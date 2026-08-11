@@ -204,7 +204,7 @@ declare void @Gia_ManStop(ptr noundef) local_unnamed_addr #9
 ; Function Attrs: nounwind uwtable
 define ptr @Ifn_ManStrFindCofactors(i32 noundef %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #7 {
 bb.a:
-  %i.a = shl nuw i32 1, %0
+  %i.a = shl nuw nsw i32 1, %0
   %i.b = getelementptr i8, ptr %1, i64 24         ; 3 uses
   %.val66 = load i32, ptr %i.b, align 8, !tbaa !91
   %i.c = tail call ptr @Gia_ManStart(i32 noundef %.val66) #26 ; 11 uses
@@ -282,7 +282,6 @@ bb.e:                                             ; preds = %bb.c, %bb.d
   %i.af = getelementptr inbounds nuw i8, ptr %i.c, i64 72 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.c, i64 232
   %i.ah = sext i32 %0 to i64                      ; 3 uses
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.a, i32 1)
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %.critedge6
@@ -599,7 +598,7 @@ Gia_ManAppendCo.exit:                             ; preds = %Vec_IntPush.exit.i,
 
 .critedge6:                                       ; preds = %Gia_ManAppendCo.exit, %.lr.ph94, %.critedge4
   %i.fz = add nuw nsw i32 %.096, 1                ; 2 uses
-  %exitcond108.not = icmp eq i32 %i.fz, %smax
+  %exitcond108.not = icmp eq i32 %i.fz, %i.a
   br i1 %exitcond108.not, label %._crit_edge, label %.preheader, !llvm.loop !99
 
 ._crit_edge:                                      ; preds = %.critedge6, %.critedge
@@ -1002,7 +1001,7 @@ middle.block329:                                  ; preds = %vector.body320
   br i1 %exitcond.not.i126.1, label %Abc_TtMux.exit, label %.lr.ph.i123, !llvm.loop !203
 
 bb.f:                                             ; preds = %bb.b
-  %i.lg = shl nuw i32 1, %i.fg
+  %i.lg = shl nuw nsw i32 1, %i.fg
   br i1 %i.ca, label %.lr.ph.preheader.i127, label %Abc_TtClear.exit128
 
 .lr.ph.preheader.i127:                            ; preds = %bb.f
@@ -1015,7 +1014,6 @@ Abc_TtClear.exit128:                              ; preds = %bb.f, %.lr.ph.prehe
 
 .lr.ph165:                                        ; preds = %Abc_TtClear.exit128
   %.not179 = icmp eq i32 %i.fg, 0
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.lg, i32 1)
   %wide.trip.count203 = zext nneg i32 %i.fg to i64
   %bound0336 = icmp ult ptr %scevgep333, %scevgep335
   %bound1337 = icmp ult ptr %i.bz, %scevgep334
@@ -1319,7 +1317,7 @@ middle.block350:                                  ; preds = %vector.body343
 
 Abc_TtOr.exit:                                    ; preds = %.lr.ph.i146.prol.loopexit, %.lr.ph.i146, %middle.block350, %._crit_edge, %bb.g
   %i.pr = add nuw nsw i32 %.1104163, 1            ; 2 uses
-  %exitcond205.not = icmp eq i32 %i.pr, %smax
+  %exitcond205.not = icmp eq i32 %i.pr, %i.lg
   br i1 %exitcond205.not, label %Abc_TtMux.exit, label %bb.g, !llvm.loop !228
 
 Abc_TtMux.exit:                                   ; preds = %Abc_TtOr.exit, %.lr.ph.i123.prol.loopexit, %.lr.ph.i123, %Abc_TtXor.exit.loopexit, %Abc_TtAnd.exit.loopexit, %middle.block329, %bb.d, %bb.c, %Abc_TtClear.exit, %Abc_TtFill.exit, %Abc_TtClear.exit128, %bb.e, %bb.b
@@ -1722,7 +1720,7 @@ bb.a:
   %7 = alloca %struct.timespec, align 8           ; 5 uses
   %8 = alloca %struct.timespec, align 8           ; 5 uses
   %9 = alloca %struct.timespec, align 8           ; 5 uses
-  %i.a = shl nuw i32 1, %2
+  %i.a = shl nuw nsw i32 1, %2                    ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #26
   %i.b = call i32 @clock_gettime(i32 noundef 1, ptr noundef nonnull %9) #26
   %i.c = icmp slt i32 %i.b, 0
@@ -1848,7 +1846,6 @@ bb.i:                                             ; preds = %Abc_Clock.exit86, %
   %i.bh = sext i32 %3 to i64
   %i.bi = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.bj = getelementptr i8, ptr %i.k, i64 328     ; 3 uses
-  %smax = call i32 @llvm.smax.i32(i32 %i.a, i32 1) ; 2 uses
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %bb.v
@@ -2251,11 +2248,11 @@ bb.u:                                             ; preds = %bb.t, %bb.s
 
 bb.v:                                             ; preds = %Abc_TtFindFirstBit.exit
   %i.jp = add nuw nsw i32 %.075118, 1             ; 2 uses
-  %exitcond137.not = icmp eq i32 %i.jp, %smax
+  %exitcond137.not = icmp eq i32 %i.jp, %i.a
   br i1 %exitcond137.not, label %Ifn_NtkMatchCollectConfig.exit, label %.preheader, !llvm.loop !299
 
 Ifn_NtkMatchCollectConfig.exit:                   ; preds = %bb.v, %._crit_edge, %bb.n, %bb.u, %bb.i, %._crit_edge34.i, %Abc_TtFindFirstBit.exit.thread
-  %.075110 = phi i32 [ %.075118, %Abc_TtFindFirstBit.exit.thread ], [ %.075118, %._crit_edge34.i ], [ %.075118, %bb.u ], [ 0, %bb.i ], [ %smax, %bb.v ], [ %.075118, %._crit_edge ], [ %.075118, %bb.n ]
+  %.075110 = phi i32 [ %.075118, %Abc_TtFindFirstBit.exit.thread ], [ %.075118, %._crit_edge34.i ], [ %.075118, %bb.u ], [ 0, %bb.i ], [ %i.a, %bb.v ], [ %.075118, %._crit_edge ], [ %.075118, %bb.n ]
   %.not84 = phi i1 [ false, %Abc_TtFindFirstBit.exit.thread ], [ false, %._crit_edge34.i ], [ false, %bb.u ], [ true, %bb.i ], [ true, %bb.n ], [ true, %._crit_edge ], [ true, %bb.v ] ; 2 uses
   %.073 = phi i32 [ 1, %Abc_TtFindFirstBit.exit.thread ], [ 1, %._crit_edge34.i ], [ 1, %bb.u ], [ 0, %bb.i ], [ 0, %bb.n ], [ 0, %._crit_edge ], [ 0, %bb.v ]
   %.not83 = icmp eq i32 %4, 0

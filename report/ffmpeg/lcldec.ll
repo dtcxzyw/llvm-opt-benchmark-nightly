@@ -201,7 +201,7 @@ bb.an:                                            ; preds = %bb.am
   ]
 
 .preheader626:                                    ; preds = %bb.an
-  %4 = sdiv i32 %i.j, 2
+  %4 = lshr i32 %i.j, 1
   %i.di = icmp sgt i32 %i.j, 1
   br i1 %i.di, label %.lr.ph635, label %.loopexit617
 
@@ -604,7 +604,7 @@ bb.at:                                            ; preds = %bb.an
 .preheader609.lr.ph:                              ; preds = %.preheader610
   %i.ld = add nsw i32 %i.h, -3
   %i.le = icmp sgt i32 %i.h, 3
-  %5 = sext i32 %i.ld to i64
+  %5 = zext nneg i32 %i.ld to i64
   br label %.preheader609
 
 .preheader606:                                    ; preds = %.loopexit617
@@ -614,19 +614,19 @@ bb.at:                                            ; preds = %bb.an
 .preheader605.lr.ph:                              ; preds = %.preheader606
   %i.lg = add i32 %i.h, -3                        ; 2 uses
   %i.lh = icmp sgt i32 %i.h, 3
-  %6 = sext i32 %i.lg to i64                      ; 3 uses
-  %smax = tail call i64 @llvm.smax.i64(i64 %6, i64 4)
+  %6 = zext i32 %i.lg to i64                      ; 3 uses
+  %smax = tail call i64 @llvm.umax.i64(i64 %6, i64 4)
   %i.li = add nsw i64 %smax, -1                   ; 2 uses
   %i.lj = and i64 %i.li, -4
   %i.lk = lshr i64 %i.li, 2                       ; 2 uses
   %i.ll = shl nuw nsw i64 %i.lk, 1
   %i.lm = add nuw nsw i64 %i.ll, 2                ; 2 uses
   %i.ln = shl nuw nsw i64 %i.lk, 3
-  %i.lo = tail call i64 @llvm.smax.i64(i64 %6, i64 4)
+  %i.lo = tail call i64 @llvm.umax.i64(i64 %6, i64 4)
   %i.lp = add nsw i64 %i.lo, -1
   %i.lq = lshr i64 %i.lp, 2
   %i.lr = add nuw nsw i64 %i.lq, 1                ; 2 uses
-  %min.iters.check918 = icmp slt i32 %i.lg, 33
+  %min.iters.check919 = icmp ult i32 %i.lg, 33
   %i.ls = and i64 %i.lr, 3                        ; 2 uses
   %i.lt = icmp eq i64 %i.ls, 0
   %i.lu = select i1 %i.lt, i64 4, i64 %i.ls
@@ -1029,7 +1029,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   br i1 %i.lh, label %.lr.ph712.preheader, label %._crit_edge713.thread
 
 .lr.ph712.preheader:                              ; preds = %.preheader605
-  br i1 %min.iters.check918, label %.lr.ph712.preheader1001, label %vector.memcheck889
+  br i1 %min.iters.check919, label %.lr.ph712.preheader1001, label %vector.memcheck889
 
 vector.memcheck889:                               ; preds = %.lr.ph712.preheader
   %i.wv = getelementptr i8, ptr %.1549717, i64 %i.lj
@@ -1171,7 +1171,7 @@ vector.body921:                                   ; preds = %vector.body921, %ve
   %i.zw = getelementptr inbounds nuw i8, ptr %.1539719, i64 %i.zn
   store i8 %i.zv, ptr %i.zw, align 1, !tbaa !34
   %indvars.iv.next779 = add nuw nsw i64 %indvars.iv778, 4 ; 3 uses
-  %7 = icmp slt i64 %indvars.iv.next779, %6
+  %7 = icmp samesign ult i64 %indvars.iv.next779, %6
   br i1 %7, label %.lr.ph712, label %._crit_edge713, !llvm.loop !91
 
 ._crit_edge713:                                   ; preds = %.lr.ph712
@@ -1292,7 +1292,7 @@ bb.av:                                            ; preds = %.loopexit617
   %i.aci = getelementptr inbounds nuw i8, ptr %.2540704, i64 %i.acd
   store i8 %i.ach, ptr %i.aci, align 1, !tbaa !34
   %indvars.iv.next775 = add nuw nsw i64 %indvars.iv774, 4 ; 3 uses
-  %8 = icmp slt i64 %indvars.iv.next775, %5
+  %8 = icmp samesign ult i64 %indvars.iv.next775, %5
   br i1 %8, label %.lr.ph697, label %._crit_edge698, !llvm.loop !94
 
 ._crit_edge698:                                   ; preds = %.lr.ph697
@@ -1694,9 +1694,6 @@ declare i64 @llvm.smin.i64(i64, i64) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #5
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smax.i64(i64, i64) #5
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #6

@@ -203,7 +203,7 @@ bb.j:                                             ; preds = %bb.g
   %i.at = getelementptr [4 x i8], ptr %.val84, i64 %.val85, !dbg !70762
   %i.au = getelementptr i8, ptr %i.at, i64 -4, !dbg !70762
   %i.av = load i32, ptr %i.au, align 4, !dbg !70763, !noundef !13
-  %i.aw = sub i32 %i.av, %.val81, !dbg !70764
+  %i.aw = sub nuw nsw i32 %i.av, %.val81, !dbg !70764
   %i.ax = sext i32 %i.aw to i64, !dbg !70770
   %i.ay = icmp eq i32 %.val81, 0, !dbg !70772
   br i1 %i.ay, label %bb.k, label %bb.m, !dbg !70772
@@ -606,7 +606,7 @@ bb.j:                                             ; preds = %bb.g
   %i.at = getelementptr [4 x i8], ptr %.val81, i64 %.val82, !dbg !71154
   %i.au = getelementptr i8, ptr %i.at, i64 -4, !dbg !71154
   %i.av = load i32, ptr %i.au, align 4, !dbg !71155, !noundef !13
-  %i.aw = sub i32 %i.av, %.val78, !dbg !71156
+  %i.aw = sub nuw nsw i32 %i.av, %.val78, !dbg !71156
   %i.ax = sext i32 %i.aw to i64, !dbg !71158
   %i.ay = icmp eq i32 %.val78, 0, !dbg !71160
   br i1 %i.ay, label %bb.k, label %bb.m, !dbg !71160
@@ -1009,7 +1009,7 @@ bb.j:                                             ; preds = %bb.g
   %i.at = getelementptr [4 x i8], ptr %.val81, i64 %.val82, !dbg !71480
   %i.au = getelementptr i8, ptr %i.at, i64 -4, !dbg !71480
   %i.av = load i32, ptr %i.au, align 4, !dbg !71481, !noundef !13
-  %i.aw = sub i32 %i.av, %.val78, !dbg !71482
+  %i.aw = sub nuw nsw i32 %i.av, %.val78, !dbg !71482
   %i.ax = sext i32 %i.aw to i64, !dbg !71484
   %i.ay = icmp eq i32 %.val78, 0, !dbg !71486
   br i1 %i.ay, label %bb.k, label %bb.m, !dbg !71486
@@ -1412,7 +1412,7 @@ bb.j:                                             ; preds = %bb.g
   %i.at = getelementptr [8 x i8], ptr %.val84, i64 %.val85, !dbg !71829
   %i.au = getelementptr i8, ptr %i.at, i64 -8, !dbg !71829
   %i.av = load i64, ptr %i.au, align 8, !dbg !71830, !noundef !13
-  %i.aw = sub i64 %i.av, %.val81, !dbg !71831
+  %i.aw = sub nuw nsw i64 %i.av, %.val81, !dbg !71831
   %i.ax = icmp eq i64 %.val81, 0, !dbg !71835
   br i1 %i.ax, label %bb.k, label %bb.m, !dbg !71835
 
@@ -1815,7 +1815,7 @@ bb.j:                                             ; preds = %bb.g
   %i.at = getelementptr [8 x i8], ptr %.val84, i64 %.val85, !dbg !72152
   %i.au = getelementptr i8, ptr %i.at, i64 -8, !dbg !72152
   %i.av = load i64, ptr %i.au, align 8, !dbg !72153, !noundef !13
-  %i.aw = sub i64 %i.av, %.val78, !dbg !72154
+  %i.aw = sub nuw nsw i64 %i.av, %.val78, !dbg !72154
   %i.ax = icmp eq i64 %.val78, 0, !dbg !72156
   br i1 %i.ax, label %bb.k, label %bb.m, !dbg !72156
 
@@ -2218,7 +2218,7 @@ bb.j:                                             ; preds = %bb.g
   %i.at = getelementptr [8 x i8], ptr %.val81, i64 %.val82, !dbg !72454
   %i.au = getelementptr i8, ptr %i.at, i64 -8, !dbg !72454
   %i.av = load i64, ptr %i.au, align 8, !dbg !72455, !noundef !13
-  %i.aw = sub i64 %i.av, %.val78, !dbg !72456
+  %i.aw = sub nuw nsw i64 %i.av, %.val78, !dbg !72456
   %i.ax = icmp eq i64 %.val78, 0, !dbg !72458
   br i1 %i.ax, label %bb.k, label %bb.m, !dbg !72458
 

@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.t
   br i1 %or.cond.not, label %bb.s, label %bb.t
 
 .loopexit:                                        ; preds = %bb.t, %bb.a, %bb.s
-  %i.v = phi i64 [ %.pre, %bb.s ], [ %i.l, %bb.a ], [ %i.cx, %bb.t ] ; 5 uses
+  %i.v = phi i64 [ %.pre, %bb.s ], [ %i.l, %bb.a ], [ %i.cx, %bb.t ] ; 6 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !15873)
   call void @llvm.experimental.noalias.scope.decl(metadata !15876)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
@@ -244,7 +244,7 @@ bb.d:                                             ; preds = %bb.c
   store i64 %i.ak, ptr %i.ac, align 8, !alias.scope !15876, !noalias !15878
   call void @llvm.experimental.noalias.scope.decl(metadata !15881)
   call void @llvm.experimental.noalias.scope.decl(metadata !15884)
-  %i.al = add nsw i64 %i.v, -1                    ; 8 uses
+  %i.al = add nsw i64 %i.v, -1                    ; 7 uses
   store i64 %i.al, ptr %i.k, align 8, !alias.scope !15887, !noalias !15888
   %i.am = load i64, ptr %1, align 8, !range !45, !alias.scope !15887, !noalias !15888, !noundef !19
   %i.an = icmp samesign ult i64 %i.al, %i.am
@@ -272,7 +272,7 @@ bb.f:                                             ; preds = %bb.e
 _RINvNtCsbvkFyIu7lgC_4core10intrinsics25typed_swap_nonoverlappingINtNtNtCs8CRAYtH5WmW_12futures_util6stream15futures_ordered12OrderWrapperINtNtB4_6result6ResultINtNtB4_6option6OptionNtNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel6models7actions10CommitInfoENtNtB31_6errors15DeltaTableErrorEEECs7p2uQeJxui2_9deltalake.exit.i.i.i.i: ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i.i.i.i)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(272) %.sroa.0.i.i.i.i.i, ptr noundef nonnull align 16 dereferenceable(272) %i.z, i64 272, i1 false), !noalias !15895
-  %3 = call i64 @llvm.usub.sat.i64(i64 %i.al, i64 2)
+  %3 = add nsw i64 %i.v, -3
   %.not.not8.i.i.i.i.i = icmp samesign ult i64 %i.v, 4
   br i1 %.not.not8.i.i.i.i.i, label %._crit_edge.i.i.i.i.i, label %.lr.ph.i.i.i.i.i
 
@@ -675,7 +675,7 @@ bb.a:
   %i.c = alloca [80 x i8], align 8                ; 5 uses
   %.sroa.4 = alloca [72 x i8], align 8            ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 4 uses
-  %i.e = load i64, ptr %i.d, align 8, !noundef !19 ; 5 uses
+  %i.e = load i64, ptr %i.d, align 8, !noundef !19 ; 6 uses
   %i.f = icmp ult i64 %i.e, 115292150460684698
   tail call void @llvm.assume(i1 %i.f)
   %i.g = icmp eq i64 %i.e, 0
@@ -711,7 +711,7 @@ bb.c:                                             ; preds = %bb.b
   store i64 %i.u, ptr %i.l, align 8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !16808)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !16811)
-  %i.v = add nsw i64 %i.e, -1                     ; 9 uses
+  %i.v = add nsw i64 %i.e, -1                     ; 8 uses
   store i64 %i.v, ptr %i.d, align 8, !alias.scope !16814, !noalias !16815
   %i.w = load i64, ptr %1, align 8, !range !45, !alias.scope !16814, !noalias !16815, !noundef !19
   %i.x = icmp samesign ult i64 %i.v, %i.w
@@ -739,7 +739,7 @@ bb.e:                                             ; preds = %bb.d
 _RINvNtCsbvkFyIu7lgC_4core10intrinsics25typed_swap_nonoverlappingINtNtNtCs8CRAYtH5WmW_12futures_util6stream15futures_ordered12OrderWrapperINtNtB4_6result6ResultIB2c_NtCsjyY8HP3IvQ6_12object_store10ListResultNtB2E_5ErrorENtNtNtNtCskQDtHcQtBkN_5tokio7runtime4task5error9JoinErrorEEECs7p2uQeJxui2_9deltalake.exit.i.i.i: ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i.i.i)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.0.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(80) %i.i, i64 80, i1 false), !noalias !16822
-  %3 = call i64 @llvm.usub.sat.i64(i64 %i.v, i64 2)
+  %3 = add nsw i64 %i.e, -3
   %.not.not8.i.i.i.i = icmp samesign ult i64 %i.e, 4
   br i1 %.not.not8.i.i.i.i, label %._crit_edge.i.i.i.i, label %.lr.ph.i.i.i.i
 

@@ -203,8 +203,7 @@ lean_nat_eq.exit:                                 ; preds = %bb.d, %bb.m, %bb.l,
   %i.t = getelementptr i8, ptr %i.j, i64 8
   %.val89 = load i64, ptr %i.t, align 8, !tbaa !16
   %.mask = and i64 %.val89, 9223372036854775807
-  %i.u = icmp eq i64 %.mask, 0                    ; 2 uses
-  %5 = zext i1 %i.u to i8
+  %i.u = icmp eq i64 %.mask, 0
   br i1 %i.u, label %bb.v, label %bb.n
 
 bb.n:                                             ; preds = %lean_nat_eq.exit
@@ -257,7 +256,7 @@ lean_alloc_ctor.exit:                             ; preds = %lean_float_once.exi
   store double %.0.i93, ptr %i.ai, align 8, !tbaa !24
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ab, i64 40
   store double %.0.i93, ptr %i.aj, align 8, !tbaa !24
-  store i8 %5, ptr %i.ae, align 8, !tbaa !23
+  store i8 0, ptr %i.ae, align 8, !tbaa !23
   %i.ak = load atomic i32, ptr @l_Lean_Meta_Simp_reportDiag___lam__0___closed__2_once seq_cst, align 4, !tbaa !14
   %i.al = icmp eq i32 %i.ak, 1
   br i1 %i.al, label %bb.s, label %bb.t, !prof !13

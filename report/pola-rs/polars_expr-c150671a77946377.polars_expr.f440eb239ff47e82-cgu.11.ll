@@ -204,9 +204,9 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %.noexc57
   call void @llvm.experimental.noalias.scope.decl(metadata !147591), !dbg !147594
-  %2 = sext i8 %i.bp to i32, !dbg !147596
-  %3 = sext i8 %i.bs to i32, !dbg !147600
-  %4 = sext i8 %i.bo to i32, !dbg !147601
+  %2 = zext nneg i8 %i.bp to i32, !dbg !147596
+  %3 = zext nneg i8 %i.bs to i32, !dbg !147600
+  %4 = zext nneg i8 %i.bo to i32, !dbg !147601
   %i.cd = icmp ugt i8 %i.bp, 23, !dbg !147602
   %i.ce = icmp ugt i8 %i.bs, 59
   %or.cond.i.i.i.i.i = or i1 %i.cd, %i.ce, !dbg !147602

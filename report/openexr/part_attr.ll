@@ -201,7 +201,7 @@ bb.aa:                                            ; preds = %bb.z, %bb.y, %bb.p,
 define i32 @exr_attr_set_compression(ptr noundef %0, i32 noundef %1, ptr noundef %2, i32 noundef %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 8 uses
-  %i.b = trunc i32 %3 to i8
+  %i.b = trunc nuw nsw i32 %3 to i8
   %i.c = icmp ugt i32 %3, 11
   br i1 %i.c, label %bb.b, label %bb.c
 
@@ -604,7 +604,7 @@ bb.aa:                                            ; preds = %bb.z, %bb.y, %bb.p,
 define i32 @exr_attr_set_envmap(ptr noundef %0, i32 noundef %1, ptr noundef %2, i32 noundef %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 8 uses
-  %i.b = trunc i32 %3 to i8
+  %i.b = trunc nuw nsw i32 %3 to i8
   %i.c = icmp ugt i32 %3, 1
   br i1 %i.c, label %bb.b, label %bb.c
 
@@ -1007,7 +1007,7 @@ bb.aa:                                            ; preds = %bb.z, %bb.y, %bb.p,
 define i32 @exr_attr_set_lineorder(ptr noundef %0, i32 noundef %1, ptr noundef %2, i32 noundef %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 8 uses
-  %i.b = trunc i32 %3 to i8
+  %i.b = trunc nuw nsw i32 %3 to i8
   %i.c = icmp ugt i32 %3, 2
   br i1 %i.c, label %bb.b, label %bb.c
 

@@ -204,7 +204,6 @@ define internal fastcc void @_ZL29sortMoleculesIntoCompartmentsP9t_swapgrpRKN3gm
   %i.af = getelementptr inbounds nuw i8, ptr %3, i64 392 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.ah = icmp sgt i64 %i.k, -1
-  %16 = and i64 %i.k, 4294967295
   %i.ai = extractelement <2 x float> %i.d, i64 0
   %i.aj = extractelement <2 x float> %i.d, i64 1
   br label %bb.b
@@ -607,7 +606,7 @@ bb.am:                                            ; preds = %bb.al
   %i.jg = load i32, ptr %i.bc, align 8, !tbaa !371
   %i.jh = getelementptr inbounds nuw i8, ptr %i.bc, i64 16
   %i.ji = load ptr, ptr %i.jh, align 8, !tbaa !209
-  %i.jj = getelementptr inbounds nuw [4 x i8], ptr %i.ji, i64 %16
+  %i.jj = getelementptr inbounds nuw [4 x i8], ptr %i.ji, i64 %i.k
   store i32 %i.jg, ptr %i.jj, align 4, !tbaa !63
   br label %bb.an
 

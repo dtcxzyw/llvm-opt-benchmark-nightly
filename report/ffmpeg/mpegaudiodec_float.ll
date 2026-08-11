@@ -204,8 +204,7 @@ bb.gn:                                            ; preds = %bb.gm, %bb.gi
   %i.eke = getelementptr inbounds nuw i8, ptr %0, i64 9344
   %i.ekf = getelementptr inbounds nuw i8, ptr %0, i64 32916
   %i.ekg = getelementptr inbounds nuw i8, ptr %0, i64 9360
-  %4 = tail call i32 @llvm.umax.i32(i32 %.097, i32 1)
-  %wide.trip.count = zext nneg i32 %4 to i64
+  %wide.trip.count = zext nneg i32 %.097 to i64
   br label %bb.go
 
 bb.go:                                            ; preds = %.lr.ph208, %._crit_edge
@@ -606,9 +605,6 @@ declare i32 @llvm.bswap.i32(i32) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #7
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #7

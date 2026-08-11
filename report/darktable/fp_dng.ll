@@ -204,9 +204,9 @@ _Z16DecodeDeltaBytesPhii.exit.i.loopexit350.unr-lcssa: ; preds = %.lr.ph.i.i
   br i1 %epil.iter.cmp.not, label %_Z16DecodeDeltaBytesPhii.exit.i, label %.lr.ph.i.i.epil, !llvm.loop !167
 
 _Z16DecodeDeltaBytesPhii.exit.i:                  ; preds = %_Z16DecodeDeltaBytesPhii.exit.i.loopexit350.unr-lcssa, %.lr.ph.i.i.epil, %_Z16DecodeDeltaBytesPhii.exit.i.loopexit349.unr-lcssa, %.lr.ph101.i.i.epil, %_Z16DecodeDeltaBytesPhii.exit.i.loopexit348.unr-lcssa, %.lr.ph105.i.i.epil, %._crit_edge.i.i, %bb.at, %bb.as, %bb.ar, %.preheader.lr.ph.i.i, %.preheader86.i.i
-  %i.la = mul i32 %i.gr, %i.ec                    ; 13 uses
-  %2 = sext i32 %i.la to i64
-  %i.lb = getelementptr inbounds i8, ptr %i.gq, i64 %2 ; 19 uses
+  %i.la = mul i32 %i.gr, %i.ec                    ; 10 uses
+  %2 = zext i32 %i.la to i64                      ; 7 uses
+  %i.lb = getelementptr inbounds nuw i8, ptr %i.gq, i64 %2 ; 19 uses
   switch i32 %i.fl, label %bb.aw [
     i32 2, label %bb.au
     i32 3, label %bb.av
@@ -217,13 +217,12 @@ bb.au:                                            ; preds = %_Z16DecodeDeltaByte
   br i1 %i.lc, label %.lr.ph74.preheader.i, label %_ZL13DecodeFPDeltaPhS_iii.exit.thread
 
 .lr.ph74.preheader.i:                             ; preds = %bb.au
-  %wide.trip.count87.i = zext nneg i32 %i.la to i64 ; 2 uses
-  %xtraiter377 = and i64 %wide.trip.count87.i, 7  ; 3 uses
+  %xtraiter377 = and i64 %2, 7                    ; 3 uses
   %i.ld = icmp ult i32 %i.la, 8
   br i1 %i.ld, label %.lr.ph74.i.epil.preheader, label %.lr.ph74.preheader.i.new
 
 .lr.ph74.preheader.i.new:                         ; preds = %.lr.ph74.preheader.i
-  %unroll_iter381 = and i64 %wide.trip.count87.i, 2147483640
+  %unroll_iter381 = and i64 %2, 2147483640
   br label %.lr.ph74.i
 
 .lr.ph74.i:                                       ; preds = %.lr.ph74.i, %.lr.ph74.preheader.i.new
@@ -314,13 +313,12 @@ bb.av:                                            ; preds = %_Z16DecodeDeltaByte
   br i1 %i.nd, label %.lr.ph.preheader.i, label %_ZL13DecodeFPDeltaPhS_iii.exit.thread192
 
 .lr.ph.preheader.i:                               ; preds = %bb.av
-  %wide.trip.count.i = zext nneg i32 %i.la to i64 ; 2 uses
-  %xtraiter371 = and i64 %wide.trip.count.i, 3    ; 3 uses
+  %xtraiter371 = and i64 %2, 3                    ; 3 uses
   %i.ne = icmp ult i32 %i.la, 4
   br i1 %i.ne, label %.lr.ph.i.epil.preheader, label %.lr.ph.preheader.i.new
 
 .lr.ph.preheader.i.new:                           ; preds = %.lr.ph.preheader.i
-  %unroll_iter375 = and i64 %wide.trip.count.i, 2147483644
+  %unroll_iter375 = and i64 %2, 2147483644
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.preheader.i.new
@@ -394,13 +392,12 @@ bb.aw:                                            ; preds = %_Z16DecodeDeltaByte
   br i1 %i.ov, label %.lr.ph77.preheader.i, label %_ZL13DecodeFPDeltaPhS_iii.exit
 
 .lr.ph77.preheader.i:                             ; preds = %bb.aw
-  %wide.trip.count92.i = zext nneg i32 %i.la to i64 ; 2 uses
-  %xtraiter383 = and i64 %wide.trip.count92.i, 3  ; 3 uses
+  %xtraiter383 = and i64 %2, 3                    ; 3 uses
   %i.ow = icmp ult i32 %i.la, 4
   br i1 %i.ow, label %.lr.ph77.i.epil.preheader, label %.lr.ph77.preheader.i.new
 
 .lr.ph77.preheader.i.new:                         ; preds = %.lr.ph77.preheader.i
-  %unroll_iter387 = and i64 %wide.trip.count92.i, 2147483644
+  %unroll_iter387 = and i64 %2, 2147483644
   br label %.lr.ph77.i
 
 .lr.ph77.i:                                       ; preds = %.lr.ph77.i, %.lr.ph77.preheader.i.new
@@ -491,9 +488,9 @@ _ZL13DecodeFPDeltaPhS_iii.exit.thread.loopexit.unr-lcssa: ; preds = %.lr.ph74.i
   br label %.lr.ph74.i.epil
 
 .lr.ph74.i.epil:                                  ; preds = %.lr.ph74.i.epil, %.lr.ph74.i.epil.preheader
-  %indvars.iv84.i.epil = phi i64 [ %indvars.iv84.i.epil.init, %.lr.ph74.i.epil.preheader ], [ %indvars.iv.next85.i.epil, %.lr.ph74.i.epil ] ; 3 uses
-  %.06173.i.epil = phi ptr [ %.06173.i.epil.init, %.lr.ph74.i.epil.preheader ], [ %i.qy, %.lr.ph74.i.epil ] ; 3 uses
-  %epil.iter378 = phi i64 [ 0, %.lr.ph74.i.epil.preheader ], [ %epil.iter378.next, %.lr.ph74.i.epil ]
+  %indvars.iv84.i.epil = phi i64 [ %indvars.iv.next85.i.epil, %.lr.ph74.i.epil ], [ %indvars.iv84.i.epil.init, %.lr.ph74.i.epil.preheader ] ; 3 uses
+  %.06173.i.epil = phi ptr [ %i.qy, %.lr.ph74.i.epil ], [ %.06173.i.epil.init, %.lr.ph74.i.epil.preheader ] ; 3 uses
+  %epil.iter378 = phi i64 [ %epil.iter378.next, %.lr.ph74.i.epil ], [ 0, %.lr.ph74.i.epil.preheader ]
   %i.qt = getelementptr inbounds nuw i8, ptr %i.lb, i64 %indvars.iv84.i.epil
   %i.qu = load i8, ptr %i.qt, align 1, !tbaa !155
   store i8 %i.qu, ptr %.06173.i.epil, align 1, !tbaa !155
@@ -524,9 +521,9 @@ _ZL13DecodeFPDeltaPhS_iii.exit.thread192.loopexit.unr-lcssa: ; preds = %.lr.ph.i
   br label %.lr.ph.i.epil
 
 .lr.ph.i.epil:                                    ; preds = %.lr.ph.i.epil, %.lr.ph.i.epil.preheader
-  %indvars.iv.i.epil = phi i64 [ %indvars.iv.i.epil.init, %.lr.ph.i.epil.preheader ], [ %indvars.iv.next.i.epil, %.lr.ph.i.epil ] ; 4 uses
-  %.171.i.epil = phi ptr [ %.171.i.epil.init, %.lr.ph.i.epil.preheader ], [ %i.rj, %.lr.ph.i.epil ] ; 4 uses
-  %epil.iter372 = phi i64 [ 0, %.lr.ph.i.epil.preheader ], [ %epil.iter372.next, %.lr.ph.i.epil ]
+  %indvars.iv.i.epil = phi i64 [ %indvars.iv.next.i.epil, %.lr.ph.i.epil ], [ %indvars.iv.i.epil.init, %.lr.ph.i.epil.preheader ] ; 4 uses
+  %.171.i.epil = phi ptr [ %i.rj, %.lr.ph.i.epil ], [ %.171.i.epil.init, %.lr.ph.i.epil.preheader ] ; 4 uses
+  %epil.iter372 = phi i64 [ %epil.iter372.next, %.lr.ph.i.epil ], [ 0, %.lr.ph.i.epil.preheader ]
   %i.rb = getelementptr inbounds nuw i8, ptr %i.gq, i64 %indvars.iv.i.epil
   %i.rc = load i8, ptr %i.rb, align 1, !tbaa !155
   store i8 %i.rc, ptr %.171.i.epil, align 1, !tbaa !155
@@ -561,9 +558,9 @@ _ZL13DecodeFPDeltaPhS_iii.exit.loopexit.unr-lcssa: ; preds = %.lr.ph77.i
   br label %.lr.ph77.i.epil
 
 .lr.ph77.i.epil:                                  ; preds = %.lr.ph77.i.epil, %.lr.ph77.i.epil.preheader
-  %indvars.iv89.i.epil = phi i64 [ %indvars.iv89.i.epil.init, %.lr.ph77.i.epil.preheader ], [ %indvars.iv.next90.i.epil, %.lr.ph77.i.epil ] ; 5 uses
-  %.275.i.epil = phi ptr [ %.275.i.epil.init, %.lr.ph77.i.epil.preheader ], [ %i.rx, %.lr.ph77.i.epil ] ; 5 uses
-  %epil.iter384 = phi i64 [ 0, %.lr.ph77.i.epil.preheader ], [ %epil.iter384.next, %.lr.ph77.i.epil ]
+  %indvars.iv89.i.epil = phi i64 [ %indvars.iv.next90.i.epil, %.lr.ph77.i.epil ], [ %indvars.iv89.i.epil.init, %.lr.ph77.i.epil.preheader ] ; 5 uses
+  %.275.i.epil = phi ptr [ %i.rx, %.lr.ph77.i.epil ], [ %.275.i.epil.init, %.lr.ph77.i.epil.preheader ] ; 5 uses
+  %epil.iter384 = phi i64 [ %epil.iter384.next, %.lr.ph77.i.epil ], [ 0, %.lr.ph77.i.epil.preheader ]
   %i.rm = getelementptr inbounds nuw i8, ptr %i.ou, i64 %indvars.iv89.i.epil
   %i.rn = load i8, ptr %i.rm, align 1, !tbaa !155
   store i8 %i.rn, ptr %.275.i.epil, align 1, !tbaa !155

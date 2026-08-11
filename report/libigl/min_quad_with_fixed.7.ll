@@ -204,7 +204,7 @@ _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi1EiEEE13InnerIteratorC2ERKS
   %i.cz = sext i32 %i.cy to i64                   ; 2 uses
   %i.da = getelementptr inbounds nuw [4 x i8], ptr %i.au, i64 %.03669
   %i.db = load i32, ptr %i.da, align 4, !tbaa !104 ; 2 uses
-  %3 = sext i32 %i.db to i64
+  %3 = zext nneg i32 %i.db to i64
   %i.dc = add nsw i64 %3, %i.cz
   %i.dd = icmp sgt i32 %i.db, 0
   br i1 %i.dd, label %.lr.ph, label %._crit_edge
@@ -396,7 +396,7 @@ _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi1EiEEE13InnerIteratorC2ERKS
   %i.gq = sext i32 %i.gp to i64                   ; 2 uses
   %i.gr = getelementptr inbounds nuw [4 x i8], ptr %i.ed, i64 %indvars.iv
   %i.gs = load i32, ptr %i.gr, align 4, !tbaa !104 ; 2 uses
-  %4 = sext i32 %i.gs to i64
+  %4 = zext nneg i32 %i.gs to i64
   %i.gt = add nsw i64 %4, %i.gq
   %i.gu = icmp sgt i32 %i.gs, 0
   br i1 %i.gu, label %.lr.ph77.preheader, label %._crit_edge78
@@ -799,7 +799,7 @@ bb.z:                                             ; preds = %bb.y, %bb.x
   %i.jd = getelementptr inbounds nuw [4 x i8], ptr %i.fl, i64 %indvars.iv610
   %i.je = sext i32 %i.jc to i64                   ; 2 uses
   %i.jf = load i32, ptr %i.jd, align 4, !tbaa !104 ; 2 uses
-  %4 = sext i32 %i.jf to i64
+  %4 = zext nneg i32 %i.jf to i64
   %i.jg = add nsw i64 %4, %i.je
   %i.jh = icmp sgt i32 %i.jf, 0
   br i1 %i.jh, label %.lr.ph.i.i.i, label %.loopexit519
@@ -993,16 +993,14 @@ bb.al:                                            ; preds = %.lr.ph545, %bb.al
 ._crit_edge546:                                   ; preds = %bb.al, %.preheader
   %.1180.lcssa = phi i64 [ %.0179556, %.preheader ], [ %i.ma, %bb.al ] ; 5 uses
   %i.mg = sub nsw i64 %.1180.lcssa, %.0179556     ; 3 uses
-  %5 = sdiv i64 %i.mg, 2                          ; 3 uses
+  %5 = lshr i64 %i.mg, 1                          ; 3 uses
   %i.mh = icmp sgt i64 %i.mg, 1
   br i1 %i.mh, label %.lr.ph550, label %._crit_edge551
 
 .lr.ph550:                                        ; preds = %._crit_edge546
   %i.mi = getelementptr [4 x i8], ptr %.sroa.0394.0, i64 %.0179556 ; 3 uses
   %i.mj = getelementptr [4 x i8], ptr %.sroa.0394.0, i64 %.1180.lcssa ; 3 uses
-  %xtraiter785 = and i64 %5, 1
-  %6 = and i64 %i.mg, 9223372036854775806
-  %i.mk = icmp eq i64 %6, 2
+  %i.mk = icmp eq i64 %5, 1
   br i1 %i.mk, label %.epil.preheader784, label %.lr.ph550.new
 
 .lr.ph550.new:                                    ; preds = %.lr.ph550
@@ -1010,7 +1008,8 @@ bb.al:                                            ; preds = %.lr.ph545, %bb.al
   br label %bb.am
 
 ._crit_edge551.loopexit.unr-lcssa:                ; preds = %bb.am
-  %lcmp.mod787.not = icmp eq i64 %xtraiter785, 0
+  %6 = and i64 %i.mg, 2
+  %lcmp.mod787.not = icmp eq i64 %6, 0
   br i1 %lcmp.mod787.not, label %._crit_edge551, label %.epil.preheader784
 
 .epil.preheader784:                               ; preds = %._crit_edge551.loopexit.unr-lcssa, %.lr.ph550
@@ -1413,9 +1412,9 @@ _ZN5Eigen8internal6Colamd11recommendedIiEET_S3_S3_S3_.exit: ; preds = %_ZNK5Eige
   br i1 %or.cond, label %_ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i.i.i.i, label %_ZN5Eigen6MatrixIiLin1ELi1ELi0ELin1ELi1EEC2IiEERKT_.exit
 
 _ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i.i.i.i: ; preds = %_ZN5Eigen8internal6Colamd11recommendedIiEET_S3_S3_S3_.exit
-  %i.do = shl i64 %i.i, 32
-  %sext66 = add nuw i64 %i.do, 4294967296
-  %3 = ashr exact i64 %sext66, 30
+  %i.do = shl i64 %i.i, 2
+  %sext66 = add nuw nsw i64 %i.do, 4
+  %3 = and i64 %sext66, 17179869180
   %i.dp = tail call noalias ptr @malloc(i64 noundef %3) #35 ; 2 uses
   %i.dq = icmp eq ptr %i.dp, null
   br i1 %i.dq, label %.noexc3.i, label %_ZN5Eigen6MatrixIiLin1ELi1ELi0ELin1ELi1EEC2IiEERKT_.exit
@@ -1818,7 +1817,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %.not.i.i.i.i.i.i.i.i.i.i.i.i, label %.loopexit192, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !368
 
 .loopexit192:                                     ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i, %middle.block, %bb.h
-  %4 = sext i32 %.sroa.speculated151 to i64       ; 3 uses
+  %4 = zext i32 %.sroa.speculated151 to i64       ; 3 uses
   %i.ar = add nsw i32 %.sroa.speculated151, -1
   %i.as = tail call i32 @llvm.smax.i32(i32 %.sroa.speculated151, i32 2)
   %i.at = add nsw i32 %i.as, -1
@@ -1994,7 +1993,7 @@ _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS
   %i.dh = sext i32 %i.dg to i64                   ; 2 uses
   %i.di = getelementptr inbounds [4 x i8], ptr %i.bj, i64 %.071
   %i.dj = load i32, ptr %i.di, align 4, !tbaa !104 ; 2 uses
-  %5 = sext i32 %i.dj to i64
+  %5 = zext nneg i32 %i.dj to i64
   %i.dk = add nsw i64 %5, %i.dh
   %i.dl = icmp sgt i32 %i.dj, 0
   br i1 %i.dl, label %.lr.ph, label %._crit_edge
@@ -2397,8 +2396,8 @@ bb.n:                                             ; preds = %._crit_edge237
   %i.gy = getelementptr inbounds nuw i8, ptr %i.gu, i64 4
   %i.gz = load i32, ptr %i.gy, align 4, !tbaa !380 ; 2 uses
   %i.ha = sext i32 %i.gz to i64
-  %.idx = shl nsw i64 %i.ha, 2
-  %i.hb = getelementptr inbounds i8, ptr %i.gx, i64 %.idx
+  %.idx = shl nuw nsw i64 %i.ha, 2
+  %i.hb = getelementptr inbounds nuw i8, ptr %i.gx, i64 %.idx
   %i.hc = icmp sgt i32 %i.gz, 0
   br i1 %i.hc, label %.lr.ph243.preheader, label %._crit_edge244
 
@@ -2801,8 +2800,8 @@ bb.ak:                                            ; preds = %bb.ad
   %i.gy = getelementptr inbounds [4 x i8], ptr %5, i64 %i.gx ; 2 uses
   %i.gz = load i32, ptr %i.fn, align 4, !tbaa !378 ; 2 uses
   %i.ha = sext i32 %i.gz to i64
-  %.idx = shl nsw i64 %i.ha, 2
-  %i.hb = getelementptr inbounds i8, ptr %i.gy, i64 %.idx
+  %.idx = shl nuw nsw i64 %i.ha, 2
+  %i.hb = getelementptr inbounds nuw i8, ptr %i.gy, i64 %.idx
   %i.hc = icmp sgt i32 %i.gz, 0
   br i1 %i.hc, label %.lr.ph440, label %._crit_edge
 
@@ -3205,7 +3204,7 @@ _ZN5Eigen8internal15unary_evaluatorINS_9TransposeIKNS_12SparseMatrixIdLi0EiEEEEN
   %i.cz = sext i32 %i.cy to i64                   ; 2 uses
   %i.da = getelementptr inbounds nuw [4 x i8], ptr %i.au, i64 %.03370
   %i.db = load i32, ptr %i.da, align 4, !tbaa !104 ; 2 uses
-  %3 = sext i32 %i.db to i64
+  %3 = zext nneg i32 %i.db to i64
   %i.dc = add nsw i64 %3, %i.cz
   %i.dd = icmp sgt i32 %i.db, 0
   br i1 %i.dd, label %.lr.ph, label %._crit_edge
@@ -3397,7 +3396,7 @@ _ZN5Eigen8internal15unary_evaluatorINS_9TransposeIKNS_12SparseMatrixIdLi0EiEEEEN
   %i.gq = sext i32 %i.gp to i64                   ; 2 uses
   %i.gr = getelementptr inbounds nuw [4 x i8], ptr %i.ed, i64 %indvars.iv
   %i.gs = load i32, ptr %i.gr, align 4, !tbaa !104 ; 2 uses
-  %4 = sext i32 %i.gs to i64
+  %4 = zext nneg i32 %i.gs to i64
   %i.gt = add nsw i64 %4, %i.gq
   %i.gu = icmp sgt i32 %i.gs, 0
   br i1 %i.gu, label %.lr.ph78.preheader, label %._crit_edge79
@@ -3800,7 +3799,7 @@ _ZN5Eigen8internal15unary_evaluatorINS_9TransposeINS_12SparseMatrixIdLi0EiEEEENS
   %i.cz = sext i32 %i.cy to i64                   ; 2 uses
   %i.da = getelementptr inbounds nuw [4 x i8], ptr %i.au, i64 %.03370
   %i.db = load i32, ptr %i.da, align 4, !tbaa !104 ; 2 uses
-  %3 = sext i32 %i.db to i64
+  %3 = zext nneg i32 %i.db to i64
   %i.dc = add nsw i64 %3, %i.cz
   %i.dd = icmp sgt i32 %i.db, 0
   br i1 %i.dd, label %.lr.ph, label %._crit_edge
@@ -3992,7 +3991,7 @@ _ZN5Eigen8internal15unary_evaluatorINS_9TransposeINS_12SparseMatrixIdLi0EiEEEENS
   %i.gq = sext i32 %i.gp to i64                   ; 2 uses
   %i.gr = getelementptr inbounds nuw [4 x i8], ptr %i.ed, i64 %indvars.iv
   %i.gs = load i32, ptr %i.gr, align 4, !tbaa !104 ; 2 uses
-  %4 = sext i32 %i.gs to i64
+  %4 = zext nneg i32 %i.gs to i64
   %i.gt = add nsw i64 %4, %i.gq
   %i.gu = icmp sgt i32 %i.gs, 0
   br i1 %i.gu, label %.lr.ph78.preheader, label %._crit_edge79
@@ -4395,7 +4394,7 @@ _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS
   %i.ca = sext i32 %i.bz to i64                   ; 2 uses
   %i.cb = getelementptr inbounds nuw [4 x i8], ptr %i.v, i64 %.03668
   %i.cc = load i32, ptr %i.cb, align 4, !tbaa !104 ; 2 uses
-  %3 = sext i32 %i.cc to i64
+  %3 = zext nneg i32 %i.cc to i64
   %i.cd = add nsw i64 %3, %i.ca
   %i.ce = icmp sgt i32 %i.cc, 0
   br i1 %i.ce, label %.lr.ph, label %._crit_edge
@@ -4589,7 +4588,7 @@ _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS
   %i.fs = sext i32 %i.fr to i64                   ; 2 uses
   %i.ft = getelementptr inbounds nuw [4 x i8], ptr %i.de, i64 %.02879
   %i.fu = load i32, ptr %i.ft, align 4, !tbaa !104 ; 2 uses
-  %4 = sext i32 %i.fu to i64
+  %4 = zext nneg i32 %i.fu to i64
   %i.fv = add nsw i64 %4, %i.fs
   %i.fw = icmp sgt i32 %i.fu, 0
   br i1 %i.fw, label %.lr.ph77, label %._crit_edge78
@@ -4992,7 +4991,7 @@ _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS
   %i.dx = sext i32 %i.dw to i64                   ; 2 uses
   %i.dy = getelementptr inbounds nuw [4 x i8], ptr %i.bw, i64 %.01742
   %i.dz = load i32, ptr %i.dy, align 4, !tbaa !104 ; 2 uses
-  %6 = sext i32 %i.dz to i64
+  %6 = zext nneg i32 %i.dz to i64
   %i.ea = add nsw i64 %6, %i.dx
   %i.eb = icmp sgt i32 %i.dz, 0
   br i1 %i.eb, label %.lr.ph, label %._crit_edge
@@ -5395,7 +5394,7 @@ _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS
   %i.dm = sext i32 %i.dl to i64                   ; 2 uses
   %i.dn = getelementptr inbounds nuw [4 x i8], ptr %i.bn, i64 %.01751
   %i.do = load i32, ptr %i.dn, align 4, !tbaa !104 ; 2 uses
-  %5 = sext i32 %i.do to i64
+  %5 = zext nneg i32 %i.do to i64
   %i.dp = add nsw i64 %5, %i.dm
   %i.dq = icmp sgt i32 %i.do, 0
   br i1 %i.dq, label %.lr.ph, label %._crit_edge
@@ -5798,7 +5797,7 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
   %i.l = sub i64 %i.k, %i.a                       ; 3 uses
   %i.m = ashr exact i64 %i.l, 3                   ; 3 uses
   %i.n = add nsw i64 %i.m, -1
-  %4 = sdiv i64 %i.n, 2
+  %4 = lshr i64 %i.n, 1
   %i.o = icmp sgt i64 %i.m, 2
   br i1 %i.o, label %.lr.ph.i.i.i.i, label %._crit_edge.i.i.i.i
 
@@ -5838,7 +5837,7 @@ bb.c:                                             ; preds = %._crit_edge.i.i.i.i
   %i.ai = or disjoint i64 %i.ah, 1                ; 2 uses
   %i.aj = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.ai
   %i.ak = load i64, ptr %i.aj, align 8, !tbaa !84
-  %i.al = getelementptr inbounds [8 x i8], ptr %0, i64 %.0.lcssa.i.i.i.i
+  %i.al = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.0.lcssa.i.i.i.i
   store i64 %i.ak, ptr %i.al, align 8, !tbaa !84
   br label %.lr.ph.i.i.i.i.i.preheader
 
@@ -6241,7 +6240,7 @@ _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS
   %i.cz = sext i32 %i.cy to i64                   ; 2 uses
   %i.da = getelementptr inbounds nuw [4 x i8], ptr %i.au, i64 %.03669
   %i.db = load i32, ptr %i.da, align 4, !tbaa !104 ; 2 uses
-  %3 = sext i32 %i.db to i64
+  %3 = zext nneg i32 %i.db to i64
   %i.dc = add nsw i64 %3, %i.cz
   %i.dd = icmp sgt i32 %i.db, 0
   br i1 %i.dd, label %.lr.ph, label %._crit_edge
@@ -6484,7 +6483,7 @@ _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS
   %i.hl = sext i32 %i.hk to i64                   ; 2 uses
   %i.hm = getelementptr inbounds nuw [4 x i8], ptr %i.ed, i64 %indvars.iv
   %i.hn = load i32, ptr %i.hm, align 4, !tbaa !104 ; 2 uses
-  %4 = sext i32 %i.hn to i64
+  %4 = zext nneg i32 %i.hn to i64
   %i.ho = add nsw i64 %4, %i.hl
   %i.hp = icmp sgt i32 %i.hn, 0
   br i1 %i.hp, label %.lr.ph77.preheader, label %._crit_edge78
@@ -6887,7 +6886,7 @@ _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS
   %i.br = sext i32 %i.bq to i64                   ; 2 uses
   %i.bs = getelementptr inbounds nuw [4 x i8], ptr %i.q, i64 %.01623
   %i.bt = load i32, ptr %i.bs, align 4, !tbaa !104 ; 2 uses
-  %4 = sext i32 %i.bt to i64
+  %4 = zext nneg i32 %i.bt to i64
   %i.bu = add nsw i64 %4, %i.br
   %i.bv = icmp sgt i32 %i.bt, 0
   br i1 %i.bv, label %.lr.ph, label %._crit_edge
@@ -7290,7 +7289,7 @@ _ZN5Eigen20SparseCompressedBaseINS_3MapINS_12SparseMatrixIdLi0EiEELi0ENS_6Stride
   %i.ef = sext i32 %i.ee to i64                   ; 2 uses
   %i.eg = getelementptr inbounds [4 x i8], ptr %i.cd, i64 %.04262
   %i.eh = load i32, ptr %i.eg, align 4, !tbaa !104 ; 2 uses
-  %4 = sext i32 %i.eh to i64
+  %4 = zext nneg i32 %i.eh to i64
   %i.ei = add nsw i64 %4, %i.ef
   %i.ej = icmp sgt i32 %i.eh, 0
   br i1 %i.ej, label %.lr.ph61, label %._crit_edge
@@ -7693,7 +7692,7 @@ _ZN5Eigen8internal15unary_evaluatorINS_12CwiseUnaryOpINS0_18scalar_opposite_opId
   %i.bw = sext i32 %i.bv to i64                   ; 2 uses
   %i.bx = getelementptr inbounds nuw [4 x i8], ptr %i.t, i64 %.01826
   %i.by = load i32, ptr %i.bx, align 4, !tbaa !104 ; 2 uses
-  %4 = sext i32 %i.by to i64
+  %4 = zext nneg i32 %i.by to i64
   %i.bz = add nsw i64 %4, %i.bw
   %i.ca = icmp sgt i32 %i.by, 0
   br i1 %i.ca, label %.lr.ph, label %._crit_edge
@@ -8096,7 +8095,7 @@ _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS
   %i.bv = sext i32 %i.bu to i64                   ; 2 uses
   %i.bw = getelementptr inbounds nuw [4 x i8], ptr %i.v, i64 %.01623.i
   %i.bx = load i32, ptr %i.bw, align 4, !tbaa !104 ; 2 uses
-  %6 = sext i32 %i.bx to i64
+  %6 = zext nneg i32 %i.bx to i64
   %i.by = add nsw i64 %6, %i.bv
   %i.bz = icmp sgt i32 %i.bx, 0
   br i1 %i.bz, label %.lr.ph.i, label %._crit_edge.i

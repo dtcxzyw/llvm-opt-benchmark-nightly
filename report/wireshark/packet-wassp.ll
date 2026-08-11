@@ -201,7 +201,9 @@ bb.bq:                                            ; preds = %bb.f
   %i.ib = add i32 %.0506523, 4                    ; 2 uses
   %i.ic = add nsw i32 %i.k, -4                    ; 2 uses
   %i.id = tail call ptr @proto_tree_add_item(ptr noundef %i.u, i32 noundef %i.ia, ptr noundef %1, i32 noundef %i.ib, i32 noundef %i.ic, i32 noundef 0) ; 0 uses
-  %5 = sdiv i32 %i.ic, 6
+  %.lhs.trunc.i = trunc i32 %i.ic to i16
+  %5 = udiv i16 %.lhs.trunc.i, 6
+  %.zext.i = zext nneg i16 %5 to i32
   %i.ie = icmp ugt i16 %i.f, 9
   br i1 %i.ie, label %.lr.ph.i, label %decode_mac_list_struct.exit
 
@@ -212,7 +214,7 @@ bb.bq:                                            ; preds = %bb.f
   %i.ig = tail call ptr @proto_tree_add_item(ptr noundef %i.u, i32 noundef %i.if, ptr noundef %1, i32 noundef %.089.i, i32 noundef 6, i32 noundef 0) ; 0 uses
   %i.ih = add i32 %.089.i, 6
   %i.ii = add nuw nsw i32 %.010.i, 1              ; 2 uses
-  %exitcond.not.i = icmp eq i32 %i.ii, %5
+  %exitcond.not.i = icmp eq i32 %i.ii, %.zext.i
   br i1 %exitcond.not.i, label %decode_mac_list_struct.exit, label %.lr.ph.i, !llvm.loop !10
 
 decode_mac_list_struct.exit:                      ; preds = %.lr.ph.i, %bb.bq
@@ -246,7 +248,8 @@ bb.bs:                                            ; preds = %bb.f
   %i.je = add i32 %.0506523, 4                    ; 2 uses
   %i.jf = add nsw i32 %i.k, -4                    ; 2 uses
   %i.jg = tail call ptr @proto_tree_add_item(ptr noundef %i.u, i32 noundef %i.jd, ptr noundef %1, i32 noundef %i.je, i32 noundef %i.jf, i32 noundef 0) ; 0 uses
-  %6 = sdiv i32 %i.jf, 4
+  %6 = lshr i32 %i.jf, 2
+  %.zext.i512 = and i32 %6, 16383
   %i.jh = icmp ugt i16 %i.f, 7
   br i1 %i.jh, label %.lr.ph.i512, label %decode_rate_limit_struct.exit
 
@@ -260,7 +263,7 @@ bb.bs:                                            ; preds = %bb.f
   %i.jm = tail call ptr @proto_tree_add_item(ptr noundef %i.u, i32 noundef %i.jl, ptr noundef %1, i32 noundef %i.jk, i32 noundef 2, i32 noundef 0) ; 0 uses
   %i.jn = add i32 %.01213.i, 4
   %i.jo = add nuw nsw i32 %.014.i, 1              ; 2 uses
-  %exitcond.not.i513 = icmp eq i32 %i.jo, %6
+  %exitcond.not.i513 = icmp eq i32 %i.jo, %.zext.i512
   br i1 %exitcond.not.i513, label %decode_rate_limit_struct.exit, label %.lr.ph.i512, !llvm.loop !11
 
 decode_rate_limit_struct.exit:                    ; preds = %.lr.ph.i512, %bb.bs
@@ -272,7 +275,8 @@ bb.bt:                                            ; preds = %bb.f
   %i.jr = add i32 %.0506523, 4                    ; 2 uses
   %i.js = add nsw i32 %i.k, -4                    ; 2 uses
   %i.jt = tail call ptr @proto_tree_add_item(ptr noundef %i.u, i32 noundef %i.jq, ptr noundef %1, i32 noundef %i.jr, i32 noundef %i.js, i32 noundef 0) ; 0 uses
-  %7 = sdiv i32 %i.js, 2
+  %7 = lshr i32 %i.js, 1
+  %.zext.i515 = and i32 %7, 32767
   %i.ju = icmp ugt i16 %i.f, 5
   br i1 %i.ju, label %.lr.ph.i514, label %decode_Channel_list.exit
 
@@ -283,7 +287,7 @@ bb.bt:                                            ; preds = %bb.f
   %i.jw = tail call ptr @proto_tree_add_item(ptr noundef %i.u, i32 noundef %i.jv, ptr noundef %1, i32 noundef %.089.i516, i32 noundef 2, i32 noundef 0) ; 0 uses
   %i.jx = add i32 %.089.i516, 2
   %i.jy = add nuw nsw i32 %.010.i515, 1           ; 2 uses
-  %exitcond.not.i517 = icmp eq i32 %i.jy, %7
+  %exitcond.not.i517 = icmp eq i32 %i.jy, %.zext.i515
   br i1 %exitcond.not.i517, label %decode_Channel_list.exit, label %.lr.ph.i514, !llvm.loop !12
 
 decode_Channel_list.exit:                         ; preds = %.lr.ph.i514, %bb.bt
@@ -295,7 +299,8 @@ bb.bu:                                            ; preds = %bb.f
   %i.kb = add i32 %.0506523, 4                    ; 2 uses
   %i.kc = add nsw i32 %i.k, -4                    ; 2 uses
   %i.kd = tail call ptr @proto_tree_add_item(ptr noundef %i.u, i32 noundef %i.ka, ptr noundef %1, i32 noundef %i.kb, i32 noundef %i.kc, i32 noundef 0) ; 0 uses
-  %8 = sdiv i32 %i.kc, 4
+  %8 = lshr i32 %i.kc, 2
+  %.zext.i520 = and i32 %8, 16383
   %i.ke = icmp ugt i16 %i.f, 7
   br i1 %i.ke, label %.lr.ph.i518, label %decode_ipv4_list_struct.exit
 
@@ -306,7 +311,7 @@ bb.bu:                                            ; preds = %bb.f
   %i.kg = tail call ptr @proto_tree_add_item(ptr noundef %i.u, i32 noundef %i.kf, ptr noundef %1, i32 noundef %.089.i520, i32 noundef 4, i32 noundef 0) ; 0 uses
   %i.kh = add i32 %.089.i520, 4
   %i.ki = add nuw nsw i32 %.010.i519, 1           ; 2 uses
-  %exitcond.not.i521 = icmp eq i32 %i.ki, %8
+  %exitcond.not.i521 = icmp eq i32 %i.ki, %.zext.i520
   br i1 %exitcond.not.i521, label %decode_ipv4_list_struct.exit, label %.lr.ph.i518, !llvm.loop !13
 
 decode_ipv4_list_struct.exit:                     ; preds = %.lr.ph.i518, %bb.bu
@@ -646,7 +651,8 @@ bb.ab:                                            ; preds = %bb.aa
   br label %decode_ipv4_list_struct.exit.sink.split
 
 bb.ac:                                            ; preds = %bb.aa
-  %6 = sdiv i32 %i.cf, 4
+  %6 = lshr i32 %i.cf, 2
+  %.zext.i = and i32 %6, 16383
   %i.dc = icmp ugt i16 %i.ac, 7
   br i1 %i.dc, label %.lr.ph.i, label %decode_ipv4_list_struct.exit
 
@@ -660,7 +666,7 @@ bb.ac:                                            ; preds = %bb.aa
   %i.dh = tail call ptr @proto_tree_add_item(ptr noundef %i.j, i32 noundef %i.dg, ptr noundef %1, i32 noundef %i.df, i32 noundef 2, i32 noundef 0) ; 0 uses
   %i.di = add i32 %.01213.i, 4
   %i.dj = add nuw nsw i32 %.014.i, 1              ; 2 uses
-  %exitcond.not.i = icmp eq i32 %i.dj, %6
+  %exitcond.not.i = icmp eq i32 %i.dj, %.zext.i
   br i1 %exitcond.not.i, label %decode_ipv4_list_struct.exit, label %.lr.ph.i, !llvm.loop !11
 
 decode_rate_limit_struct.exit:                    ; preds = %.loopexit
@@ -687,7 +693,8 @@ bb.ag:                                            ; preds = %bb.ad, %decode_rate
   br i1 %or.cond24, label %bb.ah, label %decode_Channel_list.exit
 
 bb.ah:                                            ; preds = %bb.ag
-  %7 = sdiv i32 %i.cf, 2
+  %7 = lshr i32 %i.cf, 1
+  %.zext.i244 = and i32 %7, 32767
   %i.dm = icmp ugt i16 %i.ac, 5
   br i1 %i.dm, label %.lr.ph.i244, label %decode_ipv4_list_struct.exit
 
@@ -698,7 +705,7 @@ bb.ah:                                            ; preds = %bb.ag
   %i.do = tail call ptr @proto_tree_add_item(ptr noundef %i.j, i32 noundef %i.dn, ptr noundef %1, i32 noundef %.089.i, i32 noundef 2, i32 noundef 0) ; 0 uses
   %i.dp = add i32 %.089.i, 2
   %i.dq = add nuw nsw i32 %.010.i, 1              ; 2 uses
-  %exitcond.not.i245 = icmp eq i32 %i.dq, %7
+  %exitcond.not.i245 = icmp eq i32 %i.dq, %.zext.i244
   br i1 %exitcond.not.i245, label %decode_ipv4_list_struct.exit, label %.lr.ph.i244, !llvm.loop !12
 
 decode_Channel_list.exit:                         ; preds = %bb.af, %bb.ag
@@ -733,7 +740,9 @@ bb.al:                                            ; preds = %decode_Channel_list
   ]
 
 bb.am:                                            ; preds = %bb.al, %bb.al
-  %8 = sdiv i32 %i.cf, 6
+  %.lhs.trunc.i = trunc i32 %i.cf to i16
+  %8 = udiv i16 %.lhs.trunc.i, 6
+  %.zext.i247 = zext nneg i16 %8 to i32
   %i.dy = icmp ugt i16 %i.ac, 9
   br i1 %i.dy, label %.lr.ph.i246, label %decode_ipv4_list_struct.exit
 
@@ -744,7 +753,7 @@ bb.am:                                            ; preds = %bb.al, %bb.al
   %i.ea = tail call ptr @proto_tree_add_item(ptr noundef %i.j, i32 noundef %i.dz, ptr noundef %1, i32 noundef %.089.i248, i32 noundef 6, i32 noundef 0) ; 0 uses
   %i.eb = add i32 %.089.i248, 6
   %i.ec = add nuw nsw i32 %.010.i247, 1           ; 2 uses
-  %exitcond.not.i249 = icmp eq i32 %i.ec, %8
+  %exitcond.not.i249 = icmp eq i32 %i.ec, %.zext.i247
   br i1 %exitcond.not.i249, label %decode_ipv4_list_struct.exit, label %.lr.ph.i246, !llvm.loop !10
 
 decode_mac_list_struct.exit:                      ; preds = %decode_Channel_list.exit
@@ -753,7 +762,8 @@ decode_mac_list_struct.exit:                      ; preds = %decode_Channel_list
   br i1 %or.cond27, label %bb.an, label %decode_ipv4_list_struct.exit
 
 bb.an:                                            ; preds = %decode_mac_list_struct.exit
-  %9 = sdiv i32 %i.cf, 4
+  %9 = lshr i32 %i.cf, 2
+  %.zext.i252 = and i32 %9, 16383
   %i.ee = icmp ugt i16 %i.ac, 7
   br i1 %i.ee, label %.lr.ph.i250, label %decode_ipv4_list_struct.exit
 
@@ -764,7 +774,7 @@ bb.an:                                            ; preds = %decode_mac_list_str
   %i.eg = tail call ptr @proto_tree_add_item(ptr noundef %i.j, i32 noundef %i.ef, ptr noundef %1, i32 noundef %.089.i252, i32 noundef 4, i32 noundef 0) ; 0 uses
   %i.eh = add i32 %.089.i252, 4
   %i.ei = add nuw nsw i32 %.010.i251, 1           ; 2 uses
-  %exitcond.not.i253 = icmp eq i32 %i.ei, %9
+  %exitcond.not.i253 = icmp eq i32 %i.ei, %.zext.i252
   br i1 %exitcond.not.i253, label %decode_ipv4_list_struct.exit, label %.lr.ph.i250, !llvm.loop !13
 
 decode_ipv4_list_struct.exit.sink.split:          ; preds = %bb.ak, %bb.aj, %bb.ab

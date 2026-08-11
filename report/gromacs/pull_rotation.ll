@@ -204,8 +204,6 @@ bb.av:                                            ; preds = %bb.au, %bb.at
   %.pre.i170 = load i32, ptr %.phi.trans.insert.i, align 8, !tbaa !317
   %.phi.trans.insert214.i = getelementptr inbounds nuw i8, ptr %.sroa.0198.0243, i64 216
   %.pre215.i = load float, ptr %.phi.trans.insert214.i, align 8, !tbaa !364
-  %.pre218.i = sitofp i32 %.pre.i170 to float
-  %.pre219.i = fmul float %.pre215.i, %.pre218.i
   br label %bb.ay
 
 bb.aw:                                            ; preds = %bb.av
@@ -219,11 +217,11 @@ bb.aw:                                            ; preds = %bb.av
   call void @_Z10get_centerPA3_KfPfiS2_(ptr noundef %i.bfo, ptr noundef %i.bfq, i32 noundef %i.bfs, ptr noundef nonnull %i.bft)
   %i.bfu = load ptr, ptr %.sroa.0198.0243, align 8, !tbaa !77 ; 3 uses
   %i.bfv = getelementptr inbounds nuw i8, ptr %i.bfu, i64 8
-  %i.bfw = load i32, ptr %i.bfv, align 8, !tbaa !317 ; 3 uses
-  %10 = sitofp i32 %i.bfw to float
+  %i.bfw = load i32, ptr %i.bfv, align 8, !tbaa !317 ; 4 uses
+  %10 = uitofp nneg i32 %i.bfw to float
   %i.bfx = getelementptr inbounds nuw i8, ptr %.sroa.0198.0243, i64 216
-  %i.bfy = load float, ptr %i.bfx, align 8, !tbaa !364 ; 2 uses
-  %i.bfz = fmul float %i.bfy, %10                 ; 2 uses
+  %i.bfy = load float, ptr %i.bfx, align 8, !tbaa !364 ; 3 uses
+  %i.bfz = fmul float %i.bfy, %10
   %i.bga = icmp sgt i32 %i.bfw, 0
   br i1 %i.bga, label %.lr.ph.i.i, label %_ZL32radial_motion2_precalc_inner_sumPK13gmx_enfrotgrpPf.exit.i
 
@@ -372,10 +370,13 @@ _ZL32radial_motion2_precalc_inner_sumPK13gmx_enfrotgrpPf.exit.i: ; preds = %bb.a
   br label %bb.ay
 
 bb.ay:                                            ; preds = %_ZL32radial_motion2_precalc_inner_sumPK13gmx_enfrotgrpPf.exit.i, %._crit_edge213.i
-  %.pre-phi220.i = phi float [ %.pre219.i, %._crit_edge213.i ], [ %i.bfz, %_ZL32radial_motion2_precalc_inner_sumPK13gmx_enfrotgrpPf.exit.i ]
-  %.sroa.8.0.i = phi float [ 0.000000e+00, %._crit_edge213.i ], [ %i.bkt, %_ZL32radial_motion2_precalc_inner_sumPK13gmx_enfrotgrpPf.exit.i ]
-  %.sroa.5105.0.i = phi float [ 0.000000e+00, %._crit_edge213.i ], [ %i.bks, %_ZL32radial_motion2_precalc_inner_sumPK13gmx_enfrotgrpPf.exit.i ]
-  %.sroa.0104.0.i = phi float [ 0.000000e+00, %._crit_edge213.i ], [ %i.bkr, %_ZL32radial_motion2_precalc_inner_sumPK13gmx_enfrotgrpPf.exit.i ]
+  %.pre-phi220.i = phi float [ %i.bfy, %_ZL32radial_motion2_precalc_inner_sumPK13gmx_enfrotgrpPf.exit.i ], [ %.pre215.i, %._crit_edge213.i ]
+  %11 = phi i32 [ %i.bfw, %_ZL32radial_motion2_precalc_inner_sumPK13gmx_enfrotgrpPf.exit.i ], [ %.pre.i170, %._crit_edge213.i ]
+  %.sroa.8.0.i = phi float [ %i.bkt, %_ZL32radial_motion2_precalc_inner_sumPK13gmx_enfrotgrpPf.exit.i ], [ 0.000000e+00, %._crit_edge213.i ]
+  %.sroa.5105.0.i = phi float [ %i.bks, %_ZL32radial_motion2_precalc_inner_sumPK13gmx_enfrotgrpPf.exit.i ], [ 0.000000e+00, %._crit_edge213.i ]
+  %.sroa.0104.0.i = phi float [ %i.bkr, %_ZL32radial_motion2_precalc_inner_sumPK13gmx_enfrotgrpPf.exit.i ], [ 0.000000e+00, %._crit_edge213.i ]
+  %12 = sitofp i32 %11 to float
+  %13 = fmul float %.pre-phi220.i, %12
   %i.bku = getelementptr inbounds nuw i8, ptr %.sroa.0198.0243, i64 56 ; 2 uses
   %i.bkv = load ptr, ptr %i.bku, align 8, !tbaa !31
   %i.bkw = call { ptr, ptr } @_ZNK3gmx12LocalAtomSet10localIndexEv(ptr noundef nonnull align 8 dereferenceable(8) %i.bkv) ; 2 uses
@@ -555,7 +556,7 @@ bb.bd:                                            ; preds = %bb.bc, %_ZL18shift_
   %.sroa.10184.0.i = phi float [ %.sroa.10184.1.i, %_ZL18shift_single_coordPA3_KfPfPKi.exit.i187 ], [ %i.bpi, %bb.bc ] ; 2 uses
   %.sroa.18188.0.i = phi float [ %i.bob, %_ZL18shift_single_coordPA3_KfPfPKi.exit.i187 ], [ %i.bpk, %bb.bc ] ; 2 uses
   %.099.i = phi float [ %i.bmq, %_ZL18shift_single_coordPA3_KfPfPKi.exit.i187 ], [ %i.bpd, %bb.bc ] ; 4 uses
-  %i.bps = fmul float %.pre-phi220.i, %.099.i     ; 3 uses
+  %i.bps = fmul float %13, %.099.i                ; 3 uses
   %i.bpt = load float, ptr %i.blw, align 8, !tbaa !59
   %i.bpu = fsub float %.sroa.0180.0.i, %i.bpt     ; 4 uses
   %i.bpv = load float, ptr %i.blx, align 4, !tbaa !59

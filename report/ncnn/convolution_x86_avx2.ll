@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.e
   %i.o = sdiv i32 %4, 8
   %i.p = sext i32 %i.o to i64
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %12 = sdiv i32 %5, 8
+  %12 = lshr i32 %5, 3
   %i.r = shl i64 %i.k, 3
   %i.s = sext i32 %4 to i64
   %i.t = icmp sgt i32 %5, 1
@@ -464,7 +464,7 @@ _ZN4ncnn3MatD2Ev.exit263.i.us.i:                  ; preds = %_ZN4ncnn3MatD2Ev.ex
   %i.eo = sdiv i32 %4, 8
   %i.ep = sext i32 %i.eo to i64
   %i.eq = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %13 = sdiv i32 %5, 8                            ; 3 uses
+  %13 = lshr i32 %5, 3                            ; 3 uses
   %i.er = shl i64 %i.k, 3                         ; 2 uses
   %i.es = sext i32 %4 to i64
   %i.et = icmp sgt i32 %5, 1
@@ -498,11 +498,10 @@ _ZN4ncnn3MatD2Ev.exit261.i.us.i.preheader:        ; preds = %.lr.ph169.i.i
   br i1 %i.fe, label %_ZN4ncnn3MatD2Ev.exit262.i.us.us.i.preheader, label %_ZN4ncnn3MatD2Ev.exit262.i.us.preheader.i
 
 _ZN4ncnn3MatD2Ev.exit262.i.us.us.i.preheader:     ; preds = %.lr.ph169.i.split.us.i
-  %xtraiter348 = and i32 %13, 1
-  %i.ff = and i32 %5, 2147483640
-  %14 = icmp eq i32 %i.ff, 8
-  %unroll_iter352 = and i32 %13, 268435454
-  %lcmp.mod349.not = icmp eq i32 %xtraiter348, 0
+  %14 = icmp eq i32 %13, 1
+  %i.ff = and i32 %13, 268435454
+  %unroll_iter352 = and i32 %5, 8
+  %lcmp.mod349.not = icmp eq i32 %unroll_iter352, 0
   %lcmp.mod351 = trunc i32 %13 to i1
   br label %_ZN4ncnn3MatD2Ev.exit262.i.us.us.i
 
@@ -554,7 +553,7 @@ _ZN4ncnn3MatD2Ev.exit262.i.us.us.i:               ; preds = %_ZN4ncnn3MatD2Ev.ex
   %i.gi = getelementptr inbounds nuw i8, ptr %.7152.i.us.us.i, i64 64 ; 3 uses
   %i.gj = getelementptr inbounds nuw i8, ptr %i.gb, i64 %i.er ; 2 uses
   %niter353.next.1 = add i32 %niter353, 2         ; 2 uses
-  %niter353.ncmp.1 = icmp eq i32 %niter353.next.1, %unroll_iter352
+  %niter353.ncmp.1 = icmp eq i32 %niter353.next.1, %i.ff
   br i1 %niter353.ncmp.1, label %.loopexit124.i.loopexit.us.us.i.unr-lcssa, label %.lr.ph153.i.us.us.i, !llvm.loop !381
 
 .loopexit124.i.loopexit.us.us.i.unr-lcssa:        ; preds = %.lr.ph153.i.us.us.i
@@ -737,7 +736,7 @@ _ZN4ncnn3MatD2Ev.exit261.i.us.i:                  ; preds = %_ZN4ncnn3MatD2Ev.ex
   %i.jt = sdiv i32 %4, 8
   %i.ju = sext i32 %i.jt to i64
   %i.jv = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %15 = sdiv i32 %5, 8                            ; 3 uses
+  %15 = lshr i32 %5, 3                            ; 3 uses
   %i.jw = shl i64 %i.k, 3                         ; 2 uses
   %i.jx = sext i32 %4 to i64
   %i.jy = icmp sgt i32 %5, 1
@@ -778,11 +777,10 @@ _ZN4ncnn3MatD2Ev.exit259.i.i.us.preheader:        ; preds = %.lr.ph191.i.i
   br i1 %i.kp, label %_ZN4ncnn3MatD2Ev.exit260.i.i.us.us.preheader, label %_ZN4ncnn3MatD2Ev.exit260.i.i.us.preheader
 
 _ZN4ncnn3MatD2Ev.exit260.i.i.us.us.preheader:     ; preds = %.lr.ph191.i.i.split.us
-  %xtraiter364 = and i32 %15, 1
-  %i.kq = and i32 %5, 2147483640
-  %16 = icmp eq i32 %i.kq, 8
-  %unroll_iter368 = and i32 %15, 268435454
-  %lcmp.mod365.not = icmp eq i32 %xtraiter364, 0
+  %16 = icmp eq i32 %15, 1
+  %i.kq = and i32 %15, 268435454
+  %unroll_iter368 = and i32 %5, 8
+  %lcmp.mod365.not = icmp eq i32 %unroll_iter368, 0
   %lcmp.mod367 = trunc i32 %15 to i1
   br label %_ZN4ncnn3MatD2Ev.exit260.i.i.us.us
 
@@ -837,7 +835,7 @@ _ZN4ncnn3MatD2Ev.exit260.i.i.us.us:               ; preds = %_ZN4ncnn3MatD2Ev.ex
   %i.ly = getelementptr inbounds nuw i8, ptr %.13174.i.i.us.us, i64 32 ; 3 uses
   %i.lz = getelementptr inbounds nuw i8, ptr %i.lp, i64 %i.jw ; 2 uses
   %niter369.next.1 = add i32 %niter369, 2         ; 2 uses
-  %niter369.ncmp.1 = icmp eq i32 %niter369.next.1, %unroll_iter368
+  %niter369.ncmp.1 = icmp eq i32 %niter369.next.1, %i.kq
   br i1 %niter369.ncmp.1, label %.loopexit120.i.i.loopexit.us.us.unr-lcssa, label %.lr.ph175.i.i.us.us, !llvm.loop !391
 
 .loopexit120.i.i.loopexit.us.us.unr-lcssa:        ; preds = %.lr.ph175.i.i.us.us
@@ -1240,7 +1238,7 @@ bb.v:                                             ; preds = %bb.q
   %i.amt = icmp sgt i32 %5, 1
   %i.amu = mul i32 %i.sz, %9                      ; 4 uses
   %i.amv = icmp ne i32 %i.tb, 8
-  %17 = sdiv i32 %5, 8
+  %17 = lshr i32 %5, 3
   %i.amw = icmp slt i32 %5, 8
   %i.amx = sdiv i32 %4, 8
   %brmerge234.i.i = or i1 %i.amw, %i.amv

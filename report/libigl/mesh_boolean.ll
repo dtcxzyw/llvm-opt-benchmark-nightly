@@ -204,7 +204,6 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   %i.fx = ashr exact i64 %i.fw, 2                 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %29) #12
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %29, i8 0, i64 24, i1 false)
-  %37 = mul nsw i64 %i.fx, 3
   %i.fy = getelementptr inbounds nuw i8, ptr %29, i64 8 ; 2 uses
   %i.fz = getelementptr inbounds nuw i8, ptr %29, i64 16 ; 2 uses
   %.not.i218 = icmp eq ptr %.sroa.13.1, %.sroa.0259.1
@@ -215,7 +214,7 @@ bb.at:                                            ; preds = %_ZN5Eigen15PlainObj
   br i1 %i.ga, label %bb.au, label %.sink.split.i219
 
 bb.au:                                            ; preds = %bb.at
-  %i.gb = icmp samesign ugt i64 %37, 4611686018427387903
+  %i.gb = icmp ugt i64 %i.fx, 1537228672809129301
   br i1 %i.gb, label %.invoke516, label %_ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i221
 
 _ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i221: ; preds = %bb.au
@@ -618,7 +617,6 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   %i.fx = ashr exact i64 %i.fw, 2                 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %29) #12
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %29, i8 0, i64 24, i1 false)
-  %37 = mul nsw i64 %i.fx, 3
   %i.fy = getelementptr inbounds nuw i8, ptr %29, i64 8 ; 2 uses
   %i.fz = getelementptr inbounds nuw i8, ptr %29, i64 16 ; 2 uses
   %.not.i216 = icmp eq ptr %.sroa.13.1, %.sroa.0257.1
@@ -629,7 +627,7 @@ bb.at:                                            ; preds = %_ZN5Eigen15PlainObj
   br i1 %i.ga, label %bb.au, label %.sink.split.i217
 
 bb.au:                                            ; preds = %bb.at
-  %i.gb = icmp samesign ugt i64 %37, 4611686018427387903
+  %i.gb = icmp ugt i64 %i.fx, 1537228672809129301
   br i1 %i.gb, label %.invoke508, label %_ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i219
 
 _ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i219: ; preds = %bb.au
@@ -1032,7 +1030,6 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   %i.fx = ashr exact i64 %i.fw, 2                 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %29) #12
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %29, i8 0, i64 24, i1 false)
-  %37 = mul nsw i64 %i.fx, 3
   %i.fy = getelementptr inbounds nuw i8, ptr %29, i64 8 ; 2 uses
   %i.fz = getelementptr inbounds nuw i8, ptr %29, i64 16 ; 2 uses
   %.not.i218 = icmp eq ptr %.sroa.13.1, %.sroa.0259.1
@@ -1043,7 +1040,7 @@ bb.at:                                            ; preds = %_ZN5Eigen15PlainObj
   br i1 %i.ga, label %bb.au, label %.sink.split.i219
 
 bb.au:                                            ; preds = %bb.at
-  %i.gb = icmp samesign ugt i64 %37, 4611686018427387903
+  %i.gb = icmp ugt i64 %i.fx, 1537228672809129301
   br i1 %i.gb, label %.invoke516, label %_ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i221
 
 _ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i221: ; preds = %bb.au

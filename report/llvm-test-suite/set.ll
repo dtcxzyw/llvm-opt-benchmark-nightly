@@ -203,8 +203,8 @@ bb.a:
   %i.e = load i32, ptr %0, align 8, !tbaa !35
   %i.f = mul nsw i32 %i.e, %i.d                   ; 2 uses
   %i.g = sext i32 %i.f to i64
-  %.idx = shl nsw i64 %i.g, 2
-  %i.h = getelementptr inbounds i8, ptr %i.b, i64 %.idx
+  %.idx = shl nuw nsw i64 %i.g, 2
+  %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 %.idx
   %i.i = icmp sgt i32 %i.f, 0
   br i1 %i.i, label %.lr.ph, label %._crit_edge
 
@@ -531,8 +531,8 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.k = phi i32 [ %.pre30, %bb.b ], [ %i.h, %bb.a ] ; 3 uses
   %i.l = phi i32 [ %.pre29, %bb.b ], [ %i.e, %bb.a ]
   %i.m = phi i32 [ %.pre, %bb.b ], [ %i.b, %bb.a ]
-  %i.n = mul i32 %i.f, %i.e                       ; 4 uses
-  %2 = sext i32 %i.n to i64                       ; 5 uses
+  %i.n = mul i32 %i.f, %i.e                       ; 3 uses
+  %2 = zext i32 %i.n to i64                       ; 5 uses
   %i.o = mul i32 %i.c, %i.b                       ; 4 uses
   %i.p = sext i32 %i.o to i64                     ; 7 uses
   %i.q = add nsw i32 %i.l, %i.m                   ; 2 uses
@@ -737,9 +737,8 @@ middle.block49:                                   ; preds = %vector.body42
   %indvars.iv.i23.ph = phi i64 [ 0, %vector.memcheck36 ], [ 0, %.lr.ph.i22.preheader ], [ %n.vec41, %middle.block49 ] ; 3 uses
   %.058.i24.ph = phi ptr [ %i.ci, %vector.memcheck36 ], [ %i.ci, %.lr.ph.i22.preheader ], [ %i.co, %middle.block49 ] ; 2 uses
   %.067.i25.ph = phi ptr [ %i.ch, %vector.memcheck36 ], [ %i.ch, %.lr.ph.i22.preheader ], [ %i.cp, %middle.block49 ] ; 2 uses
-  %xtraiter57 = and i64 %2, 7
-  %3 = and i32 %i.n, 7
-  %lcmp.mod58.not = icmp eq i32 %3, 0
+  %xtraiter57 = and i64 %2, 7                     ; 2 uses
+  %lcmp.mod58.not = icmp eq i64 %xtraiter57, 0
   br i1 %lcmp.mod58.not, label %.lr.ph.i22.prol.loopexit, label %.lr.ph.i22.prol
 
 .lr.ph.i22.prol:                                  ; preds = %.lr.ph.i22.preheader55, %.lr.ph.i22.prol
@@ -859,8 +858,8 @@ bb.e:                                             ; preds = %bb.c
 bb.f:                                             ; preds = %bb.e, %bb.d
   %i.x = phi ptr [ %i.v, %bb.d ], [ %i.w, %bb.e ] ; 3 uses
   %i.y = ptrtoaddr ptr %i.x to i64
-  %i.z = mul nsw i32 %i.f, %i.e                   ; 4 uses
-  %2 = sext i32 %i.z to i64                       ; 5 uses
+  %i.z = mul nsw i32 %i.f, %i.e                   ; 3 uses
+  %2 = zext i32 %i.z to i64                       ; 5 uses
   store ptr %i.x, ptr %i.o, align 8, !tbaa !33
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !33 ; 7 uses
@@ -912,9 +911,8 @@ middle.block:                                     ; preds = %vector.body
   %indvars.iv.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i.preheader ], [ %n.vec, %middle.block ] ; 3 uses
   %.058.i.ph = phi ptr [ %i.ag, %vector.memcheck ], [ %i.ag, %.lr.ph.i.preheader ], [ %i.al, %middle.block ] ; 2 uses
   %.067.i.ph = phi ptr [ %i.ab, %vector.memcheck ], [ %i.ab, %.lr.ph.i.preheader ], [ %i.am, %middle.block ] ; 2 uses
-  %xtraiter = and i64 %2, 7
-  %3 = and i32 %i.z, 7
-  %lcmp.mod.not = icmp eq i32 %3, 0
+  %xtraiter = and i64 %2, 7                       ; 2 uses
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
 
 .lr.ph.i.prol:                                    ; preds = %.lr.ph.i.preheader32, %.lr.ph.i.prol
@@ -1317,8 +1315,8 @@ sf_new.exit:                                      ; preds = %bb.b, %bb.c
   %i.y = load i32, ptr %.0.i, align 8, !tbaa !35  ; 3 uses
   %i.z = mul nsw i32 %i.y, %i.x                   ; 2 uses
   %i.aa = sext i32 %i.z to i64
-  %.idx = shl nsw i64 %i.aa, 2
-  %i.ab = getelementptr inbounds i8, ptr %i.t, i64 %.idx
+  %.idx = shl nuw nsw i64 %i.aa, 2
+  %i.ab = getelementptr inbounds nuw i8, ptr %i.t, i64 %.idx
   %i.ac = icmp sgt i32 %i.z, 0
   br i1 %i.ac, label %.lr.ph, label %._crit_edge
 

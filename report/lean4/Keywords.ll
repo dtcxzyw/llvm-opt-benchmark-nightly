@@ -203,7 +203,7 @@ bb.cq:                                            ; preds = %bb.cp
   br label %lean_inc.exit987
 
 lean_inc.exit987:                                 ; preds = %bb.cq, %bb.cp, %bb.co, %bb.cm
-  %i.fu = tail call ptr @l_Lean_unresolveNameGlobalAvoidingLocals___at___00__private_Lean_Elab_DocString_Builtin_Keywords_0__Lean_Doc_kwImpl_ofSuggestions_spec__0(ptr noundef %i.ug, i8 noundef zeroext %10, ptr noundef %4, ptr noundef %5, ptr noundef %6, ptr noundef %7, ptr noundef %8, ptr noundef %9) ; 13 uses
+  %i.fu = tail call ptr @l_Lean_unresolveNameGlobalAvoidingLocals___at___00__private_Lean_Elab_DocString_Builtin_Keywords_0__Lean_Doc_kwImpl_ofSuggestions_spec__0(ptr noundef %i.ug, i8 noundef zeroext 0, ptr noundef %4, ptr noundef %5, ptr noundef %6, ptr noundef %7, ptr noundef %8, ptr noundef %9) ; 13 uses
   %i.fv = ptrtoint ptr %i.fu to i64               ; 2 uses
   %i.fw = and i64 %i.fv, 1
   %.not.i1331 = icmp eq i64 %i.fw, 0              ; 2 uses
@@ -606,8 +606,7 @@ lean_nat_eq.exit:                                 ; preds = %bb.lw, %bb.lv, %bb.
   br i1 %.not, label %bb.qp, label %lean_nat_lt.exit
 
 lean_nat_lt.exit:                                 ; preds = %lean_nat_eq.exit
-  %i.tf = icmp ugt i64 %i.te, 3                   ; 2 uses
-  %10 = zext i1 %i.tf to i8
+  %i.tf = icmp ugt i64 %i.te, 3
   br i1 %i.tf, label %bb.oh, label %bb.lx
 
 bb.lx:                                            ; preds = %lean_nat_lt.exit

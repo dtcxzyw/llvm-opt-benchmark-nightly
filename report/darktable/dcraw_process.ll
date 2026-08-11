@@ -203,7 +203,6 @@ bb.bi:                                            ; preds = %bb.bh
   %.095 = select i1 %i.ef, i32 %i.ee, i32 1
   %i.eg = getelementptr inbounds nuw i8, ptr %0, i64 5520
   %i.eh = load i32, ptr %i.eg, align 8, !tbaa !125 ; 2 uses
-  %.096 = call i32 @llvm.smax.i32(i32 %i.eh, i32 0)
   %i.ei = getelementptr inbounds nuw i8, ptr %0, i64 5524
   %i.ej = load i32, ptr %i.ei, align 4, !tbaa !126
   %i.ek = icmp sgt i32 %i.ej, 0
@@ -606,7 +605,7 @@ bb.ds:                                            ; preds = %bb.dr
   br i1 %i.sx, label %bb.dt, label %.thread
 
 bb.dt:                                            ; preds = %bb.ds
-  invoke void @_ZN6LibRaw4fbddEi(ptr noundef nonnull align 8 dereferenceable(768512) %0, i32 noundef %.096)
+  invoke void @_ZN6LibRaw4fbddEi(ptr noundef nonnull align 8 dereferenceable(768512) %0, i32 noundef %i.eh)
           to label %._crit_edge216 unwind label %bb.du
 
 ._crit_edge216:                                   ; preds = %bb.dt

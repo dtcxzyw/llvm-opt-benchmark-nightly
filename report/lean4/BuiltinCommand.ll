@@ -203,8 +203,7 @@ lean_nat_eq.exit:                                 ; preds = %lean_dec_ref_known.
   %i.aq = getelementptr i8, ptr %i.ab, i64 8      ; 2 uses
   %.val249 = load i64, ptr %i.aq, align 8, !tbaa !9
   %.mask = and i64 %.val249, 9223372036854775807
-  %i.ar = icmp eq i64 %.mask, 0                   ; 2 uses
-  %3 = zext i1 %i.ar to i8
+  %i.ar = icmp eq i64 %.mask, 0
   br i1 %i.ar, label %bb.dn, label %bb.ad
 
 bb.ad:                                            ; preds = %lean_nat_eq.exit
@@ -334,7 +333,7 @@ bb.av:                                            ; preds = %lean_obj_tag.exit28
   tail call fastcc void @lean_dec_ref_known(ptr noundef %i.bq, i32 noundef 1)
   %i.by = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.bz = load ptr, ptr %i.by, align 8, !tbaa !11 ; 2 uses
-  %i.ca = tail call ptr @l_Lean_SourceInfo_fromRef(ptr noundef %i.bb, i8 noundef zeroext %3) #8 ; 12 uses
+  %i.ca = tail call ptr @l_Lean_SourceInfo_fromRef(ptr noundef %i.bb, i8 noundef zeroext 0) #8 ; 12 uses
   br i1 %.not.i184, label %bb.aw, label %lean_dec.exit210
 
 bb.aw:                                            ; preds = %bb.av
@@ -737,8 +736,7 @@ lean_nat_eq.exit:                                 ; preds = %bb.qk, %bb.qj, %bb.
   %i.ol = getelementptr i8, ptr %i.az, i64 8      ; 2 uses
   %.val1791 = load i64, ptr %i.ol, align 8, !tbaa !9
   %.mask = and i64 %.val1791, 9223372036854775807
-  %i.om = icmp eq i64 %.mask, 0                   ; 2 uses
-  %2 = zext i1 %i.om to i8
+  %i.om = icmp eq i64 %.mask, 0
   br i1 %i.om, label %bb.mf, label %bb.jc
 
 bb.jc:                                            ; preds = %lean_nat_eq.exit
@@ -820,7 +818,7 @@ bb.jm:                                            ; preds = %lean_obj_tag.exit19
   %i.pl = load ptr, ptr %i.pk, align 8, !tbaa !11 ; 2 uses
   %.val1788 = load i64, ptr %i.ol, align 8, !tbaa !9
   %i.pm = tail call ptr @l___private_Init_Data_Array_Basic_0__Array_mapMUnsafe_map___at___00Lean_Elab_Command_elabWhere_spec__2(i64 noundef %.val1788, i64 noundef 0, ptr noundef nonnull %i.az) ; 4 uses
-  %i.pn = tail call ptr @l_Lean_SourceInfo_fromRef(ptr noundef %i.ow, i8 noundef zeroext %2) #8 ; 7 uses
+  %i.pn = tail call ptr @l_Lean_SourceInfo_fromRef(ptr noundef %i.ow, i8 noundef zeroext 0) #8 ; 7 uses
   br i1 %.not.i1341, label %bb.jn, label %lean_dec.exit1483
 
 bb.jn:                                            ; preds = %bb.jm

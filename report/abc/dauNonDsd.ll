@@ -36,7 +36,7 @@ bb.a:
   %i.g = sub nsw i32 6, %2                        ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #20
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #20
-  %i.h = shl nuw i32 1, %3
+  %i.h = shl nuw nsw i32 1, %3
   %i.i = sub nsw i32 %3, %4
   %i.j = shl nuw i32 1, %4                        ; 3 uses
   %i.k = icmp sgt i32 %3, 0
@@ -151,8 +151,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 .lr.ph144:                                        ; preds = %.preheader133
   %i.ai = getelementptr inbounds nuw i8, ptr %i.a, i64 512
   %.not123 = icmp eq ptr %7, null
-  %smax159 = tail call i32 @llvm.smax.i32(i32 %i.h, i32 1)
-  %wide.trip.count160 = zext nneg i32 %smax159 to i64
+  %wide.trip.count160 = zext nneg i32 %i.h to i64
   br label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph144, %bb.o
@@ -383,7 +382,7 @@ bb.a:
   %i.g = select i1 %i.d, i32 1, i32 %i.f          ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #20
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #20
-  %i.h = shl nuw i32 1, %3
+  %i.h = shl nuw nsw i32 1, %3
   %i.i = sub nsw i32 %3, %4
   %i.j = shl nuw i32 1, %4                        ; 3 uses
   %i.k = icmp sgt i32 %3, 0
@@ -501,8 +500,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.ak = shl nsw i64 %i.aj, 3                    ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.a, i64 512
   %.not113 = icmp eq ptr %7, null
-  %smax143 = tail call i32 @llvm.smax.i32(i32 %i.h, i32 1)
-  %wide.trip.count144 = zext nneg i32 %smax143 to i64
+  %wide.trip.count144 = zext nneg i32 %i.h to i64
   br label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph129, %bb.p
@@ -905,12 +903,11 @@ middle.block:                                     ; preds = %vector.body
   %i.ax = add i32 %i.aw, -6                       ; 3 uses
   %i.ay = shl nuw i32 1, %i.ax
   %i.az = trunc nuw nsw i64 %indvars.iv212 to i32 ; 2 uses
-  %i.ba = shl nuw i32 1, %i.az
+  %i.ba = shl nuw nsw i32 1, %i.az
   %.not134.i = icmp eq i64 %indvars.iv212, 31     ; 2 uses
   %i.bb = sext i32 %i.ay to i64
   %i.bc = shl nsw i64 %i.bb, 3                    ; 4 uses
-  %smax143.i = call i32 @llvm.smax.i32(i32 %i.ba, i32 1)
-  %wide.trip.count144.i = zext nneg i32 %smax143.i to i64 ; 4 uses
+  %wide.trip.count144.i = zext nneg i32 %i.ba to i64 ; 4 uses
   %i.bd = trunc nsw i64 %i.at to i32              ; 3 uses
   %i.be = shl nuw nsw i32 1, %i.bd
   %i.bf = zext nneg i32 %i.be to i64

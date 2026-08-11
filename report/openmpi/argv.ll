@@ -202,7 +202,6 @@ bb.c:                                             ; preds = %opal_argv_count.exi
 bb.d:                                             ; preds = %bb.c
   %i.k = add i32 %3, %2                           ; 2 uses
   %i.l = sub i32 %.07.i, %i.k                     ; 2 uses
-  %spec.store.select = tail call i32 @llvm.smax.i32(i32 %i.l, i32 0)
   %invariant.smin = tail call i32 @llvm.smin.i32(i32 %.07.i, i32 %i.k) ; 2 uses
   %or.cond5051 = icmp slt i32 %2, %invariant.smin
   br i1 %or.cond5051, label %.lr.ph.preheader, label %.critedge.preheader
@@ -217,7 +216,7 @@ bb.d:                                             ; preds = %bb.c
 
 .critedge.preheader:                              ; preds = %.critedge.preheader.loopexit, %bb.d
   %.pre = phi ptr [ %.pre.pre, %.critedge.preheader.loopexit ], [ %i.b, %bb.d ] ; 5 uses
-  %i.n = add i32 %spec.store.select, %2           ; 2 uses
+  %i.n = add i32 %i.l, %2                         ; 2 uses
   %.not55 = icmp slt i32 %i.l, 1
   br i1 %.not55, label %.critedge._crit_edge, label %.lr.ph54
 
@@ -620,20 +619,20 @@ opal_argv_append.exit:                            ; preds = %.preheader.i.i, %bb
 
 declare void @opal_string_copy(ptr noundef, ptr noundef, i64 noundef) local_unnamed_addr #11
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #12
-
 ; Function Attrs: nofree nounwind willreturn allockind("alloc,zeroed") allocsize(0,1) memory(inaccessiblemem: readwrite, errnomem: write)
-declare noalias noundef ptr @calloc(i64 noundef, i64 noundef) local_unnamed_addr #13
+declare noalias noundef ptr @calloc(i64 noundef, i64 noundef) local_unnamed_addr #12
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly captures(none), i64, i1 immarg) #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smin.i32(i32, i32) #12
+declare i32 @llvm.smin.i32(i32, i32) #13
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #14
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #13
 
 attributes #0 = { nounwind memory(readwrite, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -647,8 +646,8 @@ attributes #8 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-mat
 attributes #9 = { nofree nounwind memory(readwrite, argmem: read, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #10 = { nofree norecurse nosync nounwind memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #11 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #12 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #13 = { nofree nounwind willreturn allockind("alloc,zeroed") allocsize(0,1) memory(inaccessiblemem: readwrite, errnomem: write) "alloc-family"="malloc" }
+attributes #12 = { nofree nounwind willreturn allockind("alloc,zeroed") allocsize(0,1) memory(inaccessiblemem: readwrite, errnomem: write) "alloc-family"="malloc" }
+attributes #13 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #14 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
 attributes #15 = { nounwind allocsize(1) }
 attributes #16 = { nounwind }

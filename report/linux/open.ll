@@ -201,8 +201,6 @@ bb.a:
   %i.a = getelementptr i8, ptr %0, i64 88
   %i.b = load i64, ptr %i.a, align 8
   %i.c = and i64 %i.b, 4294967295                 ; 2 uses
-  %sext.i = shl nuw i64 %i.c, 32
-  %1 = ashr exact i64 %sext.i, 32
   %.not.i = icmp samesign ult i64 %i.c, 2147483648
   br i1 %.not.i, label %bb.b, label %__se_compat_sys_ftruncate.exit
 
@@ -217,7 +215,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.h = and i64 %i.g, -4
   %i.i = inttoptr i64 %i.h to ptr                 ; 2 uses
-  %i.j = tail call i32 @do_ftruncate(ptr noundef %i.i, i64 noundef %1, i32 noundef 0) #15 ; 2 uses
+  %i.j = tail call i32 @do_ftruncate(ptr noundef %i.i, i64 noundef range(i64 0, 4294967296) %i.c, i32 noundef 0) #15 ; 2 uses
   %i.k = and i64 %i.g, 1
   %.not.i6.i.i.i = icmp eq i64 %i.k, 0
   br i1 %.not.i6.i.i.i, label %__se_compat_sys_ftruncate.exit, label %bb.d, !prof !32

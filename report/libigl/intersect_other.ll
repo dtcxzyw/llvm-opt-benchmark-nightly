@@ -204,7 +204,6 @@ bb.q:                                             ; preds = %_ZN5Eigen15PlainObj
   br i1 %i.bi, label %.invoke.i, label %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i.i
 
 _ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i.i: ; preds = %bb.q
-  %80 = mul nsw i64 %i.bh, 3
   %i.bj = getelementptr inbounds nuw i8, ptr %73, i64 8 ; 2 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %73, i64 16 ; 2 uses
   %.not.i183.i = icmp eq i64 %i.bh, 0
@@ -215,11 +214,11 @@ bb.r:                                             ; preds = %_ZN5Eigen15PlainObj
   br i1 %i.bl, label %bb.s, label %.sink.split.i.i
 
 bb.s:                                             ; preds = %bb.r
-  %i.bm = icmp samesign ugt i64 %80, 2305843009213693951
+  %i.bm = icmp samesign ugt i64 %i.bh, 768614336404564650
   br i1 %i.bm, label %.invoke.i, label %_ZN5Eigen8internal23check_size_for_overflowIdEEvm.exit.i.i.i
 
 _ZN5Eigen8internal23check_size_for_overflowIdEEvm.exit.i.i.i: ; preds = %bb.s
-  %i.bn = mul i64 %i.bh, 24
+  %i.bn = mul nuw i64 %i.bh, 24
   %i.bo = call noalias ptr @malloc(i64 noundef %i.bn) #44 ; 2 uses
   %i.bp = icmp eq ptr %i.bo, null
   br i1 %i.bp, label %.invoke.i, label %.sink.split.i.i
@@ -374,7 +373,6 @@ bb.y:                                             ; preds = %._crit_edge.i.i
   br i1 %i.dk, label %.invoke361.i, label %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i.i
 
 _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i.i: ; preds = %bb.y
-  %81 = mul nsw i64 %i.dj, 3
   %i.dl = getelementptr inbounds nuw i8, ptr %74, i64 8 ; 2 uses
   %i.dm = getelementptr inbounds nuw i8, ptr %74, i64 16 ; 2 uses
   %.not.i186.i = icmp eq i64 %i.dj, 0
@@ -385,11 +383,11 @@ bb.z:                                             ; preds = %_ZN5Eigen15PlainObj
   br i1 %i.dn, label %bb.aa, label %.sink.split.i187.i
 
 bb.aa:                                            ; preds = %bb.z
-  %i.do = icmp samesign ugt i64 %81, 4611686018427387903
+  %i.do = icmp samesign ugt i64 %i.dj, 1537228672809129301
   br i1 %i.do, label %.invoke361.i, label %_ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i.i
 
 _ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i.i: ; preds = %bb.aa
-  %i.dp = mul i64 %i.dj, 12
+  %i.dp = mul nuw i64 %i.dj, 12
   %i.dq = call noalias ptr @malloc(i64 noundef %i.dp) #44 ; 2 uses
   %i.dr = icmp eq ptr %i.dq, null
   br i1 %i.dr, label %.invoke361.i, label %.sink.split.i187.i
@@ -792,7 +790,6 @@ bb.dv:                                            ; preds = %_ZN5Eigen15PlainObj
   br i1 %i.ti, label %.invoke.i162, label %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i.i37
 
 _ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i.i37: ; preds = %bb.dv
-  %82 = mul nsw i64 %i.th, 3
   %i.tj = getelementptr inbounds nuw i8, ptr %38, i64 8 ; 2 uses
   %i.tk = getelementptr inbounds nuw i8, ptr %38, i64 16 ; 2 uses
   %.not.i203.i = icmp eq i64 %i.th, 0
@@ -803,11 +800,11 @@ bb.dw:                                            ; preds = %_ZN5Eigen15PlainObj
   br i1 %i.tl, label %bb.dx, label %.sink.split.i.i38
 
 bb.dx:                                            ; preds = %bb.dw
-  %i.tm = icmp samesign ugt i64 %82, 2305843009213693951
+  %i.tm = icmp samesign ugt i64 %i.th, 768614336404564650
   br i1 %i.tm, label %.invoke.i162, label %_ZN5Eigen8internal23check_size_for_overflowIdEEvm.exit.i.i.i161
 
 _ZN5Eigen8internal23check_size_for_overflowIdEEvm.exit.i.i.i161: ; preds = %bb.dx
-  %i.tn = mul i64 %i.th, 24
+  %i.tn = mul nuw i64 %i.th, 24
   %i.to = call noalias ptr @malloc(i64 noundef %i.tn) #44 ; 2 uses
   %i.tp = icmp eq ptr %i.to, null
   br i1 %i.tp, label %.invoke.i162, label %.sink.split.i.i38
@@ -962,7 +959,6 @@ bb.ed:                                            ; preds = %._crit_edge.i.i46
   br i1 %i.vk, label %.invoke399.i, label %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i.i47
 
 _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i.i47: ; preds = %bb.ed
-  %83 = mul nsw i64 %i.vj, 3
   %i.vl = getelementptr inbounds nuw i8, ptr %39, i64 8 ; 2 uses
   %i.vm = getelementptr inbounds nuw i8, ptr %39, i64 16 ; 2 uses
   %.not.i206.i = icmp eq i64 %i.vj, 0
@@ -973,11 +969,11 @@ bb.ee:                                            ; preds = %_ZN5Eigen15PlainObj
   br i1 %i.vn, label %bb.ef, label %.sink.split.i207.i
 
 bb.ef:                                            ; preds = %bb.ee
-  %i.vo = icmp samesign ugt i64 %83, 4611686018427387903
+  %i.vo = icmp samesign ugt i64 %i.vj, 1537228672809129301
   br i1 %i.vo, label %.invoke399.i, label %_ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i.i157
 
 _ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i.i157: ; preds = %bb.ef
-  %i.vp = mul i64 %i.vj, 12
+  %i.vp = mul nuw i64 %i.vj, 12
   %i.vq = call noalias ptr @malloc(i64 noundef %i.vp) #44 ; 2 uses
   %i.vr = icmp eq ptr %i.vq, null
   br i1 %i.vr, label %.invoke399.i, label %.sink.split.i207.i
@@ -1380,7 +1376,7 @@ bb.q:                                             ; preds = %bb.p
   unreachable
 
 _ZN5Eigen15PlainObjectBaseINS_6MatrixIN4CGAL13Lazy_exact_ntIN5boost14multiprecision6numberINS5_8backends16rational_adaptorINS7_15cpp_int_backendILm0ELm0ELNS5_16cpp_integer_typeE1ELNS5_18cpp_int_check_typeE0ESaIyEEEEELNS5_26expression_template_optionE1EEEEELin1ELin1ELi1ELin1ELin1EEEE6resizeEll.exit.i.i.i: ; preds = %bb.p
-  %i.bh = mul nsw i64 %i.be, 3
+  %i.bh = mul nuw nsw i64 %i.be, 3
   %i.bi = getelementptr inbounds nuw i8, ptr %28, i64 8 ; 2 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %28, i64 16 ; 2 uses
   %.not.i192.i = icmp eq i64 %i.be, 0
@@ -1534,7 +1530,6 @@ bb.aa:                                            ; preds = %_ZN5Eigen9DenseBase
   br i1 %i.di, label %.invoke.i, label %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i.i
 
 _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i.i: ; preds = %bb.aa
-  %36 = mul nsw i64 %i.dh, 3
   %i.dj = getelementptr inbounds nuw i8, ptr %30, i64 8 ; 2 uses
   %i.dk = getelementptr inbounds nuw i8, ptr %30, i64 16 ; 2 uses
   %.not.i196.i = icmp eq i64 %i.dh, 0
@@ -1545,11 +1540,11 @@ bb.ab:                                            ; preds = %_ZN5Eigen15PlainObj
   br i1 %i.dl, label %bb.ac, label %.sink.split.i197.i
 
 bb.ac:                                            ; preds = %bb.ab
-  %i.dm = icmp samesign ugt i64 %36, 4611686018427387903
+  %i.dm = icmp samesign ugt i64 %i.dh, 1537228672809129301
   br i1 %i.dm, label %.invoke.i, label %_ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i.i
 
 _ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i.i: ; preds = %bb.ac
-  %i.dn = mul i64 %i.dh, 12
+  %i.dn = mul nuw i64 %i.dh, 12
   %i.do = call noalias ptr @malloc(i64 noundef %i.dn) #44 ; 2 uses
   %i.dp = icmp eq ptr %i.do, null
   br i1 %i.dp, label %.invoke.i, label %.sink.split.i197.i

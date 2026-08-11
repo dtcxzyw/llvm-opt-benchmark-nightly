@@ -204,10 +204,9 @@ _RNvMsc_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeNtB5_4Loss18through_truncation.exit.
 bb.k:                                             ; preds = %_RNvMsc_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeNtB5_4Loss18through_truncation.exit.thread15.i
   %i.ai = extractvalue { i32, i1 } %i.ag, 0
   store i32 %i.ai, ptr %1, align 4, !alias.scope !10370, !noalias !10367
-  %6 = and i64 %i.p, 127
   %i.aj = and i32 %i.o, 127
   %.not12.i = icmp eq i32 %i.aj, 0
-  %i.ak = zext nneg i64 %6 to i128
+  %i.ak = zext nneg i64 %i.p to i128
   br i1 %.not12.i, label %.lr.ph.split.us.i.preheader, label %.lr.ph.split.i.preheader
 
 .lr.ph.split.i.preheader:                         ; preds = %bb.k

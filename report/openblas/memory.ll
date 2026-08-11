@@ -195,27 +195,32 @@ bb.b:                                             ; preds = %bb.a
   %i.b = tail call i32 @get_num_procs()           ; 2 uses
   %i.c = tail call i32 @openblas_num_threads_env() #17 ; 2 uses
   %i.d = icmp slt i32 %i.c, 1
-  br i1 %i.d, label %bb.c, label %bb.d
+  br i1 %i.d, label %bb.c, label %.thread
 
-bb.c:                                             ; preds = %bb.b
-  %i.e = tail call i32 @openblas_goto_num_threads_env() #17
-  %spec.store.select1 = tail call i32 @llvm.smax.i32(i32 %i.e, i32 0)
+.thread:                                          ; preds = %bb.b
+  %0 = tail call i32 @openblas_omp_num_threads_env() #17 ; 0 uses
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.c, %bb.b
-  %.0 = phi i32 [ %spec.store.select1, %bb.c ], [ %i.c, %bb.b ] ; 2 uses
-  %0 = tail call i32 @openblas_omp_num_threads_env() #17 ; 2 uses
-  %spec.store.select2 = tail call i32 @llvm.smax.i32(i32 %0, i32 0)
-  %.not16 = icmp eq i32 %.0, 0
-  %.not17 = icmp slt i32 %0, 1
-  %.spec.store.select2 = select i1 %.not17, i32 64, i32 %spec.store.select2
-  %spec.store.select2.sink = select i1 %.not16, i32 %.spec.store.select2, i32 %.0 ; 3 uses
-  %i.f = icmp sgt i32 %spec.store.select2.sink, %i.b
-  %i.g = tail call i32 @llvm.smin.i32(i32 %spec.store.select2.sink, i32 %i.b) ; 2 uses
+bb.c:                                             ; preds = %bb.b
+  %i.e = tail call i32 @openblas_goto_num_threads_env() #17 ; 2 uses
+  %spec.store.select1 = tail call i32 @llvm.smax.i32(i32 %i.e, i32 0)
+  %1 = tail call i32 @openblas_omp_num_threads_env() #17 ; 2 uses
+  %.not16 = icmp slt i32 %i.e, 1
+  br i1 %.not16, label %2, label %bb.d
+
+2:                                                ; preds = %bb.c
+  %.not17 = icmp slt i32 %1, 1
+  %. = select i1 %.not17, i32 64, i32 %1
+  br label %bb.d
+
+bb.d:                                             ; preds = %2, %bb.c, %.thread
+  %.sink = phi i32 [ %., %2 ], [ %spec.store.select1, %bb.c ], [ %i.c, %.thread ] ; 3 uses
+  %i.f = icmp sgt i32 %.sink, %i.b
+  %i.g = tail call i32 @llvm.smin.i32(i32 %.sink, i32 %i.b) ; 2 uses
   %i.h = icmp sgt i32 %i.g, 64
   %i.i = or i1 %i.f, %i.h
   %simplifycfg.merge = tail call i32 @llvm.smin.i32(i32 %i.g, i32 64)
-  %storemerge = select i1 %i.i, i32 %simplifycfg.merge, i32 %spec.store.select2.sink ; 3 uses
+  %storemerge = select i1 %i.i, i32 %simplifycfg.merge, i32 %.sink ; 3 uses
   store i32 %storemerge, ptr @blas_num_threads, align 4, !tbaa !8
   store atomic i32 %storemerge, ptr @blas_cpu_number seq_cst, align 4, !tbaa !9
   br label %bb.e
@@ -249,27 +254,31 @@ bb.b:                                             ; preds = %bb.a
   %i.b = tail call i32 @get_num_procs()           ; 2 uses
   %i.c = tail call i32 @openblas_num_threads_env() #17 ; 2 uses
   %i.d = icmp slt i32 %i.c, 1
-  br i1 %i.d, label %bb.c, label %bb.d
+  br i1 %i.d, label %bb.c, label %.thread.i
 
-bb.c:                                             ; preds = %bb.b
-  %i.e = tail call i32 @openblas_goto_num_threads_env() #17
-  %spec.store.select1.i = tail call i32 @llvm.smax.i32(i32 %i.e, i32 0)
+.thread.i:                                        ; preds = %bb.b
+  %0 = tail call i32 @openblas_omp_num_threads_env() #17 ; 0 uses
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.c, %bb.b
-  %.0.i = phi i32 [ %spec.store.select1.i, %bb.c ], [ %i.c, %bb.b ] ; 2 uses
-  %0 = tail call i32 @openblas_omp_num_threads_env() #17 ; 2 uses
-  %spec.store.select2.i = tail call i32 @llvm.smax.i32(i32 %0, i32 0)
-  %.not16.i = icmp eq i32 %.0.i, 0
-  %.not17.i = icmp slt i32 %0, 1
-  %.spec.store.select2.i = select i1 %.not17.i, i32 64, i32 %spec.store.select2.i
-  %spec.store.select2.sink.i = select i1 %.not16.i, i32 %.spec.store.select2.i, i32 %.0.i ; 3 uses
-  %i.f = icmp sgt i32 %spec.store.select2.sink.i, %i.b
-  %i.g = tail call i32 @llvm.smin.i32(i32 %spec.store.select2.sink.i, i32 %i.b) ; 2 uses
+bb.c:                                             ; preds = %bb.b
+  %i.e = tail call i32 @openblas_goto_num_threads_env() #17 ; 2 uses
+  %1 = tail call i32 @openblas_omp_num_threads_env() #17 ; 2 uses
+  %.not16.i = icmp slt i32 %i.e, 1
+  br i1 %.not16.i, label %2, label %bb.d
+
+2:                                                ; preds = %bb.c
+  %.not17.i = icmp slt i32 %1, 1
+  %..i = select i1 %.not17.i, i32 64, i32 %1
+  br label %bb.d
+
+bb.d:                                             ; preds = %2, %bb.c, %.thread.i
+  %.sink.i = phi i32 [ %..i, %2 ], [ %i.e, %bb.c ], [ %i.c, %.thread.i ] ; 3 uses
+  %i.f = icmp sgt i32 %.sink.i, %i.b
+  %i.g = tail call i32 @llvm.smin.i32(i32 %.sink.i, i32 %i.b) ; 2 uses
   %i.h = icmp sgt i32 %i.g, 64
   %i.i = or i1 %i.f, %i.h
   %simplifycfg.merge.i = tail call i32 @llvm.smin.i32(i32 %i.g, i32 64)
-  %storemerge.i = select i1 %i.i, i32 %simplifycfg.merge.i, i32 %spec.store.select2.sink.i ; 2 uses
+  %storemerge.i = select i1 %i.i, i32 %simplifycfg.merge.i, i32 %.sink.i ; 2 uses
   store i32 %storemerge.i, ptr @blas_num_threads, align 4, !tbaa !8
   store atomic i32 %storemerge.i, ptr @blas_cpu_number seq_cst, align 4, !tbaa !9
   br label %blas_get_cpu_number.exit
@@ -301,27 +310,31 @@ bb.d:                                             ; preds = %bb.c
   %i.e = tail call i32 @get_num_procs()           ; 2 uses
   %i.f = tail call i32 @openblas_num_threads_env() #17 ; 2 uses
   %i.g = icmp slt i32 %i.f, 1
-  br i1 %i.g, label %bb.e, label %blas_get_cpu_number.exit
+  br i1 %i.g, label %bb.e, label %.thread.i
 
-bb.e:                                             ; preds = %bb.d
-  %i.h = tail call i32 @openblas_goto_num_threads_env() #17
-  %spec.store.select1.i = tail call i32 @llvm.smax.i32(i32 %i.h, i32 0)
+.thread.i:                                        ; preds = %bb.d
+  %1 = tail call i32 @openblas_omp_num_threads_env() #17 ; 0 uses
   br label %blas_get_cpu_number.exit
 
-blas_get_cpu_number.exit:                         ; preds = %bb.e, %bb.d
-  %.0.i = phi i32 [ %spec.store.select1.i, %bb.e ], [ %i.f, %bb.d ] ; 2 uses
-  %1 = tail call i32 @openblas_omp_num_threads_env() #17 ; 2 uses
-  %spec.store.select2.i = tail call i32 @llvm.smax.i32(i32 %1, i32 0)
-  %.not16.i = icmp eq i32 %.0.i, 0
-  %.not17.i = icmp slt i32 %1, 1
-  %.spec.store.select2.i = select i1 %.not17.i, i32 64, i32 %spec.store.select2.i
-  %spec.store.select2.sink.i = select i1 %.not16.i, i32 %.spec.store.select2.i, i32 %.0.i ; 3 uses
-  %i.i = icmp sgt i32 %spec.store.select2.sink.i, %i.e
-  %i.j = tail call i32 @llvm.smin.i32(i32 %spec.store.select2.sink.i, i32 %i.e) ; 2 uses
+bb.e:                                             ; preds = %bb.d
+  %i.h = tail call i32 @openblas_goto_num_threads_env() #17 ; 2 uses
+  %2 = tail call i32 @openblas_omp_num_threads_env() #17 ; 2 uses
+  %.not16.i = icmp slt i32 %i.h, 1
+  br i1 %.not16.i, label %3, label %blas_get_cpu_number.exit
+
+3:                                                ; preds = %bb.e
+  %.not17.i = icmp slt i32 %2, 1
+  %..i = select i1 %.not17.i, i32 64, i32 %2
+  br label %blas_get_cpu_number.exit
+
+blas_get_cpu_number.exit:                         ; preds = %3, %bb.e, %.thread.i
+  %.sink.i = phi i32 [ %..i, %3 ], [ %i.h, %bb.e ], [ %i.f, %.thread.i ] ; 3 uses
+  %i.i = icmp sgt i32 %.sink.i, %i.e
+  %i.j = tail call i32 @llvm.smin.i32(i32 %.sink.i, i32 %i.e) ; 2 uses
   %i.k = icmp sgt i32 %i.j, 64
   %i.l = or i1 %i.i, %i.k
   %simplifycfg.merge.i = tail call i32 @llvm.smin.i32(i32 %i.j, i32 64)
-  %storemerge.i = select i1 %i.l, i32 %simplifycfg.merge.i, i32 %spec.store.select2.sink.i ; 3 uses
+  %storemerge.i = select i1 %i.l, i32 %simplifycfg.merge.i, i32 %.sink.i ; 3 uses
   store i32 %storemerge.i, ptr @blas_num_threads, align 4, !tbaa !8
   store atomic i32 %storemerge.i, ptr @blas_cpu_number seq_cst, align 4, !tbaa !9
   store atomic i32 %storemerge.i, ptr @blas_cpu_number seq_cst, align 4, !tbaa !9
@@ -724,27 +737,31 @@ bb.d:                                             ; preds = %openblas_fork_handl
   %i.e = tail call i32 @get_num_procs()           ; 2 uses
   %i.f = tail call i32 @openblas_num_threads_env() #17 ; 2 uses
   %i.g = icmp slt i32 %i.f, 1
-  br i1 %i.g, label %bb.e, label %bb.f
+  br i1 %i.g, label %bb.e, label %.thread.i
 
-bb.e:                                             ; preds = %bb.d
-  %i.h = tail call i32 @openblas_goto_num_threads_env() #17
-  %spec.store.select1.i = tail call i32 @llvm.smax.i32(i32 %i.h, i32 0)
+.thread.i:                                        ; preds = %bb.d
+  %0 = tail call i32 @openblas_omp_num_threads_env() #17 ; 0 uses
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.e, %bb.d
-  %.0.i = phi i32 [ %spec.store.select1.i, %bb.e ], [ %i.f, %bb.d ] ; 2 uses
-  %0 = tail call i32 @openblas_omp_num_threads_env() #17 ; 2 uses
-  %spec.store.select2.i = tail call i32 @llvm.smax.i32(i32 %0, i32 0)
-  %.not16.i = icmp eq i32 %.0.i, 0
-  %.not17.i = icmp slt i32 %0, 1
-  %.spec.store.select2.i = select i1 %.not17.i, i32 64, i32 %spec.store.select2.i
-  %spec.store.select2.sink.i = select i1 %.not16.i, i32 %.spec.store.select2.i, i32 %.0.i ; 3 uses
-  %i.i = icmp sgt i32 %spec.store.select2.sink.i, %i.e
-  %i.j = tail call i32 @llvm.smin.i32(i32 %spec.store.select2.sink.i, i32 %i.e) ; 2 uses
+bb.e:                                             ; preds = %bb.d
+  %i.h = tail call i32 @openblas_goto_num_threads_env() #17 ; 2 uses
+  %1 = tail call i32 @openblas_omp_num_threads_env() #17 ; 2 uses
+  %.not16.i = icmp slt i32 %i.h, 1
+  br i1 %.not16.i, label %2, label %bb.f
+
+2:                                                ; preds = %bb.e
+  %.not17.i = icmp slt i32 %1, 1
+  %..i = select i1 %.not17.i, i32 64, i32 %1
+  br label %bb.f
+
+bb.f:                                             ; preds = %2, %bb.e, %.thread.i
+  %.sink.i = phi i32 [ %..i, %2 ], [ %i.h, %bb.e ], [ %i.f, %.thread.i ] ; 3 uses
+  %i.i = icmp sgt i32 %.sink.i, %i.e
+  %i.j = tail call i32 @llvm.smin.i32(i32 %.sink.i, i32 %i.e) ; 2 uses
   %i.k = icmp sgt i32 %i.j, 64
   %i.l = or i1 %i.i, %i.k
   %simplifycfg.merge.i = tail call i32 @llvm.smin.i32(i32 %i.j, i32 64)
-  %storemerge.i = select i1 %i.l, i32 %simplifycfg.merge.i, i32 %spec.store.select2.sink.i ; 2 uses
+  %storemerge.i = select i1 %i.l, i32 %simplifycfg.merge.i, i32 %.sink.i ; 2 uses
   store i32 %storemerge.i, ptr @blas_num_threads, align 4, !tbaa !8
   store atomic i32 %storemerge.i, ptr @blas_cpu_number seq_cst, align 4, !tbaa !9
   br label %blas_get_cpu_number.exit

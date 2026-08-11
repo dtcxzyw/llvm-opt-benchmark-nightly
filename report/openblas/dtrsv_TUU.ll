@@ -27,8 +27,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 .lr.ph59:                                         ; preds = %bb.c, %._crit_edge
   %indvars.iv = phi i64 [ %indvars.iv.next, %._crit_edge ], [ %0, %bb.c ] ; 3 uses
   %.04857 = phi i64 [ %i.aa, %._crit_edge ], [ 0, %bb.c ] ; 9 uses
-  %6 = tail call i64 @llvm.smax.i64(i64 %indvars.iv, i64 1)
-  %i.i = tail call i64 @llvm.umin.i64(i64 %6, i64 32)
+  %i.i = tail call i64 @llvm.umin.i64(i64 %indvars.iv, i64 32)
   %i.j = sub nsw i64 %0, %.04857                  ; 2 uses
   %.not54 = icmp eq i64 %.04857, 0
   br i1 %.not54, label %bb.e, label %bb.d
@@ -90,9 +89,6 @@ declare double @ddot_k(i64 noundef, ptr noundef, i64 noundef, ptr noundef, i64 n
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #2
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smax.i64(i64, i64) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #2

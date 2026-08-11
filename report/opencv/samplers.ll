@@ -203,7 +203,7 @@ bb.c:                                             ; preds = %bb.b
   %i.al = add i32 %i.ad, -2                       ; 2 uses
   %.not189218 = icmp slt i32 %i.ad, 2
   %i.am = sext i32 %7 to i64                      ; 8 uses
-  %9 = sext i32 %i.al to i64                      ; 3 uses
+  %9 = zext i32 %i.al to i64                      ; 3 uses
   %wide.trip.count272 = zext i32 %i.ad to i64     ; 2 uses
   %i.an = shl nuw nsw i64 %i.af, 2
   %i.ao = add nuw nsw i64 %i.an, 4
@@ -232,9 +232,8 @@ bb.c:                                             ; preds = %bb.b
   %i.bl = and i64 %i.bk, 4294967295               ; 2 uses
   %i.bm = mul i64 %i.u, %i.bl
   %i.bn = shl i64 %i.bm, 2
-  %10 = tail call i64 @llvm.smax.i64(i64 %9, i64 1)
-  %i.bo = shl nuw nsw i64 %10, 2
-  %i.bp = and i64 %i.bo, 9223372036854775800      ; 4 uses
+  %i.bo = shl nuw nsw i64 %9, 2
+  %i.bp = and i64 %i.bo, 17179869176              ; 4 uses
   %i.bq = getelementptr i8, ptr %3, i64 %i.bn
   %i.br = getelementptr i8, ptr %i.bq, i64 %i.bp
   %scevgep = getelementptr i8, ptr %i.br, i64 8
@@ -285,10 +284,9 @@ bb.c:                                             ; preds = %bb.b
   %i.dh = insertelement <4 x ptr> %i.dg, ptr %i.ak, i64 3
   %i.di = insertelement <4 x ptr> poison, ptr %scevgep, i64 0
   %i.dj = shufflevector <4 x ptr> %i.di, <4 x ptr> poison, <4 x i32> zeroinitializer
-  %11 = tail call i64 @llvm.smax.i64(i64 %9, i64 1)
-  %i.dk = lshr i64 %11, 1
+  %i.dk = lshr i64 %9, 1
   %i.dl = add nuw nsw i64 %i.dk, 1                ; 2 uses
-  %min.iters.check469 = icmp slt i32 %i.al, 6
+  %min.iters.check469 = icmp ult i32 %i.al, 6
   %i.dm = icmp ult <4 x ptr> %i.dd, %i.db
   %i.dn = icmp ult <4 x ptr> %i.dh, %i.dj
   %i.do = or i64 %1, %4
@@ -297,7 +295,7 @@ bb.c:                                             ; preds = %bb.b
   %i.dr = icmp ne i4 %i.dq, 0
   %i.ds = icmp slt i64 %i.do, 0
   %op.rdx502 = or i1 %i.dr, %i.ds
-  %n.vec471 = and i64 %i.dl, 2147483644           ; 3 uses
+  %n.vec471 = and i64 %i.dl, 4294967292           ; 3 uses
   %i.dt = shl nuw nsw i64 %n.vec471, 1            ; 2 uses
   %broadcast.splatinsert472 = insertelement <4 x float> poison, float %i.q, i64 0
   %broadcast.splatinsert474 = insertelement <4 x float> poison, float %i.p, i64 0
@@ -457,7 +455,7 @@ scalar.ph468:                                     ; preds = %scalar.ph468.prehea
   %i.fu = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ft, <2 x float> %i.ef, <2 x float> %i.fs)
   store <2 x float> %i.fu, ptr %i.fm, align 4, !tbaa !36
   %indvars.iv.next267 = add nuw nsw i64 %indvars.iv266, 2 ; 3 uses
-  %.not189 = icmp sgt i64 %indvars.iv.next267, %9
+  %.not189 = icmp samesign ugt i64 %indvars.iv.next267, %9
   br i1 %.not189, label %.preheader.loopexit, label %scalar.ph468, !llvm.loop !87
 
 scalar.ph419:                                     ; preds = %scalar.ph419.preheader, %scalar.ph419
@@ -858,9 +856,6 @@ declare <2 x float> @llvm.floor.v2f32(<2 x float>) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #8
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smax.i64(i64, i64) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x float> @llvm.fmuladd.v8f32(<8 x float>, <8 x float>, <8 x float>) #8

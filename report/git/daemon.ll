@@ -204,13 +204,15 @@ bb.by:                                            ; preds = %bb.bx
   %sext38.i = shl i64 %i.zk, 32
   %i.zr = ashr exact i64 %sext38.i, 32
   %i.zs = getelementptr inbounds i8, ptr @packet_buffer, i64 %i.zr ; 3 uses
-  %i.zt = getelementptr inbounds nuw i8, ptr %i.zs, i64 1 ; 6 uses
+  %i.zt = getelementptr inbounds nuw i8, ptr %i.zs, i64 1 ; 7 uses
   %i.zu = xor i32 %i.zl, -1
-  %i.zv = add i32 %i.zi, %i.zu                    ; 2 uses
+  %i.zv = add i32 %i.zi, %i.zu                    ; 3 uses
   %i.zw = sext i32 %i.zv to i64
-  %i.zx = getelementptr inbounds i8, ptr %i.zt, i64 %i.zw ; 3 uses
+  %i.zx = getelementptr inbounds i8, ptr %i.zt, i64 %i.zw ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #21
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %10, ptr noundef nonnull align 8 dereferenceable(24) @__const.run_access_hook.buf, i64 24, i1 false)
+  %14 = zext nneg i32 %i.zv to i64
+  %15 = getelementptr inbounds nuw i8, ptr %i.zt, i64 %14
   %i.zy = icmp sgt i32 %i.zv, 0
   br i1 %i.zy, label %bb.bz, label %parse_host_arg.exit.i.i
 
@@ -300,7 +302,7 @@ bb.cj:                                            ; preds = %parse_host_and_port
 
 bb.ck:                                            ; preds = %bb.cj, %bb.ca
   %.0.i.i.i = phi ptr [ %i.aau, %bb.cj ], [ %i.zt, %bb.ca ] ; 4 uses
-  %i.aav = icmp ult ptr %.0.i.i.i, %i.zx
+  %i.aav = icmp ult ptr %.0.i.i.i, %15
   br i1 %i.aav, label %bb.cl, label %parse_host_arg.exit.i.i
 
 bb.cl:                                            ; preds = %bb.ck

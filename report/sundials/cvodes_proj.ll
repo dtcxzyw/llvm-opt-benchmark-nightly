@@ -201,7 +201,7 @@ bb.d:                                             ; preds = %bb.c
   %i.s = load double, ptr %i.r, align 8, !tbaa !34
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !44
-  %i.v = tail call i32 %i.m(double noundef %i.o, ptr noundef %i.q, ptr noundef %i.e, double noundef %i.s, ptr noundef %.04957, ptr noundef %i.u) #8 ; 3 uses
+  %i.v = tail call i32 %i.m(double noundef %i.o, ptr noundef %i.q, ptr noundef %i.e, double noundef %i.s, ptr noundef %.04957, ptr noundef %i.u) #8 ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.b, i64 64 ; 2 uses
   %i.x = load i64, ptr %i.w, align 8, !tbaa !36
   %i.y = add nsw i64 %i.x, 1
@@ -231,7 +231,6 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 
 bb.h:                                             ; preds = %.thread
   %i.ah = icmp slt i32 %i.v, 0
-  %4 = icmp sgt i32 %i.v, 0
   %i.ai = getelementptr inbounds nuw i8, ptr %i.b, i64 72 ; 2 uses
   %i.aj = load i64, ptr %i.ai, align 8, !tbaa !38
   %i.ak = add nsw i64 %i.aj, 1
@@ -258,8 +257,7 @@ bb.j:                                             ; preds = %bb.i
   %i.av = getelementptr inbounds nuw i8, ptr %i.b, i64 32
   %i.aw = load i32, ptr %i.av, align 8, !tbaa !29
   %i.ax = icmp eq i32 %i.am, %i.aw
-  %or.cond = and i1 %4, %i.ax
-  br i1 %or.cond, label %bb.l, label %bb.k
+  br i1 %i.ax, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %i.ay = getelementptr inbounds nuw i8, ptr %i.b, i64 56

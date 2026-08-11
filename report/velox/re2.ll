@@ -203,12 +203,13 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.p
 
 bb.d:                                             ; preds = %bb.b
-  %i.h = load i8, ptr %i.c, align 1, !tbaa !25    ; 2 uses
+  %i.h = load i8, ptr %i.c, align 1, !tbaa !25    ; 3 uses
+  %6 = zext nneg i8 %i.h to i32
   %i.i = icmp eq i8 %i.h, 92
   br i1 %i.i, label %bb.h, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.j = add i8 %i.h, -48                         ; 2 uses
+  %i.j = add i8 %i.h, -48
   %i.k = icmp ult i8 %i.j, 10
   br i1 %i.k, label %bb.g, label %bb.f
 
@@ -219,8 +220,8 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.p
 
 bb.g:                                             ; preds = %bb.e
-  %6 = zext nneg i8 %i.j to i32
-  %spec.select = tail call i32 @llvm.smax.i32(i32 %.042, i32 %6)
+  %7 = add nsw i32 %6, -48
+  %spec.select = tail call i32 @llvm.smax.i32(i32 %.042, i32 %7)
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %.lr.ph, %bb.d
@@ -623,7 +624,7 @@ _ZN3re212re2_internal5ParseIlEEbPKcmPT_i.exit.thread9: ; preds = %_ZN3re212re2_i
 bb.i:                                             ; preds = %bb.h
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #31
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #31
-  %i.ag = trunc i64 %i.ac to i16
+  %i.ag = trunc nsw i64 %i.ac to i16
   %i.ah = add i64 %i.ac, 32768
   %.not = icmp ult i64 %i.ah, 65536
   br i1 %.not, label %bb.j, label %_ZN3re212re2_internal5ParseIlEEbPKcmPT_i.exit.thread
@@ -651,7 +652,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = load i64, ptr %i.a, align 8, !tbaa !42   ; 2 uses
-  %i.d = trunc i64 %i.c to i16
+  %i.d = trunc nuw i64 %i.c to i16
   %.not = icmp ult i64 %i.c, 65536
   br i1 %.not, label %bb.c, label %bb.e
 
@@ -773,7 +774,7 @@ _ZN3re212re2_internal5ParseIlEEbPKcmPT_i.exit.thread9: ; preds = %_ZN3re212re2_i
 bb.i:                                             ; preds = %bb.h
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #31
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #31
-  %i.ag = trunc i64 %i.ac to i32
+  %i.ag = trunc nsw i64 %i.ac to i32
   %i.ah = add i64 %i.ac, 2147483648
   %.not = icmp ult i64 %i.ah, 4294967296
   br i1 %.not, label %bb.j, label %_ZN3re212re2_internal5ParseIlEEbPKcmPT_i.exit.thread
@@ -801,7 +802,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = load i64, ptr %i.a, align 8, !tbaa !42   ; 2 uses
-  %i.d = trunc i64 %i.c to i32
+  %i.d = trunc nuw i64 %i.c to i32
   %.not = icmp ult i64 %i.c, 4294967296
   br i1 %.not, label %bb.c, label %bb.e
 

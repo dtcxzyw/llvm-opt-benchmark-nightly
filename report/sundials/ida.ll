@@ -203,7 +203,7 @@ bb.i:                                             ; preds = %bb.h
   %i.ac = fsub double %1, %i.m
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 144 ; 2 uses
   %i.ae = sub nsw i32 %i.g, %2                    ; 4 uses
-  %4 = sext i32 %i.ae to i64
+  %4 = zext nneg i32 %i.ae to i64
   %i.af = add nuw i32 %2, 1
   %wide.trip.count = zext i32 %i.af to i64
   %.not8387 = icmp slt i32 %i.ae, 1
@@ -261,7 +261,7 @@ bb.l:                                             ; preds = %bb.j
 bb.m:                                             ; preds = %bb.l, %bb.k
   %.076 = phi double [ 0.000000e+00, %bb.k ], [ %i.ba, %bb.l ]
   %indvar.next = add nuw nsw i64 %indvar, 1       ; 2 uses
-  %i.bd = add nsw i64 %indvar, %4
+  %i.bd = add nuw nsw i64 %indvar, %4
   br i1 %.not8387, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.m

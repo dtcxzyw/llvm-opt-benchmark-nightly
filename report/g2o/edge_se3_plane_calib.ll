@@ -204,7 +204,6 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 _ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i.i: ; preds = %bb.c
-  %18 = mul nsw i64 %i.bb, 3
   %.not.i = icmp eq i64 %i.bb, 0
   br i1 %.not.i, label %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE10resizeLikeINS_7ProductINS_9TransposeIKNS_3MapIS2_Li0ENS_6StrideILi0ELi0EEEEEEENS1_IdLi3ELi3ELi0ELi3ELi3EEELi0EEEEEvRKNS_9EigenBaseIT_EE.exit.i.i, label %bb.d
 
@@ -213,7 +212,7 @@ bb.d:                                             ; preds = %_ZN5Eigen15PlainObj
   br i1 %i.be, label %bb.e, label %.sink.split.i
 
 bb.e:                                             ; preds = %bb.d
-  %i.bf = icmp samesign ugt i64 %18, 2305843009213693951
+  %i.bf = icmp ugt i64 %i.bb, 768614336404564650
   br i1 %i.bf, label %.invoke, label %_ZN5Eigen8internal23check_size_for_overflowIdEEvm.exit.i.i
 
 _ZN5Eigen8internal23check_size_for_overflowIdEEvm.exit.i.i: ; preds = %bb.e

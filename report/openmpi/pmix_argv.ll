@@ -202,7 +202,6 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.h = add i32 %3, %2                           ; 2 uses
   %i.i = sub i32 %i.e, %i.h                       ; 2 uses
-  %spec.store.select = tail call i32 @llvm.smax.i32(i32 %i.i, i32 0)
   %invariant.smin = tail call i32 @llvm.smin.i32(i32 %i.e, i32 %i.h) ; 2 uses
   %or.cond5051 = icmp slt i32 %2, %invariant.smin
   br i1 %or.cond5051, label %.lr.ph.preheader, label %.critedge.preheader
@@ -212,7 +211,7 @@ bb.e:                                             ; preds = %bb.d
   br label %.lr.ph
 
 .critedge.preheader:                              ; preds = %.lr.ph, %bb.e
-  %i.k = add i32 %spec.store.select, %2           ; 2 uses
+  %i.k = add i32 %i.i, %2                         ; 2 uses
   %.not55 = icmp slt i32 %i.i, 1
   %.pre = load ptr, ptr %1, align 8, !tbaa !8     ; 5 uses
   br i1 %.not55, label %.critedge._crit_edge, label %.lr.ph54
@@ -615,13 +614,13 @@ pmix_argv_append.exit:                            ; preds = %bb.f, %bb.e, %bb.c,
 }
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #9
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #9
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #9
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

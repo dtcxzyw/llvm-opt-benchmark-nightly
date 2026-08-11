@@ -203,7 +203,7 @@ bb.bt:                                            ; preds = %bb.br, %bb.bs
   %i.gq = trunc i64 %i.gc to i32                  ; 2 uses
   %i.gr = icmp sgt i32 %i.gq, -1
   %i.gs = icmp slt i32 %i.gi, 0
-  %3 = icmp sgt i32 %i.gi, 0
+  %.not = icmp eq i32 %i.gi, 0
   %spec.select1060 = call i32 @llvm.umin.i32(i32 %i.gi, i32 %i.gq)
   %i.gt = and i32 %i.ge, 512
   %.not1017 = icmp eq i32 %i.gt, 0
@@ -222,7 +222,7 @@ bb.bv:                                            ; preds = %bb.bu
   br i1 %i.gs, label %bb.bw, label %.preheader1150
 
 .preheader1150:                                   ; preds = %bb.bv
-  br i1 %3, label %.lr.ph1313, label %.loopexit
+  br i1 %.not, label %.loopexit, label %.lr.ph1313
 
 bb.bw:                                            ; preds = %bb.bv
   %i.gw = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %.0825) #9

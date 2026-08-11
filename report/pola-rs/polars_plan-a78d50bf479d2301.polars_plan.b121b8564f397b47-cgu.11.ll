@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %bb.b
           to label %bb.bk unwind label %.loopexit.split-lp613.loopexit.split-lp, !dbg !75775
 
 bb.i:                                             ; preds = %bb.b
-  %i.da = add i64 %i.ay, 4, !dbg !75776
+  %i.da = add nsw i64 %i.ay, 4, !dbg !75776
   %i.db = load ptr, ptr %0, align 8, !dbg !75778, !nonnull !11, !align !3633, !noundef !11 ; 6 uses
   %i.dc = getelementptr inbounds nuw i8, ptr %i.bc, i64 8, !dbg !75780
   %i.dd = load ptr, ptr %i.dc, align 8, !dbg !75780, !nonnull !11, !align !3633, !noundef !11
@@ -607,7 +607,7 @@ _RINvMNtCscgRAwXFJnXP_4core6optionINtB3_6OptionReE11map_or_elseNtNtCsgZ49sUHp3tW
   br label %bb.bo, !dbg !76194
 
 bb.bo:                                            ; preds = %_RINvMNtCscgRAwXFJnXP_4core6optionINtB3_6OptionReE11map_or_elseNtNtCsgZ49sUHp3tW_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECsfcROwRM8ZtH_11polars_plan.exit566, %_RINvMNtCscgRAwXFJnXP_4core6optionINtB3_6OptionReE11map_or_elseNtNtCsgZ49sUHp3tW_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECsfcROwRM8ZtH_11polars_plan.exit
-  %i.jf = add i64 %i.ay, 4, !dbg !76195
+  %i.jf = add nsw i64 %i.ay, 4, !dbg !76195
   %i.jg = getelementptr inbounds nuw i8, ptr %i.bd, i64 72, !dbg !76197
   %i.jh = load ptr, ptr %i.jg, align 8, !dbg !76197, !nonnull !11, !noundef !11 ; 2 uses
   %i.ji = getelementptr inbounds nuw i8, ptr %i.bd, i64 80, !dbg !76216
@@ -873,7 +873,7 @@ bb.ck:                                            ; preds = %bb.j
   br i1 %i.dm, label %bb.u, label %bb.cl, !dbg !76374
 
 bb.cl:                                            ; preds = %bb.ck
-  %i.lr = add i64 %i.ay, 4, !dbg !76375
+  %i.lr = add nsw i64 %i.ay, 4, !dbg !76375
   %i.ls = getelementptr inbounds nuw i8, ptr %i.bd, i64 16, !dbg !76376
   %i.lt = load ptr, ptr %i.ls, align 16, !dbg !76376, !nonnull !11, !noundef !11 ; 2 uses
   %i.lu = getelementptr inbounds nuw i8, ptr %i.bd, i64 24, !dbg !76389

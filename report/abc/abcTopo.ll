@@ -204,7 +204,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   %.val348 = load ptr, ptr %i.cf, align 8, !tbaa !70
   %i.ek = getelementptr i8, ptr %.val348, i64 4
   %.val348.val = load i32, ptr %i.ek, align 4, !tbaa !26 ; 4 uses
-  %i.el = shl nuw i32 1, %.val348.val
+  %i.el = shl nuw nsw i32 1, %.val348.val
   %i.em = getelementptr i8, ptr %1, i64 48        ; 3 uses
   %.val367 = load ptr, ptr %i.em, align 8, !tbaa !76
   %i.en = getelementptr i8, ptr %.val367, i64 4
@@ -311,7 +311,6 @@ bb.v:                                             ; preds = %bb.u, %bb.r, %.lr.p
   %i.gi = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 2 uses
   %i.gj = getelementptr i8, ptr %i.bu, i64 8
   %i.gk = sext i32 %i.bw to i64                   ; 2 uses
-  %smax519 = call i32 @llvm.smax.i32(i32 %i.el, i32 1)
   br label %bb.w
 
 bb.w:                                             ; preds = %.lr.ph453, %.critedge15
@@ -714,7 +713,7 @@ bb.ad:                                            ; preds = %.critedge13.1
 
 .critedge15:                                      ; preds = %.critedge11, %.critedge11.preheader
   %i.oo = add nuw nsw i32 %.0276452, 1            ; 2 uses
-  %exitcond520.not = icmp eq i32 %i.oo, %smax519
+  %exitcond520.not = icmp eq i32 %i.oo, %i.el
   br i1 %exitcond520.not, label %._crit_edge454, label %bb.w, !llvm.loop !87
 
 ._crit_edge454:                                   ; preds = %.critedge15, %.critedge7

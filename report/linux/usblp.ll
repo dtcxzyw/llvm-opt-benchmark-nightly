@@ -203,7 +203,6 @@ bb.x:                                             ; preds = %bb.w
   %i.ct = or i32 %i.cs, -2147483520
   %i.cu = trunc i32 %i.cq to i16
   %i.cv = tail call i32 @usb_control_msg(ptr noundef %i.cr, i32 noundef %i.ct, i8 noundef zeroext 1, i8 noundef zeroext -95, i16 noundef zeroext 0, i16 noundef zeroext %i.cu, ptr noundef %i.co, i16 noundef zeroext 1, i32 noundef 5000) #11 ; 2 uses
-  %3 = tail call range(i32 -2147483648, 1) i32 @llvm.smin.i32(i32 %i.cv, i32 0)
   %.not74 = icmp sgt i32 %i.cv, -1
   br i1 %.not74, label %copy_to_user.exit, label %bb.y
 
@@ -215,7 +214,7 @@ bb.y:                                             ; preds = %bb.x
 bb.z:                                             ; preds = %bb.y
   %i.cx = getelementptr i8, ptr %i.e, i64 300
   %i.cy = load i32, ptr %i.cx, align 4
-  %i.cz = tail call i32 (ptr, ...) @_printk(ptr noundef nonnull @.str.34, i32 noundef %i.cy, i32 noundef %3) #14 ; 0 uses
+  %i.cz = tail call i32 (ptr, ...) @_printk(ptr noundef nonnull @.str.34, i32 noundef %i.cy, i32 noundef %i.cv) #14 ; 0 uses
   br label %copy_to_user.exit110
 
 copy_to_user.exit:                                ; preds = %bb.x
@@ -618,7 +617,6 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not32, label %bb.l, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %3 = call range(i32 -2147483648, 1) i32 @llvm.smin.i32(i32 %i.aj, i32 0)
   %i.ak = icmp slt i32 %i.aj, 0
   br i1 %i.ak, label %bb.h, label %bb.j
 
@@ -630,7 +628,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.am = load i32, ptr %i.p, align 4
-  %i.an = call i32 (ptr, ...) @_printk(ptr noundef nonnull @.str.26, i32 noundef %i.am, i32 noundef %3) #14 ; 0 uses
+  %i.an = call i32 (ptr, ...) @_printk(ptr noundef nonnull @.str.26, i32 noundef %i.am, i32 noundef %i.aj) #14 ; 0 uses
   br label %usblp_check_status.exit.thread
 
 bb.j:                                             ; preds = %bb.g

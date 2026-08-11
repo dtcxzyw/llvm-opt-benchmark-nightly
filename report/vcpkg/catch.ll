@@ -204,7 +204,6 @@ define dso_local void @_ZN5Catch11StringMakerIavE7convertB5cxx11Ea(ptr dead_on_u
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %i.b = alloca [4 x i8], align 4                 ; 6 uses
-  %2 = sext i8 %1 to i64
   switch i8 %1, label %bb.b [
     i8 13, label %._crit_edge.i.i
     i8 12, label %._crit_edge.i.i14
@@ -257,6 +256,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %or.cond, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
+  %2 = zext nneg i8 %1 to i64
   tail call void @_ZN5Catch11StringMakerIyvE7convertB5cxx11Ey(ptr dead_on_unwind writable sret(%"class.std::__cxx11::basic_string") align 8 %0, i64 noundef %2)
   br label %bb.h
 
@@ -659,7 +659,7 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
   %i.k = ptrtoint ptr %i.h to i64
   %i.l = sub i64 %i.k, %i.a                       ; 5 uses
   %i.m = add nsw i64 %i.l, -1
-  %4 = sdiv i64 %i.m, 2
+  %4 = lshr i64 %i.m, 1
   %i.n = icmp sgt i64 %i.l, 2
   br i1 %i.n, label %.lr.ph.i.i.i.i, label %._crit_edge.i.i.i.i
 
@@ -698,7 +698,7 @@ bb.c:                                             ; preds = %._crit_edge.i.i.i.i
   %i.ag = or disjoint i64 %i.af, 1                ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 %i.ag
   %i.ai = load i8, ptr %i.ah, align 1, !tbaa !41
-  %i.aj = getelementptr inbounds i8, ptr %0, i64 %.0.lcssa.i.i.i.i
+  %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 %.0.lcssa.i.i.i.i
   store i8 %i.ai, ptr %i.aj, align 1, !tbaa !41
   br label %.lr.ph.i.i.i.i.i.preheader
 

@@ -201,8 +201,9 @@ bb.a:
   %4 = alloca %class.QString, align 8             ; 11 uses
   %5 = alloca %class.QString, align 8             ; 11 uses
   %6 = alloca %class.QString, align 8             ; 11 uses
-  %7 = sdiv i64 %2, 1024
-  %8 = sdiv i64 %2, 1048576
+  %7 = lshr i64 %2, 10
+  %.zext = and i64 %7, 4194303
+  %8 = lshr i64 %2, 20
   %i.a = icmp sgt i64 %2, 11811160063
   br i1 %i.a, label %bb.b, label %bb.g
 
@@ -322,7 +323,7 @@ bb.n:                                             ; preds = %bb.m
   store ptr @.str.3, ptr %i.w, align 8
   %i.x = getelementptr inbounds nuw i8, ptr %5, i64 16
   store i64 5, ptr %i.x, align 8
-  invoke void @_ZNK7QString3argExii5QChar(ptr dead_on_unwind writable sret(%class.QString) align 8 %0, ptr noundef nonnull align 8 dereferenceable_or_null(24) %5, i64 noundef %7, i32 noundef 0, i32 noundef 10, i16 32)
+  invoke void @_ZNK7QString3argExii5QChar(ptr dead_on_unwind writable sret(%class.QString) align 8 %0, ptr noundef nonnull align 8 dereferenceable_or_null(24) %5, i64 noundef %.zext, i32 noundef 0, i32 noundef 10, i16 32)
           to label %bb.o unwind label %bb.q
 
 bb.o:                                             ; preds = %bb.n

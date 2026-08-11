@@ -203,7 +203,7 @@ bb.i:                                             ; preds = %bb.h
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 360 ; 2 uses
   %i.af = load i32, ptr %i.f, align 4, !tbaa !105
   %i.ag = sub i32 %i.af, %2                       ; 3 uses
-  %4 = sext i32 %i.ag to i64
+  %4 = zext nneg i32 %i.ag to i64
   %i.ah = add nuw i32 %2, 1
   %wide.trip.count = zext i32 %i.ah to i64
   %.not8691 = icmp slt i32 %i.ag, 1
@@ -261,7 +261,7 @@ bb.l:                                             ; preds = %bb.j
 bb.m:                                             ; preds = %bb.l, %bb.k
   %.078 = phi double [ 0.000000e+00, %bb.k ], [ %i.bc, %bb.l ]
   %indvar.next = add nuw nsw i64 %indvar, 1       ; 2 uses
-  %i.bf = add nsw i64 %indvar, %4
+  %i.bf = add nuw nsw i64 %indvar, %4
   br i1 %.not8691, label %.loopexit88, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.m
@@ -424,7 +424,7 @@ bb.k:                                             ; preds = %bb.j
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 1660
   %i.ac = load i32, ptr %i.ab, align 4, !tbaa !105
   %i.ad = sub i32 %i.ac, %2                       ; 3 uses
-  %4 = sext i32 %i.ad to i64
+  %4 = zext nneg i32 %i.ad to i64
   %i.ae = add nuw i32 %2, 1
   %wide.trip.count = zext i32 %i.ae to i64
   %.not8691 = icmp slt i32 %i.ad, 1
@@ -482,7 +482,7 @@ bb.n:                                             ; preds = %bb.l
 bb.o:                                             ; preds = %bb.n, %bb.m
   %.078 = phi double [ 0.000000e+00, %bb.m ], [ %i.az, %bb.n ]
   %indvar.next = add nuw nsw i64 %indvar, 1       ; 2 uses
-  %i.bc = add nsw i64 %indvar, %4
+  %i.bc = add nuw nsw i64 %indvar, %4
   br i1 %.not8691, label %.loopexit88, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.o
@@ -701,7 +701,7 @@ bb.n:                                             ; preds = %bb.m
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 360 ; 2 uses
   %i.al = load i32, ptr %i.l, align 4, !tbaa !105
   %i.am = sub i32 %i.al, %2                       ; 3 uses
-  %5 = sext i32 %i.am to i64
+  %5 = zext nneg i32 %i.am to i64
   %i.an = add nuw i32 %2, 1
   %wide.trip.count = zext i32 %i.an to i64
   %.not95100 = icmp slt i32 %i.am, 1
@@ -759,7 +759,7 @@ bb.q:                                             ; preds = %bb.o
 bb.r:                                             ; preds = %bb.q, %bb.p
   %.085 = phi double [ 0.000000e+00, %bb.p ], [ %i.bi, %bb.q ]
   %indvar.next = add nuw nsw i64 %indvar, 1       ; 2 uses
-  %i.bl = add nsw i64 %indvar, %5
+  %i.bl = add nuw nsw i64 %indvar, %5
   br i1 %.not95100, label %.loopexit97, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.r
@@ -1081,7 +1081,7 @@ bb.p:                                             ; preds = %bb.o
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 360 ; 2 uses
   %i.ao = load i32, ptr %i.o, align 4, !tbaa !105
   %i.ap = sub i32 %i.ao, %2                       ; 3 uses
-  %5 = sext i32 %i.ap to i64
+  %5 = zext nneg i32 %i.ap to i64
   %i.aq = add nuw i32 %2, 1
   %wide.trip.count = zext i32 %i.aq to i64
   %.not97102 = icmp slt i32 %i.ap, 1
@@ -1139,7 +1139,7 @@ bb.s:                                             ; preds = %bb.q
 bb.t:                                             ; preds = %bb.s, %bb.r
   %.087 = phi double [ 0.000000e+00, %bb.r ], [ %i.bl, %bb.s ]
   %indvar.next = add nuw nsw i64 %indvar, 1       ; 2 uses
-  %i.bo = add nsw i64 %indvar, %5
+  %i.bo = add nuw nsw i64 %indvar, %5
   br i1 %.not97102, label %.loopexit99, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.t

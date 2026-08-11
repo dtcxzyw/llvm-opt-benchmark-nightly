@@ -203,9 +203,8 @@ choose_mirror.exit.thread:                        ; preds = %bb.m, %choose_mirro
 define internal range(i32 0, 2) i32 @mirror_end_io(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr nofree noundef readonly captures(none) %2) #2 align 16 prefalign(16) {
 bb.a:
   %i.a = getelementptr i8, ptr %1, i64 16         ; 3 uses
-  %.val34 = load i32, ptr %i.a, align 8           ; 2 uses
+  %.val34 = load i32, ptr %i.a, align 8
   %i.b = trunc i32 %.val34 to i1
-  %3 = and i32 %.val34, 1
   %i.c = getelementptr i8, ptr %0, i64 56
   %i.d = load ptr, ptr %i.c, align 8              ; 3 uses
   %i.e = tail call ptr @dm_per_bio_data(ptr noundef %1, i64 noundef 72) #13 ; 8 uses
@@ -301,7 +300,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   store ptr null, ptr %i.q, align 8
   %i.av = getelementptr i8, ptr %1, i64 26
   store i8 0, ptr %i.av, align 2
-  tail call fastcc void @queue_bio(ptr noundef %i.d, ptr noundef %1, i32 noundef %3) #16, !srcloc !22
+  tail call fastcc void @queue_bio(ptr noundef %i.d, ptr noundef %1, i32 noundef 0) #16, !srcloc !22
   br label %bb.n
 
 bb.l:                                             ; preds = %bb.j

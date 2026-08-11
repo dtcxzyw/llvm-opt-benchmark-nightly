@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
   %i.o = load i32, ptr %i.n, align 8, !tbaa !124
   %i.p = sext i32 %i.o to i64
   %i.q = getelementptr inbounds i8, ptr %i.m, i64 %i.p ; 5 uses
-  %4 = icmp sgt i32 %3, 5
+  %4 = icmp samesign ugt i32 %3, 5
   %i.r = add nsw i32 %3, -2
   %i.s = icmp slt i32 %3, 2
   br i1 %i.s, label %bb.d, label %bb.e
@@ -607,7 +607,7 @@ bb.q:                                             ; preds = %bb.p
   %i.iu = load i32, ptr %i.it, align 8, !tbaa !124
   %i.iv = sext i32 %i.iu to i64
   %i.iw = getelementptr inbounds i8, ptr %i.is, i64 %i.iv ; 5 uses
-  %5 = icmp sgt i32 %3, 5
+  %5 = icmp samesign ugt i32 %3, 5
   %i.ix = add nsw i32 %3, -2
   %i.iy = icmp slt i32 %3, 2
   br i1 %i.iy, label %bb.r, label %bb.s
@@ -1010,7 +1010,7 @@ bb.ar:                                            ; preds = %Abc_TtCheckEqualCof
   br i1 %i.ne, label %.preheader121.lr.ph.i185, label %Abc_TtCheckEqualCofs.exit228
 
 .preheader121.lr.ph.i185:                         ; preds = %bb.ar
-  %i.nf = shl i32 2, %i.nc
+  %i.nf = shl nuw i32 2, %i.nc
   br i1 %.not.i233, label %Abc_TtCheckEqualCofs.exit228, label %.preheader121.lr.ph.split.us.i187
 
 .preheader121.lr.ph.split.us.i187:                ; preds = %.preheader121.lr.ph.i185
@@ -1172,7 +1172,7 @@ bb.bd:                                            ; preds = %bb.az
   br i1 %i.pb, label %.preheader121.lr.ph.i138, label %Abc_TtCheckEqualCofs.exit134.thread400
 
 .preheader121.lr.ph.i138:                         ; preds = %bb.bd
-  %i.pc = shl i32 2, %i.oy
+  %i.pc = shl nuw i32 2, %i.oy
   br i1 %.not.i233, label %.preheader121.lr.ph.i92, label %.preheader121.lr.ph.split.us.i140
 
 .preheader121.lr.ph.split.us.i140:                ; preds = %.preheader121.lr.ph.i138
@@ -1575,12 +1575,12 @@ bb.ce:                                            ; preds = %bb.cd, %.preheader.
 bb.cf:                                            ; preds = %bb.cb
   %i.adw = trunc i64 %indvars.iv612 to i32
   %i.adx = add i32 %i.adw, -6                     ; 3 uses
-  %i.ady = shl nuw i32 1, %i.adx
+  %i.ady = shl nuw nsw i32 1, %i.adx
   %i.adz = icmp sgt i32 %i.ea, 0
   br i1 %i.adz, label %.preheader121.lr.ph.i46, label %Abc_TtCheckEqualCofs.exit88.thread
 
 .preheader121.lr.ph.i46:                          ; preds = %bb.cf
-  %i.aea = shl i32 2, %i.adx
+  %i.aea = shl nuw i32 2, %i.adx
   br i1 %.not.i233, label %Abc_TtCheckEqualCofs.exit88.thread, label %.preheader121.lr.ph.split.us.i48
 
 .preheader121.lr.ph.split.us.i48:                 ; preds = %.preheader121.lr.ph.i46
@@ -1588,9 +1588,8 @@ bb.cf:                                            ; preds = %bb.cb
   br i1 %.not137.i49, label %Abc_TtCheckEqualCofs.exit88.thread409, label %.preheader121.us.us.preheader.i50
 
 .preheader121.us.us.preheader.i50:                ; preds = %.preheader121.lr.ph.split.us.i48
-  %smax.i51 = call i32 @llvm.smax.i32(i32 %i.ady, i32 1)
   %i.aeb = sext i32 %i.aea to i64
-  %wide.trip.count.i52 = zext nneg i32 %smax.i51 to i64
+  %wide.trip.count.i52 = zext nneg i32 %i.ady to i64
   br label %.preheader121.us.us.i53
 
 .preheader121.us.us.i53:                          ; preds = %._crit_edge125.split.us.us.us.i66, %.preheader121.us.us.preheader.i50
@@ -1993,7 +1992,7 @@ bb.dk:                                            ; preds = %bb.dg
   br i1 %i.bch, label %.preheader121.lr.ph.i, label %Abc_TtCheckEqualCofs.exit.thread
 
 .preheader121.lr.ph.i:                            ; preds = %bb.dk
-  %i.bci = shl i32 2, %i.bce
+  %i.bci = shl nuw i32 2, %i.bce
   br i1 %.not.i233, label %Abc_TtCheckEqualCofs.exit.thread, label %.preheader121.lr.ph.split.us.i
 
 .preheader121.lr.ph.split.us.i:                   ; preds = %.preheader121.lr.ph.i

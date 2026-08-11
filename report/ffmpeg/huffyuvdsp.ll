@@ -25,20 +25,19 @@ bb.a:
   %i.c = mul i64 %i.b, 281479271743489            ; 4 uses
   %i.d = add i64 %i.c, 281479271743489            ; 2 uses
   %i.e = add i32 %3, -4                           ; 2 uses
-  %4 = sext i32 %i.e to i64                       ; 3 uses
+  %4 = zext i32 %i.e to i64                       ; 3 uses
   %.not27 = icmp slt i32 %3, 4
   br i1 %.not27, label %.preheader, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %5 = tail call i64 @llvm.smax.i64(i64 %4, i64 3)
-  %i.f = lshr i64 %5, 2
+  %i.f = lshr i64 %4, 2
   %i.g = add nuw nsw i64 %i.f, 1                  ; 2 uses
-  %min.iters.check = icmp slt i32 %i.e, 36
+  %min.iters.check = icmp ult i32 %i.e, 20
   br i1 %min.iters.check, label %.lr.ph.preheader72, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
   %i.h = shl nuw nsw i64 %4, 1
-  %i.i = and i64 %i.h, 4294967288
+  %i.i = and i64 %i.h, 8589934584
   %i.j = add nuw nsw i64 %i.i, 8                  ; 2 uses
   %scevgep = getelementptr i8, ptr %0, i64 %i.j
   %scevgep32 = getelementptr i8, ptr %1, i64 %i.j
@@ -48,7 +47,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.preheader
   br i1 %found.conflict, label %.lr.ph.preheader72, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %i.g, 1073741820               ; 3 uses
+  %n.vec = and i64 %i.g, 2147483644               ; 3 uses
   %i.k = shl nuw nsw i64 %n.vec, 2                ; 2 uses
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.c, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 4 uses
@@ -233,7 +232,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.cg = xor i64 %i.cd, %i.cf
   store i64 %i.cg, ptr %i.bz, align 8, !tbaa !14
   %i.ch = add nuw nsw i64 %.028, 4                ; 3 uses
-  %.not = icmp sgt i64 %i.ch, %4
+  %.not = icmp samesign ugt i64 %i.ch, %4
   br i1 %.not, label %.preheader, label %.lr.ph, !llvm.loop !35
 
 .lr.ph30:                                         ; preds = %.lr.ph30.prol.loopexit, %.lr.ph30
@@ -416,9 +415,6 @@ declare i32 @llvm.umin.i32(i32, i32) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #2
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smax.i64(i64, i64) #2
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #3

@@ -204,11 +204,11 @@ bb.bs:                                            ; preds = %bb.br, %bb.bq
 
 .lr.ph666:                                        ; preds = %bb.bs
   %i.up = icmp sgt i32 %2, 0
-  %18 = sext i32 %2 to i64                        ; 2 uses
+  %18 = zext nneg i32 %2 to i64
   %wide.trip.count814 = zext nneg i32 %.1416 to i64
-  %wide.trip.count809 = zext i32 %2 to i64        ; 10 uses
+  %wide.trip.count809 = zext i32 %2 to i64        ; 11 uses
   %i.uq = sub i64 %.04141204, %.04251205
-  %i.ur = mul nsw i64 %18, -8
+  %i.ur = mul nsw i64 %wide.trip.count809, -8
   %min.iters.check1207 = icmp ult i32 %2, 4
   %n.vec1209 = and i64 %wide.trip.count809, 2147483644 ; 4 uses
   %cmp.n1216 = icmp eq i64 %n.vec1209, %wide.trip.count809
@@ -247,7 +247,7 @@ bb.bu:                                            ; preds = %bb.bt
 .lr.ph659:                                        ; preds = %bb.bu
   %i.vc = mul nuw nsw i64 %indvars.iv811, %18
   %i.vd = sext i32 %.0412663 to i64               ; 5 uses
-  %invariant.gep1072 = getelementptr [8 x i8], ptr %.0425, i64 %i.vc ; 6 uses
+  %invariant.gep1072 = getelementptr inbounds nuw [8 x i8], ptr %.0425, i64 %i.vc ; 6 uses
   br i1 %min.iters.check1207, label %scalar.ph1206.preheader, label %vector.memcheck1203
 
 vector.memcheck1203:                              ; preds = %.lr.ph659
@@ -264,8 +264,8 @@ vector.ph1208:                                    ; preds = %vector.memcheck1203
 
 vector.body1210:                                  ; preds = %vector.body1210, %vector.ph1208
   %index1211 = phi i64 [ 0, %vector.ph1208 ], [ %index.next1214, %vector.body1210 ] ; 3 uses
-  %i.vi = getelementptr [8 x i8], ptr %invariant.gep1072, i64 %index1211 ; 2 uses
-  %i.vj = getelementptr i8, ptr %i.vi, i64 16
+  %i.vi = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep1072, i64 %index1211 ; 2 uses
+  %i.vj = getelementptr inbounds nuw i8, ptr %i.vi, i64 16
   %wide.load1212 = load <2 x double>, ptr %i.vi, align 8, !tbaa !22
   %wide.load1213 = load <2 x double>, ptr %i.vj, align 8, !tbaa !22
   %gep1445 = getelementptr [8 x i8], ptr %invariant.gep1444, i64 %index1211 ; 2 uses
@@ -288,7 +288,7 @@ scalar.ph1206.prol:                               ; preds = %scalar.ph1206.prehe
   %indvars.iv804.prol = phi i64 [ %indvars.iv.next805.prol, %scalar.ph1206.prol ], [ %indvars.iv804.ph, %scalar.ph1206.preheader ] ; 2 uses
   %indvars.iv802.prol = phi i64 [ %indvars.iv.next803.prol, %scalar.ph1206.prol ], [ %indvars.iv802.ph, %scalar.ph1206.preheader ] ; 2 uses
   %prol.iter = phi i64 [ %prol.iter.next, %scalar.ph1206.prol ], [ 0, %scalar.ph1206.preheader ]
-  %gep1073.prol = getelementptr [8 x i8], ptr %invariant.gep1072, i64 %indvars.iv804.prol
+  %gep1073.prol = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep1072, i64 %indvars.iv804.prol
   %i.vm = load double, ptr %gep1073.prol, align 8, !tbaa !22
   %indvars.iv.next803.prol = add nsw i64 %indvars.iv802.prol, 1 ; 3 uses
   %i.vn = getelementptr inbounds [8 x i8], ptr %.0414, i64 %indvars.iv802.prol
@@ -309,24 +309,24 @@ scalar.ph1206.prol.loopexit:                      ; preds = %scalar.ph1206.prol,
 scalar.ph1206:                                    ; preds = %scalar.ph1206.prol.loopexit, %scalar.ph1206
   %indvars.iv804 = phi i64 [ %indvars.iv.next805.3, %scalar.ph1206 ], [ %indvars.iv804.unr, %scalar.ph1206.prol.loopexit ] ; 5 uses
   %indvars.iv802 = phi i64 [ %indvars.iv.next803.3, %scalar.ph1206 ], [ %indvars.iv802.unr, %scalar.ph1206.prol.loopexit ] ; 5 uses
-  %gep1073 = getelementptr [8 x i8], ptr %invariant.gep1072, i64 %indvars.iv804
+  %gep1073 = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep1072, i64 %indvars.iv804
   %i.vq = load double, ptr %gep1073, align 8, !tbaa !22
   %i.vr = getelementptr inbounds [8 x i8], ptr %.0414, i64 %indvars.iv802
   store double %i.vq, ptr %i.vr, align 8, !tbaa !22
-  %i.vs = getelementptr [8 x i8], ptr %invariant.gep1072, i64 %indvars.iv804
-  %gep1073.1 = getelementptr i8, ptr %i.vs, i64 8
+  %i.vs = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep1072, i64 %indvars.iv804
+  %gep1073.1 = getelementptr inbounds nuw i8, ptr %i.vs, i64 8
   %i.vt = load double, ptr %gep1073.1, align 8, !tbaa !22
   %i.vu = getelementptr [8 x i8], ptr %.0414, i64 %indvars.iv802
   %i.vv = getelementptr i8, ptr %i.vu, i64 8
   store double %i.vt, ptr %i.vv, align 8, !tbaa !22
-  %i.vw = getelementptr [8 x i8], ptr %invariant.gep1072, i64 %indvars.iv804
-  %gep1073.2 = getelementptr i8, ptr %i.vw, i64 16
+  %i.vw = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep1072, i64 %indvars.iv804
+  %gep1073.2 = getelementptr inbounds nuw i8, ptr %i.vw, i64 16
   %i.vx = load double, ptr %gep1073.2, align 8, !tbaa !22
   %i.vy = getelementptr [8 x i8], ptr %.0414, i64 %indvars.iv802
   %i.vz = getelementptr i8, ptr %i.vy, i64 16
   store double %i.vx, ptr %i.vz, align 8, !tbaa !22
-  %i.wa = getelementptr [8 x i8], ptr %invariant.gep1072, i64 %indvars.iv804
-  %gep1073.3 = getelementptr i8, ptr %i.wa, i64 24
+  %i.wa = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep1072, i64 %indvars.iv804
+  %gep1073.3 = getelementptr inbounds nuw i8, ptr %i.wa, i64 24
   %i.wb = load double, ptr %gep1073.3, align 8, !tbaa !22
   %indvars.iv.next803.3 = add nsw i64 %indvars.iv802, 4 ; 2 uses
   %i.wc = getelementptr [8 x i8], ptr %.0414, i64 %indvars.iv802

@@ -204,8 +204,8 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define hidden void @_ZN2cv3dnn17fastGemmThinPackBEiiPKfmmPf(i32 noundef %0, i32 noundef %1, ptr nofree noundef readonly captures(none) %2, i64 noundef %3, i64 noundef %4, ptr nofree noundef writeonly captures(none) %5) local_unnamed_addr #2 {
 bb.a:
-  %i.a = add nsw i32 %0, 3
-  %6 = sdiv i32 %i.a, 4
+  %i.a = add nuw nsw i32 %0, 3
+  %6 = lshr i32 %i.a, 2
   %i.b = icmp sgt i32 %0, 0
   br i1 %i.b, label %.lr.ph, label %._crit_edge47.split
 
@@ -220,7 +220,7 @@ bb.a:
   %i.g = zext nneg i32 %1 to i64                  ; 2 uses
   %i.h = shl nuw nsw i64 %i.g, 4
   %i.i = zext nneg i32 %0 to i64
-  %smax64 = tail call i32 @llvm.smax.i32(i32 %6, i32 1)
+  %smax64 = tail call i32 @llvm.umax.i32(i32 %6, i32 1)
   %wide.trip.count65 = zext nneg i32 %smax64 to i64
   br label %.lr.ph43
 
@@ -621,6 +621,9 @@ declare i32 @llvm.smin.i32(i32, i32) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umax.i32(i32, i32) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #10

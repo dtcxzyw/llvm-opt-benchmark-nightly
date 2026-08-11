@@ -203,7 +203,6 @@ bb.bt:                                            ; preds = %bb.bs
 bb.bu:                                            ; preds = %bb.bt, %bb.bs
   %i.he = getelementptr inbounds nuw i8, ptr %i.gp, i64 72
   %i.hf = load i32, ptr %i.he, align 8, !tbaa !132 ; 2 uses
-  %narrow.i112 = call i32 @llvm.smax.i32(i32 %i.hf, i32 1)
   %i.hg = icmp sgt i32 %i.hf, 1
   br i1 %i.hg, label %bb.by, label %bb.bv
 
@@ -242,7 +241,6 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i115: ; preds = %
 bb.by:                                            ; preds = %bb.bu
   %i.hn = getelementptr inbounds nuw i8, ptr %i.gp, i64 84
   %i.ho = load i32, ptr %i.gj, align 8, !tbaa !132 ; 2 uses
-  %narrow.i121 = call i32 @llvm.smax.i32(i32 %i.ho, i32 1)
   %i.hp = icmp sgt i32 %i.ho, 1
   br i1 %i.hp, label %bb.cc, label %bb.bz
 
@@ -292,8 +290,8 @@ bb.cc:                                            ; preds = %bb.by
   br i1 %i.ic, label %.lr.ph231.preheader, label %._crit_edge232
 
 .lr.ph231.preheader:                              ; preds = %.preheader
-  %wide.trip.count263 = zext nneg i32 %narrow.i112 to i64
-  %wide.trip.count265 = zext nneg i32 %narrow.i121 to i64
+  %wide.trip.count263 = zext nneg i32 %i.hf to i64
+  %wide.trip.count265 = zext nneg i32 %i.ho to i64
   %wide.trip.count267 = zext nneg i32 %i.ib to i64
   br label %.lr.ph231
 

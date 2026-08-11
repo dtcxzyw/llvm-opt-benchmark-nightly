@@ -204,7 +204,6 @@ bb.a:
   unreachable
 
 _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i: ; preds = %bb.a
-  %5 = mul nsw i64 %i.b, 6
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %.not.i = icmp eq i64 %i.b, 0
@@ -220,7 +219,7 @@ bb.b:                                             ; preds = %_ZN5Eigen15PlainObj
   br i1 %i.h, label %bb.c, label %_ZN5Eigen16CommaInitializerINS_5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEEcmERKi.exit58.lr.ph
 
 bb.c:                                             ; preds = %bb.b
-  %i.i = icmp samesign ugt i64 %5, 4611686018427387903
+  %i.i = icmp ugt i64 %i.b, 768614336404564650
   br i1 %i.i, label %.noexc, label %_ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i
 
 .noexc:                                           ; preds = %bb.c
@@ -623,7 +622,6 @@ bb.a:
   unreachable
 
 _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i: ; preds = %bb.a
-  %5 = mul nsw i64 %i.b, 6
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %.not.i = icmp eq i64 %i.b, 0
@@ -639,7 +637,7 @@ bb.b:                                             ; preds = %_ZN5Eigen15PlainObj
   br i1 %i.h, label %bb.c, label %_ZN5Eigen16CommaInitializerINS_5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEEcmERKi.exit58.lr.ph
 
 bb.c:                                             ; preds = %bb.b
-  %i.i = icmp samesign ugt i64 %5, 4611686018427387903
+  %i.i = icmp ugt i64 %i.b, 768614336404564650
   br i1 %i.i, label %.noexc, label %_ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i
 
 .noexc:                                           ; preds = %bb.c
@@ -1042,7 +1040,6 @@ bb.a:
   unreachable
 
 _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i: ; preds = %bb.a
-  %5 = mul nsw i64 %i.b, 6
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %.not.i = icmp eq i64 %i.b, 0
@@ -1058,7 +1055,7 @@ bb.b:                                             ; preds = %_ZN5Eigen15PlainObj
   br i1 %i.h, label %bb.c, label %_ZN5Eigen16CommaInitializerINS_5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEEcmERKi.exit58.lr.ph
 
 bb.c:                                             ; preds = %bb.b
-  %i.i = icmp samesign ugt i64 %5, 4611686018427387903
+  %i.i = icmp ugt i64 %i.b, 768614336404564650
   br i1 %i.i, label %.noexc, label %_ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i
 
 .noexc:                                           ; preds = %bb.c
@@ -1461,7 +1458,6 @@ bb.a:
   unreachable
 
 _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i: ; preds = %bb.a
-  %5 = mul nsw i64 %i.b, 6
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %.not.i = icmp eq i64 %i.b, 0
@@ -1477,7 +1473,7 @@ bb.b:                                             ; preds = %_ZN5Eigen15PlainObj
   br i1 %i.h, label %bb.c, label %_ZN5Eigen16CommaInitializerINS_5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEEcmERKi.exit58.lr.ph
 
 bb.c:                                             ; preds = %bb.b
-  %i.i = icmp samesign ugt i64 %5, 4611686018427387903
+  %i.i = icmp ugt i64 %i.b, 768614336404564650
   br i1 %i.i, label %.noexc, label %_ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i
 
 .noexc:                                           ; preds = %bb.c
@@ -1880,7 +1876,6 @@ bb.a:
   unreachable
 
 _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i: ; preds = %bb.a
-  %5 = mul nsw i64 %i.b, 6
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %.not.i = icmp eq i64 %i.b, 0
@@ -1896,7 +1891,7 @@ bb.b:                                             ; preds = %_ZN5Eigen15PlainObj
   br i1 %i.h, label %bb.c, label %_ZN5Eigen16CommaInitializerINS_5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEEcmERKi.exit58.lr.ph
 
 bb.c:                                             ; preds = %bb.b
-  %i.i = icmp samesign ugt i64 %5, 4611686018427387903
+  %i.i = icmp ugt i64 %i.b, 768614336404564650
   br i1 %i.i, label %.noexc, label %_ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i
 
 .noexc:                                           ; preds = %bb.c
@@ -2299,7 +2294,6 @@ bb.a:
   unreachable
 
 _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i: ; preds = %bb.a
-  %5 = mul nsw i64 %i.b, 6
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %.not.i = icmp eq i64 %i.b, 0
@@ -2315,7 +2309,7 @@ bb.b:                                             ; preds = %_ZN5Eigen15PlainObj
   br i1 %i.h, label %bb.c, label %_ZN5Eigen16CommaInitializerINS_5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEEcmERKi.exit58.lr.ph
 
 bb.c:                                             ; preds = %bb.b
-  %i.i = icmp samesign ugt i64 %5, 4611686018427387903
+  %i.i = icmp ugt i64 %i.b, 768614336404564650
   br i1 %i.i, label %.noexc, label %_ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i
 
 .noexc:                                           ; preds = %bb.c
@@ -2718,7 +2712,6 @@ bb.a:
   unreachable
 
 _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i: ; preds = %bb.a
-  %5 = mul nsw i64 %i.b, 6
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %.not.i = icmp eq i64 %i.b, 0
@@ -2734,7 +2727,7 @@ bb.b:                                             ; preds = %_ZN5Eigen15PlainObj
   br i1 %i.h, label %bb.c, label %_ZN5Eigen16CommaInitializerINS_5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEEcmERKi.exit66.lr.ph
 
 bb.c:                                             ; preds = %bb.b
-  %i.i = icmp samesign ugt i64 %5, 4611686018427387903
+  %i.i = icmp ugt i64 %i.b, 768614336404564650
   br i1 %i.i, label %.noexc, label %_ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i
 
 .noexc:                                           ; preds = %bb.c
@@ -3137,7 +3130,6 @@ bb.a:
   unreachable
 
 _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i: ; preds = %bb.a
-  %5 = mul nsw i64 %i.b, 6
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %.not.i = icmp eq i64 %i.b, 0
@@ -3153,7 +3145,7 @@ bb.b:                                             ; preds = %_ZN5Eigen15PlainObj
   br i1 %i.h, label %bb.c, label %_ZN5Eigen16CommaInitializerINS_5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEEcmERKi.exit66.lr.ph
 
 bb.c:                                             ; preds = %bb.b
-  %i.i = icmp samesign ugt i64 %5, 4611686018427387903
+  %i.i = icmp ugt i64 %i.b, 768614336404564650
   br i1 %i.i, label %.noexc, label %_ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i
 
 .noexc:                                           ; preds = %bb.c
@@ -3556,7 +3548,6 @@ bb.a:
   unreachable
 
 _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i: ; preds = %bb.a
-  %5 = mul nsw i64 %i.b, 6
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %.not.i = icmp eq i64 %i.b, 0
@@ -3572,7 +3563,7 @@ bb.b:                                             ; preds = %_ZN5Eigen15PlainObj
   br i1 %i.h, label %bb.c, label %_ZN5Eigen16CommaInitializerINS_5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEEcmERKi.exit58.lr.ph
 
 bb.c:                                             ; preds = %bb.b
-  %i.i = icmp samesign ugt i64 %5, 4611686018427387903
+  %i.i = icmp ugt i64 %i.b, 768614336404564650
   br i1 %i.i, label %.noexc, label %_ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i
 
 .noexc:                                           ; preds = %bb.c
@@ -3975,7 +3966,6 @@ bb.a:
   unreachable
 
 _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i: ; preds = %bb.a
-  %5 = mul nsw i64 %i.b, 6
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %.not.i = icmp eq i64 %i.b, 0
@@ -3991,7 +3981,7 @@ bb.b:                                             ; preds = %_ZN5Eigen15PlainObj
   br i1 %i.h, label %bb.c, label %_ZN5Eigen16CommaInitializerINS_5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEEcmERKi.exit58.lr.ph
 
 bb.c:                                             ; preds = %bb.b
-  %i.i = icmp samesign ugt i64 %5, 4611686018427387903
+  %i.i = icmp ugt i64 %i.b, 768614336404564650
   br i1 %i.i, label %.noexc, label %_ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i
 
 .noexc:                                           ; preds = %bb.c
@@ -4394,7 +4384,6 @@ bb.a:
   unreachable
 
 _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i: ; preds = %bb.a
-  %5 = mul nsw i64 %i.b, 6
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %.not.i = icmp eq i64 %i.b, 0
@@ -4410,7 +4399,7 @@ bb.b:                                             ; preds = %_ZN5Eigen15PlainObj
   br i1 %i.h, label %bb.c, label %_ZN5Eigen16CommaInitializerINS_5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEEcmERKi.exit58.lr.ph
 
 bb.c:                                             ; preds = %bb.b
-  %i.i = icmp samesign ugt i64 %5, 4611686018427387903
+  %i.i = icmp ugt i64 %i.b, 768614336404564650
   br i1 %i.i, label %.noexc, label %_ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i
 
 .noexc:                                           ; preds = %bb.c
@@ -4813,7 +4802,6 @@ bb.a:
   unreachable
 
 _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i: ; preds = %bb.a
-  %5 = mul nsw i64 %i.b, 6
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %.not.i = icmp eq i64 %i.b, 0
@@ -4829,7 +4817,7 @@ bb.b:                                             ; preds = %_ZN5Eigen15PlainObj
   br i1 %i.h, label %bb.c, label %_ZN5Eigen16CommaInitializerINS_5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEEcmERKi.exit58.lr.ph
 
 bb.c:                                             ; preds = %bb.b
-  %i.i = icmp samesign ugt i64 %5, 4611686018427387903
+  %i.i = icmp ugt i64 %i.b, 768614336404564650
   br i1 %i.i, label %.noexc, label %_ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i
 
 .noexc:                                           ; preds = %bb.c
@@ -5232,7 +5220,6 @@ bb.a:
   unreachable
 
 _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i: ; preds = %bb.a
-  %5 = mul nsw i64 %i.b, 6
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %.not.i = icmp eq i64 %i.b, 0
@@ -5248,7 +5235,7 @@ bb.b:                                             ; preds = %_ZN5Eigen15PlainObj
   br i1 %i.h, label %bb.c, label %_ZN5Eigen16CommaInitializerINS_5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEEcmERKi.exit58.lr.ph
 
 bb.c:                                             ; preds = %bb.b
-  %i.i = icmp samesign ugt i64 %5, 4611686018427387903
+  %i.i = icmp ugt i64 %i.b, 768614336404564650
   br i1 %i.i, label %.noexc, label %_ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i
 
 .noexc:                                           ; preds = %bb.c

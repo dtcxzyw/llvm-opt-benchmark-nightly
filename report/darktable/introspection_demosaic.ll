@@ -204,7 +204,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   br i1 %i.si, label %bb.cm, label %.preheader._crit_edge.i.i.i
 
 bb.av:                                            ; preds = %.loopexit.i.i
-  %i.sj = add i32 %i.ii, -4
+  %i.sj = add nsw i32 %i.ii, -4
   %i.sk = icmp sgt i32 %i.ii, 8
   br i1 %i.sk, label %.preheader.lr.ph.i.i.i, label %_calcRadiusMono.exit.i.i
 
@@ -607,7 +607,7 @@ bb.pb:                                            ; preds = %._crit_edge935.spli
   %i.jka = mul i32 %.0741937.i, 92                ; 8 uses
   %i.jkb = add i32 %i.jka, 112                    ; 2 uses
   %i.jkc = tail call i32 @llvm.smin.i32(i32 %i.jkb, i32 %i.bo) ; 3 uses
-  %i.jkd = sub nsw i32 %i.jkc, %i.jka             ; 4 uses
+  %i.jkd = sub nsw i32 %i.jkc, %i.jka             ; 5 uses
   %i.jke = tail call i32 @llvm.smin.i32(i32 %i.jkd, i32 112) ; 3 uses
   %i.jkf = icmp sgt i32 %i.jkb, %i.bo
   %or.cond794.i = select i1 %i.jhr, i1 true, i1 %i.jkf
@@ -647,7 +647,7 @@ iter.check3690.preheader:                         ; preds = %bb.pd
   br label %.preheader832.i
 
 .lr.ph850.i:                                      ; preds = %._crit_edge842.split.i
-  %i.jkm = icmp sgt i32 %i.jkd, 8                 ; 2 uses
+  %i.jkm = icmp sgt i32 %i.jkd, 8
   br i1 %i.jkm, label %.lr.ph846.i.preheader, label %._crit_edge851.split.i
 
 .lr.ph846.i.preheader:                            ; preds = %.lr.ph850.i
@@ -835,6 +835,7 @@ vec.epilog.scalar.ph3691:                         ; preds = %vec.epilog.scalar.p
 
 .lr.ph872.i:                                      ; preds = %._crit_edge851.split.i
   %i.jnn = icmp sgt i32 %i.jkd, 6
+  %6 = icmp samesign ugt i32 %i.jkd, 8
   br i1 %i.jnn, label %.lr.ph855.preheader.i.preheader, label %.lr.ph881.i
 
 .lr.ph855.preheader.i.preheader:                  ; preds = %.lr.ph872.i
@@ -1044,7 +1045,7 @@ middle.block3632:                                 ; preds = %vector.body3623
 
 ._crit_edge856.i:                                 ; preds = %.lr.ph855.i, %middle.block3632
   %i.jrb = or disjoint i64 %i.jpz, 4              ; 4 uses
-  br i1 %i.jkm, label %.lr.ph860.i.preheader, label %.loopexit.i545
+  br i1 %6, label %.lr.ph860.i.preheader, label %.loopexit.i545
 
 .lr.ph860.i.preheader:                            ; preds = %._crit_edge856.i
   %i.jrc = or disjoint i32 %indvars.iv981.i, 4
@@ -1447,6 +1448,8 @@ bb.pr:                                            ; preds = %._crit_edge1176.spl
   %smin4180 = call i32 @llvm.smin.i32(i32 %i.bo, i32 %indvars.iv1107)
   %i.mat = add i32 %smin4180, %indvars.iv1110
   %i.mau = call i32 @llvm.smin.i32(i32 %i.mat, i32 128)
+  %7 = add nsw i32 %i.mau, 7
+  %8 = zext i32 %7 to i64
   %smin4051 = call i32 @llvm.smin.i32(i32 %i.bo, i32 %indvars.iv1107)
   %i.mav = add i32 %smin4051, %indvars.iv1110
   %smin4052 = call i32 @llvm.smin.i32(i32 %i.mav, i32 128)
@@ -1474,7 +1477,7 @@ bb.pr:                                            ; preds = %._crit_edge1176.spl
   %i.mbf = mul nuw i32 %.08811178.i, 112          ; 5 uses
   %i.mbg = add nuw i32 %i.mbf, 128
   %i.mbh = tail call i32 @llvm.smin.i32(i32 %i.mbg, i32 %i.bo) ; 2 uses
-  %i.mbi = sub i32 %i.mbh, %i.mbf                 ; 8 uses
+  %i.mbi = sub i32 %i.mbh, %i.mbf                 ; 7 uses
   %i.mbj = tail call i32 @llvm.smin.i32(i32 %i.mbi, i32 128) ; 13 uses
   %i.mbk = add nsw i32 %i.mbj, 8                  ; 2 uses
   br i1 %i.lyd, label %.lr.ph1031.i, label %.preheader1019.i
@@ -1877,8 +1880,8 @@ scalar.ph4281:                                    ; preds = %scalar.ph4281.prehe
   br i1 %i.lyh, label %.lr.ph1070.i, label %._crit_edge1078.i
 
 .lr.ph1070.i:                                     ; preds = %.preheader1016.i
-  %i.niq = add nsw i32 %i.mbj, 7                  ; 2 uses
-  %i.nir = sext i32 %i.niq to i64                 ; 3 uses
+  %i.niq = add nsw i32 %i.mbj, 7                  ; 3 uses
+  %i.nir = sext i32 %i.niq to i64                 ; 2 uses
   %i.nis = add nsw i32 %i.mbj, 6
   br label %bb.qy
 
@@ -2111,6 +2114,10 @@ bb.qx:                                            ; preds = %.thread980.i.1, %.t
   %niter4787.ncmp.1.not = icmp eq i64 %niter4787, %i.muu
   br i1 %niter4787.ncmp.1.not, label %._crit_edge1060.i.loopexit4692.unr-lcssa, label %.thread978.i
 
+.preheader1015.i:                                 ; preds = %._crit_edge1068.i
+  %9 = zext i32 %i.niq to i64                     ; 2 uses
+  br label %.preheader1015.i.a
+
 bb.qy:                                            ; preds = %._crit_edge1068.i, %.lr.ph1070.i
   %indvar4223 = phi i64 [ %indvar.next4224, %._crit_edge1068.i ], [ 0, %.lr.ph1070.i ] ; 2 uses
   %indvars.iv1256.i = phi i64 [ %indvars.iv.next1257.i, %._crit_edge1068.i ], [ 1, %.lr.ph1070.i ] ; 3 uses
@@ -2269,14 +2276,7 @@ vector.body4254:                                  ; preds = %vector.body4254, %v
   %indvars.iv.next1257.i = add nuw nsw i64 %indvars.iv1256.i, 1 ; 2 uses
   %exitcond1129.not = icmp eq i64 %indvars.iv.next1257.i, %smax1134
   %indvar.next4224 = add i64 %indvar4223, 1
-  br i1 %exitcond1129.not, label %.preheader1015.i.preheader, label %bb.qy
-
-.preheader1015.i.preheader:                       ; preds = %._crit_edge1068.i
-  %narrow4616 = add nsw i32 %i.mau, 5
-  %6 = sext i32 %narrow4616 to i64
-  %7 = call i32 @llvm.smin.i32(i32 %i.mbi, i32 128)
-  %8 = sext i32 %7 to i64
-  br label %.preheader1015.i.a
+  br i1 %exitcond1129.not, label %.preheader1015.i, label %bb.qy
 
 scalar.ph4247:                                    ; preds = %scalar.ph4247.preheader, %scalar.ph4247
   %indvars.iv1253.i = phi i64 [ %indvars.iv.next1254.i, %scalar.ph4247 ], [ %indvars.iv1253.i.ph, %scalar.ph4247.preheader ] ; 4 uses
@@ -2403,9 +2403,9 @@ scalar.ph4247:                                    ; preds = %scalar.ph4247.prehe
   %i.nsi = add i32 %i.nqg, %i.nsh
   br label %.preheader1011.i
 
-.preheader1015.i.a:                               ; preds = %.preheader1015.i.preheader, %._crit_edge1075.i
-  %indvar4177 = phi i64 [ 0, %.preheader1015.i.preheader ], [ %indvar.next4178, %._crit_edge1075.i ] ; 2 uses
-  %indvars.iv1262.i = phi i64 [ 1, %.preheader1015.i.preheader ], [ %indvars.iv.next1263.i, %._crit_edge1075.i ] ; 3 uses
+.preheader1015.i.a:                               ; preds = %._crit_edge1075.i, %.preheader1015.i
+  %indvar4177 = phi i64 [ %indvar.next4178, %._crit_edge1075.i ], [ 0, %.preheader1015.i ] ; 2 uses
+  %indvars.iv1262.i = phi i64 [ %indvars.iv.next1263.i, %._crit_edge1075.i ], [ 1, %.preheader1015.i ] ; 3 uses
   %i.nsj = mul nuw nsw i64 %indvar4177, 544       ; 4 uses
   %i.nsk = getelementptr i8, ptr %i.lwy, i64 %i.nsj
   %scevgep4183.a = getelementptr i8, ptr %i.nsk, i64 73988
@@ -2437,11 +2437,13 @@ scalar.ph4247:                                    ; preds = %scalar.ph4247.prehe
   %i.nte = getelementptr inbounds nuw [4 x i8], ptr %i.lxa, i64 %i.ntc ; 2 uses
   %i.ntf = zext nneg i32 %i.nsr to i64            ; 5 uses
   %i.ntg = and i32 %i.nsp, 1
-  %i.nth = zext nneg i32 %i.ntg to i64
-  %i.nti = sub nsw i64 %8, %i.nth
-  %i.ntj = add nsw i64 %i.nti, 5                  ; 2 uses
+  %i.nth = zext nneg i32 %i.ntg to i64            ; 2 uses
+  %10 = add nuw nsw i64 %i.nth, 3
+  %11 = call i64 @llvm.umax.i64(i64 %10, i64 %9)
+  %i.nti = sub nsw i64 %11, %i.nth
+  %i.ntj = add nsw i64 %i.nti, -2                 ; 2 uses
   %i.ntk = lshr i64 %i.ntj, 1
-  %i.ntl = add nuw i64 %i.ntk, 1                  ; 2 uses
+  %i.ntl = add nuw nsw i64 %i.ntk, 1              ; 2 uses
   %min.iters.check4191 = icmp ult i64 %i.ntj, 8
   br i1 %min.iters.check4191, label %scalar.ph4190.preheader, label %vector.memcheck4176
 
@@ -2451,14 +2453,17 @@ scalar.ph4190.preheader:                          ; preds = %vector.body4197, %v
 
 vector.memcheck4176:                              ; preds = %.lr.ph1074.i
   %i.ntm = and i32 %i.nsp, 1
-  %i.ntn = zext nneg i32 %i.ntm to i64            ; 2 uses
+  %i.ntn = zext nneg i32 %i.ntm to i64            ; 3 uses
   %i.nto = shl nuw nsw i64 %i.ntn, 2              ; 4 uses
   %i.ntp = getelementptr i8, ptr %i.ntb, i64 %i.nsj
   %i.ntq = getelementptr i8, ptr %i.ntp, i64 4
   %scevgep4179 = getelementptr i8, ptr %i.ntq, i64 %i.nto
-  %i.ntr = sub nsw i64 %6, %i.ntn
-  %i.nts = shl nsw i64 %i.ntr, 2
-  %i.ntt = and i64 %i.nts, -8                     ; 2 uses
+  %12 = add nuw nsw i64 %i.ntn, 3
+  %umax4182 = call i64 @llvm.umax.i64(i64 %12, i64 %8)
+  %13 = add nsw i64 %umax4182, -2
+  %i.ntr = sub nsw i64 %13, %i.ntn
+  %i.nts = shl nuw nsw i64 %i.ntr, 2
+  %i.ntt = and i64 %i.nts, 9223372036854775800    ; 2 uses
   %i.ntu = getelementptr i8, ptr %i.ntb, i64 %i.nsj
   %i.ntv = getelementptr i8, ptr %i.ntu, i64 1096
   %i.ntw = getelementptr i8, ptr %i.ntv, i64 %i.ntt
@@ -2475,7 +2480,7 @@ vector.ph4192:                                    ; preds = %vector.memcheck4176
   %i.nty = and i64 %i.ntl, 3                      ; 2 uses
   %i.ntz = icmp eq i64 %i.nty, 0
   %i.nua = select i1 %i.ntz, i64 4, i64 %i.nty
-  %n.vec4193 = sub i64 %i.ntl, %i.nua             ; 2 uses
+  %n.vec4193 = sub nsw i64 %i.ntl, %i.nua         ; 2 uses
   %i.nub = shl i64 %n.vec4193, 1
   %i.nuc = add i64 %i.nub, %i.ntf
   %broadcast.splatinsert4194 = insertelement <4 x i64> poison, i64 %i.ntf, i64 0
@@ -2568,8 +2573,8 @@ scalar.ph4190:                                    ; preds = %scalar.ph4190.prehe
   %i.nvw = fadd reassoc nsz arcp contract afn float %i.nvv, %i.nux
   store float %i.nvw, ptr %i.nuv, align 4, !tbaa !22, !noalias !402
   %indvars.iv.next1260.i = add nuw nsw i64 %indvars.iv1259.i, 2 ; 2 uses
-  %9 = icmp slt i64 %indvars.iv.next1260.i, %i.nir
-  br i1 %9, label %scalar.ph4190, label %._crit_edge1075.i, !llvm.loop !438
+  %14 = icmp samesign ult i64 %indvars.iv.next1260.i, %9
+  br i1 %14, label %scalar.ph4190, label %._crit_edge1075.i, !llvm.loop !438
 
 .preheader1014.i:                                 ; preds = %._crit_edge1123.i, %._crit_edge1078.i
   %i.nvx = icmp sgt i32 %i.mbi, 0
@@ -2972,7 +2977,7 @@ bb.g:                                             ; preds = %bb.f
 
 .preheader364.lr.ph:                              ; preds = %.preheader365
   %i.cw = add nsw i32 %3, -2
-  %i.cx = add i32 %2, -2
+  %i.cx = add nsw i32 %2, -2
   %i.cy = icmp sgt i32 %2, 4
   %i.cz = shl i32 %2, 2                           ; 3 uses
   %i.da = add i32 %i.cz, -16
@@ -3375,7 +3380,7 @@ bb.cm:                                            ; preds = %bb.cl, %bb.ck
 pre_median.exit:                                  ; preds = %._crit_edge103.i.i, %._crit_edge411.split
   %.0321 = phi ptr [ %1, %._crit_edge411.split ], [ %i.hq, %._crit_edge103.i.i ] ; 4 uses
   %i.oa = add nuw nsw i32 %6, 3                   ; 4 uses
-  %i.ob = add i32 %3, -3
+  %i.ob = add nsw i32 %3, -3
   %i.oc = icmp sgt i32 %3, 6
   br i1 %i.oc, label %.lr.ph420, label %.preheader
 
@@ -3778,7 +3783,7 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae
   br label %fcol.exit227
 
 .preheader233:                                    ; preds = %.split264, %.split264.us.us
-  %i.nt = add i32 %3, -1
+  %i.nt = add nsw i32 %3, -1
   %i.nu = icmp sgt i32 %3, 2
   br i1 %i.nu, label %.lr.ph284, label %._crit_edge285.split
 

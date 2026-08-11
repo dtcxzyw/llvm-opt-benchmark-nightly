@@ -204,7 +204,7 @@ bb.a:
   %i.s = sext i32 %i.h to i64                     ; 4 uses
   %i.t = add i32 %i.h, -4                         ; 2 uses
   %i.u = trunc i32 %i.h to i2
-  %6 = sext i32 %i.t to i64                       ; 3 uses
+  %6 = zext i32 %i.t to i64                       ; 3 uses
   %wide.trip.count233 = zext nneg i32 %i.j to i64
   %wide.trip.count229 = zext i32 %i.h to i64      ; 3 uses
   %scevgep258 = getelementptr i8, ptr %3, i64 16
@@ -363,14 +363,16 @@ bb.d:                                             ; preds = %.lr.ph199, %._crit_
   %indvars.iv231 = phi i64 [ 0, %.lr.ph199 ], [ %indvars.iv.next232, %._crit_edge197 ] ; 8 uses
   %indvars.iv219 = phi i2 [ 0, %.lr.ph199 ], [ %indvars.iv.next220, %._crit_edge197 ] ; 5 uses
   %i.dk = mul i64 %indvars.iv231, %i.s
-  %i.dl = zext i2 %indvars.iv219 to i64           ; 2 uses
+  %i.dl = zext i2 %indvars.iv219 to i64           ; 3 uses
   %i.dm = add i64 %i.dk, %i.dl
   %i.dn = shl i64 %i.dm, 2                        ; 3 uses
   %scevgep257 = getelementptr i8, ptr %3, i64 %i.dn
+  %7 = or disjoint i64 %i.dl, 4
+  %umax = tail call i64 @llvm.umax.i64(i64 %7, i64 %6)
   %i.do = xor i64 %i.dl, -1
-  %i.dp = add nsw i64 %i.do, %6
-  %i.dq = shl nsw i64 %i.dp, 2
-  %i.dr = and i64 %i.dq, -16
+  %i.dp = add nsw i64 %umax, %i.do
+  %i.dq = shl nuw nsw i64 %i.dp, 2
+  %i.dr = and i64 %i.dq, 9223372036854775792
   %i.ds = add i64 %i.dr, %i.dn                    ; 2 uses
   %scevgep259 = getelementptr i8, ptr %scevgep258, i64 %i.ds
   %scevgep260 = getelementptr i8, ptr %2, i64 %i.dn
@@ -462,9 +464,11 @@ bb.f:                                             ; preds = %bb.e
 
 .lr.ph193:                                        ; preds = %._crit_edge189
   %i.fy = mul nsw i64 %indvars.iv231, %i.s        ; 2 uses
-  %i.fz = zext nneg i32 %.0159.lcssa to i64       ; 5 uses
+  %i.fz = zext nneg i32 %.0159.lcssa to i64       ; 6 uses
+  %8 = or disjoint i64 %i.fz, 4
+  %9 = tail call i64 @llvm.umax.i64(i64 %8, i64 %6)
   %i.ga = xor i64 %i.fz, -1
-  %i.gb = add nsw i64 %i.ga, %6                   ; 2 uses
+  %i.gb = add nsw i64 %9, %i.ga                   ; 2 uses
   %i.gc = lshr i64 %i.gb, 2
   %i.gd = add nuw nsw i64 %i.gc, 1                ; 2 uses
   %min.iters.check267 = icmp ult i64 %i.gb, 12
@@ -626,8 +630,8 @@ scalar.ph266:                                     ; preds = %scalar.ph266.prehea
   %i.jd = getelementptr inbounds nuw i8, ptr %i.io, i64 12
   store float %i.jc, ptr %i.jd, align 4, !tbaa !11
   %indvars.iv.next224 = add nuw nsw i64 %indvars.iv223, 4 ; 3 uses
-  %7 = icmp slt i64 %indvars.iv.next224, %6
-  br i1 %7, label %scalar.ph266, label %.preheader.loopexit, !llvm.loop !55
+  %10 = icmp samesign ult i64 %indvars.iv.next224, %6
+  br i1 %10, label %scalar.ph266, label %.preheader.loopexit, !llvm.loop !55
 
 bb.g:                                             ; preds = %bb.g, %.lr.ph196.new
   %indvars.iv226 = phi i64 [ %indvars.iv226.unr, %.lr.ph196.new ], [ %indvars.iv.next227.3, %bb.g ] ; 5 uses
@@ -1029,6 +1033,9 @@ declare void @dt_dev_add_history_item(ptr noundef, ptr noundef, i32 noundef) loc
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #18
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umax.i64(i64, i64) #15
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(read)
 declare <8 x float> @llvm.masked.gather.v8f32.v8p0(<8 x ptr>, <8 x i1>, <8 x float>) #19

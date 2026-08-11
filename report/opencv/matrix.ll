@@ -204,7 +204,7 @@ define void @_ZN2cv8MatShape6assignEii(ptr nofree noundef nonnull writeonly alig
 bb.a:
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %4 = alloca %"class.std::allocator", align 1    ; 3 uses
-  %5 = sext i32 %1 to i64                         ; 2 uses
+  %5 = zext i32 %1 to i64                         ; 2 uses
   %i.a = icmp ult i32 %1, 10
   br i1 %i.a, label %bb.e, label %bb.b
 
@@ -244,7 +244,7 @@ bb.e:                                             ; preds = %bb.a
 
 .lr.ph.i:                                         ; preds = %bb.e
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 9 uses
-  %xtraiter = and i64 %5, 7
+  %xtraiter = and i64 %5, 7                       ; 3 uses
   %i.i = icmp ult i32 %1, 8
   br i1 %i.i, label %.epil.preheader, label %.lr.ph.i.new
 
@@ -284,14 +284,12 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph.i.new
   br i1 %niter.ncmp.7, label %_ZN2cv8MatShape6assignEmi.exit.loopexit.unr-lcssa, label %bb.f, !llvm.loop !32
 
 _ZN2cv8MatShape6assignEmi.exit.loopexit.unr-lcssa: ; preds = %bb.f
-  %6 = and i32 %1, 7
-  %lcmp.mod.not = icmp eq i32 %6, 0
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %_ZN2cv8MatShape6assignEmi.exit, label %.epil.preheader
 
 .epil.preheader:                                  ; preds = %_ZN2cv8MatShape6assignEmi.exit.loopexit.unr-lcssa, %.lr.ph.i
   %indvars.iv.i.epil.init = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i.7, %_ZN2cv8MatShape6assignEmi.exit.loopexit.unr-lcssa ]
-  %7 = and i32 %1, 7
-  %lcmp.mod4 = icmp ne i32 %7, 0
+  %lcmp.mod4 = icmp ne i64 %xtraiter, 0
   tail call void @llvm.assume(i1 %lcmp.mod4)
   br label %bb.g
 

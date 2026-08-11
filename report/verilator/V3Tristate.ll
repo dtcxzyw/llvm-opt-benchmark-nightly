@@ -203,7 +203,7 @@ bb.a:
 .preheader:                                       ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.e = load i32, ptr %i.d, align 8, !tbaa !233  ; 3 uses
-  %i.f = add nsw i32 %i.e, 31
+  %i.f = add nuw nsw i32 %i.e, 31
   %i.g = sdiv i32 %i.f, 32
   %i.h = icmp sgt i32 %i.e, 0
   br i1 %i.h, label %.lr.ph, label %.loopexit
@@ -606,7 +606,7 @@ _ZSt13__heap_selectIN9__gnu_cxx17__normal_iteratorIPN15TristateVisitor11RefStren
   %i.ao = sub i64 %i.an, %i.a                     ; 3 uses
   %i.ap = ashr exact i64 %i.ao, 4                 ; 3 uses
   %i.aq = add nsw i64 %i.ap, -1
-  %10 = sdiv i64 %i.aq, 2
+  %10 = lshr i64 %i.aq, 1
   %i.ar = icmp sgt i64 %i.ap, 2
   br i1 %i.ar, label %.lr.ph.i.i.i.i, label %._crit_edge.i.i.i.i
 
@@ -645,7 +645,7 @@ bb.g:                                             ; preds = %._crit_edge.i.i.i.i
   %i.bg = shl nuw nsw i64 %.0.lcssa.i.i.i.i, 1
   %i.bh = or disjoint i64 %i.bg, 1                ; 2 uses
   %i.bi = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.bh
-  %i.bj = getelementptr inbounds [16 x i8], ptr %0, i64 %.0.lcssa.i.i.i.i
+  %i.bj = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %.0.lcssa.i.i.i.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %i.bj, ptr noundef nonnull align 8 dereferenceable(9) %i.bi, i64 9, i1 false), !tbaa.struct !625
   br label %.lr.ph.i.i.i.i.i.preheader
 

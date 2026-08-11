@@ -204,7 +204,7 @@ _ZN4core5arrayIP13_SDL_JoystickEixEj.exit:        ; preds = %bb.ce
 
 bb.cg:                                            ; preds = %_ZN4core5arrayIP13_SDL_JoystickEixEj.exit
   %i.rd = call i32 @SDL_JoystickNumButtons(ptr noundef nonnull %i.rc) ; 2 uses
-  %.sroa.speculated90 = call i32 @llvm.smin.i32(i32 %i.rd, i32 32)
+  %.sroa.speculated90 = call i32 @llvm.umin.i32(i32 %i.rd, i32 32)
   store i32 0, ptr %i.qh, align 8, !tbaa !87
   %i.re = icmp sgt i32 %i.rd, 0
   br i1 %i.re, label %.lr.ph182, label %._crit_edge

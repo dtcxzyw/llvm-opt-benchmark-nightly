@@ -203,8 +203,7 @@ bb.wi:                                            ; preds = %lean_dec.exit1078
   br label %lean_nat_eq.exit
 
 lean_nat_eq.exit:                                 ; preds = %bb.wi, %.critedge.i1544
-  %.0.i1545 = phi i1 [ %i.ajd, %bb.wi ], [ %i.aje, %.critedge.i1544 ] ; 2 uses
-  %6 = zext i1 %.0.i1545 to i8
+  %.0.i1545 = phi i1 [ %i.ajd, %bb.wi ], [ %i.aje, %.critedge.i1544 ]
   %i.ajf = and i64 %i.ajb, 1
   %.not.i1075 = icmp eq i64 %i.ajf, 0
   br i1 %.not.i1075, label %bb.wj, label %lean_dec.exit1076
@@ -470,7 +469,7 @@ bb.ye:                                            ; preds = %lean_dec.exit1058
 
 lean_obj_once.exit1827:                           ; preds = %bb.yd, %bb.ye
   %.0.i1826 = phi ptr [ %i.aku, %bb.yd ], [ %i.akv, %bb.ye ]
-  %i.akw = tail call ptr @l_Lean_MessageData_ofConstName(ptr noundef %i.agt, i8 noundef zeroext %6) #5
+  %i.akw = tail call ptr @l_Lean_MessageData_ofConstName(ptr noundef %i.agt, i8 noundef zeroext 0) #5
   tail call void @lean_inc_heartbeat() #5
   %i.akx = tail call noalias ptr @mi_malloc_small(i64 noundef 24) #5 ; 6 uses
   %i.aky = icmp eq ptr %i.akx, null

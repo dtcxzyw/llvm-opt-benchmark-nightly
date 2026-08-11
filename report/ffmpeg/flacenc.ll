@@ -204,7 +204,7 @@ middle.block:                                     ; preds = %vector.body
 ._crit_edge.i:                                    ; preds = %.lr.ph.i, %middle.block, %bb.d
   %.not.i = icmp eq i32 %i.ay, 0                  ; 2 uses
   %i.bx = select i1 %.not.i, i32 0, i32 %i.ba     ; 5 uses
-  %i.by = shl nuw i32 1, %.0.i30
+  %i.by = shl nuw nsw i32 1, %.0.i30              ; 2 uses
   %.not58.i.i = icmp slt i32 %i.bx, 0             ; 2 uses
   br i1 %.not58.i.i, label %calc_sum_top.exit.i, label %.lr.ph62.i.i
 
@@ -219,17 +219,16 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph62.split.i.i:                               ; preds = %.lr.ph62.i.i
   %.not41.i.i = icmp eq i32 %i.bx, 0
-  %smax80.i.i = tail call i32 @llvm.smax.i32(i32 %i.by, i32 1) ; 2 uses
   br i1 %.not41.i.i, label %.lr.ph56.us.i.i, label %.lr.ph56.preheader.i.i
 
 .lr.ph56.preheader.i.i:                           ; preds = %.lr.ph62.split.i.i
   %i.cd = add nuw nsw i32 %i.bx, 1
   %wide.trip.count75.i.i = zext nneg i32 %i.cd to i64
-  %wide.trip.count.i.i = zext nneg i32 %smax80.i.i to i64
+  %wide.trip.count.i.i = zext nneg i32 %i.by to i64
   br label %.lr.ph56.i.i
 
 .lr.ph56.us.i.i:                                  ; preds = %.lr.ph62.split.i.i
-  %wide.trip.count81.i.i = zext nneg i32 %smax80.i.i to i64
+  %wide.trip.count81.i.i = zext nneg i32 %i.by to i64
   %i.ce = shl nsw i64 %i.cc, 2
   %i.cf = add i64 %i.ce, %i.a
   %i.cg = add i64 %i.cf, 1184

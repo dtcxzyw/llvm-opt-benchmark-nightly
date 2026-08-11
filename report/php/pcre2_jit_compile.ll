@@ -204,7 +204,7 @@ bb.x:                                             ; preds = %bb.w
   %i.ea = load i8, ptr %i.dy, align 1, !tbaa !436
   %i.eb = zext i8 %i.ea to i64
   %i.ec = getelementptr inbounds nuw i8, ptr %i.dz, i64 %i.eb
-  %i.ed = trunc i64 %indvars.iv670 to i8
+  %i.ed = trunc nuw i64 %indvars.iv670 to i8
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.aa, %.lr.ph656
@@ -607,7 +607,7 @@ sljit_emit_op1.exit811:                           ; preds = %bb.kh, %bb.kg, %emi
   %i.arz = lshr exact i32 %.0238.i, 1
   %i.asa = zext nneg i32 %i.arz to i64            ; 2 uses
   %or.cond.i1055 = icmp samesign ult i32 %.6.i, 268435457
-  %.neg = mul i64 %i.aru, -34359738368
+  %.neg = mul nsw i64 %i.aru, -34359738368
   %i.asb = ashr exact i64 %.neg, 32
   %i.asc = icmp eq i8 %i.amk, -115                ; 3 uses
   %i.asd = shl i32 %i.ani, 3

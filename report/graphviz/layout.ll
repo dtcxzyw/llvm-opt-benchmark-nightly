@@ -203,7 +203,7 @@ bb.ae:                                            ; preds = %bb.ad
   unreachable
 
 bb.af:                                            ; preds = %bb.ad
-  %i.hc = shl nsw i64 %i.gy, 3
+  %i.hc = shl nuw nsw i64 %i.gy, 3
   %i.hd = icmp eq i64 %i.gz, 0
   br i1 %i.hd, label %bb.ag, label %bb.ah
 
@@ -462,7 +462,7 @@ bb.bb:                                            ; preds = %bb.ba
   unreachable
 
 bb.bc:                                            ; preds = %bb.ba
-  %i.lg = shl nsw i64 %i.lc, 3
+  %i.lg = shl nuw nsw i64 %i.lc, 3
   %i.lh = icmp eq i64 %i.ld, 0
   br i1 %i.lh, label %bb.bd, label %bb.be
 

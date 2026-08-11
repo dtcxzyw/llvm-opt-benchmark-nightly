@@ -201,7 +201,7 @@ bb.u:                                             ; preds = %._crit_edge196
 
 _ZN8nlohmann16json_abi_v3_12_06detail10serializerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEE12count_digitsEm.exit31.i: ; preds = %._crit_edge196
   %i.hv = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.hw = zext i8 %i.hq to i64
+  %i.hw = zext nneg i8 %i.hq to i64
   %i.hx = icmp ult i8 %i.hq, 10
   %i.hy = icmp ult i8 %i.hq, 100
   %i.hz = select i1 %i.hy, i64 2, i64 3
@@ -269,7 +269,7 @@ bb.z:                                             ; preds = %bb.y
   br label %_ZN8nlohmann16json_abi_v3_12_06detail10serializerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEE12dump_integerIhTnNSt9enable_ifIXoooooosr3std11is_integralIT_EE5valuesr3std7is_sameISJ_mEE5valuesr3std7is_sameISJ_lEE5valuesr3std7is_sameISJ_hEE5valueEiE4typeELi0EEEvSJ_.exit91
 
 _ZN8nlohmann16json_abi_v3_12_06detail10serializerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEE12count_digitsEm.exit31.i85: ; preds = %bb.y
-  %i.jd = zext i8 %i.iy to i64
+  %i.jd = zext nneg i8 %i.iy to i64
   %i.je = icmp ult i8 %i.iy, 10
   %i.jf = icmp ult i8 %i.iy, 100
   %i.jg = select i1 %i.jf, i64 2, i64 3
@@ -533,7 +533,7 @@ bb.ar:                                            ; preds = %._crit_edge
 
 _ZN8nlohmann16json_abi_v3_12_06detail10serializerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEE12count_digitsEm.exit31.i94: ; preds = %._crit_edge
   %i.oc = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.od = zext i8 %i.nx to i64
+  %i.od = zext nneg i8 %i.nx to i64
   %i.oe = icmp ult i8 %i.nx, 10
   %i.of = icmp ult i8 %i.nx, 100
   %i.og = select i1 %i.of, i64 2, i64 3
@@ -601,7 +601,7 @@ bb.aw:                                            ; preds = %bb.av
   br label %_ZN8nlohmann16json_abi_v3_12_06detail10serializerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEE12dump_integerIhTnNSt9enable_ifIXoooooosr3std11is_integralIT_EE5valuesr3std7is_sameISJ_mEE5valuesr3std7is_sameISJ_lEE5valuesr3std7is_sameISJ_hEE5valueEiE4typeELi0EEEvSJ_.exit107
 
 _ZN8nlohmann16json_abi_v3_12_06detail10serializerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEE12count_digitsEm.exit31.i101: ; preds = %bb.av
-  %i.pk = zext i8 %i.pf to i64
+  %i.pk = zext nneg i8 %i.pf to i64
   %i.pl = icmp ult i8 %i.pf, 10
   %i.pm = icmp ult i8 %i.pf, 100
   %i.pn = select i1 %i.pm, i64 2, i64 3

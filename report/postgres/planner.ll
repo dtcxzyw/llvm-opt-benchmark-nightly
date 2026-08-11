@@ -201,8 +201,8 @@ bb.ba:                                            ; preds = %bb.bf, %.lr.ph249.i
   %i.jx = load i16, ptr %i.jw, align 2            ; 3 uses
   %i.jy = load ptr, ptr %i.hz, align 8
   %i.jz = getelementptr inbounds nuw [2 x i8], ptr %i.jy, i64 %indvars.iv288.i
-  %i.ka = load i16, ptr %i.jz, align 2            ; 2 uses
-  %10 = sext i16 %i.ka to i64                     ; 2 uses
+  %i.ka = load i16, ptr %i.jz, align 2            ; 3 uses
+  %10 = zext nneg i16 %i.ka to i64
   %i.kb = icmp sgt i16 %i.jx, 0
   %i.kc = sext i16 %i.jx to i64
   %i.kd = icmp sgt i64 %indvars.iv288.i, %i.kc
@@ -217,7 +217,8 @@ bb.bb:                                            ; preds = %bb.ba
 
 bb.bc:                                            ; preds = %bb.ba
   %i.kh = icmp sgt i16 %i.ka, 0
-  %i.ki = icmp sgt i64 %indvars.iv288.i, %10
+  %11 = sext i16 %i.ka to i64
+  %i.ki = icmp sgt i64 %indvars.iv288.i, %11
   %or.cond192.i = and i1 %i.kh, %i.ki
   br i1 %or.cond192.i, label %bb.bd, label %bb.be
 

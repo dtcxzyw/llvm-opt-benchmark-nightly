@@ -204,7 +204,7 @@ bb.xe:                                            ; preds = %bb.xd, %_ZL12do_the
   %i.cgz = sitofp i32 %i.cgo to float             ; 4 uses
   %i.cha = fneg float %i.cgz                      ; 2 uses
   %i.chb = add nsw i32 %i.cgo, -1
-  %71 = sitofp i32 %i.chb to double
+  %71 = uitofp nneg i32 %i.chb to double
   %i.chc = icmp sgt i32 %i.cgm, 1
   br i1 %i.cgw, label %.preheader187.us.preheader.i, label %._crit_edge211.thread.i
 

@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ah = mul nsw i64 %i.ae, %i.q
   %i.ai = icmp sgt i64 %i.ah, 1000
   %.0.shrunk = select i1 %3, i1 %i.ai, i1 false   ; 2 uses
-  %7 = icmp sgt i64 %i.q, 6
+  %7 = icmp samesign ugt i64 %i.q, 6
   %i.aj = and i1 %7, %.0.shrunk
   %i.ak = icmp sgt i64 %i.ae, 6
   %i.al = and i1 %i.ak, %.0.shrunk
@@ -607,7 +607,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZSt10__po
   %i.k = sub i64 %i.j, %i.a                       ; 3 uses
   %i.l = ashr exact i64 %i.k, 4                   ; 3 uses
   %i.m = add nsw i64 %i.l, -1
-  %3 = sdiv i64 %i.m, 2
+  %3 = lshr i64 %i.m, 1
   %i.n = icmp sgt i64 %i.l, 2
   br i1 %i.n, label %.lr.ph.i.i, label %._crit_edge.i.i
 
@@ -647,7 +647,7 @@ bb.c:                                             ; preds = %._crit_edge.i.i
   %i.ah = shl nuw nsw i64 %.0.lcssa.i.i, 1
   %i.ai = or disjoint i64 %i.ah, 1                ; 2 uses
   %i.aj = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.ai
-  %i.ak = getelementptr inbounds [16 x i8], ptr %0, i64 %.0.lcssa.i.i
+  %i.ak = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %.0.lcssa.i.i
   %i.al = load <2 x i64>, ptr %i.aj, align 8, !tbaa !8
   store <2 x i64> %i.al, ptr %i.ak, align 8, !tbaa !8
   br label %.lr.ph.i.i.i.preheader

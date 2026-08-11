@@ -204,7 +204,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !153)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !156)
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
-  %i.b = load i64, ptr %i.a, align 8, !alias.scope !156, !noalias !153, !noundef !9 ; 5 uses
+  %i.b = load i64, ptr %i.a, align 8, !alias.scope !156, !noalias !153, !noundef !9 ; 6 uses
   %i.c = icmp eq i64 %i.b, 0
   br i1 %i.c, label %bb.b, label %bb.c
 
@@ -214,7 +214,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.e = add nsw i64 %i.b, -1                     ; 8 uses
+  %i.e = add nsw i64 %i.b, -1                     ; 7 uses
   store i64 %i.e, ptr %i.a, align 8, !alias.scope !156, !noalias !153
   %i.f = load i64, ptr %i.d, align 8, !range !5, !alias.scope !156, !noalias !153, !noundef !9
   %i.g = icmp samesign ult i64 %i.e, %i.f
@@ -253,7 +253,7 @@ bb.d:                                             ; preds = %bb.c
   store i64 %.sroa.4.sroa.6.0.copyload.i, ptr %i.p, align 1, !alias.scope !179, !noalias !181
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i.i)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.0.i.i.i, ptr noundef nonnull align 8 dereferenceable(40) %i.i, i64 40, i1 false), !noalias !183
-  %2 = tail call i64 @llvm.usub.sat.i64(i64 %i.e, i64 2)
+  %2 = add nsw i64 %i.b, -3
   %.not.not8.i.i.i = icmp samesign ult i64 %i.b, 4
   br i1 %.not.not8.i.i.i, label %._crit_edge.i.i.i, label %.lr.ph.i.i.i
 
@@ -655,9 +655,6 @@ declare void @_RNvNtCshzWfHUSfYae_4core6option13unwrap_failed(ptr noalias nofree
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare { i64, i1 } @llvm.umul.with.overflow.i64(i64, i64) #14
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.usub.sat.i64(i64, i64) #14
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden void @_RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VecNtNtCsjsNuU4yXw23_3fst3raw10TransitionE7reserveBI_(ptr noalias nofree noundef align 8 dereferenceable(24), i64 noundef) unnamed_addr #0

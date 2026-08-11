@@ -204,7 +204,7 @@ _ZN5Eigen8internal15unary_evaluatorINS_9TransposeIKNS_12SparseMatrixIdLi0EiEEEEN
   %i.cz = sext i32 %i.cy to i64                   ; 2 uses
   %i.da = getelementptr inbounds nuw [4 x i8], ptr %i.au, i64 %.03370
   %i.db = load i32, ptr %i.da, align 4, !tbaa !32 ; 2 uses
-  %3 = sext i32 %i.db to i64
+  %3 = zext nneg i32 %i.db to i64
   %i.dc = add nsw i64 %3, %i.cz
   %i.dd = icmp sgt i32 %i.db, 0
   br i1 %i.dd, label %.lr.ph, label %._crit_edge
@@ -396,7 +396,7 @@ _ZN5Eigen8internal15unary_evaluatorINS_9TransposeIKNS_12SparseMatrixIdLi0EiEEEEN
   %i.gq = sext i32 %i.gp to i64                   ; 2 uses
   %i.gr = getelementptr inbounds nuw [4 x i8], ptr %i.ed, i64 %indvars.iv
   %i.gs = load i32, ptr %i.gr, align 4, !tbaa !32 ; 2 uses
-  %4 = sext i32 %i.gs to i64
+  %4 = zext nneg i32 %i.gs to i64
   %i.gt = add nsw i64 %4, %i.gq
   %i.gu = icmp sgt i32 %i.gs, 0
   br i1 %i.gu, label %.lr.ph78.preheader, label %._crit_edge79
@@ -799,7 +799,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZSt10__po
   %i.j = sub i64 %i.i, %i.a                       ; 3 uses
   %i.k = ashr exact i64 %i.j, 4                   ; 3 uses
   %i.l = add nsw i64 %i.k, -1
-  %3 = sdiv i64 %i.l, 2
+  %3 = lshr i64 %i.l, 1
   %i.m = icmp sgt i64 %i.k, 2
   br i1 %i.m, label %.lr.ph.i.i, label %._crit_edge.i.i
 
@@ -841,7 +841,7 @@ bb.c:                                             ; preds = %._crit_edge.i.i
   %i.ah = shl nuw nsw i64 %.0.lcssa.i.i, 1
   %i.ai = or disjoint i64 %i.ah, 1                ; 2 uses
   %i.aj = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.ai ; 2 uses
-  %i.ak = getelementptr inbounds [16 x i8], ptr %0, i64 %.0.lcssa.i.i ; 2 uses
+  %i.ak = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %.0.lcssa.i.i ; 2 uses
   %i.al = load i32, ptr %i.aj, align 4, !tbaa !32
   store i32 %i.al, ptr %i.ak, align 8, !tbaa !816
   %i.am = getelementptr inbounds nuw i8, ptr %i.aj, i64 8

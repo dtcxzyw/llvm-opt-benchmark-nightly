@@ -203,12 +203,12 @@ bb.j:                                             ; preds = %bb.h
   %i.at = sub i64 %i.ar, %i.as
   %i.au = lshr i64 %i.at, 2
   %i.av = trunc i64 %i.au to i32                  ; 2 uses
-  %.sroa.speculated = tail call i32 @llvm.smin.i32(i32 %i.av, i32 %i.ac)
+  %.sroa.speculated = tail call i32 @llvm.umin.i32(i32 %i.av, i32 %i.ac)
   %i.aw = icmp sgt i32 %i.am, 0
   br i1 %i.aw, label %.lr.ph.preheader, label %bb.k
 
 .lr.ph.preheader:                                 ; preds = %bb.j
-  %.sroa.speculated186 = tail call i32 @llvm.smin.i32(i32 %i.am, i32 %i.ac) ; 3 uses
+  %.sroa.speculated186 = tail call i32 @llvm.umin.i32(i32 %i.am, i32 %i.ac) ; 3 uses
   %i.ax = and i64 %i.ab, 2147483647
   %wide.trip.count = zext nneg i32 %.sroa.speculated186 to i64 ; 2 uses
   %i.ay = getelementptr [16 x i8], ptr %i.x, i64 %i.ax ; 3 uses
@@ -610,6 +610,9 @@ declare i32 @llvm.smin.i32(i32, i32) #24
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #24
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umin.i32(i32, i32) #24
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }

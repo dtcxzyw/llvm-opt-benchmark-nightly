@@ -204,8 +204,8 @@ bb.n:                                             ; preds = %.lr.ph145, %.loopex
   %i.aw = phi i32 [ %i.as, %.lr.ph145 ], [ %i.by, %.loopexit ] ; 2 uses
   %.078144 = phi ptr [ null, %.lr.ph145 ], [ %.381, %.loopexit ] ; 3 uses
   %i.ax = trunc i32 %i.aw to i16
-  %i.ay = add i16 %i.ax, -7                       ; 4 uses
-  %3 = sext i16 %i.ay to i32                      ; 2 uses
+  %i.ay = add i16 %i.ax, -7                       ; 5 uses
+  %3 = zext nneg i16 %i.ay to i32
   %i.az = icmp eq i16 %i.ay, 0
   br i1 %i.az, label %.preheader128, label %bb.p
 
@@ -251,15 +251,12 @@ bb.r:                                             ; preds = %bb.q
   %i.bt = getelementptr i8, ptr %i.bs, i64 -2
   %i.bu = load i16, ptr %i.bt, align 2            ; 2 uses
   %i.bv = icmp eq i16 %i.bu, 0
-  br i1 %i.bv, label %.critedge117, label %._crit_edge160
+  br i1 %i.bv, label %.critedge117, label %bb.s
 
-._crit_edge160:                                   ; preds = %bb.r
-  %.pre161 = sext i16 %i.bu to i32
-  br label %bb.s
-
-bb.s:                                             ; preds = %._crit_edge160, %bb.p
-  %.pre-phi = phi i32 [ %.pre161, %._crit_edge160 ], [ %3, %bb.p ]
-  %i.bw = add nsw i32 %.pre-phi, 7
+bb.s:                                             ; preds = %bb.p, %bb.r
+  %.076 = phi i16 [ %i.bu, %bb.r ], [ %i.ay, %bb.p ]
+  %4 = sext i16 %.076 to i32
+  %i.bw = add nsw i32 %4, 7
   %i.bx = tail call ptr @bms_add_member(ptr noundef %.078144, i32 noundef %i.bw) #12
   br label %.loopexit
 

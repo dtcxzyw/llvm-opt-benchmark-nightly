@@ -204,7 +204,7 @@ Abc_TtPrintBits2.exit:                            ; preds = %bb.b
 ._crit_edge:                                      ; preds = %.lr.ph, %Abc_TtPrintBits2.exit
   %i.o = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.40) ; 0 uses
   %i.p = load ptr, ptr @stdout, align 8, !tbaa !12 ; 2 uses
-  %7 = icmp sgt i32 %3, 5                         ; 2 uses
+  %7 = icmp samesign ugt i32 %3, 5                ; 2 uses
   %i.q = add nsw i32 %3, -2                       ; 2 uses
   %i.r = icmp slt i32 %3, 2                       ; 2 uses
   br i1 %i.r, label %bb.c, label %bb.d
@@ -607,7 +607,7 @@ Abc_TtFlip.exit:                                  ; preds = %._crit_edge.us.i122
   %i.hu = sdiv i32 %i.s, %.val93
   %i.hv = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.44, i32 noundef %.val93, i32 noundef %i.s, i32 noundef %i.hu) ; 0 uses
   %i.hw = load ptr, ptr @stdout, align 8, !tbaa !12 ; 2 uses
-  %3 = icmp sgt i32 %1, 5
+  %3 = icmp samesign ugt i32 %1, 5
   %i.hx = add nsw i32 %1, -2
   %i.hy = icmp slt i32 %1, 2
   br i1 %i.hy, label %bb.n, label %bb.o
@@ -856,7 +856,7 @@ Vec_IntAlloc.exit:                                ; preds = %Abc_Clock.exit, %bb
   br i1 %i.af, label %.lr.ph183, label %._crit_edge184
 
 .lr.ph183:                                        ; preds = %Vec_IntAlloc.exit
-  %i.ag = shl nuw i32 1, %1
+  %i.ag = shl nuw nsw i32 1, %1
   %i.ah = select i1 %i.t, i32 0, i32 %i.u
   %i.ai = getelementptr i8, ptr %0, i64 8
   %i.aj = getelementptr i8, ptr %i.s, i64 4       ; 3 uses
@@ -870,9 +870,8 @@ Vec_IntAlloc.exit:                                ; preds = %Abc_Clock.exit, %bb
   %i.ap = getelementptr inbounds nuw i8, ptr %i.s, i64 12
   %i.aq = icmp sgt i32 %i.x, 0
   %i.ar = shl nuw nsw i64 %wide.trip.count.i, 3   ; 2 uses
-  %smax = call i32 @llvm.smax.i32(i32 %i.ag, i32 1)
   %.val110.pre = load i32, ptr %i.aj, align 4, !tbaa !87
-  %wide.trip.count = zext nneg i32 %smax to i64
+  %wide.trip.count = zext nneg i32 %i.ag to i64
   %wide.trip.count197 = zext nneg i32 %i.x to i64
   %i.as = add i64 %i.ab, %i.ad
   %min.iters.check341 = icmp ult i32 %i.w, 4

@@ -61,7 +61,7 @@ bb.a:
   %i.u = load i32, ptr %1, align 4, !tbaa !8      ; 3 uses
   %. = tail call i32 @llvm.smin.i32(i32 %i.t, i32 %i.u) ; 2 uses
   store i32 %., ptr %i.e, align 4, !tbaa !8
-  %i.v = tail call i32 @llvm.smax.i32(i32 %i.t, i32 %i.u)
+  %i.v = tail call i32 @llvm.umax.i32(i32 %i.t, i32 %i.u)
   %i.w = load i32, ptr %11, align 4, !tbaa !8     ; 2 uses
   %i.x = icmp eq i32 %i.w, -1                     ; 2 uses
   %i.y = icmp slt i32 %i.t, 0
