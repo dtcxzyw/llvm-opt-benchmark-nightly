@@ -1,0 +1,255 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp b/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
+index 1fd813fb856ad..a9919a4e57dcf 100644
+--- a/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
+@@ -432,9 +432,23 @@ static bool simplifyAssocCastAssoc(BinaryOperator *BinOp1,
+ 
+   auto AssocOpcode = BinOp1->getOpcode();
+   auto *BinOp2 = dyn_cast<BinaryOperator>(Cast->getOperand(0));
+-  if (!BinOp2 || !BinOp2->hasOneUse() || BinOp2->getOpcode() != AssocOpcode)
++  if (!BinOp2 || !BinOp2->hasOneUse())
+     return false;
+ 
++  if (BinOp2->getOpcode() != AssocOpcode) {
++    // For defined inputs, `or disjoint` is equivalent to xor.
++    bool IsMixedXorDisjointOr =
++        (AssocOpcode == Instruction::Xor &&
++         match(BinOp2, m_DisjointOr(m_Value(), m_Value()))) ||
++        (BinOp2->getOpcode() == Instruction::Xor &&
++         match(BinOp1, m_DisjointOr(m_Value(), m_Value())));
++
++    if (!IsMixedXorDisjointOr)
++      return false;
++
++    AssocOpcode = Instruction::Xor;
++  }
++
+   Constant *C1, *C2;
+   if (!match(BinOp1->getOperand(1), m_Constant(C1)) ||
+       !match(BinOp2->getOperand(1), m_Constant(C2)))
+@@ -455,10 +469,18 @@ static bool simplifyAssocCastAssoc(BinaryOperator *BinOp1,
+   if (!FoldedC)
+     return false;
+ 
++  // A non-negative (X | C) implies that X is also non-negative.
++  bool PreserveNonNeg =
++      Cast->hasNonNeg() && BinOp2->getOpcode() == Instruction::Or;
++
+   IC.replaceOperand(*Cast, 0, BinOp2->getOperand(0));
+-  IC.replaceOperand(*BinOp1, 1, FoldedC);
+-  BinOp1->dropPoisonGeneratingFlags();
+   Cast->dropPoisonGeneratingFlags();
++
++  if (PreserveNonNeg)
++    Cast->setNonNeg();
++
++  Value *NewBinOp = IC.Builder.CreateBinOp(AssocOpcode, Cast, FoldedC);
++  IC.replaceInstUsesWith(*BinOp1, NewBinOp);
+   return true;
+ }
+ 
+@@ -581,9 +603,8 @@ bool InstCombinerImpl::SimplifyAssociativeOrCommutative(BinaryOperator &I) {
+ 
+     if (I.isAssociative() && I.isCommutative()) {
+       if (simplifyAssocCastAssoc(&I, *this)) {
+-        Changed = true;
+         ++NumReassoc;
+-        continue;
++        return true;
+       }
+ 
+       // Transform: "(A op B) op C" ==> "(C op A) op B" if "C op A" simplifies.
+diff --git a/llvm/test/Transforms/InstCombine/or.ll b/llvm/test/Transforms/InstCombine/or.ll
+index 4126d653d2ad1..49364214574aa 100644
+--- a/llvm/test/Transforms/InstCombine/or.ll
++++ b/llvm/test/Transforms/InstCombine/or.ll
+@@ -4,6 +4,7 @@
+ 
+ target datalayout = "e-p:32:32:32-i1:8:8-i8:8:8-i16:16:16-i32:32:32-i64:32:64-f32:32:32-f64:32:64-v64:64:64-v128:128:128-a0:0:64-f80:128:128-n32:64"
+ declare void @use(i32)
++declare void @use_i8(i8)
+ 
+ ; Should be eliminated
+ define i32 @test12(i32 %A) {
+@@ -2386,3 +2387,71 @@ define i32 @signum_i32_or_wrong_ext(i32 %x) {
+   %r = or i32 %signbit, %sgt0ext
+   ret i32 %r
+ }
++
++; or disjoint(zext(xor X, C1), C2) -> xor(zext(X), C2 ^ zext(C1))
++define i32 @fold_disjoint_or_zext_xor(i8 %x) {
++; CHECK-LABEL: @fold_disjoint_or_zext_xor(
++; CHECK-NEXT:    [[TMP1:%.*]] = xor i8 [[X:%.*]], 3
++; CHECK-NEXT:    [[R:%.*]] = zext i8 [[TMP1]] to i32
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %a = xor i8 %x, 2
++  %z = zext i8 %a to i32
++  %r = or disjoint i32 %z, 1
++  ret i32 %r
++}
++
++define <2 x i32> @fold_disjoint_or_zext_xor_splat(<2 x i8> %x) {
++; CHECK-LABEL: @fold_disjoint_or_zext_xor_splat(
++; CHECK-NEXT:    [[TMP1:%.*]] = xor <2 x i8> [[X:%.*]], splat (i8 3)
++; CHECK-NEXT:    [[R:%.*]] = zext <2 x i8> [[TMP1]] to <2 x i32>
++; CHECK-NEXT:    ret <2 x i32> [[R]]
++;
++  %a = xor <2 x i8> %x, splat (i8 2)
++  %z = zext <2 x i8> %a to <2 x i32>
++  %r = or disjoint <2 x i32> %z, splat (i32 1)
++  ret <2 x i32> %r
++}
++
++define i32 @no_fold_or_zext_xor(i8 %x) {
++; CHECK-LABEL: @no_fold_or_zext_xor(
++; CHECK-NEXT:    [[TMP1:%.*]] = and i8 [[X:%.*]], -2
++; CHECK-NEXT:    [[TMP2:%.*]] = xor i8 [[TMP1]], 3
++; CHECK-NEXT:    [[R:%.*]] = zext i8 [[TMP2]] to i32
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %a = xor i8 %x, 2
++  %z = zext i8 %a to i32
++  %r = or i32 %z, 1
++  ret i32 %r
++}
++
++define i32 @no_fold_disjoint_or_zext_xor_zext_multi_use(i8 %x) {
++; CHECK-LABEL: @no_fold_disjoint_or_zext_xor_zext_multi_use(
++; CHECK-NEXT:    [[A:%.*]] = xor i8 [[X:%.*]], 2
++; CHECK-NEXT:    [[Z:%.*]] = zext i8 [[A]] to i32
++; CHECK-NEXT:    call void @use(i32 [[Z]])
++; CHECK-NEXT:    [[R:%.*]] = or disjoint i32 [[Z]], 1
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %a = xor i8 %x, 2
++  %z = zext i8 %a to i32
++  call void @use(i32 %z)
++  %r = or disjoint i32 %z, 1
++  ret i32 %r
++}
++
++define i32 @no_fold_disjoint_or_zext_xor_inner_multi_use(i8 %x) {
++; CHECK-LABEL: @no_fold_disjoint_or_zext_xor_inner_multi_use(
++; CHECK-NEXT:    [[A:%.*]] = xor i8 [[X:%.*]], 2
++; CHECK-NEXT:    call void @use_i8(i8 [[A]])
++; CHECK-NEXT:    [[TMP1:%.*]] = or i8 [[A]], 1
++; CHECK-NEXT:    [[R:%.*]] = zext i8 [[TMP1]] to i32
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %a = xor i8 %x, 2
++  call void @use_i8(i8 %a)
++  %z = zext i8 %a to i32
++  %r = or disjoint i32 %z, 1
++  ret i32 %r
++}
+diff --git a/llvm/test/Transforms/InstCombine/xor.ll b/llvm/test/Transforms/InstCombine/xor.ll
+index 3abaf74285cc0..6839984c8c5cd 100644
+--- a/llvm/test/Transforms/InstCombine/xor.ll
++++ b/llvm/test/Transforms/InstCombine/xor.ll
+@@ -7,6 +7,7 @@
+ declare i32 @llvm.ctlz.i32(i32, i1)
+ declare <2 x i8> @llvm.cttz.v2i8(<2 x i8>, i1)
+ declare void @use(i8)
++declare void @use_i32(i32)
+ 
+ define i1 @test0(i1 %A) {
+ ; CHECK-LABEL: @test0(
+@@ -1664,3 +1665,97 @@ entry:
+   %or = or <2 x i32> %add, %c
+   ret <2 x i32> %or
+ }
++
++; xor(zext(or disjoint X, NarrowC), WideC) ->
++; xor(zext(X), WideC ^ zext(NarrowC))
++
++define i32 @fold_zext_or_disjoint_xor_i8_to_i32(i8 %input) {
++; CHECK-LABEL: @fold_zext_or_disjoint_xor_i8_to_i32(
++; CHECK-NEXT:    [[Z:%.*]] = zext i8 [[INPUT:%.*]] to i32
++; CHECK-NEXT:    [[R:%.*]] = xor i32 [[Z]], 267
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %or = or disjoint i8 %input, 10
++  %z = zext i8 %or to i32
++  %r = xor i32 %z, 257
++  ret i32 %r
++}
++
++define i64 @fold_zext_or_disjoint_xor_i32_to_i64(i32 %x) {
++; CHECK-LABEL: @fold_zext_or_disjoint_xor_i32_to_i64(
++; CHECK-NEXT:    [[Z:%.*]] = zext i32 [[X:%.*]] to i64
++; CHECK-NEXT:    [[R:%.*]] = xor i64 [[Z]], 2611923443488327890
++; CHECK-NEXT:    ret i64 [[R]]
++;
++  %or = or disjoint i32 %x, 1
++  %z = zext i32 %or to i64
++  %r = xor i64 %z, 2611923443488327891
++  ret i64 %r
++}
++
++define i64 @fold_zext_or_disjoint_xor_nneg(i32 %x) {
++; CHECK-LABEL: @fold_zext_or_disjoint_xor_nneg(
++; CHECK-NEXT:    [[TMP1:%.*]] = zext nneg i32 [[X:%.*]] to i64
++; CHECK-NEXT:    [[R:%.*]] = xor i64 [[TMP1]], 7640891576939301128
++; CHECK-NEXT:    ret i64 [[R]]
++;
++  %or = or disjoint i32 %x, 16842752
++  %z = zext nneg i32 %or to i64
++  %r = xor i64 %z, 7640891576956012808
++  ret i64 %r
++}
++
++define <2 x i32> @fold_zext_or_disjoint_xor_splat_vector(<2 x i8> %x) {
++; CHECK-LABEL: @fold_zext_or_disjoint_xor_splat_vector(
++; CHECK-NEXT:    [[TMP1:%.*]] = zext <2 x i8> [[X:%.*]] to <2 x i32>
++; CHECK-NEXT:    [[R:%.*]] = xor <2 x i32> [[TMP1]], splat (i32 267)
++; CHECK-NEXT:    ret <2 x i32> [[R]]
++;
++  %or = or disjoint <2 x i8> %x, <i8 10, i8 10>
++  %z = zext <2 x i8> %or to <2 x i32>
++  %r = xor <2 x i32> %z, <i32 257, i32 257>
++  ret <2 x i32> %r
++}
++
++define i32 @no_fold_zext_plain_or_xor(i8 %x) {
++; CHECK-LABEL: @no_fold_zext_plain_or_xor(
++; CHECK-NEXT:    [[OR:%.*]] = or i8 [[X:%.*]], 2
++; CHECK-NEXT:    [[Z:%.*]] = zext i8 [[OR]] to i32
++; CHECK-NEXT:    [[R:%.*]] = xor i32 [[Z]], 257
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %or = or i8 %x, 2
++  %z = zext i8 %or to i32
++  %r = xor i32 %z, 257
++  ret i32 %r
++}
++
++define i32 @no_fold_zext_multi_use(i8 %x) {
++; CHECK-LABEL: @no_fold_zext_multi_use(
++; CHECK-NEXT:    [[OR:%.*]] = or disjoint i8 [[X:%.*]], 2
++; CHECK-NEXT:    [[Z:%.*]] = zext i8 [[OR]] to i32
++; CHECK-NEXT:    [[R:%.*]] = xor i32 [[Z]], 257
++; CHECK-NEXT:    call void @use_i32(i32 [[Z]])
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %or = or disjoint i8 %x, 2
++  %z = zext i8 %or to i32
++  %r = xor i32 %z, 257
++  call void @use_i32(i32 %z)
++  ret i32 %r
++}
++
++define i32 @no_fold_inner_or_multi_use(i8 %x) {
++; CHECK-LABEL: @no_fold_inner_or_multi_use(
++; CHECK-NEXT:    [[OR:%.*]] = or disjoint i8 [[X:%.*]], 2
++; CHECK-NEXT:    [[Z:%.*]] = zext i8 [[OR]] to i32
++; CHECK-NEXT:    [[R:%.*]] = xor i32 [[Z]], 257
++; CHECK-NEXT:    call void @use(i8 [[OR]])
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %or = or disjoint i8 %x, 2
++  %z = zext i8 %or to i32
++  %r = xor i32 %z, 257
++  call void @use(i8 %or)
++  ret i32 %r
++}
