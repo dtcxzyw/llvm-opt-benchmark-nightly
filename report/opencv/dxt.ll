@@ -204,7 +204,7 @@ _ZN2cvL23complementComplexOutputEiPhmiii.exit:    ; preds = %._crit_edge.i25.i, 
 define internal fastcc void @_ZN2cvL9ExpandCCSEPhii(ptr nofree noundef captures(none) %0, i32 noundef %1, i32 noundef %2) unnamed_addr #16 {
 bb.a:
   %i.a = icmp eq i32 %2, 4
-  %i.b = add nsw i32 %1, 1                        ; 4 uses
+  %i.b = add nuw nsw i32 %1, 1                    ; 4 uses
   %i.c = icmp sgt i32 %1, 2                       ; 2 uses
   br i1 %i.a, label %.preheader, label %.preheader62
 
@@ -212,12 +212,13 @@ bb.a:
   br i1 %i.c, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %.preheader62
-  %i.d = lshr i32 %i.b, 1                         ; 2 uses
+  %i.d = lshr i32 %i.b, 1
   %i.e = zext nneg i32 %1 to i64                  ; 3 uses
-  %wide.trip.count = zext nneg i32 %i.d to i64
+  %smax = tail call i32 @llvm.smax.i32(i32 %i.d, i32 2)
+  %wide.trip.count = zext nneg i32 %smax to i64
   %i.f = add nsw i64 %wide.trip.count, -1         ; 3 uses
   %xtraiter = and i64 %i.f, 1
-  %3 = icmp eq i32 %i.d, 2
+  %3 = icmp ult i32 %1, 5
   br i1 %3, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
@@ -228,12 +229,13 @@ bb.a:
   br i1 %i.c, label %.lr.ph70.preheader, label %._crit_edge71
 
 .lr.ph70.preheader:                               ; preds = %.preheader
-  %i.g = lshr i32 %i.b, 1                         ; 2 uses
+  %i.g = lshr i32 %i.b, 1
   %i.h = zext nneg i32 %1 to i64                  ; 3 uses
-  %wide.trip.count86 = zext nneg i32 %i.g to i64
+  %smax85 = tail call i32 @llvm.smax.i32(i32 %i.g, i32 2)
+  %wide.trip.count86 = zext nneg i32 %smax85 to i64
   %i.i = add nsw i64 %wide.trip.count86, -1       ; 3 uses
   %xtraiter113 = and i64 %i.i, 1
-  %4 = icmp eq i32 %i.g, 2
+  %4 = icmp ult i32 %1, 5
   br i1 %4, label %.lr.ph70.epil.preheader, label %.lr.ph70.preheader.new
 
 .lr.ph70.preheader.new:                           ; preds = %.lr.ph70.preheader
