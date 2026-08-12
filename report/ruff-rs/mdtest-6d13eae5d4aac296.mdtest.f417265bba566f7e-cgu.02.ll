@@ -203,8 +203,9 @@ bb.bs:                                            ; preds = %bb.br
 
 bb.bt:                                            ; preds = %bb.bu, %bb.bs
   %i.ea = load i64, ptr %i.w, align 8, !range !85, !noundef !4
-  %8 = icmp eq i64 %i.ea, 2
-  %or.cond183.not = and i1 %.sroa.010.0125, %8
+  %.off = add nsw i64 %i.ea, -2
+  %switch = icmp ult i64 %.off, -3
+  %or.cond183.not = and i1 %.sroa.010.0125, %switch
   br i1 %or.cond183.not, label %bb.bv, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs2AWtUsOyxgP_3std9backtrace9BacktraceECskXhPDodhyTq_6mdtest.exit114
 
 bb.bu:                                            ; preds = %bb.bs
@@ -215,7 +216,7 @@ bb.bu:                                            ; preds = %bb.bs
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs56aZGHL6Dc6_7ruff_db5panic7PayloadECskXhPDodhyTq_6mdtest(ptr %.val53, ptr nonnull %.val54) #25
           to label %bb.bt unwind label %bb.bk
 
-_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs2AWtUsOyxgP_3std9backtrace9BacktraceECskXhPDodhyTq_6mdtest.exit114: ; preds = %bb.bv, %bb.bt
+_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs2AWtUsOyxgP_3std9backtrace9BacktraceECskXhPDodhyTq_6mdtest.exit114: ; preds = %bb.bt, %bb.bv
   %i.ed = getelementptr inbounds nuw i8, ptr %i.w, i64 88
   %i.ee = load ptr, ptr %i.ed, align 8, !align !41, !noundef !4 ; 2 uses
   %i.ef = icmp ne ptr %i.ee, null

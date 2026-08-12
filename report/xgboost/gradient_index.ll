@@ -203,8 +203,6 @@ bb.a:
   %.sroa.speculated.i = tail call noundef i32 @llvm.smax.i32(i32 %i.o, i32 %i.m) ; 2 uses
   %i.p = icmp slt i32 %.sroa.speculated.i, 257
   %or.cond = and i1 %3, %i.p
-  %37 = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 6 uses
-  %38 = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 9 uses
   br i1 %or.cond, label %bb.b, label %bb.cn
 
 bb.b:                                             ; preds = %bb.a
@@ -213,6 +211,8 @@ bb.b:                                             ; preds = %bb.a
   store i64 %2, ptr %i.g, align 8, !tbaa !8
   call void @llvm.lifetime.start.p0(ptr nonnull %26) #8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #8
+  %37 = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
+  %38 = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
   %i.q = load i64, ptr %38, align 8, !tbaa !322   ; 2 uses
   store i64 %i.q, ptr %i.h, align 8, !tbaa !8
   %.not.i.i = icmp ult i64 %2, %i.q
@@ -615,6 +615,8 @@ bb.cn:                                            ; preds = %bb.a
   %i.hz = add i32 %.sroa.speculated.i, -257
   %i.ia = icmp ult i32 %i.hz, 65280
   %or.cond213 = and i1 %3, %i.ia
+  %39 = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 4 uses
+  %40 = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 6 uses
   br i1 %or.cond213, label %bb.co, label %bb.ga
 
 bb.co:                                            ; preds = %bb.cn
@@ -624,7 +626,7 @@ bb.co:                                            ; preds = %bb.cn
   store i64 %i.ib, ptr %i.d, align 8, !tbaa !8
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #8
-  %i.ic = load i64, ptr %38, align 8, !tbaa !322  ; 2 uses
+  %i.ic = load i64, ptr %40, align 8, !tbaa !322  ; 2 uses
   store i64 %i.ic, ptr %i.e, align 8, !tbaa !8
   %.not.i.i9 = icmp ult i64 %i.ib, %i.ic
   br i1 %.not.i.i9, label %_ZN4dmlc11LogCheck_GEImmEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_.exit.i92, label %_ZN4dmlc11LogCheck_GEImmEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_.exit.thread.i10
@@ -756,7 +758,7 @@ _ZNK7xgboost6common15RefResourceViewIhE8ResourceEv.exit.i14: ; preds = %bb.cx, %
   br i1 %.not111.i15, label %bb.cy, label %bb.dg
 
 bb.cy:                                            ; preds = %_ZNK7xgboost6common15RefResourceViewIhE8ResourceEv.exit.i14
-  %i.jf = load i64, ptr %38, align 8, !tbaa !322
+  %i.jf = load i64, ptr %40, align 8, !tbaa !322
   %i.jg = icmp eq i64 %i.jf, 0
   br i1 %i.jg, label %bb.de, label %bb.cz, !prof !140
 
@@ -1159,7 +1161,7 @@ bb.fb:                                            ; preds = %bb.fa, %bb.ez, %bb.
 
 bb.fc:                                            ; preds = %_ZNSt12__shared_ptrIN7xgboost6common14MallocResourceELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i53, %_ZN7xgboost6common15RefResourceViewIhED2Ev.exit.i90
   %i.nw = phi <2 x ptr> [ %i.ns, %_ZNSt12__shared_ptrIN7xgboost6common14MallocResourceELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i53 ], [ %i.jp, %_ZN7xgboost6common15RefResourceViewIhED2Ev.exit.i90 ]
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %37, ptr noundef nonnull align 8 dereferenceable(32) %18, i64 16, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %39, ptr noundef nonnull align 8 dereferenceable(32) %18, i64 16, i1 false)
   %i.nx = getelementptr inbounds nuw i8, ptr %18, i64 16
   %i.ny = getelementptr inbounds nuw i8, ptr %18, i64 24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.nx, i8 0, i64 16, i1 false)
@@ -1213,8 +1215,8 @@ bb.fi:                                            ; preds = %_ZN9__gnu_cxx27__ex
   br label %_ZN7xgboost6common15RefResourceViewIhEaSEOS2_.exit86.i60
 
 _ZN7xgboost6common15RefResourceViewIhEaSEOS2_.exit86.i60: ; preds = %bb.fi, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i84.i58, %bb.fe, %bb.fc
-  %i.op = load ptr, ptr %37, align 8, !tbaa !336  ; 2 uses
-  %i.oq = load i64, ptr %38, align 8, !tbaa !322  ; 2 uses
+  %i.op = load ptr, ptr %39, align 8, !tbaa !336  ; 2 uses
+  %i.oq = load i64, ptr %40, align 8, !tbaa !322  ; 2 uses
   %i.or = icmp ne ptr %i.op, null
   %i.os = icmp eq i64 %i.oq, 0
   %i.ot = or i1 %i.or, %i.os
@@ -1380,7 +1382,7 @@ bb.ga:                                            ; preds = %bb.cn
   store i64 %i.ql, ptr %i.a, align 8, !tbaa !8
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
-  %i.qm = load i64, ptr %38, align 8, !tbaa !322  ; 2 uses
+  %i.qm = load i64, ptr %40, align 8, !tbaa !322  ; 2 uses
   store i64 %i.qm, ptr %i.b, align 8, !tbaa !8
   %.not.i.i108 = icmp ult i64 %i.ql, %i.qm
   br i1 %.not.i.i108, label %_ZN4dmlc11LogCheck_GEImmEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_.exit.i191, label %_ZN4dmlc11LogCheck_GEImmEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_.exit.thread.i109
@@ -1512,7 +1514,7 @@ _ZNK7xgboost6common15RefResourceViewIhE8ResourceEv.exit.i113: ; preds = %bb.gj, 
   br i1 %.not111.i114, label %bb.gk, label %bb.gs
 
 bb.gk:                                            ; preds = %_ZNK7xgboost6common15RefResourceViewIhE8ResourceEv.exit.i113
-  %i.rp = load i64, ptr %38, align 8, !tbaa !322
+  %i.rp = load i64, ptr %40, align 8, !tbaa !322
   %i.rq = icmp eq i64 %i.rp, 0
   br i1 %i.rq, label %bb.gq, label %bb.gl, !prof !140
 
@@ -1915,7 +1917,7 @@ bb.in:                                            ; preds = %bb.im, %bb.il, %bb.
 
 bb.io:                                            ; preds = %_ZNSt12__shared_ptrIN7xgboost6common14MallocResourceELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i152, %_ZN7xgboost6common15RefResourceViewIhED2Ev.exit.i189
   %i.wg = phi <2 x ptr> [ %i.wc, %_ZNSt12__shared_ptrIN7xgboost6common14MallocResourceELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i152 ], [ %i.rz, %_ZN7xgboost6common15RefResourceViewIhED2Ev.exit.i189 ]
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %37, ptr noundef nonnull align 8 dereferenceable(32) %7, i64 16, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %39, ptr noundef nonnull align 8 dereferenceable(32) %7, i64 16, i1 false)
   %i.wh = getelementptr inbounds nuw i8, ptr %7, i64 16
   %i.wi = getelementptr inbounds nuw i8, ptr %7, i64 24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.wh, i8 0, i64 16, i1 false)
@@ -1969,8 +1971,8 @@ bb.iu:                                            ; preds = %_ZN9__gnu_cxx27__ex
   br label %_ZN7xgboost6common15RefResourceViewIhEaSEOS2_.exit86.i159
 
 _ZN7xgboost6common15RefResourceViewIhEaSEOS2_.exit86.i159: ; preds = %bb.iu, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i84.i157, %bb.iq, %bb.io
-  %i.wz = load ptr, ptr %37, align 8, !tbaa !336  ; 2 uses
-  %i.xa = load i64, ptr %38, align 8, !tbaa !322  ; 2 uses
+  %i.wz = load ptr, ptr %39, align 8, !tbaa !336  ; 2 uses
+  %i.xa = load i64, ptr %40, align 8, !tbaa !322  ; 2 uses
   %i.xb = icmp ne ptr %i.wz, null
   %i.xc = icmp eq i64 %i.xa, 0
   %i.xd = or i1 %i.xb, %i.xc
