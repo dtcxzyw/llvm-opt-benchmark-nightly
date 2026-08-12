@@ -204,15 +204,12 @@ bb.bz:                                            ; preds = %.lr.ph357, %bb.bz
   %i.lx = getelementptr i8, ptr %i.ab, i64 64     ; 4 uses
   %i.ly = getelementptr i8, ptr %i.ab, i64 72     ; 3 uses
   %.not214 = icmp eq ptr %.val239.pre, null
-  br label %2
-
-2:                                                ; preds = %.lr.ph361, %.loopexit
-  %indvars.iv383 = phi i64 [ 0, %.lr.ph361 ], [ %indvars.iv.next384, %.loopexit ] ; 5 uses
-  %3 = getelementptr inbounds nuw [12 x i8], ptr %.val239.pre, i64 %indvars.iv383 ; 13 uses
   br i1 %.not214, label %.critedge4, label %bb.ca
 
-bb.ca:                                            ; preds = %2
-  %i.lz = getelementptr inbounds nuw i8, ptr %3, i64 8
+bb.ca:                                            ; preds = %.lr.ph361, %.loopexit
+  %indvars.iv383 = phi i64 [ %indvars.iv.next384, %.loopexit ], [ 0, %.lr.ph361 ] ; 5 uses
+  %2 = getelementptr inbounds nuw [12 x i8], ptr %.val239.pre, i64 %indvars.iv383 ; 13 uses
+  %i.lz = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.ma = load i32, ptr %i.lz, align 4, !tbaa !136 ; 3 uses
   %i.mb = getelementptr inbounds nuw [4 x i8], ptr %i.lt, i64 %indvars.iv383
   store i32 %i.ma, ptr %i.mb, align 4, !tbaa !24
@@ -224,7 +221,7 @@ Gla_ManObj.exit:                                  ; preds = %bb.ca
   %i.md = getelementptr inbounds [40 x i8], ptr %i.lp, i64 %i.mc ; 5 uses
   %i.me = trunc nuw nsw i64 %indvars.iv383 to i32
   store i32 %i.me, ptr %i.md, align 8, !tbaa !26
-  %.val249 = load i64, ptr %3, align 4
+  %.val249 = load i64, ptr %2, align 4
   %i.mf = trunc i64 %.val249 to i32
   %i.mg = getelementptr inbounds nuw i8, ptr %i.md, i64 4 ; 14 uses
   %i.mh = load i32, ptr %i.mg, align 4
@@ -232,13 +229,13 @@ Gla_ManObj.exit:                                  ; preds = %bb.ca
   %i.mj = and i32 %i.mi, 2
   %i.mk = and i32 %i.mh, -7
   %i.ml = or disjoint i32 %i.mj, %i.mk
-  %.val251 = load i64, ptr %3, align 4
+  %.val251 = load i64, ptr %2, align 4
   %i.mm = and i64 %.val251, 2305843005455597567
   %narrow.i = icmp eq i64 %i.mm, 2305843005455597567
   %i.mn = select i1 %narrow.i, i32 4, i32 0
   %i.mo = or disjoint i32 %i.mn, %i.ml            ; 2 uses
   store i32 %i.mo, ptr %i.mg, align 4
-  %.val238 = load i64, ptr %3, align 4            ; 2 uses
+  %.val238 = load i64, ptr %2, align 4            ; 2 uses
   %i.mp = and i64 %.val238, 2684354559
   %narrow.i.not.i = icmp eq i64 %i.mp, 2684354559
   br i1 %narrow.i.not.i, label %bb.cb, label %Gia_ObjIsPi.exit
@@ -261,7 +258,7 @@ Gia_ObjIsPi.exit:                                 ; preds = %Gla_ManObj.exit, %b
   %i.my = and i32 %i.mo, -9
   %i.mz = or disjoint i32 %i.mx, %i.my            ; 2 uses
   store i32 %i.mz, ptr %i.mg, align 4
-  %.val246 = load i64, ptr %3, align 4            ; 3 uses
+  %.val246 = load i64, ptr %2, align 4            ; 3 uses
   %i.na = and i64 %.val246, 2147483648
   %.not.i.i297 = icmp eq i64 %i.na, 0
   %i.nb = and i64 %.val246, 536870911
@@ -287,7 +284,7 @@ Gia_ObjIsPo.exit:                                 ; preds = %Gia_ObjIsPi.exit, %
   %i.nl = and i32 %i.mz, -17
   %i.nm = or disjoint i32 %i.nk, %i.nl            ; 2 uses
   store i32 %i.nm, ptr %i.mg, align 4
-  %.val247 = load i64, ptr %3, align 4            ; 3 uses
+  %.val247 = load i64, ptr %2, align 4            ; 3 uses
   %i.nn = and i64 %.val247, 2147483648
   %.not.i.i299 = icmp eq i64 %i.nn, 0
   %i.no = and i64 %.val247, 536870911
@@ -313,7 +310,7 @@ Gia_ObjIsRi.exit:                                 ; preds = %Gia_ObjIsPo.exit, %
   %i.nx = and i32 %i.nm, -65
   %i.ny = or disjoint i32 %i.nw, %i.nx            ; 2 uses
   store i32 %i.ny, ptr %i.mg, align 4
-  %.val252 = load i64, ptr %3, align 4            ; 2 uses
+  %.val252 = load i64, ptr %2, align 4            ; 2 uses
   %i.nz = and i64 %.val252, 2684354559
   %narrow.i.not.i304 = icmp eq i64 %i.nz, 2684354559
   br i1 %narrow.i.not.i304, label %bb.ce, label %Gia_ObjIsRo.exit
@@ -335,7 +332,7 @@ Gia_ObjIsRo.exit:                                 ; preds = %Gia_ObjIsRi.exit, %
   %i.og = phi i32 [ 0, %Gia_ObjIsRi.exit ], [ %i.of, %bb.ce ]
   %i.oh = and i32 %i.ny, -161
   %i.oi = or disjoint i32 %i.og, %i.oh
-  %.val254 = load i64, ptr %3, align 4            ; 2 uses
+  %.val254 = load i64, ptr %2, align 4            ; 2 uses
   %i.oj = and i64 %.val254, 2147483648
   %.not.i308 = icmp eq i64 %i.oj, 0
   %i.ok = and i64 %.val254, 536870911
@@ -344,7 +341,7 @@ Gia_ObjIsRo.exit:                                 ; preds = %Gia_ObjIsRi.exit, %
   %i.om = select i1 %narrow.i309, i32 128, i32 0
   %i.on = or disjoint i32 %i.om, %i.oi            ; 4 uses
   store i32 %i.on, ptr %i.mg, align 4
-  %.val250 = load i64, ptr %3, align 4            ; 5 uses
+  %.val250 = load i64, ptr %2, align 4            ; 5 uses
   %i.oo = and i64 %.val250, 2305843005455597567
   %narrow.i310.not = icmp eq i64 %i.oo, 2305843005455597567
   br i1 %narrow.i310.not, label %.loopexit, label %bb.cf
@@ -378,10 +375,10 @@ bb.cg:                                            ; preds = %Gia_ObjIsPi.exit315
   %i.oy = and i32 %i.on, 511
   %i.oz = or disjoint i32 %i.oy, 512
   store i32 %i.oz, ptr %i.mg, align 4
-  %i.pa = load i64, ptr %3, align 4
+  %i.pa = load i64, ptr %2, align 4
   %i.pb = and i64 %i.pa, 536870911
   %i.pc = sub nsw i64 0, %i.pb
-  %i.pd = getelementptr inbounds [12 x i8], ptr %3, i64 %i.pc
+  %i.pd = getelementptr inbounds [12 x i8], ptr %2, i64 %i.pc
   %i.pe = getelementptr inbounds nuw i8, ptr %i.pd, i64 8
   %i.pf = load i32, ptr %i.pe, align 4, !tbaa !136
   %i.pg = getelementptr inbounds nuw i8, ptr %i.md, i64 8
@@ -491,7 +488,7 @@ bb.cq:                                            ; preds = %bb.ch
   %i.rl = and i32 %i.on, 511
   %i.rm = or disjoint i32 %i.rl, 512              ; 2 uses
   store i32 %i.rm, ptr %i.mg, align 4
-  %.val242 = load i64, ptr %3, align 4
+  %.val242 = load i64, ptr %2, align 4
   %.val6.i = load ptr, ptr %i.ly, align 8, !tbaa !83 ; 2 uses
   %i.rn = getelementptr i8, ptr %.val6.i, i64 4   ; 2 uses
   %.val6.val.i = load i32, ptr %i.rn, align 4, !tbaa !8
@@ -518,7 +515,7 @@ bb.cq:                                            ; preds = %bb.ch
   %i.sf = load i32, ptr %i.se, align 4, !tbaa !136
   %i.sg = getelementptr inbounds nuw i8, ptr %i.md, i64 8
   store i32 %i.sf, ptr %i.sg, align 8, !tbaa !24
-  %.val241 = load i64, ptr %3, align 4
+  %.val241 = load i64, ptr %2, align 4
   %.val6.val.i323 = load i32, ptr %i.rn, align 4, !tbaa !8
   %.val7.val.i325 = load i32, ptr %i.ro, align 4, !tbaa !8
   %i.sh = lshr i64 %.val241, 32
@@ -543,9 +540,9 @@ bb.cq:                                            ; preds = %bb.ch
 .loopexit:                                        ; preds = %bb.co, %bb.cp, %bb.ca, %Gia_ObjIsRo.exit, %Gia_ObjIsPi.exit315, %bb.cq, %bb.cg
   %indvars.iv.next384 = add nuw nsw i64 %indvars.iv383, 1 ; 2 uses
   %i.sw = icmp slt i64 %indvars.iv.next384, %i.lr
-  br i1 %i.sw, label %2, label %.critedge4, !llvm.loop !162
+  br i1 %i.sw, label %bb.ca, label %.critedge4, !llvm.loop !162
 
-.critedge4:                                       ; preds = %2, %.loopexit, %._crit_edge
+.critedge4:                                       ; preds = %.loopexit, %.lr.ph361, %._crit_edge
   %i.sx = getelementptr i8, ptr %i.ab, i64 72
   %.val240 = load ptr, ptr %i.sx, align 8, !tbaa !83
   %i.sy = getelementptr i8, ptr %.val240, i64 8

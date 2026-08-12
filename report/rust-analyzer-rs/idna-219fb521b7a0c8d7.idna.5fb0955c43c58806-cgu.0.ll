@@ -203,7 +203,7 @@ bb.ad:                                            ; preds = %bb.y, %bb.ab
   %i.fz = icmp eq i64 %.idx836, 4
   br i1 %i.fz, label %._crit_edge807.thread.thread, label %.lr.ph806.jt0
 
-.lr.ph806:                                        ; preds = %11
+.lr.ph806:                                        ; preds = %bb.aq
   %i.ga = getelementptr inbounds nuw i8, ptr %i.jv, i64 4 ; 6 uses
   %i.gb = load i32, ptr %i.jv, align 4, !range !19, !noundef !12 ; 4 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !539)
@@ -242,9 +242,9 @@ bb.ad:                                            ; preds = %bb.y, %bb.ab
   %.not.i184.not.jt1 = icmp samesign ugt i32 %i.go, %..i183.jt1
   br i1 %.not.i184.not.jt1, label %bb.al, label %bb.ah
 
-._crit_edge807:                                   ; preds = %11, %bb.au
-  %.lcssa = phi i8 [ %.ph1262, %bb.au ], [ 1, %11 ]
-  %.sroa.097.0.lcssa = phi i8 [ 1, %bb.au ], [ %.sroa.097.08031156.ph, %11 ] ; 2 uses
+._crit_edge807:                                   ; preds = %bb.aq, %bb.au
+  %.lcssa = phi i8 [ %.ph1262, %bb.au ], [ 1, %bb.aq ]
+  %.sroa.097.0.lcssa = phi i8 [ 1, %bb.au ], [ %.sroa.097.08031156.ph, %bb.aq ] ; 2 uses
   %i.gr = icmp eq i8 %.sroa.097.0.lcssa, 1
   %i.gs = icmp eq i8 %.sroa.0129.0, 5
   %or.cond = and i1 %i.gs, %i.gr
@@ -390,12 +390,14 @@ bb.ap:                                            ; preds = %bb.ah, %bb.al
   %.ph1269 = phi ptr [ %i.gn, %bb.ap ], [ %i.gf, %bb.an ], [ %i.gj, %bb.ao ]
   %.sroa.097.08031156.ph = phi i8 [ 1, %bb.ap ], [ 0, %bb.an ], [ 2, %bb.ao ] ; 2 uses
   %.sroa.0100.08041153.ph = phi ptr [ %i.jz, %bb.ap ], [ %.sroa.0100.0804.jt0, %bb.an ], [ %i.jx, %bb.ao ]
-  br label %bb.aq
+  br i1 %6, label %bb.as, label %bb.aq
 
 bb.aq:                                            ; preds = %.preheader1268, %bb.am
   %i.jv = phi ptr [ %i.ga, %bb.am ], [ %.ph1269, %.preheader1268 ] ; 6 uses
   %.sroa.0100.08041153 = phi ptr [ %i.jv, %bb.am ], [ %.sroa.0100.08041153.ph, %.preheader1268 ]
-  br i1 %6, label %bb.as, label %11
+  store i32 65533, ptr %.sroa.0100.08041153, align 4
+  %11 = icmp eq ptr %i.jv, %i.ft
+  br i1 %11, label %._crit_edge807, label %.lr.ph806
 
 bb.ar:                                            ; preds = %bb.am
   switch i8 %.sroa.097.08031156.ph, label %default.unreachable [
@@ -404,12 +406,7 @@ bb.ar:                                            ; preds = %bb.am
     i8 2, label %.thread1178
   ]
 
-11:                                               ; preds = %bb.aq
-  store i32 65533, ptr %.sroa.0100.08041153, align 4
-  %12 = icmp eq ptr %i.jv, %i.ft
-  br i1 %12, label %._crit_edge807, label %.lr.ph806
-
-bb.as:                                            ; preds = %bb.aq
+bb.as:                                            ; preds = %.preheader1268
   store i128 4722366482869645213696, ptr %0, align 8
   br label %bb.l
 

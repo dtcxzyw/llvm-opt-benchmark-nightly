@@ -204,7 +204,7 @@ _RNvMs_NtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules19flake8_tidy_imports5rules27bann
   tail call void @llvm.assume(i1 %i.ba)
   %i.bb = xor i64 %i.az, -9223372036854775808     ; 2 uses
   %i.bc = icmp ult i64 %i.bb, 3
-  %i.bd = select i1 %i.bc, i64 %i.bb, i64 1       ; 2 uses
+  %i.bd = select i1 %i.bc, i64 %i.bb, i64 1       ; 3 uses
   switch i64 %i.bd, label %bb.n [
     i64 0, label %bb.o
     i64 1, label %bb.p
@@ -410,23 +410,21 @@ _RNvXs0_NtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules19flake8_tidy_imports5rules27ban
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
   %.sroa.1136.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 2 uses
   %.sroa.14.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 24 ; 2 uses
+  %cond = icmp eq i64 %i.bd, 2
+  br i1 %cond, label %.loopexit, label %_RNvXs0_NtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules19flake8_tidy_imports5rules27banned_module_level_importsRNtB5_26BannedModuleImportPoliciesNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits7collect12IntoIterator9into_iter.exit.split.preheader
+
+_RNvXs0_NtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules19flake8_tidy_imports5rules27banned_module_level_importsRNtB5_26BannedModuleImportPoliciesNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits7collect12IntoIterator9into_iter.exit.split.preheader: ; preds = %_RNvXs0_NtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules19flake8_tidy_imports5rules27banned_module_level_importsRNtB5_26BannedModuleImportPoliciesNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits7collect12IntoIterator9into_iter.exit
+  %2 = icmp eq i64 %i.bd, 0
   br label %bb.al
 
-bb.al:                                            ; preds = %bb.bd, %_RNvXs0_NtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules19flake8_tidy_imports5rules27banned_module_level_importsRNtB5_26BannedModuleImportPoliciesNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits7collect12IntoIterator9into_iter.exit
-  %.sroa.16.0 = phi ptr [ %.sroa.10.1, %_RNvXs0_NtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules19flake8_tidy_imports5rules27banned_module_level_importsRNtB5_26BannedModuleImportPoliciesNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits7collect12IntoIterator9into_iter.exit ], [ %.sroa.16.260, %bb.bd ] ; 3 uses
-  %.sroa.13.0 = phi i64 [ %.sroa.9.0..sroa.9.0..sroa.9.0.copyload, %_RNvXs0_NtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules19flake8_tidy_imports5rules27banned_module_level_importsRNtB5_26BannedModuleImportPoliciesNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits7collect12IntoIterator9into_iter.exit ], [ %.sroa.13.162, %bb.bd ] ; 2 uses
-  %.sroa.14.0 = phi i64 [ undef, %_RNvXs0_NtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules19flake8_tidy_imports5rules27banned_module_level_importsRNtB5_26BannedModuleImportPoliciesNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits7collect12IntoIterator9into_iter.exit ], [ %.sroa.14.164, %bb.bd ] ; 3 uses
-  %.sroa.531.0 = phi i64 [ %.sroa.5.0..sroa.5.0..sroa.5.0.copyload, %_RNvXs0_NtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules19flake8_tidy_imports5rules27banned_module_level_importsRNtB5_26BannedModuleImportPoliciesNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits7collect12IntoIterator9into_iter.exit ], [ %.sroa.531.166, %bb.bd ] ; 7 uses
-  %.sroa.03.0 = phi i1 [ false, %_RNvXs0_NtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules19flake8_tidy_imports5rules27banned_module_level_importsRNtB5_26BannedModuleImportPoliciesNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits7collect12IntoIterator9into_iter.exit ], [ %.sroa.03.1, %bb.bd ] ; 4 uses
-  %.sroa.0.0 = phi i1 [ true, %_RNvXs0_NtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules19flake8_tidy_imports5rules27banned_module_level_importsRNtB5_26BannedModuleImportPoliciesNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits7collect12IntoIterator9into_iter.exit ], [ %.sroa.0.1, %bb.bd ] ; 5 uses
-  switch i64 %i.bd, label %default.unreachable47.i [
-    i64 0, label %bb.am
-    i64 1, label %bb.an
-    i64 2, label %.loopexit
-  ]
-
-default.unreachable47.i:                          ; preds = %bb.al
-  unreachable
+bb.al:                                            ; preds = %_RNvXs0_NtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules19flake8_tidy_imports5rules27banned_module_level_importsRNtB5_26BannedModuleImportPoliciesNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits7collect12IntoIterator9into_iter.exit.split.preheader, %bb.bd
+  %.sroa.16.0 = phi ptr [ %.sroa.16.260, %bb.bd ], [ %.sroa.10.1, %_RNvXs0_NtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules19flake8_tidy_imports5rules27banned_module_level_importsRNtB5_26BannedModuleImportPoliciesNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits7collect12IntoIterator9into_iter.exit.split.preheader ] ; 3 uses
+  %.sroa.13.0 = phi i64 [ %.sroa.13.162, %bb.bd ], [ %.sroa.9.0..sroa.9.0..sroa.9.0.copyload, %_RNvXs0_NtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules19flake8_tidy_imports5rules27banned_module_level_importsRNtB5_26BannedModuleImportPoliciesNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits7collect12IntoIterator9into_iter.exit.split.preheader ] ; 2 uses
+  %.sroa.14.0 = phi i64 [ %.sroa.14.164, %bb.bd ], [ undef, %_RNvXs0_NtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules19flake8_tidy_imports5rules27banned_module_level_importsRNtB5_26BannedModuleImportPoliciesNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits7collect12IntoIterator9into_iter.exit.split.preheader ] ; 3 uses
+  %.sroa.531.0 = phi i64 [ %.sroa.531.166, %bb.bd ], [ %.sroa.5.0..sroa.5.0..sroa.5.0.copyload, %_RNvXs0_NtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules19flake8_tidy_imports5rules27banned_module_level_importsRNtB5_26BannedModuleImportPoliciesNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits7collect12IntoIterator9into_iter.exit.split.preheader ] ; 7 uses
+  %.sroa.03.0 = phi i1 [ %.sroa.03.1, %bb.bd ], [ false, %_RNvXs0_NtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules19flake8_tidy_imports5rules27banned_module_level_importsRNtB5_26BannedModuleImportPoliciesNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits7collect12IntoIterator9into_iter.exit.split.preheader ] ; 4 uses
+  %.sroa.0.0 = phi i1 [ %.sroa.0.1, %bb.bd ], [ true, %_RNvXs0_NtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules19flake8_tidy_imports5rules27banned_module_level_importsRNtB5_26BannedModuleImportPoliciesNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits7collect12IntoIterator9into_iter.exit.split.preheader ] ; 5 uses
+  br i1 %2, label %bb.am, label %bb.an
 
 bb.am:                                            ; preds = %bb.al
   %i.cw = icmp eq i64 %.sroa.531.0, %.sroa.7.0..sroa.7.0..sroa.7.0.copyload
@@ -497,9 +495,9 @@ _RNvXsl_NtCskLngH8kgpZI_15ruff_python_ast4nameNtB5_4NameINtNtCs4NRVxsYgnAr_4core
   %i.ed = ptrtoint ptr %.sroa.01.0.i36.i to i64
   br label %bb.au
 
-.loopexit:                                        ; preds = %bb.al, %bb.am, %bb.an, %.preheader.i
-  %.sroa.03.098 = phi i1 [ %.sroa.03.0, %.preheader.i ], [ %.sroa.03.0, %bb.am ], [ %.sroa.03.0, %bb.an ], [ false, %bb.al ]
-  %.sroa.0.092 = phi i1 [ %.sroa.0.0, %.preheader.i ], [ %.sroa.0.0, %bb.am ], [ %.sroa.0.0, %bb.an ], [ true, %bb.al ]
+.loopexit:                                        ; preds = %bb.an, %bb.am, %.preheader.i, %_RNvXs0_NtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules19flake8_tidy_imports5rules27banned_module_level_importsRNtB5_26BannedModuleImportPoliciesNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits7collect12IntoIterator9into_iter.exit
+  %.sroa.03.098 = phi i1 [ %.sroa.03.0, %.preheader.i ], [ false, %_RNvXs0_NtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules19flake8_tidy_imports5rules27banned_module_level_importsRNtB5_26BannedModuleImportPoliciesNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits7collect12IntoIterator9into_iter.exit ], [ %.sroa.03.0, %bb.am ], [ %.sroa.03.0, %bb.an ]
+  %.sroa.0.092 = phi i1 [ %.sroa.0.0, %.preheader.i ], [ true, %_RNvXs0_NtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules19flake8_tidy_imports5rules27banned_module_level_importsRNtB5_26BannedModuleImportPoliciesNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits7collect12IntoIterator9into_iter.exit ], [ %.sroa.0.0, %bb.am ], [ %.sroa.0.0, %bb.an ]
   %i.ee = load i64, ptr %i.e, align 8, !range !1169, !alias.scope !4982, !noundef !12 ; 2 uses
   %i.ef = icmp ne i64 %i.ee, -9223372036854775807
   call void @llvm.assume(i1 %i.ef)

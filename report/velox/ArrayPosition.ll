@@ -204,24 +204,21 @@ bb.n:                                             ; preds = %bb.m
   %i.dg = icmp samesign ult i32 %i.db, 5
   %i.dh = icmp eq ptr %.sroa.2.0.copyload.i18.us66, %.sroa.2.0.copyload.i
   %or.cond.us70 = select i1 %i.dg, i1 true, i1 %i.dh
-  br label %_ZNK8facebook5velox13DecodedVector7valueAtINS0_10StringViewEEET_i.exit21.us62
+  br i1 %.not.i.i22.us67, label %_ZNK8facebook5velox13DecodedVector7valueAtINS0_10StringViewEEET_i.exit21.us62, label %_ZN8facebook5velox10FlatVectorIlE3setEil.exit.thread
 
 _ZNK8facebook5velox13DecodedVector7valueAtINS0_10StringViewEEET_i.exit21.us62: ; preds = %.lr.ph.split.split.split.us.split, %.critedge.us71
   %indvars.iv93 = phi i64 [ %indvars.iv.next94, %.critedge.us71 ], [ 0, %.lr.ph.split.split.split.us.split ] ; 3 uses
-  br i1 %.not.i.i22.us67, label %2, label %.critedge.us71
-
-2:                                                ; preds = %_ZNK8facebook5velox13DecodedVector7valueAtINS0_10StringViewEEET_i.exit21.us62
   br i1 %i.dc, label %bb.o, label %.split37.us68
 
-.split37.us68:                                    ; preds = %2
+.split37.us68:                                    ; preds = %_ZNK8facebook5velox13DecodedVector7valueAtINS0_10StringViewEEET_i.exit21.us62
   %bcmp.i.i.us69 = tail call i32 @bcmp(ptr nonnull %i.dd, ptr nonnull %i.as, i64 %i.df)
   %i.di = icmp eq i32 %bcmp.i.i.us69, 0
   br i1 %i.di, label %_ZN8facebook5velox9functions12_GLOBAL__N_116isPrimitiveEqualINS0_10StringViewEEEbRKT_S7_.exit.thread, label %.critedge.us71
 
-bb.o:                                             ; preds = %2
+bb.o:                                             ; preds = %_ZNK8facebook5velox13DecodedVector7valueAtINS0_10StringViewEEET_i.exit21.us62
   br i1 %or.cond.us70, label %_ZN8facebook5velox9functions12_GLOBAL__N_116isPrimitiveEqualINS0_10StringViewEEEbRKT_S7_.exit.thread, label %.critedge.us71
 
-.critedge.us71:                                   ; preds = %bb.o, %.split37.us68, %_ZNK8facebook5velox13DecodedVector7valueAtINS0_10StringViewEEET_i.exit21.us62
+.critedge.us71:                                   ; preds = %bb.o, %.split37.us68
   %indvars.iv.next94 = add nuw nsw i64 %indvars.iv93, 1 ; 2 uses
   %exitcond97.not = icmp eq i64 %indvars.iv.next94, %wide.trip.count96
   br i1 %exitcond97.not, label %_ZN8facebook5velox10FlatVectorIlE3setEil.exit.thread, label %_ZNK8facebook5velox13DecodedVector7valueAtINS0_10StringViewEEET_i.exit21.us62, !llvm.loop !3521
@@ -341,7 +338,7 @@ _ZN8facebook5velox10FlatVectorIlE3setEil.exit:    ; preds = %_ZNK8facebook5velox
   %i.fg = icmp eq i32 %.041, %i.k
   br i1 %i.fg, label %_ZN8facebook5velox10FlatVectorIlE3setEil.exit.thread, label %_ZN8facebook5velox10FlatVectorIlE3setEil.exit30
 
-_ZN8facebook5velox10FlatVectorIlE3setEil.exit.thread: ; preds = %.critedge, %.critedge.us71, %.critedge.us55, %.critedge.us, %.lr.ph.split.split.split.us, %_ZN8facebook5velox10FlatVectorIlE3setEil.exit
+_ZN8facebook5velox10FlatVectorIlE3setEil.exit.thread: ; preds = %.critedge, %.critedge.us71, %.critedge.us55, %.critedge.us, %.lr.ph.split.split.split.us.split, %.lr.ph.split.split.split.us, %_ZN8facebook5velox10FlatVectorIlE3setEil.exit
   %i.fh = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.fi = load ptr, ptr %i.fh, align 8, !tbaa !3522, !nonnull !76, !align !277 ; 5 uses
   %i.fj = getelementptr inbounds nuw i8, ptr %i.fi, i64 144 ; 2 uses
@@ -744,24 +741,21 @@ bb.n:                                             ; preds = %bb.m
   %i.dg = icmp samesign ult i32 %i.db, 5
   %i.dh = icmp eq ptr %.sroa.2.0.copyload.i18.us66, %.sroa.2.0.copyload.i
   %or.cond.us70 = select i1 %i.dg, i1 true, i1 %i.dh
-  br label %_ZNK8facebook5velox13DecodedVector7valueAtINS0_10StringViewEEET_i.exit21.us62
+  br i1 %.not.i.i22.us67, label %_ZNK8facebook5velox13DecodedVector7valueAtINS0_10StringViewEEET_i.exit21.us62, label %_ZN8facebook5velox10FlatVectorIlE3setEil.exit.thread
 
 _ZNK8facebook5velox13DecodedVector7valueAtINS0_10StringViewEEET_i.exit21.us62: ; preds = %.lr.ph.split.split.split.us.split, %.critedge.us71
   %indvars.iv93 = phi i64 [ %indvars.iv.next94, %.critedge.us71 ], [ 0, %.lr.ph.split.split.split.us.split ] ; 3 uses
-  br i1 %.not.i.i22.us67, label %2, label %.critedge.us71
-
-2:                                                ; preds = %_ZNK8facebook5velox13DecodedVector7valueAtINS0_10StringViewEEET_i.exit21.us62
   br i1 %i.dc, label %bb.o, label %.split37.us68
 
-.split37.us68:                                    ; preds = %2
+.split37.us68:                                    ; preds = %_ZNK8facebook5velox13DecodedVector7valueAtINS0_10StringViewEEET_i.exit21.us62
   %bcmp.i.i.us69 = tail call i32 @bcmp(ptr nonnull %i.dd, ptr nonnull %i.as, i64 %i.df)
   %i.di = icmp eq i32 %bcmp.i.i.us69, 0
   br i1 %i.di, label %_ZN8facebook5velox9functions12_GLOBAL__N_116isPrimitiveEqualINS0_10StringViewEEEbRKT_S7_.exit.thread, label %.critedge.us71
 
-bb.o:                                             ; preds = %2
+bb.o:                                             ; preds = %_ZNK8facebook5velox13DecodedVector7valueAtINS0_10StringViewEEET_i.exit21.us62
   br i1 %or.cond.us70, label %_ZN8facebook5velox9functions12_GLOBAL__N_116isPrimitiveEqualINS0_10StringViewEEEbRKT_S7_.exit.thread, label %.critedge.us71
 
-.critedge.us71:                                   ; preds = %bb.o, %.split37.us68, %_ZNK8facebook5velox13DecodedVector7valueAtINS0_10StringViewEEET_i.exit21.us62
+.critedge.us71:                                   ; preds = %bb.o, %.split37.us68
   %indvars.iv.next94 = add nuw nsw i64 %indvars.iv93, 1 ; 2 uses
   %exitcond97.not = icmp eq i64 %indvars.iv.next94, %wide.trip.count96
   br i1 %exitcond97.not, label %_ZN8facebook5velox10FlatVectorIlE3setEil.exit.thread, label %_ZNK8facebook5velox13DecodedVector7valueAtINS0_10StringViewEEET_i.exit21.us62, !llvm.loop !3537
@@ -881,7 +875,7 @@ _ZN8facebook5velox10FlatVectorIlE3setEil.exit:    ; preds = %_ZNK8facebook5velox
   %i.fg = icmp eq i32 %.041, %i.k
   br i1 %i.fg, label %_ZN8facebook5velox10FlatVectorIlE3setEil.exit.thread, label %_ZN8facebook5velox10FlatVectorIlE3setEil.exit30
 
-_ZN8facebook5velox10FlatVectorIlE3setEil.exit.thread: ; preds = %.critedge, %.critedge.us71, %.critedge.us55, %.critedge.us, %.lr.ph.split.split.split.us, %_ZN8facebook5velox10FlatVectorIlE3setEil.exit
+_ZN8facebook5velox10FlatVectorIlE3setEil.exit.thread: ; preds = %.critedge, %.critedge.us71, %.critedge.us55, %.critedge.us, %.lr.ph.split.split.split.us.split, %.lr.ph.split.split.split.us, %_ZN8facebook5velox10FlatVectorIlE3setEil.exit
   %i.fh = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.fi = load ptr, ptr %i.fh, align 8, !tbaa !3538, !nonnull !76, !align !277 ; 5 uses
   %i.fj = getelementptr inbounds nuw i8, ptr %i.fi, i64 144 ; 2 uses

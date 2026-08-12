@@ -202,11 +202,12 @@ middle.block:                                     ; preds = %vector.body
   br i1 %i.hn, label %.preheader519.lr.ph, label %.loopexit
 
 .preheader519.lr.ph:                              ; preds = %.preheader520
-  %2 = icmp sgt i32 %.0438540, 0
-  %3 = icmp sgt i32 %.0440542, 0
+  %2 = icmp slt i32 %.0438540, 1
+  %3 = icmp slt i32 %.0440542, 1
   %i.ho = mul nsw i32 %.0427, %.0440542
   %i.hp = mul nsw i32 %.0426, %.0438540
-  br i1 %2, label %.preheader519, label %.loopexit
+  %brmerge = select i1 %2, i1 true, i1 %3
+  br i1 %brmerge, label %.loopexit, label %.preheader519
 
 .preheader516:                                    ; preds = %._crit_edge
   %i.hq = icmp sgt i32 %.0438540, 0
@@ -308,7 +309,7 @@ bb.v:                                             ; preds = %.preheader515, %bb.
   br i1 %exitcond712.not, label %.loopexit, label %.preheader515, !llvm.loop !27
 
 .preheader519:                                    ; preds = %.preheader519.lr.ph, %._crit_edge597
-  %.3600 = phi i32 [ %.us-phi, %._crit_edge597 ], [ 0, %.preheader519.lr.ph ] ; 2 uses
+  %.3600 = phi i64 [ %indvars.iv.next703, %._crit_edge597 ], [ 0, %.preheader519.lr.ph ]
   %.0398599 = phi i32 [ %i.kl, %._crit_edge597 ], [ 0, %.preheader519.lr.ph ] ; 2 uses
   %i.jk = add nsw i32 %.0398599, %.0425           ; 2 uses
   %i.jl = mul nsw i32 %i.jk, %.0448550
@@ -316,15 +317,11 @@ bb.v:                                             ; preds = %.preheader515, %bb.
   %i.jn = add nsw i32 %i.jk, 1
   %i.jo = mul nsw i32 %i.jn, %.0448550
   %i.jp = add nsw i32 %i.jo, 31
-  br i1 %3, label %.preheader518.us.preheader, label %._crit_edge597
-
-.preheader518.us.preheader:                       ; preds = %.preheader519
-  %4 = sext i32 %.3600 to i64
   br label %.preheader518.us
 
-.preheader518.us:                                 ; preds = %.preheader518.us.preheader, %._crit_edge593.us
-  %.4596.us = phi i64 [ %indvars.iv.next703, %._crit_edge593.us ], [ %4, %.preheader518.us.preheader ]
-  %.1400595.us = phi i32 [ %i.kk, %._crit_edge593.us ], [ 0, %.preheader518.us.preheader ] ; 2 uses
+.preheader518.us:                                 ; preds = %.preheader519, %._crit_edge593.us
+  %.4596.us = phi i64 [ %indvars.iv.next703, %._crit_edge593.us ], [ %.3600, %.preheader519 ]
+  %.1400595.us = phi i32 [ %i.kk, %._crit_edge593.us ], [ 0, %.preheader519 ] ; 2 uses
   %i.jq = add nsw i32 %.1400595.us, %i.hp         ; 2 uses
   %i.jr = mul nsw i32 %i.jq, %.0450552
   %i.js = add nsw i32 %i.jq, 1
@@ -363,14 +360,9 @@ bb.w:                                             ; preds = %.preheader518.us, %
 ._crit_edge593.us:                                ; preds = %bb.w
   %i.kk = add nuw nsw i32 %.1400595.us, 1         ; 2 uses
   %exitcond706.not = icmp eq i32 %i.kk, %.0438540
-  br i1 %exitcond706.not, label %._crit_edge597.loopexit, label %.preheader518.us, !llvm.loop !29
+  br i1 %exitcond706.not, label %._crit_edge597, label %.preheader518.us, !llvm.loop !29
 
-._crit_edge597.loopexit:                          ; preds = %._crit_edge593.us
-  %5 = trunc nsw i64 %indvars.iv.next703 to i32
-  br label %._crit_edge597
-
-._crit_edge597:                                   ; preds = %.preheader519, %._crit_edge597.loopexit
-  %.us-phi = phi i32 [ %5, %._crit_edge597.loopexit ], [ %.3600, %.preheader519 ]
+._crit_edge597:                                   ; preds = %._crit_edge593.us
   %i.kl = add nuw nsw i32 %.0398599, 1            ; 2 uses
   %exitcond707.not = icmp eq i32 %i.kl, %.0436538
   br i1 %exitcond707.not, label %.loopexit, label %.preheader519, !llvm.loop !30
@@ -398,7 +390,7 @@ bb.w:                                             ; preds = %.preheader518.us, %
   store i32 %i.kt, ptr %i.kv, align 4, !tbaa !4
   br label %.loopexit
 
-.loopexit:                                        ; preds = %._crit_edge597, %._crit_edge604, %.epil.preheader, %.loopexit.loopexit.unr-lcssa, %.preheader520, %.preheader519.lr.ph, %.preheader516, %.preheader515.lr.ph, %.preheader514, %._crit_edge
+.loopexit:                                        ; preds = %._crit_edge597, %._crit_edge604, %.epil.preheader, %.loopexit.loopexit.unr-lcssa, %.preheader519.lr.ph, %.preheader520, %.preheader516, %.preheader515.lr.ph, %.preheader514, %._crit_edge
   %i.kw = call i32 @HYPRE_StructGridCreate(i32 noundef 0, i32 noundef %.0423528, ptr noundef nonnull %i.n) #10 ; 0 uses
   br i1 %i.gz, label %.lr.ph613.preheader, label %._crit_edge614
 

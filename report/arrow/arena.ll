@@ -203,9 +203,9 @@ bb.j:                                             ; preds = %bb.h, %bb.i
   br i1 %.not200, label %.thread180, label %.lr.ph192
 
 .lr.ph192:                                        ; preds = %bb.j
-  %.not115 = icmp eq ptr %4, null                 ; 3 uses
+  %.not115 = icmp ne ptr %4, null                 ; 3 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  br i1 %.not115, label %bb.k, label %.thread157.peel
+  br i1 %.not115, label %.thread157.peel, label %bb.k
 
 bb.k:                                             ; preds = %.lr.ph192
   %.not225 = icmp eq i64 %i.ae, 1
@@ -233,7 +233,7 @@ bb.m:                                             ; preds = %bb.l, %.thread157.p
   br i1 %i.aq, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  br i1 %.not115, label %mi_arena_id_is_suitable.exit.i127.peel, label %.thread163.peel
+  br i1 %.not115, label %.thread163.peel, label %mi_arena_id_is_suitable.exit.i127.peel
 
 mi_arena_id_is_suitable.exit.i127.peel:           ; preds = %bb.n
   %i.ar = getelementptr inbounds nuw i8, ptr %.087160.peel, i64 52
@@ -256,13 +256,11 @@ bb.o:                                             ; preds = %.thread.i128.peel, 
 
 .thread163.peel:                                  ; preds = %bb.o, %.thread.i128.peel, %mi_arena_id_is_suitable.exit.i127.peel, %bb.n, %bb.l, %bb.k
   %exitcond208.peel.not = icmp eq i64 %i.ae, 1
-  br i1 %exitcond208.peel.not, label %.thread180, label %.peel.next
+  %brmerge = or i1 %exitcond208.peel.not, %.not115
+  br i1 %brmerge, label %.thread180, label %bb.p
 
-.peel.next:                                       ; preds = %.thread163.peel, %.thread163
+bb.p:                                             ; preds = %.thread163.peel, %.thread163
   %.088191 = phi i64 [ %i.bp, %.thread163 ], [ 1, %.thread163.peel ] ; 4 uses
-  br i1 %.not115, label %bb.p, label %.thread180
-
-bb.p:                                             ; preds = %.peel.next
   %i.az = icmp ult i64 %.088191, %i.af
   %i.ba = add i64 %.088191, %i.ai                 ; 2 uses
   %.not116 = icmp ult i64 %i.ba, %i.af
@@ -305,10 +303,10 @@ bb.r:                                             ; preds = %.thread.i128
 .thread163:                                       ; preds = %.thread.i128, %mi_arena_id_is_suitable.exit.i127, %bb.q, %bb.p, %bb.r
   %i.bp = add nuw i64 %.088191, 1                 ; 2 uses
   %exitcond208.not = icmp eq i64 %i.bp, %i.ae
-  br i1 %exitcond208.not, label %.thread180, label %.peel.next, !llvm.loop !119
+  br i1 %exitcond208.not, label %.thread180, label %bb.p, !llvm.loop !119
 
-.thread180:                                       ; preds = %bb.f, %.peel.next, %bb.r, %.thread163, %bb.g, %.lr.ph.split.split.us.preheader, %bb.o, %.thread163.peel, %bb.j, %.thread154
-  %.10 = phi ptr [ %i.ab, %.lr.ph.split.split.us.preheader ], [ null, %.thread154 ], [ %i.ac, %bb.g ], [ null, %.peel.next ], [ null, %bb.j ], [ null, %.thread163.peel ], [ %i.ay, %bb.o ], [ %i.bo, %bb.r ], [ null, %.thread163 ], [ %i.w, %bb.f ]
+.thread180:                                       ; preds = %bb.f, %.thread163, %bb.r, %.thread163.peel, %bb.g, %.lr.ph.split.split.us.preheader, %bb.o, %bb.j, %.thread154
+  %.10 = phi ptr [ %i.ab, %.lr.ph.split.split.us.preheader ], [ null, %.thread154 ], [ %i.ac, %bb.g ], [ null, %.thread163 ], [ null, %bb.j ], [ null, %.thread163.peel ], [ %i.ay, %bb.o ], [ %i.bo, %bb.r ], [ %i.w, %bb.f ]
   ret ptr %.10
 }
 

@@ -203,21 +203,18 @@ bb.x:                                             ; preds = %.critedge13
 .lr.ph2514:                                       ; preds = %bb.x
   %i.ff = icmp sgt i32 %.0801.lcssa.ph, 0
   %wide.trip.count = zext nneg i32 %.val10732989.fr to i64
-  br label %bb.y
+  br i1 %i.ff, label %bb.y, label %.critedge15
 
 bb.y:                                             ; preds = %.lr.ph2514, %._crit_edge
-  %indvars.iv2935 = phi i64 [ 0, %.lr.ph2514 ], [ %indvars.iv.next2936, %._crit_edge ] ; 3 uses
+  %indvars.iv2935 = phi i64 [ %indvars.iv.next2936, %._crit_edge ], [ 0, %.lr.ph2514 ] ; 3 uses
   %i.fg = getelementptr inbounds nuw [4 x i8], ptr %i.el, i64 %indvars.iv2935
   %i.fh = load i32, ptr %i.fg, align 4, !tbaa !39
-  br i1 %i.ff, label %.lr.ph2509, label %._crit_edge
-
-.lr.ph2509:                                       ; preds = %bb.y
   %2 = trunc i64 %indvars.iv2935 to i32
   %3 = mul i32 %.0801.lcssa.ph, %2
   br label %bb.z
 
-bb.z:                                             ; preds = %.lr.ph2509, %bb.ab
-  %.08102508 = phi i32 [ 0, %.lr.ph2509 ], [ %i.fs, %bb.ab ] ; 3 uses
+bb.z:                                             ; preds = %bb.y, %bb.ab
+  %.08102508 = phi i32 [ 0, %bb.y ], [ %i.fs, %bb.ab ] ; 3 uses
   %i.fi = shl nuw i32 1, %.08102508
   %i.fj = and i32 %i.fi, %i.fh
   %.not1040 = icmp eq i32 %i.fj, 0
@@ -240,12 +237,12 @@ bb.ab:                                            ; preds = %bb.z, %bb.aa
   %exitcond.not = icmp eq i32 %i.fs, %.0801.lcssa.ph
   br i1 %exitcond.not, label %._crit_edge, label %bb.z, !llvm.loop !87
 
-._crit_edge:                                      ; preds = %bb.ab, %bb.y
+._crit_edge:                                      ; preds = %bb.ab
   %indvars.iv.next2936 = add nuw nsw i64 %indvars.iv2935, 1 ; 2 uses
   %exitcond2939.not = icmp eq i64 %indvars.iv.next2936, %wide.trip.count
   br i1 %exitcond2939.not, label %.critedge15, label %bb.y, !llvm.loop !88
 
-.critedge15:                                      ; preds = %._crit_edge, %bb.x
+.critedge15:                                      ; preds = %._crit_edge, %.lr.ph2514, %bb.x
   %i.ft = load ptr, ptr %i.aj, align 8, !tbaa !32 ; 6 uses
   %i.fu = getelementptr inbounds nuw i8, ptr %i.ft, i64 4 ; 3 uses
   %i.fv = load i32, ptr %i.fu, align 4, !tbaa !27 ; 7 uses

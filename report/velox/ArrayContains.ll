@@ -204,24 +204,21 @@ _ZN8facebook5velox9functions12_GLOBAL__N_116isPrimitiveEqualINS0_10StringViewEEE
   %i.df = icmp samesign ult i32 %i.da, 5
   %i.dg = icmp eq ptr %.sroa.2.0.copyload.i20.us64, %.sroa.2.0.copyload.i
   %or.cond.us68 = select i1 %i.df, i1 true, i1 %i.dg
-  br label %_ZNK8facebook5velox13DecodedVector7valueAtINS0_10StringViewEEET_i.exit23.us60
+  br i1 %.not.i.i24.us65, label %_ZNK8facebook5velox13DecodedVector7valueAtINS0_10StringViewEEET_i.exit23.us60, label %.critedge75
 
 _ZNK8facebook5velox13DecodedVector7valueAtINS0_10StringViewEEET_i.exit23.us60: ; preds = %.lr.ph.split.split.split.us.split, %_ZN8facebook5velox9functions12_GLOBAL__N_116isPrimitiveEqualINS0_10StringViewEEEbRKT_S7_.exit.thread31.us69
   %indvars.iv82 = phi i64 [ %indvars.iv.next83, %_ZN8facebook5velox9functions12_GLOBAL__N_116isPrimitiveEqualINS0_10StringViewEEEbRKT_S7_.exit.thread31.us69 ], [ 0, %.lr.ph.split.split.split.us.split ]
-  br i1 %.not.i.i24.us65, label %2, label %_ZN8facebook5velox9functions12_GLOBAL__N_116isPrimitiveEqualINS0_10StringViewEEEbRKT_S7_.exit.thread31.us69
-
-2:                                                ; preds = %_ZNK8facebook5velox13DecodedVector7valueAtINS0_10StringViewEEET_i.exit23.us60
   br i1 %i.db, label %bb.o, label %.split33.us66
 
-.split33.us66:                                    ; preds = %2
+.split33.us66:                                    ; preds = %_ZNK8facebook5velox13DecodedVector7valueAtINS0_10StringViewEEET_i.exit23.us60
   %bcmp.i.i.us67 = tail call i32 @bcmp(ptr nonnull %i.dc, ptr nonnull %i.ar, i64 %i.de)
   %i.dh = icmp eq i32 %bcmp.i.i.us67, 0
   br i1 %i.dh, label %_ZN8facebook5velox9functions12_GLOBAL__N_116isPrimitiveEqualINS0_10StringViewEEEbRKT_S7_.exit.thread, label %_ZN8facebook5velox9functions12_GLOBAL__N_116isPrimitiveEqualINS0_10StringViewEEEbRKT_S7_.exit.thread31.us69
 
-bb.o:                                             ; preds = %2
+bb.o:                                             ; preds = %_ZNK8facebook5velox13DecodedVector7valueAtINS0_10StringViewEEET_i.exit23.us60
   br i1 %or.cond.us68, label %_ZN8facebook5velox9functions12_GLOBAL__N_116isPrimitiveEqualINS0_10StringViewEEEbRKT_S7_.exit.thread, label %_ZN8facebook5velox9functions12_GLOBAL__N_116isPrimitiveEqualINS0_10StringViewEEEbRKT_S7_.exit.thread31.us69
 
-_ZN8facebook5velox9functions12_GLOBAL__N_116isPrimitiveEqualINS0_10StringViewEEEbRKT_S7_.exit.thread31.us69: ; preds = %bb.o, %.split33.us66, %_ZNK8facebook5velox13DecodedVector7valueAtINS0_10StringViewEEET_i.exit23.us60
+_ZN8facebook5velox9functions12_GLOBAL__N_116isPrimitiveEqualINS0_10StringViewEEEbRKT_S7_.exit.thread31.us69: ; preds = %bb.o, %.split33.us66
   %indvars.iv.next83 = add nuw nsw i64 %indvars.iv82, 1 ; 2 uses
   %exitcond86.not = icmp eq i64 %indvars.iv.next83, %wide.trip.count85
   br i1 %exitcond86.not, label %.critedge75, label %_ZNK8facebook5velox13DecodedVector7valueAtINS0_10StringViewEEET_i.exit23.us60, !llvm.loop !1934
@@ -325,7 +322,7 @@ _ZN8facebook5velox10FlatVectorIbE7setNullEib.exit: ; preds = %.critedge76
   store i8 %i.ex, ptr %i.es, align 1, !tbaa !40
   br label %bb.s
 
-.critedge75:                                      ; preds = %_ZN8facebook5velox9functions12_GLOBAL__N_116isPrimitiveEqualINS0_10StringViewEEEbRKT_S7_.exit.thread31.us69, %_ZN8facebook5velox9functions12_GLOBAL__N_116isPrimitiveEqualINS0_10StringViewEEEbRKT_S7_.exit.thread31.us, %_ZNK8facebook5velox13DecodedVector7valueAtINS0_10StringViewEEET_i.exit, %.critedge
+.critedge75:                                      ; preds = %_ZN8facebook5velox9functions12_GLOBAL__N_116isPrimitiveEqualINS0_10StringViewEEEbRKT_S7_.exit.thread31.us69, %_ZN8facebook5velox9functions12_GLOBAL__N_116isPrimitiveEqualINS0_10StringViewEEEbRKT_S7_.exit.thread31.us, %.lr.ph.split.split.split.us.split, %_ZNK8facebook5velox13DecodedVector7valueAtINS0_10StringViewEEET_i.exit, %.critedge
   %i.ey = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.ez = load ptr, ptr %i.ey, align 8, !tbaa !1935, !nonnull !80, !align !281
   tail call void @_ZN8facebook5velox10FlatVectorIbE3setEib(ptr noundef nonnull align 8 dereferenceable(176) %i.ez, i32 noundef %1, i1 noundef zeroext false)
@@ -578,24 +575,21 @@ _ZN8facebook5velox9functions12_GLOBAL__N_116isPrimitiveEqualINS0_10StringViewEEE
   %i.df = icmp samesign ult i32 %i.da, 5
   %i.dg = icmp eq ptr %.sroa.2.0.copyload.i20.us64, %.sroa.2.0.copyload.i
   %or.cond.us68 = select i1 %i.df, i1 true, i1 %i.dg
-  br label %_ZNK8facebook5velox13DecodedVector7valueAtINS0_10StringViewEEET_i.exit23.us60
+  br i1 %.not.i.i24.us65, label %_ZNK8facebook5velox13DecodedVector7valueAtINS0_10StringViewEEET_i.exit23.us60, label %.critedge75
 
 _ZNK8facebook5velox13DecodedVector7valueAtINS0_10StringViewEEET_i.exit23.us60: ; preds = %.lr.ph.split.split.split.us.split, %_ZN8facebook5velox9functions12_GLOBAL__N_116isPrimitiveEqualINS0_10StringViewEEEbRKT_S7_.exit.thread31.us69
   %indvars.iv82 = phi i64 [ %indvars.iv.next83, %_ZN8facebook5velox9functions12_GLOBAL__N_116isPrimitiveEqualINS0_10StringViewEEEbRKT_S7_.exit.thread31.us69 ], [ 0, %.lr.ph.split.split.split.us.split ]
-  br i1 %.not.i.i24.us65, label %2, label %_ZN8facebook5velox9functions12_GLOBAL__N_116isPrimitiveEqualINS0_10StringViewEEEbRKT_S7_.exit.thread31.us69
-
-2:                                                ; preds = %_ZNK8facebook5velox13DecodedVector7valueAtINS0_10StringViewEEET_i.exit23.us60
   br i1 %i.db, label %bb.o, label %.split33.us66
 
-.split33.us66:                                    ; preds = %2
+.split33.us66:                                    ; preds = %_ZNK8facebook5velox13DecodedVector7valueAtINS0_10StringViewEEET_i.exit23.us60
   %bcmp.i.i.us67 = tail call i32 @bcmp(ptr nonnull %i.dc, ptr nonnull %i.ar, i64 %i.de)
   %i.dh = icmp eq i32 %bcmp.i.i.us67, 0
   br i1 %i.dh, label %_ZN8facebook5velox9functions12_GLOBAL__N_116isPrimitiveEqualINS0_10StringViewEEEbRKT_S7_.exit.thread, label %_ZN8facebook5velox9functions12_GLOBAL__N_116isPrimitiveEqualINS0_10StringViewEEEbRKT_S7_.exit.thread31.us69
 
-bb.o:                                             ; preds = %2
+bb.o:                                             ; preds = %_ZNK8facebook5velox13DecodedVector7valueAtINS0_10StringViewEEET_i.exit23.us60
   br i1 %or.cond.us68, label %_ZN8facebook5velox9functions12_GLOBAL__N_116isPrimitiveEqualINS0_10StringViewEEEbRKT_S7_.exit.thread, label %_ZN8facebook5velox9functions12_GLOBAL__N_116isPrimitiveEqualINS0_10StringViewEEEbRKT_S7_.exit.thread31.us69
 
-_ZN8facebook5velox9functions12_GLOBAL__N_116isPrimitiveEqualINS0_10StringViewEEEbRKT_S7_.exit.thread31.us69: ; preds = %bb.o, %.split33.us66, %_ZNK8facebook5velox13DecodedVector7valueAtINS0_10StringViewEEET_i.exit23.us60
+_ZN8facebook5velox9functions12_GLOBAL__N_116isPrimitiveEqualINS0_10StringViewEEEbRKT_S7_.exit.thread31.us69: ; preds = %bb.o, %.split33.us66
   %indvars.iv.next83 = add nuw nsw i64 %indvars.iv82, 1 ; 2 uses
   %exitcond86.not = icmp eq i64 %indvars.iv.next83, %wide.trip.count85
   br i1 %exitcond86.not, label %.critedge75, label %_ZNK8facebook5velox13DecodedVector7valueAtINS0_10StringViewEEET_i.exit23.us60, !llvm.loop !1942
@@ -699,7 +693,7 @@ _ZN8facebook5velox10FlatVectorIbE7setNullEib.exit: ; preds = %.critedge76
   store i8 %i.ex, ptr %i.es, align 1, !tbaa !40
   br label %bb.s
 
-.critedge75:                                      ; preds = %_ZN8facebook5velox9functions12_GLOBAL__N_116isPrimitiveEqualINS0_10StringViewEEEbRKT_S7_.exit.thread31.us69, %_ZN8facebook5velox9functions12_GLOBAL__N_116isPrimitiveEqualINS0_10StringViewEEEbRKT_S7_.exit.thread31.us, %_ZNK8facebook5velox13DecodedVector7valueAtINS0_10StringViewEEET_i.exit, %.critedge
+.critedge75:                                      ; preds = %_ZN8facebook5velox9functions12_GLOBAL__N_116isPrimitiveEqualINS0_10StringViewEEEbRKT_S7_.exit.thread31.us69, %_ZN8facebook5velox9functions12_GLOBAL__N_116isPrimitiveEqualINS0_10StringViewEEEbRKT_S7_.exit.thread31.us, %.lr.ph.split.split.split.us.split, %_ZNK8facebook5velox13DecodedVector7valueAtINS0_10StringViewEEET_i.exit, %.critedge
   %i.ey = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.ez = load ptr, ptr %i.ey, align 8, !tbaa !1943, !nonnull !80, !align !281
   tail call void @_ZN8facebook5velox10FlatVectorIbE3setEib(ptr noundef nonnull align 8 dereferenceable(176) %i.ez, i32 noundef %1, i1 noundef zeroext false)

@@ -203,17 +203,14 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 .preheader.split.us.preheader:                    ; preds = %.preheader
   %i.v = load ptr, ptr %6, align 8
   %.not38.us = icmp eq ptr %i.v, null
-  br label %ComId_connection_equals.exit.thread.us
-
-ComId_connection_equals.exit.thread.us:           ; preds = %bb.d, %.preheader.split.us.preheader
-  %.032.us = phi ptr [ %i.x, %bb.d ], [ %i.u, %.preheader.split.us.preheader ] ; 2 uses
   br i1 %.not38.us, label %bb.d, label %.loopexit
 
-bb.d:                                             ; preds = %ComId_connection_equals.exit.thread.us
+bb.d:                                             ; preds = %.preheader.split.us.preheader, %bb.d
+  %.032.us = phi ptr [ %i.x, %bb.d ], [ %i.u, %.preheader.split.us.preheader ] ; 2 uses
   %i.w = getelementptr i8, ptr %.032.us, i64 80
   %i.x = load ptr, ptr %i.w, align 8              ; 2 uses
   %.not39.us = icmp eq ptr %i.x, null
-  br i1 %.not39.us, label %.split.us, label %ComId_connection_equals.exit.thread.us, !llvm.loop !41
+  br i1 %.not39.us, label %.split.us, label %bb.d, !llvm.loop !41
 
 .preheader.split:                                 ; preds = %.preheader, %bb.m
   %.032 = phi ptr [ %i.ay, %bb.m ], [ %i.u, %.preheader ] ; 9 uses
@@ -314,7 +311,7 @@ bb.n:                                             ; preds = %bb.c
   store ptr %i.d, ptr %i.t, align 8
   br label %.loopexit
 
-.loopexit:                                        ; preds = %ComId_connection_equals.exit.thread, %ComId_connection_equals.exit.thread.us, %bb.l, %.split.us, %bb.n
+.loopexit:                                        ; preds = %ComId_connection_equals.exit.thread, %.preheader.split.us.preheader, %bb.l, %.split.us, %bb.n
   ret void
 }
 

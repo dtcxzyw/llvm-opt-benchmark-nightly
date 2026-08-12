@@ -204,7 +204,7 @@ bb.t:                                             ; preds = %bb.r
   %i.bx = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.by = load ptr, ptr %i.bx, align 8, !nonnull !12, !align !112
   %i.bz = icmp ugt ptr %i.n, inttoptr (i64 2 to ptr)
-  br label %bb.ac
+  br i1 %i.bz, label %bb.ac, label %bb.ad, !prof !13
 
 bb.u:                                             ; preds = %.lr.ph112
   br i1 %i.an, label %bb.w, label %bb.v, !prof !13
@@ -263,24 +263,21 @@ bb.ab:                                            ; preds = %bb.z
   br i1 %i.cx, label %.loopexit.sink.split, label %bb.aa
 
 bb.ac:                                            ; preds = %.lr.ph116, %bb.ae
-  %.sroa.045.0115 = phi ptr [ %i.n, %.lr.ph116 ], [ %i.cy, %bb.ae ] ; 6 uses
+  %.sroa.045.0115 = phi ptr [ %i.cy, %bb.ae ], [ %i.n, %.lr.ph116 ] ; 6 uses
   %i.cy = getelementptr inbounds nuw i8, ptr %.sroa.045.0115, i64 32 ; 2 uses
-  br i1 %i.bz, label %3, label %bb.ad, !prof !13
+  %3 = ptrtoint ptr %.sroa.045.0115 to i64
+  %4 = icmp eq i64 %.sroa.12.3, %3
+  br i1 %4, label %bb.af, label %bb.ae
 
-bb.ad:                                            ; preds = %bb.ac
+bb.ad:                                            ; preds = %.lr.ph116
   tail call void @_RNvNtCshzWfHUSfYae_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @10, i64 noundef 25, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @11) #25
   unreachable
 
-3:                                                ; preds = %bb.ac
-  %4 = ptrtoint ptr %.sroa.045.0115 to i64
-  %5 = icmp eq i64 %.sroa.12.3, %4
-  br i1 %5, label %bb.af, label %bb.ae
-
-bb.ae:                                            ; preds = %bb.af, %3
+bb.ae:                                            ; preds = %bb.af, %bb.ac
   %i.cz = icmp eq ptr %i.cy, %i.q
   br i1 %i.cz, label %.loopexit, label %bb.ac
 
-bb.af:                                            ; preds = %3
+bb.af:                                            ; preds = %bb.ac
   %i.da = load ptr, ptr %.sroa.045.0115, align 8, !nonnull !12, !noundef !12
   %i.db = getelementptr inbounds nuw i8, ptr %.sroa.045.0115, i64 8
   %i.dc = load ptr, ptr %i.db, align 8, !nonnull !12, !align !112, !noundef !12
