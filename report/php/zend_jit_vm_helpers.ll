@@ -1,8 +1,8 @@
 inline.NumInlined: 9
 inline.NumDeleted: 6
-loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 4
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@zend_jit_check_constant:bb.a
   %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 64
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !110
@@ -204,7 +204,7 @@ zend_jit_trace_counter_helper.exit:               ; preds = %bb.c, %bb.b, %bb.d
 define hidden range(i32 0, 70) i32 @zend_jit_trace_execute(ptr noundef initializes((0, 8)) %0, ptr noundef %1, ptr nofree noundef initializes((0, 2), (3, 4), (8, 20), (24, 32)) %2, i8 noundef zeroext %3, i32 noundef %4, i32 noundef %5) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
-  %i.b = alloca [14 x ptr], align 16              ; 10 uses
+  %i.b = alloca [14 x ptr], align 16              ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
   store ptr %1, ptr %0, align 8, !tbaa !65
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -297,9 +297,6 @@ bb.h:                                             ; preds = %bb.f
 
 .thread.preheader:                                ; preds = %bb.i, %bb.h
   %.2637.ph = phi i32 [ %i.aq, %bb.i ], [ 2, %bb.h ]
-  %6 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %7 = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %8 = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   br label %.thread.outer
 
 bb.i:                                             ; preds = %bb.h
@@ -323,9 +320,9 @@ bb.j:                                             ; preds = %bb.i
   br label %bb.fq
 
 .thread:                                          ; preds = %.thread.backedge, %.thread.outer1683
-  %.0722 = phi i32 [ %.0722.ph1684, %.thread.outer1683 ], [ %.3725, %.thread.backedge ] ; 21 uses
-  %.0716 = phi i32 [ %.0716.ph1685, %.thread.outer1683 ], [ %.3719, %.thread.backedge ] ; 20 uses
-  %.0710 = phi i32 [ %.0710.ph1686, %.thread.outer1683 ], [ %.3713, %.thread.backedge ] ; 20 uses
+  %.0722 = phi i32 [ %.0722.ph1684, %.thread.outer1683 ], [ %.3725, %.thread.backedge ] ; 20 uses
+  %.0716 = phi i32 [ %.0716.ph1685, %.thread.outer1683 ], [ %.3719, %.thread.backedge ] ; 19 uses
+  %.0710 = phi i32 [ %.0710.ph1686, %.thread.outer1683 ], [ %.3713, %.thread.backedge ] ; 19 uses
   %.0691 = phi ptr [ %.0691.ph1690, %.thread.outer1683 ], [ %.3694, %.thread.backedge ] ; 3 uses
   %.0688 = phi ptr [ %.0688.ph1691, %.thread.outer1683 ], [ %.1689, %.thread.backedge ] ; 4 uses
   %.0684 = phi ptr [ %.0684.ph1692, %.thread.outer1683 ], [ %.1685, %.thread.backedge ] ; 23 uses
@@ -334,7 +331,7 @@ bb.j:                                             ; preds = %bb.i
   %.2637 = phi i32 [ %.2637.ph1695, %.thread.outer1683 ], [ %.17652, %.thread.backedge ] ; 3 uses
   %.0626 = phi i64 [ %.0626.ph1696, %.thread.outer1683 ], [ %.1627, %.thread.backedge ] ; 2 uses
   %.1621 = phi ptr [ %.1621.ph1697, %.thread.outer1683 ], [ %.3623, %.thread.backedge ] ; 2 uses
-  %.0612 = phi i32 [ %.0612.ph1698, %.thread.outer1683 ], [ %.2614, %.thread.backedge ] ; 47 uses
+  %.0612 = phi i32 [ %.0612.ph1698, %.thread.outer1683 ], [ %.2614, %.thread.backedge ] ; 44 uses
   %.0608 = phi i32 [ %.0608.ph1699, %.thread.outer1683 ], [ %.2610, %.thread.backedge ] ; 9 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %.0679, i64 29 ; 3 uses
   %i.ay = load i8, ptr %i.ax, align 1, !tbaa !137 ; 2 uses
@@ -737,7 +734,7 @@ bb.cj:                                            ; preds = %bb.cg, %bb.ch, %bb.
   br i1 %.not826, label %bb.ck, label %.thread1013
 
 bb.ck:                                            ; preds = %bb.cj, %bb.cd, %bb.cf
-  %.11646 = phi i32 [ %.9644, %bb.cd ], [ %.9644, %bb.cf ], [ %i.kl, %bb.cj ] ; 23 uses
+  %.11646 = phi i32 [ %.9644, %bb.cd ], [ %.9644, %bb.cf ], [ %i.kl, %bb.cj ] ; 22 uses
   %i.kp = getelementptr inbounds nuw i8, ptr %.0679, i64 %.0626
   %i.kq = getelementptr inbounds nuw i8, ptr %i.kp, i64 8
   %i.kr = load ptr, ptr %i.kq, align 8, !tbaa !12
@@ -775,8 +772,8 @@ bb.cn:                                            ; preds = %._crit_edge
   %.not827 = icmp eq i64 %i.lc, 0                 ; 2 uses
   %i.ld = inttoptr i64 %i.kz to ptr
   %i.le = load ptr, ptr getelementptr inbounds nuw (i8, ptr @executor_globals, i64 512), align 8
-  %.1685 = select i1 %.not827, ptr %.0684, ptr %i.le ; 51 uses
-  %.2681 = select i1 %.not827, ptr %.1680.lcssa, ptr %i.ld ; 70 uses
+  %.1685 = select i1 %.not827, ptr %.0684, ptr %i.le ; 50 uses
+  %.2681 = select i1 %.not827, ptr %.1680.lcssa, ptr %i.ld ; 69 uses
   %.not828 = icmp eq ptr %.1685, %.0688
   br i1 %.not828, label %bb.eb, label %bb.co, !prof !13
 
@@ -1006,7 +1003,7 @@ bb.dk:                                            ; preds = %bb.dj
   %i.om = load ptr, ptr %.01114.i, align 8, !tbaa !65
   %i.on = getelementptr inbounds nuw i8, ptr %i.om, i64 32
   %i.oo = icmp eq ptr %i.on, %1
-  br i1 %i.oo, label %zend_jit_trace_has_recursive_ret.exit, label %bb.dl
+  br i1 %i.oo, label %bb.dm, label %bb.dl
 
 bb.dl:                                            ; preds = %bb.dk, %bb.dj
   %i.op = getelementptr inbounds nuw i8, ptr %.01114.i, i64 48
@@ -1015,11 +1012,7 @@ bb.dl:                                            ; preds = %bb.dk, %bb.dj
   %.not.i921 = icmp eq ptr %i.oq, null
   br i1 %.not.i921, label %zend_jit_trace_has_recursive_ret.exit.thread, label %.lr.ph.i919, !llvm.loop !161
 
-zend_jit_trace_has_recursive_ret.exit:            ; preds = %bb.dk
-  %9 = icmp sgt i32 %.0612, 4
-  br i1 %9, label %.thread1013, label %bb.dm
-
-bb.dm:                                            ; preds = %zend_jit_trace_has_recursive_ret.exit
+bb.dm:                                            ; preds = %bb.dk
   %i.os = zext nneg i32 %.11646 to i64
   %i.ot = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %i.os ; 2 uses
   store i32 7, ptr %i.ot, align 8, !tbaa !12
@@ -1033,55 +1026,77 @@ bb.dm:                                            ; preds = %zend_jit_trace_has_
   br i1 %.not846, label %bb.dn, label %.thread1013
 
 bb.dn:                                            ; preds = %bb.dm
-  %i.oz = load ptr, ptr %i.lf, align 8, !tbaa !24 ; 5 uses
+  %i.oz = load ptr, ptr %i.lf, align 8, !tbaa !24 ; 3 uses
   %i.pa = icmp sgt i32 %.0612, 0
-  br i1 %i.pa, label %.lr.ph.i925.a, label %zend_jit_trace_recursive_ret_count.exit
+  br i1 %i.pa, label %.lr.ph.preheader.i923, label %zend_jit_trace_recursive_ret_count.exit
 
-.lr.ph.i925.a:                                    ; preds = %bb.dn
-  %10 = load ptr, ptr %i.b, align 16, !tbaa !155
-  %11 = icmp eq ptr %10, %i.oz
-  %12 = zext i1 %11 to i32                        ; 2 uses
-  %exitcond.not.i928 = icmp eq i32 %.0612, 1
-  br i1 %exitcond.not.i928, label %zend_jit_trace_recursive_ret_count.exit, label %.lr.ph.i925.1
+.lr.ph.preheader.i923:                            ; preds = %bb.dn
+  %wide.trip.count.i924 = zext nneg i32 %.0612 to i64 ; 3 uses
+  %min.iters.check1681 = icmp ult i32 %.0612, 4
+  br i1 %min.iters.check1681, label %.lr.ph.i925.preheader, label %.lr.ph.i925.a
 
-.lr.ph.i925.1:                                    ; preds = %.lr.ph.i925.a
-  %13 = load ptr, ptr %6, align 8, !tbaa !155
-  %14 = icmp eq ptr %13, %i.oz
-  %15 = zext i1 %14 to i32
-  %16 = add nuw nsw i32 %12, %15                  ; 2 uses
-  %exitcond.not.i928.1 = icmp eq i32 %.0612, 2
-  br i1 %exitcond.not.i928.1, label %zend_jit_trace_recursive_ret_count.exit, label %.lr.ph.i925.2
+.lr.ph.i925.a:                                    ; preds = %.lr.ph.preheader.i923
+  %n.vec1683 = and i64 %wide.trip.count.i924, 2147483644 ; 3 uses
+  %broadcast.splatinsert1684 = insertelement <2 x ptr> poison, ptr %i.oz, i64 0
+  %broadcast.splat1685 = shufflevector <2 x ptr> %broadcast.splatinsert1684, <2 x ptr> poison, <2 x i32> zeroinitializer ; 2 uses
+  br label %.lr.ph.i925.1
+
+.lr.ph.i925.1:                                    ; preds = %.lr.ph.i925.1, %.lr.ph.i925.a
+  %index1687 = phi i64 [ 0, %.lr.ph.i925.a ], [ %index.next1692, %.lr.ph.i925.1 ] ; 2 uses
+  %vec.phi1688 = phi <2 x i32> [ zeroinitializer, %.lr.ph.i925.a ], [ %12, %.lr.ph.i925.1 ]
+  %vec.phi1689 = phi <2 x i32> [ zeroinitializer, %.lr.ph.i925.a ], [ %13, %.lr.ph.i925.1 ]
+  %6 = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %index1687 ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %6, i64 16
+  %wide.load1690 = load <2 x ptr>, ptr %6, align 16, !tbaa !155
+  %wide.load1691 = load <2 x ptr>, ptr %7, align 16, !tbaa !155
+  %8 = icmp eq <2 x ptr> %wide.load1690, %broadcast.splat1685
+  %9 = icmp eq <2 x ptr> %wide.load1691, %broadcast.splat1685
+  %10 = zext <2 x i1> %8 to <2 x i32>
+  %11 = zext <2 x i1> %9 to <2 x i32>
+  %12 = add <2 x i32> %vec.phi1688, %10           ; 2 uses
+  %13 = add <2 x i32> %vec.phi1689, %11           ; 2 uses
+  %index.next1692 = add nuw i64 %index1687, 4     ; 2 uses
+  %exitcond.not.i928.1 = icmp eq i64 %index.next1692, %n.vec1683
+  br i1 %exitcond.not.i928.1, label %.lr.ph.i925.2, label %.lr.ph.i925.1, !llvm.loop !162
 
 .lr.ph.i925.2:                                    ; preds = %.lr.ph.i925.1
-  %17 = load ptr, ptr %7, align 16, !tbaa !155
-  %18 = icmp eq ptr %17, %i.oz
-  %19 = zext i1 %18 to i32
-  %20 = add nuw nsw i32 %16, %19                  ; 2 uses
-  %exitcond.not.i928.2 = icmp eq i32 %.0612, 3
-  br i1 %exitcond.not.i928.2, label %zend_jit_trace_recursive_ret_count.exit, label %.lr.ph.i925.3
+  %bin.rdx1694 = add <2 x i32> %13, %12
+  %14 = call i32 @llvm.vector.reduce.add.v2i32(<2 x i32> %bin.rdx1694) ; 2 uses
+  %exitcond.not.i928.2 = icmp eq i64 %n.vec1683, %wide.trip.count.i924
+  br i1 %exitcond.not.i928.2, label %zend_jit_trace_recursive_ret_count.exit, label %.lr.ph.i925.preheader
 
-.lr.ph.i925.3:                                    ; preds = %.lr.ph.i925.2
-  %i.pb = load ptr, ptr %8, align 8, !tbaa !155
+.lr.ph.i925.preheader:                            ; preds = %.lr.ph.preheader.i923, %.lr.ph.i925.2
+  %indvars.iv.i926.ph = phi i64 [ 0, %.lr.ph.preheader.i923 ], [ %n.vec1683, %.lr.ph.i925.2 ]
+  %.09.i.ph = phi i32 [ 0, %.lr.ph.preheader.i923 ], [ %14, %.lr.ph.i925.2 ]
+  br label %.lr.ph.i925.3
+
+.lr.ph.i925.3:                                    ; preds = %.lr.ph.i925.preheader, %.lr.ph.i925.3
+  %indvars.iv.i926 = phi i64 [ %indvars.iv.next.i927, %.lr.ph.i925.3 ], [ %indvars.iv.i926.ph, %.lr.ph.i925.preheader ] ; 2 uses
+  %.09.i = phi i32 [ %i.pe, %.lr.ph.i925.3 ], [ %.09.i.ph, %.lr.ph.i925.preheader ]
+  %15 = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv.i926
+  %i.pb = load ptr, ptr %15, align 8, !tbaa !155
   %i.pc = icmp eq ptr %i.pb, %i.oz
   %i.pd = zext i1 %i.pc to i32
-  %i.pe = add nuw nsw i32 %20, %i.pd
-  br label %zend_jit_trace_recursive_ret_count.exit
+  %i.pe = add nuw nsw i32 %.09.i, %i.pd           ; 2 uses
+  %indvars.iv.next.i927 = add nuw nsw i64 %indvars.iv.i926, 1 ; 2 uses
+  %exitcond.not.i928 = icmp eq i64 %indvars.iv.next.i927, %wide.trip.count.i924
+  br i1 %exitcond.not.i928, label %zend_jit_trace_recursive_ret_count.exit, label %.lr.ph.i925.3, !llvm.loop !163
 
-zend_jit_trace_recursive_ret_count.exit:          ; preds = %.lr.ph.i925.a, %.lr.ph.i925.1, %.lr.ph.i925.2, %.lr.ph.i925.3, %bb.dn
-  %.0.lcssa.i922 = phi i32 [ 0, %bb.dn ], [ %12, %.lr.ph.i925.a ], [ %16, %.lr.ph.i925.1 ], [ %20, %.lr.ph.i925.2 ], [ %i.pe, %.lr.ph.i925.3 ] ; 2 uses
+zend_jit_trace_recursive_ret_count.exit:          ; preds = %.lr.ph.i925.3, %.lr.ph.i925.2, %bb.dn
+  %.0.lcssa.i922 = phi i32 [ 0, %bb.dn ], [ %14, %.lr.ph.i925.2 ], [ %i.pe, %.lr.ph.i925.3 ] ; 2 uses
   %i.pf = icmp eq ptr %.2681, %1
   br i1 %i.pf, label %bb.do, label %bb.dp
 
 bb.do:                                            ; preds = %zend_jit_trace_recursive_ret_count.exit
   %i.pg = add nsw i32 %.0.lcssa.i922, 1
   %i.ph = sext i32 %i.pg to i64
-  %i.pi = load i64, ptr getelementptr inbounds nuw (i8, ptr @jit_globals, i64 136), align 8, !tbaa !162
+  %i.pi = load i64, ptr getelementptr inbounds nuw (i8, ptr @jit_globals, i64 136), align 8, !tbaa !164
   %.not848 = icmp sgt i64 %i.pi, %i.ph
   br i1 %.not848, label %bb.dq, label %.critedge
 
 bb.dp:                                            ; preds = %zend_jit_trace_recursive_ret_count.exit
   %i.pj = sext i32 %.0.lcssa.i922 to i64
-  %i.pk = load i64, ptr getelementptr inbounds nuw (i8, ptr @jit_globals, i64 136), align 8, !tbaa !162
+  %i.pk = load i64, ptr getelementptr inbounds nuw (i8, ptr @jit_globals, i64 136), align 8, !tbaa !164
   %.not847 = icmp sgt i64 %i.pk, %i.pj
   br i1 %.not847, label %bb.dq, label %.thread1013
 
@@ -1104,7 +1119,7 @@ zend_jit_trace_has_recursive_ret.exit.thread:     ; preds = %bb.dl, %.lr.ph.i919
   br i1 %.not838, label %bb.dt, label %bb.ds
 
 bb.ds:                                            ; preds = %zend_jit_trace_has_recursive_ret.exit.thread
-  %i.pq = load i64, ptr getelementptr inbounds nuw (i8, ptr @jit_globals, i64 104), align 8, !tbaa !163
+  %i.pq = load i64, ptr getelementptr inbounds nuw (i8, ptr @jit_globals, i64 104), align 8, !tbaa !165
   %i.pr = trunc i64 %i.pq to i32
   %i.ps = add i32 %i.pr, -1
   %i.pt = call fastcc zeroext i8 @zend_jit_trace_bad_stop_event(ptr noundef %1, i32 noundef %i.ps)
@@ -1122,7 +1137,7 @@ bb.du:                                            ; preds = %bb.dt
   br i1 %i.pw, label %bb.dv, label %bb.dw
 
 bb.dv:                                            ; preds = %bb.du
-  %i.px = load i64, ptr getelementptr inbounds nuw (i8, ptr @jit_globals, i64 104), align 8, !tbaa !163
+  %i.px = load i64, ptr getelementptr inbounds nuw (i8, ptr @jit_globals, i64 104), align 8, !tbaa !165
   %i.py = trunc i64 %i.px to i32
   %i.pz = add i32 %i.py, -1
   %i.qa = call fastcc zeroext i8 @zend_jit_trace_bad_stop_event(ptr noundef %1, i32 noundef %i.pz)
@@ -1276,7 +1291,7 @@ bb.ek:                                            ; preds = %.thread953
   br i1 %.not867, label %bb.el, label %.thread949
 
 bb.el:                                            ; preds = %bb.ek
-  %i.sa = load i64, ptr getelementptr inbounds nuw (i8, ptr @jit_globals, i64 144), align 8, !tbaa !164
+  %i.sa = load i64, ptr getelementptr inbounds nuw (i8, ptr @jit_globals, i64 144), align 8, !tbaa !166
   %i.sb = icmp eq i64 %i.sa, 0
   br i1 %i.sb, label %bb.em, label %zend_jit_may_be_polymorphic_call.exit.thread959
 
@@ -1405,7 +1420,7 @@ bb.eu:                                            ; preds = %bb.et
   br i1 %or.cond903, label %bb.ev, label %.preheader
 
 bb.ev:                                            ; preds = %bb.eu
-  %i.tp = load i64, ptr getelementptr inbounds nuw (i8, ptr @jit_globals, i64 104), align 8, !tbaa !163
+  %i.tp = load i64, ptr getelementptr inbounds nuw (i8, ptr @jit_globals, i64 104), align 8, !tbaa !165
   %i.tq = trunc i64 %i.tp to i32
   %i.tr = add i32 %i.tq, -1
   %i.ts = call fastcc zeroext i8 @zend_jit_trace_bad_stop_event(ptr noundef %1, i32 noundef %i.tr)
@@ -1480,7 +1495,7 @@ bb.fb:                                            ; preds = %bb.fa
   br i1 %or.cond909, label %bb.ff, label %bb.fc
 
 bb.fc:                                            ; preds = %bb.fb
-  %i.uf = load i64, ptr getelementptr inbounds nuw (i8, ptr @jit_globals, i64 104), align 8, !tbaa !163
+  %i.uf = load i64, ptr getelementptr inbounds nuw (i8, ptr @jit_globals, i64 104), align 8, !tbaa !165
   %i.ug = sdiv i64 %i.uf, 2
   %i.uh = trunc i64 %i.ug to i32                  ; 2 uses
   %i.ui = call fastcc zeroext i8 @zend_jit_trace_bad_stop_event(ptr noundef nonnull %.2681, i32 noundef %i.uh)
@@ -1522,7 +1537,7 @@ bb.fg:                                            ; preds = %bb.ff
 
 bb.fh:                                            ; preds = %bb.ff
   %i.ut = sext i32 %.0706.ph1687 to i64
-  %i.uu = load i64, ptr getelementptr inbounds nuw (i8, ptr @jit_globals, i64 120), align 8, !tbaa !165
+  %i.uu = load i64, ptr getelementptr inbounds nuw (i8, ptr @jit_globals, i64 120), align 8, !tbaa !167
   %i.uv = icmp sgt i64 %i.uu, %i.ut
   br i1 %i.uv, label %bb.fi, label %.thread1013
 
@@ -1568,15 +1583,15 @@ bb.fk:                                            ; preds = %bb.fj
   %.911 = select i1 %.not875, i32 12, i32 14
   br label %.thread1013
 
-.thread1013:                                      ; preds = %bb.cj, %bb.cv, %bb.cz, %bb.ea, %bb.eq, %bb.ey, %bb.dc, %zend_jit_trace_has_recursive_ret.exit, %bb.dm, %bb.dp, %bb.ds, %bb.dv, %bb.dx, %bb.as, %bb.aq, %bb.ao, %bb.ep, %bb.fd, %bb.fe, %bb.fh, %bb.ev, %bb.fk
-  %.181038 = phi i32 [ %.911, %bb.fk ], [ 23, %bb.ev ], [ 14, %bb.cj ], [ 14, %bb.dx ], [ 14, %bb.ep ], [ 14, %bb.ao ], [ 14, %bb.aq ], [ 14, %bb.as ], [ 15, %bb.cv ], [ 14, %bb.cz ], [ 14, %bb.ea ], [ 13, %bb.eq ], [ 21, %bb.ey ], [ 17, %bb.dc ], [ 16, %zend_jit_trace_has_recursive_ret.exit ], [ 14, %bb.dm ], [ 17, %bb.dp ], [ 19, %bb.ds ], [ 20, %bb.dv ], [ 22, %bb.fd ], [ 22, %bb.fe ], [ 18, %bb.fh ] ; 3 uses
-  %.66181035 = phi i32 [ %.2614, %bb.fk ], [ %.2614, %bb.ev ], [ %.0612, %bb.cj ], [ %.0612, %bb.dx ], [ %.2614, %bb.ep ], [ %.0612, %bb.ao ], [ %.0612, %bb.aq ], [ %.0612, %bb.as ], [ %.0612, %bb.cv ], [ %.0612, %bb.cz ], [ %.0612, %bb.ea ], [ %.2614, %bb.eq ], [ %.2614, %bb.ey ], [ %.0612, %bb.dc ], [ %.0612, %zend_jit_trace_has_recursive_ret.exit ], [ %.0612, %bb.dm ], [ %.0612, %bb.dp ], [ %.0612, %bb.ds ], [ %.0612, %bb.dv ], [ %.2614, %bb.fd ], [ %.2614, %bb.fe ], [ %.2614, %bb.fh ] ; 4 uses
-  %.211034 = phi i32 [ %i.vb, %bb.fk ], [ %.17652, %bb.ev ], [ %i.kl, %bb.cj ], [ %i.qf, %bb.dx ], [ %i.ta, %bb.ep ], [ %i.et, %bb.ao ], [ %i.ez, %bb.aq ], [ %i.fg, %bb.as ], [ %.11646, %bb.cv ], [ %i.mq, %bb.cz ], [ %i.qq, %bb.ea ], [ %.17652, %bb.eq ], [ %.17652, %bb.ey ], [ %i.mq, %bb.dc ], [ %.11646, %zend_jit_trace_has_recursive_ret.exit ], [ %i.ov, %bb.dm ], [ %i.ov, %bb.dp ], [ %.11646, %bb.ds ], [ %.11646, %bb.dv ], [ %.17652, %bb.fd ], [ %.17652, %bb.fe ], [ %.17652, %bb.fh ] ; 2 uses
-  %.46831032 = phi ptr [ %.2681, %bb.fk ], [ %.2681, %bb.ev ], [ %.0679, %bb.cj ], [ %.2681, %bb.dx ], [ %.2681, %bb.ep ], [ %.0679, %bb.ao ], [ %.0679, %bb.aq ], [ %.0679, %bb.as ], [ %.2681, %bb.cv ], [ %.2681, %bb.cz ], [ %.2681, %bb.ea ], [ %.2681, %bb.eq ], [ %.2681, %bb.ey ], [ %.2681, %bb.dc ], [ %.2681, %zend_jit_trace_has_recursive_ret.exit ], [ %.2681, %bb.dm ], [ %.2681, %bb.dp ], [ %.2681, %bb.ds ], [ %.2681, %bb.dv ], [ %.2681, %bb.fd ], [ %.2681, %bb.fe ], [ %.2681, %bb.fh ] ; 7 uses
-  %.36871030 = phi ptr [ %.1685, %bb.fk ], [ %.1685, %bb.ev ], [ %.0684, %bb.cj ], [ %.1685, %bb.dx ], [ %.1685, %bb.ep ], [ %.0684, %bb.ao ], [ %.0684, %bb.aq ], [ %.0684, %bb.as ], [ %.1685, %bb.cv ], [ %.1685, %bb.cz ], [ %.1685, %bb.ea ], [ %.1685, %bb.eq ], [ %.1685, %bb.ey ], [ %.1685, %bb.dc ], [ %.1685, %zend_jit_trace_has_recursive_ret.exit ], [ %.1685, %bb.dm ], [ %.1685, %bb.dp ], [ %.1685, %bb.ds ], [ %.1685, %bb.dv ], [ %.1685, %bb.fd ], [ %.1685, %bb.fe ], [ %.1685, %bb.fh ] ; 5 uses
-  %.57151029 = phi i32 [ %.3713, %bb.fk ], [ %.3713, %bb.ev ], [ %.0710, %bb.cj ], [ %.0710, %bb.dx ], [ %.3713, %bb.ep ], [ %.0710, %bb.ao ], [ %.0710, %bb.aq ], [ %.0710, %bb.as ], [ %.0710, %bb.cv ], [ %.0710, %bb.cz ], [ %.0710, %bb.ea ], [ %.3713, %bb.eq ], [ %.3713, %bb.ey ], [ %.0710, %bb.dc ], [ %.0710, %zend_jit_trace_has_recursive_ret.exit ], [ %.0710, %bb.dm ], [ %.0710, %bb.dp ], [ %.0710, %bb.ds ], [ %.0710, %bb.dv ], [ %.3713, %bb.fd ], [ %.3713, %bb.fe ], [ %.3713, %bb.fh ]
-  %.57211028 = phi i32 [ %.3719, %bb.fk ], [ %.3719, %bb.ev ], [ %.0716, %bb.cj ], [ %.0716, %bb.dx ], [ %.3719, %bb.ep ], [ %.0716, %bb.ao ], [ %.0716, %bb.aq ], [ %.0716, %bb.as ], [ %.0716, %bb.cv ], [ %.0716, %bb.cz ], [ %.0716, %bb.ea ], [ %.3719, %bb.eq ], [ %.3719, %bb.ey ], [ %.0716, %bb.dc ], [ %.0716, %zend_jit_trace_has_recursive_ret.exit ], [ %.0716, %bb.dm ], [ %.0716, %bb.dp ], [ %.0716, %bb.ds ], [ %.0716, %bb.dv ], [ %.3719, %bb.fd ], [ %.3719, %bb.fe ], [ %.3719, %bb.fh ] ; 2 uses
-  %.57271027 = phi i32 [ %.3725, %bb.fk ], [ %.3725, %bb.ev ], [ %.0722, %bb.cj ], [ %.0722, %bb.dx ], [ %.3725, %bb.ep ], [ %.0722, %bb.ao ], [ %.0722, %bb.aq ], [ %.0722, %bb.as ], [ %.0722, %bb.cv ], [ %.0722, %bb.cz ], [ %.0722, %bb.ea ], [ %.3725, %bb.eq ], [ %.3725, %bb.ey ], [ %.0722, %bb.dc ], [ %.0722, %zend_jit_trace_has_recursive_ret.exit ], [ %.0722, %bb.dm ], [ %.0722, %bb.dp ], [ %.0722, %bb.ds ], [ %.0722, %bb.dv ], [ %.3725, %bb.fd ], [ %.3725, %bb.fe ], [ %.3725, %bb.fh ] ; 2 uses
+.thread1013:                                      ; preds = %bb.cj, %bb.cv, %bb.cz, %bb.ea, %bb.eq, %bb.ey, %bb.dc, %bb.dm, %bb.dp, %bb.ds, %bb.dv, %bb.dx, %bb.as, %bb.aq, %bb.ao, %bb.ep, %bb.fd, %bb.fe, %bb.fh, %bb.ev, %bb.fk
+  %.181038 = phi i32 [ %.911, %bb.fk ], [ 23, %bb.ev ], [ 14, %bb.cj ], [ 14, %bb.ao ], [ 14, %bb.ep ], [ 14, %bb.dx ], [ 20, %bb.dv ], [ 19, %bb.ds ], [ 17, %bb.dp ], [ 14, %bb.dm ], [ 17, %bb.dc ], [ 21, %bb.ey ], [ 13, %bb.eq ], [ 14, %bb.ea ], [ 14, %bb.cz ], [ 15, %bb.cv ], [ 14, %bb.as ], [ 14, %bb.aq ], [ 18, %bb.fh ], [ 22, %bb.fe ], [ 22, %bb.fd ] ; 3 uses
+  %.66181035 = phi i32 [ %.2614, %bb.fk ], [ %.2614, %bb.ev ], [ %.0612, %bb.cj ], [ %.0612, %bb.ao ], [ %.2614, %bb.ep ], [ %.0612, %bb.dx ], [ %.0612, %bb.dv ], [ %.0612, %bb.ds ], [ %.0612, %bb.dp ], [ %.0612, %bb.dm ], [ %.0612, %bb.dc ], [ %.2614, %bb.ey ], [ %.2614, %bb.eq ], [ %.0612, %bb.ea ], [ %.0612, %bb.cz ], [ %.0612, %bb.cv ], [ %.0612, %bb.as ], [ %.0612, %bb.aq ], [ %.2614, %bb.fd ], [ %.2614, %bb.fe ], [ %.2614, %bb.fh ] ; 4 uses
+  %.211034 = phi i32 [ %i.vb, %bb.fk ], [ %.17652, %bb.ev ], [ %i.kl, %bb.cj ], [ %i.et, %bb.ao ], [ %i.ta, %bb.ep ], [ %i.qf, %bb.dx ], [ %.11646, %bb.dv ], [ %.11646, %bb.ds ], [ %i.ov, %bb.dp ], [ %i.ov, %bb.dm ], [ %i.mq, %bb.dc ], [ %.17652, %bb.ey ], [ %.17652, %bb.eq ], [ %i.qq, %bb.ea ], [ %i.mq, %bb.cz ], [ %.11646, %bb.cv ], [ %i.fg, %bb.as ], [ %i.ez, %bb.aq ], [ %.17652, %bb.fd ], [ %.17652, %bb.fe ], [ %.17652, %bb.fh ] ; 2 uses
+  %.46831032 = phi ptr [ %.2681, %bb.fk ], [ %.2681, %bb.ev ], [ %.0679, %bb.cj ], [ %.0679, %bb.ao ], [ %.2681, %bb.ep ], [ %.2681, %bb.dx ], [ %.2681, %bb.dv ], [ %.2681, %bb.ds ], [ %.2681, %bb.dp ], [ %.2681, %bb.dm ], [ %.2681, %bb.dc ], [ %.2681, %bb.ey ], [ %.2681, %bb.eq ], [ %.2681, %bb.ea ], [ %.2681, %bb.cz ], [ %.2681, %bb.cv ], [ %.0679, %bb.as ], [ %.0679, %bb.aq ], [ %.2681, %bb.fd ], [ %.2681, %bb.fe ], [ %.2681, %bb.fh ] ; 7 uses
+  %.36871030 = phi ptr [ %.1685, %bb.fk ], [ %.1685, %bb.ev ], [ %.0684, %bb.cj ], [ %.0684, %bb.ao ], [ %.1685, %bb.ep ], [ %.1685, %bb.dx ], [ %.1685, %bb.dv ], [ %.1685, %bb.ds ], [ %.1685, %bb.dp ], [ %.1685, %bb.dm ], [ %.1685, %bb.dc ], [ %.1685, %bb.ey ], [ %.1685, %bb.eq ], [ %.1685, %bb.ea ], [ %.1685, %bb.cz ], [ %.1685, %bb.cv ], [ %.0684, %bb.as ], [ %.0684, %bb.aq ], [ %.1685, %bb.fd ], [ %.1685, %bb.fe ], [ %.1685, %bb.fh ] ; 5 uses
+  %.57151029 = phi i32 [ %.3713, %bb.fk ], [ %.3713, %bb.ev ], [ %.0710, %bb.cj ], [ %.0710, %bb.ao ], [ %.3713, %bb.ep ], [ %.0710, %bb.dx ], [ %.0710, %bb.dv ], [ %.0710, %bb.ds ], [ %.0710, %bb.dp ], [ %.0710, %bb.dm ], [ %.0710, %bb.dc ], [ %.3713, %bb.ey ], [ %.3713, %bb.eq ], [ %.0710, %bb.ea ], [ %.0710, %bb.cz ], [ %.0710, %bb.cv ], [ %.0710, %bb.as ], [ %.0710, %bb.aq ], [ %.3713, %bb.fd ], [ %.3713, %bb.fe ], [ %.3713, %bb.fh ]
+  %.57211028 = phi i32 [ %.3719, %bb.fk ], [ %.3719, %bb.ev ], [ %.0716, %bb.cj ], [ %.0716, %bb.ao ], [ %.3719, %bb.ep ], [ %.0716, %bb.dx ], [ %.0716, %bb.dv ], [ %.0716, %bb.ds ], [ %.0716, %bb.dp ], [ %.0716, %bb.dm ], [ %.0716, %bb.dc ], [ %.3719, %bb.ey ], [ %.3719, %bb.eq ], [ %.0716, %bb.ea ], [ %.0716, %bb.cz ], [ %.0716, %bb.cv ], [ %.0716, %bb.as ], [ %.0716, %bb.aq ], [ %.3719, %bb.fd ], [ %.3719, %bb.fe ], [ %.3719, %bb.fh ] ; 2 uses
+  %.57271027 = phi i32 [ %.3725, %bb.fk ], [ %.3725, %bb.ev ], [ %.0722, %bb.cj ], [ %.0722, %bb.ao ], [ %.3725, %bb.ep ], [ %.0722, %bb.dx ], [ %.0722, %bb.dv ], [ %.0722, %bb.ds ], [ %.0722, %bb.dp ], [ %.0722, %bb.dm ], [ %.0722, %bb.dc ], [ %.3725, %bb.ey ], [ %.3725, %bb.eq ], [ %.0722, %bb.ea ], [ %.0722, %bb.cz ], [ %.0722, %bb.cv ], [ %.0722, %bb.as ], [ %.0722, %bb.aq ], [ %.3725, %bb.fd ], [ %.3725, %bb.fe ], [ %.3725, %bb.fh ] ; 2 uses
   %i.vf = icmp sgt i32 %.57271027, 0
   br i1 %i.vf, label %.critedge, label %bb.fl
 
@@ -1591,7 +1606,7 @@ bb.fm:                                            ; preds = %bb.fl
   br i1 %or.cond16, label %bb.fn, label %.critedge
 
 bb.fn:                                            ; preds = %bb.fm
-  %i.vj = load i64, ptr getelementptr inbounds nuw (i8, ptr @jit_globals, i64 104), align 8, !tbaa !163
+  %i.vj = load i64, ptr getelementptr inbounds nuw (i8, ptr @jit_globals, i64 104), align 8, !tbaa !165
   %i.vk = sdiv i64 %i.vj, 2
   %i.vl = trunc i64 %i.vk to i32
   %i.vm = call fastcc zeroext i8 @zend_jit_trace_bad_stop_event(ptr noundef %1, i32 noundef %i.vl)
@@ -1625,7 +1640,7 @@ bb.fo:                                            ; preds = %.lr.ph1233
   %i.vx = getelementptr i8, ptr %i.vw, i64 -16    ; 2 uses
   %i.vy = load i8, ptr %i.vx, align 8, !tbaa !12
   %i.vz = icmp eq i8 %i.vy, 4
-  br i1 %i.vz, label %.lr.ph1233, label %.critedge.loopexit, !llvm.loop !166
+  br i1 %i.vz, label %.lr.ph1233, label %.critedge.loopexit, !llvm.loop !168
 
 .critedge.loopexit:                               ; preds = %.lr.ph1233, %bb.fo
   %.24.ph.in = phi i64 [ %indvars.iv.next, %bb.fo ], [ %indvars.iv, %.lr.ph1233 ]
@@ -2028,9 +2043,11 @@ attributes #8 = { nounwind }
 !159 = distinct !{!159, !29, !158, !157}
 !160 = !{!112, !36, i64 128}
 !161 = distinct !{!161, !29}
-!162 = !{!112, !36, i64 136}
-!163 = !{!112, !36, i64 104}
-!164 = !{!112, !36, i64 144}
-!165 = !{!112, !36, i64 120}
-!166 = distinct !{!166, !29}
+!162 = distinct !{!162, !29, !157, !158}
+!163 = distinct !{!163, !29, !158, !157}
+!164 = !{!112, !36, i64 136}
+!165 = !{!112, !36, i64 104}
+!166 = !{!112, !36, i64 144}
+!167 = !{!112, !36, i64 120}
+!168 = distinct !{!168, !29}
 end_hunk_2
