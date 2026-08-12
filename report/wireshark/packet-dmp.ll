@@ -203,7 +203,7 @@ bb.t:                                             ; preds = %bb.d, %bb.s, %bb.r,
   %.recomposed123 = urem i64 %0, %i.z             ; 2 uses
   %i.ac = trunc i64 %i.aa to i8                   ; 4 uses
   %i.ad = icmp slt i8 %i.ac, 10                   ; 2 uses
-  %i.ae = icmp ugt i8 %i.ac, 35                   ; 2 uses
+  %i.ae = icmp samesign ugt i8 %i.ac, 35          ; 2 uses
   %i.af = add nuw nsw i8 %i.ac, 55
   %spec.select120 = select i1 %i.ae, i8 42, i8 %i.af
   %i.ag = add nsw i8 %i.ac, 48
@@ -217,7 +217,7 @@ bb.t:                                             ; preds = %bb.d, %bb.s, %bb.r,
   %.not = icmp eq i16 %i.ak, 0                    ; 2 uses
   %spec.store.select117 = select i1 %.not, i8 42, i8 %.sink116
   store i8 %spec.store.select117, ptr %1, align 1
-  %spec.select118 = or i1 %.not, %.1              ; 2 uses
+  %spec.select118 = select i1 %.not, i1 true, i1 %.1 ; 2 uses
   %i.al = add nsw i32 %i.a, -2
   %i.am = sitofp i32 %i.al to double
   %i.an = tail call double @pow(double noundef %.093, double noundef %i.am) #19
@@ -231,7 +231,7 @@ bb.t:                                             ; preds = %bb.d, %bb.s, %bb.r,
   br i1 %i.at, label %bb.v, label %bb.u
 
 bb.u:                                             ; preds = %.split
-  %i.au = icmp ugt i8 %i.ar, 35                   ; 2 uses
+  %i.au = icmp samesign ugt i8 %i.ar, 35          ; 2 uses
   %i.av = add nuw nsw i8 %i.ar, 55
   %spec.select120.1 = select i1 %i.au, i8 42, i8 %i.av
   %spec.select121.1 = select i1 %i.au, i1 true, i1 %spec.select118
@@ -266,7 +266,7 @@ bb.v:                                             ; preds = %.split
   br i1 %i.bj, label %bb.x, label %bb.w
 
 bb.w:                                             ; preds = %.split.2
-  %i.bk = icmp ugt i8 %i.bh, 35                   ; 2 uses
+  %i.bk = icmp samesign ugt i8 %i.bh, 35          ; 2 uses
   %i.bl = add nuw nsw i8 %i.bh, 55
   %spec.select120.2 = select i1 %i.bk, i8 42, i8 %i.bl
   %spec.select121.2 = select i1 %i.bk, i1 true, i1 %spec.select118.1
@@ -305,7 +305,7 @@ bb.y:                                             ; preds = %bb.x, %bb.w
   br i1 %i.bz, label %bb.aa, label %bb.z
 
 bb.z:                                             ; preds = %.split.3
-  %i.ca = icmp ugt i8 %i.bx, 35                   ; 2 uses
+  %i.ca = icmp samesign ugt i8 %i.bx, 35          ; 2 uses
   %i.cb = add nuw nsw i8 %i.bx, 55
   %spec.select120.3 = select i1 %i.ca, i8 42, i8 %i.cb
   %spec.select121.3 = select i1 %i.ca, i1 true, i1 %spec.select118.2
@@ -344,7 +344,7 @@ bb.ab:                                            ; preds = %bb.aa, %bb.z
   br i1 %i.cp, label %bb.ad, label %bb.ac
 
 bb.ac:                                            ; preds = %.split.4
-  %i.cq = icmp ugt i8 %i.cn, 35                   ; 2 uses
+  %i.cq = icmp samesign ugt i8 %i.cn, 35          ; 2 uses
   %i.cr = add nuw nsw i8 %i.cn, 55
   %spec.select120.4 = select i1 %i.cq, i8 42, i8 %i.cr
   %spec.select121.4 = select i1 %i.cq, i1 true, i1 %spec.select118.3
@@ -383,7 +383,7 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac
   br i1 %i.df, label %bb.ag, label %bb.af
 
 bb.af:                                            ; preds = %.split.5
-  %i.dg = icmp ugt i8 %i.dd, 35                   ; 2 uses
+  %i.dg = icmp samesign ugt i8 %i.dd, 35          ; 2 uses
   %i.dh = add nuw nsw i8 %i.dd, 55
   %spec.select120.5 = select i1 %i.dg, i8 42, i8 %i.dh
   %spec.select121.5 = select i1 %i.dg, i1 true, i1 %spec.select118.4
@@ -422,7 +422,7 @@ bb.ah:                                            ; preds = %bb.ag, %bb.af
   br i1 %i.dv, label %bb.aj, label %bb.ai
 
 bb.ai:                                            ; preds = %.split.6
-  %i.dw = icmp ugt i8 %i.dt, 35                   ; 2 uses
+  %i.dw = icmp samesign ugt i8 %i.dt, 35          ; 2 uses
   %i.dx = add nuw nsw i8 %i.dt, 55
   %spec.select120.6 = select i1 %i.dw, i8 42, i8 %i.dx
   %spec.select121.6 = select i1 %i.dw, i1 true, i1 %spec.select118.5
@@ -459,7 +459,7 @@ bb.ak:                                            ; preds = %bb.aj, %bb.ai
   br i1 %i.ek, label %bb.am, label %bb.al
 
 bb.al:                                            ; preds = %.split.7
-  %i.el = icmp ugt i8 %i.ei, 35                   ; 2 uses
+  %i.el = icmp samesign ugt i8 %i.ei, 35          ; 2 uses
   %i.em = add nuw nsw i8 %i.ei, 55
   %spec.select120.7 = select i1 %i.el, i8 42, i8 %i.em
   %spec.select121.7 = select i1 %i.el, i1 true, i1 %spec.select118.6

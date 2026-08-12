@@ -204,7 +204,7 @@ bb.k:                                             ; preds = %_ZN11duckdb_zstdL17
   %i.cc = and i64 %i.cb, -64
   %i.cd = inttoptr i64 %i.cc to ptr               ; 2 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 6080 ; 3 uses
-  %i.cf = icmp ugt i64 %i.bx, 6079
+  %i.cf = icmp samesign ugt i64 %i.bx, 6079
   tail call void @llvm.assume(i1 %i.cf)
   %i.cg = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 32 ; 3 uses
   store ptr %.0.i.i, ptr %i.cg, align 8, !tbaa !62

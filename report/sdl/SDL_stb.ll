@@ -204,11 +204,11 @@ bb.d:                                             ; preds = %stbi__mul2sizes_val
 
 stbi__mul2sizes_valid.exit18.i.i:                 ; preds = %bb.d
   %i.g = udiv i32 2147483647, %4
-  %.not.i.i = icmp samesign ugt i32 %i.d, %i.g
+  %.not.i.i = icmp samesign ule i32 %i.d, %i.g
   %i.h = mul nsw i32 %i.d, %4
-  %5 = icmp ugt i32 %i.h, 1073741823
-  %or.cond.i = select i1 %.not.i.i, i1 true, i1 %5
-  br i1 %or.cond.i, label %stbi__malloc_mad4.exit.thread, label %stbi__malloc_mad4.exit
+  %or.cond.not.i = icmp ult i32 %i.h, 1073741824
+  %or.cond.i = select i1 %.not.i.i, i1 %or.cond.not.i, i1 false
+  br i1 %or.cond.i, label %stbi__malloc_mad4.exit, label %stbi__malloc_mad4.exit.thread
 
 stbi__malloc_mad4.exit:                           ; preds = %bb.d, %stbi__mul2sizes_valid.exit18.i.i
   %i.i = shl nuw i32 %i.d, 1

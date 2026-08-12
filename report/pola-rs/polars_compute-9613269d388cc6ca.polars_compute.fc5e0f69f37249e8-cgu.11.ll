@@ -203,7 +203,7 @@ bb.dr:                                            ; preds = %bb.dp
   %i.jc = load i64, ptr %i.az, align 8, !dbg !13964, !noalias !13502, !noundef !13
   %i.jd = load i64, ptr %i.ba, align 8, !dbg !13965, !noalias !13502, !noundef !13 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s), !dbg !14162, !noalias !13502
-  %i.je = icmp ult i64 %i.jd, 1000000000
+  %i.je = icmp ult i64 %i.jd, 1000000000, !dbg !14163
   br i1 %i.je, label %bb.ds, label %.loopexit, !dbg !14163
 
 bb.ds:                                            ; preds = %bb.dr
@@ -266,7 +266,7 @@ bb.ea:                                            ; preds = %bb.dy
   %i.jt = load i64, ptr %i.ax, align 8, !dbg !13964, !noalias !13502, !noundef !13
   %i.ju = load i64, ptr %i.ay, align 8, !dbg !13965, !noalias !13502, !noundef !13 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.r), !dbg !14209, !noalias !13502
-  %i.jv = icmp ult i64 %i.ju, 1000000000
+  %i.jv = icmp ult i64 %i.ju, 1000000000, !dbg !14210
   br i1 %i.jv, label %bb.eb, label %.loopexit, !dbg !14210
 
 bb.eb:                                            ; preds = %bb.ea
@@ -329,7 +329,7 @@ bb.ej:                                            ; preds = %bb.eh
   %i.kk = load i64, ptr %i.av, align 8, !dbg !13964, !noalias !13502, !noundef !13
   %i.kl = load i64, ptr %i.aw, align 8, !dbg !13965, !noalias !13502, !noundef !13 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q), !dbg !14256, !noalias !13502
-  %i.km = icmp ult i64 %i.kl, 1000000000
+  %i.km = icmp ult i64 %i.kl, 1000000000, !dbg !14257
   br i1 %i.km, label %bb.ek, label %.loopexit, !dbg !14257
 
 bb.ek:                                            ; preds = %bb.ej
@@ -517,7 +517,7 @@ bb.fl:                                            ; preds = %bb.fj
   %i.mm = load i64, ptr %i.aj, align 8, !dbg !13964, !noalias !13502, !noundef !13
   %i.mn = load i64, ptr %i.ak, align 8, !dbg !13965, !noalias !13502, !noundef !13 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p), !dbg !14331, !noalias !13502
-  %i.mo = icmp ult i64 %i.mn, 1000000000
+  %i.mo = icmp ult i64 %i.mn, 1000000000, !dbg !14332
   br i1 %i.mo, label %bb.fm, label %.loopexit, !dbg !14332
 
 bb.fm:                                            ; preds = %bb.fl
@@ -553,7 +553,7 @@ bb.fq:                                            ; preds = %bb.fo
   %i.mw = load i64, ptr %i.ah, align 8, !dbg !13964, !noalias !13502, !noundef !13
   %i.mx = load i64, ptr %i.ai, align 8, !dbg !13965, !noalias !13502, !noundef !13 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o), !dbg !14349, !noalias !13502
-  %i.my = icmp ult i64 %i.mx, 1000000000
+  %i.my = icmp ult i64 %i.mx, 1000000000, !dbg !14350
   br i1 %i.my, label %bb.fr, label %.loopexit, !dbg !14350
 
 bb.fr:                                            ; preds = %bb.fq
@@ -589,7 +589,7 @@ bb.fv:                                            ; preds = %bb.ft
   %i.ng = load i64, ptr %i.ad, align 8, !dbg !13964, !noalias !13502, !noundef !13
   %i.nh = load i64, ptr %i.ae, align 8, !dbg !13965, !noalias !13502, !noundef !13 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n), !dbg !14367, !noalias !13502
-  %i.ni = icmp ult i64 %i.nh, 1000000000
+  %i.ni = icmp ult i64 %i.nh, 1000000000, !dbg !14368
   br i1 %i.ni, label %bb.fw, label %.loopexit, !dbg !14368
 
 bb.fw:                                            ; preds = %bb.fv
@@ -992,7 +992,7 @@ bb.c:                                             ; preds = %bb.b
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
 define internal noundef range(i8 0, 9) i8 @_RNvMNtNtCs9o5SvTbM2BP_6chrono6format6parsedNtB2_6Parsed10set_minute(ptr noalias nofree noundef align 8 captures(none) dereferenceable(176) %0, i64 noundef %1) unnamed_addr #3 personality ptr @rust_eh_personality !dbg !30102 {
 bb.a:
-  %i.a = icmp ult i64 %1, 60
+  %i.a = icmp ult i64 %1, 60, !dbg !30103
   br i1 %i.a, label %bb.b, label %_RINvNtNtCs9o5SvTbM2BP_6chrono6format6parsed17set_if_consistentmECslFlrwjHoTci_14polars_compute.exit, !dbg !30103
 
 bb.b:                                             ; preds = %bb.a
@@ -1019,7 +1019,7 @@ _RINvNtNtCs9o5SvTbM2BP_6chrono6format6parsed17set_if_consistentmECslFlrwjHoTci_1
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
 define internal noundef range(i8 0, 9) i8 @_RNvMNtNtCs9o5SvTbM2BP_6chrono6format6parsedNtB2_6Parsed10set_second(ptr noalias nofree noundef align 8 captures(none) dereferenceable(176) %0, i64 noundef %1) unnamed_addr #3 personality ptr @rust_eh_personality !dbg !30119 {
 bb.a:
-  %i.a = icmp ult i64 %1, 61
+  %i.a = icmp ult i64 %1, 61, !dbg !30120
   br i1 %i.a, label %bb.b, label %_RINvNtNtCs9o5SvTbM2BP_6chrono6format6parsed17set_if_consistentmECslFlrwjHoTci_14polars_compute.exit, !dbg !30120
 
 bb.b:                                             ; preds = %bb.a
@@ -1179,7 +1179,7 @@ _RINvNtNtCs9o5SvTbM2BP_6chrono6format6parsed17set_if_consistentxECslFlrwjHoTci_1
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
 define internal noundef range(i8 0, 9) i8 @_RNvMNtNtCs9o5SvTbM2BP_6chrono6format6parsedNtB2_6Parsed14set_nanosecond(ptr noalias nofree noundef align 8 captures(none) dereferenceable(176) %0, i64 noundef %1) unnamed_addr #3 personality ptr @rust_eh_personality !dbg !30219 {
 bb.a:
-  %i.a = icmp ult i64 %1, 1000000000
+  %i.a = icmp ult i64 %1, 1000000000, !dbg !30220
   br i1 %i.a, label %bb.b, label %_RINvNtNtCs9o5SvTbM2BP_6chrono6format6parsed17set_if_consistentmECslFlrwjHoTci_14polars_compute.exit, !dbg !30220
 
 bb.b:                                             ; preds = %bb.a
@@ -1206,7 +1206,7 @@ _RINvNtNtCs9o5SvTbM2BP_6chrono6format6parsed17set_if_consistentmECslFlrwjHoTci_1
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
 define internal noundef range(i8 0, 9) i8 @_RNvMNtNtCs9o5SvTbM2BP_6chrono6format6parsedNtB2_6Parsed16set_year_div_100(ptr noalias nofree noundef align 8 captures(none) dereferenceable(176) %0, i64 noundef %1) unnamed_addr #3 personality ptr @rust_eh_personality !dbg !30236 {
 bb.a:
-  %i.a = icmp ult i64 %1, 2147483648
+  %i.a = icmp ult i64 %1, 2147483648, !dbg !30237
   br i1 %i.a, label %bb.b, label %_RINvNtNtCs9o5SvTbM2BP_6chrono6format6parsed17set_if_consistentlECslFlrwjHoTci_14polars_compute.exit, !dbg !30237
 
 bb.b:                                             ; preds = %bb.a
@@ -1260,7 +1260,7 @@ _RINvNtNtCs9o5SvTbM2BP_6chrono6format6parsed17set_if_consistentlECslFlrwjHoTci_1
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
 define internal noundef range(i8 0, 9) i8 @_RNvMNtNtCs9o5SvTbM2BP_6chrono6format6parsedNtB2_6Parsed17set_week_from_mon(ptr noalias nofree noundef align 8 captures(none) dereferenceable(176) %0, i64 noundef %1) unnamed_addr #3 personality ptr @rust_eh_personality !dbg !30271 {
 bb.a:
-  %i.a = icmp ult i64 %1, 54
+  %i.a = icmp ult i64 %1, 54, !dbg !30272
   br i1 %i.a, label %bb.b, label %_RINvNtNtCs9o5SvTbM2BP_6chrono6format6parsed17set_if_consistentmECslFlrwjHoTci_14polars_compute.exit, !dbg !30272
 
 bb.b:                                             ; preds = %bb.a
@@ -1287,7 +1287,7 @@ _RINvNtNtCs9o5SvTbM2BP_6chrono6format6parsed17set_if_consistentmECslFlrwjHoTci_1
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
 define internal noundef range(i8 0, 9) i8 @_RNvMNtNtCs9o5SvTbM2BP_6chrono6format6parsedNtB2_6Parsed17set_week_from_sun(ptr noalias nofree noundef align 8 captures(none) dereferenceable(176) %0, i64 noundef %1) unnamed_addr #3 personality ptr @rust_eh_personality !dbg !30288 {
 bb.a:
-  %i.a = icmp ult i64 %1, 54
+  %i.a = icmp ult i64 %1, 54, !dbg !30289
   br i1 %i.a, label %bb.b, label %_RINvNtNtCs9o5SvTbM2BP_6chrono6format6parsed17set_if_consistentmECslFlrwjHoTci_14polars_compute.exit, !dbg !30289
 
 bb.b:                                             ; preds = %bb.a
@@ -1314,7 +1314,7 @@ _RINvNtNtCs9o5SvTbM2BP_6chrono6format6parsed17set_if_consistentmECslFlrwjHoTci_1
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
 define internal noundef range(i8 0, 9) i8 @_RNvMNtNtCs9o5SvTbM2BP_6chrono6format6parsedNtB2_6Parsed19set_isoyear_div_100(ptr noalias nofree noundef align 8 captures(none) dereferenceable(176) %0, i64 noundef %1) unnamed_addr #3 personality ptr @rust_eh_personality !dbg !30305 {
 bb.a:
-  %i.a = icmp ult i64 %1, 2147483648
+  %i.a = icmp ult i64 %1, 2147483648, !dbg !30306
   br i1 %i.a, label %bb.b, label %_RINvNtNtCs9o5SvTbM2BP_6chrono6format6parsed17set_if_consistentlECslFlrwjHoTci_14polars_compute.exit, !dbg !30306
 
 bb.b:                                             ; preds = %bb.a

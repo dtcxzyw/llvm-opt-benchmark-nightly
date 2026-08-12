@@ -203,8 +203,8 @@ man_trk_ctl_continuos_full_frame.exit:            ; preds = %bb.d
   %i.ae = load i64, ptr %i.ad, align 8
   %i.af = and i64 %i.ae, 4503599627370496
   %.not.i = icmp eq i64 %i.af, 0
-  %i.ag = icmp ult i16 %i.k, 14
-  %1 = and i1 %.not.i, %i.ag
+  %i.ag = icmp samesign ult i16 %i.k, 14
+  %1 = select i1 %.not.i, i1 %i.ag, i1 false
   %i.ah = select i1 %1, i32 -2147483634, i32 -2147459072
   tail call void @intel_dmc_wl_get(ptr noundef %i.d, i32 %i.ac) #11
   %.val.i19 = load ptr, ptr %i.d, align 8

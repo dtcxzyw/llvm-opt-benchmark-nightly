@@ -204,7 +204,7 @@ bb.o:                                             ; preds = %bb.m
   %or.cond.i = and i1 %i.cu, %i.cs
   %or.cond39.i = or i1 %i.ct, %or.cond.i
   %or.cond39.i.not = xor i1 %or.cond39.i, true
-  %i.cv = icmp ult i64 %i.bu, 129
+  %i.cv = icmp samesign ult i64 %i.bu, 129
   %or.cond.not = select i1 %i.cs, i1 true, i1 %i.cv
   %or.cond = select i1 %or.cond39.i.not, i1 %or.cond.not, i1 false
   br i1 %or.cond, label %.noexc21, label %bb.p
@@ -607,7 +607,7 @@ bb.h:                                             ; preds = %bb.f
   %or.cond.i = and i1 %i.cd, %i.cb
   %or.cond39.i = or i1 %i.cc, %or.cond.i
   %or.cond39.i.not = xor i1 %or.cond39.i, true
-  %i.ce = icmp ult i64 %i.bd, 129
+  %i.ce = icmp samesign ult i64 %i.bd, 129
   %or.cond.not = select i1 %i.cb, i1 true, i1 %i.ce
   %or.cond = select i1 %or.cond39.i.not, i1 %or.cond.not, i1 false
   br i1 %or.cond, label %.noexc28, label %bb.i
@@ -1010,7 +1010,7 @@ bb.i:                                             ; preds = %bb.g
   %or.cond.i.i = and i1 %i.ck, %i.ci
   %or.cond39.i.i = or i1 %i.cj, %or.cond.i.i
   %or.cond39.i.i.not = xor i1 %or.cond39.i.i, true
-  %i.cl = icmp ult i64 %i.bk, 129
+  %i.cl = icmp samesign ult i64 %i.bk, 129
   %or.cond.not = select i1 %i.ci, i1 true, i1 %i.cl
   %or.cond = select i1 %or.cond39.i.i.not, i1 %or.cond.not, i1 false
   br i1 %or.cond, label %.noexc66, label %bb.j
@@ -1413,7 +1413,7 @@ bb.bi:                                            ; preds = %bb.bg
   %or.cond.i = and i1 %i.pk, %i.pi
   %or.cond39.i = or i1 %i.pj, %or.cond.i
   %or.cond39.i.not = xor i1 %or.cond39.i, true
-  %i.pl = icmp ult i64 %i.ok, 129
+  %i.pl = icmp samesign ult i64 %i.ok, 129
   %or.cond341.not = select i1 %i.pi, i1 true, i1 %i.pl
   %or.cond344 = select i1 %or.cond39.i.not, i1 %or.cond341.not, i1 false
   br i1 %or.cond344, label %.noexc34, label %bb.bj
@@ -1816,7 +1816,7 @@ bb.r:                                             ; preds = %bb.p
   %or.cond.i.i = and i1 %i.dg, %i.de
   %or.cond39.i.i = or i1 %i.df, %or.cond.i.i
   %or.cond39.i.i.not = xor i1 %or.cond39.i.i, true
-  %i.dh = icmp ult i64 %i.cg, 129
+  %i.dh = icmp samesign ult i64 %i.cg, 129
   %or.cond.not = select i1 %i.de, i1 true, i1 %i.dh
   %or.cond = select i1 %or.cond39.i.i.not, i1 %or.cond.not, i1 false
   br i1 %or.cond, label %.noexc16, label %bb.s
@@ -2219,7 +2219,7 @@ bb.k:                                             ; preds = %bb.i
   %or.cond.i.i = and i1 %i.cp, %i.cn
   %or.cond39.i.i = or i1 %i.co, %or.cond.i.i
   %or.cond39.i.i.not = xor i1 %or.cond39.i.i, true
-  %i.cq = icmp ult i64 %i.bp, 129
+  %i.cq = icmp samesign ult i64 %i.bp, 129
   %or.cond.not = select i1 %i.cn, i1 true, i1 %i.cq
   %or.cond = select i1 %or.cond39.i.i.not, i1 %or.cond.not, i1 false
   br i1 %or.cond, label %.noexc23, label %bb.l
@@ -2622,7 +2622,7 @@ bb.l:                                             ; preds = %bb.j
   %or.cond.i.i.i = and i1 %i.cw, %i.cu
   %or.cond39.i.i.i = or i1 %i.cv, %or.cond.i.i.i
   %or.cond39.i.i.i.not = xor i1 %or.cond39.i.i.i, true
-  %i.cx = icmp ult i64 %i.bw, 129
+  %i.cx = icmp samesign ult i64 %i.bw, 129
   %or.cond.not = select i1 %i.cu, i1 true, i1 %i.cx
   %or.cond = select i1 %or.cond39.i.i.i.not, i1 %or.cond.not, i1 false
   br i1 %or.cond, label %.noexc57, label %bb.m
@@ -3025,7 +3025,7 @@ bb.bo:                                            ; preds = %bb.bm
   %or.cond.i.i = and i1 %i.qi, %i.qg
   %or.cond39.i.i = or i1 %i.qh, %or.cond.i.i
   %or.cond39.i.i.not = xor i1 %or.cond39.i.i, true
-  %i.qj = icmp ult i64 %i.pi, 129
+  %i.qj = icmp samesign ult i64 %i.pi, 129
   %or.cond336.not = select i1 %i.qg, i1 true, i1 %i.qj
   %or.cond339 = select i1 %or.cond39.i.i.not, i1 %or.cond336.not, i1 false
   br i1 %or.cond339, label %.noexc29, label %bb.bp

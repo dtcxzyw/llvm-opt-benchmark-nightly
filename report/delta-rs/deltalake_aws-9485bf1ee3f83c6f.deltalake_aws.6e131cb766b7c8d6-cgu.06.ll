@@ -201,7 +201,7 @@ bb.aa:                                            ; preds = %.loopexit, %.loopex
 
 bb.ab:                                            ; preds = %.noexc43.i
   %i.ez = load ptr, ptr %i.bh, align 8, !noalias !2396, !nonnull !3, !noundef !3 ; 2 uses
-  %i.fa = icmp ugt i64 %i.ex, 2
+  %i.fa = icmp samesign ugt i64 %i.ex, 2
   call void @llvm.assume(i1 %i.fa)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ad), !noalias !2396
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.ez, ptr noundef nonnull readonly align 1 dereferenceable(3) @46, i64 range(i64 0, -9223372036854775808) 3, i1 false), !noalias !2402
@@ -604,7 +604,7 @@ bb.s:                                             ; preds = %.loopexit, %.loopex
 
 bb.t:                                             ; preds = %.noexc.i
   %i.ex = load ptr, ptr %i.bl, align 8, !noalias !2892, !nonnull !3, !noundef !3 ; 2 uses
-  %i.ey = icmp ugt i64 %i.ev, 1
+  %i.ey = icmp samesign ugt i64 %i.ev, 1
   call void @llvm.assume(i1 %i.ey)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ah), !noalias !2892
   store i16 26170, ptr %i.ex, align 1, !noalias !2898
@@ -1007,7 +1007,7 @@ bb.r:                                             ; preds = %.noexc.i
 
 bb.s:                                             ; preds = %.noexc.i
   %i.fu = load ptr, ptr %i.bu, align 8, !noalias !3195, !nonnull !3, !noundef !3 ; 3 uses
-  %i.fv = icmp ugt i64 %i.fs, 33
+  %i.fv = icmp samesign ugt i64 %i.fs, 33
   call void @llvm.assume(i1 %i.fv)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aj), !noalias !3195
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(34) %i.fu, ptr noundef nonnull readonly align 1 dereferenceable(34) @50, i64 range(i64 0, -9223372036854775808) 34, i1 false), !noalias !3202
@@ -1138,7 +1138,7 @@ bb.ac:                                            ; preds = %.loopexit56, %.loop
 
 bb.ad:                                            ; preds = %.noexc38.i
   %i.gm = load ptr, ptr %i.bx, align 8, !noalias !3237, !nonnull !3, !noundef !3 ; 2 uses
-  %i.gn = icmp ugt i64 %i.gk, 1
+  %i.gn = icmp samesign ugt i64 %i.gk, 1
   call void @llvm.assume(i1 %i.gn)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ah), !noalias !3237
   store i16 25402, ptr %i.gm, align 1, !noalias !3242
@@ -1201,7 +1201,7 @@ bb.ah:                                            ; preds = %.loopexit61, %.loop
 
 bb.ai:                                            ; preds = %.noexc43.i
   %i.gt = load ptr, ptr %i.ca, align 8, !noalias !3247, !nonnull !3, !noundef !3 ; 2 uses
-  %i.gu = icmp ugt i64 %i.gr, 1
+  %i.gu = icmp samesign ugt i64 %i.gr, 1
   call void @llvm.assume(i1 %i.gu)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ag), !noalias !3247
   store i16 25914, ptr %i.gt, align 1, !noalias !3252
@@ -1267,7 +1267,7 @@ bb.am:                                            ; preds = %.loopexit66, %.loop
 
 bb.an:                                            ; preds = %.noexc46.i
   %i.hc = load ptr, ptr %i.ce, align 8, !noalias !3260, !nonnull !3, !noundef !3 ; 2 uses
-  %i.hd = icmp ugt i64 %i.ha, 1
+  %i.hd = icmp samesign ugt i64 %i.ha, 1
   call void @llvm.assume(i1 %i.hd)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.af), !noalias !3260
   store i16 26170, ptr %i.hc, align 1, !noalias !3266
@@ -1343,7 +1343,7 @@ bb.au:                                            ; preds = %.noexc.i.i
 
 bb.av:                                            ; preds = %.noexc.i.i
   %i.hl = load ptr, ptr %i.cj, align 8, !noalias !3275, !nonnull !3, !noundef !3 ; 3 uses
-  %i.hm = icmp ugt i64 %i.hj, 12
+  %i.hm = icmp samesign ugt i64 %i.hj, 12
   call void @llvm.assume(i1 %i.hm)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ad), !noalias !3275
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(13) %i.hl, ptr noundef nonnull readonly align 1 dereferenceable(13) @52, i64 range(i64 0, -9223372036854775808) 13, i1 false), !noalias !3286

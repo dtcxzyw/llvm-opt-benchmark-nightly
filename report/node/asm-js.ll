@@ -201,7 +201,7 @@ bb.d:                                             ; preds = %bb.c
   %i.j = and i64 %0, 16777215
   %.not = icmp eq i64 %i.j, 0
   %i.k = icmp samesign ult i64 %0, 2147483649
-  %spec.select = and i1 %.not, %i.k
+  %spec.select = select i1 %.not, i1 %i.k, i1 false
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.b, %bb.a, %_ZN2v84base4bits12IsPowerOfTwoIjEEbT_Qoosr3stdE13is_integral_vIS3_Esr3stdE9is_enum_vIS3_E.exit

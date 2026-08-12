@@ -201,7 +201,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.noexc.i
   %i.t = load ptr, ptr %i.l, align 8, !noalias !66, !nonnull !22, !noundef !22
-  %i.u = icmp ugt i64 %i.k, 2
+  %i.u = icmp samesign ugt i64 %i.k, 2
   tail call void @llvm.assume(i1 %i.u)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !66
   store i64 %i.k, ptr %i.d, align 8, !noalias !66
@@ -218,7 +218,7 @@ bb.c:                                             ; preds = %bb.e, %bb.b
 
 bb.d:                                             ; preds = %.noexc16.i
   %i.w = load ptr, ptr %i.r, align 8, !noalias !66, !nonnull !22, !noundef !22
-  %i.x = icmp ugt i64 %i.q, 3
+  %i.x = icmp samesign ugt i64 %i.q, 3
   tail call void @llvm.assume(i1 %i.x)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !66
   store i64 %i.q, ptr %i.d, align 8, !noalias !66
@@ -302,7 +302,7 @@ bb.l:                                             ; preds = %bb.k
 
 _RNvXs_NtNtCsiS54oC2UhYT_4toml3ser5errorNtB4_5ErrorINtNtCshzWfHUSfYae_4core7convert4FromNtNtBR_3fmt5ErrorE4from.exit: ; preds = %bb.k
   %i.as = load ptr, ptr %i.aq, align 8, !noalias !75, !nonnull !22, !noundef !22 ; 2 uses
-  %i.at = icmp ugt i64 %i.ap, 37
+  %i.at = icmp samesign ugt i64 %i.ap, 37
   call void @llvm.assume(i1 %i.at)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !75
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(38) %i.as, ptr noundef nonnull readonly align 1 dereferenceable(38) @31, i64 range(i64 0, -9223372036854775808) 38, i1 false), !noalias !88
@@ -387,7 +387,7 @@ bb.g:                                             ; preds = %bb.f
 
 _RNvXs_NtNtCsiS54oC2UhYT_4toml3ser5errorNtB4_5ErrorINtNtCshzWfHUSfYae_4core7convert4FromNtNtBR_3fmt5ErrorE4from.exit: ; preds = %bb.f
   %i.w = load ptr, ptr %i.u, align 8, !noalias !89, !nonnull !22, !noundef !22 ; 2 uses
-  %i.x = icmp ugt i64 %i.t, 37
+  %i.x = icmp samesign ugt i64 %i.t, 37
   call void @llvm.assume(i1 %i.x)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !89
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(38) %i.w, ptr noundef nonnull readonly align 1 dereferenceable(38) @31, i64 range(i64 0, -9223372036854775808) 38, i1 false), !noalias !102
@@ -453,7 +453,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.noexc.i
   %i.t = load ptr, ptr %i.l, align 8, !noalias !103, !nonnull !22, !noundef !22
-  %i.u = icmp ugt i64 %i.k, 4
+  %i.u = icmp samesign ugt i64 %i.k, 4
   tail call void @llvm.assume(i1 %i.u)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !103
   store i64 %i.k, ptr %i.d, align 8, !noalias !103
@@ -470,7 +470,7 @@ bb.c:                                             ; preds = %bb.e, %bb.b
 
 bb.d:                                             ; preds = %.noexc16.i
   %i.w = load ptr, ptr %i.r, align 8, !noalias !103, !nonnull !22, !noundef !22
-  %i.x = icmp ugt i64 %i.q, 5
+  %i.x = icmp samesign ugt i64 %i.q, 5
   tail call void @llvm.assume(i1 %i.x)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !103
   store i64 %i.q, ptr %i.d, align 8, !noalias !103
@@ -554,7 +554,7 @@ bb.l:                                             ; preds = %bb.k
 
 _RNvXs_NtNtCsiS54oC2UhYT_4toml3ser5errorNtB4_5ErrorINtNtCshzWfHUSfYae_4core7convert4FromNtNtBR_3fmt5ErrorE4from.exit: ; preds = %bb.k
   %i.as = load ptr, ptr %i.aq, align 8, !noalias !112, !nonnull !22, !noundef !22 ; 2 uses
-  %i.at = icmp ugt i64 %i.ap, 37
+  %i.at = icmp samesign ugt i64 %i.ap, 37
   call void @llvm.assume(i1 %i.at)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !112
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(38) %i.as, ptr noundef nonnull readonly align 1 dereferenceable(38) @31, i64 range(i64 0, -9223372036854775808) 38, i1 false), !noalias !125
@@ -620,7 +620,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.noexc.i
   %i.t = load ptr, ptr %i.l, align 8, !noalias !126, !nonnull !22, !noundef !22
-  %i.u = icmp ugt i64 %i.k, 9
+  %i.u = icmp samesign ugt i64 %i.k, 9
   tail call void @llvm.assume(i1 %i.u)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !126
   store i64 %i.k, ptr %i.d, align 8, !noalias !126
@@ -637,7 +637,7 @@ bb.c:                                             ; preds = %bb.e, %bb.b
 
 bb.d:                                             ; preds = %.noexc16.i
   %i.w = load ptr, ptr %i.r, align 8, !noalias !126, !nonnull !22, !noundef !22
-  %i.x = icmp ugt i64 %i.q, 10
+  %i.x = icmp samesign ugt i64 %i.q, 10
   tail call void @llvm.assume(i1 %i.x)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !126
   store i64 %i.q, ptr %i.d, align 8, !noalias !126
@@ -721,7 +721,7 @@ bb.l:                                             ; preds = %bb.k
 
 _RNvXs_NtNtCsiS54oC2UhYT_4toml3ser5errorNtB4_5ErrorINtNtCshzWfHUSfYae_4core7convert4FromNtNtBR_3fmt5ErrorE4from.exit: ; preds = %bb.k
   %i.as = load ptr, ptr %i.aq, align 8, !noalias !135, !nonnull !22, !noundef !22 ; 2 uses
-  %i.at = icmp ugt i64 %i.ap, 37
+  %i.at = icmp samesign ugt i64 %i.ap, 37
   call void @llvm.assume(i1 %i.at)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !135
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(38) %i.as, ptr noundef nonnull readonly align 1 dereferenceable(38) @31, i64 range(i64 0, -9223372036854775808) 38, i1 false), !noalias !148
@@ -787,7 +787,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.noexc.i
   %i.t = load ptr, ptr %i.l, align 8, !noalias !149, !nonnull !22, !noundef !22
-  %i.u = icmp ugt i64 %i.k, 18
+  %i.u = icmp samesign ugt i64 %i.k, 18
   tail call void @llvm.assume(i1 %i.u)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !149
   store i64 %i.k, ptr %i.d, align 8, !noalias !149
@@ -804,7 +804,7 @@ bb.c:                                             ; preds = %bb.e, %bb.b
 
 bb.d:                                             ; preds = %.noexc16.i
   %i.w = load ptr, ptr %i.r, align 8, !noalias !149, !nonnull !22, !noundef !22
-  %i.x = icmp ugt i64 %i.q, 19
+  %i.x = icmp samesign ugt i64 %i.q, 19
   tail call void @llvm.assume(i1 %i.x)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !149
   store i64 %i.q, ptr %i.d, align 8, !noalias !149
@@ -888,7 +888,7 @@ bb.l:                                             ; preds = %bb.k
 
 _RNvXs_NtNtCsiS54oC2UhYT_4toml3ser5errorNtB4_5ErrorINtNtCshzWfHUSfYae_4core7convert4FromNtNtBR_3fmt5ErrorE4from.exit: ; preds = %bb.k
   %i.as = load ptr, ptr %i.aq, align 8, !noalias !158, !nonnull !22, !noundef !22 ; 2 uses
-  %i.at = icmp ugt i64 %i.ap, 37
+  %i.at = icmp samesign ugt i64 %i.ap, 37
   call void @llvm.assume(i1 %i.at)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !158
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(38) %i.as, ptr noundef nonnull readonly align 1 dereferenceable(38) @31, i64 range(i64 0, -9223372036854775808) 38, i1 false), !noalias !171
@@ -931,7 +931,7 @@ bb.c:                                             ; preds = %bb.b
 
 _RNvXs_NtNtCsiS54oC2UhYT_4toml3ser5errorNtB4_5ErrorINtNtCshzWfHUSfYae_4core7convert4FromNtNtBR_3fmt5ErrorE4from.exit: ; preds = %bb.b
   %i.i = load ptr, ptr %i.g, align 8, !noalias !172, !nonnull !22, !noundef !22 ; 2 uses
-  %i.j = icmp ugt i64 %i.f, 37
+  %i.j = icmp samesign ugt i64 %i.f, 37
   tail call void @llvm.assume(i1 %i.j)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !172
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(38) %i.i, ptr noundef nonnull readonly align 1 dereferenceable(38) @31, i64 range(i64 0, -9223372036854775808) 38, i1 false), !noalias !185
@@ -1016,7 +1016,7 @@ bb.g:                                             ; preds = %bb.f
 
 _RNvXs_NtNtCsiS54oC2UhYT_4toml3ser5errorNtB4_5ErrorINtNtCshzWfHUSfYae_4core7convert4FromNtNtBR_3fmt5ErrorE4from.exit: ; preds = %bb.f
   %i.w = load ptr, ptr %i.u, align 8, !noalias !186, !nonnull !22, !noundef !22 ; 2 uses
-  %i.x = icmp ugt i64 %i.t, 37
+  %i.x = icmp samesign ugt i64 %i.t, 37
   call void @llvm.assume(i1 %i.x)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !186
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(38) %i.w, ptr noundef nonnull readonly align 1 dereferenceable(38) @31, i64 range(i64 0, -9223372036854775808) 38, i1 false), !noalias !199
@@ -1101,7 +1101,7 @@ bb.g:                                             ; preds = %bb.f
 
 _RNvXs_NtNtCsiS54oC2UhYT_4toml3ser5errorNtB4_5ErrorINtNtCshzWfHUSfYae_4core7convert4FromNtNtBR_3fmt5ErrorE4from.exit: ; preds = %bb.f
   %i.w = load ptr, ptr %i.u, align 8, !noalias !200, !nonnull !22, !noundef !22 ; 2 uses
-  %i.x = icmp ugt i64 %i.t, 37
+  %i.x = icmp samesign ugt i64 %i.t, 37
   call void @llvm.assume(i1 %i.x)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !200
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(38) %i.w, ptr noundef nonnull readonly align 1 dereferenceable(38) @31, i64 range(i64 0, -9223372036854775808) 38, i1 false), !noalias !213
@@ -1186,7 +1186,7 @@ bb.g:                                             ; preds = %bb.f
 
 _RNvXs_NtNtCsiS54oC2UhYT_4toml3ser5errorNtB4_5ErrorINtNtCshzWfHUSfYae_4core7convert4FromNtNtBR_3fmt5ErrorE4from.exit: ; preds = %bb.f
   %i.w = load ptr, ptr %i.u, align 8, !noalias !214, !nonnull !22, !noundef !22 ; 2 uses
-  %i.x = icmp ugt i64 %i.t, 37
+  %i.x = icmp samesign ugt i64 %i.t, 37
   call void @llvm.assume(i1 %i.x)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !214
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(38) %i.w, ptr noundef nonnull readonly align 1 dereferenceable(38) @31, i64 range(i64 0, -9223372036854775808) 38, i1 false), !noalias !227
@@ -1263,7 +1263,7 @@ bb.e:                                             ; preds = %bb.d
 
 _RNvXs_NtNtCsiS54oC2UhYT_4toml3ser5errorNtB4_5ErrorINtNtCshzWfHUSfYae_4core7convert4FromNtNtBR_3fmt5ErrorE4from.exit: ; preds = %bb.d
   %i.v = load ptr, ptr %i.t, align 8, !noalias !229, !nonnull !22, !noundef !22 ; 2 uses
-  %i.w = icmp ugt i64 %i.s, 37
+  %i.w = icmp samesign ugt i64 %i.s, 37
   call void @llvm.assume(i1 %i.w)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !229
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(38) %i.v, ptr noundef nonnull readonly align 1 dereferenceable(38) @31, i64 range(i64 0, -9223372036854775808) 38, i1 false), !noalias !242
@@ -1367,7 +1367,7 @@ bb.i:                                             ; preds = %bb.h
 
 _RNvXs_NtNtCsiS54oC2UhYT_4toml3ser5errorNtB4_5ErrorINtNtCshzWfHUSfYae_4core7convert4FromNtNtBR_3fmt5ErrorE4from.exit: ; preds = %bb.h
   %i.aj = load ptr, ptr %i.ah, align 8, !noalias !246, !nonnull !22, !noundef !22 ; 2 uses
-  %i.ak = icmp ugt i64 %i.ag, 37
+  %i.ak = icmp samesign ugt i64 %i.ag, 37
   call void @llvm.assume(i1 %i.ak)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !246
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(38) %i.aj, ptr noundef nonnull readonly align 1 dereferenceable(38) @31, i64 range(i64 0, -9223372036854775808) 38, i1 false), !noalias !259
@@ -1434,7 +1434,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.noexc.i
   %i.t = load ptr, ptr %i.l, align 8, !noalias !260, !nonnull !22, !noundef !22
-  %i.u = icmp ugt i64 %i.k, 38
+  %i.u = icmp samesign ugt i64 %i.k, 38
   tail call void @llvm.assume(i1 %i.u)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !260
   store i64 %i.k, ptr %i.d, align 8, !noalias !260
@@ -1451,7 +1451,7 @@ bb.c:                                             ; preds = %bb.e, %bb.b
 
 bb.d:                                             ; preds = %.noexc16.i
   %i.w = load ptr, ptr %i.r, align 8, !noalias !260, !nonnull !22, !noundef !22
-  %i.x = icmp ugt i64 %i.q, 39
+  %i.x = icmp samesign ugt i64 %i.q, 39
   tail call void @llvm.assume(i1 %i.x)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !260
   store i64 %i.q, ptr %i.d, align 8, !noalias !260
@@ -1535,7 +1535,7 @@ bb.l:                                             ; preds = %bb.k
 
 _RNvXs_NtNtCsiS54oC2UhYT_4toml3ser5errorNtB4_5ErrorINtNtCshzWfHUSfYae_4core7convert4FromNtNtBR_3fmt5ErrorE4from.exit: ; preds = %bb.k
   %i.as = load ptr, ptr %i.aq, align 8, !noalias !269, !nonnull !22, !noundef !22 ; 2 uses
-  %i.at = icmp ugt i64 %i.ap, 37
+  %i.at = icmp samesign ugt i64 %i.ap, 37
   call void @llvm.assume(i1 %i.at)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !269
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(38) %i.as, ptr noundef nonnull readonly align 1 dereferenceable(38) @31, i64 range(i64 0, -9223372036854775808) 38, i1 false), !noalias !282
@@ -1620,7 +1620,7 @@ bb.g:                                             ; preds = %bb.f
 
 _RNvXs_NtNtCsiS54oC2UhYT_4toml3ser5errorNtB4_5ErrorINtNtCshzWfHUSfYae_4core7convert4FromNtNtBR_3fmt5ErrorE4from.exit: ; preds = %bb.f
   %i.w = load ptr, ptr %i.u, align 8, !noalias !283, !nonnull !22, !noundef !22 ; 2 uses
-  %i.x = icmp ugt i64 %i.t, 37
+  %i.x = icmp samesign ugt i64 %i.t, 37
   call void @llvm.assume(i1 %i.x)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !283
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(38) %i.w, ptr noundef nonnull readonly align 1 dereferenceable(38) @31, i64 range(i64 0, -9223372036854775808) 38, i1 false), !noalias !296
@@ -1663,7 +1663,7 @@ bb.c:                                             ; preds = %bb.b
 
 _RNvXs_NtNtCsiS54oC2UhYT_4toml3ser5errorNtB4_5ErrorINtNtCshzWfHUSfYae_4core7convert4FromNtNtBR_3fmt5ErrorE4from.exit: ; preds = %bb.b
   %i.i = load ptr, ptr %i.g, align 8, !noalias !297, !nonnull !22, !noundef !22 ; 2 uses
-  %i.j = icmp ugt i64 %i.f, 37
+  %i.j = icmp samesign ugt i64 %i.f, 37
   tail call void @llvm.assume(i1 %i.j)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !297
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(38) %i.i, ptr noundef nonnull readonly align 1 dereferenceable(38) @31, i64 range(i64 0, -9223372036854775808) 38, i1 false), !noalias !310
@@ -2002,7 +2002,7 @@ bb.b:                                             ; preds = %bb.a
 
 _RINvMNtNtCsiS54oC2UhYT_4toml3ser5errorNtB3_5Error3newReEB7_.exit: ; preds = %bb.a
   %i.h = load ptr, ptr %i.f, align 8, !noalias !332, !nonnull !22, !noundef !22 ; 2 uses
-  %i.i = icmp ugt i64 %i.e, 37
+  %i.i = icmp samesign ugt i64 %i.e, 37
   tail call void @llvm.assume(i1 %i.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !332
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(38) %i.h, ptr noundef nonnull readonly align 1 dereferenceable(38) @31, i64 range(i64 0, -9223372036854775808) 38, i1 false), !noalias !341

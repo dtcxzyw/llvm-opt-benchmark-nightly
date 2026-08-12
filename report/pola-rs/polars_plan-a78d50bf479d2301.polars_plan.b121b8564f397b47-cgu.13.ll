@@ -203,7 +203,7 @@ bb.a:
   %.idx.i = mul nuw nsw i64 %.16.val, 24, !dbg !4316
   %i.j = getelementptr inbounds nuw i8, ptr %.8.val, i64 %.idx.i, !dbg !4316 ; 4 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
-  %i.k = icmp ult i64 %.16.val, 4294967296        ; 2 uses
+  %i.k = icmp samesign ult i64 %.16.val, 4294967296 ; 2 uses
   %i.l = trunc nuw i64 %.16.val to i32            ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 28, !dbg !4330
   %i.n = load i8, ptr %i.m, align 4, !dbg !4330, !range !2278, !alias.scope !4314, !noalias !4310, !noundef !14
@@ -553,7 +553,7 @@ bb.a:
   %.idx.i = mul nuw nsw i64 %.16.val, 24, !dbg !4581
   %i.j = getelementptr inbounds nuw i8, ptr %.8.val, i64 %.idx.i, !dbg !4581 ; 4 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
-  %i.k = icmp ult i64 %.16.val, 4294967296        ; 2 uses
+  %i.k = icmp samesign ult i64 %.16.val, 4294967296 ; 2 uses
   %i.l = trunc nuw i64 %.16.val to i32            ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 12, !dbg !4588
   %i.n = load i8, ptr %i.m, align 4, !dbg !4588, !range !2278, !alias.scope !4579, !noalias !4575, !noundef !14
@@ -903,7 +903,7 @@ bb.a:
   %.idx.i = mul nuw nsw i64 %.16.val, 144, !dbg !4844
   %i.j = getelementptr inbounds nuw i8, ptr %.8.val, i64 %.idx.i, !dbg !4844 ; 4 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
-  %i.k = icmp ult i64 %.16.val, 4294967296        ; 2 uses
+  %i.k = icmp samesign ult i64 %.16.val, 4294967296 ; 2 uses
   %i.l = trunc nuw i64 %.16.val to i32            ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 28, !dbg !4857
   %i.n = load i8, ptr %i.m, align 4, !dbg !4857, !range !2278, !alias.scope !4842, !noalias !4838, !noundef !14
@@ -1306,7 +1306,7 @@ bb.a:
   %.idx.i = mul nuw nsw i64 %.16.val, 144, !dbg !5277
   %i.j = getelementptr inbounds nuw i8, ptr %.8.val, i64 %.idx.i, !dbg !5277 ; 4 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
-  %i.k = icmp ult i64 %.16.val, 4294967296        ; 2 uses
+  %i.k = icmp samesign ult i64 %.16.val, 4294967296 ; 2 uses
   %i.l = trunc nuw i64 %.16.val to i32            ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 12, !dbg !5284
   %i.n = load i8, ptr %i.m, align 4, !dbg !5284, !range !2278, !alias.scope !5275, !noalias !5271, !noundef !14
@@ -1709,7 +1709,7 @@ bb.a:
   %.idx.i = shl nuw nsw i64 %.16.val, 3, !dbg !5694 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %.8.val, i64 %.idx.i, !dbg !5694 ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
-  %i.g = icmp ult i64 %.16.val, 4294967296        ; 2 uses
+  %i.g = icmp samesign ult i64 %.16.val, 4294967296 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 28, !dbg !5707
   %i.i = load i8, ptr %i.h, align 4, !dbg !5707, !range !2278, !alias.scope !5692, !noalias !5688, !noundef !14
   %.not.i = icmp ne i8 %i.i, 0, !dbg !5716
@@ -1992,7 +1992,7 @@ bb.a:
   %.idx.i = shl nuw nsw i64 %.16.val, 3, !dbg !5914 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %.8.val, i64 %.idx.i, !dbg !5914 ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
-  %i.g = icmp ult i64 %.16.val, 4294967296        ; 2 uses
+  %i.g = icmp samesign ult i64 %.16.val, 4294967296 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 12, !dbg !5921
   %i.i = load i8, ptr %i.h, align 4, !dbg !5921, !range !2278, !alias.scope !5912, !noalias !5908, !noundef !14
   %.not.i = icmp ne i8 %i.i, 0, !dbg !5930
@@ -2395,7 +2395,7 @@ bb.b:                                             ; preds = %bb.ac, %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.817.i.i), !dbg !12186
   %.idx.i.i = mul nuw nsw i64 %.val4, 368, !dbg !12186
   %i.p = getelementptr inbounds nuw i8, ptr %.val, i64 %.idx.i.i, !dbg !12186 ; 4 uses
-  %i.q = icmp ult i64 %.val4, 4294967296          ; 2 uses
+  %i.q = icmp samesign ult i64 %.val4, 4294967296 ; 2 uses
   %i.r = trunc nuw i64 %.val4 to i32              ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.j, i64 28, !dbg !12199
   %i.t = load i8, ptr %i.s, align 4, !dbg !12199, !range !2278, !alias.scope !12208, !noalias !12209, !noundef !14
@@ -2774,7 +2774,7 @@ bb.b:                                             ; preds = %bb.z, %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.819.i.i), !dbg !12465
   %.idx.i.i = mul nuw nsw i64 %.val4, 48, !dbg !12465 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %.val, i64 %.idx.i.i, !dbg !12465 ; 2 uses
-  %i.p = icmp ult i64 %.val4, 4294967296          ; 2 uses
+  %i.p = icmp samesign ult i64 %.val4, 4294967296 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.i, i64 28, !dbg !12478
   %i.r = load i8, ptr %i.q, align 4, !dbg !12478, !range !2278, !alias.scope !12487, !noalias !12488, !noundef !14
   %.not.i.i = icmp ne i8 %i.r, 0, !dbg !12489
@@ -3177,7 +3177,7 @@ bb.b:                                             ; preds = %bb.ac, %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.817.i.i), !dbg !19153
   %.idx.i.i = mul nuw nsw i64 %.val4, 368, !dbg !19153
   %i.p = getelementptr inbounds nuw i8, ptr %.val, i64 %.idx.i.i, !dbg !19153 ; 4 uses
-  %i.q = icmp ult i64 %.val4, 4294967296          ; 2 uses
+  %i.q = icmp samesign ult i64 %.val4, 4294967296 ; 2 uses
   %i.r = trunc nuw i64 %.val4 to i32              ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.j, i64 12, !dbg !19160
   %i.t = load i8, ptr %i.s, align 4, !dbg !19160, !range !2278, !alias.scope !19169, !noalias !19170, !noundef !14
@@ -3555,7 +3555,7 @@ bb.b:                                             ; preds = %bb.x, %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.820.i.i), !dbg !19423
   %.idx.i.i = mul nuw nsw i64 %.val4, 48, !dbg !19423 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %.val, i64 %.idx.i.i, !dbg !19423
-  %i.o = icmp ult i64 %.val4, 4294967296          ; 2 uses
+  %i.o = icmp samesign ult i64 %.val4, 4294967296 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.h, i64 12, !dbg !19430
   %i.q = load i8, ptr %i.p, align 4, !dbg !19430, !range !2278, !alias.scope !19439, !noalias !19440, !noundef !14
   %.not.i.i = icmp ne i8 %i.q, 0, !dbg !19441
@@ -3958,7 +3958,7 @@ bb.a:
   %.val30 = load i64, ptr %i.k, align 8, !dbg !33279, !noundef !14 ; 5 uses
   %.idx = mul nuw nsw i64 %.val30, 80, !dbg !33280
   %i.l = getelementptr inbounds nuw i8, ptr %.val29, i64 %.idx, !dbg !33280 ; 4 uses
-  %i.m = icmp ult i64 %.val30, 4294967296         ; 2 uses
+  %i.m = icmp samesign ult i64 %.val30, 4294967296 ; 2 uses
   %i.n = trunc nuw i64 %.val30 to i32             ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 28, !dbg !33291
   %i.p = load i8, ptr %i.o, align 4, !dbg !33291, !range !2278, !noundef !14
@@ -4361,7 +4361,7 @@ _RINvMNtCscgRAwXFJnXP_4core6optionINtB3_6OptionIBw_RTNtNtCs2mZqlW55729_12polars_
   %.val30 = load i64, ptr %i.j, align 8, !dbg !33707, !noundef !14 ; 4 uses
   %.idx = mul nuw nsw i64 %.val30, 80, !dbg !33708 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %.val29, i64 %.idx, !dbg !33708 ; 2 uses
-  %i.l = icmp ult i64 %.val30, 4294967296         ; 2 uses
+  %i.l = icmp samesign ult i64 %.val30, 4294967296 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 28, !dbg !33719
   %i.n = load i8, ptr %i.m, align 4, !dbg !33719, !range !2278, !noundef !14
   %.not = icmp ne i8 %i.n, 0, !dbg !33728
@@ -4673,7 +4673,7 @@ _RINvMNtCscgRAwXFJnXP_4core6optionINtB3_6OptionIBw_RTNtNtCs2mZqlW55729_12polars_
   %.val30 = load i64, ptr %i.j, align 8, !dbg !33926, !noundef !14 ; 4 uses
   %.idx = mul nuw nsw i64 %.val30, 176, !dbg !33927 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %.val29, i64 %.idx, !dbg !33927 ; 2 uses
-  %i.l = icmp ult i64 %.val30, 4294967296         ; 2 uses
+  %i.l = icmp samesign ult i64 %.val30, 4294967296 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 28, !dbg !33938
   %i.n = load i8, ptr %i.m, align 4, !dbg !33938, !range !2278, !noundef !14
   %.not = icmp ne i8 %i.n, 0, !dbg !33947
@@ -4985,7 +4985,7 @@ _RINvMNtCscgRAwXFJnXP_4core6optionINtB3_6OptionIBw_RTRNtNtCsgZ49sUHp3tW_5alloc6s
   %.val30 = load i64, ptr %i.j, align 8, !dbg !34143, !noundef !14 ; 4 uses
   %.idx = shl nuw nsw i64 %.val30, 4, !dbg !34144 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %.val29, i64 %.idx, !dbg !34144 ; 2 uses
-  %i.l = icmp ult i64 %.val30, 4294967296         ; 2 uses
+  %i.l = icmp samesign ult i64 %.val30, 4294967296 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 28, !dbg !34155
   %i.n = load i8, ptr %i.m, align 4, !dbg !34155, !range !2278, !noundef !14
   %.not = icmp ne i8 %i.n, 0, !dbg !34164
@@ -5388,7 +5388,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.817.i.i.i), !dbg !35627
   %.idx.i.i.i = mul nuw nsw i64 %.val1.i, 48, !dbg !35627
   %i.l = getelementptr inbounds nuw i8, ptr %.val.i, i64 %.idx.i.i.i, !dbg !35627 ; 4 uses
-  %i.m = icmp ult i64 %.val1.i, 4294967296        ; 2 uses
+  %i.m = icmp samesign ult i64 %.val1.i, 4294967296 ; 2 uses
   %i.n = trunc nuw i64 %.val1.i to i32            ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 28, !dbg !35640
   %i.p = load i8, ptr %i.o, align 4, !dbg !35640, !range !2278, !alias.scope !35649, !noalias !35650, !noundef !14
@@ -5743,7 +5743,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !35903), !dbg !35900
   %.idx.i.i.i = shl nuw nsw i64 %.val1.i, 3, !dbg !35905 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %.val.i, i64 %.idx.i.i.i, !dbg !35905 ; 2 uses
-  %i.l = icmp ult i64 %.val1.i, 4294967296        ; 2 uses
+  %i.l = icmp samesign ult i64 %.val1.i, 4294967296 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 28, !dbg !35918
   %i.n = load i8, ptr %i.m, align 4, !dbg !35918, !range !2278, !alias.scope !35927, !noalias !35928, !noundef !14
   %.not.i.i.i = icmp ne i8 %i.n, 0, !dbg !35929
@@ -6146,7 +6146,7 @@ bb.e:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.821.i.i), !dbg !38698
   %.idx.i.i = mul nuw nsw i64 %.val2, 72, !dbg !38698
   %i.s = getelementptr inbounds nuw i8, ptr %.val, i64 %.idx.i.i, !dbg !38698 ; 4 uses
-  %i.t = icmp ult i64 %.val2, 4294967296          ; 2 uses
+  %i.t = icmp samesign ult i64 %.val2, 4294967296 ; 2 uses
   %i.u = trunc nuw i64 %.val2 to i32              ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 28, !dbg !38711
   %i.w = load i8, ptr %i.v, align 4, !dbg !38711, !range !2278, !alias.scope !38720, !noalias !38721, !noundef !14
@@ -6549,7 +6549,7 @@ bb.e:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.821.i.i), !dbg !39179
   %.idx.i.i = shl nuw nsw i64 %.val2, 3, !dbg !39179
   %i.s = getelementptr inbounds nuw i8, ptr %.val, i64 %.idx.i.i, !dbg !39179 ; 4 uses
-  %i.t = icmp ult i64 %.val2, 4294967296          ; 2 uses
+  %i.t = icmp samesign ult i64 %.val2, 4294967296 ; 2 uses
   %i.u = trunc nuw i64 %.val2 to i32              ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 28, !dbg !39192
   %i.w = load i8, ptr %i.v, align 4, !dbg !39192, !range !2278, !alias.scope !39201, !noalias !39202, !noundef !14
@@ -6952,7 +6952,7 @@ bb.e:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.819.i.i), !dbg !39660
   %.idx.i.i = mul nuw nsw i64 %.val2, 48, !dbg !39660 ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %.val, i64 %.idx.i.i, !dbg !39660 ; 2 uses
-  %i.s = icmp ult i64 %.val2, 4294967296          ; 2 uses
+  %i.s = icmp samesign ult i64 %.val2, 4294967296 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 28, !dbg !39673
   %i.u = load i8, ptr %i.t, align 4, !dbg !39673, !range !2278, !alias.scope !39682, !noalias !39683, !noundef !14
   %.not.i.i = icmp ne i8 %i.u, 0, !dbg !39684
@@ -7308,7 +7308,7 @@ bb.e:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.819.i.i), !dbg !39931
   %.idx.i.i = mul nuw nsw i64 %.val2, 112, !dbg !39931 ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %.val, i64 %.idx.i.i, !dbg !39931 ; 2 uses
-  %i.s = icmp ult i64 %.val2, 4294967296          ; 2 uses
+  %i.s = icmp samesign ult i64 %.val2, 4294967296 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 28, !dbg !39944
   %i.u = load i8, ptr %i.t, align 4, !dbg !39944, !range !2278, !alias.scope !39953, !noalias !39954, !noundef !14
   %.not.i.i = icmp ne i8 %i.u, 0, !dbg !39955
@@ -7709,7 +7709,7 @@ bb.e:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.819.i.i), !dbg !40238
   %.idx.i.i = shl nuw nsw i64 %.val2, 5, !dbg !40238 ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %.val, i64 %.idx.i.i, !dbg !40238 ; 2 uses
-  %i.s = icmp ult i64 %.val2, 4294967296          ; 2 uses
+  %i.s = icmp samesign ult i64 %.val2, 4294967296 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 28, !dbg !40251
   %i.u = load i8, ptr %i.t, align 4, !dbg !40251, !range !2278, !alias.scope !40260, !noalias !40261, !noundef !14
   %.not.i.i = icmp ne i8 %i.u, 0, !dbg !40262
@@ -8065,7 +8065,7 @@ bb.e:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.819.i.i), !dbg !40509
   %.idx.i.i = shl nuw nsw i64 %.val2, 5, !dbg !40509 ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %.val, i64 %.idx.i.i, !dbg !40509 ; 2 uses
-  %i.s = icmp ult i64 %.val2, 4294967296          ; 2 uses
+  %i.s = icmp samesign ult i64 %.val2, 4294967296 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 28, !dbg !40522
   %i.u = load i8, ptr %i.t, align 4, !dbg !40522, !range !2278, !alias.scope !40531, !noalias !40532, !noundef !14
   %.not.i.i = icmp ne i8 %i.u, 0, !dbg !40533
@@ -8421,7 +8421,7 @@ bb.e:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.819.i.i), !dbg !40780
   %.idx.i.i = shl nuw nsw i64 %.val2, 5, !dbg !40780 ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %.val, i64 %.idx.i.i, !dbg !40780 ; 2 uses
-  %i.s = icmp ult i64 %.val2, 4294967296          ; 2 uses
+  %i.s = icmp samesign ult i64 %.val2, 4294967296 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 28, !dbg !40793
   %i.u = load i8, ptr %i.t, align 4, !dbg !40793, !range !2278, !alias.scope !40802, !noalias !40803, !noundef !14
   %.not.i.i = icmp ne i8 %i.u, 0, !dbg !40804
@@ -8824,7 +8824,7 @@ bb.a:
   %.val30 = load i64, ptr %i.k, align 8, !dbg !59344, !noundef !14 ; 5 uses
   %.idx = mul nuw nsw i64 %.val30, 80, !dbg !59345
   %i.l = getelementptr inbounds nuw i8, ptr %.val29, i64 %.idx, !dbg !59345 ; 4 uses
-  %i.m = icmp ult i64 %.val30, 4294967296         ; 2 uses
+  %i.m = icmp samesign ult i64 %.val30, 4294967296 ; 2 uses
   %i.n = trunc nuw i64 %.val30 to i32             ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 12, !dbg !59350
   %i.p = load i8, ptr %i.o, align 4, !dbg !59350, !range !2278, !noundef !14
@@ -9227,7 +9227,7 @@ _RINvMNtCscgRAwXFJnXP_4core6optionINtB3_6OptionIBw_RTNtNtCs2mZqlW55729_12polars_
   %.val30 = load i64, ptr %i.i, align 8, !dbg !59749, !noundef !14 ; 4 uses
   %.idx = mul nuw nsw i64 %.val30, 80, !dbg !59750 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %.val29, i64 %.idx, !dbg !59750
-  %i.k = icmp ult i64 %.val30, 4294967296         ; 2 uses
+  %i.k = icmp samesign ult i64 %.val30, 4294967296 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 12, !dbg !59755
   %i.m = load i8, ptr %i.l, align 4, !dbg !59755, !range !2278, !noundef !14
   %.not = icmp ne i8 %i.m, 0, !dbg !59764
@@ -9467,7 +9467,7 @@ _RINvMNtCscgRAwXFJnXP_4core6optionINtB3_6OptionIBw_RTNtNtCs2mZqlW55729_12polars_
   %.val30 = load i64, ptr %i.i, align 8, !dbg !59910, !noundef !14 ; 4 uses
   %.idx = mul nuw nsw i64 %.val30, 176, !dbg !59911 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %.val29, i64 %.idx, !dbg !59911
-  %i.k = icmp ult i64 %.val30, 4294967296         ; 2 uses
+  %i.k = icmp samesign ult i64 %.val30, 4294967296 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 12, !dbg !59916
   %i.m = load i8, ptr %i.l, align 4, !dbg !59916, !range !2278, !noundef !14
   %.not = icmp ne i8 %i.m, 0, !dbg !59925
@@ -9707,7 +9707,7 @@ _RINvMNtCscgRAwXFJnXP_4core6optionINtB3_6OptionIBw_RTRNtNtCsgZ49sUHp3tW_5alloc6s
   %.val30 = load i64, ptr %i.i, align 8, !dbg !60071, !noundef !14 ; 4 uses
   %.idx = shl nuw nsw i64 %.val30, 4, !dbg !60072 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %.val29, i64 %.idx, !dbg !60072
-  %i.k = icmp ult i64 %.val30, 4294967296         ; 2 uses
+  %i.k = icmp samesign ult i64 %.val30, 4294967296 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 12, !dbg !60077
   %i.m = load i8, ptr %i.l, align 4, !dbg !60077, !range !2278, !noundef !14
   %.not = icmp ne i8 %i.m, 0, !dbg !60086
@@ -10110,7 +10110,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.817.i.i.i), !dbg !61450
   %.idx.i.i.i = mul nuw nsw i64 %.val1.i, 48, !dbg !61450
   %i.l = getelementptr inbounds nuw i8, ptr %.val.i, i64 %.idx.i.i.i, !dbg !61450 ; 4 uses
-  %i.m = icmp ult i64 %.val1.i, 4294967296        ; 2 uses
+  %i.m = icmp samesign ult i64 %.val1.i, 4294967296 ; 2 uses
   %i.n = trunc nuw i64 %.val1.i to i32            ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 12, !dbg !61457
   %i.p = load i8, ptr %i.o, align 4, !dbg !61457, !range !2278, !alias.scope !61466, !noalias !61467, !noundef !14
@@ -10465,7 +10465,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !61717), !dbg !61714
   %.idx.i.i.i = shl nuw nsw i64 %.val1.i, 3, !dbg !61719 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %.val.i, i64 %.idx.i.i.i, !dbg !61719 ; 2 uses
-  %i.l = icmp ult i64 %.val1.i, 4294967296        ; 2 uses
+  %i.l = icmp samesign ult i64 %.val1.i, 4294967296 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 12, !dbg !61726
   %i.n = load i8, ptr %i.m, align 4, !dbg !61726, !range !2278, !alias.scope !61735, !noalias !61736, !noundef !14
   %.not.i.i.i = icmp ne i8 %i.n, 0, !dbg !61737
@@ -10868,7 +10868,7 @@ bb.e:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.821.i.i), !dbg !64490
   %.idx.i.i = mul nuw nsw i64 %.val2, 72, !dbg !64490
   %i.s = getelementptr inbounds nuw i8, ptr %.val, i64 %.idx.i.i, !dbg !64490 ; 4 uses
-  %i.t = icmp ult i64 %.val2, 4294967296          ; 2 uses
+  %i.t = icmp samesign ult i64 %.val2, 4294967296 ; 2 uses
   %i.u = trunc nuw i64 %.val2 to i32              ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 12, !dbg !64497
   %i.w = load i8, ptr %i.v, align 4, !dbg !64497, !range !2278, !alias.scope !64506, !noalias !64507, !noundef !14
@@ -11271,7 +11271,7 @@ bb.e:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.821.i.i), !dbg !64949
   %.idx.i.i = shl nuw nsw i64 %.val2, 3, !dbg !64949
   %i.s = getelementptr inbounds nuw i8, ptr %.val, i64 %.idx.i.i, !dbg !64949 ; 4 uses
-  %i.t = icmp ult i64 %.val2, 4294967296          ; 2 uses
+  %i.t = icmp samesign ult i64 %.val2, 4294967296 ; 2 uses
   %i.u = trunc nuw i64 %.val2 to i32              ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 12, !dbg !64956
   %i.w = load i8, ptr %i.v, align 4, !dbg !64956, !range !2278, !alias.scope !64965, !noalias !64966, !noundef !14
@@ -11674,7 +11674,7 @@ bb.e:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.820.i.i), !dbg !65408
   %.idx.i.i = mul nuw nsw i64 %.val2, 48, !dbg !65408 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %.val, i64 %.idx.i.i, !dbg !65408
-  %i.r = icmp ult i64 %.val2, 4294967296          ; 2 uses
+  %i.r = icmp samesign ult i64 %.val2, 4294967296 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 12, !dbg !65415
   %i.t = load i8, ptr %i.s, align 4, !dbg !65415, !range !2278, !alias.scope !65424, !noalias !65425, !noundef !14
   %.not.i.i = icmp ne i8 %i.t, 0, !dbg !65426
@@ -11958,7 +11958,7 @@ bb.e:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.820.i.i), !dbg !65620
   %.idx.i.i = mul nuw nsw i64 %.val2, 112, !dbg !65620 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %.val, i64 %.idx.i.i, !dbg !65620
-  %i.r = icmp ult i64 %.val2, 4294967296          ; 2 uses
+  %i.r = icmp samesign ult i64 %.val2, 4294967296 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 12, !dbg !65627
   %i.t = load i8, ptr %i.s, align 4, !dbg !65627, !range !2278, !alias.scope !65636, !noalias !65637, !noundef !14
   %.not.i.i = icmp ne i8 %i.t, 0, !dbg !65638
@@ -12287,7 +12287,7 @@ bb.e:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.820.i.i), !dbg !65868
   %.idx.i.i = shl nuw nsw i64 %.val2, 5, !dbg !65868 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %.val, i64 %.idx.i.i, !dbg !65868
-  %i.r = icmp ult i64 %.val2, 4294967296          ; 2 uses
+  %i.r = icmp samesign ult i64 %.val2, 4294967296 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 12, !dbg !65875
   %i.t = load i8, ptr %i.s, align 4, !dbg !65875, !range !2278, !alias.scope !65884, !noalias !65885, !noundef !14
   %.not.i.i = icmp ne i8 %i.t, 0, !dbg !65886
@@ -12571,7 +12571,7 @@ bb.e:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.820.i.i), !dbg !66080
   %.idx.i.i = shl nuw nsw i64 %.val2, 5, !dbg !66080 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %.val, i64 %.idx.i.i, !dbg !66080
-  %i.r = icmp ult i64 %.val2, 4294967296          ; 2 uses
+  %i.r = icmp samesign ult i64 %.val2, 4294967296 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 12, !dbg !66087
   %i.t = load i8, ptr %i.s, align 4, !dbg !66087, !range !2278, !alias.scope !66096, !noalias !66097, !noundef !14
   %.not.i.i = icmp ne i8 %i.t, 0, !dbg !66098
@@ -12855,7 +12855,7 @@ bb.e:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.820.i.i), !dbg !66292
   %.idx.i.i = shl nuw nsw i64 %.val2, 5, !dbg !66292 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %.val, i64 %.idx.i.i, !dbg !66292
-  %i.r = icmp ult i64 %.val2, 4294967296          ; 2 uses
+  %i.r = icmp samesign ult i64 %.val2, 4294967296 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 12, !dbg !66299
   %i.t = load i8, ptr %i.s, align 4, !dbg !66299, !range !2278, !alias.scope !66308, !noalias !66309, !noundef !14
   %.not.i.i = icmp ne i8 %i.t, 0, !dbg !66310

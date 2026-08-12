@@ -204,11 +204,11 @@ bb.m:                                             ; preds = %_ZL21stbi__mul2size
 
 _ZL21stbi__mul2sizes_validii.exit18.i.i.i:        ; preds = %bb.m
   %i.al = udiv i32 2147483647, %i.ae
-  %.not.i.i.i = icmp sgt i32 %i.ai, %i.al
+  %.not.i.i.i = icmp sle i32 %i.ai, %i.al
   %i.am = mul nsw i32 %i.ae, %i.ai
-  %5 = icmp ugt i32 %i.am, 536870911
-  %or.cond.i.i31 = select i1 %.not.i.i.i, i1 true, i1 %5
-  br i1 %or.cond.i.i31, label %_ZL17stbi__malloc_mad4iiiii.exit.thread.i, label %_ZL17stbi__malloc_mad4iiiii.exit.i
+  %or.cond.not.i.i = icmp ult i32 %i.am, 536870912
+  %or.cond.i.i31 = select i1 %.not.i.i.i, i1 %or.cond.not.i.i, i1 false
+  br i1 %or.cond.i.i31, label %_ZL17stbi__malloc_mad4iiiii.exit.i, label %_ZL17stbi__malloc_mad4iiiii.exit.thread.i
 
 _ZL17stbi__malloc_mad4iiiii.exit.i:               ; preds = %_ZL21stbi__mul2sizes_validii.exit18.i.i.i, %bb.m
   %i.an = shl i32 %i.ai, 2
@@ -611,11 +611,11 @@ _ZL21stbi__mul2sizes_validii.exit.thread24.i:     ; preds = %_ZL21stbi__mul2size
 
 bb.l:                                             ; preds = %_ZL21stbi__mul2sizes_validii.exit.thread24.i
   %i.bt = udiv i32 2147483647, %spec.store.select
-  %.not.i = icmp sgt i32 %i.br, %i.bt
+  %.not.i = icmp sle i32 %i.br, %i.bt
   %i.bu = mul nsw i32 %i.br, %spec.store.select
-  %5 = icmp ugt i32 %i.bu, 536870911
-  %or.cond181 = select i1 %.not.i, i1 true, i1 %5
-  br i1 %or.cond181, label %_ZL21stbi__mad4sizes_validiiiii.exit.thread, label %bb.m
+  %or.cond13.not = icmp ult i32 %i.bu, 536870912
+  %or.cond181 = select i1 %.not.i, i1 %or.cond13.not, i1 false
+  br i1 %or.cond181, label %bb.m, label %_ZL21stbi__mad4sizes_validiiiii.exit.thread
 
 _ZL21stbi__mad4sizes_validiiiii.exit.thread:      ; preds = %bb.j, %_ZL21stbi__mul2sizes_validii.exit.thread24.i, %_ZL21stbi__mul2sizes_validii.exit.i, %bb.l
   store ptr @.str.26, ptr @_ZL22stbi__g_failure_reason, align 8, !tbaa !9
