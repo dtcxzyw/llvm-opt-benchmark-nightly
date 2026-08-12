@@ -203,15 +203,15 @@ st_mult.exit87.i:                                 ; preds = %.thread.i.st_mult.e
   br i1 %i.av, label %.lr.ph105.i, label %._crit_edge.i
 
 .lr.ph105.i:                                      ; preds = %st_mult.exit87.i
-  %i.aw = icmp ugt i32 %.26392146.i, 9
+  %i.aw = icmp samesign ugt i32 %.26392146.i, 9
   br i1 %i.aw, label %.lr.ph105.i.1, label %._crit_edge.i
 
 .lr.ph105.i.1:                                    ; preds = %.lr.ph105.i
-  %i.ax = icmp ugt i32 %.26392146.i, 99
+  %i.ax = icmp samesign ugt i32 %.26392146.i, 99
   br i1 %i.ax, label %.lr.ph105.i.2, label %._crit_edge.i
 
 .lr.ph105.i.2:                                    ; preds = %.lr.ph105.i.1
-  %i.ay = icmp ugt i32 %.26392146.i, 999          ; 2 uses
+  %i.ay = icmp samesign ugt i32 %.26392146.i, 999 ; 2 uses
   %spec.select = select i1 %i.ay, i32 4, i32 3
   %spec.select77 = select i1 %i.ay, i64 10000, i64 1000
   br label %._crit_edge.i

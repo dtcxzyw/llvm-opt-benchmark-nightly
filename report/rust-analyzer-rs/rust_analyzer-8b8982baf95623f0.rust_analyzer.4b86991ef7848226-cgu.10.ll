@@ -203,7 +203,7 @@ bb.c:                                             ; preds = %bb.b
 
 _RNvXs_NtNtCs8yjYO7b73r2_10serde_json5value3serNtB4_10SerializerNtNtCsjQbM3MYDIrM_10serde_core3ser10Serializer22serialize_unit_variant.exit: ; preds = %bb.b
   %i.k = load ptr, ptr %i.i, align 8, !noalias !2572, !nonnull !5, !noundef !5 ; 2 uses
-  %i.l = icmp ugt i64 %i.h, 1
+  %i.l = icmp samesign ugt i64 %i.h, 1
   tail call void @llvm.assume(i1 %i.l)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !2572
   store i16 27503, ptr %i.k, align 1, !noalias !2579
@@ -226,7 +226,7 @@ bb.e:                                             ; preds = %bb.d
 
 _RNvXs_NtNtCs8yjYO7b73r2_10serde_json5value3serNtB4_10SerializerNtNtCsjQbM3MYDIrM_10serde_core3ser10Serializer22serialize_unit_variant.exit4: ; preds = %bb.d
   %i.s = load ptr, ptr %i.q, align 8, !noalias !2580, !nonnull !5, !noundef !5 ; 2 uses
-  %i.t = icmp ugt i64 %i.p, 6
+  %i.t = icmp samesign ugt i64 %i.p, 6
   tail call void @llvm.assume(i1 %i.t)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !2580
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %i.s, ptr noundef nonnull readonly align 1 dereferenceable(7) @680, i64 range(i64 0, -9223372036854775808) 7, i1 false), !noalias !2587
@@ -249,7 +249,7 @@ bb.g:                                             ; preds = %bb.f
 
 _RNvXs_NtNtCs8yjYO7b73r2_10serde_json5value3serNtB4_10SerializerNtNtCsjQbM3MYDIrM_10serde_core3ser10Serializer22serialize_unit_variant.exit8: ; preds = %bb.f
   %i.aa = load ptr, ptr %i.y, align 8, !noalias !2588, !nonnull !5, !noundef !5 ; 2 uses
-  %i.ab = icmp ugt i64 %i.x, 4
+  %i.ab = icmp samesign ugt i64 %i.x, 4
   tail call void @llvm.assume(i1 %i.ab)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !2588
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %i.aa, ptr noundef nonnull readonly align 1 dereferenceable(5) @681, i64 range(i64 0, -9223372036854775808) 5, i1 false), !noalias !2595
@@ -652,7 +652,7 @@ bb.c:                                             ; preds = %bb.b
 
 _RNvXs_NtNtCs8yjYO7b73r2_10serde_json5value3serNtB4_10SerializerNtNtCsjQbM3MYDIrM_10serde_core3ser10Serializer22serialize_unit_variant.exit: ; preds = %bb.b
   %i.l = load ptr, ptr %i.j, align 8, !noalias !2638, !nonnull !5, !noundef !5 ; 2 uses
-  %i.m = icmp ugt i64 %i.i, 4
+  %i.m = icmp samesign ugt i64 %i.i, 4
   tail call void @llvm.assume(i1 %i.m)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !2638
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %i.l, ptr noundef nonnull readonly align 1 dereferenceable(5) @724, i64 range(i64 0, -9223372036854775808) 5, i1 false), !noalias !2645
@@ -675,7 +675,7 @@ bb.e:                                             ; preds = %bb.d
 
 _RNvXs_NtNtCs8yjYO7b73r2_10serde_json5value3serNtB4_10SerializerNtNtCsjQbM3MYDIrM_10serde_core3ser10Serializer22serialize_unit_variant.exit4: ; preds = %bb.d
   %i.t = load ptr, ptr %i.r, align 8, !noalias !2646, !nonnull !5, !noundef !5 ; 2 uses
-  %i.u = icmp ugt i64 %i.q, 8
+  %i.u = icmp samesign ugt i64 %i.q, 8
   tail call void @llvm.assume(i1 %i.u)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !2646
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(9) %i.t, ptr noundef nonnull readonly align 1 dereferenceable(9) @725, i64 range(i64 0, -9223372036854775808) 9, i1 false), !noalias !2653
@@ -698,7 +698,7 @@ bb.g:                                             ; preds = %bb.f
 
 _RNvXs_NtNtCs8yjYO7b73r2_10serde_json5value3serNtB4_10SerializerNtNtCsjQbM3MYDIrM_10serde_core3ser10Serializer22serialize_unit_variant.exit8: ; preds = %bb.f
   %i.ab = load ptr, ptr %i.z, align 8, !noalias !2654, !nonnull !5, !noundef !5 ; 2 uses
-  %i.ac = icmp ugt i64 %i.y, 6
+  %i.ac = icmp samesign ugt i64 %i.y, 6
   tail call void @llvm.assume(i1 %i.ac)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !2654
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %i.ab, ptr noundef nonnull readonly align 1 dereferenceable(7) @726, i64 range(i64 0, -9223372036854775808) 7, i1 false), !noalias !2661
@@ -721,7 +721,7 @@ bb.i:                                             ; preds = %bb.h
 
 _RNvXs_NtNtCs8yjYO7b73r2_10serde_json5value3serNtB4_10SerializerNtNtCsjQbM3MYDIrM_10serde_core3ser10Serializer22serialize_unit_variant.exit12: ; preds = %bb.h
   %i.aj = load ptr, ptr %i.ah, align 8, !noalias !2662, !nonnull !5, !noundef !5 ; 2 uses
-  %i.ak = icmp ugt i64 %i.ag, 10
+  %i.ak = icmp samesign ugt i64 %i.ag, 10
   tail call void @llvm.assume(i1 %i.ak)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !2662
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(11) %i.aj, ptr noundef nonnull readonly align 1 dereferenceable(11) @727, i64 range(i64 0, -9223372036854775808) 11, i1 false), !noalias !2669
@@ -1124,7 +1124,7 @@ bb.c:                                             ; preds = %bb.b
 
 _RNvXs_NtNtCs8yjYO7b73r2_10serde_json5value3serNtB4_10SerializerNtNtCsjQbM3MYDIrM_10serde_core3ser10Serializer22serialize_unit_variant.exit: ; preds = %bb.b
   %i.k = load ptr, ptr %i.i, align 8, !noalias !2733, !nonnull !5, !noundef !5 ; 2 uses
-  %i.l = icmp ugt i64 %i.h, 6
+  %i.l = icmp samesign ugt i64 %i.h, 6
   tail call void @llvm.assume(i1 %i.l)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !2733
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %i.k, ptr noundef nonnull readonly align 1 dereferenceable(7) @801, i64 range(i64 0, -9223372036854775808) 7, i1 false), !noalias !2740
@@ -1147,7 +1147,7 @@ bb.e:                                             ; preds = %bb.d
 
 _RNvXs_NtNtCs8yjYO7b73r2_10serde_json5value3serNtB4_10SerializerNtNtCsjQbM3MYDIrM_10serde_core3ser10Serializer22serialize_unit_variant.exit4: ; preds = %bb.d
   %i.s = load ptr, ptr %i.q, align 8, !noalias !2741, !nonnull !5, !noundef !5 ; 2 uses
-  %i.t = icmp ugt i64 %i.p, 5
+  %i.t = icmp samesign ugt i64 %i.p, 5
   tail call void @llvm.assume(i1 %i.t)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !2741
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %i.s, ptr noundef nonnull readonly align 1 dereferenceable(6) @802, i64 range(i64 0, -9223372036854775808) 6, i1 false), !noalias !2748
@@ -1170,7 +1170,7 @@ bb.g:                                             ; preds = %bb.f
 
 _RNvXs_NtNtCs8yjYO7b73r2_10serde_json5value3serNtB4_10SerializerNtNtCsjQbM3MYDIrM_10serde_core3ser10Serializer22serialize_unit_variant.exit8: ; preds = %bb.f
   %i.aa = load ptr, ptr %i.y, align 8, !noalias !2749, !nonnull !5, !noundef !5 ; 2 uses
-  %i.ab = icmp ugt i64 %i.x, 3
+  %i.ab = icmp samesign ugt i64 %i.x, 3
   tail call void @llvm.assume(i1 %i.ab)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !2749
   store i32 1953719668, ptr %i.aa, align 1, !noalias !2756

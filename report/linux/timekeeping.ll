@@ -201,7 +201,7 @@ timespec64_valid_settod.exit:                     ; preds = %bb.a
   %i.d = load i64, ptr %i.c, align 8
   %i.e = icmp ult i64 %i.d, 1000000000
   %i.f = icmp samesign ult i64 %i.a, 8277292036
-  %spec.select.i19 = and i1 %i.f, %i.e
+  %spec.select.i19 = select i1 %i.e, i1 %i.f, i1 false
   br i1 %spec.select.i19, label %bb.b, label %timespec64_valid_settod.exit.thread
 
 bb.b:                                             ; preds = %timespec64_valid_settod.exit
@@ -604,7 +604,7 @@ bb.a:
 timespec64_valid_settod.exit:                     ; preds = %bb.a
   %i.d = icmp ult i64 %.val1524, 1000000000
   %i.e = icmp samesign ult i64 %i.a, 8277292036
-  %spec.select.i = and i1 %i.e, %i.d
+  %spec.select.i = select i1 %i.d, i1 %i.e, i1 false
   br i1 %spec.select.i, label %timespec64_to_ns.exit, label %bb.c
 
 timespec64_to_ns.exit:                            ; preds = %timespec64_valid_settod.exit
@@ -934,7 +934,7 @@ timespec64_compare.exit.thread:                   ; preds = %bb.e
 timespec64_valid_strict.exit.i:                   ; preds = %.critedge
   %i.w = icmp ult i64 %.fca.1.load.i.sink, 1000000000
   %i.x = icmp samesign ult i64 %.fca.0.load.i.sink, 9223372036
-  %spec.select.i.i = and i1 %i.x, %i.w
+  %spec.select.i.i = select i1 %i.w, i1 %i.x, i1 false
   br i1 %spec.select.i.i, label %bb.f, label %timespec64_valid_strict.exit.thread.i
 
 timespec64_valid_strict.exit.thread.i:            ; preds = %timespec64_valid_strict.exit.i, %.critedge
@@ -1337,7 +1337,7 @@ timespec64_compare.exit.thread2:                  ; preds = %bb.b
 timespec64_valid_settod.exit:                     ; preds = %timespec64_compare.exit, %timespec64_compare.exit.thread2
   %i.t = icmp ult i64 %.fca.1.load.i, 1000000000
   %i.u = icmp samesign ult i64 %.fca.0.load.i, 8277292036
-  %spec.select.i = and i1 %i.u, %i.t
+  %spec.select.i = select i1 %i.t, i1 %i.u, i1 false
   br i1 %spec.select.i, label %bb.d, label %timespec64_compare.exit.thread
 
 timespec64_compare.exit.thread:                   ; preds = %timespec64_compare.exit.thread2, %bb.c, %timespec64_valid_settod.exit, %timespec64_compare.exit

@@ -49,7 +49,7 @@ bb.e:                                             ; preds = %bb.d
   %i.s = load i32, ptr %0, align 4, !tbaa !8
   %.not = icmp ne i32 %i.s, 0
   %i.t = icmp samesign ult i32 %i.q, %i.j
-  %16 = and i1 %i.m, %.not
+  %16 = select i1 %.not, i1 %i.m, i1 false
   %or.cond427 = select i1 %16, i1 %i.t, i1 false
   br i1 %or.cond427, label %.thread413, label %bb.f
 
@@ -62,7 +62,7 @@ bb.g:                                             ; preds = %bb.f
   %i.w = load i32, ptr %1, align 4, !tbaa !8
   %.not389 = icmp ne i32 %i.w, 0
   %i.x = icmp samesign ult i32 %i.u, %i.j
-  %17 = and i1 %i.m, %.not389
+  %17 = select i1 %.not389, i1 %i.m, i1 false
   %or.cond428 = select i1 %17, i1 %i.x, i1 false
   br i1 %or.cond428, label %.thread413, label %bb.h
 

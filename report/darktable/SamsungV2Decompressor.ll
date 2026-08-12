@@ -203,7 +203,7 @@ bb.m:                                             ; preds = %bb.k
   %i.dr = add nuw nsw i32 %.sroa.speculated27.i.i.i.i, 4
   %.sroa.speculated.i.i.i.i = tail call i32 @llvm.umin.i32(i32 %i.q, i32 %i.dr)
   %i.ds = sub nsw i32 %.sroa.speculated.i.i.i.i, %.sroa.speculated27.i.i.i.i ; 2 uses
-  %i.dt = icmp ult i32 %i.ds, 5
+  %i.dt = icmp samesign ult i32 %i.ds, 5
   tail call void @llvm.assume(i1 %i.dt), !noalias !142
   %i.du = zext nneg i32 %.sroa.speculated27.i.i.i.i to i64
   %i.dv = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.du
@@ -272,7 +272,7 @@ bb.t:                                             ; preds = %bb.r
   %i.es = add nuw nsw i32 %.sroa.speculated27.i.i.i.i60, 4
   %.sroa.speculated.i.i.i.i61 = tail call i32 @llvm.umin.i32(i32 %i.q, i32 %i.es)
   %i.et = sub nsw i32 %.sroa.speculated.i.i.i.i61, %.sroa.speculated27.i.i.i.i60 ; 2 uses
-  %i.eu = icmp ult i32 %i.et, 5
+  %i.eu = icmp samesign ult i32 %i.et, 5
   tail call void @llvm.assume(i1 %i.eu), !noalias !142
   %i.ev = zext nneg i32 %.sroa.speculated27.i.i.i.i60 to i64
   %i.ew = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.ev
@@ -354,7 +354,7 @@ bb.ab:                                            ; preds = %bb.z
   %i.fu = add nuw nsw i32 %.sroa.speculated27.i.i.i.i74, 4
   %.sroa.speculated.i.i.i.i75 = tail call i32 @llvm.umin.i32(i32 %i.q, i32 %i.fu)
   %i.fv = sub nsw i32 %.sroa.speculated.i.i.i.i75, %.sroa.speculated27.i.i.i.i74 ; 2 uses
-  %i.fw = icmp ult i32 %i.fv, 5
+  %i.fw = icmp samesign ult i32 %i.fv, 5
   tail call void @llvm.assume(i1 %i.fw), !noalias !142
   %i.fx = zext nneg i32 %.sroa.speculated27.i.i.i.i74 to i64
   %i.fy = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.fx
@@ -409,7 +409,7 @@ bb.ah:                                            ; preds = %bb.af
   %i.gm = add nuw nsw i32 %.sroa.speculated27.i.i.i.i88, 4
   %.sroa.speculated.i.i.i.i89 = tail call i32 @llvm.umin.i32(i32 %i.q, i32 %i.gm)
   %i.gn = sub nsw i32 %.sroa.speculated.i.i.i.i89, %.sroa.speculated27.i.i.i.i88 ; 2 uses
-  %i.go = icmp ult i32 %i.gn, 5
+  %i.go = icmp samesign ult i32 %i.gn, 5
   tail call void @llvm.assume(i1 %i.go), !noalias !142
   %i.gp = zext nneg i32 %.sroa.speculated27.i.i.i.i88 to i64
   %i.gq = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.gp
@@ -463,7 +463,7 @@ bb.an:                                            ; preds = %bb.al
   %i.hc = add nuw nsw i32 %.sroa.speculated27.i.i.i.i102, 4
   %.sroa.speculated.i.i.i.i103 = tail call i32 @llvm.umin.i32(i32 %i.q, i32 %i.hc)
   %i.hd = sub nsw i32 %.sroa.speculated.i.i.i.i103, %.sroa.speculated27.i.i.i.i102 ; 2 uses
-  %i.he = icmp ult i32 %i.hd, 5
+  %i.he = icmp samesign ult i32 %i.hd, 5
   tail call void @llvm.assume(i1 %i.he), !noalias !142
   %i.hf = zext nneg i32 %.sroa.speculated27.i.i.i.i102 to i64
   %i.hg = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.hf
@@ -749,7 +749,7 @@ bb.bl:                                            ; preds = %bb.bj
   %i.lj = add nuw nsw i32 %.sroa.speculated27.i.i.i.i125, 4
   %.sroa.speculated.i.i.i.i126 = tail call i32 @llvm.umin.i32(i32 %i.q, i32 %i.lj)
   %i.lk = sub nsw i32 %.sroa.speculated.i.i.i.i126, %.sroa.speculated27.i.i.i.i125 ; 2 uses
-  %i.ll = icmp ult i32 %i.lk, 5
+  %i.ll = icmp samesign ult i32 %i.lk, 5
   tail call void @llvm.assume(i1 %i.ll), !noalias !148
   %i.lm = zext nneg i32 %.sroa.speculated27.i.i.i.i125 to i64
   %i.ln = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.lm
@@ -809,7 +809,7 @@ bb.br:                                            ; preds = %bb.bp
   %i.mb = add nuw nsw i32 %.sroa.speculated27.i.i.i.i139, 4
   %.sroa.speculated.i.i.i.i140 = tail call i32 @llvm.umin.i32(i32 %i.q, i32 %i.mb)
   %i.mc = sub nsw i32 %.sroa.speculated.i.i.i.i140, %.sroa.speculated27.i.i.i.i139 ; 2 uses
-  %i.md = icmp ult i32 %i.mc, 5
+  %i.md = icmp samesign ult i32 %i.mc, 5
   tail call void @llvm.assume(i1 %i.md), !noalias !148
   %i.me = zext nneg i32 %.sroa.speculated27.i.i.i.i139 to i64
   %i.mf = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.me
@@ -861,7 +861,7 @@ bb.bv:                                            ; preds = %bb.bu
   %i.my = add nuw nsw i32 %.sroa.speculated27.i.i.i.i139.1, 4
   %.sroa.speculated.i.i.i.i140.1 = tail call i32 @llvm.umin.i32(i32 %i.q, i32 %i.my)
   %i.mz = sub nsw i32 %.sroa.speculated.i.i.i.i140.1, %.sroa.speculated27.i.i.i.i139.1 ; 2 uses
-  %i.na = icmp ult i32 %i.mz, 5
+  %i.na = icmp samesign ult i32 %i.mz, 5
   tail call void @llvm.assume(i1 %i.na), !noalias !148
   %i.nb = zext nneg i32 %.sroa.speculated27.i.i.i.i139.1 to i64
   %i.nc = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.nb
@@ -921,7 +921,7 @@ bb.bz:                                            ; preds = %bb.by
   %i.nw = add nuw nsw i32 %.sroa.speculated27.i.i.i.i139.2, 4
   %.sroa.speculated.i.i.i.i140.2 = tail call i32 @llvm.umin.i32(i32 %i.q, i32 %i.nw)
   %i.nx = sub nsw i32 %.sroa.speculated.i.i.i.i140.2, %.sroa.speculated27.i.i.i.i139.2 ; 2 uses
-  %i.ny = icmp ult i32 %i.nx, 5
+  %i.ny = icmp samesign ult i32 %i.nx, 5
   tail call void @llvm.assume(i1 %i.ny), !noalias !148
   %i.nz = zext nneg i32 %.sroa.speculated27.i.i.i.i139.2 to i64
   %i.oa = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.nz
@@ -978,7 +978,7 @@ bb.cd:                                            ; preds = %bb.cc
   %i.oq = add nuw nsw i32 %.sroa.speculated27.i.i.i.i139.3, 4
   %.sroa.speculated.i.i.i.i140.3 = tail call i32 @llvm.umin.i32(i32 %i.q, i32 %i.oq)
   %i.or = sub nsw i32 %.sroa.speculated.i.i.i.i140.3, %.sroa.speculated27.i.i.i.i139.3 ; 2 uses
-  %i.os = icmp ult i32 %i.or, 5
+  %i.os = icmp samesign ult i32 %i.or, 5
   tail call void @llvm.assume(i1 %i.os), !noalias !148
   %i.ot = zext nneg i32 %.sroa.speculated27.i.i.i.i139.3 to i64
   %i.ou = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.ot
@@ -1056,7 +1056,7 @@ bb.ci:                                            ; preds = %bb.ch
   %i.ps = add nuw nsw i32 %.sroa.speculated27.i.i.i.i153.1, 4
   %.sroa.speculated.i.i.i.i154.1 = tail call i32 @llvm.umin.i32(i32 %i.q, i32 %i.ps)
   %i.pt = sub nsw i32 %.sroa.speculated.i.i.i.i154.1, %.sroa.speculated27.i.i.i.i153.1 ; 2 uses
-  %i.pu = icmp ult i32 %i.pt, 5
+  %i.pu = icmp samesign ult i32 %i.pt, 5
   tail call void @llvm.assume(i1 %i.pu), !noalias !148
   %i.pv = zext nneg i32 %.sroa.speculated27.i.i.i.i153.1 to i64
   %i.pw = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.pv
@@ -1153,7 +1153,7 @@ bb.cs:                                            ; preds = %bb.cr
   %i.qz = add nuw nsw i32 %.sroa.speculated27.i.i.i.i153.2, 4
   %.sroa.speculated.i.i.i.i154.2 = tail call i32 @llvm.umin.i32(i32 %i.q, i32 %i.qz)
   %i.ra = sub nsw i32 %.sroa.speculated.i.i.i.i154.2, %.sroa.speculated27.i.i.i.i153.2 ; 2 uses
-  %i.rb = icmp ult i32 %i.ra, 5
+  %i.rb = icmp samesign ult i32 %i.ra, 5
   tail call void @llvm.assume(i1 %i.rb), !noalias !148
   %i.rc = zext nneg i32 %.sroa.speculated27.i.i.i.i153.2 to i64
   %i.rd = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.rc
@@ -1253,7 +1253,7 @@ bb.dc:                                            ; preds = %bb.db
   %i.sf = add nuw nsw i32 %.sroa.speculated27.i.i.i.i153.3, 4
   %.sroa.speculated.i.i.i.i154.3 = tail call i32 @llvm.umin.i32(i32 %i.q, i32 %i.sf)
   %i.sg = sub nsw i32 %.sroa.speculated.i.i.i.i154.3, %.sroa.speculated27.i.i.i.i153.3 ; 2 uses
-  %i.sh = icmp ult i32 %i.sg, 5
+  %i.sh = icmp samesign ult i32 %i.sg, 5
   tail call void @llvm.assume(i1 %i.sh), !noalias !148
   %i.si = zext nneg i32 %.sroa.speculated27.i.i.i.i153.3 to i64
   %i.sj = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.si
@@ -1384,7 +1384,7 @@ bb.dt:                                            ; preds = %bb.dr
   %i.tv = add nuw nsw i32 %.sroa.speculated27.i.i.i.i153, 4
   %.sroa.speculated.i.i.i.i154 = tail call i32 @llvm.umin.i32(i32 %i.q, i32 %i.tv)
   %i.tw = sub nsw i32 %.sroa.speculated.i.i.i.i154, %.sroa.speculated27.i.i.i.i153 ; 2 uses
-  %i.tx = icmp ult i32 %i.tw, 5
+  %i.tx = icmp samesign ult i32 %i.tw, 5
   tail call void @llvm.assume(i1 %i.tx), !noalias !148
   %i.ty = zext nneg i32 %.sroa.speculated27.i.i.i.i153 to i64
   %i.tz = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.ty
@@ -1501,7 +1501,7 @@ bb.ed:                                            ; preds = %bb.eb
   %i.vg = add nuw nsw i32 %.sroa.speculated27.i.i.i.i167, 4
   %.sroa.speculated.i.i.i.i168 = tail call i32 @llvm.umin.i32(i32 %i.q, i32 %i.vg)
   %i.vh = sub nsw i32 %.sroa.speculated.i.i.i.i168, %.sroa.speculated27.i.i.i.i167 ; 2 uses
-  %i.vi = icmp ult i32 %i.vh, 5
+  %i.vi = icmp samesign ult i32 %i.vh, 5
   tail call void @llvm.assume(i1 %i.vi), !noalias !148
   %i.vj = zext nneg i32 %.sroa.speculated27.i.i.i.i167 to i64
   %i.vk = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.vj

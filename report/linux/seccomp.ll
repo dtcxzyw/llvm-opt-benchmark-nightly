@@ -203,7 +203,7 @@ bb.h:                                             ; preds = %bb.g
   %or.cond51.i = icmp eq i64 %i.t, 9
   %.not45.i = icmp samesign ugt i32 %1, 31
   %or.cond53.i = and i1 %.not45.i, %.not44.i
-  %or.cond71.i = or i1 %or.cond51.i, %or.cond53.i
+  %or.cond71.i = select i1 %or.cond51.i, i1 true, i1 %or.cond53.i
   br i1 %or.cond71.i, label %seccomp_set_mode_filter.exit, label %bb.i
 
 bb.i:                                             ; preds = %bb.h

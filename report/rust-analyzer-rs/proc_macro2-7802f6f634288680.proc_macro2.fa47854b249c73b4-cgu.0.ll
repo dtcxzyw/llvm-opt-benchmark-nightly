@@ -201,7 +201,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.noexc.i
   %i.r = load ptr, ptr %i.j, align 8, !noalias !155, !nonnull !5, !noundef !5
-  %i.s = icmp ugt i64 %i.i, 2
+  %i.s = icmp samesign ugt i64 %i.i, 2
   tail call void @llvm.assume(i1 %i.s)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !155
   store i64 %i.i, ptr %i.c, align 8, !noalias !155
@@ -218,7 +218,7 @@ bb.c:                                             ; preds = %bb.e, %bb.b
 
 bb.d:                                             ; preds = %.noexc16.i
   %i.u = load ptr, ptr %i.p, align 8, !noalias !155, !nonnull !5, !noundef !5
-  %i.v = icmp ugt i64 %i.o, 3
+  %i.v = icmp samesign ugt i64 %i.o, 3
   tail call void @llvm.assume(i1 %i.v)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !155
   store i64 %i.o, ptr %i.c, align 8, !noalias !155
@@ -621,7 +621,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.noexc.i
   %i.r = load ptr, ptr %i.j, align 8, !noalias !216, !nonnull !5, !noundef !5
-  %i.s = icmp ugt i64 %i.i, 4
+  %i.s = icmp samesign ugt i64 %i.i, 4
   tail call void @llvm.assume(i1 %i.s)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !216
   store i64 %i.i, ptr %i.c, align 8, !noalias !216
@@ -638,7 +638,7 @@ bb.c:                                             ; preds = %bb.e, %bb.b
 
 bb.d:                                             ; preds = %.noexc16.i
   %i.u = load ptr, ptr %i.p, align 8, !noalias !216, !nonnull !5, !noundef !5
-  %i.v = icmp ugt i64 %i.o, 5
+  %i.v = icmp samesign ugt i64 %i.o, 5
   tail call void @llvm.assume(i1 %i.v)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !216
   store i64 %i.o, ptr %i.c, align 8, !noalias !216
@@ -748,7 +748,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.noexc.i
   %i.r = load ptr, ptr %i.j, align 8, !noalias !225, !nonnull !5, !noundef !5
-  %i.s = icmp ugt i64 %i.i, 9
+  %i.s = icmp samesign ugt i64 %i.i, 9
   tail call void @llvm.assume(i1 %i.s)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !225
   store i64 %i.i, ptr %i.c, align 8, !noalias !225
@@ -765,7 +765,7 @@ bb.c:                                             ; preds = %bb.e, %bb.b
 
 bb.d:                                             ; preds = %.noexc16.i
   %i.u = load ptr, ptr %i.p, align 8, !noalias !225, !nonnull !5, !noundef !5
-  %i.v = icmp ugt i64 %i.o, 10
+  %i.v = icmp samesign ugt i64 %i.o, 10
   tail call void @llvm.assume(i1 %i.v)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !225
   store i64 %i.o, ptr %i.c, align 8, !noalias !225
@@ -875,7 +875,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.noexc.i
   %i.r = load ptr, ptr %i.j, align 8, !noalias !234, !nonnull !5, !noundef !5
-  %i.s = icmp ugt i64 %i.i, 18
+  %i.s = icmp samesign ugt i64 %i.i, 18
   tail call void @llvm.assume(i1 %i.s)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !234
   store i64 %i.i, ptr %i.c, align 8, !noalias !234
@@ -892,7 +892,7 @@ bb.c:                                             ; preds = %bb.e, %bb.b
 
 bb.d:                                             ; preds = %.noexc16.i
   %i.u = load ptr, ptr %i.p, align 8, !noalias !234, !nonnull !5, !noundef !5
-  %i.v = icmp ugt i64 %i.o, 19
+  %i.v = icmp samesign ugt i64 %i.o, 19
   tail call void @llvm.assume(i1 %i.v)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !234
   store i64 %i.o, ptr %i.c, align 8, !noalias !234
@@ -1167,7 +1167,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.noexc.i
   %i.r = load ptr, ptr %i.j, align 8, !noalias !243, !nonnull !5, !noundef !5
-  %i.s = icmp ugt i64 %i.i, 38
+  %i.s = icmp samesign ugt i64 %i.i, 38
   tail call void @llvm.assume(i1 %i.s)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !243
   store i64 %i.i, ptr %i.c, align 8, !noalias !243
@@ -1184,7 +1184,7 @@ bb.c:                                             ; preds = %bb.e, %bb.b
 
 bb.d:                                             ; preds = %.noexc16.i
   %i.u = load ptr, ptr %i.p, align 8, !noalias !243, !nonnull !5, !noundef !5
-  %i.v = icmp ugt i64 %i.o, 39
+  %i.v = icmp samesign ugt i64 %i.o, 39
   tail call void @llvm.assume(i1 %i.v)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !243
   store i64 %i.o, ptr %i.c, align 8, !noalias !243
@@ -1528,7 +1528,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.noexc.i
   %i.r = load ptr, ptr %i.j, align 8, !noalias !266, !nonnull !5, !noundef !5
-  %i.s = icmp ugt i64 %i.i, 18
+  %i.s = icmp samesign ugt i64 %i.i, 18
   tail call void @llvm.assume(i1 %i.s)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !266
   store i64 %i.i, ptr %i.c, align 8, !noalias !266
@@ -1545,7 +1545,7 @@ bb.c:                                             ; preds = %bb.e, %bb.b
 
 bb.d:                                             ; preds = %.noexc16.i
   %i.u = load ptr, ptr %i.p, align 8, !noalias !266, !nonnull !5, !noundef !5
-  %i.v = icmp ugt i64 %i.o, 19
+  %i.v = icmp samesign ugt i64 %i.o, 19
   tail call void @llvm.assume(i1 %i.v)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !266
   store i64 %i.o, ptr %i.c, align 8, !noalias !266

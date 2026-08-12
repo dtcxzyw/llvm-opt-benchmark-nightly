@@ -203,17 +203,18 @@ bb.k:                                             ; preds = %bb.h
   br i1 %i.an, label %bb.l, label %.critedge.loopexit.split.loop.exit154
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.ao = ashr exact i32 %i.al, 8                 ; 5 uses
+  %i.ao = ashr exact i32 %i.al, 8                 ; 6 uses
   %i.ap = add nsw i32 %i.ao, -4352
   %or.cond.i103 = icmp ult i32 %i.ap, 195
   br i1 %or.cond.i103, label %bb.m, label %_ZN6icu_786Hangul6isJamoEi.exit.thread
 
 bb.m:                                             ; preds = %bb.l
+  %3 = icmp samesign ugt i32 %i.ao, 4370
   %i.aq = add nsw i32 %i.ao, -4470
   %or.cond3.i = icmp ult i32 %i.aq, -21
-  %3 = add nsw i32 %i.ao, -4371
-  %i.ar = icmp ult i32 %3, 149
-  %or.cond119 = select i1 %i.ar, i1 %or.cond3.i, i1 false
+  %or.cond9.i.not139 = select i1 %3, i1 %or.cond3.i, i1 false
+  %i.ar = icmp samesign ult i32 %i.ao, 4520
+  %or.cond119 = select i1 %or.cond9.i.not139, i1 %i.ar, i1 false
   br i1 %or.cond119, label %_ZN6icu_786Hangul6isJamoEi.exit.thread, label %.critedge.loopexit.split.loop.exit
 
 _ZN6icu_786Hangul6isJamoEi.exit.thread:           ; preds = %bb.m, %bb.l

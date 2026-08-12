@@ -203,7 +203,7 @@ bb.e:                                             ; preds = %.noexc
 
 bb.f:                                             ; preds = %.noexc
   %i.s = load ptr, ptr %i.q, align 8, !noalias !3, !nonnull !14, !noundef !14 ; 2 uses
-  %i.t = icmp ugt i64 %i.p, 75
+  %i.t = icmp samesign ugt i64 %i.p, 75
   tail call void @llvm.assume(i1 %i.t)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !3
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(76) %i.s, ptr noundef nonnull readonly align 1 dereferenceable(76) @0, i64 range(i64 0, -9223372036854775808) 76, i1 false), !noalias !17
@@ -606,7 +606,7 @@ bb.l:                                             ; preds = %bb.j
   call void @llvm.lifetime.start.p0(ptr nonnull %i.he)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.hd)
   %i.iy = load atomic i64, ptr @_RNvNtCs2y6mmZ7bjoM_12tracing_core8metadata9MAX_LEVEL monotonic, align 8
-  %i.iz = icmp ult i64 %i.iy, 2
+  %i.iz = icmp samesign ult i64 %i.iy, 2
   br i1 %i.iz, label %bb.m, label %bb.v
 
 bb.m:                                             ; preds = %bb.l
@@ -986,7 +986,7 @@ bb.bg:                                            ; preds = %bb.ht, %bb.bf, %bb.
 
 bb.bh:                                            ; preds = %bb.bf
   %i.ly = load atomic i64, ptr @_RNvNtCs2y6mmZ7bjoM_12tracing_core8metadata9MAX_LEVEL monotonic, align 8
-  %i.lz = icmp ult i64 %i.ly, 2
+  %i.lz = icmp samesign ult i64 %i.ly, 2
   br i1 %i.lz, label %bb.bi, label %bb.bp
 
 bb.bi:                                            ; preds = %bb.bh
@@ -1214,7 +1214,7 @@ bb.cj:                                            ; preds = %bb.av
   store i16 10, ptr %i.gv, align 8
   store <2 x ptr> %i.nx, ptr %.sroa.101044.8..sroa_idx, align 8
   %i.ny = load atomic i64, ptr @_RNvNtCs2y6mmZ7bjoM_12tracing_core8metadata9MAX_LEVEL monotonic, align 8
-  %i.nz = icmp ult i64 %i.ny, 2
+  %i.nz = icmp samesign ult i64 %i.ny, 2
   br i1 %i.nz, label %bb.ck, label %bb.cr
 
 bb.ck:                                            ; preds = %bb.cj
@@ -1446,7 +1446,7 @@ bb.do:                                            ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ho)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.ho, ptr noundef nonnull align 8 dereferenceable(48) %i.hf, i64 48, i1 false)
   %i.pq = load atomic i64, ptr @_RNvNtCs2y6mmZ7bjoM_12tracing_core8metadata9MAX_LEVEL monotonic, align 8
-  %i.pr = icmp ult i64 %i.pq, 2
+  %i.pr = icmp samesign ult i64 %i.pq, 2
   br i1 %i.pr, label %bb.dp, label %bb.dw
 
 bb.dp:                                            ; preds = %bb.do
@@ -1638,7 +1638,7 @@ bb.eo:                                            ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %i.hy)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.hy, ptr noundef nonnull align 8 dereferenceable(48) %i.hp, i64 48, i1 false)
   %i.rc = load atomic i64, ptr @_RNvNtCs2y6mmZ7bjoM_12tracing_core8metadata9MAX_LEVEL monotonic, align 8
-  %i.rd = icmp ult i64 %i.rc, 2
+  %i.rd = icmp samesign ult i64 %i.rc, 2
   br i1 %i.rd, label %bb.ep, label %bb.ew
 
 bb.ep:                                            ; preds = %bb.eo
@@ -2041,7 +2041,7 @@ bb.in:                                            ; preds = %bb.im
 
 bb.io:                                            ; preds = %bb.ij
   %i.zf = load atomic i64, ptr @_RNvNtCs2y6mmZ7bjoM_12tracing_core8metadata9MAX_LEVEL monotonic, align 8
-  %i.zg = icmp ult i64 %i.zf, 2
+  %i.zg = icmp samesign ult i64 %i.zf, 2
   br i1 %i.zg, label %bb.ip, label %bb.iw
 
 bb.ip:                                            ; preds = %bb.io
@@ -2226,7 +2226,7 @@ bb.jk:                                            ; preds = %bb.ik
   %i.aau = getelementptr inbounds nuw i8, ptr %i.eq, i64 8
   store ptr @30, ptr %i.aau, align 8
   %i.aav = load atomic i64, ptr @_RNvNtCs2y6mmZ7bjoM_12tracing_core8metadata9MAX_LEVEL monotonic, align 8
-  %i.aaw = icmp ult i64 %i.aav, 2
+  %i.aaw = icmp samesign ult i64 %i.aav, 2
   br i1 %i.aaw, label %bb.jl, label %bb.js
 
 bb.jl:                                            ; preds = %._crit_edge
@@ -2435,7 +2435,7 @@ bb.km:                                            ; preds = %bb.kl
   store <2 x ptr> %i.acm, ptr %i.acl, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.dy)
   %i.acn = load atomic i64, ptr @_RNvNtCs2y6mmZ7bjoM_12tracing_core8metadata9MAX_LEVEL monotonic, align 8
-  %i.aco = icmp ult i64 %i.acn, 2
+  %i.aco = icmp samesign ult i64 %i.acn, 2
   br i1 %i.aco, label %bb.kn, label %bb.ku
 
 bb.kn:                                            ; preds = %bb.km
@@ -2644,7 +2644,7 @@ bb.ll:                                            ; preds = %bb.kl
   call void @llvm.lifetime.start.p0(ptr nonnull %i.dx)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(112) %i.dx, ptr noundef nonnull align 8 dereferenceable(112) %i.dy, i64 112, i1 false)
   %i.aej = load atomic i64, ptr @_RNvNtCs2y6mmZ7bjoM_12tracing_core8metadata9MAX_LEVEL monotonic, align 8
-  %i.aek = icmp ult i64 %i.aej, 2
+  %i.aek = icmp samesign ult i64 %i.aej, 2
   br i1 %i.aek, label %bb.lm, label %bb.lt
 
 bb.lm:                                            ; preds = %bb.ll
@@ -2843,7 +2843,7 @@ bb.mm:                                            ; preds = %_RINvNtCsbvkFyIu7lg
   %i.afz = getelementptr inbounds nuw i8, ptr %i.eh, i64 8
   store ptr %i.afy, ptr %i.afz, align 8
   %i.aga = load atomic i64, ptr @_RNvNtCs2y6mmZ7bjoM_12tracing_core8metadata9MAX_LEVEL monotonic, align 8
-  %i.agb = icmp ult i64 %i.aga, 2
+  %i.agb = icmp samesign ult i64 %i.aga, 2
   br i1 %i.agb, label %bb.mn, label %bb.mu
 
 bb.mn:                                            ; preds = %bb.mm
@@ -3043,7 +3043,7 @@ bb.nn:                                            ; preds = %bb.ia
   call void @llvm.lifetime.start.p0(ptr nonnull %i.fi)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.fi, ptr noundef nonnull align 8 dereferenceable(48) %i.ez, i64 48, i1 false)
   %i.ahn = load atomic i64, ptr @_RNvNtCs2y6mmZ7bjoM_12tracing_core8metadata9MAX_LEVEL monotonic, align 8
-  %i.aho = icmp ult i64 %i.ahn, 2
+  %i.aho = icmp samesign ult i64 %i.ahn, 2
   br i1 %i.aho, label %bb.no, label %bb.nv
 
 bb.no:                                            ; preds = %bb.nn
@@ -3235,7 +3235,7 @@ bb.on:                                            ; preds = %bb.hx
   call void @llvm.lifetime.start.p0(ptr nonnull %i.fs)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.fs, ptr noundef nonnull align 8 dereferenceable(48) %i.fj, i64 48, i1 false)
   %i.aiz = load atomic i64, ptr @_RNvNtCs2y6mmZ7bjoM_12tracing_core8metadata9MAX_LEVEL monotonic, align 8
-  %i.aja = icmp ult i64 %i.aiz, 2
+  %i.aja = icmp samesign ult i64 %i.aiz, 2
   br i1 %i.aja, label %bb.oo, label %bb.ov
 
 bb.oo:                                            ; preds = %bb.on
@@ -3457,7 +3457,7 @@ bb.pp:                                            ; preds = %bb.hg
   %.sroa.121078.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.gd, i64 16
   store ptr %i.aks, ptr %.sroa.121078.0..sroa_idx, align 8
   %i.akt = load atomic i64, ptr @_RNvNtCs2y6mmZ7bjoM_12tracing_core8metadata9MAX_LEVEL monotonic, align 8
-  %i.aku = icmp ult i64 %i.akt, 2
+  %i.aku = icmp samesign ult i64 %i.akt, 2
   br i1 %i.aku, label %bb.pq, label %bb.px
 
 bb.pq:                                            ; preds = %bb.pp
@@ -3856,7 +3856,7 @@ bb.rs:                                            ; preds = %.noexc856
   store i16 7, ptr %i.bt, align 8
   store <2 x ptr> %i.any, ptr %.sroa.111267.0..sroa_idx, align 8
   %i.anz = load atomic i64, ptr @_RNvNtCs2y6mmZ7bjoM_12tracing_core8metadata9MAX_LEVEL monotonic, align 8
-  %i.aoa = icmp ult i64 %i.anz, 2
+  %i.aoa = icmp samesign ult i64 %i.anz, 2
   br i1 %i.aoa, label %bb.rt, label %bb.sa
 
 bb.rt:                                            ; preds = %bb.rs
@@ -4192,7 +4192,7 @@ bb.te:                                            ; preds = %bb.td
 
 bb.tf:                                            ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCsVcNsP0WZIc_22aws_smithy_runtime_api6client7retries19SharedRetryStrategyECs9rVkZwOUgsI_13deltalake_aws.exit878
   %i.arh = load atomic i64, ptr @_RNvNtCs2y6mmZ7bjoM_12tracing_core8metadata9MAX_LEVEL monotonic, align 8
-  %i.ari = icmp ult i64 %i.arh, 2
+  %i.ari = icmp samesign ult i64 %i.arh, 2
   br i1 %i.ari, label %bb.tg, label %bb.tn
 
 bb.tg:                                            ; preds = %bb.tf
@@ -4595,7 +4595,7 @@ bb.wa:                                            ; preds = %bb.vs
 
 bb.wb:                                            ; preds = %bb.wa
   %i.axg = load atomic i64, ptr @_RNvNtCs2y6mmZ7bjoM_12tracing_core8metadata9MAX_LEVEL monotonic, align 8
-  %i.axh = icmp ult i64 %i.axg, 2
+  %i.axh = icmp samesign ult i64 %i.axg, 2
   br i1 %i.axh, label %bb.wc, label %bb.wj
 
 bb.wc:                                            ; preds = %bb.wb
@@ -4815,7 +4815,7 @@ bb.xa:                                            ; preds = %bb.wz
   %i.azh = getelementptr inbounds nuw i8, ptr %0, i64 152
   %i.azi = load ptr, ptr %i.azh, align 8, !nonnull !14, !align !259, !noundef !14 ; 8 uses
   %i.azj = load atomic i64, ptr @_RNvNtCs2y6mmZ7bjoM_12tracing_core8metadata9MAX_LEVEL monotonic, align 8
-  %i.azk = icmp ult i64 %i.azj, 2
+  %i.azk = icmp samesign ult i64 %i.azj, 2
   br i1 %i.azk, label %bb.xb, label %bb.xi
 
 bb.xb:                                            ; preds = %bb.xa
@@ -5218,7 +5218,7 @@ bb.zq:                                            ; preds = %bb.ul
   %.sroa.111314.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ap, i64 16
   store ptr @30, ptr %.sroa.111314.0..sroa_idx, align 8
   %i.bfd = load atomic i64, ptr @_RNvNtCs2y6mmZ7bjoM_12tracing_core8metadata9MAX_LEVEL monotonic, align 8
-  %i.bfe = icmp ult i64 %i.bfd, 2
+  %i.bfe = icmp samesign ult i64 %i.bfd, 2
   br i1 %i.bfe, label %bb.zr, label %bb.zy
 
 bb.zr:                                            ; preds = %bb.zq
@@ -5466,7 +5466,7 @@ bb.aax:                                           ; preds = %bb.sx
   %.sroa.91285.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bg, i64 16
   store ptr %i.bhi, ptr %.sroa.91285.0..sroa_idx, align 8
   %i.bhk = load atomic i64, ptr @_RNvNtCs2y6mmZ7bjoM_12tracing_core8metadata9MAX_LEVEL monotonic, align 8
-  %i.bhl = icmp ult i64 %i.bhk, 2
+  %i.bhl = icmp samesign ult i64 %i.bhk, 2
   br i1 %i.bhl, label %bb.aay, label %bb.abf
 
 bb.aay:                                           ; preds = %bb.aax
@@ -5869,7 +5869,7 @@ bb.b:                                             ; preds = %bb.a
 
 _RINvXs_NvMNtCs6Po7BT7Nknu_5alloc5sliceSp9to_vec_inhNtB5_10ConvertVec6to_vecNtNtBa_5alloc6GlobalECs9rVkZwOUgsI_13deltalake_aws.exit.i: ; preds = %bb.a
   %i.i = load ptr, ptr %i.g, align 8, !noalias !1858, !nonnull !14, !noundef !14 ; 2 uses
-  %i.j = icmp ugt i64 %i.f, 96
+  %i.j = icmp samesign ugt i64 %i.f, 96
   tail call void @llvm.assume(i1 %i.j)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !1858
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(97) %i.i, ptr noundef nonnull align 1 dereferenceable(97) @46, i64 97, i1 false), !noalias !1862
@@ -6062,7 +6062,7 @@ bb.i:                                             ; preds = %._crit_edge, %.thre
   %i.bn = getelementptr inbounds nuw i8, ptr %1, i64 1273 ; 2 uses
   store i8 0, ptr %i.bn, align 1, !noalias !1871
   %i.bo = load atomic i64, ptr @_RNvNtCs2y6mmZ7bjoM_12tracing_core8metadata9MAX_LEVEL monotonic, align 8, !noalias !1871
-  %i.bp = icmp ult i64 %i.bo, 2
+  %i.bp = icmp samesign ult i64 %i.bo, 2
   br i1 %i.bp, label %bb.j, label %bb.s
 
 bb.j:                                             ; preds = %bb.i
@@ -6428,7 +6428,7 @@ bb.bf:                                            ; preds = %._crit_edge15, %.th
   %i.er = getelementptr inbounds nuw i8, ptr %1, i64 1273 ; 2 uses
   store i8 0, ptr %i.er, align 1, !noalias !1893
   %i.es = load atomic i64, ptr @_RNvNtCs2y6mmZ7bjoM_12tracing_core8metadata9MAX_LEVEL monotonic, align 8, !noalias !1893
-  %i.et = icmp ult i64 %i.es, 2
+  %i.et = icmp samesign ult i64 %i.es, 2
   br i1 %i.et, label %bb.bg, label %bb.bp
 
 bb.bg:                                            ; preds = %bb.bf
@@ -6709,7 +6709,7 @@ bb.co:                                            ; preds = %bb.cn
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aa), !noalias !1893
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.aa, ptr noundef nonnull align 8 dereferenceable(48) %i.ab, i64 48, i1 false), !noalias !1893
   %i.hb = load atomic i64, ptr @_RNvNtCs2y6mmZ7bjoM_12tracing_core8metadata9MAX_LEVEL monotonic, align 8, !noalias !1893
-  %i.hc = icmp ult i64 %i.hb, 2
+  %i.hc = icmp samesign ult i64 %i.hb, 2
   br i1 %i.hc, label %bb.cp, label %bb.cw
 
 bb.cp:                                            ; preds = %bb.co
@@ -6998,7 +6998,7 @@ bb.dw:                                            ; preds = %bb.dv
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o), !noalias !1893
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.o, ptr noundef nonnull align 8 dereferenceable(48) %i.p, i64 48, i1 false), !noalias !1893
   %i.jq = load atomic i64, ptr @_RNvNtCs2y6mmZ7bjoM_12tracing_core8metadata9MAX_LEVEL monotonic, align 8, !noalias !1893
-  %i.jr = icmp ult i64 %i.jq, 2
+  %i.jr = icmp samesign ult i64 %i.jq, 2
   br i1 %i.jr, label %bb.dx, label %bb.ee
 
 bb.dx:                                            ; preds = %bb.dw
@@ -7401,7 +7401,7 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.b
   %i.ah = load atomic i64, ptr @_RNvNtCs2y6mmZ7bjoM_12tracing_core8metadata9MAX_LEVEL monotonic, align 8, !noalias !1971
-  %i.ai = icmp ult i64 %i.ah, 2
+  %i.ai = icmp samesign ult i64 %i.ah, 2
   br i1 %i.ai, label %bb.f, label %bb.m
 
 bb.f:                                             ; preds = %bb.e
@@ -7636,7 +7636,7 @@ bb.ac:                                            ; preds = %bb.ab, %bb.v, %bb.s
   store i8 0, ptr %i.ct, align 1, !alias.scope !1988, !noalias !1991
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n), !noalias !1971
   %i.cu = load atomic i64, ptr @_RNvNtCs2y6mmZ7bjoM_12tracing_core8metadata9MAX_LEVEL monotonic, align 8, !noalias !1971
-  %i.cv = icmp ult i64 %i.cu, 2
+  %i.cv = icmp samesign ult i64 %i.cu, 2
   br i1 %i.cv, label %bb.ad, label %bb.am
 
 bb.ad:                                            ; preds = %bb.ac
@@ -7854,7 +7854,7 @@ bb.bj:                                            ; preds = %bb.bg
   %i.ef = load ptr, ptr %i.ee, align 8, !noalias !1971, !nonnull !14, !align !259, !noundef !14
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !1971
   %i.eg = load atomic i64, ptr @_RNvNtCs2y6mmZ7bjoM_12tracing_core8metadata9MAX_LEVEL monotonic, align 8, !noalias !1971
-  %i.eh = icmp ult i64 %i.eg, 2
+  %i.eh = icmp samesign ult i64 %i.eg, 2
   br i1 %i.eh, label %bb.bk, label %bb.bt
 
 bb.bk:                                            ; preds = %bb.bj

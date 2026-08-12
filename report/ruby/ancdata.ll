@@ -203,7 +203,7 @@ bb.d:                                             ; preds = %bb.c
   %i.n = load i64, ptr %.012, align 8, !tbaa !10  ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %.012, i64 %i.n
   %i.p = getelementptr inbounds nuw i8, ptr %.012, i64 20 ; 2 uses
-  %i.q = icmp ugt i64 %i.n, 19
+  %i.q = icmp samesign ugt i64 %i.n, 19
   %i.r = icmp ule ptr %i.p, %i.f
   %i.s = and i1 %i.r, %i.q
   br i1 %i.s, label %.lr.ph.preheader.i, label %discard_cmsg.exit
@@ -587,7 +587,7 @@ bb.aq:                                            ; preds = %bb.ap
   %i.cn = load i64, ptr %.012.i, align 8, !tbaa !10 ; 2 uses
   %i.co = getelementptr inbounds nuw i8, ptr %.012.i, i64 %i.cn
   %i.cp = getelementptr inbounds nuw i8, ptr %.012.i, i64 20 ; 2 uses
-  %i.cq = icmp ugt i64 %i.cn, 19
+  %i.cq = icmp samesign ugt i64 %i.cn, 19
   %i.cr = icmp ule ptr %i.cp, %i.cf
   %i.cs = and i1 %i.cr, %i.cq
   br i1 %i.cs, label %.lr.ph.preheader.i.i, label %discard_cmsg.exit.i
@@ -700,7 +700,7 @@ bb.ax:                                            ; preds = %bb.aw
   %i.el = load i64, ptr %.012.i155, align 8, !tbaa !10 ; 2 uses
   %i.em = getelementptr inbounds nuw i8, ptr %.012.i155, i64 %i.el
   %i.en = getelementptr inbounds nuw i8, ptr %.012.i155, i64 20 ; 2 uses
-  %i.eo = icmp ugt i64 %i.el, 19
+  %i.eo = icmp samesign ugt i64 %i.el, 19
   %i.ep = icmp ule ptr %i.en, %i.ed
   %i.eq = and i1 %i.ep, %i.eo
   br i1 %i.eq, label %.lr.ph.preheader.i.i159, label %discard_cmsg.exit.i156
@@ -786,7 +786,7 @@ bb.bd:                                            ; preds = %bb.bc
   %i.gc = load i64, ptr %.012.i166, align 8, !tbaa !10 ; 2 uses
   %i.gd = getelementptr inbounds nuw i8, ptr %.012.i166, i64 %i.gc
   %i.ge = getelementptr inbounds nuw i8, ptr %.012.i166, i64 20 ; 2 uses
-  %i.gf = icmp ugt i64 %i.gc, 19
+  %i.gf = icmp samesign ugt i64 %i.gc, 19
   %i.gg = icmp ule ptr %i.ge, %i.fu
   %i.gh = and i1 %i.gg, %i.gf
   br i1 %i.gh, label %.lr.ph.preheader.i.i170, label %discard_cmsg.exit.i167
@@ -953,7 +953,7 @@ rbimpl_intern_const.exit.i:                       ; preds = %.lr.ph.i.i175, %bb.
   %i.jl = load i64, ptr %.0118302560, align 8, !tbaa !10 ; 2 uses
   %i.jm = getelementptr inbounds nuw i8, ptr %.0118302560, i64 %i.jl
   %i.jn = getelementptr inbounds nuw i8, ptr %.0118302560, i64 20 ; 2 uses
-  %i.jo = icmp ugt i64 %i.jl, 19
+  %i.jo = icmp samesign ugt i64 %i.jl, 19
   %i.jp = icmp ule ptr %i.jn, %i.hy
   %i.jq = and i1 %i.jp, %i.jo
   br i1 %i.jq, label %.lr.ph.i174, label %._crit_edge.i
@@ -1030,7 +1030,7 @@ bb.bt:                                            ; preds = %bb.bs
   %i.km = load i64, ptr %.0118302560, align 8, !tbaa !10 ; 2 uses
   %i.kn = getelementptr inbounds nuw i8, ptr %.0118302560, i64 %i.km
   %i.ko = getelementptr inbounds nuw i8, ptr %.0118302560, i64 20 ; 2 uses
-  %i.kp = icmp ugt i64 %i.km, 19
+  %i.kp = icmp samesign ugt i64 %i.km, 19
   %i.kq = icmp ule ptr %i.ko, %i.hy
   %i.kr = and i1 %i.kq, %i.kp
   br i1 %i.kr, label %.lr.ph.i176, label %make_io_for_unix_rights.exit

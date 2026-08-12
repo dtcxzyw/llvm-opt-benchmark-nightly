@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %.lr.ph.preheader.1, %bb.g
   %.3.1 = phi float [ %.3, %bb.g ], [ %.sroa.speculated.1, %.lr.ph.preheader.1 ] ; 3 uses
-  %i.bb = icmp ult i32 %i.d, 3
+  %i.bb = icmp samesign ult i32 %i.d, 3
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 124
   %i.bd = load i32, ptr %i.bc, align 4
   %.not.2 = icmp eq i32 %i.bd, 0
@@ -607,7 +607,7 @@ bb.cu:                                            ; preds = %bb.ct
   br label %bb.cv
 
 bb.cv:                                            ; preds = %bb.cu, %bb.cs
-  %i.qx = icmp ult i32 %i.qq, 3
+  %i.qx = icmp samesign ult i32 %i.qq, 3
   %brmerge = select i1 %i.qx, i1 true, i1 %.sroa.9.1
   br i1 %brmerge, label %.loopexit310, label %bb.cw
 
