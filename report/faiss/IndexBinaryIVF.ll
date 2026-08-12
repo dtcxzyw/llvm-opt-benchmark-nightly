@@ -203,17 +203,17 @@ bb.tp:                                            ; preds = %_ZN5faiss13Inverted
   invoke void %i.gmh(ptr noundef nonnull align 8 dereferenceable(25) %i.gju, i64 noundef %.0189.i.i644, ptr noundef %i.gjy)
           to label %_ZN5faiss13InvertedLists9ScopedIdsD2Ev.exit371.i.i unwind label %bb.agn, !noalias !751
 
-bb.tq:                                            ; preds = %_ZN5faiss12_GLOBAL__N_111BlockSearchINS_26HammingComputerDefault_tplILNS_9SIMDLevelE0EEELi4ELi1EE9add_bcodeEPKhl.exit.i.i, %.lr.ph252.i.i
-  %.0193250.i.i = phi i64 [ 0, %.lr.ph252.i.i ], [ %i.hcy, %_ZN5faiss12_GLOBAL__N_111BlockSearchINS_26HammingComputerDefault_tplILNS_9SIMDLevelE0EEELi4ELi1EE9add_bcodeEPKhl.exit.i.i ] ; 3 uses
-  %.sroa.5258.0249.i.i = phi i32 [ %i.glq, %.lr.ph252.i.i ], [ %.sroa.5258.1.i.i, %_ZN5faiss12_GLOBAL__N_111BlockSearchINS_26HammingComputerDefault_tplILNS_9SIMDLevelE0EEELi4ELi1EE9add_bcodeEPKhl.exit.i.i ] ; 2 uses
-  %.sroa.4957.0248.i.i = phi i32 [ %i.glr, %.lr.ph252.i.i ], [ %.sroa.4957.1.i.i, %_ZN5faiss12_GLOBAL__N_111BlockSearchINS_26HammingComputerDefault_tplILNS_9SIMDLevelE0EEELi4ELi1EE9add_bcodeEPKhl.exit.i.i ] ; 2 uses
-  %.sroa.4656.0247.i.i = phi i32 [ %i.gls, %.lr.ph252.i.i ], [ %.sroa.4656.1.i.i, %_ZN5faiss12_GLOBAL__N_111BlockSearchINS_26HammingComputerDefault_tplILNS_9SIMDLevelE0EEELi4ELi1EE9add_bcodeEPKhl.exit.i.i ] ; 2 uses
-  %.sroa.4355.0246.i.i = phi i32 [ %i.glt, %.lr.ph252.i.i ], [ %.sroa.4355.1.i.i, %_ZN5faiss12_GLOBAL__N_111BlockSearchINS_26HammingComputerDefault_tplILNS_9SIMDLevelE0EEELi4ELi1EE9add_bcodeEPKhl.exit.i.i ] ; 2 uses
+bb.tq:                                            ; preds = %.lr.ph252.i.i, %_ZN5faiss12_GLOBAL__N_111BlockSearchINS_26HammingComputerDefault_tplILNS_9SIMDLevelE0EEELi4ELi1EE9add_bcodeEPKhl.exit.i.i
+  %.0193250.i.i = phi i64 [ %i.hcy, %_ZN5faiss12_GLOBAL__N_111BlockSearchINS_26HammingComputerDefault_tplILNS_9SIMDLevelE0EEELi4ELi1EE9add_bcodeEPKhl.exit.i.i ], [ 0, %.lr.ph252.i.i ] ; 3 uses
+  %.sroa.5258.0249.i.i = phi i32 [ %.sroa.5258.1.i.i, %_ZN5faiss12_GLOBAL__N_111BlockSearchINS_26HammingComputerDefault_tplILNS_9SIMDLevelE0EEELi4ELi1EE9add_bcodeEPKhl.exit.i.i ], [ %i.glq, %.lr.ph252.i.i ] ; 2 uses
+  %.sroa.4957.0248.i.i = phi i32 [ %.sroa.4957.1.i.i, %_ZN5faiss12_GLOBAL__N_111BlockSearchINS_26HammingComputerDefault_tplILNS_9SIMDLevelE0EEELi4ELi1EE9add_bcodeEPKhl.exit.i.i ], [ %i.glr, %.lr.ph252.i.i ] ; 2 uses
+  %.sroa.4656.0247.i.i = phi i32 [ %.sroa.4656.1.i.i, %_ZN5faiss12_GLOBAL__N_111BlockSearchINS_26HammingComputerDefault_tplILNS_9SIMDLevelE0EEELi4ELi1EE9add_bcodeEPKhl.exit.i.i ], [ %i.gls, %.lr.ph252.i.i ] ; 2 uses
+  %.sroa.4355.0246.i.i = phi i32 [ %.sroa.4355.1.i.i, %_ZN5faiss12_GLOBAL__N_111BlockSearchINS_26HammingComputerDefault_tplILNS_9SIMDLevelE0EEELi4ELi1EE9add_bcodeEPKhl.exit.i.i ], [ %i.glt, %.lr.ph252.i.i ] ; 2 uses
   %i.gmi = mul i64 %.0193250.i.i, %i.gis
   %i.gmj = getelementptr inbounds nuw i8, ptr %i.gjt, i64 %i.gmi ; 36 uses
   %i.gmk = getelementptr inbounds nuw [8 x i8], ptr %i.gjy, i64 %.0193250.i.i
   %i.gml = load i64, ptr %i.gmk, align 8, !tbaa !90, !noalias !751 ; 4 uses
-  switch i32 %i.giw, label %.unreachabledefault.a [
+  switch i32 %i.giw, label %default.unreachable [
     i32 7, label %bb.tt
     i32 6, label %bb.tu
     i32 5, label %bb.tv
@@ -224,13 +224,13 @@ bb.tq:                                            ; preds = %_ZN5faiss12_GLOBAL_
     i32 0, label %bb.tr
   ]
 
-.unreachabledefault.a:                            ; preds = %bb.tq
+.unreachabledefault.a:                            ; preds = %bb.aaa, %bb.aau, %bb.abo, %bb.xd, %bb.xv, %bb.yn, %bb.ui, %bb.va, %bb.vs, %bb.ade, %bb.adz, %bb.aeu
   unreachable
 
-default.unreachable:                              ; preds = %bb.abo, %bb.aau, %bb.aaa, %bb.zg, %bb.yn, %bb.xv, %bb.xd, %bb.wl, %bb.vs, %bb.va, %bb.ui, %bb.aeu, %bb.adz, %bb.ade, %bb.acj, %bb.afp
+default.unreachable:                              ; preds = %bb.tq
   unreachable
 
-bb.tr:                                            ; preds = %bb.tz, %bb.tq
+bb.tr:                                            ; preds = %bb.tq, %bb.tz
   %.090.i462.i.i = phi i32 [ %i.gpo, %bb.tz ], [ %i.giw, %bb.tq ] ; 4 uses
   %.082.i463.i.i = phi i32 [ %i.gpp, %bb.tz ], [ %i.giw, %bb.tq ] ; 2 uses
   %.080.i464.i.i = phi i32 [ %.7.i495.i.i, %bb.tz ], [ %i.giu, %bb.tq ] ; 2 uses
@@ -428,7 +428,7 @@ bb.uh:                                            ; preds = %.noexc244.i.i
 
 bb.ui:                                            ; preds = %bb.uh, %.noexc244.i.i
   %.sroa.4355.1.i.i = phi i32 [ %.11.i474.i.i, %bb.uh ], [ %.sroa.4355.0246.i.i, %.noexc244.i.i ]
-  switch i32 %i.giw, label %default.unreachable [
+  switch i32 %i.giw, label %.unreachabledefault.a [
     i32 7, label %bb.ul
     i32 6, label %bb.um
     i32 5, label %bb.un
@@ -637,7 +637,7 @@ bb.uz:                                            ; preds = %.noexc245.i.i
 
 bb.va:                                            ; preds = %bb.uz, %.noexc245.i.i
   %.sroa.4656.1.i.i = phi i32 [ %.11.i438.i.i, %bb.uz ], [ %.sroa.4656.0247.i.i, %.noexc245.i.i ]
-  switch i32 %i.giw, label %default.unreachable [
+  switch i32 %i.giw, label %.unreachabledefault.a [
     i32 7, label %bb.vd
     i32 6, label %bb.ve
     i32 5, label %bb.vf
@@ -846,7 +846,7 @@ bb.vr:                                            ; preds = %.noexc246.i.i
 
 bb.vs:                                            ; preds = %bb.vr, %.noexc246.i.i
   %.sroa.4957.1.i.i = phi i32 [ %.11.i402.i.i, %bb.vr ], [ %.sroa.4957.0248.i.i, %.noexc246.i.i ]
-  switch i32 %i.giw, label %default.unreachable [
+  switch i32 %i.giw, label %.unreachabledefault.a [
     i32 7, label %bb.vv
     i32 6, label %bb.vw
     i32 5, label %bb.vx
@@ -1144,7 +1144,7 @@ bb.wl:                                            ; preds = %_ZN5faiss12_GLOBAL_
   %i.hfg = getelementptr inbounds nuw i8, ptr %i.gjt, i64 %i.hff ; 36 uses
   %i.hfh = getelementptr inbounds nuw [8 x i8], ptr %i.gjy, i64 %.0192239.i.i
   %i.hfi = load i64, ptr %i.hfh, align 8, !tbaa !90, !noalias !751 ; 8 uses
-  switch i32 %i.giw, label %default.unreachable [
+  switch i32 %i.giw, label %.unreachabledefault [
     i32 7, label %bb.wo
     i32 6, label %bb.wp
     i32 5, label %bb.wq
@@ -1154,6 +1154,9 @@ bb.wl:                                            ; preds = %_ZN5faiss12_GLOBAL_
     i32 1, label %bb.wu
     i32 0, label %bb.wm
   ]
+
+.unreachabledefault:                              ; preds = %bb.wl
+  unreachable
 
 bb.wm:                                            ; preds = %bb.wl, %bb.wu
   %.090.i606.i.i = phi i32 [ %i.hil, %bb.wu ], [ %i.giw, %bb.wl ] ; 4 uses
@@ -1374,7 +1377,7 @@ _ZN5faiss16heap_replace_topINS_4CMaxIilEEEEvmPNT_1TEPNS3_2TIES4_S6_.exit.i.i.i74
 
 bb.xd:                                            ; preds = %_ZN5faiss16heap_replace_topINS_4CMaxIilEEEEvmPNT_1TEPNS3_2TIES4_S6_.exit.i.i.i748, %.noexc259.i.i
   %.sroa.4331.1.i.i = phi i32 [ %i.hjt, %_ZN5faiss16heap_replace_topINS_4CMaxIilEEEEvmPNT_1TEPNS3_2TIES4_S6_.exit.i.i.i748 ], [ %.sroa.4331.0235.i.i, %.noexc259.i.i ]
-  switch i32 %i.giw, label %default.unreachable [
+  switch i32 %i.giw, label %.unreachabledefault.a [
     i32 7, label %bb.xg
     i32 6, label %bb.xh
     i32 5, label %bb.xi
@@ -1604,7 +1607,7 @@ _ZN5faiss16heap_replace_topINS_4CMaxIilEEEEvmPNT_1TEPNS3_2TIES4_S6_.exit.1.i.i.i
 
 bb.xv:                                            ; preds = %_ZN5faiss16heap_replace_topINS_4CMaxIilEEEEvmPNT_1TEPNS3_2TIES4_S6_.exit.1.i.i.i743, %.noexc260.i.i
   %.sroa.4632.1.i.i = phi i32 [ %i.hoe, %_ZN5faiss16heap_replace_topINS_4CMaxIilEEEEvmPNT_1TEPNS3_2TIES4_S6_.exit.1.i.i.i743 ], [ %.sroa.4632.0236.i.i, %.noexc260.i.i ]
-  switch i32 %i.giw, label %default.unreachable [
+  switch i32 %i.giw, label %.unreachabledefault.a [
     i32 7, label %bb.xy
     i32 6, label %bb.xz
     i32 5, label %bb.ya
@@ -1834,7 +1837,7 @@ _ZN5faiss16heap_replace_topINS_4CMaxIilEEEEvmPNT_1TEPNS3_2TIES4_S6_.exit.2.i.i.i
 
 bb.yn:                                            ; preds = %_ZN5faiss16heap_replace_topINS_4CMaxIilEEEEvmPNT_1TEPNS3_2TIES4_S6_.exit.2.i.i.i738, %.noexc261.i.i
   %.sroa.4933.1.i.i = phi i32 [ %i.hsp, %_ZN5faiss16heap_replace_topINS_4CMaxIilEEEEvmPNT_1TEPNS3_2TIES4_S6_.exit.2.i.i.i738 ], [ %.sroa.4933.0237.i.i, %.noexc261.i.i ]
-  switch i32 %i.giw, label %default.unreachable [
+  switch i32 %i.giw, label %.unreachabledefault.a [
     i32 7, label %bb.yq
     i32 6, label %bb.yr
     i32 5, label %bb.ys
@@ -2149,7 +2152,7 @@ bb.zg:                                            ; preds = %_ZN5faiss12_GLOBAL_
   %i.hzf = getelementptr inbounds nuw i8, ptr %i.gjt, i64 %i.hze ; 36 uses
   %i.hzg = getelementptr inbounds nuw [8 x i8], ptr %i.gjy, i64 %.0191229.i.i
   %i.hzh = load i64, ptr %i.hzg, align 8, !tbaa !90, !noalias !751 ; 12 uses
-  switch i32 %i.giw, label %default.unreachable [
+  switch i32 %i.giw, label %.unreachabledefault2102 [
     i32 7, label %bb.zj
     i32 6, label %bb.zk
     i32 5, label %bb.zl
@@ -2159,6 +2162,9 @@ bb.zg:                                            ; preds = %_ZN5faiss12_GLOBAL_
     i32 1, label %bb.zp
     i32 0, label %bb.zh
   ]
+
+.unreachabledefault2102:                          ; preds = %bb.zg
+  unreachable
 
 bb.zh:                                            ; preds = %bb.zg, %bb.zp
   %.090.i750.i.i = phi i32 [ %i.ick, %bb.zp ], [ %i.giw, %bb.zg ] ; 4 uses
@@ -2427,7 +2433,7 @@ _ZN5faiss16heap_replace_topINS_4CMaxIilEEEEvmPNT_1TEPNS3_2TIES4_S6_.exit.i293.i.
 
 bb.aaa:                                           ; preds = %_ZN5faiss16heap_replace_topINS_4CMaxIilEEEEvmPNT_1TEPNS3_2TIES4_S6_.exit.i293.i.i, %.noexc298.i.i
   %.sroa.43.1.i.i691 = phi i32 [ %i.ies, %_ZN5faiss16heap_replace_topINS_4CMaxIilEEEEvmPNT_1TEPNS3_2TIES4_S6_.exit.i293.i.i ], [ %.sroa.43.0225.i.i, %.noexc298.i.i ]
-  switch i32 %i.giw, label %default.unreachable [
+  switch i32 %i.giw, label %.unreachabledefault.a [
     i32 7, label %bb.aad
     i32 6, label %bb.aae
     i32 5, label %bb.aaf
@@ -2705,7 +2711,7 @@ _ZN5faiss16heap_replace_topINS_4CMaxIilEEEEvmPNT_1TEPNS3_2TIES4_S6_.exit.1.i287.
 
 bb.aau:                                           ; preds = %_ZN5faiss16heap_replace_topINS_4CMaxIilEEEEvmPNT_1TEPNS3_2TIES4_S6_.exit.1.i287.i.i, %.noexc299.i.i
   %.sroa.4610.1.i.i = phi i32 [ %i.ikd, %_ZN5faiss16heap_replace_topINS_4CMaxIilEEEEvmPNT_1TEPNS3_2TIES4_S6_.exit.1.i287.i.i ], [ %.sroa.4610.0226.i.i, %.noexc299.i.i ]
-  switch i32 %i.giw, label %default.unreachable [
+  switch i32 %i.giw, label %.unreachabledefault.a [
     i32 7, label %bb.aax
     i32 6, label %bb.aay
     i32 5, label %bb.aaz
@@ -2983,7 +2989,7 @@ _ZN5faiss16heap_replace_topINS_4CMaxIilEEEEvmPNT_1TEPNS3_2TIES4_S6_.exit.2.i281.
 
 bb.abo:                                           ; preds = %_ZN5faiss16heap_replace_topINS_4CMaxIilEEEEvmPNT_1TEPNS3_2TIES4_S6_.exit.2.i281.i.i, %.noexc300.i.i
   %.sroa.49.1.i.i692 = phi i32 [ %i.ipo, %_ZN5faiss16heap_replace_topINS_4CMaxIilEEEEvmPNT_1TEPNS3_2TIES4_S6_.exit.2.i281.i.i ], [ %.sroa.49.0227.i.i, %.noexc300.i.i ]
-  switch i32 %i.giw, label %default.unreachable [
+  switch i32 %i.giw, label %.unreachabledefault.a [
     i32 7, label %bb.abr
     i32 6, label %bb.abs
     i32 5, label %bb.abt
@@ -3346,7 +3352,7 @@ bb.acj:                                           ; preds = %_ZN5faiss12_GLOBAL_
   %i.ixe = getelementptr inbounds nuw i8, ptr %i.gjt, i64 %i.ixd ; 36 uses
   %i.ixf = getelementptr inbounds nuw [8 x i8], ptr %i.gjy, i64 %.0190261.i.i
   %i.ixg = load i64, ptr %i.ixf, align 8, !tbaa !90, !noalias !751 ; 12 uses
-  switch i32 %i.giw, label %default.unreachable [
+  switch i32 %i.giw, label %.unreachabledefault2103 [
     i32 7, label %bb.acm
     i32 6, label %bb.acn
     i32 5, label %bb.aco
@@ -3356,6 +3362,9 @@ bb.acj:                                           ; preds = %_ZN5faiss12_GLOBAL_
     i32 1, label %bb.acs
     i32 0, label %bb.ack
   ]
+
+.unreachabledefault2103:                          ; preds = %bb.acj
+  unreachable
 
 bb.ack:                                           ; preds = %bb.acj, %bb.acs
   %.090.i894.i.i = phi i32 [ %i.jaj, %bb.acs ], [ %i.giw, %bb.acj ] ; 4 uses
@@ -3627,7 +3636,7 @@ _ZN5faiss16heap_replace_topINS_4CMaxIilEEEEvmPNT_1TEPNS3_2TIES4_S6_.exit.i360.i.
 
 bb.ade:                                           ; preds = %_ZN5faiss16heap_replace_topINS_4CMaxIilEEEEvmPNT_1TEPNS3_2TIES4_S6_.exit.i360.i.i, %.noexc366.i.i
   %.sroa.48.1.i.i = phi i32 [ %i.jcr, %_ZN5faiss16heap_replace_topINS_4CMaxIilEEEEvmPNT_1TEPNS3_2TIES4_S6_.exit.i360.i.i ], [ %.sroa.48.0257.i.i, %.noexc366.i.i ]
-  switch i32 %i.giw, label %default.unreachable [
+  switch i32 %i.giw, label %.unreachabledefault.a [
     i32 7, label %bb.adh
     i32 6, label %bb.adi
     i32 5, label %bb.adj
@@ -3908,7 +3917,7 @@ _ZN5faiss16heap_replace_topINS_4CMaxIilEEEEvmPNT_1TEPNS3_2TIES4_S6_.exit.1.i346.
 
 bb.adz:                                           ; preds = %_ZN5faiss16heap_replace_topINS_4CMaxIilEEEEvmPNT_1TEPNS3_2TIES4_S6_.exit.1.i346.i.i, %.noexc367.i.i
   %.sroa.51.1.i.i = phi i32 [ %i.jic, %_ZN5faiss16heap_replace_topINS_4CMaxIilEEEEvmPNT_1TEPNS3_2TIES4_S6_.exit.1.i346.i.i ], [ %.sroa.51.0258.i.i, %.noexc367.i.i ]
-  switch i32 %i.giw, label %default.unreachable [
+  switch i32 %i.giw, label %.unreachabledefault.a [
     i32 7, label %bb.aec
     i32 6, label %bb.aed
     i32 5, label %bb.aee
@@ -4189,7 +4198,7 @@ _ZN5faiss16heap_replace_topINS_4CMaxIilEEEEvmPNT_1TEPNS3_2TIES4_S6_.exit.2.i332.
 
 bb.aeu:                                           ; preds = %_ZN5faiss16heap_replace_topINS_4CMaxIilEEEEvmPNT_1TEPNS3_2TIES4_S6_.exit.2.i332.i.i, %.noexc368.i.i
   %.sroa.54.1.i.i752 = phi i32 [ %i.jnn, %_ZN5faiss16heap_replace_topINS_4CMaxIilEEEEvmPNT_1TEPNS3_2TIES4_S6_.exit.2.i332.i.i ], [ %.sroa.54.0259.i.i, %.noexc368.i.i ]
-  switch i32 %i.giw, label %default.unreachable [
+  switch i32 %i.giw, label %.unreachabledefault.a [
     i32 7, label %bb.aex
     i32 6, label %bb.aey
     i32 5, label %bb.aez
@@ -4512,7 +4521,7 @@ bb.afp:                                           ; preds = %bb.agk, %.lr.ph271.
   %.0186268.i.i = phi i32 [ %i.jtl, %.lr.ph271.i.i ], [ %.1187.i.i677, %bb.agk ] ; 2 uses
   %i.jts = mul i64 %.0185269.i.i, %i.gis
   %i.jtt = getelementptr inbounds nuw i8, ptr %i.gjt, i64 %i.jts ; 9 uses
-  switch i32 %i.giw, label %default.unreachable [
+  switch i32 %i.giw, label %.unreachabledefault2104 [
     i32 7, label %bb.afs
     i32 6, label %bb.aft
     i32 5, label %bb.afu
@@ -4522,6 +4531,9 @@ bb.afp:                                           ; preds = %bb.agk, %.lr.ph271.
     i32 1, label %bb.afy
     i32 0, label %bb.afq
   ]
+
+.unreachabledefault2104:                          ; preds = %bb.afp
+  unreachable
 
 bb.afq:                                           ; preds = %bb.afp, %bb.afy
   %.090.i930.i.i = phi i32 [ %i.jww, %bb.afy ], [ %i.giw, %bb.afp ] ; 4 uses

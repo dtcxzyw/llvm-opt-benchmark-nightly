@@ -41,8 +41,6 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   store i64 0, ptr %i.f, align 8
   %.sroa.019.0.copyload = load i64, ptr %1, align 8, !alias.scope !3
-  %.sroa.4.0..sroa_idx20 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.sroa.4.0.copyload = load ptr, ptr %.sroa.4.0..sroa_idx20, align 8, !alias.scope !3
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 48
   %.sroa.6.0.copyload = load i64, ptr %.sroa.6.0..sroa_idx, align 8, !alias.scope !3 ; 2 uses
   %.sroa.722.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 56
@@ -81,33 +79,37 @@ bb.a:
   %.sroa.612.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 120
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 121
   %i.g = trunc nuw i64 %.sroa.13.0.copyload to i1
-  br label %bb.b
-
-bb.b:                                             ; preds = %bb.o, %bb.a
-  %.sroa.5.0 = phi ptr [ %.sroa.4.0.copyload, %bb.a ], [ %i.i, %bb.o ]
-  switch i64 %.sroa.019.0.copyload, label %.split.us.i.i.i.i.i.i [
+  switch i64 %.sroa.019.0.copyload, label %bb.b [
     i64 2, label %.split8.us.i.i.i.i.i.i.preheader
     i64 0, label %.split8.us.i.i.i.i.i.i.preheader
   ]
+
+bb.b:                                             ; preds = %bb.a
+  %.sroa.4.0..sroa_idx20 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %.sroa.4.0.copyload = load ptr, ptr %.sroa.4.0..sroa_idx20, align 8, !alias.scope !3
+  br label %.split.us.i.i.i.i.i.i
 
 .split8.us.i.i.i.i.i.i:                           ; preds = %bb.p
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %.not.i.i.i = icmp eq i64 %.sroa.718.7.ph, 2
   br i1 %.not.i.i.i, label %select.unfold.i18.i.i.i.i.i, label %.lr.ph
 
-.split.us.i.i.i.i.i.i:                            ; preds = %bb.b, %bb.c
-  %.sroa.5.3 = phi ptr [ %i.i, %bb.c ], [ %.sroa.5.0, %bb.b ] ; 3 uses
+.split.us.i.i.i.i.i.i:                            ; preds = %.split.us.i.i.i.i.i.i.backedge, %bb.b
+  %.sroa.5.3 = phi ptr [ %.sroa.4.0.copyload, %bb.b ], [ %i.i, %.split.us.i.i.i.i.i.i.backedge ] ; 3 uses
   %.not.i.i.i.i.i.us.i.i.i.i.i.i = icmp eq ptr %.sroa.5.3, null
   br i1 %.not.i.i.i.i.i.us.i.i.i.i.i.i, label %.split8.us.i.i.i.i.i.i.preheader, label %bb.c
 
 bb.c:                                             ; preds = %.split.us.i.i.i.i.i.i
   %i.h = getelementptr inbounds nuw i8, ptr %.sroa.5.3, i64 8
-  %i.i = load atomic ptr, ptr %i.h monotonic, align 8, !noalias !7 ; 2 uses
+  %i.i = load atomic ptr, ptr %i.h monotonic, align 8, !noalias !7
   %i.j = load ptr, ptr %.sroa.5.3, align 8, !noalias !7, !align !30, !noundef !31 ; 4 uses
   %.not.us.i.i.i.i.i.i = icmp eq ptr %i.j, null
-  br i1 %.not.us.i.i.i.i.i.i, label %.split.us.i.i.i.i.i.i, label %bb.m
+  br i1 %.not.us.i.i.i.i.i.i, label %.split.us.i.i.i.i.i.i.backedge, label %bb.m
 
-.split8.us.i.i.i.i.i.i.preheader:                 ; preds = %bb.b, %bb.b, %.split.us.i.i.i.i.i.i
+.split.us.i.i.i.i.i.i.backedge:                   ; preds = %bb.c, %bb.o
+  br label %.split.us.i.i.i.i.i.i
+
+.split8.us.i.i.i.i.i.i.preheader:                 ; preds = %.split.us.i.i.i.i.i.i, %bb.a, %bb.a
   %.not.i.i.i296 = icmp eq i64 %.sroa.6.0.copyload, 2
   br i1 %.not.i.i.i296, label %select.unfold.i18.i.i.i.i.i, label %.lr.ph
 
@@ -417,7 +419,7 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.n
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
-  br label %bb.b
+  br label %.split.us.i.i.i.i.i.i.backedge
 
 bb.p:                                             ; preds = %bb.l
   invoke fastcc void @_RNvMNtNtCs4wrugdhLTku_30codspeed_divan_compat_walltime5entry4treeNtB2_9EntryTree12insert_entry(ptr noalias noundef align 8 dereferenceable(24) %i.d, i64 noundef 1, ptr noundef %.pn3.i.i.ph, ptr noundef nonnull %i.b, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(56) @2)

@@ -204,13 +204,13 @@ define linkonce_odr dso_local void @_ZSt22__chunk_insertion_sortIPN9Stockfish6Sq
 bb.a:
   %i.a = ptrtoint ptr %1 to i64                   ; 5 uses
   %i.b = ptrtoint ptr %0 to i64                   ; 6 uses
-  %i.c = sub i64 %i.a, %i.b
+  %i.c = sub i64 %i.a, %i.b                       ; 2 uses
   %.not27 = icmp slt i64 %i.c, %2
   br i1 %.not27, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
   switch i64 %2, label %.preheader.i [
-    i64 0, label %._crit_edge
+    i64 0, label %_ZSt16__insertion_sortIPN9Stockfish6SquareEN9__gnu_cxx5__ops15_Iter_comp_iterIPFbS1_S1_EEEEvT_S9_T0_.exit.us.preheader
     i64 1, label %iter.check
   ]
 
@@ -275,6 +275,11 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .preheader.i.us.preheader:                        ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.028.us31.ph = phi ptr [ %0, %iter.check ], [ %i.i, %vec.epilog.iter.check ], [ %i.m, %vec.epilog.middle.block ]
   br label %.preheader.i.us
+
+_ZSt16__insertion_sortIPN9Stockfish6SquareEN9__gnu_cxx5__ops15_Iter_comp_iterIPFbS1_S1_EEEEvT_S9_T0_.exit.us.preheader: ; preds = %.lr.ph
+  %.not.us = icmp slt i64 %i.c, 0
+  tail call void @llvm.assume(i1 %.not.us)
+  br label %._crit_edge
 
 .preheader.i.us:                                  ; preds = %.preheader.i.us.preheader, %.preheader.i.us
   %.028.us31 = phi ptr [ %i.q, %.preheader.i.us ], [ %.028.us31.ph, %.preheader.i.us.preheader ]
@@ -348,9 +353,9 @@ _ZSt16__insertion_sortIPN9Stockfish6SquareEN9__gnu_cxx5__ops15_Iter_comp_iterIPF
   %.not = icmp slt i64 %i.al, %2
   br i1 %.not, label %._crit_edge, label %.preheader.i, !llvm.loop !523
 
-._crit_edge:                                      ; preds = %.preheader.i.us, %_ZSt16__insertion_sortIPN9Stockfish6SquareEN9__gnu_cxx5__ops15_Iter_comp_iterIPFbS1_S1_EEEEvT_S9_T0_.exit.loopexit, %middle.block, %vec.epilog.middle.block, %.lr.ph, %bb.a
-  %.0.lcssa = phi ptr [ %0, %bb.a ], [ %0, %.lr.ph ], [ %i.u, %_ZSt16__insertion_sortIPN9Stockfish6SquareEN9__gnu_cxx5__ops15_Iter_comp_iterIPFbS1_S1_EEEEvT_S9_T0_.exit.loopexit ], [ %i.m, %vec.epilog.middle.block ], [ %i.i, %middle.block ], [ %i.q, %.preheader.i.us ] ; 9 uses
-  %.lcssa = phi i64 [ %i.b, %bb.a ], [ %i.b, %.lr.ph ], [ %i.ak, %_ZSt16__insertion_sortIPN9Stockfish6SquareEN9__gnu_cxx5__ops15_Iter_comp_iterIPFbS1_S1_EEEEvT_S9_T0_.exit.loopexit ], [ %i.p, %vec.epilog.middle.block ], [ %i.l, %middle.block ], [ %i.r, %.preheader.i.us ]
+._crit_edge:                                      ; preds = %.preheader.i.us, %_ZSt16__insertion_sortIPN9Stockfish6SquareEN9__gnu_cxx5__ops15_Iter_comp_iterIPFbS1_S1_EEEEvT_S9_T0_.exit.loopexit, %middle.block, %vec.epilog.middle.block, %_ZSt16__insertion_sortIPN9Stockfish6SquareEN9__gnu_cxx5__ops15_Iter_comp_iterIPFbS1_S1_EEEEvT_S9_T0_.exit.us.preheader, %bb.a
+  %.0.lcssa = phi ptr [ %0, %bb.a ], [ %0, %_ZSt16__insertion_sortIPN9Stockfish6SquareEN9__gnu_cxx5__ops15_Iter_comp_iterIPFbS1_S1_EEEEvT_S9_T0_.exit.us.preheader ], [ %i.u, %_ZSt16__insertion_sortIPN9Stockfish6SquareEN9__gnu_cxx5__ops15_Iter_comp_iterIPFbS1_S1_EEEEvT_S9_T0_.exit.loopexit ], [ %i.m, %vec.epilog.middle.block ], [ %i.i, %middle.block ], [ %i.q, %.preheader.i.us ] ; 9 uses
+  %.lcssa = phi i64 [ %i.b, %bb.a ], [ %i.b, %_ZSt16__insertion_sortIPN9Stockfish6SquareEN9__gnu_cxx5__ops15_Iter_comp_iterIPFbS1_S1_EEEEvT_S9_T0_.exit.us.preheader ], [ %i.ak, %_ZSt16__insertion_sortIPN9Stockfish6SquareEN9__gnu_cxx5__ops15_Iter_comp_iterIPFbS1_S1_EEEEvT_S9_T0_.exit.loopexit ], [ %i.p, %vec.epilog.middle.block ], [ %i.l, %middle.block ], [ %i.r, %.preheader.i.us ]
   %i.am = icmp eq ptr %.0.lcssa, %1
   br i1 %i.am, label %_ZSt16__insertion_sortIPN9Stockfish6SquareEN9__gnu_cxx5__ops15_Iter_comp_iterIPFbS1_S1_EEEEvT_S9_T0_.exit26, label %.preheader.i12
 

@@ -201,8 +201,9 @@ bb.o:                                             ; preds = %.lr.ph315, %bb.af
 bb.p:                                             ; preds = %bb.o
   %i.cx = getelementptr inbounds nuw i8, ptr %.0313, i64 72 ; 2 uses
   %i.cy = load i32, ptr %i.cx, align 8
-  %.not345 = icmp eq i32 %i.cy, 0
-  br i1 %.not345, label %._crit_edge309, label %.lr.ph308.preheader
+  %.not345 = icmp ne i32 %i.cy, 0
+  %brmerge461.not = and i1 %.not345, %i.aq
+  br i1 %brmerge461.not, label %.lr.ph308.preheader, label %._crit_edge309
 
 .lr.ph308.preheader:                              ; preds = %bb.p
   %i.cz = getelementptr inbounds nuw i8, ptr %.0313, i64 80
@@ -221,7 +222,7 @@ bb.p:                                             ; preds = %bb.o
   %i.df = getelementptr inbounds nuw i8, ptr %.1306, i64 32
   %i.dg = load i64, ptr %i.df, align 8
   %i.dh = tail call i64 @llvm.umax.i64(i64 %i.de, i64 %i.dg) ; 2 uses
-  br i1 %i.aq, label %.lr.ph304, label %.loopexit274
+  br label %.lr.ph304
 
 bb.q:                                             ; preds = %.lr.ph304
   %indvars.iv.next377 = add nuw nsw i64 %indvars.iv376, 1 ; 2 uses
@@ -229,7 +230,7 @@ bb.q:                                             ; preds = %.lr.ph304
   br i1 %exitcond380.not, label %.loopexit274, label %.lr.ph304, !llvm.loop !54
 
 .lr.ph304:                                        ; preds = %.lr.ph308, %bb.q
-  %indvars.iv376 = phi i64 [ %indvars.iv.next377, %bb.q ], [ 0, %.lr.ph308 ] ; 4 uses
+  %indvars.iv376 = phi i64 [ 0, %.lr.ph308 ], [ %indvars.iv.next377, %bb.q ] ; 4 uses
   %i.di = getelementptr inbounds nuw [8 x i8], ptr %i.ct, i64 %indvars.iv376
   %i.dj = load ptr, ptr %i.di, align 8
   %i.dk = tail call i32 @xstrcmp(ptr noundef %.sroa.3.0.copyload., ptr noundef %i.dj) #17
@@ -257,7 +258,7 @@ bb_granularity.exit261:                           ; preds = %bb.r, %bb.s
   store i64 %i.dt, ptr %i.dr, align 8
   br label %.loopexit274
 
-.loopexit274:                                     ; preds = %bb.q, %.lr.ph308, %bb_granularity.exit261
+.loopexit274:                                     ; preds = %bb.q, %bb_granularity.exit261
   %i.du = add nuw nsw i32 %.2205305, 1            ; 2 uses
   %i.dv = getelementptr inbounds nuw i8, ptr %.1306, i64 40
   %i.dw = load i32, ptr %i.cx, align 8

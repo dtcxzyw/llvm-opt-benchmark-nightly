@@ -15,7 +15,8 @@ target triple = "x86_64-pc-linux-gnu"
 @switch.table._Py_LibHacl_Hacl_Streaming_HMAC_malloc_.9 = private unnamed_addr constant [13 x i8] c"@@@@\80\80\90\88hH@@\80", align 8
 @switch.table._Py_LibHacl_Hacl_Streaming_HMAC_malloc_.10 = private unnamed_addr constant [13 x i8] [i8 64, i8 64, i8 64, i8 64, i8 -128, i8 -128, i8 -112, i8 -120, i8 104, i8 72, i8 64, i8 poison, i8 -128], align 8
 @switch.table.init0 = private unnamed_addr constant [14 x i8] c"@@@@\80\80\90\88hH@@\80\80", align 8
-@switch.table.init0.31 = private unnamed_addr constant [12 x i8] c"@@\80\80@@@\80\88\90hH", align 8
+@switch.table.init0.30 = private unnamed_addr constant [10 x i8] c"\80\80@@@\80\88\90hH", align 8
+@switch.table.init0.31 = private unnamed_addr constant [12 x i8] c"@@\80\80@@@\80\88\90hH", align 4
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define hidden ptr @_Py_LibHacl_Hacl_Streaming_HMAC_s1(i64 %0, ptr nofree noundef readonly byval(%struct.Hacl_Streaming_HMAC_Definitions_two_state_s) align 8 captures(none) %1) local_unnamed_addr #0 {
@@ -418,38 +419,56 @@ wrap_key.exit:                                    ; preds = %block_len.exit28.th
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(168) %i.b, i8 54, i64 168, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #15
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(168) %i.c, i8 92, i64 168, i1 false)
-  %3 = zext nneg i8 %.0.i47 to i64
-  %switch.gep73 = getelementptr inbounds nuw i8, ptr @switch.table.init0.31, i64 %3
-  %switch.load74 = load i8, ptr %switch.gep73, align 1
-  %switch.ext75 = zext i8 %switch.load74 to i64
+  %switch.tableidx = add i8 %.0.i47, -2           ; 2 uses
+  %3 = icmp ult i8 %switch.tableidx, 10
+  %4 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep72 = getelementptr inbounds nuw i8, ptr @switch.table.init0.30, i64 %4
+  br label %5
+
+5:                                                ; preds = %bb.v, %wrap_key.exit
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.v ], [ 0, %wrap_key.exit ] ; 5 uses
+  br i1 %3, label %switch.lookup71, label %switch.lookup72
+
+switch.lookup71:                                  ; preds = %5
+  %switch.load73 = load i8, ptr %switch.gep72, align 1
+  %switch.ext74 = zext i8 %switch.load73 to i64
   br label %switch.lookup72
 
-switch.lookup72:                                  ; preds = %wrap_key.exit, %bb.v
-  %indvars.iv.a = phi i64 [ %indvars.iv.next, %bb.v ], [ 0, %wrap_key.exit ] ; 5 uses
-  %i.p = icmp samesign ult i64 %indvars.iv.a, %switch.ext75
+switch.lookup72:                                  ; preds = %switch.lookup71, %5
+  %indvars.iv.a = phi i64 [ %switch.ext74, %switch.lookup71 ], [ 64, %5 ]
+  %i.p = icmp samesign ult i64 %indvars.iv, %indvars.iv.a
   br i1 %i.p, label %bb.v, label %switch.lookup76.preheader
 
 switch.lookup76.preheader:                        ; preds = %switch.lookup72
-  %4 = zext nneg i8 %.0.i47 to i64
-  %switch.gep77 = getelementptr inbounds nuw i8, ptr @switch.table.init0.31, i64 %4
+  %switch.tableidx75 = add i8 %.0.i47, -2         ; 2 uses
+  %6 = icmp ult i8 %switch.tableidx75, 10
+  %7 = zext nneg i8 %switch.tableidx75 to i64
+  %switch.gep77 = getelementptr inbounds nuw i8, ptr @switch.table.init0.30, i64 %7
+  br label %.preheader
+
+bb.v:                                             ; preds = %switch.lookup72
+  %i.q = getelementptr i8, ptr %i.b, i64 %indvars.iv
+  %i.r = load i8, ptr %i.q, align 1, !tbaa !18
+  %i.s = getelementptr i8, ptr %i.a, i64 %indvars.iv
+  %i.t = load i8, ptr %i.s, align 1, !tbaa !18
+  %i.u = xor i8 %i.t, %i.r
+  %i.v = getelementptr i8, ptr %1, i64 %indvars.iv
+  store i8 %i.u, ptr %i.v, align 1, !tbaa !18
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  br label %5, !llvm.loop !27
+
+.preheader:                                       ; preds = %switch.lookup76.preheader, %bb.w
+  %indvars.iv66 = phi i64 [ %indvars.iv.next67, %bb.w ], [ 0, %switch.lookup76.preheader ] ; 4 uses
+  br i1 %6, label %switch.lookup76, label %switch.lookup76.a
+
+switch.lookup76:                                  ; preds = %.preheader
   %switch.load78 = load i8, ptr %switch.gep77, align 1
   %switch.ext79 = zext i8 %switch.load78 to i64
   br label %switch.lookup76.a
 
-bb.v:                                             ; preds = %switch.lookup72
-  %i.q = getelementptr i8, ptr %i.b, i64 %indvars.iv.a
-  %i.r = load i8, ptr %i.q, align 1, !tbaa !18
-  %i.s = getelementptr i8, ptr %i.a, i64 %indvars.iv.a
-  %i.t = load i8, ptr %i.s, align 1, !tbaa !18
-  %i.u = xor i8 %i.t, %i.r
-  %i.v = getelementptr i8, ptr %1, i64 %indvars.iv.a
-  store i8 %i.u, ptr %i.v, align 1, !tbaa !18
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv.a, 1
-  br label %switch.lookup72, !llvm.loop !27
-
-switch.lookup76.a:                                ; preds = %switch.lookup76.preheader, %bb.w
-  %indvars.iv66.a = phi i64 [ %indvars.iv.next67, %bb.w ], [ 0, %switch.lookup76.preheader ] ; 4 uses
-  %i.w = icmp samesign ult i64 %indvars.iv66.a, %switch.ext79
+switch.lookup76.a:                                ; preds = %switch.lookup76, %.preheader
+  %indvars.iv66.a = phi i64 [ %switch.ext79, %switch.lookup76 ], [ 64, %.preheader ]
+  %i.w = icmp samesign ult i64 %indvars.iv66, %indvars.iv66.a
   br i1 %i.w, label %bb.w, label %switch.lookup80
 
 switch.lookup80:                                  ; preds = %switch.lookup76.a
@@ -466,14 +485,14 @@ switch.lookup80:                                  ; preds = %switch.lookup76.a
   ret void
 
 bb.w:                                             ; preds = %switch.lookup76.a
-  %i.y = getelementptr i8, ptr %i.c, i64 %indvars.iv66.a ; 2 uses
+  %i.y = getelementptr i8, ptr %i.c, i64 %indvars.iv66 ; 2 uses
   %i.z = load i8, ptr %i.y, align 1, !tbaa !18
-  %i.aa = getelementptr i8, ptr %i.a, i64 %indvars.iv66.a
+  %i.aa = getelementptr i8, ptr %i.a, i64 %indvars.iv66
   %i.ab = load i8, ptr %i.aa, align 1, !tbaa !18
   %i.ac = xor i8 %i.ab, %i.z
   store i8 %i.ac, ptr %i.y, align 1, !tbaa !18
-  %indvars.iv.next67 = add nuw nsw i64 %indvars.iv66.a, 1
-  br label %switch.lookup76.a, !llvm.loop !29
+  %indvars.iv.next67 = add nuw nsw i64 %indvars.iv66, 1
+  br label %.preheader, !llvm.loop !29
 }
 
 ; Function Attrs: nounwind uwtable
