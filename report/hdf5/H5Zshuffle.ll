@@ -183,7 +183,7 @@ bb.i:                                             ; preds = %bb.h
   %.0124172 = phi i64 [ %i.bd, %bb.r ], [ 0, %bb.i ] ; 2 uses
   %.0126171 = phi ptr [ %i.az, %bb.r ], [ %i.z, %bb.i ] ; 8 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.q, i64 %.0124172 ; 8 uses
-  switch i64 %i.ac, label %.split.unreachabledefault [
+  switch i64 %i.ac, label %default.unreachable [
     i64 0, label %bb.j
     i64 7, label %bb.k
     i64 6, label %bb.l
@@ -264,10 +264,7 @@ bb.p:                                             ; preds = %bb.o, %.split
   %i.ay = getelementptr inbounds nuw i8, ptr %.7141, i64 %i.l
   br label %bb.q
 
-.split.unreachabledefault:                        ; preds = %.split
-  unreachable
-
-default.unreachable:                              ; preds = %.preheader.split
+default.unreachable:                              ; preds = %.split
   unreachable
 
 bb.q:                                             ; preds = %.split, %bb.p
@@ -304,7 +301,7 @@ bb.t:                                             ; preds = %bb.s
   %.9143173 = phi ptr [ %i.cg, %bb.ac ], [ %i.q, %.preheader ] ; 8 uses
   %i.bi = load ptr, ptr %5, align 8, !tbaa !16
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bi, i64 %.1125174 ; 8 uses
-  switch i64 %i.y, label %default.unreachable [
+  switch i64 %i.y, label %.preheader.split.unreachabledefault [
     i64 0, label %bb.u
     i64 7, label %bb.v
     i64 6, label %bb.w
@@ -384,6 +381,9 @@ bb.aa:                                            ; preds = %bb.z, %.preheader.s
   store i8 %i.cc, ptr %.16150, align 1, !tbaa !18
   %i.ce = getelementptr inbounds nuw i8, ptr %.16, i64 %i.l
   br label %bb.ab
+
+.preheader.split.unreachabledefault:              ; preds = %.preheader.split
+  unreachable
 
 bb.ab:                                            ; preds = %.preheader.split, %bb.aa
   %.17151 = phi ptr [ %i.cd, %bb.aa ], [ %.9143173, %.preheader.split ] ; 2 uses

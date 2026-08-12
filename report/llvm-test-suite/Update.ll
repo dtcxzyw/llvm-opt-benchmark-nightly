@@ -204,7 +204,7 @@ bb.bj:                                            ; preds = %bb.bi, %bb.bh
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #19
   br label %.thread
 
-.thread:                                          ; preds = %_ZN18COutMultiVolStream14CSubStreamInfoD2Ev.exit, %.outer.preheader, %.thread.sink.split, %bb.ay
+.thread:                                          ; preds = %_ZN18COutMultiVolStream14CSubStreamInfoD2Ev.exit, %.thread.sink.split, %.outer.preheader, %bb.ay
   %.7 = phi i32 [ %i.gj, %bb.ay ], [ %.7.ph, %.thread.sink.split ], [ 0, %.outer.preheader ], [ %.1, %_ZN18COutMultiVolStream14CSubStreamInfoD2Ev.exit ]
   ret i32 %.7
 }

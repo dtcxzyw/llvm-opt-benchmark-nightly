@@ -204,28 +204,18 @@ bb.c:                                             ; preds = %bb.a
   %i.p = load i32, ptr %i.o, align 4, !tbaa !79   ; 7 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
-  br label %5
-
-5:                                                ; preds = %5, %bb.c
-  switch i32 %i.n, label %5 [
+  switch i32 %i.n, label %.loopexit233.preheader.a [
     i32 0, label %.loopexit.preheader
     i32 1, label %.loopexit228
     i32 2, label %.loopexit229
     i32 3, label %.loopexit230
     i32 4, label %.loopexit231
     i32 5, label %.loopexit232
-    i32 6, label %.loopexit233.preheader.a
+    i32 6, label %.loopexit233.preheader
   ]
 
-.loopexit233.preheader.a:                         ; preds = %5, %bb.ab
-  %.0222.ph = phi i32 [ %.0224, %bb.ab ], [ %i.g, %5 ] ; 2 uses
-  %.0118213.ph = phi i32 [ %.0118215, %bb.ab ], [ %i.h, %5 ]
-  %.0120206.ph = phi i32 [ %.0120208, %bb.ab ], [ %i.p, %5 ] ; 2 uses
-  %.0127194.ph = phi ptr [ %.0127196, %bb.ab ], [ %i.k, %5 ]
-  %.0130187.ph = phi ptr [ %.0130189, %bb.ab ], [ %i.i, %5 ] ; 2 uses
-  %.0134179.ph = phi i64 [ %.0134181, %bb.ab ], [ %i.l, %5 ]
-  %.0137172.ph = phi i64 [ %.0137174, %bb.ab ], [ %i.j, %5 ] ; 2 uses
-  br label %.loopexit233
+.loopexit233.preheader.a:                         ; preds = %bb.c, %.loopexit233.preheader.a
+  br label %.loopexit233.preheader.a
 
 bb.d:                                             ; preds = %bb.k, %bb.p, %bb.v, %bb.ac
   %.0130184.sink = phi ptr [ %.0130189, %bb.ac ], [ %.0130184, %bb.p ], [ %.0130186, %bb.v ], [ %.0130184, %bb.k ]
@@ -256,14 +246,14 @@ bb.f:                                             ; preds = %bb.g
   %i.x = add i64 %.0137173, -1
   br label %.loopexit228
 
-.loopexit.preheader:                              ; preds = %5, %.loopexit233, %bb.m, %bb.r, %bb.y, %bb.z, %bb.aa
-  %.0223.ph = phi i32 [ 0, %.loopexit233 ], [ 0, %bb.z ], [ 0, %bb.m ], [ 0, %bb.y ], [ 0, %bb.aa ], [ %.0227, %bb.r ], [ %i.g, %5 ] ; 3 uses
-  %.0118214.ph = phi i32 [ 0, %.loopexit233 ], [ 0, %bb.z ], [ 0, %bb.m ], [ 0, %bb.y ], [ 0, %bb.aa ], [ %.0118218, %bb.r ], [ %i.h, %5 ] ; 3 uses
-  %.0120207.ph = phi i32 [ %.0120206.ph, %.loopexit233 ], [ %.0120208, %bb.z ], [ %.0120203, %bb.m ], [ %.0120208, %bb.y ], [ %.0120208, %bb.aa ], [ %.1121, %bb.r ], [ %i.p, %5 ] ; 3 uses
-  %.0127195.ph = phi ptr [ %.0127194, %.loopexit233 ], [ %.0127196, %bb.z ], [ %.0127191, %bb.m ], [ %.0127196, %bb.y ], [ %.0127196, %bb.aa ], [ %i.bn, %bb.r ], [ %i.k, %5 ]
-  %.0130188.ph = phi ptr [ %.0130187.ph, %.loopexit233 ], [ %.0130189, %bb.z ], [ %i.an, %bb.m ], [ %i.ce, %bb.y ], [ %.0130189, %bb.aa ], [ %.1131, %bb.r ], [ %i.i, %5 ]
-  %.0134180.ph = phi i64 [ %.0134179, %.loopexit233 ], [ %.0134181, %bb.z ], [ %.0134176, %bb.m ], [ %.0134181, %bb.y ], [ %.0134181, %bb.aa ], [ %i.bo, %bb.r ], [ %i.l, %5 ]
-  %.0137173.ph = phi i64 [ %.0137172.ph, %.loopexit233 ], [ %.0137174, %bb.z ], [ %i.ao, %bb.m ], [ %i.cf, %bb.y ], [ %.0137174, %bb.aa ], [ %.1138, %bb.r ], [ %i.j, %5 ]
+.loopexit.preheader:                              ; preds = %.loopexit233, %bb.c, %bb.m, %bb.r, %bb.y, %bb.z, %bb.aa
+  %.0223.ph = phi i32 [ %i.g, %bb.c ], [ 0, %bb.z ], [ 0, %bb.m ], [ 0, %bb.y ], [ 0, %bb.aa ], [ %.0227, %bb.r ], [ 0, %.loopexit233 ] ; 3 uses
+  %.0118214.ph = phi i32 [ %i.h, %bb.c ], [ 0, %bb.z ], [ 0, %bb.m ], [ 0, %bb.y ], [ 0, %bb.aa ], [ %.0118218, %bb.r ], [ 0, %.loopexit233 ] ; 3 uses
+  %.0120207.ph = phi i32 [ %i.p, %bb.c ], [ %.0120208, %bb.z ], [ %.0120203, %bb.m ], [ %.0120208, %bb.y ], [ %.0120208, %bb.aa ], [ %.1121, %bb.r ], [ %.0120206.ph, %.loopexit233 ] ; 3 uses
+  %.0127195.ph = phi ptr [ %i.k, %bb.c ], [ %.0127196, %bb.z ], [ %.0127191, %bb.m ], [ %.0127196, %bb.y ], [ %.0127196, %bb.aa ], [ %i.bn, %bb.r ], [ %.0127194, %.loopexit233 ]
+  %.0130188.ph = phi ptr [ %i.i, %bb.c ], [ %.0130189, %bb.z ], [ %i.an, %bb.m ], [ %i.ce, %bb.y ], [ %.0130189, %bb.aa ], [ %.1131, %bb.r ], [ %.0130187.ph, %.loopexit233 ]
+  %.0134180.ph = phi i64 [ %i.l, %bb.c ], [ %.0134181, %bb.z ], [ %.0134176, %bb.m ], [ %.0134181, %bb.y ], [ %.0134181, %bb.aa ], [ %i.bo, %bb.r ], [ %.0134179, %.loopexit233 ]
+  %.0137173.ph = phi i64 [ %i.j, %bb.c ], [ %.0137174, %bb.z ], [ %i.ao, %bb.m ], [ %i.cf, %bb.y ], [ %.0137174, %bb.aa ], [ %.1138, %bb.r ], [ %.0137172.ph, %.loopexit233 ]
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.loopexit.preheader, %bb.i
@@ -291,14 +281,14 @@ bb.i:                                             ; preds = %bb.h
   %i.af = add i64 %.0137173, -1
   br label %.loopexit
 
-.loopexit228:                                     ; preds = %5, %bb.f
-  %.0219 = phi i32 [ %.0223.ph, %bb.f ], [ %i.g, %5 ] ; 8 uses
-  %.0118210 = phi i32 [ %.0118214.ph, %bb.f ], [ %i.h, %5 ] ; 7 uses
-  %.0120203 = phi i32 [ %.0120207.ph, %bb.f ], [ %i.p, %5 ] ; 8 uses
-  %.0127191 = phi ptr [ %.0127195, %bb.f ], [ %i.k, %5 ] ; 8 uses
-  %.0130184 = phi ptr [ %i.w, %bb.f ], [ %i.i, %5 ] ; 9 uses
-  %.0134176 = phi i64 [ %.0134180, %bb.f ], [ %i.l, %5 ] ; 8 uses
-  %.0137169 = phi i64 [ %i.x, %bb.f ], [ %i.j, %5 ] ; 8 uses
+.loopexit228:                                     ; preds = %bb.c, %bb.f
+  %.0219 = phi i32 [ %.0223.ph, %bb.f ], [ %i.g, %bb.c ] ; 8 uses
+  %.0118210 = phi i32 [ %.0118214.ph, %bb.f ], [ %i.h, %bb.c ] ; 7 uses
+  %.0120203 = phi i32 [ %.0120207.ph, %bb.f ], [ %i.p, %bb.c ] ; 8 uses
+  %.0127191 = phi ptr [ %.0127195, %bb.f ], [ %i.k, %bb.c ] ; 8 uses
+  %.0130184 = phi ptr [ %i.w, %bb.f ], [ %i.i, %bb.c ] ; 9 uses
+  %.0134176 = phi i64 [ %.0134180, %bb.f ], [ %i.l, %bb.c ] ; 8 uses
+  %.0137169 = phi i64 [ %i.x, %bb.f ], [ %i.j, %bb.c ] ; 8 uses
   %i.ag = icmp eq i64 %.0137169, 0
   br i1 %i.ag, label %.loopexit236, label %bb.j
 
@@ -344,14 +334,14 @@ bb.p:                                             ; preds = %bb.o
   %i.av = add i32 %.0219, 1
   br label %bb.d
 
-.loopexit229:                                     ; preds = %5, %bb.q
-  %.0220 = phi i32 [ %.0226, %bb.q ], [ %i.g, %5 ] ; 2 uses
-  %.0118211 = phi i32 [ %.0118217, %bb.q ], [ %i.h, %5 ] ; 2 uses
-  %.0120204 = phi i32 [ %i.bi, %bb.q ], [ %i.p, %5 ] ; 2 uses
-  %.0127192 = phi ptr [ %.0127198, %bb.q ], [ %i.k, %5 ] ; 2 uses
-  %.0130185 = phi ptr [ %i.bj, %bb.q ], [ %i.i, %5 ] ; 3 uses
-  %.0134177 = phi i64 [ %.0134182, %bb.q ], [ %i.l, %5 ] ; 2 uses
-  %.0137170 = phi i64 [ %i.bk, %bb.q ], [ %i.j, %5 ] ; 2 uses
+.loopexit229:                                     ; preds = %bb.c, %bb.q
+  %.0220 = phi i32 [ %.0226, %bb.q ], [ %i.g, %bb.c ] ; 2 uses
+  %.0118211 = phi i32 [ %.0118217, %bb.q ], [ %i.h, %bb.c ] ; 2 uses
+  %.0120204 = phi i32 [ %i.bi, %bb.q ], [ %i.p, %bb.c ] ; 2 uses
+  %.0127192 = phi ptr [ %.0127198, %bb.q ], [ %i.k, %bb.c ] ; 2 uses
+  %.0130185 = phi ptr [ %i.bj, %bb.q ], [ %i.i, %bb.c ] ; 3 uses
+  %.0134177 = phi i64 [ %.0134182, %bb.q ], [ %i.l, %bb.c ] ; 2 uses
+  %.0137170 = phi i64 [ %i.bk, %bb.q ], [ %i.j, %bb.c ] ; 2 uses
   %i.aw = icmp eq i64 %.0137170, 0
   br i1 %i.aw, label %.loopexit236, label %..thread_crit_edge
 
@@ -390,14 +380,14 @@ bb.q:                                             ; preds = %.thread
   %i.bk = add i64 %.0137175, -1                   ; 2 uses
   br i1 %.not157, label %.loopexit230, label %.loopexit229
 
-.loopexit230:                                     ; preds = %5, %bb.q
-  %.0227 = phi i32 [ %.0226, %bb.q ], [ %i.g, %5 ] ; 2 uses
-  %.0118218 = phi i32 [ %.0118217, %bb.q ], [ %i.h, %5 ] ; 2 uses
-  %.0127199 = phi ptr [ %.0127198, %bb.q ], [ %i.k, %5 ] ; 3 uses
-  %.0134183 = phi i64 [ %.0134182, %bb.q ], [ %i.l, %5 ] ; 2 uses
-  %.1138 = phi i64 [ %i.bk, %bb.q ], [ %i.j, %5 ] ; 2 uses
-  %.1131 = phi ptr [ %i.bj, %bb.q ], [ %i.i, %5 ] ; 2 uses
-  %.1121 = phi i32 [ %i.bi, %bb.q ], [ %i.p, %5 ] ; 3 uses
+.loopexit230:                                     ; preds = %bb.c, %bb.q
+  %.0227 = phi i32 [ %.0226, %bb.q ], [ %i.g, %bb.c ] ; 2 uses
+  %.0118218 = phi i32 [ %.0118217, %bb.q ], [ %i.h, %bb.c ] ; 2 uses
+  %.0127199 = phi ptr [ %.0127198, %bb.q ], [ %i.k, %bb.c ] ; 3 uses
+  %.0134183 = phi i64 [ %.0134182, %bb.q ], [ %i.l, %bb.c ] ; 2 uses
+  %.1138 = phi i64 [ %i.bk, %bb.q ], [ %i.j, %bb.c ] ; 2 uses
+  %.1131 = phi ptr [ %i.bj, %bb.q ], [ %i.i, %bb.c ] ; 2 uses
+  %.1121 = phi i32 [ %i.bi, %bb.q ], [ %i.p, %bb.c ] ; 3 uses
   %i.bl = icmp eq i64 %.0134183, 0
   br i1 %i.bl, label %.loopexit236, label %bb.r
 
@@ -408,14 +398,14 @@ bb.r:                                             ; preds = %.loopexit230
   %i.bo = add i64 %.0134183, -1
   br label %.loopexit.preheader
 
-.loopexit231:                                     ; preds = %5, %bb.e
-  %.0221 = phi i32 [ %.2.jt4, %bb.e ], [ %i.g, %5 ] ; 6 uses
-  %.0118212 = phi i32 [ %.1119.jt4, %bb.e ], [ %i.h, %5 ] ; 5 uses
-  %.0120205 = phi i32 [ %.2122.jt4, %bb.e ], [ %i.p, %5 ] ; 5 uses
-  %.0127193 = phi ptr [ %.2129.jt4, %bb.e ], [ %i.k, %5 ] ; 5 uses
-  %.0130186 = phi ptr [ %i.u, %bb.e ], [ %i.i, %5 ] ; 6 uses
-  %.0134178 = phi i64 [ %.2136.jt4, %bb.e ], [ %i.l, %5 ] ; 5 uses
-  %.0137171 = phi i64 [ %i.v, %bb.e ], [ %i.j, %5 ] ; 5 uses
+.loopexit231:                                     ; preds = %bb.c, %bb.e
+  %.0221 = phi i32 [ %.2.jt4, %bb.e ], [ %i.g, %bb.c ] ; 6 uses
+  %.0118212 = phi i32 [ %.1119.jt4, %bb.e ], [ %i.h, %bb.c ] ; 5 uses
+  %.0120205 = phi i32 [ %.2122.jt4, %bb.e ], [ %i.p, %bb.c ] ; 5 uses
+  %.0127193 = phi ptr [ %.2129.jt4, %bb.e ], [ %i.k, %bb.c ] ; 5 uses
+  %.0130186 = phi ptr [ %i.u, %bb.e ], [ %i.i, %bb.c ] ; 6 uses
+  %.0134178 = phi i64 [ %.2136.jt4, %bb.e ], [ %i.l, %bb.c ] ; 5 uses
+  %.0137171 = phi i64 [ %i.v, %bb.e ], [ %i.j, %bb.c ] ; 5 uses
   %i.bp = icmp eq i64 %.0137171, 0
   br i1 %i.bp, label %.loopexit236, label %bb.s
 
@@ -443,14 +433,14 @@ bb.v:                                             ; preds = %bb.t
   %i.bx = add i32 %.0221, 1
   br label %bb.d
 
-.loopexit232:                                     ; preds = %5, %bb.d
-  %.0224 = phi i32 [ %.2.jt5, %bb.d ], [ %i.g, %5 ] ; 6 uses
-  %.0118215 = phi i32 [ %.1119.jt5, %bb.d ], [ %i.h, %5 ] ; 3 uses
-  %.0120208 = phi i32 [ %.2122.jt5, %bb.d ], [ %i.p, %5 ] ; 6 uses
-  %.0127196 = phi ptr [ %.2129.jt5, %bb.d ], [ %i.k, %5 ] ; 6 uses
-  %.0130189 = phi ptr [ %i.s, %bb.d ], [ %i.i, %5 ] ; 8 uses
-  %.0134181 = phi i64 [ %.2136.jt5, %bb.d ], [ %i.l, %5 ] ; 6 uses
-  %.0137174 = phi i64 [ %i.t, %bb.d ], [ %i.j, %5 ] ; 6 uses
+.loopexit232:                                     ; preds = %bb.c, %bb.d
+  %.0224 = phi i32 [ %.2.jt5, %bb.d ], [ %i.g, %bb.c ] ; 6 uses
+  %.0118215 = phi i32 [ %.1119.jt5, %bb.d ], [ %i.h, %bb.c ] ; 3 uses
+  %.0120208 = phi i32 [ %.2122.jt5, %bb.d ], [ %i.p, %bb.c ] ; 6 uses
+  %.0127196 = phi ptr [ %.2129.jt5, %bb.d ], [ %i.k, %bb.c ] ; 6 uses
+  %.0130189 = phi ptr [ %i.s, %bb.d ], [ %i.i, %bb.c ] ; 8 uses
+  %.0134181 = phi i64 [ %.2136.jt5, %bb.d ], [ %i.l, %bb.c ] ; 6 uses
+  %.0137174 = phi i64 [ %i.t, %bb.d ], [ %i.j, %bb.c ] ; 6 uses
   %i.by = icmp eq i64 %.0137174, 0
   br i1 %i.by, label %.loopexit236, label %bb.w
 
@@ -487,16 +477,26 @@ bb.ab:                                            ; preds = %bb.aa
   %i.ck = getelementptr inbounds nuw i8, ptr %i.bz, i64 %i.ch
   %i.cl = load i8, ptr %i.ck, align 1, !tbaa !28
   %i.cm = icmp eq i8 %i.cj, %i.cl
-  br i1 %i.cm, label %bb.ac, label %.loopexit233.preheader.a
+  br i1 %i.cm, label %bb.ac, label %.loopexit233.preheader
+
+.loopexit233.preheader:                           ; preds = %bb.c, %bb.ab
+  %.0222.ph = phi i32 [ %.0224, %bb.ab ], [ %i.g, %bb.c ] ; 2 uses
+  %.0118213.ph = phi i32 [ %.0118215, %bb.ab ], [ %i.h, %bb.c ]
+  %.0120206.ph = phi i32 [ %.0120208, %bb.ab ], [ %i.p, %bb.c ] ; 2 uses
+  %.0127194.ph = phi ptr [ %.0127196, %bb.ab ], [ %i.k, %bb.c ]
+  %.0130187.ph = phi ptr [ %.0130189, %bb.ab ], [ %i.i, %bb.c ] ; 2 uses
+  %.0134179.ph = phi i64 [ %.0134181, %bb.ab ], [ %i.l, %bb.c ]
+  %.0137172.ph = phi i64 [ %.0137174, %bb.ab ], [ %i.j, %bb.c ] ; 2 uses
+  br label %.loopexit233
 
 bb.ac:                                            ; preds = %bb.ab
   %i.cn = add i32 %.0224, 1
   br label %bb.d
 
-.loopexit233:                                     ; preds = %.loopexit233.preheader.a, %bb.ae
-  %.0118213 = phi i32 [ %i.cr, %bb.ae ], [ %.0118213.ph, %.loopexit233.preheader.a ] ; 4 uses
-  %.0127194 = phi ptr [ %i.cv, %bb.ae ], [ %.0127194.ph, %.loopexit233.preheader.a ] ; 4 uses
-  %.0134179 = phi i64 [ %i.cw, %bb.ae ], [ %.0134179.ph, %.loopexit233.preheader.a ] ; 3 uses
+.loopexit233:                                     ; preds = %.loopexit233.preheader, %bb.ae
+  %.0118213 = phi i32 [ %i.cr, %bb.ae ], [ %.0118213.ph, %.loopexit233.preheader ] ; 4 uses
+  %.0127194 = phi ptr [ %i.cv, %bb.ae ], [ %.0127194.ph, %.loopexit233.preheader ] ; 4 uses
+  %.0134179 = phi i64 [ %i.cw, %bb.ae ], [ %.0134179.ph, %.loopexit233.preheader ] ; 3 uses
   %i.co = icmp ult i32 %.0118213, %.0222.ph
   br i1 %i.co, label %bb.ad, label %.loopexit.preheader
 
@@ -762,7 +762,7 @@ bb.b:                                             ; preds = %.lr.ph, %php_dechun
   %.pre226.i = load i64, ptr %i.b, align 8, !tbaa !109
   br label %bb.w
 
-.loopexit277.i:                                   ; preds = %.lr.ph188.i, %.backedge.jt0.i
+.loopexit277.i:                                   ; preds = %.backedge.jt0.i, %.lr.ph188.i
   %.sink.i = phi ptr [ %i.bs, %.backedge.jt0.i ], [ %i.k, %.lr.ph188.i ]
   %.0111183261.i = phi ptr [ %.2113.i, %.backedge.jt0.i ], [ %i.k, %.lr.ph188.i ]
   %.0184252.i = phi i64 [ %.2.i, %.backedge.jt0.i ], [ 0, %.lr.ph188.i ]
@@ -893,7 +893,7 @@ thread-pre-split.thread.i:                        ; preds = %bb.n, %bb.h, %.loop
   %i.bc = icmp eq ptr %.1116146.i, %i.l
   br i1 %i.bc, label %php_dechunk.exit, label %._crit_edge230.i
 
-._crit_edge230.i:                                 ; preds = %.lr.ph188.i, %thread-pre-split.thread.i
+._crit_edge230.i:                                 ; preds = %thread-pre-split.thread.i, %.lr.ph188.i
   %.sink300.i = phi ptr [ %.1116146.i, %thread-pre-split.thread.i ], [ %i.k, %.lr.ph188.i ] ; 5 uses
   %.0111183265.i = phi ptr [ %.0111183264.i, %thread-pre-split.thread.i ], [ %i.k, %.lr.ph188.i ]
   %.0184256.i = phi i64 [ %.0184255.i, %thread-pre-split.thread.i ], [ 0, %.lr.ph188.i ] ; 2 uses
@@ -925,7 +925,7 @@ bb.o:                                             ; preds = %.lr.ph176.i
   %i.bh = icmp eq ptr %.3.lcssa.i, %i.l
   br i1 %i.bh, label %php_dechunk.exit, label %.loopexit280.i
 
-.loopexit280.i:                                   ; preds = %.lr.ph188.i, %.critedge.i
+.loopexit280.i:                                   ; preds = %.critedge.i, %.lr.ph188.i
   %.0111183266.i = phi ptr [ %.0111183265.i, %.critedge.i ], [ %i.k, %.lr.ph188.i ] ; 2 uses
   %.0184257.i = phi i64 [ %.0184256.i, %.critedge.i ], [ 0, %.lr.ph188.i ] ; 3 uses
   %.4.i = phi ptr [ %.3.lcssa.i, %.critedge.i ], [ %i.k, %.lr.ph188.i ] ; 3 uses
@@ -942,7 +942,7 @@ bb.q:                                             ; preds = %bb.p
   store i32 4, ptr %i.d, align 8, !tbaa !107
   br label %php_dechunk.exit
 
-thread-pre-split139.i:                            ; preds = %.lr.ph188.i, %bb.p
+thread-pre-split139.i:                            ; preds = %bb.p, %.lr.ph188.i
   %.0111183268.i = phi ptr [ %.0111183266.i, %bb.p ], [ %i.k, %.lr.ph188.i ]
   %.0184259.i = phi i64 [ %.0184257.i, %bb.p ], [ 0, %.lr.ph188.i ]
   %.5.ph.i = phi ptr [ %i.bk, %bb.p ], [ %i.k, %.lr.ph188.i ] ; 2 uses
@@ -1037,7 +1037,7 @@ bb.ad:                                            ; preds = %bb.ac, %bb.ab
   %i.cg = add i64 %i.by, %.0184260.i
   br label %php_dechunk.exit
 
-.loopexit281.i:                                   ; preds = %.lr.ph188.i, %bb.z
+.loopexit281.i:                                   ; preds = %bb.z, %.lr.ph188.i
   %.7.i = phi ptr [ %i.cc, %bb.z ], [ %i.k, %.lr.ph188.i ] ; 3 uses
   %.1112.i = phi ptr [ %i.ca, %bb.z ], [ %i.k, %.lr.ph188.i ] ; 2 uses
   %.1.i = phi i64 [ %i.cb, %bb.z ], [ 0, %.lr.ph188.i ] ; 3 uses
@@ -1054,7 +1054,7 @@ bb.af:                                            ; preds = %bb.ae
   store i32 7, ptr %i.d, align 8, !tbaa !107
   br label %php_dechunk.exit
 
-thread-pre-split141.i:                            ; preds = %.lr.ph188.i, %bb.ae
+thread-pre-split141.i:                            ; preds = %bb.ae, %.lr.ph188.i
   %.8.ph.i = phi ptr [ %i.cj, %bb.ae ], [ %i.k, %.lr.ph188.i ] ; 2 uses
   %.2113.ph.i = phi ptr [ %.1112.i, %bb.ae ], [ %i.k, %.lr.ph188.i ]
   %.2.ph.i = phi i64 [ %.1.i, %bb.ae ], [ 0, %.lr.ph188.i ]

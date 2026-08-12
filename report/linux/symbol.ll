@@ -203,7 +203,7 @@ sym_clear_all_valid.exit:                         ; preds = %._crit_edge.i.1
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local i32 @sym_toggle_tristate_value(ptr nofree noundef captures(address) %0) local_unnamed_addr #4 {
+define dso_local noundef i32 @sym_toggle_tristate_value(ptr nofree noundef captures(address) %0) local_unnamed_addr #4 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 2 uses
   br label %bb.b

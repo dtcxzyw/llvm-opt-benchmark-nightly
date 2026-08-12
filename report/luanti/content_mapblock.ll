@@ -204,7 +204,7 @@ bb.az:                                            ; preds = %bb.ay
   br label %_ZNSt6vectorIfSaIfEED2Ev.exit
 
 bb.ba:                                            ; preds = %_ZNSt6vectorIfSaIfEE9push_backEOf.exit.7, %._crit_edge573
-  %indvars.iv703 = phi i64 [ 0, %_ZNSt6vectorIfSaIfEE9push_backEOf.exit.7 ], [ %indvars.iv.next704, %._crit_edge573 ] ; 4 uses
+  %indvars.iv703 = phi i64 [ 0, %_ZNSt6vectorIfSaIfEE9push_backEOf.exit.7 ], [ %indvars.iv.next704, %._crit_edge573 ] ; 5 uses
   %.sroa.35.1584 = phi ptr [ %.sroa.35.6.7, %_ZNSt6vectorIfSaIfEE9push_backEOf.exit.7 ], [ %.sroa.35.2.lcssa767, %._crit_edge573 ] ; 6 uses
   %.sroa.18.1583 = phi ptr [ %.sroa.18.4.7, %_ZNSt6vectorIfSaIfEE9push_backEOf.exit.7 ], [ %.sroa.18.2.lcssa766, %._crit_edge573 ] ; 6 uses
   %.sroa.0237.1582 = phi ptr [ %.sroa.0237.6.7, %_ZNSt6vectorIfSaIfEE9push_backEOf.exit.7 ], [ %.sroa.0237.2.lcssa765, %._crit_edge573 ] ; 10 uses
@@ -310,6 +310,8 @@ _ZNSt6vectorIfSaIfEE6resizeEm.exit:               ; preds = %bb.bf, %bb.bc, %_ZS
 
 .lr.ph554.preheader:                              ; preds = %_ZNSt6vectorIfSaIfEE6resizeEm.exit
   %i.rm = trunc nuw nsw i64 %indvars.iv703 to i32 ; 2 uses
+  %switch = icmp samesign ult i64 %indvars.iv703, 3
+  call void @llvm.assume(i1 %switch)
   br label %.lr.ph554
 
 .preheader:                                       ; preds = %_ZNSt6vectorIfSaIfEE9push_backERKf.exit186
@@ -340,10 +342,9 @@ bb.bg:                                            ; preds = %_ZNKSt6vectorIfSaIf
   %.sroa.18.2551 = phi ptr [ %.sroa.18.7, %_ZNSt6vectorIfSaIfEE9push_backERKf.exit186 ], [ %.sroa.18.5, %.lr.ph554.preheader ] ; 3 uses
   %.sroa.0237.2550 = phi ptr [ %.sroa.0237.9, %_ZNSt6vectorIfSaIfEE9push_backERKf.exit186 ], [ %.sroa.0237.7, %.lr.ph554.preheader ] ; 7 uses
   %i.rt = getelementptr inbounds nuw [24 x i8], ptr %i.rs, i64 %.093553 ; 3 uses
-  switch i32 %i.rm, label %default.unreachable [
+  switch i32 %i.rm, label %bb.bi [
     i32 0, label %_ZN4core8vector3dIfEixEj.exit
     i32 1, label %bb.bh
-    i32 2, label %bb.bi
   ]
 
 bb.bh:                                            ; preds = %.lr.ph554
@@ -354,7 +355,7 @@ bb.bi:                                            ; preds = %.lr.ph554
   %i.rv = getelementptr inbounds nuw i8, ptr %i.rt, i64 8
   br label %_ZN4core8vector3dIfEixEj.exit
 
-default.unreachable:                              ; preds = %_ZNSt6vectorIfSaIfEE9push_backERKf.exit, %.lr.ph554, %bb.cb, %bb.by, %bb.bv
+default.unreachable:                              ; preds = %_ZNSt6vectorIfSaIfEE9push_backERKf.exit, %bb.by, %bb.cb
   unreachable
 
 _ZN4core8vector3dIfEixEj.exit:                    ; preds = %.lr.ph554, %bb.bh, %bb.bi
@@ -579,10 +580,9 @@ bb.bv:                                            ; preds = %.lr.ph564, %bb.cm
   %.sroa.15.3560 = phi ptr [ %.sroa.15.2569, %.lr.ph564 ], [ %.sroa.15.4, %bb.cm ] ; 8 uses
   %.sroa.25.3559 = phi ptr [ %.sroa.25.2568, %.lr.ph564 ], [ %.sroa.25.4, %bb.cm ] ; 6 uses
   %i.ue = load float, ptr %.sroa.0233.0562, align 4, !tbaa !44 ; 6 uses
-  switch i32 %i.rq, label %default.unreachable [
+  switch i32 %i.rq, label %bb.bx [
     i32 0, label %_ZN4core8vector3dIfEixEj.exit188
     i32 1, label %bb.bw
-    i32 2, label %bb.bx
   ]
 
 bb.bw:                                            ; preds = %bb.bv

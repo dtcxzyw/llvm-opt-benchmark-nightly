@@ -203,22 +203,22 @@ bb.ev:                                            ; preds = %bb.eu
   br i1 %i.vs, label %_ZN6google8protobuf2io7Printer8PrintRawESt17basic_string_viewIcSt11char_traitsIcEE.exit461, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.ev
-  %.sroa.0508.0.copyload = load i64, ptr %i.vp, align 8, !tbaa !71 ; 3 uses
+  %.sroa.0508.0.copyload = load i64, ptr %i.vp, align 8, !tbaa !71 ; 4 uses
   %.sroa.7.0..sroa_idx509 = getelementptr inbounds nuw i8, ptr %i.vp, i64 8
-  %.sroa.7.0.copyload510 = load ptr, ptr %.sroa.7.0..sroa_idx509, align 8, !tbaa !75 ; 3 uses
+  %.sroa.7.0.copyload510 = load ptr, ptr %.sroa.7.0..sroa_idx509, align 8, !tbaa !75 ; 4 uses
   %i.vt = load ptr, ptr %i.bk, align 8, !tbaa !131 ; 2 uses
   %i.vu = getelementptr inbounds nuw i8, ptr %i.vt, i64 %i.vg
   %i.vv = icmp eq i64 %.sroa.0508.0.copyload, 0
-  br label %bb.ew
+  br i1 %i.vv, label %.loopexit632, label %bb.ew
 
-bb.ew:                                            ; preds = %.lr.ph, %bb.ex
-  %.sroa.0505.01150 = phi ptr [ %i.vt, %.lr.ph ], [ %i.vz, %bb.ex ] ; 2 uses
-  br i1 %i.vv, label %bb.ex, label %_ZN4absl12lts_2025051210StartsWithESt17basic_string_viewIcSt11char_traitsIcEES4_.exit.i455
+bb.ew:                                            ; preds = %.lr.ph
+  %lhsc628 = load i8, ptr %.sroa.7.0.copyload510, align 1
+  br label %_ZN4absl12lts_2025051210StartsWithESt17basic_string_viewIcSt11char_traitsIcEES4_.exit.i455
 
-_ZN4absl12lts_2025051210StartsWithESt17basic_string_viewIcSt11char_traitsIcEES4_.exit.i455: ; preds = %bb.ew
-  %37 = load i8, ptr %.sroa.0505.01150, align 1, !tbaa !76
-  %lhsc628.a = load i8, ptr %.sroa.7.0.copyload510, align 1
-  %i.vw = icmp eq i8 %lhsc628.a, %37
+_ZN4absl12lts_2025051210StartsWithESt17basic_string_viewIcSt11char_traitsIcEES4_.exit.i455: ; preds = %bb.ew, %bb.ex
+  %.sroa.0505.01150 = phi ptr [ %i.vt, %bb.ew ], [ %i.vz, %bb.ex ] ; 2 uses
+  %lhsc628.a = load i8, ptr %.sroa.0505.01150, align 1, !tbaa !76
+  %i.vw = icmp eq i8 %lhsc628, %lhsc628.a
   br i1 %i.vw, label %_ZN4absl12lts_2025051213ConsumePrefixEPSt17basic_string_viewIcSt11char_traitsIcEES4_.exit459, label %bb.ex
 
 _ZN4absl12lts_2025051213ConsumePrefixEPSt17basic_string_viewIcSt11char_traitsIcEES4_.exit459: ; preds = %_ZN4absl12lts_2025051210StartsWithESt17basic_string_viewIcSt11char_traitsIcEES4_.exit.i455
@@ -226,14 +226,14 @@ _ZN4absl12lts_2025051213ConsumePrefixEPSt17basic_string_viewIcSt11char_traitsIcE
   %i.vy = add i64 %.sroa.0508.0.copyload, -1
   br label %.loopexit632
 
-bb.ex:                                            ; preds = %_ZN4absl12lts_2025051210StartsWithESt17basic_string_viewIcSt11char_traitsIcEES4_.exit.i455, %bb.ew
+bb.ex:                                            ; preds = %_ZN4absl12lts_2025051210StartsWithESt17basic_string_viewIcSt11char_traitsIcEES4_.exit.i455
   %i.vz = getelementptr inbounds nuw i8, ptr %.sroa.0505.01150, i64 1 ; 2 uses
   %.not627 = icmp eq ptr %i.vz, %i.vu
-  br i1 %.not627, label %.loopexit632, label %bb.ew
+  br i1 %.not627, label %.loopexit632, label %_ZN4absl12lts_2025051210StartsWithESt17basic_string_viewIcSt11char_traitsIcEES4_.exit.i455
 
-.loopexit632:                                     ; preds = %bb.ex, %_ZN4absl12lts_2025051213ConsumePrefixEPSt17basic_string_viewIcSt11char_traitsIcEES4_.exit459
-  %.sroa.0508.1 = phi i64 [ %i.vy, %_ZN4absl12lts_2025051213ConsumePrefixEPSt17basic_string_viewIcSt11char_traitsIcEES4_.exit459 ], [ %.sroa.0508.0.copyload, %bb.ex ]
-  %.sroa.7.1 = phi ptr [ %i.vx, %_ZN4absl12lts_2025051213ConsumePrefixEPSt17basic_string_viewIcSt11char_traitsIcEES4_.exit459 ], [ %.sroa.7.0.copyload510, %bb.ex ]
+.loopexit632:                                     ; preds = %bb.ex, %.lr.ph, %_ZN4absl12lts_2025051213ConsumePrefixEPSt17basic_string_viewIcSt11char_traitsIcEES4_.exit459
+  %.sroa.0508.1 = phi i64 [ %i.vy, %_ZN4absl12lts_2025051213ConsumePrefixEPSt17basic_string_viewIcSt11char_traitsIcEES4_.exit459 ], [ %.sroa.0508.0.copyload, %.lr.ph ], [ %.sroa.0508.0.copyload, %bb.ex ]
+  %.sroa.7.1 = phi ptr [ %i.vx, %_ZN4absl12lts_2025051213ConsumePrefixEPSt17basic_string_viewIcSt11char_traitsIcEES4_.exit459 ], [ %.sroa.7.0.copyload510, %.lr.ph ], [ %.sroa.7.0.copyload510, %bb.ex ]
   invoke void @_ZN6google8protobuf2io7Printer8WriteRawEPKcm(ptr noundef nonnull align 16 dereferenceable(296) %0, ptr noundef %.sroa.7.1, i64 noundef %.sroa.0508.1)
           to label %_ZN6google8protobuf2io7Printer8PrintRawESt17basic_string_viewIcSt11char_traitsIcEE.exit461 unwind label %bb.ey
 

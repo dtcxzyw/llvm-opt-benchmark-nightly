@@ -199,7 +199,7 @@ bb.a:
   %.0139190 = phi ptr [ %i.ch, %bb.z ], [ %i.f, %.lr.ph ] ; 8 uses
   %.0147189 = phi ptr [ %i.ci, %bb.z ], [ %i.j, %.lr.ph ] ; 8 uses
   %i.aa = add nsw i32 %.in, -1                    ; 2 uses
-  switch i32 %i.s, label %.lr.ph.split.unreachabledefault [
+  switch i32 %i.s, label %default.unreachable [
     i32 0, label %bb.b
     i32 7, label %bb.e
     i32 6, label %bb.h
@@ -357,10 +357,7 @@ bb.v:                                             ; preds = %bb.u, %bb.t
   %i.bx = getelementptr inbounds nuw i8, ptr %.7146, i64 1
   br label %bb.w
 
-.lr.ph.split.unreachabledefault:                  ; preds = %.lr.ph.split
-  unreachable
-
-default.unreachable:                              ; preds = %.lr.ph194.split
+default.unreachable:                              ; preds = %.lr.ph.split
   unreachable
 
 bb.w:                                             ; preds = %.lr.ph.split, %bb.v
@@ -397,7 +394,7 @@ bb.z:                                             ; preds = %bb.y
   %.9193 = phi ptr [ %i.ds, %bb.ay ], [ %i.f, %.lr.ph194 ] ; 8 uses
   %.9156192 = phi ptr [ %i.dt, %bb.ay ], [ %i.j, %.lr.ph194 ] ; 8 uses
   %i.cj = add nsw i32 %.in196, -1                 ; 2 uses
-  switch i32 %i.x, label %default.unreachable [
+  switch i32 %i.x, label %.lr.ph194.split.unreachabledefault [
     i32 0, label %bb.aa
     i32 7, label %bb.ad
     i32 6, label %bb.ag
@@ -533,6 +530,9 @@ bb.au:                                            ; preds = %bb.at, %bb.as
   %i.dk = getelementptr inbounds nuw i8, ptr %.16163, i64 1
   %i.dl = getelementptr inbounds nuw i8, ptr %.16, i64 1
   br label %bb.av
+
+.lr.ph194.split.unreachabledefault:               ; preds = %.lr.ph194.split
+  unreachable
 
 bb.av:                                            ; preds = %.lr.ph194.split, %bb.au
   %.17164 = phi ptr [ %i.dk, %bb.au ], [ %.9156192, %.lr.ph194.split ] ; 2 uses
