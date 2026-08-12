@@ -204,14 +204,13 @@ begin_hunk_0_@DoNNetIteration:bb.a
   %i.ur = getelementptr inbounds nuw [64 x i8], ptr @out_pats, i64 %indvars.iv ; 8 uses
   %i.us = load double, ptr %i.ur, align 16, !tbaa !80
   %i.ut = extractelement <2 x double> %i.pc, i64 0
-  %i.uu = fsub double %i.us, %i.ut                ; 8 uses
+  %i.uu = fsub double %i.us, %i.ut                ; 7 uses
   store double %i.uu, ptr @out_error, align 16, !tbaa !80
   %i.uv = fcmp olt double %i.uu, 0.000000e+00
   br i1 %i.uv, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %do_forward_pass.exit
-  %1 = fsub double 0.000000e+00, %i.uu
-  %i.uw = fneg double %i.uu
+  %i.uw = fneg double %i.uu                       ; 2 uses
   br label %bb.f
 
 bb.d:                                             ; preds = %do_forward_pass.exit
@@ -224,7 +223,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c
   %.122.i.i = phi double [ %i.uw, %bb.c ], [ 0.000000e+00, %bb.d ], [ %i.uu, %bb.e ] ; 4 uses
-  %.1.i.i = phi double [ %1, %bb.c ], [ %i.ux, %bb.d ], [ %i.ux, %bb.e ] ; 2 uses
+  %.1.i.i = phi double [ %i.uw, %bb.c ], [ %i.ux, %bb.d ], [ %i.ux, %bb.e ] ; 2 uses
   %i.uz = getelementptr inbounds nuw i8, ptr %i.ur, i64 8
   %i.va = load double, ptr %i.uz, align 8, !tbaa !80
   %i.vb = extractelement <2 x double> %i.pc, i64 1
