@@ -204,12 +204,11 @@ bb.a:
 ; Function Attrs: inlinehint nonlazybind uwtable
 define internal fastcc void @_RINvMs6_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver6consts7valtreeNtB6_9ScalarInt17truncate_from_intnEBc_(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 1 captures(none) dereferenceable(18) %0, i128 noundef %1, i64 noundef %2) unnamed_addr #1 {
 bb.a:
-  %3 = shl i64 %2, 3                              ; 2 uses
   %i.a = icmp ugt i64 %2, 2305843009213693951
   br i1 %i.a, label %bb.c, label %bb.b, !prof !8
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = icmp eq i64 %3, 0
+  %i.b = icmp eq i64 %2, 0
   br i1 %i.b, label %bb.d, label %bb.e
 
 bb.c:                                             ; preds = %bb.a
@@ -230,8 +229,8 @@ bb.f:                                             ; preds = %bb.e
   unreachable
 
 _RNvMs6_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver6consts7valtreeNtB5_9ScalarInt3raw.exit4: ; preds = %bb.e
-  %4 = sub i64 0, %3
-  %i.d = and i64 %4, 120
+  %.neg = mul i64 %2, 120
+  %i.d = and i64 %.neg, 120
   %i.e = zext nneg i64 %i.d to i128               ; 3 uses
   %i.f = lshr i128 -1, %i.e
   %i.g = and i128 %i.f, %1
@@ -250,43 +249,34 @@ _RNvMs6_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver6consts7valtreeNtB5_9ScalarInt3r
 ; Function Attrs: inlinehint nonlazybind uwtable
 define internal fastcc void @_RINvMs6_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver6consts7valtreeNtB6_9ScalarInt18truncate_from_uintoEBc_(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 1 captures(none) dereferenceable(18) %0, i128 noundef %1, i64 noundef %2) unnamed_addr #1 {
 bb.a:
-  %3 = shl i64 %2, 3                              ; 2 uses
   %i.a = icmp ugt i64 %2, 2305843009213693951
   br i1 %i.a, label %bb.c, label %bb.b, !prof !8
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = icmp eq i64 %3, 0
-  br i1 %i.b, label %10, label %4
+  %3 = trunc i64 %2 to i8                         ; 2 uses
+  %i.b = icmp eq i8 %3, 0
+  br i1 %i.b, label %bb.d, label %_RNvMs6_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver6consts7valtreeNtB5_9ScalarInt3raw.exit, !prof !8
 
 bb.c:                                             ; preds = %bb.a
   tail call void @_RNvNvMs9_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_4Size4bits8overflow(i64 noundef %2) #49
   unreachable
 
-4:                                                ; preds = %bb.b
-  %5 = sub i64 0, %3
-  %6 = and i64 %5, 120
-  %7 = zext nneg i64 %6 to i128
-  %8 = lshr i128 -1, %7
-  %9 = and i128 %8, %1
-  br label %10
-
-10:                                               ; preds = %bb.b, %4
-  %.sroa.0.0 = phi i128 [ %9, %4 ], [ 0, %bb.b ]  ; 2 uses
-  %11 = trunc i64 %2 to i8                        ; 2 uses
-  %.not.i = icmp eq i8 %11, 0
-  br i1 %.not.i, label %bb.d, label %_RNvMs6_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver6consts7valtreeNtB5_9ScalarInt3raw.exit, !prof !8
-
-bb.d:                                             ; preds = %10
+bb.d:                                             ; preds = %bb.b
   tail call void @_RNvNtCshzWfHUSfYae_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @241) #46, !noalias !632
   unreachable
 
-_RNvMs6_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver6consts7valtreeNtB5_9ScalarInt3raw.exit: ; preds = %10
-  %12 = icmp ne i128 %.sroa.0.0, %1
-  store i8 %11, ptr %0, align 1
+_RNvMs6_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver6consts7valtreeNtB5_9ScalarInt3raw.exit: ; preds = %bb.b
+  %.neg = mul i64 %2, 120
+  %4 = and i64 %.neg, 120
+  %5 = zext nneg i64 %4 to i128
+  %6 = lshr i128 -1, %5                           ; 2 uses
+  %7 = and i128 %6, %1
+  %8 = icmp ugt i128 %1, %6
+  store i8 %3, ptr %0, align 1
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 1
-  store i128 %.sroa.0.0, ptr %.sroa.4.0..sroa_idx, align 1
+  store i128 %7, ptr %.sroa.4.0..sroa_idx, align 1
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 17
-  %i.d = zext i1 %12 to i8
+  %i.d = zext i1 %8 to i8
   store i8 %i.d, ptr %i.c, align 1
   ret void
 }
@@ -689,43 +679,33 @@ bb.l:                                             ; preds = %_RINvNtCshzWfHUSfYa
 bb.m:                                             ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6result6ResultRNtCskVLyBV5N46_15ra_ap_rustc_abi16TargetDataLayoutNtNtCsgIpRO4v45SJ_7base_db6target15TargetLoadErrorEECs8K4cjrcxBsw_6hir_ty.exit208, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6result6ResultRNtCskVLyBV5N46_15ra_ap_rustc_abi16TargetDataLayoutNtNtCsgIpRO4v45SJ_7base_db6target15TargetLoadErrorEECs8K4cjrcxBsw_6hir_ty.exit208
   call void @llvm.lifetime.start.p0(ptr nonnull %i.w)
   call void @_RNvNtNtCs8K4cjrcxBsw_6hir_ty3mir4eval5pad16(ptr noalias nofree noundef nonnull sret([16 x i8]) align 1 captures(none) dereferenceable(16) %i.w, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %2, i64 noundef %3, i1 noundef zeroext false)
-  %i.ci = load i128, ptr %i.w, align 16, !noundef !4 ; 3 uses
+  %i.ci = load i128, ptr %i.w, align 16, !noundef !4 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.w)
   %i.cj = getelementptr inbounds nuw i8, ptr %i.br, i64 48
   %i.ck = load i64, ptr %i.cj, align 8, !noundef !4 ; 4 uses
-  %6 = shl i64 %i.ck, 3                           ; 2 uses
   %i.cl = icmp ugt i64 %i.ck, 2305843009213693951
-  br i1 %i.cl, label %bb.o, label %bb.n, !prof !8
+  br i1 %i.cl, label %7, label %bb.n, !prof !8
 
 bb.n:                                             ; preds = %bb.m
-  %i.cm = icmp eq i64 %6, 0
-  br i1 %i.cm, label %9, label %bb.p
+  %6 = trunc i64 %i.ck to i8                      ; 2 uses
+  %i.cm = icmp eq i8 %6, 0
+  br i1 %i.cm, label %bb.o, label %bb.p, !prof !8
 
-bb.o:                                             ; preds = %bb.m
+7:                                                ; preds = %bb.m
   call void @_RNvNvMs9_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_4Size4bits8overflow(i64 noundef %i.ck) #49, !noalias !7286
   unreachable
 
-bb.p:                                             ; preds = %bb.n
-  %7 = sub i64 0, %6
-  %i.cn = and i64 %7, 120
-  %i.co = zext nneg i64 %i.cn to i128
-  %i.cp = lshr i128 -1, %i.co
-  %8 = and i128 %i.cp, %i.ci
-  br label %9
-
-9:                                                ; preds = %bb.p, %bb.n
-  %.sroa.0.0.i = phi i128 [ %8, %bb.p ], [ 0, %bb.n ]
-  %10 = trunc i64 %i.ck to i8                     ; 2 uses
-  %.not.i.i = icmp eq i8 %10, 0
-  br i1 %.not.i.i, label %11, label %_RINvMs6_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver6consts7valtreeNtB6_9ScalarInt18truncate_from_uintoEBc_.exit, !prof !8
-
-11:                                               ; preds = %9
+bb.o:                                             ; preds = %bb.n
   call void @_RNvNtCshzWfHUSfYae_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @241) #46, !noalias !7289
   unreachable
 
-_RINvMs6_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver6consts7valtreeNtB6_9ScalarInt18truncate_from_uintoEBc_.exit: ; preds = %9
-  %.not348 = icmp eq i128 %.sroa.0.0.i, %i.ci
-  br i1 %.not348, label %bb.dz, label %bb.ea, !prof !9
+bb.p:                                             ; preds = %bb.n
+  %.neg.i = mul i64 %i.ck, 120
+  %i.cn = and i64 %.neg.i, 120
+  %i.co = zext nneg i64 %i.cn to i128
+  %i.cp = lshr i128 -1, %i.co                     ; 2 uses
+  %8 = icmp ugt i128 %i.ci, %i.cp
+  br i1 %8, label %bb.ea, label %bb.dz, !prof !8
 
 bb.q:                                             ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6result6ResultRNtCskVLyBV5N46_15ra_ap_rustc_abi16TargetDataLayoutNtNtCsgIpRO4v45SJ_7base_db6target15TargetLoadErrorEECs8K4cjrcxBsw_6hir_ty.exit208
   call void @llvm.lifetime.start.p0(ptr nonnull %i.az)
@@ -1128,15 +1108,16 @@ bb.dy:                                            ; preds = %bb.dw
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ai)
   br label %bb.dx
 
-bb.dz:                                            ; preds = %_RINvMs6_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver6consts7valtreeNtB6_9ScalarInt18truncate_from_uintoEBc_.exit
+bb.dz:                                            ; preds = %bb.p
+  %9 = and i128 %i.cp, %i.ci
   %i.jp = getelementptr inbounds nuw i8, ptr %i.bd, i64 1
-  store i8 %10, ptr %i.jp, align 1
+  store i8 %6, ptr %i.jp, align 1
   %.sroa.4309.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bd, i64 2
-  store i128 %i.ci, ptr %.sroa.4309.0..sroa_idx, align 2
+  store i128 %9, ptr %.sroa.4309.0..sroa_idx, align 2
   store i8 0, ptr %i.bd, align 8
   br label %bb.z
 
-bb.ea:                                            ; preds = %_RINvMs6_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver6consts7valtreeNtB6_9ScalarInt18truncate_from_uintoEBc_.exit
+bb.ea:                                            ; preds = %bb.p
   call void @_RNvNtCshzWfHUSfYae_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @279) #46
   unreachable
 

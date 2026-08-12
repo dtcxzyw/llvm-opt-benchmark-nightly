@@ -199,7 +199,7 @@ bb.a:
   %i.d = alloca i32, align 4                      ; 2 uses
   %i.e = alloca i32, align 4                      ; 3 uses
   store i32 0, ptr %i.e, align 4
-  call fastcc void @cpuid(i32 noundef 1, ptr noundef %i.a, ptr noundef %i.b, ptr noundef %i.c, ptr noundef %i.d)
+  call void @cpuid(i32 noundef 1, ptr noundef %i.a, ptr noundef %i.b, ptr noundef %i.c, ptr noundef %i.d)
   %i.f = load i32, ptr %i.c, align 4
   %i.g = and i32 %i.f, 268435456
   %i.h = icmp ne i32 %i.g, 0
@@ -218,7 +218,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.n, label %bb.d, label %bb.g
 
 bb.d:                                             ; preds = %bb.c
-  call fastcc void @xgetbv(ptr noundef %i.a, ptr noundef %i.d)
+  call void @xgetbv(i32 noundef 0, ptr noundef %i.a, ptr noundef %i.d)
   %i.o = load i32, ptr %i.a, align 4
   %i.p = and i32 %i.o, 6
   %i.q = icmp eq i32 %i.p, 6
@@ -237,7 +237,7 @@ bb.g:                                             ; preds = %bb.f, %bb.c, %bb.b,
 }
 
 ; Function Attrs: noinline nounwind optnone uwtable
-define internal fastcc void @cpuid(i32 noundef range(i32 -2147483648, 8) %0, ptr noundef nonnull %1, ptr noundef nonnull %2, ptr noundef nonnull %3, ptr noundef nonnull %4) unnamed_addr #0 {
+define internal void @cpuid(i32 noundef range(i32 -2147483648, 8) %0, ptr noundef nonnull %1, ptr noundef nonnull %2, ptr noundef nonnull %3, ptr noundef nonnull %4) unnamed_addr #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 2 uses
   %i.b = alloca ptr, align 8                      ; 2 uses
@@ -267,14 +267,14 @@ bb.a:
 }
 
 ; Function Attrs: noinline nounwind optnone uwtable
-define internal fastcc void @xgetbv(ptr noundef nonnull %0, ptr noundef nonnull %1) unnamed_addr #0 {
+define internal void @xgetbv(i32 noundef %0, ptr noundef nonnull %1, ptr noundef nonnull %2) unnamed_addr #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 2 uses
   %i.b = alloca ptr, align 8                      ; 2 uses
   %i.c = alloca ptr, align 8                      ; 2 uses
   store i32 0, ptr %i.a, align 4
-  store ptr %0, ptr %i.b, align 8
-  store ptr %1, ptr %i.c, align 8
+  store ptr %1, ptr %i.b, align 8
+  store ptr %2, ptr %i.c, align 8
   %i.d = load ptr, ptr %i.b, align 8
   %i.e = load ptr, ptr %i.c, align 8
   %i.f = load i32, ptr %i.a, align 4
@@ -306,7 +306,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.f
 
 bb.c:                                             ; preds = %bb.a
-  call fastcc void @cpuid(i32 noundef 7, ptr noundef %i.b, ptr noundef %i.c, ptr noundef %i.d, ptr noundef %i.e)
+  call void @cpuid(i32 noundef 7, ptr noundef %i.b, ptr noundef %i.c, ptr noundef %i.d, ptr noundef %i.e)
   %i.i = load i32, ptr %i.c, align 4
   %i.j = and i32 %i.i, 32
   %i.k = icmp ne i32 %i.j, 0
@@ -345,7 +345,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.j
 
 bb.c:                                             ; preds = %bb.a
-  call fastcc void @cpuid(i32 noundef 7, ptr noundef %i.b, ptr noundef %i.c, ptr noundef %i.d, ptr noundef %i.e)
+  call void @cpuid(i32 noundef 7, ptr noundef %i.b, ptr noundef %i.c, ptr noundef %i.d, ptr noundef %i.e)
   %i.i = load i32, ptr %i.c, align 4
   %i.j = and i32 %i.i, 32
   %i.k = icmp eq i32 %i.j, 0
@@ -362,7 +362,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %i.n, label %bb.f, label %bb.i
 
 bb.f:                                             ; preds = %bb.e
-  call fastcc void @xgetbv(ptr noundef %i.b, ptr noundef %i.e)
+  call void @xgetbv(i32 noundef 0, ptr noundef %i.b, ptr noundef %i.e)
   %i.o = load i32, ptr %i.b, align 4
   %i.p = and i32 %i.o, 224
   %i.q = icmp eq i32 %i.p, 224
@@ -404,7 +404,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.f
 
 bb.c:                                             ; preds = %bb.a
-  call fastcc void @cpuid_count(i32 noundef 7, i32 noundef 1, ptr noundef %i.b, ptr noundef %i.c, ptr noundef %i.d, ptr noundef %i.e)
+  call void @cpuid_count(i32 noundef 7, i32 noundef 1, ptr noundef %i.b, ptr noundef %i.c, ptr noundef %i.d, ptr noundef %i.e)
   %i.i = load i32, ptr %i.b, align 4
   %i.j = and i32 %i.i, 32
   %i.k = icmp eq i32 %i.j, 32
@@ -425,7 +425,7 @@ bb.f:                                             ; preds = %bb.e, %bb.b
 }
 
 ; Function Attrs: noinline nounwind optnone uwtable
-define internal fastcc void @cpuid_count(i32 noundef range(i32 4, 14) %0, i32 noundef %1, ptr noundef nonnull %2, ptr noundef nonnull %3, ptr noundef nonnull %4, ptr noundef nonnull %5) unnamed_addr #0 {
+define internal void @cpuid_count(i32 noundef range(i32 4, 14) %0, i32 noundef %1, ptr noundef nonnull %2, ptr noundef nonnull %3, ptr noundef nonnull %4, ptr noundef nonnull %5) unnamed_addr #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 2 uses
   %i.b = alloca i32, align 4                      ; 2 uses
@@ -476,7 +476,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.i
 
 bb.c:                                             ; preds = %bb.a
-  call fastcc void @cpuid_count(i32 noundef 7, i32 noundef 0, ptr noundef %i.b, ptr noundef %i.c, ptr noundef %i.d, ptr noundef %i.e)
+  call void @cpuid_count(i32 noundef 7, i32 noundef 0, ptr noundef %i.b, ptr noundef %i.c, ptr noundef %i.d, ptr noundef %i.e)
   %i.i = load i32, ptr %i.e, align 4
   %i.j = and i32 %i.i, 16777216
   %i.k = icmp ne i32 %i.j, 0
@@ -489,7 +489,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.n, label %bb.e, label %bb.h
 
 bb.e:                                             ; preds = %bb.d
-  call fastcc void @cpuid_count(i32 noundef 13, i32 noundef 0, ptr noundef %i.b, ptr noundef %i.c, ptr noundef %i.d, ptr noundef %i.e)
+  call void @cpuid_count(i32 noundef 13, i32 noundef 0, ptr noundef %i.b, ptr noundef %i.c, ptr noundef %i.d, ptr noundef %i.e)
   %i.o = load i32, ptr %i.b, align 4
   %i.p = and i32 %i.o, 393216
   %i.q = icmp eq i32 %i.p, 393216
@@ -521,7 +521,7 @@ bb.a:
   %i.d = alloca i32, align 4                      ; 2 uses
   %i.e = alloca i32, align 4                      ; 2 uses
   %i.f = alloca [13 x i8], align 1                ; 16 uses
-  call fastcc void @cpuid(i32 noundef 0, ptr noundef %i.b, ptr noundef %i.c, ptr noundef %i.d, ptr noundef %i.e)
+  call void @cpuid(i32 noundef 0, ptr noundef %i.b, ptr noundef %i.c, ptr noundef %i.d, ptr noundef %i.e)
   %i.g = load i32, ptr %i.c, align 4
   %i.h = getelementptr inbounds nuw [13 x i8], ptr %i.f, i64 0, i64 0
   store i32 %i.g, ptr %i.h, align 1
@@ -691,7 +691,7 @@ bb.a:
   %i.g = alloca i32, align 4                      ; 50 uses
   store i32 %0, ptr %i.b, align 4
   store i32 0, ptr %i.g, align 4
-  call fastcc void @cpuid(i32 noundef 1, ptr noundef %i.c, ptr noundef %i.d, ptr noundef %i.e, ptr noundef %i.f)
+  call void @cpuid(i32 noundef 1, ptr noundef %i.c, ptr noundef %i.d, ptr noundef %i.e, ptr noundef %i.f)
   %i.h = load i32, ptr %i.b, align 4
   switch i32 %i.h, label %bb.bu [
     i32 1, label %bb.b
@@ -780,7 +780,7 @@ bb.k:                                             ; preds = %bb.a
   br label %bb.bv
 
 bb.l:                                             ; preds = %bb.a
-  %1 = call fastcc i32 @have_cpuid()
+  %1 = call i32 @have_cpuid()
   %i.am = icmp slt i32 %1, 4
   br i1 %i.am, label %bb.m, label %bb.n
 
@@ -789,7 +789,7 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.bv
 
 bb.n:                                             ; preds = %bb.l
-  call fastcc void @cpuid(i32 noundef 4, ptr noundef %i.c, ptr noundef %i.d, ptr noundef %i.e, ptr noundef %i.f)
+  call void @cpuid(i32 noundef 4, ptr noundef %i.c, ptr noundef %i.d, ptr noundef %i.e, ptr noundef %i.f)
   %i.an = load i32, ptr %i.c, align 4
   %i.ao = ashr i32 %i.an, 14
   %i.ap = and i32 %i.ao, 4095
@@ -797,7 +797,7 @@ bb.n:                                             ; preds = %bb.l
   br label %bb.bv
 
 bb.o:                                             ; preds = %bb.a
-  %2 = call fastcc i32 @have_cpuid()
+  %2 = call i32 @have_cpuid()
   %i.aq = icmp slt i32 %2, 4
   br i1 %i.aq, label %bb.p, label %bb.q
 
@@ -806,7 +806,7 @@ bb.p:                                             ; preds = %bb.o
   br label %bb.bv
 
 bb.q:                                             ; preds = %bb.o
-  call fastcc void @cpuid(i32 noundef 4, ptr noundef %i.c, ptr noundef %i.d, ptr noundef %i.e, ptr noundef %i.f)
+  call void @cpuid(i32 noundef 4, ptr noundef %i.c, ptr noundef %i.d, ptr noundef %i.e, ptr noundef %i.f)
   %i.ar = load i32, ptr %i.c, align 4
   %i.as = ashr i32 %i.ar, 26
   %i.at = and i32 %i.as, 63
@@ -1023,12 +1023,12 @@ bb.ba:                                            ; preds = %bb.az
   br label %bb.bb
 
 bb.bb:                                            ; preds = %bb.ba, %bb.az
-  %3 = call fastcc i32 @have_excpuid()
+  %3 = call i32 @have_excpuid()
   %i.ea = icmp sge i32 %3, 1
   br i1 %i.ea, label %bb.bc, label %bb.bn
 
 bb.bc:                                            ; preds = %bb.bb
-  call fastcc void @cpuid(i32 noundef -2147483647, ptr noundef %i.c, ptr noundef %i.d, ptr noundef %i.e, ptr noundef %i.f)
+  call void @cpuid(i32 noundef -2147483647, ptr noundef %i.c, ptr noundef %i.d, ptr noundef %i.e, ptr noundef %i.f)
   %i.eb = load i32, ptr %i.e, align 4
   %i.ec = and i32 %i.eb, 64
   %i.ed = icmp ne i32 %i.ec, 0
@@ -1092,12 +1092,12 @@ bb.bm:                                            ; preds = %bb.bl, %bb.bk
   br label %bb.bn
 
 bb.bn:                                            ; preds = %bb.bm, %bb.bb
-  %4 = call fastcc i32 @have_excpuid()
+  %4 = call i32 @have_excpuid()
   %i.fa = icmp sge i32 %4, 26
   br i1 %i.fa, label %bb.bo, label %bb.bt
 
 bb.bo:                                            ; preds = %bb.bn
-  call fastcc void @cpuid(i32 noundef -2147483622, ptr noundef %i.c, ptr noundef %i.d, ptr noundef %i.e, ptr noundef %i.f)
+  call void @cpuid(i32 noundef -2147483622, ptr noundef %i.c, ptr noundef %i.d, ptr noundef %i.e, ptr noundef %i.f)
   %i.fb = load i32, ptr %i.c, align 4
   %i.fc = and i32 %i.fb, 1
   %i.fd = icmp ne i32 %i.fc, 0
@@ -1138,25 +1138,25 @@ bb.bv:                                            ; preds = %bb.bu, %bb.q, %bb.p
 }
 
 ; Function Attrs: noinline nounwind optnone uwtable
-define internal fastcc i32 @have_cpuid() unnamed_addr #0 {
+define internal i32 @have_cpuid() unnamed_addr #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 2 uses
   %i.b = alloca i32, align 4
   %i.c = alloca i32, align 4
   %i.d = alloca i32, align 4
-  call fastcc void @cpuid(i32 noundef 0, ptr noundef %i.a, ptr noundef %i.b, ptr noundef %i.c, ptr noundef %i.d)
+  call void @cpuid(i32 noundef 0, ptr noundef %i.a, ptr noundef %i.b, ptr noundef %i.c, ptr noundef %i.d)
   %i.e = load i32, ptr %i.a, align 4
   ret i32 %i.e
 }
 
 ; Function Attrs: noinline nounwind optnone uwtable
-define internal fastcc range(i32 0, 65536) i32 @have_excpuid() unnamed_addr #0 {
+define internal range(i32 0, 65536) i32 @have_excpuid() unnamed_addr #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 2 uses
   %i.b = alloca i32, align 4
   %i.c = alloca i32, align 4
   %i.d = alloca i32, align 4
-  call fastcc void @cpuid(i32 noundef -2147483648, ptr noundef %i.a, ptr noundef %i.b, ptr noundef %i.c, ptr noundef %i.d)
+  call void @cpuid(i32 noundef -2147483648, ptr noundef %i.a, ptr noundef %i.b, ptr noundef %i.c, ptr noundef %i.d)
   %i.e = load i32, ptr %i.a, align 4
   %i.f = and i32 %i.e, 65535
   ret i32 %i.f
@@ -1294,13 +1294,13 @@ bb.a:
   store i32 0, ptr %60, align 4
   %61 = getelementptr inbounds nuw %struct.cache_info_t, ptr %13, i32 0, i32 3
   store i32 0, ptr %61, align 4
-  call fastcc void @cpuid(i32 noundef 0, ptr noundef %i.g, ptr noundef %i.d, ptr noundef %i.e, ptr noundef %i.f)
+  call void @cpuid(i32 noundef 0, ptr noundef %i.g, ptr noundef %i.d, ptr noundef %i.e, ptr noundef %i.f)
   %i.t = load i32, ptr %i.g, align 4
   %i.u = icmp sgt i32 %i.t, 1
   br i1 %i.u, label %bb.b, label %bb.ej
 
 bb.b:                                             ; preds = %bb.a
-  call fastcc void @cpuid(i32 noundef 2, ptr noundef %i.c, ptr noundef %i.d, ptr noundef %i.e, ptr noundef %i.f)
+  call void @cpuid(i32 noundef 2, ptr noundef %i.c, ptr noundef %i.d, ptr noundef %i.e, ptr noundef %i.f)
   %i.v = load i32, ptr %i.c, align 4
   %i.w = ashr i32 %i.v, 0
   %i.x = and i32 %i.w, 255
@@ -1703,7 +1703,7 @@ bb.en:                                            ; preds = %bb.fa, %bb.em
 
 bb.eo:                                            ; preds = %bb.en
   %i.da = load i32, ptr %i.k, align 4
-  call fastcc void @cpuid_count(i32 noundef 4, i32 noundef %i.da, ptr noundef %i.c, ptr noundef %i.d, ptr noundef %i.e, ptr noundef %i.f)
+  call void @cpuid_count(i32 noundef 4, i32 noundef %i.da, ptr noundef %i.c, ptr noundef %i.d, ptr noundef %i.e, ptr noundef %i.f)
   %i.db = load i32, ptr %i.c, align 4
   %i.dc = and i32 %i.db, 31
   switch i32 %i.dc, label %bb.ey [
@@ -1838,7 +1838,7 @@ bb.fb:                                            ; preds = %bb.en
   br label %bb.fc
 
 bb.fc:                                            ; preds = %bb.fb, %bb.el
-  call fastcc void @cpuid(i32 noundef -2147483648, ptr noundef %i.g, ptr noundef %i.d, ptr noundef %i.e, ptr noundef %i.f)
+  call void @cpuid(i32 noundef -2147483648, ptr noundef %i.g, ptr noundef %i.d, ptr noundef %i.e, ptr noundef %i.f)
   %i.fj = load i32, ptr %i.g, align 4
   %i.fk = icmp uge i32 %i.fj, -2147483642
   br i1 %i.fk, label %bb.fd, label %bb.fj
@@ -1850,7 +1850,7 @@ bb.fd:                                            ; preds = %bb.fc
   br i1 %i.fm, label %bb.fe, label %bb.fi
 
 bb.fe:                                            ; preds = %bb.fd
-  call fastcc void @cpuid(i32 noundef -2147483642, ptr noundef %i.c, ptr noundef %i.d, ptr noundef %i.e, ptr noundef %i.f)
+  call void @cpuid(i32 noundef -2147483642, ptr noundef %i.c, ptr noundef %i.d, ptr noundef %i.e, ptr noundef %i.f)
   %i.fn = load i32, ptr %i.e, align 4
   %i.fo = ashr i32 %i.fn, 16
   %i.fp = and i32 %i.fo, 65535
@@ -1913,7 +1913,7 @@ bb.fn:                                            ; preds = %bb.fm
   br i1 %i.ge, label %bb.fo, label %bb.gs
 
 bb.fo:                                            ; preds = %bb.fn, %bb.fm, %bb.fl, %bb.fk
-  call fastcc void @cpuid(i32 noundef -2147483643, ptr noundef %i.c, ptr noundef %i.d, ptr noundef %i.e, ptr noundef %i.f)
+  call void @cpuid(i32 noundef -2147483643, ptr noundef %i.c, ptr noundef %i.d, ptr noundef %i.e, ptr noundef %i.f)
   %491 = getelementptr inbounds nuw %struct.cache_info_t, ptr %9, i32 0, i32 0
   store i32 4096, ptr %491, align 4
   %i.gf = load i32, ptr %i.c, align 4
@@ -2058,7 +2058,7 @@ bb.ga:                                            ; preds = %bb.fz, %bb.fy
   %i.ig = and i32 %i.if, 255
   %520 = getelementptr inbounds nuw %struct.cache_info_t, ptr %2, i32 0, i32 2
   store i32 %i.ig, ptr %520, align 4
-  call fastcc void @cpuid(i32 noundef -2147483642, ptr noundef %i.c, ptr noundef %i.d, ptr noundef %i.e, ptr noundef %i.f)
+  call void @cpuid(i32 noundef -2147483642, ptr noundef %i.c, ptr noundef %i.d, ptr noundef %i.e, ptr noundef %i.f)
   %521 = getelementptr inbounds nuw %struct.cache_info_t, ptr %13, i32 0, i32 0
   store i32 4096, ptr %521, align 4
   %i.ih = load i32, ptr %i.c, align 4
@@ -2327,7 +2327,7 @@ bb.a:
   %i.e = alloca i32, align 4                      ; 12 uses
   %i.f = alloca i32, align 4                      ; 5 uses
   %i.g = alloca i32, align 4                      ; 2 uses
-  %0 = call fastcc i32 @have_cpuid()
+  %0 = call i32 @have_cpuid()
   %i.h = icmp ne i32 %0, 0
   br i1 %i.h, label %bb.c, label %bb.b
 
@@ -2730,7 +2730,7 @@ bb.a:
   %i.e = alloca i32, align 4                      ; 5 uses
   %i.f = alloca i32, align 4                      ; 6 uses
   %i.g = alloca i32, align 4                      ; 2 uses
-  %0 = call fastcc i32 @have_cpuid()
+  %0 = call i32 @have_cpuid()
   %i.h = icmp ne i32 %0, 0
   br i1 %i.h, label %bb.c, label %bb.b
 
@@ -3133,10 +3133,10 @@ bb.d:                                             ; preds = %bb.c
   %i.n = call i32 (ptr, ...) @printf(ptr noundef @.str.88) ; 0 uses
   call void @get_libname()
   %i.o = call i32 (ptr, ...) @printf(ptr noundef @.str.89) ; 0 uses
-  %2 = call fastcc i32 @get_num_cores()
+  %2 = call i32 @get_num_cores()
   %i.p = call i32 (ptr, ...) @printf(ptr noundef @.str.90, i32 noundef %2) ; 0 uses
   call void @get_sse()
-  %3 = call fastcc i32 @get_num_cores()
+  %3 = call i32 @get_num_cores()
   %i.q = call i32 (ptr, ...) @printf(ptr noundef @.str.91, i32 noundef %3) ; 0 uses
   br label %bb.i
 
@@ -3147,7 +3147,7 @@ bb.e:                                             ; preds = %bb.c
   br label %bb.i
 
 bb.f:                                             ; preds = %bb.c
-  %4 = call fastcc i32 @get_num_cores()
+  %4 = call i32 @get_num_cores()
   %i.t = icmp sgt i32 %4, 1
   br i1 %i.t, label %bb.g, label %bb.h
 
@@ -3170,7 +3170,7 @@ bb.j:                                             ; preds = %bb.i, %bb.b
 }
 
 ; Function Attrs: noinline nounwind optnone uwtable
-define internal fastcc i32 @get_num_cores() unnamed_addr #0 {
+define internal i32 @get_num_cores() unnamed_addr #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   %i.b = call i64 @sysconf(i32 noundef 83) #5

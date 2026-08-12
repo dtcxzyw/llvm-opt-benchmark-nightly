@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.c
 _Z3absRK13checked_int64ILb1EE.exit:               ; preds = %bb.b, %bb.e
   %.sroa.0.0.i.i = phi i64 [ %i.l, %bb.e ], [ %i.h, %bb.b ]
   %i.m = load i64, ptr %2, align 8, !tbaa !17     ; 2 uses
-  %i.n = add i64 %i.m, %.sroa.0.0.i.i             ; 3 uses
+  %i.n = add i64 %i.m, %.sroa.0.0.i.i             ; 4 uses
   %i.o = icmp sgt i64 %i.m, 0
   %i.p = icmp slt i64 %i.n, 1
   %or.cond11 = select i1 %i.o, i1 %i.p, i1 false
@@ -217,7 +217,7 @@ bb.f:                                             ; preds = %_Z3absRK13checked_i
   unreachable
 
 _ZplILb1EE13checked_int64IXT_EERKS1_S3_.exit:     ; preds = %_Z3absRK13checked_int64ILb1EE.exit
-  %i.r = add i64 %i.n, -1                         ; 3 uses
+  %i.r = add nsw i64 %i.n, -1                     ; 2 uses
   %or.cond = icmp eq i64 %i.n, -9223372036854775808
   br i1 %or.cond, label %bb.g, label %_ZmiILb1EE13checked_int64IXT_EERKS1_RKl.exit
 
@@ -240,7 +240,7 @@ bb.h:                                             ; preds = %_ZmiILb1EE13checked
 _ZN13checked_int64ILb1EEdVERKS0_.exit.i:          ; preds = %_ZmiILb1EE13checked_int64IXT_EERKS1_RKl.exit
   %i.v = sdiv i64 %i.r, %i.h                      ; 5 uses
   %i.w = srem i64 %i.r, %i.h
-  %i.x = icmp sge i64 %i.r, 0
+  %i.x = icmp sge i64 %i.n, 1
   %.not.i = icmp eq i64 %i.w, 0
   %or.cond14 = select i1 %i.x, i1 true, i1 %.not.i
   br i1 %or.cond14, label %_Z3divILb1EE13checked_int64IXT_EERKS1_S3_.exit, label %bb.i
@@ -643,11 +643,11 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 40
   %i.f = load i32, ptr %i.e, align 8, !tbaa !78
   %i.g = icmp eq i32 %i.f, 0
-  %i.h = load i64, ptr %2, align 8, !tbaa !17     ; 3 uses
+  %i.h = load i64, ptr %2, align 8, !tbaa !17     ; 4 uses
   br i1 %i.g, label %bb.b, label %bb.f
 
 bb.b:                                             ; preds = %bb.a
-  %i.i = add i64 %i.h, -1                         ; 3 uses
+  %i.i = add nsw i64 %i.h, -1                     ; 2 uses
   %or.cond = icmp eq i64 %i.h, -9223372036854775808
   br i1 %or.cond, label %bb.c, label %_ZmiILb1EE13checked_int64IXT_EERKS1_RKl.exit
 
@@ -667,8 +667,8 @@ _ZmiILb1EE13checked_int64IXT_EERKS1_RKl.exit:     ; preds = %bb.b
 bb.d:                                             ; preds = %_ZmiILb1EE13checked_int64IXT_EERKS1_RKl.exit
   %i.o = getelementptr inbounds nuw i8, ptr %i.d, i64 144 ; 2 uses
   %i.p = load i64, ptr %i.o, align 8, !tbaa !45
-  %.not.i = icmp slt i64 %i.i, %i.p
-  br i1 %.not.i, label %.thread.i, label %_ZN3sls10arith_baseI13checked_int64ILb1EEE6add_leEjRKS2_.exit
+  %.not.i.not = icmp sgt i64 %i.h, %i.p
+  br i1 %.not.i.not, label %_ZN3sls10arith_baseI13checked_int64ILb1EEE6add_leEjRKS2_.exit, label %.thread.i
 
 .thread.i:                                        ; preds = %bb.d
   store i8 0, ptr %i.k, align 8
@@ -710,11 +710,11 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 40
   %i.f = load i32, ptr %i.e, align 8, !tbaa !78
   %i.g = icmp eq i32 %i.f, 0
-  %i.h = load i64, ptr %2, align 8, !tbaa !17     ; 3 uses
+  %i.h = load i64, ptr %2, align 8, !tbaa !17     ; 4 uses
   br i1 %i.g, label %bb.b, label %bb.f
 
 bb.b:                                             ; preds = %bb.a
-  %i.i = add i64 %i.h, 1                          ; 3 uses
+  %i.i = add nsw i64 %i.h, 1                      ; 2 uses
   %i.j = icmp eq i64 %i.h, 9223372036854775807
   br i1 %i.j, label %bb.c, label %_ZplILb1EE13checked_int64IXT_EERKS1_RKl.exit
 
@@ -734,8 +734,8 @@ _ZplILb1EE13checked_int64IXT_EERKS1_RKl.exit:     ; preds = %bb.b
 bb.d:                                             ; preds = %_ZplILb1EE13checked_int64IXT_EERKS1_RKl.exit
   %i.p = getelementptr inbounds nuw i8, ptr %i.d, i64 120 ; 2 uses
   %i.q = load i64, ptr %i.p, align 8, !tbaa !45
-  %.not.i = icmp slt i64 %i.q, %i.i
-  br i1 %.not.i, label %.thread.i, label %_ZN3sls10arith_baseI13checked_int64ILb1EEE6add_geEjRKS2_.exit
+  %.not.i.not = icmp sgt i64 %i.q, %i.h
+  br i1 %.not.i.not, label %_ZN3sls10arith_baseI13checked_int64ILb1EEE6add_geEjRKS2_.exit, label %.thread.i
 
 .thread.i:                                        ; preds = %bb.d
   store i8 0, ptr %i.l, align 8
@@ -1138,7 +1138,7 @@ _ZN13checked_int64ILb1EEpLERKS0_.exit220:         ; preds = %bb.r, %bb.t, %bb.u
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.h, %bb.o, %bb.p, %_ZN13checked_int64ILb1EEpLERKS0_.exit, %_ZN13checked_int64ILb1EEpLERKS0_.exit220, %bb.f
-  %.sroa.0348.1 = phi i64 [ %i.ca, %_ZN13checked_int64ILb1EEpLERKS0_.exit ], [ %i.cu, %_ZN13checked_int64ILb1EEpLERKS0_.exit220 ], [ %.sroa.0348.0532, %bb.p ], [ %.sroa.0348.0532, %bb.f ], [ %.sroa.0348.0532, %bb.o ], [ %.sroa.0348.0532, %bb.h ] ; 5 uses
+  %.sroa.0348.1 = phi i64 [ %i.ca, %_ZN13checked_int64ILb1EEpLERKS0_.exit ], [ %i.cu, %_ZN13checked_int64ILb1EEpLERKS0_.exit220 ], [ %.sroa.0348.0532, %bb.p ], [ %.sroa.0348.0532, %bb.f ], [ %.sroa.0348.0532, %bb.o ], [ %.sroa.0348.0532, %bb.h ] ; 6 uses
   %.1180 = phi i8 [ %i.ck, %_ZN13checked_int64ILb1EEpLERKS0_.exit ], [ %i.de, %_ZN13checked_int64ILb1EEpLERKS0_.exit220 ], [ %.0179535, %bb.p ], [ %.0179535, %bb.f ], [ %.0179535, %bb.o ], [ %.0179535, %bb.h ] ; 2 uses
   %.1172 = phi i8 [ 1, %_ZN13checked_int64ILb1EEpLERKS0_.exit ], [ 1, %_ZN13checked_int64ILb1EEpLERKS0_.exit220 ], [ 0, %bb.p ], [ 0, %bb.f ], [ 0, %bb.o ], [ 0, %bb.h ] ; 2 uses
   br i1 %i.bi, label %bb.w, label %.thread372
@@ -1283,7 +1283,7 @@ bb.an:                                            ; preds = %bb.am
   br i1 %i.fd, label %bb.ao, label %bb.ar
 
 bb.ao:                                            ; preds = %bb.an
-  %i.fe = add i64 %.sroa.0348.1, 1                ; 3 uses
+  %i.fe = add nsw i64 %.sroa.0348.1, 1            ; 2 uses
   %i.ff = icmp eq i64 %.sroa.0348.1, 9223372036854775807
   br i1 %i.ff, label %bb.ap, label %_ZplILb1EE13checked_int64IXT_EERKS1_RKl.exit.i
 
@@ -1303,8 +1303,8 @@ _ZplILb1EE13checked_int64IXT_EERKS1_RKl.exit.i:   ; preds = %bb.ao
 bb.aq:                                            ; preds = %_ZplILb1EE13checked_int64IXT_EERKS1_RKl.exit.i
   %i.fl = getelementptr inbounds nuw i8, ptr %i.fa, i64 120 ; 2 uses
   %i.fm = load i64, ptr %i.fl, align 8, !tbaa !45
-  %.not.i.i = icmp slt i64 %i.fm, %i.fe
-  br i1 %.not.i.i, label %.thread.i.i, label %_ZN3sls10arith_baseI13checked_int64ILb1EEE6add_gtEjRKS2_.exit
+  %.not.i.not.i = icmp sgt i64 %i.fm, %.sroa.0348.1
+  br i1 %.not.i.not.i, label %_ZN3sls10arith_baseI13checked_int64ILb1EEE6add_gtEjRKS2_.exit, label %.thread.i.i
 
 .thread.i.i:                                      ; preds = %bb.aq
   store i8 0, ptr %i.fh, align 8
@@ -1370,7 +1370,7 @@ _ZN3sls10arith_baseI13checked_int64ILb1EEE6add_gtEjRKS2_.exit: ; preds = %bb.as,
   br i1 %.0175.lcssa641, label %bb.at, label %_ZN3sls10arith_baseI13checked_int64ILb1EEE6add_ltEjRKS2_.exit
 
 bb.at:                                            ; preds = %.split655, %.thread.i.i, %.split654, %.thread.i, %.split, %_ZN3sls10arith_baseI13checked_int64ILb1EEE6add_gtEjRKS2_.exit
-  %.sroa.0343.0.lcssa635653 = phi i64 [ %.sroa.0343.0.lcssa636651, %.split ], [ %.sroa.0343.0.lcssa635, %_ZN3sls10arith_baseI13checked_int64ILb1EEE6add_gtEjRKS2_.exit ], [ %.sroa.0343.0.lcssa636651, %.thread.i ], [ %.sroa.0343.1.ph, %.split654 ], [ %.sroa.0343.1.ph, %.thread.i.i ], [ %.sroa.0343.1.ph, %.split655 ] ; 6 uses
+  %.sroa.0343.0.lcssa635653 = phi i64 [ %.sroa.0343.0.lcssa636651, %.split ], [ %.sroa.0343.0.lcssa635, %_ZN3sls10arith_baseI13checked_int64ILb1EEE6add_gtEjRKS2_.exit ], [ %.sroa.0343.0.lcssa636651, %.thread.i ], [ %.sroa.0343.1.ph, %.split654 ], [ %.sroa.0343.1.ph, %.thread.i.i ], [ %.sroa.0343.1.ph, %.split655 ] ; 7 uses
   %.0189.lcssa638652 = phi i1 [ %.0189.lcssa639649, %.split ], [ %.0189.lcssa638, %_ZN3sls10arith_baseI13checked_int64ILb1EEE6add_gtEjRKS2_.exit ], [ %.0189.lcssa639649, %.thread.i ], [ %i.ex, %.split654 ], [ %i.ex, %.thread.i.i ], [ %i.ex, %.split655 ]
   %i.fz = load ptr, ptr %i.u, align 8, !tbaa !139
   %i.ga = getelementptr inbounds nuw [184 x i8], ptr %i.fz, i64 %indvars.iv ; 12 uses
@@ -1383,7 +1383,7 @@ bb.au:                                            ; preds = %bb.at
   br i1 %i.gd, label %bb.av, label %bb.az
 
 bb.av:                                            ; preds = %bb.au
-  %i.ge = add i64 %.sroa.0343.0.lcssa635653, -1   ; 3 uses
+  %i.ge = add nsw i64 %.sroa.0343.0.lcssa635653, -1 ; 2 uses
   %or.cond.i229 = icmp eq i64 %.sroa.0343.0.lcssa635653, -9223372036854775808
   br i1 %or.cond.i229, label %bb.aw, label %_ZmiILb1EE13checked_int64IXT_EERKS1_RKl.exit.i
 
@@ -1403,8 +1403,8 @@ _ZmiILb1EE13checked_int64IXT_EERKS1_RKl.exit.i:   ; preds = %bb.av
 bb.ax:                                            ; preds = %_ZmiILb1EE13checked_int64IXT_EERKS1_RKl.exit.i
   %i.gk = getelementptr inbounds nuw i8, ptr %i.ga, i64 144 ; 2 uses
   %i.gl = load i64, ptr %i.gk, align 8, !tbaa !45
-  %.not.i.i231 = icmp slt i64 %i.ge, %i.gl
-  br i1 %.not.i.i231, label %.thread.i.i232, label %_ZN3sls10arith_baseI13checked_int64ILb1EEE6add_ltEjRKS2_.exit
+  %.not.i.not.i231 = icmp sgt i64 %.sroa.0343.0.lcssa635653, %i.gl
+  br i1 %.not.i.not.i231, label %_ZN3sls10arith_baseI13checked_int64ILb1EEE6add_ltEjRKS2_.exit, label %.thread.i.i232
 
 .thread.i.i232:                                   ; preds = %bb.ax
   store i8 0, ptr %i.gg, align 8

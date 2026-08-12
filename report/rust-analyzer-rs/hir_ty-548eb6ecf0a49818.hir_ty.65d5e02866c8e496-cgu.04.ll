@@ -204,16 +204,15 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %.val = load ptr, ptr %1, align 8, !nonnull !5, !align !449, !noundef !5
   %i.i = getelementptr i8, ptr %.val, i64 48
-  %.val5.i = load i64, ptr %i.i, align 8, !noundef !5 ; 3 uses
-  %5 = shl i64 %.val5.i, 3                        ; 2 uses
+  %.val5.i = load i64, ptr %i.i, align 8, !noundef !5 ; 4 uses
   %i.j = icmp ugt i64 %.val5.i, 2305843009213693951
   br i1 %i.j, label %bb.d, label %bb.c, !prof !7
 
 bb.c:                                             ; preds = %bb.b
-  switch i64 %5, label %bb.e [
-    i64 16, label %_RINvMs9_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_4Size11checked_mulRNtB6_16TargetDataLayoutECs8K4cjrcxBsw_6hir_ty.exit
-    i64 32, label %bb.f
-    i64 64, label %bb.g
+  switch i64 %.val5.i, label %bb.e [
+    i64 2, label %_RINvMs9_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_4Size11checked_mulRNtB6_16TargetDataLayoutECs8K4cjrcxBsw_6hir_ty.exit
+    i64 4, label %bb.f
+    i64 8, label %bb.g
   ], !prof !450
 
 bb.d:                                             ; preds = %bb.b
@@ -221,6 +220,7 @@ bb.d:                                             ; preds = %bb.b
   unreachable
 
 bb.e:                                             ; preds = %bb.c
+  %5 = shl nuw i64 %.val5.i, 3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store i64 %5, ptr %i.b, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -623,25 +623,25 @@ bb.bc:                                            ; preds = %bb.az, %bb.aw
   %.sroa.2.2 = phi i8 [ %.sroa.2.1, %bb.az ], [ %.sroa.2.0128, %bb.aw ] ; 2 uses
   %.sroa.032.2 = phi i128 [ %.sroa.032.1, %bb.az ], [ %.sroa.032.0130, %bb.aw ]
   %i.ig = getelementptr inbounds nuw i8, ptr %i.ie, i64 320
-  %i.ih = load i64, ptr %i.ig, align 16, !noundef !5
-  %i.ii = add i64 %i.ih, %i.if                    ; 4 uses
+  %6 = load i64, ptr %i.ig, align 16, !noundef !5
+  %i.ih = load i64, ptr %i.fh, align 8            ; 4 uses
+  %i.ii = add i64 %6, %i.if                       ; 4 uses
   %i.ij = icmp ult i64 %i.ii, %i.if
   br i1 %i.ij, label %.thread26, label %bb.bd, !prof !7
 
 bb.bd:                                            ; preds = %bb.bc
-  %.val241 = load i64, ptr %i.fh, align 8         ; 4 uses
-  %i.ik = icmp ugt i64 %.val241, 2305843009213693951
+  %i.ik = icmp ugt i64 %i.ih, 2305843009213693951
   br i1 %i.ik, label %.invoke389, label %bb.be, !prof !7
 
 bb.be:                                            ; preds = %bb.bd
-  switch i64 %.val241, label %bb.bf [
+  switch i64 %i.ih, label %bb.bf [
     i64 2, label %bb.bi
     i64 4, label %bb.bg
     i64 8, label %bb.bh
   ], !prof !450
 
 .invoke389:                                       ; preds = %bb.bd, %bb.bs
-  %i.il = phi i64 [ %.val229, %bb.bs ], [ %.val241, %bb.bd ]
+  %i.il = phi i64 [ %.val229, %bb.bs ], [ %i.ih, %bb.bd ]
   invoke void @_RNvNvMs9_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_4Size4bits8overflow(i64 noundef %i.il) #45
           to label %.cont390 unwind label %.loopexit.split-lp
 
@@ -649,7 +649,7 @@ bb.be:                                            ; preds = %bb.bd
   unreachable
 
 bb.bf:                                            ; preds = %bb.be
-  %i.im = shl nuw i64 %.val241, 3
+  %i.im = shl nuw i64 %i.ih, 3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   store i64 %i.im, ptr %i.d, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
@@ -751,21 +751,21 @@ bb.bs:                                            ; preds = %bb.bq, %bb.bn, %._c
   %i.je = add i64 %i.ja, %i.jd
   %i.jf = and i64 %i.je, %notmask210              ; 5 uses
   %i.jg = getelementptr i8, ptr %.0.val, i64 48
-  %.val229 = load i64, ptr %i.jg, align 8, !noundef !5 ; 3 uses
-  %6 = shl i64 %.val229, 3                        ; 2 uses
+  %.val229 = load i64, ptr %i.jg, align 8, !noundef !5 ; 4 uses
   %i.jh = icmp ugt i64 %.val229, 2305843009213693951
   br i1 %i.jh, label %.invoke389, label %bb.bt, !prof !7
 
 bb.bt:                                            ; preds = %bb.bs
-  switch i64 %6, label %bb.bu [
-    i64 16, label %_RNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB5_16TargetDataLayout14obj_size_bound.exit
-    i64 32, label %bb.bv
-    i64 64, label %bb.bw
+  switch i64 %.val229, label %bb.bu [
+    i64 2, label %_RNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB5_16TargetDataLayout14obj_size_bound.exit
+    i64 4, label %bb.bv
+    i64 8, label %bb.bw
   ], !prof !450
 
 bb.bu:                                            ; preds = %bb.bt
+  %7 = shl nuw i64 %.val229, 3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  store i64 %6, ptr %i.b, align 8
+  store i64 %7, ptr %i.b, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %i.b, ptr %i.a, align 8
   %.sroa.43.0..sroa_idx.i272 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -1168,16 +1168,15 @@ bb.eq:                                            ; preds = %bb.ep
 
 bb.er:                                            ; preds = %bb.ep
   %i.up = getelementptr inbounds nuw i8, ptr %.val.i52, i64 56
-  %.val.i.i = load i64, ptr %i.up, align 8, !alias.scope !847, !noalias !850, !noundef !5 ; 3 uses
-  %11 = shl i64 %.val.i.i, 3                      ; 2 uses
+  %.val.i.i = load i64, ptr %i.up, align 8, !alias.scope !847, !noalias !850, !noundef !5 ; 4 uses
   %i.uq = icmp ugt i64 %.val.i.i, 2305843009213693951
   br i1 %i.uq, label %bb.et, label %bb.es, !prof !7
 
 bb.es:                                            ; preds = %bb.er
-  switch i64 %11, label %bb.eu [
-    i64 16, label %bb.ex
-    i64 32, label %bb.ev
-    i64 64, label %bb.ew
+  switch i64 %.val.i.i, label %bb.eu [
+    i64 2, label %bb.ex
+    i64 4, label %bb.ev
+    i64 8, label %bb.ew
   ], !prof !450
 
 bb.et:                                            ; preds = %bb.er
@@ -1188,6 +1187,7 @@ bb.et:                                            ; preds = %bb.er
   unreachable
 
 bb.eu:                                            ; preds = %bb.es
+  %11 = shl nuw i64 %.val.i.i, 3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.af), !noalias !851
   store i64 %11, ptr %i.af, align 8, !noalias !851
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ae), !noalias !851
@@ -1590,18 +1590,17 @@ bb.hd:                                            ; preds = %bb.hb
   %i.aat = and i64 %i.aas, %notmask.i             ; 2 uses
   store i64 %i.aat, ptr %i.ce, align 8, !noalias !741
   %i.aau = getelementptr i8, ptr %.val.i52, i64 48 ; 3 uses
-  %.val589.i = load i64, ptr %i.aau, align 8, !noalias !850, !noundef !5 ; 3 uses
-  %12 = shl i64 %.val589.i, 3                     ; 2 uses
+  %.val589.i = load i64, ptr %i.aau, align 8, !noalias !850, !noundef !5 ; 4 uses
   %i.aav = icmp ugt i64 %.val589.i, 2305843009213693951
   %i.aaw = inttoptr i64 %i.aai to ptr             ; 2 uses
   %i.aax = ptrtoint ptr %i.aak to i64
   br i1 %i.aav, label %.invoke.i62, label %bb.he, !prof !7
 
 bb.he:                                            ; preds = %bb.hd
-  switch i64 %12, label %bb.hf [
-    i64 16, label %_RNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB5_16TargetDataLayout14obj_size_bound.exit.i
-    i64 32, label %bb.hg
-    i64 64, label %bb.hh
+  switch i64 %.val589.i, label %bb.hf [
+    i64 2, label %_RNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB5_16TargetDataLayout14obj_size_bound.exit.i
+    i64 4, label %bb.hg
+    i64 8, label %bb.hh
   ], !prof !450
 
 .invoke.i62:                                      ; preds = %bb.it, %bb.hl, %bb.hd
@@ -1613,6 +1612,7 @@ bb.he:                                            ; preds = %bb.hd
   unreachable
 
 bb.hf:                                            ; preds = %bb.he
+  %12 = shl nuw i64 %.val589.i, 3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l), !noalias !741
   store i64 %12, ptr %i.l, align 8, !noalias !741
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k), !noalias !741
@@ -1660,19 +1660,19 @@ bb.hk:                                            ; preds = %bb.hj
 
 bb.hl:                                            ; preds = %bb.hj
   %i.aba = getelementptr inbounds nuw i8, ptr %.val.i52, i64 56
-  %.val.i622.i = load i64, ptr %i.aba, align 8, !alias.scope !938, !noalias !850, !noundef !5 ; 3 uses
-  %13 = shl i64 %.val.i622.i, 3                   ; 2 uses
+  %.val.i622.i = load i64, ptr %i.aba, align 8, !alias.scope !938, !noalias !850, !noundef !5 ; 4 uses
   %i.abb = icmp ugt i64 %.val.i622.i, 2305843009213693951
   br i1 %i.abb, label %.invoke.i62, label %bb.hm, !prof !7
 
 bb.hm:                                            ; preds = %bb.hl
-  switch i64 %13, label %bb.hn [
-    i64 16, label %_RINvMsl_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_7Integer9from_attrNtB6_16TargetDataLayoutECs8K4cjrcxBsw_6hir_ty.exit626.i
-    i64 32, label %bb.ho
-    i64 64, label %bb.hp
+  switch i64 %.val.i622.i, label %bb.hn [
+    i64 2, label %_RINvMsl_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_7Integer9from_attrNtB6_16TargetDataLayoutECs8K4cjrcxBsw_6hir_ty.exit626.i
+    i64 4, label %bb.ho
+    i64 8, label %bb.hp
   ], !prof !450
 
 bb.hn:                                            ; preds = %bb.hm
+  %13 = shl nuw i64 %.val.i622.i, 3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !941
   store i64 %13, ptr %i.j, align 8, !noalias !941
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !941
@@ -2075,22 +2075,21 @@ bb.i:                                             ; preds = %bb.g
   %i.u = getelementptr inbounds nuw i8, ptr %2, i64 336
   %i.v = load i64, ptr %i.u, align 16, !noalias !1054, !noundef !5
   %i.w = getelementptr inbounds nuw i8, ptr %.val, i64 48
-  %.val29.i = load i64, ptr %i.w, align 8, !alias.scope !1052, !noalias !1049 ; 3 uses
+  %.val29.i = load i64, ptr %i.w, align 8, !alias.scope !1052, !noalias !1049 ; 4 uses
   %i.x = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.v, i64 range(i64 1, 32769) %3) ; 2 uses
   %i.y = extractvalue { i64, i1 } %i.x, 0         ; 6 uses
   %i.z = extractvalue { i64, i1 } %i.x, 1
   br i1 %i.z, label %.thread.i, label %bb.j, !prof !7
 
 bb.j:                                             ; preds = %bb.i
-  %5 = shl i64 %.val29.i, 3                       ; 2 uses
   %i.aa = icmp ugt i64 %.val29.i, 2305843009213693951
   br i1 %i.aa, label %bb.l, label %bb.k, !prof !7
 
 bb.k:                                             ; preds = %bb.j
-  switch i64 %5, label %bb.m [
-    i64 16, label %bb.q
-    i64 32, label %bb.n
-    i64 64, label %bb.o
+  switch i64 %.val29.i, label %bb.m [
+    i64 2, label %bb.q
+    i64 4, label %bb.n
+    i64 8, label %bb.o
   ], !prof !450
 
 bb.l:                                             ; preds = %bb.j
@@ -2101,6 +2100,7 @@ bb.l:                                             ; preds = %bb.j
   unreachable
 
 bb.m:                                             ; preds = %bb.k
+  %5 = shl nuw i64 %.val29.i, 3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !1054
   store i64 %5, ptr %i.c, align 8, !noalias !1054
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !1054
@@ -2503,16 +2503,15 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %.val = load i64, ptr %i.d, align 8, !noundef !5 ; 3 uses
-  %2 = shl i64 %.val, 3                           ; 2 uses
+  %.val = load i64, ptr %i.d, align 8, !noundef !5 ; 4 uses
   %i.e = icmp ugt i64 %.val, 2305843009213693951
   br i1 %i.e, label %bb.e, label %bb.d, !prof !7
 
 bb.d:                                             ; preds = %bb.c
-  switch i64 %2, label %bb.f [
-    i64 16, label %_RNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB5_16TargetDataLayout17ptr_sized_integer.exit
-    i64 32, label %bb.g
-    i64 64, label %bb.h
+  switch i64 %.val, label %bb.f [
+    i64 2, label %_RNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB5_16TargetDataLayout17ptr_sized_integer.exit
+    i64 4, label %bb.g
+    i64 8, label %bb.h
   ], !prof !450
 
 bb.e:                                             ; preds = %bb.c
@@ -2520,6 +2519,7 @@ bb.e:                                             ; preds = %bb.c
   unreachable
 
 bb.f:                                             ; preds = %bb.d
+  %2 = shl nuw i64 %.val, 3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store i64 %2, ptr %i.b, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -2922,16 +2922,15 @@ default.unreachable1:                             ; preds = %bb.a
 bb.b:                                             ; preds = %bb.a
   %i.c = tail call noundef nonnull align 8 ptr @_RNvXs3_NtNtCs8K4cjrcxBsw_6hir_ty11next_solver4utilNtNtB7_8interner10DbInternerNtCskVLyBV5N46_15ra_ap_rustc_abi13HasDataLayout11data_layout(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %0)
   %i.d = getelementptr i8, ptr %i.c, i64 56
-  %.val = load i64, ptr %i.d, align 8, !noundef !5 ; 3 uses
-  %2 = shl i64 %.val, 3                           ; 2 uses
+  %.val = load i64, ptr %i.d, align 8, !noundef !5 ; 4 uses
   %i.e = icmp ugt i64 %.val, 2305843009213693951
   br i1 %i.e, label %bb.d, label %bb.c, !prof !7
 
 bb.c:                                             ; preds = %bb.b
-  switch i64 %2, label %bb.e [
-    i64 16, label %_RNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB5_16TargetDataLayout17ptr_sized_integer.exit
-    i64 32, label %bb.f
-    i64 64, label %bb.g
+  switch i64 %.val, label %bb.e [
+    i64 2, label %_RNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB5_16TargetDataLayout17ptr_sized_integer.exit
+    i64 4, label %bb.f
+    i64 8, label %bb.g
   ], !prof !450
 
 bb.d:                                             ; preds = %bb.b
@@ -2939,6 +2938,7 @@ bb.d:                                             ; preds = %bb.b
   unreachable
 
 bb.e:                                             ; preds = %bb.c
+  %2 = shl nuw i64 %.val, 3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store i64 %2, ptr %i.b, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -2985,16 +2985,15 @@ default.unreachable1:                             ; preds = %bb.a
 bb.b:                                             ; preds = %bb.a
   %i.c = tail call noundef nonnull align 8 ptr @_RNvXs3_NtNtCs8K4cjrcxBsw_6hir_ty11next_solver4utilNtNtB7_8interner10DbInternerNtCskVLyBV5N46_15ra_ap_rustc_abi13HasDataLayout11data_layout(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %0)
   %i.d = getelementptr i8, ptr %i.c, i64 56
-  %.val = load i64, ptr %i.d, align 8, !noundef !5 ; 3 uses
-  %2 = shl i64 %.val, 3                           ; 2 uses
+  %.val = load i64, ptr %i.d, align 8, !noundef !5 ; 4 uses
   %i.e = icmp ugt i64 %.val, 2305843009213693951
   br i1 %i.e, label %bb.d, label %bb.c, !prof !7
 
 bb.c:                                             ; preds = %bb.b
-  switch i64 %2, label %bb.e [
-    i64 16, label %_RNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB5_16TargetDataLayout17ptr_sized_integer.exit
-    i64 32, label %bb.f
-    i64 64, label %bb.g
+  switch i64 %.val, label %bb.e [
+    i64 2, label %_RNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB5_16TargetDataLayout17ptr_sized_integer.exit
+    i64 4, label %bb.f
+    i64 8, label %bb.g
   ], !prof !450
 
 bb.d:                                             ; preds = %bb.b
@@ -3002,6 +3001,7 @@ bb.d:                                             ; preds = %bb.b
   unreachable
 
 bb.e:                                             ; preds = %bb.c
+  %2 = shl nuw i64 %.val, 3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store i64 %2, ptr %i.b, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -3404,16 +3404,15 @@ bb.l:                                             ; preds = %_RNvMsl_CskVLyBV5N4
 
 bb.m:                                             ; preds = %bb.l
   %i.t = getelementptr i8, ptr %i.s, i64 56
-  %.val.i = load i64, ptr %i.t, align 8, !noundef !5 ; 3 uses
-  %5 = shl i64 %.val.i, 3                         ; 2 uses
+  %.val.i = load i64, ptr %i.t, align 8, !noundef !5 ; 4 uses
   %i.u = icmp ugt i64 %.val.i, 2305843009213693951
   br i1 %i.u, label %bb.o, label %bb.n, !prof !7
 
 bb.n:                                             ; preds = %bb.m
-  switch i64 %5, label %bb.p [
-    i64 16, label %_RINvMsl_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_7Integer9from_attrNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerEB13_.exit.thread
-    i64 32, label %bb.q
-    i64 64, label %bb.r
+  switch i64 %.val.i, label %bb.p [
+    i64 2, label %_RINvMsl_CskVLyBV5N46_15ra_ap_rustc_abiNtB6_7Integer9from_attrNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerEB13_.exit.thread
+    i64 4, label %bb.q
+    i64 8, label %bb.r
   ], !prof !450
 
 bb.o:                                             ; preds = %bb.m
@@ -3421,6 +3420,7 @@ bb.o:                                             ; preds = %bb.m
   unreachable
 
 bb.p:                                             ; preds = %bb.n
+  %5 = shl nuw i64 %.val.i, 3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !11687
   store i64 %5, ptr %i.b, align 8, !noalias !11687
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !11687

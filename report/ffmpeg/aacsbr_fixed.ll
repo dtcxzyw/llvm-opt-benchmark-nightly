@@ -204,7 +204,7 @@ av_normalize_sf.exit41.i721.i:                    ; preds = %._crit_edge.i32.i71
 
 av_add_sf.exit743.i:                              ; preds = %av_normalize_sf.exit41.i721.i, %bb.dm, %av_normalize_sf.exit.i737.i, %.lr.ph1490.i
   %.sroa.016.0.i706.i = phi i64 [ %i.aya, %.lr.ph1490.i ], [ %.sroa.05.0.insert.insert.i.i738.i, %av_normalize_sf.exit.i737.i ], [ %.sroa.05.0.insert.insert.i37.i722.i, %av_normalize_sf.exit41.i721.i ], [ %.sroa.047.01487.i, %bb.dm ] ; 2 uses
-  %.sroa.5.0.i707.i = phi i64 [ %.sroa.4.0.extract.shift.i704.i, %.lr.ph1490.i ], [ %.sroa.5.0.extract.shift.i739.i, %av_normalize_sf.exit.i737.i ], [ %.sroa.5.0.extract.shift18.i723.i, %av_normalize_sf.exit41.i721.i ], [ %.sroa.414.0.extract.shift.i701.i, %bb.dm ] ; 4 uses
+  %.sroa.5.0.i707.i = phi i64 [ %.sroa.4.0.extract.shift.i704.i, %.lr.ph1490.i ], [ %.sroa.5.0.extract.shift.i739.i, %av_normalize_sf.exit.i737.i ], [ %.sroa.5.0.extract.shift18.i723.i, %av_normalize_sf.exit41.i721.i ], [ %.sroa.414.0.extract.shift.i701.i, %bb.dm ] ; 5 uses
   %.sroa.5.0.insert.shift.i708.i = shl nuw i64 %.sroa.5.0.i707.i, 32
   %.sroa.016.0.insert.ext.i709.i = and i64 %.sroa.016.0.i706.i, 4294967295
   %.sroa.016.0.insert.insert.i710.i = or disjoint i64 %.sroa.5.0.insert.shift.i708.i, %.sroa.016.0.insert.ext.i709.i ; 2 uses
@@ -319,7 +319,7 @@ av_normalize_sf.exit41.i765.i:                    ; preds = %._crit_edge.i32.i76
 
 av_add_sf.exit787.i:                              ; preds = %av_normalize_sf.exit41.i765.i, %bb.dq, %av_normalize_sf.exit.i781.i, %av_add_sf.exit743.i
   %.sroa.016.0.i750.i = phi i64 [ %i.azp, %av_add_sf.exit743.i ], [ %.sroa.05.0.insert.insert.i.i782.i, %av_normalize_sf.exit.i781.i ], [ %.sroa.05.0.insert.insert.i37.i766.i, %av_normalize_sf.exit41.i765.i ], [ %.sroa.10.01486.i, %bb.dq ] ; 2 uses
-  %.sroa.5.0.i751.i = phi i64 [ %.sroa.4.0.extract.shift.i748.i, %av_add_sf.exit743.i ], [ %.sroa.5.0.extract.shift.i783.i, %av_normalize_sf.exit.i781.i ], [ %.sroa.5.0.extract.shift18.i767.i, %av_normalize_sf.exit41.i765.i ], [ %.sroa.414.0.extract.shift.i745.i, %bb.dq ] ; 4 uses
+  %.sroa.5.0.i751.i = phi i64 [ %.sroa.4.0.extract.shift.i748.i, %av_add_sf.exit743.i ], [ %.sroa.5.0.extract.shift.i783.i, %av_normalize_sf.exit.i781.i ], [ %.sroa.5.0.extract.shift18.i767.i, %av_normalize_sf.exit41.i765.i ], [ %.sroa.414.0.extract.shift.i745.i, %bb.dq ] ; 5 uses
   %.sroa.5.0.insert.shift.i752.i = shl nuw i64 %.sroa.5.0.i751.i, 32
   %.sroa.016.0.insert.ext.i753.i = and i64 %.sroa.016.0.i750.i, 4294967295
   %.sroa.016.0.insert.insert.i754.i = or disjoint i64 %.sroa.5.0.insert.shift.i752.i, %.sroa.016.0.insert.ext.i753.i ; 2 uses
@@ -332,7 +332,7 @@ av_add_sf.exit787.i:                              ; preds = %av_normalize_sf.exi
   %.sroa.09.0.extract.trunc.i788.i = trunc i64 %.sroa.016.0.i706.i to i32 ; 2 uses
   %.sroa.4.0.extract.trunc.i790.i = trunc nuw i64 %.sroa.5.0.i707.i to i32 ; 4 uses
   %.neg.i233 = add nsw i32 %.sroa.4.0.extract.trunc.i790.i, 16
-  %i.bbe = sub nsw i32 -16, %.sroa.4.0.extract.trunc.i790.i ; 2 uses
+  %i.bbe = sub nuw nsw i32 -16, %.sroa.4.0.extract.trunc.i790.i
   %i.bbf = icmp sgt i32 %.sroa.4.0.extract.trunc.i790.i, 15
   br i1 %i.bbf, label %av_add_sf.exit828.i, label %bb.ds
 
@@ -385,7 +385,7 @@ av_normalize_sf.exit.i822.i:                      ; preds = %._crit_edge.i.i817.
   br label %av_add_sf.exit828.i
 
 bb.du:                                            ; preds = %bb.ds
-  %6 = icmp samesign ult i32 %i.bbe, 32
+  %6 = icmp samesign ugt i64 %.sroa.5.0.i707.i, 4294967248
   br i1 %6, label %bb.dv, label %av_add_sf.exit828.i
 
 bb.dv:                                            ; preds = %bb.du
@@ -436,7 +436,7 @@ av_add_sf.exit828.i:                              ; preds = %av_normalize_sf.exi
   %.sroa.09.0.extract.trunc.i829.i = trunc i64 %.sroa.016.0.i750.i to i32 ; 2 uses
   %.sroa.4.0.extract.trunc.i831.i = trunc nuw i64 %.sroa.5.0.i751.i to i32 ; 4 uses
   %.neg1363.i = add nsw i32 %.sroa.4.0.extract.trunc.i831.i, 16
-  %i.bco = sub nsw i32 -16, %.sroa.4.0.extract.trunc.i831.i ; 2 uses
+  %i.bco = sub nuw nsw i32 -16, %.sroa.4.0.extract.trunc.i831.i
   %i.bcp = icmp sgt i32 %.sroa.4.0.extract.trunc.i831.i, 15
   br i1 %i.bcp, label %av_add_sf.exit869.i, label %bb.dw
 
@@ -489,7 +489,7 @@ av_normalize_sf.exit.i863.i:                      ; preds = %._crit_edge.i.i858.
   br label %av_add_sf.exit869.i
 
 bb.dy:                                            ; preds = %bb.dw
-  %7 = icmp samesign ult i32 %i.bco, 32
+  %7 = icmp samesign ugt i64 %.sroa.5.0.i751.i, 4294967248
   br i1 %7, label %bb.dz, label %av_add_sf.exit869.i
 
 bb.dz:                                            ; preds = %bb.dy
@@ -892,7 +892,7 @@ av_normalize_sf.exit41.i984.i:                    ; preds = %._crit_edge.i32.i97
 
 av_add_sf.exit1006.i:                             ; preds = %av_normalize_sf.exit41.i984.i, %bb.er, %av_normalize_sf.exit.i1000.i, %.lr.ph1504.i
   %.sroa.016.0.i969.i = phi i64 [ %i.bjn, %.lr.ph1504.i ], [ %.sroa.05.0.insert.insert.i.i1001.i, %av_normalize_sf.exit.i1000.i ], [ %.sroa.05.0.insert.insert.i37.i985.i, %av_normalize_sf.exit41.i984.i ], [ %.sroa.047.11501.i, %bb.er ] ; 2 uses
-  %.sroa.5.0.i970.i = phi i64 [ %.sroa.4.0.extract.shift.i967.i, %.lr.ph1504.i ], [ %.sroa.5.0.extract.shift.i1002.i, %av_normalize_sf.exit.i1000.i ], [ %.sroa.5.0.extract.shift18.i986.i, %av_normalize_sf.exit41.i984.i ], [ %.sroa.414.0.extract.shift.i964.i, %bb.er ] ; 4 uses
+  %.sroa.5.0.i970.i = phi i64 [ %.sroa.4.0.extract.shift.i967.i, %.lr.ph1504.i ], [ %.sroa.5.0.extract.shift.i1002.i, %av_normalize_sf.exit.i1000.i ], [ %.sroa.5.0.extract.shift18.i986.i, %av_normalize_sf.exit41.i984.i ], [ %.sroa.414.0.extract.shift.i964.i, %bb.er ] ; 5 uses
   %.sroa.5.0.insert.shift.i971.i = shl nuw i64 %.sroa.5.0.i970.i, 32
   %.sroa.016.0.insert.ext.i972.i = and i64 %.sroa.016.0.i969.i, 4294967295
   %.sroa.016.0.insert.insert.i973.i = or disjoint i64 %.sroa.5.0.insert.shift.i971.i, %.sroa.016.0.insert.ext.i972.i ; 2 uses
@@ -1295,7 +1295,7 @@ av_add_sf.exit1194.i:                             ; preds = %av_normalize_sf.exi
   br label %bb.fg
 
 bb.fg:                                            ; preds = %av_add_sf.exit1194.i, %av_add_sf.exit1136.i
-  %.sroa.10.2.i = phi i64 [ %.sroa.016.0.insert.insert.i1103.i, %av_add_sf.exit1136.i ], [ %.sroa.016.0.insert.insert.i1161.i, %av_add_sf.exit1194.i ] ; 4 uses
+  %.sroa.10.2.i = phi i64 [ %.sroa.016.0.insert.insert.i1103.i, %av_add_sf.exit1136.i ], [ %.sroa.016.0.insert.insert.i1161.i, %av_add_sf.exit1194.i ] ; 5 uses
   %indvars.iv.next1613.i = add nsw i64 %indvars.iv1612.i, 1 ; 2 uses
   %exitcond1616.not.i = icmp eq i64 %indvars.iv.next1613.i, %wide.trip.count1615.i
   br i1 %exitcond1616.not.i, label %._crit_edge1505.i, label %.lr.ph1504.i, !llvm.loop !209
@@ -1304,7 +1304,7 @@ bb.fg:                                            ; preds = %av_add_sf.exit1194.
   %.sroa.09.0.extract.trunc.i1195.i = trunc i64 %.sroa.016.0.i969.i to i32 ; 2 uses
   %.sroa.4.0.extract.trunc.i1197.i = trunc nuw i64 %.sroa.5.0.i970.i to i32 ; 4 uses
   %.neg1364.i = add nsw i32 %.sroa.4.0.extract.trunc.i1197.i, 16
-  %i.brp = sub nsw i32 -16, %.sroa.4.0.extract.trunc.i1197.i ; 2 uses
+  %i.brp = sub nuw nsw i32 -16, %.sroa.4.0.extract.trunc.i1197.i
   %i.brq = icmp sgt i32 %.sroa.4.0.extract.trunc.i1197.i, 15
   br i1 %i.brq, label %av_add_sf.exit1235.i, label %bb.fh
 
@@ -1357,7 +1357,7 @@ av_normalize_sf.exit.i1229.i:                     ; preds = %._crit_edge.i.i1224
   br label %av_add_sf.exit1235.i
 
 bb.fj:                                            ; preds = %bb.fh
-  %8 = icmp samesign ult i32 %i.brp, 32
+  %8 = icmp samesign ugt i64 %.sroa.5.0.i970.i, 4294967248
   br i1 %8, label %bb.fk, label %av_add_sf.exit1235.i
 
 bb.fk:                                            ; preds = %bb.fj
@@ -1409,7 +1409,7 @@ av_add_sf.exit1235.i:                             ; preds = %av_normalize_sf.exi
   %.sroa.4.0.extract.shift.i1237.i = lshr i64 %.sroa.10.2.i, 32 ; 3 uses
   %.sroa.4.0.extract.trunc.i1238.i = trunc nuw i64 %.sroa.4.0.extract.shift.i1237.i to i32 ; 4 uses
   %.neg1365.i = add nsw i32 %.sroa.4.0.extract.trunc.i1238.i, 16
-  %i.bsz = sub nsw i32 -16, %.sroa.4.0.extract.trunc.i1238.i ; 2 uses
+  %i.bsz = sub nuw nsw i32 -16, %.sroa.4.0.extract.trunc.i1238.i
   %i.bta = icmp sgt i32 %.sroa.4.0.extract.trunc.i1238.i, 15
   br i1 %i.bta, label %av_add_sf.exit1276.i, label %bb.fl
 
@@ -1462,7 +1462,7 @@ av_normalize_sf.exit.i1270.i:                     ; preds = %._crit_edge.i.i1265
   br label %av_add_sf.exit1276.i
 
 bb.fn:                                            ; preds = %bb.fl
-  %9 = icmp samesign ult i32 %i.bsz, 32
+  %9 = icmp ugt i64 %.sroa.10.2.i, -201863462913
   br i1 %9, label %bb.fo, label %av_add_sf.exit1276.i
 
 bb.fo:                                            ; preds = %bb.fn

@@ -204,7 +204,7 @@ bb.a:
   %i.i = and i32 %1, -8
   %i.j = shl nuw nsw i64 %i.g, 3
   %i.k = shl nuw nsw i64 %i.g, 2
-  %i.l = add i32 %1, -1                           ; 2 uses
+  %i.l = add nsw i32 %1, -1                       ; 2 uses
   %i.m = shl nuw nsw i64 %i.g, 1
   br label %.preheader308
 
@@ -238,7 +238,7 @@ bb.a:
   %i.x = and i32 %1, -8
   %i.y = shl nuw nsw i64 %i.v, 3
   %i.z = shl nuw nsw i64 %i.v, 2
-  %i.aa = add i32 %1, -1                          ; 2 uses
+  %i.aa = add nsw i32 %1, -1                      ; 2 uses
   %i.ab = shl nuw nsw i64 %i.v, 1
   %xtraiter = and i32 %3, 1
   %i.ac = icmp eq i32 %3, 1

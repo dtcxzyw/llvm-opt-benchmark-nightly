@@ -201,7 +201,7 @@ bb.y:                                             ; preds = %bb.x
 
 bb.z:                                             ; preds = %bb.x
   %i.bo = load i64, ptr %i.a, align 8, !tbaa !25  ; 2 uses
-  %i.bp = sub i64 15, %i.bo                       ; 2 uses
+  %i.bp = sub nuw nsw i64 15, %i.bo               ; 2 uses
   %i.bq = add i64 %i.bo, -14
   %or.cond = icmp ult i64 %i.bq, -7
   br i1 %or.cond, label %bb.aa, label %bb.ab

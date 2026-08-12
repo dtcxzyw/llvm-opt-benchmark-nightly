@@ -74,14 +74,14 @@ bb.d:                                             ; preds = %bb.c
   %i.t = getelementptr inbounds ptr, ptr %i.q, i64 %i.s
   %i.u = load ptr, ptr %i.t, align 8
   %i.v = load ptr, ptr %i.c, align 8
-  call fastcc void @check(ptr noundef %i.u, ptr noundef @.str.4, ptr noundef %i.v)
+  call void @check(ptr noundef %i.u, ptr noundef @.str.4, ptr noundef %i.v)
   %i.w = load ptr, ptr %i.b, align 8
   %i.x = load i32, ptr %i.a, align 4
   %i.y = sext i32 %i.x to i64
   %i.z = getelementptr inbounds ptr, ptr %i.w, i64 %i.y
   %i.aa = load ptr, ptr %i.z, align 8
   %i.ab = load ptr, ptr %i.d, align 8
-  call fastcc void @check(ptr noundef %i.aa, ptr noundef @.str.5, ptr noundef %i.ab)
+  call void @check(ptr noundef %i.aa, ptr noundef @.str.5, ptr noundef %i.ab)
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d
@@ -108,7 +108,7 @@ declare i32 @mca_base_var_register(ptr noundef, ptr noundef, ptr noundef, ptr no
 declare noalias ptr @opal_argv_split(ptr noundef, i32 noundef) local_unnamed_addr #1
 
 ; Function Attrs: noinline nounwind optnone uwtable
-define internal fastcc void @check(ptr noundef %0, ptr noundef %1, ptr noundef %2) unnamed_addr #0 {
+define internal void @check(ptr noundef %0, ptr noundef %1, ptr noundef %2) unnamed_addr #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 2 uses
   %i.b = alloca ptr, align 8                      ; 3 uses

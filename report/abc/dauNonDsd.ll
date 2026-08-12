@@ -204,7 +204,7 @@ define internal fastcc range(i32 0, 2) i32 @Dau_DecCheckSetAny(ptr nofree nounde
 bb.a:
   %i.a = icmp slt i32 %2, 6
   %i.b = sub i32 %1, %2                           ; 18 uses
-  %i.c = shl nuw i32 1, %i.b                      ; 3 uses
+  %i.c = shl nuw i32 1, %i.b                      ; 4 uses
   br i1 %i.a, label %bb.b, label %bb.ab
 
 bb.b:                                             ; preds = %bb.a
@@ -218,7 +218,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %.not97.i = icmp eq i32 %i.b, 31
-  br i1 %.not97.i, label %._crit_edge.i, label %.lr.ph.split.us.preheader.i
+  br i1 %.not97.i, label %._crit_edge.i, label %.lr.ph.split.us.i
 
 .thread.i:                                        ; preds = %bb.b
   store i64 0, ptr %7, align 8, !tbaa !9
@@ -227,7 +227,6 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph.split.preheader.i:                         ; preds = %.thread.i
   %i.h = icmp sgt i32 %i.b, 0
-  %smax.i = tail call i32 @llvm.smax.i32(i32 %i.c, i32 1) ; 2 uses
   br i1 %i.h, label %.lr.ph.split.i.us.preheader, label %.lr.ph.split.i
 
 .lr.ph.split.i.us.preheader:                      ; preds = %.lr.ph.split.preheader.i
@@ -436,19 +435,15 @@ bb.p:                                             ; preds = %.sink.split.i.us, %
   %.152.i.us = phi i64 [ %.05191.i.us, %bb.e ], [ %.05191.i.us, %.lr.ph.split.i.us ], [ %i.w, %bb.d ], [ %.05191.i.us, %.sink.split.i.us ] ; 2 uses
   %.1.i.us = phi i64 [ %.05092.i.us, %bb.e ], [ %.05092.i.us, %.lr.ph.split.i.us ], [ %.05092.i.us, %bb.d ], [ %.1.ph.i.us, %.sink.split.i.us ] ; 2 uses
   %i.br = add nuw nsw i32 %.05787.i.us, 1         ; 2 uses
-  %exitcond.not.i.us = icmp eq i32 %i.br, %smax.i
+  %exitcond.not.i.us = icmp eq i32 %i.br, %i.c
   br i1 %exitcond.not.i.us, label %._crit_edge.i, label %.lr.ph.split.i.us, !llvm.loop !25
 
-.lr.ph.split.us.preheader.i:                      ; preds = %bb.c
-  %smax100.i = tail call i32 @llvm.smax.i32(i32 %i.c, i32 1)
-  br label %.lr.ph.split.us.i
-
-.lr.ph.split.us.i:                                ; preds = %bb.u, %.lr.ph.split.us.preheader.i
-  %.05092.us.i = phi i64 [ %.1.us.i, %bb.u ], [ 0, %.lr.ph.split.us.preheader.i ] ; 5 uses
-  %.05191.us.i = phi i64 [ %.152.us.i, %bb.u ], [ 0, %.lr.ph.split.us.preheader.i ] ; 5 uses
-  %.05390.us.i = phi i32 [ %.154.us.i, %bb.u ], [ 0, %.lr.ph.split.us.preheader.i ] ; 2 uses
-  %.05589.us.i = phi i32 [ %.156.us.i, %bb.u ], [ 0, %.lr.ph.split.us.preheader.i ] ; 4 uses
-  %.05787.us.i = phi i32 [ %i.cf, %bb.u ], [ 0, %.lr.ph.split.us.preheader.i ] ; 4 uses
+.lr.ph.split.us.i:                                ; preds = %bb.c, %bb.u
+  %.05092.us.i = phi i64 [ %.1.us.i, %bb.u ], [ 0, %bb.c ] ; 5 uses
+  %.05191.us.i = phi i64 [ %.152.us.i, %bb.u ], [ 0, %bb.c ] ; 5 uses
+  %.05390.us.i = phi i32 [ %.154.us.i, %bb.u ], [ 0, %bb.c ] ; 2 uses
+  %.05589.us.i = phi i32 [ %.156.us.i, %bb.u ], [ 0, %bb.c ] ; 4 uses
+  %.05787.us.i = phi i32 [ %i.cf, %bb.u ], [ 0, %bb.c ] ; 4 uses
   %i.bs = and i32 %.05787.us.i, %3
   %i.bt = icmp eq i32 %i.bs, %4
   br i1 %i.bt, label %bb.q, label %bb.u
@@ -484,7 +479,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s, %bb.r,
   %.152.us.i = phi i64 [ %.05191.us.i, %bb.r ], [ %i.cc, %bb.q ], [ %.05191.us.i, %bb.t ], [ %.05191.us.i, %.lr.ph.split.us.i ], [ %.05191.us.i, %bb.s ] ; 2 uses
   %.1.us.i = phi i64 [ %.05092.us.i, %bb.r ], [ %.05092.us.i, %bb.q ], [ %.05092.us.i, %bb.t ], [ %.05092.us.i, %.lr.ph.split.us.i ], [ %i.cc, %bb.s ] ; 2 uses
   %i.cf = add nuw nsw i32 %.05787.us.i, 1         ; 2 uses
-  %exitcond101.not.i = icmp eq i32 %i.cf, %smax100.i
+  %exitcond101.not.i = icmp eq i32 %i.cf, %i.c
   br i1 %exitcond101.not.i, label %._crit_edge.i, label %.lr.ph.split.us.i, !llvm.loop !25
 
 .lr.ph.split.i:                                   ; preds = %.lr.ph.split.preheader.i, %bb.z
@@ -533,7 +528,7 @@ bb.z:                                             ; preds = %.sink.split.i, %bb.
   %.152.i = phi i64 [ %.05191.i, %bb.w ], [ %.05191.i, %.lr.ph.split.i ], [ %i.cq, %bb.v ], [ %.05191.i, %.sink.split.i ] ; 2 uses
   %.1.i = phi i64 [ %.05092.i, %bb.w ], [ %.05092.i, %.lr.ph.split.i ], [ %.05092.i, %bb.v ], [ %.1.ph.i, %.sink.split.i ] ; 2 uses
   %i.ct = add nuw nsw i32 %.05787.i, 1            ; 2 uses
-  %exitcond.not.i = icmp eq i32 %i.ct, %smax.i
+  %exitcond.not.i = icmp eq i32 %i.ct, %i.c
   br i1 %exitcond.not.i, label %._crit_edge.i, label %.lr.ph.split.i, !llvm.loop !25
 
 ._crit_edge.i:                                    ; preds = %bb.z, %bb.p, %bb.u, %.thread.i, %bb.c

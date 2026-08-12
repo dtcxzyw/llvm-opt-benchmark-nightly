@@ -23,7 +23,7 @@ bb.a:
   %i.e = alloca i32, align 4                      ; 3 uses
   %i.f = alloca i64, align 8                      ; 4 uses
   store i32 0, ptr %i.a, align 4
-  %0 = call fastcc noundef i32 @_ZL11__get_cpuidjPjS_S_S_(ptr noundef %i.b, ptr noundef %i.c, ptr noundef %i.d, ptr noundef %i.e)
+  %0 = call noundef i32 @_ZL11__get_cpuidjPjS_S_S_(i32 noundef 1, ptr noundef %i.b, ptr noundef %i.c, ptr noundef %i.d, ptr noundef %i.e)
   %i.g = icmp ne i32 %0, 0
   br i1 %i.g, label %bb.c, label %bb.b
 
@@ -71,7 +71,7 @@ bb.j:                                             ; preds = %bb.i, %bb.b
 }
 
 ; Function Attrs: mustprogress noinline norecurse optnone uwtable
-define internal fastcc noundef i32 @_ZL11__get_cpuidjPjS_S_S_(ptr noundef nonnull %0, ptr noundef nonnull %1, ptr noundef nonnull %2, ptr noundef nonnull %3) unnamed_addr #0 {
+define internal noundef i32 @_ZL11__get_cpuidjPjS_S_S_(i32 noundef %0, ptr noundef nonnull %1, ptr noundef nonnull %2, ptr noundef nonnull %3, ptr noundef nonnull %4) unnamed_addr #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 3 uses
   %i.b = alloca i32, align 4                      ; 4 uses
@@ -81,14 +81,14 @@ bb.a:
   %i.f = alloca ptr, align 8                      ; 2 uses
   %i.g = alloca i32, align 4                      ; 3 uses
   store i32 1, ptr %i.b, align 4
-  store ptr %0, ptr %i.c, align 8
-  store ptr %1, ptr %i.d, align 8
-  store ptr %2, ptr %i.e, align 8
-  store ptr %3, ptr %i.f, align 8
+  store ptr %1, ptr %i.c, align 8
+  store ptr %2, ptr %i.d, align 8
+  store ptr %3, ptr %i.e, align 8
+  store ptr %4, ptr %i.f, align 8
   %i.h = load i32, ptr %i.b, align 4
   %i.i = and i32 %i.h, -2147483648
-  %4 = call fastcc noundef i32 @_ZL15__get_cpuid_maxjPj(i32 noundef %i.i)
-  store i32 %4, ptr %i.g, align 4
+  %5 = call noundef i32 @_ZL15__get_cpuid_maxjPj(i32 noundef %i.i, ptr noundef null)
+  store i32 %5, ptr %i.g, align 4
   %i.j = load i32, ptr %i.g, align 4
   %i.k = icmp eq i32 %i.j, 0
   br i1 %i.k, label %bb.c, label %bb.b
@@ -133,7 +133,7 @@ declare noundef nonnull align 8 dereferenceable(8) ptr @_ZNSolsEPFRSoS_E(ptr nou
 declare noundef nonnull align 8 dereferenceable(8) ptr @_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_(ptr noundef nonnull align 8 dereferenceable(8)) #1
 
 ; Function Attrs: mustprogress noinline norecurse nounwind optnone uwtable
-define internal fastcc noundef i32 @_ZL15__get_cpuid_maxjPj(i32 noundef range(i32 0, -2147483647) %0) unnamed_addr #2 {
+define internal noundef i32 @_ZL15__get_cpuid_maxjPj(i32 noundef range(i32 0, -2147483647) %0, ptr noundef %1) unnamed_addr #2 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 2 uses
   %i.b = alloca ptr, align 8                      ; 3 uses

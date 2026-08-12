@@ -203,7 +203,7 @@ bb.a:
   %.sroa.5.0..sroa_idx32.i = getelementptr inbounds nuw i8, ptr %1, i64 16, !dbg !24601
   %.sroa.5.0.copyload.i = load i64, ptr %.sroa.5.0..sroa_idx32.i, align 8, !dbg !24601, !alias.scope !24606, !noalias !24594 ; 2 uses
   %.sroa.9.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 24, !dbg !24601
-  %.sroa.9.0.copyload.i = load i64, ptr %.sroa.9.0..sroa_idx.i, align 8, !dbg !24601, !alias.scope !24606, !noalias !24594 ; 6 uses
+  %.sroa.9.0.copyload.i = load i64, ptr %.sroa.9.0..sroa_idx.i, align 8, !dbg !24601, !alias.scope !24606, !noalias !24594 ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !dbg !24610, !noalias !24612
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.b, ptr noundef nonnull align 8 dereferenceable(32) %i.c, i64 24, i1 false), !dbg !24613, !noalias !24599
   store i64 0, ptr %i.c, align 8, !dbg !24618, !alias.scope !24594, !noalias !24599
@@ -234,7 +234,7 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc7raw_vec6R
 bb.b:                                             ; preds = %.thread.i, %.preheader.i
   %.sroa.5.0.i = phi i64 [ %.sroa.5.182.i, %.thread.i ], [ %.sroa.5.0.copyload.i, %.preheader.i ], !dbg !24601 ; 14 uses
   %.sroa.0.0.i = phi i64 [ %.sroa.0.164.i, %.thread.i ], [ 0, %.preheader.i ], !dbg !24645 ; 2 uses
-  %umax.i = call i64 @llvm.umax.i64(i64 %.sroa.5.0.i, i64 %.sroa.9.0.copyload.i), !dbg !24646 ; 14 uses
+  %umax.i = call i64 @llvm.umax.i64(i64 %.sroa.5.0.i, i64 %.sroa.9.0.copyload.i), !dbg !24646 ; 9 uses
   %i.n = add i64 %.sroa.0.0.i, 8, !dbg !24646
   %i.o = add i64 %.sroa.5.0.i, 8, !dbg !24646
   %i.p = add i64 %.sroa.0.0.i, %umax.i, !dbg !24646
@@ -303,7 +303,7 @@ bb.g:                                             ; preds = %bb.f, %_RNvMs0_NtNt
   br i1 %exitcond.not.i.1, label %.thread45.i, label %bb.h, !dbg !24654
 
 bb.h:                                             ; preds = %bb.g
-  %i.al = add i64 %.sroa.5.0.i, 2, !dbg !24655    ; 4 uses
+  %i.al = add nuw i64 %.sroa.5.0.i, 2, !dbg !24655 ; 4 uses
   %i.am = icmp ult i64 %i.s, %i.w, !dbg !24682
   br i1 %i.am, label %bb.i, label %.invoke145.i, !dbg !24682, !prof !1364
 
@@ -327,11 +327,11 @@ bb.j:                                             ; preds = %_RNvMs0_NtNtCs8774d
 
 bb.k:                                             ; preds = %bb.j, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit2.i.i.i.1
   %.sroa.0.0.i.ph.i.1 = phi i8 [ %.sroa.0.0.i.ph.i, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit2.i.i.i.1 ], [ %i.au, %bb.j ] ; 3 uses
-  %exitcond.not.i.2 = icmp eq i64 %i.al, %umax.i, !dbg !24647
+  %exitcond.not.i.2 = icmp eq i64 %.sroa.9.0.copyload.i, %i.al, !dbg !24647
   br i1 %exitcond.not.i.2, label %.thread45.i, label %bb.l, !dbg !24654
 
 bb.l:                                             ; preds = %bb.k
-  %i.av = add i64 %.sroa.5.0.i, 3, !dbg !24655    ; 4 uses
+  %i.av = add nuw i64 %.sroa.5.0.i, 3, !dbg !24655 ; 4 uses
   %i.aw = icmp ult i64 %i.al, %i.w, !dbg !24682
   br i1 %i.aw, label %bb.m, label %.invoke145.i, !dbg !24682, !prof !1364
 
@@ -355,11 +355,11 @@ bb.n:                                             ; preds = %_RNvMs0_NtNtCs8774d
 
 bb.o:                                             ; preds = %bb.n, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit2.i.i.i.2
   %.sroa.0.0.i.ph.i.2 = phi i8 [ %.sroa.0.0.i.ph.i.1, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit2.i.i.i.2 ], [ %i.be, %bb.n ] ; 3 uses
-  %exitcond.not.i.3 = icmp eq i64 %i.av, %umax.i, !dbg !24647
+  %exitcond.not.i.3 = icmp eq i64 %.sroa.9.0.copyload.i, %i.av, !dbg !24647
   br i1 %exitcond.not.i.3, label %.thread45.i, label %bb.p, !dbg !24654
 
 bb.p:                                             ; preds = %bb.o
-  %i.bf = add i64 %.sroa.5.0.i, 4, !dbg !24655    ; 4 uses
+  %i.bf = add nuw i64 %.sroa.5.0.i, 4, !dbg !24655 ; 4 uses
   %i.bg = icmp ult i64 %i.av, %i.w, !dbg !24682
   br i1 %i.bg, label %bb.q, label %.invoke145.i, !dbg !24682, !prof !1364
 
@@ -383,11 +383,11 @@ bb.r:                                             ; preds = %_RNvMs0_NtNtCs8774d
 
 bb.s:                                             ; preds = %bb.r, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit2.i.i.i.3
   %.sroa.0.0.i.ph.i.3 = phi i8 [ %.sroa.0.0.i.ph.i.2, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit2.i.i.i.3 ], [ %i.bo, %bb.r ] ; 3 uses
-  %exitcond.not.i.4 = icmp eq i64 %i.bf, %umax.i, !dbg !24647
+  %exitcond.not.i.4 = icmp eq i64 %.sroa.9.0.copyload.i, %i.bf, !dbg !24647
   br i1 %exitcond.not.i.4, label %.thread45.i, label %bb.t, !dbg !24654
 
 bb.t:                                             ; preds = %bb.s
-  %i.bp = add i64 %.sroa.5.0.i, 5, !dbg !24655    ; 4 uses
+  %i.bp = add nuw i64 %.sroa.5.0.i, 5, !dbg !24655 ; 4 uses
   %i.bq = icmp ult i64 %i.bf, %i.w, !dbg !24682
   br i1 %i.bq, label %bb.u, label %.invoke145.i, !dbg !24682, !prof !1364
 
@@ -411,11 +411,11 @@ bb.v:                                             ; preds = %_RNvMs0_NtNtCs8774d
 
 bb.w:                                             ; preds = %bb.v, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit2.i.i.i.4
   %.sroa.0.0.i.ph.i.4 = phi i8 [ %.sroa.0.0.i.ph.i.3, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit2.i.i.i.4 ], [ %i.by, %bb.v ] ; 3 uses
-  %exitcond.not.i.5 = icmp eq i64 %i.bp, %umax.i, !dbg !24647
+  %exitcond.not.i.5 = icmp eq i64 %.sroa.9.0.copyload.i, %i.bp, !dbg !24647
   br i1 %exitcond.not.i.5, label %.thread45.i, label %bb.x, !dbg !24654
 
 bb.x:                                             ; preds = %bb.w
-  %i.bz = add i64 %.sroa.5.0.i, 6, !dbg !24655    ; 4 uses
+  %i.bz = add nuw i64 %.sroa.5.0.i, 6, !dbg !24655 ; 4 uses
   %i.ca = icmp ult i64 %i.bp, %i.w, !dbg !24682
   br i1 %i.ca, label %bb.y, label %.invoke145.i, !dbg !24682, !prof !1364
 
@@ -439,7 +439,7 @@ bb.z:                                             ; preds = %_RNvMs0_NtNtCs8774d
 
 bb.aa:                                            ; preds = %bb.z, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit2.i.i.i.5
   %.sroa.0.0.i.ph.i.5 = phi i8 [ %.sroa.0.0.i.ph.i.4, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit2.i.i.i.5 ], [ %i.ci, %bb.z ] ; 3 uses
-  %exitcond.not.i.6 = icmp eq i64 %i.bz, %umax.i, !dbg !24647
+  %exitcond.not.i.6 = icmp eq i64 %.sroa.9.0.copyload.i, %i.bz, !dbg !24647
   br i1 %exitcond.not.i.6, label %.thread45.i, label %bb.ab, !dbg !24654
 
 bb.ab:                                            ; preds = %bb.aa
@@ -648,7 +648,7 @@ bb.a:
   %.sroa.5.0..sroa_idx32.i = getelementptr inbounds nuw i8, ptr %1, i64 16, !dbg !24810
   %.sroa.5.0.copyload.i = load i64, ptr %.sroa.5.0..sroa_idx32.i, align 8, !dbg !24810, !alias.scope !24815, !noalias !24803 ; 2 uses
   %.sroa.9.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 24, !dbg !24810
-  %.sroa.9.0.copyload.i = load i64, ptr %.sroa.9.0..sroa_idx.i, align 8, !dbg !24810, !alias.scope !24815, !noalias !24803 ; 6 uses
+  %.sroa.9.0.copyload.i = load i64, ptr %.sroa.9.0..sroa_idx.i, align 8, !dbg !24810, !alias.scope !24815, !noalias !24803 ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !dbg !24819, !noalias !24821
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.b, ptr noundef nonnull align 8 dereferenceable(32) %i.c, i64 24, i1 false), !dbg !24822, !noalias !24808
   store i64 0, ptr %i.c, align 8, !dbg !24827, !alias.scope !24803, !noalias !24808
@@ -679,7 +679,7 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc7raw_vec6R
 bb.b:                                             ; preds = %.thread.i, %.preheader.i
   %.sroa.5.0.i = phi i64 [ %.sroa.5.182.i, %.thread.i ], [ %.sroa.5.0.copyload.i, %.preheader.i ], !dbg !24810 ; 14 uses
   %.sroa.0.0.i = phi i64 [ %.sroa.0.164.i, %.thread.i ], [ 0, %.preheader.i ], !dbg !24854 ; 2 uses
-  %umax.i = call i64 @llvm.umax.i64(i64 %.sroa.5.0.i, i64 %.sroa.9.0.copyload.i), !dbg !24855 ; 14 uses
+  %umax.i = call i64 @llvm.umax.i64(i64 %.sroa.5.0.i, i64 %.sroa.9.0.copyload.i), !dbg !24855 ; 9 uses
   %i.n = add i64 %.sroa.0.0.i, 8, !dbg !24855
   %i.o = add i64 %.sroa.5.0.i, 8, !dbg !24855
   %i.p = add i64 %.sroa.0.0.i, %umax.i, !dbg !24855
@@ -748,7 +748,7 @@ bb.g:                                             ; preds = %bb.f, %_RNvMs0_NtNt
   br i1 %exitcond.not.i.1, label %.thread45.i, label %bb.h, !dbg !24863
 
 bb.h:                                             ; preds = %bb.g
-  %i.ak = add i64 %.sroa.5.0.i, 2, !dbg !24864    ; 4 uses
+  %i.ak = add nuw i64 %.sroa.5.0.i, 2, !dbg !24864 ; 4 uses
   %i.al = icmp ult i64 %i.s, %i.w, !dbg !24884
   br i1 %i.al, label %bb.i, label %.invoke145.i, !dbg !24884, !prof !1364
 
@@ -772,11 +772,11 @@ bb.j:                                             ; preds = %_RNvMs0_NtNtCs8774d
 bb.k:                                             ; preds = %bb.j, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit2.i.i.i.1
   %.sroa.0.0.i.ph.i.1 = phi i8 [ 2, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit2.i.i.i.1 ], [ %i.ar, %bb.j ]
   %.sroa.013.0.i.1 = or disjoint i8 %.sroa.0.0.i.ph.i.1, %.sroa.0.0.i.ph.i, !dbg !24925 ; 2 uses
-  %exitcond.not.i.2 = icmp eq i64 %i.ak, %umax.i, !dbg !24856
+  %exitcond.not.i.2 = icmp eq i64 %.sroa.9.0.copyload.i, %i.ak, !dbg !24856
   br i1 %exitcond.not.i.2, label %.thread45.i, label %bb.l, !dbg !24863
 
 bb.l:                                             ; preds = %bb.k
-  %i.as = add i64 %.sroa.5.0.i, 3, !dbg !24864    ; 4 uses
+  %i.as = add nuw i64 %.sroa.5.0.i, 3, !dbg !24864 ; 4 uses
   %i.at = icmp ult i64 %i.ak, %i.w, !dbg !24884
   br i1 %i.at, label %bb.m, label %.invoke145.i, !dbg !24884, !prof !1364
 
@@ -800,11 +800,11 @@ bb.n:                                             ; preds = %_RNvMs0_NtNtCs8774d
 bb.o:                                             ; preds = %bb.n, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit2.i.i.i.2
   %.sroa.0.0.i.ph.i.2 = phi i8 [ 4, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit2.i.i.i.2 ], [ %i.az, %bb.n ]
   %.sroa.013.0.i.2 = or disjoint i8 %.sroa.0.0.i.ph.i.2, %.sroa.013.0.i.1, !dbg !24925 ; 2 uses
-  %exitcond.not.i.3 = icmp eq i64 %i.as, %umax.i, !dbg !24856
+  %exitcond.not.i.3 = icmp eq i64 %.sroa.9.0.copyload.i, %i.as, !dbg !24856
   br i1 %exitcond.not.i.3, label %.thread45.i, label %bb.p, !dbg !24863
 
 bb.p:                                             ; preds = %bb.o
-  %i.ba = add i64 %.sroa.5.0.i, 4, !dbg !24864    ; 4 uses
+  %i.ba = add nuw i64 %.sroa.5.0.i, 4, !dbg !24864 ; 4 uses
   %i.bb = icmp ult i64 %i.as, %i.w, !dbg !24884
   br i1 %i.bb, label %bb.q, label %.invoke145.i, !dbg !24884, !prof !1364
 
@@ -828,11 +828,11 @@ bb.r:                                             ; preds = %_RNvMs0_NtNtCs8774d
 bb.s:                                             ; preds = %bb.r, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit2.i.i.i.3
   %.sroa.0.0.i.ph.i.3 = phi i8 [ 8, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit2.i.i.i.3 ], [ %i.bh, %bb.r ]
   %.sroa.013.0.i.3 = or disjoint i8 %.sroa.0.0.i.ph.i.3, %.sroa.013.0.i.2, !dbg !24925 ; 2 uses
-  %exitcond.not.i.4 = icmp eq i64 %i.ba, %umax.i, !dbg !24856
+  %exitcond.not.i.4 = icmp eq i64 %.sroa.9.0.copyload.i, %i.ba, !dbg !24856
   br i1 %exitcond.not.i.4, label %.thread45.i, label %bb.t, !dbg !24863
 
 bb.t:                                             ; preds = %bb.s
-  %i.bi = add i64 %.sroa.5.0.i, 5, !dbg !24864    ; 4 uses
+  %i.bi = add nuw i64 %.sroa.5.0.i, 5, !dbg !24864 ; 4 uses
   %i.bj = icmp ult i64 %i.ba, %i.w, !dbg !24884
   br i1 %i.bj, label %bb.u, label %.invoke145.i, !dbg !24884, !prof !1364
 
@@ -856,11 +856,11 @@ bb.v:                                             ; preds = %_RNvMs0_NtNtCs8774d
 bb.w:                                             ; preds = %bb.v, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit2.i.i.i.4
   %.sroa.0.0.i.ph.i.4 = phi i8 [ 16, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit2.i.i.i.4 ], [ %i.bp, %bb.v ]
   %.sroa.013.0.i.4 = or disjoint i8 %.sroa.0.0.i.ph.i.4, %.sroa.013.0.i.3, !dbg !24925 ; 2 uses
-  %exitcond.not.i.5 = icmp eq i64 %i.bi, %umax.i, !dbg !24856
+  %exitcond.not.i.5 = icmp eq i64 %.sroa.9.0.copyload.i, %i.bi, !dbg !24856
   br i1 %exitcond.not.i.5, label %.thread45.i, label %bb.x, !dbg !24863
 
 bb.x:                                             ; preds = %bb.w
-  %i.bq = add i64 %.sroa.5.0.i, 6, !dbg !24864    ; 4 uses
+  %i.bq = add nuw i64 %.sroa.5.0.i, 6, !dbg !24864 ; 4 uses
   %i.br = icmp ult i64 %i.bi, %i.w, !dbg !24884
   br i1 %i.br, label %bb.y, label %.invoke145.i, !dbg !24884, !prof !1364
 
@@ -884,7 +884,7 @@ bb.z:                                             ; preds = %_RNvMs0_NtNtCs8774d
 bb.aa:                                            ; preds = %bb.z, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit2.i.i.i.5
   %.sroa.0.0.i.ph.i.5 = phi i8 [ 32, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit2.i.i.i.5 ], [ %i.bx, %bb.z ]
   %.sroa.013.0.i.5 = or i8 %.sroa.0.0.i.ph.i.5, %.sroa.013.0.i.4, !dbg !24925 ; 2 uses
-  %exitcond.not.i.6 = icmp eq i64 %i.bq, %umax.i, !dbg !24856
+  %exitcond.not.i.6 = icmp eq i64 %.sroa.9.0.copyload.i, %i.bq, !dbg !24856
   br i1 %exitcond.not.i.6, label %.thread45.i, label %bb.ab, !dbg !24863
 
 bb.ab:                                            ; preds = %bb.aa
@@ -1093,7 +1093,7 @@ bb.a:
   %.sroa.5.0..sroa_idx30.i = getelementptr inbounds nuw i8, ptr %1, i64 16, !dbg !25006
   %.sroa.5.0.copyload.i = load i64, ptr %.sroa.5.0..sroa_idx30.i, align 8, !dbg !25006, !alias.scope !25011, !noalias !24999 ; 2 uses
   %.sroa.9.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 24, !dbg !25006
-  %.sroa.9.0.copyload.i = load i64, ptr %.sroa.9.0..sroa_idx.i, align 8, !dbg !25006, !alias.scope !25011, !noalias !24999 ; 7 uses
+  %.sroa.9.0.copyload.i = load i64, ptr %.sroa.9.0..sroa_idx.i, align 8, !dbg !25006, !alias.scope !25011, !noalias !24999 ; 19 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !dbg !25015, !noalias !25017
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.b, ptr noundef nonnull align 8 dereferenceable(32) %i.c, i64 24, i1 false), !dbg !25018, !noalias !25004
   store i64 0, ptr %i.c, align 8, !dbg !25023, !alias.scope !24999, !noalias !25004
@@ -1122,7 +1122,7 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc7raw_vec6R
 bb.b:                                             ; preds = %.thread.i, %.preheader.i
   %.sroa.5.0.i = phi i64 [ %.sroa.5.170.i, %.thread.i ], [ %.sroa.5.0.copyload.i, %.preheader.i ], !dbg !25006 ; 12 uses
   %.sroa.0.0.i = phi i64 [ %.sroa.0.158.i, %.thread.i ], [ 0, %.preheader.i ], !dbg !25050 ; 9 uses
-  %umax.i = call i64 @llvm.umax.i64(i64 %.sroa.5.0.i, i64 %.sroa.9.0.copyload.i), !dbg !25051 ; 19 uses
+  %umax.i = call i64 @llvm.umax.i64(i64 %.sroa.5.0.i, i64 %.sroa.9.0.copyload.i), !dbg !25051 ; 7 uses
   %i.l = add i64 %.sroa.0.0.i, 8, !dbg !25051     ; 2 uses
   %i.m = add i64 %.sroa.5.0.i, 8, !dbg !25051     ; 2 uses
   %exitcond.not.not.not.i = icmp ult i64 %.sroa.5.0.i, %.sroa.9.0.copyload.i, !dbg !25052
@@ -1178,7 +1178,7 @@ bb.g:                                             ; preds = %bb.f, %_RNvMs0_NtNt
   br i1 %exitcond.1.not.i, label %.thread43.i, label %bb.h, !dbg !25059
 
 bb.h:                                             ; preds = %bb.g
-  %i.ac = add i64 %.sroa.5.0.i, 2, !dbg !25060    ; 3 uses
+  %i.ac = add nuw i64 %.sroa.5.0.i, 2, !dbg !25060 ; 3 uses
   %i.ad = icmp ult i64 %i.n, %i.r, !dbg !25080
   br i1 %i.ad, label %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit.i.i.1.i, label %bb.e, !dbg !25080, !prof !1364
 
@@ -1199,11 +1199,11 @@ bb.i:                                             ; preds = %_RNvMs0_NtNtCs8774d
 bb.j:                                             ; preds = %bb.i, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit.i.i.1.i
   %.sroa.0.0.i.ph.1.i = phi i8 [ %.sroa.0.0.i.ph.i, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit.i.i.1.i ], [ %i.ak, %bb.i ] ; 3 uses
   %i.al = add i64 %.sroa.0.0.i, 2, !dbg !25104
-  %exitcond.2.not.i = icmp eq i64 %i.ac, %umax.i, !dbg !25052
+  %exitcond.2.not.i = icmp eq i64 %.sroa.9.0.copyload.i, %i.ac, !dbg !25052
   br i1 %exitcond.2.not.i, label %.thread43.i, label %bb.k, !dbg !25059
 
 bb.k:                                             ; preds = %bb.j
-  %i.am = add i64 %.sroa.5.0.i, 3, !dbg !25060    ; 3 uses
+  %i.am = add nuw i64 %.sroa.5.0.i, 3, !dbg !25060 ; 3 uses
   %i.an = icmp ult i64 %i.ac, %i.r, !dbg !25080
   br i1 %i.an, label %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit.i.i.2.i, label %bb.e, !dbg !25080, !prof !1364
 
@@ -1224,11 +1224,11 @@ bb.l:                                             ; preds = %_RNvMs0_NtNtCs8774d
 bb.m:                                             ; preds = %bb.l, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit.i.i.2.i
   %.sroa.0.0.i.ph.2.i = phi i8 [ %.sroa.0.0.i.ph.1.i, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit.i.i.2.i ], [ %i.au, %bb.l ] ; 3 uses
   %i.av = add i64 %.sroa.0.0.i, 3, !dbg !25104
-  %exitcond.3.not.i = icmp eq i64 %i.am, %umax.i, !dbg !25052
+  %exitcond.3.not.i = icmp eq i64 %.sroa.9.0.copyload.i, %i.am, !dbg !25052
   br i1 %exitcond.3.not.i, label %.thread43.i, label %bb.n, !dbg !25059
 
 bb.n:                                             ; preds = %bb.m
-  %i.aw = add i64 %.sroa.5.0.i, 4, !dbg !25060    ; 3 uses
+  %i.aw = add nuw i64 %.sroa.5.0.i, 4, !dbg !25060 ; 3 uses
   %i.ax = icmp ult i64 %i.am, %i.r, !dbg !25080
   br i1 %i.ax, label %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit.i.i.3.i, label %bb.e, !dbg !25080, !prof !1364
 
@@ -1249,11 +1249,11 @@ bb.o:                                             ; preds = %_RNvMs0_NtNtCs8774d
 bb.p:                                             ; preds = %bb.o, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit.i.i.3.i
   %.sroa.0.0.i.ph.3.i = phi i8 [ %.sroa.0.0.i.ph.2.i, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit.i.i.3.i ], [ %i.be, %bb.o ] ; 3 uses
   %i.bf = add i64 %.sroa.0.0.i, 4, !dbg !25104
-  %exitcond.4.not.i = icmp eq i64 %i.aw, %umax.i, !dbg !25052
+  %exitcond.4.not.i = icmp eq i64 %.sroa.9.0.copyload.i, %i.aw, !dbg !25052
   br i1 %exitcond.4.not.i, label %.thread43.i, label %bb.q, !dbg !25059
 
 bb.q:                                             ; preds = %bb.p
-  %i.bg = add i64 %.sroa.5.0.i, 5, !dbg !25060    ; 3 uses
+  %i.bg = add nuw i64 %.sroa.5.0.i, 5, !dbg !25060 ; 3 uses
   %i.bh = icmp ult i64 %i.aw, %i.r, !dbg !25080
   br i1 %i.bh, label %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit.i.i.4.i, label %bb.e, !dbg !25080, !prof !1364
 
@@ -1274,11 +1274,11 @@ bb.r:                                             ; preds = %_RNvMs0_NtNtCs8774d
 bb.s:                                             ; preds = %bb.r, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit.i.i.4.i
   %.sroa.0.0.i.ph.4.i = phi i8 [ %.sroa.0.0.i.ph.3.i, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit.i.i.4.i ], [ %i.bo, %bb.r ] ; 3 uses
   %i.bp = add i64 %.sroa.0.0.i, 5, !dbg !25104
-  %exitcond.5.not.i = icmp eq i64 %i.bg, %umax.i, !dbg !25052
+  %exitcond.5.not.i = icmp eq i64 %.sroa.9.0.copyload.i, %i.bg, !dbg !25052
   br i1 %exitcond.5.not.i, label %.thread43.i, label %bb.t, !dbg !25059
 
 bb.t:                                             ; preds = %bb.s
-  %i.bq = add i64 %.sroa.5.0.i, 6, !dbg !25060    ; 3 uses
+  %i.bq = add nuw i64 %.sroa.5.0.i, 6, !dbg !25060 ; 3 uses
   %i.br = icmp ult i64 %i.bg, %i.r, !dbg !25080
   br i1 %i.br, label %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit.i.i.5.i, label %bb.e, !dbg !25080, !prof !1364
 
@@ -1299,11 +1299,11 @@ bb.u:                                             ; preds = %_RNvMs0_NtNtCs8774d
 bb.v:                                             ; preds = %bb.u, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit.i.i.5.i
   %.sroa.0.0.i.ph.5.i = phi i8 [ %.sroa.0.0.i.ph.4.i, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit.i.i.5.i ], [ %i.by, %bb.u ] ; 3 uses
   %i.bz = add i64 %.sroa.0.0.i, 6, !dbg !25104
-  %exitcond.6.not.i = icmp eq i64 %i.bq, %umax.i, !dbg !25052
+  %exitcond.6.not.i = icmp eq i64 %.sroa.9.0.copyload.i, %i.bq, !dbg !25052
   br i1 %exitcond.6.not.i, label %.thread43.i, label %bb.w, !dbg !25059
 
 bb.w:                                             ; preds = %bb.v
-  %i.ca = add i64 %.sroa.5.0.i, 7, !dbg !25060    ; 5 uses
+  %i.ca = add nuw i64 %.sroa.5.0.i, 7, !dbg !25060 ; 5 uses
   %i.cb = icmp ult i64 %i.bq, %i.r, !dbg !25080
   br i1 %i.cb, label %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit.i.i.6.i, label %bb.e, !dbg !25080, !prof !1364
 
@@ -1324,7 +1324,7 @@ bb.x:                                             ; preds = %_RNvMs0_NtNtCs8774d
 bb.y:                                             ; preds = %bb.x, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit.i.i.6.i
   %.sroa.0.0.i.ph.6.i = phi i8 [ %.sroa.0.0.i.ph.5.i, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit.i.i.6.i ], [ %i.ci, %bb.x ] ; 3 uses
   %i.cj = add i64 %.sroa.0.0.i, 7, !dbg !25104
-  %exitcond.7.not.i = icmp eq i64 %i.ca, %umax.i, !dbg !25052
+  %exitcond.7.not.i = icmp eq i64 %.sroa.9.0.copyload.i, %i.ca, !dbg !25052
   br i1 %exitcond.7.not.i, label %.thread43.i, label %bb.z, !dbg !25059
 
 bb.z:                                             ; preds = %bb.y
@@ -1346,7 +1346,7 @@ bb.aa:                                            ; preds = %_RNvMs0_NtNtCs8774d
   br label %.thread43.i, !dbg !25103
 
 .thread43.i:                                      ; preds = %bb.aa, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit.i.i.7.i, %bb.y, %bb.v, %bb.s, %bb.p, %bb.m, %bb.j, %bb.g
-  %.pn.i = phi i64 [ %i.ca, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit.i.i.7.i ], [ %i.ca, %bb.aa ], [ %umax.i, %bb.y ], [ %umax.i, %bb.v ], [ %umax.i, %bb.s ], [ %umax.i, %bb.p ], [ %umax.i, %bb.m ], [ %umax.i, %bb.j ], [ %.sroa.9.0.copyload.i, %bb.g ]
+  %.pn.i = phi i64 [ %i.ca, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit.i.i.7.i ], [ %i.ca, %bb.aa ], [ %.sroa.9.0.copyload.i, %bb.y ], [ %.sroa.9.0.copyload.i, %bb.v ], [ %.sroa.9.0.copyload.i, %bb.s ], [ %.sroa.9.0.copyload.i, %bb.p ], [ %.sroa.9.0.copyload.i, %bb.m ], [ %.sroa.9.0.copyload.i, %bb.j ], [ %.sroa.9.0.copyload.i, %bb.g ]
   %.sroa.5.170.i = phi i64 [ %i.m, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit.i.i.7.i ], [ %i.m, %bb.aa ], [ %umax.i, %bb.y ], [ %umax.i, %bb.v ], [ %umax.i, %bb.s ], [ %umax.i, %bb.p ], [ %umax.i, %bb.m ], [ %umax.i, %bb.j ], [ %umax.i, %bb.g ] ; 2 uses
   %.sroa.05.063.i = phi i8 [ %.sroa.0.0.i.ph.6.i, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit.i.i.7.i ], [ %i.cr, %bb.aa ], [ %.sroa.0.0.i.ph.6.i, %bb.y ], [ %.sroa.0.0.i.ph.5.i, %bb.v ], [ %.sroa.0.0.i.ph.4.i, %bb.s ], [ %.sroa.0.0.i.ph.3.i, %bb.p ], [ %.sroa.0.0.i.ph.2.i, %bb.m ], [ %.sroa.0.0.i.ph.1.i, %bb.j ], [ %.sroa.0.0.i.ph.i, %bb.g ]
   %.sroa.0.158.i = phi i64 [ %i.l, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit.i.i.7.i ], [ %i.l, %bb.aa ], [ %i.cj, %bb.y ], [ %i.bz, %bb.v ], [ %i.bp, %bb.s ], [ %i.bf, %bb.p ], [ %i.av, %bb.m ], [ %i.al, %bb.j ], [ %i.ab, %bb.g ] ; 2 uses
@@ -1479,7 +1479,7 @@ bb.a:
   %.sroa.5.0..sroa_idx30.i = getelementptr inbounds nuw i8, ptr %1, i64 16, !dbg !25178
   %.sroa.5.0.copyload.i = load i64, ptr %.sroa.5.0..sroa_idx30.i, align 8, !dbg !25178, !alias.scope !25183, !noalias !25171 ; 2 uses
   %.sroa.9.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 24, !dbg !25178
-  %.sroa.9.0.copyload.i = load i64, ptr %.sroa.9.0..sroa_idx.i, align 8, !dbg !25178, !alias.scope !25183, !noalias !25171 ; 6 uses
+  %.sroa.9.0.copyload.i = load i64, ptr %.sroa.9.0..sroa_idx.i, align 8, !dbg !25178, !alias.scope !25183, !noalias !25171 ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !dbg !25187, !noalias !25189
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.b, ptr noundef nonnull align 8 dereferenceable(32) %i.c, i64 24, i1 false), !dbg !25190, !noalias !25176
   store i64 0, ptr %i.c, align 8, !dbg !25195, !alias.scope !25171, !noalias !25176
@@ -1508,7 +1508,7 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc7raw_vec6R
 bb.b:                                             ; preds = %.thread.i, %.preheader.i
   %.sroa.5.0.i = phi i64 [ %.sroa.5.170.i, %.thread.i ], [ %.sroa.5.0.copyload.i, %.preheader.i ], !dbg !25178 ; 12 uses
   %.sroa.0.0.i = phi i64 [ %.sroa.0.158.i, %.thread.i ], [ 0, %.preheader.i ], !dbg !25222 ; 9 uses
-  %umax.i = call i64 @llvm.umax.i64(i64 %.sroa.5.0.i, i64 %.sroa.9.0.copyload.i), !dbg !25223 ; 13 uses
+  %umax.i = call i64 @llvm.umax.i64(i64 %.sroa.5.0.i, i64 %.sroa.9.0.copyload.i), !dbg !25223 ; 7 uses
   %i.l = add i64 %.sroa.0.0.i, 8, !dbg !25223
   %i.m = add i64 %.sroa.5.0.i, 8, !dbg !25223
   %exitcond.not.not.not.i = icmp ult i64 %.sroa.5.0.i, %.sroa.9.0.copyload.i, !dbg !25224
@@ -1564,7 +1564,7 @@ bb.g:                                             ; preds = %bb.f, %_RNvMs0_NtNt
   br i1 %exitcond.1.not.i, label %.thread43.i, label %bb.h, !dbg !25231
 
 bb.h:                                             ; preds = %bb.g
-  %i.ab = add i64 %.sroa.5.0.i, 2, !dbg !25232    ; 3 uses
+  %i.ab = add nuw i64 %.sroa.5.0.i, 2, !dbg !25232 ; 3 uses
   %i.ac = icmp ult i64 %i.n, %i.r, !dbg !25252
   br i1 %i.ac, label %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit.i.i.1.i, label %bb.e, !dbg !25252, !prof !1364
 
@@ -1585,11 +1585,11 @@ bb.j:                                             ; preds = %bb.i, %_RNvMs0_NtNt
   %.sroa.0.0.i.ph.1.i = phi i8 [ 2, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit.i.i.1.i ], [ %i.ah, %bb.i ]
   %i.ai = add i64 %.sroa.0.0.i, 2, !dbg !25278
   %.sroa.013.0.1.i = or disjoint i8 %.sroa.0.0.i.ph.1.i, %.sroa.0.0.i.ph.i, !dbg !25276 ; 2 uses
-  %exitcond.2.not.i = icmp eq i64 %i.ab, %umax.i, !dbg !25224
+  %exitcond.2.not.i = icmp eq i64 %.sroa.9.0.copyload.i, %i.ab, !dbg !25224
   br i1 %exitcond.2.not.i, label %.thread43.i, label %bb.k, !dbg !25231
 
 bb.k:                                             ; preds = %bb.j
-  %i.aj = add i64 %.sroa.5.0.i, 3, !dbg !25232    ; 3 uses
+  %i.aj = add nuw i64 %.sroa.5.0.i, 3, !dbg !25232 ; 3 uses
   %i.ak = icmp ult i64 %i.ab, %i.r, !dbg !25252
   br i1 %i.ak, label %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit.i.i.2.i, label %bb.e, !dbg !25252, !prof !1364
 
@@ -1610,11 +1610,11 @@ bb.m:                                             ; preds = %bb.l, %_RNvMs0_NtNt
   %.sroa.0.0.i.ph.2.i = phi i8 [ 4, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit.i.i.2.i ], [ %i.ap, %bb.l ]
   %i.aq = add i64 %.sroa.0.0.i, 3, !dbg !25278
   %.sroa.013.0.2.i = or disjoint i8 %.sroa.0.0.i.ph.2.i, %.sroa.013.0.1.i, !dbg !25276 ; 2 uses
-  %exitcond.3.not.i = icmp eq i64 %i.aj, %umax.i, !dbg !25224
+  %exitcond.3.not.i = icmp eq i64 %.sroa.9.0.copyload.i, %i.aj, !dbg !25224
   br i1 %exitcond.3.not.i, label %.thread43.i, label %bb.n, !dbg !25231
 
 bb.n:                                             ; preds = %bb.m
-  %i.ar = add i64 %.sroa.5.0.i, 4, !dbg !25232    ; 3 uses
+  %i.ar = add nuw i64 %.sroa.5.0.i, 4, !dbg !25232 ; 3 uses
   %i.as = icmp ult i64 %i.aj, %i.r, !dbg !25252
   br i1 %i.as, label %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit.i.i.3.i, label %bb.e, !dbg !25252, !prof !1364
 
@@ -1635,11 +1635,11 @@ bb.p:                                             ; preds = %bb.o, %_RNvMs0_NtNt
   %.sroa.0.0.i.ph.3.i = phi i8 [ 8, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit.i.i.3.i ], [ %i.ax, %bb.o ]
   %i.ay = add i64 %.sroa.0.0.i, 4, !dbg !25278
   %.sroa.013.0.3.i = or disjoint i8 %.sroa.0.0.i.ph.3.i, %.sroa.013.0.2.i, !dbg !25276 ; 2 uses
-  %exitcond.4.not.i = icmp eq i64 %i.ar, %umax.i, !dbg !25224
+  %exitcond.4.not.i = icmp eq i64 %.sroa.9.0.copyload.i, %i.ar, !dbg !25224
   br i1 %exitcond.4.not.i, label %.thread43.i, label %bb.q, !dbg !25231
 
 bb.q:                                             ; preds = %bb.p
-  %i.az = add i64 %.sroa.5.0.i, 5, !dbg !25232    ; 3 uses
+  %i.az = add nuw i64 %.sroa.5.0.i, 5, !dbg !25232 ; 3 uses
   %i.ba = icmp ult i64 %i.ar, %i.r, !dbg !25252
   br i1 %i.ba, label %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit.i.i.4.i, label %bb.e, !dbg !25252, !prof !1364
 
@@ -1660,11 +1660,11 @@ bb.s:                                             ; preds = %bb.r, %_RNvMs0_NtNt
   %.sroa.0.0.i.ph.4.i = phi i8 [ 16, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit.i.i.4.i ], [ %i.bf, %bb.r ]
   %i.bg = add i64 %.sroa.0.0.i, 5, !dbg !25278
   %.sroa.013.0.4.i = or disjoint i8 %.sroa.0.0.i.ph.4.i, %.sroa.013.0.3.i, !dbg !25276 ; 2 uses
-  %exitcond.5.not.i = icmp eq i64 %i.az, %umax.i, !dbg !25224
+  %exitcond.5.not.i = icmp eq i64 %.sroa.9.0.copyload.i, %i.az, !dbg !25224
   br i1 %exitcond.5.not.i, label %.thread43.i, label %bb.t, !dbg !25231
 
 bb.t:                                             ; preds = %bb.s
-  %i.bh = add i64 %.sroa.5.0.i, 6, !dbg !25232    ; 3 uses
+  %i.bh = add nuw i64 %.sroa.5.0.i, 6, !dbg !25232 ; 3 uses
   %i.bi = icmp ult i64 %i.az, %i.r, !dbg !25252
   br i1 %i.bi, label %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit.i.i.5.i, label %bb.e, !dbg !25252, !prof !1364
 
@@ -1685,11 +1685,11 @@ bb.v:                                             ; preds = %bb.u, %_RNvMs0_NtNt
   %.sroa.0.0.i.ph.5.i = phi i8 [ 32, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit.i.i.5.i ], [ %i.bn, %bb.u ]
   %i.bo = add i64 %.sroa.0.0.i, 6, !dbg !25278
   %.sroa.013.0.5.i = or i8 %.sroa.0.0.i.ph.5.i, %.sroa.013.0.4.i, !dbg !25276 ; 2 uses
-  %exitcond.6.not.i = icmp eq i64 %i.bh, %umax.i, !dbg !25224
+  %exitcond.6.not.i = icmp eq i64 %.sroa.9.0.copyload.i, %i.bh, !dbg !25224
   br i1 %exitcond.6.not.i, label %.thread43.i, label %bb.w, !dbg !25231
 
 bb.w:                                             ; preds = %bb.v
-  %i.bp = add i64 %.sroa.5.0.i, 7, !dbg !25232    ; 4 uses
+  %i.bp = add nuw i64 %.sroa.5.0.i, 7, !dbg !25232 ; 3 uses
   %i.bq = icmp ult i64 %i.bh, %i.r, !dbg !25252
   br i1 %i.bq, label %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit.i.i.6.i, label %bb.e, !dbg !25252, !prof !1364
 
@@ -1710,7 +1710,7 @@ bb.y:                                             ; preds = %bb.x, %_RNvMs0_NtNt
   %.sroa.0.0.i.ph.6.i = phi i8 [ 64, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit.i.i.6.i ], [ %i.bv, %bb.x ]
   %i.bw = add i64 %.sroa.0.0.i, 7, !dbg !25278
   %.sroa.013.0.6.i = or i8 %.sroa.0.0.i.ph.6.i, %.sroa.013.0.5.i, !dbg !25276 ; 2 uses
-  %exitcond.7.not.i = icmp eq i64 %i.bp, %umax.i, !dbg !25224
+  %exitcond.7.not.i = icmp eq i64 %.sroa.9.0.copyload.i, %i.bp, !dbg !25224
   br i1 %exitcond.7.not.i, label %.thread43.i, label %bb.z, !dbg !25231
 
 bb.z:                                             ; preds = %bb.y
@@ -1733,11 +1733,10 @@ bb.aa:                                            ; preds = %_RNvMs0_NtNtCs8774d
 .thread43.loopexit.i:                             ; preds = %bb.aa, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit.i.i.7.i
   %.sroa.0.0.i.ph.7.i = phi i8 [ -128, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow5array17fixed_size_binaryNtB5_20FixedSizeBinaryArray5value.exit.i.i.7.i ], [ %i.cc, %bb.aa ]
   %.sroa.013.0.7.i = or i8 %.sroa.0.0.i.ph.7.i, %.sroa.013.0.6.i, !dbg !25276
-  %2 = icmp ult i64 %i.bp, %.sroa.9.0.copyload.i, !dbg !25224
   br label %.thread43.i, !dbg !25279
 
 .thread43.i:                                      ; preds = %.thread43.loopexit.i, %bb.y, %bb.v, %bb.s, %bb.p, %bb.m, %bb.j, %bb.g
-  %.pn.i = phi i1 [ %2, %.thread43.loopexit.i ], [ false, %bb.y ], [ false, %bb.v ], [ false, %bb.s ], [ false, %bb.p ], [ false, %bb.m ], [ false, %bb.j ], [ false, %bb.g ]
+  %.pn.i = phi i1 [ true, %.thread43.loopexit.i ], [ false, %bb.y ], [ false, %bb.v ], [ false, %bb.s ], [ false, %bb.p ], [ false, %bb.m ], [ false, %bb.j ], [ false, %bb.g ]
   %.sroa.5.170.i = phi i64 [ %i.m, %.thread43.loopexit.i ], [ %umax.i, %bb.y ], [ %umax.i, %bb.v ], [ %umax.i, %bb.s ], [ %umax.i, %bb.p ], [ %umax.i, %bb.m ], [ %umax.i, %bb.j ], [ %umax.i, %bb.g ] ; 2 uses
   %.sroa.05.063.i = phi i8 [ %.sroa.013.0.7.i, %.thread43.loopexit.i ], [ %.sroa.013.0.6.i, %bb.y ], [ %.sroa.013.0.5.i, %bb.v ], [ %.sroa.013.0.4.i, %bb.s ], [ %.sroa.013.0.3.i, %bb.p ], [ %.sroa.013.0.2.i, %bb.m ], [ %.sroa.013.0.1.i, %bb.j ], [ %.sroa.0.0.i.ph.i, %bb.g ]
   %.sroa.0.158.i = phi i64 [ %i.l, %.thread43.loopexit.i ], [ %i.bw, %bb.y ], [ %i.bo, %bb.v ], [ %i.bg, %bb.s ], [ %i.ay, %bb.p ], [ %i.aq, %bb.m ], [ %i.ai, %bb.j ], [ %i.aa, %bb.g ] ; 2 uses

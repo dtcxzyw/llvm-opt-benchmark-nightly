@@ -203,7 +203,7 @@ bb.cq:                                            ; preds = %.body136.i
 
 bb.cr:                                            ; preds = %bb.cg, %bb.au, %bb.ar
   %.sroa.19.1.ph.i = phi i32 [ %i.fe, %bb.ar ], [ 0, %bb.au ], [ %.sroa.517.0.i.i, %bb.cg ] ; 9 uses
-  %.sroa.15247.1.ph.i = phi i32 [ %i.fd, %bb.ar ], [ 0, %bb.au ], [ %.sroa.3.0.i.i, %bb.cg ] ; 10 uses
+  %.sroa.15247.1.ph.i = phi i32 [ %i.fd, %bb.ar ], [ 0, %bb.au ], [ %.sroa.3.0.i.i, %bb.cg ] ; 11 uses
   %.sroa.13.1.ph.i = phi i64 [ %i.ff, %bb.ar ], [ %.sroa.13.0.copyload245.i, %bb.au ], [ 0, %bb.cg ]
   %.sroa.11241.1.ph.i = phi ptr [ %i.do, %bb.ar ], [ %.sroa.11241.0.copyload243.i, %bb.au ], [ %i.fh, %bb.cg ]
   %i.jb = phi i32 [ %.sroa.11.0.i, %bb.ar ], [ %.sroa.11.0.copyload240.i, %bb.au ], [ %.sroa.11.0.i, %bb.cg ] ; 5 uses
@@ -606,7 +606,7 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtCs42xZ1oUXfIG_8smol_str7SmolStrECs33K2
 bb.ft:                                            ; preds = %bb.eu
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r), !noalias !27
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q), !noalias !27
-  %i.py = add i32 %.sroa.15247.1.ph.i, 1          ; 3 uses
+  %i.py = add nuw i32 %.sroa.15247.1.ph.i, 1      ; 2 uses
   %.not81.i = icmp eq i32 %.sroa.15247.1.ph.i, -1
   br i1 %.not81.i, label %bb.fu, label %bb.fv, !prof !14
 
@@ -717,8 +717,8 @@ bb.gg:                                            ; preds = %bb.ge, %.split.i
 
 bb.gh:                                            ; preds = %bb.gf
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o), !noalias !27
-  %.not83.i = icmp ugt i32 %i.py, %.sroa.19.1.ph.i
-  br i1 %.not83.i, label %bb.gi, label %bb.gj, !prof !14
+  %.not83.not.i = icmp ult i32 %.sroa.15247.1.ph.i, %.sroa.19.1.ph.i
+  br i1 %.not83.not.i, label %bb.gj, label %bb.gi, !prof !76
 
 bb.gi:                                            ; preds = %bb.gh
   invoke void @_RNvNtCshzWfHUSfYae_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @3, i64 noundef 38, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @5) #27
@@ -1121,7 +1121,7 @@ bb.cq:                                            ; preds = %.body136.i
 
 bb.cr:                                            ; preds = %bb.cg, %bb.au, %bb.ar
   %.sroa.19.1.ph.i = phi i32 [ %i.fd, %bb.ar ], [ 0, %bb.au ], [ %.sroa.517.0.i.i, %bb.cg ] ; 9 uses
-  %.sroa.15247.1.ph.i = phi i32 [ %i.fc, %bb.ar ], [ 0, %bb.au ], [ %.sroa.3.0.i.i, %bb.cg ] ; 10 uses
+  %.sroa.15247.1.ph.i = phi i32 [ %i.fc, %bb.ar ], [ 0, %bb.au ], [ %.sroa.3.0.i.i, %bb.cg ] ; 11 uses
   %.sroa.13.1.ph.i = phi i64 [ %i.fe, %bb.ar ], [ %.sroa.13.0.copyload245.i, %bb.au ], [ 0, %bb.cg ]
   %.sroa.11241.1.ph.i = phi ptr [ %i.dn, %bb.ar ], [ %.sroa.11241.0.copyload243.i, %bb.au ], [ %i.fg, %bb.cg ]
   %i.ja = phi i32 [ %.sroa.11.0.i, %bb.ar ], [ %.sroa.11.0.copyload240.i, %bb.au ], [ %.sroa.11.0.i, %bb.cg ] ; 5 uses
@@ -1524,7 +1524,7 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtCs42xZ1oUXfIG_8smol_str7SmolStrECs33K2
 bb.ft:                                            ; preds = %bb.eu
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r), !noalias !282
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q), !noalias !282
-  %i.px = add i32 %.sroa.15247.1.ph.i, 1          ; 3 uses
+  %i.px = add nuw i32 %.sroa.15247.1.ph.i, 1      ; 2 uses
   %.not81.i = icmp eq i32 %.sroa.15247.1.ph.i, -1
   br i1 %.not81.i, label %bb.fu, label %bb.fv, !prof !14
 
@@ -1635,8 +1635,8 @@ bb.gg:                                            ; preds = %bb.ge, %.split.i
 
 bb.gh:                                            ; preds = %bb.gf
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o), !noalias !282
-  %.not83.i = icmp ugt i32 %i.px, %.sroa.19.1.ph.i
-  br i1 %.not83.i, label %bb.gi, label %bb.gj, !prof !14
+  %.not83.not.i = icmp ult i32 %.sroa.15247.1.ph.i, %.sroa.19.1.ph.i
+  br i1 %.not83.not.i, label %bb.gj, label %bb.gi, !prof !76
 
 bb.gi:                                            ; preds = %bb.gh
   invoke void @_RNvNtCshzWfHUSfYae_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @3, i64 noundef 38, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @5) #27
@@ -2039,7 +2039,7 @@ bb.cq:                                            ; preds = %.body136.i
 
 bb.cr:                                            ; preds = %bb.cg, %bb.au, %bb.ar
   %.sroa.19.1.ph.i = phi i32 [ %i.fd, %bb.ar ], [ 0, %bb.au ], [ %.sroa.517.0.i.i, %bb.cg ] ; 9 uses
-  %.sroa.15247.1.ph.i = phi i32 [ %i.fc, %bb.ar ], [ 0, %bb.au ], [ %.sroa.3.0.i.i, %bb.cg ] ; 10 uses
+  %.sroa.15247.1.ph.i = phi i32 [ %i.fc, %bb.ar ], [ 0, %bb.au ], [ %.sroa.3.0.i.i, %bb.cg ] ; 11 uses
   %.sroa.13.1.ph.i = phi i64 [ %i.fe, %bb.ar ], [ %.sroa.13.0.copyload245.i, %bb.au ], [ 0, %bb.cg ]
   %.sroa.11241.1.ph.i = phi ptr [ %i.dn, %bb.ar ], [ %.sroa.11241.0.copyload243.i, %bb.au ], [ %i.fg, %bb.cg ]
   %i.ja = phi i32 [ %.sroa.11.0.i, %bb.ar ], [ %.sroa.11.0.copyload240.i, %bb.au ], [ %.sroa.11.0.i, %bb.cg ] ; 5 uses
@@ -2442,7 +2442,7 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtCs42xZ1oUXfIG_8smol_str7SmolStrECs33K2
 bb.ft:                                            ; preds = %bb.eu
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r), !noalias !529
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q), !noalias !529
-  %i.px = add i32 %.sroa.15247.1.ph.i, 1          ; 3 uses
+  %i.px = add nuw i32 %.sroa.15247.1.ph.i, 1      ; 2 uses
   %.not81.i = icmp eq i32 %.sroa.15247.1.ph.i, -1
   br i1 %.not81.i, label %bb.fu, label %bb.fv, !prof !14
 
@@ -2553,8 +2553,8 @@ bb.gg:                                            ; preds = %bb.ge, %.split.i
 
 bb.gh:                                            ; preds = %bb.gf
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o), !noalias !529
-  %.not83.i = icmp ugt i32 %i.px, %.sroa.19.1.ph.i
-  br i1 %.not83.i, label %bb.gi, label %bb.gj, !prof !14
+  %.not83.not.i = icmp ult i32 %.sroa.15247.1.ph.i, %.sroa.19.1.ph.i
+  br i1 %.not83.not.i, label %bb.gj, label %bb.gi, !prof !76
 
 bb.gi:                                            ; preds = %bb.gh
   invoke void @_RNvNtCshzWfHUSfYae_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @3, i64 noundef 38, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @5) #27
@@ -2957,7 +2957,7 @@ bb.cq:                                            ; preds = %.body135.i
 
 bb.cr:                                            ; preds = %bb.cg, %bb.au, %bb.ar
   %.sroa.19.1.ph.i = phi i32 [ %i.fd, %bb.ar ], [ 0, %bb.au ], [ %.sroa.517.0.i.i, %bb.cg ] ; 9 uses
-  %.sroa.15246.1.ph.i = phi i32 [ %i.fc, %bb.ar ], [ 0, %bb.au ], [ %.sroa.3.0.i.i, %bb.cg ] ; 10 uses
+  %.sroa.15246.1.ph.i = phi i32 [ %i.fc, %bb.ar ], [ 0, %bb.au ], [ %.sroa.3.0.i.i, %bb.cg ] ; 11 uses
   %.sroa.13.1.ph.i = phi i64 [ %i.fe, %bb.ar ], [ %.sroa.13.0.copyload244.i, %bb.au ], [ 0, %bb.cg ]
   %.sroa.11240.1.ph.i = phi ptr [ %i.dn, %bb.ar ], [ %.sroa.11240.0.copyload242.i, %bb.au ], [ %i.fg, %bb.cg ]
   %i.ja = phi i32 [ %.sroa.11.0.i, %bb.ar ], [ %.sroa.11.0.copyload239.i, %bb.au ], [ %.sroa.11.0.i, %bb.cg ] ; 5 uses
@@ -3360,7 +3360,7 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtCs42xZ1oUXfIG_8smol_str7SmolStrECs33K2
 bb.ft:                                            ; preds = %bb.eu
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r), !noalias !777
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q), !noalias !777
-  %i.py = add i32 %.sroa.15246.1.ph.i, 1          ; 3 uses
+  %i.py = add nuw i32 %.sroa.15246.1.ph.i, 1      ; 2 uses
   %.not81.i = icmp eq i32 %.sroa.15246.1.ph.i, -1
   br i1 %.not81.i, label %bb.fu, label %bb.fv, !prof !14
 
@@ -3471,8 +3471,8 @@ bb.gg:                                            ; preds = %bb.ge, %.split.i
 
 bb.gh:                                            ; preds = %bb.gf
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o), !noalias !777
-  %.not83.i = icmp ugt i32 %i.py, %.sroa.19.1.ph.i
-  br i1 %.not83.i, label %bb.gi, label %bb.gj, !prof !14
+  %.not83.not.i = icmp ult i32 %.sroa.15246.1.ph.i, %.sroa.19.1.ph.i
+  br i1 %.not83.not.i, label %bb.gj, label %bb.gi, !prof !76
 
 bb.gi:                                            ; preds = %bb.gh
   invoke void @_RNvNtCshzWfHUSfYae_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @3, i64 noundef 38, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @5) #27

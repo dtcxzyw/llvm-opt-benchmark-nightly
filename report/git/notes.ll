@@ -203,8 +203,8 @@ bb.c:                                             ; preds = %bb.a
   %i.f = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #16
   tail call void @strbuf_add(ptr noundef nonnull %i.d, ptr noundef nonnull %1, i64 noundef %i.f) #14
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 48 ; 3 uses
-  %i.h = load i64, ptr %i.g, align 8, !tbaa !34   ; 4 uses
-  %i.i = add i64 %i.h, 1                          ; 3 uses
+  %i.h = load i64, ptr %i.g, align 8, !tbaa !34   ; 5 uses
+  %i.i = add nuw i64 %i.h, 1                      ; 2 uses
   %i.j = icmp eq i64 %i.h, -1
   br i1 %i.j, label %bb.d, label %bb.e
 
@@ -215,8 +215,8 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 56 ; 2 uses
   %i.l = load i64, ptr %i.k, align 8, !tbaa !92   ; 2 uses
-  %3 = icmp ugt i64 %i.i, %i.l
-  br i1 %3, label %bb.f, label %._crit_edge
+  %.not30 = icmp ult i64 %i.h, %i.l
+  br i1 %.not30, label %._crit_edge, label %bb.f
 
 ._crit_edge:                                      ; preds = %bb.e
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.b, i64 40
@@ -307,8 +307,8 @@ bb.e:                                             ; preds = %.tail.thread
 
 bb.f:                                             ; preds = %bb.c, %.tail.thread
   %i.o = getelementptr inbounds nuw i8, ptr %i.b, i64 48 ; 3 uses
-  %i.p = load i64, ptr %i.o, align 8, !tbaa !34   ; 4 uses
-  %i.q = add i64 %i.p, 1                          ; 3 uses
+  %i.p = load i64, ptr %i.o, align 8, !tbaa !34   ; 5 uses
+  %i.q = add nuw i64 %i.p, 1                      ; 2 uses
   %i.r = icmp eq i64 %i.p, -1
   br i1 %i.r, label %bb.g, label %bb.h
 
@@ -319,8 +319,8 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.f
   %i.s = getelementptr inbounds nuw i8, ptr %i.b, i64 56 ; 2 uses
   %i.t = load i64, ptr %i.s, align 8, !tbaa !92   ; 2 uses
-  %3 = icmp ugt i64 %i.q, %i.t
-  br i1 %3, label %bb.i, label %._crit_edge
+  %.not34 = icmp ult i64 %i.p, %i.t
+  br i1 %.not34, label %._crit_edge, label %bb.i
 
 ._crit_edge:                                      ; preds = %bb.h
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.b, i64 40
@@ -447,8 +447,8 @@ bb.i:                                             ; preds = %bb.g
   %i.s = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   store i64 %i.r, ptr %i.s, align 8, !tbaa !99
   %i.t = getelementptr inbounds nuw i8, ptr %i.d, i64 48 ; 3 uses
-  %i.u = load i64, ptr %i.t, align 8, !tbaa !34   ; 4 uses
-  %i.v = add i64 %i.u, 1                          ; 3 uses
+  %i.u = load i64, ptr %i.t, align 8, !tbaa !34   ; 5 uses
+  %i.v = add nuw i64 %i.u, 1                      ; 2 uses
   %i.w = icmp eq i64 %i.u, -1
   br i1 %i.w, label %bb.j, label %bb.k
 
@@ -459,8 +459,8 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.i
   %i.x = getelementptr inbounds nuw i8, ptr %i.d, i64 56 ; 2 uses
   %i.y = load i64, ptr %i.x, align 8, !tbaa !92   ; 2 uses
-  %4 = icmp ugt i64 %i.v, %i.y
-  br i1 %4, label %bb.l, label %._crit_edge
+  %.not42 = icmp ult i64 %i.u, %i.y
+  br i1 %.not42, label %._crit_edge, label %bb.l
 
 ._crit_edge:                                      ; preds = %bb.k
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.d, i64 40

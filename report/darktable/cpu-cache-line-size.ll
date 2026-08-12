@@ -82,7 +82,7 @@ bb.a:
   br i1 %i.b, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %5 = call fastcc { i64, i8 } @_ZL30get_cachelinesize_from_sysconfv() ; 2 uses
+  %5 = call { i64, i8 } @_ZL30get_cachelinesize_from_sysconfv() ; 2 uses
   %6 = getelementptr inbounds nuw %"class.std::optional", ptr %1, i32 0, i32 0
   %7 = getelementptr inbounds nuw %"struct.std::_Optional_base", ptr %6, i32 0, i32 0 ; 2 uses
   %i.c = getelementptr inbounds nuw { i64, i8 }, ptr %7, i32 0, i32 0
@@ -99,7 +99,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.g, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %8 = call fastcc { i64, i8 } @_ZL32get_cachelinesize_from_getauxvalv() ; 2 uses
+  %8 = call { i64, i8 } @_ZL32get_cachelinesize_from_getauxvalv() ; 2 uses
   %9 = getelementptr inbounds nuw %"class.std::optional", ptr %2, i32 0, i32 0
   %10 = getelementptr inbounds nuw %"struct.std::_Optional_base", ptr %9, i32 0, i32 0 ; 2 uses
   %i.h = getelementptr inbounds nuw { i64, i8 }, ptr %10, i32 0, i32 0
@@ -116,7 +116,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %i.l, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %11 = call fastcc { i64, i8 } @_ZL35get_cachelinesize_from_sysctlbynamev() ; 2 uses
+  %11 = call { i64, i8 } @_ZL35get_cachelinesize_from_sysctlbynamev() ; 2 uses
   %12 = getelementptr inbounds nuw %"class.std::optional", ptr %3, i32 0, i32 0
   %13 = getelementptr inbounds nuw %"struct.std::_Optional_base", ptr %12, i32 0, i32 0 ; 2 uses
   %i.m = getelementptr inbounds nuw { i64, i8 }, ptr %13, i32 0, i32 0
@@ -133,7 +133,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br i1 %i.q, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %14 = call fastcc { i64, i8 } @_ZL53get_cachelinesize_from_GetLogicalProcessorInformationv() ; 2 uses
+  %14 = call { i64, i8 } @_ZL53get_cachelinesize_from_GetLogicalProcessorInformationv() ; 2 uses
   %15 = getelementptr inbounds nuw %"class.std::optional", ptr %4, i32 0, i32 0
   %16 = getelementptr inbounds nuw %"struct.std::_Optional_base", ptr %15, i32 0, i32 0 ; 2 uses
   %i.r = getelementptr inbounds nuw { i64, i8 }, ptr %16, i32 0, i32 0
@@ -189,7 +189,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress noinline norecurse nounwind optnone uwtable
-define internal fastcc { i64, i8 } @_ZL30get_cachelinesize_from_sysconfv() unnamed_addr #2 {
+define internal { i64, i8 } @_ZL30get_cachelinesize_from_sysconfv() unnamed_addr #2 {
 bb.a:
   %0 = alloca %"class.std::optional", align 8     ; 3 uses
   %i.a = alloca i64, align 8                      ; 3 uses
@@ -219,7 +219,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #3
 
 ; Function Attrs: mustprogress noinline norecurse nounwind optnone uwtable
-define internal fastcc { i64, i8 } @_ZL32get_cachelinesize_from_getauxvalv() unnamed_addr #2 {
+define internal { i64, i8 } @_ZL32get_cachelinesize_from_getauxvalv() unnamed_addr #2 {
 bb.a:
   %0 = alloca %"class.std::optional", align 8     ; 3 uses
   %i.a = alloca i64, align 8                      ; 5 uses
@@ -255,7 +255,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 }
 
 ; Function Attrs: mustprogress noinline norecurse nounwind optnone uwtable
-define internal fastcc { i64, i8 } @_ZL35get_cachelinesize_from_sysctlbynamev() unnamed_addr #2 {
+define internal { i64, i8 } @_ZL35get_cachelinesize_from_sysctlbynamev() unnamed_addr #2 {
 bb.a:
   %0 = alloca %"class.std::optional", align 8     ; 2 uses
   %1 = alloca %"struct.std::nullopt_t", align 1   ; 0 uses
@@ -267,7 +267,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress noinline norecurse nounwind optnone uwtable
-define internal fastcc { i64, i8 } @_ZL53get_cachelinesize_from_GetLogicalProcessorInformationv() unnamed_addr #2 {
+define internal { i64, i8 } @_ZL53get_cachelinesize_from_GetLogicalProcessorInformationv() unnamed_addr #2 {
 bb.a:
   %0 = alloca %"class.std::optional", align 8     ; 2 uses
   %1 = alloca %"struct.std::nullopt_t", align 1   ; 0 uses

@@ -203,7 +203,7 @@ bb.q:                                             ; preds = %_RNvMNtCs4NRVxsYgnA
 
 bb.r:                                             ; preds = %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultmNtNtNtB4_3num5error15TryFromIntErrorE6unwrapCs98D8VPWzHuM_14regex_automata.exit
   %i.an = shl i64 %i.h, %i.r                      ; 3 uses
-  %i.ao = shl i64 %i.an, 2                        ; 2 uses
+  %i.ao = shl nuw i64 %i.an, 2                    ; 2 uses
   %i.ap = icmp ugt i64 %i.an, 4611686018427387903
   br i1 %i.ap, label %bb.t, label %bb.s, !prof !389
 
@@ -606,14 +606,14 @@ bb.ai:                                            ; preds = %bb.ag
 
 bb.aj:                                            ; preds = %bb.ag
   %i.ch = extractvalue { i64, i1 } %i.cb, 0
-  %i.ci = select i1 %i.ca, i64 %i.ch, i64 0       ; 2 uses
-  %i.cj = add i64 %i.ci, 12                       ; 3 uses
+  %i.ci = select i1 %i.ca, i64 %i.ch, i64 0       ; 3 uses
+  %i.cj = add nuw i64 %i.ci, 12                   ; 2 uses
   %i.ck = icmp ugt i64 %i.ci, -13
   br i1 %i.ck, label %bb.al, label %bb.ak, !prof !389
 
 bb.ak:                                            ; preds = %bb.aj
-  %i.cl = shl i64 %i.cj, 2                        ; 2 uses
-  %i.cm = icmp ugt i64 %i.cj, 4611686018427387903
+  %i.cl = shl nuw i64 %i.cj, 2                    ; 2 uses
+  %i.cm = icmp ugt i64 %i.ci, 4611686018427387891
   br i1 %i.cm, label %bb.an, label %bb.am, !prof !389
 
 bb.al:                                            ; preds = %bb.aj
@@ -737,7 +737,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  %i.i = load i64, ptr %i.h, align 8, !noundef !7 ; 3 uses
+  %i.i = load i64, ptr %i.h, align 8, !noundef !7 ; 4 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   %i.k = load i64, ptr %i.j, align 8, !noundef !7 ; 4 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
@@ -747,7 +747,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.m = sub nuw nsw i64 %2, %i.k                 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 %i.k ; 3 uses
-  %i.o = shl i64 %i.i, 1                          ; 2 uses
+  %i.o = shl nuw nsw i64 %i.i, 1
   %i.p = icmp slt i64 %i.i, 0
   br i1 %i.p, label %bb.g, label %bb.f, !prof !389
 
@@ -756,8 +756,8 @@ bb.e:                                             ; preds = %bb.c
   unreachable
 
 bb.f:                                             ; preds = %bb.d
-  %i.q = shl i64 %i.i, 3                          ; 3 uses
-  %i.r = icmp ugt i64 %i.o, 4611686018427387903
+  %i.q = shl nuw i64 %i.i, 3                      ; 3 uses
+  %i.r = icmp samesign ugt i64 %i.i, 2305843009213693951
   br i1 %i.r, label %bb.i, label %bb.h, !prof !389
 
 bb.g:                                             ; preds = %bb.d
@@ -890,7 +890,7 @@ bb.s:                                             ; preds = %bb.p
 
 bb.t:                                             ; preds = %bb.s
   %i.au = getelementptr inbounds nuw i8, ptr %i.al, i64 %i.as ; 3 uses
-  %i.av = shl i64 %i.aq, 2                        ; 2 uses
+  %i.av = shl nuw i64 %i.aq, 2                    ; 2 uses
   %i.aw = icmp ugt i64 %i.aq, 4611686018427387903
   br i1 %i.aw, label %bb.w, label %bb.v, !prof !389
 

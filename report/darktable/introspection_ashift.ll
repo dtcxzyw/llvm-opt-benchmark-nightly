@@ -204,7 +204,7 @@ _isneutral.exit.thread:                           ; preds = %bb.a, %bb.b, %bb.c,
   call fastcc void @_homography(ptr noundef %i.a, float noundef %i.d, float noundef %.pre, float noundef %i.ao, float noundef %i.aq, float noundef %i.as, float noundef %i.au, float noundef %i.aw, i32 noundef %i.ay, i32 noundef %i.ba, i32 noundef 0)
   %i.bb = getelementptr inbounds nuw i8, ptr %3, i64 12
   %i.bc = load i32, ptr %i.bb, align 4, !tbaa !112 ; 4 uses
-  %invariant.op89 = add i32 %i.bc, -1             ; 2 uses
+  %invariant.op89 = add nsw i32 %i.bc, -1         ; 2 uses
   %i.bd = icmp sgt i32 %i.bc, 0
   br i1 %i.bd, label %.preheader.lr.ph, label %._crit_edge96
 
@@ -485,7 +485,7 @@ _isneutral.exit.thread:                           ; preds = %bb.a, %bb.b, %bb.c,
   %i.bw = fdiv reassoc nsz arcp contract afn <2 x float> %i.bv, %i.br ; 2 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %2, i64 12
   %i.by = load i32, ptr %i.bx, align 4, !tbaa !112 ; 4 uses
-  %invariant.op135 = add i32 %i.by, -1            ; 2 uses
+  %invariant.op135 = add nsw i32 %i.by, -1        ; 2 uses
   %i.bz = icmp sgt i32 %i.by, 0
   br i1 %i.bz, label %.preheader.lr.ph, label %._crit_edge142
 
@@ -888,7 +888,7 @@ bb.ap:                                            ; preds = %bb.ao, %bb.an
   %i.ih = load i32, ptr %i.s, align 8, !tbaa !506
   call fastcc void @_homography(ptr noundef %i.b, float noundef %i.fy, float noundef %i.gr, float noundef %i.hk, float noundef %i.ic, float noundef %i.id, float noundef %i.ie, float noundef %i.if, i32 noundef %i.ig, i32 noundef %i.ih, i32 noundef 0)
   %i.ii = load i32, ptr %i.s, align 8, !tbaa !506 ; 5 uses
-  %invariant.op17.i = add i32 %i.ii, -1           ; 2 uses
+  %invariant.op17.i = add nsw i32 %i.ii, -1       ; 2 uses
   %i.ij = icmp sgt i32 %i.ii, 0
   %.pre.i = load i32, ptr %i.r, align 4, !tbaa !505 ; 4 uses
   br i1 %i.ij, label %.preheader.lr.ph.i, label %._crit_edge24.i

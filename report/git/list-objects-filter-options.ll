@@ -203,8 +203,8 @@ strbuf_setlen.exit:                               ; preds = %bb.f, %bb.g
 
 bb.i:                                             ; preds = %strbuf_setlen.exit
   %i.r = load ptr, ptr %i.c, align 8, !tbaa !24   ; 3 uses
-  %i.s = load i64, ptr %i.d, align 8, !tbaa !25   ; 6 uses
-  %i.t = add i64 %i.s, 1                          ; 3 uses
+  %i.s = load i64, ptr %i.d, align 8, !tbaa !25   ; 7 uses
+  %i.t = add nuw i64 %i.s, 1                      ; 2 uses
   %i.u = icmp eq i64 %i.s, -1
   br i1 %i.u, label %bb.j, label %bb.k
 
@@ -214,8 +214,8 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.i
   %i.v = load i64, ptr %i.e, align 8, !tbaa !27   ; 2 uses
-  %4 = icmp ugt i64 %i.t, %i.v
-  br i1 %4, label %bb.l, label %._crit_edge
+  %.not37 = icmp ult i64 %i.s, %i.v
+  br i1 %.not37, label %._crit_edge, label %bb.l
 
 ._crit_edge:                                      ; preds = %bb.k
   %.pre = load ptr, ptr %i.f, align 8, !tbaa !28
@@ -472,8 +472,8 @@ filter_spec_append_urlencode.exit.i:              ; preds = %bb.j, %list_objects
 
 transform_to_combine_type.exit:                   ; preds = %bb.c, %filter_spec_append_urlencode.exit.i
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 3 uses
-  %i.aa = load i64, ptr %i.z, align 8, !tbaa !25  ; 4 uses
-  %i.ab = add i64 %i.aa, 1                        ; 3 uses
+  %i.aa = load i64, ptr %i.z, align 8, !tbaa !25  ; 5 uses
+  %i.ab = add nuw i64 %i.aa, 1                    ; 2 uses
   %i.ac = icmp eq i64 %i.aa, -1
   br i1 %i.ac, label %bb.k, label %bb.l
 
@@ -484,8 +484,8 @@ bb.k:                                             ; preds = %transform_to_combin
 bb.l:                                             ; preds = %transform_to_combine_type.exit
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   %i.ae = load i64, ptr %i.ad, align 8, !tbaa !27 ; 2 uses
-  %3 = icmp ugt i64 %i.ab, %i.ae
-  br i1 %3, label %bb.m, label %._crit_edge
+  %.not44 = icmp ult i64 %i.aa, %i.ae
+  br i1 %.not44, label %._crit_edge, label %bb.m
 
 ._crit_edge:                                      ; preds = %bb.l
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 80

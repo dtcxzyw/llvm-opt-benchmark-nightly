@@ -204,7 +204,7 @@ bb.ac:                                            ; preds = %bb.e
   %i.dn = add i32 %5, 2
   %i.do = tail call zeroext i16 @tvb_get_letohs(ptr noundef %3, i32 noundef %i.dn)
   %i.dp = zext i16 %i.do to i32
-  %i.dq = mul nuw i32 %i.dp, %i.dm                ; 2 uses
+  %i.dq = mul nuw nsw i32 %i.dp, %i.dm            ; 2 uses
   switch i16 %i.dl, label %dissect_cip_string_type.exit [
     i16 1, label %bb.af
     i16 2, label %bb.ad

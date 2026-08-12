@@ -203,7 +203,7 @@ bb.g:                                             ; preds = %bb.d, %bb.i
   %.sroa.013.sroa.10.0 = phi ptr [ %.sroa.0144.sroa.11.0.copyload, %bb.d ], [ %.sroa.0147.sroa.11.0.copyload, %bb.i ] ; 2 uses
   %.sroa.013.sroa.9.0 = phi i64 [ %.sroa.0144.sroa.10.0.copyload, %bb.d ], [ %.sroa.0147.sroa.10.0.copyload, %bb.i ] ; 7 uses
   %.sroa.013.sroa.8.0 = phi ptr [ %.sroa.0144.sroa.9.0.copyload, %bb.d ], [ %.sroa.0147.sroa.9.0.copyload, %bb.i ] ; 3 uses
-  %.sroa.013.sroa.7.0 = phi i64 [ %.sroa.0144.sroa.8.0.copyload, %bb.d ], [ %.sroa.0147.sroa.8.0.copyload, %bb.i ] ; 2 uses
+  %.sroa.013.sroa.7.0 = phi i64 [ %.sroa.0144.sroa.8.0.copyload, %bb.d ], [ %.sroa.0147.sroa.8.0.copyload, %bb.i ] ; 3 uses
   %.sroa.013.sroa.6.0 = phi ptr [ %.sroa.0144.sroa.7.0.copyload, %bb.d ], [ %.sroa.0147.sroa.7.0.copyload, %bb.i ] ; 2 uses
   %.sroa.013.sroa.5.0 = phi i64 [ %.sroa.0144.sroa.6.0.copyload, %bb.d ], [ %.sroa.0147.sroa.6.0.copyload, %bb.i ]
   %.sroa.013.sroa.4.0 = phi ptr [ %.sroa.5387.0.copyload, %bb.d ], [ %.sroa.5396.0.copyload, %bb.i ] ; 3 uses
@@ -555,12 +555,12 @@ bb.aa:                                            ; preds = %bb.y
   %i.ds = getelementptr inbounds nuw i8, ptr %i.w, i64 16 ; 3 uses
   store i64 0, ptr %i.ds, align 8
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.013.sroa.6.0) ]
-  %3 = urem i64 %.sroa.013.sroa.7.0, 6
-  %4 = sub nuw nsw i64 %.sroa.013.sroa.7.0, %3    ; 2 uses
-  %.not223485 = icmp ult i64 %4, 6
+  %.not223485 = icmp ult i64 %.sroa.013.sroa.7.0, 6
   br i1 %.not223485, label %._crit_edge, label %.lr.ph488
 
 .lr.ph488:                                        ; preds = %bb.aa
+  %3 = urem i64 %.sroa.013.sroa.7.0, 6
+  %4 = sub nuw nsw i64 %.sroa.013.sroa.7.0, %3
   %i.dt = getelementptr inbounds nuw i8, ptr %.sroa.013.sroa.8.0, i64 %.sroa.013.sroa.9.0
   %i.du = getelementptr inbounds nuw i8, ptr %i.k, i64 4
   br label %bb.ca

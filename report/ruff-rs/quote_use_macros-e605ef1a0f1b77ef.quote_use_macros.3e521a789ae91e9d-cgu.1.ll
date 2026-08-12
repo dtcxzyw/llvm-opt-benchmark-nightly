@@ -201,11 +201,8 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.t, label %bb.o, label %_RNvXsp_NtCs4NRVxsYgnAr_4core6resultINtB5_6ResultINtNtNtB7_3ptr8non_null7NonNullhENtCskqTXHgZZ9qE_8smallvec18CollectionAllocErrENtNtNtB7_3ops9try_trait3Try6branchCs5lJmHfxUNUn_16quote_use_macros.exit.i
 
 bb.o:                                             ; preds = %bb.n
-  %1 = icmp ugt i64 %i.z, 576460752303423487
-  %2 = shl i64 %i.z, 5                            ; 2 uses
-  %i.ae = icmp ugt i64 %2, 9223372036854775800
-  %or.cond8 = or i1 %1, %i.ae
-  br i1 %or.cond8, label %bb.t, label %_RNvXsp_NtCs4NRVxsYgnAr_4core6resultINtB5_6ResultINtNtNtB7_3ptr8non_null7NonNullhENtCskqTXHgZZ9qE_8smallvec18CollectionAllocErrENtNtNtB7_3ops9try_trait3Try6branchCs5lJmHfxUNUn_16quote_use_macros.exit32.i
+  %i.ae = icmp ugt i64 %i.z, 288230376151711743
+  br i1 %i.ae, label %bb.t, label %_RNvXsp_NtCs4NRVxsYgnAr_4core6resultINtB5_6ResultINtNtNtB7_3ptr8non_null7NonNullhENtCskqTXHgZZ9qE_8smallvec18CollectionAllocErrENtNtNtB7_3ops9try_trait3Try6branchCs5lJmHfxUNUn_16quote_use_macros.exit32.i
 
 _RNvXsp_NtCs4NRVxsYgnAr_4core6resultINtB5_6ResultINtNtNtB7_3ptr8non_null7NonNullhENtCskqTXHgZZ9qE_8smallvec18CollectionAllocErrENtNtNtB7_3ops9try_trait3Try6branchCs5lJmHfxUNUn_16quote_use_macros.exit.i: ; preds = %bb.n
   %i.af = call ptr @_RNvNtCscdodAO9FK5_5alloc5alloc5allocCs5lJmHfxUNUn_16quote_use_macros(i64 8, i64 %i.ac) ; 3 uses
@@ -213,7 +210,8 @@ _RNvXsp_NtCs4NRVxsYgnAr_4core6resultINtB5_6ResultINtNtNtB7_3ptr8non_null7NonNull
   br i1 %.not.i.not.i, label %bb.s, label %bb.q
 
 _RNvXsp_NtCs4NRVxsYgnAr_4core6resultINtB5_6ResultINtNtNtB7_3ptr8non_null7NonNullhENtCskqTXHgZZ9qE_8smallvec18CollectionAllocErrENtNtNtB7_3ops9try_trait3Try6branchCs5lJmHfxUNUn_16quote_use_macros.exit32.i: ; preds = %bb.o
-  %i.ag = call ptr @_RNvNtCscdodAO9FK5_5alloc5alloc7reallocCs5lJmHfxUNUn_16quote_use_macros(ptr %i.u, i64 8, i64 %2, i64 %i.ac) ; 2 uses
+  %1 = shl nuw nsw i64 %i.z, 5
+  %i.ag = call ptr @_RNvNtCscdodAO9FK5_5alloc5alloc7reallocCs5lJmHfxUNUn_16quote_use_macros(ptr %i.u, i64 8, i64 %1, i64 %i.ac) ; 2 uses
   %.not.i27.not.i = icmp eq ptr %i.ag, null
   br i1 %.not.i27.not.i, label %bb.s, label %bb.p
 

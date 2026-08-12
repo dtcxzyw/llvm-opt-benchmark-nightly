@@ -199,7 +199,7 @@ bb.h:                                             ; preds = %bb.c
   br label %bb.m
 
 bb.i:                                             ; preds = %bb.d
-  call fastcc void @_ZZ4mainEN14my_string_viewC2EPKc(ptr noundef nonnull align 8 dereferenceable(16) %5)
+  call void @_ZZ4mainEN14my_string_viewC2EPKc(ptr noundef nonnull align 8 dereferenceable(16) %5, ptr noundef @.str.3)
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i
@@ -207,7 +207,7 @@ bb.j:                                             ; preds = %bb.i
   %i.p = load i64, ptr %i.o, align 8
   %i.q = getelementptr inbounds nuw { i64, ptr }, ptr %5, i32 0, i32 1
   %i.r = load ptr, ptr %i.q, align 8
-  call fastcc void @_ZZ4mainEN7my_pathC2EZ4mainE14my_string_view(ptr noundef nonnull align 1 dereferenceable(1) %4, i64 %i.p, ptr %i.r)
+  call void @_ZZ4mainEN7my_pathC2EZ4mainE14my_string_view(ptr noundef nonnull align 1 dereferenceable(1) %4, i64 %i.p, ptr %i.r)
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j
@@ -523,7 +523,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress noinline norecurse nounwind optnone uwtable
-define internal fastcc void @_ZZ4mainEN14my_string_viewC2EPKc(ptr noundef nonnull align 8 dereferenceable(16) %0) unnamed_addr #4 align 2 {
+define internal void @_ZZ4mainEN14my_string_viewC2EPKc(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef %1) unnamed_addr #4 align 2 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 2 uses
   %i.b = alloca ptr, align 8                      ; 2 uses
@@ -536,7 +536,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress noinline norecurse nounwind optnone uwtable
-define internal fastcc void @_ZZ4mainEN7my_pathC2EZ4mainE14my_string_view(ptr noundef nonnull align 1 dereferenceable(1) %0, i64 %1, ptr %2) unnamed_addr #4 align 2 {
+define internal void @_ZZ4mainEN7my_pathC2EZ4mainE14my_string_view(ptr noundef nonnull align 1 dereferenceable(1) %0, i64 %1, ptr %2) unnamed_addr #4 align 2 {
 bb.a:
   %3 = alloca %class.my_string_view, align 8      ; 2 uses
   %i.a = alloca ptr, align 8                      ; 2 uses

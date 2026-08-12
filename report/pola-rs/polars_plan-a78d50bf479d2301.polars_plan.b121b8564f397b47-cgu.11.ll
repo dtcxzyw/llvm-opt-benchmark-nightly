@@ -204,7 +204,7 @@ bb.a:
   %i.g = alloca [1 x i8], align 1                 ; 2 uses
   %i.h = zext i1 %9 to i8
   store i8 %i.h, ptr %i.g, align 1
-  %i.i = add i64 %2, 2, !dbg !123018              ; 4 uses
+  %i.i = add nuw nsw i64 %2, 2, !dbg !123018      ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !dbg !123019
   store ptr %4, ptr %i.f, align 8, !dbg !123021
   %i.j = getelementptr inbounds nuw i8, ptr %i.f, i64 8, !dbg !123021
@@ -244,7 +244,7 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !dbg !123044
-  %i.s = icmp samesign ugt i64 %i.i, 65535, !dbg !123047
+  %i.s = icmp samesign ugt i64 %2, 65533, !dbg !123047
   br i1 %i.s, label %bb.h, label %bb.g, !dbg !123047, !prof !32
 
 bb.f:                                             ; preds = %bb.d
@@ -255,7 +255,7 @@ bb.f:                                             ; preds = %bb.d
   %i.u = getelementptr inbounds nuw i8, ptr %i.b, i64 16, !dbg !123051
   store ptr %3, ptr %i.u, align 8, !dbg !123051
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !123052
-  %i.v = icmp samesign ugt i64 %i.i, 65535, !dbg !123056
+  %i.v = icmp samesign ugt i64 %2, 65533, !dbg !123056
   br i1 %i.v, label %bb.l, label %bb.k, !dbg !123056, !prof !32
 
 bb.g:                                             ; preds = %bb.e

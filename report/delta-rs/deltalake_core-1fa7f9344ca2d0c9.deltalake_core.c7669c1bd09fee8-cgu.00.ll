@@ -204,14 +204,14 @@ bb.d:                                             ; preds = %_RNvMs4_NtCs6Po7BT7
   br i1 %.not.i.i.i.i, label %_RINvMsj_NtCs6Po7BT7Nknu_5alloc3vecINtB6_3VeclE14extend_trustedINtNtNtNtCsbvkFyIu7lgC_4core4iter8adapters3map3MapINtNtNtB17_3ops5range14RangeInclusivejENCNvNtNtNtCs14kWLkQVSKO_14deltalake_core10operations8optimize6zorder10zorder_keys_0EEB2z_.exit.i, label %_RNvXs0_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_3ops5range14RangeInclusivejENCNvNtNtNtCs14kWLkQVSKO_14deltalake_core10operations8optimize6zorder10zorder_keys_0ENtNtNtB9_6traits8iterator8Iterator9size_hintB1I_.exit.i.i
 
 _RNvXs0_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_3ops5range14RangeInclusivejENCNvNtNtNtCs14kWLkQVSKO_14deltalake_core10operations8optimize6zorder10zorder_keys_0ENtNtNtB9_6traits8iterator8Iterator9size_hintB1I_.exit.i.i: ; preds = %bb.d
-  %i.aa = sub nuw i64 %i.z, %i.y                  ; 2 uses
+  %i.aa = sub nuw i64 %i.z, %i.y                  ; 3 uses
   %.not.i.i3 = icmp eq i64 %i.aa, -1
-  %i.ab = add i64 %i.aa, 1                        ; 2 uses
+  %i.ab = add nuw i64 %i.aa, 1
   br i1 %.not.i.i3, label %bb.g, label %bb.e, !prof !39344
 
 bb.e:                                             ; preds = %_RNvXs0_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_3ops5range14RangeInclusivejENCNvNtNtNtCs14kWLkQVSKO_14deltalake_core10operations8optimize6zorder10zorder_keys_0ENtNtNtB9_6traits8iterator8Iterator9size_hintB1I_.exit.i.i
-  %2 = icmp ugt i64 %i.ab, %i.p
-  br i1 %2, label %bb.f, label %_RINvMsj_NtCs6Po7BT7Nknu_5alloc3vecINtB6_3VeclE14extend_trustedINtNtNtNtCsbvkFyIu7lgC_4core4iter8adapters3map3MapINtNtNtB17_3ops5range14RangeInclusivejENCNvNtNtNtCs14kWLkQVSKO_14deltalake_core10operations8optimize6zorder10zorder_keys_0EEB2z_.exit.i, !prof !39370
+  %.not11.i.i = icmp ult i64 %i.aa, %i.p
+  br i1 %.not11.i.i, label %_RINvMsj_NtCs6Po7BT7Nknu_5alloc3vecINtB6_3VeclE14extend_trustedINtNtNtNtCsbvkFyIu7lgC_4core4iter8adapters3map3MapINtNtNtB17_3ops5range14RangeInclusivejENCNvNtNtNtCs14kWLkQVSKO_14deltalake_core10operations8optimize6zorder10zorder_keys_0EEB2z_.exit.i, label %bb.f, !prof !39370
 
 bb.f:                                             ; preds = %bb.e
   invoke void @_RINvNvMs2_NtCs6Po7BT7Nknu_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECs14kWLkQVSKO_14deltalake_core(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.c, i64 noundef 0, i64 noundef %i.ab, i64 noundef 4, i64 noundef 4)
@@ -614,7 +614,7 @@ begin_hunk_1_@llvm.umax.i64
 !39367 = distinct !{!39367, !39364, !"_RNvXs0_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_3ops5range14RangeInclusivejENCNvNtNtNtCs14kWLkQVSKO_14deltalake_core10operations8optimize6zorder10zorder_keys_0ENtNtNtB9_6traits8iterator8Iterator9size_hintB1I_: argument 0"}
 !39368 = !{!39359, !39361, !39363, !39354, !39349}
 !39369 = !{!39356, !39366, !39367, !39351, !39346}
-!39370 = !{!"branch_weights", !"expected", i32 4299269, i32 2143184379}
+!39370 = !{!"branch_weights", !"expected", i32 2143184379, i32 4299269}
 !39371 = !{!39351, !39346}
 !39372 = !{!39354, !39349}
 !39373 = !{!39351, !39354, !39346, !39349}
