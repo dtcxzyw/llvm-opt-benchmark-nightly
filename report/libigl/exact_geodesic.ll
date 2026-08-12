@@ -204,7 +204,7 @@ _ZN3igl8geodesic22GeodesicAlgorithmExact5clearEv.exit: ; preds = %.lr.ph.i, %_ZN
   %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 5 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %i.am = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 2 uses
+  %i.am = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 4 uses
   br label %bb.d
 
 ._crit_edge26:                                    ; preds = %._crit_edge
@@ -314,14 +314,7 @@ bb.g:                                             ; preds = %bb.f
   %i.ch = getelementptr inbounds nuw i8, ptr %i.cg, i64 48
   %i.ci = load i32, ptr %i.ch, align 4, !tbaa !27
   %i.cj = icmp eq i32 %i.by, %i.ci
-  br i1 %i.cj, label %3, label %bb.h
-
-3:                                                ; preds = %bb.g
-  %4 = getelementptr inbounds nuw i8, ptr %i.bs, i64 56
-  %5 = load double, ptr %4, align 8, !tbaa !79    ; 3 uses
-  store double %5, ptr %i.aj, align 8, !tbaa !145
-  store i64 0, ptr %i.ak, align 8
-  br label %_ZN3igl8geodesic8Interval20compute_min_distanceEd.exit.i
+  br i1 %i.cj, label %_ZN3igl8geodesic8Interval20compute_min_distanceEd.exit.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %._crit_edge.i
   %i.ck = phi ptr [ %.pre12.i, %._crit_edge.i ], [ %i.cb, %bb.g ] ; 3 uses
@@ -363,7 +356,7 @@ bb.i:                                             ; preds = %bb.h
   %sqrt.i.i21.i.i = call noundef double @llvm.sqrt.f64(double %i.dp) ; 3 uses
   %i.dq = fcmp olt double %sqrt.i.i21.i.i, 1.000000e-50
   %i.dr = getelementptr inbounds nuw i8, ptr %i.bs, i64 56
-  %i.ds = load double, ptr %i.dr, align 8, !tbaa !146 ; 6 uses
+  %i.ds = load double, ptr %i.dr, align 8, !tbaa !145 ; 8 uses
   br i1 %i.dq, label %.thread18.i, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
@@ -373,7 +366,7 @@ bb.j:                                             ; preds = %bb.i
   %i.dw = call double @llvm.fmuladd.f64(double %sqrt.i.i.i.i, double %sqrt.i.i.i.i, double %i.dv)
   %i.dx = fmul double %i.ds, 2.000000e+00
   %i.dy = fdiv double %i.dw, %i.dx
-  %i.dz = fadd double %i.dt, %i.dy                ; 4 uses
+  %i.dz = fadd double %i.dt, %i.dy                ; 7 uses
   store double %i.dz, ptr %i.aj, align 8, !tbaa !79
   %i.ea = fneg double %i.dz
   %i.eb = fmul double %i.dz, %i.ea
@@ -381,41 +374,70 @@ bb.j:                                             ; preds = %bb.i
   %i.ed = fcmp ogt double %i.ec, 0.000000e+00
   %.sroa.speculated.i.i = select i1 %i.ed, double %i.ec, double 0.000000e+00
   %i.ee = call double @sqrt(double noundef %.sroa.speculated.i.i) #22
-  %i.ef = fneg double %i.ee                       ; 2 uses
-  store double %i.ef, ptr %i.ak, align 8, !tbaa !148
-  br label %_ZN3igl8geodesic8Interval20compute_min_distanceEd.exit.i
+  %i.ef = fneg double %i.ee                       ; 3 uses
+  store double %i.ef, ptr %i.ak, align 8, !tbaa !147
+  %3 = fcmp uge double %i.dz, 0.000000e+00
+  %4 = fcmp olt double %i.ds, %i.dz
+  %or.cond = select i1 %3, i1 %4, i1 false
+  br i1 %or.cond, label %.thread71, label %.thread18.i..thread21.i_crit_edge
 
 .thread18.i:                                      ; preds = %bb.i
   %i.eg = insertelement <2 x double> <double poison, double -0.000000e+00>, double %i.ds, i64 0
   store <2 x double> %i.eg, ptr %i.aj, align 8, !tbaa !79
-  br label %_ZN3igl8geodesic8Interval20compute_min_distanceEd.exit.i
+  br label %.thread18.i..thread21.i_crit_edge
 
 .thread56:                                        ; preds = %bb.h
   store <2 x double> <double 0.000000e+00, double -0.000000e+00>, ptr %i.aj, align 8, !tbaa !79
   %.in.i.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.bs, i64 56
-  %.pre = load double, ptr %.in.i.phi.trans.insert, align 8, !tbaa !79
-  br label %_ZN3igl8geodesic8Interval20compute_min_distanceEd.exit.i
+  %.pre = load double, ptr %.in.i.phi.trans.insert, align 8, !tbaa !79 ; 3 uses
+  %5 = fcmp olt double %.pre, 0.000000e+00
+  br i1 %5, label %.thread71, label %.thread18.i..thread21.i_crit_edge
 
-_ZN3igl8geodesic8Interval20compute_min_distanceEd.exit.i: ; preds = %bb.j, %.thread56, %.thread18.i, %3
-  %6 = phi double [ 0.000000e+00, %3 ], [ %i.ef, %bb.j ], [ -0.000000e+00, %.thread56 ], [ -0.000000e+00, %.thread18.i ] ; 7 uses
-  %7 = phi double [ %5, %3 ], [ %i.dz, %bb.j ], [ 0.000000e+00, %.thread56 ], [ %i.ds, %.thread18.i ] ; 4 uses
-  %8 = phi double [ %5, %3 ], [ %i.ds, %bb.j ], [ %.pre, %.thread56 ], [ %i.ds, %.thread18.i ] ; 3 uses
+.thread71:                                        ; preds = %bb.j, %.thread56
+  %.ph = phi double [ -0.000000e+00, %.thread56 ], [ %i.ef, %bb.j ]
+  %.ph69 = phi double [ 0.000000e+00, %.thread56 ], [ %i.dz, %bb.j ]
+  %.ph70 = phi double [ %.pre, %.thread56 ], [ %i.ds, %bb.j ] ; 2 uses
+  store double %.ph70, ptr %i.am, align 8, !tbaa !79
+  br label %bb.k
+
+.thread18.i..thread21.i_crit_edge:                ; preds = %bb.j, %.thread18.i, %.thread56
+  %6 = phi double [ -0.000000e+00, %.thread18.i ], [ %i.ef, %bb.j ], [ -0.000000e+00, %.thread56 ] ; 4 uses
+  %7 = phi double [ %i.ds, %.thread18.i ], [ %i.dz, %bb.j ], [ 0.000000e+00, %.thread56 ] ; 5 uses
+  %8 = phi double [ %i.ds, %.thread18.i ], [ %i.ds, %bb.j ], [ %.pre, %.thread56 ] ; 2 uses
   store double %8, ptr %i.am, align 8, !tbaa !79
-  %i.eh = fcmp olt double %7, 0.000000e+00
-  br i1 %i.eh, label %_ZN3igl8geodesic8Interval6signalEd.exit.i.a, label %bb.k
+  %9 = fcmp olt double %7, 0.000000e+00
+  br i1 %9, label %12, label %bb.k
 
-_ZN3igl8geodesic8Interval6signalEd.exit.i.a:      ; preds = %_ZN3igl8geodesic8Interval20compute_min_distanceEd.exit.i
-  %9 = fsub double 0.000000e+00, %7               ; 3 uses
-  %10 = fcmp oeq double %6, 0.000000e+00
-  %i.ei = fmul double %6, %6
-  %i.ej = call double @llvm.fmuladd.f64(double %9, double %9, double %i.ei)
-  %sqrt.i.i = call double @llvm.sqrt.f64(double %i.ej)
-  %i.ek = fadd double %sqrt.i.i, 0.000000e+00
-  %.0.i.i = select i1 %10, double %9, double %i.ek
+_ZN3igl8geodesic8Interval20compute_min_distanceEd.exit.i: ; preds = %bb.g
+  %10 = getelementptr inbounds nuw i8, ptr %i.bs, i64 56
+  %11 = load double, ptr %10, align 8, !tbaa !79  ; 4 uses
+  store double %11, ptr %i.aj, align 8, !tbaa !148
+  store i64 0, ptr %i.ak, align 8
+  store double %11, ptr %i.am, align 8, !tbaa !79
+  %i.eh = fcmp olt double %11, 0.000000e+00
+  br i1 %i.eh, label %.thread65, label %bb.n
+
+12:                                               ; preds = %.thread18.i..thread21.i_crit_edge
+  %13 = fcmp oeq double %6, 0.000000e+00
+  br i1 %13, label %.thread65, label %_ZN3igl8geodesic8Interval6signalEd.exit.i.a
+
+.thread65:                                        ; preds = %_ZN3igl8geodesic8Interval20compute_min_distanceEd.exit.i, %12
+  %14 = phi double [ %7, %12 ], [ %11, %_ZN3igl8geodesic8Interval20compute_min_distanceEd.exit.i ]
+  %15 = fneg double %14
   br label %_ZN3igl8geodesic8Interval6signalEd.exit10.i
 
-bb.k:                                             ; preds = %_ZN3igl8geodesic8Interval20compute_min_distanceEd.exit.i
-  %i.el = fcmp olt double %8, %7
+_ZN3igl8geodesic8Interval6signalEd.exit.i.a:      ; preds = %12
+  %i.ei = fmul double %6, %6
+  %i.ej = call double @llvm.fmuladd.f64(double %7, double %7, double %i.ei)
+  %sqrt.i.i = call double @llvm.sqrt.f64(double %i.ej)
+  %i.ek = fadd double %sqrt.i.i, 0.000000e+00
+  br label %_ZN3igl8geodesic8Interval6signalEd.exit10.i
+
+bb.k:                                             ; preds = %.thread71, %.thread18.i..thread21.i_crit_edge
+  %16 = phi double [ %.ph70, %.thread71 ], [ %8, %.thread18.i..thread21.i_crit_edge ] ; 2 uses
+  %17 = phi double [ %.ph69, %.thread71 ], [ %7, %.thread18.i..thread21.i_crit_edge ] ; 2 uses
+  %18 = phi double [ %.ph, %.thread71 ], [ %6, %.thread18.i..thread21.i_crit_edge ] ; 4 uses
+  %i.el = fcmp olt double %16, %17
   br i1 %i.el, label %bb.l, label %bb.n
 
 .thread62:                                        ; preds = %bb.f
@@ -427,8 +449,8 @@ bb.k:                                             ; preds = %_ZN3igl8geodesic8In
   br i1 %i.em, label %.thread63, label %bb.n
 
 bb.l:                                             ; preds = %bb.k
-  %i.en = fsub double %8, %7                      ; 3 uses
-  %i.eo = fcmp oeq double %6, 0.000000e+00
+  %i.en = fsub double %16, %17                    ; 3 uses
+  %i.eo = fcmp oeq double %18, 0.000000e+00
   br i1 %i.eo, label %.thread63, label %bb.m
 
 .thread63:                                        ; preds = %.thread62, %bb.l
@@ -437,19 +459,19 @@ bb.l:                                             ; preds = %bb.k
   br label %_ZN3igl8geodesic8Interval6signalEd.exit10.i
 
 bb.m:                                             ; preds = %bb.l
-  %i.er = fmul double %6, %6
+  %i.er = fmul double %18, %18
   %i.es = call double @llvm.fmuladd.f64(double %i.en, double %i.en, double %i.er)
   %sqrt.i6.i = call double @llvm.sqrt.f64(double %i.es)
   %i.et = fadd double %sqrt.i6.i, 0.000000e+00
   br label %_ZN3igl8geodesic8Interval6signalEd.exit10.i
 
-bb.n:                                             ; preds = %.thread62, %bb.k
-  %11 = phi double [ 0.000000e+00, %.thread62 ], [ %6, %bb.k ]
-  %i.eu = fsub double 0.000000e+00, %11
+bb.n:                                             ; preds = %_ZN3igl8geodesic8Interval20compute_min_distanceEd.exit.i, %.thread62, %bb.k
+  %19 = phi double [ 0.000000e+00, %.thread62 ], [ %18, %bb.k ], [ 0.000000e+00, %_ZN3igl8geodesic8Interval20compute_min_distanceEd.exit.i ]
+  %i.eu = fsub double 0.000000e+00, %19
   br label %_ZN3igl8geodesic8Interval6signalEd.exit10.i
 
-_ZN3igl8geodesic8Interval6signalEd.exit10.i:      ; preds = %.thread63, %bb.m, %bb.n, %_ZN3igl8geodesic8Interval6signalEd.exit.i.a
-  %.0.i.sink.i = phi double [ %.0.i.i, %_ZN3igl8geodesic8Interval6signalEd.exit.i.a ], [ %i.eu, %bb.n ], [ %i.eq, %.thread63 ], [ %i.et, %bb.m ]
+_ZN3igl8geodesic8Interval6signalEd.exit10.i:      ; preds = %.thread63, %bb.m, %.thread65, %_ZN3igl8geodesic8Interval6signalEd.exit.i.a, %bb.n
+  %.0.i.sink.i = phi double [ %i.ek, %_ZN3igl8geodesic8Interval6signalEd.exit.i.a ], [ %i.eu, %bb.n ], [ %15, %.thread65 ], [ %i.eq, %.thread63 ], [ %i.et, %bb.m ]
   store double %.0.i.sink.i, ptr %i.al, align 8, !tbaa !149
   store i32 2, ptr %i.ag, align 4, !tbaa !92
   %i.ev = getelementptr inbounds nuw i8, ptr %i.bs, i64 48
@@ -585,10 +607,10 @@ _ZN3igl8geodesic12IntervalList17covering_intervalEd.exit.i: ; preds = %bb.e
 
 bb.f:                                             ; preds = %_ZN3igl8geodesic12IntervalList17covering_intervalEd.exit.i
   %i.ay = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 16
-  %i.az = load double, ptr %i.ay, align 8, !tbaa !145
+  %i.az = load double, ptr %i.ay, align 8, !tbaa !148
   %i.ba = fsub double 0.000000e+00, %i.az         ; 3 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 24
-  %i.bc = load double, ptr %i.bb, align 8, !tbaa !148 ; 3 uses
+  %i.bc = load double, ptr %i.bb, align 8, !tbaa !147 ; 3 uses
   %i.bd = fcmp oeq double %i.bc, 0.000000e+00
   br i1 %i.bd, label %bb.g, label %bb.h
 
@@ -638,10 +660,10 @@ _ZN3igl8geodesic12IntervalList17covering_intervalEd.exit.i21: ; preds = %bb.l
 
 bb.m:                                             ; preds = %_ZN3igl8geodesic12IntervalList17covering_intervalEd.exit.i21
   %i.bt = getelementptr inbounds nuw i8, ptr %.0.i.i17, i64 16
-  %i.bu = load double, ptr %i.bt, align 8, !tbaa !145
+  %i.bu = load double, ptr %i.bt, align 8, !tbaa !148
   %i.bv = fsub double %i.bi, %i.bu                ; 3 uses
   %i.bw = getelementptr inbounds nuw i8, ptr %.0.i.i17, i64 24
-  %i.bx = load double, ptr %i.bw, align 8, !tbaa !148 ; 3 uses
+  %i.bx = load double, ptr %i.bw, align 8, !tbaa !147 ; 3 uses
   %i.by = fcmp oeq double %i.bx, 0.000000e+00
   br i1 %i.by, label %bb.n, label %bb.o
 
@@ -732,14 +754,14 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.ad = load double, ptr %2, align 8, !tbaa !154 ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %i.af = load double, ptr %i.ae, align 8, !tbaa !145 ; 4 uses
+  %i.af = load double, ptr %i.ae, align 8, !tbaa !148 ; 4 uses
   %i.ag = fcmp ogt double %i.ad, %i.af
   br i1 %i.ag, label %bb.e, label %bb.h
 
 bb.e:                                             ; preds = %bb.d
   %i.ah = fsub double %i.ad, %i.af                ; 3 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %i.aj = load double, ptr %i.ai, align 8, !tbaa !148 ; 3 uses
+  %i.aj = load double, ptr %i.ai, align 8, !tbaa !147 ; 3 uses
   %i.ak = fcmp oeq double %i.aj, 0.000000e+00
   br i1 %i.ak, label %bb.f, label %bb.g
 
@@ -765,7 +787,7 @@ bb.h:                                             ; preds = %bb.d
 bb.i:                                             ; preds = %bb.h
   %i.ap = fsub double %i.z, %i.af                 ; 3 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %i.ar = load double, ptr %i.aq, align 8, !tbaa !148 ; 3 uses
+  %i.ar = load double, ptr %i.aq, align 8, !tbaa !147 ; 3 uses
   %i.as = fcmp oeq double %i.ar, 0.000000e+00
   br i1 %i.as, label %bb.j, label %bb.k
 
@@ -786,7 +808,7 @@ _ZN3igl8geodesic8Interval6signalEd.exit10.i:      ; preds = %bb.k, %bb.j
 
 bb.l:                                             ; preds = %bb.h
   %i.aw = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %i.ax = load double, ptr %i.aw, align 8, !tbaa !148
+  %i.ax = load double, ptr %i.aw, align 8, !tbaa !147
   %i.ay = fsub double %i.ab, %i.ax
   br label %_ZN3igl8geodesic8Interval20compute_min_distanceEd.exit
 
@@ -808,14 +830,14 @@ bb.m:                                             ; preds = %bb.b
 
 bb.n:                                             ; preds = %bb.m
   %i.bk = getelementptr inbounds nuw i8, ptr %.155, i64 16
-  %i.bl = load double, ptr %i.bk, align 8, !tbaa !145 ; 4 uses
+  %i.bl = load double, ptr %i.bk, align 8, !tbaa !148 ; 4 uses
   %i.bm = fcmp ogt double %i.bi, %i.bl
   br i1 %i.bm, label %bb.o, label %bb.r
 
 bb.o:                                             ; preds = %bb.n
   %i.bn = fsub double %i.bi, %i.bl                ; 3 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %.155, i64 24
-  %i.bp = load double, ptr %i.bo, align 8, !tbaa !148 ; 3 uses
+  %i.bp = load double, ptr %i.bo, align 8, !tbaa !147 ; 3 uses
   %i.bq = fcmp oeq double %i.bp, 0.000000e+00
   br i1 %i.bq, label %bb.p, label %bb.q
 
@@ -841,7 +863,7 @@ bb.r:                                             ; preds = %bb.n
 bb.s:                                             ; preds = %bb.r
   %i.bv = fsub double %i.be, %i.bl                ; 3 uses
   %i.bw = getelementptr inbounds nuw i8, ptr %.155, i64 24
-  %i.bx = load double, ptr %i.bw, align 8, !tbaa !148 ; 3 uses
+  %i.bx = load double, ptr %i.bw, align 8, !tbaa !147 ; 3 uses
   %i.by = fcmp oeq double %i.bx, 0.000000e+00
   br i1 %i.by, label %bb.t, label %bb.u
 
@@ -862,7 +884,7 @@ _ZN3igl8geodesic8Interval6signalEd.exit10.i159:   ; preds = %bb.u, %bb.t
 
 bb.v:                                             ; preds = %bb.r
   %i.cc = getelementptr inbounds nuw i8, ptr %.155, i64 24
-  %i.cd = load double, ptr %i.cc, align 8, !tbaa !148
+  %i.cd = load double, ptr %i.cc, align 8, !tbaa !147
   %i.ce = fsub double %i.bg, %i.cd
   br label %_ZN3igl8geodesic8Interval20compute_min_distanceEd.exit166
 
@@ -879,14 +901,14 @@ _ZN3igl8geodesic8Interval20compute_min_distanceEd.exit166: ; preds = %bb.m, %_ZN
 
 bb.w:                                             ; preds = %_ZN3igl8geodesic8Interval20compute_min_distanceEd.exit166
   %i.cl = getelementptr inbounds nuw i8, ptr %., i64 16
-  %i.cm = load double, ptr %i.cl, align 8, !tbaa !145 ; 4 uses
+  %i.cm = load double, ptr %i.cl, align 8, !tbaa !148 ; 4 uses
   %i.cn = fcmp ogt double %i.bj, %i.cm
   br i1 %i.cn, label %bb.x, label %bb.aa
 
 bb.x:                                             ; preds = %bb.w
   %i.co = fsub double %i.bj, %i.cm                ; 3 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %., i64 24
-  %i.cq = load double, ptr %i.cp, align 8, !tbaa !148 ; 3 uses
+  %i.cq = load double, ptr %i.cp, align 8, !tbaa !147 ; 3 uses
   %i.cr = fcmp oeq double %i.cq, 0.000000e+00
   br i1 %i.cr, label %bb.y, label %bb.z
 
@@ -912,7 +934,7 @@ bb.aa:                                            ; preds = %bb.w
 bb.ab:                                            ; preds = %bb.aa
   %i.cw = fsub double %i.ch, %i.cm                ; 3 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %., i64 24
-  %i.cy = load double, ptr %i.cx, align 8, !tbaa !148 ; 3 uses
+  %i.cy = load double, ptr %i.cx, align 8, !tbaa !147 ; 3 uses
   %i.cz = fcmp oeq double %i.cy, 0.000000e+00
   br i1 %i.cz, label %bb.ac, label %bb.ad
 
@@ -933,7 +955,7 @@ _ZN3igl8geodesic8Interval6signalEd.exit10.i169:   ; preds = %bb.ad, %bb.ac
 
 bb.ae:                                            ; preds = %bb.aa
   %i.dd = getelementptr inbounds nuw i8, ptr %., i64 24
-  %i.de = load double, ptr %i.dd, align 8, !tbaa !148
+  %i.de = load double, ptr %i.dd, align 8, !tbaa !147
   %i.df = fsub double %i.cj, %i.de
   br label %_ZN3igl8geodesic8Interval20compute_min_distanceEd.exit
 
@@ -1204,14 +1226,14 @@ bb.bd:                                            ; preds = %bb.bc
 bb.be:                                            ; preds = %bb.bd
   %i.hx = load double, ptr %.0434511, align 8, !tbaa !154 ; 2 uses
   %i.hy = getelementptr inbounds nuw i8, ptr %.0434511, i64 16
-  %i.hz = load double, ptr %i.hy, align 8, !tbaa !145 ; 4 uses
+  %i.hz = load double, ptr %i.hy, align 8, !tbaa !148 ; 4 uses
   %i.ia = fcmp ogt double %i.hx, %i.hz
   br i1 %i.ia, label %bb.bf, label %bb.bi
 
 bb.bf:                                            ; preds = %bb.be
   %i.ib = fsub double %i.hx, %i.hz                ; 3 uses
   %i.ic = getelementptr inbounds nuw i8, ptr %.0434511, i64 24
-  %i.id = load double, ptr %i.ic, align 8, !tbaa !148 ; 3 uses
+  %i.id = load double, ptr %i.ic, align 8, !tbaa !147 ; 3 uses
   %i.ie = fcmp oeq double %i.id, 0.000000e+00
   br i1 %i.ie, label %bb.bg, label %bb.bh
 
@@ -1237,7 +1259,7 @@ bb.bi:                                            ; preds = %bb.be
 bb.bj:                                            ; preds = %bb.bi
   %i.ij = fsub double %i.ht, %i.hz                ; 3 uses
   %i.ik = getelementptr inbounds nuw i8, ptr %.0434511, i64 24
-  %i.il = load double, ptr %i.ik, align 8, !tbaa !148 ; 3 uses
+  %i.il = load double, ptr %i.ik, align 8, !tbaa !147 ; 3 uses
   %i.im = fcmp oeq double %i.il, 0.000000e+00
   br i1 %i.im, label %bb.bk, label %bb.bl
 
@@ -1258,7 +1280,7 @@ _ZN3igl8geodesic8Interval6signalEd.exit10.i189:   ; preds = %bb.bl, %bb.bk
 
 bb.bm:                                            ; preds = %bb.bi
   %i.iq = getelementptr inbounds nuw i8, ptr %.0434511, i64 24
-  %i.ir = load double, ptr %i.iq, align 8, !tbaa !148
+  %i.ir = load double, ptr %i.iq, align 8, !tbaa !147
   %i.is = fsub double %i.hv, %i.ir
   br label %_ZN3igl8geodesic8Interval20compute_min_distanceEd.exit196
 
@@ -1661,14 +1683,14 @@ bb.dp:                                            ; preds = %bb.do
 bb.dq:                                            ; preds = %bb.dp
   %i.uu = load double, ptr %.0434511, align 8, !tbaa !154 ; 2 uses
   %i.uv = getelementptr inbounds nuw i8, ptr %.0434511, i64 16
-  %i.uw = load double, ptr %i.uv, align 8, !tbaa !145 ; 4 uses
+  %i.uw = load double, ptr %i.uv, align 8, !tbaa !148 ; 4 uses
   %i.ux = fcmp ogt double %i.uu, %i.uw
   br i1 %i.ux, label %bb.dr, label %bb.du
 
 bb.dr:                                            ; preds = %bb.dq
   %i.uy = fsub double %i.uu, %i.uw                ; 3 uses
   %i.uz = getelementptr inbounds nuw i8, ptr %.0434511, i64 24
-  %i.va = load double, ptr %i.uz, align 8, !tbaa !148 ; 3 uses
+  %i.va = load double, ptr %i.uz, align 8, !tbaa !147 ; 3 uses
   %i.vb = fcmp oeq double %i.va, 0.000000e+00
   br i1 %i.vb, label %bb.ds, label %bb.dt
 
@@ -1694,7 +1716,7 @@ bb.du:                                            ; preds = %bb.dq
 bb.dv:                                            ; preds = %bb.du
   %i.vg = fsub double %i.uq, %i.uw                ; 3 uses
   %i.vh = getelementptr inbounds nuw i8, ptr %.0434511, i64 24
-  %i.vi = load double, ptr %i.vh, align 8, !tbaa !148 ; 3 uses
+  %i.vi = load double, ptr %i.vh, align 8, !tbaa !147 ; 3 uses
   %i.vj = fcmp oeq double %i.vi, 0.000000e+00
   br i1 %i.vj, label %bb.dw, label %bb.dx
 
@@ -1715,7 +1737,7 @@ _ZN3igl8geodesic8Interval6signalEd.exit10.i253:   ; preds = %bb.dx, %bb.dw
 
 bb.dy:                                            ; preds = %bb.du
   %i.vn = getelementptr inbounds nuw i8, ptr %.0434511, i64 24
-  %i.vo = load double, ptr %i.vn, align 8, !tbaa !148
+  %i.vo = load double, ptr %i.vn, align 8, !tbaa !147
   %i.vp = fsub double %i.us, %i.vo
   br label %bb.dz
 
@@ -2060,14 +2082,14 @@ bb.fb:                                            ; preds = %bb.ey, %bb.ez
 bb.fc:                                            ; preds = %bb.fb
   %i.aah = load double, ptr %i.zx, align 8, !tbaa !154 ; 2 uses
   %i.aai = getelementptr inbounds nuw i8, ptr %i.zx, i64 16
-  %i.aaj = load double, ptr %i.aai, align 8, !tbaa !145 ; 4 uses
+  %i.aaj = load double, ptr %i.aai, align 8, !tbaa !148 ; 4 uses
   %i.aak = fcmp ogt double %i.aah, %i.aaj
   br i1 %i.aak, label %bb.fd, label %bb.fg
 
 bb.fd:                                            ; preds = %bb.fc
   %i.aal = fsub double %i.aah, %i.aaj             ; 3 uses
   %i.aam = getelementptr inbounds nuw i8, ptr %i.zx, i64 24
-  %i.aan = load double, ptr %i.aam, align 8, !tbaa !148 ; 3 uses
+  %i.aan = load double, ptr %i.aam, align 8, !tbaa !147 ; 3 uses
   %i.aao = fcmp oeq double %i.aan, 0.000000e+00
   br i1 %i.aao, label %bb.fe, label %bb.ff
 
@@ -2093,7 +2115,7 @@ bb.fg:                                            ; preds = %bb.fc
 bb.fh:                                            ; preds = %bb.fg
   %i.aat = fsub double %i.aad, %i.aaj             ; 3 uses
   %i.aau = getelementptr inbounds nuw i8, ptr %i.zx, i64 24
-  %i.aav = load double, ptr %i.aau, align 8, !tbaa !148 ; 3 uses
+  %i.aav = load double, ptr %i.aau, align 8, !tbaa !147 ; 3 uses
   %i.aaw = fcmp oeq double %i.aav, 0.000000e+00
   br i1 %i.aaw, label %bb.fi, label %bb.fj
 
@@ -2114,7 +2136,7 @@ _ZN3igl8geodesic8Interval6signalEd.exit10.i287:   ; preds = %bb.fj, %bb.fi
 
 bb.fk:                                            ; preds = %bb.fg
   %i.aba = getelementptr inbounds nuw i8, ptr %i.zx, i64 24
-  %i.abb = load double, ptr %i.aba, align 8, !tbaa !148
+  %i.abb = load double, ptr %i.aba, align 8, !tbaa !147
   %i.abc = fsub double %i.aaf, %i.abb
   br label %bb.fl
 
@@ -2314,14 +2336,14 @@ bb.fy:                                            ; preds = %.critedge2
 bb.fz:                                            ; preds = %bb.fy
   %i.adz = load double, ptr %.0434.lcssa, align 8, !tbaa !154 ; 2 uses
   %i.aea = getelementptr inbounds nuw i8, ptr %.0434.lcssa, i64 16
-  %i.aeb = load double, ptr %i.aea, align 8, !tbaa !145 ; 4 uses
+  %i.aeb = load double, ptr %i.aea, align 8, !tbaa !148 ; 4 uses
   %i.aec = fcmp ogt double %i.adz, %i.aeb
   br i1 %i.aec, label %bb.ga, label %bb.gd
 
 bb.ga:                                            ; preds = %bb.fz
   %i.aed = fsub double %i.adz, %i.aeb             ; 3 uses
   %i.aee = getelementptr inbounds nuw i8, ptr %.0434.lcssa, i64 24
-  %i.aef = load double, ptr %i.aee, align 8, !tbaa !148 ; 3 uses
+  %i.aef = load double, ptr %i.aee, align 8, !tbaa !147 ; 3 uses
   %i.aeg = fcmp oeq double %i.aef, 0.000000e+00
   br i1 %i.aeg, label %bb.gb, label %bb.gc
 
@@ -2347,7 +2369,7 @@ bb.gd:                                            ; preds = %bb.fz
 bb.ge:                                            ; preds = %bb.gd
   %i.ael = fsub double %i.adv, %i.aeb             ; 3 uses
   %i.aem = getelementptr inbounds nuw i8, ptr %.0434.lcssa, i64 24
-  %i.aen = load double, ptr %i.aem, align 8, !tbaa !148 ; 3 uses
+  %i.aen = load double, ptr %i.aem, align 8, !tbaa !147 ; 3 uses
   %i.aeo = fcmp oeq double %i.aen, 0.000000e+00
   br i1 %i.aeo, label %bb.gf, label %bb.gg
 
@@ -2368,7 +2390,7 @@ _ZN3igl8geodesic8Interval6signalEd.exit10.i311:   ; preds = %bb.gg, %bb.gf
 
 bb.gh:                                            ; preds = %bb.gd
   %i.aes = getelementptr inbounds nuw i8, ptr %.0434.lcssa, i64 24
-  %i.aet = load double, ptr %i.aes, align 8, !tbaa !148
+  %i.aet = load double, ptr %i.aes, align 8, !tbaa !147
   %i.aeu = fsub double %i.adx, %i.aet
   br label %_ZN3igl8geodesic8Interval20compute_min_distanceEd.exit318
 
@@ -2771,7 +2793,7 @@ bb.k:                                             ; preds = %bb.j
   %sqrt.i.i21.i.i = call noundef double @llvm.sqrt.f64(double %i.cq) ; 3 uses
   %i.cr = fcmp olt double %sqrt.i.i21.i.i, 1.000000e-50
   %i.cs = getelementptr inbounds nuw i8, ptr %i.bm, i64 56
-  %i.ct = load double, ptr %i.cs, align 8, !tbaa !146 ; 3 uses
+  %i.ct = load double, ptr %i.cs, align 8, !tbaa !145 ; 3 uses
   br i1 %i.cr, label %_ZN3igl8geodesic4Edge17local_coordinatesEPNS0_7Point3DERdS4_.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
@@ -2818,9 +2840,9 @@ bb.m:                                             ; preds = %.lr.ph.i96
 
 bb.n:                                             ; preds = %bb.m
   %i.dn = getelementptr inbounds nuw i8, ptr %.017.i, i64 24
-  %i.do = load double, ptr %i.dn, align 8, !tbaa !148 ; 15 uses
+  %i.do = load double, ptr %i.dn, align 8, !tbaa !147 ; 15 uses
   %i.dp = getelementptr inbounds nuw i8, ptr %.017.i, i64 16
-  %i.dq = load double, ptr %i.dp, align 8, !tbaa !145 ; 7 uses
+  %i.dq = load double, ptr %i.dp, align 8, !tbaa !148 ; 7 uses
   %i.dr = getelementptr inbounds nuw i8, ptr %.017.i, i64 40
   %i.ds = load ptr, ptr %i.dr, align 8, !tbaa !99 ; 2 uses
   %.not.i.i99 = icmp eq ptr %i.ds, null
@@ -3223,10 +3245,10 @@ _ZN3igl8geodesic12IntervalList17covering_intervalEd.exit: ; preds = %bb.d
 
 bb.e:                                             ; preds = %_ZN3igl8geodesic12IntervalList17covering_intervalEd.exit
   %i.as = getelementptr inbounds nuw i8, ptr %.0.i, i64 16
-  %i.at = load double, ptr %i.as, align 8, !tbaa !145
+  %i.at = load double, ptr %i.as, align 8, !tbaa !148
   %i.au = fsub double %sqrt.i.i, %i.at            ; 3 uses
   %i.av = getelementptr inbounds nuw i8, ptr %.0.i, i64 24
-  %i.aw = load double, ptr %i.av, align 8, !tbaa !148 ; 3 uses
+  %i.aw = load double, ptr %i.av, align 8, !tbaa !147 ; 3 uses
   %i.ax = fcmp oeq double %i.aw, 0.000000e+00
   br i1 %i.ax, label %bb.f, label %bb.g
 
@@ -3496,10 +3518,10 @@ _ZN3igl8geodesic12IntervalList17covering_intervalEd.exit90: ; preds = %bb.y
 
 bb.z:                                             ; preds = %_ZN3igl8geodesic12IntervalList17covering_intervalEd.exit90
   %i.fl = getelementptr inbounds nuw i8, ptr %.0.i86, i64 16
-  %i.fm = load double, ptr %i.fl, align 8, !tbaa !145
+  %i.fm = load double, ptr %i.fl, align 8, !tbaa !148
   %i.fn = fsub double %i.fa, %i.fm                ; 3 uses
   %i.fo = getelementptr inbounds nuw i8, ptr %.0.i86, i64 24
-  %i.fp = load double, ptr %i.fo, align 8, !tbaa !148 ; 3 uses
+  %i.fp = load double, ptr %i.fo, align 8, !tbaa !147 ; 3 uses
   %i.fq = fcmp oeq double %i.fp, 0.000000e+00
   br i1 %i.fq, label %bb.aa, label %bb.ab
 
@@ -3902,7 +3924,7 @@ bb.b:                                             ; preds = %bb.a
   %sqrt.i.i21.i = tail call noundef double @llvm.sqrt.f64(double %i.an) ; 3 uses
   %i.ao = fcmp olt double %sqrt.i.i21.i, 1.000000e-50
   %i.ap = getelementptr inbounds nuw i8, ptr %i.e, i64 56
-  %i.aq = load double, ptr %i.ap, align 8, !tbaa !146 ; 3 uses
+  %i.aq = load double, ptr %i.ap, align 8, !tbaa !145 ; 3 uses
   br i1 %i.ao, label %_ZN3igl8geodesic4Edge17local_coordinatesEPNS0_7Point3DERdS4_.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -3979,9 +4001,9 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 6 uses
-  %i.e = load double, ptr %i.d, align 8, !tbaa !148 ; 2 uses
+  %i.e = load double, ptr %i.d, align 8, !tbaa !147 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 6 uses
-  %i.g = load double, ptr %i.f, align 8, !tbaa !145 ; 2 uses
+  %i.g = load double, ptr %i.f, align 8, !tbaa !148 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !99   ; 2 uses
   %.not.i = icmp eq ptr %i.i, null
@@ -4010,9 +4032,9 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.w, label %_ZN3igl8geodesic8Interval6signalEd.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.x = load double, ptr %i.f, align 8, !tbaa !145
+  %i.x = load double, ptr %i.f, align 8, !tbaa !148
   %i.y = fsub double %i.u, %i.x                   ; 3 uses
-  %i.z = load double, ptr %i.d, align 8, !tbaa !148 ; 3 uses
+  %i.z = load double, ptr %i.d, align 8, !tbaa !147 ; 3 uses
   %i.aa = fcmp oeq double %i.z, 0.000000e+00
   br i1 %i.aa, label %bb.g, label %bb.h
 
@@ -4049,9 +4071,9 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.aj, label %_ZN3igl8geodesic8Interval6signalEd.exit58, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.ak = load double, ptr %i.f, align 8, !tbaa !145
+  %i.ak = load double, ptr %i.f, align 8, !tbaa !148
   %i.al = fsub double %i.m, %i.ak                 ; 3 uses
-  %i.am = load double, ptr %i.d, align 8, !tbaa !148 ; 3 uses
+  %i.am = load double, ptr %i.d, align 8, !tbaa !147 ; 3 uses
   %i.an = fcmp oeq double %i.am, 0.000000e+00
   br i1 %i.an, label %bb.m, label %bb.n
 
@@ -4084,9 +4106,9 @@ bb.p:                                             ; preds = %bb.j
   br i1 %i.av, label %_ZN3igl8geodesic8Interval6signalEd.exit63, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.aw = load double, ptr %i.f, align 8, !tbaa !145
+  %i.aw = load double, ptr %i.f, align 8, !tbaa !148
   %i.ax = fsub double %1, %i.aw                   ; 3 uses
-  %i.ay = load double, ptr %i.d, align 8, !tbaa !148 ; 3 uses
+  %i.ay = load double, ptr %i.d, align 8, !tbaa !147 ; 3 uses
   %i.az = fcmp oeq double %i.ay, 0.000000e+00
   br i1 %i.az, label %bb.r, label %bb.s
 
@@ -4122,9 +4144,9 @@ bb.v:                                             ; preds = %bb.u
   br i1 %i.bl, label %_ZN3igl8geodesic8Interval6signalEd.exit68, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
-  %i.bm = load double, ptr %i.f, align 8, !tbaa !145
+  %i.bm = load double, ptr %i.f, align 8, !tbaa !148
   %i.bn = fsub double %i.bj, %i.bm                ; 3 uses
-  %i.bo = load double, ptr %i.d, align 8, !tbaa !148 ; 3 uses
+  %i.bo = load double, ptr %i.d, align 8, !tbaa !147 ; 3 uses
   %i.bp = fcmp oeq double %i.bo, 0.000000e+00
   br i1 %i.bp, label %bb.x, label %bb.y
 
@@ -4163,9 +4185,9 @@ bb.ab:                                            ; preds = %bb.aa
   br i1 %i.bz, label %_ZN3igl8geodesic8Interval6signalEd.exit74, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
-  %i.ca = load double, ptr %i.f, align 8, !tbaa !145
+  %i.ca = load double, ptr %i.f, align 8, !tbaa !148
   %i.cb = fsub double %i.m, %i.ca                 ; 3 uses
-  %i.cc = load double, ptr %i.d, align 8, !tbaa !148 ; 3 uses
+  %i.cc = load double, ptr %i.d, align 8, !tbaa !147 ; 3 uses
   %i.cd = fcmp oeq double %i.cc, 0.000000e+00
   br i1 %i.cd, label %bb.ad, label %bb.ae
 
@@ -4568,10 +4590,10 @@ attributes #28 = { nounwind allocsize(0) }
 !142 = !{!143, !144, i64 52}
 !143 = !{!"_ZTSN3igl8geodesic15MeshElementBaseE", !84, i64 0, !97, i64 16, !81, i64 32, !6, i64 48, !144, i64 52}
 !144 = !{!"_ZTSN3igl8geodesic9PointTypeE", !7, i64 0}
-!145 = !{!34, !18, i64 16}
-!146 = !{!147, !18, i64 56}
-!147 = !{!"_ZTSN3igl8geodesic4EdgeE", !143, i64 0, !18, i64 56}
-!148 = !{!34, !18, i64 24}
+!145 = !{!146, !18, i64 56}
+!146 = !{!"_ZTSN3igl8geodesic4EdgeE", !143, i64 0, !18, i64 56}
+!147 = !{!34, !18, i64 24}
+!148 = !{!34, !18, i64 16}
 !149 = !{!34, !18, i64 32}
 !150 = distinct !{!150, !101}
 !151 = distinct !{!151, !101}
