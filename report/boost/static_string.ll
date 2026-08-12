@@ -205,26 +205,18 @@ bb.jj:                                            ; preds = %_ZN5boost14static_s
 bb.jk:                                            ; preds = %_ZN5boost14static_stringseqILm100EcSt11char_traitsIcEEEbRKNS0_19basic_static_stringIXT_ET0_T1_EEPKS5_.exit1749
   %i.auc = add nuw nsw i64 %i.aty, 1
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.atz, ptr noundef nonnull align 1 dereferenceable(1) %i.asu, i64 %i.auc, i1 false)
-  %946 = icmp ult ptr %i.asu, %i.atz
-  %i.aud = icmp eq i8 %i.atx, 0                   ; 2 uses
-  br i1 %946, label %948, label %947
+  %946 = icmp uge ptr %i.asu, %i.atz
+  %i.aud = icmp eq i8 %i.atx, 0
+  %or.cond = or i1 %946, %i.aud
+  br i1 %or.cond, label %_ZN5boost14static_strings19basic_static_stringILm100EcSt11char_traitsIcEE6insertEmPKcm.exit1759.thread, label %_ZN5boost14static_strings19basic_static_stringILm100EcSt11char_traitsIcEE6insertEmPKcm.exit1759
 
-947:                                              ; preds = %bb.jk
-  br i1 %i.aud, label %_ZN5boost14static_strings19basic_static_stringILm100EcSt11char_traitsIcEE6insertEmPKcm.exit1759.thread, label %_ZN5boost14static_strings19basic_static_stringILm100EcSt11char_traitsIcEE6insertEmPKcm.exit1759
-
-948:                                              ; preds = %bb.jk
-  br i1 %i.aud, label %_ZN5boost14static_strings19basic_static_stringILm100EcSt11char_traitsIcEE6insertEmPKcm.exit1759.thread, label %949
-
-949:                                              ; preds = %948
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.asu, ptr nonnull align 1 %i.atz, i64 %i.aty, i1 false)
-  br label %_ZN5boost14static_strings19basic_static_stringILm100EcSt11char_traitsIcEE6insertEmPKcm.exit1759
-
-_ZN5boost14static_strings19basic_static_stringILm100EcSt11char_traitsIcEE6insertEmPKcm.exit1759.thread: ; preds = %947, %948
+_ZN5boost14static_strings19basic_static_stringILm100EcSt11char_traitsIcEE6insertEmPKcm.exit1759.thread: ; preds = %bb.jk
   %i.aue = shl nuw nsw i8 %i.atx, 1
   store i8 %i.aue, ptr %51, align 16, !tbaa !921
   br label %_ZN5boost14static_strings19basic_static_stringILm100EcSt11char_traitsIcEEC2EPKc.exit9809
 
-_ZN5boost14static_strings19basic_static_stringILm100EcSt11char_traitsIcEE6insertEmPKcm.exit1759: ; preds = %947, %949
+_ZN5boost14static_strings19basic_static_stringILm100EcSt11char_traitsIcEE6insertEmPKcm.exit1759: ; preds = %bb.jk
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.asu, ptr nonnull align 1 %i.atz, i64 %i.aty, i1 false)
   %i.auf = shl i8 %i.atx, 1                       ; 2 uses
   store i8 %i.auf, ptr %51, align 16, !tbaa !921
   %or.cond.not.i1760 = icmp eq i8 %i.auf, 80

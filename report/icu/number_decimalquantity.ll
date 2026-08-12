@@ -54,7 +54,6 @@ $_ZTSN6icu_787UMemoryE = comdat any
 @.str.8 = private unnamed_addr constant [45 x i16] [i16 76, i16 101, i16 97, i16 115, i16 116, i16 32, i16 115, i16 105, i16 103, i16 110, i16 105, i16 102, i16 105, i16 99, i16 97, i16 110, i16 116, i16 32, i16 100, i16 105, i16 103, i16 105, i16 116, i16 32, i16 105, i16 115, i16 32, i16 122, i16 101, i16 114, i16 111, i16 32, i16 105, i16 110, i16 32, i16 108, i16 111, i16 110, i16 103, i16 32, i16 109, i16 111, i16 100, i16 101, i16 0], align 2
 @.str.9 = private unnamed_addr constant [33 x i16] [i16 68, i16 105, i16 103, i16 105, i16 116, i16 32, i16 101, i16 120, i16 99, i16 101, i16 101, i16 100, i16 105, i16 110, i16 103, i16 32, i16 49, i16 48, i16 32, i16 105, i16 110, i16 32, i16 98, i16 121, i16 116, i16 101, i16 32, i16 97, i16 114, i16 114, i16 97, i16 121, i16 0], align 2
 @.str.10 = private unnamed_addr constant [28 x i16] [i16 68, i16 105, i16 103, i16 105, i16 116, i16 32, i16 98, i16 101, i16 108, i16 111, i16 119, i16 32, i16 48, i16 32, i16 105, i16 110, i16 32, i16 98, i16 121, i16 116, i16 101, i16 32, i16 97, i16 114, i16 114, i16 97, i16 121, i16 0], align 2
-@.str.11 = private unnamed_addr constant [46 x i16] [i16 78, i16 111, i16 110, i16 122, i16 101, i16 114, i16 111, i16 32, i16 100, i16 105, i16 103, i16 105, i16 116, i16 115, i16 32, i16 111, i16 117, i16 116, i16 115, i16 105, i16 100, i16 101, i16 32, i16 111, i16 102, i16 32, i16 114, i16 97, i16 110, i16 103, i16 101, i16 32, i16 105, i16 110, i16 32, i16 98, i16 121, i16 116, i16 101, i16 32, i16 97, i16 114, i16 114, i16 97, i16 121, i16 0], align 2
 @.str.12 = private unnamed_addr constant [47 x i16] [i16 86, i16 97, i16 108, i16 117, i16 101, i16 32, i16 105, i16 110, i16 32, i16 98, i16 99, i16 100, i16 76, i16 111, i16 110, i16 103, i16 32, i16 101, i16 118, i16 101, i16 110, i16 32, i16 116, i16 104, i16 111, i16 117, i16 103, i16 104, i16 32, i16 112, i16 114, i16 101, i16 99, i16 105, i16 115, i16 105, i16 111, i16 110, i16 32, i16 105, i16 115, i16 32, i16 122, i16 101, i16 114, i16 111, i16 0], align 2
 @.str.13 = private unnamed_addr constant [33 x i16] [i16 80, i16 114, i16 101, i16 99, i16 105, i16 115, i16 105, i16 111, i16 110, i16 32, i16 101, i16 120, i16 99, i16 101, i16 101, i16 100, i16 115, i16 32, i16 108, i16 101, i16 110, i16 103, i16 116, i16 104, i16 32, i16 111, i16 102, i16 32, i16 108, i16 111, i16 110, i16 103, i16 0], align 2
 @.str.14 = private unnamed_addr constant [44 x i16] [i16 77, i16 111, i16 115, i16 116, i16 32, i16 115, i16 105, i16 103, i16 110, i16 105, i16 102, i16 105, i16 99, i16 97, i16 110, i16 116, i16 32, i16 100, i16 105, i16 103, i16 105, i16 116, i16 32, i16 105, i16 115, i16 32, i16 122, i16 101, i16 114, i16 111, i16 32, i16 105, i16 110, i16 32, i16 108, i16 111, i16 110, i16 103, i16 32, i16 109, i16 111, i16 100, i16 101, i16 0], align 2
@@ -457,7 +456,7 @@ bb.a:
   %i.b = load i8, ptr %i.a, align 8, !tbaa !15, !range !17, !noundef !18
   %i.c = trunc nuw i8 %i.b to i1
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.e = load i32, ptr %i.d, align 8, !tbaa !21   ; 16 uses
+  %i.e = load i32, ptr %i.d, align 8, !tbaa !21   ; 14 uses
   br i1 %i.c, label %bb.b, label %bb.f
 
 bb.b:                                             ; preds = %bb.a
@@ -466,7 +465,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %i.h = load i32, ptr %i.g, align 8, !tbaa !19   ; 3 uses
+  %i.h = load i32, ptr %i.g, align 8, !tbaa !19
   %i.i = icmp sgt i32 %i.e, %i.h
   br i1 %i.i, label %.thread91, label %bb.d
 
@@ -476,8 +475,8 @@ bb.d:                                             ; preds = %bb.c
 
 _ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit: ; preds = %bb.d
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.l = load ptr, ptr %i.k, align 8, !tbaa !19   ; 4 uses
-  %i.m = zext nneg i32 %i.e to i64                ; 3 uses
+  %i.l = load ptr, ptr %i.k, align 8, !tbaa !19   ; 3 uses
+  %i.m = zext nneg i32 %i.e to i64                ; 2 uses
   %i.n = getelementptr i8, ptr %i.l, i64 %i.m
   %i.o = getelementptr i8, ptr %i.n, i64 -1
   %i.p = load i8, ptr %i.o, align 1, !tbaa !19
@@ -492,11 +491,7 @@ _ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit45: ; preds = %_ZNK6
 bb.e:                                             ; preds = %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit55
   %indvars.iv.next134 = add nuw nsw i64 %indvars.iv133, 1 ; 2 uses
   %exitcond137.not = icmp eq i64 %indvars.iv.next134, %i.m
-  br i1 %exitcond137.not, label %.preheader, label %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit50, !llvm.loop !98
-
-.preheader:                                       ; preds = %bb.e
-  %.not40120 = icmp slt i32 %i.e, %i.h
-  br i1 %.not40120, label %.lr.ph122, label %.thread91
+  br i1 %exitcond137.not, label %.thread91, label %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit50, !llvm.loop !98
 
 _ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit50: ; preds = %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit45, %bb.e
   %indvars.iv133 = phi i64 [ %indvars.iv.next134, %bb.e ], [ 0, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit45 ] ; 2 uses
@@ -508,24 +503,6 @@ _ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit50: ; preds = %_ZNK6
 _ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit55: ; preds = %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit50
   %i.w = icmp slt i8 %i.u, 0
   br i1 %i.w, label %.thread91, label %bb.e
-
-.lr.ph122:                                        ; preds = %.preheader, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit60.thread
-  %indvars.iv138 = phi i64 [ %indvars.iv.next139, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit60.thread ], [ %i.m, %.preheader ] ; 3 uses
-  %1 = trunc nuw i64 %indvars.iv138 to i32
-  %.not.i58 = icmp sgt i32 %i.e, %1
-  br i1 %.not.i58, label %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit60, label %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit60.thread
-
-_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit60: ; preds = %.lr.ph122
-  %2 = getelementptr inbounds nuw i8, ptr %i.l, i64 %indvars.iv138
-  %3 = load i8, ptr %2, align 1, !tbaa !19
-  %.not39 = icmp eq i8 %3, 0
-  br i1 %.not39, label %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit60.thread, label %.thread91
-
-_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit60.thread: ; preds = %.lr.ph122, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit60
-  %indvars.iv.next139 = add nuw nsw i64 %indvars.iv138, 1 ; 2 uses
-  %4 = trunc nuw i64 %indvars.iv.next139 to i32
-  %.not40 = icmp sgt i32 %i.h, %4
-  br i1 %.not40, label %.lr.ph122, label %.thread91, !llvm.loop !99
 
 bb.f:                                             ; preds = %bb.a
   %i.x = icmp ne i32 %i.e, 0
@@ -568,7 +545,7 @@ _ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit74.preheader: ; pred
 bb.j:                                             ; preds = %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit74
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.preheader111, label %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit74, !llvm.loop !100
+  br i1 %exitcond.not, label %.preheader111, label %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit74, !llvm.loop !99
 
 .preheader111:                                    ; preds = %bb.j
   %.not125 = icmp eq i32 %i.e, 16
@@ -608,7 +585,7 @@ vector.body.interim:                              ; preds = %vector.body
   %vec.ind.next = add nsw <16 x i32> %vec.ind, splat (i32 16)
   %index.next = add nuw i32 %index, 16            ; 2 uses
   %i.au = icmp eq i32 %index.next, %n.vec
-  br i1 %i.au, label %middle.block, label %vector.body, !llvm.loop !101
+  br i1 %i.au, label %middle.block, label %vector.body, !llvm.loop !100
 
 middle.block:                                     ; preds = %vector.body.interim
   %cmp.n = icmp eq i32 %i.aj, %n.vec
@@ -642,10 +619,10 @@ _ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit84: ; preds = %.lr.p
 _ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit84.thread: ; preds = %.lr.ph, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit84
   %i.bd = add nsw i32 %.0116, 1                   ; 2 uses
   %exitcond132.not = icmp eq i32 %i.bd, 16
-  br i1 %exitcond132.not, label %.thread91, label %.lr.ph, !llvm.loop !104
+  br i1 %exitcond132.not, label %.thread91, label %.lr.ph, !llvm.loop !103
 
-.thread91:                                        ; preds = %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit74, %vector.body, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit84, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit84.thread, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit50, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit55, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit60.thread, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit60, %middle.block, %.preheader111, %.preheader, %bb.i, %bb.d, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit45, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit, %bb.c, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit69, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit65, %bb.g, %bb.f, %bb.b
-  %.5 = phi ptr [ @.str.7, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit ], [ @.str.8, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit45 ], [ @.str.6, %bb.c ], [ @.str.5, %bb.b ], [ @.str.12, %bb.f ], [ @.str.13, %bb.g ], [ @.str.14, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit65 ], [ null, %middle.block ], [ @.str.8, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit69 ], [ @.str.14, %bb.i ], [ @.str.7, %bb.d ], [ null, %.preheader111 ], [ @.str.9, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit50 ], [ @.str.11, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit60 ], [ null, %.preheader ], [ @.str.17, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit84 ], [ @.str.17, %vector.body ], [ null, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit60.thread ], [ @.str.10, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit55 ], [ null, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit84.thread ], [ @.str.15, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit74 ]
+.thread91:                                        ; preds = %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit74, %vector.body, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit84, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit84.thread, %bb.e, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit50, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit55, %middle.block, %.preheader111, %bb.i, %bb.d, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit45, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit, %bb.c, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit69, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit65, %bb.g, %bb.f, %bb.b
+  %.5 = phi ptr [ @.str.7, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit ], [ @.str.8, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit45 ], [ @.str.6, %bb.c ], [ @.str.5, %bb.b ], [ @.str.12, %bb.f ], [ @.str.13, %bb.g ], [ @.str.14, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit65 ], [ @.str.9, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit50 ], [ @.str.8, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit69 ], [ @.str.14, %bb.i ], [ @.str.7, %bb.d ], [ null, %.preheader111 ], [ null, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit84.thread ], [ null, %middle.block ], [ @.str.17, %vector.body ], [ null, %bb.e ], [ @.str.10, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit55 ], [ @.str.17, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit84 ], [ @.str.15, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit74 ]
   ret ptr %.5
 }
 
@@ -747,7 +724,7 @@ bb.k:                                             ; preds = %bb.h
 
 bb.l:                                             ; preds = %_ZNK6icu_786number4impl15DecimalQuantity8getDigitEi.exit25
   %.not18.not.not = icmp sgt i32 %.034, %..i20
-  br i1 %.not18.not.not, label %.lr.ph, label %.critedge, !llvm.loop !105
+  br i1 %.not18.not.not, label %.lr.ph, label %.critedge, !llvm.loop !104
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.l
   %.034.in = phi i32 [ %.034, %bb.l ], [ %..i, %.lr.ph.preheader ]
@@ -810,10 +787,10 @@ bb.t:                                             ; preds = %bb.s
 _ZNK6icu_786number4impl15DecimalQuantity8getDigitEi.exit25: ; preds = %bb.q, %bb.r, %bb.s, %bb.t
   %.0.i.i22 = phi i8 [ %i.bu, %bb.t ], [ %i.bp, %bb.r ], [ 0, %bb.q ], [ 0, %bb.s ]
   %.not19 = icmp eq i8 %.0.i.i, %.0.i.i22
-  br i1 %.not19, label %bb.l, label %_ZNK6icu_786number4impl15DecimalQuantity8getDigitEi.exit25..critedge.loopexit_crit_edge, !llvm.loop !105
+  br i1 %.not19, label %bb.l, label %_ZNK6icu_786number4impl15DecimalQuantity8getDigitEi.exit25..critedge.loopexit_crit_edge, !llvm.loop !104
 
 _ZNK6icu_786number4impl15DecimalQuantity8getDigitEi.exit25..critedge.loopexit_crit_edge: ; preds = %_ZNK6icu_786number4impl15DecimalQuantity8getDigitEi.exit25
-  br label %.critedge, !llvm.loop !105
+  br label %.critedge, !llvm.loop !104
 
 .critedge:                                        ; preds = %bb.l, %bb.k, %_ZNK6icu_786number4impl15DecimalQuantity8getDigitEi.exit25..critedge.loopexit_crit_edge, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a, %bb.i, %bb.j, %bb.g, %bb.f
   %.1 = phi i1 [ false, %bb.f ], [ true, %bb.g ], [ %i.ao, %bb.j ], [ false, %bb.e ], [ false, %bb.d ], [ false, %bb.i ], [ false, %bb.a ], [ false, %bb.b ], [ false, %bb.c ], [ false, %_ZNK6icu_786number4impl15DecimalQuantity8getDigitEi.exit25..critedge.loopexit_crit_edge ], [ true, %bb.k ], [ true, %bb.l ]
@@ -830,11 +807,11 @@ bb.a:
   %i.c = load i32, ptr %i.b, align 8, !tbaa !21   ; 2 uses
   %i.d = add nsw i32 %i.c, 1                      ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 13
-  store ptr %i.e, ptr %2, align 8, !tbaa !106
+  store ptr %i.e, ptr %2, align 8, !tbaa !105
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
-  store i32 30, ptr %i.f, align 8, !tbaa !108
+  store i32 30, ptr %i.f, align 8, !tbaa !107
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 12 ; 4 uses
-  store i8 0, ptr %i.g, align 4, !tbaa !109
+  store i8 0, ptr %i.g, align 4, !tbaa !108
   %i.h = icmp sgt i32 %i.c, 29
   br i1 %i.h, label %bb.b, label %_ZN6icu_7815MaybeStackArrayIcLi30EEC2Ei10UErrorCode.exit
 
@@ -848,19 +825,19 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i.i, label %_ZN6icu_7815MaybeStackArrayIcLi30EEC2Ei10UErrorCode.exit, label %bb.c
 
 bb.c:                                             ; preds = %.noexc.i
-  %i.k = load i8, ptr %i.g, align 4, !tbaa !109
+  %i.k = load i8, ptr %i.g, align 4, !tbaa !108
   %.not.i.i.i = icmp eq i8 %i.k, 0
   br i1 %.not.i.i.i, label %_ZN6icu_7815MaybeStackArrayIcLi30EE12releaseArrayEv.exit.i.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.l = load ptr, ptr %2, align 8, !tbaa !106
+  %i.l = load ptr, ptr %2, align 8, !tbaa !105
   invoke void @uprv_free_78(ptr noundef %i.l)
           to label %_ZN6icu_7815MaybeStackArrayIcLi30EE12releaseArrayEv.exit.i.i unwind label %bb.e
 
 _ZN6icu_7815MaybeStackArrayIcLi30EE12releaseArrayEv.exit.i.i: ; preds = %bb.d, %bb.c
-  store ptr %i.j, ptr %2, align 8, !tbaa !106
-  store i32 %i.d, ptr %i.f, align 8, !tbaa !108
-  store i8 1, ptr %i.g, align 4, !tbaa !109
+  store ptr %i.j, ptr %2, align 8, !tbaa !105
+  store i32 %i.d, ptr %i.f, align 8, !tbaa !107
+  store i8 1, ptr %i.g, align 4, !tbaa !108
   br label %_ZN6icu_7815MaybeStackArrayIcLi30EEC2Ei10UErrorCode.exit
 
 common.resume:                                    ; preds = %.body, %bb.e
@@ -889,7 +866,7 @@ _ZN6icu_7815MaybeStackArrayIcLi30EEC2Ei10UErrorCode.exit.._crit_edge_crit_edge: 
 
 ._crit_edge:                                      ; preds = %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit, %_ZN6icu_7815MaybeStackArrayIcLi30EEC2Ei10UErrorCode.exit.._crit_edge_crit_edge
   %.pre-phi = phi i64 [ %.pre, %_ZN6icu_7815MaybeStackArrayIcLi30EEC2Ei10UErrorCode.exit.._crit_edge_crit_edge ], [ %i.bg, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit ]
-  %i.r = load ptr, ptr %2, align 8, !tbaa !106
+  %i.r = load ptr, ptr %2, align 8, !tbaa !105
   %i.s = getelementptr inbounds i8, ptr %i.r, i64 %.pre-phi
   store i8 0, ptr %i.s, align 1, !tbaa !19
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #25
@@ -954,14 +931,14 @@ bb.j:                                             ; preds = %bb.i
 _ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit: ; preds = %bb.g, %bb.h, %bb.i, %bb.j
   %.0.i = phi i8 [ %i.bb, %bb.j ], [ %i.av, %bb.h ], [ 0, %bb.g ], [ 0, %bb.i ]
   %i.bc = add i8 %.0.i, 48
-  %i.bd = load ptr, ptr %2, align 8, !tbaa !106
+  %i.bd = load ptr, ptr %2, align 8, !tbaa !105
   %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 %indvars.iv
   store i8 %i.bc, ptr %i.be, align 1, !tbaa !19
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.bf = load i32, ptr %i.b, align 8, !tbaa !21  ; 2 uses
   %i.bg = sext i32 %i.bf to i64                   ; 2 uses
   %i.bh = icmp slt i64 %indvars.iv.next, %i.bg
-  br i1 %i.bh, label %bb.f, label %._crit_edge, !llvm.loop !110
+  br i1 %i.bh, label %bb.f, label %._crit_edge, !llvm.loop !109
 
 .body:                                            ; preds = %._crit_edge
   %i.bi = landingpad { ptr, i32 }
@@ -973,12 +950,12 @@ _ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit: ; preds = %bb.g, %
 
 bb.k:                                             ; preds = %._crit_edge
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #25
-  %i.bj = load i8, ptr %i.g, align 4, !tbaa !109
+  %i.bj = load i8, ptr %i.g, align 4, !tbaa !108
   %.not.i.i12 = icmp eq i8 %i.bj, 0
   br i1 %.not.i.i12, label %_ZN6icu_7815MaybeStackArrayIcLi30EED2Ev.exit, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.bk = load ptr, ptr %2, align 8, !tbaa !106
+  %i.bk = load ptr, ptr %2, align 8, !tbaa !105
   invoke void @uprv_free_78(ptr noundef %i.bk)
           to label %_ZN6icu_7815MaybeStackArrayIcLi30EED2Ev.exit unwind label %bb.m
 
@@ -1003,12 +980,12 @@ declare void @_ZN6icu_7813UnicodeStringC1EPKciNS0_10EInvariantE(ptr noundef nonn
 define linkonce_odr void @_ZN6icu_7815MaybeStackArrayIcLi30EED2Ev(ptr noundef nonnull align 8 dead_on_return(43) dereferenceable(43) %0) unnamed_addr #5 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 12
-  %i.b = load i8, ptr %i.a, align 4, !tbaa !109
+  %i.b = load i8, ptr %i.a, align 4, !tbaa !108
   %.not.i = icmp eq i8 %i.b, 0
   br i1 %.not.i, label %_ZN6icu_7815MaybeStackArrayIcLi30EE12releaseArrayEv.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = load ptr, ptr %0, align 8, !tbaa !106
+  %i.c = load ptr, ptr %0, align 8, !tbaa !105
   invoke void @uprv_free_78(ptr noundef %i.c)
           to label %_ZN6icu_7815MaybeStackArrayIcLi30EE12releaseArrayEv.exit unwind label %bb.c
 
@@ -1191,15 +1168,14 @@ attributes #27 = { nounwind willreturn memory(none) }
 !97 = distinct !{!97, !67}
 !98 = distinct !{!98, !31}
 !99 = distinct !{!99, !31}
-!100 = distinct !{!100, !31}
-!101 = distinct !{!101, !31, !102, !103}
-!102 = !{!"llvm.loop.isvectorized", i32 1}
-!103 = !{!"llvm.loop.unroll.runtime.disable"}
-!104 = distinct !{!104, !31, !103, !102}
-!105 = distinct !{!105, !31}
-!106 = !{!107, !49, i64 0}
-!107 = !{!"_ZTSN6icu_7815MaybeStackArrayIcLi30EEE", !49, i64 0, !5, i64 8, !6, i64 12, !6, i64 13}
-!108 = !{!107, !5, i64 8}
-!109 = !{!107, !6, i64 12}
-!110 = distinct !{!110, !31}
+!100 = distinct !{!100, !31, !101, !102}
+!101 = !{!"llvm.loop.isvectorized", i32 1}
+!102 = !{!"llvm.loop.unroll.runtime.disable"}
+!103 = distinct !{!103, !31, !102, !101}
+!104 = distinct !{!104, !31}
+!105 = !{!106, !49, i64 0}
+!106 = !{!"_ZTSN6icu_7815MaybeStackArrayIcLi30EEE", !49, i64 0, !5, i64 8, !6, i64 12, !6, i64 13}
+!107 = !{!106, !5, i64 8}
+!108 = !{!106, !6, i64 12}
+!109 = distinct !{!109, !31}
 end_hunk_1

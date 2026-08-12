@@ -204,7 +204,6 @@ $_ZSt19piecewise_construct = comdat any
 @.str.141 = private unnamed_addr constant [13 x i8] c" = nullptr);\00", align 1
 @.str.142 = private unnamed_addr constant [34 x i8] c"// Tear down sub module instances\00", align 1
 @.str.143 = private unnamed_addr constant [9 x i8] c".dtor();\00", align 1
-@.str.144 = private unnamed_addr constant [12 x i8] c"Empty split\00", align 1
 @.str.145 = private unnamed_addr constant [38 x i8] c"Symbol table implementation internals\00", align 1
 @.str.146 = private unnamed_addr constant [3 x i8] c"::\00", align 1
 @.str.147 = private unnamed_addr constant [6 x i8] c"() {\0A\00", align 1
@@ -607,7 +606,7 @@ bb.a:
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader235, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit221
-  %.047658 = phi i64 [ 0, %.preheader235 ], [ %i.bu, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit221 ] ; 5 uses
+  %.047658 = phi i64 [ 0, %.preheader235 ], [ %i.bu, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit221 ] ; 4 uses
   %.151657 = phi i64 [ %.050659, %.preheader235 ], [ %i.cg, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit221 ] ; 6 uses
   %.052656 = phi i64 [ 0, %.preheader235 ], [ %i.ny, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit221 ] ; 2 uses
   br label %bb.f
@@ -672,7 +671,7 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE6resize
 bb.f:                                             ; preds = %.preheader, %_ZN9EmitCSyms8stmtCostERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit
   %indvars.iv.in = phi i64 [ %.047658, %.preheader ], [ %indvars.iv, %_ZN9EmitCSyms8stmtCostERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit ] ; 2 uses
   %.046654 = phi i64 [ 0, %.preheader ], [ %i.cb, %_ZN9EmitCSyms8stmtCostERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit ]
-  %.148653 = phi i64 [ %.047658, %.preheader ], [ %i.bu, %_ZN9EmitCSyms8stmtCostERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit ] ; 3 uses
+  %.148653 = phi i64 [ %.047658, %.preheader ], [ %i.bu, %_ZN9EmitCSyms8stmtCostERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit ] ; 2 uses
   %indvars.iv = add i64 %indvars.iv.in, 1
   %i.bu = add nuw i64 %.148653, 1                 ; 4 uses
   %i.bv = load ptr, ptr %1, align 8, !tbaa !100
@@ -697,20 +696,9 @@ _ZN9EmitCSyms8stmtCostERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.ex
   %or.cond = select i1 %i.cc, i1 true, i1 %i.ce
   %i.cf = icmp ult i64 %i.bu, %i.aw               ; 2 uses
   %or.cond74 = select i1 %or.cond, i1 %i.cf, i1 false
-  br i1 %or.cond74, label %bb.f, label %.critedge, !llvm.loop !816
+  br i1 %or.cond74, label %bb.f, label %bb.h, !llvm.loop !816
 
-.critedge:                                        ; preds = %_ZN9EmitCSyms8stmtCostERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit
-  %.not.not = icmp ugt i64 %.047658, %.148653
-  br i1 %.not.not, label %19, label %bb.h, !prof !9
-
-19:                                               ; preds = %.critedge
-  %20 = call noundef nonnull align 8 dereferenceable(112) ptr @_ZN7V3Error19v3errorPrepFileLineB5cxx11E11V3ErrorCodePKci(i8 4, ptr noundef nonnull @.str.1, i32 noundef 1245) ; 0 uses
-  %21 = call noundef nonnull align 8 dereferenceable(112) ptr @_ZN7V3Error10v3errorStrB5cxx11Ev()
-  %22 = call noundef nonnull align 8 dereferenceable(8) ptr @_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc(ptr noundef nonnull align 8 dereferenceable(8) %21, ptr noundef nonnull @.str.144)
-  call void @_Z15v3errorEndFatalRNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(112) %22) #25
-  unreachable
-
-bb.h:                                             ; preds = %.critedge
+bb.h:                                             ; preds = %_ZN9EmitCSyms8stmtCostERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #23
   %i.cg = add i64 %.151657, 1                     ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !817)
