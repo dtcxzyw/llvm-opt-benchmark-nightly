@@ -199,8 +199,8 @@ bb.ar:                                            ; preds = %bb.aq, %bb.ap
   store ptr @pmix_list_t_class, ptr %39, align 8
   %40 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %2, i32 0, i32 2
   store i32 1, ptr %40, align 8
-  call fastcc void @pmix_obj_construct_tma(ptr noundef %2)
-  call fastcc void @pmix_obj_run_constructors(ptr noundef %2)
+  call void @pmix_obj_construct_tma(ptr noundef %2, ptr noundef null)
+  call void @pmix_obj_run_constructors(ptr noundef %2)
   br label %bb.as
 
 bb.as:                                            ; preds = %bb.ar
@@ -213,7 +213,7 @@ bb.au:                                            ; preds = %bb.at
   %i.ez = load ptr, ptr %i.b, align 8
   %41 = getelementptr inbounds nuw %struct.prte_job_t, ptr %i.ez, i32 0, i32 8
   %i.fa = load ptr, ptr %41, align 8
-  %42 = call fastcc ptr @pmix_pointer_array_get_item(ptr noundef %i.fa, i32 noundef 0)
+  %42 = call ptr @pmix_pointer_array_get_item(ptr noundef %i.fa, i32 noundef 0)
   store ptr %42, ptr %i.d, align 8
   %i.fb = load ptr, ptr %i.d, align 8
   %i.fc = icmp eq ptr null, %i.fb
@@ -271,8 +271,8 @@ bb.bd:                                            ; preds = %bb.bc
 bb.be:                                            ; preds = %bb.bd, %bb.bc
   store ptr @pmix_pointer_array_t_class, ptr getelementptr inbounds nuw (i8, ptr @rankmap, i64 40), align 8
   store i32 1, ptr getelementptr inbounds nuw (i8, ptr @rankmap, i64 48), align 8
-  call fastcc void @pmix_obj_construct_tma(ptr noundef @rankmap)
-  call fastcc void @pmix_obj_run_constructors(ptr noundef @rankmap)
+  call void @pmix_obj_construct_tma(ptr noundef @rankmap, ptr noundef null)
+  call void @pmix_obj_run_constructors(ptr noundef @rankmap)
   br label %bb.bf
 
 bb.bf:                                            ; preds = %bb.be
@@ -292,7 +292,7 @@ bb.bi:                                            ; preds = %bb.bh
   br label %bb.bj
 
 bb.bj:                                            ; preds = %bb.bi
-  call fastcc void @pmix_obj_run_destructors(ptr noundef @rankmap)
+  call void @pmix_obj_run_destructors(ptr noundef @rankmap)
   br label %bb.bk
 
 bb.bk:                                            ; preds = %bb.bj
@@ -301,7 +301,7 @@ bb.bk:                                            ; preds = %bb.bj
 
 bb.bl:                                            ; preds = %bb.bh
   %i.ft = load ptr, ptr %i.u, align 8
-  %47 = call fastcc i32 @prte_rmaps_rank_file_parse(ptr noundef %i.ft) ; 2 uses
+  %47 = call i32 @prte_rmaps_rank_file_parse(ptr noundef %i.ft) ; 2 uses
   store i32 %47, ptr %i.p, align 4
   %i.fu = icmp ne i32 0, %47
   br i1 %i.fu, label %bb.bm, label %bb.bn
@@ -329,7 +329,7 @@ bb.bp:                                            ; preds = %bb.bo
   %50 = getelementptr inbounds nuw %struct.prte_job_t, ptr %i.ga, i32 0, i32 8
   %i.gb = load ptr, ptr %50, align 8
   %i.gc = load i32, ptr %i.e, align 4
-  %51 = call fastcc ptr @pmix_pointer_array_get_item(ptr noundef %i.gb, i32 noundef %i.gc)
+  %51 = call ptr @pmix_pointer_array_get_item(ptr noundef %i.gb, i32 noundef %i.gc)
   store ptr %51, ptr %i.d, align 8
   %i.gd = load ptr, ptr %i.d, align 8
   %i.ge = icmp eq ptr null, %i.gd
@@ -420,7 +420,7 @@ bb.cd:                                            ; preds = %bb.cc
   %i.hk = add i32 %i.hi, %i.hj
   store i32 %i.hk, ptr %i.j, align 4
   %i.hl = load i32, ptr %i.j, align 4
-  %57 = call fastcc ptr @pmix_pointer_array_get_item(ptr noundef @rankmap, i32 noundef %i.hl)
+  %57 = call ptr @pmix_pointer_array_get_item(ptr noundef @rankmap, i32 noundef %i.hl)
   store ptr %57, ptr %i.m, align 8
   %i.hm = load ptr, ptr %i.m, align 8
   %i.hn = icmp eq ptr null, %i.hm
@@ -669,7 +669,7 @@ bb.dp:                                            ; preds = %bb.do, %bb.dn
   %i.kt = call i32 @atoi(ptr noundef %i.ks) #17
   store i32 %i.kt, ptr %i.n, align 4
   %i.ku = load i32, ptr %i.n, align 4
-  %84 = call fastcc i64 @pmix_list_get_size(ptr noundef %2)
+  %84 = call i64 @pmix_list_get_size(ptr noundef %2)
   %i.kv = trunc i64 %84 to i32
   %i.kw = icmp sge i32 %i.ku, %i.kv
   br i1 %i.kw, label %bb.dr, label %bb.dq
@@ -696,7 +696,7 @@ bb.dt:                                            ; preds = %bb.ds
   br label %bb.ka
 
 bb.du:                                            ; preds = %bb.dq
-  %86 = call fastcc ptr @pmix_list_get_first(ptr noundef %2)
+  %86 = call ptr @pmix_list_get_first(ptr noundef %2)
   store ptr %86, ptr %i.i, align 8
   store i32 0, ptr %i.o, align 4
   br label %bb.dv
@@ -851,7 +851,7 @@ pmix_obj_update.exit7:                            ; preds = %bb.eq
 
 bb.es:                                            ; preds = %pmix_obj_update.exit7
   %i.nh = load ptr, ptr %i.ab, align 8
-  call fastcc void @pmix_obj_run_destructors(ptr noundef %i.nh)
+  call void @pmix_obj_run_destructors(ptr noundef %i.nh)
   %i.ni = load ptr, ptr %i.ab, align 8
   %92 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.ni, i32 0, i32 3
   %93 = getelementptr inbounds nuw %struct.pmix_tma, ptr %92, i32 0, i32 5
@@ -863,7 +863,7 @@ bb.et:                                            ; preds = %bb.es
   %i.nl = load ptr, ptr %i.ab, align 8
   %94 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.nl, i32 0, i32 3
   %i.nm = load ptr, ptr %i.q, align 8
-  call fastcc void @pmix_tma_free(ptr noundef %94, ptr noundef %i.nm)
+  call void @pmix_tma_free(ptr noundef %94, ptr noundef %i.nm)
   br label %bb.ev
 
 bb.eu:                                            ; preds = %bb.es
@@ -990,7 +990,7 @@ pmix_obj_update.exit5:                            ; preds = %bb.fj
 
 bb.fl:                                            ; preds = %pmix_obj_update.exit5
   %i.pd = load ptr, ptr %i.ac, align 8
-  call fastcc void @pmix_obj_run_destructors(ptr noundef %i.pd)
+  call void @pmix_obj_run_destructors(ptr noundef %i.pd)
   %i.pe = load ptr, ptr %i.ac, align 8
   %101 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.pe, i32 0, i32 3
   %102 = getelementptr inbounds nuw %struct.pmix_tma, ptr %101, i32 0, i32 5
@@ -1002,7 +1002,7 @@ bb.fm:                                            ; preds = %bb.fl
   %i.ph = load ptr, ptr %i.ac, align 8
   %103 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.ph, i32 0, i32 3
   %i.pi = load ptr, ptr %i.q, align 8
-  call fastcc void @pmix_tma_free(ptr noundef %103, ptr noundef %i.pi)
+  call void @pmix_tma_free(ptr noundef %103, ptr noundef %i.pi)
   br label %bb.fo
 
 bb.fn:                                            ; preds = %bb.fl
@@ -1054,7 +1054,7 @@ pmix_obj_update.exit4:                            ; preds = %bb.fs
 
 bb.fu:                                            ; preds = %pmix_obj_update.exit4
   %i.px = load ptr, ptr %i.ad, align 8
-  call fastcc void @pmix_obj_run_destructors(ptr noundef %i.px)
+  call void @pmix_obj_run_destructors(ptr noundef %i.px)
   %i.py = load ptr, ptr %i.ad, align 8
   %105 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.py, i32 0, i32 3
   %106 = getelementptr inbounds nuw %struct.pmix_tma, ptr %105, i32 0, i32 5
@@ -1066,7 +1066,7 @@ bb.fv:                                            ; preds = %bb.fu
   %i.qb = load ptr, ptr %i.ad, align 8
   %107 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.qb, i32 0, i32 3
   %i.qc = load ptr, ptr %i.q, align 8
-  call fastcc void @pmix_tma_free(ptr noundef %107, ptr noundef %i.qc)
+  call void @pmix_tma_free(ptr noundef %107, ptr noundef %i.qc)
   br label %bb.fx
 
 bb.fw:                                            ; preds = %bb.fu
@@ -1339,7 +1339,7 @@ bb.hc:                                            ; preds = %bb.hb
   br label %bb.hd
 
 bb.hd:                                            ; preds = %bb.hm, %bb.hc
-  %135 = call fastcc ptr @pmix_list_remove_first(ptr noundef %2) ; 2 uses
+  %135 = call ptr @pmix_list_remove_first(ptr noundef %2) ; 2 uses
   store ptr %135, ptr %i.af, align 8
   %i.ut = icmp ne ptr null, %135
   br i1 %i.ut, label %bb.he, label %bb.hn
@@ -1373,7 +1373,7 @@ pmix_obj_update.exit3:                            ; preds = %bb.hf
 
 bb.hh:                                            ; preds = %pmix_obj_update.exit3
   %i.ve = load ptr, ptr %i.ag, align 8
-  call fastcc void @pmix_obj_run_destructors(ptr noundef %i.ve)
+  call void @pmix_obj_run_destructors(ptr noundef %i.ve)
   %i.vf = load ptr, ptr %i.ag, align 8
   %136 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.vf, i32 0, i32 3
   %137 = getelementptr inbounds nuw %struct.pmix_tma, ptr %136, i32 0, i32 5
@@ -1385,7 +1385,7 @@ bb.hi:                                            ; preds = %bb.hh
   %i.vi = load ptr, ptr %i.ag, align 8
   %138 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.vi, i32 0, i32 3
   %i.vj = load ptr, ptr %i.af, align 8
-  call fastcc void @pmix_tma_free(ptr noundef %138, ptr noundef %i.vj)
+  call void @pmix_tma_free(ptr noundef %138, ptr noundef %i.vj)
   br label %bb.hk
 
 bb.hj:                                            ; preds = %bb.hh
@@ -1407,7 +1407,7 @@ bb.hn:                                            ; preds = %bb.hd
   br label %bb.ho
 
 bb.ho:                                            ; preds = %bb.hn
-  call fastcc void @pmix_obj_run_destructors(ptr noundef %2)
+  call void @pmix_obj_run_destructors(ptr noundef %2)
   br label %bb.hp
 
 bb.hp:                                            ; preds = %bb.ho
@@ -1437,8 +1437,8 @@ bb.hv:                                            ; preds = %bb.hu, %bb.ht
   store ptr @pmix_list_t_class, ptr %139, align 8
   %140 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %2, i32 0, i32 2
   store i32 1, ptr %140, align 8
-  call fastcc void @pmix_obj_construct_tma(ptr noundef %2)
-  call fastcc void @pmix_obj_run_constructors(ptr noundef %2)
+  call void @pmix_obj_construct_tma(ptr noundef %2, ptr noundef null)
+  call void @pmix_obj_run_constructors(ptr noundef %2)
   br label %bb.hw
 
 bb.hw:                                            ; preds = %bb.hv
@@ -1463,7 +1463,7 @@ bb.ib:                                            ; preds = %bb.ia
   br label %bb.ic
 
 bb.ic:                                            ; preds = %bb.il, %bb.ib
-  %141 = call fastcc ptr @pmix_list_remove_first(ptr noundef %2) ; 2 uses
+  %141 = call ptr @pmix_list_remove_first(ptr noundef %2) ; 2 uses
   store ptr %141, ptr %i.ah, align 8
   %i.vq = icmp ne ptr null, %141
   br i1 %i.vq, label %bb.id, label %bb.im
@@ -1497,7 +1497,7 @@ pmix_obj_update.exit2:                            ; preds = %bb.ie
 
 bb.ig:                                            ; preds = %pmix_obj_update.exit2
   %i.wb = load ptr, ptr %i.ai, align 8
-  call fastcc void @pmix_obj_run_destructors(ptr noundef %i.wb)
+  call void @pmix_obj_run_destructors(ptr noundef %i.wb)
   %i.wc = load ptr, ptr %i.ai, align 8
   %142 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.wc, i32 0, i32 3
   %143 = getelementptr inbounds nuw %struct.pmix_tma, ptr %142, i32 0, i32 5
@@ -1509,7 +1509,7 @@ bb.ih:                                            ; preds = %bb.ig
   %i.wf = load ptr, ptr %i.ai, align 8
   %144 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.wf, i32 0, i32 3
   %i.wg = load ptr, ptr %i.ah, align 8
-  call fastcc void @pmix_tma_free(ptr noundef %144, ptr noundef %i.wg)
+  call void @pmix_tma_free(ptr noundef %144, ptr noundef %i.wg)
   br label %bb.ij
 
 bb.ii:                                            ; preds = %bb.ig
@@ -1531,7 +1531,7 @@ bb.im:                                            ; preds = %bb.ic
   br label %bb.in
 
 bb.in:                                            ; preds = %bb.im
-  call fastcc void @pmix_obj_run_destructors(ptr noundef %2)
+  call void @pmix_obj_run_destructors(ptr noundef %2)
   br label %bb.io
 
 bb.io:                                            ; preds = %bb.in
@@ -1549,7 +1549,7 @@ bb.iq:                                            ; preds = %bb.jc, %bb.ip
 
 bb.ir:                                            ; preds = %bb.iq
   %i.wl = load i32, ptr %i.e, align 4
-  %145 = call fastcc ptr @pmix_pointer_array_get_item(ptr noundef @rankmap, i32 noundef %i.wl) ; 2 uses
+  %145 = call ptr @pmix_pointer_array_get_item(ptr noundef @rankmap, i32 noundef %i.wl) ; 2 uses
   store ptr %145, ptr %i.m, align 8
   %i.wm = icmp ne ptr null, %145
   br i1 %i.wm, label %bb.is, label %bb.jb
@@ -1583,7 +1583,7 @@ pmix_obj_update.exit1:                            ; preds = %bb.it
 
 bb.iv:                                            ; preds = %pmix_obj_update.exit1
   %i.wx = load ptr, ptr %i.aj, align 8
-  call fastcc void @pmix_obj_run_destructors(ptr noundef %i.wx)
+  call void @pmix_obj_run_destructors(ptr noundef %i.wx)
   %i.wy = load ptr, ptr %i.aj, align 8
   %146 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.wy, i32 0, i32 3
   %147 = getelementptr inbounds nuw %struct.pmix_tma, ptr %146, i32 0, i32 5
@@ -1595,7 +1595,7 @@ bb.iw:                                            ; preds = %bb.iv
   %i.xb = load ptr, ptr %i.aj, align 8
   %148 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.xb, i32 0, i32 3
   %i.xc = load ptr, ptr %i.m, align 8
-  call fastcc void @pmix_tma_free(ptr noundef %148, ptr noundef %i.xc)
+  call void @pmix_tma_free(ptr noundef %148, ptr noundef %i.xc)
   br label %bb.iy
 
 bb.ix:                                            ; preds = %bb.iv
@@ -1626,7 +1626,7 @@ bb.jd:                                            ; preds = %bb.iq
   br label %bb.je
 
 bb.je:                                            ; preds = %bb.jd
-  call fastcc void @pmix_obj_run_destructors(ptr noundef @rankmap)
+  call void @pmix_obj_run_destructors(ptr noundef @rankmap)
   br label %bb.jf
 
 bb.jf:                                            ; preds = %bb.je
@@ -1655,7 +1655,7 @@ bb.jj:                                            ; preds = %bb.ji
   br label %bb.jk
 
 bb.jk:                                            ; preds = %bb.jt, %bb.jj
-  %149 = call fastcc ptr @pmix_list_remove_first(ptr noundef %2) ; 2 uses
+  %149 = call ptr @pmix_list_remove_first(ptr noundef %2) ; 2 uses
   store ptr %149, ptr %i.ak, align 8
   %i.xn = icmp ne ptr null, %149
   br i1 %i.xn, label %bb.jl, label %bb.ju
@@ -1689,7 +1689,7 @@ pmix_obj_update.exit:                             ; preds = %bb.jm
 
 bb.jo:                                            ; preds = %pmix_obj_update.exit
   %i.xy = load ptr, ptr %i.al, align 8
-  call fastcc void @pmix_obj_run_destructors(ptr noundef %i.xy)
+  call void @pmix_obj_run_destructors(ptr noundef %i.xy)
   %i.xz = load ptr, ptr %i.al, align 8
   %150 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.xz, i32 0, i32 3
   %151 = getelementptr inbounds nuw %struct.pmix_tma, ptr %150, i32 0, i32 5
@@ -1701,7 +1701,7 @@ bb.jp:                                            ; preds = %bb.jo
   %i.yc = load ptr, ptr %i.al, align 8
   %152 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.yc, i32 0, i32 3
   %i.yd = load ptr, ptr %i.ak, align 8
-  call fastcc void @pmix_tma_free(ptr noundef %152, ptr noundef %i.yd)
+  call void @pmix_tma_free(ptr noundef %152, ptr noundef %i.yd)
   br label %bb.jr
 
 bb.jq:                                            ; preds = %bb.jo
@@ -1723,7 +1723,7 @@ bb.ju:                                            ; preds = %bb.jk
   br label %bb.jv
 
 bb.jv:                                            ; preds = %bb.ju
-  call fastcc void @pmix_obj_run_destructors(ptr noundef %2)
+  call void @pmix_obj_run_destructors(ptr noundef %2)
   br label %bb.jw
 
 bb.jw:                                            ; preds = %bb.jv
@@ -1767,7 +1767,7 @@ declare noalias ptr @strdup(ptr noundef readonly captures(none)) local_unnamed_a
 declare void @pmix_class_initialize(ptr noundef) local_unnamed_addr #1
 
 ; Function Attrs: noinline nounwind optnone uwtable
-define internal fastcc void @pmix_obj_construct_tma(ptr noundef %0) unnamed_addr #0 {
+define internal void @pmix_obj_construct_tma(ptr noundef %0, ptr noundef %1) unnamed_addr #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 10 uses
   %i.b = alloca ptr, align 8                      ; 3 uses
@@ -1779,44 +1779,44 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.e = load ptr, ptr %i.a, align 8
-  %1 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.e, i32 0, i32 3
-  %2 = getelementptr inbounds nuw %struct.pmix_tma, ptr %1, i32 0, i32 0
-  store ptr null, ptr %2, align 8
+  %2 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.e, i32 0, i32 3
+  %3 = getelementptr inbounds nuw %struct.pmix_tma, ptr %2, i32 0, i32 0
+  store ptr null, ptr %3, align 8
   %i.f = load ptr, ptr %i.a, align 8
-  %3 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.f, i32 0, i32 3
-  %4 = getelementptr inbounds nuw %struct.pmix_tma, ptr %3, i32 0, i32 1
-  store ptr null, ptr %4, align 8
+  %4 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.f, i32 0, i32 3
+  %5 = getelementptr inbounds nuw %struct.pmix_tma, ptr %4, i32 0, i32 1
+  store ptr null, ptr %5, align 8
   %i.g = load ptr, ptr %i.a, align 8
-  %5 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.g, i32 0, i32 3
-  %6 = getelementptr inbounds nuw %struct.pmix_tma, ptr %5, i32 0, i32 2
-  store ptr null, ptr %6, align 8
+  %6 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.g, i32 0, i32 3
+  %7 = getelementptr inbounds nuw %struct.pmix_tma, ptr %6, i32 0, i32 2
+  store ptr null, ptr %7, align 8
   %i.h = load ptr, ptr %i.a, align 8
-  %7 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.h, i32 0, i32 3
-  %8 = getelementptr inbounds nuw %struct.pmix_tma, ptr %7, i32 0, i32 3
-  store ptr null, ptr %8, align 8
+  %8 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.h, i32 0, i32 3
+  %9 = getelementptr inbounds nuw %struct.pmix_tma, ptr %8, i32 0, i32 3
+  store ptr null, ptr %9, align 8
   %i.i = load ptr, ptr %i.a, align 8
-  %9 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.i, i32 0, i32 3
-  %10 = getelementptr inbounds nuw %struct.pmix_tma, ptr %9, i32 0, i32 4
-  store ptr null, ptr %10, align 8
+  %10 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.i, i32 0, i32 3
+  %11 = getelementptr inbounds nuw %struct.pmix_tma, ptr %10, i32 0, i32 4
+  store ptr null, ptr %11, align 8
   %i.j = load ptr, ptr %i.a, align 8
-  %11 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.j, i32 0, i32 3
-  %12 = getelementptr inbounds nuw %struct.pmix_tma, ptr %11, i32 0, i32 5
-  store ptr null, ptr %12, align 8
+  %12 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.j, i32 0, i32 3
+  %13 = getelementptr inbounds nuw %struct.pmix_tma, ptr %12, i32 0, i32 5
+  store ptr null, ptr %13, align 8
   %i.k = load ptr, ptr %i.a, align 8
-  %13 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.k, i32 0, i32 3
-  %14 = getelementptr inbounds nuw %struct.pmix_tma, ptr %13, i32 0, i32 6
-  store ptr null, ptr %14, align 8
+  %14 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.k, i32 0, i32 3
+  %15 = getelementptr inbounds nuw %struct.pmix_tma, ptr %14, i32 0, i32 6
+  store ptr null, ptr %15, align 8
   %i.l = load ptr, ptr %i.a, align 8
-  %15 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.l, i32 0, i32 3
-  %16 = getelementptr inbounds nuw %struct.pmix_tma, ptr %15, i32 0, i32 7
-  store ptr null, ptr %16, align 8
+  %16 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.l, i32 0, i32 3
+  %17 = getelementptr inbounds nuw %struct.pmix_tma, ptr %16, i32 0, i32 7
+  store ptr null, ptr %17, align 8
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
   %i.m = load ptr, ptr %i.a, align 8
-  %17 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.m, i32 0, i32 3
+  %18 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.m, i32 0, i32 3
   %i.n = load ptr, ptr %i.b, align 8
-  call void @llvm.memcpy.p0.p0.i64(ptr align 8 %17, ptr align 8 %i.n, i64 64, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 8 %18, ptr align 8 %i.n, i64 64, i1 false)
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
@@ -1824,7 +1824,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 }
 
 ; Function Attrs: noinline nounwind optnone uwtable
-define internal fastcc void @pmix_obj_run_constructors(ptr noundef %0) unnamed_addr #0 {
+define internal void @pmix_obj_run_constructors(ptr noundef %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = alloca ptr, align 8                      ; 5 uses
@@ -1872,7 +1872,7 @@ bb.g:                                             ; preds = %bb.e
 }
 
 ; Function Attrs: noinline nounwind optnone uwtable
-define internal fastcc ptr @pmix_pointer_array_get_item(ptr noundef %0, i32 noundef %1) unnamed_addr #0 {
+define internal ptr @pmix_pointer_array_get_item(ptr noundef %0, i32 noundef %1) unnamed_addr #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 3 uses
   %i.b = alloca ptr, align 8                      ; 3 uses
@@ -1928,7 +1928,7 @@ declare i32 @pmix_show_help(ptr noundef, ptr noundef, i32 noundef, ...) local_un
 declare i32 @pmix_pointer_array_init(ptr noundef, i32 noundef, i32 noundef, i32 noundef) local_unnamed_addr #1
 
 ; Function Attrs: noinline nounwind optnone uwtable
-define internal fastcc void @pmix_obj_run_destructors(ptr noundef %0) unnamed_addr #0 {
+define internal void @pmix_obj_run_destructors(ptr noundef %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = alloca ptr, align 8                      ; 5 uses
@@ -1976,7 +1976,7 @@ bb.g:                                             ; preds = %bb.e
 }
 
 ; Function Attrs: noinline nounwind optnone uwtable
-define internal fastcc i32 @prte_rmaps_rank_file_parse(ptr noundef %0) unnamed_addr #0 {
+define internal i32 @prte_rmaps_rank_file_parse(ptr noundef %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 3 uses
   %i.b = alloca ptr, align 8                      ; 13 uses
@@ -2001,7 +2001,7 @@ bb.a:
   store ptr null, ptr %i.f, align 8
   store i32 -1, ptr %i.j, align 4
   store ptr null, ptr %i.m, align 8
-  %1 = call fastcc ptr @pmix_obj_new_tma(ptr noundef @pmix_pointer_array_t_class)
+  %1 = call ptr @pmix_obj_new_tma(ptr noundef @pmix_pointer_array_t_class, ptr noundef null)
   store ptr %1, ptr %i.n, align 8
   %i.s = load ptr, ptr %i.n, align 8
   %i.t = call i32 @pmix_pointer_array_init(ptr noundef %i.s, i32 noundef 64, i32 noundef 2147483647, i32 noundef 64)
@@ -2039,7 +2039,7 @@ pmix_obj_update.exit1:                            ; preds = %bb.c
 
 bb.e:                                             ; preds = %pmix_obj_update.exit1
   %i.ag = load ptr, ptr %i.p, align 8
-  call fastcc void @pmix_obj_run_destructors(ptr noundef %i.ag)
+  call void @pmix_obj_run_destructors(ptr noundef %i.ag)
   %i.ah = load ptr, ptr %i.p, align 8
   %2 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.ah, i32 0, i32 3
   %3 = getelementptr inbounds nuw %struct.pmix_tma, ptr %2, i32 0, i32 5
@@ -2051,7 +2051,7 @@ bb.f:                                             ; preds = %bb.e
   %i.ak = load ptr, ptr %i.p, align 8
   %4 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.ak, i32 0, i32 3
   %i.al = load ptr, ptr %i.n, align 8
-  call fastcc void @pmix_tma_free(ptr noundef %4, ptr noundef %i.al)
+  call void @pmix_tma_free(ptr noundef %4, ptr noundef %i.al)
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.e
@@ -2188,7 +2188,7 @@ bb.ac:                                            ; preds = %bb.o
 bb.ad:                                            ; preds = %bb.ac
   %i.bw = load i32, ptr @prte_rmaps_rank_file_value, align 8
   store i32 %i.bw, ptr %i.j, align 4
-  %6 = call fastcc ptr @pmix_obj_new_tma(ptr noundef @prte_rmaps_rank_file_map_t_class)
+  %6 = call ptr @pmix_obj_new_tma(ptr noundef @prte_rmaps_rank_file_map_t_class, ptr noundef null)
   store ptr %6, ptr %i.m, align 8
   %i.bx = load i32, ptr %i.j, align 4
   %i.by = load ptr, ptr %i.m, align 8
@@ -2472,7 +2472,7 @@ bb.cc:                                            ; preds = %bb.cb
   br i1 %i.fi, label %bb.ce, label %bb.cd
 
 bb.cd:                                            ; preds = %bb.cc
-  %10 = call fastcc ptr @prte_rmaps_rank_file_parse_string_or_int() ; 2 uses
+  %10 = call ptr @prte_rmaps_rank_file_parse_string_or_int() ; 2 uses
   store ptr %10, ptr %i.i, align 8
   %i.fj = icmp eq ptr null, %10
   br i1 %i.fj, label %bb.ce, label %bb.cj
@@ -2503,7 +2503,7 @@ bb.ci:                                            ; preds = %bb.ch
 bb.cj:                                            ; preds = %bb.cd
   %i.fq = load ptr, ptr %i.n, align 8
   %i.fr = load i32, ptr %i.j, align 4
-  %11 = call fastcc ptr @pmix_pointer_array_get_item(ptr noundef %i.fq, i32 noundef %i.fr)
+  %11 = call ptr @pmix_pointer_array_get_item(ptr noundef %i.fq, i32 noundef %i.fr)
   %i.fs = icmp ne ptr null, %11
   br i1 %i.fs, label %bb.ck, label %bb.cl
 
@@ -2511,7 +2511,7 @@ bb.ck:                                            ; preds = %bb.cj
   %i.ft = load i32, ptr %i.j, align 4
   %i.fu = load ptr, ptr %i.n, align 8
   %i.fv = load i32, ptr %i.j, align 4
-  %12 = call fastcc ptr @pmix_pointer_array_get_item(ptr noundef %i.fu, i32 noundef %i.fv)
+  %12 = call ptr @pmix_pointer_array_get_item(ptr noundef %i.fu, i32 noundef %i.fv)
   %i.fw = load ptr, ptr %i.b, align 8
   %i.fx = call i32 (ptr, ptr, i32, ...) @pmix_show_help(ptr noundef @.str.6, ptr noundef @.str.28, i32 noundef 1, i32 noundef %i.ft, ptr noundef %12, ptr noundef %i.fw) ; 0 uses
   store i32 -5, ptr %i.d, align 4
@@ -2655,7 +2655,7 @@ pmix_obj_update.exit:                             ; preds = %bb.de
 
 bb.dg:                                            ; preds = %pmix_obj_update.exit
   %i.ib = load ptr, ptr %i.r, align 8
-  call fastcc void @pmix_obj_run_destructors(ptr noundef %i.ib)
+  call void @pmix_obj_run_destructors(ptr noundef %i.ib)
   %i.ic = load ptr, ptr %i.r, align 8
   %14 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.ic, i32 0, i32 3
   %15 = getelementptr inbounds nuw %struct.pmix_tma, ptr %14, i32 0, i32 5
@@ -2667,7 +2667,7 @@ bb.dh:                                            ; preds = %bb.dg
   %i.if = load ptr, ptr %i.r, align 8
   %16 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.if, i32 0, i32 3
   %i.ig = load ptr, ptr %i.n, align 8
-  call fastcc void @pmix_tma_free(ptr noundef %16, ptr noundef %i.ig)
+  call void @pmix_tma_free(ptr noundef %16, ptr noundef %i.ig)
   br label %bb.dj
 
 bb.di:                                            ; preds = %bb.dg
@@ -2708,7 +2708,7 @@ declare i32 @atoi(ptr noundef captures(none)) local_unnamed_addr #6
 declare ptr @strtok(ptr noundef, ptr noundef readonly captures(none)) local_unnamed_addr #7
 
 ; Function Attrs: noinline nounwind optnone uwtable
-define internal fastcc i64 @pmix_list_get_size(ptr noundef nonnull %0) unnamed_addr #0 {
+define internal i64 @pmix_list_get_size(ptr noundef nonnull %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 2 uses
   store ptr %0, ptr %i.a, align 8
@@ -2719,7 +2719,7 @@ bb.a:
 }
 
 ; Function Attrs: noinline nounwind optnone uwtable
-define internal fastcc ptr @pmix_list_get_first(ptr noundef nonnull %0) unnamed_addr #0 {
+define internal ptr @pmix_list_get_first(ptr noundef nonnull %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 2 uses
   %i.b = alloca ptr, align 8                      ; 2 uses
@@ -2742,7 +2742,7 @@ declare zeroext i1 @prte_rmaps_base_check_avail(ptr noundef, ptr noundef, ptr no
 declare i32 @prte_rmaps_base_check_oversubscribed(ptr noundef, ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #1
 
 ; Function Attrs: noinline nounwind optnone uwtable
-define internal fastcc void @pmix_tma_free(ptr noundef %0, ptr noundef %1) unnamed_addr #0 {
+define internal void @pmix_tma_free(ptr noundef %0, ptr noundef %1) unnamed_addr #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = alloca ptr, align 8                      ; 3 uses
@@ -2795,7 +2795,7 @@ declare i32 @hwloc_bitmap_andnot(ptr noundef, ptr noundef, ptr noundef) local_un
 declare ptr @prte_util_print_name_args(ptr noundef) local_unnamed_addr #1
 
 ; Function Attrs: noinline nounwind optnone uwtable
-define internal fastcc ptr @pmix_list_remove_first(ptr noundef nonnull %0) unnamed_addr #0 {
+define internal ptr @pmix_list_remove_first(ptr noundef nonnull %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 3 uses
   %i.b = alloca ptr, align 8                      ; 5 uses
@@ -2855,7 +2855,7 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 declare void @__assert_fail(ptr noundef, ptr noundef, i32 noundef, ptr noundef) local_unnamed_addr #10
 
 ; Function Attrs: noinline nounwind optnone uwtable
-define internal fastcc ptr @pmix_obj_new_tma(ptr noundef %0) unnamed_addr #0 {
+define internal ptr @pmix_obj_new_tma(ptr noundef %0, ptr noundef %1) unnamed_addr #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 6 uses
   %i.b = alloca ptr, align 8                      ; 4 uses
@@ -2863,8 +2863,8 @@ bb.a:
   store ptr %0, ptr %i.a, align 8
   store ptr null, ptr %i.b, align 8
   %i.d = load ptr, ptr %i.a, align 8
-  %1 = getelementptr inbounds nuw %struct.pmix_class_t, ptr %i.d, i32 0, i32 8
-  %i.e = load i64, ptr %1, align 8
+  %2 = getelementptr inbounds nuw %struct.pmix_class_t, ptr %i.d, i32 0, i32 8
+  %i.e = load i64, ptr %2, align 8
   %i.f = icmp uge i64 %i.e, 120
   br i1 %i.f, label %bb.b, label %bb.c
 
@@ -2878,14 +2878,14 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.b
   %i.g = load ptr, ptr %i.b, align 8
   %i.h = load ptr, ptr %i.a, align 8
-  %2 = getelementptr inbounds nuw %struct.pmix_class_t, ptr %i.h, i32 0, i32 8
-  %i.i = load i64, ptr %2, align 8
-  %3 = call fastcc ptr @pmix_tma_malloc(ptr noundef %i.g, i64 noundef %i.i)
-  store ptr %3, ptr %i.c, align 8
+  %3 = getelementptr inbounds nuw %struct.pmix_class_t, ptr %i.h, i32 0, i32 8
+  %i.i = load i64, ptr %3, align 8
+  %4 = call ptr @pmix_tma_malloc(ptr noundef %i.g, i64 noundef %i.i)
+  store ptr %4, ptr %i.c, align 8
   %i.j = load i32, ptr @pmix_class_init_epoch, align 4
   %i.k = load ptr, ptr %i.a, align 8
-  %4 = getelementptr inbounds nuw %struct.pmix_class_t, ptr %i.k, i32 0, i32 4
-  %i.l = load i32, ptr %4, align 8
+  %5 = getelementptr inbounds nuw %struct.pmix_class_t, ptr %i.k, i32 0, i32 4
+  %i.l = load i32, ptr %5, align 8
   %i.m = icmp ne i32 %i.j, %i.l
   br i1 %i.m, label %bb.e, label %bb.f
 
@@ -2901,60 +2901,60 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 
 bb.g:                                             ; preds = %bb.f
   %i.q = load ptr, ptr %i.c, align 8
-  %5 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.q, i32 0, i32 0
-  %i.r = call i32 @pthread_mutex_init(ptr noundef %5, ptr noundef null) #18 ; 0 uses
+  %6 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.q, i32 0, i32 0
+  %i.r = call i32 @pthread_mutex_init(ptr noundef %6, ptr noundef null) #18 ; 0 uses
   %i.s = load ptr, ptr %i.a, align 8
   %i.t = load ptr, ptr %i.c, align 8
-  %6 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.t, i32 0, i32 1
-  store ptr %i.s, ptr %6, align 8
+  %7 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.t, i32 0, i32 1
+  store ptr %i.s, ptr %7, align 8
   %i.u = load ptr, ptr %i.c, align 8
-  %7 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.u, i32 0, i32 2
-  store i32 1, ptr %7, align 8
+  %8 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.u, i32 0, i32 2
+  store i32 1, ptr %8, align 8
   %i.v = load ptr, ptr %i.b, align 8
   %i.w = icmp eq ptr null, %i.v
   br i1 %i.w, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
   %i.x = load ptr, ptr %i.c, align 8
-  %8 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.x, i32 0, i32 3
-  %9 = getelementptr inbounds nuw %struct.pmix_tma, ptr %8, i32 0, i32 0
-  store ptr null, ptr %9, align 8
+  %9 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.x, i32 0, i32 3
+  %10 = getelementptr inbounds nuw %struct.pmix_tma, ptr %9, i32 0, i32 0
+  store ptr null, ptr %10, align 8
   %i.y = load ptr, ptr %i.c, align 8
-  %10 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.y, i32 0, i32 3
-  %11 = getelementptr inbounds nuw %struct.pmix_tma, ptr %10, i32 0, i32 1
-  store ptr null, ptr %11, align 8
+  %11 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.y, i32 0, i32 3
+  %12 = getelementptr inbounds nuw %struct.pmix_tma, ptr %11, i32 0, i32 1
+  store ptr null, ptr %12, align 8
   %i.z = load ptr, ptr %i.c, align 8
-  %12 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.z, i32 0, i32 3
-  %13 = getelementptr inbounds nuw %struct.pmix_tma, ptr %12, i32 0, i32 2
-  store ptr null, ptr %13, align 8
+  %13 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.z, i32 0, i32 3
+  %14 = getelementptr inbounds nuw %struct.pmix_tma, ptr %13, i32 0, i32 2
+  store ptr null, ptr %14, align 8
   %i.aa = load ptr, ptr %i.c, align 8
-  %14 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.aa, i32 0, i32 3
-  %15 = getelementptr inbounds nuw %struct.pmix_tma, ptr %14, i32 0, i32 3
-  store ptr null, ptr %15, align 8
+  %15 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.aa, i32 0, i32 3
+  %16 = getelementptr inbounds nuw %struct.pmix_tma, ptr %15, i32 0, i32 3
+  store ptr null, ptr %16, align 8
   %i.ab = load ptr, ptr %i.c, align 8
-  %16 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.ab, i32 0, i32 3
-  %17 = getelementptr inbounds nuw %struct.pmix_tma, ptr %16, i32 0, i32 5
-  store ptr null, ptr %17, align 8
+  %17 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.ab, i32 0, i32 3
+  %18 = getelementptr inbounds nuw %struct.pmix_tma, ptr %17, i32 0, i32 5
+  store ptr null, ptr %18, align 8
   %i.ac = load ptr, ptr %i.c, align 8
-  %18 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.ac, i32 0, i32 3
-  %19 = getelementptr inbounds nuw %struct.pmix_tma, ptr %18, i32 0, i32 6
-  store ptr null, ptr %19, align 8
+  %19 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.ac, i32 0, i32 3
+  %20 = getelementptr inbounds nuw %struct.pmix_tma, ptr %19, i32 0, i32 6
+  store ptr null, ptr %20, align 8
   %i.ad = load ptr, ptr %i.c, align 8
-  %20 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.ad, i32 0, i32 3
-  %21 = getelementptr inbounds nuw %struct.pmix_tma, ptr %20, i32 0, i32 7
-  store ptr null, ptr %21, align 8
+  %21 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.ad, i32 0, i32 3
+  %22 = getelementptr inbounds nuw %struct.pmix_tma, ptr %21, i32 0, i32 7
+  store ptr null, ptr %22, align 8
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.g
   %i.ae = load ptr, ptr %i.c, align 8
-  %22 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.ae, i32 0, i32 3
+  %23 = getelementptr inbounds nuw %struct.pmix_object_t, ptr %i.ae, i32 0, i32 3
   %i.af = load ptr, ptr %i.b, align 8
-  call void @llvm.memcpy.p0.p0.i64(ptr align 8 %22, ptr align 8 %i.af, i64 64, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 8 %23, ptr align 8 %i.af, i64 64, i1 false)
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
   %i.ag = load ptr, ptr %i.c, align 8
-  call fastcc void @pmix_obj_run_constructors(ptr noundef %i.ag)
+  call void @pmix_obj_run_constructors(ptr noundef %i.ag)
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.f
@@ -2984,7 +2984,7 @@ declare ptr @strchr(ptr noundef, i32 noundef) local_unnamed_addr #5
 declare zeroext i1 @prte_check_host_is_local(ptr noundef) local_unnamed_addr #1
 
 ; Function Attrs: noinline nounwind optnone uwtable
-define internal fastcc ptr @prte_rmaps_rank_file_parse_string_or_int() unnamed_addr #0 {
+define internal ptr @prte_rmaps_rank_file_parse_string_or_int() unnamed_addr #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 5 uses
   %i.b = alloca i32, align 4                      ; 2 uses
@@ -3036,7 +3036,7 @@ declare noundef i32 @fclose(ptr noundef captures(none)) local_unnamed_addr #11
 declare i32 @prte_rmaps_rank_file_lex_destroy() local_unnamed_addr #1
 
 ; Function Attrs: noinline nounwind optnone uwtable
-define internal fastcc ptr @pmix_tma_malloc(ptr noundef %0, i64 noundef %1) unnamed_addr #0 {
+define internal ptr @pmix_tma_malloc(ptr noundef %0, i64 noundef %1) unnamed_addr #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 3 uses
   %i.b = alloca ptr, align 8                      ; 4 uses

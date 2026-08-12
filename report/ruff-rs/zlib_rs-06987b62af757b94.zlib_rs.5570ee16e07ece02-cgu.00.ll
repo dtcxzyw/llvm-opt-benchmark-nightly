@@ -203,7 +203,7 @@ _RNvNtCs7kNFBubu20U_7zlib_rs7deflate14send_all_trees.exit.i: ; preds = %bb.hj
   %i.aha = getelementptr inbounds nuw i8, ptr %.pre307.pre308, i64 112
   %i.ahb = load i64, ptr %i.aha, align 8, !alias.scope !311, !noalias !312, !noundef !4 ; 2 uses
   %i.ahc = getelementptr inbounds nuw i8, ptr %.pre307.pre308, i64 120
-  %i.ahd = load i64, ptr %i.ahc, align 8, !alias.scope !311, !noalias !312, !noundef !4 ; 4 uses
+  %i.ahd = load i64, ptr %i.ahc, align 8, !alias.scope !311, !noalias !312, !noundef !4 ; 5 uses
   %.not.i.i.i116.i = icmp ugt i64 %i.ahd, %i.ahb
   br i1 %.not.i.i.i116.i, label %bb.hk, label %_RNvMNtNtCs7kNFBubu20U_7zlib_rs7deflate7sym_bufNtB2_6SymBuf4iter.exit.i.i.i, !prof !127
 
@@ -212,12 +212,12 @@ bb.hk:                                            ; preds = %_RNvNtCs7kNFBubu20U
   unreachable
 
 _RNvMNtNtCs7kNFBubu20U_7zlib_rs7deflate7sym_bufNtB2_6SymBuf4iter.exit.i.i.i: ; preds = %_RNvNtCs7kNFBubu20U_7zlib_rs7deflate14send_all_trees.exit.i
-  %2 = urem i64 %i.ahd, 3
-  %3 = sub nuw nsw i64 %i.ahd, %2                 ; 2 uses
-  %.not7.i.i117.i = icmp ult i64 %3, 3
+  %.not7.i.i117.i = icmp ult i64 %i.ahd, 3
   br i1 %.not7.i.i117.i, label %._crit_edge.i.i120.i, label %.lr.ph.i.i118.i
 
 .lr.ph.i.i118.i:                                  ; preds = %_RNvMNtNtCs7kNFBubu20U_7zlib_rs7deflate7sym_bufNtB2_6SymBuf4iter.exit.i.i.i
+  %2 = urem i64 %i.ahd, 3
+  %3 = sub nuw nsw i64 %i.ahd, %2
   %i.ahe = load ptr, ptr %i.agz, align 8, !alias.scope !311, !noalias !312, !noundef !4
   br label %bb.hn
 
@@ -434,7 +434,7 @@ _RNvMs5_NtCs7kNFBubu20U_7zlib_rs7deflateNtB5_9BitWriter9emit_tree.exit121.i: ; p
   %i.alo = getelementptr inbounds nuw i8, ptr %i.ala, i64 112
   %i.alp = load i64, ptr %i.alo, align 8, !alias.scope !374, !noalias !375, !noundef !4 ; 2 uses
   %i.alq = getelementptr inbounds nuw i8, ptr %i.ala, i64 120
-  %i.alr = load i64, ptr %i.alq, align 8, !alias.scope !374, !noalias !375, !noundef !4 ; 4 uses
+  %i.alr = load i64, ptr %i.alq, align 8, !alias.scope !374, !noalias !375, !noundef !4 ; 5 uses
   %.not.i.i122.i = icmp ugt i64 %i.alr, %i.alp
   br i1 %.not.i.i122.i, label %bb.ib, label %_RNvMNtNtCs7kNFBubu20U_7zlib_rs7deflate7sym_bufNtB2_6SymBuf4iter.exit.i.i, !prof !127
 
@@ -443,12 +443,12 @@ bb.ib:                                            ; preds = %_RNvMs5_NtCs7kNFBub
   unreachable
 
 _RNvMNtNtCs7kNFBubu20U_7zlib_rs7deflate7sym_bufNtB2_6SymBuf4iter.exit.i.i: ; preds = %_RNvMs5_NtCs7kNFBubu20U_7zlib_rs7deflateNtB5_9BitWriter9emit_tree.exit121.i
-  %4 = urem i64 %i.alr, 3
-  %5 = sub nuw nsw i64 %i.alr, %4                 ; 2 uses
-  %.not7.i.i = icmp ult i64 %5, 3
+  %.not7.i.i = icmp ult i64 %i.alr, 3
   br i1 %.not7.i.i, label %._crit_edge.i127.i, label %.lr.ph.i123.i
 
 .lr.ph.i123.i:                                    ; preds = %_RNvMNtNtCs7kNFBubu20U_7zlib_rs7deflate7sym_bufNtB2_6SymBuf4iter.exit.i.i
+  %4 = urem i64 %i.alr, 3
+  %5 = sub nuw nsw i64 %i.alr, %4
   %i.als = getelementptr inbounds nuw i8, ptr %i.ala, i64 104
   %i.alt = load ptr, ptr %i.als, align 8, !alias.scope !374, !noalias !375, !noundef !4
   %i.alu = getelementptr inbounds nuw i8, ptr %i.ala, i64 176 ; 4 uses

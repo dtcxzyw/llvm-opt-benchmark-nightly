@@ -17,7 +17,7 @@ bb.a:
   %i.j = alloca x86_fp80, align 16
   %i.k = alloca x86_fp80, align 16
   store i32 0, ptr %i.a, align 4
-  %0 = call fastcc <2 x float> @H5_make_fcomplex()
+  %0 = call <2 x float> @H5_make_fcomplex(float noundef 1.000000e+00, float noundef 1.000000e+00)
   store <2 x float> %0, ptr %i.c, align 4
   %i.l = getelementptr inbounds nuw { float, float }, ptr %i.c, i32 0, i32 0
   %i.m = load float, ptr %i.l, align 4
@@ -27,14 +27,14 @@ bb.a:
   %i.q = getelementptr inbounds nuw { float, float }, ptr %i.b, i32 0, i32 1
   store float %i.m, ptr %i.p, align 4
   store float %i.o, ptr %i.q, align 4
-  %1 = call fastcc { double, double } @H5_make_dcomplex() ; 2 uses
+  %1 = call { double, double } @H5_make_dcomplex(double noundef 2.000000e+00, double noundef 4.000000e+00) ; 2 uses
   %i.r = extractvalue { double, double } %1, 0
   %i.s = extractvalue { double, double } %1, 1
   %i.t = getelementptr inbounds nuw { double, double }, ptr %i.d, i32 0, i32 0
   %i.u = getelementptr inbounds nuw { double, double }, ptr %i.d, i32 0, i32 1
   store double %i.r, ptr %i.t, align 8
   store double %i.s, ptr %i.u, align 8
-  %2 = call fastcc { x86_fp80, x86_fp80 } @H5_make_lcomplex() ; 2 uses
+  %2 = call { x86_fp80, x86_fp80 } @H5_make_lcomplex(x86_fp80 noundef 3.000000e+00, x86_fp80 noundef 5.000000e+00) ; 2 uses
   %i.v = extractvalue { x86_fp80, x86_fp80 } %2, 0
   %i.w = extractvalue { x86_fp80, x86_fp80 } %2, 1
   %i.x = getelementptr inbounds nuw { x86_fp80, x86_fp80 }, ptr %i.e, i32 0, i32 0
@@ -75,7 +75,7 @@ bb.a:
 }
 
 ; Function Attrs: noinline nounwind optnone uwtable
-define internal fastcc <2 x float> @H5_make_fcomplex() unnamed_addr #0 {
+define internal <2 x float> @H5_make_fcomplex(float noundef nofpclass(nan inf zero sub nnorm) %0, float noundef nofpclass(nan inf zero sub nnorm) %1) unnamed_addr #0 {
 bb.a:
   %i.a = alloca { float, float }, align 4         ; 3 uses
   %i.b = alloca float, align 4                    ; 2 uses
@@ -96,7 +96,7 @@ bb.a:
 }
 
 ; Function Attrs: noinline nounwind optnone uwtable
-define internal fastcc { double, double } @H5_make_dcomplex() unnamed_addr #1 {
+define internal { double, double } @H5_make_dcomplex(double noundef nofpclass(nan inf zero sub nnorm) %0, double noundef nofpclass(nan inf zero sub nnorm) %1) unnamed_addr #1 {
 bb.a:
   %i.a = alloca { double, double }, align 8       ; 3 uses
   %i.b = alloca double, align 8                   ; 2 uses
@@ -117,7 +117,7 @@ bb.a:
 }
 
 ; Function Attrs: noinline nounwind optnone uwtable
-define internal fastcc { x86_fp80, x86_fp80 } @H5_make_lcomplex() unnamed_addr #1 {
+define internal { x86_fp80, x86_fp80 } @H5_make_lcomplex(x86_fp80 noundef nofpclass(nan inf zero sub nnorm) %0, x86_fp80 noundef nofpclass(nan inf zero sub nnorm) %1) unnamed_addr #1 {
 bb.a:
   %i.a = alloca { x86_fp80, x86_fp80 }, align 16  ; 3 uses
   %i.b = alloca x86_fp80, align 16                ; 2 uses

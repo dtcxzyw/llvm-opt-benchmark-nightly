@@ -203,12 +203,11 @@ bb.f:                                             ; preds = %bb.e, %_RINvMs6_NtC
 ; Function Attrs: nonlazybind uwtable
 define noundef range(i32 1, -255) i32 @_RNvMs1_Cs1nWGUjlayfI_19ra_ap_rustc_type_irNtB5_13UniverseIndex13next_universe(i32 noundef %0) unnamed_addr #0 {
 bb.a:
-  %1 = add i32 %0, 1                              ; 2 uses
   %i.a = icmp eq i32 %0, -1
   br i1 %i.a, label %bb.c, label %bb.b, !prof !63
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = icmp ult i32 %1, -255
+  %i.b = icmp ult i32 %0, -256
   br i1 %i.b, label %bb.e, label %bb.d, !prof !62
 
 bb.c:                                             ; preds = %bb.a
@@ -220,6 +219,7 @@ bb.d:                                             ; preds = %bb.b
   unreachable
 
 bb.e:                                             ; preds = %bb.b
+  %1 = add nuw i32 %0, 1
   ret i32 %1
 }
 

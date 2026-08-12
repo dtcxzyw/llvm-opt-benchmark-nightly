@@ -108,7 +108,7 @@ bb.j:                                             ; preds = %bb.h
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i
-  call fastcc void @prte_rmaps_rank_file_ensure_buffer_stack()
+  call void @prte_rmaps_rank_file_ensure_buffer_stack()
   %i.z = load ptr, ptr @prte_rmaps_rank_file_in, align 8
   %i.aa = call ptr @prte_rmaps_rank_file__create_buffer(ptr noundef %i.z, i32 noundef 16384)
   %i.ab = load ptr, ptr @yy_buffer_stack, align 8
@@ -118,7 +118,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.i
-  call fastcc void @prte_rmaps_rank_file__load_buffer_state()
+  call void @prte_rmaps_rank_file__load_buffer_state()
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.a
@@ -521,10 +521,10 @@ bb.bl:                                            ; preds = %bb.bk
   %i.gl = sext i32 %i.gk to i64
   %i.gm = getelementptr inbounds i8, ptr %i.gj, i64 %i.gl
   store ptr %i.gm, ptr @yy_c_buf_p, align 8
-  %5 = call fastcc i32 @yy_get_previous_state()
+  %5 = call i32 @yy_get_previous_state()
   store i32 %5, ptr %i.b, align 4
   %i.gn = load i32, ptr %i.b, align 4
-  %6 = call fastcc i32 @yy_try_NUL_trans(i32 noundef %i.gn)
+  %6 = call i32 @yy_try_NUL_trans(i32 noundef %i.gn)
   store i32 %6, ptr %i.h, align 4
   %i.go = load ptr, ptr @prte_rmaps_rank_file_text, align 8
   %i.gp = getelementptr inbounds nuw i8, ptr %i.go, i64 0
@@ -548,7 +548,7 @@ bb.bn:                                            ; preds = %bb.bl
   br label %bb.z
 
 bb.bo:                                            ; preds = %bb.bk
-  %7 = call fastcc i32 @yy_get_next_buffer()
+  %7 = call i32 @yy_get_next_buffer()
   switch i32 %7, label %bb.bt [
     i32 1, label %bb.bp
     i32 0, label %bb.br
@@ -577,7 +577,7 @@ bb.br:                                            ; preds = %bb.bo
   %i.hg = sext i32 %i.hf to i64
   %i.hh = getelementptr inbounds i8, ptr %i.he, i64 %i.hg
   store ptr %i.hh, ptr @yy_c_buf_p, align 8
-  %8 = call fastcc i32 @yy_get_previous_state()
+  %8 = call i32 @yy_get_previous_state()
   store i32 %8, ptr %i.b, align 4
   %i.hi = load ptr, ptr @yy_c_buf_p, align 8
   store ptr %i.hi, ptr %i.c, align 8
@@ -597,7 +597,7 @@ bb.bs:                                            ; preds = %bb.bo
   %i.hr = sext i32 %i.hq to i64
   %i.hs = getelementptr inbounds i8, ptr %i.hp, i64 %i.hr
   store ptr %i.hs, ptr @yy_c_buf_p, align 8
-  %10 = call fastcc i32 @yy_get_previous_state()
+  %10 = call i32 @yy_get_previous_state()
   store i32 %10, ptr %i.b, align 4
   %i.ht = load ptr, ptr @yy_c_buf_p, align 8
   store ptr %i.ht, ptr %i.c, align 8
@@ -613,7 +613,7 @@ bb.bu:                                            ; preds = %bb.bt
   br label %bb.bw
 
 bb.bv:                                            ; preds = %bb.ac
-  call fastcc void @yy_fatal_error(ptr noundef @.str) #14
+  call void @yy_fatal_error(ptr noundef @.str) #14
   unreachable
 
 bb.bw:                                            ; preds = %bb.bu, %bb.an, %bb.aj, %bb.ai
@@ -625,7 +625,7 @@ bb.bx:                                            ; preds = %bb.bh, %bb.bb, %bb.
 }
 
 ; Function Attrs: noinline nounwind optnone uwtable
-define internal fastcc void @prte_rmaps_rank_file_ensure_buffer_stack() unnamed_addr #0 {
+define internal void @prte_rmaps_rank_file_ensure_buffer_stack() unnamed_addr #0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 7 uses
   %i.b = alloca i64, align 8                      ; 3 uses
@@ -644,7 +644,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  call fastcc void @yy_fatal_error(ptr noundef @.str.9) #14
+  call void @yy_fatal_error(ptr noundef @.str.9) #14
   unreachable
 
 bb.d:                                             ; preds = %bb.b
@@ -680,7 +680,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.z, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  call fastcc void @yy_fatal_error(ptr noundef @.str.9) #14
+  call void @yy_fatal_error(ptr noundef @.str.9) #14
   unreachable
 
 bb.h:                                             ; preds = %bb.f
@@ -713,7 +713,7 @@ bb.a:
   br i1 %i.f, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  call fastcc void @yy_fatal_error(ptr noundef @.str.1) #14
+  call void @yy_fatal_error(ptr noundef @.str.1) #14
   unreachable
 
 bb.c:                                             ; preds = %bb.a
@@ -737,7 +737,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.q, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  call fastcc void @yy_fatal_error(ptr noundef @.str.1) #14
+  call void @yy_fatal_error(ptr noundef @.str.1) #14
   unreachable
 
 bb.e:                                             ; preds = %bb.c
@@ -746,13 +746,13 @@ bb.e:                                             ; preds = %bb.c
   store i32 1, ptr %6, align 8
   %i.s = load ptr, ptr %i.c, align 8
   %i.t = load ptr, ptr %i.a, align 8
-  call fastcc void @prte_rmaps_rank_file__init_buffer(ptr noundef %i.s, ptr noundef %i.t)
+  call void @prte_rmaps_rank_file__init_buffer(ptr noundef %i.s, ptr noundef %i.t)
   %i.u = load ptr, ptr %i.c, align 8
   ret ptr %i.u
 }
 
 ; Function Attrs: noinline nounwind optnone uwtable
-define internal fastcc void @prte_rmaps_rank_file__load_buffer_state() unnamed_addr #0 {
+define internal void @prte_rmaps_rank_file__load_buffer_state() unnamed_addr #0 {
 bb.a:
   %i.a = load ptr, ptr @yy_buffer_stack, align 8
   %i.b = load i64, ptr @yy_buffer_stack_top, align 8
@@ -789,7 +789,7 @@ declare i64 @atol(ptr noundef captures(none)) local_unnamed_addr #1
 declare noundef i64 @fwrite(ptr noundef readonly captures(none), i64 noundef, i64 noundef, ptr noundef captures(none)) local_unnamed_addr #2
 
 ; Function Attrs: noinline nounwind optnone uwtable
-define internal fastcc i32 @yy_get_previous_state() unnamed_addr #0 {
+define internal i32 @yy_get_previous_state() unnamed_addr #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 11 uses
   %i.b = alloca ptr, align 8                      ; 7 uses
@@ -914,7 +914,7 @@ bb.o:                                             ; preds = %bb.b
 }
 
 ; Function Attrs: noinline nounwind optnone uwtable
-define internal fastcc i32 @yy_try_NUL_trans(i32 noundef %0) unnamed_addr #0 {
+define internal i32 @yy_try_NUL_trans(i32 noundef %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 12 uses
   %i.b = alloca i32, align 4                      ; 2 uses
@@ -1015,7 +1015,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
 }
 
 ; Function Attrs: noinline nounwind optnone uwtable
-define internal fastcc i32 @yy_get_next_buffer() unnamed_addr #0 {
+define internal i32 @yy_get_next_buffer() unnamed_addr #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   %i.b = alloca ptr, align 8                      ; 3 uses
@@ -1054,7 +1054,7 @@ bb.a:
   br i1 %i.ad, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  call fastcc void @yy_fatal_error(ptr noundef @.str.5) #14
+  call void @yy_fatal_error(ptr noundef @.str.5) #14
   unreachable
 
 bb.c:                                             ; preds = %bb.a
@@ -1238,7 +1238,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   br i1 %i.dp, label %bb.w, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  call fastcc void @yy_fatal_error(ptr noundef @.str.6) #14
+  call void @yy_fatal_error(ptr noundef @.str.6) #14
   unreachable
 
 bb.w:                                             ; preds = %bb.u
@@ -1368,7 +1368,7 @@ bb.ak:                                            ; preds = %bb.aj
   br i1 %i.gd, label %bb.al, label %bb.am
 
 bb.al:                                            ; preds = %bb.ak
-  call fastcc void @yy_fatal_error(ptr noundef @.str.7) #14
+  call void @yy_fatal_error(ptr noundef @.str.7) #14
   unreachable
 
 bb.am:                                            ; preds = %bb.ak, %bb.aj
@@ -1417,7 +1417,7 @@ bb.ar:                                            ; preds = %bb.aq
   br i1 %i.ha, label %bb.as, label %bb.at
 
 bb.as:                                            ; preds = %bb.ar
-  call fastcc void @yy_fatal_error(ptr noundef @.str.7) #14
+  call void @yy_fatal_error(ptr noundef @.str.7) #14
   unreachable
 
 bb.at:                                            ; preds = %bb.ar
@@ -1519,7 +1519,7 @@ bb.bd:                                            ; preds = %bb.bc
   br i1 %i.ix, label %bb.bf, label %bb.be
 
 bb.be:                                            ; preds = %bb.bd
-  call fastcc void @yy_fatal_error(ptr noundef @.str.8) #14
+  call void @yy_fatal_error(ptr noundef @.str.8) #14
   unreachable
 
 bb.bf:                                            ; preds = %bb.bd
@@ -1604,7 +1604,7 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  call fastcc void @prte_rmaps_rank_file_ensure_buffer_stack()
+  call void @prte_rmaps_rank_file_ensure_buffer_stack()
   %i.i = load ptr, ptr @prte_rmaps_rank_file_in, align 8
   %i.j = call ptr @prte_rmaps_rank_file__create_buffer(ptr noundef %i.i, i32 noundef 16384)
   %i.k = load ptr, ptr @yy_buffer_stack, align 8
@@ -1631,13 +1631,13 @@ bb.g:                                             ; preds = %bb.e
 bb.h:                                             ; preds = %bb.g, %bb.f
   %i.t = phi ptr [ %i.s, %bb.f ], [ null, %bb.g ]
   %i.u = load ptr, ptr %i.a, align 8
-  call fastcc void @prte_rmaps_rank_file__init_buffer(ptr noundef %i.t, ptr noundef %i.u)
-  call fastcc void @prte_rmaps_rank_file__load_buffer_state()
+  call void @prte_rmaps_rank_file__init_buffer(ptr noundef %i.t, ptr noundef %i.u)
+  call void @prte_rmaps_rank_file__load_buffer_state()
   ret void
 }
 
 ; Function Attrs: noinline noreturn nounwind optnone uwtable
-define internal fastcc void @yy_fatal_error(ptr noundef %0) unnamed_addr #3 {
+define internal void @yy_fatal_error(ptr noundef %0) unnamed_addr #3 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 2 uses
   store ptr %0, ptr %i.a, align 8
@@ -1649,7 +1649,7 @@ bb.a:
 }
 
 ; Function Attrs: noinline nounwind optnone uwtable
-define internal fastcc void @prte_rmaps_rank_file__init_buffer(ptr noundef %0, ptr noundef %1) unnamed_addr #0 {
+define internal void @prte_rmaps_rank_file__init_buffer(ptr noundef %0, ptr noundef %1) unnamed_addr #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 8 uses
   %i.b = alloca ptr, align 8                      ; 4 uses
@@ -1729,7 +1729,7 @@ define void @prte_rmaps_rank_file__switch_to_buffer(ptr noundef %0) local_unname
 bb.a:
   %i.a = alloca ptr, align 8                      ; 3 uses
   store ptr %0, ptr %i.a, align 8
-  call fastcc void @prte_rmaps_rank_file_ensure_buffer_stack()
+  call void @prte_rmaps_rank_file_ensure_buffer_stack()
   %i.b = load ptr, ptr @yy_buffer_stack, align 8
   %i.c = icmp ne ptr %i.b, null
   br i1 %i.c, label %bb.b, label %bb.c
@@ -1795,7 +1795,7 @@ bb.j:                                             ; preds = %bb.h, %bb.i, %bb.g
   %i.af = load i64, ptr @yy_buffer_stack_top, align 8
   %i.ag = getelementptr inbounds nuw ptr, ptr %i.ae, i64 %i.af
   store ptr %i.ad, ptr %i.ag, align 8
-  call fastcc void @prte_rmaps_rank_file__load_buffer_state()
+  call void @prte_rmaps_rank_file__load_buffer_state()
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.e
@@ -1945,7 +1945,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br i1 %i.y, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  call fastcc void @prte_rmaps_rank_file__load_buffer_state()
+  call void @prte_rmaps_rank_file__load_buffer_state()
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.b
@@ -1965,7 +1965,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.l
 
 bb.c:                                             ; preds = %bb.a
-  call fastcc void @prte_rmaps_rank_file_ensure_buffer_stack()
+  call void @prte_rmaps_rank_file_ensure_buffer_stack()
   %i.d = load ptr, ptr @yy_buffer_stack, align 8
   %i.e = icmp ne ptr %i.d, null
   br i1 %i.e, label %bb.d, label %bb.e
@@ -2029,7 +2029,7 @@ bb.k:                                             ; preds = %bb.i, %bb.j, %bb.h
   %i.ah = load i64, ptr @yy_buffer_stack_top, align 8
   %i.ai = getelementptr inbounds nuw ptr, ptr %i.ag, i64 %i.ah
   store ptr %i.af, ptr %i.ai, align 8
-  call fastcc void @prte_rmaps_rank_file__load_buffer_state()
+  call void @prte_rmaps_rank_file__load_buffer_state()
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.b
@@ -2106,7 +2106,7 @@ bb.l:                                             ; preds = %bb.j
   br label %bb.n
 
 bb.m:                                             ; preds = %bb.k
-  call fastcc void @prte_rmaps_rank_file__load_buffer_state()
+  call void @prte_rmaps_rank_file__load_buffer_state()
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.l, %bb.m, %bb.k, %bb.d
@@ -2158,7 +2158,7 @@ bb.e:                                             ; preds = %bb.c
   br i1 %i.w, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  call fastcc void @yy_fatal_error(ptr noundef @.str.2) #14
+  call void @yy_fatal_error(ptr noundef @.str.2) #14
   unreachable
 
 bb.g:                                             ; preds = %bb.e
@@ -2246,7 +2246,7 @@ bb.a:
   br i1 %i.m, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  call fastcc void @yy_fatal_error(ptr noundef @.str.3) #14
+  call void @yy_fatal_error(ptr noundef @.str.3) #14
   unreachable
 
 bb.c:                                             ; preds = %bb.a
@@ -2299,7 +2299,7 @@ bb.g:                                             ; preds = %bb.d
   br i1 %i.ao, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  call fastcc void @yy_fatal_error(ptr noundef @.str.4) #14
+  call void @yy_fatal_error(ptr noundef @.str.4) #14
   unreachable
 
 bb.i:                                             ; preds = %bb.g
@@ -2449,12 +2449,12 @@ bb.j:                                             ; preds = %bb.e
   %i.s = load ptr, ptr @yy_buffer_stack, align 8
   call void @prte_rmaps_rank_file_free(ptr noundef %i.s)
   store ptr null, ptr @yy_buffer_stack, align 8
-  call fastcc void @yy_init_globals()
+  %0 = call i32 @yy_init_globals()                ; 0 uses
   ret i32 0
 }
 
 ; Function Attrs: noinline nounwind optnone uwtable
-define internal fastcc void @yy_init_globals() unnamed_addr #0 {
+define internal i32 @yy_init_globals() unnamed_addr #0 {
 bb.a:
   store ptr null, ptr @yy_buffer_stack, align 8
   store i64 0, ptr @yy_buffer_stack_top, align 8
@@ -2464,7 +2464,7 @@ bb.a:
   store i32 0, ptr @yy_start, align 4
   store ptr null, ptr @prte_rmaps_rank_file_in, align 8
   store ptr null, ptr @prte_rmaps_rank_file_out, align 8
-  ret void
+  ret i32 poison
 }
 
 ; Function Attrs: mustprogress nofree nounwind willreturn allockind("alloc,uninitialized") allocsize(0) memory(inaccessiblemem: readwrite, errnomem: write)

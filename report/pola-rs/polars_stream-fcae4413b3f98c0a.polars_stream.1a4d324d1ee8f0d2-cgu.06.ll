@@ -203,9 +203,9 @@ bb.b:                                             ; preds = %bb.a
   br label %_RINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB6_3VecINtNtCs5ERpa6sqwDS_7slotmap9secondary4SlotIBx_INtNtB8_4sync3ArcNtNtCs2g09Ig8GZd6_13polars_stream4pipe11PipeMetricsEEEE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2Z_3ops5range14RangeInclusivejENCNvMs_BJ_INtBJ_12SecondaryMapNtNtB1L_5graph14LogicalPipeKeyB1m_E5entry0EEB1L_.exit, !dbg !88200
 
 _RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_3ops5range14RangeInclusivejENCNvMs_NtCs5ERpa6sqwDS_7slotmap9secondaryINtB1F_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream5graph14LogicalPipeKeyINtNtCsgZ49sUHp3tW_5alloc3vec3VecINtNtB3w_4sync3ArcNtNtB2C_4pipe11PipeMetricsEEE5entry0ENtNtNtB9_6traits8iterator8Iterator9size_hintB2C_.exit.i: ; preds = %bb.b
-  %i.i = sub nuw i64 %i.g, %i.f, !dbg !88205      ; 2 uses
+  %i.i = sub nuw i64 %i.g, %i.f, !dbg !88205      ; 3 uses
   %.not.i = icmp eq i64 %i.i, -1, !dbg !88208
-  %i.j = add i64 %i.i, 1                          ; 2 uses
+  %i.j = add nuw i64 %i.i, 1
   br i1 %.not.i, label %bb.e, label %bb.c, !dbg !88218, !prof !88219
 
 bb.c:                                             ; preds = %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_3ops5range14RangeInclusivejENCNvMs_NtCs5ERpa6sqwDS_7slotmap9secondaryINtB1F_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream5graph14LogicalPipeKeyINtNtCsgZ49sUHp3tW_5alloc3vec3VecINtNtB3w_4sync3ArcNtNtB2C_4pipe11PipeMetricsEEE5entry0ENtNtNtB9_6traits8iterator8Iterator9size_hintB2C_.exit.i
@@ -213,8 +213,8 @@ bb.c:                                             ; preds = %_RNvXs0_NtNtNtCscgR
   %i.l = load i64, ptr %i.k, align 8, !dbg !88195, !alias.scope !88220, !noalias !88156, !noundef !13 ; 2 uses
   %i.m = load i64, ptr %0, align 8, !dbg !88223, !range !2568, !alias.scope !88220, !noalias !88156, !noundef !13
   %i.n = sub i64 %i.m, %i.l, !dbg !88228
-  %2 = icmp ugt i64 %i.j, %i.n, !dbg !88231
-  br i1 %2, label %bb.d, label %_RINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB6_3VecINtNtCs5ERpa6sqwDS_7slotmap9secondary4SlotIBx_INtNtB8_4sync3ArcNtNtCs2g09Ig8GZd6_13polars_stream4pipe11PipeMetricsEEEE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2Z_3ops5range14RangeInclusivejENCNvMs_BJ_INtBJ_12SecondaryMapNtNtB1L_5graph14LogicalPipeKeyB1m_E5entry0EEB1L_.exit, !dbg !88200, !prof !88232
+  %.not11.i = icmp ult i64 %i.i, %i.n, !dbg !88231
+  br i1 %.not11.i, label %_RINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB6_3VecINtNtCs5ERpa6sqwDS_7slotmap9secondary4SlotIBx_INtNtB8_4sync3ArcNtNtCs2g09Ig8GZd6_13polars_stream4pipe11PipeMetricsEEEE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2Z_3ops5range14RangeInclusivejENCNvMs_BJ_INtBJ_12SecondaryMapNtNtB1L_5graph14LogicalPipeKeyB1m_E5entry0EEB1L_.exit, label %bb.d, !dbg !88200, !prof !88232
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_RINvNvMs2_NtCsgZ49sUHp3tW_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECs2g09Ig8GZd6_13polars_stream(ptr noalias noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %i.l, i64 noundef %i.j, i64 noundef 8, i64 noundef 32), !dbg !88233, !noalias !88156
@@ -265,9 +265,9 @@ bb.b:                                             ; preds = %bb.a
   br label %_RINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB6_3VecINtNtCs5ERpa6sqwDS_7slotmap9secondary4SlotIBx_INtNtB8_4sync3ArcNtNtCsidoPH4Qgqxm_12polars_async8executor11TaskMetricsEEEE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB32_3ops5range14RangeInclusivejENCNvMs_BJ_INtBJ_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream5graph12GraphNodeKeyB1m_E5entry0EEB4S_.exit, !dbg !88298
 
 _RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_3ops5range14RangeInclusivejENCNvMs_NtCs5ERpa6sqwDS_7slotmap9secondaryINtB1F_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream5graph12GraphNodeKeyINtNtCsgZ49sUHp3tW_5alloc3vec3VecINtNtB3u_4sync3ArcNtNtCsidoPH4Qgqxm_12polars_async8executor11TaskMetricsEEE5entry0ENtNtNtB9_6traits8iterator8Iterator9size_hintB2C_.exit.i: ; preds = %bb.b
-  %i.i = sub nuw i64 %i.g, %i.f, !dbg !88303      ; 2 uses
+  %i.i = sub nuw i64 %i.g, %i.f, !dbg !88303      ; 3 uses
   %.not.i = icmp eq i64 %i.i, -1, !dbg !88305
-  %i.j = add i64 %i.i, 1                          ; 2 uses
+  %i.j = add nuw i64 %i.i, 1
   br i1 %.not.i, label %bb.e, label %bb.c, !dbg !88309, !prof !88219
 
 bb.c:                                             ; preds = %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_3ops5range14RangeInclusivejENCNvMs_NtCs5ERpa6sqwDS_7slotmap9secondaryINtB1F_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream5graph12GraphNodeKeyINtNtCsgZ49sUHp3tW_5alloc3vec3VecINtNtB3u_4sync3ArcNtNtCsidoPH4Qgqxm_12polars_async8executor11TaskMetricsEEE5entry0ENtNtNtB9_6traits8iterator8Iterator9size_hintB2C_.exit.i
@@ -275,8 +275,8 @@ bb.c:                                             ; preds = %_RNvXs0_NtNtNtCscgR
   %i.l = load i64, ptr %i.k, align 8, !dbg !88293, !alias.scope !88310, !noalias !88261, !noundef !13 ; 2 uses
   %i.m = load i64, ptr %0, align 8, !dbg !88313, !range !2568, !alias.scope !88310, !noalias !88261, !noundef !13
   %i.n = sub i64 %i.m, %i.l, !dbg !88318
-  %2 = icmp ugt i64 %i.j, %i.n, !dbg !88321
-  br i1 %2, label %bb.d, label %_RINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB6_3VecINtNtCs5ERpa6sqwDS_7slotmap9secondary4SlotIBx_INtNtB8_4sync3ArcNtNtCsidoPH4Qgqxm_12polars_async8executor11TaskMetricsEEEE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB32_3ops5range14RangeInclusivejENCNvMs_BJ_INtBJ_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream5graph12GraphNodeKeyB1m_E5entry0EEB4S_.exit, !dbg !88298, !prof !88232
+  %.not11.i = icmp ult i64 %i.i, %i.n, !dbg !88321
+  br i1 %.not11.i, label %_RINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB6_3VecINtNtCs5ERpa6sqwDS_7slotmap9secondary4SlotIBx_INtNtB8_4sync3ArcNtNtCsidoPH4Qgqxm_12polars_async8executor11TaskMetricsEEEE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB32_3ops5range14RangeInclusivejENCNvMs_BJ_INtBJ_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream5graph12GraphNodeKeyB1m_E5entry0EEB4S_.exit, label %bb.d, !dbg !88298, !prof !88232
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_RINvNvMs2_NtCsgZ49sUHp3tW_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECs2g09Ig8GZd6_13polars_stream(ptr noalias noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %i.l, i64 noundef %i.j, i64 noundef 8, i64 noundef 32), !dbg !88322, !noalias !88261
@@ -327,9 +327,9 @@ bb.b:                                             ; preds = %bb.a
   br label %_RINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB6_3VecINtNtCs5ERpa6sqwDS_7slotmap9secondary4SlotIBx_NtNtCs2g09Ig8GZd6_13polars_stream13physical_plan10PhysStreamEEE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2Q_3ops5range14RangeInclusivejENCNvMs_BJ_INtBJ_12SecondaryMapNtB1s_11PhysNodeKeyB1m_E6insert0EEB1u_.exit, !dbg !88387
 
 _RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_3ops5range14RangeInclusivejENCNvMs_NtCs5ERpa6sqwDS_7slotmap9secondaryINtB1F_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream13physical_plan11PhysNodeKeyINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtB2A_10PhysStreamEE6insert0ENtNtNtB9_6traits8iterator8Iterator9size_hintB2C_.exit.i: ; preds = %bb.b
-  %i.i = sub nuw i64 %i.g, %i.f, !dbg !88392      ; 2 uses
+  %i.i = sub nuw i64 %i.g, %i.f, !dbg !88392      ; 3 uses
   %.not.i = icmp eq i64 %i.i, -1, !dbg !88394
-  %i.j = add i64 %i.i, 1                          ; 2 uses
+  %i.j = add nuw i64 %i.i, 1
   br i1 %.not.i, label %bb.e, label %bb.c, !dbg !88398, !prof !88219
 
 bb.c:                                             ; preds = %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_3ops5range14RangeInclusivejENCNvMs_NtCs5ERpa6sqwDS_7slotmap9secondaryINtB1F_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream13physical_plan11PhysNodeKeyINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtB2A_10PhysStreamEE6insert0ENtNtNtB9_6traits8iterator8Iterator9size_hintB2C_.exit.i
@@ -337,8 +337,8 @@ bb.c:                                             ; preds = %_RNvXs0_NtNtNtCscgR
   %i.l = load i64, ptr %i.k, align 8, !dbg !88382, !alias.scope !88399, !noalias !88350, !noundef !13 ; 2 uses
   %i.m = load i64, ptr %0, align 8, !dbg !88402, !range !2568, !alias.scope !88399, !noalias !88350, !noundef !13
   %i.n = sub i64 %i.m, %i.l, !dbg !88407
-  %2 = icmp ugt i64 %i.j, %i.n, !dbg !88410
-  br i1 %2, label %bb.d, label %_RINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB6_3VecINtNtCs5ERpa6sqwDS_7slotmap9secondary4SlotIBx_NtNtCs2g09Ig8GZd6_13polars_stream13physical_plan10PhysStreamEEE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2Q_3ops5range14RangeInclusivejENCNvMs_BJ_INtBJ_12SecondaryMapNtB1s_11PhysNodeKeyB1m_E6insert0EEB1u_.exit, !dbg !88387, !prof !88232
+  %.not11.i = icmp ult i64 %i.i, %i.n, !dbg !88410
+  br i1 %.not11.i, label %_RINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB6_3VecINtNtCs5ERpa6sqwDS_7slotmap9secondary4SlotIBx_NtNtCs2g09Ig8GZd6_13polars_stream13physical_plan10PhysStreamEEE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2Q_3ops5range14RangeInclusivejENCNvMs_BJ_INtBJ_12SecondaryMapNtB1s_11PhysNodeKeyB1m_E6insert0EEB1u_.exit, label %bb.d, !dbg !88387, !prof !88232
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_RINvNvMs2_NtCsgZ49sUHp3tW_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECs2g09Ig8GZd6_13polars_stream(ptr noalias noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %i.l, i64 noundef %i.j, i64 noundef 8, i64 noundef 32), !dbg !88411, !noalias !88350
@@ -389,9 +389,9 @@ bb.b:                                             ; preds = %bb.a
   br label %_RINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB6_3VecINtNtCs5ERpa6sqwDS_7slotmap9secondary4SlotINtNtB8_4sync3ArcINtNtCs2mZqlW55729_12polars_utils12relaxed_cell11RelaxedCellyEEEE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB35_3ops5range14RangeInclusivejENCNvMs_BJ_INtBJ_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream5graph14LogicalPipeKeyB1m_E5entry0EEB4V_.exit, !dbg !88476
 
 _RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_3ops5range14RangeInclusivejENCNvMs_NtCs5ERpa6sqwDS_7slotmap9secondaryINtB1F_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream5graph14LogicalPipeKeyINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCs2mZqlW55729_12polars_utils12relaxed_cell11RelaxedCellyEEE5entry0ENtNtNtB9_6traits8iterator8Iterator9size_hintB2C_.exit.i: ; preds = %bb.b
-  %i.i = sub nuw i64 %i.g, %i.f, !dbg !88481      ; 2 uses
+  %i.i = sub nuw i64 %i.g, %i.f, !dbg !88481      ; 3 uses
   %.not.i = icmp eq i64 %i.i, -1, !dbg !88483
-  %i.j = add i64 %i.i, 1                          ; 2 uses
+  %i.j = add nuw i64 %i.i, 1
   br i1 %.not.i, label %bb.e, label %bb.c, !dbg !88487, !prof !88219
 
 bb.c:                                             ; preds = %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_3ops5range14RangeInclusivejENCNvMs_NtCs5ERpa6sqwDS_7slotmap9secondaryINtB1F_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream5graph14LogicalPipeKeyINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCs2mZqlW55729_12polars_utils12relaxed_cell11RelaxedCellyEEE5entry0ENtNtNtB9_6traits8iterator8Iterator9size_hintB2C_.exit.i
@@ -399,8 +399,8 @@ bb.c:                                             ; preds = %_RNvXs0_NtNtNtCscgR
   %i.l = load i64, ptr %i.k, align 8, !dbg !88471, !alias.scope !88488, !noalias !88439, !noundef !13 ; 2 uses
   %i.m = load i64, ptr %0, align 8, !dbg !88491, !range !2568, !alias.scope !88488, !noalias !88439, !noundef !13
   %i.n = sub i64 %i.m, %i.l, !dbg !88496
-  %2 = icmp ugt i64 %i.j, %i.n, !dbg !88499
-  br i1 %2, label %bb.d, label %_RINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB6_3VecINtNtCs5ERpa6sqwDS_7slotmap9secondary4SlotINtNtB8_4sync3ArcINtNtCs2mZqlW55729_12polars_utils12relaxed_cell11RelaxedCellyEEEE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB35_3ops5range14RangeInclusivejENCNvMs_BJ_INtBJ_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream5graph14LogicalPipeKeyB1m_E5entry0EEB4V_.exit, !dbg !88476, !prof !88232
+  %.not11.i = icmp ult i64 %i.i, %i.n, !dbg !88499
+  br i1 %.not11.i, label %_RINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB6_3VecINtNtCs5ERpa6sqwDS_7slotmap9secondary4SlotINtNtB8_4sync3ArcINtNtCs2mZqlW55729_12polars_utils12relaxed_cell11RelaxedCellyEEEE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB35_3ops5range14RangeInclusivejENCNvMs_BJ_INtBJ_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream5graph14LogicalPipeKeyB1m_E5entry0EEB4V_.exit, label %bb.d, !dbg !88476, !prof !88232
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_RINvNvMs2_NtCsgZ49sUHp3tW_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECs2g09Ig8GZd6_13polars_stream(ptr noalias noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %i.l, i64 noundef %i.j, i64 noundef 8, i64 noundef 16), !dbg !88500, !noalias !88439
@@ -451,9 +451,9 @@ bb.b:                                             ; preds = %bb.a
   br label %_RINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB6_3VecINtNtCs5ERpa6sqwDS_7slotmap9secondary4SlotINtNtB8_4sync3ArcNtNtCslpwjCj2YNBy_9polars_io7metrics9IOMetricsEEE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2P_3ops5range14RangeInclusivejENCNvMs_BJ_INtBJ_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream5graph12GraphNodeKeyB1m_E5entry0EEB4F_.exit, !dbg !88565
 
 _RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_3ops5range14RangeInclusivejENCNvMs_NtCs5ERpa6sqwDS_7slotmap9secondaryINtB1F_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream5graph12GraphNodeKeyINtNtCsgZ49sUHp3tW_5alloc4sync3ArcNtNtCslpwjCj2YNBy_9polars_io7metrics9IOMetricsEE5entry0ENtNtNtB9_6traits8iterator8Iterator9size_hintB2C_.exit.i: ; preds = %bb.b
-  %i.i = sub nuw i64 %i.g, %i.f, !dbg !88570      ; 2 uses
+  %i.i = sub nuw i64 %i.g, %i.f, !dbg !88570      ; 3 uses
   %.not.i = icmp eq i64 %i.i, -1, !dbg !88572
-  %i.j = add i64 %i.i, 1                          ; 2 uses
+  %i.j = add nuw i64 %i.i, 1
   br i1 %.not.i, label %bb.e, label %bb.c, !dbg !88576, !prof !88219
 
 bb.c:                                             ; preds = %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_3ops5range14RangeInclusivejENCNvMs_NtCs5ERpa6sqwDS_7slotmap9secondaryINtB1F_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream5graph12GraphNodeKeyINtNtCsgZ49sUHp3tW_5alloc4sync3ArcNtNtCslpwjCj2YNBy_9polars_io7metrics9IOMetricsEE5entry0ENtNtNtB9_6traits8iterator8Iterator9size_hintB2C_.exit.i
@@ -461,8 +461,8 @@ bb.c:                                             ; preds = %_RNvXs0_NtNtNtCscgR
   %i.l = load i64, ptr %i.k, align 8, !dbg !88560, !alias.scope !88577, !noalias !88528, !noundef !13 ; 2 uses
   %i.m = load i64, ptr %0, align 8, !dbg !88580, !range !2568, !alias.scope !88577, !noalias !88528, !noundef !13
   %i.n = sub i64 %i.m, %i.l, !dbg !88585
-  %2 = icmp ugt i64 %i.j, %i.n, !dbg !88588
-  br i1 %2, label %bb.d, label %_RINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB6_3VecINtNtCs5ERpa6sqwDS_7slotmap9secondary4SlotINtNtB8_4sync3ArcNtNtCslpwjCj2YNBy_9polars_io7metrics9IOMetricsEEE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2P_3ops5range14RangeInclusivejENCNvMs_BJ_INtBJ_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream5graph12GraphNodeKeyB1m_E5entry0EEB4F_.exit, !dbg !88565, !prof !88232
+  %.not11.i = icmp ult i64 %i.i, %i.n, !dbg !88588
+  br i1 %.not11.i, label %_RINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB6_3VecINtNtCs5ERpa6sqwDS_7slotmap9secondary4SlotINtNtB8_4sync3ArcNtNtCslpwjCj2YNBy_9polars_io7metrics9IOMetricsEEE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2P_3ops5range14RangeInclusivejENCNvMs_BJ_INtBJ_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream5graph12GraphNodeKeyB1m_E5entry0EEB4F_.exit, label %bb.d, !dbg !88565, !prof !88232
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_RINvNvMs2_NtCsgZ49sUHp3tW_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECs2g09Ig8GZd6_13polars_stream(ptr noalias noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %i.l, i64 noundef %i.j, i64 noundef 8, i64 noundef 16), !dbg !88589, !noalias !88528
@@ -513,9 +513,9 @@ bb.b:                                             ; preds = %bb.a
   br label %_RINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB6_3VecINtNtCs5ERpa6sqwDS_7slotmap9secondary4SlotNtNtCs2g09Ig8GZd6_13polars_stream13physical_plan8PhysNodeEE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2I_3ops5range14RangeInclusivejENCNvMs_BJ_INtBJ_12SecondaryMapNtB1o_11PhysNodeKeyB1m_E6insert0EEB1q_.exit, !dbg !88654
 
 _RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_3ops5range14RangeInclusivejENCNvMs_NtCs5ERpa6sqwDS_7slotmap9secondaryINtB1F_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream13physical_plan11PhysNodeKeyNtB2A_8PhysNodeE6insert0ENtNtNtB9_6traits8iterator8Iterator9size_hintB2C_.exit.i: ; preds = %bb.b
-  %i.i = sub nuw i64 %i.g, %i.f, !dbg !88659      ; 2 uses
+  %i.i = sub nuw i64 %i.g, %i.f, !dbg !88659      ; 3 uses
   %.not.i = icmp eq i64 %i.i, -1, !dbg !88661
-  %i.j = add i64 %i.i, 1                          ; 2 uses
+  %i.j = add nuw i64 %i.i, 1
   br i1 %.not.i, label %bb.e, label %bb.c, !dbg !88665, !prof !88219
 
 bb.c:                                             ; preds = %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_3ops5range14RangeInclusivejENCNvMs_NtCs5ERpa6sqwDS_7slotmap9secondaryINtB1F_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream13physical_plan11PhysNodeKeyNtB2A_8PhysNodeE6insert0ENtNtNtB9_6traits8iterator8Iterator9size_hintB2C_.exit.i
@@ -523,8 +523,8 @@ bb.c:                                             ; preds = %_RNvXs0_NtNtNtCscgR
   %i.l = load i64, ptr %i.k, align 8, !dbg !88649, !alias.scope !88666, !noalias !88617, !noundef !13 ; 2 uses
   %i.m = load i64, ptr %0, align 8, !dbg !88669, !range !2568, !alias.scope !88666, !noalias !88617, !noundef !13
   %i.n = sub i64 %i.m, %i.l, !dbg !88674
-  %2 = icmp ugt i64 %i.j, %i.n, !dbg !88677
-  br i1 %2, label %bb.d, label %_RINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB6_3VecINtNtCs5ERpa6sqwDS_7slotmap9secondary4SlotNtNtCs2g09Ig8GZd6_13polars_stream13physical_plan8PhysNodeEE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2I_3ops5range14RangeInclusivejENCNvMs_BJ_INtBJ_12SecondaryMapNtB1o_11PhysNodeKeyB1m_E6insert0EEB1q_.exit, !dbg !88654, !prof !88232
+  %.not11.i = icmp ult i64 %i.i, %i.n, !dbg !88677
+  br i1 %.not11.i, label %_RINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB6_3VecINtNtCs5ERpa6sqwDS_7slotmap9secondary4SlotNtNtCs2g09Ig8GZd6_13polars_stream13physical_plan8PhysNodeEE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2I_3ops5range14RangeInclusivejENCNvMs_BJ_INtBJ_12SecondaryMapNtB1o_11PhysNodeKeyB1m_E6insert0EEB1q_.exit, label %bb.d, !dbg !88654, !prof !88232
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_RINvNvMs2_NtCsgZ49sUHp3tW_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECs2g09Ig8GZd6_13polars_stream(ptr noalias noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %i.l, i64 noundef %i.j, i64 noundef 16, i64 noundef 448), !dbg !88678, !noalias !88617
@@ -575,9 +575,9 @@ bb.b:                                             ; preds = %bb.a
   br label %_RINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB6_3VecINtNtCs5ERpa6sqwDS_7slotmap9secondary4SlotNtNtCs2g09Ig8GZd6_13polars_stream4pipe12PhysicalPipeEE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2D_3ops5range14RangeInclusivejENCNvMs_BJ_INtBJ_12SecondaryMapNtNtB1q_5graph14LogicalPipeKeyB1m_E6insert0EEB1q_.exit, !dbg !88743
 
 _RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_3ops5range14RangeInclusivejENCNvMs_NtCs5ERpa6sqwDS_7slotmap9secondaryINtB1F_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream5graph14LogicalPipeKeyNtNtB2C_4pipe12PhysicalPipeE6insert0ENtNtNtB9_6traits8iterator8Iterator9size_hintB2C_.exit.i: ; preds = %bb.b
-  %i.i = sub nuw i64 %i.g, %i.f, !dbg !88748      ; 2 uses
+  %i.i = sub nuw i64 %i.g, %i.f, !dbg !88748      ; 3 uses
   %.not.i = icmp eq i64 %i.i, -1, !dbg !88750
-  %i.j = add i64 %i.i, 1                          ; 2 uses
+  %i.j = add nuw i64 %i.i, 1
   br i1 %.not.i, label %bb.e, label %bb.c, !dbg !88754, !prof !88219
 
 bb.c:                                             ; preds = %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_3ops5range14RangeInclusivejENCNvMs_NtCs5ERpa6sqwDS_7slotmap9secondaryINtB1F_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream5graph14LogicalPipeKeyNtNtB2C_4pipe12PhysicalPipeE6insert0ENtNtNtB9_6traits8iterator8Iterator9size_hintB2C_.exit.i
@@ -585,8 +585,8 @@ bb.c:                                             ; preds = %_RNvXs0_NtNtNtCscgR
   %i.l = load i64, ptr %i.k, align 8, !dbg !88738, !alias.scope !88755, !noalias !88706, !noundef !13 ; 2 uses
   %i.m = load i64, ptr %0, align 8, !dbg !88758, !range !2568, !alias.scope !88755, !noalias !88706, !noundef !13
   %i.n = sub i64 %i.m, %i.l, !dbg !88763
-  %2 = icmp ugt i64 %i.j, %i.n, !dbg !88766
-  br i1 %2, label %bb.d, label %_RINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB6_3VecINtNtCs5ERpa6sqwDS_7slotmap9secondary4SlotNtNtCs2g09Ig8GZd6_13polars_stream4pipe12PhysicalPipeEE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2D_3ops5range14RangeInclusivejENCNvMs_BJ_INtBJ_12SecondaryMapNtNtB1q_5graph14LogicalPipeKeyB1m_E6insert0EEB1q_.exit, !dbg !88743, !prof !88232
+  %.not11.i = icmp ult i64 %i.i, %i.n, !dbg !88766
+  br i1 %.not11.i, label %_RINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB6_3VecINtNtCs5ERpa6sqwDS_7slotmap9secondary4SlotNtNtCs2g09Ig8GZd6_13polars_stream4pipe12PhysicalPipeEE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2D_3ops5range14RangeInclusivejENCNvMs_BJ_INtBJ_12SecondaryMapNtNtB1q_5graph14LogicalPipeKeyB1m_E6insert0EEB1q_.exit, label %bb.d, !dbg !88743, !prof !88232
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_RINvNvMs2_NtCsgZ49sUHp3tW_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECs2g09Ig8GZd6_13polars_stream(ptr noalias noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %i.l, i64 noundef %i.j, i64 noundef 8, i64 noundef 80), !dbg !88767, !noalias !88706
@@ -637,9 +637,9 @@ bb.b:                                             ; preds = %bb.a
   br label %_RINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB6_3VecINtNtCs5ERpa6sqwDS_7slotmap9secondary4SlotNtNtCs2g09Ig8GZd6_13polars_stream5graph12GraphNodeKeyEE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2E_3ops5range14RangeInclusivejENCNvMs_BJ_INtBJ_12SecondaryMapNtNtB1q_13physical_plan11PhysNodeKeyB1m_E6insert0EEB1q_.exit, !dbg !88832
 
 _RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_3ops5range14RangeInclusivejENCNvMs_NtCs5ERpa6sqwDS_7slotmap9secondaryINtB1F_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream13physical_plan11PhysNodeKeyNtNtB2C_5graph12GraphNodeKeyE6insert0ENtNtNtB9_6traits8iterator8Iterator9size_hintB2C_.exit.i: ; preds = %bb.b
-  %i.i = sub nuw i64 %i.g, %i.f, !dbg !88837      ; 2 uses
+  %i.i = sub nuw i64 %i.g, %i.f, !dbg !88837      ; 3 uses
   %.not.i = icmp eq i64 %i.i, -1, !dbg !88839
-  %i.j = add i64 %i.i, 1                          ; 2 uses
+  %i.j = add nuw i64 %i.i, 1
   br i1 %.not.i, label %bb.e, label %bb.c, !dbg !88843, !prof !88219
 
 bb.c:                                             ; preds = %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_3ops5range14RangeInclusivejENCNvMs_NtCs5ERpa6sqwDS_7slotmap9secondaryINtB1F_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream13physical_plan11PhysNodeKeyNtNtB2C_5graph12GraphNodeKeyE6insert0ENtNtNtB9_6traits8iterator8Iterator9size_hintB2C_.exit.i
@@ -647,8 +647,8 @@ bb.c:                                             ; preds = %_RNvXs0_NtNtNtCscgR
   %i.l = load i64, ptr %i.k, align 8, !dbg !88827, !alias.scope !88844, !noalias !88795, !noundef !13 ; 2 uses
   %i.m = load i64, ptr %0, align 8, !dbg !88847, !range !2568, !alias.scope !88844, !noalias !88795, !noundef !13
   %i.n = sub i64 %i.m, %i.l, !dbg !88852
-  %2 = icmp ugt i64 %i.j, %i.n, !dbg !88855
-  br i1 %2, label %bb.d, label %_RINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB6_3VecINtNtCs5ERpa6sqwDS_7slotmap9secondary4SlotNtNtCs2g09Ig8GZd6_13polars_stream5graph12GraphNodeKeyEE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2E_3ops5range14RangeInclusivejENCNvMs_BJ_INtBJ_12SecondaryMapNtNtB1q_13physical_plan11PhysNodeKeyB1m_E6insert0EEB1q_.exit, !dbg !88832, !prof !88232
+  %.not11.i = icmp ult i64 %i.i, %i.n, !dbg !88855
+  br i1 %.not11.i, label %_RINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB6_3VecINtNtCs5ERpa6sqwDS_7slotmap9secondary4SlotNtNtCs2g09Ig8GZd6_13polars_stream5graph12GraphNodeKeyEE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2E_3ops5range14RangeInclusivejENCNvMs_BJ_INtBJ_12SecondaryMapNtNtB1q_13physical_plan11PhysNodeKeyB1m_E6insert0EEB1q_.exit, label %bb.d, !dbg !88832, !prof !88232
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_RINvNvMs2_NtCsgZ49sUHp3tW_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECs2g09Ig8GZd6_13polars_stream(ptr noalias noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %i.l, i64 noundef %i.j, i64 noundef 4, i64 noundef 12), !dbg !88856, !noalias !88795
@@ -699,9 +699,9 @@ bb.b:                                             ; preds = %bb.a
   br label %_RINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB6_3VecINtNtCs5ERpa6sqwDS_7slotmap9secondary4SlotNtNtCs2g09Ig8GZd6_13polars_stream7metrics11NodeMetricsEE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2F_3ops5range14RangeInclusivejENCNvMs_BJ_INtBJ_12SecondaryMapNtNtB1q_5graph12GraphNodeKeyB1m_E5entry0EEB1q_.exit, !dbg !88921
 
 _RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_3ops5range14RangeInclusivejENCNvMs_NtCs5ERpa6sqwDS_7slotmap9secondaryINtB1F_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream5graph12GraphNodeKeyNtNtB2C_7metrics11NodeMetricsE5entry0ENtNtNtB9_6traits8iterator8Iterator9size_hintB2C_.exit.i: ; preds = %bb.b
-  %i.i = sub nuw i64 %i.g, %i.f, !dbg !88926      ; 2 uses
+  %i.i = sub nuw i64 %i.g, %i.f, !dbg !88926      ; 3 uses
   %.not.i = icmp eq i64 %i.i, -1, !dbg !88928
-  %i.j = add i64 %i.i, 1                          ; 2 uses
+  %i.j = add nuw i64 %i.i, 1
   br i1 %.not.i, label %bb.e, label %bb.c, !dbg !88932, !prof !88219
 
 bb.c:                                             ; preds = %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_3ops5range14RangeInclusivejENCNvMs_NtCs5ERpa6sqwDS_7slotmap9secondaryINtB1F_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream5graph12GraphNodeKeyNtNtB2C_7metrics11NodeMetricsE5entry0ENtNtNtB9_6traits8iterator8Iterator9size_hintB2C_.exit.i
@@ -709,8 +709,8 @@ bb.c:                                             ; preds = %_RNvXs0_NtNtNtCscgR
   %i.l = load i64, ptr %i.k, align 8, !dbg !88916, !alias.scope !88933, !noalias !88884, !noundef !13 ; 2 uses
   %i.m = load i64, ptr %0, align 8, !dbg !88936, !range !2568, !alias.scope !88933, !noalias !88884, !noundef !13
   %i.n = sub i64 %i.m, %i.l, !dbg !88941
-  %2 = icmp ugt i64 %i.j, %i.n, !dbg !88944
-  br i1 %2, label %bb.d, label %_RINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB6_3VecINtNtCs5ERpa6sqwDS_7slotmap9secondary4SlotNtNtCs2g09Ig8GZd6_13polars_stream7metrics11NodeMetricsEE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2F_3ops5range14RangeInclusivejENCNvMs_BJ_INtBJ_12SecondaryMapNtNtB1q_5graph12GraphNodeKeyB1m_E5entry0EEB1q_.exit, !dbg !88921, !prof !88232
+  %.not11.i = icmp ult i64 %i.i, %i.n, !dbg !88944
+  br i1 %.not11.i, label %_RINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB6_3VecINtNtCs5ERpa6sqwDS_7slotmap9secondary4SlotNtNtCs2g09Ig8GZd6_13polars_stream7metrics11NodeMetricsEE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2F_3ops5range14RangeInclusivejENCNvMs_BJ_INtBJ_12SecondaryMapNtNtB1q_5graph12GraphNodeKeyB1m_E5entry0EEB1q_.exit, label %bb.d, !dbg !88921, !prof !88232
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_RINvNvMs2_NtCsgZ49sUHp3tW_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECs2g09Ig8GZd6_13polars_stream(ptr noalias noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %i.l, i64 noundef %i.j, i64 noundef 8, i64 noundef 152), !dbg !88945, !noalias !88884
@@ -761,9 +761,9 @@ bb.b:                                             ; preds = %bb.a
   br label %_RINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB6_3VecINtNtCs5ERpa6sqwDS_7slotmap9secondary4SlotNtNtNtCs2g09Ig8GZd6_13polars_stream5nodes5top_k6DfsKeyEE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2F_3ops5range14RangeInclusivejENCNvMs_BJ_INtBJ_12SecondaryMapB1m_B1m_E6insert0EEB1s_.exit, !dbg !89010
 
 _RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_3ops5range14RangeInclusivejENCNvMs_NtCs5ERpa6sqwDS_7slotmap9secondaryINtB1F_12SecondaryMapNtNtNtCs2g09Ig8GZd6_13polars_stream5nodes5top_k6DfsKeyB2y_E6insert0ENtNtNtB9_6traits8iterator8Iterator9size_hintB2E_.exit.i: ; preds = %bb.b
-  %i.i = sub nuw i64 %i.g, %i.f, !dbg !89015      ; 2 uses
+  %i.i = sub nuw i64 %i.g, %i.f, !dbg !89015      ; 3 uses
   %.not.i = icmp eq i64 %i.i, -1, !dbg !89017
-  %i.j = add i64 %i.i, 1                          ; 2 uses
+  %i.j = add nuw i64 %i.i, 1
   br i1 %.not.i, label %bb.e, label %bb.c, !dbg !89021, !prof !88219
 
 bb.c:                                             ; preds = %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_3ops5range14RangeInclusivejENCNvMs_NtCs5ERpa6sqwDS_7slotmap9secondaryINtB1F_12SecondaryMapNtNtNtCs2g09Ig8GZd6_13polars_stream5nodes5top_k6DfsKeyB2y_E6insert0ENtNtNtB9_6traits8iterator8Iterator9size_hintB2E_.exit.i
@@ -771,8 +771,8 @@ bb.c:                                             ; preds = %_RNvXs0_NtNtNtCscgR
   %i.l = load i64, ptr %i.k, align 8, !dbg !89005, !alias.scope !89022, !noalias !88973, !noundef !13 ; 2 uses
   %i.m = load i64, ptr %0, align 8, !dbg !89025, !range !2568, !alias.scope !89022, !noalias !88973, !noundef !13
   %i.n = sub i64 %i.m, %i.l, !dbg !89030
-  %2 = icmp ugt i64 %i.j, %i.n, !dbg !89033
-  br i1 %2, label %bb.d, label %_RINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB6_3VecINtNtCs5ERpa6sqwDS_7slotmap9secondary4SlotNtNtNtCs2g09Ig8GZd6_13polars_stream5nodes5top_k6DfsKeyEE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2F_3ops5range14RangeInclusivejENCNvMs_BJ_INtBJ_12SecondaryMapB1m_B1m_E6insert0EEB1s_.exit, !dbg !89010, !prof !88232
+  %.not11.i = icmp ult i64 %i.i, %i.n, !dbg !89033
+  br i1 %.not11.i, label %_RINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB6_3VecINtNtCs5ERpa6sqwDS_7slotmap9secondary4SlotNtNtNtCs2g09Ig8GZd6_13polars_stream5nodes5top_k6DfsKeyEE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2F_3ops5range14RangeInclusivejENCNvMs_BJ_INtBJ_12SecondaryMapB1m_B1m_E6insert0EEB1s_.exit, label %bb.d, !dbg !89010, !prof !88232
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_RINvNvMs2_NtCsgZ49sUHp3tW_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECs2g09Ig8GZd6_13polars_stream(ptr noalias noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %i.l, i64 noundef %i.j, i64 noundef 4, i64 noundef 12), !dbg !89034, !noalias !88973
@@ -823,9 +823,9 @@ bb.b:                                             ; preds = %bb.a
   br label %_RINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB6_3VecINtNtCs5ERpa6sqwDS_7slotmap9secondary4SlotQNtNtCs2g09Ig8GZd6_13polars_stream5graph9GraphNodeEE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2B_3ops5range14RangeInclusivejENCNvMs_BJ_INtBJ_12SecondaryMapNtB1p_12GraphNodeKeyB1m_E6insert0EEB1r_.exit, !dbg !89099
 
 _RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_3ops5range14RangeInclusivejENCNvMs_NtCs5ERpa6sqwDS_7slotmap9secondaryINtB1F_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream5graph12GraphNodeKeyQNtB2A_9GraphNodeE6insert0ENtNtNtB9_6traits8iterator8Iterator9size_hintB2C_.exit.i: ; preds = %bb.b
-  %i.i = sub nuw i64 %i.g, %i.f, !dbg !89104      ; 2 uses
+  %i.i = sub nuw i64 %i.g, %i.f, !dbg !89104      ; 3 uses
   %.not.i = icmp eq i64 %i.i, -1, !dbg !89106
-  %i.j = add i64 %i.i, 1                          ; 2 uses
+  %i.j = add nuw i64 %i.i, 1
   br i1 %.not.i, label %bb.e, label %bb.c, !dbg !89110, !prof !88219
 
 bb.c:                                             ; preds = %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_3ops5range14RangeInclusivejENCNvMs_NtCs5ERpa6sqwDS_7slotmap9secondaryINtB1F_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream5graph12GraphNodeKeyQNtB2A_9GraphNodeE6insert0ENtNtNtB9_6traits8iterator8Iterator9size_hintB2C_.exit.i
@@ -833,8 +833,8 @@ bb.c:                                             ; preds = %_RNvXs0_NtNtNtCscgR
   %i.l = load i64, ptr %i.k, align 8, !dbg !89094, !alias.scope !89111, !noalias !89062, !noundef !13 ; 2 uses
   %i.m = load i64, ptr %0, align 8, !dbg !89114, !range !2568, !alias.scope !89111, !noalias !89062, !noundef !13
   %i.n = sub i64 %i.m, %i.l, !dbg !89119
-  %2 = icmp ugt i64 %i.j, %i.n, !dbg !89122
-  br i1 %2, label %bb.d, label %_RINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB6_3VecINtNtCs5ERpa6sqwDS_7slotmap9secondary4SlotQNtNtCs2g09Ig8GZd6_13polars_stream5graph9GraphNodeEE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2B_3ops5range14RangeInclusivejENCNvMs_BJ_INtBJ_12SecondaryMapNtB1p_12GraphNodeKeyB1m_E6insert0EEB1r_.exit, !dbg !89099, !prof !88232
+  %.not11.i = icmp ult i64 %i.i, %i.n, !dbg !89122
+  br i1 %.not11.i, label %_RINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB6_3VecINtNtCs5ERpa6sqwDS_7slotmap9secondary4SlotQNtNtCs2g09Ig8GZd6_13polars_stream5graph9GraphNodeEE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB2B_3ops5range14RangeInclusivejENCNvMs_BJ_INtBJ_12SecondaryMapNtB1p_12GraphNodeKeyB1m_E6insert0EEB1r_.exit, label %bb.d, !dbg !89099, !prof !88232
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_RINvNvMs2_NtCsgZ49sUHp3tW_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECs2g09Ig8GZd6_13polars_stream(ptr noalias noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %i.l, i64 noundef %i.j, i64 noundef 8, i64 noundef 16), !dbg !89123, !noalias !89062
@@ -885,9 +885,9 @@ bb.b:                                             ; preds = %bb.a
   br label %_RINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB6_3VecINtNtCs5ERpa6sqwDS_7slotmap9secondary4SlotjEE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1O_3ops5range14RangeInclusivejENCNvMs_BJ_INtBJ_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream13physical_plan11PhysNodeKeyjE5entry0EEB3E_.exit, !dbg !89188
 
 _RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_3ops5range14RangeInclusivejENCNvMs_NtCs5ERpa6sqwDS_7slotmap9secondaryINtB1F_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream13physical_plan11PhysNodeKeyjE5entry0ENtNtNtB9_6traits8iterator8Iterator9size_hintB2C_.exit.i: ; preds = %bb.b
-  %i.i = sub nuw i64 %i.g, %i.f, !dbg !89193      ; 2 uses
+  %i.i = sub nuw i64 %i.g, %i.f, !dbg !89193      ; 3 uses
   %.not.i = icmp eq i64 %i.i, -1, !dbg !89195
-  %i.j = add i64 %i.i, 1                          ; 2 uses
+  %i.j = add nuw i64 %i.i, 1
   br i1 %.not.i, label %bb.e, label %bb.c, !dbg !89199, !prof !88219
 
 bb.c:                                             ; preds = %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_3ops5range14RangeInclusivejENCNvMs_NtCs5ERpa6sqwDS_7slotmap9secondaryINtB1F_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream13physical_plan11PhysNodeKeyjE5entry0ENtNtNtB9_6traits8iterator8Iterator9size_hintB2C_.exit.i
@@ -895,8 +895,8 @@ bb.c:                                             ; preds = %_RNvXs0_NtNtNtCscgR
   %i.l = load i64, ptr %i.k, align 8, !dbg !89183, !alias.scope !89200, !noalias !89151, !noundef !13 ; 2 uses
   %i.m = load i64, ptr %0, align 8, !dbg !89203, !range !2568, !alias.scope !89200, !noalias !89151, !noundef !13
   %i.n = sub i64 %i.m, %i.l, !dbg !89208
-  %2 = icmp ugt i64 %i.j, %i.n, !dbg !89211
-  br i1 %2, label %bb.d, label %_RINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB6_3VecINtNtCs5ERpa6sqwDS_7slotmap9secondary4SlotjEE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1O_3ops5range14RangeInclusivejENCNvMs_BJ_INtBJ_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream13physical_plan11PhysNodeKeyjE5entry0EEB3E_.exit, !dbg !89188, !prof !88232
+  %.not11.i = icmp ult i64 %i.i, %i.n, !dbg !89211
+  br i1 %.not11.i, label %_RINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB6_3VecINtNtCs5ERpa6sqwDS_7slotmap9secondary4SlotjEE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1O_3ops5range14RangeInclusivejENCNvMs_BJ_INtBJ_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream13physical_plan11PhysNodeKeyjE5entry0EEB3E_.exit, label %bb.d, !dbg !89188, !prof !88232
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_RINvNvMs2_NtCsgZ49sUHp3tW_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECs2g09Ig8GZd6_13polars_stream(ptr noalias noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %i.l, i64 noundef %i.j, i64 noundef 8, i64 noundef 16), !dbg !89212, !noalias !89151
@@ -947,9 +947,9 @@ bb.b:                                             ; preds = %bb.a
   br label %_RINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB6_3VecINtNtCs5ERpa6sqwDS_7slotmap9secondary4SlotjEE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1O_3ops5range14RangeInclusivejENCNvMs_BJ_INtBJ_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream5graph12GraphNodeKeyjE6insert0EEB3E_.exit, !dbg !89276
 
 _RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_3ops5range14RangeInclusivejENCNvMs_NtCs5ERpa6sqwDS_7slotmap9secondaryINtB1F_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream5graph12GraphNodeKeyjE6insert0ENtNtNtB9_6traits8iterator8Iterator9size_hintB2C_.exit.i: ; preds = %bb.b
-  %i.i = sub nuw i64 %i.g, %i.f, !dbg !89279      ; 2 uses
+  %i.i = sub nuw i64 %i.g, %i.f, !dbg !89279      ; 3 uses
   %.not.i = icmp eq i64 %i.i, -1, !dbg !89281
-  %i.j = add i64 %i.i, 1                          ; 2 uses
+  %i.j = add nuw i64 %i.i, 1
   br i1 %.not.i, label %bb.e, label %bb.c, !dbg !89285, !prof !88219
 
 bb.c:                                             ; preds = %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_3ops5range14RangeInclusivejENCNvMs_NtCs5ERpa6sqwDS_7slotmap9secondaryINtB1F_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream5graph12GraphNodeKeyjE6insert0ENtNtNtB9_6traits8iterator8Iterator9size_hintB2C_.exit.i
@@ -957,8 +957,8 @@ bb.c:                                             ; preds = %_RNvXs0_NtNtNtCscgR
   %i.l = load i64, ptr %i.k, align 8, !dbg !89272, !alias.scope !89286, !noalias !89240, !noundef !13 ; 2 uses
   %i.m = load i64, ptr %0, align 8, !dbg !89289, !range !2568, !alias.scope !89286, !noalias !89240, !noundef !13
   %i.n = sub i64 %i.m, %i.l, !dbg !89292
-  %2 = icmp ugt i64 %i.j, %i.n, !dbg !89294
-  br i1 %2, label %bb.d, label %_RINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB6_3VecINtNtCs5ERpa6sqwDS_7slotmap9secondary4SlotjEE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1O_3ops5range14RangeInclusivejENCNvMs_BJ_INtBJ_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream5graph12GraphNodeKeyjE6insert0EEB3E_.exit, !dbg !89276, !prof !88232
+  %.not11.i = icmp ult i64 %i.i, %i.n, !dbg !89294
+  br i1 %.not11.i, label %_RINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB6_3VecINtNtCs5ERpa6sqwDS_7slotmap9secondary4SlotjEE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1O_3ops5range14RangeInclusivejENCNvMs_BJ_INtBJ_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream5graph12GraphNodeKeyjE6insert0EEB3E_.exit, label %bb.d, !dbg !89276, !prof !88232
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_RINvNvMs2_NtCsgZ49sUHp3tW_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECs2g09Ig8GZd6_13polars_stream(ptr noalias noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %i.l, i64 noundef %i.j, i64 noundef 8, i64 noundef 16), !dbg !89295, !noalias !89240
@@ -1009,9 +1009,9 @@ bb.b:                                             ; preds = %bb.a
   br label %_RINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB6_3VecINtNtCs5ERpa6sqwDS_7slotmap9secondary4SlotuEE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1O_3ops5range14RangeInclusivejENCNvMs_BJ_INtBJ_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream13physical_plan11PhysNodeKeyuE6insert0EEB3E_.exit, !dbg !89360
 
 _RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_3ops5range14RangeInclusivejENCNvMs_NtCs5ERpa6sqwDS_7slotmap9secondaryINtB1F_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream13physical_plan11PhysNodeKeyuE6insert0ENtNtNtB9_6traits8iterator8Iterator9size_hintB2C_.exit.i: ; preds = %bb.b
-  %i.i = sub nuw i64 %i.g, %i.f, !dbg !89365      ; 2 uses
+  %i.i = sub nuw i64 %i.g, %i.f, !dbg !89365      ; 3 uses
   %.not.i = icmp eq i64 %i.i, -1, !dbg !89367
-  %i.j = add i64 %i.i, 1                          ; 2 uses
+  %i.j = add nuw i64 %i.i, 1
   br i1 %.not.i, label %bb.e, label %bb.c, !dbg !89371, !prof !88219
 
 bb.c:                                             ; preds = %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_3ops5range14RangeInclusivejENCNvMs_NtCs5ERpa6sqwDS_7slotmap9secondaryINtB1F_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream13physical_plan11PhysNodeKeyuE6insert0ENtNtNtB9_6traits8iterator8Iterator9size_hintB2C_.exit.i
@@ -1019,8 +1019,8 @@ bb.c:                                             ; preds = %_RNvXs0_NtNtNtCscgR
   %i.l = load i64, ptr %i.k, align 8, !dbg !89355, !alias.scope !89372, !noalias !89323, !noundef !13 ; 2 uses
   %i.m = load i64, ptr %0, align 8, !dbg !89375, !range !2568, !alias.scope !89372, !noalias !89323, !noundef !13
   %i.n = sub i64 %i.m, %i.l, !dbg !89380
-  %2 = icmp ugt i64 %i.j, %i.n, !dbg !89383
-  br i1 %2, label %bb.d, label %_RINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB6_3VecINtNtCs5ERpa6sqwDS_7slotmap9secondary4SlotuEE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1O_3ops5range14RangeInclusivejENCNvMs_BJ_INtBJ_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream13physical_plan11PhysNodeKeyuE6insert0EEB3E_.exit, !dbg !89360, !prof !88232
+  %.not11.i = icmp ult i64 %i.i, %i.n, !dbg !89383
+  br i1 %.not11.i, label %_RINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB6_3VecINtNtCs5ERpa6sqwDS_7slotmap9secondary4SlotuEE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1O_3ops5range14RangeInclusivejENCNvMs_BJ_INtBJ_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream13physical_plan11PhysNodeKeyuE6insert0EEB3E_.exit, label %bb.d, !dbg !89360, !prof !88232
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_RINvNvMs2_NtCsgZ49sUHp3tW_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECs2g09Ig8GZd6_13polars_stream(ptr noalias noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %i.l, i64 noundef %i.j, i64 noundef 4, i64 noundef 4), !dbg !89384, !noalias !89323
@@ -1071,9 +1071,9 @@ bb.b:                                             ; preds = %bb.a
   br label %_RINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB6_3VecINtNtCs5ERpa6sqwDS_7slotmap9secondary4SlotuEE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1O_3ops5range14RangeInclusivejENCNvMs_BJ_INtBJ_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream5graph12GraphNodeKeyuE6insert0EEB3E_.exit, !dbg !89448
 
 _RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_3ops5range14RangeInclusivejENCNvMs_NtCs5ERpa6sqwDS_7slotmap9secondaryINtB1F_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream5graph12GraphNodeKeyuE6insert0ENtNtNtB9_6traits8iterator8Iterator9size_hintB2C_.exit.i: ; preds = %bb.b
-  %i.i = sub nuw i64 %i.g, %i.f, !dbg !89451      ; 2 uses
+  %i.i = sub nuw i64 %i.g, %i.f, !dbg !89451      ; 3 uses
   %.not.i = icmp eq i64 %i.i, -1, !dbg !89453
-  %i.j = add i64 %i.i, 1                          ; 2 uses
+  %i.j = add nuw i64 %i.i, 1
   br i1 %.not.i, label %bb.e, label %bb.c, !dbg !89457, !prof !88219
 
 bb.c:                                             ; preds = %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_3ops5range14RangeInclusivejENCNvMs_NtCs5ERpa6sqwDS_7slotmap9secondaryINtB1F_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream5graph12GraphNodeKeyuE6insert0ENtNtNtB9_6traits8iterator8Iterator9size_hintB2C_.exit.i
@@ -1081,8 +1081,8 @@ bb.c:                                             ; preds = %_RNvXs0_NtNtNtCscgR
   %i.l = load i64, ptr %i.k, align 8, !dbg !89444, !alias.scope !89458, !noalias !89412, !noundef !13 ; 2 uses
   %i.m = load i64, ptr %0, align 8, !dbg !89461, !range !2568, !alias.scope !89458, !noalias !89412, !noundef !13
   %i.n = sub i64 %i.m, %i.l, !dbg !89464
-  %2 = icmp ugt i64 %i.j, %i.n, !dbg !89466
-  br i1 %2, label %bb.d, label %_RINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB6_3VecINtNtCs5ERpa6sqwDS_7slotmap9secondary4SlotuEE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1O_3ops5range14RangeInclusivejENCNvMs_BJ_INtBJ_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream5graph12GraphNodeKeyuE6insert0EEB3E_.exit, !dbg !89448, !prof !88232
+  %.not11.i = icmp ult i64 %i.i, %i.n, !dbg !89466
+  br i1 %.not11.i, label %_RINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB6_3VecINtNtCs5ERpa6sqwDS_7slotmap9secondary4SlotuEE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1O_3ops5range14RangeInclusivejENCNvMs_BJ_INtBJ_12SecondaryMapNtNtCs2g09Ig8GZd6_13polars_stream5graph12GraphNodeKeyuE6insert0EEB3E_.exit, label %bb.d, !dbg !89448, !prof !88232
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_RINvNvMs2_NtCsgZ49sUHp3tW_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECs2g09Ig8GZd6_13polars_stream(ptr noalias noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %i.l, i64 noundef %i.j, i64 noundef 4, i64 noundef 4), !dbg !89467, !noalias !89412
@@ -1133,9 +1133,9 @@ bb.b:                                             ; preds = %bb.a
   br label %_RINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB6_3VecINtNtCs5ERpa6sqwDS_7slotmap9secondary4SlotuEE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1O_3ops5range14RangeInclusivejENCNvMs_BJ_INtBJ_12SecondaryMapNtNtNtCs2g09Ig8GZd6_13polars_stream5nodes5top_k6DfsKeyuE6insert0EEB3G_.exit, !dbg !89531
 
 _RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_3ops5range14RangeInclusivejENCNvMs_NtCs5ERpa6sqwDS_7slotmap9secondaryINtB1F_12SecondaryMapNtNtNtCs2g09Ig8GZd6_13polars_stream5nodes5top_k6DfsKeyuE6insert0ENtNtNtB9_6traits8iterator8Iterator9size_hintB2E_.exit.i: ; preds = %bb.b
-  %i.i = sub nuw i64 %i.g, %i.f, !dbg !89534      ; 2 uses
+  %i.i = sub nuw i64 %i.g, %i.f, !dbg !89534      ; 3 uses
   %.not.i = icmp eq i64 %i.i, -1, !dbg !89536
-  %i.j = add i64 %i.i, 1                          ; 2 uses
+  %i.j = add nuw i64 %i.i, 1
   br i1 %.not.i, label %bb.e, label %bb.c, !dbg !89540, !prof !88219
 
 bb.c:                                             ; preds = %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_3ops5range14RangeInclusivejENCNvMs_NtCs5ERpa6sqwDS_7slotmap9secondaryINtB1F_12SecondaryMapNtNtNtCs2g09Ig8GZd6_13polars_stream5nodes5top_k6DfsKeyuE6insert0ENtNtNtB9_6traits8iterator8Iterator9size_hintB2E_.exit.i
@@ -1143,8 +1143,8 @@ bb.c:                                             ; preds = %_RNvXs0_NtNtNtCscgR
   %i.l = load i64, ptr %i.k, align 8, !dbg !89527, !alias.scope !89541, !noalias !89495, !noundef !13 ; 2 uses
   %i.m = load i64, ptr %0, align 8, !dbg !89544, !range !2568, !alias.scope !89541, !noalias !89495, !noundef !13
   %i.n = sub i64 %i.m, %i.l, !dbg !89547
-  %2 = icmp ugt i64 %i.j, %i.n, !dbg !89549
-  br i1 %2, label %bb.d, label %_RINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB6_3VecINtNtCs5ERpa6sqwDS_7slotmap9secondary4SlotuEE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1O_3ops5range14RangeInclusivejENCNvMs_BJ_INtBJ_12SecondaryMapNtNtNtCs2g09Ig8GZd6_13polars_stream5nodes5top_k6DfsKeyuE6insert0EEB3G_.exit, !dbg !89531, !prof !88232
+  %.not11.i = icmp ult i64 %i.i, %i.n, !dbg !89549
+  br i1 %.not11.i, label %_RINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB6_3VecINtNtCs5ERpa6sqwDS_7slotmap9secondary4SlotuEE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1O_3ops5range14RangeInclusivejENCNvMs_BJ_INtBJ_12SecondaryMapNtNtNtCs2g09Ig8GZd6_13polars_stream5nodes5top_k6DfsKeyuE6insert0EEB3G_.exit, label %bb.d, !dbg !89531, !prof !88232
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_RINvNvMs2_NtCsgZ49sUHp3tW_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECs2g09Ig8GZd6_13polars_stream(ptr noalias noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %i.l, i64 noundef %i.j, i64 noundef 4, i64 noundef 4), !dbg !89550, !noalias !89495
@@ -1547,7 +1547,7 @@ begin_hunk_1_@llvm.umin.i8
 !88229 = distinct !DISubprogram(name: "wrapping_sub", linkageName: "_RNvMs9_NtCscgRAwXFJnXP_4core3numj12wrapping_sub", scope: !2575, file: !2574, line: 2547, type: !12, scopeLine: 2547, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !13)
 !88230 = distinct !DILocation(line: 767, column: 56, scope: !88226, inlinedAt: !88227)
 !88231 = !DILocation(line: 767, column: 9, scope: !88226, inlinedAt: !88227)
-!88232 = !{!"branch_weights", !"expected", i32 4299269, i32 2143184379}
+!88232 = !{!"branch_weights", !"expected", i32 2143184379, i32 4299269}
 !88233 = !DILocation(line: 675, column: 17, scope: !88201, inlinedAt: !88202)
 !88234 = !DILocation(line: 4042, column: 13, scope: !88199, inlinedAt: !88170)
 !88235 = !{!88153, !88157}

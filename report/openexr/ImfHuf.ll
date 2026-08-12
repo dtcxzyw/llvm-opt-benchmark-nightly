@@ -170,7 +170,7 @@ bb.e:                                             ; preds = %.lr.ph.i30.epil.pre
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i30.epil.preheader, %bb.e, %._crit_edge.i.unr-lcssa
   %.2.lcssa = phi i32 [ %.2.1, %._crit_edge.i.unr-lcssa ], [ %.1.epil.init, %.lr.ph.i30.epil.preheader ], [ %i.au, %bb.e ] ; 3 uses
-  %.158.i.lcssa = phi i32 [ %.158.i.1, %._crit_edge.i.unr-lcssa ], [ %.057133.i.epil.init, %.lr.ph.i30.epil.preheader ], [ %i.az, %bb.e ] ; 4 uses
+  %.158.i.lcssa = phi i32 [ %.158.i.1, %._crit_edge.i.unr-lcssa ], [ %.057133.i.epil.init, %.lr.ph.i30.epil.preheader ], [ %i.az, %bb.e ] ; 5 uses
   %i.ba = trunc nuw nsw i64 %indvars.iv.i28 to i32 ; 3 uses
   %i.bb = add nsw i32 %.2.lcssa, 1                ; 3 uses
   %i.bc = sext i32 %i.bb to i64                   ; 2 uses
@@ -179,16 +179,16 @@ bb.e:                                             ; preds = %.lr.ph.i30.epil.pre
   %i.be = sext i32 %.158.i.lcssa to i64
   %i.bf = getelementptr inbounds [8 x i8], ptr %i.an, i64 %i.be
   store ptr %i.bd, ptr %i.bf, align 8, !tbaa !18
-  %i.bg = add i32 %.158.i.lcssa, 1                ; 2 uses
+  %i.bg = add nuw i32 %.158.i.lcssa, 1            ; 2 uses
   %i.bh = icmp slt i32 %.158.i.lcssa, 1
   br i1 %i.bh, label %_ZSt9make_heapIPPmN7Imf_3_412_GLOBAL__N_112FHeapCompareEEvT_S5_T0_.exit.i, label %bb.f
 
 bb.f:                                             ; preds = %._crit_edge.i
-  %i.bi = zext nneg i32 %i.bg to i64              ; 3 uses
+  %i.bi = zext nneg i32 %i.bg to i64              ; 2 uses
   %i.bj = add nsw i64 %i.bi, -2                   ; 2 uses
   %i.bk = lshr i64 %i.bj, 1                       ; 3 uses
-  %3 = add nsw i64 %i.bi, -1
-  %4 = lshr i64 %3, 1                             ; 2 uses
+  %3 = lshr i32 %.158.i.lcssa, 1
+  %4 = zext nneg i32 %3 to i64                    ; 2 uses
   %i.bl = and i64 %i.bi, 1
   %i.bm = icmp eq i64 %i.bl, 0
   %i.bn = or disjoint i64 %i.bj, 1                ; 2 uses

@@ -203,7 +203,7 @@ _ZN5Eigen5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSINS1_IiLi1
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #11
   %i.fr = add i32 %.0155.us, 1                    ; 2 uses
   %i.fs = zext i32 %i.fr to i64                   ; 2 uses
-  %18 = icmp samesign ugt i64 %i.au, %i.fs
+  %18 = icmp sgt i64 %i.au, %i.fs
   br i1 %18, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader.us, label %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit._crit_edge, !llvm.loop !77
 
 _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit._crit_edge: ; preds = %_ZN5Eigen5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSINS1_IiLi1ELi3ELi1ELi1ELi3EEEEERS3_RKNS_9DenseBaseIT_EE.exit95.loopexit.us, %.lr.ph, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.preheader

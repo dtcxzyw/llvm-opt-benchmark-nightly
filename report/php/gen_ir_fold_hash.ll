@@ -160,7 +160,7 @@ bb.a:
   store i32 %1, ptr %i.b, align 4
   store i32 %2, ptr %i.c, align 4
   %i.f = load i32, ptr %i.b, align 4
-  %3 = call fastcc i32 @ir_strtab_hash_size(i32 noundef %i.f)
+  %3 = call i32 @ir_strtab_hash_size(i32 noundef %i.f)
   store i32 %3, ptr %i.d, align 4
   %i.g = load i32, ptr %i.d, align 4
   %i.h = zext i32 %i.g to i64
@@ -236,7 +236,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 }
 
 ; Function Attrs: noinline nounwind optnone uwtable
-define internal fastcc i32 @ir_strtab_hash_size(i32 noundef %0) unnamed_addr #0 {
+define internal i32 @ir_strtab_hash_size(i32 noundef %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 19 uses
   store i32 %0, ptr %i.a, align 4
@@ -296,7 +296,7 @@ bb.a:
   %i.i = load ptr, ptr %i.c, align 8
   %i.j = load i32, ptr %i.d, align 4
   %i.k = zext i32 %i.j to i64
-  %3 = call fastcc i32 @ir_str_hash(ptr noundef %i.i, i64 noundef %i.k)
+  %3 = call i32 @ir_str_hash(ptr noundef %i.i, i64 noundef %i.k)
   store i32 %3, ptr %i.e, align 4
   %i.l = load ptr, ptr %i.b, align 8
   %4 = getelementptr inbounds nuw %struct._ir_strtab, ptr %i.l, i32 0, i32 0
@@ -375,7 +375,7 @@ bb.i:                                             ; preds = %bb.h, %bb.f
 }
 
 ; Function Attrs: noinline nounwind optnone uwtable
-define internal fastcc range(i32 268435456, 0) i32 @ir_str_hash(ptr noundef %0, i64 noundef range(i64 0, 4294967296) %1) unnamed_addr #0 {
+define internal range(i32 268435456, 0) i32 @ir_str_hash(ptr noundef %0, i64 noundef range(i64 0, 4294967296) %1) unnamed_addr #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = alloca i64, align 8                      ; 2 uses
@@ -442,7 +442,7 @@ bb.a:
   %i.j = load ptr, ptr %i.c, align 8
   %i.k = load i32, ptr %i.d, align 4
   %i.l = zext i32 %i.k to i64
-  %4 = call fastcc i32 @ir_str_hash(ptr noundef %i.j, i64 noundef %i.l)
+  %4 = call i32 @ir_str_hash(ptr noundef %i.j, i64 noundef %i.l)
   store i32 %4, ptr %i.f, align 4
   %i.m = load ptr, ptr %i.b, align 8
   %5 = getelementptr inbounds nuw %struct._ir_strtab, ptr %i.m, i32 0, i32 0
@@ -528,7 +528,7 @@ bb.h:                                             ; preds = %bb.b
 
 bb.i:                                             ; preds = %bb.h
   %i.bf = load ptr, ptr %i.b, align 8
-  call fastcc void @ir_strtab_resize(ptr noundef %i.bf)
+  call void @ir_strtab_resize(ptr noundef %i.bf)
   %i.bg = load ptr, ptr %i.b, align 8
   %14 = getelementptr inbounds nuw %struct._ir_strtab, ptr %i.bg, i32 0, i32 0
   %i.bh = load ptr, ptr %14, align 8
@@ -564,7 +564,7 @@ bb.l:                                             ; preds = %bb.k
   %i.by = load ptr, ptr %i.b, align 8
   %i.bz = load i32, ptr %i.d, align 4
   %i.ca = add i32 %i.bz, 1
-  call fastcc void @ir_strtab_grow_buf(ptr noundef %i.by, i32 noundef %i.ca)
+  call void @ir_strtab_grow_buf(ptr noundef %i.by, i32 noundef %i.ca)
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k
@@ -677,7 +677,7 @@ bb.o:                                             ; preds = %bb.n, %bb.f
 }
 
 ; Function Attrs: noinline nounwind optnone uwtable
-define internal fastcc void @ir_strtab_resize(ptr noundef %0) unnamed_addr #0 {
+define internal void @ir_strtab_resize(ptr noundef %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 14 uses
   %i.b = alloca i32, align 4                      ; 2 uses
@@ -705,7 +705,7 @@ bb.a:
   %i.r = mul i32 %i.q, 2
   store i32 %i.r, ptr %i.d, align 4
   %i.s = load i32, ptr %i.d, align 4
-  %4 = call fastcc i32 @ir_strtab_hash_size(i32 noundef %i.s)
+  %4 = call i32 @ir_strtab_hash_size(i32 noundef %i.s)
   store i32 %4, ptr %i.e, align 4
   %i.t = load i32, ptr %i.e, align 4
   %i.u = zext i32 %i.t to i64
@@ -815,7 +815,7 @@ bb.d:                                             ; preds = %bb.c
 }
 
 ; Function Attrs: noinline nounwind optnone uwtable
-define internal fastcc void @ir_strtab_grow_buf(ptr noundef %0, i32 noundef %1) unnamed_addr #0 {
+define internal void @ir_strtab_grow_buf(ptr noundef %0, i32 noundef %1) unnamed_addr #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 12 uses
   %i.b = alloca i32, align 4                      ; 2 uses
@@ -948,7 +948,7 @@ bb.a:
   %i.j = load ptr, ptr %i.c, align 8
   %i.k = load i32, ptr %i.d, align 4
   %i.l = zext i32 %i.k to i64
-  %4 = call fastcc i32 @ir_str_hash(ptr noundef %i.j, i64 noundef %i.l)
+  %4 = call i32 @ir_str_hash(ptr noundef %i.j, i64 noundef %i.l)
   store i32 %4, ptr %i.f, align 4
   %i.m = load ptr, ptr %i.b, align 8
   %5 = getelementptr inbounds nuw %struct._ir_strtab, ptr %i.m, i32 0, i32 0
@@ -1286,7 +1286,7 @@ bb.i:                                             ; preds = %bb.h
   %i.ae = and i32 %i.ad, 2097151
   %i.af = load i32, ptr %i.f, align 4
   %i.ag = load i32, ptr %i.g, align 4
-  %2 = call fastcc i32 @hash_shl2(i32 noundef %i.ae, i32 noundef %i.af, i32 noundef %i.ag)
+  %2 = call i32 @hash_shl2(i32 noundef %i.ae, i32 noundef %i.af, i32 noundef %i.ag)
   %i.ah = load i32, ptr %i.e, align 4
   %i.ai = urem i32 %2, %i.ah
   store i32 %i.ai, ptr %i.i, align 4
@@ -1410,7 +1410,7 @@ bb.z:                                             ; preds = %bb.y, %bb.r
 }
 
 ; Function Attrs: noinline nounwind optnone uwtable
-define internal fastcc i32 @hash_shl2(i32 noundef range(i32 0, 2097152) %0, i32 noundef %1, i32 noundef %2) unnamed_addr #0 {
+define internal i32 @hash_shl2(i32 noundef range(i32 0, 2097152) %0, i32 noundef %1, i32 noundef %2) unnamed_addr #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 3 uses
   %i.b = alloca i32, align 4                      ; 2 uses
@@ -1645,7 +1645,7 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.i
   %i.fp = getelementptr inbounds nuw [4096 x i8], ptr %i.d, i64 0, i64 0
-  %2 = call fastcc i32 @parse_rule(ptr noundef %i.fp)
+  %2 = call i32 @parse_rule(ptr noundef %i.fp)
   store i32 %2, ptr %i.h, align 4
   %i.fq = load i32, ptr %i.h, align 4
   %i.fr = icmp ne i32 %i.fq, 0
@@ -1742,7 +1742,7 @@ declare i64 @strlen(ptr noundef captures(none)) local_unnamed_addr #3
 declare noundef i32 @fprintf(ptr noundef captures(none), ptr noundef readonly captures(none), ...) local_unnamed_addr #6
 
 ; Function Attrs: noinline nounwind optnone uwtable
-define internal fastcc i32 @parse_rule(ptr noundef nonnull %0) unnamed_addr #0 {
+define internal i32 @parse_rule(ptr noundef nonnull %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 14 uses
   %i.b = alloca ptr, align 8                      ; 2 uses
@@ -1857,7 +1857,7 @@ bb.q:                                             ; preds = %bb.o
   %i.be = ptrtoint ptr %i.bc to i64
   %i.bf = ptrtoint ptr %i.bd to i64
   %i.bg = sub i64 %i.be, %i.bf
-  %1 = call fastcc i32 @find_op(ptr noundef %i.bb, i64 noundef %i.bg)
+  %1 = call i32 @find_op(ptr noundef %i.bb, i64 noundef %i.bg)
   store i32 %1, ptr %i.e, align 4
   %i.bh = load i32, ptr %i.e, align 4
   %i.bi = icmp slt i32 %i.bh, 0
@@ -2037,7 +2037,7 @@ bb.at:                                            ; preds = %bb.ar
   %i.eh = ptrtoint ptr %i.ef to i64
   %i.ei = ptrtoint ptr %i.eg to i64
   %i.ej = sub i64 %i.eh, %i.ei
-  %2 = call fastcc i32 @find_op(ptr noundef %i.ee, i64 noundef %i.ej)
+  %2 = call i32 @find_op(ptr noundef %i.ee, i64 noundef %i.ej)
   store i32 %2, ptr %i.e, align 4
   %i.ek = load i32, ptr %i.e, align 4
   %i.el = icmp slt i32 %i.ek, 0
@@ -2230,7 +2230,7 @@ bb.bz:                                            ; preds = %bb.bx
   %i.hn = ptrtoint ptr %i.hl to i64
   %i.ho = ptrtoint ptr %i.hm to i64
   %i.hp = sub i64 %i.hn, %i.ho
-  %3 = call fastcc i32 @find_op(ptr noundef %i.hk, i64 noundef %i.hp)
+  %3 = call i32 @find_op(ptr noundef %i.hk, i64 noundef %i.hp)
   store i32 %3, ptr %i.e, align 4
   %i.hq = load i32, ptr %i.e, align 4
   %i.hr = icmp slt i32 %i.hq, 0
@@ -2348,7 +2348,7 @@ bb.ct:                                            ; preds = %bb.cs, %bb.cr, %bb.
 declare noalias noundef ptr @realloc(ptr allocptr noundef captures(none), i64 noundef) local_unnamed_addr #7
 
 ; Function Attrs: noinline nounwind optnone uwtable
-define internal fastcc range(i32 -2147483648, 2147483647) i32 @find_op(ptr noundef %0, i64 noundef %1) unnamed_addr #0 {
+define internal range(i32 -2147483648, 2147483647) i32 @find_op(ptr noundef %0, i64 noundef %1) unnamed_addr #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 2 uses
   %i.b = alloca i64, align 8                      ; 2 uses

@@ -154,7 +154,7 @@ bb.e:                                             ; preds = %_ZN9benchmark5State
   store ptr %i.ak, ptr %i.e, align 8, !tbaa !14
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #8
   store i32 1, ptr %i.f, align 4, !tbaa !4
-  invoke fastcc void @_ZL18callThroughOptnoneIRFvPjS0_S0_S0_jjEJS0_S0_S0_S0_RjiEEvOT_DpOT0_(ptr noundef nonnull align 8 dereferenceable(8) %i.b, ptr noundef nonnull align 8 dereferenceable(8) %i.c, ptr noundef nonnull align 8 dereferenceable(8) %i.d, ptr noundef nonnull align 8 dereferenceable(8) %i.e, ptr noundef nonnull align 4 dereferenceable(4) %i.a, ptr noundef nonnull align 4 dereferenceable(4) %i.f)
+  invoke void @_ZL18callThroughOptnoneIRFvPjS0_S0_S0_jjEJS0_S0_S0_S0_RjiEEvOT_DpOT0_(ptr noundef nonnull @_ZL29vecWithRuntimeChecks4PointersPjS_S_S_jj, ptr noundef nonnull align 8 dereferenceable(8) %i.b, ptr noundef nonnull align 8 dereferenceable(8) %i.c, ptr noundef nonnull align 8 dereferenceable(8) %i.d, ptr noundef nonnull align 8 dereferenceable(8) %i.e, ptr noundef nonnull align 4 dereferenceable(4) %i.a, ptr noundef nonnull align 4 dereferenceable(4) %i.f)
           to label %_ZN9benchmark5State3endEv.exit unwind label %bb.f
 
 _ZN9benchmark5State3endEv.exit:                   ; preds = %.lr.ph
@@ -205,7 +205,7 @@ declare noundef nonnull ptr @_Znam(i64 noundef) local_unnamed_addr #3
 declare i32 @__gxx_personality_v0(...)
 
 ; Function Attrs: mustprogress noinline optnone uwtable
-define internal fastcc void @_ZL18callThroughOptnoneIRFvPjS0_S0_S0_jjEJS0_S0_S0_S0_RjiEEvOT_DpOT0_(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull align 8 dereferenceable(8) %3, ptr noundef nonnull align 4 dereferenceable(4) %4, ptr noundef nonnull align 4 dereferenceable(4) %5) unnamed_addr #4 {
+define internal void @_ZL18callThroughOptnoneIRFvPjS0_S0_S0_jjEJS0_S0_S0_S0_RjiEEvOT_DpOT0_(ptr noundef nonnull %0, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull align 8 dereferenceable(8) %3, ptr noundef nonnull align 8 dereferenceable(8) %4, ptr noundef nonnull align 4 dereferenceable(4) %5, ptr noundef nonnull align 4 dereferenceable(4) %6) unnamed_addr #4 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 2 uses
   %i.b = alloca ptr, align 8                      ; 2 uses
@@ -215,12 +215,12 @@ bb.a:
   %i.f = alloca ptr, align 8                      ; 2 uses
   %i.g = alloca ptr, align 8                      ; 2 uses
   store ptr @_ZL29vecWithRuntimeChecks4PointersPjS_S_S_jj, ptr %i.a, align 8, !tbaa !48
-  store ptr %0, ptr %i.b, align 8, !tbaa !49
-  store ptr %1, ptr %i.c, align 8, !tbaa !49
-  store ptr %2, ptr %i.d, align 8, !tbaa !49
-  store ptr %3, ptr %i.e, align 8, !tbaa !49
-  store ptr %4, ptr %i.f, align 8, !tbaa !14
-  store ptr %5, ptr %i.g, align 8, !tbaa !14
+  store ptr %1, ptr %i.b, align 8, !tbaa !49
+  store ptr %2, ptr %i.c, align 8, !tbaa !49
+  store ptr %3, ptr %i.d, align 8, !tbaa !49
+  store ptr %4, ptr %i.e, align 8, !tbaa !49
+  store ptr %5, ptr %i.f, align 8, !tbaa !14
+  store ptr %6, ptr %i.g, align 8, !tbaa !14
   %i.h = load ptr, ptr %i.a, align 8, !tbaa !48, !nonnull !52
   %i.i = load ptr, ptr %i.b, align 8, !tbaa !49, !nonnull !52, !align !53
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !14
@@ -472,7 +472,7 @@ bb.e:                                             ; preds = %_ZN9benchmark5State
   store ptr %i.ae, ptr %i.e, align 8, !tbaa !14
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #8
   store i32 1, ptr %i.f, align 4, !tbaa !4
-  invoke fastcc void @_ZL18callThroughOptnoneIRFvPjS0_S0_S0_jjEJS0_S0_S0_S0_RjiEEvOT_DpOT0_(ptr noundef nonnull align 8 dereferenceable(8) %i.b, ptr noundef nonnull align 8 dereferenceable(8) %i.c, ptr noundef nonnull align 8 dereferenceable(8) %i.d, ptr noundef nonnull align 8 dereferenceable(8) %i.e, ptr noundef nonnull align 4 dereferenceable(4) %i.a, ptr noundef nonnull align 4 dereferenceable(4) %i.f)
+  invoke void @_ZL18callThroughOptnoneIRFvPjS0_S0_S0_jjEJS0_S0_S0_S0_RjiEEvOT_DpOT0_(ptr noundef nonnull @_ZL29vecWithRuntimeChecks4PointersPjS_S_S_jj, ptr noundef nonnull align 8 dereferenceable(8) %i.b, ptr noundef nonnull align 8 dereferenceable(8) %i.c, ptr noundef nonnull align 8 dereferenceable(8) %i.d, ptr noundef nonnull align 8 dereferenceable(8) %i.e, ptr noundef nonnull align 4 dereferenceable(4) %i.a, ptr noundef nonnull align 4 dereferenceable(4) %i.f)
           to label %_ZN9benchmark5State3endEv.exit unwind label %bb.f
 
 _ZN9benchmark5State3endEv.exit:                   ; preds = %.lr.ph
@@ -626,7 +626,7 @@ bb.e:                                             ; preds = %_ZN9benchmark5State
   store ptr %i.ab, ptr %i.e, align 8, !tbaa !14
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #8
   store i32 1, ptr %i.f, align 4, !tbaa !4
-  invoke fastcc void @_ZL18callThroughOptnoneIRFvPjS0_S0_S0_jjEJS0_S0_S0_S0_RjiEEvOT_DpOT0_(ptr noundef nonnull align 8 dereferenceable(8) %i.b, ptr noundef nonnull align 8 dereferenceable(8) %i.c, ptr noundef nonnull align 8 dereferenceable(8) %i.d, ptr noundef nonnull align 8 dereferenceable(8) %i.e, ptr noundef nonnull align 4 dereferenceable(4) %i.a, ptr noundef nonnull align 4 dereferenceable(4) %i.f)
+  invoke void @_ZL18callThroughOptnoneIRFvPjS0_S0_S0_jjEJS0_S0_S0_S0_RjiEEvOT_DpOT0_(ptr noundef nonnull @_ZL29vecWithRuntimeChecks4PointersPjS_S_S_jj, ptr noundef nonnull align 8 dereferenceable(8) %i.b, ptr noundef nonnull align 8 dereferenceable(8) %i.c, ptr noundef nonnull align 8 dereferenceable(8) %i.d, ptr noundef nonnull align 8 dereferenceable(8) %i.e, ptr noundef nonnull align 4 dereferenceable(4) %i.a, ptr noundef nonnull align 4 dereferenceable(4) %i.f)
           to label %_ZN9benchmark5State3endEv.exit unwind label %bb.f
 
 _ZN9benchmark5State3endEv.exit:                   ; preds = %.lr.ph
@@ -782,7 +782,7 @@ bb.e:                                             ; preds = %_ZN9benchmark5State
   store ptr %i.ab, ptr %i.e, align 8, !tbaa !14
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #8
   store i32 1, ptr %i.f, align 4, !tbaa !4
-  invoke fastcc void @_ZL18callThroughOptnoneIRFvPjS0_S0_S0_jjEJS0_S0_S0_S0_RjiEEvOT_DpOT0_(ptr noundef nonnull align 8 dereferenceable(8) %i.b, ptr noundef nonnull align 8 dereferenceable(8) %i.c, ptr noundef nonnull align 8 dereferenceable(8) %i.d, ptr noundef nonnull align 8 dereferenceable(8) %i.e, ptr noundef nonnull align 4 dereferenceable(4) %i.a, ptr noundef nonnull align 4 dereferenceable(4) %i.f)
+  invoke void @_ZL18callThroughOptnoneIRFvPjS0_S0_S0_jjEJS0_S0_S0_S0_RjiEEvOT_DpOT0_(ptr noundef nonnull @_ZL29vecWithRuntimeChecks4PointersPjS_S_S_jj, ptr noundef nonnull align 8 dereferenceable(8) %i.b, ptr noundef nonnull align 8 dereferenceable(8) %i.c, ptr noundef nonnull align 8 dereferenceable(8) %i.d, ptr noundef nonnull align 8 dereferenceable(8) %i.e, ptr noundef nonnull align 4 dereferenceable(4) %i.a, ptr noundef nonnull align 4 dereferenceable(4) %i.f)
           to label %_ZN9benchmark5State3endEv.exit unwind label %bb.f
 
 _ZN9benchmark5State3endEv.exit:                   ; preds = %.lr.ph
@@ -938,7 +938,7 @@ bb.e:                                             ; preds = %_ZN9benchmark5State
   store ptr %i.aj, ptr %i.e, align 8, !tbaa !14
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #8
   store i32 1, ptr %i.f, align 4, !tbaa !4
-  invoke fastcc void @_ZL18callThroughOptnoneIRFvPjS0_S0_S0_jjEJS0_S0_S0_S0_RjiEEvOT_DpOT0_(ptr noundef nonnull align 8 dereferenceable(8) %i.b, ptr noundef nonnull align 8 dereferenceable(8) %i.c, ptr noundef nonnull align 8 dereferenceable(8) %i.d, ptr noundef nonnull align 8 dereferenceable(8) %i.e, ptr noundef nonnull align 4 dereferenceable(4) %i.a, ptr noundef nonnull align 4 dereferenceable(4) %i.f)
+  invoke void @_ZL18callThroughOptnoneIRFvPjS0_S0_S0_jjEJS0_S0_S0_S0_RjiEEvOT_DpOT0_(ptr noundef nonnull @_ZL29vecWithRuntimeChecks4PointersPjS_S_S_jj, ptr noundef nonnull align 8 dereferenceable(8) %i.b, ptr noundef nonnull align 8 dereferenceable(8) %i.c, ptr noundef nonnull align 8 dereferenceable(8) %i.d, ptr noundef nonnull align 8 dereferenceable(8) %i.e, ptr noundef nonnull align 4 dereferenceable(4) %i.a, ptr noundef nonnull align 4 dereferenceable(4) %i.f)
           to label %_ZN9benchmark5State3endEv.exit unwind label %bb.f
 
 _ZN9benchmark5State3endEv.exit:                   ; preds = %.lr.ph
