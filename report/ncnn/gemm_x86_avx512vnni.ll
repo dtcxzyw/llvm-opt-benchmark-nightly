@@ -204,8 +204,8 @@ begin_hunk_0_@_ZN4ncnn45transpose_pack_A_tile_fp32_to_int8_avx512vnniERKNS_3MatE
   %i.vi = xor i64 %i.vb, -1
   %i.vj = add nsw i64 %smax, %i.vi
   %i.vk = and i64 %i.vj, -4
-  %i.vl = add i64 %i.vk, %i.vb
-  %i.vm = add i64 %i.vl, 4
+  %i.vl = add nuw i64 %i.vk, %i.vb
+  %i.vm = add nuw i64 %i.vl, 4
   br label %.preheader536.loopexit.i
 
 .split1223.i.us:                                  ; preds = %.lr.ph718.i, %.loopexit538.i.us
@@ -608,8 +608,8 @@ begin_hunk_1_@_ZN4ncnn35pack_B_tile_fp32_to_int8_avx512vnniERKNS_3MatERS0_iiiif:
   %i.tj = xor i64 %i.tf, -1
   %i.tk = add nsw i64 %smax, %i.tj
   %i.tl = and i64 %i.tk, -4
-  %i.tm = add i64 %i.tl, %i.tf
-  %i.tn = add i64 %i.tm, 4
+  %i.tm = add nuw i64 %i.tl, %i.tf
+  %i.tn = add nuw i64 %i.tm, 4
   br label %.preheader294.loopexit.i
 
 .preheader301.i.us:                               ; preds = %.lr.ph519.i, %.loopexit.i.us
@@ -1012,8 +1012,8 @@ begin_hunk_2_@_ZN4ncnn45transpose_pack_B_tile_fp32_to_int8_avx512vnniERKNS_3MatE
   %i.li = xor i64 %i.lb, -1
   %i.lj = add nsw i64 %smax, %i.li
   %i.lk = and i64 %i.lj, -8
-  %i.ll = add i64 %i.lk, %i.lb
-  %i.lm = add i64 %i.ll, 8
+  %i.ll = add nuw i64 %i.lk, %i.lb
+  %i.lm = add nuw i64 %i.ll, 8
   br label %.preheader408.loopexit.i
 
 .loopexit414.i.us.us.us.us:                       ; preds = %.lr.ph505.i.split.us.split.us.split.us, %.loopexit410.i.us.us.us.us
@@ -1416,7 +1416,7 @@ bb.a:
   %spec.select.idx.i = select i1 %i.d, i64 64, i64 0 ; 2 uses
   %i.g = add i32 %8, -4                           ; 4 uses
   %i.h = and i32 %i.g, -4
-  %i.i = add i32 %i.h, 4                          ; 5 uses
+  %i.i = add nuw nsw i32 %i.h, 4                  ; 5 uses
   %i.j = and i32 %6, -16
   %i.k = zext i32 %i.g to i64                     ; 2 uses
   %i.l = lshr i64 %i.k, 2                         ; 4 uses
@@ -1467,7 +1467,7 @@ bb.a:
   %spec.select2228.idx.i = select i1 %i.ab, i64 32, i64 0 ; 3 uses
   %i.ae = add i32 %8, -4                          ; 5 uses
   %i.af = and i32 %i.ae, -4
-  %i.ag = add i32 %i.af, 4                        ; 5 uses
+  %i.ag = add nuw nsw i32 %i.af, 4                ; 5 uses
   %i.ah = and i32 %6, -16
   %i.ai = zext i32 %i.ae to i64                   ; 2 uses
   %i.aj = lshr i64 %i.ai, 2                       ; 4 uses
@@ -1870,7 +1870,7 @@ begin_hunk_4_@_ZN4ncnn39gemm_transB_packed_tile_int8_avx512vnniERKNS_3MatES2_RS0
   %spec.select2229.idx.i = select i1 %i.aeu, i64 16, i64 0 ; 3 uses
   %i.aex = add i32 %8, -4                         ; 6 uses
   %i.aey = and i32 %i.aex, -4
-  %i.aez = add i32 %i.aey, 4                      ; 5 uses
+  %i.aez = add nuw nsw i32 %i.aey, 4              ; 5 uses
   %i.afa = and i32 %6, -16
   %i.afb = zext i32 %i.aex to i64                 ; 2 uses
   %i.afc = lshr i64 %i.afb, 2                     ; 4 uses
@@ -2273,7 +2273,7 @@ bb.ad:                                            ; preds = %.unr-lcssa3408, %.l
   %spec.select2230.idx.i = select i1 %i.bgi, i64 8, i64 0 ; 3 uses
   %i.bgl = add i32 %8, -4                         ; 9 uses
   %i.bgm = and i32 %i.bgl, -4
-  %i.bgn = add i32 %i.bgm, 4                      ; 5 uses
+  %i.bgn = add nuw nsw i32 %i.bgm, 4              ; 5 uses
   %i.bgo = and i32 %6, -16
   %i.bgp = zext i32 %i.bgl to i64                 ; 2 uses
   %i.bgq = lshr i64 %i.bgp, 2                     ; 5 uses
@@ -2676,7 +2676,7 @@ bb.as:                                            ; preds = %.unr-lcssa3456, %.l
   %spec.select2231.idx.i = select i1 %i.ccx, i64 4, i64 0 ; 2 uses
   %i.ccz = add i32 %8, -4                         ; 6 uses
   %i.cda = and i32 %i.ccz, -4
-  %i.cdb = add i32 %i.cda, 4                      ; 5 uses
+  %i.cdb = add nuw nsw i32 %i.cda, 4              ; 5 uses
   %i.cdc = and i32 %6, -16
   %i.cdd = zext i32 %i.ccz to i64                 ; 4 uses
   %i.cde = lshr i64 %i.cdd, 2                     ; 4 uses

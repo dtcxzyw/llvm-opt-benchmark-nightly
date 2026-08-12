@@ -204,7 +204,7 @@ bb.a:
   %i.i = add i32 %4, -12                          ; 2 uses
   %i.j = urem i32 %i.i, 12
   %i.k = sub nuw i32 %i.i, %i.j
-  %i.l = add i32 %i.k, 12
+  %i.l = add nuw nsw i32 %i.k, 12
   %i.m = add i32 %6, -1                           ; 2 uses
   %i.n = zext i32 %i.m to i64                     ; 4 uses
   %i.o = shl nuw nsw i64 %i.n, 5
@@ -255,7 +255,7 @@ bb.a:
   %i.ai = add i32 %4, -12                         ; 2 uses
   %i.aj = urem i32 %i.ai, 12
   %i.ak = sub nuw i32 %i.ai, %i.aj
-  %i.al = add i32 %i.ak, 12
+  %i.al = add nuw nsw i32 %i.ak, 12
   %i.am = add i32 %6, -1
   %i.an = zext i32 %i.am to i64                   ; 4 uses
   %i.ao = shl nuw nsw i64 %i.an, 5
@@ -658,7 +658,7 @@ bb.l:                                             ; preds = %.lr.ph388, %bb.k
   %i.pg = add i32 %4, -12                         ; 2 uses
   %i.ph = urem i32 %i.pg, 12
   %i.pi = sub nuw i32 %i.pg, %i.ph
-  %i.pj = add i32 %i.pi, 12
+  %i.pj = add nuw nsw i32 %i.pi, 12
   %i.pk = add i32 %6, -1
   %i.pl = zext i32 %i.pk to i64                   ; 4 uses
   %i.pm = shl nuw nsw i64 %i.pl, 5
@@ -1061,24 +1061,24 @@ bb.ac:                                            ; preds = %.lr.ph581.split.us
 
 .lr.ph581.split.split.preheader:                  ; preds = %.lr.ph581.split
   %scevgep780 = getelementptr i8, ptr %.17.lcssa, i64 16
-  %i.aey = add i32 %.1449.lcssa, 7
+  %i.aey = add nuw i32 %.1449.lcssa, 7
   %smax = tail call i32 @llvm.smax.i32(i32 %4, i32 %i.aey)
-  %i.aez = add i32 %smax, -4
-  %i.afa = sub i32 %i.aez, %.1449.lcssa           ; 2 uses
+  %i.aez = add nsw i32 %smax, -4
+  %i.afa = sub nsw i32 %i.aez, %.1449.lcssa       ; 2 uses
   %i.afb = lshr i32 %i.afa, 2
   %i.afc = zext nneg i32 %i.afb to i64
   %i.afd = shl nuw nsw i64 %i.afc, 4
   %scevgep781 = getelementptr i8, ptr %scevgep780, i64 %i.afd
-  %i.afe = add i32 %.1449.lcssa, 4
+  %i.afe = add nuw i32 %.1449.lcssa, 4
   %i.aff = and i32 %i.afa, -4
   %i.afg = add i32 %i.afe, %i.aff
   br label %.preheader271
 
 .lr.ph581.split.split.us.preheader:               ; preds = %.lr.ph581.split
-  %i.afh = add i32 %.1449.lcssa, 7
+  %i.afh = add nuw i32 %.1449.lcssa, 7
   %smax782 = tail call i32 @llvm.smax.i32(i32 %4, i32 %i.afh)
-  %i.afi = add i32 %smax782, -4
-  %i.afj = sub i32 %i.afi, %.1449.lcssa           ; 2 uses
+  %i.afi = add nsw i32 %smax782, -4
+  %i.afj = sub nsw i32 %i.afi, %.1449.lcssa       ; 2 uses
   %i.afk = lshr i32 %i.afj, 2
   %i.afl = zext nneg i32 %i.afk to i64
   %i.afm = shl nuw nsw i64 %i.afl, 4              ; 2 uses
@@ -1086,7 +1086,7 @@ bb.ac:                                            ; preds = %.lr.ph581.split.us
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.17.lcssa, i8 0, i64 %i.afn, i1 false), !tbaa !254
   %scevgep783 = getelementptr i8, ptr %.17.lcssa, i64 16
   %scevgep785 = getelementptr i8, ptr %scevgep783, i64 %i.afm
-  %i.afo = add i32 %.1449.lcssa, 4
+  %i.afo = add nuw i32 %.1449.lcssa, 4
   %i.afp = and i32 %i.afj, -4
   %i.afq = add i32 %i.afo, %i.afp
   br label %.preheader271
@@ -1489,8 +1489,8 @@ bb.c:                                             ; preds = %_ZN4ncnn3MatD2Ev.ex
   %i.bl = sub nsw i64 %i.bj, %umin71.i
   %i.bm = udiv i64 %i.bl, 12
   %i.bn = add nuw nsw i64 %i.bm, %umin71.i
-  %i.bo = mul i64 %i.bn, 12
-  %i.bp = add i64 %i.bo, 12
+  %i.bo = mul nuw nsw i64 %i.bn, 12
+  %i.bp = add nuw nsw i64 %i.bo, 12
   br label %.preheader159.loopexit.i.i
 
 .lr.ph172.i.split.us.i:                           ; preds = %.lr.ph172.i.i
@@ -1504,8 +1504,8 @@ _ZN4ncnn3MatD2Ev.exit375.i.us.preheader.i:        ; preds = %.lr.ph172.i.split.u
   %i.bt = sub nsw i64 %i.br, %umin69.i
   %i.bu = udiv i64 %i.bt, 12
   %i.bv = add nuw nsw i64 %i.bu, %umin69.i
-  %i.bw = mul i64 %i.bv, 12
-  %i.bx = add i64 %i.bw, 12
+  %i.bw = mul nuw nsw i64 %i.bv, 12
+  %i.bx = add nuw nsw i64 %i.bw, 12
   br label %.preheader159.loopexit.i.i
 
 _ZN4ncnn3MatD2Ev.exit375.i.us.us.preheader.i:     ; preds = %.lr.ph172.i.split.us.i
@@ -1625,8 +1625,8 @@ _ZN4ncnn3MatD2Ev.exit374.i.us.preheader.i:        ; preds = %.lr.ph172.i.split.u
   %i.ev = sub nsw i64 %i.et, %umin.i
   %i.ew = udiv i64 %i.ev, 12
   %i.ex = add nuw nsw i64 %i.ew, %umin.i
-  %i.ey = mul i64 %i.ex, 12
-  %i.ez = add i64 %i.ey, 12
+  %i.ey = mul nuw nsw i64 %i.ex, 12
+  %i.ez = add nuw nsw i64 %i.ey, 12
   br label %.preheader159.loopexit.i.i
 
 _ZN4ncnn3MatD2Ev.exit374.i.us.us.preheader.i:     ; preds = %.lr.ph172.i.split.us18.i
@@ -1747,7 +1747,7 @@ _ZN4ncnn3MatD2Ev.exit374.i.us.us.i:               ; preds = %.loopexit160.i.loop
   %i.gy = add nsw i64 %reass.sub89, 7
   %i.gz = and i64 %i.gy, -8
   %i.ha = add nuw nsw i64 %i.gv, 8
-  %i.hb = add i64 %i.ha, %i.gz
+  %i.hb = add nuw i64 %i.ha, %i.gz
   br label %.preheader156.loopexit.i.i
 
 .lr.ph187.i.split.us.i:                           ; preds = %.lr.ph187.i.i
@@ -1760,7 +1760,7 @@ _ZN4ncnn3MatD2Ev.exit373.i.us.preheader.i:        ; preds = %.lr.ph187.i.split.u
   %i.hd = add nsw i64 %reass.sub88, 7
   %i.he = and i64 %i.hd, -8
   %i.hf = add nuw nsw i64 %i.gv, 8
-  %i.hg = add i64 %i.hf, %i.he
+  %i.hg = add nuw i64 %i.hf, %i.he
   br label %.preheader156.loopexit.i.i
 
 _ZN4ncnn3MatD2Ev.exit373.i.us.us.preheader.i:     ; preds = %.lr.ph187.i.split.us.i
@@ -1854,7 +1854,7 @@ _ZN4ncnn3MatD2Ev.exit372.i.us.preheader.i:        ; preds = %.lr.ph187.i.split.u
   %i.jh = add nsw i64 %reass.sub, 7
   %i.ji = and i64 %i.jh, -8
   %i.jj = add nuw nsw i64 %i.gv, 8
-  %i.jk = add i64 %i.jj, %i.ji
+  %i.jk = add nuw i64 %i.jj, %i.ji
   br label %.preheader156.loopexit.i.i
 
 _ZN4ncnn3MatD2Ev.exit372.i.us.us.preheader.i:     ; preds = %.lr.ph187.i.split.us34.i
@@ -2257,7 +2257,7 @@ bb.a:
   %i.h = icmp sgt i32 %6, 1                       ; 4 uses
   %i.i = add i32 %6, -2                           ; 5 uses
   %i.j = and i32 %i.i, -2
-  %i.k = add i32 %i.j, 2                          ; 4 uses
+  %i.k = add nuw nsw i32 %i.j, 2                  ; 4 uses
   %i.l = and i32 %4, -8
   %i.m = lshr i32 %i.i, 1                         ; 2 uses
   %i.n = zext nneg i32 %i.m to i64                ; 3 uses
@@ -2308,7 +2308,7 @@ bb.a:
   %i.aj = icmp sgt i32 %6, 1                      ; 4 uses
   %i.ak = add i32 %6, -2                          ; 6 uses
   %i.al = and i32 %i.ak, -2
-  %i.am = add i32 %i.al, 2                        ; 4 uses
+  %i.am = add nuw nsw i32 %i.al, 2                ; 4 uses
   %i.an = and i32 %4, -8
   %i.ao = lshr i32 %i.ak, 1
   %i.ap = zext nneg i32 %i.ao to i64              ; 5 uses
@@ -2711,7 +2711,7 @@ bb.o:                                             ; preds = %.lr.ph378, %bb.n
   %i.ta = icmp sgt i32 %6, 0
   %i.tb = add i32 %6, -2                          ; 3 uses
   %i.tc = and i32 %i.tb, -2
-  %i.td = add i32 %i.tc, 2                        ; 4 uses
+  %i.td = add nuw nsw i32 %i.tc, 2                ; 4 uses
   %i.te = and i32 %4, -8
   %i.tf = lshr i32 %i.tb, 1
   %i.tg = zext nneg i32 %i.tf to i64              ; 3 uses
@@ -3114,7 +3114,7 @@ _ZN4ncnn3MatD2Ev.exit268.i.us.i.preheader:        ; preds = %.lr.ph169.i.i
   %i.fw = xor i64 %i.fs, -1
   %i.fx = add nsw i64 %smax151.i, %i.fw
   %i.fy = and i64 %i.fx, -4
-  %i.fz = add i64 %i.fv, %i.fy
+  %i.fz = add nuw i64 %i.fv, %i.fy
   br label %.preheader122.loopexit.i.i
 
 .lr.ph169.i.split.us.i:                           ; preds = %.lr.ph169.i.i
@@ -3127,7 +3127,7 @@ _ZN4ncnn3MatD2Ev.exit269.i.us.preheader.i:        ; preds = %.lr.ph169.i.split.u
   %i.gc = xor i64 %i.fs, -1
   %i.gd = add nsw i64 %smax.i, %i.gc
   %i.ge = and i64 %i.gd, -4
-  %i.gf = add i64 %i.gb, %i.ge
+  %i.gf = add nuw i64 %i.gb, %i.ge
   br label %.preheader122.loopexit.i.i
 
 _ZN4ncnn3MatD2Ev.exit269.i.us.us.i:               ; preds = %.lr.ph169.i.split.us.i, %.loopexit124.i.loopexit.us.us.i
