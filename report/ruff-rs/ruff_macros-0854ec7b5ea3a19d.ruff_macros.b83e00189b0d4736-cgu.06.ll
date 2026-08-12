@@ -30,8 +30,7 @@ bb.a:
   store ptr %i.d, ptr %i.c, align 8
   call void @llvm.experimental.noalias.scope.decl(metadata !3)
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
-  %i.g = load i64, ptr %i.f, align 8, !alias.scope !3, !noalias !6, !noundef !9 ; 2 uses
-  %2 = add i64 %i.g, 1                            ; 2 uses
+  %i.g = load i64, ptr %i.f, align 8, !alias.scope !3, !noalias !6, !noundef !9 ; 3 uses
   %i.h = icmp eq i64 %i.g, -1
   br i1 %i.h, label %bb.c, label %bb.b, !prof !10
 
@@ -44,8 +43,8 @@ bb.b:                                             ; preds = %bb.a
   %i.n = mul nuw i64 %i.m, 7
   %.sroa.03.0.i = select i1 %i.k, i64 %i.j, i64 %i.n ; 2 uses
   %i.o = lshr i64 %.sroa.03.0.i, 1
-  %.not.i = icmp ugt i64 %2, %i.o
-  br i1 %.not.i, label %bb.d, label %bb.k
+  %.not.i.not = icmp ult i64 %i.g, %i.o
+  br i1 %.not.i.not, label %bb.k, label %bb.d
 
 bb.c:                                             ; preds = %bb.a
   %i.p = call { i64, i64 } @_RNvMNtCsgQfI1edjipl_9hashbrown3rawNtB2_11Fallibility17capacity_overflow(i1 noundef zeroext true), !noalias !11
@@ -53,8 +52,8 @@ bb.c:                                             ; preds = %bb.a
   br label %_RINvMsa_NtCsgQfI1edjipl_9hashbrown3rawNtB6_13RawTableInner20reserve_rehash_innerNtNtCscdodAO9FK5_5alloc5alloc6GlobalECsfOIrz68VyyU_11ruff_macros.exit
 
 bb.d:                                             ; preds = %bb.b
-  %3 = add nuw i64 %.sroa.03.0.i, 1
-  %.sroa.0.0.i9 = call noundef i64 @llvm.umax.i64(i64 %3, i64 %2)
+  %2 = call i64 @llvm.umax.i64(i64 %.sroa.03.0.i, i64 %i.g)
+  %.sroa.0.0.i9 = add nuw i64 %2, 1
   call void @llvm.experimental.noalias.scope.decl(metadata !12)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !15
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !15
@@ -294,8 +293,7 @@ bb.a:
   store ptr %i.d, ptr %i.c, align 8
   call void @llvm.experimental.noalias.scope.decl(metadata !41)
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
-  %i.g = load i64, ptr %i.f, align 8, !alias.scope !41, !noalias !44, !noundef !9 ; 2 uses
-  %2 = add i64 %i.g, 1                            ; 2 uses
+  %i.g = load i64, ptr %i.f, align 8, !alias.scope !41, !noalias !44, !noundef !9 ; 3 uses
   %i.h = icmp eq i64 %i.g, -1
   br i1 %i.h, label %bb.c, label %bb.b, !prof !10
 
@@ -308,8 +306,8 @@ bb.b:                                             ; preds = %bb.a
   %i.n = mul nuw i64 %i.m, 7
   %.sroa.03.0.i = select i1 %i.k, i64 %i.j, i64 %i.n ; 2 uses
   %i.o = lshr i64 %.sroa.03.0.i, 1
-  %.not.i = icmp ugt i64 %2, %i.o
-  br i1 %.not.i, label %bb.d, label %bb.k
+  %.not.i.not = icmp ult i64 %i.g, %i.o
+  br i1 %.not.i.not, label %bb.k, label %bb.d
 
 bb.c:                                             ; preds = %bb.a
   %i.p = call { i64, i64 } @_RNvMNtCsgQfI1edjipl_9hashbrown3rawNtB2_11Fallibility17capacity_overflow(i1 noundef zeroext true), !noalias !47
@@ -317,8 +315,8 @@ bb.c:                                             ; preds = %bb.a
   br label %_RINvMsa_NtCsgQfI1edjipl_9hashbrown3rawNtB6_13RawTableInner20reserve_rehash_innerNtNtCscdodAO9FK5_5alloc5alloc6GlobalECsfOIrz68VyyU_11ruff_macros.exit
 
 bb.d:                                             ; preds = %bb.b
-  %3 = add nuw i64 %.sroa.03.0.i, 1
-  %.sroa.0.0.i9 = call noundef i64 @llvm.umax.i64(i64 %3, i64 %2)
+  %2 = call i64 @llvm.umax.i64(i64 %.sroa.03.0.i, i64 %i.g)
+  %.sroa.0.0.i9 = add nuw i64 %2, 1
   call void @llvm.experimental.noalias.scope.decl(metadata !48)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !51
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !51
@@ -558,8 +556,7 @@ bb.a:
   store ptr %i.d, ptr %i.c, align 8
   call void @llvm.experimental.noalias.scope.decl(metadata !74)
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
-  %i.g = load i64, ptr %i.f, align 8, !alias.scope !74, !noalias !77, !noundef !9 ; 2 uses
-  %2 = add i64 %i.g, 1                            ; 2 uses
+  %i.g = load i64, ptr %i.f, align 8, !alias.scope !74, !noalias !77, !noundef !9 ; 3 uses
   %i.h = icmp eq i64 %i.g, -1
   br i1 %i.h, label %bb.c, label %bb.b, !prof !10
 
@@ -572,8 +569,8 @@ bb.b:                                             ; preds = %bb.a
   %i.n = mul nuw i64 %i.m, 7
   %.sroa.03.0.i = select i1 %i.k, i64 %i.j, i64 %i.n ; 2 uses
   %i.o = lshr i64 %.sroa.03.0.i, 1
-  %.not.i = icmp ugt i64 %2, %i.o
-  br i1 %.not.i, label %bb.d, label %bb.k
+  %.not.i.not = icmp ult i64 %i.g, %i.o
+  br i1 %.not.i.not, label %bb.k, label %bb.d
 
 bb.c:                                             ; preds = %bb.a
   %i.p = call { i64, i64 } @_RNvMNtCsgQfI1edjipl_9hashbrown3rawNtB2_11Fallibility17capacity_overflow(i1 noundef zeroext true), !noalias !80
@@ -581,8 +578,8 @@ bb.c:                                             ; preds = %bb.a
   br label %_RINvMsa_NtCsgQfI1edjipl_9hashbrown3rawNtB6_13RawTableInner20reserve_rehash_innerNtNtCscdodAO9FK5_5alloc5alloc6GlobalECsfOIrz68VyyU_11ruff_macros.exit
 
 bb.d:                                             ; preds = %bb.b
-  %3 = add nuw i64 %.sroa.03.0.i, 1
-  %.sroa.0.0.i9 = call noundef i64 @llvm.umax.i64(i64 %3, i64 %2)
+  %2 = call i64 @llvm.umax.i64(i64 %.sroa.03.0.i, i64 %i.g)
+  %.sroa.0.0.i9 = add nuw i64 %2, 1
   call void @llvm.experimental.noalias.scope.decl(metadata !81)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !84
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !84

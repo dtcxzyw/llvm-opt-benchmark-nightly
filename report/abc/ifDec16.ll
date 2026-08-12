@@ -204,7 +204,7 @@ bb.a:
   %i.c = alloca [128 x i64], align 16             ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1024) %i.c, i8 0, i64 1024, i1 false)
-  %i.d = shl nuw i32 1, %2                        ; 2 uses
+  %i.d = shl nuw nsw i32 1, %2                    ; 2 uses
   %i.e = sub nsw i32 %1, %2                       ; 4 uses
   %i.f = icmp slt i32 %i.e, 6
   br i1 %i.f, label %bb.b, label %bb.f
@@ -219,8 +219,7 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph174:                                        ; preds = %bb.b
   %.not117 = icmp eq ptr %4, null
-  %smax211 = tail call i32 @llvm.smax.i32(i32 %i.d, i32 1)
-  %wide.trip.count212 = zext nneg i32 %smax211 to i64
+  %wide.trip.count212 = zext nneg i32 %i.d to i64
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph174, %.thread218
@@ -316,8 +315,7 @@ bb.f:                                             ; preds = %bb.a
   %.not178 = icmp eq i32 %i.ap, 31                ; 2 uses
   %.not114 = icmp eq ptr %4, null
   %smax = tail call i32 @llvm.smax.i32(i32 %i.aq, i32 1) ; 4 uses
-  %smax200 = tail call i32 @llvm.smax.i32(i32 %i.d, i32 1)
-  %wide.trip.count201 = zext nneg i32 %smax200 to i64
+  %wide.trip.count201 = zext nneg i32 %i.d to i64
   %wide.trip.count = zext nneg i32 %smax to i64
   %wide.trip.count195 = zext nneg i32 %smax to i64
   br label %bb.h
@@ -720,7 +718,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l, %bb.j,
 bb.o:                                             ; preds = %bb.c
   %i.bn = trunc i64 %indvars.iv135 to i32
   %i.bo = add i32 %i.bn, -6                       ; 3 uses
-  %i.bp = shl nuw i32 1, %i.bo                    ; 2 uses
+  %i.bp = shl nuw nsw i32 1, %i.bo                ; 2 uses
   br i1 %i.ad, label %.preheader.lr.ph.i, label %.loopexit.i
 
 .preheader.lr.ph.i:                               ; preds = %bb.o
@@ -730,9 +728,8 @@ bb.o:                                             ; preds = %bb.c
   br i1 %.not.i, label %.loopexit.i.thread, label %.preheader.us.preheader.i
 
 .preheader.us.preheader.i:                        ; preds = %.preheader.lr.ph.i
-  %4 = sext i32 %i.bp to i64
-  %smax.i = tail call i32 @llvm.smax.i32(i32 %i.bp, i32 1)
-  %wide.trip.count.i81 = zext nneg i32 %smax.i to i64
+  %4 = zext nneg i32 %i.bp to i64
+  %wide.trip.count.i81 = zext nneg i32 %i.bp to i64
   br label %.preheader.us.i
 
 .preheader.us.i:                                  ; preds = %._crit_edge.us.i, %.preheader.us.preheader.i
@@ -1135,17 +1132,16 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.ai = sub i32 %2, %7                          ; 5 uses
   %i.aj = sub nsw i32 %2, %4
   %i.ak = icmp slt i32 %4, %7
-  %i.al = shl nuw i32 1, %7
+  %i.al = shl nuw nsw i32 1, %7
   %i.am = icmp slt i32 %i.ai, 6
   %i.an = add i32 %i.ai, -6                       ; 3 uses
   %i.ao = shl nuw i32 1, %i.an                    ; 3 uses
   %.not.i = icmp eq i32 %7, 31                    ; 2 uses
   %i.ap = sext i32 %i.ao to i64
   %.not178.i = icmp eq i32 %i.an, 31
-  %smax.i = tail call i32 @llvm.smax.i32(i32 %i.ao, i32 1) ; 2 uses
-  %smax200.i = tail call i32 @llvm.smax.i32(i32 %i.al, i32 1)
-  %wide.trip.count201.i = zext nneg i32 %smax200.i to i64 ; 3 uses
-  %wide.trip.count.i = zext nneg i32 %smax.i to i64
+  %smax200.i = tail call i32 @llvm.smax.i32(i32 %i.ao, i32 1) ; 2 uses
+  %wide.trip.count201.i = zext nneg i32 %i.al to i64 ; 3 uses
+  %wide.trip.count.i = zext nneg i32 %smax200.i to i64
   %i.aq = shl nuw nsw i32 1, %i.ai
   %i.ar = zext nneg i32 %i.aq to i64
   %notmask.i = shl nsw i64 -1, %i.ar
@@ -1355,7 +1351,7 @@ bb.n:                                             ; preds = %bb.m
   br label %._crit_edge.us.i
 
 ._crit_edge.us.i:                                 ; preds = %bb.n, %._crit_edge.us.split.loop.exit230.i
-  %.0106.lcssa.us.i = phi i32 [ %i.de, %._crit_edge.us.split.loop.exit230.i ], [ %smax.i, %bb.n ]
+  %.0106.lcssa.us.i = phi i32 [ %i.de, %._crit_edge.us.split.loop.exit230.i ], [ %smax200.i, %bb.n ]
   %i.df = icmp eq i32 %.0106.lcssa.us.i, %i.ao
   br i1 %i.df, label %._crit_edge146.split.us.loopexit.i, label %bb.o
 
@@ -1758,8 +1754,8 @@ bb.m:                                             ; preds = %.lr.ph.i38
 
 bb.n:                                             ; preds = %bb.m
   %i.de = trunc i64 %indvars.iv68.i to i32
-  %i.df = add i32 %i.de, -7                       ; 5 uses
-  %i.dg = shl nuw i32 1, %i.df                    ; 8 uses
+  %i.df = add i32 %i.de, -7                       ; 11 uses
+  %i.dg = shl nuw nsw i32 1, %i.df
   br i1 %i.au, label %.preheader87.lr.ph.i.i, label %If_CluSwapAdjacent.exit.i
 
 .preheader87.lr.ph.i.i:                           ; preds = %bb.n
@@ -1771,47 +1767,43 @@ bb.n:                                             ; preds = %bb.m
 .preheader87.us.preheader.i.i:                    ; preds = %.preheader87.lr.ph.i.i
   %i.dj = shl nuw i32 3, %i.df
   %i.dk = shl nuw i32 2, %i.df
-  %smax.i.i = tail call i32 @llvm.smax.i32(i32 %i.dg, i32 1)
-  %i.dl = sext i32 %i.dk to i64                   ; 4 uses
-  %4 = sext i32 %i.dg to i64                      ; 3 uses
+  %i.dl = sext i32 %i.dk to i64                   ; 3 uses
+  %4 = zext nneg i32 %i.dg to i64                 ; 12 uses
   %i.dm = sext i32 %i.dj to i64                   ; 6 uses
-  %wide.trip.count.i.i = zext nneg i32 %smax.i.i to i64 ; 10 uses
-  %i.dn = shl nuw nsw i64 %wide.trip.count.i.i, 3
-  %i.do = shl nsw i64 %i.dl, 3
+  %i.dn = shl nuw nsw i64 %4, 3                   ; 3 uses
+  %i.do = shl nsw i64 %i.dl, 3                    ; 2 uses
   %i.dp = add i64 %i.do, %.13045.i179
-  %5 = shl nsw i64 %4, 3                          ; 2 uses
-  %i.dq = add i64 %5, %.12746.i180
-  %i.dr = add i64 %5, %.13045.i179
-  %6 = shl nsw i64 %i.dl, 3
-  %i.ds = add i64 %6, %.12746.i180
-  %min.iters.check219 = icmp slt i32 %i.dg, 4
+  %i.dq = add i64 %i.dn, %.12746.i180
+  %i.dr = add i64 %i.dn, %.13045.i179
+  %i.ds = add i64 %i.do, %.12746.i180
+  %min.iters.check220 = icmp ult i32 %i.df, 2
   %i.dt = sub i64 %i.ds, %i.dr
   %diff.check217 = icmp ugt i64 %i.dt, -32
-  %or.cond230 = select i1 %min.iters.check219, i1 true, i1 %diff.check217
-  %n.vec221 = and i64 %wide.trip.count.i.i, 2147483644
-  %xtraiter = and i64 %wide.trip.count.i.i, 3     ; 3 uses
-  %7 = icmp slt i32 %i.dg, 4
-  %unroll_iter = and i64 %wide.trip.count.i.i, 2147483644
+  %or.cond230 = select i1 %min.iters.check220, i1 true, i1 %diff.check217
+  %n.vec221 = and i64 %4, 2147483644
+  %xtraiter = and i64 %4, 3                       ; 3 uses
+  %5 = icmp ult i32 %i.df, 2
+  %unroll_iter = and i64 %4, 2147483644
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %lcmp.mod242 = icmp ne i64 %xtraiter, 0
-  %min.iters.check205 = icmp slt i32 %i.dg, 4
+  %min.iters.check206 = icmp ult i32 %i.df, 2
   %i.du = sub i64 %i.dq, %i.dp
   %diff.check203 = icmp ugt i64 %i.du, -32
-  %or.cond232.a = select i1 %min.iters.check205, i1 true, i1 %diff.check203
-  %n.vec207 = and i64 %wide.trip.count.i.i, 2147483644
-  %xtraiter243 = and i64 %wide.trip.count.i.i, 3  ; 3 uses
-  %8 = icmp slt i32 %i.dg, 4
-  %unroll_iter247 = and i64 %wide.trip.count.i.i, 2147483644
+  %or.cond232.a = select i1 %min.iters.check206, i1 true, i1 %diff.check203
+  %n.vec207 = and i64 %4, 2147483644
+  %xtraiter243 = and i64 %4, 3                    ; 3 uses
+  %6 = icmp ult i32 %i.df, 2
+  %unroll_iter247 = and i64 %4, 2147483644
   %lcmp.mod245.not = icmp eq i64 %xtraiter243, 0
   %lcmp.mod246 = icmp ne i64 %xtraiter243, 0
-  %min.iters.check191 = icmp slt i32 %i.dg, 4
+  %min.iters.check192 = icmp ult i32 %i.df, 2
   %i.dv = sub i64 %.12746.i180, %.13045.i179
   %diff.check189 = icmp ugt i64 %i.dv, -32
-  %or.cond231 = select i1 %min.iters.check191, i1 true, i1 %diff.check189
-  %n.vec193 = and i64 %wide.trip.count.i.i, 2147483644
-  %xtraiter249 = and i64 %wide.trip.count.i.i, 3  ; 3 uses
-  %9 = icmp slt i32 %i.dg, 4
-  %unroll_iter253 = and i64 %wide.trip.count.i.i, 2147483644
+  %or.cond231 = select i1 %min.iters.check192, i1 true, i1 %diff.check189
+  %n.vec193 = and i64 %4, 2147483644
+  %xtraiter249 = and i64 %4, 3                    ; 3 uses
+  %7 = icmp ult i32 %i.df, 2
+  %unroll_iter253 = and i64 %4, 2147483644
   %lcmp.mod251.not = icmp eq i64 %xtraiter249, 0
   %lcmp.mod252 = icmp ne i64 %xtraiter249, 0
   br label %.lr.ph.us.preheader.i.i
@@ -1826,7 +1818,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %or.cond230, label %.lr.ph91.us.i.i.preheader, label %vector.body222
 
 .lr.ph91.us.i.i.preheader:                        ; preds = %.lr.ph.us.preheader.i.i
-  br i1 %7, label %.lr.ph91.us.i.i.epil.preheader, label %.lr.ph91.us.i.i
+  br i1 %5, label %.lr.ph91.us.i.i.epil.preheader, label %.lr.ph91.us.i.i
 
 vector.body222:                                   ; preds = %.lr.ph.us.preheader.i.i, %vector.body222
   %index223 = phi i64 [ %index.next226, %vector.body222 ], [ 0, %.lr.ph.us.preheader.i.i ] ; 3 uses
@@ -1920,7 +1912,7 @@ scalar.ph204.epil:                                ; preds = %scalar.ph204.epil, 
   br i1 %or.cond231, label %.lr.ph95.us.i.i.preheader233, label %vector.body194
 
 .lr.ph95.us.i.i.preheader233:                     ; preds = %.lr.ph95.us.i.i.preheader
-  br i1 %9, label %.lr.ph95.us.i.i.epil.preheader, label %.lr.ph95.us.i.i
+  br i1 %7, label %.lr.ph95.us.i.i.epil.preheader, label %.lr.ph95.us.i.i
 
 vector.body194:                                   ; preds = %.lr.ph95.us.i.i.preheader, %vector.body194
   %index195 = phi i64 [ %index.next198, %vector.body194 ], [ 0, %.lr.ph95.us.i.i.preheader ] ; 2 uses
@@ -2022,7 +2014,7 @@ vector.body194:                                   ; preds = %.lr.ph95.us.i.i.pre
   br i1 %or.cond232.a, label %scalar.ph204.preheader, label %vector.body208
 
 scalar.ph204.preheader:                           ; preds = %.preheader85.us.i.i
-  br i1 %8, label %scalar.ph204.epil.preheader, label %scalar.ph204
+  br i1 %6, label %scalar.ph204.epil.preheader, label %scalar.ph204
 
 vector.body208:                                   ; preds = %.preheader85.us.i.i, %vector.body208
   %index209 = phi i64 [ %index.next212, %vector.body208 ], [ 0, %.preheader85.us.i.i ] ; 3 uses

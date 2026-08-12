@@ -204,15 +204,14 @@ bb.e:                                             ; preds = %.critedge
   %i.x = getelementptr i8, ptr %4, i64 4          ; 4 uses
   %.val129 = load i32, ptr %i.x, align 4, !tbaa !88
   %.val129.fr = freeze i32 %.val129               ; 2 uses
-  %i.y = shl nuw i32 1, %.val129.fr               ; 2 uses
+  %i.y = shl nuw nsw i32 1, %.val129.fr           ; 2 uses
   %.not168 = icmp eq i32 %.val129.fr, 31          ; 2 uses
   br i1 %.not168, label %._crit_edge, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %bb.e
   %i.z = getelementptr i8, ptr %3, i64 8
   %i.aa = getelementptr i8, ptr %4, i64 8
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.y, i32 1)
-  %wide.trip.count189 = zext nneg i32 %smax to i64
+  %wide.trip.count189 = zext nneg i32 %i.y to i64
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %.critedge6
@@ -474,7 +473,7 @@ Vec_IntFree.exit140:                              ; preds = %._crit_edge, %bb.j
   br i1 %brmerge, label %.critedge8, label %.lr.ph166.split.us.preheader
 
 .lr.ph166.split.us.preheader:                     ; preds = %Vec_IntFree.exit140
-  %5 = sext i32 %i.y to i64
+  %5 = zext nneg i32 %i.y to i64
   br label %.lr.ph166.split.us
 
 .lr.ph166.split.us:                               ; preds = %.lr.ph166.split.us.preheader, %._crit_edge163.us

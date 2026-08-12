@@ -204,7 +204,7 @@ bb.cn:                                            ; preds = %bb.cm
   br label %_ZN2cv10AutoBufferIfLm264EEC2Em.exit.i
 
 _ZN2cv10AutoBufferIfLm264EEC2Em.exit.i:           ; preds = %.noexc179, %bb.cm
-  %i.jy = phi ptr [ %i.fv, %bb.cm ], [ %i.jx, %.noexc179 ] ; 5 uses
+  %i.jy = phi ptr [ %i.fv, %bb.cm ], [ %i.jx, %.noexc179 ] ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #23
   %i.jz = shl nsw i32 %i.jd, 1                    ; 5 uses
   %i.ka = add nsw i32 %i.jp, %i.jz                ; 2 uses
@@ -228,7 +228,7 @@ bb.co:                                            ; preds = %_ZN2cv10AutoBufferI
 
 _ZN2cv10AutoBufferIfLm264EEC2Em.exit209.i:        ; preds = %.noexc.i, %_ZN2cv10AutoBufferIfLm264EEC2Em.exit.i
   %i.kh = phi ptr [ %i.kg, %.noexc.i ], [ %i.fx, %_ZN2cv10AutoBufferIfLm264EEC2Em.exit.i ] ; 3 uses
-  %i.ki = sext i32 %i.jd to i64                   ; 2 uses
+  %i.ki = sext i32 %i.jd to i64
   %i.kj = getelementptr inbounds [4 x i8], ptr %i.jy, i64 %i.ki ; 12 uses
   %i.kk = sext i32 %i.jz to i64                   ; 4 uses
   %i.kl = getelementptr inbounds [4 x i8], ptr %i.kj, i64 %i.kk
@@ -238,7 +238,7 @@ _ZN2cv10AutoBufferIfLm264EEC2Em.exit209.i:        ; preds = %.noexc.i, %_ZN2cv10
   %i.kp = mul i32 %i.jd, 3                        ; 3 uses
   %i.kq = sext i32 %i.kp to i64                   ; 3 uses
   %i.kr = getelementptr [4 x i8], ptr %i.kh, i64 %i.kq ; 22 uses
-  %i.ks = sub i32 0, %i.jd                        ; 4 uses
+  %i.ks = sub nsw i32 0, %i.jd                    ; 4 uses
   %.not129.i.i = icmp slt i32 %i.jd, 0            ; 2 uses
   br i1 %.not129.i.i, label %._crit_edge136.i.i, label %.lr.ph.i.i
 
@@ -249,13 +249,13 @@ _ZN2cv10AutoBufferIfLm264EEC2Em.exit209.i:        ; preds = %.noexc.i, %_ZN2cv10
   %.083.i.i = select i1 %i.kt, double %i.kv, double %i.je ; 2 uses
   %i.kw = fmul double %.083.i.i, 2.000000e+00
   %i.kx = fmul double %.083.i.i, %i.kw
-  %i.ky = sext i32 %i.ks to i64                   ; 7 uses
+  %i.ky = sext i32 %i.ks to i64                   ; 6 uses
   %i.kz = add nuw i32 %i.jd, 1                    ; 2 uses
   br label %bb.cp
 
 .lr.ph135.preheader.i.i:                          ; preds = %bb.cp
   %i.la = fdiv double 1.000000e+00, %i.mg         ; 2 uses
-  %min.iters.check651 = icmp ult i32 %i.jz, 8
+  %min.iters.check651 = icmp ult i32 %i.jz, 4
   br i1 %min.iters.check651, label %.lr.ph135.i.i.preheader, label %vector.memcheck629
 
 .lr.ph135.i.i.preheader:                          ; preds = %vector.body661, %vector.memcheck629, %.lr.ph135.preheader.i.i
@@ -263,33 +263,24 @@ _ZN2cv10AutoBufferIfLm264EEC2Em.exit209.i:        ; preds = %.noexc.i, %_ZN2cv10
   br label %.lr.ph135.i.i
 
 vector.memcheck629:                               ; preds = %.lr.ph135.preheader.i.i
-  %52 = shl nuw nsw i64 %i.ki, 2                  ; 3 uses
-  %53 = shl nsw i64 %i.ky, 2                      ; 3 uses
-  %54 = add nsw i64 %52, %53                      ; 2 uses
-  %scevgep630 = getelementptr i8, ptr %i.jy, i64 %54 ; 2 uses
   %scevgep631.a = getelementptr i8, ptr %i.jy, i64 4 ; 2 uses
   %i.lb = zext nneg i32 %i.jz to i64
   %i.lc = shl nuw nsw i64 %i.lb, 2                ; 3 uses
-  %55 = getelementptr i8, ptr %scevgep631.a, i64 %54
-  %scevgep632.a = getelementptr i8, ptr %55, i64 %i.lc ; 2 uses
-  %56 = add nsw i64 %52, %53
-  %i.ld = shl nuw nsw i64 %i.kk, 2
-  %57 = add nsw i64 %56, %i.ld                    ; 2 uses
-  %scevgep633.a = getelementptr i8, ptr %scevgep631.a, i64 %57 ; 2 uses
+  %scevgep632.a = getelementptr i8, ptr %scevgep631.a, i64 %i.lc ; 2 uses
+  %i.ld = shl nuw nsw i64 %i.kk, 2                ; 2 uses
+  %scevgep633.a = getelementptr i8, ptr %scevgep631.a, i64 %i.ld ; 2 uses
   %scevgep634.a = getelementptr i8, ptr %i.jy, i64 8 ; 2 uses
-  %i.le = getelementptr i8, ptr %scevgep634.a, i64 %57
+  %i.le = getelementptr i8, ptr %scevgep634.a, i64 %i.ld
   %scevgep635.a = getelementptr i8, ptr %i.le, i64 %i.lc ; 2 uses
-  %i.lf = shl nuw nsw i64 %i.kk, 3
-  %58 = add nuw nsw i64 %i.lf, %52
-  %59 = add nsw i64 %58, %53                      ; 2 uses
-  %scevgep636.a = getelementptr i8, ptr %scevgep634.a, i64 %59 ; 2 uses
+  %i.lf = shl nuw nsw i64 %i.kk, 3                ; 2 uses
+  %scevgep636.a = getelementptr i8, ptr %scevgep634.a, i64 %i.lf ; 2 uses
   %scevgep637.a = getelementptr i8, ptr %i.jy, i64 12
-  %i.lg = getelementptr i8, ptr %scevgep637.a, i64 %59
+  %i.lg = getelementptr i8, ptr %scevgep637.a, i64 %i.lf
   %scevgep638 = getelementptr i8, ptr %i.lg, i64 %i.lc ; 2 uses
-  %bound0639 = icmp ult ptr %scevgep630, %scevgep635.a
+  %bound0639 = icmp ult ptr %i.jy, %scevgep635.a
   %bound1640 = icmp ult ptr %scevgep633.a, %scevgep632.a
   %found.conflict641 = and i1 %bound0639, %bound1640
-  %bound0642 = icmp ult ptr %scevgep630, %scevgep638
+  %bound0642 = icmp ult ptr %i.jy, %scevgep638
   %bound1643 = icmp ult ptr %scevgep636.a, %scevgep632.a
   %found.conflict644 = and i1 %bound0642, %bound1643
   %conflict.rdx645 = or i1 %found.conflict641, %found.conflict644
@@ -692,7 +683,7 @@ _ZN2cv4Mat_IdEaSEONS_3MatE.exit:                  ; preds = %.noexc258, %bb.dc, 
   %i.sq = icmp eq i32 %i.jp, 0
   %i.sr = icmp sgt i32 %i.jd, 0
   %i.ss = mul nsw i32 %i.jp, 3
-  %i.st = add i32 %i.jd, 1
+  %i.st = add nuw i32 %i.jd, 1
   %i.su = sext i32 %i.ss to i64
   %smax.i = call i32 @llvm.smax.i32(i32 %i.kp, i32 1) ; 2 uses
   %wide.trip.count314.i = zext nneg i32 %i.jq to i64 ; 2 uses

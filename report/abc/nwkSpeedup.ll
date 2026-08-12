@@ -203,15 +203,14 @@ Vec_PtrFree.exit:                                 ; preds = %bb.g, %bb.h
 bb.i:                                             ; preds = %.critedge4
   %i.by = getelementptr i8, ptr %4, i64 4         ; 5 uses
   %.val117 = load i32, ptr %i.by, align 4, !tbaa !27 ; 2 uses
-  %i.bz = shl nuw i32 1, %.val117                 ; 2 uses
+  %i.bz = shl nuw nsw i32 1, %.val117             ; 2 uses
   %.not164 = icmp eq i32 %.val117, 31             ; 2 uses
   br i1 %.not164, label %._crit_edge, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %bb.i
   %i.ca = getelementptr i8, ptr %3, i64 8
   %i.cb = getelementptr i8, ptr %4, i64 8
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.bz, i32 1)
-  %wide.trip.count189 = zext nneg i32 %smax to i64
+  %wide.trip.count189 = zext nneg i32 %i.bz to i64
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %.critedge10
@@ -368,7 +367,7 @@ Vec_PtrFree.exit137:                              ; preds = %._crit_edge, %bb.l
   br i1 %.not164, label %.critedge12, label %.lr.ph159.preheader
 
 .lr.ph159.preheader:                              ; preds = %.lr.ph163
-  %5 = sext i32 %i.bz to i64
+  %5 = zext nneg i32 %i.bz to i64
   br label %.lr.ph159
 
 .lr.ph159:                                        ; preds = %.lr.ph159.preheader, %._crit_edge160
@@ -769,9 +768,6 @@ declare noalias noundef ptr @realloc(ptr allocptr noundef captures(none), i64 no
 
 ; Function Attrs: nofree nounwind
 declare noundef i32 @putchar(i32 noundef) local_unnamed_addr #9
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.ctpop.i32(i32) #10

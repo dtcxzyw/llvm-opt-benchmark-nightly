@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #26
-  %i.bp = shl nuw i32 1, %i.aj                    ; 2 uses
+  %i.bp = shl nuw nsw i32 1, %i.aj                ; 2 uses
   %.not = icmp eq i32 %i.aj, 31
   br i1 %.not, label %._crit_edge124.split, label %.preheader110
 
@@ -213,15 +213,14 @@ bb.d:                                             ; preds = %bb.b
   %i.br = and i32 %i.bq, 1020
   %i.bs = zext nneg i32 %i.br to i64
   %scevgep = getelementptr i8, ptr %i.f, i64 %i.bs
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.bp, i32 1)
-  %i.bt = zext nneg i32 %smax to i64
+  %i.bt = zext nneg i32 %i.bp to i64
   %i.bu = shl nuw nsw i64 %i.bt, 2
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %i.a, ptr noundef nonnull align 4 dereferenceable(1) %scevgep, i64 %i.bu, i1 false), !tbaa !24
   %.not182 = icmp eq i32 %i.aj, 0
   br i1 %.not182, label %._crit_edge124.split, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %.preheader110
-  %1 = sext i32 %i.bp to i64
+  %1 = zext nneg i32 %i.bp to i64
   %wide.trip.count = zext nneg i32 %i.aj to i64
   br label %.preheader
 
@@ -624,7 +623,7 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define range(i32 0, 2) i32 @Ifn_ManSatCheckOne(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, i32 noundef %3, ptr nofree noundef readonly captures(none) %4, i32 noundef %5, ptr nofree noundef captures(none) initializes((4, 8)) %6) local_unnamed_addr #7 {
 bb.a:
-  %i.a = shl nuw i32 1, %3
+  %i.a = shl nuw nsw i32 1, %3                    ; 2 uses
   %i.b = getelementptr i8, ptr %1, i64 4
   %.val42 = load i32, ptr %i.b, align 4, !tbaa !85 ; 7 uses
   %i.c = load i32, ptr %6, align 8, !tbaa !87
@@ -675,11 +674,10 @@ Vec_IntFill.exit:                                 ; preds = %Vec_IntGrow.exit.i,
   %i.q = icmp sgt i32 %5, 0
   %i.r = getelementptr i8, ptr %6, i64 8
   %.val46 = load ptr, ptr %i.r, align 8, !tbaa !88 ; 2 uses
-  %smax63 = tail call i32 @llvm.smax.i32(i32 %i.a, i32 1) ; 2 uses
   br i1 %i.q, label %.preheader49.us.preheader, label %.preheader49.preheader
 
 .preheader49.preheader:                           ; preds = %.preheader49.lr.ph
-  %i.s = add nsw i32 %smax63, -1                  ; 2 uses
+  %i.s = add nsw i32 %i.a, -1                     ; 2 uses
   %i.t = lshr i32 %i.s, 6
   %i.u = zext nneg i32 %i.t to i64
   %i.v = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.u
@@ -766,7 +764,7 @@ Vec_IntFill.exit:                                 ; preds = %Vec_IntGrow.exit.i,
   %i.bi = getelementptr inbounds [4 x i8], ptr %.val46, i64 %i.bh
   store i32 %i.bg, ptr %i.bi, align 4, !tbaa !24
   %i.bj = add nuw nsw i32 %.03752.us, 1           ; 2 uses
-  %exitcond64.not = icmp eq i32 %i.bj, %smax63
+  %exitcond64.not = icmp eq i32 %i.bj, %i.a
   br i1 %exitcond64.not, label %.preheaderthread-pre-split, label %.preheader49.us, !llvm.loop !123
 
 .preheaderthread-pre-split:                       ; preds = %._crit_edge.us, %.preheader49.preheader
