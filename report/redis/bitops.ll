@@ -204,7 +204,7 @@ bb.av:                                            ; preds = %bb.au, %bb.at
   %i.di = tail call i64 @llvm.umax.i64(i64 %i.dh, i64 -32)
   %i.dj = add i64 %i.di, %.0469.lcssa
   %i.dk = and i64 %i.dj, -32
-  %i.dl = add i64 %i.dk, 32
+  %i.dl = add nuw i64 %i.dk, 32
   br label %.loopexit572
 
 .preheader570.us:                                 ; preds = %.preheader570.lr.ph, %._crit_edge675.us
@@ -269,7 +269,7 @@ bb.ax:                                            ; preds = %bb.av
   %i.eo = tail call i64 @llvm.umax.i64(i64 %i.en, i64 -32)
   %i.ep = add i64 %i.eo, %.0469.lcssa
   %i.eq = and i64 %i.ep, -32
-  %i.er = add i64 %i.eq, 32
+  %i.er = add nuw i64 %i.eq, 32
   br label %.loopexit572
 
 .preheader573.us:                                 ; preds = %.preheader573.lr.ph, %._crit_edge663.us
@@ -334,7 +334,7 @@ bb.az:                                            ; preds = %bb.ax
   %i.fu = tail call i64 @llvm.umax.i64(i64 %i.ft, i64 -32)
   %i.fv = add i64 %i.fu, %.0469.lcssa
   %i.fw = and i64 %i.fv, -32
-  %i.fx = add i64 %i.fw, 32
+  %i.fx = add nuw i64 %i.fw, 32
   br label %.loopexit572
 
 .preheader576.us:                                 ; preds = %.preheader576.lr.ph, %._crit_edge651.us
@@ -419,7 +419,7 @@ bb.bc:                                            ; preds = %bb.bb
   %i.hj = tail call i64 @llvm.umax.i64(i64 %i.hi, i64 -32)
   %i.hk = add i64 %i.hj, %.0469.lcssa
   %i.hl = and i64 %i.hk, -32
-  %i.hm = add i64 %i.hl, 32
+  %i.hm = add nuw i64 %i.hl, 32
   br label %._crit_edge628
 
 .preheader587.us:                                 ; preds = %.preheader587.lr.ph, %._crit_edge619.us
@@ -473,30 +473,18 @@ bb.bd:                                            ; preds = %.preheader587.us, %
   br i1 %i.in, label %.preheader587.us, label %._crit_edge628, !llvm.loop !148
 
 ._crit_edge628:                                   ; preds = %._crit_edge619.us, %.preheader587.preheader
-  %.6458.lcssa = phi i64 [ %i.hm, %.preheader587.preheader ], [ %i.il, %._crit_edge619.us ] ; 10 uses
+  %.6458.lcssa = phi i64 [ %i.hm, %.preheader587.preheader ], [ %i.il, %._crit_edge619.us ] ; 7 uses
   %i.io = load ptr, ptr %i.al, align 8, !tbaa !113 ; 3 uses
   switch i64 %.0436523528, label %.loopexit572 [
-    i64 4, label %.preheader581
-    i64 5, label %.preheader583
-    i64 6, label %.preheader585
+    i64 4, label %.lr.ph643
+    i64 5, label %.lr.ph639
+    i64 6, label %.lr.ph635
   ]
 
-.preheader585:                                    ; preds = %._crit_edge628
-  %.not713 = icmp eq i64 %.6458.lcssa, 0
-  br i1 %.not713, label %.loopexit572, label %.lr.ph635
-
-.preheader583:                                    ; preds = %._crit_edge628
-  %.not714 = icmp eq i64 %.6458.lcssa, 0
-  br i1 %.not714, label %.loopexit572, label %.lr.ph639
-
-.preheader581:                                    ; preds = %._crit_edge628
-  %.not715 = icmp eq i64 %.6458.lcssa, 0
-  br i1 %.not715, label %.loopexit572, label %.lr.ph643
-
-.lr.ph643:                                        ; preds = %.preheader581, %.lr.ph643
-  %.0426642 = phi ptr [ %i.jm, %.lr.ph643 ], [ %i.io, %.preheader581 ] ; 5 uses
-  %.5641 = phi ptr [ %i.jl, %.lr.ph643 ], [ %i.cz, %.preheader581 ] ; 6 uses
-  %.4442640 = phi i64 [ %i.jn, %.lr.ph643 ], [ 0, %.preheader581 ]
+.lr.ph643:                                        ; preds = %._crit_edge628, %.lr.ph643
+  %.0426642 = phi ptr [ %i.jm, %.lr.ph643 ], [ %i.io, %._crit_edge628 ] ; 5 uses
+  %.5641 = phi ptr [ %i.jl, %.lr.ph643 ], [ %i.cz, %._crit_edge628 ] ; 6 uses
+  %.4442640 = phi i64 [ %i.jn, %.lr.ph643 ], [ 0, %._crit_edge628 ]
   %i.ip = load i64, ptr %.0426642, align 8, !tbaa !20
   %i.iq = load i64, ptr %.5641, align 8, !tbaa !20
   %i.ir = xor i64 %i.iq, -1
@@ -529,10 +517,10 @@ bb.bd:                                            ; preds = %.preheader587.us, %
   %i.jo = icmp ult i64 %i.jn, %.6458.lcssa
   br i1 %i.jo, label %.lr.ph643, label %.loopexit572, !llvm.loop !149
 
-.lr.ph639:                                        ; preds = %.preheader583, %.lr.ph639
-  %.1638 = phi ptr [ %i.km, %.lr.ph639 ], [ %i.io, %.preheader583 ] ; 5 uses
-  %.6637 = phi ptr [ %i.kl, %.lr.ph639 ], [ %i.cz, %.preheader583 ] ; 6 uses
-  %.5443636 = phi i64 [ %i.kn, %.lr.ph639 ], [ 0, %.preheader583 ]
+.lr.ph639:                                        ; preds = %._crit_edge628, %.lr.ph639
+  %.1638 = phi ptr [ %i.km, %.lr.ph639 ], [ %i.io, %._crit_edge628 ] ; 5 uses
+  %.6637 = phi ptr [ %i.kl, %.lr.ph639 ], [ %i.cz, %._crit_edge628 ] ; 6 uses
+  %.5443636 = phi i64 [ %i.kn, %.lr.ph639 ], [ 0, %._crit_edge628 ]
   %i.jp = load i64, ptr %.1638, align 8, !tbaa !20
   %i.jq = xor i64 %i.jp, -1
   %i.jr = load i64, ptr %.6637, align 8, !tbaa !20
@@ -565,10 +553,10 @@ bb.bd:                                            ; preds = %.preheader587.us, %
   %i.ko = icmp ult i64 %i.kn, %.6458.lcssa
   br i1 %i.ko, label %.lr.ph639, label %.loopexit572, !llvm.loop !150
 
-.lr.ph635:                                        ; preds = %.preheader585, %.lr.ph635
-  %.2634 = phi ptr [ %i.li, %.lr.ph635 ], [ %i.io, %.preheader585 ] ; 5 uses
-  %.7633 = phi ptr [ %i.lh, %.lr.ph635 ], [ %i.cz, %.preheader585 ] ; 6 uses
-  %.6444632 = phi i64 [ %i.lj, %.lr.ph635 ], [ 0, %.preheader585 ]
+.lr.ph635:                                        ; preds = %._crit_edge628, %.lr.ph635
+  %.2634 = phi ptr [ %i.li, %.lr.ph635 ], [ %i.io, %._crit_edge628 ] ; 5 uses
+  %.7633 = phi ptr [ %i.lh, %.lr.ph635 ], [ %i.cz, %._crit_edge628 ] ; 6 uses
+  %.6444632 = phi i64 [ %i.lj, %.lr.ph635 ], [ 0, %._crit_edge628 ]
   %i.kp = load i64, ptr %.2634, align 8, !tbaa !20
   %i.kq = load i64, ptr %.7633, align 8, !tbaa !20
   %i.kr = and i64 %i.kq, %i.kp
@@ -703,8 +691,8 @@ bb.bf:                                            ; preds = %.lr.ph604, %bb.bf
   %i.nl = icmp ugt i64 %i.nk, 31
   br i1 %i.nl, label %.preheader589, label %.loopexit572, !llvm.loop !153
 
-.loopexit572:                                     ; preds = %._crit_edge605, %.lr.ph635, %.lr.ph639, %.lr.ph643, %.lr.ph647, %._crit_edge651.us, %._crit_edge663.us, %._crit_edge675.us, %.preheader576.preheader, %.preheader573.preheader, %.preheader570.preheader, %.preheader585, %.preheader583, %.preheader581, %.thread, %bb.be, %._crit_edge628, %bb.ar
-  %.9 = phi i64 [ 0, %bb.ar ], [ %i.dc, %.thread ], [ 0, %.preheader585 ], [ %i.hf, %.lr.ph647 ], [ %i.fq, %._crit_edge663.us ], [ 0, %bb.be ], [ %.6458.lcssa, %._crit_edge628 ], [ 0, %.preheader581 ], [ %i.fx, %.preheader576.preheader ], [ %i.gw, %._crit_edge651.us ], [ 0, %.preheader583 ], [ %i.ek, %._crit_edge675.us ], [ %.6458.lcssa, %.lr.ph635 ], [ %.6458.lcssa, %.lr.ph639 ], [ %i.dl, %.preheader570.preheader ], [ %.6458.lcssa, %.lr.ph643 ], [ %i.er, %.preheader573.preheader ], [ %i.nj, %._crit_edge605 ] ; 2 uses
+.loopexit572:                                     ; preds = %._crit_edge605, %.lr.ph635, %.lr.ph639, %.lr.ph643, %.lr.ph647, %._crit_edge651.us, %._crit_edge663.us, %._crit_edge675.us, %.preheader576.preheader, %.preheader573.preheader, %.preheader570.preheader, %.thread, %bb.be, %._crit_edge628, %bb.ar
+  %.9 = phi i64 [ 0, %bb.ar ], [ %i.dc, %.thread ], [ %i.hf, %.lr.ph647 ], [ %i.dl, %.preheader570.preheader ], [ %i.fq, %._crit_edge663.us ], [ 0, %bb.be ], [ %.6458.lcssa, %._crit_edge628 ], [ %.6458.lcssa, %.lr.ph643 ], [ %i.fx, %.preheader576.preheader ], [ %i.gw, %._crit_edge651.us ], [ %i.er, %.preheader573.preheader ], [ %i.ek, %._crit_edge675.us ], [ %.6458.lcssa, %.lr.ph635 ], [ %.6458.lcssa, %.lr.ph639 ], [ %i.nj, %._crit_edge605 ] ; 2 uses
   %i.nm = icmp ult i64 %.9, %.0466.lcssa
   br i1 %i.nm, label %.lr.ph703, label %.loopexit
 
