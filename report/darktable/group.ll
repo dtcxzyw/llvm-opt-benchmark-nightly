@@ -144,9 +144,9 @@ bb.f:                                             ; preds = %dt_masks_get_mask_r
   %i.y = load i64, ptr %i.x, align 8, !tbaa !73
   %i.z = sitofp reassoc nsz arcp contract afn i64 %i.y to double
   %i.aa = fmul reassoc nnan nsz arcp contract afn double %i.z, f0x3EB0C6F7A0B5ED8D
+  %7 = fadd reassoc nsz arcp contract afn double %i.aa, %i.w
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #11
-  %7 = fsub reassoc nsz arcp contract afn double %i.w, %i.k
-  %8 = fadd reassoc nsz arcp contract afn double %7, %i.aa
+  %8 = fsub reassoc nsz arcp contract afn double %7, %i.k
   tail call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str, double noundef %8) #11
   br label %bb.g
 
@@ -549,9 +549,9 @@ bb.an:                                            ; preds = %.loopexit
   %i.aey = load i64, ptr %i.mf, align 8, !tbaa !73
   %i.aez = sitofp reassoc nsz arcp contract afn i64 %i.aey to double
   %i.afa = fmul reassoc nnan nsz arcp contract afn double %i.aez, f0x3EB0C6F7A0B5ED8D
+  %12 = fadd reassoc nsz arcp contract afn double %i.afa, %i.aex
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #11
-  %12 = fsub reassoc nsz arcp contract afn double %i.aex, %i.nh
-  %13 = fadd reassoc nsz arcp contract afn double %12, %i.afa
+  %13 = fsub reassoc nsz arcp contract afn double %12, %i.nh
   %i.afb = trunc nuw nsw i64 %indvars.iv650 to i32
   tail call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.2, i32 noundef %i.afb, double noundef %13) #11
   %.pre = load i32, ptr getelementptr inbounds nuw (i8, ptr @darktable, i64 8), align 8, !tbaa !70
