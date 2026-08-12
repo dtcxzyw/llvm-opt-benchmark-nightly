@@ -11,18 +11,18 @@ define void @guided_filter(ptr nofree noundef readonly captures(none) %0, ptr no
 bb.a:
   %i.a = mul nsw i32 %6, 3
   %i.b = sext i32 %i.a to i64                     ; 3 uses
-  %i.c = tail call i64 @dt_round_size(i64 noundef %i.b, i64 noundef 16) #7
+  %i.c = tail call i64 @dt_round_size(i64 noundef %i.b, i64 noundef 16) #8
   %i.d = icmp ugt i64 %i.c, 512
   br i1 %i.d, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.e = tail call i64 @dt_round_size(i64 noundef %i.b, i64 noundef 16) #7
+  %i.e = tail call i64 @dt_round_size(i64 noundef %i.b, i64 noundef 16) #8
   %i.f = trunc i64 %i.e to i32
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
   %i.g = phi i32 [ %i.f, %bb.b ], [ 512, %bb.a ]  ; 6 uses
-  %i.h = fmul reassoc nsz arcp contract afn float %7, %7 ; 4 uses
+  %i.h = fmul reassoc nsz arcp contract afn float %7, %7 ; 3 uses
   %i.i = icmp sgt i32 %4, 0
   br i1 %i.i, label %.preheader.lr.ph, label %._crit_edge56
 
@@ -51,6 +51,8 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.w = shufflevector <4 x float> %i.v, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1>
   %broadcast.splatinsert116 = insertelement <8 x float> poison, float %i.h, i64 0
   %broadcast.splat117 = shufflevector <8 x float> %broadcast.splatinsert116, <8 x float> poison, <8 x i32> zeroinitializer ; 3 uses
+  %11 = insertelement <2 x float> poison, float %i.h, i64 0
+  %12 = shufflevector <2 x float> %11, <2 x float> poison, <2 x i32> zeroinitializer
   %ident.check.not = icmp eq i32 %5, 1
   %broadcast.splatinsert = insertelement <8 x float> poison, float %8, i64 0
   %broadcast.splat = shufflevector <8 x float> %broadcast.splatinsert, <8 x float> poison, <8 x i32> zeroinitializer
@@ -123,7 +125,7 @@ bb.d:                                             ; preds = %.preheader.us, %_gu
   %indvars.iv.next = add nsw i64 %indvars.iv, %i.m ; 3 uses
   %i.bm = trunc nsw i64 %indvars.iv.next to i32
   %i.bn = tail call i32 @llvm.smin.i32(i32 %i.bm, i32 %3) ; 2 uses
-  %i.bo = tail call i64 @dt_round_size(i64 noundef %i.b, i64 noundef 16) #7
+  %i.bo = tail call i64 @dt_round_size(i64 noundef %i.b, i64 noundef 16) #8
   %i.bp = trunc i64 %i.bo to i32                  ; 5 uses
   %i.bq = trunc nsw i64 %indvars.iv to i32        ; 2 uses
   %i.br = sub nsw i32 %i.bq, %i.bp
@@ -142,16 +144,16 @@ bb.d:                                             ; preds = %.preheader.us, %_gu
   %i.ce = shl nsw i64 %i.cb, 2
   %i.cf = mul i64 %i.ce, %i.cc                    ; 2 uses
   %i.cg = shl i64 %i.cf, 2
-  %i.ch = tail call ptr @dt_alloc_aligned(i64 noundef %i.cg) #7, !noalias !11 ; 18 uses
+  %i.ch = tail call ptr @dt_alloc_aligned(i64 noundef %i.cg) #8, !noalias !11 ; 18 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.ch, i64 64) ]
   %i.ci = mul i64 %i.cf, 9
-  %i.cj = tail call ptr @dt_alloc_aligned(i64 noundef %i.ci) #7, !noalias !14 ; 15 uses
+  %i.cj = tail call ptr @dt_alloc_aligned(i64 noundef %i.ci) #8, !noalias !14 ; 15 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.cj, i64 64) ]
-  %i.ck = tail call i64 @dt_round_size(i64 noundef %i.cb, i64 noundef 16) #7
+  %i.ck = tail call i64 @dt_round_size(i64 noundef %i.cb, i64 noundef 16) #8
   %i.cl = mul i64 %i.ck, 36
   %i.cm = add i64 %i.cl, 60
   %i.cn = and i64 %i.cm, -64
-  %i.co = tail call ptr @dt_alloc_aligned(i64 noundef %i.cn) #7 ; 6 uses
+  %i.co = tail call ptr @dt_alloc_aligned(i64 noundef %i.cn) #8 ; 6 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.co, i64 64) ]
   %i.cp = icmp slt i32 %i.bw, %i.by
   br i1 %i.cp, label %.lr.ph325.i.us, label %._crit_edge326.i.us
@@ -177,8 +179,8 @@ bb.d:                                             ; preds = %.preheader.us, %_gu
   %i.cz = mul i32 %i.cv, %i.cr
   %i.da = sext i32 %i.cz to i64
   %i.db = getelementptr inbounds [4 x i8], ptr %i.cj, i64 %i.da
-  tail call void @dt_box_mean_horizontal(ptr noundef %i.cy, i64 noundef %i.cb, i32 noundef 16777220, i64 noundef %.pre.i, ptr noundef %i.co) #7
-  tail call void @dt_box_mean_horizontal(ptr noundef %i.db, i64 noundef %i.cb, i32 noundef 16777225, i64 noundef %.pre.i, ptr noundef %i.co) #7
+  tail call void @dt_box_mean_horizontal(ptr noundef %i.cy, i64 noundef %i.cb, i32 noundef 16777220, i64 noundef %.pre.i, ptr noundef %i.co) #8
+  tail call void @dt_box_mean_horizontal(ptr noundef %i.db, i64 noundef %i.cb, i32 noundef 16777225, i64 noundef %.pre.i, ptr noundef %i.co) #8
   %indvars.iv.next.i.us = add nuw nsw i64 %indvars.iv.i.us, 1 ; 2 uses
   %exitcond.not.i.us = icmp eq i64 %indvars.iv.next.i.us, %wide.trip.count.i.us
   br i1 %exitcond.not.i.us, label %._crit_edge326.i.us, label %.lr.ph325.split.i.us
@@ -374,17 +376,17 @@ scalar.ph183:                                     ; preds = %scalar.ph183.prehea
   br i1 %exitcond344.not.i.us, label %._crit_edge.us.i.us, label %scalar.ph183, !llvm.loop !33
 
 ._crit_edge.us.i.us:                              ; preds = %scalar.ph183, %middle.block210
-  tail call void @dt_box_mean_horizontal(ptr noundef nonnull %i.ea, i64 noundef %i.cb, i32 noundef 16777220, i64 noundef %.pre.i, ptr noundef %i.co) #7
-  tail call void @dt_box_mean_horizontal(ptr noundef nonnull %i.ed, i64 noundef %i.cb, i32 noundef 16777225, i64 noundef %.pre.i, ptr noundef %i.co) #7
+  tail call void @dt_box_mean_horizontal(ptr noundef nonnull %i.ea, i64 noundef %i.cb, i32 noundef 16777220, i64 noundef %.pre.i, ptr noundef %i.co) #8
+  tail call void @dt_box_mean_horizontal(ptr noundef nonnull %i.ed, i64 noundef %i.cb, i32 noundef 16777225, i64 noundef %.pre.i, ptr noundef %i.co) #8
   %indvars.iv.next346.i.us = add nuw nsw i64 %indvars.iv345.i.us, 1 ; 2 uses
   %exitcond349.not.i.us.a = icmp eq i64 %indvars.iv.next346.i.us, %wide.trip.count348.i.us
   %indvar.next152 = add i32 %indvar151, 1
   br i1 %exitcond349.not.i.us.a, label %._crit_edge326.i.us, label %.lr.ph.us.i.us
 
 ._crit_edge326.i.us:                              ; preds = %.lr.ph325.split.i.us, %._crit_edge.us.i.us, %bb.d
-  tail call void @free(ptr noundef %i.co) #7
-  tail call void @dt_box_mean_vertical(ptr noundef %i.ch, i64 noundef %i.cc, i64 noundef %i.cb, i32 noundef 16777220, i64 noundef %.pre.i) #7
-  tail call void @dt_box_mean_vertical(ptr noundef %i.cj, i64 noundef %i.cc, i64 noundef %i.cb, i32 noundef 16777225, i64 noundef %.pre.i) #7
+  tail call void @free(ptr noundef %i.co) #8
+  tail call void @dt_box_mean_vertical(ptr noundef %i.ch, i64 noundef %i.cc, i64 noundef %i.cb, i32 noundef 16777220, i64 noundef %.pre.i) #8
+  tail call void @dt_box_mean_vertical(ptr noundef %i.cj, i64 noundef %i.cc, i64 noundef %i.cb, i32 noundef 16777225, i64 noundef %.pre.i) #8
   %.not.i.us = icmp eq i64 %i.cd, 0
   br i1 %.not.i.us, label %._crit_edge.i.us, label %.lr.ph.i.us.preheader
 
@@ -522,9 +524,9 @@ vector.body118:                                   ; preds = %vector.body118, %ve
   %i.jm = fdiv reassoc nsz arcp contract afn <8 x float> %i.jj, %i.ic ; 2 uses
   %i.jn = fmul reassoc nsz arcp contract afn <8 x float> %i.jl, %strided.vec123
   %i.jo = fmul reassoc nsz arcp contract afn <8 x float> %i.jm, %strided.vec124
-  %i.jp = fmul reassoc nsz arcp contract afn <8 x float> %i.jk, %strided.vec122
+  %i.jp = fmul reassoc nsz arcp contract afn <8 x float> %strided.vec122, %i.jk
   %i.jq = fadd reassoc nsz arcp contract afn <8 x float> %i.jn, %i.jo
-  %i.jr = fadd reassoc nsz arcp contract afn <8 x float> %i.jq, %i.jp
+  %i.jr = fadd reassoc nsz arcp contract afn <8 x float> %i.jp, %i.jq
   %i.js = fsub reassoc nsz arcp contract afn <8 x float> %strided.vec121, %i.jr
   %predphi = select nsz <8 x i1> %i.ie, <8 x float> %i.js, <8 x float> %strided.vec121
   %predphi141 = select nsz <8 x i1> %i.ie, <8 x float> %i.jm, <8 x float> zeroinitializer
@@ -553,55 +555,55 @@ middle.block145:                                  ; preds = %vector.body118
   %i.jw = getelementptr inbounds nuw i8, ptr %i.ch, i64 %.idx309.i.us ; 5 uses
   %i.jx = load float, ptr %i.jw, align 16, !tbaa !17 ; 5 uses
   %i.jy = getelementptr inbounds nuw i8, ptr %i.jw, i64 4
-  %i.jz = getelementptr inbounds nuw i8, ptr %i.jw, i64 8
-  %i.ka = getelementptr inbounds nuw i8, ptr %i.jw, i64 12 ; 2 uses
+  %i.jz = getelementptr inbounds nuw i8, ptr %i.jw, i64 8 ; 2 uses
+  %i.ka = getelementptr inbounds nuw i8, ptr %i.jw, i64 12
   %.idx310.i.us = mul i64 %.0271327.i.us, 36
-  %i.kb = getelementptr inbounds nuw i8, ptr %i.cj, i64 %.idx310.i.us ; 9 uses
+  %i.kb = getelementptr inbounds nuw i8, ptr %i.cj, i64 %.idx310.i.us ; 8 uses
   %i.kc = getelementptr inbounds nuw i8, ptr %i.kb, i64 12
   %i.kd = getelementptr inbounds nuw i8, ptr %i.kb, i64 16
   %i.ke = getelementptr inbounds nuw i8, ptr %i.kb, i64 20
   %i.kf = getelementptr inbounds nuw i8, ptr %i.kb, i64 24
-  %i.kg = getelementptr inbounds nuw i8, ptr %i.kb, i64 28
-  %11 = getelementptr inbounds nuw i8, ptr %i.kb, i64 32
-  %i.kh = load float, ptr %i.ka, align 4, !tbaa !17 ; 6 uses
-  %12 = load <2 x float>, ptr %i.jy, align 4, !tbaa !17 ; 5 uses
-  %13 = extractelement <2 x float> %12, i64 0     ; 3 uses
-  %foldExtExtBinop215 = fmul reassoc nsz arcp contract afn <2 x float> %12, %12
-  %i.ki = extractelement <2 x float> %foldExtExtBinop215, i64 0
-  %14 = load float, ptr %i.ke, align 4, !tbaa !17
-  %15 = load float, ptr %i.kd, align 4, !tbaa !17
-  %16 = load float, ptr %i.kf, align 4, !tbaa !17
-  %17 = load float, ptr %i.kc, align 4, !tbaa !17
-  %18 = fsub reassoc nsz arcp contract afn float %17, %i.ki
-  %i.kj = fmul reassoc nsz arcp contract afn float %i.kh, %13
-  %i.kk = fadd reassoc nsz arcp contract afn float %18, %i.h ; 3 uses
-  %19 = extractelement <2 x float> %12, i64 1     ; 5 uses
-  %20 = fmul reassoc nsz arcp contract afn float %19, %19
-  %21 = fmul reassoc nsz arcp contract afn float %19, %13
-  %i.kl = fsub reassoc nsz arcp contract afn float %16, %20
-  %22 = fsub reassoc nsz arcp contract afn float %15, %21 ; 6 uses
-  %23 = fadd reassoc nsz arcp contract afn float %i.kl, %i.h ; 3 uses
-  %24 = load float, ptr %11, align 4, !tbaa !17
-  %25 = load float, ptr %i.kg, align 4, !tbaa !17
-  %26 = fmul reassoc nsz arcp contract afn float %i.kh, %i.kh
-  %27 = fsub reassoc nsz arcp contract afn float %24, %26
-  %28 = fmul reassoc nsz arcp contract afn float %i.kh, %19
-  %29 = fsub reassoc nsz arcp contract afn float %14, %i.kj ; 6 uses
-  %30 = fadd reassoc nsz arcp contract afn float %27, %i.h ; 3 uses
-  %31 = fsub reassoc nsz arcp contract afn float %25, %28 ; 6 uses
-  %i.km = fmul reassoc nsz arcp contract afn float %30, %22
-  %32 = fmul reassoc nsz arcp contract afn float %30, %23
-  %i.kn = fmul reassoc nsz arcp contract afn float %31, %29
-  %i.ko = fmul reassoc nsz arcp contract afn float %31, %31
-  %i.kp = fsub reassoc nsz arcp contract afn float %i.km, %i.kn ; 2 uses
-  %i.kq = fsub reassoc nsz arcp contract afn float %32, %i.ko ; 2 uses
+  %i.kg = getelementptr inbounds nuw i8, ptr %i.kb, i64 32
+  %13 = load float, ptr %i.ke, align 4, !tbaa !17
+  %i.kh = load float, ptr %i.kf, align 4, !tbaa !17
+  %14 = load float, ptr %i.kc, align 4, !tbaa !17
+  %15 = load float, ptr %i.kg, align 4, !tbaa !17
+  %16 = load <2 x float>, ptr %i.jy, align 4, !tbaa !17 ; 5 uses
+  %i.ki = extractelement <2 x float> %16, i64 0   ; 2 uses
+  %foldExtExtBinop216 = fmul reassoc nsz arcp contract afn <2 x float> %16, %16
+  %17 = extractelement <2 x float> %foldExtExtBinop216, i64 0
+  %18 = load <2 x float>, ptr %i.jz, align 8, !tbaa !17 ; 6 uses
+  %19 = fsub reassoc nsz arcp contract afn float %14, %17
+  %20 = extractelement <2 x float> %18, i64 1     ; 3 uses
+  %i.kj = fmul reassoc nsz arcp contract afn float %20, %i.ki
+  %i.kk = fadd reassoc nsz arcp contract afn float %19, %i.h ; 3 uses
+  %21 = tail call <4 x float> @llvm.masked.load.v4f32.p0(ptr nonnull align 4 %i.kd, <4 x i1> <i1 true, i1 false, i1 false, i1 true>, <4 x float> poison), !tbaa !17
+  %22 = shufflevector <4 x float> %21, <4 x float> poison, <2 x i32> <i32 0, i32 3>
+  %23 = fmul reassoc nsz arcp contract afn <2 x float> %18, %16
+  %i.kl = fsub reassoc nsz arcp contract afn float %13, %i.kj ; 6 uses
+  %24 = fmul reassoc nsz arcp contract afn <2 x float> %18, %18
+  %25 = insertelement <2 x float> poison, float %i.kh, i64 0
+  %26 = insertelement <2 x float> %25, float %15, i64 1
+  %27 = fsub reassoc nsz arcp contract afn <2 x float> %26, %24
+  %28 = fadd reassoc nsz arcp contract afn <2 x float> %27, %12 ; 2 uses
+  %29 = fsub reassoc nsz arcp contract afn <2 x float> %22, %23 ; 2 uses
+  %30 = extractelement <2 x float> %29, i64 0     ; 6 uses
+  %31 = extractelement <2 x float> %28, i64 1     ; 3 uses
+  %32 = fmul reassoc nsz arcp contract afn float %31, %30
+  %33 = extractelement <2 x float> %28, i64 0     ; 3 uses
+  %i.km = fmul reassoc nsz arcp contract afn float %31, %33
+  %34 = extractelement <2 x float> %29, i64 1     ; 6 uses
+  %i.kn = fmul reassoc nsz arcp contract afn float %34, %i.kl
+  %i.ko = fmul reassoc nsz arcp contract afn float %34, %34
+  %i.kp = fsub reassoc nsz arcp contract afn float %32, %i.kn ; 2 uses
+  %i.kq = fsub reassoc nsz arcp contract afn float %i.km, %i.ko ; 2 uses
   %i.kr = fmul reassoc nsz arcp contract afn float %i.kq, %i.kk
-  %i.ks = fmul reassoc nsz arcp contract afn float %i.kp, %22
+  %i.ks = fmul reassoc nsz arcp contract afn float %i.kp, %30
   %i.kt = fsub reassoc nsz arcp contract afn float %i.kr, %i.ks
-  %i.ku = fmul reassoc nsz arcp contract afn float %31, %22
-  %i.kv = fmul reassoc nsz arcp contract afn float %23, %29
+  %i.ku = fmul reassoc nsz arcp contract afn float %34, %30
+  %i.kv = fmul reassoc nsz arcp contract afn float %33, %i.kl
   %i.kw = fsub reassoc nsz arcp contract afn float %i.ku, %i.kv ; 2 uses
-  %i.kx = fmul reassoc nsz arcp contract afn float %i.kw, %29
+  %i.kx = fmul reassoc nsz arcp contract afn float %i.kw, %i.kl
   %i.ky = fadd reassoc nsz arcp contract afn float %i.kt, %i.kx ; 3 uses
   %i.kz = tail call reassoc nsz arcp contract afn float @llvm.fabs.f32(float %i.ky)
   %i.la = fcmp reassoc nsz arcp contract afn ogt float %i.kz, f0x35000000
@@ -609,53 +611,56 @@ middle.block145:                                  ; preds = %vector.body118
 
 bb.e:                                             ; preds = %.lr.ph.i.us
   %i.lb = load float, ptr %i.kb, align 4, !tbaa !17
-  %i.lc = fmul reassoc nsz arcp contract afn float %13, %i.jx
+  %i.lc = fmul reassoc nsz arcp contract afn float %i.ki, %i.jx
   %i.ld = fsub reassoc nsz arcp contract afn float %i.lb, %i.lc ; 3 uses
   %i.le = getelementptr inbounds nuw i8, ptr %i.kb, i64 4
-  %i.lf = fmul reassoc nsz arcp contract afn float %19, %i.jx
+  %35 = extractelement <2 x float> %18, i64 0
+  %i.lf = fmul reassoc nsz arcp contract afn float %35, %i.jx
   %i.lg = getelementptr inbounds nuw i8, ptr %i.kb, i64 8
-  %i.lh = fmul reassoc nsz arcp contract afn float %i.kh, %i.jx
+  %i.lh = fmul reassoc nsz arcp contract afn float %20, %i.jx
   %i.li = fmul reassoc nsz arcp contract afn float %i.ld, %i.kw
   %i.lj = load float, ptr %i.lg, align 4, !tbaa !17
   %i.lk = load float, ptr %i.le, align 4, !tbaa !17
   %i.ll = fsub reassoc nsz arcp contract afn float %i.lj, %i.lh ; 3 uses
   %i.lm = fsub reassoc nsz arcp contract afn float %i.lk, %i.lf ; 3 uses
-  %i.ln = fmul reassoc nsz arcp contract afn float %i.lm, %31 ; 2 uses
-  %i.lo = fmul reassoc nsz arcp contract afn float %i.ll, %23 ; 2 uses
-  %i.lp = fmul reassoc nsz arcp contract afn float %i.ll, %22
-  %i.lq = fmul reassoc nsz arcp contract afn float %i.lm, %30
-  %i.lr = fmul reassoc nsz arcp contract afn float %i.lm, %29
-  %i.ls = fmul reassoc nsz arcp contract afn float %i.ll, %31
+  %i.ln = fmul reassoc nsz arcp contract afn float %i.lm, %34 ; 2 uses
+  %i.lo = fmul reassoc nsz arcp contract afn float %i.ll, %33 ; 2 uses
+  %i.lp = fmul reassoc nsz arcp contract afn float %i.ll, %30
+  %i.lq = fmul reassoc nsz arcp contract afn float %i.lm, %31
+  %i.lr = fmul reassoc nsz arcp contract afn float %i.lm, %i.kl
+  %i.ls = fmul reassoc nsz arcp contract afn float %i.ll, %34
   %i.lt = fsub reassoc nsz arcp contract afn float %i.ln, %i.lo
   %i.lu = fsub reassoc nsz arcp contract afn float %i.lp, %i.lr ; 2 uses
   %i.lv = fsub reassoc nsz arcp contract afn float %i.lq, %i.ls ; 2 uses
   %i.lw = fmul reassoc nsz arcp contract afn float %i.lv, %i.kk
-  %i.lx = fmul reassoc nsz arcp contract afn float %i.lt, %29
+  %i.lx = fmul reassoc nsz arcp contract afn float %i.lt, %i.kl
   %i.ly = fmul reassoc nsz arcp contract afn float %i.kp, %i.ld
   %i.lz = fmul reassoc nsz arcp contract afn float %i.ld, %i.kq
   %i.ma = fsub reassoc nsz arcp contract afn float %i.lw, %i.ly
   %i.mb = fadd reassoc nsz arcp contract afn float %i.lx, %i.lz
-  %i.mc = fmul reassoc nsz arcp contract afn float %i.lu, %29
-  %i.md = fmul reassoc nsz arcp contract afn float %22, %i.lv
+  %i.mc = fmul reassoc nsz arcp contract afn float %i.lu, %i.kl
+  %i.md = fmul reassoc nsz arcp contract afn float %30, %i.lv
   %i.me = fadd reassoc nsz arcp contract afn float %i.ma, %i.mc
   %i.mf = fsub reassoc nsz arcp contract afn float %i.mb, %i.md
   %i.mg = fsub reassoc nsz arcp contract afn float %i.lo, %i.ln
   %i.mh = fmul reassoc nsz arcp contract afn float %i.mg, %i.kk
   %i.mi = fadd reassoc nsz arcp contract afn float %i.mh, %i.li
-  %i.mj = fmul reassoc nsz arcp contract afn float %22, %i.lu
+  %i.mj = fmul reassoc nsz arcp contract afn float %30, %i.lu
   %i.mk = fsub reassoc nsz arcp contract afn float %i.mi, %i.mj
   %i.ml = insertelement <2 x float> poison, float %i.mf, i64 0
   %i.mm = insertelement <2 x float> %i.ml, float %i.me, i64 1
   %i.mn = insertelement <2 x float> poison, float %i.ky, i64 0
   %i.mo = shufflevector <2 x float> %i.mn, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.mp = fdiv reassoc nsz arcp contract afn <2 x float> %i.mm, %i.mo ; 2 uses
+  %i.mp = fdiv reassoc nsz arcp contract afn <2 x float> %i.mm, %i.mo ; 3 uses
   %i.mq = fdiv reassoc nsz arcp contract afn float %i.mk, %i.ky ; 2 uses
-  %.neg316.i.neg.us = fmul reassoc nsz arcp contract afn float %i.mq, %i.kh
-  %i.mr = fmul reassoc nsz arcp contract afn <2 x float> %i.mp, %12 ; 2 uses
-  %i.ms = extractelement <2 x float> %i.mr, i64 1
+  %shift = shufflevector <2 x float> %i.mp, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %i.mr = fmul reassoc nsz arcp contract afn <2 x float> %shift, %18
+  %i.ms = extractelement <2 x float> %i.mr, i64 0
+  %.neg316.i.neg.us = fmul reassoc nsz arcp contract afn float %i.mq, %20
+  %foldExtExtBinop220 = fmul reassoc nsz arcp contract afn <2 x float> %16, %i.mp
+  %i.mt = extractelement <2 x float> %foldExtExtBinop220, i64 0
   %reass.add.us = fadd reassoc nsz arcp contract afn float %i.ms, %.neg316.i.neg.us
-  %i.mt = extractelement <2 x float> %i.mr, i64 0
-  %reass.add52.us = fadd reassoc nsz arcp contract afn float %reass.add.us, %i.mt
+  %reass.add52.us = fadd reassoc nsz arcp contract afn float %i.mt, %reass.add.us
   %i.mu = fsub reassoc nsz arcp contract afn float %i.jx, %reass.add52.us
   br label %bb.f
 
@@ -671,8 +676,8 @@ bb.f:                                             ; preds = %bb.e, %.lr.ph.i.us
   br i1 %exitcond350.not.i.us, label %._crit_edge.i.us, label %.lr.ph.i.us, !llvm.loop !40
 
 ._crit_edge.i.us:                                 ; preds = %bb.f, %middle.block145, %._crit_edge326.i.us
-  tail call void @free(ptr noundef %i.cj) #7
-  tail call void @dt_box_mean(ptr noundef %i.ch, i64 noundef %i.cc, i64 noundef %i.cb, i32 noundef 16777220, i64 noundef %.pre.i, i32 noundef 1) #7
+  tail call void @free(ptr noundef %i.cj) #8
+  tail call void @dt_box_mean(ptr noundef %i.ch, i64 noundef %i.cc, i64 noundef %i.cb, i32 noundef 16777220, i64 noundef %.pre.i, i32 noundef 1) #8
   br i1 %i.aj, label %.lr.ph336.i.us, label %_guided_filter_tiling.exit.us
 
 .lr.ph336.i.us:                                   ; preds = %._crit_edge.i.us
@@ -892,7 +897,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   br i1 %exitcond360.not.i.us, label %_guided_filter_tiling.exit.us, label %.lr.ph332.i.us
 
 _guided_filter_tiling.exit.us:                    ; preds = %._crit_edge333.i.us, %.lr.ph336.i.us, %._crit_edge.i.us
-  tail call void @free(ptr noundef %i.ch) #7
+  tail call void @free(ptr noundef %i.ch) #8
   %i.rz = icmp slt i64 %indvars.iv.next, %i.k
   %indvar.next77 = add i64 %indvar76, 1
   br i1 %i.rz, label %bb.d, label %._crit_edge.us
@@ -952,6 +957,9 @@ declare <8 x float> @llvm.fabs.v8f32(<8 x float>) #4
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(write)
 declare void @llvm.masked.scatter.v8f32.v8p0(<8 x float>, <8 x ptr>, <8 x i1>) #6
 
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
+declare <4 x float> @llvm.masked.load.v4f32.p0(ptr captures(none), <4 x i1>, <4 x float>) #7
+
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="icelake-server" "target-features"="+64bit,+adx,+aes,+avx,+avx2,+avx512bitalg,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512ifma,+avx512vbmi,+avx512vbmi2,+avx512vl,+avx512vnni,+avx512vpopcntdq,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+gfni,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdpid,+rdrnd,+rdseed,+sahf,+sha,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+vaes,+vpclmulqdq,+wbnoinvd,+x87,+xsave,+xsavec,+xsaveopt,+xsaves,-amx-avx512,-amx-bf16,-amx-complex,-amx-fp16,-amx-fp8,-amx-int8,-amx-movrs,-amx-tile,-avx10.1,-avx10.2,-avx512bf16,-avx512bmm,-avx512fp16,-avx512vp2intersect,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-ccmp,-cf,-cldemote,-clzero,-cmpccxadd,-egpr,-enqcmd,-fma4,-hreset,-jmpabs,-kl,-lwp,-movdir64b,-movdiri,-movrs,-mwaitx,-ndd,-nf,-pconfig,-ppx,-prefetchi,-ptwrite,-push2pop2,-raoint,-rdpru,-rtm,-serialize,-sgx,-sha512,-shstk,-sm3,-sm4,-sse4a,-tbm,-tsxldtrk,-uintr,-usermsr,-waitpkg,-widekl,-xop,-zu" }
 attributes #1 = { "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="icelake-server" "target-features"="+64bit,+adx,+aes,+avx,+avx2,+avx512bitalg,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512ifma,+avx512vbmi,+avx512vbmi2,+avx512vl,+avx512vnni,+avx512vpopcntdq,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+gfni,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdpid,+rdrnd,+rdseed,+sahf,+sha,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+vaes,+vpclmulqdq,+wbnoinvd,+x87,+xsave,+xsavec,+xsaveopt,+xsaves,-amx-avx512,-amx-bf16,-amx-complex,-amx-fp16,-amx-fp8,-amx-int8,-amx-movrs,-amx-tile,-avx10.1,-avx10.2,-avx512bf16,-avx512bmm,-avx512fp16,-avx512vp2intersect,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-ccmp,-cf,-cldemote,-clzero,-cmpccxadd,-egpr,-enqcmd,-fma4,-hreset,-jmpabs,-kl,-lwp,-movdir64b,-movdiri,-movrs,-mwaitx,-ndd,-nf,-pconfig,-ppx,-prefetchi,-ptwrite,-push2pop2,-raoint,-rdpru,-rtm,-serialize,-sgx,-sha512,-shstk,-sm3,-sm4,-sse4a,-tbm,-tsxldtrk,-uintr,-usermsr,-waitpkg,-widekl,-xop,-zu" }
 attributes #2 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
@@ -959,7 +967,8 @@ attributes #3 = { mustprogress nounwind willreturn allockind("free") memory(argm
 attributes #4 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #5 = { nocallback nofree nosync nounwind willreturn memory(read) }
 attributes #6 = { nocallback nofree nosync nounwind willreturn memory(write) }
-attributes #7 = { nounwind }
+attributes #7 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
+attributes #8 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4}
 !llvm.ident = !{!5}

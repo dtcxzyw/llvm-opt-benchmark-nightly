@@ -204,6 +204,7 @@ bb.a:
   %i.a = fmul reassoc nsz arcp contract afn float %3, 5.000000e-01 ; 2 uses
   %i.b = fmul reassoc nsz arcp contract afn float %4, %4
   %i.c = fmul reassoc nsz arcp contract afn float %i.b, %i.a
+  %5 = fsub reassoc nsz arcp contract afn float %4, %i.c
   %i.d = uitofp reassoc nsz arcp contract afn i64 %1 to float
   %i.e = fdiv reassoc nsz arcp contract afn float 1.000000e+00, %i.d
   %i.f = add i64 %1, -1                           ; 7 uses
@@ -233,12 +234,12 @@ bb.a:
   %i.p = fmul reassoc nnan nsz arcp contract afn float %i.o, 1.250000e-01
   %i.q = fadd reassoc nsz arcp contract afn float %i.p, -1.000000e+00
   %i.r = fmul reassoc nsz arcp contract afn float %i.q, %i.l
-  %i.s = fadd reassoc nsz arcp contract afn float %i.r, -1.000000e+00 ; 4 uses
-  %i.t = fsub reassoc nsz arcp contract afn float %i.s, %4 ; 2 uses
+  %i.s = fadd reassoc nsz arcp contract afn float %i.r, -1.000000e+00 ; 3 uses
+  %i.t = fsub reassoc nsz arcp contract afn float %i.s, %4 ; 3 uses
   %i.u = fmul reassoc nsz arcp contract afn float %i.t, %i.t
   %i.v = fmul reassoc nsz arcp contract afn float %i.u, %i.a
-  %5 = fsub reassoc nsz arcp contract afn float %i.s, %i.c
-  %i.w = fadd reassoc nsz arcp contract afn float %5, %i.v ; 2 uses
+  %6 = fadd reassoc nsz arcp contract afn float %i.t, %i.v
+  %i.w = fadd reassoc nsz arcp contract afn float %6, %5 ; 2 uses
   %i.x = fmul reassoc nsz arcp contract afn float %i.s, %cos
   %i.y = fmul reassoc nsz arcp contract afn float %i.s, %sin
   %i.z = fadd reassoc nsz arcp contract afn float %i.x, 1.000000e+00
