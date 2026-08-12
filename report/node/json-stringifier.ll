@@ -204,10 +204,9 @@ bb.dw:                                            ; preds = %.lr.ph700
   br i1 %or.cond, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit.thread, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit.thread655
 
 _ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit.thread655: ; preds = %bb.dw
-  %9 = and i16 %i.ov, -10240
-  %10 = icmp eq i16 %9, -10240
+  %9 = icmp slt i16 %i.ov, -8192
   %i.pb = icmp eq i64 %.053.i698, %.056.i697      ; 2 uses
-  br i1 %10, label %bb.dx, label %bb.et
+  br i1 %9, label %bb.dx, label %bb.et
 
 bb.dx:                                            ; preds = %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit.thread655
   br i1 %i.pb, label %_ZN2v88internal15JsonStringifier15NoExtendBuilderItE15AppendSubstringItEEvPKT_mm.exit61.i, label %bb.dy
@@ -554,10 +553,9 @@ bb.fm:                                            ; preds = %bb.fl
   br i1 %or.cond659, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit98.thread, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit98.thread656
 
 _ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit98.thread656: ; preds = %bb.fm
-  %11 = and i16 %i.ri, -10240
-  %12 = icmp eq i16 %11, -10240
+  %10 = icmp slt i16 %i.ri, -8192
   call void @_ZN2v88internal15JsonStringifier15AppendSubstringItEEvPKT_mm(ptr noundef nonnull align 8 dereferenceable(2688) %0, ptr noundef nonnull %i.nz, i64 noundef %.045.i741, i64 noundef %.048.i740)
-  br i1 %12, label %bb.fn, label %bb.gu
+  br i1 %10, label %bb.fn, label %bb.gu
 
 bb.fn:                                            ; preds = %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit98.thread656
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #21
@@ -960,14 +958,13 @@ bb.bc:                                            ; preds = %.lr.ph391
   br i1 %or.cond, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit.thread, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit.thread347, !prof !349
 
 _ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit.thread347: ; preds = %bb.bc
-  %3 = and i16 %i.tc, -10240
-  %4 = icmp eq i16 %3, -10240
+  %3 = icmp slt i16 %i.tc, -8192
   %i.ti = zext i32 %.055.i.i75390 to i64
   %i.tj = getelementptr inbounds nuw [2 x i8], ptr %i.si, i64 %i.ti
   %i.tk = sub i32 %.057.i.i74389, %.055.i.i75390
   %i.tl = zext i32 %i.tk to i64
   call void @_ZN2v88internal9OutBufferItE6AppendItQgestT_stTL0__EEvPKS4_m(ptr noundef nonnull align 8 dereferenceable(640) %i.so, ptr noundef nonnull %i.tj, i64 noundef %i.tl)
-  br i1 %4, label %bb.bd, label %bb.bl
+  br i1 %3, label %bb.bd, label %bb.bl
 
 bb.bd:                                            ; preds = %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit.thread347
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #21
@@ -1285,14 +1282,13 @@ bb.cj:                                            ; preds = %.lr.ph386
   br i1 %or.cond353, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit162.thread, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit162.thread348, !prof !351
 
 _ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit162.thread348: ; preds = %bb.cj
-  %5 = and i16 %i.xi, -10240
-  %6 = icmp eq i16 %5, -10240
+  %4 = icmp slt i16 %i.xi, -8192
   %i.xo = zext i32 %.055.i.i94385 to i64
   %i.xp = getelementptr inbounds nuw [2 x i8], ptr %.0.i157, i64 %i.xo
   %i.xq = sub i32 %.057.i.i93384, %.055.i.i94385
   %i.xr = zext i32 %i.xq to i64
   call void @_ZN2v88internal9OutBufferItE6AppendItQgestT_stTL0__EEvPKS4_m(ptr noundef nonnull align 8 dereferenceable(640) %i.wu, ptr noundef %i.xp, i64 noundef %i.xr)
-  br i1 %6, label %bb.ck, label %bb.cs
+  br i1 %4, label %bb.ck, label %bb.cs
 
 bb.ck:                                            ; preds = %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit162.thread348
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #21
@@ -1586,14 +1582,13 @@ bb.do:                                            ; preds = %.lr.ph381
   br i1 %or.cond355, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit173.thread, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit173.thread349, !prof !351
 
 _ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit173.thread349: ; preds = %bb.do
-  %7 = and i16 %i.abh, -10240
-  %8 = icmp eq i16 %7, -10240
+  %5 = icmp slt i16 %i.abh, -8192
   %i.abn = zext i32 %.055.i.i85380 to i64
   %i.abo = getelementptr inbounds nuw [2 x i8], ptr %i.aar, i64 %i.abn
   %i.abp = sub i32 %.057.i.i84379, %.055.i.i85380
   %i.abq = zext i32 %i.abp to i64
   call void @_ZN2v88internal9OutBufferItE6AppendItQgestT_stTL0__EEvPKS4_m(ptr noundef nonnull align 8 dereferenceable(640) %i.aao, ptr noundef %i.abo, i64 noundef %i.abq)
-  br i1 %8, label %bb.dp, label %bb.dx
+  br i1 %5, label %bb.dp, label %bb.dx
 
 bb.dp:                                            ; preds = %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit173.thread349
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #21
@@ -1775,14 +1770,13 @@ bb.ec:                                            ; preds = %.lr.ph
   br i1 %or.cond357, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit180.thread, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit180.thread350, !prof !351
 
 _ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit180.thread350: ; preds = %bb.ec
-  %9 = and i16 %i.aen, -10240
-  %10 = icmp eq i16 %9, -10240
+  %6 = icmp slt i16 %i.aen, -8192
   %i.aet = zext i32 %.055.i.i378 to i64
   %i.aeu = getelementptr inbounds nuw [2 x i8], ptr %i.adx, i64 %i.aet
   %i.aev = sub i32 %.057.i.i377, %.055.i.i378
   %i.aew = zext i32 %i.aev to i64
   call void @_ZN2v88internal9OutBufferItE6AppendItQgestT_stTL0__EEvPKS4_m(ptr noundef nonnull align 8 dereferenceable(640) %i.aao, ptr noundef nonnull %i.aeu, i64 noundef %i.aew)
-  br i1 %10, label %bb.ed, label %bb.el
+  br i1 %6, label %bb.ed, label %bb.el
 
 bb.ed:                                            ; preds = %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit180.thread350
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #21
@@ -2185,14 +2179,13 @@ bb.dm:                                            ; preds = %.lr.ph3447
   br i1 %or.cond, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit.thread, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit.thread2654, !prof !351
 
 _ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit.thread2654: ; preds = %bb.dm
-  %7 = and i16 %i.aht, -10240
-  %8 = icmp eq i16 %7, -10240
+  %7 = icmp slt i16 %i.aht, -8192
   %i.ahz = zext i32 %.055.i.i.i3446 to i64
   %i.aia = getelementptr inbounds nuw [2 x i8], ptr %i.ahc, i64 %i.ahz
   %i.aib = sub i32 %.057.i.i.i3445, %.055.i.i.i3446
   %i.aic = zext i32 %i.aib to i64
   call void @_ZN2v88internal9OutBufferItE6AppendItQgestT_stTL0__EEvPKS4_m(ptr noundef nonnull align 8 dereferenceable(640) %i.z, ptr noundef nonnull %i.aia, i64 noundef %i.aic)
-  br i1 %8, label %bb.dn, label %bb.dv
+  br i1 %7, label %bb.dn, label %bb.dv
 
 bb.dn:                                            ; preds = %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit.thread2654
   call void @llvm.lifetime.start.p0(ptr nonnull %i.s) #21
@@ -2507,14 +2500,13 @@ bb.et:                                            ; preds = %.lr.ph3442
   br i1 %or.cond2833, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit532.thread, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit532.thread2655, !prof !351
 
 _ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit532.thread2655: ; preds = %bb.et
-  %9 = and i16 %i.alw, -10240
-  %10 = icmp eq i16 %9, -10240
+  %8 = icmp slt i16 %i.alw, -8192
   %i.amc = zext i32 %.055.i.i102.i3441 to i64
   %i.amd = getelementptr inbounds nuw [2 x i8], ptr %.0.i527, i64 %i.amc
   %i.ame = sub i32 %.057.i.i101.i3440, %.055.i.i102.i3441
   %i.amf = zext i32 %i.ame to i64
   call void @_ZN2v88internal9OutBufferItE6AppendItQgestT_stTL0__EEvPKS4_m(ptr noundef nonnull align 8 dereferenceable(640) %i.z, ptr noundef %i.amd, i64 noundef %i.amf)
-  br i1 %10, label %bb.eu, label %bb.fc
+  br i1 %8, label %bb.eu, label %bb.fc
 
 bb.eu:                                            ; preds = %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit532.thread2655
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q) #21
@@ -2842,14 +2834,13 @@ bb.gb:                                            ; preds = %.lr.ph3437
   br i1 %or.cond2835, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit546.thread, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit546.thread2656, !prof !351
 
 _ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit546.thread2656: ; preds = %bb.gb
-  %11 = and i16 %i.aqj, -10240
-  %12 = icmp eq i16 %11, -10240
+  %9 = icmp slt i16 %i.aqj, -8192
   %i.aqp = zext i32 %.055.i.i111.i3436 to i64
   %i.aqq = getelementptr inbounds nuw [2 x i8], ptr %.0.i540, i64 %i.aqp
   %i.aqr = sub i32 %.057.i.i110.i3435, %.055.i.i111.i3436
   %i.aqs = zext i32 %i.aqr to i64
   call void @_ZN2v88internal9OutBufferItE6AppendItQgestT_stTL0__EEvPKS4_m(ptr noundef nonnull align 8 dereferenceable(640) %i.z, ptr noundef %i.aqq, i64 noundef %i.aqs)
-  br i1 %12, label %bb.gc, label %bb.gk
+  br i1 %9, label %bb.gc, label %bb.gk
 
 bb.gc:                                            ; preds = %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit546.thread2656
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p) #21
@@ -3131,14 +3122,13 @@ bb.hf:                                            ; preds = %.lr.ph3432
   br i1 %or.cond2837, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit556.thread, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit556.thread2657, !prof !351
 
 _ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit556.thread2657: ; preds = %bb.hf
-  %13 = and i16 %i.atu, -10240
-  %14 = icmp eq i16 %13, -10240
+  %10 = icmp slt i16 %i.atu, -8192
   %i.aua = zext i32 %.055.i.i92.i3431 to i64
   %i.aub = getelementptr inbounds nuw [2 x i8], ptr %i.apb, i64 %i.aua
   %i.auc = sub i32 %.057.i.i91.i3430, %.055.i.i92.i3431
   %i.aud = zext i32 %i.auc to i64
   call void @_ZN2v88internal9OutBufferItE6AppendItQgestT_stTL0__EEvPKS4_m(ptr noundef nonnull align 8 dereferenceable(640) %i.z, ptr noundef nonnull %i.aub, i64 noundef %i.aud)
-  br i1 %14, label %bb.hg, label %bb.ho
+  br i1 %10, label %bb.hg, label %bb.ho
 
 bb.hg:                                            ; preds = %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit556.thread2657
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r) #21
@@ -3541,14 +3531,13 @@ bb.nj:                                            ; preds = %.lr.ph3345
   br i1 %or.cond2839, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit774.thread, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit774.thread2725, !prof !351
 
 _ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit774.thread2725: ; preds = %bb.nj
-  %15 = and i16 %i.cho, -10240
-  %16 = icmp eq i16 %15, -10240
+  %11 = icmp slt i16 %i.cho, -8192
   %i.chu = zext i32 %.055.i.i.i1393344 to i64
   %i.chv = getelementptr inbounds nuw [2 x i8], ptr %i.cgx, i64 %i.chu ; 34 uses
   %i.chw = sub i32 %.057.i.i.i1383343, %.055.i.i.i1393344 ; 3 uses
   %i.chx = zext i32 %i.chw to i64                 ; 4 uses
   %i.chy = load ptr, ptr %i.y, align 8            ; 34 uses
-  br i1 %16, label %bb.nk, label %bb.oi
+  br i1 %11, label %bb.nk, label %bb.oi
 
 bb.nk:                                            ; preds = %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit774.thread2725
   switch i32 %i.chw, label %_ZSt8__copy_nIPKtmPtET1_T_T0_S3_St26random_access_iterator_tag.exit.i.i.i775 [
@@ -3951,14 +3940,13 @@ bb.pw:                                            ; preds = %.lr.ph3340
   br i1 %or.cond2841, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit793.thread, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit793.thread2726, !prof !351
 
 _ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit793.thread2726: ; preds = %bb.pw
-  %17 = and i16 %i.cly, -10240
-  %18 = icmp eq i16 %17, -10240
+  %12 = icmp slt i16 %i.cly, -8192
   %i.cme = zext i32 %.055.i.i102.i1283339 to i64
   %i.cmf = getelementptr inbounds nuw [2 x i8], ptr %.0.i787, i64 %i.cme ; 34 uses
   %i.cmg = sub i32 %.057.i.i101.i1273338, %.055.i.i102.i1283339 ; 3 uses
   %i.cmh = zext i32 %i.cmg to i64                 ; 4 uses
   %i.cmi = load ptr, ptr %i.y, align 8            ; 34 uses
-  br i1 %18, label %bb.px, label %bb.qv
+  br i1 %12, label %bb.px, label %bb.qv
 
 bb.px:                                            ; preds = %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit793.thread2726
   switch i32 %i.cmg, label %_ZSt8__copy_nIPKtmPtET1_T_T0_S3_St26random_access_iterator_tag.exit.i.i.i794 [
@@ -4361,14 +4349,13 @@ bb.sk:                                            ; preds = %.lr.ph3335
   br i1 %or.cond2843, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit813.thread, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit813.thread2727, !prof !351
 
 _ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit813.thread2727: ; preds = %bb.sk
-  %19 = and i16 %i.cqs, -10240
-  %20 = icmp eq i16 %19, -10240
+  %13 = icmp slt i16 %i.cqs, -8192
   %i.cqy = zext i32 %.055.i.i111.i1173334 to i64
   %i.cqz = getelementptr inbounds nuw [2 x i8], ptr %.0.i807, i64 %i.cqy
   %i.cra = sub i32 %.057.i.i110.i1163333, %.055.i.i111.i1173334
   %i.crb = zext i32 %i.cra to i64
   call void @_ZN2v88internal9OutBufferItE6AppendItQgestT_stTL0__EEvPKS4_m(ptr noundef nonnull align 8 dereferenceable(640) %i.z, ptr noundef %i.cqz, i64 noundef %i.crb)
-  br i1 %20, label %bb.sl, label %bb.st
+  br i1 %13, label %bb.sl, label %bb.st
 
 bb.sl:                                            ; preds = %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit813.thread2727
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k) #21
@@ -4650,14 +4637,13 @@ bb.to:                                            ; preds = %.lr.ph3330
   br i1 %or.cond2845, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit823.thread, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit823.thread2728, !prof !351
 
 _ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit823.thread2728: ; preds = %bb.to
-  %21 = and i16 %i.cud, -10240
-  %22 = icmp eq i16 %21, -10240
+  %14 = icmp slt i16 %i.cud, -8192
   %i.cuj = zext i32 %.055.i.i92.i1073329 to i64
   %i.cuk = getelementptr inbounds nuw [2 x i8], ptr %i.cpk, i64 %i.cuj
   %i.cul = sub i32 %.057.i.i91.i1063328, %.055.i.i92.i1073329
   %i.cum = zext i32 %i.cul to i64
   call void @_ZN2v88internal9OutBufferItE6AppendItQgestT_stTL0__EEvPKS4_m(ptr noundef nonnull align 8 dereferenceable(640) %i.z, ptr noundef nonnull %i.cuk, i64 noundef %i.cum)
-  br i1 %22, label %bb.tp, label %bb.tx
+  br i1 %14, label %bb.tp, label %bb.tx
 
 bb.tp:                                            ; preds = %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit823.thread2728
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m) #21
@@ -5060,14 +5046,13 @@ bb.yk:                                            ; preds = %.lr.ph3250
   br i1 %or.cond2847, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit1003.thread, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit1003.thread2769, !prof !351
 
 _ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit1003.thread2769: ; preds = %bb.yk
-  %23 = and i16 %i.eaa, -10240
-  %24 = icmp eq i16 %23, -10240
+  %15 = icmp slt i16 %i.eaa, -8192
   %i.eag = zext i32 %.055.i.i.i2973249 to i64
   %i.eah = getelementptr inbounds nuw [2 x i8], ptr %i.dzj, i64 %i.eag ; 34 uses
   %i.eai = sub i32 %.057.i.i.i2963248, %.055.i.i.i2973249 ; 3 uses
   %i.eaj = zext i32 %i.eai to i64                 ; 4 uses
   %i.eak = load ptr, ptr %i.y, align 8            ; 34 uses
-  br i1 %24, label %bb.yl, label %bb.zj
+  br i1 %15, label %bb.yl, label %bb.zj
 
 bb.yl:                                            ; preds = %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit1003.thread2769
   switch i32 %i.eai, label %_ZSt8__copy_nIPKtmPtET1_T_T0_S3_St26random_access_iterator_tag.exit.i.i.i1004 [
@@ -5470,14 +5455,13 @@ bb.aax:                                           ; preds = %.lr.ph3245
   br i1 %or.cond2849, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit1022.thread, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit1022.thread2770, !prof !351
 
 _ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit1022.thread2770: ; preds = %bb.aax
-  %25 = and i16 %i.eek, -10240
-  %26 = icmp eq i16 %25, -10240
+  %16 = icmp slt i16 %i.eek, -8192
   %i.eeq = zext i32 %.055.i.i64.i3244 to i64
   %i.eer = getelementptr inbounds nuw [2 x i8], ptr %.0.i1016, i64 %i.eeq ; 34 uses
   %i.ees = sub i32 %.057.i.i63.i3243, %.055.i.i64.i3244 ; 3 uses
   %i.eet = zext i32 %i.ees to i64                 ; 4 uses
   %i.eeu = load ptr, ptr %i.y, align 8            ; 34 uses
-  br i1 %26, label %bb.aay, label %bb.abw
+  br i1 %16, label %bb.aay, label %bb.abw
 
 bb.aay:                                           ; preds = %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit1022.thread2770
   switch i32 %i.ees, label %_ZSt8__copy_nIPKtmPtET1_T_T0_S3_St26random_access_iterator_tag.exit.i.i.i1023 [
@@ -5880,14 +5864,13 @@ bb.adl:                                           ; preds = %.lr.ph3240
   br i1 %or.cond2851, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit1042.thread, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit1042.thread2771, !prof !351
 
 _ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit1042.thread2771: ; preds = %bb.adl
-  %27 = and i16 %i.eje, -10240
-  %28 = icmp eq i16 %27, -10240
+  %17 = icmp slt i16 %i.eje, -8192
   %i.ejk = zext i32 %.055.i.i73.i3239 to i64
   %i.ejl = getelementptr inbounds nuw [2 x i8], ptr %.0.i1036, i64 %i.ejk
   %i.ejm = sub i32 %.057.i.i72.i3238, %.055.i.i73.i3239
   %i.ejn = zext i32 %i.ejm to i64
   call void @_ZN2v88internal9OutBufferItE6AppendItQgestT_stTL0__EEvPKS4_m(ptr noundef nonnull align 8 dereferenceable(640) %i.z, ptr noundef %i.ejl, i64 noundef %i.ejn)
-  br i1 %28, label %bb.adm, label %bb.adu
+  br i1 %17, label %bb.adm, label %bb.adu
 
 bb.adm:                                           ; preds = %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit1042.thread2771
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #21
@@ -6169,14 +6152,13 @@ bb.aep:                                           ; preds = %.lr.ph3235
   br i1 %or.cond2853, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit1052.thread, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit1052.thread2772, !prof !351
 
 _ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit1052.thread2772: ; preds = %bb.aep
-  %29 = and i16 %i.emp, -10240
-  %30 = icmp eq i16 %29, -10240
+  %18 = icmp slt i16 %i.emp, -8192
   %i.emv = zext i32 %.055.i.i54.i3234 to i64
   %i.emw = getelementptr inbounds nuw [2 x i8], ptr %i.ehw, i64 %i.emv
   %i.emx = sub i32 %.057.i.i53.i3233, %.055.i.i54.i3234
   %i.emy = zext i32 %i.emx to i64
   call void @_ZN2v88internal9OutBufferItE6AppendItQgestT_stTL0__EEvPKS4_m(ptr noundef nonnull align 8 dereferenceable(640) %i.z, ptr noundef nonnull %i.emw, i64 noundef %i.emy)
-  br i1 %30, label %bb.aeq, label %bb.aey
+  br i1 %18, label %bb.aeq, label %bb.aey
 
 bb.aeq:                                           ; preds = %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit1052.thread2772
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #21
@@ -6579,14 +6561,13 @@ bb.ajb:                                           ; preds = %.lr.ph3160
   br i1 %or.cond2855, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit1212.thread, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit1212.thread2794, !prof !351
 
 _ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit1212.thread2794: ; preds = %bb.ajb
-  %31 = and i16 %i.fpm, -10240
-  %32 = icmp eq i16 %31, -10240
+  %19 = icmp slt i16 %i.fpm, -8192
   %i.fps = zext i32 %.055.i.i.i3423159 to i64
   %i.fpt = getelementptr inbounds nuw [2 x i8], ptr %i.fov, i64 %i.fps
   %i.fpu = sub i32 %.057.i.i.i3413158, %.055.i.i.i3423159
   %i.fpv = zext i32 %i.fpu to i64
   call void @_ZN2v88internal9OutBufferItE6AppendItQgestT_stTL0__EEvPKS4_m(ptr noundef nonnull align 8 dereferenceable(640) %i.z, ptr noundef nonnull %i.fpt, i64 noundef %i.fpv)
-  br i1 %32, label %bb.ajc, label %bb.ajk
+  br i1 %19, label %bb.ajc, label %bb.ajk
 
 bb.ajc:                                           ; preds = %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit1212.thread2794
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #21
@@ -6901,14 +6882,13 @@ bb.aki:                                           ; preds = %.lr.ph3155
   br i1 %or.cond2857, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit1225.thread, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit1225.thread2795, !prof !351
 
 _ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit1225.thread2795: ; preds = %bb.aki
-  %33 = and i16 %i.ftp, -10240
-  %34 = icmp eq i16 %33, -10240
+  %20 = icmp slt i16 %i.ftp, -8192
   %i.ftv = zext i32 %.055.i.i66.i3154 to i64
   %i.ftw = getelementptr inbounds nuw [2 x i8], ptr %.0.i1219, i64 %i.ftv ; 34 uses
   %i.ftx = sub i32 %.057.i.i65.i3153, %.055.i.i66.i3154 ; 3 uses
   %i.fty = zext i32 %i.ftx to i64                 ; 4 uses
   %i.ftz = load ptr, ptr %i.y, align 8            ; 34 uses
-  br i1 %34, label %bb.akj, label %bb.alh
+  br i1 %20, label %bb.akj, label %bb.alh
 
 bb.akj:                                           ; preds = %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit1225.thread2795
   switch i32 %i.ftx, label %_ZSt8__copy_nIPKtmPtET1_T_T0_S3_St26random_access_iterator_tag.exit.i.i.i1226 [
@@ -7311,14 +7291,13 @@ bb.amw:                                           ; preds = %.lr.ph3150
   br i1 %or.cond2859, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit1245.thread, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit1245.thread2796, !prof !351
 
 _ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit1245.thread2796: ; preds = %bb.amw
-  %35 = and i16 %i.fyj, -10240
-  %36 = icmp eq i16 %35, -10240
+  %21 = icmp slt i16 %i.fyj, -8192
   %i.fyp = zext i32 %.055.i.i75.i3149 to i64
   %i.fyq = getelementptr inbounds nuw [2 x i8], ptr %.0.i1239, i64 %i.fyp
   %i.fyr = sub i32 %.057.i.i74.i3148, %.055.i.i75.i3149
   %i.fys = zext i32 %i.fyr to i64
   call void @_ZN2v88internal9OutBufferItE6AppendItQgestT_stTL0__EEvPKS4_m(ptr noundef nonnull align 8 dereferenceable(640) %i.z, ptr noundef %i.fyq, i64 noundef %i.fys)
-  br i1 %36, label %bb.amx, label %bb.anf
+  br i1 %21, label %bb.amx, label %bb.anf
 
 bb.amx:                                           ; preds = %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit1245.thread2796
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #21
@@ -7600,14 +7579,13 @@ bb.aoa:                                           ; preds = %.lr.ph
   br i1 %or.cond2861, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit1255.thread, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit1255.thread2797, !prof !351
 
 _ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit1255.thread2797: ; preds = %bb.aoa
-  %37 = and i16 %i.gbu, -10240
-  %38 = icmp eq i16 %37, -10240
+  %22 = icmp slt i16 %i.gbu, -8192
   %i.gca = zext i32 %.055.i.i56.i3147 to i64
   %i.gcb = getelementptr inbounds nuw [2 x i8], ptr %i.fxb, i64 %i.gca
   %i.gcc = sub i32 %.057.i.i55.i3146, %.055.i.i56.i3147
   %i.gcd = zext i32 %i.gcc to i64
   call void @_ZN2v88internal9OutBufferItE6AppendItQgestT_stTL0__EEvPKS4_m(ptr noundef nonnull align 8 dereferenceable(640) %i.z, ptr noundef nonnull %i.gcb, i64 noundef %i.gcd)
-  br i1 %38, label %bb.aob, label %bb.aoj
+  br i1 %22, label %bb.aob, label %bb.aoj
 
 bb.aob:                                           ; preds = %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit1255.thread2797
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #21
@@ -8010,14 +7988,13 @@ bb.d:                                             ; preds = %.lr.ph
   br i1 %or.cond, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit.thread, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit.thread17, !prof !349
 
 _ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit.thread17: ; preds = %bb.d
-  %4 = and i16 %i.y, -10240
-  %5 = icmp eq i16 %4, -10240
+  %4 = icmp slt i16 %i.y, -8192
   %i.ae = zext i32 %.055.i20 to i64
   %i.af = getelementptr inbounds nuw [2 x i8], ptr %i.d, i64 %i.ae
   %i.ag = sub i32 %.057.i19, %.055.i20
   %i.ah = zext i32 %i.ag to i64
   call void @_ZN2v88internal9OutBufferItE6AppendItQgestT_stTL0__EEvPKS4_m(ptr noundef nonnull align 8 dereferenceable(640) %i.j, ptr noundef nonnull %i.af, i64 noundef %i.ah)
-  br i1 %5, label %bb.e, label %bb.m
+  br i1 %4, label %bb.e, label %bb.m
 
 bb.e:                                             ; preds = %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit.thread17
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #21
@@ -8356,14 +8333,13 @@ bb.g:                                             ; preds = %.lr.ph
   br i1 %or.cond, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit.thread, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit.thread18, !prof !349
 
 _ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit.thread18: ; preds = %bb.g
-  %4 = and i16 %i.ap, -10240
-  %5 = icmp eq i16 %4, -10240
+  %4 = icmp slt i16 %i.ap, -8192
   %i.av = zext i32 %.055.i21 to i64
   %i.aw = getelementptr inbounds nuw [2 x i8], ptr %.0.i10, i64 %i.av
   %i.ax = sub i32 %.057.i20, %.055.i21
   %i.ay = zext i32 %i.ax to i64
   call void @_ZN2v88internal9OutBufferItE6AppendItQgestT_stTL0__EEvPKS4_m(ptr noundef nonnull align 8 dereferenceable(640) %i.aa, ptr noundef %i.aw, i64 noundef %i.ay)
-  br i1 %5, label %bb.h, label %bb.p
+  br i1 %4, label %bb.h, label %bb.p
 
 bb.h:                                             ; preds = %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit.thread18
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #21
@@ -8766,14 +8742,13 @@ bb.aa:                                            ; preds = %.lr.ph385
   br i1 %or.cond, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit.thread, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit.thread330, !prof !351
 
 _ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit.thread330: ; preds = %bb.aa
-  %3 = and i16 %i.ii, -10240
-  %4 = icmp eq i16 %3, -10240
+  %3 = icmp slt i16 %i.ii, -8192
   %i.io = zext i32 %.055.i.i.i384 to i64
   %i.ip = getelementptr inbounds nuw [2 x i8], ptr %i.ho, i64 %i.io
   %i.iq = sub i32 %.057.i.i.i383, %.055.i.i.i384
   %i.ir = zext i32 %i.iq to i64
   call void @_ZN2v88internal9OutBufferItE6AppendItQgestT_stTL0__EEvPKS4_m(ptr noundef nonnull align 8 dereferenceable(640) %i.hu, ptr noundef nonnull %i.ip, i64 noundef %i.ir)
-  br i1 %4, label %bb.ab, label %bb.aj
+  br i1 %3, label %bb.ab, label %bb.aj
 
 bb.ab:                                            ; preds = %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit.thread330
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #21
@@ -9176,14 +9151,13 @@ bb.bx:                                            ; preds = %.lr.ph
   br i1 %or.cond345, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit130.thread, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit130.thread331, !prof !351
 
 _ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit130.thread331: ; preds = %bb.bx
-  %5 = and i16 %i.sh, -10240
-  %6 = icmp eq i16 %5, -10240
+  %4 = icmp slt i16 %i.sh, -8192
   %i.sn = zext i32 %.055.i.i.i62366 to i64
   %i.so = getelementptr inbounds nuw [2 x i8], ptr %.0.i125, i64 %i.sn
   %i.sp = sub i32 %.057.i.i.i61365, %.055.i.i.i62366
   %i.sq = zext i32 %i.sp to i64
   call void @_ZN2v88internal9OutBufferItE6AppendItQgestT_stTL0__EEvPKS4_m(ptr noundef nonnull align 8 dereferenceable(640) %i.rt, ptr noundef %i.so, i64 noundef %i.sq)
-  br i1 %6, label %bb.by, label %bb.cg
+  br i1 %4, label %bb.by, label %bb.cg
 
 bb.by:                                            ; preds = %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit130.thread331
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #21
@@ -9586,14 +9560,13 @@ bb.bw:                                            ; preds = %.lr.ph1095
   br i1 %or.cond, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit.thread, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit.thread813, !prof !351
 
 _ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit.thread813: ; preds = %bb.bw
-  %4 = and i16 %i.xe, -10240
-  %5 = icmp eq i16 %4, -10240
+  %4 = icmp slt i16 %i.xe, -8192
   %i.xk = zext i32 %.055.i.i.i1094 to i64
   %i.xl = getelementptr inbounds nuw [2 x i8], ptr %i.wn, i64 %i.xk
   %i.xm = sub i32 %.057.i.i.i1093, %.055.i.i.i1094
   %i.xn = zext i32 %i.xm to i64
   call void @_ZN2v88internal9OutBufferItE6AppendItQgestT_stTL0__EEvPKS4_m(ptr noundef nonnull align 8 dereferenceable(640) %i.y, ptr noundef nonnull %i.xl, i64 noundef %i.xn)
-  br i1 %5, label %bb.bx, label %bb.cf
+  br i1 %4, label %bb.bx, label %bb.cf
 
 bb.bx:                                            ; preds = %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit.thread813
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #21
@@ -9908,14 +9881,13 @@ bb.dd:                                            ; preds = %.lr.ph1090
   br i1 %or.cond863, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit216.thread, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit216.thread814, !prof !351
 
 _ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit216.thread814: ; preds = %bb.dd
-  %6 = and i16 %i.abh, -10240
-  %7 = icmp eq i16 %6, -10240
+  %5 = icmp slt i16 %i.abh, -8192
   %i.abn = zext i32 %.055.i.i64.i1089 to i64
   %i.abo = getelementptr inbounds nuw [2 x i8], ptr %.0.i211, i64 %i.abn
   %i.abp = sub i32 %.057.i.i63.i1088, %.055.i.i64.i1089
   %i.abq = zext i32 %i.abp to i64
   call void @_ZN2v88internal9OutBufferItE6AppendItQgestT_stTL0__EEvPKS4_m(ptr noundef nonnull align 8 dereferenceable(640) %i.y, ptr noundef %i.abo, i64 noundef %i.abq)
-  br i1 %7, label %bb.de, label %bb.dm
+  br i1 %5, label %bb.de, label %bb.dm
 
 bb.de:                                            ; preds = %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit216.thread814
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #21
@@ -10238,14 +10210,13 @@ bb.el:                                            ; preds = %.lr.ph1085
   br i1 %or.cond865, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit230.thread, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit230.thread815, !prof !351
 
 _ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit230.thread815: ; preds = %bb.el
-  %8 = and i16 %i.afu, -10240
-  %9 = icmp eq i16 %8, -10240
+  %6 = icmp slt i16 %i.afu, -8192
   %i.aga = zext i32 %.055.i.i73.i1084 to i64
   %i.agb = getelementptr inbounds nuw [2 x i8], ptr %.0.i224, i64 %i.aga
   %i.agc = sub i32 %.057.i.i72.i1083, %.055.i.i73.i1084
   %i.agd = zext i32 %i.agc to i64
   call void @_ZN2v88internal9OutBufferItE6AppendItQgestT_stTL0__EEvPKS4_m(ptr noundef nonnull align 8 dereferenceable(640) %i.y, ptr noundef %i.agb, i64 noundef %i.agd)
-  br i1 %9, label %bb.em, label %bb.eu
+  br i1 %6, label %bb.em, label %bb.eu
 
 bb.em:                                            ; preds = %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit230.thread815
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #21
@@ -10427,14 +10398,13 @@ bb.ez:                                            ; preds = %.lr.ph1080
   br i1 %or.cond867, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit237.thread, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit237.thread816, !prof !351
 
 _ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit237.thread816: ; preds = %bb.ez
-  %10 = and i16 %i.aja, -10240
-  %11 = icmp eq i16 %10, -10240
+  %7 = icmp slt i16 %i.aja, -8192
   %i.ajg = zext i32 %.055.i.i54.i1079 to i64
   %i.ajh = getelementptr inbounds nuw [2 x i8], ptr %i.aem, i64 %i.ajg
   %i.aji = sub i32 %.057.i.i53.i1078, %.055.i.i54.i1079
   %i.ajj = zext i32 %i.aji to i64
   call void @_ZN2v88internal9OutBufferItE6AppendItQgestT_stTL0__EEvPKS4_m(ptr noundef nonnull align 8 dereferenceable(640) %i.y, ptr noundef nonnull %i.ajh, i64 noundef %i.ajj)
-  br i1 %11, label %bb.fa, label %bb.fi
+  br i1 %7, label %bb.fa, label %bb.fi
 
 bb.fa:                                            ; preds = %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit237.thread816
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #21
@@ -10837,14 +10807,13 @@ bb.je:                                            ; preds = %.lr.ph1000
   br i1 %or.cond869, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit344.thread, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit344.thread836, !prof !351
 
 _ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit344.thread836: ; preds = %bb.je
-  %12 = and i16 %i.bmb, -10240
-  %13 = icmp eq i16 %12, -10240
+  %8 = icmp slt i16 %i.bmb, -8192
   %i.bmh = zext i32 %.055.i.i.i107999 to i64
   %i.bmi = getelementptr inbounds nuw [2 x i8], ptr %i.blk, i64 %i.bmh
   %i.bmj = sub i32 %.057.i.i.i106998, %.055.i.i.i107999
   %i.bmk = zext i32 %i.bmj to i64
   call void @_ZN2v88internal9OutBufferItE6AppendItQgestT_stTL0__EEvPKS4_m(ptr noundef nonnull align 8 dereferenceable(640) %i.y, ptr noundef nonnull %i.bmi, i64 noundef %i.bmk)
-  br i1 %13, label %bb.jf, label %bb.jn
+  br i1 %8, label %bb.jf, label %bb.jn
 
 bb.jf:                                            ; preds = %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit344.thread836
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #21
@@ -11159,14 +11128,13 @@ bb.kl:                                            ; preds = %.lr.ph995
   br i1 %or.cond871, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit357.thread, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit357.thread837, !prof !351
 
 _ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit357.thread837: ; preds = %bb.kl
-  %14 = and i16 %i.bqe, -10240
-  %15 = icmp eq i16 %14, -10240
+  %9 = icmp slt i16 %i.bqe, -8192
   %i.bqk = zext i32 %.055.i.i66.i994 to i64
   %i.bql = getelementptr inbounds nuw [2 x i8], ptr %.0.i351, i64 %i.bqk
   %i.bqm = sub i32 %.057.i.i65.i993, %.055.i.i66.i994
   %i.bqn = zext i32 %i.bqm to i64
   call void @_ZN2v88internal9OutBufferItE6AppendItQgestT_stTL0__EEvPKS4_m(ptr noundef nonnull align 8 dereferenceable(640) %i.y, ptr noundef %i.bql, i64 noundef %i.bqn)
-  br i1 %15, label %bb.km, label %bb.ku
+  br i1 %9, label %bb.km, label %bb.ku
 
 bb.km:                                            ; preds = %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit357.thread837
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #21
@@ -11457,14 +11425,13 @@ bb.lq:                                            ; preds = %.lr.ph990
   br i1 %or.cond873, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit368.thread, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit368.thread838, !prof !351
 
 _ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit368.thread838: ; preds = %bb.lq
-  %16 = and i16 %i.bua, -10240
-  %17 = icmp eq i16 %16, -10240
+  %10 = icmp slt i16 %i.bua, -8192
   %i.bug = zext i32 %.055.i.i75.i989 to i64
   %i.buh = getelementptr inbounds nuw [2 x i8], ptr %i.btk, i64 %i.bug
   %i.bui = sub i32 %.057.i.i74.i988, %.055.i.i75.i989
   %i.buj = zext i32 %i.bui to i64
   call void @_ZN2v88internal9OutBufferItE6AppendItQgestT_stTL0__EEvPKS4_m(ptr noundef nonnull align 8 dereferenceable(640) %i.y, ptr noundef %i.buh, i64 noundef %i.buj)
-  br i1 %17, label %bb.lr, label %bb.lz
+  br i1 %10, label %bb.lr, label %bb.lz
 
 bb.lr:                                            ; preds = %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit368.thread838
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #21
@@ -11646,14 +11613,13 @@ bb.me:                                            ; preds = %.lr.ph986
   br i1 %or.cond875, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit375.thread, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit375.thread839, !prof !351
 
 _ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit375.thread839: ; preds = %bb.me
-  %18 = and i16 %i.bxg, -10240
-  %19 = icmp eq i16 %18, -10240
+  %11 = icmp slt i16 %i.bxg, -8192
   %i.bxm = zext i32 %.055.i.i56.i985 to i64
   %i.bxn = getelementptr inbounds nuw [2 x i8], ptr %i.bwq, i64 %i.bxm
   %i.bxo = sub i32 %.057.i.i55.i984, %.055.i.i56.i985
   %i.bxp = zext i32 %i.bxo to i64
   call void @_ZN2v88internal9OutBufferItE6AppendItQgestT_stTL0__EEvPKS4_m(ptr noundef nonnull align 8 dereferenceable(640) %i.y, ptr noundef nonnull %i.bxn, i64 noundef %i.bxp)
-  br i1 %19, label %bb.mf, label %bb.mn
+  br i1 %11, label %bb.mf, label %bb.mn
 
 bb.mf:                                            ; preds = %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit375.thread839
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #21
@@ -12056,14 +12022,13 @@ bb.bq:                                            ; preds = %.lr.ph488
   br i1 %or.cond, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit.thread, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit.thread396, !prof !349
 
 _ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit.thread396: ; preds = %bb.bq
-  %5 = and i16 %i.ww, -10240
-  %6 = icmp eq i16 %5, -10240
+  %5 = icmp slt i16 %i.ww, -8192
   %i.xc = zext i32 %.055.i.i.i487 to i64
   %i.xd = getelementptr inbounds nuw [2 x i8], ptr %i.wf, i64 %i.xc
   %i.xe = sub i32 %.057.i.i.i486, %.055.i.i.i487
   %i.xf = zext i32 %i.xe to i64
   call void @_ZN2v88internal9OutBufferItE6AppendItQgestT_stTL0__EEvPKS4_m(ptr noundef nonnull align 8 dereferenceable(640) %i.j, ptr noundef nonnull %i.xd, i64 noundef %i.xf)
-  br i1 %6, label %bb.br, label %bb.bz
+  br i1 %5, label %bb.br, label %bb.bz
 
 bb.br:                                            ; preds = %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit.thread396
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #21
@@ -12378,14 +12343,13 @@ bb.cx:                                            ; preds = %.lr.ph483
   br i1 %or.cond421, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit146.thread, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit146.thread397, !prof !351
 
 _ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit146.thread397: ; preds = %bb.cx
-  %7 = and i16 %i.aaz, -10240
-  %8 = icmp eq i16 %7, -10240
+  %6 = icmp slt i16 %i.aaz, -8192
   %i.abf = zext i32 %.055.i.i64.i482 to i64
   %i.abg = getelementptr inbounds nuw [2 x i8], ptr %.0.i141, i64 %i.abf ; 34 uses
   %i.abh = sub i32 %.057.i.i63.i481, %.055.i.i64.i482 ; 3 uses
   %i.abi = zext i32 %i.abh to i64                 ; 4 uses
   %i.abj = load ptr, ptr %i.i, align 8            ; 34 uses
-  br i1 %8, label %bb.cy, label %bb.dw
+  br i1 %6, label %bb.cy, label %bb.dw
 
 bb.cy:                                            ; preds = %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit146.thread397
   switch i32 %i.abh, label %_ZSt8__copy_nIPKtmPtET1_T_T0_S3_St26random_access_iterator_tag.exit.i.i.i147 [
@@ -12788,14 +12752,13 @@ bb.fl:                                            ; preds = %.lr.ph478
   br i1 %or.cond423, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit166.thread, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit166.thread398, !prof !351
 
 _ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit166.thread398: ; preds = %bb.fl
-  %9 = and i16 %i.aft, -10240
-  %10 = icmp eq i16 %9, -10240
+  %7 = icmp slt i16 %i.aft, -8192
   %i.afz = zext i32 %.055.i.i73.i477 to i64
   %i.aga = getelementptr inbounds nuw [2 x i8], ptr %.0.i160, i64 %i.afz
   %i.agb = sub i32 %.057.i.i72.i476, %.055.i.i73.i477
   %i.agc = zext i32 %i.agb to i64
   call void @_ZN2v88internal9OutBufferItE6AppendItQgestT_stTL0__EEvPKS4_m(ptr noundef nonnull align 8 dereferenceable(640) %i.j, ptr noundef %i.aga, i64 noundef %i.agc)
-  br i1 %10, label %bb.fm, label %bb.fu
+  br i1 %7, label %bb.fm, label %bb.fu
 
 bb.fm:                                            ; preds = %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit166.thread398
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #21
@@ -13077,14 +13040,13 @@ bb.gp:                                            ; preds = %.lr.ph
   br i1 %or.cond425, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit176.thread, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit176.thread399, !prof !351
 
 _ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit176.thread399: ; preds = %bb.gp
-  %11 = and i16 %i.aje, -10240
-  %12 = icmp eq i16 %11, -10240
+  %8 = icmp slt i16 %i.aje, -8192
   %i.ajk = zext i32 %.055.i.i54.i475 to i64
   %i.ajl = getelementptr inbounds nuw [2 x i8], ptr %i.ael, i64 %i.ajk
   %i.ajm = sub i32 %.057.i.i53.i474, %.055.i.i54.i475
   %i.ajn = zext i32 %i.ajm to i64
   call void @_ZN2v88internal9OutBufferItE6AppendItQgestT_stTL0__EEvPKS4_m(ptr noundef nonnull align 8 dereferenceable(640) %i.j, ptr noundef nonnull %i.ajl, i64 noundef %i.ajn)
-  br i1 %12, label %bb.gq, label %bb.gy
+  br i1 %8, label %bb.gq, label %bb.gy
 
 bb.gq:                                            ; preds = %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit176.thread399
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #21
@@ -13487,14 +13449,13 @@ bb.bu:                                            ; preds = %.lr.ph487
   br i1 %or.cond, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit.thread, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit.thread394, !prof !349
 
 _ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit.thread394: ; preds = %bb.bu
-  %5 = and i16 %i.xh, -10240
-  %6 = icmp eq i16 %5, -10240
+  %5 = icmp slt i16 %i.xh, -8192
   %i.xn = zext i32 %.055.i.i.i486 to i64
   %i.xo = getelementptr inbounds nuw [2 x i8], ptr %i.wq, i64 %i.xn
   %i.xp = sub i32 %.057.i.i.i485, %.055.i.i.i486
   %i.xq = zext i32 %i.xp to i64
   call void @_ZN2v88internal9OutBufferItE6AppendItQgestT_stTL0__EEvPKS4_m(ptr noundef nonnull align 8 dereferenceable(640) %i.m, ptr noundef nonnull %i.xo, i64 noundef %i.xq)
-  br i1 %6, label %bb.bv, label %bb.cd
+  br i1 %5, label %bb.bv, label %bb.cd
 
 bb.bv:                                            ; preds = %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit.thread394
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #21
@@ -13809,14 +13770,13 @@ bb.db:                                            ; preds = %.lr.ph482
   br i1 %or.cond419, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit149.thread, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit149.thread395, !prof !351
 
 _ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit149.thread395: ; preds = %bb.db
-  %7 = and i16 %i.abk, -10240
-  %8 = icmp eq i16 %7, -10240
+  %6 = icmp slt i16 %i.abk, -8192
   %i.abq = zext i32 %.055.i.i66.i481 to i64
   %i.abr = getelementptr inbounds nuw [2 x i8], ptr %.0.i144, i64 %i.abq
   %i.abs = sub i32 %.057.i.i65.i480, %.055.i.i66.i481
   %i.abt = zext i32 %i.abs to i64
   call void @_ZN2v88internal9OutBufferItE6AppendItQgestT_stTL0__EEvPKS4_m(ptr noundef nonnull align 8 dereferenceable(640) %i.m, ptr noundef %i.abr, i64 noundef %i.abt)
-  br i1 %8, label %bb.dc, label %bb.dk
+  br i1 %6, label %bb.dc, label %bb.dk
 
 bb.dc:                                            ; preds = %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit149.thread395
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #21
@@ -14144,14 +14104,13 @@ bb.ej:                                            ; preds = %.lr.ph477
   br i1 %or.cond421, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit163.thread, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit163.thread396, !prof !351
 
 _ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit163.thread396: ; preds = %bb.ej
-  %9 = and i16 %i.afx, -10240
-  %10 = icmp eq i16 %9, -10240
+  %7 = icmp slt i16 %i.afx, -8192
   %i.agd = zext i32 %.055.i.i75.i476 to i64
   %i.age = getelementptr inbounds nuw [2 x i8], ptr %.0.i157, i64 %i.agd
   %i.agf = sub i32 %.057.i.i74.i475, %.055.i.i75.i476
   %i.agg = zext i32 %i.agf to i64
   call void @_ZN2v88internal9OutBufferItE6AppendItQgestT_stTL0__EEvPKS4_m(ptr noundef nonnull align 8 dereferenceable(640) %i.m, ptr noundef %i.age, i64 noundef %i.agg)
-  br i1 %10, label %bb.ek, label %bb.es
+  br i1 %7, label %bb.ek, label %bb.es
 
 bb.ek:                                            ; preds = %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit163.thread396
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #21
@@ -14433,14 +14392,13 @@ bb.fn:                                            ; preds = %.lr.ph
   br i1 %or.cond423, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit173.thread, label %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit173.thread397, !prof !351
 
 _ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit173.thread397: ; preds = %bb.fn
-  %11 = and i16 %i.aji, -10240
-  %12 = icmp eq i16 %11, -10240
+  %8 = icmp slt i16 %i.aji, -8192
   %i.ajo = zext i32 %.055.i.i56.i474 to i64
   %i.ajp = getelementptr inbounds nuw [2 x i8], ptr %i.aep, i64 %i.ajo
   %i.ajq = sub i32 %.057.i.i55.i473, %.055.i.i56.i474
   %i.ajr = zext i32 %i.ajq to i64
   call void @_ZN2v88internal9OutBufferItE6AppendItQgestT_stTL0__EEvPKS4_m(ptr noundef nonnull align 8 dereferenceable(640) %i.m, ptr noundef nonnull %i.ajp, i64 noundef %i.ajr)
-  br i1 %12, label %bb.fo, label %bb.fw
+  br i1 %8, label %bb.fo, label %bb.fw
 
 bb.fo:                                            ; preds = %_ZN2v88internal12_GLOBAL__N_111DoNotEscapeItEEbT_.exit173.thread397
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #21
