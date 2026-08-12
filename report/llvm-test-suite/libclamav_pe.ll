@@ -203,7 +203,7 @@ bb.dj:                                            ; preds = %bb.dh
   %i.en = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.eo = load i32, ptr %i.en, align 8            ; 12 uses
   %i.ep = getelementptr inbounds nuw i8, ptr %3, i64 36
-  %i.eq = load i32, ptr %i.ep, align 4            ; 4 uses
+  %i.eq = load i32, ptr %i.ep, align 4            ; 5 uses
   %narrow = mul nuw nsw i16 %i.aj, 40
   %i.er = zext nneg i16 %narrow to i32            ; 2 uses
   %i.es = call i32 @cli_readn(i32 noundef %0, ptr noundef nonnull %i.el, i32 noundef %i.er) #13
@@ -217,7 +217,7 @@ bb.dj:                                            ; preds = %bb.dh
 .lr.ph.preheader:                                 ; preds = %.preheader3350
   %i.et = zext nneg i16 %i.aj to i64
   %.not2980 = icmp eq i32 %i.eq, 0
-  br label %.lr.ph
+  br i1 %.not2980, label %._crit_edge, label %bb.dn
 
 bb.dk:                                            ; preds = %bb.dj
   call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.86) #13
@@ -238,11 +238,8 @@ bb.dm:                                            ; preds = %bb.dl
   store ptr @.str.4, ptr %i.ew, align 8, !tbaa !21
   br label %.critedge3020
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.dp
-  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.dp ] ; 2 uses
-  br i1 %.not2980, label %bb.dp, label %bb.dn
-
-bb.dn:                                            ; preds = %.lr.ph
+bb.dn:                                            ; preds = %.lr.ph.preheader, %bb.dp
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.dp ], [ 0, %.lr.ph.preheader ] ; 2 uses
   %i.ex = getelementptr inbounds nuw [40 x i8], ptr %i.el, i64 %indvars.iv ; 2 uses
   %i.ey = getelementptr inbounds nuw i8, ptr %i.ex, i64 16
   %i.ez = load i32, ptr %i.ey, align 4, !tbaa !39
@@ -263,13 +260,13 @@ bb.do:                                            ; preds = %bb.dn
   call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.88) #13
   br label %._crit_edge
 
-bb.dp:                                            ; preds = %.lr.ph, %bb.dn, %bb.do
+bb.dp:                                            ; preds = %bb.dn, %bb.do
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.fe = icmp samesign ult i64 %indvars.iv.next, %i.et
-  br i1 %i.fe, label %.lr.ph, label %._crit_edge, !llvm.loop !42
+  br i1 %i.fe, label %bb.dn, label %._crit_edge, !llvm.loop !42
 
-._crit_edge:                                      ; preds = %bb.dp, %.thread, %.preheader3350
-  %.02366.lcssa = phi i32 [ 512, %.preheader3350 ], [ 512, %.thread ], [ %i.eq, %bb.dp ] ; 5 uses
+._crit_edge:                                      ; preds = %bb.dp, %.lr.ph.preheader, %.thread, %.preheader3350
+  %.02366.lcssa = phi i32 [ 512, %.preheader3350 ], [ 512, %.thread ], [ %i.eq, %.lr.ph.preheader ], [ %i.eq, %bb.dp ] ; 5 uses
   %.not2695 = icmp eq i32 %i.eo, 0                ; 3 uses
   br i1 %.not2695, label %bb.dr, label %bb.dq
 

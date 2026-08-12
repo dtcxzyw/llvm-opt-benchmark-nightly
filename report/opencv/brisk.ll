@@ -203,8 +203,8 @@ bb.i:                                             ; preds = %._crit_edge
   %i.cx = getelementptr inbounds nuw i8, ptr %0, i64 8
   br label %_ZNSt6vectorIS_IN2cv8KeyPointESaIS1_EESaIS3_EE2atEm.exit
 
-_ZNSt6vectorIS_IN2cv8KeyPointESaIS1_EESaIS3_EE2atEm.exit: ; preds = %bb.y, %.lr.ph420
-  %.0166418 = phi i64 [ 0, %.lr.ph420 ], [ %i.fv, %bb.y ] ; 2 uses
+_ZNSt6vectorIS_IN2cv8KeyPointESaIS1_EESaIS3_EE2atEm.exit: ; preds = %.lr.ph420, %bb.y
+  %.0166418 = phi i64 [ %i.fv, %bb.y ], [ 0, %.lr.ph420 ] ; 2 uses
   %i.cy = load ptr, ptr %i.al, align 8, !tbaa !123
   %i.cz = getelementptr inbounds nuw [28 x i8], ptr %i.cy, i64 %.0166418 ; 12 uses
   %i.da = load float, ptr %i.cz, align 4, !tbaa !129
@@ -503,7 +503,7 @@ bb.ak:                                            ; preds = %.lr.ph416, %.loopex
   %.not.i.i230 = icmp ult i64 %indvars.iv500, %i.ah
   %i.gw = getelementptr inbounds nuw [24 x i8], ptr %i.al, i64 %indvars.iv500
   %i.gx = trunc nuw nsw i64 %indvars.iv500 to i32 ; 4 uses
-  br label %.lr.ph410
+  br i1 %.not.i.i230, label %bb.bs, label %6
 
 .preheader:                                       ; preds = %bb.ak
   br i1 %.not422, label %.loopexit317, label %.lr.ph412
@@ -514,20 +514,10 @@ bb.ak:                                            ; preds = %.lr.ph416, %.loopex
   %.not.i.i211 = icmp ult i64 %indvars.iv500, %i.ah
   %i.ha = getelementptr inbounds nuw [24 x i8], ptr %i.al, i64 %indvars.iv500
   %i.hb = trunc nuw nsw i64 %indvars.iv500 to i32 ; 4 uses
-  br label %5
+  br i1 %.not.i.i211, label %bb.al, label %5
 
-5:                                                ; preds = %.lr.ph412, %bb.bg
-  %.0168411 = phi i64 [ 0, %.lr.ph412 ], [ %i.kp, %bb.bg ] ; 2 uses
-  br i1 %.not.i.i211, label %bb.al, label %6
-
-6:                                                ; preds = %5
-  invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.26, i64 noundef %indvars.iv500, i64 noundef %i.ah) #27
-          to label %.noexc212 unwind label %.loopexit.split-lp319
-
-.noexc212:                                        ; preds = %6
-  unreachable
-
-bb.al:                                            ; preds = %5
+bb.al:                                            ; preds = %.lr.ph412, %bb.bg
+  %.0168411 = phi i64 [ %i.kp, %bb.bg ], [ 0, %.lr.ph412 ] ; 2 uses
   %i.hc = load ptr, ptr %i.ha, align 8, !tbaa !123
   %i.hd = getelementptr inbounds nuw [28 x i8], ptr %i.hc, i64 %.0168411 ; 13 uses
   %i.he = load float, ptr %i.hd, align 4, !tbaa !129
@@ -538,6 +528,13 @@ bb.al:                                            ; preds = %5
   %i.hj = invoke noundef zeroext i1 @_ZN2cv11xfeatures2d15BriskScaleSpace7isMax2DEiii(ptr noundef nonnull align 8 dereferenceable(32) %0, i32 noundef %i.hb, i32 noundef %i.hf, i32 noundef %i.hi)
           to label %bb.am unwind label %.loopexit318
 
+5:                                                ; preds = %.lr.ph412
+  invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.26, i64 noundef %indvars.iv500, i64 noundef %i.ah) #27
+          to label %.noexc212 unwind label %.loopexit.split-lp319
+
+.noexc212:                                        ; preds = %5
+  unreachable
+
 bb.am:                                            ; preds = %bb.al
   br i1 %i.hj, label %bb.an, label %bb.bg
 
@@ -546,7 +543,7 @@ bb.am:                                            ; preds = %bb.al
           cleanup
   br label %bb.ce
 
-.loopexit.split-lp319:                            ; preds = %6
+.loopexit.split-lp319:                            ; preds = %5
   %lpad.loopexit.split-lp321 = landingpad { ptr, i32 }
           cleanup
   br label %bb.ce
@@ -765,7 +762,7 @@ bb.bf:                                            ; preds = %bb.ap, %_ZNSt6vecto
 bb.bg:                                            ; preds = %bb.am, %bb.bf
   %i.kp = add nuw i64 %.0168411, 1                ; 2 uses
   %exitcond499.not = icmp eq i64 %i.kp, %i.gs
-  br i1 %exitcond499.not, label %.loopexit317, label %5, !llvm.loop !218
+  br i1 %exitcond499.not, label %.loopexit317, label %bb.al, !llvm.loop !218
 
 bb.bh:                                            ; preds = %bb.ar
   %i.kq = landingpad { ptr, i32 }
@@ -835,18 +832,8 @@ bb.br:                                            ; preds = %bb.bh, %bb.bj, %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #24
   br label %bb.ce
 
-.lr.ph410:                                        ; preds = %.lr.ph410.preheader, %bb.cc
+bb.bs:                                            ; preds = %.lr.ph410.preheader, %bb.cc
   %.0139409 = phi i64 [ %i.mo, %bb.cc ], [ 0, %.lr.ph410.preheader ] ; 2 uses
-  br i1 %.not.i.i230, label %bb.bs, label %7
-
-7:                                                ; preds = %.lr.ph410
-  invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.26, i64 noundef %indvars.iv500, i64 noundef %i.ah) #27
-          to label %.noexc231 unwind label %.loopexit.split-lp331
-
-.noexc231:                                        ; preds = %7
-  unreachable
-
-bb.bs:                                            ; preds = %.lr.ph410
   %i.kz = load ptr, ptr %i.gw, align 8, !tbaa !123
   %i.la = getelementptr inbounds nuw [28 x i8], ptr %i.kz, i64 %.0139409 ; 3 uses
   %i.lb = load float, ptr %i.la, align 4, !tbaa !129
@@ -857,6 +844,13 @@ bb.bs:                                            ; preds = %.lr.ph410
   %i.lg = invoke noundef zeroext i1 @_ZN2cv11xfeatures2d15BriskScaleSpace7isMax2DEiii(ptr noundef nonnull align 8 dereferenceable(32) %0, i32 noundef %i.gx, i32 noundef %i.lc, i32 noundef %i.lf)
           to label %bb.bt unwind label %.loopexit330
 
+6:                                                ; preds = %.lr.ph410.preheader
+  invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.26, i64 noundef %indvars.iv500, i64 noundef %i.ah) #27
+          to label %.noexc231 unwind label %.loopexit.split-lp331
+
+.noexc231:                                        ; preds = %6
+  unreachable
+
 bb.bt:                                            ; preds = %bb.bs
   br i1 %i.lg, label %bb.bu, label %bb.cc
 
@@ -865,7 +859,7 @@ bb.bt:                                            ; preds = %bb.bs
           cleanup
   br label %bb.ce
 
-.loopexit.split-lp331:                            ; preds = %7
+.loopexit.split-lp331:                            ; preds = %6
   %lpad.loopexit.split-lp333 = landingpad { ptr, i32 }
           cleanup
   br label %bb.ce
@@ -1009,7 +1003,7 @@ _ZNSt6vectorIN2cv8KeyPointESaIS1_EE9push_backEOS1_.exit248: ; preds = %bb.by, %_
 bb.cc:                                            ; preds = %bb.bt, %_ZNSt6vectorIN2cv8KeyPointESaIS1_EE9push_backEOS1_.exit248
   %i.mo = add nuw i64 %.0139409, 1                ; 2 uses
   %exitcond.not = icmp eq i64 %i.mo, %i.gs
-  br i1 %exitcond.not, label %.loopexit317, label %.lr.ph410, !llvm.loop !223
+  br i1 %exitcond.not, label %.loopexit317, label %bb.bs, !llvm.loop !223
 
 bb.cd:                                            ; preds = %.loopexit335, %.loopexit.split-lp336, %bb.bw
   %.pn = phi { ptr, i32 } [ %i.lp, %bb.bw ], [ %lpad.loopexit337, %.loopexit335 ], [ %lpad.loopexit.split-lp338, %.loopexit.split-lp336 ]

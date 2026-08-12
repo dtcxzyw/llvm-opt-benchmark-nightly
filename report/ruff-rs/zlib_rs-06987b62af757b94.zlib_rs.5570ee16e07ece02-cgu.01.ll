@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.e, %bb.c
   %.pre1584.i = load ptr, ptr %i.ab, align 16, !alias.scope !92
   br label %.lr.ph1088.i
 
-default.unreachable:                              ; preds = %bb.hx, %bb.at, %._crit_edge774.i.i, %.backedge.i, %.preheader458.split.i, %bb.jk, %bb.kx
+default.unreachable:                              ; preds = %bb.hx, %bb.at, %._crit_edge774.i.i, %.backedge.i
   unreachable
 
 bb.g:                                             ; preds = %.backedge.i
@@ -607,7 +607,7 @@ bb.ja:                                            ; preds = %.lr.ph2040
 .preheader458.split.i:                            ; preds = %.preheader458.i, %bb.jj
   %.lcssa593.promoted.i = phi i64 [ %i.aqw, %bb.jj ], [ %.promoted1041.i, %.preheader458.i ] ; 4 uses
   %i.apw = and i64 %.lcssa593.promoted.i, %i.ck   ; 3 uses
-  switch i8 %i.cl, label %default.unreachable [
+  switch i8 %i.cl, label %.preheader458.split.i.unreachabledefault [
     i8 0, label %bb.je
     i8 1, label %bb.jb
     i8 2, label %bb.jc
@@ -619,6 +619,9 @@ bb.jb:                                            ; preds = %.preheader458.split
 
 bb.jc:                                            ; preds = %.preheader458.split.i
   br label %bb.je
+
+.preheader458.split.i.unreachabledefault:         ; preds = %.preheader458.split.i
+  unreachable
 
 bb.jd:                                            ; preds = %.preheader458.split.i
   br label %bb.je
@@ -685,7 +688,7 @@ bb.jk:                                            ; preds = %bb.jt, %.preheader4
   %i.ara = and i64 %i.aqz, %i.aqm
   %i.arb = lshr i64 %i.ara, %i.aqp
   %i.arc = add nuw i64 %i.arb, %i.aqn             ; 3 uses
-  switch i8 %i.cl, label %default.unreachable [
+  switch i8 %i.cl, label %.unreachabledefault [
     i8 0, label %bb.jo
     i8 1, label %bb.jl
     i8 2, label %bb.jm
@@ -697,6 +700,9 @@ bb.jl:                                            ; preds = %bb.jk
 
 bb.jm:                                            ; preds = %bb.jk
   br label %bb.jo
+
+.unreachabledefault:                              ; preds = %bb.jk
+  unreachable
 
 bb.jn:                                            ; preds = %bb.jk
   br label %bb.jo
@@ -1100,7 +1106,7 @@ bb.kw:                                            ; preds = %bb.kt
 bb.kx:                                            ; preds = %bb.lg, %.preheader448.i
   %i.axn = phi i64 [ %.lcssa31293133, %.preheader448.i ], [ %i.ayf, %bb.lg ] ; 9 uses
   %i.axo = and i64 %i.axn, %i.tx                  ; 3 uses
-  switch i8 %i.ty, label %default.unreachable [
+  switch i8 %i.ty, label %.unreachabledefault1574 [
     i8 0, label %bb.lb
     i8 1, label %bb.ky
     i8 2, label %bb.kz
@@ -1112,6 +1118,9 @@ bb.ky:                                            ; preds = %bb.kx
 
 bb.kz:                                            ; preds = %bb.kx
   br label %bb.lb
+
+.unreachabledefault1574:                          ; preds = %bb.kx
+  unreachable
 
 bb.la:                                            ; preds = %bb.kx
   br label %bb.lb

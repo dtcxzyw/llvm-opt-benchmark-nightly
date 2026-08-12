@@ -204,21 +204,21 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.bk
 
 bb.c:                                             ; preds = %.lr.ph531, %.thread
-  %.0306530 = phi ptr [ %3, %.lr.ph531 ], [ %.9, %.thread ] ; 21 uses
-  %.0307529 = phi ptr [ %3, %.lr.ph531 ], [ %.4311, %.thread ] ; 29 uses
-  %.0312528 = phi i32 [ %i.al, %.lr.ph531 ], [ %.5317, %.thread ] ; 9 uses
-  %.0318527 = phi i32 [ %i.an, %.lr.ph531 ], [ %.5323, %.thread ] ; 3 uses
-  switch i32 %5, label %.unreachabledefault [
+  %.0306530 = phi ptr [ %.9, %.thread ], [ %3, %.lr.ph531 ] ; 21 uses
+  %.0307529 = phi ptr [ %.4311, %.thread ], [ %3, %.lr.ph531 ] ; 29 uses
+  %.0312528 = phi i32 [ %.5317, %.thread ], [ %i.al, %.lr.ph531 ] ; 9 uses
+  %.0318527 = phi i32 [ %.5323, %.thread ], [ %i.an, %.lr.ph531 ] ; 3 uses
+  switch i32 %5, label %default.unreachable [
     i32 7, label %bb.g
     i32 5, label %bb.e
     i32 6, label %bb.f
     i32 4, label %bb.d
   ]
 
-.unreachabledefault:                              ; preds = %bb.c
+.unreachabledefault:                              ; preds = %bb.ba, %_ZN11duckdb_zstdL13ZSTD_storeSeqEPNS_10seqStore_tEmPKhS3_jm.exit
   unreachable
 
-default.unreachable:                              ; preds = %bb.ba, %_ZN11duckdb_zstdL13ZSTD_storeSeqEPNS_10seqStore_tEmPKhS3_jm.exit
+default.unreachable:                              ; preds = %bb.c
   unreachable
 
 bb.d:                                             ; preds = %bb.c
@@ -621,7 +621,7 @@ bb.ba:                                            ; preds = %_ZN11duckdb_zstdL13
   %i.px = lshr i64 %i.pw, %i.at
   %i.py = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.px
   store i32 %i.pv, ptr %i.py, align 4, !tbaa !3
-  switch i32 %5, label %default.unreachable [
+  switch i32 %5, label %.unreachabledefault [
     i32 7, label %_ZN11duckdb_zstdL12ZSTD_hashPtrEPKvjj.exit346.thread462
     i32 5, label %_ZN11duckdb_zstdL12ZSTD_hashPtrEPKvjj.exit346.thread458
     i32 6, label %_ZN11duckdb_zstdL12ZSTD_hashPtrEPKvjj.exit346.thread460
@@ -752,7 +752,7 @@ _ZN11duckdb_zstdL13ZSTD_storeSeqEPNS_10seqStore_tEmPKhS3_jm.exit: ; preds = %_ZN
   store i16 %i.se, ptr %i.sf, align 2, !tbaa !65
   %i.sg = getelementptr inbounds nuw i8, ptr %i.ru, i64 8 ; 2 uses
   store ptr %i.sg, ptr %i.az, align 8, !tbaa !42
-  switch i32 %5, label %default.unreachable [
+  switch i32 %5, label %.unreachabledefault [
     i32 7, label %bb.bi
     i32 5, label %bb.bg
     i32 6, label %bb.bh

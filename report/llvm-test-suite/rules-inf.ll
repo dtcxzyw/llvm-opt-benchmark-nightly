@@ -203,22 +203,25 @@ clause_GetLiteralAtom.exit99:                     ; preds = %bb.d, %bb.e
 .lr.ph182:                                        ; preds = %._crit_edge165
   %i.al = getelementptr i8, ptr %0, i64 56
   %.not167 = icmp eq ptr %2, null
-  %6 = sext i32 %.val80 to i64
   %i.am = add i32 %.val81, %.val80
+  br i1 %.not167, label %._crit_edge171.thread, label %.lr.ph182.split.preheader
+
+.lr.ph182.split.preheader:                        ; preds = %.lr.ph182
+  %6 = sext i32 %.val80 to i64
   br label %bb.f
 
-bb.f:                                             ; preds = %.lr.ph182, %inf_CopyHyperElectron.exit
-  %indvars.iv201 = phi i64 [ %6, %.lr.ph182 ], [ %indvars.iv.next202, %inf_CopyHyperElectron.exit ] ; 3 uses
-  %.067180 = phi i32 [ %.val88, %.lr.ph182 ], [ %i.bf, %inf_CopyHyperElectron.exit ]
-  %.071178 = phi ptr [ null, %.lr.ph182 ], [ %i.bx, %inf_CopyHyperElectron.exit ]
-  %.072177 = phi ptr [ null, %.lr.ph182 ], [ %i.br, %inf_CopyHyperElectron.exit ]
-  %.073176 = phi ptr [ %i.a, %.lr.ph182 ], [ %i.bg, %inf_CopyHyperElectron.exit ]
-  %.1137175 = phi ptr [ %.0136.lcssa, %.lr.ph182 ], [ %.4, %inf_CopyHyperElectron.exit ] ; 2 uses
-  %.1140174 = phi ptr [ %.0139.lcssa, %.lr.ph182 ], [ %.4143, %inf_CopyHyperElectron.exit ] ; 2 uses
+bb.f:                                             ; preds = %.lr.ph182.split.preheader, %inf_CopyHyperElectron.exit
+  %indvars.iv201 = phi i64 [ %indvars.iv.next202, %inf_CopyHyperElectron.exit ], [ %6, %.lr.ph182.split.preheader ] ; 3 uses
+  %.067180 = phi i32 [ %i.bf, %inf_CopyHyperElectron.exit ], [ %.val88, %.lr.ph182.split.preheader ]
+  %.071178 = phi ptr [ %i.bx, %inf_CopyHyperElectron.exit ], [ null, %.lr.ph182.split.preheader ]
+  %.072177 = phi ptr [ %i.br, %inf_CopyHyperElectron.exit ], [ null, %.lr.ph182.split.preheader ]
+  %.073176 = phi ptr [ %i.bg, %inf_CopyHyperElectron.exit ], [ %i.a, %.lr.ph182.split.preheader ]
+  %.1137175 = phi ptr [ %.4, %inf_CopyHyperElectron.exit ], [ %.0136.lcssa, %.lr.ph182.split.preheader ] ; 2 uses
+  %.1140174 = phi ptr [ %.4143, %inf_CopyHyperElectron.exit ], [ %.0139.lcssa, %.lr.ph182.split.preheader ] ; 2 uses
   %.val83 = load ptr, ptr %i.al, align 8
   %i.an = getelementptr inbounds [8 x i8], ptr %.val83, i64 %indvars.iv201
   %i.ao = load ptr, ptr %i.an, align 8            ; 2 uses
-  br i1 %.not167, label %._crit_edge171.thread, label %.lr.ph170
+  br label %.lr.ph170
 
 .lr.ph170:                                        ; preds = %bb.f, %bb.g
   %.070168 = phi ptr [ %.070.val86, %bb.g ], [ %2, %bb.f ] ; 2 uses
@@ -238,7 +241,7 @@ bb.g:                                             ; preds = %.lr.ph170
   %i.as = icmp eq ptr %.pre, %i.ao
   br i1 %i.as, label %.thread.thread, label %._crit_edge171.thread
 
-._crit_edge171.thread:                            ; preds = %bb.f, %.thread
+._crit_edge171.thread:                            ; preds = %.thread, %.lr.ph182
   %i.at = load ptr, ptr @stdout, align 8
   %i.au = tail call i32 @fflush(ptr noundef %i.at) ; 0 uses
   %i.av = load ptr, ptr @stderr, align 8

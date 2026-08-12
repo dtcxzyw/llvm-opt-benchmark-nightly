@@ -204,18 +204,24 @@ _ZN18reduce_hypotheses020is_literal_in_clauseEP4exprS1_.exit.preheader: ; preds 
   %i.vu = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.vv = load ptr, ptr %i.jz, align 8, !tbaa !8  ; 6 uses
   %i.vw = icmp eq ptr %i.vv, null
-  %14 = getelementptr inbounds i8, ptr %i.vv, i64 -4
   br i1 %i.vw, label %.critedge, label %_ZNK15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.preheader
 
 _ZNK15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.preheader: ; preds = %_ZN18reduce_hypotheses020is_literal_in_clauseEP4exprS1_.exit.preheader
-  %i.vx = load i32, ptr %14, align 4, !tbaa !17
+  %14 = getelementptr inbounds i8, ptr %i.vv, i64 -4
+  %i.vx = load i32, ptr %14, align 4, !tbaa !17   ; 2 uses
   %i.vy = zext i32 %i.vx to i64
-  br label %_ZNK15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit
+  %15 = icmp ugt i32 %i.vx, 1
+  br i1 %15, label %_ZNK15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit, label %.critedge
 
-_ZNK15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit: ; preds = %_ZNK15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.preheader, %_ZNK11ast_manager13is_complementEPK4exprS2_.exit.thread493
-  %indvars.iv609897 = phi i64 [ %indvars.iv.next610, %_ZNK11ast_manager13is_complementEPK4exprS2_.exit.thread493 ], [ 1, %_ZNK15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.preheader ] ; 3 uses
-  %15 = icmp samesign ult i64 %indvars.iv609897, %i.vy
-  br i1 %15, label %bb.eg, label %.critedge
+_ZNK15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit: ; preds = %_ZNK15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.preheader
+  %16 = load ptr, ptr %0, align 8, !tbaa !153, !nonnull !37, !align !38 ; 2 uses
+  %17 = getelementptr inbounds nuw i8, ptr %16, i64 832
+  %18 = load ptr, ptr %17, align 8, !tbaa !262    ; 3 uses
+  %19 = icmp eq ptr %i.tb, %18
+  %20 = getelementptr inbounds nuw i8, ptr %16, i64 840
+  %21 = load ptr, ptr %20, align 8                ; 2 uses
+  %22 = icmp eq ptr %i.tb, %21                    ; 2 uses
+  br label %bb.eg
 
 .loopexit517:                                     ; preds = %bb.ep
   %lpad.loopexit519 = landingpad { ptr, i32 }
@@ -232,8 +238,8 @@ _ZNK15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit: 
           cleanup
   br label %.loopexit.split-lp509
 
-bb.eg:                                            ; preds = %_ZNK15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit
-  %16 = load ptr, ptr %0, align 8, !tbaa !153, !nonnull !37, !align !38 ; 2 uses
+bb.eg:                                            ; preds = %_ZNK15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit, %_ZNK11ast_manager13is_complementEPK4exprS2_.exit.thread493
+  %indvars.iv609897 = phi i64 [ %indvars.iv.next610, %_ZNK11ast_manager13is_complementEPK4exprS2_.exit.thread493 ], [ 1, %_ZNK15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit ] ; 2 uses
   %i.vz = getelementptr inbounds nuw [8 x i8], ptr %i.vv, i64 %indvars.iv609897
   %i.wa = load ptr, ptr %i.vz, align 8, !tbaa !18 ; 5 uses
   %i.wb = getelementptr inbounds nuw i8, ptr %i.wa, i64 24
@@ -242,14 +248,9 @@ bb.eg:                                            ; preds = %_ZNK15ref_vector_co
   %i.we = getelementptr inbounds nuw i8, ptr %i.wa, i64 32
   %i.wf = zext i32 %i.wd to i64
   %i.wg = getelementptr inbounds nuw [8 x i8], ptr %i.we, i64 %i.wf
-  %17 = load ptr, ptr %i.wg, align 8, !tbaa !39   ; 6 uses
-  %18 = getelementptr inbounds nuw i8, ptr %16, i64 832
-  %19 = load ptr, ptr %18, align 8, !tbaa !262    ; 2 uses
-  %20 = icmp eq ptr %i.tb, %19
-  %21 = getelementptr inbounds nuw i8, ptr %16, i64 840
-  %i.wh = load ptr, ptr %21, align 8              ; 2 uses
-  %i.wi = icmp eq ptr %17, %i.wh
-  %or.cond.i.i = select i1 %20, i1 %i.wi, i1 false
+  %i.wh = load ptr, ptr %i.wg, align 8, !tbaa !39 ; 7 uses
+  %i.wi = icmp eq ptr %i.wh, %21
+  %or.cond.i.i = select i1 %19, i1 %i.wi, i1 false
   br i1 %or.cond.i.i, label %_ZN11ast_manager7inc_refEP3ast.exit.i297, label %bb.eh
 
 bb.eh:                                            ; preds = %bb.eg
@@ -276,24 +277,26 @@ _ZNK11ast_manager6is_notEPK4expr.exit.i.i291:     ; preds = %bb.ei
 
 _ZNK11ast_manager18is_complement_coreEPK4exprS2_.exit.i: ; preds = %_ZNK11ast_manager6is_notEPK4expr.exit.i.i291
   %i.wv = load ptr, ptr %i.vt, align 8, !tbaa !39
-  %i.ww = icmp eq ptr %i.wv, %17
-  br i1 %i.ww, label %_ZN11ast_manager7inc_refEP3ast.exit.i297, label %_ZNK11ast_manager18is_complement_coreEPK4exprS2_.exit.thread.i
+  %23 = icmp eq ptr %i.wv, %i.wh
+  %i.ww = icmp eq ptr %i.wh, %18
+  %or.cond.i5.i = select i1 %i.ww, i1 %22, i1 false
+  %or.cond1021 = select i1 %23, i1 true, i1 %or.cond.i5.i
+  br i1 %or.cond1021, label %_ZN11ast_manager7inc_refEP3ast.exit.i297, label %bb.ej
 
-_ZNK11ast_manager18is_complement_coreEPK4exprS2_.exit.thread.i: ; preds = %_ZNK11ast_manager18is_complement_coreEPK4exprS2_.exit.i, %_ZNK11ast_manager6is_notEPK4expr.exit.i.i291, %bb.ei, %bb.eh
-  %22 = icmp eq ptr %17, %19
-  %i.wx = icmp eq ptr %i.tb, %i.wh
-  %or.cond.i5.i.a = select i1 %22, i1 %i.wx, i1 false
+_ZNK11ast_manager18is_complement_coreEPK4exprS2_.exit.thread.i: ; preds = %_ZNK11ast_manager6is_notEPK4expr.exit.i.i291, %bb.ei, %bb.eh
+  %i.wx = icmp eq ptr %i.wh, %18
+  %or.cond.i5.i.a = select i1 %i.wx, i1 %22, i1 false
   br i1 %or.cond.i5.i.a, label %_ZN11ast_manager7inc_refEP3ast.exit.i297, label %bb.ej
 
-bb.ej:                                            ; preds = %_ZNK11ast_manager18is_complement_coreEPK4exprS2_.exit.thread.i
-  %i.wy = getelementptr inbounds nuw i8, ptr %17, i64 4
+bb.ej:                                            ; preds = %_ZNK11ast_manager18is_complement_coreEPK4exprS2_.exit.i, %_ZNK11ast_manager18is_complement_coreEPK4exprS2_.exit.thread.i
+  %i.wy = getelementptr inbounds nuw i8, ptr %i.wh, i64 4
   %i.wz = load i32, ptr %i.wy, align 4
   %i.xa = and i32 %i.wz, 65535
   %i.xb = icmp eq i32 %i.xa, 0
   br i1 %i.xb, label %bb.ek, label %_ZNK11ast_manager13is_complementEPK4exprS2_.exit.thread493
 
 bb.ek:                                            ; preds = %bb.ej
-  %i.xc = getelementptr inbounds nuw i8, ptr %17, i64 16
+  %i.xc = getelementptr inbounds nuw i8, ptr %i.wh, i64 16
   %i.xd = load ptr, ptr %i.xc, align 8, !tbaa !173
   %i.xe = getelementptr inbounds nuw i8, ptr %i.xd, i64 24
   %i.xf = load ptr, ptr %i.xe, align 8, !tbaa !174 ; 3 uses
@@ -310,7 +313,7 @@ _ZNK11ast_manager6is_notEPK4expr.exit.i7.i:       ; preds = %bb.ek
   br i1 %i.xl, label %_ZNK11ast_manager13is_complementEPK4exprS2_.exit, label %_ZNK11ast_manager13is_complementEPK4exprS2_.exit.thread493
 
 _ZNK11ast_manager13is_complementEPK4exprS2_.exit: ; preds = %_ZNK11ast_manager6is_notEPK4expr.exit.i7.i
-  %i.xm = getelementptr inbounds nuw i8, ptr %17, i64 32
+  %i.xm = getelementptr inbounds nuw i8, ptr %i.wh, i64 32
   %i.xn = load ptr, ptr %i.xm, align 8, !tbaa !39
   %i.xo = icmp eq ptr %i.xn, %i.tb
   br i1 %i.xo, label %_ZN11ast_manager7inc_refEP3ast.exit.i297, label %_ZNK11ast_manager13is_complementEPK4exprS2_.exit.thread493
@@ -498,10 +501,11 @@ bb.ex:                                            ; preds = %bb.em
   br label %.loopexit.split-lp509
 
 _ZNK11ast_manager13is_complementEPK4exprS2_.exit.thread493: ; preds = %_ZNK11ast_manager6is_notEPK4expr.exit.i7.i, %bb.ej, %bb.ek, %_ZNK11ast_manager13is_complementEPK4exprS2_.exit
-  %indvars.iv.next610 = add nuw nsw i64 %indvars.iv609897, 1
-  br label %_ZNK15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit, !llvm.loop !297
+  %indvars.iv.next610 = add nuw nsw i64 %indvars.iv609897, 1 ; 2 uses
+  %24 = icmp samesign ult i64 %indvars.iv.next610, %i.vy
+  br i1 %24, label %bb.eg, label %.critedge, !llvm.loop !297
 
-.critedge:                                        ; preds = %_ZNK15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit, %_ZN18reduce_hypotheses020is_literal_in_clauseEP4exprS1_.exit.preheader
+.critedge:                                        ; preds = %_ZNK11ast_manager13is_complementEPK4exprS2_.exit.thread493, %_ZNK15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.preheader, %_ZN18reduce_hypotheses020is_literal_in_clauseEP4exprS1_.exit.preheader
   %i.zw = load ptr, ptr %i.vv, align 8, !tbaa !18
   br label %.critedge135
 

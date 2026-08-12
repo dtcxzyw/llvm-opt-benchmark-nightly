@@ -204,7 +204,10 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %.not126.i.6 = icmp sgt i32 %i.e, 0
   %wide.trip.count.i.6 = zext nneg i32 %i.e to i64
   %wide.trip.count.i.7 = zext nneg i32 %i.e to i64 ; 2 uses
-  %1 = load ptr, ptr %i.el, align 8
+  br i1 %.not126.i, label %._crit_edge247.split, label %._crit_edge.i.7.loopexit
+
+._crit_edge247.split:                             ; preds = %._crit_edge247
+  %1 = load ptr, ptr %i.el, align 8, !tbaa !24
   %2 = load ptr, ptr %i.el, align 8
   %3 = load ptr, ptr %i.el, align 8
   %4 = load ptr, ptr %i.el, align 8
@@ -236,9 +239,9 @@ bb.g:                                             ; preds = %.lr.ph246, %bb.g
   %exitcond287.not = icmp eq i64 %indvars.iv.next284, %wide.trip.count286
   br i1 %exitcond287.not, label %._crit_edge247, label %bb.g, !llvm.loop !82
 
-bb.h:                                             ; preds = %._crit_edge247, %_ZNK18btConvexPolyhedron15testContainmentEv.exit
-  %i.ey = phi float [ %i.ej, %._crit_edge247 ], [ %i.kb, %_ZNK18btConvexPolyhedron15testContainmentEv.exit ]
-  %.094254 = phi i32 [ 0, %._crit_edge247 ], [ %i.kc, %_ZNK18btConvexPolyhedron15testContainmentEv.exit ]
+bb.h:                                             ; preds = %._crit_edge247.split, %_ZNK18btConvexPolyhedron15testContainmentEv.exit
+  %i.ey = phi float [ %i.ej, %._crit_edge247.split ], [ %i.kb, %_ZNK18btConvexPolyhedron15testContainmentEv.exit ]
+  %.094254 = phi i32 [ 0, %._crit_edge247.split ], [ %i.kc, %_ZNK18btConvexPolyhedron15testContainmentEv.exit ]
   %i.ez = load float, ptr %i.eg, align 8          ; 2 uses
   %i.fa = load float, ptr %i.ei, align 4          ; 2 uses
   %i.fb = load float, ptr %i.eh, align 8          ; 2 uses
@@ -248,15 +251,15 @@ bb.h:                                             ; preds = %._crit_edge247, %_Z
   %i.ff = fadd float %i.fb, %i.s                  ; 4 uses
   %i.fg = fadd float %i.fa, %i.q                  ; 4 uses
   %i.fh = fadd float %i.o, %i.ez                  ; 4 uses
-  br i1 %.not126.i, label %.lr.ph.i, label %._crit_edge.i.7.loopexit
+  br label %.lr.ph.i
 
 bb.i:                                             ; preds = %.lr.ph.i
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
   br i1 %exitcond.not.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !35
 
-.lr.ph.i:                                         ; preds = %bb.h, %bb.i
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.i ], [ 0, %bb.h ] ; 2 uses
+.lr.ph.i:                                         ; preds = %bb.i, %bb.h
+  %indvars.iv.i = phi i64 [ 0, %bb.h ], [ %indvars.iv.next.i, %bb.i ] ; 2 uses
   %i.fi = getelementptr inbounds nuw [48 x i8], ptr %1, i64 %indvars.iv.i ; 4 uses
   %i.fj = getelementptr inbounds nuw i8, ptr %i.fi, i64 32
   %i.fk = getelementptr inbounds nuw i8, ptr %i.fi, i64 36
@@ -455,7 +458,7 @@ bb.p:                                             ; preds = %.lr.ph.i.7
   %exitcond.not.i.7 = icmp eq i64 %indvars.iv.next.i.7, %wide.trip.count.i.7
   br i1 %exitcond.not.i.7, label %._crit_edge.i.7, label %.lr.ph.i.7, !llvm.loop !35
 
-._crit_edge.i.7.loopexit:                         ; preds = %bb.h, %._crit_edge.i, %._crit_edge.i.1, %._crit_edge.i.2, %._crit_edge.i.3, %._crit_edge.i.4, %._crit_edge.i.5, %._crit_edge.i.6
+._crit_edge.i.7.loopexit:                         ; preds = %._crit_edge.i.6, %._crit_edge.i.5, %._crit_edge.i.4, %._crit_edge.i.3, %._crit_edge.i.2, %._crit_edge.i.1, %._crit_edge.i, %._crit_edge247
   %.pre322 = zext nneg i32 %i.e to i64
   br label %._crit_edge.i.7
 

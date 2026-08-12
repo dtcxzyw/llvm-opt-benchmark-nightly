@@ -39,7 +39,7 @@ bb.a:
 .split.split.preheader:                           ; preds = %.split
   %i.m = getelementptr i8, ptr %6, i64 673        ; 2 uses
   %.not = icmp ult ptr %i.m, %6
-  br label %.split.split
+  br i1 %.not, label %.split142, label %bb.d
 
 .split.split.us:                                  ; preds = %.split
   %.not100.us = icmp ugt i32 %7, 689
@@ -61,16 +61,13 @@ bb.c:                                             ; preds = %bb.b
   %i.t = icmp eq ptr %i.s, null
   br i1 %i.t, label %.split148.us, label %.split150
 
-.split.split:                                     ; preds = %.split.split.preheader, %bb.ez
+bb.d:                                             ; preds = %.split.split.preheader, %bb.ez
   %.090 = phi ptr [ %i.u, %bb.ez ], [ %i.m, %.split.split.preheader ] ; 5 uses
-  br i1 %.not, label %.split142, label %bb.d
-
-bb.d:                                             ; preds = %.split.split
   %i.u = getelementptr inbounds nuw i8, ptr %.090, i64 17 ; 2 uses
   %.not100.not = icmp ugt ptr %i.u, %i.g
   br i1 %.not100.not, label %.split142, label %bb.e
 
-.split142:                                        ; preds = %bb.d, %.split.split, %.split.split.us, %bb.a
+.split142:                                        ; preds = %bb.d, %.split.split.preheader, %.split.split.us, %bb.a
   tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.1) #7
   br label %bb.fc
 
@@ -473,7 +470,7 @@ bb.ez:                                            ; preds = %bb.aw
   %i.oe = getelementptr inbounds nuw i8, ptr %.090, i64 16
   %i.of = load i8, ptr %i.oe, align 1, !tbaa !11
   %.not106 = icmp eq i8 %i.of, 0
-  br i1 %.not106, label %bb.fa, label %.split.split
+  br i1 %.not106, label %bb.fa, label %bb.d
 
 bb.fa:                                            ; preds = %bb.ez
   %i.og = zext i32 %5 to i64

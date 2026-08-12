@@ -203,7 +203,7 @@ scalar.ph111.preheader:                           ; preds = %.lr.ph117.us126.i, 
   %indvars.iv176.i.ph = phi i64 [ 0, %.lr.ph117.us126.i ], [ %n.vec114, %middle.block122 ]
   br label %scalar.ph111
 
-calculate_sums.exit:                              ; preds = %.loopexit.us125.i, %.loopexit.us.i, %.preheader101.us.preheader.i, %.lr.ph120.split.i, %bb.p, %bb.l, %bb.j
+calculate_sums.exit:                              ; preds = %.loopexit.us125.i, %.loopexit.us.i, %.lr.ph120.split.i, %.preheader101.us.preheader.i, %bb.p, %bb.l, %bb.j
   %spec.select = call i32 @llvm.smin.i32(i32 %i.d, i32 %i.bq)
   %i.hl = call i32 @llvm.smin.i32(i32 %spec.select, i32 32)
   %i.hm = call i32 @ff_filter_execute(ptr noundef %i.c, ptr noundef nonnull @slice_geq_filter, ptr noundef nonnull %2, ptr noundef null, i32 noundef %i.hl) #13 ; 0 uses

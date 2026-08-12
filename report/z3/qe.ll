@@ -204,28 +204,25 @@ _ZNK10union_findI22union_find_default_ctxE4findEj.exit129: ; preds = %bb.bs
   %i.lt = load i32, ptr %i.ls, align 4, !tbaa !15 ; 2 uses
   %i.lu = load ptr, ptr %20, align 8, !tbaa !403  ; 5 uses
   %i.lv = icmp eq ptr %i.lu, null
-  %22 = getelementptr inbounds i8, ptr %i.lu, i64 -4
   br i1 %i.lv, label %.critedge2, label %_ZNK6vectorIjLb0EjE4sizeEv.exit131.thread.preheader
 
 _ZNK6vectorIjLb0EjE4sizeEv.exit131.thread.preheader: ; preds = %_ZNK10union_findI22union_find_default_ctxE4findEj.exit129
-  %i.lw = load i32, ptr %22, align 4, !tbaa !15   ; 3 uses
+  %22 = getelementptr inbounds i8, ptr %i.lu, i64 -4
+  %i.lw = load i32, ptr %22, align 4, !tbaa !15   ; 4 uses
   %i.lx = zext i32 %i.lw to i64                   ; 2 uses
-  br label %_ZNK6vectorIjLb0EjE4sizeEv.exit131.thread
+  %.not391 = icmp eq i32 %i.lw, 0
+  br i1 %.not391, label %bb.ci, label %bb.bt
 
-_ZNK6vectorIjLb0EjE4sizeEv.exit131.thread:        ; preds = %_ZNK6vectorIjLb0EjE4sizeEv.exit131.thread.preheader, %bb.ch
-  %indvars.iv266394 = phi i64 [ %indvars.iv.next267, %bb.ch ], [ 0, %_ZNK6vectorIjLb0EjE4sizeEv.exit131.thread.preheader ] ; 4 uses
-  %23 = icmp samesign ult i64 %indvars.iv266394, %i.lx
-  br i1 %23, label %bb.bt, label %bb.ci
-
-bb.bt:                                            ; preds = %_ZNK6vectorIjLb0EjE4sizeEv.exit131.thread
-  %i.ly = getelementptr inbounds nuw [4 x i8], ptr %i.lu, i64 %indvars.iv266394
+bb.bt:                                            ; preds = %_ZNK6vectorIjLb0EjE4sizeEv.exit131.thread.preheader, %bb.ch
+  %indvars.iv266389 = phi i64 [ %indvars.iv.next267, %bb.ch ], [ 0, %_ZNK6vectorIjLb0EjE4sizeEv.exit131.thread.preheader ] ; 3 uses
+  %i.ly = getelementptr inbounds nuw [4 x i8], ptr %i.lu, i64 %indvars.iv266389
   %i.lz = load i32, ptr %i.ly, align 4, !tbaa !15
   %i.ma = icmp eq i32 %i.lz, %i.lt
   br i1 %i.ma, label %bb.bu, label %bb.ch
 
 bb.bu:                                            ; preds = %bb.bt
   %i.mb = load ptr, ptr %5, align 8, !tbaa !572
-  %i.mc = getelementptr inbounds nuw [8 x i8], ptr %i.mb, i64 %indvars.iv266394 ; 3 uses
+  %i.mc = getelementptr inbounds nuw [8 x i8], ptr %i.mb, i64 %indvars.iv266389 ; 3 uses
   %i.md = load ptr, ptr %i.mc, align 8, !tbaa !403 ; 4 uses
   %i.me = icmp eq ptr %i.md, null
   br i1 %i.me, label %bb.bw, label %bb.bv
@@ -356,10 +353,11 @@ bb.cg:                                            ; preds = %bb.ce, %bb.bw
   br label %.body209
 
 bb.ch:                                            ; preds = %bb.bt
-  %indvars.iv.next267 = add nuw nsw i64 %indvars.iv266394, 1
-  br label %_ZNK6vectorIjLb0EjE4sizeEv.exit131.thread
+  %indvars.iv.next267 = add nuw nsw i64 %indvars.iv266389, 1 ; 2 uses
+  %23 = icmp samesign ult i64 %indvars.iv.next267, %i.lx
+  br i1 %23, label %bb.bt, label %bb.ci
 
-bb.ci:                                            ; preds = %_ZNK6vectorIjLb0EjE4sizeEv.exit131.thread
+bb.ci:                                            ; preds = %bb.ch, %_ZNK6vectorIjLb0EjE4sizeEv.exit131.thread.preheader
   %i.ns = getelementptr inbounds i8, ptr %i.lu, i64 -8
   %i.nt = load i32, ptr %i.ns, align 4, !tbaa !15
   %i.nu = icmp eq i32 %i.lw, %i.nt

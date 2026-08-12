@@ -1,8 +1,8 @@
 inline.NumInlined: 2597
 inline.NumDeleted: 451
 loop-unroll.NumCompletelyUnrolled: 19
-loop-unroll.NumRuntimeUnrolled: 16
-loop-unroll.NumUnrolled: 35
+loop-unroll.NumRuntimeUnrolled: 17
+loop-unroll.NumUnrolled: 36
 begin_hunk_0_@_ZN8V3Number6createEPKc:bb.a
   %i.aeb = icmp slt i32 %i.ada, 129
   %i.aec = load ptr, ptr %0, align 8
@@ -204,8 +204,9 @@ _ZN8V3Number6setBitEic.exit373:                   ; preds = %_ZN12V3NumberData3n
   br i1 %.not273, label %.loopexit496, label %.lr.ph580, !llvm.loop !153
 
 .loopexit496:                                     ; preds = %_ZN8V3Number6setBitEic.exit373, %._crit_edge591.thread, %bb.ei, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit365, %._crit_edge591, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit357
-  %.2222 = phi i32 [ %i.lv, %._crit_edge591 ], [ %i.lv, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit357 ], [ %.0220576, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit365 ], [ 0, %bb.ei ], [ %i.ky, %._crit_edge591.thread ], [ %.1221, %_ZN8V3Number6setBitEic.exit373 ] ; 4 uses
+  %.2222 = phi i32 [ %i.lv, %._crit_edge591 ], [ %i.lv, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit357 ], [ %.0220576, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit365 ], [ 0, %bb.ei ], [ %i.ky, %._crit_edge591.thread ], [ %.1221, %_ZN8V3Number6setBitEic.exit373 ]
   %.2219 = phi i32 [ 1, %._crit_edge591 ], [ 1, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit357 ], [ %.0217577, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit365 ], [ 1, %bb.ei ], [ 1, %._crit_edge591.thread ], [ %.1218, %_ZN8V3Number6setBitEic.exit373 ] ; 2 uses
+  %.2222.fr = freeze i32 %.2222                   ; 3 uses
   br i1 %.0250, label %bb.hv, label %bb.ht
 
 bb.ht:                                            ; preds = %.loopexit496
@@ -286,24 +287,19 @@ _ZNK8V3Number10widthToFitEv.exit:                 ; preds = %tailrecurse.prehead
 bb.hv:                                            ; preds = %_ZNK8V3Number10widthToFitEv.exit, %bb.ht, %.loopexit496
   %i.ail = load i32, ptr %i.do, align 8, !tbaa !41
   %.fr.i595 = freeze i32 %i.ail                   ; 2 uses
-  %8 = icmp sle i32 %.2222, %.fr.i595
-  %9 = icmp ne i32 %.2222, 0
-  %or.cond596 = and i1 %9, %8
-  br i1 %or.cond596, label %.lr.ph600.preheader, label %.critedge5
+  %8 = icmp sgt i32 %.2222.fr, %.fr.i595
+  %9 = icmp slt i32 %.2222.fr, 1
+  %or.cond = or i1 %9, %8
+  br i1 %or.cond, label %.critedge5, label %.lr.ph600
 
-.lr.ph600.preheader:                              ; preds = %bb.hv
-  %10 = icmp slt i32 %.2222, 1
-  br label %.lr.ph600
-
-.lr.ph600:                                        ; preds = %.lr.ph600.preheader, %bb.hw
-  %.fr.i598 = phi i32 [ %.fr.i, %bb.hw ], [ %.fr.i595, %.lr.ph600.preheader ]
-  %.3223597 = phi i32 [ %i.aja, %bb.hw ], [ %.2222, %.lr.ph600.preheader ] ; 4 uses
+.lr.ph600:                                        ; preds = %bb.hv, %bb.hw
+  %.fr.i598 = phi i32 [ %.fr.i, %bb.hw ], [ %.fr.i595, %bb.hv ]
+  %.3223597 = phi i32 [ %i.aja, %bb.hw ], [ %.2222.fr, %bb.hv ] ; 4 uses
   %i.aim = add nsw i32 %.3223597, -1              ; 3 uses
   %i.ain = load i8, ptr %i.g, align 4, !tbaa !42
   %i.aio = add i8 %i.ain, -3
   %spec.select.i.i432 = icmp ult i8 %i.aio, -2
-  %or.cond10.i = or i1 %10, %spec.select.i.i432
-  br i1 %or.cond10.i, label %.critedge5, label %_ZNK8V3Number7bitIsXZEi.exit
+  br i1 %spec.select.i.i432, label %.critedge5, label %_ZNK8V3Number7bitIsXZEi.exit
 
 _ZNK8V3Number7bitIsXZEi.exit:                     ; preds = %.lr.ph600
   %i.aip = icmp samesign ult i32 %.fr.i598, 129
@@ -331,7 +327,7 @@ bb.hw:                                            ; preds = %_ZNK8V3Number7bitIs
   %i.ajc = icmp slt i32 %.3223597, %.fr.i
   br i1 %i.ajc, label %.lr.ph600, label %.critedge5, !llvm.loop !155
 
-.critedge5:                                       ; preds = %_ZNK8V3Number7bitIsXZEi.exit, %bb.hw, %.lr.ph600, %bb.hv
+.critedge5:                                       ; preds = %.lr.ph600, %bb.hw, %_ZNK8V3Number7bitIsXZEi.exit, %bb.hv
   call void @_ZN8V3Number11opCleanThisEb(ptr noundef nonnull align 8 dereferenceable(56) %0, i1 noundef zeroext true)
   ret void
 }
@@ -734,11 +730,11 @@ bb.a:
   %spec.select.i.i = icmp ult i8 %i.c, -2
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.e = load i32, ptr %i.d, align 8
-  %.fr.i.i = freeze i32 %i.e                      ; 5 uses
+  %.fr.i.i = freeze i32 %i.e                      ; 7 uses
   %i.f = add nsw i32 %.fr.i.i, -1                 ; 2 uses
   %i.g = icmp samesign ult i32 %.fr.i.i, 129
   %i.h = load ptr, ptr %0, align 8
-  %spec.select.i7.i.i = select i1 %i.g, ptr %0, ptr %i.h ; 3 uses
+  %spec.select.i7.i.i = select i1 %i.g, ptr %0, ptr %i.h ; 5 uses
   %i.i = lshr i32 %i.f, 5
   %i.j = zext nneg i32 %i.i to i64
   %i.k = getelementptr inbounds nuw [8 x i8], ptr %spec.select.i7.i.i, i64 %i.j
@@ -751,18 +747,56 @@ bb.a:
 .lr.ph.split:                                     ; preds = %.lr.ph
   %i.o = icmp slt i32 %.fr.i.i, 1
   %i.p = icmp slt i32 %2, 0                       ; 2 uses
-  br i1 %i.o, label %.lr.ph.split.split.us.a, label %.lr.ph.split.split.a
+  br i1 %i.o, label %.lr.ph.split.split.us.preheader, label %.lr.ph.split.split.preheader
 
-.lr.ph.split.split.us.a:                          ; preds = %.lr.ph.split, %_ZNK8V3Number6bitIs0Ei.exit.thread.us.a
-  %.0713.us.a = phi i32 [ %3, %_ZNK8V3Number6bitIs0Ei.exit.thread.us.a ], [ %2, %.lr.ph.split ] ; 5 uses
-  br i1 %i.p, label %_ZNK8V3Number6bitIs0Ei.exit.thread10, label %bb.b, !prof !329
+.lr.ph.split.split.preheader:                     ; preds = %.lr.ph.split
+  br i1 %i.p, label %_ZNK8V3Number6bitIs0Ei.exit.thread10, label %bb.c, !prof !329
 
-bb.b:                                             ; preds = %.lr.ph.split.split.us.a
-  %.not.i.us = icmp slt i32 %.0713.us.a, %.fr.i.i
-  br i1 %.not.i.us, label %_ZNK8V3Number6bitIs0Ei.exit.us, label %_ZNK8V3Number6bitIs0Ei.exit.thread.us.a
+.lr.ph.split.split.us.preheader:                  ; preds = %.lr.ph.split
+  br i1 %i.p, label %_ZNK8V3Number6bitIs0Ei.exit.thread10, label %.lr.ph.split.split.us.preheader37, !prof !329
+
+.lr.ph.split.split.us.preheader37:                ; preds = %.lr.ph.split.split.us.preheader
+  %3 = add i32 %1, %2
+  %4 = and i32 %3, 1
+  %lcmp.mod.not.not = icmp eq i32 %4, 0
+  br i1 %lcmp.mod.not.not, label %.lr.ph.split.split.us.prol, label %.lr.ph.split.split.us.a
+
+.lr.ph.split.split.us.prol:                       ; preds = %.lr.ph.split.split.us.preheader37
+  %.not.i.us.prol = icmp slt i32 %2, %.fr.i.i
+  br i1 %.not.i.us.prol, label %_ZNK8V3Number6bitIs0Ei.exit.us.prol, label %_ZNK8V3Number6bitIs0Ei.exit.thread.us.prol
+
+_ZNK8V3Number6bitIs0Ei.exit.us.prol:              ; preds = %.lr.ph.split.split.us.prol
+  %5 = lshr i32 %2, 5
+  %6 = zext nneg i32 %5 to i64
+  %7 = getelementptr inbounds nuw [8 x i8], ptr %spec.select.i7.i.i, i64 %6 ; 2 uses
+  %.sroa.0.0.copyload.i.us.prol = load i32, ptr %7, align 4, !tbaa !66
+  %.sroa.4.0..sroa_idx.i.us.prol = getelementptr inbounds nuw i8, ptr %7, i64 4
+  %.sroa.4.0.copyload.i.us.prol = load i32, ptr %.sroa.4.0..sroa_idx.i.us.prol, align 4, !tbaa !66
+  %8 = or i32 %.sroa.4.0.copyload.i.us.prol, %.sroa.0.0.copyload.i.us.prol
+  %9 = zext i32 %8 to i64
+  %10 = and i32 %2, 31
+  %11 = zext nneg i32 %10 to i64
+  %12 = shl nuw nsw i64 1, %11
+  %13 = and i64 %12, %9
+  %14 = icmp eq i64 %13, 0
+  br i1 %14, label %_ZNK8V3Number6bitIs0Ei.exit.thread.us.prol, label %_ZNK8V3Number6bitIs0Ei.exit.thread10, !prof !330
+
+_ZNK8V3Number6bitIs0Ei.exit.thread.us.prol:       ; preds = %_ZNK8V3Number6bitIs0Ei.exit.us.prol, %.lr.ph.split.split.us.prol
+  %15 = add nuw i32 %2, 1
+  br label %.lr.ph.split.split.us.a
+
+.lr.ph.split.split.us.a:                          ; preds = %_ZNK8V3Number6bitIs0Ei.exit.thread.us.prol, %.lr.ph.split.split.us.preheader37
+  %.0713.us.a = phi i32 [ %2, %.lr.ph.split.split.us.preheader37 ], [ %15, %_ZNK8V3Number6bitIs0Ei.exit.thread.us.prol ]
+  %16 = icmp eq i32 %1, %2
+  br i1 %16, label %_ZNK8V3Number6bitIs0Ei.exit.thread10, label %bb.b
+
+bb.b:                                             ; preds = %.lr.ph.split.split.us.a, %.lr.ph.split.split.a
+  %.0713.us = phi i32 [ %27, %.lr.ph.split.split.a ], [ %.0713.us.a, %.lr.ph.split.split.us.a ] ; 5 uses
+  %.not.i.us = icmp slt i32 %.0713.us, %.fr.i.i
+  br i1 %.not.i.us, label %_ZNK8V3Number6bitIs0Ei.exit.us, label %_ZNK8V3Number6bitIs0Ei.exit.thread.us
 
 _ZNK8V3Number6bitIs0Ei.exit.us:                   ; preds = %bb.b
-  %i.q = lshr i32 %.0713.us.a, 5
+  %i.q = lshr i32 %.0713.us, 5
   %i.r = zext nneg i32 %i.q to i64
   %i.s = getelementptr inbounds nuw [8 x i8], ptr %spec.select.i7.i.i, i64 %i.r ; 2 uses
   %.sroa.0.0.copyload.i.us = load i32, ptr %i.s, align 4, !tbaa !66
@@ -770,23 +804,41 @@ _ZNK8V3Number6bitIs0Ei.exit.us:                   ; preds = %bb.b
   %.sroa.4.0.copyload.i.us = load i32, ptr %.sroa.4.0..sroa_idx.i.us, align 4, !tbaa !66
   %i.t = or i32 %.sroa.4.0.copyload.i.us, %.sroa.0.0.copyload.i.us
   %i.u = zext i32 %i.t to i64
-  %i.v = and i32 %.0713.us.a, 31
+  %i.v = and i32 %.0713.us, 31
   %i.w = zext nneg i32 %i.v to i64
   %i.x = shl nuw nsw i64 1, %i.w
   %i.y = and i64 %i.x, %i.u
   %i.z = icmp eq i64 %i.y, 0
-  br i1 %i.z, label %_ZNK8V3Number6bitIs0Ei.exit.thread.us.a, label %_ZNK8V3Number6bitIs0Ei.exit.thread10, !prof !330
+  br i1 %i.z, label %_ZNK8V3Number6bitIs0Ei.exit.thread.us, label %_ZNK8V3Number6bitIs0Ei.exit.thread10, !prof !330
 
-_ZNK8V3Number6bitIs0Ei.exit.thread.us.a:          ; preds = %bb.b, %_ZNK8V3Number6bitIs0Ei.exit.us
-  %3 = add i32 %.0713.us.a, 1
-  %exitcond27.not = icmp eq i32 %.0713.us.a, %1
-  br i1 %exitcond27.not, label %_ZNK8V3Number6bitIs0Ei.exit.thread10, label %.lr.ph.split.split.us.a, !llvm.loop !331
+_ZNK8V3Number6bitIs0Ei.exit.thread.us:            ; preds = %bb.b, %_ZNK8V3Number6bitIs0Ei.exit.us
+  %17 = add i32 %.0713.us, 1                      ; 4 uses
+  %.not.i.us.1 = icmp slt i32 %17, %.fr.i.i
+  br i1 %.not.i.us.1, label %_ZNK8V3Number6bitIs0Ei.exit.thread.us.a, label %.lr.ph.split.split.a
 
-.lr.ph.split.split.a:                             ; preds = %.lr.ph.split, %_ZNK8V3Number6bitIs0Ei.exit.thread
-  %.0713 = phi i32 [ %i.an, %_ZNK8V3Number6bitIs0Ei.exit.thread ], [ %2, %.lr.ph.split ] ; 5 uses
-  br i1 %i.p, label %_ZNK8V3Number6bitIs0Ei.exit.thread10, label %bb.c, !prof !329
+_ZNK8V3Number6bitIs0Ei.exit.thread.us.a:          ; preds = %_ZNK8V3Number6bitIs0Ei.exit.thread.us
+  %18 = lshr i32 %17, 5
+  %19 = zext nneg i32 %18 to i64
+  %20 = getelementptr inbounds nuw [8 x i8], ptr %spec.select.i7.i.i, i64 %19 ; 2 uses
+  %.sroa.0.0.copyload.i.us.1 = load i32, ptr %20, align 4, !tbaa !66
+  %.sroa.4.0..sroa_idx.i.us.1 = getelementptr inbounds nuw i8, ptr %20, i64 4
+  %.sroa.4.0.copyload.i.us.1 = load i32, ptr %.sroa.4.0..sroa_idx.i.us.1, align 4, !tbaa !66
+  %21 = or i32 %.sroa.4.0.copyload.i.us.1, %.sroa.0.0.copyload.i.us.1
+  %22 = zext i32 %21 to i64
+  %23 = and i32 %17, 31
+  %24 = zext nneg i32 %23 to i64
+  %25 = shl nuw nsw i64 1, %24
+  %26 = and i64 %25, %22
+  %exitcond27.not = icmp eq i64 %26, 0
+  br i1 %exitcond27.not, label %.lr.ph.split.split.a, label %_ZNK8V3Number6bitIs0Ei.exit.thread10, !prof !330
 
-bb.c:                                             ; preds = %.lr.ph.split.split.a
+.lr.ph.split.split.a:                             ; preds = %_ZNK8V3Number6bitIs0Ei.exit.thread.us.a, %_ZNK8V3Number6bitIs0Ei.exit.thread.us
+  %27 = add i32 %.0713.us, 2
+  %exitcond27.not.1 = icmp eq i32 %17, %1
+  br i1 %exitcond27.not.1, label %_ZNK8V3Number6bitIs0Ei.exit.thread10, label %bb.b, !llvm.loop !331
+
+bb.c:                                             ; preds = %.lr.ph.split.split.preheader, %_ZNK8V3Number6bitIs0Ei.exit.thread
+  %.0713 = phi i32 [ %i.an, %_ZNK8V3Number6bitIs0Ei.exit.thread ], [ %2, %.lr.ph.split.split.preheader ] ; 5 uses
   %.not.i = icmp slt i32 %.0713, %.fr.i.i
   br i1 %.not.i, label %_ZNK8V3Number6bitIs0Ei.exit, label %tailrecurse.preheader.i.i
 
@@ -816,10 +868,10 @@ _ZNK8V3Number6bitIs0Ei.exit:                      ; preds = %bb.c
 _ZNK8V3Number6bitIs0Ei.exit.thread:               ; preds = %tailrecurse.preheader.i.i, %_ZNK8V3Number6bitIs0Ei.exit
   %i.an = add i32 %.0713, 1
   %exitcond.not = icmp eq i32 %.0713, %1
-  br i1 %exitcond.not, label %_ZNK8V3Number6bitIs0Ei.exit.thread10, label %.lr.ph.split.split.a, !llvm.loop !331
+  br i1 %exitcond.not, label %_ZNK8V3Number6bitIs0Ei.exit.thread10, label %bb.c, !llvm.loop !331
 
-_ZNK8V3Number6bitIs0Ei.exit.thread10:             ; preds = %_ZNK8V3Number6bitIs0Ei.exit.thread, %_ZNK8V3Number6bitIs0Ei.exit, %tailrecurse.preheader.i.i, %.lr.ph.split.split.a, %_ZNK8V3Number6bitIs0Ei.exit.thread.us.a, %_ZNK8V3Number6bitIs0Ei.exit.us, %.lr.ph.split.split.us.a, %.lr.ph, %bb.a
-  %.not.lcssa = phi i1 [ true, %bb.a ], [ false, %.lr.ph.split.split.us.a ], [ false, %.lr.ph ], [ false, %_ZNK8V3Number6bitIs0Ei.exit.us ], [ true, %_ZNK8V3Number6bitIs0Ei.exit.thread.us.a ], [ true, %_ZNK8V3Number6bitIs0Ei.exit.thread ], [ false, %.lr.ph.split.split.a ], [ false, %tailrecurse.preheader.i.i ], [ false, %_ZNK8V3Number6bitIs0Ei.exit ]
+_ZNK8V3Number6bitIs0Ei.exit.thread10:             ; preds = %tailrecurse.preheader.i.i, %_ZNK8V3Number6bitIs0Ei.exit, %_ZNK8V3Number6bitIs0Ei.exit.thread, %.lr.ph.split.split.us.a, %_ZNK8V3Number6bitIs0Ei.exit.us, %_ZNK8V3Number6bitIs0Ei.exit.thread.us.a, %.lr.ph.split.split.a, %_ZNK8V3Number6bitIs0Ei.exit.us.prol, %.lr.ph.split.split.preheader, %.lr.ph.split.split.us.preheader, %.lr.ph, %bb.a
+  %.not.lcssa = phi i1 [ true, %bb.a ], [ false, %.lr.ph.split.split.preheader ], [ false, %.lr.ph ], [ false, %.lr.ph.split.split.us.preheader ], [ false, %_ZNK8V3Number6bitIs0Ei.exit.thread.us.a ], [ true, %.lr.ph.split.split.us.a ], [ false, %_ZNK8V3Number6bitIs0Ei.exit.us.prol ], [ false, %_ZNK8V3Number6bitIs0Ei.exit.us ], [ true, %.lr.ph.split.split.a ], [ true, %_ZNK8V3Number6bitIs0Ei.exit.thread ], [ false, %_ZNK8V3Number6bitIs0Ei.exit ], [ false, %tailrecurse.preheader.i.i ]
   ret i1 %.not.lcssa
 }
 
@@ -1222,7 +1274,7 @@ _ZNK8V3Number6bitIs0Ei.exit.thread.i:             ; preds = %_ZNK8V3Number6bitIs
   %i.bi = icmp slt i32 %i.bg, %i.bh
   br i1 %i.bi, label %.lr.ph, label %.loopexit, !llvm.loop !386
 
-.critedge37:                                      ; preds = %_ZNK8V3Number6bitIs0Ei.exit.i, %tailrecurse.preheader.i.i.i, %.lr.ph.i, %.critedge
+.critedge37:                                      ; preds = %tailrecurse.preheader.i.i.i, %_ZNK8V3Number6bitIs0Ei.exit.i, %.lr.ph.i, %.critedge
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.bk = load i32, ptr %i.bj, align 8, !tbaa !41
   %i.bl = icmp sgt i32 %i.bk, 0

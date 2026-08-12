@@ -66,15 +66,12 @@ bb.b:                                             ; preds = %bb.a, %._crit_edge3
   %.not = icmp eq i32 %i.a, 0
   %invariant.gep47 = getelementptr inbounds nuw [4 x i8], ptr @zetas_montgomery, i64 %i.f
   %invariant.gep = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.e
-  br label %1
+  br i1 %.not, label %._crit_edge39, label %.lr.ph
 
-1:                                                ; preds = %.lr.ph38, %._crit_edge
-  %indvars.iv44 = phi i64 [ 0, %.lr.ph38 ], [ %indvars.iv.next45, %._crit_edge ] ; 2 uses
-  %indvars.iv = phi i64 [ 0, %.lr.ph38 ], [ %indvars.iv.next, %._crit_edge ] ; 3 uses
-  %2 = add nuw nsw i64 %indvars.iv, %i.e
-  br i1 %.not, label %._crit_edge, label %.lr.ph
-
-.lr.ph:                                           ; preds = %1
+.lr.ph:                                           ; preds = %.lr.ph38, %._crit_edge
+  %indvars.iv44 = phi i64 [ %indvars.iv.next45, %._crit_edge ], [ 0, %.lr.ph38 ] ; 2 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %._crit_edge ], [ 0, %.lr.ph38 ] ; 3 uses
+  %1 = add nuw nsw i64 %indvars.iv, %i.e
   %gep48 = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep47, i64 %indvars.iv44
   %i.g = load i32, ptr %gep48, align 4, !tbaa !10
   %i.h = zext i32 %i.g to i64
@@ -130,16 +127,16 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   %i.aw = or i32 %i.av, %i.as
   store i32 %i.aw, ptr %gep, align 4, !tbaa !10
   %indvars.iv.next43 = add nuw nsw i64 %indvars.iv42, 1 ; 2 uses
-  %i.ax = icmp samesign ult i64 %indvars.iv.next43, %2
+  %i.ax = icmp samesign ult i64 %indvars.iv.next43, %1
   br i1 %i.ax, label %bb.c, label %._crit_edge, !llvm.loop !14
 
-._crit_edge:                                      ; preds = %bb.c, %1
+._crit_edge:                                      ; preds = %bb.c
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, %i.d
   %indvars.iv.next45 = add nuw nsw i64 %indvars.iv44, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next45, %i.f
-  br i1 %exitcond.not, label %._crit_edge39, label %1, !llvm.loop !15
+  br i1 %exitcond.not, label %._crit_edge39, label %.lr.ph, !llvm.loop !15
 
-._crit_edge39:                                    ; preds = %._crit_edge, %bb.b
+._crit_edge39:                                    ; preds = %._crit_edge, %.lr.ph38, %bb.b
   %i.ay = shl i32 %.03240, 1                      ; 2 uses
   %i.az = icmp slt i32 %i.ay, 256
   br i1 %i.az, label %bb.b, label %bb.d, !llvm.loop !16

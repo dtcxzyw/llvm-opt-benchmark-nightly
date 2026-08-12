@@ -203,20 +203,17 @@ bb.a:
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 16
   %brmerge.not = select i1 %i.i, i1 %i.m, i1 false
-  br label %4
-
-4:                                                ; preds = %.lr.ph, %_ZN3ade6HandleINS_4NodeEED2Ev.exit
-  %5 = phi ptr [ %.promoted, %.lr.ph ], [ %i.al, %_ZN3ade6HandleINS_4NodeEED2Ev.exit ] ; 3 uses
   br i1 %brmerge.not, label %._crit_edge, label %_ZNK3ade4util5Range13IterableRangeINS1_8MapRangeINS1_9IterRangeIN9__gnu_cxx17__normal_iteratorIPSt10shared_ptrINS_4NodeEESt6vectorIS9_SaIS9_EEEESE_EENS_5Graph12HandleMapperEEEE8iteratorneERKSK_.exit
 
-_ZNK3ade4util5Range13IterableRangeINS1_8MapRangeINS1_9IterRangeIN9__gnu_cxx17__normal_iteratorIPSt10shared_ptrINS_4NodeEESt6vectorIS9_SaIS9_EEEESE_EENS_5Graph12HandleMapperEEEE8iteratorneERKSK_.exit: ; preds = %4
+_ZNK3ade4util5Range13IterableRangeINS1_8MapRangeINS1_9IterRangeIN9__gnu_cxx17__normal_iteratorIPSt10shared_ptrINS_4NodeEESt6vectorIS9_SaIS9_EEEESE_EENS_5Graph12HandleMapperEEEE8iteratorneERKSK_.exit: ; preds = %.lr.ph, %_ZN3ade6HandleINS_4NodeEED2Ev.exit
+  %4 = phi ptr [ %i.al, %_ZN3ade6HandleINS_4NodeEED2Ev.exit ], [ %.promoted, %.lr.ph ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #23
   call void @llvm.experimental.noalias.scope.decl(metadata !554)
   call void @llvm.experimental.noalias.scope.decl(metadata !557)
   call void @llvm.experimental.noalias.scope.decl(metadata !560)
-  %i.q = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %i.q = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !21, !noalias !563 ; 2 uses
-  %i.s = load <2 x ptr>, ptr %5, align 8, !tbaa !17, !noalias !563
+  %i.s = load <2 x ptr>, ptr %4, align 8, !tbaa !17, !noalias !563
   store <2 x ptr> %i.s, ptr %3, align 16, !tbaa !17, !alias.scope !563
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.r, null
   br i1 %.not.i.i.i.i.i.i.i, label %_ZN3ade4util5Range13IterableRangeINS1_8MapRangeINS1_9IterRangeIN9__gnu_cxx17__normal_iteratorIPSt10shared_ptrINS_4NodeEESt6vectorIS9_SaIS9_EEEESE_EENS_5Graph12HandleMapperEEEE8iteratordeEv.exit, label %bb.b
@@ -289,10 +286,10 @@ bb.i:                                             ; preds = %_ZN9__gnu_cxx27__ex
 
 _ZN3ade6HandleINS_4NodeEED2Ev.exit:               ; preds = %_ZNSt6vectorIN3ade6HandleINS0_4NodeEEESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit.thread, %_ZNSt6vectorIN3ade6HandleINS0_4NodeEEESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i, %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #23
-  %i.al = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
+  %i.al = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
   %i.am = icmp eq ptr %i.al, %i.b
   %or.cond.i.i = select i1 %i.am, i1 %i.e, i1 false
-  br i1 %or.cond.i.i, label %._crit_edge, label %4
+  br i1 %or.cond.i.i, label %._crit_edge, label %_ZNK3ade4util5Range13IterableRangeINS1_8MapRangeINS1_9IterRangeIN9__gnu_cxx17__normal_iteratorIPSt10shared_ptrINS_4NodeEESt6vectorIS9_SaIS9_EEEESE_EENS_5Graph12HandleMapperEEEE8iteratorneERKSK_.exit
 
 bb.j:                                             ; preds = %bb.e
   %i.an = landingpad { ptr, i32 }
@@ -343,7 +340,7 @@ bb.o:                                             ; preds = %_ZN3ade6HandleINS_4
   invoke void @__cxa_end_catch()
           to label %bb.p unwind label %bb.q
 
-._crit_edge:                                      ; preds = %_ZN3ade6HandleINS_4NodeEED2Ev.exit, %4, %bb.a
+._crit_edge:                                      ; preds = %_ZN3ade6HandleINS_4NodeEED2Ev.exit, %.lr.ph, %bb.a
   ret void
 
 bb.p:                                             ; preds = %bb.o

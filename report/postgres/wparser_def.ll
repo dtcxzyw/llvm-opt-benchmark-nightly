@@ -203,7 +203,7 @@ define internal fastcc noundef zeroext i1 @hlCover(ptr nofree noundef readonly c
 bb.a:
   %6 = alloca %struct.hlCheck, align 8            ; 6 uses
   %.not = icmp eq ptr %2, null
-  %i.a = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.d = getelementptr inbounds nuw i8, ptr %6, i64 8
@@ -211,18 +211,19 @@ bb.a:
   br i1 %.not, label %.loopexit, label %.lr.ph168.lr.ph
 
 .lr.ph168.lr.ph:                                  ; preds = %bb.a
-  %i.f = load i32, ptr %3, align 4
-  br label %.lr.ph168
+  %i.f = load i32, ptr %i.a, align 4              ; 2 uses
+  %7 = icmp sgt i32 %i.f, 0
+  br i1 %7, label %.lr.ph168, label %.loopexit
 
-.lr.ph168:                                        ; preds = %.thread146, %.lr.ph168.lr.ph
-  %.0100250 = phi i32 [ %i.f, %.lr.ph168.lr.ph ], [ %i.bf, %.thread146 ] ; 2 uses
-  %i.g = load i32, ptr %i.a, align 4              ; 2 uses
-  %7 = icmp sgt i32 %i.g, 0
-  br i1 %7, label %.lr.ph179, label %.loopexit
+.lr.ph168:                                        ; preds = %.lr.ph168.lr.ph
+  %i.g = load i32, ptr %3, align 4
+  br label %.lr.ph179
 
-.lr.ph179:                                        ; preds = %.lr.ph168
+.lr.ph179:                                        ; preds = %.lr.ph168, %.thread146
+  %8 = phi i32 [ %9, %.thread146 ], [ %i.f, %.lr.ph168 ]
+  %.0100250 = phi i32 [ %i.bf, %.thread146 ], [ %i.g, %.lr.ph168 ] ; 2 uses
   %i.h = load ptr, ptr %i.b, align 8
-  %wide.trip.count209 = zext nneg i32 %i.g to i64
+  %wide.trip.count209 = zext nneg i32 %8 to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph179, %._crit_edge
@@ -386,10 +387,12 @@ bb.m:                                             ; preds = %bb.l
 
 .thread146:                                       ; preds = %.preheader, %._crit_edge198, %.critedge, %.thread149
   %i.bf = add i32 %i.aa, 1
-  br label %.lr.ph168
+  %9 = load i32, ptr %i.a, align 4                ; 2 uses
+  %10 = icmp sgt i32 %9, 0
+  br i1 %10, label %.lr.ph179, label %.loopexit
 
-.loopexit:                                        ; preds = %.lr.ph168, %bb.b, %bb.c, %bb.a, %bb.m
-  %.8.ph = phi i1 [ false, %bb.a ], [ true, %bb.m ], [ false, %bb.b ], [ false, %bb.c ], [ false, %.lr.ph168 ]
+.loopexit:                                        ; preds = %.thread146, %bb.b, %bb.c, %.lr.ph168.lr.ph, %bb.a, %bb.m
+  %.8.ph = phi i1 [ false, %bb.a ], [ true, %bb.m ], [ false, %bb.b ], [ false, %.lr.ph168.lr.ph ], [ false, %bb.c ], [ false, %.thread146 ]
   ret i1 %.8.ph
 }
 

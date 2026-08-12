@@ -202,62 +202,56 @@ bb.a:
   %wide.trip.count = zext nneg i32 %i.c to i64
   %.idx = shl nuw nsw i64 %i.g, 1                 ; 3 uses
   %.not = icmp eq i32 %i.f, 0
-  br label %bb.b
+  br i1 %.not, label %._crit_edge23, label %bb.b
 
-bb.b:                                             ; preds = %.lr.ph22, %._crit_edge
-  %indvars.iv = phi i64 [ 0, %.lr.ph22 ], [ %indvars.iv.next, %._crit_edge ] ; 3 uses
-  %4 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv
-  %5 = load ptr, ptr %4, align 8, !tbaa !78       ; 9 uses
-  %6 = ptrtoaddr ptr %5 to i64                    ; 6 uses
-  %7 = getelementptr inbounds nuw i8, ptr %5, i64 %.idx
-  br i1 %.not, label %._crit_edge, label %.lr.ph.preheader.a
+bb.b:                                             ; preds = %.lr.ph22
+  %4 = tail call i64 @llvm.umax.i64(i64 %.idx, i64 4)
+  %5 = add nsw i64 %4, -2                         ; 2 uses
+  %6 = lshr i64 %5, 2
+  %7 = add nuw nsw i64 %6, 1                      ; 2 uses
+  %min.iters.check = icmp ult i64 %5, 60
+  %8 = tail call i64 @llvm.umax.i64(i64 %.idx, i64 4)
+  %9 = add nsw i64 %8, -1                         ; 2 uses
+  %10 = and i64 %9, -4
+  %11 = lshr i64 %9, 1
+  %12 = and i64 %11, 9223372036854775806
+  %n.vec = and i64 %7, 9223372036854775800        ; 4 uses
+  %13 = shl nuw i64 %n.vec, 1
+  %14 = shl i64 %n.vec, 2
+  %cmp.n = icmp eq i64 %7, %n.vec
+  br label %.lr.ph.preheader.a
 
-.lr.ph.preheader.a:                               ; preds = %bb.b
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv
-  %9 = load ptr, ptr %8, align 8, !tbaa !78       ; 6 uses
-  %10 = add i64 %.idx, %6
-  %11 = add i64 %6, 4
-  %12 = tail call i64 @llvm.umax.i64(i64 %10, i64 %11)
-  %13 = xor i64 %6, -1
-  %14 = add i64 %12, %13                          ; 2 uses
-  %15 = lshr i64 %14, 2
-  %16 = add nuw nsw i64 %15, 1                    ; 2 uses
-  %min.iters.check = icmp ult i64 %14, 60
+.lr.ph.preheader.a:                               ; preds = %bb.b, %._crit_edge
+  %indvars.iv = phi i64 [ %indvars.iv.next, %._crit_edge ], [ 0, %bb.b ] ; 3 uses
+  %15 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv
+  %16 = load ptr, ptr %15, align 8, !tbaa !78     ; 8 uses
+  %17 = getelementptr inbounds nuw i8, ptr %16, i64 %.idx
+  %18 = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv
+  %19 = load ptr, ptr %18, align 8, !tbaa !78     ; 6 uses
   br i1 %min.iters.check, label %.lr.ph.preheader33, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader.a
-  %scevgep = getelementptr i8, ptr %5, i64 4
-  %17 = add i64 %.idx, %6
-  %18 = add i64 %6, 4
-  %umax = tail call i64 @llvm.umax.i64(i64 %17, i64 %18)
-  %19 = xor i64 %6, -1
-  %20 = add i64 %umax, %19                        ; 2 uses
-  %21 = and i64 %20, -4
-  %scevgep25 = getelementptr i8, ptr %scevgep, i64 %21
-  %scevgep26 = getelementptr i8, ptr %9, i64 2
-  %22 = lshr i64 %20, 1
-  %23 = and i64 %22, 9223372036854775806
-  %scevgep27 = getelementptr i8, ptr %scevgep26, i64 %23
-  %bound0 = icmp ult ptr %5, %scevgep27
-  %bound1 = icmp ult ptr %9, %scevgep25
+  %scevgep = getelementptr i8, ptr %16, i64 4
+  %scevgep25 = getelementptr i8, ptr %scevgep, i64 %10
+  %scevgep26 = getelementptr i8, ptr %19, i64 2
+  %scevgep27 = getelementptr i8, ptr %scevgep26, i64 %12
+  %bound0 = icmp ult ptr %16, %scevgep27
+  %bound1 = icmp ult ptr %19, %scevgep25
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph.preheader33, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %16, 9223372036854775800       ; 4 uses
-  %24 = shl nuw i64 %n.vec, 1
-  %i.h = getelementptr i8, ptr %9, i64 %24
-  %25 = shl i64 %n.vec, 2
-  %i.i = getelementptr i8, ptr %5, i64 %25
+  %i.h = getelementptr i8, ptr %19, i64 %13
+  %i.i = getelementptr i8, ptr %16, i64 %14
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.j = shl i64 %index, 1
-  %next.gep = getelementptr i8, ptr %9, i64 %i.j  ; 2 uses
+  %next.gep = getelementptr i8, ptr %19, i64 %i.j ; 2 uses
   %i.k = shl i64 %index, 2                        ; 2 uses
-  %next.gep28 = getelementptr i8, ptr %5, i64 %i.k
-  %i.l = getelementptr i8, ptr %5, i64 %i.k
+  %next.gep28 = getelementptr i8, ptr %16, i64 %i.k
+  %i.l = getelementptr i8, ptr %16, i64 %i.k
   %next.gep29 = getelementptr i8, ptr %i.l, i64 16
   %i.m = getelementptr i8, ptr %next.gep, i64 8
   %wide.load = load <4 x i16>, ptr %next.gep, align 2, !tbaa !80, !alias.scope !91
@@ -271,12 +265,11 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.n, label %middle.block, label %vector.body, !llvm.loop !96
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %16, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader33
 
 .lr.ph.preheader33:                               ; preds = %vector.memcheck, %.lr.ph.preheader.a, %middle.block
-  %.01619.ph = phi ptr [ %9, %vector.memcheck ], [ %9, %.lr.ph.preheader.a ], [ %i.h, %middle.block ]
-  %.01718.ph = phi ptr [ %5, %vector.memcheck ], [ %5, %.lr.ph.preheader.a ], [ %i.i, %middle.block ]
+  %.01619.ph = phi ptr [ %19, %vector.memcheck ], [ %19, %.lr.ph.preheader.a ], [ %i.h, %middle.block ]
+  %.01718.ph = phi ptr [ %16, %vector.memcheck ], [ %16, %.lr.ph.preheader.a ], [ %i.i, %middle.block ]
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader33, %.lr.ph
@@ -288,15 +281,15 @@ middle.block:                                     ; preds = %vector.body
   store i16 %i.p, ptr %.01718, align 2, !tbaa !80
   %i.r = getelementptr inbounds nuw i8, ptr %.01718, i64 4 ; 2 uses
   store i16 %i.p, ptr %i.q, align 2, !tbaa !80
-  %i.s = icmp ult ptr %i.r, %7
+  %i.s = icmp ult ptr %i.r, %17
   br i1 %i.s, label %.lr.ph, label %._crit_edge, !llvm.loop !97
 
-._crit_edge:                                      ; preds = %.lr.ph, %middle.block, %bb.b
+._crit_edge:                                      ; preds = %.lr.ph, %middle.block
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge23, label %bb.b, !llvm.loop !98
+  br i1 %exitcond.not, label %._crit_edge23, label %.lr.ph.preheader.a, !llvm.loop !98
 
-._crit_edge23:                                    ; preds = %._crit_edge, %bb.a
+._crit_edge23:                                    ; preds = %._crit_edge, %.lr.ph22, %bb.a
   ret void
 }
 
@@ -699,9 +692,9 @@ bb.a:
   %i.l = getelementptr inbounds i8, ptr %i.k, i64 %i.g
   %i.m = load i8, ptr %i.l, align 1, !tbaa !39
   %.fr = freeze i8 %i.m                           ; 3 uses
-  %i.n = zext i8 %.fr to i32                      ; 3 uses
+  %i.n = zext i8 %.fr to i32                      ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 412 ; 3 uses
-  %i.p = load i32, ptr %i.o, align 4, !tbaa !61   ; 3 uses
+  %i.p = load i32, ptr %i.o, align 4, !tbaa !61   ; 2 uses
   %i.q = icmp sgt i32 %i.p, 0
   br i1 %i.q, label %.lr.ph, label %._crit_edge44
 
@@ -714,7 +707,7 @@ bb.a:
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph
   %i.u = zext i8 %.fr to i64                      ; 2 uses
-  br i1 %i.s, label %.lr.ph.split.us.split.us.preheader, label %.lr.ph.split.us.split.a
+  br i1 %i.s, label %.lr.ph.split.us.split.us.preheader, label %.lr.ph.split.us.split
 
 .lr.ph.split.us.split.us.preheader:               ; preds = %.lr.ph.split.us
   %i.v = zext i8 %.fr50 to i64                    ; 5 uses
@@ -833,12 +826,15 @@ vec.epilog.scalar.ph113:                          ; preds = %vec.epilog.scalar.p
   %i.ba = icmp ult ptr %.lcssa, %i.ah
   br i1 %i.ba, label %iter.check112, label %._crit_edge.split.us.us.us, !llvm.loop !120
 
-.lr.ph.split.us.split.a:                          ; preds = %.lr.ph.split.us
+.lr.ph.split.us.split:                            ; preds = %.lr.ph.split.us
   %4 = zext nneg i32 %i.p to i64
   %.pre = load i32, ptr %i.r, align 8, !tbaa !66  ; 2 uses
   %5 = zext i32 %.pre to i64
   %.idx = shl nuw nsw i64 %5, 1
   %.not53 = icmp eq i32 %.pre, 0
+  br i1 %.not53, label %._crit_edge44, label %.lr.ph.split.us.split.a
+
+.lr.ph.split.us.split.a:                          ; preds = %.lr.ph.split.us.split
   %i.bb = zext i8 %.fr50 to i64                   ; 5 uses
   %min.iters.check = icmp ult i8 %.fr50, 4
   %min.iters.check86 = icmp ult i8 %.fr50, 16
@@ -856,28 +852,25 @@ vec.epilog.scalar.ph113:                          ; preds = %vec.epilog.scalar.p
   %cmp.n94 = icmp eq i64 %n.vec88, %i.bb
   br label %bb.b
 
-bb.b:                                             ; preds = %._crit_edge.split.us.us, %.lr.ph.split.us.split.a
+bb.b:                                             ; preds = %.lr.ph.split.us.split.a, %._crit_edge.split.us.us
   %indvars.iv60 = phi i64 [ %indvars.iv.next61, %._crit_edge.split.us.us ], [ 0, %.lr.ph.split.us.split.a ] ; 2 uses
   %indvars.iv = phi i64 [ %indvars.iv.next, %._crit_edge.split.us.us ], [ 0, %.lr.ph.split.us.split.a ] ; 2 uses
   %i.bj = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %indvars.iv
   %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !78 ; 2 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bk, i64 %.idx
-  br i1 %.not53, label %._crit_edge.split.us.us, label %.lr.ph.us.us.preheader
-
-.lr.ph.us.us.preheader:                           ; preds = %bb.b
   %6 = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv60
   %7 = load ptr, ptr %6, align 8, !tbaa !78
   br label %iter.check
 
-._crit_edge.split.us.us:                          ; preds = %..loopexit_crit_edge.us.us, %bb.b
+._crit_edge.split.us.us:                          ; preds = %..loopexit_crit_edge.us.us
   %indvars.iv.next61 = add nuw nsw i64 %indvars.iv60, 1
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, %i.u ; 2 uses
   %i.bm = icmp samesign ult i64 %indvars.iv.next, %4
   br i1 %i.bm, label %bb.b, label %._crit_edge44, !llvm.loop !115
 
-iter.check:                                       ; preds = %.lr.ph.us.us.preheader, %..loopexit_crit_edge.us.us
-  %.03239.us.us = phi ptr [ %i.by, %..loopexit_crit_edge.us.us ], [ %7, %.lr.ph.us.us.preheader ] ; 2 uses
-  %.03338.us.us = phi ptr [ %.lcssa85, %..loopexit_crit_edge.us.us ], [ %i.bk, %.lr.ph.us.us.preheader ] ; 5 uses
+iter.check:                                       ; preds = %bb.b, %..loopexit_crit_edge.us.us
+  %.03239.us.us = phi ptr [ %i.by, %..loopexit_crit_edge.us.us ], [ %7, %bb.b ] ; 2 uses
+  %.03338.us.us = phi ptr [ %.lcssa85, %..loopexit_crit_edge.us.us ], [ %i.bk, %bb.b ] ; 5 uses
   %i.bn = load i16, ptr %.03239.us.us, align 2, !tbaa !80 ; 3 uses
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
@@ -966,24 +959,15 @@ bb.c:                                             ; preds = %.lr.ph.split.split.
 .lr.ph.split.split:                               ; preds = %.lr.ph.split
   %i.cf = load i32, ptr %i.r, align 8, !tbaa !66
   %.not51 = icmp eq i32 %i.cf, 0
-  br label %8
+  br i1 %.not51, label %._crit_edge44, label %.loopexit.preheader
 
-8:                                                ; preds = %.lr.ph.split.split, %9
-  %.042 = phi i32 [ 0, %.lr.ph.split.split ], [ %10, %9 ]
-  br i1 %.not51, label %9, label %.loopexit.preheader
-
-.loopexit.preheader:                              ; preds = %8, %.lr.ph.split.split.us
+.loopexit.preheader:                              ; preds = %.lr.ph.split.split.us, %.lr.ph.split.split
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.loopexit.preheader, %.loopexit
   br label %.loopexit
 
-9:                                                ; preds = %8
-  %10 = add nuw nsw i32 %.042, %i.n               ; 2 uses
-  %11 = icmp slt i32 %10, %i.p
-  br i1 %11, label %8, label %._crit_edge44, !llvm.loop !115
-
-._crit_edge44:                                    ; preds = %._crit_edge.split.us.us, %._crit_edge.split.us.us.us, %9, %bb.c, %bb.a
+._crit_edge44:                                    ; preds = %._crit_edge.split.us.us, %._crit_edge.split.us.us.us, %bb.c, %.lr.ph.split.split, %.lr.ph.split.us.split, %bb.a
   ret void
 }
 

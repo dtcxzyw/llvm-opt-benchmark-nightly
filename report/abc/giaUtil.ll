@@ -204,18 +204,14 @@ Vec_WrdAlloc.exit:                                ; preds = %bb.a, %bb.b
   %i.o = getelementptr i8, ptr %1, i64 8
   %i.p = zext i32 %2 to i64                       ; 4 uses
   %wide.trip.count74 = zext nneg i32 %3 to i64
-  br label %.preheader36
+  br i1 %i.m, label %.preheader36, label %._crit_edge55
 
 .preheader36:                                     ; preds = %.preheader36.lr.ph, %.preheader.thread
-  %.promoted41 = phi ptr [ %i.j, %.preheader36.lr.ph ], [ %.promoted4184, %.preheader.thread ] ; 2 uses
-  %.promoted38 = phi i32 [ %spec.store.select.i, %.preheader36.lr.ph ], [ %.promoted3881, %.preheader.thread ] ; 2 uses
-  %.promoted = phi i32 [ 0, %.preheader36.lr.ph ], [ %.promoted78, %.preheader.thread ] ; 2 uses
-  %indvars.iv71 = phi i64 [ 0, %.preheader36.lr.ph ], [ %indvars.iv.next72, %.preheader.thread ] ; 3 uses
-  br i1 %i.m, label %.lr.ph, label %.preheader.thread
-
-.lr.ph:                                           ; preds = %.preheader36
+  %.promoted41 = phi ptr [ %storemerge53, %.preheader.thread ], [ %i.j, %.preheader36.lr.ph ]
+  %.promoted38 = phi i32 [ %spec.select.sink.i3149, %.preheader.thread ], [ %spec.store.select.i, %.preheader36.lr.ph ]
+  %.promoted = phi i64 [ %indvars.iv.next63, %.preheader.thread ], [ 0, %.preheader36.lr.ph ]
+  %indvars.iv71 = phi i64 [ %indvars.iv.next72, %.preheader.thread ], [ 0, %.preheader36.lr.ph ] ; 3 uses
   %4 = mul nuw nsw i64 %indvars.iv71, %i.p
-  %5 = sext i32 %.promoted to i64
   br label %bb.c
 
 .preheader:                                       ; preds = %Vec_WrdPush.exit
@@ -226,11 +222,11 @@ Vec_WrdAlloc.exit:                                ; preds = %bb.a, %bb.b
   %i.r = mul nuw nsw i64 %indvars.iv71, %i.p
   br label %bb.l
 
-bb.c:                                             ; preds = %.lr.ph, %Vec_WrdPush.exit
-  %indvars.iv57 = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next58, %Vec_WrdPush.exit ] ; 2 uses
-  %indvars.iv = phi i64 [ %5, %.lr.ph ], [ %indvars.iv.next, %Vec_WrdPush.exit ] ; 7 uses
-  %storemerge3542 = phi ptr [ %.promoted41, %.lr.ph ], [ %storemerge3543, %Vec_WrdPush.exit ] ; 6 uses
-  %spec.select.sink.i40 = phi i32 [ %.promoted38, %.lr.ph ], [ %spec.select.sink.i39, %Vec_WrdPush.exit ] ; 3 uses
+bb.c:                                             ; preds = %.preheader36, %Vec_WrdPush.exit
+  %indvars.iv57 = phi i64 [ 0, %.preheader36 ], [ %indvars.iv.next58, %Vec_WrdPush.exit ] ; 2 uses
+  %indvars.iv = phi i64 [ %.promoted, %.preheader36 ], [ %indvars.iv.next, %Vec_WrdPush.exit ] ; 7 uses
+  %storemerge3542 = phi ptr [ %.promoted41, %.preheader36 ], [ %storemerge3543, %Vec_WrdPush.exit ] ; 6 uses
+  %spec.select.sink.i40 = phi i32 [ %.promoted38, %.preheader36 ], [ %spec.select.sink.i39, %Vec_WrdPush.exit ] ; 3 uses
   %.val24 = load ptr, ptr %i.n, align 8, !tbaa !186
   %i.s = getelementptr inbounds nuw [8 x i8], ptr %.val24, i64 %indvars.iv57
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %4
@@ -328,29 +324,23 @@ Vec_WrdPush.exit34.sink.split:                    ; preds = %bb.m, %bb.o
 Vec_WrdPush.exit34:                               ; preds = %Vec_WrdPush.exit34.sink.split, %bb.l, %bb.n
   %storemerge53 = phi ptr [ %storemerge52, %bb.l ], [ %storemerge52, %bb.n ], [ %i.at, %Vec_WrdPush.exit34.sink.split ] ; 4 uses
   %spec.select.sink.i3149 = phi i32 [ %spec.select.sink.i3150, %bb.l ], [ %spec.select.sink.i3150, %bb.n ], [ %spec.select.sink.i3149.ph, %Vec_WrdPush.exit34.sink.split ] ; 3 uses
-  %indvars.iv.next63 = add nsw i64 %indvars.iv62, 1 ; 2 uses
+  %indvars.iv.next63 = add nsw i64 %indvars.iv62, 1 ; 3 uses
   %i.au = getelementptr inbounds [8 x i8], ptr %storemerge53, i64 %indvars.iv62
   store i64 %i.ak, ptr %i.au, align 8, !tbaa !235
   %indvars.iv.next65 = add nuw nsw i64 %indvars.iv64, 1 ; 2 uses
   %exitcond70.not = icmp eq i64 %indvars.iv.next65, %i.p
-  br i1 %exitcond70.not, label %._crit_edge, label %bb.l, !llvm.loop !290
+  br i1 %exitcond70.not, label %.preheader.thread, label %bb.l, !llvm.loop !290
 
-._crit_edge:                                      ; preds = %Vec_WrdPush.exit34
-  %6 = trunc nsw i64 %indvars.iv.next63 to i32    ; 2 uses
-  store i32 %6, ptr %i.f, align 4, !tbaa !187
+.preheader.thread:                                ; preds = %Vec_WrdPush.exit34
+  %5 = trunc nsw i64 %indvars.iv.next63 to i32
+  store i32 %5, ptr %i.f, align 4, !tbaa !187
   store i32 %spec.select.sink.i3149, ptr %i.d, align 8
   store ptr %storemerge53, ptr %i.k, align 8
-  br label %.preheader.thread
-
-.preheader.thread:                                ; preds = %.preheader36, %._crit_edge
-  %.promoted4184 = phi ptr [ %storemerge53, %._crit_edge ], [ %.promoted41, %.preheader36 ]
-  %.promoted3881 = phi i32 [ %spec.select.sink.i3149, %._crit_edge ], [ %.promoted38, %.preheader36 ]
-  %.promoted78 = phi i32 [ %6, %._crit_edge ], [ %.promoted, %.preheader36 ]
   %indvars.iv.next72 = add nuw nsw i64 %indvars.iv71, 1 ; 2 uses
   %exitcond75.not = icmp eq i64 %indvars.iv.next72, %wide.trip.count74
   br i1 %exitcond75.not, label %._crit_edge55, label %.preheader36, !llvm.loop !291
 
-._crit_edge55:                                    ; preds = %.preheader.thread, %Vec_WrdAlloc.exit
+._crit_edge55:                                    ; preds = %.preheader.thread, %.preheader36.lr.ph, %Vec_WrdAlloc.exit
   ret ptr %i.d
 }
 

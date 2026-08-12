@@ -204,10 +204,10 @@ _ZNSt6vectorIdSaIdEEC2EmRKdRKS0_.exit177.i:       ; preds = %.noexc176.i, %_ZNSt
   %i.cfw = zext nneg i32 %i.cea to i64
   %wide.trip.count203.i = zext nneg i32 %i.ceb to i64
   %wide.trip.count184.i = zext nneg i32 %smax.i to i64 ; 7 uses
-  %.reass.i735 = mul i32 %i.ced, %i.cea
   br i1 %.not.i.i.i.i.i731, label %._crit_edge176.i, label %.lr.ph.i737.preheader.preheader
 
 .lr.ph.i737.preheader.preheader:                  ; preds = %.lr.ph175.i
+  %.reass.i735 = mul i32 %i.ced, %i.cea
   %i.cfx = shl nuw nsw i64 %i.cfn, 3
   %i.cfy = or disjoint i64 %i.cfx, 8              ; 2 uses
   %i.cfz = shl nuw nsw i64 %i.cft, 3
@@ -243,8 +243,8 @@ _ZNSt6vectorIdSaIdEEC2EmRKdRKS0_.exit177.i:       ; preds = %.noexc176.i, %_ZNSt
   %i.cgi = mul i32 %.reass.i735, %i.cgh           ; 2 uses
   br label %.lr.ph.i737
 
-.lr.ph.i737:                                      ; preds = %.lr.ph.i737.preheader, %._crit_edge.i741
-  %indvars.iv181.i = phi i64 [ %indvars.iv.next182.i, %._crit_edge.i741 ], [ 0, %.lr.ph.i737.preheader ] ; 2 uses
+.lr.ph.i737:                                      ; preds = %._crit_edge.i741, %.lr.ph.i737.preheader
+  %indvars.iv181.i = phi i64 [ 0, %.lr.ph.i737.preheader ], [ %indvars.iv.next182.i, %._crit_edge.i741 ] ; 2 uses
   %i.cgj = trunc nuw nsw i64 %indvars.iv181.i to i32 ; 2 uses
   %i.cgk = add i32 %i.cfi, %i.cgj
   %i.cgl = srem i32 %i.cgk, %i.cea

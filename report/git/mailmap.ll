@@ -201,7 +201,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %.not28.i = icmp eq i64 %i.n, 0
   br i1 %.not28.i, label %lookup_prefix.exit.thread, label %bb.e
 
-lookup_prefix.exit.thread:                        ; preds = %bb.h, %bb.e, %.lr.ph.i, %bb.c, %bb.d
+lookup_prefix.exit.thread:                        ; preds = %bb.e, %bb.h, %bb.c, %bb.d, %.lr.ph.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
   br label %.thread
 
@@ -284,8 +284,8 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   %.not28.i45 = icmp eq i64 %i.an, 0
   br i1 %.not28.i45, label %.loopexit.split, label %bb.o
 
-.loopexit.split:                                  ; preds = %bb.o, %bb.q, %bb.r, %.lr.ph.i40, %bb.n, %bb.m, %bb.l
-  %.2.i43 = phi ptr [ %i.aj, %bb.l ], [ null, %bb.m ], [ null, %bb.n ], [ null, %.lr.ph.i40 ], [ %i.ao, %bb.q ], [ null, %bb.o ], [ null, %bb.r ] ; 2 uses
+.loopexit.split:                                  ; preds = %bb.r, %bb.q, %bb.o, %.lr.ph.i40, %bb.n, %bb.m, %bb.l
+  %.2.i43 = phi ptr [ %i.aj, %bb.l ], [ null, %bb.m ], [ null, %bb.n ], [ null, %.lr.ph.i40 ], [ %i.ao, %bb.q ], [ null, %bb.r ], [ null, %bb.o ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   %.not33 = icmp eq ptr %.2.i43, null
   %spec.select = select i1 %.not33, ptr %.2.i54, ptr %.2.i43 ; 2 uses

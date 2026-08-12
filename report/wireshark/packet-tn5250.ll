@@ -201,7 +201,7 @@ bb.z:                                             ; preds = %bb.b
   %i.afp = tail call zeroext i16 @tvb_get_ntohs(ptr noundef %1, i32 noundef %i.afi) ; 2 uses
   %i.afq = zext i16 %i.afp to i32                 ; 4 uses
   %i.afr = add i32 %.0145, 4
-  %i.afs = tail call zeroext i8 @tvb_get_uint8(ptr noundef %1, i32 noundef %i.afr)
+  %i.afs = tail call zeroext i8 @tvb_get_uint8(ptr noundef %1, i32 noundef %i.afr) ; 2 uses
   %i.aft = tail call fastcc i32 @tn5250_add_hf_items(ptr noundef %i.afk, ptr noundef %1, i32 noundef %i.afi, ptr noundef nonnull @__const.dissect_write_structured_field.standard_fields)
   %i.afu = add i32 %i.aft, %i.afi                 ; 5 uses
   %i.afv = tail call i32 @tvb_reported_length_remaining(ptr noundef %1, i32 noundef %i.afu)
@@ -211,11 +211,27 @@ bb.z:                                             ; preds = %bb.b
 .lr.ph116.i:                                      ; preds = %bb.z
   %i.afw = icmp ult i16 %i.afp, 6
   %i.afx = add nsw i32 %i.afq, -6                 ; 2 uses
+  switch i8 %i.afs, label %.loopexit.thread.i [
+    i8 81, label %.lr.ph116.i.split.preheader
+    i8 82, label %.lr.ph116.i.split.preheader
+    i8 88, label %.lr.ph116.i.split.preheader
+    i8 91, label %.lr.ph116.i.split.preheader
+    i8 89, label %.lr.ph116.i.split.preheader
+    i8 95, label %.lr.ph116.i.split.preheader
+    i8 80, label %.lr.ph116.i.split.preheader
+    i8 83, label %.lr.ph116.i.split.preheader
+    i8 84, label %.lr.ph116.i.split.preheader
+    i8 85, label %.lr.ph116.i.split.preheader
+    i8 96, label %.lr.ph116.i.split.preheader
+    i8 97, label %.lr.ph116.i.split.preheader
+  ]
+
+.lr.ph116.i.split.preheader:                      ; preds = %.lr.ph116.i, %.lr.ph116.i, %.lr.ph116.i, %.lr.ph116.i, %.lr.ph116.i, %.lr.ph116.i, %.lr.ph116.i, %.lr.ph116.i, %.lr.ph116.i, %.lr.ph116.i, %.lr.ph116.i, %.lr.ph116.i
   br label %bb.aa
 
-bb.aa:                                            ; preds = %.loopexit.i, %.lr.ph116.i
-  %.088114.i = phi i32 [ %i.afu, %.lr.ph116.i ], [ %.2.i124, %.loopexit.i ] ; 22 uses
-  switch i8 %i.afs, label %.loopexit.thread.i [
+bb.aa:                                            ; preds = %.lr.ph116.i.split.preheader, %.loopexit.i
+  %.088114.i = phi i32 [ %.2.i124, %.loopexit.i ], [ %i.afu, %.lr.ph116.i.split.preheader ] ; 22 uses
+  switch i8 %i.afs, label %bb.bb [
     i8 81, label %bb.ab
     i8 82, label %bb.ag
     i8 88, label %bb.ag
@@ -227,10 +243,9 @@ bb.aa:                                            ; preds = %.loopexit.i, %.lr.p
     i8 84, label %bb.av
     i8 85, label %bb.ax
     i8 96, label %bb.az
-    i8 97, label %bb.bb
   ]
 
-.loopexit.thread.i:                               ; preds = %bb.aa
+.loopexit.thread.i:                               ; preds = %.lr.ph116.i
   %i.afy = tail call i32 @tvb_reported_length_remaining(ptr noundef %1, i32 noundef %i.afu) ; 0 uses
   br label %.critedge.i126
 

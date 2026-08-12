@@ -204,7 +204,7 @@ _RNvMs7_NtNtCsk4ZPsEfLtLH_6brotli3enc17brotli_bit_streamINtB5_12BlockEncoderNtNt
   %i.adt = icmp eq i64 %i.ads, 0, !dbg !2071
   br i1 %i.adt, label %.loopexit.i.i, label %.lr.ph185.i.i, !dbg !2071
 
-.lr.ph179.i.i:                                    ; preds = %_RNvMs9_NtNtCsk4ZPsEfLtLH_6brotli3enc17brotli_bit_streamINtB5_12BlockEncoderNtNtCsbA1n9drshSs_12alloc_stdlib9std_alloc13StandardAllocE25store_symbol_with_contextCsfISxE4fmY1Y_14polars_parquet.exit.i.i, %.lr.ph179.preheader.i.i
+.lr.ph179.i.i:                                    ; preds = %.lr.ph179.preheader.i.i, %_RNvMs9_NtNtCsk4ZPsEfLtLH_6brotli3enc17brotli_bit_streamINtB5_12BlockEncoderNtNtCsbA1n9drshSs_12alloc_stdlib9std_alloc13StandardAllocE25store_symbol_with_contextCsfISxE4fmY1Y_14polars_parquet.exit.i.i
   %.sroa.0.3177.i.i = phi i64 [ %i.ahj, %_RNvMs9_NtNtCsk4ZPsEfLtLH_6brotli3enc17brotli_bit_streamINtB5_12BlockEncoderNtNtCsbA1n9drshSs_12alloc_stdlib9std_alloc13StandardAllocE25store_symbol_with_contextCsfISxE4fmY1Y_14polars_parquet.exit.i.i ], [ %.sroa.0.0190.i.i, %.lr.ph179.preheader.i.i ] ; 2 uses
   %.sroa.09.2176.i.i = phi i8 [ %i.afv, %_RNvMs9_NtNtCsk4ZPsEfLtLH_6brotli3enc17brotli_bit_streamINtB5_12BlockEncoderNtNtCsbA1n9drshSs_12alloc_stdlib9std_alloc13StandardAllocE25store_symbol_with_contextCsfISxE4fmY1Y_14polars_parquet.exit.i.i ], [ %.sroa.09.0189.i.i, %.lr.ph179.preheader.i.i ] ; 6 uses
   %.sroa.011.2175.i.i = phi i8 [ %.sroa.09.2176.i.i, %_RNvMs9_NtNtCsk4ZPsEfLtLH_6brotli3enc17brotli_bit_streamINtB5_12BlockEncoderNtNtCsbA1n9drshSs_12alloc_stdlib9std_alloc13StandardAllocE25store_symbol_with_contextCsfISxE4fmY1Y_14polars_parquet.exit.i.i ], [ %.sroa.011.0188.i.i, %.lr.ph179.preheader.i.i ] ; 2 uses
@@ -215,9 +215,6 @@ _RNvMs7_NtNtCsk4ZPsEfLtLH_6brotli3enc17brotli_bit_streamINtB5_12BlockEncoderNtNt
     i8 2, label %bb.gs
     i8 3, label %bb.gt
   ], !dbg !2078
-
-.lr.ph179.i.i.unreachabledefault:                 ; preds = %.lr.ph179.i.i
-  unreachable
 
 default.unreachable:                              ; preds = %bb.id
   unreachable
@@ -240,6 +237,9 @@ bb.gs:                                            ; preds = %.lr.ph179.i.i
   %i.aec = load i8, ptr %i.aeb, align 1, !dbg !2140, !noalias !1443, !noundef !14
   %i.aed = or i8 %i.aec, %i.adz, !dbg !2141
   br label %_RNvNtNtCsk4ZPsEfLtLH_6brotli3enc17brotli_bit_stream7Context.exit.i.i, !dbg !2142
+
+.lr.ph179.i.i.unreachabledefault:                 ; preds = %.lr.ph179.i.i
+  unreachable
 
 bb.gt:                                            ; preds = %.lr.ph179.i.i
   %i.aee = zext i8 %.sroa.011.2175.i.i to i64, !dbg !2143
@@ -643,7 +643,7 @@ _RNvMs7_NtNtCsk4ZPsEfLtLH_6brotli3enc17brotli_bit_streamINtB5_12BlockEncoderNtNt
   %i.adt = icmp eq i64 %i.ads, 0, !dbg !3981
   br i1 %i.adt, label %.loopexit.i.i, label %.lr.ph185.i.i, !dbg !3981
 
-.lr.ph179.i.i:                                    ; preds = %_RNvMs9_NtNtCsk4ZPsEfLtLH_6brotli3enc17brotli_bit_streamINtB5_12BlockEncoderNtNtCsbA1n9drshSs_12alloc_stdlib9std_alloc13StandardAllocE25store_symbol_with_contextCsfISxE4fmY1Y_14polars_parquet.exit.i.i, %.lr.ph179.preheader.i.i
+.lr.ph179.i.i:                                    ; preds = %.lr.ph179.preheader.i.i, %_RNvMs9_NtNtCsk4ZPsEfLtLH_6brotli3enc17brotli_bit_streamINtB5_12BlockEncoderNtNtCsbA1n9drshSs_12alloc_stdlib9std_alloc13StandardAllocE25store_symbol_with_contextCsfISxE4fmY1Y_14polars_parquet.exit.i.i
   %.sroa.0.3177.i.i = phi i64 [ %i.ahj, %_RNvMs9_NtNtCsk4ZPsEfLtLH_6brotli3enc17brotli_bit_streamINtB5_12BlockEncoderNtNtCsbA1n9drshSs_12alloc_stdlib9std_alloc13StandardAllocE25store_symbol_with_contextCsfISxE4fmY1Y_14polars_parquet.exit.i.i ], [ %.sroa.0.0190.i.i, %.lr.ph179.preheader.i.i ] ; 2 uses
   %.sroa.09.2176.i.i = phi i8 [ %i.afv, %_RNvMs9_NtNtCsk4ZPsEfLtLH_6brotli3enc17brotli_bit_streamINtB5_12BlockEncoderNtNtCsbA1n9drshSs_12alloc_stdlib9std_alloc13StandardAllocE25store_symbol_with_contextCsfISxE4fmY1Y_14polars_parquet.exit.i.i ], [ %.sroa.09.0189.i.i, %.lr.ph179.preheader.i.i ] ; 6 uses
   %.sroa.011.2175.i.i = phi i8 [ %.sroa.09.2176.i.i, %_RNvMs9_NtNtCsk4ZPsEfLtLH_6brotli3enc17brotli_bit_streamINtB5_12BlockEncoderNtNtCsbA1n9drshSs_12alloc_stdlib9std_alloc13StandardAllocE25store_symbol_with_contextCsfISxE4fmY1Y_14polars_parquet.exit.i.i ], [ %.sroa.011.0188.i.i, %.lr.ph179.preheader.i.i ] ; 2 uses
@@ -654,9 +654,6 @@ _RNvMs7_NtNtCsk4ZPsEfLtLH_6brotli3enc17brotli_bit_streamINtB5_12BlockEncoderNtNt
     i8 2, label %bb.gs
     i8 3, label %bb.gt
   ], !dbg !3988
-
-.lr.ph179.i.i.unreachabledefault:                 ; preds = %.lr.ph179.i.i
-  unreachable
 
 default.unreachable:                              ; preds = %bb.id
   unreachable
@@ -679,6 +676,9 @@ bb.gs:                                            ; preds = %.lr.ph179.i.i
   %i.aec = load i8, ptr %i.aeb, align 1, !dbg !4041, !noalias !3387, !noundef !14
   %i.aed = or i8 %i.aec, %i.adz, !dbg !4042
   br label %_RNvNtNtCsk4ZPsEfLtLH_6brotli3enc17brotli_bit_stream7Context.exit.i.i, !dbg !4043
+
+.lr.ph179.i.i.unreachabledefault:                 ; preds = %.lr.ph179.i.i
+  unreachable
 
 bb.gt:                                            ; preds = %.lr.ph179.i.i
   %i.aee = zext i8 %.sroa.011.2175.i.i to i64, !dbg !4044
