@@ -204,10 +204,10 @@ bb.j:                                             ; preds = %bb.g, %._crit_edge6
   %i.cv = load i32, ptr %i.cu, align 4, !tbaa !54
   %i.cw = uitofp reassoc nsz arcp contract afn i32 %i.cv to float
   %.neg543.i = fmul reassoc nnan nsz arcp contract afn float %i.cl, %i.co
-  %.neg543.i.neg = fmul reassoc nsz arcp contract afn float %.neg543.i, %i.cn
-  %.neg544.i = fmul reassoc nnan nsz arcp contract afn float %i.cq, %i.ct
-  %.neg544.i.neg = fmul reassoc nsz arcp contract afn float %.neg544.i, %i.cs
-  %reass.add = fadd reassoc nsz arcp contract afn float %.neg544.i.neg, %.neg543.i.neg
+  %.neg543.i.neg = fmul reassoc nnan nsz arcp contract afn float %i.cq, %i.ct
+  %.neg544.i = fmul reassoc nsz arcp contract afn float %.neg543.i, %i.cn
+  %.neg544.i.neg = fmul reassoc nsz arcp contract afn float %.neg543.i.neg, %i.cs
+  %reass.add = fadd reassoc nsz arcp contract afn float %.neg544.i, %.neg544.i.neg
   %i.cx = fadd reassoc nsz arcp contract afn float %reass.add, %i.cw
   %i.cy = fsub reassoc nsz arcp contract afn float %i.cj, %i.cx
   %i.cz = call reassoc nsz arcp contract afn float @llvm.maxnum.f32(float %i.cy, float 0.000000e+00)
@@ -610,7 +610,7 @@ begin_hunk_1_@default_process_tiling:bb.a
   %i.alg = sub nsw <2 x i32> %i.ald, %i.alf
   %i.alh = sitofp <2 x i32> %i.alg to <2 x double> ; 2 uses
   %i.ali = fmul reassoc nnan nsz arcp contract afn <2 x double> %i.alh, %i.alh
-  %i.alj = fadd reassoc nsz arcp contract afn <2 x double> %i.ali, %i.alb
+  %i.alj = fadd reassoc nsz arcp contract afn <2 x double> %i.alb, %i.ali
   %i.alk = load i32, ptr %i.jp, align 8, !tbaa !44
   %i.all = load <2 x i32>, ptr %i.kd, align 8, !tbaa !55 ; 2 uses
   %i.alm = shufflevector <2 x i32> %i.akl, <2 x i32> %i.all, <2 x i32> <i32 0, i32 2>
@@ -626,7 +626,7 @@ begin_hunk_1_@default_process_tiling:bb.a
   %i.alw = sub nsw <2 x i32> %i.alt, %i.alv
   %i.alx = sitofp <2 x i32> %i.alw to <2 x double> ; 2 uses
   %i.aly = fmul reassoc nnan nsz arcp contract afn <2 x double> %i.alx, %i.alx
-  %i.alz = fadd reassoc nsz arcp contract afn <2 x double> %i.alr, %i.aly ; 2 uses
+  %i.alz = fadd reassoc nsz arcp contract afn <2 x double> %i.aly, %i.alr ; 2 uses
   %i.ama = extractelement <2 x double> %i.alz, i64 0
   store double %i.ama, ptr %i.xl, align 8, !tbaa !122
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #11
@@ -1029,10 +1029,10 @@ bb.en:                                            ; preds = %bb.ek, %._crit_edge
   %i.azl = load i32, ptr %i.azk, align 4, !tbaa !54
   %i.azm = uitofp reassoc nsz arcp contract afn i32 %i.azl to float
   %.neg345.i = fmul reassoc nnan nsz arcp contract afn float %i.ayz, %i.azd
-  %.neg345.i.neg = fmul reassoc nsz arcp contract afn float %.neg345.i, %i.azc
-  %.neg346.i = fmul reassoc nnan nsz arcp contract afn float %i.azf, %i.azj
-  %.neg346.i.neg = fmul reassoc nsz arcp contract afn float %.neg346.i, %i.azi
-  %reass.add51 = fadd reassoc nsz arcp contract afn float %.neg346.i.neg, %.neg345.i.neg
+  %.neg345.i.neg = fmul reassoc nnan nsz arcp contract afn float %i.azf, %i.azj
+  %.neg346.i = fmul reassoc nsz arcp contract afn float %.neg345.i, %i.azc
+  %.neg346.i.neg = fmul reassoc nsz arcp contract afn float %.neg345.i.neg, %i.azi
+  %reass.add51 = fadd reassoc nsz arcp contract afn float %.neg346.i, %.neg346.i.neg
   %i.azn = fadd reassoc nsz arcp contract afn float %reass.add51, %i.azm
   %i.azo = fsub reassoc nsz arcp contract afn float %i.ayx, %i.azn
   %i.azp = call reassoc nsz arcp contract afn float @llvm.maxnum.f32(float %i.azo, float 0.000000e+00)

@@ -203,7 +203,7 @@ bb.v:                                             ; preds = %g_strdup_inline.exi
   %.neg356 = fmul reassoc nsz arcp contract afn double %i.dp, -1.000000e+01
   %i.dw = fmul reassoc nsz arcp contract afn double %i.dv, f0xBFE5555555555556
   %i.dx = fadd reassoc nsz arcp contract afn double %i.dm, %i.dw
-  %i.dy = fadd reassoc nsz arcp contract afn double %i.dx, %.neg356
+  %i.dy = fadd reassoc nsz arcp contract afn double %.neg356, %i.dx
   call void @cairo_move_to(ptr noundef %1, double noundef %i.du, double noundef %i.dy) #16
   call void @pango_cairo_layout_path(ptr noundef %1, ptr noundef %i.dj) #16
   call void @cairo_set_line_width(ptr noundef %1, double noundef 2.000000e+00) #16
@@ -606,9 +606,9 @@ bb.n:                                             ; preds = %bb.e
   %i.ac = load i64, ptr %i.ab, align 8, !tbaa !238
   %i.ad = sitofp reassoc nsz arcp contract afn i64 %i.ac to double
   %i.ae = fmul reassoc nnan nsz arcp contract afn double %i.ad, f0x3EB0C6F7A0B5ED8D
+  %2 = fadd reassoc nsz arcp contract afn double %i.ae, %i.aa
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #16
-  %2 = fadd reassoc nsz arcp contract afn double %i.aa, 1.000000e+01
-  %i.af = fadd reassoc nsz arcp contract afn double %2, %i.ae
+  %i.af = fadd reassoc nsz arcp contract afn double %2, 1.000000e+01
   %i.ag = load ptr, ptr getelementptr inbounds nuw (i8, ptr @darktable, i64 64), align 8, !tbaa !11
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 64
   store double %i.af, ptr %i.ah, align 16, !tbaa !239
@@ -1011,9 +1011,9 @@ bb.x:                                             ; preds = %dt_dev_gui_module.e
   %i.cg = load i64, ptr %i.cf, align 8, !tbaa !238
   %i.ch = sitofp reassoc nsz arcp contract afn i64 %i.cg to double
   %i.ci = fmul reassoc nnan nsz arcp contract afn double %i.ch, f0x3EB0C6F7A0B5ED8D
+  %3 = fadd reassoc nsz arcp contract afn double %i.ci, %i.ce
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #16
-  %3 = fadd reassoc nsz arcp contract afn double %i.ce, 1.000000e+01
-  %i.cj = fadd reassoc nsz arcp contract afn double %3, %i.ci
+  %i.cj = fadd reassoc nsz arcp contract afn double %3, 1.000000e+01
   %i.ck = load ptr, ptr getelementptr inbounds nuw (i8, ptr @darktable, i64 64), align 8, !tbaa !11
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ck, i64 64
   store double %i.cj, ptr %i.cl, align 16, !tbaa !239

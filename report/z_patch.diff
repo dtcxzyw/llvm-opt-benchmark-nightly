@@ -1,0 +1,637 @@
+diff --git a/llvm/lib/Transforms/Scalar/Reassociate.cpp b/llvm/lib/Transforms/Scalar/Reassociate.cpp
+index c8a27e6509ec3..02c3ee83983c3 100644
+--- a/llvm/lib/Transforms/Scalar/Reassociate.cpp
++++ b/llvm/lib/Transforms/Scalar/Reassociate.cpp
+@@ -178,6 +178,27 @@ static BinaryOperator *isReassociableOp(Value *V, unsigned Opcode1,
+   return nullptr;
+ }
+ 
++/// Return the fmul operand if V is a one-use fadd with a single one-use fmul
++/// operand, all with the flags needed for reassociation and contraction. Such
++/// pairs can be fused into a single fma, so they are kept together as leaves
++/// of the enclosing expression tree instead of being linearized into it.
++static BinaryOperator *isFMulAddCandidate(Value *V) {
++  BinaryOperator *FAdd = isReassociableOp(V, Instruction::FAdd);
++  if (!FAdd || !FAdd->hasAllowContract())
++    return nullptr;
++  auto GetContractableFMul = [](Value *Op) {
++    BinaryOperator *FMul = isReassociableOp(Op, Instruction::FMul);
++    return FMul && FMul->hasAllowContract() ? FMul : nullptr;
++  };
++  BinaryOperator *Mul0 = GetContractableFMul(FAdd->getOperand(0));
++  BinaryOperator *Mul1 = GetContractableFMul(FAdd->getOperand(1));
++  // Keep constants visible to the enclosing expression so they still can be
++  // folded there.
++  if (!Mul0 == !Mul1 || isa<Constant>(FAdd->getOperand(Mul0 ? 1 : 0)))
++    return nullptr;
++  return Mul0 ? Mul0 : Mul1;
++}
++
+ void ReassociatePass::BuildRankMap(Function &F,
+                                    ReversePostOrderTraversal<Function*> &RPOT) {
+   unsigned Rank = 2;
+@@ -467,7 +488,8 @@ static bool LinearizeExprTree(Instruction *I,
+ 
+       // If this is a binary operation of the right kind with only one use then
+       // add its operands to the expression.
+-      if (BinaryOperator *BO = isReassociableOp(Op, Opcode)) {
++      if (BinaryOperator *BO = isReassociableOp(Op, Opcode);
++          BO && !(Opcode == Instruction::FAdd && isFMulAddCandidate(BO))) {
+         assert(Visited.insert(Op).second && "Not first visit!");
+         LLVM_DEBUG(dbgs() << "DIRECT ADD: " << *Op << " (" << Weight << ")\n");
+         Worklist.push_back(std::make_pair(BO, Weight));
+@@ -513,9 +535,10 @@ static bool LinearizeExprTree(Instruction *I,
+       // expression.  This means that it can safely be modified.  See if we
+       // can usefully morph it into an expression of the right kind.
+       assert((!isa<Instruction>(Op) ||
+-              cast<Instruction>(Op)->getOpcode() != Opcode
+-              || (isa<FPMathOperator>(Op) &&
+-                  !hasFPAssociativeFlags(cast<Instruction>(Op)))) &&
++              cast<Instruction>(Op)->getOpcode() != Opcode ||
++              (isa<FPMathOperator>(Op) &&
++               !hasFPAssociativeFlags(cast<Instruction>(Op))) ||
++              isFMulAddCandidate(Op)) &&
+              "Should have been handled above!");
+       assert(Op->hasOneUse() && "Has uses outside the expression tree!");
+ 
+@@ -545,7 +568,8 @@ static bool LinearizeExprTree(Instruction *I,
+       // Failed to morph into an expression of the right type.  This really is
+       // a leaf.
+       LLVM_DEBUG(dbgs() << "ADD LEAF: " << *Op << " (" << Weight << ")\n");
+-      assert(!isReassociableOp(Op, Opcode) && "Value was morphed?");
++      assert((!isReassociableOp(Op, Opcode) || isFMulAddCandidate(Op)) &&
++             "Value was morphed?");
+       LeafOrder.push_back(Op);
+       Leaves[Op] = Weight;
+     }
+@@ -558,7 +582,8 @@ static bool LinearizeExprTree(Instruction *I,
+     if (It == Leaves.end())
+       // Node initially thought to be a leaf wasn't.
+       continue;
+-    assert(!isReassociableOp(V, Opcode) && "Shouldn't be a leaf!");
++    assert((!isReassociableOp(V, Opcode) || isFMulAddCandidate(V)) &&
++           "Shouldn't be a leaf!");
+     uint64_t Weight = It->second;
+     // Ensure the leaf is only output once.
+     It->second = 0;
+@@ -1678,12 +1703,7 @@ Value *ReassociatePass::OptimizeAdd(Instruction *I,
+             (isa<Instruction>(Factor) || isa<Argument>(Factor)) &&
+             isa<Constant>(MaxOccVal) && !isa<UndefValue>(MaxOccVal));
+   };
+-  for (const ValueEntry &Op : Ops) {
+-    BinaryOperator *BOp =
+-        isReassociableOp(Op.Op, Instruction::Mul, Instruction::FMul);
+-    if (!BOp)
+-      continue;
+-
++  auto CountFactors = [&](BinaryOperator *BOp) {
+     // Compute all of the factors of this added value.
+     SmallVector<Value*, 8> Factors;
+     FindSingleUseMultiplyFactors(BOp, Factors);
+@@ -1730,6 +1750,30 @@ Value *ReassociatePass::OptimizeAdd(Instruction *I,
+         }
+       }
+     }
++  };
++
++  // fmul/fadd pairs kept together for fma hide their muls; count their factors
++  // as well and break the pairs up if a repeated factor exists, so that
++  // factorization still applies.
++  SmallVector<Value *> FMulAddCands;
++  for (const ValueEntry &Entry : Ops) {
++    if (BinaryOperator *BOp =
++            isReassociableOp(Entry.Op, Instruction::Mul, Instruction::FMul)) {
++      CountFactors(BOp);
++      continue;
++    }
++    if (BinaryOperator *BOp = isFMulAddCandidate(Entry.Op)) {
++      FMulAddCands.push_back(Entry.Op);
++      CountFactors(BOp);
++    }
++  }
++
++  if (MaxOcc > 1) {
++    for (Value *V : FMulAddCands) {
++      erase_if(Ops, [V](const ValueEntry &E) { return E.Op == V; });
++      for (Value *Op : cast<BinaryOperator>(V)->operands())
++        Ops.emplace_back(getRank(Op), Op);
++    }
+   }
+ 
+   // If any factor occurred more than one time, we can pull it out.
+diff --git a/llvm/test/Transforms/PhaseOrdering/AArch64/reduce_submuladd.ll b/llvm/test/Transforms/PhaseOrdering/AArch64/reduce_submuladd.ll
+index 86d6a445ca43e..b3acb80c5fdb0 100644
+--- a/llvm/test/Transforms/PhaseOrdering/AArch64/reduce_submuladd.ll
++++ b/llvm/test/Transforms/PhaseOrdering/AArch64/reduce_submuladd.ll
+@@ -22,9 +22,9 @@ define dso_local noundef nofpclass(nan inf) float @_Z4testPKfS0_ii(ptr noundef %
+ ; CHECK-NEXT:    [[TMP13:%.*]] = load float, ptr [[TMP12]], align 4, !tbaa [[TBAA4]]
+ ; CHECK-NEXT:    [[TMP14:%.*]] = fsub fast float [[TMP11]], [[TMP13]]
+ ; CHECK-NEXT:    [[TMP15:%.*]] = fmul fast float [[TMP14]], [[TMP14]]
++; CHECK-NEXT:    [[OP_RDX:%.*]] = tail call fast float @llvm.vector.reduce.fadd.v20f32(float [[TMP15]], <20 x float> [[TMP9]])
+ ; CHECK-NEXT:    [[TMP16:%.*]] = getelementptr inbounds [4 x i8], ptr [[TMP0]], i64 [[TMP5]]
+ ; CHECK-NEXT:    [[TMP17:%.*]] = getelementptr inbounds [4 x i8], ptr [[TMP1]], i64 [[TMP4]]
+-; CHECK-NEXT:    [[OP_RDX:%.*]] = tail call fast float @llvm.vector.reduce.fadd.v20f32(float [[TMP15]], <20 x float> [[TMP9]])
+ ; CHECK-NEXT:    [[TMP18:%.*]] = load <20 x float>, ptr [[TMP16]], align 4, !tbaa [[TBAA4]]
+ ; CHECK-NEXT:    [[TMP19:%.*]] = load <20 x float>, ptr [[TMP17]], align 4, !tbaa [[TBAA4]]
+ ; CHECK-NEXT:    [[TMP20:%.*]] = fsub fast <20 x float> [[TMP18]], [[TMP19]]
+@@ -35,79 +35,79 @@ define dso_local noundef nofpclass(nan inf) float @_Z4testPKfS0_ii(ptr noundef %
+ ; CHECK-NEXT:    [[TMP25:%.*]] = load float, ptr [[TMP24]], align 4, !tbaa [[TBAA4]]
+ ; CHECK-NEXT:    [[TMP26:%.*]] = fsub fast float [[TMP23]], [[TMP25]]
+ ; CHECK-NEXT:    [[TMP27:%.*]] = fmul fast float [[TMP26]], [[TMP26]]
++; CHECK-NEXT:    [[OP_RDX_1:%.*]] = tail call fast float @llvm.vector.reduce.fadd.v20f32(float [[TMP27]], <20 x float> [[TMP21]])
+ ; CHECK-NEXT:    [[TMP28:%.*]] = getelementptr inbounds [4 x i8], ptr [[TMP16]], i64 [[TMP5]]
+ ; CHECK-NEXT:    [[TMP29:%.*]] = getelementptr inbounds [4 x i8], ptr [[TMP17]], i64 [[TMP4]]
+-; CHECK-NEXT:    [[OP_RDX_1:%.*]] = tail call fast float @llvm.vector.reduce.fadd.v20f32(float [[TMP27]], <20 x float> [[TMP21]])
+-; CHECK-NEXT:    [[OP_RDX3_1:%.*]] = fadd fast float [[OP_RDX_1]], [[OP_RDX]]
+-; CHECK-NEXT:    [[TMP30:%.*]] = load <20 x float>, ptr [[TMP28]], align 4, !tbaa [[TBAA4]]
+-; CHECK-NEXT:    [[TMP31:%.*]] = load <20 x float>, ptr [[TMP29]], align 4, !tbaa [[TBAA4]]
+-; CHECK-NEXT:    [[TMP32:%.*]] = fsub fast <20 x float> [[TMP30]], [[TMP31]]
+-; CHECK-NEXT:    [[TMP33:%.*]] = fmul fast <20 x float> [[TMP32]], [[TMP32]]
+-; CHECK-NEXT:    [[TMP34:%.*]] = getelementptr inbounds nuw i8, ptr [[TMP28]], i64 80
+-; CHECK-NEXT:    [[TMP35:%.*]] = load float, ptr [[TMP34]], align 4, !tbaa [[TBAA4]]
+-; CHECK-NEXT:    [[TMP36:%.*]] = getelementptr inbounds nuw i8, ptr [[TMP29]], i64 80
+-; CHECK-NEXT:    [[TMP37:%.*]] = load float, ptr [[TMP36]], align 4, !tbaa [[TBAA4]]
+-; CHECK-NEXT:    [[TMP38:%.*]] = fsub fast float [[TMP35]], [[TMP37]]
+-; CHECK-NEXT:    [[TMP39:%.*]] = fmul fast float [[TMP38]], [[TMP38]]
+-; CHECK-NEXT:    [[TMP40:%.*]] = getelementptr inbounds [4 x i8], ptr [[TMP28]], i64 [[TMP5]]
+-; CHECK-NEXT:    [[TMP41:%.*]] = getelementptr inbounds [4 x i8], ptr [[TMP29]], i64 [[TMP4]]
+-; CHECK-NEXT:    [[OP_RDX_2:%.*]] = tail call fast float @llvm.vector.reduce.fadd.v20f32(float [[TMP39]], <20 x float> [[TMP33]])
+-; CHECK-NEXT:    [[OP_RDX3_2:%.*]] = fadd fast float [[OP_RDX_2]], [[OP_RDX3_1]]
+-; CHECK-NEXT:    [[TMP42:%.*]] = load <20 x float>, ptr [[TMP40]], align 4, !tbaa [[TBAA4]]
+-; CHECK-NEXT:    [[TMP43:%.*]] = load <20 x float>, ptr [[TMP41]], align 4, !tbaa [[TBAA4]]
+-; CHECK-NEXT:    [[TMP44:%.*]] = fsub fast <20 x float> [[TMP42]], [[TMP43]]
+-; CHECK-NEXT:    [[TMP45:%.*]] = fmul fast <20 x float> [[TMP44]], [[TMP44]]
+-; CHECK-NEXT:    [[TMP46:%.*]] = getelementptr inbounds nuw i8, ptr [[TMP40]], i64 80
+-; CHECK-NEXT:    [[TMP47:%.*]] = load float, ptr [[TMP46]], align 4, !tbaa [[TBAA4]]
++; CHECK-NEXT:    [[TMP30:%.*]] = fadd fast float [[OP_RDX_1]], [[OP_RDX]]
++; CHECK-NEXT:    [[TMP31:%.*]] = load <20 x float>, ptr [[TMP28]], align 4, !tbaa [[TBAA4]]
++; CHECK-NEXT:    [[TMP32:%.*]] = load <20 x float>, ptr [[TMP29]], align 4, !tbaa [[TBAA4]]
++; CHECK-NEXT:    [[TMP33:%.*]] = fsub fast <20 x float> [[TMP31]], [[TMP32]]
++; CHECK-NEXT:    [[TMP34:%.*]] = fmul fast <20 x float> [[TMP33]], [[TMP33]]
++; CHECK-NEXT:    [[TMP35:%.*]] = getelementptr inbounds nuw i8, ptr [[TMP28]], i64 80
++; CHECK-NEXT:    [[TMP36:%.*]] = load float, ptr [[TMP35]], align 4, !tbaa [[TBAA4]]
++; CHECK-NEXT:    [[TMP37:%.*]] = getelementptr inbounds nuw i8, ptr [[TMP29]], i64 80
++; CHECK-NEXT:    [[TMP38:%.*]] = load float, ptr [[TMP37]], align 4, !tbaa [[TBAA4]]
++; CHECK-NEXT:    [[TMP39:%.*]] = fsub fast float [[TMP36]], [[TMP38]]
++; CHECK-NEXT:    [[TMP40:%.*]] = fmul fast float [[TMP39]], [[TMP39]]
++; CHECK-NEXT:    [[OP_RDX_2:%.*]] = tail call fast float @llvm.vector.reduce.fadd.v20f32(float [[TMP40]], <20 x float> [[TMP34]])
++; CHECK-NEXT:    [[TMP41:%.*]] = getelementptr inbounds [4 x i8], ptr [[TMP28]], i64 [[TMP5]]
++; CHECK-NEXT:    [[TMP42:%.*]] = getelementptr inbounds [4 x i8], ptr [[TMP29]], i64 [[TMP4]]
++; CHECK-NEXT:    [[TMP43:%.*]] = fadd fast float [[OP_RDX_2]], [[TMP30]]
++; CHECK-NEXT:    [[TMP44:%.*]] = load <20 x float>, ptr [[TMP41]], align 4, !tbaa [[TBAA4]]
++; CHECK-NEXT:    [[TMP45:%.*]] = load <20 x float>, ptr [[TMP42]], align 4, !tbaa [[TBAA4]]
++; CHECK-NEXT:    [[TMP46:%.*]] = fsub fast <20 x float> [[TMP44]], [[TMP45]]
++; CHECK-NEXT:    [[TMP47:%.*]] = fmul fast <20 x float> [[TMP46]], [[TMP46]]
+ ; CHECK-NEXT:    [[TMP48:%.*]] = getelementptr inbounds nuw i8, ptr [[TMP41]], i64 80
+ ; CHECK-NEXT:    [[TMP49:%.*]] = load float, ptr [[TMP48]], align 4, !tbaa [[TBAA4]]
+-; CHECK-NEXT:    [[TMP50:%.*]] = fsub fast float [[TMP47]], [[TMP49]]
+-; CHECK-NEXT:    [[TMP51:%.*]] = fmul fast float [[TMP50]], [[TMP50]]
+-; CHECK-NEXT:    [[TMP52:%.*]] = getelementptr inbounds [4 x i8], ptr [[TMP40]], i64 [[TMP5]]
+-; CHECK-NEXT:    [[TMP53:%.*]] = getelementptr inbounds [4 x i8], ptr [[TMP41]], i64 [[TMP4]]
+-; CHECK-NEXT:    [[OP_RDX_3:%.*]] = tail call fast float @llvm.vector.reduce.fadd.v20f32(float [[TMP51]], <20 x float> [[TMP45]])
+-; CHECK-NEXT:    [[OP_RDX3_3:%.*]] = fadd fast float [[OP_RDX_3]], [[OP_RDX3_2]]
+-; CHECK-NEXT:    [[TMP54:%.*]] = load <20 x float>, ptr [[TMP52]], align 4, !tbaa [[TBAA4]]
+-; CHECK-NEXT:    [[TMP55:%.*]] = load <20 x float>, ptr [[TMP53]], align 4, !tbaa [[TBAA4]]
+-; CHECK-NEXT:    [[TMP56:%.*]] = fsub fast <20 x float> [[TMP54]], [[TMP55]]
+-; CHECK-NEXT:    [[TMP57:%.*]] = fmul fast <20 x float> [[TMP56]], [[TMP56]]
+-; CHECK-NEXT:    [[TMP58:%.*]] = getelementptr inbounds nuw i8, ptr [[TMP52]], i64 80
+-; CHECK-NEXT:    [[TMP59:%.*]] = load float, ptr [[TMP58]], align 4, !tbaa [[TBAA4]]
+-; CHECK-NEXT:    [[TMP60:%.*]] = getelementptr inbounds nuw i8, ptr [[TMP53]], i64 80
+-; CHECK-NEXT:    [[TMP61:%.*]] = load float, ptr [[TMP60]], align 4, !tbaa [[TBAA4]]
+-; CHECK-NEXT:    [[TMP62:%.*]] = fsub fast float [[TMP59]], [[TMP61]]
+-; CHECK-NEXT:    [[TMP63:%.*]] = fmul fast float [[TMP62]], [[TMP62]]
+-; CHECK-NEXT:    [[TMP64:%.*]] = getelementptr inbounds [4 x i8], ptr [[TMP52]], i64 [[TMP5]]
+-; CHECK-NEXT:    [[TMP65:%.*]] = getelementptr inbounds [4 x i8], ptr [[TMP53]], i64 [[TMP4]]
+-; CHECK-NEXT:    [[OP_RDX_4:%.*]] = tail call fast float @llvm.vector.reduce.fadd.v20f32(float [[TMP63]], <20 x float> [[TMP57]])
+-; CHECK-NEXT:    [[OP_RDX3_4:%.*]] = fadd fast float [[OP_RDX_4]], [[OP_RDX3_3]]
+-; CHECK-NEXT:    [[TMP66:%.*]] = load <20 x float>, ptr [[TMP64]], align 4, !tbaa [[TBAA4]]
+-; CHECK-NEXT:    [[TMP67:%.*]] = load <20 x float>, ptr [[TMP65]], align 4, !tbaa [[TBAA4]]
+-; CHECK-NEXT:    [[TMP68:%.*]] = fsub fast <20 x float> [[TMP66]], [[TMP67]]
+-; CHECK-NEXT:    [[TMP69:%.*]] = fmul fast <20 x float> [[TMP68]], [[TMP68]]
+-; CHECK-NEXT:    [[TMP70:%.*]] = getelementptr inbounds nuw i8, ptr [[TMP64]], i64 80
+-; CHECK-NEXT:    [[TMP71:%.*]] = load float, ptr [[TMP70]], align 4, !tbaa [[TBAA4]]
+-; CHECK-NEXT:    [[TMP72:%.*]] = getelementptr inbounds nuw i8, ptr [[TMP65]], i64 80
+-; CHECK-NEXT:    [[TMP73:%.*]] = load float, ptr [[TMP72]], align 4, !tbaa [[TBAA4]]
+-; CHECK-NEXT:    [[TMP74:%.*]] = fsub fast float [[TMP71]], [[TMP73]]
+-; CHECK-NEXT:    [[TMP75:%.*]] = fmul fast float [[TMP74]], [[TMP74]]
+-; CHECK-NEXT:    [[TMP76:%.*]] = getelementptr inbounds [4 x i8], ptr [[TMP64]], i64 [[TMP5]]
+-; CHECK-NEXT:    [[TMP77:%.*]] = getelementptr inbounds [4 x i8], ptr [[TMP65]], i64 [[TMP4]]
+-; CHECK-NEXT:    [[OP_RDX_5:%.*]] = tail call fast float @llvm.vector.reduce.fadd.v20f32(float [[TMP75]], <20 x float> [[TMP69]])
+-; CHECK-NEXT:    [[OP_RDX3_5:%.*]] = fadd fast float [[OP_RDX_5]], [[OP_RDX3_4]]
+-; CHECK-NEXT:    [[TMP78:%.*]] = load <20 x float>, ptr [[TMP76]], align 4, !tbaa [[TBAA4]]
+-; CHECK-NEXT:    [[TMP79:%.*]] = load <20 x float>, ptr [[TMP77]], align 4, !tbaa [[TBAA4]]
+-; CHECK-NEXT:    [[TMP80:%.*]] = fsub fast <20 x float> [[TMP78]], [[TMP79]]
+-; CHECK-NEXT:    [[TMP81:%.*]] = fmul fast <20 x float> [[TMP80]], [[TMP80]]
+-; CHECK-NEXT:    [[TMP82:%.*]] = getelementptr inbounds nuw i8, ptr [[TMP76]], i64 80
+-; CHECK-NEXT:    [[TMP83:%.*]] = load float, ptr [[TMP82]], align 4, !tbaa [[TBAA4]]
+-; CHECK-NEXT:    [[TMP84:%.*]] = getelementptr inbounds nuw i8, ptr [[TMP77]], i64 80
+-; CHECK-NEXT:    [[TMP85:%.*]] = load float, ptr [[TMP84]], align 4, !tbaa [[TBAA4]]
+-; CHECK-NEXT:    [[TMP86:%.*]] = fsub fast float [[TMP83]], [[TMP85]]
+-; CHECK-NEXT:    [[TMP87:%.*]] = fmul fast float [[TMP86]], [[TMP86]]
+-; CHECK-NEXT:    [[OP_RDX_6:%.*]] = tail call fast float @llvm.vector.reduce.fadd.v20f32(float [[TMP87]], <20 x float> [[TMP81]])
+-; CHECK-NEXT:    [[OP_RDX3_6:%.*]] = fadd fast float [[OP_RDX_6]], [[OP_RDX3_5]]
+-; CHECK-NEXT:    ret float [[OP_RDX3_6]]
++; CHECK-NEXT:    [[TMP50:%.*]] = getelementptr inbounds nuw i8, ptr [[TMP42]], i64 80
++; CHECK-NEXT:    [[TMP51:%.*]] = load float, ptr [[TMP50]], align 4, !tbaa [[TBAA4]]
++; CHECK-NEXT:    [[TMP52:%.*]] = fsub fast float [[TMP49]], [[TMP51]]
++; CHECK-NEXT:    [[TMP53:%.*]] = fmul fast float [[TMP52]], [[TMP52]]
++; CHECK-NEXT:    [[OP_RDX_3:%.*]] = tail call fast float @llvm.vector.reduce.fadd.v20f32(float [[TMP53]], <20 x float> [[TMP47]])
++; CHECK-NEXT:    [[TMP54:%.*]] = getelementptr inbounds [4 x i8], ptr [[TMP41]], i64 [[TMP5]]
++; CHECK-NEXT:    [[TMP55:%.*]] = getelementptr inbounds [4 x i8], ptr [[TMP42]], i64 [[TMP4]]
++; CHECK-NEXT:    [[TMP56:%.*]] = fadd fast float [[OP_RDX_3]], [[TMP43]]
++; CHECK-NEXT:    [[TMP57:%.*]] = load <20 x float>, ptr [[TMP54]], align 4, !tbaa [[TBAA4]]
++; CHECK-NEXT:    [[TMP58:%.*]] = load <20 x float>, ptr [[TMP55]], align 4, !tbaa [[TBAA4]]
++; CHECK-NEXT:    [[TMP59:%.*]] = fsub fast <20 x float> [[TMP57]], [[TMP58]]
++; CHECK-NEXT:    [[TMP60:%.*]] = fmul fast <20 x float> [[TMP59]], [[TMP59]]
++; CHECK-NEXT:    [[TMP61:%.*]] = getelementptr inbounds nuw i8, ptr [[TMP54]], i64 80
++; CHECK-NEXT:    [[TMP62:%.*]] = load float, ptr [[TMP61]], align 4, !tbaa [[TBAA4]]
++; CHECK-NEXT:    [[TMP63:%.*]] = getelementptr inbounds nuw i8, ptr [[TMP55]], i64 80
++; CHECK-NEXT:    [[TMP64:%.*]] = load float, ptr [[TMP63]], align 4, !tbaa [[TBAA4]]
++; CHECK-NEXT:    [[TMP65:%.*]] = fsub fast float [[TMP62]], [[TMP64]]
++; CHECK-NEXT:    [[TMP66:%.*]] = fmul fast float [[TMP65]], [[TMP65]]
++; CHECK-NEXT:    [[OP_RDX_4:%.*]] = tail call fast float @llvm.vector.reduce.fadd.v20f32(float [[TMP66]], <20 x float> [[TMP60]])
++; CHECK-NEXT:    [[TMP67:%.*]] = getelementptr inbounds [4 x i8], ptr [[TMP54]], i64 [[TMP5]]
++; CHECK-NEXT:    [[TMP68:%.*]] = getelementptr inbounds [4 x i8], ptr [[TMP55]], i64 [[TMP4]]
++; CHECK-NEXT:    [[TMP69:%.*]] = fadd fast float [[OP_RDX_4]], [[TMP56]]
++; CHECK-NEXT:    [[TMP70:%.*]] = load <20 x float>, ptr [[TMP67]], align 4, !tbaa [[TBAA4]]
++; CHECK-NEXT:    [[TMP71:%.*]] = load <20 x float>, ptr [[TMP68]], align 4, !tbaa [[TBAA4]]
++; CHECK-NEXT:    [[TMP72:%.*]] = fsub fast <20 x float> [[TMP70]], [[TMP71]]
++; CHECK-NEXT:    [[TMP73:%.*]] = fmul fast <20 x float> [[TMP72]], [[TMP72]]
++; CHECK-NEXT:    [[TMP74:%.*]] = getelementptr inbounds nuw i8, ptr [[TMP67]], i64 80
++; CHECK-NEXT:    [[TMP75:%.*]] = load float, ptr [[TMP74]], align 4, !tbaa [[TBAA4]]
++; CHECK-NEXT:    [[TMP76:%.*]] = getelementptr inbounds nuw i8, ptr [[TMP68]], i64 80
++; CHECK-NEXT:    [[TMP77:%.*]] = load float, ptr [[TMP76]], align 4, !tbaa [[TBAA4]]
++; CHECK-NEXT:    [[TMP78:%.*]] = fsub fast float [[TMP75]], [[TMP77]]
++; CHECK-NEXT:    [[TMP79:%.*]] = fmul fast float [[TMP78]], [[TMP78]]
++; CHECK-NEXT:    [[OP_RDX_5:%.*]] = tail call fast float @llvm.vector.reduce.fadd.v20f32(float [[TMP79]], <20 x float> [[TMP73]])
++; CHECK-NEXT:    [[TMP80:%.*]] = getelementptr inbounds [4 x i8], ptr [[TMP67]], i64 [[TMP5]]
++; CHECK-NEXT:    [[TMP81:%.*]] = getelementptr inbounds [4 x i8], ptr [[TMP68]], i64 [[TMP4]]
++; CHECK-NEXT:    [[TMP82:%.*]] = fadd fast float [[OP_RDX_5]], [[TMP69]]
++; CHECK-NEXT:    [[TMP83:%.*]] = load <20 x float>, ptr [[TMP80]], align 4, !tbaa [[TBAA4]]
++; CHECK-NEXT:    [[TMP84:%.*]] = load <20 x float>, ptr [[TMP81]], align 4, !tbaa [[TBAA4]]
++; CHECK-NEXT:    [[TMP85:%.*]] = fsub fast <20 x float> [[TMP83]], [[TMP84]]
++; CHECK-NEXT:    [[TMP86:%.*]] = fmul fast <20 x float> [[TMP85]], [[TMP85]]
++; CHECK-NEXT:    [[TMP87:%.*]] = getelementptr inbounds nuw i8, ptr [[TMP80]], i64 80
++; CHECK-NEXT:    [[TMP88:%.*]] = load float, ptr [[TMP87]], align 4, !tbaa [[TBAA4]]
++; CHECK-NEXT:    [[TMP89:%.*]] = getelementptr inbounds nuw i8, ptr [[TMP81]], i64 80
++; CHECK-NEXT:    [[TMP90:%.*]] = load float, ptr [[TMP89]], align 4, !tbaa [[TBAA4]]
++; CHECK-NEXT:    [[TMP91:%.*]] = fsub fast float [[TMP88]], [[TMP90]]
++; CHECK-NEXT:    [[TMP92:%.*]] = fmul fast float [[TMP91]], [[TMP91]]
++; CHECK-NEXT:    [[OP_RDX_6:%.*]] = tail call fast float @llvm.vector.reduce.fadd.v20f32(float [[TMP92]], <20 x float> [[TMP86]])
++; CHECK-NEXT:    [[TMP93:%.*]] = fadd fast float [[OP_RDX_6]], [[TMP82]]
++; CHECK-NEXT:    ret float [[TMP93]]
+ ;
+   %5 = alloca ptr, align 8
+   %6 = alloca ptr, align 8
+diff --git a/llvm/test/Transforms/PhaseOrdering/X86/fma-reassociate-pairs.ll b/llvm/test/Transforms/PhaseOrdering/X86/fma-reassociate-pairs.ll
+new file mode 100644
+index 0000000000000..bcd1c9f0bf202
+--- /dev/null
++++ b/llvm/test/Transforms/PhaseOrdering/X86/fma-reassociate-pairs.ll
+@@ -0,0 +1,58 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 5
++; RUN: opt -S -O3 -mtriple=x86_64-unknown-linux-gnu -mcpu=x86-64-v3 < %s | FileCheck %s
++
++define double @fsub_fmul_2(ptr %x, ptr %y, ptr %z) {
++; CHECK-LABEL: define double @fsub_fmul_2(
++; CHECK-SAME: ptr nofree readonly captures(none) [[X:%.*]], ptr nofree readonly captures(none) [[Y:%.*]], ptr nofree readonly captures(none) [[Z:%.*]]) local_unnamed_addr #[[ATTR0:[0-9]+]] {
++; CHECK-NEXT:    [[TMP1:%.*]] = load <2 x double>, ptr [[X]], align 8
++; CHECK-NEXT:    [[TMP2:%.*]] = load <2 x double>, ptr [[Y]], align 8
++; CHECK-NEXT:    [[TMP3:%.*]] = fmul reassoc nsz contract <2 x double> [[TMP2]], [[TMP1]]
++; CHECK-NEXT:    [[TMP4:%.*]] = load <2 x double>, ptr [[Z]], align 8
++; CHECK-NEXT:    [[TMP5:%.*]] = fsub reassoc nsz contract <2 x double> [[TMP3]], [[TMP4]]
++; CHECK-NEXT:    [[R:%.*]] = tail call reassoc nsz contract double @llvm.vector.reduce.fadd.v2f64(double 0.000000e+00, <2 x double> [[TMP5]])
++; CHECK-NEXT:    ret double [[R]]
++;
++  %x0 = load double, ptr %x
++  %y0 = load double, ptr %y
++  %m0 = fmul reassoc nsz contract double %x0, %y0
++  %z0 = load double, ptr %z
++  %s0 = fsub reassoc nsz contract double %m0, %z0
++  %x1p = getelementptr inbounds double, ptr %x, i64 1
++  %x1 = load double, ptr %x1p
++  %y1p = getelementptr inbounds double, ptr %y, i64 1
++  %y1 = load double, ptr %y1p
++  %m1 = fmul reassoc nsz contract double %x1, %y1
++  %z1p = getelementptr inbounds double, ptr %z, i64 1
++  %z1 = load double, ptr %z1p
++  %s1 = fsub reassoc nsz contract double %m1, %z1
++  %r = fadd reassoc nsz contract double %s0, %s1
++  ret double %r
++}
++
++define double @fadd_fmul_2(ptr %x, ptr %y, ptr %z) {
++; CHECK-LABEL: define double @fadd_fmul_2(
++; CHECK-SAME: ptr nofree readonly captures(none) [[X:%.*]], ptr nofree readonly captures(none) [[Y:%.*]], ptr nofree readonly captures(none) [[Z:%.*]]) local_unnamed_addr #[[ATTR0]] {
++; CHECK-NEXT:    [[TMP1:%.*]] = load <2 x double>, ptr [[X]], align 8
++; CHECK-NEXT:    [[TMP2:%.*]] = load <2 x double>, ptr [[Y]], align 8
++; CHECK-NEXT:    [[TMP3:%.*]] = fmul reassoc nsz contract <2 x double> [[TMP2]], [[TMP1]]
++; CHECK-NEXT:    [[TMP4:%.*]] = load <2 x double>, ptr [[Z]], align 8
++; CHECK-NEXT:    [[TMP5:%.*]] = fadd reassoc nsz contract <2 x double> [[TMP3]], [[TMP4]]
++; CHECK-NEXT:    [[R:%.*]] = tail call reassoc nsz contract double @llvm.vector.reduce.fadd.v2f64(double 0.000000e+00, <2 x double> [[TMP5]])
++; CHECK-NEXT:    ret double [[R]]
++;
++  %x0 = load double, ptr %x
++  %y0 = load double, ptr %y
++  %m0 = fmul reassoc nsz contract double %x0, %y0
++  %z0 = load double, ptr %z
++  %a0 = fadd reassoc nsz contract double %m0, %z0
++  %x1p = getelementptr inbounds double, ptr %x, i64 1
++  %x1 = load double, ptr %x1p
++  %y1p = getelementptr inbounds double, ptr %y, i64 1
++  %y1 = load double, ptr %y1p
++  %m1 = fmul reassoc nsz contract double %x1, %y1
++  %z1p = getelementptr inbounds double, ptr %z, i64 1
++  %z1 = load double, ptr %z1p
++  %a1 = fadd reassoc nsz contract double %m1, %z1
++  %r = fadd reassoc nsz contract double %a0, %a1
++  ret double %r
++}
+diff --git a/llvm/test/Transforms/Reassociate/fma-pairs.ll b/llvm/test/Transforms/Reassociate/fma-pairs.ll
+new file mode 100644
+index 0000000000000..dd6dc7229aefd
+--- /dev/null
++++ b/llvm/test/Transforms/Reassociate/fma-pairs.ll
+@@ -0,0 +1,282 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 5
++; RUN: opt -passes=reassociate -S < %s | FileCheck %s
++
++define double @fsub_fmul_2(ptr %x, ptr %y, ptr %z) {
++; CHECK-LABEL: define double @fsub_fmul_2(
++; CHECK-SAME: ptr [[X:%.*]], ptr [[Y:%.*]], ptr [[Z:%.*]]) {
++; CHECK-NEXT:    [[X0:%.*]] = load double, ptr [[X]], align 8
++; CHECK-NEXT:    [[Y0:%.*]] = load double, ptr [[Y]], align 8
++; CHECK-NEXT:    [[M0:%.*]] = fmul reassoc nsz contract double [[Y0]], [[X0]]
++; CHECK-NEXT:    [[Z0:%.*]] = load double, ptr [[Z]], align 8
++; CHECK-NEXT:    [[Z0_NEG:%.*]] = fneg reassoc nsz contract double [[Z0]]
++; CHECK-NEXT:    [[S0:%.*]] = fadd reassoc nsz contract double [[M0]], [[Z0_NEG]]
++; CHECK-NEXT:    [[X1P:%.*]] = getelementptr inbounds double, ptr [[X]], i64 1
++; CHECK-NEXT:    [[X1:%.*]] = load double, ptr [[X1P]], align 8
++; CHECK-NEXT:    [[Y1P:%.*]] = getelementptr inbounds double, ptr [[Y]], i64 1
++; CHECK-NEXT:    [[Y1:%.*]] = load double, ptr [[Y1P]], align 8
++; CHECK-NEXT:    [[M1:%.*]] = fmul reassoc nsz contract double [[Y1]], [[X1]]
++; CHECK-NEXT:    [[Z1P:%.*]] = getelementptr inbounds double, ptr [[Z]], i64 1
++; CHECK-NEXT:    [[Z1:%.*]] = load double, ptr [[Z1P]], align 8
++; CHECK-NEXT:    [[Z1_NEG:%.*]] = fneg reassoc nsz contract double [[Z1]]
++; CHECK-NEXT:    [[S1:%.*]] = fadd reassoc nsz contract double [[M1]], [[Z1_NEG]]
++; CHECK-NEXT:    [[R:%.*]] = fadd reassoc nsz contract double [[S1]], [[S0]]
++; CHECK-NEXT:    ret double [[R]]
++;
++  %x0 = load double, ptr %x
++  %y0 = load double, ptr %y
++  %m0 = fmul reassoc nsz contract double %x0, %y0
++  %z0 = load double, ptr %z
++  %s0 = fsub reassoc nsz contract double %m0, %z0
++  %x1p = getelementptr inbounds double, ptr %x, i64 1
++  %x1 = load double, ptr %x1p
++  %y1p = getelementptr inbounds double, ptr %y, i64 1
++  %y1 = load double, ptr %y1p
++  %m1 = fmul reassoc nsz contract double %x1, %y1
++  %z1p = getelementptr inbounds double, ptr %z, i64 1
++  %z1 = load double, ptr %z1p
++  %s1 = fsub reassoc nsz contract double %m1, %z1
++  %r = fadd reassoc nsz contract double %s0, %s1
++  ret double %r
++}
++
++define double @fadd_fmul_2(ptr %x, ptr %y, ptr %z) {
++; CHECK-LABEL: define double @fadd_fmul_2(
++; CHECK-SAME: ptr [[X:%.*]], ptr [[Y:%.*]], ptr [[Z:%.*]]) {
++; CHECK-NEXT:    [[X0:%.*]] = load double, ptr [[X]], align 8
++; CHECK-NEXT:    [[Y0:%.*]] = load double, ptr [[Y]], align 8
++; CHECK-NEXT:    [[M0:%.*]] = fmul reassoc nsz contract double [[Y0]], [[X0]]
++; CHECK-NEXT:    [[Z0:%.*]] = load double, ptr [[Z]], align 8
++; CHECK-NEXT:    [[A0:%.*]] = fadd reassoc nsz contract double [[M0]], [[Z0]]
++; CHECK-NEXT:    [[X1P:%.*]] = getelementptr inbounds double, ptr [[X]], i64 1
++; CHECK-NEXT:    [[X1:%.*]] = load double, ptr [[X1P]], align 8
++; CHECK-NEXT:    [[Y1P:%.*]] = getelementptr inbounds double, ptr [[Y]], i64 1
++; CHECK-NEXT:    [[Y1:%.*]] = load double, ptr [[Y1P]], align 8
++; CHECK-NEXT:    [[M1:%.*]] = fmul reassoc nsz contract double [[Y1]], [[X1]]
++; CHECK-NEXT:    [[Z1P:%.*]] = getelementptr inbounds double, ptr [[Z]], i64 1
++; CHECK-NEXT:    [[Z1:%.*]] = load double, ptr [[Z1P]], align 8
++; CHECK-NEXT:    [[A1:%.*]] = fadd reassoc nsz contract double [[M1]], [[Z1]]
++; CHECK-NEXT:    [[R:%.*]] = fadd reassoc nsz contract double [[A1]], [[A0]]
++; CHECK-NEXT:    ret double [[R]]
++;
++  %x0 = load double, ptr %x
++  %y0 = load double, ptr %y
++  %m0 = fmul reassoc nsz contract double %x0, %y0
++  %z0 = load double, ptr %z
++  %a0 = fadd reassoc nsz contract double %m0, %z0
++  %x1p = getelementptr inbounds double, ptr %x, i64 1
++  %x1 = load double, ptr %x1p
++  %y1p = getelementptr inbounds double, ptr %y, i64 1
++  %y1 = load double, ptr %y1p
++  %m1 = fmul reassoc nsz contract double %x1, %y1
++  %z1p = getelementptr inbounds double, ptr %z, i64 1
++  %z1 = load double, ptr %z1p
++  %a1 = fadd reassoc nsz contract double %m1, %z1
++  %r = fadd reassoc nsz contract double %a0, %a1
++  ret double %r
++}
++
++define double @fsub_fmul_4(ptr %x, ptr %y, ptr %z) {
++; CHECK-LABEL: define double @fsub_fmul_4(
++; CHECK-SAME: ptr [[X:%.*]], ptr [[Y:%.*]], ptr [[Z:%.*]]) {
++; CHECK-NEXT:    [[X0:%.*]] = load double, ptr [[X]], align 8
++; CHECK-NEXT:    [[Y0:%.*]] = load double, ptr [[Y]], align 8
++; CHECK-NEXT:    [[M0:%.*]] = fmul reassoc nsz contract double [[Y0]], [[X0]]
++; CHECK-NEXT:    [[Z0:%.*]] = load double, ptr [[Z]], align 8
++; CHECK-NEXT:    [[Z0_NEG:%.*]] = fneg reassoc nsz contract double [[Z0]]
++; CHECK-NEXT:    [[S0:%.*]] = fadd reassoc nsz contract double [[M0]], [[Z0_NEG]]
++; CHECK-NEXT:    [[X1P:%.*]] = getelementptr inbounds double, ptr [[X]], i64 1
++; CHECK-NEXT:    [[X1:%.*]] = load double, ptr [[X1P]], align 8
++; CHECK-NEXT:    [[Y1P:%.*]] = getelementptr inbounds double, ptr [[Y]], i64 1
++; CHECK-NEXT:    [[Y1:%.*]] = load double, ptr [[Y1P]], align 8
++; CHECK-NEXT:    [[M1:%.*]] = fmul reassoc nsz contract double [[Y1]], [[X1]]
++; CHECK-NEXT:    [[Z1P:%.*]] = getelementptr inbounds double, ptr [[Z]], i64 1
++; CHECK-NEXT:    [[Z1:%.*]] = load double, ptr [[Z1P]], align 8
++; CHECK-NEXT:    [[Z1_NEG:%.*]] = fneg reassoc nsz contract double [[Z1]]
++; CHECK-NEXT:    [[S1:%.*]] = fadd reassoc nsz contract double [[M1]], [[Z1_NEG]]
++; CHECK-NEXT:    [[X2P:%.*]] = getelementptr inbounds double, ptr [[X]], i64 2
++; CHECK-NEXT:    [[X2:%.*]] = load double, ptr [[X2P]], align 8
++; CHECK-NEXT:    [[Y2P:%.*]] = getelementptr inbounds double, ptr [[Y]], i64 2
++; CHECK-NEXT:    [[Y2:%.*]] = load double, ptr [[Y2P]], align 8
++; CHECK-NEXT:    [[M2:%.*]] = fmul reassoc nsz contract double [[Y2]], [[X2]]
++; CHECK-NEXT:    [[Z2P:%.*]] = getelementptr inbounds double, ptr [[Z]], i64 2
++; CHECK-NEXT:    [[Z2:%.*]] = load double, ptr [[Z2P]], align 8
++; CHECK-NEXT:    [[Z2_NEG:%.*]] = fneg reassoc nsz contract double [[Z2]]
++; CHECK-NEXT:    [[S2:%.*]] = fadd reassoc nsz contract double [[M2]], [[Z2_NEG]]
++; CHECK-NEXT:    [[X3P:%.*]] = getelementptr inbounds double, ptr [[X]], i64 3
++; CHECK-NEXT:    [[X3:%.*]] = load double, ptr [[X3P]], align 8
++; CHECK-NEXT:    [[Y3P:%.*]] = getelementptr inbounds double, ptr [[Y]], i64 3
++; CHECK-NEXT:    [[Y3:%.*]] = load double, ptr [[Y3P]], align 8
++; CHECK-NEXT:    [[M3:%.*]] = fmul reassoc nsz contract double [[Y3]], [[X3]]
++; CHECK-NEXT:    [[Z3P:%.*]] = getelementptr inbounds double, ptr [[Z]], i64 3
++; CHECK-NEXT:    [[Z3:%.*]] = load double, ptr [[Z3P]], align 8
++; CHECK-NEXT:    [[Z3_NEG:%.*]] = fneg reassoc nsz contract double [[Z3]]
++; CHECK-NEXT:    [[S3:%.*]] = fadd reassoc nsz contract double [[M3]], [[Z3_NEG]]
++; CHECK-NEXT:    [[R0:%.*]] = fadd reassoc nsz contract double [[S1]], [[S0]]
++; CHECK-NEXT:    [[R1:%.*]] = fadd reassoc nsz contract double [[R0]], [[S2]]
++; CHECK-NEXT:    [[R2:%.*]] = fadd reassoc nsz contract double [[R1]], [[S3]]
++; CHECK-NEXT:    ret double [[R2]]
++;
++  %x0 = load double, ptr %x
++  %y0 = load double, ptr %y
++  %m0 = fmul reassoc nsz contract double %x0, %y0
++  %z0 = load double, ptr %z
++  %s0 = fsub reassoc nsz contract double %m0, %z0
++  %x1p = getelementptr inbounds double, ptr %x, i64 1
++  %x1 = load double, ptr %x1p
++  %y1p = getelementptr inbounds double, ptr %y, i64 1
++  %y1 = load double, ptr %y1p
++  %m1 = fmul reassoc nsz contract double %x1, %y1
++  %z1p = getelementptr inbounds double, ptr %z, i64 1
++  %z1 = load double, ptr %z1p
++  %s1 = fsub reassoc nsz contract double %m1, %z1
++  %x2p = getelementptr inbounds double, ptr %x, i64 2
++  %x2 = load double, ptr %x2p
++  %y2p = getelementptr inbounds double, ptr %y, i64 2
++  %y2 = load double, ptr %y2p
++  %m2 = fmul reassoc nsz contract double %x2, %y2
++  %z2p = getelementptr inbounds double, ptr %z, i64 2
++  %z2 = load double, ptr %z2p
++  %s2 = fsub reassoc nsz contract double %m2, %z2
++  %x3p = getelementptr inbounds double, ptr %x, i64 3
++  %x3 = load double, ptr %x3p
++  %y3p = getelementptr inbounds double, ptr %y, i64 3
++  %y3 = load double, ptr %y3p
++  %m3 = fmul reassoc nsz contract double %x3, %y3
++  %z3p = getelementptr inbounds double, ptr %z, i64 3
++  %z3 = load double, ptr %z3p
++  %s3 = fsub reassoc nsz contract double %m3, %z3
++  %r0 = fadd reassoc nsz contract double %s0, %s1
++  %r1 = fadd reassoc nsz contract double %r0, %s2
++  %r2 = fadd reassoc nsz contract double %r1, %s3
++  ret double %r2
++}
++
++define <2 x double> @fsub_fmul_vec(<2 x double> %x, <2 x double> %y, <2 x double> %z, <2 x double> %w) {
++; CHECK-LABEL: define <2 x double> @fsub_fmul_vec(
++; CHECK-SAME: <2 x double> [[X:%.*]], <2 x double> [[Y:%.*]], <2 x double> [[Z:%.*]], <2 x double> [[W:%.*]]) {
++; CHECK-NEXT:    [[W_NEG:%.*]] = fmul reassoc nsz contract <2 x double> [[Y]], [[X]]
++; CHECK-NEXT:    [[Z_NEG:%.*]] = fneg reassoc nsz contract <2 x double> [[Z]]
++; CHECK-NEXT:    [[S0:%.*]] = fadd reassoc nsz contract <2 x double> [[W_NEG]], [[Z_NEG]]
++; CHECK-NEXT:    [[M1:%.*]] = fmul reassoc nsz contract <2 x double> [[W]], [[Z]]
++; CHECK-NEXT:    [[X_NEG:%.*]] = fneg reassoc nsz contract <2 x double> [[X]]
++; CHECK-NEXT:    [[S1:%.*]] = fadd reassoc nsz contract <2 x double> [[M1]], [[X_NEG]]
++; CHECK-NEXT:    [[R:%.*]] = fadd reassoc nsz contract <2 x double> [[S1]], [[S0]]
++; CHECK-NEXT:    ret <2 x double> [[R]]
++;
++  %m0 = fmul reassoc nsz contract <2 x double> %x, %y
++  %s0 = fsub reassoc nsz contract <2 x double> %m0, %z
++  %m1 = fmul reassoc nsz contract <2 x double> %z, %w
++  %s1 = fsub reassoc nsz contract <2 x double> %m1, %x
++  %r = fadd reassoc nsz contract <2 x double> %s0, %s1
++  ret <2 x double> %r
++}
++
++define float @factorize_first(float %a, float %b, float %c, float %d) {
++; CHECK-LABEL: define float @factorize_first(
++; CHECK-SAME: float [[A:%.*]], float [[B:%.*]], float [[C:%.*]], float [[D:%.*]]) {
++; CHECK-NEXT:    [[REASS_ADD:%.*]] = fadd reassoc nsz contract float [[C]], [[B]]
++; CHECK-NEXT:    [[REASS_MUL:%.*]] = fmul reassoc nsz contract float [[REASS_ADD]], [[A]]
++; CHECK-NEXT:    [[T3:%.*]] = fadd reassoc nsz contract float [[REASS_MUL]], [[D]]
++; CHECK-NEXT:    ret float [[T3]]
++;
++  %t0 = fmul reassoc nsz contract float %a, %b
++  %t1 = fmul reassoc nsz contract float %a, %c
++  %t2 = fadd reassoc nsz contract float %t1, %d
++  %t3 = fadd reassoc nsz contract float %t0, %t2
++  ret float %t3
++}
++
++define double @no_contract(ptr %x, ptr %y, ptr %z) {
++; CHECK-LABEL: define double @no_contract(
++; CHECK-SAME: ptr [[X:%.*]], ptr [[Y:%.*]], ptr [[Z:%.*]]) {
++; CHECK-NEXT:    [[X0:%.*]] = load double, ptr [[X]], align 8
++; CHECK-NEXT:    [[Y0:%.*]] = load double, ptr [[Y]], align 8
++; CHECK-NEXT:    [[M0:%.*]] = fmul reassoc nsz double [[Y0]], [[X0]]
++; CHECK-NEXT:    [[Z0:%.*]] = load double, ptr [[Z]], align 8
++; CHECK-NEXT:    [[Z0_NEG:%.*]] = fneg reassoc nsz double [[Z0]]
++; CHECK-NEXT:    [[X1P:%.*]] = getelementptr inbounds double, ptr [[X]], i64 1
++; CHECK-NEXT:    [[X1:%.*]] = load double, ptr [[X1P]], align 8
++; CHECK-NEXT:    [[Y1P:%.*]] = getelementptr inbounds double, ptr [[Y]], i64 1
++; CHECK-NEXT:    [[Y1:%.*]] = load double, ptr [[Y1P]], align 8
++; CHECK-NEXT:    [[M1:%.*]] = fmul reassoc nsz double [[Y1]], [[X1]]
++; CHECK-NEXT:    [[Z1P:%.*]] = getelementptr inbounds double, ptr [[Z]], i64 1
++; CHECK-NEXT:    [[Z1:%.*]] = load double, ptr [[Z1P]], align 8
++; CHECK-NEXT:    [[Z1_NEG:%.*]] = fneg reassoc nsz double [[Z1]]
++; CHECK-NEXT:    [[S1:%.*]] = fadd reassoc nsz double [[M0]], [[Z0_NEG]]
++; CHECK-NEXT:    [[S0:%.*]] = fadd reassoc nsz double [[S1]], [[Z1_NEG]]
++; CHECK-NEXT:    [[R:%.*]] = fadd reassoc nsz double [[S0]], [[M1]]
++; CHECK-NEXT:    ret double [[R]]
++;
++  %x0 = load double, ptr %x
++  %y0 = load double, ptr %y
++  %m0 = fmul reassoc nsz double %x0, %y0
++  %z0 = load double, ptr %z
++  %s0 = fsub reassoc nsz double %m0, %z0
++  %x1p = getelementptr inbounds double, ptr %x, i64 1
++  %x1 = load double, ptr %x1p
++  %y1p = getelementptr inbounds double, ptr %y, i64 1
++  %y1 = load double, ptr %y1p
++  %m1 = fmul reassoc nsz double %x1, %y1
++  %z1p = getelementptr inbounds double, ptr %z, i64 1
++  %z1 = load double, ptr %z1p
++  %s1 = fsub reassoc nsz double %m1, %z1
++  %r = fadd reassoc nsz double %s0, %s1
++  ret double %r
++}
++
++define double @multi_use_mul(ptr %x, ptr %y, ptr %z, ptr %p) {
++; CHECK-LABEL: define double @multi_use_mul(
++; CHECK-SAME: ptr [[X:%.*]], ptr [[Y:%.*]], ptr [[Z:%.*]], ptr [[P:%.*]]) {
++; CHECK-NEXT:    [[X0:%.*]] = load double, ptr [[X]], align 8
++; CHECK-NEXT:    [[Y0:%.*]] = load double, ptr [[Y]], align 8
++; CHECK-NEXT:    [[M0:%.*]] = fmul reassoc nsz contract double [[Y0]], [[X0]]
++; CHECK-NEXT:    store double [[M0]], ptr [[P]], align 8
++; CHECK-NEXT:    [[Z0:%.*]] = load double, ptr [[Z]], align 8
++; CHECK-NEXT:    [[Z0_NEG:%.*]] = fneg reassoc nsz contract double [[Z0]]
++; CHECK-NEXT:    [[S0:%.*]] = fadd reassoc nsz contract double [[Z0_NEG]], [[M0]]
++; CHECK-NEXT:    [[X1P:%.*]] = getelementptr inbounds double, ptr [[X]], i64 1
++; CHECK-NEXT:    [[X1:%.*]] = load double, ptr [[X1P]], align 8
++; CHECK-NEXT:    [[Y1P:%.*]] = getelementptr inbounds double, ptr [[Y]], i64 1
++; CHECK-NEXT:    [[Y1:%.*]] = load double, ptr [[Y1P]], align 8
++; CHECK-NEXT:    [[M1:%.*]] = fmul reassoc nsz contract double [[Y1]], [[X1]]
++; CHECK-NEXT:    [[Z1P:%.*]] = getelementptr inbounds double, ptr [[Z]], i64 1
++; CHECK-NEXT:    [[Z1:%.*]] = load double, ptr [[Z1P]], align 8
++; CHECK-NEXT:    [[Z1_NEG:%.*]] = fneg reassoc nsz contract double [[Z1]]
++; CHECK-NEXT:    [[S1:%.*]] = fadd reassoc nsz contract double [[M1]], [[Z1_NEG]]
++; CHECK-NEXT:    [[R:%.*]] = fadd reassoc nsz contract double [[S0]], [[S1]]
++; CHECK-NEXT:    ret double [[R]]
++;
++  %x0 = load double, ptr %x
++  %y0 = load double, ptr %y
++  %m0 = fmul reassoc nsz contract double %x0, %y0
++  store double %m0, ptr %p
++  %z0 = load double, ptr %z
++  %s0 = fsub reassoc nsz contract double %m0, %z0
++  %x1p = getelementptr inbounds double, ptr %x, i64 1
++  %x1 = load double, ptr %x1p
++  %y1p = getelementptr inbounds double, ptr %y, i64 1
++  %y1 = load double, ptr %y1p
++  %m1 = fmul reassoc nsz contract double %x1, %y1
++  %z1p = getelementptr inbounds double, ptr %z, i64 1
++  %z1 = load double, ptr %z1p
++  %s1 = fsub reassoc nsz contract double %m1, %z1
++  %r = fadd reassoc nsz contract double %s0, %s1
++  ret double %r
++}
++
++define double @const_addend(ptr %x, ptr %y) {
++; CHECK-LABEL: define double @const_addend(
++; CHECK-SAME: ptr [[X:%.*]], ptr [[Y:%.*]]) {
++; CHECK-NEXT:    [[X0:%.*]] = load double, ptr [[X]], align 8
++; CHECK-NEXT:    [[Y0:%.*]] = load double, ptr [[Y]], align 8
++; CHECK-NEXT:    [[M0:%.*]] = fmul reassoc nsz contract double [[Y0]], [[X0]]
++; CHECK-NEXT:    [[R:%.*]] = fadd reassoc nsz contract double [[M0]], 3.000000e+00
++; CHECK-NEXT:    ret double [[R]]
++;
++  %x0 = load double, ptr %x
++  %y0 = load double, ptr %y
++  %m0 = fmul reassoc nsz contract double %x0, %y0
++  %a0 = fadd reassoc nsz contract double %m0, 1.0
++  %r = fadd reassoc nsz contract double %a0, 2.0
++  ret double %r
++}

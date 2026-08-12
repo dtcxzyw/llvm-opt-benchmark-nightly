@@ -204,8 +204,8 @@ vector.body319:                                   ; preds = %vector.body319, %ve
   %i.ana = fmul reassoc nsz arcp contract afn <8 x float> %i.amu, %wide.masked.gather328
   %wide.masked.gather329 = call <8 x float> @llvm.masked.gather.v8f32.v8p0(<8 x ptr> align 4 %wide.gep323, <8 x i1> splat (i1 true), <8 x float> poison), !tbaa !13, !alias.scope !179, !noalias !182
   %i.anb = fmul reassoc nsz arcp contract afn <8 x float> %i.amv, %wide.masked.gather329
-  %7 = fadd reassoc nsz arcp contract afn <8 x float> %i.anb, %i.ana
-  %8 = fsub reassoc nsz arcp contract afn <8 x float> %7, %i.amz
+  %7 = fsub reassoc nsz arcp contract afn <8 x float> %i.ana, %i.amz
+  %8 = fadd reassoc nsz arcp contract afn <8 x float> %7, %i.anb
   %i.anc = fmul reassoc nsz arcp contract afn <8 x float> %8, %broadcast.splat310
   %i.and = fadd reassoc nsz arcp contract afn <8 x float> %i.anc, %i.amz
   store <8 x float> %i.and, ptr %i.amw, align 4, !tbaa !13, !alias.scope !182, !noalias !179
@@ -255,8 +255,8 @@ scalar.ph305:                                     ; preds = %scalar.ph305.prehea
   %i.aoe = fmul reassoc nsz arcp contract afn float %i.anv, %i.aod
   %i.aof = load float, ptr %i.anr, align 4, !tbaa !13, !alias.scope !179, !noalias !182
   %i.aog = fmul reassoc nsz arcp contract afn float %i.anw, %i.aof
-  %9 = fadd reassoc nsz arcp contract afn float %i.aog, %i.aoe
-  %10 = fsub reassoc nsz arcp contract afn float %9, %i.aoc
+  %9 = fsub reassoc nsz arcp contract afn float %i.aoe, %i.aoc
+  %10 = fadd reassoc nsz arcp contract afn float %9, %i.aog
   %i.aoh = fmul reassoc nsz arcp contract afn float %10, %i.amg
   %i.aoi = fadd reassoc nsz arcp contract afn float %i.aoh, %i.aoc
   store float %i.aoi, ptr %i.anx, align 4, !tbaa !13, !alias.scope !182, !noalias !179

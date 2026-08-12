@@ -204,9 +204,9 @@ bb.o:                                             ; preds = %._crit_edge125
   %i.hl = load i64, ptr %i.hk, align 8, !tbaa !137
   %i.hm = sitofp reassoc nsz arcp contract afn i64 %i.hl to double
   %i.hn = fmul reassoc nnan nsz arcp contract afn double %i.hm, f0x3EB0C6F7A0B5ED8D
+  %13 = fadd reassoc nsz arcp contract afn double %i.hn, %i.hj
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #13
-  %13 = fsub reassoc nsz arcp contract afn double %i.hj, %.2114
-  %14 = fadd reassoc nsz arcp contract afn double %13, %i.hn
+  %14 = fsub reassoc nsz arcp contract afn double %13, %.2114
   tail call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.12, ptr noundef nonnull %i.hf, double noundef %14) #13
   br label %bb.p
 
@@ -609,9 +609,9 @@ bb.ad:                                            ; preds = %._crit_edge478.spli
   %i.qp = load i64, ptr %i.qo, align 8, !tbaa !137
   %i.qq = sitofp reassoc nsz arcp contract afn i64 %i.qp to double
   %i.qr = fmul reassoc nnan nsz arcp contract afn double %i.qq, f0x3EB0C6F7A0B5ED8D
+  %14 = fadd reassoc nsz arcp contract afn double %i.qr, %i.qn
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #13
-  %14 = fsub reassoc nsz arcp contract afn double %i.qn, %.5
-  %15 = fadd reassoc nsz arcp contract afn double %14, %i.qr
+  %15 = fsub reassoc nsz arcp contract afn double %14, %.5
   tail call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.12, ptr noundef nonnull %i.qj, double noundef %15) #13
   %.pre = load i32, ptr getelementptr inbounds nuw (i8, ptr @darktable, i64 8), align 8, !tbaa !134
   br label %bb.ae
@@ -633,9 +633,9 @@ bb.af:                                            ; preds = %bb.ae
   %i.ra = load i64, ptr %i.qz, align 8, !tbaa !137
   %i.rb = sitofp reassoc nsz arcp contract afn i64 %i.ra to double
   %i.rc = fmul reassoc nnan nsz arcp contract afn double %i.rb, f0x3EB0C6F7A0B5ED8D
+  %16 = fadd reassoc nsz arcp contract afn double %i.rc, %i.qy
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #13
-  %16 = fsub reassoc nsz arcp contract afn double %i.qy, %i.k
-  %17 = fadd reassoc nsz arcp contract afn double %16, %i.rc
+  %17 = fsub reassoc nsz arcp contract afn double %16, %i.k
   tail call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.17, ptr noundef nonnull %i.qu, double noundef %17) #13
   br label %bb.ag
 

@@ -204,12 +204,12 @@ bb.a:
   br i1 %.not38, label %.critedge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %4 = add nsw i64 %i.h, -1290608000
-  %5 = sitofp reassoc nsz arcp contract afn i64 %4 to double
-  %6 = fadd reassoc nsz arcp contract afn double %5, -2.500000e-01
-  %i.k = sitofp reassoc nsz arcp contract afn i64 %i.j to double
-  %7 = fmul reassoc nnan nsz arcp contract afn double %i.k, f0x3EB0C6F7A0B5ED8D
-  %i.l = fadd reassoc nsz arcp contract afn double %6, %7
+  %4 = sitofp reassoc nsz arcp contract afn i64 %i.j to double
+  %5 = fmul reassoc nnan nsz arcp contract afn double %4, f0x3EB0C6F7A0B5ED8D
+  %6 = add nsw i64 %i.h, -1290608000
+  %i.k = sitofp reassoc nsz arcp contract afn i64 %6 to double
+  %7 = fadd reassoc nsz arcp contract afn double %5, %i.k
+  %i.l = fadd reassoc nsz arcp contract afn double %7, -2.500000e-01
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.o = uitofp reassoc nsz arcp contract afn i32 %i.c to double
@@ -612,12 +612,12 @@ bb.e:                                             ; preds = %_apply_lua_filter.e
   br i1 %.not146174, label %.critedge, label %.lr.ph185
 
 .lr.ph185:                                        ; preds = %.lr.ph
-  %9 = add nsw i64 %i.ab, -1290608000
-  %10 = sitofp reassoc nsz arcp contract afn i64 %9 to double
-  %11 = fadd reassoc nsz arcp contract afn double %10, -2.500000e-01
-  %i.ar = sitofp reassoc nsz arcp contract afn i64 %i.ad to double
-  %12 = fmul reassoc nnan nsz arcp contract afn double %i.ar, f0x3EB0C6F7A0B5ED8D
-  %i.as = fadd reassoc nsz arcp contract afn double %11, %12 ; 2 uses
+  %9 = sitofp reassoc nsz arcp contract afn i64 %i.ad to double
+  %10 = fmul reassoc nnan nsz arcp contract afn double %9, f0x3EB0C6F7A0B5ED8D
+  %11 = add nsw i64 %i.ab, -1290608000
+  %i.ar = sitofp reassoc nsz arcp contract afn i64 %11 to double
+  %12 = fadd reassoc nsz arcp contract afn double %10, %i.ar
+  %i.as = fadd reassoc nsz arcp contract afn double %12, -2.500000e-01 ; 2 uses
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.ai

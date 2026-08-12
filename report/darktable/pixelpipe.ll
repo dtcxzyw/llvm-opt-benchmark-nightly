@@ -204,9 +204,9 @@ bb.g:                                             ; preds = %._crit_edge48
   %i.bs = load i64, ptr %i.br, align 8, !tbaa !256
   %i.bt = sitofp reassoc nsz arcp contract afn i64 %i.bs to double
   %i.bu = fmul reassoc nnan nsz arcp contract afn double %i.bt, f0x3EB0C6F7A0B5ED8D
+  %5 = fadd reassoc nsz arcp contract afn double %i.bu, %i.bq
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #23
-  %5 = fsub reassoc nsz arcp contract afn double %i.bq, %i.an
-  %6 = fadd reassoc nsz arcp contract afn double %5, %i.bu
+  %6 = fsub reassoc nsz arcp contract afn double %5, %i.an
   tail call void (ptr, ptr, ptr, i32, ptr, ptr, ptr, ...) @dt_print_pipe_ext(ptr noundef nonnull @.str.76, ptr noundef nonnull %0, ptr noundef null, i32 noundef -2, ptr noundef null, ptr noundef null, ptr noundef nonnull @.str.77, double noundef %i.bm, double noundef %6)
   br label %bb.h
 

@@ -204,8 +204,8 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.fh = sub i32 %i.ff, %i.fg
   %i.fi = sitofp reassoc nsz arcp contract afn i32 %i.fh to double
   %i.fj = fmul reassoc nnan nsz arcp contract afn double %i.fi, 5.000000e-01
-  %i.fk = fadd reassoc nsz arcp contract afn double %.pre-phi, %i.fa
-  %i.fl = fadd reassoc nsz arcp contract afn double %i.fk, %i.fj
+  %i.fk = fadd reassoc nsz arcp contract afn double %i.fj, %i.fa
+  %i.fl = fadd reassoc nsz arcp contract afn double %i.fk, %.pre-phi
   %i.fm = fptosi double %i.fl to i32
   call void @gtk_widget_set_margin_start(ptr noundef %i.ew, i32 noundef %i.fm) #22
   %i.fn = getelementptr inbounds nuw i8, ptr %0, i64 248 ; 4 uses
@@ -229,10 +229,10 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.gc = sub i32 %i.ga, %i.gb
   %i.gd = sitofp reassoc nsz arcp contract afn i32 %i.gc to double
   %i.ge = fmul reassoc nnan nsz arcp contract afn double %i.gd, 5.000000e-01
+  %1 = fadd reassoc nsz arcp contract afn double %i.ge, %i.fv
   %i.gf = shl i32 %i.ao, 1
   %i.gg = sitofp reassoc nsz arcp contract afn i32 %i.gf to double
-  %1 = fadd reassoc nsz arcp contract afn double %i.fv, %i.gg
-  %i.gh = fadd reassoc nsz arcp contract afn double %1, %i.ge
+  %i.gh = fadd reassoc nsz arcp contract afn double %1, %i.gg
   %i.gi = fptosi double %i.gh to i32
   call void @gtk_widget_set_margin_start(ptr noundef %i.fr, i32 noundef %i.gi) #22
   %i.gj = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 4 uses
@@ -256,10 +256,10 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.gy = sub i32 %i.gw, %i.gx
   %i.gz = sitofp reassoc nsz arcp contract afn i32 %i.gy to double
   %i.ha = fmul reassoc nnan nsz arcp contract afn double %i.gz, 5.000000e-01
+  %2 = fadd reassoc nsz arcp contract afn double %i.ha, %i.gr
   %i.hb = mul i32 %i.ao, 3
   %i.hc = sitofp reassoc nsz arcp contract afn i32 %i.hb to double
-  %2 = fadd reassoc nsz arcp contract afn double %i.gr, %i.hc
-  %i.hd = fadd reassoc nsz arcp contract afn double %2, %i.ha
+  %i.hd = fadd reassoc nsz arcp contract afn double %2, %i.hc
   %i.he = fptosi double %i.hd to i32
   call void @gtk_widget_set_margin_start(ptr noundef %i.gn, i32 noundef %i.he) #22
   %i.hf = getelementptr inbounds nuw i8, ptr %0, i64 264 ; 4 uses
@@ -283,10 +283,10 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.hu = sub i32 %i.hs, %i.ht
   %i.hv = sitofp reassoc nsz arcp contract afn i32 %i.hu to double
   %i.hw = fmul reassoc nnan nsz arcp contract afn double %i.hv, 5.000000e-01
+  %3 = fadd reassoc nsz arcp contract afn double %i.hw, %i.hn
   %i.hx = shl i32 %i.ao, 2
   %i.hy = sitofp reassoc nsz arcp contract afn i32 %i.hx to double
-  %3 = fadd reassoc nsz arcp contract afn double %i.hn, %i.hy
-  %i.hz = fadd reassoc nsz arcp contract afn double %3, %i.hw
+  %i.hz = fadd reassoc nsz arcp contract afn double %3, %i.hy
   %i.ia = fptosi double %i.hz to i32
   call void @gtk_widget_set_margin_start(ptr noundef %i.hj, i32 noundef %i.ia) #22
   %i.ib = getelementptr inbounds nuw i8, ptr %0, i64 272 ; 5 uses
@@ -534,13 +534,13 @@ bb.h:                                             ; preds = %bb.c
 
 bb.i:                                             ; preds = %bb.h
   %i.pm = fmul reassoc nnan nsz arcp contract afn double %i.oz, 2.000000e+00
+  %4 = fadd reassoc nsz arcp contract afn double %i.pm, %.neg331
   %i.pn = fmul reassoc nnan nsz arcp contract afn float %i.md, 2.000000e+00
   %i.po = fpext reassoc nsz arcp contract afn float %i.pn to double
   %i.pp = fmul reassoc nnan nsz arcp contract afn float %i.md, 2.100000e+01
   %i.pq = fpext reassoc nsz arcp contract afn float %i.pp to double
-  %4 = fadd reassoc nsz arcp contract afn double %i.pq, %i.po
-  %i.pr = fadd reassoc nsz arcp contract afn double %4, %.neg331
-  %i.ps = fadd reassoc nsz arcp contract afn double %i.pr, %i.pm
+  %i.pr = fadd reassoc nsz arcp contract afn double %i.pq, %i.po
+  %i.ps = fadd reassoc nsz arcp contract afn double %i.pr, %4
   %i.pt = fptosi double %i.ps to i32
   %i.pu = sitofp reassoc nsz arcp contract afn i32 %i.pt to double ; 2 uses
   %i.pv = fcmp reassoc nsz arcp contract afn olt double %i.pi, %i.pu
@@ -596,8 +596,8 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   %i.rc = add nsw i32 %i.ly, %i.ov                ; 7 uses
   call void @gtk_widget_set_margin_top(ptr noundef %i.rb, i32 noundef %i.rc) #22
   %i.rd = getelementptr inbounds nuw i8, ptr %0, i64 232 ; 4 uses
-  %i.re = fadd reassoc nsz arcp contract afn double %i.mt, %i.mp
-  %i.rf = fadd reassoc nsz arcp contract afn double %i.re, %i.qy ; 5 uses
+  %i.re = fadd reassoc nsz arcp contract afn double %i.qy, %i.mt
+  %i.rf = fadd reassoc nsz arcp contract afn double %i.re, %i.mp ; 5 uses
   %i.rg = load ptr, ptr %i.rd, align 8, !tbaa !100
   call void @gtk_widget_set_size_request(ptr noundef %i.rg, i32 noundef %i.qt, i32 noundef %i.qt) #22
   %i.rh = load ptr, ptr %i.rd, align 8, !tbaa !100
@@ -606,7 +606,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   call void @gtk_widget_set_margin_top(ptr noundef %i.ri, i32 noundef %i.rc) #22
   %i.rj = load ptr, ptr %i.rd, align 8, !tbaa !100
   %i.rk = fmul reassoc nnan nsz arcp contract afn double %i.mt, 3.000000e+00
-  %i.rl = fadd reassoc nsz arcp contract afn double %i.rf, %i.rk
+  %i.rl = fadd reassoc nsz arcp contract afn double %i.rk, %i.rf
   %i.rm = fptosi double %i.rl to i32
   call void @gtk_widget_set_margin_start(ptr noundef %i.rj, i32 noundef %i.rm) #22
   %i.rn = getelementptr inbounds nuw i8, ptr %0, i64 240 ; 4 uses
@@ -618,7 +618,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   call void @gtk_widget_set_margin_top(ptr noundef %i.rq, i32 noundef %i.rc) #22
   %i.rr = load ptr, ptr %i.rn, align 8, !tbaa !100
   %i.rs = fmul reassoc nnan nsz arcp contract afn double %i.mt, 6.000000e+00
-  %i.rt = fadd reassoc nsz arcp contract afn double %i.rf, %i.rs
+  %i.rt = fadd reassoc nsz arcp contract afn double %i.rs, %i.rf
   %i.ru = fptosi double %i.rt to i32
   call void @gtk_widget_set_margin_start(ptr noundef %i.rr, i32 noundef %i.ru) #22
   %i.rv = getelementptr inbounds nuw i8, ptr %0, i64 248 ; 4 uses
@@ -630,7 +630,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   call void @gtk_widget_set_margin_top(ptr noundef %i.ry, i32 noundef %i.rc) #22
   %i.rz = load ptr, ptr %i.rv, align 8, !tbaa !100
   %i.sa = fmul reassoc nnan nsz arcp contract afn double %i.mt, 9.000000e+00
-  %i.sb = fadd reassoc nsz arcp contract afn double %i.rf, %i.sa
+  %i.sb = fadd reassoc nsz arcp contract afn double %i.sa, %i.rf
   %i.sc = fptosi double %i.sb to i32
   call void @gtk_widget_set_margin_start(ptr noundef %i.rz, i32 noundef %i.sc) #22
   %i.sd = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 4 uses
@@ -642,7 +642,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   call void @gtk_widget_set_margin_top(ptr noundef %i.sg, i32 noundef %i.rc) #22
   %i.sh = load ptr, ptr %i.sd, align 8, !tbaa !100
   %i.si = fmul reassoc nnan nsz arcp contract afn double %i.mt, 1.200000e+01
-  %i.sj = fadd reassoc nsz arcp contract afn double %i.rf, %i.si
+  %i.sj = fadd reassoc nsz arcp contract afn double %i.si, %i.rf
   %i.sk = fptosi double %i.sj to i32
   call void @gtk_widget_set_margin_start(ptr noundef %i.sh, i32 noundef %i.sk) #22
   %i.sl = getelementptr inbounds nuw i8, ptr %0, i64 264 ; 4 uses
@@ -654,7 +654,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   call void @gtk_widget_set_margin_top(ptr noundef %i.so, i32 noundef %i.rc) #22
   %i.sp = load ptr, ptr %i.sl, align 8, !tbaa !100
   %i.sq = fmul reassoc nnan nsz arcp contract afn double %i.mt, 1.500000e+01
-  %i.sr = fadd reassoc nsz arcp contract afn double %i.rf, %i.sq
+  %i.sr = fadd reassoc nsz arcp contract afn double %i.sq, %i.rf
   %i.ss = fptosi double %i.sr to i32
   call void @gtk_widget_set_margin_start(ptr noundef %i.sp, i32 noundef %i.ss) #22
   %i.st = getelementptr inbounds nuw i8, ptr %0, i64 272 ; 5 uses

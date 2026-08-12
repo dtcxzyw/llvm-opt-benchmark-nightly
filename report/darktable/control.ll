@@ -203,7 +203,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %.neg27 = fmul reassoc nsz arcp contract afn double %i.x, -3.000000e+01
   %i.ab = fmul reassoc nsz arcp contract afn double %i.aa, f0xBFE5555555555556
   %i.ac = fadd reassoc nsz arcp contract afn double %i.u, %i.ab
-  %i.ad = fadd reassoc nsz arcp contract afn double %i.ac, %.neg27
+  %i.ad = fadd reassoc nsz arcp contract afn double %.neg27, %i.ac
   call void @cairo_move_to(ptr noundef %0, double noundef %i.z, double noundef %i.ad) #14
   call void @pango_cairo_layout_path(ptr noundef %0, ptr noundef %i.l) #14
   call void @cairo_set_line_width(ptr noundef %0, double noundef 2.000000e+00) #14

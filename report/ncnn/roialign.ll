@@ -203,13 +203,13 @@ bb.b:                                             ; preds = %bb.a
   %i.bg = load float, ptr %7, align 4, !tbaa !46
   %i.bh = load float, ptr %8, align 4, !tbaa !46  ; 2 uses
   %i.bi = fmul fast float %i.bh, %i.bf
-  %i.bj = fadd fast float %i.bi, %i.bg
+  %i.bj = fadd fast float %i.bg, %i.bi
   %i.bk = trunc nuw nsw i64 %indvars.iv to i32
   %i.bl = uitofp nneg i32 %i.bk to float
   %i.bm = load float, ptr %10, align 4, !tbaa !46
   %i.bn = load float, ptr %11, align 4, !tbaa !46 ; 2 uses
   %i.bo = fmul fast float %i.bn, %i.bl
-  %i.bp = fadd fast float %i.bo, %i.bm
+  %i.bp = fadd fast float %i.bm, %i.bo
   br label %.lr.ph.us.us.us.us.us.us.us
 
 .lr.ph.us.us.us.us.us.us.us:                      ; preds = %._crit_edge.us.us.us.us.us.us.us, %.preheader.us.us.us.us.us.us

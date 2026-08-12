@@ -204,14 +204,15 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %i.fg = load i32, ptr %i.ff, align 4, !tbaa !130
   %i.fh = sitofp reassoc nsz arcp contract afn i32 %i.fg to float ; 2 uses
   %i.fi = call reassoc nsz arcp contract afn float @hypotf(float noundef %i.fe, float noundef %i.fh) #14 ; 3 uses
-  %i.fj = fdiv reassoc nsz arcp contract afn float 1.000000e+00, %i.fi ; 4 uses
+  %i.fj = fdiv reassoc nsz arcp contract afn float 1.000000e+00, %i.fi ; 5 uses
   %i.fk = getelementptr inbounds nuw i8, ptr %i.bk, i64 8
   %i.fl = load float, ptr %i.fk, align 4, !tbaa !31
   %i.fm = fmul reassoc nsz arcp contract afn float %i.fl, f0xBC8EFA36
   %sincos = call reassoc nsz arcp contract afn { float, float } @llvm.sincos.f32(float %i.fm) ; 2 uses
-  %sin = extractvalue { float, float } %sincos, 0
-  %cos = extractvalue { float, float } %sincos, 1
+  %sin = extractvalue { float, float } %sincos, 0 ; 2 uses
+  %cos = extractvalue { float, float } %sincos, 1 ; 2 uses
   %i.fn = load float, ptr %i.bk, align 4, !tbaa !29
+  %13 = fmul reassoc nsz arcp contract afn float %i.fn, %i.fe ; 2 uses
   %i.fo = getelementptr inbounds nuw i8, ptr %i.bk, i64 4
   %i.fp = load float, ptr %i.fo, align 4, !tbaa !29
   %i.fq = fmul reassoc nsz arcp contract afn float %i.fp, %i.fh ; 2 uses
@@ -414,8 +415,13 @@ bb.l:                                             ; preds = %bb.k
   br i1 %.not196237, label %._crit_edge263.split, label %.preheader231.lr.ph
 
 .preheader231.lr.ph:                              ; preds = %._crit_edge241
+  %14 = fneg reassoc nsz arcp contract afn float %sin
+  %factor.op.fmul255 = fmul reassoc nsz arcp contract afn float %i.fq, %14
+  %factor.op.fmul240 = fmul reassoc nsz arcp contract afn float %sin, %i.fj ; 2 uses
   %factor.op.fmul248 = fmul reassoc nsz arcp contract afn float %cos, %i.fj ; 2 uses
-  %factor.op.fmul249 = fmul reassoc nsz arcp contract afn float %sin, %i.fj ; 2 uses
+  %15 = fmul reassoc nsz arcp contract afn float %cos, %13
+  %16 = fsub reassoc nsz arcp contract afn float %factor.op.fmul255, %15
+  %factor.op.fmul249 = fmul reassoc nsz arcp contract afn float %16, %i.fj
   %i.jf = fmul reassoc nnan nsz arcp contract afn float %i.ft, -4.000000e+00
   br i1 %.not209235, label %._crit_edge263.split, label %.preheader231.preheader
 
@@ -426,7 +432,6 @@ bb.l:                                             ; preds = %bb.k
   %wide.trip.count305 = zext nneg i32 %i.ji to i64
   %i.jj = extractelement <2 x i32> %i.jh, i64 0
   %wide.trip.count299 = zext nneg i32 %i.jj to i64
-  %13 = fmul reassoc nsz arcp contract afn float %i.fn, %i.fe
   br label %.preheader231
 
 .lr.ph.split:                                     ; preds = %.lr.ph.split.preheader, %.lr.ph.split
@@ -487,17 +492,17 @@ bb.m:                                             ; preds = %.preheader231, %bb.
   %i.kh = add nsw i64 %indvars.iv295, %i.jx
   %.idx327 = shl nsw i64 %i.kh, 3
   %i.ki = getelementptr inbounds i8, ptr %i.ca, i64 %.idx327 ; 3 uses
-  %i.kj = load float, ptr %i.ki, align 8, !tbaa !29
+  %i.kj = load float, ptr %i.ki, align 8, !tbaa !29 ; 2 uses
   %i.kk = getelementptr i8, ptr %i.ki, i64 4
   %i.kl = load float, ptr %i.kk, align 4, !tbaa !29 ; 2 uses
-  %reass.add223 = fsub reassoc nsz arcp contract afn float %i.kj, %13 ; 2 uses
-  %reass.mul224.reass.a = fmul reassoc nsz arcp contract afn float %reass.add223, %factor.op.fmul248
-  %reass.add225 = fsub reassoc nsz arcp contract afn float %i.kl, %i.fq
-  %reass.mul226.reass = fmul reassoc nsz arcp contract afn float %reass.add225, %factor.op.fmul249
-  %i.km = fadd reassoc nsz arcp contract afn float %reass.mul226.reass, %reass.mul224.reass.a ; 2 uses
+  %reass.mul224.reass.a = fmul reassoc nsz arcp contract afn float %i.kj, %factor.op.fmul248
+  %.reass241 = fmul reassoc nsz arcp contract afn float %i.kl, %factor.op.fmul240
+  %17 = fadd reassoc nsz arcp contract afn float %factor.op.fmul249, %reass.mul224.reass.a
+  %i.km = fadd reassoc nsz arcp contract afn float %17, %.reass241 ; 2 uses
   %reass.add = fsub reassoc nsz arcp contract afn float %i.fq, %i.kl
   %reass.mul.reass = fmul reassoc nsz arcp contract afn float %reass.add, %factor.op.fmul248
-  %reass.mul228.reass = fmul reassoc nsz arcp contract afn float %reass.add223, %factor.op.fmul249
+  %reass.add223 = fsub reassoc nsz arcp contract afn float %i.kj, %13
+  %reass.mul228.reass = fmul reassoc nsz arcp contract afn float %reass.add223, %factor.op.fmul240
   %i.kn = fadd reassoc nsz arcp contract afn float %reass.mul228.reass, %reass.mul.reass
   %i.ko = fmul reassoc nsz arcp contract afn float %i.km, %i.km
   %i.kp = fmul reassoc nsz arcp contract afn float %i.ko, %i.fv
@@ -612,10 +617,10 @@ bb.s:                                             ; preds = %._crit_edge273.spli
   %i.mw = load i64, ptr %i.mv, align 8, !tbaa !87
   %i.mx = sitofp reassoc nsz arcp contract afn i64 %i.mw to double
   %i.my = fmul reassoc nnan nsz arcp contract afn double %i.mx, f0x3EB0C6F7A0B5ED8D
+  %18 = fadd reassoc nsz arcp contract afn double %i.my, %i.mu
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #12
-  %14 = fsub reassoc nsz arcp contract afn double %i.mu, %.2
-  %15 = fadd reassoc nsz arcp contract afn double %14, %i.my
-  call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.18, ptr noundef nonnull %i.mq, double noundef %15) #12
+  %19 = fsub reassoc nsz arcp contract afn double %18, %.2
+  call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.18, ptr noundef nonnull %i.mq, double noundef %19) #12
   br label %bb.t
 
 bb.t:                                             ; preds = %_gradient_get_area.exit.thread, %bb.h, %bb.e, %bb.q, %bb.s, %._crit_edge273.split, %bb.l
@@ -930,14 +935,15 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %i.em = load i32, ptr %i.el, align 4, !tbaa !130
   %i.en = sitofp reassoc nsz arcp contract afn i32 %i.em to float ; 2 uses
   %i.eo = tail call reassoc nsz arcp contract afn float @hypotf(float noundef %i.ek, float noundef %i.en) #14 ; 3 uses
-  %i.ep = fdiv reassoc nsz arcp contract afn float 1.000000e+00, %i.eo ; 4 uses
+  %i.ep = fdiv reassoc nsz arcp contract afn float 1.000000e+00, %i.eo ; 5 uses
   %i.eq = getelementptr inbounds nuw i8, ptr %i.m, i64 8
   %i.er = load float, ptr %i.eq, align 4, !tbaa !31
   %i.es = fmul reassoc nsz arcp contract afn float %i.er, f0xBC8EFA36
   %sincos = tail call reassoc nsz arcp contract afn { float, float } @llvm.sincos.f32(float %i.es) ; 2 uses
-  %sin = extractvalue { float, float } %sincos, 0
-  %cos = extractvalue { float, float } %sincos, 1
+  %sin = extractvalue { float, float } %sincos, 0 ; 2 uses
+  %cos = extractvalue { float, float } %sincos, 1 ; 2 uses
   %i.et = load float, ptr %i.m, align 4, !tbaa !29
+  %9 = fmul reassoc nsz arcp contract afn float %i.et, %i.ek ; 2 uses
   %i.eu = getelementptr inbounds nuw i8, ptr %i.m, i64 4
   %i.ev = load float, ptr %i.eu, align 4, !tbaa !29
   %i.ew = fmul reassoc nsz arcp contract afn float %i.ev, %i.en ; 2 uses
@@ -1141,16 +1147,20 @@ bb.l:                                             ; preds = %bb.k
   br i1 %.not200256, label %._crit_edge258.split, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %._crit_edge236
-  %factor.op.fmul243 = fmul reassoc nsz arcp contract afn float %cos, %i.ep ; 2 uses
+  %10 = fneg reassoc nsz arcp contract afn float %sin
+  %factor.op.fmul243 = fmul reassoc nsz arcp contract afn float %i.ew, %10
   %factor.op.fmul244 = fmul reassoc nsz arcp contract afn float %sin, %i.ep ; 2 uses
+  %factor.op.fmul237 = fmul reassoc nsz arcp contract afn float %cos, %i.ep ; 2 uses
   %.not206249 = icmp slt i32 %i.af, 0
+  %11 = fmul reassoc nsz arcp contract afn float %cos, %9
+  %12 = fsub reassoc nsz arcp contract afn float %factor.op.fmul243, %11
+  %.neg216 = fmul reassoc nsz arcp contract afn float %12, %i.ep
   %i.il = fmul reassoc nnan nsz arcp contract afn float %i.ez, -4.000000e+00
   br i1 %.not206249, label %._crit_edge258.split, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %wide.trip.count296 = zext i32 %i.ak to i64
   %wide.trip.count291 = zext nneg i32 %i.ag to i64
-  %9 = fmul reassoc nsz arcp contract afn float %i.et, %i.ek
   br label %.preheader
 
 .lr.ph.split:                                     ; preds = %.lr.ph.split.preheader, %.lr.ph.split
@@ -1206,16 +1216,16 @@ bb.m:                                             ; preds = %.preheader, %bb.p
   %i.jg = add nuw nsw i64 %i.iz, %indvars.iv288
   %.idx214 = shl nsw i64 %i.jg, 3
   %i.jh = getelementptr inbounds nuw i8, ptr %i.ap, i64 %.idx214 ; 3 uses
-  %i.ji = load float, ptr %i.jh, align 8, !tbaa !29
+  %i.ji = load float, ptr %i.jh, align 8, !tbaa !29 ; 2 uses
   %i.jj = getelementptr inbounds nuw i8, ptr %i.jh, i64 4
   %i.jk = load float, ptr %i.jj, align 4, !tbaa !29 ; 2 uses
-  %reass.add219 = fsub reassoc nsz arcp contract afn float %i.ji, %9 ; 2 uses
-  %reass.mul220.reass.a = fmul reassoc nsz arcp contract afn float %reass.add219, %factor.op.fmul243
-  %reass.add221 = fsub reassoc nsz arcp contract afn float %i.jk, %i.ew
-  %reass.mul222.reass = fmul reassoc nsz arcp contract afn float %reass.add221, %factor.op.fmul244
-  %i.jl = fadd reassoc nsz arcp contract afn float %reass.mul222.reass, %reass.mul220.reass.a ; 2 uses
+  %reass.mul220.reass.a = fmul reassoc nsz arcp contract afn float %i.ji, %factor.op.fmul237
+  %.reass236 = fmul reassoc nsz arcp contract afn float %i.jk, %factor.op.fmul244
+  %13 = fadd reassoc nsz arcp contract afn float %.neg216, %reass.mul220.reass.a
+  %i.jl = fadd reassoc nsz arcp contract afn float %13, %.reass236 ; 2 uses
   %reass.add = fsub reassoc nsz arcp contract afn float %i.ew, %i.jk
-  %reass.mul.reass = fmul reassoc nsz arcp contract afn float %reass.add, %factor.op.fmul243
+  %reass.mul.reass = fmul reassoc nsz arcp contract afn float %reass.add, %factor.op.fmul237
+  %reass.add219 = fsub reassoc nsz arcp contract afn float %i.ji, %9
   %reass.mul224.reass = fmul reassoc nsz arcp contract afn float %reass.add219, %factor.op.fmul244
   %i.jm = fadd reassoc nsz arcp contract afn float %reass.mul224.reass, %reass.mul.reass
   %i.jn = fmul reassoc nsz arcp contract afn float %i.jl, %i.jl
@@ -1327,10 +1337,10 @@ bb.r:                                             ; preds = %._crit_edge266.spli
   %i.ma = load i64, ptr %i.lz, align 8, !tbaa !87
   %i.mb = sitofp reassoc nsz arcp contract afn i64 %i.ma to double
   %i.mc = fmul reassoc nnan nsz arcp contract afn double %i.mb, f0x3EB0C6F7A0B5ED8D
+  %14 = fadd reassoc nsz arcp contract afn double %i.mc, %i.ly
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #12
-  %10 = fsub reassoc nsz arcp contract afn double %i.ly, %.1212
-  %11 = fadd reassoc nsz arcp contract afn double %10, %i.mc
-  tail call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.18, ptr noundef nonnull %i.lu, double noundef %11) #12
+  %15 = fsub reassoc nsz arcp contract afn double %14, %.1212
+  tail call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.18, ptr noundef nonnull %i.lu, double noundef %15) #12
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.l, %bb.r, %._crit_edge266.split, %bb.e, %bb.h

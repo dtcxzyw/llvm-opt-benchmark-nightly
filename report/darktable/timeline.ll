@@ -201,9 +201,9 @@ bb.ex:                                            ; preds = %.lr.ph200, %bb.ew
   %i.qc = load double, ptr %i.ph, align 8, !tbaa !137
   %i.qd = fsub reassoc nsz arcp contract afn double %i.qb, %i.qc
   %i.qe = fmul reassoc nsz arcp contract afn double %i.qd, 5.000000e-01
-  %12 = load double, ptr %9, align 8, !tbaa !138
-  %13 = fsub reassoc nsz arcp contract afn double %i.qa, %12
-  %14 = fadd reassoc nsz arcp contract afn double %13, %i.qe
+  %12 = fadd reassoc nsz arcp contract afn double %i.qe, %i.qa
+  %13 = load double, ptr %9, align 8, !tbaa !138
+  %14 = fsub reassoc nsz arcp contract afn double %12, %13
   %i.qf = add nsw i32 %i.pu, -2
   %i.qg = sitofp reassoc nsz arcp contract afn i32 %i.qf to double
   call void @cairo_move_to(ptr noundef %i.pe, double noundef %14, double noundef %i.qg) #15
