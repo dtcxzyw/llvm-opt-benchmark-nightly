@@ -64,7 +64,7 @@ bb.f:                                             ; preds = %.loopexit, %bb.e
   %i.n = sext i32 %i.m to i64
   %i.o = getelementptr [4 x i8], ptr %i.b, i64 %i.n ; 2 uses
   %i.p = getelementptr i8, ptr %i.o, i64 -8       ; 3 uses
-  %i.q = load i32, ptr %i.p, align 8, !tbaa !8    ; 21 uses
+  %i.q = load i32, ptr %i.p, align 8, !tbaa !8    ; 17 uses
   %i.r = getelementptr i8, ptr %i.o, i64 -4       ; 3 uses
   %i.s = load i32, ptr %i.r, align 4, !tbaa !8    ; 13 uses
   %i.t = add nsw i32 %.0181, -1                   ; 7 uses
@@ -93,7 +93,7 @@ bb.h:                                             ; preds = %bb.g
   br label %.lr.ph.prol
 
 .lr.ph.prol:                                      ; preds = %bb.i, %.preheader218.prol
-  %indvars.iv278.prol = phi i64 [ %indvars.iv.next279.prol, %bb.i ], [ %indvars.iv276.prol, %.preheader218.prol ] ; 2 uses
+  %indvars.iv278.prol = phi i64 [ %indvars.iv276.prol, %.preheader218.prol ], [ %indvars.iv.next279.prol, %bb.i ] ; 2 uses
   %i.y = getelementptr inbounds [8 x i8], ptr %i.c, i64 %indvars.iv278.prol ; 3 uses
   %i.z = load double, ptr %i.y, align 8, !tbaa !9 ; 2 uses
   %i.aa = getelementptr i8, ptr %i.y, i64 -8      ; 2 uses
@@ -108,25 +108,20 @@ bb.i:                                             ; preds = %.lr.ph.prol
   %.not214.not.prol = icmp sgt i64 %indvars.iv.next279.prol, %i.w
   br i1 %.not214.not.prol, label %.lr.ph.prol, label %.preheader218.prol.loopexit, !llvm.loop !11
 
-.preheader218.prol.loopexit:                      ; preds = %bb.i, %.lr.ph.prol, %.preheader218.preheader
-  %indvars.iv276.in.unr = phi i64 [ %i.w, %.preheader218.preheader ], [ %indvars.iv276.prol, %.lr.ph.prol ], [ %indvars.iv276.prol, %bb.i ]
-  %.0182243.in.unr = phi i32 [ %i.q, %.preheader218.preheader ], [ %.0182243.prol, %.lr.ph.prol ], [ %.0182243.prol, %bb.i ]
+.preheader218.prol.loopexit:                      ; preds = %.lr.ph.prol, %bb.i, %.preheader218.preheader
+  %indvars.iv276.in.unr = phi i64 [ %i.w, %.preheader218.preheader ], [ %indvars.iv276.prol, %bb.i ], [ %indvars.iv276.prol, %.lr.ph.prol ]
+  %.0182243.in.unr = phi i32 [ %i.q, %.preheader218.preheader ], [ %.0182243.prol, %bb.i ], [ %.0182243.prol, %.lr.ph.prol ]
   %i.ad = icmp eq i32 %i.v, 0
   br i1 %i.ad, label %.loopexit, label %.preheader218
 
 .preheader218:                                    ; preds = %.preheader218.prol.loopexit, %._crit_edge.1
   %indvars.iv276.in = phi i64 [ %indvars.iv276.1, %._crit_edge.1 ], [ %indvars.iv276.in.unr, %.preheader218.prol.loopexit ] ; 2 uses
-  %.0182243.in = phi i32 [ %.0182243.1, %._crit_edge.1 ], [ %.0182243.in.unr, %.preheader218.prol.loopexit ] ; 3 uses
-  %.0182243 = add nsw i32 %.0182243.in, 1
-  %.not214.not238.not = icmp slt i32 %.0182243.in, %i.q
-  br i1 %.not214.not238.not, label %._crit_edge, label %.lr.ph.preheader
-
-.lr.ph.preheader:                                 ; preds = %.preheader218
+  %.0182243.in = phi i32 [ %.0182243.1, %._crit_edge.1 ], [ %.0182243.in.unr, %.preheader218.prol.loopexit ]
   %indvars.iv276 = add nsw i64 %indvars.iv276.in, 1
   br label %.lr.ph
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.j
-  %indvars.iv278 = phi i64 [ %indvars.iv.next279, %bb.j ], [ %indvars.iv276, %.lr.ph.preheader ] ; 2 uses
+.lr.ph:                                           ; preds = %.preheader218, %bb.j
+  %indvars.iv278 = phi i64 [ %indvars.iv276, %.preheader218 ], [ %indvars.iv.next279, %bb.j ] ; 2 uses
   %i.ae = getelementptr inbounds [8 x i8], ptr %i.c, i64 %indvars.iv278 ; 3 uses
   %i.af = load double, ptr %i.ae, align 8, !tbaa !9 ; 2 uses
   %i.ag = getelementptr i8, ptr %i.ae, i64 -8     ; 2 uses
@@ -141,14 +136,13 @@ bb.j:                                             ; preds = %.lr.ph
   %.not214.not = icmp sgt i64 %indvars.iv.next279, %i.w
   br i1 %.not214.not, label %.lr.ph, label %._crit_edge, !llvm.loop !11
 
-._crit_edge:                                      ; preds = %bb.j, %.lr.ph, %.preheader218
+._crit_edge:                                      ; preds = %bb.j, %.lr.ph
   %indvars.iv276.1 = add nsw i64 %indvars.iv276.in, 2 ; 2 uses
   %.0182243.1 = add nsw i32 %.0182243.in, 2       ; 2 uses
-  %.not214.not238.not.1 = icmp slt i32 %.0182243, %i.q
-  br i1 %.not214.not238.not.1, label %._crit_edge.1, label %.lr.ph.1
+  br label %.lr.ph.1
 
-.lr.ph.1:                                         ; preds = %._crit_edge, %bb.k
-  %indvars.iv278.1 = phi i64 [ %indvars.iv.next279.1, %bb.k ], [ %indvars.iv276.1, %._crit_edge ] ; 2 uses
+.lr.ph.1:                                         ; preds = %bb.k, %._crit_edge
+  %indvars.iv278.1 = phi i64 [ %indvars.iv276.1, %._crit_edge ], [ %indvars.iv.next279.1, %bb.k ] ; 2 uses
   %i.aj = getelementptr inbounds [8 x i8], ptr %i.c, i64 %indvars.iv278.1 ; 3 uses
   %i.ak = load double, ptr %i.aj, align 8, !tbaa !9 ; 2 uses
   %i.al = getelementptr i8, ptr %i.aj, i64 -8     ; 2 uses
@@ -163,7 +157,7 @@ bb.k:                                             ; preds = %.lr.ph.1
   %.not214.not.1 = icmp sgt i64 %indvars.iv.next279.1, %i.w
   br i1 %.not214.not.1, label %.lr.ph.1, label %._crit_edge.1, !llvm.loop !11
 
-._crit_edge.1:                                    ; preds = %.lr.ph.1, %bb.k, %._crit_edge
+._crit_edge.1:                                    ; preds = %bb.k, %.lr.ph.1
   %exitcond.not.1 = icmp eq i32 %.0182243.1, %i.s
   br i1 %exitcond.not.1, label %.loopexit, label %.preheader218, !llvm.loop !13
 
@@ -183,7 +177,7 @@ bb.l:                                             ; preds = %bb.g
   br label %.lr.ph246.prol
 
 .lr.ph246.prol:                                   ; preds = %bb.m, %.preheader.prol
-  %indvars.iv283.prol = phi i64 [ %indvars.iv.next284.prol, %bb.m ], [ %indvars.iv281.prol, %.preheader.prol ] ; 2 uses
+  %indvars.iv283.prol = phi i64 [ %indvars.iv281.prol, %.preheader.prol ], [ %indvars.iv.next284.prol, %bb.m ] ; 2 uses
   %i.aq = getelementptr inbounds [8 x i8], ptr %i.c, i64 %indvars.iv283.prol ; 3 uses
   %i.ar = load double, ptr %i.aq, align 8, !tbaa !9 ; 2 uses
   %i.as = getelementptr i8, ptr %i.aq, i64 -8     ; 2 uses
@@ -198,25 +192,20 @@ bb.m:                                             ; preds = %.lr.ph246.prol
   %.not213.not.prol = icmp sgt i64 %indvars.iv.next284.prol, %i.ao
   br i1 %.not213.not.prol, label %.lr.ph246.prol, label %.preheader.prol.loopexit, !llvm.loop !14
 
-.preheader.prol.loopexit:                         ; preds = %bb.m, %.lr.ph246.prol, %.preheader.preheader
-  %indvars.iv281.in.unr = phi i64 [ %i.ao, %.preheader.preheader ], [ %indvars.iv281.prol, %.lr.ph246.prol ], [ %indvars.iv281.prol, %bb.m ]
-  %.1183251.in.unr = phi i32 [ %i.q, %.preheader.preheader ], [ %.1183251.prol, %.lr.ph246.prol ], [ %.1183251.prol, %bb.m ]
+.preheader.prol.loopexit:                         ; preds = %.lr.ph246.prol, %bb.m, %.preheader.preheader
+  %indvars.iv281.in.unr = phi i64 [ %i.ao, %.preheader.preheader ], [ %indvars.iv281.prol, %bb.m ], [ %indvars.iv281.prol, %.lr.ph246.prol ]
+  %.1183251.in.unr = phi i32 [ %i.q, %.preheader.preheader ], [ %.1183251.prol, %bb.m ], [ %.1183251.prol, %.lr.ph246.prol ]
   %i.av = icmp eq i32 %i.v, 0
   br i1 %i.av, label %.loopexit, label %.preheader.a
 
 .preheader.a:                                     ; preds = %.preheader.prol.loopexit, %._crit_edge247.1
   %indvars.iv281.in = phi i64 [ %indvars.iv281.1, %._crit_edge247.1 ], [ %indvars.iv281.in.unr, %.preheader.prol.loopexit ] ; 2 uses
-  %.1183251.in = phi i32 [ %.1183251.1, %._crit_edge247.1 ], [ %.1183251.in.unr, %.preheader.prol.loopexit ] ; 3 uses
-  %.1183251 = add nsw i32 %.1183251.in, 1
-  %.not213.not244.not = icmp slt i32 %.1183251.in, %i.q
-  br i1 %.not213.not244.not, label %._crit_edge247, label %.lr.ph246.preheader
-
-.lr.ph246.preheader:                              ; preds = %.preheader.a
+  %.1183251.in = phi i32 [ %.1183251.1, %._crit_edge247.1 ], [ %.1183251.in.unr, %.preheader.prol.loopexit ]
   %indvars.iv281 = add nsw i64 %indvars.iv281.in, 1
   br label %.lr.ph246
 
-.lr.ph246:                                        ; preds = %.lr.ph246.preheader, %bb.n
-  %indvars.iv283 = phi i64 [ %indvars.iv.next284, %bb.n ], [ %indvars.iv281, %.lr.ph246.preheader ] ; 2 uses
+.lr.ph246:                                        ; preds = %.preheader.a, %bb.n
+  %indvars.iv283 = phi i64 [ %indvars.iv281, %.preheader.a ], [ %indvars.iv.next284, %bb.n ] ; 2 uses
   %i.aw = getelementptr inbounds [8 x i8], ptr %i.c, i64 %indvars.iv283 ; 3 uses
   %i.ax = load double, ptr %i.aw, align 8, !tbaa !9 ; 2 uses
   %i.ay = getelementptr i8, ptr %i.aw, i64 -8     ; 2 uses
@@ -231,14 +220,13 @@ bb.n:                                             ; preds = %.lr.ph246
   %.not213.not = icmp sgt i64 %indvars.iv.next284, %i.ao
   br i1 %.not213.not, label %.lr.ph246, label %._crit_edge247, !llvm.loop !14
 
-._crit_edge247:                                   ; preds = %bb.n, %.lr.ph246, %.preheader.a
+._crit_edge247:                                   ; preds = %bb.n, %.lr.ph246
   %indvars.iv281.1 = add nsw i64 %indvars.iv281.in, 2 ; 2 uses
   %.1183251.1 = add nsw i32 %.1183251.in, 2       ; 2 uses
-  %.not213.not244.not.1 = icmp slt i32 %.1183251, %i.q
-  br i1 %.not213.not244.not.1, label %._crit_edge247.1, label %.lr.ph246.1
+  br label %.lr.ph246.1
 
-.lr.ph246.1:                                      ; preds = %._crit_edge247, %bb.o
-  %indvars.iv283.1 = phi i64 [ %indvars.iv.next284.1, %bb.o ], [ %indvars.iv281.1, %._crit_edge247 ] ; 2 uses
+.lr.ph246.1:                                      ; preds = %bb.o, %._crit_edge247
+  %indvars.iv283.1 = phi i64 [ %indvars.iv281.1, %._crit_edge247 ], [ %indvars.iv.next284.1, %bb.o ] ; 2 uses
   %i.bb = getelementptr inbounds [8 x i8], ptr %i.c, i64 %indvars.iv283.1 ; 3 uses
   %i.bc = load double, ptr %i.bb, align 8, !tbaa !9 ; 2 uses
   %i.bd = getelementptr i8, ptr %i.bb, i64 -8     ; 2 uses
@@ -253,7 +241,7 @@ bb.o:                                             ; preds = %.lr.ph246.1
   %.not213.not.1 = icmp sgt i64 %indvars.iv.next284.1, %i.ao
   br i1 %.not213.not.1, label %.lr.ph246.1, label %._crit_edge247.1, !llvm.loop !14
 
-._crit_edge247.1:                                 ; preds = %.lr.ph246.1, %bb.o, %._crit_edge247
+._crit_edge247.1:                                 ; preds = %bb.o, %.lr.ph246.1
   %exitcond286.not.1 = icmp eq i32 %.1183251.1, %i.s
   br i1 %exitcond286.not.1, label %.loopexit, label %.preheader.a, !llvm.loop !15
 

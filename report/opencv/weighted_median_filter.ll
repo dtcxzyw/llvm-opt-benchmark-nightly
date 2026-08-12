@@ -203,7 +203,8 @@ bb.bg:                                            ; preds = %bb.bf
   %indvars.iv396.i.us = phi i64 [ %indvars.iv.next397.i.us, %._crit_edge340.i.us ], [ 0, %.preheader.lr.ph.i ] ; 6 uses
   %i.ea = getelementptr inbounds nuw [8 x i8], ptr %i.df, i64 %indvars.iv396.i.us
   %i.eb = load ptr, ptr %i.ea, align 8, !tbaa !35
-  %i.ec = trunc nuw nsw i64 %indvars.iv396.i.us to i32 ; 2 uses
+  %i.ec = trunc nuw nsw i64 %indvars.iv396.i.us to i32
+  %60 = uitofp nneg i32 %i.ec to double
   br label %.split1.us.i.us
 
 .split1.us.i.us:                                  ; preds = %bb.bm, %.lr.ph339.i.us
@@ -222,11 +223,8 @@ bb.bg:                                            ; preds = %bb.bf
   ]
 
 bb.bh:                                            ; preds = %.split1.us.i.us
-  %i.eh = trunc nuw nsw i64 %indvars.iv401.i.us to i32 ; 2 uses
-  %.sroa.speculated286.us.i.us = call i32 @llvm.umin.i32(i32 %i.eh, i32 %i.ec)
-  %60 = uitofp nneg i32 %.sroa.speculated286.us.i.us to double
-  %.sroa.speculated283.us.i.us = call i32 @llvm.umax.i32(i32 %i.ec, i32 %i.eh)
-  %i.ei = uitofp nneg i32 %.sroa.speculated283.us.i.us to double
+  %i.eh = trunc nuw nsw i64 %indvars.iv401.i.us to i32
+  %i.ei = uitofp nneg i32 %i.eh to double
   %i.ej = fdiv double %60, %i.ei
   %i.ek = fptrunc double %i.ej to float
   br label %bb.bm
@@ -627,9 +625,6 @@ declare i32 @llvm.smin.i32(i32, i32) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #10
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.sqrt.f32(float) #10

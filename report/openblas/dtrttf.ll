@@ -1,5 +1,5 @@
-loop-unroll.NumRuntimeUnrolled: 19
-loop-unroll.NumUnrolled: 19
+loop-unroll.NumRuntimeUnrolled: 20
+loop-unroll.NumUnrolled: 20
 begin_hunk_0_@dtrttf_:bb.a
   %indvars.iv797.lcssa = phi i32 [ %i.wd, %vec.epilog.middle.block1368 ], [ %i.vv, %middle.block1350 ], [ %indvars.iv797.lcssa1868.unr, %vec.epilog.scalar.ph1358.prol.loopexit ], [ %indvars.iv797.7, %vec.epilog.scalar.ph1358 ]
   %indvars.iv.next787.lcssa = phi i64 [ %i.vw, %vec.epilog.middle.block1368 ], [ %i.vf, %middle.block1350 ], [ %indvars.iv.next787.lcssa1867.unr, %vec.epilog.scalar.ph1358.prol.loopexit ], [ %indvars.iv.next787.7, %vec.epilog.scalar.ph1358 ]
@@ -201,27 +201,31 @@ bb.p:                                             ; preds = %bb.l
 
 .lr.ph574.preheader:                              ; preds = %.thread461
   %i.zu = zext nneg i32 %i.i to i64               ; 6 uses
-  %i.zv = lshr exact i64 %i.zu, 1                 ; 6 uses
-  %i.zw = sext i32 %i.d to i64                    ; 3 uses
+  %i.zv = lshr exact i64 %i.zu, 1                 ; 7 uses
+  %i.zw = sext i32 %i.d to i64                    ; 7 uses
   %i.zx = zext nneg i32 %i.i to i64
   %i.zy = zext nneg i32 %i.v to i64
-  %wide.trip.count839 = zext nneg i32 %i.v to i64
+  %wide.trip.count839 = zext nneg i32 %i.v to i64 ; 2 uses
+  %invariant.gep1031 = getelementptr [8 x i8], ptr %3, i64 %i.zy
   %i.zz = sub i64 %i.b, %i.a                      ; 2 uses
   %i.aaa = shl nsw i64 %i.zw, 3
   %i.aab = sub nuw nsw i64 -8, %i.aaa
+  %7 = add nuw nsw i64 %wide.trip.count839, 1
   %ident.check1406.not = icmp eq i32 %i.d, 1
   br label %iter.check1434
 
 iter.check1434:                                   ; preds = %.lr.ph574.preheader, %._crit_edge569
-  %indvars.iv829 = phi i64 [ 0, %.lr.ph574.preheader ], [ %indvars.iv.next830, %._crit_edge569 ] ; 16 uses
+  %indvars.iv842.in = phi i64 [ %i.zv, %.lr.ph574.preheader ], [ %i.aag, %._crit_edge569 ] ; 3 uses
+  %indvars.iv829 = phi i64 [ 0, %.lr.ph574.preheader ], [ %indvars.iv.next830, %._crit_edge569 ] ; 17 uses
   %.16573 = phi i32 [ 0, %.lr.ph574.preheader ], [ %.18.lcssa, %._crit_edge569 ] ; 5 uses
+  %8 = add nuw i64 %7, %indvars.iv829
   %i.aac = add nuw i64 %indvars.iv829, 1          ; 5 uses
   %i.aad = sub nsw i64 %i.zu, %indvars.iv829      ; 7 uses
   %i.aae = mul i64 %i.aab, %indvars.iv829
   %i.aaf = add i64 %i.zz, %i.aae
-  %i.aag = add nuw nsw i64 %indvars.iv829, %i.zy  ; 2 uses
+  %i.aag = add nuw nsw i64 %indvars.iv842.in, 1
   %i.aah = sext i32 %.16573 to i64                ; 7 uses
-  %invariant.gep1017 = getelementptr [8 x i8], ptr %3, i64 %i.aag ; 3 uses
+  %invariant.gep1017 = getelementptr [8 x i8], ptr %invariant.gep1031, i64 %indvars.iv829 ; 7 uses
   %min.iters.check1410 = icmp samesign ugt i64 %indvars.iv829, 2
   %or.cond1822 = select i1 %min.iters.check1410, i1 %ident.check1406.not, i1 false
   br i1 %or.cond1822, label %vector.memcheck1407, label %vec.epilog.scalar.ph1435.preheader
@@ -321,20 +325,50 @@ vec.epilog.middle.block1445:                      ; preds = %vec.epilog.vector.b
   br i1 %cmp.n1446, label %.preheader474, label %vec.epilog.scalar.ph1435.preheader
 
 vec.epilog.scalar.ph1435.preheader:               ; preds = %vector.memcheck1407, %iter.check1434, %vec.epilog.iter.check1436, %vec.epilog.middle.block1445
-  %indvars.iv825.in.ph = phi i32 [ %.16573, %iter.check1434 ], [ %.16573, %vector.memcheck1407 ], [ %i.abf, %vec.epilog.iter.check1436 ], [ %i.abn, %vec.epilog.middle.block1445 ]
-  %indvars.iv821.ph = phi i64 [ %i.zv, %iter.check1434 ], [ %i.zv, %vector.memcheck1407 ], [ %i.aap, %vec.epilog.iter.check1436 ], [ %i.abg, %vec.epilog.middle.block1445 ]
-  %indvars.iv819.ph = phi i64 [ %i.aah, %iter.check1434 ], [ %i.aah, %vector.memcheck1407 ], [ %i.aaq, %vec.epilog.iter.check1436 ], [ %i.abh, %vec.epilog.middle.block1445 ]
-  br label %vec.epilog.scalar.ph1435
+  %indvars.iv825.in.ph = phi i32 [ %.16573, %iter.check1434 ], [ %.16573, %vector.memcheck1407 ], [ %i.abf, %vec.epilog.iter.check1436 ], [ %i.abn, %vec.epilog.middle.block1445 ] ; 2 uses
+  %indvars.iv821.ph = phi i64 [ %i.zv, %iter.check1434 ], [ %i.zv, %vector.memcheck1407 ], [ %i.aap, %vec.epilog.iter.check1436 ], [ %i.abg, %vec.epilog.middle.block1445 ] ; 4 uses
+  %indvars.iv819.ph = phi i64 [ %i.aah, %iter.check1434 ], [ %i.aah, %vector.memcheck1407 ], [ %i.aaq, %vec.epilog.iter.check1436 ], [ %i.abh, %vec.epilog.middle.block1445 ] ; 2 uses
+  %9 = sub i64 %8, %indvars.iv821.ph
+  %10 = sub i64 %indvars.iv842.in, %indvars.iv821.ph
+  %xtraiter1923 = and i64 %9, 3                   ; 2 uses
+  %lcmp.mod1924.not = icmp eq i64 %xtraiter1923, 0
+  br i1 %lcmp.mod1924.not, label %vec.epilog.scalar.ph1446.prol.loopexit, label %vec.epilog.scalar.ph1446.prol
 
-.preheader474:                                    ; preds = %vec.epilog.scalar.ph1435, %vec.epilog.middle.block1445, %middle.block1426
-  %indvars.iv825.lcssa = phi i32 [ %i.abn, %vec.epilog.middle.block1445 ], [ %i.abf, %middle.block1426 ], [ %indvars.iv825, %vec.epilog.scalar.ph1435 ]
-  %indvars.iv.next820.lcssa = phi i64 [ %i.abh, %vec.epilog.middle.block1445 ], [ %i.aaq, %middle.block1426 ], [ %indvars.iv.next820, %vec.epilog.scalar.ph1435 ]
+vec.epilog.scalar.ph1446.prol:                    ; preds = %vec.epilog.scalar.ph1435.preheader, %vec.epilog.scalar.ph1446.prol
+  %indvars.iv829.in.prol = phi i32 [ %indvars.iv829.prol, %vec.epilog.scalar.ph1446.prol ], [ %indvars.iv825.in.ph, %vec.epilog.scalar.ph1435.preheader ]
+  %indvars.iv821.prol = phi i64 [ %indvars.iv.next822.prol, %vec.epilog.scalar.ph1446.prol ], [ %indvars.iv821.ph, %vec.epilog.scalar.ph1435.preheader ] ; 2 uses
+  %indvars.iv819.prol = phi i64 [ %indvars.iv.next820.prol, %vec.epilog.scalar.ph1446.prol ], [ %indvars.iv819.ph, %vec.epilog.scalar.ph1435.preheader ] ; 2 uses
+  %prol.iter1925 = phi i64 [ %prol.iter1925.next, %vec.epilog.scalar.ph1446.prol ], [ 0, %vec.epilog.scalar.ph1435.preheader ]
+  %indvars.iv829.prol = add i32 %indvars.iv829.in.prol, 1 ; 3 uses
+  %11 = mul nsw i64 %indvars.iv821.prol, %i.zw
+  %gep1028.prol = getelementptr [8 x i8], ptr %invariant.gep1017, i64 %11
+  %12 = load double, ptr %gep1028.prol, align 8, !tbaa !9
+  %13 = getelementptr inbounds [8 x i8], ptr %5, i64 %indvars.iv819.prol
+  store double %12, ptr %13, align 8, !tbaa !9
+  %indvars.iv.next820.prol = add nsw i64 %indvars.iv819.prol, 1 ; 3 uses
+  %indvars.iv.next822.prol = add nuw nsw i64 %indvars.iv821.prol, 1 ; 2 uses
+  %prol.iter1925.next = add i64 %prol.iter1925, 1 ; 2 uses
+  %prol.iter1925.cmp.not = icmp eq i64 %prol.iter1925.next, %xtraiter1923
+  br i1 %prol.iter1925.cmp.not, label %vec.epilog.scalar.ph1446.prol.loopexit, label %vec.epilog.scalar.ph1446.prol, !llvm.loop !64
+
+vec.epilog.scalar.ph1446.prol.loopexit:           ; preds = %vec.epilog.scalar.ph1446.prol, %vec.epilog.scalar.ph1435.preheader
+  %indvars.iv829.lcssa1871.unr = phi i32 [ poison, %vec.epilog.scalar.ph1435.preheader ], [ %indvars.iv829.prol, %vec.epilog.scalar.ph1446.prol ]
+  %indvars.iv.next820.lcssa1870.unr = phi i64 [ poison, %vec.epilog.scalar.ph1435.preheader ], [ %indvars.iv.next820.prol, %vec.epilog.scalar.ph1446.prol ]
+  %indvars.iv829.in.unr = phi i32 [ %indvars.iv825.in.ph, %vec.epilog.scalar.ph1435.preheader ], [ %indvars.iv829.prol, %vec.epilog.scalar.ph1446.prol ]
+  %indvars.iv821.unr = phi i64 [ %indvars.iv821.ph, %vec.epilog.scalar.ph1435.preheader ], [ %indvars.iv.next822.prol, %vec.epilog.scalar.ph1446.prol ]
+  %indvars.iv819.unr = phi i64 [ %indvars.iv819.ph, %vec.epilog.scalar.ph1435.preheader ], [ %indvars.iv.next820.prol, %vec.epilog.scalar.ph1446.prol ]
+  %14 = icmp ult i64 %10, 3
+  br i1 %14, label %.preheader474, label %vec.epilog.scalar.ph1435
+
+.preheader474:                                    ; preds = %vec.epilog.scalar.ph1446.prol.loopexit, %vec.epilog.scalar.ph1435, %vec.epilog.middle.block1445, %middle.block1426
+  %indvars.iv829.lcssa = phi i32 [ %i.abn, %vec.epilog.middle.block1445 ], [ %i.abf, %middle.block1426 ], [ %indvars.iv829.lcssa1871.unr, %vec.epilog.scalar.ph1446.prol.loopexit ], [ %indvars.iv825, %vec.epilog.scalar.ph1435 ]
+  %indvars.iv.next820.lcssa = phi i64 [ %i.abh, %vec.epilog.middle.block1445 ], [ %i.aaq, %middle.block1426 ], [ %indvars.iv.next820.lcssa1870.unr, %vec.epilog.scalar.ph1446.prol.loopexit ], [ %indvars.iv.next820, %vec.epilog.scalar.ph1435 ]
   %.not435.not565 = icmp samesign ult i64 %indvars.iv829, %i.zx
   br i1 %.not435.not565, label %iter.check1391, label %._crit_edge569
 
 iter.check1391:                                   ; preds = %.preheader474
   %i.abo = mul nsw i64 %indvars.iv829, %i.zw
-  %i.abp = sext i32 %indvars.iv825.lcssa to i64   ; 7 uses
+  %i.abp = sext i32 %indvars.iv829.lcssa to i64   ; 7 uses
   %invariant.gep1019 = getelementptr [8 x i8], ptr %3, i64 %i.abo ; 11 uses
   %min.iters.check1375 = icmp ult i64 %i.aad, 4
   br i1 %min.iters.check1375, label %vec.epilog.scalar.ph1392.preheader, label %vector.memcheck1373
@@ -379,7 +413,7 @@ vector.body1380:                                  ; preds = %vector.body1380, %v
   store <4 x double> %wide.load1385, ptr %i.acd, align 8, !tbaa !9
   %index.next1386 = add nuw i64 %index1381, 16    ; 2 uses
   %i.ace = icmp eq i64 %index.next1386, %n.vec1379
-  br i1 %i.ace, label %middle.block1387, label %vector.body1380, !llvm.loop !64
+  br i1 %i.ace, label %middle.block1387, label %vector.body1380, !llvm.loop !65
 
 middle.block1387:                                 ; preds = %vector.body1380
   %cmp.n1388 = icmp eq i64 %i.aad, %n.vec1379
@@ -406,7 +440,7 @@ vec.epilog.vector.body1397:                       ; preds = %vec.epilog.vector.b
   store <4 x double> %wide.load1399, ptr %gep2027, align 8, !tbaa !9
   %index.next1400 = add nuw i64 %index1398, 4     ; 2 uses
   %i.acj = icmp eq i64 %index.next1400, %n.vec1396
-  br i1 %i.acj, label %vec.epilog.middle.block1401, label %vec.epilog.vector.body1397, !llvm.loop !65
+  br i1 %i.acj, label %vec.epilog.middle.block1401, label %vec.epilog.vector.body1397, !llvm.loop !66
 
 vec.epilog.middle.block1401:                      ; preds = %vec.epilog.vector.body1397
   %cmp.n1402 = icmp eq i64 %i.aad, %n.vec1396
@@ -432,7 +466,7 @@ vec.epilog.scalar.ph1392.prol:                    ; preds = %vec.epilog.scalar.p
   %indvars.iv.next832.prol = add nuw nsw i64 %indvars.iv831.prol.a, 1 ; 2 uses
   %prol.iter1914.next = add i64 %prol.iter1914, 1 ; 2 uses
   %prol.iter1914.cmp.not = icmp eq i64 %prol.iter1914.next, %xtraiter1912
-  br i1 %prol.iter1914.cmp.not, label %vec.epilog.scalar.ph1392.prol.loopexit, label %vec.epilog.scalar.ph1392.prol, !llvm.loop !66
+  br i1 %prol.iter1914.cmp.not, label %vec.epilog.scalar.ph1392.prol.loopexit, label %vec.epilog.scalar.ph1392.prol, !llvm.loop !67
 
 vec.epilog.scalar.ph1392.prol.loopexit:           ; preds = %vec.epilog.scalar.ph1392.prol, %vec.epilog.scalar.ph1392.preheader
   %indvars.iv.next828.lcssa.unr = phi i64 [ poison, %vec.epilog.scalar.ph1392.preheader ], [ %indvars.iv.next828.prol, %vec.epilog.scalar.ph1392.prol ]
@@ -442,20 +476,41 @@ vec.epilog.scalar.ph1392.prol.loopexit:           ; preds = %vec.epilog.scalar.p
   %i.aco = icmp ugt i64 %i.acn, -8
   br i1 %i.aco, label %._crit_edge569, label %vec.epilog.scalar.ph1392
 
-vec.epilog.scalar.ph1435:                         ; preds = %vec.epilog.scalar.ph1435.preheader, %vec.epilog.scalar.ph1435
-  %indvars.iv825.in = phi i32 [ %indvars.iv825, %vec.epilog.scalar.ph1435 ], [ %indvars.iv825.in.ph, %vec.epilog.scalar.ph1435.preheader ]
-  %indvars.iv821 = phi i64 [ %indvars.iv.next822.a, %vec.epilog.scalar.ph1435 ], [ %indvars.iv821.ph, %vec.epilog.scalar.ph1435.preheader ] ; 3 uses
-  %indvars.iv819 = phi i64 [ %indvars.iv.next820, %vec.epilog.scalar.ph1435 ], [ %indvars.iv819.ph, %vec.epilog.scalar.ph1435.preheader ] ; 2 uses
-  %indvars.iv825 = add i32 %indvars.iv825.in, 1   ; 2 uses
-  %i.acp = mul nsw i64 %indvars.iv821, %i.zw
+vec.epilog.scalar.ph1435:                         ; preds = %vec.epilog.scalar.ph1446.prol.loopexit, %vec.epilog.scalar.ph1435
+  %indvars.iv825.in = phi i32 [ %indvars.iv825, %vec.epilog.scalar.ph1435 ], [ %indvars.iv829.in.unr, %vec.epilog.scalar.ph1446.prol.loopexit ]
+  %indvars.iv821 = phi i64 [ %indvars.iv.next822.a, %vec.epilog.scalar.ph1435 ], [ %indvars.iv821.unr, %vec.epilog.scalar.ph1446.prol.loopexit ] ; 5 uses
+  %indvars.iv819 = phi i64 [ %indvars.iv.next820, %vec.epilog.scalar.ph1435 ], [ %indvars.iv819.unr, %vec.epilog.scalar.ph1446.prol.loopexit ] ; 5 uses
+  %15 = mul nsw i64 %indvars.iv821, %i.zw
+  %gep1028 = getelementptr [8 x i8], ptr %invariant.gep1017, i64 %15
+  %16 = load double, ptr %gep1028, align 8, !tbaa !9
+  %17 = getelementptr inbounds [8 x i8], ptr %5, i64 %indvars.iv819
+  store double %16, ptr %17, align 8, !tbaa !9
+  %indvars.iv.next822 = add nuw nsw i64 %indvars.iv821, 1
+  %18 = mul nsw i64 %indvars.iv.next822, %i.zw
+  %gep1028.1 = getelementptr [8 x i8], ptr %invariant.gep1017, i64 %18
+  %19 = load double, ptr %gep1028.1, align 8, !tbaa !9
+  %20 = getelementptr [8 x i8], ptr %5, i64 %indvars.iv819
+  %21 = getelementptr i8, ptr %20, i64 8
+  store double %19, ptr %21, align 8, !tbaa !9
+  %indvars.iv.next822.1 = add nuw nsw i64 %indvars.iv821, 2
+  %22 = mul nsw i64 %indvars.iv.next822.1, %i.zw
+  %gep1028.2 = getelementptr [8 x i8], ptr %invariant.gep1017, i64 %22
+  %23 = load double, ptr %gep1028.2, align 8, !tbaa !9
+  %24 = getelementptr [8 x i8], ptr %5, i64 %indvars.iv819
+  %25 = getelementptr i8, ptr %24, i64 16
+  store double %23, ptr %25, align 8, !tbaa !9
+  %indvars.iv.next822.2 = add nuw nsw i64 %indvars.iv821, 3 ; 2 uses
+  %indvars.iv825 = add i32 %indvars.iv825.in, 4   ; 2 uses
+  %i.acp = mul nsw i64 %indvars.iv.next822.2, %i.zw
   %gep1018 = getelementptr [8 x i8], ptr %invariant.gep1017, i64 %i.acp
   %i.acq = load double, ptr %gep1018, align 8, !tbaa !9
-  %i.acr = getelementptr inbounds [8 x i8], ptr %5, i64 %indvars.iv819
-  store double %i.acq, ptr %i.acr, align 8, !tbaa !9
-  %indvars.iv.next820 = add nsw i64 %indvars.iv819, 1 ; 2 uses
-  %indvars.iv.next822.a = add nuw nsw i64 %indvars.iv821, 1
-  %.not434.not = icmp samesign ult i64 %indvars.iv821, %i.aag
-  br i1 %.not434.not, label %vec.epilog.scalar.ph1435, label %.preheader474, !llvm.loop !67
+  %i.acr = getelementptr [8 x i8], ptr %5, i64 %indvars.iv819
+  %26 = getelementptr i8, ptr %i.acr, i64 24
+  store double %i.acq, ptr %26, align 8, !tbaa !9
+  %indvars.iv.next820 = add nsw i64 %indvars.iv819, 4 ; 2 uses
+  %indvars.iv.next822.a = add nuw nsw i64 %indvars.iv821, 4
+  %exitcond827.not.3 = icmp eq i64 %indvars.iv.next822.2, %indvars.iv842.in
+  br i1 %exitcond827.not.3, label %.preheader474, label %vec.epilog.scalar.ph1435, !llvm.loop !68
 
 vec.epilog.scalar.ph1392:                         ; preds = %vec.epilog.scalar.ph1392.prol.loopexit, %vec.epilog.scalar.ph1392
   %indvars.iv831.a = phi i64 [ %indvars.iv.next832.7, %vec.epilog.scalar.ph1392 ], [ %indvars.iv831.unr.a, %vec.epilog.scalar.ph1392.prol.loopexit ] ; 9 uses
@@ -509,14 +564,14 @@ vec.epilog.scalar.ph1392:                         ; preds = %vec.epilog.scalar.p
   %indvars.iv.next828.7 = add nsw i64 %indvars.iv827, 8 ; 2 uses
   %indvars.iv.next832.7 = add nuw nsw i64 %indvars.iv831.a, 8 ; 2 uses
   %exitcond837.not.7 = icmp eq i64 %indvars.iv.next832.7, %i.zu
-  br i1 %exitcond837.not.7, label %._crit_edge569, label %vec.epilog.scalar.ph1392, !llvm.loop !68
+  br i1 %exitcond837.not.7, label %._crit_edge569, label %vec.epilog.scalar.ph1392, !llvm.loop !69
 
 ._crit_edge569:                                   ; preds = %vec.epilog.scalar.ph1392.prol.loopexit, %vec.epilog.scalar.ph1392, %middle.block1387, %vec.epilog.middle.block1401, %.preheader474
   %.18.lcssa.in = phi i64 [ %indvars.iv.next820.lcssa, %.preheader474 ], [ %i.acg, %vec.epilog.middle.block1401 ], [ %i.abv, %middle.block1387 ], [ %indvars.iv.next828.lcssa.unr, %vec.epilog.scalar.ph1392.prol.loopexit ], [ %indvars.iv.next828.7, %vec.epilog.scalar.ph1392 ]
   %.18.lcssa = trunc i64 %.18.lcssa.in to i32
   %indvars.iv.next830 = add nuw nsw i64 %indvars.iv829, 1 ; 2 uses
   %exitcond840.not = icmp eq i64 %indvars.iv.next830, %wide.trip.count839
-  br i1 %exitcond840.not, label %.loopexit, label %iter.check1434, !llvm.loop !69
+  br i1 %exitcond840.not, label %.loopexit, label %iter.check1434, !llvm.loop !70
 
 .preheader469.lr.ph:                              ; preds = %bb.p
   %i.adw = xor i32 %i.i, -1
@@ -606,7 +661,7 @@ vector.body1635:                                  ; preds = %vector.body1635, %v
   store <4 x double> %wide.load1644, ptr %i.afm, align 8, !tbaa !9
   %index.next1645 = add nuw i64 %index1636, 16    ; 2 uses
   %i.afn = icmp eq i64 %index.next1645, %n.vec1634
-  br i1 %i.afn, label %middle.block1646, label %vector.body1635, !llvm.loop !70
+  br i1 %i.afn, label %middle.block1646, label %vector.body1635, !llvm.loop !71
 
 middle.block1646:                                 ; preds = %vector.body1635
   %bin.rdx1647 = add <4 x i32> %i.afd, %i.afc
@@ -639,7 +694,7 @@ vec.epilog.vector.body1659:                       ; preds = %vec.epilog.vector.b
   store <4 x double> %wide.load1662, ptr %gep2043.a, align 8, !tbaa !9
   %index.next1663 = add nuw i64 %index1660, 4     ; 2 uses
   %i.aft = icmp eq i64 %index.next1663, %n.vec1658
-  br i1 %i.aft, label %vec.epilog.middle.block1664, label %vec.epilog.vector.body1659, !llvm.loop !71
+  br i1 %i.aft, label %vec.epilog.middle.block1664, label %vec.epilog.vector.body1659, !llvm.loop !72
 
 vec.epilog.middle.block1664:                      ; preds = %vec.epilog.vector.body1659
   %i.afu = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.afr) ; 2 uses
@@ -669,7 +724,7 @@ vec.epilog.scalar.ph1654.prol:                    ; preds = %vec.epilog.scalar.p
   %indvars.iv.next897.prol = add nuw nsw i64 %indvars.iv896.prol, 1 ; 2 uses
   %prol.iter1926.next = add i64 %prol.iter1926, 1 ; 2 uses
   %prol.iter1926.cmp.not = icmp eq i64 %prol.iter1926.next, %xtraiter1924
-  br i1 %prol.iter1926.cmp.not, label %vec.epilog.scalar.ph1654.prol.loopexit, label %vec.epilog.scalar.ph1654.prol, !llvm.loop !72
+  br i1 %prol.iter1926.cmp.not, label %vec.epilog.scalar.ph1654.prol.loopexit, label %vec.epilog.scalar.ph1654.prol, !llvm.loop !73
 
 vec.epilog.scalar.ph1654.prol.loopexit:           ; preds = %vec.epilog.scalar.ph1654.prol, %vec.epilog.scalar.ph1654.preheader
   %indvars.iv903.lcssa1842.unr = phi i32 [ poison, %vec.epilog.scalar.ph1654.preheader ], [ %indvars.iv903.prol, %vec.epilog.scalar.ph1654.prol ]
@@ -736,7 +791,7 @@ vec.epilog.scalar.ph1654:                         ; preds = %vec.epilog.scalar.p
   %indvars.iv.next895.7 = add nsw i64 %indvars.iv894, 8 ; 2 uses
   %indvars.iv.next897.7 = add nuw nsw i64 %indvars.iv896, 8 ; 2 uses
   %exitcond902.not.7 = icmp eq i64 %indvars.iv.next897.7, %indvars.iv916
-  br i1 %exitcond902.not.7, label %.loopexit1811, label %vec.epilog.scalar.ph1654, !llvm.loop !73
+  br i1 %exitcond902.not.7, label %.loopexit1811, label %vec.epilog.scalar.ph1654, !llvm.loop !74
 
 .loopexit1811:                                    ; preds = %vec.epilog.scalar.ph1654.prol.loopexit, %vec.epilog.scalar.ph1654, %vec.epilog.middle.block1664, %middle.block1646
   %indvars.iv903.lcssa = phi i32 [ %i.afu, %vec.epilog.middle.block1664 ], [ %i.afo, %middle.block1646 ], [ %indvars.iv903.lcssa1842.unr, %vec.epilog.scalar.ph1654.prol.loopexit ], [ %indvars.iv903.7, %vec.epilog.scalar.ph1654 ]
@@ -797,7 +852,7 @@ vector.body1603:                                  ; preds = %vector.body1603, %v
   store <4 x double> %wide.load1608, ptr %i.ahx, align 8, !tbaa !9
   %index.next1609 = add nuw i64 %index1604, 16    ; 2 uses
   %i.ahy = icmp eq i64 %index.next1609, %n.vec1602
-  br i1 %i.ahy, label %middle.block1610, label %vector.body1603, !llvm.loop !74
+  br i1 %i.ahy, label %middle.block1610, label %vector.body1603, !llvm.loop !75
 
 middle.block1610:                                 ; preds = %vector.body1603
   %cmp.n1611 = icmp eq i64 %i.aeo, %n.vec1602
@@ -824,7 +879,7 @@ vec.epilog.vector.body1620:                       ; preds = %vec.epilog.vector.b
   store <4 x double> %wide.load1622, ptr %gep2051.a, align 8, !tbaa !9
   %index.next1623 = add nuw i64 %index1621, 4     ; 2 uses
   %i.aib = icmp eq i64 %index.next1623, %n.vec1619
-  br i1 %i.aib, label %vec.epilog.middle.block1624, label %vec.epilog.vector.body1620, !llvm.loop !75
+  br i1 %i.aib, label %vec.epilog.middle.block1624, label %vec.epilog.vector.body1620, !llvm.loop !76
 
 vec.epilog.middle.block1624:                      ; preds = %vec.epilog.vector.body1620
   %cmp.n1625 = icmp eq i64 %i.aeo, %n.vec1619
@@ -852,7 +907,7 @@ vec.epilog.middle.block1624:                      ; preds = %vec.epilog.vector.b
   %indvars.iv.next910.prol = add nsw i64 %indvars.iv909.prol, 1 ; 2 uses
   %prol.iter1929.next = add i32 %prol.iter1929, 1 ; 2 uses
   %prol.iter1929.cmp.not = icmp eq i32 %prol.iter1929.next, %xtraiter1927
-  br i1 %prol.iter1929.cmp.not, label %.lr.ph610.prol.loopexit, label %.lr.ph610.prol, !llvm.loop !76
+  br i1 %prol.iter1929.cmp.not, label %.lr.ph610.prol.loopexit, label %.lr.ph610.prol, !llvm.loop !77
 
 .lr.ph610.prol.loopexit:                          ; preds = %.lr.ph610.prol, %.lr.ph610.preheader
   %indvars.iv.next906.lcssa.unr = phi i64 [ poison, %.lr.ph610.preheader ], [ %indvars.iv.next906.prol, %.lr.ph610.prol ]
@@ -923,7 +978,7 @@ vec.epilog.middle.block1624:                      ; preds = %vec.epilog.vector.b
   %indvars.iv.next910.7 = add nsw i64 %indvars.iv909, 8 ; 2 uses
   %lftr.wideiv914.7 = trunc i64 %indvars.iv.next910.7 to i32
   %exitcond915.not.7 = icmp eq i32 %i.v, %lftr.wideiv914.7
-  br i1 %exitcond915.not.7, label %._crit_edge611, label %.lr.ph610, !llvm.loop !77
+  br i1 %exitcond915.not.7, label %._crit_edge611, label %.lr.ph610, !llvm.loop !78
 
 ._crit_edge611:                                   ; preds = %.lr.ph610.prol.loopexit, %.lr.ph610, %middle.block1610, %vec.epilog.middle.block1624, %.loopexit1811
   %.21.lcssa.in = phi i64 [ %indvars.iv.next895.lcssa, %.loopexit1811 ], [ %i.aia, %vec.epilog.middle.block1624 ], [ %i.ahr, %middle.block1610 ], [ %indvars.iv.next906.lcssa.unr, %.lr.ph610.prol.loopexit ], [ %indvars.iv.next906.7, %.lr.ph610 ]
@@ -932,7 +987,7 @@ vec.epilog.middle.block1624:                      ; preds = %vec.epilog.vector.b
   %.not430.not = icmp sgt i64 %indvars.iv.next917, %i.aed
   %indvars.iv.next908 = add i32 %indvars.iv907, -1
   %indvar.next1596 = add i64 %indvar1595, 1
-  br i1 %.not430.not, label %iter.check1653, label %.loopexit, !llvm.loop !78
+  br i1 %.not430.not, label %iter.check1653, label %.loopexit, !llvm.loop !79
 
 iter.check1468:                                   ; preds = %.thread461
   %i.ajo = mul nsw i32 %i.v, %i.d
@@ -986,7 +1041,7 @@ vector.body1458:                                  ; preds = %vector.body1458, %v
   store <4 x double> %wide.load1463, ptr %i.akh, align 8, !tbaa !9
   %index.next1464 = add nuw i64 %index1459, 16    ; 2 uses
   %i.aki = icmp eq i64 %index.next1464, %n.vec1457
-  br i1 %i.aki, label %middle.block1465, label %vector.body1458, !llvm.loop !79
+  br i1 %i.aki, label %middle.block1465, label %vector.body1458, !llvm.loop !80
 
 middle.block1465:                                 ; preds = %vector.body1458
   %cmp.n1466 = icmp eq i64 %i.aju, %n.vec1457
@@ -1011,7 +1066,7 @@ vec.epilog.vector.body1474:                       ; preds = %vec.epilog.vector.b
   store <4 x double> %wide.load1476, ptr %i.akk, align 8, !tbaa !9
   %index.next1477 = add nuw i64 %index1475, 4     ; 2 uses
   %i.akl = icmp eq i64 %index.next1477, %n.vec1473
-  br i1 %i.akl, label %vec.epilog.middle.block1478, label %vec.epilog.vector.body1474, !llvm.loop !80
+  br i1 %i.akl, label %vec.epilog.middle.block1478, label %vec.epilog.vector.body1474, !llvm.loop !81
 
 vec.epilog.middle.block1478:                      ; preds = %vec.epilog.vector.body1474
   %cmp.n1479 = icmp eq i64 %i.aju, %n.vec1473
@@ -1032,7 +1087,7 @@ vec.epilog.scalar.ph1469:                         ; preds = %vec.epilog.scalar.p
   %indvars.iv.next842 = add nuw nsw i64 %indvars.iv841, 1 ; 2 uses
   %indvars.iv.next844 = add nuw nsw i64 %indvars.iv843, 1 ; 2 uses
   %.not424.not = icmp samesign ult i64 %indvars.iv.next844, %i.ajs
-  br i1 %.not424.not, label %vec.epilog.scalar.ph1469, label %._crit_edge579, !llvm.loop !81
+  br i1 %.not424.not, label %vec.epilog.scalar.ph1469, label %._crit_edge579, !llvm.loop !82
 
 ._crit_edge579:                                   ; preds = %vec.epilog.scalar.ph1469, %vec.epilog.middle.block1478, %middle.block1465
   %indvars.iv.next842.lcssa = phi i64 [ %n.vec1473, %vec.epilog.middle.block1478 ], [ %n.vec1457, %middle.block1465 ], [ %indvars.iv.next842, %vec.epilog.scalar.ph1469 ] ; 2 uses
@@ -1123,7 +1178,7 @@ vector.body1523:                                  ; preds = %vector.body1523, %v
   store <4 x double> %wide.load1532, ptr %i.ama, align 8, !tbaa !9
   %index.next1533 = add nuw i64 %index1524, 16    ; 2 uses
   %i.amb = icmp eq i64 %index.next1533, %n.vec1522
-  br i1 %i.amb, label %middle.block1534, label %vector.body1523, !llvm.loop !82
+  br i1 %i.amb, label %middle.block1534, label %vector.body1523, !llvm.loop !83
 
 middle.block1534:                                 ; preds = %vector.body1523
   %bin.rdx1535 = add <4 x i32> %i.alq, %i.alp
@@ -1156,7 +1211,7 @@ vec.epilog.vector.body1547:                       ; preds = %vec.epilog.vector.b
   store <4 x double> %wide.load1550, ptr %i.ami, align 8, !tbaa !9
   %index.next1551 = add nuw i64 %index1548, 4     ; 2 uses
   %i.amj = icmp eq i64 %index.next1551, %n.vec1546
-  br i1 %i.amj, label %vec.epilog.middle.block1552, label %vec.epilog.vector.body1547, !llvm.loop !83
+  br i1 %i.amj, label %vec.epilog.middle.block1552, label %vec.epilog.vector.body1547, !llvm.loop !84
 
 vec.epilog.middle.block1552:                      ; preds = %vec.epilog.vector.body1547
   %i.amk = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.amg) ; 2 uses
@@ -1187,7 +1242,7 @@ vec.epilog.scalar.ph1542.prol:                    ; preds = %vec.epilog.scalar.p
   %indvars.iv.next849.prol = add nuw nsw i64 %indvars.iv848.prol, 1 ; 2 uses
   %prol.iter1917.next = add i64 %prol.iter1917, 1 ; 2 uses
   %prol.iter1917.cmp.not = icmp eq i64 %prol.iter1917.next, %xtraiter1915
-  br i1 %prol.iter1917.cmp.not, label %vec.epilog.scalar.ph1542.prol.loopexit, label %vec.epilog.scalar.ph1542.prol, !llvm.loop !84
+  br i1 %prol.iter1917.cmp.not, label %vec.epilog.scalar.ph1542.prol.loopexit, label %vec.epilog.scalar.ph1542.prol, !llvm.loop !85
 
 vec.epilog.scalar.ph1542.prol.loopexit:           ; preds = %vec.epilog.scalar.ph1542.prol, %vec.epilog.scalar.ph1542.preheader
   %indvars.iv858.lcssa1851.unr = phi i32 [ poison, %vec.epilog.scalar.ph1542.preheader ], [ %indvars.iv858.prol, %vec.epilog.scalar.ph1542.prol ]
@@ -1232,7 +1287,7 @@ vec.epilog.scalar.ph1542:                         ; preds = %vec.epilog.scalar.p
   %indvars.iv.next847.3 = add nsw i64 %indvars.iv846, 4 ; 2 uses
   %indvars.iv.next849.3 = add nuw nsw i64 %indvars.iv848, 4 ; 2 uses
   %exitcond856.not.3 = icmp eq i64 %indvars.iv.next849.3, %indvars.iv871
-  br i1 %exitcond856.not.3, label %.loopexit1812, label %vec.epilog.scalar.ph1542, !llvm.loop !85
+  br i1 %exitcond856.not.3, label %.loopexit1812, label %vec.epilog.scalar.ph1542, !llvm.loop !86
 
 .loopexit1812:                                    ; preds = %vec.epilog.scalar.ph1542.prol.loopexit, %vec.epilog.scalar.ph1542, %vec.epilog.middle.block1552, %middle.block1534
   %indvars.iv858.lcssa = phi i32 [ %i.amk, %vec.epilog.middle.block1552 ], [ %i.amc, %middle.block1534 ], [ %indvars.iv858.lcssa1851.unr, %vec.epilog.scalar.ph1542.prol.loopexit ], [ %indvars.iv858.3, %vec.epilog.scalar.ph1542 ]
@@ -1293,7 +1348,7 @@ vector.body1489:                                  ; preds = %vector.body1489, %v
   store <4 x double> %wide.load1494, ptr %i.any, align 8, !tbaa !9
   %index.next1495 = add nuw i64 %index1490, 16    ; 2 uses
   %i.anz = icmp eq i64 %index.next1495, %n.vec1488
-  br i1 %i.anz, label %middle.block1496, label %vector.body1489, !llvm.loop !86
+  br i1 %i.anz, label %middle.block1496, label %vector.body1489, !llvm.loop !87
 
 middle.block1496:                                 ; preds = %vector.body1489
   %cmp.n1497 = icmp eq i64 %i.ala, %n.vec1488
@@ -1320,7 +1375,7 @@ vec.epilog.vector.body1506:                       ; preds = %vec.epilog.vector.b
   store <4 x double> %wide.load1508, ptr %gep2039, align 8, !tbaa !9
   %index.next1509 = add nuw i64 %index1507, 4     ; 2 uses
   %i.aoc = icmp eq i64 %index.next1509, %n.vec1505
-  br i1 %i.aoc, label %vec.epilog.middle.block1510, label %vec.epilog.vector.body1506, !llvm.loop !87
+  br i1 %i.aoc, label %vec.epilog.middle.block1510, label %vec.epilog.vector.body1506, !llvm.loop !88
 
 vec.epilog.middle.block1510:                      ; preds = %vec.epilog.vector.body1506
   %cmp.n1511 = icmp eq i64 %i.ala, %n.vec1505
@@ -1347,7 +1402,7 @@ vec.epilog.scalar.ph1501.prol:                    ; preds = %vec.epilog.scalar.p
   %indvars.iv.next865.prol = add nsw i64 %indvars.iv864.prol, 1 ; 2 uses
   %prol.iter1920.next = add i32 %prol.iter1920, 1 ; 2 uses
   %prol.iter1920.cmp.not = icmp eq i32 %prol.iter1920.next, %xtraiter1918
-  br i1 %prol.iter1920.cmp.not, label %vec.epilog.scalar.ph1501.prol.loopexit, label %vec.epilog.scalar.ph1501.prol, !llvm.loop !88
+  br i1 %prol.iter1920.cmp.not, label %vec.epilog.scalar.ph1501.prol.loopexit, label %vec.epilog.scalar.ph1501.prol, !llvm.loop !89
 
 vec.epilog.scalar.ph1501.prol.loopexit:           ; preds = %vec.epilog.scalar.ph1501.prol, %vec.epilog.scalar.ph1501.preheader
   %indvars.iv.next861.lcssa.unr = phi i64 [ poison, %vec.epilog.scalar.ph1501.preheader ], [ %indvars.iv.next861.prol, %vec.epilog.scalar.ph1501.prol ]
@@ -1410,7 +1465,7 @@ vec.epilog.scalar.ph1501:                         ; preds = %vec.epilog.scalar.p
   %indvars.iv.next865.7 = add nsw i64 %indvars.iv864, 8 ; 2 uses
   %lftr.wideiv869.7 = trunc i64 %indvars.iv.next865.7 to i32
   %exitcond870.not.7 = icmp eq i32 %i.i, %lftr.wideiv869.7
-  br i1 %exitcond870.not.7, label %._crit_edge588, label %vec.epilog.scalar.ph1501, !llvm.loop !89
+  br i1 %exitcond870.not.7, label %._crit_edge588, label %vec.epilog.scalar.ph1501, !llvm.loop !90
 
 ._crit_edge588:                                   ; preds = %vec.epilog.scalar.ph1501.prol.loopexit, %vec.epilog.scalar.ph1501, %middle.block1496, %vec.epilog.middle.block1510, %.loopexit1812
   %.25.lcssa.in = phi i64 [ %indvars.iv.next847.lcssa, %.loopexit1812 ], [ %i.aob, %vec.epilog.middle.block1510 ], [ %i.ans, %middle.block1496 ], [ %indvars.iv.next861.lcssa.unr, %vec.epilog.scalar.ph1501.prol.loopexit ], [ %indvars.iv.next861.7, %vec.epilog.scalar.ph1501 ] ; 2 uses
@@ -1418,7 +1473,7 @@ vec.epilog.scalar.ph1501:                         ; preds = %vec.epilog.scalar.p
   %indvars.iv.next872 = add nuw nsw i64 %indvars.iv871, 1
   %indvars.iv.next863 = add nuw i32 %indvars.iv862, 1
   %exitcond879.not = icmp eq i64 %indvars.iv.next874, %wide.trip.count878
-  br i1 %exitcond879.not, label %.preheader471.preheader, label %iter.check1541, !llvm.loop !90
+  br i1 %exitcond879.not, label %.preheader471.preheader, label %iter.check1541, !llvm.loop !91
 
 .preheader471.preheader:                          ; preds = %._crit_edge588, %._crit_edge579
   %.23.lcssa = phi i64 [ %indvars.iv.next842.lcssa, %._crit_edge579 ], [ %.25.lcssa.in, %._crit_edge588 ]
@@ -1493,7 +1548,7 @@ vector.body1568:                                  ; preds = %vector.body1568, %v
   store <4 x double> %wide.load1573, ptr %i.aqm, align 8, !tbaa !9
   %index.next1574 = add nuw i64 %index1569, 16    ; 2 uses
   %i.aqn = icmp eq i64 %index.next1574, %n.vec1567
-  br i1 %i.aqn, label %middle.block1575, label %vector.body1568, !llvm.loop !91
+  br i1 %i.aqn, label %middle.block1575, label %vector.body1568, !llvm.loop !92
 
 middle.block1575:                                 ; preds = %vector.body1568
   br i1 %cmp.n1576, label %._crit_edge599, label %vec.epilog.iter.check1580
@@ -1515,7 +1570,7 @@ vec.epilog.vector.body1584:                       ; preds = %vec.epilog.vector.b
   store <4 x double> %wide.load1586, ptr %i.aqr, align 8, !tbaa !9
   %index.next1587 = add nuw i64 %index1585, 4     ; 2 uses
   %i.aqs = icmp eq i64 %index.next1587, %n.vec1583
-  br i1 %i.aqs, label %vec.epilog.middle.block1588, label %vec.epilog.vector.body1584, !llvm.loop !92
+  br i1 %i.aqs, label %vec.epilog.middle.block1588, label %vec.epilog.vector.body1584, !llvm.loop !93
 
 vec.epilog.middle.block1588:                      ; preds = %vec.epilog.vector.body1584
   br i1 %cmp.n1589, label %._crit_edge599, label %vec.epilog.scalar.ph1579.preheader
@@ -1541,7 +1596,7 @@ vec.epilog.scalar.ph1579.prol:                    ; preds = %vec.epilog.scalar.p
   %indvars.iv.next883.prol = add nuw nsw i64 %indvars.iv882.prol, 1 ; 2 uses
   %prol.iter1923.next = add i64 %prol.iter1923, 1 ; 2 uses
   %prol.iter1923.cmp.not = icmp eq i64 %prol.iter1923.next, %xtraiter1921
-  br i1 %prol.iter1923.cmp.not, label %vec.epilog.scalar.ph1579.prol.loopexit, label %vec.epilog.scalar.ph1579.prol, !llvm.loop !93
+  br i1 %prol.iter1923.cmp.not, label %vec.epilog.scalar.ph1579.prol.loopexit, label %vec.epilog.scalar.ph1579.prol, !llvm.loop !94
 
 vec.epilog.scalar.ph1579.prol.loopexit:           ; preds = %vec.epilog.scalar.ph1579.prol, %vec.epilog.scalar.ph1579.preheader
   %indvars.iv.next881.lcssa1844.unr = phi i64 [ poison, %vec.epilog.scalar.ph1579.preheader ], [ %indvars.iv.next881.prol, %vec.epilog.scalar.ph1579.prol ]
@@ -1611,14 +1666,14 @@ vec.epilog.scalar.ph1579:                         ; preds = %vec.epilog.scalar.p
   %indvars.iv.next881.7 = add nsw i64 %indvars.iv880, 8 ; 2 uses
   %indvars.iv.next883.7 = add nuw nsw i64 %indvars.iv882, 8 ; 2 uses
   %exitcond888.not.7 = icmp eq i64 %indvars.iv.next883.7, %wide.trip.count887
-  br i1 %exitcond888.not.7, label %._crit_edge599, label %vec.epilog.scalar.ph1579, !llvm.loop !94
+  br i1 %exitcond888.not.7, label %._crit_edge599, label %vec.epilog.scalar.ph1579, !llvm.loop !95
 
 ._crit_edge599:                                   ; preds = %vec.epilog.scalar.ph1579.prol.loopexit, %vec.epilog.scalar.ph1579, %vec.epilog.middle.block1588, %middle.block1575
   %indvars.iv.next881.lcssa = phi i64 [ %i.aqo, %vec.epilog.middle.block1588 ], [ %i.aqd, %middle.block1575 ], [ %indvars.iv.next881.lcssa1844.unr, %vec.epilog.scalar.ph1579.prol.loopexit ], [ %indvars.iv.next881.7, %vec.epilog.scalar.ph1579 ]
   %indvars.iv.next890 = add nsw i64 %indvars.iv889, 1 ; 2 uses
   %exitcond892.not = icmp eq i64 %indvars.iv.next890, %wide.trip.count891
   %indvar.next1561 = add i64 %indvar1560, 1
-  br i1 %exitcond892.not, label %.loopexit, label %iter.check1578, !llvm.loop !95
+  br i1 %exitcond892.not, label %.loopexit, label %iter.check1578, !llvm.loop !96
 
 .preheader468.us.preheader:                       ; preds = %bb.p
   %i.ase = lshr exact i32 %i.i, 1
@@ -1689,7 +1744,7 @@ vector.body1679:                                  ; preds = %vector.body1679, %v
   store <4 x double> %wide.load1684, ptr %i.atc, align 8, !tbaa !9
   %index.next1685 = add nuw i64 %index1680, 16    ; 2 uses
   %i.atd = icmp eq i64 %index.next1685, %n.vec1678
-  br i1 %i.atd, label %middle.block1686, label %vector.body1679, !llvm.loop !96
+  br i1 %i.atd, label %middle.block1686, label %vector.body1679, !llvm.loop !97
 
 middle.block1686:                                 ; preds = %vector.body1679
   br i1 %cmp.n1687, label %._crit_edge622.us, label %vec.epilog.iter.check1692
@@ -1712,7 +1767,7 @@ vec.epilog.vector.body1696:                       ; preds = %vec.epilog.vector.b
   store <4 x double> %wide.load1698, ptr %i.atg, align 8, !tbaa !9
   %index.next1699 = add nuw i64 %index1697, 4     ; 2 uses
   %i.ath = icmp eq i64 %index.next1699, %n.vec1695
-  br i1 %i.ath, label %vec.epilog.middle.block1700, label %vec.epilog.vector.body1696, !llvm.loop !97
+  br i1 %i.ath, label %vec.epilog.middle.block1700, label %vec.epilog.vector.body1696, !llvm.loop !98
 
 vec.epilog.middle.block1700:                      ; preds = %vec.epilog.vector.body1696
   br i1 %cmp.n1701, label %._crit_edge622.us, label %vec.epilog.scalar.ph1691.preheader
@@ -1733,13 +1788,13 @@ vec.epilog.scalar.ph1691:                         ; preds = %vec.epilog.scalar.p
   %indvars.iv.next920 = add nsw i64 %indvars.iv919, 1 ; 2 uses
   %indvars.iv.next922 = add nuw nsw i64 %indvars.iv921, 1 ; 2 uses
   %.not423.not.us = icmp samesign ult i64 %indvars.iv.next922, %i.ash
-  br i1 %.not423.not.us, label %vec.epilog.scalar.ph1691, label %._crit_edge622.us, !llvm.loop !98
+  br i1 %.not423.not.us, label %vec.epilog.scalar.ph1691, label %._crit_edge622.us, !llvm.loop !99
 
 ._crit_edge622.us:                                ; preds = %vec.epilog.scalar.ph1691, %vec.epilog.middle.block1700, %middle.block1686
   %indvars.iv.next920.lcssa = phi i64 [ %i.ate, %vec.epilog.middle.block1700 ], [ %i.asu, %middle.block1686 ], [ %indvars.iv.next920, %vec.epilog.scalar.ph1691 ] ; 3 uses
   %indvars.iv.next925 = add nuw nsw i64 %indvars.iv924, 1 ; 2 uses
   %exitcond928.not = icmp eq i64 %indvars.iv.next925, %wide.trip.count927
-  br i1 %exitcond928.not, label %.split627.us, label %iter.check1690, !llvm.loop !99
+  br i1 %exitcond928.not, label %.split627.us, label %iter.check1690, !llvm.loop !100
 
 .split627.us:                                     ; preds = %._crit_edge622.us
   %.not419638 = icmp ult i32 %i.i, 4
@@ -1829,7 +1884,7 @@ vector.body1745:                                  ; preds = %vector.body1745, %v
   store <4 x double> %wide.load1754, ptr %i.auy, align 8, !tbaa !9
   %index.next1755 = add nuw i64 %index1746, 16    ; 2 uses
   %i.auz = icmp eq i64 %index.next1755, %n.vec1744
-  br i1 %i.auz, label %middle.block1756, label %vector.body1745, !llvm.loop !100
+  br i1 %i.auz, label %middle.block1756, label %vector.body1745, !llvm.loop !101
 
 middle.block1756:                                 ; preds = %vector.body1745
   %bin.rdx1757 = add <4 x i32> %i.auo, %i.aun
@@ -1862,7 +1917,7 @@ vec.epilog.vector.body1769:                       ; preds = %vec.epilog.vector.b
   store <4 x double> %wide.load1772, ptr %i.avg, align 8, !tbaa !9
   %index.next1773 = add nuw i64 %index1770, 4     ; 2 uses
   %i.avh = icmp eq i64 %index.next1773, %n.vec1768
-  br i1 %i.avh, label %vec.epilog.middle.block1774, label %vec.epilog.vector.body1769, !llvm.loop !101
+  br i1 %i.avh, label %vec.epilog.middle.block1774, label %vec.epilog.vector.body1769, !llvm.loop !102
 
 vec.epilog.middle.block1774:                      ; preds = %vec.epilog.vector.body1769
   %i.avi = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.ave) ; 2 uses
@@ -1893,7 +1948,7 @@ vec.epilog.scalar.ph1764.prol:                    ; preds = %vec.epilog.scalar.p
   %indvars.iv.next933.prol = add nuw nsw i64 %indvars.iv932.prol, 1 ; 2 uses
   %prol.iter1932.next = add i64 %prol.iter1932, 1 ; 2 uses
   %prol.iter1932.cmp.not = icmp eq i64 %prol.iter1932.next, %xtraiter1930
-  br i1 %prol.iter1932.cmp.not, label %vec.epilog.scalar.ph1764.prol.loopexit, label %vec.epilog.scalar.ph1764.prol, !llvm.loop !102
+  br i1 %prol.iter1932.cmp.not, label %vec.epilog.scalar.ph1764.prol.loopexit, label %vec.epilog.scalar.ph1764.prol, !llvm.loop !103
 
 vec.epilog.scalar.ph1764.prol.loopexit:           ; preds = %vec.epilog.scalar.ph1764.prol, %vec.epilog.scalar.ph1764.preheader
   %indvars.iv941.lcssa1833.unr = phi i32 [ poison, %vec.epilog.scalar.ph1764.preheader ], [ %indvars.iv941.prol, %vec.epilog.scalar.ph1764.prol ]
@@ -1958,7 +2013,7 @@ vec.epilog.scalar.ph1764:                         ; preds = %vec.epilog.scalar.p
   %indvars.iv.next931.7 = add nsw i64 %indvars.iv930, 8 ; 2 uses
   %indvars.iv.next933.7 = add nuw nsw i64 %indvars.iv932, 8 ; 2 uses
   %exitcond940.not.7 = icmp eq i64 %indvars.iv.next933.7, %indvars.iv954
-  br i1 %exitcond940.not.7, label %.loopexit1810, label %vec.epilog.scalar.ph1764, !llvm.loop !103
+  br i1 %exitcond940.not.7, label %.loopexit1810, label %vec.epilog.scalar.ph1764, !llvm.loop !104
 
 .loopexit1810:                                    ; preds = %vec.epilog.scalar.ph1764.prol.loopexit, %vec.epilog.scalar.ph1764, %vec.epilog.middle.block1774, %middle.block1756
   %indvars.iv941.lcssa = phi i32 [ %i.avi, %vec.epilog.middle.block1774 ], [ %i.ava, %middle.block1756 ], [ %indvars.iv941.lcssa1833.unr, %vec.epilog.scalar.ph1764.prol.loopexit ], [ %indvars.iv941.7, %vec.epilog.scalar.ph1764 ]
@@ -2018,7 +2073,7 @@ vector.body1713:                                  ; preds = %vector.body1713, %v
   store <4 x double> %wide.load1718, ptr %i.axj, align 8, !tbaa !9
   %index.next1719 = add nuw i64 %index1714, 16    ; 2 uses
   %i.axk = icmp eq i64 %index.next1719, %n.vec1712
-  br i1 %i.axk, label %middle.block1720, label %vector.body1713, !llvm.loop !104
+  br i1 %i.axk, label %middle.block1720, label %vector.body1713, !llvm.loop !105
 
 middle.block1720:                                 ; preds = %vector.body1713
   %cmp.n1721 = icmp eq i64 %i.aty, %n.vec1712
@@ -2045,7 +2100,7 @@ vec.epilog.vector.body1730:                       ; preds = %vec.epilog.vector.b
   store <4 x double> %wide.load1732, ptr %gep2063, align 8, !tbaa !9
   %index.next1733 = add nuw i64 %index1731, 4     ; 2 uses
   %i.axn = icmp eq i64 %index.next1733, %n.vec1729
-  br i1 %i.axn, label %vec.epilog.middle.block1734, label %vec.epilog.vector.body1730, !llvm.loop !105
+  br i1 %i.axn, label %vec.epilog.middle.block1734, label %vec.epilog.vector.body1730, !llvm.loop !106
 
 vec.epilog.middle.block1734:                      ; preds = %vec.epilog.vector.body1730
   %cmp.n1735 = icmp eq i64 %i.aty, %n.vec1729
@@ -2073,7 +2128,7 @@ vec.epilog.middle.block1734:                      ; preds = %vec.epilog.vector.b
   %indvars.iv.next948.prol = add nsw i64 %indvars.iv947.prol, 1 ; 2 uses
   %prol.iter1935.next = add i32 %prol.iter1935, 1 ; 2 uses
   %prol.iter1935.cmp.not = icmp eq i32 %prol.iter1935.next, %xtraiter1933
-  br i1 %prol.iter1935.cmp.not, label %.lr.ph635.prol.loopexit, label %.lr.ph635.prol, !llvm.loop !106
+  br i1 %prol.iter1935.cmp.not, label %.lr.ph635.prol.loopexit, label %.lr.ph635.prol, !llvm.loop !107
 
 .lr.ph635.prol.loopexit:                          ; preds = %.lr.ph635.prol, %.lr.ph635.preheader
   %indvars.iv.next944.lcssa.unr = phi i64 [ poison, %.lr.ph635.preheader ], [ %indvars.iv.next944.prol, %.lr.ph635.prol ]
@@ -2144,7 +2199,7 @@ vec.epilog.middle.block1734:                      ; preds = %vec.epilog.vector.b
   %indvars.iv.next948.7 = add nsw i64 %indvars.iv947, 8 ; 2 uses
   %lftr.wideiv952.7 = trunc i64 %indvars.iv.next948.7 to i32
   %exitcond953.not.7 = icmp eq i32 %i.i, %lftr.wideiv952.7
-  br i1 %exitcond953.not.7, label %._crit_edge636, label %.lr.ph635, !llvm.loop !107
+  br i1 %exitcond953.not.7, label %._crit_edge636, label %.lr.ph635, !llvm.loop !108
 
 ._crit_edge636:                                   ; preds = %.lr.ph635.prol.loopexit, %.lr.ph635, %middle.block1720, %vec.epilog.middle.block1734, %.loopexit1810
   %.32.lcssa.in = phi i64 [ %indvars.iv.next931.lcssa, %.loopexit1810 ], [ %i.axm, %vec.epilog.middle.block1734 ], [ %i.axd, %middle.block1720 ], [ %indvars.iv.next944.lcssa.unr, %.lr.ph635.prol.loopexit ], [ %indvars.iv.next944.7, %.lr.ph635 ] ; 2 uses
@@ -2152,7 +2207,7 @@ vec.epilog.middle.block1734:                      ; preds = %vec.epilog.vector.b
   %indvars.iv.next955 = add nuw nsw i64 %indvars.iv954, 1
   %indvars.iv.next946 = add nuw i32 %indvars.iv945, 1
   %exitcond962.not = icmp eq i64 %indvars.iv.next957, %wide.trip.count961
-  br i1 %exitcond962.not, label %._crit_edge641.loopexit, label %iter.check1763, !llvm.loop !108
+  br i1 %exitcond962.not, label %._crit_edge641.loopexit, label %iter.check1763, !llvm.loop !109
 
 ._crit_edge641.loopexit:                          ; preds = %._crit_edge636
   %sext984 = shl i64 %.32.lcssa.in, 32
@@ -2210,7 +2265,7 @@ vector.body1786:                                  ; preds = %vector.body1786, %v
   store <4 x double> %wide.load1791, ptr %i.azt, align 8, !tbaa !9
   %index.next1792 = add nuw i64 %index1787, 16    ; 2 uses
   %i.azu = icmp eq i64 %index.next1792, %n.vec1785
-  br i1 %i.azu, label %middle.block1793, label %vector.body1786, !llvm.loop !109
+  br i1 %i.azu, label %middle.block1793, label %vector.body1786, !llvm.loop !110
 
 middle.block1793:                                 ; preds = %vector.body1786
   %cmp.n1794 = icmp eq i64 %n.vec1785, %wide.trip.count971
@@ -2235,7 +2290,7 @@ vec.epilog.vector.body1802:                       ; preds = %vec.epilog.vector.b
   store <4 x double> %wide.load1804, ptr %i.azy, align 8, !tbaa !9
   %index.next1805 = add nuw i64 %index1803, 4     ; 2 uses
   %i.azz = icmp eq i64 %index.next1805, %n.vec1801
-  br i1 %i.azz, label %vec.epilog.middle.block1806, label %vec.epilog.vector.body1802, !llvm.loop !110
+  br i1 %i.azz, label %vec.epilog.middle.block1806, label %vec.epilog.vector.body1802, !llvm.loop !111
 
 vec.epilog.middle.block1806:                      ; preds = %vec.epilog.vector.body1802
   %cmp.n1807 = icmp eq i64 %n.vec1801, %wide.trip.count971
@@ -2261,7 +2316,7 @@ vec.epilog.scalar.ph1797.prol:                    ; preds = %vec.epilog.scalar.p
   %indvars.iv.next967.prol = add nuw nsw i64 %indvars.iv966.prol, 1 ; 2 uses
   %prol.iter1938.next = add i64 %prol.iter1938, 1 ; 2 uses
   %prol.iter1938.cmp.not = icmp eq i64 %prol.iter1938.next, %xtraiter1936
-  br i1 %prol.iter1938.cmp.not, label %vec.epilog.scalar.ph1797.prol.loopexit, label %vec.epilog.scalar.ph1797.prol, !llvm.loop !111
+  br i1 %prol.iter1938.cmp.not, label %vec.epilog.scalar.ph1797.prol.loopexit, label %vec.epilog.scalar.ph1797.prol, !llvm.loop !112
 
 vec.epilog.scalar.ph1797.prol.loopexit:           ; preds = %vec.epilog.scalar.ph1797.prol, %vec.epilog.scalar.ph1797.preheader
   %indvars.iv966.unr = phi i64 [ %indvars.iv966.ph, %vec.epilog.scalar.ph1797.preheader ], [ %indvars.iv.next967.prol, %vec.epilog.scalar.ph1797.prol ]
@@ -2322,7 +2377,7 @@ vec.epilog.scalar.ph1797:                         ; preds = %vec.epilog.scalar.p
   %indvars.iv.next965.7 = add nsw i64 %indvars.iv964, 8
   %indvars.iv.next967.7 = add nuw nsw i64 %indvars.iv966, 8 ; 2 uses
   %exitcond972.not.7 = icmp eq i64 %indvars.iv.next967.7, %wide.trip.count971
-  br i1 %exitcond972.not.7, label %.loopexit, label %vec.epilog.scalar.ph1797, !llvm.loop !112
+  br i1 %exitcond972.not.7, label %.loopexit, label %vec.epilog.scalar.ph1797, !llvm.loop !113
 
 .loopexit:                                        ; preds = %._crit_edge, %._crit_edge510, %._crit_edge535, %._crit_edge558, %._crit_edge569, %._crit_edge599, %._crit_edge611, %vec.epilog.scalar.ph1797.prol.loopexit, %vec.epilog.scalar.ph1797, %middle.block1793, %vec.epilog.middle.block1806, %._crit_edge529, %._crit_edge549, %bb.i, %bb.j, %.thread
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #4
@@ -2425,53 +2480,54 @@ attributes #4 = { nounwind }
 !61 = distinct !{!61, !12}
 !62 = distinct !{!62, !12, !13, !14}
 !63 = distinct !{!63, !12, !13, !14}
-!64 = distinct !{!64, !12, !13, !14}
+!64 = distinct !{!64, !18}
 !65 = distinct !{!65, !12, !13, !14}
-!66 = distinct !{!66, !18}
-!67 = distinct !{!67, !12, !13}
+!66 = distinct !{!66, !12, !13, !14}
+!67 = distinct !{!67, !18}
 !68 = distinct !{!68, !12, !13}
-!69 = distinct !{!69, !12}
-!70 = distinct !{!70, !12, !13, !14}
+!69 = distinct !{!69, !12, !13}
+!70 = distinct !{!70, !12}
 !71 = distinct !{!71, !12, !13, !14}
-!72 = distinct !{!72, !18}
-!73 = distinct !{!73, !12, !13}
-!74 = distinct !{!74, !12, !13, !14}
+!72 = distinct !{!72, !12, !13, !14}
+!73 = distinct !{!73, !18}
+!74 = distinct !{!74, !12, !13}
 !75 = distinct !{!75, !12, !13, !14}
-!76 = distinct !{!76, !18}
-!77 = distinct !{!77, !12, !13}
-!78 = distinct !{!78, !12}
-!79 = distinct !{!79, !12, !13, !14}
+!76 = distinct !{!76, !12, !13, !14}
+!77 = distinct !{!77, !18}
+!78 = distinct !{!78, !12, !13}
+!79 = distinct !{!79, !12}
 !80 = distinct !{!80, !12, !13, !14}
-!81 = distinct !{!81, !12, !13}
-!82 = distinct !{!82, !12, !13, !14}
+!81 = distinct !{!81, !12, !13, !14}
+!82 = distinct !{!82, !12, !13}
 !83 = distinct !{!83, !12, !13, !14}
-!84 = distinct !{!84, !18}
-!85 = distinct !{!85, !12, !13}
-!86 = distinct !{!86, !12, !13, !14}
+!84 = distinct !{!84, !12, !13, !14}
+!85 = distinct !{!85, !18}
+!86 = distinct !{!86, !12, !13}
 !87 = distinct !{!87, !12, !13, !14}
-!88 = distinct !{!88, !18}
-!89 = distinct !{!89, !12, !13}
-!90 = distinct !{!90, !12}
-!91 = distinct !{!91, !12, !13, !14}
+!88 = distinct !{!88, !12, !13, !14}
+!89 = distinct !{!89, !18}
+!90 = distinct !{!90, !12, !13}
+!91 = distinct !{!91, !12}
 !92 = distinct !{!92, !12, !13, !14}
-!93 = distinct !{!93, !18}
-!94 = distinct !{!94, !12, !13}
-!95 = distinct !{!95, !12}
-!96 = distinct !{!96, !12, !13, !14}
+!93 = distinct !{!93, !12, !13, !14}
+!94 = distinct !{!94, !18}
+!95 = distinct !{!95, !12, !13}
+!96 = distinct !{!96, !12}
 !97 = distinct !{!97, !12, !13, !14}
-!98 = distinct !{!98, !12, !13}
-!99 = distinct !{!99, !12}
-!100 = distinct !{!100, !12, !13, !14}
+!98 = distinct !{!98, !12, !13, !14}
+!99 = distinct !{!99, !12, !13}
+!100 = distinct !{!100, !12}
 !101 = distinct !{!101, !12, !13, !14}
-!102 = distinct !{!102, !18}
-!103 = distinct !{!103, !12, !13}
-!104 = distinct !{!104, !12, !13, !14}
+!102 = distinct !{!102, !12, !13, !14}
+!103 = distinct !{!103, !18}
+!104 = distinct !{!104, !12, !13}
 !105 = distinct !{!105, !12, !13, !14}
-!106 = distinct !{!106, !18}
-!107 = distinct !{!107, !12, !13}
-!108 = distinct !{!108, !12}
-!109 = distinct !{!109, !12, !13, !14}
+!106 = distinct !{!106, !12, !13, !14}
+!107 = distinct !{!107, !18}
+!108 = distinct !{!108, !12, !13}
+!109 = distinct !{!109, !12}
 !110 = distinct !{!110, !12, !13, !14}
-!111 = distinct !{!111, !18}
-!112 = distinct !{!112, !12, !13}
+!111 = distinct !{!111, !12, !13, !14}
+!112 = distinct !{!112, !18}
+!113 = distinct !{!113, !12, !13}
 end_hunk_0
