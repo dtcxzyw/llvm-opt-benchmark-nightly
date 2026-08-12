@@ -204,8 +204,8 @@ vec.epilog.middle.block1038:                      ; preds = %vec.epilog.vector.b
   %i.yk = add i32 %smax, -4
   %i.yl = sub i32 %i.yk, %.1587.lcssa
   %i.ym = and i32 %i.yl, -4
-  %i.yn = add i32 %.1587.lcssa, %i.ym
-  %i.yo = add i32 %i.yn, 4
+  %i.yn = add nuw i32 %.1587.lcssa, %i.ym
+  %i.yo = add nuw i32 %i.yn, 4
   br label %.preheader94
 
 .lr.ph278.split.split.us:                         ; preds = %.lr.ph278.split
@@ -217,8 +217,8 @@ vec.epilog.middle.block1038:                      ; preds = %vec.epilog.vector.b
   %i.yq = add i32 %smax438, -4
   %i.yr = sub i32 %i.yq, %.1587.lcssa
   %i.ys = and i32 %i.yr, -4
-  %i.yt = add i32 %.1587.lcssa, %i.ys
-  %i.yu = add i32 %i.yt, 4
+  %i.yt = add nuw i32 %.1587.lcssa, %i.ys
+  %i.yu = add nuw i32 %i.yt, 4
   br label %.preheader94
 
 .lr.ph240.us290.us.preheader:                     ; preds = %.lr.ph278.split.split.us
@@ -621,8 +621,8 @@ vec.epilog.middle.block1090:                      ; preds = %vec.epilog.vector.b
   %i.yk = add i32 %smax, -4
   %i.yl = sub i32 %i.yk, %.1655.lcssa
   %i.ym = and i32 %i.yl, -4
-  %i.yn = add i32 %.1655.lcssa, %i.ym
-  %i.yo = add i32 %i.yn, 4
+  %i.yn = add nuw i32 %.1655.lcssa, %i.ym
+  %i.yo = add nuw i32 %i.yn, 4
   br label %.preheader94
 
 .lr.ph300.split.split.us:                         ; preds = %.lr.ph300.split
@@ -634,8 +634,8 @@ vec.epilog.middle.block1090:                      ; preds = %vec.epilog.vector.b
   %i.yq = add i32 %smax470, -4
   %i.yr = sub i32 %i.yq, %.1655.lcssa
   %i.ys = and i32 %i.yr, -4
-  %i.yt = add i32 %.1655.lcssa, %i.ys
-  %i.yu = add i32 %i.yt, 4
+  %i.yt = add nuw i32 %.1655.lcssa, %i.ys
+  %i.yu = add nuw i32 %i.yt, 4
   br label %.preheader94
 
 .lr.ph262.us312.us.preheader:                     ; preds = %.lr.ph300.split.split.us
@@ -1038,7 +1038,7 @@ bb.gs:                                            ; preds = %bb.gp, %.thread1416
   %i.cjq = sext i32 %8 to i64
   %i.cjr = add i32 %8, -4                         ; 5 uses
   %i.cjs = and i32 %i.cjr, -4
-  %i.cjt = add i32 %i.cjs, 4                      ; 5 uses
+  %i.cjt = add nuw nsw i32 %i.cjs, 4              ; 5 uses
   %i.cju = and i32 %6, -16
   %i.cjv = lshr i32 %i.cjr, 2
   %i.cjw = zext nneg i32 %i.cjv to i64            ; 5 uses
@@ -1441,7 +1441,7 @@ bb.g:                                             ; preds = %bb.e
   %i.l = sext i32 %i.k to i64                     ; 2 uses
   %i.m = add i32 %8, -2                           ; 5 uses
   %i.n = and i32 %i.m, -2
-  %i.o = add i32 %i.n, 2                          ; 5 uses
+  %i.o = add nuw nsw i32 %i.n, 2                  ; 5 uses
   %i.p = and i32 %6, -16
   %i.q = zext i32 %i.m to i64                     ; 2 uses
   %i.r = lshr i64 %i.q, 1                         ; 4 uses
@@ -1493,7 +1493,7 @@ bb.g:                                             ; preds = %bb.e
   %i.al = sext i32 %i.ak to i64                   ; 2 uses
   %i.am = add i32 %8, -2                          ; 5 uses
   %i.an = and i32 %i.am, -2
-  %i.ao = add i32 %i.an, 2                        ; 5 uses
+  %i.ao = add nuw nsw i32 %i.an, 2                ; 5 uses
   %i.ap = and i32 %6, -16
   %i.aq = zext i32 %i.am to i64                   ; 2 uses
   %i.ar = lshr i64 %i.aq, 1                       ; 3 uses
@@ -1896,7 +1896,7 @@ bb.q:                                             ; preds = %.lr.ph2607, %bb.p
   %i.yo = sext i32 %i.yn to i64                   ; 2 uses
   %i.yp = add i32 %8, -2                          ; 5 uses
   %i.yq = and i32 %i.yp, -2
-  %i.yr = add i32 %i.yq, 2                        ; 5 uses
+  %i.yr = add nuw nsw i32 %i.yq, 2                ; 5 uses
   %i.ys = and i32 %6, -16
   %i.yt = zext i32 %i.yp to i64                   ; 2 uses
   %i.yu = lshr i64 %i.yt, 1                       ; 3 uses
@@ -2299,7 +2299,7 @@ bb.aa:                                            ; preds = %.lr.ph2763, %bb.z
   %i.atz = sext i32 %i.aty to i64                 ; 2 uses
   %i.aua = add i32 %8, -2                         ; 6 uses
   %i.aub = and i32 %i.aua, -2
-  %i.auc = add i32 %i.aub, 2                      ; 6 uses
+  %i.auc = add nuw nsw i32 %i.aub, 2              ; 6 uses
   %i.aud = and i32 %6, -16
   %i.aue = zext i32 %i.aua to i64                 ; 2 uses
   %i.auf = lshr i64 %i.aue, 1                     ; 4 uses
@@ -2702,7 +2702,7 @@ bb.ak:                                            ; preds = %.lr.ph2903, %bb.aj
   %i.blc = sext i32 %8 to i64                     ; 2 uses
   %i.bld = add i32 %8, -2                         ; 4 uses
   %i.ble = and i32 %i.bld, -2
-  %i.blf = add i32 %i.ble, 2                      ; 5 uses
+  %i.blf = add nuw nsw i32 %i.ble, 2              ; 5 uses
   %i.blg = and i32 %6, -16
   %i.blh = zext i32 %i.bld to i64                 ; 2 uses
   %i.bli = lshr i64 %i.blh, 1                     ; 4 uses
@@ -3105,8 +3105,8 @@ begin_hunk_7_@_ZN4ncnnL20pack_B_tile_quantizeERKNS_3MatERS0_iiiif:bb.a
   %i.kh = xor i64 %i.kd, -1
   %i.ki = add nsw i64 %smax, %i.kh
   %i.kj = and i64 %i.ki, -4
-  %i.kk = add i64 %i.kj, %i.kd
-  %i.kl = add i64 %i.kk, 4
+  %i.kk = add nuw i64 %i.kj, %i.kd
+  %i.kl = add nuw i64 %i.kk, 4
   br label %.preheader572.loopexit.i
 
 .preheader578.i.us:                               ; preds = %.preheader578.i.us.preheader, %.loopexit574.i.us
@@ -3509,8 +3509,8 @@ begin_hunk_8_@_ZN4ncnnL30transpose_pack_B_tile_quantizeERKNS_3MatERS0_iiiif:bb.a
   %i.jd = xor i64 %i.iw, -1
   %i.je = add nsw i64 %smax, %i.jd
   %i.jf = and i64 %i.je, -8
-  %i.jg = add i64 %i.jf, %i.iw
-  %i.jh = add i64 %i.jg, 8
+  %i.jg = add nuw i64 %i.jf, %i.iw
+  %i.jh = add nuw i64 %i.jg, 8
   br label %.preheader1085.loopexit.i
 
 .loopexit1090.i.us.us.us.us:                      ; preds = %.loopexit1090.i.us.us.us.us.preheader, %.loopexit1087.i.us.us.us.us
@@ -3913,8 +3913,8 @@ begin_hunk_9_@_ZN4ncnnL30transpose_pack_A_tile_quantizeERKNS_3MatERS0_iiiiS2_:bb
   %i.ade = xor i64 %i.acx, -1
   %i.adf = add nsw i64 %smax, %i.ade
   %i.adg = and i64 %i.adf, -4
-  %i.adh = add i64 %i.adg, %i.acx
-  %i.adi = add i64 %i.adh, 4
+  %i.adh = add nuw i64 %i.adg, %i.acx
+  %i.adi = add nuw i64 %i.adh, 4
   br label %.preheader1262.loopexit.i
 
 .split.i.us:                                      ; preds = %.split.i.us.preheader, %.loopexit1264.i.us
@@ -4317,8 +4317,8 @@ begin_hunk_10_@_ZN4ncnnL20pack_A_tile_quantizeERKNS_3MatERS0_iiiiS2_:bb.a
   %i.kl = xor i64 %i.ki, -1
   %i.km = add nsw i64 %smax, %i.kl
   %i.kn = and i64 %i.km, -4
-  %i.ko = add i64 %i.kn, %i.ki
-  %i.kp = add i64 %i.ko, 4
+  %i.ko = add nuw i64 %i.kn, %i.ki
+  %i.kp = add nuw i64 %i.ko, 4
   br label %.preheader599.loopexit.i
 
 .preheader605.i.us:                               ; preds = %.preheader605.i.us.preheader, %.loopexit601.i.us
@@ -4721,8 +4721,8 @@ vec.epilog.middle.block729:                       ; preds = %vec.epilog.vector.b
   %i.pr = add i32 %smax477, -4
   %i.ps = sub i32 %i.pr, %.1221.lcssa
   %i.pt = and i32 %i.ps, -4
-  %i.pu = add i32 %.1221.lcssa, %i.pt
-  %i.pv = add i32 %i.pu, 4
+  %i.pu = add nuw i32 %.1221.lcssa, %i.pt
+  %i.pv = add nuw i32 %i.pu, 4
   br label %.preheader272
 
 .lr.ph370.split.split.us:                         ; preds = %.lr.ph370.split
@@ -4760,8 +4760,8 @@ vec.epilog.middle.block729:                       ; preds = %vec.epilog.vector.b
   %i.qm = add i32 %smax, -4
   %i.qn = sub i32 %i.qm, %.1221.lcssa
   %i.qo = and i32 %i.qn, -4
-  %i.qp = add i32 %.1221.lcssa, %i.qo
-  %i.qq = add i32 %i.qp, 4
+  %i.qp = add nuw i32 %.1221.lcssa, %i.qo
+  %i.qq = add nuw i32 %i.qp, 4
   br label %.preheader272
 
 iter.check:                                       ; preds = %.preheader275.us380.us.preheader, %..loopexit276_crit_edge.us384.us
@@ -5164,8 +5164,8 @@ vec.epilog.middle.block668:                       ; preds = %vec.epilog.vector.b
   %i.ot = add i32 %smax428, -4
   %i.ou = sub i32 %i.ot, %.1206.lcssa
   %i.ov = and i32 %i.ou, -4
-  %i.ow = add i32 %.1206.lcssa, %i.ov
-  %i.ox = add i32 %i.ow, 4
+  %i.ow = add nuw i32 %.1206.lcssa, %i.ov
+  %i.ox = add nuw i32 %i.ow, 4
   br label %.preheader243
 
 .lr.ph327.split.split.us:                         ; preds = %.lr.ph327.split
@@ -5203,8 +5203,8 @@ vec.epilog.middle.block668:                       ; preds = %vec.epilog.vector.b
   %i.po = add i32 %smax, -4
   %i.pp = sub i32 %i.po, %.1206.lcssa
   %i.pq = and i32 %i.pp, -4
-  %i.pr = add i32 %.1206.lcssa, %i.pq
-  %i.ps = add i32 %i.pr, 4
+  %i.pr = add nuw i32 %.1206.lcssa, %i.pq
+  %i.ps = add nuw i32 %i.pr, 4
   br label %.preheader243
 
 iter.check:                                       ; preds = %.preheader245.us337.us.preheader, %..loopexit246_crit_edge.us341.us
@@ -5607,7 +5607,7 @@ bb.ad:                                            ; preds = %bb.ac, %.lr.ph1924
   %i.afl = sext i32 %8 to i64
   %i.afm = add i32 %8, -4                         ; 6 uses
   %i.afn = and i32 %i.afm, -4
-  %i.afo = add i32 %i.afn, 4                      ; 5 uses
+  %i.afo = add nuw nsw i32 %i.afn, 4              ; 5 uses
   %i.afp = and i32 %6, -16
   %i.afq = lshr i32 %i.afm, 2
   %i.afr = zext nneg i32 %i.afq to i64            ; 5 uses

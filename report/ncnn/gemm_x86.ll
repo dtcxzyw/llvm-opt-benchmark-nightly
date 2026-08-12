@@ -204,8 +204,8 @@ middle.block:                                     ; preds = %vector.body
   %i.ny = add i32 %smax, -4
   %i.nz = sub i32 %i.ny, %.1553.lcssa
   %i.oa = and i32 %i.nz, -4
-  %i.ob = add i32 %.1553.lcssa, %i.oa
-  %i.oc = add i32 %i.ob, 4
+  %i.ob = add nuw i32 %.1553.lcssa, %i.oa
+  %i.oc = add nuw i32 %i.ob, 4
   br label %.preheader3
 
 .lr.ph141.split.split.us:                         ; preds = %.lr.ph141.split
@@ -217,8 +217,8 @@ middle.block:                                     ; preds = %vector.body
   %i.oe = add i32 %smax262, -4
   %i.of = sub i32 %i.oe, %.1553.lcssa
   %i.og = and i32 %i.of, -4
-  %i.oh = add i32 %.1553.lcssa, %i.og
-  %i.oi = add i32 %i.oh, 4
+  %i.oh = add nuw i32 %.1553.lcssa, %i.og
+  %i.oi = add nuw i32 %i.oh, 4
   br label %.preheader3
 
 .lr.ph116.us153.us.preheader:                     ; preds = %.lr.ph141.split.split.us
@@ -621,7 +621,7 @@ bb.a:
   %i.z = add i32 %6, -12                          ; 2 uses
   %i.aa = urem i32 %i.z, 12
   %i.ab = sub nuw i32 %i.z, %i.aa
-  %i.ac = add i32 %i.ab, 12
+  %i.ac = add nuw nsw i32 %i.ab, 12
   %i.ad = add i32 %8, -1                          ; 2 uses
   %i.ae = zext i32 %i.ad to i64                   ; 4 uses
   %i.af = shl nuw nsw i64 %i.ae, 5
@@ -670,7 +670,7 @@ bb.a:
   %i.az = add i32 %6, -12                         ; 2 uses
   %i.ba = urem i32 %i.az, 12
   %i.bb = sub nuw i32 %i.az, %i.ba
-  %i.bc = add i32 %i.bb, 12
+  %i.bc = add nuw nsw i32 %i.bb, 12
   %i.bd = add i32 %8, -1
   %i.be = zext i32 %i.bd to i64                   ; 4 uses
   %i.bf = shl nuw nsw i64 %i.be, 5
@@ -1073,11 +1073,11 @@ bb.bn:                                            ; preds = %bb.bk, %.thread801,
   %i.aas = sext i32 %8 to i64
   %i.aat = add i32 %8, -4                         ; 4 uses
   %i.aau = and i32 %i.aat, -4
-  %i.aav = add i32 %i.aau, 4                      ; 5 uses
+  %i.aav = add nuw nsw i32 %i.aau, 4              ; 5 uses
   %i.aaw = add i32 %6, -12                        ; 2 uses
   %i.aax = urem i32 %i.aaw, 12
   %i.aay = sub nuw i32 %i.aaw, %i.aax
-  %i.aaz = add i32 %i.aay, 12
+  %i.aaz = add nuw nsw i32 %i.aay, 12
   %i.aba = lshr i32 %i.aat, 2
   %i.abb = zext nneg i32 %i.aba to i64            ; 6 uses
   %i.abc = shl nuw nsw i64 %i.abb, 7
@@ -1480,7 +1480,7 @@ bb.c:                                             ; preds = %bb.a
   %i.j = sext i32 %i.i to i64                     ; 2 uses
   %i.k = add i32 %8, -2                           ; 2 uses
   %i.l = and i32 %i.k, -2
-  %i.m = add i32 %i.l, 2                          ; 4 uses
+  %i.m = add nuw nsw i32 %i.l, 2                  ; 4 uses
   %i.n = and i32 %6, -8
   %i.o = zext i32 %i.k to i64                     ; 2 uses
   %i.p = lshr i64 %i.o, 1                         ; 2 uses
@@ -1518,7 +1518,7 @@ bb.c:                                             ; preds = %bb.a
   %i.ab = sext i32 %i.aa to i64                   ; 2 uses
   %i.ac = add i32 %8, -2                          ; 2 uses
   %i.ad = and i32 %i.ac, -2
-  %i.ae = add i32 %i.ad, 2                        ; 4 uses
+  %i.ae = add nuw nsw i32 %i.ad, 2                ; 4 uses
   %i.af = and i32 %6, -8
   %i.ag = zext i32 %i.ac to i64                   ; 2 uses
   %i.ah = lshr i64 %i.ag, 1                       ; 2 uses
@@ -1921,7 +1921,7 @@ bb.k:                                             ; preds = %.lr.ph1258, %bb.j
   %i.ob = sext i32 %8 to i64                      ; 2 uses
   %i.oc = add i32 %8, -2                          ; 2 uses
   %i.od = and i32 %i.oc, -2
-  %i.oe = add i32 %i.od, 2                        ; 3 uses
+  %i.oe = add nuw nsw i32 %i.od, 2                ; 3 uses
   %i.of = and i32 %6, -8
   %i.og = zext i32 %i.oc to i64                   ; 2 uses
   %i.oh = lshr i64 %i.og, 1                       ; 2 uses
@@ -2324,8 +2324,8 @@ begin_hunk_5_@_ZN4ncnnL20pack_B_tile_quantizeERKNS_3MatERS0_iiiif:bb.a
   %i.gp = xor i64 %i.gl, -1
   %i.gq = add nsw i64 %smax, %i.gp
   %i.gr = and i64 %i.gq, -4
-  %i.gs = add i64 %i.gr, %i.gl
-  %i.gt = add i64 %i.gs, 4
+  %i.gs = add nuw i64 %i.gr, %i.gl
+  %i.gt = add nuw i64 %i.gs, 4
   br label %.preheader75.loopexit.i
 
 .preheader80.i.us:                                ; preds = %.preheader80.i.us.preheader, %.loopexit.i.us
@@ -2728,8 +2728,8 @@ bb.a:
   %i.dh = xor i64 %i.cz, -1
   %i.di = add nsw i64 %smax, %i.dh
   %i.dj = and i64 %i.di, -4
-  %i.dk = add i64 %i.dj, %i.cz
-  %i.dl = add i64 %i.dk, 4
+  %i.dk = add nuw i64 %i.dj, %i.cz
+  %i.dl = add nuw i64 %i.dk, 4
   br label %.preheader86.loopexit.i
 
 .loopexit89.i.us.us:                              ; preds = %.loopexit89.i.us.us.preheader, %.loopexit88.i.us.us
@@ -2993,8 +2993,8 @@ bb.a:
   %i.jx = xor i64 %i.jq, -1
   %i.jy = add nsw i64 %smax59, %i.jx
   %i.jz = and i64 %i.jy, -2
-  %i.ka = add i64 %i.jz, %i.jq
-  %i.kb = add i64 %i.ka, 2
+  %i.ka = add nuw i64 %i.jz, %i.jq
+  %i.kb = add nuw i64 %i.ka, 2
   br label %.preheader81.loopexit.i
 
 .loopexit85.i.us.us:                              ; preds = %.lr.ph165.i.split.us, %.loopexit83.i.us.us
@@ -3397,8 +3397,8 @@ begin_hunk_7_@_ZN4ncnnL30transpose_pack_A_tile_quantizeERKNS_3MatERS0_iiiiS2_:bb
   %i.iz = add i32 %2, -2
   %i.ja = sub i32 %i.iz, %.0234.lcssa.i
   %i.jb = and i32 %i.ja, -2
-  %i.jc = add i32 %.0234.lcssa.i, 2
-  %i.jd = add i32 %i.jc, %i.jb
+  %i.jc = add nuw i32 %.0234.lcssa.i, 2
+  %i.jd = add nuw i32 %i.jc, %i.jb
   br label %.preheader39.i
 
 .lr.ph96.split.split.us.i:                        ; preds = %.lr.ph96.i
@@ -3411,8 +3411,8 @@ begin_hunk_7_@_ZN4ncnnL30transpose_pack_A_tile_quantizeERKNS_3MatERS0_iiiiS2_:bb
   %i.jh = add i32 %2, -2
   %i.ji = sub i32 %i.jh, %.0234.lcssa.i
   %i.jj = and i32 %i.ji, -2
-  %i.jk = add i32 %.0234.lcssa.i, 2
-  %i.jl = add i32 %i.jk, %i.jj
+  %i.jk = add nuw i32 %.0234.lcssa.i, 2
+  %i.jl = add nuw i32 %i.jk, %i.jj
   br label %.preheader39.i
 
 .lr.ph72.us108.us.preheader.i:                    ; preds = %.lr.ph96.split.split.us.i
@@ -3815,7 +3815,7 @@ bb.g:                                             ; preds = %.lr.ph348.split.us
   %i.hl = sext i32 %3 to i64
   %i.hm = add i32 %3, -4                          ; 4 uses
   %i.hn = and i32 %i.hm, -4
-  %i.ho = add i32 %i.hn, 4                        ; 4 uses
+  %i.ho = add nuw nsw i32 %i.hn, 4                ; 4 uses
   %i.hp = and i32 %1, -8
   %i.hq = lshr i32 %i.hm, 2
   %i.hr = zext nneg i32 %i.hq to i64              ; 5 uses

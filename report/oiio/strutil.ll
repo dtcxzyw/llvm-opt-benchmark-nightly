@@ -204,8 +204,8 @@ bb.de:                                            ; preds = %bb.dd, %bb.dc
   %umin1994 = call i64 @llvm.umin.i64(i64 %i.uu, i64 %i.uw) ; 2 uses
   %i.ux = add nuw nsw i64 %umin1994, 1
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.4882.fr, i8 48, i64 %i.ux, i1 false), !tbaa !7
-  %scevgep1995 = getelementptr i8, ptr %.4882.fr, i64 1
-  %scevgep1997 = getelementptr i8, ptr %scevgep1995, i64 %umin1994
+  %scevgep1995 = getelementptr nuw i8, ptr %.4882.fr, i64 1
+  %scevgep1997 = getelementptr nuw i8, ptr %scevgep1995, i64 %umin1994
   %i.uy = zext i2 %i.ut to i32
   %i.uz = call i32 @llvm.usub.sat.i32(i32 %i.uv, i32 %i.uy)
   br label %.preheader1474

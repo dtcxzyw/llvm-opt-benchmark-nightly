@@ -204,7 +204,7 @@ bb.an:                                            ; preds = %.sink.split190, %.l
   %i.bk = add i64 %i.bj, 4                        ; 3 uses
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %1, ptr nonnull align 8 %0, i64 %i.bk, i1 false), !tbaa !18
   %scevgep = getelementptr i8, ptr %1, i64 %i.bk
-  %scevgep173 = getelementptr i8, ptr %0, i64 %i.bk
+  %scevgep173 = getelementptr nuw i8, ptr %0, i64 %i.bk
   br label %.critedge.i
 
 .critedge.i:                                      ; preds = %.lr.ph.i.preheader, %bb.an
@@ -231,7 +231,7 @@ bb.ap:                                            ; preds = %.critedge.i
   br i1 %.not.i.i.i95, label %bb.aq, label %.lr.ph.i.i.i.i.i.i.i96.preheader, !prof !24
 
 .lr.ph.i.i.i.i.i.i.i96.preheader:                 ; preds = %bb.ap
-  call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.bc, ptr align 4 %.lcssa11.i, i64 %i.bt, i1 false), !tbaa !18, !noalias !813
+  call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.bc, ptr nonnull align 4 %.lcssa11.i, i64 %i.bt, i1 false), !tbaa !18, !noalias !813
   %i.bw = add i64 %i.bu, %.fr
   br label %bb.ar
 
@@ -634,7 +634,7 @@ bb.be:                                            ; preds = %bb.bd, %bb.bk, %bb.
   %i.cg = add i64 %i.cf, 4                        ; 3 uses
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %1, ptr nonnull align 8 %0, i64 %i.cg, i1 false), !tbaa !78
   %scevgep = getelementptr i8, ptr %1, i64 %i.cg
-  %scevgep260 = getelementptr i8, ptr %0, i64 %i.cg
+  %scevgep260 = getelementptr nuw i8, ptr %0, i64 %i.cg
   br label %.critedge.i
 
 .critedge.i:                                      ; preds = %.lr.ph.i.preheader, %bb.be
@@ -715,7 +715,7 @@ bb.bg:                                            ; preds = %.critedge.i
 
 .lr.ph.i.i.i.i.i.i.i95.preheader:                 ; preds = %bb.bg
   %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted236 = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !18, !noalias !940 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.by, ptr align 4 %.lcssa11.i, i64 %i.db, i1 false), !tbaa !78, !noalias !940
+  call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.by, ptr nonnull align 4 %.lcssa11.i, i64 %i.db, i1 false), !tbaa !78, !noalias !940
   %min.iters.check = icmp ult i64 %i.dc, 8
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.i95.preheader368, label %vector.ph
 
@@ -1118,7 +1118,7 @@ bb.ap:                                            ; preds = %.sink.split188, %.l
   %i.bj = add i64 %i.bi, 4                        ; 3 uses
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %1, ptr nonnull align 8 %0, i64 %i.bj, i1 false), !tbaa !18
   %scevgep = getelementptr i8, ptr %1, i64 %i.bj
-  %scevgep170 = getelementptr i8, ptr %0, i64 %i.bj
+  %scevgep170 = getelementptr nuw i8, ptr %0, i64 %i.bj
   br label %.critedge.i
 
 .critedge.i:                                      ; preds = %.lr.ph.i.preheader, %bb.ap
@@ -1145,7 +1145,7 @@ bb.ar:                                            ; preds = %.critedge.i
   br i1 %.not.i.i.i114, label %bb.as, label %.lr.ph.i.i.i.i.i.i.i115.preheader, !prof !24
 
 .lr.ph.i.i.i.i.i.i.i115.preheader:                ; preds = %bb.ar
-  call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.bb, ptr align 4 %.lcssa11.i, i64 %i.bs, i1 false), !tbaa !18, !noalias !1089
+  call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.bb, ptr nonnull align 4 %.lcssa11.i, i64 %i.bs, i1 false), !tbaa !18, !noalias !1089
   %i.bv = add i64 %i.bt, %.fr
   br label %bb.at
 
@@ -1548,7 +1548,7 @@ bb.be:                                            ; preds = %bb.bd, %bb.bk, %bb.
   %i.cg = add i64 %i.cf, 4                        ; 3 uses
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %1, ptr nonnull align 8 %0, i64 %i.cg, i1 false), !tbaa !78
   %scevgep = getelementptr i8, ptr %1, i64 %i.cg
-  %scevgep257 = getelementptr i8, ptr %0, i64 %i.cg
+  %scevgep257 = getelementptr nuw i8, ptr %0, i64 %i.cg
   br label %.critedge.i
 
 .critedge.i:                                      ; preds = %.lr.ph.i.preheader, %bb.be
@@ -1629,7 +1629,7 @@ bb.bg:                                            ; preds = %.critedge.i
 
 .lr.ph.i.i.i.i.i.i.i113.preheader:                ; preds = %bb.bg
   %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted235 = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !18, !noalias !1223 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.by, ptr align 4 %.lcssa11.i, i64 %i.db, i1 false), !tbaa !78, !noalias !1223
+  call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.by, ptr nonnull align 4 %.lcssa11.i, i64 %i.db, i1 false), !tbaa !78, !noalias !1223
   %min.iters.check = icmp ult i64 %i.dc, 8
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.i113.preheader373, label %vector.ph
 

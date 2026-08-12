@@ -204,8 +204,8 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.an = xor i64 %i.ak, -1
   %i.ao = add nsw i64 %smax, %i.an
   %i.ap = and i64 %i.ao, -4
-  %i.aq = add i64 %i.ap, %i.ak
-  %i.ar = add i64 %i.aq, 4
+  %i.aq = add nuw i64 %i.ap, %i.ak
+  %i.ar = add nuw i64 %i.aq, 4
   br label %.preheader694.loopexit.i
 
 .preheader700.i.us:                               ; preds = %.lr.ph833.i, %.loopexit696.i.us
@@ -608,8 +608,8 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.aj = xor i64 %i.af, -1
   %i.ak = add nsw i64 %smax, %i.aj
   %i.al = and i64 %i.ak, -4
-  %i.am = add i64 %i.al, %i.af
-  %i.an = add i64 %i.am, 4
+  %i.am = add nuw i64 %i.al, %i.af
+  %i.an = add nuw i64 %i.am, 4
   br label %.preheader850.loopexit.i
 
 .lr.ph949.i.split.us:                             ; preds = %.lr.ph949.i, %.loopexit852.i.us
@@ -1012,8 +1012,8 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.ar = xor i64 %i.an, -1
   %i.as = add nsw i64 %smax, %i.ar
   %i.at = and i64 %i.as, -4
-  %i.au = add i64 %i.at, %i.an
-  %i.av = add i64 %i.au, 4
+  %i.au = add nuw i64 %i.at, %i.an
+  %i.av = add nuw i64 %i.au, 4
   br label %.preheader559.loopexit.i
 
 .preheader567.i.us:                               ; preds = %.lr.ph684.i, %.loopexit561.i.us
@@ -1416,8 +1416,8 @@ begin_hunk_3_@_ZN4ncnn42transpose_pack_B_tile_fp32_to_int8_avxvnniERKNS_3MatERS0
   %i.ha = xor i64 %i.gt, -1
   %i.hb = add nsw i64 %smax, %i.ha
   %i.hc = and i64 %i.hb, -4
-  %i.hd = add i64 %i.hc, %i.gt
-  %i.he = add i64 %i.hd, 4
+  %i.hd = add nuw i64 %i.hc, %i.gt
+  %i.he = add nuw i64 %i.hd, 4
   br label %.preheader652.loopexit.i
 
 .loopexit657.i.us.us.us:                          ; preds = %.lr.ph731.i.split.us.split.us, %.loopexit654.i.us.us.us
@@ -1820,8 +1820,8 @@ begin_hunk_4_@_ZN4ncnn42transpose_pack_B_tile_fp32_to_int8_avxvnniERKNS_3MatERS0
   %i.sb = xor i64 %i.ru, -1
   %i.sc = add nsw i64 %smax98, %i.sb
   %i.sd = and i64 %i.sc, -2
-  %i.se = add i64 %i.sd, %i.ru
-  %i.sf = add i64 %i.se, 2
+  %i.se = add nuw i64 %i.sd, %i.ru
+  %i.sf = add nuw i64 %i.se, 2
   br label %.preheader645.loopexit.i
 
 .loopexit651.i.us.us.us:                          ; preds = %.lr.ph767.i.split.us.split.us, %.loopexit648.i.us.us.us
@@ -2224,7 +2224,7 @@ bb.c:                                             ; preds = %bb.a
   %spec.select.idx.i = select i1 %i.h, i64 32, i64 0 ; 2 uses
   %i.k = add i32 %8, -4                           ; 5 uses
   %i.l = and i32 %i.k, -4
-  %i.m = add i32 %i.l, 4                          ; 4 uses
+  %i.m = add nuw nsw i32 %i.l, 4                  ; 4 uses
   %i.n = and i32 %6, -8
   %i.o = zext i32 %i.k to i64                     ; 2 uses
   %i.p = lshr i64 %i.o, 2                         ; 3 uses
@@ -2279,7 +2279,7 @@ bb.c:                                             ; preds = %bb.a
   %spec.select1374.idx.i = select i1 %i.ag, i64 16, i64 0 ; 3 uses
   %i.aj = add i32 %8, -4                          ; 6 uses
   %i.ak = and i32 %i.aj, -4
-  %i.al = add i32 %i.ak, 4                        ; 4 uses
+  %i.al = add nuw nsw i32 %i.ak, 4                ; 4 uses
   %i.am = and i32 %6, -8
   %i.an = zext i32 %i.aj to i64                   ; 2 uses
   %i.ao = lshr i64 %i.an, 2                       ; 3 uses
@@ -2682,7 +2682,7 @@ begin_hunk_6_@_ZN4ncnn36gemm_transB_packed_tile_int8_avxvnniERKNS_3MatES2_RS0_ii
   %spec.select1375.idx.i = select i1 %i.uj, i64 8, i64 0 ; 3 uses
   %i.um = add i32 %8, -4                          ; 5 uses
   %i.un = and i32 %i.um, -4
-  %i.uo = add i32 %i.un, 4                        ; 4 uses
+  %i.uo = add nuw nsw i32 %i.un, 4                ; 4 uses
   %i.up = and i32 %6, -8
   %i.uq = zext i32 %i.um to i64                   ; 2 uses
   %i.ur = lshr i64 %i.uq, 2                       ; 4 uses
@@ -3085,7 +3085,7 @@ begin_hunk_7_@_ZN4ncnn36gemm_transB_packed_tile_int8_avxvnniERKNS_3MatES2_RS0_ii
   %spec.select1376.idx.i = select i1 %i.amm, i64 4, i64 0 ; 2 uses
   %i.amo = add i32 %8, -4                         ; 5 uses
   %i.amp = and i32 %i.amo, -4
-  %i.amq = add i32 %i.amp, 4                      ; 4 uses
+  %i.amq = add nuw nsw i32 %i.amp, 4              ; 4 uses
   %i.amr = and i32 %6, -8
   %i.ams = zext i32 %i.amo to i64                 ; 4 uses
   %i.amt = lshr i64 %i.ams, 2                     ; 4 uses

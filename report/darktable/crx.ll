@@ -204,12 +204,12 @@ bb.ch:                                            ; preds = %bb.cg, %bb.cf
   %i.xi = zext nneg i32 %.3 to i64
   %i.xj = shl nuw nsw i64 %i.xi, 2                ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr align 4 %.promoted, i8 0, i64 %i.xj, i1 false), !tbaa !21
-  %scevgep = getelementptr i8, ptr %.promoted447, i64 4 ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep, i8 0, i64 %i.xj, i1 false), !tbaa !21
+  %scevgep = getelementptr nuw i8, ptr %.promoted447, i64 4 ; 2 uses
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %scevgep, i8 0, i64 %i.xj, i1 false), !tbaa !21
   %i.xk = add nsw i32 %.3, -1
   %i.xl = zext nneg i32 %i.xk to i64
   %i.xm = shl nuw nsw i64 %i.xl, 2                ; 2 uses
-  %scevgep526 = getelementptr i8, ptr %scevgep, i64 %i.xm
+  %scevgep526 = getelementptr nuw i8, ptr %scevgep, i64 %i.xm
   %scevgep527 = getelementptr i8, ptr %.promoted, i64 4
   %scevgep528 = getelementptr i8, ptr %scevgep527, i64 %i.xm
   store ptr %scevgep528, ptr %i.r, align 8, !tbaa !80
