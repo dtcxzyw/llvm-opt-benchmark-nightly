@@ -201,9 +201,9 @@ bb.r:                                             ; preds = %.thread
   %i.dj = inttoptr i64 %i.di to ptr               ; 3 uses
   %i.dk = add i64 %i.di, 8
   store i64 %i.dk, ptr %i.de, align 8
-  %14 = getelementptr inbounds nuw i8, ptr %i.dj, i64 8
   %i.dl = ptrtoint ptr %.sroa.010.0.copyload to i64
   store i64 %i.dl, ptr %i.dj, align 8
+  %14 = getelementptr inbounds nuw i8, ptr %i.dj, i64 8
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #24
   %i.dm = load i64, ptr %9, align 8
   store i64 %i.dm, ptr %12, align 8
@@ -288,9 +288,9 @@ bb.aa:                                            ; preds = %_ZN2v88internal8com
   %i.ek = inttoptr i64 %i.ej to ptr               ; 3 uses
   %i.el = add i64 %i.ej, 8
   store i64 %i.el, ptr %i.ef, align 8
-  %15 = getelementptr inbounds nuw i8, ptr %i.ek, i64 8
   %i.em = ptrtoint ptr %i.eb to i64               ; 2 uses
   store i64 %i.em, ptr %i.ek, align 8
+  %15 = getelementptr inbounds nuw i8, ptr %i.ek, i64 8
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #24
   store i64 %i.em, ptr %13, align 8
   store ptr %i.ec, ptr %i.ag, align 8
