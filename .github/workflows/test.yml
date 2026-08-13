@@ -13,7 +13,7 @@ jobs:
       issues: write
       contents: write
 
-    timeout-minutes: 120
+    timeout-minutes: 200
 
     steps:
       - name: Reset repository
