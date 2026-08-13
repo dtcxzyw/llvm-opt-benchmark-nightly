@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
 
 ._crit_edge:                                      ; preds = %bb.j, %bb.a
   %.022.lcssa = phi ptr [ %1, %bb.a ], [ %.123, %bb.j ] ; 3 uses
-  %.0.lcssa = phi ptr [ %0, %bb.a ], [ %.1, %bb.j ] ; 3 uses
+  %.0.lcssa = phi ptr [ %0, %bb.a ], [ %.1, %bb.j ] ; 4 uses
   %i.am = icmp eq ptr %.0.lcssa, %.022.lcssa
   %.0164.i = getelementptr inbounds nuw i8, ptr %.0.lcssa, i64 16 ; 2 uses
   %.not5.i26 = icmp eq ptr %.0164.i, %.022.lcssa
@@ -212,10 +212,11 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   br i1 %or.cond.i, label %_ZN4pugi4impl12_GLOBAL__N_114insertion_sortINS_10xpath_nodeENS1_25document_order_comparatorEEEvPT_S6_RKT0_.exit, label %.lr.ph7.i
 
 .lr.ph7.i:                                        ; preds = %._crit_edge, %.critedge.i.loopexit
-  %.0166.i = phi ptr [ %.016.i, %.critedge.i.loopexit ], [ %.0164.i, %._crit_edge ] ; 3 uses
+  %.0166.i = phi ptr [ %.016.i, %.critedge.i.loopexit ], [ %.0164.i, %._crit_edge ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #50
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(16) %.0166.i, i64 16, i1 false)
-  br label %.lr.ph.i28
+  %7 = icmp ugt ptr %.0166.i, %.0.lcssa
+  br i1 %7, label %.lr.ph.i28, label %.critedge.i.loopexit
 
 .lr.ph.i28:                                       ; preds = %.lr.ph7.i, %bb.k
   %.01.i = phi ptr [ %i.an, %bb.k ], [ %.0166.i, %.lr.ph7.i ] ; 3 uses
@@ -228,9 +229,9 @@ bb.k:                                             ; preds = %.lr.ph.i28
   %i.ap = icmp ugt ptr %i.an, %.0.lcssa
   br i1 %i.ap, label %.lr.ph.i28, label %.critedge.i.loopexit, !llvm.loop !385
 
-.critedge.i.loopexit:                             ; preds = %.lr.ph.i28, %bb.k
-  %.0.lcssa.i.ph = phi ptr [ %.01.i, %.lr.ph.i28 ], [ %i.an, %bb.k ]
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.0.lcssa.i.ph, ptr noundef nonnull align 8 dereferenceable(16) %2, i64 16, i1 false)
+.critedge.i.loopexit:                             ; preds = %bb.k, %.lr.ph.i28, %.lr.ph7.i
+  %.0.lcssa.i = phi ptr [ %.0166.i, %.lr.ph7.i ], [ %.01.i, %.lr.ph.i28 ], [ %i.an, %bb.k ]
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.0.lcssa.i, ptr noundef nonnull align 8 dereferenceable(16) %2, i64 16, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #50
   %.016.i = getelementptr inbounds nuw i8, ptr %.0166.i, i64 16 ; 2 uses
   %.not.i27 = icmp eq ptr %.016.i, %.022.lcssa

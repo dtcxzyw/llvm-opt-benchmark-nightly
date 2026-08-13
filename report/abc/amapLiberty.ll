@@ -203,7 +203,7 @@ bb.c:                                             ; preds = %Abc_Clock.exit
   br i1 %i.p, label %.lr.ph26.i, label %Amap_LibertyWipeOutComments.exit
 
 .lr.ph26.i:                                       ; preds = %bb.c, %.loopexit.i
-  %.01725.i = phi ptr [ %i.dp, %.loopexit.i ], [ %i.j, %bb.c ] ; 52 uses
+  %.01725.i = phi ptr [ %i.dp, %.loopexit.i ], [ %i.j, %bb.c ] ; 53 uses
   %.0172529.i = ptrtoaddr ptr %.01725.i to i64
   %i.q = load i8, ptr %.01725.i, align 1, !tbaa !18
   %i.r = icmp eq i8 %i.q, 47
@@ -227,7 +227,7 @@ bb.d:                                             ; preds = %.lr.ph26.i
 .lr.ph.i:                                         ; preds = %bb.h, %.lr.ph.preheader.i
   %indvar = phi i64 [ %indvar.next, %bb.h ], [ 0, %.lr.ph.preheader.i ] ; 2 uses
   %indvars.iv.i = phi ptr [ %scevgep32.i, %bb.h ], [ %scevgep31.i, %.lr.ph.preheader.i ] ; 2 uses
-  %.122.i = phi ptr [ %i.do, %bb.h ], [ %.01725.i, %.lr.ph.preheader.i ] ; 6 uses
+  %.122.i = phi ptr [ %i.do, %bb.h ], [ %.01725.i, %.lr.ph.preheader.i ] ; 8 uses
   %i.x = load i8, ptr %.122.i, align 1, !tbaa !18
   %i.y = icmp eq i8 %i.x, 42
   br i1 %i.y, label %bb.e, label %bb.h
@@ -236,9 +236,14 @@ bb.e:                                             ; preds = %.lr.ph.i
   %i.z = getelementptr inbounds nuw i8, ptr %.122.i, i64 1
   %i.aa = load i8, ptr %i.z, align 1, !tbaa !18
   %i.ab = icmp eq i8 %i.aa, 47
-  br i1 %i.ab, label %iter.check, label %bb.h
+  br i1 %i.ab, label %.preheader.i, label %bb.h
 
-iter.check:                                       ; preds = %bb.e
+.preheader.i:                                     ; preds = %bb.e
+  %4 = getelementptr inbounds nuw i8, ptr %.122.i, i64 2
+  %5 = icmp ult ptr %.01725.i, %4
+  br i1 %5, label %iter.check, label %.loopexit.i
+
+iter.check:                                       ; preds = %.preheader.i
   %i.ac = add i64 %indvar, 2                      ; 7 uses
   %min.iters.check = icmp ult i64 %i.ac, 8
   br i1 %min.iters.check, label %.lr.ph24.i.preheader, label %vector.main.loop.iter.check
@@ -641,8 +646,8 @@ bb.h:                                             ; preds = %bb.e, %.lr.ph.i
   %indvar.next = add i64 %indvar, 1
   br i1 %exitcond.not.i, label %.loopexit.i, label %.lr.ph.i, !llvm.loop !62
 
-.loopexit.i:                                      ; preds = %bb.h, %bb.g, %middle.block, %vec.epilog.middle.block, %bb.d, %.lr.ph26.i
-  %.2.i = phi ptr [ %.01725.i, %.lr.ph26.i ], [ %.122.i, %middle.block ], [ %.01725.i, %bb.d ], [ %.122.i, %bb.g ], [ %.122.i, %vec.epilog.middle.block ], [ %scevgep30.i, %bb.h ]
+.loopexit.i:                                      ; preds = %bb.h, %bb.g, %middle.block, %vec.epilog.middle.block, %.preheader.i, %bb.d, %.lr.ph26.i
+  %.2.i = phi ptr [ %.01725.i, %.lr.ph26.i ], [ %.122.i, %.preheader.i ], [ %.01725.i, %bb.d ], [ %.122.i, %middle.block ], [ %.122.i, %bb.g ], [ %.122.i, %vec.epilog.middle.block ], [ %scevgep30.i, %bb.h ]
   %i.dp = getelementptr inbounds nuw i8, ptr %.2.i, i64 1 ; 2 uses
   %i.dq = icmp ult ptr %i.dp, %i.n
   br i1 %i.dq, label %.lr.ph26.i, label %Amap_LibertyWipeOutComments.exit.loopexit, !llvm.loop !63
@@ -864,7 +869,7 @@ bb.c:                                             ; preds = %Abc_Clock.exit
   br i1 %i.p, label %.lr.ph26.i, label %Amap_LibertyWipeOutComments.exit
 
 .lr.ph26.i:                                       ; preds = %bb.c, %.loopexit.i
-  %.01725.i = phi ptr [ %i.dp, %.loopexit.i ], [ %i.j, %bb.c ] ; 52 uses
+  %.01725.i = phi ptr [ %i.dp, %.loopexit.i ], [ %i.j, %bb.c ] ; 53 uses
   %.0172529.i = ptrtoaddr ptr %.01725.i to i64
   %i.q = load i8, ptr %.01725.i, align 1, !tbaa !18
   %i.r = icmp eq i8 %i.q, 47
@@ -888,7 +893,7 @@ bb.d:                                             ; preds = %.lr.ph26.i
 .lr.ph.i:                                         ; preds = %bb.h, %.lr.ph.preheader.i
   %indvar = phi i64 [ %indvar.next, %bb.h ], [ 0, %.lr.ph.preheader.i ] ; 2 uses
   %indvars.iv.i = phi ptr [ %scevgep32.i, %bb.h ], [ %scevgep31.i, %.lr.ph.preheader.i ] ; 2 uses
-  %.122.i = phi ptr [ %i.do, %bb.h ], [ %.01725.i, %.lr.ph.preheader.i ] ; 6 uses
+  %.122.i = phi ptr [ %i.do, %bb.h ], [ %.01725.i, %.lr.ph.preheader.i ] ; 8 uses
   %i.x = load i8, ptr %.122.i, align 1, !tbaa !18
   %i.y = icmp eq i8 %i.x, 42
   br i1 %i.y, label %bb.e, label %bb.h
@@ -897,9 +902,14 @@ bb.e:                                             ; preds = %.lr.ph.i
   %i.z = getelementptr inbounds nuw i8, ptr %.122.i, i64 1
   %i.aa = load i8, ptr %i.z, align 1, !tbaa !18
   %i.ab = icmp eq i8 %i.aa, 47
-  br i1 %i.ab, label %iter.check, label %bb.h
+  br i1 %i.ab, label %.preheader.i, label %bb.h
 
-iter.check:                                       ; preds = %bb.e
+.preheader.i:                                     ; preds = %bb.e
+  %4 = getelementptr inbounds nuw i8, ptr %.122.i, i64 2
+  %5 = icmp ult ptr %.01725.i, %4
+  br i1 %5, label %iter.check, label %.loopexit.i
+
+iter.check:                                       ; preds = %.preheader.i
   %i.ac = add i64 %indvar, 2                      ; 7 uses
   %min.iters.check = icmp ult i64 %i.ac, 8
   br i1 %min.iters.check, label %.lr.ph24.i.preheader, label %vector.main.loop.iter.check
@@ -1302,8 +1312,8 @@ bb.h:                                             ; preds = %bb.e, %.lr.ph.i
   %indvar.next = add i64 %indvar, 1
   br i1 %exitcond.not.i, label %.loopexit.i, label %.lr.ph.i, !llvm.loop !62
 
-.loopexit.i:                                      ; preds = %bb.h, %bb.g, %middle.block, %vec.epilog.middle.block, %bb.d, %.lr.ph26.i
-  %.2.i = phi ptr [ %.01725.i, %.lr.ph26.i ], [ %.122.i, %middle.block ], [ %.01725.i, %bb.d ], [ %.122.i, %bb.g ], [ %.122.i, %vec.epilog.middle.block ], [ %scevgep30.i, %bb.h ]
+.loopexit.i:                                      ; preds = %bb.h, %bb.g, %middle.block, %vec.epilog.middle.block, %.preheader.i, %bb.d, %.lr.ph26.i
+  %.2.i = phi ptr [ %.01725.i, %.lr.ph26.i ], [ %.122.i, %.preheader.i ], [ %.01725.i, %bb.d ], [ %.122.i, %middle.block ], [ %.122.i, %bb.g ], [ %.122.i, %vec.epilog.middle.block ], [ %scevgep30.i, %bb.h ]
   %i.dp = getelementptr inbounds nuw i8, ptr %.2.i, i64 1 ; 2 uses
   %i.dq = icmp ult ptr %i.dp, %i.n
   br i1 %i.dq, label %.lr.ph26.i, label %Amap_LibertyWipeOutComments.exit.loopexit, !llvm.loop !63

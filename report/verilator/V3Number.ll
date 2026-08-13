@@ -204,18 +204,23 @@ _ZN12V3NumberData8setLogicEv.exit:                ; preds = %_ZN12V3NumberData13
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.e, %_ZN12V3NumberData8setLogicEv.exit
-  %.0228 = phi ptr [ %1, %_ZN12V3NumberData8setLogicEv.exit ], [ %i.aq, %bb.e ] ; 2 uses
+  %.0228 = phi ptr [ %1, %_ZN12V3NumberData8setLogicEv.exit ], [ %i.aq, %bb.e ] ; 3 uses
   %i.ap = load i8, ptr %.0228, align 1, !tbaa !23
   switch i8 %i.ap, label %bb.e [
     i8 0, label %.thread
-    i8 39, label %bb.f
+    i8 39, label %8
   ]
 
 bb.e:                                             ; preds = %bb.d
   %i.aq = getelementptr inbounds nuw i8, ptr %.0228, i64 1
   br label %bb.d, !llvm.loop !92
 
-bb.f:                                             ; preds = %bb.d
+8:                                                ; preds = %bb.d
+  %9 = getelementptr inbounds nuw i8, ptr %.0228, i64 1
+  %.not263 = icmp eq ptr %9, %1
+  br i1 %.not263, label %.thread, label %bb.f
+
+bb.f:                                             ; preds = %8
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #30
   %i.ar = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 8 uses
   store ptr %i.ar, ptr %2, align 8, !tbaa !15
@@ -462,11 +467,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit303: ; preds = %_Z
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #30
   br label %.thread
 
-.thread:                                          ; preds = %bb.d, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit303
-  %.not263484 = phi i1 [ false, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit303 ], [ true, %bb.d ]
-  %.0250 = phi i1 [ %i.bx, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit303 ], [ false, %bb.d ] ; 4 uses
-  %.1248 = phi i8 [ %i.bv, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit303 ], [ 100, %bb.d ] ; 4 uses
-  %.1225 = phi ptr [ %spec.select291, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit303 ], [ %1, %bb.d ] ; 2 uses
+.thread:                                          ; preds = %bb.d, %8, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit303
+  %.not263484 = phi i1 [ false, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit303 ], [ true, %8 ], [ true, %bb.d ]
+  %.0250 = phi i1 [ %i.bx, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit303 ], [ false, %8 ], [ false, %bb.d ] ; 4 uses
+  %.1248 = phi i8 [ %i.bv, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit303 ], [ 100, %8 ], [ 100, %bb.d ] ; 4 uses
+  %.1225 = phi ptr [ %spec.select291, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit303 ], [ %1, %8 ], [ %1, %bb.d ] ; 2 uses
   %i.dn = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 24 uses
   %i.do = load i32, ptr %i.dn, align 8, !tbaa !41 ; 3 uses
   %i.dp = icmp sgt i32 %i.do, 0
