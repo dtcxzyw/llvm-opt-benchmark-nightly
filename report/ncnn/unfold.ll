@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %bb.c, %.epil.prehea
   %exitcond104.not = icmp eq i32 %i.ay, %lftr.wideiv
   br i1 %exitcond104.not, label %._crit_edge.split82, label %.noexc.us.us
 
-._crit_edge.split82:                              ; preds = %._ZN4ncnn3MatD2Ev.exit_crit_edge.split77.us.split.us.us.us, %.noexc.lr.ph.split.split.split.us, %.noexc.lr.ph.split.split, %.noexc.lr.ph, %.noexc.lr.ph.split, %bb.b
+._crit_edge.split82:                              ; preds = %._ZN4ncnn3MatD2Ev.exit_crit_edge.split77.us.split.us.us.us, %.noexc.lr.ph.split.split, %.noexc.lr.ph.split.split.split.us, %.noexc.lr.ph, %.noexc.lr.ph.split, %bb.b
   call void @__kmpc_for_static_fini(ptr nonnull @1, i32 %i.h)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #6

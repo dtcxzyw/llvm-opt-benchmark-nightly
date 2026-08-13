@@ -204,12 +204,7 @@ bb.p:                                             ; preds = %.sink.split, %bb.n,
 .preheader169.lr.ph.split:                        ; preds = %.preheader169.lr.ph
   %i.dk = zext nneg i32 %i.h to i64               ; 5 uses
   %i.dl = zext nneg i32 %i.i to i64               ; 3 uses
-  br i1 %.not199, label %.preheader169.preheader, label %.preheader169.lr.ph.split.split.us
-
-.preheader169.preheader:                          ; preds = %.preheader169.lr.ph.split
-  %5 = mul nuw nsw i64 %i.dk, %i.dl
-  call void @llvm.memset.p0.i64(ptr align 1 %i.dg, i8 %spec.select, i64 %5, i1 false), !tbaa !77
-  br label %.loopexit
+  br i1 %.not199, label %.preheader169.lr.ph.split.split, label %.preheader169.lr.ph.split.split.us
 
 .preheader169.lr.ph.split.split.us:               ; preds = %.preheader169.lr.ph.split
   br i1 %.not158, label %.preheader169.us.preheader, label %.preheader169.us.us.preheader
@@ -439,7 +434,12 @@ bb.af:                                            ; preds = %.epil.preheader12
   %exitcond235.not = icmp eq i64 %indvars.iv.next232, %i.dl
   br i1 %exitcond235.not, label %.thread165, label %.preheader169.us, !llvm.loop !154
 
-.loopexit:                                        ; preds = %bb.e, %.preheader169.preheader, %._crit_edge182, %.preheader169.lr.ph, %bb.d
+.preheader169.lr.ph.split.split:                  ; preds = %.preheader169.lr.ph.split
+  %5 = mul nuw nsw i64 %i.dk, %i.dl
+  call void @llvm.memset.p0.i64(ptr align 1 %i.dg, i8 %spec.select, i64 %5, i1 false), !tbaa !77
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %bb.e, %.preheader169.lr.ph.split.split, %._crit_edge182, %.preheader169.lr.ph, %bb.d
   %.not161 = icmp eq ptr %i.r, null
   br i1 %.not161, label %.thread, label %.thread165
 

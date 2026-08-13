@@ -203,11 +203,11 @@ bb.il:                                            ; preds = %bb.id
   br label %.preheader334.us.i
 
 .preheader334.us.i:                               ; preds = %..thread278_crit_edge.us.i, %.preheader334.us.preheader.i
-  %.0150501.us.i = phi i32 [ %i.akb, %..thread278_crit_edge.us.i ], [ 0, %.preheader334.us.preheader.i ] ; 15 uses
-  %.0161499.us.i = phi i1 [ %.us-phi481, %..thread278_crit_edge.us.i ], [ false, %.preheader334.us.preheader.i ] ; 3 uses
-  %.sroa.15.0498.us.i = phi ptr [ %.us-phi480, %..thread278_crit_edge.us.i ], [ null, %.preheader334.us.preheader.i ] ; 15 uses
-  %.sroa.10.0497.us.i = phi ptr [ %.us-phi479, %..thread278_crit_edge.us.i ], [ null, %.preheader334.us.preheader.i ] ; 3 uses
-  %.sroa.0.0496.us.i = phi ptr [ %.us-phi478, %..thread278_crit_edge.us.i ], [ null, %.preheader334.us.preheader.i ] ; 15 uses
+  %.0150501.us.i = phi i32 [ 0, %.preheader334.us.preheader.i ], [ %i.akb, %..thread278_crit_edge.us.i ] ; 15 uses
+  %.0161499.us.i = phi i1 [ false, %.preheader334.us.preheader.i ], [ %.us-phi481, %..thread278_crit_edge.us.i ] ; 3 uses
+  %.sroa.15.0498.us.i = phi ptr [ null, %.preheader334.us.preheader.i ], [ %.us-phi480, %..thread278_crit_edge.us.i ] ; 15 uses
+  %.sroa.10.0497.us.i = phi ptr [ null, %.preheader334.us.preheader.i ], [ %.us-phi479, %..thread278_crit_edge.us.i ] ; 3 uses
+  %.sroa.0.0496.us.i = phi ptr [ null, %.preheader334.us.preheader.i ], [ %.us-phi478, %..thread278_crit_edge.us.i ] ; 15 uses
   br i1 %i.aay, label %.preheader334.us.i.split.us, label %.preheader333.us.i
 
 .preheader334.us.i.split.us:                      ; preds = %.preheader334.us.i
@@ -610,12 +610,12 @@ bb.aq:                                            ; preds = %bb.ai
   %lcmp.mod868 = trunc i32 %.0188 to i1
   br label %.preheader334.us
 
-.preheader334.us:                                 ; preds = %.preheader334.us.preheader, %..thread278_crit_edge.us
-  %.0150501.us = phi i32 [ %i.jy, %..thread278_crit_edge.us ], [ 0, %.preheader334.us.preheader ] ; 5 uses
-  %.0161499.us = phi i1 [ %.2163.us, %..thread278_crit_edge.us ], [ false, %.preheader334.us.preheader ]
-  %.sroa.15.0498.us = phi ptr [ %.sroa.15.2.us, %..thread278_crit_edge.us ], [ null, %.preheader334.us.preheader ]
-  %.sroa.10.0497.us = phi ptr [ %.sroa.10.2.us, %..thread278_crit_edge.us ], [ null, %.preheader334.us.preheader ]
-  %.sroa.0.0496.us = phi ptr [ %.sroa.0.2.us, %..thread278_crit_edge.us ], [ null, %.preheader334.us.preheader ]
+.preheader334.us:                                 ; preds = %..thread278_crit_edge.us, %.preheader334.us.preheader
+  %.0150501.us = phi i32 [ 0, %.preheader334.us.preheader ], [ %i.jy, %..thread278_crit_edge.us ] ; 5 uses
+  %.0161499.us = phi i1 [ false, %.preheader334.us.preheader ], [ %.2163.us, %..thread278_crit_edge.us ]
+  %.sroa.15.0498.us = phi ptr [ null, %.preheader334.us.preheader ], [ %.sroa.15.2.us, %..thread278_crit_edge.us ]
+  %.sroa.10.0497.us = phi ptr [ null, %.preheader334.us.preheader ], [ %.sroa.10.2.us, %..thread278_crit_edge.us ]
+  %.sroa.0.0496.us = phi ptr [ null, %.preheader334.us.preheader ], [ %.sroa.0.2.us, %..thread278_crit_edge.us ]
   br label %.preheader333.us
 
 bb.ar:                                            ; preds = %.preheader333.us, %.thread.us

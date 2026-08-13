@@ -201,8 +201,8 @@ _ZN4ncnn3Mat4fillEf.exit.preheader.us.us.us.epil: ; preds = %.lr.ph.us.us.us.pre
   br label %.noexc.us.us.us97.epil
 
 .noexc.us.us.us97.epil:                           ; preds = %.noexc.us.us.us97.epil, %.noexc.us.us.us97.epil.preheader
-  %indvar117.epil = phi i64 [ %indvar117.epil.init, %.noexc.us.us.us97.epil.preheader ], [ %indvar.next118.epil, %.noexc.us.us.us97.epil ] ; 2 uses
-  %epil.iter182 = phi i32 [ 0, %.noexc.us.us.us97.epil.preheader ], [ %epil.iter182.next, %.noexc.us.us.us97.epil ]
+  %indvar117.epil = phi i64 [ %indvar.next118.epil, %.noexc.us.us.us97.epil ], [ %indvar117.epil.init, %.noexc.us.us.us97.epil.preheader ] ; 2 uses
+  %epil.iter182 = phi i32 [ %epil.iter182.next, %.noexc.us.us.us97.epil ], [ 0, %.noexc.us.us.us97.epil.preheader ]
   %i.fn = add i64 %indvar117.epil, %i.ds
   %i.fo = mul i64 %factor.op.mul85, %i.fn
   %scevgep119.epil = getelementptr i8, ptr %i.y, i64 %i.fo

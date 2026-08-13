@@ -204,15 +204,7 @@ bb.f:                                             ; preds = %bb.b
   %i.bi = load i64, ptr %i.y, align 8, !tbaa !41  ; 4 uses
   %i.bj = mul i64 %i.bi, %i.bg
   %i.bk = getelementptr inbounds nuw [4 x i8], ptr %i.bh, i64 %i.bj
-  br i1 %i.bd, label %.preheader1.us.preheader.i.i.i, label %.preheader1.preheader.i.i.i
-
-.preheader1.preheader.i.i.i:                      ; preds = %.preheader1.lr.ph.split.i.i.i
-  %4 = zext nneg i32 %i.bb to i64
-  %5 = zext nneg i32 %i.az to i64
-  %6 = shl nuw nsw i64 %5, 4
-  %7 = mul i64 %6, %4
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.ar, i8 0, i64 %7, i1 false), !tbaa !108
-  br label %._crit_edge14.split.i.i.i
+  br i1 %i.bd, label %.preheader1.us.preheader.i.i.i, label %.preheader1.lr.ph.split.split.i.i.i
 
 .preheader1.us.preheader.i.i.i:                   ; preds = %.preheader1.lr.ph.split.i.i.i
   %i.bl = tail call i32 @llvm.usub.sat.i32(i32 3, i32 %i.au)
@@ -287,7 +279,15 @@ bb.h:                                             ; preds = %bb.g
   %exitcond36.not.i.i.i = icmp eq i64 %indvars.iv.next33.i.i.i, %wide.trip.count35.i.i.i
   br i1 %exitcond36.not.i.i.i, label %._crit_edge14.split.i.i.i, label %.preheader1.us.i.i.i, !llvm.loop !249
 
-._crit_edge14.split.i.i.i:                        ; preds = %._crit_edge9.split.us.us.i.i.i, %.preheader1.preheader.i.i.i, %.preheader1.lr.ph.i.i.i, %bb.f
+.preheader1.lr.ph.split.split.i.i.i:              ; preds = %.preheader1.lr.ph.split.i.i.i
+  %4 = zext nneg i32 %i.bb to i64
+  %5 = zext nneg i32 %i.az to i64
+  %flatten.tripcount.i.i.i = shl nuw nsw i64 %5, 4
+  %6 = mul i64 %flatten.tripcount.i.i.i, %4
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.ar, i8 0, i64 %6, i1 false), !tbaa !108
+  br label %._crit_edge14.split.i.i.i
+
+._crit_edge14.split.i.i.i:                        ; preds = %._crit_edge9.split.us.us.i.i.i, %.preheader1.lr.ph.split.split.i.i.i, %.preheader1.lr.ph.i.i.i, %bb.f
   %i.ci = add i32 %.03917.i.i.i, 1                ; 2 uses
   %exitcond37.not.i.i.i = icmp eq i32 %i.ci, %.val3
   %indvars.iv.next.i.i = add i32 %indvars.iv.i.i, -4

@@ -203,9 +203,9 @@ bb.a:
   br i1 %.not, label %.sink.split, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.l = sext i32 %1 to i64                       ; 2 uses
+  %i.l = sext i32 %1 to i64                       ; 8 uses
   %i.m = shl nsw i64 %i.l, 3
-  %i.n = sext i32 %i.h to i64                     ; 2 uses
+  %i.n = sext i32 %i.h to i64                     ; 4 uses
   %i.o = mul i64 %i.m, %i.n
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.k, ptr align 8 %2, i64 %i.o, i1 false)
   %i.p = tail call noalias ptr @calloc(i64 noundef %i.j, i64 noundef 8) #13 ; 19 uses
@@ -608,16 +608,15 @@ get_edge_label_matrix.exit.thread:                ; preds = %bb.t, %get_edge_lab
   %i.jz = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %i.ka = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   %or.cond.i172 = and i1 %i.jw, %i.jv
-  %i.kb = zext i32 %1 to i64                      ; 14 uses
-  %wide.trip.count41.i = zext i32 %i.h to i64     ; 5 uses
+  %i.kb = zext i32 %1 to i64                      ; 7 uses
+  %wide.trip.count41.i = zext i32 %i.h to i64     ; 3 uses
   %.reass = shl i64 %factor.op.mul, 3
   %brmerge = or i1 %.not171, %i.jx
   %brmerge228 = or i1 %brmerge, %i.jy
-  %i.kc = mul nuw i64 %wide.trip.count41.i, %i.kb
+  %i.kc = mul nsw i64 %i.n, %i.l
   %i.kd = shl i64 %i.kc, 3                        ; 2 uses
   %scevgep = getelementptr i8, ptr %i.p, i64 %i.kd
   %scevgep355 = getelementptr i8, ptr %.0179, i64 %i.kd
-  %4 = add nsw i64 %i.kb, -1                      ; 2 uses
   %min.iters.check371 = icmp ult i32 %1, 4
   %n.vec373 = and i64 %i.kb, 2147483644           ; 3 uses
   %cmp.n384 = icmp eq i64 %n.vec373, %i.kb
@@ -626,12 +625,13 @@ get_edge_label_matrix.exit.thread:                ; preds = %bb.t, %get_edge_lab
   %bound0 = icmp ult ptr %i.p, %scevgep355
   %bound1 = icmp ult ptr %.0179, %scevgep
   %found.conflict = and i1 %bound0, %bound1
-  %n.vec359 = and i64 %i.kb, 2147483644           ; 3 uses
-  %cmp.n368 = icmp eq i64 %n.vec359, %i.kb
-  %xtraiter398 = and i64 %i.kb, 1
-  %lcmp.mod399.not = icmp eq i64 %xtraiter398, 0
+  %n.vec359 = and i64 %i.l, 2147483644            ; 3 uses
+  %cmp.n368 = icmp eq i64 %n.vec359, %i.l
+  %4 = and i32 %1, 1
+  %lcmp.mod399.not = icmp eq i32 %4, 0
+  %5 = add nsw i64 %i.l, -1
   %xtraiter400 = and i64 %i.kb, 1
-  %i.ke = icmp eq i64 %4, 0
+  %i.ke = icmp eq i32 %1, 1
   %unroll_iter404 = and i64 %i.kb, 2147483646
   %lcmp.mod401.not = icmp eq i64 %xtraiter400, 0
   %lcmp.mod403 = trunc i32 %1 to i1
@@ -871,7 +871,7 @@ scalar.ph370:                                     ; preds = %scalar.ph370.prehea
 
 .preheader:                                       ; preds = %.loopexit196, %._crit_edge222
   %indvars.iv263 = phi i64 [ %indvars.iv.next264, %._crit_edge222 ], [ 0, %.loopexit196 ] ; 2 uses
-  %i.nl = mul nuw nsw i64 %indvars.iv263, %i.kb   ; 4 uses
+  %i.nl = mul nuw nsw i64 %indvars.iv263, %i.l    ; 4 uses
   %brmerge416 = select i1 %min.iters.check357, i1 true, i1 %found.conflict
   br i1 %brmerge416, label %scalar.ph356.preheader, label %vector.body360
 
@@ -914,7 +914,7 @@ scalar.ph356.prol:                                ; preds = %scalar.ph356.prehea
 
 scalar.ph356.prol.loopexit:                       ; preds = %scalar.ph356.prol, %scalar.ph356.preheader
   %indvars.iv258.unr = phi i64 [ %indvars.iv258.ph, %scalar.ph356.preheader ], [ %indvars.iv.next259.prol, %scalar.ph356.prol ]
-  %i.oa = icmp eq i64 %4, %indvars.iv258.ph
+  %i.oa = icmp eq i64 %indvars.iv258.ph, %5
   br i1 %i.oa, label %._crit_edge222, label %scalar.ph356.preheader.new
 
 scalar.ph356.preheader.new:                       ; preds = %scalar.ph356.prol.loopexit
@@ -938,12 +938,12 @@ scalar.ph356:                                     ; preds = %scalar.ph356, %scal
   %i.ol = fadd double %i.oi, %i.ok
   store double %i.ol, ptr %i.oj, align 8, !tbaa !18
   %indvars.iv.next259.1 = add nuw nsw i64 %indvars.iv258, 2 ; 2 uses
-  %exitcond262.not.1 = icmp eq i64 %indvars.iv.next259.1, %i.kb
+  %exitcond262.not.1 = icmp eq i64 %indvars.iv.next259.1, %i.l
   br i1 %exitcond262.not.1, label %._crit_edge222, label %scalar.ph356, !llvm.loop !101
 
 ._crit_edge222:                                   ; preds = %scalar.ph356.prol.loopexit, %scalar.ph356, %middle.block367
   %indvars.iv.next264 = add nuw nsw i64 %indvars.iv263, 1 ; 2 uses
-  %exitcond267.not = icmp eq i64 %indvars.iv.next264, %wide.trip.count41.i
+  %exitcond267.not = icmp eq i64 %indvars.iv.next264, %i.n
   br i1 %exitcond267.not, label %.loopexit, label %.preheader, !llvm.loop !102
 
 .loopexit:                                        ; preds = %._crit_edge222, %.loopexit196
