@@ -203,7 +203,7 @@ Io_MvGetLine.exit.i114:                           ; preds = %bb.fh, %.critedge.l
   %i.so = getelementptr i8, ptr %i.sn, i64 8
   %.val63.i = load ptr, ptr %i.so, align 8, !tbaa !13
   %i.sp = getelementptr inbounds nuw [8 x i8], ptr %.val63.i, i64 %indvars.iv.i111
-  %i.sq = load ptr, ptr %i.sp, align 8, !tbaa !39 ; 3 uses
+  %i.sq = load ptr, ptr %i.sp, align 8, !tbaa !39 ; 4 uses
   %i.sr = load ptr, ptr %i.qc, align 8, !tbaa !63
   %i.ss = getelementptr inbounds nuw i8, ptr %i.sr, i64 64
   %i.st = load ptr, ptr %i.ss, align 8, !tbaa !22 ; 5 uses
@@ -231,7 +231,7 @@ Io_MvCharIsSpace.exit.thread.i.i70.i:             ; preds = %.lr.ph.i.i68.i, %.l
   br label %bb.fi
 
 bb.fi:                                            ; preds = %Io_MvCharIsSpace.exit.thread.i.i70.i, %.lr.ph.i.i68.i
-  %i.sx = getelementptr inbounds nuw i8, ptr %.012.i.i69.i, i64 1 ; 2 uses
+  %i.sx = getelementptr inbounds nuw i8, ptr %.012.i.i69.i, i64 1 ; 3 uses
   %i.sy = load i8, ptr %i.sx, align 1, !tbaa !40  ; 2 uses
   %.not.i.i71.i = icmp eq i8 %i.sy, 0
   br i1 %.not.i.i71.i, label %Io_MvSplitIntoTokens.exit.i72.i, label %.lr.ph.i.i68.i, !llvm.loop !69
@@ -239,12 +239,16 @@ bb.fi:                                            ; preds = %Io_MvCharIsSpace.ex
 Io_MvSplitIntoTokens.exit.i72.i:                  ; preds = %bb.fi
   %i.sz = getelementptr inbounds nuw i8, ptr %i.st, i64 4 ; 4 uses
   store i32 0, ptr %i.sz, align 4, !tbaa !8
-  %3 = getelementptr i8, ptr %i.st, i64 8         ; 5 uses
+  %3 = icmp ult ptr %i.sq, %i.sx
+  br i1 %3, label %.lr.ph.i108.i, label %Io_MvParseLineInputs.exit.i
+
+.lr.ph.i108.i:                                    ; preds = %Io_MvSplitIntoTokens.exit.i72.i
+  %4 = getelementptr i8, ptr %i.st, i64 8         ; 5 uses
   br label %bb.fj
 
-bb.fj:                                            ; preds = %.loopexit.i.i, %Io_MvSplitIntoTokens.exit.i72.i
-  %i.ta = phi i32 [ 0, %Io_MvSplitIntoTokens.exit.i72.i ], [ %.val12.i.pr.i, %.loopexit.i.i ] ; 8 uses
-  %.09.i.i = phi ptr [ %i.sq, %Io_MvSplitIntoTokens.exit.i72.i ], [ %i.tv, %.loopexit.i.i ] ; 4 uses
+bb.fj:                                            ; preds = %.loopexit.i.i, %.lr.ph.i108.i
+  %i.ta = phi i32 [ 0, %.lr.ph.i108.i ], [ %.val12.i.pr.i, %.loopexit.i.i ] ; 8 uses
+  %.09.i.i = phi ptr [ %i.sq, %.lr.ph.i108.i ], [ %i.tv, %.loopexit.i.i ] ; 4 uses
   %i.tb = load i8, ptr %.09.i.i, align 1, !tbaa !40
   %i.tc = icmp eq i8 %i.tb, 0
   br i1 %i.tc, label %.loopexit.i.i, label %bb.fk
@@ -255,7 +259,7 @@ bb.fk:                                            ; preds = %bb.fj
   br i1 %i.te, label %bb.fl, label %.Vec_PtrPush.exit_crit_edge.i.i
 
 .Vec_PtrPush.exit_crit_edge.i.i:                  ; preds = %bb.fk
-  %.pre.i109.i = load ptr, ptr %3, align 8, !tbaa !13
+  %.pre.i109.i = load ptr, ptr %4, align 8, !tbaa !13
   br label %Vec_PtrPush.exit.i.i
 
 bb.fl:                                            ; preds = %bb.fk
@@ -263,7 +267,7 @@ bb.fl:                                            ; preds = %bb.fk
   br i1 %i.tf, label %bb.fm, label %bb.fp
 
 bb.fm:                                            ; preds = %bb.fl
-  %i.tg = load ptr, ptr %3, align 8, !tbaa !13    ; 2 uses
+  %i.tg = load ptr, ptr %4, align 8, !tbaa !13    ; 2 uses
   %.not9.i.i.i116.i = icmp eq ptr %i.tg, null
   br i1 %.not9.i.i.i116.i, label %bb.fo, label %bb.fn
 
@@ -280,7 +284,7 @@ bb.fp:                                            ; preds = %bb.fl
   %i.tk = shl nuw nsw i32 %i.ta, 1
   %spec.select.i.i111.i = select i1 %i.tj, i32 %i.tk, i32 2147483647 ; 4 uses
   %.not.i10.i.i112.i = icmp samesign ult i32 %i.ta, %spec.select.i.i111.i
-  %.pre11.i.i = load ptr, ptr %3, align 8, !tbaa !13 ; 3 uses
+  %.pre11.i.i = load ptr, ptr %4, align 8, !tbaa !13 ; 3 uses
   br i1 %.not.i10.i.i112.i, label %bb.fq, label %Vec_PtrPush.exit.i.i
 
 bb.fq:                                            ; preds = %bb.fp
@@ -300,7 +304,7 @@ bb.fs:                                            ; preds = %bb.fq
 Vec_PtrGrow.exit12.sink.split.i.i114.i:           ; preds = %bb.fs, %bb.fr, %bb.fo, %bb.fn
   %i.tp = phi ptr [ %i.ti, %bb.fo ], [ %i.th, %bb.fn ], [ %i.tn, %bb.fr ], [ %i.to, %bb.fs ] ; 2 uses
   %spec.select.sink.i.i115.i = phi i32 [ 16, %bb.fo ], [ 16, %bb.fn ], [ %spec.select.i.i111.i, %bb.fr ], [ %spec.select.i.i111.i, %bb.fs ]
-  store ptr %i.tp, ptr %3, align 8, !tbaa !13
+  store ptr %i.tp, ptr %4, align 8, !tbaa !13
   store i32 %spec.select.sink.i.i115.i, ptr %i.st, align 8, !tbaa !12
   %.pre12.i.i = load i32, ptr %i.sz, align 4, !tbaa !8
   br label %Vec_PtrPush.exit.i.i
@@ -331,7 +335,7 @@ Io_MvCollectTokens.exit.i:                        ; preds = %.loopexit.i.i
 
 .lr.ph.i74.i:                                     ; preds = %Io_MvCollectTokens.exit.i, %.lr.ph.i74.i
   %indvars.iv.i75.i = phi i64 [ %indvars.iv.next.i76.i, %.lr.ph.i74.i ], [ 1, %Io_MvCollectTokens.exit.i ] ; 2 uses
-  %.val10.i.i = load ptr, ptr %3, align 8, !tbaa !13
+  %.val10.i.i = load ptr, ptr %4, align 8, !tbaa !13
   %i.ty = getelementptr inbounds nuw [8 x i8], ptr %.val10.i.i, i64 %indvars.iv.i75.i
   %i.tz = load ptr, ptr %i.ty, align 8, !tbaa !39
   %i.ua = load ptr, ptr %i.rs, align 8, !tbaa !68
@@ -342,7 +346,7 @@ Io_MvCollectTokens.exit.i:                        ; preds = %.loopexit.i.i
   %i.ud = icmp slt i64 %indvars.iv.next.i76.i, %i.uc
   br i1 %i.ud, label %.lr.ph.i74.i, label %Io_MvParseLineInputs.exit.i, !llvm.loop !84
 
-Io_MvParseLineInputs.exit.i:                      ; preds = %.lr.ph.i74.i, %Io_MvCollectTokens.exit.i, %Io_MvSplitIntoTokens.exit.i72.thread.i
+Io_MvParseLineInputs.exit.i:                      ; preds = %.lr.ph.i74.i, %Io_MvCollectTokens.exit.i, %Io_MvSplitIntoTokens.exit.i72.i, %Io_MvSplitIntoTokens.exit.i72.thread.i
   %indvars.iv.next.i112 = add nuw nsw i64 %indvars.iv.i111, 1 ; 2 uses
   %i.ue = load ptr, ptr %i.ru, align 8, !tbaa !54 ; 2 uses
   %i.uf = getelementptr i8, ptr %i.ue, i64 4
@@ -357,7 +361,7 @@ Io_MvParseLineInputs.exit.i:                      ; preds = %.lr.ph.i74.i, %Io_M
   %i.uj = getelementptr i8, ptr %i.ui, i64 8
   %.val62.i = load ptr, ptr %i.uj, align 8, !tbaa !13
   %i.uk = getelementptr inbounds nuw [8 x i8], ptr %.val62.i, i64 %indvars.iv196.i
-  %i.ul = load ptr, ptr %i.uk, align 8, !tbaa !39 ; 3 uses
+  %i.ul = load ptr, ptr %i.uk, align 8, !tbaa !39 ; 4 uses
   %i.um = load ptr, ptr %i.qc, align 8, !tbaa !63
   %i.un = getelementptr inbounds nuw i8, ptr %i.um, i64 64
   %i.uo = load ptr, ptr %i.un, align 8, !tbaa !22 ; 5 uses
@@ -385,7 +389,7 @@ Io_MvCharIsSpace.exit.thread.i.i81.i:             ; preds = %.lr.ph.i.i79.i, %.l
   br label %bb.ft
 
 bb.ft:                                            ; preds = %Io_MvCharIsSpace.exit.thread.i.i81.i, %.lr.ph.i.i79.i
-  %i.us = getelementptr inbounds nuw i8, ptr %.012.i.i80.i, i64 1 ; 2 uses
+  %i.us = getelementptr inbounds nuw i8, ptr %.012.i.i80.i, i64 1 ; 3 uses
   %i.ut = load i8, ptr %i.us, align 1, !tbaa !40  ; 2 uses
   %.not.i.i82.i = icmp eq i8 %i.ut, 0
   br i1 %.not.i.i82.i, label %Io_MvSplitIntoTokens.exit.i83.i, label %.lr.ph.i.i79.i, !llvm.loop !69
@@ -393,12 +397,16 @@ bb.ft:                                            ; preds = %Io_MvCharIsSpace.ex
 Io_MvSplitIntoTokens.exit.i83.i:                  ; preds = %bb.ft
   %i.uu = getelementptr inbounds nuw i8, ptr %i.uo, i64 4 ; 4 uses
   store i32 0, ptr %i.uu, align 4, !tbaa !8
-  %4 = getelementptr i8, ptr %i.uo, i64 8         ; 5 uses
+  %5 = icmp ult ptr %i.ul, %i.us
+  br i1 %5, label %.lr.ph.i118.i, label %Io_MvParseLineOutputs.exit.i
+
+.lr.ph.i118.i:                                    ; preds = %Io_MvSplitIntoTokens.exit.i83.i
+  %6 = getelementptr i8, ptr %i.uo, i64 8         ; 5 uses
   br label %bb.fu
 
-bb.fu:                                            ; preds = %.loopexit.i126.i, %Io_MvSplitIntoTokens.exit.i83.i
-  %i.uv = phi i32 [ 0, %Io_MvSplitIntoTokens.exit.i83.i ], [ %.val12.i85.pr.i, %.loopexit.i126.i ] ; 8 uses
-  %.09.i119.i = phi ptr [ %i.ul, %Io_MvSplitIntoTokens.exit.i83.i ], [ %i.vq, %.loopexit.i126.i ] ; 4 uses
+bb.fu:                                            ; preds = %.loopexit.i126.i, %.lr.ph.i118.i
+  %i.uv = phi i32 [ 0, %.lr.ph.i118.i ], [ %.val12.i85.pr.i, %.loopexit.i126.i ] ; 8 uses
+  %.09.i119.i = phi ptr [ %i.ul, %.lr.ph.i118.i ], [ %i.vq, %.loopexit.i126.i ] ; 4 uses
   %i.uw = load i8, ptr %.09.i119.i, align 1, !tbaa !40
   %i.ux = icmp eq i8 %i.uw, 0
   br i1 %i.ux, label %.loopexit.i126.i, label %bb.fv
@@ -409,7 +417,7 @@ bb.fv:                                            ; preds = %bb.fu
   br i1 %i.uz, label %bb.fw, label %.Vec_PtrPush.exit_crit_edge.i120.i
 
 .Vec_PtrPush.exit_crit_edge.i120.i:               ; preds = %bb.fv
-  %.pre.i121.i = load ptr, ptr %4, align 8, !tbaa !13
+  %.pre.i121.i = load ptr, ptr %6, align 8, !tbaa !13
   br label %Vec_PtrPush.exit.i122.i
 
 bb.fw:                                            ; preds = %bb.fv
@@ -417,7 +425,7 @@ bb.fw:                                            ; preds = %bb.fv
   br i1 %i.va, label %bb.fx, label %bb.ga
 
 bb.fx:                                            ; preds = %bb.fw
-  %i.vb = load ptr, ptr %4, align 8, !tbaa !13    ; 2 uses
+  %i.vb = load ptr, ptr %6, align 8, !tbaa !13    ; 2 uses
   %.not9.i.i.i135.i = icmp eq ptr %i.vb, null
   br i1 %.not9.i.i.i135.i, label %bb.fz, label %bb.fy
 
@@ -434,7 +442,7 @@ bb.ga:                                            ; preds = %bb.fw
   %i.vf = shl nuw nsw i32 %i.uv, 1
   %spec.select.i.i128.i = select i1 %i.ve, i32 %i.vf, i32 2147483647 ; 4 uses
   %.not.i10.i.i129.i = icmp samesign ult i32 %i.uv, %spec.select.i.i128.i
-  %.pre11.i130.i = load ptr, ptr %4, align 8, !tbaa !13 ; 3 uses
+  %.pre11.i130.i = load ptr, ptr %6, align 8, !tbaa !13 ; 3 uses
   br i1 %.not.i10.i.i129.i, label %bb.gb, label %Vec_PtrPush.exit.i122.i
 
 bb.gb:                                            ; preds = %bb.ga
@@ -454,7 +462,7 @@ bb.gd:                                            ; preds = %bb.gb
 Vec_PtrGrow.exit12.sink.split.i.i132.i:           ; preds = %bb.gd, %bb.gc, %bb.fz, %bb.fy
   %i.vk = phi ptr [ %i.vd, %bb.fz ], [ %i.vc, %bb.fy ], [ %i.vi, %bb.gc ], [ %i.vj, %bb.gd ] ; 2 uses
   %spec.select.sink.i.i133.i = phi i32 [ 16, %bb.fz ], [ 16, %bb.fy ], [ %spec.select.i.i128.i, %bb.gc ], [ %spec.select.i.i128.i, %bb.gd ]
-  store ptr %i.vk, ptr %4, align 8, !tbaa !13
+  store ptr %i.vk, ptr %6, align 8, !tbaa !13
   store i32 %spec.select.sink.i.i133.i, ptr %i.uo, align 8, !tbaa !12
   %.pre12.i134.i = load i32, ptr %i.uu, align 4, !tbaa !8
   br label %Vec_PtrPush.exit.i122.i
@@ -485,7 +493,7 @@ Io_MvCollectTokens.exit136.i:                     ; preds = %.loopexit.i126.i
 
 .lr.ph.i86.i:                                     ; preds = %Io_MvCollectTokens.exit136.i, %.lr.ph.i86.i
   %indvars.iv.i87.i = phi i64 [ %indvars.iv.next.i89.i, %.lr.ph.i86.i ], [ 1, %Io_MvCollectTokens.exit136.i ] ; 2 uses
-  %.val10.i88.i = load ptr, ptr %4, align 8, !tbaa !13
+  %.val10.i88.i = load ptr, ptr %6, align 8, !tbaa !13
   %i.vt = getelementptr inbounds nuw [8 x i8], ptr %.val10.i88.i, i64 %indvars.iv.i87.i
   %i.vu = load ptr, ptr %i.vt, align 8, !tbaa !39
   %i.vv = load ptr, ptr %i.rs, align 8, !tbaa !68
@@ -496,7 +504,7 @@ Io_MvCollectTokens.exit136.i:                     ; preds = %.loopexit.i126.i
   %i.vy = icmp slt i64 %indvars.iv.next.i89.i, %i.vx
   br i1 %i.vy, label %.lr.ph.i86.i, label %Io_MvParseLineOutputs.exit.i, !llvm.loop !86
 
-Io_MvParseLineOutputs.exit.i:                     ; preds = %.lr.ph.i86.i, %Io_MvCollectTokens.exit136.i, %Io_MvSplitIntoTokens.exit.i83.thread.i
+Io_MvParseLineOutputs.exit.i:                     ; preds = %.lr.ph.i86.i, %Io_MvCollectTokens.exit136.i, %Io_MvSplitIntoTokens.exit.i83.i, %Io_MvSplitIntoTokens.exit.i83.thread.i
   %indvars.iv.next197.i = add nuw nsw i64 %indvars.iv196.i, 1 ; 2 uses
   %i.vz = load ptr, ptr %i.sj, align 8, !tbaa !55 ; 2 uses
   %i.wa = getelementptr i8, ptr %i.vz, i64 4
@@ -524,7 +532,7 @@ Io_MvParseLineOutputs.exit.i:                     ; preds = %.lr.ph.i86.i, %Io_M
   %i.wl = getelementptr i8, ptr %i.wk, i64 8
   %.val61.i = load ptr, ptr %i.wl, align 8, !tbaa !13
   %i.wm = getelementptr inbounds nuw [8 x i8], ptr %.val61.i, i64 %indvars.iv199.i
-  %i.wn = load ptr, ptr %i.wm, align 8, !tbaa !39 ; 3 uses
+  %i.wn = load ptr, ptr %i.wm, align 8, !tbaa !39 ; 4 uses
   %i.wo = load ptr, ptr %i.qc, align 8, !tbaa !63
   %i.wp = getelementptr inbounds nuw i8, ptr %i.wo, i64 64
   %i.wq = load ptr, ptr %i.wp, align 8, !tbaa !22 ; 5 uses
@@ -552,7 +560,7 @@ Io_MvCharIsSpace.exit.thread.i.i94.i:             ; preds = %.lr.ph.i.i92.i, %.l
   br label %bb.ge
 
 bb.ge:                                            ; preds = %Io_MvCharIsSpace.exit.thread.i.i94.i, %.lr.ph.i.i92.i
-  %i.wu = getelementptr inbounds nuw i8, ptr %.012.i.i93.i, i64 1 ; 2 uses
+  %i.wu = getelementptr inbounds nuw i8, ptr %.012.i.i93.i, i64 1 ; 3 uses
   %i.wv = load i8, ptr %i.wu, align 1, !tbaa !40  ; 2 uses
   %.not.i.i95.i = icmp eq i8 %i.wv, 0
   br i1 %.not.i.i95.i, label %Io_MvSplitIntoTokens.exit.i96.i, label %.lr.ph.i.i92.i, !llvm.loop !69
@@ -560,12 +568,16 @@ bb.ge:                                            ; preds = %Io_MvCharIsSpace.ex
 Io_MvSplitIntoTokens.exit.i96.i:                  ; preds = %bb.ge
   %i.ww = getelementptr inbounds nuw i8, ptr %i.wq, i64 4 ; 4 uses
   store i32 0, ptr %i.ww, align 4, !tbaa !8
-  %5 = getelementptr i8, ptr %i.wq, i64 8         ; 5 uses
+  %7 = icmp ult ptr %i.wn, %i.wu
+  br i1 %7, label %.lr.ph.i138.i, label %Io_MvParseLineConstrs.exit.i
+
+.lr.ph.i138.i:                                    ; preds = %Io_MvSplitIntoTokens.exit.i96.i
+  %8 = getelementptr i8, ptr %i.wq, i64 8         ; 5 uses
   br label %bb.gf
 
-bb.gf:                                            ; preds = %.loopexit.i146.i, %Io_MvSplitIntoTokens.exit.i96.i
-  %i.wx = phi i32 [ 0, %Io_MvSplitIntoTokens.exit.i96.i ], [ %.val12.i98.pr.i, %.loopexit.i146.i ] ; 8 uses
-  %.09.i139.i = phi ptr [ %i.wn, %Io_MvSplitIntoTokens.exit.i96.i ], [ %i.xs, %.loopexit.i146.i ] ; 4 uses
+bb.gf:                                            ; preds = %.loopexit.i146.i, %.lr.ph.i138.i
+  %i.wx = phi i32 [ 0, %.lr.ph.i138.i ], [ %.val12.i98.pr.i, %.loopexit.i146.i ] ; 8 uses
+  %.09.i139.i = phi ptr [ %i.wn, %.lr.ph.i138.i ], [ %i.xs, %.loopexit.i146.i ] ; 4 uses
   %i.wy = load i8, ptr %.09.i139.i, align 1, !tbaa !40
   %i.wz = icmp eq i8 %i.wy, 0
   br i1 %i.wz, label %.loopexit.i146.i, label %bb.gg
@@ -576,7 +588,7 @@ bb.gg:                                            ; preds = %bb.gf
   br i1 %i.xb, label %bb.gh, label %.Vec_PtrPush.exit_crit_edge.i140.i
 
 .Vec_PtrPush.exit_crit_edge.i140.i:               ; preds = %bb.gg
-  %.pre.i141.i = load ptr, ptr %5, align 8, !tbaa !13
+  %.pre.i141.i = load ptr, ptr %8, align 8, !tbaa !13
   br label %Vec_PtrPush.exit.i142.i
 
 bb.gh:                                            ; preds = %bb.gg
@@ -584,7 +596,7 @@ bb.gh:                                            ; preds = %bb.gg
   br i1 %i.xc, label %bb.gi, label %bb.gl
 
 bb.gi:                                            ; preds = %bb.gh
-  %i.xd = load ptr, ptr %5, align 8, !tbaa !13    ; 2 uses
+  %i.xd = load ptr, ptr %8, align 8, !tbaa !13    ; 2 uses
   %.not9.i.i.i155.i = icmp eq ptr %i.xd, null
   br i1 %.not9.i.i.i155.i, label %bb.gk, label %bb.gj
 
@@ -601,7 +613,7 @@ bb.gl:                                            ; preds = %bb.gh
   %i.xh = shl nuw nsw i32 %i.wx, 1
   %spec.select.i.i148.i = select i1 %i.xg, i32 %i.xh, i32 2147483647 ; 4 uses
   %.not.i10.i.i149.i = icmp samesign ult i32 %i.wx, %spec.select.i.i148.i
-  %.pre11.i150.i = load ptr, ptr %5, align 8, !tbaa !13 ; 3 uses
+  %.pre11.i150.i = load ptr, ptr %8, align 8, !tbaa !13 ; 3 uses
   br i1 %.not.i10.i.i149.i, label %bb.gm, label %Vec_PtrPush.exit.i142.i
 
 bb.gm:                                            ; preds = %bb.gl
@@ -621,7 +633,7 @@ bb.go:                                            ; preds = %bb.gm
 Vec_PtrGrow.exit12.sink.split.i.i152.i:           ; preds = %bb.go, %bb.gn, %bb.gk, %bb.gj
   %i.xm = phi ptr [ %i.xf, %bb.gk ], [ %i.xe, %bb.gj ], [ %i.xk, %bb.gn ], [ %i.xl, %bb.go ] ; 2 uses
   %spec.select.sink.i.i153.i = phi i32 [ 16, %bb.gk ], [ 16, %bb.gj ], [ %spec.select.i.i148.i, %bb.gn ], [ %spec.select.i.i148.i, %bb.go ]
-  store ptr %i.xm, ptr %5, align 8, !tbaa !13
+  store ptr %i.xm, ptr %8, align 8, !tbaa !13
   store i32 %spec.select.sink.i.i153.i, ptr %i.wq, align 8, !tbaa !12
   %.pre12.i154.i = load i32, ptr %i.ww, align 4, !tbaa !8
   br label %Vec_PtrPush.exit.i142.i
@@ -652,7 +664,7 @@ Io_MvCollectTokens.exit156.i:                     ; preds = %.loopexit.i146.i
 
 .lr.ph.i99.i:                                     ; preds = %Io_MvCollectTokens.exit156.i, %.lr.ph.i99.i
   %indvars.iv.i100.i = phi i64 [ %indvars.iv.next.i102.i, %.lr.ph.i99.i ], [ 1, %Io_MvCollectTokens.exit156.i ] ; 2 uses
-  %.val10.i101.i = load ptr, ptr %5, align 8, !tbaa !13
+  %.val10.i101.i = load ptr, ptr %8, align 8, !tbaa !13
   %i.xv = getelementptr inbounds nuw [8 x i8], ptr %.val10.i101.i, i64 %indvars.iv.i100.i
   %i.xw = load ptr, ptr %i.xv, align 8, !tbaa !39
   %i.xx = load ptr, ptr %i.rs, align 8, !tbaa !68
@@ -663,7 +675,7 @@ Io_MvCollectTokens.exit156.i:                     ; preds = %.loopexit.i146.i
   %i.ya = icmp slt i64 %indvars.iv.next.i102.i, %i.xz
   br i1 %i.ya, label %.lr.ph.i99.i, label %Io_MvParseLineConstrs.exit.i, !llvm.loop !89
 
-Io_MvParseLineConstrs.exit.i:                     ; preds = %.lr.ph.i99.i, %Io_MvCollectTokens.exit156.i, %Io_MvSplitIntoTokens.exit.i96.thread.i
+Io_MvParseLineConstrs.exit.i:                     ; preds = %.lr.ph.i99.i, %Io_MvCollectTokens.exit156.i, %Io_MvSplitIntoTokens.exit.i96.i, %Io_MvSplitIntoTokens.exit.i96.thread.i
   %indvars.iv.next200.i = add nuw nsw i64 %indvars.iv199.i, 1 ; 2 uses
   %i.yb = load ptr, ptr %i.wg, align 8, !tbaa !60 ; 2 uses
   %i.yc = getelementptr i8, ptr %i.yb, i64 4

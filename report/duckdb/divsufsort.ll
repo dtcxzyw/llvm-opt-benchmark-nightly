@@ -203,7 +203,7 @@ bb.fk:                                            ; preds = %.preheader.i
   br i1 %i.ano, label %.preheader.i, label %.critedge.i.i300, !llvm.loop !82
 
 .critedge.i.i300:                                 ; preds = %bb.fk, %.preheader.i, %._crit_edge.thread.i.i299
-  %.1456.i.i = phi ptr [ %.0455.ph.i.i, %._crit_edge.thread.i.i299 ], [ %i.anl, %.preheader.i ], [ %i.anl, %bb.fk ] ; 9 uses
+  %.1456.i.i = phi ptr [ %.0455.ph.i.i, %._crit_edge.thread.i.i299 ], [ %i.anl, %.preheader.i ], [ %i.anl, %bb.fk ] ; 10 uses
   %i.anp = icmp ult ptr %.1456.i.i, %.0463.ph.i.i
   br i1 %i.anp, label %bb.fl, label %bb.gg
 
@@ -280,7 +280,7 @@ bb.fu:                                            ; preds = %bb.fs
 
 _ZN11duckdb_zstdL6tr_ilgEi.exit556.i.i:           ; preds = %bb.fu, %bb.ft, %bb.fr, %bb.fq, %bb.fn
   %i.aoz = phi i32 [ -1, %bb.fn ], [ %i.aoq, %bb.fr ], [ %i.aol, %bb.fq ], [ %i.aov, %bb.ft ], [ %i.aoy, %bb.fu ] ; 3 uses
-  %i.apa = getelementptr inbounds nuw i8, ptr %i.anr, i64 8 ; 9 uses
+  %i.apa = getelementptr inbounds nuw i8, ptr %i.anr, i64 8 ; 10 uses
   %i.apb = icmp ult ptr %i.apa, %.0463.ph.i.i
   %i.apc = ptrtoint ptr %i.apa to i64             ; 4 uses
   br i1 %i.apb, label %.lr.ph685.i.preheader.i, label %_ZN11duckdb_zstdL6tr_ilgEi.exit556._crit_edge.i.i
@@ -290,9 +290,10 @@ _ZN11duckdb_zstdL6tr_ilgEi.exit556.i.i:           ; preds = %bb.fu, %bb.ft, %bb.
   %i.ape = lshr exact i64 %i.apd, 2
   %i.apf = trunc i64 %i.ape to i32
   %i.apg = add i32 %i.apf, -1
-  br label %.lr.ph685.i.i
+  %6 = icmp ult ptr %.1456.i.i, %i.apa
+  br i1 %6, label %.lr.ph685.i.i, label %_ZN11duckdb_zstdL6tr_ilgEi.exit556._crit_edge.i.i
 
-.lr.ph685.i.i:                                    ; preds = %.lr.ph685.i.i, %.lr.ph685.i.preheader.i
+.lr.ph685.i.i:                                    ; preds = %.lr.ph685.i.preheader.i, %.lr.ph685.i.i
   %i.aph = phi ptr [ %i.apl, %.lr.ph685.i.i ], [ %.1456.i.i, %.lr.ph685.i.preheader.i ] ; 2 uses
   %i.api = load i32, ptr %i.aph, align 4, !tbaa !3
   %i.apj = sext i32 %i.api to i64
@@ -302,7 +303,7 @@ _ZN11duckdb_zstdL6tr_ilgEi.exit556.i.i:           ; preds = %bb.fu, %bb.ft, %bb.
   %i.apm = icmp ult ptr %i.apl, %i.apa
   br i1 %i.apm, label %.lr.ph685.i.i, label %_ZN11duckdb_zstdL6tr_ilgEi.exit556._crit_edge.i.i, !llvm.loop !84
 
-_ZN11duckdb_zstdL6tr_ilgEi.exit556._crit_edge.i.i: ; preds = %.lr.ph685.i.i, %_ZN11duckdb_zstdL6tr_ilgEi.exit556.i.i
+_ZN11duckdb_zstdL6tr_ilgEi.exit556._crit_edge.i.i: ; preds = %.lr.ph685.i.i, %.lr.ph685.i.preheader.i, %_ZN11duckdb_zstdL6tr_ilgEi.exit556.i.i
   %i.apn = ptrtoint ptr %.1456.i.i to i64
   %i.apo = sub i64 %i.apc, %i.apn                 ; 2 uses
   %i.app = lshr exact i64 %i.apo, 2

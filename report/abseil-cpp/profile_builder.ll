@@ -203,7 +203,7 @@ _ZN4absl12lts_2026052619str_format_internal11InvokeFlushINS0_10FormatSinkEEEDTcl
 ; Function Attrs: mustprogress uwtable
 define internal noundef zeroext i1 @_ZN4absl12lts_2026052619str_format_internal13FormatArgImpl8DispatchINS0_18debugging_internal12_GLOBAL__N_16VarintEEEbNS2_4DataENS1_24FormatConversionSpecImplEPv(ptr nofree readonly captures(none) %0, i64 %1, i32 %2, ptr noundef %3) #0 align 2 {
 bb.a:
-  %i.a = alloca [10 x i8], align 1                ; 7 uses
+  %i.a = alloca [10 x i8], align 1                ; 8 uses
   %i.b = and i64 %1, 255
   %i.c = icmp eq i64 %i.b, 18                     ; 2 uses
   br i1 %i.c, label %bb.b, label %bb.e, !prof !311
@@ -212,7 +212,7 @@ bb.b:                                             ; preds = %bb.a
   %.val = load i64, ptr %0, align 8, !tbaa !89    ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #21
   %i.d = icmp ugt i64 %.val, 127
-  br i1 %i.d, label %.lr.ph.i.i, label %._crit_edge.i.i.a
+  br i1 %i.d, label %.lr.ph.i.i, label %._crit_edge.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.b, %.lr.ph.i.i
   %.04.i.i = phi i64 [ %i.h, %.lr.ph.i.i ], [ %.val, %bb.b ] ; 3 uses
@@ -223,17 +223,21 @@ bb.b:                                             ; preds = %bb.a
   store i8 %i.f, ptr %.083.i.i, align 1, !tbaa !31
   %i.h = lshr i64 %.04.i.i, 7                     ; 2 uses
   %i.i = icmp ugt i64 %.04.i.i, 16383
-  br i1 %i.i, label %.lr.ph.i.i, label %._crit_edge.i.i.a, !llvm.loop !323
+  br i1 %i.i, label %.lr.ph.i.i, label %._crit_edge.i.i, !llvm.loop !323
 
-._crit_edge.i.i.a:                                ; preds = %.lr.ph.i.i, %bb.b
+._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i, %bb.b
   %.08.lcssa.i.i = phi ptr [ %i.a, %bb.b ], [ %i.g, %.lr.ph.i.i ] ; 2 uses
   %.0.lcssa.i.i = phi i64 [ %.val, %bb.b ], [ %i.h, %.lr.ph.i.i ]
   %4 = trunc nuw nsw i64 %.0.lcssa.i.i to i8
-  %5 = getelementptr inbounds nuw i8, ptr %.08.lcssa.i.i, i64 1
+  %5 = getelementptr inbounds nuw i8, ptr %.08.lcssa.i.i, i64 1 ; 2 uses
   store i8 %4, ptr %.08.lcssa.i.i, align 1, !tbaa !31
   %6 = ptrtoint ptr %5 to i64
   %7 = ptrtoint ptr %i.a to i64
   %8 = sub i64 %6, %7                             ; 5 uses
+  %9 = icmp eq ptr %5, %i.a
+  br i1 %9, label %_ZN4absl12lts_2026052619str_format_internal17FormatConvertImplINS0_18debugging_internal12_GLOBAL__N_16VarintEEENSt9enable_ifIXaaaantsr3std7is_enumIT_EE5valuentsr3std7is_sameIS7_NS0_4CordEEE5valuesr3std7is_voidIDTcl13AbslStringifyclL_ZSt7declvalIRNS0_10FormatSinkEEDTcl9__declvalIS7_ELi0EEEvEEfp_EEEE5valueENS1_16ArgConvertResultILNS0_23FormatConversionCharSetE524288EEEE4typeERKS7_NS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE.exit, label %._crit_edge.i.i.a
+
+._crit_edge.i.i.a:                                ; preds = %._crit_edge.i.i
   %i.j = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %i.k = load i64, ptr %i.j, align 8, !tbaa !315
   %i.l = add i64 %i.k, %8
@@ -268,7 +272,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i.a
   store ptr %i.ab, ptr %i.n, align 8, !tbaa !318
   br label %_ZN4absl12lts_2026052619str_format_internal17FormatConvertImplINS0_18debugging_internal12_GLOBAL__N_16VarintEEENSt9enable_ifIXaaaantsr3std7is_enumIT_EE5valuentsr3std7is_sameIS7_NS0_4CordEEE5valuesr3std7is_voidIDTcl13AbslStringifyclL_ZSt7declvalIRNS0_10FormatSinkEEDTcl9__declvalIS7_ELi0EEEvEEfp_EEEE5valueENS1_16ArgConvertResultILNS0_23FormatConversionCharSetE524288EEEE4typeERKS7_NS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE.exit
 
-_ZN4absl12lts_2026052619str_format_internal17FormatConvertImplINS0_18debugging_internal12_GLOBAL__N_16VarintEEENSt9enable_ifIXaaaantsr3std7is_enumIT_EE5valuentsr3std7is_sameIS7_NS0_4CordEEE5valuesr3std7is_voidIDTcl13AbslStringifyclL_ZSt7declvalIRNS0_10FormatSinkEEDTcl9__declvalIS7_ELi0EEEvEEfp_EEEE5valueENS1_16ArgConvertResultILNS0_23FormatConversionCharSetE524288EEEE4typeERKS7_NS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE.exit: ; preds = %bb.c, %bb.d
+_ZN4absl12lts_2026052619str_format_internal17FormatConvertImplINS0_18debugging_internal12_GLOBAL__N_16VarintEEENSt9enable_ifIXaaaantsr3std7is_enumIT_EE5valuentsr3std7is_sameIS7_NS0_4CordEEE5valuesr3std7is_voidIDTcl13AbslStringifyclL_ZSt7declvalIRNS0_10FormatSinkEEDTcl9__declvalIS7_ELi0EEEvEEfp_EEEE5valueENS1_16ArgConvertResultILNS0_23FormatConversionCharSetE524288EEEE4typeERKS7_NS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE.exit: ; preds = %._crit_edge.i.i, %bb.c, %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #21
   br label %bb.e
 
