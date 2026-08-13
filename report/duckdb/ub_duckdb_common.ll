@@ -1,8 +1,8 @@
 inline.NumInlined: 29988
 inline.NumDeleted: 10454
 loop-unroll.NumCompletelyUnrolled: 46
-loop-unroll.NumRuntimeUnrolled: 385
-loop-unroll.NumUnrolled: 431
+loop-unroll.NumRuntimeUnrolled: 384
+loop-unroll.NumUnrolled: 430
 begin_hunk_0_@_ZN6duckdb17ChecksumRemainderEPvm:bb.a
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %.lr.ph
   %i.d = and i64 %1, 8
@@ -204,42 +204,26 @@ middle.block:                                     ; preds = %vector.body
   br i1 %.not, label %bb.j, label %bb.b
 
 bb.b:                                             ; preds = %._crit_edge
-  %i.p = sub i64 %1, %.0.lcssa                    ; 3 uses
-  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 %.0.lcssa ; 4 uses
+  %i.p = sub i64 %1, %.0.lcssa                    ; 2 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 %.0.lcssa ; 2 uses
   %i.r = mul i64 %i.p, -4132994306676758123
-  %i.s = xor i64 %i.r, 3782874213                 ; 3 uses
-  %i.t = lshr i64 %i.p, 3                         ; 4 uses
-  switch i64 %i.t, label %.lr.ph.i.preheader.new [
-    i64 0, label %._crit_edge.i
-    i64 1, label %.lr.ph.i.epil.preheader
-  ]
+  %i.s = xor i64 %i.r, 3782874213                 ; 2 uses
+  %i.t = lshr i64 %i.p, 3                         ; 2 uses
+  %.not.i = icmp eq i64 %i.t, 0
+  br i1 %.not.i, label %._crit_edge.i, label %.lr.ph.i.epil.preheader
 
-.lr.ph.i.preheader.new:                           ; preds = %bb.b
-  %unroll_iter = and i64 %i.t, 2305843009213693950
-  br label %.lr.ph.i
-
-._crit_edge.i.loopexit.unr-lcssa:                 ; preds = %.lr.ph.i
-  %2 = and i64 %i.p, 8
-  %lcmp.mod.not = icmp eq i64 %2, 0
-  br i1 %lcmp.mod.not, label %._crit_edge.i, label %.lr.ph.i.epil.preheader
-
-.lr.ph.i.epil.preheader:                          ; preds = %bb.b, %._crit_edge.i.loopexit.unr-lcssa
-  %.041.i.epil.init = phi i64 [ %i.s, %bb.b ], [ %18, %._crit_edge.i.loopexit.unr-lcssa ]
-  %.03840.i.epil.init = phi i64 [ 0, %bb.b ], [ %19, %._crit_edge.i.loopexit.unr-lcssa ]
-  %lcmp.mod34 = trunc i64 %i.t to i1
-  tail call void @llvm.assume(i1 %lcmp.mod34)
-  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.q, i64 %.03840.i.epil.init
-  %.0.copyload.i.i.epil = load i64, ptr %3, align 1
+.lr.ph.i.epil.preheader:                          ; preds = %bb.b
+  %.0.copyload.i.i.epil = load i64, ptr %i.q, align 1
   %i.u = mul i64 %.0.copyload.i.i.epil, -4132994306676758123 ; 2 uses
   %i.v = lshr i64 %i.u, 47
   %i.w = xor i64 %i.v, %i.u
   %i.x = mul i64 %i.w, -4132994306676758123
-  %i.y = xor i64 %i.x, %.041.i.epil.init
+  %i.y = xor i64 %i.x, %i.s
   %i.z = mul i64 %i.y, -4132994306676758123
   br label %._crit_edge.i
 
-._crit_edge.i:                                    ; preds = %.lr.ph.i.epil.preheader, %._crit_edge.i.loopexit.unr-lcssa, %bb.b
-  %.0.lcssa.i = phi i64 [ %i.s, %bb.b ], [ %18, %._crit_edge.i.loopexit.unr-lcssa ], [ %i.z, %.lr.ph.i.epil.preheader ] ; 8 uses
+._crit_edge.i:                                    ; preds = %.lr.ph.i.epil.preheader, %bb.b
+  %.0.lcssa.i = phi i64 [ %i.s, %bb.b ], [ %i.z, %.lr.ph.i.epil.preheader ] ; 8 uses
   %i.aa = getelementptr inbounds nuw [8 x i8], ptr %i.q, i64 %i.t ; 7 uses
   %i.ab = and i64 %1, 7
   switch i64 %i.ab, label %default.unreachable [
@@ -252,32 +236,6 @@ bb.b:                                             ; preds = %._crit_edge
     i64 1, label %bb.i
     i64 0, label %_ZN6duckdb17ChecksumRemainderEPvm.exit
   ]
-
-.lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.i.preheader.new
-  %.041.i = phi i64 [ %i.s, %.lr.ph.i.preheader.new ], [ %18, %.lr.ph.i ]
-  %.03840.i = phi i64 [ 0, %.lr.ph.i.preheader.new ], [ %19, %.lr.ph.i ] ; 3 uses
-  %niter = phi i64 [ 0, %.lr.ph.i.preheader.new ], [ %niter.next.1, %.lr.ph.i ]
-  %4 = getelementptr inbounds nuw [8 x i8], ptr %i.q, i64 %.03840.i
-  %.0.copyload.i.i = load i64, ptr %4, align 1
-  %5 = mul i64 %.0.copyload.i.i, -4132994306676758123 ; 2 uses
-  %6 = lshr i64 %5, 47
-  %7 = xor i64 %6, %5
-  %8 = mul i64 %7, -4132994306676758123
-  %9 = xor i64 %8, %.041.i
-  %10 = mul i64 %9, -4132994306676758123
-  %11 = getelementptr inbounds nuw [8 x i8], ptr %i.q, i64 %.03840.i
-  %12 = getelementptr inbounds nuw i8, ptr %11, i64 8
-  %.0.copyload.i.i.1 = load i64, ptr %12, align 1
-  %13 = mul i64 %.0.copyload.i.i.1, -4132994306676758123 ; 2 uses
-  %14 = lshr i64 %13, 47
-  %15 = xor i64 %14, %13
-  %16 = mul i64 %15, -4132994306676758123
-  %17 = xor i64 %16, %10
-  %18 = mul i64 %17, -4132994306676758123         ; 3 uses
-  %19 = add nuw nsw i64 %.03840.i, 2              ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
-  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %._crit_edge.i.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !1243
 
 bb.c:                                             ; preds = %._crit_edge.i
   %i.ac = getelementptr inbounds nuw i8, ptr %i.aa, i64 6
