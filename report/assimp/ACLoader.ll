@@ -204,7 +204,7 @@ bb.ei:                                            ; preds = %bb.eh
   %i.abi = ptrtoint ptr %i.abg to i64
   %i.abj = sub i64 %i.abh, %i.abi
   %i.abk = ashr exact i64 %i.abj, 3               ; 2 uses
-  %i.abl = sub nsw i64 %i.abk, %i.jq              ; 4 uses
+  %i.abl = sub nsw i64 %i.abk, %i.jq              ; 5 uses
   %i.abm = icmp ugt i64 %i.abl, 1152921504606846975
   br i1 %i.abm, label %bb.ej, label %_ZNSt6vectorIP6aiMeshSaIS1_EE17_S_check_init_lenEmRKS2_.exit.i
 
@@ -236,18 +236,22 @@ bb.ek:                                            ; preds = %.noexc405
   %i.abu = load ptr, ptr %2, align 8
   %i.abv = getelementptr inbounds i8, ptr %i.abu, i64 %i.jp ; 2 uses
   %i.abw = icmp samesign ugt i64 %i.abl, 1
-  br i1 %i.abw, label %bb.el, label %bb.em, !prof !65
+  br i1 %i.abw, label %bb.el, label %6, !prof !65
 
 bb.el:                                            ; preds = %bb.ek
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.abv, ptr nonnull align 8 %i.abo, i64 %i.abn, i1 false)
   br label %_ZNSt10unique_ptrIN6Assimp10SubdividerESt14default_deleteIS1_EED2Ev.exit
 
-bb.em:                                            ; preds = %bb.ek
+6:                                                ; preds = %bb.ek
+  %7 = icmp eq i64 %i.abl, 1
+  br i1 %7, label %bb.em, label %_ZNSt10unique_ptrIN6Assimp10SubdividerESt14default_deleteIS1_EED2Ev.exit
+
+bb.em:                                            ; preds = %6
   %i.abx = load ptr, ptr %i.abo, align 8
   store ptr %i.abx, ptr %i.abv, align 8
   br label %_ZNSt10unique_ptrIN6Assimp10SubdividerESt14default_deleteIS1_EED2Ev.exit
 
-_ZNSt10unique_ptrIN6Assimp10SubdividerESt14default_deleteIS1_EED2Ev.exit: ; preds = %bb.em, %bb.el
+_ZNSt10unique_ptrIN6Assimp10SubdividerESt14default_deleteIS1_EED2Ev.exit: ; preds = %bb.em, %6, %bb.el
   tail call void @_ZdlPvm(ptr noundef nonnull %i.abo, i64 noundef %i.abn) #29
   %i.aby = load ptr, ptr %i.abc, align 8
   %i.abz = getelementptr inbounds nuw i8, ptr %i.aby, i64 8

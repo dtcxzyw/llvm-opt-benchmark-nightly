@@ -205,9 +205,9 @@ bb.ae:                                            ; preds = %sqlite3_malloc.exit
   br i1 %i.kr, label %.lr.ph.i.i.i, label %._crit_edge.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.ae
-  %i.ks = getelementptr inbounds nuw i8, ptr %i.iq, i64 24
-  %i.kt = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 2 uses
-  %i.ku = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
+  %i.ks = getelementptr inbounds nuw i8, ptr %i.a, i64 4
+  %i.kt = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
+  %i.ku = getelementptr inbounds nuw i8, ptr %i.iq, i64 24
   %i.kv = getelementptr inbounds nuw i8, ptr %i.bi, i64 104
   %i.kw = getelementptr inbounds nuw i8, ptr %i.bi, i64 85
   %i.kx = getelementptr inbounds nuw i8, ptr %i.a, i64 16
@@ -239,42 +239,30 @@ bb.ag:                                            ; preds = %bb.af
   store <8 x i8> %i.lp, ptr %i.a, align 16, !tbaa !229
   %i.lq = load i32, ptr %i.gz, align 4, !tbaa !2037
   %i.lr = icmp eq i32 %i.lq, 0
-  br i1 %i.lr, label %5, label %bb.ah
+  br i1 %i.lr, label %walChecksumBytes.exit.i.i.i.i, label %bb.ah
 
-5:                                                ; preds = %bb.ag
-  %6 = load i64, ptr %i.kv, align 8
-  store i64 %6, ptr %i.ku, align 8
-  %7 = load i8, ptr %i.kw, align 1, !tbaa !2242
-  %8 = icmp eq i8 %7, 0                           ; 2 uses
-  %9 = zext i1 %8 to i32
-  %10 = load i32, ptr %i.ju, align 8, !tbaa !24   ; 2 uses
-  %11 = load i32, ptr %i.kn, align 4, !tbaa !24   ; 3 uses
+walChecksumBytes.exit.i.i.i.i:                    ; preds = %bb.ag
+  %5 = load i64, ptr %i.kv, align 8
+  store i64 %5, ptr %i.kt, align 8
+  %6 = load i8, ptr %i.kw, align 1, !tbaa !2242
+  %7 = icmp eq i8 %6, 0                           ; 3 uses
+  %8 = zext i1 %7 to i32
+  %9 = load i32, ptr %i.ju, align 8, !tbaa !24
+  %10 = load i32, ptr %i.kn, align 4, !tbaa !24   ; 2 uses
+  %11 = add i32 %10, %9
   %12 = load i32, ptr %i.a, align 16, !tbaa !24   ; 2 uses
-  br i1 %8, label %.preheader96.i.i.i.i.i, label %.preheader.i.i.i.i.i
-
-.preheader.i.i.i.i.i:                             ; preds = %5
   %13 = call i32 @llvm.bswap.i32(i32 %12)
-  %14 = add i32 %11, %10
-  %15 = add i32 %14, %13
-  %16 = load i32, ptr %i.kt, align 4, !tbaa !24
-  %17 = call i32 @llvm.bswap.i32(i32 %16)
-  br label %walChecksumBytes.exit.i.i.i.i
-
-.preheader96.i.i.i.i.i:                           ; preds = %5
-  %18 = add i32 %11, %10
-  %19 = add i32 %18, %12
-  %20 = load i32, ptr %i.kt, align 4, !tbaa !24
-  br label %walChecksumBytes.exit.i.i.i.i
-
-walChecksumBytes.exit.i.i.i.i:                    ; preds = %.preheader96.i.i.i.i.i, %.preheader.i.i.i.i.i
-  %.sink27.i.i.i.i = phi i32 [ %17, %.preheader.i.i.i.i.i ], [ %20, %.preheader96.i.i.i.i.i ]
-  %.sink26.i.i.i.i = phi i32 [ %15, %.preheader.i.i.i.i.i ], [ %19, %.preheader96.i.i.i.i.i ] ; 2 uses
-  %i.ls = add i32 %.sink27.i.i.i.i, %11
-  %i.lt = add i32 %i.ls, %.sink26.i.i.i.i
-  store i32 %.sink26.i.i.i.i, ptr %i.ju, align 8, !tbaa !24
+  %14 = load i32, ptr %i.ks, align 4              ; 2 uses
+  %15 = call i32 @llvm.bswap.i32(i32 %14)
+  %.sink31.i.i.i.i = select i1 %7, i32 %14, i32 %15
+  %.pn.i.i.i.i = select i1 %7, i32 %12, i32 %13
+  %.sink30.i.i.i.i = add i32 %11, %.pn.i.i.i.i    ; 2 uses
+  %i.ls = add i32 %.sink31.i.i.i.i, %10
+  %i.lt = add i32 %i.ls, %.sink30.i.i.i.i
+  store i32 %.sink30.i.i.i.i, ptr %i.ju, align 8, !tbaa !24
   store i32 %i.lt, ptr %i.kn, align 4, !tbaa !24
   %i.lu = load i32, ptr %i.gm, align 8, !tbaa !2223
-  call fastcc void @walChecksumBytes(i32 noundef %9, ptr noundef nonnull readonly %i.ks, i32 noundef %i.lu, ptr noundef nonnull %i.ju, ptr noundef nonnull %i.ju), !inline_history !2322
+  call fastcc void @walChecksumBytes(i32 noundef %8, ptr noundef nonnull readonly %i.ku, i32 noundef %i.lu, ptr noundef nonnull %i.ju, ptr noundef nonnull %i.ju), !inline_history !2322
   %i.lv = load i32, ptr %i.ju, align 8, !tbaa !24 ; 4 uses
   %i.lw = lshr i32 %i.lv, 24
   %i.lx = trunc nuw i32 %i.lw to i8
@@ -302,7 +290,7 @@ walChecksumBytes.exit.i.i.i.i:                    ; preds = %.preheader96.i.i.i.
   br label %bb.ai
 
 bb.ah:                                            ; preds = %bb.ag
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ku, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.kt, i8 0, i64 16, i1 false)
   br label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah, %walChecksumBytes.exit.i.i.i.i
@@ -705,7 +693,7 @@ bb.a:
   %i.k = trunc i32 %.48.val to i8
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 3
   store i8 %i.k, ptr %i.l, align 1, !tbaa !229
-  %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 3 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 2 uses
   %i.n = lshr i32 %1, 24
   %i.o = trunc nuw i32 %i.n to i8
   store i8 %i.o, ptr %i.m, align 4, !tbaa !229
@@ -723,50 +711,38 @@ bb.a:
   %i.x = getelementptr inbounds nuw i8, ptr %i.b, i64 124
   %i.y = load i32, ptr %i.x, align 4, !tbaa !2037
   %i.z = icmp eq i32 %i.y, 0
-  br i1 %i.z, label %3, label %bb.b
+  br i1 %i.z, label %walChecksumBytes.exit.i, label %bb.b
 
-3:                                                ; preds = %bb.a
-  %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 96 ; 5 uses
-  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %6 = getelementptr inbounds nuw i8, ptr %i.b, i64 104
-  %7 = load i64, ptr %6, align 8
-  store i64 %7, ptr %5, align 8
-  %8 = getelementptr inbounds nuw i8, ptr %i.b, i64 85
-  %9 = load i8, ptr %8, align 1, !tbaa !2242
-  %10 = icmp eq i8 %9, 0                          ; 2 uses
-  %11 = zext i1 %10 to i32
-  %12 = load i32, ptr %4, align 8, !tbaa !24      ; 2 uses
-  %13 = getelementptr inbounds nuw i8, ptr %i.b, i64 100 ; 3 uses
-  %14 = load i32, ptr %13, align 4, !tbaa !24     ; 3 uses
+walChecksumBytes.exit.i:                          ; preds = %bb.a
+  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 96 ; 5 uses
+  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 104
+  %6 = load i64, ptr %5, align 8
+  store i64 %6, ptr %4, align 8
+  %7 = getelementptr inbounds nuw i8, ptr %i.b, i64 85
+  %8 = load i8, ptr %7, align 1, !tbaa !2242
+  %9 = icmp eq i8 %8, 0                           ; 3 uses
+  %10 = zext i1 %9 to i32
+  %11 = load i32, ptr %3, align 8, !tbaa !24
+  %12 = getelementptr inbounds nuw i8, ptr %i.b, i64 100 ; 3 uses
+  %13 = load i32, ptr %12, align 4, !tbaa !24     ; 2 uses
+  %14 = add i32 %13, %11
   %15 = load i32, ptr %i.a, align 16, !tbaa !24   ; 2 uses
-  br i1 %10, label %.preheader96.i.i, label %.preheader.i.i
-
-.preheader.i.i:                                   ; preds = %3
   %16 = tail call i32 @llvm.bswap.i32(i32 %15)
-  %17 = add i32 %14, %12
-  %18 = add i32 %17, %16
-  %19 = load i32, ptr %i.m, align 4, !tbaa !24
-  %20 = tail call i32 @llvm.bswap.i32(i32 %19)
-  br label %walChecksumBytes.exit.i
-
-.preheader96.i.i:                                 ; preds = %3
-  %21 = add i32 %14, %12
-  %22 = add i32 %21, %15
-  %23 = load i32, ptr %i.m, align 4, !tbaa !24
-  br label %walChecksumBytes.exit.i
-
-walChecksumBytes.exit.i:                          ; preds = %.preheader96.i.i, %.preheader.i.i
-  %.sink27.i = phi i32 [ %20, %.preheader.i.i ], [ %23, %.preheader96.i.i ]
-  %.sink26.i = phi i32 [ %18, %.preheader.i.i ], [ %22, %.preheader96.i.i ] ; 2 uses
-  %i.aa = add i32 %.sink27.i, %14
-  %i.ab = add i32 %i.aa, %.sink26.i
-  store i32 %.sink26.i, ptr %4, align 8, !tbaa !24
-  store i32 %i.ab, ptr %13, align 4, !tbaa !24
+  %17 = load i32, ptr %i.m, align 4               ; 2 uses
+  %18 = tail call i32 @llvm.bswap.i32(i32 %17)
+  %.sink31.i = select i1 %9, i32 %17, i32 %18
+  %.pn.i = select i1 %9, i32 %15, i32 %16
+  %.sink30.i = add i32 %14, %.pn.i                ; 2 uses
+  %i.aa = add i32 %.sink31.i, %13
+  %i.ab = add i32 %i.aa, %.sink30.i
+  store i32 %.sink30.i, ptr %3, align 8, !tbaa !24
+  store i32 %i.ab, ptr %12, align 4, !tbaa !24
   %i.ac = getelementptr inbounds nuw i8, ptr %i.b, i64 56
   %i.ad = load i32, ptr %i.ac, align 8, !tbaa !2223
-  tail call fastcc void @walChecksumBytes(i32 noundef %11, ptr noundef readonly %.8.val, i32 noundef %i.ad, ptr noundef nonnull %4, ptr noundef nonnull %4)
+  tail call fastcc void @walChecksumBytes(i32 noundef %10, ptr noundef readonly %.8.val, i32 noundef %i.ad, ptr noundef nonnull %3, ptr noundef nonnull %3)
   %i.ae = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %i.af = load i32, ptr %4, align 8, !tbaa !24    ; 4 uses
+  %i.af = load i32, ptr %3, align 8, !tbaa !24    ; 4 uses
   %i.ag = lshr i32 %i.af, 24
   %i.ah = trunc nuw i32 %i.ag to i8
   store i8 %i.ah, ptr %i.ae, align 16, !tbaa !229
@@ -782,7 +758,7 @@ walChecksumBytes.exit.i:                          ; preds = %.preheader96.i.i, %
   %i.ap = getelementptr inbounds nuw i8, ptr %i.a, i64 19
   store i8 %i.ao, ptr %i.ap, align 1, !tbaa !229
   %i.aq = getelementptr inbounds nuw i8, ptr %i.a, i64 20
-  %i.ar = load i32, ptr %13, align 4, !tbaa !24   ; 4 uses
+  %i.ar = load i32, ptr %12, align 4, !tbaa !24   ; 4 uses
   %i.as = lshr i32 %i.ar, 24
   %i.at = trunc nuw i32 %i.as to i8
   store i8 %i.at, ptr %i.aq, align 4, !tbaa !229

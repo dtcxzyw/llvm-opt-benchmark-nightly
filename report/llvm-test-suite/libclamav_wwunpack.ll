@@ -37,12 +37,13 @@ bb.a:
   br i1 %i.l, label %.split.split.us, label %.split.split.preheader
 
 .split.split.preheader:                           ; preds = %.split
-  %i.m = getelementptr inbounds nuw i8, ptr %6, i64 673
-  br label %.split.split.a
+  %i.m = getelementptr i8, ptr %6, i64 673        ; 2 uses
+  %.not = icmp ult ptr %i.m, %6
+  br label %.split.split
 
 .split.split.us:                                  ; preds = %.split
-  %.not100.us.not = icmp ult i32 %7, 690
-  br i1 %.not100.us.not, label %.split142, label %bb.b
+  %.not100.us = icmp ugt i32 %7, 689
+  br i1 %.not100.us, label %bb.b, label %.split142
 
 bb.b:                                             ; preds = %.split.split.us
   %i.n = getelementptr inbounds nuw i8, ptr %6, i64 681
@@ -60,13 +61,16 @@ bb.c:                                             ; preds = %bb.b
   %i.t = icmp eq ptr %i.s, null
   br i1 %i.t, label %.split148.us, label %.split150
 
-.split.split.a:                                   ; preds = %.split.split.preheader, %bb.ey
+.split.split:                                     ; preds = %.split.split.preheader, %bb.ey
   %.090 = phi ptr [ %i.u, %bb.ey ], [ %i.m, %.split.split.preheader ] ; 5 uses
+  br i1 %.not, label %.split142, label %.split.split.a
+
+.split.split.a:                                   ; preds = %.split.split
   %i.u = getelementptr inbounds nuw i8, ptr %.090, i64 17 ; 2 uses
   %.not100.not = icmp ugt ptr %i.u, %i.g
   br i1 %.not100.not, label %.split142, label %bb.d
 
-.split142:                                        ; preds = %.split.split.a, %.split.split.us, %bb.a
+.split142:                                        ; preds = %.split.split.a, %.split.split, %.split.split.us, %bb.a
   tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.1) #7
   br label %bb.fb
 
@@ -469,7 +473,7 @@ bb.ey:                                            ; preds = %bb.av
   %i.oe = getelementptr inbounds nuw i8, ptr %.090, i64 16
   %i.of = load i8, ptr %i.oe, align 1, !tbaa !11
   %.not106 = icmp eq i8 %i.of, 0
-  br i1 %.not106, label %bb.ez, label %.split.split.a
+  br i1 %.not106, label %bb.ez, label %.split.split
 
 bb.ez:                                            ; preds = %bb.ey
   %i.og = zext i32 %5 to i64

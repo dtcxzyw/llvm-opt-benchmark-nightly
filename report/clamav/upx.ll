@@ -203,7 +203,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %.not369510, label %.critedge10, label %.lr.ph513
 
 .lr.ph513:                                        ; preds = %bb.r, %.critedge12
-  %.1281511 = phi ptr [ %i.dr, %.critedge12 ], [ %i.dg, %bb.r ] ; 5 uses
+  %.1281511 = phi ptr [ %i.dr, %.critedge12 ], [ %i.dg, %bb.r ] ; 6 uses
   %i.dh = ptrtoint ptr %.1281511 to i64           ; 2 uses
   %i.di = add i64 %i.dh, 2                        ; 2 uses
   %.not370 = icmp ule i64 %i.di, %i.cz
@@ -216,11 +216,19 @@ bb.r:                                             ; preds = %bb.q
 bb.s:                                             ; preds = %.lr.ph513
   %i.dl = load i8, ptr %.1281511, align 1, !tbaa !8
   %.not371 = icmp eq i8 %i.dl, 0
-  br i1 %.not371, label %.critedge10, label %.preheader.a
+  br i1 %.not371, label %.critedge10, label %.preheader.preheader
 
-.preheader.a:                                     ; preds = %bb.s, %bb.t
-  %.1281.pn = phi ptr [ %.2282, %bb.t ], [ %.1281511, %bb.s ] ; 2 uses
+.preheader.preheader:                             ; preds = %bb.s
+  %scevgep = getelementptr i8, ptr %.1281511, i64 1
+  %.not374 = icmp ult ptr %scevgep, %2
+  br label %.preheader
+
+.preheader:                                       ; preds = %.preheader.preheader, %bb.t
+  %.1281.pn = phi ptr [ %.2282, %bb.t ], [ %.1281511, %.preheader.preheader ] ; 2 uses
   %.2282 = getelementptr inbounds nuw i8, ptr %.1281.pn, i64 1 ; 3 uses
+  br i1 %.not374, label %.critedge12, label %.preheader.a
+
+.preheader.a:                                     ; preds = %.preheader
   %i.dm = ptrtoint ptr %.2282 to i64              ; 2 uses
   %i.dn = add i64 %i.dm, 2                        ; 2 uses
   %.not375 = icmp ule i64 %i.dn, %i.cz
@@ -233,9 +241,9 @@ bb.s:                                             ; preds = %.lr.ph513
 bb.t:                                             ; preds = %.preheader.a
   %i.dq = load i8, ptr %.2282, align 1, !tbaa !8
   %.not376 = icmp eq i8 %i.dq, 0
-  br i1 %.not376, label %.critedge12, label %.preheader.a
+  br i1 %.not376, label %.critedge12, label %.preheader
 
-.critedge12:                                      ; preds = %.preheader.a, %bb.t
+.critedge12:                                      ; preds = %.preheader.a, %.preheader, %bb.t
   %i.dr = getelementptr inbounds nuw i8, ptr %.1281.pn, i64 2 ; 3 uses
   %.not369 = icmp ult ptr %i.dr, %2
   br i1 %.not369, label %.critedge10, label %.lr.ph513
