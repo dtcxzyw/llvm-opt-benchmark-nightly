@@ -1,7 +1,5 @@
 inline.NumInlined: 6
 inline.NumDeleted: 6
-loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumUnrolled: 1
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -125,8 +123,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.f = tail call i32 @avio_rl16(ptr noundef %i.c) #7 ; 0 uses
-  %i.g = tail call i32 @avio_rl16(ptr noundef %i.c) #7 ; 3 uses
-  %i.h = lshr i32 %i.g, 3                         ; 4 uses
+  %i.g = tail call i32 @avio_rl16(ptr noundef %i.c) #7 ; 4 uses
+  %i.h = lshr i32 %i.g, 3                         ; 3 uses
   %i.i = icmp ugt i32 %i.g, 87
   br i1 %i.i, label %bb.m, label %bb.c
 
@@ -151,12 +149,15 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not50, label %flush_put_bits.exit, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %bb.e
-  %i.t = ptrtoint ptr %i.s to i64                 ; 8 uses
+  %i.t = ptrtoint ptr %i.s to i64
+  %2 = and i32 %i.g, 120
+  %3 = call i32 @llvm.umax.i32(i32 %2, i32 1)
+  %umax = zext nneg i32 %3 to i64
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %put_bits.exit.7
-  %.02447 = phi i32 [ 0, %.preheader.lr.ph ], [ %149, %put_bits.exit.7 ]
-  %.02646 = phi ptr [ %i.a, %.preheader.lr.ph ], [ %130, %put_bits.exit.7 ] ; 9 uses
+  %indvar50 = phi i64 [ 0, %.preheader.lr.ph ], [ %indvar.next51, %put_bits.exit.7 ]
+  %.02646 = phi ptr [ %i.a, %.preheader.lr.ph ], [ %i.u, %put_bits.exit.7 ] ; 2 uses
   %.sroa.0.045 = phi i32 [ 0, %.preheader.lr.ph ], [ %.026.i.i.7, %put_bits.exit.7 ] ; 2 uses
   %.sroa.11.044 = phi i32 [ 32, %.preheader.lr.ph ], [ %i.ak, %put_bits.exit.7 ] ; 4 uses
   %.sroa.19.043 = phi ptr [ %i.q, %.preheader.lr.ph ], [ %.sroa.19.2.7, %put_bits.exit.7 ] ; 5 uses
@@ -165,299 +166,40 @@ bb.e:                                             ; preds = %bb.d
   %i.w = icmp eq i16 %i.v, 129
   %i.x = zext i1 %i.w to i32                      ; 4 uses
   %i.y = icmp sgt i32 %.sroa.11.044, 1
-  br i1 %i.y, label %2, label %5
+  br i1 %i.y, label %bb.f, label %bb.g
 
-2:                                                ; preds = %.preheader
-  %3 = shl i32 %.sroa.0.045, 1
-  %4 = or disjoint i32 %3, %i.x
-  br label %put_bits.exit
+bb.f:                                             ; preds = %.preheader
+  %i.z = shl i32 %.sroa.0.045, 1
+  %i.aa = or disjoint i32 %i.z, %i.x
+  br label %put_bits.exit.7
 
-5:                                                ; preds = %.preheader
-  %6 = ptrtoint ptr %.sroa.19.043 to i64
-  %7 = sub i64 %i.t, %6
-  %8 = icmp ugt i64 %7, 3
-  br i1 %8, label %9, label %16
-
-9:                                                ; preds = %5
-  %10 = shl i32 %.sroa.0.045, %.sroa.11.044
-  %11 = sub nsw i32 1, %.sroa.11.044
-  %12 = lshr i32 %i.x, %11
-  %13 = or i32 %12, %10
-  %14 = call i32 @llvm.bswap.i32(i32 %13)
-  store i32 %14, ptr %.sroa.19.043, align 1, !tbaa !14
-  %15 = getelementptr inbounds nuw i8, ptr %.sroa.19.043, i64 4
-  br label %put_bits.exit
-
-16:                                               ; preds = %5
-  call void (ptr, i32, ptr, ...) @av_log(ptr noundef null, i32 noundef 16, ptr noundef nonnull @.str.3) #7
-  br label %put_bits.exit
-
-put_bits.exit:                                    ; preds = %2, %9, %16
-  %.sroa.19.2 = phi ptr [ %.sroa.19.043, %2 ], [ %15, %9 ], [ %.sroa.19.043, %16 ] ; 5 uses
-  %.sink.i.i = phi i32 [ -1, %2 ], [ 31, %9 ], [ 31, %16 ]
-  %.026.i.i = phi i32 [ %4, %2 ], [ %i.x, %9 ], [ %i.x, %16 ] ; 2 uses
-  %17 = add nsw i32 %.sink.i.i, %.sroa.11.044     ; 4 uses
-  %18 = getelementptr inbounds nuw i8, ptr %.02646, i64 4
-  %19 = load i16, ptr %i.u, align 1, !tbaa !14
-  %20 = icmp eq i16 %19, 129
-  %21 = zext i1 %20 to i32                        ; 4 uses
-  %22 = icmp sgt i32 %17, 1
-  br i1 %22, label %35, label %23
-
-23:                                               ; preds = %put_bits.exit
-  %24 = ptrtoint ptr %.sroa.19.2 to i64
-  %25 = sub i64 %i.t, %24
-  %26 = icmp ugt i64 %25, 3
-  br i1 %26, label %28, label %27
-
-27:                                               ; preds = %23
-  call void (ptr, i32, ptr, ...) @av_log(ptr noundef null, i32 noundef 16, ptr noundef nonnull @.str.3) #7
-  br label %put_bits.exit.1
-
-28:                                               ; preds = %23
-  %29 = shl i32 %.026.i.i, %17
-  %30 = sub nsw i32 1, %17
-  %31 = lshr i32 %21, %30
-  %32 = or i32 %31, %29
-  %33 = call i32 @llvm.bswap.i32(i32 %32)
-  store i32 %33, ptr %.sroa.19.2, align 1, !tbaa !14
-  %34 = getelementptr inbounds nuw i8, ptr %.sroa.19.2, i64 4
-  br label %put_bits.exit.1
-
-35:                                               ; preds = %put_bits.exit
-  %36 = shl i32 %.026.i.i, 1
-  %37 = or disjoint i32 %36, %21
-  br label %put_bits.exit.1
-
-put_bits.exit.1:                                  ; preds = %35, %28, %27
-  %.sroa.19.2.1 = phi ptr [ %.sroa.19.2, %35 ], [ %34, %28 ], [ %.sroa.19.2, %27 ] ; 5 uses
-  %.sink.i.i.1 = phi i32 [ -1, %35 ], [ 31, %28 ], [ 31, %27 ]
-  %.026.i.i.1 = phi i32 [ %37, %35 ], [ %21, %28 ], [ %21, %27 ] ; 2 uses
-  %38 = add nsw i32 %.sink.i.i.1, %17             ; 4 uses
-  %39 = getelementptr inbounds nuw i8, ptr %.02646, i64 6
-  %40 = load i16, ptr %18, align 1, !tbaa !14
-  %41 = icmp eq i16 %40, 129
-  %42 = zext i1 %41 to i32                        ; 4 uses
-  %43 = icmp sgt i32 %38, 1
-  br i1 %43, label %56, label %44
-
-44:                                               ; preds = %put_bits.exit.1
-  %45 = ptrtoint ptr %.sroa.19.2.1 to i64
-  %46 = sub i64 %i.t, %45
-  %47 = icmp ugt i64 %46, 3
-  br i1 %47, label %49, label %48
-
-48:                                               ; preds = %44
-  call void (ptr, i32, ptr, ...) @av_log(ptr noundef null, i32 noundef 16, ptr noundef nonnull @.str.3) #7
-  br label %put_bits.exit.2
-
-49:                                               ; preds = %44
-  %50 = shl i32 %.026.i.i.1, %38
-  %51 = sub nsw i32 1, %38
-  %52 = lshr i32 %42, %51
-  %53 = or i32 %52, %50
-  %54 = call i32 @llvm.bswap.i32(i32 %53)
-  store i32 %54, ptr %.sroa.19.2.1, align 1, !tbaa !14
-  %55 = getelementptr inbounds nuw i8, ptr %.sroa.19.2.1, i64 4
-  br label %put_bits.exit.2
-
-56:                                               ; preds = %put_bits.exit.1
-  %57 = shl i32 %.026.i.i.1, 1
-  %58 = or disjoint i32 %57, %42
-  br label %put_bits.exit.2
-
-put_bits.exit.2:                                  ; preds = %56, %49, %48
-  %.sroa.19.2.2 = phi ptr [ %.sroa.19.2.1, %56 ], [ %55, %49 ], [ %.sroa.19.2.1, %48 ] ; 5 uses
-  %.sink.i.i.2 = phi i32 [ -1, %56 ], [ 31, %49 ], [ 31, %48 ]
-  %.026.i.i.2 = phi i32 [ %58, %56 ], [ %42, %49 ], [ %42, %48 ] ; 2 uses
-  %59 = add nsw i32 %.sink.i.i.2, %38             ; 4 uses
-  %60 = getelementptr inbounds nuw i8, ptr %.02646, i64 8
-  %61 = load i16, ptr %39, align 1, !tbaa !14
-  %62 = icmp eq i16 %61, 129
-  %63 = zext i1 %62 to i32                        ; 4 uses
-  %64 = icmp sgt i32 %59, 1
-  br i1 %64, label %77, label %65
-
-65:                                               ; preds = %put_bits.exit.2
-  %66 = ptrtoint ptr %.sroa.19.2.2 to i64
-  %67 = sub i64 %i.t, %66
-  %68 = icmp ugt i64 %67, 3
-  br i1 %68, label %70, label %69
-
-69:                                               ; preds = %65
-  call void (ptr, i32, ptr, ...) @av_log(ptr noundef null, i32 noundef 16, ptr noundef nonnull @.str.3) #7
-  br label %put_bits.exit.3
-
-70:                                               ; preds = %65
-  %71 = shl i32 %.026.i.i.2, %59
-  %72 = sub nsw i32 1, %59
-  %73 = lshr i32 %63, %72
-  %74 = or i32 %73, %71
-  %75 = call i32 @llvm.bswap.i32(i32 %74)
-  store i32 %75, ptr %.sroa.19.2.2, align 1, !tbaa !14
-  %76 = getelementptr inbounds nuw i8, ptr %.sroa.19.2.2, i64 4
-  br label %put_bits.exit.3
-
-77:                                               ; preds = %put_bits.exit.2
-  %78 = shl i32 %.026.i.i.2, 1
-  %79 = or disjoint i32 %78, %63
-  br label %put_bits.exit.3
-
-put_bits.exit.3:                                  ; preds = %77, %70, %69
-  %.sroa.19.2.3 = phi ptr [ %.sroa.19.2.2, %77 ], [ %76, %70 ], [ %.sroa.19.2.2, %69 ] ; 5 uses
-  %.sink.i.i.3 = phi i32 [ -1, %77 ], [ 31, %70 ], [ 31, %69 ]
-  %.026.i.i.3 = phi i32 [ %79, %77 ], [ %63, %70 ], [ %63, %69 ] ; 2 uses
-  %80 = add nsw i32 %.sink.i.i.3, %59             ; 4 uses
-  %81 = getelementptr inbounds nuw i8, ptr %.02646, i64 10
-  %82 = load i16, ptr %60, align 1, !tbaa !14
-  %83 = icmp eq i16 %82, 129
-  %84 = zext i1 %83 to i32                        ; 4 uses
-  %85 = icmp sgt i32 %80, 1
-  br i1 %85, label %98, label %86
-
-86:                                               ; preds = %put_bits.exit.3
-  %87 = ptrtoint ptr %.sroa.19.2.3 to i64
-  %88 = sub i64 %i.t, %87
-  %89 = icmp ugt i64 %88, 3
-  br i1 %89, label %91, label %90
-
-90:                                               ; preds = %86
-  call void (ptr, i32, ptr, ...) @av_log(ptr noundef null, i32 noundef 16, ptr noundef nonnull @.str.3) #7
-  br label %put_bits.exit.4
-
-91:                                               ; preds = %86
-  %92 = shl i32 %.026.i.i.3, %80
-  %93 = sub nsw i32 1, %80
-  %94 = lshr i32 %84, %93
-  %95 = or i32 %94, %92
-  %96 = call i32 @llvm.bswap.i32(i32 %95)
-  store i32 %96, ptr %.sroa.19.2.3, align 1, !tbaa !14
-  %97 = getelementptr inbounds nuw i8, ptr %.sroa.19.2.3, i64 4
-  br label %put_bits.exit.4
-
-98:                                               ; preds = %put_bits.exit.3
-  %99 = shl i32 %.026.i.i.3, 1
-  %100 = or disjoint i32 %99, %84
-  br label %put_bits.exit.4
-
-put_bits.exit.4:                                  ; preds = %98, %91, %90
-  %.sroa.19.2.4 = phi ptr [ %.sroa.19.2.3, %98 ], [ %97, %91 ], [ %.sroa.19.2.3, %90 ] ; 5 uses
-  %.sink.i.i.4 = phi i32 [ -1, %98 ], [ 31, %91 ], [ 31, %90 ]
-  %.026.i.i.4 = phi i32 [ %100, %98 ], [ %84, %91 ], [ %84, %90 ] ; 2 uses
-  %101 = add nsw i32 %.sink.i.i.4, %80            ; 4 uses
-  %102 = getelementptr inbounds nuw i8, ptr %.02646, i64 12
-  %103 = load i16, ptr %81, align 1, !tbaa !14
-  %104 = icmp eq i16 %103, 129
-  %105 = zext i1 %104 to i32                      ; 4 uses
-  %106 = icmp sgt i32 %101, 1
-  br i1 %106, label %bb.f, label %107
-
-107:                                              ; preds = %put_bits.exit.4
-  %108 = ptrtoint ptr %.sroa.19.2.4 to i64
-  %109 = sub i64 %i.t, %108
-  %110 = icmp ugt i64 %109, 3
-  br i1 %110, label %112, label %111
-
-111:                                              ; preds = %107
-  call void (ptr, i32, ptr, ...) @av_log(ptr noundef null, i32 noundef 16, ptr noundef nonnull @.str.3) #7
-  br label %put_bits.exit.5
-
-112:                                              ; preds = %107
-  %113 = shl i32 %.026.i.i.4, %101
-  %114 = sub nsw i32 1, %101
-  %115 = lshr i32 %105, %114
-  %116 = or i32 %115, %113
-  %117 = call i32 @llvm.bswap.i32(i32 %116)
-  store i32 %117, ptr %.sroa.19.2.4, align 1, !tbaa !14
-  %118 = getelementptr inbounds nuw i8, ptr %.sroa.19.2.4, i64 4
-  br label %put_bits.exit.5
-
-bb.f:                                             ; preds = %put_bits.exit.4
-  %i.z = shl i32 %.026.i.i.4, 1
-  %i.aa = or disjoint i32 %i.z, %105
-  br label %put_bits.exit.5
-
-put_bits.exit.5:                                  ; preds = %bb.f, %112, %111
-  %.sroa.19.2.5 = phi ptr [ %.sroa.19.2.4, %bb.f ], [ %118, %112 ], [ %.sroa.19.2.4, %111 ] ; 5 uses
-  %.sink.i.i.5 = phi i32 [ -1, %bb.f ], [ 31, %112 ], [ 31, %111 ]
-  %.026.i.i.5 = phi i32 [ %i.aa, %bb.f ], [ %105, %112 ], [ %105, %111 ] ; 2 uses
-  %119 = add nsw i32 %.sink.i.i.5, %101           ; 4 uses
-  %120 = getelementptr inbounds nuw i8, ptr %.02646, i64 14
-  %121 = load i16, ptr %102, align 1, !tbaa !14
-  %122 = icmp eq i16 %121, 129
-  %123 = zext i1 %122 to i32                      ; 4 uses
-  %124 = icmp sgt i32 %119, 1
-  br i1 %124, label %126, label %bb.g
-
-bb.g:                                             ; preds = %put_bits.exit.5
-  %i.ab = ptrtoint ptr %.sroa.19.2.5 to i64
+bb.g:                                             ; preds = %.preheader
+  %i.ab = ptrtoint ptr %.sroa.19.043 to i64
   %i.ac = sub i64 %i.t, %i.ab
   %i.ad = icmp ugt i64 %i.ac, 3
-  br i1 %i.ad, label %bb.h, label %125
-
-125:                                              ; preds = %bb.g
-  call void (ptr, i32, ptr, ...) @av_log(ptr noundef null, i32 noundef 16, ptr noundef nonnull @.str.3) #7
-  br label %put_bits.exit.6
+  br i1 %i.ad, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  %i.ae = shl i32 %.026.i.i.5, %119
-  %i.af = sub nsw i32 1, %119
-  %i.ag = lshr i32 %123, %i.af
+  %i.ae = shl i32 %.sroa.0.045, %.sroa.11.044
+  %i.af = sub nsw i32 1, %.sroa.11.044
+  %i.ag = lshr i32 %i.x, %i.af
   %i.ah = or i32 %i.ag, %i.ae
   %i.ai = call i32 @llvm.bswap.i32(i32 %i.ah)
-  store i32 %i.ai, ptr %.sroa.19.2.5, align 1, !tbaa !14
-  %i.aj = getelementptr inbounds nuw i8, ptr %.sroa.19.2.5, i64 4
-  br label %put_bits.exit.6
+  store i32 %i.ai, ptr %.sroa.19.043, align 1, !tbaa !14
+  %i.aj = getelementptr inbounds nuw i8, ptr %.sroa.19.043, i64 4
+  br label %put_bits.exit.7
 
-126:                                              ; preds = %put_bits.exit.5
-  %127 = shl i32 %.026.i.i.5, 1
-  %128 = or disjoint i32 %127, %123
-  br label %put_bits.exit.6
-
-put_bits.exit.6:                                  ; preds = %126, %bb.h, %125
-  %.sroa.19.2.6 = phi ptr [ %.sroa.19.2.5, %126 ], [ %i.aj, %bb.h ], [ %.sroa.19.2.5, %125 ] ; 5 uses
-  %.sink.i.i.6 = phi i32 [ -1, %126 ], [ 31, %bb.h ], [ 31, %125 ]
-  %.026.i.i.6 = phi i32 [ %128, %126 ], [ %123, %bb.h ], [ %123, %125 ] ; 2 uses
-  %129 = add nsw i32 %.sink.i.i.6, %119           ; 4 uses
-  %130 = getelementptr inbounds nuw i8, ptr %.02646, i64 16
-  %131 = load i16, ptr %120, align 1, !tbaa !14
-  %132 = icmp eq i16 %131, 129
-  %133 = zext i1 %132 to i32                      ; 4 uses
-  %134 = icmp sgt i32 %129, 1
-  br i1 %134, label %146, label %135
-
-135:                                              ; preds = %put_bits.exit.6
-  %136 = ptrtoint ptr %.sroa.19.2.6 to i64
-  %137 = sub i64 %i.t, %136
-  %138 = icmp ugt i64 %137, 3
-  br i1 %138, label %139, label %bb.i
-
-bb.i:                                             ; preds = %135
+bb.i:                                             ; preds = %bb.g
   call void (ptr, i32, ptr, ...) @av_log(ptr noundef null, i32 noundef 16, ptr noundef nonnull @.str.3) #7
   br label %put_bits.exit.7
 
-139:                                              ; preds = %135
-  %140 = shl i32 %.026.i.i.6, %129
-  %141 = sub nsw i32 1, %129
-  %142 = lshr i32 %133, %141
-  %143 = or i32 %142, %140
-  %144 = call i32 @llvm.bswap.i32(i32 %143)
-  store i32 %144, ptr %.sroa.19.2.6, align 1, !tbaa !14
-  %145 = getelementptr inbounds nuw i8, ptr %.sroa.19.2.6, i64 4
-  br label %put_bits.exit.7
-
-146:                                              ; preds = %put_bits.exit.6
-  %147 = shl i32 %.026.i.i.6, 1
-  %148 = or disjoint i32 %147, %133
-  br label %put_bits.exit.7
-
-put_bits.exit.7:                                  ; preds = %146, %139, %bb.i
-  %.sroa.19.2.7 = phi ptr [ %.sroa.19.2.6, %146 ], [ %145, %139 ], [ %.sroa.19.2.6, %bb.i ] ; 2 uses
-  %.sink.i.i.7 = phi i32 [ -1, %146 ], [ 31, %139 ], [ 31, %bb.i ]
-  %.026.i.i.7 = phi i32 [ %148, %146 ], [ %133, %139 ], [ %133, %bb.i ] ; 2 uses
-  %i.ak = add nsw i32 %.sink.i.i.7, %129          ; 4 uses
-  %149 = add nuw nsw i32 %.02447, 1               ; 2 uses
-  %exitcond.not = icmp eq i32 %149, %i.h
+put_bits.exit.7:                                  ; preds = %bb.f, %bb.h, %bb.i
+  %.sroa.19.2.7 = phi ptr [ %.sroa.19.043, %bb.f ], [ %i.aj, %bb.h ], [ %.sroa.19.043, %bb.i ] ; 2 uses
+  %.sink.i.i.7 = phi i32 [ -1, %bb.f ], [ 31, %bb.h ], [ 31, %bb.i ]
+  %.026.i.i.7 = phi i32 [ %i.aa, %bb.f ], [ %i.x, %bb.h ], [ %i.x, %bb.i ] ; 2 uses
+  %i.ak = add nsw i32 %.sink.i.i.7, %.sroa.11.044 ; 4 uses
+  %indvar.next51 = add nuw nsw i64 %indvar50, 1   ; 2 uses
+  %exitcond.not = icmp eq i64 %indvar.next51, %umax
   br i1 %exitcond.not, label %._crit_edge, label %.preheader, !llvm.loop !47
 
 ._crit_edge:                                      ; preds = %put_bits.exit.7
@@ -616,6 +358,9 @@ declare void @avio_wl16(ptr noundef, i32 noundef) local_unnamed_addr #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.bswap.i32(i32) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umax.i32(i32, i32) #6
 
 attributes #0 = { nofree norecurse nosync nounwind memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

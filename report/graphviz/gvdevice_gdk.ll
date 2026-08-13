@@ -47,61 +47,31 @@ bb.a:
   %i.d = getelementptr inbounds [8 x i8], ptr @__const.gdk_format.format_strs, i64 %i.c
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !32
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 576 ; 2 uses
-  %i.g = load i32, ptr %i.f, align 8, !tbaa !33   ; 4 uses
-  %3 = zext i32 %i.g to i64                       ; 2 uses
+  %i.g = load i32, ptr %i.f, align 8, !tbaa !33   ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 580 ; 2 uses
   %i.i = load i32, ptr %i.h, align 4, !tbaa !34   ; 3 uses
-  %4 = zext i32 %i.i to i64
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 272 ; 2 uses
-  %5 = load ptr, ptr %i.j, align 8, !tbaa !35     ; 2 uses
   %i.k = icmp ne i32 %i.i, 0
   %i.l = icmp ne i32 %i.g, 0
   %or.cond.i = and i1 %i.l, %i.k
-  br i1 %or.cond.i, label %.preheader.i.preheader, label %argb2rgba.exit
+  br i1 %or.cond.i, label %bb.b, label %argb2rgba.exit
 
-.preheader.i.preheader:                           ; preds = %bb.a
-  %xtraiter = and i64 %3, 3                       ; 3 uses
-  %6 = icmp ult i32 %i.g, 4
-  %unroll_iter = and i64 %3, 4294967292
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  %lcmp.mod38 = icmp ne i64 %xtraiter, 0
-  br label %.preheader.i
+bb.b:                                             ; preds = %bb.a
+  %3 = zext i32 %i.g to i64
+  %4 = zext i32 %i.i to i64
+  %5 = load ptr, ptr %i.j, align 8, !tbaa !35     ; 2 uses
+  %flatten.tripcount.i = mul nuw i64 %4, %3       ; 3 uses
+  %xtraiter = and i64 %flatten.tripcount.i, 3     ; 3 uses
+  %6 = icmp ult i64 %flatten.tripcount.i, 4
+  br i1 %6, label %.preheader.i.epil.preheader, label %._crit_edge.i
 
-.preheader.i:                                     ; preds = %.preheader.i.preheader, %._crit_edge.i
-  %.017.i = phi ptr [ %.lcssa, %._crit_edge.i ], [ %5, %.preheader.i.preheader ] ; 2 uses
-  %.01216.i = phi i64 [ %11, %._crit_edge.i ], [ 0, %.preheader.i.preheader ]
-  br i1 %6, label %.epil.preheader, label %.preheader.i.new
+._crit_edge.i:                                    ; preds = %bb.b
+  %unroll_iter = and i64 %flatten.tripcount.i, -4
+  br label %.preheader.i.new
 
-._crit_edge.i.unr-lcssa:                          ; preds = %.preheader.i.new
-  br i1 %lcmp.mod.not, label %._crit_edge.i, label %.epil.preheader
-
-.epil.preheader:                                  ; preds = %._crit_edge.i.unr-lcssa, %.preheader.i
-  %.115.i.epil.init = phi ptr [ %.017.i, %.preheader.i ], [ %i.ab, %._crit_edge.i.unr-lcssa ]
-  tail call void @llvm.assume(i1 %lcmp.mod38)
-  br label %bb.b
-
-bb.b:                                             ; preds = %bb.b, %.epil.preheader
-  %.115.i.epil = phi ptr [ %.115.i.epil.init, %.epil.preheader ], [ %10, %bb.b ] ; 4 uses
-  %epil.iter = phi i64 [ 0, %.epil.preheader ], [ %epil.iter.next, %bb.b ]
-  %7 = getelementptr inbounds nuw i8, ptr %.115.i.epil, i64 2 ; 2 uses
-  %8 = load i8, ptr %7, align 1, !tbaa !36
-  %9 = load i8, ptr %.115.i.epil, align 1, !tbaa !36
-  store i8 %8, ptr %.115.i.epil, align 1, !tbaa !36
-  store i8 %9, ptr %7, align 1, !tbaa !36
-  %10 = getelementptr inbounds nuw i8, ptr %.115.i.epil, i64 4 ; 2 uses
-  %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
-  %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %._crit_edge.i, label %bb.b, !llvm.loop !37
-
-._crit_edge.i:                                    ; preds = %bb.b, %._crit_edge.i.unr-lcssa
-  %.lcssa = phi ptr [ %i.ab, %._crit_edge.i.unr-lcssa ], [ %10, %bb.b ]
-  %11 = add nuw nsw i64 %.01216.i, 1              ; 2 uses
-  %exitcond19.not.i = icmp eq i64 %11, %4
-  br i1 %exitcond19.not.i, label %argb2rgba.exit.loopexit, label %.preheader.i, !llvm.loop !39
-
-.preheader.i.new:                                 ; preds = %.preheader.i, %.preheader.i.new
-  %.115.i = phi ptr [ %i.ab, %.preheader.i.new ], [ %.017.i, %.preheader.i ] ; 10 uses
-  %niter = phi i64 [ %niter.next.3, %.preheader.i.new ], [ 0, %.preheader.i ]
+.preheader.i.new:                                 ; preds = %.preheader.i.new, %._crit_edge.i
+  %.115.i = phi ptr [ %5, %._crit_edge.i ], [ %i.ab, %.preheader.i.new ] ; 10 uses
+  %niter = phi i64 [ 0, %._crit_edge.i ], [ %niter.next.3, %.preheader.i.new ]
   %i.m = getelementptr inbounds nuw i8, ptr %.115.i, i64 2 ; 2 uses
   %i.n = load i8, ptr %i.m, align 1, !tbaa !36
   %i.o = load i8, ptr %.115.i, align 1, !tbaa !36
@@ -125,13 +95,35 @@ bb.b:                                             ; preds = %bb.b, %.epil.prehea
   %i.aa = load i8, ptr %i.x, align 1, !tbaa !36
   store i8 %i.z, ptr %i.x, align 1, !tbaa !36
   store i8 %i.aa, ptr %i.y, align 1, !tbaa !36
-  %i.ab = getelementptr inbounds nuw i8, ptr %.115.i, i64 16 ; 3 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %.115.i, i64 16 ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
-  br i1 %niter.ncmp.3, label %._crit_edge.i.unr-lcssa, label %.preheader.i.new, !llvm.loop !41
+  br i1 %niter.ncmp.3, label %argb2rgba.exit.loopexit.unr-lcssa, label %.preheader.i.new, !llvm.loop !37
 
-argb2rgba.exit.loopexit:                          ; preds = %._crit_edge.i
-  %.pre = load ptr, ptr %i.j, align 8, !tbaa !35
+argb2rgba.exit.loopexit.unr-lcssa:                ; preds = %.preheader.i.new
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %argb2rgba.exit.loopexit, label %.preheader.i.epil.preheader
+
+.preheader.i.epil.preheader:                      ; preds = %argb2rgba.exit.loopexit.unr-lcssa, %bb.b
+  %.017.i.epil.init = phi ptr [ %5, %bb.b ], [ %i.ab, %argb2rgba.exit.loopexit.unr-lcssa ]
+  %lcmp.mod37 = icmp ne i64 %xtraiter, 0
+  tail call void @llvm.assume(i1 %lcmp.mod37)
+  br label %.preheader.i.epil
+
+.preheader.i.epil:                                ; preds = %.preheader.i.epil, %.preheader.i.epil.preheader
+  %.017.i.epil = phi ptr [ %.017.i.epil.init, %.preheader.i.epil.preheader ], [ %10, %.preheader.i.epil ] ; 4 uses
+  %epil.iter = phi i64 [ 0, %.preheader.i.epil.preheader ], [ %epil.iter.next, %.preheader.i.epil ]
+  %7 = getelementptr inbounds nuw i8, ptr %.017.i.epil, i64 2 ; 2 uses
+  %8 = load i8, ptr %7, align 1, !tbaa !36
+  %9 = load i8, ptr %.017.i.epil, align 1, !tbaa !36
+  store i8 %8, ptr %.017.i.epil, align 1, !tbaa !36
+  store i8 %9, ptr %7, align 1, !tbaa !36
+  %10 = getelementptr inbounds nuw i8, ptr %.017.i.epil, i64 4
+  %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
+  %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
+  br i1 %epil.iter.cmp.not, label %argb2rgba.exit.loopexit, label %.preheader.i.epil, !llvm.loop !39
+
+argb2rgba.exit.loopexit:                          ; preds = %.preheader.i.epil, %argb2rgba.exit.loopexit.unr-lcssa
   %.pre33.a = load i32, ptr %i.f, align 8, !tbaa !33
   %.pre34 = load i32, ptr %i.h, align 4, !tbaa !34
   br label %argb2rgba.exit
@@ -139,18 +131,18 @@ argb2rgba.exit.loopexit:                          ; preds = %._crit_edge.i
 argb2rgba.exit:                                   ; preds = %argb2rgba.exit.loopexit, %bb.a
   %i.ac = phi i32 [ %.pre34, %argb2rgba.exit.loopexit ], [ %i.i, %bb.a ]
   %i.ad = phi i32 [ %.pre33.a, %argb2rgba.exit.loopexit ], [ %i.g, %bb.a ] ; 2 uses
-  %12 = phi ptr [ %.pre, %argb2rgba.exit.loopexit ], [ %5, %bb.a ]
+  %11 = load ptr, ptr %i.j, align 8, !tbaa !35
   %i.ae = shl nsw i32 %i.ad, 2
-  %i.af = tail call ptr @gdk_pixbuf_new_from_data(ptr noundef %12, i32 noundef 0, i32 noundef 1, i32 noundef 8, i32 noundef %i.ad, i32 noundef %i.ac, i32 noundef %i.ae, ptr noundef null, ptr noundef null) #14 ; 2 uses
+  %i.af = tail call ptr @gdk_pixbuf_new_from_data(ptr noundef %11, i32 noundef 0, i32 noundef 1, i32 noundef 8, i32 noundef %i.ad, i32 noundef %i.ac, i32 noundef %i.ae, ptr noundef null, ptr noundef null) #14 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #14
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %1, i8 0, i64 32, i1 false)
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 560
-  %i.ah = load double, ptr %i.ag, align 8, !tbaa !42
+  %i.ah = load double, ptr %i.ag, align 8, !tbaa !41
   call void (ptr, ptr, ...) @agxbprint(ptr noundef %1, ptr nonnull poison, double noundef %i.ah)
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #14
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %2, i8 0, i64 32, i1 false)
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 568
-  %i.aj = load double, ptr %i.ai, align 8, !tbaa !43
+  %i.aj = load double, ptr %i.ai, align 8, !tbaa !42
   call void (ptr, ptr, ...) @agxbprint(ptr noundef %2, ptr nonnull poison, double noundef %i.aj)
   %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 31 ; 6 uses
   %.val.i = load i8, ptr %i.ak, align 1, !tbaa !36 ; 3 uses
@@ -507,7 +499,7 @@ bb.c:                                             ; preds = %agxbsizeof.exit
   br i1 %i.j, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.k = load ptr, ptr @stderr, align 8, !tbaa !44
+  %i.k = load ptr, ptr @stderr, align 8, !tbaa !43
   %i.l = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.k, ptr noundef nonnull @.str.17, i64 noundef %spec.select33) #16 ; 0 uses
   tail call fastcc void @graphviz_exit() #17
   unreachable
@@ -530,7 +522,7 @@ bb.g:                                             ; preds = %bb.a
   br i1 %i.r, label %bb.h, label %gv_calloc.exit
 
 bb.h:                                             ; preds = %bb.g
-  %i.s = load ptr, ptr @stderr, align 8, !tbaa !44
+  %i.s = load ptr, ptr @stderr, align 8, !tbaa !43
   %i.t = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.s, ptr noundef nonnull @.str.17, i64 noundef %spec.select) #16 ; 0 uses
   tail call fastcc void @graphviz_exit() #17
   unreachable
@@ -645,11 +637,10 @@ attributes #19 = { cold noreturn nounwind }
 !35 = !{!9, !15, i64 272}
 !36 = !{!6, !6, i64 0}
 !37 = distinct !{!37, !38}
-!38 = !{!"llvm.loop.unroll.disable"}
+!38 = !{!"llvm.loop.mustprogress"}
 !39 = distinct !{!39, !40}
-!40 = !{!"llvm.loop.mustprogress"}
-!41 = distinct !{!41, !40}
-!42 = !{!9, !26, i64 560}
-!43 = !{!9, !26, i64 568}
-!44 = !{!16, !16, i64 0}
+!40 = !{!"llvm.loop.unroll.disable"}
+!41 = !{!9, !26, i64 560}
+!42 = !{!9, !26, i64 568}
+!43 = !{!16, !16, i64 0}
 end_hunk_0

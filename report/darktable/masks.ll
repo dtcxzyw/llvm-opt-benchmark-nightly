@@ -203,7 +203,7 @@ bb.a:
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 1432
   %i.j = load double, ptr %i.i, align 8, !tbaa !115
   %i.k = fmul reassoc nsz arcp contract afn double %i.j, 1.300000e+01
-  %i.l = fptosi double %i.k to i32                ; 40 uses
+  %i.l = fptosi double %i.k to i32                ; 36 uses
   %i.m = tail call ptr @cairo_image_surface_create(i32 noundef 0, i32 noundef %i.l, i32 noundef %i.l) #11 ; 3 uses
   %i.n = tail call ptr @cairo_create(ptr noundef %i.m) #11 ; 3 uses
   tail call void @dt_gui_gtk_set_source_rgba(ptr noundef %i.n, i32 noundef 9, float noundef 1.000000e+00) #11
@@ -211,27 +211,17 @@ bb.a:
   tail call void @cairo_destroy(ptr noundef %i.n) #11
   %i.o = tail call ptr @cairo_image_surface_get_data(ptr noundef %i.m) #11 ; 5 uses
   %.not = icmp eq i32 %i.l, 0                     ; 7 uses
-  br i1 %.not, label %_get_pixbuf_from_cairo.exit, label %.preheader.preheader.i.i
+  br i1 %.not, label %_get_pixbuf_from_cairo.exit, label %.preheader.i.i.a
 
-.preheader.preheader.i.i:                         ; preds = %bb.a
-  %wide.trip.count.i.i = zext i32 %i.l to i64
-  br label %.preheader.i.i.a
-
-.preheader.i.i.a:                                 ; preds = %._crit_edge.i.i, %.preheader.preheader.i.i
-  %.038.i.i = phi i32 [ %2, %._crit_edge.i.i ], [ 0, %.preheader.preheader.i.i ] ; 2 uses
-  %1 = mul i32 %.038.i.i, %i.l
+.preheader.i.i.a:                                 ; preds = %bb.a
+  %1 = zext i32 %i.l to i64                       ; 2 uses
+  %flatten.tripcount.i.i = mul nuw i64 %1, %1
   br label %bb.b
-
-._crit_edge.i.i:                                  ; preds = %bb.d
-  %2 = add nuw i32 %.038.i.i, 1                   ; 2 uses
-  %exitcond41.not.i.i = icmp eq i32 %2, %i.l
-  br i1 %exitcond41.not.i.i, label %_get_pixbuf_from_cairo.exit, label %.preheader.i.i.a
 
 bb.b:                                             ; preds = %bb.d, %.preheader.i.i.a
   %indvars.iv.i.i = phi i64 [ 0, %.preheader.i.i.a ], [ %indvars.iv.next.i.i, %bb.d ] ; 2 uses
-  %i.p = trunc nuw i64 %indvars.iv.i.i to i32
-  %3 = add i32 %1, %i.p
-  %i.q = shl i32 %3, 2                            ; 4 uses
+  %i.p = trunc i64 %indvars.iv.i.i to i32
+  %i.q = shl i32 %i.p, 2                          ; 4 uses
   %i.r = zext i32 %i.q to i64
   %i.s = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.r ; 3 uses
   %i.t = or disjoint i32 %i.q, 2
@@ -270,11 +260,11 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
-  %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i, %wide.trip.count.i.i
-  br i1 %exitcond.not.i.i, label %._crit_edge.i.i, label %bb.b
+  %indvars.iv.next.i.i = add nuw i64 %indvars.iv.i.i, 1 ; 2 uses
+  %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i, %flatten.tripcount.i.i
+  br i1 %exitcond.not.i.i, label %_get_pixbuf_from_cairo.exit, label %bb.b
 
-_get_pixbuf_from_cairo.exit:                      ; preds = %._crit_edge.i.i, %bb.a
+_get_pixbuf_from_cairo.exit:                      ; preds = %bb.d, %bb.a
   %i.ar = tail call i32 @cairo_image_surface_get_stride(ptr noundef %i.m) #11
   %i.as = tail call ptr @gdk_pixbuf_new_from_data(ptr noundef %i.o, i32 noundef 0, i32 noundef 1, i32 noundef 8, i32 noundef %i.l, i32 noundef %i.l, i32 noundef %i.ar, ptr noundef null, ptr noundef null) #11
   %i.at = getelementptr inbounds nuw i8, ptr %i.f, i64 248
@@ -285,27 +275,17 @@ _get_pixbuf_from_cairo.exit:                      ; preds = %._crit_edge.i.i, %b
   tail call void @dtgtk_cairo_paint_masks_used(ptr noundef %i.av, i32 noundef 0, i32 noundef 0, i32 noundef %i.l, i32 noundef %i.l, i32 noundef 0, ptr noundef null) #11, !inline_history !121
   tail call void @cairo_destroy(ptr noundef %i.av) #11
   %i.aw = tail call ptr @cairo_image_surface_get_data(ptr noundef %i.au) #11 ; 5 uses
-  br i1 %.not, label %_get_pixbuf_from_cairo.exit175, label %.preheader.preheader.i.i165
+  br i1 %.not, label %_get_pixbuf_from_cairo.exit175, label %.preheader.i.i167.a
 
-.preheader.preheader.i.i165:                      ; preds = %_get_pixbuf_from_cairo.exit
-  %wide.trip.count.i.i166 = zext i32 %i.l to i64
-  br label %.preheader.i.i167.a
-
-.preheader.i.i167.a:                              ; preds = %._crit_edge.i.i173, %.preheader.preheader.i.i165
-  %.038.i.i168 = phi i32 [ %5, %._crit_edge.i.i173 ], [ 0, %.preheader.preheader.i.i165 ] ; 2 uses
-  %4 = mul i32 %.038.i.i168, %i.l
+.preheader.i.i167.a:                              ; preds = %_get_pixbuf_from_cairo.exit
+  %2 = zext i32 %i.l to i64                       ; 2 uses
+  %flatten.tripcount.i.i166 = mul nuw i64 %2, %2
   br label %bb.e
-
-._crit_edge.i.i173:                               ; preds = %bb.g
-  %5 = add nuw i32 %.038.i.i168, 1                ; 2 uses
-  %exitcond41.not.i.i174 = icmp eq i32 %5, %i.l
-  br i1 %exitcond41.not.i.i174, label %_get_pixbuf_from_cairo.exit175, label %.preheader.i.i167.a
 
 bb.e:                                             ; preds = %bb.g, %.preheader.i.i167.a
   %indvars.iv.i.i169 = phi i64 [ 0, %.preheader.i.i167.a ], [ %indvars.iv.next.i.i171, %bb.g ] ; 2 uses
-  %i.ax = trunc nuw i64 %indvars.iv.i.i169 to i32
-  %6 = add i32 %4, %i.ax
-  %i.ay = shl i32 %6, 2                           ; 4 uses
+  %i.ax = trunc i64 %indvars.iv.i.i169 to i32
+  %i.ay = shl i32 %i.ax, 2                        ; 4 uses
   %i.az = zext i32 %i.ay to i64
   %i.ba = getelementptr inbounds nuw i8, ptr %i.aw, i64 %i.az ; 3 uses
   %i.bb = or disjoint i32 %i.ay, 2
@@ -344,43 +324,34 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
-  %indvars.iv.next.i.i171 = add nuw nsw i64 %indvars.iv.i.i169, 1 ; 2 uses
-  %exitcond.not.i.i172 = icmp eq i64 %indvars.iv.next.i.i171, %wide.trip.count.i.i166
-  br i1 %exitcond.not.i.i172, label %._crit_edge.i.i173, label %bb.e
+  %indvars.iv.next.i.i171 = add nuw i64 %indvars.iv.i.i169, 1 ; 2 uses
+  %exitcond.not.i.i172 = icmp eq i64 %indvars.iv.next.i.i171, %flatten.tripcount.i.i166
+  br i1 %exitcond.not.i.i172, label %_get_pixbuf_from_cairo.exit175, label %bb.e
 
-_get_pixbuf_from_cairo.exit175:                   ; preds = %._crit_edge.i.i173, %_get_pixbuf_from_cairo.exit
+_get_pixbuf_from_cairo.exit175:                   ; preds = %bb.g, %_get_pixbuf_from_cairo.exit
   %i.bz = tail call i32 @cairo_image_surface_get_stride(ptr noundef %i.au) #11
   %i.ca = tail call ptr @gdk_pixbuf_new_from_data(ptr noundef %i.aw, i32 noundef 0, i32 noundef 1, i32 noundef 8, i32 noundef %i.l, i32 noundef %i.l, i32 noundef %i.bz, ptr noundef null, ptr noundef null) #11
   %i.cb = getelementptr inbounds nuw i8, ptr %i.f, i64 296
   store ptr %i.ca, ptr %i.cb, align 8, !tbaa !106
-  %i.cc = shl nsw i32 %i.l, 1                     ; 25 uses
+  %i.cc = shl nsw i32 %i.l, 1                     ; 20 uses
   %i.cd = tail call ptr @cairo_image_surface_create(i32 noundef 0, i32 noundef %i.cc, i32 noundef %i.l) #11 ; 3 uses
   %i.ce = tail call ptr @cairo_create(ptr noundef %i.cd) #11 ; 3 uses
   tail call void @dt_gui_gtk_set_source_rgba(ptr noundef %i.ce, i32 noundef 9, float noundef 1.000000e+00) #11
   tail call void @dtgtk_cairo_paint_masks_union(ptr noundef %i.ce, i32 noundef 0, i32 noundef 0, i32 noundef %i.cc, i32 noundef %i.l, i32 noundef 0, ptr noundef null) #11, !inline_history !121
   tail call void @cairo_destroy(ptr noundef %i.ce) #11
   %i.cf = tail call ptr @cairo_image_surface_get_data(ptr noundef %i.cd) #11 ; 5 uses
-  br i1 %.not, label %_get_pixbuf_from_cairo.exit186, label %.preheader.preheader.i.i176
+  br i1 %.not, label %_get_pixbuf_from_cairo.exit186, label %.preheader.i.i178
 
-.preheader.preheader.i.i176:                      ; preds = %_get_pixbuf_from_cairo.exit175
-  %wide.trip.count.i.i177 = zext i32 %i.cc to i64
-  br label %.preheader.i.i178
-
-.preheader.i.i178:                                ; preds = %._crit_edge.i.i184, %.preheader.preheader.i.i176
-  %.038.i.i179 = phi i32 [ %8, %._crit_edge.i.i184 ], [ 0, %.preheader.preheader.i.i176 ] ; 2 uses
-  %7 = mul i32 %.038.i.i179, %i.cc
+.preheader.i.i178:                                ; preds = %_get_pixbuf_from_cairo.exit175
+  %3 = zext i32 %i.cc to i64
+  %4 = zext i32 %i.l to i64
+  %flatten.tripcount.i.i176 = mul nuw i64 %3, %4
   br label %bb.h
-
-._crit_edge.i.i184:                               ; preds = %bb.j
-  %8 = add nuw i32 %.038.i.i179, 1                ; 2 uses
-  %exitcond41.not.i.i185 = icmp eq i32 %8, %i.l
-  br i1 %exitcond41.not.i.i185, label %_get_pixbuf_from_cairo.exit186, label %.preheader.i.i178
 
 bb.h:                                             ; preds = %bb.j, %.preheader.i.i178
   %indvars.iv.i.i180 = phi i64 [ 0, %.preheader.i.i178 ], [ %indvars.iv.next.i.i182, %bb.j ] ; 2 uses
-  %i.cg = trunc nuw i64 %indvars.iv.i.i180 to i32
-  %9 = add i32 %7, %i.cg
-  %i.ch = shl i32 %9, 2                           ; 4 uses
+  %i.cg = trunc i64 %indvars.iv.i.i180 to i32
+  %i.ch = shl i32 %i.cg, 2                        ; 4 uses
   %i.ci = zext i32 %i.ch to i64
   %i.cj = getelementptr inbounds nuw i8, ptr %i.cf, i64 %i.ci ; 3 uses
   %i.ck = or disjoint i32 %i.ch, 2
@@ -419,11 +390,11 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
-  %indvars.iv.next.i.i182 = add nuw nsw i64 %indvars.iv.i.i180, 1 ; 2 uses
-  %exitcond.not.i.i183 = icmp eq i64 %indvars.iv.next.i.i182, %wide.trip.count.i.i177
-  br i1 %exitcond.not.i.i183, label %._crit_edge.i.i184, label %bb.h
+  %indvars.iv.next.i.i182 = add nuw i64 %indvars.iv.i.i180, 1 ; 2 uses
+  %exitcond.not.i.i183 = icmp eq i64 %indvars.iv.next.i.i182, %flatten.tripcount.i.i176
+  br i1 %exitcond.not.i.i183, label %_get_pixbuf_from_cairo.exit186, label %bb.h
 
-_get_pixbuf_from_cairo.exit186:                   ; preds = %._crit_edge.i.i184, %_get_pixbuf_from_cairo.exit175
+_get_pixbuf_from_cairo.exit186:                   ; preds = %bb.j, %_get_pixbuf_from_cairo.exit175
   %i.di = tail call i32 @cairo_image_surface_get_stride(ptr noundef %i.cd) #11
   %i.dj = tail call ptr @gdk_pixbuf_new_from_data(ptr noundef %i.cf, i32 noundef 0, i32 noundef 1, i32 noundef 8, i32 noundef %i.cc, i32 noundef %i.l, i32 noundef %i.di, ptr noundef null, ptr noundef null) #11
   %i.dk = getelementptr inbounds nuw i8, ptr %i.f, i64 256
@@ -434,27 +405,18 @@ _get_pixbuf_from_cairo.exit186:                   ; preds = %._crit_edge.i.i184,
   tail call void @dtgtk_cairo_paint_masks_intersection(ptr noundef %i.dm, i32 noundef 0, i32 noundef 0, i32 noundef %i.cc, i32 noundef %i.l, i32 noundef 0, ptr noundef null) #11, !inline_history !121
   tail call void @cairo_destroy(ptr noundef %i.dm) #11
   %i.dn = tail call ptr @cairo_image_surface_get_data(ptr noundef %i.dl) #11 ; 5 uses
-  br i1 %.not, label %_get_pixbuf_from_cairo.exit197, label %.preheader.preheader.i.i187
+  br i1 %.not, label %_get_pixbuf_from_cairo.exit197, label %.preheader.i.i189
 
-.preheader.preheader.i.i187:                      ; preds = %_get_pixbuf_from_cairo.exit186
-  %wide.trip.count.i.i188 = zext i32 %i.cc to i64
-  br label %.preheader.i.i189
-
-.preheader.i.i189:                                ; preds = %._crit_edge.i.i195, %.preheader.preheader.i.i187
-  %.038.i.i190 = phi i32 [ %11, %._crit_edge.i.i195 ], [ 0, %.preheader.preheader.i.i187 ] ; 2 uses
-  %10 = mul i32 %.038.i.i190, %i.cc
+.preheader.i.i189:                                ; preds = %_get_pixbuf_from_cairo.exit186
+  %5 = zext i32 %i.cc to i64
+  %6 = zext i32 %i.l to i64
+  %flatten.tripcount.i.i186 = mul nuw i64 %5, %6
   br label %bb.k
-
-._crit_edge.i.i195:                               ; preds = %bb.m
-  %11 = add nuw i32 %.038.i.i190, 1               ; 2 uses
-  %exitcond41.not.i.i196 = icmp eq i32 %11, %i.l
-  br i1 %exitcond41.not.i.i196, label %_get_pixbuf_from_cairo.exit197, label %.preheader.i.i189
 
 bb.k:                                             ; preds = %bb.m, %.preheader.i.i189
   %indvars.iv.i.i191 = phi i64 [ 0, %.preheader.i.i189 ], [ %indvars.iv.next.i.i193, %bb.m ] ; 2 uses
-  %i.do = trunc nuw i64 %indvars.iv.i.i191 to i32
-  %12 = add i32 %10, %i.do
-  %i.dp = shl i32 %12, 2                          ; 4 uses
+  %i.do = trunc i64 %indvars.iv.i.i191 to i32
+  %i.dp = shl i32 %i.do, 2                        ; 4 uses
   %i.dq = zext i32 %i.dp to i64
   %i.dr = getelementptr inbounds nuw i8, ptr %i.dn, i64 %i.dq ; 3 uses
   %i.ds = or disjoint i32 %i.dp, 2
@@ -493,11 +455,11 @@ bb.l:                                             ; preds = %bb.k
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k
-  %indvars.iv.next.i.i193 = add nuw nsw i64 %indvars.iv.i.i191, 1 ; 2 uses
-  %exitcond.not.i.i194 = icmp eq i64 %indvars.iv.next.i.i193, %wide.trip.count.i.i188
-  br i1 %exitcond.not.i.i194, label %._crit_edge.i.i195, label %bb.k
+  %indvars.iv.next.i.i193 = add nuw i64 %indvars.iv.i.i191, 1 ; 2 uses
+  %exitcond.not.i.i194 = icmp eq i64 %indvars.iv.next.i.i193, %flatten.tripcount.i.i186
+  br i1 %exitcond.not.i.i194, label %_get_pixbuf_from_cairo.exit197, label %bb.k
 
-_get_pixbuf_from_cairo.exit197:                   ; preds = %._crit_edge.i.i195, %_get_pixbuf_from_cairo.exit186
+_get_pixbuf_from_cairo.exit197:                   ; preds = %bb.m, %_get_pixbuf_from_cairo.exit186
   %i.eq = tail call i32 @cairo_image_surface_get_stride(ptr noundef %i.dl) #11
   %i.er = tail call ptr @gdk_pixbuf_new_from_data(ptr noundef %i.dn, i32 noundef 0, i32 noundef 1, i32 noundef 8, i32 noundef %i.cc, i32 noundef %i.l, i32 noundef %i.eq, ptr noundef null, ptr noundef null) #11
   %i.es = getelementptr inbounds nuw i8, ptr %i.f, i64 264
@@ -508,27 +470,18 @@ _get_pixbuf_from_cairo.exit197:                   ; preds = %._crit_edge.i.i195,
   tail call void @dtgtk_cairo_paint_masks_difference(ptr noundef %i.eu, i32 noundef 0, i32 noundef 0, i32 noundef %i.cc, i32 noundef %i.l, i32 noundef 0, ptr noundef null) #11, !inline_history !121
   tail call void @cairo_destroy(ptr noundef %i.eu) #11
   %i.ev = tail call ptr @cairo_image_surface_get_data(ptr noundef %i.et) #11 ; 5 uses
-  br i1 %.not, label %_get_pixbuf_from_cairo.exit208, label %.preheader.preheader.i.i198
+  br i1 %.not, label %_get_pixbuf_from_cairo.exit208, label %.preheader.i.i200
 
-.preheader.preheader.i.i198:                      ; preds = %_get_pixbuf_from_cairo.exit197
-  %wide.trip.count.i.i199 = zext i32 %i.cc to i64
-  br label %.preheader.i.i200
-
-.preheader.i.i200:                                ; preds = %._crit_edge.i.i206, %.preheader.preheader.i.i198
-  %.038.i.i201 = phi i32 [ %14, %._crit_edge.i.i206 ], [ 0, %.preheader.preheader.i.i198 ] ; 2 uses
-  %13 = mul i32 %.038.i.i201, %i.cc
+.preheader.i.i200:                                ; preds = %_get_pixbuf_from_cairo.exit197
+  %7 = zext i32 %i.cc to i64
+  %8 = zext i32 %i.l to i64
+  %flatten.tripcount.i.i196 = mul nuw i64 %7, %8
   br label %bb.n
-
-._crit_edge.i.i206:                               ; preds = %bb.p
-  %14 = add nuw i32 %.038.i.i201, 1               ; 2 uses
-  %exitcond41.not.i.i207 = icmp eq i32 %14, %i.l
-  br i1 %exitcond41.not.i.i207, label %_get_pixbuf_from_cairo.exit208, label %.preheader.i.i200
 
 bb.n:                                             ; preds = %bb.p, %.preheader.i.i200
   %indvars.iv.i.i202 = phi i64 [ 0, %.preheader.i.i200 ], [ %indvars.iv.next.i.i204, %bb.p ] ; 2 uses
-  %i.ew = trunc nuw i64 %indvars.iv.i.i202 to i32
-  %15 = add i32 %13, %i.ew
-  %i.ex = shl i32 %15, 2                          ; 4 uses
+  %i.ew = trunc i64 %indvars.iv.i.i202 to i32
+  %i.ex = shl i32 %i.ew, 2                        ; 4 uses
   %i.ey = zext i32 %i.ex to i64
   %i.ez = getelementptr inbounds nuw i8, ptr %i.ev, i64 %i.ey ; 3 uses
   %i.fa = or disjoint i32 %i.ex, 2
@@ -567,11 +520,11 @@ bb.o:                                             ; preds = %bb.n
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %bb.n
-  %indvars.iv.next.i.i204 = add nuw nsw i64 %indvars.iv.i.i202, 1 ; 2 uses
-  %exitcond.not.i.i205 = icmp eq i64 %indvars.iv.next.i.i204, %wide.trip.count.i.i199
-  br i1 %exitcond.not.i.i205, label %._crit_edge.i.i206, label %bb.n
+  %indvars.iv.next.i.i204 = add nuw i64 %indvars.iv.i.i202, 1 ; 2 uses
+  %exitcond.not.i.i205 = icmp eq i64 %indvars.iv.next.i.i204, %flatten.tripcount.i.i196
+  br i1 %exitcond.not.i.i205, label %_get_pixbuf_from_cairo.exit208, label %bb.n
 
-_get_pixbuf_from_cairo.exit208:                   ; preds = %._crit_edge.i.i206, %_get_pixbuf_from_cairo.exit197
+_get_pixbuf_from_cairo.exit208:                   ; preds = %bb.p, %_get_pixbuf_from_cairo.exit197
   %i.fy = tail call i32 @cairo_image_surface_get_stride(ptr noundef %i.et) #11
   %i.fz = tail call ptr @gdk_pixbuf_new_from_data(ptr noundef %i.ev, i32 noundef 0, i32 noundef 1, i32 noundef 8, i32 noundef %i.cc, i32 noundef %i.l, i32 noundef %i.fy, ptr noundef null, ptr noundef null) #11
   %i.ga = getelementptr inbounds nuw i8, ptr %i.f, i64 272
@@ -582,27 +535,18 @@ _get_pixbuf_from_cairo.exit208:                   ; preds = %._crit_edge.i.i206,
   tail call void @dtgtk_cairo_paint_masks_sum(ptr noundef %i.gc, i32 noundef 0, i32 noundef 0, i32 noundef %i.cc, i32 noundef %i.l, i32 noundef 0, ptr noundef null) #11, !inline_history !121
   tail call void @cairo_destroy(ptr noundef %i.gc) #11
   %i.gd = tail call ptr @cairo_image_surface_get_data(ptr noundef %i.gb) #11 ; 5 uses
-  br i1 %.not, label %_get_pixbuf_from_cairo.exit219, label %.preheader.preheader.i.i209
+  br i1 %.not, label %_get_pixbuf_from_cairo.exit219, label %.preheader.i.i211
 
-.preheader.preheader.i.i209:                      ; preds = %_get_pixbuf_from_cairo.exit208
-  %wide.trip.count.i.i210 = zext i32 %i.cc to i64
-  br label %.preheader.i.i211
-
-.preheader.i.i211:                                ; preds = %._crit_edge.i.i217, %.preheader.preheader.i.i209
-  %.038.i.i212 = phi i32 [ %17, %._crit_edge.i.i217 ], [ 0, %.preheader.preheader.i.i209 ] ; 2 uses
-  %16 = mul i32 %.038.i.i212, %i.cc
+.preheader.i.i211:                                ; preds = %_get_pixbuf_from_cairo.exit208
+  %9 = zext i32 %i.cc to i64
+  %10 = zext i32 %i.l to i64
+  %flatten.tripcount.i.i206 = mul nuw i64 %9, %10
   br label %bb.q
-
-._crit_edge.i.i217:                               ; preds = %bb.s
-  %17 = add nuw i32 %.038.i.i212, 1               ; 2 uses
-  %exitcond41.not.i.i218 = icmp eq i32 %17, %i.l
-  br i1 %exitcond41.not.i.i218, label %_get_pixbuf_from_cairo.exit219, label %.preheader.i.i211
 
 bb.q:                                             ; preds = %bb.s, %.preheader.i.i211
   %indvars.iv.i.i213 = phi i64 [ 0, %.preheader.i.i211 ], [ %indvars.iv.next.i.i215, %bb.s ] ; 2 uses
-  %i.ge = trunc nuw i64 %indvars.iv.i.i213 to i32
-  %18 = add i32 %16, %i.ge
-  %i.gf = shl i32 %18, 2                          ; 4 uses
+  %i.ge = trunc i64 %indvars.iv.i.i213 to i32
+  %i.gf = shl i32 %i.ge, 2                        ; 4 uses
   %i.gg = zext i32 %i.gf to i64
   %i.gh = getelementptr inbounds nuw i8, ptr %i.gd, i64 %i.gg ; 3 uses
   %i.gi = or disjoint i32 %i.gf, 2
@@ -641,11 +585,11 @@ bb.r:                                             ; preds = %bb.q
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.r, %bb.q
-  %indvars.iv.next.i.i215 = add nuw nsw i64 %indvars.iv.i.i213, 1 ; 2 uses
-  %exitcond.not.i.i216 = icmp eq i64 %indvars.iv.next.i.i215, %wide.trip.count.i.i210
-  br i1 %exitcond.not.i.i216, label %._crit_edge.i.i217, label %bb.q
+  %indvars.iv.next.i.i215 = add nuw i64 %indvars.iv.i.i213, 1 ; 2 uses
+  %exitcond.not.i.i216 = icmp eq i64 %indvars.iv.next.i.i215, %flatten.tripcount.i.i206
+  br i1 %exitcond.not.i.i216, label %_get_pixbuf_from_cairo.exit219, label %bb.q
 
-_get_pixbuf_from_cairo.exit219:                   ; preds = %._crit_edge.i.i217, %_get_pixbuf_from_cairo.exit208
+_get_pixbuf_from_cairo.exit219:                   ; preds = %bb.s, %_get_pixbuf_from_cairo.exit208
   %i.hg = tail call i32 @cairo_image_surface_get_stride(ptr noundef %i.gb) #11
   %i.hh = tail call ptr @gdk_pixbuf_new_from_data(ptr noundef %i.gd, i32 noundef 0, i32 noundef 1, i32 noundef 8, i32 noundef %i.cc, i32 noundef %i.l, i32 noundef %i.hg, ptr noundef null, ptr noundef null) #11
   %i.hi = getelementptr inbounds nuw i8, ptr %i.f, i64 280
@@ -656,27 +600,18 @@ _get_pixbuf_from_cairo.exit219:                   ; preds = %._crit_edge.i.i217,
   tail call void @dtgtk_cairo_paint_masks_exclusion(ptr noundef %i.hk, i32 noundef 0, i32 noundef 0, i32 noundef %i.cc, i32 noundef %i.l, i32 noundef 0, ptr noundef null) #11, !inline_history !121
   tail call void @cairo_destroy(ptr noundef %i.hk) #11
   %i.hl = tail call ptr @cairo_image_surface_get_data(ptr noundef %i.hj) #11 ; 5 uses
-  br i1 %.not, label %_get_pixbuf_from_cairo.exit230, label %.preheader.preheader.i.i220
+  br i1 %.not, label %_get_pixbuf_from_cairo.exit230, label %.preheader.i.i222
 
-.preheader.preheader.i.i220:                      ; preds = %_get_pixbuf_from_cairo.exit219
-  %wide.trip.count.i.i221 = zext i32 %i.cc to i64
-  br label %.preheader.i.i222
-
-.preheader.i.i222:                                ; preds = %._crit_edge.i.i228, %.preheader.preheader.i.i220
-  %.038.i.i223 = phi i32 [ %20, %._crit_edge.i.i228 ], [ 0, %.preheader.preheader.i.i220 ] ; 2 uses
-  %19 = mul i32 %.038.i.i223, %i.cc
+.preheader.i.i222:                                ; preds = %_get_pixbuf_from_cairo.exit219
+  %11 = zext i32 %i.cc to i64
+  %12 = zext i32 %i.l to i64
+  %flatten.tripcount.i.i216 = mul nuw i64 %11, %12
   br label %bb.t
-
-._crit_edge.i.i228:                               ; preds = %bb.v
-  %20 = add nuw i32 %.038.i.i223, 1               ; 2 uses
-  %exitcond41.not.i.i229 = icmp eq i32 %20, %i.l
-  br i1 %exitcond41.not.i.i229, label %_get_pixbuf_from_cairo.exit230, label %.preheader.i.i222
 
 bb.t:                                             ; preds = %bb.v, %.preheader.i.i222
   %indvars.iv.i.i224 = phi i64 [ 0, %.preheader.i.i222 ], [ %indvars.iv.next.i.i226, %bb.v ] ; 2 uses
-  %i.hm = trunc nuw i64 %indvars.iv.i.i224 to i32
-  %21 = add i32 %19, %i.hm
-  %i.hn = shl i32 %21, 2                          ; 4 uses
+  %i.hm = trunc i64 %indvars.iv.i.i224 to i32
+  %i.hn = shl i32 %i.hm, 2                        ; 4 uses
   %i.ho = zext i32 %i.hn to i64
   %i.hp = getelementptr inbounds nuw i8, ptr %i.hl, i64 %i.ho ; 3 uses
   %i.hq = or disjoint i32 %i.hn, 2
@@ -715,11 +650,11 @@ bb.u:                                             ; preds = %bb.t
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.u, %bb.t
-  %indvars.iv.next.i.i226 = add nuw nsw i64 %indvars.iv.i.i224, 1 ; 2 uses
-  %exitcond.not.i.i227 = icmp eq i64 %indvars.iv.next.i.i226, %wide.trip.count.i.i221
-  br i1 %exitcond.not.i.i227, label %._crit_edge.i.i228, label %bb.t
+  %indvars.iv.next.i.i226 = add nuw i64 %indvars.iv.i.i224, 1 ; 2 uses
+  %exitcond.not.i.i227 = icmp eq i64 %indvars.iv.next.i.i226, %flatten.tripcount.i.i216
+  br i1 %exitcond.not.i.i227, label %_get_pixbuf_from_cairo.exit230, label %bb.t
 
-_get_pixbuf_from_cairo.exit230:                   ; preds = %._crit_edge.i.i228, %_get_pixbuf_from_cairo.exit219
+_get_pixbuf_from_cairo.exit230:                   ; preds = %bb.v, %_get_pixbuf_from_cairo.exit219
   %i.io = tail call i32 @cairo_image_surface_get_stride(ptr noundef %i.hj) #11
   %i.ip = tail call ptr @gdk_pixbuf_new_from_data(ptr noundef %i.hl, i32 noundef 0, i32 noundef 1, i32 noundef 8, i32 noundef %i.cc, i32 noundef %i.l, i32 noundef %i.io, ptr noundef null, ptr noundef null) #11
   %i.iq = getelementptr inbounds nuw i8, ptr %i.f, i64 288

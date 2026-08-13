@@ -201,7 +201,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bl, i64 1432
   %i.bn = load double, ptr %i.bm, align 8, !tbaa !68
   %i.bo = fmul reassoc nsz arcp contract afn double %i.bn, 1.000000e+01
-  %i.bp = fptosi double %i.bo to i32              ; 12 uses
+  %i.bp = fptosi double %i.bo to i32              ; 10 uses
   %i.bq = call ptr @cairo_image_surface_create(i32 noundef 0, i32 noundef %i.bp, i32 noundef %i.bp) #8 ; 3 uses
   %i.br = call ptr @cairo_create(ptr noundef %i.bq) #8 ; 3 uses
   call void @gdk_cairo_set_source_rgba(ptr noundef %i.br, ptr noundef nonnull %5) #8
@@ -209,27 +209,17 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   call void @cairo_destroy(ptr noundef %i.br) #8
   %i.bs = call ptr @cairo_image_surface_get_data(ptr noundef %i.bq) #8 ; 5 uses
   %.not.i = icmp eq i32 %i.bp, 0
-  br i1 %.not.i, label %dt_draw_paint_to_pixbuf.exit, label %.preheader.preheader.i.i
+  br i1 %.not.i, label %dt_draw_paint_to_pixbuf.exit, label %.preheader.i.i.a
 
-.preheader.preheader.i.i:                         ; preds = %bb.d
-  %wide.trip.count.i.i = zext i32 %i.bp to i64
-  br label %.preheader.i.i.a
-
-.preheader.i.i.a:                                 ; preds = %._crit_edge.i.i, %.preheader.preheader.i.i
-  %.038.i.i = phi i32 [ %7, %._crit_edge.i.i ], [ 0, %.preheader.preheader.i.i ] ; 2 uses
-  %6 = mul i32 %.038.i.i, %i.bp
+.preheader.i.i.a:                                 ; preds = %bb.d
+  %6 = zext i32 %i.bp to i64                      ; 2 uses
+  %flatten.tripcount.i.i = mul nuw i64 %6, %6
   br label %bb.e
-
-._crit_edge.i.i:                                  ; preds = %bb.g
-  %7 = add nuw i32 %.038.i.i, 1                   ; 2 uses
-  %exitcond41.not.i.i = icmp eq i32 %7, %i.bp
-  br i1 %exitcond41.not.i.i, label %dt_draw_paint_to_pixbuf.exit, label %.preheader.i.i.a
 
 bb.e:                                             ; preds = %bb.g, %.preheader.i.i.a
   %indvars.iv.i.i = phi i64 [ 0, %.preheader.i.i.a ], [ %indvars.iv.next.i.i, %bb.g ] ; 2 uses
-  %i.bt = trunc nuw i64 %indvars.iv.i.i to i32
-  %8 = add i32 %6, %i.bt
-  %i.bu = shl i32 %8, 2                           ; 4 uses
+  %i.bt = trunc i64 %indvars.iv.i.i to i32
+  %i.bu = shl i32 %i.bt, 2                        ; 4 uses
   %i.bv = zext i32 %i.bu to i64
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bs, i64 %i.bv ; 3 uses
   %i.bx = or disjoint i32 %i.bu, 2
@@ -268,11 +258,11 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
-  %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
-  %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i, %wide.trip.count.i.i
-  br i1 %exitcond.not.i.i, label %._crit_edge.i.i, label %bb.e
+  %indvars.iv.next.i.i = add nuw i64 %indvars.iv.i.i, 1 ; 2 uses
+  %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i, %flatten.tripcount.i.i
+  br i1 %exitcond.not.i.i, label %dt_draw_paint_to_pixbuf.exit, label %bb.e
 
-dt_draw_paint_to_pixbuf.exit:                     ; preds = %._crit_edge.i.i, %bb.d
+dt_draw_paint_to_pixbuf.exit:                     ; preds = %bb.g, %bb.d
   %i.cv = sext i32 %i.bp to i64                   ; 2 uses
   %i.cw = shl nsw i64 %i.cv, 2
   %i.cx = mul i64 %i.cw, %i.cv                    ; 2 uses
@@ -290,7 +280,7 @@ dt_draw_paint_to_pixbuf.exit:                     ; preds = %._crit_edge.i.i, %b
   %i.de = getelementptr inbounds nuw i8, ptr %i.dd, i64 1432
   %i.df = load double, ptr %i.de, align 8, !tbaa !68
   %i.dg = fmul reassoc nsz arcp contract afn double %i.df, 1.000000e+01
-  %i.dh = fptosi double %i.dg to i32              ; 12 uses
+  %i.dh = fptosi double %i.dg to i32              ; 10 uses
   %i.di = call ptr @cairo_image_surface_create(i32 noundef 0, i32 noundef %i.dh, i32 noundef %i.dh) #8 ; 3 uses
   %i.dj = call ptr @cairo_create(ptr noundef %i.di) #8 ; 3 uses
   call void @gdk_cairo_set_source_rgba(ptr noundef %i.dj, ptr noundef nonnull %4) #8
@@ -298,27 +288,17 @@ dt_draw_paint_to_pixbuf.exit:                     ; preds = %._crit_edge.i.i, %b
   call void @cairo_destroy(ptr noundef %i.dj) #8
   %i.dk = call ptr @cairo_image_surface_get_data(ptr noundef %i.di) #8 ; 5 uses
   %.not.i104 = icmp eq i32 %i.dh, 0
-  br i1 %.not.i104, label %dt_draw_paint_to_pixbuf.exit115, label %.preheader.preheader.i.i105
+  br i1 %.not.i104, label %dt_draw_paint_to_pixbuf.exit115, label %.preheader.i.i107.a
 
-.preheader.preheader.i.i105:                      ; preds = %dt_draw_paint_to_pixbuf.exit
-  %wide.trip.count.i.i106 = zext i32 %i.dh to i64
-  br label %.preheader.i.i107.a
-
-.preheader.i.i107.a:                              ; preds = %._crit_edge.i.i113, %.preheader.preheader.i.i105
-  %.038.i.i108 = phi i32 [ %10, %._crit_edge.i.i113 ], [ 0, %.preheader.preheader.i.i105 ] ; 2 uses
-  %9 = mul i32 %.038.i.i108, %i.dh
+.preheader.i.i107.a:                              ; preds = %dt_draw_paint_to_pixbuf.exit
+  %7 = zext i32 %i.dh to i64                      ; 2 uses
+  %flatten.tripcount.i.i106 = mul nuw i64 %7, %7
   br label %bb.h
-
-._crit_edge.i.i113:                               ; preds = %bb.j
-  %10 = add nuw i32 %.038.i.i108, 1               ; 2 uses
-  %exitcond41.not.i.i114 = icmp eq i32 %10, %i.dh
-  br i1 %exitcond41.not.i.i114, label %dt_draw_paint_to_pixbuf.exit115, label %.preheader.i.i107.a
 
 bb.h:                                             ; preds = %bb.j, %.preheader.i.i107.a
   %indvars.iv.i.i109 = phi i64 [ 0, %.preheader.i.i107.a ], [ %indvars.iv.next.i.i111, %bb.j ] ; 2 uses
-  %i.dl = trunc nuw i64 %indvars.iv.i.i109 to i32
-  %11 = add i32 %9, %i.dl
-  %i.dm = shl i32 %11, 2                          ; 4 uses
+  %i.dl = trunc i64 %indvars.iv.i.i109 to i32
+  %i.dm = shl i32 %i.dl, 2                        ; 4 uses
   %i.dn = zext i32 %i.dm to i64
   %i.do = getelementptr inbounds nuw i8, ptr %i.dk, i64 %i.dn ; 3 uses
   %i.dp = or disjoint i32 %i.dm, 2
@@ -357,11 +337,11 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
-  %indvars.iv.next.i.i111 = add nuw nsw i64 %indvars.iv.i.i109, 1 ; 2 uses
-  %exitcond.not.i.i112 = icmp eq i64 %indvars.iv.next.i.i111, %wide.trip.count.i.i106
-  br i1 %exitcond.not.i.i112, label %._crit_edge.i.i113, label %bb.h
+  %indvars.iv.next.i.i111 = add nuw i64 %indvars.iv.i.i109, 1 ; 2 uses
+  %exitcond.not.i.i112 = icmp eq i64 %indvars.iv.next.i.i111, %flatten.tripcount.i.i106
+  br i1 %exitcond.not.i.i112, label %dt_draw_paint_to_pixbuf.exit115, label %bb.h
 
-dt_draw_paint_to_pixbuf.exit115:                  ; preds = %._crit_edge.i.i113, %dt_draw_paint_to_pixbuf.exit
+dt_draw_paint_to_pixbuf.exit115:                  ; preds = %bb.j, %dt_draw_paint_to_pixbuf.exit
   %i.en = sext i32 %i.dh to i64                   ; 2 uses
   %i.eo = shl nsw i64 %i.en, 2
   %i.ep = mul i64 %i.eo, %i.en                    ; 2 uses
@@ -379,7 +359,7 @@ dt_draw_paint_to_pixbuf.exit115:                  ; preds = %._crit_edge.i.i113,
   %i.ew = getelementptr inbounds nuw i8, ptr %i.ev, i64 1432
   %i.ex = load double, ptr %i.ew, align 8, !tbaa !68
   %i.ey = fmul reassoc nsz arcp contract afn double %i.ex, 1.000000e+01
-  %i.ez = fptosi double %i.ey to i32              ; 12 uses
+  %i.ez = fptosi double %i.ey to i32              ; 10 uses
   %i.fa = call ptr @cairo_image_surface_create(i32 noundef 0, i32 noundef %i.ez, i32 noundef %i.ez) #8 ; 3 uses
   %i.fb = call ptr @cairo_create(ptr noundef %i.fa) #8 ; 3 uses
   call void @gdk_cairo_set_source_rgba(ptr noundef %i.fb, ptr noundef nonnull %3) #8
@@ -387,27 +367,17 @@ dt_draw_paint_to_pixbuf.exit115:                  ; preds = %._crit_edge.i.i113,
   call void @cairo_destroy(ptr noundef %i.fb) #8
   %i.fc = call ptr @cairo_image_surface_get_data(ptr noundef %i.fa) #8 ; 5 uses
   %.not.i116 = icmp eq i32 %i.ez, 0
-  br i1 %.not.i116, label %dt_draw_paint_to_pixbuf.exit127, label %.preheader.preheader.i.i117
+  br i1 %.not.i116, label %dt_draw_paint_to_pixbuf.exit127, label %.preheader.i.i119
 
-.preheader.preheader.i.i117:                      ; preds = %dt_draw_paint_to_pixbuf.exit115
-  %wide.trip.count.i.i118 = zext i32 %i.ez to i64
-  br label %.preheader.i.i119
-
-.preheader.i.i119:                                ; preds = %._crit_edge.i.i125, %.preheader.preheader.i.i117
-  %.038.i.i120 = phi i32 [ %13, %._crit_edge.i.i125 ], [ 0, %.preheader.preheader.i.i117 ] ; 2 uses
-  %12 = mul i32 %.038.i.i120, %i.ez
+.preheader.i.i119:                                ; preds = %dt_draw_paint_to_pixbuf.exit115
+  %8 = zext i32 %i.ez to i64                      ; 2 uses
+  %flatten.tripcount.i.i117 = mul nuw i64 %8, %8
   br label %bb.k
-
-._crit_edge.i.i125:                               ; preds = %bb.m
-  %13 = add nuw i32 %.038.i.i120, 1               ; 2 uses
-  %exitcond41.not.i.i126 = icmp eq i32 %13, %i.ez
-  br i1 %exitcond41.not.i.i126, label %dt_draw_paint_to_pixbuf.exit127, label %.preheader.i.i119
 
 bb.k:                                             ; preds = %bb.m, %.preheader.i.i119
   %indvars.iv.i.i121 = phi i64 [ 0, %.preheader.i.i119 ], [ %indvars.iv.next.i.i123, %bb.m ] ; 2 uses
-  %i.fd = trunc nuw i64 %indvars.iv.i.i121 to i32
-  %14 = add i32 %12, %i.fd
-  %i.fe = shl i32 %14, 2                          ; 4 uses
+  %i.fd = trunc i64 %indvars.iv.i.i121 to i32
+  %i.fe = shl i32 %i.fd, 2                        ; 4 uses
   %i.ff = zext i32 %i.fe to i64
   %i.fg = getelementptr inbounds nuw i8, ptr %i.fc, i64 %i.ff ; 3 uses
   %i.fh = or disjoint i32 %i.fe, 2
@@ -446,11 +416,11 @@ bb.l:                                             ; preds = %bb.k
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k
-  %indvars.iv.next.i.i123 = add nuw nsw i64 %indvars.iv.i.i121, 1 ; 2 uses
-  %exitcond.not.i.i124 = icmp eq i64 %indvars.iv.next.i.i123, %wide.trip.count.i.i118
-  br i1 %exitcond.not.i.i124, label %._crit_edge.i.i125, label %bb.k
+  %indvars.iv.next.i.i123 = add nuw i64 %indvars.iv.i.i121, 1 ; 2 uses
+  %exitcond.not.i.i124 = icmp eq i64 %indvars.iv.next.i.i123, %flatten.tripcount.i.i117
+  br i1 %exitcond.not.i.i124, label %dt_draw_paint_to_pixbuf.exit127, label %bb.k
 
-dt_draw_paint_to_pixbuf.exit127:                  ; preds = %._crit_edge.i.i125, %dt_draw_paint_to_pixbuf.exit115
+dt_draw_paint_to_pixbuf.exit127:                  ; preds = %bb.m, %dt_draw_paint_to_pixbuf.exit115
   %i.gf = sext i32 %i.ez to i64                   ; 2 uses
   %i.gg = shl nsw i64 %i.gf, 2
   %i.gh = mul i64 %i.gg, %i.gf                    ; 2 uses

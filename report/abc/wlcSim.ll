@@ -203,12 +203,17 @@ bb.a:
   %i.d = getelementptr i8, ptr %1, i64 8
   %i.e = getelementptr i8, ptr %0, i64 640
   %i.f = getelementptr i8, ptr %2, i64 8
-  br i1 %i.b, label %.preheader36.us, label %.preheader36
+  br i1 %i.b, label %.preheader36.lr.ph.split.us, label %.preheader36
 
-.preheader36.us:                                  ; preds = %.preheader36.lr.ph, %._crit_edge.us
-  %.045.us = phi i32 [ %i.ak, %._crit_edge.us ], [ 0, %.preheader36.lr.ph ]
-  %.02444.us = phi i32 [ %7, %._crit_edge.us ], [ 0, %.preheader36.lr.ph ]
-  br label %.preheader35.us
+.preheader36.lr.ph.split.us:                      ; preds = %.preheader36.lr.ph
+  %5 = zext nneg i32 %3 to i64
+  %6 = shl nuw nsw i64 %5, 6
+  br label %.preheader36.us
+
+.preheader36.us:                                  ; preds = %._crit_edge.us, %.preheader36.lr.ph.split.us
+  %.045.us = phi i32 [ 0, %.preheader36.lr.ph.split.us ], [ %i.ak, %._crit_edge.us ]
+  %.02444.us = phi i32 [ 0, %.preheader36.lr.ph.split.us ], [ %i.af, %._crit_edge.us ]
+  br label %.preheader.us
 
 bb.b:                                             ; preds = %.lr.ph.us, %bb.d
   %indvars.iv49 = phi i64 [ 0, %.lr.ph.us ], [ %indvars.iv.next50, %bb.d ] ; 3 uses
@@ -257,27 +262,18 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.ae, label %bb.b, label %.critedge.us, !llvm.loop !104
 
 .critedge.us:                                     ; preds = %bb.d, %.preheader.us
-  %i.af = add i32 %.241.us, 1                     ; 2 uses
+  %i.af = add nsw i32 %.241.us, 1                 ; 2 uses
   %putchar28.us = tail call i32 @putchar(i32 10)  ; 0 uses
-  %exitcond53.not = icmp eq i32 %i.af, %7
-  br i1 %exitcond53.not, label %5, label %.preheader.us, !llvm.loop !105
+  %indvar.next48 = add nuw nsw i64 %indvar47, 1   ; 2 uses
+  %exitcond53.not = icmp eq i64 %indvar.next48, %6
+  br i1 %exitcond53.not, label %._crit_edge.us, label %.preheader.us, !llvm.loop !105
 
-5:                                                ; preds = %.critedge.us
-  %6 = add nuw nsw i32 %.02343.us, 1              ; 2 uses
-  %exitcond54.not = icmp eq i32 %6, %3
-  br i1 %exitcond54.not, label %._crit_edge.us, label %.preheader35.us, !llvm.loop !106
-
-.preheader.us:                                    ; preds = %.preheader35.us, %.critedge.us
-  %.241.us = phi i32 [ %.142.us, %.preheader35.us ], [ %i.af, %.critedge.us ] ; 3 uses
+.preheader.us:                                    ; preds = %.preheader36.us, %.critedge.us
+  %indvar47 = phi i64 [ 0, %.preheader36.us ], [ %indvar.next48, %.critedge.us ]
+  %.241.us = phi i32 [ %.02444.us, %.preheader36.us ], [ %i.af, %.critedge.us ] ; 3 uses
   %.val38.us = load i32, ptr %i.c, align 4, !tbaa !50
   %i.ag = icmp sgt i32 %.val38.us, 0
   br i1 %i.ag, label %.lr.ph.us, label %.critedge.us
-
-.preheader35.us:                                  ; preds = %.preheader36.us, %5
-  %.02343.us = phi i32 [ 0, %.preheader36.us ], [ %6, %5 ]
-  %.142.us = phi i32 [ %.02444.us, %.preheader36.us ], [ %7, %5 ] ; 2 uses
-  %7 = add i32 %.142.us, 64                       ; 3 uses
-  br label %.preheader.us
 
 .lr.ph.us:                                        ; preds = %.preheader.us
   %i.ah = ashr i32 %.241.us, 5
@@ -285,18 +281,18 @@ bb.d:                                             ; preds = %bb.c
   %i.aj = and i32 %.241.us, 31
   br label %bb.b
 
-._crit_edge.us:                                   ; preds = %5
+._crit_edge.us:                                   ; preds = %.critedge.us
   %i.ak = add nuw nsw i32 %.045.us, 1             ; 2 uses
   %putchar.us = tail call i32 @putchar(i32 10)    ; 0 uses
   %exitcond55.not = icmp eq i32 %i.ak, %4
-  br i1 %exitcond55.not, label %._crit_edge46, label %.preheader36.us, !llvm.loop !107
+  br i1 %exitcond55.not, label %._crit_edge46, label %.preheader36.us, !llvm.loop !106
 
 .preheader36:                                     ; preds = %.preheader36.lr.ph, %.preheader36
   %.045 = phi i32 [ %i.al, %.preheader36 ], [ 0, %.preheader36.lr.ph ]
   %i.al = add nuw nsw i32 %.045, 1                ; 2 uses
   %putchar = tail call i32 @putchar(i32 10)       ; 0 uses
   %exitcond.not = icmp eq i32 %i.al, %4
-  br i1 %exitcond.not, label %._crit_edge46, label %.preheader36, !llvm.loop !107
+  br i1 %exitcond.not, label %._crit_edge46, label %.preheader36, !llvm.loop !106
 
 ._crit_edge46:                                    ; preds = %.preheader36, %._crit_edge.us, %bb.a
   ret void
@@ -307,7 +303,7 @@ define void @Wlc_NtkSimulateTest(ptr noundef %0) local_unnamed_addr #2 {
 Vec_IntFree.exit:
   %i.a = tail call noalias dereferenceable_or_null(16) ptr @malloc(i64 noundef 16) #14 ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  store i32 16, ptr %i.a, align 8, !tbaa !108
+  store i32 16, ptr %i.a, align 8, !tbaa !107
   %i.c = tail call noalias dereferenceable_or_null(64) ptr @malloc(i64 noundef 64) #14 ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %i.c, ptr %i.d, align 8, !tbaa !52
@@ -475,6 +471,5 @@ attributes #16 = { nounwind allocsize(1) }
 !104 = distinct !{!104, !18}
 !105 = distinct !{!105, !18}
 !106 = distinct !{!106, !18}
-!107 = distinct !{!107, !18}
-!108 = !{!32, !5, i64 0}
+!107 = !{!32, !5, i64 0}
 end_hunk_0

@@ -203,6 +203,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.v, label %.noexc.us.preheader, label %._crit_edge.split41
 
 .noexc.us.preheader:                              ; preds = %.noexc.lr.ph.split.split
+  %7 = zext nneg i32 %i.s to i64
+  %8 = zext nneg i32 %i.q to i64
+  %9 = mul nuw nsw i64 %7, %8
   %i.x = sext i32 %i.k to i64
   %i.y = add nsw i32 %i.j, 1
   %i.z = zext nneg i32 %i.u to i64                ; 2 uses
@@ -225,20 +228,15 @@ bb.b:                                             ; preds = %bb.a
   %cmp.n = icmp eq i64 %n.vec, %i.af
   br label %.noexc.us
 
-.noexc.us:                                        ; preds = %.noexc.us.preheader, %._crit_edge36.split38.us.us
-  %indvars.iv = phi i64 [ %i.x, %.noexc.us.preheader ], [ %indvars.iv.next, %._crit_edge36.split38.us.us ] ; 2 uses
+.noexc.us:                                        ; preds = %._crit_edge36.split38.us.us, %.noexc.us.preheader
+  %indvars.iv = phi i64 [ %indvars.iv.next, %._crit_edge36.split38.us.us ], [ %i.x, %.noexc.us.preheader ] ; 2 uses
   %.reass.us = mul i64 %factor.op.mul, %indvars.iv
   %i.ai = getelementptr inbounds nuw i8, ptr %i.l, i64 %.reass.us
-  br label %.preheader.us.us
-
-.preheader.us.us:                                 ; preds = %._crit_edge.split.us.us.us, %.noexc.us
-  %.02235.us.us = phi i32 [ 0, %.noexc.us ], [ %8, %._crit_edge.split.us.us.us ]
-  %.02334.us.us = phi ptr [ %i.ai, %.noexc.us ], [ %i.bj, %._crit_edge.split.us.us.us ]
   br label %.lr.ph.i.preheader.us.us.us
 
-.lr.ph.i.preheader.us.us.us:                      ; preds = %_ZN4ncnnL7softmaxEPfi.exit.loopexit.us.us.us, %.preheader.us.us
-  %.033.us.us.us = phi i32 [ 0, %.preheader.us.us ], [ %7, %_ZN4ncnnL7softmaxEPfi.exit.loopexit.us.us.us ]
-  %.132.us.us.us = phi ptr [ %.02334.us.us, %.preheader.us.us ], [ %i.bj, %_ZN4ncnnL7softmaxEPfi.exit.loopexit.us.us.us ] ; 10 uses
+.lr.ph.i.preheader.us.us.us:                      ; preds = %_ZN4ncnnL7softmaxEPfi.exit.loopexit.us.us.us, %.noexc.us
+  %indvar49 = phi i64 [ %indvar.next50, %_ZN4ncnnL7softmaxEPfi.exit.loopexit.us.us.us ], [ 0, %.noexc.us ]
+  %.132.us.us.us = phi ptr [ %i.bj, %_ZN4ncnnL7softmaxEPfi.exit.loopexit.us.us.us ], [ %i.ai, %.noexc.us ] ; 10 uses
   br i1 %min.iters.check79, label %.lr.ph.i.us.us.us.preheader, label %vector.ph80
 
 vector.ph80:                                      ; preds = %.lr.ph.i.preheader.us.us.us
@@ -339,10 +337,10 @@ middle.block:                                     ; preds = %vector.body
   br label %.lr.ph39.i.us.us.us
 
 _ZN4ncnnL7softmaxEPfi.exit.loopexit.us.us.us:     ; preds = %.lr.ph39.i.us.us.us, %middle.block
-  %i.bj = getelementptr inbounds nuw [4 x i8], ptr %.132.us.us.us, i64 %i.w ; 2 uses
-  %7 = add nuw nsw i32 %.033.us.us.us, 1          ; 2 uses
-  %exitcond.not = icmp eq i32 %7, %i.s
-  br i1 %exitcond.not, label %._crit_edge.split.us.us.us, label %.lr.ph.i.preheader.us.us.us, !llvm.loop !119
+  %i.bj = getelementptr inbounds nuw [4 x i8], ptr %.132.us.us.us, i64 %i.w
+  %indvar.next50 = add nuw nsw i64 %indvar49, 1   ; 2 uses
+  %exitcond.not = icmp eq i64 %indvar.next50, %9
+  br i1 %exitcond.not, label %._crit_edge36.split38.us.us, label %.lr.ph.i.preheader.us.us.us, !llvm.loop !119
 
 .lr.ph35.i.preheader.us.us.us:                    ; preds = %.lr.ph.i.us.us.us, %middle.block90
   %.sroa.speculated.i.us.us.us.lcssa = phi float [ %i.ap, %middle.block90 ], [ %.sroa.speculated.i.us.us.us, %.lr.ph.i.us.us.us ] ; 2 uses
@@ -386,12 +384,7 @@ middle.block74:                                   ; preds = %vector.body67
   %.02232.i.us.us.us.ph = phi float [ 0.000000e+00, %.lr.ph35.i.preheader.us.us.us ], [ %i.bu, %middle.block74 ]
   br label %.lr.ph35.i.us.us.us
 
-._crit_edge.split.us.us.us:                       ; preds = %_ZN4ncnnL7softmaxEPfi.exit.loopexit.us.us.us
-  %8 = add nuw nsw i32 %.02235.us.us, 1           ; 2 uses
-  %exitcond48.not = icmp eq i32 %8, %i.q
-  br i1 %exitcond48.not, label %._crit_edge36.split38.us.us, label %.preheader.us.us, !llvm.loop !121
-
-._crit_edge36.split38.us.us:                      ; preds = %._crit_edge.split.us.us.us
+._crit_edge36.split38.us.us:                      ; preds = %_ZN4ncnnL7softmaxEPfi.exit.loopexit.us.us.us
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
   %lftr.wideiv = trunc i64 %indvars.iv.next to i32
   %exitcond50.not = icmp eq i32 %i.y, %lftr.wideiv
@@ -582,5 +575,4 @@ attributes #13 = { cold }
 !118 = distinct !{!118, !42, !43, !44}
 !119 = distinct !{!119, !42}
 !120 = distinct !{!120, !42, !43, !44}
-!121 = distinct !{!121, !42}
 end_hunk_0

@@ -203,7 +203,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.cf = getelementptr inbounds nuw i8, ptr %i.ce, i64 1432
   %i.cg = load double, ptr %i.cf, align 8, !tbaa !141
   %i.ch = fmul reassoc nsz arcp contract afn double %i.cg, 1.300000e+01
-  %i.ci = fptosi double %i.ch to i32              ; 12 uses
+  %i.ci = fptosi double %i.ch to i32              ; 10 uses
   %i.cj = call ptr @cairo_image_surface_create(i32 noundef 0, i32 noundef %i.ci, i32 noundef %i.ci) #15 ; 3 uses
   %i.ck = call ptr @cairo_create(ptr noundef %i.cj) #15 ; 3 uses
   call void @gdk_cairo_set_source_rgba(ptr noundef %i.ck, ptr noundef nonnull %1) #15
@@ -211,27 +211,17 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   call void @cairo_destroy(ptr noundef %i.ck) #15
   %i.cl = call ptr @cairo_image_surface_get_data(ptr noundef %i.cj) #15 ; 5 uses
   %.not.i.i = icmp eq i32 %i.ci, 0
-  br i1 %.not.i.i, label %_set_files_list.exit, label %.preheader.preheader.i.i.i
+  br i1 %.not.i.i, label %_set_files_list.exit, label %.preheader.i.i.i.a
 
-.preheader.preheader.i.i.i:                       ; preds = %bb.c
-  %wide.trip.count.i.i.i = zext i32 %i.ci to i64
-  br label %.preheader.i.i.i.a
-
-.preheader.i.i.i.a:                               ; preds = %._crit_edge.i.i.i, %.preheader.preheader.i.i.i
-  %.038.i.i.i = phi i32 [ %3, %._crit_edge.i.i.i ], [ 0, %.preheader.preheader.i.i.i ] ; 2 uses
-  %2 = mul i32 %.038.i.i.i, %i.ci
+.preheader.i.i.i.a:                               ; preds = %bb.c
+  %2 = zext i32 %i.ci to i64                      ; 2 uses
+  %flatten.tripcount.i.i.i = mul nuw i64 %2, %2
   br label %bb.d
-
-._crit_edge.i.i.i:                                ; preds = %bb.f
-  %3 = add nuw i32 %.038.i.i.i, 1                 ; 2 uses
-  %exitcond41.not.i.i.i = icmp eq i32 %3, %i.ci
-  br i1 %exitcond41.not.i.i.i, label %_set_files_list.exit, label %.preheader.i.i.i.a
 
 bb.d:                                             ; preds = %bb.f, %.preheader.i.i.i.a
   %indvars.iv.i.i.i = phi i64 [ 0, %.preheader.i.i.i.a ], [ %indvars.iv.next.i.i.i, %bb.f ] ; 2 uses
-  %i.cm = trunc nuw i64 %indvars.iv.i.i.i to i32
-  %4 = add i32 %2, %i.cm
-  %i.cn = shl i32 %4, 2                           ; 4 uses
+  %i.cm = trunc i64 %indvars.iv.i.i.i to i32
+  %i.cn = shl i32 %i.cm, 2                        ; 4 uses
   %i.co = zext i32 %i.cn to i64
   %i.cp = getelementptr inbounds nuw i8, ptr %i.cl, i64 %i.co ; 3 uses
   %i.cq = or disjoint i32 %i.cn, 2
@@ -270,11 +260,11 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
-  %indvars.iv.next.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i, 1 ; 2 uses
-  %exitcond.not.i.i.i = icmp eq i64 %indvars.iv.next.i.i.i, %wide.trip.count.i.i.i
-  br i1 %exitcond.not.i.i.i, label %._crit_edge.i.i.i, label %bb.d
+  %indvars.iv.next.i.i.i = add nuw i64 %indvars.iv.i.i.i, 1 ; 2 uses
+  %exitcond.not.i.i.i = icmp eq i64 %indvars.iv.next.i.i.i, %flatten.tripcount.i.i.i
+  br i1 %exitcond.not.i.i.i, label %_set_files_list.exit, label %bb.d
 
-_set_files_list.exit:                             ; preds = %._crit_edge.i.i.i, %bb.c
+_set_files_list.exit:                             ; preds = %bb.f, %bb.c
   %i.do = sext i32 %i.ci to i64                   ; 2 uses
   %i.dp = shl nsw i64 %i.do, 2
   %i.dq = mul i64 %i.dp, %i.do                    ; 2 uses

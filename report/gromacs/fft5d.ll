@@ -204,28 +204,25 @@ bb.v:                                             ; preds = %bb.u
   %exitcond67.not = icmp eq i32 %i.cc, %.sroa.16.0
   br i1 %exitcond67.not, label %._crit_edge.split, label %.preheader50.us, !llvm.loop !145
 
-.preheader50.a:                                   ; preds = %.preheader50.lr.ph.split, %._crit_edge57.split
-  %.02559 = phi i32 [ %5, %._crit_edge57.split ], [ 0, %.preheader50.lr.ph.split ]
+.preheader50.a:                                   ; preds = %.preheader50.lr.ph.split
+  %4 = zext nneg i32 %.sroa.10.0 to i64
+  %5 = zext nneg i32 %.sroa.16.0 to i64
+  %flatten.tripcount = mul nuw nsw i64 %4, %5
   br label %bb.w
 
 bb.w:                                             ; preds = %.preheader50.a, %bb.w
-  %.02356 = phi i32 [ 0, %.preheader50.a ], [ %4, %bb.w ]
+  %indvar62 = phi i64 [ 0, %.preheader50.a ], [ %indvar.next63, %bb.w ]
   %i.cd = load ptr, ptr @debug, align 8, !tbaa !13
   %i.ce = load i32, ptr %i.a, align 8, !tbaa !9
   %i.cf = load i32, ptr %i.bb, align 4, !tbaa !9
   %i.cg = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.cd, ptr noundef nonnull @.str.15, i32 noundef %i.ce, i32 noundef %i.cf) #13 ; 0 uses
   %i.ch = load ptr, ptr @debug, align 8, !tbaa !13
   %fputc = tail call i32 @fputc(i32 10, ptr %i.ch) ; 0 uses
-  %4 = add nuw nsw i32 %.02356, 1                 ; 2 uses
-  %exitcond.not = icmp eq i32 %4, %.sroa.10.0
-  br i1 %exitcond.not, label %._crit_edge57.split, label %bb.w, !llvm.loop !144
+  %indvar.next63 = add nuw i64 %indvar62, 1       ; 2 uses
+  %exitcond.not = icmp eq i64 %indvar.next63, %flatten.tripcount
+  br i1 %exitcond.not, label %._crit_edge.split, label %bb.w, !llvm.loop !145
 
-._crit_edge57.split:                              ; preds = %bb.w
-  %5 = add nuw nsw i32 %.02559, 1                 ; 2 uses
-  %exitcond63.not = icmp eq i32 %5, %.sroa.16.0
-  br i1 %exitcond63.not, label %._crit_edge.split, label %.preheader50.a, !llvm.loop !145
-
-._crit_edge.split:                                ; preds = %._crit_edge57.split, %._crit_edge57.split.us.us, %.preheader50.lr.ph, %_ZL15compute_offsetsP12fft5d_plan_tPiS1_S1_S1_i.exit
+._crit_edge.split:                                ; preds = %bb.w, %._crit_edge57.split.us.us, %.preheader50.lr.ph, %_ZL15compute_offsetsP12fft5d_plan_tPiS1_S1_S1_i.exit
   ret void
 }
 
