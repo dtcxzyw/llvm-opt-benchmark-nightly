@@ -203,10 +203,10 @@ bb.a:
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !174  ; 8 uses
   %i.e = ptrtoint ptr %i.b to i64
   %i.f = ptrtoint ptr %i.d to i64                 ; 4 uses
-  %i.g = sub i64 %i.e, %i.f
+  %i.g = sub i64 %i.e, %i.f                       ; 3 uses
   %i.h = ashr exact i64 %i.g, 3
-  %i.i = add nsw i64 %i.h, 1                      ; 3 uses
-  %i.j = add i64 %i.i, %1                         ; 3 uses
+  %i.i = add i64 %1, 1
+  %i.j = add i64 %i.i, %i.h                       ; 3 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.l = load i64, ptr %i.k, align 8, !tbaa !217  ; 4 uses
   %i.m = shl i64 %i.j, 1
@@ -244,7 +244,7 @@ bb.f:                                             ; preds = %bb.e
   br label %_ZSt4copyIPPPN7CaDiCaL6ClauseES4_ET0_T_S6_S5_.exit
 
 bb.g:                                             ; preds = %bb.b
-  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.t, i64 %i.i ; 2 uses
+  %3 = getelementptr i8, ptr %i.t, i64 %i.g       ; 2 uses
   %i.ab = ptrtoint ptr %i.v to i64
   %i.ac = sub i64 %i.ab, %i.f                     ; 3 uses
   %i.ad = ashr exact i64 %i.ac, 3                 ; 2 uses
@@ -252,8 +252,9 @@ bb.g:                                             ; preds = %bb.b
   br i1 %i.ae, label %bb.h, label %bb.i, !prof !218
 
 bb.h:                                             ; preds = %bb.g
+  %4 = getelementptr i8, ptr %3, i64 8
   %i.af = sub nsw i64 0, %i.ad
-  %i.ag = getelementptr inbounds [8 x i8], ptr %3, i64 %i.af
+  %i.ag = getelementptr inbounds [8 x i8], ptr %4, i64 %i.af
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.ag, ptr align 8 %i.d, i64 %i.ac, i1 false)
   br label %_ZSt4copyIPPPN7CaDiCaL6ClauseES4_ET0_T_S6_S5_.exit
 
@@ -262,9 +263,8 @@ bb.i:                                             ; preds = %bb.g
   br i1 %i.ah, label %bb.j, label %_ZSt4copyIPPPN7CaDiCaL6ClauseES4_ET0_T_S6_S5_.exit
 
 bb.j:                                             ; preds = %bb.i
-  %4 = getelementptr inbounds i8, ptr %3, i64 -8
   %i.ai = load ptr, ptr %i.d, align 8, !tbaa !176
-  store ptr %i.ai, ptr %4, align 8, !tbaa !176
+  store ptr %i.ai, ptr %3, align 8, !tbaa !176
   br label %_ZSt4copyIPPPN7CaDiCaL6ClauseES4_ET0_T_S6_S5_.exit
 
 bb.k:                                             ; preds = %bb.a
@@ -329,8 +329,7 @@ _ZSt4copyIPPPN7CaDiCaL6ClauseES4_ET0_T_S6_S5_.exit: ; preds = %bb.j, %bb.i, %bb.
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bb, i64 512
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 32
   store ptr %i.bd, ptr %i.be, align 8, !tbaa !178
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %.0, i64 %i.i
-  %i.bf = getelementptr inbounds i8, ptr %5, i64 -8 ; 2 uses
+  %i.bf = getelementptr i8, ptr %.0, i64 %i.g     ; 2 uses
   store ptr %i.bf, ptr %i.a, align 8, !tbaa !175
   %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !176 ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 56

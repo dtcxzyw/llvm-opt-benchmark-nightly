@@ -189,7 +189,7 @@ bb.m:                                             ; preds = %._crit_edge.thread
   br label %bb.n
 
 .loopexit:                                        ; preds = %bb.z, %.thread317, %bb.t
-  %indvars.iv.next302320 = phi i64 [ %indvars.iv.next302319, %.thread317 ], [ %indvars.iv.next302, %bb.t ], [ %indvars.iv.next302, %bb.z ]
+  %indvars.iv.next302320 = add nsw i64 %indvars.iv301, 1
   %i.bs = load i32, ptr %i.a, align 4, !tbaa !8
   %i.bt = sext i32 %i.bs to i64
   %.not263.not = icmp slt i64 %indvars.iv301, %i.bt
@@ -281,7 +281,6 @@ bb.s:                                             ; preds = %bb.r, %bb.q
 
 .thread317:                                       ; preds = %bb.s
   store i32 %i.dp, ptr %i.b, align 4, !tbaa !8
-  %indvars.iv.next302319 = add nsw i64 %indvars.iv301, 1
   br label %.loopexit
 
 bb.t:                                             ; preds = %bb.s
@@ -312,12 +311,11 @@ bb.t:                                             ; preds = %bb.s
   %.pre305 = sext i32 %.pre to i64
   %i.ej = icmp slt i64 %indvars.iv301, %.pre305
   store i32 %.pre, ptr %i.b, align 4, !tbaa !8
-  %indvars.iv.next302 = add nsw i64 %indvars.iv301, 1 ; 3 uses
   br i1 %i.ej, label %.lr.ph283.preheader, label %.loopexit
 
 .lr.ph283.preheader:                              ; preds = %bb.t
   %invariant.gep321 = getelementptr [8 x i8], ptr %i.g, i64 %indvars.iv301
-  %invariant.gep323 = getelementptr [8 x i8], ptr %i.g, i64 %indvars.iv.next302
+  %invariant.gep323 = getelementptr [8 x i8], ptr %i.g, i64 %indvars.iv301
   br label %.lr.ph283
 
 .lr.ph283:                                        ; preds = %.lr.ph283.preheader, %bb.z
@@ -361,7 +359,8 @@ bb.v:                                             ; preds = %bb.u
 bb.w:                                             ; preds = %bb.v
   store i32 %i.fj, ptr %i.c, align 4, !tbaa !8
   %gep324 = getelementptr [8 x i8], ptr %invariant.gep323, i64 %i.eo
-  %i.fl = call double @dnrm2_(ptr noundef nonnull %i.c, ptr noundef %gep324, ptr noundef nonnull @c__1) #5 ; 2 uses
+  %8 = getelementptr i8, ptr %gep324, i64 8
+  %i.fl = call double @dnrm2_(ptr noundef nonnull %i.c, ptr noundef %8, ptr noundef nonnull @c__1) #5 ; 2 uses
   store double %i.fl, ptr %i.el, align 8, !tbaa !11
   %i.fm = load i32, ptr %1, align 4, !tbaa !8
   %i.fn = sext i32 %i.fm to i64

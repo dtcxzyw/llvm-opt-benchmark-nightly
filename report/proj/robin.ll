@@ -108,27 +108,23 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.m
 
 .preheader:                                       ; preds = %bb.f, %.preheader.backedge
-  %.0 = phi i64 [ %.0.be, %.preheader.backedge ], [ %i.p, %bb.f ] ; 5 uses
-  %i.r = getelementptr inbounds [16 x i8], ptr @_ZL1Y, i64 %.0 ; 4 uses
+  %.0 = phi i64 [ %5, %.preheader.backedge ], [ %i.p, %bb.f ] ; 4 uses
+  %i.r = getelementptr inbounds [16 x i8], ptr @_ZL1Y, i64 %.0 ; 5 uses
   %i.s = load float, ptr %i.r, align 16, !tbaa !45 ; 2 uses
   %i.t = fpext float %i.s to double               ; 3 uses
   %i.u = fcmp olt double %i.f, %i.t
-  br i1 %i.u, label %4, label %bb.g
-
-4:                                                ; preds = %.preheader
-  %5 = add nsw i64 %.0, -1
-  br label %.preheader.backedge
+  br i1 %i.u, label %.preheader.backedge, label %bb.g
 
 bb.g:                                             ; preds = %.preheader
-  %6 = add nsw i64 %.0, 1                         ; 2 uses
-  %7 = getelementptr inbounds [16 x i8], ptr @_ZL1Y, i64 %6
-  %i.v = load float, ptr %7, align 16, !tbaa !45  ; 2 uses
+  %4 = getelementptr i8, ptr %i.r, i64 16
+  %i.v = load float, ptr %4, align 16, !tbaa !45  ; 2 uses
   %i.w = fpext float %i.v to double
   %i.x = fcmp ult double %i.f, %i.w
   br i1 %i.x, label %bb.h, label %.preheader.backedge
 
-.preheader.backedge:                              ; preds = %bb.g, %4
-  %.0.be = phi i64 [ %6, %bb.g ], [ %5, %4 ]
+.preheader.backedge:                              ; preds = %bb.g, %.preheader
+  %.0.be = phi i64 [ -1, %.preheader ], [ 1, %bb.g ]
+  %5 = add nsw i64 %.0, %.0.be
   br label %.preheader, !llvm.loop !48
 
 bb.h:                                             ; preds = %bb.g

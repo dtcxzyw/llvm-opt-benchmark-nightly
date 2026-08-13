@@ -201,15 +201,14 @@ bb.i:                                             ; preds = %php_ap_memstr.exit5
   br i1 %.not53, label %bb.l, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.bn = getelementptr i8, ptr %i.bm, i64 -1
+  %i.bn = getelementptr i8, ptr %i.bm, i64 -1     ; 2 uses
   %i.bo = load i8, ptr %i.bn, align 1, !tbaa !38
   %i.bp = icmp eq i8 %i.bo, 13
   br i1 %i.bp, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
-  %i.bq = add nsw i64 %i.bl, -1                   ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 %i.bq
-  store i8 0, ptr %3, align 1, !tbaa !38
+  %i.bq = add nsw i64 %i.bl, -1
+  store i8 0, ptr %i.bn, align 1, !tbaa !38
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j, %bb.i

@@ -204,13 +204,12 @@ _ZNSt6vectorIN4llvh9StringRefESaIS1_EE9push_backEOS1_.exit199: ; preds = %_ZNSt7
   %.0911.i.i.i.i.i.i207.ptr.3 = getelementptr inbounds nuw i8, ptr %i.ee, i64 48
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.012.i.i.i.i.i.i206.ptr.3, ptr noundef nonnull align 8 dereferenceable(16) %.0911.i.i.i.i.i.i207.ptr.3, i64 16, i1 false), !tbaa.struct !52, !alias.scope !83
   call void @_ZdlPvm(ptr noundef nonnull %i.ee, i64 noundef 64) #18
-  %.ptr.3 = getelementptr inbounds nuw i8, ptr %i.ei, i64 64 ; 2 uses
   %i.ek = getelementptr inbounds nuw i8, ptr %i.ei, i64 128 ; 5 uses
   %.sroa.29.5.ptr = getelementptr inbounds nuw i8, ptr %i.ei, i64 80
   store ptr @.str.43, ptr %.sroa.29.5.ptr, align 8, !tbaa !25
   %.sroa.5416.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ei, i64 88
   store i64 2, ptr %.sroa.5416.0..sroa_idx, align 8, !tbaa !21
-  %.sroa.29.6 = getelementptr inbounds nuw i8, ptr %.ptr.3, i64 32 ; 3 uses
+  %.sroa.29.6 = getelementptr inbounds nuw i8, ptr %i.ei, i64 96 ; 4 uses
   %i.el = load ptr, ptr %9, align 8, !tbaa !17    ; 2 uses
   %i.em = load i64, ptr %i.dp, align 8, !tbaa !20 ; 2 uses
   %.not.i.i228 = icmp eq ptr %.sroa.29.6, %i.ek
@@ -218,7 +217,7 @@ _ZNSt6vectorIN4llvh9StringRefESaIS1_EE9push_backEOS1_.exit199: ; preds = %_ZNSt7
 
 bb.v:                                             ; preds = %_ZNSt6vectorIN4llvh9StringRefESaIS1_EE9push_backEOS1_.exit199
   store ptr %i.el, ptr %.sroa.29.6, align 8, !tbaa !25
-  %.sroa.5411.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.ptr.3, i64 40
+  %.sroa.5411.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.29.6, i64 8
   store i64 %i.em, ptr %.sroa.5411.0..sroa_idx, align 8, !tbaa !21
   br label %_ZNSt6vectorIN4llvh9StringRefESaIS1_EE9push_backEOS1_.exit241
 

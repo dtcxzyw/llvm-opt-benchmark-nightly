@@ -204,20 +204,19 @@ bb.ab:                                            ; preds = %_ZN5faiss14Operatin
   br i1 %.not80, label %.critedge, label %.lr.ph84
 
 .lr.ph84:                                         ; preds = %bb.ab, %_ZNSt6vectorIN5faiss14OperatingPointESaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS1_S3_EE.exit
-  %.05082 = phi i64 [ %.050, %_ZNSt6vectorIN5faiss14OperatingPointESaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS1_S3_EE.exit ], [ %.05079, %bb.ab ] ; 3 uses
+  %.05082 = phi i64 [ %.050, %_ZNSt6vectorIN5faiss14OperatingPointESaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS1_S3_EE.exit ], [ %.05079, %bb.ab ] ; 2 uses
   %.050.in81 = phi i64 [ %.05082, %_ZNSt6vectorIN5faiss14OperatingPointESaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS1_S3_EE.exit ], [ %i.bu, %bb.ab ]
-  %i.bv = load ptr, ptr %i.s, align 8, !tbaa !196 ; 2 uses
-  %i.bw = getelementptr inbounds nuw [56 x i8], ptr %i.bv, i64 %.05082
-  %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 8
+  %i.bv = load ptr, ptr %i.s, align 8, !tbaa !196
+  %i.bw = getelementptr [56 x i8], ptr %i.bv, i64 %.050.in81 ; 3 uses
+  %i.bx = getelementptr i8, ptr %i.bw, i64 -48
   %i.by = load double, ptr %i.bx, align 8, !tbaa !218
-  %7 = getelementptr [56 x i8], ptr %i.bv, i64 %.050.in81 ; 2 uses
-  %i.bz = getelementptr i8, ptr %7, i64 -104
+  %i.bz = getelementptr i8, ptr %i.bw, i64 -104
   %i.ca = load double, ptr %i.bz, align 8, !tbaa !218
   %i.cb = fcmp ugt double %i.by, %i.ca
   br i1 %i.cb, label %_ZNSt6vectorIN5faiss14OperatingPointESaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS1_S3_EE.exit, label %bb.ac
 
 bb.ac:                                            ; preds = %.lr.ph84
-  %i.cc = getelementptr i8, ptr %7, i64 -112
+  %i.cc = getelementptr i8, ptr %i.bw, i64 -112
   %i.cd = invoke ptr @_ZNSt6vectorIN5faiss14OperatingPointESaIS1_EE8_M_eraseEN9__gnu_cxx17__normal_iteratorIPS1_S3_EE(ptr noundef nonnull align 8 dereferenceable(24) %i.s, ptr nonnull %i.cc)
           to label %_ZNSt6vectorIN5faiss14OperatingPointESaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS1_S3_EE.exit unwind label %bb.ad ; 0 uses
 

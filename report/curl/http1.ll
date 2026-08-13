@@ -128,22 +128,21 @@ bb.h:                                             ; preds = %bb.g, %bb.e
   br i1 %.not.i39.i, label %bb.m, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.v = load ptr, ptr %i.e, align 8, !tbaa !17   ; 2 uses
-  %i.w = getelementptr i8, ptr %i.v, i64 %i.u
+  %i.v = load ptr, ptr %i.e, align 8, !tbaa !17
+  %i.w = getelementptr i8, ptr %i.v, i64 %i.u     ; 2 uses
   %i.x = getelementptr i8, ptr %i.w, i64 -1
   %i.y = load i8, ptr %i.x, align 1, !tbaa !19    ; 2 uses
   %i.z = icmp eq i8 %i.y, 10
   br i1 %i.z, label %thread-pre-split.i.i, label %thread-pre-split.thread.i.i
 
 thread-pre-split.i.i:                             ; preds = %bb.i
-  %i.aa = add i64 %i.u, -1                        ; 4 uses
+  %i.aa = add i64 %i.u, -1                        ; 3 uses
   store i64 %i.aa, ptr %i.f, align 8, !tbaa !18
   %.not16.i.i = icmp eq i64 %i.aa, 0
   br i1 %.not16.i.i, label %bb.l, label %thread-pre-split.i.thread-pre-split.thread.i_crit_edge.i
 
 thread-pre-split.i.thread-pre-split.thread.i_crit_edge.i: ; preds = %thread-pre-split.i.i
-  %.phi.trans.insert.i = getelementptr i8, ptr %i.v, i64 %i.aa
-  %.phi.trans.insert42.i = getelementptr i8, ptr %.phi.trans.insert.i, i64 -1
+  %.phi.trans.insert42.i = getelementptr i8, ptr %i.w, i64 -2
   %.pre43.i = load i8, ptr %.phi.trans.insert42.i, align 1, !tbaa !19
   br label %thread-pre-split.thread.i.i
 

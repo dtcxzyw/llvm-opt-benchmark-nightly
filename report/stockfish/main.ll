@@ -204,25 +204,24 @@ bb.i:                                             ; preds = %._crit_edge106, %bb
   br i1 %.not87114, label %._crit_edge118, label %.lr.ph117
 
 .lr.ph105:                                        ; preds = %bb.i, %bb.r
-  %i.bn = phi ptr [ %i.ej, %bb.r ], [ %i.be, %bb.i ] ; 4 uses
+  %i.bn = phi ptr [ %i.ej, %bb.r ], [ %i.be, %bb.i ] ; 3 uses
   %i.bo = phi ptr [ %i.ek, %bb.r ], [ %i.bf, %bb.i ] ; 2 uses
-  %i.bp = phi i64 [ %i.el, %bb.r ], [ 1, %bb.i ]  ; 3 uses
+  %i.bp = phi i64 [ %i.el, %bb.r ], [ 1, %bb.i ]  ; 2 uses
   %.034103 = phi i1 [ %.135, %bb.r ], [ false, %bb.i ]
   %.036102 = phi i64 [ %i.bp, %bb.r ], [ 0, %bb.i ] ; 2 uses
-  %i.bq = getelementptr inbounds nuw [56 x i8], ptr %i.bn, i64 %.036102 ; 4 uses
+  %i.bq = getelementptr [56 x i8], ptr %i.bn, i64 %.036102 ; 7 uses
   %i.br = getelementptr inbounds nuw i8, ptr %i.bq, i64 48 ; 3 uses
   %i.bs = load i64, ptr %i.br, align 8, !tbaa !36
-  %6 = getelementptr inbounds nuw [56 x i8], ptr %i.bn, i64 %i.bp ; 3 uses
-  %i.bt = getelementptr inbounds nuw i8, ptr %6, i64 48 ; 3 uses
+  %i.bt = getelementptr i8, ptr %i.bq, i64 104    ; 3 uses
   %i.bu = load i64, ptr %i.bt, align 8, !tbaa !36
   %i.bv = add i64 %i.bu, %i.bs
   %.not = icmp ugt i64 %i.bv, %2
   br i1 %.not, label %bb.r, label %bb.j
 
 bb.j:                                             ; preds = %.lr.ph105
-  %i.bw = getelementptr inbounds nuw i8, ptr %6, i64 32
+  %i.bw = getelementptr i8, ptr %i.bq, i64 88
   %i.bx = load ptr, ptr %i.bw, align 8, !tbaa !34 ; 2 uses
-  %i.by = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 3 uses
+  %i.by = getelementptr i8, ptr %i.bq, i64 72     ; 3 uses
   %.not21.i = icmp eq ptr %i.bx, %i.by
   br i1 %.not21.i, label %_ZNSt8_Rb_treeImmSt9_IdentityImESt4lessImESaImEE15_M_merge_uniqueIS3_EEvRS_ImmS1_T_S4_E.exit, label %.lr.ph.i43
 
