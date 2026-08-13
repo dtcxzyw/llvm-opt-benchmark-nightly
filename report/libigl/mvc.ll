@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %bb.f
   store i64 3, ptr %i.at, align 8, !tbaa !224, !alias.scope !221
   %i.dy = getelementptr inbounds nuw [8 x i8], ptr %i.ad, i64 %.075149 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #22
-  %i.dz = sub nuw nsw i64 2, %.075149             ; 6 uses
+  %i.dz = sub nuw nsw i64 2, %.075149             ; 5 uses
   %i.ea = getelementptr inbounds nuw i8, ptr %i.dx, i64 8
   store ptr %i.ea, ptr %1, align 8, !tbaa !235
   store i64 %i.dz, ptr %i.au, align 8, !tbaa !37
@@ -350,18 +350,17 @@ bb.m:                                             ; preds = %bb.l
   %i.gc = getelementptr inbounds nuw i8, ptr %i.gb, i64 24
   %i.gd = load double, ptr %i.gc, align 8, !tbaa !22 ; 2 uses
   %i.ge = fmul double %i.gd, %i.gd
-  %i.gf = fadd double %i.ga, %i.ge                ; 2 uses
-  %i.gg = add nuw nsw i64 %.05283.i.i.i.i.i, 4    ; 2 uses
-  %exitcond.not.i.i.i.i.i.3 = icmp eq i64 %i.gg, %i.dz
-  br i1 %exitcond.not.i.i.i.i.i.3, label %_ZNK5Eigen10MatrixBaseINS_5BlockINS1_INS_6MatrixIdLi3ELi3ELi0ELi3ELi3EEELi3ELi1ELb1EEELin1ELi1ELb0EEEE4normEv.exit, label %.lr.ph85.i.i.i.i.i, !llvm.loop !256
+  %i.gf = fadd double %i.ga, %i.ge
+  %i.gg = add nuw nsw i64 %.05283.i.i.i.i.i, 4
+  br label %.lr.ph85.i.i.i.i.i, !llvm.loop !256
 
 bb.n:                                             ; preds = %bb.l
   %i.gh = load double, ptr %gep, align 8, !tbaa !22 ; 2 uses
   %i.gi = fmul double %i.gh, %i.gh
   br label %_ZNK5Eigen10MatrixBaseINS_5BlockINS1_INS_6MatrixIdLi3ELi3ELi0ELi3ELi3EEELi3ELi1ELb1EEELin1ELi1ELb0EEEE4normEv.exit
 
-_ZNK5Eigen10MatrixBaseINS_5BlockINS1_INS_6MatrixIdLi3ELi3ELi0ELi3ELi3EEELi3ELi1ELb1EEELin1ELi1ELb0EEEE4normEv.exit: ; preds = %.lr.ph85.i.i.i.i.i, %bb.m, %bb.n
-  %.0.i.i.i = phi double [ %i.gi, %bb.n ], [ %i.fh, %bb.m ], [ %i.gf, %.lr.ph85.i.i.i.i.i ]
+_ZNK5Eigen10MatrixBaseINS_5BlockINS1_INS_6MatrixIdLi3ELi3ELi0ELi3ELi3EEELi3ELi1ELb1EEELin1ELi1ELb0EEEE4normEv.exit: ; preds = %bb.m, %bb.n
+  %.0.i.i.i = phi double [ %i.gi, %bb.n ], [ %i.fh, %bb.m ]
   %.scalar.i90 = call noundef double @llvm.sqrt.f64(double %.0.i.i.i) ; 2 uses
   store double %.scalar.i90, ptr %i.ez, align 8, !tbaa !22
   br label %.sink.split
