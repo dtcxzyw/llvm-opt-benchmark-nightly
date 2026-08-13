@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_Z8generatemm(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.std::vector.5") align 8 captures(none) %0, i64 noundef %1, i64 noundef %2) local_unnamed_addr #2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = mul i64 %2, %1                           ; 5 uses
+  %i.a = mul i64 %2, %1                           ; 6 uses
   %i.b = icmp ugt i64 %i.a, 2305843009213693951
   br i1 %i.b, label %.noexc, label %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i
 
@@ -240,14 +240,14 @@ _ZSt6fill_nIPfmfET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i: ; preds = %.noexc22
   br label %bb.b
 
 bb.b:                                             ; preds = %_ZNSt12_Vector_baseIfSaIfEEC2EmRKS0_.exit.thread.i, %.noexc22, %_ZSt6fill_nIPfmfET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i
-  %i.k = phi ptr [ null, %_ZNSt12_Vector_baseIfSaIfEEC2EmRKS0_.exit.thread.i ], [ %i.d, %.noexc22 ], [ %i.d, %_ZSt6fill_nIPfmfET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i ]
+  %i.k = phi ptr [ null, %_ZNSt12_Vector_baseIfSaIfEEC2EmRKS0_.exit.thread.i ], [ %i.d, %.noexc22 ], [ %i.d, %_ZSt6fill_nIPfmfET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i ] ; 2 uses
   %.0.i.i.i.i.i = phi ptr [ null, %_ZNSt12_Vector_baseIfSaIfEEC2EmRKS0_.exit.thread.i ], [ %i.g, %.noexc22 ], [ %i.j, %_ZSt6fill_nIPfmfET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i ]
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.0.i.i.i.i.i, ptr %i.l, align 8, !tbaa !75
   %.not = icmp eq i64 %1, 0
   %.not33 = icmp eq i64 %2, 0
   %or.cond = or i1 %.not, %.not33
-  br i1 %or.cond, label %._crit_edge32.split.a, label %.preheader.lr.ph.split
+  br i1 %or.cond, label %._crit_edge32.split, label %.preheader.lr.ph.split
 
 .preheader.lr.ph.split:                           ; preds = %bb.b
   %i.m = tail call x86_fp80 @llvm.log.f80(x86_fp80 f0x401DFFFFFFFC00000000)
@@ -256,30 +256,76 @@ bb.b:                                             ; preds = %_ZNSt12_Vector_base
   %i.p = fptoui x86_fp80 %i.o to i64              ; 2 uses
   %i.q = add i64 %i.p, 23
   %i.r = udiv i64 %i.q, %i.p
-  %spec.select.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.r, i64 1)
-  br label %.preheader.a
+  %spec.select.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.r, i64 1) ; 2 uses
+  %flatten.mul = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %1, i64 %2)
+  %flatten.overflow = extractvalue { i64, i1 } %flatten.mul, 1
+  br i1 %flatten.overflow, label %.preheader.a, label %.preheader.preheader
 
-.preheader.a:                                     ; preds = %.preheader.lr.ph.split, %._crit_edge.a
-  %.01331.a = phi i64 [ 0, %.preheader.lr.ph.split ], [ %i.u, %._crit_edge.a ] ; 2 uses
-  %.sroa.024.030.a = phi i64 [ 345, %.preheader.lr.ph.split ], [ %i.z, %._crit_edge.a ]
-  %i.s = mul i64 %.01331.a, %2
-  %i.t = getelementptr [4 x i8], ptr %i.k, i64 %i.s
+.preheader.preheader:                             ; preds = %.preheader.lr.ph.split
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.a, i64 1)
   br label %bb.c
 
-._crit_edge32.split.a:                            ; preds = %._crit_edge.a, %bb.b
-  ret void
+.preheader.a:                                     ; preds = %.preheader.lr.ph.split, %._crit_edge.a
+  %.01331.a = phi i64 [ %i.u, %._crit_edge.a ], [ 0, %.preheader.lr.ph.split ] ; 2 uses
+  %.sroa.024.030.a = phi i64 [ %6, %._crit_edge.a ], [ 345, %.preheader.lr.ph.split ]
+  %i.s = mul i64 %.01331.a, %2
+  %i.t = getelementptr [4 x i8], ptr %i.k, i64 %i.s
+  br label %3
 
-._crit_edge.a:                                    ; preds = %bb.f
+3:                                                ; preds = %._crit_edge32.split.a, %.preheader.a
+  %.029.lver.orig = phi i64 [ 0, %.preheader.a ], [ %20, %._crit_edge32.split.a ] ; 2 uses
+  %.sroa.024.128.lver.orig = phi i64 [ %.sroa.024.030.a, %.preheader.a ], [ %6, %._crit_edge32.split.a ]
+  br label %select.unfold.i.i.i.i.lver.orig
+
+select.unfold.i.i.i.i.lver.orig:                  ; preds = %select.unfold.i.i.i.i.lver.orig, %3
+  %.023.i.i.i.i.lver.orig = phi i64 [ %spec.select.i.i.i.i, %3 ], [ %13, %select.unfold.i.i.i.i.lver.orig ]
+  %.01422.i.i.i.i.lver.orig = phi float [ 1.000000e+00, %3 ], [ %12, %select.unfold.i.i.i.i.lver.orig ] ; 2 uses
+  %.01521.i.i.i.i.lver.orig = phi float [ 0.000000e+00, %3 ], [ %9, %select.unfold.i.i.i.i.lver.orig ]
+  %4 = phi i64 [ %.sroa.024.128.lver.orig, %3 ], [ %6, %select.unfold.i.i.i.i.lver.orig ]
+  %5 = mul nuw nsw i64 %4, 48271
+  %6 = urem i64 %5, 2147483647                    ; 4 uses
+  %7 = add nsw i64 %6, -1
+  %8 = uitofp i64 %7 to float
+  %9 = tail call float @llvm.fmuladd.f32(float %8, float %.01422.i.i.i.i.lver.orig, float %.01521.i.i.i.i.lver.orig) ; 2 uses
+  %10 = fpext float %.01422.i.i.i.i.lver.orig to x86_fp80
+  %11 = fmul x86_fp80 %10, f0x401DFFFFFFFC00000000
+  %12 = fptrunc x86_fp80 %11 to float             ; 2 uses
+  %13 = add i64 %.023.i.i.i.i.lver.orig, -1       ; 2 uses
+  %.not.i.i.i.i23.lver.orig = icmp eq i64 %13, 0
+  br i1 %.not.i.i.i.i23.lver.orig, label %14, label %select.unfold.i.i.i.i.lver.orig, !llvm.loop !76
+
+14:                                               ; preds = %select.unfold.i.i.i.i.lver.orig
+  %15 = fdiv float %9, %12                        ; 2 uses
+  %16 = fcmp ult float %15, 1.000000e+00
+  br i1 %16, label %._crit_edge32.split.a, label %17, !prof !78
+
+17:                                               ; preds = %14
+  br label %._crit_edge32.split.a
+
+._crit_edge32.split.a:                            ; preds = %17, %14
+  %.016.i.i.i.i.lver.orig = phi float [ f0x3F7FFFFF, %17 ], [ %15, %14 ]
+  %18 = fadd float %.016.i.i.i.i.lver.orig, 0.000000e+00
+  %19 = getelementptr [4 x i8], ptr %i.t, i64 %.029.lver.orig
+  store float %18, ptr %19, align 4, !tbaa !74
+  %20 = add nuw i64 %.029.lver.orig, 1            ; 2 uses
+  %exitcond41.not = icmp eq i64 %20, %2
+  br i1 %exitcond41.not, label %._crit_edge.a, label %3, !llvm.loop !79
+
+._crit_edge.a:                                    ; preds = %._crit_edge32.split.a
   %i.u = add nuw i64 %.01331.a, 1                 ; 2 uses
   %exitcond36.not = icmp eq i64 %i.u, %1
-  br i1 %exitcond36.not, label %._crit_edge32.split.a, label %.preheader.a, !llvm.loop !76
+  br i1 %exitcond36.not, label %._crit_edge32.split, label %.preheader.a, !llvm.loop !80
 
-bb.c:                                             ; preds = %.preheader.a, %bb.f
-  %.029 = phi i64 [ 0, %.preheader.a ], [ %i.ai, %bb.f ] ; 2 uses
-  %.sroa.024.128 = phi i64 [ %.sroa.024.030.a, %.preheader.a ], [ %i.z, %bb.f ]
+bb.c:                                             ; preds = %.preheader.preheader, %bb.f
+  %.029 = phi i64 [ %i.ai, %bb.f ], [ 0, %.preheader.preheader ] ; 2 uses
+  %.sroa.024.128 = phi i64 [ %i.z, %bb.f ], [ 345, %.preheader.preheader ]
   br label %select.unfold.i.i.i.i
 
+._crit_edge32.split:                              ; preds = %bb.f, %._crit_edge.a, %bb.b
+  ret void
+
 bb.d:                                             ; preds = %select.unfold.i.i.i.i
+  %flatten. = getelementptr [4 x i8], ptr %i.k, i64 %.029
   %i.v = fdiv float %i.ac, %i.af                  ; 2 uses
   %i.w = fcmp ult float %i.v, 1.000000e+00
   br i1 %i.w, label %bb.f, label %bb.e, !prof !78
@@ -290,7 +336,7 @@ select.unfold.i.i.i.i:                            ; preds = %select.unfold.i.i.i
   %.01521.i.i.i.i = phi float [ 0.000000e+00, %bb.c ], [ %i.ac, %select.unfold.i.i.i.i ]
   %i.x = phi i64 [ %.sroa.024.128, %bb.c ], [ %i.z, %select.unfold.i.i.i.i ]
   %i.y = mul nuw nsw i64 %i.x, 48271
-  %i.z = urem i64 %i.y, 2147483647                ; 4 uses
+  %i.z = urem i64 %i.y, 2147483647                ; 3 uses
   %i.aa = add nsw i64 %i.z, -1
   %i.ab = uitofp i64 %i.aa to float
   %i.ac = tail call float @llvm.fmuladd.f32(float %i.ab, float %.01422.i.i.i.i, float %.01521.i.i.i.i) ; 2 uses
@@ -299,7 +345,7 @@ select.unfold.i.i.i.i:                            ; preds = %select.unfold.i.i.i
   %i.af = fptrunc x86_fp80 %i.ae to float         ; 2 uses
   %i.ag = add i64 %.023.i.i.i.i, -1               ; 2 uses
   %.not.i.i.i.i23 = icmp eq i64 %i.ag, 0
-  br i1 %.not.i.i.i.i23, label %bb.d, label %select.unfold.i.i.i.i, !llvm.loop !79
+  br i1 %.not.i.i.i.i23, label %bb.d, label %select.unfold.i.i.i.i, !llvm.loop !76
 
 bb.e:                                             ; preds = %bb.d
   br label %bb.f
@@ -307,11 +353,10 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e, %bb.d
   %.016.i.i.i.i = phi float [ f0x3F7FFFFF, %bb.e ], [ %i.v, %bb.d ]
   %i.ah = fadd float %.016.i.i.i.i, 0.000000e+00
-  %3 = getelementptr [4 x i8], ptr %i.t, i64 %.029
-  store float %i.ah, ptr %3, align 4, !tbaa !74
+  store float %i.ah, ptr %flatten., align 4, !tbaa !74
   %i.ai = add nuw i64 %.029, 1                    ; 2 uses
-  %exitcond.not = icmp eq i64 %i.ai, %2
-  br i1 %exitcond.not, label %._crit_edge.a, label %bb.c, !llvm.loop !80
+  %exitcond.not = icmp eq i64 %i.ai, %umax
+  br i1 %exitcond.not, label %._crit_edge32.split, label %bb.c, !llvm.loop !80
 }
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -712,6 +757,9 @@ declare i64 @llvm.umax.i64(i64, i64) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare x86_fp80 @llvm.log.f80(x86_fp80) #16
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare { i64, i1 } @llvm.umul.with.overflow.i64(i64, i64) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #16

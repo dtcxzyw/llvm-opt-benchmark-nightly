@@ -203,13 +203,7 @@ _ZNSt6vectorIfSaIfEE6resizeEm.exit25:             ; preds = %bb.e, %bb.f, %bb.g,
   %i.al = load i64, ptr %i.ak, align 8, !tbaa !26 ; 6 uses
   %.not36 = icmp eq i64 %i.al, 0
   %i.am = load ptr, ptr %i.s, align 8, !tbaa !34  ; 2 uses
-  br i1 %.not36, label %.preheader26.preheader, label %.preheader26.lr.ph.split.split.us
-
-.preheader26.preheader:                           ; preds = %.preheader26.lr.ph.split
-  %1 = mul i64 %i.ai, %i.ah
-  %2 = shl i64 %1, 2
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.am, i8 0, i64 %2, i1 false), !tbaa !36
-  br label %._crit_edge.split
+  br i1 %.not36, label %.preheader26.lver.check, label %.preheader26.lr.ph.split.split.us
 
 .preheader26.lr.ph.split.split.us:                ; preds = %.preheader26.lr.ph.split
   %i.an = load ptr, ptr %i.aj, align 8, !tbaa !34
@@ -291,7 +285,17 @@ _ZNSt6vectorIfSaIfEE6resizeEm.exit25:             ; preds = %bb.e, %bb.f, %bb.g,
   %exitcond39.not = icmp eq i64 %i.br, %i.ah
   br i1 %exitcond39.not, label %._crit_edge.split, label %.preheader26.us, !llvm.loop !243
 
-._crit_edge.split:                                ; preds = %._crit_edge30.split.us.us, %.preheader26.preheader, %.preheader26.lr.ph, %_ZNSt6vectorIfSaIfEE6resizeEm.exit25
+.preheader26.lver.check:                          ; preds = %.preheader26.lr.ph.split
+  %flatten.mul = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.ah, i64 %i.ai) ; 2 uses
+  %flatten.tripcount = extractvalue { i64, i1 } %flatten.mul, 0 ; 2 uses
+  %flatten.overflow = extractvalue { i64, i1 } %flatten.mul, 1
+  %umax = tail call i64 @llvm.umax.i64(i64 %flatten.tripcount, i64 1)
+  %umax.sink = select i1 %flatten.overflow, i64 %flatten.tripcount, i64 %umax
+  %1 = shl i64 %umax.sink, 2
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.am, i8 0, i64 %1, i1 false), !tbaa !36
+  br label %._crit_edge.split
+
+._crit_edge.split:                                ; preds = %._crit_edge30.split.us.us, %.preheader26.lver.check, %.preheader26.lr.ph, %_ZNSt6vectorIfSaIfEE6resizeEm.exit25
   ret void
 }
 

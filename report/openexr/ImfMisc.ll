@@ -2,7 +2,7 @@ inline.NumInlined: 360
 inline.NumDeleted: 159
 loop-unroll.NumCompletelyUnrolled: 17
 loop-unroll.NumRuntimeUnrolled: 30
-loop-unroll.NumUnrolled: 71
+loop-unroll.NumUnrolled: 73
 begin_hunk_0_@_ZN7Imf_3_423copyFromDeepFrameBufferERPcPKcS0_lliiiiiiilllNS_10Compressor6FormatENS_9PixelTypeE:bb.a
   %exitcond.not = icmp eq i32 %i.ib, %i.hg
   br i1 %exitcond.not, label %._crit_edge, label %.preheader218, !llvm.loop !398
@@ -204,50 +204,26 @@ bb.e:                                             ; preds = %bb.c
 bb.f:                                             ; preds = %bb.a
   switch i32 %2, label %bb.g [
     i32 0, label %.preheader51
-    i32 1, label %.preheader53.a
-    i32 2, label %.preheader56
+    i32 1, label %.preheader53
+    i32 2, label %.preheader53.a
   ]
-
-.preheader56:                                     ; preds = %bb.f
-  %.not = icmp eq i64 %3, 0
-  br i1 %.not, label %.loopexit, label %.preheader55.preheader
-
-.preheader55.preheader:                           ; preds = %.preheader56
-  %xtraiter = and i64 %3, 1
-  %4 = icmp eq i64 %3, 1
-  br i1 %4, label %.preheader55.epil.preheader, label %.preheader55.preheader.new
-
-.preheader55.preheader.new:                       ; preds = %.preheader55.preheader
-  %unroll_iter = and i64 %3, -2
-  br label %.preheader55.a
 
 .preheader53.a:                                   ; preds = %bb.f
   %.not69 = icmp eq i64 %3, 0
   br i1 %.not69, label %.loopexit, label %.lr.ph.preheader.a
 
 .lr.ph.preheader.a:                               ; preds = %.preheader53.a
-  %.promoted = load ptr, ptr %0, align 8          ; 2 uses
-  %i.au = shl nuw i64 %3, 1                       ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr align 2 %.promoted, i8 0, i64 %i.au, i1 false), !tbaa !45
-  %scevgep = getelementptr i8, ptr %.promoted, i64 %i.au
-  store ptr %scevgep, ptr %0, align 8, !tbaa !51
-  br label %.loopexit
+  %i.au = shl nuw i64 %3, 2
+  %flatten.overflow = icmp ugt i64 %3, 4611686018427387903
+  br i1 %flatten.overflow, label %.preheader50.preheader, label %.preheader55
 
-.preheader51:                                     ; preds = %bb.f
-  %.not70 = icmp eq i64 %3, 0
-  br i1 %.not70, label %.loopexit, label %.preheader50.preheader
-
-.preheader50.preheader:                           ; preds = %.preheader51
+.preheader50.preheader:                           ; preds = %.lr.ph.preheader.a
   %xtraiter96 = and i64 %3, 1
-  %5 = icmp eq i64 %3, 1
-  br i1 %5, label %.preheader50.epil.preheader, label %.preheader50.preheader.new
-
-.preheader50.preheader.new:                       ; preds = %.preheader50.preheader
-  %unroll_iter99 = and i64 %3, -2
+  %unroll_iter = and i64 %3, -2
   br label %.preheader50.a
 
-.preheader50.a:                                   ; preds = %.preheader50.a, %.preheader50.preheader.new
-  %niter100 = phi i64 [ 0, %.preheader50.preheader.new ], [ %niter100.next.1, %.preheader50.a ]
+.preheader50.a:                                   ; preds = %.preheader50.a, %.preheader50.preheader
+  %niter100 = phi i64 [ 0, %.preheader50.preheader ], [ %niter100.next.1, %.preheader50.a ]
   %i.av = load ptr, ptr %0, align 8, !tbaa !51    ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 1
   store ptr %i.aw, ptr %0, align 8, !tbaa !51
@@ -281,11 +257,37 @@ bb.f:                                             ; preds = %bb.a
   store ptr %i.bk, ptr %0, align 8, !tbaa !51
   store i8 0, ptr %i.bj, align 1, !tbaa !53
   %niter100.next.1 = add nuw i64 %niter100, 2     ; 2 uses
-  %niter100.ncmp.1 = icmp eq i64 %niter100.next.1, %unroll_iter99
-  br i1 %niter100.ncmp.1, label %.loopexit.loopexit93.unr-lcssa, label %.preheader50.a, !llvm.loop !403
+  %niter100.ncmp.1 = icmp eq i64 %niter100.next.1, %unroll_iter
+  br i1 %niter100.ncmp.1, label %.loopexit.loopexit94.unr-lcssa, label %.preheader50.a, !llvm.loop !403
 
-.preheader55.a:                                   ; preds = %.preheader55.a, %.preheader55.preheader.new
-  %niter = phi i64 [ 0, %.preheader55.preheader.new ], [ %niter.next.1, %.preheader55.a ]
+.preheader53:                                     ; preds = %bb.f
+  %.not74 = icmp eq i64 %3, 0
+  br i1 %.not74, label %.loopexit, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %.preheader53
+  %.promoted = load ptr, ptr %0, align 8          ; 2 uses
+  %4 = shl nuw i64 %3, 1                          ; 2 uses
+  tail call void @llvm.memset.p0.i64(ptr align 2 %.promoted, i8 0, i64 %4, i1 false), !tbaa !45
+  %scevgep = getelementptr i8, ptr %.promoted, i64 %4
+  store ptr %scevgep, ptr %0, align 8, !tbaa !51
+  br label %.loopexit
+
+.preheader51:                                     ; preds = %bb.f
+  %.not75 = icmp eq i64 %3, 0
+  br i1 %.not75, label %.loopexit, label %.preheader50.lver.check
+
+.preheader50.lver.check:                          ; preds = %.preheader51
+  %flatten.tripcount66 = shl nuw i64 %3, 2
+  %flatten.overflow67 = icmp ugt i64 %3, 4611686018427387903
+  br i1 %flatten.overflow67, label %.preheader50.lver.orig.preheader, label %.preheader50
+
+.preheader50.lver.orig.preheader:                 ; preds = %.preheader50.lver.check
+  %xtraiter112 = and i64 %3, 1
+  %unroll_iter115 = and i64 %3, -2
+  br label %.preheader55.a
+
+.preheader55.a:                                   ; preds = %.preheader55.a, %.preheader50.lver.orig.preheader
+  %niter = phi i64 [ 0, %.preheader50.lver.orig.preheader ], [ %niter.next.1, %.preheader55.a ]
   %i.bl = load ptr, ptr %0, align 8, !tbaa !51    ; 2 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bl, i64 1
   store ptr %i.bm, ptr %0, align 8, !tbaa !51
@@ -319,8 +321,52 @@ bb.f:                                             ; preds = %bb.a
   store ptr %i.ca, ptr %0, align 8, !tbaa !51
   store i8 0, ptr %i.bz, align 1, !tbaa !53
   %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
-  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %.loopexit.loopexit94.unr-lcssa, label %.preheader55.a, !llvm.loop !404
+  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter115
+  br i1 %niter.ncmp.1, label %.loopexit.loopexit93.unr-lcssa, label %.preheader55.a, !llvm.loop !404
+
+.preheader50:                                     ; preds = %.preheader50.lver.check, %.preheader50
+  %.03863 = phi i64 [ %13, %.preheader50 ], [ 0, %.preheader50.lver.check ]
+  %5 = load ptr, ptr %0, align 8, !tbaa !51       ; 2 uses
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 1
+  store ptr %6, ptr %0, align 8, !tbaa !51
+  store i8 0, ptr %5, align 1, !tbaa !53
+  %7 = load ptr, ptr %0, align 8, !tbaa !51       ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %7, i64 1
+  store ptr %8, ptr %0, align 8, !tbaa !51
+  store i8 0, ptr %7, align 1, !tbaa !53
+  %9 = load ptr, ptr %0, align 8, !tbaa !51       ; 2 uses
+  %10 = getelementptr inbounds nuw i8, ptr %9, i64 1
+  store ptr %10, ptr %0, align 8, !tbaa !51
+  store i8 0, ptr %9, align 1, !tbaa !53
+  %11 = load ptr, ptr %0, align 8, !tbaa !51      ; 2 uses
+  %12 = getelementptr inbounds nuw i8, ptr %11, i64 1
+  store ptr %12, ptr %0, align 8, !tbaa !51
+  store i8 0, ptr %11, align 1, !tbaa !53
+  %13 = add nuw i64 %.03863, 4                    ; 2 uses
+  %exitcond87.not.3 = icmp eq i64 %13, %flatten.tripcount66
+  br i1 %exitcond87.not.3, label %.loopexit, label %.preheader50, !llvm.loop !404
+
+.preheader55:                                     ; preds = %.lr.ph.preheader.a, %.preheader55
+  %.03559 = phi i64 [ %22, %.preheader55 ], [ 0, %.lr.ph.preheader.a ]
+  %14 = load ptr, ptr %0, align 8, !tbaa !51      ; 2 uses
+  %15 = getelementptr inbounds nuw i8, ptr %14, i64 1
+  store ptr %15, ptr %0, align 8, !tbaa !51
+  store i8 0, ptr %14, align 1, !tbaa !53
+  %16 = load ptr, ptr %0, align 8, !tbaa !51      ; 2 uses
+  %17 = getelementptr inbounds nuw i8, ptr %16, i64 1
+  store ptr %17, ptr %0, align 8, !tbaa !51
+  store i8 0, ptr %16, align 1, !tbaa !53
+  %18 = load ptr, ptr %0, align 8, !tbaa !51      ; 2 uses
+  %19 = getelementptr inbounds nuw i8, ptr %18, i64 1
+  store ptr %19, ptr %0, align 8, !tbaa !51
+  store i8 0, ptr %18, align 1, !tbaa !53
+  %20 = load ptr, ptr %0, align 8, !tbaa !51      ; 2 uses
+  %21 = getelementptr inbounds nuw i8, ptr %20, i64 1
+  store ptr %21, ptr %0, align 8, !tbaa !51
+  store i8 0, ptr %20, align 1, !tbaa !53
+  %22 = add nuw i64 %.03559, 4                    ; 2 uses
+  %exitcond.not.3 = icmp eq i64 %22, %i.au
+  br i1 %exitcond.not.3, label %.loopexit, label %.preheader55, !llvm.loop !403
 
 bb.g:                                             ; preds = %bb.f
   %i.cb = tail call ptr @__cxa_allocate_exception(i64 72) #19 ; 3 uses
@@ -403,11 +449,11 @@ bb.i:                                             ; preds = %bb.g
   store i8 0, ptr %i.cv, align 1, !tbaa !53
   br label %.loopexit
 
-.loopexit.loopexit93.unr-lcssa:                   ; preds = %.preheader50.a
-  %lcmp.mod97.not = icmp eq i64 %xtraiter96, 0
+.loopexit.loopexit93.unr-lcssa:                   ; preds = %.preheader55.a
+  %lcmp.mod97.not = icmp eq i64 %xtraiter112, 0
   br i1 %lcmp.mod97.not, label %.loopexit, label %.preheader50.epil.preheader
 
-.preheader50.epil.preheader:                      ; preds = %.loopexit.loopexit93.unr-lcssa, %.preheader50.preheader
+.preheader50.epil.preheader:                      ; preds = %.loopexit.loopexit93.unr-lcssa
   %lcmp.mod98 = trunc i64 %3 to i1
   tail call void @llvm.assume(i1 %lcmp.mod98)
   %i.cx = load ptr, ptr %0, align 8, !tbaa !51    ; 2 uses
@@ -428,11 +474,11 @@ bb.i:                                             ; preds = %bb.g
   store i8 0, ptr %i.dd, align 1, !tbaa !53
   br label %.loopexit
 
-.loopexit.loopexit94.unr-lcssa:                   ; preds = %.preheader55.a
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+.loopexit.loopexit94.unr-lcssa:                   ; preds = %.preheader50.a
+  %lcmp.mod.not = icmp eq i64 %xtraiter96, 0
   br i1 %lcmp.mod.not, label %.loopexit, label %.preheader55.epil.preheader
 
-.preheader55.epil.preheader:                      ; preds = %.loopexit.loopexit94.unr-lcssa, %.preheader55.preheader
+.preheader55.epil.preheader:                      ; preds = %.loopexit.loopexit94.unr-lcssa
   %lcmp.mod95 = trunc i64 %3 to i1
   tail call void @llvm.assume(i1 %lcmp.mod95)
   %i.df = load ptr, ptr %0, align 8, !tbaa !51    ; 2 uses
@@ -453,7 +499,7 @@ bb.i:                                             ; preds = %bb.g
   store i8 0, ptr %i.dl, align 1, !tbaa !53
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.preheader55.epil.preheader, %.loopexit.loopexit94.unr-lcssa, %.preheader50.epil.preheader, %.loopexit.loopexit93.unr-lcssa, %.lr.ph64.epil.preheader, %.loopexit.loopexit92.unr-lcssa, %.lr.ph66.epil.preheader, %.loopexit.loopexit91.unr-lcssa, %.lr.ph68.epil.preheader, %.loopexit.loopexit.unr-lcssa, %.preheader56, %.preheader53.a, %.lr.ph.preheader.a, %.preheader51, %.preheader48, %.preheader46, %.preheader
+.loopexit:                                        ; preds = %.preheader55, %.preheader55.epil.preheader, %.loopexit.loopexit94.unr-lcssa, %.preheader50, %.preheader50.epil.preheader, %.loopexit.loopexit93.unr-lcssa, %.lr.ph64.epil.preheader, %.loopexit.loopexit92.unr-lcssa, %.lr.ph66.epil.preheader, %.loopexit.loopexit91.unr-lcssa, %.lr.ph68.epil.preheader, %.loopexit.loopexit.unr-lcssa, %.preheader53.a, %.preheader53, %.lr.ph.preheader, %.preheader51, %.preheader48, %.preheader46, %.preheader
   ret void
 
 bb.j:                                             ; preds = %bb.i, %bb.e

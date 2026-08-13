@@ -1,8 +1,8 @@
-inline.NumInlined: 798
-inline.NumDeleted: 175
-loop-unroll.NumCompletelyUnrolled: 9
+inline.NumInlined: 801
+inline.NumDeleted: 176
+loop-unroll.NumCompletelyUnrolled: 7
 loop-unroll.NumRuntimeUnrolled: 10
-loop-unroll.NumUnrolled: 19
+loop-unroll.NumUnrolled: 17
 begin_hunk_0_@ZSTD_buildSequencesStatistics:bb.a
   %i.af = trunc nuw nsw i32 %i.ae to i8
   %i.ag = sub nuw nsw i8 50, %i.af
@@ -204,6 +204,7 @@ declare i64 @ZSTD_buildCTable(ptr noundef, i64 noundef, ptr noundef, i32 noundef
 define internal fastcc void @ZSTD_overflowCorrectIfNeeded(ptr nofree noundef captures(none) %0, ptr nofree noundef captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr noundef %3, ptr noundef %4) unnamed_addr #11 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %2, i64 28 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.c = getelementptr i8, ptr %0, i64 8          ; 2 uses
   %.val = load ptr, ptr %i.c, align 8, !tbaa !241 ; 2 uses
@@ -219,8 +220,7 @@ bb.b:                                             ; preds = %bb.a
   %i.j = load i32, ptr %i.i, align 4, !tbaa !86
   %i.k = shl nuw i32 1, %i.j
   %i.l = load i32, ptr %i.a, align 4, !tbaa !88
-  %5 = getelementptr inbounds nuw i8, ptr %2, i64 28 ; 2 uses
-  %i.m = load i32, ptr %5, align 4, !tbaa !92
+  %i.m = load i32, ptr %5, align 4, !tbaa !92     ; 2 uses
   %i.n = icmp ugt i32 %i.m, 5
   %.neg.i = sext i1 %i.n to i32
   %i.o = add i32 %i.l, %.neg.i
@@ -246,7 +246,7 @@ bb.b:                                             ; preds = %bb.a
   store ptr %i.ag, ptr %i.ae, align 8, !tbaa !238
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 2 uses
   %i.ai = load i32, ptr %i.ah, align 4, !tbaa !239 ; 2 uses
-  %i.aj = add i32 %i.ab, 2                        ; 3 uses
+  %i.aj = add i32 %i.ab, 2                        ; 6 uses
   %i.ak = icmp ult i32 %i.ai, %i.aj
   %i.al = sub i32 %i.ai, %i.ab
   %storemerge.i = select i1 %i.ak, i32 2, i32 %i.al
@@ -262,116 +262,185 @@ bb.b:                                             ; preds = %bb.a
   %i.as = add i32 %i.ar, 1
   store i32 %i.as, ptr %i.aq, align 8, !tbaa !440
   %i.at = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.au = load ptr, ptr %i.at, align 8, !tbaa !53
-  %i.av = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 3 uses
+  %i.au = load ptr, ptr %i.at, align 8, !tbaa !53 ; 2 uses
+  %i.av = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
   store ptr %i.au, ptr %i.av, align 8, !tbaa !55
   %i.aw = getelementptr inbounds nuw i8, ptr %2, i64 12
   %i.ax = load i32, ptr %i.aw, align 4, !tbaa !87
-  %i.ay = shl nuw i32 1, %i.ax
+  %i.ay = shl nuw i32 1, %i.ax                    ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 112
   %i.ba = load ptr, ptr %i.az, align 8, !tbaa !420
-  tail call fastcc void @ZSTD_reduceTable(ptr noundef %i.ba, i32 noundef %i.ay, i32 noundef %i.ab)
-  %6 = load i32, ptr %5, align 4, !tbaa !92       ; 3 uses
-  %7 = getelementptr inbounds nuw i8, ptr %2, i64 144
-  %8 = load i32, ptr %7, align 8, !tbaa !78
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 140
-  %10 = load i32, ptr %9, align 4, !tbaa !414
-  %.not.i.i = icmp eq i32 %10, 0
+  %6 = icmp sgt i32 %i.ay, 15
+  br i1 %6, label %.preheader.lr.ph.i.i, label %ZSTD_reduceTable.exit.i
+
+.preheader.lr.ph.i.i:                             ; preds = %bb.b
+  %7 = and i32 %i.ay, 2147483632
+  %flatten.tripcount.i.i = zext nneg i32 %7 to i64
+  %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %i.aj, i64 0
+  %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
+  %broadcast.splatinsert38 = insertelement <4 x i32> poison, i32 %i.ab, i64 0
+  %broadcast.splat39 = shufflevector <4 x i32> %broadcast.splatinsert38, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
+  br label %vector.body
+
+vector.body:                                      ; preds = %vector.body, %.preheader.lr.ph.i.i
+  %index = phi i64 [ 0, %.preheader.lr.ph.i.i ], [ %index.next, %vector.body ] ; 2 uses
+  %8 = getelementptr inbounds nuw [4 x i8], ptr %i.ba, i64 %index ; 3 uses
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 2 uses
+  %wide.load = load <4 x i32>, ptr %8, align 4, !tbaa !50 ; 2 uses
+  %wide.load40 = load <4 x i32>, ptr %9, align 4, !tbaa !50 ; 2 uses
+  %10 = icmp ult <4 x i32> %wide.load, %broadcast.splat
+  %11 = icmp ult <4 x i32> %wide.load40, %broadcast.splat
+  %12 = sub <4 x i32> %wide.load, %broadcast.splat39
+  %13 = sub <4 x i32> %wide.load40, %broadcast.splat39
+  %14 = select <4 x i1> %10, <4 x i32> zeroinitializer, <4 x i32> %12
+  %15 = select <4 x i1> %11, <4 x i32> zeroinitializer, <4 x i32> %13
+  store <4 x i32> %14, ptr %8, align 4, !tbaa !50
+  store <4 x i32> %15, ptr %9, align 4, !tbaa !50
+  %index.next = add nuw i64 %index, 8             ; 2 uses
+  %16 = icmp eq i64 %index.next, %flatten.tripcount.i.i
+  br i1 %16, label %ZSTD_reduceTable.exit.i.loopexit, label %vector.body, !llvm.loop !441
+
+ZSTD_reduceTable.exit.i.loopexit:                 ; preds = %vector.body
+  %.pre = load i32, ptr %5, align 4, !tbaa !92
+  br label %ZSTD_reduceTable.exit.i
+
+ZSTD_reduceTable.exit.i:                          ; preds = %ZSTD_reduceTable.exit.i.loopexit, %bb.b
+  %17 = phi i32 [ %.pre, %ZSTD_reduceTable.exit.i.loopexit ], [ %i.m, %bb.b ] ; 3 uses
+  %18 = getelementptr inbounds nuw i8, ptr %2, i64 144
+  %19 = load i32, ptr %18, align 8, !tbaa !78
+  %20 = getelementptr inbounds nuw i8, ptr %0, i64 140
+  %21 = load i32, ptr %20, align 4, !tbaa !414
+  %.not.i.i = icmp eq i32 %21, 0
   br i1 %.not.i.i, label %bb.c, label %ZSTD_allocateChainTable.exit.thread21.i
 
-bb.c:                                             ; preds = %bb.b
-  %.not4.i.i = icmp eq i32 %6, 1
+bb.c:                                             ; preds = %ZSTD_reduceTable.exit.i
+  %.not4.i.i = icmp eq i32 %17, 1
   br i1 %.not4.i.i, label %ZSTD_reduceTable_btlazy2.exit.i, label %ZSTD_allocateChainTable.exit.i
 
 ZSTD_allocateChainTable.exit.i:                   ; preds = %bb.c
-  %i.bb = add i32 %6, -3
+  %i.bb = add i32 %17, -3
   %i.bc = icmp ult i32 %i.bb, 3
-  %i.bd = icmp eq i32 %8, 1
+  %i.bd = icmp eq i32 %19, 1
   %.not8.i.not.i = and i1 %i.bc, %i.bd
   br i1 %.not8.i.not.i, label %ZSTD_reduceTable_btlazy2.exit.i, label %ZSTD_allocateChainTable.exit.thread21.i
 
-ZSTD_allocateChainTable.exit.thread21.i:          ; preds = %ZSTD_allocateChainTable.exit.i, %bb.b
+ZSTD_allocateChainTable.exit.thread21.i:          ; preds = %ZSTD_allocateChainTable.exit.i, %ZSTD_reduceTable.exit.i
   %i.be = load i32, ptr %i.a, align 8, !tbaa !88
   %i.bf = shl nuw i32 1, %i.be                    ; 3 uses
-  %i.bg = icmp eq i32 %6, 6
+  %i.bg = icmp eq i32 %17, 6
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 128
   %i.bi = load ptr, ptr %i.bh, align 8, !tbaa !421 ; 2 uses
-  br i1 %i.bg, label %bb.d, label %bb.e
+  %22 = icmp sgt i32 %i.bf, 15                    ; 2 uses
+  br i1 %i.bg, label %bb.d, label %29
 
 bb.d:                                             ; preds = %ZSTD_allocateChainTable.exit.thread21.i
-  %11 = lshr i32 %i.bf, 4
-  %12 = icmp sgt i32 %i.bf, 15
-  br i1 %12, label %.preheader.i.i.preheader, label %ZSTD_reduceTable_btlazy2.exit.i
+  br i1 %22, label %.preheader.i.i.preheader, label %ZSTD_reduceTable_btlazy2.exit.i
 
 .preheader.i.i.preheader:                         ; preds = %bb.d
+  %23 = and i32 %i.bf, 2147483632
+  %flatten.tripcount.i21.i = zext nneg i32 %23 to i64
   %i.bj = insertelement <4 x i32> poison, i32 %i.aj, i64 0
-  %i.bk = shufflevector <4 x i32> %i.bj, <4 x i32> poison, <4 x i32> zeroinitializer ; 4 uses
+  %i.bk = shufflevector <4 x i32> %i.bj, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   %i.bl = insertelement <4 x i32> poison, i32 %i.ab, i64 0
-  %i.bm = shufflevector <4 x i32> %i.bl, <4 x i32> poison, <4 x i32> zeroinitializer ; 4 uses
+  %i.bm = shufflevector <4 x i32> %i.bl, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %.preheader.i.i
 
-.preheader.i.i:                                   ; preds = %.preheader.i.i.preheader, %.preheader.i.i
-  %indvars.iv.i.i = phi i64 [ %indvars.iv.next7.i.i, %.preheader.i.i ], [ 0, %.preheader.i.i.preheader ] ; 2 uses
-  %.021.i4.i.i = phi i32 [ %33, %.preheader.i.i ], [ 0, %.preheader.i.i.preheader ]
-  %i.bn = getelementptr inbounds nuw [4 x i8], ptr %i.bi, i64 %indvars.iv.i.i ; 5 uses
-  %13 = load <4 x i32>, ptr %i.bn, align 4, !tbaa !50 ; 3 uses
-  %14 = icmp eq <4 x i32> %13, splat (i32 1)
-  %15 = icmp ult <4 x i32> %13, %i.bk
-  %16 = sub <4 x i32> %13, %i.bm
-  %17 = select <4 x i1> %15, <4 x i32> zeroinitializer, <4 x i32> %16
-  %18 = select <4 x i1> %14, <4 x i32> splat (i32 1), <4 x i32> %17
-  store <4 x i32> %18, ptr %i.bn, align 4, !tbaa !50
+.preheader.i.i:                                   ; preds = %.preheader.i.i, %.preheader.i.i.preheader
+  %indvars.iv.i.i = phi i64 [ 0, %.preheader.i.i.preheader ], [ %index.next66, %.preheader.i.i ] ; 2 uses
+  %i.bn = getelementptr inbounds nuw [4 x i8], ptr %i.bi, i64 %indvars.iv.i.i ; 3 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bn, i64 16 ; 2 uses
-  %i.bp = load <4 x i32>, ptr %i.bo, align 4, !tbaa !50 ; 3 uses
-  %19 = icmp eq <4 x i32> %i.bp, splat (i32 1)
-  %20 = icmp ult <4 x i32> %i.bp, %i.bk
-  %21 = sub <4 x i32> %i.bp, %i.bm
-  %22 = select <4 x i1> %20, <4 x i32> zeroinitializer, <4 x i32> %21
-  %23 = select <4 x i1> %19, <4 x i32> splat (i32 1), <4 x i32> %22
-  store <4 x i32> %23, ptr %i.bo, align 4, !tbaa !50
-  %24 = getelementptr inbounds nuw i8, ptr %i.bn, i64 32 ; 2 uses
-  %25 = load <4 x i32>, ptr %24, align 4, !tbaa !50 ; 3 uses
-  %26 = icmp eq <4 x i32> %25, splat (i32 1)
-  %i.bq = icmp ult <4 x i32> %25, %i.bk
-  %i.br = sub <4 x i32> %25, %i.bm
-  %27 = select <4 x i1> %i.bq, <4 x i32> zeroinitializer, <4 x i32> %i.br
-  %i.bs = select <4 x i1> %26, <4 x i32> splat (i32 1), <4 x i32> %27
-  store <4 x i32> %i.bs, ptr %24, align 4, !tbaa !50
-  %28 = getelementptr inbounds nuw i8, ptr %i.bn, i64 48 ; 2 uses
-  %29 = load <4 x i32>, ptr %28, align 4, !tbaa !50 ; 3 uses
-  %30 = icmp eq <4 x i32> %29, splat (i32 1)
-  %31 = icmp ult <4 x i32> %29, %i.bk
-  %32 = sub <4 x i32> %29, %i.bm
-  %i.bt = select <4 x i1> %31, <4 x i32> zeroinitializer, <4 x i32> %32
-  %i.bu = select <4 x i1> %30, <4 x i32> splat (i32 1), <4 x i32> %i.bt
-  store <4 x i32> %i.bu, ptr %28, align 4, !tbaa !50
-  %indvars.iv.next7.i.i = add nuw nsw i64 %indvars.iv.i.i, 16
-  %33 = add nuw nsw i32 %.021.i4.i.i, 1           ; 2 uses
-  %exitcond.not.i.i = icmp eq i32 %33, %11
-  br i1 %exitcond.not.i.i, label %ZSTD_reduceTable_btlazy2.exit.i, label %.preheader.i.i, !llvm.loop !441
+  %i.bp = load <4 x i32>, ptr %i.bn, align 4, !tbaa !50 ; 3 uses
+  %wide.load65 = load <4 x i32>, ptr %i.bo, align 4, !tbaa !50 ; 3 uses
+  %24 = icmp eq <4 x i32> %i.bp, splat (i32 1)
+  %25 = icmp eq <4 x i32> %wide.load65, splat (i32 1)
+  %26 = icmp ult <4 x i32> %i.bp, %i.bk
+  %i.bq = icmp ult <4 x i32> %wide.load65, %i.bk
+  %i.br = sub <4 x i32> %i.bp, %i.bm
+  %27 = sub <4 x i32> %wide.load65, %i.bm
+  %i.bs = select <4 x i1> %26, <4 x i32> zeroinitializer, <4 x i32> %i.br
+  %28 = select <4 x i1> %i.bq, <4 x i32> zeroinitializer, <4 x i32> %27
+  %i.bt = select <4 x i1> %24, <4 x i32> splat (i32 1), <4 x i32> %i.bs
+  %i.bu = select <4 x i1> %25, <4 x i32> splat (i32 1), <4 x i32> %28
+  store <4 x i32> %i.bt, ptr %i.bn, align 4, !tbaa !50
+  store <4 x i32> %i.bu, ptr %i.bo, align 4, !tbaa !50
+  %index.next66 = add nuw i64 %indvars.iv.i.i, 8  ; 2 uses
+  %exitcond.not.i.i = icmp eq i64 %index.next66, %flatten.tripcount.i21.i
+  br i1 %exitcond.not.i.i, label %ZSTD_reduceTable_btlazy2.exit.i, label %.preheader.i.i, !llvm.loop !442
 
-bb.e:                                             ; preds = %ZSTD_allocateChainTable.exit.thread21.i
-  tail call fastcc void @ZSTD_reduceTable(ptr noundef %i.bi, i32 noundef %i.bf, i32 noundef %i.ab)
-  br label %ZSTD_reduceTable_btlazy2.exit.i
+29:                                               ; preds = %ZSTD_allocateChainTable.exit.thread21.i
+  br i1 %22, label %bb.e, label %ZSTD_reduceTable_btlazy2.exit.i
 
-ZSTD_reduceTable_btlazy2.exit.i:                  ; preds = %.preheader.i.i, %bb.e, %bb.d, %ZSTD_allocateChainTable.exit.i, %bb.c
+bb.e:                                             ; preds = %29
+  %30 = and i32 %i.bf, 2147483632
+  %flatten.tripcount.i28.i = zext nneg i32 %30 to i64
+  %broadcast.splatinsert44 = insertelement <4 x i32> poison, i32 %i.aj, i64 0
+  %broadcast.splat45 = shufflevector <4 x i32> %broadcast.splatinsert44, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
+  %broadcast.splatinsert46 = insertelement <4 x i32> poison, i32 %i.ab, i64 0
+  %broadcast.splat47 = shufflevector <4 x i32> %broadcast.splatinsert46, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
+  br label %vector.body48
+
+vector.body48:                                    ; preds = %vector.body48, %bb.e
+  %index49 = phi i64 [ 0, %bb.e ], [ %index.next52, %vector.body48 ] ; 2 uses
+  %31 = getelementptr inbounds nuw [4 x i8], ptr %i.bi, i64 %index49 ; 3 uses
+  %32 = getelementptr inbounds nuw i8, ptr %31, i64 16 ; 2 uses
+  %wide.load50 = load <4 x i32>, ptr %31, align 4, !tbaa !50 ; 2 uses
+  %wide.load51 = load <4 x i32>, ptr %32, align 4, !tbaa !50 ; 2 uses
+  %33 = icmp ult <4 x i32> %wide.load50, %broadcast.splat45
+  %34 = icmp ult <4 x i32> %wide.load51, %broadcast.splat45
+  %35 = sub <4 x i32> %wide.load50, %broadcast.splat47
+  %36 = sub <4 x i32> %wide.load51, %broadcast.splat47
+  %37 = select <4 x i1> %33, <4 x i32> zeroinitializer, <4 x i32> %35
+  %38 = select <4 x i1> %34, <4 x i32> zeroinitializer, <4 x i32> %36
+  store <4 x i32> %37, ptr %31, align 4, !tbaa !50
+  store <4 x i32> %38, ptr %32, align 4, !tbaa !50
+  %index.next52 = add nuw i64 %index49, 8         ; 2 uses
+  %39 = icmp eq i64 %index.next52, %flatten.tripcount.i28.i
+  br i1 %39, label %ZSTD_reduceTable_btlazy2.exit.i, label %vector.body48, !llvm.loop !443
+
+ZSTD_reduceTable_btlazy2.exit.i:                  ; preds = %vector.body48, %.preheader.i.i, %29, %bb.d, %ZSTD_allocateChainTable.exit.i, %bb.c
   %i.bv = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.bw = load i32, ptr %i.bv, align 8, !tbaa !415 ; 2 uses
   %.not19.i = icmp eq i32 %i.bw, 0
   br i1 %.not19.i, label %ZSTD_reduceIndex.exit, label %bb.f
 
 bb.f:                                             ; preds = %ZSTD_reduceTable_btlazy2.exit.i
-  %i.bx = shl nuw i32 1, %i.bw
+  %i.bx = shl nuw i32 1, %i.bw                    ; 2 uses
   %i.by = getelementptr inbounds nuw i8, ptr %0, i64 120
   %i.bz = load ptr, ptr %i.by, align 8, !tbaa !422
-  tail call fastcc void @ZSTD_reduceTable(ptr noundef %i.bz, i32 noundef %i.bx, i32 noundef %i.ab)
-  br label %ZSTD_reduceIndex.exit
+  %40 = icmp sgt i32 %i.bx, 15
+  br i1 %40, label %.preheader.lr.ph.i35.i, label %ZSTD_reduceIndex.exit
 
-ZSTD_reduceIndex.exit:                            ; preds = %ZSTD_reduceTable_btlazy2.exit.i, %bb.f
-  %34 = load ptr, ptr %i.av, align 8, !tbaa !55
+.preheader.lr.ph.i35.i:                           ; preds = %bb.f
+  %41 = and i32 %i.bx, 2147483632
+  %flatten.tripcount.i36.i = zext nneg i32 %41 to i64
+  %broadcast.splatinsert72 = insertelement <4 x i32> poison, i32 %i.aj, i64 0
+  %broadcast.splat73 = shufflevector <4 x i32> %broadcast.splatinsert72, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
+  %broadcast.splatinsert74 = insertelement <4 x i32> poison, i32 %i.ab, i64 0
+  %broadcast.splat75 = shufflevector <4 x i32> %broadcast.splatinsert74, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
+  br label %vector.body76
+
+vector.body76:                                    ; preds = %vector.body76, %.preheader.lr.ph.i35.i
+  %index77 = phi i64 [ 0, %.preheader.lr.ph.i35.i ], [ %index.next80, %vector.body76 ] ; 2 uses
+  %42 = getelementptr inbounds nuw [4 x i8], ptr %i.bz, i64 %index77 ; 3 uses
+  %43 = getelementptr inbounds nuw i8, ptr %42, i64 16 ; 2 uses
+  %wide.load78 = load <4 x i32>, ptr %42, align 4, !tbaa !50 ; 2 uses
+  %wide.load79 = load <4 x i32>, ptr %43, align 4, !tbaa !50 ; 2 uses
+  %44 = icmp ult <4 x i32> %wide.load78, %broadcast.splat73
+  %45 = icmp ult <4 x i32> %wide.load79, %broadcast.splat73
+  %46 = sub <4 x i32> %wide.load78, %broadcast.splat75
+  %47 = sub <4 x i32> %wide.load79, %broadcast.splat75
+  %48 = select <4 x i1> %44, <4 x i32> zeroinitializer, <4 x i32> %46
+  %49 = select <4 x i1> %45, <4 x i32> zeroinitializer, <4 x i32> %47
+  store <4 x i32> %48, ptr %42, align 4, !tbaa !50
+  store <4 x i32> %49, ptr %43, align 4, !tbaa !50
+  %index.next80 = add nuw i64 %index77, 8         ; 2 uses
+  %50 = icmp eq i64 %index.next80, %flatten.tripcount.i36.i
+  br i1 %50, label %ZSTD_reduceIndex.exit, label %vector.body76, !llvm.loop !444
+
+ZSTD_reduceIndex.exit:                            ; preds = %vector.body76, %ZSTD_reduceTable_btlazy2.exit.i, %bb.f
   %i.ca = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.cb = load ptr, ptr %i.ca, align 8, !tbaa !54 ; 2 uses
-  %i.cc = icmp ult ptr %34, %i.cb
+  %i.cc = icmp ult ptr %i.au, %i.cb
   br i1 %i.cc, label %bb.g, label %ZSTD_cwksp_mark_tables_clean.exit
 
 bb.g:                                             ; preds = %ZSTD_reduceIndex.exit
@@ -486,59 +555,6 @@ bb.m:                                             ; preds = %.thread66
   ret i64 %.3
 }
 
-; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define internal fastcc void @ZSTD_reduceTable(ptr nofree noundef captures(none) %0, i32 noundef %1, i32 noundef %2) unnamed_addr #13 {
-  %4 = lshr i32 %1, 4
-  %5 = add i32 %2, 2
-  %6 = icmp sgt i32 %1, 15
-  br i1 %6, label %.preheader.preheader, label %ZSTD_reduceTable_internal.exit
-
-.preheader.preheader:                             ; preds = %3
-  %7 = insertelement <4 x i32> poison, i32 %5, i64 0
-  %8 = shufflevector <4 x i32> %7, <4 x i32> poison, <4 x i32> zeroinitializer ; 4 uses
-  %9 = insertelement <4 x i32> poison, i32 %2, i64 0
-  %10 = shufflevector <4 x i32> %9, <4 x i32> poison, <4 x i32> zeroinitializer ; 4 uses
-  br label %.preheader
-
-.preheader:                                       ; preds = %.preheader.preheader, %.preheader
-  %indvars.iv = phi i64 [ %indvars.iv.next7, %.preheader ], [ 0, %.preheader.preheader ] ; 5 uses
-  %.021.i4 = phi i32 [ %34, %.preheader ], [ 0, %.preheader.preheader ]
-  %11 = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv ; 2 uses
-  %12 = load <4 x i32>, ptr %11, align 4, !tbaa !50 ; 2 uses
-  %13 = icmp ult <4 x i32> %12, %8
-  %14 = sub <4 x i32> %12, %10
-  %15 = select <4 x i1> %13, <4 x i32> zeroinitializer, <4 x i32> %14
-  store <4 x i32> %15, ptr %11, align 4, !tbaa !50
-  %16 = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv
-  %17 = getelementptr inbounds nuw i8, ptr %16, i64 16 ; 2 uses
-  %18 = load <4 x i32>, ptr %17, align 4, !tbaa !50 ; 2 uses
-  %19 = icmp ult <4 x i32> %18, %8
-  %20 = sub <4 x i32> %18, %10
-  %21 = select <4 x i1> %19, <4 x i32> zeroinitializer, <4 x i32> %20
-  store <4 x i32> %21, ptr %17, align 4, !tbaa !50
-  %22 = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv
-  %23 = getelementptr inbounds nuw i8, ptr %22, i64 32 ; 2 uses
-  %24 = load <4 x i32>, ptr %23, align 4, !tbaa !50 ; 2 uses
-  %25 = icmp ult <4 x i32> %24, %8
-  %26 = sub <4 x i32> %24, %10
-  %27 = select <4 x i1> %25, <4 x i32> zeroinitializer, <4 x i32> %26
-  store <4 x i32> %27, ptr %23, align 4, !tbaa !50
-  %28 = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv
-  %29 = getelementptr inbounds nuw i8, ptr %28, i64 48 ; 2 uses
-  %30 = load <4 x i32>, ptr %29, align 4, !tbaa !50 ; 2 uses
-  %31 = icmp ult <4 x i32> %30, %8
-  %32 = sub <4 x i32> %30, %10
-  %33 = select <4 x i1> %31, <4 x i32> zeroinitializer, <4 x i32> %32
-  store <4 x i32> %33, ptr %29, align 4, !tbaa !50
-  %indvars.iv.next7 = add nuw nsw i64 %indvars.iv, 16
-  %34 = add nuw nsw i32 %.021.i4, 1               ; 2 uses
-  %exitcond.not = icmp eq i32 %34, %4
-  br i1 %exitcond.not, label %ZSTD_reduceTable_internal.exit, label %.preheader, !llvm.loop !441
-
-ZSTD_reduceTable_internal.exit:                   ; preds = %.preheader, %3
-  ret void
-}
-
 ; Function Attrs: nounwind uwtable
 define internal fastcc range(i64 -119, 2) i64 @ZSTD_buildSeqStore(ptr noundef %0, ptr noundef %1, i64 noundef %2) unnamed_addr #2 {
 bb.a:
@@ -580,13 +596,13 @@ bb.e:                                             ; preds = %bb.a
   store i32 0, ptr %i.q, align 8, !tbaa !199
   %i.r = load ptr, ptr %i.j, align 8, !tbaa !56   ; 4 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 3448
-  store ptr %i.r, ptr %i.s, align 8, !tbaa !442
+  store ptr %i.r, ptr %i.s, align 8, !tbaa !445
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 304
-  %i.u = load i32, ptr %i.t, align 8, !tbaa !443
+  %i.u = load i32, ptr %i.t, align 8, !tbaa !446
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 3456
-  store i32 %i.u, ptr %i.v, align 8, !tbaa !444
+  store i32 %i.u, ptr %i.v, align 8, !tbaa !447
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 3224
-  %i.x = load ptr, ptr %i.w, align 8, !tbaa !445
+  %i.x = load ptr, ptr %i.w, align 8, !tbaa !448
   %i.y = ptrtoint ptr %1 to i64
   %i.z = ptrtoint ptr %i.x to i64
   %i.aa = sub i64 %i.y, %i.z
@@ -644,7 +660,7 @@ ZSTD_matchState_dictMode.exit:                    ; preds = %bb.g, %bb.h, %bb.i
   store i32 %i.az, ptr %i.ba, align 4, !tbaa !50
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 3160
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 3168
-  %i.bd = load i64, ptr %i.bc, align 8, !tbaa !446
+  %i.bd = load i64, ptr %i.bc, align 8, !tbaa !449
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 3184
   %i.bf = load i64, ptr %i.be, align 8, !tbaa !234
   %i.bg = icmp ult i64 %i.bd, %i.bf
@@ -680,11 +696,11 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.m
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 3144
   %i.br = load ptr, ptr %i.bq, align 8, !tbaa !403
-  store ptr %i.br, ptr %3, align 8, !tbaa !447
+  store ptr %i.br, ptr %3, align 8, !tbaa !450
   %i.bs = getelementptr inbounds nuw i8, ptr %0, i64 3152
   %i.bt = load i64, ptr %i.bs, align 8, !tbaa !404
   %i.bu = getelementptr inbounds nuw i8, ptr %3, i64 32
-  store i64 %i.bt, ptr %i.bu, align 8, !tbaa !448
+  store i64 %i.bt, ptr %i.bu, align 8, !tbaa !451
   %i.bv = getelementptr inbounds nuw i8, ptr %0, i64 1032
   %i.bw = call i64 @ZSTD_ldm_generateSequences(ptr noundef nonnull %i.bv, ptr noundef nonnull %3, ptr noundef nonnull %i.bl, ptr noundef %1, i64 noundef %2) #28 ; 2 uses
   %i.bx = icmp ult i64 %i.bw, -119
@@ -714,13 +730,13 @@ bb.q:                                             ; preds = %bb.p
   %i.ce = load i32, ptr %i.b, align 4, !tbaa !245
   %i.cf = shl nuw i32 1, %i.ce
   %i.cg = getelementptr inbounds nuw i8, ptr %0, i64 416
-  %i.ch = load ptr, ptr %i.cg, align 8, !tbaa !449
+  %i.ch = load ptr, ptr %i.cg, align 8, !tbaa !452
   %i.ci = getelementptr inbounds nuw i8, ptr %0, i64 5232 ; 3 uses
   %i.cj = load ptr, ptr %i.ci, align 8, !tbaa !407
   %i.ck = getelementptr inbounds nuw i8, ptr %0, i64 5240 ; 2 uses
   %i.cl = load i64, ptr %i.ck, align 8, !tbaa !406
   %i.cm = getelementptr inbounds nuw i8, ptr %0, i64 276
-  %i.cn = load i32, ptr %i.cm, align 4, !tbaa !450
+  %i.cn = load i32, ptr %i.cm, align 4, !tbaa !453
   %i.co = zext i32 %i.cf to i64
   %i.cp = tail call i64 %.val(ptr noundef %i.ch, ptr noundef %i.cj, i64 noundef %i.cl, ptr noundef %1, i64 noundef %2, ptr noundef null, i64 noundef 0, i32 noundef %i.cn, i64 noundef %i.co) #28 ; 5 uses
   %i.cq = load i64, ptr %i.ck, align 8, !tbaa !406 ; 2 uses
@@ -814,7 +830,7 @@ bb.u:                                             ; preds = %ZSTD_postProcessSeq
   %i.em = add nuw i64 %.014.i, 4                  ; 2 uses
   %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
-  br i1 %niter.ncmp.3, label %ZSTD_fastSequenceLengthSum.exit.unr-lcssa, label %.lr.ph.i, !llvm.loop !451
+  br i1 %niter.ncmp.3, label %ZSTD_fastSequenceLengthSum.exit.unr-lcssa, label %.lr.ph.i, !llvm.loop !454
 
 ZSTD_fastSequenceLengthSum.exit.unr-lcssa:        ; preds = %.lr.ph.i
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -845,7 +861,7 @@ ZSTD_fastSequenceLengthSum.exit.unr-lcssa:        ; preds = %.lr.ph.i
   %i.ew = add nuw i64 %.014.i.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %ZSTD_fastSequenceLengthSum.exit, label %.lr.ph.i.epil, !llvm.loop !452
+  br i1 %epil.iter.cmp.not, label %ZSTD_fastSequenceLengthSum.exit, label %.lr.ph.i.epil, !llvm.loop !455
 
 ZSTD_fastSequenceLengthSum.exit:                  ; preds = %.lr.ph.i.epil, %ZSTD_fastSequenceLengthSum.exit.unr-lcssa
   %.lcssa180 = phi i64 [ %i.eh, %ZSTD_fastSequenceLengthSum.exit.unr-lcssa ], [ %i.er, %.lr.ph.i.epil ]
@@ -863,7 +879,7 @@ ZSTD_fastSequenceLengthSum.exit.thread:           ; preds = %bb.u, %ZSTD_fastSeq
 
 bb.v:                                             ; preds = %ZSTD_fastSequenceLengthSum.exit.thread
   %i.fd = getelementptr inbounds nuw i8, ptr %0, i64 3504
-  store ptr null, ptr %i.fd, align 8, !tbaa !453
+  store ptr null, ptr %i.fd, align 8, !tbaa !456
   br label %bb.w
 
 bb.w:                                             ; preds = %ZSTD_fastSequenceLengthSum.exit, %ZSTD_fastSequenceLengthSum.exit.thread, %bb.v
@@ -874,7 +890,7 @@ bb.w:                                             ; preds = %ZSTD_fastSequenceLe
 ZSTD_postProcessSequenceProducerResult.exit.thread: ; preds = %bb.q, %bb.s, %ZSTD_postProcessSequenceProducerResult.exit
   %.1.i156 = phi i64 [ %.1.i, %ZSTD_postProcessSequenceProducerResult.exit ], [ -106, %bb.s ], [ -106, %bb.q ]
   %i.fe = getelementptr inbounds nuw i8, ptr %0, i64 412
-  %i.ff = load i32, ptr %i.fe, align 4, !tbaa !454
+  %i.ff = load i32, ptr %i.fe, align 4, !tbaa !457
   %.not140 = icmp eq i32 %i.ff, 0
   br i1 %.not140, label %.thread163, label %bb.x
 
@@ -897,7 +913,7 @@ bb.x:                                             ; preds = %ZSTD_postProcessSeq
   %.0.in.i = select i1 %.not8.i, ptr %i.ft, ptr %i.fq
   %.0.i = load ptr, ptr %.0.in.i, align 8, !tbaa !49
   %i.fu = getelementptr inbounds nuw i8, ptr %0, i64 3504
-  store ptr null, ptr %i.fu, align 8, !tbaa !453
+  store ptr null, ptr %i.fu, align 8, !tbaa !456
   %i.fv = load ptr, ptr %i.ar, align 8, !tbaa !57
   %i.fw = getelementptr inbounds nuw i8, ptr %i.fv, i64 5616
   %i.fx = tail call i64 %.0.i(ptr noundef nonnull %i.a, ptr noundef nonnull %i.k, ptr noundef nonnull %i.fw, ptr noundef %1, i64 noundef %2) #28
@@ -922,7 +938,7 @@ bb.y:                                             ; preds = %bb.p
   %.0.in.i149 = select i1 %.not8.i148, ptr %i.gl, ptr %i.gi
   %.0.i150 = load ptr, ptr %.0.in.i149, align 8, !tbaa !49
   %i.gm = getelementptr inbounds nuw i8, ptr %0, i64 3504
-  store ptr null, ptr %i.gm, align 8, !tbaa !453
+  store ptr null, ptr %i.gm, align 8, !tbaa !456
   %i.gn = tail call i64 %.0.i150(ptr noundef nonnull %i.a, ptr noundef nonnull %i.k, ptr noundef nonnull %i.at, ptr noundef %1, i64 noundef %2) #28
   br label %bb.z
 
@@ -1103,7 +1119,7 @@ bb.r:                                             ; preds = %bb.q
 .critedge:                                        ; preds = %bb.r
   %i.aq = add i64 %.02335, 32                     ; 2 uses
   %.not28 = icmp eq i64 %i.aq, %1
-  br i1 %.not28, label %.loopexit, label %.preheader, !llvm.loop !455
+  br i1 %.not28, label %.loopexit, label %.preheader, !llvm.loop !458
 
 .loopexit:                                        ; preds = %.critedge, %.preheader, %bb.p, %bb.q, %bb.r, %bb.o, %ZSTD_count.exit, %bb.a
   %.2 = phi i32 [ 0, %ZSTD_count.exit ], [ 1, %bb.a ], [ 1, %bb.o ], [ 1, %.critedge ], [ 0, %bb.p ], [ 0, %bb.q ], [ 0, %bb.r ], [ 0, %.preheader ]
@@ -1120,7 +1136,7 @@ define internal fastcc i64 @ZSTD_compressSeqStore_singleBlock(ptr nofree noundef
 bb.a:
   %10 = alloca %struct.repcodes_s, align 4        ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #28
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %10, ptr noundef nonnull align 4 dereferenceable(12) %2, i64 12, i1 false), !tbaa.struct !456
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %10, ptr noundef nonnull align 4 dereferenceable(12) %2, i64 12, i1 false), !tbaa.struct !459
   %.not = icmp eq i32 %9, 0
   br i1 %.not, label %ZSTD_seqStore_resolveOffCodes.exit, label %bb.b
 
@@ -1297,7 +1313,7 @@ bb.r:                                             ; preds = %bb.q, %bb.p
 ZSTD_updateRep.exit39.i:                          ; preds = %.sink.split.i36.i, %bb.o
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %ZSTD_seqStore_resolveOffCodes.exit, label %bb.e, !llvm.loop !457
+  br i1 %exitcond.not.i, label %ZSTD_seqStore_resolveOffCodes.exit, label %bb.e, !llvm.loop !460
 
 ZSTD_seqStore_resolveOffCodes.exit:               ; preds = %ZSTD_updateRep.exit39.i, %bb.d, %bb.a
   %i.bp = icmp ult i64 %5, 3
@@ -1377,7 +1393,7 @@ ZSTD_noCompressBlock.exit:                        ; preds = %bb.z
   br i1 %i.cw, label %bb.aa, label %ZSTD_noCompressBlock.exit.thread
 
 bb.aa:                                            ; preds = %ZSTD_noCompressBlock.exit
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %2, ptr noundef nonnull align 4 dereferenceable(12) %10, i64 12, i1 false), !tbaa.struct !456
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %2, ptr noundef nonnull align 4 dereferenceable(12) %10, i64 12, i1 false), !tbaa.struct !459
   br label %bb.ae
 
 bb.ab:                                            ; preds = %bb.y
@@ -1397,7 +1413,7 @@ bb.ac:                                            ; preds = %bb.ab
   %i.df = getelementptr inbounds nuw i8, ptr %4, i64 2
   store i8 %i.de, ptr %i.df, align 1, !tbaa !197
   store i8 %i.cy, ptr %i.bv, align 1, !tbaa !197
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %2, ptr noundef nonnull align 4 dereferenceable(12) %10, i64 12, i1 false), !tbaa.struct !456
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %2, ptr noundef nonnull align 4 dereferenceable(12) %10, i64 12, i1 false), !tbaa.struct !459
   br label %bb.ae
 
 bb.ad:                                            ; preds = %bb.y
@@ -1800,7 +1816,7 @@ bb.b:                                             ; preds = %bb.a
   %i.ah = ashr exact i64 %i.ag, 3                 ; 11 uses
   %i.ai = load ptr, ptr %i.h, align 8, !tbaa !57  ; 4 uses
   %i.aj = load ptr, ptr %i.k, align 8, !tbaa !58  ; 15 uses
-  %i.ak = load i32, ptr %i.e, align 8, !tbaa !458 ; 2 uses
+  %i.ak = load i32, ptr %i.e, align 8, !tbaa !461 ; 2 uses
   %.not = icmp eq i32 %i.ak, 2
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #28
   store i32 255, ptr %i.d, align 4, !tbaa !50
@@ -1832,7 +1848,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.av = getelementptr inbounds nuw i8, ptr %1, i64 5056
-  %i.aw = load i64, ptr %i.av, align 8, !tbaa !459
+  %i.aw = load i64, ptr %i.av, align 8, !tbaa !462
   %i.ax = add i64 %i.aw, %i.au
   br label %bb.g
 
@@ -1852,7 +1868,7 @@ ZSTD_estimateBlockSize_literal.exit.i:            ; preds = %bb.h, %bb.g, %bb.d,
   %i.ba = getelementptr inbounds nuw i8, ptr %i.ai, i64 2064
   %i.bb = getelementptr inbounds nuw i8, ptr %1, i64 5064
   %i.bc = getelementptr inbounds nuw i8, ptr %1, i64 5068
-  %i.bd = load i32, ptr %i.bc, align 4, !tbaa !460 ; 2 uses
+  %i.bd = load i32, ptr %i.bc, align 4, !tbaa !463 ; 2 uses
   %i.be = getelementptr inbounds nuw i8, ptr %i.w, i64 %i.ah
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #28
   store i32 31, ptr %i.c, align 4, !tbaa !50
@@ -1895,7 +1911,7 @@ bb.l:                                             ; preds = %bb.k, %bb.i
   %.2.us.i.i.i = add i64 %.139.us.i.i.i, %.pn.us.i.i.i ; 2 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %.03438.us.i.i.i, i64 1 ; 2 uses
   %i.bn = icmp ult ptr %i.bm, %i.be
-  br i1 %i.bn, label %.lr.ph.split.us.i.i.i, label %._crit_edge.i.i.i, !llvm.loop !461
+  br i1 %i.bn, label %.lr.ph.split.us.i.i.i, label %._crit_edge.i.i.i, !llvm.loop !464
 
 bb.m:                                             ; preds = %bb.l
   %i.bo = mul i64 %i.ah, 10
@@ -1909,7 +1925,7 @@ bb.m:                                             ; preds = %bb.l
 ZSTD_estimateBlockSize_symbolType.exit.i.i:       ; preds = %._crit_edge.i.i.i, %bb.m
   %.033.i.i.i = phi i64 [ %i.bo, %bb.m ], [ %i.bp, %._crit_edge.i.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #28
-  %i.bq = load i32, ptr %i.bb, align 8, !tbaa !462 ; 2 uses
+  %i.bq = load i32, ptr %i.bb, align 8, !tbaa !465 ; 2 uses
   %i.br = getelementptr inbounds nuw i8, ptr %i.ai, i64 4288
   %i.bs = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.ah
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #28
@@ -1960,7 +1976,7 @@ bb.r:                                             ; preds = %bb.q
   %.2.i.i.i = add i64 %.139.i.i.i, %.pn.i.i.i     ; 2 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %.03438.i.i.i, i64 1 ; 2 uses
   %i.cf = icmp ult ptr %i.ce, %i.bs
-  br i1 %i.cf, label %.lr.ph.split.i.i.i, label %._crit_edge.i31.i.i, !llvm.loop !461
+  br i1 %i.cf, label %.lr.ph.split.i.i.i, label %._crit_edge.i31.i.i, !llvm.loop !464
 
 ._crit_edge.i31.i.i:                              ; preds = %.lr.ph.split.i.i.i, %.preheader.i27.i.i
   %.1.lcssa.i32.i.i = phi i64 [ %.043.i28.i.i, %.preheader.i27.i.i ], [ %.2.i.i.i, %.lr.ph.split.i.i.i ]
@@ -2022,7 +2038,7 @@ bb.w:                                             ; preds = %bb.v
   %.2.i46.i.i = add i64 %.139.i42.i.i, %.pn.i45.i.i ; 2 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %.03438.i43.i.i, i64 1 ; 2 uses
   %i.cx = icmp ult ptr %i.cw, %i.ck
-  br i1 %i.cx, label %.lr.ph.split.i41.i.i, label %._crit_edge.i47.i.i, !llvm.loop !461
+  br i1 %i.cx, label %.lr.ph.split.i41.i.i, label %._crit_edge.i47.i.i, !llvm.loop !464
 
 ._crit_edge.i47.i.i:                              ; preds = %.lr.ph.split.i41.i.i, %.preheader.i37.i.i
   %.1.lcssa.i48.i.i = phi i64 [ %.043.i38.i.i, %.preheader.i37.i.i ], [ %.2.i46.i.i, %.lr.ph.split.i41.i.i ]
@@ -2033,7 +2049,7 @@ ZSTD_estimateBlockSize.exit:                      ; preds = %bb.w, %._crit_edge.
   %.033.i49.i.i = phi i64 [ %i.cs, %bb.w ], [ %i.cy, %._crit_edge.i47.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #28
   %i.cz = getelementptr inbounds nuw i8, ptr %1, i64 5216
-  %i.da = load i64, ptr %i.cz, align 8, !tbaa !463
+  %i.da = load i64, ptr %i.cz, align 8, !tbaa !466
   %i.db = icmp ugt i64 %i.ah, 32511
   %i.dc = icmp ugt i64 %i.ah, 127
   %i.dd = select i1 %i.dc, i64 3, i64 2
@@ -2283,14 +2299,14 @@ bb.a:
   %i.l = ptrtoint ptr %i.i to i64
   %i.m = ptrtoint ptr %i.k to i64
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.o = load i64, ptr %i.n, align 8, !tbaa !464  ; 3 uses
+  %i.o = load i64, ptr %i.n, align 8, !tbaa !467  ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.q = load ptr, ptr %i.p, align 8, !tbaa !465
+  %i.q = load ptr, ptr %i.p, align 8, !tbaa !468
   %i.r = getelementptr inbounds nuw [16 x i8], ptr %i.q, i64 %i.o ; 2 uses
   %i.s = add nsw i64 %i.g, 1                      ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #28
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.u = load i64, ptr %i.t, align 8, !tbaa !466
+  %i.u = load i64, ptr %i.t, align 8, !tbaa !469
   %i.v = sub i64 %i.u, %i.o
   %i.w = icmp ugt i64 %i.s, %i.v
   br i1 %i.w, label %bb.r, label %bb.b
@@ -2332,7 +2348,7 @@ bb.c:                                             ; preds = %.lr.ph, %ZSTD_updat
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ak, i64 8 ; 2 uses
   store i32 %i.ap, ptr %i.aq, align 4, !tbaa !215
   %i.ar = getelementptr inbounds nuw i8, ptr %i.ak, i64 12 ; 2 uses
-  store i32 0, ptr %i.ar, align 4, !tbaa !467
+  store i32 0, ptr %i.ar, align 4, !tbaa !470
   %i.as = icmp eq i64 %.07484, %i.z
   br i1 %i.as, label %bb.d, label %bb.g
 
@@ -2361,7 +2377,7 @@ bb.g:                                             ; preds = %bb.d, %bb.e, %bb.f,
   br i1 %or.cond, label %bb.h, label %bb.m
 
 bb.h:                                             ; preds = %bb.g
-  store i32 %i.ax, ptr %i.ar, align 4, !tbaa !467
+  store i32 %i.ax, ptr %i.ar, align 4, !tbaa !470
   %.not80 = icmp eq i32 %i.aw, 0
   br i1 %.not80, label %bb.j, label %bb.i
 
@@ -2438,7 +2454,7 @@ ZSTD_updateRep.exit:                              ; preds = %bb.n, %.sink.split.
   %i.bw = add i64 %.07285, %i.bv                  ; 2 uses
   %i.bx = add nuw i64 %.07484, 1                  ; 2 uses
   %exitcond.not = icmp eq i64 %i.bx, %i.g
-  br i1 %exitcond.not, label %._crit_edge, label %bb.c, !llvm.loop !468
+  br i1 %exitcond.not, label %._crit_edge, label %bb.c, !llvm.loop !471
 
 ._crit_edge:                                      ; preds = %ZSTD_updateRep.exit, %bb.b
   %.072.lcssa = phi i64 [ 0, %bb.b ], [ %i.bw, %ZSTD_updateRep.exit ]
@@ -2452,7 +2468,7 @@ ZSTD_updateRep.exit:                              ; preds = %bb.n, %.sink.split.
   store i32 0, ptr %i.cd, align 4, !tbaa !215
   store i32 0, ptr %i.cb, align 4, !tbaa !213
   %i.ce = add i64 %i.s, %i.o
-  store i64 %i.ce, ptr %i.n, align 8, !tbaa !464
+  store i64 %i.ce, ptr %i.n, align 8, !tbaa !467
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.a, %._crit_edge
@@ -2707,7 +2723,7 @@ ZSTD_window_update.exit117:                       ; preds = %ZSTD_window_update.
 
 bb.l:                                             ; preds = %ZSTD_window_update.exit117
   %i.bz = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.ca = load ptr, ptr %i.bz, align 8, !tbaa !469
+  %i.ca = load ptr, ptr %i.bz, align 8, !tbaa !472
   %i.cb = ptrtoint ptr %i.a to i64
   %i.cc = ptrtoint ptr %i.ca to i64
   %i.cd = sub i64 %i.cb, %i.cc
@@ -2717,7 +2733,7 @@ bb.l:                                             ; preds = %ZSTD_window_update.
 bb.m:                                             ; preds = %ZSTD_window_update.exit117, %bb.l
   %i.cf = phi i32 [ %i.ce, %bb.l ], [ 0, %ZSTD_window_update.exit117 ]
   %i.cg = getelementptr inbounds nuw i8, ptr %1, i64 48
-  store i32 %i.cf, ptr %i.cg, align 8, !tbaa !470
+  store i32 %i.cf, ptr %i.cg, align 8, !tbaa !473
   tail call void @ZSTD_ldm_fillHashTable(ptr noundef nonnull %1, ptr noundef nonnull %.092, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #28
   %.pre = load i32, ptr %i.g, align 4, !tbaa !92
   br label %bb.n
@@ -2747,7 +2763,7 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   %.296 = phi ptr [ %.195, %bb.o ], [ %.092, %bb.n ] ; 2 uses
   %.2 = phi i64 [ %.1, %bb.o ], [ %.093, %bb.n ]
   %i.cs = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.ct = load ptr, ptr %i.cs, align 8, !tbaa !445
+  %i.ct = load ptr, ptr %i.cs, align 8, !tbaa !448
   %i.cu = ptrtoint ptr %.296 to i64
   %i.cv = ptrtoint ptr %i.ct to i64               ; 2 uses
   %i.cw = sub i64 %i.cu, %i.cv
@@ -2833,7 +2849,7 @@ bb.y:                                             ; preds = %bb.q, %bb.q, %bb.q,
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.q, %bb.u, %bb.x, %bb.w, %bb.y, %bb.s, %bb.r
-  %i.eb = load ptr, ptr %i.cs, align 8, !tbaa !445
+  %i.eb = load ptr, ptr %i.cs, align 8, !tbaa !448
   %i.ec = ptrtoint ptr %i.eb to i64
   %i.ed = sub i64 %i.db, %i.ec
   %i.ee = trunc i64 %i.ed to i32
@@ -3236,34 +3252,37 @@ begin_hunk_2_@llvm.umin.v2i32
 !438 = !{!434, !5, i64 4}
 !439 = !{!434, !5, i64 8}
 !440 = !{!29, !5, i64 32}
-!441 = distinct !{!441, !148}
-!442 = !{!32, !19, i64 232}
-!443 = !{!12, !5, i64 304}
-!444 = !{!32, !5, i64 240}
-!445 = !{!32, !27, i64 8}
-!446 = !{!12, !16, i64 3168}
-!447 = !{!30, !19, i64 0}
-!448 = !{!30, !16, i64 32}
-!449 = !{!12, !19, i64 416}
-!450 = !{!12, !5, i64 276}
-!451 = distinct !{!451, !148}
-!452 = distinct !{!452, !282}
-!453 = !{!32, !19, i64 288}
-!454 = !{!12, !5, i64 412}
-!455 = distinct !{!455, !148}
-!456 = !{i64 0, i64 12, !197}
-!457 = distinct !{!457, !148}
-!458 = !{!41, !5, i64 0}
-!459 = !{!42, !16, i64 136}
-!460 = !{!43, !5, i64 4}
-!461 = distinct !{!461, !148}
-!462 = !{!43, !5, i64 0}
-!463 = !{!43, !16, i64 152}
-!464 = !{!24, !16, i64 16}
-!465 = !{!24, !19, i64 8}
-!466 = !{!24, !16, i64 24}
-!467 = !{!214, !5, i64 12}
-!468 = distinct !{!468, !148}
-!469 = !{!28, !27, i64 8}
-!470 = !{!28, !5, i64 48}
+!441 = distinct !{!441, !148, !263, !262}
+!442 = distinct !{!442, !148, !263, !262}
+!443 = distinct !{!443, !148, !263, !262}
+!444 = distinct !{!444, !148, !263, !262}
+!445 = !{!32, !19, i64 232}
+!446 = !{!12, !5, i64 304}
+!447 = !{!32, !5, i64 240}
+!448 = !{!32, !27, i64 8}
+!449 = !{!12, !16, i64 3168}
+!450 = !{!30, !19, i64 0}
+!451 = !{!30, !16, i64 32}
+!452 = !{!12, !19, i64 416}
+!453 = !{!12, !5, i64 276}
+!454 = distinct !{!454, !148}
+!455 = distinct !{!455, !282}
+!456 = !{!32, !19, i64 288}
+!457 = !{!12, !5, i64 412}
+!458 = distinct !{!458, !148}
+!459 = !{i64 0, i64 12, !197}
+!460 = distinct !{!460, !148}
+!461 = !{!41, !5, i64 0}
+!462 = !{!42, !16, i64 136}
+!463 = !{!43, !5, i64 4}
+!464 = distinct !{!464, !148}
+!465 = !{!43, !5, i64 0}
+!466 = !{!43, !16, i64 152}
+!467 = !{!24, !16, i64 16}
+!468 = !{!24, !19, i64 8}
+!469 = !{!24, !16, i64 24}
+!470 = !{!214, !5, i64 12}
+!471 = distinct !{!471, !148}
+!472 = !{!28, !27, i64 8}
+!473 = !{!28, !5, i64 48}
 end_hunk_2

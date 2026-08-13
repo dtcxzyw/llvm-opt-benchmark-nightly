@@ -1,8 +1,8 @@
 inline.NumInlined: 258
 inline.NumDeleted: 77
-loop-unroll.NumCompletelyUnrolled: 74
+loop-unroll.NumCompletelyUnrolled: 75
 loop-unroll.NumRuntimeUnrolled: 20
-loop-unroll.NumUnrolled: 95
+loop-unroll.NumUnrolled: 96
 begin_hunk_0_@tiling_callback:bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !281
@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %.thread, %bb.f
   %i.aq = phi i32 [ %i.ae, %.thread ], [ %i.ao, %bb.f ] ; 2 uses
-  %i.ar = phi ptr [ null, %.thread ], [ %i.an, %bb.f ] ; 9 uses
+  %i.ar = phi ptr [ null, %.thread ], [ %i.an, %bb.f ] ; 12 uses
   %i.as = icmp ne ptr %i.s, null
   %i.at = icmp ne i32 %i.x, 0
   %or.cond3 = and i1 %i.as, %i.at                 ; 2 uses
@@ -317,15 +317,15 @@ bb.t:                                             ; preds = %bb.s
   br label %.thread198.i
 
 .thread198.i:                                     ; preds = %bb.t, %bb.s
-  %.sroa.0278.0.i = phi float [ %i.co, %bb.t ], [ %i.ce, %bb.s ] ; 4 uses
-  %.sroa.5.0.i = phi float [ %i.cp, %bb.t ], [ %i.ce, %bb.s ] ; 4 uses
-  %i.cr = phi float [ %i.cq, %bb.t ], [ %i.ce, %bb.s ] ; 4 uses
+  %.sroa.0278.0.i = phi float [ %i.co, %bb.t ], [ %i.ce, %bb.s ] ; 5 uses
+  %.sroa.5.0.i = phi float [ %i.cp, %bb.t ], [ %i.ce, %bb.s ] ; 5 uses
+  %i.cr = phi float [ %i.cq, %bb.t ], [ %i.ce, %bb.s ] ; 5 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.ct = load i32, ptr %i.cs, align 4, !tbaa !310 ; 2 uses
-  %i.cu = sext i32 %i.ct to i64                   ; 8 uses
+  %i.cu = sext i32 %i.ct to i64                   ; 9 uses
   %i.cv = getelementptr inbounds nuw i8, ptr %4, i64 12
   %i.cw = load i32, ptr %i.cv, align 4, !tbaa !308 ; 2 uses
-  %i.cx = sext i32 %i.cw to i64                   ; 5 uses
+  %i.cx = sext i32 %i.cw to i64                   ; 6 uses
   %i.cy = udiv i64 %i.cu, 3                       ; 8 uses
   %i.cz = udiv i64 %i.cx, 3                       ; 2 uses
   %i.da = tail call i64 @dt_round_size(i64 noundef %i.cy, i64 noundef 4) #33
@@ -728,28 +728,124 @@ bb.av:                                            ; preds = %bb.au
   br label %.thread199.i
 
 .thread199.i:                                     ; preds = %._crit_edge220.thread.i, %bb.w, %bb.v, %.preheader204.preheader.i
-  %.sroa.0262.1.i = phi nsz float [ %.sroa.0262.0.copyload264.i, %.preheader204.preheader.i ], [ 0.000000e+00, %bb.v ], [ 0.000000e+00, %bb.w ], [ %.sroa.0262.0.i, %._crit_edge220.thread.i ]
-  %.sroa.8.1.i = phi nsz float [ %.sroa.8.0.copyload265.i, %.preheader204.preheader.i ], [ 0.000000e+00, %bb.v ], [ 0.000000e+00, %bb.w ], [ %.sroa.8.0.i, %._crit_edge220.thread.i ]
-  %.sroa.11.1.i = phi nsz float [ %.sroa.11.0.copyload267.i, %.preheader204.preheader.i ], [ 0.000000e+00, %bb.v ], [ 0.000000e+00, %bb.w ], [ %.sroa.11.0.i, %._crit_edge220.thread.i ]
+  %.sroa.0262.1.i = phi nsz float [ %.sroa.0262.0.copyload264.i, %.preheader204.preheader.i ], [ 0.000000e+00, %bb.v ], [ 0.000000e+00, %bb.w ], [ %.sroa.0262.0.i, %._crit_edge220.thread.i ] ; 2 uses
+  %.sroa.8.1.i = phi nsz float [ %.sroa.8.0.copyload265.i, %.preheader204.preheader.i ], [ 0.000000e+00, %bb.v ], [ 0.000000e+00, %bb.w ], [ %.sroa.8.0.i, %._crit_edge220.thread.i ] ; 2 uses
+  %.sroa.11.1.i = phi nsz float [ %.sroa.11.0.copyload267.i, %.preheader204.preheader.i ], [ 0.000000e+00, %bb.v ], [ 0.000000e+00, %bb.w ], [ %.sroa.11.0.i, %._crit_edge220.thread.i ] ; 2 uses
   %.not239.i = icmp eq i32 %i.cw, 0
   %.not240.i = icmp eq i32 %i.ct, 0
   %or.cond341.i = or i1 %.not240.i, %.not239.i
-  br i1 %or.cond341.i, label %_process_linear_opposed.exit, label %.preheader.i.a
+  br i1 %or.cond341.i, label %_process_linear_opposed.exit, label %.preheader.lver.check.i
 
-.preheader.i.a:                                   ; preds = %.thread199.i, %._crit_edge235.i.a
-  %.0164236.i.a = phi i64 [ %i.km, %._crit_edge235.i.a ], [ 0, %.thread199.i ] ; 2 uses
+.preheader.lver.check.i:                          ; preds = %.thread199.i
+  %flatten.mul.i = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.cx, i64 %i.cu) ; 2 uses
+  %flatten.overflow.i = extractvalue { i64, i1 } %flatten.mul.i, 1
+  br i1 %flatten.overflow.i, label %.preheader.i.a, label %.preheader.preheader.i
+
+.preheader.i.a:                                   ; preds = %.preheader.lver.check.i, %._crit_edge235.i.a
+  %.0164236.i.a = phi i64 [ %i.km, %._crit_edge235.i.a ], [ 0, %.preheader.lver.check.i ] ; 2 uses
   %i.kl = mul i64 %.0164236.i.a, %i.cu
-  br label %bb.aw
+  br label %7
 
-._crit_edge235.i.a:                               ; preds = %bb.bc
+7:                                                ; preds = %71, %.preheader.i.a
+  %.0163234.lver.orig.i.lver.orig = phi i64 [ 0, %.preheader.i.a ], [ %74, %71 ] ; 2 uses
+  %8 = add i64 %.0163234.lver.orig.i.lver.orig, %i.kl
+  %9 = shl i64 %8, 2                              ; 4 uses
+  %10 = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %9 ; 5 uses
+  %11 = getelementptr inbounds nuw i8, ptr %10, i64 8
+  %12 = load float, ptr %10, align 4, !tbaa !11
+  %13 = tail call reassoc nsz arcp contract afn float @llvm.maxnum.f32(float %12, float 0.000000e+00) ; 3 uses
+  %14 = fcmp reassoc nsz arcp contract afn ult float %13, %.sroa.0278.0.i
+  br i1 %14, label %29, label %15
+
+15:                                               ; preds = %7
+  %16 = getelementptr inbounds nuw i8, ptr %10, i64 4
+  %17 = load <2 x float>, ptr %16, align 4, !tbaa !11
+  %18 = tail call reassoc nsz arcp contract afn <2 x float> @llvm.maxnum.v2f32(<2 x float> %17, <2 x float> zeroinitializer) ; 2 uses
+  %19 = extractelement <2 x float> %18, i64 1
+  %20 = tail call reassoc nsz arcp contract afn float @cbrtf(float noundef %19) #35
+  %21 = extractelement <2 x float> %18, i64 0
+  %22 = tail call reassoc nsz arcp contract afn float @cbrtf(float noundef %21) #35
+  %23 = fadd reassoc nsz arcp contract afn float %22, %20
+  %24 = fmul reassoc nsz arcp contract afn float %23, 5.000000e-01 ; 3 uses
+  %25 = fmul reassoc nsz arcp contract afn float %24, %24
+  %26 = fmul reassoc nsz arcp contract afn float %25, %24
+  %27 = fadd reassoc nsz arcp contract afn float %26, %.sroa.0262.1.i
+  %28 = tail call reassoc nsz arcp contract afn float @llvm.maxnum.f32(float %13, float %27)
+  br label %29
+
+29:                                               ; preds = %15, %7
+  %30 = phi reassoc nsz arcp contract afn float [ %28, %15 ], [ %13, %7 ]
+  %31 = getelementptr inbounds nuw [4 x i8], ptr %i.ar, i64 %9
+  store float %30, ptr %31, align 16, !tbaa !11
+  %32 = or disjoint i64 %9, 1                     ; 2 uses
+  %33 = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %32
+  %34 = load float, ptr %33, align 4, !tbaa !11
+  %35 = tail call reassoc nsz arcp contract afn float @llvm.maxnum.f32(float %34, float 0.000000e+00) ; 3 uses
+  %36 = fcmp reassoc nsz arcp contract afn ult float %35, %.sroa.5.0.i
+  br i1 %36, label %50, label %37
+
+37:                                               ; preds = %29
+  %38 = load float, ptr %11, align 4, !tbaa !11
+  %39 = tail call reassoc nsz arcp contract afn float @llvm.maxnum.f32(float %38, float 0.000000e+00)
+  %40 = tail call reassoc nsz arcp contract afn float @cbrtf(float noundef %39) #35
+  %41 = load float, ptr %10, align 4, !tbaa !11
+  %42 = tail call reassoc nsz arcp contract afn float @llvm.maxnum.f32(float %41, float 0.000000e+00)
+  %43 = tail call reassoc nsz arcp contract afn float @cbrtf(float noundef %42) #35
+  %44 = fadd reassoc nsz arcp contract afn float %43, %40
+  %45 = fmul reassoc nsz arcp contract afn float %44, 5.000000e-01 ; 3 uses
+  %46 = fmul reassoc nsz arcp contract afn float %45, %45
+  %47 = fmul reassoc nsz arcp contract afn float %46, %45
+  %48 = fadd reassoc nsz arcp contract afn float %47, %.sroa.8.1.i
+  %49 = tail call reassoc nsz arcp contract afn float @llvm.maxnum.f32(float %35, float %48)
+  br label %50
+
+50:                                               ; preds = %37, %29
+  %51 = phi reassoc nsz arcp contract afn float [ %49, %37 ], [ %35, %29 ]
+  %52 = getelementptr inbounds nuw [4 x i8], ptr %i.ar, i64 %32
+  store float %51, ptr %52, align 4, !tbaa !11
+  %53 = or disjoint i64 %9, 2                     ; 2 uses
+  %54 = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %53
+  %55 = load float, ptr %54, align 4, !tbaa !11
+  %56 = tail call reassoc nsz arcp contract afn float @llvm.maxnum.f32(float %55, float 0.000000e+00) ; 3 uses
+  %57 = fcmp reassoc nsz arcp contract afn ult float %56, %i.cr
+  br i1 %57, label %71, label %58
+
+58:                                               ; preds = %50
+  %59 = load <2 x float>, ptr %10, align 4, !tbaa !11
+  %60 = tail call reassoc nsz arcp contract afn <2 x float> @llvm.maxnum.v2f32(<2 x float> %59, <2 x float> zeroinitializer) ; 2 uses
+  %61 = extractelement <2 x float> %60, i64 1
+  %62 = tail call reassoc nsz arcp contract afn float @cbrtf(float noundef %61) #35
+  %63 = extractelement <2 x float> %60, i64 0
+  %64 = tail call reassoc nsz arcp contract afn float @cbrtf(float noundef %63) #35
+  %65 = fadd reassoc nsz arcp contract afn float %64, %62
+  %66 = fmul reassoc nsz arcp contract afn float %65, 5.000000e-01 ; 3 uses
+  %67 = fmul reassoc nsz arcp contract afn float %66, %66
+  %68 = fmul reassoc nsz arcp contract afn float %67, %66
+  %69 = fadd reassoc nsz arcp contract afn float %68, %.sroa.11.1.i
+  %70 = tail call reassoc nsz arcp contract afn float @llvm.maxnum.f32(float %56, float %69)
+  br label %71
+
+71:                                               ; preds = %58, %50
+  %72 = phi reassoc nsz arcp contract afn float [ %70, %58 ], [ %56, %50 ]
+  %73 = getelementptr inbounds nuw [4 x i8], ptr %i.ar, i64 %53
+  store float %72, ptr %73, align 8, !tbaa !11
+  %74 = add nuw i64 %.0163234.lver.orig.i.lver.orig, 1 ; 2 uses
+  %exitcond254.not.i.lver.orig = icmp eq i64 %74, %i.cu
+  br i1 %exitcond254.not.i.lver.orig, label %._crit_edge235.i.a, label %7
+
+._crit_edge235.i.a:                               ; preds = %71
   %i.km = add nuw i64 %.0164236.i.a, 1            ; 2 uses
   %exitcond251.not.i = icmp eq i64 %i.km, %i.cx
   br i1 %exitcond251.not.i, label %_process_linear_opposed.exit, label %.preheader.i.a
 
-bb.aw:                                            ; preds = %bb.bc, %.preheader.i.a
-  %.0163234.i = phi i64 [ 0, %.preheader.i.a ], [ %i.mu, %bb.bc ] ; 2 uses
-  %7 = add i64 %.0163234.i, %i.kl
-  %i.kn = shl i64 %7, 2                           ; 4 uses
+.preheader.preheader.i:                           ; preds = %.preheader.lver.check.i
+  %flatten.tripcount.i = extractvalue { i64, i1 } %flatten.mul.i, 0
+  %umax.i = tail call i64 @llvm.umax.i64(i64 %flatten.tripcount.i, i64 1)
+  br label %bb.aw
+
+bb.aw:                                            ; preds = %bb.bc, %.preheader.preheader.i
+  %.0163234.i = phi i64 [ %i.mu, %bb.bc ], [ 0, %.preheader.preheader.i ] ; 2 uses
+  %i.kn = shl i64 %.0163234.i, 2                  ; 4 uses
   %i.ko = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.kn ; 5 uses
   %i.kp = getelementptr inbounds nuw i8, ptr %i.ko, i64 8
   %i.kq = load float, ptr %i.ko, align 4, !tbaa !11
@@ -830,10 +926,10 @@ bb.bc:                                            ; preds = %bb.bb, %bb.ba
   %i.mt = getelementptr inbounds nuw [4 x i8], ptr %i.ar, i64 %i.mb
   store float %i.ms, ptr %i.mt, align 8, !tbaa !11
   %i.mu = add nuw i64 %.0163234.i, 1              ; 2 uses
-  %exitcond250.not.i = icmp eq i64 %i.mu, %i.cu
-  br i1 %exitcond250.not.i, label %._crit_edge235.i.a, label %bb.aw
+  %exitcond250.not.i = icmp eq i64 %i.mu, %umax.i
+  br i1 %exitcond250.not.i, label %_process_linear_opposed.exit, label %bb.aw
 
-_process_linear_opposed.exit:                     ; preds = %._crit_edge235.i.a, %bb.u, %.thread199.i
+_process_linear_opposed.exit:                     ; preds = %bb.bc, %._crit_edge235.i.a, %bb.u, %.thread199.i
   tail call void @dt_iop_clip_and_zoom_roi(ptr noundef %3, ptr noundef %i.ar, ptr noundef %5, ptr noundef %4) #33
   tail call void @free(ptr noundef %i.ar) #33
   br label %.loopexit
@@ -1234,6 +1330,9 @@ declare i32 @llvm.fshl.i32(i32, i32, i32) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #14
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare { i64, i1 } @llvm.umul.with.overflow.i64(i64, i64) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #14

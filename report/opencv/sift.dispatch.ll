@@ -204,8 +204,8 @@ bb.a:
   %i.ap = shufflevector <2 x float> %i.ao, <2 x float> poison, <2 x i32> zeroinitializer
   %i.aq = fdiv <2 x float> %i.an, %i.ap           ; 2 uses
   %i.ar = add i32 %4, 2                           ; 7 uses
-  %i.as = add i32 %5, 2                           ; 12 uses
-  %i.at = mul i32 %i.as, %i.ar                    ; 3 uses
+  %i.as = add i32 %5, 2                           ; 8 uses
+  %i.at = mul i32 %i.as, %i.ar                    ; 2 uses
   %i.au = mul i32 %i.at, %i.ar
   %i.av = mul i32 %i.r, %5                        ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #24
@@ -278,60 +278,65 @@ bb.k:                                             ; preds = %bb.j
   br i1 %or.cond386, label %.preheader341.preheader, label %._crit_edge346.split
 
 .preheader341.preheader:                          ; preds = %bb.k
-  %smax = call i32 @llvm.smax.i32(i32 %i.as, i32 1)
-  %10 = zext nneg i32 %smax to i64
-  %i.bf = shl nuw nsw i64 %10, 2                  ; 5 uses
-  %smax394 = call i32 @llvm.smax.i32(i32 %i.ar, i32 1) ; 2 uses
-  %wide.trip.count.a = zext nneg i32 %smax394 to i64 ; 2 uses
-  %xtraiter = and i64 %wide.trip.count.a, 3       ; 3 uses
-  %i.bg = icmp slt i32 %i.ar, 4
-  %unroll_iter = and i64 %wide.trip.count.a, 2147483644
+  %10 = sext i32 %i.as to i64                     ; 2 uses
+  %11 = sext i32 %i.ar to i64                     ; 2 uses
+  %12 = mul nsw i64 %11, %10
+  %13 = shl i64 %12, 2
+  %i.bf = shl nsw i64 %10, 2                      ; 9 uses
+  %smax394 = call i32 @llvm.smax.i32(i32 %i.as, i32 1)
+  %wide.trip.count.a = zext nneg i32 %smax394 to i64
+  %14 = shl nuw nsw i64 %wide.trip.count.a, 2     ; 9 uses
+  %smax395 = call i64 @llvm.smax.i64(i64 %11, i64 1) ; 3 uses
+  %xtraiter = and i64 %smax395, 7                 ; 3 uses
+  %i.bg = icmp slt i32 %i.ar, 8
+  %unroll_iter = and i64 %smax395, 2147483640
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %lcmp.mod481 = icmp ne i64 %xtraiter, 0
   br label %.preheader341
 
 .preheader341:                                    ; preds = %.preheader341.preheader, %._crit_edge344
-  %.0271345 = phi i32 [ %40, %._crit_edge344 ], [ 0, %.preheader341.preheader ] ; 2 uses
-  %11 = mul i32 %i.at, %.0271345                  ; 5 uses
-  %i.bh = load ptr, ptr %i.g, align 8             ; 5 uses
+  %indvar348 = phi i64 [ 0, %.preheader341.preheader ], [ %indvar.next349, %._crit_edge344 ] ; 2 uses
+  %15 = mul i64 %13, %indvar348
+  %i.bh = load ptr, ptr %i.g, align 8
+  %16 = getelementptr i8, ptr %i.bh, i64 %15      ; 9 uses
   br i1 %i.bg, label %.preheader340.epil.preheader, label %.preheader340
 
 .preheader340:                                    ; preds = %.preheader341, %.preheader340
-  %indvars.iv.a = phi i64 [ %indvars.iv.next.3, %.preheader340 ], [ 0, %.preheader341 ] ; 5 uses
+  %indvars.iv.a = phi i64 [ %indvars.iv.next.3, %.preheader340 ], [ 0, %.preheader341 ] ; 9 uses
   %niter = phi i64 [ %niter.next.3, %.preheader340 ], [ 0, %.preheader341 ]
-  %12 = trunc nuw nsw i64 %indvars.iv.a to i32
-  %13 = mul i32 %i.as, %12
-  %14 = add i32 %11, %13
-  %15 = sext i32 %14 to i64
-  %16 = shl nsw i64 %15, 2
-  %scevgep.a = getelementptr i8, ptr %i.bh, i64 %16
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.a, i8 0, i64 %i.bf, i1 false), !tbaa !28
-  %17 = trunc i64 %indvars.iv.a to i32
-  %18 = or disjoint i32 %17, 1
-  %19 = mul i32 %i.as, %18
-  %20 = add i32 %11, %19
-  %21 = sext i32 %20 to i64
-  %22 = shl nsw i64 %21, 2
-  %scevgep.1 = getelementptr i8, ptr %i.bh, i64 %22
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.1, i8 0, i64 %i.bf, i1 false), !tbaa !28
-  %23 = trunc i64 %indvars.iv.a to i32
-  %24 = or disjoint i32 %23, 2
-  %25 = mul i32 %i.as, %24
-  %26 = add i32 %11, %25
-  %27 = sext i32 %26 to i64
-  %28 = shl nsw i64 %27, 2
-  %scevgep.2.a = getelementptr i8, ptr %i.bh, i64 %28
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.2.a, i8 0, i64 %i.bf, i1 false), !tbaa !28
-  %29 = trunc i64 %indvars.iv.a to i32
-  %30 = or disjoint i32 %29, 3
-  %31 = mul i32 %i.as, %30
-  %32 = add i32 %11, %31
-  %33 = sext i32 %32 to i64
-  %34 = shl nsw i64 %33, 2
-  %scevgep.3 = getelementptr i8, ptr %i.bh, i64 %34
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.3, i8 0, i64 %i.bf, i1 false), !tbaa !28
-  %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv.a, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %17 = mul i64 %i.bf, %indvars.iv.a
+  %scevgep = getelementptr i8, ptr %16, i64 %17
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep, i8 0, i64 %14, i1 false), !tbaa !28
+  %indvar.next = or disjoint i64 %indvars.iv.a, 1
+  %18 = mul i64 %i.bf, %indvar.next
+  %scevgep.a = getelementptr i8, ptr %16, i64 %18
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.a, i8 0, i64 %14, i1 false), !tbaa !28
+  %indvar.next.1 = or disjoint i64 %indvars.iv.a, 2
+  %19 = mul i64 %i.bf, %indvar.next.1
+  %scevgep.2 = getelementptr i8, ptr %16, i64 %19
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.2, i8 0, i64 %14, i1 false), !tbaa !28
+  %indvar.next.2 = or disjoint i64 %indvars.iv.a, 3
+  %20 = mul i64 %i.bf, %indvar.next.2
+  %scevgep.1 = getelementptr i8, ptr %16, i64 %20
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.1, i8 0, i64 %14, i1 false), !tbaa !28
+  %indvar.next.3 = or disjoint i64 %indvars.iv.a, 4
+  %21 = mul i64 %i.bf, %indvar.next.3
+  %scevgep.4 = getelementptr i8, ptr %16, i64 %21
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.4, i8 0, i64 %14, i1 false), !tbaa !28
+  %indvar.next.4 = or disjoint i64 %indvars.iv.a, 5
+  %22 = mul i64 %i.bf, %indvar.next.4
+  %scevgep.2.a = getelementptr i8, ptr %16, i64 %22
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.2.a, i8 0, i64 %14, i1 false), !tbaa !28
+  %indvar.next.5 = or disjoint i64 %indvars.iv.a, 6
+  %23 = mul i64 %i.bf, %indvar.next.5
+  %scevgep.6 = getelementptr i8, ptr %16, i64 %23
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.6, i8 0, i64 %14, i1 false), !tbaa !28
+  %indvar.next.6 = or disjoint i64 %indvars.iv.a, 7
+  %24 = mul i64 %i.bf, %indvar.next.6
+  %scevgep.3 = getelementptr i8, ptr %16, i64 %24
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.3, i8 0, i64 %14, i1 false), !tbaa !28
+  %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv.a, 8 ; 2 uses
+  %niter.next.3 = add i64 %niter, 8               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge344.unr-lcssa, label %.preheader340, !llvm.loop !56
 
@@ -356,21 +361,17 @@ bb.m:                                             ; preds = %bb.j, %bb.i, %bb.h,
 .preheader340.epil:                               ; preds = %.preheader340.epil, %.preheader340.epil.preheader
   %indvars.iv.epil = phi i64 [ %indvars.iv.epil.init, %.preheader340.epil.preheader ], [ %indvars.iv.next.epil, %.preheader340.epil ] ; 2 uses
   %epil.iter = phi i64 [ 0, %.preheader340.epil.preheader ], [ %epil.iter.next, %.preheader340.epil ]
-  %35 = trunc nuw nsw i64 %indvars.iv.epil to i32
-  %36 = mul i32 %i.as, %35
-  %37 = add i32 %11, %36
-  %38 = sext i32 %37 to i64
-  %39 = shl nsw i64 %38, 2
-  %scevgep.epil = getelementptr i8, ptr %i.bh, i64 %39
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.epil, i8 0, i64 %i.bf, i1 false), !tbaa !28
+  %25 = mul i64 %i.bf, %indvars.iv.epil
+  %scevgep.epil = getelementptr i8, ptr %16, i64 %25
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.epil, i8 0, i64 %14, i1 false), !tbaa !28
   %indvars.iv.next.epil = add nuw nsw i64 %indvars.iv.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %._crit_edge344, label %.preheader340.epil, !llvm.loop !57
 
 ._crit_edge344:                                   ; preds = %.preheader340.epil, %._crit_edge344.unr-lcssa
-  %40 = add nuw nsw i32 %.0271345, 1              ; 2 uses
-  %exitcond395.not = icmp eq i32 %40, %smax394
+  %indvar.next349 = add nuw nsw i64 %indvar348, 1 ; 2 uses
+  %exitcond395.not = icmp eq i64 %indvar.next349, %smax395
   br i1 %exitcond395.not, label %._crit_edge346.split, label %.preheader341, !llvm.loop !59
 
 ._crit_edge346.split:                             ; preds = %._crit_edge344, %bb.k
@@ -771,6 +772,9 @@ declare i32 @llvm.umin.i32(i32, i32) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.sqrt.f64(double) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.sqrt.f32(float) #5
