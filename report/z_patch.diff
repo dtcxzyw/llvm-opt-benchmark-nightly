@@ -1,0 +1,122 @@
+diff --git a/llvm/lib/Analysis/InstructionSimplify.cpp b/llvm/lib/Analysis/InstructionSimplify.cpp
+index 10b159192c4be..ac9f01bc11b75 100644
+--- a/llvm/lib/Analysis/InstructionSimplify.cpp
++++ b/llvm/lib/Analysis/InstructionSimplify.cpp
+@@ -3292,6 +3292,14 @@ static Value *simplifyICmpWithBinOpOnLHS(CmpPredicate Pred, BinaryOperator *LBO,
+     }
+   }
+ 
++  // (X - (X urem Y)) u>= 1 iff X u>= Y.
++  Value *X, *Divisor;
++  if (MaxRecurse && Pred == ICmpInst::ICMP_UGE && match(RHS, m_One()) &&
++      match(LBO, m_Sub(m_Value(X), m_URem(m_Deferred(X), m_Value(Divisor)))))
++    if (Value *V =
++            simplifyICmpInst(ICmpInst::ICMP_UGE, X, Divisor, Q, MaxRecurse - 1))
++      return V;
++
+   // If x is nonzero:
+   // x >>u C <u  x --> true  for C != 0.
+   // x >>u C !=  x --> true  for C != 0.
+diff --git a/llvm/test/Transforms/InstSimplify/domcondition.ll b/llvm/test/Transforms/InstSimplify/domcondition.ll
+index 2893bb155bbe7..b3c70070c58e2 100644
+--- a/llvm/test/Transforms/InstSimplify/domcondition.ll
++++ b/llvm/test/Transforms/InstSimplify/domcondition.ll
+@@ -118,6 +118,98 @@ cond.end:
+   ret i32 %cond
+ }
+ 
++define i1 @urem_sub_nonzero_domcondition(i64 %x, i64 %y) {
++; CHECK-LABEL: @urem_sub_nonzero_domcondition(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[COND:%.*]] = icmp uge i64 [[X:%.*]], [[Y:%.*]]
++; CHECK-NEXT:    br i1 [[COND]], label [[KNOWN:%.*]], label [[EXIT:%.*]]
++; CHECK:       known:
++; CHECK-NEXT:    ret i1 true
++; CHECK:       exit:
++; CHECK-NEXT:    ret i1 false
++;
++entry:
++  %cond = icmp uge i64 %x, %y
++  br i1 %cond, label %known, label %exit
++
++known:
++  %rem = urem i64 %x, %y
++  %sub = sub i64 %x, %rem
++  %cmp = icmp uge i64 %sub, 1
++  ret i1 %cmp
++
++exit:
++  ret i1 false
++}
++
++declare i64 @llvm.umax.i64(i64, i64)
++
++define i64 @urem_sub_umax_domcondition(i64 %x, i64 %y) {
++; CHECK-LABEL: @urem_sub_umax_domcondition(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[COND:%.*]] = icmp ult i64 [[X:%.*]], [[Y:%.*]]
++; CHECK-NEXT:    br i1 [[COND]], label [[EXIT:%.*]], label [[BODY:%.*]]
++; CHECK:       body:
++; CHECK-NEXT:    [[REM:%.*]] = urem i64 [[X]], [[Y]]
++; CHECK-NEXT:    [[SUB:%.*]] = sub i64 [[X]], [[REM]]
++; CHECK-NEXT:    ret i64 [[SUB]]
++; CHECK:       exit:
++; CHECK-NEXT:    ret i64 0
++;
++entry:
++  %cond = icmp ult i64 %x, %y
++  br i1 %cond, label %exit, label %body
++
++body:
++  %rem = urem i64 %x, %y
++  %sub = sub i64 %x, %rem
++  %max = call i64 @llvm.umax.i64(i64 %sub, i64 1)
++  ret i64 %max
++
++exit:
++  ret i64 0
++}
++
++define i1 @urem_sub_nonzero_no_context(i64 %x, i64 %y) {
++; CHECK-LABEL: @urem_sub_nonzero_no_context(
++; CHECK-NEXT:    [[REM:%.*]] = urem i64 [[X:%.*]], [[Y:%.*]]
++; CHECK-NEXT:    [[SUB:%.*]] = sub i64 [[X]], [[REM]]
++; CHECK-NEXT:    [[CMP:%.*]] = icmp uge i64 [[SUB]], 1
++; CHECK-NEXT:    ret i1 [[CMP]]
++;
++  %rem = urem i64 %x, %y
++  %sub = sub i64 %x, %rem
++  %cmp = icmp uge i64 %sub, 1
++  ret i1 %cmp
++}
++
++define i1 @urem_sub_nonzero_different_dividend(i64 %x, i64 %y, i64 %z) {
++; CHECK-LABEL: @urem_sub_nonzero_different_dividend(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[COND:%.*]] = icmp uge i64 [[X:%.*]], [[Y:%.*]]
++; CHECK-NEXT:    br i1 [[COND]], label [[KNOWN:%.*]], label [[EXIT:%.*]]
++; CHECK:       known:
++; CHECK-NEXT:    [[REM:%.*]] = urem i64 [[Z:%.*]], [[Y]]
++; CHECK-NEXT:    [[SUB:%.*]] = sub i64 [[X]], [[REM]]
++; CHECK-NEXT:    [[CMP:%.*]] = icmp uge i64 [[SUB]], 1
++; CHECK-NEXT:    ret i1 [[CMP]]
++; CHECK:       exit:
++; CHECK-NEXT:    ret i1 false
++;
++entry:
++  %cond = icmp uge i64 %x, %y
++  br i1 %cond, label %known, label %exit
++
++known:
++  %rem = urem i64 %z, %y
++  %sub = sub i64 %x, %rem
++  %cmp = icmp uge i64 %sub, 1
++  ret i1 %cmp
++
++exit:
++  ret i1 false
++}
++
+ define i32 @srem_domcondition(i32 %x, i32 %y) {
+ ; CHECK-LABEL: @srem_domcondition(
+ ; CHECK-NEXT:  entry:
