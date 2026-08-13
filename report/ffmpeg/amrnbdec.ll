@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.ba
   %indvars.iv192 = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next193, %bb.ba ] ; 3 uses
   %.0122180 = phi ptr [ %i.p, %.lr.ph ], [ %i.auk, %bb.ba ] ; 3 uses
   %.0125179 = phi i32 [ %i.r, %.lr.ph ], [ %i.aul, %bb.ba ] ; 2 uses
-  %i.co = getelementptr inbounds nuw [2392 x i8], ptr %i.n, i64 %indvars.iv192 ; 132 uses
+  %i.co = getelementptr inbounds nuw [2392 x i8], ptr %i.n, i64 %indvars.iv192 ; 130 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #7
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(96) %4, i8 0, i64 96, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l) #7
@@ -607,9 +607,7 @@ bb.i:                                             ; preds = %.loopexit206
   %i.pb = getelementptr inbounds nuw i8, ptr %i.co, i64 2068 ; 4 uses
   %i.pc = getelementptr inbounds nuw i8, ptr %i.co, i64 544
   %i.pd = getelementptr inbounds nuw i8, ptr %i.co, i64 704 ; 3 uses
-  %5 = getelementptr inbounds nuw i8, ptr %i.co, i64 708
-  %6 = getelementptr inbounds nuw i8, ptr %i.co, i64 724
-  %i.pe = getelementptr inbounds nuw i8, ptr %i.co, i64 740
+  %i.pe = getelementptr inbounds nuw i8, ptr %i.co, i64 712
   %i.pf = getelementptr inbounds nuw i8, ptr %i.co, i64 2076 ; 3 uses
   %.phi.trans.insert.i141 = getelementptr inbounds nuw i8, ptr %i.co, i64 2077 ; 2 uses
   %i.pg = getelementptr inbounds nuw i8, ptr %i.co, i64 2052 ; 2 uses
@@ -1012,71 +1010,62 @@ begin_hunk_2_@amrnb_decode_frame:bb.a
   %i.amf = load float, ptr %i.ame, align 4, !tbaa !47
   %i.amg = call nsz float @llvm.trunc.f32(float %i.amf)
   store float %i.amg, ptr %i.ame, align 4, !tbaa !47
-  %i.amh = getelementptr inbounds nuw [40 x i8], ptr %i.pc, i64 %indvars.iv ; 4 uses
+  %i.amh = getelementptr inbounds nuw [40 x i8], ptr %i.pc, i64 %indvars.iv ; 2 uses
   %i.ami = load i32, ptr %i.fk, align 4, !tbaa !66 ; 4 uses
-  %7 = load float, ptr %i.pd, align 8, !tbaa !47  ; 2 uses
-  %8 = load float, ptr %i.amh, align 4, !tbaa !47
-  %9 = fsub nsz float %7, %8
-  %10 = call nsz float @llvm.fabs.f32(float %9)
-  %i.amj = fdiv nsz float %10, %7
-  %11 = getelementptr inbounds nuw i8, ptr %i.amh, i64 4
-  %i.amk = fpext nsz float %i.amj to double
-  %12 = load <4 x float>, ptr %5, align 4, !tbaa !47 ; 2 uses
-  %13 = load <4 x float>, ptr %11, align 4, !tbaa !47
-  %14 = fsub nsz <4 x float> %12, %13
-  %15 = call nsz <4 x float> @llvm.fabs.v4f32(<4 x float> %14)
-  %16 = fpext <4 x float> %15 to <4 x double>
-  %17 = fpext <4 x float> %12 to <4 x double>
-  %18 = fdiv nsz <4 x double> %16, %17            ; 4 uses
-  %19 = extractelement <4 x double> %18, i64 0
-  %20 = fadd nsz double %19, %i.amk
-  %21 = fptrunc nsz double %20 to float
-  %22 = fpext nsz float %21 to double
-  %23 = extractelement <4 x double> %18, i64 1
-  %i.aml = fadd nsz double %23, %22
+  %5 = load <2 x float>, ptr %i.pd, align 8, !tbaa !47 ; 3 uses
+  %6 = load <2 x float>, ptr %i.amh, align 4, !tbaa !47
+  %7 = fsub nsz <2 x float> %5, %6
+  %8 = extractelement <2 x float> %5, i64 0
+  %9 = call nsz <2 x float> @llvm.fabs.v2f32(<2 x float> %7) ; 2 uses
+  %10 = extractelement <2 x float> %9, i64 0
+  %i.amj = fdiv nsz float %10, %8
+  %11 = extractelement <2 x float> %9, i64 1
+  %i.amk = fpext float %11 to double
+  %12 = extractelement <2 x float> %5, i64 1
+  %13 = fpext nsz float %12 to double
+  %14 = fdiv nsz double %i.amk, %13
+  %15 = fpext nsz float %i.amj to double
+  %16 = getelementptr inbounds nuw i8, ptr %i.amh, i64 8
+  %17 = load <8 x float>, ptr %i.pe, align 8, !tbaa !47 ; 2 uses
+  %18 = load <8 x float>, ptr %16, align 4, !tbaa !47
+  %19 = fsub nsz <8 x float> %17, %18
+  %20 = call nsz <8 x float> @llvm.fabs.v8f32(<8 x float> %19)
+  %21 = fpext <8 x float> %20 to <8 x double>
+  %22 = fpext <8 x float> %17 to <8 x double>
+  %23 = fdiv nsz <8 x double> %21, %22            ; 8 uses
+  %i.aml = fadd nsz double %14, %15
   %i.amm = fptrunc nsz double %i.aml to float
   %i.amn = fpext nsz float %i.amm to double
-  %i.amo = extractelement <4 x double> %18, i64 2
+  %i.amo = extractelement <8 x double> %23, i64 0
   %i.amp = fadd nsz double %i.amo, %i.amn
   %i.amq = fptrunc nsz double %i.amp to float
   %i.amr = fpext nsz float %i.amq to double
-  %i.ams = extractelement <4 x double> %18, i64 3
+  %i.ams = extractelement <8 x double> %23, i64 1
   %i.amt = fadd nsz double %i.ams, %i.amr
   %i.amu = fptrunc nsz double %i.amt to float
-  %24 = getelementptr inbounds nuw i8, ptr %i.amh, i64 20
   %i.amv = fpext nsz float %i.amu to double
-  %25 = load <4 x float>, ptr %6, align 4, !tbaa !47 ; 2 uses
-  %26 = load <4 x float>, ptr %24, align 4, !tbaa !47
-  %27 = fsub nsz <4 x float> %25, %26
-  %28 = call nsz <4 x float> @llvm.fabs.v4f32(<4 x float> %27)
-  %29 = fpext <4 x float> %28 to <4 x double>
-  %30 = fpext <4 x float> %25 to <4 x double>
-  %31 = fdiv nsz <4 x double> %29, %30            ; 4 uses
-  %i.amw = extractelement <4 x double> %31, i64 0
+  %i.amw = extractelement <8 x double> %23, i64 2
   %i.amx = fadd nsz double %i.amw, %i.amv
   %i.amy = fptrunc nsz double %i.amx to float
   %i.amz = fpext nsz float %i.amy to double
-  %i.ana = extractelement <4 x double> %31, i64 1
+  %i.ana = extractelement <8 x double> %23, i64 3
   %i.anb = fadd nsz double %i.ana, %i.amz
   %i.anc = fptrunc nsz double %i.anb to float
   %i.and = fpext nsz float %i.anc to double
-  %i.ane = extractelement <4 x double> %31, i64 2
+  %i.ane = extractelement <8 x double> %23, i64 4
   %i.anf = fadd nsz double %i.ane, %i.and
   %i.ang = fptrunc nsz double %i.anf to float
   %i.anh = fpext nsz float %i.ang to double
-  %i.ani = extractelement <4 x double> %31, i64 3
+  %i.ani = extractelement <8 x double> %23, i64 5
   %i.anj = fadd nsz double %i.ani, %i.anh
   %i.ank = fptrunc nsz double %i.anj to float
-  %32 = load float, ptr %i.pe, align 4, !tbaa !47 ; 2 uses
-  %33 = getelementptr inbounds nuw i8, ptr %i.amh, i64 36
-  %34 = load float, ptr %33, align 4, !tbaa !47
-  %35 = fsub nsz float %32, %34
-  %36 = call nsz float @llvm.fabs.f32(float %35)
-  %37 = fpext float %36 to double
-  %i.anl = fpext nsz float %32 to double
-  %38 = fdiv nsz double %37, %i.anl
-  %39 = fpext nsz float %i.ank to double
-  %i.anm = fadd nsz double %38, %39
+  %24 = fpext nsz float %i.ank to double
+  %25 = extractelement <8 x double> %23, i64 6
+  %op.rdx224 = fadd nsz double %25, %24
+  %26 = fptrunc nsz double %op.rdx224 to float
+  %i.anl = fpext nsz float %26 to double
+  %27 = extractelement <8 x double> %23, i64 7
+  %i.anm = fadd nsz double %27, %i.anl
   %i.ann = fptrunc nsz double %i.anm to float
   %i.ano = load i8, ptr %i.pf, align 4, !tbaa !84
   %i.anp = add i8 %i.ano, 1
@@ -1479,7 +1468,7 @@ declare i32 @llvm.umin.i32(i32, i32) #5
 declare i4 @llvm.ctpop.i4(i4) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <4 x float> @llvm.fabs.v4f32(<4 x float>) #5
+declare <8 x float> @llvm.fabs.v8f32(<8 x float>) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x double> @llvm.fmuladd.v4f64(<4 x double>, <4 x double>, <4 x double>) #5
@@ -1492,6 +1481,9 @@ declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x float> @llvm.fabs.v2f32(<2 x float>) #5
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #6
