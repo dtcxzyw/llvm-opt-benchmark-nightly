@@ -201,9 +201,9 @@ bb.a:
   br label %.outer
 
 .outer:                                           ; preds = %.outer.backedge, %bb.a
-  %.0151.ph = phi i32 [ 0, %bb.a ], [ %.0151.ph.be, %.outer.backedge ] ; 13 uses
+  %.0151.ph = phi i32 [ 0, %bb.a ], [ %.0151.ph.be, %.outer.backedge ] ; 12 uses
   %.0144.ph = phi i32 [ 0, %bb.a ], [ %.0144.ph.be, %.outer.backedge ] ; 5 uses
-  %.0142.ph = phi i32 [ 0, %bb.a ], [ %.0142.ph.be, %.outer.backedge ] ; 6 uses
+  %.0142.ph = phi i32 [ 0, %bb.a ], [ %.0142.ph.be, %.outer.backedge ] ; 5 uses
   %.0139.ph = phi i32 [ 0, %bb.a ], [ %.0139.ph.be, %.outer.backedge ]
   %.0136.ph = phi i32 [ 0, %bb.a ], [ %.0136.ph.be, %.outer.backedge ]
   %.0135.ph = phi i32 [ undef, %bb.a ], [ %.0135.ph.be, %.outer.backedge ]
@@ -217,7 +217,7 @@ bb.a:
   %.0135.ph185 = phi i32 [ %.0135.ph, %.outer ], [ %.0135319, %.loopexit186 ] ; 22 uses
   %i.t = icmp eq i32 %.0136.ph184, 0              ; 15 uses
   %or.cond17.not.peel = select i1 %or.cond, i1 %i.t, i1 false
-  br i1 %or.cond17.not.peel, label %.loopexit385.loopexit857, label %.critedge.peel
+  br i1 %or.cond17.not.peel, label %.loopexit385, label %.critedge.peel
 
 .critedge.peel:                                   ; preds = %.outer182
   %i.u = tail call i32 @avio_rl32(ptr noundef %i.d) #4 ; 13 uses
@@ -326,11 +326,11 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   %.not166.peel = icmp eq i32 %.1149.peel, 0
   br i1 %.not166.peel, label %.peel.next, label %.loopexit390
 
-.peel.next:                                       ; preds = %bb.o, %bb.aa
-  %.0135 = phi i32 [ %.1, %bb.aa ], [ %.1.peel, %bb.o ] ; 22 uses
-  br i1 %or.cond, label %.loopexit385.loopexit, label %.critedge
+.peel.next:                                       ; preds = %bb.o
+  br i1 %or.cond, label %.loopexit385, label %.critedge
 
-.critedge:                                        ; preds = %.peel.next
+.critedge:                                        ; preds = %.peel.next, %bb.aa
+  %.0135 = phi i32 [ %.1, %bb.aa ], [ %.1.peel, %.peel.next ] ; 22 uses
   %i.al = tail call i32 @avio_rl32(ptr noundef %i.d) #4 ; 13 uses
   %i.am = tail call i32 @avio_feof(ptr noundef %i.d) #4
   %.not = icmp eq i32 %i.am, 0
@@ -435,7 +435,7 @@ bb.aa:                                            ; preds = %.sink.split642, %bb
   %.1149 = phi i32 [ %.0148, %bb.w ], [ %i.bd, %.sink.split642 ] ; 2 uses
   %.1 = phi i32 [ %.0135, %bb.w ], [ %.1.ph, %.sink.split642 ] ; 2 uses
   %.not166 = icmp eq i32 %.1149, 0
-  br i1 %.not166, label %.peel.next, label %.loopexit390, !llvm.loop !91
+  br i1 %.not166, label %.critedge, label %.loopexit390, !llvm.loop !91
 
 .loopexit390:                                     ; preds = %bb.o, %bb.aa
   %.1149.lcssa = phi i32 [ %.1149, %bb.aa ], [ %.1149.peel, %bb.o ] ; 3 uses
@@ -711,22 +711,12 @@ bb.ax:                                            ; preds = %bb.av, %bb.av, %bb.
   %i.ed = tail call i64 @avio_skip(ptr noundef %i.d, i64 noundef %i.ec) #4 ; 0 uses
   br label %.outer.backedge
 
-.loopexit385.loopexit:                            ; preds = %.peel.next
+.loopexit385:                                     ; preds = %.outer182, %.peel.next
   %2 = icmp ne i32 %.0142.ph, 0
   %3 = icmp eq i32 %.0151.ph, 0
-  br label %.loopexit385
-
-.loopexit385.loopexit857:                         ; preds = %.outer182
-  %4 = icmp ne i32 %.0142.ph, 0
-  %5 = icmp eq i32 %.0151.ph, 0
-  br label %.loopexit385
-
-.loopexit385:                                     ; preds = %.loopexit385.loopexit857, %.loopexit385.loopexit
-  %6 = phi i1 [ %4, %.loopexit385.loopexit857 ], [ %2, %.loopexit385.loopexit ]
-  %7 = phi i1 [ %5, %.loopexit385.loopexit857 ], [ %3, %.loopexit385.loopexit ]
   %i.ee = icmp slt i32 %.0144.ph, 0
-  %or.cond13.not856 = or i1 %i.ee, %7
-  %or.cond15 = or i1 %6, %or.cond13.not856
+  %or.cond13.not856 = or i1 %i.ee, %3
+  %or.cond15 = or i1 %2, %or.cond13.not856
   %.0144. = select i1 %or.cond15, i32 %.0144.ph, i32 -11
   br label %.loopexit179
 

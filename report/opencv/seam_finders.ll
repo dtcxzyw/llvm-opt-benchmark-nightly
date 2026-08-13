@@ -204,7 +204,7 @@ bb.av:                                            ; preds = %bb.ap, %bb.an
   %i.ls = add nsw i64 %indvars.iv295, %i.ln       ; 2 uses
   %invariant.op = add nuw nsw i64 %i.lq, 10
   %i.lt = icmp sgt i32 %indvars.iv289, -11
-  br label %26
+  br i1 %i.lt, label %bb.ay, label %bb.az
 
 ._crit_edge281.split:                             ; preds = %._crit_edge279, %.preheader.lr.ph, %.preheader272
   %i.lu = load ptr, ptr %i.dh, align 8, !tbaa !455 ; 3 uses
@@ -274,12 +274,9 @@ _ZN2cv6detail7GCGraphIfED2Ev.exit:                ; preds = %_ZNSt6vectorIN2cv6d
   %exitcond299.not = icmp eq i64 %indvars.iv.next296, %.sroa.28.8.extract.shift
   br i1 %exitcond299.not, label %._crit_edge281.split, label %.preheader, !llvm.loop !466
 
-26:                                               ; preds = %.preheader, %bb.bi
-  %indvars.iv291 = phi i64 [ 0, %.preheader ], [ %indvars.iv.next292, %bb.bi ] ; 5 uses
+bb.ay:                                            ; preds = %.preheader, %bb.bi
+  %indvars.iv291 = phi i64 [ %indvars.iv.next292, %bb.bi ], [ 0, %.preheader ] ; 5 uses
   %.reass = add nuw nsw i64 %indvars.iv291, %invariant.op ; 2 uses
-  br i1 %i.lt, label %bb.ay, label %bb.az
-
-bb.ay:                                            ; preds = %26
   %i.me = load ptr, ptr %i.kx, align 8, !tbaa !420
   %i.mf = load ptr, ptr %23, align 8, !tbaa !425  ; 2 uses
   %i.mg = ptrtoint ptr %i.me to i64
@@ -290,7 +287,7 @@ bb.ay:                                            ; preds = %26
   %i.mk = icmp slt i64 %.reass, %i.mj
   br i1 %i.mk, label %bb.bc, label %bb.az
 
-bb.az:                                            ; preds = %bb.ay, %26
+bb.az:                                            ; preds = %.preheader, %bb.ay
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #28
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEPKcRKS3_(ptr noundef nonnull align 8 dereferenceable(32) %5, ptr noundef nonnull @.str.29, ptr noundef nonnull align 1 dereferenceable(1) %6)
@@ -393,7 +390,7 @@ bb.bh:                                            ; preds = %bb.bg
 bb.bi:                                            ; preds = %.sink.split, %bb.bd, %bb.bg
   %indvars.iv.next292 = add nuw nsw i64 %indvars.iv291, 1 ; 2 uses
   %exitcond294.not = icmp eq i64 %indvars.iv.next292, %wide.trip.count
-  br i1 %exitcond294.not, label %._crit_edge279, label %26, !llvm.loop !468
+  br i1 %exitcond294.not, label %._crit_edge279, label %bb.ay, !llvm.loop !468
 
 .body255:                                         ; preds = %bb.bf, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %bb.ao
   %.pn.pn = phi { ptr, i32 } [ %.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %i.km, %bb.ao ], [ %i.ni, %bb.bf ], [ %i.ml, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i ]

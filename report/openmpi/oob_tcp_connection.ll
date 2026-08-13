@@ -203,7 +203,7 @@ bb.s:                                             ; preds = %.thread481
 
 .thread:                                          ; preds = %._crit_edge, %bb.s, %.thread481, %bb.r
   %i.dm = icmp slt i32 %i.cn, 1
-  %i.dn = icmp slt i32 %i.cq, 1                   ; 2 uses
+  %i.dn = icmp slt i32 %i.cq, 1
   %i.do = getelementptr inbounds nuw i8, ptr %i.cs, i64 128 ; 3 uses
   %i.dp = getelementptr inbounds nuw i8, ptr %i.aj, i64 696 ; 2 uses
   %i.dq = getelementptr inbounds nuw i8, ptr %i.aj, i64 144 ; 13 uses
@@ -227,16 +227,16 @@ bb.s:                                             ; preds = %.thread481
   br label %.preheader.lr.ph.split.us
 
 .preheader.lr.ph.split.us:                        ; preds = %.preheader.lr.ph.split.us.preheader, %.backedge
-  %.0245531 = phi i32 [ %i.eq, %.backedge ], [ 0, %.preheader.lr.ph.split.us.preheader ]
-  %.0248530 = phi i32 [ %i.er, %.backedge ], [ 0, %.preheader.lr.ph.split.us.preheader ]
+  %.0245531 = phi i32 [ %i.er, %.backedge ], [ 0, %.preheader.lr.ph.split.us.preheader ]
+  %.0248530 = phi i32 [ %i.eq, %.backedge ], [ 0, %.preheader.lr.ph.split.us.preheader ]
   %i.dz = load ptr, ptr %i.do, align 8, !tbaa !67
   br label %.preheader.us
 
 .preheader.us:                                    ; preds = %._crit_edge372.us, %.preheader.lr.ph.split.us
   %indvars.iv431 = phi i64 [ %indvars.iv.next432, %._crit_edge372.us ], [ 0, %.preheader.lr.ph.split.us ] ; 3 uses
   %.0242377.us = phi i32 [ %.2244.us.lcssa, %._crit_edge372.us ], [ 0, %.preheader.lr.ph.split.us ] ; 2 uses
-  %.1246376.us = phi i32 [ %i.eq, %._crit_edge372.us ], [ %.0245531, %.preheader.lr.ph.split.us ] ; 2 uses
-  %.1249375.us = phi i32 [ %i.er, %._crit_edge372.us ], [ %.0248530, %.preheader.lr.ph.split.us ] ; 2 uses
+  %.1246376.us = phi i32 [ %i.eq, %._crit_edge372.us ], [ %.0248530, %.preheader.lr.ph.split.us ] ; 2 uses
+  %.1249375.us = phi i32 [ %i.er, %._crit_edge372.us ], [ %.0245531, %.preheader.lr.ph.split.us ] ; 2 uses
   %i.ea = getelementptr inbounds nuw [8 x i8], ptr %i.dz, i64 %indvars.iv431
   %i.eb = load ptr, ptr %i.ea, align 8, !tbaa !70 ; 3 uses
   %i.ec = trunc nuw nsw i64 %indvars.iv431 to i32 ; 2 uses
@@ -473,7 +473,7 @@ bb.z:                                             ; preds = %bb.y
   tail call void (i32, ptr, ...) @pmix_output(i32 noundef %i.hf, ptr noundef nonnull @.str.7, ptr noundef %i.hl, ptr noundef %i.hn, i32 noundef %i.ho) #16
   br label %.backedge
 
-.backedge:                                        ; preds = %bb.bf, %bb.ab, %bb.ac, %bb.ad, %bb.x, %bb.y, %bb.z, %.preheader342, %.lr.ph405, %bb.bv
+.backedge:                                        ; preds = %bb.bf, %bb.ab, %bb.ac, %bb.ad, %bb.x, %bb.y, %bb.z, %.lr.ph405, %bb.bv
   br label %.preheader.lr.ph.split.us, !llvm.loop !89
 
 bb.aa:                                            ; preds = %bb.w
@@ -697,12 +697,9 @@ bb.az:                                            ; preds = %bb.ay
   %i.lo = load i32, ptr %i.ln, align 4, !tbaa !15
   %i.lp = and i32 %i.lo, -2
   %switch = icmp eq i32 %i.lp, 98
-  br i1 %switch, label %.preheader342, label %bb.ba
+  br i1 %switch, label %.lr.ph405, label %bb.ba
 
-.preheader342:                                    ; preds = %bb.az
-  br i1 %i.dn, label %.backedge, label %.lr.ph405, !llvm.loop !89
-
-.lr.ph405:                                        ; preds = %.preheader342
+.lr.ph405:                                        ; preds = %bb.az
   %i.lq = load ptr, ptr %i.do, align 8, !tbaa !67
   %i.lr = getelementptr inbounds [8 x i8], ptr %i.lq, i64 %i.eu
   %i.ls = load ptr, ptr %i.lr, align 8, !tbaa !70

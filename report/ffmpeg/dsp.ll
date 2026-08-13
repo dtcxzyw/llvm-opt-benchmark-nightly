@@ -204,21 +204,18 @@ bb.a:
   %brmerge88 = select i1 %or.cond82, i1 true, i1 %or.cond83.not94 ; 2 uses
   %.076.idx = select i1 %brmerge88, i64 %i.e, i64 0
   %.mux.idx = select i1 %or.cond83.not94, i64 %i.f, i64 0
-  br label %10
+  br i1 %brmerge, label %bb.b, label %._crit_edge
 
 ._crit_edge87.split:                              ; preds = %._crit_edge, %.preheader.lr.ph, %bb.a
   ret void
 
-._crit_edge:                                      ; preds = %11
+._crit_edge:                                      ; preds = %bb.b, %.preheader
   %indvars.iv.next97 = add nuw nsw i64 %indvars.iv96, 1 ; 2 uses
   %exitcond100.not = icmp eq i64 %indvars.iv.next97, %wide.trip.count99
   br i1 %exitcond100.not, label %._crit_edge87.split, label %.preheader, !llvm.loop !855
 
-10:                                               ; preds = %.preheader, %11
-  %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %11 ] ; 3 uses
-  br i1 %brmerge, label %bb.b, label %11
-
-bb.b:                                             ; preds = %10
+bb.b:                                             ; preds = %.preheader, %bb.b
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.b ], [ 0, %.preheader ] ; 3 uses
   %i.ab = trunc nuw nsw i64 %indvars.iv to i32
   %i.ac = shl i32 %i.ab, %6
   %i.ad = sext i32 %i.ac to i64
@@ -294,12 +291,9 @@ bb.b:                                             ; preds = %10
   %i.cq = tail call i32 @llvm.umin.i32(i32 %i.cp, i32 4095)
   %i.cr = trunc nuw nsw i32 %i.cq to i16
   store i16 %i.cr, ptr %i.ag, align 2, !tbaa !45
-  br label %11
-
-11:                                               ; preds = %10, %bb.b
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %10, !llvm.loop !856
+  br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !856
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
@@ -702,21 +696,18 @@ bb.a:
   %brmerge88 = select i1 %or.cond82, i1 true, i1 %or.cond83.not94 ; 2 uses
   %.076.idx = select i1 %brmerge88, i64 %i.e, i64 0
   %.mux.idx = select i1 %or.cond83.not94, i64 %i.f, i64 0
-  br label %10
+  br i1 %brmerge, label %bb.b, label %._crit_edge
 
 ._crit_edge87.split:                              ; preds = %._crit_edge, %.preheader.lr.ph, %bb.a
   ret void
 
-._crit_edge:                                      ; preds = %11
+._crit_edge:                                      ; preds = %bb.b, %.preheader
   %indvars.iv.next97 = add nuw nsw i64 %indvars.iv96, 1 ; 2 uses
   %exitcond100.not = icmp eq i64 %indvars.iv.next97, %wide.trip.count99
   br i1 %exitcond100.not, label %._crit_edge87.split, label %.preheader, !llvm.loop !1538
 
-10:                                               ; preds = %.preheader, %11
-  %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %11 ] ; 3 uses
-  br i1 %brmerge, label %bb.b, label %11
-
-bb.b:                                             ; preds = %10
+bb.b:                                             ; preds = %.preheader, %bb.b
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.b ], [ 0, %.preheader ] ; 3 uses
   %i.ab = trunc nuw nsw i64 %indvars.iv to i32
   %i.ac = shl i32 %i.ab, %6
   %i.ad = sext i32 %i.ac to i64
@@ -792,12 +783,9 @@ bb.b:                                             ; preds = %10
   %i.cq = tail call i32 @llvm.umin.i32(i32 %i.cp, i32 1023)
   %i.cr = trunc nuw nsw i32 %i.cq to i16
   store i16 %i.cr, ptr %i.ag, align 2, !tbaa !45
-  br label %11
-
-11:                                               ; preds = %10, %bb.b
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %10, !llvm.loop !1539
+  br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !1539
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
@@ -1200,21 +1188,18 @@ bb.a:
   %brmerge88 = select i1 %or.cond82, i1 true, i1 %or.cond83.not94 ; 2 uses
   %.076.idx = select i1 %brmerge88, i64 %i.c, i64 0
   %.mux.idx = select i1 %or.cond83.not94, i64 %i.d, i64 0
-  br label %10
+  br i1 %brmerge, label %bb.b, label %._crit_edge
 
 ._crit_edge87.split:                              ; preds = %._crit_edge, %.preheader.lr.ph, %bb.a
   ret void
 
-._crit_edge:                                      ; preds = %11
+._crit_edge:                                      ; preds = %bb.b, %.preheader
   %indvars.iv.next97 = add nuw nsw i64 %indvars.iv96, 1 ; 2 uses
   %exitcond100.not = icmp eq i64 %indvars.iv.next97, %wide.trip.count99
   br i1 %exitcond100.not, label %._crit_edge87.split, label %.preheader, !llvm.loop !2264
 
-10:                                               ; preds = %.preheader, %11
-  %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %11 ] ; 3 uses
-  br i1 %brmerge, label %bb.b, label %11
-
-bb.b:                                             ; preds = %10
+bb.b:                                             ; preds = %.preheader, %bb.b
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.b ], [ 0, %.preheader ] ; 3 uses
   %i.z = trunc nuw nsw i64 %indvars.iv to i32
   %i.aa = shl i32 %i.z, %6
   %i.ab = sext i32 %i.aa to i64
@@ -1292,12 +1277,9 @@ bb.b:                                             ; preds = %10
   %i.co = trunc nuw i32 %i.cm to i8
   %.0.i84 = select i1 %.not.i, i8 %i.co, i8 %i.cn
   store i8 %.0.i84, ptr %i.ae, align 1, !tbaa !62
-  br label %11
-
-11:                                               ; preds = %10, %bb.b
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %10, !llvm.loop !2265
+  br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !2265
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable

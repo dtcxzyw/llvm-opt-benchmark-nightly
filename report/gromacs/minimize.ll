@@ -204,7 +204,7 @@ vec.epilog.scalar.ph1692:                         ; preds = %vec.epilog.scalar.p
 .preheader.lr.ph:                                 ; preds = %.preheader990
   %i.bbz = load ptr, ptr %7, align 8
   %i.bca = load ptr, ptr %6, align 8
-  br label %.preheader
+  br i1 %.not.i.i.i.i, label %._crit_edge1106, label %.lr.ph1095
 
 .lr.ph1092:                                       ; preds = %.lr.ph1092.preheader, %.lr.ph1092
   %indvars.iv1235 = phi i64 [ %indvars.iv.next1236, %.lr.ph1092 ], [ %indvars.iv1235.ph, %.lr.ph1092.preheader ] ; 2 uses
@@ -229,12 +229,9 @@ vec.epilog.scalar.ph1692:                         ; preds = %vec.epilog.scalar.p
   %i.bch = load ptr, ptr %i.bcg, align 8, !tbaa !524 ; 2 uses
   br label %bb.es
 
-.preheader:                                       ; preds = %.preheader.lr.ph, %._crit_edge1101
-  %.04421103 = phi i32 [ 0, %.preheader.lr.ph ], [ %i.bfm, %._crit_edge1101 ]
-  %.24501102 = phi i32 [ %.0448.lcssa, %.preheader.lr.ph ], [ %spec.store.select10, %._crit_edge1101 ] ; 2 uses
-  br i1 %.not.i.i.i.i, label %._crit_edge1101, label %.lr.ph1095
-
-.lr.ph1095:                                       ; preds = %.preheader
+.lr.ph1095:                                       ; preds = %.preheader.lr.ph, %._crit_edge1101
+  %.04421103 = phi i32 [ %i.bfm, %._crit_edge1101 ], [ 0, %.preheader.lr.ph ]
+  %.24501102 = phi i32 [ %spec.store.select10, %._crit_edge1101 ], [ %.0448.lcssa, %.preheader.lr.ph ] ; 2 uses
   %i.bci = sext i32 %.24501102 to i64             ; 4 uses
   %i.bcj = getelementptr inbounds nuw [24 x i8], ptr %i.bbz, i64 %i.bci
   %i.bck = load ptr, ptr %i.bcj, align 8, !tbaa !524 ; 9 uses
@@ -430,13 +427,13 @@ vec.epilog.scalar.ph.prol.loopexit:               ; preds = %vec.epilog.scalar.p
   %niter2061.ncmp.7 = icmp eq i64 %niter2061.next.7, %unroll_iter2060
   br i1 %niter2061.ncmp.7, label %iter.check.unr-lcssa, label %.lr.ph1095.new, !llvm.loop !857
 
-._crit_edge1101:                                  ; preds = %vec.epilog.scalar.ph.prol.loopexit, %vec.epilog.scalar.ph, %middle.block, %vec.epilog.middle.block, %.preheader
+._crit_edge1101:                                  ; preds = %vec.epilog.scalar.ph.prol.loopexit, %vec.epilog.scalar.ph, %vec.epilog.middle.block, %middle.block
   %i.bfl = add nsw i32 %.24501102, 1              ; 2 uses
   %.not567 = icmp slt i32 %i.bfl, %spec.select609
   %spec.store.select10 = select i1 %.not567, i32 %i.bfl, i32 0
   %i.bfm = add nuw nsw i32 %.04421103, 1          ; 2 uses
   %exitcond1253.not = icmp eq i32 %i.bfm, %spec.select609
-  br i1 %exitcond1253.not, label %.preheader989, label %.preheader, !llvm.loop !858
+  br i1 %exitcond1253.not, label %.preheader989, label %.lr.ph1095, !llvm.loop !858
 
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.prol.loopexit, %vec.epilog.scalar.ph
   %indvars.iv1247 = phi i64 [ %indvars.iv.next1248.7, %vec.epilog.scalar.ph ], [ %indvars.iv1247.unr, %vec.epilog.scalar.ph.prol.loopexit ] ; 10 uses
@@ -527,7 +524,7 @@ bb.er:                                            ; preds = %.epil.preheader2065
   store float %.sink1541.epil, ptr %i.bhk, align 4, !tbaa !333
   br label %._crit_edge1106
 
-._crit_edge1106:                                  ; preds = %._crit_edge1106.loopexit.epilog-lcssa, %._crit_edge1106.loopexit.unr-lcssa, %.preheader989
+._crit_edge1106:                                  ; preds = %._crit_edge1106.loopexit.epilog-lcssa, %._crit_edge1106.loopexit.unr-lcssa, %.preheader.lr.ph, %.preheader989
   br i1 %i.p, label %bb.ex, label %bb.fl
 
 bb.es:                                            ; preds = %bb.ew, %.lr.ph1105.new

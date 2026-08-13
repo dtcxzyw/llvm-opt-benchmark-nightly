@@ -33,7 +33,7 @@ bb.a:
 
 .split.preheader:                                 ; preds = %bb.a
   %.not1240 = icmp ult ptr %i.a, %2
-  br label %.split
+  br i1 %.not1240, label %.loopexit1456.sink.split, label %.split
 
 .split.us:                                        ; preds = %bb.a
   %i.k = load i32, ptr %i.d, align 4, !tbaa !8    ; 2 uses
@@ -56,8 +56,7 @@ bb.b:                                             ; preds = %.split.us
   %.0989 = phi ptr [ %i.qe, %bb.fo ], [ %i.a, %.split.preheader ] ; 6 uses
   %i.s = load i32, ptr %i.d, align 4, !tbaa !8    ; 2 uses
   %i.t = icmp ult i32 %i.s, 17
-  %or.cond = or i1 %i.t, %.not1240
-  br i1 %or.cond, label %.loopexit1456.sink.split, label %bb.c
+  br i1 %i.t, label %.loopexit1456.sink.split, label %bb.c
 
 bb.c:                                             ; preds = %.split
   %i.u = zext i32 %i.s to i64
@@ -460,8 +459,8 @@ bb.fo:                                            ; preds = %bb.fn
   %.not1335 = icmp eq i8 %i.qf, 0
   br i1 %.not1335, label %.loopexit1456, label %.split
 
-.loopexit1456.sink.split:                         ; preds = %bb.f, %bb.c, %.split, %bb.b, %.split.us, %.split1503
-  %.str.1.sink = phi ptr [ @.str.1, %bb.b ], [ @.str.2, %.split1503 ], [ @.str.1, %.split.us ], [ @.str.1, %.split ], [ @.str.1, %bb.c ], [ @.str.4, %bb.f ]
+.loopexit1456.sink.split:                         ; preds = %bb.f, %.split, %bb.c, %bb.b, %.split.us, %.split.preheader, %.split1503
+  %.str.1.sink = phi ptr [ @.str.1, %bb.b ], [ @.str.2, %.split1503 ], [ @.str.1, %.split.preheader ], [ @.str.1, %.split.us ], [ @.str.1, %bb.c ], [ @.str.1, %.split ], [ @.str.4, %bb.f ]
   tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull %.str.1.sink) #5
   br label %.loopexit1456
 
@@ -546,22 +545,17 @@ bb.fu:                                            ; preds = %bb.fs
   %i.sb = zext i32 %i.sa to i64
   %i.sc = getelementptr i8, ptr %0, i64 %i.sb     ; 3 uses
   %.not = icmp eq i16 %4, 0
-  br i1 %.not, label %._crit_edge, label %.lr.ph1508
+  br i1 %.not, label %._crit_edge, label %.lr.ph1508.split.a
 
-.lr.ph1508:                                       ; preds = %bb.fu
+.lr.ph1508.split.a:                               ; preds = %bb.fu
   %7 = icmp ult i32 %1, 40
-  br i1 %7, label %.split1510, label %.lr.ph1508.split.preheader
-
-.lr.ph1508.split.preheader:                       ; preds = %.lr.ph1508
   %.not1343 = icmp ult ptr %i.sc, %0
-  br label %.lr.ph1508.split.a
+  %or.cond1617 = select i1 %7, i1 true, i1 %.not1343
+  br i1 %or.cond1617, label %.split1510, label %bb.fv
 
-.lr.ph1508.split.a:                               ; preds = %.lr.ph1508.split.preheader, %bb.fw
-  %indvars.iv = phi i64 [ 0, %.lr.ph1508.split.preheader ], [ %indvars.iv.next, %bb.fw ] ; 2 uses
-  %.19901506 = phi ptr [ %i.sc, %.lr.ph1508.split.preheader ], [ %i.sr, %bb.fw ] ; 6 uses
-  br i1 %.not1343, label %.split1510, label %bb.fv
-
-bb.fv:                                            ; preds = %.lr.ph1508.split.a
+bb.fv:                                            ; preds = %.lr.ph1508.split.a, %bb.fw
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.fw ], [ 0, %.lr.ph1508.split.a ] ; 2 uses
+  %.19901506 = phi ptr [ %i.sr, %bb.fw ], [ %i.sc, %.lr.ph1508.split.a ] ; 6 uses
   %i.sd = ptrtoint ptr %.19901506 to i64          ; 2 uses
   %i.se = add i64 %i.sd, 40                       ; 2 uses
   %.not1344 = icmp ule i64 %i.se, %i.i
@@ -571,7 +565,7 @@ bb.fv:                                            ; preds = %.lr.ph1508.split.a
   %or.cond1421 = and i1 %i.sg, %or.cond1420
   br i1 %or.cond1421, label %bb.fw, label %.split1510
 
-.split1510:                                       ; preds = %.lr.ph1508.split.a, %bb.fv, %.lr.ph1508
+.split1510:                                       ; preds = %bb.fv, %.lr.ph1508.split.a
   tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.8) #5
   br label %bb.ga
 
@@ -593,7 +587,7 @@ bb.fw:                                            ; preds = %bb.fv
   %i.sr = getelementptr inbounds nuw i8, ptr %.19901506, i64 40 ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %i.b
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph1508.split.a
+  br i1 %exitcond.not, label %._crit_edge, label %bb.fv
 
 ._crit_edge:                                      ; preds = %bb.fw, %bb.fu
   %.1990.lcssa = phi ptr [ %i.sc, %bb.fu ], [ %i.sr, %bb.fw ] ; 3 uses

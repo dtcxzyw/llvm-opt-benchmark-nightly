@@ -204,9 +204,9 @@ _ZN2cv13computeRadiusIfEENS_4Mat_IT_EERKNS_3MatE.exit: ; preds = %._crit_edge.i.
   %wide.trip.count = zext nneg i32 %0 to i64
   %.idx = shl nuw nsw i64 %i.ex, 4
   %i.fc = icmp sgt i32 %i.ew, 0
-  br label %23
+  br i1 %i.fc, label %.lr.ph.preheader, label %._crit_edge105
 
-._crit_edge105:                                   ; preds = %._crit_edge, %_ZN2cv13computeRadiusIfEENS_4Mat_IT_EERKNS_3MatE.exit
+._crit_edge105:                                   ; preds = %._crit_edge, %.lr.ph104, %_ZN2cv13computeRadiusIfEENS_4Mat_IT_EERKNS_3MatE.exit
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %21) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %21) #20
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %12) #20
@@ -317,14 +317,11 @@ bb.ac:                                            ; preds = %bb.k
   call void @llvm.lifetime.end.p0(ptr nonnull %21) #20
   br label %bb.ad
 
-23:                                               ; preds = %.lr.ph104, %._crit_edge
-  %indvars.iv = phi i64 [ 0, %.lr.ph104 ], [ %indvars.iv.next, %._crit_edge ] ; 7 uses
-  %24 = mul i64 %i.ev, %indvars.iv
-  %25 = getelementptr inbounds nuw i8, ptr %i.et, i64 %24 ; 2 uses
-  %26 = getelementptr inbounds nuw i8, ptr %25, i64 %.idx
-  br i1 %i.fc, label %.lr.ph.preheader, label %._crit_edge
-
-.lr.ph.preheader:                                 ; preds = %23
+.lr.ph.preheader:                                 ; preds = %.lr.ph104, %._crit_edge
+  %indvars.iv = phi i64 [ %indvars.iv.next, %._crit_edge ], [ 0, %.lr.ph104 ] ; 7 uses
+  %23 = mul i64 %i.ev, %indvars.iv
+  %24 = getelementptr inbounds nuw i8, ptr %i.et, i64 %23 ; 2 uses
+  %25 = getelementptr inbounds nuw i8, ptr %24, i64 %.idx
   %i.fp = mul i64 %i.fb, %indvars.iv
   %i.fq = getelementptr inbounds nuw i8, ptr %i.ez, i64 %i.fp
   %i.fr = mul i64 %i.er, %indvars.iv
@@ -339,7 +336,7 @@ bb.ac:                                            ; preds = %bb.k
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %.062102 = phi ptr [ %i.gr, %.lr.ph ], [ %i.fq, %.lr.ph.preheader ] ; 2 uses
-  %.064101 = phi ptr [ %i.gq, %.lr.ph ], [ %25, %.lr.ph.preheader ] ; 4 uses
+  %.064101 = phi ptr [ %i.gq, %.lr.ph ], [ %24, %.lr.ph.preheader ] ; 4 uses
   %.065100 = phi ptr [ %i.gp, %.lr.ph ], [ %i.fs, %.lr.ph.preheader ] ; 2 uses
   %.06699 = phi ptr [ %i.go, %.lr.ph ], [ %i.fu, %.lr.ph.preheader ] ; 2 uses
   %.06798 = phi ptr [ %i.gn, %.lr.ph ], [ %i.fw, %.lr.ph.preheader ] ; 2 uses
@@ -367,13 +364,13 @@ bb.ac:                                            ; preds = %bb.k
   %i.gp = getelementptr inbounds nuw i8, ptr %.065100, i64 4
   %i.gq = getelementptr inbounds nuw i8, ptr %.064101, i64 16 ; 2 uses
   %i.gr = getelementptr inbounds nuw i8, ptr %.062102, i64 4
-  %i.gs = icmp ult ptr %i.gq, %26
+  %i.gs = icmp ult ptr %i.gq, %25
   br i1 %i.gs, label %.lr.ph, label %._crit_edge, !llvm.loop !192
 
-._crit_edge:                                      ; preds = %.lr.ph, %23
+._crit_edge:                                      ; preds = %.lr.ph
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge105, label %23, !llvm.loop !193
+  br i1 %exitcond.not, label %._crit_edge105, label %.lr.ph.preheader, !llvm.loop !193
 
 bb.ad:                                            ; preds = %bb.ac, %bb.ab, %bb.y, %bb.v, %bb.s, %.body87
   %.pn83 = phi { ptr, i32 } [ %i.fo, %bb.ac ], [ %.pn81, %bb.ab ], [ %.pn79, %bb.y ], [ %.pn77, %bb.v ], [ %.pn75, %bb.s ], [ %.pn70.pn.pn, %.body87 ]
@@ -776,9 +773,9 @@ _ZN2cv13computeRadiusIdEENS_4Mat_IT_EERKNS_3MatE.exit: ; preds = %._crit_edge.i.
   %wide.trip.count = zext nneg i32 %0 to i64
   %.idx = shl nuw nsw i64 %i.ec, 5
   %i.eh = icmp sgt i32 %i.eb, 0
-  br label %23
+  br i1 %i.eh, label %.lr.ph.preheader, label %._crit_edge105
 
-._crit_edge105:                                   ; preds = %._crit_edge, %_ZN2cv13computeRadiusIdEENS_4Mat_IT_EERKNS_3MatE.exit
+._crit_edge105:                                   ; preds = %._crit_edge, %.lr.ph104, %_ZN2cv13computeRadiusIdEENS_4Mat_IT_EERKNS_3MatE.exit
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %21) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %21) #20
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %12) #20
@@ -889,14 +886,11 @@ bb.ac:                                            ; preds = %bb.k
   call void @llvm.lifetime.end.p0(ptr nonnull %21) #20
   br label %bb.ad
 
-23:                                               ; preds = %.lr.ph104, %._crit_edge
-  %indvars.iv = phi i64 [ 0, %.lr.ph104 ], [ %indvars.iv.next, %._crit_edge ] ; 7 uses
-  %24 = mul i64 %i.ea, %indvars.iv
-  %25 = getelementptr inbounds nuw i8, ptr %i.dy, i64 %24 ; 2 uses
-  %26 = getelementptr inbounds nuw i8, ptr %25, i64 %.idx
-  br i1 %i.eh, label %.lr.ph.preheader, label %._crit_edge
-
-.lr.ph.preheader:                                 ; preds = %23
+.lr.ph.preheader:                                 ; preds = %.lr.ph104, %._crit_edge
+  %indvars.iv = phi i64 [ %indvars.iv.next, %._crit_edge ], [ 0, %.lr.ph104 ] ; 7 uses
+  %23 = mul i64 %i.ea, %indvars.iv
+  %24 = getelementptr inbounds nuw i8, ptr %i.dy, i64 %23 ; 2 uses
+  %25 = getelementptr inbounds nuw i8, ptr %24, i64 %.idx
   %i.eu = mul i64 %i.eg, %indvars.iv
   %i.ev = getelementptr inbounds nuw i8, ptr %i.ee, i64 %i.eu
   %i.ew = mul i64 %i.dw, %indvars.iv
@@ -911,7 +905,7 @@ bb.ac:                                            ; preds = %bb.k
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %.062102 = phi ptr [ %i.gc, %.lr.ph ], [ %i.ev, %.lr.ph.preheader ] ; 2 uses
-  %.064101 = phi ptr [ %i.gb, %.lr.ph ], [ %25, %.lr.ph.preheader ] ; 4 uses
+  %.064101 = phi ptr [ %i.gb, %.lr.ph ], [ %24, %.lr.ph.preheader ] ; 4 uses
   %.065100 = phi ptr [ %i.ga, %.lr.ph ], [ %i.ex, %.lr.ph.preheader ] ; 2 uses
   %.06699 = phi ptr [ %i.fz, %.lr.ph ], [ %i.ez, %.lr.ph.preheader ] ; 2 uses
   %.06798 = phi ptr [ %i.fy, %.lr.ph ], [ %i.fb, %.lr.ph.preheader ] ; 2 uses
@@ -945,13 +939,13 @@ bb.ac:                                            ; preds = %bb.k
   %i.ga = getelementptr inbounds nuw i8, ptr %.065100, i64 8
   %i.gb = getelementptr inbounds nuw i8, ptr %.064101, i64 32 ; 2 uses
   %i.gc = getelementptr inbounds nuw i8, ptr %.062102, i64 8
-  %i.gd = icmp ult ptr %i.gb, %26
+  %i.gd = icmp ult ptr %i.gb, %25
   br i1 %i.gd, label %.lr.ph, label %._crit_edge, !llvm.loop !247
 
-._crit_edge:                                      ; preds = %.lr.ph, %23
+._crit_edge:                                      ; preds = %.lr.ph
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge105, label %23, !llvm.loop !248
+  br i1 %exitcond.not, label %._crit_edge105, label %.lr.ph.preheader, !llvm.loop !248
 
 bb.ad:                                            ; preds = %bb.ac, %bb.ab, %bb.y, %bb.v, %bb.s, %.body87
   %.pn83 = phi { ptr, i32 } [ %i.et, %bb.ac ], [ %.pn81, %bb.ab ], [ %.pn79, %bb.y ], [ %.pn77, %bb.v ], [ %.pn75, %bb.s ], [ %.pn70.pn.pn, %.body87 ]

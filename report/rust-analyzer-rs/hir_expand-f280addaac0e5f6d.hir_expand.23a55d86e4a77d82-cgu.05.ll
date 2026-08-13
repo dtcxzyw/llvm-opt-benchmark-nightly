@@ -203,19 +203,15 @@ bb.cw:                                            ; preds = %bb.cu, %bb.cu, %bb.
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters3map12map_try_foldRjNtCs4dcH4YgJDq_2tt13DelimiterKinduINtNtNtBa_3ops12control_flow11ControlFlowTjB11_EENCNvMsc_NtB13_7storageNtB2u_17TopSubtreeBuilder19expected_delimiters0NCINvNvXs_NtB6_9enumerateINtB3D_9EnumeratepENtNtNtB8_6traits8iterator8Iterator8try_fold9enumerateB11_uB1z_NCINvNvB4b_4find5checkB2e_NCINvCslVwgvvnzcNb_13syntax_bridge14convert_tokensINtB5G_9ConverterNtNtCs33K2ylI4knu_10hir_expand8span_map7SpanMapNCINvB5G_25syntax_node_to_token_treeB6G_E0EEs_0E0E0E0B6K_.exit.i.i, %.lr.ph.i.preheader.i
-  %indvars.iv969.i = phi i64 [ 1, %.lr.ph.i.preheader.i ], [ %indvars.iv.next970.i, %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters3map12map_try_foldRjNtCs4dcH4YgJDq_2tt13DelimiterKinduINtNtNtBa_3ops12control_flow11ControlFlowTjB11_EENCNvMsc_NtB13_7storageNtB2u_17TopSubtreeBuilder19expected_delimiters0NCINvNvXs_NtB6_9enumerateINtB3D_9EnumeratepENtNtNtB8_6traits8iterator8Iterator8try_fold9enumerateB11_uB1z_NCINvNvB4b_4find5checkB2e_NCINvCslVwgvvnzcNb_13syntax_bridge14convert_tokensINtB5G_9ConverterNtNtCs33K2ylI4knu_10hir_expand8span_map7SpanMapNCINvB5G_25syntax_node_to_token_treeB6G_E0EEs_0E0E0E0B6K_.exit.i.i ] ; 2 uses
-  %i.jp = phi ptr [ %i.jl, %.lr.ph.i.preheader.i ], [ %i.jq, %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters3map12map_try_foldRjNtCs4dcH4YgJDq_2tt13DelimiterKinduINtNtNtBa_3ops12control_flow11ControlFlowTjB11_EENCNvMsc_NtB13_7storageNtB2u_17TopSubtreeBuilder19expected_delimiters0NCINvNvXs_NtB6_9enumerateINtB3D_9EnumeratepENtNtNtB8_6traits8iterator8Iterator8try_fold9enumerateB11_uB1z_NCINvNvB4b_4find5checkB2e_NCINvCslVwgvvnzcNb_13syntax_bridge14convert_tokensINtB5G_9ConverterNtNtCs33K2ylI4knu_10hir_expand8span_map7SpanMapNCINvB5G_25syntax_node_to_token_treeB6G_E0EEs_0E0E0E0B6K_.exit.i.i ]
+  %indvars.iv969.i = phi i64 [ %indvars.iv.next970.i, %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters3map12map_try_foldRjNtCs4dcH4YgJDq_2tt13DelimiterKinduINtNtNtBa_3ops12control_flow11ControlFlowTjB11_EENCNvMsc_NtB13_7storageNtB2u_17TopSubtreeBuilder19expected_delimiters0NCINvNvXs_NtB6_9enumerateINtB3D_9EnumeratepENtNtNtB8_6traits8iterator8Iterator8try_fold9enumerateB11_uB1z_NCINvNvB4b_4find5checkB2e_NCINvCslVwgvvnzcNb_13syntax_bridge14convert_tokensINtB5G_9ConverterNtNtCs33K2ylI4knu_10hir_expand8span_map7SpanMapNCINvB5G_25syntax_node_to_token_treeB6G_E0EEs_0E0E0E0B6K_.exit.i.i ], [ 1, %.lr.ph.i.preheader.i ] ; 2 uses
+  %i.jp = phi ptr [ %i.jq, %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters3map12map_try_foldRjNtCs4dcH4YgJDq_2tt13DelimiterKinduINtNtNtBa_3ops12control_flow11ControlFlowTjB11_EENCNvMsc_NtB13_7storageNtB2u_17TopSubtreeBuilder19expected_delimiters0NCINvNvXs_NtB6_9enumerateINtB3D_9EnumeratepENtNtNtB8_6traits8iterator8Iterator8try_fold9enumerateB11_uB1z_NCINvNvB4b_4find5checkB2e_NCINvCslVwgvvnzcNb_13syntax_bridge14convert_tokensINtB5G_9ConverterNtNtCs33K2ylI4knu_10hir_expand8span_map7SpanMapNCINvB5G_25syntax_node_to_token_treeB6G_E0EEs_0E0E0E0B6K_.exit.i.i ], [ %i.jl, %.lr.ph.i.preheader.i ]
   %i.jq = getelementptr inbounds i8, ptr %i.jp, i64 -8 ; 3 uses
   %.val.i116.i = load i64, ptr %i.jq, align 8, !noalias !71, !noundef !4 ; 7 uses
   %i.jr = icmp ult i64 %.val.i116.i, %i.jn        ; 3 uses
-  switch i64 %i.jm, label %.lr.ph.i.i.unreachabledefault [
+  switch i64 %i.jm, label %bb.cz [
     i64 0, label %bb.cx
     i64 1, label %bb.cy
-    i64 2, label %bb.cz
   ]
-
-.lr.ph.i.i.unreachabledefault:                    ; preds = %.lr.ph.i.i
-  unreachable
 
 default.unreachable:                              ; preds = %.noexc208.i, %.noexc118.i
   unreachable
@@ -619,19 +615,15 @@ bb.cw:                                            ; preds = %bb.cu, %bb.cu, %bb.
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters3map12map_try_foldRjNtCs4dcH4YgJDq_2tt13DelimiterKinduINtNtNtBa_3ops12control_flow11ControlFlowTjB11_EENCNvMsc_NtB13_7storageNtB2u_17TopSubtreeBuilder19expected_delimiters0NCINvNvXs_NtB6_9enumerateINtB3D_9EnumeratepENtNtNtB8_6traits8iterator8Iterator8try_fold9enumerateB11_uB1z_NCINvNvB4b_4find5checkB2e_NCINvCslVwgvvnzcNb_13syntax_bridge14convert_tokensINtB5G_9ConverterNtNtCsdovh4xi6v3I_4span3map7SpanMapNCINvB5G_25syntax_node_to_token_treeB6G_E0EEs_0E0E0E0Cs33K2ylI4knu_10hir_expand.exit.i.i, %.lr.ph.i.preheader.i
-  %indvars.iv969.i = phi i64 [ 1, %.lr.ph.i.preheader.i ], [ %indvars.iv.next970.i, %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters3map12map_try_foldRjNtCs4dcH4YgJDq_2tt13DelimiterKinduINtNtNtBa_3ops12control_flow11ControlFlowTjB11_EENCNvMsc_NtB13_7storageNtB2u_17TopSubtreeBuilder19expected_delimiters0NCINvNvXs_NtB6_9enumerateINtB3D_9EnumeratepENtNtNtB8_6traits8iterator8Iterator8try_fold9enumerateB11_uB1z_NCINvNvB4b_4find5checkB2e_NCINvCslVwgvvnzcNb_13syntax_bridge14convert_tokensINtB5G_9ConverterNtNtCsdovh4xi6v3I_4span3map7SpanMapNCINvB5G_25syntax_node_to_token_treeB6G_E0EEs_0E0E0E0Cs33K2ylI4knu_10hir_expand.exit.i.i ] ; 2 uses
-  %i.jo = phi ptr [ %i.jk, %.lr.ph.i.preheader.i ], [ %i.jp, %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters3map12map_try_foldRjNtCs4dcH4YgJDq_2tt13DelimiterKinduINtNtNtBa_3ops12control_flow11ControlFlowTjB11_EENCNvMsc_NtB13_7storageNtB2u_17TopSubtreeBuilder19expected_delimiters0NCINvNvXs_NtB6_9enumerateINtB3D_9EnumeratepENtNtNtB8_6traits8iterator8Iterator8try_fold9enumerateB11_uB1z_NCINvNvB4b_4find5checkB2e_NCINvCslVwgvvnzcNb_13syntax_bridge14convert_tokensINtB5G_9ConverterNtNtCsdovh4xi6v3I_4span3map7SpanMapNCINvB5G_25syntax_node_to_token_treeB6G_E0EEs_0E0E0E0Cs33K2ylI4knu_10hir_expand.exit.i.i ]
+  %indvars.iv969.i = phi i64 [ %indvars.iv.next970.i, %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters3map12map_try_foldRjNtCs4dcH4YgJDq_2tt13DelimiterKinduINtNtNtBa_3ops12control_flow11ControlFlowTjB11_EENCNvMsc_NtB13_7storageNtB2u_17TopSubtreeBuilder19expected_delimiters0NCINvNvXs_NtB6_9enumerateINtB3D_9EnumeratepENtNtNtB8_6traits8iterator8Iterator8try_fold9enumerateB11_uB1z_NCINvNvB4b_4find5checkB2e_NCINvCslVwgvvnzcNb_13syntax_bridge14convert_tokensINtB5G_9ConverterNtNtCsdovh4xi6v3I_4span3map7SpanMapNCINvB5G_25syntax_node_to_token_treeB6G_E0EEs_0E0E0E0Cs33K2ylI4knu_10hir_expand.exit.i.i ], [ 1, %.lr.ph.i.preheader.i ] ; 2 uses
+  %i.jo = phi ptr [ %i.jp, %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters3map12map_try_foldRjNtCs4dcH4YgJDq_2tt13DelimiterKinduINtNtNtBa_3ops12control_flow11ControlFlowTjB11_EENCNvMsc_NtB13_7storageNtB2u_17TopSubtreeBuilder19expected_delimiters0NCINvNvXs_NtB6_9enumerateINtB3D_9EnumeratepENtNtNtB8_6traits8iterator8Iterator8try_fold9enumerateB11_uB1z_NCINvNvB4b_4find5checkB2e_NCINvCslVwgvvnzcNb_13syntax_bridge14convert_tokensINtB5G_9ConverterNtNtCsdovh4xi6v3I_4span3map7SpanMapNCINvB5G_25syntax_node_to_token_treeB6G_E0EEs_0E0E0E0Cs33K2ylI4knu_10hir_expand.exit.i.i ], [ %i.jk, %.lr.ph.i.preheader.i ]
   %i.jp = getelementptr inbounds i8, ptr %i.jo, i64 -8 ; 3 uses
   %.val.i116.i = load i64, ptr %i.jp, align 8, !noalias !323, !noundef !4 ; 7 uses
   %i.jq = icmp ult i64 %.val.i116.i, %i.jm        ; 3 uses
-  switch i64 %i.jl, label %.lr.ph.i.i.unreachabledefault [
+  switch i64 %i.jl, label %bb.cz [
     i64 0, label %bb.cx
     i64 1, label %bb.cy
-    i64 2, label %bb.cz
   ]
-
-.lr.ph.i.i.unreachabledefault:                    ; preds = %.lr.ph.i.i
-  unreachable
 
 default.unreachable:                              ; preds = %.noexc208.i, %.noexc118.i
   unreachable
@@ -1035,19 +1027,15 @@ bb.cw:                                            ; preds = %bb.cu, %bb.cu, %bb.
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters3map12map_try_foldRjNtCs4dcH4YgJDq_2tt13DelimiterKinduINtNtNtBa_3ops12control_flow11ControlFlowTjB11_EENCNvMsc_NtB13_7storageNtB2u_17TopSubtreeBuilder19expected_delimiters0NCINvNvXs_NtB6_9enumerateINtB3D_9EnumeratepENtNtNtB8_6traits8iterator8Iterator8try_fold9enumerateB11_uB1z_NCINvNvB4b_4find5checkB2e_NCINvCslVwgvvnzcNb_13syntax_bridge14convert_tokensINtB5G_9ConverterRNtNtCsdovh4xi6v3I_4span3map7SpanMapNCINvB5G_25syntax_node_to_token_treeB6G_E0EEs_0E0E0E0Cs33K2ylI4knu_10hir_expand.exit.i.i, %.lr.ph.i.preheader.i
-  %indvars.iv969.i = phi i64 [ 1, %.lr.ph.i.preheader.i ], [ %indvars.iv.next970.i, %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters3map12map_try_foldRjNtCs4dcH4YgJDq_2tt13DelimiterKinduINtNtNtBa_3ops12control_flow11ControlFlowTjB11_EENCNvMsc_NtB13_7storageNtB2u_17TopSubtreeBuilder19expected_delimiters0NCINvNvXs_NtB6_9enumerateINtB3D_9EnumeratepENtNtNtB8_6traits8iterator8Iterator8try_fold9enumerateB11_uB1z_NCINvNvB4b_4find5checkB2e_NCINvCslVwgvvnzcNb_13syntax_bridge14convert_tokensINtB5G_9ConverterRNtNtCsdovh4xi6v3I_4span3map7SpanMapNCINvB5G_25syntax_node_to_token_treeB6G_E0EEs_0E0E0E0Cs33K2ylI4knu_10hir_expand.exit.i.i ] ; 2 uses
-  %i.jo = phi ptr [ %i.jk, %.lr.ph.i.preheader.i ], [ %i.jp, %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters3map12map_try_foldRjNtCs4dcH4YgJDq_2tt13DelimiterKinduINtNtNtBa_3ops12control_flow11ControlFlowTjB11_EENCNvMsc_NtB13_7storageNtB2u_17TopSubtreeBuilder19expected_delimiters0NCINvNvXs_NtB6_9enumerateINtB3D_9EnumeratepENtNtNtB8_6traits8iterator8Iterator8try_fold9enumerateB11_uB1z_NCINvNvB4b_4find5checkB2e_NCINvCslVwgvvnzcNb_13syntax_bridge14convert_tokensINtB5G_9ConverterRNtNtCsdovh4xi6v3I_4span3map7SpanMapNCINvB5G_25syntax_node_to_token_treeB6G_E0EEs_0E0E0E0Cs33K2ylI4knu_10hir_expand.exit.i.i ]
+  %indvars.iv969.i = phi i64 [ %indvars.iv.next970.i, %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters3map12map_try_foldRjNtCs4dcH4YgJDq_2tt13DelimiterKinduINtNtNtBa_3ops12control_flow11ControlFlowTjB11_EENCNvMsc_NtB13_7storageNtB2u_17TopSubtreeBuilder19expected_delimiters0NCINvNvXs_NtB6_9enumerateINtB3D_9EnumeratepENtNtNtB8_6traits8iterator8Iterator8try_fold9enumerateB11_uB1z_NCINvNvB4b_4find5checkB2e_NCINvCslVwgvvnzcNb_13syntax_bridge14convert_tokensINtB5G_9ConverterRNtNtCsdovh4xi6v3I_4span3map7SpanMapNCINvB5G_25syntax_node_to_token_treeB6G_E0EEs_0E0E0E0Cs33K2ylI4knu_10hir_expand.exit.i.i ], [ 1, %.lr.ph.i.preheader.i ] ; 2 uses
+  %i.jo = phi ptr [ %i.jp, %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters3map12map_try_foldRjNtCs4dcH4YgJDq_2tt13DelimiterKinduINtNtNtBa_3ops12control_flow11ControlFlowTjB11_EENCNvMsc_NtB13_7storageNtB2u_17TopSubtreeBuilder19expected_delimiters0NCINvNvXs_NtB6_9enumerateINtB3D_9EnumeratepENtNtNtB8_6traits8iterator8Iterator8try_fold9enumerateB11_uB1z_NCINvNvB4b_4find5checkB2e_NCINvCslVwgvvnzcNb_13syntax_bridge14convert_tokensINtB5G_9ConverterRNtNtCsdovh4xi6v3I_4span3map7SpanMapNCINvB5G_25syntax_node_to_token_treeB6G_E0EEs_0E0E0E0Cs33K2ylI4knu_10hir_expand.exit.i.i ], [ %i.jk, %.lr.ph.i.preheader.i ]
   %i.jp = getelementptr inbounds i8, ptr %i.jo, i64 -8 ; 3 uses
   %.val.i116.i = load i64, ptr %i.jp, align 8, !noalias !570, !noundef !4 ; 7 uses
   %i.jq = icmp ult i64 %.val.i116.i, %i.jm        ; 3 uses
-  switch i64 %i.jl, label %.lr.ph.i.i.unreachabledefault [
+  switch i64 %i.jl, label %bb.cz [
     i64 0, label %bb.cx
     i64 1, label %bb.cy
-    i64 2, label %bb.cz
   ]
-
-.lr.ph.i.i.unreachabledefault:                    ; preds = %.lr.ph.i.i
-  unreachable
 
 default.unreachable:                              ; preds = %.noexc208.i, %.noexc118.i
   unreachable
@@ -1451,19 +1439,15 @@ bb.cw:                                            ; preds = %bb.cu, %bb.cu, %bb.
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters3map12map_try_foldRjNtCs4dcH4YgJDq_2tt13DelimiterKinduINtNtNtBa_3ops12control_flow11ControlFlowTjB11_EENCNvMsc_NtB13_7storageNtB2u_17TopSubtreeBuilder19expected_delimiters0NCINvNvXs_NtB6_9enumerateINtB3D_9EnumeratepENtNtNtB8_6traits8iterator8Iterator8try_fold9enumerateB11_uB1z_NCINvNvB4b_4find5checkB2e_NCINvCslVwgvvnzcNb_13syntax_bridge14convert_tokensINtB5G_9ConverterNtNtCs33K2ylI4knu_10hir_expand8span_map7SpanMapNCNvNtB6K_11cfg_process20macro_input_callbacks0_0EEs_0E0E0E0B6K_.exit.i.i, %.lr.ph.i.preheader.i
-  %indvars.iv968.i = phi i64 [ 1, %.lr.ph.i.preheader.i ], [ %indvars.iv.next969.i, %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters3map12map_try_foldRjNtCs4dcH4YgJDq_2tt13DelimiterKinduINtNtNtBa_3ops12control_flow11ControlFlowTjB11_EENCNvMsc_NtB13_7storageNtB2u_17TopSubtreeBuilder19expected_delimiters0NCINvNvXs_NtB6_9enumerateINtB3D_9EnumeratepENtNtNtB8_6traits8iterator8Iterator8try_fold9enumerateB11_uB1z_NCINvNvB4b_4find5checkB2e_NCINvCslVwgvvnzcNb_13syntax_bridge14convert_tokensINtB5G_9ConverterNtNtCs33K2ylI4knu_10hir_expand8span_map7SpanMapNCNvNtB6K_11cfg_process20macro_input_callbacks0_0EEs_0E0E0E0B6K_.exit.i.i ] ; 2 uses
-  %i.jp = phi ptr [ %i.jl, %.lr.ph.i.preheader.i ], [ %i.jq, %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters3map12map_try_foldRjNtCs4dcH4YgJDq_2tt13DelimiterKinduINtNtNtBa_3ops12control_flow11ControlFlowTjB11_EENCNvMsc_NtB13_7storageNtB2u_17TopSubtreeBuilder19expected_delimiters0NCINvNvXs_NtB6_9enumerateINtB3D_9EnumeratepENtNtNtB8_6traits8iterator8Iterator8try_fold9enumerateB11_uB1z_NCINvNvB4b_4find5checkB2e_NCINvCslVwgvvnzcNb_13syntax_bridge14convert_tokensINtB5G_9ConverterNtNtCs33K2ylI4knu_10hir_expand8span_map7SpanMapNCNvNtB6K_11cfg_process20macro_input_callbacks0_0EEs_0E0E0E0B6K_.exit.i.i ]
+  %indvars.iv968.i = phi i64 [ %indvars.iv.next969.i, %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters3map12map_try_foldRjNtCs4dcH4YgJDq_2tt13DelimiterKinduINtNtNtBa_3ops12control_flow11ControlFlowTjB11_EENCNvMsc_NtB13_7storageNtB2u_17TopSubtreeBuilder19expected_delimiters0NCINvNvXs_NtB6_9enumerateINtB3D_9EnumeratepENtNtNtB8_6traits8iterator8Iterator8try_fold9enumerateB11_uB1z_NCINvNvB4b_4find5checkB2e_NCINvCslVwgvvnzcNb_13syntax_bridge14convert_tokensINtB5G_9ConverterNtNtCs33K2ylI4knu_10hir_expand8span_map7SpanMapNCNvNtB6K_11cfg_process20macro_input_callbacks0_0EEs_0E0E0E0B6K_.exit.i.i ], [ 1, %.lr.ph.i.preheader.i ] ; 2 uses
+  %i.jp = phi ptr [ %i.jq, %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters3map12map_try_foldRjNtCs4dcH4YgJDq_2tt13DelimiterKinduINtNtNtBa_3ops12control_flow11ControlFlowTjB11_EENCNvMsc_NtB13_7storageNtB2u_17TopSubtreeBuilder19expected_delimiters0NCINvNvXs_NtB6_9enumerateINtB3D_9EnumeratepENtNtNtB8_6traits8iterator8Iterator8try_fold9enumerateB11_uB1z_NCINvNvB4b_4find5checkB2e_NCINvCslVwgvvnzcNb_13syntax_bridge14convert_tokensINtB5G_9ConverterNtNtCs33K2ylI4knu_10hir_expand8span_map7SpanMapNCNvNtB6K_11cfg_process20macro_input_callbacks0_0EEs_0E0E0E0B6K_.exit.i.i ], [ %i.jl, %.lr.ph.i.preheader.i ]
   %i.jq = getelementptr inbounds i8, ptr %i.jp, i64 -8 ; 3 uses
   %.val.i115.i = load i64, ptr %i.jq, align 8, !noalias !823, !noundef !4 ; 7 uses
   %i.jr = icmp ult i64 %.val.i115.i, %i.jn        ; 3 uses
-  switch i64 %i.jm, label %.lr.ph.i.i.unreachabledefault [
+  switch i64 %i.jm, label %bb.cz [
     i64 0, label %bb.cx
     i64 1, label %bb.cy
-    i64 2, label %bb.cz
   ]
-
-.lr.ph.i.i.unreachabledefault:                    ; preds = %.lr.ph.i.i
-  unreachable
 
 default.unreachable:                              ; preds = %.noexc207.i, %.noexc117.i
   unreachable

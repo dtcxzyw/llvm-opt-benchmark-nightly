@@ -202,9 +202,9 @@ bb.a:
   %i.l = getelementptr inbounds i8, ptr %i.k, i64 %i.g
   %i.m = load i8, ptr %i.l, align 1, !tbaa !39
   %.fr = freeze i8 %i.m                           ; 4 uses
-  %i.n = zext i8 %.fr to i32                      ; 3 uses
+  %i.n = zext i8 %.fr to i32                      ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 412 ; 4 uses
-  %i.p = load i32, ptr %i.o, align 4, !tbaa !61   ; 3 uses
+  %i.p = load i32, ptr %i.o, align 4, !tbaa !61   ; 2 uses
   %i.q = icmp sgt i32 %i.p, 0
   br i1 %i.q, label %.lr.ph, label %._crit_edge44
 
@@ -332,24 +332,15 @@ bb.b:                                             ; preds = %.lr.ph.split.split.
 .lr.ph.split.split:                               ; preds = %.lr.ph.split
   %i.bj = load i32, ptr %i.r, align 8, !tbaa !66
   %.not51 = icmp eq i32 %i.bj, 0
-  br label %4
+  br i1 %.not51, label %._crit_edge44, label %.loopexit.preheader
 
-4:                                                ; preds = %.lr.ph.split.split, %5
-  %.042 = phi i32 [ 0, %.lr.ph.split.split ], [ %6, %5 ]
-  br i1 %.not51, label %5, label %.loopexit.preheader
-
-.loopexit.preheader:                              ; preds = %4, %.lr.ph.split.split.us
+.loopexit.preheader:                              ; preds = %.lr.ph.split.split.us, %.lr.ph.split.split
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.loopexit.preheader, %.loopexit
   br label %.loopexit
 
-5:                                                ; preds = %4
-  %6 = add nuw nsw i32 %.042, %i.n                ; 2 uses
-  %7 = icmp slt i32 %6, %i.p
-  br i1 %7, label %4, label %._crit_edge44, !llvm.loop !132
-
-._crit_edge44:                                    ; preds = %._crit_edge.split.us.us, %._crit_edge.split.us.us.us, %5, %bb.b, %bb.a
+._crit_edge44:                                    ; preds = %._crit_edge.split.us.us, %._crit_edge.split.us.us.us, %bb.b, %.lr.ph.split.split, %bb.a
   ret void
 }
 

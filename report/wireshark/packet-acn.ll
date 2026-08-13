@@ -203,7 +203,6 @@ begin_hunk_0
 @.str.1945 = private unnamed_addr constant [18 x i8] c"%d.%d.%d.%d.%d.%d\00", align 1
 @.str.1946 = private unnamed_addr constant [36 x i8] c"RDMnet [Src Port: %d, Dst Port: %d]\00", align 1
 @is_rdmnet_over_tcp.acn_packet_id = internal constant [13 x i8] c"ASC-E1.17\00\00\00\00", align 1
-@switch.table.acn_add_dmp_reason_codes = private unnamed_addr constant [3 x ptr] [ptr @.str.813, ptr @.str.814, ptr @.str.815], align 8
 
 ; Function Attrs: null_pointer_is_valid sspstrong uwtable
 define hidden void @proto_register_acn() local_unnamed_addr #0 {
@@ -606,7 +605,7 @@ bb.b:                                             ; preds = %bb.a
   %i.k = icmp eq i32 %i.j, 0
   br i1 %i.k, label %.critedge, label %bb.c
 
-default.unreachable:                              ; preds = %8, %bb.e, %bb.a
+default.unreachable:                              ; preds = %bb.e, %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.b
@@ -617,15 +616,23 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not, label %.critedge, label %.lr.ph251
 
 .lr.ph251:                                        ; preds = %bb.c
-  %i.o = and i8 %i.a, 3
+  %i.o = and i8 %i.a, 3                           ; 3 uses
   %i.p = udiv i32 %i.m, %i.j                      ; 4 uses
-  %5 = getelementptr i8, ptr %4, i64 4
-  %6 = load i32, ptr %5, align 4
   %i.q = getelementptr i8, ptr %1, i64 416        ; 2 uses
   %invariant.umin = tail call i32 @llvm.umin.i32(i32 %i.p, i32 20)
   %.not269 = icmp ugt i32 %i.j, %i.m
   %i.r = getelementptr i8, ptr %4, i64 8
-  br label %8
+  %5 = icmp eq i8 %i.o, 3
+  br i1 %5, label %.loopexit, label %.lr.ph251.split.preheader
+
+.lr.ph251.split.preheader:                        ; preds = %.lr.ph251
+  %6 = getelementptr i8, ptr %4, i64 4
+  %7 = load i32, ptr %6, align 4
+  %switch.selectcmp285 = icmp eq i8 %i.o, 1
+  %switch.select286 = select i1 %switch.selectcmp285, ptr @.str.814, ptr @.str.815
+  %switch.selectcmp287 = icmp eq i8 %i.o, 0
+  %switch.select288 = select i1 %switch.selectcmp287, ptr @.str.813, ptr %switch.select286
+  br label %bb.w
 
 .critedge:                                        ; preds = %.split, %bb.a, %bb.b, %bb.c
   %i.s = getelementptr i8, ptr %4, i64 20
@@ -637,7 +644,7 @@ bb.c:                                             ; preds = %bb.b
   br label %.loopexit
 
 bb.d:                                             ; preds = %.split
-  %i.x = and i8 %i.a, 3                           ; 3 uses
+  %i.x = and i8 %i.a, 3                           ; 4 uses
   %i.y = icmp eq i8 %i.c, 0
   br i1 %i.y, label %bb.e, label %bb.p
 
@@ -745,16 +752,17 @@ bb.p:                                             ; preds = %bb.d
 .lr.ph262.split.preheader:                        ; preds = %.lr.ph262
   %i.bh = getelementptr i8, ptr %4, i64 4
   %i.bi = load i32, ptr %i.bh, align 4
-  %7 = zext nneg i8 %i.x to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.acn_add_dmp_reason_codes, i64 %7
-  %switch.load = load ptr, ptr %switch.gep, align 8
+  %switch.selectcmp = icmp eq i8 %i.x, 1
+  %switch.select = select i1 %switch.selectcmp, ptr @.str.814, ptr @.str.815
+  %switch.selectcmp283 = icmp eq i8 %i.x, 0
+  %switch.select284 = select i1 %switch.selectcmp283, ptr @.str.813, ptr %switch.select
   br label %.lr.ph262.split
 
 .lr.ph262.split:                                  ; preds = %.lr.ph262.split.preheader, %bb.v
   %.0230260 = phi i32 [ %i.ck, %bb.v ], [ 0, %.lr.ph262.split.preheader ]
   %.0232259 = phi i32 [ %i.cj, %bb.v ], [ %i.bi, %.lr.ph262.split.preheader ] ; 2 uses
   %i.bj = load ptr, ptr %i.bf, align 8
-  %i.bk = tail call noalias ptr (ptr, ptr, ...) @wmem_strdup_printf(ptr noundef %i.bj, ptr noundef nonnull %switch.load, i32 noundef %.0232259) ; 4 uses
+  %i.bk = tail call noalias ptr (ptr, ptr, ...) @wmem_strdup_printf(ptr noundef %i.bj, ptr noundef nonnull %switch.select284, i32 noundef %.0232259) ; 4 uses
   switch i32 %i.e, label %bb.u [
     i32 1, label %bb.q
     i32 2, label %bb.r
@@ -822,27 +830,12 @@ bb.v:                                             ; preds = %._crit_edge258, %bb
   %i.cn = add i32 %i.e, %3
   br label %.loopexit
 
-8:                                                ; preds = %.lr.ph251, %bb.ac
-  %.1231250 = phi i32 [ 0, %.lr.ph251 ], [ %i.dr, %bb.ac ]
-  %.1233249 = phi i32 [ %6, %.lr.ph251 ], [ %i.dq, %bb.ac ] ; 2 uses
-  %.1236248 = phi i32 [ %3, %.lr.ph251 ], [ %i.do, %bb.ac ] ; 11 uses
-  switch i8 %i.o, label %default.unreachable [
-    i8 0, label %bb.w
-    i8 1, label %9
-    i8 2, label %10
-    i8 3, label %.loopexit
-  ]
-
-9:                                                ; preds = %8
-  br label %bb.w
-
-10:                                               ; preds = %8
-  br label %bb.w
-
-bb.w:                                             ; preds = %8, %10, %9
-  %.str.815.sink282 = phi ptr [ @.str.815, %10 ], [ @.str.814, %9 ], [ @.str.813, %8 ]
+bb.w:                                             ; preds = %.lr.ph251.split.preheader, %bb.ac
+  %.1231250 = phi i32 [ %i.dr, %bb.ac ], [ 0, %.lr.ph251.split.preheader ]
+  %.1233249 = phi i32 [ %i.dq, %bb.ac ], [ %7, %.lr.ph251.split.preheader ] ; 2 uses
+  %.1236248 = phi i32 [ %i.do, %bb.ac ], [ %3, %.lr.ph251.split.preheader ] ; 11 uses
   %i.co = load ptr, ptr %i.q, align 8
-  %i.cp = tail call noalias ptr (ptr, ptr, ...) @wmem_strdup_printf(ptr noundef %i.co, ptr noundef nonnull %.str.815.sink282, i32 noundef %.1233249) ; 4 uses
+  %i.cp = tail call noalias ptr (ptr, ptr, ...) @wmem_strdup_printf(ptr noundef %i.co, ptr noundef nonnull %switch.select288, i32 noundef %.1233249) ; 4 uses
   switch i32 %i.p, label %bb.ab [
     i32 1, label %bb.x
     i32 2, label %bb.y
@@ -905,10 +898,10 @@ bb.ac:                                            ; preds = %._crit_edge, %bb.aa
   %i.dr = add nuw i32 %.1231250, 1                ; 2 uses
   %i.ds = load i32, ptr %i.i, align 4
   %i.dt = icmp ult i32 %i.dr, %i.ds
-  br i1 %i.dt, label %8, label %.loopexit, !llvm.loop !61
+  br i1 %i.dt, label %bb.w, label %.loopexit, !llvm.loop !61
 
-.loopexit:                                        ; preds = %8, %bb.ac, %.lr.ph262, %bb.o, %._crit_edge263, %bb.h, %.critedge
-  %.0234 = phi i32 [ %i.be, %bb.o ], [ %i.ab, %bb.h ], [ %i.w, %.critedge ], [ %i.cn, %._crit_edge263 ], [ %3, %.lr.ph262 ], [ %3, %8 ], [ %i.do, %bb.ac ]
+.loopexit:                                        ; preds = %bb.ac, %.lr.ph251, %.lr.ph262, %bb.o, %._crit_edge263, %bb.h, %.critedge
+  %.0234 = phi i32 [ %i.be, %bb.o ], [ %i.ab, %bb.h ], [ %i.w, %.critedge ], [ %i.cn, %._crit_edge263 ], [ %3, %.lr.ph262 ], [ %3, %.lr.ph251 ], [ %i.do, %bb.ac ]
   ret i32 %.0234
 }
 
@@ -918,7 +911,7 @@ bb.a:
   %i.a = load i8, ptr %4, align 4                 ; 2 uses
   %i.b = lshr i8 %i.a, 4
   %i.c = and i8 %i.b, 3
-  %i.d = and i8 %i.a, 3                           ; 4 uses
+  %i.d = and i8 %i.a, 3                           ; 7 uses
   switch i8 %i.c, label %default.unreachable97 [
     i8 0, label %bb.b
     i8 1, label %bb.f
@@ -972,16 +965,17 @@ bb.f:                                             ; preds = %bb.a
 .lr.ph92.split.preheader:                         ; preds = %.lr.ph92
   %i.v = getelementptr i8, ptr %4, i64 4
   %i.w = load i32, ptr %i.v, align 4
-  %5 = zext nneg i8 %i.d to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.acn_add_dmp_reason_codes, i64 %5
-  %switch.load = load ptr, ptr %switch.gep, align 8
+  %switch.selectcmp = icmp eq i8 %i.d, 1
+  %switch.select = select i1 %switch.selectcmp, ptr @.str.814, ptr @.str.815
+  %switch.selectcmp102 = icmp eq i8 %i.d, 0
+  %switch.select103 = select i1 %switch.selectcmp102, ptr @.str.813, ptr %switch.select
   br label %switch.lookup
 
-switch.lookup:                                    ; preds = %switch.lookup, %.lr.ph92.split.preheader
+switch.lookup:                                    ; preds = %.lr.ph92.split.preheader, %switch.lookup
   %.07491 = phi i32 [ %i.ah, %switch.lookup ], [ 0, %.lr.ph92.split.preheader ]
   %.07690 = phi i32 [ %i.ag, %switch.lookup ], [ %i.w, %.lr.ph92.split.preheader ] ; 2 uses
   %i.x = load ptr, ptr %i.t, align 8
-  %i.y = tail call noalias ptr (ptr, ptr, ...) @wmem_strdup_printf(ptr noundef %i.x, ptr noundef nonnull %switch.load, i32 noundef %.07690)
+  %i.y = tail call noalias ptr (ptr, ptr, ...) @wmem_strdup_printf(ptr noundef %i.x, ptr noundef nonnull %switch.select103, i32 noundef %.07690)
   %i.z = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %3)
   %i.aa = zext i8 %i.z to i32                     ; 2 uses
   %i.ab = load ptr, ptr %i.t, align 8
@@ -1006,55 +1000,45 @@ bb.g:                                             ; preds = %bb.a, %bb.a
   br i1 %.not, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.g
-  %i.an = getelementptr i8, ptr %4, i64 4
-  %6 = load i32, ptr %i.an, align 4
-  %i.ao = getelementptr i8, ptr %1, i64 416       ; 2 uses
-  %7 = getelementptr i8, ptr %4, i64 8
-  br label %bb.h
+  %i.an = getelementptr i8, ptr %1, i64 416       ; 2 uses
+  %i.ao = getelementptr i8, ptr %4, i64 8
+  %5 = icmp eq i8 %i.d, 3
+  br i1 %5, label %.loopexit, label %bb.h
 
-bb.h:                                             ; preds = %.lr.ph, %bb.i
-  %.17587 = phi i32 [ 0, %.lr.ph ], [ %i.ba, %bb.i ]
-  %.17786 = phi i32 [ %6, %.lr.ph ], [ %i.ay, %bb.i ] ; 2 uses
-  %.07985 = phi i32 [ %3, %.lr.ph ], [ %i.az, %bb.i ] ; 3 uses
-  switch i8 %i.d, label %.unreachabledefault [
-    i8 0, label %bb.i
-    i8 1, label %8
-    i8 2, label %9
-    i8 3, label %.loopexit
-  ]
-
-8:                                                ; preds = %bb.h
+bb.h:                                             ; preds = %.lr.ph
+  %6 = getelementptr i8, ptr %4, i64 4
+  %7 = load i32, ptr %6, align 4
+  %switch.selectcmp104 = icmp eq i8 %i.d, 1
+  %switch.select105 = select i1 %switch.selectcmp104, ptr @.str.814, ptr @.str.815
+  %switch.selectcmp106 = icmp eq i8 %i.d, 0
+  %switch.select107 = select i1 %switch.selectcmp106, ptr @.str.813, ptr %switch.select105
   br label %bb.i
 
-9:                                                ; preds = %bb.h
-  br label %bb.i
-
-bb.i:                                             ; preds = %bb.h, %9, %8
-  %.str.815.sink101 = phi ptr [ @.str.815, %9 ], [ @.str.814, %8 ], [ @.str.813, %bb.h ]
-  %i.ap = load ptr, ptr %i.ao, align 8
-  %i.aq = tail call noalias ptr (ptr, ptr, ...) @wmem_strdup_printf(ptr noundef %i.ap, ptr noundef nonnull %.str.815.sink101, i32 noundef %.17786)
+bb.i:                                             ; preds = %bb.h, %bb.i
+  %.17587 = phi i32 [ %i.ba, %bb.i ], [ 0, %bb.h ]
+  %.17786 = phi i32 [ %i.ay, %bb.i ], [ %7, %bb.h ] ; 2 uses
+  %.07985 = phi i32 [ %i.az, %bb.i ], [ %3, %bb.h ] ; 3 uses
+  %i.ap = load ptr, ptr %i.an, align 8
+  %i.aq = tail call noalias ptr (ptr, ptr, ...) @wmem_strdup_printf(ptr noundef %i.ap, ptr noundef nonnull %switch.select107, i32 noundef %.17786)
   %i.ar = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %.07985)
   %i.as = zext i8 %i.ar to i32                    ; 2 uses
-  %i.at = load ptr, ptr %i.ao, align 8
+  %i.at = load ptr, ptr %i.an, align 8
   %i.au = tail call ptr @val_to_str(ptr noundef %i.at, i32 noundef %i.as, ptr noundef nonnull @acn_dmp_reason_code_vals, ptr noundef nonnull @.str.822)
   %i.av = load i32, ptr @hf_acn_data8, align 4
   %i.aw = tail call ptr (ptr, i32, ptr, i32, i32, i32, ptr, ...) @proto_tree_add_uint_format(ptr noundef %2, i32 noundef %i.av, ptr noundef %0, i32 noundef %.07985, i32 noundef 1, i32 noundef %i.as, ptr noundef nonnull @.str.823, ptr noundef %i.aq, ptr noundef %i.au) ; 0 uses
-  %i.ax = load i32, ptr %7, align 4
+  %i.ax = load i32, ptr %i.ao, align 4
   %i.ay = add i32 %i.ax, %.17786
   %i.az = add i32 %.07985, 1                      ; 2 uses
   %i.ba = add nuw i32 %.17587, 1                  ; 2 uses
   %i.bb = load i32, ptr %i.al, align 4
   %i.bc = icmp ult i32 %i.ba, %i.bb
-  br i1 %i.bc, label %bb.h, label %.loopexit, !llvm.loop !63
-
-.unreachabledefault:                              ; preds = %bb.h
-  unreachable
+  br i1 %i.bc, label %bb.i, label %.loopexit, !llvm.loop !63
 
 default.unreachable97:                            ; preds = %bb.b, %bb.a
   unreachable
 
-.loopexit:                                        ; preds = %bb.h, %bb.i, %bb.g, %.lr.ph92, %bb.e, %._crit_edge, %bb.b
-  %.078 = phi i32 [ %i.q, %bb.e ], [ %i.ak, %._crit_edge ], [ %3, %bb.b ], [ %3, %.lr.ph92 ], [ %3, %bb.g ], [ %3, %bb.h ], [ %i.az, %bb.i ]
+.loopexit:                                        ; preds = %bb.i, %.lr.ph, %bb.g, %.lr.ph92, %bb.e, %._crit_edge, %bb.b
+  %.078 = phi i32 [ %i.q, %bb.e ], [ %i.ak, %._crit_edge ], [ %3, %bb.b ], [ %3, %.lr.ph92 ], [ %3, %bb.g ], [ %3, %.lr.ph ], [ %i.az, %bb.i ]
   ret i32 %.078
 }
 
