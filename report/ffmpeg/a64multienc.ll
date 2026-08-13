@@ -183,7 +183,7 @@ bb.a:
   %spec.select = ashr i32 %i.s, 3                 ; 3 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 112
   %i.u = load i32, ptr %i.t, align 8, !tbaa !54   ; 5 uses
-  %i.v = tail call i32 @llvm.smin.i32(i32 %i.u, i32 320) ; 5 uses
+  %i.v = tail call i32 @llvm.smin.i32(i32 %i.u, i32 320) ; 6 uses
   %i.w = ashr i32 %i.v, 3                         ; 4 uses
   %i.x = mul nsw i32 %i.w, %spec.select           ; 4 uses
   %.not = icmp eq ptr %2, null
@@ -586,17 +586,18 @@ bb.ar:                                            ; preds = %.loopexit.i
   %i.rm = icmp slt i32 %i.w, 1
   %i.rn = sext i32 %i.x to i64
   %i.ro = sext i32 %i.p to i64
-  %4 = zext i32 %i.w to i64                       ; 7 uses
+  %4 = sext i32 %i.w to i64                       ; 7 uses
+  %5 = sext i32 %spec.select to i64               ; 2 uses
   %brmerge = select i1 %i.rl, i1 true, i1 %i.rm
-  %wide.trip.count158 = zext i32 %spec.select to i64 ; 2 uses
-  %i.rp = mul nuw i64 %wide.trip.count158, %4     ; 2 uses
-  %i.rq = shl i64 %i.rp, 2
+  %i.rp = mul nsw i64 %5, %4                      ; 2 uses
+  %i.rq = shl nsw i64 %i.rp, 2
   %i.rr = getelementptr i8, ptr %i.g, i64 %i.rq
   %min.iters.check = icmp ult i32 %i.w, 8
   %n.vec = and i64 %4, 2147483640                 ; 3 uses
   %cmp.n = icmp eq i64 %n.vec, %4
-  %xtraiter189 = and i64 %4, 3                    ; 2 uses
-  %lcmp.mod190.not = icmp eq i64 %xtraiter189, 0
+  %xtraiter189 = and i64 %4, 3
+  %6 = and i32 %i.v, 24
+  %lcmp.mod190.not = icmp eq i32 %6, 0
   br label %.preheader143
 
 .preheader143:                                    ; preds = %.preheader143.lr.ph, %bb.au
@@ -704,7 +705,7 @@ scalar.ph:                                        ; preds = %scalar.ph, %scalar.
 
 ._crit_edge:                                      ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block
   %indvars.iv.next156 = add nuw nsw i64 %indvars.iv155, 1 ; 2 uses
-  %exitcond159.not = icmp eq i64 %indvars.iv.next156, %wide.trip.count158
+  %exitcond159.not = icmp eq i64 %indvars.iv.next156, %5
   br i1 %exitcond159.not, label %._crit_edge146.split, label %.preheader, !llvm.loop !81
 
 ._crit_edge146.split:                             ; preds = %._crit_edge, %.preheader143

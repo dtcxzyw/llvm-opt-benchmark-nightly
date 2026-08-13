@@ -204,7 +204,7 @@ bb.a:
 
 .preheader154.lr.ph.split:                        ; preds = %.preheader155
   switch i32 %.09.i.fr, label %.preheader154.us.us.preheader [
-    i32 31, label %.preheader154.us204
+    i32 31, label %.preheader154.lr.ph.split.split.split.us
     i32 0, label %.preheader154.us
   ]
 
@@ -310,86 +310,92 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   %exitcond227.not = icmp eq i32 %i.bv, %2
   br i1 %exitcond227.not, label %._crit_edge201.split, label %.preheader154.us, !llvm.loop !54
 
-.preheader154.us204:                              ; preds = %.preheader154.lr.ph.split, %._crit_edge191.split.split.us.us
-  %.6200.us205 = phi i32 [ %7, %._crit_edge191.split.split.us.us ], [ 0, %.preheader154.lr.ph.split ] ; 2 uses
-  %4 = mul nuw nsw i32 %.6200.us205, %1
+.preheader154.lr.ph.split.split.split.us:         ; preds = %.preheader154.lr.ph.split
+  %4 = zext nneg i32 %1 to i64                    ; 2 uses
+  %5 = zext nneg i32 %2 to i64
+  br label %.preheader154.us204
+
+.preheader154.us204:                              ; preds = %._crit_edge191.split.split.us.us, %.preheader154.lr.ph.split.split.split.us
+  %indvar210 = phi i64 [ %indvar.next211, %._crit_edge191.split.split.us.us ], [ 0, %.preheader154.lr.ph.split.split.split.us ] ; 2 uses
+  %6 = mul nuw nsw i64 %indvar210, %4
   br label %.preheader.us193.us
 
 .preheader.us193.us:                              ; preds = %.preheader.us193.us, %.preheader154.us204
-  %.0134189.us194.us = phi i32 [ 0, %.preheader154.us204 ], [ %6, %.preheader.us193.us ] ; 2 uses
+  %indvar208 = phi i64 [ %indvar.next209, %.preheader.us193.us ], [ 0, %.preheader154.us204 ] ; 2 uses
   %i.bw = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.l, ptr noundef nonnull @.str.126, i32 noundef 31) #22 ; 0 uses
-  %5 = add nuw nsw i32 %.0134189.us194.us, %4     ; 2 uses
-  %i.bx = mul nuw nsw i32 %5, 31                  ; 31 uses
+  %7 = add nuw nsw i64 %indvar208, %6
+  %8 = trunc i64 %7 to i32                        ; 2 uses
+  %i.bx = mul i32 %8, 31                          ; 31 uses
   %i.by = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.l, ptr noundef nonnull @.str.132, i32 noundef 0, i32 noundef %i.bx) #22 ; 0 uses
-  %i.bz = add nuw nsw i32 %i.bx, 1
+  %i.bz = add nsw i32 %i.bx, 1
   %i.ca = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.l, ptr noundef nonnull @.str.132, i32 noundef 1, i32 noundef %i.bz) #22 ; 0 uses
-  %i.cb = add nuw nsw i32 %i.bx, 2
+  %i.cb = add nsw i32 %i.bx, 2
   %i.cc = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.l, ptr noundef nonnull @.str.132, i32 noundef 2, i32 noundef %i.cb) #22 ; 0 uses
-  %i.cd = add nuw nsw i32 %i.bx, 3
+  %i.cd = add nsw i32 %i.bx, 3
   %i.ce = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.l, ptr noundef nonnull @.str.132, i32 noundef 3, i32 noundef %i.cd) #22 ; 0 uses
-  %i.cf = add nuw nsw i32 %i.bx, 4
+  %i.cf = add nsw i32 %i.bx, 4
   %i.cg = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.l, ptr noundef nonnull @.str.132, i32 noundef 4, i32 noundef %i.cf) #22 ; 0 uses
-  %i.ch = add nuw nsw i32 %i.bx, 5
+  %i.ch = add nsw i32 %i.bx, 5
   %i.ci = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.l, ptr noundef nonnull @.str.132, i32 noundef 5, i32 noundef %i.ch) #22 ; 0 uses
-  %i.cj = add nuw nsw i32 %i.bx, 6
+  %i.cj = add nsw i32 %i.bx, 6
   %i.ck = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.l, ptr noundef nonnull @.str.132, i32 noundef 6, i32 noundef %i.cj) #22 ; 0 uses
-  %i.cl = add nuw nsw i32 %i.bx, 7
+  %i.cl = add nsw i32 %i.bx, 7
   %i.cm = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.l, ptr noundef nonnull @.str.132, i32 noundef 7, i32 noundef %i.cl) #22 ; 0 uses
-  %i.cn = add nuw nsw i32 %i.bx, 8
+  %i.cn = add nsw i32 %i.bx, 8
   %i.co = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.l, ptr noundef nonnull @.str.132, i32 noundef 8, i32 noundef %i.cn) #22 ; 0 uses
-  %i.cp = add nuw nsw i32 %i.bx, 9
+  %i.cp = add nsw i32 %i.bx, 9
   %i.cq = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.l, ptr noundef nonnull @.str.132, i32 noundef 9, i32 noundef %i.cp) #22 ; 0 uses
-  %i.cr = add nuw nsw i32 %i.bx, 10
+  %i.cr = add nsw i32 %i.bx, 10
   %i.cs = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.l, ptr noundef nonnull @.str.132, i32 noundef 10, i32 noundef %i.cr) #22 ; 0 uses
-  %i.ct = add nuw nsw i32 %i.bx, 11
+  %i.ct = add nsw i32 %i.bx, 11
   %i.cu = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.l, ptr noundef nonnull @.str.132, i32 noundef 11, i32 noundef %i.ct) #22 ; 0 uses
-  %i.cv = add nuw nsw i32 %i.bx, 12
+  %i.cv = add nsw i32 %i.bx, 12
   %i.cw = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.l, ptr noundef nonnull @.str.132, i32 noundef 12, i32 noundef %i.cv) #22 ; 0 uses
-  %i.cx = add nuw nsw i32 %i.bx, 13
+  %i.cx = add nsw i32 %i.bx, 13
   %i.cy = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.l, ptr noundef nonnull @.str.132, i32 noundef 13, i32 noundef %i.cx) #22 ; 0 uses
-  %i.cz = add nuw nsw i32 %i.bx, 14
+  %i.cz = add nsw i32 %i.bx, 14
   %i.da = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.l, ptr noundef nonnull @.str.132, i32 noundef 14, i32 noundef %i.cz) #22 ; 0 uses
-  %i.db = add nuw nsw i32 %i.bx, 15
+  %i.db = add nsw i32 %i.bx, 15
   %i.dc = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.l, ptr noundef nonnull @.str.132, i32 noundef 15, i32 noundef %i.db) #22 ; 0 uses
-  %i.dd = add nuw nsw i32 %i.bx, 16
+  %i.dd = add nsw i32 %i.bx, 16
   %i.de = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.l, ptr noundef nonnull @.str.132, i32 noundef 16, i32 noundef %i.dd) #22 ; 0 uses
-  %i.df = add nuw nsw i32 %i.bx, 17
+  %i.df = add nsw i32 %i.bx, 17
   %i.dg = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.l, ptr noundef nonnull @.str.132, i32 noundef 17, i32 noundef %i.df) #22 ; 0 uses
-  %i.dh = add nuw nsw i32 %i.bx, 18
+  %i.dh = add nsw i32 %i.bx, 18
   %i.di = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.l, ptr noundef nonnull @.str.132, i32 noundef 18, i32 noundef %i.dh) #22 ; 0 uses
-  %i.dj = add nuw nsw i32 %i.bx, 19
+  %i.dj = add nsw i32 %i.bx, 19
   %i.dk = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.l, ptr noundef nonnull @.str.132, i32 noundef 19, i32 noundef %i.dj) #22 ; 0 uses
-  %i.dl = add nuw nsw i32 %i.bx, 20
+  %i.dl = add nsw i32 %i.bx, 20
   %i.dm = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.l, ptr noundef nonnull @.str.132, i32 noundef 20, i32 noundef %i.dl) #22 ; 0 uses
-  %i.dn = add nuw nsw i32 %i.bx, 21
+  %i.dn = add nsw i32 %i.bx, 21
   %i.do = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.l, ptr noundef nonnull @.str.132, i32 noundef 21, i32 noundef %i.dn) #22 ; 0 uses
-  %i.dp = add nuw nsw i32 %i.bx, 22
+  %i.dp = add nsw i32 %i.bx, 22
   %i.dq = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.l, ptr noundef nonnull @.str.132, i32 noundef 22, i32 noundef %i.dp) #22 ; 0 uses
-  %i.dr = add nuw nsw i32 %i.bx, 23
+  %i.dr = add nsw i32 %i.bx, 23
   %i.ds = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.l, ptr noundef nonnull @.str.132, i32 noundef 23, i32 noundef %i.dr) #22 ; 0 uses
-  %i.dt = add nuw nsw i32 %i.bx, 24
+  %i.dt = add nsw i32 %i.bx, 24
   %i.du = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.l, ptr noundef nonnull @.str.132, i32 noundef 24, i32 noundef %i.dt) #22 ; 0 uses
-  %i.dv = add nuw nsw i32 %i.bx, 25
+  %i.dv = add nsw i32 %i.bx, 25
   %i.dw = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.l, ptr noundef nonnull @.str.132, i32 noundef 25, i32 noundef %i.dv) #22 ; 0 uses
-  %i.dx = add nuw nsw i32 %i.bx, 26
+  %i.dx = add nsw i32 %i.bx, 26
   %i.dy = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.l, ptr noundef nonnull @.str.132, i32 noundef 26, i32 noundef %i.dx) #22 ; 0 uses
-  %i.dz = add nuw nsw i32 %i.bx, 27
+  %i.dz = add nsw i32 %i.bx, 27
   %i.ea = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.l, ptr noundef nonnull @.str.132, i32 noundef 27, i32 noundef %i.dz) #22 ; 0 uses
-  %i.eb = add nuw nsw i32 %i.bx, 28
+  %i.eb = add nsw i32 %i.bx, 28
   %i.ec = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.l, ptr noundef nonnull @.str.132, i32 noundef 28, i32 noundef %i.eb) #22 ; 0 uses
-  %i.ed = add nuw nsw i32 %i.bx, 29
+  %i.ed = add nsw i32 %i.bx, 29
   %i.ee = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.l, ptr noundef nonnull @.str.132, i32 noundef 29, i32 noundef %i.ed) #22 ; 0 uses
-  %i.ef = add nuw nsw i32 %i.bx, 30
+  %i.ef = add nsw i32 %i.bx, 30
   %i.eg = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.l, ptr noundef nonnull @.str.132, i32 noundef 30, i32 noundef %i.ef) #22 ; 0 uses
-  %i.eh = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.l, ptr noundef nonnull @.str.133, i32 noundef %5) #22 ; 0 uses
+  %i.eh = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.l, ptr noundef nonnull @.str.133, i32 noundef %8) #22 ; 0 uses
   %fputc150.us196.us = tail call i32 @fputc(i32 10, ptr %i.l) ; 0 uses
-  %6 = add nuw nsw i32 %.0134189.us194.us, 1      ; 2 uses
-  %exitcond229.not = icmp eq i32 %6, %1
+  %indvar.next209 = add nuw nsw i64 %indvar208, 1 ; 2 uses
+  %exitcond229.not = icmp eq i64 %indvar.next209, %4
   br i1 %exitcond229.not, label %._crit_edge191.split.split.us.us, label %.preheader.us193.us, !llvm.loop !53
 
 ._crit_edge191.split.split.us.us:                 ; preds = %.preheader.us193.us
-  %7 = add nuw nsw i32 %.6200.us205, 1            ; 2 uses
-  %exitcond230.not = icmp eq i32 %7, %2
+  %indvar.next211 = add nuw nsw i64 %indvar210, 1 ; 2 uses
+  %exitcond230.not = icmp eq i64 %indvar.next211, %5
   br i1 %exitcond230.not, label %._crit_edge201.split, label %.preheader154.us204, !llvm.loop !54
 
 bb.k:                                             ; preds = %.lr.ph182, %._crit_edge179

@@ -201,46 +201,36 @@ bb.a:
   %i.a = icmp sgt i32 %1, 0
   %i.b = icmp sgt i32 %2, 0
   %or.cond = and i1 %i.a, %i.b
-  br i1 %or.cond, label %.preheader.preheader, label %._crit_edge21.split
+  br i1 %or.cond, label %.preheader.a, label %._crit_edge21.split
 
-.preheader.preheader:                             ; preds = %bb.a
-  %wide.trip.count = zext nneg i32 %2 to i64
-  br label %.preheader.a
-
-.preheader.a:                                     ; preds = %.preheader.preheader, %._crit_edge
-  %.01720 = phi i32 [ %4, %._crit_edge ], [ 0, %.preheader.preheader ] ; 2 uses
-  %3 = mul i32 %.01720, %2
+.preheader.a:                                     ; preds = %bb.a
+  %3 = zext nneg i32 %2 to i64
+  %4 = zext nneg i32 %1 to i64
+  %flatten.tripcount = mul nuw nsw i64 %3, %4
   br label %bb.b
-
-._crit_edge21.split:                              ; preds = %._crit_edge, %bb.a
-  ret void
-
-._crit_edge:                                      ; preds = %bb.b
-  %4 = add nuw nsw i32 %.01720, 1                 ; 2 uses
-  %exitcond23.not = icmp eq i32 %4, %1
-  br i1 %exitcond23.not, label %._crit_edge21.split, label %.preheader.a, !llvm.loop !42
 
 bb.b:                                             ; preds = %.preheader.a, %bb.b
   %indvars.iv = phi i64 [ 0, %.preheader.a ], [ %indvars.iv.next, %bb.b ] ; 2 uses
   %i.c = tail call i32 @glibc_compat_rand()
   %i.d = srem i32 %i.c, 256
-  %5 = trunc nuw nsw i64 %indvars.iv to i32
-  %reass.add = add i32 %3, %5
-  %reass.mul = mul i32 %reass.add, 3
-  %6 = sext i32 %reass.mul to i64
-  %7 = getelementptr inbounds [4 x i8], ptr %0, i64 %6 ; 3 uses
-  store i32 %i.d, ptr %7, align 4, !tbaa !4
+  %sext = mul i64 %indvars.iv, 12884901888
+  %5 = ashr exact i64 %sext, 30
+  %6 = getelementptr inbounds i8, ptr %0, i64 %5  ; 3 uses
+  store i32 %i.d, ptr %6, align 4, !tbaa !4
   %i.e = tail call i32 @glibc_compat_rand()
   %i.f = srem i32 %i.e, 256
-  %i.g = getelementptr i8, ptr %7, i64 4
+  %i.g = getelementptr i8, ptr %6, i64 4
   store i32 %i.f, ptr %i.g, align 4, !tbaa !4
   %i.h = tail call i32 @glibc_compat_rand()
   %i.i = srem i32 %i.h, 256
-  %i.j = getelementptr i8, ptr %7, i64 8
+  %i.j = getelementptr i8, ptr %6, i64 8
   store i32 %i.i, ptr %i.j, align 4, !tbaa !4
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !43
+  %indvars.iv.next = add nuw i64 %indvars.iv, 1   ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %flatten.tripcount
+  br i1 %exitcond.not, label %._crit_edge21.split, label %bb.b, !llvm.loop !42
+
+._crit_edge21.split:                              ; preds = %bb.b, %bb.a
+  ret void
 }
 
 ; Function Attrs: mustprogress uwtable
@@ -280,7 +270,7 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit: ; preds = %bb.b
 
 bb.c:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit
   %i.m = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_(ptr noundef nonnull align 8 dereferenceable(8) %i.l)
-          to label %_ZNSolsEPFRSoS_E.exit unwind label %bb.d, !inline_history !44 ; 0 uses
+          to label %_ZNSolsEPFRSoS_E.exit unwind label %bb.d, !inline_history !43 ; 0 uses
 
 _ZNSolsEPFRSoS_E.exit:                            ; preds = %bb.c
   call void @exit(i32 noundef 1) #10
@@ -320,7 +310,7 @@ bb.e:                                             ; preds = %.noexc
 ._crit_edge:                                      ; preds = %bb.g
   %indvars.iv.next25 = add nuw nsw i64 %indvars.iv24, 1 ; 2 uses
   %exitcond28.not = icmp eq i64 %indvars.iv.next25, %wide.trip.count27
-  br i1 %exitcond28.not, label %._crit_edge22.split, label %.preheader, !llvm.loop !45
+  br i1 %exitcond28.not, label %._crit_edge22.split, label %.preheader, !llvm.loop !44
 
 bb.f:                                             ; preds = %.preheader, %bb.g
   %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %bb.g ] ; 2 uses
@@ -331,7 +321,7 @@ bb.f:                                             ; preds = %.preheader, %bb.g
 bb.g:                                             ; preds = %bb.f
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %i.j
-  br i1 %exitcond.not, label %._crit_edge, label %bb.f, !llvm.loop !46
+  br i1 %exitcond.not, label %._crit_edge, label %bb.f, !llvm.loop !45
 
 bb.h:                                             ; preds = %bb.f
   %i.z = landingpad { ptr, i32 }
@@ -398,7 +388,7 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit: ; preds = %bb.b
 
 bb.c:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit
   %i.m = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_(ptr noundef nonnull align 8 dereferenceable(8) %i.l)
-          to label %_ZNSolsEPFRSoS_E.exit unwind label %bb.d, !inline_history !44 ; 0 uses
+          to label %_ZNSolsEPFRSoS_E.exit unwind label %bb.d, !inline_history !43 ; 0 uses
 
 _ZNSolsEPFRSoS_E.exit:                            ; preds = %bb.c
   call void @exit(i32 noundef 1) #10
@@ -438,7 +428,7 @@ bb.e:                                             ; preds = %.noexc
 ._crit_edge:                                      ; preds = %bb.i
   %indvars.iv.next33 = add nuw nsw i64 %indvars.iv32, 1 ; 2 uses
   %exitcond36.not = icmp eq i64 %indvars.iv.next33, %wide.trip.count35
-  br i1 %exitcond36.not, label %._crit_edge30.split, label %.preheader, !llvm.loop !47
+  br i1 %exitcond36.not, label %._crit_edge30.split, label %.preheader, !llvm.loop !46
 
 bb.f:                                             ; preds = %.preheader, %bb.i
   %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %bb.i ] ; 2 uses
@@ -459,7 +449,7 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.h
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %i.j
-  br i1 %exitcond.not, label %._crit_edge, label %bb.f, !llvm.loop !48
+  br i1 %exitcond.not, label %._crit_edge, label %bb.f, !llvm.loop !47
 
 bb.j:                                             ; preds = %bb.h, %bb.g, %bb.f
   %i.ad = landingpad { ptr, i32 }
@@ -560,10 +550,9 @@ attributes #10 = { cold noreturn nounwind }
 !40 = !{!"p1 _ZTSSt7num_putIcSt19ostreambuf_iteratorIcSt11char_traitsIcEEE", !19, i64 0}
 !41 = !{!"p1 _ZTSSt7num_getIcSt19istreambuf_iteratorIcSt11char_traitsIcEEE", !19, i64 0}
 !42 = distinct !{!42, !9}
-!43 = distinct !{!43, !9}
-!44 = distinct !{null}
+!43 = distinct !{null}
+!44 = distinct !{!44, !9}
 !45 = distinct !{!45, !9}
 !46 = distinct !{!46, !9}
 !47 = distinct !{!47, !9}
-!48 = distinct !{!48, !9}
 end_hunk_0

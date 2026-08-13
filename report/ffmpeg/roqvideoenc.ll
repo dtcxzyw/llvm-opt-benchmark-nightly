@@ -1,6 +1,6 @@
 inline.NumInlined: 56
 inline.NumDeleted: 22
-loop-unroll.NumCompletelyUnrolled: 100
+loop-unroll.NumCompletelyUnrolled: 99
 loop-unroll.NumUnrolled: 103
 begin_hunk_0_@roq_encode_frame:bb.a
   %i.jd = sext i32 %i.jc to i64
@@ -203,134 +203,79 @@ create_clusters.exit.i.i:                         ; preds = %._crit_edge.i.i.i, 
   %i.pw = getelementptr inbounds nuw i8, ptr %i.c, i64 5680 ; 2 uses
   %i.px = tail call i32 @avpriv_elbg_do(ptr noundef nonnull %i.pv, ptr noundef %i.bt, i32 noundef 24, i32 noundef range(i32 -536870912, 536870909) %i.br, ptr noundef nonnull %i.ps, i32 noundef range(i32 255, 257) %i.pq, i32 noundef 1, ptr noundef %i.pu, ptr noundef nonnull %i.pw, i64 noundef 0) #9 ; 2 uses
   %i.py = icmp slt i32 %i.px, 0
-  br i1 %i.py, label %roq_encode_video.exit.thread, label %.preheader38.i.i.i
+  br i1 %i.py, label %roq_encode_video.exit.thread, label %.preheader39.split.i.i.i
 
-.preheader38.i.i.i:                               ; preds = %create_clusters.exit.i.i, %.preheader38.i.i.i
-  %.03148.i.i.i = phi ptr [ %i.ru, %.preheader38.i.i.i ], [ %i.pr, %create_clusters.exit.i.i ] ; 25 uses
-  %.03247.i.i.i.a = phi ptr [ %i.rq, %.preheader38.i.i.i ], [ %i.ps, %create_clusters.exit.i.i ] ; 25 uses
-  %.03446.i.i.i = phi i32 [ %53, %.preheader38.i.i.i ], [ 0, %create_clusters.exit.i.i ]
-  %5 = getelementptr inbounds nuw i8, ptr %.03247.i.i.i.a, i64 4
-  %6 = load i32, ptr %.03247.i.i.i.a, align 4, !tbaa !69
-  %7 = trunc i32 %6 to i8
-  store i8 %7, ptr %.03148.i.i.i, align 1, !tbaa !66
-  %8 = getelementptr inbounds nuw i8, ptr %.03247.i.i.i.a, i64 8
-  %9 = load i32, ptr %5, align 4, !tbaa !69
-  %10 = trunc i32 %9 to i8
-  %11 = getelementptr inbounds nuw i8, ptr %.03148.i.i.i, i64 1
-  store i8 %10, ptr %11, align 1, !tbaa !66
-  %12 = getelementptr inbounds nuw i8, ptr %.03247.i.i.i.a, i64 12
-  %13 = load i32, ptr %8, align 4, !tbaa !69
-  %14 = trunc i32 %13 to i8
-  %15 = getelementptr inbounds nuw i8, ptr %.03148.i.i.i, i64 2
-  store i8 %14, ptr %15, align 1, !tbaa !66
-  %16 = getelementptr inbounds nuw i8, ptr %.03247.i.i.i.a, i64 16
-  %17 = load i32, ptr %12, align 4, !tbaa !69
-  %18 = trunc i32 %17 to i8
-  %19 = getelementptr inbounds nuw i8, ptr %.03148.i.i.i, i64 3
-  store i8 %18, ptr %19, align 1, !tbaa !66
-  %20 = getelementptr inbounds nuw i8, ptr %.03247.i.i.i.a, i64 20
-  %21 = load i32, ptr %16, align 4, !tbaa !69
-  %22 = trunc i32 %21 to i8
-  %23 = getelementptr inbounds nuw i8, ptr %.03148.i.i.i, i64 4
-  store i8 %22, ptr %23, align 1, !tbaa !74
-  %24 = getelementptr inbounds nuw i8, ptr %.03247.i.i.i.a, i64 24
-  %25 = load i32, ptr %20, align 4, !tbaa !69
-  %26 = trunc i32 %25 to i8
-  %27 = getelementptr inbounds nuw i8, ptr %.03148.i.i.i, i64 5
-  store i8 %26, ptr %27, align 1, !tbaa !76
-  %28 = getelementptr inbounds nuw i8, ptr %.03148.i.i.i, i64 6
-  %29 = getelementptr inbounds nuw i8, ptr %.03247.i.i.i.a, i64 28
-  %30 = load i32, ptr %24, align 4, !tbaa !69
-  %31 = trunc i32 %30 to i8
-  store i8 %31, ptr %28, align 1, !tbaa !66
-  %32 = getelementptr inbounds nuw i8, ptr %.03247.i.i.i.a, i64 32
-  %33 = load i32, ptr %29, align 4, !tbaa !69
-  %34 = trunc i32 %33 to i8
-  %35 = getelementptr inbounds nuw i8, ptr %.03148.i.i.i, i64 7
-  store i8 %34, ptr %35, align 1, !tbaa !66
-  %36 = getelementptr inbounds nuw i8, ptr %.03247.i.i.i.a, i64 36
-  %37 = load i32, ptr %32, align 4, !tbaa !69
-  %38 = trunc i32 %37 to i8
-  %39 = getelementptr inbounds nuw i8, ptr %.03148.i.i.i, i64 8
-  store i8 %38, ptr %39, align 1, !tbaa !66
-  %40 = getelementptr inbounds nuw i8, ptr %.03247.i.i.i.a, i64 40
-  %41 = load i32, ptr %36, align 4, !tbaa !69
-  %42 = trunc i32 %41 to i8
-  %43 = getelementptr inbounds nuw i8, ptr %.03148.i.i.i, i64 9
-  store i8 %42, ptr %43, align 1, !tbaa !66
-  %44 = getelementptr inbounds nuw i8, ptr %.03247.i.i.i.a, i64 44
-  %45 = load i32, ptr %40, align 4, !tbaa !69
-  %46 = trunc i32 %45 to i8
-  %47 = getelementptr inbounds nuw i8, ptr %.03148.i.i.i, i64 10
-  store i8 %46, ptr %47, align 1, !tbaa !74
-  %48 = getelementptr inbounds nuw i8, ptr %.03247.i.i.i.a, i64 48
-  %49 = load i32, ptr %44, align 4, !tbaa !69
-  %50 = trunc i32 %49 to i8
-  %51 = getelementptr inbounds nuw i8, ptr %.03148.i.i.i, i64 11
-  store i8 %50, ptr %51, align 1, !tbaa !76
-  %52 = getelementptr inbounds nuw i8, ptr %.03148.i.i.i, i64 12
-  %i.pz = getelementptr inbounds nuw i8, ptr %.03247.i.i.i.a, i64 52
-  %i.qa = load i32, ptr %48, align 4, !tbaa !69
+.preheader39.split.i.i.i:                         ; preds = %create_clusters.exit.i.i
+  %narrow.i.i.i = shl nuw nsw i32 %i.pq, 2
+  %flatten.tripcount.i.i.i = zext nneg i32 %narrow.i.i.i to i64
+  br label %.preheader38.i.i.i
+
+.preheader38.i.i.i:                               ; preds = %.preheader38.i.i.i, %.preheader39.split.i.i.i
+  %indvar49.i.i.i = phi i64 [ 0, %.preheader39.split.i.i.i ], [ %indvar.next50.i.i.i.1, %.preheader38.i.i.i ]
+  %.03247.i.i.i.a = phi ptr [ %i.pr, %.preheader39.split.i.i.i ], [ %i.ru, %.preheader38.i.i.i ] ; 13 uses
+  %.03247.i.i.i = phi ptr [ %i.ps, %.preheader39.split.i.i.i ], [ %i.rq, %.preheader38.i.i.i ] ; 13 uses
+  %i.pz = getelementptr inbounds nuw i8, ptr %.03247.i.i.i, i64 4
+  %i.qa = load i32, ptr %.03247.i.i.i, align 4, !tbaa !69
   %i.qb = trunc i32 %i.qa to i8
-  store i8 %i.qb, ptr %52, align 1, !tbaa !66
-  %i.qc = getelementptr inbounds nuw i8, ptr %.03247.i.i.i.a, i64 56
+  store i8 %i.qb, ptr %.03247.i.i.i.a, align 1, !tbaa !66
+  %i.qc = getelementptr inbounds nuw i8, ptr %.03247.i.i.i, i64 8
   %i.qd = load i32, ptr %i.pz, align 4, !tbaa !69
   %i.qe = trunc i32 %i.qd to i8
-  %i.qf = getelementptr inbounds nuw i8, ptr %.03148.i.i.i, i64 13
+  %i.qf = getelementptr inbounds nuw i8, ptr %.03247.i.i.i.a, i64 1
   store i8 %i.qe, ptr %i.qf, align 1, !tbaa !66
-  %i.qg = getelementptr inbounds nuw i8, ptr %.03247.i.i.i.a, i64 60
+  %i.qg = getelementptr inbounds nuw i8, ptr %.03247.i.i.i, i64 12
   %i.qh = load i32, ptr %i.qc, align 4, !tbaa !69
   %i.qi = trunc i32 %i.qh to i8
-  %i.qj = getelementptr inbounds nuw i8, ptr %.03148.i.i.i, i64 14
+  %i.qj = getelementptr inbounds nuw i8, ptr %.03247.i.i.i.a, i64 2
   store i8 %i.qi, ptr %i.qj, align 1, !tbaa !66
-  %i.qk = getelementptr inbounds nuw i8, ptr %.03247.i.i.i.a, i64 64
+  %i.qk = getelementptr inbounds nuw i8, ptr %.03247.i.i.i, i64 16
   %i.ql = load i32, ptr %i.qg, align 4, !tbaa !69
   %i.qm = trunc i32 %i.ql to i8
-  %i.qn = getelementptr inbounds nuw i8, ptr %.03148.i.i.i, i64 15
+  %i.qn = getelementptr inbounds nuw i8, ptr %.03247.i.i.i.a, i64 3
   store i8 %i.qm, ptr %i.qn, align 1, !tbaa !66
-  %i.qo = getelementptr inbounds nuw i8, ptr %.03247.i.i.i.a, i64 68
+  %i.qo = getelementptr inbounds nuw i8, ptr %.03247.i.i.i, i64 20
   %i.qp = load i32, ptr %i.qk, align 4, !tbaa !69
   %i.qq = trunc i32 %i.qp to i8
-  %i.qr = getelementptr inbounds nuw i8, ptr %.03148.i.i.i, i64 16
+  %i.qr = getelementptr inbounds nuw i8, ptr %.03247.i.i.i.a, i64 4
   store i8 %i.qq, ptr %i.qr, align 1, !tbaa !74
-  %i.qs = getelementptr inbounds nuw i8, ptr %.03247.i.i.i.a, i64 72
+  %i.qs = getelementptr inbounds nuw i8, ptr %.03247.i.i.i, i64 24
   %i.qt = load i32, ptr %i.qo, align 4, !tbaa !69
   %i.qu = trunc i32 %i.qt to i8
-  %i.qv = getelementptr inbounds nuw i8, ptr %.03148.i.i.i, i64 17
+  %i.qv = getelementptr inbounds nuw i8, ptr %.03247.i.i.i.a, i64 5
   store i8 %i.qu, ptr %i.qv, align 1, !tbaa !76
-  %i.qw = getelementptr inbounds nuw i8, ptr %.03148.i.i.i, i64 18
-  %i.qx = getelementptr inbounds nuw i8, ptr %.03247.i.i.i.a, i64 76
+  %i.qw = getelementptr inbounds nuw i8, ptr %.03247.i.i.i.a, i64 6
+  %i.qx = getelementptr inbounds nuw i8, ptr %.03247.i.i.i, i64 28
   %i.qy = load i32, ptr %i.qs, align 4, !tbaa !69
   %i.qz = trunc i32 %i.qy to i8
   store i8 %i.qz, ptr %i.qw, align 1, !tbaa !66
-  %i.ra = getelementptr inbounds nuw i8, ptr %.03247.i.i.i.a, i64 80
+  %i.ra = getelementptr inbounds nuw i8, ptr %.03247.i.i.i, i64 32
   %i.rb = load i32, ptr %i.qx, align 4, !tbaa !69
   %i.rc = trunc i32 %i.rb to i8
-  %i.rd = getelementptr inbounds nuw i8, ptr %.03148.i.i.i, i64 19
+  %i.rd = getelementptr inbounds nuw i8, ptr %.03247.i.i.i.a, i64 7
   store i8 %i.rc, ptr %i.rd, align 1, !tbaa !66
-  %i.re = getelementptr inbounds nuw i8, ptr %.03247.i.i.i.a, i64 84
+  %i.re = getelementptr inbounds nuw i8, ptr %.03247.i.i.i, i64 36
   %i.rf = load i32, ptr %i.ra, align 4, !tbaa !69
   %i.rg = trunc i32 %i.rf to i8
-  %i.rh = getelementptr inbounds nuw i8, ptr %.03148.i.i.i, i64 20
+  %i.rh = getelementptr inbounds nuw i8, ptr %.03247.i.i.i.a, i64 8
   store i8 %i.rg, ptr %i.rh, align 1, !tbaa !66
-  %i.ri = getelementptr inbounds nuw i8, ptr %.03247.i.i.i.a, i64 88
+  %i.ri = getelementptr inbounds nuw i8, ptr %.03247.i.i.i, i64 40
   %i.rj = load i32, ptr %i.re, align 4, !tbaa !69
   %i.rk = trunc i32 %i.rj to i8
-  %i.rl = getelementptr inbounds nuw i8, ptr %.03148.i.i.i, i64 21
+  %i.rl = getelementptr inbounds nuw i8, ptr %.03247.i.i.i.a, i64 9
   store i8 %i.rk, ptr %i.rl, align 1, !tbaa !66
-  %i.rm = getelementptr inbounds nuw i8, ptr %.03247.i.i.i.a, i64 92
+  %i.rm = getelementptr inbounds nuw i8, ptr %.03247.i.i.i, i64 44
   %i.rn = load i32, ptr %i.ri, align 4, !tbaa !69
   %i.ro = trunc i32 %i.rn to i8
-  %i.rp = getelementptr inbounds nuw i8, ptr %.03148.i.i.i, i64 22
+  %i.rp = getelementptr inbounds nuw i8, ptr %.03247.i.i.i.a, i64 10
   store i8 %i.ro, ptr %i.rp, align 1, !tbaa !74
-  %i.rq = getelementptr inbounds nuw i8, ptr %.03247.i.i.i.a, i64 96
+  %i.rq = getelementptr inbounds nuw i8, ptr %.03247.i.i.i, i64 48
   %i.rr = load i32, ptr %i.rm, align 4, !tbaa !69
   %i.rs = trunc i32 %i.rr to i8
-  %i.rt = getelementptr inbounds nuw i8, ptr %.03148.i.i.i, i64 23
+  %i.rt = getelementptr inbounds nuw i8, ptr %.03247.i.i.i.a, i64 11
   store i8 %i.rs, ptr %i.rt, align 1, !tbaa !76
-  %i.ru = getelementptr inbounds nuw i8, ptr %.03148.i.i.i, i64 24
-  %53 = add nuw nsw i32 %.03446.i.i.i, 1          ; 2 uses
-  %exitcond52.not.i.i.i = icmp eq i32 %53, %i.pq
+  %i.ru = getelementptr inbounds nuw i8, ptr %.03247.i.i.i.a, i64 12
+  %indvar.next50.i.i.i.1 = add nuw nsw i64 %indvar49.i.i.i, 2 ; 2 uses
+  %exitcond52.not.i.i.i = icmp eq i64 %indvar.next50.i.i.i.1, %flatten.tripcount.i.i.i
   br i1 %exitcond52.not.i.i.i, label %generate_codebook.exit.i.i, label %.preheader38.i.i.i, !llvm.loop !77
 
 generate_codebook.exit.i.i:                       ; preds = %.preheader38.i.i.i
@@ -342,71 +287,71 @@ generate_codebook.exit.i.i:                       ; preds = %.preheader38.i.i.i
   br i1 %i.rz, label %roq_encode_video.exit.thread, label %.preheader38.i57.i.i
 
 .preheader38.i57.i.i:                             ; preds = %generate_codebook.exit.i.i, %.preheader38.i57.i.i
-  %.03148.i58.i.i = phi ptr [ %i.sw, %.preheader38.i57.i.i ], [ %i.rw, %generate_codebook.exit.i.i ] ; 13 uses
-  %.03247.i59.i.i = phi ptr [ %56, %.preheader38.i57.i.i ], [ %i.ps, %generate_codebook.exit.i.i ] ; 13 uses
-  %.03446.i60.i.i = phi i32 [ %57, %.preheader38.i57.i.i ], [ 0, %generate_codebook.exit.i.i ]
-  %54 = getelementptr i8, ptr %.03247.i59.i.i, i64 24
-  %55 = getelementptr i8, ptr %.03148.i58.i.i, i64 6
-  %i.sa = getelementptr inbounds nuw i8, ptr %.03247.i59.i.i, i64 4
-  %i.sb = load i32, ptr %.03247.i59.i.i, align 4, !tbaa !69
+  %indvar49.i58.i.i = phi i64 [ %indvar.next50.i61.i.i.1, %.preheader38.i57.i.i ], [ 0, %generate_codebook.exit.i.i ]
+  %.03247.i59.i.i = phi ptr [ %7, %.preheader38.i57.i.i ], [ %i.rw, %generate_codebook.exit.i.i ] ; 13 uses
+  %.03247.i60.i.i = phi ptr [ %6, %.preheader38.i57.i.i ], [ %i.ps, %generate_codebook.exit.i.i ] ; 13 uses
+  %i.sa = getelementptr inbounds nuw i8, ptr %.03247.i60.i.i, i64 4
+  %i.sb = load i32, ptr %.03247.i60.i.i, align 4, !tbaa !69
   %i.sc = trunc i32 %i.sb to i8
-  store i8 %i.sc, ptr %.03148.i58.i.i, align 1, !tbaa !66
-  %i.sd = getelementptr inbounds nuw i8, ptr %.03247.i59.i.i, i64 8
+  store i8 %i.sc, ptr %.03247.i59.i.i, align 1, !tbaa !66
+  %i.sd = getelementptr inbounds nuw i8, ptr %.03247.i60.i.i, i64 8
   %i.se = load i32, ptr %i.sa, align 4, !tbaa !69
   %i.sf = trunc i32 %i.se to i8
-  %i.sg = getelementptr inbounds nuw i8, ptr %.03148.i58.i.i, i64 1
+  %i.sg = getelementptr inbounds nuw i8, ptr %.03247.i59.i.i, i64 1
   store i8 %i.sf, ptr %i.sg, align 1, !tbaa !66
-  %i.sh = getelementptr inbounds nuw i8, ptr %.03247.i59.i.i, i64 12
+  %i.sh = getelementptr inbounds nuw i8, ptr %.03247.i60.i.i, i64 12
   %i.si = load i32, ptr %i.sd, align 4, !tbaa !69
   %i.sj = trunc i32 %i.si to i8
-  %i.sk = getelementptr inbounds nuw i8, ptr %.03148.i58.i.i, i64 2
+  %i.sk = getelementptr inbounds nuw i8, ptr %.03247.i59.i.i, i64 2
   store i8 %i.sj, ptr %i.sk, align 1, !tbaa !66
-  %i.sl = getelementptr inbounds nuw i8, ptr %.03247.i59.i.i, i64 16
+  %i.sl = getelementptr inbounds nuw i8, ptr %.03247.i60.i.i, i64 16
   %i.sm = load i32, ptr %i.sh, align 4, !tbaa !69
   %i.sn = trunc i32 %i.sm to i8
-  %i.so = getelementptr inbounds nuw i8, ptr %.03148.i58.i.i, i64 3
+  %i.so = getelementptr inbounds nuw i8, ptr %.03247.i59.i.i, i64 3
   store i8 %i.sn, ptr %i.so, align 1, !tbaa !66
-  %i.sp = getelementptr inbounds nuw i8, ptr %.03247.i59.i.i, i64 20
+  %i.sp = getelementptr inbounds nuw i8, ptr %.03247.i60.i.i, i64 20
   %i.sq = load i32, ptr %i.sl, align 4, !tbaa !69
   %i.sr = trunc i32 %i.sq to i8
-  %i.ss = getelementptr inbounds nuw i8, ptr %.03148.i58.i.i, i64 4
+  %i.ss = getelementptr inbounds nuw i8, ptr %.03247.i59.i.i, i64 4
   store i8 %i.sr, ptr %i.ss, align 1, !tbaa !74
+  %5 = getelementptr inbounds nuw i8, ptr %.03247.i60.i.i, i64 24
   %i.st = load i32, ptr %i.sp, align 4, !tbaa !69
   %i.su = trunc i32 %i.st to i8
-  %i.sv = getelementptr inbounds nuw i8, ptr %.03148.i58.i.i, i64 5
+  %i.sv = getelementptr inbounds nuw i8, ptr %.03247.i59.i.i, i64 5
   store i8 %i.su, ptr %i.sv, align 1, !tbaa !76
-  %56 = getelementptr i8, ptr %.03247.i59.i.i, i64 48
-  %i.sw = getelementptr i8, ptr %.03148.i58.i.i, i64 12
-  %i.sx = getelementptr i8, ptr %.03247.i59.i.i, i64 28
-  %i.sy = load i32, ptr %54, align 4, !tbaa !69
+  %i.sw = getelementptr inbounds nuw i8, ptr %.03247.i59.i.i, i64 6
+  %i.sx = getelementptr inbounds nuw i8, ptr %.03247.i60.i.i, i64 28
+  %i.sy = load i32, ptr %5, align 4, !tbaa !69
   %i.sz = trunc i32 %i.sy to i8
-  store i8 %i.sz, ptr %55, align 1, !tbaa !66
-  %i.ta = getelementptr i8, ptr %.03247.i59.i.i, i64 32
+  store i8 %i.sz, ptr %i.sw, align 1, !tbaa !66
+  %i.ta = getelementptr inbounds nuw i8, ptr %.03247.i60.i.i, i64 32
   %i.tb = load i32, ptr %i.sx, align 4, !tbaa !69
   %i.tc = trunc i32 %i.tb to i8
-  %i.td = getelementptr i8, ptr %.03148.i58.i.i, i64 7
+  %i.td = getelementptr inbounds nuw i8, ptr %.03247.i59.i.i, i64 7
   store i8 %i.tc, ptr %i.td, align 1, !tbaa !66
-  %i.te = getelementptr i8, ptr %.03247.i59.i.i, i64 36
+  %i.te = getelementptr inbounds nuw i8, ptr %.03247.i60.i.i, i64 36
   %i.tf = load i32, ptr %i.ta, align 4, !tbaa !69
   %i.tg = trunc i32 %i.tf to i8
-  %i.th = getelementptr i8, ptr %.03148.i58.i.i, i64 8
+  %i.th = getelementptr inbounds nuw i8, ptr %.03247.i59.i.i, i64 8
   store i8 %i.tg, ptr %i.th, align 1, !tbaa !66
-  %i.ti = getelementptr i8, ptr %.03247.i59.i.i, i64 40
+  %i.ti = getelementptr inbounds nuw i8, ptr %.03247.i60.i.i, i64 40
   %i.tj = load i32, ptr %i.te, align 4, !tbaa !69
   %i.tk = trunc i32 %i.tj to i8
-  %i.tl = getelementptr i8, ptr %.03148.i58.i.i, i64 9
+  %i.tl = getelementptr inbounds nuw i8, ptr %.03247.i59.i.i, i64 9
   store i8 %i.tk, ptr %i.tl, align 1, !tbaa !66
-  %i.tm = getelementptr i8, ptr %.03247.i59.i.i, i64 44
+  %i.tm = getelementptr inbounds nuw i8, ptr %.03247.i60.i.i, i64 44
   %i.tn = load i32, ptr %i.ti, align 4, !tbaa !69
   %i.to = trunc i32 %i.tn to i8
-  %i.tp = getelementptr i8, ptr %.03148.i58.i.i, i64 10
+  %i.tp = getelementptr inbounds nuw i8, ptr %.03247.i59.i.i, i64 10
   store i8 %i.to, ptr %i.tp, align 1, !tbaa !74
+  %6 = getelementptr inbounds nuw i8, ptr %.03247.i60.i.i, i64 48
   %i.tq = load i32, ptr %i.tm, align 4, !tbaa !69
   %i.tr = trunc i32 %i.tq to i8
-  %i.ts = getelementptr i8, ptr %.03148.i58.i.i, i64 11
+  %i.ts = getelementptr inbounds nuw i8, ptr %.03247.i59.i.i, i64 11
   store i8 %i.tr, ptr %i.ts, align 1, !tbaa !76
-  %57 = add nuw nsw i32 %.03446.i60.i.i, 2        ; 2 uses
-  %exitcond52.not.i67.i.i.1 = icmp eq i32 %57, 256
+  %7 = getelementptr inbounds nuw i8, ptr %.03247.i59.i.i, i64 12
+  %indvar.next50.i61.i.i.1 = add nuw nsw i64 %indvar49.i58.i.i, 2 ; 2 uses
+  %exitcond52.not.i67.i.i.1 = icmp eq i64 %indvar.next50.i61.i.i.1, 256
   br i1 %exitcond52.not.i67.i.i.1, label %generate_codebook.exit69.i.i, label %.preheader38.i57.i.i, !llvm.loop !77
 
 generate_codebook.exit69.i.i:                     ; preds = %.preheader38.i57.i.i

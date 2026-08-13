@@ -204,27 +204,41 @@ bb.a:
   br i1 %.not, label %._crit_edge84.split.sink.split, label %.preheader72.lr.ph
 
 .preheader72.lr.ph:                               ; preds = %bb.a
-  %i.c = add i64 %3, -2                           ; 3 uses
+  %i.c = add i64 %3, -2                           ; 4 uses
   %.not85 = icmp eq i64 %i.c, 0
-  br i1 %.not85, label %._crit_edge84.split.sink.split, label %._crit_edge77.a
+  br i1 %.not85, label %._crit_edge84.split.sink.split, label %.preheader72.us.lver.check
 
-._crit_edge77.a:                                  ; preds = %.preheader72.lr.ph
+.preheader72.us.lver.check:                       ; preds = %.preheader72.lr.ph
+  %flatten.mul = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %2, i64 %i.c) ; 2 uses
+  %flatten.overflow = extractvalue { i64, i1 } %flatten.mul, 1
+  br i1 %flatten.overflow, label %._crit_edge77.a, label %.preheader72.us.preheader
+
+.preheader72.us.preheader:                        ; preds = %.preheader72.us.lver.check
+  %flatten.tripcount = extractvalue { i64, i1 } %flatten.mul, 0
+  %umax = tail call i64 @llvm.umax.i64(i64 %flatten.tripcount, i64 1)
+  br label %._crit_edge77
+
+._crit_edge77.a:                                  ; preds = %.preheader72.us.lver.check
   %i.d = add i64 %2, -1
   %i.e = mul i64 %i.d, %i.c
   %i.f = add i64 %3, %i.e
-  %i.g = add i64 %i.f, -2                         ; 3 uses
-  %4 = icmp sgt i64 %i.g, 3074457345618258602
+  %i.g = add i64 %i.f, -2
+  br label %._crit_edge77
+
+._crit_edge77:                                    ; preds = %.preheader72.us.preheader, %._crit_edge77.a
+  %.051.lcssa = phi i64 [ %umax, %.preheader72.us.preheader ], [ %i.g, %._crit_edge77.a ] ; 3 uses
+  %4 = icmp sgt i64 %.051.lcssa, 3074457345618258602
   br i1 %4, label %bb.b, label %.preheader.lr.ph.split
 
-bb.b:                                             ; preds = %._crit_edge77.a
+bb.b:                                             ; preds = %._crit_edge77
   %i.h = tail call ptr @__cxa_allocate_exception(i64 8) #32 ; 2 uses
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVSt9bad_alloc, i64 16), ptr %i.h, align 8, !tbaa !46
   tail call void @__cxa_throw(ptr nonnull %i.h, ptr nonnull @_ZTISt9bad_alloc, ptr nonnull @_ZNSt9bad_allocD1Ev) #35
   unreachable
 
-.preheader.lr.ph.split:                           ; preds = %._crit_edge77.a
-  %i.i = mul nsw i64 %i.g, 3
-  tail call void @_ZN5Eigen12DenseStorageIiLin1ELin1ELin1ELi0EE6resizeElll(ptr noundef nonnull align 8 dereferenceable(24) %1, i64 noundef %i.i, i64 noundef %i.g, i64 noundef 3)
+.preheader.lr.ph.split:                           ; preds = %._crit_edge77
+  %i.i = mul nsw i64 %.051.lcssa, 3
+  tail call void @_ZN5Eigen12DenseStorageIiLin1ELin1ELin1ELi0EE6resizeElll(ptr noundef nonnull align 8 dereferenceable(24) %1, i64 noundef %i.i, i64 noundef %.051.lcssa, i64 noundef 3)
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.k = load ptr, ptr %1, align 8, !tbaa !37     ; 3 uses
   %i.l = load i64, ptr %i.j, align 8, !tbaa !286  ; 4 uses
@@ -554,27 +568,41 @@ bb.a:
   br i1 %.not, label %._crit_edge84.split.sink.split, label %.preheader72.lr.ph
 
 .preheader72.lr.ph:                               ; preds = %bb.a
-  %i.c = add i64 %3, -2                           ; 3 uses
+  %i.c = add i64 %3, -2                           ; 4 uses
   %.not85 = icmp eq i64 %i.c, 0
-  br i1 %.not85, label %._crit_edge84.split.sink.split, label %._crit_edge77.a
+  br i1 %.not85, label %._crit_edge84.split.sink.split, label %.preheader72.us.lver.check
 
-._crit_edge77.a:                                  ; preds = %.preheader72.lr.ph
+.preheader72.us.lver.check:                       ; preds = %.preheader72.lr.ph
+  %flatten.mul = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %2, i64 %i.c) ; 2 uses
+  %flatten.overflow = extractvalue { i64, i1 } %flatten.mul, 1
+  br i1 %flatten.overflow, label %._crit_edge77.a, label %.preheader72.us.preheader
+
+.preheader72.us.preheader:                        ; preds = %.preheader72.us.lver.check
+  %flatten.tripcount = extractvalue { i64, i1 } %flatten.mul, 0
+  %umax = tail call i64 @llvm.umax.i64(i64 %flatten.tripcount, i64 1)
+  br label %._crit_edge77
+
+._crit_edge77.a:                                  ; preds = %.preheader72.us.lver.check
   %i.d = add i64 %2, -1
   %i.e = mul i64 %i.d, %i.c
   %i.f = add i64 %3, %i.e
-  %i.g = add i64 %i.f, -2                         ; 3 uses
-  %4 = icmp sgt i64 %i.g, 3074457345618258602
+  %i.g = add i64 %i.f, -2
+  br label %._crit_edge77
+
+._crit_edge77:                                    ; preds = %.preheader72.us.preheader, %._crit_edge77.a
+  %.051.lcssa = phi i64 [ %umax, %.preheader72.us.preheader ], [ %i.g, %._crit_edge77.a ] ; 3 uses
+  %4 = icmp sgt i64 %.051.lcssa, 3074457345618258602
   br i1 %4, label %bb.b, label %.preheader.lr.ph.split
 
-bb.b:                                             ; preds = %._crit_edge77.a
+bb.b:                                             ; preds = %._crit_edge77
   %i.h = tail call ptr @__cxa_allocate_exception(i64 8) #32 ; 2 uses
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVSt9bad_alloc, i64 16), ptr %i.h, align 8, !tbaa !46
   tail call void @__cxa_throw(ptr nonnull %i.h, ptr nonnull @_ZTISt9bad_alloc, ptr nonnull @_ZNSt9bad_allocD1Ev) #35
   unreachable
 
-.preheader.lr.ph.split:                           ; preds = %._crit_edge77.a
-  %i.i = mul nsw i64 %i.g, 3
-  tail call void @_ZN5Eigen12DenseStorageIiLin1ELin1ELin1ELi0EE6resizeElll(ptr noundef nonnull align 8 dereferenceable(24) %1, i64 noundef %i.i, i64 noundef %i.g, i64 noundef 3)
+.preheader.lr.ph.split:                           ; preds = %._crit_edge77
+  %i.i = mul nsw i64 %.051.lcssa, 3
+  tail call void @_ZN5Eigen12DenseStorageIiLin1ELin1ELin1ELi0EE6resizeElll(ptr noundef nonnull align 8 dereferenceable(24) %1, i64 noundef %i.i, i64 noundef %.051.lcssa, i64 noundef 3)
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.k = load ptr, ptr %1, align 8, !tbaa !37     ; 3 uses
   %i.l = load i64, ptr %i.j, align 8, !tbaa !286  ; 4 uses
@@ -901,27 +929,41 @@ bb.a:
   br i1 %.not, label %._crit_edge84.split.sink.split, label %.preheader72.lr.ph
 
 .preheader72.lr.ph:                               ; preds = %bb.a
-  %i.c = add i64 %3, -2                           ; 3 uses
+  %i.c = add i64 %3, -2                           ; 4 uses
   %.not85 = icmp eq i64 %i.c, 0
-  br i1 %.not85, label %._crit_edge84.split.sink.split, label %._crit_edge77.a
+  br i1 %.not85, label %._crit_edge84.split.sink.split, label %.preheader72.us.lver.check
 
-._crit_edge77.a:                                  ; preds = %.preheader72.lr.ph
+.preheader72.us.lver.check:                       ; preds = %.preheader72.lr.ph
+  %flatten.mul = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %2, i64 %i.c) ; 2 uses
+  %flatten.overflow = extractvalue { i64, i1 } %flatten.mul, 1
+  br i1 %flatten.overflow, label %._crit_edge77.a, label %.preheader72.us.preheader
+
+.preheader72.us.preheader:                        ; preds = %.preheader72.us.lver.check
+  %flatten.tripcount = extractvalue { i64, i1 } %flatten.mul, 0
+  %umax = tail call i64 @llvm.umax.i64(i64 %flatten.tripcount, i64 1)
+  br label %._crit_edge77
+
+._crit_edge77.a:                                  ; preds = %.preheader72.us.lver.check
   %i.d = add i64 %2, -1
   %i.e = mul i64 %i.d, %i.c
   %i.f = add i64 %3, %i.e
-  %i.g = add i64 %i.f, -2                         ; 3 uses
-  %4 = icmp sgt i64 %i.g, 3074457345618258602
+  %i.g = add i64 %i.f, -2
+  br label %._crit_edge77
+
+._crit_edge77:                                    ; preds = %.preheader72.us.preheader, %._crit_edge77.a
+  %.051.lcssa = phi i64 [ %umax, %.preheader72.us.preheader ], [ %i.g, %._crit_edge77.a ] ; 3 uses
+  %4 = icmp sgt i64 %.051.lcssa, 3074457345618258602
   br i1 %4, label %bb.b, label %.preheader.lr.ph.split
 
-bb.b:                                             ; preds = %._crit_edge77.a
+bb.b:                                             ; preds = %._crit_edge77
   %i.h = tail call ptr @__cxa_allocate_exception(i64 8) #32 ; 2 uses
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVSt9bad_alloc, i64 16), ptr %i.h, align 8, !tbaa !46
   tail call void @__cxa_throw(ptr nonnull %i.h, ptr nonnull @_ZTISt9bad_alloc, ptr nonnull @_ZNSt9bad_allocD1Ev) #35
   unreachable
 
-.preheader.lr.ph.split:                           ; preds = %._crit_edge77.a
-  %i.i = mul nsw i64 %i.g, 3
-  tail call void @_ZN5Eigen12DenseStorageIiLin1ELin1ELin1ELi0EE6resizeElll(ptr noundef nonnull align 8 dereferenceable(24) %1, i64 noundef %i.i, i64 noundef %i.g, i64 noundef 3)
+.preheader.lr.ph.split:                           ; preds = %._crit_edge77
+  %i.i = mul nsw i64 %.051.lcssa, 3
+  tail call void @_ZN5Eigen12DenseStorageIiLin1ELin1ELin1ELi0EE6resizeElll(ptr noundef nonnull align 8 dereferenceable(24) %1, i64 noundef %i.i, i64 noundef %.051.lcssa, i64 noundef 3)
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.k = load ptr, ptr %1, align 8, !tbaa !37     ; 3 uses
   %i.l = load i64, ptr %i.j, align 8, !tbaa !286  ; 4 uses
@@ -1324,13 +1366,27 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not.i, label %._crit_edge84.split.sink.split.i, label %.preheader72.lr.ph.i
 
 .preheader72.lr.ph.i:                             ; preds = %bb.c
-  %i.e = add i64 %3, -2                           ; 3 uses
+  %i.e = add i64 %3, -2                           ; 4 uses
   %.not85.i = icmp eq i64 %i.e, 0
-  br i1 %.not85.i, label %._crit_edge84.split.sink.split.i, label %.preheader.lr.ph.split.i
+  br i1 %.not85.i, label %._crit_edge84.split.sink.split.i, label %.preheader72.us.lver.check.i
 
-.preheader.lr.ph.split.i:                         ; preds = %.preheader72.lr.ph.i
+.preheader72.us.lver.check.i:                     ; preds = %.preheader72.lr.ph.i
+  %flatten.mul.i = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %2, i64 %i.e) ; 2 uses
+  %flatten.overflow.i = extractvalue { i64, i1 } %flatten.mul.i, 1
+  br i1 %flatten.overflow.i, label %.preheader72.us.lver.orig.preheader.i, label %.preheader72.us.preheader.i
+
+.preheader72.us.preheader.i:                      ; preds = %.preheader72.us.lver.check.i
+  %flatten.tripcount.i = extractvalue { i64, i1 } %flatten.mul.i, 0
+  %umax.i = tail call i64 @llvm.umax.i64(i64 %flatten.tripcount.i, i64 1)
+  br label %.preheader.lr.ph.split.i
+
+.preheader72.us.lver.orig.preheader.i:            ; preds = %.preheader72.us.lver.check.i
   %4 = mul i64 %i.e, %2
-  tail call void @_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELi3ELi0ELin1ELi3EEEE6resizeEll(ptr noundef nonnull align 8 dereferenceable(16) %1, i64 noundef %4, i64 noundef 3)
+  br label %.preheader.lr.ph.split.i
+
+.preheader.lr.ph.split.i:                         ; preds = %.preheader72.us.lver.orig.preheader.i, %.preheader72.us.preheader.i
+  %.051.lcssa.ph.ph.i = phi i64 [ %4, %.preheader72.us.lver.orig.preheader.i ], [ %umax.i, %.preheader72.us.preheader.i ]
+  tail call void @_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELi3ELi0ELin1ELi3EEEE6resizeEll(ptr noundef nonnull align 8 dereferenceable(16) %1, i64 noundef %.051.lcssa.ph.ph.i, i64 noundef 3)
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.g = load ptr, ptr %1, align 8, !tbaa !405    ; 3 uses
   %i.h = load i64, ptr %i.f, align 8, !tbaa !407  ; 4 uses
@@ -1456,13 +1512,27 @@ bb.f:                                             ; preds = %bb.a
   br i1 %.not.i33, label %._crit_edge84.split.sink.split.i49, label %.preheader72.lr.ph.i34
 
 .preheader72.lr.ph.i34:                           ; preds = %bb.f
-  %i.bk = add i64 %3, -2                          ; 3 uses
+  %i.bk = add i64 %3, -2                          ; 4 uses
   %.not85.i35 = icmp eq i64 %i.bk, 0
-  br i1 %.not85.i35, label %._crit_edge84.split.sink.split.i49, label %.preheader.lr.ph.split.i36
+  br i1 %.not85.i35, label %._crit_edge84.split.sink.split.i49, label %.preheader72.us.lver.check.i36
 
-.preheader.lr.ph.split.i36:                       ; preds = %.preheader72.lr.ph.i34
+.preheader72.us.lver.check.i36:                   ; preds = %.preheader72.lr.ph.i34
+  %flatten.mul.i37 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %2, i64 %i.bk) ; 2 uses
+  %flatten.overflow.i38 = extractvalue { i64, i1 } %flatten.mul.i37, 1
+  br i1 %flatten.overflow.i38, label %.preheader72.us.lver.orig.preheader.i56, label %.preheader72.us.preheader.i39
+
+.preheader72.us.preheader.i39:                    ; preds = %.preheader72.us.lver.check.i36
+  %flatten.tripcount.i40 = extractvalue { i64, i1 } %flatten.mul.i37, 0
+  %umax.i41 = tail call i64 @llvm.umax.i64(i64 %flatten.tripcount.i40, i64 1)
+  br label %.preheader.lr.ph.split.i36
+
+.preheader72.us.lver.orig.preheader.i56:          ; preds = %.preheader72.us.lver.check.i36
   %5 = mul i64 %i.bk, %2
-  tail call void @_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELi3ELi0ELin1ELi3EEEE6resizeEll(ptr noundef nonnull align 8 dereferenceable(16) %1, i64 noundef %5, i64 noundef 3)
+  br label %.preheader.lr.ph.split.i36
+
+.preheader.lr.ph.split.i36:                       ; preds = %.preheader72.us.lver.orig.preheader.i56, %.preheader72.us.preheader.i39
+  %.051.lcssa.ph.ph.i43 = phi i64 [ %5, %.preheader72.us.lver.orig.preheader.i56 ], [ %umax.i41, %.preheader72.us.preheader.i39 ]
+  tail call void @_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELi3ELi0ELin1ELi3EEEE6resizeEll(ptr noundef nonnull align 8 dereferenceable(16) %1, i64 noundef %.051.lcssa.ph.ph.i43, i64 noundef 3)
   %i.bl = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.bm = load ptr, ptr %1, align 8, !tbaa !405   ; 3 uses
   %i.bn = load i64, ptr %i.bl, align 8, !tbaa !407 ; 4 uses
@@ -1588,13 +1658,27 @@ bb.i:                                             ; preds = %bb.a
   br i1 %.not.i50, label %._crit_edge84.split.sink.split.i66, label %.preheader72.lr.ph.i51
 
 .preheader72.lr.ph.i51:                           ; preds = %bb.i
-  %i.dq = add i64 %3, -2                          ; 3 uses
+  %i.dq = add i64 %3, -2                          ; 4 uses
   %.not85.i52 = icmp eq i64 %i.dq, 0
-  br i1 %.not85.i52, label %._crit_edge84.split.sink.split.i66, label %.preheader.lr.ph.split.i53
+  br i1 %.not85.i52, label %._crit_edge84.split.sink.split.i66, label %.preheader72.us.lver.check.i61
 
-.preheader.lr.ph.split.i53:                       ; preds = %.preheader72.lr.ph.i51
+.preheader72.us.lver.check.i61:                   ; preds = %.preheader72.lr.ph.i51
+  %flatten.mul.i62 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %2, i64 %i.dq) ; 2 uses
+  %flatten.overflow.i63 = extractvalue { i64, i1 } %flatten.mul.i62, 1
+  br i1 %flatten.overflow.i63, label %.preheader72.us.lver.orig.preheader.i81, label %.preheader72.us.preheader.i64
+
+.preheader72.us.preheader.i64:                    ; preds = %.preheader72.us.lver.check.i61
+  %flatten.tripcount.i65 = extractvalue { i64, i1 } %flatten.mul.i62, 0
+  %umax.i66 = tail call i64 @llvm.umax.i64(i64 %flatten.tripcount.i65, i64 1)
+  br label %.preheader.lr.ph.split.i53
+
+.preheader72.us.lver.orig.preheader.i81:          ; preds = %.preheader72.us.lver.check.i61
   %6 = mul i64 %i.dq, %2
-  tail call void @_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELi3ELi0ELin1ELi3EEEE6resizeEll(ptr noundef nonnull align 8 dereferenceable(16) %1, i64 noundef %6, i64 noundef 3)
+  br label %.preheader.lr.ph.split.i53
+
+.preheader.lr.ph.split.i53:                       ; preds = %.preheader72.us.lver.orig.preheader.i81, %.preheader72.us.preheader.i64
+  %.051.lcssa.ph.ph.i68 = phi i64 [ %6, %.preheader72.us.lver.orig.preheader.i81 ], [ %umax.i66, %.preheader72.us.preheader.i64 ]
+  tail call void @_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELi3ELi0ELin1ELi3EEEE6resizeEll(ptr noundef nonnull align 8 dereferenceable(16) %1, i64 noundef %.051.lcssa.ph.ph.i68, i64 noundef 3)
   %i.dr = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.ds = load ptr, ptr %1, align 8, !tbaa !405   ; 3 uses
   %i.dt = load i64, ptr %i.dr, align 8, !tbaa !407 ; 4 uses
@@ -1997,13 +2081,27 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not.i, label %._crit_edge86.split.sink.split.i, label %.preheader74.lr.ph.i
 
 .preheader74.lr.ph.i:                             ; preds = %bb.c
-  %i.e = add i64 %3, -2                           ; 3 uses
+  %i.e = add i64 %3, -2                           ; 4 uses
   %.not87.i = icmp eq i64 %i.e, 0
-  br i1 %.not87.i, label %._crit_edge86.split.sink.split.i, label %.preheader.lr.ph.split.i
+  br i1 %.not87.i, label %._crit_edge86.split.sink.split.i, label %.preheader74.us.lver.check.i
 
-.preheader.lr.ph.split.i:                         ; preds = %.preheader74.lr.ph.i
+.preheader74.us.lver.check.i:                     ; preds = %.preheader74.lr.ph.i
+  %flatten.mul.i = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %2, i64 %i.e) ; 2 uses
+  %flatten.overflow.i = extractvalue { i64, i1 } %flatten.mul.i, 1
+  br i1 %flatten.overflow.i, label %.preheader74.us.lver.orig.preheader.i, label %.preheader74.us.preheader.i
+
+.preheader74.us.preheader.i:                      ; preds = %.preheader74.us.lver.check.i
+  %flatten.tripcount.i = extractvalue { i64, i1 } %flatten.mul.i, 0
+  %umax.i = tail call i64 @llvm.umax.i64(i64 %flatten.tripcount.i, i64 1)
+  br label %.preheader.lr.ph.split.i
+
+.preheader74.us.lver.orig.preheader.i:            ; preds = %.preheader74.us.lver.check.i
   %4 = mul i64 %i.e, %2
-  tail call void @_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELi3ELi1ELin1ELi3EEEE6resizeEll(ptr noundef nonnull align 8 dereferenceable(16) %1, i64 noundef %4, i64 noundef 3)
+  br label %.preheader.lr.ph.split.i
+
+.preheader.lr.ph.split.i:                         ; preds = %.preheader74.us.lver.orig.preheader.i, %.preheader74.us.preheader.i
+  %.051.lcssa.ph.ph.i = phi i64 [ %4, %.preheader74.us.lver.orig.preheader.i ], [ %umax.i, %.preheader74.us.preheader.i ]
+  tail call void @_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELi3ELi1ELin1ELi3EEEE6resizeEll(ptr noundef nonnull align 8 dereferenceable(16) %1, i64 noundef %.051.lcssa.ph.ph.i, i64 noundef 3)
   %i.f = load ptr, ptr %1, align 8, !tbaa !643    ; 3 uses
   %xtraiter108 = and i64 %3, 1
   %i.g = icmp eq i64 %3, 3
@@ -2129,13 +2227,27 @@ bb.f:                                             ; preds = %bb.a
   br i1 %.not.i33, label %._crit_edge86.split.sink.split.i49, label %.preheader74.lr.ph.i34
 
 .preheader74.lr.ph.i34:                           ; preds = %bb.f
-  %i.bj = add i64 %3, -2                          ; 3 uses
+  %i.bj = add i64 %3, -2                          ; 4 uses
   %.not87.i35 = icmp eq i64 %i.bj, 0
-  br i1 %.not87.i35, label %._crit_edge86.split.sink.split.i49, label %.preheader.lr.ph.split.i36
+  br i1 %.not87.i35, label %._crit_edge86.split.sink.split.i49, label %.preheader74.us.lver.check.i36
 
-.preheader.lr.ph.split.i36:                       ; preds = %.preheader74.lr.ph.i34
+.preheader74.us.lver.check.i36:                   ; preds = %.preheader74.lr.ph.i34
+  %flatten.mul.i37 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %2, i64 %i.bj) ; 2 uses
+  %flatten.overflow.i38 = extractvalue { i64, i1 } %flatten.mul.i37, 1
+  br i1 %flatten.overflow.i38, label %.preheader74.us.lver.orig.preheader.i56, label %.preheader74.us.preheader.i39
+
+.preheader74.us.preheader.i39:                    ; preds = %.preheader74.us.lver.check.i36
+  %flatten.tripcount.i40 = extractvalue { i64, i1 } %flatten.mul.i37, 0
+  %umax.i41 = tail call i64 @llvm.umax.i64(i64 %flatten.tripcount.i40, i64 1)
+  br label %.preheader.lr.ph.split.i36
+
+.preheader74.us.lver.orig.preheader.i56:          ; preds = %.preheader74.us.lver.check.i36
   %5 = mul i64 %i.bj, %2
-  tail call void @_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELi3ELi1ELin1ELi3EEEE6resizeEll(ptr noundef nonnull align 8 dereferenceable(16) %1, i64 noundef %5, i64 noundef 3)
+  br label %.preheader.lr.ph.split.i36
+
+.preheader.lr.ph.split.i36:                       ; preds = %.preheader74.us.lver.orig.preheader.i56, %.preheader74.us.preheader.i39
+  %.051.lcssa.ph.ph.i43 = phi i64 [ %5, %.preheader74.us.lver.orig.preheader.i56 ], [ %umax.i41, %.preheader74.us.preheader.i39 ]
+  tail call void @_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELi3ELi1ELin1ELi3EEEE6resizeEll(ptr noundef nonnull align 8 dereferenceable(16) %1, i64 noundef %.051.lcssa.ph.ph.i43, i64 noundef 3)
   %i.bk = load ptr, ptr %1, align 8, !tbaa !643   ; 3 uses
   %xtraiter101 = and i64 %3, 1
   %i.bl = icmp eq i64 %3, 3
@@ -2261,13 +2373,27 @@ bb.i:                                             ; preds = %bb.a
   br i1 %.not.i50, label %._crit_edge86.split.sink.split.i66, label %.preheader74.lr.ph.i51
 
 .preheader74.lr.ph.i51:                           ; preds = %bb.i
-  %i.do = add i64 %3, -2                          ; 3 uses
+  %i.do = add i64 %3, -2                          ; 4 uses
   %.not87.i52 = icmp eq i64 %i.do, 0
-  br i1 %.not87.i52, label %._crit_edge86.split.sink.split.i66, label %.preheader.lr.ph.split.i53
+  br i1 %.not87.i52, label %._crit_edge86.split.sink.split.i66, label %.preheader74.us.lver.check.i61
 
-.preheader.lr.ph.split.i53:                       ; preds = %.preheader74.lr.ph.i51
+.preheader74.us.lver.check.i61:                   ; preds = %.preheader74.lr.ph.i51
+  %flatten.mul.i62 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %2, i64 %i.do) ; 2 uses
+  %flatten.overflow.i63 = extractvalue { i64, i1 } %flatten.mul.i62, 1
+  br i1 %flatten.overflow.i63, label %.preheader74.us.lver.orig.preheader.i81, label %.preheader74.us.preheader.i64
+
+.preheader74.us.preheader.i64:                    ; preds = %.preheader74.us.lver.check.i61
+  %flatten.tripcount.i65 = extractvalue { i64, i1 } %flatten.mul.i62, 0
+  %umax.i66 = tail call i64 @llvm.umax.i64(i64 %flatten.tripcount.i65, i64 1)
+  br label %.preheader.lr.ph.split.i53
+
+.preheader74.us.lver.orig.preheader.i81:          ; preds = %.preheader74.us.lver.check.i61
   %6 = mul i64 %i.do, %2
-  tail call void @_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELi3ELi1ELin1ELi3EEEE6resizeEll(ptr noundef nonnull align 8 dereferenceable(16) %1, i64 noundef %6, i64 noundef 3)
+  br label %.preheader.lr.ph.split.i53
+
+.preheader.lr.ph.split.i53:                       ; preds = %.preheader74.us.lver.orig.preheader.i81, %.preheader74.us.preheader.i64
+  %.051.lcssa.ph.ph.i68 = phi i64 [ %6, %.preheader74.us.lver.orig.preheader.i81 ], [ %umax.i66, %.preheader74.us.preheader.i64 ]
+  tail call void @_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELi3ELi1ELin1ELi3EEEE6resizeEll(ptr noundef nonnull align 8 dereferenceable(16) %1, i64 noundef %.051.lcssa.ph.ph.i68, i64 noundef 3)
   %i.dp = load ptr, ptr %1, align 8, !tbaa !643   ; 3 uses
   %xtraiter = and i64 %3, 1
   %i.dq = icmp eq i64 %3, 3
@@ -2670,13 +2796,27 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not.i, label %._crit_edge86.split.sink.split.i, label %.preheader74.lr.ph.i
 
 .preheader74.lr.ph.i:                             ; preds = %bb.c
-  %i.e = add i64 %3, -2                           ; 3 uses
+  %i.e = add i64 %3, -2                           ; 4 uses
   %.not87.i = icmp eq i64 %i.e, 0
-  br i1 %.not87.i, label %._crit_edge86.split.sink.split.i, label %.preheader.lr.ph.split.i
+  br i1 %.not87.i, label %._crit_edge86.split.sink.split.i, label %.preheader74.us.lver.check.i
 
-.preheader.lr.ph.split.i:                         ; preds = %.preheader74.lr.ph.i
+.preheader74.us.lver.check.i:                     ; preds = %.preheader74.lr.ph.i
+  %flatten.mul.i = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %2, i64 %i.e) ; 2 uses
+  %flatten.overflow.i = extractvalue { i64, i1 } %flatten.mul.i, 1
+  br i1 %flatten.overflow.i, label %.preheader74.us.lver.orig.preheader.i, label %.preheader74.us.preheader.i
+
+.preheader74.us.preheader.i:                      ; preds = %.preheader74.us.lver.check.i
+  %flatten.tripcount.i = extractvalue { i64, i1 } %flatten.mul.i, 0
+  %umax.i = tail call i64 @llvm.umax.i64(i64 %flatten.tripcount.i, i64 1)
+  br label %.preheader.lr.ph.split.i
+
+.preheader74.us.lver.orig.preheader.i:            ; preds = %.preheader74.us.lver.check.i
   %4 = mul i64 %i.e, %2
-  tail call void @_ZN5Eigen15PlainObjectBaseINS_6MatrixIjLin1ELi3ELi1ELin1ELi3EEEE6resizeEll(ptr noundef nonnull align 8 dereferenceable(16) %1, i64 noundef %4, i64 noundef 3)
+  br label %.preheader.lr.ph.split.i
+
+.preheader.lr.ph.split.i:                         ; preds = %.preheader74.us.lver.orig.preheader.i, %.preheader74.us.preheader.i
+  %.051.lcssa.ph.ph.i = phi i64 [ %4, %.preheader74.us.lver.orig.preheader.i ], [ %umax.i, %.preheader74.us.preheader.i ]
+  tail call void @_ZN5Eigen15PlainObjectBaseINS_6MatrixIjLin1ELi3ELi1ELin1ELi3EEEE6resizeEll(ptr noundef nonnull align 8 dereferenceable(16) %1, i64 noundef %.051.lcssa.ph.ph.i, i64 noundef 3)
   %i.f = load ptr, ptr %1, align 8, !tbaa !842    ; 3 uses
   %xtraiter108 = and i64 %3, 1
   %i.g = icmp eq i64 %3, 3
@@ -2802,13 +2942,27 @@ bb.f:                                             ; preds = %bb.a
   br i1 %.not.i33, label %._crit_edge86.split.sink.split.i49, label %.preheader74.lr.ph.i34
 
 .preheader74.lr.ph.i34:                           ; preds = %bb.f
-  %i.bj = add i64 %3, -2                          ; 3 uses
+  %i.bj = add i64 %3, -2                          ; 4 uses
   %.not87.i35 = icmp eq i64 %i.bj, 0
-  br i1 %.not87.i35, label %._crit_edge86.split.sink.split.i49, label %.preheader.lr.ph.split.i36
+  br i1 %.not87.i35, label %._crit_edge86.split.sink.split.i49, label %.preheader74.us.lver.check.i36
 
-.preheader.lr.ph.split.i36:                       ; preds = %.preheader74.lr.ph.i34
+.preheader74.us.lver.check.i36:                   ; preds = %.preheader74.lr.ph.i34
+  %flatten.mul.i37 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %2, i64 %i.bj) ; 2 uses
+  %flatten.overflow.i38 = extractvalue { i64, i1 } %flatten.mul.i37, 1
+  br i1 %flatten.overflow.i38, label %.preheader74.us.lver.orig.preheader.i56, label %.preheader74.us.preheader.i39
+
+.preheader74.us.preheader.i39:                    ; preds = %.preheader74.us.lver.check.i36
+  %flatten.tripcount.i40 = extractvalue { i64, i1 } %flatten.mul.i37, 0
+  %umax.i41 = tail call i64 @llvm.umax.i64(i64 %flatten.tripcount.i40, i64 1)
+  br label %.preheader.lr.ph.split.i36
+
+.preheader74.us.lver.orig.preheader.i56:          ; preds = %.preheader74.us.lver.check.i36
   %5 = mul i64 %i.bj, %2
-  tail call void @_ZN5Eigen15PlainObjectBaseINS_6MatrixIjLin1ELi3ELi1ELin1ELi3EEEE6resizeEll(ptr noundef nonnull align 8 dereferenceable(16) %1, i64 noundef %5, i64 noundef 3)
+  br label %.preheader.lr.ph.split.i36
+
+.preheader.lr.ph.split.i36:                       ; preds = %.preheader74.us.lver.orig.preheader.i56, %.preheader74.us.preheader.i39
+  %.051.lcssa.ph.ph.i43 = phi i64 [ %5, %.preheader74.us.lver.orig.preheader.i56 ], [ %umax.i41, %.preheader74.us.preheader.i39 ]
+  tail call void @_ZN5Eigen15PlainObjectBaseINS_6MatrixIjLin1ELi3ELi1ELin1ELi3EEEE6resizeEll(ptr noundef nonnull align 8 dereferenceable(16) %1, i64 noundef %.051.lcssa.ph.ph.i43, i64 noundef 3)
   %i.bk = load ptr, ptr %1, align 8, !tbaa !842   ; 3 uses
   %xtraiter101 = and i64 %3, 1
   %i.bl = icmp eq i64 %3, 3
@@ -2934,13 +3088,27 @@ bb.i:                                             ; preds = %bb.a
   br i1 %.not.i50, label %._crit_edge86.split.sink.split.i66, label %.preheader74.lr.ph.i51
 
 .preheader74.lr.ph.i51:                           ; preds = %bb.i
-  %i.do = add i64 %3, -2                          ; 3 uses
+  %i.do = add i64 %3, -2                          ; 4 uses
   %.not87.i52 = icmp eq i64 %i.do, 0
-  br i1 %.not87.i52, label %._crit_edge86.split.sink.split.i66, label %.preheader.lr.ph.split.i53
+  br i1 %.not87.i52, label %._crit_edge86.split.sink.split.i66, label %.preheader74.us.lver.check.i61
 
-.preheader.lr.ph.split.i53:                       ; preds = %.preheader74.lr.ph.i51
+.preheader74.us.lver.check.i61:                   ; preds = %.preheader74.lr.ph.i51
+  %flatten.mul.i62 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %2, i64 %i.do) ; 2 uses
+  %flatten.overflow.i63 = extractvalue { i64, i1 } %flatten.mul.i62, 1
+  br i1 %flatten.overflow.i63, label %.preheader74.us.lver.orig.preheader.i81, label %.preheader74.us.preheader.i64
+
+.preheader74.us.preheader.i64:                    ; preds = %.preheader74.us.lver.check.i61
+  %flatten.tripcount.i65 = extractvalue { i64, i1 } %flatten.mul.i62, 0
+  %umax.i66 = tail call i64 @llvm.umax.i64(i64 %flatten.tripcount.i65, i64 1)
+  br label %.preheader.lr.ph.split.i53
+
+.preheader74.us.lver.orig.preheader.i81:          ; preds = %.preheader74.us.lver.check.i61
   %6 = mul i64 %i.do, %2
-  tail call void @_ZN5Eigen15PlainObjectBaseINS_6MatrixIjLin1ELi3ELi1ELin1ELi3EEEE6resizeEll(ptr noundef nonnull align 8 dereferenceable(16) %1, i64 noundef %6, i64 noundef 3)
+  br label %.preheader.lr.ph.split.i53
+
+.preheader.lr.ph.split.i53:                       ; preds = %.preheader74.us.lver.orig.preheader.i81, %.preheader74.us.preheader.i64
+  %.051.lcssa.ph.ph.i68 = phi i64 [ %6, %.preheader74.us.lver.orig.preheader.i81 ], [ %umax.i66, %.preheader74.us.preheader.i64 ]
+  tail call void @_ZN5Eigen15PlainObjectBaseINS_6MatrixIjLin1ELi3ELi1ELin1ELi3EEEE6resizeEll(ptr noundef nonnull align 8 dereferenceable(16) %1, i64 noundef %.051.lcssa.ph.ph.i68, i64 noundef 3)
   %i.dp = load ptr, ptr %1, align 8, !tbaa !842   ; 3 uses
   %xtraiter = and i64 %3, 1
   %i.dq = icmp eq i64 %3, 3
@@ -3342,6 +3510,9 @@ declare i64 @llvm.umin.i64(i64, i64) #29
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #29
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare { i64, i1 } @llvm.umul.with.overflow.i64(i64, i64) #29
 
 attributes #0 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #1 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

@@ -203,7 +203,7 @@ bb.a:
 .lr.ph.split.i.i.i:                               ; preds = %.lr.ph.i.i.i
   %i.ah = getelementptr inbounds nuw i8, ptr %.val, i64 56
   %i.ai = load ptr, ptr %i.ah, align 8, !nonnull !87, !align !320
-  %i.aj = load i32, ptr %i.ai, align 4, !tbaa !111 ; 4 uses
+  %i.aj = load i32, ptr %i.ai, align 4, !tbaa !111 ; 3 uses
   %i.ak = icmp sgt i32 %i.aj, 0
   br i1 %i.ak, label %.lr.ph.split.split.i.i.i, label %"_ZSt10__invoke_rIvRZN2cv3dnnL28maxPool32f_nchw_with_indicesEPKfPfPliiiiiiiiiiiiiiE3$_0JRKNS0_5RangeEEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESC_E4typeEOSD_DpOSE_.exit"
 
@@ -428,18 +428,19 @@ bb.m:                                             ; preds = %._crit_edge.us.us.u
   %i.dz = load ptr, ptr %i.ag, align 8, !tbaa !334, !nonnull !87, !align !320
   %i.ea = load i32, ptr %i.dz, align 4, !tbaa !111
   %i.eb = sext i32 %i.ea to i64
-  %i.ec = zext nneg i32 %i.aj to i64              ; 4 uses
+  %i.ec = zext nneg i32 %i.aj to i64
+  %2 = zext nneg i32 %i.v to i64
   %i.ed = sext i32 %.val2 to i64
   %i.ee = sext i32 %i.p to i64
   %wide.trip.count37.i.i.i = sext i32 %.val3 to i64
-  %wide.trip.count32.i.i.i = zext nneg i32 %i.v to i64
-  %min.iters.check = icmp ult i32 %i.aj, 4
-  %n.vec = and i64 %i.ec, 2147483644              ; 3 uses
-  %cmp.n = icmp eq i64 %n.vec, %i.ec
+  %flatten.tripcount.i.i = mul nuw nsw i64 %i.ec, %2 ; 4 uses
+  %min.iters.check = icmp samesign ult i64 %flatten.tripcount.i.i, 4
+  %n.vec = and i64 %flatten.tripcount.i.i, 4611686018427387900 ; 3 uses
+  %cmp.n = icmp eq i64 %flatten.tripcount.i.i, %n.vec
   br label %.preheader2.lr.ph.i.i.i
 
-.preheader2.lr.ph.i.i.i:                          ; preds = %._crit_edge.split18.i.i.i, %.lr.ph.split.split.split.i.i.i
-  %indvars.iv34.i.i.i = phi i64 [ %i.ed, %.lr.ph.split.split.split.i.i.i ], [ %indvars.iv.next35.i.i.i, %._crit_edge.split18.i.i.i ] ; 3 uses
+.preheader2.lr.ph.i.i.i:                          ; preds = %._crit_edge14.split.i.i.i, %.lr.ph.split.split.split.i.i.i
+  %indvars.iv34.i.i.i = phi i64 [ %i.ed, %.lr.ph.split.split.split.i.i.i ], [ %indvars.iv.next30.i.i.i, %._crit_edge14.split.i.i.i ] ; 3 uses
   %i.ef = trunc nsw i64 %indvars.iv34.i.i.i to i32
   %i.eg = srem i32 %i.ef, %i.d
   %i.eh = mul nsw i64 %indvars.iv34.i.i.i, %i.ee  ; 2 uses
@@ -448,23 +449,20 @@ bb.m:                                             ; preds = %._crit_edge.us.us.u
   %i.ek = mul nsw i32 %i.eg, %i.dy
   %i.el = sext i32 %i.ek to i64
   %i.em = mul nsw i64 %i.el, %i.eb                ; 2 uses
+  br i1 %min.iters.check, label %.preheader1.i.i.i.preheader, label %.preheader2.i.i.i.a
+
+.preheader2.i.i.i.a:                              ; preds = %.preheader2.lr.ph.i.i.i
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.em, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
-  br label %.preheader2.i.i.i.a
+  br label %vector.body
 
-.preheader2.i.i.i.a:                              ; preds = %._crit_edge14.split.i.i.i, %.preheader2.lr.ph.i.i.i
-  %indvars.iv29.i.i.i = phi i64 [ 0, %.preheader2.lr.ph.i.i.i ], [ %indvars.iv.next30.i.i.i, %._crit_edge14.split.i.i.i ] ; 2 uses
-  %2 = mul nuw nsw i64 %indvars.iv29.i.i.i, %i.ec ; 2 uses
-  br i1 %min.iters.check, label %.preheader1.i.i.i.preheader, label %vector.body
-
-vector.body:                                      ; preds = %.preheader2.i.i.i.a, %vector.body
-  %index = phi i64 [ %index.next, %vector.body ], [ 0, %.preheader2.i.i.i.a ] ; 2 uses
-  %3 = add nuw nsw i64 %index, %2                 ; 2 uses
-  %i.en = getelementptr inbounds nuw [4 x i8], ptr %i.ei, i64 %3 ; 2 uses
+vector.body:                                      ; preds = %vector.body, %.preheader2.i.i.i.a
+  %index = phi i64 [ 0, %.preheader2.i.i.i.a ], [ %index.next, %vector.body ] ; 3 uses
+  %i.en = getelementptr inbounds nuw [4 x i8], ptr %i.ei, i64 %index ; 2 uses
   %i.eo = getelementptr inbounds nuw i8, ptr %i.en, i64 8
   store <2 x float> zeroinitializer, ptr %i.en, align 4, !tbaa !290
   store <2 x float> zeroinitializer, ptr %i.eo, align 4, !tbaa !290
-  %i.ep = getelementptr inbounds nuw [8 x i8], ptr %i.ej, i64 %3 ; 2 uses
+  %i.ep = getelementptr inbounds nuw [8 x i8], ptr %i.ej, i64 %index ; 2 uses
   %i.eq = getelementptr inbounds nuw i8, ptr %i.ep, i64 16
   store <2 x i64> %broadcast.splat, ptr %i.ep, align 8, !tbaa !78
   store <2 x i64> %broadcast.splat, ptr %i.eq, align 8, !tbaa !78
@@ -475,32 +473,26 @@ vector.body:                                      ; preds = %.preheader2.i.i.i.a
 middle.block:                                     ; preds = %vector.body
   br i1 %cmp.n, label %._crit_edge14.split.i.i.i, label %.preheader1.i.i.i.preheader
 
-.preheader1.i.i.i.preheader:                      ; preds = %.preheader2.i.i.i.a, %middle.block
-  %indvars.iv.i.i.i.ph = phi i64 [ 0, %.preheader2.i.i.i.a ], [ %n.vec, %middle.block ]
+.preheader1.i.i.i.preheader:                      ; preds = %.preheader2.lr.ph.i.i.i, %middle.block
+  %indvars.iv.i.i.i.ph = phi i64 [ 0, %.preheader2.lr.ph.i.i.i ], [ %n.vec, %middle.block ]
   br label %.preheader1.i.i.i
 
-._crit_edge.split18.i.i.i:                        ; preds = %._crit_edge14.split.i.i.i
-  %indvars.iv.next35.i.i.i = add nsw i64 %indvars.iv34.i.i.i, 1 ; 2 uses
-  %exitcond38.not.i.i.i = icmp eq i64 %indvars.iv.next35.i.i.i, %wide.trip.count37.i.i.i
-  br i1 %exitcond38.not.i.i.i, label %"_ZSt10__invoke_rIvRZN2cv3dnnL28maxPool32f_nchw_with_indicesEPKfPfPliiiiiiiiiiiiiiE3$_0JRKNS0_5RangeEEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESC_E4typeEOSD_DpOSE_.exit", label %.preheader2.lr.ph.i.i.i, !llvm.loop !341
-
 .preheader1.i.i.i:                                ; preds = %.preheader1.i.i.i.preheader, %.preheader1.i.i.i
-  %indvars.iv.i.i.i = phi i64 [ %indvars.iv.next.i.i.i.a, %.preheader1.i.i.i ], [ %indvars.iv.i.i.i.ph, %.preheader1.i.i.i.preheader ] ; 2 uses
-  %4 = add nuw nsw i64 %indvars.iv.i.i.i, %2      ; 2 uses
-  %i.es = getelementptr inbounds nuw [4 x i8], ptr %i.ei, i64 %4
+  %indvars.iv.i.i.i = phi i64 [ %indvars.iv.next.i.i.i.a, %.preheader1.i.i.i ], [ %indvars.iv.i.i.i.ph, %.preheader1.i.i.i.preheader ] ; 3 uses
+  %i.es = getelementptr inbounds nuw [4 x i8], ptr %i.ei, i64 %indvars.iv.i.i.i
   store float 0.000000e+00, ptr %i.es, align 4, !tbaa !290
-  %i.et = getelementptr inbounds nuw [8 x i8], ptr %i.ej, i64 %4
+  %i.et = getelementptr inbounds nuw [8 x i8], ptr %i.ej, i64 %indvars.iv.i.i.i
   store i64 %i.em, ptr %i.et, align 8, !tbaa !78
   %indvars.iv.next.i.i.i.a = add nuw nsw i64 %indvars.iv.i.i.i, 1 ; 2 uses
-  %exitcond.not.i.i.i = icmp eq i64 %indvars.iv.next.i.i.i.a, %i.ec
+  %exitcond.not.i.i.i = icmp eq i64 %indvars.iv.next.i.i.i.a, %flatten.tripcount.i.i
   br i1 %exitcond.not.i.i.i, label %._crit_edge14.split.i.i.i, label %.preheader1.i.i.i, !llvm.loop !343
 
 ._crit_edge14.split.i.i.i:                        ; preds = %.preheader1.i.i.i, %middle.block
-  %indvars.iv.next30.i.i.i = add nuw nsw i64 %indvars.iv29.i.i.i, 1 ; 2 uses
-  %exitcond33.not.i.i.i = icmp eq i64 %indvars.iv.next30.i.i.i, %wide.trip.count32.i.i.i
-  br i1 %exitcond33.not.i.i.i, label %._crit_edge.split18.i.i.i, label %.preheader2.i.i.i.a, !llvm.loop !340
+  %indvars.iv.next30.i.i.i = add nsw i64 %indvars.iv34.i.i.i, 1 ; 2 uses
+  %exitcond33.not.i.i.i = icmp eq i64 %indvars.iv.next30.i.i.i, %wide.trip.count37.i.i.i
+  br i1 %exitcond33.not.i.i.i, label %"_ZSt10__invoke_rIvRZN2cv3dnnL28maxPool32f_nchw_with_indicesEPKfPfPliiiiiiiiiiiiiiE3$_0JRKNS0_5RangeEEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESC_E4typeEOSD_DpOSE_.exit", label %.preheader2.lr.ph.i.i.i, !llvm.loop !341
 
-"_ZSt10__invoke_rIvRZN2cv3dnnL28maxPool32f_nchw_with_indicesEPKfPfPliiiiiiiiiiiiiiE3$_0JRKNS0_5RangeEEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESC_E4typeEOSD_DpOSE_.exit": ; preds = %._crit_edge.split18.i.i.i, %._crit_edge.split18.us.us.i.i.i, %bb.a, %.lr.ph.i.i.i, %.lr.ph.split.i.i.i
+"_ZSt10__invoke_rIvRZN2cv3dnnL28maxPool32f_nchw_with_indicesEPKfPfPliiiiiiiiiiiiiiE3$_0JRKNS0_5RangeEEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESC_E4typeEOSD_DpOSE_.exit": ; preds = %._crit_edge14.split.i.i.i, %._crit_edge.split18.us.us.i.i.i, %bb.a, %.lr.ph.i.i.i, %.lr.ph.split.i.i.i
   ret void
 }
 

@@ -204,12 +204,7 @@ bb.z:                                             ; preds = %.noexc41
   %i.bg = icmp sgt i32 %i.y, 0
   %i.bh = zext nneg i32 %i.ap to i64              ; 3 uses
   %wide.trip.count81.i = zext nneg i32 %i.ag to i64 ; 2 uses
-  br i1 %i.bg, label %.preheader59.us.preheader.i, label %.preheader59.preheader.i
-
-.preheader59.preheader.i:                         ; preds = %.preheader59.lr.ph.split.i
-  %29 = mul nuw nsw i64 %i.bh, %wide.trip.count81.i
-  call void @llvm.memset.p0.i64(ptr align 1 %i.bd, i8 0, i64 %29, i1 false), !tbaa !17
-  br label %_ZN12_GLOBAL__N_114probsToClassesERKN2cv3MatERS1_.exit
+  br i1 %i.bg, label %.preheader59.us.preheader.i, label %.preheader59.lr.ph.split.split.i
 
 .preheader59.us.preheader.i:                      ; preds = %.preheader59.lr.ph.split.i
   %wide.trip.count.i = zext nneg i32 %i.y to i64  ; 2 uses
@@ -301,6 +296,11 @@ bb.z:                                             ; preds = %.noexc41
   %indvars.iv.next79.i = add nuw nsw i64 %indvars.iv78.i, 1 ; 2 uses
   %exitcond82.not.i = icmp eq i64 %indvars.iv.next79.i, %wide.trip.count81.i
   br i1 %exitcond82.not.i, label %_ZN12_GLOBAL__N_114probsToClassesERKN2cv3MatERS1_.exit, label %.preheader59.us.i, !llvm.loop !439
+
+.preheader59.lr.ph.split.split.i:                 ; preds = %.preheader59.lr.ph.split.i
+  %29 = mul nuw nsw i64 %i.bh, %wide.trip.count81.i
+  call void @llvm.memset.p0.i64(ptr align 1 %i.bd, i8 0, i64 %29, i1 false), !tbaa !17
+  br label %_ZN12_GLOBAL__N_114probsToClassesERKN2cv3MatERS1_.exit
 
 bb.aa:                                            ; preds = %_ZNK2cv8MatShapeixEm.exit58.i, %bb.r, %bb.o, %bb.l, %bb.g, %bb.ad
   %i.cs = landingpad { ptr, i32 }
@@ -444,7 +444,7 @@ bb.ar:                                            ; preds = %bb.ao
   call void @llvm.lifetime.end.p0(ptr nonnull %24) #27
   br label %.body
 
-_ZN12_GLOBAL__N_114probsToClassesERKN2cv3MatERS1_.exit: ; preds = %._crit_edge64.split.us.us.i, %.preheader59.preheader.i, %bb.z, %bb.ap
+_ZN12_GLOBAL__N_114probsToClassesERKN2cv3MatERS1_.exit: ; preds = %._crit_edge64.split.us.us.i, %.preheader59.lr.ph.split.split.i, %bb.z, %bb.ap
   call void @llvm.lifetime.start.p0(ptr nonnull %26) #27
   call void @_ZN2cv3MatC1Ev(ptr noundef nonnull align 8 dereferenceable(208) %26) #27
   %i.dv = getelementptr inbounds nuw i8, ptr %23, i64 72

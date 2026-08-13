@@ -204,14 +204,7 @@ bb.a:
 .preheader.lr.ph.split:                           ; preds = %bb.a
   %i.c = icmp sgt i32 %5, 0
   %i.d = zext nneg i32 %6 to i64                  ; 5 uses
-  br i1 %i.c, label %.preheader.us.preheader, label %.preheader.preheader
-
-.preheader.preheader:                             ; preds = %.preheader.lr.ph.split
-  %8 = zext nneg i32 %3 to i64
-  %9 = mul nuw nsw i64 %i.d, %8
-  %10 = shl nuw i64 %9, 2
-  tail call void @llvm.memset.p0.i64(ptr align 4 %7, i8 0, i64 %10, i1 false), !tbaa !9
-  br label %._crit_edge.split
+  br i1 %i.c, label %.preheader.us.preheader, label %.preheader.lr.ph.split.split
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph.split
   %i.e = sext i32 %4 to i64
@@ -290,7 +283,14 @@ bb.a:
   %exitcond47.not = icmp eq i64 %indvars.iv.next44, %wide.trip.count46
   br i1 %exitcond47.not, label %._crit_edge.split, label %.preheader.us, !llvm.loop !216
 
-._crit_edge.split:                                ; preds = %._crit_edge30.split.us.us, %.preheader.preheader, %bb.a
+.preheader.lr.ph.split.split:                     ; preds = %.preheader.lr.ph.split
+  %8 = zext nneg i32 %3 to i64
+  %9 = mul nuw nsw i64 %i.d, %8
+  %10 = shl nuw i64 %9, 2
+  tail call void @llvm.memset.p0.i64(ptr align 4 %7, i8 0, i64 %10, i1 false), !tbaa !9
+  br label %._crit_edge.split
+
+._crit_edge.split:                                ; preds = %._crit_edge30.split.us.us, %.preheader.lr.ph.split.split, %bb.a
   ret void
 }
 

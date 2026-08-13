@@ -204,7 +204,7 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.f = load i32, ptr %i.e, align 8, !tbaa !115  ; 9 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 168
-  %i.h = load i32, ptr %i.g, align 8, !tbaa !116  ; 7 uses
+  %i.h = load i32, ptr %i.g, align 8, !tbaa !116  ; 6 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 172
   %i.j = load i32, ptr %i.i, align 4, !tbaa !117  ; 10 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 112
@@ -224,14 +224,12 @@ bb.a:
 .preheader87.preheader:                           ; preds = %.preheader87.lr.ph
   %i.s = sext i32 %i.j to i64                     ; 3 uses
   %i.t = sext i32 %i.f to i64                     ; 2 uses
-  %i.u = zext nneg i32 %i.h to i64
+  %i.u = zext nneg i32 %i.h to i64                ; 4 uses
   %wide.trip.count125 = zext nneg i32 %i.o to i64
-  %wide.trip.count120 = zext nneg i32 %i.h to i64 ; 3 uses
   %wide.trip.count = zext i32 %i.m to i64         ; 9 uses
-  %invariant.gep163 = getelementptr [4 x i8], ptr %1, i64 %i.t
-  %i.v = mul nsw i64 %i.s, %wide.trip.count120
+  %i.v = mul nsw i64 %i.s, %i.u
   %i.w = shl i64 %i.v, 2
-  %i.x = add nuw nsw i64 %wide.trip.count120, 4611686018427387903
+  %i.x = add nuw nsw i64 %i.u, 4611686018427387903
   %i.y = mul i64 %i.x, %i.s
   %i.z = shl i64 %i.y, 2                          ; 2 uses
   %i.aa = shl nuw nsw i64 %wide.trip.count, 2     ; 2 uses
@@ -270,9 +268,9 @@ bb.a:
 iter.check:                                       ; preds = %.preheader87, %._crit_edge
   %indvars.iv117 = phi i64 [ 0, %.preheader87 ], [ %indvars.iv.next118, %._crit_edge ] ; 2 uses
   %i.am = add nuw nsw i64 %indvars.iv117, %i.ak
-  %i.an = mul nsw i64 %i.am, %i.s                 ; 2 uses
-  %gep164 = getelementptr [4 x i8], ptr %invariant.gep163, i64 %i.an ; 11 uses
-  %invariant.gep.a = getelementptr [4 x i8], ptr %1, i64 %i.an ; 11 uses
+  %i.an = mul nsw i64 %i.am, %i.s
+  %gep164 = getelementptr [4 x i8], ptr %1, i64 %i.an ; 12 uses
+  %invariant.gep.a = getelementptr [4 x i8], ptr %gep164, i64 %i.t ; 11 uses
   %brmerge283 = select i1 %min.iters.check, i1 true, i1 %i.al
   br i1 %brmerge283, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
@@ -281,7 +279,7 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
 
 vector.body:                                      ; preds = %vector.main.loop.iter.check, %vector.body
   %index = phi i64 [ %index.next, %vector.body ], [ 0, %vector.main.loop.iter.check ] ; 3 uses
-  %i.ao = getelementptr [4 x i8], ptr %gep164, i64 %index ; 4 uses
+  %i.ao = getelementptr [4 x i8], ptr %invariant.gep.a, i64 %index ; 4 uses
   %i.ap = getelementptr i8, ptr %i.ao, i64 32
   %i.aq = getelementptr i8, ptr %i.ao, i64 64
   %i.ar = getelementptr i8, ptr %i.ao, i64 96
@@ -289,7 +287,7 @@ vector.body:                                      ; preds = %vector.main.loop.it
   %wide.load178.a = load <8 x float>, ptr %i.ap, align 4, !tbaa !119, !alias.scope !201
   %wide.load179 = load <8 x float>, ptr %i.aq, align 4, !tbaa !119, !alias.scope !201
   %wide.load180 = load <8 x float>, ptr %i.ar, align 4, !tbaa !119, !alias.scope !201
-  %i.as = getelementptr [4 x i8], ptr %invariant.gep.a, i64 %index ; 5 uses
+  %i.as = getelementptr [4 x i8], ptr %gep164, i64 %index ; 5 uses
   %i.at = getelementptr i8, ptr %i.as, i64 32     ; 2 uses
   %i.au = getelementptr i8, ptr %i.as, i64 64     ; 2 uses
   %i.av = getelementptr i8, ptr %i.as, i64 96     ; 2 uses
@@ -321,9 +319,9 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index186 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next189, %vec.epilog.vector.body ] ; 3 uses
-  %i.bb = getelementptr [4 x i8], ptr %gep164, i64 %index186
+  %i.bb = getelementptr [4 x i8], ptr %invariant.gep.a, i64 %index186
   %wide.load187 = load <4 x float>, ptr %i.bb, align 4, !tbaa !119, !alias.scope !201
-  %i.bc = getelementptr [4 x i8], ptr %invariant.gep.a, i64 %index186 ; 2 uses
+  %i.bc = getelementptr [4 x i8], ptr %gep164, i64 %index186 ; 2 uses
   %wide.load188 = load <4 x float>, ptr %i.bc, align 4, !tbaa !119, !alias.scope !204, !noalias !201
   %i.bd = fadd <4 x float> %wide.load187, %wide.load188
   store <4 x float> %i.bd, ptr %i.bc, align 4, !tbaa !119, !alias.scope !204, !noalias !201
@@ -344,9 +342,9 @@ vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.ep
 vec.epilog.scalar.ph.prol:                        ; preds = %vec.epilog.scalar.ph.preheader, %vec.epilog.scalar.ph.prol
   %indvars.iv.prol = phi i64 [ %indvars.iv.next.prol, %vec.epilog.scalar.ph.prol ], [ %indvars.iv.ph, %vec.epilog.scalar.ph.preheader ] ; 3 uses
   %prol.iter = phi i64 [ %prol.iter.next, %vec.epilog.scalar.ph.prol ], [ 0, %vec.epilog.scalar.ph.preheader ]
-  %i.bg = getelementptr [4 x i8], ptr %gep164, i64 %indvars.iv.prol
+  %i.bg = getelementptr [4 x i8], ptr %invariant.gep.a, i64 %indvars.iv.prol
   %i.bh = load float, ptr %i.bg, align 4, !tbaa !119
-  %gep.prol.a = getelementptr [4 x i8], ptr %invariant.gep.a, i64 %indvars.iv.prol ; 2 uses
+  %gep.prol.a = getelementptr [4 x i8], ptr %gep164, i64 %indvars.iv.prol ; 2 uses
   %i.bi = load float, ptr %gep.prol.a, align 4, !tbaa !119
   %i.bj = fadd float %i.bh, %i.bi
   store float %i.bj, ptr %gep.prol.a, align 4, !tbaa !119
@@ -363,58 +361,58 @@ vec.epilog.scalar.ph.prol.loopexit:               ; preds = %vec.epilog.scalar.p
 
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.prol.loopexit, %vec.epilog.scalar.ph
   %indvars.iv = phi i64 [ %indvars.iv.next.7, %vec.epilog.scalar.ph ], [ %indvars.iv.unr, %vec.epilog.scalar.ph.prol.loopexit ] ; 10 uses
-  %i.bm = getelementptr [4 x i8], ptr %gep164, i64 %indvars.iv
+  %i.bm = getelementptr [4 x i8], ptr %invariant.gep.a, i64 %indvars.iv
   %i.bn = load float, ptr %i.bm, align 4, !tbaa !119
-  %gep.a = getelementptr [4 x i8], ptr %invariant.gep.a, i64 %indvars.iv ; 2 uses
+  %gep.a = getelementptr [4 x i8], ptr %gep164, i64 %indvars.iv ; 2 uses
   %i.bo = load float, ptr %gep.a, align 4, !tbaa !119
   %i.bp = fadd float %i.bn, %i.bo
   store float %i.bp, ptr %gep.a, align 4, !tbaa !119
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %i.bq = getelementptr [4 x i8], ptr %gep164, i64 %indvars.iv.next
+  %i.bq = getelementptr [4 x i8], ptr %invariant.gep.a, i64 %indvars.iv.next
   %i.br = load float, ptr %i.bq, align 4, !tbaa !119
-  %gep.1.a = getelementptr [4 x i8], ptr %invariant.gep.a, i64 %indvars.iv.next ; 2 uses
+  %gep.1.a = getelementptr [4 x i8], ptr %gep164, i64 %indvars.iv.next ; 2 uses
   %i.bs = load float, ptr %gep.1.a, align 4, !tbaa !119
   %i.bt = fadd float %i.br, %i.bs
   store float %i.bt, ptr %gep.1.a, align 4, !tbaa !119
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %i.bu = getelementptr [4 x i8], ptr %gep164, i64 %indvars.iv.next.1
+  %i.bu = getelementptr [4 x i8], ptr %invariant.gep.a, i64 %indvars.iv.next.1
   %i.bv = load float, ptr %i.bu, align 4, !tbaa !119
-  %gep.2.a = getelementptr [4 x i8], ptr %invariant.gep.a, i64 %indvars.iv.next.1 ; 2 uses
+  %gep.2.a = getelementptr [4 x i8], ptr %gep164, i64 %indvars.iv.next.1 ; 2 uses
   %i.bw = load float, ptr %gep.2.a, align 4, !tbaa !119
   %i.bx = fadd float %i.bv, %i.bw
   store float %i.bx, ptr %gep.2.a, align 4, !tbaa !119
   %indvars.iv.next.2 = add nuw nsw i64 %indvars.iv, 3 ; 2 uses
-  %i.by = getelementptr [4 x i8], ptr %gep164, i64 %indvars.iv.next.2
+  %i.by = getelementptr [4 x i8], ptr %invariant.gep.a, i64 %indvars.iv.next.2
   %i.bz = load float, ptr %i.by, align 4, !tbaa !119
-  %gep.3.a = getelementptr [4 x i8], ptr %invariant.gep.a, i64 %indvars.iv.next.2 ; 2 uses
+  %gep.3.a = getelementptr [4 x i8], ptr %gep164, i64 %indvars.iv.next.2 ; 2 uses
   %i.ca = load float, ptr %gep.3.a, align 4, !tbaa !119
   %i.cb = fadd float %i.bz, %i.ca
   store float %i.cb, ptr %gep.3.a, align 4, !tbaa !119
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %i.cc = getelementptr [4 x i8], ptr %gep164, i64 %indvars.iv.next.3
+  %i.cc = getelementptr [4 x i8], ptr %invariant.gep.a, i64 %indvars.iv.next.3
   %i.cd = load float, ptr %i.cc, align 4, !tbaa !119
-  %gep.4.a = getelementptr [4 x i8], ptr %invariant.gep.a, i64 %indvars.iv.next.3 ; 2 uses
+  %gep.4.a = getelementptr [4 x i8], ptr %gep164, i64 %indvars.iv.next.3 ; 2 uses
   %i.ce = load float, ptr %gep.4.a, align 4, !tbaa !119
   %i.cf = fadd float %i.cd, %i.ce
   store float %i.cf, ptr %gep.4.a, align 4, !tbaa !119
   %indvars.iv.next.4 = add nuw nsw i64 %indvars.iv, 5 ; 2 uses
-  %i.cg = getelementptr [4 x i8], ptr %gep164, i64 %indvars.iv.next.4
+  %i.cg = getelementptr [4 x i8], ptr %invariant.gep.a, i64 %indvars.iv.next.4
   %i.ch = load float, ptr %i.cg, align 4, !tbaa !119
-  %gep.5.a = getelementptr [4 x i8], ptr %invariant.gep.a, i64 %indvars.iv.next.4 ; 2 uses
+  %gep.5.a = getelementptr [4 x i8], ptr %gep164, i64 %indvars.iv.next.4 ; 2 uses
   %i.ci = load float, ptr %gep.5.a, align 4, !tbaa !119
   %i.cj = fadd float %i.ch, %i.ci
   store float %i.cj, ptr %gep.5.a, align 4, !tbaa !119
   %indvars.iv.next.5 = add nuw nsw i64 %indvars.iv, 6 ; 2 uses
-  %i.ck = getelementptr [4 x i8], ptr %gep164, i64 %indvars.iv.next.5
+  %i.ck = getelementptr [4 x i8], ptr %invariant.gep.a, i64 %indvars.iv.next.5
   %i.cl = load float, ptr %i.ck, align 4, !tbaa !119
-  %gep.6.a = getelementptr [4 x i8], ptr %invariant.gep.a, i64 %indvars.iv.next.5 ; 2 uses
+  %gep.6.a = getelementptr [4 x i8], ptr %gep164, i64 %indvars.iv.next.5 ; 2 uses
   %i.cm = load float, ptr %gep.6.a, align 4, !tbaa !119
   %i.cn = fadd float %i.cl, %i.cm
   store float %i.cn, ptr %gep.6.a, align 4, !tbaa !119
   %indvars.iv.next.6 = add nuw nsw i64 %indvars.iv, 7 ; 2 uses
-  %i.co = getelementptr [4 x i8], ptr %gep164, i64 %indvars.iv.next.6
+  %i.co = getelementptr [4 x i8], ptr %invariant.gep.a, i64 %indvars.iv.next.6
   %i.cp = load float, ptr %i.co, align 4, !tbaa !119
-  %gep.7.a = getelementptr [4 x i8], ptr %invariant.gep.a, i64 %indvars.iv.next.6 ; 2 uses
+  %gep.7.a = getelementptr [4 x i8], ptr %gep164, i64 %indvars.iv.next.6 ; 2 uses
   %i.cq = load float, ptr %gep.7.a, align 4, !tbaa !119
   %i.cr = fadd float %i.cp, %i.cq
   store float %i.cr, ptr %gep.7.a, align 4, !tbaa !119
@@ -424,7 +422,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
 
 ._crit_edge:                                      ; preds = %vec.epilog.scalar.ph.prol.loopexit, %vec.epilog.scalar.ph, %vec.epilog.middle.block, %middle.block
   %indvars.iv.next118 = add nuw nsw i64 %indvars.iv117, 1 ; 2 uses
-  %exitcond121.not = icmp eq i64 %indvars.iv.next118, %wide.trip.count120
+  %exitcond121.not = icmp eq i64 %indvars.iv.next118, %i.u
   br i1 %exitcond121.not, label %._crit_edge90, label %iter.check, !llvm.loop !210
 
 ._crit_edge90:                                    ; preds = %._crit_edge

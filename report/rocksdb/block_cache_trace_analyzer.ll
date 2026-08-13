@@ -204,8 +204,8 @@ bb.f:                                             ; preds = %bb.e
   unreachable
 
 _ZNSt14_Function_baseD2Ev.exit:                   ; preds = %bb.d, %bb.e
-  %i.x = load i64, ptr %i.c, align 8, !tbaa !143  ; 9 uses
-  %i.y = mul i64 %i.x, %i.x                       ; 2 uses
+  %i.x = load i64, ptr %i.c, align 8, !tbaa !143  ; 10 uses
+  %i.y = mul i64 %i.x, %i.x                       ; 3 uses
   %i.z = icmp ugt i64 %i.y, 2305843009213693951
   %i.aa = shl i64 %i.y, 3                         ; 2 uses
   %i.ab = select i1 %i.z, i64 -1, i64 %i.aa
@@ -226,7 +226,11 @@ _ZNSt14_Function_baseD2Ev.exit:                   ; preds = %bb.d, %bb.e
   br label %.preheader.us.preheader
 
 .preheader360.us.preheader:                       ; preds = %.preheader360.lr.ph
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.ac, i8 0, i64 %i.aa, i1 false), !tbaa !143
+  %flatten.overflow = icmp ugt i64 %i.x, 4294967295
+  %umax = call i64 @llvm.umax.i64(i64 %i.y, i64 1)
+  %21 = shl nuw i64 %umax, 3
+  %.sink = select i1 %flatten.overflow, i64 %i.aa, i64 %21
+  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.ac, i8 0, i64 %.sink, i1 false), !tbaa !143
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge393, %.preheader360.us.preheader, %.preheader361

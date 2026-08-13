@@ -203,26 +203,27 @@ bb.ak:                                            ; preds = %bb.aj, %bb.ai
 .preheader28.us.us.preheader.i.split.i.i:         ; preds = %.preheader28.us.us.preheader.i.i.i
   br i1 %.not.i.i.i.i.i.i.i, label %._crit_edge67.split.i.i.i, label %.preheader28.us.us.i.i.i.a
 
-.preheader28.us.us.i.i.i.a:                       ; preds = %.preheader28.us.us.preheader.i.split.i.i, %._crit_edge.split.us.split.us.us.us.i.split.split.i.i
-  %.011863.us.us.i.i.i = phi ptr [ %17, %._crit_edge.split.us.split.us.us.us.i.split.split.i.i ], [ %i.ez, %.preheader28.us.us.preheader.i.split.i.i ]
-  %.012162.us.us.i.i.i = phi i32 [ %i.lv, %._crit_edge.split.us.split.us.us.us.i.split.split.i.i ], [ %.val2, %.preheader28.us.us.preheader.i.split.i.i ]
+.preheader28.us.us.i.i.i.a:                       ; preds = %.preheader28.us.us.preheader.i.split.i.i
+  %16 = zext nneg i32 %i.co to i64
+  %17 = zext nneg i32 %i.ch to i64
+  %flatten.tripcount.i.i = mul nuw nsw i64 %16, %17
   br label %.lr.ph46.us.us.us.us.i.i.i.a
 
-.lr.ph46.us.us.us.us.i.i.i.a:                     ; preds = %._crit_edge47.split.us.us.us.us.us.i.split.split.i.i, %.preheader28.us.us.i.i.i.a
-  %.111954.us.us.us.us.i.i.i.a = phi ptr [ %.011863.us.us.i.i.i, %.preheader28.us.us.i.i.i.a ], [ %17, %._crit_edge47.split.us.us.us.us.us.i.split.split.i.i ]
-  %.012253.us.us.us.us.i.i.i = phi i32 [ 0, %.preheader28.us.us.i.i.i.a ], [ %18, %._crit_edge47.split.us.us.us.us.us.i.split.split.i.i ]
+.lr.ph46.us.us.us.us.i.i.i.a:                     ; preds = %._crit_edge.split.us.split.us.us.us.i.split.split.i.i, %.preheader28.us.us.i.i.i.a
+  %.111954.us.us.us.us.i.i.i.a = phi ptr [ %18, %._crit_edge.split.us.split.us.us.us.i.split.split.i.i ], [ %i.ez, %.preheader28.us.us.i.i.i.a ]
+  %.012253.us.us.us.us.i.i.i = phi i32 [ %i.lv, %._crit_edge.split.us.split.us.us.us.i.split.split.i.i ], [ %.val2, %.preheader28.us.us.i.i.i.a ]
   br label %.lr.ph41.us.us.us.us.us.i.i.i
 
 .lr.ph41.us.us.us.us.us.i.i.i:                    ; preds = %._crit_edge42.us.us.us.us.us.i.split.split.i.i, %.lr.ph46.us.us.us.us.i.i.i.a
-  %.212044.us.us.us.us.us.i.i.i = phi ptr [ %.111954.us.us.us.us.i.i.i.a, %.lr.ph46.us.us.us.us.i.i.i.a ], [ %17, %._crit_edge42.us.us.us.us.us.i.split.split.i.i ] ; 2 uses
-  %.012843.us.us.us.us.us.i.i.i = phi i32 [ 0, %.lr.ph46.us.us.us.us.i.i.i.a ], [ %16, %._crit_edge42.us.us.us.us.us.i.split.split.i.i ]
+  %indvar25.i.i = phi i64 [ %indvar.next26.i.i, %._crit_edge42.us.us.us.us.us.i.split.split.i.i ], [ 0, %.lr.ph46.us.us.us.us.i.i.i.a ]
+  %.111954.us.us.us.us.i.i.i = phi ptr [ %18, %._crit_edge42.us.us.us.us.us.i.split.split.i.i ], [ %.111954.us.us.us.us.i.i.i.a, %.lr.ph46.us.us.us.us.i.i.i.a ] ; 2 uses
   br label %.lr.ph.us.us.us.us.us.preheader.i.i.i
 
 .lr.ph.us.us.us.us.us.preheader.i.i.i:            ; preds = %._crit_edge38.us.us.us.us.us.i.loopexit.i.i, %.lr.ph41.us.us.us.us.us.i.i.i
   %indvars.iv103.i.i.i = phi i64 [ %indvars.iv.next104.i.i.i, %._crit_edge38.us.us.us.us.us.i.loopexit.i.i ], [ 0, %.lr.ph41.us.us.us.us.us.i.i.i ] ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.sroa.021.0.i.i.i, i8 0, i64 %i.fr, i1 false), !tbaa !111
   %i.le = mul nuw nsw i64 %indvars.iv103.i.i.i, %i.fs
-  %invariant.gep156.sink.i.i.i = getelementptr inbounds nuw i8, ptr %.212044.us.us.us.us.us.i.i.i, i64 %i.le
+  %invariant.gep156.sink.i.i.i = getelementptr inbounds nuw i8, ptr %.111954.us.us.us.us.i.i.i, i64 %i.le
   br label %bb.al
 
 bb.al:                                            ; preds = %bb.ao, %.lr.ph.us.us.us.us.us.preheader.i.i.i
@@ -266,20 +267,15 @@ bb.ao:                                            ; preds = %bb.an, %bb.am
   br i1 %exitcond107.not.i.i.i, label %._crit_edge42.us.us.us.us.us.i.split.split.i.i, label %.lr.ph.us.us.us.us.us.preheader.i.i.i, !llvm.loop !380
 
 ._crit_edge42.us.us.us.us.us.i.split.split.i.i:   ; preds = %._crit_edge38.us.us.us.us.us.i.loopexit.i.i
-  %16 = add nuw nsw i32 %.012843.us.us.us.us.us.i.i.i, 1 ; 2 uses
-  %17 = getelementptr inbounds nuw i8, ptr %.212044.us.us.us.us.us.i.i.i, i64 %i.fl ; 3 uses
-  %exitcond108.not.i.i.i = icmp eq i32 %16, %i.co
-  br i1 %exitcond108.not.i.i.i, label %._crit_edge47.split.us.us.us.us.us.i.split.split.i.i, label %.lr.ph41.us.us.us.us.us.i.i.i, !llvm.loop !381
+  %18 = getelementptr inbounds nuw i8, ptr %.111954.us.us.us.us.i.i.i, i64 %i.fl ; 2 uses
+  %indvar.next26.i.i = add nuw nsw i64 %indvar25.i.i, 1 ; 2 uses
+  %exitcond108.not.i.i.i = icmp eq i64 %indvar.next26.i.i, %flatten.tripcount.i.i
+  br i1 %exitcond108.not.i.i.i, label %._crit_edge.split.us.split.us.us.us.i.split.split.i.i, label %.lr.ph41.us.us.us.us.us.i.i.i, !llvm.loop !382
 
-._crit_edge47.split.us.us.us.us.us.i.split.split.i.i: ; preds = %._crit_edge42.us.us.us.us.us.i.split.split.i.i
-  %18 = add nuw nsw i32 %.012253.us.us.us.us.i.i.i, 1 ; 2 uses
-  %exitcond109.not.i.i.i = icmp eq i32 %18, %i.ch
-  br i1 %exitcond109.not.i.i.i, label %._crit_edge.split.us.split.us.us.us.i.split.split.i.i, label %.lr.ph46.us.us.us.us.i.i.i.a, !llvm.loop !382
-
-._crit_edge.split.us.split.us.us.us.i.split.split.i.i: ; preds = %._crit_edge47.split.us.us.us.us.us.i.split.split.i.i
-  %i.lv = add nsw i32 %.012162.us.us.i.i.i, 1     ; 2 uses
+._crit_edge.split.us.split.us.us.us.i.split.split.i.i: ; preds = %._crit_edge42.us.us.us.us.us.i.split.split.i.i
+  %i.lv = add nsw i32 %.012253.us.us.us.us.i.i.i, 1 ; 2 uses
   %exitcond110.not.i.i.i = icmp eq i32 %i.lv, %.val3
-  br i1 %exitcond110.not.i.i.i, label %._crit_edge67.split.i.thread.i.i, label %.preheader28.us.us.i.i.i.a, !llvm.loop !383
+  br i1 %exitcond110.not.i.i.i, label %._crit_edge67.split.i.thread.i.i, label %.lr.ph46.us.us.us.us.i.i.i.a, !llvm.loop !383
 
 ._crit_edge67.split.i.i.i:                        ; preds = %._crit_edge.split.us.split.us.us.us.i.split.us.us.i.i, %.preheader28.us.us.preheader.i.split.i.i, %.preheader28.lr.ph.i.i.i, %_ZNSt6vectorIiSaIiEEC2EmRKS0_.exit.i.i.i
   %.not.i.i.i.i.i.i = icmp eq ptr %.sroa.021.0.i.i.i, null

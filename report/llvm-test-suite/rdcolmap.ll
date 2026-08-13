@@ -203,18 +203,26 @@ bb.ap:                                            ; preds = %bb.ao, %bb.an
 
 .preheader106.i:                                  ; preds = %bb.ap
   %brmerge = or i1 %i.dz, %i.ea
-  br i1 %brmerge, label %read_gif_map.exit, label %.preheader105.i
+  br i1 %brmerge, label %read_gif_map.exit, label %.preheader105.lr.ph.split.i
+
+.preheader105.lr.ph.split.i:                      ; preds = %.preheader106.i
+  %2 = zext i32 %i.dw to i64
+  %3 = zext i32 %i.dx to i64
+  %flatten.tripcount.i = mul nuw i64 %3, %2
+  br label %bb.bj
 
 .preheader104.i:                                  ; preds = %bb.ap
   %brmerge23 = or i1 %i.dz, %i.ea
   br i1 %brmerge23, label %read_gif_map.exit, label %.preheader.i.a
 
-.preheader.i.a:                                   ; preds = %.preheader104.i, %._crit_edge128.i
-  %.062129.i = phi i32 [ %3, %._crit_edge128.i ], [ 0, %.preheader104.i ]
+.preheader.i.a:                                   ; preds = %.preheader104.i
+  %4 = zext i32 %i.dw to i64
+  %5 = zext i32 %i.dx to i64
+  %flatten.tripcount136.i = mul nuw i64 %5, %4
   br label %.critedge.i.preheader.i
 
-.critedge.i.preheader.i:                          ; preds = %add_map_entry.exit.i15, %.preheader.i.a
-  %.0127.i = phi i32 [ 0, %.preheader.i.a ], [ %2, %add_map_entry.exit.i15 ]
+.critedge.i.preheader.i:                          ; preds = %._crit_edge128.i, %.preheader.i.a
+  %indvar134.i = phi i64 [ 0, %.preheader.i.a ], [ %indvar.next135.i, %._crit_edge128.i ]
   br label %.critedge.i.i
 
 .critedge.i.i:                                    ; preds = %.critedge.i.i.backedge, %.critedge.i.preheader.i
@@ -474,7 +482,7 @@ bb.bg:                                            ; preds = %bb.bf
   %i.hb = load i8, ptr %i.ha, align 1, !tbaa !43
   %i.hc = zext i8 %i.hb to i32
   %i.hd = icmp eq i32 %.0.i81.i, %i.hc
-  br i1 %i.hd, label %add_map_entry.exit.i15, label %bb.bh
+  br i1 %i.hd, label %._crit_edge128.i, label %bb.bh
 
 bb.bh:                                            ; preds = %bb.bg, %bb.bf, %.lr.ph.i.i18
   %indvars.iv.next.i.i20 = add nuw nsw i64 %indvars.iv.i.i19, 1 ; 2 uses
@@ -510,24 +518,15 @@ bb.bi:                                            ; preds = %._crit_edge.i.i22
   %i.hr = load i32, ptr %i.g, align 4, !tbaa !36
   %i.hs = add nsw i32 %i.hr, 1
   store i32 %i.hs, ptr %i.g, align 4, !tbaa !36
-  br label %add_map_entry.exit.i15
+  br label %._crit_edge128.i
 
-add_map_entry.exit.i15:                           ; preds = %bb.bg, %._crit_edge.thread.i.i14
-  %2 = add nuw i32 %.0127.i, 1                    ; 2 uses
-  %exitcond153.not.i = icmp eq i32 %2, %i.dw
-  br i1 %exitcond153.not.i, label %._crit_edge128.i, label %.critedge.i.preheader.i, !llvm.loop !52
+._crit_edge128.i:                                 ; preds = %bb.bg, %._crit_edge.thread.i.i14
+  %indvar.next135.i = add nuw i64 %indvar134.i, 1 ; 2 uses
+  %exitcond154.not.i = icmp eq i64 %indvar.next135.i, %flatten.tripcount136.i
+  br i1 %exitcond154.not.i, label %read_gif_map.exit, label %.critedge.i.preheader.i, !llvm.loop !52
 
-._crit_edge128.i:                                 ; preds = %add_map_entry.exit.i15
-  %3 = add nuw i32 %.062129.i, 1                  ; 2 uses
-  %exitcond154.not.i = icmp eq i32 %3, %i.dx
-  br i1 %exitcond154.not.i, label %read_gif_map.exit, label %.preheader.i.a, !llvm.loop !53
-
-.preheader105.i:                                  ; preds = %.preheader106.i, %._crit_edge.i
-  %.163126.i = phi i32 [ %5, %._crit_edge.i ], [ 0, %.preheader106.i ]
-  br label %bb.bj
-
-bb.bj:                                            ; preds = %add_map_entry.exit103.i, %.preheader105.i
-  %.1125.i = phi i32 [ 0, %.preheader105.i ], [ %4, %add_map_entry.exit103.i ]
+bb.bj:                                            ; preds = %._crit_edge.i, %.preheader105.lr.ph.split.i
+  %indvar127.i = phi i64 [ 0, %.preheader105.lr.ph.split.i ], [ %indvar.next128.i, %._crit_edge.i ]
   %i.ht = tail call i32 @getc(ptr noundef %1)     ; 2 uses
   %i.hu = icmp eq i32 %i.ht, 35
   br i1 %i.hu, label %.preheader.i.i, label %pbm_getc.exit.i
@@ -617,7 +616,7 @@ bb.bn:                                            ; preds = %bb.bm
   %i.iz = load i8, ptr %i.iy, align 1, !tbaa !43
   %i.ja = zext i8 %i.iz to i32
   %i.jb = icmp eq i32 %.0.i92.i, %i.ja
-  br i1 %i.jb, label %add_map_entry.exit103.i, label %bb.bo
+  br i1 %i.jb, label %._crit_edge.i, label %bb.bo
 
 bb.bo:                                            ; preds = %bb.bn, %bb.bm, %.lr.ph.i98.i
   %indvars.iv.next.i100.i = add nuw nsw i64 %indvars.iv.i99.i, 1 ; 2 uses
@@ -653,17 +652,12 @@ bb.bp:                                            ; preds = %._crit_edge.i102.i
   %i.jp = load i32, ptr %i.g, align 4, !tbaa !36
   %i.jq = add nsw i32 %i.jp, 1
   store i32 %i.jq, ptr %i.g, align 4, !tbaa !36
-  br label %add_map_entry.exit103.i
+  br label %._crit_edge.i
 
-add_map_entry.exit103.i:                          ; preds = %bb.bn, %._crit_edge.thread.i95.i
-  %4 = add nuw i32 %.1125.i, 1                    ; 2 uses
-  %exitcond.not.i13 = icmp eq i32 %4, %i.dw
-  br i1 %exitcond.not.i13, label %._crit_edge.i, label %bb.bj, !llvm.loop !54
-
-._crit_edge.i:                                    ; preds = %add_map_entry.exit103.i
-  %5 = add nuw i32 %.163126.i, 1                  ; 2 uses
-  %exitcond152.not.i = icmp eq i32 %5, %i.dx
-  br i1 %exitcond152.not.i, label %read_gif_map.exit, label %.preheader105.i, !llvm.loop !55
+._crit_edge.i:                                    ; preds = %bb.bn, %._crit_edge.thread.i95.i
+  %indvar.next128.i = add nuw i64 %indvar127.i, 1 ; 2 uses
+  %exitcond152.not.i = icmp eq i64 %indvar.next128.i, %flatten.tripcount.i
+  br i1 %exitcond152.not.i, label %read_gif_map.exit, label %bb.bj, !llvm.loop !53
 
 read_gif_map.exit.sink.split:                     ; preds = %bb.a, %bb.ap
   %i.jr = load ptr, ptr %0, align 8, !tbaa !37    ; 2 uses
@@ -825,6 +819,4 @@ attributes #2 = { nounwind }
 !51 = distinct !{null, null}
 !52 = distinct !{!52, !45}
 !53 = distinct !{!53, !45}
-!54 = distinct !{!54, !45}
-!55 = distinct !{!55, !45}
 end_hunk_0

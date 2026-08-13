@@ -204,39 +204,27 @@ _Z12GifWriteCodeIN11OpenImageIO4v3_110Filesystem7IOProxyEEvPT_R12GifBitStatusjj.
 .preheader.lr.ph:                                 ; preds = %_Z12GifWriteCodeIN11OpenImageIO4v3_110Filesystem7IOProxyEEvPT_R12GifBitStatusjj.exit
   %.not206.a = icmp eq i32 %4, 0
   %i.fa = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 4 uses
-  br i1 %.not206.a, label %._crit_edge198, label %.preheader.us.preheader
+  br i1 %.not206.a, label %._crit_edge198, label %.preheader.us.a
 
-.preheader.us.preheader:                          ; preds = %.preheader.lr.ph
-  %wide.trip.count = zext i32 %4 to i64
-  br label %.preheader.us.a
-
-.preheader.us.a:                                  ; preds = %.preheader.us.preheader, %._crit_edge.us
-  %.pre12.pre.i177.us236 = phi i32 [ %.pre12.pre.i177.us242, %._crit_edge.us ], [ %.pre12.pre.i164.us233, %.preheader.us.preheader ]
-  %.pre12.pre.i164.us226 = phi i32 [ %.pre12.pre.i164.us228, %._crit_edge.us ], [ %.pre12.pre.i164.us233, %.preheader.us.preheader ]
-  %.pre11.i163.us217 = phi i8 [ %.pre11.i163.us219, %._crit_edge.us ], [ %.pre11.i163.us223, %.preheader.us.preheader ]
-  %.pre.i162.us210 = phi i8 [ %.pre.i162.us212, %._crit_edge.us ], [ %.pre.i162.us216, %.preheader.us.preheader ]
-  %.0197.us = phi i32 [ %.2.us, %._crit_edge.us ], [ -1, %.preheader.us.preheader ]
-  %.089196.us = phi i32 [ %15, %._crit_edge.us ], [ 0, %.preheader.us.preheader ] ; 2 uses
-  %.090195.us = phi i32 [ %.3.us, %._crit_edge.us ], [ %i.dv, %.preheader.us.preheader ]
-  %.093194.us = phi i32 [ %.4.us, %._crit_edge.us ], [ %i.du, %.preheader.us.preheader ]
-  %9 = mul i32 %.089196.us, %4
+.preheader.us.a:                                  ; preds = %.preheader.lr.ph
+  %9 = zext i32 %4 to i64
+  %10 = zext i32 %5 to i64
+  %flatten.tripcount = mul nuw i64 %9, %10
   br label %bb.d
 
-bb.d:                                             ; preds = %.preheader.us.a, %bb.q
-  %.pre12.pre.i177.us241 = phi i32 [ %.pre12.pre.i177.us236, %.preheader.us.a ], [ %.pre12.pre.i177.us242, %bb.q ] ; 4 uses
-  %.pre12.pre.i164.us = phi i32 [ %.pre12.pre.i164.us226, %.preheader.us.a ], [ %.pre12.pre.i164.us228, %bb.q ] ; 5 uses
-  %.pre11.i163.us = phi i8 [ %.pre11.i163.us217, %.preheader.us.a ], [ %.pre11.i163.us219, %bb.q ] ; 4 uses
-  %.pre.i162.us = phi i8 [ %.pre.i162.us210, %.preheader.us.a ], [ %.pre.i162.us212, %bb.q ] ; 4 uses
-  %indvars.iv = phi i64 [ 0, %.preheader.us.a ], [ %indvars.iv.next, %bb.q ] ; 2 uses
-  %.1191.us = phi i32 [ %.0197.us, %.preheader.us.a ], [ %.2.us, %bb.q ] ; 3 uses
-  %.191189.us = phi i32 [ %.090195.us, %.preheader.us.a ], [ %.3.us, %bb.q ] ; 3 uses
-  %.194188.us = phi i32 [ %.093194.us, %.preheader.us.a ], [ %.4.us, %bb.q ] ; 6 uses
-  %10 = trunc nuw i64 %indvars.iv to i32
-  %11 = add i32 %9, %10
-  %12 = shl i32 %11, 2
-  %13 = or disjoint i32 %12, 3
-  %14 = zext i32 %13 to i64
-  %i.fb = getelementptr inbounds nuw i8, ptr %1, i64 %14
+bb.d:                                             ; preds = %bb.q, %.preheader.us.a
+  %.pre12.pre.i177.us241 = phi i32 [ %.pre12.pre.i177.us242, %bb.q ], [ %.pre12.pre.i164.us233, %.preheader.us.a ] ; 4 uses
+  %.pre12.pre.i164.us = phi i32 [ %.pre12.pre.i164.us228, %bb.q ], [ %.pre12.pre.i164.us233, %.preheader.us.a ] ; 5 uses
+  %.pre11.i163.us = phi i8 [ %.pre11.i163.us219, %bb.q ], [ %.pre11.i163.us223, %.preheader.us.a ] ; 4 uses
+  %.pre.i162.us = phi i8 [ %.pre.i162.us212, %bb.q ], [ %.pre.i162.us216, %.preheader.us.a ] ; 4 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.q ], [ 0, %.preheader.us.a ] ; 2 uses
+  %.1191.us = phi i32 [ %.2.us, %bb.q ], [ -1, %.preheader.us.a ] ; 3 uses
+  %.191189.us = phi i32 [ %.3.us, %bb.q ], [ %i.dv, %.preheader.us.a ] ; 3 uses
+  %.194188.us = phi i32 [ %.4.us, %bb.q ], [ %i.du, %.preheader.us.a ] ; 6 uses
+  %11 = shl i64 %indvars.iv, 2
+  %12 = and i64 %11, 4294967292
+  %13 = getelementptr inbounds nuw i8, ptr %1, i64 %12
+  %i.fb = getelementptr inbounds nuw i8, ptr %13, i64 3
   %i.fc = load i8, ptr %i.fb, align 1, !tbaa !9   ; 3 uses
   %i.fd = icmp slt i32 %.1191.us, 0
   br i1 %i.fd, label %bb.p, label %bb.e
@@ -435,28 +423,23 @@ bb.p:                                             ; preds = %bb.d
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %bb.o, %bb.f
-  %.pre12.pre.i177.us242 = phi i32 [ %.pre12.pre.i177.us241, %bb.p ], [ %.pre12.pre.i177.us241, %bb.f ], [ %.pre12.pre.i177.us243, %bb.o ] ; 3 uses
-  %.pre12.pre.i164.us228 = phi i32 [ %.pre12.pre.i164.us, %bb.p ], [ %.pre12.pre.i164.us, %bb.f ], [ %.pre12.pre.i164.us229, %bb.o ] ; 2 uses
-  %.pre11.i163.us219 = phi i8 [ %.pre11.i163.us, %bb.p ], [ %.pre11.i163.us, %bb.f ], [ %.pre11.i163.us220, %bb.o ] ; 3 uses
-  %.pre.i162.us212 = phi i8 [ %.pre.i162.us, %bb.p ], [ %.pre.i162.us, %bb.f ], [ %.pre.i162.us213, %bb.o ] ; 3 uses
-  %.4.us = phi i32 [ %.194188.us, %bb.p ], [ %.194188.us, %bb.f ], [ %.396.us, %bb.o ] ; 3 uses
-  %.3.us = phi i32 [ %.191189.us, %bb.p ], [ %.191189.us, %bb.f ], [ %.292.us, %bb.o ] ; 2 uses
-  %.2.us = phi i32 [ %i.hx, %bb.p ], [ %i.fj, %bb.f ], [ %i.hw, %bb.o ] ; 3 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge.us, label %bb.d, !llvm.loop !764
+  %.pre12.pre.i177.us242 = phi i32 [ %.pre12.pre.i177.us241, %bb.p ], [ %.pre12.pre.i177.us241, %bb.f ], [ %.pre12.pre.i177.us243, %bb.o ] ; 2 uses
+  %.pre12.pre.i164.us228 = phi i32 [ %.pre12.pre.i164.us, %bb.p ], [ %.pre12.pre.i164.us, %bb.f ], [ %.pre12.pre.i164.us229, %bb.o ]
+  %.pre11.i163.us219 = phi i8 [ %.pre11.i163.us, %bb.p ], [ %.pre11.i163.us, %bb.f ], [ %.pre11.i163.us220, %bb.o ] ; 2 uses
+  %.pre.i162.us212 = phi i8 [ %.pre.i162.us, %bb.p ], [ %.pre.i162.us, %bb.f ], [ %.pre.i162.us213, %bb.o ] ; 2 uses
+  %.4.us = phi i32 [ %.194188.us, %bb.p ], [ %.194188.us, %bb.f ], [ %.396.us, %bb.o ] ; 2 uses
+  %.3.us = phi i32 [ %.191189.us, %bb.p ], [ %.191189.us, %bb.f ], [ %.292.us, %bb.o ]
+  %.2.us = phi i32 [ %i.hx, %bb.p ], [ %i.fj, %bb.f ], [ %i.hw, %bb.o ] ; 2 uses
+  %indvars.iv.next = add nuw i64 %indvars.iv, 1   ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %flatten.tripcount
+  br i1 %exitcond.not, label %._crit_edge198, label %bb.d, !llvm.loop !764
 
-._crit_edge.us:                                   ; preds = %bb.q
-  %15 = add nuw i32 %.089196.us, 1                ; 2 uses
-  %exitcond209.not = icmp eq i32 %15, %5
-  br i1 %exitcond209.not, label %._crit_edge198, label %.preheader.us.a, !llvm.loop !765
-
-._crit_edge198:                                   ; preds = %._crit_edge.us, %.preheader.lr.ph, %_Z12GifWriteCodeIN11OpenImageIO4v3_110Filesystem7IOProxyEEvPT_R12GifBitStatusjj.exit
-  %.pre12.pre.i125 = phi i32 [ %.pre12.pre.i164.us233, %_Z12GifWriteCodeIN11OpenImageIO4v3_110Filesystem7IOProxyEEvPT_R12GifBitStatusjj.exit ], [ %.pre12.pre.i164.us233, %.preheader.lr.ph ], [ %.pre12.pre.i177.us242, %._crit_edge.us ] ; 2 uses
-  %.pre11.i124 = phi i8 [ %.pre11.i163.us223, %_Z12GifWriteCodeIN11OpenImageIO4v3_110Filesystem7IOProxyEEvPT_R12GifBitStatusjj.exit ], [ %.pre11.i163.us223, %.preheader.lr.ph ], [ %.pre11.i163.us219, %._crit_edge.us ] ; 2 uses
-  %.pre.i123 = phi i8 [ %.pre.i162.us216, %_Z12GifWriteCodeIN11OpenImageIO4v3_110Filesystem7IOProxyEEvPT_R12GifBitStatusjj.exit ], [ %.pre.i162.us216, %.preheader.lr.ph ], [ %.pre.i162.us212, %._crit_edge.us ] ; 2 uses
-  %.093.lcssa = phi i32 [ %i.du, %_Z12GifWriteCodeIN11OpenImageIO4v3_110Filesystem7IOProxyEEvPT_R12GifBitStatusjj.exit ], [ %i.du, %.preheader.lr.ph ], [ %.4.us, %._crit_edge.us ] ; 3 uses
-  %.0.lcssa = phi i32 [ -1, %_Z12GifWriteCodeIN11OpenImageIO4v3_110Filesystem7IOProxyEEvPT_R12GifBitStatusjj.exit ], [ -1, %.preheader.lr.ph ], [ %.2.us, %._crit_edge.us ]
+._crit_edge198:                                   ; preds = %bb.q, %.preheader.lr.ph, %_Z12GifWriteCodeIN11OpenImageIO4v3_110Filesystem7IOProxyEEvPT_R12GifBitStatusjj.exit
+  %.pre12.pre.i125 = phi i32 [ %.pre12.pre.i164.us233, %_Z12GifWriteCodeIN11OpenImageIO4v3_110Filesystem7IOProxyEEvPT_R12GifBitStatusjj.exit ], [ %.pre12.pre.i164.us233, %.preheader.lr.ph ], [ %.pre12.pre.i177.us242, %bb.q ] ; 2 uses
+  %.pre11.i124 = phi i8 [ %.pre11.i163.us223, %_Z12GifWriteCodeIN11OpenImageIO4v3_110Filesystem7IOProxyEEvPT_R12GifBitStatusjj.exit ], [ %.pre11.i163.us223, %.preheader.lr.ph ], [ %.pre11.i163.us219, %bb.q ] ; 2 uses
+  %.pre.i123 = phi i8 [ %.pre.i162.us216, %_Z12GifWriteCodeIN11OpenImageIO4v3_110Filesystem7IOProxyEEvPT_R12GifBitStatusjj.exit ], [ %.pre.i162.us216, %.preheader.lr.ph ], [ %.pre.i162.us212, %bb.q ] ; 2 uses
+  %.093.lcssa = phi i32 [ %i.du, %_Z12GifWriteCodeIN11OpenImageIO4v3_110Filesystem7IOProxyEEvPT_R12GifBitStatusjj.exit ], [ %i.du, %.preheader.lr.ph ], [ %.4.us, %bb.q ] ; 3 uses
+  %.0.lcssa = phi i32 [ -1, %_Z12GifWriteCodeIN11OpenImageIO4v3_110Filesystem7IOProxyEEvPT_R12GifBitStatusjj.exit ], [ -1, %.preheader.lr.ph ], [ %.2.us, %bb.q ]
   %.not.i121 = icmp eq i32 %.093.lcssa, 0
   br i1 %.not.i121, label %_Z12GifWriteCodeIN11OpenImageIO4v3_110Filesystem7IOProxyEEvPT_R12GifBitStatusjj.exit146, label %.lr.ph.i122
 
@@ -682,7 +665,7 @@ _Z11GifWriteBitR12GifBitStatusj.exit.thread:      ; preds = %bb.aa
 
 _Z11GifWriteBitR12GifBitStatusj.exit:             ; preds = %bb.aa
   %.not = icmp eq i8 %i.lh, 0
-  br i1 %.not, label %._crit_edge, label %bb.aa, !llvm.loop !766
+  br i1 %.not, label %._crit_edge, label %bb.aa, !llvm.loop !765
 
 ._crit_edge:                                      ; preds = %_Z11GifWriteBitR12GifBitStatusj.exit, %_Z11GifWriteBitR12GifBitStatusj.exit.thread
   %i.lm = phi i32 [ %i.lj, %_Z11GifWriteBitR12GifBitStatusj.exit.thread ], [ %.promoted203, %_Z11GifWriteBitR12GifBitStatusj.exit ]
@@ -701,7 +684,7 @@ bb.ac:                                            ; preds = %bb.ab
   %i.lp = load ptr, ptr %0, align 8, !tbaa !30
   %i.lq = getelementptr inbounds nuw i8, ptr %i.lp, i64 64
   %i.lr = load ptr, ptr %i.lq, align 8
-  %i.ls = call noundef i64 %i.lr(ptr noundef nonnull align 8 dereferenceable(88) %0, ptr noundef nonnull %i.b, i64 noundef 1), !inline_history !767 ; 0 uses
+  %i.ls = call noundef i64 %i.lr(ptr noundef nonnull align 8 dereferenceable(88) %0, ptr noundef nonnull %i.b, i64 noundef 1), !inline_history !766 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #34
   %i.lt = getelementptr inbounds nuw i8, ptr %8, i64 8
   %i.lu = load i32, ptr %i.dx, align 4, !tbaa !29
@@ -709,7 +692,7 @@ bb.ac:                                            ; preds = %bb.ab
   %i.lw = load ptr, ptr %0, align 8, !tbaa !30
   %i.lx = getelementptr inbounds nuw i8, ptr %i.lw, i64 64
   %i.ly = load ptr, ptr %i.lx, align 8
-  %i.lz = call noundef i64 %i.ly(ptr noundef nonnull align 8 dereferenceable(88) %0, ptr noundef nonnull %i.lt, i64 noundef %i.lv), !inline_history !768 ; 0 uses
+  %i.lz = call noundef i64 %i.ly(ptr noundef nonnull align 8 dereferenceable(88) %0, ptr noundef nonnull %i.lt, i64 noundef %i.lv), !inline_history !767 ; 0 uses
   store i8 0, ptr %8, align 4, !tbaa !26
   store i8 0, ptr %i.dw, align 1, !tbaa !28
   store i32 0, ptr %i.dx, align 4, !tbaa !29
@@ -806,7 +789,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.ar = shl nuw i32 1, %i.aq
   %i.as = sext i32 %i.ar to i64
   %i.at = icmp slt i64 %indvars.iv.next, %i.as
-  br i1 %i.at, label %bb.b, label %._crit_edge, !llvm.loop !769
+  br i1 %i.at, label %bb.b, label %._crit_edge, !llvm.loop !768
 }
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -1209,8 +1192,7 @@ begin_hunk_1_@llvm.smax.v2i32
 !763 = !{!"short", !5, i64 0}
 !764 = distinct !{!764, !11}
 !765 = distinct !{!765, !11}
-!766 = distinct !{!766, !11}
+!766 = distinct !{null, null}
 !767 = distinct !{null, null}
-!768 = distinct !{null, null}
-!769 = distinct !{!769, !11}
+!768 = distinct !{!768, !11}
 end_hunk_1

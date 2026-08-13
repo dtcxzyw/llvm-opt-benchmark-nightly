@@ -204,7 +204,7 @@ bb.af:                                            ; preds = %bb.ad, %bb.ae, %bb.
 define dso_local void @_ZN19MinimapUpdateThread6getMapEN4core8vector3dIsEEss(ptr nofree noundef nonnull readonly align 8 captures(address) dereferenceable(352) %0, i48 %1, i16 noundef signext %2, i16 noundef signext %3) local_unnamed_addr #4 align 2 {
 bb.a:
   %.sroa.2.0.extract.shift = lshr i48 %1, 16
-  %4 = sext i16 %2 to i32                         ; 2 uses
+  %4 = sext i16 %2 to i64
   %i.a = insertelement <2 x i16> poison, i16 %2, i64 0
   %i.b = insertelement <2 x i16> %i.a, i16 %3, i64 1
   %i.c = sdiv <2 x i16> %i.b, splat (i16 2)       ; 3 uses
@@ -261,7 +261,7 @@ bb.a:
 
 .preheader164.lr.ph:                              ; preds = %bb.a
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 5 uses
-  %i.ap = zext nneg i32 %4 to i64                 ; 4 uses
+  %i.ap = zext nneg i16 %2 to i64                 ; 4 uses
   %xtraiter = and i64 %i.ap, 3                    ; 3 uses
   %i.aq = icmp ult i16 %2, 4
   %unroll_iter = and i64 %i.ap, 32764
@@ -487,8 +487,8 @@ _ZNSt3mapIN4core8vector3dIsEEP15MinimapMapblockSt4lessIS2_ESaISt4pairIKS2_S4_EEE
   %sh.diff = ashr exact i48 %.sroa.3.0.insert.shift.i101, 28
   %i.dx = zext i48 %sh.diff to i64
   %i.dy = sub i16 %storemerge55171, %i.g
-  %5 = sext i16 %i.dy to i32
-  %6 = mul nsw i32 %5, %4
+  %5 = sext i16 %i.dy to i64
+  %6 = mul nsw i64 %5, %4
   br label %bb.j
 
 bb.j:                                             ; preds = %.preheader, %bb.l
@@ -502,10 +502,10 @@ bb.j:                                             ; preds = %.preheader, %bb.l
   %i.ee = sub i16 %storemerge57168, %i.q
   %i.ef = load ptr, ptr %i.ax, align 8, !tbaa !70
   %i.eg = getelementptr inbounds nuw i8, ptr %i.ef, i64 100
-  %7 = sext i16 %i.ee to i32
-  %8 = add nsw i32 %6, %7
-  %9 = sext i32 %8 to i64
-  %10 = getelementptr inbounds [8 x i8], ptr %i.eg, i64 %9 ; 3 uses
+  %7 = sext i16 %i.ee to i64
+  %8 = add nsw i64 %6, %7
+  %9 = shl nsw i64 %8, 3
+  %10 = getelementptr inbounds i8, ptr %i.eg, i64 %9 ; 3 uses
   %i.eh = getelementptr inbounds nuw i8, ptr %i.ed, i64 6
   %i.ei = load i16, ptr %i.eh, align 2, !tbaa !104
   %i.ej = getelementptr inbounds nuw i8, ptr %10, i64 6 ; 2 uses

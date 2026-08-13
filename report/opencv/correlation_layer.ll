@@ -203,8 +203,8 @@ _ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit:            ; preds = %.noexc140, %_ZNSt6v
   %lcmp.mod338 = icmp ne i64 %xtraiter335, 0
   br label %.preheader147.us
 
-.preheader147.us:                                 ; preds = %.preheader147.us.preheader, %._crit_edge188.split.us.us
-  %indvars.iv270 = phi i64 [ 0, %.preheader147.us.preheader ], [ %indvars.iv.next271, %._crit_edge188.split.us.us ] ; 4 uses
+.preheader147.us:                                 ; preds = %._crit_edge188.split.us.us, %.preheader147.us.preheader
+  %indvars.iv270 = phi i64 [ %indvars.iv.next271, %._crit_edge188.split.us.us ], [ 0, %.preheader147.us.preheader ] ; 4 uses
   %i.dj = mul i64 %indvars.iv270, %i.dd
   %i.dk = add i64 %i.dj, %i.da
   %i.dl = trunc i64 %indvars.iv270 to i32
