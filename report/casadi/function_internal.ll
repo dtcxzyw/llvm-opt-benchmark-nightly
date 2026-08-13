@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.e
   br label %_ZNSt6vectorIN6casadi8SparsityESaIS1_EE6resizeEm.exit.1
 
 _ZNSt6vectorIN6casadi8SparsityESaIS1_EE6resizeEm.exit.1: ; preds = %bb.e, %bb.f, %_ZNSt6vectorIN6casadi8SparsityESaIS1_EE6resizeEm.exit
-  %i.s = phi i64 [ %.pre, %bb.f ], [ %.pre175, %_ZNSt6vectorIN6casadi8SparsityESaIS1_EE6resizeEm.exit ], [ %.pre175, %bb.e ]
+  %i.s = phi i64 [ %.pre175, %_ZNSt6vectorIN6casadi8SparsityESaIS1_EE6resizeEm.exit ], [ %.pre, %bb.f ], [ %.pre175, %bb.e ]
   %i.t = mul i64 %i.s, %1
   %i.u = add i64 %i.t, %2                         ; 6 uses
   %i.v = zext i1 %3 to i64

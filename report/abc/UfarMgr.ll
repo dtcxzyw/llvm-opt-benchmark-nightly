@@ -204,7 +204,7 @@ _ZN4LogTC2Ej.exit:                                ; preds = %bb.cr, %_ZNKSt7__cx
   call void @llvm.lifetime.end.p0(ptr nonnull %17) #37
   br label %.lr.ph.i.i.i197.preheader
 
-.lr.ph.i.i.i197.preheader:                        ; preds = %._crit_edge464.split, %_ZN4LogTC2Ej.exit
+.lr.ph.i.i.i197.preheader:                        ; preds = %_ZN4LogTC2Ej.exit, %._crit_edge464.split
   %i.amx = load ptr, ptr %i.xr, align 8, !tbaa !44 ; 2 uses
   %i.amy = icmp eq ptr %i.amx, %i.yc
   br i1 %i.amy, label %_ZSt8_DestroyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i200, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i199
@@ -607,7 +607,7 @@ _ZN4LogTC2Ej.exit:                                ; preds = %bb.co, %_ZNKSt7__cx
   call void @llvm.lifetime.end.p0(ptr nonnull %17) #37
   br label %.lr.ph.i.i.i165.preheader
 
-.lr.ph.i.i.i165.preheader:                        ; preds = %._crit_edge432.split, %_ZN4LogTC2Ej.exit
+.lr.ph.i.i.i165.preheader:                        ; preds = %_ZN4LogTC2Ej.exit, %._crit_edge432.split
   %i.akz = load ptr, ptr %i.vt, align 8, !tbaa !44 ; 2 uses
   %i.ala = icmp eq ptr %i.akz, %i.we
   br i1 %i.ala, label %_ZSt8_DestroyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i168, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i167
