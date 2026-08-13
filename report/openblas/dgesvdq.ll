@@ -201,18 +201,21 @@ bb.gd:                                            ; preds = %._crit_edge2099.thr
   call void @dgeqrf_(ptr noundef nonnull %6, ptr noundef nonnull %i.h, ptr noundef %i.azf, ptr noundef nonnull %11, ptr noundef %i.azi, ptr noundef %i.azl, ptr noundef nonnull %i.a, ptr noundef nonnull %i.d) #6
   %i.azm = load i32, ptr %i.h, align 4, !tbaa !8  ; 4 uses
   %.not18422106 = icmp slt i32 %i.azm, 1
-  br i1 %.not18422106, label %._crit_edge2110, label %.lr.ph2109.a
+  br i1 %.not18422106, label %._crit_edge2110, label %.lr.ph2109
 
-.lr.ph2109.a:                                     ; preds = %bb.gd
+.lr.ph2109:                                       ; preds = %bb.gd
   %22 = load i32, ptr %6, align 4, !tbaa !8       ; 2 uses
   %.not18432101 = icmp slt i32 %22, 1
   %23 = zext nneg i32 %i.azm to i64               ; 12 uses
   %24 = sext i32 %i.n to i64                      ; 9 uses
   %25 = add i32 %22, 1                            ; 3 uses
   %26 = sext i32 %i.q to i64                      ; 3 uses
-  %27 = add nuw i32 %i.azm, 1                     ; 2 uses
+  %27 = add nuw i32 %i.azm, 1                     ; 3 uses
   %wide.trip.count2343 = zext i32 %27 to i64      ; 2 uses
   %wide.trip.count2338 = zext i32 %25 to i64      ; 5 uses
+  br i1 %.not18432101, label %._crit_edge2110, label %.lr.ph2109.a
+
+.lr.ph2109.a:                                     ; preds = %.lr.ph2109
   %i.azn = shl nsw i64 %26, 3
   %i.azo = shl nsw i64 %i.r, 3                    ; 2 uses
   %i.azp = getelementptr i8, ptr %12, i64 %i.azn
@@ -249,13 +252,10 @@ bb.gd:                                            ; preds = %._crit_edge2099.thr
   %n.vec3018 = and i64 %i.bab, -4                 ; 3 uses
   %i.baf = or disjoint i64 %n.vec3018, 1
   %cmp.n3024 = icmp eq i64 %i.bab, %n.vec3018
-  br label %28
+  br label %iter.check3013
 
-28:                                               ; preds = %.lr.ph2109.a, %._crit_edge2105
-  %indvars.iv2340 = phi i64 [ 1, %.lr.ph2109.a ], [ %indvars.iv.next2341, %._crit_edge2105 ] ; 3 uses
-  br i1 %.not18432101, label %._crit_edge2105, label %iter.check3013
-
-iter.check3013:                                   ; preds = %28
+iter.check3013:                                   ; preds = %.lr.ph2109.a, %._crit_edge2105
+  %indvars.iv2340 = phi i64 [ %indvars.iv.next2341, %._crit_edge2105 ], [ 1, %.lr.ph2109.a ] ; 3 uses
   %i.bag = mul nsw i64 %indvars.iv2340, %26
   %invariant.gep2572 = getelementptr [8 x i8], ptr %i.p, i64 %indvars.iv2340 ; 11 uses
   %invariant.gep2574 = getelementptr [8 x i8], ptr %i.s, i64 %i.bag ; 11 uses
@@ -406,13 +406,13 @@ vec.epilog.scalar.ph3014:                         ; preds = %vec.epilog.scalar.p
   %exitcond2339.not.7 = icmp eq i64 %indvars.iv.next2336.7, %wide.trip.count2338
   br i1 %exitcond2339.not.7, label %._crit_edge2105, label %vec.epilog.scalar.ph3014, !llvm.loop !137
 
-._crit_edge2105:                                  ; preds = %vec.epilog.scalar.ph3014.prol.loopexit, %vec.epilog.scalar.ph3014, %middle.block3009, %vec.epilog.middle.block3023, %28
+._crit_edge2105:                                  ; preds = %vec.epilog.scalar.ph3014.prol.loopexit, %vec.epilog.scalar.ph3014, %vec.epilog.middle.block3023, %middle.block3009
   %indvars.iv.next2341 = add nuw nsw i64 %indvars.iv2340, 1 ; 2 uses
   %exitcond2344.not = icmp eq i64 %indvars.iv.next2341, %wide.trip.count2343
-  br i1 %exitcond2344.not, label %._crit_edge2110, label %28, !llvm.loop !138
+  br i1 %exitcond2344.not, label %._crit_edge2110, label %iter.check3013, !llvm.loop !138
 
-._crit_edge2110:                                  ; preds = %._crit_edge2105, %bb.gd
-  %storemerge1841.lcssa = phi i32 [ 1, %bb.gd ], [ %27, %._crit_edge2105 ]
+._crit_edge2110:                                  ; preds = %._crit_edge2105, %.lr.ph2109, %bb.gd
+  %storemerge1841.lcssa = phi i32 [ 1, %bb.gd ], [ %27, %.lr.ph2109 ], [ %27, %._crit_edge2105 ]
   store i32 %storemerge1841.lcssa, ptr %i.f, align 4, !tbaa !8
   %i.bbx = add nsw i32 %i.azm, -1                 ; 2 uses
   store i32 %i.bbx, ptr %i.a, align 4, !tbaa !8

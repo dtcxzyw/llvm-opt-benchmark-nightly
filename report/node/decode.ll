@@ -204,19 +204,19 @@ bb.a:
   %i.l = getelementptr inbounds nuw i8, ptr %3, i64 92
   %i.m = getelementptr inbounds nuw i8, ptr %3, i64 96
   %.pre = load i32, ptr %i.b, align 4, !tbaa !138
-  br label %bb.b
-
-bb.b:                                             ; preds = %bb.b, %.preheader
   switch i32 %.pre, label %bb.b [
     i32 0, label %.loopexit
     i32 1, label %.loopexit67
   ]
 
+bb.b:                                             ; preds = %.preheader, %bb.b
+  br label %bb.b
+
 bb.c:                                             ; preds = %bb.h, %bb.g
   store i32 0, ptr %i.b, align 4, !tbaa !138
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.b, %bb.c
+.loopexit:                                        ; preds = %.preheader, %bb.c
   %i.n = load ptr, ptr %i.d, align 8, !tbaa !47
   %i.o = load ptr, ptr %i.e, align 8, !tbaa !46
   %i.p = ptrtoint ptr %i.n to i64
@@ -318,7 +318,7 @@ bb.f:                                             ; preds = %BrotliCopyBytes.exi
   %. = select i1 %i.bk, i32 1, i32 2
   br label %.thread47
 
-.loopexit67:                                      ; preds = %bb.b, %.thread
+.loopexit67:                                      ; preds = %.preheader, %.thread
   %i.bl = tail call fastcc i32 @WriteRingBuffer(ptr noundef nonnull %3, ptr noundef %0, ptr noundef %1, ptr noundef %2, i32 noundef 0) ; 2 uses
   %.not44 = icmp eq i32 %i.bl, 1
   br i1 %.not44, label %bb.g, label %.thread47

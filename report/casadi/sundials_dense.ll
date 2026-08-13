@@ -202,7 +202,7 @@ vector.body167:                                   ; preds = %vector.body167, %ve
 
 middle.block171:                                  ; preds = %vector.body167
   %cmp.n172 = icmp eq i64 %i.h, %n.vec164
-  br i1 %cmp.n172, label %.lr.ph118.a, label %.lr.ph101.preheader175
+  br i1 %cmp.n172, label %.lr.ph118, label %.lr.ph101.preheader175
 
 .lr.ph101.preheader175:                           ; preds = %.lr.ph101.preheader, %middle.block171
   %.199.ph = phi i64 [ 1, %.lr.ph101.preheader ], [ %i.be, %middle.block171 ]
@@ -216,16 +216,19 @@ middle.block171:                                  ; preds = %vector.body167
   store double %i.bl, ptr %i.bj, align 8, !tbaa !20
   %i.bm = add nuw nsw i64 %.199, 1                ; 2 uses
   %exitcond129.not = icmp eq i64 %i.bm, %indvars.iv
-  br i1 %exitcond129.not, label %.lr.ph118.a, label %.lr.ph101, !llvm.loop !108
+  br i1 %exitcond129.not, label %.lr.ph118, label %.lr.ph101, !llvm.loop !108
 
 ._crit_edge.thread:                               ; preds = %bb.b, %._crit_edge
   %i.bn = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %.087124
   store double 0.000000e+00, ptr %i.bn, align 8, !tbaa !20
-  br label %.lr.ph118.a
+  br label %.lr.ph118
 
-.lr.ph118.a:                                      ; preds = %.lr.ph101, %middle.block171, %._crit_edge.thread
+.lr.ph118:                                        ; preds = %.lr.ph101, %middle.block171, %._crit_edge.thread
   %5 = icmp sgt i64 %i.s, 0
   %6 = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %.087124
+  br i1 %5, label %.lr.ph118.a, label %._crit_edge119
+
+.lr.ph118.a:                                      ; preds = %.lr.ph118
   %xtraiter179 = and i64 %indvars.iv, 3           ; 3 uses
   %i.bo = icmp ult i64 %i.f, 3
   %unroll_iter184 = and i64 %indvars.iv, -4
@@ -239,19 +242,16 @@ middle.block171:                                  ; preds = %vector.body167
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph118.a, %._crit_edge115
-  %.0116 = phi i64 [ %.087124, %.lr.ph118.a ], [ %i.dr, %._crit_edge115 ] ; 2 uses
+  %.0116 = phi i64 [ %i.dr, %._crit_edge115 ], [ %.087124, %.lr.ph118.a ] ; 2 uses
   %i.bp = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.0116
   %i.bq = load ptr, ptr %i.bp, align 8, !tbaa !19 ; 2 uses
-  %invariant.gep102 = getelementptr [8 x i8], ptr %i.bq, i64 %.087124 ; 10 uses
-  br i1 %5, label %.lr.ph107.preheader, label %._crit_edge115
-
-.lr.ph107.preheader:                              ; preds = %bb.c
+  %invariant.gep102 = getelementptr inbounds nuw [8 x i8], ptr %i.bq, i64 %.087124 ; 10 uses
   br i1 %i.bo, label %.lr.ph107.epil.preheader, label %.lr.ph107
 
-.lr.ph107:                                        ; preds = %.lr.ph107.preheader, %.lr.ph107
-  %.2105 = phi i64 [ %i.ck, %.lr.ph107 ], [ 0, %.lr.ph107.preheader ] ; 6 uses
-  %.190104 = phi double [ %i.cj, %.lr.ph107 ], [ 0.000000e+00, %.lr.ph107.preheader ]
-  %niter185 = phi i64 [ %niter185.next.3, %.lr.ph107 ], [ 0, %.lr.ph107.preheader ]
+.lr.ph107:                                        ; preds = %bb.c, %.lr.ph107
+  %.2105 = phi i64 [ %i.ck, %.lr.ph107 ], [ 0, %bb.c ] ; 6 uses
+  %.190104 = phi double [ %i.cj, %.lr.ph107 ], [ 0.000000e+00, %bb.c ]
+  %niter185 = phi i64 [ %niter185.next.3, %.lr.ph107 ], [ 0, %bb.c ]
   %gep103 = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep102, i64 %.2105
   %i.br = load double, ptr %gep103, align 8, !tbaa !20
   %i.bs = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %.2105
@@ -283,9 +283,9 @@ bb.c:                                             ; preds = %.lr.ph118.a, %._cri
 .lr.ph114.unr-lcssa:                              ; preds = %.lr.ph107
   br i1 %lcmp.mod181.not, label %.lr.ph114, label %.lr.ph107.epil.preheader
 
-.lr.ph107.epil.preheader:                         ; preds = %.lr.ph114.unr-lcssa, %.lr.ph107.preheader
-  %.2105.epil.init = phi i64 [ 0, %.lr.ph107.preheader ], [ %i.ck, %.lr.ph114.unr-lcssa ]
-  %.190104.epil.init = phi double [ 0.000000e+00, %.lr.ph107.preheader ], [ %i.cj, %.lr.ph114.unr-lcssa ]
+.lr.ph107.epil.preheader:                         ; preds = %.lr.ph114.unr-lcssa, %bb.c
+  %.2105.epil.init = phi i64 [ 0, %bb.c ], [ %i.ck, %.lr.ph114.unr-lcssa ]
+  %.190104.epil.init = phi double [ 0.000000e+00, %bb.c ], [ %i.cj, %.lr.ph114.unr-lcssa ]
   tail call void @llvm.assume(i1 %lcmp.mod183)
   br label %.lr.ph107.epil
 
@@ -382,12 +382,12 @@ scalar.ph147:                                     ; preds = %scalar.ph147.prol.l
   %exitcond131.not.1 = icmp eq i64 %i.dq, %indvars.iv
   br i1 %exitcond131.not.1, label %._crit_edge115, label %scalar.ph147, !llvm.loop !117
 
-._crit_edge115:                                   ; preds = %scalar.ph147.prol.loopexit, %scalar.ph147, %middle.block158, %bb.c
+._crit_edge115:                                   ; preds = %scalar.ph147.prol.loopexit, %scalar.ph147, %middle.block158
   %i.dr = add nuw nsw i64 %.0116, 1               ; 2 uses
   %exitcond132.not = icmp eq i64 %i.dr, %2
   br i1 %exitcond132.not, label %._crit_edge119, label %bb.c, !llvm.loop !118
 
-._crit_edge119:                                   ; preds = %._crit_edge115
+._crit_edge119:                                   ; preds = %._crit_edge115, %.lr.ph118
   %i.ds = icmp sge i64 %.087124, %i.c
   %brmerge = or i1 %i.ds, %i.t
   br i1 %brmerge, label %.loopexit, label %.lr.ph123.preheader

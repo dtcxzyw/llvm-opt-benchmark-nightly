@@ -109,7 +109,7 @@ target triple = "x86_64-unknown-linux-gnu"
 @93 = private unnamed_addr constant [99 x i8] c"/home/opt-bench/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/text-size-1.1.1/src/traits.rs\00", align 1
 @94 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @93, [16 x i8] c"b\00\00\00\00\00\00\00\12\00\00\00\1F\00\00\00" }>, align 8
 @95 = private unnamed_addr constant <{ ptr, ptr }> <{ ptr inttoptr (i64 -654675508425364404 to ptr), ptr inttoptr (i64 7626636266285069727 to ptr) }>, align 8
-@switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559 = private unnamed_addr constant [3 x i8] c"\02\00\01", align 4
+@switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557 = private unnamed_addr constant [3 x i8] c"\02\00\01", align 4
 
 ; Function Attrs: nonlazybind uwtable
 define hidden noundef nonnull align 8 ptr @_RINvMs4_NtCsd9Lm8bEdjjY_5salsa5tableNtB6_5Table3getINtNtB8_5input5ValueNtCsgIpRO4v45SJ_7base_db15SourceRootInputEECsiU5vK8fN4ZC_11ide_assists(ptr noundef nonnull align 8 %0, i32 noundef range(i32 1, 0) %1, i32 noundef %2) unnamed_addr #0 {
@@ -512,26 +512,26 @@ switch.lookup:                                    ; preds = %bb.a, %bb.b
   %.sroa.0.0.val13 = load ptr, ptr %.sroa.0.0, align 8, !nonnull !5, !align !82, !noundef !5
   %.sroa.04.0.val14 = load ptr, ptr %.sroa.04.0, align 8, !nonnull !5, !noundef !5
   %i.n = load i64, ptr %.sroa.0.0.val13, align 8, !range !552, !noundef !5 ; 2 uses
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.n
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.n
   %switch.load = load i8, ptr %switch.gep, align 1
   %i.o = load i64, ptr %.sroa.04.0.val14, align 8, !range !552, !noundef !5 ; 2 uses
-  %switch.gep10 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.o
+  %switch.gep10 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.o
   %switch.load11 = load i8, ptr %switch.gep10, align 1
   %i.p = icmp ult i8 %switch.load, %switch.load11 ; 2 uses
   %.sroa.08.0.val12 = load ptr, ptr %.sroa.08.0, align 8, !nonnull !5, !noundef !5
-  %switch.gep2 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.n
+  %switch.gep2 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.n
   %switch.load3 = load i8, ptr %switch.gep2, align 1
   %i.q = load i64, ptr %.sroa.08.0.val12, align 8, !range !552, !noundef !5 ; 2 uses
-  %switch.gep18 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.q
+  %switch.gep18 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.q
   %switch.load19 = load i8, ptr %switch.gep18, align 1
   %i.r = icmp ult i8 %switch.load3, %switch.load19
   %i.s = xor i1 %i.p, %i.r
   br i1 %i.s, label %_RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6shared5pivot7median3RNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSBZ_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB2Z_.exit, label %switch.lookup5
 
 switch.lookup5:                                   ; preds = %switch.lookup
-  %switch.gep6 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.o
+  %switch.gep6 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.o
   %switch.load7 = load i8, ptr %switch.gep6, align 1
-  %switch.gep14 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.q
+  %switch.gep14 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.q
   %switch.load15 = load i8, ptr %switch.gep14, align 1
   %i.t = icmp ult i8 %switch.load7, %switch.load15
   %i.u = xor i1 %i.p, %i.t
@@ -934,10 +934,10 @@ switch.lookup:
   %.val8 = load ptr, ptr %i.a, align 8, !nonnull !5, !align !82, !noundef !5
   %.val9 = load ptr, ptr %0, align 8, !nonnull !5, !noundef !5
   %i.b = load i64, ptr %.val8, align 8, !range !552, !noundef !5
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.b
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.b
   %switch.load = load i8, ptr %switch.gep, align 1
   %i.c = load i64, ptr %.val9, align 8, !range !552, !noundef !5
-  %switch.gep18 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.c
+  %switch.gep18 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.c
   %switch.load19 = load i8, ptr %switch.gep18, align 1
   %i.d = icmp ult i8 %switch.load, %switch.load19 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -945,10 +945,10 @@ switch.lookup:
   %.val6 = load ptr, ptr %i.e, align 8, !nonnull !5, !align !82, !noundef !5
   %.val7 = load ptr, ptr %i.f, align 8, !nonnull !5, !noundef !5
   %i.g = load i64, ptr %.val6, align 8, !range !552, !noundef !5
-  %switch.gep2 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.g
+  %switch.gep2 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.g
   %switch.load3 = load i8, ptr %switch.gep2, align 1
   %i.h = load i64, ptr %.val7, align 8, !range !552, !noundef !5
-  %switch.gep30 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.h
+  %switch.gep30 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.h
   %switch.load31 = load i8, ptr %switch.gep30, align 1
   %i.i = icmp ult i8 %switch.load3, %switch.load31 ; 2 uses
   %i.j = zext i1 %i.d to i64
@@ -963,19 +963,19 @@ switch.lookup:
   %.val4 = load ptr, ptr %i.p, align 8, !nonnull !5, !align !82, !noundef !5
   %.val5 = load ptr, ptr %i.k, align 8, !nonnull !5, !noundef !5
   %i.s = load i64, ptr %.val4, align 8, !range !552, !noundef !5
-  %switch.gep6 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.s
+  %switch.gep6 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.s
   %switch.load7 = load i8, ptr %switch.gep6, align 1
   %i.t = load i64, ptr %.val5, align 8, !range !552, !noundef !5
-  %switch.gep22 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.t
+  %switch.gep22 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.t
   %switch.load23 = load i8, ptr %switch.gep22, align 1
   %i.u = icmp ult i8 %switch.load7, %switch.load23 ; 3 uses
   %.val2 = load ptr, ptr %i.r, align 8, !nonnull !5, !align !82, !noundef !5
   %.val3 = load ptr, ptr %i.n, align 8, !nonnull !5, !noundef !5
   %i.v = load i64, ptr %.val2, align 8, !range !552, !noundef !5
-  %switch.gep10 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.v
+  %switch.gep10 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.v
   %switch.load11 = load i8, ptr %switch.gep10, align 1
   %i.w = load i64, ptr %.val3, align 8, !range !552, !noundef !5
-  %switch.gep34 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.w
+  %switch.gep34 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.w
   %switch.load35 = load i8, ptr %switch.gep34, align 1
   %i.x = icmp ult i8 %switch.load11, %switch.load35 ; 3 uses
   %i.y = select i1 %i.x, ptr %i.p, ptr %i.n, !unpredictable !5
@@ -985,10 +985,10 @@ switch.lookup:
   %.val = load ptr, ptr %i.ab, align 8, !nonnull !5, !align !82, !noundef !5
   %.val1 = load ptr, ptr %i.z, align 8, !nonnull !5, !noundef !5
   %i.ac = load i64, ptr %.val, align 8, !range !552, !noundef !5
-  %switch.gep14 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.ac
+  %switch.gep14 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.ac
   %switch.load15 = load i8, ptr %switch.gep14, align 1
   %i.ad = load i64, ptr %.val1, align 8, !range !552, !noundef !5
-  %switch.gep26 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.ad
+  %switch.gep26 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.ad
   %switch.load27 = load i8, ptr %switch.gep26, align 1
   %i.ae = icmp ult i8 %switch.load15, %switch.load27 ; 2 uses
   %.val37 = load i64, ptr %i.p, align 8
@@ -1391,10 +1391,10 @@ define internal fastcc void @_RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6shared9
   %.sroa.011.0.val.i = load ptr, ptr %i.b, align 8, !alias.scope !1469, !nonnull !5, !align !82, !noundef !5
   %.sroa.06.0.val.i = load ptr, ptr %2, align 8, !alias.scope !1469, !nonnull !5, !noundef !5
   %i.f = load i64, ptr %.sroa.011.0.val.i, align 8, !range !552, !noalias !1469, !noundef !5
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.f
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.f
   %switch.load = load i8, ptr %switch.gep, align 1
   %i.g = load i64, ptr %.sroa.06.0.val.i, align 8, !range !552, !noalias !1469, !noundef !5
-  %switch.gep28 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.g
+  %switch.gep28 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.g
   %switch.load29 = load i8, ptr %switch.gep28, align 1
   %i.h = icmp ult i8 %switch.load, %switch.load29 ; 3 uses
   %i.i = xor i1 %i.h, true
@@ -1410,10 +1410,10 @@ define internal fastcc void @_RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6shared9
   %.sroa.017.0.val.i = load ptr, ptr %i.d, align 8, !alias.scope !1469, !nonnull !5, !align !82, !noundef !5
   %.sroa.015.0.val.i = load ptr, ptr %i.e, align 8, !alias.scope !1469, !nonnull !5, !noundef !5
   %i.p = load i64, ptr %.sroa.017.0.val.i, align 8, !range !552, !noalias !1469, !noundef !5
-  %switch.gep7 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.p
+  %switch.gep7 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.p
   %switch.load8 = load i8, ptr %switch.gep7, align 1
   %i.q = load i64, ptr %.sroa.015.0.val.i, align 8, !range !552, !noalias !1469, !noundef !5
-  %switch.gep40 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.q
+  %switch.gep40 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.q
   %switch.load41 = load i8, ptr %switch.gep40, align 1
   %i.r = icmp ult i8 %switch.load8, %switch.load41 ; 3 uses
   %i.s = xor i1 %i.r, true
@@ -1429,10 +1429,10 @@ define internal fastcc void @_RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6shared9
   %.sroa.011.0.val.i.1 = load ptr, ptr %i.l, align 8, !alias.scope !1469, !nonnull !5, !align !82, !noundef !5
   %.sroa.06.0.val.i.1 = load ptr, ptr %i.n, align 8, !alias.scope !1469, !nonnull !5, !noundef !5
   %i.x = load i64, ptr %.sroa.011.0.val.i.1, align 8, !range !552, !noalias !1469, !noundef !5
-  %switch.gep10 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.x
+  %switch.gep10 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.x
   %switch.load11 = load i8, ptr %switch.gep10, align 1
   %i.y = load i64, ptr %.sroa.06.0.val.i.1, align 8, !range !552, !noalias !1469, !noundef !5
-  %switch.gep31 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.y
+  %switch.gep31 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.y
   %switch.load32 = load i8, ptr %switch.gep31, align 1
   %i.z = icmp ult i8 %switch.load11, %switch.load32 ; 3 uses
   %i.aa = xor i1 %i.z, true
@@ -1448,10 +1448,10 @@ define internal fastcc void @_RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6shared9
   %.sroa.017.0.val.i.1 = load ptr, ptr %i.u, align 8, !alias.scope !1469, !nonnull !5, !align !82, !noundef !5
   %.sroa.015.0.val.i.1 = load ptr, ptr %i.v, align 8, !alias.scope !1469, !nonnull !5, !noundef !5
   %i.ah = load i64, ptr %.sroa.017.0.val.i.1, align 8, !range !552, !noalias !1469, !noundef !5
-  %switch.gep13 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.ah
+  %switch.gep13 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.ah
   %switch.load14 = load i8, ptr %switch.gep13, align 1
   %i.ai = load i64, ptr %.sroa.015.0.val.i.1, align 8, !range !552, !noalias !1469, !noundef !5
-  %switch.gep46 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.ai
+  %switch.gep46 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.ai
   %switch.load47 = load i8, ptr %switch.gep46, align 1
   %i.aj = icmp ult i8 %switch.load14, %switch.load47 ; 3 uses
   %i.ak = xor i1 %i.aj, true
@@ -1467,10 +1467,10 @@ define internal fastcc void @_RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6shared9
   %.sroa.011.0.val.i.2 = load ptr, ptr %i.ad, align 8, !alias.scope !1469, !nonnull !5, !align !82, !noundef !5
   %.sroa.06.0.val.i.2 = load ptr, ptr %i.af, align 8, !alias.scope !1469, !nonnull !5, !noundef !5
   %i.ap = load i64, ptr %.sroa.011.0.val.i.2, align 8, !range !552, !noalias !1469, !noundef !5
-  %switch.gep16 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.ap
+  %switch.gep16 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.ap
   %switch.load17 = load i8, ptr %switch.gep16, align 1
   %i.aq = load i64, ptr %.sroa.06.0.val.i.2, align 8, !range !552, !noalias !1469, !noundef !5
-  %switch.gep34 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.aq
+  %switch.gep34 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.aq
   %switch.load35 = load i8, ptr %switch.gep34, align 1
   %i.ar = icmp ult i8 %switch.load17, %switch.load35 ; 3 uses
   %i.as = xor i1 %i.ar, true
@@ -1486,10 +1486,10 @@ define internal fastcc void @_RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6shared9
   %.sroa.017.0.val.i.2 = load ptr, ptr %i.am, align 8, !alias.scope !1469, !nonnull !5, !align !82, !noundef !5
   %.sroa.015.0.val.i.2 = load ptr, ptr %i.an, align 8, !alias.scope !1469, !nonnull !5, !noundef !5
   %i.az = load i64, ptr %.sroa.017.0.val.i.2, align 8, !range !552, !noalias !1469, !noundef !5
-  %switch.gep19 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.az
+  %switch.gep19 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.az
   %switch.load20 = load i8, ptr %switch.gep19, align 1
   %i.ba = load i64, ptr %.sroa.015.0.val.i.2, align 8, !range !552, !noalias !1469, !noundef !5
-  %switch.gep43 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.ba
+  %switch.gep43 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.ba
   %switch.load44 = load i8, ptr %switch.gep43, align 1
   %i.bb = icmp ult i8 %switch.load20, %switch.load44 ; 3 uses
   %i.bc = xor i1 %i.bb, true
@@ -1505,10 +1505,10 @@ define internal fastcc void @_RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6shared9
   %.sroa.011.0.val.i.3 = load ptr, ptr %i.av, align 8, !alias.scope !1469, !nonnull !5, !align !82, !noundef !5
   %.sroa.06.0.val.i.3 = load ptr, ptr %i.ax, align 8, !alias.scope !1469, !nonnull !5, !noundef !5
   %i.bh = load i64, ptr %.sroa.011.0.val.i.3, align 8, !range !552, !noalias !1469, !noundef !5
-  %switch.gep22 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.bh
+  %switch.gep22 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.bh
   %switch.load23 = load i8, ptr %switch.gep22, align 1
   %i.bi = load i64, ptr %.sroa.06.0.val.i.3, align 8, !range !552, !noalias !1469, !noundef !5
-  %switch.gep37 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.bi
+  %switch.gep37 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.bi
   %switch.load38 = load i8, ptr %switch.gep37, align 1
   %i.bj = icmp ult i8 %switch.load23, %switch.load38 ; 3 uses
   %i.bk = xor i1 %i.bj, true
@@ -1523,10 +1523,10 @@ define internal fastcc void @_RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6shared9
   %.sroa.017.0.val.i.3 = load ptr, ptr %i.be, align 8, !alias.scope !1469, !nonnull !5, !align !82, !noundef !5
   %.sroa.015.0.val.i.3 = load ptr, ptr %i.bf, align 8, !alias.scope !1469, !nonnull !5, !noundef !5
   %i.bq = load i64, ptr %.sroa.017.0.val.i.3, align 8, !range !552, !noalias !1469, !noundef !5
-  %switch.gep25 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.bq
+  %switch.gep25 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.bq
   %switch.load26 = load i8, ptr %switch.gep25, align 1
   %i.br = load i64, ptr %.sroa.015.0.val.i.3, align 8, !range !552, !noalias !1469, !noundef !5
-  %switch.gep49 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.br
+  %switch.gep49 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.br
   %switch.load50 = load i8, ptr %switch.gep49, align 1
   %i.bs = icmp ult i8 %switch.load26, %switch.load50 ; 3 uses
   %i.bt = xor i1 %i.bs, true
@@ -1929,10 +1929,10 @@ bb.c:                                             ; preds = %bb.a
   %.val9.i = load ptr, ptr %.sroa.0.07, align 8, !nonnull !5, !align !82, !noundef !5 ; 3 uses
   %.val10.i = load ptr, ptr %i.d, align 8, !nonnull !5, !noundef !5 ; 2 uses
   %i.e = load i64, ptr %.val9.i, align 8, !range !552, !noundef !5
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.e
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.e
   %switch.load = load i8, ptr %switch.gep, align 1
   %i.f = load i64, ptr %.val10.i, align 8, !range !552, !noundef !5
-  %switch.gep21 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.f
+  %switch.gep21 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.f
   %switch.load22 = load i8, ptr %switch.gep21, align 1
   %i.g = icmp ult i8 %switch.load, %switch.load22
   br i1 %i.g, label %.preheader.preheader, label %_RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6shared9smallsort11insert_tailRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB18_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB39_.exit
@@ -1945,7 +1945,7 @@ bb.c:                                             ; preds = %bb.a
 
 .lr.ph15.preheader:                               ; preds = %.preheader.preheader
   %i.j = load i64, ptr %.val9.i, align 8, !range !552, !noundef !5
-  %switch.gep18 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.j
+  %switch.gep18 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.j
   %switch.load19 = load i8, ptr %switch.gep18, align 1
   br label %.lr.ph15
 
@@ -1960,7 +1960,7 @@ bb.c:                                             ; preds = %bb.a
   %i.m = getelementptr inbounds i8, ptr %.sroa.0.0.i14, i64 -8 ; 3 uses
   %.val8.i = load ptr, ptr %i.m, align 8, !nonnull !5, !noundef !5 ; 2 uses
   %i.n = load i64, ptr %.val8.i, align 8, !range !552, !noundef !5
-  %switch.gep24 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.n
+  %switch.gep24 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.n
   %switch.load25 = load i8, ptr %switch.gep24, align 1
   %i.o = icmp ult i8 %switch.load19, %switch.load25
   br i1 %i.o, label %.preheader, label %._crit_edge16
@@ -2363,10 +2363,10 @@ switch.lookup:                                    ; preds = %bb.j
   %.val10.i = load ptr, ptr %i.q, align 8, !alias.scope !3065, !noalias !3068, !nonnull !5, !align !82, !noundef !5 ; 3 uses
   %.val11.i = load ptr, ptr %i.o, align 8, !alias.scope !3065, !noalias !3068, !nonnull !5, !noundef !5
   %i.r = load i64, ptr %.val10.i, align 8, !range !552, !noalias !3071, !noundef !5
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.r
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.r
   %switch.load = load i8, ptr %switch.gep, align 1
   %i.s = load i64, ptr %.val11.i, align 8, !range !552, !noalias !3071, !noundef !5
-  %switch.gep170 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.s
+  %switch.gep170 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.s
   %switch.load171 = load i8, ptr %switch.gep170, align 1
   %i.t = icmp ult i8 %switch.load, %switch.load171 ; 2 uses
   %.not87 = icmp eq i64 %i.n, 2                   ; 2 uses
@@ -2387,10 +2387,10 @@ switch.lookup:                                    ; preds = %bb.j
   tail call void @llvm.assume(i1 %i.w)
   %.val8.i = load ptr, ptr %i.u, align 8, !alias.scope !3065, !noalias !3068, !nonnull !5, !align !82, !noundef !5 ; 2 uses
   %i.x = load i64, ptr %.val8.i, align 8, !range !552, !noalias !3071, !noundef !5
-  %switch.gep154 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.x
+  %switch.gep154 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.x
   %switch.load155 = load i8, ptr %switch.gep154, align 1
   %i.y = load i64, ptr %.val9.i, align 8, !range !552, !noalias !3071, !noundef !5
-  %switch.gep174 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.y
+  %switch.gep174 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.y
   %switch.load175 = load i8, ptr %switch.gep174, align 1
   %i.z = icmp ult i8 %switch.load155, %switch.load175
   br i1 %i.z, label %_RINvNtNtNtCshzWfHUSfYae_4core5slice4sort6shared17find_existing_runRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB12_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB33_.exit.i, label %bb.k
@@ -2409,10 +2409,10 @@ bb.k:                                             ; preds = %.lr.ph
   tail call void @llvm.assume(i1 %i.ad)
   %.val.i = load ptr, ptr %i.ab, align 8, !alias.scope !3065, !noalias !3068, !nonnull !5, !align !82, !noundef !5 ; 2 uses
   %i.ae = load i64, ptr %.val.i, align 8, !range !552, !noalias !3071, !noundef !5
-  %switch.gep158 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.ae
+  %switch.gep158 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.ae
   %switch.load159 = load i8, ptr %switch.gep158, align 1
   %i.af = load i64, ptr %.val7.i, align 8, !range !552, !noalias !3071, !noundef !5
-  %switch.gep178 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.af
+  %switch.gep178 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.af
   %switch.load179 = load i8, ptr %switch.gep178, align 1
   %i.ag = icmp ult i8 %switch.load159, %switch.load179
   br i1 %i.ag, label %bb.l, label %_RINvNtNtNtCshzWfHUSfYae_4core5slice4sort6shared17find_existing_runRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB12_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB33_.exit.i
@@ -2631,10 +2631,10 @@ bb.y:                                             ; preds = %bb.x
   %.val.i.i = load ptr, ptr %i.dc, align 8, !alias.scope !3090, !noalias !3093, !nonnull !5, !align !82, !noundef !5
   %.val12.i.i = load ptr, ptr %i.db, align 8, !alias.scope !3087, !noalias !3096, !nonnull !5, !noundef !5
   %i.de = load i64, ptr %.val.i.i, align 8, !range !552, !noalias !3097, !noundef !5
-  %switch.gep162 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.de
+  %switch.gep162 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.de
   %switch.load163 = load i8, ptr %switch.gep162, align 1
   %i.df = load i64, ptr %.val12.i.i, align 8, !range !552, !noalias !3097, !noundef !5
-  %switch.gep182 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.df
+  %switch.gep182 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.df
   %switch.load183 = load i8, ptr %switch.gep182, align 1
   %i.dg = icmp ult i8 %switch.load163, %switch.load183 ; 3 uses
   %.val189 = load i64, ptr %i.db, align 8
@@ -2658,10 +2658,10 @@ bb.y:                                             ; preds = %bb.x
   %.sroa.0.0.val.i.i = load ptr, ptr %.sroa.0.02.i.i, align 8, !alias.scope !3087, !noalias !3098, !nonnull !5, !align !82, !noundef !5
   %.val.i19.i = load ptr, ptr %i.dq, align 8, !alias.scope !3090, !noalias !3101, !nonnull !5, !noundef !5
   %i.dr = load i64, ptr %.sroa.0.0.val.i.i, align 8, !range !552, !noalias !3102, !noundef !5
-  %switch.gep166 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.dr
+  %switch.gep166 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.dr
   %switch.load167 = load i8, ptr %switch.gep166, align 1
   %i.ds = load i64, ptr %.val.i19.i, align 8, !range !552, !noalias !3102, !noundef !5
-  %switch.gep186 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.ds
+  %switch.gep186 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.ds
   %switch.load187 = load i8, ptr %switch.gep186, align 1
   %i.dt = icmp ult i8 %switch.load167, %switch.load187 ; 3 uses
   %i.du = xor i1 %i.dt, true
@@ -3064,10 +3064,10 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g
   %.val9.i.cast.1.i = inttoptr i64 %i.ac to ptr
   %.val10.i.1.i = load ptr, ptr %i.ad, align 8, !alias.scope !5286, !noalias !5283, !nonnull !5, !noundef !5 ; 2 uses
   %i.ae = load i64, ptr %.val9.i.cast.1.i, align 8, !range !552, !noalias !5288, !noundef !5 ; 2 uses
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.ae
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.ae
   %switch.load = load i8, ptr %switch.gep, align 1
   %i.af = load i64, ptr %.val10.i.1.i, align 8, !range !552, !noalias !5288, !noundef !5
-  %switch.gep634 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.af
+  %switch.gep634 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.af
   %switch.load635 = load i8, ptr %switch.gep634, align 1
   %i.ag = icmp ult i8 %switch.load, %switch.load635
   br i1 %i.ag, label %.preheader.1.i.preheader, label %_RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6shared9smallsort11insert_tailRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB18_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB39_.exit.1.i
@@ -3157,10 +3157,10 @@ _RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6shared9smallsort11insert_tailRNtNtNt
   %.sroa.011.0.val.i.i = load ptr, ptr %.sroa.011.017.i.i, align 8, !alias.scope !5297, !noalias !5283, !nonnull !5, !align !82, !noundef !5
   %.sroa.06.0.val.i.i = load ptr, ptr %.sroa.06.018.i.i, align 8, !alias.scope !5297, !noalias !5283, !nonnull !5, !noundef !5
   %i.bd = load i64, ptr %.sroa.011.0.val.i.i, align 8, !range !552, !noalias !5298, !noundef !5
-  %switch.gep573 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.bd
+  %switch.gep573 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.bd
   %switch.load574 = load i8, ptr %switch.gep573, align 1
   %i.be = load i64, ptr %.sroa.06.0.val.i.i, align 8, !range !552, !noalias !5298, !noundef !5
-  %switch.gep638 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.be
+  %switch.gep638 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.be
   %switch.load639 = load i8, ptr %switch.gep638, align 1
   %i.bf = icmp ult i8 %switch.load574, %switch.load639 ; 3 uses
   %i.bg = xor i1 %i.bf, true
@@ -3176,10 +3176,10 @@ _RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6shared9smallsort11insert_tailRNtNtNt
   %.sroa.017.0.val.i.i = load ptr, ptr %.sroa.017.015.i.i, align 8, !alias.scope !5297, !noalias !5283, !nonnull !5, !align !82, !noundef !5
   %.sroa.015.0.val.i.i = load ptr, ptr %.sroa.015.016.i.i, align 8, !alias.scope !5297, !noalias !5283, !nonnull !5, !noundef !5
   %i.bn = load i64, ptr %.sroa.017.0.val.i.i, align 8, !range !552, !noalias !5298, !noundef !5
-  %switch.gep576 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.bn
+  %switch.gep576 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.bn
   %switch.load577 = load i8, ptr %switch.gep576, align 1
   %i.bo = load i64, ptr %.sroa.015.0.val.i.i, align 8, !range !552, !noalias !5298, !noundef !5
-  %switch.gep678 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.bo
+  %switch.gep678 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.bo
   %switch.load679 = load i8, ptr %switch.gep678, align 1
   %i.bp = icmp ult i8 %switch.load577, %switch.load679 ; 3 uses
   %i.bq = xor i1 %i.bp, true
@@ -3240,10 +3240,10 @@ bb.n:                                             ; preds = %bb.m
   %.val9.i.cast.i = inttoptr i64 %i.ci to ptr
   %.val10.i.i = load ptr, ptr %i.cj, align 8, !alias.scope !5286, !noalias !5283, !nonnull !5, !noundef !5 ; 2 uses
   %i.ck = load i64, ptr %.val9.i.cast.i, align 8, !range !552, !noalias !5288, !noundef !5 ; 2 uses
-  %switch.gep579 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.ck
+  %switch.gep579 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.ck
   %switch.load580 = load i8, ptr %switch.gep579, align 1
   %i.cl = load i64, ptr %.val10.i.i, align 8, !range !552, !noalias !5288, !noundef !5
-  %switch.gep642 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.cl
+  %switch.gep642 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.cl
   %switch.load643 = load i8, ptr %switch.gep642, align 1
   %i.cm = icmp ult i8 %switch.load580, %switch.load643
   br i1 %i.cm, label %.preheader.i.preheader, label %_RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6shared9smallsort11insert_tailRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB18_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB39_.exit.i
@@ -3251,7 +3251,7 @@ bb.n:                                             ; preds = %bb.m
 .preheader.1.i.preheader.unreachabledefault:      ; preds = %.preheader.1.i.preheader
   unreachable
 
-default.unreachable:                              ; preds = %.lr.ph53.i68, %.preheader.i.preheader
+default.unreachable:                              ; preds = %_RNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0B7_.exit.i.i.i82, %.lr.ph53.i68, %.preheader.i.preheader
   unreachable
 
 .preheader.i.preheader:                           ; preds = %.lr.ph.i
@@ -3338,26 +3338,26 @@ switch.lookup:                                    ; preds = %.lr.ph535
   %.val6.i = load ptr, ptr %.sroa.0.0.ph542, align 8, !alias.scope !5312, !nonnull !5, !align !82, !noundef !5
   %.val7.i = load ptr, ptr %i.dc, align 8, !alias.scope !5312, !nonnull !5, !noundef !5
   %i.dg = load i64, ptr %.val6.i, align 8, !range !552, !noalias !5312, !noundef !5 ; 2 uses
-  %switch.gep582 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.dg
+  %switch.gep582 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.dg
   %switch.load583 = load i8, ptr %switch.gep582, align 1
   %i.dh = load i64, ptr %.val7.i, align 8, !range !552, !noalias !5312, !noundef !5 ; 2 uses
-  %switch.gep646 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.dh
+  %switch.gep646 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.dh
   %switch.load647 = load i8, ptr %switch.gep646, align 1
   %i.di = icmp ult i8 %switch.load583, %switch.load647 ; 2 uses
   %.val5.i = load ptr, ptr %i.dd, align 8, !alias.scope !5312, !nonnull !5, !noundef !5
-  %switch.gep586 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.dg
+  %switch.gep586 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.dg
   %switch.load587 = load i8, ptr %switch.gep586, align 1
   %i.dj = load i64, ptr %.val5.i, align 8, !range !552, !noalias !5312, !noundef !5 ; 2 uses
-  %switch.gep682 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.dj
+  %switch.gep682 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.dj
   %switch.load683 = load i8, ptr %switch.gep682, align 1
   %i.dk = icmp ult i8 %switch.load587, %switch.load683
   %i.dl = xor i1 %i.di, %i.dk
   br i1 %i.dl, label %bb.p, label %switch.lookup589
 
 switch.lookup589:                                 ; preds = %switch.lookup
-  %switch.gep590 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.dh
+  %switch.gep590 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.dh
   %switch.load591 = load i8, ptr %switch.gep590, align 1
-  %switch.gep650 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.dj
+  %switch.gep650 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.dj
   %switch.load651 = load i8, ptr %switch.gep650, align 1
   %i.dm = icmp ult i8 %switch.load591, %switch.load651
   %i.dn = xor i1 %i.di, %i.dm
@@ -3383,11 +3383,11 @@ bb.p:                                             ; preds = %switch.lookup589, %
 switch.lookup593:                                 ; preds = %bb.p
   %.sroa.028.0.val = load ptr, ptr %.sroa.028.0.ph539, align 8, !nonnull !5, !align !82, !noundef !5
   %i.dt = load i64, ptr %.sroa.028.0.val, align 8, !range !552, !noundef !5
-  %switch.gep594 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.dt
+  %switch.gep594 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.dt
   %switch.load595 = load i8, ptr %switch.gep594, align 1
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ds) ]
   %i.du = load i64, ptr %i.ds, align 8, !range !552, !noundef !5
-  %switch.gep654 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.du
+  %switch.gep654 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.du
   %switch.load655 = load i8, ptr %switch.gep654, align 1
   %i.dv = icmp ult i8 %switch.load595, %switch.load655
   br i1 %i.dv, label %bb.q, label %.thread
@@ -3419,13 +3419,13 @@ bb.t:                                             ; preds = %bb.u, %bb.r
 .lr.ph.i43.preheader:                             ; preds = %bb.t
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ds) ]
   %i.ea = load i64, ptr %i.ds, align 8, !range !552, !noalias !5320, !noundef !5 ; 4 uses
-  %switch.gep658 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.ea
+  %switch.gep658 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.ea
   %switch.load659 = load i8, ptr %switch.gep658, align 1
-  %switch.gep686 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.ea
+  %switch.gep686 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.ea
   %switch.load687 = load i8, ptr %switch.gep686, align 1
-  %switch.gep662 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.ea
+  %switch.gep662 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.ea
   %switch.load663 = load i8, ptr %switch.gep662, align 1
-  %switch.gep694 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.ea
+  %switch.gep694 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.ea
   %switch.load695 = load i8, ptr %switch.gep694, align 1
   br label %.lr.ph.i43
 
@@ -3436,7 +3436,7 @@ bb.t:                                             ; preds = %bb.u, %bb.r
   %.val21.i = load ptr, ptr %.sroa.9.145.i, align 8, !alias.scope !5315, !noalias !5318, !nonnull !5, !align !82, !noundef !5 ; 2 uses
   %i.eb = load i64, ptr %.val21.i, align 8, !range !552, !noalias !5320, !noundef !5
   %i.ec = ptrtoint ptr %.val21.i to i64
-  %switch.gep598 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.eb
+  %switch.gep598 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.eb
   %switch.load599 = load i8, ptr %switch.gep598, align 1
   %i.ed = icmp ult i8 %switch.load599, %switch.load659 ; 2 uses
   %i.ee = getelementptr inbounds i8, ptr %.sroa.43.146.i, i64 -8
@@ -3449,7 +3449,7 @@ bb.t:                                             ; preds = %bb.u, %bb.r
   %.val19.i = load ptr, ptr %i.ei, align 8, !alias.scope !5315, !noalias !5318, !nonnull !5, !align !82, !noundef !5 ; 2 uses
   %i.ej = load i64, ptr %.val19.i, align 8, !range !552, !noalias !5320, !noundef !5
   %i.ek = ptrtoint ptr %.val19.i to i64
-  %switch.gep602 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.ej
+  %switch.gep602 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.ej
   %switch.load603 = load i8, ptr %switch.gep602, align 1
   %i.el = icmp ult i8 %switch.load603, %switch.load687 ; 2 uses
   %i.em = getelementptr inbounds i8, ptr %.sroa.43.146.i, i64 -16
@@ -3462,7 +3462,7 @@ bb.t:                                             ; preds = %bb.u, %bb.r
   %.val17.i = load ptr, ptr %i.eq, align 8, !alias.scope !5315, !noalias !5318, !nonnull !5, !align !82, !noundef !5 ; 2 uses
   %i.er = load i64, ptr %.val17.i, align 8, !range !552, !noalias !5320, !noundef !5
   %i.es = ptrtoint ptr %.val17.i to i64
-  %switch.gep606 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.er
+  %switch.gep606 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.er
   %switch.load607 = load i8, ptr %switch.gep606, align 1
   %i.et = icmp ult i8 %switch.load607, %switch.load663 ; 2 uses
   %i.eu = getelementptr inbounds i8, ptr %.sroa.43.146.i, i64 -24
@@ -3475,7 +3475,7 @@ bb.t:                                             ; preds = %bb.u, %bb.r
   %.val15.i = load ptr, ptr %i.ey, align 8, !alias.scope !5315, !noalias !5318, !nonnull !5, !align !82, !noundef !5 ; 2 uses
   %i.ez = load i64, ptr %.val15.i, align 8, !range !552, !noalias !5320, !noundef !5
   %i.fa = ptrtoint ptr %.val15.i to i64
-  %switch.gep610 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.ez
+  %switch.gep610 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.ez
   %switch.load611 = load i8, ptr %switch.gep610, align 1
   %i.fb = icmp ult i8 %switch.load611, %switch.load695 ; 2 uses
   %i.fc = getelementptr inbounds i8, ptr %.sroa.43.146.i, i64 -32 ; 3 uses
@@ -3499,7 +3499,7 @@ bb.t:                                             ; preds = %bb.u, %bb.r
 .lr.ph53.i.preheader:                             ; preds = %._crit_edge.i
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ds) ]
   %i.fk = load i64, ptr %i.ds, align 8, !range !552, !noalias !5320, !noundef !5
-  %switch.gep666 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.fk
+  %switch.gep666 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.fk
   %switch.load667 = load i8, ptr %switch.gep666, align 1
   br label %.lr.ph53.i
 
@@ -3517,7 +3517,7 @@ bb.t:                                             ; preds = %bb.u, %bb.r
   %.val.i = load ptr, ptr %.sroa.9.250.i, align 8, !alias.scope !5315, !noalias !5318, !nonnull !5, !align !82, !noundef !5 ; 2 uses
   %i.fm = load i64, ptr %.val.i, align 8, !range !552, !noalias !5320, !noundef !5
   %i.fn = ptrtoint ptr %.val.i to i64
-  %switch.gep614 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.fm
+  %switch.gep614 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.fm
   %switch.load615 = load i8, ptr %switch.gep614, align 1
   %i.fo = icmp ult i8 %switch.load615, %switch.load667 ; 2 uses
   %i.fp = getelementptr inbounds i8, ptr %.sroa.43.251.i, i64 -8 ; 3 uses
@@ -3638,40 +3638,49 @@ bb.aa:                                            ; preds = %bb.ac, %bb.y
 
 .lr.ph.i76:                                       ; preds = %bb.aa
   %.val22.i77 = load ptr, ptr %i.gr, align 8, !alias.scope !5346, !noalias !5349, !nonnull !5, !align !82, !noundef !5
-  %i.gw = load i64, ptr %.val22.i77, align 8, !range !552, !noalias !5351, !noundef !5 ; 4 uses
-  %switch.gep618 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.gw
-  %switch.load619 = load i8, ptr %switch.gep618, align 1
-  %switch.gep622 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.gw
-  %switch.load623 = load i8, ptr %switch.gep622, align 1
-  %switch.gep626 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.gw
-  %switch.load627 = load i8, ptr %switch.gep626, align 1
-  %switch.gep630 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.gw
-  %switch.load631 = load i8, ptr %switch.gep630, align 1
-  br label %switch.lookup617
+  %i.gw = load i64, ptr %.val22.i77, align 8, !range !552, !noalias !5351, !noundef !5 ; 5 uses
+  %switch.selectcmp450 = icmp eq i64 %i.gw, 0
+  %switch.selectcmp449 = icmp ne i64 %i.gw, 1
+  %switch.gep622 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.gw
+  %switch.gep626 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.gw
+  %switch.gep630 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.gw
+  br label %_RNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0B7_.exit.i.i.i82
 
-switch.lookup617:                                 ; preds = %switch.lookup617, %.lr.ph.i76
+_RNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0B7_.exit.i.i.i82: ; preds = %switch.lookup617, %.lr.ph.i76
   %.sroa.43.146.i78 = phi ptr [ %.sroa.43.0.i54, %.lr.ph.i76 ], [ %i.hv, %switch.lookup617 ] ; 4 uses
   %.sroa.9.145.i79 = phi ptr [ %.sroa.9.0.i53, %.lr.ph.i76 ], [ %i.hz, %switch.lookup617 ] ; 5 uses
   %.sroa.27.144.i80 = phi i64 [ %.sroa.27.0.i52, %.lr.ph.i76 ], [ %i.hy, %switch.lookup617 ] ; 2 uses
   %.val21.i81 = load ptr, ptr %.sroa.9.145.i79, align 8, !alias.scope !5346, !noalias !5349, !nonnull !5, !noundef !5 ; 2 uses
   %7 = ptrtoint ptr %.val21.i81 to i64
   %8 = load i64, ptr %.val21.i81, align 8, !range !552, !noalias !5351, !noundef !5
-  %switch.gep670 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %8
-  %switch.load671 = load i8, ptr %switch.gep670, align 1
-  %9 = icmp uge i8 %switch.load619, %switch.load671 ; 2 uses
+  switch i64 %8, label %default.unreachable [
+    i64 0, label %switch.lookup617
+    i64 1, label %9
+    i64 2, label %10
+  ]
+
+9:                                                ; preds = %_RNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0B7_.exit.i.i.i82
+  br label %switch.lookup617
+
+10:                                               ; preds = %_RNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0B7_.exit.i.i.i82
+  br label %switch.lookup617
+
+switch.lookup617:                                 ; preds = %10, %9, %_RNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0B7_.exit.i.i.i82
+  %.sroa.0.0.i2.i.i.i84 = phi i1 [ %switch.selectcmp449, %10 ], [ true, %9 ], [ %switch.selectcmp450, %_RNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0B7_.exit.i.i.i82 ] ; 2 uses
   %i.gx = getelementptr inbounds i8, ptr %.sroa.43.146.i78, i64 -8
-  %.sroa.01.0.i.i85 = select i1 %9, ptr %2, ptr %i.gx
+  %.sroa.01.0.i.i85 = select i1 %.sroa.0.0.i2.i.i.i84, ptr %2, ptr %i.gx
   %i.gy = getelementptr inbounds nuw [8 x i8], ptr %.sroa.01.0.i.i85, i64 %.sroa.27.144.i80
   store i64 %7, ptr %i.gy, align 8, !alias.scope !5349, !noalias !5352
-  %i.gz = zext i1 %9 to i64
+  %i.gz = zext i1 %.sroa.0.0.i2.i.i.i84 to i64
   %i.ha = add i64 %.sroa.27.144.i80, %i.gz        ; 2 uses
   %i.hb = getelementptr inbounds nuw i8, ptr %.sroa.9.145.i79, i64 8
   %.val19.i86 = load ptr, ptr %i.hb, align 8, !alias.scope !5346, !noalias !5349, !nonnull !5, !noundef !5 ; 2 uses
   %i.hc = ptrtoint ptr %.val19.i86 to i64
+  %switch.load622 = load i8, ptr %switch.gep622, align 1
   %i.hd = load i64, ptr %.val19.i86, align 8, !range !552, !noalias !5351, !noundef !5
-  %switch.gep690 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.hd
+  %switch.gep690 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.hd
   %switch.load691 = load i8, ptr %switch.gep690, align 1
-  %i.he = icmp uge i8 %switch.load623, %switch.load691 ; 2 uses
+  %i.he = icmp uge i8 %switch.load622, %switch.load691 ; 2 uses
   %i.hf = getelementptr inbounds i8, ptr %.sroa.43.146.i78, i64 -16
   %.sroa.01.0.i28.i87 = select i1 %i.he, ptr %2, ptr %i.hf
   %i.hg = getelementptr inbounds nuw [8 x i8], ptr %.sroa.01.0.i28.i87, i64 %i.ha
@@ -3681,10 +3690,11 @@ switch.lookup617:                                 ; preds = %switch.lookup617, %
   %i.hj = getelementptr inbounds nuw i8, ptr %.sroa.9.145.i79, i64 16
   %.val17.i88 = load ptr, ptr %i.hj, align 8, !alias.scope !5346, !noalias !5349, !nonnull !5, !noundef !5 ; 2 uses
   %i.hk = ptrtoint ptr %.val17.i88 to i64
+  %switch.load626 = load i8, ptr %switch.gep626, align 1
   %i.hl = load i64, ptr %.val17.i88, align 8, !range !552, !noalias !5351, !noundef !5
-  %switch.gep674 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.hl
+  %switch.gep674 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.hl
   %switch.load675 = load i8, ptr %switch.gep674, align 1
-  %i.hm = icmp uge i8 %switch.load627, %switch.load675 ; 2 uses
+  %i.hm = icmp uge i8 %switch.load626, %switch.load675 ; 2 uses
   %i.hn = getelementptr inbounds i8, ptr %.sroa.43.146.i78, i64 -24
   %.sroa.01.0.i34.i89 = select i1 %i.hm, ptr %2, ptr %i.hn
   %i.ho = getelementptr inbounds nuw [8 x i8], ptr %.sroa.01.0.i34.i89, i64 %i.hi
@@ -3694,10 +3704,11 @@ switch.lookup617:                                 ; preds = %switch.lookup617, %
   %i.hr = getelementptr inbounds nuw i8, ptr %.sroa.9.145.i79, i64 24
   %.val15.i90 = load ptr, ptr %i.hr, align 8, !alias.scope !5346, !noalias !5349, !nonnull !5, !noundef !5 ; 2 uses
   %i.hs = ptrtoint ptr %.val15.i90 to i64
+  %switch.load630 = load i8, ptr %switch.gep630, align 1
   %i.ht = load i64, ptr %.val15.i90, align 8, !range !552, !noalias !5351, !noundef !5
-  %switch.gep698 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.559, i64 %i.ht
+  %switch.gep698 = getelementptr inbounds nuw i8, ptr @switch.table._RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksort9quicksortRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes12GenericParamNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSB15_11sort_by_keylNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0E0EB36_.557, i64 %i.ht
   %switch.load699 = load i8, ptr %switch.gep698, align 1
-  %i.hu = icmp uge i8 %switch.load631, %switch.load699 ; 2 uses
+  %i.hu = icmp uge i8 %switch.load630, %switch.load699 ; 2 uses
   %i.hv = getelementptr inbounds i8, ptr %.sroa.43.146.i78, i64 -32 ; 3 uses
   %.sroa.01.0.i40.i91 = select i1 %i.hu, ptr %2, ptr %i.hv
   %i.hw = getelementptr inbounds nuw [8 x i8], ptr %.sroa.01.0.i40.i91, i64 %i.hq
@@ -3706,7 +3717,7 @@ switch.lookup617:                                 ; preds = %switch.lookup617, %
   %i.hy = add i64 %i.hq, %i.hx                    ; 2 uses
   %i.hz = getelementptr inbounds nuw i8, ptr %.sroa.9.145.i79, i64 32 ; 3 uses
   %i.ia = icmp ult ptr %i.hz, %i.gu
-  br i1 %i.ia, label %switch.lookup617, label %._crit_edge.i56
+  br i1 %i.ia, label %_RNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers18extract_type_alias21collect_used_genericss_0B7_.exit.i.i.i82, label %._crit_edge.i56
 
 ._crit_edge.i56:                                  ; preds = %switch.lookup617, %bb.aa
   %.sroa.27.1.lcssa.i57 = phi i64 [ %.sroa.27.0.i52, %bb.aa ], [ %i.hy, %switch.lookup617 ] ; 2 uses

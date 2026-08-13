@@ -204,9 +204,9 @@ bb.rg:                                            ; preds = %bb.rg, %.preheader1
   %.09081159.i = phi i32 [ %i.pmd, %._crit_edge1158.i.loopexit ], [ 0, %.lr.ph1143.i.preheader.preheader ]
   br label %.lr.ph1143.i
 
-.lr.ph1143.i:                                     ; preds = %.lr.ph1143.i.preheader, %._crit_edge1140.i
-  %indvar3927 = phi i64 [ 0, %.lr.ph1143.i.preheader ], [ %indvar.next3928, %._crit_edge1140.i ] ; 2 uses
-  %indvars.iv1287.i = phi i64 [ %i.lyy, %.lr.ph1143.i.preheader ], [ %indvars.iv.next1288.i, %._crit_edge1140.i ] ; 3 uses
+.lr.ph1143.i:                                     ; preds = %._crit_edge1140.i, %.lr.ph1143.i.preheader
+  %indvar3927 = phi i64 [ %indvar.next3928, %._crit_edge1140.i ], [ 0, %.lr.ph1143.i.preheader ] ; 2 uses
+  %indvars.iv1287.i = phi i64 [ %indvars.iv.next1288.i, %._crit_edge1140.i ], [ %i.lyy, %.lr.ph1143.i.preheader ] ; 3 uses
   %i.owc = mul i64 %indvar3927, 544               ; 4 uses
   %scevgep3929 = getelementptr i8, ptr %i.lzp, i64 %i.owc
   %scevgep3931 = getelementptr i8, ptr %i.lzr, i64 %i.owc
@@ -609,8 +609,8 @@ middle.block1835:                                 ; preds = %vector.body1827
   %i.qwa = getelementptr inbounds nuw i8, ptr %i.pzf, i64 216
   %i.qwb = load ptr, ptr %i.qwa, align 8, !tbaa !554 ; 2 uses
   %wide.trip.count290.i.i = zext nneg i32 %i.ayi to i64 ; 2 uses
-  %brmerge.not = select i1 %i.qqe, i1 %i.aoz, i1 false
-  br i1 %brmerge.not, label %.preheader275.lr.ph.i.i, label %.preheader.i589
+  %brmerge.not.i = and i1 %i.aoz, %i.qqe
+  br i1 %brmerge.not.i, label %.preheader275.lr.ph.i.i, label %.preheader.i589
 
 .lr.ph29.i:                                       ; preds = %.lr.ph29.i.preheader4700, %.lr.ph29.i
   %.016828.i = phi i64 [ %i.qwj, %.lr.ph29.i ], [ %.016828.i.ph, %.lr.ph29.i.preheader4700 ] ; 3 uses
@@ -772,7 +772,7 @@ middle.block1812:                                 ; preds = %vector.body1797
   %.016730.i = phi i32 [ %i.ryj, %_blur_mul.exit.i.loopexit ], [ 0, %.lr.ph31.i ]
   br label %.preheader275.i.i
 
-.preheader275.i.i:                                ; preds = %.preheader275.lr.ph.i.i, %._crit_edge.i205.i
+.preheader275.i.i:                                ; preds = %._crit_edge.i205.i, %.preheader275.lr.ph.i.i
   %indvars.iv287.i.i = phi i64 [ %indvars.iv.next288.i.i, %._crit_edge.i205.i ], [ 0, %.preheader275.lr.ph.i.i ] ; 5 uses
   %i.qys = mul nuw nsw i64 %indvars.iv287.i.i, %i.apa
   %i.qyt = trunc nuw nsw i64 %indvars.iv287.i.i to i32

@@ -204,7 +204,7 @@ bb.bg:                                            ; preds = %bb.bf, %bb.be, %bb.
   %i.nl = icmp sgt i32 %i.lj, 0
   %i.nm = icmp slt i32 %i.kt, 2                   ; 2 uses
   %i.nn = icmp slt i32 %i.kr, 2
-  %2 = icmp sgt i32 %i.li, 0
+  %2 = icmp slt i32 %i.li, 1
   %i.no = sub nsw i32 0, %i.kp
   %i.np = sext i32 %i.no to i64                   ; 3 uses
   %i.nq = mul nsw i32 %i.kp, %i.kv
@@ -220,6 +220,7 @@ bb.bg:                                            ; preds = %bb.bf, %bb.be, %bb.
   %unroll_iter834 = and i64 %wide.trip.count726, 1073741822
   %lcmp.mod831.not = icmp eq i64 %xtraiter829, 0
   %lcmp.mod833 = trunc i32 %i.ku to i1
+  %brmerge815 = or i1 %2, %i.nm
   %xtraiter836 = and i32 %i.kv, 1
   %i.nx = and i32 %i.kt, 2147483646
   %i.ny = icmp eq i32 %i.nx, 2
@@ -251,7 +252,7 @@ bb.bh:                                            ; preds = %.lr.ph661, %._crit_
   br i1 %i.nl, label %.lr.ph648, label %.preheader582
 
 .preheader582:                                    ; preds = %bb.br, %bb.bh
-  br i1 %2, label %.lr.ph657, label %._crit_edge658
+  br i1 %brmerge815, label %._crit_edge658, label %.lr.ph653.preheader
 
 .lr.ph648:                                        ; preds = %bb.bh, %bb.br
   %indvars.iv729 = phi i64 [ %indvars.iv.next730.pre-phi, %bb.br ], [ 0, %bb.bh ] ; 4 uses
@@ -406,11 +407,8 @@ bb.br:                                            ; preds = %._crit_edge643._cri
   %i.qs = icmp slt i64 %indvars.iv.next730.pre-phi, %i.nt
   br i1 %i.qs, label %.lr.ph648, label %.preheader582, !llvm.loop !121
 
-.lr.ph657:                                        ; preds = %.preheader582, %._crit_edge654.thread
+.lr.ph653.preheader:                              ; preds = %.preheader582, %._crit_edge654.thread
   %indvars.iv733 = phi i64 [ %indvars.iv.next734, %._crit_edge654.thread ], [ %i.nt, %.preheader582 ] ; 4 uses
-  br i1 %i.nm, label %._crit_edge654.thread, label %.lr.ph653.preheader
-
-.lr.ph653.preheader:                              ; preds = %.lr.ph657
   %i.qt = getelementptr inbounds i8, ptr %.1548659, i64 %indvars.iv733 ; 2 uses
   br i1 %i.ny, label %.lr.ph653.epil.preheader, label %.lr.ph653
 
@@ -531,10 +529,10 @@ bb.bz:                                            ; preds = %._crit_edge654
   store i32 %i.ta, ptr %i.sy, align 4, !tbaa !48
   br label %._crit_edge654.thread
 
-._crit_edge654.thread:                            ; preds = %.lr.ph657, %bb.bz, %._crit_edge654
+._crit_edge654.thread:                            ; preds = %bb.bz, %._crit_edge654
   %indvars.iv.next734 = add nsw i64 %indvars.iv733, 1 ; 2 uses
   %i.tb = icmp slt i64 %indvars.iv.next734, %i.nu
-  br i1 %i.tb, label %.lr.ph657, label %._crit_edge658, !llvm.loop !123
+  br i1 %i.tb, label %.lr.ph653.preheader, label %._crit_edge658, !llvm.loop !123
 
 ._crit_edge658:                                   ; preds = %._crit_edge654.thread, %.preheader582
   %i.tc = getelementptr inbounds i8, ptr %.1548659, i64 %i.nr ; 2 uses

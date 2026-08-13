@@ -203,7 +203,7 @@ bb.bo:                                            ; preds = %bb.bn, %bb.bm
   %i.sx = load ptr, ptr %5, align 8, !tbaa !133
   %i.sy = getelementptr inbounds nuw i8, ptr %i.sx, i64 784
   %i.sz = load ptr, ptr %i.sy, align 16, !tbaa !172 ; 2 uses
-  %.not548 = icmp eq ptr %i.sz, null              ; 2 uses
+  %.not548 = icmp eq ptr %i.sz, null
   %i.ta = getelementptr inbounds nuw i8, ptr %i.sz, i64 384 ; 2 uses
   %i.tb = getelementptr inbounds nuw i8, ptr %.0423.lcssa, i64 28 ; 2 uses
   %i.tc = getelementptr inbounds nuw i8, ptr %.0423.lcssa, i64 68 ; 2 uses
@@ -223,18 +223,15 @@ bb.bo:                                            ; preds = %bb.bn, %bb.bm
 bb.bp:                                            ; preds = %bb.bo
   %i.to = load ptr, ptr %i.ta, align 8, !tbaa !173 ; 3 uses
   %.not549652 = icmp eq ptr %i.to, null
-  br i1 %.not549652, label %.critedge15, label %.lr.ph657
+  br i1 %.not549652, label %bb.bq, label %.lr.ph657
 
 .lr.ph657:                                        ; preds = %bb.bp
   %i.tp = load ptr, ptr %i.to, align 8, !tbaa !178
   %.not550756 = icmp eq ptr %i.tp, null
-  br i1 %.not550756, label %.critedge15, label %.lr.ph760
+  br i1 %.not550756, label %bb.bq, label %.lr.ph760
 
-.critedge15:                                      ; preds = %bb.by, %.lr.ph657, %bb.bp
-  %.18.lcssa = phi i32 [ %.16, %bb.bp ], [ %.20, %bb.by ], [ %.16, %.lr.ph657 ]
-  br i1 %.not548, label %.loopexit, label %bb.bq
-
-bb.bq:                                            ; preds = %.critedge15
+bb.bq:                                            ; preds = %bb.by, %.lr.ph657, %bb.bp
+  %.18.lcssa = phi i32 [ %.16, %bb.bp ], [ %.16, %.lr.ph657 ], [ %.20, %bb.by ]
   %i.tq = load ptr, ptr %i.ta, align 8, !tbaa !173 ; 3 uses
   %.not549652.1 = icmp eq ptr %i.tq, null
   br i1 %.not549652.1, label %.loopexit, label %.lr.ph657.1
@@ -476,9 +473,9 @@ bb.by:                                            ; preds = %bb.bv, %.lr.ph760, 
   %i.zg = getelementptr inbounds nuw i8, ptr %.0461654758, i64 80 ; 2 uses
   %i.zh = load ptr, ptr %i.zg, align 8, !tbaa !178
   %.not550 = icmp eq ptr %i.zh, null
-  br i1 %.not550, label %.critedge15, label %.lr.ph760
+  br i1 %.not550, label %bb.bq, label %.lr.ph760
 
-.loopexit:                                        ; preds = %.critedge15, %bb.bq, %.lr.ph657.1, %bb.bu, %bb.bo, %bb.f
+.loopexit:                                        ; preds = %bb.bq, %.lr.ph657.1, %bb.bu, %bb.bo, %bb.f
   %i.zi = call noalias ptr @g_strjoinv(ptr noundef nonnull @.str.74, ptr noundef nonnull %i.k) #15 ; 5 uses
   call void @g_strfreev(ptr noundef nonnull %i.k) #15
   %i.zj = load i8, ptr %i.zi, align 1, !tbaa !185 ; 2 uses

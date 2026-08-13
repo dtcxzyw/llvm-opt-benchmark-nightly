@@ -201,7 +201,7 @@ bb.at:                                            ; preds = %bb.an
   %i.kk = load i32, ptr %i.f, align 8, !tbaa !35
   switch i32 %i.kk, label %bb.az [
     i32 0, label %.preheader604
-    i32 1, label %.preheader606.a
+    i32 1, label %.preheader606
     i32 2, label %bb.av
     i32 3, label %.preheader610
     i32 4, label %.preheader613
@@ -244,16 +244,19 @@ bb.at:                                            ; preds = %bb.an
   %i.le = add nsw i32 %i.h, -3
   %i.lf = icmp sgt i32 %i.h, 3
   %i.lg = zext nneg i32 %i.le to i64
-  br label %.preheader609
+  br i1 %i.lf, label %.preheader609, label %.loopexit
 
-.preheader606.a:                                  ; preds = %.loopexit617
-  %i.lh = icmp sgt i32 %i.j, 0
+.preheader606:                                    ; preds = %.loopexit617
+  %4 = icmp sgt i32 %i.j, 0
+  br i1 %4, label %.preheader606.a, label %.loopexit
+
+.preheader606.a:                                  ; preds = %.preheader606
+  %5 = add i32 %i.h, -3                           ; 2 uses
+  %i.lh = icmp sgt i32 %i.h, 3
+  %6 = zext i32 %5 to i64                         ; 3 uses
   br i1 %i.lh, label %.preheader605.lr.ph, label %.loopexit
 
 .preheader605.lr.ph:                              ; preds = %.preheader606.a
-  %4 = add i32 %i.h, -3                           ; 2 uses
-  %5 = icmp sgt i32 %i.h, 3
-  %6 = zext i32 %4 to i64                         ; 3 uses
   %umax890 = tail call i64 @llvm.umax.i64(i64 %6, i64 4)
   %i.li = add nsw i64 %umax890, -1                ; 2 uses
   %i.lj = and i64 %i.li, -4
@@ -265,7 +268,7 @@ bb.at:                                            ; preds = %bb.an
   %i.lp = add nsw i64 %i.lo, -1
   %i.lq = lshr i64 %i.lp, 2
   %i.lr = add nuw nsw i64 %i.lq, 1                ; 2 uses
-  %min.iters.check919 = icmp ult i32 %4, 33
+  %min.iters.check919 = icmp ult i32 %5, 33
   %i.ls = and i64 %i.lr, 3                        ; 2 uses
   %i.lt = icmp eq i64 %i.ls, 0
   %i.lu = select i1 %i.lt, i64 4, i64 %i.ls
@@ -668,17 +671,14 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   br i1 %exitcond787.not, label %.loopexit, label %iter.check, !llvm.loop !78
 
 .preheader605:                                    ; preds = %.preheader605.lr.ph, %._crit_edge713.thread
-  %.6527720 = phi i32 [ 0, %.preheader605.lr.ph ], [ %i.aaw, %._crit_edge713.thread ]
-  %.1539719 = phi ptr [ %i.kj, %.preheader605.lr.ph ], [ %i.aav, %._crit_edge713.thread ] ; 10 uses
-  %.1544718 = phi ptr [ %i.kc, %.preheader605.lr.ph ], [ %i.aar, %._crit_edge713.thread ] ; 10 uses
-  %.1549717 = phi ptr [ %i.jv, %.preheader605.lr.ph ], [ %i.aan, %._crit_edge713.thread ] ; 7 uses
-  %.3556716 = phi ptr [ %.0553, %.preheader605.lr.ph ], [ %.4557.lcssa820, %._crit_edge713.thread ] ; 12 uses
-  br i1 %5, label %.lr.ph712.preheader, label %._crit_edge713.thread
-
-.lr.ph712.preheader:                              ; preds = %.preheader605
+  %.6527720 = phi i32 [ %i.aaw, %._crit_edge713.thread ], [ 0, %.preheader605.lr.ph ]
+  %.1539719 = phi ptr [ %i.aav, %._crit_edge713.thread ], [ %i.kj, %.preheader605.lr.ph ] ; 10 uses
+  %.1544718 = phi ptr [ %i.aar, %._crit_edge713.thread ], [ %i.kc, %.preheader605.lr.ph ] ; 10 uses
+  %.1549717 = phi ptr [ %i.aan, %._crit_edge713.thread ], [ %i.jv, %.preheader605.lr.ph ] ; 7 uses
+  %.3556716 = phi ptr [ %i.zt, %._crit_edge713.thread ], [ %.0553, %.preheader605.lr.ph ] ; 11 uses
   br i1 %min.iters.check919, label %.lr.ph712.preheader1002, label %vector.memcheck889
 
-vector.memcheck889:                               ; preds = %.lr.ph712.preheader
+vector.memcheck889:                               ; preds = %.preheader605
   %i.wv = getelementptr i8, ptr %.1549717, i64 %i.lj
   %scevgep891 = getelementptr i8, ptr %i.wv, i64 4 ; 3 uses
   %scevgep892 = getelementptr i8, ptr %.1544718, i64 %i.lm ; 3 uses
@@ -783,9 +783,9 @@ vector.body922:                                   ; preds = %vector.body922, %ve
   %i.zb = icmp eq i64 %index.next929, %n.vec921
   br i1 %i.zb, label %.lr.ph712.preheader1002, label %vector.body922, !llvm.loop !90
 
-.lr.ph712.preheader1002:                          ; preds = %vector.body922, %vector.memcheck889, %.lr.ph712.preheader
-  %indvars.iv778.ph = phi i64 [ 0, %vector.memcheck889 ], [ 0, %.lr.ph712.preheader ], [ %i.lv, %vector.body922 ]
-  %.4557710.ph = phi ptr [ %.3556716, %vector.memcheck889 ], [ %.3556716, %.lr.ph712.preheader ], [ %i.wx, %vector.body922 ]
+.lr.ph712.preheader1002:                          ; preds = %vector.body922, %vector.memcheck889, %.preheader605
+  %indvars.iv778.ph = phi i64 [ 0, %vector.memcheck889 ], [ 0, %.preheader605 ], [ %i.lv, %vector.body922 ]
+  %.4557710.ph = phi ptr [ %.3556716, %vector.memcheck889 ], [ %.3556716, %.preheader605 ], [ %i.wx, %vector.body922 ]
   br label %.lr.ph712
 
 .lr.ph712:                                        ; preds = %.lr.ph712.preheader1002, %.lr.ph712
@@ -812,7 +812,7 @@ vector.body922:                                   ; preds = %vector.body922, %ve
   %i.zr = xor i8 %i.zq, -128
   %i.zs = getelementptr inbounds nuw i8, ptr %.1539719, i64 %i.zi
   store i8 %i.zr, ptr %i.zs, align 1, !tbaa !34
-  %i.zt = getelementptr inbounds nuw i8, ptr %.4557710, i64 8 ; 3 uses
+  %i.zt = getelementptr inbounds nuw i8, ptr %.4557710, i64 8 ; 2 uses
   %i.zu = load i8, ptr %i.zp, align 1, !tbaa !34
   %i.zv = xor i8 %i.zu, -128
   %i.zw = getelementptr inbounds nuw i8, ptr %.1539719, i64 %i.zn
@@ -841,8 +841,7 @@ bb.au:                                            ; preds = %._crit_edge713
   store i8 %i.aai, ptr %i.aaj, align 1, !tbaa !34
   br label %._crit_edge713.thread
 
-._crit_edge713.thread:                            ; preds = %.preheader605, %bb.au, %._crit_edge713
-  %.4557.lcssa820 = phi ptr [ %i.zt, %._crit_edge713 ], [ %i.zt, %bb.au ], [ %.3556716, %.preheader605 ]
+._crit_edge713.thread:                            ; preds = %bb.au, %._crit_edge713
   %i.aak = load i32, ptr %i.jr, align 8, !tbaa !42
   %i.aal = sext i32 %i.aak to i64
   %i.aam = sub nsw i64 0, %i.aal
@@ -913,16 +912,16 @@ bb.av:                                            ; preds = %.loopexit617
   br i1 %.not843.1, label %.loopexit, label %.lr.ph709.new, !llvm.loop !93
 
 .preheader609:                                    ; preds = %.preheader609.lr.ph, %._crit_edge698.thread
-  %.8705 = phi i32 [ 0, %.preheader609.lr.ph ], [ %i.adj, %._crit_edge698.thread ]
-  %.2540704 = phi ptr [ %i.kj, %.preheader609.lr.ph ], [ %i.adi, %._crit_edge698.thread ] ; 4 uses
-  %.2545703 = phi ptr [ %i.kc, %.preheader609.lr.ph ], [ %i.ade, %._crit_edge698.thread ] ; 4 uses
-  %.2550702 = phi ptr [ %i.jv, %.preheader609.lr.ph ], [ %i.ada, %._crit_edge698.thread ] ; 2 uses
-  %.6559701 = phi ptr [ %.0553, %.preheader609.lr.ph ], [ %.7560.lcssa825, %._crit_edge698.thread ] ; 2 uses
-  br i1 %i.lf, label %.lr.ph697, label %._crit_edge698.thread
+  %.8705 = phi i32 [ %i.adj, %._crit_edge698.thread ], [ 0, %.preheader609.lr.ph ]
+  %.2540704 = phi ptr [ %i.adi, %._crit_edge698.thread ], [ %i.kj, %.preheader609.lr.ph ] ; 4 uses
+  %.2545703 = phi ptr [ %i.ade, %._crit_edge698.thread ], [ %i.kc, %.preheader609.lr.ph ] ; 4 uses
+  %.2550702 = phi ptr [ %i.ada, %._crit_edge698.thread ], [ %i.jv, %.preheader609.lr.ph ] ; 2 uses
+  %.6559701 = phi ptr [ %i.acg, %._crit_edge698.thread ], [ %.0553, %.preheader609.lr.ph ]
+  br label %.lr.ph697
 
 .lr.ph697:                                        ; preds = %.preheader609, %.lr.ph697
-  %indvars.iv774 = phi i64 [ %indvars.iv.next775, %.lr.ph697 ], [ 0, %.preheader609 ] ; 3 uses
-  %.7560695 = phi ptr [ %i.acg, %.lr.ph697 ], [ %.6559701, %.preheader609 ] ; 4 uses
+  %indvars.iv774 = phi i64 [ 0, %.preheader609 ], [ %indvars.iv.next775, %.lr.ph697 ] ; 3 uses
+  %.7560695 = phi ptr [ %.6559701, %.preheader609 ], [ %i.acg, %.lr.ph697 ] ; 4 uses
   %i.aby = getelementptr inbounds nuw i8, ptr %.2550702, i64 %indvars.iv774
   %i.abz = load i32, ptr %.7560695, align 1
   store i32 %i.abz, ptr %i.aby, align 1
@@ -933,7 +932,7 @@ bb.av:                                            ; preds = %.loopexit617
   %i.ace = lshr exact i64 %indvars.iv774, 2       ; 2 uses
   %i.acf = getelementptr inbounds nuw i8, ptr %.2545703, i64 %i.ace
   store i8 %i.acd, ptr %i.acf, align 1, !tbaa !34
-  %i.acg = getelementptr inbounds nuw i8, ptr %.7560695, i64 6 ; 3 uses
+  %i.acg = getelementptr inbounds nuw i8, ptr %.7560695, i64 6 ; 2 uses
   %i.ach = load i8, ptr %i.acb, align 1, !tbaa !34
   %i.aci = xor i8 %i.ach, -128
   %i.acj = getelementptr inbounds nuw i8, ptr %.2540704, i64 %i.ace
@@ -962,8 +961,7 @@ bb.aw:                                            ; preds = %._crit_edge698
   store i8 %i.acv, ptr %i.acw, align 1, !tbaa !34
   br label %._crit_edge698.thread
 
-._crit_edge698.thread:                            ; preds = %.preheader609, %bb.aw, %._crit_edge698
-  %.7560.lcssa825 = phi ptr [ %i.acg, %._crit_edge698 ], [ %i.acg, %bb.aw ], [ %.6559701, %.preheader609 ]
+._crit_edge698.thread:                            ; preds = %bb.aw, %._crit_edge698
   %i.acx = load i32, ptr %i.jr, align 8, !tbaa !42
   %i.acy = sext i32 %i.acx to i64
   %i.acz = sub nsw i64 0, %i.acy
@@ -1241,7 +1239,7 @@ bb.az:                                            ; preds = %.loopexit617
   tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef %0, i32 noundef 16, ptr noundef nonnull @.str.35) #7
   br label %bb.ba
 
-.loopexit:                                        ; preds = %._crit_edge678, %._crit_edge688, %._crit_edge698.thread, %.prol.loopexit, %.lr.ph709.new, %._crit_edge713.thread, %._crit_edge724, %bb.ax, %.preheader613, %.preheader610, %bb.av, %.preheader606.a, %.preheader604
+.loopexit:                                        ; preds = %._crit_edge678, %._crit_edge688, %._crit_edge698.thread, %.prol.loopexit, %.lr.ph709.new, %._crit_edge713.thread, %._crit_edge724, %.preheader609.lr.ph, %.preheader606.a, %bb.ax, %.preheader613, %.preheader610, %bb.av, %.preheader606, %.preheader604
   store i32 1, ptr %2, align 4, !tbaa !42
   br label %bb.ba
 

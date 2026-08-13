@@ -203,9 +203,9 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %7, i64 24
   %i.h = getelementptr inbounds nuw i8, ptr %7, i64 264
   %wide.trip.count = zext nneg i32 %3 to i64
-  br label %bb.c
+  br i1 %i.f, label %bb.c, label %._crit_edge164
 
-._crit_edge164:                                   ; preds = %._crit_edge.thread, %bb.a
+._crit_edge164:                                   ; preds = %._crit_edge.thread, %.lr.ph163, %bb.a
   invoke void @b3LeaveProfileZone()
           to label %_ZN13b3ProfileZoneD2Ev.exit unwind label %bb.b
 
@@ -220,12 +220,13 @@ _ZN13b3ProfileZoneD2Ev.exit:                      ; preds = %._crit_edge164
   ret void
 
 bb.c:                                             ; preds = %.lr.ph163, %._crit_edge.thread
-  %indvars.iv166 = phi i64 [ 0, %.lr.ph163 ], [ %indvars.iv.next167, %._crit_edge.thread ] ; 8 uses
-  %.sroa.6117.0160 = phi <2 x float> [ undef, %.lr.ph163 ], [ %.sroa.6117.1.lcssa184, %._crit_edge.thread ] ; 2 uses
-  %.sroa.0116.0159 = phi <2 x float> [ undef, %.lr.ph163 ], [ %.sroa.0116.1.lcssa183, %._crit_edge.thread ] ; 2 uses
+  %indvars.iv166 = phi i64 [ %indvars.iv.next167, %._crit_edge.thread ], [ 0, %.lr.ph163 ] ; 8 uses
+  %.sroa.6117.0160 = phi <2 x float> [ %.sroa.6117.3, %._crit_edge.thread ], [ undef, %.lr.ph163 ]
+  %.sroa.0116.0159 = phi <2 x float> [ %.sroa.0116.3, %._crit_edge.thread ], [ undef, %.lr.ph163 ]
   %i.k = load ptr, ptr %i.d, align 8, !tbaa !84
   %i.l = getelementptr inbounds nuw [32 x i8], ptr %i.k, i64 %indvars.iv166 ; 6 uses
   %.sroa.6129.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.l, i64 4
+  %8 = load <2 x float>, ptr %i.l, align 16       ; 3 uses
   %.sroa.6129.0.copyload = load float, ptr %.sroa.6129.0..sroa_idx, align 4 ; 2 uses
   %.sroa.8131.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   %.sroa.8131.0.copyload = load float, ptr %.sroa.8131.0..sroa_idx, align 8 ; 5 uses
@@ -234,35 +235,31 @@ bb.c:                                             ; preds = %.lr.ph163, %._crit_
   %.sroa.6124.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.l, i64 20
   %.sroa.6124.0.copyload = load float, ptr %.sroa.6124.0..sroa_idx, align 4 ; 4 uses
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.l, i64 24
-  %.sroa.8.0.copyload.a = load float, ptr %.sroa.8.0..sroa_idx, align 8 ; 4 uses
-  br i1 %i.f, label %.lr.ph, label %._crit_edge.thread
-
-.lr.ph:                                           ; preds = %bb.c
-  %8 = load <2 x float>, ptr %i.l, align 16       ; 3 uses
+  %.sroa.8.0.copyload = load float, ptr %.sroa.8.0..sroa_idx, align 8 ; 4 uses
   %9 = load ptr, ptr %i.e, align 8, !tbaa !85
   %10 = getelementptr inbounds nuw [48 x i8], ptr %9, i64 %indvars.iv166
-  %11 = load float, ptr %10, align 16, !tbaa !89
-  %12 = extractelement <2 x float> %8, i64 0      ; 2 uses
-  %13 = fsub float %.sroa.0122.0.copyload, %12    ; 3 uses
-  %14 = fsub float %.sroa.6124.0.copyload, %.sroa.6129.0.copyload ; 3 uses
-  %15 = fsub float %.sroa.8.0.copyload.a, %.sroa.8131.0.copyload ; 3 uses
-  %16 = fmul float %14, %14
-  %17 = tail call float @llvm.fmuladd.f32(float %13, float %13, float %16)
-  %18 = tail call float @llvm.fmuladd.f32(float %15, float %15, float %17) ; 2 uses
-  %19 = shufflevector <2 x float> %8, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
-  %20 = shufflevector <2 x float> %8, <2 x float> <float 1.000000e+00, float poison>, <4 x i32> <i32 2, i32 1, i32 1, i32 1>
+  %.sroa.8.0.copyload.a = load float, ptr %10, align 16, !tbaa !89
+  %11 = extractelement <2 x float> %8, i64 0      ; 2 uses
+  %12 = fsub float %.sroa.0122.0.copyload, %11    ; 3 uses
+  %13 = fsub float %.sroa.6124.0.copyload, %.sroa.6129.0.copyload ; 3 uses
+  %14 = fsub float %.sroa.8.0.copyload, %.sroa.8131.0.copyload ; 3 uses
+  %15 = fmul float %13, %13
+  %16 = tail call float @llvm.fmuladd.f32(float %12, float %12, float %15)
+  %17 = tail call float @llvm.fmuladd.f32(float %14, float %14, float %16) ; 2 uses
+  %18 = shufflevector <2 x float> %8, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
+  %19 = shufflevector <2 x float> %8, <2 x float> <float 1.000000e+00, float poison>, <4 x i32> <i32 2, i32 1, i32 1, i32 1>
   br label %bb.d
 
 ._crit_edge:                                      ; preds = %_Z9rayConvexRK9b3Vector3S1_RK22b3ConvexPolyhedronDataRK20b3AlignedObjectArrayI9b3GpuFaceERfRS_.exit
   %i.n = icmp sgt i32 %.468, -1
   br i1 %i.n, label %bb.u, label %._crit_edge.thread
 
-bb.d:                                             ; preds = %.lr.ph, %_Z9rayConvexRK9b3Vector3S1_RK22b3ConvexPolyhedronDataRK20b3AlignedObjectArrayI9b3GpuFaceERfRS_.exit
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_Z9rayConvexRK9b3Vector3S1_RK22b3ConvexPolyhedronDataRK20b3AlignedObjectArrayI9b3GpuFaceERfRS_.exit ] ; 4 uses
-  %.064152 = phi i32 [ -1, %.lr.ph ], [ %.468, %_Z9rayConvexRK9b3Vector3S1_RK22b3ConvexPolyhedronDataRK20b3AlignedObjectArrayI9b3GpuFaceERfRS_.exit ] ; 5 uses
-  %.0135151 = phi float [ %11, %.lr.ph ], [ %.2, %_Z9rayConvexRK9b3Vector3S1_RK22b3ConvexPolyhedronDataRK20b3AlignedObjectArrayI9b3GpuFaceERfRS_.exit ] ; 6 uses
-  %.sroa.6117.1150 = phi <2 x float> [ %.sroa.6117.0160, %.lr.ph ], [ %.sroa.6117.3, %_Z9rayConvexRK9b3Vector3S1_RK22b3ConvexPolyhedronDataRK20b3AlignedObjectArrayI9b3GpuFaceERfRS_.exit ] ; 5 uses
-  %.sroa.0116.1149 = phi <2 x float> [ %.sroa.0116.0159, %.lr.ph ], [ %.sroa.0116.3, %_Z9rayConvexRK9b3Vector3S1_RK22b3ConvexPolyhedronDataRK20b3AlignedObjectArrayI9b3GpuFaceERfRS_.exit ] ; 5 uses
+bb.d:                                             ; preds = %bb.c, %_Z9rayConvexRK9b3Vector3S1_RK22b3ConvexPolyhedronDataRK20b3AlignedObjectArrayI9b3GpuFaceERfRS_.exit
+  %indvars.iv = phi i64 [ 0, %bb.c ], [ %indvars.iv.next, %_Z9rayConvexRK9b3Vector3S1_RK22b3ConvexPolyhedronDataRK20b3AlignedObjectArrayI9b3GpuFaceERfRS_.exit ] ; 4 uses
+  %.064152 = phi i32 [ -1, %bb.c ], [ %.468, %_Z9rayConvexRK9b3Vector3S1_RK22b3ConvexPolyhedronDataRK20b3AlignedObjectArrayI9b3GpuFaceERfRS_.exit ] ; 5 uses
+  %.0135151 = phi float [ %.sroa.8.0.copyload.a, %bb.c ], [ %.2, %_Z9rayConvexRK9b3Vector3S1_RK22b3ConvexPolyhedronDataRK20b3AlignedObjectArrayI9b3GpuFaceERfRS_.exit ] ; 6 uses
+  %.sroa.6117.1150 = phi <2 x float> [ %.sroa.6117.0160, %bb.c ], [ %.sroa.6117.3, %_Z9rayConvexRK9b3Vector3S1_RK22b3ConvexPolyhedronDataRK20b3AlignedObjectArrayI9b3GpuFaceERfRS_.exit ] ; 5 uses
+  %.sroa.0116.1149 = phi <2 x float> [ %.sroa.0116.0159, %bb.c ], [ %.sroa.0116.3, %_Z9rayConvexRK9b3Vector3S1_RK22b3ConvexPolyhedronDataRK20b3AlignedObjectArrayI9b3GpuFaceERfRS_.exit ] ; 5 uses
   %i.o = getelementptr inbounds nuw [80 x i8], ptr %4, i64 %indvars.iv ; 12 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 64
   %i.q = load i32, ptr %i.p, align 16, !tbaa !91
@@ -283,23 +280,23 @@ bb.e:                                             ; preds = %bb.d
   %i.v = getelementptr inbounds nuw i8, ptr %i.s, i64 4
   %i.w = load float, ptr %i.v, align 4, !tbaa !67 ; 2 uses
   %i.x = load float, ptr %i.o, align 16, !tbaa !67 ; 2 uses
-  %i.y = fsub float %12, %i.x                     ; 3 uses
+  %i.y = fsub float %11, %i.x                     ; 3 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.o, i64 4 ; 2 uses
   %i.aa = load float, ptr %i.z, align 4, !tbaa !67
   %i.ab = fsub float %.sroa.6129.0.copyload, %i.aa ; 3 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.o, i64 8 ; 2 uses
   %i.ad = load float, ptr %i.ac, align 8, !tbaa !67
   %i.ae = fsub float %.sroa.8131.0.copyload, %i.ad ; 3 uses
-  %i.af = fmul float %14, %i.ab
-  %i.ag = tail call float @llvm.fmuladd.f32(float %i.y, float %13, float %i.af)
-  %i.ah = tail call noundef float @llvm.fmuladd.f32(float %i.ae, float %15, float %i.ag) ; 3 uses
+  %i.af = fmul float %13, %i.ab
+  %i.ag = tail call float @llvm.fmuladd.f32(float %i.y, float %12, float %i.af)
+  %i.ah = tail call noundef float @llvm.fmuladd.f32(float %i.ae, float %14, float %i.ag) ; 3 uses
   %i.ai = fmul float %i.ab, %i.ab
   %i.aj = tail call float @llvm.fmuladd.f32(float %i.y, float %i.y, float %i.ai)
   %i.ak = tail call noundef float @llvm.fmuladd.f32(float %i.ae, float %i.ae, float %i.aj)
   %i.al = fneg float %i.w
   %i.am = tail call float @llvm.fmuladd.f32(float %i.al, float %i.w, float %i.ak)
   %i.an = fneg float %i.am
-  %i.ao = fmul float %18, %i.an
+  %i.ao = fmul float %17, %i.an
   %i.ap = tail call float @llvm.fmuladd.f32(float %i.ah, float %i.ah, float %i.ao) ; 2 uses
   %i.aq = fcmp ogt float %i.ap, 0.000000e+00
   br i1 %i.aq, label %bb.f, label %_Z16sphere_intersectRK9b3Vector3fS1_S1_Rf.exit.thread
@@ -308,7 +305,7 @@ bb.f:                                             ; preds = %bb.e
   %i.ar = fneg float %i.ah
   %i.as = tail call noundef float @sqrtf(float noundef %i.ap) #19
   %i.at = fsub float %i.ar, %i.as
-  %i.au = fdiv float %i.at, %18                   ; 6 uses
+  %i.au = fdiv float %i.at, %17                   ; 6 uses
   %i.av = fcmp oge float %i.au, 0.000000e+00
   %i.aw = fcmp olt float %i.au, %.0135151
   %or.cond = select i1 %i.av, i1 %i.aw, i1 false
@@ -417,12 +414,12 @@ _Z16sphere_intersectRK9b3Vector3fS1_S1_Rf.exit.thread: ; preds = %._Z16sphere_in
   %i.ec = insertelement <4 x float> %i.eb, float %i.dp, i64 1
   %i.ed = insertelement <4 x float> %i.ec, float %i.dd, i64 2
   %i.ee = insertelement <4 x float> %i.ed, float %i.de, i64 3
-  %i.ef = fmul <4 x float> %20, %i.ee
+  %i.ef = fmul <4 x float> %19, %i.ee
   %i.eg = insertelement <4 x float> poison, float %i.du, i64 0
   %i.eh = insertelement <4 x float> %i.eg, float %i.dt, i64 1
   %i.ei = insertelement <4 x float> %i.eh, float %i.ds, i64 2
   %i.ej = insertelement <4 x float> %i.ei, float %i.dr, i64 3
-  %i.ek = insertelement <2 x float> %19, float %i.di, i64 0
+  %i.ek = insertelement <2 x float> %18, float %i.di, i64 0
   %i.el = shufflevector <2 x float> %i.ek, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1>
   %i.em = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.ej, <4 x float> %i.el, <4 x float> %i.ef) ; 4 uses
   %i.en = extractelement <4 x float> %i.em, i64 1
@@ -437,13 +434,13 @@ _Z16sphere_intersectRK9b3Vector3fS1_S1_Rf.exit.thread: ; preds = %._Z16sphere_in
   %i.ew = fadd float %i.es, %i.ev
   %i.ex = fmul float %.sroa.6124.0.copyload, %i.dp
   %i.ey = tail call float @llvm.fmuladd.f32(float %.sroa.0122.0.copyload, float %i.dt, float %i.ex)
-  %i.ez = tail call noundef float @llvm.fmuladd.f32(float %.sroa.8.0.copyload.a, float %i.dq, float %i.ey)
+  %i.ez = tail call noundef float @llvm.fmuladd.f32(float %.sroa.8.0.copyload, float %i.dq, float %i.ey)
   %i.fa = fmul float %.sroa.6124.0.copyload, %i.dd
   %i.fb = tail call float @llvm.fmuladd.f32(float %.sroa.0122.0.copyload, float %i.ds, float %i.fa)
-  %i.fc = tail call noundef float @llvm.fmuladd.f32(float %.sroa.8.0.copyload.a, float %i.df, float %i.fb)
+  %i.fc = tail call noundef float @llvm.fmuladd.f32(float %.sroa.8.0.copyload, float %i.df, float %i.fb)
   %i.fd = fmul float %.sroa.6124.0.copyload, %i.de
   %i.fe = tail call float @llvm.fmuladd.f32(float %.sroa.0122.0.copyload, float %i.dr, float %i.fd)
-  %i.ff = tail call noundef float @llvm.fmuladd.f32(float %.sroa.8.0.copyload.a, float %i.du, float %i.fe)
+  %i.ff = tail call noundef float @llvm.fmuladd.f32(float %.sroa.8.0.copyload, float %i.du, float %i.fe)
   %i.fg = fadd float %i.ez, %i.dx
   %i.fh = fadd float %i.fc, %i.dz
   %i.fi = fadd float %i.ff, %i.ev
@@ -559,8 +556,8 @@ bb.s:                                             ; preds = %bb.r, %bb.q
           to label %_ZN13b3ProfileZoneD2Ev.exit82 unwind label %bb.t
 
 _Z9rayConvexRK9b3Vector3S1_RK22b3ConvexPolyhedronDataRK20b3AlignedObjectArrayI9b3GpuFaceERfRS_.exit: ; preds = %_Z9rayConvexRK9b3Vector3S1_RK22b3ConvexPolyhedronDataRK20b3AlignedObjectArrayI9b3GpuFaceERfRS_.exit.thread, %._crit_edge.i, %bb.p, %bb.r
-  %.sroa.0116.3 = phi <2 x float> [ %.sroa.0116.1149, %bb.p ], [ %.sroa.0116.1149, %bb.r ], [ %.sroa.0116.2, %_Z9rayConvexRK9b3Vector3S1_RK22b3ConvexPolyhedronDataRK20b3AlignedObjectArrayI9b3GpuFaceERfRS_.exit.thread ], [ %.sroa.0.2.i, %._crit_edge.i ] ; 4 uses
-  %.sroa.6117.3 = phi <2 x float> [ %.sroa.6117.1150, %bb.p ], [ %.sroa.6117.1150, %bb.r ], [ %.sroa.6117.2, %_Z9rayConvexRK9b3Vector3S1_RK22b3ConvexPolyhedronDataRK20b3AlignedObjectArrayI9b3GpuFaceERfRS_.exit.thread ], [ %.sroa.5.2.i, %._crit_edge.i ] ; 4 uses
+  %.sroa.0116.3 = phi <2 x float> [ %.sroa.0116.1149, %bb.p ], [ %.sroa.0116.1149, %bb.r ], [ %.sroa.0116.2, %_Z9rayConvexRK9b3Vector3S1_RK22b3ConvexPolyhedronDataRK20b3AlignedObjectArrayI9b3GpuFaceERfRS_.exit.thread ], [ %.sroa.0.2.i, %._crit_edge.i ] ; 3 uses
+  %.sroa.6117.3 = phi <2 x float> [ %.sroa.6117.1150, %bb.p ], [ %.sroa.6117.1150, %bb.r ], [ %.sroa.6117.2, %_Z9rayConvexRK9b3Vector3S1_RK22b3ConvexPolyhedronDataRK20b3AlignedObjectArrayI9b3GpuFaceERfRS_.exit.thread ], [ %.sroa.5.2.i, %._crit_edge.i ] ; 3 uses
   %.2 = phi float [ %.0135151, %bb.p ], [ %.0135151, %bb.r ], [ %.1, %_Z9rayConvexRK9b3Vector3S1_RK22b3ConvexPolyhedronDataRK20b3AlignedObjectArrayI9b3GpuFaceERfRS_.exit.thread ], [ %.247.i, %._crit_edge.i ] ; 6 uses
   %.468 = phi i32 [ %.064152, %bb.p ], [ %.064152, %bb.r ], [ %.266, %_Z9rayConvexRK9b3Vector3S1_RK22b3ConvexPolyhedronDataRK20b3AlignedObjectArrayI9b3GpuFaceERfRS_.exit.thread ], [ %i.gu, %._crit_edge.i ] ; 3 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
@@ -619,9 +616,7 @@ bb.u:                                             ; preds = %._crit_edge
   store i32 %.468, ptr %i.ic, align 4, !tbaa !102
   br label %._crit_edge.thread
 
-._crit_edge.thread:                               ; preds = %bb.c, %bb.u, %._crit_edge
-  %.sroa.6117.1.lcssa184 = phi <2 x float> [ %.sroa.6117.3, %._crit_edge ], [ %.sroa.6117.3, %bb.u ], [ %.sroa.6117.0160, %bb.c ]
-  %.sroa.0116.1.lcssa183 = phi <2 x float> [ %.sroa.0116.3, %._crit_edge ], [ %.sroa.0116.3, %bb.u ], [ %.sroa.0116.0159, %bb.c ]
+._crit_edge.thread:                               ; preds = %bb.u, %._crit_edge
   %indvars.iv.next167 = add nuw nsw i64 %indvars.iv166, 1 ; 2 uses
   %i.id = load i32, ptr %i.a, align 4, !tbaa !80
   %i.ie = sext i32 %i.id to i64

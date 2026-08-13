@@ -204,7 +204,7 @@ lzh_decode_blocks.exit.i.i:                       ; preds = %.thread274.i.i.i, %
   br label %lzh_read_blocks.exit.i.i
 
 lzh_read_blocks.exit.i.i:                         ; preds = %lzh_decode_blocks.exit.i.i, %bb.ce, %bb.bo, %bb.aq
-  %.0.i60.i = phi i32 [ %.0159.i.i.i, %lzh_decode_blocks.exit.i.i ], [ 100, %bb.bo ], [ 100, %bb.ce ], [ 100, %bb.aq ] ; 2 uses
+  %.0.i60.i = phi i32 [ %.0159.i.i.i, %lzh_decode_blocks.exit.i.i ], [ 100, %bb.aq ], [ 100, %bb.ce ], [ 100, %bb.bo ] ; 2 uses
   %i.zc = icmp eq i32 %.0.i60.i, 100
   br i1 %i.zc, label %bb.ap, label %lzh_read_blocks.exit.thread.i.i, !llvm.loop !161
 

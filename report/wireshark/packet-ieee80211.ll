@@ -204,7 +204,7 @@ bb.al:                                            ; preds = %.lr.ph.i
 .lr.ph.i.unreachabledefault:                      ; preds = %.lr.ph.i
   unreachable
 
-default.unreachable:                              ; preds = %bb.kh, %.split.i, %bb.gj, %.lr.ph.split.us.split.i.i, %bb.gs, %bb.ix, %bb.ip
+default.unreachable:                              ; preds = %bb.kh, %bb.gj, %bb.gs, %bb.ix, %bb.ip
   unreachable
 
 add_ff_psmp_sta_info.exit.i:                      ; preds = %bb.al, %bb.ak, %bb.aj, %.lr.ph.i
@@ -607,12 +607,15 @@ switch.lookup408:                                 ; preds = %bb.fx
   %.1143.us.i.i = phi i32 [ %i.bdh, %vht_compressed_skip_scidx.exit.us.i.i ], [ %i.bbx, %.lr.ph.i.i168 ]
   %.1117142.us.i.i = phi i32 [ %i.bde, %vht_compressed_skip_scidx.exit.us.i.i ], [ %switch.load, %.lr.ph.i.i168 ] ; 11 uses
   %.1121141.us.i.i = phi i32 [ %i.bdi, %vht_compressed_skip_scidx.exit.us.i.i ], [ 0, %.lr.ph.i.i168 ]
-  switch i8 %i.bcd, label %default.unreachable [
+  switch i8 %i.bcd, label %.lr.ph.split.us.split.i.i.unreachabledefault [
     i8 0, label %bb.gi
     i8 1, label %bb.gf
     i8 2, label %bb.gd
     i8 3, label %bb.fz
   ]
+
+.lr.ph.split.us.split.i.i.unreachabledefault:     ; preds = %.lr.ph.split.us.split.i.i
+  unreachable
 
 bb.fz:                                            ; preds = %.lr.ph.split.us.split.i.i
   switch i32 %.1117142.us.i.i, label %.fold.split.i.us.i.i [
@@ -1016,10 +1019,9 @@ bb.jq:                                            ; preds = %bb.jp, %bb.jo, %bb.
   %.080.i.i = phi i32 [ %i.bqt, %bb.lg ], [ %i.bot, %bb.jq ] ; 21 uses
   %.079.i.i = phi i32 [ %.058.i99.i.i, %bb.lg ], [ -2147483648, %bb.jq ] ; 10 uses
   %.1.i.i184 = phi i32 [ %i.bqv, %bb.lg ], [ %i.bny, %bb.jq ]
-  switch i32 %i.boe, label %default.unreachable [
+  switch i32 %i.boe, label %bb.kb [
     i32 0, label %bb.jr
     i32 1, label %bb.jw
-    i32 2, label %bb.kb
   ]
 
 bb.jr:                                            ; preds = %.split.i

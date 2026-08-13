@@ -204,14 +204,17 @@ bb.i:                                             ; preds = %bb.e
 .preheader:                                       ; preds = %bb.i
   %i.ac = load i32, ptr %i.z, align 4, !tbaa !99  ; 2 uses
   %i.ad = icmp sgt i32 %i.ac, 0
-  br i1 %i.ad, label %.lr.ph97.a, label %._crit_edge98
+  br i1 %i.ad, label %.lr.ph97, label %._crit_edge98
 
-.lr.ph97.a:                                       ; preds = %.preheader
+.lr.ph97:                                         ; preds = %.preheader
   %7 = getelementptr inbounds nuw i8, ptr %5, i64 24
   %8 = getelementptr inbounds nuw i8, ptr %5, i64 128
   %.not5290 = icmp slt i32 %i.p, 1
   %9 = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 7 uses
   %10 = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
+  br i1 %.not5290, label %._crit_edge98, label %.lr.ph97.a
+
+.lr.ph97.a:                                       ; preds = %.lr.ph97
   %i.ae = add nuw nsw i64 %i.o, 1
   %wide.trip.count = and i64 %i.ae, 4294967295    ; 2 uses
   %i.af = add nsw i64 %wide.trip.count, -1        ; 3 uses
@@ -240,27 +243,24 @@ bb.m:                                             ; preds = %bb.l
   unreachable
 
 bb.n:                                             ; preds = %.lr.ph97.a, %._crit_edge.thread
-  %i.ak = phi i32 [ %i.ac, %.lr.ph97.a ], [ %12, %._crit_edge.thread ] ; 2 uses
-  %indvars.iv107 = phi i64 [ 0, %.lr.ph97.a ], [ %indvars.iv.next108, %._crit_edge.thread ] ; 2 uses
-  %.03895 = phi i32 [ 0, %.lr.ph97.a ], [ %.240, %._crit_edge.thread ] ; 4 uses
-  %.04194 = phi i1 [ true, %.lr.ph97.a ], [ %.not53126, %._crit_edge.thread ]
+  %i.ak = phi i32 [ %12, %._crit_edge.thread ], [ %i.ac, %.lr.ph97.a ]
+  %indvars.iv107 = phi i64 [ %indvars.iv.next108, %._crit_edge.thread ], [ 0, %.lr.ph97.a ] ; 2 uses
+  %.03895 = phi i32 [ %.240, %._crit_edge.thread ], [ 0, %.lr.ph97.a ] ; 3 uses
+  %.04194 = phi i1 [ %.not53, %._crit_edge.thread ], [ true, %.lr.ph97.a ]
   %i.al = load ptr, ptr %7, align 8, !tbaa !190
   %i.am = load i64, ptr %8, align 8, !tbaa !72
   %i.an = mul i64 %i.am, %indvars.iv107
   %i.ao = getelementptr inbounds nuw i8, ptr %i.al, i64 %i.an ; 4 uses
-  br i1 %.not5290, label %._crit_edge.thread, label %.lr.ph.preheader
-
-.lr.ph.preheader:                                 ; preds = %bb.n
   %11 = load float, ptr %i.ao, align 4, !tbaa !106 ; 2 uses
   br i1 %i.ag, label %.lr.ph.epil.preheader, label %.lr.ph
 
 ._crit_edge.unr-lcssa:                            ; preds = %.lr.ph
   br i1 %lcmp.mod.not, label %._crit_edge, label %.lr.ph.epil.preheader
 
-.lr.ph.epil.preheader:                            ; preds = %._crit_edge.unr-lcssa, %.lr.ph.preheader
-  %indvars.iv.epil.init = phi i64 [ 1, %.lr.ph.preheader ], [ %indvars.iv.next.1, %._crit_edge.unr-lcssa ] ; 2 uses
-  %.03292.epil.init = phi float [ %11, %.lr.ph.preheader ], [ %.1.1, %._crit_edge.unr-lcssa ]
-  %.03391.epil.init = phi i32 [ 0, %.lr.ph.preheader ], [ %.134.1, %._crit_edge.unr-lcssa ]
+.lr.ph.epil.preheader:                            ; preds = %._crit_edge.unr-lcssa, %bb.n
+  %indvars.iv.epil.init = phi i64 [ 1, %bb.n ], [ %indvars.iv.next.1, %._crit_edge.unr-lcssa ] ; 2 uses
+  %.03292.epil.init = phi float [ %11, %bb.n ], [ %.1.1, %._crit_edge.unr-lcssa ]
+  %.03391.epil.init = phi i32 [ 0, %bb.n ], [ %.134.1, %._crit_edge.unr-lcssa ]
   call void @llvm.assume(i1 %lcmp.mod149)
   %i.ap = getelementptr inbounds nuw [4 x i8], ptr %i.ao, i64 %indvars.iv.epil.init
   %i.aq = load float, ptr %i.ap, align 4, !tbaa !106
@@ -271,14 +271,14 @@ bb.n:                                             ; preds = %.lr.ph97.a, %._crit
 
 ._crit_edge:                                      ; preds = %._crit_edge.unr-lcssa, %.lr.ph.epil.preheader
   %.134.lcssa = phi i32 [ %.134.1, %._crit_edge.unr-lcssa ], [ %.134.epil, %.lr.ph.epil.preheader ] ; 4 uses
-  %.not53 = icmp eq i32 %.134.lcssa, 0
+  %.not53 = icmp eq i32 %.134.lcssa, 0            ; 2 uses
   br i1 %.not53, label %._crit_edge.thread, label %bb.o
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next.1, %.lr.ph ], [ 1, %.lr.ph.preheader ] ; 4 uses
-  %.03292 = phi float [ %.1.1, %.lr.ph ], [ %11, %.lr.ph.preheader ] ; 2 uses
-  %.03391 = phi i32 [ %.134.1, %.lr.ph ], [ 0, %.lr.ph.preheader ]
-  %niter = phi i64 [ %niter.next.1, %.lr.ph ], [ 0, %.lr.ph.preheader ]
+.lr.ph:                                           ; preds = %bb.n, %.lr.ph
+  %indvars.iv = phi i64 [ %indvars.iv.next.1, %.lr.ph ], [ 1, %bb.n ] ; 4 uses
+  %.03292 = phi float [ %.1.1, %.lr.ph ], [ %11, %bb.n ] ; 2 uses
+  %.03391 = phi i32 [ %.134.1, %.lr.ph ], [ 0, %bb.n ]
+  %niter = phi i64 [ %niter.next.1, %.lr.ph ], [ 0, %bb.n ]
   %i.at = getelementptr inbounds nuw [4 x i8], ptr %i.ao, i64 %indvars.iv
   %i.au = load float, ptr %i.at, align 4, !tbaa !106 ; 2 uses
   %i.av = fcmp olt float %.03292, %i.au           ; 2 uses
@@ -438,16 +438,15 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.w,
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #29
   br label %.body
 
-._crit_edge.thread:                               ; preds = %bb.n, %._crit_edge, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit69
-  %.not53126 = phi i1 [ false, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit69 ], [ true, %._crit_edge ], [ true, %bb.n ]
-  %12 = phi i32 [ %.pre, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit69 ], [ %i.ak, %._crit_edge ], [ %i.ak, %bb.n ] ; 2 uses
-  %.240 = phi i32 [ %.139, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit69 ], [ %.03895, %._crit_edge ], [ %.03895, %bb.n ]
+._crit_edge.thread:                               ; preds = %._crit_edge, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit69
+  %12 = phi i32 [ %.pre, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit69 ], [ %i.ak, %._crit_edge ] ; 2 uses
+  %.240 = phi i32 [ %.139, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit69 ], [ %.03895, %._crit_edge ]
   %indvars.iv.next108 = add nuw nsw i64 %indvars.iv107, 1 ; 2 uses
   %i.ck = sext i32 %12 to i64
   %i.cl = icmp slt i64 %indvars.iv.next108, %i.ck
   br i1 %i.cl, label %bb.n, label %._crit_edge98, !llvm.loop !632
 
-._crit_edge98:                                    ; preds = %._crit_edge.thread, %.preheader
+._crit_edge98:                                    ; preds = %._crit_edge.thread, %.lr.ph97, %.preheader
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %5) #29
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #29
   ret void

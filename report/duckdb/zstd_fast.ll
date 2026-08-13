@@ -204,14 +204,14 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph570, %.thread473
-  %i.bf = phi ptr [ %i.av, %.lr.ph570 ], [ %i.ms, %.thread473 ]
-  %i.bg = phi ptr [ %i.au, %.lr.ph570 ], [ %i.mr, %.thread473 ]
-  %.1285569 = phi i32 [ %.0284, %.lr.ph570 ], [ %.5, %.thread473 ] ; 7 uses
-  %.1289568 = phi i32 [ %spec.select365, %.lr.ph570 ], [ %.5293, %.thread473 ] ; 2 uses
-  %.0296566 = phi ptr [ %3, %.lr.ph570 ], [ %.8, %.thread473 ] ; 17 uses
+  %i.bf = phi ptr [ %i.ms, %.thread473 ], [ %i.av, %.lr.ph570 ]
+  %i.bg = phi ptr [ %i.mr, %.thread473 ], [ %i.au, %.lr.ph570 ]
+  %.1285569 = phi i32 [ %.5, %.thread473 ], [ %.0284, %.lr.ph570 ] ; 7 uses
+  %.1289568 = phi i32 [ %.5293, %.thread473 ], [ %spec.select365, %.lr.ph570 ] ; 2 uses
+  %.0296566 = phi ptr [ %.8, %.thread473 ], [ %3, %.lr.ph570 ] ; 17 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %.0296566, i64 1 ; 5 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %.0296566, i64 128
-  switch i32 %5, label %.unreachabledefault [
+  switch i32 %5, label %default.unreachable [
     i32 7, label %_ZN11duckdb_zstdL12ZSTD_hashPtrEPKvjj.exit379.thread452
     i32 5, label %_ZN11duckdb_zstdL12ZSTD_hashPtrEPKvjj.exit379.thread446
     i32 6, label %_ZN11duckdb_zstdL12ZSTD_hashPtrEPKvjj.exit379.thread449
@@ -245,10 +245,10 @@ _ZN11duckdb_zstdL12ZSTD_hashPtrEPKvjj.exit379.thread452: ; preds = %bb.d
   %i.bu = lshr i64 %i.bt, %i.ay
   br label %_ZN11duckdb_zstdL12ZSTD_hashPtrEPKvjj.exit377
 
-.unreachabledefault:                              ; preds = %bb.d
+.unreachabledefault:                              ; preds = %bb.al, %.thread646, %.thread, %_ZN11duckdb_zstdL13ZSTD_storeSeqEPNS_10seqStore_tEmPKhS3_jm.exit
   unreachable
 
-default.unreachable:                              ; preds = %bb.al, %.thread646, %.thread, %_ZN11duckdb_zstdL13ZSTD_storeSeqEPNS_10seqStore_tEmPKhS3_jm.exit
+default.unreachable:                              ; preds = %bb.d
   unreachable
 
 _ZN11duckdb_zstdL12ZSTD_hashPtrEPKvjj.exit379:    ; preds = %bb.d
@@ -348,7 +348,7 @@ bb.k:                                             ; preds = %bb.j
   %i.dm = load i32, ptr %i.dl, align 4, !tbaa !3  ; 4 uses
   %i.dn = icmp ult i32 %i.dm, %i.ag
   %i.do = select i1 %i.dn, ptr %i.n, ptr %i.l     ; 2 uses
-  switch i32 %5, label %default.unreachable [
+  switch i32 %5, label %.unreachabledefault [
     i32 7, label %bb.o
     i32 5, label %bb.m
     i32 6, label %bb.n
@@ -401,7 +401,7 @@ bb.p:                                             ; preds = %_ZN11duckdb_zstdL12
   %i.ef = load i32, ptr %i.ee, align 4, !tbaa !3  ; 2 uses
   %i.eg = icmp ult i32 %i.ef, %i.ag
   %i.eh = select i1 %i.eg, ptr %i.n, ptr %i.l
-  switch i32 %5, label %default.unreachable [
+  switch i32 %5, label %.unreachabledefault [
     i32 7, label %bb.t
     i32 5, label %bb.r
     i32 6, label %bb.s
@@ -804,7 +804,7 @@ bb.al:                                            ; preds = %bb.ak
   %i.jv = zext i32 %.1309 to i64
   %i.jw = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.jv
   %i.jx = getelementptr inbounds nuw i8, ptr %i.jw, i64 2 ; 4 uses
-  switch i32 %5, label %default.unreachable [
+  switch i32 %5, label %.unreachabledefault [
     i32 7, label %_ZN11duckdb_zstdL12ZSTD_hashPtrEPKvjj.exit371.thread471
     i32 5, label %_ZN11duckdb_zstdL12ZSTD_hashPtrEPKvjj.exit371.thread467
     i32 6, label %_ZN11duckdb_zstdL12ZSTD_hashPtrEPKvjj.exit371.thread469
@@ -937,7 +937,7 @@ _ZN11duckdb_zstdL13ZSTD_storeSeqEPNS_10seqStore_tEmPKhS3_jm.exit: ; preds = %_ZN
   store i16 %i.mc, ptr %i.md, align 2, !tbaa !58
   %i.me = getelementptr inbounds nuw i8, ptr %i.ls, i64 8 ; 2 uses
   store ptr %i.me, ptr %i.bd, align 8, !tbaa !42
-  switch i32 %5, label %default.unreachable [
+  switch i32 %5, label %.unreachabledefault [
     i32 7, label %bb.at
     i32 5, label %bb.ar
     i32 6, label %bb.as

@@ -204,23 +204,20 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br i1 %.not54, label %.split.us.preheader, label %.split
 
 .split.us.preheader:                              ; preds = %bb.g
-  br i1 %i.ab, label %.critedge39, label %_ZNK6vectorISt5tupleIJbjP4exprjEELb0EjE4sizeEv.exit.us.preheader
+  br i1 %i.ab, label %.critedge39, label %_ZNK6vectorISt5tupleIJbjP4exprjEELb0EjE4sizeEv.exit.us
 
-_ZNK6vectorISt5tupleIJbjP4exprjEELb0EjE4sizeEv.exit.us.preheader: ; preds = %.split.us.preheader
-  %5 = load i32, ptr %i.ac, align 4, !tbaa !40
-  br label %_ZNK6vectorISt5tupleIJbjP4exprjEELb0EjE4sizeEv.exit.us
+_ZNK6vectorISt5tupleIJbjP4exprjEELb0EjE4sizeEv.exit.us: ; preds = %.split.us.preheader
+  %5 = load i32, ptr %i.ac, align 4, !tbaa !40    ; 2 uses
+  %.not97100.not = icmp eq i32 %5, 0
+  br i1 %.not97100.not, label %.critedge39, label %bb.h
 
-_ZNK6vectorISt5tupleIJbjP4exprjEELb0EjE4sizeEv.exit.us: ; preds = %_ZNK6vectorISt5tupleIJbjP4exprjEELb0EjE4sizeEv.exit.us.preheader, %.critedge.us
-  %.034.us100 = phi i32 [ %i.ax, %.critedge.us ], [ 0, %_ZNK6vectorISt5tupleIJbjP4exprjEELb0EjE4sizeEv.exit.us.preheader ] ; 6 uses
-  %.not97 = icmp uge i32 %.034.us100, %5          ; 3 uses
-  br i1 %.not97, label %.critedge39, label %bb.h
-
-bb.h:                                             ; preds = %_ZNK6vectorISt5tupleIJbjP4exprjEELb0EjE4sizeEv.exit.us
-  %i.ad = icmp eq i32 %.034.us100, 0
+bb.h:                                             ; preds = %_ZNK6vectorISt5tupleIJbjP4exprjEELb0EjE4sizeEv.exit.us, %.critedge.us
+  %.034.us101 = phi i32 [ %i.ax, %.critedge.us ], [ 0, %_ZNK6vectorISt5tupleIJbjP4exprjEELb0EjE4sizeEv.exit.us ] ; 5 uses
+  %i.ad = icmp eq i32 %.034.us101, 0
   br i1 %i.ad, label %.critedge.us, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.ae = zext i32 %.034.us100 to i64
+  %i.ae = zext i32 %.034.us101 to i64
   %i.af = getelementptr inbounds nuw [24 x i8], ptr %i.w, i64 %i.ae
   %.sroa.4.0..sroa_idx.us = getelementptr inbounds nuw i8, ptr %i.af, i64 8
   %.sroa.4.0.copyload.us = load ptr, ptr %.sroa.4.0..sroa_idx.us, align 8
@@ -239,12 +236,12 @@ _ZNK8obj_markI4expr10bit_vector14default_t2uintIS0_EE9is_markedEPS0_.exit.us: ; 
   %i.ap = shl nuw i32 1, %i.ao
   %i.aq = and i32 %i.an, %i.ap
   %.not53.us = icmp eq i32 %i.aq, 0
-  %.not91 = icmp eq i32 %.028, %.034.us100
+  %.not91 = icmp eq i32 %.028, %.034.us101
   %or.cond = or i1 %.not53.us, %.not91
   br i1 %or.cond, label %.critedge.us, label %.lr.ph.i42.us
 
 .lr.ph.i42.us:                                    ; preds = %_ZNK8obj_markI4expr10bit_vector14default_t2uintIS0_EE9is_markedEPS0_.exit.us, %.lr.ph.i42.us
-  %.01.i43.us = phi i32 [ %.sroa.0.0.copyload.i44.us, %.lr.ph.i42.us ], [ %.034.us100, %_ZNK8obj_markI4expr10bit_vector14default_t2uintIS0_EE9is_markedEPS0_.exit.us ]
+  %.01.i43.us = phi i32 [ %.sroa.0.0.copyload.i44.us, %.lr.ph.i42.us ], [ %.034.us101, %_ZNK8obj_markI4expr10bit_vector14default_t2uintIS0_EE9is_markedEPS0_.exit.us ]
   %i.ar = zext i32 %.01.i43.us to i64
   %i.as = getelementptr inbounds nuw [24 x i8], ptr %i.w, i64 %i.ar
   %.sroa.0.0.copyload.i44.us = load i32, ptr %i.as, align 8 ; 4 uses
@@ -258,8 +255,9 @@ _ZNK8obj_markI4expr10bit_vector14default_t2uintIS0_EE9is_markedEPS0_.exit.us: ; 
   br i1 %i.aw, label %.critedge.us, label %.critedge39
 
 .critedge.us:                                     ; preds = %"_ZZN3euf17solve_context_eqs11is_safe_varEP4exprjS2_RK7svectorISt5tupleIJbjS2_jEEjEENK3$_0clEjj.exit45.us", %_ZNK8obj_markI4expr10bit_vector14default_t2uintIS0_EE9is_markedEPS0_.exit.us, %bb.i, %bb.h
-  %i.ax = add nuw i32 %.034.us100, 1
-  br label %_ZNK6vectorISt5tupleIJbjP4exprjEELb0EjE4sizeEv.exit.us, !llvm.loop !201
+  %i.ax = add nuw i32 %.034.us101, 1              ; 2 uses
+  %.not97 = icmp ult i32 %i.ax, %5
+  br i1 %.not97, label %bb.h, label %.critedge39, !llvm.loop !201
 
 .split:                                           ; preds = %bb.g
   br i1 %i.ab, label %.critedge39, label %.split.split
@@ -342,8 +340,8 @@ bb.k:                                             ; preds = %"_ZZN3euf17solve_co
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.critedge39, label %.lr.ph, !llvm.loop !201
 
-.critedge39:                                      ; preds = %"_ZZN3euf17solve_context_eqs11is_safe_varEP4exprjS2_RK7svectorISt5tupleIJbjS2_jEEjEENK3$_0clEjj.exit45", %.critedge, %"_ZZN3euf17solve_context_eqs11is_safe_varEP4exprjS2_RK7svectorISt5tupleIJbjS2_jEEjEENK3$_0clEjj.exit45.us", %_ZNK6vectorISt5tupleIJbjP4exprjEELb0EjE4sizeEv.exit.us, %.split.us.preheader, %.split, %.split.split
-  %.us-phi = phi i1 [ true, %.split.split ], [ true, %.split.us.preheader ], [ true, %.split ], [ %.not97, %"_ZZN3euf17solve_context_eqs11is_safe_varEP4exprjS2_RK7svectorISt5tupleIJbjS2_jEEjEENK3$_0clEjj.exit45.us" ], [ %.not97, %_ZNK6vectorISt5tupleIJbjP4exprjEELb0EjE4sizeEv.exit.us ], [ false, %"_ZZN3euf17solve_context_eqs11is_safe_varEP4exprjS2_RK7svectorISt5tupleIJbjS2_jEEjEENK3$_0clEjj.exit45" ], [ true, %.critedge ]
+.critedge39:                                      ; preds = %"_ZZN3euf17solve_context_eqs11is_safe_varEP4exprjS2_RK7svectorISt5tupleIJbjS2_jEEjEENK3$_0clEjj.exit45", %.critedge, %.critedge.us, %"_ZZN3euf17solve_context_eqs11is_safe_varEP4exprjS2_RK7svectorISt5tupleIJbjS2_jEEjEENK3$_0clEjj.exit45.us", %_ZNK6vectorISt5tupleIJbjP4exprjEELb0EjE4sizeEv.exit.us, %.split.us.preheader, %.split, %.split.split
+  %.us-phi = phi i1 [ true, %.split.split ], [ false, %"_ZZN3euf17solve_context_eqs11is_safe_varEP4exprjS2_RK7svectorISt5tupleIJbjS2_jEEjEENK3$_0clEjj.exit45.us" ], [ true, %.split ], [ true, %.split.us.preheader ], [ true, %_ZNK6vectorISt5tupleIJbjP4exprjEELb0EjE4sizeEv.exit.us ], [ true, %.critedge.us ], [ true, %.critedge ], [ false, %"_ZZN3euf17solve_context_eqs11is_safe_varEP4exprjS2_RK7svectorISt5tupleIJbjS2_jEEjEENK3$_0clEjj.exit45" ]
   ret i1 %.us-phi
 }
 

@@ -201,7 +201,7 @@ bb.s:                                             ; preds = %_RNvXsf_NtCseR46qig
   %.sroa.50.sroa.0.019832167 = phi i8 [ %.sroa.50.sroa.0.019832166, %.loopexit2249 ], [ %.sroa.50.sroa.0.01983, %.lr.ph.preheader ] ; 18 uses
   %.sroa.72.sroa.0.019872139 = phi i8 [ %.sroa.72.sroa.0.019872138, %.loopexit2249 ], [ %.sroa.72.sroa.0.01987, %.lr.ph.preheader ] ; 18 uses
   %.sroa.0.11932 = phi i8 [ %.sroa.0.2, %.loopexit2249 ], [ %.sroa.0.01994, %.lr.ph.preheader ]
-  %.sroa.05.11931 = phi i8 [ %.sroa.05.2, %.loopexit2249 ], [ %.sroa.05.01993, %.lr.ph.preheader ] ; 20 uses
+  %.sroa.05.11931 = phi i8 [ %.sroa.05.2, %.loopexit2249 ], [ %.sroa.05.01993, %.lr.ph.preheader ] ; 21 uses
   %.sroa.010.01930 = phi ptr [ %i.da, %.loopexit2249 ], [ %i.g, %.lr.ph.preheader ] ; 2 uses
   %.sroa.4150.11929 = phi i16 [ %.sroa.4150.2, %.loopexit2249 ], [ %.sroa.4150.01992, %.lr.ph.preheader ] ; 21 uses
   %.sroa.0149.11928 = phi i1 [ %.sroa.0149.2, %.loopexit2249 ], [ %.sroa.0149.01991, %.lr.ph.preheader ] ; 17 uses
@@ -219,9 +219,11 @@ bb.s:                                             ; preds = %_RNvXsf_NtCseR46qig
   ]
 
 .preheader2260:                                   ; preds = %.lr.ph
+  %switch = icmp ult i8 %.sroa.05.11931, 3
+  call void @llvm.assume(i1 %switch)
   %i.av = zext i8 %.sroa.0.sroa.49.019762216 to i32
-  %i.aw = zext i8 %.sroa.50.sroa.49.019802188 to i32
-  %i.ax = zext i8 %.sroa.72.sroa.50.01984 to i32
+  %i.aw = zext i8 %.sroa.72.sroa.50.01984 to i32
+  %i.ax = zext i8 %.sroa.50.sroa.49.019802188 to i32
   br label %bb.y
 
 .preheader2252:                                   ; preds = %.lr.ph
@@ -385,7 +387,7 @@ bb.x:                                             ; preds = %bb.w, %bb.v, %bb.u
 .unreachabledefault:                              ; preds = %bb.t
   unreachable
 
-default.unreachable2119:                          ; preds = %.lr.ph, %bb.y, %.lr.ph3145
+default.unreachable2119:                          ; preds = %.lr.ph, %.lr.ph3145
   unreachable
 
 default.unreachable:                              ; preds = %bb.ar, %bb.aq, %bb.ao, %bb.am
@@ -437,21 +439,20 @@ bb.y:                                             ; preds = %.preheader2260, %.l
   %.sroa.0.sroa.48.019772205 = phi i8 [ %.sroa.0.sroa.48.0.extract.trunc1541, %.lr.ph.jt2 ], [ %.sroa.0.sroa.48.019772209, %.preheader2260 ] ; 2 uses
   %.sroa.0.sroa.45.019782198 = phi i8 [ %.sroa.0.sroa.45.0.extract.trunc1426, %.lr.ph.jt2 ], [ %.sroa.0.sroa.45.019782202, %.preheader2260 ] ; 2 uses
   %.sroa.0.sroa.0.019792191 = phi i8 [ %.sroa.0.sroa.0.0.extract.trunc1341, %.lr.ph.jt2 ], [ %.sroa.0.sroa.0.019792195, %.preheader2260 ] ; 2 uses
-  %.sroa.50.sroa.49.019802184 = phi i32 [ %.sroa.50.sroa.49.0.extract.shift1293, %.lr.ph.jt2 ], [ %i.aw, %.preheader2260 ] ; 2 uses
+  %.sroa.50.sroa.49.019802184 = phi i32 [ %.sroa.50.sroa.49.0.extract.shift1293, %.lr.ph.jt2 ], [ %i.ax, %.preheader2260 ] ; 2 uses
   %.sroa.50.sroa.48.019812177 = phi i8 [ %.sroa.50.sroa.48.0.extract.trunc1178, %.lr.ph.jt2 ], [ %.sroa.50.sroa.48.019812181, %.preheader2260 ] ; 2 uses
   %.sroa.50.sroa.45.019822170 = phi i8 [ %.sroa.50.sroa.45.0.extract.trunc1063, %.lr.ph.jt2 ], [ %.sroa.50.sroa.45.019822174, %.preheader2260 ] ; 2 uses
   %.sroa.50.sroa.0.019832163 = phi i8 [ %.sroa.50.sroa.0.0.extract.trunc958, %.lr.ph.jt2 ], [ %.sroa.50.sroa.0.019832167, %.preheader2260 ] ; 2 uses
-  %.sroa.72.sroa.50.019842156 = phi i32 [ %.sroa.72.sroa.50.0.extract.shift872, %.lr.ph.jt2 ], [ %i.ax, %.preheader2260 ] ; 2 uses
+  %.sroa.72.sroa.50.019842156 = phi i32 [ %.sroa.72.sroa.50.0.extract.shift872, %.lr.ph.jt2 ], [ %i.aw, %.preheader2260 ] ; 2 uses
   %.sroa.72.sroa.49.019852149 = phi i8 [ %.sroa.72.sroa.49.0.extract.trunc745, %.lr.ph.jt2 ], [ %.sroa.72.sroa.49.01985, %.preheader2260 ] ; 2 uses
   %.sroa.72.sroa.48.019862142 = phi i8 [ %.sroa.72.sroa.48.0.extract.trunc617, %.lr.ph.jt2 ], [ %.sroa.72.sroa.48.01986, %.preheader2260 ] ; 2 uses
   %.sroa.72.sroa.0.019872135 = phi i8 [ %.sroa.72.sroa.0.0.extract.trunc498, %.lr.ph.jt2 ], [ %.sroa.72.sroa.0.019872139, %.preheader2260 ] ; 2 uses
   %i.ca = shl i16 %i.bz, 8
   %i.cb = or disjoint i16 %i.ca, 1
   %.sroa.0130.0.insert.insert = zext i16 %i.cb to i32 ; 3 uses
-  switch i8 %.sroa.05.11931, label %default.unreachable2119 [
+  switch i8 %.sroa.05.11931, label %bb.bx [
     i8 0, label %bb.bv
     i8 1, label %bb.bw
-    i8 2, label %bb.bx
   ]
 
 .preheader2256:                                   ; preds = %.lr.ph, %.lr.ph.jt4

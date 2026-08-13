@@ -201,7 +201,7 @@ bb.al:                                            ; preds = %bb.ak
   %i.fk = call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.fj, ptr noundef nonnull @.str.230) #11 ; 0 uses
   br label %.split.i.preheader.preheader
 
-.split.i.preheader.preheader:                     ; preds = %bb.ak, %bb.al
+.split.i.preheader.preheader:                     ; preds = %bb.al, %bb.ak
   %i.fl = trunc nuw nsw i64 %4 to i32
   br label %.split.i
 

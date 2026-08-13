@@ -203,14 +203,11 @@ add_pbf_error.exit892:                            ; preds = %.thread1238, %bb.ha
   %i.bgd = ptrtoint ptr %1 to i64
   %i.bge = sub i64 %i.bgc, %i.bgd
   %i.bgf = trunc i64 %i.bge to i32
-  br label %8
-
-8:                                                ; preds = %.lr.ph1095, %timelib_time_reset_unset_fields.exit900
-  %9 = phi i8 [ %.pr1251, %.lr.ph1095 ], [ %i.bhu, %timelib_time_reset_unset_fields.exit900 ]
-  %.21093 = phi ptr [ %.0330.lcssa1222.ph, %.lr.ph1095 ], [ %i.bht, %timelib_time_reset_unset_fields.exit900 ]
   br i1 %.not10.i893, label %timelib_lookup_format.exit899.thread, label %.lr.ph.i894.preheader
 
-.lr.ph.i894.preheader:                            ; preds = %8
+.lr.ph.i894.preheader:                            ; preds = %.lr.ph1095, %timelib_time_reset_unset_fields.exit900
+  %8 = phi i8 [ %i.bhu, %timelib_time_reset_unset_fields.exit900 ], [ %.pr1251, %.lr.ph1095 ]
+  %.21093 = phi ptr [ %i.bht, %timelib_time_reset_unset_fields.exit900 ], [ %.0330.lcssa1222.ph, %.lr.ph1095 ]
   %i.bgg = load i8, ptr %i.e, align 4, !tbaa !108 ; 2 uses
   %.not8.i8961089 = icmp eq i8 %i.bgg, 0
   br i1 %.not8.i8961089, label %timelib_lookup_format.exit899.thread, label %.lr.ph1091
@@ -218,7 +215,7 @@ add_pbf_error.exit892:                            ; preds = %.thread1238, %bb.ha
 .lr.ph1091:                                       ; preds = %.lr.ph.i894.preheader, %.lr.ph.i894
   %i.bgh = phi i8 [ %i.bgk, %.lr.ph.i894 ], [ %i.bgg, %.lr.ph.i894.preheader ]
   %.011.i8951090 = phi ptr [ %i.bgj, %.lr.ph.i894 ], [ %i.e, %.lr.ph.i894.preheader ] ; 2 uses
-  %i.bgi = icmp eq i8 %i.bgh, %9
+  %i.bgi = icmp eq i8 %i.bgh, %8
   br i1 %i.bgi, label %timelib_lookup_format.exit899, label %.lr.ph.i894
 
 .lr.ph.i894:                                      ; preds = %.lr.ph1091
@@ -307,7 +304,7 @@ bb.hp:                                            ; preds = %bb.ho
   store i64 0, ptr %i.bfz, align 8, !tbaa !57
   br label %timelib_time_reset_unset_fields.exit900
 
-timelib_lookup_format.exit899.thread:             ; preds = %.lr.ph.i894.preheader, %8, %timelib_lookup_format.exit899, %.lr.ph.i894
+timelib_lookup_format.exit899.thread:             ; preds = %timelib_lookup_format.exit899, %.lr.ph.i894.preheader, %.lr.ph.i894, %.lr.ph1095
   %i.bhb = load i32, ptr %i.bgb, align 4, !tbaa !12 ; 4 uses
   %i.bhc = tail call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %i.bhb)
   %i.bhd = icmp samesign ult i32 %i.bhc, 2
@@ -347,7 +344,7 @@ timelib_time_reset_unset_fields.exit900:          ; preds = %bb.hp, %bb.ho, %bb.
   %i.bht = getelementptr inbounds nuw i8, ptr %.21093, i64 1 ; 2 uses
   %i.bhu = load i8, ptr %i.bht, align 1, !tbaa !16 ; 2 uses
   %.not373.not = icmp eq i8 %i.bhu, 0
-  br i1 %.not373.not, label %.critedge11, label %8, !llvm.loop !115
+  br i1 %.not373.not, label %.critedge11, label %.lr.ph.i894.preheader, !llvm.loop !115
 
 .critedge11:                                      ; preds = %timelib_time_reset_unset_fields.exit900, %.critedge.thread1223, %timelib_time_reset_unset_fields.exit900.thread, %.critedge.thread
   %i.bhv = phi ptr [ %1, %.critedge.thread1223 ], [ %.ph1250, %.critedge.thread ], [ %.ph1250, %timelib_time_reset_unset_fields.exit900.thread ], [ %.ph1250, %timelib_time_reset_unset_fields.exit900 ] ; 10 uses

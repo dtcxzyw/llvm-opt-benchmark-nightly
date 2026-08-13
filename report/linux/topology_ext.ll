@@ -63,16 +63,21 @@ bb.g:                                             ; preds = %bb.e, %bb.f, %bb.d,
 
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
 define internal fastcc noundef zeroext i1 @parse_topology_leaf(ptr noundef %0, i32 noundef range(i32 -2147483610, 32) %1) unnamed_addr #0 align 16 prefalign(16) {
-bb.a:
+  switch i32 %1, label %.thread [
+    i32 11, label %bb.a
+    i32 31, label %bb.a
+    i32 -2147483610, label %bb.a
+  ]
+
+bb.a:                                             ; preds = %2, %2, %2
   br label %bb.b
 
-bb.b:                                             ; preds = %bb.p, %bb.a
-  %.0 = phi i32 [ 0, %bb.a ], [ %.1, %bb.p ]      ; 2 uses
-  %.019 = phi i32 [ 0, %bb.a ], [ %i.t, %bb.p ]   ; 5 uses
-  switch i32 %1, label %.thread [
+bb.b:                                             ; preds = %bb.a, %bb.p
+  %.0 = phi i32 [ %.1, %bb.p ], [ 0, %bb.a ]      ; 2 uses
+  %.019 = phi i32 [ %i.t, %bb.p ], [ 0, %bb.a ]   ; 5 uses
+  switch i32 %1, label %bb.d [
     i32 11, label %bb.e
     i32 31, label %bb.c
-    i32 -2147483610, label %bb.d
   ]
 
 bb.c:                                             ; preds = %bb.b
@@ -192,8 +197,8 @@ bb.u:                                             ; preds = %.critedge, %bb.s, %
   tail call void asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock orb ${1:b},$0", "=*m,iq,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i8) %i.ae, i32 64, ptr elementtype(i8) %i.ae) #4, !srcloc !18
   br label %.thread
 
-.thread:                                          ; preds = %bb.b, %bb.q, %bb.u
-  %.not32 = phi i1 [ true, %bb.u ], [ false, %bb.q ], [ false, %bb.b ]
+.thread:                                          ; preds = %2, %bb.q, %bb.u
+  %.not32 = phi i1 [ true, %bb.u ], [ false, %bb.q ], [ false, %2 ]
   ret i1 %.not32
 }
 

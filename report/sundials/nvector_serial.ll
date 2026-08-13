@@ -203,15 +203,18 @@ bb.o:                                             ; preds = %bb.l
 
 .critedge.preheader:                              ; preds = %bb.o
   %i.ge = icmp sgt i32 %0, 0
-  br i1 %i.ge, label %.lr.ph164.a, label %N_VScale_Serial.exit
+  br i1 %i.ge, label %.lr.ph164, label %N_VScale_Serial.exit
 
-.lr.ph164.a:                                      ; preds = %.critedge.preheader
+.lr.ph164:                                        ; preds = %.critedge.preheader
   %5 = icmp sgt i64 %i.gc, 0
   %6 = icmp slt i32 %1, 2
   %7 = icmp eq i64 %i.gc, 0
   %wide.trip.count216 = zext nneg i32 %0 to i64
   %brmerge198 = select i1 %6, i1 true, i1 %7
   %wide.trip.count211 = zext i32 %1 to i64        ; 2 uses
+  br i1 %5, label %.lr.ph164.a, label %N_VScale_Serial.exit
+
+.lr.ph164.a:                                      ; preds = %.lr.ph164
   %i.gf = shl i64 %i.gc, 3                        ; 4 uses
   %scevgep273 = getelementptr i8, ptr %2, i64 8   ; 2 uses
   %i.gg = shl nuw nsw i64 %wide.trip.count211, 3
@@ -232,18 +235,21 @@ bb.p:                                             ; preds = %bb.o
   %i.gh = load double, ptr %2, align 8, !tbaa !66
   %i.gi = fcmp oeq double %i.gh, 1.000000e+00
   %i.gj = icmp sgt i32 %0, 0                      ; 2 uses
-  br i1 %i.gi, label %.preheader, label %.preheader148.a
+  br i1 %i.gi, label %.preheader, label %.preheader148
 
-.preheader148.a:                                  ; preds = %bb.p
-  br i1 %i.gj, label %.lr.ph176, label %N_VScale_Serial.exit
+.preheader148:                                    ; preds = %bb.p
+  br i1 %i.gj, label %.preheader148.a, label %N_VScale_Serial.exit
 
-.lr.ph176:                                        ; preds = %.preheader148.a
+.preheader148.a:                                  ; preds = %.preheader148
   %8 = icmp sgt i64 %i.gc, 0
   %9 = icmp slt i32 %1, 2
   %10 = icmp eq i64 %i.gc, 0
   %wide.trip.count228 = zext nneg i32 %0 to i64
   %brmerge195 = select i1 %9, i1 true, i1 %10
   %wide.trip.count223 = zext i32 %1 to i64        ; 2 uses
+  br i1 %8, label %.lr.ph176, label %N_VScale_Serial.exit
+
+.lr.ph176:                                        ; preds = %.preheader148.a
   %i.gk = shl i64 %i.gc, 3                        ; 3 uses
   %scevgep320 = getelementptr i8, ptr %2, i64 8   ; 2 uses
   %i.gl = shl nuw nsw i64 %wide.trip.count223, 3
@@ -396,18 +402,15 @@ scalar.ph377:                                     ; preds = %scalar.ph377.prol.l
   br i1 %exitcond240.not, label %N_VScale_Serial.exit, label %.lr.ph183
 
 bb.q:                                             ; preds = %.lr.ph176, %._crit_edge174.split
-  %indvars.iv225 = phi i64 [ 0, %.lr.ph176 ], [ %indvars.iv.next226, %._crit_edge174.split ] ; 3 uses
+  %indvars.iv225 = phi i64 [ %indvars.iv.next226, %._crit_edge174.split ], [ 0, %.lr.ph176 ] ; 3 uses
   %i.ih = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %indvars.iv225
   %i.ii = load ptr, ptr %i.ih, align 8, !tbaa !169
   %i.ij = load ptr, ptr %i.ii, align 8, !tbaa !57
   %i.ik = getelementptr inbounds nuw i8, ptr %i.ij, i64 16
   %i.il = load ptr, ptr %i.ik, align 8, !tbaa !63 ; 15 uses
-  br i1 %8, label %.lr.ph167.preheader, label %._crit_edge174.split
-
-.lr.ph167.preheader:                              ; preds = %bb.q
   br i1 %min.iters.check352, label %.lr.ph167.preheader464, label %vector.memcheck346
 
-vector.memcheck346:                               ; preds = %.lr.ph167.preheader
+vector.memcheck346:                               ; preds = %bb.q
   %scevgep347 = getelementptr i8, ptr %i.il, i64 %i.gk
   %bound0348 = icmp ult ptr %i.il, %scevgep320
   %bound1349 = icmp ult ptr %2, %scevgep347
@@ -437,8 +440,8 @@ vector.body355:                                   ; preds = %vector.body355, %ve
 middle.block362:                                  ; preds = %vector.body355
   br i1 %cmp.n363, label %.preheader147, label %.lr.ph167.preheader464
 
-.lr.ph167.preheader464:                           ; preds = %vector.memcheck346, %.lr.ph167.preheader, %middle.block362
-  %.1133165.ph = phi i64 [ 0, %vector.memcheck346 ], [ 0, %.lr.ph167.preheader ], [ %n.vec354, %middle.block362 ] ; 3 uses
+.lr.ph167.preheader464:                           ; preds = %vector.memcheck346, %bb.q, %middle.block362
+  %.1133165.ph = phi i64 [ 0, %vector.memcheck346 ], [ 0, %bb.q ], [ %n.vec354, %middle.block362 ] ; 3 uses
   br i1 %lcmp.mod472.not, label %.lr.ph167.prol.loopexit, label %.lr.ph167.prol
 
 .lr.ph167.prol:                                   ; preds = %.lr.ph167.preheader464, %.lr.ph167.prol
@@ -593,13 +596,13 @@ scalar.ph330:                                     ; preds = %scalar.ph330.prol.l
   %exitcond224.not = icmp eq i64 %indvars.iv.next221, %wide.trip.count223
   br i1 %exitcond224.not, label %._crit_edge174.split, label %.lr.ph170
 
-._crit_edge174.split:                             ; preds = %._crit_edge171, %bb.q, %.preheader147
+._crit_edge174.split:                             ; preds = %._crit_edge171, %.preheader147
   %indvars.iv.next226 = add nuw nsw i64 %indvars.iv225, 1 ; 2 uses
   %exitcond229.not = icmp eq i64 %indvars.iv.next226, %wide.trip.count228
   br i1 %exitcond229.not, label %N_VScale_Serial.exit, label %bb.q
 
 bb.r:                                             ; preds = %.lr.ph164.a, %.critedge
-  %indvars.iv213 = phi i64 [ 0, %.lr.ph164.a ], [ %indvars.iv.next214, %.critedge ] ; 4 uses
+  %indvars.iv213 = phi i64 [ %indvars.iv.next214, %.critedge ], [ 0, %.lr.ph164.a ] ; 4 uses
   %i.lf = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv213
   %i.lg = load ptr, ptr %i.lf, align 8, !tbaa !169
   %i.lh = load ptr, ptr %i.lg, align 8, !tbaa !57
@@ -610,12 +613,9 @@ bb.r:                                             ; preds = %.lr.ph164.a, %.crit
   %i.lm = load ptr, ptr %i.ll, align 8, !tbaa !57
   %i.ln = getelementptr inbounds nuw i8, ptr %i.lm, i64 16
   %i.lo = load ptr, ptr %i.ln, align 8, !tbaa !63 ; 16 uses
-  br i1 %5, label %.lr.ph155.preheader, label %.critedge
-
-.lr.ph155.preheader:                              ; preds = %bb.r
   br i1 %min.iters.check305, label %.lr.ph155.preheader466, label %vector.memcheck294
 
-vector.memcheck294:                               ; preds = %.lr.ph155.preheader
+vector.memcheck294:                               ; preds = %bb.r
   %scevgep295 = getelementptr i8, ptr %i.lo, i64 %i.gf ; 2 uses
   %scevgep296 = getelementptr i8, ptr %i.lj, i64 %i.gf
   %bound0297 = icmp ult ptr %i.lo, %scevgep273
@@ -652,8 +652,8 @@ vector.body308:                                   ; preds = %vector.body308, %ve
 middle.block315:                                  ; preds = %vector.body308
   br i1 %cmp.n316, label %.preheader150, label %.lr.ph155.preheader466
 
-.lr.ph155.preheader466:                           ; preds = %vector.memcheck294, %.lr.ph155.preheader, %middle.block315
-  %.3135153.ph = phi i64 [ 0, %vector.memcheck294 ], [ 0, %.lr.ph155.preheader ], [ %n.vec307, %middle.block315 ] ; 3 uses
+.lr.ph155.preheader466:                           ; preds = %vector.memcheck294, %bb.r, %middle.block315
+  %.3135153.ph = phi i64 [ 0, %vector.memcheck294 ], [ 0, %bb.r ], [ %n.vec307, %middle.block315 ] ; 3 uses
   br i1 %lcmp.mod.not, label %.lr.ph155.prol.loopexit, label %.lr.ph155.prol
 
 .lr.ph155.prol:                                   ; preds = %.lr.ph155.preheader466, %.lr.ph155.prol
@@ -813,12 +813,12 @@ scalar.ph279:                                     ; preds = %scalar.ph279.prol.l
   %exitcond212.not = icmp eq i64 %indvars.iv.next209, %wide.trip.count211
   br i1 %exitcond212.not, label %.critedge, label %.lr.ph158
 
-.critedge:                                        ; preds = %._crit_edge159, %bb.r, %.preheader150
+.critedge:                                        ; preds = %._crit_edge159, %.preheader150
   %indvars.iv.next214 = add nuw nsw i64 %indvars.iv213, 1 ; 2 uses
   %exitcond217.not = icmp eq i64 %indvars.iv.next214, %wide.trip.count216
   br i1 %exitcond217.not, label %N_VScale_Serial.exit, label %bb.r
 
-N_VScale_Serial.exit:                             ; preds = %.critedge, %._crit_edge174.split, %._crit_edge184, %.lr.ph.i.prol.loopexit, %.lr.ph.i, %.lr.ph.i33.i.prol.loopexit, %.lr.ph.i33.i, %.lr.ph.i30.i.prol.loopexit, %.lr.ph.i30.i, %.lr.ph.i.i, %middle.block405, %middle.block421, %middle.block437, %middle.block451, %.lr.ph186, %.critedge.preheader, %.preheader148.a, %.preheader, %bb.i, %bb.h, %bb.f, %bb.d, %bb.n, %._crit_edge, %._crit_edge191, %bb.j
+N_VScale_Serial.exit:                             ; preds = %.critedge, %._crit_edge174.split, %._crit_edge184, %.lr.ph.i.prol.loopexit, %.lr.ph.i, %.lr.ph.i33.i.prol.loopexit, %.lr.ph.i33.i, %.lr.ph.i30.i.prol.loopexit, %.lr.ph.i30.i, %.lr.ph.i.i, %middle.block405, %middle.block421, %middle.block437, %middle.block451, %.lr.ph164, %.preheader148.a, %.lr.ph186, %.critedge.preheader, %.preheader148, %.preheader, %bb.i, %bb.h, %bb.f, %bb.d, %bb.n, %._crit_edge, %._crit_edge191, %bb.j
   ret i32 0
 }
 

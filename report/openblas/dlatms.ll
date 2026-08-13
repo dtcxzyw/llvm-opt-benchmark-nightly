@@ -202,30 +202,30 @@ vec.epilog.scalar.ph1918:                         ; preds = %vec.epilog.scalar.p
   br i1 %exitcond1777.peel.not, label %.thread1196, label %.peel.next
 
 .peel.next:                                       ; preds = %._crit_edge1569.peel
-  %.not11671565 = icmp slt i32 %i.asu, 1          ; 2 uses
+  %.not11671565 = icmp slt i32 %i.asu, 1
   %i.ath = add nsw i32 %i.asu, -1
   %i.ati = zext nneg i32 %i.ath to i64
   %i.atj = shl nuw nsw i64 %i.ati, 3
   %i.atk = add nuw nsw i64 %i.atj, 8              ; 5 uses
-  %16 = sub i32 %i.ast, %.2510321830              ; 2 uses
-  %xtraiter2005 = and i32 %16, 3                  ; 3 uses
-  %17 = sub i32 %.2510321830, %i.ast
-  %18 = icmp ugt i32 %17, -4
-  br i1 %18, label %.epil.preheader2004, label %.peel.next.new
+  br i1 %.not11671565, label %.thread1196, label %.peel.next.new
 
 .peel.next.new:                                   ; preds = %.peel.next
-  %unroll_iter2009 = and i32 %16, -4
+  %16 = sub i32 %i.ast, %.2510321830              ; 2 uses
+  %xtraiter2004 = and i32 %16, 3                  ; 3 uses
+  %17 = sub i32 %.2510321830, %i.ast
+  %18 = icmp ugt i32 %17, -4
+  br i1 %18, label %.epil.preheader2004, label %bb.dz
+
+bb.dz:                                            ; preds = %.peel.next.new
+  %unroll_iter2008 = and i32 %16, -4
   %invariant.op = add i32 1, %.2510321830
-  %invariant.op2026 = add i32 2, %.2510321830
-  %invariant.op2028 = add i32 3, %.2510321830
-  br label %bb.dz
+  %invariant.op2025 = add i32 2, %.2510321830
+  %invariant.op2027 = add i32 3, %.2510321830
+  br label %.lr.ph1568
 
-bb.dz:                                            ; preds = %._crit_edge1569.3, %.peel.next.new
-  %indvar = phi i32 [ 1, %.peel.next.new ], [ %indvar.next.3, %._crit_edge1569.3 ] ; 5 uses
-  %niter2010 = phi i32 [ 0, %.peel.next.new ], [ %niter2010.next.3, %._crit_edge1569.3 ]
-  br i1 %.not11671565, label %._crit_edge1569.3, label %.lr.ph1568
-
-.lr.ph1568:                                       ; preds = %bb.dz
+.lr.ph1568:                                       ; preds = %.lr.ph1568, %bb.dz
+  %indvar = phi i32 [ 1, %bb.dz ], [ %indvar.next.3, %.lr.ph1568 ] ; 5 uses
+  %niter2009 = phi i32 [ 0, %bb.dz ], [ %niter2009.next.3, %.lr.ph1568 ]
   %i.atl = add i32 %.2510321830, %indvar
   %i.atm = mul i32 %i.atl, %i.ab
   %i.atn = add i32 %i.atm, 1
@@ -240,27 +240,24 @@ bb.dz:                                            ; preds = %._crit_edge1569.3, 
   %i.att = shl nsw i64 %i.ats, 3
   %scevgep1772.1 = getelementptr i8, ptr %scevgep1771, i64 %i.att
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep1772.1, i8 0, i64 %i.atk, i1 false), !tbaa !9
-  %.reass2027 = add i32 %indvar, %invariant.op2026
+  %.reass2027 = add i32 %indvar, %invariant.op2025
   %i.atu = mul i32 %.reass2027, %i.ab
   %i.atv = add i32 %i.atu, 1
   %i.atw = sext i32 %i.atv to i64
   %i.atx = shl nsw i64 %i.atw, 3
   %scevgep1772.2 = getelementptr i8, ptr %scevgep1771, i64 %i.atx
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep1772.2, i8 0, i64 %i.atk, i1 false), !tbaa !9
-  %.reass2029 = add i32 %indvar, %invariant.op2028
+  %.reass2029 = add i32 %indvar, %invariant.op2027
   %i.aty = mul i32 %.reass2029, %i.ab
   %i.atz = add i32 %i.aty, 1
   %i.aua = sext i32 %i.atz to i64
   %i.aub = shl nsw i64 %i.aua, 3
   %scevgep1772.3 = getelementptr i8, ptr %scevgep1771, i64 %i.aub
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep1772.3, i8 0, i64 %i.atk, i1 false), !tbaa !9
-  br label %._crit_edge1569.3
-
-._crit_edge1569.3:                                ; preds = %bb.dz, %.lr.ph1568
   %indvar.next.3 = add i32 %indvar, 4             ; 2 uses
-  %niter2010.next.3 = add i32 %niter2010, 4       ; 2 uses
-  %niter2010.ncmp.3 = icmp eq i32 %niter2010.next.3, %unroll_iter2009
-  br i1 %niter2010.ncmp.3, label %.thread1196.loopexit.unr-lcssa, label %bb.dz, !llvm.loop !61
+  %niter2009.next.3 = add i32 %niter2009, 4       ; 2 uses
+  %niter2009.ncmp.3 = icmp eq i32 %niter2009.next.3, %unroll_iter2008
+  br i1 %niter2009.ncmp.3, label %.thread1196.loopexit.unr-lcssa, label %.lr.ph1568, !llvm.loop !61
 
 bb.ea:                                            ; preds = %.loopexit1278
   br i1 %i.bc, label %bb.eb, label %.thread1196
@@ -339,22 +336,19 @@ bb.ec:                                            ; preds = %.lr.ph1562, %._crit
   %exitcond1770.not = icmp eq i64 %indvars.iv.next1766, %wide.trip.count1769
   br i1 %exitcond1770.not, label %.thread1196, label %bb.ec, !llvm.loop !63
 
-.thread1196.loopexit.unr-lcssa:                   ; preds = %._crit_edge1569.3
-  %lcmp.mod2007.not = icmp eq i32 %xtraiter2005, 0
+.thread1196.loopexit.unr-lcssa:                   ; preds = %.lr.ph1568
+  %lcmp.mod2007.not = icmp eq i32 %xtraiter2004, 0
   br i1 %lcmp.mod2007.not, label %.thread1196, label %.epil.preheader2004
 
-.epil.preheader2004:                              ; preds = %.thread1196.loopexit.unr-lcssa, %.peel.next
-  %indvar.epil.init = phi i32 [ 1, %.peel.next ], [ %indvar.next.3, %.thread1196.loopexit.unr-lcssa ]
-  %lcmp.mod2008 = icmp ne i32 %xtraiter2005, 0
+.epil.preheader2004:                              ; preds = %.thread1196.loopexit.unr-lcssa, %.peel.next.new
+  %indvar.epil.init = phi i32 [ 1, %.peel.next.new ], [ %indvar.next.3, %.thread1196.loopexit.unr-lcssa ]
+  %lcmp.mod2008 = icmp ne i32 %xtraiter2004, 0
   call void @llvm.assume(i1 %lcmp.mod2008)
-  br label %19
+  br label %.lr.ph1568.epil
 
-19:                                               ; preds = %._crit_edge1569.epil, %.epil.preheader2004
-  %indvar.epil = phi i32 [ %indvar.epil.init, %.epil.preheader2004 ], [ %indvar.next.epil, %._crit_edge1569.epil ] ; 2 uses
-  %epil.iter2006 = phi i32 [ 0, %.epil.preheader2004 ], [ %epil.iter2006.next, %._crit_edge1569.epil ]
-  br i1 %.not11671565, label %._crit_edge1569.epil, label %.lr.ph1568.epil
-
-.lr.ph1568.epil:                                  ; preds = %19
+.lr.ph1568.epil:                                  ; preds = %.lr.ph1568.epil, %.epil.preheader2004
+  %indvar.epil = phi i32 [ %indvar.next.epil, %.lr.ph1568.epil ], [ %indvar.epil.init, %.epil.preheader2004 ] ; 2 uses
+  %epil.iter2005 = phi i32 [ %epil.iter2005.next, %.lr.ph1568.epil ], [ 0, %.epil.preheader2004 ]
   %i.avm = add i32 %.2510321830, %indvar.epil
   %i.avn = mul i32 %i.avm, %i.ab
   %i.avo = add i32 %i.avn, 1
@@ -362,15 +356,12 @@ bb.ec:                                            ; preds = %.lr.ph1562, %._crit
   %i.avq = shl nsw i64 %i.avp, 3
   %scevgep1772.epil = getelementptr i8, ptr %scevgep1771, i64 %i.avq
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep1772.epil, i8 0, i64 %i.atk, i1 false), !tbaa !9
-  br label %._crit_edge1569.epil
-
-._crit_edge1569.epil:                             ; preds = %.lr.ph1568.epil, %19
   %indvar.next.epil = add i32 %indvar.epil, 1
-  %epil.iter2006.next = add i32 %epil.iter2006, 1 ; 2 uses
-  %epil.iter2006.cmp.not = icmp eq i32 %epil.iter2006.next, %xtraiter2005
-  br i1 %epil.iter2006.cmp.not, label %.thread1196, label %19, !llvm.loop !64
+  %epil.iter2005.next = add i32 %epil.iter2005, 1 ; 2 uses
+  %epil.iter2005.cmp.not = icmp eq i32 %epil.iter2005.next, %xtraiter2004
+  br i1 %epil.iter2005.cmp.not, label %.thread1196, label %.lr.ph1568.epil, !llvm.loop !64
 
-.thread1196:                                      ; preds = %._crit_edge1557, %.thread1196.loopexit.unr-lcssa, %._crit_edge1569.epil, %._crit_edge1569.peel, %bb.eb, %.loopexit1278.thread, %bb.dr, %.loopexit1284, %bb.ea, %bb.a, %bb.b, %bb.dd, %bb.ar, %bb.am, %.thread
+.thread1196:                                      ; preds = %._crit_edge1557, %.thread1196.loopexit.unr-lcssa, %.lr.ph1568.epil, %.peel.next, %._crit_edge1569.peel, %bb.eb, %.loopexit1278.thread, %bb.dr, %.loopexit1284, %bb.ea, %bb.a, %bb.b, %bb.dd, %bb.ar, %bb.am, %.thread
   call void @llvm.lifetime.end.p0(ptr nonnull %i.z) #8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.y) #8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.x) #8

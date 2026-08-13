@@ -204,26 +204,26 @@ _ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit:
   %i.an = zext i32 %.02562 to i64                 ; 2 uses
   %i.ao = load ptr, ptr %i.ag, align 8, !tbaa !19 ; 3 uses
   %i.ap = icmp eq ptr %i.ao, null
-  %7 = getelementptr inbounds i8, ptr %i.ao, i64 -4
   br i1 %i.ap, label %.thread, label %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit30.preheader
 
 _ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit30.preheader: ; preds = %.preheader
-  %i.aq = load i32, ptr %7, align 4, !tbaa !47
+  %7 = getelementptr inbounds i8, ptr %i.ao, i64 -4
+  %i.aq = load i32, ptr %7, align 4, !tbaa !47    ; 2 uses
   %i.ar = zext i32 %i.aq to i64
-  br label %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit30.a
+  %.not = icmp eq i32 %i.aq, 0
+  br i1 %.not, label %.thread, label %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit30.a
 
-_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit30.a: ; preds = %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit30.preheader, %bb.j
-  %indvars.iv61 = phi i64 [ %indvars.iv.next, %bb.j ], [ 0, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit30.preheader ] ; 4 uses
-  %8 = icmp samesign ult i64 %indvars.iv61, %i.ar
-  br i1 %8, label %bb.e, label %.thread
+_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit30.a: ; preds = %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit30.preheader
+  %8 = load ptr, ptr %i.af, align 8, !tbaa !19
+  %9 = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %i.an
+  %10 = load ptr, ptr %9, align 8, !tbaa !52
+  br label %bb.e
 
-bb.e:                                             ; preds = %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit30.a
-  %9 = load ptr, ptr %i.af, align 8, !tbaa !19
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %i.an
-  %11 = load ptr, ptr %10, align 8, !tbaa !52
+bb.e:                                             ; preds = %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit30.a, %bb.j
+  %indvars.iv61 = phi i64 [ %indvars.iv.next, %bb.j ], [ 0, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit30.a ] ; 3 uses
   %i.as = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %indvars.iv61
   %i.at = load ptr, ptr %i.as, align 8, !tbaa !52
-  %i.au = icmp eq ptr %11, %i.at
+  %i.au = icmp eq ptr %10, %i.at
   br i1 %i.au, label %bb.f, label %bb.j
 
 bb.f:                                             ; preds = %bb.e
@@ -283,8 +283,9 @@ _ZgtRK8rationalS1_.exit32:                        ; preds = %bb.i
   br i1 %i.cd, label %.thread, label %bb.k
 
 bb.j:                                             ; preds = %bb.e
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv61, 1
-  br label %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit30.a
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv61, 1 ; 2 uses
+  %11 = icmp samesign ult i64 %indvars.iv.next, %i.ar
+  br i1 %11, label %bb.e, label %.thread
 
 bb.k:                                             ; preds = %.split35, %.split34, %_ZgtRK8rationalS1_.exit32
   %i.ce = add i32 %.02562, 1
@@ -292,8 +293,8 @@ bb.k:                                             ; preds = %.split35, %.split34
   %i.cg = icmp eq ptr %i.cf, null
   br i1 %i.cg, label %.thread, label %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit, !llvm.loop !257
 
-.thread:                                          ; preds = %.preheader, %bb.k, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit, %.split35, %.split34, %_ZgtRK8rationalS1_.exit32, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit30.a, %.preheader42, %.split33, %.split, %_ZgtRK8rationalS1_.exit
-  %.4 = phi i1 [ false, %.split33 ], [ false, %_ZgtRK8rationalS1_.exit ], [ false, %.split ], [ true, %.preheader42 ], [ false, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit30.a ], [ false, %.split35 ], [ true, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit ], [ false, %.split34 ], [ false, %_ZgtRK8rationalS1_.exit32 ], [ true, %bb.k ], [ false, %.preheader ]
+.thread:                                          ; preds = %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit30.preheader, %bb.k, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit, %.split35, %.split34, %_ZgtRK8rationalS1_.exit32, %.preheader, %bb.j, %.preheader42, %.split33, %.split, %_ZgtRK8rationalS1_.exit
+  %.4 = phi i1 [ false, %.split33 ], [ false, %_ZgtRK8rationalS1_.exit ], [ false, %.split ], [ true, %.preheader42 ], [ false, %bb.j ], [ false, %.split35 ], [ true, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit ], [ false, %.split34 ], [ false, %_ZgtRK8rationalS1_.exit32 ], [ false, %.preheader ], [ true, %bb.k ], [ false, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit30.preheader ]
   ret i1 %.4
 }
 

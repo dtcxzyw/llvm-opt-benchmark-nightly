@@ -203,7 +203,7 @@ _ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit705.1: ; preds = %bb.fv, %bb.fu, %
   %i.ws = and i64 %.sroa.speculated, 4294967295
   %.not1467 = icmp eq i64 %i.ws, 0
   %wide.trip.count = and i64 %.sroa.speculated, 4294967295
-  br label %.preheader1409
+  br i1 %.not1467, label %.critedge587, label %.preheader1409
 
 bb.fw:                                            ; preds = %bb.fr, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit705, %bb.fl, %.critedge575
   %i.wt = landingpad { ptr, i32 }
@@ -217,8 +217,8 @@ bb.fx:                                            ; preds = %_ZNK4cvc58internal1
   br label %bb.apz
 
 .preheader1409:                                   ; preds = %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit705.1, %.thread1307
-  %i.wv = phi i1 [ true, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit705.1 ], [ false, %.thread1307 ] ; 3 uses
-  br i1 %.not1467, label %.thread1307, label %.lr.ph
+  %i.wv = phi i1 [ false, %.thread1307 ], [ true, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit705.1 ] ; 3 uses
+  br label %.lr.ph
 
 bb.fy:                                            ; preds = %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit728
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
@@ -226,7 +226,7 @@ bb.fy:                                            ; preds = %_ZN4cvc58internal12
   br i1 %exitcond.not, label %.thread1307, label %.lr.ph, !llvm.loop !1013
 
 .lr.ph:                                           ; preds = %.preheader1409, %bb.fy
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.fy ], [ 0, %.preheader1409 ] ; 4 uses
+  %indvars.iv = phi i64 [ 0, %.preheader1409 ], [ %indvars.iv.next, %bb.fy ] ; 4 uses
   %.pre = load ptr, ptr %49, align 16, !tbaa !63  ; 2 uses
   br i1 %i.wv, label %.thread1302, label %bb.fz
 
@@ -629,10 +629,10 @@ bb.ie:                                            ; preds = %bb.id, %bb.hh
 bb.if:                                            ; preds = %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit728
   br i1 %.3340, label %.thread1307, label %.loopexit1410
 
-.thread1307:                                      ; preds = %bb.fy, %.preheader1409, %bb.if
+.thread1307:                                      ; preds = %bb.fy, %bb.if
   br i1 %i.wv, label %.preheader1409, label %.critedge587, !llvm.loop !1014
 
-.critedge587:                                     ; preds = %.thread1307
+.critedge587:                                     ; preds = %.thread1307, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit705.1
   call void @llvm.lifetime.start.p0(ptr nonnull %62) #23
   %i.aco = load atomic i8, ptr @_ZGVZN4cvc58internal4expr9NodeValue4nullEvE6s_null acquire, align 8
   %i.acp = icmp eq i8 %i.aco, 0

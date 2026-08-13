@@ -203,13 +203,10 @@ bb.j:                                             ; preds = %bb.h
 .preheader.preheader:                             ; preds = %.preheader126
   %.pre = load i32, ptr %i.at, align 4, !tbaa !57 ; 2 uses
   %i.db = icmp sgt i32 %.pre, 0
-  br label %.preheader
+  br i1 %i.db, label %.lr.ph137.preheader, label %._crit_edge139
 
-.preheader:                                       ; preds = %.preheader.preheader, %._crit_edge
+.lr.ph137.preheader:                              ; preds = %.preheader.preheader, %._crit_edge
   %.0111138 = phi i32 [ %i.dl, %._crit_edge ], [ 0, %.preheader.preheader ] ; 2 uses
-  br i1 %i.db, label %.lr.ph137.preheader, label %._crit_edge
-
-.lr.ph137.preheader:                              ; preds = %.preheader
   %.pre142 = load i32, ptr %i.av, align 4, !tbaa !59 ; 2 uses
   %i.dc = mul nsw i32 %.pre142, %.0111138
   %i.dd = shl nsw i32 %.pre142, 1
@@ -227,12 +224,12 @@ bb.j:                                             ; preds = %bb.h
   %i.dk = icmp slt i32 %i.dj, %.pre
   br i1 %i.dk, label %.lr.ph137, label %._crit_edge, !llvm.loop !69
 
-._crit_edge:                                      ; preds = %.lr.ph137, %.preheader
+._crit_edge:                                      ; preds = %.lr.ph137
   %i.dl = add nuw nsw i32 %.0111138, 1            ; 2 uses
   %i.dm = icmp slt i32 %i.dl, %i.cz
-  br i1 %i.dm, label %.preheader, label %._crit_edge139, !llvm.loop !70
+  br i1 %i.dm, label %.lr.ph137.preheader, label %._crit_edge139, !llvm.loop !70
 
-._crit_edge139:                                   ; preds = %._crit_edge, %.preheader126
+._crit_edge139:                                   ; preds = %._crit_edge, %.preheader.preheader, %.preheader126
   %i.dn = getelementptr inbounds nuw i8, ptr %i.b, i64 5384
   br label %bb.k
 

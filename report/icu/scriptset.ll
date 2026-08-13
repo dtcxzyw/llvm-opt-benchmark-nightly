@@ -203,9 +203,9 @@ bb.j:                                             ; preds = %bb.d
   %.promoted = load i32, ptr %2, align 4, !tbaa !8
   %wide.trip.count = zext nneg i32 %i.i to i64
   %i.v = icmp slt i32 %.promoted, 1
-  br label %bb.l
+  br i1 %i.v, label %bb.l, label %.loopexit
 
-bb.k:                                             ; preds = %4
+bb.k:                                             ; preds = %bb.l
   %i.w = lshr i32 %i.ae, 5
   %i.x = and i32 %i.ae, 31
   %i.y = shl nuw i32 1, %i.x
@@ -219,21 +219,18 @@ bb.k:                                             ; preds = %4
   br i1 %exitcond.not, label %.loopexit, label %bb.l, !llvm.loop !26
 
 bb.l:                                             ; preds = %.lr.ph, %bb.k
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.k ] ; 2 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.k ], [ 0, %.lr.ph ] ; 2 uses
   %i.ad = getelementptr inbounds nuw [4 x i8], ptr %i.u, i64 %indvars.iv
   %i.ae = load i32, ptr %i.ad, align 4, !tbaa !27 ; 3 uses
-  br i1 %i.v, label %4, label %.loopexit
-
-4:                                                ; preds = %bb.l
   %or.cond.i = icmp ugt i32 %i.ae, 223
   br i1 %or.cond.i, label %.loopexit.sink.split, label %bb.k
 
-.loopexit.sink.split:                             ; preds = %bb.e, %.noexc, %4, %bb.j
-  %.sink = phi i32 [ %i.j, %bb.j ], [ 1, %4 ], [ 7, %.noexc ], [ 7, %bb.e ]
+.loopexit.sink.split:                             ; preds = %bb.e, %.noexc, %bb.l, %bb.j
+  %.sink = phi i32 [ %i.j, %bb.j ], [ 1, %bb.l ], [ 7, %.noexc ], [ 7, %bb.e ]
   store i32 %.sink, ptr %2, align 4, !tbaa !8
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.l, %bb.k, %.loopexit.sink.split, %.preheader
+.loopexit:                                        ; preds = %bb.k, %.loopexit.sink.split, %.lr.ph, %.preheader
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #14
   %i.af = load i8, ptr %i.f, align 4, !tbaa !24
   %.not.i.i22 = icmp eq i8 %i.af, 0

@@ -204,14 +204,14 @@ bb.a:
   %i.p = load double, ptr %i.o, align 8, !tbaa !30
   %i.q = icmp sgt i32 %i.g, 0                     ; 2 uses
   %i.r = zext i32 %i.g to i64                     ; 25 uses
-  br i1 %i.q, label %.lr.ph.preheader, label %._crit_edge.a
+  br i1 %i.q, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %i.s = shl nuw nsw i64 %i.r, 3
   call void @llvm.memset.p0.i64(ptr nonnull align 16 %i.a, i8 0, i64 %i.s, i1 false), !tbaa !26
-  br label %._crit_edge.a
+  br label %._crit_edge
 
-._crit_edge.a:                                    ; preds = %bb.a, %.lr.ph.preheader
+._crit_edge:                                      ; preds = %bb.a, %.lr.ph.preheader
   %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   store double 1.000000e+00, ptr %5, align 8, !tbaa !26
   %6 = sub i32 0, %i.l                            ; 2 uses
@@ -223,6 +223,9 @@ bb.a:
   %11 = sext i32 %i.g to i64                      ; 4 uses
   %12 = sext i32 %i.l to i64                      ; 4 uses
   %wide.trip.count = zext i32 %10 to i64          ; 4 uses
+  br i1 %i.q, label %._crit_edge.a, label %bb.e
+
+._crit_edge.a:                                    ; preds = %._crit_edge
   %i.t = add nsw i64 %wide.trip.count, -2         ; 2 uses
   %i.u = zext i32 %i.l to i64
   %scevgep = getelementptr i8, ptr %4, i64 20008
@@ -240,17 +243,17 @@ bb.a:
   %scevgep128.a = getelementptr i8, ptr %i.c, i64 %i.y
   %scevgep131.a = getelementptr i8, ptr %i.c, i64 %i.y
   %i.aa = shl nsw i64 %12, 3
-  %i.ab = shl nsw i64 %11, 3
+  %i.ab = shl nuw nsw i64 %11, 3
   %i.ac = shl nuw nsw i64 %i.r, 3                 ; 2 uses
   %i.ad = mul nuw nsw i64 %i.r, 56
   %i.ae = getelementptr i8, ptr %4, i64 %i.ad
   %scevgep167.a = getelementptr i8, ptr %i.ae, i64 256
   %i.af = shl nsw i64 %12, 3
-  %i.ag = mul nsw i64 %11, 152
+  %i.ag = mul nuw nsw i64 %11, 152
   %i.ah = shl nuw nsw i64 %i.r, 3
-  %i.ai = add nsw i64 %i.ag, %i.ah                ; 2 uses
+  %i.ai = add nuw nsw i64 %i.ag, %i.ah            ; 2 uses
   %i.aj = shl nsw i64 %12, 3
-  %i.ak = shl nsw i64 %11, 3
+  %i.ak = shl nuw nsw i64 %11, 3
   %i.al = add nsw i64 %i.r, -1                    ; 2 uses
   %i.am = getelementptr i8, ptr %4, i64 %i.ai
   %i.an = getelementptr i8, ptr %i.am, i64 20008
@@ -288,7 +291,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %._crit_edge.a, %bb.d
-  %indvars.iv107 = phi i64 [ 0, %._crit_edge.a ], [ %indvars.iv.next108, %bb.d ] ; 10 uses
+  %indvars.iv107 = phi i64 [ %indvars.iv.next108, %bb.d ], [ 0, %._crit_edge.a ] ; 10 uses
   %i.ax = mul i64 %i.aj, %indvars.iv107
   %i.ay = mul i64 %i.af, %indvars.iv107           ; 5 uses
   %i.az = getelementptr i8, ptr %4, i64 %i.ay
@@ -380,21 +383,20 @@ bb.c:                                             ; preds = %bb.b, %._crit_edge9
   %i.de = trunc nuw nsw i64 %indvars.iv103 to i32
   %i.df = uitofp nneg i32 %i.de to double
   %i.dg = fmul double %i.n, %i.df
-  %i.dh = mul nsw i64 %indvars.iv103, %11
+  %i.dh = mul nuw nsw i64 %indvars.iv103, %11
   %i.di = add nsw i64 %i.dh, %i.bk                ; 5 uses
   %i.dj = getelementptr inbounds [8 x i8], ptr %i.b, i64 %i.di ; 6 uses
   %i.dk = getelementptr inbounds [8 x i8], ptr %i.c, i64 %i.di ; 5 uses
   %i.dl = getelementptr inbounds [8 x i8], ptr %i.h, i64 %i.di ; 13 uses
   %i.dm = getelementptr inbounds [8 x i8], ptr %i.i, i64 %i.di ; 8 uses
   %i.dn = tail call double @llvm.fmuladd.f64(double %i.dg, double %i.bj, double 1.000000e+00) ; 6 uses
-  br i1 %i.q, label %.lr.ph.i.preheader, label %._crit_edge98
+  br i1 %min.iters.check231, label %.lr.ph.i.preheader247, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %bb.c
   %i.do = mul i64 %i.ak, %indvars.iv103
   %op.rdx244.reass = add i64 %i.do, %invariant.op
   %diff.check = icmp ult i64 %op.rdx244.reass, 31
-  %or.cond = select i1 %min.iters.check231, i1 true, i1 %diff.check
-  br i1 %or.cond, label %.lr.ph.i.preheader247, label %vector.ph232
+  br i1 %diff.check, label %.lr.ph.i.preheader247, label %vector.ph232
 
 vector.ph232:                                     ; preds = %.lr.ph.i.preheader
   %broadcast.splatinsert234 = insertelement <2 x double> poison, double %i.dn, i64 0
@@ -420,8 +422,8 @@ vector.body236:                                   ; preds = %vector.body236, %ve
 middle.block241:                                  ; preds = %vector.body236
   br i1 %cmp.n242, label %.preheader60.i.preheader, label %.lr.ph.i.preheader247
 
-.lr.ph.i.preheader247:                            ; preds = %.lr.ph.i.preheader, %middle.block241
-  %indvars.iv.i.ph = phi i64 [ 0, %.lr.ph.i.preheader ], [ %n.vec233, %middle.block241 ] ; 3 uses
+.lr.ph.i.preheader247:                            ; preds = %.lr.ph.i.preheader, %bb.c, %middle.block241
+  %indvars.iv.i.ph = phi i64 [ 0, %.lr.ph.i.preheader ], [ 0, %bb.c ], [ %n.vec233, %middle.block241 ] ; 3 uses
   %i.dw = sub nsw i64 %i.al, %indvars.iv.i.ph
   br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
 
@@ -824,7 +826,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge98, label %scalar.ph, !llvm.loop !148
 
-._crit_edge98:                                    ; preds = %scalar.ph, %middle.block, %bb.c, %WebRatesB.exit
+._crit_edge98:                                    ; preds = %scalar.ph, %middle.block, %WebRatesB.exit
   %indvars.iv.next104 = add nuw nsw i64 %indvars.iv103, 1 ; 2 uses
   %exitcond106.not = icmp eq i64 %indvars.iv.next104, 20
   br i1 %exitcond106.not, label %bb.d, label %bb.c
@@ -834,7 +836,7 @@ bb.d:                                             ; preds = %._crit_edge98
   %exitcond110.not = icmp eq i64 %indvars.iv.next108, 20
   br i1 %exitcond110.not, label %bb.e, label %bb.b
 
-bb.e:                                             ; preds = %bb.d
+bb.e:                                             ; preds = %bb.d, %._crit_edge
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
   ret i32 0
 }

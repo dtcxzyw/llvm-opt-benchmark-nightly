@@ -204,6 +204,9 @@ bb.a:
   %wide.trip.count299 = zext nneg i32 %1 to i64   ; 2 uses
   %wide.trip.count294 = zext i32 %i.a to i64      ; 2 uses
   %wide.trip.count305 = zext i32 %i.a to i64
+  br i1 %.not185.not216, label %.preheader201.preheader, label %._crit_edge220.thread
+
+.preheader201.preheader:                          ; preds = %.preheader202
   %4 = shl nuw nsw i64 %wide.trip.count267, 3
   %5 = add nuw nsw i64 %4, 8                      ; 2 uses
   %6 = add nsw i64 %wide.trip.count267, -2
@@ -244,9 +247,9 @@ bb.a:
   %niter338.ncmp.1 = icmp eq i64 %niter338.next.1, %unroll_iter337
   br i1 %niter338.ncmp.1, label %.preheader202.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !781
 
-.preheader201:                                    ; preds = %.preheader202, %._crit_edge247
-  %.0176248 = phi i32 [ 1, %.preheader202 ], [ %i.ib, %._crit_edge247 ] ; 3 uses
-  br i1 %.not185.not216, label %.lr.ph215, label %._crit_edge220.thread
+.preheader201:                                    ; preds = %.preheader201.preheader, %._crit_edge247
+  %.0176248 = phi i32 [ %i.ib, %._crit_edge247 ], [ 1, %.preheader201.preheader ] ; 3 uses
+  br label %.lr.ph215
 
 .loopexit199:                                     ; preds = %.lr.ph215.new, %.prol.loopexit
   %.lcssa = phi double [ %.lcssa.unr, %.prol.loopexit ], [ %i.cb, %.lr.ph215.new ] ; 3 uses
@@ -255,7 +258,7 @@ bb.a:
   %indvar.next340 = add i64 %indvar339, 1
   br i1 %exitcond268.not, label %._crit_edge220, label %.lr.ph215, !llvm.loop !782
 
-.lr.ph215:                                        ; preds = %.preheader201, %.loopexit199
+.lr.ph215:                                        ; preds = %.loopexit199, %.preheader201
   %indvar339 = phi i64 [ %indvar.next340, %.loopexit199 ], [ 0, %.preheader201 ] ; 3 uses
   %indvars.iv264 = phi i64 [ %indvars.iv.next265, %.loopexit199 ], [ 1, %.preheader201 ] ; 2 uses
   %indvars.iv257 = phi i64 [ %indvars.iv.next258, %.loopexit199 ], [ 2, %.preheader201 ] ; 3 uses
@@ -658,7 +661,7 @@ bb.l:                                             ; preds = %.lr.ph234, %bb.l
   %exitcond307.not = icmp eq i32 %i.ib, 51
   br i1 %exitcond307.not, label %._crit_edge220.thread, label %.preheader201, !llvm.loop !799
 
-._crit_edge220.thread:                            ; preds = %._crit_edge247, %._crit_edge220, %.preheader201
+._crit_edge220.thread:                            ; preds = %._crit_edge247, %._crit_edge220, %.preheader202
   tail call void @_ZdaPv(ptr noundef nonnull %i.f) #43
   tail call void @_ZdaPv(ptr noundef nonnull %i.g) #43
   ret void

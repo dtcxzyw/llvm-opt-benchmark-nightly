@@ -201,15 +201,12 @@ bb.cw:                                            ; preds = %wg_kdf.exit69.jt2.i
   %.not17.i.jt2.i.i = icmp eq ptr %i.me, null
   br i1 %.not17.i.jt2.i.i, label %.lr.ph.i.i.jt2.i, label %bb.dc
 
-default.unreachable128:                           ; preds = %.lr.ph.i.i.i
-  unreachable
-
 .lr.ph.i.i.i:                                     ; preds = %bb.cq
   switch i32 %.sroa.077.0.i.i, label %default.unreachable128 [
     i32 0, label %bb.cx
     i32 1, label %.loopexit19.i.i.i
     i32 2, label %.lr.ph.i.i.jt2.i
-  ], !llvm.loop !9
+  ]
 
 .lr.ph.i.jt3.i.i:                                 ; preds = %wg_kdf.exit69.jt3.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %5, ptr noundef nonnull align 1 dereferenceable(32) %.sroa.08.i.i, i64 32, i1 false)
@@ -219,6 +216,9 @@ default.unreachable128:                           ; preds = %.lr.ph.i.i.i
   %i.kv = and i8 %.pre.i.i, 2
   %i.kw = icmp eq i8 %i.kv, 0
   br i1 %i.kw, label %bb.dw, label %bb.do
+
+default.unreachable128:                           ; preds = %.lr.ph.i.i.i
+  unreachable
 
 .loopexit19.i.i.i:                                ; preds = %bb.cr, %bb.cx, %.lr.ph.i.i.i, %bb.cv, %bb.ct
   %i.kx = load ptr, ptr %i.iy, align 8
