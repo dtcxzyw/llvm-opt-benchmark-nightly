@@ -203,11 +203,20 @@ _ZNK2v84base6VectorIKhE6lengthEv.exit.i.preheader: ; preds = %.lr.ph
 .lr.ph12:                                         ; preds = %.preheader
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %.pre = load i32, ptr %0, align 8
   %.pre16 = load i64, ptr %i.n, align 8           ; 2 uses
   %i.o = icmp ult i64 %.pre16, 2147483648
-  %i.p = trunc nuw nsw i64 %.pre16 to i32
-  br label %bb.c
+  %i.p = trunc nuw nsw i64 %.pre16 to i32         ; 2 uses
+  br i1 %i.o, label %.lr.ph12.split.preheader, label %bb.d, !prof !59
+
+.lr.ph12.split.preheader:                         ; preds = %.lr.ph12
+  %.pre = load i32, ptr %0, align 8               ; 3 uses
+  %1 = add nsw i32 %i.j, -48                      ; 2 uses
+  %2 = icmp slt i32 %.pre, %i.p
+  br i1 %2, label %_ZN2v88internal10DateParser11InputReaderIKhE4NextEv.exit6.preheader, label %._crit_edge.sink.split
+
+_ZN2v88internal10DateParser11InputReaderIKhE4NextEv.exit6.preheader: ; preds = %.lr.ph12.split.preheader
+  %3 = load ptr, ptr %i.m, align 8
+  br label %_ZN2v88internal10DateParser11InputReaderIKhE4NextEv.exit6
 
 _ZNK2v84base6VectorIKhE6lengthEv.exit.i:          ; preds = %_ZN2v88internal10DateParser11InputReaderIKhE4NextEv.exit
   %i.q = icmp slt i64 %indvars.iv.next, %i.e
@@ -233,50 +242,45 @@ _ZN2v88internal10DateParser11InputReaderIKhE4NextEv.exit: ; preds = %_ZNK2v84bas
   %i.w = icmp eq i8 %i.t, 48
   br i1 %i.w, label %_ZNK2v84base6VectorIKhE6lengthEv.exit.i, label %.preheader, !llvm.loop !70
 
-bb.c:                                             ; preds = %.lr.ph12, %_ZN2v88internal10DateParser11InputReaderIKhE4NextEv.exit6
-  %1 = phi i32 [ %.pre, %.lr.ph12 ], [ %i.ae, %_ZN2v88internal10DateParser11InputReaderIKhE4NextEv.exit6 ] ; 4 uses
-  %2 = phi i32 [ %i.j, %.lr.ph12 ], [ %i.ad, %_ZN2v88internal10DateParser11InputReaderIKhE4NextEv.exit6 ]
-  %.011 = phi i32 [ 0, %.lr.ph12 ], [ %3, %_ZN2v88internal10DateParser11InputReaderIKhE4NextEv.exit6 ] ; 2 uses
-  %.0410 = phi i32 [ 0, %.lr.ph12 ], [ %.1, %_ZN2v88internal10DateParser11InputReaderIKhE4NextEv.exit6 ] ; 2 uses
-  %i.x = icmp samesign ult i32 %.011, 9
-  %i.y = mul nsw i32 %.0410, 10
+bb.c:                                             ; preds = %_ZN2v88internal10DateParser11InputReaderIKhE4NextEv.exit6
+  %4 = add nuw nsw i32 %.01130, 1
+  %i.x = icmp samesign ult i32 %.01130, 8
+  %i.y = mul nsw i32 %.131, 10
   %i.z = add i32 %i.y, -48
-  %i.aa = add i32 %i.z, %2
-  %.1 = select i1 %i.x, i32 %i.aa, i32 %.0410     ; 3 uses
-  %3 = add nuw nsw i32 %.011, 1
-  br i1 %i.o, label %_ZNK2v84base6VectorIKhE6lengthEv.exit.i5, label %bb.d, !prof !59
+  %i.aa = add i32 %i.z, %i.ad
+  %.1 = select i1 %i.x, i32 %i.aa, i32 %.131      ; 2 uses
+  %5 = icmp slt i32 %i.ae, %i.p
+  br i1 %5, label %_ZN2v88internal10DateParser11InputReaderIKhE4NextEv.exit6, label %._crit_edge.sink.split, !llvm.loop !71
 
-bb.d:                                             ; preds = %bb.c
+bb.d:                                             ; preds = %.lr.ph12
   tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.31, ptr noundef nonnull @.str.34) #17
   unreachable
 
-_ZNK2v84base6VectorIKhE6lengthEv.exit.i5:         ; preds = %bb.c
-  %4 = icmp slt i32 %1, %i.p
-  br i1 %4, label %_ZN2v88internal10DateParser11InputReaderIKhE4NextEv.exit6, label %._crit_edge.sink.split
-
-_ZN2v88internal10DateParser11InputReaderIKhE4NextEv.exit6: ; preds = %_ZNK2v84base6VectorIKhE6lengthEv.exit.i5
-  %5 = sext i32 %1 to i64
-  %6 = load ptr, ptr %i.m, align 8
-  %i.ab = getelementptr inbounds nuw i8, ptr %6, i64 %5
+_ZN2v88internal10DateParser11InputReaderIKhE4NextEv.exit6: ; preds = %_ZN2v88internal10DateParser11InputReaderIKhE4NextEv.exit6.preheader, %bb.c
+  %.131 = phi i32 [ %.1, %bb.c ], [ %1, %_ZN2v88internal10DateParser11InputReaderIKhE4NextEv.exit6.preheader ] ; 3 uses
+  %.01130 = phi i32 [ %4, %bb.c ], [ 0, %_ZN2v88internal10DateParser11InputReaderIKhE4NextEv.exit6.preheader ] ; 2 uses
+  %6 = phi i32 [ %i.ae, %bb.c ], [ %.pre, %_ZN2v88internal10DateParser11InputReaderIKhE4NextEv.exit6.preheader ] ; 2 uses
+  %7 = sext i32 %6 to i64
+  %i.ab = getelementptr inbounds nuw i8, ptr %3, i64 %7
   %i.ac = load i8, ptr %i.ab, align 1             ; 2 uses
   %i.ad = zext i8 %i.ac to i32                    ; 2 uses
   store i32 %i.ad, ptr %i.a, align 8
-  %i.ae = add nsw i32 %1, 1                       ; 2 uses
+  %i.ae = add nsw i32 %6, 1                       ; 4 uses
   store i32 %i.ae, ptr %0, align 8
   %i.af = add i8 %i.ac, -48
   %i.ag = icmp ult i8 %i.af, 10
   br i1 %i.ag, label %bb.c, label %._crit_edge, !llvm.loop !71
 
-._crit_edge.sink.split:                           ; preds = %_ZNK2v84base6VectorIKhE6lengthEv.exit.i5, %_ZNK2v84base6VectorIKhE6lengthEv.exit.i.preheader, %_ZNK2v84base6VectorIKhE6lengthEv.exit.i..preheader.thread_crit_edge
-  %.sink.in = phi i32 [ %.promoted9, %_ZNK2v84base6VectorIKhE6lengthEv.exit.i.preheader ], [ %i.r, %_ZNK2v84base6VectorIKhE6lengthEv.exit.i..preheader.thread_crit_edge ], [ %1, %_ZNK2v84base6VectorIKhE6lengthEv.exit.i5 ]
-  %.04.lcssa.ph = phi i32 [ 0, %_ZNK2v84base6VectorIKhE6lengthEv.exit.i.preheader ], [ 0, %_ZNK2v84base6VectorIKhE6lengthEv.exit.i..preheader.thread_crit_edge ], [ %.1, %_ZNK2v84base6VectorIKhE6lengthEv.exit.i5 ]
+._crit_edge.sink.split:                           ; preds = %bb.c, %.lr.ph12.split.preheader, %_ZNK2v84base6VectorIKhE6lengthEv.exit.i.preheader, %_ZNK2v84base6VectorIKhE6lengthEv.exit.i..preheader.thread_crit_edge
+  %.sink.in = phi i32 [ %.promoted9, %_ZNK2v84base6VectorIKhE6lengthEv.exit.i.preheader ], [ %i.r, %_ZNK2v84base6VectorIKhE6lengthEv.exit.i..preheader.thread_crit_edge ], [ %.pre, %.lr.ph12.split.preheader ], [ %i.ae, %bb.c ]
+  %.04.lcssa.ph = phi i32 [ 0, %_ZNK2v84base6VectorIKhE6lengthEv.exit.i.preheader ], [ 0, %_ZNK2v84base6VectorIKhE6lengthEv.exit.i..preheader.thread_crit_edge ], [ %1, %.lr.ph12.split.preheader ], [ %.1, %bb.c ]
   store i32 0, ptr %i.a, align 8
   %.sink = add i32 %.sink.in, 1
   store i32 %.sink, ptr %0, align 8
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %_ZN2v88internal10DateParser11InputReaderIKhE4NextEv.exit6, %._crit_edge.sink.split, %.preheader
-  %.04.lcssa = phi i32 [ 0, %.preheader ], [ %.04.lcssa.ph, %._crit_edge.sink.split ], [ %.1, %_ZN2v88internal10DateParser11InputReaderIKhE4NextEv.exit6 ]
+  %.04.lcssa = phi i32 [ 0, %.preheader ], [ %.04.lcssa.ph, %._crit_edge.sink.split ], [ %.131, %_ZN2v88internal10DateParser11InputReaderIKhE4NextEv.exit6 ]
   ret i32 %.04.lcssa
 }
 
@@ -679,11 +683,20 @@ _ZNK2v84base6VectorIKtE6lengthEv.exit.i.preheader: ; preds = %.lr.ph
 .lr.ph12:                                         ; preds = %.preheader
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %.pre = load i32, ptr %0, align 8
   %.pre16 = load i64, ptr %i.n, align 8           ; 2 uses
   %i.o = icmp ult i64 %.pre16, 2147483648
-  %i.p = trunc nuw nsw i64 %.pre16 to i32
-  br label %bb.c
+  %i.p = trunc nuw nsw i64 %.pre16 to i32         ; 2 uses
+  br i1 %i.o, label %.lr.ph12.split.preheader, label %bb.d, !prof !59
+
+.lr.ph12.split.preheader:                         ; preds = %.lr.ph12
+  %.pre = load i32, ptr %0, align 8               ; 3 uses
+  %1 = add nsw i32 %i.j, -48                      ; 2 uses
+  %2 = icmp slt i32 %.pre, %i.p
+  br i1 %2, label %_ZN2v88internal10DateParser11InputReaderIKtE4NextEv.exit6.preheader, label %._crit_edge.sink.split
+
+_ZN2v88internal10DateParser11InputReaderIKtE4NextEv.exit6.preheader: ; preds = %.lr.ph12.split.preheader
+  %3 = load ptr, ptr %i.m, align 8
+  br label %_ZN2v88internal10DateParser11InputReaderIKtE4NextEv.exit6
 
 _ZNK2v84base6VectorIKtE6lengthEv.exit.i:          ; preds = %_ZN2v88internal10DateParser11InputReaderIKtE4NextEv.exit
   %i.q = icmp slt i64 %indvars.iv.next, %i.e
@@ -709,50 +722,45 @@ _ZN2v88internal10DateParser11InputReaderIKtE4NextEv.exit: ; preds = %_ZNK2v84bas
   %i.w = icmp eq i16 %i.t, 48
   br i1 %i.w, label %_ZNK2v84base6VectorIKtE6lengthEv.exit.i, label %.preheader, !llvm.loop !74
 
-bb.c:                                             ; preds = %.lr.ph12, %_ZN2v88internal10DateParser11InputReaderIKtE4NextEv.exit6
-  %1 = phi i32 [ %.pre, %.lr.ph12 ], [ %i.ae, %_ZN2v88internal10DateParser11InputReaderIKtE4NextEv.exit6 ] ; 4 uses
-  %2 = phi i32 [ %i.j, %.lr.ph12 ], [ %i.ad, %_ZN2v88internal10DateParser11InputReaderIKtE4NextEv.exit6 ]
-  %.011 = phi i32 [ 0, %.lr.ph12 ], [ %3, %_ZN2v88internal10DateParser11InputReaderIKtE4NextEv.exit6 ] ; 2 uses
-  %.0410 = phi i32 [ 0, %.lr.ph12 ], [ %.1, %_ZN2v88internal10DateParser11InputReaderIKtE4NextEv.exit6 ] ; 2 uses
-  %i.x = icmp samesign ult i32 %.011, 9
-  %i.y = mul nsw i32 %.0410, 10
+bb.c:                                             ; preds = %_ZN2v88internal10DateParser11InputReaderIKtE4NextEv.exit6
+  %4 = add nuw nsw i32 %.01130, 1
+  %i.x = icmp samesign ult i32 %.01130, 8
+  %i.y = mul nsw i32 %.131, 10
   %i.z = add i32 %i.y, -48
-  %i.aa = add i32 %i.z, %2
-  %.1 = select i1 %i.x, i32 %i.aa, i32 %.0410     ; 3 uses
-  %3 = add nuw nsw i32 %.011, 1
-  br i1 %i.o, label %_ZNK2v84base6VectorIKtE6lengthEv.exit.i5, label %bb.d, !prof !59
+  %i.aa = add i32 %i.z, %i.ad
+  %.1 = select i1 %i.x, i32 %i.aa, i32 %.131      ; 2 uses
+  %5 = icmp slt i32 %i.ae, %i.p
+  br i1 %5, label %_ZN2v88internal10DateParser11InputReaderIKtE4NextEv.exit6, label %._crit_edge.sink.split, !llvm.loop !75
 
-bb.d:                                             ; preds = %bb.c
+bb.d:                                             ; preds = %.lr.ph12
   tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.31, ptr noundef nonnull @.str.34) #17
   unreachable
 
-_ZNK2v84base6VectorIKtE6lengthEv.exit.i5:         ; preds = %bb.c
-  %4 = icmp slt i32 %1, %i.p
-  br i1 %4, label %_ZN2v88internal10DateParser11InputReaderIKtE4NextEv.exit6, label %._crit_edge.sink.split
-
-_ZN2v88internal10DateParser11InputReaderIKtE4NextEv.exit6: ; preds = %_ZNK2v84base6VectorIKtE6lengthEv.exit.i5
-  %5 = sext i32 %1 to i64
-  %6 = load ptr, ptr %i.m, align 8
-  %i.ab = getelementptr inbounds nuw [2 x i8], ptr %6, i64 %5
+_ZN2v88internal10DateParser11InputReaderIKtE4NextEv.exit6: ; preds = %_ZN2v88internal10DateParser11InputReaderIKtE4NextEv.exit6.preheader, %bb.c
+  %.131 = phi i32 [ %.1, %bb.c ], [ %1, %_ZN2v88internal10DateParser11InputReaderIKtE4NextEv.exit6.preheader ] ; 3 uses
+  %.01130 = phi i32 [ %4, %bb.c ], [ 0, %_ZN2v88internal10DateParser11InputReaderIKtE4NextEv.exit6.preheader ] ; 2 uses
+  %6 = phi i32 [ %i.ae, %bb.c ], [ %.pre, %_ZN2v88internal10DateParser11InputReaderIKtE4NextEv.exit6.preheader ] ; 2 uses
+  %7 = sext i32 %6 to i64
+  %i.ab = getelementptr inbounds nuw [2 x i8], ptr %3, i64 %7
   %i.ac = load i16, ptr %i.ab, align 2            ; 2 uses
   %i.ad = zext i16 %i.ac to i32                   ; 2 uses
   store i32 %i.ad, ptr %i.a, align 8
-  %i.ae = add nsw i32 %1, 1                       ; 2 uses
+  %i.ae = add nsw i32 %6, 1                       ; 4 uses
   store i32 %i.ae, ptr %0, align 8
   %i.af = add i16 %i.ac, -48
   %i.ag = icmp ult i16 %i.af, 10
   br i1 %i.ag, label %bb.c, label %._crit_edge, !llvm.loop !75
 
-._crit_edge.sink.split:                           ; preds = %_ZNK2v84base6VectorIKtE6lengthEv.exit.i5, %_ZNK2v84base6VectorIKtE6lengthEv.exit.i.preheader, %_ZNK2v84base6VectorIKtE6lengthEv.exit.i..preheader.thread_crit_edge
-  %.sink.in = phi i32 [ %.promoted9, %_ZNK2v84base6VectorIKtE6lengthEv.exit.i.preheader ], [ %i.r, %_ZNK2v84base6VectorIKtE6lengthEv.exit.i..preheader.thread_crit_edge ], [ %1, %_ZNK2v84base6VectorIKtE6lengthEv.exit.i5 ]
-  %.04.lcssa.ph = phi i32 [ 0, %_ZNK2v84base6VectorIKtE6lengthEv.exit.i.preheader ], [ 0, %_ZNK2v84base6VectorIKtE6lengthEv.exit.i..preheader.thread_crit_edge ], [ %.1, %_ZNK2v84base6VectorIKtE6lengthEv.exit.i5 ]
+._crit_edge.sink.split:                           ; preds = %bb.c, %.lr.ph12.split.preheader, %_ZNK2v84base6VectorIKtE6lengthEv.exit.i.preheader, %_ZNK2v84base6VectorIKtE6lengthEv.exit.i..preheader.thread_crit_edge
+  %.sink.in = phi i32 [ %.promoted9, %_ZNK2v84base6VectorIKtE6lengthEv.exit.i.preheader ], [ %i.r, %_ZNK2v84base6VectorIKtE6lengthEv.exit.i..preheader.thread_crit_edge ], [ %.pre, %.lr.ph12.split.preheader ], [ %i.ae, %bb.c ]
+  %.04.lcssa.ph = phi i32 [ 0, %_ZNK2v84base6VectorIKtE6lengthEv.exit.i.preheader ], [ 0, %_ZNK2v84base6VectorIKtE6lengthEv.exit.i..preheader.thread_crit_edge ], [ %1, %.lr.ph12.split.preheader ], [ %.1, %bb.c ]
   store i32 0, ptr %i.a, align 8
   %.sink = add i32 %.sink.in, 1
   store i32 %.sink, ptr %0, align 8
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %_ZN2v88internal10DateParser11InputReaderIKtE4NextEv.exit6, %._crit_edge.sink.split, %.preheader
-  %.04.lcssa = phi i32 [ 0, %.preheader ], [ %.04.lcssa.ph, %._crit_edge.sink.split ], [ %.1, %_ZN2v88internal10DateParser11InputReaderIKtE4NextEv.exit6 ]
+  %.04.lcssa = phi i32 [ 0, %.preheader ], [ %.04.lcssa.ph, %._crit_edge.sink.split ], [ %.131, %_ZN2v88internal10DateParser11InputReaderIKtE4NextEv.exit6 ]
   ret i32 %.04.lcssa
 }
 

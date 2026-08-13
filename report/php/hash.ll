@@ -203,20 +203,25 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not4148, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader
-  %i.ad = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.fr51, i1 true) ; 2 uses
+  %i.ad = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.fr51, i1 true) ; 3 uses
   %i.ae = icmp eq i64 %.fr51, 8
+  %switch70 = icmp samesign ult i64 %i.ad, 4
+  call void @llvm.assume(i1 %switch70)
   br i1 %i.ae, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %one_from_buffer.exit.us
   %.03349.us = phi i64 [ %i.av, %one_from_buffer.exit.us ], [ %i.n, %.lr.ph ]
   %i.af = phi i64 [ %i.ao, %one_from_buffer.exit.us ], [ %i.o, %.lr.ph ] ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.af ; 4 uses
-  switch i64 %i.ad, label %.unreachabledefault.i [
+  switch i64 %i.ad, label %.lr.ph.split.us.unreachabledefault [
     i64 1, label %bb.j
     i64 2, label %bb.i
     i64 3, label %bb.h
     i64 0, label %bb.g
   ]
+
+.lr.ph.split.us.unreachabledefault:               ; preds = %.lr.ph.split.us
+  unreachable
 
 bb.g:                                             ; preds = %.lr.ph.split.us
   call void @llvm.assume(i1 %i.ab)
@@ -304,7 +309,7 @@ bb.m:                                             ; preds = %.lr.ph.split
   %i.bo = load i64, ptr %i.bj, align 8, !tbaa !23
   br label %one_from_buffer.exit
 
-.unreachabledefault.i:                            ; preds = %.lr.ph.split, %.lr.ph.split.us
+.unreachabledefault.i:                            ; preds = %.lr.ph.split
   unreachable
 
 bb.n:                                             ; preds = %.lr.ph.split

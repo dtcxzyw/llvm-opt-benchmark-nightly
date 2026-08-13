@@ -201,24 +201,25 @@ bb.a:
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 161 ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 162
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 2 uses
-  %.pre = load i32, ptr %0, align 8, !tbaa !25
-  br label %bb.b
-
-bb.b:                                             ; preds = %.lr.ph, %bb.v
-  %i.s = phi i64 [ %i.a, %.lr.ph ], [ %i.cv, %bb.v ] ; 2 uses
-  switch i32 %.pre, label %bb.v [
-    i32 0, label %.loopexit
+  %.pre = load i32, ptr %0, align 8, !tbaa !25    ; 2 uses
+  switch i32 %.pre, label %bb.b [
     i32 1, label %._crit_edge
     i32 2, label %._crit_edge111
     i32 3, label %.loopexit120
+  ]
+
+bb.b:                                             ; preds = %.lr.ph, %bb.v
+  %i.s = phi i64 [ %i.cv, %bb.v ], [ %i.a, %.lr.ph ] ; 2 uses
+  switch i32 %.pre, label %bb.v [
+    i32 0, label %.loopexit
     i32 4, label %.loopexit121
   ]
 
-._crit_edge111:                                   ; preds = %bb.b
+._crit_edge111:                                   ; preds = %.lr.ph
   %.pre112 = load i64, ptr %i.l, align 8, !tbaa !37
   br label %bb.t
 
-._crit_edge:                                      ; preds = %bb.b
+._crit_edge:                                      ; preds = %.lr.ph
   %.pre108 = load i64, ptr %i.e, align 8, !tbaa !38
   %i.t = trunc i64 %.pre108 to i32
   %i.u = sub i32 2097152, %i.t
@@ -379,7 +380,7 @@ bb.t:                                             ; preds = %._crit_edge111, %.t
   %.not83 = icmp eq i64 %i.ch, %i.ci
   br i1 %.not83, label %bb.w, label %.thread
 
-.loopexit120:                                     ; preds = %bb.b, %bb.x
+.loopexit120:                                     ; preds = %.lr.ph, %bb.x
   %i.cj = tail call i64 @lzma_bufcpy(ptr noundef nonnull %i.c, ptr noundef nonnull %i.d, i64 noundef 3, ptr noundef %2, ptr noundef nonnull %3, i64 noundef %4) #8 ; 0 uses
   %i.ck = load i64, ptr %i.d, align 8, !tbaa !48
   %.not = icmp eq i64 %i.ck, 3

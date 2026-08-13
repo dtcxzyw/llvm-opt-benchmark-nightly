@@ -45,9 +45,6 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 .preheader.outer:                                 ; preds = %get_12_norm.exit129, %bb.c
   %.0147.ph = phi i32 [ %i.fq, %get_12_norm.exit129 ], [ 1, %bb.c ] ; 3 uses
-  br label %.preheader
-
-.preheader:                                       ; preds = %.preheader.outer, %bb.aa
   br i1 %i.k, label %.lr.ph144, label %._crit_edge145.thread
 
 .thread172.critedge:                              ; preds = %._crit_edge145.thread
@@ -70,14 +67,14 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %.not77 = icmp eq i8 %i.w, 0
   br i1 %.not77, label %bb.aa, label %.lr.ph42.preheader.i112
 
-._crit_edge145.thread:                            ; preds = %.preheader
+._crit_edge145.thread:                            ; preds = %.preheader.outer
   %i.x = load i8, ptr @Verbose, align 1, !tbaa !17
   %.not77167 = icmp eq i8 %i.x, 0
   br i1 %.not77167, label %.thread172, label %.thread172.critedge
 
-.lr.ph144:                                        ; preds = %.preheader, %bb.w
-  %indvars.iv151 = phi i64 [ %indvars.iv.next152, %bb.w ], [ 0, %.preheader ] ; 8 uses
-  %.171143 = phi i1 [ %.4, %bb.w ], [ false, %.preheader ]
+.lr.ph144:                                        ; preds = %.preheader.outer, %.lr.ph144.backedge
+  %indvars.iv151 = phi i64 [ %indvars.iv151.be, %.lr.ph144.backedge ], [ 0, %.preheader.outer ] ; 8 uses
+  %.171143 = phi i1 [ %.171143.be, %.lr.ph144.backedge ], [ false, %.preheader.outer ]
   %i.y = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv151 ; 3 uses
   %i.z = load i32, ptr %i.y, align 4, !tbaa !20   ; 2 uses
   %i.aa = getelementptr i8, ptr %i.y, i64 4       ; 2 uses
@@ -356,7 +353,12 @@ get_12_norm.exit.loopexit:                        ; preds = %._crit_edge.i
 bb.w:                                             ; preds = %._crit_edge, %get_12_norm.exit.loopexit
   %indvars.iv.next152 = add nuw nsw i64 %indvars.iv151, 1 ; 2 uses
   %exitcond154.not = icmp eq i64 %indvars.iv.next152, %wide.trip.count50.i
-  br i1 %exitcond154.not, label %._crit_edge145, label %.lr.ph144, !llvm.loop !26
+  br i1 %exitcond154.not, label %._crit_edge145, label %.lr.ph144.backedge
+
+.lr.ph144.backedge:                               ; preds = %bb.w, %bb.aa
+  %indvars.iv151.be = phi i64 [ %indvars.iv.next152, %bb.w ], [ 0, %bb.aa ]
+  %.171143.be = phi i1 [ %.4, %bb.w ], [ false, %bb.aa ]
+  br label %.lr.ph144, !llvm.loop !26
 
 .lr.ph42.preheader.i112:                          ; preds = %._crit_edge145
   %.pre.i114 = load i32, ptr %i.c, align 4, !tbaa !20
@@ -435,10 +437,10 @@ get_12_norm.exit129:                              ; preds = %._crit_edge.i119
   %i.fu = sitofp i64 %i.ft to double
   %i.fv = fdiv double %i.fu, 1.000000e+06
   %i.fw = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %.069, ptr noundef nonnull @.str.3, double noundef %i.fv, double noundef %.sroa.0.8, double noundef %i.fo) #9 ; 0 uses
-  br i1 %.4, label %.preheader.outer, label %.thread172, !llvm.loop !27
+  br i1 %.4, label %.preheader.outer, label %.thread172, !llvm.loop !26
 
 bb.aa:                                            ; preds = %._crit_edge145
-  br i1 %.4, label %.preheader, label %.thread172, !llvm.loop !27
+  br i1 %.4, label %.lr.ph144.backedge, label %.thread172
 
 bb.ab:                                            ; preds = %.thread172
   %i.fx = tail call i32 @fclose(ptr noundef nonnull %.069) ; 0 uses
@@ -494,7 +496,7 @@ bb.a:
   %i.l = call ptr @SparseMatrix_from_coordinate_format(ptr noundef %.0.lcssa) #9 ; 3 uses
   call void @SparseMatrix_delete(ptr noundef %.0.lcssa) #9
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 4
-  %i.n = load i32, ptr %i.m, align 4, !tbaa !28
+  %i.n = load i32, ptr %i.m, align 4, !tbaa !27
   %i.o = call ptr @power_method(ptr noundef %i.l, i32 noundef %i.n, i32 noundef %0) #9 ; 2 uses
   call void @vector_ordering(i32 noundef %i.c, ptr noundef %i.o, ptr noundef %2) #9
   call void @free(ptr noundef %i.o) #9
@@ -506,7 +508,7 @@ bb.a:
   %indvars.iv61 = phi i64 [ 0, %.lr.ph57.preheader ], [ %indvars.iv.next62, %._crit_edge ] ; 5 uses
   %.055 = phi ptr [ %i.j, %.lr.ph57.preheader ], [ %i.y, %._crit_edge ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
-  store double 0.000000e+00, ptr %i.a, align 8, !tbaa !29
+  store double 0.000000e+00, ptr %i.a, align 8, !tbaa !28
   %i.q = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %indvars.iv61
   %i.r = load i32, ptr %i.q, align 4, !tbaa !20   ; 2 uses
   %indvars.iv.next62 = add nuw nsw i64 %indvars.iv61, 1 ; 3 uses
@@ -526,7 +528,7 @@ bb.a:
   %i.y = call ptr @SparseMatrix_coordinate_form_add_entry_(ptr noundef %.1.lcssa, i32 noundef %i.x, i32 noundef %i.x, ptr noundef nonnull %i.a, i32 noundef 1) #9 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   %exitcond.not = icmp eq i64 %indvars.iv.next62, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge58, label %.lr.ph57, !llvm.loop !31
+  br i1 %exitcond.not, label %._crit_edge58, label %.lr.ph57, !llvm.loop !30
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.c
   %i.z = phi i32 [ %i.t, %.lr.ph.preheader ], [ %i.ag, %bb.c ]
@@ -539,10 +541,10 @@ bb.a:
   br i1 %.not50, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
-  %i.ad = load double, ptr %i.a, align 8, !tbaa !29
+  %i.ad = load double, ptr %i.a, align 8, !tbaa !28
   %i.ae = fadd double %i.ad, 1.000000e+00
-  store double %i.ae, ptr %i.a, align 8, !tbaa !29
-  store double -1.000000e+00, ptr %i.b, align 8, !tbaa !29
+  store double %i.ae, ptr %i.a, align 8, !tbaa !28
+  store double -1.000000e+00, ptr %i.b, align 8, !tbaa !28
   %i.af = call ptr @SparseMatrix_coordinate_form_add_entry_(ptr noundef %.152, i32 noundef %i.w, i32 noundef %i.ab, ptr noundef nonnull %i.b, i32 noundef 1) #9
   %.pre = load i32, ptr %i.s, align 4, !tbaa !20
   br label %bb.c
@@ -553,7 +555,7 @@ bb.c:                                             ; preds = %bb.b, %.lr.ph
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
   %i.ah = sext i32 %i.ag to i64
   %i.ai = icmp slt i64 %indvars.iv.next, %i.ah
-  br i1 %i.ai, label %.lr.ph, label %._crit_edge, !llvm.loop !32
+  br i1 %i.ai, label %.lr.ph, label %._crit_edge, !llvm.loop !31
 
 bb.d:                                             ; preds = %._crit_edge58
   %i.aj = load ptr, ptr @stderr, align 8, !tbaa !18
@@ -566,7 +568,7 @@ bb.d:                                             ; preds = %._crit_edge58
 
 bb.e:                                             ; preds = %bb.d, %._crit_edge58
   %i.ap = call i64 @clock() #9
-  %i.aq = load ptr, ptr %2, align 8, !tbaa !33
+  %i.aq = load ptr, ptr %2, align 8, !tbaa !32
   call void @improve_antibandwidth_by_swapping(ptr noundef %i.e, ptr noundef %i.aq)
   %i.ar = load i8, ptr @Verbose, align 1, !tbaa !17
   %.not48 = icmp eq i8 %i.ar, 0
@@ -670,11 +672,10 @@ attributes #11 = { cold nounwind }
 !24 = distinct !{!24, !22}
 !25 = distinct !{!25, !22}
 !26 = distinct !{!26, !22}
-!27 = distinct !{!27, !22}
-!28 = !{!10, !6, i64 4}
-!29 = !{!30, !30, i64 0}
-!30 = !{!"double", !7, i64 0}
+!27 = !{!10, !6, i64 4}
+!28 = !{!29, !29, i64 0}
+!29 = !{!"double", !7, i64 0}
+!30 = distinct !{!30, !22}
 !31 = distinct !{!31, !22}
-!32 = distinct !{!32, !22}
-!33 = !{!12, !12, i64 0}
+!32 = !{!12, !12, i64 0}
 end_hunk_0

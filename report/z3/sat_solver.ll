@@ -204,17 +204,23 @@ _ZNK3sat6solver15init_trail_sizeEv.exit:          ; preds = %bb.e
   br label %.outer
 
 .outer:                                           ; preds = %_ZN3sat6solver11assign_unitENS_7literalE.exit, %.lr.ph66
-  %indvars.iv72.ph = phi i64 [ %indvars.iv.next7394, %_ZN3sat6solver11assign_unitENS_7literalE.exit ], [ 0, %.lr.ph66 ]
-  %.065.ph = phi i32 [ %i.bv, %_ZN3sat6solver11assign_unitENS_7literalE.exit ], [ 0, %.lr.ph66 ] ; 3 uses
+  %indvars.iv72.ph = phi i64 [ %indvars.iv.next7394, %_ZN3sat6solver11assign_unitENS_7literalE.exit ], [ 0, %.lr.ph66 ] ; 2 uses
+  %.065.ph = phi i32 [ %i.bv, %_ZN3sat6solver11assign_unitENS_7literalE.exit ], [ 0, %.lr.ph66 ] ; 4 uses
   %i.aj = load ptr, ptr %2, align 8, !tbaa !197   ; 3 uses
   %i.ak = icmp eq ptr %i.aj, null
-  %4 = getelementptr inbounds i8, ptr %i.aj, i64 -4
   br i1 %i.ak, label %.critedge, label %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit.preheader
 
 _ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit.preheader: ; preds = %.outer
+  %4 = getelementptr inbounds i8, ptr %i.aj, i64 -4
   %i.al = load i32, ptr %4, align 4, !tbaa !175
-  %i.am = zext i32 %i.al to i64
-  br label %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit
+  %i.am = zext i32 %i.al to i64                   ; 2 uses
+  %5 = icmp samesign ult i64 %indvars.iv72.ph, %i.am
+  br i1 %5, label %.lr.ph124.preheader, label %.critedge
+
+.lr.ph124.preheader:                              ; preds = %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit.preheader
+  %6 = load ptr, ptr %i.ae, align 8, !tbaa !224
+  %.pre76 = load ptr, ptr %i.af, align 8, !tbaa !229
+  br label %bb.m
 
 bb.f:                                             ; preds = %.lr.ph, %bb.k
   %i.an = phi ptr [ null, %.lr.ph ], [ %i.bi, %bb.k ] ; 5 uses
@@ -275,13 +281,8 @@ bb.k:                                             ; preds = %_ZN6vectorIN3sat7li
   %exitcond.not = icmp eq i32 %i.r, %lftr.wideiv
   br i1 %exitcond.not, label %._crit_edge.loopexit, label %bb.f, !llvm.loop !712
 
-_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit:     ; preds = %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit.preheader, %bb.s
-  %indvars.iv72125 = phi i64 [ %indvars.iv.next73, %bb.s ], [ %indvars.iv72.ph, %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit.preheader ] ; 4 uses
-  %5 = icmp samesign ult i64 %indvars.iv72125, %i.am
-  br i1 %5, label %bb.m, label %.critedge
-
-.critedge:                                        ; preds = %_ZN3sat6solver11assign_unitENS_7literalE.exit, %.outer, %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit, %.preheader
-  %.0.lcssa = phi i32 [ 0, %.preheader ], [ %.065.ph, %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit ], [ %i.bv, %_ZN3sat6solver11assign_unitENS_7literalE.exit ], [ %.065.ph, %.outer ] ; 3 uses
+.critedge:                                        ; preds = %.outer, %_ZN3sat6solver11assign_unitENS_7literalE.exit, %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit.preheader, %bb.s, %.preheader
+  %.0.lcssa = phi i32 [ 0, %.preheader ], [ %.065.ph, %bb.s ], [ %.065.ph, %.outer ], [ %i.bv, %_ZN3sat6solver11assign_unitENS_7literalE.exit ], [ %.065.ph, %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit.preheader ] ; 3 uses
   %i.bj = icmp ne i32 %.0.lcssa, 0
   %i.bk = icmp ne i32 %.020.lcssa, 0
   %or.cond = select i1 %i.bj, i1 true, i1 %i.bk
@@ -292,16 +293,15 @@ bb.l:                                             ; preds = %_ZNSolsEj.exit47, %
           cleanup
   br label %bb.ag
 
-bb.m:                                             ; preds = %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit
-  %i.bm = getelementptr inbounds nuw [4 x i8], ptr %i.aj, i64 %indvars.iv72125
+bb.m:                                             ; preds = %.lr.ph124.preheader, %bb.s
+  %indvars.iv72123 = phi i64 [ %indvars.iv.next73, %bb.s ], [ %indvars.iv72.ph, %.lr.ph124.preheader ] ; 3 uses
+  %i.bm = getelementptr inbounds nuw [4 x i8], ptr %i.aj, i64 %indvars.iv72123
   %i.bn = load i32, ptr %i.bm, align 4, !tbaa !175 ; 4 uses
   %i.bo = lshr i32 %i.bn, 1
-  %6 = load ptr, ptr %i.ae, align 8, !tbaa !224
   %i.bp = zext nneg i32 %i.bo to i64
   %i.bq = getelementptr inbounds nuw [24 x i8], ptr %6, i64 %i.bp ; 3 uses
   %i.br = load i32, ptr %i.bq, align 8, !tbaa !169
   %.not28 = icmp eq i32 %i.br, 0                  ; 2 uses
-  %.pre76 = load ptr, ptr %i.af, align 8, !tbaa !229
   %i.bs = zext i32 %i.bn to i64
   %i.bt = getelementptr inbounds nuw [4 x i8], ptr %.pre76, i64 %i.bs
   %i.bu = load i32, ptr %i.bt, align 4, !tbaa !230 ; 2 uses
@@ -348,7 +348,7 @@ _ZN3sat6solver11assign_unitENS_7literalE.exit:    ; preds = %bb.p, %bb.o, %.loop
   call void @llvm.lifetime.end.p0(ptr nonnull %1)
   %.pre80 = load i8, ptr %i.ab, align 8, !tbaa !167, !range !257
   %i.bz = trunc nuw i8 %.pre80 to i1
-  %indvars.iv.next7394 = add nuw nsw i64 %indvars.iv72125, 1
+  %indvars.iv.next7394 = add nuw nsw i64 %indvars.iv72123, 1
   br i1 %i.bz, label %.critedge, label %.outer, !llvm.loop !713
 
 bb.r:                                             ; preds = %bb.o
@@ -357,8 +357,9 @@ bb.r:                                             ; preds = %bb.o
   br label %bb.ag
 
 bb.s:                                             ; preds = %bb.m
-  %indvars.iv.next73 = add nuw nsw i64 %indvars.iv72125, 1
-  br label %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit, !llvm.loop !713
+  %indvars.iv.next73 = add nuw nsw i64 %indvars.iv72123, 1 ; 2 uses
+  %7 = icmp samesign ult i64 %indvars.iv.next73, %i.am
+  br i1 %7, label %bb.m, label %.critedge, !llvm.loop !713
 
 bb.t:                                             ; preds = %.critedge
   %i.cb = invoke noundef i32 @_Z19get_verbosity_levelv()

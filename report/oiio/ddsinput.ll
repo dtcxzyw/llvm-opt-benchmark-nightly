@@ -204,7 +204,7 @@ begin_hunk_0_@bcdec_bc7:bb.a
   %.0306.us.us.us.us = ashr i32 %i.acc, 6         ; 4 uses
   %.0308.us.us.us.us = ashr i32 %i.aby, 6         ; 4 uses
   %.0310.us.us.us.us = ashr i32 %i.abu, 6         ; 4 uses
-  switch i32 %.0251, label %.preheader.us.us.unreachabledefault.a [
+  switch i32 %.0251, label %default.unreachable [
     i32 1, label %bb.u
     i32 2, label %bb.t
     i32 3, label %bb.s
@@ -220,10 +220,10 @@ bb.t:                                             ; preds = %.preheader.us.us
 bb.u:                                             ; preds = %.preheader.us.us
   br label %bb.v
 
-.preheader.us.us.unreachabledefault.a:            ; preds = %.preheader.us.us
+.preheader.us.us.unreachabledefault.a:            ; preds = %bb.bb, %bb.ak, %bb.ao, %bb.as, %bb.v, %bb.z, %bb.ad
   unreachable
 
-default.unreachable:                              ; preds = %bb.bb, %bb.as, %bb.ao, %bb.ak, %.preheader.us, %bb.ad, %bb.z, %bb.v
+default.unreachable:                              ; preds = %.preheader.us.us
   unreachable
 
 bb.v:                                             ; preds = %.preheader.us.us, %bb.u, %bb.t, %bb.s
@@ -268,7 +268,7 @@ bb.v:                                             ; preds = %.preheader.us.us, %
   %.0306.us.us.us.us.1 = ashr i32 %i.adf, 6       ; 4 uses
   %.0308.us.us.us.us.1 = ashr i32 %i.adb, 6       ; 4 uses
   %.0310.us.us.us.us.1 = ashr i32 %i.acx, 6       ; 4 uses
-  switch i32 %.0251, label %default.unreachable [
+  switch i32 %.0251, label %.preheader.us.us.unreachabledefault.a [
     i32 1, label %bb.y
     i32 2, label %bb.x
     i32 3, label %bb.w
@@ -327,7 +327,7 @@ bb.z:                                             ; preds = %bb.y, %bb.x, %bb.w,
   %.0306.us.us.us.us.2 = ashr i32 %i.aej, 6       ; 4 uses
   %.0308.us.us.us.us.2 = ashr i32 %i.aef, 6       ; 4 uses
   %.0310.us.us.us.us.2 = ashr i32 %i.aeb, 6       ; 4 uses
-  switch i32 %.0251, label %default.unreachable [
+  switch i32 %.0251, label %.preheader.us.us.unreachabledefault.a [
     i32 1, label %bb.ac
     i32 2, label %bb.ab
     i32 3, label %bb.aa
@@ -386,7 +386,7 @@ bb.ad:                                            ; preds = %bb.ac, %bb.ab, %bb.
   %.0306.us.us.us.us.3 = ashr i32 %i.afn, 6       ; 4 uses
   %.0308.us.us.us.us.3 = ashr i32 %i.afj, 6       ; 4 uses
   %.0310.us.us.us.us.3 = ashr i32 %i.aff, 6       ; 4 uses
-  switch i32 %.0251, label %default.unreachable [
+  switch i32 %.0251, label %.preheader.us.us.unreachabledefault.a [
     i32 1, label %bb.ag
     i32 2, label %bb.af
     i32 3, label %bb.ae
@@ -474,7 +474,7 @@ bb.ag:                                            ; preds = %bb.ad
   %.0306.us.us = ashr i32 %i.ahj, 6               ; 4 uses
   %.0308.us.us = ashr i32 %i.ahb, 6               ; 4 uses
   %.0310.us.us = ashr i32 %i.agt, 6               ; 4 uses
-  switch i32 %.0251, label %default.unreachable [
+  switch i32 %.0251, label %.preheader.us.unreachabledefault [
     i32 1, label %bb.aj
     i32 2, label %bb.ai
     i32 3, label %bb.ah
@@ -489,6 +489,9 @@ bb.ai:                                            ; preds = %.preheader.us
 
 bb.aj:                                            ; preds = %.preheader.us
   br label %bb.ak
+
+.preheader.us.unreachabledefault:                 ; preds = %.preheader.us
+  unreachable
 
 bb.ak:                                            ; preds = %.preheader.us, %bb.aj, %bb.ai, %bb.ah
   %.1311.us.us = phi i32 [ %.0310.us.us, %.preheader.us ], [ %.0304.us.us, %bb.aj ], [ %.0310.us.us, %bb.ai ], [ %.0310.us.us, %bb.ah ]
@@ -553,7 +556,7 @@ bb.ak:                                            ; preds = %.preheader.us, %bb.
   %.0306.us.us.1 = ashr i32 %i.ajh, 6             ; 4 uses
   %.0308.us.us.1 = ashr i32 %i.aiz, 6             ; 4 uses
   %.0310.us.us.1 = ashr i32 %i.air, 6             ; 4 uses
-  switch i32 %.0251, label %default.unreachable [
+  switch i32 %.0251, label %.preheader.us.us.unreachabledefault.a [
     i32 1, label %bb.an
     i32 2, label %bb.am
     i32 3, label %bb.al
@@ -633,7 +636,7 @@ bb.ao:                                            ; preds = %bb.an, %bb.am, %bb.
   %.0306.us.us.2 = ashr i32 %i.alg, 6             ; 4 uses
   %.0308.us.us.2 = ashr i32 %i.aky, 6             ; 4 uses
   %.0310.us.us.2 = ashr i32 %i.akq, 6             ; 4 uses
-  switch i32 %.0251, label %default.unreachable [
+  switch i32 %.0251, label %.preheader.us.us.unreachabledefault.a [
     i32 1, label %bb.ar
     i32 2, label %bb.aq
     i32 3, label %bb.ap
@@ -713,7 +716,7 @@ bb.as:                                            ; preds = %bb.ar, %bb.aq, %bb.
   %.0306.us.us.3 = ashr i32 %i.anf, 6             ; 4 uses
   %.0308.us.us.3 = ashr i32 %i.amx, 6             ; 4 uses
   %.0310.us.us.3 = ashr i32 %i.amp, 6             ; 4 uses
-  switch i32 %.0251, label %default.unreachable [
+  switch i32 %.0251, label %.preheader.us.us.unreachabledefault.a [
     i32 1, label %bb.av
     i32 2, label %bb.au
     i32 3, label %bb.at
@@ -871,7 +874,7 @@ bb.bb:                                            ; preds = %bb.az, %bb.ba
   %.0306 = ashr i32 %.0306.in, 6                  ; 4 uses
   %.0308 = ashr i32 %.0308.in, 6                  ; 4 uses
   %.0310 = ashr i32 %.0310.in, 6                  ; 4 uses
-  switch i32 %.0251, label %default.unreachable [
+  switch i32 %.0251, label %.preheader.us.us.unreachabledefault.a [
     i32 1, label %bb.bc
     i32 2, label %bb.bd
     i32 3, label %bb.be
