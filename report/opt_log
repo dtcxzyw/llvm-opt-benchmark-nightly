@@ -1,0 +1,2 @@
+boost/static_string.bc: timeout
+velox/ArrayFunctionsRegistration.bc: timeout
