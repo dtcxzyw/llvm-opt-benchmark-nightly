@@ -139,8 +139,8 @@ bb.a:
   store i8 1, ptr %i.j, align 1, !tbaa !29
   %i.k = getelementptr inbounds nuw i8, ptr %i.f, i64 204
   store i32 1, ptr %i.k, align 4, !tbaa !93
-  %8 = add i64 %1, -1                             ; 2 uses
-  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 %8
+  %8 = getelementptr i8, ptr %0, i64 %1
+  %i.l = getelementptr i8, ptr %8, i64 -1
   %i.m = load i8, ptr %i.l, align 1, !tbaa !94
   %.not = icmp eq i8 %i.m, 0
   br i1 %.not, label %bb.c, label %bb.b
@@ -151,8 +151,9 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.i
 
 bb.c:                                             ; preds = %bb.a
+  %9 = add i64 %1, -1
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #14
-  call void @_ZN4llvh12MemoryBuffer12getMemBufferENS_9StringRefES1_b(ptr dead_on_unwind nonnull writable sret(%"class.std::unique_ptr.41") align 8 %2, ptr nonnull %0, i64 %8, ptr nonnull @.str.1, i64 0, i1 noundef zeroext true) #14
+  call void @_ZN4llvh12MemoryBuffer12getMemBufferENS_9StringRefES1_b(ptr dead_on_unwind nonnull writable sret(%"class.std::unique_ptr.41") align 8 %2, ptr nonnull %0, i64 %9, ptr nonnull @.str.1, i64 0, i1 noundef zeroext true) #14
   %i.p = getelementptr inbounds nuw i8, ptr %i.f, i64 176
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !95, !nonnull !96, !align !97
   %i.r = load i64, ptr %2, align 8, !tbaa !98

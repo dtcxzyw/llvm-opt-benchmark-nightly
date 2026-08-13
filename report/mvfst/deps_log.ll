@@ -203,7 +203,7 @@ _ZN7DepsLog10UpdateDepsEiPNS_4DepsE.exit:         ; preds = %_ZNSt6vectorIPN7Dep
   br label %_ZNSt6vectorIP4NodeSaIS1_EE9push_backERKS1_.exit
 
 bb.w:                                             ; preds = %bb.w, %.lr.ph.new
-  %indvars.iv = phi i64 [ 0, %.lr.ph.new ], [ %indvars.iv.next.3, %bb.w ] ; 6 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph.new ], [ %indvars.iv.next.3, %bb.w ] ; 9 uses
   %niter = phi i64 [ 0, %.lr.ph.new ], [ %niter.next.3, %bb.w ]
   %i.dk = getelementptr inbounds nuw [4 x i8], ptr %i.ao, i64 %indvars.iv
   %i.dl = load i32, ptr %i.dk, align 4, !tbaa !78
@@ -212,30 +212,33 @@ bb.w:                                             ; preds = %bb.w, %.lr.ph.new
   %i.do = load ptr, ptr %i.dn, align 8, !tbaa !55
   %i.dp = getelementptr inbounds nuw [8 x i8], ptr %i.cb, i64 %indvars.iv
   store ptr %i.do, ptr %i.dp, align 8, !tbaa !55
-  %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 2 uses
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %i.ao, i64 %indvars.iv.next
-  %i.dq = load i32, ptr %7, align 16, !tbaa !78
+  %7 = getelementptr inbounds nuw [4 x i8], ptr %i.ao, i64 %indvars.iv
+  %8 = getelementptr inbounds nuw i8, ptr %7, i64 4
+  %i.dq = load i32, ptr %8, align 16, !tbaa !78
   %i.dr = sext i32 %i.dq to i64
   %i.ds = getelementptr inbounds nuw [8 x i8], ptr %i.cd, i64 %i.dr
   %i.dt = load ptr, ptr %i.ds, align 8, !tbaa !55
-  %i.du = getelementptr inbounds nuw [8 x i8], ptr %i.cb, i64 %indvars.iv.next
-  store ptr %i.dt, ptr %i.du, align 8, !tbaa !55
-  %indvars.iv.next.1 = or disjoint i64 %indvars.iv, 2 ; 2 uses
-  %8 = getelementptr inbounds nuw [4 x i8], ptr %i.ao, i64 %indvars.iv.next.1
-  %i.dv = load i32, ptr %8, align 4, !tbaa !78
+  %i.du = getelementptr inbounds nuw [8 x i8], ptr %i.cb, i64 %indvars.iv
+  %9 = getelementptr inbounds nuw i8, ptr %i.du, i64 8
+  store ptr %i.dt, ptr %9, align 8, !tbaa !55
+  %10 = getelementptr inbounds nuw [4 x i8], ptr %i.ao, i64 %indvars.iv
+  %11 = getelementptr inbounds nuw i8, ptr %10, i64 8
+  %i.dv = load i32, ptr %11, align 4, !tbaa !78
   %i.dw = sext i32 %i.dv to i64
   %i.dx = getelementptr inbounds nuw [8 x i8], ptr %i.cd, i64 %i.dw
   %i.dy = load ptr, ptr %i.dx, align 8, !tbaa !55
-  %i.dz = getelementptr inbounds nuw [8 x i8], ptr %i.cb, i64 %indvars.iv.next.1
-  store ptr %i.dy, ptr %i.dz, align 8, !tbaa !55
-  %indvars.iv.next.2 = or disjoint i64 %indvars.iv, 3 ; 2 uses
-  %9 = getelementptr inbounds nuw [4 x i8], ptr %i.ao, i64 %indvars.iv.next.2
-  %i.ea = load i32, ptr %9, align 8, !tbaa !78
+  %i.dz = getelementptr inbounds nuw [8 x i8], ptr %i.cb, i64 %indvars.iv
+  %12 = getelementptr inbounds nuw i8, ptr %i.dz, i64 16
+  store ptr %i.dy, ptr %12, align 8, !tbaa !55
+  %13 = getelementptr inbounds nuw [4 x i8], ptr %i.ao, i64 %indvars.iv
+  %14 = getelementptr inbounds nuw i8, ptr %13, i64 12
+  %i.ea = load i32, ptr %14, align 8, !tbaa !78
   %i.eb = sext i32 %i.ea to i64
   %i.ec = getelementptr inbounds nuw [8 x i8], ptr %i.cd, i64 %i.eb
   %i.ed = load ptr, ptr %i.ec, align 8, !tbaa !55
-  %i.ee = getelementptr inbounds nuw [8 x i8], ptr %i.cb, i64 %indvars.iv.next.2
-  store ptr %i.ed, ptr %i.ee, align 8, !tbaa !55
+  %i.ee = getelementptr inbounds nuw [8 x i8], ptr %i.cb, i64 %indvars.iv
+  %15 = getelementptr inbounds nuw i8, ptr %i.ee, i64 24
+  store ptr %i.ed, ptr %15, align 8, !tbaa !55
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter

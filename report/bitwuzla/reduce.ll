@@ -203,12 +203,13 @@ bb.c:                                             ; preds = %bb.b
 vector.memcheck157:                               ; preds = %.lr.ph.i.preheader
   %i.p = add i64 %i.g, -8
   %i.q = sub i64 %i.p, %i.d
-  %i.r = and i64 %i.q, -8
-  %3 = add i64 %i.r, 8                            ; 2 uses
-  %scevgep158.a = getelementptr i8, ptr %0, i64 %3
-  %scevgep159 = getelementptr i8, ptr %1, i64 %3
+  %i.r = and i64 %i.q, -8                         ; 2 uses
+  %3 = getelementptr i8, ptr %0, i64 %i.r
+  %scevgep158 = getelementptr i8, ptr %3, i64 8
+  %scevgep158.a = getelementptr i8, ptr %1, i64 %i.r
+  %scevgep159 = getelementptr i8, ptr %scevgep158.a, i64 8
   %bound0160 = icmp ult ptr %0, %scevgep159
-  %bound1161 = icmp ult ptr %1, %scevgep158.a
+  %bound1161 = icmp ult ptr %1, %scevgep158
   %found.conflict162 = and i1 %bound0160, %bound1161
   br i1 %found.conflict162, label %.lr.ph.i.preheader180, label %vector.ph165
 

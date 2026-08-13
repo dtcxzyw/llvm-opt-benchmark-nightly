@@ -30,9 +30,9 @@ bb.d:                                             ; preds = %.lr.ph, %bb.f
   %.03541 = phi i64 [ 0, %.lr.ph ], [ %i.t, %bb.f ] ; 3 uses
   %.03640 = phi ptr [ %i.g, %.lr.ph ], [ %i.s, %bb.f ] ; 3 uses
   %i.i = load double, ptr %.03640, align 8, !tbaa !8
-  %i.j = sub nsw i64 %0, %.03541                  ; 3 uses
-  %5 = add nsw i64 %i.j, -1                       ; 2 uses
-  %6 = getelementptr inbounds [8 x i8], ptr %.0, i64 %5 ; 2 uses
+  %i.j = sub nsw i64 %0, %.03541                  ; 4 uses
+  %5 = getelementptr [8 x i8], ptr %.0, i64 %i.j
+  %6 = getelementptr i8, ptr %5, i64 -8           ; 2 uses
   %i.k = load double, ptr %6, align 8, !tbaa !8
   %i.l = fdiv double %i.k, %i.i                   ; 2 uses
   store double %i.l, ptr %6, align 8, !tbaa !8
@@ -40,10 +40,11 @@ bb.d:                                             ; preds = %.lr.ph, %bb.f
   br i1 %i.m, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
+  %7 = add nsw i64 %i.j, -1
   %i.n = fneg double %i.l
   %i.o = sub nsw i64 1, %i.j
   %i.p = getelementptr inbounds [8 x i8], ptr %.03640, i64 %i.o
-  %i.q = tail call i32 @daxpy_k(i64 noundef %5, i64 noundef 0, i64 noundef 0, double noundef %i.n, ptr noundef nonnull %i.p, i64 noundef 1, ptr noundef nonnull %.0, i64 noundef 1, ptr noundef null, i64 noundef 0) #2 ; 0 uses
+  %i.q = tail call i32 @daxpy_k(i64 noundef %7, i64 noundef 0, i64 noundef 0, double noundef %i.n, ptr noundef nonnull %i.p, i64 noundef 1, ptr noundef nonnull %.0, i64 noundef 1, ptr noundef null, i64 noundef 0) #2 ; 0 uses
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d

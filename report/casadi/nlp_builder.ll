@@ -203,8 +203,8 @@ bb.a:
   %9 = alloca %"class.std::allocator.0", align 1  ; 3 uses
   %10 = alloca %"class.std::vector", align 8      ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
-  %i.d = load i64, ptr %i.c, align 8, !tbaa !165  ; 3 uses
-  %i.e = add nsw i64 %i.d, 1                      ; 4 uses
+  %i.d = load i64, ptr %i.c, align 8, !tbaa !165  ; 4 uses
+  %i.e = add nsw i64 %i.d, 1                      ; 3 uses
   %i.f = icmp ugt i64 %i.e, 1152921504606846975
   br i1 %i.f, label %.noexc, label %_ZNSt6vectorIxSaIxEE17_S_check_init_lenEmRKS0_.exit.i
 
@@ -219,7 +219,8 @@ _ZNSt6vectorIxSaIxEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %bb.a
 .noexc36:                                         ; preds = %_ZNSt6vectorIxSaIxEE17_S_check_init_lenEmRKS0_.exit.i
   %i.g = shl nuw nsw i64 %i.e, 3
   %i.h = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.g) #25 ; 5 uses
-  %i.i = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %i.e ; 2 uses
+  %i.i = getelementptr [8 x i8], ptr %i.h, i64 %i.d
+  %11 = getelementptr i8, ptr %i.i, i64 8         ; 2 uses
   store i64 0, ptr %i.h, align 8, !tbaa !225
   %i.j = icmp eq i64 %i.d, 0
   br i1 %i.j, label %_ZNSt6vectorIxSaIxEEC2EmRKS0_.exit, label %_ZSt6fill_nIPxmxET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i
@@ -231,7 +232,7 @@ _ZSt6fill_nIPxmxET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i: ; preds = %.noexc36
   br label %_ZNSt6vectorIxSaIxEEC2EmRKS0_.exit
 
 _ZNSt6vectorIxSaIxEEC2EmRKS0_.exit:               ; preds = %_ZSt6fill_nIPxmxET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i, %.noexc36, %_ZNSt6vectorIxSaIxEE17_S_check_init_lenEmRKS0_.exit.i
-  %.sroa.11.0 = phi ptr [ %i.i, %_ZSt6fill_nIPxmxET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i ], [ %i.i, %.noexc36 ], [ null, %_ZNSt6vectorIxSaIxEE17_S_check_init_lenEmRKS0_.exit.i ] ; 2 uses
+  %.sroa.11.0 = phi ptr [ %11, %_ZSt6fill_nIPxmxET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i ], [ %11, %.noexc36 ], [ null, %_ZNSt6vectorIxSaIxEE17_S_check_init_lenEmRKS0_.exit.i ] ; 2 uses
   %.sroa.062.0 = phi ptr [ %i.h, %_ZSt6fill_nIPxmxET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i ], [ %i.h, %.noexc36 ], [ null, %_ZNSt6vectorIxSaIxEE17_S_check_init_lenEmRKS0_.exit.i ] ; 7 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !73   ; 2 uses
@@ -502,7 +503,7 @@ _ZNSt6vectorIxSaIxEED2Ev.exit:                    ; preds = %bb.y, %bb.v
   ret void
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.y
-  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.y ]
+  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.y ] ; 2 uses
   %i.bz = load ptr, ptr %i.l, align 8, !tbaa !73  ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #22
   %i.ca = load i8, ptr %i.n, align 1, !tbaa !93, !range !94, !noundef !95
@@ -521,9 +522,10 @@ bb.y:                                             ; preds = %bb.w, %bb.x
   %i.ce = load i32, ptr %i.a, align 4, !tbaa !213
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #22
   %i.cf = sext i32 %i.ce to i64
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
-  %i.cg = getelementptr inbounds nuw [8 x i8], ptr %.sroa.062.0, i64 %indvars.iv.next
-  store i64 %i.cf, ptr %i.cg, align 8, !tbaa !225
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %i.cg = getelementptr inbounds nuw [8 x i8], ptr %.sroa.062.0, i64 %indvars.iv
+  %12 = getelementptr inbounds nuw i8, ptr %i.cg, i64 8
+  store i64 %i.cf, ptr %12, align 8, !tbaa !225
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %_ZNSt6vectorIxSaIxEED2Ev.exit, label %.lr.ph, !llvm.loop !293
 

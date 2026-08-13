@@ -203,7 +203,7 @@ bb.a:
   %i.c = alloca [8 x i8], align 8                 ; 4 uses
   %i.d = alloca [8 x i8], align 8                 ; 4 uses
   %i.e = alloca [1024 x i8], align 4              ; 5 uses
-  %i.f = alloca [16384 x i8], align 4             ; 23 uses
+  %i.f = alloca [16384 x i8], align 4             ; 24 uses
   %i.g = alloca [1024 x i8], align 4              ; 5 uses
   %i.h = alloca [24 x i8], align 8                ; 6 uses
   %i.i = alloca [8 x i8], align 8                 ; 4 uses
@@ -606,6 +606,8 @@ _RNvXsq_NtCshzWfHUSfYae_4core6resultINtB5_6ResultuINtNtCsbSS6DM8SDEO_5alloc5boxe
   br label %bb.bu
 
 bb.bp:                                            ; preds = %bb.bx
+  %0 = getelementptr inbounds nuw i8, ptr %i.f, i64 %.sroa.060.0.idx.i.i48
+  %.sroa.060.0.ptr.i.i = getelementptr inbounds nuw i8, ptr %0, i64 1024
   %i.kz = icmp eq i64 %.sroa.060.0.add.i.i, 16384
   br i1 %i.kz, label %bb.bq, label %bb.bv
 
@@ -648,8 +650,8 @@ bb.bu:                                            ; preds = %_RNvXsq_NtCshzWfHUS
           to label %bb.cg unwind label %bb.b
 
 bb.bv:                                            ; preds = %.preheader79.i.i, %bb.bp
+  %.sroa.060.0.ptr.i.i49 = phi ptr [ %i.f, %.preheader79.i.i ], [ %.sroa.060.0.ptr.i.i, %bb.bp ]
   %.sroa.060.0.idx.i.i48 = phi i64 [ 0, %.preheader79.i.i ], [ %.sroa.060.0.add.i.i, %bb.bp ] ; 2 uses
-  %.sroa.060.0.ptr.i.i49 = getelementptr inbounds nuw i8, ptr %i.f, i64 %.sroa.060.0.idx.i.i48
   %.sroa.060.0.add.i.i = add nuw nsw i64 %.sroa.060.0.idx.i.i48, 1024 ; 2 uses
   %i.lc = invoke fastcc ptr @_RNvYINtNtNtNtCsbSS6DM8SDEO_5alloc2io8buffered9bufwriter9BufWriterNtNtCscAsMj0W7j8b_3std2fs4FileENtNtNtCshzWfHUSfYae_4core2io5write5Write9write_fmtCs5I7i6yCjUqE_18build_script_build(ptr align 8 %i.q, ptr nonnull @14, ptr nonnull inttoptr (i64 13 to ptr))
           to label %bb.bw unwind label %.loopexit.split-lp.loopexit.i.i ; 2 uses

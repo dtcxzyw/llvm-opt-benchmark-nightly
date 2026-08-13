@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %rb_alloc_tmp_buffer
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %RSTRING_PTR.exit
-  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %RSTRING_PTR.exit ] ; 3 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %RSTRING_PTR.exit ] ; 4 uses
   %i.v = getelementptr [8 x i8], ptr %1, i64 %indvars.iv
   %i.w = load i64, ptr %i.v, align 8, !tbaa !13
   %i.x = call i64 @rb_obj_as_string(i64 noundef %i.w) #28
@@ -236,12 +236,13 @@ bb.l:                                             ; preds = %bb.k
 
 RSTRING_PTR.exit:                                 ; preds = %bb.k, %bb.l
   %i.ah = phi ptr [ %i.ag, %bb.l ], [ %i.af, %bb.k ]
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
-  %i.ai = getelementptr [16 x i8], ptr %i.m, i64 %indvars.iv.next ; 2 uses
-  store ptr %i.ah, ptr %i.ai, align 8, !tbaa !279
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %i.ai = getelementptr [16 x i8], ptr %i.m, i64 %indvars.iv ; 2 uses
+  %4 = getelementptr i8, ptr %i.ai, i64 16
+  store ptr %i.ah, ptr %4, align 8, !tbaa !279
   %i.aj = getelementptr i8, ptr %i.ac, i64 16
   %i.ak = load i64, ptr %i.aj, align 8, !tbaa !81
-  %i.al = getelementptr i8, ptr %i.ai, i64 8
+  %i.al = getelementptr i8, ptr %i.ai, i64 24
   store i64 %i.ak, ptr %i.al, align 8, !tbaa !281
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !344

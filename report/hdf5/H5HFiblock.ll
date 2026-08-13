@@ -203,7 +203,7 @@ bb.ac:                                            ; preds = %._crit_edge165, %bb
 
 bb.ad:                                            ; preds = %bb.ad, %.lr.ph.new
   %.0106151 = phi i64 [ 0, %.lr.ph.new ], [ %i.fh, %bb.ad ]
-  %.0109150 = phi i64 [ %i.eq, %.lr.ph.new ], [ %i.fi, %bb.ad ] ; 4 uses
+  %.0109150 = phi i64 [ %i.eq, %.lr.ph.new ], [ %i.fi, %bb.ad ] ; 5 uses
   %niter = phi i64 [ 0, %.lr.ph.new ], [ %niter.next.1, %bb.ad ]
   %.lhs.trunc = trunc i64 %.0109150 to i32
   %i.ey = udiv i32 %.lhs.trunc, %i.ej
@@ -213,12 +213,13 @@ bb.ad:                                            ; preds = %bb.ad, %.lr.ph.new
   %i.fa = getelementptr inbounds nuw [8 x i8], ptr %i.eu, i64 %.zext
   %i.fb = load i64, ptr %i.fa, align 8, !tbaa !51
   %i.fc = add i64 %i.fb, %.0106151
-  %2 = add nuw nsw i64 %.0109150, 1               ; 2 uses
-  %.lhs.trunc.1 = trunc i64 %2 to i32
+  %2 = trunc i64 %.0109150 to i32
+  %.lhs.trunc.1 = add i32 %2, 1
   %i.fd = udiv i32 %.lhs.trunc.1, %i.ej
   %.zext.1 = zext i32 %i.fd to i64
-  %i.fe = getelementptr inbounds nuw [8 x i8], ptr %i.es, i64 %2
-  store i64 -1, ptr %i.fe, align 8, !tbaa !98
+  %i.fe = getelementptr inbounds nuw [8 x i8], ptr %i.es, i64 %.0109150
+  %3 = getelementptr inbounds nuw i8, ptr %i.fe, i64 8
+  store i64 -1, ptr %3, align 8, !tbaa !98
   %i.ff = getelementptr inbounds nuw [8 x i8], ptr %i.eu, i64 %.zext.1
   %i.fg = load i64, ptr %i.ff, align 8, !tbaa !51
   %i.fh = add i64 %i.fg, %i.fc                    ; 3 uses

@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   %i.j = load ptr, ptr %0, align 8, !tbaa !40     ; 2 uses
-  %i.k = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.j) #11
-  %i.l = add i64 %i.k, 1                          ; 2 uses
+  %i.k = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.j) #11 ; 2 uses
+  %i.l = add i64 %i.k, 1
   %i.m = load i8, ptr %1, align 8, !tbaa !32, !range !13, !noundef !14
   %i.n = trunc nuw i8 %i.m to i1
   br i1 %i.n, label %bb.d, label %bb.e
@@ -217,7 +217,8 @@ bb.d:                                             ; preds = %bb.c
   %i.r = tail call ptr @strcpy(ptr noundef nonnull dereferenceable(1) %i.q, ptr noundef nonnull dereferenceable(1) %i.j) #10 ; 0 uses
   %i.s = load ptr, ptr %i.o, align 8, !tbaa !37   ; 2 uses
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !16
-  %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.l
+  %3 = getelementptr i8, ptr %i.t, i64 %i.k
+  %i.u = getelementptr i8, ptr %3, i64 1
   store ptr %i.u, ptr %i.s, align 8, !tbaa !16
   br label %bb.e
 
@@ -225,7 +226,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !36   ; 2 uses
   %i.x = load i64, ptr %i.w, align 8, !tbaa !8
-  %i.y = add i64 %i.x, %i.l
+  %i.y = add i64 %i.l, %i.x
   store i64 %i.y, ptr %i.w, align 8, !tbaa !8
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #10
   %i.z = call i32 @H5_user_cb_prepare(ptr noundef nonnull %2) #10

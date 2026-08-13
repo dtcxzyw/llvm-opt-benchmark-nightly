@@ -201,7 +201,7 @@ bb.d:                                             ; preds = %bb.c
   %i.i = getelementptr i8, ptr %0, i64 72         ; 2 uses
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !14
   %i.k = getelementptr i8, ptr %i.j, i64 16
-  %.val = load i64, ptr %i.k, align 8, !tbaa !24
+  %.val = load i64, ptr %i.k, align 8, !tbaa !24  ; 2 uses
   %.01929 = add i64 %.val, -1                     ; 2 uses
   %i.l = icmp sgt i64 %.01929, -1
   br i1 %i.l, label %.lr.ph, label %.thread24
@@ -213,11 +213,13 @@ bb.e:                                             ; preds = %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.d, %bb.e
   %.01930 = phi i64 [ %.019, %bb.e ], [ %.01929, %bb.d ] ; 3 uses
+  %.019.in30 = phi i64 [ %.01930, %bb.e ], [ %.val, %bb.d ]
   %i.n = load ptr, ptr %i.i, align 8, !tbaa !14
   %i.o = getelementptr i8, ptr %i.n, i64 24
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !31
-  %i.q = getelementptr [8 x i8], ptr %i.p, i64 %.01930
-  %i.r = load ptr, ptr %i.q, align 8, !tbaa !35
+  %i.q = getelementptr [8 x i8], ptr %i.p, i64 %.019.in30
+  %2 = getelementptr i8, ptr %i.q, i64 -8
+  %i.r = load ptr, ptr %2, align 8, !tbaa !35
   %i.s = tail call ptr @PyCapsule_GetPointer(ptr noundef %i.r, ptr noundef nonnull @.str.1) #11 ; 2 uses
   %i.t = getelementptr i8, ptr %i.s, i64 8
   %i.u = load i32, ptr %i.t, align 8, !tbaa !36
@@ -620,16 +622,17 @@ Py_INCREF.exit:                                   ; preds = %bb.c, %bb.b, %bb.a
   %i.n = getelementptr i8, ptr %0, i64 72         ; 2 uses
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !14   ; 2 uses
   %i.p = getelementptr i8, ptr %i.o, i64 16
-  %.val = load i64, ptr %i.p, align 8, !tbaa !24
-  %i.q = add i64 %.val, -1                        ; 3 uses
+  %.val = load i64, ptr %i.p, align 8, !tbaa !24  ; 2 uses
+  %i.q = add i64 %.val, -1                        ; 2 uses
   %i.r = icmp sgt i64 %i.q, -1
   br i1 %i.r, label %bb.d, label %bb.i
 
 bb.d:                                             ; preds = %Py_INCREF.exit
   %i.s = getelementptr i8, ptr %i.o, i64 24
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !31
-  %i.u = getelementptr [8 x i8], ptr %i.t, i64 %i.q
-  %i.v = load ptr, ptr %i.u, align 8, !tbaa !35
+  %i.u = getelementptr [8 x i8], ptr %i.t, i64 %.val
+  %1 = getelementptr i8, ptr %i.u, i64 -8
+  %i.v = load ptr, ptr %1, align 8, !tbaa !35
   %i.w = tail call ptr @PyCapsule_GetPointer(ptr noundef %i.v, ptr noundef nonnull @.str.1) #11
   store ptr %i.w, ptr %i.l, align 8, !tbaa !47
   %i.x = load ptr, ptr %i.n, align 8, !tbaa !14

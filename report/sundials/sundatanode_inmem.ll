@@ -201,7 +201,7 @@ thread-pre-split:                                 ; preds = %SUNDataNode_HasChil
   br label %SUNDataNode_HasChildren_InMem.exit.thread
 
 SUNDataNode_HasChildren_InMem.exit.thread:        ; preds = %bb.b, %thread-pre-split
-  %i.g = phi i64 [ %.pr, %thread-pre-split ], [ %.val.i, %bb.b ] ; 2 uses
+  %i.g = phi i64 [ %.pr, %thread-pre-split ], [ %.val.i, %bb.b ] ; 3 uses
   %i.h = icmp sge i64 %1, %i.g
   %i.i = icmp slt i64 %1, 0
   %or.cond.i = or i1 %i.i, %i.h
@@ -225,7 +225,7 @@ SUNStlVector_SUNDataNode_Set.exit.i:              ; preds = %bb.d
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !31
   store ptr null, ptr %i.o, align 8, !tbaa !58
   store ptr null, ptr %i.l, align 8, !tbaa !8
-  %i.p = add nsw i64 %i.g, -1                     ; 4 uses
+  %i.p = add nsw i64 %i.g, -1                     ; 3 uses
   %i.q = icmp slt i64 %1, %i.p
   br i1 %i.q, label %.lr.ph.i, label %._crit_edge.i
 
@@ -239,8 +239,9 @@ SUNStlVector_SUNDataNode_Set.exit.i:              ; preds = %bb.d
   br label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i, %SUNStlVector_SUNDataNode_Set.exit.i
-  %i.u = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %i.p
-  store ptr null, ptr %i.u, align 8, !tbaa !8
+  %i.u = getelementptr [8 x i8], ptr %i.k, i64 %i.g
+  %3 = getelementptr i8, ptr %i.u, i64 -8
+  store ptr null, ptr %3, align 8, !tbaa !8
   store i64 %i.p, ptr %i.d, align 8, !tbaa !38
   br label %SUNStlVector_SUNDataNode_Erase.exit
 

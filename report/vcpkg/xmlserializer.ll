@@ -165,8 +165,8 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.l = load i64, ptr %i.k, align 8, !tbaa !9    ; 4 uses
-  %i.m = add i64 %i.l, 1                          ; 3 uses
+  %i.l = load i64, ptr %i.k, align 8, !tbaa !9    ; 5 uses
+  %i.m = add i64 %i.l, 1                          ; 2 uses
   %i.n = load ptr, ptr %0, align 8, !tbaa !21     ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.p = icmp eq ptr %i.n, %i.o
@@ -197,7 +197,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9push_backEc.exit: ; preds 
   store i8 32, ptr %i.v, align 1, !tbaa !22
   store i64 %i.m, ptr %i.k, align 8, !tbaa !9
   %i.w = load ptr, ptr %0, align 8, !tbaa !21
-  %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 %i.m
+  %6 = getelementptr i8, ptr %i.w, i64 %i.l
+  %i.x = getelementptr i8, ptr %6, i64 1
   store i8 0, ptr %i.x, align 1, !tbaa !22
   br label %bb.e
 
@@ -206,8 +207,8 @@ bb.e:                                             ; preds = %_ZNSt7__cxx1112basi
   call void @_ZN5vcpkg7Strings7details15append_internalERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKc(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull @.str.1)
   %i.y = call noundef nonnull align 8 dereferenceable(37) ptr @_ZN5vcpkg13XmlSerializer4textENS_10StringViewE(ptr noundef nonnull align 8 dereferenceable(37) %0, ptr %3, i64 %4) ; 0 uses
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.aa = load i64, ptr %i.z, align 8, !tbaa !9   ; 4 uses
-  %i.ab = add i64 %i.aa, 1                        ; 3 uses
+  %i.aa = load i64, ptr %i.z, align 8, !tbaa !9   ; 5 uses
+  %i.ab = add i64 %i.aa, 1                        ; 2 uses
   %i.ac = load ptr, ptr %0, align 8, !tbaa !21    ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.ae = icmp eq ptr %i.ac, %i.ad
@@ -238,7 +239,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9push_backEc.exit7: ; preds
   store i8 34, ptr %i.ak, align 1, !tbaa !22
   store i64 %i.ab, ptr %i.z, align 8, !tbaa !9
   %i.al = load ptr, ptr %0, align 8, !tbaa !21
-  %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 %i.ab
+  %7 = getelementptr i8, ptr %i.al, i64 %i.aa
+  %i.am = getelementptr i8, ptr %7, i64 1
   store i8 0, ptr %i.am, align 1, !tbaa !22
   ret ptr %0
 }
@@ -278,7 +280,7 @@ _ZN5vcpkg13XmlSerializer19emit_pending_indentEv.exit: ; preds = %bb.a, %bb.b
 bb.c:                                             ; preds = %.lr.ph, %bb.p
   %.020 = phi ptr [ %1, %.lr.ph ], [ %i.ao, %bb.p ] ; 2 uses
   %i.m = load i8, ptr %.020, align 1, !tbaa !22   ; 2 uses
-  %i.n = load i64, ptr %i.k, align 8, !tbaa !9    ; 9 uses
+  %i.n = load i64, ptr %i.k, align 8, !tbaa !9    ; 10 uses
   switch i8 %i.m, label %bb.n [
     i8 38, label %bb.d
     i8 60, label %bb.f
@@ -353,7 +355,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit16: ; preds
   br label %bb.p
 
 bb.n:                                             ; preds = %bb.c
-  %i.ad = add i64 %i.n, 1                         ; 3 uses
+  %i.ad = add i64 %i.n, 1                         ; 2 uses
   %i.ae = load ptr, ptr %0, align 8, !tbaa !21    ; 2 uses
   %i.af = icmp eq ptr %i.ae, %i.l
   br i1 %i.af, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
@@ -383,7 +385,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9push_backEc.exit: ; preds 
   store i8 %i.m, ptr %i.al, align 1, !tbaa !22
   store i64 %i.ad, ptr %i.k, align 8, !tbaa !9
   %i.am = load ptr, ptr %0, align 8, !tbaa !21
-  %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 %i.ad
+  %3 = getelementptr i8, ptr %i.am, i64 %i.n
+  %i.an = getelementptr i8, ptr %3, i64 1
   store i8 0, ptr %i.an, align 1, !tbaa !22
   br label %bb.p
 
@@ -413,8 +416,8 @@ bb.b:                                             ; preds = %bb.a
 
 _ZN5vcpkg13XmlSerializer19emit_pending_indentEv.exit: ; preds = %bb.a, %bb.b
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.k = load i64, ptr %i.j, align 8, !tbaa !9    ; 4 uses
-  %i.l = add i64 %i.k, 1                          ; 3 uses
+  %i.k = load i64, ptr %i.j, align 8, !tbaa !9    ; 5 uses
+  %i.l = add i64 %i.k, 1                          ; 2 uses
   %i.m = load ptr, ptr %0, align 8, !tbaa !21     ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.o = icmp eq ptr %i.m, %i.n
@@ -445,7 +448,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9push_backEc.exit: ; preds 
   store i8 62, ptr %i.u, align 1, !tbaa !22
   store i64 %i.l, ptr %i.j, align 8, !tbaa !9
   %i.v = load ptr, ptr %0, align 8, !tbaa !21
-  %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 %i.l
+  %1 = getelementptr i8, ptr %i.v, i64 %i.k
+  %i.w = getelementptr i8, ptr %1, i64 1
   store i8 0, ptr %i.w, align 1, !tbaa !22
   ret ptr %0
 }
@@ -706,8 +710,8 @@ _ZN5vcpkg13XmlSerializer9close_tagENS_13StringLiteralE.exit: ; preds = %_ZN5vcpk
 define dso_local noundef nonnull align 8 dereferenceable(37) ptr @_ZN5vcpkg13XmlSerializer10line_breakEv(ptr noundef nonnull returned align 8 dereferenceable(37) %0) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !9    ; 4 uses
-  %i.c = add i64 %i.b, 1                          ; 3 uses
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !9    ; 5 uses
+  %i.c = add i64 %i.b, 1                          ; 2 uses
   %i.d = load ptr, ptr %0, align 8, !tbaa !21     ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.f = icmp eq ptr %i.d, %i.e
@@ -738,7 +742,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9push_backEc.exit: ; preds 
   store i8 10, ptr %i.l, align 1, !tbaa !22
   store i64 %i.c, ptr %i.a, align 8, !tbaa !9
   %i.m = load ptr, ptr %0, align 8, !tbaa !21
-  %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 %i.c
+  %1 = getelementptr i8, ptr %i.m, i64 %i.b
+  %i.n = getelementptr i8, ptr %1, i64 1
   store i8 0, ptr %i.n, align 1, !tbaa !22
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 36
   store i8 1, ptr %i.o, align 4, !tbaa !15

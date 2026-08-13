@@ -201,8 +201,8 @@ bb.dq:                                            ; preds = %_ZN5Catch16Assertio
 
 bb.dr:                                            ; preds = %bb.dq
   %i.pf = trunc nuw nsw i32 %i.pd to i8
-  %i.pg = load i64, ptr %i.hy, align 8, !tbaa !17 ; 4 uses
-  %i.ph = add i64 %i.pg, 1                        ; 3 uses
+  %i.pg = load i64, ptr %i.hy, align 8, !tbaa !17 ; 5 uses
+  %i.ph = add i64 %i.pg, 1                        ; 2 uses
   %i.pi = load ptr, ptr %70, align 8, !tbaa !20   ; 2 uses
   %i.pj = icmp eq ptr %i.pi, %i.hx
   br i1 %i.pj, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i219, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i218
@@ -235,7 +235,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9push_backEc.exit.i: ; pred
   store i8 %i.pf, ptr %i.pp, align 1, !tbaa !19
   store i64 %i.ph, ptr %i.hy, align 8, !tbaa !17
   %i.pq = load ptr, ptr %70, align 8, !tbaa !20
-  %i.pr = getelementptr inbounds nuw i8, ptr %i.pq, i64 %i.ph
+  %88 = getelementptr i8, ptr %i.pq, i64 %i.pg
+  %i.pr = getelementptr i8, ptr %88, i64 1
   store i8 0, ptr %i.pr, align 1, !tbaa !19
   br label %bb.du
 
@@ -638,12 +639,13 @@ _ZNKSt6vectorIN5Catch10Generators16GeneratorWrapperIRA16_KcEESaIS6_EE12_M_check_
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.preheader
   %i.w = add i64 %i.m, -8
   %i.x = sub i64 %i.w, %i.e
-  %i.y = and i64 %i.x, -8
-  %3 = add i64 %i.y, 8                            ; 2 uses
-  %scevgep.a = getelementptr i8, ptr %i.p, i64 %3
-  %scevgep35 = getelementptr i8, ptr %i.c, i64 %3
+  %i.y = and i64 %i.x, -8                         ; 2 uses
+  %3 = getelementptr i8, ptr %i.p, i64 %i.y
+  %scevgep = getelementptr i8, ptr %3, i64 8
+  %scevgep.a = getelementptr i8, ptr %i.c, i64 %i.y
+  %scevgep35 = getelementptr i8, ptr %scevgep.a, i64 8
   %bound0 = icmp ult ptr %i.p, %scevgep35
-  %bound1 = icmp ult ptr %i.c, %scevgep.a
+  %bound1 = icmp ult ptr %i.c, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph.i.i.i.preheader61, label %vector.ph
 
@@ -860,12 +862,13 @@ _ZNKSt6vectorIN5Catch10Generators16GeneratorWrapperIRA16_KcEESaIS6_EE12_M_check_
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.preheader
   %i.aa = add i64 %i.k, -8
   %i.ab = sub i64 %i.aa, %i.l
-  %i.ac = and i64 %i.ab, -8
-  %2 = add i64 %i.ac, 8                           ; 2 uses
-  %scevgep.a = getelementptr i8, ptr %i.u, i64 %2
-  %scevgep13 = getelementptr i8, ptr %i.j, i64 %2
+  %i.ac = and i64 %i.ab, -8                       ; 2 uses
+  %2 = getelementptr i8, ptr %i.u, i64 %i.ac
+  %scevgep = getelementptr i8, ptr %2, i64 8
+  %scevgep.a = getelementptr i8, ptr %i.j, i64 %i.ac
+  %scevgep13 = getelementptr i8, ptr %scevgep.a, i64 8
   %bound0 = icmp ult ptr %i.u, %scevgep13
-  %bound1 = icmp ult ptr %i.j, %scevgep.a
+  %bound1 = icmp ult ptr %i.j, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph.i.i.i.i.preheader17, label %vector.ph
 
@@ -1268,12 +1271,13 @@ _ZNKSt6vectorIN5Catch10Generators16GeneratorWrapperIRA2_KcEESaIS6_EE12_M_check_l
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.preheader
   %i.w = add i64 %i.m, -8
   %i.x = sub i64 %i.w, %i.e
-  %i.y = and i64 %i.x, -8
-  %3 = add i64 %i.y, 8                            ; 2 uses
-  %scevgep.a = getelementptr i8, ptr %i.p, i64 %3
-  %scevgep35 = getelementptr i8, ptr %i.c, i64 %3
+  %i.y = and i64 %i.x, -8                         ; 2 uses
+  %3 = getelementptr i8, ptr %i.p, i64 %i.y
+  %scevgep = getelementptr i8, ptr %3, i64 8
+  %scevgep.a = getelementptr i8, ptr %i.c, i64 %i.y
+  %scevgep35 = getelementptr i8, ptr %scevgep.a, i64 8
   %bound0 = icmp ult ptr %i.p, %scevgep35
-  %bound1 = icmp ult ptr %i.c, %scevgep.a
+  %bound1 = icmp ult ptr %i.c, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph.i.i.i.preheader61, label %vector.ph
 
@@ -1490,12 +1494,13 @@ _ZNKSt6vectorIN5Catch10Generators16GeneratorWrapperIRA2_KcEESaIS6_EE12_M_check_l
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.preheader
   %i.aa = add i64 %i.k, -8
   %i.ab = sub i64 %i.aa, %i.l
-  %i.ac = and i64 %i.ab, -8
-  %2 = add i64 %i.ac, 8                           ; 2 uses
-  %scevgep.a = getelementptr i8, ptr %i.u, i64 %2
-  %scevgep13 = getelementptr i8, ptr %i.j, i64 %2
+  %i.ac = and i64 %i.ab, -8                       ; 2 uses
+  %2 = getelementptr i8, ptr %i.u, i64 %i.ac
+  %scevgep = getelementptr i8, ptr %2, i64 8
+  %scevgep.a = getelementptr i8, ptr %i.j, i64 %i.ac
+  %scevgep13 = getelementptr i8, ptr %scevgep.a, i64 8
   %bound0 = icmp ult ptr %i.u, %scevgep13
-  %bound1 = icmp ult ptr %i.j, %scevgep.a
+  %bound1 = icmp ult ptr %i.j, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph.i.i.i.i.preheader17, label %vector.ph
 

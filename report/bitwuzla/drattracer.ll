@@ -203,13 +203,14 @@ bb.o:                                             ; preds = %putc_unlocked.exit.
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %indvars.iv = phi i64 [ 10, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ]
+  %indvars.iv = phi i64 [ 10, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 3 uses
   %.032 = phi i32 [ %i.dk, %.lr.ph.preheader ], [ %i.dp, %.lr.ph ] ; 3 uses
   %i.dl = urem i32 %.032, 10
   %i.dm = trunc nuw nsw i32 %i.dl to i8
   %i.dn = or disjoint i8 %i.dm, 48                ; 2 uses
-  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 3 uses
-  %i.do = getelementptr inbounds i8, ptr %i.a, i64 %indvars.iv.next
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %2 = getelementptr i8, ptr %i.a, i64 %indvars.iv
+  %i.do = getelementptr i8, ptr %2, i64 -1
   store i8 %i.dn, ptr %i.do, align 1, !tbaa !37
   %i.dp = udiv i32 %.032, 10
   %.not14 = icmp samesign ult i32 %.032, 10
@@ -248,7 +249,8 @@ _ZN7CaDiCaL4File3putEc.exit21.thread:             ; preds = %putc_unlocked.exit.
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %_ZN7CaDiCaL4File3putEc.exit21.thread, %._crit_edge
-  %i.ec = getelementptr inbounds i8, ptr %i.a, i64 %indvars.iv.next
+  %3 = getelementptr i8, ptr %i.a, i64 %indvars.iv
+  %i.ec = getelementptr i8, ptr %3, i64 -1
   %i.ed = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.ee = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   br label %bb.q

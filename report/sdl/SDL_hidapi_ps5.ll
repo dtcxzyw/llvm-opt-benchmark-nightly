@@ -203,10 +203,11 @@ bb.r:                                             ; preds = %bb.q
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #8
   store i8 -94, ptr %i.e, align 1
   %i.ax = call i32 @SDL_crc32_REAL(i32 noundef 0, ptr noundef nonnull %i.e, i64 noundef 1) #8
-  %i.ay = zext nneg i32 %.029 to i64
-  %i.az = add nsw i64 %i.ay, -4                   ; 2 uses
+  %i.ay = zext nneg i32 %.029 to i64              ; 2 uses
+  %i.az = add nsw i64 %i.ay, -4
   %i.ba = call i32 @SDL_crc32_REAL(i32 noundef %i.ax, ptr noundef nonnull %i.a, i64 noundef %i.az) #8
-  %i.bb = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.az
+  %5 = getelementptr i8, ptr %i.a, i64 %i.ay
+  %i.bb = getelementptr i8, ptr %5, i64 -4
   store i32 %i.ba, ptr %i.bb, align 2
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #8
   br label %bb.s

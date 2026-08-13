@@ -203,8 +203,8 @@ _ZNSt6vectorIhSaIhEE9push_backERKh.exit:          ; preds = %bb.k, %_ZNSt6vector
   %i.ci = ptrtoint ptr %.sroa.0.1 to i64          ; 2 uses
   %i.cj = sub i64 %i.ch, %i.ci                    ; 10 uses
   %i.ck = and i64 %.sroa.01.1.extract.shift, 255
-  %i.cl = add i64 %i.cj, -1
-  %i.cm = add i64 %i.cl, %i.ck                    ; 5 uses
+  %i.cl = add i64 %i.ck, %i.cj                    ; 3 uses
+  %i.cm = add i64 %i.cl, -1                       ; 3 uses
   %i.cn = icmp ugt i64 %i.cm, %i.cj
   br i1 %i.cn, label %bb.p, label %bb.x
 
@@ -274,7 +274,8 @@ bb.w:                                             ; preds = %_ZNSt6vectorIhSaIhE
   br label %_ZNSt12_Vector_baseIhSaIhEE13_M_deallocateEPhm.exit.i.i
 
 _ZNSt12_Vector_baseIhSaIhEE13_M_deallocateEPhm.exit.i.i: ; preds = %bb.w, %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit.i.i
-  %i.dh = getelementptr inbounds nuw i8, ptr %i.db, i64 %i.cm
+  %3 = getelementptr i8, ptr %i.db, i64 %i.cl
+  %i.dh = getelementptr i8, ptr %3, i64 -1
   %i.di = getelementptr inbounds nuw i8, ptr %i.db, i64 %i.da
   br label %_ZNSt6vectorIhSaIhEE6resizeEm.exit
 
@@ -283,7 +284,8 @@ bb.x:                                             ; preds = %_ZNSt6vectorIhSaIhE
   br i1 %i.dj, label %bb.y, label %_ZNSt6vectorIhSaIhEE6resizeEm.exit
 
 bb.y:                                             ; preds = %bb.x
-  %i.dk = getelementptr inbounds nuw i8, ptr %.sroa.0.1, i64 %i.cm ; 2 uses
+  %4 = getelementptr i8, ptr %.sroa.0.1, i64 %i.cl
+  %i.dk = getelementptr i8, ptr %4, i64 -1        ; 2 uses
   %.not.i4.i = icmp eq ptr %.sroa.13.1, %i.dk
   %spec.select = select i1 %.not.i4.i, ptr %.sroa.13.1, ptr %i.dk
   br label %_ZNSt6vectorIhSaIhEE6resizeEm.exit

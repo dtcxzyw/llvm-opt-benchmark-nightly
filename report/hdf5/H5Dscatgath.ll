@@ -166,7 +166,7 @@ bb.g:                                             ; preds = %.lr.ph68
   br label %.thread50.thread
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
-  %.03164 = phi i64 [ 0, %.lr.ph.preheader.new ], [ %i.as, %.lr.ph ] ; 4 uses
+  %.03164 = phi i64 [ 0, %.lr.ph.preheader.new ], [ %i.as, %.lr.ph ] ; 5 uses
   %.13663 = phi ptr [ %.03566, %.lr.ph.preheader.new ], [ %i.ar, %.lr.ph ] ; 2 uses
   %niter = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.1, %.lr.ph ]
   %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %.03164
@@ -176,11 +176,12 @@ bb.g:                                             ; preds = %.lr.ph68
   %i.al = getelementptr inbounds nuw i8, ptr %3, i64 %i.ak
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.al, ptr align 1 %.13663, i64 %i.ai, i1 false)
   %i.am = getelementptr inbounds nuw i8, ptr %.13663, i64 %i.ai ; 2 uses
-  %4 = or disjoint i64 %.03164, 1                 ; 2 uses
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %4
+  %4 = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %.03164
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.an = load i64, ptr %5, align 8, !tbaa !13    ; 2 uses
-  %i.ao = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %4
-  %i.ap = load i64, ptr %i.ao, align 8, !tbaa !13
+  %i.ao = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %.03164
+  %6 = getelementptr inbounds nuw i8, ptr %i.ao, i64 8
+  %i.ap = load i64, ptr %6, align 8, !tbaa !13
   %i.aq = getelementptr inbounds nuw i8, ptr %3, i64 %i.ap
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.aq, ptr align 1 %i.am, i64 %i.an, i1 false)
   %i.ar = getelementptr inbounds nuw i8, ptr %i.am, i64 %i.an ; 3 uses

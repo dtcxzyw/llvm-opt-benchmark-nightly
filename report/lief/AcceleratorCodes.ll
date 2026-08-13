@@ -201,13 +201,14 @@ bb.e:                                             ; preds = %bb.c
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 2608
   %i.o = load i32, ptr %i.n, align 8, !tbaa !8
   %i.p = icmp ult i32 %i.o, %i.c
-  %.add11.i.a = select i1 %i.p, i64 2624, i64 2560 ; 2 uses
+  %.add11.i.a = select i1 %i.p, i64 64, i64 0     ; 2 uses
   %.ptr23.i = getelementptr inbounds nuw i8, ptr %0, i64 %.add11.i.a
-  %i.q = getelementptr inbounds nuw i8, ptr %.ptr23.i, i64 16
+  %i.q = getelementptr inbounds nuw i8, ptr %.ptr23.i, i64 2576
   %i.r = load i32, ptr %i.q, align 8, !tbaa !8
   %i.s = icmp ult i32 %i.r, %i.c
   %.idx.i.i6.i.i.i.i.i.i.i = select i1 %i.s, i64 32, i64 0
-  %.add12.i = or disjoint i64 %.idx.i.i6.i.i.i.i.i.i.i, %.add11.i.a
+  %.add11.i = or disjoint i64 %.add11.i.a, %.idx.i.i6.i.i.i.i.i.i.i
+  %.add12.i = or disjoint i64 %.add11.i, 2560
   br label %_ZNK6frozen3mapIN4LIEF2PE17ACCELERATOR_CODESEPKcLm171ESt4lessIS3_EE11lower_boundIS3_EEPKSt4pairIKS3_S5_ERKT_.exit.i
 
 bb.f:                                             ; preds = %bb.b

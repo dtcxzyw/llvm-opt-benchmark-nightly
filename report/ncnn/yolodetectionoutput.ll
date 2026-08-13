@@ -203,7 +203,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.in, label %.lr.ph71.i.preheader, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i
-  %.03662.i = phi i64 [ %i.jb, %.lr.ph.i ], [ %.03662.i.unr, %.lr.ph.i.prol.loopexit ] ; 4 uses
+  %.03662.i = phi i64 [ %i.jb, %.lr.ph.i ], [ %.03662.i.unr, %.lr.ph.i.prol.loopexit ] ; 5 uses
   %i.io = getelementptr inbounds nuw [20 x i8], ptr %.pre, i64 %.03662.i ; 2 uses
   %i.ip = getelementptr inbounds nuw i8, ptr %i.io, i64 8
   %i.iq = load <2 x float>, ptr %i.ip, align 4, !tbaa !76
@@ -212,15 +212,16 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.it = call fast float @llvm.vector.reduce.fmul.v2f32(float 1.000000e+00, <2 x float> %i.is)
   %i.iu = getelementptr inbounds nuw [4 x i8], ptr %i.fr, i64 %.03662.i
   store float %i.it, ptr %i.iu, align 4, !tbaa !76
-  %8 = add nuw i64 %.03662.i, 1                   ; 2 uses
-  %9 = getelementptr inbounds nuw [20 x i8], ptr %.pre, i64 %8 ; 2 uses
-  %i.iv = getelementptr inbounds nuw i8, ptr %9, i64 8
+  %8 = getelementptr inbounds nuw [20 x i8], ptr %.pre, i64 %.03662.i ; 2 uses
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 20
+  %i.iv = getelementptr inbounds nuw i8, ptr %8, i64 28
   %i.iw = load <2 x float>, ptr %i.iv, align 4, !tbaa !76
   %i.ix = load <2 x float>, ptr %9, align 4, !tbaa !76
   %i.iy = fsub fast <2 x float> %i.iw, %i.ix
   %i.iz = call fast float @llvm.vector.reduce.fmul.v2f32(float 1.000000e+00, <2 x float> %i.iy)
-  %i.ja = getelementptr inbounds nuw [4 x i8], ptr %i.fr, i64 %8
-  store float %i.iz, ptr %i.ja, align 4, !tbaa !76
+  %i.ja = getelementptr inbounds nuw [4 x i8], ptr %i.fr, i64 %.03662.i
+  %10 = getelementptr inbounds nuw i8, ptr %i.ja, i64 4
+  store float %i.iz, ptr %10, align 4, !tbaa !76
   %i.jb = add nuw i64 %.03662.i, 2                ; 2 uses
   %exitcond.not.i.1 = icmp eq i64 %i.jb, %i.fo
   br i1 %exitcond.not.i.1, label %.lr.ph71.i.preheader, label %.lr.ph.i, !llvm.loop !100

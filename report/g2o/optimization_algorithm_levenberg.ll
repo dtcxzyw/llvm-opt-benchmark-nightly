@@ -203,7 +203,7 @@ bb.q:                                             ; preds = %bb.o
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.r, %.lr.ph.i59.new
-  %.09.i = phi i64 [ 0, %.lr.ph.i59.new ], [ %i.ef, %bb.r ] ; 4 uses
+  %.09.i = phi i64 [ 0, %.lr.ph.i59.new ], [ %i.ef, %bb.r ] ; 5 uses
   %.078.i = phi double [ 0.000000e+00, %.lr.ph.i59.new ], [ %i.ee, %bb.r ]
   %niter = phi i64 [ 0, %.lr.ph.i59.new ], [ %niter.next.1, %bb.r ]
   %i.du = getelementptr inbounds nuw [8 x i8], ptr %i.dp, i64 %.09.i
@@ -212,11 +212,12 @@ bb.r:                                             ; preds = %bb.r, %.lr.ph.i59.n
   %i.dx = load double, ptr %i.dw, align 8, !tbaa !13
   %i.dy = tail call double @llvm.fmuladd.f64(double %i.dq, double %i.dv, double %i.dx)
   %i.dz = tail call double @llvm.fmuladd.f64(double %i.dv, double %i.dy, double %.078.i)
-  %3 = or disjoint i64 %.09.i, 1                  ; 2 uses
-  %4 = getelementptr inbounds nuw [8 x i8], ptr %i.dp, i64 %3
+  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.dp, i64 %.09.i
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.ea = load double, ptr %4, align 8, !tbaa !13 ; 2 uses
-  %i.eb = getelementptr inbounds nuw [8 x i8], ptr %i.ds, i64 %3
-  %i.ec = load double, ptr %i.eb, align 8, !tbaa !13
+  %i.eb = getelementptr inbounds nuw [8 x i8], ptr %i.ds, i64 %.09.i
+  %5 = getelementptr inbounds nuw i8, ptr %i.eb, i64 8
+  %i.ec = load double, ptr %5, align 8, !tbaa !13
   %i.ed = tail call double @llvm.fmuladd.f64(double %i.dq, double %i.ea, double %i.ec)
   %i.ee = tail call double @llvm.fmuladd.f64(double %i.ea, double %i.ed, double %i.dz) ; 3 uses
   %i.ef = add nuw i64 %.09.i, 2                   ; 2 uses
@@ -491,7 +492,7 @@ bb.a:
   ret double %.07.lcssa
 
 bb.b:                                             ; preds = %bb.b, %.lr.ph.new
-  %.09 = phi i64 [ 0, %.lr.ph.new ], [ %i.ac, %bb.b ] ; 4 uses
+  %.09 = phi i64 [ 0, %.lr.ph.new ], [ %i.ac, %bb.b ] ; 5 uses
   %.078 = phi double [ 0.000000e+00, %.lr.ph.new ], [ %i.ab, %bb.b ]
   %niter = phi i64 [ 0, %.lr.ph.new ], [ %niter.next.1, %bb.b ]
   %i.r = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %.09
@@ -500,11 +501,12 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
   %i.u = load double, ptr %i.t, align 8, !tbaa !13
   %i.v = tail call double @llvm.fmuladd.f64(double %i.h, double %i.s, double %i.u)
   %i.w = tail call double @llvm.fmuladd.f64(double %i.s, double %i.v, double %.078)
-  %1 = or disjoint i64 %.09, 1                    ; 2 uses
-  %2 = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %1
+  %1 = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %.09
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.x = load double, ptr %2, align 8, !tbaa !13  ; 2 uses
-  %i.y = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %1
-  %i.z = load double, ptr %i.y, align 8, !tbaa !13
+  %i.y = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %.09
+  %3 = getelementptr inbounds nuw i8, ptr %i.y, i64 8
+  %i.z = load double, ptr %3, align 8, !tbaa !13
   %i.aa = tail call double @llvm.fmuladd.f64(double %i.h, double %i.x, double %i.z)
   %i.ab = tail call double @llvm.fmuladd.f64(double %i.x, double %i.aa, double %i.w) ; 3 uses
   %i.ac = add nuw i64 %.09, 2                     ; 2 uses

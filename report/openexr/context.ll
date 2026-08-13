@@ -203,17 +203,19 @@ bb.o:                                             ; preds = %bb.n
 bb.p:                                             ; preds = %bb.o
   %i.br = ptrtoint ptr %i.bl to i64
   %i.bs = ptrtoint ptr %i.as to i64
-  %i.bt = sub i64 %i.br, %i.bs
-  %i.bu = add i64 %i.bt, 1                        ; 4 uses
+  %i.bt = sub i64 %i.br, %i.bs                    ; 3 uses
+  %i.bu = add i64 %i.bt, 1                        ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bk, ptr nonnull align 1 %i.as, i64 %i.bu, i1 false)
-  %i.bv = getelementptr inbounds nuw i8, ptr %i.bk, i64 %i.bu ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bv, ptr nonnull align 16 %i.a, i64 %i.az, i1 false)
-  %i.bw = getelementptr inbounds nuw i8, ptr %i.bv, i64 %i.az
-  %i.bx = getelementptr inbounds nuw i8, ptr %i.as, i64 %i.bu
+  %5 = getelementptr i8, ptr %i.bk, i64 %i.bt
+  %i.bv = getelementptr i8, ptr %5, i64 1         ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bv, ptr nonnull align 16 %i.a, i64 %i.az, i1 false)
+  %6 = getelementptr inbounds nuw i8, ptr %i.bv, i64 %i.az
+  %i.bw = getelementptr i8, ptr %i.as, i64 %i.bt
+  %i.bx = getelementptr i8, ptr %i.bw, i64 1
   %i.by = load i32, ptr %i.aq, align 8, !tbaa !63
   %i.bz = sext i32 %i.by to i64
   %i.ca = sub i64 %i.bz, %i.bu
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bw, ptr nonnull align 1 %i.bx, i64 %i.ca, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %6, ptr align 1 %i.bx, i64 %i.ca, i1 false)
   br label %.thread22
 
 bb.q:                                             ; preds = %bb.o

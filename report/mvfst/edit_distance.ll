@@ -186,19 +186,20 @@ bb.d:                                             ; preds = %.lr.ph96.split.us.s
   br label %.lr.ph91.us.us
 
 .lr.ph91.us.us:                                   ; preds = %.lr.ph91.us.us.preheader, %._crit_edge.split.us.us.us
-  %indvars.iv163 = phi i64 [ %indvars.iv.next164, %._crit_edge.split.us.us.us ], [ 1, %.lr.ph91.us.us.preheader ] ; 3 uses
+  %indvars.iv163 = phi i64 [ %indvars.iv.next164, %._crit_edge.split.us.us.us ], [ 1, %.lr.ph91.us.us.preheader ] ; 4 uses
   %i.aq = trunc nuw nsw i64 %indvars.iv163 to i32 ; 3 uses
   store i32 %i.aq, ptr %.sroa.068.0, align 4, !tbaa !17
-  %4 = add nsw i64 %indvars.iv163, -1             ; 2 uses
-  %i.ar = getelementptr inbounds i8, ptr %i.al, i64 %4
-  %i.as = trunc nuw nsw i64 %4 to i32             ; 2 uses
+  %4 = getelementptr i8, ptr %i.al, i64 %indvars.iv163
+  %i.ar = getelementptr i8, ptr %4, i64 -1
+  %i.as = trunc i64 %indvars.iv163 to i32
+  %5 = add i32 %i.as, -1                          ; 2 uses
   %.pre172 = load i8, ptr %i.ar, align 1, !tbaa !25 ; 3 uses
   br i1 %i.ap, label %.epil.preheader223, label %.lr.ph91.us.us.new
 
 .lr.ph91.us.us.new:                               ; preds = %.lr.ph91.us.us, %.lr.ph91.us.us.new
   %i.at = phi i32 [ %.sroa.speculated.us.us.us.1, %.lr.ph91.us.us.new ], [ %i.aq, %.lr.ph91.us.us ]
   %indvars.iv158 = phi i64 [ %indvars.iv.next159.1, %.lr.ph91.us.us.new ], [ 1, %.lr.ph91.us.us ] ; 5 uses
-  %.04589.us.us.us = phi i32 [ %i.bg, %.lr.ph91.us.us.new ], [ %i.as, %.lr.ph91.us.us ]
+  %.04589.us.us.us = phi i32 [ %i.bg, %.lr.ph91.us.us.new ], [ %5, %.lr.ph91.us.us ]
   %niter230 = phi i64 [ %niter230.next.1, %.lr.ph91.us.us.new ], [ 0, %.lr.ph91.us.us ]
   %i.au = getelementptr inbounds nuw [4 x i8], ptr %.sroa.068.0, i64 %indvars.iv158 ; 2 uses
   %i.av = load i32, ptr %i.au, align 4, !tbaa !17 ; 2 uses
@@ -235,7 +236,7 @@ bb.d:                                             ; preds = %.lr.ph96.split.us.s
 .epil.preheader223:                               ; preds = %._crit_edge.split.us.us.us.unr-lcssa, %.lr.ph91.us.us
   %.epil.init226 = phi i32 [ %i.aq, %.lr.ph91.us.us ], [ %.sroa.speculated.us.us.us.1, %._crit_edge.split.us.us.us.unr-lcssa ]
   %indvars.iv158.epil.init = phi i64 [ 1, %.lr.ph91.us.us ], [ %indvars.iv.next159.1, %._crit_edge.split.us.us.us.unr-lcssa ] ; 2 uses
-  %.04589.us.us.us.epil.init = phi i32 [ %i.as, %.lr.ph91.us.us ], [ %i.bg, %._crit_edge.split.us.us.us.unr-lcssa ]
+  %.04589.us.us.us.epil.init = phi i32 [ %5, %.lr.ph91.us.us ], [ %i.bg, %._crit_edge.split.us.us.us.unr-lcssa ]
   tail call void @llvm.assume(i1 %lcmp.mod228)
   %i.bo = getelementptr inbounds nuw [4 x i8], ptr %.sroa.068.0, i64 %indvars.iv158.epil.init ; 2 uses
   %i.bp = load i32, ptr %i.bo, align 4, !tbaa !17
@@ -257,12 +258,13 @@ bb.d:                                             ; preds = %.lr.ph96.split.us.s
   br i1 %exitcond167.not, label %.thread, label %.lr.ph91.us.us, !llvm.loop !27
 
 .lr.ph91.us:                                      ; preds = %.lr.ph96.split.split.us, %bb.e
-  %indvars.iv153 = phi i64 [ %indvars.iv.next154, %bb.e ], [ 1, %.lr.ph96.split.split.us ] ; 3 uses
+  %indvars.iv153 = phi i64 [ %indvars.iv.next154, %bb.e ], [ 1, %.lr.ph96.split.split.us ] ; 4 uses
   %i.by = trunc nuw nsw i64 %indvars.iv153 to i32 ; 3 uses
   store i32 %i.by, ptr %.sroa.068.0, align 4, !tbaa !17
-  %5 = add nsw i64 %indvars.iv153, -1             ; 2 uses
-  %i.bz = getelementptr inbounds i8, ptr %i.al, i64 %5
-  %i.ca = trunc nuw nsw i64 %5 to i32
+  %6 = getelementptr i8, ptr %i.al, i64 %indvars.iv153
+  %i.bz = getelementptr i8, ptr %6, i64 -1
+  %i.ca = trunc i64 %indvars.iv153 to i32
+  %7 = add i32 %i.ca, -1
   %.pre171 = load i8, ptr %i.bz, align 1, !tbaa !25
   br label %bb.f
 
@@ -274,7 +276,7 @@ bb.e:                                             ; preds = %._crit_edge.split.u
 bb.f:                                             ; preds = %bb.f, %.lr.ph91.us
   %i.cb = phi i32 [ %.sroa.speculated.us.us, %bb.f ], [ %i.by, %.lr.ph91.us ]
   %indvars.iv148 = phi i64 [ %indvars.iv.next149, %bb.f ], [ 1, %.lr.ph91.us ] ; 3 uses
-  %.04589.us.us = phi i32 [ %i.cd, %bb.f ], [ %i.ca, %.lr.ph91.us ]
+  %.04589.us.us = phi i32 [ %i.cd, %bb.f ], [ %7, %.lr.ph91.us ]
   %.08288.us.us = phi i32 [ %.sroa.speculated64.us.us, %bb.f ], [ %i.by, %.lr.ph91.us ]
   %i.cc = getelementptr inbounds nuw [4 x i8], ptr %.sroa.068.0, i64 %indvars.iv148 ; 2 uses
   %i.cd = load i32, ptr %i.cc, align 4, !tbaa !17 ; 2 uses
@@ -309,32 +311,34 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph91.us
   br label %.lr.ph91.us105
 
 .lr.ph91.us105:                                   ; preds = %.lr.ph91.us105.preheader, %._crit_edge.split.us
-  %indvars.iv143 = phi i64 [ %indvars.iv.next144, %._crit_edge.split.us ], [ 1, %.lr.ph91.us105.preheader ] ; 3 uses
+  %indvars.iv143 = phi i64 [ %indvars.iv.next144, %._crit_edge.split.us ], [ 1, %.lr.ph91.us105.preheader ] ; 4 uses
   %i.cn = trunc nuw nsw i64 %indvars.iv143 to i32 ; 3 uses
   store i32 %i.cn, ptr %.sroa.068.0, align 4, !tbaa !17
-  %6 = add nsw i64 %indvars.iv143, -1             ; 2 uses
-  %i.co = getelementptr inbounds i8, ptr %i.al, i64 %6
-  %i.cp = trunc nuw nsw i64 %6 to i32             ; 2 uses
+  %8 = getelementptr i8, ptr %i.al, i64 %indvars.iv143
+  %i.co = getelementptr i8, ptr %8, i64 -1
+  %i.cp = trunc i64 %indvars.iv143 to i32
+  %9 = add i32 %i.cp, -1                          ; 2 uses
   %.pre170 = load i8, ptr %i.co, align 1, !tbaa !25 ; 3 uses
   br i1 %i.cm, label %.epil.preheader, label %.lr.ph91.us105.new
 
 .lr.ph91.us105.new:                               ; preds = %.lr.ph91.us105, %bb.j
   %i.cq = phi i32 [ %storemerge112.1, %bb.j ], [ %i.cn, %.lr.ph91.us105 ]
-  %indvars.iv138 = phi i64 [ %indvars.iv.next139.1, %bb.j ], [ 1, %.lr.ph91.us105 ] ; 6 uses
-  %.04589.us = phi i32 [ %i.dc, %bb.j ], [ %i.cp, %.lr.ph91.us105 ]
+  %indvars.iv138 = phi i64 [ %indvars.iv.next139.1, %bb.j ], [ 1, %.lr.ph91.us105 ] ; 7 uses
+  %.04589.us = phi i32 [ %i.dc, %bb.j ], [ %9, %.lr.ph91.us105 ]
   %niter = phi i64 [ %niter.next.1, %bb.j ], [ 0, %.lr.ph91.us105 ]
   %i.cr = getelementptr inbounds nuw [4 x i8], ptr %.sroa.068.0, i64 %indvars.iv138 ; 3 uses
   %i.cs = load i32, ptr %i.cr, align 4, !tbaa !17 ; 2 uses
-  %7 = add nsw i64 %indvars.iv138, -1             ; 2 uses
-  %i.ct = getelementptr inbounds i8, ptr %i.am, i64 %7
+  %10 = getelementptr i8, ptr %i.am, i64 %indvars.iv138
+  %i.ct = getelementptr i8, ptr %10, i64 -1
   %i.cu = load i8, ptr %i.ct, align 1, !tbaa !25
   %i.cv = icmp eq i8 %.pre170, %i.cu
   br i1 %i.cv, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph91.us105.new
-  %i.cw = getelementptr inbounds nuw [4 x i8], ptr %.sroa.068.0, i64 %7
+  %i.cw = getelementptr [4 x i8], ptr %.sroa.068.0, i64 %indvars.iv138
+  %11 = getelementptr i8, ptr %i.cw, i64 -4
   %i.cx = icmp slt i32 %i.cs, %i.cq
-  %..i58.us = select i1 %i.cx, ptr %i.cr, ptr %i.cw
+  %..i58.us = select i1 %i.cx, ptr %i.cr, ptr %11
   %i.cy = load i32, ptr %..i58.us, align 4, !tbaa !17
   %i.cz = add nsw i32 %i.cy, 1
   br label %bb.h
@@ -345,13 +349,13 @@ bb.h:                                             ; preds = %.lr.ph91.us105.new,
   %i.da = getelementptr inbounds nuw [4 x i8], ptr %.sroa.068.0, i64 %indvars.iv138
   %i.db = getelementptr inbounds nuw i8, ptr %i.da, i64 4 ; 3 uses
   %i.dc = load i32, ptr %i.db, align 4, !tbaa !17 ; 3 uses
-  %i.dd = getelementptr inbounds nuw i8, ptr %i.am, i64 %indvars.iv138
+  %i.dd = getelementptr i8, ptr %i.am, i64 %indvars.iv138
   %i.de = load i8, ptr %i.dd, align 1, !tbaa !25
   %i.df = icmp eq i8 %.pre170, %i.de
   br i1 %i.df, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.dg = getelementptr inbounds nuw [4 x i8], ptr %.sroa.068.0, i64 %indvars.iv138
+  %i.dg = getelementptr [4 x i8], ptr %.sroa.068.0, i64 %indvars.iv138
   %i.dh = icmp slt i32 %i.dc, %storemerge112
   %..i58.us.1 = select i1 %i.dh, ptr %i.db, ptr %i.dg
   %i.di = load i32, ptr %..i58.us.1, align 4, !tbaa !17
@@ -371,21 +375,22 @@ bb.j:                                             ; preds = %bb.i, %bb.h
 
 .epil.preheader:                                  ; preds = %._crit_edge.split.us.unr-lcssa, %.lr.ph91.us105
   %.epil.init = phi i32 [ %i.cn, %.lr.ph91.us105 ], [ %storemerge112.1, %._crit_edge.split.us.unr-lcssa ]
-  %indvars.iv138.epil.init = phi i64 [ 1, %.lr.ph91.us105 ], [ %indvars.iv.next139.1, %._crit_edge.split.us.unr-lcssa ] ; 2 uses
-  %.04589.us.epil.init = phi i32 [ %i.cp, %.lr.ph91.us105 ], [ %i.dc, %._crit_edge.split.us.unr-lcssa ]
+  %indvars.iv138.epil.init = phi i64 [ 1, %.lr.ph91.us105 ], [ %indvars.iv.next139.1, %._crit_edge.split.us.unr-lcssa ] ; 3 uses
+  %.04589.us.epil.init = phi i32 [ %9, %.lr.ph91.us105 ], [ %i.dc, %._crit_edge.split.us.unr-lcssa ]
   tail call void @llvm.assume(i1 %lcmp.mod222)
   %i.dk = getelementptr inbounds nuw [4 x i8], ptr %.sroa.068.0, i64 %indvars.iv138.epil.init ; 3 uses
-  %8 = add nsw i64 %indvars.iv138.epil.init, -1   ; 2 uses
-  %i.dl = getelementptr inbounds i8, ptr %i.am, i64 %8
+  %12 = getelementptr i8, ptr %i.am, i64 %indvars.iv138.epil.init
+  %i.dl = getelementptr i8, ptr %12, i64 -1
   %i.dm = load i8, ptr %i.dl, align 1, !tbaa !25
   %i.dn = icmp eq i8 %.pre170, %i.dm
   br i1 %i.dn, label %._crit_edge.split.us.epilog-lcssa, label %bb.k
 
 bb.k:                                             ; preds = %.epil.preheader
   %i.do = load i32, ptr %i.dk, align 4, !tbaa !17
-  %i.dp = getelementptr inbounds nuw [4 x i8], ptr %.sroa.068.0, i64 %8
+  %i.dp = getelementptr [4 x i8], ptr %.sroa.068.0, i64 %indvars.iv138.epil.init
+  %13 = getelementptr i8, ptr %i.dp, i64 -4
   %i.dq = icmp slt i32 %i.do, %.epil.init
-  %..i58.us.epil = select i1 %i.dq, ptr %i.dk, ptr %i.dp
+  %..i58.us.epil = select i1 %i.dq, ptr %i.dk, ptr %13
   %i.dr = load i32, ptr %..i58.us.epil, align 4, !tbaa !17
   %i.ds = add nsw i32 %i.dr, 1
   br label %._crit_edge.split.us.epilog-lcssa
@@ -415,12 +420,13 @@ bb.l:                                             ; preds = %._crit_edge.split
   br i1 %exitcond137.not, label %.thread, label %.lr.ph91, !llvm.loop !27
 
 .lr.ph91:                                         ; preds = %.lr.ph96.split.split, %bb.l
-  %indvars.iv133 = phi i64 [ %indvars.iv.next134, %bb.l ], [ 1, %.lr.ph96.split.split ] ; 3 uses
+  %indvars.iv133 = phi i64 [ %indvars.iv.next134, %bb.l ], [ 1, %.lr.ph96.split.split ] ; 4 uses
   %i.dv = trunc nuw nsw i64 %indvars.iv133 to i32 ; 3 uses
   store i32 %i.dv, ptr %.sroa.068.0, align 4, !tbaa !17
-  %9 = add nsw i64 %indvars.iv133, -1             ; 2 uses
-  %i.dw = getelementptr inbounds i8, ptr %i.al, i64 %9
-  %i.dx = trunc nuw nsw i64 %9 to i32
+  %14 = getelementptr i8, ptr %i.al, i64 %indvars.iv133
+  %i.dw = getelementptr i8, ptr %14, i64 -1
+  %i.dx = trunc i64 %indvars.iv133 to i32
+  %15 = add i32 %i.dx, -1
   %.pre = load i8, ptr %i.dw, align 1, !tbaa !25
   br label %bb.m
 
@@ -430,21 +436,22 @@ bb.l:                                             ; preds = %._crit_edge.split
 
 bb.m:                                             ; preds = %.lr.ph91, %bb.o
   %i.dy = phi i32 [ %i.dv, %.lr.ph91 ], [ %storemerge, %bb.o ]
-  %indvars.iv128 = phi i64 [ 1, %.lr.ph91 ], [ %indvars.iv.next129, %bb.o ] ; 3 uses
-  %.04589 = phi i32 [ %i.dx, %.lr.ph91 ], [ %i.ea, %bb.o ]
+  %indvars.iv128 = phi i64 [ 1, %.lr.ph91 ], [ %indvars.iv.next129, %bb.o ] ; 4 uses
+  %.04589 = phi i32 [ %15, %.lr.ph91 ], [ %i.ea, %bb.o ]
   %.08288 = phi i32 [ %i.dv, %.lr.ph91 ], [ %.sroa.speculated64, %bb.o ]
   %i.dz = getelementptr inbounds nuw [4 x i8], ptr %.sroa.068.0, i64 %indvars.iv128 ; 3 uses
   %i.ea = load i32, ptr %i.dz, align 4, !tbaa !17 ; 2 uses
-  %10 = add nsw i64 %indvars.iv128, -1            ; 2 uses
-  %i.eb = getelementptr inbounds i8, ptr %i.am, i64 %10
+  %16 = getelementptr i8, ptr %i.am, i64 %indvars.iv128
+  %i.eb = getelementptr i8, ptr %16, i64 -1
   %i.ec = load i8, ptr %i.eb, align 1, !tbaa !25
   %i.ed = icmp eq i8 %.pre, %i.ec
   br i1 %i.ed, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %i.ee = getelementptr inbounds nuw [4 x i8], ptr %.sroa.068.0, i64 %10
+  %i.ee = getelementptr [4 x i8], ptr %.sroa.068.0, i64 %indvars.iv128
+  %17 = getelementptr i8, ptr %i.ee, i64 -4
   %i.ef = icmp slt i32 %i.ea, %i.dy
-  %..i58 = select i1 %i.ef, ptr %i.dz, ptr %i.ee
+  %..i58 = select i1 %i.ef, ptr %i.dz, ptr %17
   %i.eg = load i32, ptr %..i58, align 4, !tbaa !17
   %i.eh = add nsw i32 %i.eg, 1
   br label %bb.o

@@ -122,8 +122,9 @@ bb.a:
   %i.b = shl i32 %i.a, 5
   %i.c = lshr i32 %i.a, 2
   %i.d = add i32 %i.b, %i.c
-  %i.e = add nsw i64 %2, -1                       ; 2 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %1, i64 %i.e
+  %i.e = add nsw i64 %2, -1
+  %3 = getelementptr i8, ptr %1, i64 %2
+  %i.f = getelementptr i8, ptr %3, i64 -1
   %i.g = load i8, ptr %i.f, align 1, !tbaa !32
   %i.h = zext i8 %i.g to i32
   %i.i = add i32 %i.d, %i.h
@@ -138,7 +139,7 @@ bb.a:
   br i1 %i.k, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
-  %.03243 = phi i64 [ %i.x, %.lr.ph ], [ %.03243.unr, %.lr.ph.prol.loopexit ] ; 2 uses
+  %.03243 = phi i64 [ %i.x, %.lr.ph ], [ %.03243.unr, %.lr.ph.prol.loopexit ] ; 3 uses
   %.03442 = phi i32 [ %i.ac, %.lr.ph ], [ %.03442.unr, %.lr.ph.prol.loopexit ] ; 3 uses
   %i.l = shl i32 %.03442, 5
   %i.m = lshr i32 %.03442, 2
@@ -152,8 +153,9 @@ bb.a:
   %i.u = shl i32 %i.t, 5
   %i.v = lshr i32 %i.t, 2
   %i.w = add i32 %i.u, %i.v
-  %i.x = add i64 %.03243, -2                      ; 3 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %1, i64 %i.x
+  %i.x = add i64 %.03243, -2                      ; 2 uses
+  %4 = getelementptr i8, ptr %1, i64 %.03243
+  %i.y = getelementptr i8, ptr %4, i64 -2
   %i.z = load i8, ptr %i.y, align 1, !tbaa !32
   %i.aa = zext i8 %i.z to i32
   %i.ab = add i32 %i.w, %i.aa

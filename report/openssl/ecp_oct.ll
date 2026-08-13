@@ -201,9 +201,9 @@ bb.h:                                             ; preds = %bb.c
   %i.e = tail call i32 @BN_num_bits(ptr noundef %i.d) #3
   %i.f = add nsw i32 %i.e, 7
   %i.g = sdiv i32 %i.f, 8                         ; 6 uses
-  %i.h = sext i32 %i.g to i64                     ; 3 uses
+  %i.h = sext i32 %i.g to i64                     ; 4 uses
   %i.i = icmp eq i32 %2, 2
-  %i.j = add nsw i64 %i.h, 1                      ; 6 uses
+  %i.j = add nsw i64 %i.h, 1                      ; 5 uses
   %i.k = shl nsw i64 %i.h, 1
   %i.l = or disjoint i64 %i.k, 1
   %i.m = select i1 %i.i, i64 %i.j, i64 %i.l       ; 3 uses
@@ -311,7 +311,8 @@ bb.s:                                             ; preds = %bb.r, %bb.r
 
 .lr.ph129.preheader:                              ; preds = %.preheader
   %i.am = sext i32 %narrow105 to i64
-  %scevgep133 = getelementptr i8, ptr %3, i64 %i.j
+  %6 = getelementptr i8, ptr %3, i64 %i.h
+  %scevgep133 = getelementptr i8, ptr %6, i64 1
   tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep133, i8 0, i64 %i.am, i1 false), !tbaa !27
   %i.an = add nsw i64 %i.j, %i.h
   %i.ao = sext i32 %.neg106 to i64

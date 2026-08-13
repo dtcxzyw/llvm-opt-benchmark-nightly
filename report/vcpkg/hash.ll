@@ -201,19 +201,20 @@ bb.b:                                             ; preds = %bb.c
 
 .thread:                                          ; preds = %bb.b
   %i.k = load ptr, ptr %4, align 8, !tbaa !104    ; 2 uses
-  %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.r
+  %29 = getelementptr i8, ptr %i.a, i64 %.040111152
+  %i.l = getelementptr i8, ptr %29, i64 -512
   %i.m = load ptr, ptr %i.k, align 8, !tbaa !26
   %i.n = load ptr, ptr %i.m, align 8
   call void %i.n(ptr noundef nonnull align 8 dereferenceable(8) %i.k, ptr noundef nonnull %i.a, ptr noundef nonnull %i.l) #16
   br label %.loopexit145
 
 bb.c:                                             ; preds = %bb.a, %bb.b
-  %.040111152 = phi i64 [ 1000000, %bb.a ], [ %i.r, %bb.b ]
+  %.040111152 = phi i64 [ 1000000, %bb.a ], [ %i.r, %bb.b ] ; 2 uses
   %i.o = load ptr, ptr %4, align 8, !tbaa !104    ; 2 uses
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !26
   %i.q = load ptr, ptr %i.p, align 8
   call void %i.q(ptr noundef nonnull align 8 dereferenceable(8) %i.o, ptr noundef nonnull %i.a, ptr noundef nonnull %i.i) #16
-  %i.r = add i64 %.040111152, -512                ; 4 uses
+  %i.r = add i64 %.040111152, -512                ; 3 uses
   %.not = icmp eq i64 %i.r, 0
   br i1 %.not, label %.loopexit145, label %bb.b, !llvm.loop !106
 
@@ -616,7 +617,8 @@ bb.bd:                                            ; preds = %bb.bi
 
 .thread140:                                       ; preds = %bb.bd
   %i.gi = load ptr, ptr %4, align 8, !tbaa !104   ; 2 uses
-  %i.gj = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.gr
+  %30 = getelementptr i8, ptr %i.d, i64 %.0114153
+  %i.gj = getelementptr i8, ptr %30, i64 -512
   %i.gk = load ptr, ptr %i.gi, align 8, !tbaa !26
   %i.gl = load ptr, ptr %i.gk, align 8
   call void %i.gl(ptr noundef nonnull align 8 dereferenceable(8) %i.gi, ptr noundef nonnull %i.d, ptr noundef nonnull %i.gj) #16
@@ -645,12 +647,12 @@ bb.bh:                                            ; preds = %bb.bg, %bb.au
   br label %bb.ca
 
 bb.bi:                                            ; preds = %bb.bc, %bb.bd
-  %.0114153 = phi i64 [ 1610612798, %bb.bc ], [ %i.gr, %bb.bd ]
+  %.0114153 = phi i64 [ 1610612798, %bb.bc ], [ %i.gr, %bb.bd ] ; 2 uses
   %i.go = load ptr, ptr %4, align 8, !tbaa !104   ; 2 uses
   %i.gp = load ptr, ptr %i.go, align 8, !tbaa !26
   %i.gq = load ptr, ptr %i.gp, align 8
   call void %i.gq(ptr noundef nonnull align 8 dereferenceable(8) %i.go, ptr noundef nonnull %i.d, ptr noundef nonnull %i.gg) #16
-  %i.gr = add i64 %.0114153, -512                 ; 4 uses
+  %i.gr = add i64 %.0114153, -512                 ; 3 uses
   %.not58 = icmp eq i64 %i.gr, 0
   br i1 %.not58, label %.loopexit, label %bb.bd, !llvm.loop !119
 
@@ -924,19 +926,20 @@ bb.b:                                             ; preds = %bb.c
 
 .thread:                                          ; preds = %bb.b
   %i.k = load ptr, ptr %4, align 8, !tbaa !104    ; 2 uses
-  %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.r
+  %29 = getelementptr i8, ptr %i.a, i64 %.040111152
+  %i.l = getelementptr i8, ptr %29, i64 -512
   %i.m = load ptr, ptr %i.k, align 8, !tbaa !26
   %i.n = load ptr, ptr %i.m, align 8
   call void %i.n(ptr noundef nonnull align 8 dereferenceable(8) %i.k, ptr noundef nonnull %i.a, ptr noundef nonnull %i.l) #16
   br label %.loopexit145
 
 bb.c:                                             ; preds = %bb.a, %bb.b
-  %.040111152 = phi i64 [ 1000000, %bb.a ], [ %i.r, %bb.b ]
+  %.040111152 = phi i64 [ 1000000, %bb.a ], [ %i.r, %bb.b ] ; 2 uses
   %i.o = load ptr, ptr %4, align 8, !tbaa !104    ; 2 uses
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !26
   %i.q = load ptr, ptr %i.p, align 8
   call void %i.q(ptr noundef nonnull align 8 dereferenceable(8) %i.o, ptr noundef nonnull %i.a, ptr noundef nonnull %i.i) #16
-  %i.r = add i64 %.040111152, -512                ; 4 uses
+  %i.r = add i64 %.040111152, -512                ; 3 uses
   %.not = icmp eq i64 %i.r, 0
   br i1 %.not, label %.loopexit145, label %bb.b, !llvm.loop !124
 
@@ -1339,7 +1342,8 @@ bb.bd:                                            ; preds = %bb.bi
 
 .thread140:                                       ; preds = %bb.bd
   %i.gi = load ptr, ptr %4, align 8, !tbaa !104   ; 2 uses
-  %i.gj = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.gr
+  %30 = getelementptr i8, ptr %i.d, i64 %.0114153
+  %i.gj = getelementptr i8, ptr %30, i64 -512
   %i.gk = load ptr, ptr %i.gi, align 8, !tbaa !26
   %i.gl = load ptr, ptr %i.gk, align 8
   call void %i.gl(ptr noundef nonnull align 8 dereferenceable(8) %i.gi, ptr noundef nonnull %i.d, ptr noundef nonnull %i.gj) #16
@@ -1368,12 +1372,12 @@ bb.bh:                                            ; preds = %bb.bg, %bb.au
   br label %bb.ca
 
 bb.bi:                                            ; preds = %bb.bc, %bb.bd
-  %.0114153 = phi i64 [ 1610612798, %bb.bc ], [ %i.gr, %bb.bd ]
+  %.0114153 = phi i64 [ 1610612798, %bb.bc ], [ %i.gr, %bb.bd ] ; 2 uses
   %i.go = load ptr, ptr %4, align 8, !tbaa !104   ; 2 uses
   %i.gp = load ptr, ptr %i.go, align 8, !tbaa !26
   %i.gq = load ptr, ptr %i.gp, align 8
   call void %i.gq(ptr noundef nonnull align 8 dereferenceable(8) %i.go, ptr noundef nonnull %i.d, ptr noundef nonnull %i.gg) #16
-  %i.gr = add i64 %.0114153, -512                 ; 4 uses
+  %i.gr = add i64 %.0114153, -512                 ; 3 uses
   %.not58 = icmp eq i64 %i.gr, 0
   br i1 %.not58, label %.loopexit, label %bb.bd, !llvm.loop !136
 

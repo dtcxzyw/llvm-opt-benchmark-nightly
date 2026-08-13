@@ -204,17 +204,19 @@ bb.z:                                             ; preds = %_ZN10fast_float6big
   br label %bb.aa
 
 .preheader.i:                                     ; preds = %bb.aa
+  %5 = add nsw i64 %.014.i123, -1                 ; 2 uses
   %.not.i51 = icmp eq i64 %5, 0
   br i1 %.not.i51, label %_ZNK10fast_float6bigint7compareERKS0_.exit, label %bb.aa, !llvm.loop !71
 
 bb.aa:                                            ; preds = %.lr.ph, %.preheader.i
   %.0.i124 = phi i32 [ undef, %.lr.ph ], [ %.1.i, %.preheader.i ]
-  %.014.i123 = phi i64 [ %i.dm, %.lr.ph ], [ %5, %.preheader.i ]
-  %5 = add nsw i64 %.014.i123, -1                 ; 4 uses
-  %6 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %5
-  %i.dn = load i64, ptr %6, align 8, !tbaa !25    ; 3 uses
-  %i.do = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %5
-  %i.dp = load i64, ptr %i.do, align 8, !tbaa !25 ; 3 uses
+  %.014.i123 = phi i64 [ %i.dm, %.lr.ph ], [ %5, %.preheader.i ] ; 3 uses
+  %6 = getelementptr [8 x i8], ptr %0, i64 %.014.i123
+  %7 = getelementptr i8, ptr %6, i64 -8
+  %i.dn = load i64, ptr %7, align 8, !tbaa !25    ; 3 uses
+  %i.do = getelementptr [8 x i8], ptr %4, i64 %.014.i123
+  %8 = getelementptr i8, ptr %i.do, i64 -8
+  %i.dp = load i64, ptr %8, align 8, !tbaa !25    ; 3 uses
   %.not21.i = icmp ugt i64 %i.dn, %i.dp
   %.not22.i = icmp ult i64 %i.dn, %i.dp
   %..0.i = select i1 %.not22.i, i32 -1, i32 %.0.i124

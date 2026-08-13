@@ -203,19 +203,20 @@ bb.u:                                             ; preds = %bb.t
 
 .lr.ph46.i:                                       ; preds = %.lr.ph97
   %i.gc = load ptr, ptr %i.er, align 8, !tbaa !75
-  %i.gd = getelementptr inbounds [8 x i8], ptr %i.gc, i64 %indvars.iv.next57.i
-  %i.ge = load ptr, ptr %i.gd, align 8, !tbaa !78
+  %i.gd = getelementptr [8 x i8], ptr %i.gc, i64 %indvars.iv56.i96
+  %15 = getelementptr i8, ptr %i.gd, i64 8
+  %i.ge = load ptr, ptr %15, align 8, !tbaa !78
   %i.gf = call i32 @check_dir_entry_contains(ptr noundef %i.fs, ptr noundef %i.ge) #15
   %.not38.i = icmp eq i32 %i.gf, 0
   br i1 %.not38.i, label %.critedge2.i.loopexit, label %.lr.ph97, !llvm.loop !80
 
 .lr.ph97:                                         ; preds = %.lr.ph46.preheader.i, %.lr.ph46.i
-  %indvars.iv56.i96 = phi i64 [ %indvars.iv.next57.i, %.lr.ph46.i ], [ %i.fy, %.lr.ph46.preheader.i ] ; 4 uses
+  %indvars.iv56.i96 = phi i64 [ %indvars.iv.next57.i, %.lr.ph46.i ], [ %i.fy, %.lr.ph46.preheader.i ] ; 5 uses
   %i.gg = load ptr, ptr %i.er, align 8, !tbaa !75
   %i.gh = getelementptr inbounds [8 x i8], ptr %i.gg, i64 %indvars.iv56.i96
   %i.gi = load ptr, ptr %i.gh, align 8, !tbaa !78
   call void @free(ptr noundef %i.gi) #15
-  %indvars.iv.next57.i = add nsw i64 %indvars.iv56.i96, 1 ; 3 uses
+  %indvars.iv.next57.i = add nsw i64 %indvars.iv56.i96, 1 ; 2 uses
   %i.gj = load i32, ptr %i.eo, align 4, !tbaa !73
   %i.gk = sext i32 %i.gj to i64
   %i.gl = icmp slt i64 %indvars.iv.next57.i, %i.gk

@@ -50,12 +50,13 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph70:                                         ; preds = %.lr.ph70.preheader, %._crit_edge
   %i.s = phi i32 [ %.pre, %.lr.ph70.preheader ], [ %i.at, %._crit_edge ] ; 2 uses
-  %indvars.iv75 = phi i64 [ 0, %.lr.ph70.preheader ], [ %indvars.iv.next76, %._crit_edge ] ; 2 uses
+  %indvars.iv75 = phi i64 [ 0, %.lr.ph70.preheader ], [ %indvars.iv.next76, %._crit_edge ] ; 3 uses
   %.05568 = phi i32 [ 0, %.lr.ph70.preheader ], [ %.1.lcssa, %._crit_edge ] ; 4 uses
   %i.t = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %indvars.iv75
-  %indvars.iv.next76 = add nuw nsw i64 %indvars.iv75, 1 ; 3 uses
-  %i.u = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %indvars.iv.next76 ; 2 uses
-  %i.v = load i32, ptr %i.u, align 4, !tbaa !18   ; 3 uses
+  %indvars.iv.next76 = add nuw nsw i64 %indvars.iv75, 1 ; 2 uses
+  %i.u = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %indvars.iv75
+  %1 = getelementptr inbounds nuw i8, ptr %i.u, i64 4 ; 2 uses
+  %i.v = load i32, ptr %1, align 4, !tbaa !18     ; 3 uses
   %i.w = icmp slt i32 %i.s, %i.v
   br i1 %i.w, label %.lr.ph66.preheader, label %._crit_edge
 
@@ -95,7 +96,7 @@ bb.e:                                             ; preds = %.lr.ph66
   %i.ao = add nsw i32 %.164, 1
   %i.ap = getelementptr inbounds [8 x i8], ptr %i.m, i64 %i.ak
   store double %i.an, ptr %i.ap, align 8, !tbaa !19
-  %.pre78 = load i32, ptr %i.u, align 4, !tbaa !18
+  %.pre78 = load i32, ptr %1, align 4, !tbaa !18
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.d, %bb.e

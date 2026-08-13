@@ -204,7 +204,7 @@ bb.as:                                            ; preds = %bb.ar
 RSTRING_PTR.exit629:                              ; preds = %bb.ar, %bb.as
   %i.zn = phi ptr [ %i.zm, %bb.as ], [ %i.zl, %bb.ar ] ; 15 uses
   %i.zo = getelementptr inbounds nuw i8, ptr %i.zi, i64 16
-  %i.zp = load i64, ptr %i.zo, align 8, !tbaa !12 ; 12 uses
+  %i.zp = load i64, ptr %i.zo, align 8, !tbaa !12 ; 13 uses
   %i.zq = icmp eq i64 %i.j, 4
   br i1 %i.zq, label %bb.az, label %bb.at
 
@@ -260,8 +260,8 @@ bb.av:                                            ; preds = %n2i.exit638
 .loopexit:                                        ; preds = %.lr.ph.i642, %bb.av
   %.lcssa.i641 = phi i64 [ %.pr.i639, %bb.av ], [ %i.aai, %.lr.ph.i642 ]
   %i.aaj = call i64 @rb_id2sym(i64 noundef %.lcssa.i641) #14
-  %2 = add nsw i64 %i.zp, -4                      ; 2 uses
-  %i.aak = getelementptr inbounds i8, ptr %i.zn, i64 %2
+  %2 = getelementptr i8, ptr %i.zn, i64 %i.zp
+  %i.aak = getelementptr i8, ptr %2, i64 -4
   %i.aal = load i8, ptr %i.aak, align 1, !tbaa !16
   %i.aam = sext i8 %i.aal to i64
   %i.aan = mul nsw i64 %i.aam, 10
@@ -291,19 +291,20 @@ bb.aw:                                            ; preds = %.loopexit
 rbimpl_intern_const.exit653:                      ; preds = %.lr.ph.i651, %bb.aw
   %.lcssa.i650 = phi i64 [ %.pr.i648, %bb.aw ], [ %i.aay, %.lr.ph.i651 ]
   %i.aaz = call i64 @rb_id2sym(i64 noundef %.lcssa.i650) #14
-  %i.aba = add i64 %i.zp, -5
+  %i.aba = add nsw i64 %i.zp, -5
   %xtraiter = and i64 %i.zp, 3                    ; 3 uses
   %i.abb = icmp ult i64 %i.aba, 3
   br i1 %i.abb, label %.epil.preheader, label %rbimpl_intern_const.exit653.new
 
 rbimpl_intern_const.exit653.new:                  ; preds = %rbimpl_intern_const.exit653
-  %unroll_iter = and i64 %2, -4
+  %unroll_iter = and i64 %i.zp, -4
+  %3 = add i64 %unroll_iter, -8
   br label %bb.ax
 
 bb.ax:                                            ; preds = %bb.ax, %rbimpl_intern_const.exit653.new
   %.012.i654 = phi i32 [ 0, %rbimpl_intern_const.exit653.new ], [ %i.acc, %bb.ax ]
   %.01011.i655 = phi i64 [ 0, %rbimpl_intern_const.exit653.new ], [ %i.acd, %bb.ax ] ; 5 uses
-  %niter = phi i64 [ 0, %rbimpl_intern_const.exit653.new ], [ %niter.next.3, %bb.ax ]
+  %niter = phi i64 [ 0, %rbimpl_intern_const.exit653.new ], [ %niter.next.3, %bb.ax ] ; 2 uses
   %i.abc = mul nsw i32 %.012.i654, 10
   %i.abd = getelementptr inbounds nuw i8, ptr %i.zn, i64 %.01011.i655
   %i.abe = load i8, ptr %i.abd, align 1, !tbaa !16
@@ -332,8 +333,8 @@ bb.ax:                                            ; preds = %bb.ax, %rbimpl_inte
   %i.acb = add i32 %i.abw, -48
   %i.acc = add i32 %i.acb, %i.aca                 ; 3 uses
   %i.acd = add nuw nsw i64 %.01011.i655, 4        ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
-  %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
+  %niter.next.3 = add i64 %niter, 4
+  %niter.ncmp.3 = icmp eq i64 %niter, %3
   br i1 %niter.ncmp.3, label %n2i.exit656.unr-lcssa, label %bb.ax, !llvm.loop !61
 
 n2i.exit656.unr-lcssa:                            ; preds = %bb.ax

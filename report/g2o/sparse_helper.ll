@@ -203,10 +203,11 @@ bb.f:                                             ; preds = %.lr.ph107, %.loopex
   %.promoted88 = phi ptr [ %.promoted88143, %.lr.ph107 ], [ %.lcssa89, %.loopexit ] ; 2 uses
   %.promoted = phi ptr [ %.promoted141, %.lr.ph107 ], [ %.lcssa83, %.loopexit ] ; 2 uses
   %i.v = phi i32 [ %.pre, %.lr.ph107 ], [ %i.m, %.loopexit ] ; 2 uses
-  %indvars.iv137 = phi i64 [ 0, %.lr.ph107 ], [ %indvars.iv.next138, %.loopexit ] ; 6 uses
-  %indvars.iv.next138 = add nuw nsw i64 %indvars.iv137, 1 ; 3 uses
-  %i.w = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvars.iv.next138 ; 2 uses
-  %i.x = load i32, ptr %i.w, align 4, !tbaa !47   ; 2 uses
+  %indvars.iv137 = phi i64 [ 0, %.lr.ph107 ], [ %indvars.iv.next138, %.loopexit ] ; 7 uses
+  %indvars.iv.next138 = add nuw nsw i64 %indvars.iv137, 1 ; 2 uses
+  %i.w = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvars.iv137
+  %8 = getelementptr inbounds nuw i8, ptr %i.w, i64 4 ; 2 uses
+  %i.x = load i32, ptr %8, align 4, !tbaa !47     ; 2 uses
   %i.y = icmp slt i32 %i.v, %i.x
   br i1 %i.y, label %.lr.ph, label %.loopexit
 
@@ -449,7 +450,7 @@ _ZNSt6vectorIN3g2o12TripletEntryESaIS1_EE12emplace_backIJS1_EEERS1_DpOT_.exit59:
   %i.ck = phi ptr [ %i.ba, %bb.n ], [ %i.br, %_ZNSt6vectorIN3g2o12TripletEntryESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i56 ], [ %i.ba, %_ZNSt6vectorIN3g2o12TripletEntryESaIS1_EE12emplace_backIJS1_EEERS1_DpOT_.exit ], [ %i.ba, %bb.l ] ; 2 uses
   %i.cl = phi ptr [ %i.bb, %bb.n ], [ %i.ci, %_ZNSt6vectorIN3g2o12TripletEntryESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i56 ], [ %i.bb, %_ZNSt6vectorIN3g2o12TripletEntryESaIS1_EE12emplace_backIJS1_EEERS1_DpOT_.exit ], [ %i.bb, %bb.l ] ; 2 uses
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
-  %i.cm = load i32, ptr %i.w, align 4, !tbaa !47  ; 2 uses
+  %i.cm = load i32, ptr %8, align 4, !tbaa !47    ; 2 uses
   %i.cn = sext i32 %i.cm to i64
   %i.co = icmp slt i64 %indvars.iv.next, %i.cn
   br i1 %i.co, label %bb.g, label %..loopexit_crit_edge, !llvm.loop !66
@@ -852,14 +853,15 @@ bb.a:
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN3g2o14TripletColSortEEclINS_17__normal_iteratorIPNS2_12TripletEntryESt6vectorIS7_SaIS7_EEEESC_EEbT_T0_.exit.thread38.i.i
   %.040.i.i = phi i64 [ %i.y, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN3g2o14TripletColSortEEclINS_17__normal_iteratorIPNS2_12TripletEntryESt6vectorIS7_SaIS7_EEEESC_EEbT_T0_.exit.thread38.i.i ], [ 0, %.lr.ph ] ; 2 uses
-  %i.l = shl i64 %.040.i.i, 1                     ; 2 uses
-  %i.m = add i64 %i.l, 2                          ; 3 uses
-  %i.n = getelementptr inbounds [16 x i8], ptr %0, i64 %i.m ; 2 uses
-  %i.o = or disjoint i64 %i.l, 1                  ; 2 uses
-  %3 = getelementptr inbounds [16 x i8], ptr %0, i64 %i.o ; 2 uses
-  %i.p = getelementptr inbounds nuw i8, ptr %i.n, i64 4
+  %i.l = shl i64 %.040.i.i, 1                     ; 3 uses
+  %i.m = add i64 %i.l, 2                          ; 2 uses
+  %i.n = getelementptr [16 x i8], ptr %0, i64 %i.l ; 4 uses
+  %3 = getelementptr i8, ptr %i.n, i64 32
+  %i.o = or disjoint i64 %i.l, 1
+  %4 = getelementptr i8, ptr %i.n, i64 16
+  %i.p = getelementptr i8, ptr %i.n, i64 36
   %i.q = load i32, ptr %i.p, align 4, !tbaa !81   ; 2 uses
-  %i.r = getelementptr inbounds nuw i8, ptr %3, i64 4
+  %i.r = getelementptr i8, ptr %i.n, i64 20
   %i.s = load i32, ptr %i.r, align 4, !tbaa !81   ; 2 uses
   %i.t = icmp slt i32 %i.q, %i.s
   br i1 %i.t, label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN3g2o14TripletColSortEEclINS_17__normal_iteratorIPNS2_12TripletEntryESt6vectorIS7_SaIS7_EEEESC_EEbT_T0_.exit.thread.i.i, label %bb.b
@@ -869,8 +871,8 @@ bb.b:                                             ; preds = %.lr.ph.i.i
   br i1 %i.u, label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN3g2o14TripletColSortEEclINS_17__normal_iteratorIPNS2_12TripletEntryESt6vectorIS7_SaIS7_EEEESC_EEbT_T0_.exit.i.i, label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN3g2o14TripletColSortEEclINS_17__normal_iteratorIPNS2_12TripletEntryESt6vectorIS7_SaIS7_EEEESC_EEbT_T0_.exit.thread38.i.i
 
 _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN3g2o14TripletColSortEEclINS_17__normal_iteratorIPNS2_12TripletEntryESt6vectorIS7_SaIS7_EEEESC_EEbT_T0_.exit.i.i: ; preds = %bb.b
-  %i.v = load i32, ptr %i.n, align 8, !tbaa !79
-  %i.w = load i32, ptr %3, align 8, !tbaa !79
+  %i.v = load i32, ptr %3, align 8, !tbaa !79
+  %i.w = load i32, ptr %4, align 8, !tbaa !79
   %i.x = icmp slt i32 %i.v, %i.w
   %cond.fr.i.i = freeze i1 %i.x
   br i1 %cond.fr.i.i, label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN3g2o14TripletColSortEEclINS_17__normal_iteratorIPNS2_12TripletEntryESt6vectorIS7_SaIS7_EEEESC_EEbT_T0_.exit.thread.i.i, label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN3g2o14TripletColSortEEclINS_17__normal_iteratorIPNS2_12TripletEntryESt6vectorIS7_SaIS7_EEEESC_EEbT_T0_.exit.thread38.i.i
@@ -899,11 +901,12 @@ bb.c:                                             ; preds = %._crit_edge.i.i
   br i1 %i.ag, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.ah = shl nsw i64 %.0.lcssa.i.i, 1
-  %i.ai = or disjoint i64 %i.ah, 1                ; 2 uses
-  %i.aj = getelementptr inbounds [16 x i8], ptr %0, i64 %i.ai
+  %i.ah = shl nsw i64 %.0.lcssa.i.i, 1            ; 2 uses
+  %i.ai = or disjoint i64 %i.ah, 1
+  %i.aj = getelementptr [16 x i8], ptr %0, i64 %i.ah
+  %5 = getelementptr i8, ptr %i.aj, i64 16
   %i.ak = getelementptr inbounds [16 x i8], ptr %0, i64 %.0.lcssa.i.i
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ak, ptr noundef nonnull align 8 dereferenceable(16) %i.aj, i64 16, i1 false), !tbaa.struct !54
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ak, ptr noundef nonnull align 8 dereferenceable(16) %5, i64 16, i1 false), !tbaa.struct !54
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c, %._crit_edge.i.i
@@ -957,7 +960,7 @@ define linkonce_odr void @_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN3g2
 bb.a:
   %i.a = ptrtoint ptr %1 to i64
   %i.b = ptrtoint ptr %0 to i64
-  %i.c = sub i64 %i.a, %i.b                       ; 2 uses
+  %i.c = sub i64 %i.a, %i.b                       ; 3 uses
   %i.d = ashr exact i64 %i.c, 4                   ; 3 uses
   %i.e = icmp slt i64 %i.d, 2
   br i1 %i.e, label %.loopexit, label %bb.b
@@ -970,8 +973,9 @@ bb.b:                                             ; preds = %bb.a
   %i.j = and i64 %i.c, 16
   %i.k = icmp eq i64 %i.j, 0
   %i.l = lshr exact i64 %i.f, 1                   ; 2 uses
-  %i.m = or disjoint i64 %i.f, 1                  ; 2 uses
-  %3 = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.m
+  %i.m = or disjoint i64 %i.f, 1
+  %3 = getelementptr i8, ptr %0, i64 %i.c
+  %4 = getelementptr i8, ptr %3, i64 -16
   %i.n = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.l
   br label %bb.c
 
@@ -986,14 +990,15 @@ bb.c:                                             ; preds = %_ZSt13__adjust_heap
 
 .lr.ph.i:                                         ; preds = %bb.c, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN3g2o14TripletColSortEEclINS_17__normal_iteratorIPNS2_12TripletEntryESt6vectorIS7_SaIS7_EEEESC_EEbT_T0_.exit.thread38.i
   %.040.i = phi i64 [ %i.ad, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN3g2o14TripletColSortEEclINS_17__normal_iteratorIPNS2_12TripletEntryESt6vectorIS7_SaIS7_EEEESC_EEbT_T0_.exit.thread38.i ], [ %.010, %bb.c ] ; 2 uses
-  %i.q = shl i64 %.040.i, 1                       ; 2 uses
-  %i.r = add i64 %i.q, 2                          ; 3 uses
-  %i.s = getelementptr inbounds [16 x i8], ptr %0, i64 %i.r ; 2 uses
-  %i.t = or disjoint i64 %i.q, 1                  ; 2 uses
-  %4 = getelementptr inbounds [16 x i8], ptr %0, i64 %i.t ; 2 uses
-  %i.u = getelementptr inbounds nuw i8, ptr %i.s, i64 4
+  %i.q = shl i64 %.040.i, 1                       ; 3 uses
+  %i.r = add i64 %i.q, 2                          ; 2 uses
+  %i.s = getelementptr [16 x i8], ptr %0, i64 %i.q ; 4 uses
+  %5 = getelementptr i8, ptr %i.s, i64 32
+  %i.t = or disjoint i64 %i.q, 1
+  %6 = getelementptr i8, ptr %i.s, i64 16
+  %i.u = getelementptr i8, ptr %i.s, i64 36
   %i.v = load i32, ptr %i.u, align 4, !tbaa !81   ; 2 uses
-  %i.w = getelementptr inbounds nuw i8, ptr %4, i64 4
+  %i.w = getelementptr i8, ptr %i.s, i64 20
   %i.x = load i32, ptr %i.w, align 4, !tbaa !81   ; 2 uses
   %i.y = icmp slt i32 %i.v, %i.x
   br i1 %i.y, label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN3g2o14TripletColSortEEclINS_17__normal_iteratorIPNS2_12TripletEntryESt6vectorIS7_SaIS7_EEEESC_EEbT_T0_.exit.thread.i, label %bb.d
@@ -1003,8 +1008,8 @@ bb.d:                                             ; preds = %.lr.ph.i
   br i1 %i.z, label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN3g2o14TripletColSortEEclINS_17__normal_iteratorIPNS2_12TripletEntryESt6vectorIS7_SaIS7_EEEESC_EEbT_T0_.exit.i, label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN3g2o14TripletColSortEEclINS_17__normal_iteratorIPNS2_12TripletEntryESt6vectorIS7_SaIS7_EEEESC_EEbT_T0_.exit.thread38.i
 
 _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN3g2o14TripletColSortEEclINS_17__normal_iteratorIPNS2_12TripletEntryESt6vectorIS7_SaIS7_EEEESC_EEbT_T0_.exit.i: ; preds = %bb.d
-  %i.aa = load i32, ptr %i.s, align 8, !tbaa !79
-  %i.ab = load i32, ptr %4, align 8, !tbaa !79
+  %i.aa = load i32, ptr %5, align 8, !tbaa !79
+  %i.ab = load i32, ptr %6, align 8, !tbaa !79
   %i.ac = icmp slt i32 %i.aa, %i.ab
   %cond.fr.i = freeze i1 %i.ac
   br i1 %cond.fr.i, label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN3g2o14TripletColSortEEclINS_17__normal_iteratorIPNS2_12TripletEntryESt6vectorIS7_SaIS7_EEEESC_EEbT_T0_.exit.thread.i, label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN3g2o14TripletColSortEEclINS_17__normal_iteratorIPNS2_12TripletEntryESt6vectorIS7_SaIS7_EEEESC_EEbT_T0_.exit.thread38.i
@@ -1027,7 +1032,7 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN3g2o14TripletColSortEEclINS_17__normal_ite
   br i1 %or.cond, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %._crit_edge.i
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.n, ptr noundef nonnull align 8 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !54
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.n, ptr noundef nonnull align 8 dereferenceable(16) %4, i64 16, i1 false), !tbaa.struct !54
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %._crit_edge.i

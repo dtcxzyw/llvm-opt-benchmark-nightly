@@ -201,15 +201,16 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.split
   %i.o = phi ptr [ %i.v, %bb.d ], [ %.pre, %.lr.ph ] ; 2 uses
   %.022 = phi ptr [ %.0, %bb.d ], [ %.020, %.lr.ph ] ; 2 uses
   %i.p = load ptr, ptr %.022, align 8, !tbaa !25  ; 2 uses
-  %i.q = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.p) #8
-  %i.r = add i64 %i.q, 1                          ; 3 uses
+  %i.q = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.p) #8 ; 2 uses
+  %i.r = add i64 %i.q, 1                          ; 2 uses
   %.not19 = icmp eq ptr %i.o, null
   br i1 %.not19, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph.split
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.o, ptr nonnull align 1 %i.p, i64 %i.r, i1 false)
   %i.s = load ptr, ptr %1, align 8, !tbaa !34
-  %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.r ; 3 uses
+  %3 = getelementptr i8, ptr %i.s, i64 %i.q
+  %i.t = getelementptr i8, ptr %3, i64 1          ; 3 uses
   store ptr %i.t, ptr %1, align 8, !tbaa !34
   br label %bb.d
 

@@ -203,7 +203,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.p, label %.preheader, label %vector.body, !llvm.loop !32
 
 .preheader:                                       ; preds = %vector.body, %.preheader
-  %indvars.iv127 = phi i64 [ %indvars.iv.next128.1, %.preheader ], [ 0, %vector.body ] ; 4 uses
+  %indvars.iv127 = phi i64 [ %indvars.iv.next128.1, %.preheader ], [ 0, %vector.body ] ; 5 uses
   %i.q = getelementptr inbounds nuw [64 x i8], ptr @_ZN9Stockfish14SquareDistanceE, i64 %indvars.iv127
   %i.r = trunc nuw nsw i64 %indvars.iv127 to i8   ; 2 uses
   %i.s = lshr i8 %i.r, 3
@@ -221,15 +221,16 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.aa = tail call <64 x i32> @llvm.umax.v64i32(<64 x i32> %i.x, <64 x i32> %i.z)
   %i.ab = trunc nuw nsw <64 x i32> %i.aa to <64 x i8>
   store <64 x i8> %i.ab, ptr %i.q, align 16, !tbaa !19
-  %indvars.iv.next128 = or disjoint i64 %indvars.iv127, 1 ; 2 uses
-  %0 = getelementptr inbounds nuw [64 x i8], ptr @_ZN9Stockfish14SquareDistanceE, i64 %indvars.iv.next128
-  %i.ac = trunc nuw nsw i64 %indvars.iv.next128 to i8 ; 2 uses
+  %0 = getelementptr inbounds nuw [64 x i8], ptr @_ZN9Stockfish14SquareDistanceE, i64 %indvars.iv127
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 64
+  %i.ac = trunc i64 %indvars.iv127 to i8          ; 2 uses
   %i.ad = lshr i8 %i.ac, 3
   %i.ae = zext nneg i8 %i.ad to i32
   %broadcast.splatinsert140.1 = insertelement <64 x i32> poison, i32 %i.ae, i64 0
   %broadcast.splat141.1 = shufflevector <64 x i32> %broadcast.splatinsert140.1, <64 x i32> poison, <64 x i32> zeroinitializer
-  %i.af = and i8 %i.ac, 7
-  %i.ag = zext nneg i8 %i.af to i32
+  %i.af = and i8 %i.ac, 6
+  %2 = or disjoint i8 %i.af, 1
+  %i.ag = zext nneg i8 %2 to i32
   %broadcast.splatinsert.1 = insertelement <64 x i32> poison, i32 %i.ag, i64 0
   %broadcast.splat.1 = shufflevector <64 x i32> %broadcast.splatinsert.1, <64 x i32> poison, <64 x i32> zeroinitializer
   %i.ah = add nsw <64 x i32> %broadcast.splat.1, <i32 0, i32 -1, i32 -2, i32 -3, i32 -4, i32 -5, i32 -6, i32 -7, i32 0, i32 -1, i32 -2, i32 -3, i32 -4, i32 -5, i32 -6, i32 -7, i32 0, i32 -1, i32 -2, i32 -3, i32 -4, i32 -5, i32 -6, i32 -7, i32 0, i32 -1, i32 -2, i32 -3, i32 -4, i32 -5, i32 -6, i32 -7, i32 0, i32 -1, i32 -2, i32 -3, i32 -4, i32 -5, i32 -6, i32 -7, i32 0, i32 -1, i32 -2, i32 -3, i32 -4, i32 -5, i32 -6, i32 -7, i32 0, i32 -1, i32 -2, i32 -3, i32 -4, i32 -5, i32 -6, i32 -7, i32 0, i32 -1, i32 -2, i32 -3, i32 -4, i32 -5, i32 -6, i32 -7>
@@ -238,7 +239,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.ak = tail call <64 x i32> @llvm.abs.v64i32(<64 x i32> %i.aj, i1 true)
   %i.al = tail call <64 x i32> @llvm.umax.v64i32(<64 x i32> %i.ai, <64 x i32> %i.ak)
   %i.am = trunc nuw nsw <64 x i32> %i.al to <64 x i8>
-  store <64 x i8> %i.am, ptr %0, align 16, !tbaa !19
+  store <64 x i8> %i.am, ptr %1, align 16, !tbaa !19
   %indvars.iv.next128.1 = add nuw nsw i64 %indvars.iv127, 2 ; 2 uses
   %exitcond130.not.1 = icmp eq i64 %indvars.iv.next128.1, 64
   br i1 %exitcond130.not.1, label %bb.a, label %.preheader, !llvm.loop !35

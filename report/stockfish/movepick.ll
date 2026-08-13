@@ -145,6 +145,7 @@ bb.a:
   %.pre = load i32, ptr %i.a, align 8, !tbaa !49
   %i.g = ptrtoaddr ptr %1 to i64
   %invariant.op = sub i64 -2, %i.g
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 108
   br label %bb.b
 
 bb.b:                                             ; preds = %_ZN9Stockfish12_GLOBAL__N_122partial_insertion_sortEPNS_7ExtMoveES2_i.exit, %bb.a
@@ -200,9 +201,9 @@ _ZN9Stockfish10MovePicker5scoreILNS_7GenTypeE0EEEPNS_7ExtMoveERNS_8MoveListIXT_E
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i
-  %n.vec = and i64 %i.q, -16                      ; 4 uses
+  %n.vec = and i64 %i.q, -16                      ; 5 uses
   %i.r = shl i64 %n.vec, 3                        ; 2 uses
-  %i.s = or disjoint i64 %i.r, 116                ; 2 uses
+  %i.s = or disjoint i64 %i.r, 116
   %i.t = shl i64 %n.vec, 1
   %i.u = getelementptr i8, ptr %1, i64 %i.t
   br label %vector.body
@@ -525,6 +526,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
 
 middle.block:                                     ; preds = %vector.body
   %ind.escape = or disjoint i64 %i.r, 108
+  %5 = shl i64 %n.vec, 3
+  %6 = getelementptr i8, ptr %4, i64 %5
   %cmp.n = icmp eq i64 %i.q, %n.vec
   br i1 %cmp.n, label %_ZN9Stockfish10MovePicker5scoreILNS_7GenTypeE0EEEPNS_7ExtMoveERNS_8MoveListIXT_EEE.exit, label %scalar.ph.preheader
 
@@ -536,9 +539,9 @@ scalar.ph.preheader:                              ; preds = %.lr.ph.i, %middle.b
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
   %.025.i.idx = phi i64 [ %.025.i.add, %scalar.ph ], [ %.025.i.idx.ph, %scalar.ph.preheader ] ; 3 uses
   %.02224.i = phi ptr [ %i.ls, %scalar.ph ], [ %.02224.i.ph, %scalar.ph.preheader ] ; 2 uses
-  %.025.i.ptr = getelementptr inbounds nuw i8, ptr %0, i64 %.025.i.idx ; 2 uses
+  %.025.i.ptr = getelementptr inbounds nuw i8, ptr %0, i64 %.025.i.idx ; 3 uses
   %.sroa.011.0.copyload.i = load i16, ptr %.02224.i, align 2, !tbaa !30 ; 3 uses
-  %.025.i.add = add nuw nsw i64 %.025.i.idx, 8    ; 2 uses
+  %.025.i.add = add nuw nsw i64 %.025.i.idx, 8
   store i16 %.sroa.011.0.copyload.i, ptr %.025.i.ptr, align 4, !tbaa !59
   %i.kv = lshr i16 %.sroa.011.0.copyload.i, 6
   %i.kw = and i16 %.sroa.011.0.copyload.i, 63
@@ -570,36 +573,37 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 
 _ZN9Stockfish10MovePicker5scoreILNS_7GenTypeE0EEEPNS_7ExtMoveERNS_8MoveListIXT_EEE.exit: ; preds = %scalar.ph, %middle.block
   %.025.i.idx.lcssa = phi i64 [ %ind.escape, %middle.block ], [ %.025.i.idx, %scalar.ph ]
-  %.025.i.add.lcssa = phi i64 [ %i.s, %middle.block ], [ %.025.i.add, %scalar.ph ]
-  %.ptr87.le = getelementptr inbounds nuw i8, ptr %0, i64 %.025.i.add.lcssa ; 3 uses
+  %.025.i.ptr.lcssa = phi ptr [ %6, %middle.block ], [ %.025.i.ptr, %scalar.ph ] ; 2 uses
+  %.ptr87.le = getelementptr inbounds nuw i8, ptr %.025.i.ptr.lcssa, i64 8 ; 2 uses
   store ptr %.ptr87.le, ptr %i.e, align 8, !tbaa !57
   store ptr %.ptr87.le, ptr %i.f, align 8, !tbaa !58
   %i.lt = icmp samesign ugt i64 %.025.i.idx.lcssa, 116
   br i1 %i.lt, label %.lr.ph28.i, label %_ZN9Stockfish12_GLOBAL__N_122partial_insertion_sortEPNS_7ExtMoveES2_i.exit
 
 .lr.ph28.i:                                       ; preds = %_ZN9Stockfish10MovePicker5scoreILNS_7GenTypeE0EEEPNS_7ExtMoveERNS_8MoveListIXT_EEE.exit, %.critedge.i
-  %.01727.i = phi ptr [ %.017.i, %.critedge.i ], [ %.01724.i, %_ZN9Stockfish10MovePicker5scoreILNS_7GenTypeE0EEEPNS_7ExtMoveERNS_8MoveListIXT_EEE.exit ] ; 3 uses
-  %.01825.i.idx = phi i64 [ %.01825.i.add, %.critedge.i ], [ 116, %_ZN9Stockfish10MovePicker5scoreILNS_7GenTypeE0EEEPNS_7ExtMoveERNS_8MoveListIXT_EEE.exit ]
+  %.01727.i = phi ptr [ %.017.i, %.critedge.i ], [ %.01724.i, %_ZN9Stockfish10MovePicker5scoreILNS_7GenTypeE0EEEPNS_7ExtMoveERNS_8MoveListIXT_EEE.exit ] ; 4 uses
+  %.01825.i.idx = phi i64 [ %.01825.i.add, %.critedge.i ], [ 116, %_ZN9Stockfish10MovePicker5scoreILNS_7GenTypeE0EEEPNS_7ExtMoveERNS_8MoveListIXT_EEE.exit ] ; 2 uses
   %i.lu = load i64, ptr %.01727.i, align 4        ; 2 uses
   %.sroa.4.0.extract.shift.i = lshr i64 %i.lu, 32
   %.sroa.4.0.extract.trunc.i = trunc nuw i64 %.sroa.4.0.extract.shift.i to i32
-  %.01825.i.add = add nuw nsw i64 %.01825.i.idx, 8 ; 3 uses
-  %.ptr90 = getelementptr inbounds nuw i8, ptr %0, i64 %.01825.i.add
+  %.01825.i.add = add nuw nsw i64 %.01825.i.idx, 8 ; 2 uses
+  %7 = getelementptr i8, ptr %0, i64 %.01825.i.idx
+  %.ptr90 = getelementptr i8, ptr %7, i64 8
   %i.lv = load i64, ptr %.ptr90, align 4
   store i64 %i.lv, ptr %.01727.i, align 4
   br label %.lr.ph.i9
 
 .lr.ph.i9:                                        ; preds = %.lr.ph28.i, %bb.e
   %.021.i.idx = phi i64 [ %.021.i.add, %bb.e ], [ %.01825.i.add, %.lr.ph28.i ] ; 2 uses
-  %.021.i.ptr = getelementptr inbounds i8, ptr %0, i64 %.021.i.idx ; 3 uses
+  %.021.i.ptr = getelementptr i8, ptr %0, i64 %.021.i.idx ; 4 uses
   %i.lw = getelementptr inbounds i8, ptr %.021.i.ptr, i64 -4
   %i.lx = load i32, ptr %i.lw, align 4, !tbaa !63
   %i.ly = icmp slt i32 %i.lx, %.sroa.4.0.extract.trunc.i
   br i1 %i.ly, label %bb.e, label %.critedge.i
 
 bb.e:                                             ; preds = %.lr.ph.i9
-  %.021.i.add = add nsw i64 %.021.i.idx, -8       ; 3 uses
-  %.ptr89 = getelementptr inbounds i8, ptr %0, i64 %.021.i.add
+  %.021.i.add = add nsw i64 %.021.i.idx, -8       ; 2 uses
+  %.ptr89 = getelementptr i8, ptr %.021.i.ptr, i64 -8
   %i.lz = load i64, ptr %.ptr89, align 4
   store i64 %i.lz, ptr %.021.i.ptr, align 4
   %.not19.i = icmp eq i64 %.021.i.add, 116
@@ -608,8 +612,8 @@ bb.e:                                             ; preds = %.lr.ph.i9
 .critedge.i:                                      ; preds = %bb.e, %.lr.ph.i9
   %.0.lcssa.i10 = phi ptr [ %.021.i.ptr, %.lr.ph.i9 ], [ %.ptr88.ptr, %bb.e ]
   store i64 %i.lu, ptr %.0.lcssa.i10, align 4
-  %.017.i = getelementptr inbounds nuw i8, ptr %.01727.i, i64 8 ; 2 uses
-  %i.ma = icmp ult ptr %.017.i, %.ptr87.le
+  %.017.i = getelementptr inbounds nuw i8, ptr %.01727.i, i64 8
+  %i.ma = icmp ult ptr %.01727.i, %.025.i.ptr.lcssa
   br i1 %i.ma, label %.lr.ph28.i, label %_ZN9Stockfish12_GLOBAL__N_122partial_insertion_sortEPNS_7ExtMoveES2_i.exit, !llvm.loop !71
 
 _ZN9Stockfish12_GLOBAL__N_122partial_insertion_sortEPNS_7ExtMoveES2_i.exit: ; preds = %.critedge.i, %_ZN9Stockfish10MovePicker5scoreILNS_7GenTypeE0EEEPNS_7ExtMoveERNS_8MoveListIXT_EEE.exit.thread, %_ZN9Stockfish10MovePicker5scoreILNS_7GenTypeE0EEEPNS_7ExtMoveERNS_8MoveListIXT_EEE.exit
@@ -923,9 +927,9 @@ _ZN9Stockfish10MovePicker5scoreILNS_7GenTypeE2EEEPNS_7ExtMoveERNS_8MoveListIXT_E
 bb.aa:                                            ; preds = %bb.ad, %.lr.ph.i42
   %.029.i.idx = phi i64 [ 116, %.lr.ph.i42 ], [ %.029.i.add, %bb.ad ] ; 3 uses
   %.02628.i = phi ptr [ %3, %.lr.ph.i42 ], [ %i.ri, %bb.ad ] ; 2 uses
-  %.029.i.ptr = getelementptr inbounds nuw i8, ptr %0, i64 %.029.i.idx ; 2 uses
+  %.029.i.ptr = getelementptr inbounds nuw i8, ptr %0, i64 %.029.i.idx ; 4 uses
   %.sroa.014.0.copyload.i = load i16, ptr %.02628.i, align 2, !tbaa !30 ; 7 uses
-  %.029.i.add = add nuw nsw i64 %.029.i.idx, 8    ; 2 uses
+  %.029.i.add = add nuw nsw i64 %.029.i.idx, 8
   store i16 %.sroa.014.0.copyload.i, ptr %.029.i.ptr, align 4, !tbaa !59
   %i.qe = and i16 %.sroa.014.0.copyload.i, 63
   %i.qf = zext nneg i16 %i.qe to i64              ; 2 uses
@@ -976,7 +980,7 @@ bb.ad:                                            ; preds = %bb.ac, %bb.ab
   br i1 %.not.i43, label %_ZN9Stockfish10MovePicker5scoreILNS_7GenTypeE2EEEPNS_7ExtMoveERNS_8MoveListIXT_EEE.exit, label %bb.aa
 
 _ZN9Stockfish10MovePicker5scoreILNS_7GenTypeE2EEEPNS_7ExtMoveERNS_8MoveListIXT_EEE.exit: ; preds = %bb.ad
-  %.ptr.le = getelementptr inbounds nuw i8, ptr %0, i64 %.029.i.add ; 3 uses
+  %.ptr.le = getelementptr inbounds nuw i8, ptr %.029.i.ptr, i64 8 ; 2 uses
   %i.rj = getelementptr inbounds nuw i8, ptr %0, i64 88
   store ptr %.ptr.le, ptr %i.rj, align 8, !tbaa !77
   store ptr %.ptr.le, ptr %i.f, align 8, !tbaa !58
@@ -984,28 +988,29 @@ _ZN9Stockfish10MovePicker5scoreILNS_7GenTypeE2EEEPNS_7ExtMoveERNS_8MoveListIXT_E
   br i1 %i.rk, label %.lr.ph28.i46, label %_ZN9Stockfish12_GLOBAL__N_122partial_insertion_sortEPNS_7ExtMoveES2_i.exit61
 
 .lr.ph28.i46:                                     ; preds = %_ZN9Stockfish10MovePicker5scoreILNS_7GenTypeE2EEEPNS_7ExtMoveERNS_8MoveListIXT_EEE.exit, %.critedge.i56
-  %.01727.i47 = phi ptr [ %.017.i59, %.critedge.i56 ], [ %.01724.i, %_ZN9Stockfish10MovePicker5scoreILNS_7GenTypeE2EEEPNS_7ExtMoveERNS_8MoveListIXT_EEE.exit ] ; 3 uses
-  %.01825.i49.idx = phi i64 [ %.01825.i49.add, %.critedge.i56 ], [ 116, %_ZN9Stockfish10MovePicker5scoreILNS_7GenTypeE2EEEPNS_7ExtMoveERNS_8MoveListIXT_EEE.exit ]
+  %.01727.i47 = phi ptr [ %.017.i59, %.critedge.i56 ], [ %.01724.i, %_ZN9Stockfish10MovePicker5scoreILNS_7GenTypeE2EEEPNS_7ExtMoveERNS_8MoveListIXT_EEE.exit ] ; 4 uses
+  %.01825.i49.idx = phi i64 [ %.01825.i49.add, %.critedge.i56 ], [ 116, %_ZN9Stockfish10MovePicker5scoreILNS_7GenTypeE2EEEPNS_7ExtMoveERNS_8MoveListIXT_EEE.exit ] ; 2 uses
   %i.rl = load i64, ptr %.01727.i47, align 4      ; 2 uses
   %.sroa.4.0.extract.shift.i51 = lshr i64 %i.rl, 32
   %.sroa.4.0.extract.trunc.i52 = trunc nuw i64 %.sroa.4.0.extract.shift.i51 to i32
-  %.01825.i49.add = add nuw nsw i64 %.01825.i49.idx, 8 ; 3 uses
-  %.ptr84 = getelementptr inbounds nuw i8, ptr %0, i64 %.01825.i49.add
+  %.01825.i49.add = add nuw nsw i64 %.01825.i49.idx, 8 ; 2 uses
+  %8 = getelementptr i8, ptr %0, i64 %.01825.i49.idx
+  %.ptr84 = getelementptr i8, ptr %8, i64 8
   %i.rm = load i64, ptr %.ptr84, align 4
   store i64 %i.rm, ptr %.01727.i47, align 4
   br label %.lr.ph.i54
 
 .lr.ph.i54:                                       ; preds = %.lr.ph28.i46, %bb.ae
   %.021.i55.idx = phi i64 [ %.021.i55.add, %bb.ae ], [ %.01825.i49.add, %.lr.ph28.i46 ] ; 2 uses
-  %.021.i55.ptr = getelementptr inbounds i8, ptr %0, i64 %.021.i55.idx ; 3 uses
+  %.021.i55.ptr = getelementptr i8, ptr %0, i64 %.021.i55.idx ; 4 uses
   %i.rn = getelementptr inbounds i8, ptr %.021.i55.ptr, i64 -4
   %i.ro = load i32, ptr %i.rn, align 4, !tbaa !63
   %i.rp = icmp slt i32 %i.ro, %.sroa.4.0.extract.trunc.i52
   br i1 %i.rp, label %bb.ae, label %.critedge.i56
 
 bb.ae:                                            ; preds = %.lr.ph.i54
-  %.021.i55.add = add nsw i64 %.021.i55.idx, -8   ; 3 uses
-  %.ptr83 = getelementptr inbounds i8, ptr %0, i64 %.021.i55.add
+  %.021.i55.add = add nsw i64 %.021.i55.idx, -8   ; 2 uses
+  %.ptr83 = getelementptr i8, ptr %.021.i55.ptr, i64 -8
   %i.rq = load i64, ptr %.ptr83, align 4
   store i64 %i.rq, ptr %.021.i55.ptr, align 4
   %.not19.i60 = icmp eq i64 %.021.i55.add, 116
@@ -1014,8 +1019,8 @@ bb.ae:                                            ; preds = %.lr.ph.i54
 .critedge.i56:                                    ; preds = %bb.ae, %.lr.ph.i54
   %.0.lcssa.i57 = phi ptr [ %.021.i55.ptr, %.lr.ph.i54 ], [ %.ptr88.ptr, %bb.ae ]
   store i64 %i.rl, ptr %.0.lcssa.i57, align 4
-  %.017.i59 = getelementptr inbounds nuw i8, ptr %.01727.i47, i64 8 ; 2 uses
-  %i.rr = icmp ult ptr %.017.i59, %.ptr.le
+  %.017.i59 = getelementptr inbounds nuw i8, ptr %.01727.i47, i64 8
+  %i.rr = icmp ult ptr %.01727.i47, %.029.i.ptr
   br i1 %i.rr, label %.lr.ph28.i46, label %_ZN9Stockfish12_GLOBAL__N_122partial_insertion_sortEPNS_7ExtMoveES2_i.exit61, !llvm.loop !71
 
 _ZN9Stockfish12_GLOBAL__N_122partial_insertion_sortEPNS_7ExtMoveES2_i.exit61: ; preds = %.critedge.i56, %_ZN9Stockfish10MovePicker5scoreILNS_7GenTypeE2EEEPNS_7ExtMoveERNS_8MoveListIXT_EEE.exit.thread, %_ZN9Stockfish10MovePicker5scoreILNS_7GenTypeE2EEEPNS_7ExtMoveERNS_8MoveListIXT_EEE.exit

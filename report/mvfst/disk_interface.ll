@@ -61,13 +61,14 @@ _ZN12_GLOBAL__N_17DirNameERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE
   br label %bb.k
 
 _ZSt4findIPKccET_S2_S2_RKT0_.exit.i:              ; preds = %.lr.ph
+  %4 = add i64 %.0.i13, -1                        ; 3 uses
   %.not.i = icmp eq i64 %4, 0
   br i1 %.not.i, label %.critedge.i, label %.lr.ph, !llvm.loop !24
 
 .lr.ph:                                           ; preds = %_ZSt4findIPKccET_S2_S2_RKT0_.exit.preheader.i, %_ZSt4findIPKccET_S2_S2_RKT0_.exit.i
-  %.0.i13 = phi i64 [ %4, %_ZSt4findIPKccET_S2_S2_RKT0_.exit.i ], [ %i.b, %_ZSt4findIPKccET_S2_S2_RKT0_.exit.preheader.i ] ; 2 uses
-  %4 = add i64 %.0.i13, -1                        ; 4 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %.pre.pre.i, i64 %4
+  %.0.i13 = phi i64 [ %4, %_ZSt4findIPKccET_S2_S2_RKT0_.exit.i ], [ %i.b, %_ZSt4findIPKccET_S2_S2_RKT0_.exit.preheader.i ] ; 3 uses
+  %5 = getelementptr i8, ptr %.pre.pre.i, i64 %.0.i13
+  %i.f = getelementptr i8, ptr %5, i64 -1
   %.pre53.i.i.i.i = load i8, ptr %i.f, align 1, !tbaa !23, !noalias !12
   %i.g = icmp eq i8 %.pre53.i.i.i.i, 47
   br i1 %i.g, label %_ZSt4findIPKccET_S2_S2_RKT0_.exit.i, label %..critedge.i_crit_edge, !llvm.loop !24

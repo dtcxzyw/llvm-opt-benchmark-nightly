@@ -203,17 +203,18 @@ bb.w:                                             ; preds = %bb.q
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit
-  %indvars.iv = phi i64 [ %i.da, %.lr.ph.preheader ], [ %indvars.iv.next, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit ] ; 2 uses
-  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
+  %indvars.iv = phi i64 [ %i.da, %.lr.ph.preheader ], [ %indvars.iv.next, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit ] ; 3 uses
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
   %i.db = load ptr, ptr %i.t, align 8, !tbaa !85
-  %i.dc = getelementptr inbounds nuw i8, ptr %i.db, i64 %indvars.iv.next
+  %10 = getelementptr i8, ptr %i.db, i64 %indvars.iv
+  %i.dc = getelementptr i8, ptr %10, i64 -1
   %i.dd = load i8, ptr %i.dc, align 1, !tbaa !33
   %.not21 = icmp eq i8 %i.dd, 10
   br i1 %.not21, label %.critedge, label %bb.x
 
 bb.x:                                             ; preds = %.lr.ph
-  %i.de = load i64, ptr %i.bz, align 8, !tbaa !83 ; 4 uses
-  %i.df = add i64 %i.de, 1                        ; 3 uses
+  %i.de = load i64, ptr %i.bz, align 8, !tbaa !83 ; 5 uses
+  %i.df = add i64 %i.de, 1                        ; 2 uses
   %i.dg = load ptr, ptr %i.bx, align 8, !tbaa !85 ; 2 uses
   %i.dh = icmp eq ptr %i.dg, %i.by
   br i1 %i.dh, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
@@ -246,7 +247,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEc.exit: ; preds = %_ZNKS
   store i8 32, ptr %i.dn, align 1, !tbaa !33
   store i64 %i.df, ptr %i.bz, align 8, !tbaa !83
   %i.do = load ptr, ptr %i.bx, align 8, !tbaa !85
-  %i.dp = getelementptr inbounds nuw i8, ptr %i.do, i64 %i.df
+  %11 = getelementptr i8, ptr %i.do, i64 %i.de
+  %i.dp = getelementptr i8, ptr %11, i64 1
   store i8 0, ptr %i.dp, align 1, !tbaa !33
   %i.dq = icmp samesign ugt i64 %indvars.iv, 1
   br i1 %i.dq, label %.lr.ph, label %.critedge

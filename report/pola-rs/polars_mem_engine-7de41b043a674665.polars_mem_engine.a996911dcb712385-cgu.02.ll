@@ -203,9 +203,10 @@ _RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VecbE7reserveCseyIfFeUOWMb_17polars_mem_
 ._crit_edge.thread:                               ; preds = %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VecbE7reserveCseyIfFeUOWMb_17polars_mem_engine.exit
   %i.m = add i64 %1, -1, !dbg !40098
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.k, i8 %i.a, i64 %i.m, i1 false), !dbg !40107
-  %i.n = add i64 %i.g, %1, !dbg !40098
-  %i.o = add i64 %i.n, -1, !dbg !40098            ; 2 uses
-  %scevgep = getelementptr i8, ptr %i.i, i64 %i.o, !dbg !40098
+  %i.n = add i64 %i.g, %1, !dbg !40098            ; 2 uses
+  %i.o = add i64 %i.n, -1, !dbg !40098
+  %3 = getelementptr i8, ptr %i.i, i64 %i.n, !dbg !40098
+  %scevgep = getelementptr i8, ptr %3, i64 -1, !dbg !40098
   br label %bb.c, !dbg !40110
 
 ._crit_edge:                                      ; preds = %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VecbE7reserveCseyIfFeUOWMb_17polars_mem_engine.exit

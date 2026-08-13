@@ -201,14 +201,13 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a, %_ZN3g2o13TicTocElementaSEOS0_.exit
   %.047 = phi i64 [ %spec.select, %_ZN3g2o13TicTocElementaSEOS0_.exit ], [ %1, %bb.a ] ; 3 uses
-  %i.d = shl i64 %.047, 1                         ; 2 uses
-  %i.e = add i64 %i.d, 2                          ; 2 uses
-  %i.f = getelementptr inbounds [88 x i8], ptr %0, i64 %i.e
-  %i.g = or disjoint i64 %i.d, 1                  ; 2 uses
-  %6 = getelementptr inbounds [88 x i8], ptr %0, i64 %i.g
-  %i.h = getelementptr inbounds nuw i8, ptr %i.f, i64 8
+  %i.d = shl i64 %.047, 1                         ; 3 uses
+  %i.e = add i64 %i.d, 2
+  %i.f = getelementptr [88 x i8], ptr %0, i64 %i.d ; 2 uses
+  %i.g = or disjoint i64 %i.d, 1
+  %i.h = getelementptr i8, ptr %i.f, i64 184
   %i.i = load double, ptr %i.h, align 8, !tbaa !64
-  %i.j = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %i.j = getelementptr i8, ptr %i.f, i64 96
   %i.k = load double, ptr %i.j, align 8, !tbaa !64
   %i.l = fcmp olt double %i.i, %i.k
   %spec.select = select i1 %i.l, i64 %i.g, i64 %i.e ; 5 uses
@@ -317,17 +316,20 @@ bb.h:                                             ; preds = %._crit_edge
 
 bb.i:                                             ; preds = %bb.h
   %i.aw = shl nsw i64 %.0.lcssa, 1
-  %i.ax = or disjoint i64 %i.aw, 1                ; 3 uses
-  %7 = getelementptr inbounds [88 x i8], ptr %0, i64 %i.ax ; 8 uses
-  %8 = getelementptr inbounds [88 x i8], ptr %0, i64 %.0.lcssa ; 7 uses
+  %i.ax = or disjoint i64 %i.aw, 1
+  %.idx = mul i64 %.0.lcssa, 176                  ; 2 uses
+  %6 = getelementptr i8, ptr %0, i64 %.idx        ; 8 uses
+  %7 = getelementptr i8, ptr %6, i64 88
+  %.idx47 = mul nsw i64 %.0.lcssa, 88             ; 2 uses
+  %8 = getelementptr inbounds i8, ptr %0, i64 %.idx47 ; 7 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(81) %8, ptr noundef nonnull align 8 dereferenceable(81) %7, i64 48, i1 false)
   %i.ay = getelementptr inbounds nuw i8, ptr %8, i64 48 ; 4 uses
-  %i.az = getelementptr inbounds nuw i8, ptr %7, i64 48 ; 4 uses
+  %i.az = getelementptr i8, ptr %6, i64 136       ; 4 uses
   %i.ba = load ptr, ptr %i.ay, align 8, !tbaa !34 ; 6 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %8, i64 64 ; 4 uses
   %i.bc = icmp eq ptr %i.ba, %i.bb
   %i.bd = load ptr, ptr %i.az, align 8, !tbaa !34 ; 6 uses
-  %i.be = getelementptr inbounds nuw i8, ptr %7, i64 64 ; 6 uses
+  %i.be = getelementptr i8, ptr %6, i64 152       ; 6 uses
   %i.bf = icmp eq ptr %i.bd, %i.be                ; 2 uses
   br i1 %i.bc, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i31, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i25
 
@@ -338,11 +340,12 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
   br i1 %i.bf, label %bb.j, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit23.thread25.i.i26
 
 bb.j:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i25, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i31
-  %i.bg = getelementptr inbounds nuw i8, ptr %7, i64 56 ; 2 uses
+  %i.bg = getelementptr i8, ptr %6, i64 144       ; 2 uses
   %i.bh = load i64, ptr %i.bg, align 8, !tbaa !37 ; 3 uses
   %i.bi = icmp ult i64 %i.bh, 16
   tail call void @llvm.assume(i1 %i.bi)
-  %.not21.i.i28 = icmp eq i64 %i.ax, %.0.lcssa
+  %9 = add i64 %.idx, 88
+  %.not21.i.i28 = icmp eq i64 %9, %.idx47
   br i1 %.not21.i.i28, label %_ZN3g2o13TicTocElementaSEOS0_.exit33, label %bb.k, !prof !94
 
 bb.k:                                             ; preds = %bb.j
@@ -373,7 +376,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i29:
 .thread.i.i32:                                    ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i31
   %i.bo = getelementptr inbounds nuw i8, ptr %8, i64 56
   store ptr %i.bd, ptr %i.ay, align 8, !tbaa !34
-  %i.bp = getelementptr inbounds nuw i8, ptr %7, i64 56
+  %i.bp = getelementptr i8, ptr %6, i64 144
   %i.bq = load i64, ptr %i.bp, align 8, !tbaa !37
   store i64 %i.bq, ptr %i.bo, align 8, !tbaa !37
   %i.br = load i64, ptr %i.be, align 8, !tbaa !36
@@ -383,7 +386,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i29:
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit23.thread25.i.i26: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i25
   %i.bs = load i64, ptr %i.bb, align 8, !tbaa !36
   store ptr %i.bd, ptr %i.ay, align 8, !tbaa !34
-  %i.bt = getelementptr inbounds nuw i8, ptr %7, i64 56
+  %i.bt = getelementptr i8, ptr %6, i64 144
   %i.bu = load i64, ptr %i.bt, align 8, !tbaa !37
   %i.bv = getelementptr inbounds nuw i8, ptr %8, i64 56
   store i64 %i.bu, ptr %i.bv, align 8, !tbaa !37
@@ -403,10 +406,10 @@ bb.o:                                             ; preds = %_ZNKSt7__cxx1112bas
 
 _ZN3g2o13TicTocElementaSEOS0_.exit33:             ; preds = %bb.j, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i29, %bb.n, %bb.o
   %i.bx = phi ptr [ %i.ba, %bb.n ], [ %i.be, %bb.o ], [ %i.bd, %bb.j ], [ %.pre.i.i30, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i.i29 ]
-  %i.by = getelementptr inbounds nuw i8, ptr %7, i64 56
+  %i.by = getelementptr i8, ptr %6, i64 144
   store i64 0, ptr %i.by, align 8, !tbaa !37
   store i8 0, ptr %i.bx, align 1, !tbaa !36
-  %i.bz = getelementptr inbounds nuw i8, ptr %7, i64 80
+  %i.bz = getelementptr i8, ptr %6, i64 168
   %i.ca = load i8, ptr %i.bz, align 8, !tbaa !44, !range !28, !noundef !29
   %i.cb = getelementptr inbounds nuw i8, ptr %8, i64 80
   store i8 %i.ca, ptr %i.cb, align 8, !tbaa !44

@@ -203,15 +203,16 @@ bb.a:
   br i1 %i.n, label %bb.b, label %bb.c
 
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
-  %indvars.iv88 = phi i64 [ %i.q, %.lr.ph ], [ %i.c, %bb.a ] ; 2 uses
+  %indvars.iv88 = phi i64 [ %i.q, %.lr.ph ], [ %i.c, %bb.a ] ; 3 uses
   %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ 1, %bb.a ] ; 2 uses
   %.07379 = phi i32 [ %i.al, %.lr.ph ], [ %i.k, %bb.a ]
   %.in.i76 = getelementptr inbounds nuw [4 x i8], ptr @_ZN4ojph5local10bibo_gains10gain_5x3_lE, i64 %indvars.iv88
   %i.o = load float, ptr %.in.i76, align 4, !tbaa !161
   %i.p = fpext float %i.o to double
-  %i.q = add nsw i64 %indvars.iv88, -1            ; 3 uses
-  %.in.i77.a = getelementptr inbounds nuw [4 x i8], ptr @_ZN4ojph5local10bibo_gains10gain_5x3_hE, i64 %i.q
-  %i.r = load float, ptr %.in.i77.a, align 4, !tbaa !161
+  %i.q = add nsw i64 %indvars.iv88, -1            ; 2 uses
+  %.in.i77.a = getelementptr [4 x i8], ptr @_ZN4ojph5local10bibo_gains10gain_5x3_hE, i64 %indvars.iv88
+  %.in.i77 = getelementptr i8, ptr %.in.i77.a, i64 -4
+  %i.r = load float, ptr %.in.i77, align 4, !tbaa !161
   %i.s = fpext float %i.r to double               ; 3 uses
   %i.t = fmul double %i.p, %i.s
   %i.u = tail call double @log(double noundef %i.t) #22
@@ -332,13 +333,14 @@ bb.a:
   ret void
 
 .lr.ph71:                                         ; preds = %._crit_edge, %._crit_edge64
-  %indvars.iv78 = phi i64 [ %i.v, %._crit_edge64 ], [ %i.b, %._crit_edge ] ; 2 uses
+  %indvars.iv78 = phi i64 [ %i.v, %._crit_edge64 ], [ %i.b, %._crit_edge ] ; 3 uses
   %indvars.iv = phi i64 [ %indvars.iv.next, %._crit_edge64 ], [ 1, %._crit_edge ] ; 2 uses
   %.in.i48 = getelementptr inbounds nuw [4 x i8], ptr @_ZN4ojph5local17sqrt_energy_gains10gain_9x7_lE, i64 %indvars.iv78
   %i.u = load float, ptr %.in.i48, align 4, !tbaa !161
-  %i.v = add nsw i64 %indvars.iv78, -1            ; 3 uses
-  %.in.i49.a = getelementptr inbounds nuw [4 x i8], ptr @_ZN4ojph5local17sqrt_energy_gains10gain_9x7_hE, i64 %i.v
-  %i.w = load float, ptr %.in.i49.a, align 4, !tbaa !161 ; 3 uses
+  %i.v = add nsw i64 %indvars.iv78, -1            ; 2 uses
+  %.in.i49.a = getelementptr [4 x i8], ptr @_ZN4ojph5local17sqrt_energy_gains10gain_9x7_hE, i64 %indvars.iv78
+  %.in.i49 = getelementptr i8, ptr %.in.i49.a, i64 -4
+  %i.w = load float, ptr %.in.i49, align 4, !tbaa !161 ; 3 uses
   %i.x = load float, ptr %i.d, align 4, !tbaa !81
   %i.y = fmul float %i.u, %i.w
   %i.z = fdiv float %i.x, %i.y                    ; 3 uses

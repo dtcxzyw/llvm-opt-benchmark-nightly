@@ -203,7 +203,7 @@ bb.a:
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
-  %.012 = phi i64 [ 0, %.lr.ph.preheader.new ], [ %i.ad, %.lr.ph ] ; 4 uses
+  %.012 = phi i64 [ 0, %.lr.ph.preheader.new ], [ %i.ad, %.lr.ph ] ; 5 uses
   %niter = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.1, %.lr.ph ]
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 %.012
   %i.c = load i8, ptr %i.b, align 1, !tbaa !16
@@ -221,22 +221,23 @@ bb.a:
   %i.n = load i8, ptr %i.m, align 1, !tbaa !16
   %i.o = getelementptr inbounds nuw i8, ptr %i.j, i64 1
   store i8 %i.n, ptr %i.o, align 1, !tbaa !16
-  %3 = or disjoint i64 %.012, 1                   ; 2 uses
-  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 %3
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 %.012
+  %i.p = getelementptr inbounds nuw i8, ptr %3, i64 1
   %i.q = load i8, ptr %i.p, align 1, !tbaa !16
   %i.r = zext i8 %i.q to i32                      ; 2 uses
   %i.s = lshr i32 %i.r, 4
   %i.t = zext nneg i32 %i.s to i64
   %i.u = getelementptr inbounds nuw i8, ptr @.str.2, i64 %i.t
   %i.v = load i8, ptr %i.u, align 1, !tbaa !16
-  %i.w = shl i64 %3, 1
-  %i.x = getelementptr inbounds nuw i8, ptr %1, i64 %i.w ; 2 uses
+  %i.w = shl i64 %.012, 1
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 %i.w ; 2 uses
+  %i.x = getelementptr inbounds nuw i8, ptr %4, i64 2
   store i8 %i.v, ptr %i.x, align 1, !tbaa !16
   %i.y = and i32 %i.r, 15
   %i.z = zext nneg i32 %i.y to i64
   %i.aa = getelementptr inbounds nuw i8, ptr @.str.2, i64 %i.z
   %i.ab = load i8, ptr %i.aa, align 1, !tbaa !16
-  %i.ac = getelementptr inbounds nuw i8, ptr %i.x, i64 1
+  %i.ac = getelementptr inbounds nuw i8, ptr %4, i64 3
   store i8 %i.ab, ptr %i.ac, align 1, !tbaa !16
   %i.ad = add nuw i64 %.012, 2                    ; 2 uses
   %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses

@@ -201,6 +201,7 @@ _ZNSt6vectorIjSaIjEED2Ev.exit:                    ; preds = %_ZNSt6vectorIdSaIdE
   br label %bb.f
 
 bb.d:                                             ; preds = %bb.f
+  %1 = add i64 %.0.i5, -1                         ; 2 uses
   %.not.i = icmp eq i64 %1, 0
   br i1 %.not.i, label %._crit_edge, label %bb.f, !llvm.loop !796
 
@@ -219,11 +220,11 @@ bb.e:                                             ; preds = %._crit_edge
   br label %_ZN5Ipopt8ObserverD2Ev.exit
 
 bb.f:                                             ; preds = %.lr.ph, %bb.d
-  %.0.i5 = phi i64 [ %i.v, %.lr.ph ], [ %1, %bb.d ]
-  %1 = add i64 %.0.i5, -1                         ; 3 uses
+  %.0.i5 = phi i64 [ %i.v, %.lr.ph ], [ %1, %bb.d ] ; 2 uses
   %i.ac = load ptr, ptr %i.o, align 8, !tbaa !790
-  %i.ad = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %1
-  %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !788
+  %i.ad = getelementptr [8 x i8], ptr %i.ac, i64 %.0.i5
+  %2 = getelementptr i8, ptr %i.ad, i64 -8
+  %i.ae = load ptr, ptr %2, align 8, !tbaa !788
   invoke void @_ZN5Ipopt8Observer13RequestDetachENS0_10NotifyTypeEPKNS_7SubjectE(ptr noundef nonnull align 8 dereferenceable(32) %0, i32 noundef 0, ptr noundef %i.ae)
           to label %bb.d unwind label %bb.g, !llvm.loop !796, !inline_history !797
 
@@ -281,6 +282,7 @@ bb.a:
   br label %bb.d
 
 bb.b:                                             ; preds = %bb.d
+  %1 = add i64 %.05, -1                           ; 2 uses
   %.not = icmp eq i64 %1, 0
   br i1 %.not, label %._crit_edge, label %bb.d, !llvm.loop !796
 
@@ -302,11 +304,11 @@ _ZNSt6vectorIPKN5Ipopt7SubjectESaIS3_EED2Ev.exit: ; preds = %._crit_edge, %bb.c
   ret void
 
 bb.d:                                             ; preds = %.lr.ph, %bb.b
-  %.05 = phi i64 [ %i.h, %.lr.ph ], [ %1, %bb.b ]
-  %1 = add i64 %.05, -1                           ; 3 uses
+  %.05 = phi i64 [ %i.h, %.lr.ph ], [ %1, %bb.b ] ; 2 uses
   %i.o = load ptr, ptr %i.a, align 8, !tbaa !790
-  %i.p = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %1
-  %i.q = load ptr, ptr %i.p, align 8, !tbaa !788
+  %i.p = getelementptr [8 x i8], ptr %i.o, i64 %.05
+  %2 = getelementptr i8, ptr %i.p, i64 -8
+  %i.q = load ptr, ptr %2, align 8, !tbaa !788
   invoke void @_ZN5Ipopt8Observer13RequestDetachENS0_10NotifyTypeEPKNS_7SubjectE(ptr noundef nonnull align 8 dereferenceable(32) %0, i32 noundef 0, ptr noundef %i.q)
           to label %bb.b unwind label %bb.e, !llvm.loop !796
 

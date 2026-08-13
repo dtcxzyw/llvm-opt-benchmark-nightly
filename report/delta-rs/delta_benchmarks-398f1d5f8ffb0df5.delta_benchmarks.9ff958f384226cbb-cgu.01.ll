@@ -204,9 +204,10 @@ _RNvMs_NtCs6Po7BT7Nknu_5alloc3vecINtB4_3VecNtNtCs8VI8w5SIoU4_15datafusion_expr12
 ._crit_edge.thread:                               ; preds = %_RNvMs_NtCs6Po7BT7Nknu_5alloc3vecINtB4_3VecNtNtCs8VI8w5SIoU4_15datafusion_expr12table_source27TableProviderFilterPushDownE7reserveCsdJxlLsGgtXr_16delta_benchmarks.exit
   %i.l = add i64 %1, -1
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.j, i8 %2, i64 %i.l, i1 false)
-  %i.m = add i64 %i.f, %1
-  %i.n = add i64 %i.m, -1                         ; 2 uses
-  %scevgep = getelementptr i8, ptr %i.h, i64 %i.n
+  %i.m = add i64 %i.f, %1                         ; 2 uses
+  %i.n = add i64 %i.m, -1
+  %3 = getelementptr i8, ptr %i.h, i64 %i.m
+  %scevgep = getelementptr i8, ptr %3, i64 -1
   br label %bb.c
 
 ._crit_edge:                                      ; preds = %_RNvMs_NtCs6Po7BT7Nknu_5alloc3vecINtB4_3VecNtNtCs8VI8w5SIoU4_15datafusion_expr12table_source27TableProviderFilterPushDownE7reserveCsdJxlLsGgtXr_16delta_benchmarks.exit
@@ -609,7 +610,8 @@ bb.b:                                             ; preds = %bb.a
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.o = load i8, ptr %i.n, align 8, !alias.scope !9930, !noalias !9931 ; 2 uses
   %i.p = zext nneg i8 %i.o to i64                 ; 4 uses
-  %i.q = icmp ult i8 %i.o, 5
+  %2 = add i8 %i.o, -1
+  %i.q = icmp ult i8 %2, 4
   br i1 %.not.i.i.i.i, label %_RNvMsf_NtNtCsbvkFyIu7lgC_4core3str4iterINtB5_13SplitInternalcE7get_endCsdJxlLsGgtXr_16delta_benchmarks.exit.i.i.i, label %.lr.ph.split.i.i.i.i
 
 .lr.ph.split.i.i.i.i:                             ; preds = %.lr.ph.i.i.i.i
@@ -758,7 +760,8 @@ _RNvMs4_NtCs6Po7BT7Nknu_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsdJxl
   %i.bj = getelementptr inbounds nuw i8, ptr %i.b, i64 56
   %i.bk = load i8, ptr %i.bj, align 8, !alias.scope !9956, !noalias !9955 ; 2 uses
   %i.bl = zext nneg i8 %i.bk to i64               ; 4 uses
-  %i.bm = icmp ult i8 %i.bk, 5
+  %3 = add i8 %i.bk, -1
+  %i.bm = icmp ult i8 %3, 4
   %i.bn = getelementptr i8, ptr %i.bi, i64 %i.bl
   %i.bo = getelementptr i8, ptr %i.bn, i64 -1
   %i.bp = getelementptr inbounds nuw i8, ptr %i.b, i64 64

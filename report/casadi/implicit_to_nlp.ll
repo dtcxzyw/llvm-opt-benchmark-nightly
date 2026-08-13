@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %.lr.ph.epil.prehead
   br label %bb.h
 
 .lr.ph:                                           ; preds = %bb.f, %.lr.ph.preheader.new
-  %.094 = phi i64 [ 0, %.lr.ph.preheader.new ], [ %i.bx, %bb.f ] ; 4 uses
+  %.094 = phi i64 [ 0, %.lr.ph.preheader.new ], [ %i.bx, %bb.f ] ; 5 uses
   %niter = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.1, %bb.f ]
   %i.bo = getelementptr inbounds nuw [8 x i8], ptr %i.aw, i64 %.094
   %i.bp = load i64, ptr %i.bo, align 8, !tbaa !199 ; 2 uses
@@ -223,8 +223,8 @@ bb.d:                                             ; preds = %.lr.ph
   br label %.lr.ph.1
 
 .lr.ph.1:                                         ; preds = %.sink.split, %bb.d
-  %2 = or disjoint i64 %.094, 1                   ; 2 uses
-  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.aw, i64 %2
+  %2 = getelementptr inbounds nuw [8 x i8], ptr %i.aw, i64 %.094
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.bt = load i64, ptr %3, align 8, !tbaa !199   ; 2 uses
   %i.bu = icmp sgt i64 %i.bt, 0
   br i1 %i.bu, label %.sink.split.1, label %bb.e
@@ -236,8 +236,9 @@ bb.e:                                             ; preds = %.lr.ph.1
 .sink.split.1:                                    ; preds = %bb.e, %.lr.ph.1
   %.sink128.in.1 = phi ptr [ %i.l, %.lr.ph.1 ], [ %i.ar, %bb.e ]
   %.sink128.1 = load ptr, ptr %.sink128.in.1, align 8, !tbaa !164
-  %i.bw = getelementptr inbounds nuw [8 x i8], ptr %.sink128.1, i64 %2
-  store double 0.000000e+00, ptr %i.bw, align 8, !tbaa !190
+  %i.bw = getelementptr inbounds nuw [8 x i8], ptr %.sink128.1, i64 %.094
+  %4 = getelementptr inbounds nuw i8, ptr %i.bw, i64 8
+  store double 0.000000e+00, ptr %4, align 8, !tbaa !190
   br label %bb.f
 
 bb.f:                                             ; preds = %.sink.split.1, %bb.e
@@ -640,7 +641,7 @@ bb.f:                                             ; preds = %_ZSt8_DestroyIPN6ca
   unreachable
 
 _ZSt34__uninitialized_move_if_noexcept_aIPN6casadi2MXES2_SaIS1_EET0_T_S5_S4_RT1_.exit: ; preds = %_ZSt10_ConstructIN6casadi2MXEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i, %_ZNSt16allocator_traitsISaIN6casadi2MXEEE9constructIS1_JS1_EEEvRS2_PT_DpOT0_.exit
-  %.0.lcssa.i.i.i.i.i = phi ptr [ %i.p, %_ZNSt16allocator_traitsISaIN6casadi2MXEEE9constructIS1_JS1_EEEvRS2_PT_DpOT0_.exit ], [ %i.u, %_ZSt10_ConstructIN6casadi2MXEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i ] ; 4 uses
+  %.0.lcssa.i.i.i.i.i = phi ptr [ %i.p, %_ZNSt16allocator_traitsISaIN6casadi2MXEEE9constructIS1_JS1_EEEvRS2_PT_DpOT0_.exit ], [ %i.u, %_ZSt10_ConstructIN6casadi2MXEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i ] ; 3 uses
   %.ptr = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i, i64 8 ; 3 uses
   %.not14.i.i.i.i.i28 = icmp eq ptr %1, %i.b
   br i1 %.not14.i.i.i.i.i28, label %_ZSt34__uninitialized_move_if_noexcept_aIPN6casadi2MXES2_SaIS1_EET0_T_S5_S4_RT1_.exit43, label %.lr.ph.i.i.i.i.i29
@@ -648,7 +649,7 @@ _ZSt34__uninitialized_move_if_noexcept_aIPN6casadi2MXES2_SaIS1_EET0_T_S5_S4_RT1_
 .lr.ph.i.i.i.i.i29:                               ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPN6casadi2MXES2_SaIS1_EET0_T_S5_S4_RT1_.exit, %_ZSt10_ConstructIN6casadi2MXEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i37
   %.016.i.i.i.i.i30.idx = phi i64 [ %.016.i.i.i.i.i30.add, %_ZSt10_ConstructIN6casadi2MXEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i37 ], [ 8, %_ZSt34__uninitialized_move_if_noexcept_aIPN6casadi2MXES2_SaIS1_EET0_T_S5_S4_RT1_.exit ] ; 3 uses
   %.01215.i.i.i.i.i31 = phi ptr [ %i.ad, %_ZSt10_ConstructIN6casadi2MXEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i37 ], [ %1, %_ZSt34__uninitialized_move_if_noexcept_aIPN6casadi2MXES2_SaIS1_EET0_T_S5_S4_RT1_.exit ] ; 2 uses
-  %.016.i.i.i.i.i30.ptr = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i, i64 %.016.i.i.i.i.i30.idx ; 3 uses
+  %.016.i.i.i.i.i30.ptr = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i, i64 %.016.i.i.i.i.i30.idx ; 4 uses
   %i.ac = load ptr, ptr %.01215.i.i.i.i.i31, align 8, !tbaa !142
   store ptr %i.ac, ptr %.016.i.i.i.i.i30.ptr, align 8, !tbaa !142
   invoke void @_ZN6casadi13GenericSharedINS_12SharedObjectENS_20SharedObjectInternalEE8count_upEv(ptr noundef nonnull align 8 dereferenceable(8) %.016.i.i.i.i.i30.ptr)
@@ -656,7 +657,7 @@ _ZSt34__uninitialized_move_if_noexcept_aIPN6casadi2MXES2_SaIS1_EET0_T_S5_S4_RT1_
 
 _ZSt10_ConstructIN6casadi2MXEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i37: ; preds = %.lr.ph.i.i.i.i.i29
   %i.ad = getelementptr inbounds nuw i8, ptr %.01215.i.i.i.i.i31, i64 8 ; 2 uses
-  %.016.i.i.i.i.i30.add = add nuw nsw i64 %.016.i.i.i.i.i30.idx, 8 ; 2 uses
+  %.016.i.i.i.i.i30.add = add nuw nsw i64 %.016.i.i.i.i.i30.idx, 8
   %.not.i.i.i.i.i38 = icmp eq ptr %i.ad, %i.b
   br i1 %.not.i.i.i.i.i38, label %_ZSt34__uninitialized_move_if_noexcept_aIPN6casadi2MXES2_SaIS1_EET0_T_S5_S4_RT1_.exit43.loopexit, label %.lr.ph.i.i.i.i.i29, !llvm.loop !295
 
@@ -696,7 +697,7 @@ bb.j:                                             ; preds = %_ZSt8_DestroyIPN6ca
   unreachable
 
 _ZSt34__uninitialized_move_if_noexcept_aIPN6casadi2MXES2_SaIS1_EET0_T_S5_S4_RT1_.exit43.loopexit: ; preds = %_ZSt10_ConstructIN6casadi2MXEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i37
-  %.ptr60.le = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i, i64 %.016.i.i.i.i.i30.add
+  %.ptr60.le = getelementptr inbounds nuw i8, ptr %.016.i.i.i.i.i30.ptr, i64 8
   br label %_ZSt34__uninitialized_move_if_noexcept_aIPN6casadi2MXES2_SaIS1_EET0_T_S5_S4_RT1_.exit43
 
 _ZSt34__uninitialized_move_if_noexcept_aIPN6casadi2MXES2_SaIS1_EET0_T_S5_S4_RT1_.exit43: ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPN6casadi2MXES2_SaIS1_EET0_T_S5_S4_RT1_.exit43.loopexit, %_ZSt34__uninitialized_move_if_noexcept_aIPN6casadi2MXES2_SaIS1_EET0_T_S5_S4_RT1_.exit

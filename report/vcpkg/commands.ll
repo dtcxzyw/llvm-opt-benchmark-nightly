@@ -201,8 +201,8 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 _ZN5vcpkg15LocalizedStringD2Ev.exit129:           ; preds = %bb.bj, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i127
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #15
-  %i.dt = load i64, ptr %i.c, align 8, !tbaa !23  ; 4 uses
-  %i.du = add i64 %i.dt, 1                        ; 3 uses
+  %i.dt = load i64, ptr %i.c, align 8, !tbaa !23  ; 5 uses
+  %i.du = add i64 %i.dt, 1                        ; 2 uses
   %i.dv = load ptr, ptr %1, align 8, !tbaa !28    ; 2 uses
   %i.dw = icmp eq ptr %i.dv, %i.b
   br i1 %i.dw, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
@@ -235,7 +235,8 @@ bb.bl:                                            ; preds = %.noexc, %_ZNKSt7__c
   store i8 10, ptr %i.ec, align 1, !tbaa !26
   store i64 %i.du, ptr %i.c, align 8, !tbaa !23
   %i.ed = load ptr, ptr %1, align 8, !tbaa !28
-  %i.ee = getelementptr inbounds nuw i8, ptr %i.ed, i64 %i.du
+  %17 = getelementptr i8, ptr %i.ed, i64 %i.dt
+  %i.ee = getelementptr i8, ptr %17, i64 1
   store i8 0, ptr %i.ee, align 1, !tbaa !26
   %i.ef = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   store ptr %i.ef, ptr %0, align 8, !tbaa !20
@@ -638,8 +639,8 @@ bb.e:                                             ; preds = %bb.c
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %bb.i, %bb.b
-  %i.w = load i64, ptr %i.b, align 8, !tbaa !23   ; 4 uses
-  %i.x = add i64 %i.w, 1                          ; 3 uses
+  %i.w = load i64, ptr %i.b, align 8, !tbaa !23   ; 5 uses
+  %i.x = add i64 %i.w, 1                          ; 2 uses
   %i.y = load ptr, ptr %0, align 8, !tbaa !28     ; 2 uses
   %i.z = icmp eq ptr %i.y, %i.a
   br i1 %i.z, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
@@ -698,7 +699,8 @@ bb.k:                                             ; preds = %.noexc, %_ZNKSt7__c
   store i8 10, ptr %i.ak, align 1, !tbaa !26
   store i64 %i.x, ptr %i.b, align 8, !tbaa !23
   %i.al = load ptr, ptr %0, align 8, !tbaa !28
-  %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 %i.x
+  %3 = getelementptr i8, ptr %i.al, i64 %i.w
+  %i.am = getelementptr i8, ptr %3, i64 1
   store i8 0, ptr %i.am, align 1, !tbaa !26
   call void @_ZN5vcpkg10StringViewC1ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(32) %0) #15
   %i.an = load ptr, ptr %2, align 8
@@ -1101,13 +1103,14 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
   %.034 = phi i64 [ %spec.select, %.lr.ph ], [ %1, %bb.a ] ; 2 uses
-  %i.d = shl i64 %.034, 1                         ; 2 uses
-  %i.e = add i64 %i.d, 2                          ; 2 uses
-  %i.f = getelementptr inbounds [8 x i8], ptr %0, i64 %i.e
-  %i.g = or disjoint i64 %i.d, 1                  ; 2 uses
-  %4 = getelementptr inbounds [8 x i8], ptr %0, i64 %i.g
-  %i.h = load ptr, ptr %i.f, align 8, !tbaa !15   ; 2 uses
-  %i.i = load ptr, ptr %4, align 8, !tbaa !15     ; 2 uses
+  %i.d = shl i64 %.034, 1                         ; 3 uses
+  %i.e = add i64 %i.d, 2
+  %i.f = getelementptr [8 x i8], ptr %0, i64 %i.d ; 2 uses
+  %4 = getelementptr i8, ptr %i.f, i64 16
+  %i.g = or disjoint i64 %i.d, 1
+  %5 = getelementptr i8, ptr %i.f, i64 8
+  %i.h = load ptr, ptr %4, align 8, !tbaa !15     ; 2 uses
+  %i.i = load ptr, ptr %5, align 8, !tbaa !15     ; 2 uses
   %.val.i = load ptr, ptr %i.h, align 8, !tbaa !29
   %i.j = getelementptr i8, ptr %i.h, i64 8
   %.val1.i = load i64, ptr %i.j, align 8, !tbaa !27
@@ -1136,10 +1139,11 @@ bb.b:                                             ; preds = %._crit_edge
   br i1 %i.u, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.v = shl nsw i64 %.0.lcssa, 1
-  %i.w = or disjoint i64 %i.v, 1                  ; 2 uses
-  %i.x = getelementptr inbounds [8 x i8], ptr %0, i64 %i.w
-  %i.y = load ptr, ptr %i.x, align 8, !tbaa !15
+  %i.v = shl nsw i64 %.0.lcssa, 1                 ; 2 uses
+  %i.w = or disjoint i64 %i.v, 1
+  %i.x = getelementptr [8 x i8], ptr %0, i64 %i.v
+  %6 = getelementptr i8, ptr %i.x, i64 8
+  %i.y = load ptr, ptr %6, align 8, !tbaa !15
   %i.z = getelementptr inbounds [8 x i8], ptr %0, i64 %.0.lcssa
   store ptr %i.y, ptr %i.z, align 8, !tbaa !15
   br label %bb.d

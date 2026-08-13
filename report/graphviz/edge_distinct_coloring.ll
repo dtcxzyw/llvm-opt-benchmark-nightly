@@ -110,7 +110,7 @@ bb.d:                                             ; preds = %.lr.ph.epil.prehead
   br i1 %.not103, label %bb.i, label %bb.h
 
 .lr.ph:                                           ; preds = %bb.g, %.lr.ph.preheader.new
-  %.093118 = phi i64 [ 0, %.lr.ph.preheader.new ], [ %i.az, %bb.g ] ; 4 uses
+  %.093118 = phi i64 [ 0, %.lr.ph.preheader.new ], [ %i.az, %bb.g ] ; 5 uses
   %.097117 = phi i32 [ 0, %.lr.ph.preheader.new ], [ %.198.1, %bb.g ] ; 3 uses
   %niter = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.1, %bb.g ]
   %i.ai = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %.093118
@@ -132,11 +132,12 @@ bb.e:                                             ; preds = %.lr.ph
 
 .lr.ph.1:                                         ; preds = %.lr.ph, %bb.e
   %.198 = phi i32 [ %i.ap, %bb.e ], [ %.097117, %.lr.ph ] ; 3 uses
-  %9 = or disjoint i64 %.093118, 1                ; 2 uses
-  %10 = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %9
+  %9 = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %.093118
+  %10 = getelementptr inbounds nuw i8, ptr %9, i64 4
   %i.ar = load i32, ptr %10, align 4, !tbaa !23   ; 2 uses
-  %i.as = getelementptr inbounds nuw [4 x i8], ptr %i.u, i64 %9 ; 2 uses
-  %i.at = load i32, ptr %i.as, align 4, !tbaa !23
+  %i.as = getelementptr inbounds nuw [4 x i8], ptr %i.u, i64 %.093118
+  %11 = getelementptr inbounds nuw i8, ptr %i.as, i64 4 ; 2 uses
+  %i.at = load i32, ptr %11, align 4, !tbaa !23
   %.not110.1 = icmp eq i32 %i.ar, %i.at
   br i1 %.not110.1, label %bb.g, label %bb.f
 
@@ -144,7 +145,7 @@ bb.f:                                             ; preds = %.lr.ph.1
   %i.au = sext i32 %.198 to i64                   ; 2 uses
   %i.av = getelementptr inbounds [4 x i8], ptr %i.s, i64 %i.au
   store i32 %i.ar, ptr %i.av, align 4, !tbaa !23
-  %i.aw = load i32, ptr %i.as, align 4, !tbaa !23
+  %i.aw = load i32, ptr %11, align 4, !tbaa !23
   %i.ax = add nsw i32 %.198, 1
   %i.ay = getelementptr inbounds [4 x i8], ptr %i.u, i64 %i.au
   store i32 %i.aw, ptr %i.ay, align 4, !tbaa !23

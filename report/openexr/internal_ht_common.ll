@@ -204,7 +204,7 @@ bb.aj:                                            ; preds = %bb.ah, %bb.ag, %.lr
   br i1 %exitcond194.not, label %.loopexit, label %.lr.ph178, !llvm.loop !34
 
 bb.ak:                                            ; preds = %bb.ak, %.lr.ph174.new
-  %.0173 = phi i64 [ 0, %.lr.ph174.new ], [ %i.gt, %bb.ak ] ; 5 uses
+  %.0173 = phi i64 [ 0, %.lr.ph174.new ], [ %i.gt, %bb.ak ] ; 7 uses
   %.0121172 = phi i32 [ 0, %.lr.ph174.new ], [ %i.gs, %bb.ak ] ; 2 uses
   %niter = phi i64 [ 0, %.lr.ph174.new ], [ %niter.next.1, %bb.ak ]
   %i.fw = trunc i64 %.0173 to i32
@@ -221,17 +221,18 @@ bb.ak:                                            ; preds = %bb.ak, %.lr.ph174.n
   %i.gf = sext i8 %i.ge to i32
   %i.gg = mul nsw i32 %i.gc, %i.gf
   %i.gh = add nsw i32 %i.gg, %.0121172            ; 2 uses
-  %4 = or disjoint i64 %.0173, 1                  ; 3 uses
-  %5 = trunc i64 %4 to i32
-  %i.gi = getelementptr inbounds nuw [16 x i8], ptr %i.bx, i64 %4 ; 2 uses
-  store i32 %5, ptr %i.gi, align 8, !tbaa !29
+  %4 = trunc i64 %.0173 to i32
+  %5 = or disjoint i32 %4, 1
+  %i.gi = getelementptr inbounds nuw [16 x i8], ptr %i.bx, i64 %.0173 ; 2 uses
+  %6 = getelementptr inbounds nuw i8, ptr %i.gi, i64 16
+  store i32 %5, ptr %6, align 8, !tbaa !29
   %i.gj = sext i32 %i.gh to i64
-  %i.gk = getelementptr inbounds nuw i8, ptr %i.gi, i64 8
+  %i.gk = getelementptr inbounds nuw i8, ptr %i.gi, i64 24
   store i64 %i.gj, ptr %i.gk, align 8, !tbaa !31
-  %i.gl = getelementptr inbounds nuw [48 x i8], ptr %1, i64 %4 ; 2 uses
-  %i.gm = getelementptr inbounds nuw i8, ptr %i.gl, i64 12
+  %i.gl = getelementptr inbounds nuw [48 x i8], ptr %1, i64 %.0173 ; 2 uses
+  %i.gm = getelementptr inbounds nuw i8, ptr %i.gl, i64 60
   %i.gn = load i32, ptr %i.gm, align 4, !tbaa !32
-  %i.go = getelementptr inbounds nuw i8, ptr %i.gl, i64 25
+  %i.go = getelementptr inbounds nuw i8, ptr %i.gl, i64 73
   %i.gp = load i8, ptr %i.go, align 1, !tbaa !33
   %i.gq = sext i8 %i.gp to i32
   %i.gr = mul nsw i32 %i.gn, %i.gq

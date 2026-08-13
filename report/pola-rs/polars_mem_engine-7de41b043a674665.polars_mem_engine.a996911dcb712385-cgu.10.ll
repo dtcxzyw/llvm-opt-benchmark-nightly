@@ -203,7 +203,7 @@ bb.ap:                                            ; preds = %bb.t, %bb.bx, %bb.b
 bb.aq:                                            ; preds = %bb.al, %bb.ak, %bb.ai, %bb.ai
   store i32 3, ptr %i.bn, align 8, !dbg !20301, !alias.scope !20295
   %i.bu = getelementptr inbounds nuw i8, ptr %1, i64 16, !dbg !20344 ; 2 uses
-  %i.bv = load i64, ptr %i.bu, align 8, !dbg !20344, !noundef !14 ; 3 uses
+  %i.bv = load i64, ptr %i.bu, align 8, !dbg !20344, !noundef !14 ; 4 uses
   %i.bw = icmp eq i64 %i.bv, 0, !dbg !20344
   br i1 %i.bw, label %bb.ar, label %bb.as, !dbg !20344, !prof !864
 
@@ -212,7 +212,7 @@ bb.ar:                                            ; preds = %bb.aq
           to label %bb.au unwind label %bb.u, !dbg !20347
 
 bb.as:                                            ; preds = %bb.aq
-  %i.bx = add nsw i64 %i.bv, -1, !dbg !20350      ; 3 uses
+  %i.bx = add nsw i64 %i.bv, -1, !dbg !20350      ; 2 uses
   store i64 %i.bx, ptr %i.bu, align 8, !dbg !20350
   %i.by = load i64, ptr %1, align 8, !dbg !20351, !range !2776, !noundef !14
   %i.bz = icmp samesign ult i64 %i.bx, %i.by, !dbg !20358
@@ -221,8 +221,9 @@ bb.as:                                            ; preds = %bb.aq
   %i.cb = load ptr, ptr %i.ca, align 8, !dbg !20362, !nonnull !14, !noundef !14
   %i.cc = icmp ult i64 %i.bv, 57646075230342350, !dbg !20370
   call void @llvm.assume(i1 %i.cc), !dbg !20374
-  %i.cd = getelementptr inbounds nuw [160 x i8], ptr %i.cb, i64 %i.bx, !dbg !20375
-  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(160) %i.r, ptr noundef nonnull align 16 dereferenceable(160) %i.cd, i64 160, i1 false), !dbg !20378
+  %i.cd = getelementptr [160 x i8], ptr %i.cb, i64 %i.bv, !dbg !20375
+  %3 = getelementptr i8, ptr %i.cd, i64 -160, !dbg !20375
+  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(160) %i.r, ptr noundef nonnull align 16 dereferenceable(160) %3, i64 160, i1 false), !dbg !20378
   call void @llvm.experimental.noalias.scope.decl(metadata !20379), !dbg !20234
   call void @llvm.experimental.noalias.scope.decl(metadata !20382), !dbg !20385
   call void @llvm.experimental.noalias.scope.decl(metadata !20387), !dbg !20390

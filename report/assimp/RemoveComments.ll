@@ -14,7 +14,7 @@ bb.a:
   br i1 %.not, label %.critedge._crit_edge, label %.lr.ph53
 
 .lr.ph53:                                         ; preds = %bb.a, %.critedge2
-  %.052 = phi i64 [ %i.u, %.critedge2 ], [ 0, %bb.a ] ; 4 uses
+  %.052 = phi i64 [ %i.u, %.critedge2 ], [ 0, %bb.a ] ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 %.052
   %i.d = load i8, ptr %i.c, align 1
   switch i8 %i.d, label %.critedge [
@@ -36,7 +36,9 @@ bb.c:                                             ; preds = %.lr.ph57
 
 .lr.ph57:                                         ; preds = %bb.b, %bb.c
   %i.j = phi i64 [ %i.h, %bb.c ], [ %i.f, %bb.b ] ; 4 uses
-  %i.k = getelementptr inbounds nuw i8, ptr %1, i64 %i.j
+  %.157 = phi i64 [ %i.j, %bb.c ], [ %.052, %bb.b ]
+  %3 = getelementptr i8, ptr %1, i64 %.157
+  %i.k = getelementptr i8, ptr %3, i64 1
   %i.l = load i8, ptr %i.k, align 1
   switch i8 %i.l, label %bb.c [
     i8 34, label %.critedge

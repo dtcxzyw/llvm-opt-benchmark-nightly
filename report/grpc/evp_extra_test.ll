@@ -204,7 +204,7 @@ declare i32 @EVP_DigestVerify(ptr noundef, ptr noundef, i64 noundef, ptr noundef
 ; Function Attrs: mustprogress uwtable
 define hidden void @_ZN33EVPExtraTest_TLSEncodedPoint_Test8TestBodyEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %1 = alloca [2 x %struct.anon], align 16        ; 29 uses
+  %1 = alloca [2 x %struct.anon], align 16        ; 30 uses
   %2 = alloca %"class.testing::ScopedTrace", align 1 ; 8 uses
   %3 = alloca %"class.testing::ScopedTrace", align 1 ; 8 uses
   %4 = alloca %struct.Bytes, align 8              ; 6 uses
@@ -354,8 +354,8 @@ bb.f:                                             ; preds = %bb.a
   br label %.body.thread
 
 bb.g:                                             ; preds = %_ZNSt10unique_ptrI11evp_pkey_stN4bssl8internal7DeleterEED2Ev.exit428, %bb.d
+  %.066.ptr502 = phi ptr [ %1, %bb.d ], [ %.066.ptr, %_ZNSt10unique_ptrI11evp_pkey_stN4bssl8internal7DeleterEED2Ev.exit428 ] ; 6 uses
   %.066.idx501 = phi i64 [ 0, %bb.d ], [ %.066.add, %_ZNSt10unique_ptrI11evp_pkey_stN4bssl8internal7DeleterEED2Ev.exit428 ] ; 2 uses
-  %.066.ptr502 = getelementptr inbounds nuw i8, ptr %1, i64 %.066.idx501 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #18
   invoke void @_ZN7testing11ScopedTraceC2IiEEPKciRKT_(ptr noundef nonnull align 1 dereferenceable(1) %2, ptr noundef nonnull @.str.2, i32 noundef 1199, ptr noundef nonnull align 4 dereferenceable(4) %.066.ptr502)
           to label %bb.h unwind label %bb.k
@@ -758,6 +758,8 @@ _ZNSt10unique_ptrI11evp_pkey_stN4bssl8internal7DeleterEED2Ev.exit428: ; preds = 
   call void @_ZN7testing11ScopedTraceD1Ev(ptr noundef nonnull align 1 dereferenceable(1) %2) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #18
   %.066.add = add nuw nsw i64 %.066.idx501, 56    ; 2 uses
+  %50 = getelementptr inbounds nuw i8, ptr %1, i64 %.066.idx501
+  %.066.ptr = getelementptr inbounds nuw i8, ptr %50, i64 56
   %.not = icmp ne i64 %.066.add, 112
   %or.cond.not = select i1 %.9599, i1 %.not, i1 false
   br i1 %or.cond.not, label %bb.g, label %.loopexit

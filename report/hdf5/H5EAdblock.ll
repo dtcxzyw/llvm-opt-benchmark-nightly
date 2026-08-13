@@ -201,8 +201,8 @@ bb.b:                                             ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 259
   %i.l = load i8, ptr %i.k, align 1, !tbaa !58
   %i.m = zext i8 %i.l to i64
-  %i.n = udiv i64 %i.j, %i.m
-  %i.o = add i64 %i.n, 1                          ; 8 uses
+  %i.n = udiv i64 %i.j, %i.m                      ; 2 uses
+  %i.o = add i64 %i.n, 1                          ; 7 uses
   %i.p = lshr i64 %i.o, 32                        ; 2 uses
   %.not.i = icmp eq i64 %i.p, 0
   br i1 %.not.i, label %bb.j, label %bb.c
@@ -287,7 +287,8 @@ bb.o:                                             ; preds = %bb.n
   br label %H5VM_log2_gen.exit
 
 bb.p:                                             ; preds = %bb.n
-  %i.ay = getelementptr inbounds nuw i8, ptr @LogTable256, i64 %i.o
+  %2 = getelementptr i8, ptr @LogTable256, i64 %i.n
+  %i.ay = getelementptr i8, ptr %2, i64 1
   %i.az = load i8, ptr %i.ay, align 1, !tbaa !59
   %i.ba = zext i8 %i.az to i32
   br label %H5VM_log2_gen.exit

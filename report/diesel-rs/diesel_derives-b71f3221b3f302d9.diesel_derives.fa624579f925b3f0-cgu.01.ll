@@ -203,12 +203,12 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2881)
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
-  %i.c = load i64, ptr %i.b, align 8, !alias.scope !2881, !noalias !2884, !noundef !11 ; 3 uses
+  %i.c = load i64, ptr %i.b, align 8, !alias.scope !2881, !noalias !2884, !noundef !11 ; 4 uses
   %i.d = icmp eq i64 %i.c, 0
   br i1 %i.d, label %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecTNtNtCshMFl0SviwmK_3syn4attr4MetaNtNtBJ_5token5CommaEE3popCsluMP4ekZjHw_14diesel_derives.exit.thread, label %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecTNtNtCshMFl0SviwmK_3syn4attr4MetaNtNtBJ_5token5CommaEE3popCsluMP4ekZjHw_14diesel_derives.exit
 
 _RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecTNtNtCshMFl0SviwmK_3syn4attr4MetaNtNtBJ_5token5CommaEE3popCsluMP4ekZjHw_14diesel_derives.exit: ; preds = %bb.b
-  %i.e = add nsw i64 %i.c, -1                     ; 3 uses
+  %i.e = add nsw i64 %i.c, -1                     ; 2 uses
   store i64 %i.e, ptr %i.b, align 8, !alias.scope !2881, !noalias !2884
   %i.f = load i64, ptr %1, align 8, !range !547, !alias.scope !2881, !noalias !2884, !noundef !11
   %i.g = icmp samesign ult i64 %i.e, %i.f
@@ -217,16 +217,17 @@ _RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecTNtNtCshMFl0SviwmK_3syn4attr4MetaNtNt
   %i.i = load ptr, ptr %i.h, align 8, !alias.scope !2881, !noalias !2884, !nonnull !11, !noundef !11
   %i.j = icmp ult i64 %i.c, 38430716820228234
   tail call void @llvm.assume(i1 %i.j)
-  %i.k = getelementptr inbounds nuw [240 x i8], ptr %i.i, i64 %i.e ; 3 uses
-  %.sroa.0.0.copyload = load i64, ptr %i.k, align 8, !noalias !2881 ; 2 uses
-  %.sroa.45.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 232
+  %i.k = getelementptr [240 x i8], ptr %i.i, i64 %i.c ; 3 uses
+  %2 = getelementptr i8, ptr %i.k, i64 -240
+  %.sroa.0.0.copyload = load i64, ptr %2, align 8, !noalias !2881 ; 2 uses
+  %.sroa.45.0..sroa_idx = getelementptr i8, ptr %i.k, i64 -8
   %.sroa.45.0.copyload = load i32, ptr %.sroa.45.0..sroa_idx, align 8, !noalias !2881
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2886)
   %.not.i = icmp eq i64 %.sroa.0.0.copyload, -1
   br i1 %.not.i, label %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecTNtNtCshMFl0SviwmK_3syn4attr4MetaNtNtBJ_5token5CommaEE3popCsluMP4ekZjHw_14diesel_derives.exit.thread, label %bb.c
 
 bb.c:                                             ; preds = %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecTNtNtCshMFl0SviwmK_3syn4attr4MetaNtNtBJ_5token5CommaEE3popCsluMP4ekZjHw_14diesel_derives.exit
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 8
+  %.sroa.4.0..sroa_idx = getelementptr i8, ptr %i.k, i64 -232
   store i64 %.sroa.0.0.copyload, ptr %0, align 8, !alias.scope !2889
   %.sroa.4.0..sroa_idx4 = getelementptr inbounds nuw i8, ptr %0, i64 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(224) %.sroa.4.0..sroa_idx4, ptr noundef nonnull align 8 dereferenceable(224) %.sroa.4.0..sroa_idx, i64 224, i1 false)

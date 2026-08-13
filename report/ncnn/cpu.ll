@@ -203,9 +203,10 @@ bb.j:                                             ; preds = %bb.i
 
 .lr.ph175:                                        ; preds = %.lr.ph175.preheader, %_ZN4ncnn6CpuSet6enableEi.exit119
   %indvars.iv198 = phi i64 [ 0, %.lr.ph175.preheader ], [ %indvars.iv.next199, %_ZN4ncnn6CpuSet6enableEi.exit119 ] ; 10 uses
-  %indvars.iv = phi i64 [ %i.ax, %.lr.ph175.preheader ], [ %indvars.iv.next, %_ZN4ncnn6CpuSet6enableEi.exit119 ] ; 2 uses
-  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
-  %i.ay = getelementptr inbounds nuw i8, ptr %i.e, i64 %indvars.iv.next
+  %indvars.iv = phi i64 [ %i.ax, %.lr.ph175.preheader ], [ %indvars.iv.next, %_ZN4ncnn6CpuSet6enableEi.exit119 ] ; 3 uses
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %3 = getelementptr i8, ptr %i.e, i64 %indvars.iv
+  %i.ay = getelementptr i8, ptr %3, i64 -1
   %i.az = load i8, ptr %i.ay, align 1, !tbaa !25  ; 4 uses
   %.not102 = trunc i8 %i.az to i1
   %i.ba = icmp samesign ult i64 %indvars.iv198, 1024 ; 4 uses

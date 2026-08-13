@@ -74,7 +74,7 @@ bb.f:                                             ; preds = %bb.a
   br i1 %i.k, label %_ZL4trimPKc.exit, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.l = call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %i.a) #11 ; 4 uses
+  %i.l = call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %i.a) #11 ; 5 uses
   %.0.i1724 = add i64 %i.l, -1                    ; 3 uses
   %.not.i25 = icmp eq i64 %.0.i1724, 0
   br i1 %.not.i25, label %.critedge.i, label %.lr.ph.preheader
@@ -91,7 +91,9 @@ bb.h:                                             ; preds = %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.h
   %.0.i1726 = phi i64 [ %.0.i17, %bb.h ], [ %.0.i1724, %.lr.ph.preheader ] ; 3 uses
-  %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 %.0.i1726
+  %.0.in.i26 = phi i64 [ %.0.i1726, %bb.h ], [ %i.l, %.lr.ph.preheader ]
+  %2 = getelementptr i8, ptr %i.a, i64 %.0.in.i26
+  %i.o = getelementptr i8, ptr %2, i64 -1
   %i.p = load i8, ptr %i.o, align 1, !tbaa !9
   %i.q = sext i8 %i.p to i64
   %i.r = getelementptr inbounds [2 x i8], ptr %i.n, i64 %i.q

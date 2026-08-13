@@ -201,9 +201,10 @@ bb.du:                                            ; preds = %_ZNK4cvc58internal1
   %spec.select.v.i.i309 = select i1 %i.qc, i64 32, i64 24 ; 2 uses
   %i.qd = load i64, ptr %i.pv, align 8
   %i.qe = lshr i64 %i.qd, 29
-  %.idx = and i64 %i.qe, 536870904
-  %i.qf = add nuw nsw i64 %.idx, 24               ; 2 uses
-  %i.qg = getelementptr inbounds nuw i8, ptr %i.pi, i64 %i.qf
+  %.idx = and i64 %i.qe, 536870904                ; 2 uses
+  %i.qf = add nuw nsw i64 %.idx, 24
+  %78 = getelementptr inbounds nuw i8, ptr %i.pi, i64 %.idx
+  %i.qg = getelementptr inbounds nuw i8, ptr %78, i64 24
   %.not13711688 = icmp samesign eq i64 %spec.select.v.i.i309, %i.qf
   br i1 %.not13711688, label %._crit_edge1692, label %.lr.ph1691.preheader
 

@@ -203,10 +203,11 @@ bb.a:
   br label %.lr.ph
 
 .lr.ph.i.preheader:                               ; preds = %.lr.ph.i.preheader.preheader, %.thread.loopexit.i
-  %indvars.iv = phi i64 [ %i.c, %.lr.ph.i.preheader.preheader ], [ %i.f, %.thread.loopexit.i ] ; 2 uses
-  %i.f = add nsw i64 %indvars.iv, -1              ; 3 uses
-  %i.g = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.f
-  %i.h = load i64, ptr %i.g, align 4              ; 2 uses
+  %indvars.iv = phi i64 [ %i.c, %.lr.ph.i.preheader.preheader ], [ %i.f, %.thread.loopexit.i ] ; 3 uses
+  %i.f = add nsw i64 %indvars.iv, -1              ; 2 uses
+  %i.g = getelementptr [8 x i8], ptr %0, i64 %indvars.iv
+  %2 = getelementptr i8, ptr %i.g, i64 -8
+  %i.h = load i64, ptr %2, align 4                ; 2 uses
   %i.i = trunc i64 %i.h to i32
   %i.j = trunc nuw i64 %indvars.iv to i32
   br label %.lr.ph.i

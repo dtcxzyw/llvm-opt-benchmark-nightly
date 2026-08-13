@@ -201,7 +201,7 @@ bb.ag:                                            ; preds = %.sink.split, %_ZNKS
 bb.ah:                                            ; preds = %bb.o
   %i.eq = load i64, ptr %i.r, align 8, !tbaa !17
   %i.er = add i64 %i.eq, %i.bl
-  %i.es = call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEcm(ptr noundef nonnull align 8 dereferenceable(32) %3, i8 noundef signext 61, i64 noundef %i.er) #25 ; 3 uses
+  %i.es = call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEcm(ptr noundef nonnull align 8 dereferenceable(32) %3, i8 noundef signext 61, i64 noundef %i.er) #25 ; 5 uses
   %.not92 = icmp eq i64 %i.es, -1
   br i1 %.not92, label %bb.bt, label %._crit_edge.i.i150
 
@@ -211,7 +211,7 @@ bb.ah:                                            ; preds = %bb.o
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(6) %i.w, ptr noundef nonnull align 1 dereferenceable(6) @.str.11, i64 6, i1 false)
   store i64 6, ptr %i.x, align 8, !tbaa !17
   store i8 0, ptr %i.al, align 2, !tbaa !19
-  %i.et = add i64 %i.es, -6                       ; 5 uses
+  %i.et = add i64 %i.es, -6                       ; 4 uses
   %i.eu = load i64, ptr %i.j, align 8, !tbaa !17  ; 5 uses
   %i.ev = icmp ugt i64 %i.et, %i.eu
   br i1 %i.ev, label %bb.ai, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i
@@ -231,7 +231,8 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i:     ; preds = %_ZNKSt7__cxx1112bas
   %i.ex = sub nuw i64 %i.eu, %i.et                ; 2 uses
   %spec.select.i.i = call noundef i64 @llvm.umin.i64(i64 %i.ex, i64 6)
   %i.ey = load ptr, ptr %3, align 8, !tbaa !14
-  %i.ez = getelementptr inbounds nuw i8, ptr %i.ey, i64 %i.et
+  %39 = getelementptr i8, ptr %i.ey, i64 %i.es
+  %i.ez = getelementptr i8, ptr %39, i64 -6
   %bcmp = call i32 @bcmp(ptr %i.ez, ptr nonnull %i.w, i64 %spec.select.i.i)
   %.not.i154 = icmp ne i32 %bcmp, 0
   %.not282 = icmp ult i64 %i.ex, 6
@@ -239,7 +240,7 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i:     ; preds = %_ZNKSt7__cxx1112bas
   br i1 %or.cond, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit205, label %bb.aj
 
 bb.aj:                                            ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i
-  %i.fa = add nuw i64 %i.es, 1                    ; 2 uses
+  %i.fa = add nuw i64 %i.es, 1
   %i.fb = icmp ugt i64 %i.eu, %i.fa
   br i1 %i.fb, label %bb.bb, label %bb.ak
 
@@ -472,7 +473,8 @@ bb.ba:                                            ; preds = %.sink.split499.a, %
 
 bb.bb:                                            ; preds = %bb.aj
   %i.ha = load ptr, ptr %3, align 8, !tbaa !14
-  %i.hb = getelementptr inbounds nuw i8, ptr %i.ha, i64 %i.fa
+  %40 = getelementptr inbounds nuw i8, ptr %i.ha, i64 %i.es
+  %i.hb = getelementptr inbounds nuw i8, ptr %40, i64 1
   %i.hc = load i8, ptr %i.hb, align 1, !tbaa !19
   switch i8 %i.hc, label %bb.bc [
     i8 49, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit205
@@ -875,8 +877,8 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac, %._c
 
 bb.af:                                            ; preds = %bb.ae
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #25
-  %i.ev = load i64, ptr %i.n, align 8, !tbaa !17
-  %i.ew = add i64 %i.ev, 2                        ; 4 uses
+  %i.ev = load i64, ptr %i.n, align 8, !tbaa !17  ; 2 uses
+  %i.ew = add i64 %i.ev, 2                        ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !108)
   %i.ex = load i64, ptr %i.f, align 8, !tbaa !17, !noalias !108 ; 3 uses
   %i.ey = icmp ugt i64 %i.ew, %i.ex
@@ -892,7 +894,8 @@ bb.ag:                                            ; preds = %bb.af
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i166: ; preds = %bb.af
   store ptr %i.o, ptr %16, align 8, !tbaa !10, !alias.scope !108
   %i.ez = load ptr, ptr %3, align 8, !tbaa !14, !noalias !108
-  %i.fa = getelementptr inbounds nuw i8, ptr %i.ez, i64 %i.ew ; 2 uses
+  %49 = getelementptr i8, ptr %i.ez, i64 %i.ev
+  %i.fa = getelementptr i8, ptr %49, i64 2        ; 2 uses
   %i.fb = sub nuw i64 %i.ex, %i.ew                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #25, !noalias !108
   store i64 %i.fb, ptr %i.c, align 8, !tbaa !18, !noalias !108

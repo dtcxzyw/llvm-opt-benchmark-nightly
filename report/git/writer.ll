@@ -201,20 +201,21 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.j
 
 bb.j:                                             ; preds = %.preheader, %bb.l
-  %i.ag = load i64, ptr %i.ae, align 8, !tbaa !64 ; 2 uses
+  %i.ag = load i64, ptr %i.ae, align 8, !tbaa !64 ; 3 uses
   %.not27 = icmp eq i64 %i.ag, 0
   %.pre = load ptr, ptr %i.af, align 8, !tbaa !63 ; 2 uses
   br i1 %.not27, label %.critedge, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %5 = add i64 %i.ag, -1                          ; 2 uses
-  %i.ah = getelementptr inbounds nuw i8, ptr %.pre, i64 %5
+  %5 = getelementptr i8, ptr %.pre, i64 %i.ag
+  %i.ah = getelementptr i8, ptr %5, i64 -1
   %i.ai = load i8, ptr %i.ah, align 1, !tbaa !16
   %i.aj = icmp eq i8 %i.ai, 10
   br i1 %i.aj, label %bb.l, label %.critedge
 
 bb.l:                                             ; preds = %bb.k
-  %i.ak = call i32 @reftable_buf_setlen(ptr noundef nonnull %4, i64 noundef %5) #12 ; 2 uses
+  %6 = add i64 %i.ag, -1
+  %i.ak = call i32 @reftable_buf_setlen(ptr noundef nonnull %4, i64 noundef %6) #12 ; 2 uses
   %i.al = icmp slt i32 %i.ak, 0
   br i1 %i.al, label %.loopexit, label %bb.j, !llvm.loop !79
 

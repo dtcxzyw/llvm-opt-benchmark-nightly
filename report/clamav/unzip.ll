@@ -201,10 +201,10 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph, %bb.m
-  %i.j = phi i64 [ 1, %.lr.ph ], [ %i.ae, %bb.m ] ; 10 uses
+  %i.j = phi i64 [ 1, %.lr.ph ], [ %i.ae, %bb.m ] ; 9 uses
   %.0102202 = phi i64 [ 1, %.lr.ph ], [ %.1103, %bb.m ] ; 3 uses
   %.0107201 = phi i64 [ %i.b, %.lr.ph ], [ %i.l, %bb.m ]
-  %.0113200 = phi i64 [ 0, %.lr.ph ], [ %i.j, %bb.m ] ; 2 uses
+  %.0113200 = phi i64 [ 0, %.lr.ph ], [ %i.j, %bb.m ] ; 3 uses
   %.0116199 = phi ptr [ %i.e, %.lr.ph ], [ %.2118, %bb.m ] ; 11 uses
   %i.k = load i64, ptr %i.a, align 8, !tbaa !15   ; 2 uses
   %.not213.not.not.not.not = icmp ne i64 %i.k, 0  ; 5 uses
@@ -252,11 +252,12 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.z, label %.preheader, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.aa = getelementptr inbounds nuw [32 x i8], ptr %i.y, i64 %i.j
+  %i.aa = getelementptr [32 x i8], ptr %i.y, i64 %.0113200
+  %4 = getelementptr i8, ptr %i.aa, i64 32
   %i.ab = mul i64 %i.w, 100
   %i.ac = sub i64 %i.ab, %i.j
   %i.ad = shl i64 %i.ac, 5
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.aa, i8 0, i64 %i.ad, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr align 8 %4, i8 0, i64 %i.ad, i1 false)
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.j, %bb.l

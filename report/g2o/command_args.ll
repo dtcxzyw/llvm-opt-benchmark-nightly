@@ -201,22 +201,23 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a, %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN3g2o11CommandArgs9printHelpERSoE3$_0EclINS_17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESF_ESt6vectorISG_SaISG_EEEESL_EEbT_T0_.exit"
   %.036 = phi i64 [ %spec.select, %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN3g2o11CommandArgs9printHelpERSoE3$_0EclINS_17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESF_ESt6vectorISG_SaISG_EEEESL_EEbT_T0_.exit" ], [ %1, %bb.a ] ; 2 uses
-  %i.d = shl i64 %.036, 1                         ; 2 uses
-  %i.e = add i64 %i.d, 2                          ; 2 uses
-  %i.f = getelementptr inbounds [64 x i8], ptr %0, i64 %i.e ; 2 uses
-  %i.g = or disjoint i64 %i.d, 1                  ; 2 uses
-  %5 = getelementptr inbounds [64 x i8], ptr %0, i64 %i.g ; 2 uses
-  %i.h = getelementptr i8, ptr %i.f, i64 8
+  %i.d = shl i64 %.036, 1                         ; 3 uses
+  %i.e = add i64 %i.d, 2
+  %i.f = getelementptr [64 x i8], ptr %0, i64 %i.d ; 4 uses
+  %i.g = or disjoint i64 %i.d, 1
+  %i.h = getelementptr i8, ptr %i.f, i64 136
   %.val1.i = load i64, ptr %i.h, align 8, !tbaa !25 ; 2 uses
-  %i.i = getelementptr i8, ptr %5, i64 8
+  %i.i = getelementptr i8, ptr %i.f, i64 72
   %.val3.i = load i64, ptr %i.i, align 8, !tbaa !25 ; 2 uses
   %.sroa.speculated.i.i.i.i = tail call i64 @llvm.umin.i64(i64 %.val3.i, i64 %.val1.i) ; 2 uses
   %i.j = icmp eq i64 %.sroa.speculated.i.i.i.i, 0
   br i1 %i.j, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i.i, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i
 
 _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i: ; preds = %.lr.ph
+  %5 = getelementptr i8, ptr %i.f, i64 64
+  %6 = getelementptr i8, ptr %i.f, i64 128
   %.val2.i = load ptr, ptr %5, align 8
-  %.val.i = load ptr, ptr %i.f, align 8
+  %.val.i = load ptr, ptr %6, align 8
   %i.k = tail call i32 @memcmp(ptr noundef readonly %.val.i, ptr noundef readonly %.val2.i, i64 noundef %.sroa.speculated.i.i.i.i) #23 ; 2 uses
   %.not.i.i.i.i = icmp eq i32 %i.k, 0
   br i1 %.not.i.i.i.i, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i.i, label %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN3g2o11CommandArgs9printHelpERSoE3$_0EclINS_17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESF_ESt6vectorISG_SaISG_EEEESL_EEbT_T0_.exit"
@@ -251,11 +252,12 @@ bb.b:                                             ; preds = %._crit_edge
   br i1 %i.v, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.w = shl nsw i64 %.0.lcssa, 1
-  %i.x = or disjoint i64 %i.w, 1                  ; 2 uses
-  %i.y = getelementptr inbounds [64 x i8], ptr %0, i64 %i.x
+  %i.w = shl nsw i64 %.0.lcssa, 1                 ; 2 uses
+  %i.x = or disjoint i64 %i.w, 1
+  %i.y = getelementptr [64 x i8], ptr %0, i64 %i.w
+  %7 = getelementptr i8, ptr %i.y, i64 64
   %i.z = getelementptr inbounds [64 x i8], ptr %0, i64 %.0.lcssa
-  %i.aa = tail call noundef nonnull align 8 dereferenceable(64) ptr @_ZNSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EaSEOS6_(ptr noundef nonnull align 8 dereferenceable(64) %i.z, ptr noundef nonnull align 8 dereferenceable(64) %i.y) #23 ; 0 uses
+  %i.aa = tail call noundef nonnull align 8 dereferenceable(64) ptr @_ZNSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EaSEOS6_(ptr noundef nonnull align 8 dereferenceable(64) %i.z, ptr noundef nonnull align 8 dereferenceable(64) %7) #23 ; 0 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b, %._crit_edge

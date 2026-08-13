@@ -203,7 +203,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %._cri
   store ptr %i.ab, ptr %8, align 8, !tbaa !47
   store i64 0, ptr %i.ac, align 8, !tbaa !25
   store i8 0, ptr %i.ab, align 8, !tbaa !9
-  %i.bg = call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEcm(ptr noundef nonnull align 8 dereferenceable(32) %7, i8 noundef signext 58, i64 noundef 0) #24 ; 4 uses
+  %i.bg = call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEcm(ptr noundef nonnull align 8 dereferenceable(32) %7, i8 noundef signext 58, i64 noundef 0) #24 ; 5 uses
   %.not = icmp eq i64 %i.bg, -1
   br i1 %.not, label %bb.ab, label %bb.h
 
@@ -331,7 +331,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #24
-  %i.cj = add nuw i64 %i.bg, 1                    ; 3 uses
+  %i.cj = add nuw i64 %i.bg, 1                    ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !134)
   %i.ck = load i64, ptr %i.aa, align 8, !tbaa !25, !noalias !134 ; 3 uses
   %.not365 = icmp ult i64 %i.bg, %i.ck
@@ -347,7 +347,8 @@ bb.q:                                             ; preds = %_ZNSt7__cxx1112basi
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
   store ptr %i.af, ptr %10, align 8, !tbaa !47, !alias.scope !134
   %i.cl = load ptr, ptr %7, align 8, !tbaa !28, !noalias !134
-  %i.cm = getelementptr inbounds nuw i8, ptr %i.cl, i64 %i.cj ; 2 uses
+  %11 = getelementptr inbounds nuw i8, ptr %i.cl, i64 %i.bg
+  %i.cm = getelementptr inbounds nuw i8, ptr %11, i64 1 ; 2 uses
   %i.cn = sub nuw i64 %i.ck, %i.cj                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #24, !noalias !134
   store i64 %i.cn, ptr %i.e, align 8, !tbaa !48, !noalias !134

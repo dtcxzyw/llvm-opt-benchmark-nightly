@@ -203,7 +203,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %i.xl, label %._crit_edge186.i, label %.sink.split.i.i109
 
 .sink.split.i.i109:                               ; preds = %.sink.split.i.i109.prol.loopexit, %.sink.split.i.i109
-  %indvars.iv220.i110 = phi i64 [ %indvars.iv.next221.i111.1, %.sink.split.i.i109 ], [ %indvars.iv220.i110.unr, %.sink.split.i.i109.prol.loopexit ] ; 4 uses
+  %indvars.iv220.i110 = phi i64 [ %indvars.iv.next221.i111.1, %.sink.split.i.i109 ], [ %indvars.iv220.i110.unr, %.sink.split.i.i109.prol.loopexit ] ; 5 uses
   %i.xm = getelementptr inbounds nuw i8, ptr %.1122188.i, i64 %indvars.iv220.i110
   %i.xn = load i8, ptr %i.xm, align 1, !tbaa !20
   %i.xo = getelementptr inbounds nuw i8, ptr %.1189.i, i64 %indvars.iv220.i110 ; 2 uses
@@ -216,10 +216,11 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.xv = lshr i16 %i.xu, 8
   %i.xw = trunc nuw i16 %i.xv to i8
   store i8 %i.xw, ptr %i.xo, align 1, !tbaa !20
-  %indvars.iv.next221.i111 = add nuw nsw i64 %indvars.iv220.i110, 1 ; 2 uses
-  %i.xx = getelementptr inbounds nuw i8, ptr %.1122188.i, i64 %indvars.iv.next221.i111
+  %1 = getelementptr inbounds nuw i8, ptr %.1122188.i, i64 %indvars.iv220.i110
+  %i.xx = getelementptr inbounds nuw i8, ptr %1, i64 1
   %i.xy = load i8, ptr %i.xx, align 1, !tbaa !20
-  %i.xz = getelementptr inbounds nuw i8, ptr %.1189.i, i64 %indvars.iv.next221.i111 ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %.1189.i, i64 %indvars.iv220.i110
+  %i.xz = getelementptr inbounds nuw i8, ptr %2, i64 1 ; 2 uses
   %i.ya = zext i8 %i.xy to i16
   %i.yb = mul nuw i16 %i.ya, %i.vg
   %i.yc = load i8, ptr %i.xz, align 1, !tbaa !20

@@ -203,7 +203,7 @@ bb.ai:                                            ; preds = %bb.ah
   br label %bb.cm
 
 bb.aj:                                            ; preds = %bb.ai
-  %i.gi = call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEcm(ptr noundef nonnull align 8 dereferenceable(32) %24, i8 noundef signext 58, i64 noundef 0) #22 ; 3 uses
+  %i.gi = call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEcm(ptr noundef nonnull align 8 dereferenceable(32) %24, i8 noundef signext 58, i64 noundef 0) #22 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %25) #22
   store ptr %i.fc, ptr %25, align 8, !tbaa !29
   store i64 0, ptr %i.fd, align 8, !tbaa !31
@@ -213,7 +213,7 @@ bb.aj:                                            ; preds = %bb.ai
 
 bb.ak:                                            ; preds = %bb.aj
   call void @llvm.lifetime.start.p0(ptr nonnull %26) #22
-  %i.gj = add nuw i64 %i.gi, 1                    ; 3 uses
+  %i.gj = add nuw i64 %i.gi, 1                    ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !67)
   %i.gk = load i64, ptr %i.fb, align 8, !tbaa !31, !noalias !67 ; 3 uses
   %.not249.i = icmp ult i64 %i.gi, %i.gk
@@ -229,7 +229,8 @@ bb.al:                                            ; preds = %bb.ak
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i.i: ; preds = %bb.ak
   store ptr %i.fe, ptr %26, align 8, !tbaa !29, !alias.scope !67
   %i.gl = load ptr, ptr %24, align 8, !tbaa !35, !noalias !67
-  %i.gm = getelementptr inbounds nuw i8, ptr %i.gl, i64 %i.gj ; 2 uses
+  %32 = getelementptr inbounds nuw i8, ptr %i.gl, i64 %i.gi
+  %i.gm = getelementptr inbounds nuw i8, ptr %32, i64 1 ; 2 uses
   %i.gn = sub nuw i64 %i.gk, %i.gj                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j) #22, !noalias !67
   store i64 %i.gn, ptr %i.j, align 8, !tbaa !39, !noalias !67
@@ -632,7 +633,7 @@ bb.ej:                                            ; preds = %bb.ei, %bb.eh, %._c
   br i1 %.not34.i.i.i, label %._crit_edge.i.i.i, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.ej, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit16.i.i.i
-  %i.ur = phi i64 [ %i.wn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit16.i.i.i ], [ %i.uq, %bb.ej ] ; 3 uses
+  %i.ur = phi i64 [ %i.wn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit16.i.i.i ], [ %i.uq, %bb.ej ] ; 4 uses
   %.0735.i.i.i = phi i32 [ %i.vd, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit16.i.i.i ], [ 0, %bb.ej ]
   call void @llvm.experimental.noalias.scope.decl(metadata !91)
   %i.us = load i64, ptr %i.qt, align 8, !tbaa !31, !noalias !94
@@ -694,7 +695,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i: ; preds = %bb.em, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #22, !noalias !88
-  %i.vi = add nuw i64 %i.ur, 1                    ; 3 uses
+  %i.vi = add nuw i64 %i.ur, 1                    ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !95)
   %i.vj = load i64, ptr %i.qt, align 8, !tbaa !31, !noalias !98 ; 3 uses
   %.not26.i.i.i = icmp ult i64 %i.ur, %i.vj
@@ -710,7 +711,8 @@ bb.en:                                            ; preds = %_ZNSt7__cxx1112basi
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i.i.i.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i
   store ptr %i.qw, ptr %2, align 8, !tbaa !29, !alias.scope !95, !noalias !88
   %i.vk = load ptr, ptr %15, align 8, !tbaa !35, !noalias !98
-  %i.vl = getelementptr inbounds nuw i8, ptr %i.vk, i64 %i.vi ; 2 uses
+  %33 = getelementptr inbounds nuw i8, ptr %i.vk, i64 %i.ur
+  %i.vl = getelementptr inbounds nuw i8, ptr %33, i64 1 ; 2 uses
   %i.vm = sub nuw i64 %i.vj, %i.vi                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #22, !noalias !98
   store i64 %i.vm, ptr %i.c, align 8, !tbaa !39, !noalias !98

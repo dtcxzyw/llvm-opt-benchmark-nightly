@@ -204,18 +204,19 @@ bb.ii:                                            ; preds = %bb.eu
   br label %opt_string.exit
 
 bb.ij:                                            ; preds = %bb.eu
-  %i.ub = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %.7117) #15 ; 3 uses
+  %i.ub = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %.7117) #15 ; 4 uses
   %i.uc = icmp ugt i64 %i.ub, 4
   br i1 %i.uc, label %bb.ik, label %bb.im
 
 bb.ik:                                            ; preds = %bb.ij
-  %13 = add i64 %i.ub, -5                         ; 2 uses
-  %i.ud = getelementptr inbounds nuw i8, ptr %.7117, i64 %13
+  %13 = getelementptr i8, ptr %.7117, i64 %i.ub
+  %i.ud = getelementptr i8, ptr %13, i64 -5
   %i.ue = call i32 @strcmp(ptr noundef nonnull dereferenceable(6) @.str.305, ptr noundef nonnull dereferenceable(1) %i.ud) #15
   %.not299.i = icmp eq i32 %i.ue, 0
   br i1 %.not299.i, label %bb.il, label %bb.im
 
 bb.il:                                            ; preds = %bb.ik
+  %14 = add i64 %i.ub, -5
   %i.uf = load i64, ptr %i.br, align 1
   %i.ug = or i64 %i.uf, 131072
   br label %bb.in
@@ -227,7 +228,7 @@ bb.im:                                            ; preds = %bb.ik, %bb.ij
 
 bb.in:                                            ; preds = %bb.im, %bb.il
   %storemerge = phi i64 [ %i.ui, %bb.im ], [ %i.ug, %bb.il ]
-  %.0.i162 = phi i64 [ %i.ub, %bb.im ], [ %13, %bb.il ] ; 2 uses
+  %.0.i162 = phi i64 [ %i.ub, %bb.im ], [ %14, %bb.il ] ; 2 uses
   store i64 %storemerge, ptr %i.br, align 1
   %.not300.i = icmp eq i64 %.0.i162, 0
   br i1 %.not300.i, label %bb.ip, label %bb.io

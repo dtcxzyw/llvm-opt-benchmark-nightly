@@ -203,8 +203,9 @@ bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
   br i1 %or.cond5, label %bb.j, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.s = add nsw i64 %0, -1                       ; 4 uses
-  %i.t = getelementptr inbounds i8, ptr %i.a, i64 %i.s
+  %i.s = add nsw i64 %0, -1                       ; 3 uses
+  %9 = getelementptr i8, ptr %i.a, i64 %0
+  %i.t = getelementptr i8, ptr %9, i64 -1
   %i.u = load i8, ptr %i.t, align 1, !tbaa !11
   %i.v = sext i8 %i.u to i64
   %i.w = icmp sgt i64 %1, %i.v

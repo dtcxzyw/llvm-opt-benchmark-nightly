@@ -204,15 +204,19 @@ bb.i:                                             ; preds = %_ZN9Stockfish10atta
 .prol.loopexit:                                   ; preds = %._crit_edge.prol, %.lr.ph85
   %indvars.iv103.unr = phi i64 [ %indvars.iv101, %.lr.ph85 ], [ %indvars.iv.next104.prol, %._crit_edge.prol ]
   %i.aoy = icmp eq i64 %indvars.iv107, 62
-  br i1 %i.aoy, label %.loopexit, label %.lr.ph85.new.a
+  br i1 %i.aoy, label %.loopexit, label %.lr.ph85.new
 
-.lr.ph85.new.a:                                   ; preds = %.prol.loopexit, %._crit_edge.1
-  %indvars.iv103 = phi i64 [ %indvars.iv.next104.1, %._crit_edge.1 ], [ %indvars.iv103.unr, %.prol.loopexit ] ; 6 uses
+.lr.ph85.new:                                     ; preds = %.prol.loopexit
+  %invariant.op = add i16 1, %i.anj
+  br label %.lr.ph85.new.a
+
+.lr.ph85.new.a:                                   ; preds = %._crit_edge.1, %.lr.ph85.new
+  %indvars.iv103 = phi i64 [ %indvars.iv103.unr, %.lr.ph85.new ], [ %indvars.iv.next104.1, %._crit_edge.1 ] ; 7 uses
   switch i8 %i.amy, label %bb.m [
-    i8 1, label %._crit_edge
+    i8 5, label %bb.l
     i8 3, label %bb.j
     i8 4, label %bb.k
-    i8 5, label %bb.l
+    i8 1, label %._crit_edge.1
   ]
 
 bb.j:                                             ; preds = %.lr.ph85.new.a
@@ -287,8 +291,7 @@ bb.n:                                             ; preds = %_ZN9Stockfish10atta
   %i.aqk = icmp eq i16 %.sroa.0.0.copyload.i, 0
   br i1 %i.aqk, label %._crit_edge, label %.lr.ph, !llvm.loop !132
 
-._crit_edge:                                      ; preds = %.lr.ph, %bb.n, %.lr.ph85.new.a, %_ZN9Stockfish10attacks_bbENS_9PieceTypeENS_6SquareEm.exit
-  %indvars.iv.next104 = add nuw nsw i64 %indvars.iv103, 1 ; 2 uses
+._crit_edge:                                      ; preds = %.lr.ph, %bb.n, %_ZN9Stockfish10attacks_bbENS_9PieceTypeENS_6SquareEm.exit
   switch i8 %i.amy, label %bb.r [
     i8 1, label %._crit_edge.1
     i8 3, label %bb.q
@@ -326,11 +329,12 @@ _ZN9Stockfish10attacks_bbENS_9PieceTypeENS_6SquareEm.exit.1: ; preds = %bb.r, %b
   br i1 %.not25.1, label %._crit_edge.1, label %bb.s
 
 bb.s:                                             ; preds = %_ZN9Stockfish10attacks_bbENS_9PieceTypeENS_6SquareEm.exit.1
-  %i.aqx = trunc nuw nsw i64 %indvars.iv.next104 to i16
-  %i.aqy = add nuw nsw i16 %i.anj, %i.aqx
+  %i.aqx = trunc i64 %indvars.iv103 to i16
+  %i.aqy = add i16 %i.aqx, %invariant.op
   %i.aqz = load i64, ptr %i.ank, align 8, !tbaa !11
-  %i.ara = getelementptr inbounds nuw [8 x i8], ptr %i.anc, i64 %indvars.iv.next104
-  %i.arb = load i64, ptr %i.ara, align 8, !tbaa !11
+  %i.ara = getelementptr inbounds nuw [8 x i8], ptr %i.anc, i64 %indvars.iv103
+  %0 = getelementptr inbounds nuw i8, ptr %i.ara, i64 8
+  %i.arb = load i64, ptr %0, align 8, !tbaa !11
   %i.arc = xor i64 %i.aqz, %i.arb
   %i.ard = xor i64 %i.arc, %i.ajw                 ; 3 uses
   %i.are = and i64 %i.ard, 8191                   ; 2 uses
@@ -368,7 +372,7 @@ bb.s:                                             ; preds = %_ZN9Stockfish10atta
   %i.arw = icmp eq i16 %.sroa.0.0.copyload.i.1, 0
   br i1 %i.arw, label %._crit_edge.1, label %.lr.ph.1, !llvm.loop !132
 
-._crit_edge.1:                                    ; preds = %.lr.ph.1, %bb.s, %_ZN9Stockfish10attacks_bbENS_9PieceTypeENS_6SquareEm.exit.1, %._crit_edge
+._crit_edge.1:                                    ; preds = %.lr.ph.1, %.lr.ph85.new.a, %bb.s, %_ZN9Stockfish10attacks_bbENS_9PieceTypeENS_6SquareEm.exit.1, %._crit_edge
   %indvars.iv.next104.1 = add nuw nsw i64 %indvars.iv103, 2 ; 2 uses
   %exitcond106.not.1 = icmp eq i64 %indvars.iv.next104.1, 64
   br i1 %exitcond106.not.1, label %.loopexit, label %.lr.ph85.new.a, !llvm.loop !133

@@ -201,8 +201,8 @@ bb.c:                                             ; preds = %bb.b
   br label %.loopexit
 
 .preheader:                                       ; preds = %bb.b, %bb.e
-  %.0.in = phi i64 [ %.0, %bb.e ], [ %i.h, %bb.b ]
-  %.0 = add nsw i64 %.0.in, 2                     ; 4 uses
+  %.0.in = phi i64 [ %.0, %bb.e ], [ %i.h, %bb.b ] ; 2 uses
+  %.0 = add nsw i64 %.0.in, 2                     ; 3 uses
   %i.n = load i32, ptr %i.i, align 8, !tbaa !85   ; 2 uses
   %i.o = sext i32 %i.n to i64
   %i.p = icmp slt i64 %.0, %i.o
@@ -210,8 +210,9 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.p, label %bb.d, label %bb.f
 
 bb.d:                                             ; preds = %.preheader
-  %i.r = getelementptr [8 x i8], ptr %i.q, i64 %.0 ; 2 uses
-  %i.s = load ptr, ptr %i.r, align 8, !tbaa !84
+  %i.r = getelementptr [8 x i8], ptr %i.q, i64 %.0.in ; 2 uses
+  %1 = getelementptr i8, ptr %i.r, i64 16
+  %i.s = load ptr, ptr %1, align 8, !tbaa !84
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 8
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !47
   %i.v = trunc i64 %.0 to i32
@@ -223,7 +224,7 @@ bb.d:                                             ; preds = %.preheader
   br i1 %or.cond, label %bb.e, label %.critedge
 
 bb.e:                                             ; preds = %bb.d
-  %i.z = getelementptr i8, ptr %i.r, i64 8
+  %i.z = getelementptr i8, ptr %i.r, i64 24
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !84
   %i.ab = call i32 @getPositiveLongFromObjectOrReply(ptr noundef nonnull %0, ptr noundef %i.aa, ptr noundef nonnull %i.b, ptr noundef nonnull @.str.21) #11
   %.not23 = icmp eq i32 %i.ab, 0

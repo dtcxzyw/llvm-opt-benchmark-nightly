@@ -201,9 +201,10 @@ bb.f:                                             ; preds = %bb.d, %bb.c
   br label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph, %.backedge
-  %.02537 = phi i64 [ %.02535, %.lr.ph ], [ %.025, %.backedge ] ; 5 uses
-  %.025.in36 = phi i64 [ %i.i, %.lr.ph ], [ %.02537, %.backedge ]
-  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 %.02537
+  %.02537 = phi i64 [ %.02535, %.lr.ph ], [ %.025, %.backedge ] ; 4 uses
+  %.025.in36 = phi i64 [ %i.i, %.lr.ph ], [ %.02537, %.backedge ] ; 2 uses
+  %1 = getelementptr i8, ptr %0, i64 %.025.in36
+  %i.m = getelementptr i8, ptr %1, i64 -1
   %i.n = load i8, ptr %i.m, align 1, !tbaa !16    ; 2 uses
   %i.o = sext i8 %i.n to i64
   %i.p = getelementptr inbounds [2 x i8], ptr %i.l, i64 %i.o

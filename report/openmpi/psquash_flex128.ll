@@ -203,13 +203,13 @@ switch.lookup:                                    ; preds = %bb.a
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %spec.store.select.i = tail call i64 @llvm.umin.i64(i64 %2, i64 9)
-  %i.d = add nsw i64 %spec.store.select.i, -1     ; 3 uses
+  %i.d = add nsw i64 %spec.store.select.i, -1     ; 2 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.c, %switch.lookup
   %.038.i = phi i64 [ 0, %switch.lookup ], [ %i.k, %bb.c ]
   %.037.i = phi i64 [ 0, %switch.lookup ], [ %i.l, %bb.c ] ; 3 uses
-  %.034.i = phi i64 [ 0, %switch.lookup ], [ %i.e, %bb.c ] ; 3 uses
+  %.034.i = phi i64 [ 0, %switch.lookup ], [ %i.e, %bb.c ] ; 4 uses
   %i.e = add nuw i64 %.034.i, 1                   ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 %.034.i
   %i.g = load i8, ptr %i.f, align 1, !tbaa !41    ; 3 uses
@@ -229,8 +229,9 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.q, label %bb.e, label %bb.f, !prof !42
 
 bb.e:                                             ; preds = %bb.d
+  %5 = getelementptr inbounds nuw i8, ptr %1, i64 %.034.i
   %i.r = add nsw i64 %.034.i, 2
-  %i.s = getelementptr inbounds nuw i8, ptr %1, i64 %i.d
+  %i.s = getelementptr i8, ptr %5, i64 1
   %i.t = load i8, ptr %i.s, align 1, !tbaa !41    ; 2 uses
   %i.u = zext i8 %i.t to i64
   %i.v = shl i64 %i.u, %i.l

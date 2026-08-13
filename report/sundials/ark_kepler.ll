@@ -203,7 +203,7 @@ bb.aa:                                            ; preds = %.preheader
   br label %bb.ab
 
 bb.ab:                                            ; preds = %.peel.next, %bb.ad
-  %indvars.iv = phi i64 [ 1, %.peel.next ], [ %indvars.iv.next, %bb.ad ] ; 5 uses
+  %indvars.iv = phi i64 [ 1, %.peel.next ], [ %indvars.iv.next, %bb.ad ] ; 9 uses
   %.082182 = phi double [ 1.000000e+00, %.peel.next ], [ %i.ft, %bb.ad ]
   %.084180 = phi double [ %i.fa, %.peel.next ], [ %i.gi, %bb.ad ]
   %i.fb = phi <2 x double> [ %i.es, %.peel.next ], [ %i.ga, %bb.ad ]
@@ -252,26 +252,30 @@ bb.ad:                                            ; preds = %bb.ab, %bb.ac
   %i.gg = fadd <4 x double> %i.fc, %i.gf          ; 5 uses
   %i.gh = call double @log(double noundef %i.fe) #14
   %i.gi = call double @llvm.fmuladd.f64(double %i.gb, double %i.gh, double %.084180) ; 2 uses
-  %4 = add nsw i64 %indvars.iv, -1                ; 5 uses
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %4
+  %4 = getelementptr [8 x i8], ptr %i.d, i64 %indvars.iv
+  %5 = getelementptr i8, ptr %4, i64 -8
   %i.gj = load double, ptr %5, align 8, !tbaa !19
   %i.gk = fdiv double %i.fo, %i.gj
   %i.gl = call double @log(double noundef %i.gk) #14
-  %i.gm = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %4
-  %i.gn = load double, ptr %i.gm, align 8, !tbaa !19
+  %i.gm = getelementptr [8 x i8], ptr %i.j, i64 %indvars.iv
+  %6 = getelementptr i8, ptr %i.gm, i64 -8
+  %i.gn = load double, ptr %6, align 8, !tbaa !19
   %i.go = fdiv double %i.fe, %i.gn                ; 2 uses
   %i.gp = call double @log(double noundef %i.go) #14
   %i.gq = fdiv double %i.gl, %i.gp
-  %i.gr = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %4
-  store double %i.gq, ptr %i.gr, align 8, !tbaa !19
-  %i.gs = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %4
-  %i.gt = load double, ptr %i.gs, align 8, !tbaa !19
+  %i.gr = getelementptr [8 x i8], ptr %i.b, i64 %indvars.iv
+  %7 = getelementptr i8, ptr %i.gr, i64 -8
+  store double %i.gq, ptr %7, align 8, !tbaa !19
+  %i.gs = getelementptr [8 x i8], ptr %i.e, i64 %indvars.iv
+  %8 = getelementptr i8, ptr %i.gs, i64 -8
+  %i.gt = load double, ptr %8, align 8, !tbaa !19
   %i.gu = fdiv double %i.fr, %i.gt
   %i.gv = call double @log(double noundef %i.gu) #14
   %i.gw = call double @log(double noundef %i.go) #14
   %i.gx = fdiv double %i.gv, %i.gw
-  %i.gy = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %4
-  store double %i.gx, ptr %i.gy, align 8, !tbaa !19
+  %i.gy = getelementptr [8 x i8], ptr %i.c, i64 %indvars.iv
+  %9 = getelementptr i8, ptr %i.gy, i64 -8
+  store double %i.gx, ptr %9, align 8, !tbaa !19
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 8
   br i1 %exitcond.not, label %.loopexit, label %bb.ab, !llvm.loop !36

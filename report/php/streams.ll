@@ -203,8 +203,8 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.t, label %bb.f, label %bb.k, !prof !147
 
 bb.f:                                             ; preds = %bb.e
-  %5 = add i64 %4, -1                             ; 2 uses
-  %i.u = getelementptr inbounds nuw i8, ptr %3, i64 %5
+  %5 = getelementptr i8, ptr %3, i64 %4
+  %i.u = getelementptr i8, ptr %5, i64 -1
   %i.v = load i8, ptr %i.u, align 1, !tbaa !27
   %i.w = sub i64 0, %4
   %i.x = getelementptr inbounds i8, ptr %i.o, i64 %i.w ; 3 uses
@@ -229,7 +229,8 @@ bb.g:                                             ; preds = %.lr.ph, %bb.j
   br i1 %.not43.i, label %zend_memnstr.exit, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 %5
+  %6 = getelementptr i8, ptr %i.ag, i64 %4
+  %i.ah = getelementptr i8, ptr %6, i64 -1
   %i.ai = load i8, ptr %i.ah, align 1, !tbaa !27
   %i.aj = icmp eq i8 %i.v, %i.ai
   br i1 %i.aj, label %bb.i, label %bb.j

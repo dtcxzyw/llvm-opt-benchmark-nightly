@@ -44,8 +44,8 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %bb.c
-  %.072.in75 = phi i64 [ %i.o, %.lr.ph ], [ %.072, %bb.c ] ; 2 uses
-  %.072 = add nsw i64 %.072.in75, -384            ; 5 uses
+  %.072.in75 = phi i64 [ %i.o, %.lr.ph ], [ %.072, %bb.c ] ; 3 uses
+  %.072 = add nsw i64 %.072.in75, -384            ; 4 uses
   %i.t = sub nsw i64 %.fr77, %.072                ; 2 uses
   %spec.select = call i64 @llvm.smin.i64(i64 %i.t, i64 384) ; 3 uses
   store i64 %spec.select, ptr %i.c, align 8, !tbaa !8
@@ -61,8 +61,9 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   store ptr %i.aa, ptr %i.r, align 8, !tbaa !18
   store ptr %i.a, ptr %i.s, align 8, !tbaa !19
   %i.ab = call i32 @dtrmm_LNLU(ptr noundef nonnull %0, ptr noundef null, ptr noundef null, ptr noundef %3, ptr noundef %4, i64 noundef 0) #4 ; 0 uses
-  %i.ac = getelementptr [8 x i8], ptr %i.i, i64 %.072
-  %i.ad = getelementptr [8 x i8], ptr %i.ac, i64 %i.y ; 2 uses
+  %i.ac = getelementptr [8 x i8], ptr %i.i, i64 %.072.in75
+  %6 = getelementptr i8, ptr %i.ac, i64 -3072
+  %i.ad = getelementptr [8 x i8], ptr %6, i64 %i.y ; 2 uses
   store ptr %i.ad, ptr %0, align 8, !tbaa !13
   store ptr %i.b, ptr %i.s, align 8, !tbaa !19
   %i.ae = call i32 @dtrsm_RNLU(ptr noundef nonnull %0, ptr noundef null, ptr noundef null, ptr noundef %3, ptr noundef %4, i64 noundef 0) #4 ; 0 uses

@@ -201,9 +201,9 @@ bb.d:                                             ; preds = %.critedge, %bb.c
   br label %bb.d, !llvm.loop !152
 
 .lr.ph:                                           ; preds = %.preheader, %bb.e
-  %.134 = phi i64 [ %2, %bb.e ], [ %.0, %.preheader ] ; 2 uses
-  %2 = add i64 %.134, -1                          ; 3 uses
-  %i.n = getelementptr inbounds nuw i8, ptr %.026, i64 %2
+  %.134 = phi i64 [ %3, %bb.e ], [ %.0, %.preheader ] ; 3 uses
+  %2 = getelementptr i8, ptr %.026, i64 %.134
+  %i.n = getelementptr i8, ptr %2, i64 -1
   %i.o = load i8, ptr %i.n, align 1, !tbaa !93
   switch i8 %i.o, label %._crit_edge [
     i8 10, label %bb.e
@@ -213,7 +213,8 @@ bb.d:                                             ; preds = %.critedge, %bb.c
   ]
 
 bb.e:                                             ; preds = %.lr.ph, %.lr.ph, %.lr.ph, %.lr.ph
-  %.not32 = icmp eq i64 %2, 0
+  %3 = add i64 %.134, -1                          ; 2 uses
+  %.not32 = icmp eq i64 %3, 0
   br i1 %.not32, label %._crit_edge, label %.lr.ph, !llvm.loop !153
 
 ._crit_edge:                                      ; preds = %bb.e, %.lr.ph, %.preheader

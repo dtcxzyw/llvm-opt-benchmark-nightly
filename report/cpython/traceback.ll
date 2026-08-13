@@ -201,12 +201,11 @@ PyUnicode_READ_CHAR.exit:                         ; preds = %_PyUnicode_DATA.exi
 
 bb.l:                                             ; preds = %PyUnicode_READ_CHAR.exit
   %i.x = getelementptr i8, ptr %1, i64 16
-  %.val = load i64, ptr %i.x, align 8, !tbaa !50  ; 2 uses
+  %.val = load i64, ptr %i.x, align 8, !tbaa !50  ; 4 uses
   %i.y = icmp sgt i64 %.val, 0
   br i1 %i.y, label %bb.m, label %.critedge
 
 bb.m:                                             ; preds = %bb.l
-  %6 = add nsw i64 %.val, -1                      ; 3 uses
   switch i32 %i.j, label %bb.t [
     i32 1, label %bb.n
     i32 2, label %bb.q
@@ -229,7 +228,8 @@ bb.p:                                             ; preds = %bb.n
 
 _PyUnicode_DATA.exit.i174:                        ; preds = %bb.p, %bb.o
   %.0.i.i175 = phi ptr [ %.0.i.i.i173, %bb.o ], [ %.val4.i.i176, %bb.p ]
-  %i.ab = getelementptr i8, ptr %.0.i.i175, i64 %6
+  %6 = getelementptr i8, ptr %.0.i.i175, i64 %.val
+  %i.ab = getelementptr i8, ptr %6, i64 -1
   %i.ac = load i8, ptr %i.ab, align 1, !tbaa !18
   %i.ad = zext i8 %i.ac to i32
   br label %PyUnicode_READ_CHAR.exit183
@@ -251,8 +251,9 @@ bb.s:                                             ; preds = %bb.q
 
 _PyUnicode_DATA.exit17.i167:                      ; preds = %bb.s, %bb.r
   %.0.i15.i168 = phi ptr [ %.0.i.i14.i166, %bb.r ], [ %.val4.i16.i170, %bb.s ]
-  %i.ag = getelementptr [2 x i8], ptr %.0.i15.i168, i64 %6
-  %i.ah = load i16, ptr %i.ag, align 2, !tbaa !49
+  %i.ag = getelementptr [2 x i8], ptr %.0.i15.i168, i64 %.val
+  %7 = getelementptr i8, ptr %i.ag, i64 -2
+  %i.ah = load i16, ptr %7, align 2, !tbaa !49
   %i.ai = zext i16 %i.ah to i32
   br label %PyUnicode_READ_CHAR.exit183
 
@@ -273,8 +274,9 @@ bb.v:                                             ; preds = %bb.t
 
 _PyUnicode_DATA.exit25.i180:                      ; preds = %bb.v, %bb.u
   %.0.i23.i181 = phi ptr [ %.0.i.i22.i179, %bb.u ], [ %.val4.i24.i182, %bb.v ]
-  %i.al = getelementptr [4 x i8], ptr %.0.i23.i181, i64 %6
-  %i.am = load i32, ptr %i.al, align 4, !tbaa !7
+  %i.al = getelementptr [4 x i8], ptr %.0.i23.i181, i64 %.val
+  %8 = getelementptr i8, ptr %i.al, i64 -4
+  %i.am = load i32, ptr %8, align 4, !tbaa !7
   br label %PyUnicode_READ_CHAR.exit183
 
 PyUnicode_READ_CHAR.exit183:                      ; preds = %_PyUnicode_DATA.exit.i174, %_PyUnicode_DATA.exit17.i167, %_PyUnicode_DATA.exit25.i180

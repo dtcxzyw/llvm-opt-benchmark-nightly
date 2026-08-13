@@ -201,8 +201,8 @@ bb.bu:                                            ; preds = %bb.bt
   %i.fd = getelementptr inbounds nuw i8, ptr %i.fc, i64 %i.fa
   store i8 0, ptr %i.fd, align 1, !tbaa !12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #17
-  %i.fe = load i64, ptr %i.fb, align 8, !tbaa !105 ; 4 uses
-  %i.ff = add i64 %i.fe, 1                        ; 3 uses
+  %i.fe = load i64, ptr %i.fb, align 8, !tbaa !105 ; 5 uses
+  %i.ff = add i64 %i.fe, 1                        ; 2 uses
   %i.fg = load ptr, ptr %36, align 8, !tbaa !95   ; 2 uses
   %i.fh = icmp eq ptr %i.fg, %i.ey
   br i1 %i.fh, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
@@ -235,7 +235,8 @@ bb.bw:                                            ; preds = %.noexc72, %_ZNKSt7_
   store i8 9, ptr %i.fn, align 1, !tbaa !12
   store i64 %i.ff, ptr %i.fb, align 8, !tbaa !105
   %i.fo = load ptr, ptr %36, align 8, !tbaa !95
-  %i.fp = getelementptr inbounds nuw i8, ptr %i.fo, i64 %i.ff
+  %43 = getelementptr i8, ptr %i.fo, i64 %i.fe
+  %i.fp = getelementptr i8, ptr %43, i64 1
   store i8 0, ptr %i.fp, align 1, !tbaa !12
   %i.fq = load i64, ptr %i.fb, align 8, !tbaa !105
   %i.fr = add i64 %i.fq, -4611686018427387901
@@ -247,8 +248,8 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.ex
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit unwind label %bb.ck ; 0 uses
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i
-  %i.fu = load i64, ptr %i.fb, align 8, !tbaa !105 ; 4 uses
-  %i.fv = add i64 %i.fu, 1                        ; 3 uses
+  %i.fu = load i64, ptr %i.fb, align 8, !tbaa !105 ; 5 uses
+  %i.fv = add i64 %i.fu, 1                        ; 2 uses
   %i.fw = load ptr, ptr %36, align 8, !tbaa !95   ; 2 uses
   %i.fx = icmp eq ptr %i.fw, %i.ey
   br i1 %i.fx, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i78, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i75
@@ -281,7 +282,8 @@ bb.by:                                            ; preds = %.noexc79, %_ZNKSt7_
   store i8 10, ptr %i.gd, align 1, !tbaa !12
   store i64 %i.fv, ptr %i.fb, align 8, !tbaa !105
   %i.ge = load ptr, ptr %36, align 8, !tbaa !95
-  %i.gf = getelementptr inbounds nuw i8, ptr %i.ge, i64 %i.fv
+  %44 = getelementptr i8, ptr %i.ge, i64 %i.fu
+  %i.gf = getelementptr i8, ptr %44, i64 1
   store i8 0, ptr %i.gf, align 1, !tbaa !12
   %i.gg = load i64, ptr %i.fb, align 8, !tbaa !105
   %i.gh = add i64 %i.gg, -4611686018427387901
@@ -300,8 +302,8 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.ex
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit84 unwind label %bb.ck ; 0 uses
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit84: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i81
-  %i.gk = load i64, ptr %i.fb, align 8, !tbaa !105 ; 4 uses
-  %i.gl = add i64 %i.gk, 1                        ; 3 uses
+  %i.gk = load i64, ptr %i.fb, align 8, !tbaa !105 ; 5 uses
+  %i.gl = add i64 %i.gk, 1                        ; 2 uses
   %i.gm = load ptr, ptr %36, align 8, !tbaa !95   ; 2 uses
   %i.gn = icmp eq ptr %i.gm, %i.ey
   br i1 %i.gn, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i88, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i85
@@ -334,10 +336,11 @@ bb.ca:                                            ; preds = %.noexc89, %_ZNKSt7_
   store i8 13, ptr %i.gt, align 1, !tbaa !12
   store i64 %i.gl, ptr %i.fb, align 8, !tbaa !105
   %i.gu = load ptr, ptr %36, align 8, !tbaa !95
-  %i.gv = getelementptr inbounds nuw i8, ptr %i.gu, i64 %i.gl
+  %45 = getelementptr i8, ptr %i.gu, i64 %i.gk
+  %i.gv = getelementptr i8, ptr %45, i64 1
   store i8 0, ptr %i.gv, align 1, !tbaa !12
-  %i.gw = load i64, ptr %i.fb, align 8, !tbaa !105 ; 4 uses
-  %i.gx = add i64 %i.gw, 1                        ; 3 uses
+  %i.gw = load i64, ptr %i.fb, align 8, !tbaa !105 ; 5 uses
+  %i.gx = add i64 %i.gw, 1                        ; 2 uses
   %i.gy = load ptr, ptr %36, align 8, !tbaa !95   ; 2 uses
   %i.gz = icmp eq ptr %i.gy, %i.ey
   br i1 %i.gz, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i94, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i91
@@ -370,7 +373,8 @@ bb.cc:                                            ; preds = %.noexc95, %_ZNKSt7_
   store i8 34, ptr %i.hf, align 1, !tbaa !12
   store i64 %i.gx, ptr %i.fb, align 8, !tbaa !105
   %i.hg = load ptr, ptr %36, align 8, !tbaa !95
-  %i.hh = getelementptr inbounds nuw i8, ptr %i.hg, i64 %i.gx
+  %46 = getelementptr i8, ptr %i.hg, i64 %i.gw
+  %i.hh = getelementptr i8, ptr %46, i64 1
   store i8 0, ptr %i.hh, align 1, !tbaa !12
   call void @llvm.lifetime.start.p0(ptr nonnull %37) #17
   call void @llvm.lifetime.start.p0(ptr nonnull %38) #17

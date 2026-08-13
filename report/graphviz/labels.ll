@@ -201,8 +201,8 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %i.h = mul i64 %i.c, 72
-  %i.i = add i64 %i.h, 72                         ; 3 uses
+  %i.h = mul i64 %i.c, 72                         ; 2 uses
+  %i.i = add i64 %i.h, 72                         ; 2 uses
   %i.j = mul nuw i64 %i.e, 72                     ; 4 uses
   %i.k = icmp eq i64 %i.e, 0
   br i1 %i.k, label %bb.d, label %bb.e
@@ -227,7 +227,8 @@ bb.g:                                             ; preds = %bb.e
   br i1 %i.p, label %bb.h, label %gv_recalloc.exit
 
 bb.h:                                             ; preds = %bb.g
-  %i.q = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.i
+  %5 = getelementptr i8, ptr %i.l, i64 %i.h
+  %i.q = getelementptr i8, ptr %5, i64 72
   %i.r = sub nuw i64 %i.j, %i.i
   tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.q, i8 0, i64 %i.r, i1 false)
   br label %gv_recalloc.exit

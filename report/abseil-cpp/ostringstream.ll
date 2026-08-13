@@ -25,8 +25,8 @@ bb.b:                                             ; preds = %bb.a
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !9    ; 6 uses
   %i.d = trunc i32 %1 to i8
   %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
-  %i.f = load i64, ptr %i.e, align 8, !tbaa !17   ; 4 uses
-  %i.g = add i64 %i.f, 1                          ; 3 uses
+  %i.f = load i64, ptr %i.e, align 8, !tbaa !17   ; 5 uses
+  %i.g = add i64 %i.f, 1                          ; 2 uses
   %i.h = load ptr, ptr %i.c, align 8, !tbaa !21   ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 2 uses
   %i.j = icmp eq ptr %i.h, %i.i
@@ -57,7 +57,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9push_backEc.exit: ; preds 
   store i8 %i.d, ptr %i.p, align 1, !tbaa !22
   store i64 %i.g, ptr %i.e, align 8, !tbaa !17
   %i.q = load ptr, ptr %i.c, align 8, !tbaa !21
-  %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 %i.g
+  %2 = getelementptr i8, ptr %i.q, i64 %i.f
+  %i.r = getelementptr i8, ptr %2, i64 1
   store i8 0, ptr %i.r, align 1, !tbaa !22
   br label %bb.d
 

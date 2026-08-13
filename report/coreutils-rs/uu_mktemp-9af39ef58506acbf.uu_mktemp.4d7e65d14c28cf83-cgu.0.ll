@@ -204,7 +204,7 @@ bb.r:                                             ; preds = %_RNvMs5_NtCs7tKScEo
 
 bb.s:                                             ; preds = %._crit_edge, %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh9ends_withCs6EuPS8vUgp3_9uu_mktemp.exit
   %i.bb = phi i64 [ %.pre392, %._crit_edge ], [ %i.bt, %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh9ends_withCs6EuPS8vUgp3_9uu_mktemp.exit ] ; 12 uses
-  %i.bc = phi ptr [ %.pre, %._crit_edge ], [ %i.bv, %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh9ends_withCs6EuPS8vUgp3_9uu_mktemp.exit ] ; 19 uses
+  %i.bc = phi ptr [ %.pre, %._crit_edge ], [ %i.bv, %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh9ends_withCs6EuPS8vUgp3_9uu_mktemp.exit ] ; 18 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %i.n, i64 8 ; 4 uses
   %i.be = getelementptr inbounds nuw i8, ptr %i.n, i64 16
   %i.bf = getelementptr inbounds nuw i8, ptr %i.bc, i64 %i.bb ; 5 uses
@@ -231,13 +231,14 @@ bb.t:                                             ; preds = %.lr.ph
   br i1 %.not.i185436, label %._crit_edge439, label %.lr.ph438
 
 bb.u:                                             ; preds = %.lr.ph438
+  %2 = add i64 %.sroa.03.0.i437, -1               ; 3 uses
   %.not.i185 = icmp eq i64 %2, 0
   br i1 %.not.i185, label %._crit_edge439, label %.lr.ph438
 
 .lr.ph438:                                        ; preds = %.split.i, %bb.u
-  %.sroa.03.0.i437 = phi i64 [ %2, %bb.u ], [ %i.bk, %.split.i ] ; 2 uses
-  %2 = add i64 %.sroa.03.0.i437, -1               ; 4 uses
-  %i.bn = getelementptr inbounds nuw i8, ptr %i.bc, i64 %2
+  %.sroa.03.0.i437 = phi i64 [ %2, %bb.u ], [ %i.bk, %.split.i ] ; 3 uses
+  %3 = getelementptr i8, ptr %i.bc, i64 %.sroa.03.0.i437
+  %i.bn = getelementptr i8, ptr %3, i64 -1
   %i.bo = load i8, ptr %i.bn, align 1, !alias.scope !997, !noalias !1004, !noundef !4
   %i.bp = icmp eq i8 %i.bo, 88
   br i1 %i.bp, label %bb.u, label %._crit_edge439
@@ -406,7 +407,7 @@ _RNvMNtCs6JMX4GRUq9U_4core5sliceSh9ends_withCs6EuPS8vUgp3_9uu_mktemp.exit195.thr
   br i1 %.not.i196, label %bb.ak, label %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh9ends_withCs6EuPS8vUgp3_9uu_mktemp.exit199
 
 _RNvMNtCs6JMX4GRUq9U_4core5sliceSh9ends_withCs6EuPS8vUgp3_9uu_mktemp.exit199: ; preds = %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh9ends_withCs6EuPS8vUgp3_9uu_mktemp.exit195.thread
-  %i.dg = getelementptr i8, ptr %i.bc, i64 %.sroa.03.0.i.lcssa
+  %i.dg = getelementptr i8, ptr %i.bc, i64 %.sroa.03.0.i.lcssa ; 2 uses
   %i.dh = getelementptr i8, ptr %i.dg, i64 -2
   %i.di = load i16, ptr %i.dh, align 1
   %i.dj = icmp ne i16 11823, %i.di
@@ -415,8 +416,8 @@ _RNvMNtCs6JMX4GRUq9U_4core5sliceSh9ends_withCs6EuPS8vUgp3_9uu_mktemp.exit199: ; 
   br i1 %i.dl, label %_RNvXs8_NtNtCs6JMX4GRUq9U_4core3str6traitsINtNtNtB9_3ops5range7RangeTojEINtNtNtB9_5slice5index10SliceIndexeE3get.exit203, label %.thread
 
 _RNvXs8_NtNtCs6JMX4GRUq9U_4core3str6traitsINtNtNtB9_3ops5range7RangeTojEINtNtNtB9_5slice5index10SliceIndexeE3get.exit203: ; preds = %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh9ends_withCs6EuPS8vUgp3_9uu_mktemp.exit199
-  %i.dm = add i64 %.sroa.03.0.i.lcssa, -1         ; 3 uses
-  %i.dn = getelementptr inbounds nuw i8, ptr %i.bc, i64 %i.dm
+  %i.dm = add i64 %.sroa.03.0.i.lcssa, -1         ; 2 uses
+  %i.dn = getelementptr i8, ptr %i.dg, i64 -1
   %i.do = load i8, ptr %i.dn, align 1, !alias.scope !1030, !noundef !4
   %i.dp = icmp sgt i8 %i.do, -65
   br i1 %i.dp, label %select.unfold, label %.split126

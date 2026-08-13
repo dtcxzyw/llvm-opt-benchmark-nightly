@@ -146,7 +146,7 @@ bb.j:                                             ; preds = %bb.h
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
-  %.04752 = phi i64 [ 1, %.lr.ph.preheader.new ], [ %i.cb, %.lr.ph ] ; 4 uses
+  %.04752 = phi i64 [ 1, %.lr.ph.preheader.new ], [ %i.cb, %.lr.ph ] ; 5 uses
   %.04851 = phi i64 [ %i.am, %.lr.ph.preheader.new ], [ %i.ca, %.lr.ph ] ; 3 uses
   %.04950 = phi i64 [ %i.h, %.lr.ph.preheader.new ], [ %i.bz, %.lr.ph ] ; 3 uses
   %niter = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.1, %.lr.ph ]
@@ -156,11 +156,12 @@ bb.j:                                             ; preds = %bb.h
   store i64 %.04851, ptr %i.bv, align 8, !tbaa !31
   %i.bw = shl i64 %.04950, 1
   %i.bx = shl i64 %.04851, 1
-  %1 = add nuw nsw i64 %.04752, 1                 ; 2 uses
-  %2 = getelementptr inbounds nuw [8 x i8], ptr %i.at, i64 %1
+  %1 = getelementptr inbounds nuw [8 x i8], ptr %i.at, i64 %.04752
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 8
   store i64 %i.bw, ptr %2, align 8, !tbaa !31
-  %i.by = getelementptr inbounds nuw [8 x i8], ptr %i.az, i64 %1
-  store i64 %i.bx, ptr %i.by, align 8, !tbaa !31
+  %i.by = getelementptr inbounds nuw [8 x i8], ptr %i.az, i64 %.04752
+  %3 = getelementptr inbounds nuw i8, ptr %i.by, i64 8
+  store i64 %i.bx, ptr %3, align 8, !tbaa !31
   %i.bz = shl i64 %.04950, 2                      ; 2 uses
   %i.ca = shl i64 %.04851, 2                      ; 2 uses
   %i.cb = add nuw nsw i64 %.04752, 2              ; 2 uses

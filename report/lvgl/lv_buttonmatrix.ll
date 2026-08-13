@@ -201,15 +201,16 @@ bb.bf:                                            ; preds = %bb.be
   br label %.critedge22
 
 bb.bg:                                            ; preds = %.critedge22
-  %i.fn = getelementptr inbounds nuw [4 x i8], ptr %i.fh, i64 %indvars.iv.next443
-  %i.fo = load i32, ptr %i.fn, align 4, !tbaa !30
+  %i.fn = getelementptr inbounds nuw [4 x i8], ptr %i.fh, i64 %indvars.iv442505
+  %3 = getelementptr inbounds nuw i8, ptr %i.fn, i64 4
+  %i.fo = load i32, ptr %3, align 4, !tbaa !30
   %i.fp = and i32 %i.fo, 80
   %or.cond381.not = icmp eq i32 %i.fp, 0
   br i1 %or.cond381.not, label %.critedge340, label %.critedge22, !llvm.loop !35
 
 .critedge22:                                      ; preds = %.critedge22.preheader, %bb.bg
-  %indvars.iv442505 = phi i64 [ %indvars.iv.next443, %bb.bg ], [ 0, %.critedge22.preheader ]
-  %indvars.iv.next443 = add nuw nsw i64 %indvars.iv442505, 1 ; 4 uses
+  %indvars.iv442505 = phi i64 [ %indvars.iv.next443, %bb.bg ], [ 0, %.critedge22.preheader ] ; 2 uses
+  %indvars.iv.next443 = add nuw nsw i64 %indvars.iv442505, 1 ; 3 uses
   %i.fq = trunc nuw i64 %indvars.iv.next443 to i32 ; 2 uses
   store i32 %i.fq, ptr %i.dz, align 8, !tbaa !21
   %.not318 = icmp samesign ult i64 %indvars.iv.next443, %i.fm
@@ -306,15 +307,16 @@ bb.bq:                                            ; preds = %bb.bp
   br label %.critedge24
 
 bb.br:                                            ; preds = %.critedge24
-  %i.hh = getelementptr inbounds nuw [4 x i8], ptr %i.hb, i64 %indvars.iv.next436
-  %i.hi = load i32, ptr %i.hh, align 4, !tbaa !30
+  %i.hh = getelementptr inbounds nuw [4 x i8], ptr %i.hb, i64 %indvars.iv435503
+  %4 = getelementptr inbounds nuw i8, ptr %i.hh, i64 4
+  %i.hi = load i32, ptr %4, align 4, !tbaa !30
   %i.hj = and i32 %i.hi, 80
   %or.cond385.not = icmp eq i32 %i.hj, 0
   br i1 %or.cond385.not, label %.critedge340, label %.critedge24, !llvm.loop !40
 
 .critedge24:                                      ; preds = %.critedge24.preheader, %bb.br
-  %indvars.iv435503 = phi i64 [ %indvars.iv.next436, %bb.br ], [ 0, %.critedge24.preheader ]
-  %indvars.iv.next436 = add nuw nsw i64 %indvars.iv435503, 1 ; 4 uses
+  %indvars.iv435503 = phi i64 [ %indvars.iv.next436, %bb.br ], [ 0, %.critedge24.preheader ] ; 2 uses
+  %indvars.iv.next436 = add nuw nsw i64 %indvars.iv435503, 1 ; 3 uses
   %i.hk = trunc nuw i64 %indvars.iv.next436 to i32 ; 2 uses
   store i32 %i.hk, ptr %i.dz, align 8, !tbaa !21
   %.not315 = icmp samesign ult i64 %indvars.iv.next436, %i.hg

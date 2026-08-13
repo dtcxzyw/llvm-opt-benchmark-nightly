@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZNSt14priority_queueIP4EdgeSt6vectorIS1_SaIS1_EE16EdgePriorityLessE3popEv(ptr noundef nonnull align 8 dereferenceable(25) %0) local_unnamed_addr #1 comdat align 2 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !150    ; 11 uses
+  %i.a = load ptr, ptr %0, align 8, !tbaa !150    ; 10 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !150  ; 3 uses
   %i.d = ptrtoint ptr %i.c to i64
@@ -225,13 +225,14 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph.i.i.i:                                     ; preds = %bb.b, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterI16EdgePriorityLessEclINS_17__normal_iteratorIPP4EdgeSt6vectorIS7_SaIS7_EEEESC_EEbT_T0_.exit.i.i.i
   %.034.i.i.i = phi i64 [ %spec.select.i.i.i, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterI16EdgePriorityLessEclINS_17__normal_iteratorIPP4EdgeSt6vectorIS7_SaIS7_EEEESC_EEbT_T0_.exit.i.i.i ], [ 0, %bb.b ] ; 2 uses
-  %i.q = shl i64 %.034.i.i.i, 1                   ; 2 uses
-  %i.r = add i64 %i.q, 2                          ; 2 uses
-  %i.s = getelementptr inbounds [8 x i8], ptr %i.a, i64 %i.r
-  %i.t = or disjoint i64 %i.q, 1                  ; 2 uses
-  %1 = getelementptr inbounds [8 x i8], ptr %i.a, i64 %i.t
-  %i.u = load ptr, ptr %i.s, align 8, !tbaa !145  ; 2 uses
-  %i.v = load ptr, ptr %1, align 8, !tbaa !145    ; 2 uses
+  %i.q = shl i64 %.034.i.i.i, 1                   ; 3 uses
+  %i.r = add i64 %i.q, 2
+  %i.s = getelementptr [8 x i8], ptr %i.a, i64 %i.q ; 2 uses
+  %1 = getelementptr i8, ptr %i.s, i64 16
+  %i.t = or disjoint i64 %i.q, 1
+  %2 = getelementptr i8, ptr %i.s, i64 8
+  %i.u = load ptr, ptr %1, align 8, !tbaa !145    ; 2 uses
+  %i.v = load ptr, ptr %2, align 8, !tbaa !145    ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.u, i64 120
   %i.x = load i64, ptr %i.w, align 8, !tbaa !151  ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.v, i64 120
@@ -274,10 +275,11 @@ bb.e:                                             ; preds = %._crit_edge.i.i.i
   br i1 %i.ao, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %i.ap = shl nsw i64 %.0.lcssa.i.i.i, 1
-  %i.aq = or disjoint i64 %i.ap, 1                ; 2 uses
-  %i.ar = getelementptr inbounds [8 x i8], ptr %i.a, i64 %i.aq
-  %i.as = load ptr, ptr %i.ar, align 8, !tbaa !145
+  %i.ap = shl nsw i64 %.0.lcssa.i.i.i, 1          ; 2 uses
+  %i.aq = or disjoint i64 %i.ap, 1
+  %i.ar = getelementptr [8 x i8], ptr %i.a, i64 %i.ap
+  %3 = getelementptr i8, ptr %i.ar, i64 8
+  %i.as = load ptr, ptr %3, align 8, !tbaa !145
   %i.at = getelementptr inbounds [8 x i8], ptr %i.a, i64 %.0.lcssa.i.i.i
   store ptr %i.as, ptr %i.at, align 8, !tbaa !145
   br label %bb.g
@@ -680,10 +682,10 @@ bb.a:
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !7185 ; 8 uses
   %i.e = ptrtoint ptr %i.b to i64
   %i.f = ptrtoint ptr %i.d to i64                 ; 4 uses
-  %i.g = sub i64 %i.e, %i.f
+  %i.g = sub i64 %i.e, %i.f                       ; 3 uses
   %i.h = ashr exact i64 %i.g, 3
-  %i.i = add nsw i64 %i.h, 1                      ; 3 uses
-  %i.j = add i64 %i.i, %1                         ; 3 uses
+  %i.i = add i64 %1, 1
+  %i.j = add i64 %i.i, %i.h                       ; 3 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.l = load i64, ptr %i.k, align 8, !tbaa !7108 ; 4 uses
   %i.m = shl i64 %i.j, 1
@@ -721,7 +723,7 @@ bb.f:                                             ; preds = %bb.e
   br label %_ZSt4copyIPPP4EdgeS3_ET0_T_S5_S4_.exit
 
 bb.g:                                             ; preds = %bb.b
-  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.t, i64 %i.i ; 2 uses
+  %3 = getelementptr i8, ptr %i.t, i64 %i.g       ; 2 uses
   %i.ab = ptrtoint ptr %i.v to i64
   %i.ac = sub i64 %i.ab, %i.f                     ; 3 uses
   %i.ad = ashr exact i64 %i.ac, 3                 ; 2 uses
@@ -729,8 +731,9 @@ bb.g:                                             ; preds = %bb.b
   br i1 %i.ae, label %bb.h, label %bb.i, !prof !7193
 
 bb.h:                                             ; preds = %bb.g
+  %4 = getelementptr i8, ptr %3, i64 8
   %i.af = sub nsw i64 0, %i.ad
-  %i.ag = getelementptr inbounds [8 x i8], ptr %3, i64 %i.af
+  %i.ag = getelementptr inbounds [8 x i8], ptr %4, i64 %i.af
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.ag, ptr align 8 %i.d, i64 %i.ac, i1 false)
   br label %_ZSt4copyIPPP4EdgeS3_ET0_T_S5_S4_.exit
 
@@ -739,9 +742,8 @@ bb.i:                                             ; preds = %bb.g
   br i1 %i.ah, label %bb.j, label %_ZSt4copyIPPP4EdgeS3_ET0_T_S5_S4_.exit
 
 bb.j:                                             ; preds = %bb.i
-  %4 = getelementptr inbounds i8, ptr %3, i64 -8
   %i.ai = load ptr, ptr %i.d, align 8, !tbaa !150
-  store ptr %i.ai, ptr %4, align 8, !tbaa !150
+  store ptr %i.ai, ptr %3, align 8, !tbaa !150
   br label %_ZSt4copyIPPP4EdgeS3_ET0_T_S5_S4_.exit
 
 bb.k:                                             ; preds = %bb.a
@@ -806,8 +808,7 @@ _ZSt4copyIPPP4EdgeS3_ET0_T_S5_S4_.exit:           ; preds = %bb.j, %bb.i, %bb.h,
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bb, i64 512
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 32
   store ptr %i.bd, ptr %i.be, align 8, !tbaa !7115
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %.0, i64 %i.i
-  %i.bf = getelementptr inbounds i8, ptr %5, i64 -8 ; 2 uses
+  %i.bf = getelementptr i8, ptr %.0, i64 %i.g     ; 2 uses
   store ptr %i.bf, ptr %i.a, align 8, !tbaa !7113
   %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !150 ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 56

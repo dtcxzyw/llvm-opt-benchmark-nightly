@@ -203,7 +203,7 @@ bb.f:                                             ; preds = %_ZSt8_DestroyIPN4bz
   unreachable
 
 _ZSt34__uninitialized_move_if_noexcept_aIPN4bzla4NodeES2_SaIS1_EET0_T_S5_S4_RT1_.exit: ; preds = %_ZSt10_ConstructIN4bzla4NodeEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i, %_ZNSt16allocator_traitsISaIN4bzla4NodeEEE9constructIS1_JRKS1_EEEvRS2_PT_DpOT0_.exit
-  %.0.lcssa.i.i.i.i.i = phi ptr [ %i.p, %_ZNSt16allocator_traitsISaIN4bzla4NodeEEE9constructIS1_JRKS1_EEEvRS2_PT_DpOT0_.exit ], [ %i.s, %_ZSt10_ConstructIN4bzla4NodeEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i ] ; 4 uses
+  %.0.lcssa.i.i.i.i.i = phi ptr [ %i.p, %_ZNSt16allocator_traitsISaIN4bzla4NodeEEE9constructIS1_JRKS1_EEEvRS2_PT_DpOT0_.exit ], [ %i.s, %_ZSt10_ConstructIN4bzla4NodeEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i ] ; 3 uses
   %.ptr = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i, i64 8 ; 3 uses
   %.not14.i.i.i.i.i28 = icmp eq ptr %1, %i.b
   br i1 %.not14.i.i.i.i.i28, label %_ZSt34__uninitialized_move_if_noexcept_aIPN4bzla4NodeES2_SaIS1_EET0_T_S5_S4_RT1_.exit43, label %.lr.ph.i.i.i.i.i29
@@ -211,13 +211,13 @@ _ZSt34__uninitialized_move_if_noexcept_aIPN4bzla4NodeES2_SaIS1_EET0_T_S5_S4_RT1_
 .lr.ph.i.i.i.i.i29:                               ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPN4bzla4NodeES2_SaIS1_EET0_T_S5_S4_RT1_.exit, %_ZSt10_ConstructIN4bzla4NodeEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i37
   %.016.i.i.i.i.i30.idx = phi i64 [ %.016.i.i.i.i.i30.add, %_ZSt10_ConstructIN4bzla4NodeEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i37 ], [ 8, %_ZSt34__uninitialized_move_if_noexcept_aIPN4bzla4NodeES2_SaIS1_EET0_T_S5_S4_RT1_.exit ] ; 3 uses
   %.01215.i.i.i.i.i31 = phi ptr [ %i.aa, %_ZSt10_ConstructIN4bzla4NodeEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i37 ], [ %1, %_ZSt34__uninitialized_move_if_noexcept_aIPN4bzla4NodeES2_SaIS1_EET0_T_S5_S4_RT1_.exit ] ; 2 uses
-  %.016.i.i.i.i.i30.ptr = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i, i64 %.016.i.i.i.i.i30.idx ; 2 uses
+  %.016.i.i.i.i.i30.ptr = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i, i64 %.016.i.i.i.i.i30.idx ; 3 uses
   invoke void @_ZN4bzla4NodeC1ERKS0_(ptr noundef nonnull align 8 dereferenceable(8) %.016.i.i.i.i.i30.ptr, ptr noundef nonnull align 8 dereferenceable(8) %.01215.i.i.i.i.i31)
           to label %_ZSt10_ConstructIN4bzla4NodeEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i37 unwind label %bb.g
 
 _ZSt10_ConstructIN4bzla4NodeEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i37: ; preds = %.lr.ph.i.i.i.i.i29
   %i.aa = getelementptr inbounds nuw i8, ptr %.01215.i.i.i.i.i31, i64 8 ; 2 uses
-  %.016.i.i.i.i.i30.add = add nuw nsw i64 %.016.i.i.i.i.i30.idx, 8 ; 2 uses
+  %.016.i.i.i.i.i30.add = add nuw nsw i64 %.016.i.i.i.i.i30.idx, 8
   %.not.i.i.i.i.i38 = icmp eq ptr %i.aa, %i.b
   br i1 %.not.i.i.i.i.i38, label %_ZSt34__uninitialized_move_if_noexcept_aIPN4bzla4NodeES2_SaIS1_EET0_T_S5_S4_RT1_.exit43.loopexit, label %.lr.ph.i.i.i.i.i29, !llvm.loop !358
 
@@ -257,7 +257,7 @@ bb.j:                                             ; preds = %_ZSt8_DestroyIPN4bz
   unreachable
 
 _ZSt34__uninitialized_move_if_noexcept_aIPN4bzla4NodeES2_SaIS1_EET0_T_S5_S4_RT1_.exit43.loopexit: ; preds = %_ZSt10_ConstructIN4bzla4NodeEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i37
-  %.ptr60.le = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i, i64 %.016.i.i.i.i.i30.add
+  %.ptr60.le = getelementptr inbounds nuw i8, ptr %.016.i.i.i.i.i30.ptr, i64 8
   br label %_ZSt34__uninitialized_move_if_noexcept_aIPN4bzla4NodeES2_SaIS1_EET0_T_S5_S4_RT1_.exit43
 
 _ZSt34__uninitialized_move_if_noexcept_aIPN4bzla4NodeES2_SaIS1_EET0_T_S5_S4_RT1_.exit43: ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPN4bzla4NodeES2_SaIS1_EET0_T_S5_S4_RT1_.exit43.loopexit, %_ZSt34__uninitialized_move_if_noexcept_aIPN4bzla4NodeES2_SaIS1_EET0_T_S5_S4_RT1_.exit
@@ -355,10 +355,10 @@ _ZNSt12_Vector_baseIN4bzla4NodeESaIS1_EE11_M_allocateEm.exit.thread: ; preds = %
   br label %_ZSt22__uninitialized_copy_aINSt8__detail20_Node_const_iteratorIN4bzla4NodeELb1ELb1EEEPS3_S3_ET0_T_S7_S6_RSaIT1_E.exit
 
 .lr.ph.i:                                         ; preds = %bb.a, %.lr.ph.i
-  %.06.i = phi i64 [ %i.c, %.lr.ph.i ], [ 0, %bb.a ] ; 2 uses
+  %.06.i = phi i64 [ %i.c, %.lr.ph.i ], [ 0, %bb.a ] ; 3 uses
   %.sroa.02.05.i = phi ptr [ %i.b, %.lr.ph.i ], [ %1, %bb.a ]
   %i.b = load ptr, ptr %.sroa.02.05.i, align 8, !tbaa !205 ; 2 uses
-  %i.c = add nuw nsw i64 %.06.i, 1                ; 3 uses
+  %i.c = add nuw nsw i64 %.06.i, 1                ; 2 uses
   %.not.i = icmp eq ptr %i.b, %2
   br i1 %.not.i, label %_ZSt10__distanceINSt8__detail20_Node_const_iteratorIN4bzla4NodeELb1ELb1EEEENSt15iterator_traitsIT_E15difference_typeES6_S6_St18input_iterator_tag.exit, label %.lr.ph.i, !llvm.loop !359
 
@@ -374,9 +374,10 @@ _ZNSt12_Vector_baseIN4bzla4NodeESaIS1_EE11_M_allocateEm.exit: ; preds = %_ZSt10_
   %i.e = shl nuw nsw i64 %i.c, 3
   %i.f = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.e) #22 ; 5 uses
   store ptr %i.f, ptr %0, align 8, !tbaa !208
-  %i.g = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %i.c
+  %i.g = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %.06.i
+  %3 = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr %i.g, ptr %i.h, align 8, !tbaa !211
+  store ptr %3, ptr %i.h, align 8, !tbaa !211
   br label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %_ZNSt12_Vector_baseIN4bzla4NodeESaIS1_EE11_M_allocateEm.exit, %_ZSt10_ConstructIN4bzla4NodeEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i

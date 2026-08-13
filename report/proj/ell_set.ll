@@ -155,14 +155,15 @@ bb.g:                                             ; preds = %_ZL12pj_get_paramP8
   br i1 %cond13.i.i, label %_ZL13pj_find_ellpsPKc.exit.thread.i, label %.lr.ph.i42.i
 
 bb.h:                                             ; preds = %.lr.ph.i42.i
-  %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
-  %i.ai = getelementptr inbounds nuw [32 x i8], ptr %i.ag, i64 %indvars.iv.next.i.i
-  %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !47 ; 2 uses
+  %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1
+  %i.ai = getelementptr inbounds nuw [32 x i8], ptr %i.ag, i64 %indvars.iv.i.i
+  %2 = getelementptr inbounds nuw i8, ptr %i.ai, i64 32
+  %i.aj = load ptr, ptr %2, align 8, !tbaa !47    ; 2 uses
   %cond.i.i = icmp eq ptr %i.aj, null
   br i1 %cond.i.i, label %_ZL13pj_find_ellpsPKc.exit.thread.i, label %.lr.ph.i42.i, !llvm.loop !49
 
 .lr.ph.i42.i:                                     ; preds = %bb.g, %bb.h
-  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %bb.h ], [ 0, %bb.g ] ; 2 uses
+  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %bb.h ], [ 0, %bb.g ] ; 3 uses
   %i.ak = phi ptr [ %i.aj, %bb.h ], [ %i.ah, %bb.g ]
   %i.al = tail call i32 @strcmp(ptr noundef nonnull readonly dereferenceable(1) %i.af, ptr noundef nonnull dereferenceable(1) %i.ak) #14
   %.not12.i.i = icmp eq i32 %i.al, 0

@@ -62,7 +62,7 @@ define void @_ZNK5arrow23DeviceAllocationTypeSet8ToStringB5cxx11Ev(ptr dead_on_u
   br label %bb.e
 
 bb.a:                                             ; preds = %bb.q
-  %i.d = load i64, ptr %i.b, align 8, !tbaa !12   ; 5 uses
+  %i.d = load i64, ptr %i.b, align 8, !tbaa !12   ; 6 uses
   %i.e = icmp eq i64 %i.d, 9223372036854775807
   br i1 %i.e, label %bb.b, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i.i
 
@@ -74,7 +74,7 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i.i: ; preds = %bb.a
-  %i.f = add nsw i64 %i.d, 1                      ; 3 uses
+  %i.f = add nsw i64 %i.d, 1                      ; 2 uses
   %i.g = load ptr, ptr %0, align 8, !tbaa !15     ; 2 uses
   %i.h = icmp eq ptr %i.g, %i.a
   br i1 %i.h, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
@@ -129,7 +129,7 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.t
 
 bb.g:                                             ; preds = %bb.f
-  %i.q = load i64, ptr %i.b, align 8, !tbaa !12   ; 6 uses
+  %i.q = load i64, ptr %i.b, align 8, !tbaa !12   ; 7 uses
   %i.r = icmp ugt i64 %i.q, 1
   br i1 %i.r, label %bb.h, label %bb.k
 
@@ -145,7 +145,7 @@ bb.h:                                             ; preds = %bb.g
   unreachable
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i.i18: ; preds = %bb.h
-  %i.t = add i64 %i.q, 2                          ; 3 uses
+  %i.t = add i64 %i.q, 2                          ; 2 uses
   %i.u = load ptr, ptr %0, align 8, !tbaa !15     ; 2 uses
   %i.v = icmp eq ptr %i.u, %i.a
   br i1 %i.v, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i.i24, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i19
@@ -176,7 +176,8 @@ bb.j:                                             ; preds = %_ZNKSt7__cxx1112bas
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit27: ; preds = %bb.j, %bb.i
   store i64 %i.t, ptr %i.b, align 8, !tbaa !12
   %i.aa = load ptr, ptr %0, align 8, !tbaa !15
-  %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 %i.t
+  %2 = getelementptr i8, ptr %i.aa, i64 %i.q
+  %i.ab = getelementptr i8, ptr %2, i64 2
   store i8 0, ptr %i.ab, align 1, !tbaa !11
   br label %bb.k
 
@@ -262,7 +263,8 @@ bb.r:                                             ; preds = %bb.d, %bb.b
 bb.s:                                             ; preds = %bb.c, %bb.d
   store i64 %i.f, ptr %i.b, align 8, !tbaa !12
   %i.au = load ptr, ptr %0, align 8, !tbaa !15
-  %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 %i.f
+  %3 = getelementptr i8, ptr %i.au, i64 %i.d
+  %i.av = getelementptr i8, ptr %3, i64 1
   store i8 0, ptr %i.av, align 1, !tbaa !11
   ret void
 

@@ -203,15 +203,16 @@ bb.bp:                                            ; preds = %bb.bo
           to label %bb.bq unwind label %bb.bt
 
 bb.bq:                                            ; preds = %bb.bp
-  %i.in = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.b) #21
-  %i.io = add i64 %i.in, 1                        ; 3 uses
+  %i.in = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.b) #21 ; 2 uses
+  %i.io = add i64 %i.in, 1                        ; 2 uses
   %i.ip = icmp ult i64 %i.io, %i.ih
   br i1 %i.ip, label %bb.br, label %bb.bw
 
 bb.br:                                            ; preds = %bb.bq
-  %i.iq = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.io
+  %7 = getelementptr i8, ptr %i.b, i64 %i.in
+  %i.iq = getelementptr i8, ptr %7, i64 1
   %i.ir = sub nuw nsw i64 %i.ih, %i.io
-  invoke void @_ZN14EncodeFileName6DecodeEPcmPhmPwm(ptr noundef nonnull align 8 dereferenceable(24) %5, ptr noundef nonnull %i.b, i64 noundef %i.ih, ptr noundef nonnull %i.iq, i64 noundef %i.ir, ptr noundef nonnull %i.ik, i64 noundef 2048)
+  invoke void @_ZN14EncodeFileName6DecodeEPcmPhmPwm(ptr noundef nonnull align 8 dereferenceable(24) %5, ptr noundef nonnull %i.b, i64 noundef %i.ih, ptr noundef %i.iq, i64 noundef %i.ir, ptr noundef nonnull %i.ik, i64 noundef 2048)
           to label %bb.bw unwind label %bb.bu
 
 bb.bs:                                            ; preds = %bb.ca, %bb.by, %bb.cn, %bb.cm, %bb.cf, %.thread260, %bb.bm

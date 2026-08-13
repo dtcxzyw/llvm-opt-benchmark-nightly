@@ -204,7 +204,7 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
   br i1 %i.x, label %_ZN6casadi23casadi_forward_diff_oldIdEET_PPS1_S2_S2_S1_xPKNS_22casadi_finite_diff_memIS1_EE.exit, label %scalar.ph
 
 scalar.ph:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph
-  %.09.i = phi i64 [ %i.al, %scalar.ph ], [ %.09.i.unr, %scalar.ph.prol.loopexit ] ; 5 uses
+  %.09.i = phi i64 [ %i.al, %scalar.ph ], [ %.09.i.unr, %scalar.ph.prol.loopexit ] ; 7 uses
   %i.y = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %.09.i
   %i.z = load double, ptr %i.y, align 8, !tbaa !100
   %i.aa = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %.09.i
@@ -213,15 +213,17 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %i.ad = fdiv double %i.ac, %4
   %i.ae = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %.09.i
   store double %i.ad, ptr %i.ae, align 8, !tbaa !100
-  %5 = add nuw nsw i64 %.09.i, 1                  ; 3 uses
-  %6 = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %5
+  %5 = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %.09.i
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.af = load double, ptr %6, align 8, !tbaa !100
-  %i.ag = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %5
-  %i.ah = load double, ptr %i.ag, align 8, !tbaa !100
+  %i.ag = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %.09.i
+  %7 = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
+  %i.ah = load double, ptr %7, align 8, !tbaa !100
   %i.ai = fsub double %i.af, %i.ah
   %i.aj = fdiv double %i.ai, %4
-  %i.ak = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %5
-  store double %i.aj, ptr %i.ak, align 8, !tbaa !100
+  %i.ak = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %.09.i
+  %8 = getelementptr inbounds nuw i8, ptr %i.ak, i64 8
+  store double %i.aj, ptr %8, align 8, !tbaa !100
   %i.al = add nuw nsw i64 %.09.i, 2               ; 2 uses
   %exitcond.not.i.1 = icmp eq i64 %i.al, %i.d
   br i1 %exitcond.not.i.1, label %_ZN6casadi23casadi_forward_diff_oldIdEET_PPS1_S2_S2_S1_xPKNS_22casadi_finite_diff_memIS1_EE.exit, label %scalar.ph, !llvm.loop !249

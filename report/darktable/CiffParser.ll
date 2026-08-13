@@ -201,9 +201,9 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEPKcm.exit.i: ;
   br label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i12.i
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i12.i: ; preds = %bb.g, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEPKcm.exit.i
-  %.1.i.i.in.i = phi i64 [ %.1.i.i.i, %bb.g ], [ %i.m, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEPKcm.exit.i ] ; 2 uses
-  %.1.i.i.i = add i64 %.1.i.i.in.i, -1            ; 3 uses
-  %i.r = getelementptr inbounds nuw i8, ptr %i.n, i64 %.1.i.i.i
+  %.1.i.i.in.i = phi i64 [ %.1.i.i.i, %bb.g ], [ %i.m, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEPKcm.exit.i ] ; 3 uses
+  %6 = getelementptr i8, ptr %i.n, i64 %.1.i.i.in.i
+  %i.r = getelementptr i8, ptr %6, i64 -1
   %i.s = load i8, ptr %i.r, align 1, !tbaa !38, !noalias !35
   switch i8 %i.s, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE16find_last_not_ofEPKcm.exit.i [
     i8 32, label %bb.g
@@ -211,6 +211,7 @@ _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i12.i: ; preds = %bb.g, %_ZNKSt17basi
   ]
 
 bb.g:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i12.i, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i12.i
+  %.1.i.i.i = add i64 %.1.i.i.in.i, -1            ; 2 uses
   %.not15.i.i.i = icmp eq i64 %.1.i.i.i, 0
   br i1 %.not15.i.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i22, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i12.i, !llvm.loop !41
 

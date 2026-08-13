@@ -203,26 +203,29 @@ middle.block:                                     ; preds = %vector.body
   br i1 %i.ac, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next.3, %.lr.ph ], [ %indvars.iv.unr, %.lr.ph.prol.loopexit ] ; 6 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next.3, %.lr.ph ], [ %indvars.iv.unr, %.lr.ph.prol.loopexit ] ; 9 uses
   %i.ad = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %indvars.iv
   %i.ae = load double, ptr %i.ad, align 8, !tbaa !66
   %i.af = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv
   store double %i.ae, ptr %i.af, align 8, !tbaa !66
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %6 = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %indvars.iv.next
-  %i.ag = load double, ptr %6, align 8, !tbaa !66
-  %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv.next
-  store double %i.ag, ptr %i.ah, align 8, !tbaa !66
-  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %indvars.iv.next.1
-  %i.ai = load double, ptr %7, align 8, !tbaa !66
-  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv.next.1
-  store double %i.ai, ptr %i.aj, align 8, !tbaa !66
-  %indvars.iv.next.2 = add nuw nsw i64 %indvars.iv, 3 ; 2 uses
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %indvars.iv.next.2
-  %i.ak = load double, ptr %8, align 8, !tbaa !66
-  %i.al = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv.next.2
-  store double %i.ak, ptr %i.al, align 8, !tbaa !66
+  %6 = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %indvars.iv
+  %7 = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %i.ag = load double, ptr %7, align 8, !tbaa !66
+  %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv
+  %8 = getelementptr inbounds nuw i8, ptr %i.ah, i64 8
+  store double %i.ag, ptr %8, align 8, !tbaa !66
+  %9 = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %indvars.iv
+  %10 = getelementptr inbounds nuw i8, ptr %9, i64 16
+  %i.ai = load double, ptr %10, align 8, !tbaa !66
+  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv
+  %11 = getelementptr inbounds nuw i8, ptr %i.aj, i64 16
+  store double %i.ai, ptr %11, align 8, !tbaa !66
+  %12 = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %indvars.iv
+  %13 = getelementptr inbounds nuw i8, ptr %12, i64 24
+  %i.ak = load double, ptr %13, align 8, !tbaa !66
+  %i.al = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv
+  %14 = getelementptr inbounds nuw i8, ptr %i.al, i64 24
+  store double %i.ak, ptr %14, align 8, !tbaa !66
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
   %exitcond.not.3 = icmp eq i64 %indvars.iv.next.3, %i.o
   br i1 %exitcond.not.3, label %._crit_edge, label %.lr.ph, !llvm.loop !74
