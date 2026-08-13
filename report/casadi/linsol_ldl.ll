@@ -204,7 +204,7 @@ begin_hunk_0_@_ZNK6casadi9LinsolLdl5solveEPvPKdPdxb:bb.a
   %exitcond50.not.i = icmp eq i64 %i.gj, %4
   br i1 %exitcond50.not.i, label %_ZN6casadi16casadi_ldl_solveIdEEvPT_xPKxPKS1_S6_S4_S2_.exit, label %.preheader.i, !llvm.loop !152
 
-_ZN6casadi16casadi_ldl_solveIdEEvPT_xPKxPKS1_S6_S4_S2_.exit: ; preds = %._crit_edge44.i.loopexit, %.preheader.lr.ph.i, %bb.a
+_ZN6casadi16casadi_ldl_solveIdEEvPT_xPKxPKS1_S6_S4_S2_.exit: ; preds = %._crit_edge44.i.loopexit, %bb.a, %.preheader.lr.ph.i
   ret i32 0
 }
 

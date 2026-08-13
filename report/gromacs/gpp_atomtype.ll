@@ -203,7 +203,7 @@ _ZNK22PreprocessingAtomTypes22atomNumberFromAtomTypeEi.exit57.us.us.us97: ; pred
   %i.ca = icmp eq i32 %.fr112, %2
   br i1 %i.ca, label %._crit_edge32.loopexit187, label %.preheader.us.us65
 
-bb.f:                                             ; preds = %._crit_edge15.split.us.us.us
+bb.f:                                             ; preds = %._crit_edge15.split.us.us.us.loopexit7, %.lr.ph14.split.us.split.us.us.us.split.split.us.preheader, %.lr.ph14.split.us.split.us.us.us.split.us.split.preheader, %.lr.ph14.split.us.split.us.us.us.split.us.split.us.preheader
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count140
   br i1 %exitcond.not, label %._crit_edge32.thread, label %.lr.ph31.split.us.split.split.us, !llvm.loop !187
@@ -220,37 +220,37 @@ bb.f:                                             ; preds = %._crit_edge15.split
 
 ._crit_edge15.split.us.us.us.loopexit7:           ; preds = %.lr.ph14.split.us.split.us49.us
   %i.cf = load i32, ptr %i.v, align 4, !tbaa !16
-  %i.cg = icmp eq i32 %i.cf, 0
-  br label %._crit_edge15.split.us.us.us
-
-._crit_edge15.split.us.us.us:                     ; preds = %._crit_edge15.split.us.us.us.loopexit7, %.lr.ph14.split.us.split.us.us.us.split.split.us.preheader, %.lr.ph14.split.us.split.us.us.us.split.us.split.us.preheader, %.lr.ph14.split.us.split.us.us.us.split.us.split.preheader
-  %.us-phi17.us.us = phi i1 [ %i.cl, %.lr.ph14.split.us.split.us.us.us.split.us.split.preheader ], [ %i.cn, %.lr.ph14.split.us.split.us.us.us.split.split.us.preheader ], [ %i.ck, %.lr.ph14.split.us.split.us.us.us.split.us.split.us.preheader ], [ %i.cg, %._crit_edge15.split.us.us.us.loopexit7 ]
-  br i1 %.us-phi17.us.us, label %._crit_edge32.loopexit187, label %bb.f
+  %.fr217 = freeze i32 %i.cf
+  %i.cg = icmp eq i32 %.fr217, 0
+  br i1 %i.cg, label %._crit_edge32.loopexit187, label %bb.f
 
 .lr.ph14.split.us.split.us.us.us:                 ; preds = %.preheader.us.us65
   %i.ch = icmp sgt i64 %i.l, %i.cc
   br i1 %i.ch, label %.lr.ph14.split.us.split.us.us.us.split.us, label %.lr.ph14.split.us.split.us.us.us.split
 
 .lr.ph14.split.us.split.us.us.us.split.us:        ; preds = %.lr.ph14.split.us.split.us.us.us
-  %i.ci = load i32, ptr %i.ce, align 4, !tbaa !16 ; 2 uses
+  %i.ci = load i32, ptr %i.ce, align 4, !tbaa !16
+  %.fr219 = freeze i32 %i.ci                      ; 2 uses
   br i1 %i.t, label %.lr.ph14.split.us.split.us.us.us.split.us.split.preheader, label %.lr.ph14.split.us.split.us.us.us.split.us.split.us.preheader
 
 .lr.ph14.split.us.split.us.us.us.split.us.split.us.preheader: ; preds = %.lr.ph14.split.us.split.us.us.us.split.us
   %i.cj = load i32, ptr %i.v, align 4, !tbaa !16
-  %i.ck = icmp eq i32 %i.ci, %i.cj
-  br label %._crit_edge15.split.us.us.us
+  %.fr220 = freeze i32 %i.cj
+  %i.ck = icmp eq i32 %.fr219, %.fr220
+  br i1 %i.ck, label %._crit_edge32.loopexit187, label %bb.f
 
 .lr.ph14.split.us.split.us.us.us.split.us.split.preheader: ; preds = %.lr.ph14.split.us.split.us.us.us.split.us
-  %i.cl = icmp eq i32 %i.ci, 0
-  br label %._crit_edge15.split.us.us.us
+  %i.cl = icmp eq i32 %.fr219, 0
+  br i1 %i.cl, label %._crit_edge32.loopexit187, label %bb.f
 
 .lr.ph14.split.us.split.us.us.us.split:           ; preds = %.lr.ph14.split.us.split.us.us.us
   br i1 %i.t, label %._crit_edge32.loopexit187, label %.lr.ph14.split.us.split.us.us.us.split.split.us.preheader
 
 .lr.ph14.split.us.split.us.us.us.split.split.us.preheader: ; preds = %.lr.ph14.split.us.split.us.us.us.split
   %i.cm = load i32, ptr %i.v, align 4, !tbaa !16
-  %i.cn = icmp eq i32 %i.cm, 0
-  br label %._crit_edge15.split.us.us.us
+  %.fr218 = freeze i32 %i.cm
+  %i.cn = icmp eq i32 %.fr218, 0
+  br i1 %i.cn, label %._crit_edge32.loopexit187, label %bb.f
 
 .lr.ph31.split.us.split.split:                    ; preds = %.lr.ph31.split.us.split, %bb.g
   %indvars.iv137 = phi i64 [ %indvars.iv.next138, %bb.g ], [ 0, %.lr.ph31.split.us.split ] ; 3 uses
@@ -300,7 +300,7 @@ _ZNK22PreprocessingAtomTypes22atomNumberFromAtomTypeEi.exit57.us.us.us: ; preds 
   %i.dc = trunc nuw nsw i64 %indvars.iv137 to i32
   br label %._crit_edge32
 
-._crit_edge32.loopexit187:                        ; preds = %._crit_edge15.split.us.us.us, %.lr.ph31.split.us.split.split.us, %.lr.ph14.split.us.split.us49.us, %.lr.ph14.split.us.split.us.us.us.split
+._crit_edge32.loopexit187:                        ; preds = %._crit_edge15.split.us.us.us.loopexit7, %.lr.ph14.split.us.split.us.us.us.split.split.us.preheader, %.lr.ph14.split.us.split.us.us.us.split.us.split.us.preheader, %.lr.ph14.split.us.split.us.us.us.split.us.split.preheader, %.lr.ph31.split.us.split.split.us, %.lr.ph14.split.us.split.us49.us, %.lr.ph14.split.us.split.us.us.us.split
   %i.dd = trunc nuw nsw i64 %indvars.iv to i32
   br label %._crit_edge32
 

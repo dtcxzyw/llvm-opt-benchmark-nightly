@@ -204,13 +204,13 @@ bb.as:                                            ; preds = %bb.ar
   %i.dm = load i64, ptr %i.cx, align 16, !tbaa !56
   %factor.op.mul170 = mul i64 %i.dm, %i.dl
   %.not171 = icmp sgt i32 %.0, %.fr343
-  %16 = icmp sgt i32 %i.bi, 0
   %i.dn = getelementptr inbounds nuw i8, ptr %11, i64 44
   %i.do = getelementptr inbounds nuw i8, ptr %11, i64 64
   %i.dp = getelementptr inbounds nuw i8, ptr %11, i64 16
-  br i1 %.not171, label %._crit_edge.split, label %.preheader160.lr.ph.preheader.a
+  br i1 %.not171, label %._crit_edge.split, label %.preheader160.lr.ph.preheader
 
-.preheader160.lr.ph.preheader.a:                  ; preds = %.lr.ph
+.preheader160.lr.ph.preheader:                    ; preds = %.lr.ph
+  %16 = icmp sgt i32 %i.bi, 0
   %17 = add nsw i32 %.0, -1
   %18 = zext nneg i32 %.0 to i64
   %19 = zext nneg i32 %17 to i64
@@ -218,6 +218,9 @@ bb.as:                                            ; preds = %bb.ar
   %wide.trip.count185 = zext nneg i32 %i.dh to i64
   %wide.trip.count177 = zext nneg i32 %i.bi to i64
   %wide.trip.count = zext i32 %.0 to i64          ; 12 uses
+  br i1 %16, label %.preheader160.lr.ph.preheader.a, label %._crit_edge.split
+
+.preheader160.lr.ph.preheader.a:                  ; preds = %.preheader160.lr.ph.preheader
   %i.dq = add nsw i64 %wide.trip.count, -1        ; 2 uses
   %i.dr = shl nuw nsw i64 %wide.trip.count, 2
   %min.iters.check298 = icmp ult i32 %.0, 4
@@ -232,9 +235,9 @@ bb.as:                                            ; preds = %bb.ar
   %cmp.n340 = icmp eq i64 %n.vec323, %wide.trip.count
   %xtraiter = and i64 %wide.trip.count, 3         ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br label %.preheader160.lr.ph
+  br label %.preheader160.us.preheader
 
-._crit_edge.split:                                ; preds = %._crit_edge168, %.lr.ph, %.preheader161
+._crit_edge.split:                                ; preds = %._crit_edge168, %.preheader160.lr.ph.preheader, %.lr.ph, %.preheader161
   %i.dv = getelementptr inbounds nuw i8, ptr %11, i64 8
   %i.dw = load ptr, ptr %i.dv, align 8, !tbaa !11 ; 2 uses
   %.not.i80 = icmp eq ptr %i.dw, null
@@ -298,8 +301,8 @@ bb.bb:                                            ; preds = %bb.as
   %.not.i88 = icmp eq ptr %i.em, null
   br i1 %.not.i88, label %_ZN4ncnn3MatD2Ev.exit76, label %bb.ce
 
-.preheader160.lr.ph:                              ; preds = %.preheader160.lr.ph.preheader.a, %._crit_edge168
-  %indvars.iv182 = phi i64 [ 0, %.preheader160.lr.ph.preheader.a ], [ %indvars.iv.next183, %._crit_edge168 ] ; 4 uses
+.preheader160.us.preheader:                       ; preds = %.preheader160.lr.ph.preheader.a, %._crit_edge168
+  %indvars.iv182 = phi i64 [ %indvars.iv.next183, %._crit_edge168 ], [ 0, %.preheader160.lr.ph.preheader.a ] ; 4 uses
   %21 = load i32, ptr %i.dn, align 4
   %22 = load ptr, ptr %11, align 8                ; 4 uses
   %23 = load i64, ptr %i.do, align 8              ; 2 uses
@@ -309,9 +312,6 @@ bb.bb:                                            ; preds = %bb.as
   %27 = getelementptr inbounds nuw i8, ptr %22, i64 %26
   %28 = sext i32 %21 to i64                       ; 5 uses
   %factor.op.mul = mul i64 %25, %28               ; 9 uses
-  br i1 %16, label %.preheader160.us.preheader, label %._crit_edge168
-
-.preheader160.us.preheader:                       ; preds = %.preheader160.lr.ph
   %.reass = mul i64 %factor.op.mul170, %indvars.iv182
   %i.en = getelementptr inbounds nuw i8, ptr %i.dj, i64 %.reass
   %i.eo = mul i64 %25, %28
@@ -515,10 +515,10 @@ vec.epilog.middle.block339:                       ; preds = %vec.epilog.vector.b
   %indvar.next = add i64 %indvar, 1
   br i1 %i.gs, label %.preheader160.us, label %._crit_edge168, !llvm.loop !72
 
-._crit_edge168:                                   ; preds = %._crit_edge.us, %.preheader160.lr.ph
+._crit_edge168:                                   ; preds = %._crit_edge.us
   %indvars.iv.next183 = add nuw nsw i64 %indvars.iv182, 1 ; 2 uses
   %exitcond186.not = icmp eq i64 %indvars.iv.next183, %wide.trip.count185
-  br i1 %exitcond186.not, label %._crit_edge.split, label %.preheader160.lr.ph, !llvm.loop !73
+  br i1 %exitcond186.not, label %._crit_edge.split, label %.preheader160.us.preheader, !llvm.loop !73
 
 bb.bc:                                            ; preds = %_ZN4ncnn3MatD2Ev.exit78
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #9

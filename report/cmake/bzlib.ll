@@ -203,16 +203,19 @@ bb.c:                                             ; preds = %bb.b
   %i.x = getelementptr inbounds nuw i8, ptr %i.c, i64 3176 ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.c, i64 3188 ; 4 uses
   %.pre = load i32, ptr %i.f, align 8, !tbaa !60  ; 2 uses
-  %1 = icmp sgt i32 %.pre, 9
-  br label %bb.d
-
-bb.d:                                             ; preds = %2, %.preheader
-  switch i32 %.pre, label %2 [
+  switch i32 %.pre, label %.preheader.split [
     i32 1, label %unRLE_obuf_to_output_SMALL.exit.thread
     i32 2, label %.loopexit
   ]
 
-.loopexit:                                        ; preds = %bb.d, %bb.da
+.preheader.split:                                 ; preds = %.preheader
+  %1 = icmp sgt i32 %.pre, 9
+  br i1 %1, label %.loopexit201, label %bb.d
+
+bb.d:                                             ; preds = %.preheader.split, %bb.d
+  br label %bb.d
+
+.loopexit:                                        ; preds = %.preheader, %bb.da
   %i.z = load i8, ptr %i.g, align 4, !tbaa !64
   %.not47 = icmp eq i8 %i.z, 0
   %i.aa = load i8, ptr %i.h, align 4, !tbaa !69
@@ -615,10 +618,7 @@ bb.cx:                                            ; preds = %bb.cw, %bb.cv
   store i32 14, ptr %i.f, align 8, !tbaa !60
   br label %.loopexit201
 
-2:                                                ; preds = %bb.d
-  br i1 %1, label %.loopexit201, label %bb.d
-
-.loopexit201:                                     ; preds = %2, %.thread
+.loopexit201:                                     ; preds = %.preheader.split, %.thread
   %i.yq = tail call i32 @BZ2_decompress(ptr noundef nonnull %i.c) #24 ; 2 uses
   %i.yr = icmp eq i32 %i.yq, 4
   br i1 %i.yr, label %bb.cy, label %bb.da
@@ -649,8 +649,8 @@ bb.da:                                            ; preds = %.loopexit201
   %.not50 = icmp eq i32 %i.zc, 2
   br i1 %.not50, label %.loopexit, label %unRLE_obuf_to_output_SMALL.exit.thread
 
-unRLE_obuf_to_output_SMALL.exit.thread:           ; preds = %bb.d, %bb.j, %bb.k, %bb.p, %bb.u, %bb.z, %bb.ab, %BZ2_indexIntoF.exit342.i, %bb.ai, %bb.aj, %bb.am, %bb.ap, %bb.as, %bb.ay, %bb.az, %bb.bf, %bb.bl, %bb.br, %bb.bu, %bb.ck, %bb.ch, %bb.ce, %bb.cc, %bb.cn, %bb.co, %unRLE_obuf_to_output_SMALL.exit, %bb.cs, %bb.cx, %bb.da, %.thread64, %bb.c, %bb.b, %bb.a
-  %.3 = phi i32 [ -4, %bb.cx ], [ -2, %bb.a ], [ -2, %bb.b ], [ -2, %bb.c ], [ -4, %BZ2_indexIntoF.exit342.i ], [ %., %.thread64 ], [ -4, %bb.j ], [ -4, %bb.ck ], [ -4, %bb.ay ], [ %i.yq, %bb.da ], [ 0, %bb.cs ], [ 0, %unRLE_obuf_to_output_SMALL.exit ], [ -4, %bb.co ], [ -4, %bb.cn ], [ -4, %bb.cc ], [ -4, %bb.ce ], [ -4, %bb.ch ], [ -4, %bb.bu ], [ -4, %bb.br ], [ -4, %bb.bl ], [ -4, %bb.bf ], [ -4, %bb.az ], [ -4, %bb.as ], [ -4, %bb.ap ], [ -4, %bb.am ], [ -4, %bb.aj ], [ -4, %bb.ai ], [ -4, %bb.ab ], [ -4, %bb.z ], [ -4, %bb.u ], [ -4, %bb.p ], [ -4, %bb.k ], [ -1, %bb.d ]
+unRLE_obuf_to_output_SMALL.exit.thread:           ; preds = %bb.j, %bb.k, %bb.p, %bb.u, %bb.z, %bb.ab, %BZ2_indexIntoF.exit342.i, %bb.ai, %bb.aj, %bb.am, %bb.ap, %bb.as, %bb.ay, %bb.az, %bb.bf, %bb.bl, %bb.br, %bb.bu, %bb.ck, %bb.ch, %bb.ce, %bb.cc, %bb.cn, %bb.co, %.preheader, %unRLE_obuf_to_output_SMALL.exit, %bb.cs, %bb.cx, %bb.da, %.thread64, %bb.c, %bb.b, %bb.a
+  %.3 = phi i32 [ -4, %bb.cx ], [ -2, %bb.a ], [ -2, %bb.b ], [ -2, %bb.c ], [ -4, %BZ2_indexIntoF.exit342.i ], [ %., %.thread64 ], [ -1, %.preheader ], [ -4, %bb.ck ], [ -4, %bb.ay ], [ %i.yq, %bb.da ], [ 0, %bb.cs ], [ 0, %unRLE_obuf_to_output_SMALL.exit ], [ -4, %bb.co ], [ -4, %bb.cn ], [ -4, %bb.cc ], [ -4, %bb.ce ], [ -4, %bb.ch ], [ -4, %bb.bu ], [ -4, %bb.br ], [ -4, %bb.bl ], [ -4, %bb.bf ], [ -4, %bb.az ], [ -4, %bb.as ], [ -4, %bb.ap ], [ -4, %bb.am ], [ -4, %bb.aj ], [ -4, %bb.ai ], [ -4, %bb.ab ], [ -4, %bb.z ], [ -4, %bb.u ], [ -4, %bb.p ], [ -4, %bb.k ], [ -4, %bb.j ]
   ret i32 %.3
 }
 

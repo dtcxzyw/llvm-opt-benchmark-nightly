@@ -204,19 +204,19 @@ toupper.exit.us.peel:                             ; preds = %._crit_edge122.us, 
 
 .peel.next:                                       ; preds = %toupper.exit.us.peel
   %i.cy = icmp eq i32 %i.cx, 0
-  br label %bb.n
+  br i1 %i.cy, label %.split124.us, label %bb.n
 
-bb.n:                                             ; preds = %toupper.exit.us, %.peel.next
-  %indvars.iv128 = phi i64 [ 1, %.peel.next ], [ %indvars.iv.next129, %toupper.exit.us ] ; 2 uses
-  br i1 %i.cy, label %.split124.us, label %toupper.exit105.us
+bb.n:                                             ; preds = %.peel.next
+  %3 = tail call ptr @__ctype_toupper_loc() #31
+  %4 = load ptr, ptr %3, align 8, !tbaa !314
+  br label %toupper.exit105.us
 
-toupper.exit105.us:                               ; preds = %bb.n
+toupper.exit105.us:                               ; preds = %toupper.exit.us, %bb.n
+  %indvars.iv128 = phi i64 [ 1, %bb.n ], [ %indvars.iv.next129, %toupper.exit.us ] ; 2 uses
   %i.cz = getelementptr inbounds nuw [8 x i8], ptr %i.co, i64 %indvars.iv128
   %i.da = load ptr, ptr %i.cz, align 8, !tbaa !68
   %i.db = getelementptr inbounds i8, ptr %i.da, i64 %indvars.iv134
   %i.dc = load i8, ptr %i.db, align 1, !tbaa !86
-  %3 = tail call ptr @__ctype_toupper_loc() #31
-  %4 = load ptr, ptr %3, align 8, !tbaa !314
   %i.dd = sext i8 %i.dc to i64
   %i.de = getelementptr inbounds [4 x i8], ptr %4, i64 %i.dd
   %i.df = load i32, ptr %i.de, align 4, !tbaa !67
@@ -226,13 +226,13 @@ toupper.exit105.us:                               ; preds = %bb.n
 toupper.exit.us:                                  ; preds = %toupper.exit105.us
   %indvars.iv.next129 = add nuw nsw i64 %indvars.iv128, 1 ; 2 uses
   %i.dg = icmp samesign ult i64 %indvars.iv.next129, %i.cp
-  br i1 %i.dg, label %bb.n, label %._crit_edge122.us, !llvm.loop !322
+  br i1 %i.dg, label %toupper.exit105.us, label %._crit_edge122.us, !llvm.loop !322
 
 ._crit_edge122.us:                                ; preds = %toupper.exit.us, %toupper.exit.us.peel
   %indvars.iv.next135 = add nsw i64 %indvars.iv134, 1
   br label %toupper.exit.us.peel
 
-.split124.us:                                     ; preds = %bb.n, %toupper.exit105.us
+.split124.us:                                     ; preds = %.peel.next, %toupper.exit105.us
   %i.dh = icmp sgt i64 %indvars.iv134, 0
   br i1 %i.dh, label %bb.o, label %bb.r
 

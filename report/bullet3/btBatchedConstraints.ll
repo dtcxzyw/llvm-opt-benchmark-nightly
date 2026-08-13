@@ -204,9 +204,9 @@ bb.bw:                                            ; preds = %.noexc149.i.i, %_ZN
   br label %.body.i.i
 
 .lr.ph.preheader.i217.i:                          ; preds = %._crit_edge.thread.i.i, %_ZN20btAlignedObjectArrayIN20btBatchedConstraints5RangeEE18resizeNoInitializeEi.exit86.i.i
-  %indvars.iv173.i.i = phi i64 [ 0, %_ZN20btAlignedObjectArrayIN20btBatchedConstraints5RangeEE18resizeNoInitializeEi.exit86.i.i ], [ %i.uj, %._crit_edge.thread.i.i ]
-  %indvars.iv.i210.i = phi i32 [ 0, %_ZN20btAlignedObjectArrayIN20btBatchedConstraints5RangeEE18resizeNoInitializeEi.exit86.i.i ], [ %indvars.iv.next.i211.i, %._crit_edge.thread.i.i ] ; 2 uses
-  %.066158.i.i = phi i32 [ 0, %_ZN20btAlignedObjectArrayIN20btBatchedConstraints5RangeEE18resizeNoInitializeEi.exit86.i.i ], [ %i.uq, %._crit_edge.thread.i.i ]
+  %indvars.iv173.i.i = phi i64 [ %i.uj, %._crit_edge.thread.i.i ], [ 0, %_ZN20btAlignedObjectArrayIN20btBatchedConstraints5RangeEE18resizeNoInitializeEi.exit86.i.i ]
+  %indvars.iv.i210.i = phi i32 [ %indvars.iv.next.i211.i, %._crit_edge.thread.i.i ], [ 0, %_ZN20btAlignedObjectArrayIN20btBatchedConstraints5RangeEE18resizeNoInitializeEi.exit86.i.i ] ; 2 uses
+  %.066158.i.i = phi i32 [ %i.uq, %._crit_edge.thread.i.i ], [ 0, %_ZN20btAlignedObjectArrayIN20btBatchedConstraints5RangeEE18resizeNoInitializeEi.exit86.i.i ]
   %i.ui = load i32, ptr %i.rr, align 4, !tbaa !17 ; 2 uses
   %i.uj = add nuw nsw i64 %indvars.iv173.i.i, 1   ; 3 uses
   %i.uk = mul nuw nsw i64 %i.uj, %i.jj
