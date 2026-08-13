@@ -201,7 +201,8 @@ bb.b:                                             ; preds = %bb.a
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.n = load i8, ptr %i.m, align 8, !alias.scope !458, !noalias !459 ; 2 uses
   %i.o = zext nneg i8 %i.n to i64                 ; 4 uses
-  %i.p = icmp ult i8 %i.n, 5
+  %1 = add i8 %i.n, -1
+  %i.p = icmp ult i8 %1, 4
   br i1 %.not.i.i.i.i, label %_RNvMsf_NtNtCs4NRVxsYgnAr_4core3str4iterINtB5_13SplitInternalcE7get_endCs8w9c0syp1Hj_13ruff_notebook.exit.i.i.i, label %.lr.ph.split.i.i.i.i
 
 .lr.ph.split.i.i.i.i:                             ; preds = %.lr.ph.i.i.i.i

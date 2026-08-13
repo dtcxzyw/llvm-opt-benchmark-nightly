@@ -203,7 +203,7 @@ define hidden void @_ZN16OpenColorIO_v2_519GradingRGBCurveImplC2ENS_12GradingSty
   %4 = alloca %"class.std::shared_ptr", align 16  ; 7 uses
   %5 = alloca %"class.std::shared_ptr", align 16  ; 7 uses
   store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN16OpenColorIO_v2_519GradingRGBCurveImplE, i64 16), ptr %0, align 8, !tbaa !13
-  %.ptr6 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 6 uses
+  %.ptr6 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %.ptr6, i8 0, i64 64, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #20
   %i.a = icmp eq i32 %1, 1
@@ -606,7 +606,8 @@ bb.be:                                            ; preds = %bb.bd, %bb.bc, %bb.
   call void @_ZNSt12__shared_ptrIN16OpenColorIO_v2_519GradingBSplineCurveELN9__gnu_cxx12_Lock_policyE2EED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %.ptr11.1) #20
   %.ptr11.2 = getelementptr inbounds nuw i8, ptr %0, i64 24
   call void @_ZNSt12__shared_ptrIN16OpenColorIO_v2_519GradingBSplineCurveELN9__gnu_cxx12_Lock_policyE2EED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %.ptr11.2) #20
-  call void @_ZNSt12__shared_ptrIN16OpenColorIO_v2_519GradingBSplineCurveELN9__gnu_cxx12_Lock_policyE2EED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %.ptr6) #20
+  %.ptr11.3 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  call void @_ZNSt12__shared_ptrIN16OpenColorIO_v2_519GradingBSplineCurveELN9__gnu_cxx12_Lock_policyE2EED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %.ptr11.3) #20
   resume { ptr, i32 } %.pn
 }
 
@@ -620,7 +621,7 @@ bb.a:
   %7 = alloca %"class.std::shared_ptr", align 16  ; 7 uses
   %8 = alloca %"class.std::shared_ptr", align 16  ; 7 uses
   store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN16OpenColorIO_v2_519GradingRGBCurveImplE, i64 16), ptr %0, align 8, !tbaa !13
-  %.ptr13 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  %.ptr13 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %.ptr13, i8 0, i64 64, i1 false)
   %i.a = load ptr, ptr %1, align 8, !tbaa !34     ; 3 uses
   %i.b = load ptr, ptr %2, align 8
@@ -1023,7 +1024,8 @@ bb.bk:                                            ; preds = %bb.bj, %bb.bi, %bb.
   call void @_ZNSt12__shared_ptrIN16OpenColorIO_v2_519GradingBSplineCurveELN9__gnu_cxx12_Lock_policyE2EED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %.ptr18.1) #20
   %.ptr18.2 = getelementptr inbounds nuw i8, ptr %0, i64 24
   call void @_ZNSt12__shared_ptrIN16OpenColorIO_v2_519GradingBSplineCurveELN9__gnu_cxx12_Lock_policyE2EED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %.ptr18.2) #20
-  call void @_ZNSt12__shared_ptrIN16OpenColorIO_v2_519GradingBSplineCurveELN9__gnu_cxx12_Lock_policyE2EED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %.ptr13) #20
+  %.ptr18.3 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  call void @_ZNSt12__shared_ptrIN16OpenColorIO_v2_519GradingBSplineCurveELN9__gnu_cxx12_Lock_policyE2EED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %.ptr18.3) #20
   resume { ptr, i32 } %.pn
 
 bb.bl:                                            ; preds = %bb.c
@@ -1047,7 +1049,7 @@ define hidden void @_ZN16OpenColorIO_v2_519GradingRGBCurveImplC2ERKSt10shared_pt
 bb.a:
   %2 = alloca %"class.std::shared_ptr", align 16  ; 22 uses
   store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN16OpenColorIO_v2_519GradingRGBCurveImplE, i64 16), ptr %0, align 8, !tbaa !13
-  %.ptr13 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  %.ptr13 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %.ptr13, i8 0, i64 64, i1 false)
   %i.a = load ptr, ptr %1, align 8, !tbaa !36     ; 2 uses
   %i.b = icmp eq ptr %i.a, null
@@ -1450,7 +1452,8 @@ bb.bc:                                            ; preds = %_ZNSt12__shared_ptr
   call void @_ZNSt12__shared_ptrIN16OpenColorIO_v2_519GradingBSplineCurveELN9__gnu_cxx12_Lock_policyE2EED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %.ptr17.1) #20
   %.ptr17.2 = getelementptr inbounds nuw i8, ptr %0, i64 24
   call void @_ZNSt12__shared_ptrIN16OpenColorIO_v2_519GradingBSplineCurveELN9__gnu_cxx12_Lock_policyE2EED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %.ptr17.2) #20
-  call void @_ZNSt12__shared_ptrIN16OpenColorIO_v2_519GradingBSplineCurveELN9__gnu_cxx12_Lock_policyE2EED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %.ptr13) #20
+  %.ptr17.3 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  call void @_ZNSt12__shared_ptrIN16OpenColorIO_v2_519GradingBSplineCurveELN9__gnu_cxx12_Lock_policyE2EED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %.ptr17.3) #20
   resume { ptr, i32 } %i.fd
 
 .thread:                                          ; preds = %_ZNSt12__shared_ptrIN16OpenColorIO_v2_519GradingBSplineCurveELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.3, %bb.a, %bb.b

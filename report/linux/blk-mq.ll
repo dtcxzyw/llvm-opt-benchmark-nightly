@@ -203,8 +203,8 @@ bb.j:                                             ; preds = %bb.i, %blk_mq_get_h
   %i.ay = load i32, ptr getelementptr inbounds nuw (i8, ptr @boot_cpu_data, i64 320), align 8
   %i.az = add i32 %i.ay, -1
   %i.ba = sext i32 %i.az to i64
-  %i.bb = or i64 %i.ax, %i.ba
-  %i.bc = add nsw i64 %i.bb, 1                    ; 6 uses
+  %i.bb = or i64 %i.ax, %i.ba                     ; 2 uses
+  %i.bc = add nsw i64 %i.bb, 1                    ; 5 uses
   %.not117.i = icmp eq i32 %2, 0
   br i1 %.not117.i, label %blk_mq_alloc_rq_map.exit.thread, label %.preheader.lr.ph.i
 
@@ -339,7 +339,8 @@ bb.q:                                             ; preds = %bb.p
 bb.r:                                             ; preds = %bb.p, %.lr.ph.i
   %i.db = getelementptr i8, ptr %.075112.i, i64 128
   store volatile i32 0, ptr %i.db, align 8
-  %i.dc = getelementptr i8, ptr %.075112.i, i64 %i.bc
+  %3 = getelementptr i8, ptr %.075112.i, i64 %i.bb
+  %i.dc = getelementptr i8, ptr %3, i64 1
   %i.dd = add i32 %.169114.i, 1                   ; 2 uses
   %i.de = add nuw i32 %.070113.i, 1               ; 2 uses
   %i.df = icmp ult i32 %i.de, %i.ch

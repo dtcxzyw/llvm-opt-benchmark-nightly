@@ -11,13 +11,15 @@ bb.a:
   br i1 %i.a, label %bb.e, label %.preheader
 
 .preheader:                                       ; preds = %bb.a
-  %i.b = add i64 %2, -1                           ; 4 uses
+  %i.b = add i64 %2, -1                           ; 2 uses
   %i.c = icmp sgt i64 %i.b, 0
   br i1 %i.c, label %.lr.ph.preheader, label %.critedge
 
 .lr.ph.preheader:                                 ; preds = %.preheader
-  %scevgep.a = getelementptr i8, ptr %0, i64 %i.b
-  %scevgep32 = getelementptr i8, ptr %1, i64 %i.b
+  %3 = getelementptr i8, ptr %0, i64 %2
+  %scevgep = getelementptr i8, ptr %3, i64 -1
+  %scevgep.a = getelementptr i8, ptr %1, i64 %2
+  %scevgep32 = getelementptr i8, ptr %scevgep.a, i64 -1
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.d
@@ -51,7 +53,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.q, label %.lr.ph, label %.critedge, !llvm.loop !12
 
 .critedge:                                        ; preds = %bb.c, %bb.d, %.lr.ph, %bb.b, %.preheader
-  %.012.lcssa = phi ptr [ %0, %.preheader ], [ %.01220, %bb.b ], [ %.01220, %.lr.ph ], [ %scevgep.a, %bb.d ], [ %.01220, %bb.c ]
+  %.012.lcssa = phi ptr [ %0, %.preheader ], [ %.01220, %bb.b ], [ %.01220, %.lr.ph ], [ %scevgep, %bb.d ], [ %.01220, %bb.c ]
   %.0.lcssa = phi ptr [ %1, %.preheader ], [ %.021, %bb.b ], [ %.021, %.lr.ph ], [ %scevgep32, %bb.d ], [ %.021, %bb.c ]
   %i.r = load i8, ptr %.012.lcssa, align 1, !tbaa !11
   %i.s = zext i8 %i.r to i64

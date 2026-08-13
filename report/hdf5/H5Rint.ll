@@ -201,10 +201,11 @@ bb.k:                                             ; preds = %bb.h
   %i.am = zext nneg i8 %i.ac to i64
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %2, ptr nonnull readonly align 1 %i.al, i64 %i.am, i1 false)
   %i.an = load i8, ptr %i.x, align 1, !tbaa !13
-  %i.ao = zext i8 %i.an to i64                    ; 2 uses
-  %3 = add nuw nsw i64 %i.ao, 1                   ; 2 uses
-  %i.ap = getelementptr inbounds nuw i8, ptr %i.u, i64 %3 ; 4 uses
-  %4 = sub i64 %i.w, %3                           ; 4 uses
+  %i.ao = zext i8 %i.an to i64                    ; 3 uses
+  %.neg = xor i64 %i.ao, -1
+  %3 = getelementptr inbounds nuw i8, ptr %i.u, i64 %i.ao ; 2 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %3, i64 1 ; 3 uses
+  %4 = add i64 %i.w, %.neg                        ; 4 uses
   %i.aq = add nuw nsw i64 %i.ao, 3                ; 2 uses
   %.not = trunc i8 %i.v to i1                     ; 5 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
@@ -244,7 +245,7 @@ bb.p:                                             ; preds = %bb.o
   br label %bb.r
 
 bb.q:                                             ; preds = %bb.o
-  %i.bk = getelementptr inbounds nuw i8, ptr %i.ap, i64 2
+  %i.bk = getelementptr inbounds nuw i8, ptr %3, i64 3
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bf, ptr nonnull readonly align 1 %i.bk, i64 %i.bd, i1 false)
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bf, i64 %i.bd
   store i8 0, ptr %i.bl, align 1, !tbaa !13

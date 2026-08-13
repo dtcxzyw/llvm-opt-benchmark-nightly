@@ -61,7 +61,7 @@ bb.b:                                             ; preds = %bb.a
   br label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.c, %.lr.ph.i.i.i.preheader.i
-  %.sroa.02.07.i.i.i.i = phi i64 [ %i.r, %bb.c ], [ 0, %.lr.ph.i.i.i.preheader.i ] ; 3 uses
+  %.sroa.02.07.i.i.i.i = phi i64 [ %i.r, %bb.c ], [ 0, %.lr.ph.i.i.i.preheader.i ] ; 4 uses
   %i.p = phi ptr [ %i.q, %bb.c ], [ %i.n, %.lr.ph.i.i.i.preheader.i ] ; 2 uses
   %.val.i.i.i.i = load i8, ptr %i.p, align 1, !alias.scope !6, !noalias !10, !noundef !5
   %.not.not.not.i.not.not.not.not.not = icmp ne i8 %.val.i.i.i.i, 47 ; 4 uses
@@ -74,13 +74,14 @@ bb.c:                                             ; preds = %.lr.ph.i.i.i.i
   br i1 %i.s, label %.loopexit.i.i.i, label %.lr.ph.i.i.i.i
 
 bb.d:                                             ; preds = %.lr.ph.i.i.i.i
-  %i.t = add nuw i64 %.sroa.02.07.i.i.i.i, 1      ; 2 uses
-  %1 = sub nuw i64 %i.o, %i.t
-  %i.u = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.t
+  %.neg.i.i.i = xor i64 %.sroa.02.07.i.i.i.i, -1
+  %i.t = add i64 %i.o, %.neg.i.i.i
+  %1 = getelementptr i8, ptr %i.n, i64 %.sroa.02.07.i.i.i.i
+  %i.u = getelementptr i8, ptr %1, i64 1
   br label %.loopexit.i.i.i
 
 .loopexit.i.i.i:                                  ; preds = %bb.c, %bb.d
-  %i.v = phi i64 [ %1, %bb.d ], [ %i.o, %bb.c ]   ; 4 uses
+  %i.v = phi i64 [ %i.t, %bb.d ], [ %i.o, %bb.c ] ; 4 uses
   %i.w = phi ptr [ %i.u, %bb.d ], [ %i.n, %bb.c ] ; 2 uses
   %.sroa.5.1.i.ph.i.i = phi i64 [ %.sroa.02.07.i.i.i.i, %bb.d ], [ %i.o, %bb.c ]
   switch i64 %.sroa.5.1.i.ph.i.i, label %.backedge.i.i [

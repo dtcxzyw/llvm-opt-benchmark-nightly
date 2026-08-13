@@ -203,7 +203,7 @@ _RINvNtNtNtCs3RYoXg2VPb3_6memchr4arch7generic6memchr21search_slice_with_rawNCNvN
   %i.f = extractvalue { i64, ptr } %i.c, 1
   %i.g = ptrtoint ptr %i.f to i64
   %i.h = ptrtoint ptr %2 to i64
-  %i.i = sub i64 %i.g, %i.h                       ; 3 uses
+  %i.i = sub i64 %i.g, %i.h                       ; 4 uses
   %.not.i = icmp ult i64 %i.i, %3
   tail call void @llvm.assume(i1 %.not.i)
   %.sroa.03.010 = add nuw nsw i64 %i.i, 1         ; 3 uses
@@ -216,7 +216,7 @@ _RINvNtNtNtCs3RYoXg2VPb3_6memchr4arch7generic6memchr21search_slice_with_rawNCNvN
   ret void
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph, %_RINvNtNtNtCs3RYoXg2VPb3_6memchr4arch7generic6memchr21search_slice_with_rawNCNvNtB8_6memchr7memchr20ECscQbPaDjPaLt_6uu_cut.exit
-  %.sroa.03.0.lcssa = phi i64 [ %.sroa.03.010, %_RINvNtNtNtCs3RYoXg2VPb3_6memchr4arch7generic6memchr21search_slice_with_rawNCNvNtB8_6memchr7memchr20ECscQbPaDjPaLt_6uu_cut.exit ], [ %.sroa.03.011, %.lr.ph ], [ %3, %bb.b ]
+  %.sroa.03.0.lcssa = phi i64 [ %.sroa.03.010, %_RINvNtNtNtCs3RYoXg2VPb3_6memchr4arch7generic6memchr21search_slice_with_rawNCNvNtB8_6memchr7memchr20ECscQbPaDjPaLt_6uu_cut.exit ], [ %.sroa.03.012, %.lr.ph ], [ %3, %bb.b ]
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %i.i, ptr %i.k, align 8
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -224,8 +224,10 @@ _RINvNtNtNtCs3RYoXg2VPb3_6memchr4arch7generic6memchr21search_slice_with_rawNCNvN
   br label %_RINvNtNtNtCs3RYoXg2VPb3_6memchr4arch7generic6memchr21search_slice_with_rawNCNvNtB8_6memchr7memchr20ECscQbPaDjPaLt_6uu_cut.exit.thread
 
 .lr.ph:                                           ; preds = %_RINvNtNtNtCs3RYoXg2VPb3_6memchr4arch7generic6memchr21search_slice_with_rawNCNvNtB8_6memchr7memchr20ECscQbPaDjPaLt_6uu_cut.exit, %bb.b
-  %.sroa.03.011 = phi i64 [ %.sroa.03.0, %bb.b ], [ %.sroa.03.010, %_RINvNtNtNtCs3RYoXg2VPb3_6memchr4arch7generic6memchr21search_slice_with_rawNCNvNtB8_6memchr7memchr20ECscQbPaDjPaLt_6uu_cut.exit ] ; 3 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %2, i64 %.sroa.03.011
+  %.sroa.03.012 = phi i64 [ %.sroa.03.0, %bb.b ], [ %.sroa.03.010, %_RINvNtNtNtCs3RYoXg2VPb3_6memchr4arch7generic6memchr21search_slice_with_rawNCNvNtB8_6memchr7memchr20ECscQbPaDjPaLt_6uu_cut.exit ] ; 3 uses
+  %.sroa.03.011 = phi i64 [ %.sroa.03.012, %bb.b ], [ %i.i, %_RINvNtNtNtCs3RYoXg2VPb3_6memchr4arch7generic6memchr21search_slice_with_rawNCNvNtB8_6memchr7memchr20ECscQbPaDjPaLt_6uu_cut.exit ]
+  %4 = getelementptr i8, ptr %2, i64 %.sroa.03.011
+  %i.m = getelementptr i8, ptr %4, i64 1
   %i.n = load i8, ptr %i.m, align 1, !noundef !15
   switch i8 %i.n, label %._crit_edge [
     i8 32, label %bb.b
@@ -233,7 +235,7 @@ _RINvNtNtNtCs3RYoXg2VPb3_6memchr4arch7generic6memchr21search_slice_with_rawNCNvN
   ]
 
 bb.b:                                             ; preds = %.lr.ph, %.lr.ph
-  %.sroa.03.0 = add nuw nsw i64 %.sroa.03.011, 1  ; 2 uses
+  %.sroa.03.0 = add nuw nsw i64 %.sroa.03.012, 1  ; 2 uses
   %exitcond.not = icmp eq i64 %.sroa.03.0, %3
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph
 }
@@ -364,8 +366,8 @@ _RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCscQbPaDjPaLt_6uu_cut.exit._crit_
   tail call void @llvm.assume(i1 %i.x)
   %.not.i = icmp samesign ult i64 %i.w, %i.s
   tail call void @llvm.assume(i1 %.not.i)
-  %i.y = add nuw i64 %i.w, %.sroa.03.0294763      ; 3 uses
-  %i.z = add nuw i64 %i.y, 1                      ; 5 uses
+  %i.y = add nuw i64 %i.w, %.sroa.03.0294763      ; 5 uses
+  %i.z = add nuw i64 %i.y, 1                      ; 3 uses
   %.not56 = icmp ult i64 %i.y, %3
   br i1 %.not56, label %bb.b, label %.split41.us, !prof !26
 
@@ -393,14 +395,16 @@ bb.b:                                             ; preds = %.lr.ph64
   br i1 %.not.i13, label %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCscQbPaDjPaLt_6uu_cut.exit.backedge, label %.split
 
 .split:                                           ; preds = %bb.b
-  %i.ae = getelementptr inbounds nuw i8, ptr %2, i64 %i.z
+  %4 = getelementptr i8, ptr %2, i64 %i.y
+  %i.ae = getelementptr i8, ptr %4, i64 1
   %bcmp.i.i = tail call i32 @bcmp(ptr noundef nonnull readonly dereferenceable(1) %i.g, ptr noundef nonnull readonly dereferenceable(1) %i.ae, i64 range(i64 1, -9223372036854775808) %i.f), !alias.scope !612
   %i.af = icmp eq i32 %bcmp.i.i, 0
   br i1 %i.af, label %.split33, label %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCscQbPaDjPaLt_6uu_cut.exit.backedge
 
 _RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCscQbPaDjPaLt_6uu_cut.exit.backedge: ; preds = %.split, %bb.b
   %i.ag = load i8, ptr %i.c, align 1, !noundef !15
-  %i.ah = getelementptr inbounds nuw i8, ptr %2, i64 %i.z ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %2, i64 %i.y
+  %i.ah = getelementptr inbounds nuw i8, ptr %5, i64 1 ; 2 uses
   %i.ai = load atomic ptr, ptr @_RNvNvNtNtNtCs3RYoXg2VPb3_6memchr4arch6x86_646memchr10memchr_raw2FN monotonic, align 8, !noalias !609, !nonnull !15, !noundef !15
   %i.aj = tail call { i64, ptr } %i.ai(i8 noundef %i.ag, ptr noundef nonnull readonly %i.ah, ptr noundef nonnull readonly %i.d) #20, !noalias !609, !inline_history !616 ; 2 uses
   %i.ak = extractvalue { i64, ptr } %i.aj, 0

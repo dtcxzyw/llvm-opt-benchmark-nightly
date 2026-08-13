@@ -204,9 +204,10 @@ rb_str_cat.exit:                                  ; preds = %rb_str_buf_new.exit
   br i1 %i.dl, label %.loopexit, label %.preheader
 
 .preheader:                                       ; preds = %rb_str_cat.exit, %bb.ah
-  %.1229452.in = phi i64 [ %.1229452, %bb.ah ], [ %spec.select297, %rb_str_cat.exit ] ; 2 uses
-  %.1229452 = add nsw i64 %.1229452.in, -1        ; 3 uses
-  %i.dm = getelementptr i8, ptr %.1260562.lcssa582, i64 %.1229452
+  %.1229452.in = phi i64 [ %.1229452, %bb.ah ], [ %spec.select297, %rb_str_cat.exit ] ; 3 uses
+  %.1229452 = add nsw i64 %.1229452.in, -1        ; 2 uses
+  %4 = getelementptr i8, ptr %.1260562.lcssa582, i64 %.1229452.in
+  %i.dm = getelementptr i8, ptr %4, i64 -1
   %i.dn = tail call i32 @rb_enc_precise_mbclen(ptr noundef %.1260562.lcssa582, ptr noundef %i.dm, ptr noundef %0) #28 ; 2 uses
   %i.do = icmp slt i32 %i.dn, -1
   br i1 %i.do, label %.loopexit, label %bb.ah
@@ -609,8 +610,8 @@ bb.e:                                             ; preds = %.lr.ph, %bb.g
   %i.w = ptrtoint ptr %i.v to i64
   %i.x = sub i64 %i.t, %i.w
   %i.y = add i64 %.04661, 1                       ; 2 uses
-  %i.z = mul i64 %i.x, %i.y                       ; 2 uses
-  %i.aa = add i64 %i.z, 20                        ; 2 uses
+  %i.z = mul i64 %i.x, %i.y                       ; 3 uses
+  %i.aa = add i64 %i.z, 20
   %i.ab = add i64 %i.z, 44
   %i.ac = call noalias nonnull ptr @ruby_xmalloc(i64 noundef %i.ab) #38 ; 6 uses
   store ptr %i.ac, ptr %.04760, align 8, !tbaa !238
@@ -618,9 +619,10 @@ bb.e:                                             ; preds = %.lr.ph, %bb.g
   store ptr null, ptr %i.ad, align 8, !tbaa !238
   store i64 %i.aa, ptr %i.ac, align 8, !tbaa !27
   %i.ae = load ptr, ptr %i.u, align 8, !tbaa !240
-  %i.af = getelementptr i8, ptr %i.ac, i64 24     ; 2 uses
-  %i.ag = getelementptr i8, ptr %i.af, i64 %i.aa
-  %i.ah = call i32 %i.ae(ptr noundef nonnull %1, ptr noundef nonnull %i.a, ptr noundef nonnull %i.o, ptr noundef %i.af, ptr noundef %i.ag, ptr noundef %2) #28 ; 3 uses
+  %3 = getelementptr i8, ptr %i.ac, i64 24        ; 2 uses
+  %i.af = getelementptr i8, ptr %3, i64 %i.z
+  %i.ag = getelementptr i8, ptr %i.af, i64 20
+  %i.ah = call i32 %i.ae(ptr noundef nonnull %1, ptr noundef nonnull %i.a, ptr noundef nonnull %i.o, ptr noundef %3, ptr noundef %i.ag, ptr noundef %2) #28 ; 3 uses
   %i.ai = icmp slt i32 %i.ah, 0
   br i1 %i.ai, label %bb.f, label %bb.g
 

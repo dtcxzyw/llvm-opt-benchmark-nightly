@@ -52,7 +52,7 @@ _RINvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits
 
 .lr.ph:                                           ; preds = %_RINvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNvCsjoDrDr40csK_10uu_dirname27dirname_string_manipulation0EB1F_.exit.preheader, %_RINvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNvCsjoDrDr40csK_10uu_dirname27dirname_string_manipulation0EB1F_.exit
   %.sroa.21.099 = phi i64 [ %i.ak, %_RINvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNvCsjoDrDr40csK_10uu_dirname27dirname_string_manipulation0EB1F_.exit ], [ %1, %_RINvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNvCsjoDrDr40csK_10uu_dirname27dirname_string_manipulation0EB1F_.exit.preheader ] ; 5 uses
-  %i.h = getelementptr i8, ptr %0, i64 %.sroa.21.099 ; 3 uses
+  %i.h = getelementptr i8, ptr %0, i64 %.sroa.21.099 ; 4 uses
   %i.i = getelementptr i8, ptr %i.h, i64 -1
   %.val3.i = load i8, ptr %i.i, align 1, !alias.scope !8
   switch i8 %.val3.i, label %.loopexit [
@@ -84,24 +84,25 @@ bb.d:                                             ; preds = %.lr.ph145
   br i1 %i.s, label %bb.f, label %bb.d
 
 bb.e:                                             ; preds = %.lr.ph
-  %2 = add nsw i64 %.sroa.21.099, -2              ; 3 uses
-  %i.t = getelementptr inbounds nuw i8, ptr %0, i64 %2
+  %i.t = getelementptr i8, ptr %i.h, i64 -2
   %i.u = load i8, ptr %i.t, align 1, !noundef !7
   %i.v = icmp eq i8 %i.u, 47
   br i1 %i.v, label %.preheader.split.preheader, label %.loopexit
 
 .preheader.split.preheader:                       ; preds = %bb.e
+  %2 = add nsw i64 %.sroa.21.099, -2              ; 2 uses
   %cond140 = icmp eq i64 %2, 0
   br i1 %cond140, label %.preheader.split._crit_edge, label %.lr.ph142
 
 .preheader.split:                                 ; preds = %.lr.ph142
+  %3 = add nsw i64 %.sroa.051.0141, -1            ; 2 uses
   %cond = icmp eq i64 %3, 0
   br i1 %cond, label %.preheader.split._crit_edge, label %.lr.ph142
 
 .lr.ph142:                                        ; preds = %.preheader.split.preheader, %.preheader.split
-  %.sroa.051.0141 = phi i64 [ %3, %.preheader.split ], [ %2, %.preheader.split.preheader ] ; 2 uses
-  %3 = add nsw i64 %.sroa.051.0141, -1            ; 3 uses
-  %i.w = getelementptr inbounds nuw i8, ptr %0, i64 %3
+  %.sroa.051.0141 = phi i64 [ %3, %.preheader.split ], [ %2, %.preheader.split.preheader ] ; 3 uses
+  %4 = getelementptr i8, ptr %0, i64 %.sroa.051.0141
+  %i.w = getelementptr i8, ptr %4, i64 -1
   %i.x = load i8, ptr %i.w, align 1, !noundef !7
   %i.y = icmp eq i8 %i.x, 47
   br i1 %i.y, label %.preheader.split, label %_RINvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCNvCsjoDrDr40csK_10uu_dirname27dirname_string_manipulation0EB1F_.exit.thread

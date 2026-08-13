@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d
   br label %normalizestring.exit
 
 .lr.ph.i:                                         ; preds = %bb.h, %.lr.ph.i.preheader.new
-  %.02024.i = phi i64 [ 0, %.lr.ph.i.preheader.new ], [ %i.ac, %bb.h ] ; 4 uses
+  %.02024.i = phi i64 [ 0, %.lr.ph.i.preheader.new ], [ %i.ac, %bb.h ] ; 5 uses
   %niter = phi i64 [ 0, %.lr.ph.i.preheader.new ], [ %niter.next.1, %bb.h ]
   %i.o = getelementptr i8, ptr %0, i64 %.02024.i
   %i.p = load i8, ptr %i.o, align 1, !tbaa !110   ; 2 uses
@@ -221,8 +221,8 @@ bb.f:                                             ; preds = %.lr.ph.i
   %.0.i = phi i8 [ %i.t, %bb.f ], [ 45, %.lr.ph.i ]
   %i.u = getelementptr i8, ptr %i.k, i64 %.02024.i
   store i8 %.0.i, ptr %i.u, align 1, !tbaa !110
-  %1 = or disjoint i64 %.02024.i, 1               ; 2 uses
-  %i.v = getelementptr i8, ptr %0, i64 %1
+  %1 = getelementptr i8, ptr %0, i64 %.02024.i
+  %i.v = getelementptr i8, ptr %1, i64 1
   %i.w = load i8, ptr %i.v, align 1, !tbaa !110   ; 2 uses
   %i.x = icmp eq i8 %i.w, 32
   br i1 %i.x, label %bb.h, label %bb.g
@@ -235,7 +235,8 @@ bb.g:                                             ; preds = %.lr.ph.i.1
 
 bb.h:                                             ; preds = %bb.g, %.lr.ph.i.1
   %.0.i.1 = phi i8 [ %i.aa, %bb.g ], [ 45, %.lr.ph.i.1 ]
-  %i.ab = getelementptr i8, ptr %i.k, i64 %1
+  %2 = getelementptr i8, ptr %i.k, i64 %.02024.i
+  %i.ab = getelementptr i8, ptr %2, i64 1
   store i8 %.0.i.1, ptr %i.ab, align 1, !tbaa !110
   %i.ac = add nuw nsw i64 %.02024.i, 2            ; 2 uses
   %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses

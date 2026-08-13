@@ -203,7 +203,7 @@ _ZN5cppgc8internal12_GLOBAL__N_115CompactionState7AddPageEPNS0_10NormalPageE.exi
   %.sroa.40.3.i = phi ptr [ %.sroa.40.4.i, %bb.cj ], [ %.sroa.40.2.i, %_ZN5cppgc8internal12_GLOBAL__N_115CompactionState7AddPageEPNS0_10NormalPageE.exit.i.i ] ; 4 uses
   %.sroa.25.1.i = phi i64 [ %.sroa.25.2.i, %bb.cj ], [ %.sroa.25.066.i, %_ZN5cppgc8internal12_GLOBAL__N_115CompactionState7AddPageEPNS0_10NormalPageE.exit.i.i ] ; 7 uses
   %.sroa.9.2.i = phi ptr [ %.sroa.9.3.i, %bb.cj ], [ %.sroa.9.1.i, %_ZN5cppgc8internal12_GLOBAL__N_115CompactionState7AddPageEPNS0_10NormalPageE.exit.i.i ] ; 8 uses
-  %.031.i.i = phi ptr [ %.1.i.i, %bb.cj ], [ %i.ky, %_ZN5cppgc8internal12_GLOBAL__N_115CompactionState7AddPageEPNS0_10NormalPageE.exit.i.i ] ; 10 uses
+  %.031.i.i = phi ptr [ %.1.i.i, %bb.cj ], [ %i.ky, %_ZN5cppgc8internal12_GLOBAL__N_115CompactionState7AddPageEPNS0_10NormalPageE.exit.i.i ] ; 9 uses
   %i.lb = getelementptr inbounds nuw i8, ptr %.031.i.i, i64 6 ; 2 uses
   %i.lc = load i16, ptr %i.lb, align 2            ; 3 uses
   %i.ld = lshr i16 %i.lc, 1
@@ -285,7 +285,7 @@ bb.br:                                            ; preds = %bb.bp
   br label %bb.bs
 
 bb.bs:                                            ; preds = %bb.br, %bb.bq
-  %i.mj = getelementptr inbounds nuw i8, ptr %.031.i.i, i64 8 ; 7 uses
+  %i.mj = getelementptr inbounds nuw i8, ptr %.031.i.i, i64 8 ; 8 uses
   %i.mk = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 8 ; 4 uses
   %i.ml = load i8, ptr %i.al, align 8, !range !5, !noundef !6
   %i.mm = trunc nuw i8 %i.ml to i1
@@ -331,7 +331,8 @@ _ZNSt3mapIPPKvPhSt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i.i.i.i
 
 bb.bw:                                            ; preds = %_ZNSt3mapIPPKvPhSt4lessIS2_ESaISt4pairIKS2_S3_EEE11lower_boundERS7_.exit.i.i.i.i.i
   %i.nb = ptrtoint ptr %i.mj to i64               ; 2 uses
-  %i.nc = getelementptr i8, ptr %.031.i.i, i64 %i.mu
+  %4 = getelementptr i8, ptr %i.mj, i64 %i.mu
+  %i.nc = getelementptr i8, ptr %4, i64 -8
   br label %bb.bx
 
 bb.bx:                                            ; preds = %bb.cb, %bb.bw

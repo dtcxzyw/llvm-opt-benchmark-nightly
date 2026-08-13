@@ -45,7 +45,7 @@ bb.a:
   %i.f = load i16, ptr %i.e, align 2
   %i.g = and i16 %i.f, 128
   %.not = icmp eq i16 %i.g, 0
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 5 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 6 uses
   br i1 %.not, label %bb.h, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -53,7 +53,8 @@ bb.b:                                             ; preds = %bb.a
   %i.j = load i16, ptr %i.i, align 4
   %i.k = zext i16 %i.j to i64                     ; 2 uses
   %i.l = add nsw i64 %i.k, -32
-  %i.m = getelementptr i8, ptr %0, i64 %i.k       ; 3 uses
+  %3 = getelementptr i8, ptr %i.h, i64 %i.k
+  %i.m = getelementptr i8, ptr %3, i64 -32        ; 3 uses
   %.not33 = icmp eq i48 %.sroa.3.0.extract.shift, 0
   br i1 %.not33, label %bb.e, label %bb.c
 

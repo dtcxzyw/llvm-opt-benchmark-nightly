@@ -201,7 +201,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %.not149, label %.critedge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.e, %bb.g
-  %.088131 = phi i64 [ %i.f, %bb.g ], [ 0, %bb.e ] ; 12 uses
+  %.088131 = phi i64 [ %i.f, %bb.g ], [ 0, %bb.e ] ; 13 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 %.088131
   %i.d = load i8, ptr %i.c, align 1, !tbaa !36
   %.fr150 = freeze i8 %i.d                        ; 3 uses
@@ -238,11 +238,12 @@ bb.g:                                             ; preds = %switch.early.test, 
   br i1 %exitcond.not, label %.critedge.thread, label %.lr.ph, !llvm.loop !37
 
 bb.h:                                             ; preds = %switch.early.test
-  %i.g = add nuw i64 %.088131, 1                  ; 3 uses
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 %.088131 ; 2 uses
+  %i.g = add nuw i64 %.088131, 1                  ; 2 uses
   br i1 %2, label %sub_0, label %bb.i
 
 sub_0:                                            ; preds = %bb.h
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 %i.g ; 2 uses
+  %i.h = getelementptr i8, ptr %5, i64 1
   %i.i = load i8, ptr %i.h, align 1               ; 2 uses
   %i.j = zext i8 %i.i to i32
   %i.k = sub nsw i32 50, %i.j
@@ -250,7 +251,7 @@ sub_0:                                            ; preds = %bb.h
   br i1 %.not151, label %sub_1, label %.tail
 
 sub_1:                                            ; preds = %sub_0
-  %i.l = getelementptr inbounds nuw i8, ptr %i.h, i64 1
+  %i.l = getelementptr i8, ptr %5, i64 2
   %i.m = load i8, ptr %i.l, align 1
   %i.n = zext i8 %i.m to i32
   %i.o = sub nsw i32 53, %i.n

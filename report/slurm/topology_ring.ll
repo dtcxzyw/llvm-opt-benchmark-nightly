@@ -201,7 +201,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %or.cond.i, label %.lr.ph.i, label %_get_segment_start.exit
 
 .lr.ph.i:                                         ; preds = %bb.f, %bb.g
-  %indvars.iv.i = phi i64 [ %indvars.iv.next42.i100, %bb.g ], [ 1, %bb.f ] ; 2 uses
+  %indvars.iv.i = phi i64 [ %indvars.iv.next42.i100, %bb.g ], [ 1, %bb.f ] ; 3 uses
   %i.ad = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %indvars.iv.i
   %i.ae = load i32, ptr %i.ad, align 4
   %i.af = zext i32 %i.ae to i64
@@ -221,8 +221,10 @@ bb.f:                                             ; preds = %bb.e
 
 .lr.ph102:                                        ; preds = %.preheader.i.preheader, %.preheader.i
   %indvars.iv.next42.i101 = phi i64 [ %indvars.iv.next42.i, %.preheader.i ], [ %indvars.iv.next42.i100, %.preheader.i.preheader ] ; 3 uses
-  %i.aj = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %indvars.iv.next42.i101
-  %i.ak = load i32, ptr %i.aj, align 4
+  %indvars.iv41.i101 = phi i64 [ %indvars.iv.next42.i101, %.preheader.i ], [ %indvars.iv.i, %.preheader.i.preheader ]
+  %i.aj = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %indvars.iv41.i101
+  %4 = getelementptr inbounds nuw i8, ptr %i.aj, i64 4
+  %i.ak = load i32, ptr %4, align 4
   %i.al = zext i32 %i.ak to i64
   %i.am = tail call i32 @slurm_bit_test(ptr noundef nonnull %0, i64 noundef %i.al) #8
   %.not30.i = icmp eq i32 %i.am, 0

@@ -201,7 +201,7 @@ bb.d:                                             ; preds = %_RINvNtCsbvkFyIu7lg
   br i1 %.not.i.i, label %_RINvMNtCsbvkFyIu7lgC_4core6optionINtB3_6OptionRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtBO_6string6StringEE6map_orbNvMs_BM_BJ_8is_emptyECsgO8S5jLFugx_23deltalake_catalog_unity.exit.thread.i.i, label %_RINvMNtCsbvkFyIu7lgC_4core6optionINtB3_6OptionRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtBO_6string6StringEE6map_orbNvMs_BM_BJ_8is_emptyECsgO8S5jLFugx_23deltalake_catalog_unity.exit.i.i
 
 _RINvMNtCsbvkFyIu7lgC_4core6optionINtB3_6OptionRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtBO_6string6StringEE6map_orbNvMs_BM_BJ_8is_emptyECsgO8S5jLFugx_23deltalake_catalog_unity.exit.i.i: ; preds = %bb.d
-  %.val.i.i.i = load i64, ptr %i.h, align 8, !alias.scope !1001, !noalias !999, !noundef !3 ; 3 uses
+  %.val.i.i.i = load i64, ptr %i.h, align 8, !alias.scope !1001, !noalias !999, !noundef !3 ; 4 uses
   %i.o = icmp ult i64 %.val.i.i.i, 384307168202282326
   call void @llvm.assume(i1 %i.o)
   %i.p = icmp eq i64 %.val.i.i.i, 0
@@ -267,18 +267,19 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCs6Po7BT
   br label %bb.d
 
 bb.j:                                             ; preds = %_RINvMNtCsbvkFyIu7lgC_4core6optionINtB3_6OptionRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtBO_6string6StringEE6map_orbNvMs_BM_BJ_8is_emptyECsgO8S5jLFugx_23deltalake_catalog_unity.exit.i.i
-  %i.ad = add nsw i64 %.val.i.i.i, -1             ; 3 uses
+  %i.ad = add nsw i64 %.val.i.i.i, -1             ; 2 uses
   store i64 %i.ad, ptr %i.h, align 8, !alias.scope !992, !noalias !999
   %i.ae = icmp samesign ult i64 %i.ad, %i.n
   call void @llvm.assume(i1 %i.ae)
   %i.af = load ptr, ptr %i.m, align 8, !alias.scope !992, !noalias !999, !nonnull !3, !noundef !3
-  %i.ag = getelementptr inbounds nuw [24 x i8], ptr %i.af, i64 %i.ad ; 2 uses
-  %.sroa.09.0.copyload.i = load i64, ptr %i.ag, align 8, !noalias !999 ; 2 uses
+  %i.ag = getelementptr [24 x i8], ptr %i.af, i64 %.val.i.i.i ; 2 uses
+  %2 = getelementptr i8, ptr %i.ag, i64 -24
+  %.sroa.09.0.copyload.i = load i64, ptr %2, align 8, !noalias !999 ; 2 uses
   %.not3.i = icmp eq i64 %.sroa.09.0.copyload.i, -9223372036854775808
   br i1 %.not3.i, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCs6Po7BT7Nknu_5alloc6string6StringEECsgO8S5jLFugx_23deltalake_catalog_unity.exit.i, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %.sroa.4.0..sroa_idx.le.i = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
+  %.sroa.4.0..sroa_idx.le.i = getelementptr i8, ptr %i.ag, i64 -16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.8, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4.0..sroa_idx.le.i, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   store i64 %.sroa.09.0.copyload.i, ptr %i.d, align 8

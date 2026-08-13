@@ -203,7 +203,7 @@ bb.a:
   %i.h = phi i64 [ %i.af, %bb.d ], [ 0, %bb.a ]   ; 3 uses
   %i.i = phi ptr [ %i.ag, %bb.d ], [ %1, %bb.a ]  ; 4 uses
   %i.j = phi i64 [ %i.ah, %bb.d ], [ 0, %bb.a ]   ; 4 uses
-  %i.k = phi i64 [ %i.r, %bb.d ], [ 0, %bb.a ]    ; 3 uses
+  %i.k = phi i64 [ %i.r, %bb.d ], [ 0, %bb.a ]    ; 4 uses
   %i.l = phi ptr [ %i.an, %bb.d ], [ %i.d, %bb.a ]
   %.045 = phi ptr [ %i.am, %bb.d ], [ %0, %bb.a ] ; 2 uses
   %.04144 = phi i64 [ %i.p, %bb.d ], [ 1, %bb.a ]
@@ -212,7 +212,7 @@ bb.a:
   %i.o = sext i32 %i.n to i64
   %i.p = mul nsw i64 %.04144, %i.o                ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %.045, i64 24
-  %i.r = add i64 %i.k, 1                          ; 12 uses
+  %i.r = add i64 %i.k, 1                          ; 11 uses
   %.not.i.i.i = icmp eq i64 %i.j, 0
   br i1 %.not.i.i.i, label %bb.c, label %bb.b
 
@@ -260,11 +260,10 @@ bb.d:                                             ; preds = %.noexc28, %bb.c, %_
   %i.ag = phi ptr [ %i.ad, %.noexc28 ], [ %i.i, %bb.c ], [ %i.x, %_ZN5arrow8internal18SmallVectorStorageISt4pairIllELm1EE18reallocate_dynamicEm.exit.i.i.i ], [ %i.i, %bb.b ] ; 2 uses
   %i.ah = phi i64 [ %i.r, %.noexc28 ], [ 0, %bb.c ], [ %.sroa.speculated.i.i.i, %_ZN5arrow8internal18SmallVectorStorageISt4pairIllELm1EE18reallocate_dynamicEm.exit.i.i.i ], [ %i.j, %bb.b ]
   store i64 %i.r, ptr %i.a, align 8, !tbaa !155
-  %i.ai = getelementptr [16 x i8], ptr %i.ag, i64 %i.r ; 2 uses
-  %2 = getelementptr i8, ptr %i.ai, i64 -16
+  %i.ai = getelementptr [16 x i8], ptr %i.ag, i64 %i.k ; 2 uses
   %i.aj = load i64, ptr %i.q, align 8, !tbaa !174
-  store i64 %i.aj, ptr %2, align 8, !tbaa !175
-  %i.ak = getelementptr i8, ptr %i.ai, i64 -8
+  store i64 %i.aj, ptr %i.ai, align 8, !tbaa !175
+  %i.ak = getelementptr inbounds nuw i8, ptr %i.ai, i64 8
   store i64 %i.p, ptr %i.ak, align 8, !tbaa !177
   %i.al = getelementptr inbounds nuw i8, ptr %.045, i64 104
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !34 ; 3 uses

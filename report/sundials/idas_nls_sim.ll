@@ -199,29 +199,32 @@ bb.ah:                                            ; preds = %bb.ag, %bb.z
   br label %bb.ai
 
 bb.ai:                                            ; preds = %.lr.ph, %bb.ai
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.ai ] ; 4 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.ai ] ; 7 uses
   %i.ce = getelementptr inbounds nuw [8 x i8], ptr %i.bz, i64 %indvars.iv
   %i.cf = load ptr, ptr %i.ce, align 8, !tbaa !43
   %i.cg = load ptr, ptr %i.bf, align 8, !tbaa !34
   %i.ch = load ptr, ptr %i.cg, align 8, !tbaa !38
   %i.ci = load ptr, ptr %i.ch, align 8, !tbaa !41
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 5 uses
-  %i.cj = getelementptr inbounds nuw [8 x i8], ptr %i.ci, i64 %indvars.iv.next
-  store ptr %i.cf, ptr %i.cj, align 8, !tbaa !43
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %i.cj = getelementptr inbounds nuw [8 x i8], ptr %i.ci, i64 %indvars.iv
+  %2 = getelementptr inbounds nuw i8, ptr %i.cj, i64 8
+  store ptr %i.cf, ptr %2, align 8, !tbaa !43
   %i.ck = getelementptr inbounds nuw [8 x i8], ptr %i.cb, i64 %indvars.iv
   %i.cl = load ptr, ptr %i.ck, align 8, !tbaa !43
   %i.cm = load ptr, ptr %i.bl, align 8, !tbaa !35
   %i.cn = load ptr, ptr %i.cm, align 8, !tbaa !38
   %i.co = load ptr, ptr %i.cn, align 8, !tbaa !41
-  %i.cp = getelementptr inbounds nuw [8 x i8], ptr %i.co, i64 %indvars.iv.next
-  store ptr %i.cl, ptr %i.cp, align 8, !tbaa !43
+  %i.cp = getelementptr inbounds nuw [8 x i8], ptr %i.co, i64 %indvars.iv
+  %3 = getelementptr inbounds nuw i8, ptr %i.cp, i64 8
+  store ptr %i.cl, ptr %3, align 8, !tbaa !43
   %i.cq = getelementptr inbounds nuw [8 x i8], ptr %i.cd, i64 %indvars.iv
   %i.cr = load ptr, ptr %i.cq, align 8, !tbaa !43
   %i.cs = load ptr, ptr %i.br, align 8, !tbaa !36
   %i.ct = load ptr, ptr %i.cs, align 8, !tbaa !38
   %i.cu = load ptr, ptr %i.ct, align 8, !tbaa !41
-  %i.cv = getelementptr inbounds nuw [8 x i8], ptr %i.cu, i64 %indvars.iv.next
-  store ptr %i.cr, ptr %i.cv, align 8, !tbaa !43
+  %i.cv = getelementptr inbounds nuw [8 x i8], ptr %i.cu, i64 %indvars.iv
+  %4 = getelementptr inbounds nuw i8, ptr %i.cv, i64 8
+  store ptr %i.cr, ptr %4, align 8, !tbaa !43
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %bb.ai
 

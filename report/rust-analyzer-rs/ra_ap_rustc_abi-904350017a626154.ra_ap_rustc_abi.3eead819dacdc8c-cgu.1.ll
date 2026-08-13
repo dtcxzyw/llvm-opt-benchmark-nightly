@@ -203,7 +203,8 @@ bb.b:                                             ; preds = %bb.a
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.n = load i8, ptr %i.m, align 8, !alias.scope !71, !noalias !72, !noundef !9 ; 2 uses
   %i.o = zext nneg i8 %i.n to i64                 ; 4 uses
-  %i.p = icmp ult i8 %i.n, 5
+  %2 = add i8 %i.n, -1
+  %i.p = icmp ult i8 %2, 4
   tail call void @llvm.assume(i1 %i.p)
   %i.q = getelementptr i8, ptr %i.l, i64 %i.o
   %i.r = getelementptr i8, ptr %i.q, i64 -1
@@ -340,7 +341,8 @@ _RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskVLy
   %i.bc = getelementptr inbounds nuw i8, ptr %i.a, i64 56
   %i.bd = load i8, ptr %i.bc, align 8, !alias.scope !100, !noalias !99 ; 2 uses
   %i.be = zext nneg i8 %i.bd to i64               ; 4 uses
-  %i.bf = icmp ult i8 %i.bd, 5
+  %3 = add i8 %i.bd, -1
+  %i.bf = icmp ult i8 %3, 4
   %i.bg = getelementptr i8, ptr %i.bb, i64 %i.be
   %i.bh = getelementptr i8, ptr %i.bg, i64 -1
   %i.bi = getelementptr inbounds nuw i8, ptr %i.a, i64 64

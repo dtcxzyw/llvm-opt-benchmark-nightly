@@ -203,9 +203,9 @@ bb.c:                                             ; preds = %_ZL19complex_horner
   %i.v = shl i32 %i.u, 1
   %i.w = add i32 %i.v, 2                          ; 2 uses
   %i.x = zext i32 %i.w to i64
-  %.idx.i.i = shl nuw nsw i64 %i.x, 3
-  %.add.i = add nsw i64 %.idx.i.i, -16            ; 2 uses
-  %.ptr46.i = getelementptr inbounds i8, ptr %i.t, i64 %.add.i
+  %.idx.i.i = shl nuw nsw i64 %i.x, 3             ; 2 uses
+  %.ptr45.i = getelementptr i8, ptr %i.t, i64 %.idx.i.i
+  %.ptr46.i = getelementptr i8, ptr %.ptr45.i, i64 -16
   %i.y = load <2 x double>, ptr %.ptr46.i, align 8, !tbaa !66 ; 2 uses
   %i.z = icmp ugt i32 %i.w, 4
   br i1 %i.z, label %.lr.ph.i.i.preheader, label %_ZL19complex_horner_evaljPKd5PJ_UVj.exit.i
@@ -218,18 +218,19 @@ bb.c:                                             ; preds = %_ZL19complex_horner
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i.preheader, %.lr.ph.i.i
-  %.027.i.idx.i.a = phi i64 [ %.027.i.add.i, %.lr.ph.i.i ], [ %.add.i, %.lr.ph.i.i.preheader ] ; 2 uses
+  %.027.i.idx.i.a = phi i64 [ %.027.i.add.i, %.lr.ph.i.i ], [ %.idx.i.i, %.lr.ph.i.i.preheader ] ; 3 uses
   %i.ae = phi <2 x double> [ %i.ak, %.lr.ph.i.i ], [ %i.y, %.lr.ph.i.i.preheader ] ; 3 uses
-  %.027.i.add.i = add nsw i64 %.027.i.idx.i.a, -16 ; 2 uses
-  %.ptr.i = getelementptr inbounds i8, ptr %i.t, i64 %.027.i.add.i
+  %.027.i.add.i = add nsw i64 %.027.i.idx.i.a, -16
+  %2 = getelementptr i8, ptr %i.t, i64 %.027.i.idx.i.a
+  %.ptr.i = getelementptr i8, ptr %2, i64 -32
   %i.af = fneg <2 x double> %i.ae
   %i.ag = shufflevector <2 x double> %i.af, <2 x double> %i.ae, <2 x i32> <i32 1, i32 2>
   %i.ah = fmul <2 x double> %i.ab, %i.ag
   %i.ai = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ad, <2 x double> %i.ae, <2 x double> %i.ah)
   %i.aj = load <2 x double>, ptr %.ptr.i, align 8, !tbaa !66
   %i.ak = fadd <2 x double> %i.ai, %i.aj          ; 2 uses
-  %2 = icmp sgt i64 %.027.i.idx.i.a, 32
-  br i1 %2, label %.lr.ph.i.i, label %_ZL19complex_horner_evaljPKd5PJ_UVj.exit.i, !llvm.loop !68
+  %3 = icmp samesign ugt i64 %.027.i.idx.i.a, 48
+  br i1 %3, label %.lr.ph.i.i, label %_ZL19complex_horner_evaljPKd5PJ_UVj.exit.i, !llvm.loop !68
 
 _ZL19complex_horner_evaljPKd5PJ_UVj.exit.i:       ; preds = %.lr.ph.i.i, %bb.c
   %i.al = phi <2 x double> [ %i.y, %bb.c ], [ %i.ak, %.lr.ph.i.i ] ; 2 uses

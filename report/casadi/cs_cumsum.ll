@@ -27,7 +27,7 @@ bb.a:
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
-  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader.new ], [ %indvars.iv.next.1, %.lr.ph ] ; 4 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader.new ], [ %indvars.iv.next.1, %.lr.ph ] ; 5 uses
   %.031 = phi double [ 0.000000e+00, %.lr.ph.preheader.new ], [ %i.o, %.lr.ph ]
   %.02330 = phi i32 [ 0, %.lr.ph.preheader.new ], [ %i.m, %.lr.ph ] ; 3 uses
   %niter = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.1, %.lr.ph ]
@@ -39,15 +39,16 @@ bb.a:
   %i.i = sitofp i32 %i.g to double
   %i.j = fadd double %.031, %i.i
   store i32 %.02330, ptr %i.f, align 4, !tbaa !8
-  %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 2 uses
-  %3 = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv.next
-  store i32 %i.h, ptr %3, align 4, !tbaa !8
-  %i.k = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv.next ; 2 uses
-  %i.l = load i32, ptr %i.k, align 4, !tbaa !8    ; 2 uses
+  %3 = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 4
+  store i32 %i.h, ptr %4, align 4, !tbaa !8
+  %i.k = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv
+  %5 = getelementptr inbounds nuw i8, ptr %i.k, i64 4 ; 2 uses
+  %i.l = load i32, ptr %5, align 4, !tbaa !8      ; 2 uses
   %i.m = add nsw i32 %i.l, %i.h                   ; 3 uses
   %i.n = sitofp i32 %i.l to double
   %i.o = fadd double %i.j, %i.n                   ; 3 uses
-  store i32 %i.h, ptr %i.k, align 4, !tbaa !8
+  store i32 %i.h, ptr %5, align 4, !tbaa !8
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter

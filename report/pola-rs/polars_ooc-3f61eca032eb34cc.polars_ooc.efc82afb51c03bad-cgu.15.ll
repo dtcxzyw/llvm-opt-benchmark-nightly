@@ -204,8 +204,7 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
   ret void, !dbg !8294
 
 scalar.ph:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph
-  %.sroa.0.04 = phi i64 [ %i.m, %scalar.ph ], [ %.sroa.0.04.unr, %scalar.ph.prol.loopexit ] ; 4 uses
-  %3 = add nuw i64 %.sroa.0.04, 1, !dbg !8259     ; 2 uses
+  %.sroa.0.04 = phi i64 [ %i.m, %scalar.ph ], [ %.sroa.0.04.unr, %scalar.ph.prol.loopexit ] ; 5 uses
   %i.k = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.0.04, !dbg !8266 ; 2 uses
   %i.l = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %.sroa.0.04, !dbg !8270 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !8272), !dbg !8275
@@ -215,14 +214,16 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   store i64 %.sroa.02.0.copyload.i, ptr %i.k, align 1, !dbg !8288, !alias.scope !8272, !noalias !8276
   store i64 %.sroa.0.0.copyload.i, ptr %i.l, align 1, !dbg !8290, !alias.scope !8276, !noalias !8272
   %i.m = add nuw i64 %.sroa.0.04, 2, !dbg !8259   ; 2 uses
-  %i.n = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %3, !dbg !8266 ; 2 uses
-  %i.o = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %3, !dbg !8270 ; 2 uses
+  %i.n = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.0.04, !dbg !8266
+  %3 = getelementptr inbounds nuw i8, ptr %i.n, i64 8, !dbg !8266 ; 2 uses
+  %i.o = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %.sroa.0.04, !dbg !8270
+  %4 = getelementptr inbounds nuw i8, ptr %i.o, i64 8, !dbg !8270 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !8295), !dbg !8275
   tail call void @llvm.experimental.noalias.scope.decl(metadata !8297), !dbg !8275
-  %.sroa.0.0.copyload.i.1 = load i64, ptr %i.n, align 1, !dbg !8278, !alias.scope !8295, !noalias !8297
-  %.sroa.02.0.copyload.i.1 = load i64, ptr %i.o, align 1, !dbg !8286, !alias.scope !8297, !noalias !8295
-  store i64 %.sroa.02.0.copyload.i.1, ptr %i.n, align 1, !dbg !8288, !alias.scope !8295, !noalias !8297
-  store i64 %.sroa.0.0.copyload.i.1, ptr %i.o, align 1, !dbg !8290, !alias.scope !8297, !noalias !8295
+  %.sroa.0.0.copyload.i.1 = load i64, ptr %3, align 1, !dbg !8278, !alias.scope !8295, !noalias !8297
+  %.sroa.02.0.copyload.i.1 = load i64, ptr %4, align 1, !dbg !8286, !alias.scope !8297, !noalias !8295
+  store i64 %.sroa.02.0.copyload.i.1, ptr %3, align 1, !dbg !8288, !alias.scope !8295, !noalias !8297
+  store i64 %.sroa.0.0.copyload.i.1, ptr %4, align 1, !dbg !8290, !alias.scope !8297, !noalias !8295
   %exitcond.not.1 = icmp eq i64 %i.m, %2, !dbg !8299
   br i1 %exitcond.not.1, label %.loopexit, label %scalar.ph, !dbg !8247, !llvm.loop !8305
 }

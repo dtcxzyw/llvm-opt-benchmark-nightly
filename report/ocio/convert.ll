@@ -203,12 +203,14 @@ bb.bl:                                            ; preds = %_ZNSt7__cxx1112basi
 
 bb.bm:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit88
   %.029.add = add nuw nsw i64 %.029.idx134, 64    ; 2 uses
+  %13 = getelementptr inbounds nuw i8, ptr @_ZZN4YAML7convertIbE6decodeERKNS_4NodeERbE5names, i64 %.029.idx134
+  %.029.ptr = getelementptr inbounds nuw i8, ptr %13, i64 64
   %.not53 = icmp eq i64 %.029.add, 256
   br i1 %.not53, label %.critedge, label %bb.bn
 
 bb.bn:                                            ; preds = %.preheader, %bb.bm
+  %.029.ptr135 = phi ptr [ @_ZZN4YAML7convertIbE6decodeERKNS_4NodeERbE5names, %.preheader ], [ %.029.ptr, %bb.bm ] ; 6 uses
   %.029.idx134 = phi i64 [ 0, %.preheader ], [ %.029.add, %bb.bm ] ; 2 uses
-  %.029.ptr135 = getelementptr inbounds nuw i8, ptr @_ZZN4YAML7convertIbE6decodeERKNS_4NodeERbE5names, i64 %.029.idx134 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #15
   %i.gq = load i8, ptr %0, align 8, !tbaa !8, !range !22, !noundef !23
   %i.gr = trunc nuw i8 %i.gq to i1
@@ -401,7 +403,7 @@ bb.bw:                                            ; preds = %_ZN12_GLOBAL__N_17t
   br i1 %i.ir, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit, label %bb.bx
 
 bb.bx:                                            ; preds = %bb.bw
-  %i.is = load ptr, ptr %.029.ptr135, align 16, !tbaa !63
+  %i.is = load ptr, ptr %.029.ptr135, align 8, !tbaa !63
   %bcmp.i = call i32 @bcmp(ptr %i.is, ptr %.pre149, i64 %.pre)
   %i.it = icmp eq i32 %bcmp.i, 0
   br label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit
@@ -616,7 +618,7 @@ bb.ch:                                            ; preds = %_ZN12_GLOBAL__N_17t
   br i1 %i.lb, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit85, label %bb.ci
 
 bb.ci:                                            ; preds = %bb.ch
-  %i.lc = load ptr, ptr %i.iz, align 16, !tbaa !63
+  %i.lc = load ptr, ptr %i.iz, align 8, !tbaa !63
   %bcmp.i84 = call i32 @bcmp(ptr %i.lc, ptr %.pre152, i64 %.pre150)
   %i.ld = icmp eq i32 %bcmp.i84, 0
   br label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit85

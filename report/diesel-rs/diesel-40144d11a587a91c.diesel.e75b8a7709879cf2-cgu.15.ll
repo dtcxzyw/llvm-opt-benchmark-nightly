@@ -203,7 +203,7 @@ bb.l:                                             ; preds = %bb.j
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.j, %bb.l
-  %i.ba = phi i64 [ %i.az, %bb.l ], [ %i.au, %bb.j ] ; 4 uses
+  %i.ba = phi i64 [ %i.az, %bb.l ], [ %i.au, %bb.j ] ; 5 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
   %i.bc = icmp sgt i64 %i.ba, -1
   tail call void @llvm.assume(i1 %i.bc)
@@ -213,7 +213,7 @@ bb.l:                                             ; preds = %bb.j
   %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 %i.ba
   %i.bg = trunc nuw nsw i32 %.sroa.021.0 to i8
   store i8 %i.bg, ptr %i.bf, align 1
-  %i.bh = add nuw i64 %i.ba, 1                    ; 4 uses
+  %i.bh = add nuw i64 %i.ba, 1                    ; 3 uses
   store i64 %i.bh, ptr %i.bb, align 8, !alias.scope !72
   %i.bi = icmp eq i8 %i.ar, 1
   br i1 %i.bi, label %bb.m, label %_RNvXsZ_NtCs40k4W9msRzi_5alloc6stringNtB5_6StringNtNtCscI6d9CVNmLh_4core3fmt5Write10write_char.exit
@@ -223,7 +223,8 @@ bb.m:                                             ; preds = %._crit_edge
   tail call void @llvm.assume(i1 %i.bj)
   tail call void @_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VechE7reserveCsjRvGck33osM_6diesel(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, i64 noundef 1)
   %i.bk = load ptr, ptr %i.bd, align 8, !alias.scope !77, !nonnull !11, !noundef !11
-  %i.bl = getelementptr inbounds nuw i8, ptr %i.bk, i64 %i.bh
+  %3 = getelementptr inbounds nuw i8, ptr %i.bk, i64 %i.ba
+  %i.bl = getelementptr inbounds nuw i8, ptr %3, i64 1
   store i8 48, ptr %i.bl, align 1
   %i.bm = add nuw i64 %i.ba, 2                    ; 2 uses
   store i64 %i.bm, ptr %i.bb, align 8, !alias.scope !77
@@ -626,7 +627,8 @@ bb.m:                                             ; preds = %bb.l
   %i.cb = getelementptr inbounds nuw i8, ptr %i.g, i64 56
   %i.cc = load i8, ptr %i.cb, align 8, !alias.scope !289 ; 2 uses
   %i.cd = zext nneg i8 %i.cc to i64               ; 4 uses
-  %i.ce = icmp ult i8 %i.cc, 5
+  %3 = add i8 %i.cc, -1
+  %i.ce = icmp ult i8 %3, 4
   %i.cf = getelementptr i8, ptr %i.ca, i64 %i.cd
   %i.cg = getelementptr i8, ptr %i.cf, i64 -1
   %i.ch = getelementptr inbounds nuw i8, ptr %i.g, i64 64
@@ -1029,7 +1031,8 @@ bb.b:                                             ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.l = load i8, ptr %i.k, align 8, !alias.scope !427, !noalias !430 ; 2 uses
   %i.m = zext nneg i8 %i.l to i64                 ; 4 uses
-  %i.n = icmp ult i8 %i.l, 5
+  %1 = add i8 %i.l, -1
+  %i.n = icmp ult i8 %1, 4
   br i1 %.not.i, label %_RNvMsf_NtNtCscI6d9CVNmLh_4core3str4iterINtB5_13SplitInternalcE7get_endCsjRvGck33osM_6diesel.exit, label %.lr.ph.split.i
 
 .lr.ph.split.i:                                   ; preds = %.lr.ph.i

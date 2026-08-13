@@ -203,7 +203,7 @@ isdiagonal.exit:                                  ; preds = %.critedge111.i
 
 bb.o:                                             ; preds = %bb.s, %isdiagonal.exit
   %.0128 = phi i64 [ 0, %isdiagonal.exit ], [ %.1.1, %bb.s ] ; 3 uses
-  %.144127 = phi i64 [ 0, %isdiagonal.exit ], [ %i.fw, %bb.s ] ; 4 uses
+  %.144127 = phi i64 [ 0, %isdiagonal.exit ], [ %i.fw, %bb.s ] ; 5 uses
   %niter = phi i64 [ 0, %isdiagonal.exit ], [ %niter.next.1, %bb.s ]
   %.not49 = icmp eq i64 %.144127, %i.g
   br i1 %.not49, label %bb.q, label %bb.p
@@ -218,13 +218,14 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.o, %bb.p
   %.1 = phi i64 [ %i.fp, %bb.p ], [ %.0128, %bb.o ] ; 3 uses
-  %i.fr = or disjoint i64 %.144127, 1             ; 2 uses
+  %i.fr = or disjoint i64 %.144127, 1
   %.not49.1 = icmp eq i64 %i.fr, %i.g
   br i1 %.not49.1, label %bb.s, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  %i.fs = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.fr
-  %i.ft = load ptr, ptr %i.fs, align 8, !tbaa !16
+  %i.fs = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.144127
+  %5 = getelementptr inbounds nuw i8, ptr %i.fs, i64 8
+  %i.ft = load ptr, ptr %5, align 8, !tbaa !16
   %i.fu = add i64 %.1, 1
   %i.fv = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.1
   store ptr %i.ft, ptr %i.fv, align 8, !tbaa !16

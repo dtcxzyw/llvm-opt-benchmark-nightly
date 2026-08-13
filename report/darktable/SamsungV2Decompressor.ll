@@ -203,7 +203,7 @@ _ZN8rawspeed10ByteStream9skipBytesEj.exit46:      ; preds = %._crit_edge
   ret void
 
 bb.g:                                             ; preds = %.lr.ph, %.preheader
-  %indvars.iv458 = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next459, %.preheader ] ; 8 uses
+  %indvars.iv458 = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next459, %.preheader ] ; 7 uses
   %i.cm = phi i32 [ %i.ae, %.lr.ph ], [ %i.xu, %.preheader ] ; 3 uses
   %.sroa.80211.0409 = phi i32 [ 0, %.lr.ph ], [ %.sroa.80211.10, %.preheader ] ; 8 uses
   %.sroa.30.0408 = phi i32 [ 0, %.lr.ph ], [ %.sroa.30.10, %.preheader ] ; 6 uses
@@ -218,7 +218,7 @@ bb.g:                                             ; preds = %.lr.ph, %.preheader
   %i.cu = load i32, ptr %i.ct, align 8, !tbaa !29, !noalias !136
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cq, i64 608
   %i.cw = load i32, ptr %i.cv, align 8, !tbaa !139, !noalias !136
-  %i.cx = mul nsw i32 %i.cw, %i.cu                ; 6 uses
+  %i.cx = mul nsw i32 %i.cw, %i.cu                ; 5 uses
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cq, i64 612
   %i.cz = load i32, ptr %i.cy, align 4, !tbaa !140, !noalias !136 ; 5 uses
   %i.da = getelementptr inbounds nuw i8, ptr %i.cq, i64 48
@@ -621,10 +621,7 @@ bb.ef:                                            ; preds = %bb.dw
   %i.wx = mul nuw nsw i32 %i.dc, %1
   %i.wy = zext nneg i32 %i.wx to i64
   %i.wz = getelementptr inbounds nuw [2 x i8], ptr %i.cs, i64 %i.wy
-  %5 = zext nneg i32 %i.cx to i64
   %i.xa = getelementptr inbounds nuw [2 x i8], ptr %i.wz, i64 %indvars.iv458
-  %indvars.iv.next461.14 = or disjoint i64 %indvars.iv458, 15
-  %6 = icmp samesign ult i64 %indvars.iv.next461.14, %5
   %.sroa.0.0..sroa.0.0. = load <16 x i16>, ptr %.sroa.0, align 32, !tbaa !145
   %i.xb = sext <16 x i16> %.sroa.0.0..sroa.0.0. to <16 x i32>
   %i.xc = insertelement <16 x i32> poison, i32 %i.wv, i64 0
@@ -651,7 +648,6 @@ bb.ef:                                            ; preds = %bb.dw
   %i.xr = tail call <16 x i32> @llvm.smax.v16i32(<16 x i32> %i.xn, <16 x i32> zeroinitializer)
   %i.xs = select <16 x i1> %i.xq, <16 x i32> %i.xp, <16 x i32> %i.xr
   %i.xt = trunc <16 x i32> %i.xs to <16 x i16>
-  tail call void @llvm.assume(i1 %6)
   store <16 x i16> %i.xt, ptr %i.xa, align 2, !tbaa !145
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #15
   %indvars.iv.next459 = add nuw nsw i64 %indvars.iv458, 16 ; 2 uses

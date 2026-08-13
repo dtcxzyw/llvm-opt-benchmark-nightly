@@ -185,7 +185,7 @@ bb.b:                                             ; preds = %bb.a
   %.057 = phi i64 [ %i.bk, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit ], [ 0, %.preheader ] ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 %.057
   %i.e = load i8, ptr %i.d, align 1, !tbaa !14    ; 2 uses
-  %i.f = load i64, ptr %i.b, align 8, !tbaa !15   ; 29 uses
+  %i.f = load i64, ptr %i.b, align 8, !tbaa !15   ; 30 uses
   switch i8 %i.e, label %bb.r [
     i8 34, label %bb.c
     i8 92, label %bb.f
@@ -416,10 +416,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9push_backEc.exit: ; preds 
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit: ; preds = %bb.p, %bb.q, %bb.m, %bb.n, %bb.j, %bb.k, %bb.g, %bb.h, %bb.d, %bb.e, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9push_backEc.exit
-  %.sink = phi i64 [ %i.az, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9push_backEc.exit ], [ %i.aj, %bb.m ], [ %i.aa, %bb.j ], [ %i.r, %bb.g ], [ %i.i, %bb.d ], [ %i.i, %bb.e ], [ %i.r, %bb.h ], [ %i.aa, %bb.k ], [ %i.aj, %bb.n ], [ %i.as, %bb.q ], [ %i.as, %bb.p ] ; 2 uses
+  %.sink = phi i64 [ %i.az, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9push_backEc.exit ], [ %i.aj, %bb.m ], [ %i.aa, %bb.j ], [ %i.r, %bb.g ], [ %i.i, %bb.d ], [ %i.i, %bb.e ], [ %i.r, %bb.h ], [ %i.aa, %bb.k ], [ %i.aj, %bb.n ], [ %i.as, %bb.q ], [ %i.as, %bb.p ]
+  %.sink62 = phi i64 [ 1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9push_backEc.exit ], [ 2, %bb.m ], [ 2, %bb.j ], [ 2, %bb.g ], [ 2, %bb.d ], [ 2, %bb.e ], [ 2, %bb.h ], [ 2, %bb.k ], [ 2, %bb.n ], [ 2, %bb.q ], [ 2, %bb.p ]
   store i64 %.sink, ptr %i.b, align 8, !tbaa !15
   %i.bi = load ptr, ptr %0, align 8, !tbaa !11
-  %i.bj = getelementptr inbounds nuw i8, ptr %i.bi, i64 %.sink
+  %3 = getelementptr i8, ptr %i.bi, i64 %i.f
+  %i.bj = getelementptr i8, ptr %3, i64 %.sink62
   store i8 0, ptr %i.bj, align 1, !tbaa !14
   %i.bk = add nuw i64 %.057, 1                    ; 2 uses
   %exitcond.not = icmp eq i64 %i.bk, %2

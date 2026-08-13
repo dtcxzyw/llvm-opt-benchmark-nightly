@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.q, label %.epil.preheader, label %.preheader65.us.new
 
 .preheader65.us.new:                              ; preds = %.preheader65.us, %.preheader65.us.new
-  %indvars.iv77 = phi i64 [ %indvars.iv.next78.1, %.preheader65.us.new ], [ 0, %.preheader65.us ] ; 6 uses
+  %indvars.iv77 = phi i64 [ %indvars.iv.next78.1, %.preheader65.us.new ], [ 0, %.preheader65.us ] ; 9 uses
   %niter = phi i64 [ %niter.next.1, %.preheader65.us.new ], [ 0, %.preheader65.us ]
   %i.r = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %indvars.iv77
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !60
@@ -216,19 +216,22 @@ bb.d:                                             ; preds = %bb.c
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !50
   %i.aa = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %indvars.iv77
   store ptr %i.z, ptr %i.aa, align 8, !tbaa !50
-  %indvars.iv.next78 = or disjoint i64 %indvars.iv77, 1 ; 4 uses
-  %6 = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %indvars.iv.next78
-  %i.ab = load ptr, ptr %6, align 8, !tbaa !60
+  %6 = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %indvars.iv77
+  %7 = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %i.ab = load ptr, ptr %7, align 8, !tbaa !60
   %i.ac = getelementptr inbounds nuw [8 x i8], ptr %i.ab, i64 %indvars.iv82
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !50
-  %i.ae = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %indvars.iv.next78
-  store ptr %i.ad, ptr %i.ae, align 8, !tbaa !50
-  %i.af = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %indvars.iv.next78
-  %i.ag = load ptr, ptr %i.af, align 8, !tbaa !60
+  %i.ae = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %indvars.iv77
+  %8 = getelementptr inbounds nuw i8, ptr %i.ae, i64 8
+  store ptr %i.ad, ptr %8, align 8, !tbaa !50
+  %i.af = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %indvars.iv77
+  %9 = getelementptr inbounds nuw i8, ptr %i.af, i64 8
+  %i.ag = load ptr, ptr %9, align 8, !tbaa !60
   %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.ag, i64 %indvars.iv82
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !50
-  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %indvars.iv.next78
-  store ptr %i.ai, ptr %i.aj, align 8, !tbaa !50
+  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %indvars.iv77
+  %10 = getelementptr inbounds nuw i8, ptr %i.aj, i64 8
+  store ptr %i.ai, ptr %10, align 8, !tbaa !50
   %indvars.iv.next78.1 = add nuw nsw i64 %indvars.iv77, 2 ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
@@ -433,7 +436,7 @@ bb.e:                                             ; preds = %bb.c
   br i1 %i.am, label %.epil.preheader, label %.preheader60.us.new
 
 .preheader60.us.new:                              ; preds = %.preheader60.us, %.preheader60.us.new
-  %indvars.iv75 = phi i64 [ %indvars.iv.next76.3, %.preheader60.us.new ], [ 0, %.preheader60.us ] ; 6 uses
+  %indvars.iv75 = phi i64 [ %indvars.iv.next76.3, %.preheader60.us.new ], [ 0, %.preheader60.us ] ; 9 uses
   %niter = phi i64 [ %niter.next.3, %.preheader60.us.new ], [ 0, %.preheader60.us ]
   %i.an = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv75
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !60
@@ -441,27 +444,30 @@ bb.e:                                             ; preds = %bb.c
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !50
   %i.ar = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %indvars.iv75
   store ptr %i.aq, ptr %i.ar, align 8, !tbaa !50
-  %indvars.iv.next76 = or disjoint i64 %indvars.iv75, 1 ; 2 uses
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv.next76
-  %i.as = load ptr, ptr %5, align 8, !tbaa !60
+  %5 = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv75
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %i.as = load ptr, ptr %6, align 8, !tbaa !60
   %i.at = getelementptr inbounds nuw [8 x i8], ptr %i.as, i64 %indvars.iv80
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !50
-  %i.av = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %indvars.iv.next76
-  store ptr %i.au, ptr %i.av, align 8, !tbaa !50
-  %indvars.iv.next76.1 = or disjoint i64 %indvars.iv75, 2 ; 2 uses
-  %6 = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv.next76.1
-  %i.aw = load ptr, ptr %6, align 8, !tbaa !60
+  %i.av = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %indvars.iv75
+  %7 = getelementptr inbounds nuw i8, ptr %i.av, i64 8
+  store ptr %i.au, ptr %7, align 8, !tbaa !50
+  %8 = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv75
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 16
+  %i.aw = load ptr, ptr %9, align 8, !tbaa !60
   %i.ax = getelementptr inbounds nuw [8 x i8], ptr %i.aw, i64 %indvars.iv80
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !50
-  %i.az = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %indvars.iv.next76.1
-  store ptr %i.ay, ptr %i.az, align 8, !tbaa !50
-  %indvars.iv.next76.2 = or disjoint i64 %indvars.iv75, 3 ; 2 uses
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv.next76.2
-  %i.ba = load ptr, ptr %7, align 8, !tbaa !60
+  %i.az = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %indvars.iv75
+  %10 = getelementptr inbounds nuw i8, ptr %i.az, i64 16
+  store ptr %i.ay, ptr %10, align 8, !tbaa !50
+  %11 = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv75
+  %12 = getelementptr inbounds nuw i8, ptr %11, i64 24
+  %i.ba = load ptr, ptr %12, align 8, !tbaa !60
   %i.bb = getelementptr inbounds nuw [8 x i8], ptr %i.ba, i64 %indvars.iv80
   %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !50
-  %i.bd = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %indvars.iv.next76.2
-  store ptr %i.bc, ptr %i.bd, align 8, !tbaa !50
+  %i.bd = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %indvars.iv75
+  %13 = getelementptr inbounds nuw i8, ptr %i.bd, i64 24
+  store ptr %i.bc, ptr %13, align 8, !tbaa !50
   %indvars.iv.next76.3 = add nuw nsw i64 %indvars.iv75, 4 ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter

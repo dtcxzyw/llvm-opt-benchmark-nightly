@@ -203,12 +203,13 @@ switch.early.test.i.i.i:                          ; preds = %bb.bk
 .critedge.i.i.i:                                  ; preds = %switch.early.test.i.i.i, %switch.early.test.i.i.i, %bb.bk, %bb.bj
   %.017.lcssa.i.i.i = phi i32 [ %.017.i.i.i, %switch.early.test.i.i.i ], [ %.017.i.i.i, %switch.early.test.i.i.i ], [ %.017.i.i.i, %bb.bk ], [ 0, %bb.bj ]
   %i.dy = zext nneg i32 %.017.lcssa.i.i.i to i64
-  %5 = add nsw i64 %i.dy, -1
   br label %strstrip.exit.i
 
 strstrip.exit.i:                                  ; preds = %.critedge.i.i.i, %bb.bf
-  %.0.i.i = phi i64 [ -1, %bb.bf ], [ %5, %.critedge.i.i.i ] ; 2 uses
-  %i.dz = getelementptr inbounds nuw i8, ptr %i.di, i64 %.0.i.i ; 2 uses
+  %.0.i.i = phi i64 [ 0, %bb.bf ], [ %i.dy, %.critedge.i.i.i ] ; 2 uses
+  %5 = add nsw i64 %.0.i.i, -1
+  %6 = getelementptr i8, ptr %i.di, i64 %.0.i.i
+  %i.dz = getelementptr i8, ptr %6, i64 -1        ; 2 uses
   %i.ea = load i8, ptr %i.dz, align 1, !tbaa !43
   %i.eb = icmp eq i8 %i.ea, 34
   br i1 %i.eb, label %bb.bl, label %bb.bm
@@ -219,7 +220,7 @@ bb.bl:                                            ; preds = %strstrip.exit.i
   br label %bb.bm
 
 bb.bm:                                            ; preds = %bb.bl, %strstrip.exit.i
-  %.0.i43 = phi i64 [ %i.ec, %bb.bl ], [ %.0.i.i, %strstrip.exit.i ]
+  %.0.i43 = phi i64 [ %i.ec, %bb.bl ], [ %5, %strstrip.exit.i ]
   %.not135.i = icmp eq i64 %.0.i43, 0
   br i1 %.not135.i, label %bb.bp, label %bb.bn
 

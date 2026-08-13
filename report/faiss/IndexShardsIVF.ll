@@ -203,7 +203,7 @@ bb.ay:                                            ; preds = %bb.ar, %bb.aq
   br label %_ZNSt6vectorIlSaIlEED2Ev.exit116
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
-  %indvars.iv140 = phi i64 [ 0, %.lr.ph.preheader.new ], [ %indvars.iv.next141.1, %.lr.ph ] ; 4 uses
+  %indvars.iv140 = phi i64 [ 0, %.lr.ph.preheader.new ], [ %indvars.iv.next141.1, %.lr.ph ] ; 5 uses
   %indvars.iv = phi i64 [ 1, %.lr.ph.preheader.new ], [ %indvars.iv.next.1, %.lr.ph ] ; 3 uses
   %niter = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.1, %.lr.ph ]
   %i.ex = getelementptr inbounds nuw [8 x i8], ptr %i.ej, i64 %indvars.iv140
@@ -215,11 +215,12 @@ bb.ay:                                            ; preds = %bb.ar, %bb.aq
   %i.fd = add nsw i64 %i.fc, %i.ey
   %i.fe = getelementptr inbounds nuw [8 x i8], ptr %i.ej, i64 %indvars.iv
   store i64 %i.fd, ptr %i.fe, align 8, !tbaa !62
-  %indvars.iv.next141 = or disjoint i64 %indvars.iv140, 1 ; 2 uses
-  %16 = getelementptr inbounds nuw [8 x i8], ptr %i.ej, i64 %indvars.iv.next141
-  %i.ff = load i64, ptr %16, align 8, !tbaa !62
-  %i.fg = getelementptr inbounds nuw [16 x i8], ptr %i.cx, i64 %indvars.iv.next141
-  %i.fh = load ptr, ptr %i.fg, align 8, !tbaa !36
+  %16 = getelementptr inbounds nuw [8 x i8], ptr %i.ej, i64 %indvars.iv140
+  %17 = getelementptr inbounds nuw i8, ptr %16, i64 8
+  %i.ff = load i64, ptr %17, align 8, !tbaa !62
+  %i.fg = getelementptr inbounds nuw [16 x i8], ptr %i.cx, i64 %indvars.iv140
+  %18 = getelementptr inbounds nuw i8, ptr %i.fg, i64 16
+  %i.fh = load ptr, ptr %18, align 8, !tbaa !36
   %i.fi = getelementptr inbounds nuw i8, ptr %i.fh, i64 16
   %i.fj = load i64, ptr %i.fi, align 8, !tbaa !61
   %i.fk = add nsw i64 %i.fj, %i.ff

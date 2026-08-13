@@ -201,8 +201,8 @@ bb.bp:                                            ; preds = %bb.bo
 
 bb.bq:                                            ; preds = %bb.bp
   %i.rz = getelementptr inbounds nuw i8, ptr %i.ry, i64 8
-  %i.sa = load i64, ptr %i.rz, align 8, !tbaa !237
-  %switch.tableidx = add i64 %i.sa, -65421        ; 3 uses
+  %i.sa = load i64, ptr %i.rz, align 8, !tbaa !237 ; 2 uses
+  %switch.tableidx = add i64 %i.sa, -65421        ; 2 uses
   %i.sb = icmp ult i64 %switch.tableidx, 49
   %switch.shifted = lshr i64 316635726479361, %switch.tableidx
   %switch.lobit = trunc i64 %switch.shifted to i1
@@ -605,8 +605,9 @@ bb.gf:                                            ; preds = %bb.br
   br label %translateKeySyms.exit.i.i
 
 switch.lookup:                                    ; preds = %bb.bq
-  %switch.gep.a = getelementptr inbounds nuw [2 x i8], ptr @switch.table._glfwPlatformInit, i64 %switch.tableidx
-  %switch.load = load i16, ptr %switch.gep.a, align 2
+  %switch.gep.a = getelementptr [2 x i8], ptr @switch.table._glfwPlatformInit, i64 %i.sa
+  %switch.gep = getelementptr i8, ptr %switch.gep.a, i64 -130842
+  %switch.load = load i16, ptr %switch.gep, align 2
   br label %translateKeySyms.exit.i.i
 
 translateKeySyms.exit.i.i:                        ; preds = %switch.lookup, %bb.gf, %bb.ge, %bb.gd, %bb.gc, %bb.gb, %bb.ga, %bb.fz, %bb.fy, %bb.fx, %bb.fw, %bb.fv, %bb.fu, %bb.ft, %bb.fs, %bb.fr, %bb.fq, %bb.fp, %bb.fo, %bb.fn, %bb.fm, %bb.fl, %bb.fk, %bb.fj, %bb.fi, %bb.fh, %bb.fg, %bb.ff, %bb.fe, %bb.fd, %bb.fc, %bb.fb, %bb.fa, %bb.ez, %bb.ey, %bb.ex, %bb.ew, %bb.ev, %bb.eu, %bb.et, %bb.es, %bb.er, %bb.eq, %bb.ep, %bb.eo, %bb.en, %bb.em, %bb.el, %bb.ek, %bb.ej, %bb.ei, %bb.eh, %bb.eg, %bb.ef, %bb.ee, %bb.ed, %bb.ec, %bb.eb, %bb.ea, %bb.dz, %bb.dy, %bb.dx, %bb.dw, %bb.dv, %bb.du, %bb.dt, %bb.ds, %bb.dr, %bb.dq, %bb.dp, %bb.do, %bb.dn, %bb.dm, %bb.dl, %bb.dk, %bb.dj, %bb.di, %bb.dh, %bb.dg, %bb.df, %bb.de, %bb.dd, %bb.dc, %bb.db, %bb.da, %bb.cz, %bb.cy, %bb.cx, %bb.cw, %bb.cv, %bb.cu, %bb.ct, %bb.cs, %bb.cr, %bb.cq, %bb.cp, %bb.co, %bb.cn, %bb.cm, %bb.cl, %bb.ck, %bb.cj, %bb.ci, %bb.ch, %bb.cg, %bb.cf, %bb.ce, %bb.cd, %bb.cc, %bb.cb, %bb.ca, %bb.bz, %bb.by, %bb.bx, %bb.bw, %bb.bv, %bb.bu, %bb.bt, %bb.bs, %bb.br

@@ -72,12 +72,12 @@ bb.e:                                             ; preds = %bb.d
   br label %.lr.ph94
 
 .lr.ph94:                                         ; preds = %.lr.ph94.preheader, %.lr.ph94._crit_edge
-  %indvars.iv97 = phi i64 [ 0, %.lr.ph94.preheader ], [ %i.x, %.lr.ph94._crit_edge ] ; 2 uses
-  %.07892 = phi ptr [ %5, %.lr.ph94.preheader ], [ %i.aa, %.lr.ph94._crit_edge ] ; 2 uses
+  %indvars.iv97 = phi i64 [ 0, %.lr.ph94.preheader ], [ %i.x, %.lr.ph94._crit_edge ] ; 3 uses
+  %.07892 = phi ptr [ %5, %.lr.ph94.preheader ], [ %6, %.lr.ph94._crit_edge ] ; 2 uses
   %i.u = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv97
   %i.v = load double, ptr %i.u, align 8, !tbaa !10 ; 2 uses
   %i.w = fcmp une double %i.v, 0.000000e+00
-  %i.x = add nuw nsw i64 %indvars.iv97, 1         ; 4 uses
+  %i.x = add nuw nsw i64 %indvars.iv97, 1         ; 3 uses
   br i1 %i.w, label %bb.f, label %.lr.ph94._crit_edge
 
 bb.f:                                             ; preds = %.lr.ph94
@@ -86,7 +86,8 @@ bb.f:                                             ; preds = %.lr.ph94
   br label %.lr.ph94._crit_edge
 
 .lr.ph94._crit_edge:                              ; preds = %.lr.ph94, %bb.f
-  %i.aa = getelementptr inbounds nuw [8 x i8], ptr %.07892, i64 %i.x
+  %i.aa = getelementptr inbounds nuw [8 x i8], ptr %.07892, i64 %indvars.iv97
+  %6 = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
   %exitcond101.not = icmp eq i64 %i.x, %wide.trip.count100
   br i1 %exitcond101.not, label %.loopexit, label %.lr.ph94, !llvm.loop !12
 

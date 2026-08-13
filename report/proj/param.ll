@@ -68,16 +68,16 @@ bb.b:                                             ; preds = %bb.b, %.preheader
 bb.c:                                             ; preds = %bb.b
   %i.j = icmp eq i8 %i.d, 43
   %spec.select.idx = zext i1 %i.j to i64
-  %spec.select = getelementptr inbounds nuw i8, ptr %.038, i64 %spec.select.idx ; 6 uses
+  %spec.select = getelementptr inbounds nuw i8, ptr %.038, i64 %spec.select.idx ; 5 uses
   %i.k = load i8, ptr %spec.select, align 1, !tbaa !8 ; 2 uses
   %.not4452 = icmp eq i8 %i.k, 0
   br i1 %.not4452, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.c, %bb.i
   %i.l = phi i8 [ %i.ab, %bb.i ], [ %i.k, %bb.c ] ; 3 uses
-  %i.m = phi ptr [ %i.aa, %bb.i ], [ %spec.select, %bb.c ] ; 2 uses
+  %i.m = phi ptr [ %i.aa, %bb.i ], [ %spec.select, %bb.c ] ; 3 uses
   %.054 = phi i1 [ %.1, %bb.i ], [ false, %bb.c ]
-  %.03453 = phi i64 [ %i.z, %bb.i ], [ 0, %bb.c ] ; 6 uses
+  %.03453 = phi i64 [ %i.z, %bb.i ], [ 0, %bb.c ] ; 5 uses
   br i1 %.054, label %bb.d, label %bb.f
 
 bb.d:                                             ; preds = %.lr.ph
@@ -85,11 +85,11 @@ bb.d:                                             ; preds = %.lr.ph
   br i1 %i.n, label %bb.e, label %bb.i
 
 bb.e:                                             ; preds = %bb.d
-  %2 = add i64 %.03453, 1                         ; 2 uses
-  %i.o = getelementptr inbounds nuw i8, ptr %spec.select, i64 %2
+  %i.o = getelementptr i8, ptr %i.m, i64 1
   %i.p = load i8, ptr %i.o, align 1, !tbaa !8
   %i.q = icmp eq i8 %i.p, 34                      ; 2 uses
-  %spec.select48 = select i1 %i.q, i64 %2, i64 %.03453
+  %2 = zext i1 %i.q to i64
+  %spec.select48 = add i64 %.03453, %2
   br label %bb.i
 
 bb.f:                                             ; preds = %.lr.ph
@@ -111,10 +111,11 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   br i1 %.not45, label %bb.i, label %._crit_edge
 
 bb.i:                                             ; preds = %bb.e, %bb.d, %bb.g, %bb.h
-  %.135 = phi i64 [ %.03453, %bb.h ], [ %spec.select48, %bb.e ], [ %.03453, %bb.g ], [ %.03453, %bb.d ]
-  %.1 = phi i1 [ false, %bb.h ], [ %i.q, %bb.e ], [ true, %bb.g ], [ true, %bb.d ]
-  %i.z = add i64 %.135, 1                         ; 3 uses
-  %i.aa = getelementptr inbounds nuw i8, ptr %spec.select, i64 %i.z ; 3 uses
+  %.135 = phi i64 [ %.03453, %bb.d ], [ %.03453, %bb.h ], [ %.03453, %bb.g ], [ %spec.select48, %bb.e ] ; 2 uses
+  %.1 = phi i1 [ true, %bb.d ], [ false, %bb.h ], [ true, %bb.g ], [ %i.q, %bb.e ]
+  %i.z = add i64 %.135, 1                         ; 2 uses
+  %3 = getelementptr i8, ptr %spec.select, i64 %.135
+  %i.aa = getelementptr i8, ptr %3, i64 1         ; 3 uses
   %i.ab = load i8, ptr %i.aa, align 1, !tbaa !8   ; 2 uses
   %.not44 = icmp eq i8 %i.ab, 0
   br i1 %.not44, label %._crit_edge, label %.lr.ph, !llvm.loop !18

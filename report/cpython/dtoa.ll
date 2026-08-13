@@ -204,12 +204,13 @@ begin_hunk_0_@_Py_dg_strtod:bb.a
   br i1 %lcmp.mod1506.not, label %.lr.ph896.prol.loopexit, label %.lr.ph896.prol
 
 .lr.ph896.prol:                                   ; preds = %.lr.ph896.preheader, %.lr.ph896.prol
-  %indvars.iv1019.prol = phi i64 [ %indvars.iv.next1020.prol, %.lr.ph896.prol ], [ %i.kk, %.lr.ph896.preheader ]
+  %indvars.iv1019.prol = phi i64 [ %indvars.iv.next1020.prol, %.lr.ph896.prol ], [ %i.kk, %.lr.ph896.preheader ] ; 2 uses
   %.3419895.prol = phi i32 [ %i.kr, %.lr.ph896.prol ], [ %.2418.lcssa, %.lr.ph896.preheader ]
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph896.prol ], [ 0, %.lr.ph896.preheader ]
   %i.km = mul i32 %.3419895.prol, 10
-  %indvars.iv.next1020.prol = add nuw nsw i64 %indvars.iv1019.prol, 1 ; 3 uses
-  %i.kn = getelementptr i8, ptr %.1430, i64 %indvars.iv.next1020.prol
+  %indvars.iv.next1020.prol = add nuw nsw i64 %indvars.iv1019.prol, 1 ; 2 uses
+  %4 = getelementptr i8, ptr %.1430, i64 %indvars.iv1019.prol
+  %i.kn = getelementptr i8, ptr %4, i64 1
   %i.ko = load i8, ptr %i.kn, align 1, !tbaa !11
   %i.kp = sext i8 %i.ko to i32
   %i.kq = add i32 %i.km, -48
@@ -263,7 +264,7 @@ begin_hunk_0_@_Py_dg_strtod:bb.a
   br i1 %niter.ncmp.3, label %.preheader.loopexit.unr-lcssa, label %.lr.ph891, !llvm.loop !36
 
 .lr.ph896:                                        ; preds = %.lr.ph896.prol.loopexit, %.lr.ph896
-  %indvars.iv1019 = phi i64 [ %indvars.iv.next1020.3, %.lr.ph896 ], [ %indvars.iv1019.unr, %.lr.ph896.prol.loopexit ] ; 4 uses
+  %indvars.iv1019 = phi i64 [ %indvars.iv.next1020.3, %.lr.ph896 ], [ %indvars.iv1019.unr, %.lr.ph896.prol.loopexit ] ; 5 uses
   %.3419895 = phi i32 [ %i.mv, %.lr.ph896 ], [ %.3419895.unr, %.lr.ph896.prol.loopexit ]
   %i.lv = mul i32 %.3419895, 10
   %i.lw = getelementptr i8, ptr %.1430, i64 %indvars.iv1019
@@ -287,8 +288,9 @@ begin_hunk_0_@_Py_dg_strtod:bb.a
   %i.mo = add i32 %i.mj, -48
   %i.mp = add i32 %i.mo, %i.mn
   %i.mq = mul i32 %i.mp, 10
-  %indvars.iv.next1020.3 = add nuw nsw i64 %indvars.iv1019, 4 ; 3 uses
-  %i.mr = getelementptr i8, ptr %.1430, i64 %indvars.iv.next1020.3
+  %indvars.iv.next1020.3 = add nuw nsw i64 %indvars.iv1019, 4 ; 2 uses
+  %5 = getelementptr i8, ptr %.1430, i64 %indvars.iv1019
+  %i.mr = getelementptr i8, ptr %5, i64 4
   %i.ms = load i8, ptr %i.mr, align 1, !tbaa !11
   %i.mt = sext i8 %i.ms to i32
   %i.mu = add i32 %i.mq, -48

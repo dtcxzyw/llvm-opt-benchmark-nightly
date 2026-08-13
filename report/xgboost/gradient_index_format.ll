@@ -201,9 +201,9 @@ bb.a:
   %i.d = load ptr, ptr %1, align 8, !tbaa !49
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = ptrtoint ptr %i.d to i64
-  %i.g = sub i64 %i.e, %i.f
+  %i.g = sub i64 %i.e, %i.f                       ; 2 uses
   %i.h = ashr exact i64 %i.g, 2
-  %i.i = add nsw i64 %i.h, -1                     ; 4 uses
+  %i.i = add nsw i64 %i.h, -1                     ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !90   ; 4 uses
   %i.l = load ptr, ptr %i.a, align 8, !tbaa !49   ; 5 uses
@@ -227,18 +227,19 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.s, label %bb.d, label %_ZNSt6vectorIjSaIjEE6resizeEm.exit
 
 bb.d:                                             ; preds = %bb.c
-  %2 = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %i.i ; 3 uses
-  %.not.i.i = icmp eq ptr %i.k, %2
+  %2 = getelementptr i8, ptr %i.l, i64 %i.g
+  %3 = getelementptr i8, ptr %2, i64 -4           ; 3 uses
+  %.not.i.i = icmp eq ptr %i.k, %3
   br i1 %.not.i.i, label %_ZNSt6vectorIjSaIjEE6resizeEm.exit, label %_ZSt8_DestroyIPjjEvT_S1_RSaIT0_E.exit.i.i
 
 _ZSt8_DestroyIPjjEvT_S1_RSaIT0_E.exit.i.i:        ; preds = %bb.d
-  store ptr %2, ptr %i.j, align 8, !tbaa !90
+  store ptr %3, ptr %i.j, align 8, !tbaa !90
   br label %_ZNSt6vectorIjSaIjEE6resizeEm.exit
 
 _ZNSt6vectorIjSaIjEE6resizeEm.exit:               ; preds = %bb.b, %bb.c, %bb.d, %_ZSt8_DestroyIPjjEvT_S1_RSaIT0_E.exit.i.i
   %.pre-phi = phi i64 [ %.pre6, %bb.b ], [ %i.n, %bb.c ], [ %i.n, %bb.d ], [ %i.n, %_ZSt8_DestroyIPjjEvT_S1_RSaIT0_E.exit.i.i ]
   %i.t = phi ptr [ %.pre5, %bb.b ], [ %i.l, %bb.c ], [ %i.l, %bb.d ], [ %i.l, %_ZSt8_DestroyIPjjEvT_S1_RSaIT0_E.exit.i.i ] ; 3 uses
-  %i.u = phi ptr [ %.pre, %bb.b ], [ %i.k, %bb.c ], [ %i.k, %bb.d ], [ %2, %_ZSt8_DestroyIPjjEvT_S1_RSaIT0_E.exit.i.i ] ; 2 uses
+  %i.u = phi ptr [ %.pre, %bb.b ], [ %i.k, %bb.c ], [ %i.k, %bb.d ], [ %3, %_ZSt8_DestroyIPjjEvT_S1_RSaIT0_E.exit.i.i ] ; 2 uses
   %i.v = load ptr, ptr %1, align 8, !tbaa !52     ; 2 uses
   %i.w = ptrtoint ptr %i.u to i64
   %i.x = sub i64 %i.w, %.pre-phi                  ; 3 uses

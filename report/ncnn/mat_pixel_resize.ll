@@ -203,7 +203,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.er, label %.lr.ph310.epil.preheader, label %.lr.ph310
 
 .lr.ph310:                                        ; preds = %.lr.ph310.preheader, %.lr.ph310
-  %indvars.iv345 = phi i64 [ %indvars.iv.next346.1, %.lr.ph310 ], [ 0, %.lr.ph310.preheader ] ; 4 uses
+  %indvars.iv345 = phi i64 [ %indvars.iv.next346.1, %.lr.ph310 ], [ 0, %.lr.ph310.preheader ] ; 5 uses
   %.0195307 = phi ptr [ %i.gs, %.lr.ph310 ], [ %i.l, %.lr.ph310.preheader ] ; 5 uses
   %niter = phi i64 [ %niter.next.1, %.lr.ph310 ], [ 0, %.lr.ph310.preheader ]
   %i.fe = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %indvars.iv345
@@ -228,9 +228,9 @@ bb.e:                                             ; preds = %bb.d
   %i.fx = getelementptr inbounds nuw [2 x i8], ptr %.0187314, i64 %indvars.iv345
   store i16 %i.fw, ptr %i.fx, align 2, !tbaa !10
   %i.fy = getelementptr inbounds nuw i8, ptr %.0195307, i64 4
-  %indvars.iv.next346 = or disjoint i64 %indvars.iv345, 1 ; 2 uses
-  %10 = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %indvars.iv.next346
-  %i.fz = load i32, ptr %10, align 4, !tbaa !9
+  %10 = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %indvars.iv345
+  %11 = getelementptr inbounds nuw i8, ptr %10, i64 4
+  %i.fz = load i32, ptr %11, align 4, !tbaa !9
   %i.ga = load i16, ptr %i.fy, align 2, !tbaa !10
   %i.gb = getelementptr inbounds nuw i8, ptr %.0195307, i64 6
   %i.gc = load i16, ptr %i.gb, align 2, !tbaa !10
@@ -248,8 +248,9 @@ bb.e:                                             ; preds = %bb.d
   %i.go = add nsw i32 %i.gn, %i.gi
   %i.gp = lshr i32 %i.go, 4
   %i.gq = trunc i32 %i.gp to i16
-  %i.gr = getelementptr inbounds nuw [2 x i8], ptr %.0187314, i64 %indvars.iv.next346
-  store i16 %i.gq, ptr %i.gr, align 2, !tbaa !10
+  %i.gr = getelementptr inbounds nuw [2 x i8], ptr %.0187314, i64 %indvars.iv345
+  %12 = getelementptr inbounds nuw i8, ptr %i.gr, i64 2
+  store i16 %i.gq, ptr %12, align 2, !tbaa !10
   %i.gs = getelementptr inbounds nuw i8, ptr %.0195307, i64 8 ; 2 uses
   %indvars.iv.next346.1 = add nuw nsw i64 %indvars.iv345, 2 ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses

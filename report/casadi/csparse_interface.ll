@@ -201,8 +201,8 @@ bb.b:                                             ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 2 uses
   store i32 %i.k, ptr %i.l, align 8, !tbaa !61
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 152 ; 4 uses
-  %i.n = tail call noundef i64 @_ZNK6casadi8Sparsity5size2Ev(ptr noundef nonnull align 8 dereferenceable(8) %i.c)
-  %i.o = add nsw i64 %i.n, 1                      ; 4 uses
+  %i.n = tail call noundef i64 @_ZNK6casadi8Sparsity5size2Ev(ptr noundef nonnull align 8 dereferenceable(8) %i.c) ; 2 uses
+  %i.o = add nsw i64 %i.n, 1                      ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 160 ; 4 uses
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !62   ; 2 uses
   %i.r = load ptr, ptr %i.m, align 8, !tbaa !54   ; 2 uses
@@ -223,12 +223,13 @@ bb.d:                                             ; preds = %bb.b
   br i1 %i.y, label %bb.e, label %_ZNSt6vectorIiSaIiEE6resizeEm.exit
 
 bb.e:                                             ; preds = %bb.d
-  %i.z = getelementptr inbounds nuw [4 x i8], ptr %i.r, i64 %i.o ; 2 uses
-  %.not.i.i = icmp eq ptr %i.q, %i.z
+  %i.z = getelementptr [4 x i8], ptr %i.r, i64 %i.n
+  %2 = getelementptr i8, ptr %i.z, i64 4          ; 2 uses
+  %.not.i.i = icmp eq ptr %i.q, %2
   br i1 %.not.i.i, label %_ZNSt6vectorIiSaIiEE6resizeEm.exit, label %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i
 
 _ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i:        ; preds = %bb.e
-  store ptr %i.z, ptr %i.p, align 8, !tbaa !62
+  store ptr %2, ptr %i.p, align 8, !tbaa !62
   br label %_ZNSt6vectorIiSaIiEE6resizeEm.exit
 
 _ZNSt6vectorIiSaIiEE6resizeEm.exit:               ; preds = %bb.c, %bb.d, %bb.e, %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i

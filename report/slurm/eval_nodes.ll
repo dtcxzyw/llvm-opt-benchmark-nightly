@@ -201,7 +201,7 @@ bb.km:                                            ; preds = %thread-pre-split.i.
 
 bb.kn:                                            ; preds = %bb.km
   %i.apl = load ptr, ptr %i.g, align 8
-  %i.apm = sext i32 %.pre814.i.us to i64
+  %i.apm = sext i32 %.pre814.i.us to i64          ; 2 uses
   %indvars.iv.next.i121.us360 = add nsw i64 %i.apm, 1 ; 2 uses
   %.not484.i.us361 = icmp slt i64 %indvars.iv.next.i121.us360, %i.and
   br i1 %.not484.i.us361, label %.lr.ph, label %.loopexit.i.us
@@ -213,8 +213,10 @@ bb.ko:                                            ; preds = %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.kn, %bb.ko
   %indvars.iv.next.i121.us362 = phi i64 [ %indvars.iv.next.i121.us, %bb.ko ], [ %indvars.iv.next.i121.us360, %bb.kn ] ; 2 uses
-  %i.apn = getelementptr inbounds [4 x i8], ptr %i.apl, i64 %indvars.iv.next.i121.us362
-  %i.apo = load i32, ptr %i.apn, align 4
+  %indvars.iv.i120.us362 = phi i64 [ %indvars.iv.next.i121.us362, %bb.ko ], [ %i.apm, %bb.kn ]
+  %i.apn = getelementptr [4 x i8], ptr %i.apl, i64 %indvars.iv.i120.us362
+  %2 = getelementptr i8, ptr %i.apn, i64 4
+  %i.apo = load i32, ptr %2, align 4
   %.not482.i.us = icmp eq i32 %i.apo, -1
   br i1 %.not482.i.us, label %bb.ko, label %.critedge3.i, !llvm.loop !35
 

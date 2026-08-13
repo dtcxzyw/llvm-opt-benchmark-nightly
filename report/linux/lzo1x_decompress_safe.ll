@@ -203,8 +203,8 @@ bb.ag:                                            ; preds = %bb.af
   %i.ez = load i8, ptr %i.ey, align 1
   %i.fa = zext i8 %i.ez to i64
   %i.fb = shl nuw nsw i64 %i.fa, 3
-  %4 = add nuw nsw i64 %i.ex, 4
-  %i.fc = add nuw nsw i64 %4, %i.fb               ; 3 uses
+  %4 = or disjoint i64 %i.fb, %i.ex               ; 2 uses
+  %i.fc = add nuw nsw i64 %4, 4                   ; 2 uses
   %i.fd = ptrtoint ptr %.0285 to i64              ; 2 uses
   %i.fe = sub i64 %i.o, %i.fd
   %.not366 = icmp ult i64 %i.fe, %i.fc
@@ -212,7 +212,8 @@ bb.ag:                                            ; preds = %bb.af
 
 bb.ah:                                            ; preds = %bb.ag
   tail call void @llvm.memset.p0.i64(ptr noundef align 1 %.0285, i8 0, i64 %i.fc, i1 false)
-  %i.ff = getelementptr i8, ptr %.0285, i64 %i.fc
+  %5 = getelementptr i8, ptr %.0285, i64 %4
+  %i.ff = getelementptr i8, ptr %5, i64 4
   %i.fg = and i64 %i.es, 3
   %i.fh = getelementptr i8, ptr %.1297, i64 4
   br label %.thread409

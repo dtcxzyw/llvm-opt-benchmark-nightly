@@ -203,7 +203,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i24
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit246: ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE9push_backEOS5_.exit243, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE9push_backEOS5_.exit243.thread, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i244
   call void @llvm.lifetime.end.p0(ptr nonnull %18) #22
   %i.hh = invoke noalias noundef nonnull dereferenceable(640) ptr @_Znwm(i64 noundef 640) #24
-          to label %.lr.ph.i.i.i.i.i252.preheader unwind label %bb.bs ; 15 uses
+          to label %.lr.ph.i.i.i.i.i252.preheader unwind label %bb.bs ; 14 uses
 
 .lr.ph.i.i.i.i.i252.preheader:                    ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit246
   %i.hi = getelementptr inbounds nuw i8, ptr %i.hh, i64 320
@@ -282,9 +282,10 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i27
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit274: ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE9push_backEOS5_.exit271, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE9push_backEOS5_.exit271.thread, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i272
   call void @llvm.lifetime.end.p0(ptr nonnull %19) #22
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.19.4.ptr, ptr noundef nonnull align 8 dereferenceable(80) %10, i64 80, i1 false), !tbaa.struct !45
-  %i.ia = getelementptr inbounds nuw i8, ptr %i.hh, i64 428
+  %42 = getelementptr inbounds nuw i8, ptr %i.hh, i64 480 ; 2 uses
+  %i.ia = getelementptr inbounds i8, ptr %42, i64 -52
   store i8 1, ptr %i.ia, align 4, !tbaa !29
-  %i.ib = getelementptr inbounds nuw i8, ptr %i.hh, i64 429
+  %i.ib = getelementptr inbounds i8, ptr %42, i64 -51
   store i8 0, ptr %i.ib, align 1, !tbaa !30
   call void @llvm.lifetime.start.p0(ptr nonnull %20) #22
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %20, i8 0, i64 16, i1 false)

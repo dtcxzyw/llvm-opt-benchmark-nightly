@@ -55,16 +55,17 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not69, label %.lr.ph79.split, label %.lr.ph79.split.us
 
 .lr.ph79.split.us:                                ; preds = %.lr.ph79, %.loopexit.us
-  %indvars.iv85 = phi i64 [ %indvars.iv.next86, %.loopexit.us ], [ 0, %.lr.ph79 ] ; 7 uses
+  %indvars.iv85 = phi i64 [ %indvars.iv.next86, %.loopexit.us ], [ 0, %.lr.ph79 ] ; 8 uses
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %indvars.iv85
   store i32 -1, ptr %i.x, align 4, !tbaa !17
   %i.y = getelementptr inbounds nuw [4 x i8], ptr %i.o, i64 %indvars.iv85
   store i32 -1, ptr %i.y, align 4, !tbaa !17
   %i.z = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %indvars.iv85
   %i.aa = load i32, ptr %i.z, align 4, !tbaa !17  ; 2 uses
-  %indvars.iv.next86 = add nuw nsw i64 %indvars.iv85, 1 ; 3 uses
-  %i.ab = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %indvars.iv.next86 ; 2 uses
-  %i.ac = load i32, ptr %i.ab, align 4, !tbaa !17 ; 2 uses
+  %indvars.iv.next86 = add nuw nsw i64 %indvars.iv85, 1 ; 2 uses
+  %i.ab = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %indvars.iv85
+  %2 = getelementptr inbounds nuw i8, ptr %i.ab, i64 4 ; 2 uses
+  %i.ac = load i32, ptr %2, align 4, !tbaa !17    ; 2 uses
   %i.ad = icmp slt i32 %i.aa, %i.ac
   br i1 %i.ad, label %.lr.ph76.us.preheader, label %.loopexit.us
 
@@ -108,7 +109,7 @@ bb.e:                                             ; preds = %.lr.ph73.us.us
   br i1 %i.at, label %.lr.ph73.us.us, label %._crit_edge.us.us.loopexit, !llvm.loop !20
 
 ._crit_edge.us.us.loopexit:                       ; preds = %bb.e, %.thread
-  %.pre = load i32, ptr %i.ab, align 4, !tbaa !17
+  %.pre = load i32, ptr %2, align 4, !tbaa !17
   br label %._crit_edge.us.us
 
 ._crit_edge.us.us:                                ; preds = %._crit_edge.us.us.loopexit, %.lr.ph76.us
@@ -123,16 +124,17 @@ bb.e:                                             ; preds = %.lr.ph73.us.us
   br i1 %exitcond95.not, label %.sink.split, label %.lr.ph79.split, !llvm.loop !18
 
 .lr.ph79.split:                                   ; preds = %.lr.ph79, %.loopexit
-  %indvars.iv91 = phi i64 [ %indvars.iv.next92, %.loopexit ], [ 0, %.lr.ph79 ] ; 8 uses
+  %indvars.iv91 = phi i64 [ %indvars.iv.next92, %.loopexit ], [ 0, %.lr.ph79 ] ; 9 uses
   %i.ax = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %indvars.iv91
   store i32 -1, ptr %i.ax, align 4, !tbaa !17
   %i.ay = getelementptr inbounds nuw [4 x i8], ptr %i.o, i64 %indvars.iv91
   store i32 -1, ptr %i.ay, align 4, !tbaa !17
   %i.az = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %indvars.iv91
   %i.ba = load i32, ptr %i.az, align 4, !tbaa !17 ; 2 uses
-  %indvars.iv.next92 = add nuw nsw i64 %indvars.iv91, 1 ; 3 uses
-  %i.bb = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %indvars.iv.next92 ; 2 uses
-  %i.bc = load i32, ptr %i.bb, align 4, !tbaa !17
+  %indvars.iv.next92 = add nuw nsw i64 %indvars.iv91, 1 ; 2 uses
+  %i.bb = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %indvars.iv91
+  %3 = getelementptr inbounds nuw i8, ptr %i.bb, i64 4 ; 2 uses
+  %i.bc = load i32, ptr %3, align 4, !tbaa !17
   %i.bd = icmp slt i32 %i.ba, %i.bc
   br i1 %i.bd, label %.lr.ph76.preheader, label %.loopexit
 
@@ -185,7 +187,7 @@ bb.f:                                             ; preds = %.lr.ph73
   %i.bw = getelementptr inbounds [4 x i8], ptr %i.s, i64 %.pre-phi
   store i32 %.pre-phi99, ptr %i.bw, align 4, !tbaa !17
   %indvars.iv.next89 = add nsw i64 %indvars.iv88, 1 ; 2 uses
-  %i.bx = load i32, ptr %i.bb, align 4, !tbaa !17
+  %i.bx = load i32, ptr %3, align 4, !tbaa !17
   %i.by = sext i32 %i.bx to i64
   %i.bz = icmp slt i64 %indvars.iv.next89, %i.by
   br i1 %i.bz, label %.lr.ph76, label %.loopexit, !llvm.loop !21

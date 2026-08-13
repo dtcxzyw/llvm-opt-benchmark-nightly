@@ -201,8 +201,8 @@ define internal ptr @codecctx_errors_get(ptr nofree noundef readonly captures(no
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 32
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !87   ; 5 uses
-  %magicptr9 = ptrtoint ptr %i.b to i64
-  %switch.tableidx = add i64 %magicptr9, -1       ; 2 uses
+  %magicptr9 = ptrtoint ptr %i.b to i64           ; 2 uses
+  %switch.tableidx = add i64 %magicptr9, -1
   %i.c = icmp ult i64 %switch.tableidx, 3
   br i1 %i.c, label %switch.lookup, label %bb.b
 
@@ -217,8 +217,9 @@ bb.c:                                             ; preds = %bb.b
   br label %_Py_NewRef.exit
 
 switch.lookup:                                    ; preds = %bb.a
-  %switch.gep.a = getelementptr inbounds nuw [8 x i8], ptr @switch.table.codecctx_errors_get, i64 %switch.tableidx
-  %switch.load = load ptr, ptr %switch.gep.a, align 8
+  %switch.gep.a = getelementptr [8 x i8], ptr @switch.table.codecctx_errors_get, i64 %magicptr9
+  %switch.gep = getelementptr i8, ptr %switch.gep.a, i64 -8
+  %switch.load = load ptr, ptr %switch.gep, align 8
   %i.g = tail call ptr @PyUnicode_FromString(ptr noundef nonnull %switch.load) #7
   br label %_Py_NewRef.exit
 

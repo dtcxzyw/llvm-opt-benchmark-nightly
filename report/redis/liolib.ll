@@ -201,20 +201,21 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a, %bb.d
   %i.g = phi ptr [ %i.p, %bb.d ], [ %i.a, %bb.a ] ; 2 uses
-  %i.h = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.g) #11 ; 3 uses
+  %i.h = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.g) #11 ; 4 uses
   %i.i = icmp eq i64 %i.h, 0
   br i1 %i.i, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
-  %3 = add i64 %i.h, -1                           ; 2 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %i.g, i64 %3
+  %3 = getelementptr i8, ptr %i.g, i64 %i.h
+  %i.j = getelementptr i8, ptr %3, i64 -1
   %i.k = load i8, ptr %i.j, align 1, !tbaa !12
   %.not = icmp eq i8 %i.k, 10
   br i1 %.not, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
   %i.l = load ptr, ptr %2, align 8, !tbaa !13
-  %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 %3
+  %4 = getelementptr i8, ptr %i.l, i64 %i.h
+  %i.m = getelementptr i8, ptr %4, i64 -1
   store ptr %i.m, ptr %2, align 8, !tbaa !13
   call void @luaL_pushresult(ptr noundef nonnull %2) #9
   br label %bb.e

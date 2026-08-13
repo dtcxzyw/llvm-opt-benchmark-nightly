@@ -203,21 +203,20 @@ bb.b:                                             ; preds = %.preheader.i.i
   br label %.preheader.i.i.1
 
 .preheader.i.i.1:                                 ; preds = %bb.b, %.preheader.i.i
-  %indvars.iv.next38.i.i = add nsw i64 %indvars.iv37.i.i, -1 ; 2 uses
-  %i.n = getelementptr inbounds nuw i8, ptr getelementptr inbounds nuw (i8, ptr @_ZL16kSizeClassConfig, i64 160), i64 %indvars.iv.next38.i.i ; 2 uses
+  %0 = getelementptr i8, ptr getelementptr inbounds nuw (i8, ptr @_ZL16kSizeClassConfig, i64 160), i64 %indvars.iv37.i.i ; 2 uses
+  %i.n = getelementptr i8, ptr %0, i64 -1         ; 2 uses
   %i.o = load i8, ptr %i.n, align 1, !tbaa !21
   %i.p = icmp slt i8 %i.o, 0
   br i1 %i.p, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %.preheader.i.i.1
-  %0 = getelementptr inbounds nuw i8, ptr getelementptr inbounds nuw (i8, ptr @_ZL16kSizeClassConfig, i64 160), i64 %indvars.iv37.i.i
   %i.q = load i8, ptr %0, align 1, !tbaa !21
   store i8 %i.q, ptr %i.n, align 1, !tbaa !21
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %.preheader.i.i.1
   %indvars.iv.next38.i.i.1 = add nsw i64 %indvars.iv37.i.i, -2
-  %.not.i.i.1 = icmp eq i64 %indvars.iv.next38.i.i, 0
+  %.not.i.i.1 = icmp eq i64 %indvars.iv37.i.i, 1
   br i1 %.not.i.i.1, label %__cxx_global_var_init.exit, label %.preheader.i.i, !llvm.loop !68
 
 __cxx_global_var_init.exit:                       ; preds = %bb.d

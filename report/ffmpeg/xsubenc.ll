@@ -203,7 +203,7 @@ bb.b:                                             ; preds = %.preheader.us, %.cr
   br i1 %i.t, label %.loopexit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.u = sext i32 %.04051.us to i64               ; 2 uses
+  %i.u = sext i32 %.04051.us to i64               ; 3 uses
   %i.v = getelementptr inbounds i8, ptr %.04252.us, i64 %i.u
   %i.w = load i8, ptr %i.v, align 1, !tbaa !46
   %i.x = and i8 %i.w, 3                           ; 3 uses
@@ -221,7 +221,9 @@ bb.d:                                             ; preds = %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.c, %bb.d
   %indvars.iv.next75 = phi i64 [ %indvars.iv.next, %bb.d ], [ %indvars.iv.next74, %bb.c ] ; 3 uses
-  %i.ac = getelementptr inbounds i8, ptr %.04252.us, i64 %indvars.iv.next75
+  %indvars.iv75 = phi i64 [ %indvars.iv.next75, %bb.d ], [ %i.u, %bb.c ]
+  %5 = getelementptr i8, ptr %.04252.us, i64 %indvars.iv75
+  %i.ac = getelementptr i8, ptr %5, i64 1
   %i.ad = load i8, ptr %i.ac, align 1, !tbaa !46
   %i.ae = and i8 %i.ad, 3
   %i.af = icmp eq i8 %i.ae, %i.x

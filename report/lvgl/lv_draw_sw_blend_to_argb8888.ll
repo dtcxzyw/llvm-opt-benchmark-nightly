@@ -203,7 +203,7 @@ bb.ic:                                            ; preds = %bb.ib
   br i1 %i.bgk, label %.epil.preheader728, label %.preheader.i227.new
 
 .preheader.i227.new:                              ; preds = %.preheader.i227, %.preheader.i227.new
-  %indvars.iv250.i = phi i64 [ %indvars.iv.next251.i.1, %.preheader.i227.new ], [ 0, %.preheader.i227 ] ; 4 uses
+  %indvars.iv250.i = phi i64 [ %indvars.iv.next251.i.1, %.preheader.i227.new ], [ 0, %.preheader.i227 ] ; 5 uses
   %niter733 = phi i64 [ %niter733.next.1, %.preheader.i227.new ], [ 0, %.preheader.i227 ]
   %i.bgl = getelementptr inbounds nuw [4 x i8], ptr %.0216.i, i64 %indvars.iv250.i ; 4 uses
   %i.bgm = getelementptr inbounds nuw i8, ptr %i.bgl, i64 3
@@ -216,18 +216,19 @@ bb.ic:                                            ; preds = %bb.ib
   store i8 %i.bgo, ptr %i.bgq, align 1, !tbaa !81
   %i.bgr = load i8, ptr %i.bgn, align 1, !tbaa !41
   store i8 %i.bgr, ptr %i.bgl, align 1, !tbaa !82
-  %indvars.iv.next251.i = or disjoint i64 %indvars.iv250.i, 1 ; 2 uses
-  %8 = getelementptr inbounds nuw [4 x i8], ptr %.0216.i, i64 %indvars.iv.next251.i ; 4 uses
-  %i.bgs = getelementptr inbounds nuw i8, ptr %8, i64 3
+  %8 = getelementptr inbounds nuw [4 x i8], ptr %.0216.i, i64 %indvars.iv250.i ; 4 uses
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 4
+  %i.bgs = getelementptr inbounds nuw i8, ptr %8, i64 7
   store i8 -1, ptr %i.bgs, align 1, !tbaa !129
-  %i.bgt = getelementptr inbounds nuw i8, ptr %.0136215.i, i64 %indvars.iv.next251.i ; 2 uses
+  %10 = getelementptr inbounds nuw i8, ptr %.0136215.i, i64 %indvars.iv250.i
+  %i.bgt = getelementptr inbounds nuw i8, ptr %10, i64 1 ; 2 uses
   %i.bgu = load i8, ptr %i.bgt, align 1, !tbaa !41 ; 2 uses
-  %i.bgv = getelementptr inbounds nuw i8, ptr %8, i64 2
+  %i.bgv = getelementptr inbounds nuw i8, ptr %8, i64 6
   store i8 %i.bgu, ptr %i.bgv, align 1, !tbaa !80
-  %i.bgw = getelementptr inbounds nuw i8, ptr %8, i64 1
+  %i.bgw = getelementptr inbounds nuw i8, ptr %8, i64 5
   store i8 %i.bgu, ptr %i.bgw, align 1, !tbaa !81
   %i.bgx = load i8, ptr %i.bgt, align 1, !tbaa !41
-  store i8 %i.bgx, ptr %8, align 1, !tbaa !82
+  store i8 %i.bgx, ptr %9, align 1, !tbaa !82
   %indvars.iv.next251.i.1 = add nuw nsw i64 %indvars.iv250.i, 2 ; 2 uses
   %niter733.next.1 = add i64 %niter733, 2         ; 2 uses
   %niter733.ncmp.1 = icmp eq i64 %niter733.next.1, %unroll_iter732

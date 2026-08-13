@@ -203,7 +203,7 @@ bb.a:
   %i.af = alloca [24 x i8], align 8               ; 10 uses
   %i.ag = alloca [8 x i8], align 8                ; 12 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %.val62 = load ptr, ptr %i.ah, align 8, !nonnull !4, !noundef !4 ; 3 uses
+  %.val62 = load ptr, ptr %i.ah, align 8, !nonnull !4, !noundef !4 ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %2, i64 16
   %.val63 = load i64, ptr %i.ai, align 8, !noundef !4 ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p)
@@ -275,13 +275,13 @@ bb.g:                                             ; preds = %bb.f
   %i.ay = phi ptr [ %i.db, %.backedge.i ], [ %i.am, %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs7NkY4QXzcxE_8uu_paste.exit.i ]
   %i.az = phi i64 [ %i.dc, %.backedge.i ], [ 0, %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs7NkY4QXzcxE_8uu_paste.exit.i ] ; 18 uses
   %.sroa.01.080.i = phi i64 [ %.sroa.01.0.be.i, %.backedge.i ], [ 0, %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs7NkY4QXzcxE_8uu_paste.exit.i ] ; 5 uses
-  %i.ba = getelementptr inbounds nuw i8, ptr %.val62, i64 %.sroa.01.080.i ; 3 uses
+  %i.ba = getelementptr inbounds nuw i8, ptr %.val62, i64 %.sroa.01.080.i ; 4 uses
   %i.bb = load i8, ptr %i.ba, align 1, !noalias !192, !noundef !4
   %i.bc = icmp eq i8 %i.bb, 92
   br i1 %i.bc, label %bb.h, label %bb.bb
 
 bb.h:                                             ; preds = %.lr.ph.i
-  %i.bd = add nuw nsw i64 %.sroa.01.080.i, 1      ; 4 uses
+  %i.bd = add nuw nsw i64 %.sroa.01.080.i, 1      ; 3 uses
   %.not53.i = icmp ult i64 %i.bd, %.val63
   br i1 %.not53.i, label %bb.l, label %bb.i
 
@@ -313,7 +313,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.bl, label %bb.af, label %bb.au
 
 bb.l:                                             ; preds = %bb.h
-  %i.bm = getelementptr inbounds nuw i8, ptr %.val62, i64 %i.bd ; 3 uses
+  %i.bm = getelementptr i8, ptr %i.ba, i64 1      ; 3 uses
   %i.bn = load i8, ptr %i.bm, align 1, !noalias !192, !noundef !4
   switch i8 %i.bn, label %bb.m [
     i8 48, label %bb.n
@@ -716,7 +716,7 @@ bb.dt:                                            ; preds = %_RNvMs_Cs7NkY4QXzcx
   br label %bb.ee
 
 bb.du:                                            ; preds = %_RNvMs_Cs7NkY4QXzcxE_8uu_pasteNtB4_11InputSource4read.exit.i, %_RNvMs_Cs7NkY4QXzcxE_8uu_pasteNtB4_11InputSource4read.exit.thread.i
-  %.sroa.8.129.i = phi i64 [ %.sroa.019.0.i.i, %_RNvMs_Cs7NkY4QXzcxE_8uu_pasteNtB4_11InputSource4read.exit.thread.i ], [ %.sroa.8.1.i, %_RNvMs_Cs7NkY4QXzcxE_8uu_pasteNtB4_11InputSource4read.exit.i ] ; 4 uses
+  %.sroa.8.129.i = phi i64 [ %.sroa.019.0.i.i, %_RNvMs_Cs7NkY4QXzcxE_8uu_pasteNtB4_11InputSource4read.exit.thread.i ], [ %.sroa.8.1.i, %_RNvMs_Cs7NkY4QXzcxE_8uu_pasteNtB4_11InputSource4read.exit.i ] ; 5 uses
   %.not14.i = icmp eq i64 %.sroa.8.129.i, 0
   br i1 %.not14.i, label %bb.dv, label %bb.dw
 
@@ -726,7 +726,6 @@ bb.dv:                                            ; preds = %bb.du
   br i1 %or.cond.i102, label %bb.eb, label %bb.dx
 
 bb.dw:                                            ; preds = %bb.du
-  %4 = add i64 %.sroa.8.129.i, -1                 ; 2 uses
   %i.qd = icmp ult i64 %.sroa.8.129.i, 8193
   br i1 %i.qd, label %bb.ei, label %bb.ej
 
@@ -825,14 +824,16 @@ bb.eh:                                            ; preds = %bb.eg
   br label %_RINvCs7NkY4QXzcxE_8uu_paste25write_single_input_sourceNtNtNtCs2vKOLqTMYjT_3std2io5stdio10StdoutLockEB2_.exit
 
 bb.ei:                                            ; preds = %bb.dw
-  %i.qw = getelementptr inbounds nuw i8, ptr %i.o, i64 %4
+  %4 = getelementptr i8, ptr %i.o, i64 %.sroa.8.129.i
+  %i.qw = getelementptr i8, ptr %4, i64 -1
   %i.qx = load i8, ptr %i.qw, align 1, !noalias !334, !noundef !4
   %i.qy = call noundef ptr @_RNvXsi_NtNtCs2vKOLqTMYjT_3std2io5stdioNtB5_10StdoutLockNtNtNtCs6JMX4GRUq9U_4core2io5write5Write9write_all(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.ad, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.o, i64 noundef %.sroa.8.129.i) #23 ; 2 uses
   %.not16.i = icmp eq ptr %i.qy, null
   br i1 %.not16.i, label %bb.cc, label %bb.ek
 
 bb.ej:                                            ; preds = %bb.dw
-  call void @_RNvNtCs6JMX4GRUq9U_4core9panicking18panic_bounds_check(i64 noundef %4, i64 noundef 8192, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #24
+  %5 = add i64 %.sroa.8.129.i, -1
+  call void @_RNvNtCs6JMX4GRUq9U_4core9panicking18panic_bounds_check(i64 noundef %5, i64 noundef 8192, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #24
   unreachable
 
 bb.ek:                                            ; preds = %bb.ei

@@ -204,14 +204,15 @@ onig_name_to_group_numbers.exit.thread25..loopexit_crit_edge: ; preds = %onig_na
   br label %.lr.ph
 
 bb.c:                                             ; preds = %.lr.ph
+  %indvars.iv.next = add nsw i64 %indvars.iv39, -1
   %i.q = icmp sgt i64 %indvars.iv39, 1
   br i1 %i.q, label %.lr.ph, label %.loopexit, !llvm.loop !56
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.c
-  %indvars.iv39 = phi i64 [ %indvars.iv.next, %bb.c ], [ %i.o, %.lr.ph.preheader ] ; 2 uses
-  %indvars.iv.next = add nsw i64 %indvars.iv39, -1 ; 2 uses
-  %5 = getelementptr [4 x i8], ptr %i.l, i64 %indvars.iv.next
-  %i.r = load i32, ptr %5, align 4, !tbaa !7      ; 2 uses
+  %indvars.iv39 = phi i64 [ %indvars.iv.next, %bb.c ], [ %i.o, %.lr.ph.preheader ] ; 3 uses
+  %5 = getelementptr [4 x i8], ptr %i.l, i64 %indvars.iv39
+  %6 = getelementptr i8, ptr %5, i64 -4
+  %i.r = load i32, ptr %6, align 4, !tbaa !7      ; 2 uses
   %i.s = sext i32 %i.r to i64
   %i.t = getelementptr [8 x i8], ptr %i.p, i64 %i.s
   %i.u = load i64, ptr %i.t, align 8, !tbaa !57

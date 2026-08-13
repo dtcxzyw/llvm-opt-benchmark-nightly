@@ -199,8 +199,8 @@ bb.p:                                             ; preds = %bb.o
   br label %.thread61
 
 bb.q:                                             ; preds = %bb.o
-  %6 = add i64 %1, -1                             ; 2 uses
-  %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 %6
+  %6 = getelementptr i8, ptr %0, i64 %1
+  %i.ap = getelementptr i8, ptr %6, i64 -1
   %i.aq = load i8, ptr %i.ap, align 1, !tbaa !17
   %.not42 = icmp eq i8 %i.aq, 0
   br i1 %.not42, label %bb.s, label %bb.r, !prof !39
@@ -212,10 +212,11 @@ bb.r:                                             ; preds = %bb.q
   br label %.thread61
 
 bb.s:                                             ; preds = %bb.q
+  %7 = add i64 %1, -1
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 3 uses
   %i.av = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.au) #8 ; 2 uses
   %i.aw = add i64 %i.av, 1
-  %.not43 = icmp ult i64 %i.aw, %6
+  %.not43 = icmp ult i64 %i.aw, %7
   br i1 %.not43, label %bb.u, label %bb.t, !prof !39
 
 bb.t:                                             ; preds = %bb.s

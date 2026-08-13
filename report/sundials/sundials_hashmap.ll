@@ -203,13 +203,14 @@ bb.q:                                             ; preds = %.lr.ph, %bb.n, %bb.
 SUNStlVector_SUNHashMapKeyValue_At.exit59:        ; preds = %.preheader, %SUNStlVector_SUNHashMapKeyValue_PopBack.exit
   %.val32.i158 = phi i64 [ %.val32.i159, %SUNStlVector_SUNHashMapKeyValue_PopBack.exit ], [ %.val32.i.pre, %.preheader ]
   %i.br = phi i64 [ %i.ch, %SUNStlVector_SUNHashMapKeyValue_PopBack.exit ], [ %.val32.i.pre, %.preheader ] ; 2 uses
-  %.033.in.i88 = phi i64 [ %.033.i89, %SUNStlVector_SUNHashMapKeyValue_PopBack.exit ], [ %.val.val, %.preheader ] ; 3 uses
-  %.033.i89 = add nsw i64 %.033.in.i88, -1        ; 2 uses
+  %.033.in.i88 = phi i64 [ %.033.i89, %SUNStlVector_SUNHashMapKeyValue_PopBack.exit ], [ %.val.val, %.preheader ] ; 4 uses
+  %.033.i89 = add nsw i64 %.033.in.i88, -1
   %i.bs = icmp sle i64 %.033.in.i88, %i.br
   tail call void @llvm.assume(i1 %i.bs)
   %i.bt = load ptr, ptr %i.t, align 8, !tbaa !11
-  %i.bu = getelementptr inbounds nuw [8 x i8], ptr %i.bt, i64 %.033.i89
-  %i.bv = load ptr, ptr %i.bu, align 8, !tbaa !19 ; 5 uses
+  %i.bu = getelementptr [8 x i8], ptr %i.bt, i64 %.033.in.i88
+  %3 = getelementptr i8, ptr %i.bu, i64 -8
+  %i.bv = load ptr, ptr %3, align 8, !tbaa !19    ; 5 uses
   %.not43.i = icmp eq ptr %i.bv, null
   br i1 %.not43.i, label %bb.s, label %bb.r
 
@@ -226,7 +227,7 @@ bb.r:                                             ; preds = %SUNStlVector_SUNHas
 
 bb.s:                                             ; preds = %bb.r, %SUNStlVector_SUNHashMapKeyValue_At.exit59
   %.val32.i157 = phi i64 [ %.pre93, %bb.r ], [ %.val32.i158, %SUNStlVector_SUNHashMapKeyValue_At.exit59 ]
-  %i.cb = phi i64 [ %.pre93, %bb.r ], [ %i.br, %SUNStlVector_SUNHashMapKeyValue_At.exit59 ] ; 3 uses
+  %i.cb = phi i64 [ %.pre93, %bb.r ], [ %i.br, %SUNStlVector_SUNHashMapKeyValue_At.exit59 ] ; 4 uses
   %i.cc = icmp eq i64 %i.cb, 0
   br i1 %i.cc, label %SUNStlVector_SUNHashMapKeyValue_PopBack.exit, label %bb.t
 
@@ -235,10 +236,11 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.cd, label %SUNStlVector_SUNHashMapKeyValue_Set.exit, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %i.ce = add nsw i64 %i.cb, -1                   ; 4 uses
+  %i.ce = add nsw i64 %i.cb, -1                   ; 3 uses
   %i.cf = load ptr, ptr %i.t, align 8, !tbaa !11
-  %i.cg = getelementptr inbounds nuw [8 x i8], ptr %i.cf, i64 %i.ce
-  store ptr null, ptr %i.cg, align 8, !tbaa !19
+  %i.cg = getelementptr [8 x i8], ptr %i.cf, i64 %i.cb
+  %4 = getelementptr i8, ptr %i.cg, i64 -8
+  store ptr null, ptr %4, align 8, !tbaa !19
   store i64 %i.ce, ptr %.val, align 8, !tbaa !16
   br label %SUNStlVector_SUNHashMapKeyValue_PopBack.exit
 
@@ -641,28 +643,32 @@ SUNStlVector_SUNHashMapKeyValue_At.exit.prol.loopexit: ; preds = %SUNStlVector_S
   br label %bb.c
 
 SUNStlVector_SUNHashMapKeyValue_At.exit:          ; preds = %SUNStlVector_SUNHashMapKeyValue_At.exit.prol.loopexit, %SUNStlVector_SUNHashMapKeyValue_At.exit
-  %.022 = phi i64 [ %i.ak, %SUNStlVector_SUNHashMapKeyValue_At.exit ], [ %.022.unr, %SUNStlVector_SUNHashMapKeyValue_At.exit.prol.loopexit ] ; 6 uses
+  %.022 = phi i64 [ %i.ak, %SUNStlVector_SUNHashMapKeyValue_At.exit ], [ %.022.unr, %SUNStlVector_SUNHashMapKeyValue_At.exit.prol.loopexit ] ; 10 uses
   %i.z = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %.022
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !19
   %i.ab = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %.022
   store ptr %i.aa, ptr %i.ab, align 8, !tbaa !19
-  %3 = add nuw nsw i64 %.022, 1                   ; 2 uses
-  %4 = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %3
+  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %.022
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.ac = load ptr, ptr %4, align 8, !tbaa !19
-  %i.ad = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %3
-  store ptr %i.ac, ptr %i.ad, align 8, !tbaa !19
-  %5 = add nuw nsw i64 %.022, 2                   ; 2 uses
-  %6 = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %5
-  %i.ae = load ptr, ptr %6, align 8, !tbaa !19
-  %i.af = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %5
-  store ptr %i.ae, ptr %i.af, align 8, !tbaa !19
-  %i.ag = add nuw nsw i64 %.022, 3                ; 3 uses
+  %i.ad = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %.022
+  %5 = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
+  store ptr %i.ac, ptr %5, align 8, !tbaa !19
+  %6 = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %.022
+  %7 = getelementptr inbounds nuw i8, ptr %6, i64 16
+  %i.ae = load ptr, ptr %7, align 8, !tbaa !19
+  %i.af = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %.022
+  %8 = getelementptr inbounds nuw i8, ptr %i.af, i64 16
+  store ptr %i.ae, ptr %8, align 8, !tbaa !19
+  %i.ag = add nuw nsw i64 %.022, 3
   %.not21.3 = icmp slt i64 %i.ag, %i.j
   tail call void @llvm.assume(i1 %.not21.3)
-  %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %i.ag
-  %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !19
-  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %i.ag
-  store ptr %i.ai, ptr %i.aj, align 8, !tbaa !19
+  %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %.022
+  %9 = getelementptr inbounds nuw i8, ptr %i.ah, i64 24
+  %i.ai = load ptr, ptr %9, align 8, !tbaa !19
+  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %.022
+  %10 = getelementptr inbounds nuw i8, ptr %i.aj, i64 24
+  store ptr %i.ai, ptr %10, align 8, !tbaa !19
   %i.ak = add nuw nsw i64 %.022, 4                ; 2 uses
   %exitcond.not.3 = icmp eq i64 %i.ak, %.val.i
   br i1 %exitcond.not.3, label %._crit_edge, label %SUNStlVector_SUNHashMapKeyValue_At.exit, !llvm.loop !40

@@ -203,10 +203,11 @@ _ZNSt12_Vector_baseIN7xgboost7RegTree4NodeESaIS2_EE11_M_allocateEm.exit.thread.i
   store ptr %i.f, ptr %i.g, align 8, !tbaa !174
   %i.h = add nsw i64 %.idx6.i.i, -20              ; 2 uses
   %i.i = urem i64 %i.h, 20
-  %i.j = sub nuw nsw i64 %i.h, %i.i
-  %i.k = add nsw i64 %i.j, 20                     ; 2 uses
+  %i.j = sub nuw nsw i64 %i.h, %i.i               ; 2 uses
+  %i.k = add nsw i64 %i.j, 20
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.e, ptr align 4 %1, i64 %i.k, i1 false)
-  %scevgep.i.i.i = getelementptr i8, ptr %i.e, i64 %i.k
+  %4 = getelementptr i8, ptr %i.e, i64 %i.j
+  %scevgep.i.i.i = getelementptr i8, ptr %4, i64 20
   br label %bb.e
 
 bb.c:                                             ; preds = %.lr.ph.i.i.i.i.preheader.i.i.i, %bb.b

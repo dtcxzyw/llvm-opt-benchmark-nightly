@@ -203,7 +203,7 @@ bb.av:                                            ; preds = %.lr.ph.epil.prehead
           to label %bb.bc unwind label %bb.az
 
 .lr.ph:                                           ; preds = %bb.ay, %.lr.ph.preheader.new
-  %.0165 = phi i64 [ 0, %.lr.ph.preheader.new ], [ %i.iz, %bb.ay ] ; 5 uses
+  %.0165 = phi i64 [ 0, %.lr.ph.preheader.new ], [ %i.iz, %bb.ay ] ; 7 uses
   %niter = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.1, %bb.ay ]
   %i.ie = getelementptr inbounds nuw [4 x i8], ptr %i.be, i64 %.0165
   %i.if = load i32, ptr %i.ie, align 4, !tbaa !165 ; 2 uses
@@ -223,17 +223,19 @@ bb.aw:                                            ; preds = %.lr.ph
   br label %.lr.ph.1
 
 .lr.ph.1:                                         ; preds = %.lr.ph, %bb.aw
-  %7 = or disjoint i64 %.0165, 1                  ; 3 uses
-  %8 = getelementptr inbounds nuw [4 x i8], ptr %i.be, i64 %7
+  %7 = getelementptr inbounds nuw [4 x i8], ptr %i.be, i64 %.0165
+  %8 = getelementptr inbounds nuw i8, ptr %7, i64 4
   %i.ip = load i32, ptr %8, align 4, !tbaa !165   ; 2 uses
   %i.iq = icmp sgt i32 %i.ip, 0
   br i1 %i.iq, label %bb.ax, label %bb.ay
 
 bb.ax:                                            ; preds = %.lr.ph.1
-  %i.ir = getelementptr inbounds nuw [8 x i8], ptr %i.di, i64 %7
-  %i.is = load double, ptr %i.ir, align 8, !tbaa !203
-  %i.it = getelementptr inbounds nuw [8 x i8], ptr %i.gi, i64 %7
-  %i.iu = load double, ptr %i.it, align 8, !tbaa !203
+  %i.ir = getelementptr inbounds nuw [8 x i8], ptr %i.di, i64 %.0165
+  %9 = getelementptr inbounds nuw i8, ptr %i.ir, i64 8
+  %i.is = load double, ptr %9, align 8, !tbaa !203
+  %i.it = getelementptr inbounds nuw [8 x i8], ptr %i.gi, i64 %.0165
+  %10 = getelementptr inbounds nuw i8, ptr %i.it, i64 8
+  %i.iu = load double, ptr %10, align 8, !tbaa !203
   %i.iv = fsub double %i.is, %i.iu
   %i.iw = zext nneg i32 %i.ip to i64
   %i.ix = getelementptr [8 x i8], ptr %i.fn, i64 %i.iw

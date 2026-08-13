@@ -203,6 +203,8 @@ bb.a:
 
 bb.b:                                             ; preds = %_ZNSt10unique_ptrI9bignum_stN4bssl8internal7DeleterEED2Ev.exit407
   %.0.add = add nuw nsw i64 %.0.idx663, 24        ; 2 uses
+  %68 = getelementptr inbounds nuw i8, ptr @_ZN12_GLOBAL__N_110kASN1TestsE, i64 %.0.idx663
+  %.0.ptr = getelementptr inbounds nuw i8, ptr %68, i64 24
   %.not = icmp eq i64 %.0.add, 168
   br i1 %.not, label %.preheader, label %bb.c
 
@@ -215,8 +217,8 @@ bb.b:                                             ; preds = %_ZNSt10unique_ptrI9
   br label %bb.fa
 
 bb.c:                                             ; preds = %bb.a, %bb.b
+  %.0.ptr664 = phi ptr [ @_ZN12_GLOBAL__N_110kASN1TestsE, %bb.a ], [ %.0.ptr, %bb.b ] ; 3 uses
   %.0.idx663 = phi i64 [ 0, %bb.a ], [ %.0.add, %bb.b ] ; 2 uses
-  %.0.ptr664 = getelementptr inbounds nuw i8, ptr @_ZN12_GLOBAL__N_110kASN1TestsE, i64 %.0.idx663 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #21
   %i.aa = load ptr, ptr %.0.ptr664, align 8, !tbaa !381 ; 2 uses
   call void @_ZN7testing11ScopedTraceC2EPKciS2_(ptr noundef nonnull align 1 dereferenceable(1) %1, ptr noundef nonnull @.str.2, i32 noundef 1423, ptr noundef %i.aa)

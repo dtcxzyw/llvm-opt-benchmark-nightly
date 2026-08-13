@@ -203,7 +203,7 @@ bb.e:                                             ; preds = %bb.e, %.epil.prehea
   ret void
 
 bb.f:                                             ; preds = %bb.f, %.lr.ph.new
-  %indvars.iv = phi i64 [ 0, %.lr.ph.new ], [ %indvars.iv.next.3, %bb.f ] ; 6 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph.new ], [ %indvars.iv.next.3, %bb.f ] ; 9 uses
   %niter = phi i64 [ 0, %.lr.ph.new ], [ %niter.next.3, %bb.f ]
   %i.ad = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %indvars.iv
   %i.ae = load i32, ptr %i.ad, align 4, !tbaa !40
@@ -213,33 +213,36 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph.new
   %i.ai = fdiv double 1.000000e+00, %i.ah
   %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %indvars.iv
   store double %i.ai, ptr %i.aj, align 8, !tbaa !41
-  %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 2 uses
-  %6 = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %indvars.iv.next
-  %i.ak = load i32, ptr %6, align 4, !tbaa !40
+  %6 = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %indvars.iv
+  %7 = getelementptr inbounds nuw i8, ptr %6, i64 4
+  %i.ak = load i32, ptr %7, align 4, !tbaa !40
   %i.al = sext i32 %i.ak to i64
   %i.am = getelementptr inbounds [8 x i8], ptr %i.t, i64 %i.al
   %i.an = load double, ptr %i.am, align 8, !tbaa !41
   %i.ao = fdiv double 1.000000e+00, %i.an
-  %i.ap = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %indvars.iv.next
-  store double %i.ao, ptr %i.ap, align 8, !tbaa !41
-  %indvars.iv.next.1 = or disjoint i64 %indvars.iv, 2 ; 2 uses
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %indvars.iv.next.1
-  %i.aq = load i32, ptr %7, align 4, !tbaa !40
+  %i.ap = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %indvars.iv
+  %8 = getelementptr inbounds nuw i8, ptr %i.ap, i64 8
+  store double %i.ao, ptr %8, align 8, !tbaa !41
+  %9 = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %indvars.iv
+  %10 = getelementptr inbounds nuw i8, ptr %9, i64 8
+  %i.aq = load i32, ptr %10, align 4, !tbaa !40
   %i.ar = sext i32 %i.aq to i64
   %i.as = getelementptr inbounds [8 x i8], ptr %i.t, i64 %i.ar
   %i.at = load double, ptr %i.as, align 8, !tbaa !41
   %i.au = fdiv double 1.000000e+00, %i.at
-  %i.av = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %indvars.iv.next.1
-  store double %i.au, ptr %i.av, align 8, !tbaa !41
-  %indvars.iv.next.2 = or disjoint i64 %indvars.iv, 3 ; 2 uses
-  %8 = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %indvars.iv.next.2
-  %i.aw = load i32, ptr %8, align 4, !tbaa !40
+  %i.av = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %indvars.iv
+  %11 = getelementptr inbounds nuw i8, ptr %i.av, i64 16
+  store double %i.au, ptr %11, align 8, !tbaa !41
+  %12 = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %indvars.iv
+  %13 = getelementptr inbounds nuw i8, ptr %12, i64 12
+  %i.aw = load i32, ptr %13, align 4, !tbaa !40
   %i.ax = sext i32 %i.aw to i64
   %i.ay = getelementptr inbounds [8 x i8], ptr %i.t, i64 %i.ax
   %i.az = load double, ptr %i.ay, align 8, !tbaa !41
   %i.ba = fdiv double 1.000000e+00, %i.az
-  %i.bb = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %indvars.iv.next.2
-  store double %i.ba, ptr %i.bb, align 8, !tbaa !41
+  %i.bb = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %indvars.iv
+  %14 = getelementptr inbounds nuw i8, ptr %i.bb, i64 24
+  store double %i.ba, ptr %14, align 8, !tbaa !41
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
@@ -642,7 +645,7 @@ bb.a:
   br i1 %i.f, label %.lr.ph._crit_edge, label %.lr.ph29, !llvm.loop !169
 
 .lr.ph._crit_edge:                                ; preds = %.lr.ph, %.lr.ph.preheader
-  %.fr.i16.lcssa = phi i64 [ %.fr.i13, %.lr.ph.preheader ], [ %.fr.i, %.lr.ph ] ; 2 uses
+  %.fr.i16.lcssa = phi i64 [ %.fr.i13, %.lr.ph.preheader ], [ %.fr.i, %.lr.ph ] ; 3 uses
   %storemerge14.lcssa = phi ptr [ %1, %.lr.ph.preheader ], [ %i.az, %.lr.ph ]
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
   %i.g = lshr i64 %.fr.i16.lcssa, 3               ; 2 uses
@@ -652,8 +655,9 @@ bb.a:
   %i.k = lshr i64 %i.j, 1                         ; 2 uses
   %i.l = and i64 %.fr.i16.lcssa, 8
   %i.m = icmp eq i64 %i.l, 0
-  %i.n = or disjoint i64 %i.h, 1                  ; 2 uses
-  %4 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.n
+  %i.n = or disjoint i64 %i.h, 1
+  %4 = getelementptr i8, ptr %0, i64 %.fr.i16.lcssa
+  %5 = getelementptr i8, ptr %4, i64 -8
   %i.o = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.i
   br label %bb.b
 
@@ -666,14 +670,15 @@ bb.b:                                             ; preds = %_ZSt13__adjust_heap
 
 .lr.ph.i.i.i:                                     ; preds = %bb.b, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.thread37.i.i.i
   %.039.i.i.i = phi i64 [ %i.ae, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.thread37.i.i.i ], [ %.09.i.i, %bb.b ] ; 2 uses
-  %i.r = shl i64 %.039.i.i.i, 1                   ; 2 uses
-  %i.s = add i64 %i.r, 2                          ; 3 uses
-  %i.t = getelementptr inbounds [8 x i8], ptr %0, i64 %i.s ; 2 uses
-  %i.u = or disjoint i64 %i.r, 1                  ; 2 uses
-  %5 = getelementptr inbounds [8 x i8], ptr %0, i64 %i.u ; 2 uses
-  %i.v = getelementptr inbounds nuw i8, ptr %i.t, i64 4
+  %i.r = shl i64 %.039.i.i.i, 1                   ; 3 uses
+  %i.s = add i64 %i.r, 2                          ; 2 uses
+  %i.t = getelementptr [8 x i8], ptr %0, i64 %i.r ; 4 uses
+  %6 = getelementptr i8, ptr %i.t, i64 16
+  %i.u = or disjoint i64 %i.r, 1
+  %7 = getelementptr i8, ptr %i.t, i64 8
+  %i.v = getelementptr i8, ptr %i.t, i64 20
   %i.w = load i32, ptr %i.v, align 4, !tbaa !71   ; 2 uses
-  %i.x = getelementptr inbounds nuw i8, ptr %5, i64 4
+  %i.x = getelementptr i8, ptr %i.t, i64 12
   %i.y = load i32, ptr %i.x, align 4, !tbaa !71   ; 2 uses
   %i.z = icmp sgt i32 %i.w, %i.y
   br i1 %i.z, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.thread.i.i.i, label %bb.c
@@ -683,8 +688,8 @@ bb.c:                                             ; preds = %.lr.ph.i.i.i
   br i1 %i.aa, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.i.i.i, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.thread37.i.i.i
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.i.i.i: ; preds = %bb.c
-  %i.ab = load i32, ptr %i.t, align 4, !tbaa !69
-  %i.ac = load i32, ptr %5, align 4, !tbaa !69
+  %i.ab = load i32, ptr %6, align 4, !tbaa !69
+  %i.ac = load i32, ptr %7, align 4, !tbaa !69
   %i.ad = icmp sgt i32 %i.ab, %i.ac
   %cond.fr.i.i.i = freeze i1 %i.ad
   br i1 %cond.fr.i.i.i, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.thread.i.i.i, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.thread37.i.i.i
@@ -708,7 +713,7 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN3g2o10MatrixEle
   br i1 %or.cond.i.i, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %._crit_edge.i.i.i
-  %i.ak = load i64, ptr %4, align 4
+  %i.ak = load i64, ptr %5, align 4
   store i64 %i.ak, ptr %i.o, align 4
   br label %bb.e
 
@@ -1111,14 +1116,15 @@ bb.a:
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.thread37.i.i
   %.039.i.i = phi i64 [ %i.z, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.thread37.i.i ], [ 0, %.lr.ph ] ; 2 uses
-  %i.m = shl i64 %.039.i.i, 1                     ; 2 uses
-  %i.n = add i64 %i.m, 2                          ; 3 uses
-  %i.o = getelementptr inbounds [8 x i8], ptr %0, i64 %i.n ; 2 uses
-  %i.p = or disjoint i64 %i.m, 1                  ; 2 uses
-  %3 = getelementptr inbounds [8 x i8], ptr %0, i64 %i.p ; 2 uses
-  %i.q = getelementptr inbounds nuw i8, ptr %i.o, i64 4
+  %i.m = shl i64 %.039.i.i, 1                     ; 3 uses
+  %i.n = add i64 %i.m, 2                          ; 2 uses
+  %i.o = getelementptr [8 x i8], ptr %0, i64 %i.m ; 4 uses
+  %3 = getelementptr i8, ptr %i.o, i64 16
+  %i.p = or disjoint i64 %i.m, 1
+  %4 = getelementptr i8, ptr %i.o, i64 8
+  %i.q = getelementptr i8, ptr %i.o, i64 20
   %i.r = load i32, ptr %i.q, align 4, !tbaa !71   ; 2 uses
-  %i.s = getelementptr inbounds nuw i8, ptr %3, i64 4
+  %i.s = getelementptr i8, ptr %i.o, i64 12
   %i.t = load i32, ptr %i.s, align 4, !tbaa !71   ; 2 uses
   %i.u = icmp sgt i32 %i.r, %i.t
   br i1 %i.u, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.thread.i.i, label %bb.b
@@ -1128,8 +1134,8 @@ bb.b:                                             ; preds = %.lr.ph.i.i
   br i1 %i.v, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.i.i, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.thread37.i.i
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.i.i: ; preds = %bb.b
-  %i.w = load i32, ptr %i.o, align 4, !tbaa !69
-  %i.x = load i32, ptr %3, align 4, !tbaa !69
+  %i.w = load i32, ptr %3, align 4, !tbaa !69
+  %i.x = load i32, ptr %4, align 4, !tbaa !69
   %i.y = icmp sgt i32 %i.w, %i.x
   %cond.fr.i.i = freeze i1 %i.y
   br i1 %cond.fr.i.i, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.thread.i.i, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN3g2o10MatrixElemESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.thread37.i.i
@@ -1159,11 +1165,12 @@ bb.c:                                             ; preds = %._crit_edge.i.i
   br i1 %i.ai, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.aj = shl nsw i64 %.0.lcssa.i.i, 1
-  %i.ak = or disjoint i64 %i.aj, 1                ; 2 uses
-  %i.al = getelementptr inbounds [8 x i8], ptr %0, i64 %i.ak
+  %i.aj = shl nsw i64 %.0.lcssa.i.i, 1            ; 2 uses
+  %i.ak = or disjoint i64 %i.aj, 1
+  %i.al = getelementptr [8 x i8], ptr %0, i64 %i.aj
+  %5 = getelementptr i8, ptr %i.al, i64 8
   %i.am = getelementptr inbounds [8 x i8], ptr %0, i64 %.0.lcssa.i.i
-  %i.an = load i64, ptr %i.al, align 4
+  %i.an = load i64, ptr %5, align 4
   store i64 %i.an, ptr %i.am, align 4
   br label %bb.e
 

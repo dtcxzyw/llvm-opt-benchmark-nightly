@@ -203,10 +203,10 @@ _ZN7testing15AssertionResultD2Ev.exit77:          ; preds = %bb.ag, %_ZNKSt14def
   br i1 %.not4.i.i.i, label %.loopexit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_ZN7testing15AssertionResultD2Ev.exit77, %.lr.ph.i.i.i
-  %.06.i.i.i = phi i64 [ %i.ds, %.lr.ph.i.i.i ], [ 0, %_ZN7testing15AssertionResultD2Ev.exit77 ] ; 2 uses
+  %.06.i.i.i = phi i64 [ %i.ds, %.lr.ph.i.i.i ], [ 0, %_ZN7testing15AssertionResultD2Ev.exit77 ] ; 3 uses
   %.sroa.02.05.i.i.i = phi ptr [ %i.dr, %.lr.ph.i.i.i ], [ %i.dq, %_ZN7testing15AssertionResultD2Ev.exit77 ]
   %i.dr = call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef %.sroa.02.05.i.i.i) #27 ; 2 uses
-  %i.ds = add nuw nsw i64 %.06.i.i.i, 1           ; 3 uses
+  %i.ds = add nuw nsw i64 %.06.i.i.i, 1           ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.dr, %i.h
   br i1 %.not.i.i.i, label %_ZSt10__distanceISt23_Rb_tree_const_iteratorIiEENSt15iterator_traitsIT_E15difference_typeES3_S3_St18input_iterator_tag.exit.i.i, label %.lr.ph.i.i.i, !llvm.loop !359
 
@@ -243,9 +243,10 @@ _ZNSt12_Vector_baseIiSaIiEED2Ev.exit.i:           ; preds = %bb.ai, %_ZNSt12_Vec
   br label %.body
 
 .loopexit.loopexit:                               ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i
-  %i.eb = getelementptr inbounds nuw [4 x i8], ptr %i.dv, i64 %i.ds
+  %i.eb = getelementptr inbounds nuw [4 x i8], ptr %i.dv, i64 %.06.i.i.i
+  %19 = getelementptr inbounds nuw i8, ptr %i.eb, i64 4
   %i.ec = ptrtoint ptr %i.dy to i64
-  %i.ed = ptrtoint ptr %i.eb to i64
+  %i.ed = ptrtoint ptr %19 to i64
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.loopexit.loopexit, %_ZN7testing15AssertionResultD2Ev.exit77

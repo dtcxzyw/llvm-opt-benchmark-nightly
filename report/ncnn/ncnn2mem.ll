@@ -204,16 +204,17 @@ bb.eu:                                            ; preds = %.noexc.i380.i
   br label %bb.fb
 
 bb.ev:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit394.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit378.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit359.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit330.i
-  %i.us = load i64, ptr %i.em, align 8, !tbaa !28 ; 2 uses
-  %20 = add i64 %i.us, -1                         ; 2 uses
-  %21 = load ptr, ptr %10, align 8, !tbaa !15
-  %i.ut = getelementptr inbounds nuw i8, ptr %21, i64 %20
+  %i.us = load i64, ptr %i.em, align 8, !tbaa !28 ; 3 uses
+  %20 = load ptr, ptr %10, align 8, !tbaa !15
+  %21 = getelementptr i8, ptr %20, i64 %i.us
+  %i.ut = getelementptr i8, ptr %21, i64 -1
   %i.uu = load i8, ptr %i.ut, align 1, !tbaa !27
   %i.uv = icmp eq i8 %i.uu, 34
   br i1 %i.uv, label %bb.ew, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit.i
 
 bb.ew:                                            ; preds = %bb.ev
-  invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEmc(ptr noundef nonnull align 8 dereferenceable(32) %10, i64 noundef %20, i8 noundef signext 0)
+  %22 = add i64 %i.us, -1
+  invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEmc(ptr noundef nonnull align 8 dereferenceable(32) %10, i64 noundef %22, i8 noundef signext 0)
           to label %._ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit_crit_edge.i unwind label %bb.ex
 
 ._ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit_crit_edge.i: ; preds = %bb.ew

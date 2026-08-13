@@ -203,7 +203,7 @@ bb.n:                                             ; preds = %bb.m
   br label %.lr.ph101
 
 .lr.ph101:                                        ; preds = %bb.q, %.lr.ph101.preheader.new
-  %indvars.iv108 = phi i64 [ 1, %.lr.ph101.preheader.new ], [ %indvars.iv.next109.1, %bb.q ] ; 4 uses
+  %indvars.iv108 = phi i64 [ 1, %.lr.ph101.preheader.new ], [ %indvars.iv.next109.1, %bb.q ] ; 5 uses
   %.0100 = phi i32 [ 0, %.lr.ph101.preheader.new ], [ %.1.1, %bb.q ] ; 3 uses
   %niter128 = phi i64 [ 0, %.lr.ph101.preheader.new ], [ %niter128.next.1, %bb.q ]
   %i.co = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %indvars.iv108 ; 2 uses
@@ -230,9 +230,9 @@ bb.o:                                             ; preds = %.lr.ph101
 
 .lr.ph101.1:                                      ; preds = %.lr.ph101, %bb.o
   %.1 = phi i32 [ %i.da, %bb.o ], [ %.0100, %.lr.ph101 ] ; 3 uses
-  %indvars.iv.next109 = add nuw nsw i64 %indvars.iv108, 1 ; 2 uses
-  %8 = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %indvars.iv.next109
-  %i.de = load i32, ptr %8, align 4, !tbaa !13
+  %8 = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %indvars.iv108
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 4
+  %i.de = load i32, ptr %9, align 4, !tbaa !13
   %i.df = sext i32 %i.de to i64
   %i.dg = getelementptr inbounds [8 x i8], ptr %.067, i64 %i.df
   %i.dh = load double, ptr %i.dg, align 8, !tbaa !19
@@ -244,8 +244,9 @@ bb.p:                                             ; preds = %.lr.ph101.1
   %i.dk = add nsw i32 %.1, 1
   %i.dl = sext i32 %.1 to i64
   %i.dm = getelementptr inbounds [4 x i8], ptr %i.ci, i64 %i.dl
-  %i.dn = trunc nuw nsw i64 %indvars.iv.next109 to i32
-  store i32 %i.dn, ptr %i.dm, align 4, !tbaa !13
+  %i.dn = trunc i64 %indvars.iv108 to i32
+  %10 = add i32 %i.dn, 1
+  store i32 %10, ptr %i.dm, align 4, !tbaa !13
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %.lr.ph101.1

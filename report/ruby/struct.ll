@@ -203,7 +203,7 @@ bb.h:                                             ; preds = %bb.f
   br label %rb_array_len.exit
 
 rb_array_len.exit:                                ; preds = %bb.g, %bb.h
-  %.0.i45 = phi i64 [ %i.ag, %bb.g ], [ %i.ai, %bb.h ] ; 8 uses
+  %.0.i45 = phi i64 [ %i.ag, %bb.g ], [ %i.ai, %bb.h ] ; 9 uses
   %i.aj = icmp slt i64 %.0.i45, 11
   %i.ak = inttoptr i64 %0 to ptr                  ; 3 uses
   %i.al = load i64, ptr %i.ak, align 8, !tbaa !13 ; 3 uses
@@ -292,7 +292,6 @@ bb.q:                                             ; preds = %bb.o
 
 internal_RSTRUCT_LEN.exit50:                      ; preds = %bb.p, %bb.q
   %.0.i49 = phi i64 [ %i.bh, %bb.p ], [ %i.bj, %bb.q ]
-  %2 = add nsw i64 %.0.i45, -1                    ; 2 uses
   br i1 %.not.i44, label %bb.s, label %bb.r
 
 bb.r:                                             ; preds = %internal_RSTRUCT_LEN.exit50
@@ -306,8 +305,9 @@ bb.s:                                             ; preds = %internal_RSTRUCT_LE
 
 RARRAY_AREF.exit53:                               ; preds = %bb.r, %bb.s
   %.0.i.i52 = phi ptr [ %i.bk, %bb.r ], [ %i.bm, %bb.s ]
-  %i.bn = getelementptr [8 x i8], ptr %.0.i.i52, i64 %2
-  %i.bo = load i64, ptr %i.bn, align 8, !tbaa !11
+  %i.bn = getelementptr [8 x i8], ptr %.0.i.i52, i64 %.0.i45
+  %2 = getelementptr i8, ptr %i.bn, i64 -8
+  %i.bo = load i64, ptr %2, align 8, !tbaa !11
   %i.bp = tail call i64 @rb_fix2int(i64 noundef %i.bo) #22
   %sext = shl i64 %i.bp, 32
   %i.bq = ashr exact i64 %sext, 32
@@ -332,8 +332,9 @@ bb.v:                                             ; preds = %bb.t
 
 RARRAY_AREF.exit56:                               ; preds = %bb.u, %bb.v
   %.0.i.i55 = phi ptr [ %i.bu, %bb.u ], [ %i.bw, %bb.v ]
-  %i.bx = getelementptr [8 x i8], ptr %.0.i.i55, i64 %2
-  %i.by = load i64, ptr %i.bx, align 8, !tbaa !11
+  %i.bx = getelementptr [8 x i8], ptr %.0.i.i55, i64 %.0.i45
+  %3 = getelementptr i8, ptr %i.bx, i64 -8
+  %i.by = load i64, ptr %3, align 8, !tbaa !11
   %i.bz = tail call fastcc i32 @RB_FIX2INT(i64 noundef %i.by)
   %i.ca = tail call fastcc i64 @internal_RSTRUCT_LEN(i64 noundef %0)
   tail call void (i64, ptr, ...) @rb_raise(i64 noundef %i.br, ptr noundef nonnull @.str.36, i32 noundef %i.bz, i64 noundef %i.ca) #24

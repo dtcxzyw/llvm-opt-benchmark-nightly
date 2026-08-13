@@ -11,13 +11,14 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define noundef nonnull ptr @extype(i64 noundef %0) local_unnamed_addr #0 {
 bb.a:
-  %switch.tableidx = add i64 %0, -260             ; 2 uses
-  %1 = icmp ult i64 %switch.tableidx, 4
-  br i1 %1, label %switch.lookup, label %bb.b
+  %1 = and i64 %0, -4
+  %2 = icmp eq i64 %1, 260
+  br i1 %2, label %switch.lookup, label %bb.b
 
 switch.lookup:                                    ; preds = %bb.a
-  %switch.gep.a = getelementptr inbounds nuw [8 x i8], ptr @switch.table.extype, i64 %switch.tableidx
-  %switch.load = load ptr, ptr %switch.gep.a, align 8
+  %switch.gep.a = getelementptr [8 x i8], ptr @switch.table.extype, i64 %0
+  %switch.gep = getelementptr i8, ptr %switch.gep.a, i64 -2080
+  %switch.load = load ptr, ptr %switch.gep, align 8
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %switch.lookup

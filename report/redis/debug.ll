@@ -203,10 +203,11 @@ bb.gw:                                            ; preds = %bb.gv
   %i.zy = tail call ptr (ptr, ptr, ...) @sdscatprintf(ptr noundef %i.aau, ptr noundef nonnull @.str.251, i64 noundef 4294967296) #24
   %i.zz = tail call ptr (ptr, ptr, ...) @sdscatprintf(ptr noundef %i.zy, ptr noundef nonnull @.str.252) #24
   %i.aaa = load ptr, ptr getelementptr inbounds nuw (i8, ptr @server, i64 1512), align 8, !tbaa !161
-  %i.aab = getelementptr inbounds nuw [16 x i8], ptr %i.aaa, i64 %indvars.iv.next ; 2 uses
-  %i.aac = getelementptr inbounds nuw i8, ptr %i.aab, i64 8
+  %i.aab = getelementptr inbounds nuw [16 x i8], ptr %i.aaa, i64 %indvars.iv ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %i.aab, i64 16
+  %i.aac = getelementptr inbounds nuw i8, ptr %i.aab, i64 24
   %i.aad = load i64, ptr %i.aac, align 8, !tbaa !166
-  %i.aae = load ptr, ptr %i.aab, align 8, !tbaa !162
+  %i.aae = load ptr, ptr %4, align 8, !tbaa !162
   %i.aaf = getelementptr inbounds nuw i8, ptr %i.aae, i64 40
   %i.aag = load i64, ptr %i.aaf, align 8, !tbaa !164
   %i.aah = tail call ptr (ptr, ptr, ...) @sdscatprintf(ptr noundef %i.zz, ptr noundef nonnull @.str.254, i64 noundef %i.aad, i64 noundef %i.aag) #24 ; 3 uses
@@ -216,7 +217,7 @@ bb.gw:                                            ; preds = %bb.gv
   br label %.loopexit
 
 bb.gx:                                            ; preds = %bb.gx, %.peel.next
-  %indvars.iv = phi i64 [ 1, %.peel.next ], [ %indvars.iv.next, %bb.gx ] ; 4 uses
+  %indvars.iv = phi i64 [ 1, %.peel.next ], [ %indvars.iv.next, %bb.gx ] ; 5 uses
   %.0527765 = phi ptr [ %i.zx, %.peel.next ], [ %i.aau, %bb.gx ]
   %i.aaj = shl nuw nsw i64 16384, %indvars.iv
   %i.aak = tail call ptr (ptr, ptr, ...) @sdscatprintf(ptr noundef %.0527765, ptr noundef nonnull @.str.251, i64 noundef %i.aaj) #24
@@ -231,7 +232,7 @@ bb.gx:                                            ; preds = %bb.gx, %.peel.next
   %i.aas = getelementptr inbounds nuw i8, ptr %i.aar, i64 40
   %i.aat = load i64, ptr %i.aas, align 8, !tbaa !164
   %i.aau = tail call ptr (ptr, ptr, ...) @sdscatprintf(ptr noundef %i.aam, ptr noundef nonnull @.str.254, i64 noundef %i.aaq, i64 noundef %i.aat) #24 ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 18
   br i1 %exitcond.not, label %.loopexit806.peel.begin, label %bb.gx, !llvm.loop !167
 

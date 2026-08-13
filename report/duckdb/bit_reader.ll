@@ -102,7 +102,7 @@ _ZN13duckdb_brotliL14BrotliPullByteEPNS_15BrotliBitReaderE.exit.i8.1: ; preds = 
   store i64 %i.ac, ptr %i.b, align 8, !tbaa !7
   %i.ad = lshr i64 %i.aa, 16                      ; 3 uses
   store i64 %i.ad, ptr %0, align 8, !tbaa !12
-  %i.ae = add i64 %1, -16                         ; 5 uses
+  %i.ae = add i64 %1, -16                         ; 4 uses
   %i.af = icmp ult i64 %i.ac, %i.ae
   br i1 %i.af, label %.lr.ph33.preheader, label %._crit_edge34
 
@@ -154,8 +154,9 @@ bb.c:                                             ; preds = %_ZN13duckdb_brotliL
 ._crit_edge34:                                    ; preds = %_ZN13duckdb_brotliL14BrotliPullByteEPNS_15BrotliBitReaderE.exit.i, %._crit_edge
   %i.ay = phi i64 [ %i.ad, %._crit_edge ], [ %i.ao, %_ZN13duckdb_brotliL14BrotliPullByteEPNS_15BrotliBitReaderE.exit.i ] ; 2 uses
   %.lcssa = phi i64 [ %i.ac, %._crit_edge ], [ %i.ap, %_ZN13duckdb_brotliL14BrotliPullByteEPNS_15BrotliBitReaderE.exit.i ]
-  %i.az = getelementptr inbounds nuw [8 x i8], ptr @_ZN13duckdb_brotli14kBrotliBitMaskE, i64 %i.ae
-  %i.ba = load i64, ptr %i.az, align 8, !tbaa !19
+  %i.az = getelementptr [8 x i8], ptr @_ZN13duckdb_brotli14kBrotliBitMaskE, i64 %1
+  %3 = getelementptr i8, ptr %i.az, i64 -128
+  %i.ba = load i64, ptr %3, align 8, !tbaa !19
   %i.bb = and i64 %i.ba, %i.ay
   %i.bc = sub i64 %.lcssa, %i.ae
   store i64 %i.bc, ptr %i.b, align 8, !tbaa !7

@@ -203,7 +203,7 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph35
 define hidden i32 @mbedtls_asn1_write_bitstring(ptr nofree noundef captures(none) %0, ptr noundef %1, ptr nofree noundef readonly captures(none) %2, i64 noundef %3) local_unnamed_addr #6 {
 bb.a:
   %i.a = add i64 %3, 7                            ; 4 uses
-  %i.b = lshr i64 %i.a, 3                         ; 5 uses
+  %i.b = lshr i64 %i.a, 3                         ; 6 uses
   %i.c = and i64 %i.a, -8
   %i.d = sub i64 %i.c, %3                         ; 3 uses
   %i.e = load ptr, ptr %0, align 8, !tbaa !9      ; 4 uses
@@ -230,8 +230,9 @@ bb.c:                                             ; preds = %bb.b
   br label %.loopexit.i.i
 
 bb.d:                                             ; preds = %bb.c
-  %i.m = add nsw i64 %i.b, -1                     ; 2 uses
-  %i.n = getelementptr inbounds nuw i8, ptr %2, i64 %i.m
+  %i.m = add nsw i64 %i.b, -1
+  %4 = getelementptr i8, ptr %2, i64 %i.b
+  %i.n = getelementptr i8, ptr %4, i64 -1
   %i.o = load i8, ptr %i.n, align 1, !tbaa !12
   %i.p = trunc i64 %i.d to i32
   %notmask = shl nsw i32 -1, %i.p

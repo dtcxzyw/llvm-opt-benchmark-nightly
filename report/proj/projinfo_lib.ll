@@ -204,16 +204,17 @@ bb.bg:                                            ; preds = %bb.bb
   br label %.lr.ph662
 
 .lr.ph662:                                        ; preds = %.lr.ph662.preheader, %bb.bp
-  %.0223660 = phi i64 [ %i.lr, %bb.bp ], [ %i.lq, %.lr.ph662.preheader ] ; 3 uses
-  %i.lr = add i64 %.0223660, -1                   ; 3 uses
-  %i.ls = getelementptr inbounds nuw [32 x i8], ptr %i.lm, i64 %i.lr ; 3 uses
-  %i.lt = getelementptr inbounds nuw i8, ptr %i.ls, i64 8
+  %.0223660 = phi i64 [ %i.lr, %bb.bp ], [ %i.lq, %.lr.ph662.preheader ] ; 4 uses
+  %i.lr = add i64 %.0223660, -1                   ; 2 uses
+  %i.ls = getelementptr [32 x i8], ptr %i.lm, i64 %.0223660 ; 2 uses
+  %53 = getelementptr i8, ptr %i.ls, i64 -32      ; 2 uses
+  %i.lt = getelementptr i8, ptr %i.ls, i64 -24
   %i.lu = load i64, ptr %i.lt, align 8, !tbaa !44 ; 2 uses
   %i.lv = icmp ugt i64 %i.lu, 1
   br i1 %i.lv, label %bb.bh, label %bb.bp
 
 bb.bh:                                            ; preds = %.lr.ph662
-  %i.lw = load ptr, ptr %i.ls, align 8, !tbaa !39 ; 2 uses
+  %i.lw = load ptr, ptr %53, align 8, !tbaa !39   ; 2 uses
   %i.lx = getelementptr i8, ptr %i.lw, i64 %i.lu
   %i.ly = getelementptr i8, ptr %i.lx, i64 -1
   %i.lz = load i8, ptr %i.ly, align 1, !tbaa !40
@@ -227,7 +228,7 @@ bb.bi:                                            ; preds = %bb.bh
 
 bb.bj:                                            ; preds = %bb.bi
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #31
-  invoke void @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6substrEmm(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %15, ptr noundef nonnull align 8 dereferenceable(32) %i.ls, i64 noundef 1, i64 noundef -1)
+  invoke void @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6substrEmm(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %15, ptr noundef nonnull align 8 dereferenceable(32) %53, i64 noundef 1, i64 noundef -1)
           to label %bb.bk unwind label %bb.bn
 
 bb.bk:                                            ; preds = %bb.bj
@@ -630,19 +631,20 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit447.thread: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit447.thread602, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit447
   %i.vb = load i8, ptr %i.uy, align 1, !tbaa !40
-  %i.vc = call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEcm(ptr noundef nonnull align 8 dereferenceable(32) %33, i8 noundef signext %i.vb, i64 noundef 0) #31 ; 3 uses
+  %i.vc = call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEcm(ptr noundef nonnull align 8 dereferenceable(32) %33, i8 noundef signext %i.vb, i64 noundef 0) #31 ; 4 uses
   %.not263 = icmp eq i64 %i.vc, -1
   br i1 %.not263, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit449.thread603, label %bb.dn
 
 bb.dn:                                            ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit447.thread
-  %i.vd = add nuw i64 %i.vc, 1                    ; 2 uses
+  %i.vd = add nuw i64 %i.vc, 1
   %i.ve = load i64, ptr %i.tb, align 8, !tbaa !44
   %i.vf = icmp ult i64 %i.vd, %i.ve
   br i1 %i.vf, label %bb.do, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit449.thread603
 
 bb.do:                                            ; preds = %bb.dn
   %i.vg = load ptr, ptr %33, align 8, !tbaa !39
-  %i.vh = getelementptr inbounds nuw i8, ptr %i.vg, i64 %i.vd
+  %54 = getelementptr inbounds nuw i8, ptr %i.vg, i64 %i.vc
+  %i.vh = getelementptr inbounds nuw i8, ptr %54, i64 1
   %i.vi = load i8, ptr %i.vh, align 1, !tbaa !40
   %i.vj = icmp eq i8 %i.vi, 32
   br i1 %i.vj, label %bb.dp, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit449.thread603

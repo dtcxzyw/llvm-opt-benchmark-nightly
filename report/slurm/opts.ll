@@ -201,14 +201,15 @@ bb.ew:                                            ; preds = %.thread50.i
   br label %bb.ey
 
 bb.ex:                                            ; preds = %bb.ey
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %i.ji = getelementptr inbounds nuw i8, ptr %i.je, i64 %indvars.iv.next.i
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1
+  %3 = getelementptr inbounds nuw i8, ptr %i.je, i64 %indvars.iv.i
+  %i.ji = getelementptr inbounds nuw i8, ptr %3, i64 1
   %i.jj = load i8, ptr %i.ji, align 1             ; 2 uses
   %.not35.i = icmp eq i8 %i.jj, 0
   br i1 %.not35.i, label %.loopexit.i, label %bb.ey, !llvm.loop !15
 
 bb.ey:                                            ; preds = %bb.ex, %.lr.ph.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.ex ] ; 2 uses
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.ex ] ; 3 uses
   %i.jk = phi i8 [ %i.jf, %.lr.ph.i ], [ %i.jj, %bb.ex ]
   %i.jl = sext i8 %i.jk to i64
   %i.jm = getelementptr inbounds [2 x i8], ptr %i.jh, i64 %i.jl

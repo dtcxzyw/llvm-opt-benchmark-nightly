@@ -145,7 +145,7 @@ bb.l:                                             ; preds = %bb.j
   br label %.preheader
 
 .preheader:                                       ; preds = %bb.o, %.preheader.lr.ph.new
-  %.0129157 = phi i64 [ 0, %.preheader.lr.ph.new ], [ %i.cj, %bb.o ] ; 6 uses
+  %.0129157 = phi i64 [ 0, %.preheader.lr.ph.new ], [ %i.cj, %bb.o ] ; 7 uses
   %niter = phi i64 [ 0, %.preheader.lr.ph.new ], [ %niter.next.1, %bb.o ]
   %i.bi = mul nuw nsw i64 %.0129157, %i.az
   %invariant.gep153 = getelementptr [8 x i8], ptr %i.a, i64 %i.bi
@@ -172,10 +172,11 @@ bb.m:                                             ; preds = %.preheader, %bb.m
   br i1 %i.bu, label %bb.m, label %.preheader.1, !llvm.loop !12
 
 .preheader.1:                                     ; preds = %bb.m
-  %i.bv = or disjoint i64 %.0129157, 1            ; 4 uses
+  %i.bv = or disjoint i64 %.0129157, 1            ; 3 uses
   %i.bw = mul nuw nsw i64 %i.bv, %i.az
   %invariant.gep153.1 = getelementptr [8 x i8], ptr %i.a, i64 %i.bw
-  %i.bx = getelementptr [8 x i8], ptr %i.a, i64 %i.bv
+  %i.bx = getelementptr [8 x i8], ptr %i.a, i64 %.0129157
+  %10 = getelementptr i8, ptr %i.bx, i64 8
   %i.by = add nuw nsw i64 %i.bv, %.0128158
   %i.bz = mul nsw i64 %i.by, %7
   %invariant.gep155.1 = getelementptr [8 x i8], ptr %invariant.gep, i64 %i.bz
@@ -186,7 +187,7 @@ bb.n:                                             ; preds = %bb.n, %.preheader.1
   %gep154.1 = getelementptr [8 x i8], ptr %invariant.gep153.1, i64 %.0130152.1
   %i.ca = load volatile double, ptr %gep154.1, align 8, !tbaa !10
   %i.cb = mul nuw nsw i64 %.0130152.1, %i.az
-  %i.cc = getelementptr [8 x i8], ptr %i.bx, i64 %i.cb
+  %i.cc = getelementptr [8 x i8], ptr %10, i64 %i.cb
   %i.cd = load volatile double, ptr %i.cc, align 8, !tbaa !10
   %i.ce = fadd double %i.ca, %i.cd
   %gep156.1 = getelementptr [8 x i8], ptr %invariant.gep155.1, i64 %.0130152.1 ; 2 uses

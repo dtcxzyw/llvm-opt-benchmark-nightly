@@ -202,7 +202,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %bb.a
-  %indvars.iv.i = phi i64 [ 0, %bb.a ], [ %indvars.iv.next.i.1, %bb.b ] ; 4 uses
+  %indvars.iv.i = phi i64 [ 0, %bb.a ], [ %indvars.iv.next.i.1, %bb.b ] ; 5 uses
   %.017.i = phi i64 [ 9, %bb.a ], [ %i.q, %bb.b ]
   %.01415.i = phi i64 [ 777, %bb.a ], [ %i.u, %bb.b ] ; 2 uses
   %i.a = add i64 %.01415.i, %.017.i               ; 3 uses
@@ -218,7 +218,7 @@ bb.b:                                             ; preds = %bb.b, %bb.a
   %i.k = trunc i64 %i.j to i8
   %i.l = getelementptr inbounds nuw i8, ptr @_ZN4absl12lts_2026052613hash_internal12_GLOBAL__N_14dataE, i64 %indvars.iv.i
   store i8 %i.k, ptr %i.l, align 2
-  %indvars.iv.next.i = or disjoint i64 %indvars.iv.i, 1 ; 2 uses
+  %indvars.iv.next.i = or disjoint i64 %indvars.iv.i, 1
   %i.m = add i64 %i.i, %i.e                       ; 3 uses
   %i.n = add i64 %i.m, %i.i                       ; 2 uses
   %i.o = lshr i64 %i.m, 41
@@ -230,7 +230,8 @@ bb.b:                                             ; preds = %bb.b, %bb.a
   %i.u = add i64 %i.t, %indvars.iv.next.i         ; 2 uses
   %i.v = lshr i64 %i.u, 37
   %i.w = trunc i64 %i.v to i8
-  %i.x = getelementptr inbounds nuw i8, ptr @_ZN4absl12lts_2026052613hash_internal12_GLOBAL__N_14dataE, i64 %indvars.iv.next.i
+  %1 = getelementptr inbounds nuw i8, ptr @_ZN4absl12lts_2026052613hash_internal12_GLOBAL__N_14dataE, i64 %indvars.iv.i
+  %i.x = getelementptr inbounds nuw i8, ptr %1, i64 1
   store i8 %i.w, ptr %i.x, align 1
   %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
   %exitcond.not.i.1 = icmp eq i64 %indvars.iv.next.i.1, 1048576

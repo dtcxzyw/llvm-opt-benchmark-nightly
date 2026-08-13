@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %bb.b
 
 .thread:                                          ; preds = %bb.b, %bb.c
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
-  %i.k = load ptr, ptr %i.j, align 8, !tbaa !18   ; 4 uses
+  %i.k = load ptr, ptr %i.j, align 8, !tbaa !18   ; 3 uses
   %i.l = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.k) #18 ; 2 uses
   %i.m = trunc i64 %i.l to i32
   %i.n = icmp sgt i32 %i.m, 0
@@ -217,15 +217,16 @@ bb.d:                                             ; preds = %bb.e
   br i1 %i.q, label %bb.e, label %._crit_edge, !llvm.loop !36
 
 bb.e:                                             ; preds = %.lr.ph, %bb.d
-  %indvars.iv81 = phi i64 [ %i.o, %.lr.ph ], [ %i.r, %bb.d ]
-  %i.r = add nsw i64 %indvars.iv81, -1            ; 5 uses
-  %i.s = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.r
+  %indvars.iv81 = phi i64 [ %i.o, %.lr.ph ], [ %i.r, %bb.d ] ; 2 uses
+  %i.r = add nsw i64 %indvars.iv81, -1            ; 3 uses
+  %2 = getelementptr i8, ptr %i.k, i64 %indvars.iv81 ; 2 uses
+  %i.s = getelementptr i8, ptr %2, i64 -1
   %i.t = load i8, ptr %i.s, align 1, !tbaa !19
   %.not = icmp eq i8 %i.t, 46
   br i1 %.not, label %.split, label %bb.d, !llvm.loop !36
 
 .split:                                           ; preds = %bb.e
-  %i.u = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.r
+  %i.u = getelementptr i8, ptr %2, i64 -1
   %i.v = trunc i64 %i.r to i32
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.x = load i32, ptr %i.w, align 8, !tbaa !17

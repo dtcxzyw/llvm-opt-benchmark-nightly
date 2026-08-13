@@ -203,10 +203,11 @@ bb.a:
 .lr.ph.preheader:                                 ; preds = %bb.a
   %i.d = add i64 %2, -1                           ; 2 uses
   %i.e = xor i64 %i.b, 7
-  %umin = tail call i64 @llvm.umin.i64(i64 %i.d, i64 %i.e) ; 2 uses
-  %i.f = add nuw nsw i64 %umin, 1                 ; 2 uses
+  %umin = tail call i64 @llvm.umin.i64(i64 %i.d, i64 %i.e) ; 3 uses
+  %i.f = add nuw nsw i64 %umin, 1
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %0, i8 %1, i64 %i.f, i1 false), !tbaa !8
-  %scevgep = getelementptr i8, ptr %0, i64 %i.f
+  %3 = getelementptr i8, ptr %0, i64 %umin
+  %scevgep = getelementptr i8, ptr %3, i64 1
   %i.g = sub i64 %i.d, %umin
   br label %.loopexit
 
@@ -609,13 +610,15 @@ vec.epilog.middle.block95:                        ; preds = %vec.epilog.vector.b
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: read) uwtable
 define range(i32 -255, 256) i32 @lv_memcmp(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2) local_unnamed_addr #2 {
 bb.a:
-  %i.a = add i64 %2, -1                           ; 4 uses
+  %i.a = add i64 %2, -1                           ; 2 uses
   %.not11 = icmp eq i64 %i.a, 0
   br i1 %.not11, label %.critedge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %scevgep.a = getelementptr i8, ptr %0, i64 %i.a
-  %scevgep18 = getelementptr i8, ptr %1, i64 %i.a
+  %3 = getelementptr i8, ptr %0, i64 %2
+  %scevgep = getelementptr i8, ptr %3, i64 -1
+  %scevgep.a = getelementptr i8, ptr %1, i64 %2
+  %scevgep18 = getelementptr i8, ptr %scevgep.a, i64 -1
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
@@ -635,7 +638,7 @@ bb.b:                                             ; preds = %.lr.ph
   br i1 %.not, label %.critedge, label %.lr.ph, !llvm.loop !34
 
 .critedge:                                        ; preds = %.lr.ph, %bb.b, %bb.a
-  %.08.lcssa = phi ptr [ %0, %bb.a ], [ %scevgep.a, %bb.b ], [ %.0812, %.lr.ph ]
+  %.08.lcssa = phi ptr [ %0, %bb.a ], [ %scevgep, %bb.b ], [ %.0812, %.lr.ph ]
   %.0.lcssa = phi ptr [ %1, %bb.a ], [ %scevgep18, %bb.b ], [ %.013, %.lr.ph ]
   %i.i = load i8, ptr %.08.lcssa, align 1, !tbaa !8
   %i.j = sext i8 %i.i to i32

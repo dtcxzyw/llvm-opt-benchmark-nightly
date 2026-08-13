@@ -202,12 +202,13 @@ vector.memcheck:                                  ; preds = %iter.check408
   %i.go = xor i32 %.7162, -1
   %i.gp = add i32 %i.a, %i.go
   %i.gq = zext i32 %i.gp to i64
-  %i.gr = shl nuw nsw i64 %i.gq, 2
-  %5 = add nuw nsw i64 %i.gr, 4                   ; 2 uses
-  %scevgep.a = getelementptr i8, ptr %.7, i64 %5
-  %scevgep384 = getelementptr i8, ptr %.7142, i64 %5
+  %i.gr = shl nuw nsw i64 %i.gq, 2                ; 2 uses
+  %5 = getelementptr i8, ptr %.7, i64 %i.gr
+  %scevgep = getelementptr i8, ptr %5, i64 4
+  %scevgep.a = getelementptr i8, ptr %.7142, i64 %i.gr
+  %scevgep384 = getelementptr i8, ptr %scevgep.a, i64 4
   %bound0 = icmp ult ptr %.7, %scevgep384
-  %bound1 = icmp ult ptr %.7142, %scevgep.a
+  %bound1 = icmp ult ptr %.7142, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph271.preheader, label %vector.main.loop.iter.check386
 

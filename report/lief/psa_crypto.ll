@@ -203,8 +203,8 @@ bb.j:                                             ; preds = %bb.h
   ]
 
 bb.k:                                             ; preds = %bb.j
-  %i.f = tail call i64 @llvm.fshl.i64(i64 %1, i64 %1, i64 54)
-  %switch.tableidx = add i64 %i.f, -2             ; 2 uses
+  %i.f = tail call i64 @llvm.fshl.i64(i64 %1, i64 %1, i64 54) ; 2 uses
+  %switch.tableidx = add i64 %i.f, -2
   %i.g = icmp ult i64 %switch.tableidx, 7
   br i1 %i.g, label %switch.lookup, label %psa_validate_unstructured_key_bit_size.exit.thread
 
@@ -215,8 +215,9 @@ psa_validate_unstructured_key_bit_size.exit.thread.fold.split: ; preds = %bb.j
   br label %psa_validate_unstructured_key_bit_size.exit.thread
 
 switch.lookup:                                    ; preds = %bb.k
-  %switch.gep.a = getelementptr inbounds nuw [4 x i8], ptr @switch.table.psa_validate_key_type_and_size_for_key_generation, i64 %switch.tableidx
-  %switch.load = load i32, ptr %switch.gep.a, align 4
+  %switch.gep.a = getelementptr [4 x i8], ptr @switch.table.psa_validate_key_type_and_size_for_key_generation, i64 %i.f
+  %switch.gep = getelementptr i8, ptr %switch.gep.a, i64 -8
+  %switch.load = load i32, ptr %switch.gep, align 4
   br label %psa_validate_unstructured_key_bit_size.exit.thread
 
 psa_validate_unstructured_key_bit_size.exit.thread: ; preds = %switch.lookup, %bb.k, %bb.j, %psa_validate_unstructured_key_bit_size.exit.thread.fold.split, %bb.d, %bb.c, %bb.e, %bb.b, %bb.g, %bb.f, %bb.i, %psa_validate_unstructured_key_bit_size.exit

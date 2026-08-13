@@ -203,7 +203,7 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
   ret void
 
 scalar.ph:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph
-  %.019 = phi i64 [ %i.bu, %scalar.ph ], [ %.019.unr, %scalar.ph.prol.loopexit ] ; 4 uses
+  %.019 = phi i64 [ %i.bu, %scalar.ph ], [ %.019.unr, %scalar.ph.prol.loopexit ] ; 5 uses
   %i.bj = getelementptr inbounds nuw [4 x i8], ptr %i.ai, i64 %.019 ; 2 uses
   %i.bk = load float, ptr %i.bj, align 4, !tbaa !40 ; 2 uses
   %.idx = mul i64 %.019, 12
@@ -214,16 +214,17 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %i.bn = load float, ptr %i.bj, align 4, !tbaa !40
   %i.bo = getelementptr i8, ptr %i.bl, i64 8
   store float %i.bn, ptr %i.bo, align 4, !tbaa !40
-  %3 = add nuw i64 %.019, 1                       ; 2 uses
-  %4 = getelementptr inbounds nuw [4 x i8], ptr %i.ai, i64 %3 ; 2 uses
+  %3 = getelementptr inbounds nuw [4 x i8], ptr %i.ai, i64 %.019
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 4 ; 2 uses
   %i.bp = load float, ptr %4, align 4, !tbaa !40  ; 2 uses
-  %.idx.1 = mul i64 %3, 12
-  %i.bq = getelementptr i8, ptr %i.ak, i64 %.idx.1 ; 3 uses
+  %.idx.1 = mul i64 %.019, 12
+  %5 = getelementptr i8, ptr %i.ak, i64 %.idx.1   ; 3 uses
+  %i.bq = getelementptr i8, ptr %5, i64 12
   store float %i.bp, ptr %i.bq, align 4, !tbaa !40
-  %i.br = getelementptr i8, ptr %i.bq, i64 4
+  %i.br = getelementptr i8, ptr %5, i64 16
   store float %i.bp, ptr %i.br, align 4, !tbaa !40
   %i.bs = load float, ptr %4, align 4, !tbaa !40
-  %i.bt = getelementptr i8, ptr %i.bq, i64 8
+  %i.bt = getelementptr i8, ptr %5, i64 20
   store float %i.bs, ptr %i.bt, align 4, !tbaa !40
   %i.bu = add nuw i64 %.019, 2                    ; 2 uses
   %exitcond.not.1 = icmp eq i64 %i.bu, %i.g

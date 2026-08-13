@@ -201,8 +201,8 @@ bb.at:                                            ; preds = %.lr.ph217, %bb.aw
   %.sroa.7140.0216 = phi i64 [ 0, %.lr.ph217 ], [ %i.fr, %bb.aw ]
   %.sroa.0138.0215 = phi ptr [ %5, %.lr.ph217 ], [ %i.fx, %bb.aw ] ; 2 uses
   %i.fr = add nuw nsw i64 %.sroa.7140.0216, 1, !dbg !4421 ; 2 uses
-  %i.fs = mul i64 %.pre275, %i.fr, !dbg !4423
-  %i.ft = add i64 %i.fs, -1, !dbg !4421           ; 3 uses
+  %i.fs = mul i64 %.pre275, %i.fr, !dbg !4423     ; 2 uses
+  %i.ft = add i64 %i.fs, -1, !dbg !4421           ; 2 uses
   %i.fu = icmp ult i64 %i.ft, %i.fp, !dbg !4426
   br i1 %i.fu, label %bb.aw, label %bb.ax, !dbg !4426
 
@@ -229,8 +229,9 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecjE
 
 bb.aw:                                            ; preds = %bb.at
   %i.fx = getelementptr inbounds nuw i8, ptr %.sroa.0138.0215, i64 8, !dbg !4442 ; 2 uses
-  %i.fy = getelementptr inbounds nuw [8 x i8], ptr %i.fq, i64 %i.ft, !dbg !4444
-  %i.fz = load i64, ptr %i.fy, align 8, !dbg !4445, !noundef !12
+  %i.fy = getelementptr [8 x i8], ptr %i.fq, i64 %i.fs, !dbg !4444
+  %9 = getelementptr i8, ptr %i.fy, i64 -8, !dbg !4444
+  %i.fz = load i64, ptr %9, align 8, !dbg !4445, !noundef !12
   store i64 %i.fz, ptr %.sroa.0138.0215, align 8, !dbg !4446
   %i.ga = icmp eq ptr %i.fx, %i.fb, !dbg !4447
   br i1 %i.ga, label %._crit_edge218, label %bb.at, !dbg !4416

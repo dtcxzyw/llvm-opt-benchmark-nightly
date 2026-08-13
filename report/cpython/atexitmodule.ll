@@ -201,7 +201,7 @@ bb.a:
   %i.c = getelementptr i8, ptr %i.b, i64 10840
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !21   ; 3 uses
   %i.e = getelementptr i8, ptr %i.d, i64 16       ; 3 uses
-  %.val55.i = load i64, ptr %i.e, align 8, !tbaa !33
+  %.val55.i = load i64, ptr %i.e, align 8, !tbaa !33 ; 2 uses
   %.03560.i = add i64 %.val55.i, -1               ; 2 uses
   %i.f = icmp sgt i64 %.03560.i, -1
   br i1 %i.f, label %.lr.ph62.i, label %atexit_unregister_locked.exit
@@ -211,10 +211,12 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %Py_DECREF.exit.i, %.lr.ph62.i
-  %.03561.i = phi i64 [ %.03560.i, %.lr.ph62.i ], [ %.035.i, %Py_DECREF.exit.i ] ; 5 uses
+  %.03562.i = phi i64 [ %.03560.i, %.lr.ph62.i ], [ %.035.i, %Py_DECREF.exit.i ] ; 4 uses
+  %.03561.i = phi i64 [ %.val55.i, %.lr.ph62.i ], [ %spec.select.i, %Py_DECREF.exit.i ]
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !38
   %i.i = getelementptr [8 x i8], ptr %i.h, i64 %.03561.i
-  %i.j = load ptr, ptr %i.i, align 8, !tbaa !28   ; 12 uses
+  %2 = getelementptr i8, ptr %i.i, i64 -8
+  %i.j = load ptr, ptr %2, align 8, !tbaa !28     ; 12 uses
   %i.k = load i32, ptr %i.j, align 8, !tbaa !29   ; 2 uses
   %i.l = icmp ugt i32 %i.k, -1073741825
   br i1 %i.l, label %_Py_NewRef.exit.i, label %bb.c
@@ -253,7 +255,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.w, label %.lr.ph.i, label %.loopexit.i
 
 .lr.ph.i:                                         ; preds = %bb.g
-  %i.x = tail call i64 @llvm.umin.i64(i64 %i.v, i64 %.03561.i)
+  %i.x = tail call i64 @llvm.umin.i64(i64 %i.v, i64 %.03562.i)
   %i.y = load ptr, ptr %i.g, align 8, !tbaa !38
   br label %bb.h
 
@@ -287,7 +289,7 @@ bb.k:                                             ; preds = %bb.h
   br i1 %i.aj, label %bb.h, label %.loopexit.i, !llvm.loop !45
 
 .loopexit.i:                                      ; preds = %bb.k, %bb.i, %bb.g, %bb.f
-  %.338.i = phi i64 [ %.03561.i, %bb.f ], [ %.059.i, %bb.i ], [ %.03561.i, %bb.g ], [ %.03561.i, %bb.k ]
+  %.338.i = phi i64 [ %.03562.i, %bb.f ], [ %.059.i, %bb.i ], [ %.03562.i, %bb.g ], [ %.03562.i, %bb.k ]
   %i.ak = load i32, ptr %i.j, align 8, !tbaa !29  ; 2 uses
   %.not.i.i = icmp sgt i32 %i.ak, -1
   br i1 %.not.i.i, label %bb.l, label %Py_DECREF.exit.i
@@ -304,7 +306,7 @@ bb.m:                                             ; preds = %bb.l
 
 Py_DECREF.exit.i:                                 ; preds = %bb.m, %bb.l, %.loopexit.i
   %.val53.i = load i64, ptr %i.e, align 8, !tbaa !33
-  %spec.select.i = tail call i64 @llvm.smin.i64(i64 %.338.i, i64 %.val53.i)
+  %spec.select.i = tail call i64 @llvm.smin.i64(i64 %.338.i, i64 %.val53.i) ; 2 uses
   %.035.i = add i64 %spec.select.i, -1            ; 2 uses
   %i.an = icmp sgt i64 %.035.i, -1
   br i1 %i.an, label %bb.b, label %atexit_unregister_locked.exit, !llvm.loop !46

@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %or.cond73, label %.preheader, label %.thread.thread
 
 .preheader:                                       ; preds = %bb.c, %bb.g
-  %.05575 = phi i64 [ %i.q, %bb.g ], [ 1, %bb.c ] ; 4 uses
+  %.05575 = phi i64 [ %i.q, %bb.g ], [ 1, %bb.c ] ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 %.05575
   %i.e = load i8, ptr %i.d, align 1, !tbaa !8
   %.fr72 = freeze i8 %i.e                         ; 5 uses
@@ -228,12 +228,13 @@ switch.early.test:                                ; preds = %bb.d
   ]
 
 bb.e:                                             ; preds = %switch.early.test, %switch.early.test, %switch.early.test, %bb.d
-  %i.j = add nuw nsw i64 %.05575, 1               ; 3 uses
+  %i.j = add nuw nsw i64 %.05575, 1               ; 2 uses
   %exitcond.not = icmp eq i64 %i.j, 40
   br i1 %exitcond.not, label %..thread_crit_edge, label %.preheader.1
 
 .preheader.1:                                     ; preds = %bb.e
-  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 %i.j
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 %.05575
+  %i.k = getelementptr inbounds nuw i8, ptr %4, i64 1
   %i.l = load i8, ptr %i.k, align 1, !tbaa !8
   %.fr72.1 = freeze i8 %i.l                       ; 5 uses
   %.not61.1 = icmp eq i8 %.fr72.1, 0
@@ -636,7 +637,7 @@ bb.e:                                             ; preds = %bb.a
   br i1 %or.cond73.i, label %.preheader.i, label %select.unfold
 
 .preheader.i:                                     ; preds = %bb.e, %bb.i
-  %.05575.i = phi i64 [ %i.ac, %bb.i ], [ 1, %bb.e ] ; 4 uses
+  %.05575.i = phi i64 [ %i.ac, %bb.i ], [ 1, %bb.e ] ; 5 uses
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 %.05575.i
   %i.q = load i8, ptr %i.p, align 1, !tbaa !8
   %.fr72.i = freeze i8 %i.q                       ; 5 uses
@@ -660,12 +661,13 @@ switch.early.test.i:                              ; preds = %bb.f
   ]
 
 bb.g:                                             ; preds = %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %bb.f
-  %i.v = add nuw nsw i64 %.05575.i, 1             ; 3 uses
+  %i.v = add nuw nsw i64 %.05575.i, 1             ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.v, 40
   br i1 %exitcond.not.i, label %..thread_crit_edge.i, label %.preheader.i.1
 
 .preheader.i.1:                                   ; preds = %bb.g
-  %i.w = getelementptr inbounds nuw i8, ptr %1, i64 %i.v
+  %5 = getelementptr inbounds nuw i8, ptr %1, i64 %.05575.i
+  %i.w = getelementptr inbounds nuw i8, ptr %5, i64 1
   %i.x = load i8, ptr %i.w, align 1, !tbaa !8
   %.fr72.i.1 = freeze i8 %i.x                     ; 5 uses
   %.not61.i.1 = icmp eq i8 %.fr72.i.1, 0
@@ -1068,7 +1070,7 @@ bb.c:                                             ; preds = %bb.b, %.lr.ph.i.i
   br i1 %or.cond73.i.i, label %.preheader.i80.i, label %.split.i
 
 .preheader.i80.i:                                 ; preds = %.loopexit.i, %bb.g
-  %.05575.i.i = phi i64 [ %i.af, %bb.g ], [ 1, %.loopexit.i ] ; 4 uses
+  %.05575.i.i = phi i64 [ %i.af, %bb.g ], [ 1, %.loopexit.i ] ; 5 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 %.05575.i.i
   %i.t = load i8, ptr %i.s, align 1, !tbaa !8
   %.fr72.i.i = freeze i8 %i.t                     ; 5 uses
@@ -1092,12 +1094,13 @@ switch.early.test.i.i:                            ; preds = %bb.d
   ]
 
 bb.e:                                             ; preds = %switch.early.test.i.i, %switch.early.test.i.i, %switch.early.test.i.i, %bb.d
-  %i.y = add nuw nsw i64 %.05575.i.i, 1           ; 3 uses
+  %i.y = add nuw nsw i64 %.05575.i.i, 1           ; 2 uses
   %exitcond.not.i82.i = icmp eq i64 %i.y, 40
   br i1 %exitcond.not.i82.i, label %..thread_crit_edge.i.i, label %.preheader.i80.i.1
 
 .preheader.i80.i.1:                               ; preds = %bb.e
-  %i.z = getelementptr inbounds nuw i8, ptr %0, i64 %i.y
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 %.05575.i.i
+  %i.z = getelementptr inbounds nuw i8, ptr %8, i64 1
   %i.aa = load i8, ptr %i.z, align 1, !tbaa !8
   %.fr72.i.i.1 = freeze i8 %i.aa                  ; 5 uses
   %.not61.i.i.1 = icmp eq i8 %.fr72.i.i.1, 0

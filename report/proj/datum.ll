@@ -201,9 +201,10 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not23, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit, label %.lr.ph
 
 bb.c:                                             ; preds = %.critedge
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %i.g = getelementptr inbounds nuw [16 x i8], ptr %i.e, i64 %indvars.iv.next
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !134
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %i.g = getelementptr inbounds nuw [16 x i8], ptr %i.e, i64 %indvars.iv
+  %2 = getelementptr inbounds nuw i8, ptr %i.g, i64 16
+  %i.h = load ptr, ptr %2, align 8, !tbaa !134
   %.not = icmp eq ptr %i.h, null
   br i1 %.not, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit, label %.lr.ph, !llvm.loop !136
 
@@ -218,7 +219,7 @@ bb.e:                                             ; preds = %_ZNSt7__cxx1112basi
   br label %bb.g
 
 .lr.ph:                                           ; preds = %.preheader, %bb.c
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.c ], [ 0, %.preheader ] ; 2 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.c ], [ 0, %.preheader ] ; 3 uses
   %i.k = getelementptr inbounds nuw [16 x i8], ptr %i.e, i64 %indvars.iv ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !137
@@ -621,7 +622,7 @@ _ZNK5osgeo4proj5datum9Ellipsoid25computedInverseFlatteningEv.exit: ; preds = %bb
   br label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph, %.critedge
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %.critedge ] ; 2 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %.critedge ] ; 3 uses
   %i.at = getelementptr inbounds nuw [32 x i8], ptr %i.al, i64 %indvars.iv ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #32
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 8
@@ -952,9 +953,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit97: ; preds = %bb.
   br label %bb.ae
 
 .critedge:                                        ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit91, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit77, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %i.fl = getelementptr inbounds nuw [32 x i8], ptr %i.al, i64 %indvars.iv.next
-  %i.fm = load ptr, ptr %i.fl, align 8, !tbaa !177
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %i.fl = getelementptr inbounds nuw [32 x i8], ptr %i.al, i64 %indvars.iv
+  %7 = getelementptr inbounds nuw i8, ptr %i.fl, i64 32
+  %i.fm = load ptr, ptr %7, align 8, !tbaa !177
   %.not.not = icmp eq ptr %i.fm, null
   br i1 %.not.not, label %.critedge70, label %bb.i, !llvm.loop !182
 

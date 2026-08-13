@@ -201,17 +201,18 @@ _ZNSt10unique_ptrIA_KfSt14default_deleteIS1_EED2Ev.exit: ; preds = %bb.a, %._cri
   ret void
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZNSt10unique_ptrIA_KfSt14default_deleteIS1_EED2Ev.exit23
-  %indvars.iv = phi i64 [ %i.k, %.lr.ph.preheader ], [ %indvars.iv.next, %_ZNSt10unique_ptrIA_KfSt14default_deleteIS1_EED2Ev.exit23 ] ; 2 uses
+  %indvars.iv = phi i64 [ %i.k, %.lr.ph.preheader ], [ %indvars.iv.next, %_ZNSt10unique_ptrIA_KfSt14default_deleteIS1_EED2Ev.exit23 ] ; 4 uses
   %.040 = phi ptr [ %2, %.lr.ph.preheader ], [ %i.w, %_ZNSt10unique_ptrIA_KfSt14default_deleteIS1_EED2Ev.exit23 ]
   %.sroa.032.039 = phi ptr [ null, %.lr.ph.preheader ], [ %i.y, %_ZNSt10unique_ptrIA_KfSt14default_deleteIS1_EED2Ev.exit23 ] ; 4 uses
-  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 4 uses
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
   %i.l = icmp eq i64 %indvars.iv.next, 0
   %.pre = load ptr, ptr %i.a, align 8, !tbaa !28  ; 2 uses
   br i1 %i.l, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
-  %i.m = getelementptr inbounds nuw [8 x i8], ptr %.pre, i64 %indvars.iv.next
-  %i.n = load ptr, ptr %i.m, align 8, !tbaa !31
+  %i.m = getelementptr [8 x i8], ptr %.pre, i64 %indvars.iv
+  %4 = getelementptr i8, ptr %i.m, i64 -8
+  %i.n = load ptr, ptr %4, align 8, !tbaa !31
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 8
   %i.p = load i32, ptr %i.o, align 8, !tbaa !89
   %i.q = sext i32 %i.p to i64
@@ -226,8 +227,9 @@ bb.c:                                             ; preds = %bb.b, %.lr.ph
   %i.w = phi ptr [ %3, %.lr.ph ], [ %i.v, %bb.b ] ; 4 uses
   %i.x = icmp eq ptr %i.w, %3
   %i.y = select i1 %i.x, ptr null, ptr %i.w       ; 5 uses
-  %i.z = getelementptr inbounds nuw [8 x i8], ptr %.pre, i64 %indvars.iv.next
-  %i.aa = load ptr, ptr %i.z, align 8, !tbaa !31  ; 2 uses
+  %i.z = getelementptr [8 x i8], ptr %.pre, i64 %indvars.iv
+  %5 = getelementptr i8, ptr %i.z, i64 -8
+  %i.aa = load ptr, ptr %5, align 8, !tbaa !31    ; 2 uses
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !45
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 16
   %i.ad = load ptr, ptr %i.ac, align 8

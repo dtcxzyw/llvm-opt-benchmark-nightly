@@ -201,7 +201,7 @@ bb.a:
   %i.h = alloca i64, align 8                      ; 6 uses
   %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 17 uses
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 18 uses
-  %i.i = tail call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEcm(ptr noundef nonnull align 8 dereferenceable(32) %0, i8 noundef signext 58, i64 noundef 0) #24 ; 5 uses
+  %i.i = tail call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEcm(ptr noundef nonnull align 8 dereferenceable(32) %0, i8 noundef signext 58, i64 noundef 0) #24 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #24
   %i.j = load ptr, ptr %0, align 8, !tbaa !49     ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 7 uses
@@ -245,8 +245,9 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %._cri
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #24
   %i.u = load ptr, ptr %0, align 8, !tbaa !49
-  %4 = add nsw i64 %i.i, 1                        ; 2 uses
-  %i.v = getelementptr inbounds i8, ptr %i.u, i64 %4 ; 2 uses
+  %.neg = xor i64 %i.i, -1
+  %4 = getelementptr i8, ptr %i.u, i64 %i.i
+  %i.v = getelementptr i8, ptr %4, i64 1          ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.x = load i64, ptr %i.w, align 8, !tbaa !59
   %i.y = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 7 uses
@@ -254,7 +255,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %._cri
   %i.z = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
   store i64 0, ptr %i.z, align 8, !tbaa !59
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #24
-  %gepdiff = sub nsw i64 %i.x, %4                 ; 4 uses
+  %gepdiff = add i64 %i.x, %.neg                  ; 4 uses
   store i64 %gepdiff, ptr %i.g, align 8, !tbaa !60
   %i.aa = icmp ugt i64 %gepdiff, 15
   br i1 %i.aa, label %.noexc.i23, label %._crit_edge.i.i22

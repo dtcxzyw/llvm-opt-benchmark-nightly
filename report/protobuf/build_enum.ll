@@ -197,7 +197,7 @@ bb.p:                                             ; preds = %bb.n
   %i.as = shl nuw i32 %i.al, 1
   %spec.select.i52.i = select i1 %i.ar, i32 2, i32 %i.as ; 2 uses
   %i.at = zext i32 %spec.select.i52.i to i64
-  %i.au = shl nuw nsw i64 %i.at, 2                ; 3 uses
+  %i.au = shl nuw nsw i64 %i.at, 2                ; 4 uses
   %i.av = load ptr, ptr %i.p, align 8, !tbaa !12  ; 7 uses
   %.not40.i.i54.i = icmp samesign ugt i64 %i.au, %i.ap
   %i.aw = add nuw nsw i64 %i.ap, 12
@@ -205,7 +205,7 @@ bb.p:                                             ; preds = %bb.n
   br i1 %.not40.i.i54.i, label %bb.q, label %.critedge.i.i55.i
 
 bb.q:                                             ; preds = %bb.p
-  %i.ay = add nuw nsw i64 %i.au, 8                ; 4 uses
+  %i.ay = add nuw nsw i64 %i.au, 8                ; 3 uses
   %i.az = sub nsw i64 %i.ay, %i.ax                ; 2 uses
   %.val14.i.i.i62.i = load ptr, ptr %i.av, align 8, !tbaa !16 ; 6 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %i.ac, i64 %i.ax ; 2 uses
@@ -244,7 +244,8 @@ upb_Arena_TryExtend.exit.thread.i.i63.i:          ; preds = %bb.q
   br i1 %i.bn, label %upb_Arena_Malloc.exit.i.i70.i, label %upb_Arena_Malloc.exit.thread.i.i67.i, !prof !19
 
 upb_Arena_Malloc.exit.thread.i.i67.i:             ; preds = %upb_Arena_TryExtend.exit.thread.i.i63.i
-  %i.bo = getelementptr inbounds nuw i8, ptr %.val14.i.i.i62.i, i64 %i.ay
+  %3 = getelementptr inbounds nuw i8, ptr %.val14.i.i.i62.i, i64 %i.au
+  %i.bo = getelementptr inbounds nuw i8, ptr %3, i64 8
   store ptr %i.bo, ptr %i.av, align 8, !tbaa !16
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val14.i.i.i62.i) ]
   br label %bb.s

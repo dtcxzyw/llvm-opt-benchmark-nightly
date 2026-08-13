@@ -203,7 +203,7 @@ _ctypes_get_ffi_type.exit.thread:                 ; preds = %bb.o, %bb.n, %bb.m,
   br label %.lr.ph140
 
 .lr.ph140:                                        ; preds = %bb.r, %.lr.ph140.preheader.new
-  %.1139 = phi i64 [ 0, %.lr.ph140.preheader.new ], [ %i.cd, %bb.r ] ; 5 uses
+  %.1139 = phi i64 [ 0, %.lr.ph140.preheader.new ], [ %i.cd, %bb.r ] ; 7 uses
   %niter = phi i64 [ 0, %.lr.ph140.preheader.new ], [ %niter.next.1, %bb.r ]
   %i.bm = getelementptr [48 x i8], ptr %i.k, i64 %.1139 ; 2 uses
   %i.bn = load ptr, ptr %i.bm, align 16, !tbaa !42 ; 2 uses
@@ -223,15 +223,16 @@ bb.p:                                             ; preds = %.lr.ph140
   %.sink = phi ptr [ %i.bt, %bb.p ], [ %i.bs, %.lr.ph140 ]
   %i.bu = getelementptr [8 x i8], ptr %i.bj, i64 %.1139
   store ptr %.sink, ptr %i.bu, align 16, !tbaa !46
-  %8 = or disjoint i64 %.1139, 1                  ; 3 uses
-  %9 = getelementptr [48 x i8], ptr %i.k, i64 %8  ; 2 uses
+  %8 = getelementptr [48 x i8], ptr %i.k, i64 %.1139 ; 2 uses
+  %9 = getelementptr i8, ptr %8, i64 48
   %i.bv = load ptr, ptr %9, align 16, !tbaa !42   ; 2 uses
-  %i.bw = getelementptr [8 x i8], ptr %i.bk, i64 %8
-  store ptr %i.bv, ptr %i.bw, align 8, !tbaa !44
+  %i.bw = getelementptr [8 x i8], ptr %i.bk, i64 %.1139
+  %10 = getelementptr i8, ptr %i.bw, i64 8
+  store ptr %i.bv, ptr %10, align 8, !tbaa !44
   %i.bx = getelementptr i8, ptr %i.bv, i64 10
   %i.by = load i16, ptr %i.bx, align 2, !tbaa !45
   %i.bz = icmp eq i16 %i.by, 13
-  %i.ca = getelementptr i8, ptr %9, i64 16        ; 2 uses
+  %i.ca = getelementptr i8, ptr %8, i64 64        ; 2 uses
   br i1 %i.bz, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %.lr.ph140.1
@@ -240,8 +241,9 @@ bb.q:                                             ; preds = %.lr.ph140.1
 
 bb.r:                                             ; preds = %bb.q, %.lr.ph140.1
   %.sink.1 = phi ptr [ %i.cb, %bb.q ], [ %i.ca, %.lr.ph140.1 ]
-  %i.cc = getelementptr [8 x i8], ptr %i.bj, i64 %8
-  store ptr %.sink.1, ptr %i.cc, align 8, !tbaa !46
+  %i.cc = getelementptr [8 x i8], ptr %i.bj, i64 %.1139
+  %11 = getelementptr i8, ptr %i.cc, i64 8
+  store ptr %.sink.1, ptr %11, align 8, !tbaa !46
   %i.cd = add nuw nsw i64 %.1139, 2               ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter

@@ -201,8 +201,8 @@ _ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i: ; preds = %.noexc9, %bb.m
           to label %_ZSt7getlineIcSt11char_traitsIcESaIcEERSt13basic_istreamIT_T0_ES7_RNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit unwind label %.loopexit ; 0 uses
 
 _ZSt7getlineIcSt11char_traitsIcESaIcEERSt13basic_istreamIT_T0_ES7_RNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit: ; preds = %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i
-  %i.aw = load i64, ptr %i.ad, align 8, !tbaa !33 ; 4 uses
-  %i.ax = add i64 %i.aw, 1                        ; 3 uses
+  %i.aw = load i64, ptr %i.ad, align 8, !tbaa !33 ; 5 uses
+  %i.ax = add i64 %i.aw, 1                        ; 2 uses
   %i.ay = load ptr, ptr %3, align 8, !tbaa !32    ; 2 uses
   %i.az = icmp eq ptr %i.ay, %i.ac
   br i1 %i.az, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
@@ -235,7 +235,8 @@ bb.p:                                             ; preds = %_ZNKSt7__cxx1112bas
   store i8 10, ptr %i.bf, align 1, !tbaa !35
   store i64 %i.ax, ptr %i.ad, align 8, !tbaa !33
   %i.bg = load ptr, ptr %3, align 8, !tbaa !32
-  %i.bh = getelementptr inbounds nuw i8, ptr %i.bg, i64 %i.ax
+  %4 = getelementptr i8, ptr %i.bg, i64 %i.aw
+  %i.bh = getelementptr i8, ptr %4, i64 1
   store i8 0, ptr %i.bh, align 1, !tbaa !35
   %i.bi = load i32, ptr %i.y, align 8, !tbaa !54
   %i.bj = add i32 %i.bi, 1
@@ -638,7 +639,7 @@ bb.f:                                             ; preds = %_ZSt8_DestroyIPN16O
   unreachable
 
 _ZSt34__uninitialized_move_if_noexcept_aIPN16OpenColorIO_v2_518FormatMetadataImplES2_SaIS1_EET0_T_S5_S4_RT1_.exit: ; preds = %_ZSt10_ConstructIN16OpenColorIO_v2_518FormatMetadataImplEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i, %_ZNSt16allocator_traitsISaIN16OpenColorIO_v2_518FormatMetadataImplEEE9constructIS1_JRKS1_EEEvRS2_PT_DpOT0_.exit
-  %.0.lcssa.i.i.i.i.i = phi ptr [ %i.p, %_ZNSt16allocator_traitsISaIN16OpenColorIO_v2_518FormatMetadataImplEEE9constructIS1_JRKS1_EEEvRS2_PT_DpOT0_.exit ], [ %i.s, %_ZSt10_ConstructIN16OpenColorIO_v2_518FormatMetadataImplEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i ] ; 4 uses
+  %.0.lcssa.i.i.i.i.i = phi ptr [ %i.p, %_ZNSt16allocator_traitsISaIN16OpenColorIO_v2_518FormatMetadataImplEEE9constructIS1_JRKS1_EEEvRS2_PT_DpOT0_.exit ], [ %i.s, %_ZSt10_ConstructIN16OpenColorIO_v2_518FormatMetadataImplEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i ] ; 3 uses
   %.ptr = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i, i64 120 ; 3 uses
   %.not14.i.i.i.i.i28 = icmp eq ptr %1, %i.b
   br i1 %.not14.i.i.i.i.i28, label %_ZSt34__uninitialized_move_if_noexcept_aIPN16OpenColorIO_v2_518FormatMetadataImplES2_SaIS1_EET0_T_S5_S4_RT1_.exit43, label %.lr.ph.i.i.i.i.i29
@@ -646,13 +647,13 @@ _ZSt34__uninitialized_move_if_noexcept_aIPN16OpenColorIO_v2_518FormatMetadataImp
 .lr.ph.i.i.i.i.i29:                               ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPN16OpenColorIO_v2_518FormatMetadataImplES2_SaIS1_EET0_T_S5_S4_RT1_.exit, %_ZSt10_ConstructIN16OpenColorIO_v2_518FormatMetadataImplEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i37
   %.016.i.i.i.i.i30.idx = phi i64 [ %.016.i.i.i.i.i30.add, %_ZSt10_ConstructIN16OpenColorIO_v2_518FormatMetadataImplEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i37 ], [ 120, %_ZSt34__uninitialized_move_if_noexcept_aIPN16OpenColorIO_v2_518FormatMetadataImplES2_SaIS1_EET0_T_S5_S4_RT1_.exit ] ; 3 uses
   %.01215.i.i.i.i.i31 = phi ptr [ %i.ad, %_ZSt10_ConstructIN16OpenColorIO_v2_518FormatMetadataImplEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i37 ], [ %1, %_ZSt34__uninitialized_move_if_noexcept_aIPN16OpenColorIO_v2_518FormatMetadataImplES2_SaIS1_EET0_T_S5_S4_RT1_.exit ] ; 2 uses
-  %.016.i.i.i.i.i30.ptr = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i, i64 %.016.i.i.i.i.i30.idx ; 2 uses
+  %.016.i.i.i.i.i30.ptr = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i, i64 %.016.i.i.i.i.i30.idx ; 3 uses
   invoke void @_ZN16OpenColorIO_v2_518FormatMetadataImplC1ERKS0_(ptr noundef nonnull align 8 dereferenceable(120) %.016.i.i.i.i.i30.ptr, ptr noundef nonnull align 8 dereferenceable(120) %.01215.i.i.i.i.i31)
           to label %_ZSt10_ConstructIN16OpenColorIO_v2_518FormatMetadataImplEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i37 unwind label %bb.g
 
 _ZSt10_ConstructIN16OpenColorIO_v2_518FormatMetadataImplEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i37: ; preds = %.lr.ph.i.i.i.i.i29
   %i.ad = getelementptr inbounds nuw i8, ptr %.01215.i.i.i.i.i31, i64 120 ; 2 uses
-  %.016.i.i.i.i.i30.add = add nuw nsw i64 %.016.i.i.i.i.i30.idx, 120 ; 2 uses
+  %.016.i.i.i.i.i30.add = add nuw nsw i64 %.016.i.i.i.i.i30.idx, 120
   %.not.i.i.i.i.i38 = icmp eq ptr %i.ad, %i.b
   br i1 %.not.i.i.i.i.i38, label %_ZSt34__uninitialized_move_if_noexcept_aIPN16OpenColorIO_v2_518FormatMetadataImplES2_SaIS1_EET0_T_S5_S4_RT1_.exit43.loopexit, label %.lr.ph.i.i.i.i.i29, !llvm.loop !378
 
@@ -695,7 +696,7 @@ bb.j:                                             ; preds = %_ZSt8_DestroyIPN16O
   unreachable
 
 _ZSt34__uninitialized_move_if_noexcept_aIPN16OpenColorIO_v2_518FormatMetadataImplES2_SaIS1_EET0_T_S5_S4_RT1_.exit43.loopexit: ; preds = %_ZSt10_ConstructIN16OpenColorIO_v2_518FormatMetadataImplEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i37
-  %.ptr60.le = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i, i64 %.016.i.i.i.i.i30.add
+  %.ptr60.le = getelementptr inbounds nuw i8, ptr %.016.i.i.i.i.i30.ptr, i64 120
   br label %_ZSt34__uninitialized_move_if_noexcept_aIPN16OpenColorIO_v2_518FormatMetadataImplES2_SaIS1_EET0_T_S5_S4_RT1_.exit43
 
 _ZSt34__uninitialized_move_if_noexcept_aIPN16OpenColorIO_v2_518FormatMetadataImplES2_SaIS1_EET0_T_S5_S4_RT1_.exit43: ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPN16OpenColorIO_v2_518FormatMetadataImplES2_SaIS1_EET0_T_S5_S4_RT1_.exit43.loopexit, %_ZSt34__uninitialized_move_if_noexcept_aIPN16OpenColorIO_v2_518FormatMetadataImplES2_SaIS1_EET0_T_S5_S4_RT1_.exit

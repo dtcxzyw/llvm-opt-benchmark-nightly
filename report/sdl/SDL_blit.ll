@@ -201,7 +201,7 @@ bb.z:                                             ; preds = %bb.y, %bb.x, %bb.q
 bb.aa:                                            ; preds = %bb.ae, %.lr.ph.i
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.ae ] ; 2 uses
   %i.bw = phi ptr [ %i.bu, %.lr.ph.i ], [ %i.ci, %bb.ae ]
-  %i.bx = getelementptr inbounds nuw [24 x i8], ptr @SDL_GeneratedBlitFuncTable, i64 %indvars.iv.i ; 4 uses
+  %i.bx = getelementptr inbounds nuw [24 x i8], ptr @SDL_GeneratedBlitFuncTable, i64 %indvars.iv.i ; 5 uses
   %i.by = load i32, ptr %i.bx, align 8
   %.not22.i = icmp eq i32 %i.bc, %i.by
   br i1 %.not22.i, label %bb.ab, label %bb.ae
@@ -227,9 +227,8 @@ bb.ad:                                            ; preds = %bb.ac
   br i1 %.not25.i, label %.critedge179.thread201, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad, %bb.ac, %bb.ab, %bb.aa
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %2 = getelementptr inbounds nuw [24 x i8], ptr @SDL_GeneratedBlitFuncTable, i64 %indvars.iv.next.i
-  %i.ch = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1
+  %i.ch = getelementptr inbounds nuw i8, ptr %i.bx, i64 40
   %i.ci = load ptr, ptr %i.ch, align 8            ; 2 uses
   %.not.i = icmp eq ptr %i.ci, null
   br i1 %.not.i, label %SDL_ChooseBlitFunc.exit, label %bb.aa, !llvm.loop !3

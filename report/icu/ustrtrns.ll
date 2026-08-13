@@ -201,7 +201,8 @@ bb.l:                                             ; preds = %.loopexit261
   br i1 %i.ax, label %.lr.ph467, label %.critedge
 
 .lr.ph285:                                        ; preds = %.lr.ph467
-  %i.ay = getelementptr inbounds i8, ptr %.1175, i64 %indvars.iv.next
+  %8 = getelementptr i8, ptr %.1175, i64 %indvars.iv465
+  %i.ay = getelementptr i8, ptr %8, i64 1
   %i.az = load i8, ptr %i.ay, align 1, !tbaa !22  ; 2 uses
   %i.ba = icmp sgt i8 %i.az, -1
   br i1 %i.ba, label %.lr.ph467, label %.lr.ph285..critedge.loopexit.split.loop.exit422_crit_edge, !llvm.loop !39
@@ -209,11 +210,11 @@ bb.l:                                             ; preds = %.loopexit261
 .lr.ph467:                                        ; preds = %.lr.ph285.preheader, %.lr.ph285
   %i.bb = phi i8 [ %i.az, %.lr.ph285 ], [ %i.aw, %.lr.ph285.preheader ]
   %.3189284466 = phi ptr [ %i.bd, %.lr.ph285 ], [ %.2188, %.lr.ph285.preheader ] ; 2 uses
-  %indvars.iv465 = phi i64 [ %indvars.iv.next, %.lr.ph285 ], [ %i.au, %.lr.ph285.preheader ]
+  %indvars.iv465 = phi i64 [ %indvars.iv.next, %.lr.ph285 ], [ %i.au, %.lr.ph285.preheader ] ; 2 uses
   %i.bc = zext nneg i8 %i.bb to i16
   %i.bd = getelementptr inbounds nuw i8, ptr %.3189284466, i64 2 ; 3 uses
   store i16 %i.bc, ptr %.3189284466, align 2, !tbaa !11
-  %indvars.iv.next = add nsw i64 %indvars.iv465, 1 ; 4 uses
+  %indvars.iv.next = add nsw i64 %indvars.iv465, 1 ; 3 uses
   %i.be = trunc i64 %indvars.iv.next to i32       ; 3 uses
   store i32 %i.be, ptr %i.a, align 4, !tbaa !10
   %exitcond.not = icmp eq i32 %.1177, %i.be

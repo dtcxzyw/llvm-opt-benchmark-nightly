@@ -204,9 +204,9 @@ _ZN4Luau3getINS_21TypeFunctionUnionTypeEEEPKT_PKNS_16TypeFunctionTypeE.exit: ; p
   %i.k = load ptr, ptr %i.h, align 8, !tbaa !325  ; 2 uses
   %i.l = ptrtoint ptr %i.j to i64
   %i.m = ptrtoint ptr %i.k to i64
-  %i.n = sub i64 %i.l, %i.m
+  %i.n = sub i64 %i.l, %i.m                       ; 2 uses
   %i.o = ashr exact i64 %i.n, 3
-  %i.p = add nsw i64 %i.o, 1                      ; 4 uses
+  %i.p = add nsw i64 %i.o, 1                      ; 3 uses
   %i.q = icmp ugt i64 %i.p, 1152921504606846975
   br i1 %i.q, label %bb.g, label %bb.h
 
@@ -231,8 +231,9 @@ _ZNSt12_Vector_baseIPKN4Luau16TypeFunctionTypeESaIS3_EE11_M_allocateEm.exit.i: ;
   %i.u = getelementptr inbounds nuw i8, ptr %2, i64 8
   store ptr %i.t, ptr %2, align 16, !tbaa !325
   store ptr %i.t, ptr %i.u, align 8, !tbaa !326
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %i.t, i64 %i.p
-  store ptr %5, ptr %i.r, align 16, !tbaa !309
+  %5 = getelementptr i8, ptr %i.t, i64 %i.n
+  %6 = getelementptr i8, ptr %5, i64 8
+  store ptr %6, ptr %i.r, align 16, !tbaa !309
   %.pre = load ptr, ptr %i.h, align 8, !tbaa !97
   %.pre58 = load ptr, ptr %i.i, align 8, !tbaa !97
   br label %_ZNSt6vectorIPKN4Luau16TypeFunctionTypeESaIS3_EE7reserveEm.exit

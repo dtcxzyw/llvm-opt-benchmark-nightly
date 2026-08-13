@@ -203,7 +203,7 @@ bb.c:                                             ; preds = %bb.b, %bb.f
   %i.v = fmul double %i.n, %i.u                   ; 2 uses
   %i.w = fmul double %i.v, %i.v                   ; 2 uses
   %i.x = shl nuw nsw i64 %.05461, 1
-  %i.y = add nuw nsw i64 %i.x, %i.m               ; 5 uses
+  %i.y = add nuw nsw i64 %i.x, %i.m               ; 6 uses
   br i1 %i.h, label %bb.d, label %.thread
 
 .thread:                                          ; preds = %bb.c
@@ -228,11 +228,12 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.d, %.thread, %bb.e
   %.sink78 = phi double [ %i.ae, %bb.e ], [ 1.000000e+05, %.thread ], [ 1.000000e+05, %bb.d ]
   %.sink = phi double [ 1.000000e+00, %bb.e ], [ 0.000000e+00, %.thread ], [ 0.000000e+00, %bb.d ]
-  %4 = or disjoint i64 %i.y, 1                    ; 2 uses
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %4
+  %4 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.y
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 8
   store double %.sink78, ptr %5, align 8, !tbaa !26
-  %i.af = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %4
-  store double %.sink, ptr %i.af, align 8, !tbaa !26
+  %i.af = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %i.y
+  %6 = getelementptr inbounds nuw i8, ptr %i.af, i64 8
+  store double %.sink, ptr %6, align 8, !tbaa !26
   %i.ag = add nuw nsw i64 %.05461, 1              ; 2 uses
   %exitcond.not = icmp eq i64 %i.ag, 20
   br i1 %exitcond.not, label %bb.g, label %bb.c
@@ -351,7 +352,7 @@ bb.b:                                             ; preds = %bb.a, %bb.h
 bb.c:                                             ; preds = %bb.b, %bb.g
   %.036 = phi i64 [ 0, %bb.b ], [ %i.x, %bb.g ]   ; 2 uses
   %i.h = shl nuw nsw i64 %.036, 1
-  %i.i = add nuw nsw i64 %i.h, %i.g               ; 3 uses
+  %i.i = add nuw nsw i64 %i.h, %i.g               ; 4 uses
   %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.i ; 5 uses
   br i1 %i.e, label %bb.d, label %.thread
 
@@ -377,13 +378,14 @@ bb.e:                                             ; preds = %.thread, %bb.d
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.d
-  %5 = or disjoint i64 %i.i, 1                    ; 2 uses
-  %6 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %5
+  %5 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.i
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.t = load double, ptr %6, align 8, !tbaa !26
-  %i.u = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %5 ; 2 uses
-  %i.v = load double, ptr %i.u, align 8, !tbaa !26
+  %i.u = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.i
+  %7 = getelementptr inbounds nuw i8, ptr %i.u, i64 8 ; 2 uses
+  %i.v = load double, ptr %7, align 8, !tbaa !26
   %i.w = fsub double %i.t, %i.v
-  store double %i.w, ptr %i.u, align 8, !tbaa !26
+  store double %i.w, ptr %7, align 8, !tbaa !26
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
@@ -675,7 +677,7 @@ bb.a:
   %i.aa = select i1 %.not, i64 -40, i64 40        ; 3 uses
   %.not61 = icmp eq i64 %.05967, 0
   %.neg = select i1 %.not61, i64 40, i64 -40      ; 3 uses
-  %i.ab = mul nuw nsw i64 %.05967, 40             ; 5 uses
+  %i.ab = mul nuw nsw i64 %.05967, 40             ; 7 uses
   %i.ac = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.ab ; 9 uses
   %i.ad = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %i.ab ; 3 uses
   %i.ae = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %i.ab ; 2 uses
@@ -863,23 +865,25 @@ bb.b:                                             ; preds = %.peel.next, %bb.b
   %i.gk = load double, ptr %i.a, align 8, !tbaa !32
   %i.gl = uitofp nneg i64 %i.gj to double
   %i.gm = fmul double %i.gk, %i.gl                ; 2 uses
-  %3 = add nuw nsw i64 %i.ab, 38                  ; 3 uses
-  %i.gn = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %3 ; 9 uses
-  %i.go = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %3 ; 3 uses
-  %4 = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %3 ; 2 uses
-  %i.gp = getelementptr inbounds nuw i8, ptr %i.gn, i64 8 ; 4 uses
-  %i.gq = load double, ptr %i.gn, align 8, !tbaa !26
+  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.ab ; 4 uses
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 304 ; 6 uses
+  %i.gn = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %i.ab ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %i.gn, i64 304 ; 2 uses
+  %i.go = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %i.ab ; 2 uses
+  %6 = getelementptr inbounds nuw i8, ptr %i.go, i64 304
+  %i.gp = getelementptr inbounds nuw i8, ptr %3, i64 312 ; 4 uses
+  %i.gq = load double, ptr %4, align 8, !tbaa !26
   %i.gr = load double, ptr %i.o, align 8, !tbaa !26
   %i.gs = tail call double @llvm.fmuladd.f64(double %i.gq, double %i.gr, double 0.000000e+00)
   %i.gt = load double, ptr %i.gp, align 8, !tbaa !26
   %i.gu = load double, ptr %i.p, align 8, !tbaa !26
   %i.gv = tail call double @llvm.fmuladd.f64(double %i.gt, double %i.gu, double %i.gs) ; 2 uses
-  store double %i.gv, ptr %i.go, align 8, !tbaa !26
-  %i.gw = load double, ptr %i.gn, align 8, !tbaa !26
+  store double %i.gv, ptr %5, align 8, !tbaa !26
+  %i.gw = load double, ptr %4, align 8, !tbaa !26
   %i.gx = load double, ptr %i.r, align 8, !tbaa !26
   %i.gy = load double, ptr %i.gp, align 8, !tbaa !26
   %i.gz = load double, ptr %i.s, align 8, !tbaa !26
-  %i.ha = getelementptr inbounds nuw i8, ptr %i.go, i64 8 ; 3 uses
+  %i.ha = getelementptr inbounds nuw i8, ptr %i.gn, i64 312 ; 3 uses
   %i.hb = fmul double %i.gm, 5.000000e+01
   %i.hc = insertelement <2 x double> poison, double %i.gw, i64 0
   %i.hd = insertelement <2 x double> %i.hc, double %i.hb, i64 1
@@ -894,20 +898,20 @@ bb.b:                                             ; preds = %.peel.next, %bb.b
   %i.hl = tail call double @sin(double noundef %i.bg) #12
   %i.hm = extractelement <2 x double> %i.hf, i64 1
   %i.hn = tail call double @llvm.fmuladd.f64(double %i.hk, double %i.hl, double %i.hm) ; 2 uses
-  %i.ho = load double, ptr %i.gn, align 8, !tbaa !26
+  %i.ho = load double, ptr %4, align 8, !tbaa !26
   %i.hp = load double, ptr %i.t, align 8, !tbaa !26
   %i.hq = tail call double @llvm.fmuladd.f64(double %i.hp, double %i.hn, double %i.gv)
   %i.hr = fmul double %i.ho, %i.hq                ; 2 uses
-  store double %i.hr, ptr %i.go, align 8, !tbaa !26
+  store double %i.hr, ptr %5, align 8, !tbaa !26
   %i.hs = load double, ptr %i.gp, align 8, !tbaa !26
   %i.ht = load double, ptr %i.u, align 8, !tbaa !26
   %i.hu = tail call double @llvm.fmuladd.f64(double %i.ht, double %i.hn, double %i.hh)
   %i.hv = fmul double %i.hs, %i.hu
   store double %i.hv, ptr %i.ha, align 8, !tbaa !26
-  %i.hw = getelementptr inbounds [8 x i8], ptr %i.gn, i64 %.neg ; 2 uses
-  %i.hx = getelementptr inbounds [8 x i8], ptr %i.gn, i64 %i.aa ; 2 uses
-  %i.hy = getelementptr inbounds i8, ptr %i.gn, i64 -16
-  %i.hz = load double, ptr %i.gn, align 8, !tbaa !26 ; 4 uses
+  %i.hw = getelementptr inbounds [8 x i8], ptr %4, i64 %.neg ; 2 uses
+  %i.hx = getelementptr inbounds [8 x i8], ptr %4, i64 %i.aa ; 2 uses
+  %i.hy = getelementptr inbounds nuw i8, ptr %3, i64 288
+  %i.hz = load double, ptr %4, align 8, !tbaa !26 ; 4 uses
   %i.ia = load double, ptr %i.hw, align 8, !tbaa !26
   %i.ib = fsub double %i.hz, %i.ia
   %i.ic = load double, ptr %i.hx, align 8, !tbaa !26
@@ -922,7 +926,7 @@ bb.b:                                             ; preds = %.peel.next, %bb.b
   %i.il = fmul double %i.ij, %i.ik
   %i.im = tail call double @llvm.fmuladd.f64(double %i.ih, double %i.ii, double %i.il)
   %i.in = fadd double %i.hr, %i.im
-  store double %i.in, ptr %4, align 8, !tbaa !26
+  store double %i.in, ptr %6, align 8, !tbaa !26
   %i.io = load double, ptr %i.gp, align 8, !tbaa !26 ; 4 uses
   %i.ip = getelementptr inbounds nuw i8, ptr %i.hw, i64 8
   %i.iq = load double, ptr %i.ip, align 8, !tbaa !26
@@ -930,7 +934,7 @@ bb.b:                                             ; preds = %.peel.next, %bb.b
   %i.is = getelementptr inbounds nuw i8, ptr %i.hx, i64 8
   %i.it = load double, ptr %i.is, align 8, !tbaa !26
   %i.iu = fsub double %i.it, %i.io
-  %i.iv = getelementptr inbounds i8, ptr %i.gn, i64 -8
+  %i.iv = getelementptr inbounds nuw i8, ptr %3, i64 296
   %i.iw = load double, ptr %i.iv, align 8, !tbaa !26 ; 2 uses
   %i.ix = fsub double %i.io, %i.iw
   %i.iy = fsub double %i.iw, %i.io
@@ -942,7 +946,7 @@ bb.b:                                             ; preds = %.peel.next, %bb.b
   %i.je = tail call double @llvm.fmuladd.f64(double %i.iz, double %i.ja, double %i.jd)
   %i.jf = load double, ptr %i.ha, align 8, !tbaa !26
   %i.jg = fadd double %i.jf, %i.je
-  %i.jh = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %i.jh = getelementptr inbounds nuw i8, ptr %i.go, i64 312
   store double %i.jg, ptr %i.jh, align 8, !tbaa !26
   %i.ji = add nuw nsw i64 %.05967, 1              ; 2 uses
   %exitcond69.not = icmp eq i64 %i.ji, 20

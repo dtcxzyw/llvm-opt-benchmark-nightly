@@ -203,7 +203,7 @@ bb.d:                                             ; preds = %.noexc, %bb.b
   %.0.i.i = phi i64 [ %i.u, %.noexc ], [ %i.m, %bb.b ]
   %i.v = zext i8 %i.o to i64
   %i.w = mul i64 %.0.i.i, %i.v
-  %i.x = lshr i64 %i.w, 3
+  %i.x = lshr i64 %i.w, 3                         ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 240 ; 3 uses
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 248 ; 2 uses
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !215
@@ -211,7 +211,7 @@ bb.d:                                             ; preds = %.noexc, %bb.b
   %i.ac = ptrtoint ptr %i.aa to i64
   %i.ad = ptrtoint ptr %i.ab to i64
   %i.ae = sub i64 %i.ac, %i.ad                    ; 2 uses
-  %i.af = add nuw nsw i64 %i.x, 20                ; 3 uses
+  %i.af = add nuw nsw i64 %i.x, 20                ; 2 uses
   %i.ag = add i64 %i.ae, %i.af                    ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 3 uses
   %i.ai = load i32, ptr %i.ah, align 8, !tbaa !224
@@ -283,9 +283,10 @@ bb.h:                                             ; preds = %._crit_edge.i
   br label %_ZN6duckdb20BitpackingPrimitives10PackBufferIjLb0EEEvPhPT_mh.exit
 
 _ZN6duckdb20BitpackingPrimitives10PackBufferIjLb0EEEvPhPT_mh.exit: ; preds = %.noexc40, %._crit_edge.i
-  %i.bo = getelementptr inbounds nuw i8, ptr %i.ao, i64 %i.af
+  %2 = getelementptr i8, ptr %i.ao, i64 %i.x
+  %i.bo = getelementptr i8, ptr %2, i64 20
   %i.bp = load ptr, ptr %i.y, align 8, !tbaa !169
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bo, ptr align 4 %i.bp, i64 %i.ae, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bo, ptr align 4 %i.bp, i64 %i.ae, i1 false)
   %i.bq = invoke noundef i32 @_ZN6duckdb15NumericCastImplIjmLb0EE7ConvertEm(i64 noundef %i.af)
           to label %_ZN6duckdb11NumericCastIjmvEET_T0_.exit unwind label %bb.m
 

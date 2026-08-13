@@ -203,9 +203,8 @@ _ZSt11make_uniqueIN9Stockfish4Eval4NNUE16AccumulatorStackEJEENSt8__detail9_MakeU
 
 .preheader:                                       ; preds = %_ZSt11make_uniqueIN9Stockfish4Eval4NNUE16AccumulatorStackEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit, %bb.e
   %indvars.iv105 = phi i64 [ 0, %_ZSt11make_uniqueIN9Stockfish4Eval4NNUE16AccumulatorStackEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit ], [ %indvars.iv.next106, %bb.e ] ; 3 uses
-  %i.ho = shl nuw nsw i64 %indvars.iv105, 3       ; 4 uses
+  %i.ho = shl nuw nsw i64 %indvars.iv105, 3       ; 5 uses
   %invariant.gep.i = getelementptr i8, ptr %i.g, i64 %i.ho
-  %8 = add nuw nsw i64 %i.ho, 8                   ; 2 uses
   br label %bb.f
 
 bb.d:                                             ; preds = %bb.e
@@ -296,7 +295,9 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f
   %i.ji = sub nuw nsw i64 7, %indvars.iv
   %i.jj = mul nuw nsw i64 %i.ji, 3                ; 2 uses
   %i.jk = getelementptr [66 x i8], ptr %i.g, i64 %i.jj ; 3 uses
-  %i.jl = getelementptr i8, ptr %i.jk, i64 198    ; 2 uses
+  %8 = getelementptr i8, ptr %i.jk, i64 198       ; 2 uses
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 %i.ho
+  %i.jl = getelementptr inbounds nuw i8, ptr %i.jk, i64 %i.ho ; 12 uses
   %i.jm = getelementptr [66 x i8], ptr %invariant.gep.i, i64 %i.jj ; 4 uses
   %gep.i = getelementptr i8, ptr %i.jm, i64 66
   %i.jn = getelementptr i8, ptr %i.jm, i64 74
@@ -306,21 +307,21 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f
   %i.jo = getelementptr i8, ptr %i.jm, i64 140
   store i8 124, ptr %i.jo, align 2, !tbaa !58
   store i8 124, ptr %gep.1.i, align 2, !tbaa !58
-  %9 = getelementptr inbounds nuw i8, ptr %i.jl, i64 %i.ho
   store <8 x i8> <i8 43, i8 45, i8 45, i8 45, i8 45, i8 45, i8 45, i8 45>, ptr %9, align 2, !tbaa !58
-  %i.jp = getelementptr inbounds nuw i8, ptr %i.jl, i64 %8
+  %10 = getelementptr inbounds nuw i8, ptr %8, i64 %i.ho
+  %i.jp = getelementptr inbounds nuw i8, ptr %10, i64 8
   store i8 43, ptr %i.jp, align 2, !tbaa !58
-  %i.jq = getelementptr inbounds nuw i8, ptr %i.jk, i64 %8
-  store i8 43, ptr %i.jq, align 2, !tbaa !58
-  %10 = getelementptr inbounds nuw i8, ptr %i.jk, i64 %i.ho ; 12 uses
-  store <8 x i8> <i8 43, i8 45, i8 45, i8 45, i8 45, i8 45, i8 45, i8 45>, ptr %10, align 2, !tbaa !58
+  %i.jq = getelementptr inbounds nuw i8, ptr %i.jk, i64 %i.ho
+  %11 = getelementptr inbounds nuw i8, ptr %i.jq, i64 8
+  store i8 43, ptr %11, align 2, !tbaa !58
+  store <8 x i8> <i8 43, i8 45, i8 45, i8 45, i8 45, i8 45, i8 45, i8 45>, ptr %i.jl, align 2, !tbaa !58
   br i1 %.not, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   %i.jr = zext i8 %i.ht to i64
   %i.js = getelementptr inbounds nuw i8, ptr @.str.15, i64 %i.jr
   %i.jt = load i8, ptr %i.js, align 1, !tbaa !58
-  %i.ju = getelementptr i8, ptr %10, i64 70
+  %i.ju = getelementptr i8, ptr %i.jl, i64 70
   store i8 %i.jt, ptr %i.ju, align 2, !tbaa !58
   br label %bb.k
 
@@ -329,7 +330,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   br i1 %.not1.i, label %"_ZZN9Stockfish4Eval4NNUE5traceB5cxx11ERNS_8PositionERKNS1_8NetworksERNS1_17AccumulatorCachesEENK3$_0clENS_4FileENS_4RankENS_5PieceEi.exit", label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.jv = getelementptr i8, ptr %10, i64 134
+  %i.jv = getelementptr i8, ptr %i.jl, i64 134
   %i.jw = icmp slt i32 %.054, 0
   %.not.i.i = icmp eq i32 %.054, 0
   %i.jx = select i1 %.not.i.i, i8 32, i8 43
@@ -344,27 +345,27 @@ bb.m:                                             ; preds = %bb.l
   %i.kc = udiv i32 %i.ka, 10000
   %i.kd = trunc i32 %i.kc to i8
   %i.ke = add i8 %i.kd, 48
-  %i.kf = getelementptr i8, ptr %10, i64 135
+  %i.kf = getelementptr i8, ptr %i.jl, i64 135
   store i8 %i.ke, ptr %i.kf, align 1, !tbaa !58
   %i.kg = urem i32 %i.ka, 10000
   %.lhs.trunc.i.i = trunc nuw nsw i32 %i.kg to i16 ; 2 uses
   %i.kh = udiv i16 %.lhs.trunc.i.i, 1000
   %i.ki = trunc nuw nsw i16 %i.kh to i8
   %i.kj = add nuw nsw i8 %i.ki, 48
-  %i.kk = getelementptr i8, ptr %10, i64 136
+  %i.kk = getelementptr i8, ptr %i.jl, i64 136
   store i8 %i.kj, ptr %i.kk, align 2, !tbaa !58
   %i.kl = urem i16 %.lhs.trunc.i.i, 1000
   %i.km = udiv i16 %i.kl, 100
   %i.kn = trunc nuw nsw i16 %i.km to i8
   %i.ko = or disjoint i8 %i.kn, 48
-  %i.kp = getelementptr i8, ptr %10, i64 137
+  %i.kp = getelementptr i8, ptr %i.jl, i64 137
   store i8 %i.ko, ptr %i.kp, align 1, !tbaa !58
   br label %_ZN9Stockfish4Eval4NNUE12_GLOBAL__N_117format_cp_compactEiPcRKNS_8PositionE.exit.i
 
 bb.n:                                             ; preds = %bb.l
   %i.kq = icmp samesign ugt i32 %i.ka, 999
   %.lhs.trunc37.i.i = trunc nuw nsw i32 %i.ka to i16 ; 4 uses
-  %i.kr = getelementptr i8, ptr %10, i64 135      ; 2 uses
+  %i.kr = getelementptr i8, ptr %i.jl, i64 135    ; 2 uses
   br i1 %i.kq, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
@@ -376,10 +377,10 @@ bb.o:                                             ; preds = %bb.n
   %i.kw = udiv i16 %i.kv, 100
   %i.kx = trunc nuw nsw i16 %i.kw to i8
   %i.ky = or disjoint i8 %i.kx, 48
-  %i.kz = getelementptr i8, ptr %10, i64 136
+  %i.kz = getelementptr i8, ptr %i.jl, i64 136
   store i8 %i.ky, ptr %i.kz, align 2, !tbaa !58
   %i.la = urem i16 %i.kv, 100
-  %i.lb = getelementptr i8, ptr %10, i64 137
+  %i.lb = getelementptr i8, ptr %i.jl, i64 137
   store i8 46, ptr %i.lb, align 1, !tbaa !58
   %.lhs.trunc45.i.i = trunc nuw nsw i16 %i.la to i8
   %i.lc = udiv i8 %.lhs.trunc45.i.i, 10
@@ -392,12 +393,12 @@ bb.p:                                             ; preds = %bb.n
   %i.lg = or disjoint i8 %i.lf, 48
   store i8 %i.lg, ptr %i.kr, align 1, !tbaa !58
   %i.lh = urem i16 %.lhs.trunc37.i.i, 100
-  %i.li = getelementptr i8, ptr %10, i64 136
+  %i.li = getelementptr i8, ptr %i.jl, i64 136
   store i8 46, ptr %i.li, align 2, !tbaa !58
   %.lhs.trunc51.i.i = trunc nuw nsw i16 %i.lh to i8 ; 2 uses
   %i.lj = udiv i8 %.lhs.trunc51.i.i, 10
   %i.lk = or disjoint i8 %i.lj, 48
-  %i.ll = getelementptr i8, ptr %10, i64 137
+  %i.ll = getelementptr i8, ptr %i.jl, i64 137
   store i8 %i.lk, ptr %i.ll, align 1, !tbaa !58
   %i.lm = urem i8 %.lhs.trunc51.i.i, 10
   %i.ln = or disjoint i8 %i.lm, 48
@@ -405,7 +406,7 @@ bb.p:                                             ; preds = %bb.n
 
 _ZN9Stockfish4Eval4NNUE12_GLOBAL__N_117format_cp_compactEiPcRKNS_8PositionE.exit.i: ; preds = %bb.p, %bb.o, %bb.m
   %.sink.i.i = phi i8 [ %i.ld, %bb.o ], [ %i.ln, %bb.p ], [ 32, %bb.m ]
-  %i.lo = getelementptr i8, ptr %10, i64 138
+  %i.lo = getelementptr i8, ptr %i.jl, i64 138
   store i8 %.sink.i.i, ptr %i.lo, align 2, !tbaa !58
   br label %"_ZZN9Stockfish4Eval4NNUE5traceB5cxx11ERNS_8PositionERKNS1_8NetworksERNS1_17AccumulatorCachesEENK3$_0clENS_4FileENS_4RankENS_5PieceEi.exit"
 

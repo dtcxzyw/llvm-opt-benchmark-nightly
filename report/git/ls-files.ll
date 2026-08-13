@@ -203,10 +203,11 @@ bb.at:                                            ; preds = %.lr.ph158
   br i1 %i.gj, label %.lr.ph158, label %.loopexit, !llvm.loop !104
 
 .lr.ph158:                                        ; preds = %bb.as, %bb.at
-  %indvars.iv.next156 = phi i64 [ %indvars.iv.next, %bb.at ], [ %indvars.iv.next154, %bb.as ] ; 3 uses
-  %indvars.iv155 = phi i64 [ %indvars.iv.next156, %bb.at ], [ %i.cv, %bb.as ]
-  %i.gk = getelementptr inbounds [8 x i8], ptr %i.gb, i64 %indvars.iv.next156
-  %i.gl = load ptr, ptr %i.gk, align 8, !tbaa !84
+  %indvars.iv.next156 = phi i64 [ %indvars.iv.next, %bb.at ], [ %indvars.iv.next154, %bb.as ] ; 2 uses
+  %indvars.iv155 = phi i64 [ %indvars.iv.next156, %bb.at ], [ %i.cv, %bb.as ] ; 2 uses
+  %i.gk = getelementptr [8 x i8], ptr %i.gb, i64 %indvars.iv155
+  %4 = getelementptr i8, ptr %i.gk, i64 8
+  %i.gl = load ptr, ptr %4, align 8, !tbaa !84
   %i.gm = getelementptr inbounds nuw i8, ptr %i.gl, i64 108
   %i.gn = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.dl, ptr noundef nonnull dereferenceable(1) %i.gm) #15
   %.not88 = icmp eq i32 %i.gn, 0

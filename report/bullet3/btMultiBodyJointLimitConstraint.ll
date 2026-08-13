@@ -203,17 +203,18 @@ _ZN20btAlignedObjectArrayI27btMultiBodySolverConstraintE8allocateEi.exit.i.i: ; 
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.i, %.lr.ph.i.i.i.new
-  %indvars.iv.i.i.i = phi i64 [ 0, %.lr.ph.i.i.i.new ], [ %indvars.iv.next.i.i.i.1, %bb.i ] ; 4 uses
+  %indvars.iv.i.i.i = phi i64 [ 0, %.lr.ph.i.i.i.new ], [ %indvars.iv.next.i.i.i.1, %bb.i ] ; 5 uses
   %niter = phi i64 [ 0, %.lr.ph.i.i.i.new ], [ %niter.next.1, %bb.i ]
   %i.br = getelementptr inbounds nuw [224 x i8], ptr %.0.i.i.i, i64 %indvars.iv.i.i.i
   %i.bs = load ptr, ptr %i.al, align 8, !tbaa !72
   %i.bt = getelementptr inbounds nuw [224 x i8], ptr %i.bs, i64 %indvars.iv.i.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(224) %i.br, ptr noundef nonnull align 8 dereferenceable(224) %i.bt, i64 224, i1 false), !tbaa.struct !73
-  %indvars.iv.next.i.i.i = or disjoint i64 %indvars.iv.i.i.i, 1 ; 2 uses
-  %7 = getelementptr inbounds nuw [224 x i8], ptr %.0.i.i.i, i64 %indvars.iv.next.i.i.i
+  %7 = getelementptr inbounds nuw [224 x i8], ptr %.0.i.i.i, i64 %indvars.iv.i.i.i
+  %8 = getelementptr inbounds nuw i8, ptr %7, i64 224
   %i.bu = load ptr, ptr %i.al, align 8, !tbaa !72
-  %i.bv = getelementptr inbounds nuw [224 x i8], ptr %i.bu, i64 %indvars.iv.next.i.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(224) %7, ptr noundef nonnull align 8 dereferenceable(224) %i.bv, i64 224, i1 false), !tbaa.struct !73
+  %i.bv = getelementptr inbounds nuw [224 x i8], ptr %i.bu, i64 %indvars.iv.i.i.i
+  %9 = getelementptr inbounds nuw i8, ptr %i.bv, i64 224
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(224) %8, ptr noundef nonnull align 8 dereferenceable(224) %9, i64 224, i1 false), !tbaa.struct !73
   %indvars.iv.next.i.i.i.1 = add nuw nsw i64 %indvars.iv.i.i.i, 2 ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter

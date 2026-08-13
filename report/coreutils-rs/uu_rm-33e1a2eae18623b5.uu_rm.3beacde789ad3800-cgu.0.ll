@@ -203,13 +203,15 @@ bb.a:
   %i.aa = alloca [8 x i8], align 8                ; 4 uses
   %i.ab = alloca [24 x i8], align 8               ; 6 uses
   %i.ac = alloca [24 x i8], align 8               ; 6 uses
-  %.idx = mul nuw nsw i64 %2, 24                  ; 3 uses
+  %.idx = mul nuw nsw i64 %2, 24                  ; 4 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 %.idx
-  %switch = icmp samesign ult i64 %2, 2
-  br i1 %switch, label %.loopexit263, label %.lr.ph.i.i
+  %.not.i.i = icmp eq i64 %2, 0                   ; 2 uses
+  %storemerge.i.i.idx = select i1 %.not.i.i, i64 0, i64 24 ; 2 uses
+  %3 = icmp eq i64 %storemerge.i.i.idx, %.idx
+  br i1 %3, label %.loopexit263, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.a
-  %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %i.ae = getelementptr i8, ptr %1, i64 %storemerge.i.i.idx
   %i.af = getelementptr inbounds nuw i8, ptr %i.m, i64 8
   %i.ag = getelementptr inbounds nuw i8, ptr %i.l, i64 8 ; 2 uses
   br label %bb.b
@@ -297,8 +299,7 @@ bb.g:                                             ; preds = %bb.c
   call void @llvm.experimental.noalias.scope.decl(metadata !785)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !788
   call void @llvm.experimental.noalias.scope.decl(metadata !790)
-  %3 = icmp eq i64 %2, 0
-  br i1 %3, label %_RINvMCsczSSEuChxEj_8clap_lexNtB3_7RawArgs3newRNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str8OsStringINtNtNtCs6JMX4GRUq9U_4core5slice4iter4IterBI_EECs58W9blM4WiW_5uu_rm.exit.i.i, label %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i.i.i.i.i
+  br i1 %.not.i.i, label %_RINvMCsczSSEuChxEj_8clap_lexNtB3_7RawArgs3newRNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str8OsStringINtNtNtCs6JMX4GRUq9U_4core5slice4iter4IterBI_EECs58W9blM4WiW_5uu_rm.exit.i.i, label %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i.i.i.i.i
 
 _RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i.i.i.i.i.i.i: ; preds = %.loopexit263
   call void @_RNvCsjSVV5GABoor_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #21, !noalias !793
@@ -701,7 +702,7 @@ bb.e:                                             ; preds = %bb.g
 .split:                                           ; preds = %bb.e, %bb.f, %.lr.ph206, %.lr.ph, %.lr.ph206.preheader, %bb.b, %bb.d, %.lr.ph.split
   %.us-phi = phi ptr [ %i.ii, %.lr.ph ], [ %i.ii, %.lr.ph.split ], [ %i.ii, %.lr.ph206.preheader ], [ %i.ii, %bb.b ], [ %i.is, %bb.d ], [ %i.jc, %.lr.ph206 ], [ %i.jc, %bb.f ], [ %i.iw, %bb.e ] ; 2 uses
   %.us-phi198 = phi ptr [ %i.ij, %.lr.ph ], [ %i.ij, %.lr.ph.split ], [ %i.ij, %.lr.ph206.preheader ], [ %i.ij, %bb.b ], [ %i.it, %bb.d ], [ %i.jb, %.lr.ph206 ], [ %i.jb, %bb.f ], [ %i.ix, %bb.e ] ; 47 uses
-  %.us-phi199 = phi i64 [ %i.il, %.lr.ph ], [ 0, %.lr.ph.split ], [ %i.il, %.lr.ph206.preheader ], [ %i.il, %bb.b ], [ 0, %bb.d ], [ %i.ja, %.lr.ph206 ], [ %i.ja, %bb.f ], [ 0, %bb.e ] ; 15 uses
+  %.us-phi199 = phi i64 [ %i.il, %.lr.ph ], [ 0, %.lr.ph.split ], [ %i.il, %.lr.ph206.preheader ], [ %i.il, %bb.b ], [ 0, %bb.d ], [ %i.ja, %.lr.ph206 ], [ %i.ja, %bb.f ], [ 0, %bb.e ] ; 16 uses
   %.us-phi200 = phi i1 [ %.not.us, %.lr.ph ], [ true, %.lr.ph.split ], [ false, %.lr.ph206.preheader ], [ false, %bb.b ], [ true, %bb.d ], [ false, %.lr.ph206 ], [ false, %bb.f ], [ true, %bb.e ]
   %.us-phi201 = phi i1 [ %.sroa.0.0.ph228, %.lr.ph ], [ %.sroa.0.0.ph228, %.lr.ph.split ], [ %.sroa.0.0.ph228, %.lr.ph206.preheader ], [ %.sroa.0.0.ph228, %bb.b ], [ true, %bb.d ], [ true, %.lr.ph206 ], [ true, %bb.f ], [ true, %bb.e ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.dp), !noalias !1505
@@ -1104,8 +1105,9 @@ bb.ao:                                            ; preds = %bb.j
   br i1 %i.na, label %bb.ap, label %_RNvCs58W9blM4WiW_5uu_rm22clean_trailing_slashes.exit.i
 
 bb.ap:                                            ; preds = %bb.ao
-  %i.nb = add i64 %.us-phi199, -1                 ; 2 uses
-  %i.nc = getelementptr inbounds nuw i8, ptr %.us-phi198, i64 %i.nb
+  %i.nb = add i64 %.us-phi199, -1
+  %3 = getelementptr i8, ptr %.us-phi198, i64 %.us-phi199
+  %i.nc = getelementptr i8, ptr %3, i64 -1
   %i.nd = load i8, ptr %i.nc, align 1, !alias.scope !1607, !noalias !1608, !noundef !4
   %i.ne = icmp eq i8 %i.nd, 47
   br i1 %i.ne, label %.lr.ph577, label %_RNvCs58W9blM4WiW_5uu_rm22clean_trailing_slashes.exit.i
@@ -1198,7 +1200,7 @@ _RINvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits
 
 bb.aw:                                            ; preds = %bb.av
   %i.od = sub nuw nsw i64 %.sroa.03.0.i.i.i579, %.sroa.03.0.i21.i.i581
-  %i.oe = getelementptr inbounds nuw i8, ptr %.us-phi198, i64 %.sroa.03.0.i21.i.i581
+  %i.oe = getelementptr i8, ptr %.us-phi198, i64 %.sroa.03.0.i21.i.i581
   br label %_RINvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator9rpositionNCNvCs58W9blM4WiW_5uu_rm35path_is_current_or_parent_directorys_0EB1L_.exit.i.i
 
 bb.ax:                                            ; preds = %bb.av
