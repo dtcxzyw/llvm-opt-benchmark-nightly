@@ -204,7 +204,7 @@ _RNvMsp_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class14static_literalNtB5_
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t), !noalias !9808
   call void @llvm.lifetime.end.p0(ptr nonnull %i.u), !noalias !9807
   %i.cw = extractvalue { ptr, i64 } %i.cv, 0      ; 15 uses
-  %i.cx = extractvalue { ptr, i64 } %i.cv, 1      ; 10 uses
+  %i.cx = extractvalue { ptr, i64 } %i.cv, 1      ; 11 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cw) ]
   switch i64 %i.cx, label %.lr.ph.i [
     i64 0, label %_RNvMsp_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class14static_literalNtB5_18StaticClassLiteral14explicit_bases.exit.thread.i
@@ -607,7 +607,9 @@ bb.bo:                                            ; preds = %bb.bm
 
 bb.bp:                                            ; preds = %bb.bo
   call void @llvm.lifetime.end.p0(ptr nonnull %i.x), !noalias !9791
-  br i1 %i.ja, label %.lr.ph.i.i, label %.lr.ph356.i
+  %.not.i120.i = icmp ne i64 %i.cx, 0
+  %or.cond.not.i = and i1 %.not.i120.i, %i.ja
+  br i1 %or.cond.not.i, label %.lr.ph.i.i, label %.lr.ph356.i
 
 .lr.ph.i.i:                                       ; preds = %bb.bp, %_RNCNvMNtNtCsoTR8nlGN3X_18ty_python_semantic5types3mroNtB4_3Mro15of_static_classs2_0B8_.exit.backedge.i.i
   %i.jb = phi ptr [ %i.jc, %_RNCNvMNtNtCsoTR8nlGN3X_18ty_python_semantic5types3mroNtB4_3Mro15of_static_classs2_0B8_.exit.backedge.i.i ], [ %i.cw, %bb.bp ] ; 4 uses

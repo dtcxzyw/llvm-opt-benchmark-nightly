@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.k, label %.lr.ph50.i, label %Scl_LibertyWipeOutComments.exit
 
 .lr.ph50.i:                                       ; preds = %bb.b, %.loopexit.i
-  %.03049.i = phi ptr [ %i.dt, %.loopexit.i ], [ %i.e, %bb.b ] ; 58 uses
+  %.03049.i = phi ptr [ %i.dt, %.loopexit.i ], [ %i.e, %bb.b ] ; 59 uses
   %.0304958.i = ptrtoaddr ptr %.03049.i to i64    ; 2 uses
   %i.l = load i8, ptr %.03049.i, align 1, !tbaa !20
   %i.m = icmp eq i8 %i.l, 47
@@ -231,7 +231,7 @@ bb.c:                                             ; preds = %.lr.ph50.i
 .lr.ph45.i:                                       ; preds = %bb.g, %.lr.ph45.preheader.i
   %indvar = phi i64 [ %indvar.next, %bb.g ], [ 0, %.lr.ph45.preheader.i ] ; 2 uses
   %indvars.iv.i = phi ptr [ %scevgep65.i, %bb.g ], [ %scevgep64.i, %.lr.ph45.preheader.i ] ; 2 uses
-  %.13144.i = phi ptr [ %i.dk, %bb.g ], [ %.03049.i, %.lr.ph45.preheader.i ] ; 6 uses
+  %.13144.i = phi ptr [ %i.dk, %bb.g ], [ %.03049.i, %.lr.ph45.preheader.i ] ; 8 uses
   %i.t = load i8, ptr %.13144.i, align 1, !tbaa !20
   %i.u = icmp eq i8 %i.t, 42
   br i1 %i.u, label %bb.d, label %bb.g
@@ -240,9 +240,14 @@ bb.d:                                             ; preds = %.lr.ph45.i
   %i.v = getelementptr inbounds nuw i8, ptr %.13144.i, i64 1
   %i.w = load i8, ptr %i.v, align 1, !tbaa !20
   %i.x = icmp eq i8 %i.w, 47
-  br i1 %i.x, label %iter.check, label %bb.g
+  br i1 %i.x, label %.preheader.i, label %bb.g
 
-iter.check:                                       ; preds = %bb.d
+.preheader.i:                                     ; preds = %bb.d
+  %4 = getelementptr inbounds nuw i8, ptr %.13144.i, i64 2
+  %5 = icmp ult ptr %.03049.i, %4
+  br i1 %5, label %iter.check, label %.loopexit.i
+
+iter.check:                                       ; preds = %.preheader.i
   %i.y = add i64 %indvar, 2                       ; 7 uses
   %min.iters.check = icmp ult i64 %i.y, 8
   br i1 %min.iters.check, label %.lr.ph48.i.preheader, label %vector.main.loop.iter.check
@@ -645,8 +650,8 @@ bb.i:                                             ; preds = %.lr.ph.i
   %indvar.next.i = add i64 %indvar.i, 1
   br i1 %exitcond.not.i, label %.loopexit.i, label %.lr.ph.i, !llvm.loop !36
 
-.loopexit.i:                                      ; preds = %bb.i, %bb.g, %bb.f, %middle.block, %vec.epilog.middle.block, %.lr.ph43.preheader.i, %.preheader35.i, %bb.h, %.preheader33.i, %.lr.ph50.i
-  %.3.i = phi ptr [ %.03049.i, %.lr.ph50.i ], [ %.241.i, %.preheader35.i ], [ %scevgep62.i, %bb.g ], [ %.13144.i, %middle.block ], [ %.03049.i, %bb.h ], [ %.241.i, %.lr.ph43.preheader.i ], [ %.03049.i, %.preheader33.i ], [ %.13144.i, %bb.f ], [ %.13144.i, %vec.epilog.middle.block ], [ %scevgep59.i, %bb.i ]
+.loopexit.i:                                      ; preds = %bb.i, %bb.g, %bb.f, %middle.block, %vec.epilog.middle.block, %.lr.ph43.preheader.i, %.preheader35.i, %bb.h, %.preheader.i, %.preheader33.i, %.lr.ph50.i
+  %.3.i = phi ptr [ %.03049.i, %.lr.ph50.i ], [ %.241.i, %.preheader35.i ], [ %.13144.i, %.preheader.i ], [ %scevgep62.i, %bb.g ], [ %.03049.i, %bb.h ], [ %.241.i, %.lr.ph43.preheader.i ], [ %.03049.i, %.preheader33.i ], [ %.13144.i, %middle.block ], [ %.13144.i, %bb.f ], [ %.13144.i, %vec.epilog.middle.block ], [ %scevgep59.i, %bb.i ]
   %i.dt = getelementptr inbounds nuw i8, ptr %.3.i, i64 1 ; 2 uses
   %i.du = icmp ult ptr %i.dt, %i.j
   br i1 %i.du, label %.lr.ph50.i, label %Scl_LibertyWipeOutComments.exit.loopexit, !llvm.loop !37

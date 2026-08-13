@@ -204,7 +204,7 @@ Abc_TtHasVar.exit.5.i:                            ; preds = %bb.r, %.loopexit12.
   %i.dg = add nuw nsw i32 %i.dd, 1
   br label %Abc_TtSupportSize.exit
 
-Abc_TtSupportSize.exit:                           ; preds = %bb.r, %Abc_TtHasVar.exit.5.i
+Abc_TtSupportSize.exit:                           ; preds = %Abc_TtHasVar.exit.5.i, %bb.r
   %i.dh = phi i32 [ %i.dg, %Abc_TtHasVar.exit.5.i ], [ %i.dd, %bb.r ]
   %.not.us.i.6.i = icmp ne i64 %i.bo, %i.bp
   %i.di = zext i1 %.not.us.i.6.i to i32
@@ -352,7 +352,7 @@ Abc_TtHasVar.exit.5.i68:                          ; preds = %bb.aa, %.loopexit12
   %i.fh = add nuw nsw i32 %i.fe, 1
   br label %Abc_TtSupportSize.exit79
 
-Abc_TtSupportSize.exit79:                         ; preds = %bb.aa, %Abc_TtHasVar.exit.5.i68
+Abc_TtSupportSize.exit79:                         ; preds = %Abc_TtHasVar.exit.5.i68, %bb.aa
   %i.fi = phi i32 [ %i.fh, %Abc_TtHasVar.exit.5.i68 ], [ %i.fe, %bb.aa ]
   %.not.us.i.6.i70 = icmp ne i64 %i.bq, %i.bn
   %i.fj = zext i1 %.not.us.i.6.i70 to i32
