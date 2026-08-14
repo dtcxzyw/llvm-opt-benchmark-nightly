@@ -201,7 +201,6 @@ bb.c:                                             ; preds = %bb.a
   %i.b = add i64 %1, 1                            ; 2 uses
   %i.c = icmp ne i64 %i.b, 0
   tail call void @llvm.assume(i1 %i.c)
-  %2 = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.b, i1 true)
   %i.d = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZZN4absl12lts_2026052618container_internal12_GLOBAL__N_110RandomSeedEvE7counter) ; 3 uses
   %i.e = load i64, ptr %i.d, align 8, !tbaa !51
   %i.f = add i64 %i.e, 1                          ; 2 uses
@@ -214,9 +213,10 @@ bb.c:                                             ; preds = %bb.a
   %i.l = lshr i128 %i.k, 64
   %i.m = xor i128 %i.l, %i.k
   %i.n = trunc i128 %i.m to i64
-  %notmask.i.i.i.i.i.i = shl nsw i64 -1, %2
-  %3 = xor i64 %notmask.i.i.i.i.i.i, -1
-  %i.o = and i64 %i.n, %3
+  %neg.i = xor i64 %1, -1
+  %2 = and i64 %i.b, %neg.i
+  %3 = add i64 %2, -1
+  %i.o = and i64 %3, %i.n
   %i.p = icmp samesign ult i64 %i.o, 16
   br label %bb.d
 
@@ -231,7 +231,6 @@ bb.a:
   %i.a = add i64 %1, 1                            ; 2 uses
   %i.b = icmp ne i64 %i.a, 0
   tail call void @llvm.assume(i1 %i.b)
-  %2 = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.a, i1 true)
   %i.c = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZZN4absl12lts_2026052618container_internal12_GLOBAL__N_110RandomSeedEvE7counter) ; 3 uses
   %i.d = load i64, ptr %i.c, align 8, !tbaa !51
   %i.e = add i64 %i.d, 1                          ; 2 uses
@@ -244,9 +243,10 @@ bb.a:
   %i.k = lshr i128 %i.j, 64
   %i.l = xor i128 %i.k, %i.j
   %i.m = trunc i128 %i.l to i64
-  %notmask.i.i.i.i.i.i = shl nsw i64 -1, %2
-  %3 = xor i64 %notmask.i.i.i.i.i.i, -1
-  %i.n = and i64 %i.m, %3
+  %neg.i = xor i64 %1, -1
+  %2 = and i64 %i.a, %neg.i
+  %3 = add i64 %2, -1
+  %i.n = and i64 %3, %i.m
   %i.o = icmp samesign ult i64 %i.n, 16
   ret i1 %i.o
 }
