@@ -204,9 +204,9 @@ bb.j:                                             ; preds = %bb.i
 
 .preheader636.i:                                  ; preds = %.preheader636.i.lr.ph, %.backedge.i
   %i.bu = phi i64 [ %i.wn, %.preheader636.i.lr.ph ], [ %i.nr, %.backedge.i ]
-  %i.bv = phi i64 [ %i.wo, %.preheader636.i.lr.ph ], [ %i.np, %.backedge.i ] ; 30 uses
+  %i.bv = phi i64 [ %i.wo, %.preheader636.i.lr.ph ], [ %i.np, %.backedge.i ] ; 32 uses
   %i.bw = phi ptr [ %i.wp, %.preheader636.i.lr.ph ], [ %i.no, %.backedge.i ] ; 3 uses
-  %i.bx = phi ptr [ %i.wq, %.preheader636.i.lr.ph ], [ %i.nn, %.backedge.i ] ; 8 uses
+  %i.bx = phi ptr [ %i.wq, %.preheader636.i.lr.ph ], [ %i.nn, %.backedge.i ] ; 10 uses
   %i.by = load i32, ptr %i.al, align 4, !tbaa !62
   %.not372.i = icmp eq i32 %i.by, 0               ; 2 uses
   br i1 %.not372.i, label %.critedge.i, label %.lr.ph.i
@@ -234,12 +234,19 @@ bb.k:                                             ; preds = %.lr.ph
 bytestream2_peek_byte.exit495.i:                  ; preds = %bb.k
   %i.ch = load i8, ptr %i.cb, align 1, !tbaa !60
   %.not373.i = icmp eq i8 %i.ch, 0
-  br i1 %.not373.i, label %bytestream2_peek_byte.exit495.thread.i, label %.preheader14.i.i
+  br i1 %.not373.i, label %bytestream2_peek_byte.exit495.thread.i, label %.preheader14.i.i.preheader
 
 bytestream2_peek_byte.exit.ithread-pre-split.i:   ; preds = %bytestream2_get_le32.exit.i.i
   %.pr.i = load i8, ptr %i.cm, align 1, !tbaa !60
   %.not.i.i = icmp eq i8 %.pr.i, 0
-  br i1 %.not.i.i, label %skip_header_chunk.exit.loopexit.i, label %.preheader14.i.i.backedge
+  br i1 %.not.i.i, label %skip_header_chunk.exit.loopexit.i, label %.preheader14.i.i.preheader
+
+.preheader14.i.i.preheader:                       ; preds = %bytestream2_peek_byte.exit495.i, %bytestream2_peek_byte.exit.ithread-pre-split.i
+  %.promoted162126.i.i366 = phi ptr [ %i.cm, %bytestream2_peek_byte.exit.ithread-pre-split.i ], [ %i.cb, %bytestream2_peek_byte.exit495.i ] ; 2 uses
+  %4 = ptrtoint ptr %.promoted162126.i.i366 to i64
+  %5 = sub i64 %i.bv, %4
+  %6 = icmp slt i64 %5, 1
+  br i1 %6, label %.loopexit.i.i, label %bytestream2_get_byte.exit.i.i
 
 bb.l:                                             ; preds = %.loopexit.1.i.i
   %i.ci = getelementptr inbounds nuw i8, ptr %.promoted1623.1.i.i, i64 4 ; 3 uses
@@ -265,26 +272,25 @@ bytestream2_get_le32.exit.i.i:                    ; preds = %.loopexit.1.i.i, %b
   %or.cond.i506.i = or i1 %i.cr, %i.cq
   br i1 %or.cond.i506.i, label %skip_header_chunk.exit.loopexit.i, label %bytestream2_peek_byte.exit.ithread-pre-split.i, !llvm.loop !65
 
-.preheader14.i.i:                                 ; preds = %bytestream2_peek_byte.exit495.i, %.preheader14.i.i.backedge
-  %4 = phi ptr [ %.be, %.preheader14.i.i.backedge ], [ %i.cb, %bytestream2_peek_byte.exit495.i ] ; 3 uses
-  %i.cs = ptrtoint ptr %4 to i64
+.preheader14.i.i:                                 ; preds = %bytestream2_get_byte.exit.i.i
+  %i.cs = ptrtoint ptr %i.cv to i64
   %i.ct = sub i64 %i.bv, %i.cs
   %i.cu = icmp slt i64 %i.ct, 1
-  br i1 %i.cu, label %.loopexit.i.i, label %bytestream2_get_byte.exit.i.i
+  br i1 %i.cu, label %.loopexit.i.i, label %bytestream2_get_byte.exit.i.i, !llvm.loop !67
 
-bytestream2_get_byte.exit.i.i:                    ; preds = %.preheader14.i.i
-  %i.cv = getelementptr inbounds nuw i8, ptr %4, i64 1 ; 3 uses
+bytestream2_get_byte.exit.i.i:                    ; preds = %.preheader14.i.i.preheader, %.preheader14.i.i
+  %7 = phi ptr [ %i.cv, %.preheader14.i.i ], [ %.promoted162126.i.i366, %.preheader14.i.i.preheader ] ; 2 uses
+  %i.cv = getelementptr inbounds nuw i8, ptr %7, i64 1 ; 4 uses
   store ptr %i.cv, ptr %i.i, align 8, !tbaa !59
-  %i.cw = load i8, ptr %4, align 1, !tbaa !60
+  %i.cw = load i8, ptr %7, align 1, !tbaa !60
   %.not7.i.i = icmp eq i8 %i.cw, 0
-  br i1 %.not7.i.i, label %.loopexit.i.i, label %.preheader14.i.i.backedge
+  br i1 %.not7.i.i, label %.preheader14.i.i.backedge, label %.preheader14.i.i, !llvm.loop !67
 
-.preheader14.i.i.backedge:                        ; preds = %bytestream2_get_byte.exit.i.i, %bytestream2_peek_byte.exit.ithread-pre-split.i
-  %.be = phi ptr [ %i.cv, %bytestream2_get_byte.exit.i.i ], [ %i.cm, %bytestream2_peek_byte.exit.ithread-pre-split.i ]
-  br label %.preheader14.i.i, !llvm.loop !67
+.preheader14.i.i.backedge:                        ; preds = %bytestream2_get_byte.exit.i.i
+  br label %.loopexit.i.i, !llvm.loop !67
 
-.loopexit.i.i:                                    ; preds = %bytestream2_get_byte.exit.i.i, %.preheader14.i.i
-  %.promoted1623.i.i = phi ptr [ %i.bx, %.preheader14.i.i ], [ %i.cv, %bytestream2_get_byte.exit.i.i ] ; 2 uses
+.loopexit.i.i:                                    ; preds = %.preheader14.i.i, %.preheader14.i.i.backedge, %.preheader14.i.i.preheader
+  %.promoted1623.i.i = phi ptr [ %i.bx, %.preheader14.i.i.preheader ], [ %i.cv, %.preheader14.i.i.backedge ], [ %i.bx, %.preheader14.i.i ] ; 2 uses
   %i.cx = ptrtoint ptr %.promoted1623.i.i to i64
   %i.cy = sub i64 %i.bv, %i.cx
   %i.cz = icmp slt i64 %i.cy, 1
@@ -394,10 +400,16 @@ bb.o:                                             ; preds = %bytestream2_peek_by
   br i1 %or.cond25.i508.i, label %skip_header_chunk.exit531.i, label %bytestream2_peek_byte.exit.i509.i
 
 bytestream2_peek_byte.exit.i509.i:                ; preds = %bb.o, %bytestream2_get_le32.exit.i525.i
-  %i.el = phi ptr [ %i.er, %bytestream2_get_le32.exit.i525.i ], [ %i.ee, %bb.o ] ; 3 uses
+  %i.el = phi ptr [ %i.er, %bytestream2_get_le32.exit.i525.i ], [ %i.ee, %bb.o ] ; 4 uses
   %i.em = load i8, ptr %i.el, align 1, !tbaa !60
   %.not.i511.i = icmp eq i8 %i.em, 0
-  br i1 %.not.i511.i, label %skip_header_chunk.exit531.i, label %.preheader14.i512.i
+  br i1 %.not.i511.i, label %skip_header_chunk.exit531.i, label %.preheader14.i512.i.preheader
+
+.preheader14.i512.i.preheader:                    ; preds = %bytestream2_peek_byte.exit.i509.i
+  %8 = ptrtoint ptr %i.el to i64
+  %9 = sub i64 %i.bv, %8
+  %10 = icmp slt i64 %9, 1
+  br i1 %10, label %.loopexit.i515.i, label %bytestream2_get_byte.exit.i513.i
 
 bb.p:                                             ; preds = %.loopexit.1.i521.i
   %i.en = getelementptr inbounds nuw i8, ptr %.promoted1623.1.i523.i, i64 4 ; 3 uses
@@ -423,22 +435,25 @@ bytestream2_get_le32.exit.i525.i:                 ; preds = %.loopexit.1.i521.i,
   %or.cond.i530.i = or i1 %i.ew, %i.ev
   br i1 %or.cond.i530.i, label %skip_header_chunk.exit531.i, label %bytestream2_peek_byte.exit.i509.i, !llvm.loop !65
 
-.preheader14.i512.i:                              ; preds = %bytestream2_peek_byte.exit.i509.i, %bytestream2_get_byte.exit.i513.i
-  %5 = phi ptr [ %i.fa, %bytestream2_get_byte.exit.i513.i ], [ %i.el, %bytestream2_peek_byte.exit.i509.i ] ; 3 uses
-  %i.ex = ptrtoint ptr %5 to i64
+.preheader14.i512.i:                              ; preds = %bytestream2_get_byte.exit.i513.i
+  %i.ex = ptrtoint ptr %i.fa to i64
   %i.ey = sub i64 %i.bv, %i.ex
   %i.ez = icmp slt i64 %i.ey, 1
-  br i1 %i.ez, label %.loopexit.i515.i, label %bytestream2_get_byte.exit.i513.i
+  br i1 %i.ez, label %.loopexit.i515.i, label %bytestream2_get_byte.exit.i513.i, !llvm.loop !67
 
-bytestream2_get_byte.exit.i513.i:                 ; preds = %.preheader14.i512.i
-  %i.fa = getelementptr inbounds nuw i8, ptr %5, i64 1 ; 3 uses
+bytestream2_get_byte.exit.i513.i:                 ; preds = %.preheader14.i512.i.preheader, %.preheader14.i512.i
+  %11 = phi ptr [ %i.fa, %.preheader14.i512.i ], [ %i.el, %.preheader14.i512.i.preheader ] ; 2 uses
+  %i.fa = getelementptr inbounds nuw i8, ptr %11, i64 1 ; 4 uses
   store ptr %i.fa, ptr %i.i, align 8, !tbaa !59
-  %i.fb = load i8, ptr %5, align 1, !tbaa !60
+  %i.fb = load i8, ptr %11, align 1, !tbaa !60
   %.not7.i514.i = icmp eq i8 %i.fb, 0
-  br i1 %.not7.i514.i, label %.loopexit.i515.i, label %.preheader14.i512.i, !llvm.loop !67
+  br i1 %.not7.i514.i, label %bytestream2_get_byte.exit.i513.i..loopexit.i515.i_crit_edge, label %.preheader14.i512.i, !llvm.loop !67
 
-.loopexit.i515.i:                                 ; preds = %bytestream2_get_byte.exit.i513.i, %.preheader14.i512.i
-  %.promoted1623.i516.i = phi ptr [ %i.bx, %.preheader14.i512.i ], [ %i.fa, %bytestream2_get_byte.exit.i513.i ] ; 2 uses
+bytestream2_get_byte.exit.i513.i..loopexit.i515.i_crit_edge: ; preds = %bytestream2_get_byte.exit.i513.i
+  br label %.loopexit.i515.i, !llvm.loop !67
+
+.loopexit.i515.i:                                 ; preds = %.preheader14.i512.i, %bytestream2_get_byte.exit.i513.i..loopexit.i515.i_crit_edge, %.preheader14.i512.i.preheader
+  %.promoted1623.i516.i = phi ptr [ %i.bx, %.preheader14.i512.i.preheader ], [ %i.fa, %bytestream2_get_byte.exit.i513.i..loopexit.i515.i_crit_edge ], [ %i.bx, %.preheader14.i512.i ] ; 2 uses
   %i.fc = ptrtoint ptr %.promoted1623.i516.i to i64
   %i.fd = sub i64 %i.bv, %i.fc
   %i.fe = icmp slt i64 %i.fd, 1

@@ -204,7 +204,7 @@ declare i32 @deflateReset(ptr noundef) local_unnamed_addr #3
 define hidden noundef zeroext i1 @_ZN2cv10PngEncoder7getRectEjjPhS1_S1_jjijji(ptr noundef nonnull align 8 dereferenceable(9064) %0, i32 noundef %1, i32 noundef %2, ptr nofree noundef readonly captures(none) %3, ptr noundef %4, ptr noundef %5, i32 noundef %6, i32 noundef %7, i32 noundef %8, i32 noundef %9, i32 noundef %10, i32 noundef %11) local_unnamed_addr #2 align 2 {
 bb.a:
   %i.a = ptrtoaddr ptr %3 to i64                  ; 4 uses
-  %i.b = add i32 %1, -1                           ; 8 uses
+  %i.b = add i32 %1, -1                           ; 9 uses
   %i.c = add i32 %2, -1                           ; 6 uses
   %.not = icmp ne i32 %9, 0                       ; 3 uses
   %spec.store.select = zext i1 %.not to i32       ; 4 uses
@@ -409,12 +409,14 @@ bb.c:                                             ; preds = %bb.b, %scalar.ph
   br i1 %or.cond687, label %.thread, label %.preheader324.lr.ph.split.us
 
 .preheader324.lr.ph.split.us:                     ; preds = %.preheader325
+  %12 = zext i32 %i.b to i64
+  %13 = mul nuw nsw i64 %12, 3                    ; 2 uses
   br i1 %.not, label %.preheader324.us.us, label %.preheader324.us
 
 .preheader324.us.us:                              ; preds = %.preheader324.lr.ph.split.us, %._crit_edge.split.us431.us
   %.0176407.us.us = phi ptr [ %i.bm, %._crit_edge.split.us431.us ], [ %5, %.preheader324.lr.ph.split.us ]
   %.0178406.us.us = phi ptr [ %i.bl, %._crit_edge.split.us431.us ], [ %4, %.preheader324.lr.ph.split.us ]
-  %.0180405.us.us = phi ptr [ %i.bk, %._crit_edge.split.us431.us ], [ %3, %.preheader324.lr.ph.split.us ]
+  %.0180405.us.us = phi ptr [ %scevgep629, %._crit_edge.split.us431.us ], [ %3, %.preheader324.lr.ph.split.us ] ; 2 uses
   %.2185403.us.us = phi i32 [ %i.bo, %._crit_edge.split.us431.us ], [ 0, %.preheader324.lr.ph.split.us ] ; 3 uses
   %.8402.us.us = phi i32 [ %.11.us.us, %._crit_edge.split.us431.us ], [ 1, %.preheader324.lr.ph.split.us ]
   %.6210401.us.us = phi i32 [ %.8212.us428.us, %._crit_edge.split.us431.us ], [ 0, %.preheader324.lr.ph.split.us ]
@@ -472,7 +474,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %.0173.us429.us = phi i32 [ %10, %bb.d ], [ %i.bh, %bb.e ]
   %.0.extract.trunc.us430.us = trunc i32 %.0173.us429.us to i24
   store i24 %.0.extract.trunc.us430.us, ptr %.1177377.us415.us, align 1
-  %i.bk = getelementptr inbounds nuw i8, ptr %.1181375.us417.us, i64 3 ; 2 uses
+  %i.bk = getelementptr inbounds nuw i8, ptr %.1181375.us417.us, i64 3
   %i.bl = getelementptr inbounds nuw i8, ptr %.1179376.us416.us, i64 3 ; 2 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %.1177377.us415.us, i64 3 ; 2 uses
   %i.bn = add nuw i32 %.2378.us414.us, 1          ; 2 uses
@@ -480,6 +482,8 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br i1 %exitcond628.not.a, label %._crit_edge.split.us431.us, label %bb.d, !llvm.loop !361
 
 ._crit_edge.split.us431.us:                       ; preds = %bb.f
+  %14 = getelementptr i8, ptr %.0180405.us.us, i64 %13
+  %scevgep629 = getelementptr i8, ptr %14, i64 3
   %i.bo = add nuw i32 %.2185403.us.us, 1          ; 2 uses
   %exitcond629.not = icmp eq i32 %i.bo, %2
   br i1 %exitcond629.not, label %.loopexit, label %.preheader324.us.us, !llvm.loop !362
@@ -487,7 +491,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 .preheader324.us:                                 ; preds = %.preheader324.lr.ph.split.us, %._crit_edge.split.us.us
   %.0176407.us = phi ptr [ %i.cg, %._crit_edge.split.us.us ], [ %5, %.preheader324.lr.ph.split.us ]
   %.0178406.us = phi ptr [ %i.cf, %._crit_edge.split.us.us ], [ %4, %.preheader324.lr.ph.split.us ]
-  %.0180405.us = phi ptr [ %i.ce, %._crit_edge.split.us.us ], [ %3, %.preheader324.lr.ph.split.us ]
+  %.0180405.us = phi ptr [ %scevgep626, %._crit_edge.split.us.us ], [ %3, %.preheader324.lr.ph.split.us ] ; 2 uses
   %.2185403.us = phi i32 [ %i.ci, %._crit_edge.split.us.us ], [ 0, %.preheader324.lr.ph.split.us ] ; 3 uses
   %.6210401.us = phi i32 [ %.8212.us.us, %._crit_edge.split.us.us ], [ 0, %.preheader324.lr.ph.split.us ]
   %.6223400.us = phi i32 [ %.8225.us.us, %._crit_edge.split.us.us ], [ 0, %.preheader324.lr.ph.split.us ]
@@ -540,7 +544,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %.0173.us.us = phi i32 [ %10, %bb.g ], [ %i.cc, %bb.h ]
   %.0.extract.trunc.us.us = trunc i32 %.0173.us.us to i24
   store i24 %.0.extract.trunc.us.us, ptr %.1177377.us.us, align 1
-  %i.ce = getelementptr inbounds nuw i8, ptr %.1181375.us.us, i64 3 ; 2 uses
+  %i.ce = getelementptr inbounds nuw i8, ptr %.1181375.us.us, i64 3
   %i.cf = getelementptr inbounds nuw i8, ptr %.1179376.us.us, i64 3 ; 2 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %.1177377.us.us, i64 3 ; 2 uses
   %i.ch = add nuw i32 %.2378.us.us, 1             ; 2 uses
@@ -548,6 +552,8 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   br i1 %exitcond626.not, label %._crit_edge.split.us.us, label %bb.g, !llvm.loop !361
 
 ._crit_edge.split.us.us:                          ; preds = %bb.i
+  %15 = getelementptr i8, ptr %.0180405.us, i64 %13
+  %scevgep626 = getelementptr i8, ptr %15, i64 3
   %i.ci = add nuw i32 %.2185403.us, 1             ; 2 uses
   %exitcond627.not = icmp eq i32 %i.ci, %2
   br i1 %exitcond627.not, label %.loopexit, label %.preheader324.us, !llvm.loop !362
