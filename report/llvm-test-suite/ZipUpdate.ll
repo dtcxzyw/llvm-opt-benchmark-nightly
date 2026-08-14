@@ -204,11 +204,11 @@ bb.fm:                                            ; preds = %bb.fk
   br i1 %.not396.i, label %bb.ez, label %.thread567.i
 
 .outer594.split.split.i:                          ; preds = %.lr.ph.a
-  %exitcond870.not.i = icmp eq i64 %indvars.iv.next868.i, %smax.i
-  br i1 %exitcond870.not.i, label %.outer594.split.split.us.loopexit.i, label %.lr.ph.a, !llvm.loop !195
+  %exitcond870.not.i = icmp eq i64 %indvars.iv.next868.i, %wide.trip.count.i
+  br i1 %exitcond870.not.i, label %.outer594.split.split.us.i, label %.lr.ph.a, !llvm.loop !195
 
 .lr.ph.a:                                         ; preds = %.lr.ph.preheader, %.outer594.split.split.i
-  %indvars.iv867.i950 = phi i64 [ %indvars.iv.next868.i, %.outer594.split.split.i ], [ %33, %.lr.ph.preheader ] ; 4 uses
+  %indvars.iv867.i950 = phi i64 [ %33, %.lr.ph.preheader ], [ %indvars.iv.next868.i, %.outer594.split.split.i ] ; 4 uses
   %indvars.iv.next868.i = add nsw i64 %indvars.iv867.i950, 1 ; 3 uses
   %i.uo = getelementptr inbounds [8 x i8], ptr %i.aad, i64 %indvars.iv867.i950
   %i.up = load ptr, ptr %i.uo, align 8, !tbaa !113 ; 6 uses
@@ -609,10 +609,10 @@ _ZN8NArchive4NZip5CItemD2Ev.exit506.i:            ; preds = %bb.hd, %_ZN8NArchiv
 
 .outer594.i:                                      ; preds = %.outer590.i, %_ZN8NArchive4NZip5CItemD2Ev.exit506.i
   %i.zx = phi i64 [ %.lcssa742744.i, %.outer590.i ], [ %i.zo, %_ZN8NArchive4NZip5CItemD2Ev.exit506.i ] ; 12 uses
-  %.0369.ph595.i = phi i32 [ %.0369.ph592.i, %.outer590.i ], [ %i.uu, %_ZN8NArchive4NZip5CItemD2Ev.exit506.i ] ; 3 uses
+  %.0369.ph595.i = phi i32 [ %.0369.ph592.i, %.outer590.i ], [ %i.uu, %_ZN8NArchive4NZip5CItemD2Ev.exit506.i ] ; 4 uses
   %.11.ph596.i = phi i32 [ %.11.ph593.i, %.outer590.i ], [ %.16.i, %_ZN8NArchive4NZip5CItemD2Ev.exit506.i ] ; 7 uses
-  %i.zy = load i32, ptr %i.bz, align 4, !tbaa !111 ; 2 uses
-  %i.zz = sext i32 %i.zy to i64                   ; 2 uses
+  %i.zy = load i32, ptr %i.bz, align 4, !tbaa !111 ; 3 uses
+  %i.zz = sext i32 %i.zy to i64
   %i.aaa = icmp slt i64 %indvars.iv872.i, %i.zz
   br i1 %i.aaa, label %.outer594.split.i, label %bb.jz
 
@@ -623,12 +623,13 @@ _ZN8NArchive4NZip5CItemD2Ev.exit506.i:            ; preds = %bb.hd, %_ZN8NArchiv
   br i1 %.fr.i, label %.outer594.split.split.preheader.i, label %.outer594.split.split.us.i
 
 .outer594.split.split.preheader.i:                ; preds = %.outer594.split.i
-  %33 = sext i32 %.0369.ph595.i to i64            ; 2 uses
-  %smax.i = call i64 @llvm.smax.i64(i64 %33, i64 %i.zz) ; 2 uses
+  %smax.i = call i32 @llvm.smax.i32(i32 %.0369.ph595.i, i32 %i.zy) ; 3 uses
+  %wide.trip.count.i = sext i32 %smax.i to i64
   %exitcond870.not.i949.not = icmp slt i32 %.0369.ph595.i, %i.zy
-  br i1 %exitcond870.not.i949.not, label %.lr.ph.preheader, label %.outer594.split.split.us.loopexit.i
+  br i1 %exitcond870.not.i949.not, label %.lr.ph.preheader, label %.outer594.split.split.us.i
 
 .lr.ph.preheader:                                 ; preds = %.outer594.split.split.preheader.i
+  %33 = sext i32 %.0369.ph595.i to i64
   %i.aad = load ptr, ptr %i.rd, align 8, !tbaa !112
   br label %.lr.ph.a
 
@@ -642,12 +643,8 @@ bb.hf:                                            ; preds = %bb.he, %bb.fr
   call void @llvm.lifetime.end.p0(ptr nonnull %26) #14
   br label %bb.ko
 
-.outer594.split.split.us.loopexit.i:              ; preds = %.outer594.split.split.preheader.i, %.outer594.split.split.i
-  %34 = trunc nsw i64 %smax.i to i32
-  br label %.outer594.split.split.us.i
-
-.outer594.split.split.us.i:                       ; preds = %.outer594.split.i, %.outer594.split.split.us.loopexit.i
-  %.us-phi700.i = phi i32 [ %34, %.outer594.split.split.us.loopexit.i ], [ %.0369.ph595.i, %.outer594.split.i ] ; 2 uses
+.outer594.split.split.us.i:                       ; preds = %.outer594.split.i, %.outer594.split.split.preheader.i, %.outer594.split.split.i
+  %.us-phi700.i = phi i32 [ %smax.i, %.outer594.split.split.i ], [ %.0369.ph595.i, %.outer594.split.i ], [ %smax.i, %.outer594.split.split.preheader.i ] ; 2 uses
   %i.aae = load ptr, ptr %i.ru, align 8, !tbaa !112
   %i.aaf = getelementptr inbounds [8 x i8], ptr %i.aae, i64 %indvars.iv872.i
   %i.aag = load ptr, ptr %i.aaf, align 8, !tbaa !113
@@ -1050,7 +1047,7 @@ declare i32 @llvm.umax.i32(i32, i32) #13
 declare i32 @llvm.smin.i32(i32, i32) #13
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smax.i64(i64, i64) #13
+declare i32 @llvm.smax.i32(i32, i32) #13
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

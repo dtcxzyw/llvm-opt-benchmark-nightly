@@ -1,0 +1,257 @@
+diff --git a/llvm/include/llvm/Analysis/ScalarEvolution.h b/llvm/include/llvm/Analysis/ScalarEvolution.h
+index 0d7f9ae298e2a..237d04e583125 100644
+--- a/llvm/include/llvm/Analysis/ScalarEvolution.h
++++ b/llvm/include/llvm/Analysis/ScalarEvolution.h
+@@ -2029,9 +2029,19 @@ class ScalarEvolution {
+   /// Provide the special handling we need to analyze PHI SCEVs.
+   const SCEV *createNodeForPHI(PHINode *PN);
+ 
++  /// The part of createNodeForPHI which runs after createAddRecFromPHI has
++  /// failed.
++  const SCEV *createNodeForPHINotAddRec(PHINode *PN);
++
+   /// Helper function called from createNodeForPHI.
+   const SCEV *createAddRecFromPHI(PHINode *PN);
+ 
++  /// The part of createAddRecFromPHI which runs after a symbolic name has been
++  /// inserted for \p PN. Removes the symbolic name again and returns nullptr if
++  /// no add recurrence can be formed.
++  const SCEV *finishAddRecFromPHI(PHINode *PN, Value *BEValueV,
++                                  Value *StartValueV);
++
+   /// A helper function for createAddRecFromPHI to handle simple cases.
+   const SCEV *createSimpleAffineAddRec(PHINode *PN, Value *BEValueV,
+                                             Value *StartValueV);
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index 27a1a20bcdf79..91985d52686da 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -5866,10 +5866,12 @@ const SCEV *ScalarEvolution::createSimpleAffineAddRec(PHINode *PN,
+   return PHISCEV;
+ }
+ 
+-const SCEV *ScalarEvolution::createAddRecFromPHI(PHINode *PN) {
++// Compute the initial and backedge values for a PHI node in a loop header.
++static std::pair<Value *, Value *> valuesForAddRecFromPHI(LoopInfo &LI,
++                                                          PHINode *PN) {
+   const Loop *L = LI.getLoopFor(PN->getParent());
+   if (!L || L->getHeader() != PN->getParent())
+-    return nullptr;
++    return {};
+ 
+   // The loop may have multiple entrances or multiple exits; we can analyze
+   // this phi as an addrec if it has a unique entry value and a unique
+@@ -5891,23 +5893,37 @@ const SCEV *ScalarEvolution::createAddRecFromPHI(PHINode *PN) {
+       break;
+     }
+   }
+-  if (!BEValueV || !StartValueV)
+-    return nullptr;
++  return {BEValueV, StartValueV};
++}
+ 
++const SCEV *ScalarEvolution::createAddRecFromPHI(PHINode *PN) {
+   assert(ValueExprMap.find_as(PN) == ValueExprMap.end() &&
+          "PHI node already processed?");
+ 
++  auto [BEValueV, StartValueV] = valuesForAddRecFromPHI(LI, PN);
++  if (!BEValueV || !StartValueV)
++    return nullptr;
++
+   // First, try to find AddRec expression without creating a fictituos symbolic
+   // value for PN.
+   if (auto *S = createSimpleAffineAddRec(PN, BEValueV, StartValueV))
+     return S;
+ 
+   // Handle PHI node value symbolically.
++  insertValueToMap(PN, getUnknown(PN));
++
++  // finishAddRecFromPHI analyzes the value coming around the back-edge using
++  // this symbolic name for the PHI.
++  return finishAddRecFromPHI(PN, BEValueV, StartValueV);
++}
++
++const SCEV *ScalarEvolution::finishAddRecFromPHI(PHINode *PN, Value *BEValueV,
++                                                 Value *StartValueV) {
++  const Loop *L = LI.getLoopFor(PN->getParent());
+   const SCEV *SymbolicName = getUnknown(PN);
+-  insertValueToMap(PN, SymbolicName);
+ 
+-  // Using this symbolic name for the PHI, analyze the value coming around
+-  // the back-edge.
++  // Using the symbolic name for the PHI, analyze the value coming around the
++  // back-edge.
+   const SCEV *BEValue = getSCEV(BEValueV);
+ 
+   // NOTE: If BEValue is loop invariant, we know that the PHI node just
+@@ -6138,6 +6154,10 @@ const SCEV *ScalarEvolution::createNodeForPHI(PHINode *PN) {
+   if (const SCEV *S = createAddRecFromPHI(PN))
+     return S;
+ 
++  return createNodeForPHINotAddRec(PN);
++}
++
++const SCEV *ScalarEvolution::createNodeForPHINotAddRec(PHINode *PN) {
+   // We do not allow simplifying phi (undef, X) to X here, to avoid reusing the
+   // phi node for X.
+   if (Value *V = simplifyInstruction(
+@@ -7642,41 +7662,75 @@ bool ScalarEvolution::loopIsFiniteByAssumption(const Loop *L) {
+ }
+ 
+ const SCEV *ScalarEvolution::createSCEVIter(Value *V) {
+-  // Worklist item with a Value and a bool indicating whether all operands have
+-  // been visited already.
+-  using PointerTy = PointerIntPair<Value *, 1, bool>;
++  // The state of a worklist item:
++  //  * NeedOperands: the operands to create SCEVs for first are not known yet.
++  //  * Create: all operands have a SCEV, the SCEV for the item can be created.
++  //  * FinishAddRec: the item is a loop header PHI for which a symbolic name
++  //    has been inserted and the backedge value has a SCEV; all that is left is
++  //    to turn it into an add recurrence.
++  enum State { NeedOperands, Create, FinishAddRec };
++  using PointerTy = PointerIntPair<Value *, 2, State>;
+   SmallVector<PointerTy> Stack;
+ 
+-  Stack.emplace_back(V, false);
++  Stack.emplace_back(V, NeedOperands);
+   while (!Stack.empty()) {
+     auto E = Stack.back();
+     Value *CurV = E.getPointer();
+ 
+-    if (getExistingSCEV(CurV)) {
++    // In the FinishAddRec state CurV already maps to its symbolic name, so skip
++    // the check.
++    if (E.getInt() != FinishAddRec && getExistingSCEV(CurV)) {
+       Stack.pop_back();
+       continue;
+     }
+ 
+     SmallVector<Value *> Ops;
+     const SCEV *CreatedSCEV = nullptr;
+-    // If all operands have been visited already, create the SCEV.
+-    if (E.getInt()) {
+-      CreatedSCEV = createSCEV(CurV);
+-    } else {
+-      // Otherwise get the operands we need to create SCEV's for before creating
+-      // the SCEV for CurV. If the SCEV for CurV can be constructed trivially,
+-      // just use it.
++    switch (E.getInt()) {
++    case NeedOperands:
++      // Get the operands we need to create SCEV's for before creating the SCEV
++      // for CurV. If the SCEV for CurV can be constructed trivially, just use
++      // it.
+       CreatedSCEV = getOperandsToCreate(CurV, Ops);
++      break;
++    case Create: {
++      // createAddRecFromPHI needs the SCEV of the backedge value, which has to
++      // be computed with a symbolic name in place for the PHI. Do that via the
++      // worklist instead of recursing into it.
++      auto *PN = dyn_cast<PHINode>(CurV);
++      auto [BEValueV, StartValueV] =
++          PN ? valuesForAddRecFromPHI(LI, PN) : std::pair<Value *, Value *>();
++      if (!BEValueV || !StartValueV || getExistingSCEV(BEValueV)) {
++        CreatedSCEV = createSCEV(CurV);
++        break;
++      }
++      CreatedSCEV = createSimpleAffineAddRec(PN, BEValueV, StartValueV);
++      if (!CreatedSCEV) {
++        insertValueToMap(PN, getUnknown(PN));
++        Stack.back().setInt(FinishAddRec);
++        Stack.emplace_back(BEValueV, NeedOperands);
++        continue;
++      }
++      break;
++    }
++    case FinishAddRec: {
++      auto *PN = cast<PHINode>(CurV);
++      auto [BEValueV, StartValueV] = valuesForAddRecFromPHI(LI, PN);
++      CreatedSCEV = finishAddRecFromPHI(PN, BEValueV, StartValueV);
++      if (!CreatedSCEV)
++        CreatedSCEV = createNodeForPHINotAddRec(PN);
++      break;
++    }
+     }
+ 
+     if (CreatedSCEV) {
+       insertValueToMap(CurV, CreatedSCEV);
+       Stack.pop_back();
+     } else {
+-      Stack.back().setInt(true);
++      Stack.back().setInt(Create);
+       // Queue its operands which need to be constructed.
+       for (Value *Op : Ops)
+-        Stack.emplace_back(Op, false);
++        Stack.emplace_back(Op, NeedOperands);
+     }
+   }
+ 
+@@ -7814,7 +7868,6 @@ ScalarEvolution::getOperandsToCreate(Value *V, SmallVectorImpl<Value *> &Ops) {
+              /*UseInstrInfo=*/true, /*CanUseUndef=*/false})) {
+       assert(V);
+       Ops.push_back(V);
+-      return nullptr;
+     }
+     // The second is createNodeForPHIWithIdenticalOperands: this looks for
+     // operands which all perform the same operation, but haven't been
+@@ -7822,7 +7875,6 @@ ScalarEvolution::getOperandsToCreate(Value *V, SmallVectorImpl<Value *> &Ops) {
+     if (BinaryOperator *BO = getCommonInstForPHI(cast<PHINode>(U))) {
+       assert(BO);
+       Ops.push_back(BO);
+-      return nullptr;
+     }
+     // The third is createNodeFromSelectLikePHI; this takes a PHI which
+     // is equivalent to a select, and analyzes it like a select.
+@@ -7839,18 +7891,34 @@ ScalarEvolution::getOperandsToCreate(Value *V, SmallVectorImpl<Value *> &Ops) {
+         Ops.push_back(Cond);
+         Ops.push_back(LHS);
+         Ops.push_back(RHS);
+-        return nullptr;
+       }
+     }
+-    // The fourth way is createAddRecFromPHI. It's complicated to handle here,
+-    // so just construct it recursively.
+-    //
++    // The fourth way is createAddRecFromPHI. The SCEV for the backedge value
++    // has to be constructed with a symbolic name in place for the PHI, so
++    // createSCEVIter deals with it separately; here we only add the values
++    // createSimpleAffineAddRec needs.
++    {
++      auto *PN = cast<PHINode>(U);
++      auto [BEValueV, StartValueV] = valuesForAddRecFromPHI(LI, PN);
++      if (BEValueV && StartValueV) {
++        Ops.push_back(StartValueV);
++        // createSimpleAffineAddRec needs the SCEV of the loop-invariant step.
++        if (auto BO = MatchBinaryOp(BEValueV, getDataLayout(), AC, DT, PN)) {
++          const Loop *L = LI.getLoopFor(PN->getParent());
++          if (BO->Opcode == Instruction::Add) {
++            if (BO->LHS == PN && L->isLoopInvariant(BO->RHS))
++              Ops.push_back(BO->RHS);
++            else if (BO->RHS == PN && L->isLoopInvariant(BO->LHS))
++              Ops.push_back(BO->LHS);
++          }
++        }
++      }
++    }
+     // In addition to getNodeForPHI, also construct nodes which might be needed
+-    // by getRangeRef.
++    // by getRangeRef() on a SCEVUnknown for a PHI.
+     if (RangeRefPHIAllowedOperands(DT, cast<PHINode>(U))) {
+       for (Value *V : cast<PHINode>(U)->operands())
+         Ops.push_back(V);
+-      return nullptr;
+     }
+     return nullptr;
+ 
+@@ -7877,6 +7945,12 @@ ScalarEvolution::getOperandsToCreate(Value *V, SmallVectorImpl<Value *> &Ops) {
+     if (CanSimplifyToUnknown())
+       return getUnknown(U);
+ 
++    // createNodeForSelectOrPHIInstWithICmpInstCond also needs the operands of
++    // an icmp condition, like the select-like PHI case above.
++    if (auto *CondICmp = dyn_cast<ICmpInst>(U->getOperand(0))) {
++      Ops.push_back(CondICmp->getOperand(0));
++      Ops.push_back(CondICmp->getOperand(1));
++    }
+     llvm::append_range(Ops, U->operands());
+     return nullptr;
+     break;

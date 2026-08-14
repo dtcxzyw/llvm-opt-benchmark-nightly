@@ -203,7 +203,7 @@ bb.x:                                             ; preds = %.lr.ph, %bb.x
   br label %bb.y
 
 bb.y:                                             ; preds = %.lr.ph271, %bb.bk
-  %.0201269 = phi i32 [ 0, %.lr.ph271 ], [ %.lcssa, %bb.bk ] ; 7 uses
+  %.0201269 = phi i32 [ 0, %.lr.ph271 ], [ %.lcssa, %bb.bk ] ; 6 uses
   %.0202268 = phi i1 [ false, %.lr.ph271 ], [ %i.fe, %bb.bk ]
   %.0205267 = phi i32 [ 0, %.lr.ph271 ], [ %.1206, %bb.bk ]
   %.0209266 = phi i32 [ 0, %.lr.ph271 ], [ %.1210, %bb.bk ]
@@ -360,14 +360,14 @@ bb.ah:                                            ; preds = %bb.ag, %bb.af
   br i1 %i.fl, label %.lr.ph254.preheader, label %._crit_edge255
 
 .lr.ph254.preheader:                              ; preds = %bb.ah
+  %8 = sext i32 %i.fk to i64
   %i.fm = sub i32 %2, %.0201269                   ; 2 uses
   br label %.lr.ph254
 
 .lr.ph254:                                        ; preds = %.lr.ph254.preheader, %bb.aq
-  %8 = phi i32 [ %10, %bb.aq ], [ %i.fk, %.lr.ph254.preheader ] ; 2 uses
-  %.0214252 = phi i32 [ %i.gq, %bb.aq ], [ 1, %.lr.ph254.preheader ] ; 2 uses
-  %9 = sext i32 %8 to i64
-  %i.fn = getelementptr inbounds [8 x i8], ptr %i.bw, i64 %9
+  %indvars.iv282 = phi i64 [ %8, %.lr.ph254.preheader ], [ %indvars.iv.next283, %bb.aq ] ; 3 uses
+  %.0214252 = phi i32 [ 1, %.lr.ph254.preheader ], [ %i.gq, %bb.aq ] ; 2 uses
+  %i.fn = getelementptr inbounds [8 x i8], ptr %i.bw, i64 %indvars.iv282
   %i.fo = load ptr, ptr %i.fn, align 8            ; 4 uses
   %i.fp = call i64 @PageGetHeapFreeSpace(ptr noundef %.0.i.i) #12
   %i.fq = load i32, ptr %i.fo, align 8
@@ -376,7 +376,7 @@ bb.ah:                                            ; preds = %bb.ag, %bb.af
   %i.ft = and i64 %i.fs, 8589934584
   %i.fu = add nsw i64 %i.ft, %i.bt
   %i.fv = icmp ult i64 %i.fp, %i.fu
-  br i1 %i.fv, label %._crit_edge255, label %bb.ai
+  br i1 %i.fv, label %._crit_edge255.loopexit.split.loop.exit, label %bb.ai
 
 bb.ai:                                            ; preds = %.lr.ph254
   call void @RelationPutHeapTuple(ptr noundef nonnull %0, i32 noundef %i.em, ptr noundef nonnull %i.fo, i1 noundef zeroext false) #12
@@ -447,14 +447,18 @@ log_heap_new_cid.exit:                            ; preds = %bb.ak, %bb.ap
   br label %bb.aq
 
 bb.aq:                                            ; preds = %log_heap_new_cid.exit, %bb.ai
-  %i.gq = add i32 %.0214252, 1                    ; 3 uses
-  %10 = add i32 %i.gq, %.0201269
+  %i.gq = add i32 %.0214252, 1                    ; 2 uses
+  %indvars.iv.next283 = add nsw i64 %indvars.iv282, 1
   %exitcond282.not = icmp eq i32 %i.gq, %i.fm
   br i1 %exitcond282.not, label %._crit_edge255, label %.lr.ph254, !llvm.loop !20
 
-._crit_edge255:                                   ; preds = %bb.aq, %.lr.ph254, %bb.ah
-  %.0214.lcssa = phi i32 [ 1, %bb.ah ], [ %.0214252, %.lr.ph254 ], [ %i.fm, %bb.aq ] ; 4 uses
-  %.lcssa = phi i32 [ %i.fk, %bb.ah ], [ %8, %.lr.ph254 ], [ %2, %bb.aq ] ; 3 uses
+._crit_edge255.loopexit.split.loop.exit:          ; preds = %.lr.ph254
+  %9 = trunc nsw i64 %indvars.iv282 to i32
+  br label %._crit_edge255
+
+._crit_edge255:                                   ; preds = %bb.aq, %._crit_edge255.loopexit.split.loop.exit, %bb.ah
+  %.0214.lcssa = phi i32 [ 1, %bb.ah ], [ %.0214252, %._crit_edge255.loopexit.split.loop.exit ], [ %i.fm, %bb.aq ] ; 4 uses
+  %.lcssa = phi i32 [ %i.fk, %bb.ah ], [ %9, %._crit_edge255.loopexit.split.loop.exit ], [ %2, %bb.aq ] ; 3 uses
   %i.gr = getelementptr i8, ptr %.0.i.i, i64 10   ; 3 uses
   %.val238 = load i16, ptr %i.gr, align 2         ; 3 uses
   %i.gs = and i16 %.val238, 4

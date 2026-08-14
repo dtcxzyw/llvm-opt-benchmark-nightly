@@ -203,11 +203,11 @@ bb.t:                                             ; preds = %bb.p, %bb.r
 .lr.ph147:                                        ; preds = %.preheader135
   %i.bi = load ptr, ptr %i.ax, align 8, !tbaa !23 ; 3 uses
   %i.bj = load ptr, ptr %9, align 8, !tbaa !23    ; 3 uses
-  %i.bk = add i32 %.0.i.i, %.0.i.i106
-  %i.bl = xor i32 %i.c, -1
+  %i.bk = add i32 %.0.i.i106, %.0.i.i
+  %i.bl = xor i32 %i.ai, -1
   %i.bm = add i32 %i.bk, %i.bl
   %xtraiter = and i32 %i.ak, 1
-  %i.bn = icmp eq i32 %i.bm, %i.ai
+  %i.bn = icmp eq i32 %i.bm, %i.c
   br i1 %i.bn, label %.epil.preheader, label %.lr.ph147.new
 
 .lr.ph147.new:                                    ; preds = %.lr.ph147

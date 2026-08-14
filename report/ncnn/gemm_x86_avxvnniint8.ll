@@ -204,8 +204,8 @@ begin_hunk_0_@_ZN4ncnn40gemm_transB_packed_tile_int8_avxvnniint8ERKNS_3MatES2_RS
   %i.ajq = and i32 %i.ajp, -4
   %i.ajr = add i32 %i.ajq, 4                      ; 4 uses
   %i.ajs = and i32 %6, -8
-  %i.ajt = zext i32 %i.ajp to i64                 ; 3 uses
-  %i.aju = lshr i64 %i.ajt, 2                     ; 4 uses
+  %i.ajt = zext i32 %i.ajp to i64                 ; 2 uses
+  %i.aju = lshr i64 %i.ajt, 2                     ; 5 uses
   %i.ajv = shl nuw nsw i64 %i.aju, 4
   %i.ajw = and i64 %i.ajt, 4294967292
   %i.ajx = add nuw nsw i64 %i.ajw, 4              ; 2 uses
@@ -243,8 +243,7 @@ begin_hunk_0_@_ZN4ncnn40gemm_transB_packed_tile_int8_avxvnniint8ERKNS_3MatES2_RS
   %i.ako = shl nuw nsw i64 %n.vec1596, 2
   %i.akp = shl nuw nsw i64 %n.vec1596, 3
   %cmp.n1613 = icmp eq i64 %i.akb, %n.vec1596
-  %9 = lshr i64 %i.ajt, 2
-  %i.akq = add nuw nsw i64 %9, 1                  ; 2 uses
+  %i.akq = add nuw nsw i64 %i.aju, 1              ; 2 uses
   %min.iters.check1344 = icmp ult i32 %i.ajp, 28
   %n.vec1346 = and i64 %i.akq, 2147483640         ; 4 uses
   %i.akr = trunc nuw nsw i64 %n.vec1346 to i32

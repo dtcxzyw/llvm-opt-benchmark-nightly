@@ -203,7 +203,7 @@ bb.co:                                            ; preds = %.loopexit177.i, %.l
   %.167.lcssa.i = phi i32 [ %.066245.i, %.preheader178..critedge_crit_edge.i ], [ %i.qe, %.critedge.i.loopexit.split.loop.exit555 ], [ %indvars.iv292.i, %.loopexit177.i ] ; 4 uses
   %i.qf = sext i32 %.167.lcssa.i to i64
   %i.qg = icmp slt i64 %indvar.next.pre-phi.i, %i.qf
-  %indvars.iv.next293.i = add nuw i32 %indvars.iv292.i, 1
+  %indvars.iv.next293.i = add i32 %indvars.iv292.i, 1
   %indvars.iv.next307.i = add nsw i32 %indvars.iv306.i, -1
   br i1 %i.qg, label %.preheader178.i, label %.preheader.i, !llvm.loop !79
 

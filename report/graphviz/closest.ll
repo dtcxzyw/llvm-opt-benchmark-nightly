@@ -29,7 +29,7 @@ bb.a:
   %6 = alloca %struct.pairs_t, align 8            ; 20 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #18
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %6, i8 0, i64 64, i1 false)
-  %i.c = sext i32 %1 to i64                       ; 28 uses
+  %i.c = sext i32 %1 to i64                       ; 27 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #18
   %.not.i.i = icmp eq i32 %1, 0                   ; 4 uses
   br i1 %.not.i.i, label %._crit_edge.i.thread.i, label %bb.b
@@ -153,7 +153,6 @@ bb.j:                                             ; preds = %._crit_edge.i
 .lr.ph140.preheader.i:                            ; preds = %bb.j, %._crit_edge.i
   store ptr null, ptr %i.ac, align 8, !tbaa !17
   store ptr null, ptr %i.ad, align 8, !tbaa !17
-  %7 = add nsw i64 %i.c, -1                       ; 5 uses
   %xtraiter = and i64 %i.c, 3
   %i.am = icmp ult i32 %1, 4
   br i1 %i.am, label %.lr.ph140.i.epil.preheader, label %.lr.ph140.preheader.i.new
@@ -195,7 +194,7 @@ bb.j:                                             ; preds = %._crit_edge.i
   br i1 %epil.iter.cmp.not, label %._crit_edge141.i, label %.lr.ph140.i.epil, !llvm.loop !21
 
 ._crit_edge141.i:                                 ; preds = %.lr.ph140.i.epil, %._crit_edge141.i.unr-lcssa
-  %i.av = add nsw i64 %i.c, -1                    ; 8 uses
+  %i.av = add nsw i64 %i.c, -1                    ; 13 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 4 uses
   store i64 %i.av, ptr %i.aw, align 8, !tbaa !23
   %i.ax = getelementptr inbounds nuw i8, ptr %4, i64 16
@@ -219,12 +218,12 @@ bb.l:                                             ; preds = %bb.k
   %.pre.i.i = load i64, ptr %i.p, align 8, !tbaa !11 ; 3 uses
   %.phi.trans.insert.i.i = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.pre.i.i
   %.pre33.i.i = load double, ptr %.phi.trans.insert.i.i, align 8, !tbaa !25 ; 2 uses
-  %xtraiter89 = and i64 %7, 1
+  %xtraiter89 = and i64 %i.av, 1
   %i.bd = icmp eq i32 %1, 2
   br i1 %i.bd, label %.lr.ph.split.i.i.epil.preheader, label %.lr.ph.split.preheader.i.i.new
 
 .lr.ph.split.preheader.i.i.new:                   ; preds = %.lr.ph.split.preheader.i.i
-  %unroll_iter95 = and i64 %7, -2
+  %unroll_iter95 = and i64 %i.av, -2
   br label %.lr.ph.split.i.i
 
 ._crit_edge.i.i:                                  ; preds = %._crit_edge141.i
@@ -240,7 +239,7 @@ bb.l:                                             ; preds = %bb.k
   %.epil.init = phi double [ %.pre33.i.i, %.lr.ph.split.preheader.i.i ], [ %i.cc, %.preheader.preheader.i.i.loopexit.unr-lcssa ]
   %.epil.init92 = phi i64 [ %.pre.i.i, %.lr.ph.split.preheader.i.i ], [ %i.ca, %.preheader.preheader.i.i.loopexit.unr-lcssa ]
   %.02830.i.i.epil.init = phi i64 [ 0, %.lr.ph.split.preheader.i.i ], [ %i.by, %.preheader.preheader.i.i.loopexit.unr-lcssa ] ; 2 uses
-  %lcmp.mod94 = trunc i64 %7 to i1
+  %lcmp.mod94 = trunc i64 %i.av to i1
   tail call void @llvm.assume(i1 %lcmp.mod94)
   %i.bf = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %.02830.i.i.epil.init
   %i.bg = getelementptr inbounds nuw i8, ptr %i.bf, i64 8
@@ -382,12 +381,12 @@ initHeap.exit.i:                                  ; preds = %heapify.exit.i.i
 
 .lr.ph143.i.preheader:                            ; preds = %initHeap.exit.i
   %i.dh = add nsw i64 %i.c, -2
-  %xtraiter97 = and i64 %7, 3                     ; 3 uses
+  %xtraiter97 = and i64 %i.av, 3                  ; 3 uses
   %i.di = icmp ult i64 %i.dh, 3
   br i1 %i.di, label %.lr.ph143.i.epil.preheader, label %.lr.ph143.i.preheader.new
 
 .lr.ph143.i.preheader.new:                        ; preds = %.lr.ph143.i.preheader
-  %unroll_iter101 = and i64 %7, -4
+  %unroll_iter101 = and i64 %i.av, -4
   br label %.lr.ph143.i
 
 .lr.ph140.i:                                      ; preds = %.lr.ph140.i, %.lr.ph140.preheader.i.new

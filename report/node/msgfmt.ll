@@ -201,7 +201,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 144 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 216 ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8              ; 2 uses
-  %i.d = sext i32 %2 to i64                       ; 2 uses
+  %i.d = sext i32 %2 to i64
   %i.e = getelementptr inbounds [16 x i8], ptr %i.c, i64 %i.d ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 4
   %i.g = load i32, ptr %i.f, align 4
@@ -212,26 +212,22 @@ bb.a:
   store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN6icu_7813UnicodeStringE, i64 16), ptr %0, align 8
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i16 2, ptr %i.l, align 8
-  %3 = sext i32 %2 to i64
-  %4 = getelementptr [16 x i8], ptr %i.c, i64 %3  ; 2 uses
-  %5 = getelementptr i8, ptr %4, i64 16           ; 2 uses
-  %i.m = load i32, ptr %5, align 4
-  %i.n = getelementptr i8, ptr %4, i64 20         ; 2 uses
+  %.01923 = add nsw i32 %2, 1
+  %3 = sext i32 %.01923 to i64                    ; 2 uses
+  %4 = getelementptr inbounds [16 x i8], ptr %i.c, i64 %3 ; 3 uses
+  %i.m = load i32, ptr %4, align 4
+  %i.n = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 2 uses
   %i.o = load i32, ptr %i.n, align 4
   %i.p = sub nsw i32 %i.o, %i.k
   %i.q = tail call noundef nonnull align 8 dereferenceable(64) ptr @_ZN6icu_7813UnicodeString8doAppendERKS0_ii(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr noundef nonnull align 8 dereferenceable(64) %i.a, i32 noundef %i.k, i32 noundef %i.p) #16 ; 0 uses
   %i.r = and i32 %i.m, -5
   %or.cond.not24 = icmp eq i32 %i.r, 1
-  br i1 %or.cond.not24, label %._crit_edge, label %.lr.ph.preheader
+  br i1 %or.cond.not24, label %._crit_edge, label %.lr.ph
 
-.lr.ph.preheader:                                 ; preds = %bb.a
-  %6 = add nsw i64 %i.d, 1
-  br label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %indvars.iv = phi i64 [ %6, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ]
-  %i.s = phi ptr [ %i.n, %.lr.ph.preheader ], [ %i.ac, %.lr.ph ]
-  %i.t = phi ptr [ %5, %.lr.ph.preheader ], [ %i.aa, %.lr.ph ]
+.lr.ph:                                           ; preds = %bb.a, %.lr.ph
+  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ %3, %bb.a ]
+  %i.s = phi ptr [ %i.ac, %.lr.ph ], [ %i.n, %bb.a ]
+  %i.t = phi ptr [ %i.aa, %.lr.ph ], [ %4, %bb.a ]
   %i.u = load i32, ptr %i.s, align 4
   %i.v = getelementptr inbounds nuw i8, ptr %i.t, i64 8
   %i.w = load i16, ptr %i.v, align 4
@@ -634,7 +630,7 @@ bb.n:                                             ; preds = %bb.m
   %i.cu = getelementptr inbounds [16 x i8], ptr %i.ct, i64 %i.bk
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cu, i64 12
   %i.cw = load i32, ptr %i.cv, align 4
-  %..i = call noundef i32 @llvm.smax.i32(i32 %i.cw, i32 %.0106) ; 3 uses
+  %..i = call noundef i32 @llvm.smax.i32(i32 %i.cw, i32 %.0106) ; 4 uses
   %i.cx = load i32, ptr %i.bl, align 4
   %i.cy = add i32 %i.cx, -5
   %or.cond.i = icmp ult i32 %i.cy, 2
@@ -699,9 +695,9 @@ bb.s:                                             ; preds = %bb.r
 bb.t:                                             ; preds = %bb.s, %_ZNK6icu_7813MessageFormat18getCachedFormatterEi.exit.thread
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #16
   call void @llvm.experimental.noalias.scope.decl(metadata !66)
-  %i.dx = load ptr, ptr %i.ae, align 8, !noalias !66
-  %i.dy = sext i32 %..i to i64                    ; 2 uses
-  %i.dz = getelementptr inbounds [16 x i8], ptr %i.dx, i64 %i.dy ; 4 uses
+  %i.dx = load ptr, ptr %i.ae, align 8, !noalias !66 ; 2 uses
+  %i.dy = sext i32 %..i to i64
+  %i.dz = getelementptr inbounds [16 x i8], ptr %i.dx, i64 %i.dy ; 2 uses
   %i.ea = getelementptr inbounds nuw i8, ptr %i.dz, i64 4
   %i.eb = load i32, ptr %i.ea, align 4, !noalias !66
   %i.ec = getelementptr inbounds nuw i8, ptr %i.dz, i64 8
@@ -710,24 +706,22 @@ bb.t:                                             ; preds = %bb.s, %_ZNK6icu_781
   %i.ef = add nsw i32 %i.eb, %i.ee                ; 2 uses
   store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN6icu_7813UnicodeStringE, i64 16), ptr %8, align 8, !alias.scope !66
   store i16 2, ptr %i.az, align 8, !alias.scope !66
-  %11 = getelementptr i8, ptr %i.dz, i64 16       ; 2 uses
-  %i.eg = load i32, ptr %11, align 4, !noalias !66
-  %i.eh = getelementptr i8, ptr %i.dz, i64 20     ; 2 uses
+  %.01923.i = add nsw i32 %..i, 1
+  %11 = sext i32 %.01923.i to i64                 ; 2 uses
+  %12 = getelementptr inbounds [16 x i8], ptr %i.dx, i64 %11 ; 3 uses
+  %i.eg = load i32, ptr %12, align 4, !noalias !66
+  %i.eh = getelementptr inbounds nuw i8, ptr %12, i64 4 ; 2 uses
   %i.ei = load i32, ptr %i.eh, align 4, !noalias !66
   %i.ej = sub nsw i32 %i.ei, %i.ef
   %i.ek = call noundef nonnull align 8 dereferenceable(64) ptr @_ZN6icu_7813UnicodeString8doAppendERKS0_ii(ptr noundef nonnull align 8 dereferenceable(64) %8, ptr noundef nonnull align 8 dereferenceable(64) %i.ad, i32 noundef %i.ef, i32 noundef %i.ej) #16 ; 0 uses
   %i.el = and i32 %i.eg, -5
   %or.cond.not24.i = icmp eq i32 %i.el, 1
-  br i1 %or.cond.not24.i, label %_ZNK6icu_7813MessageFormat33getLiteralStringUntilNextArgumentEi.exit, label %.lr.ph.preheader.i
+  br i1 %or.cond.not24.i, label %_ZNK6icu_7813MessageFormat33getLiteralStringUntilNextArgumentEi.exit, label %.lr.ph.i
 
-.lr.ph.preheader.i:                               ; preds = %bb.t
-  %12 = add nsw i64 %i.dy, 1
-  br label %.lr.ph.i
-
-.lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.preheader.i
-  %indvars.iv.i = phi i64 [ %12, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %.lr.ph.i ]
-  %i.em = phi ptr [ %i.eh, %.lr.ph.preheader.i ], [ %i.ew, %.lr.ph.i ]
-  %i.en = phi ptr [ %11, %.lr.ph.preheader.i ], [ %i.eu, %.lr.ph.i ]
+.lr.ph.i:                                         ; preds = %bb.t, %.lr.ph.i
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.lr.ph.i ], [ %11, %bb.t ]
+  %i.em = phi ptr [ %i.ew, %.lr.ph.i ], [ %i.eh, %bb.t ]
+  %i.en = phi ptr [ %i.eu, %.lr.ph.i ], [ %12, %bb.t ]
   %i.eo = load i32, ptr %i.em, align 4
   %i.ep = getelementptr inbounds nuw i8, ptr %i.en, i64 8
   %i.eq = load i16, ptr %i.ep, align 4
