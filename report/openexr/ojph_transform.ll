@@ -203,7 +203,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not175.i, label %._crit_edge.i, label %.lr.ph165.i
 
 .lr.ph165.i:                                      ; preds = %bb.c
-  %not..i = xor i1 %5, true
+  %not..i = xor i1 %5, true                       ; 5 uses
   %i.i = zext i1 %not..i to i32
   %i.j = add i32 %4, %i.i
   %i.k = lshr i32 %i.j, 1
@@ -215,7 +215,6 @@ bb.c:                                             ; preds = %bb.b
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !114
   %wide.trip.count.i = zext i8 %i.h to i64
-  %6 = xor i1 %5, true                            ; 4 uses
   br label %bb.d
 
 ._crit_edge.i:                                    ; preds = %.loopexit.i, %bb.c
@@ -233,16 +232,16 @@ bb.d:                                             ; preds = %.loopexit.i, %.lr.p
   %.0122161.i = phi i32 [ %i.n, %.lr.ph165.i ], [ %.0123160.i, %.loopexit.i ] ; 27 uses
   %.0123160.i = phi i32 [ %i.k, %.lr.ph165.i ], [ %.0122161.i, %.loopexit.i ] ; 3 uses
   %i.w = trunc i64 %indvars.iv.i to i1
-  %i.x = xor i1 %i.w, %6
+  %i.x = xor i1 %i.w, %not..i
   %i.y = select i1 %i.x, i64 4, i64 0             ; 2 uses
   %i.z = trunc i64 %indvars.iv.i to i1
-  %i.aa = xor i1 %i.z, %6
+  %i.aa = xor i1 %i.z, %not..i
   %i.ab = select i1 %i.aa, i64 4, i64 0           ; 2 uses
   %i.ac = trunc i64 %indvars.iv.i to i1
-  %i.ad = xor i1 %i.ac, %6
+  %i.ad = xor i1 %i.ac, %not..i
   %i.ae = select i1 %i.ad, i64 4, i64 0           ; 2 uses
   %i.af = trunc i64 %indvars.iv.i to i1
-  %i.ag = xor i1 %i.af, %6
+  %i.ag = xor i1 %i.af, %not..i
   %i.ah = select i1 %i.ag, i64 4, i64 0           ; 2 uses
   %i.ai = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %indvars.iv.i ; 3 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 4
@@ -645,7 +644,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %.not175.i12, label %._crit_edge.i35, label %.lr.ph165.i13
 
 .lr.ph165.i13:                                    ; preds = %bb.m
-  %not..i14 = xor i1 %5, true
+  %not..i14 = xor i1 %5, true                     ; 5 uses
   %i.ly = zext i1 %not..i14 to i32
   %i.lz = add i32 %4, %i.ly
   %i.ma = lshr i32 %i.lz, 1
@@ -657,7 +656,6 @@ bb.m:                                             ; preds = %bb.l
   %i.mg = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.mh = load ptr, ptr %i.mg, align 8, !tbaa !114
   %wide.trip.count.i15 = zext i8 %i.lx to i64
-  %7 = xor i1 %5, true                            ; 4 uses
   br label %bb.n
 
 ._crit_edge.i35:                                  ; preds = %.loopexit.i32, %bb.m
@@ -675,16 +673,16 @@ bb.n:                                             ; preds = %.loopexit.i32, %.lr
   %.0122161.i20 = phi i32 [ %i.md, %.lr.ph165.i13 ], [ %.0123160.i21, %.loopexit.i32 ] ; 27 uses
   %.0123160.i21 = phi i32 [ %i.ma, %.lr.ph165.i13 ], [ %.0122161.i20, %.loopexit.i32 ] ; 3 uses
   %i.mm = trunc i64 %indvars.iv.i16 to i1
-  %i.mn = xor i1 %i.mm, %7
+  %i.mn = xor i1 %i.mm, %not..i14
   %i.mo = select i1 %i.mn, i64 8, i64 0           ; 2 uses
   %i.mp = trunc i64 %indvars.iv.i16 to i1
-  %i.mq = xor i1 %i.mp, %7
+  %i.mq = xor i1 %i.mp, %not..i14
   %i.mr = select i1 %i.mq, i64 8, i64 0           ; 2 uses
   %i.ms = trunc i64 %indvars.iv.i16 to i1
-  %i.mt = xor i1 %i.ms, %7
+  %i.mt = xor i1 %i.ms, %not..i14
   %i.mu = select i1 %i.mt, i64 8, i64 0           ; 2 uses
   %i.mv = trunc i64 %indvars.iv.i16 to i1
-  %i.mw = xor i1 %i.mv, %7
+  %i.mw = xor i1 %i.mv, %not..i14
   %i.mx = select i1 %i.mw, i64 8, i64 0           ; 2 uses
   %i.my = getelementptr inbounds nuw [8 x i8], ptr %i.mh, i64 %indvars.iv.i16 ; 3 uses
   %i.mz = getelementptr inbounds nuw i8, ptr %i.my, i64 4

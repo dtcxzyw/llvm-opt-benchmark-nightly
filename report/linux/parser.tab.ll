@@ -201,22 +201,17 @@ bb.w:                                             ; preds = %bb.v, %bb.u, %bb.t,
 
 bb.x:                                             ; preds = %._crit_edge.i
   %i.bp = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.bo) #19
-  %i.bq = shl i64 %i.bp, 32                       ; 2 uses
+  %i.bq = shl i64 %i.bp, 32
   %sext.i = add i64 %i.bq, -4294967296
-  %i.br = ashr exact i64 %sext.i, 32
+  %i.br = ashr exact i64 %sext.i, 32              ; 2 uses
   %i.bs = getelementptr inbounds i8, ptr %i.bo, i64 %i.br ; 2 uses
   %i.bt = load i8, ptr %i.bs, align 1, !tbaa !13
   %i.bu = icmp eq i8 %i.bt, 10
-  br i1 %i.bu, label %.lr.ph71.preheader.i, label %._crit_edge72.i
+  br i1 %i.bu, label %.lr.ph71.i, label %._crit_edge72.i
 
-.lr.ph71.preheader.i:                             ; preds = %bb.x
-  %1 = ashr exact i64 %i.bq, 32
-  %2 = add nsw i64 %1, -1
-  br label %.lr.ph71.i
-
-.lr.ph71.i:                                       ; preds = %.lr.ph71.i, %.lr.ph71.preheader.i
-  %indvars.iv.i = phi i64 [ %2, %.lr.ph71.preheader.i ], [ %indvars.iv.next.i, %.lr.ph71.i ]
-  %i.bv = phi ptr [ %i.bs, %.lr.ph71.preheader.i ], [ %i.bx, %.lr.ph71.i ]
+.lr.ph71.i:                                       ; preds = %bb.x, %.lr.ph71.i
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.lr.ph71.i ], [ %i.br, %bb.x ]
+  %i.bv = phi ptr [ %i.bx, %.lr.ph71.i ], [ %i.bs, %bb.x ]
   store i8 0, ptr %i.bv, align 1, !tbaa !13
   %i.bw = load ptr, ptr %i.bn, align 8, !tbaa !45 ; 2 uses
   %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1 ; 2 uses

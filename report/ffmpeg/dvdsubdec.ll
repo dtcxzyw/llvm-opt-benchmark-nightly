@@ -204,12 +204,12 @@ is_transp.exit109.i:                              ; preds = %bb.cr
 
 .critedge2.i:                                     ; preds = %is_transp.exit109.i, %.critedge2.loopexit.i, %.critedge.i71
   %.087144.i = phi i32 [ %i.xf, %.critedge2.loopexit.i ], [ 0, %.critedge.i71 ], [ 0, %is_transp.exit109.i ] ; 2 uses
-  %i.xg = add nsw i32 %i.ux, -1                   ; 2 uses
+  %i.xg = add nsw i32 %i.ux, -1                   ; 3 uses
   %.not166.i = icmp eq i32 %i.ux, 1
   br i1 %.not166.i, label %.critedge6.i, label %.lr.ph.i111.lr.ph.i
 
 .lr.ph.i111.lr.ph.i:                              ; preds = %.critedge2.i
-  %i.xh = zext nneg i32 %i.xg to i64              ; 2 uses
+  %i.xh = zext nneg i32 %i.xg to i64
   br label %.lr.ph.i111.i
 
 .lr.ph.i111.i:                                    ; preds = %bb.cu, %.lr.ph.i111.lr.ph.i
@@ -247,8 +247,9 @@ bb.cu:                                            ; preds = %bb.ct
   br label %.lr.ph.i118.i
 
 .lr.ph.i118.i:                                    ; preds = %is_transp.exit123.i, %.critedge4.i
-  %indvars.iv192.i = phi i64 [ %i.xh, %.critedge4.i ], [ %indvars.iv.next193.i, %is_transp.exit123.i ] ; 4 uses
-  %i.xq = getelementptr inbounds nuw i8, ptr %i.wd, i64 %indvars.iv192.i
+  %.089159.i = phi i32 [ %i.xg, %.critedge4.i ], [ %.089.i, %is_transp.exit123.i ] ; 4 uses
+  %4 = zext nneg i32 %.089159.i to i64
+  %i.xq = getelementptr inbounds nuw i8, ptr %i.wd, i64 %4
   br label %bb.cv
 
 bb.cv:                                            ; preds = %bb.cw, %.lr.ph.i118.i
@@ -259,7 +260,7 @@ bb.cv:                                            ; preds = %bb.cw, %.lr.ph.i118
   %i.xt = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.xs
   %i.xu = load i8, ptr %i.xt, align 1, !tbaa !31
   %.not.i121.i = icmp eq i8 %i.xu, 0
-  br i1 %.not.i121.i, label %.critedge6.loopexit.i, label %bb.cw
+  br i1 %.not.i121.i, label %.critedge6.i, label %bb.cw
 
 bb.cw:                                            ; preds = %bb.cv
   %i.xv = getelementptr inbounds i8, ptr %.089.i120.i, i64 %i.wg
@@ -268,18 +269,13 @@ bb.cw:                                            ; preds = %bb.cv
   br i1 %exitcond.not.i122.i, label %is_transp.exit123.i, label %bb.cv, !llvm.loop !69
 
 is_transp.exit123.i:                              ; preds = %bb.cw
-  %indvars.iv.next193.i = add nsw i64 %indvars.iv192.i, -1
-  %4 = trunc nuw i64 %indvars.iv192.i to i32
-  %i.xx = icmp sgt i32 %4, 1
+  %.089.i = add nsw i32 %.089159.i, -1
+  %i.xx = icmp sgt i32 %.089159.i, 1
   br i1 %i.xx, label %.lr.ph.i118.i, label %.critedge6.i, !llvm.loop !73
 
-.critedge6.loopexit.i:                            ; preds = %bb.cv
-  %5 = trunc nuw i64 %indvars.iv192.i to i32
-  br label %.critedge6.i
-
-.critedge6.i:                                     ; preds = %is_transp.exit123.i, %.critedge6.loopexit.i, %.critedge2.i
-  %.090142216.i = phi i32 [ %.090142.i, %.critedge6.loopexit.i ], [ 0, %.critedge2.i ], [ %.090142.i, %is_transp.exit123.i ] ; 3 uses
-  %.089140.i = phi i32 [ %5, %.critedge6.loopexit.i ], [ 0, %.critedge2.i ], [ 0, %is_transp.exit123.i ]
+.critedge6.i:                                     ; preds = %is_transp.exit123.i, %bb.cv, %.critedge2.i
+  %.090142216.i = phi i32 [ 0, %.critedge2.i ], [ %.090142.i, %bb.cv ], [ %.090142.i, %is_transp.exit123.i ] ; 3 uses
+  %.089140.i = phi i32 [ 0, %.critedge2.i ], [ %.089159.i, %bb.cv ], [ 0, %is_transp.exit123.i ]
   %i.xy = sub nsw i32 %.089140.i, %.090142216.i
   %i.xz = add nsw i32 %i.xy, 1                    ; 4 uses
   %i.ya = sub i32 %.087144.i, %i.wq               ; 2 uses
