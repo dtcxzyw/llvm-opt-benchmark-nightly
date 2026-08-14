@@ -204,8 +204,8 @@ bb.h:                                             ; preds = %_ZN5Eigen8internal2
   br label %bb.l
 
 bb.i:                                             ; preds = %bb.ae, %bb.h, %bb.g
-  %.sroa.0128.0 = phi ptr [ null, %bb.h ], [ %.sroa.0128.2177264, %bb.ae ], [ null, %bb.g ]
-  %.sroa.0142.0 = phi ptr [ %calloc266, %bb.h ], [ %.sroa.0142.2162168176265, %bb.ae ], [ null, %bb.g ]
+  %.sroa.0128.0 = phi ptr [ %.sroa.0128.2177264, %bb.ae ], [ null, %bb.g ], [ null, %bb.h ]
+  %.sroa.0142.0 = phi ptr [ %.sroa.0142.2162168176265, %bb.ae ], [ null, %bb.g ], [ %calloc266, %bb.h ]
   %i.bu = landingpad { ptr, i32 }
           cleanup
   br label %bb.aj
@@ -608,8 +608,8 @@ bb.h:                                             ; preds = %_ZN5Eigen8internal2
   br label %bb.l
 
 bb.i:                                             ; preds = %bb.ae, %bb.h, %bb.g
-  %.sroa.0128.0 = phi ptr [ null, %bb.h ], [ %.sroa.0128.2177264, %bb.ae ], [ null, %bb.g ]
-  %.sroa.0142.0 = phi ptr [ %calloc266, %bb.h ], [ %.sroa.0142.2162168176265, %bb.ae ], [ null, %bb.g ]
+  %.sroa.0128.0 = phi ptr [ %.sroa.0128.2177264, %bb.ae ], [ null, %bb.g ], [ null, %bb.h ]
+  %.sroa.0142.0 = phi ptr [ %.sroa.0142.2162168176265, %bb.ae ], [ null, %bb.g ], [ %calloc266, %bb.h ]
   %i.bu = landingpad { ptr, i32 }
           cleanup
   br label %bb.aj

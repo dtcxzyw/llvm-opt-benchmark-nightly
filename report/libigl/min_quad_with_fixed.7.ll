@@ -204,8 +204,8 @@ bb.h:                                             ; preds = %._crit_edge.i, %bb.
   br i1 %.not.i, label %_ZN5Eigen8internal8nr_etdfsINS_6MatrixIiLin1ELi1ELi0ELin1ELi1EEEEEvNT_6ScalarERS4_S6_S6_S6_S5_.exit, label %bb.f, !llvm.loop !734
 
 bb.i:                                             ; preds = %bb.e, %bb.c, %bb.b
-  %.sroa.0.0 = phi ptr [ null, %bb.c ], [ %.sroa.0.158, %bb.e ], [ null, %bb.b ]
-  %.sroa.041.0 = phi ptr [ %i.d, %bb.c ], [ %.sroa.041.15157, %bb.e ], [ null, %bb.b ]
+  %.sroa.0.0 = phi ptr [ %.sroa.0.158, %bb.e ], [ null, %bb.c ], [ null, %bb.b ]
+  %.sroa.041.0 = phi ptr [ %.sroa.041.15157, %bb.e ], [ %i.d, %bb.c ], [ null, %bb.b ]
   %i.aq = landingpad { ptr, i32 }
           cleanup
   tail call void @free(ptr noundef %.sroa.0.0) #33
