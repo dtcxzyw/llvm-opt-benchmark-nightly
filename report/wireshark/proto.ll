@@ -203,9 +203,10 @@ bb.h:                                             ; preds = %bb.f, %bb.f, %bb.f,
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   %.056 = phi i64 [ %i.ac, %bb.g ], [ %i.af, %bb.h ]
-  %i.ag = load i64, ptr %i.v, align 8             ; 4 uses
-  %3 = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.ag, i1 true)
-  %4 = shl i64 %.056, %3                          ; 2 uses
+  %i.ag = load i64, ptr %i.v, align 8             ; 5 uses
+  %neg = sub i64 0, %i.ag
+  %3 = and i64 %i.ag, %neg
+  %4 = mul i64 %3, %.056                          ; 2 uses
   %i.ah = load ptr, ptr %i.r, align 8             ; 3 uses
   %.not.i61 = icmp eq i64 %i.ag, 0
   br i1 %.not.i61, label %hfinfo_container_bitwidth.exit.thread68, label %bb.j
@@ -608,9 +609,9 @@ bb.b:                                             ; preds = %bb.a
   %i.e = load i32, ptr %i.d, align 8
   switch i32 %i.e, label %bb.j [
     i32 2, label %hfinfo_container_bitwidth.exit
-    i32 3, label %hfinfo_container_bitwidth.exit.thread
-    i32 4, label %hfinfo_container_bitwidth.exit.thread
-    i32 12, label %hfinfo_container_bitwidth.exit.thread
+    i32 3, label %bb.l
+    i32 4, label %bb.l
+    i32 12, label %bb.l
     i32 5, label %bb.c
     i32 13, label %bb.c
     i32 6, label %bb.d
@@ -628,39 +629,33 @@ bb.b:                                             ; preds = %bb.a
   ]
 
 bb.c:                                             ; preds = %bb.b, %bb.b
-  br label %hfinfo_container_bitwidth.exit.thread
+  br label %bb.l
 
 bb.d:                                             ; preds = %bb.b, %bb.b
-  br label %hfinfo_container_bitwidth.exit.thread
+  br label %bb.l
 
 bb.e:                                             ; preds = %bb.b, %bb.b
-  br label %hfinfo_container_bitwidth.exit.thread
+  br label %bb.l
 
 bb.f:                                             ; preds = %bb.b, %bb.b
-  br label %hfinfo_container_bitwidth.exit.thread
+  br label %bb.l
 
 bb.g:                                             ; preds = %bb.b, %bb.b
-  br label %hfinfo_container_bitwidth.exit.thread
+  br label %bb.l
 
 bb.h:                                             ; preds = %bb.b, %bb.b
-  br label %hfinfo_container_bitwidth.exit.thread
+  br label %bb.l
 
 bb.i:                                             ; preds = %bb.b, %bb.b
-  br label %hfinfo_container_bitwidth.exit.thread
+  br label %bb.l
 
 bb.j:                                             ; preds = %bb.b
   tail call void (ptr, ...) @proto_report_dissector_bug(ptr noundef nonnull @.str.272, ptr noundef nonnull @.str.1, i32 noundef 11379) #35
   unreachable
 
-hfinfo_container_bitwidth.exit.thread:            ; preds = %bb.b, %bb.b, %bb.b, %bb.i, %bb.c, %bb.d, %bb.e, %bb.f, %bb.g, %bb.h
-  %.0.i.ph = phi i32 [ 8, %bb.b ], [ 8, %bb.b ], [ 56, %bb.h ], [ 48, %bb.g ], [ 40, %bb.f ], [ 32, %bb.e ], [ 24, %bb.d ], [ 16, %bb.c ], [ 64, %bb.i ], [ 8, %bb.b ]
-  %2 = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.c, i1 true)
-  br label %bb.l
-
 hfinfo_container_bitwidth.exit:                   ; preds = %bb.b
   %i.f = getelementptr i8, ptr %.0.val, i64 20
   %i.g = load i32, ptr %i.f, align 4              ; 2 uses
-  %3 = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.c, i1 true)
   %i.h = icmp sgt i32 %i.g, 0
   br i1 %i.h, label %bb.l, label %bb.k
 
@@ -668,16 +663,17 @@ bb.k:                                             ; preds = %hfinfo_container_bi
   tail call void (ptr, ...) @proto_report_dissector_bug(ptr noundef nonnull @.str.62, ptr noundef nonnull @.str.1, i32 noundef 5828, ptr noundef nonnull @.str.386) #35
   unreachable
 
-bb.l:                                             ; preds = %hfinfo_container_bitwidth.exit.thread, %hfinfo_container_bitwidth.exit
-  %.pn = phi i64 [ %2, %hfinfo_container_bitwidth.exit.thread ], [ %3, %hfinfo_container_bitwidth.exit ]
-  %.0.i2 = phi i32 [ %.0.i.ph, %hfinfo_container_bitwidth.exit.thread ], [ %i.g, %hfinfo_container_bitwidth.exit ]
-  %4 = shl i64 %i.a, %.pn                         ; 2 uses
+bb.l:                                             ; preds = %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.i, %bb.b, %bb.b, %bb.b, %hfinfo_container_bitwidth.exit
+  %.0.i2 = phi i32 [ %i.g, %hfinfo_container_bitwidth.exit ], [ 8, %bb.b ], [ 8, %bb.b ], [ 56, %bb.h ], [ 48, %bb.g ], [ 40, %bb.f ], [ 32, %bb.e ], [ 24, %bb.d ], [ 16, %bb.c ], [ 64, %bb.i ], [ 8, %bb.b ]
+  %neg.pn = sub i64 0, %i.c
+  %.pn = and i64 %i.c, %neg.pn
+  %2 = mul i64 %.pn, %i.a                         ; 2 uses
   %i.i = add nsw i32 %.0.i2, -1                   ; 3 uses
   %i.j = zext nneg i32 %i.i to i64
   %i.k = shl nuw i64 1, %i.j                      ; 3 uses
   %i.l = and i64 %i.k, %i.c
   %.not.i5.i = icmp eq i64 %i.l, 0
-  %i.m = and i64 %i.k, %4
+  %i.m = and i64 %i.k, %2
   %.not21.i6.i = icmp eq i64 %i.m, 0
   %..i7.i = select i1 %.not21.i6.i, i8 48, i8 49
   %.sink.i8.i = select i1 %.not.i5.i, i8 46, i8 %..i7.i
@@ -705,7 +701,7 @@ bb.n:                                             ; preds = %bb.m, %.lr.ph.i
   %.2.i.i = phi ptr [ %i.r, %bb.m ], [ %.1.i12.i, %.lr.ph.i ] ; 3 uses
   %i.s = and i64 %i.o, %i.c
   %.not.i.i = icmp eq i64 %i.s, 0
-  %i.t = and i64 %i.o, %4
+  %i.t = and i64 %i.o, %2
   %.not21.i.i = icmp eq i64 %i.t, 0
   %..i.i = select i1 %.not21.i.i, i8 48, i8 49
   %.sink.i.i = select i1 %.not.i.i, i8 46, i8 %..i.i
@@ -1108,11 +1104,12 @@ bb.o:                                             ; preds = %hfinfo_container_bi
 bb.p:                                             ; preds = %bb.o, %bb.n
   %.070 = phi i64 [ %i.r, %bb.n ], [ %i.s, %bb.o ] ; 8 uses
   %i.t = getelementptr i8, ptr %i.c, i64 32
-  %i.u = load i64, ptr %i.t, align 8              ; 5 uses
+  %i.u = load i64, ptr %i.t, align 8              ; 6 uses
   %.not74 = icmp eq i64 %i.u, 0
-  %4 = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.u, i1 true)
-  %i.v = select i1 %.not74, i64 0, i64 %4
-  %.069 = shl i64 %.070, %i.v                     ; 3 uses
+  %neg = sub i64 0, %i.u
+  %4 = and i64 %i.u, %neg
+  %i.v = select i1 %.not74, i64 1, i64 %4
+  %.069 = mul i64 %.070, %i.v                     ; 3 uses
   %i.w = load i32, ptr %i.d, align 4
   %i.x = and i32 %i.w, 262144
   %.not75 = icmp eq i32 %i.x, 0
