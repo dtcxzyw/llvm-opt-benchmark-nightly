@@ -203,9 +203,8 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.cc, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
-  %i.cd = add i64 %.1109, -1
-  %6 = or i64 %i.cd, 65535
-  %7 = add i64 %6, 1
+  %i.cd = add i64 %.1109, 65535
+  %6 = and i64 %i.cd, -65536
   br label %bb.m
 
 bb.l:                                             ; preds = %bb.j
@@ -215,7 +214,7 @@ bb.l:                                             ; preds = %bb.j
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.i, %bb.l, %bb.k
-  %.2110 = phi i64 [ %7, %bb.k ], [ %.1109, %bb.l ], [ %.1109, %bb.i ] ; 2 uses
+  %.2110 = phi i64 [ %6, %bb.k ], [ %.1109, %bb.l ], [ %.1109, %bb.i ] ; 2 uses
   %.0 = phi i32 [ %.0101, %bb.k ], [ %i.cg, %bb.l ], [ %.0101, %bb.i ]
   %.val = load ptr, ptr %i.p, align 8             ; 3 uses
   %.val120 = load i32, ptr %i.ai, align 4

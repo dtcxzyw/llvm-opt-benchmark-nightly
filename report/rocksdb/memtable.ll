@@ -204,19 +204,18 @@ bb.a:
 define linkonce_odr noundef ptr @_ZN7rocksdb15ConcurrentArena15AllocateAlignedEmmPNS_6LoggerE(ptr noundef nonnull align 16 dereferenceable(2472) %0, i64 noundef %1, i64 noundef %2, ptr noundef %3) unnamed_addr #2 comdat align 2 {
 bb.a:
   %4 = alloca %class.anon.408, align 8            ; 7 uses
-  %i.a = add i64 %1, -1
-  %5 = or i64 %i.a, 7
-  %6 = add i64 %5, 1                              ; 2 uses
+  %i.a = add i64 %1, 7
+  %5 = and i64 %i.a, -8                           ; 2 uses
   %i.b = icmp ne i64 %2, 0
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #36
   store ptr %0, ptr %4, align 8, !tbaa !904
   %i.c = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store i64 %6, ptr %i.c, align 8, !tbaa !906
+  store i64 %5, ptr %i.c, align 8, !tbaa !906
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 16
   store i64 %2, ptr %i.d, align 8, !tbaa !907
   %i.e = getelementptr inbounds nuw i8, ptr %4, i64 24
   store ptr %3, ptr %i.e, align 8, !tbaa !908
-  %i.f = call noundef ptr @_ZN7rocksdb15ConcurrentArena12AllocateImplIZNS0_15AllocateAlignedEmmPNS_6LoggerEEUlvE_EEPcmbRKT_(ptr noundef nonnull align 16 dereferenceable(2472) %0, i64 noundef %6, i1 noundef zeroext %i.b, ptr noundef nonnull align 8 dereferenceable(32) %4)
+  %i.f = call noundef ptr @_ZN7rocksdb15ConcurrentArena12AllocateImplIZNS0_15AllocateAlignedEmmPNS_6LoggerEEUlvE_EEPcmbRKT_(ptr noundef nonnull align 16 dereferenceable(2472) %0, i64 noundef %5, i1 noundef zeroext %i.b, ptr noundef nonnull align 8 dereferenceable(32) %4)
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #36
   ret ptr %i.f
 }

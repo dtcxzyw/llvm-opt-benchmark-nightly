@@ -204,7 +204,7 @@ declare dso_local void @__drm_dev_dbg(ptr noundef, ptr noundef, i32 noundef, ptr
 declare dso_local void @intel_dsc_enable_on_crtc(ptr noundef) local_unnamed_addr #4
 
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
-define dso_local range(i32 128, 1) i32 @intel_dp_compute_min_compressed_bpp_x16(ptr noundef %0, i32 noundef %1) local_unnamed_addr #3 align 16 prefalign(16) {
+define dso_local range(i32 0, 129) i32 @intel_dp_compute_min_compressed_bpp_x16(ptr noundef %0, i32 noundef %1) local_unnamed_addr #3 align 16 prefalign(16) {
 bb.a:
   %switch = icmp ult i32 %1, 3
   br i1 %switch, label %intel_dp_dsc_sink_min_compressed_bpp.exit, label %bb.b
@@ -336,13 +336,12 @@ dev_name.exit31.i:                                ; preds = %bb.p, %__drm_to_dev
   br label %bb.q
 
 bb.q:                                             ; preds = %dev_name.exit31.i, %intel_dp_dsc_bpp_step_x16.exit.i
-  %i.au = add nsw i32 %.0.i.i, -1
-  %2 = or i32 %i.au, 127
-  %3 = add nsw i32 %2, 1
+  %i.au = add nuw nsw i32 %.0.i.i, 127
+  %2 = and i32 %i.au, 128
   br label %align_min_compressed_bpp_x16.exit
 
 align_min_compressed_bpp_x16.exit:                ; preds = %bb.d, %bb.q
-  %.0.i15 = phi i32 [ %3, %bb.q ], [ 128, %bb.d ]
+  %.0.i15 = phi i32 [ %2, %bb.q ], [ 128, %bb.d ]
   ret i32 %.0.i15
 }
 
@@ -364,7 +363,7 @@ intel_dp_dsc_get_slice_count.exit.thread:         ; preds = %intel_attached_dp.e
 intel_dp_dsc_get_slice_count.exit:                ; preds = %intel_attached_dp.exit
   %i.d = call i32 @intel_dsc_line_slice_count(ptr noundef nonnull %9) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #16
-  %10 = icmp slt i32 %i.a, 1
+  %10 = icmp eq i32 %i.a, 0
   %i.e = icmp sgt i32 %i.a, %i.b
   %or.cond = select i1 %10, i1 true, i1 %i.e
   %i.f = and i32 %i.d, 255

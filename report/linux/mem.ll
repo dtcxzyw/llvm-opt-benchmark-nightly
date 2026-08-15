@@ -201,10 +201,8 @@ bb.a:
   br i1 %.not, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = add i64 %0, -1
-  %3 = or i64 %2, 4095
-  %i.b = add i64 %3, 1
-  %i.c = lshr exact i64 %i.b, 12                  ; 2 uses
+  %i.b = add i64 %0, 4095
+  %i.c = lshr i64 %i.b, 12                        ; 2 uses
   %i.d = load i8, ptr @efi_is64, align 1, !range !4, !noundef !5
   %i.e = trunc nuw i8 %i.d to i1
   br i1 %i.e, label %bb.c, label %bb.d
@@ -250,10 +248,9 @@ bb.a:
   br i1 %.not, label %bb.b, label %bb.m
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = add i64 %0, -1
-  %4 = or i64 %i.f, 4095
-  %5 = add i64 %4, 1                              ; 2 uses
-  %i.g = lshr exact i64 %5, 12                    ; 3 uses
+  %i.f = add i64 %0, 4095                         ; 2 uses
+  %4 = and i64 %i.f, -4096
+  %i.g = lshr i64 %i.f, 12                        ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %.pre55, i64 8 ; 3 uses
   %i.i = load i64, ptr %.pre55, align 8           ; 3 uses
   %i.j = load i64, ptr %i.h, align 8              ; 3 uses
@@ -302,7 +299,7 @@ bb.f:                                             ; preds = %bb.e
   %i.ae = or i64 %i.ad, %i.l
   %i.af = add i64 %i.ae, 1                        ; 2 uses
   store i64 %i.af, ptr %i.c, align 8
-  %i.ag = add i64 %i.af, %5
+  %i.ag = add i64 %i.af, %4
   %i.ah = icmp ugt i64 %i.ag, %i.ac
   br i1 %i.ah, label %bb.l, label %bb.g
 

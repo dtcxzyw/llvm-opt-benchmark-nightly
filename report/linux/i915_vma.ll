@@ -203,10 +203,9 @@ fls64.exit:                                       ; preds = %bb.r
   %i.cv = tail call i64 @llvm.umax.i64(i64 %i.ay, i64 %i.cu)
   %i.cw = and i32 %i.ci, 65536
   %.not163 = icmp eq i32 %i.cw, 0
-  %i.cx = add i64 %i.cf, -1
-  %5 = or i64 %i.cx, 2097151
-  %6 = add i64 %5, 1
-  %.1143 = select i1 %.not163, i64 %i.cf, i64 %6
+  %i.cx = add i64 %i.cf, 2097151
+  %5 = and i64 %i.cx, -2097152
+  %.1143 = select i1 %.not163, i64 %i.cf, i64 %5
   br label %bb.s
 
 bb.s:                                             ; preds = %fls64.exit, %bb.r, %bb.q, %bb.p
