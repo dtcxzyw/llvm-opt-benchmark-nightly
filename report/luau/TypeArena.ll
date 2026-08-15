@@ -203,7 +203,7 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: mustprogress uwtable
 define dso_local noundef ptr @_ZN4Luau9TypeArena9freshTypeENS_7NotNullINS_12BuiltinTypesEEENS_9TypeLevelE(ptr noundef nonnull align 8 dereferenceable(184) %0, ptr nofree readonly captures(none) %1, i64 %2) local_unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.3.i = alloca [76 x i8], align 4          ; 3 uses
+  %.sroa.3.i.sroa.0 = alloca <76 x i8>, align 128 ; 4 uses
   %3 = alloca %"struct.Luau::FreeType", align 8   ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #21
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 160
@@ -228,19 +228,20 @@ _ZN4Luau14TypedAllocatorINS_4TypeEE8allocateIJNS_8FreeTypeEEEEPS1_DpOT_.exit: ; 
   %i.k = getelementptr inbounds i8, ptr %i.j, i64 -8
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !24
   %i.m = getelementptr inbounds nuw [392 x i8], ptr %i.l, i64 %i.h ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.3.i)
-  %.sroa.3.8..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.3.i, i64 4 ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.3.i.sroa.0)
+  %.sroa.3.8..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.3.i.sroa.0, i64 4
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(72) %.sroa.3.8..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(72) %3, i64 72, i1 false)
   store i32 2, ptr %i.m, align 8, !tbaa !45
-  %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.n, ptr noundef nonnull align 4 dereferenceable(72) %.sroa.3.8..sroa_idx.i, i64 72, i1 false)
+  %4 = getelementptr inbounds nuw i8, ptr %i.m, i64 8
+  %i.n = getelementptr inbounds nuw i8, ptr %.sroa.3.i.sroa.0, i64 4
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %4, ptr noundef nonnull align 4 dereferenceable(72) %i.n, i64 72, i1 false)
   %i.o = getelementptr inbounds nuw i8, ptr %i.m, i64 336
   store i8 0, ptr %i.o, align 8, !tbaa !48
   %i.p = getelementptr inbounds nuw i8, ptr %i.m, i64 376
   store i8 0, ptr %i.p, align 8, !tbaa !56
   %i.q = getelementptr inbounds nuw i8, ptr %i.m, i64 384
   store ptr null, ptr %i.q, align 8, !tbaa !64
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.3.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.3.i.sroa.0)
   %i.r = load i64, ptr %i.e, align 8, !tbaa !26
   %i.s = add i64 %i.r, 1
   store i64 %i.s, ptr %i.e, align 8, !tbaa !26
@@ -259,7 +260,7 @@ declare void @_ZN4Luau8FreeTypeC1ENS_9TypeLevelEPKNS_4TypeES4_(ptr noundef nonnu
 ; Function Attrs: mustprogress uwtable
 define dso_local noundef ptr @_ZN4Luau9TypeArena9freshTypeENS_7NotNullINS_12BuiltinTypesEEEPNS_5ScopeE(ptr noundef nonnull align 8 dereferenceable(184) %0, ptr nofree readonly captures(none) %1, ptr noundef %2) local_unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.3.i = alloca [76 x i8], align 4          ; 3 uses
+  %.sroa.3.i.sroa.0 = alloca <76 x i8>, align 128 ; 4 uses
   %3 = alloca %"struct.Luau::FreeType", align 8   ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #21
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 160
@@ -284,19 +285,20 @@ _ZN4Luau14TypedAllocatorINS_4TypeEE8allocateIJNS_8FreeTypeEEEEPS1_DpOT_.exit: ; 
   %i.k = getelementptr inbounds i8, ptr %i.j, i64 -8
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !24
   %i.m = getelementptr inbounds nuw [392 x i8], ptr %i.l, i64 %i.h ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.3.i)
-  %.sroa.3.8..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.3.i, i64 4 ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.3.i.sroa.0)
+  %.sroa.3.8..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.3.i.sroa.0, i64 4
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(72) %.sroa.3.8..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(72) %3, i64 72, i1 false)
   store i32 2, ptr %i.m, align 8, !tbaa !45
-  %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.n, ptr noundef nonnull align 4 dereferenceable(72) %.sroa.3.8..sroa_idx.i, i64 72, i1 false)
+  %4 = getelementptr inbounds nuw i8, ptr %i.m, i64 8
+  %i.n = getelementptr inbounds nuw i8, ptr %.sroa.3.i.sroa.0, i64 4
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %4, ptr noundef nonnull align 4 dereferenceable(72) %i.n, i64 72, i1 false)
   %i.o = getelementptr inbounds nuw i8, ptr %i.m, i64 336
   store i8 0, ptr %i.o, align 8, !tbaa !48
   %i.p = getelementptr inbounds nuw i8, ptr %i.m, i64 376
   store i8 0, ptr %i.p, align 8, !tbaa !56
   %i.q = getelementptr inbounds nuw i8, ptr %i.m, i64 384
   store ptr null, ptr %i.q, align 8, !tbaa !64
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.3.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.3.i.sroa.0)
   %i.r = load i64, ptr %i.e, align 8, !tbaa !26
   %i.s = add i64 %i.r, 1
   store i64 %i.s, ptr %i.e, align 8, !tbaa !26
@@ -312,7 +314,7 @@ declare void @_ZN4Luau8FreeTypeC1EPNS_5ScopeEPKNS_4TypeES5_NS_8PolarityE(ptr nou
 ; Function Attrs: mustprogress uwtable
 define dso_local noundef ptr @_ZN4Luau9TypeArena9freshTypeENS_7NotNullINS_12BuiltinTypesEEEPNS_5ScopeENS_9TypeLevelE(ptr noundef nonnull align 8 dereferenceable(184) %0, ptr nofree readonly captures(none) %1, ptr noundef %2, i64 %3) local_unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.3.i = alloca [76 x i8], align 4          ; 3 uses
+  %.sroa.3.i.sroa.0 = alloca <76 x i8>, align 128 ; 4 uses
   %4 = alloca %"struct.Luau::FreeType", align 8   ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #21
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 160
@@ -337,19 +339,20 @@ _ZN4Luau14TypedAllocatorINS_4TypeEE8allocateIJNS_8FreeTypeEEEEPS1_DpOT_.exit: ; 
   %i.k = getelementptr inbounds i8, ptr %i.j, i64 -8
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !24
   %i.m = getelementptr inbounds nuw [392 x i8], ptr %i.l, i64 %i.h ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.3.i)
-  %.sroa.3.8..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.3.i, i64 4 ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.3.i.sroa.0)
+  %.sroa.3.8..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.3.i.sroa.0, i64 4
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(72) %.sroa.3.8..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(72) %4, i64 72, i1 false)
   store i32 2, ptr %i.m, align 8, !tbaa !45
-  %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.n, ptr noundef nonnull align 4 dereferenceable(72) %.sroa.3.8..sroa_idx.i, i64 72, i1 false)
+  %5 = getelementptr inbounds nuw i8, ptr %i.m, i64 8
+  %i.n = getelementptr inbounds nuw i8, ptr %.sroa.3.i.sroa.0, i64 4
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %5, ptr noundef nonnull align 4 dereferenceable(72) %i.n, i64 72, i1 false)
   %i.o = getelementptr inbounds nuw i8, ptr %i.m, i64 336
   store i8 0, ptr %i.o, align 8, !tbaa !48
   %i.p = getelementptr inbounds nuw i8, ptr %i.m, i64 376
   store i8 0, ptr %i.p, align 8, !tbaa !56
   %i.q = getelementptr inbounds nuw i8, ptr %i.m, i64 384
   store ptr null, ptr %i.q, align 8, !tbaa !64
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.3.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.3.i.sroa.0)
   %i.r = load i64, ptr %i.e, align 8, !tbaa !26
   %i.s = add i64 %i.r, 1
   store i64 %i.s, ptr %i.e, align 8, !tbaa !26

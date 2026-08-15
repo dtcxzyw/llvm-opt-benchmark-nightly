@@ -157,7 +157,6 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_ZN11btMultiBodyC2EifRK9btVector3bbb(ptr noundef nonnull align 8 dereferenceable(640) initializes((0, 108), (180, 188), (192, 201), (212, 220), (224, 233), (244, 252), (256, 265), (276, 284), (288, 297), (308, 316), (320, 329), (340, 348), (352, 361), (368, 565), (568, 580), (584, 613), (616, 626), (628, 640)) %0, i32 noundef %1, float noundef %2, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(16) %3, i1 noundef zeroext %4, i1 noundef zeroext %5, i1 zeroext %6) unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.15 = alloca [80 x i8], align 8           ; 6 uses
   %i.a = zext i1 %4 to i8
   %i.b = zext i1 %5 to i8
   store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTV11btMultiBody, i64 16), ptr %0, align 8, !tbaa !12
@@ -254,10 +253,6 @@ bb.a:
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 628
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(193) %i.ag, i8 0, i64 193, i1 false)
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.aw, i8 0, i64 12, i1 false)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.15)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %.sroa.15, i8 0, i64 64, i1 false)
-  %.sroa.15.64.scevgep.i.sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.15, i64 64
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.15.64.scevgep.i.sroa_idx, i8 0, i64 16, i1 false)
   %i.ax = load i32, ptr %i.k, align 4, !tbaa !39  ; 3 uses
   %i.ay = icmp sgt i32 %1, %i.ax
   br i1 %i.ay, label %bb.b, label %.loopexit106
@@ -355,7 +350,7 @@ bb.h:                                             ; preds = %bb.h, %.lr.ph.i
   %.sroa.14.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.by, i64 40
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.14.0..sroa_idx, i8 0, i64 32, i1 false)
   %.sroa.15.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.by, i64 72
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.15.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(80) %.sroa.15, i64 80, i1 false)
+  store <80 x i8> zeroinitializer, ptr %.sroa.15.0..sroa_idx, align 8
   %.sroa.17.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.by, i64 152
   store float 1.000000e+00, ptr %.sroa.17.0..sroa_idx, align 8
   %.sroa.18.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.by, i64 156
@@ -394,7 +389,6 @@ bb.h:                                             ; preds = %bb.h, %.lr.ph.i
 
 .loopexit106:                                     ; preds = %bb.h, %bb.a
   store i32 %1, ptr %i.k, align 4, !tbaa !39
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.15)
   %i.cb = add nsw i32 %1, 1                       ; 4 uses
   %i.cc = load i32, ptr %i.ae, align 4, !tbaa !51 ; 2 uses
   %.not = icmp slt i32 %1, %i.cc
@@ -615,7 +609,6 @@ _ZN11btMultiBody21clearForcesAndTorquesEv.exit:   ; preds = %_ZN11btMultiBody21c
 bb.s:                                             ; preds = %bb.g, %bb.d
   %i.eh = landingpad { ptr, i32 }
           cleanup
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.15)
   br label %bb.u
 
 bb.t:                                             ; preds = %bb.n, %bb.k
@@ -1018,7 +1011,6 @@ bb.j:                                             ; preds = %bb.f, %bb.e, %bb.h,
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_ZN11btMultiBody17forwardKinematicsER20btAlignedObjectArrayI12btQuaternionERS0_I9btVector3E(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(640) %0, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(25) %1, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(25) %2) local_unnamed_addr #5 align 2 {
 bb.a:
-  %.sroa.23 = alloca [4 x float], align 4         ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 180 ; 5 uses
   %i.b = load i32, ptr %i.a, align 4, !tbaa !39   ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 352
@@ -1421,8 +1413,7 @@ bb.p:                                             ; preds = %.lr.ph115, %bb.p
   %indvars.iv.next122 = add nuw nsw i64 %indvars.iv121, 1 ; 4 uses
   %i.jf = load ptr, ptr %i.cy, align 8, !tbaa !46
   %i.jg = getelementptr inbounds nuw [16 x i8], ptr %i.jf, i64 %indvars.iv.next122
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.23)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.23, ptr noundef nonnull align 4 dereferenceable(16) %i.jg, i64 16, i1 false)
+  %.sroa.23.sroa.0.0.copyload141 = load <4 x float>, ptr %i.jg, align 4
   %i.jh = load ptr, ptr %i.cv, align 8, !tbaa !406
   %i.ji = getelementptr inbounds nuw [16 x i8], ptr %i.jh, i64 %indvars.iv.next122 ; 4 uses
   %i.jj = load float, ptr %i.ji, align 4, !tbaa !9 ; 3 uses
@@ -1491,8 +1482,7 @@ bb.p:                                             ; preds = %.lr.ph115, %bb.p
   %.sroa.21.32..sroa_idx = getelementptr inbounds nuw i8, ptr %i.kx, i64 620
   store float 0.000000e+00, ptr %.sroa.21.32..sroa_idx, align 4, !tbaa !11
   %i.lb = getelementptr inbounds nuw i8, ptr %i.kx, i64 624
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.lb, ptr noundef nonnull align 4 dereferenceable(16) %.sroa.23, i64 16, i1 false), !tbaa.struct !36
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.23)
+  store <4 x float> %.sroa.23.sroa.0.0.copyload141, ptr %i.lb, align 4, !tbaa !11
   %i.lc = load i32, ptr %i.a, align 4, !tbaa !39
   %i.ld = sext i32 %i.lc to i64
   %i.le = icmp slt i64 %indvars.iv.next122, %i.ld
@@ -1502,8 +1492,6 @@ bb.p:                                             ; preds = %.lr.ph115, %bb.p
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_ZN11btMultiBody36updateCollisionObjectWorldTransformsER20btAlignedObjectArrayI12btQuaternionERS0_I9btVector3E(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(640) %0, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(25) %1, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(25) %2) local_unnamed_addr #5 align 2 {
 bb.a:
-  %.sroa.26144 = alloca [4 x float], align 4      ; 5 uses
-  %.sroa.26 = alloca [4 x float], align 4         ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 180 ; 5 uses
   %i.b = load i32, ptr %i.a, align 4, !tbaa !39   ; 5 uses
   %i.c = add nsw i32 %i.b, 1                      ; 6 uses
@@ -1716,8 +1704,7 @@ _ZN20btAlignedObjectArrayI9btVector3E6resizeEiRKS0_.exit: ; preds = %bb.h, %_ZN2
 
 bb.n:                                             ; preds = %_ZN20btAlignedObjectArrayI9btVector3E6resizeEiRKS0_.exit
   %i.bm = load ptr, ptr %i.bi, align 8, !tbaa !46
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.26144)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.26144, ptr noundef nonnull align 4 dereferenceable(16) %i.bm, i64 16, i1 false)
+  %.sroa.26144.sroa.0.0.copyload189 = load <4 x float>, ptr %i.bm, align 4 ; 2 uses
   %i.bn = load ptr, ptr %i.bf, align 8, !tbaa !406 ; 4 uses
   %i.bo = load float, ptr %i.bn, align 4, !tbaa !9 ; 3 uses
   %i.bp = fneg float %i.bo                        ; 4 uses
@@ -1787,7 +1774,7 @@ bb.n:                                             ; preds = %_ZN20btAlignedObjec
   %.sroa.24141.32..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bl, i64 52
   store float 0.000000e+00, ptr %.sroa.24141.32..sroa_idx, align 4, !tbaa !11
   %i.dh = getelementptr inbounds nuw i8, ptr %i.bl, i64 56
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.dh, ptr noundef nonnull align 4 dereferenceable(16) %.sroa.26144, i64 16, i1 false), !tbaa.struct !36
+  store <4 x float> %.sroa.26144.sroa.0.0.copyload189, ptr %i.dh, align 8, !tbaa !11
   %i.di = load ptr, ptr %i.bk, align 8, !tbaa !130 ; 14 uses
   %i.dj = getelementptr inbounds nuw i8, ptr %i.di, i64 352 ; 2 uses
   %i.dk = load i32, ptr %i.dj, align 8, !tbaa !412
@@ -1818,8 +1805,7 @@ bb.n:                                             ; preds = %_ZN20btAlignedObjec
   %.sroa.24141.32..sroa_idx142 = getelementptr inbounds nuw i8, ptr %i.di, i64 116
   store float 0.000000e+00, ptr %.sroa.24141.32..sroa_idx142, align 4, !tbaa !11
   %i.dp = getelementptr inbounds nuw i8, ptr %i.di, i64 120
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.dp, ptr noundef nonnull align 4 dereferenceable(16) %.sroa.26144, i64 16, i1 false), !tbaa.struct !36
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.26144)
+  store <4 x float> %.sroa.26144.sroa.0.0.copyload189, ptr %i.dp, align 8, !tbaa !11
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %_ZN20btAlignedObjectArrayI9btVector3E6resizeEiRKS0_.exit
@@ -1985,8 +1971,7 @@ bb.r:                                             ; preds = %bb.q
   %i.in = load ptr, ptr %i.bi, align 8, !tbaa !46
   %i.io = sext i32 %i.im to i64                   ; 2 uses
   %i.ip = getelementptr inbounds [16 x i8], ptr %i.in, i64 %i.io
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.26)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.26, ptr noundef nonnull align 4 dereferenceable(16) %i.ip, i64 16, i1 false)
+  %.sroa.26.sroa.0.0.copyload187 = load <4 x float>, ptr %i.ip, align 4 ; 2 uses
   %i.iq = load ptr, ptr %i.bf, align 8, !tbaa !406
   %i.ir = getelementptr inbounds [16 x i8], ptr %i.iq, i64 %i.io ; 4 uses
   %i.is = load float, ptr %i.ir, align 4, !tbaa !9 ; 3 uses
@@ -2055,7 +2040,7 @@ bb.r:                                             ; preds = %bb.q
   %.sroa.24.32..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ij, i64 52
   store float 0.000000e+00, ptr %.sroa.24.32..sroa_idx, align 4, !tbaa !11
   %i.kk = getelementptr inbounds nuw i8, ptr %i.ij, i64 56
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.kk, ptr noundef nonnull align 4 dereferenceable(16) %.sroa.26, i64 16, i1 false), !tbaa.struct !36
+  store <4 x float> %.sroa.26.sroa.0.0.copyload187, ptr %i.kk, align 8, !tbaa !11
   %i.kl = add nsw i32 %i.kg, 2
   store i32 %i.kl, ptr %i.kf, align 8, !tbaa !412
   %i.km = getelementptr inbounds nuw i8, ptr %i.ij, i64 72
@@ -2083,8 +2068,7 @@ bb.r:                                             ; preds = %bb.q
   %.sroa.24.32..sroa_idx97 = getelementptr inbounds nuw i8, ptr %i.ij, i64 116
   store float 0.000000e+00, ptr %.sroa.24.32..sroa_idx97, align 4, !tbaa !11
   %i.kp = getelementptr inbounds nuw i8, ptr %i.ij, i64 120
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.kp, ptr noundef nonnull align 4 dereferenceable(16) %.sroa.26, i64 16, i1 false), !tbaa.struct !36
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.26)
+  store <4 x float> %.sroa.26.sroa.0.0.copyload187, ptr %i.kp, align 8, !tbaa !11
   %.pre163 = load i32, ptr %i.a, align 4, !tbaa !39
   br label %bb.s
 
@@ -2099,8 +2083,6 @@ bb.s:                                             ; preds = %bb.r, %bb.q
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_ZN11btMultiBody49updateCollisionObjectInterpolationWorldTransformsER20btAlignedObjectArrayI12btQuaternionERS0_I9btVector3E(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(640) %0, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(25) %1, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(25) %2) local_unnamed_addr #5 align 2 {
 bb.a:
-  %.sroa.23103 = alloca [4 x float], align 4      ; 4 uses
-  %.sroa.23 = alloca [4 x float], align 4         ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 180 ; 5 uses
   %i.b = load i32, ptr %i.a, align 4, !tbaa !39   ; 5 uses
   %i.c = add nsw i32 %i.b, 1                      ; 6 uses
@@ -2331,8 +2313,7 @@ bb.n:                                             ; preds = %_ZNK11btMultiBody15
 bb.o:                                             ; preds = %bb.n
   %i.bq = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.br = load ptr, ptr %i.bq, align 8, !tbaa !46
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.23103)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.23103, ptr noundef nonnull align 4 dereferenceable(16) %i.br, i64 16, i1 false)
+  %.sroa.23103.sroa.0.0.copyload154 = load <4 x float>, ptr %i.br, align 4
   %i.bs = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.bt = load ptr, ptr %i.bs, align 8, !tbaa !406 ; 4 uses
   %i.bu = load float, ptr %i.bt, align 4, !tbaa !9 ; 3 uses
@@ -2403,8 +2384,7 @@ bb.o:                                             ; preds = %bb.n
   %.sroa.21102.32..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bp, i64 116
   store float 0.000000e+00, ptr %.sroa.21102.32..sroa_idx, align 4, !tbaa !11
   %i.dn = getelementptr inbounds nuw i8, ptr %i.bp, i64 120
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.dn, ptr noundef nonnull align 4 dereferenceable(16) %.sroa.23103, i64 16, i1 false), !tbaa.struct !36
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.23103)
+  store <4 x float> %.sroa.23103.sroa.0.0.copyload154, ptr %i.dn, align 8, !tbaa !11
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %bb.n
@@ -2574,8 +2554,7 @@ bb.s:                                             ; preds = %bb.r
   %i.ip = load ptr, ptr %i.dv, align 8, !tbaa !46
   %i.iq = sext i32 %i.io to i64                   ; 2 uses
   %i.ir = getelementptr inbounds [16 x i8], ptr %i.ip, i64 %i.iq
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.23)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.23, ptr noundef nonnull align 4 dereferenceable(16) %i.ir, i64 16, i1 false)
+  %.sroa.23.sroa.0.0.copyload153 = load <4 x float>, ptr %i.ir, align 4
   %i.is = load ptr, ptr %i.dw, align 8, !tbaa !406
   %i.it = getelementptr inbounds [16 x i8], ptr %i.is, i64 %i.iq ; 4 uses
   %i.iu = load float, ptr %i.it, align 4, !tbaa !9 ; 3 uses
@@ -2646,8 +2625,7 @@ bb.s:                                             ; preds = %bb.r
   %.sroa.21.32..sroa_idx = getelementptr inbounds nuw i8, ptr %i.il, i64 116
   store float 0.000000e+00, ptr %.sroa.21.32..sroa_idx, align 4, !tbaa !11
   %i.kn = getelementptr inbounds nuw i8, ptr %i.il, i64 120
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.kn, ptr noundef nonnull align 4 dereferenceable(16) %.sroa.23, i64 16, i1 false), !tbaa.struct !36
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.23)
+  store <4 x float> %.sroa.23.sroa.0.0.copyload153, ptr %i.kn, align 8, !tbaa !11
   %.pre123 = load i32, ptr %i.a, align 4, !tbaa !39
   br label %bb.t
 

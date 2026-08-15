@@ -201,7 +201,6 @@ bb.a:
   %5 = alloca %"class.std::function", align 16    ; 9 uses
   %6 = alloca %"class.std::function", align 16    ; 9 uses
   %7 = alloca %"class.std::function", align 16    ; 9 uses
-  %.sroa.3.sroa.2 = alloca [24 x i8], align 8     ; 3 uses
   %i.a = add nsw i64 %2, -1
   %i.b = sdiv i64 %i.a, 2                         ; 2 uses
   %i.c = icmp slt i64 %1, %i.b
@@ -335,7 +334,6 @@ bb.k:                                             ; preds = %_ZN12_GLOBAL__N_14F
   %.sroa.0.0.copyload = load ptr, ptr %3, align 8 ; 2 uses
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 8
   %.sroa.3.sroa.0.0.copyload = load i16, ptr %.sroa.3.0..sroa_idx, align 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.3.sroa.2, i8 0, i64 24, i1 false)
   %i.au = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 3 uses
   %i.av = load <2 x ptr>, ptr %i.au, align 8, !tbaa !921
   %i.aw = load ptr, ptr %i.au, align 8, !tbaa !40 ; 2 uses
@@ -344,11 +342,12 @@ bb.k:                                             ; preds = %_ZN12_GLOBAL__N_14F
 
 bb.l:                                             ; preds = %bb.k
   %i.ax = getelementptr inbounds nuw i8, ptr %3, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.3.sroa.2, ptr noundef nonnull align 8 dereferenceable(16) %i.ax, i64 16, i1 false), !tbaa.struct !926
+  %.sroa.3.sroa.2.0.copyload = load <16 x i8>, ptr %i.ax, align 8, !tbaa !15
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.au, i8 0, i64 16, i1 false)
   br label %_ZN12_GLOBAL__N_14FlagI10TestConfigEC2EOS2_.exit
 
 _ZN12_GLOBAL__N_14FlagI10TestConfigEC2EOS2_.exit: ; preds = %bb.k, %bb.l
+  %.sroa.3.sroa.2.0 = phi <16 x i8> [ zeroinitializer, %bb.k ], [ %.sroa.3.sroa.2.0.copyload, %bb.l ]
   %i.ay = icmp sgt i64 %.1, %1
   br i1 %i.ay, label %.lr.ph.i, label %.critedge.i
 
@@ -425,7 +424,7 @@ _ZN12_GLOBAL__N_14FlagI10TestConfigEaSEOS2_.exit.i: ; preds = %bb.p, %_ZNSt8func
   br i1 %.not.i.i.not.i.i.i18.i, label %_ZNSt8functionIFbP10TestConfigPKcEEC2EOS5_.exit.i.i19.i, label %bb.r
 
 bb.r:                                             ; preds = %.critedge.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.3.sroa.2, i64 16, i1 false), !tbaa.struct !926
+  store <16 x i8> %.sroa.3.sroa.2.0, ptr %4, align 16, !tbaa !15
   br label %_ZNSt8functionIFbP10TestConfigPKcEEC2EOS5_.exit.i.i19.i
 
 _ZNSt8functionIFbP10TestConfigPKcEEC2EOS5_.exit.i.i19.i: ; preds = %bb.r, %.critedge.i

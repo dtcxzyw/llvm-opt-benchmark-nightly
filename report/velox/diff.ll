@@ -203,7 +203,6 @@ bb.a:
   %4 = alloca %"class.arrow::Status", align 8     ; 4 uses
   %5 = alloca %"class.arrow::MakeFormatterImpl", align 8 ; 14 uses
   %6 = alloca %"class.arrow::Result.54", align 8  ; 17 uses
-  %.sroa.4 = alloca [32 x i8], align 8            ; 8 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.b = load i32, ptr %i.a, align 8, !tbaa !142
   %i.c = icmp eq i32 %i.b, 0
@@ -321,23 +320,16 @@ bb.m:                                             ; preds = %_ZN5arrowL13MakeFor
   %i.ad = getelementptr inbounds nuw i8, ptr %6, i64 24 ; 2 uses
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !249, !noalias !284 ; 3 uses
   %.not.i.i.not.i.i.i = icmp eq ptr %i.ae, null
-  br i1 %.not.i.i.not.i.i.i, label %_ZNSt8functionIFvRKN5arrow5ArrayElPSoEEC2EOS6_.exit.thread, label %bb.n
-
-_ZNSt8functionIFvRKN5arrow5ArrayElPSoEEC2EOS6_.exit.thread: ; preds = %bb.m
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.4, i8 0, i64 32, i1 false)
-  br label %_ZN5arrow20UnifiedDiffFormatterC2EPSoSt8functionIFvRKNS_5ArrayElS1_EE.exit
+  br i1 %.not.i.i.not.i.i.i, label %_ZN5arrow20UnifiedDiffFormatterC2EPSoSt8functionIFvRKNS_5ArrayElS1_EE.exit, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   %i.af = getelementptr inbounds nuw i8, ptr %6, i64 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ad, i8 0, i64 16, i1 false), !noalias !284
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4, i8 0, i64 16, i1 false)
-  %.sroa.4.24..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.4, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4.24..sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %i.af, i64 16, i1 false)
+  %.sroa.4.sroa.0.16.copyload = load <16 x i8>, ptr %i.af, align 8
   br label %_ZN5arrow20UnifiedDiffFormatterC2EPSoSt8functionIFvRKNS_5ArrayElS1_EE.exit
 
-_ZN5arrow20UnifiedDiffFormatterC2EPSoSt8functionIFvRKNS_5ArrayElS1_EE.exit: ; preds = %_ZNSt8functionIFvRKN5arrow5ArrayElPSoEEC2EOS6_.exit.thread, %bb.n
+_ZN5arrow20UnifiedDiffFormatterC2EPSoSt8functionIFvRKNS_5ArrayElS1_EE.exit: ; preds = %bb.m, %bb.n
+  %.sroa.4.sroa.0.0 = phi <16 x i8> [ %.sroa.4.sroa.0.16.copyload, %bb.n ], [ zeroinitializer, %bb.m ]
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %0, i8 0, i64 24, i1 false)
   %i.ag = invoke noalias noundef nonnull dereferenceable(56) ptr @_Znwm(i64 noundef 56) #24
           to label %.noexc.i.i.i unwind label %bb.o ; 6 uses
@@ -345,7 +337,7 @@ _ZN5arrow20UnifiedDiffFormatterC2EPSoSt8functionIFvRKNS_5ArrayElS1_EE.exit: ; pr
 .noexc.i.i.i:                                     ; preds = %_ZN5arrow20UnifiedDiffFormatterC2EPSoSt8functionIFvRKNS_5ArrayElS1_EE.exit
   store ptr %2, ptr %i.ag, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4, i64 16, i1 false)
+  store <16 x i8> zeroinitializer, ptr %.sroa.4.0..sroa_idx, align 8
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 24 ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ag, i64 48
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.ah, i8 0, i64 24, i1 false)
@@ -362,8 +354,7 @@ bb.o:                                             ; preds = %_ZN5arrow20UnifiedD
 
 _ZN5arrow6ResultISt8functionIFNS_6StatusERKNS_5ArrayES5_S5_EEEC2INS_20UnifiedDiffFormatterEvEEOT_.exit: ; preds = %.noexc.i.i.i
   %i.al = getelementptr inbounds nuw i8, ptr %i.ag, i64 40
-  %.sroa.4.24..sroa_idx11 = getelementptr inbounds nuw i8, ptr %.sroa.4, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ah, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4.24..sroa_idx11, i64 16, i1 false), !tbaa.struct !282
+  store <16 x i8> %.sroa.4.sroa.0.0, ptr %i.ah, align 8, !tbaa !61
   store ptr %i.ae, ptr %i.al, align 8, !tbaa !249
   br label %.thread
 
@@ -374,7 +365,6 @@ _ZN5arrow6ResultISt8functionIFNS_6StatusERKNS_5ArrayES5_S5_EEEC2INS_20UnifiedDif
   store ptr @_ZNSt17_Function_handlerIFN5arrow6StatusERKNS0_5ArrayES4_S4_ENS0_20UnifiedDiffFormatterEE9_M_invokeERKSt9_Any_dataS4_S4_S4_, ptr %i.an, align 8, !tbaa !266
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 24
   store ptr @_ZNSt17_Function_handlerIFN5arrow6StatusERKNS0_5ArrayES4_S4_ENS0_20UnifiedDiffFormatterEE10_M_managerERSt9_Any_dataRKS8_St18_Manager_operation, ptr %i.ao, align 8, !tbaa !249
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4)
   br label %bb.q
 
 bb.p:                                             ; preds = %_ZN5arrowL13MakeFormatterERKNS_8DataTypeE.exit

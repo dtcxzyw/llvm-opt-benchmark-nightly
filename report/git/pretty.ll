@@ -203,8 +203,7 @@ declare i32 @strbuf_expand_step(ptr noundef, ptr noundef) local_unnamed_addr #7
 ; Function Attrs: nounwind uwtable
 define internal fastcc void @rewrap_message_tail(ptr nofree noundef captures(none) %0, ptr nofree noundef nonnull captures(none) %1, i64 noundef range(i64 0, 16385) %2, i64 noundef range(i64 0, 16385) %3, i64 noundef range(i64 0, 16385) %4) unnamed_addr #1 {
 bb.a:
-  %5 = alloca [24 x i8], align 16                 ; 4 uses
-  %6 = alloca %struct.strbuf, align 8             ; 8 uses
+  %5 = alloca %struct.strbuf, align 8             ; 8 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 152 ; 2 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !160  ; 4 uses
   %i.c = icmp eq i64 %i.b, %2
@@ -235,15 +234,15 @@ bb.e:                                             ; preds = %bb.d
   %i.p = load i64, ptr %i.o, align 8, !tbaa !161  ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 168
   %i.r = load i64, ptr %i.q, align 8, !tbaa !162  ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #19
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %6, ptr noundef nonnull align 8 dereferenceable(24) @__const.strbuf_wrap.tmp, i64 24, i1 false)
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #19
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, ptr noundef nonnull align 8 dereferenceable(24) @__const.strbuf_wrap.tmp, i64 24, i1 false)
   %.not.i = icmp eq i64 %i.k, 0
   br i1 %.not.i, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !108
-  call void @strbuf_add(ptr noundef nonnull %6, ptr noundef %i.t, i64 noundef %i.k) #19
+  call void @strbuf_add(ptr noundef nonnull %5, ptr noundef %i.t, i64 noundef %i.k) #19
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
@@ -277,14 +276,12 @@ strbuf_wrap.exit:                                 ; preds = %cast_size_t_to_int.
   %i.aa = trunc nuw nsw i64 %i.p to i32
   %i.ab = getelementptr inbounds nuw i8, ptr %i.v, i64 %i.k
   %i.ac = trunc nuw nsw i64 %i.b to i32
-  call void @strbuf_add_wrapped_text(ptr noundef nonnull %6, ptr noundef %i.ab, i32 noundef %i.aa, i32 noundef %i.z, i32 noundef %i.ac) #19
-  call void @llvm.lifetime.start.p0(ptr nonnull %5)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %5, ptr noundef nonnull align 8 dereferenceable(24) %6, i64 24, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %6, ptr noundef nonnull align 1 dereferenceable(24) %0, i64 24, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(24) %0, ptr noundef nonnull align 16 dereferenceable(24) %5, i64 24, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %5)
-  call void @strbuf_release(ptr noundef nonnull %6) #19
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #19
+  call void @strbuf_add_wrapped_text(ptr noundef nonnull %5, ptr noundef %i.ab, i32 noundef %i.aa, i32 noundef %i.z, i32 noundef %i.ac) #19
+  %.sroa.0.0.copyload = load <24 x i8>, ptr %5, align 8
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, ptr noundef nonnull align 1 dereferenceable(24) %0, i64 24, i1 false)
+  store <24 x i8> %.sroa.0.0.copyload, ptr %0, align 8
+  call void @strbuf_release(ptr noundef nonnull %5) #19
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #19
   %.pre = load i64, ptr %i.l, align 8, !tbaa !107
   br label %bb.k
 

@@ -143,7 +143,7 @@ _ZN4absl12lts_202505129MutexLockD2Ev.exit:        ; preds = %bb.e
 _ZNSt8functionIFNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt17basic_string_viewIcS3_EEEaSIPS8_EENSt9enable_ifIXsr9_CallableIT_EE5valueERS9_E4typeEOSD_.exit: ; preds = %_ZN4absl12lts_2025051214flags_internal12_GLOBAL__N_122CustomUsageConfigMutexEv.exit
   store ptr @_ZN4absl12lts_2025051214flags_internal12_GLOBAL__N_122ContainsHelpshortFlagsESt17basic_string_viewIcSt11char_traitsIcEE, ptr %0, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 0, ptr %.sroa.4.0..sroa_idx, align 8
+  store <8 x i8> zeroinitializer, ptr %.sroa.4.0..sroa_idx, align 8
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr @_ZNSt17_Function_handlerIFbSt17basic_string_viewIcSt11char_traitsIcEEEPS4_E10_M_managerERSt9_Any_dataRKS7_St18_Manager_operation, ptr %i.h, align 8, !tbaa !14
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -151,7 +151,7 @@ _ZNSt8functionIFNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt17basic_st
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 32
   store ptr @_ZN4absl12lts_2025051214flags_internal12_GLOBAL__N_124ContainsHelppackageFlagsESt17basic_string_viewIcSt11char_traitsIcEE, ptr %i.j, align 8
   %.sroa.425.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40
-  store i64 0, ptr %.sroa.425.0..sroa_idx, align 8
+  store <8 x i8> zeroinitializer, ptr %.sroa.425.0..sroa_idx, align 8
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 48
   store ptr @_ZNSt17_Function_handlerIFbSt17basic_string_viewIcSt11char_traitsIcEEEPS4_E10_M_managerERSt9_Any_dataRKS7_St18_Manager_operation, ptr %i.k, align 8, !tbaa !14
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 56
@@ -159,7 +159,7 @@ _ZNSt8functionIFNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt17basic_st
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 64
   store ptr @_ZN4absl12lts_2025051214flags_internal12_GLOBAL__N_124ContainsHelppackageFlagsESt17basic_string_viewIcSt11char_traitsIcEE, ptr %i.m, align 8
   %.sroa.427.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 72
-  store i64 0, ptr %.sroa.427.0..sroa_idx, align 8
+  store <8 x i8> zeroinitializer, ptr %.sroa.427.0..sroa_idx, align 8
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 80
   store ptr @_ZNSt17_Function_handlerIFbSt17basic_string_viewIcSt11char_traitsIcEEEPS4_E10_M_managerERSt9_Any_dataRKS7_St18_Manager_operation, ptr %i.n, align 8, !tbaa !14
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 88
@@ -167,7 +167,7 @@ _ZNSt8functionIFNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt17basic_st
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 96
   store ptr @_ZN4absl12lts_2025051214flags_internal12_GLOBAL__N_113VersionStringB5cxx11Ev, ptr %i.p, align 8
   %.sroa.429.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 104
-  store i64 0, ptr %.sroa.429.0..sroa_idx, align 8
+  store <8 x i8> zeroinitializer, ptr %.sroa.429.0..sroa_idx, align 8
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 112
   store ptr @_ZNSt17_Function_handlerIFNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEvEPS6_E10_M_managerERSt9_Any_dataRKS9_St18_Manager_operation, ptr %i.q, align 8, !tbaa !14
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 120
@@ -175,7 +175,7 @@ _ZNSt8functionIFNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt17basic_st
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 128
   store ptr @_ZN4absl12lts_2025051214flags_internal12_GLOBAL__N_117NormalizeFilenameB5cxx11ESt17basic_string_viewIcSt11char_traitsIcEE, ptr %i.s, align 8
   %.sroa.431.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 136
-  store i64 0, ptr %.sroa.431.0..sroa_idx, align 8
+  store <8 x i8> zeroinitializer, ptr %.sroa.431.0..sroa_idx, align 8
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 144
   store ptr @_ZNSt17_Function_handlerIFNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt17basic_string_viewIcS3_EEPS8_E10_M_managerERSt9_Any_dataRKSB_St18_Manager_operation, ptr %i.t, align 8, !tbaa !14
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 152

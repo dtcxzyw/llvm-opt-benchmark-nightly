@@ -203,9 +203,8 @@ define hidden void @_RINvNtNtCslFlrwjHoTci_14polars_compute12if_then_else4view21
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 2 uses
   %i.b = alloca [24 x i8], align 8                ; 3 uses
-  %i.c = alloca [16 x i8], align 4                ; 4 uses
+  %i.c = alloca [16 x i8], align 16               ; 4 uses
   %i.d = alloca [24 x i8], align 8                ; 6 uses
-  %3 = alloca [16 x i8], align 4                  ; 2 uses
   %i.e = alloca [24 x i8], align 8                ; 9 uses
   %i.f = alloca [4 x i8], align 4                 ; 2 uses
   store i32 %2, ptr %i.f, align 4
@@ -220,7 +219,7 @@ bb.a:
           to label %bb.b unwind label %bb.g, !dbg !2621
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %3, ptr noundef nonnull align 4 dereferenceable(16) %i.c, i64 16, i1 false), !dbg !2616
+  %.sroa.0.0.copyload = load <16 x i8>, ptr %i.c, align 16, !dbg !2616
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !dbg !2622
   %i.i = load i64, ptr %i.h, align 8, !dbg !2623, !noundef !12 ; 2 uses
   %i.j = icmp sgt i64 %i.i, -1, !dbg !2629
@@ -261,7 +260,7 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNCINvNtNtCslFlrwjHoTci_14polars_com
   %.sroa.0.0 = phi ptr [ %.sroa.0.0.copyload1, %bb.f ], [ null, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VechEECslFlrwjHoTci_14polars_compute.exit.i ], !dbg !2660
   %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !dbg !2661
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 4 dereferenceable(16) %3, i64 16, i1 false), !dbg !2662
+  store <16 x i8> %.sroa.0.0.copyload, ptr %0, align 8, !dbg !2662
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !2662
   store ptr %.sroa.0.0, ptr %i.o, align 8, !dbg !2662
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24, !dbg !2662
@@ -293,7 +292,6 @@ bb.a:
   %i.b = alloca [24 x i8], align 8                ; 3 uses
   %i.c = alloca [32 x i8], align 4                ; 4 uses
   %i.d = alloca [24 x i8], align 8                ; 6 uses
-  %3 = alloca [32 x i8], align 4                  ; 2 uses
   %i.e = alloca [24 x i8], align 8                ; 9 uses
   %i.f = alloca [4 x i8], align 4                 ; 2 uses
   store i32 %2, ptr %i.f, align 4
@@ -308,7 +306,7 @@ bb.a:
           to label %bb.b unwind label %bb.g, !dbg !2676
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(32) %3, ptr noundef nonnull align 4 dereferenceable(32) %i.c, i64 32, i1 false), !dbg !2672
+  %.sroa.0.0.copyload = load <32 x i8>, ptr %i.c, align 4, !dbg !2672
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !dbg !2677
   %i.i = load i64, ptr %i.h, align 8, !dbg !2678, !noundef !12 ; 2 uses
   %i.j = icmp sgt i64 %i.i, -1, !dbg !2684
@@ -349,7 +347,7 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNCINvNtNtCslFlrwjHoTci_14polars_com
   %.sroa.0.0 = phi ptr [ %.sroa.0.0.copyload1, %bb.f ], [ null, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VechEECslFlrwjHoTci_14polars_compute.exit.i ], !dbg !2712
   %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !dbg !2713
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 4 dereferenceable(32) %3, i64 32, i1 false), !dbg !2714
+  store <32 x i8> %.sroa.0.0.copyload, ptr %0, align 8, !dbg !2714
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 32, !dbg !2714
   store ptr %.sroa.0.0, ptr %i.o, align 8, !dbg !2714
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40, !dbg !2714
@@ -752,27 +750,25 @@ bb.a:
   %i.a = alloca [104 x i8], align 8               ; 15 uses
   %i.b = alloca [24 x i8], align 8                ; 8 uses
   %i.c = alloca [32 x i8], align 8                ; 9 uses
-  %6 = alloca [56 x i8], align 8                  ; 5 uses
+  %.sroa.028 = alloca <56 x i8>, align 64         ; 6 uses
   %i.d = alloca [24 x i8], align 8                ; 6 uses
   %i.e = alloca [24 x i8], align 8                ; 6 uses
   %i.f = alloca [40 x i8], align 8                ; 7 uses
   %i.g = alloca [88 x i8], align 8                ; 6 uses
   %i.h = alloca [32 x i8], align 8                ; 6 uses
   %i.i = alloca [88 x i8], align 8                ; 4 uses
-  %.sroa.12.i = alloca [16 x i8], align 8         ; 4 uses
   %i.j = alloca [1 x i8], align 1                 ; 5 uses
   %i.k = alloca [4 x i8], align 4                 ; 4 uses
   %i.l = alloca [104 x i8], align 8               ; 15 uses
   %i.m = alloca [24 x i8], align 8                ; 8 uses
   %i.n = alloca [32 x i8], align 8                ; 9 uses
-  %7 = alloca [56 x i8], align 8                  ; 5 uses
+  %.sroa.0 = alloca <56 x i8>, align 64           ; 6 uses
   %i.o = alloca [24 x i8], align 8                ; 6 uses
   %i.p = alloca [24 x i8], align 8                ; 6 uses
   %i.q = alloca [40 x i8], align 8                ; 7 uses
   %i.r = alloca [88 x i8], align 8                ; 6 uses
   %i.s = alloca [32 x i8], align 8                ; 6 uses
   %i.t = alloca [88 x i8], align 8                ; 4 uses
-  %.sroa.12.i.i = alloca [16 x i8], align 8       ; 4 uses
   %i.u = alloca [1 x i8], align 1                 ; 5 uses
   %i.v = alloca [2 x i8], align 2                 ; 4 uses
   %i.w = alloca [24 x i8], align 8                ; 6 uses
@@ -868,7 +864,6 @@ bb.m:                                             ; preds = %bb.j
   call void @llvm.lifetime.start.p0(ptr nonnull %i.w), !dbg !17299, !noalias !17249
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.w, ptr noundef nonnull align 8 dereferenceable(24) %i.y, i64 24, i1 false), !dbg !17299, !noalias !17263
   call void @llvm.experimental.noalias.scope.decl(metadata !17301), !dbg !17304
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.12.i.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.u), !noalias !17249
   call void @llvm.lifetime.start.p0(ptr nonnull %i.v), !noalias !17249
   store i16 %i.av, ptr %i.v, align 2, !noalias !17305
@@ -925,7 +920,7 @@ bb.p:                                             ; preds = %.noexc6.i.i
 _RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterReINtNtNtB8_5array8iterator15ArrayValuesIterINtNtB1v_7binview22BinaryViewArrayGenericeEENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i.i.i: ; preds = %.noexc6.i.i
   %.sroa.1021.24.copyload.i.i = load i64, ptr %i.q, align 8, !dbg !17365, !noalias !17366
   %.sroa.12.24..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.q, i64 8, !dbg !17365
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.12.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.12.24..sroa_idx.i.i, i64 16, i1 false), !dbg !17365, !noalias !17305
+  %.sroa.12.i.i.sroa.0.0.copyload = load <16 x i8>, ptr %.sroa.12.24..sroa_idx.i.i, align 8, !dbg !17365, !noalias !17305
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o), !dbg !17367, !noalias !17337
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p), !dbg !17367, !noalias !17337
   br label %bb.q, !dbg !17368
@@ -936,17 +931,18 @@ _RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipVal
   br label %.body.thread.i.i, !dbg !17369
 
 bb.q:                                             ; preds = %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterReINtNtNtB8_5array8iterator15ArrayValuesIterINtNtB1v_7binview22BinaryViewArrayGenericeEENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i.i.i, %.noexc.i.i, %bb.m
-  %.sroa.018.0.i.i = phi ptr [ %1, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterReINtNtNtB8_5array8iterator15ArrayValuesIterINtNtB1v_7binview22BinaryViewArrayGenericeEENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i.i.i ], [ null, %.noexc.i.i ], [ null, %bb.m ], !dbg !17370 ; 2 uses
-  %.sroa.519.0.i.i = phi i64 [ 0, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterReINtNtNtB8_5array8iterator15ArrayValuesIterINtNtB1v_7binview22BinaryViewArrayGenericeEENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i.i.i ], [ %i.ba, %.noexc.i.i ], [ %i.ba, %bb.m ], !dbg !17370 ; 2 uses
-  %.sroa.820.0.i.i = phi i64 [ %i.az, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterReINtNtNtB8_5array8iterator15ArrayValuesIterINtNtB1v_7binview22BinaryViewArrayGenericeEENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i.i.i ], [ 0, %.noexc.i.i ], [ 0, %bb.m ], !dbg !17370 ; 3 uses
-  %.sroa.1021.0.i.i = phi i64 [ %.sroa.1021.24.copyload.i.i, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterReINtNtNtB8_5array8iterator15ArrayValuesIterINtNtB1v_7binview22BinaryViewArrayGenericeEENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i.i.i ], [ %i.az, %.noexc.i.i ], [ %i.az, %bb.m ], !dbg !17370 ; 2 uses
-  %.sroa.13.0.i.i = phi i64 [ %.sroa.4.0.copyload.i.i.i, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterReINtNtNtB8_5array8iterator15ArrayValuesIterINtNtB1v_7binview22BinaryViewArrayGenericeEENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i.i.i ], [ undef, %.noexc.i.i ], [ undef, %bb.m ]
-  %.sroa.14.0.i.i = phi i64 [ %.sroa.5.0.copyload.i.i.i, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterReINtNtNtB8_5array8iterator15ArrayValuesIterINtNtB1v_7binview22BinaryViewArrayGenericeEENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i.i.i ], [ undef, %.noexc.i.i ], [ undef, %bb.m ]
+  %.sroa.12.i.i.sroa.0.0 = phi <16 x i8> [ undef, %bb.m ], [ undef, %.noexc.i.i ], [ %.sroa.12.i.i.sroa.0.0.copyload, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterReINtNtNtB8_5array8iterator15ArrayValuesIterINtNtB1v_7binview22BinaryViewArrayGenericeEENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i.i.i ]
+  %.sroa.018.0.i.i = phi ptr [ null, %bb.m ], [ null, %.noexc.i.i ], [ %1, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterReINtNtNtB8_5array8iterator15ArrayValuesIterINtNtB1v_7binview22BinaryViewArrayGenericeEENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i.i.i ], !dbg !17370 ; 2 uses
+  %.sroa.519.0.i.i = phi i64 [ %i.ba, %bb.m ], [ %i.ba, %.noexc.i.i ], [ 0, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterReINtNtNtB8_5array8iterator15ArrayValuesIterINtNtB1v_7binview22BinaryViewArrayGenericeEENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i.i.i ], !dbg !17370 ; 2 uses
+  %.sroa.820.0.i.i = phi i64 [ 0, %bb.m ], [ 0, %.noexc.i.i ], [ %i.az, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterReINtNtNtB8_5array8iterator15ArrayValuesIterINtNtB1v_7binview22BinaryViewArrayGenericeEENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i.i.i ], !dbg !17370 ; 3 uses
+  %.sroa.1021.0.i.i = phi i64 [ %i.az, %bb.m ], [ %i.az, %.noexc.i.i ], [ %.sroa.1021.24.copyload.i.i, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterReINtNtNtB8_5array8iterator15ArrayValuesIterINtNtB1v_7binview22BinaryViewArrayGenericeEENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i.i.i ], !dbg !17370 ; 2 uses
+  %.sroa.13.0.i.i = phi i64 [ undef, %bb.m ], [ undef, %.noexc.i.i ], [ %.sroa.4.0.copyload.i.i.i, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterReINtNtNtB8_5array8iterator15ArrayValuesIterINtNtB1v_7binview22BinaryViewArrayGenericeEENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i.i.i ]
+  %.sroa.14.0.i.i = phi i64 [ undef, %bb.m ], [ undef, %.noexc.i.i ], [ %.sroa.5.0.copyload.i.i.i, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterReINtNtNtB8_5array8iterator15ArrayValuesIterINtNtB1v_7binview22BinaryViewArrayGenericeEENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q), !dbg !17371, !noalias !17305
   call void @llvm.lifetime.start.p0(ptr nonnull %i.t), !dbg !17372, !noalias !17305
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r), !dbg !17374, !noalias !17305
   call void @llvm.experimental.noalias.scope.decl(metadata !17377), !dbg !17380
-  call void @llvm.lifetime.start.p0(ptr nonnull %7), !dbg !17386
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0), !dbg !17386
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n), !dbg !17389, !noalias !17392
   store i64 0, ptr %i.n, align 8, !dbg !17397, !noalias !17392
   %.sroa.4.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.n, i64 8, !dbg !17397
@@ -987,7 +983,7 @@ bb.q:                                             ; preds = %_RNvMNtNtNtCs8774dF
   %.sroa.10.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.l, i64 56, !dbg !17432
   store i64 %.sroa.1021.0.i.i, ptr %.sroa.10.0..sroa_idx.i.i, align 8, !dbg !17432, !alias.scope !17437, !noalias !17439
   %.sroa.11.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.l, i64 64, !dbg !17432
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.11.0..sroa_idx.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.12.i.i, i64 16, i1 false), !dbg !17432, !noalias !17305
+  store <16 x i8> %.sroa.12.i.i.sroa.0.0, ptr %.sroa.11.0..sroa_idx.i.i, align 8, !dbg !17432, !noalias !17305
   %.sroa.11.sroa.2.0..sroa.11.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.l, i64 80, !dbg !17432
   store i64 %.sroa.13.0.i.i, ptr %.sroa.11.sroa.2.0..sroa.11.0..sroa_idx.sroa_idx.i.i, align 8, !dbg !17432, !alias.scope !17437, !noalias !17439
   %.sroa.11.sroa.3.0..sroa.11.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.l, i64 88, !dbg !17432
@@ -1014,18 +1010,19 @@ bb.t:                                             ; preds = %bb.r
           to label %.body.thread.i.i unwind label %bb.s, !dbg !17455, !noalias !17452
 
 bb.u:                                             ; preds = %.noexc.i.i.i.i
-  %8 = getelementptr inbounds nuw i8, ptr %7, i64 32 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l), !dbg !17456, !noalias !17392
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %7, ptr noundef nonnull align 8 dereferenceable(32) %i.n, i64 32, i1 false), !dbg !17457, !noalias !17458
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %8, ptr noundef nonnull align 8 dereferenceable(24) %i.m, i64 24, i1 false), !dbg !17459, !noalias !17458
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 64 dereferenceable(32) %.sroa.0, ptr noundef nonnull align 8 dereferenceable(32) %i.n, i64 32, i1 false), !dbg !17457, !noalias !17458
+  %.sroa.0.32..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 32, !dbg !17459
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 32 dereferenceable(24) %.sroa.0.32..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %i.m, i64 24, i1 false), !dbg !17459, !noalias !17458
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m), !dbg !17453, !noalias !17392
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n), !dbg !17455, !noalias !17392
   %i.bs = getelementptr inbounds nuw i8, ptr %i.r, i64 56, !dbg !17461
   store i8 5, ptr %i.bs, align 8, !dbg !17461, !alias.scope !17377, !noalias !17463
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %i.r, ptr noundef nonnull align 8 dereferenceable(24) %8, i64 24, i1 false), !dbg !17461, !noalias !17463
+  %.sroa.0.32..sroa_idx26 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 32, !dbg !17461
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.r, ptr noundef nonnull align 32 dereferenceable(24) %.sroa.0.32..sroa_idx26, i64 24, i1 false), !dbg !17461, !noalias !17463
   %i.bt = getelementptr inbounds nuw i8, ptr %i.r, i64 24, !dbg !17461
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.bt, ptr noundef nonnull align 8 dereferenceable(32) %7, i64 32, i1 false), !dbg !17461, !noalias !17463
-  call void @llvm.lifetime.end.p0(ptr nonnull %7), !dbg !17464
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.bt, ptr noundef nonnull align 64 dereferenceable(32) %.sroa.0, i64 32, i1 false), !dbg !17461, !noalias !17463
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0), !dbg !17464
   invoke void @_RNvXNtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB4_14PrimitiveArrayxEINtNtCscgRAwXFJnXP_4core7convert4FromINtB2_21MutablePrimitiveArrayxEE4fromCslFlrwjHoTci_14polars_compute(ptr noalias noundef nonnull sret([88 x i8]) align 8 captures(address) dereferenceable(88) %i.t, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(88) %i.r)
           to label %bb.v unwind label %.body.thread32.i.i, !dbg !17465, !noalias !17468
 
@@ -1044,7 +1041,6 @@ bb.v:                                             ; preds = %bb.u
 .noexc4:                                          ; preds = %bb.v
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s), !dbg !17475, !noalias !17305
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t), !dbg !17475, !noalias !17305
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.12.i.i), !dbg !17476
   call void @llvm.lifetime.end.p0(ptr nonnull %i.u), !dbg !17476, !noalias !17249
   call void @llvm.lifetime.end.p0(ptr nonnull %i.v), !dbg !17476, !noalias !17249
   call void @llvm.lifetime.end.p0(ptr nonnull %i.w), !dbg !17477, !noalias !17249
@@ -1090,7 +1086,6 @@ bb.ab:                                            ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.z), !dbg !17508
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.z, ptr noundef nonnull align 8 dereferenceable(24) %4, i64 24, i1 false), !dbg !17508
   tail call void @llvm.experimental.noalias.scope.decl(metadata !17509), !dbg !17507
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.12.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k)
   store i32 %i.cf, ptr %i.k, align 4, !noalias !17512
@@ -1147,7 +1142,7 @@ bb.ae:                                            ; preds = %.noexc6.i
 _RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterReINtNtNtB8_5array8iterator15ArrayValuesIterINtNtB1v_7binview22BinaryViewArrayGenericeEENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i.i: ; preds = %.noexc6.i
   %.sroa.1021.24.copyload.i = load i64, ptr %i.f, align 8, !dbg !17571, !noalias !17572
   %.sroa.12.24..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.f, i64 8, !dbg !17571
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.12.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.12.24..sroa_idx.i, i64 16, i1 false), !dbg !17571, !noalias !17512
+  %.sroa.12.i.sroa.0.0.copyload = load <16 x i8>, ptr %.sroa.12.24..sroa_idx.i, align 8, !dbg !17571, !noalias !17512
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !dbg !17573, !noalias !17543
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !dbg !17573, !noalias !17543
   br label %bb.af, !dbg !17574
@@ -1158,17 +1153,18 @@ _RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipVal
   br label %.body.thread.i6, !dbg !17575
 
 bb.af:                                            ; preds = %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterReINtNtNtB8_5array8iterator15ArrayValuesIterINtNtB1v_7binview22BinaryViewArrayGenericeEENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i.i, %.noexc.i, %bb.ab
-  %.sroa.018.0.i = phi ptr [ %1, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterReINtNtNtB8_5array8iterator15ArrayValuesIterINtNtB1v_7binview22BinaryViewArrayGenericeEENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i.i ], [ null, %.noexc.i ], [ null, %bb.ab ], !dbg !17576 ; 2 uses
-  %.sroa.519.0.i = phi i64 [ 0, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterReINtNtNtB8_5array8iterator15ArrayValuesIterINtNtB1v_7binview22BinaryViewArrayGenericeEENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i.i ], [ %i.ci, %.noexc.i ], [ %i.ci, %bb.ab ], !dbg !17576 ; 2 uses
-  %.sroa.820.0.i = phi i64 [ %i.ch, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterReINtNtNtB8_5array8iterator15ArrayValuesIterINtNtB1v_7binview22BinaryViewArrayGenericeEENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i.i ], [ 0, %.noexc.i ], [ 0, %bb.ab ], !dbg !17576 ; 3 uses
-  %.sroa.1021.0.i = phi i64 [ %.sroa.1021.24.copyload.i, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterReINtNtNtB8_5array8iterator15ArrayValuesIterINtNtB1v_7binview22BinaryViewArrayGenericeEENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i.i ], [ %i.ch, %.noexc.i ], [ %i.ch, %bb.ab ], !dbg !17576 ; 2 uses
-  %.sroa.13.0.i = phi i64 [ %.sroa.4.0.copyload.i.i, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterReINtNtNtB8_5array8iterator15ArrayValuesIterINtNtB1v_7binview22BinaryViewArrayGenericeEENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i.i ], [ undef, %.noexc.i ], [ undef, %bb.ab ]
-  %.sroa.14.0.i = phi i64 [ %.sroa.5.0.copyload.i.i, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterReINtNtNtB8_5array8iterator15ArrayValuesIterINtNtB1v_7binview22BinaryViewArrayGenericeEENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i.i ], [ undef, %.noexc.i ], [ undef, %bb.ab ]
+  %.sroa.12.i.sroa.0.0 = phi <16 x i8> [ undef, %bb.ab ], [ undef, %.noexc.i ], [ %.sroa.12.i.sroa.0.0.copyload, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterReINtNtNtB8_5array8iterator15ArrayValuesIterINtNtB1v_7binview22BinaryViewArrayGenericeEENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i.i ]
+  %.sroa.018.0.i = phi ptr [ null, %bb.ab ], [ null, %.noexc.i ], [ %1, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterReINtNtNtB8_5array8iterator15ArrayValuesIterINtNtB1v_7binview22BinaryViewArrayGenericeEENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i.i ], !dbg !17576 ; 2 uses
+  %.sroa.519.0.i = phi i64 [ %i.ci, %bb.ab ], [ %i.ci, %.noexc.i ], [ 0, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterReINtNtNtB8_5array8iterator15ArrayValuesIterINtNtB1v_7binview22BinaryViewArrayGenericeEENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i.i ], !dbg !17576 ; 2 uses
+  %.sroa.820.0.i = phi i64 [ 0, %bb.ab ], [ 0, %.noexc.i ], [ %i.ch, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterReINtNtNtB8_5array8iterator15ArrayValuesIterINtNtB1v_7binview22BinaryViewArrayGenericeEENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i.i ], !dbg !17576 ; 3 uses
+  %.sroa.1021.0.i = phi i64 [ %i.ch, %bb.ab ], [ %i.ch, %.noexc.i ], [ %.sroa.1021.24.copyload.i, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterReINtNtNtB8_5array8iterator15ArrayValuesIterINtNtB1v_7binview22BinaryViewArrayGenericeEENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i.i ], !dbg !17576 ; 2 uses
+  %.sroa.13.0.i = phi i64 [ undef, %bb.ab ], [ undef, %.noexc.i ], [ %.sroa.4.0.copyload.i.i, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterReINtNtNtB8_5array8iterator15ArrayValuesIterINtNtB1v_7binview22BinaryViewArrayGenericeEENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i.i ]
+  %.sroa.14.0.i = phi i64 [ undef, %bb.ab ], [ undef, %.noexc.i ], [ %.sroa.5.0.copyload.i.i, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterReINtNtNtB8_5array8iterator15ArrayValuesIterINtNtB1v_7binview22BinaryViewArrayGenericeEENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !dbg !17577, !noalias !17512
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !dbg !17578, !noalias !17512
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !dbg !17580, !noalias !17512
   call void @llvm.experimental.noalias.scope.decl(metadata !17583), !dbg !17586
-  call void @llvm.lifetime.start.p0(ptr nonnull %6), !dbg !17589
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.028), !dbg !17589
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !17592, !noalias !17595
   store i64 0, ptr %i.c, align 8, !dbg !17600, !noalias !17595
   %.sroa.4.0..sroa_idx.i.i.i7 = getelementptr inbounds nuw i8, ptr %i.c, i64 8, !dbg !17600
@@ -1209,7 +1205,7 @@ bb.af:                                            ; preds = %_RNvMNtNtNtCs8774dF
   %.sroa.10.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 56, !dbg !17630
   store i64 %.sroa.1021.0.i, ptr %.sroa.10.0..sroa_idx.i, align 8, !dbg !17630, !alias.scope !17635, !noalias !17637
   %.sroa.11.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 64, !dbg !17630
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.11.0..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.12.i, i64 16, i1 false), !dbg !17630, !noalias !17512
+  store <16 x i8> %.sroa.12.i.sroa.0.0, ptr %.sroa.11.0..sroa_idx.i, align 8, !dbg !17630, !noalias !17512
   %.sroa.11.sroa.2.0..sroa.11.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 80, !dbg !17630
   store i64 %.sroa.13.0.i, ptr %.sroa.11.sroa.2.0..sroa.11.0..sroa_idx.sroa_idx.i, align 8, !dbg !17630, !alias.scope !17635, !noalias !17637
   %.sroa.11.sroa.3.0..sroa.11.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 88, !dbg !17630
@@ -1236,18 +1232,19 @@ bb.ai:                                            ; preds = %bb.ag
           to label %.body.thread.i6 unwind label %bb.ah, !dbg !17652, !noalias !17649
 
 bb.aj:                                            ; preds = %.noexc.i.i.i
-  %9 = getelementptr inbounds nuw i8, ptr %6, i64 32 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !17653, !noalias !17595
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %6, ptr noundef nonnull align 8 dereferenceable(32) %i.c, i64 32, i1 false), !dbg !17654, !noalias !17655
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %9, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false), !dbg !17656, !noalias !17655
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 64 dereferenceable(32) %.sroa.028, ptr noundef nonnull align 8 dereferenceable(32) %i.c, i64 32, i1 false), !dbg !17654, !noalias !17655
+  %.sroa.028.32..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.028, i64 32, !dbg !17656
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 32 dereferenceable(24) %.sroa.028.32..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false), !dbg !17656, !noalias !17655
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !17650, !noalias !17595
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !dbg !17652, !noalias !17595
   %i.da = getelementptr inbounds nuw i8, ptr %i.g, i64 56, !dbg !17658
   store i8 5, ptr %i.da, align 8, !dbg !17658, !alias.scope !17583, !noalias !17660
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %i.g, ptr noundef nonnull align 8 dereferenceable(24) %9, i64 24, i1 false), !dbg !17658, !noalias !17660
+  %.sroa.028.32..sroa_idx29 = getelementptr inbounds nuw i8, ptr %.sroa.028, i64 32, !dbg !17658
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.g, ptr noundef nonnull align 32 dereferenceable(24) %.sroa.028.32..sroa_idx29, i64 24, i1 false), !dbg !17658, !noalias !17660
   %i.db = getelementptr inbounds nuw i8, ptr %i.g, i64 24, !dbg !17658
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.db, ptr noundef nonnull align 8 dereferenceable(32) %6, i64 32, i1 false), !dbg !17658, !noalias !17660
-  call void @llvm.lifetime.end.p0(ptr nonnull %6), !dbg !17661
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.db, ptr noundef nonnull align 64 dereferenceable(32) %.sroa.028, i64 32, i1 false), !dbg !17658, !noalias !17660
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.028), !dbg !17661
   invoke void @_RNvXNtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB4_14PrimitiveArrayxEINtNtCscgRAwXFJnXP_4core7convert4FromINtB2_21MutablePrimitiveArrayxEE4fromCslFlrwjHoTci_14polars_compute(ptr noalias noundef nonnull sret([88 x i8]) align 8 captures(address) dereferenceable(88) %i.i, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(88) %i.g)
           to label %bb.ak unwind label %.body.thread32.i, !dbg !17662, !noalias !17665
 
@@ -1298,7 +1295,6 @@ bb.ao:                                            ; preds = %.body
 bb.ap:                                            ; preds = %bb.ak
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !dbg !17698, !noalias !17512
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !dbg !17698, !noalias !17512
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.12.i), !dbg !17699
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !dbg !17699
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k), !dbg !17699
   call void @llvm.lifetime.end.p0(ptr nonnull %i.z), !dbg !17700
@@ -1351,14 +1347,13 @@ bb.a:
   %i.a = alloca [96 x i8], align 8                ; 14 uses
   %i.b = alloca [24 x i8], align 8                ; 8 uses
   %i.c = alloca [32 x i8], align 8                ; 9 uses
-  %5 = alloca [56 x i8], align 8                  ; 5 uses
+  %.sroa.0 = alloca <56 x i8>, align 64           ; 6 uses
   %i.d = alloca [24 x i8], align 8                ; 6 uses
   %i.e = alloca [24 x i8], align 8                ; 6 uses
   %i.f = alloca [40 x i8], align 8                ; 7 uses
   %i.g = alloca [88 x i8], align 8                ; 6 uses
   %i.h = alloca [32 x i8], align 8                ; 6 uses
   %i.i = alloca [88 x i8], align 8                ; 4 uses
-  %.sroa.12 = alloca [16 x i8], align 8           ; 2 uses
   %i.j = alloca [1 x i8], align 1                 ; 3 uses
   store i8 %4, ptr %i.j, align 1
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 48, !dbg !17731
@@ -1404,23 +1399,24 @@ bb.d:                                             ; preds = %bb.c
 _RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterReINtNtNtB8_5array8iterator15ArrayValuesIterINtNtB1v_7binview22BinaryViewArrayGenericeEENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i: ; preds = %bb.c
   %.sroa.1013.24.copyload = load i64, ptr %i.f, align 8, !dbg !17785, !noalias !17786
   %.sroa.12.24..sroa_idx = getelementptr inbounds nuw i8, ptr %i.f, i64 8, !dbg !17785
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.12, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.12.24..sroa_idx, i64 16, i1 false), !dbg !17785
+  %.sroa.12.sroa.0.0.copyload = load <16 x i8>, ptr %.sroa.12.24..sroa_idx, align 8, !dbg !17785
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !dbg !17787, !noalias !17751
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !dbg !17787, !noalias !17751
   br label %_RNvMs4_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB5_11ZipValidityReINtNtNtBb_5array8iterator15ArrayValuesIterINtNtB1u_7binview22BinaryViewArrayGenericeEENtNtB7_8iterator10BitmapIterE17new_with_validityCslFlrwjHoTci_14polars_compute.exit, !dbg !17788
 
 _RNvMs4_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB5_11ZipValidityReINtNtNtBb_5array8iterator15ArrayValuesIterINtNtB1u_7binview22BinaryViewArrayGenericeEENtNtB7_8iterator10BitmapIterE17new_with_validityCslFlrwjHoTci_14polars_compute.exit: ; preds = %bb.a, %bb.b, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterReINtNtNtB8_5array8iterator15ArrayValuesIterINtNtB1v_7binview22BinaryViewArrayGenericeEENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i
-  %.sroa.012.0 = phi ptr [ %1, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterReINtNtNtB8_5array8iterator15ArrayValuesIterINtNtB1v_7binview22BinaryViewArrayGenericeEENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i ], [ null, %bb.b ], [ null, %bb.a ], !dbg !17789 ; 2 uses
-  %.sroa.5.0 = phi i64 [ 0, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterReINtNtNtB8_5array8iterator15ArrayValuesIterINtNtB1v_7binview22BinaryViewArrayGenericeEENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i ], [ %i.m, %bb.b ], [ %i.m, %bb.a ], !dbg !17789 ; 2 uses
-  %.sroa.8.0 = phi i64 [ %i.l, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterReINtNtNtB8_5array8iterator15ArrayValuesIterINtNtB1v_7binview22BinaryViewArrayGenericeEENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i ], [ 0, %bb.b ], [ 0, %bb.a ], !dbg !17789 ; 3 uses
-  %.sroa.1013.0 = phi i64 [ %.sroa.1013.24.copyload, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterReINtNtNtB8_5array8iterator15ArrayValuesIterINtNtB1v_7binview22BinaryViewArrayGenericeEENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i ], [ %i.l, %bb.b ], [ %i.l, %bb.a ], !dbg !17789 ; 2 uses
-  %.sroa.13.0 = phi i64 [ %.sroa.4.0.copyload.i, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterReINtNtNtB8_5array8iterator15ArrayValuesIterINtNtB1v_7binview22BinaryViewArrayGenericeEENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i ], [ undef, %bb.b ], [ undef, %bb.a ]
-  %.sroa.14.0 = phi i64 [ %.sroa.5.0.copyload.i, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterReINtNtNtB8_5array8iterator15ArrayValuesIterINtNtB1v_7binview22BinaryViewArrayGenericeEENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i ], [ undef, %bb.b ], [ undef, %bb.a ]
+  %.sroa.12.sroa.0.0 = phi <16 x i8> [ undef, %bb.a ], [ undef, %bb.b ], [ %.sroa.12.sroa.0.0.copyload, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterReINtNtNtB8_5array8iterator15ArrayValuesIterINtNtB1v_7binview22BinaryViewArrayGenericeEENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i ]
+  %.sroa.012.0 = phi ptr [ null, %bb.a ], [ null, %bb.b ], [ %1, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterReINtNtNtB8_5array8iterator15ArrayValuesIterINtNtB1v_7binview22BinaryViewArrayGenericeEENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i ], !dbg !17789 ; 2 uses
+  %.sroa.5.0 = phi i64 [ %i.m, %bb.a ], [ %i.m, %bb.b ], [ 0, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterReINtNtNtB8_5array8iterator15ArrayValuesIterINtNtB1v_7binview22BinaryViewArrayGenericeEENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i ], !dbg !17789 ; 2 uses
+  %.sroa.8.0 = phi i64 [ 0, %bb.a ], [ 0, %bb.b ], [ %i.l, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterReINtNtNtB8_5array8iterator15ArrayValuesIterINtNtB1v_7binview22BinaryViewArrayGenericeEENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i ], !dbg !17789 ; 3 uses
+  %.sroa.1013.0 = phi i64 [ %i.l, %bb.a ], [ %i.l, %bb.b ], [ %.sroa.1013.24.copyload, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterReINtNtNtB8_5array8iterator15ArrayValuesIterINtNtB1v_7binview22BinaryViewArrayGenericeEENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i ], !dbg !17789 ; 2 uses
+  %.sroa.13.0 = phi i64 [ undef, %bb.a ], [ undef, %bb.b ], [ %.sroa.4.0.copyload.i, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterReINtNtNtB8_5array8iterator15ArrayValuesIterINtNtB1v_7binview22BinaryViewArrayGenericeEENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i ]
+  %.sroa.14.0 = phi i64 [ undef, %bb.a ], [ undef, %bb.b ], [ %.sroa.5.0.copyload.i, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterReINtNtNtB8_5array8iterator15ArrayValuesIterINtNtB1v_7binview22BinaryViewArrayGenericeEENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !dbg !17790
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !dbg !17791
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !dbg !17793
   call void @llvm.experimental.noalias.scope.decl(metadata !17795), !dbg !17798
-  call void @llvm.lifetime.start.p0(ptr nonnull %5), !dbg !17800
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0), !dbg !17800
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !17803, !noalias !17806
   store i64 0, ptr %i.c, align 8, !dbg !17811, !noalias !17806
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 8, !dbg !17811
@@ -1459,7 +1455,7 @@ _RNvMs4_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB5_11Zip
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 48, !dbg !17841
   store i64 %.sroa.1013.0, ptr %.sroa.9.0..sroa_idx, align 8, !dbg !17841, !alias.scope !17846, !noalias !17848
   %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 56, !dbg !17841
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.10.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.12, i64 16, i1 false), !dbg !17841
+  store <16 x i8> %.sroa.12.sroa.0.0, ptr %.sroa.10.0..sroa_idx, align 8, !dbg !17841
   %.sroa.10.sroa.2.0..sroa.10.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 72, !dbg !17841
   store i64 %.sroa.13.0, ptr %.sroa.10.sroa.2.0..sroa.10.0..sroa_idx.sroa_idx, align 8, !dbg !17841, !alias.scope !17846, !noalias !17848
   %.sroa.10.sroa.3.0..sroa.10.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 80, !dbg !17841
@@ -1489,18 +1485,19 @@ bb.h:                                             ; preds = %bb.g
   resume { ptr, i32 } %i.ac, !dbg !17861
 
 _RINvMsa_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB6_21MutablePrimitiveArrayxE31from_trusted_len_iter_uncheckedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtNtBc_6bitmap5utils12zip_validity11ZipValidityReINtNtBa_8iterator15ArrayValuesIterINtNtBa_7binview22BinaryViewArrayGenericeEENtNtB2X_8iterator10BitmapIterENCNvNtNtCslFlrwjHoTci_14polars_compute4cast8temporal27utf8view_to_naive_timestamp0ExEB5B_.exit: ; preds = %.noexc.i.i
-  %6 = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !17863, !noalias !17806
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %5, ptr noundef nonnull align 8 dereferenceable(32) %i.c, i64 32, i1 false), !dbg !17864, !noalias !17865
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %6, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false), !dbg !17866, !noalias !17865
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 64 dereferenceable(32) %.sroa.0, ptr noundef nonnull align 8 dereferenceable(32) %i.c, i64 32, i1 false), !dbg !17864, !noalias !17865
+  %.sroa.0.32..sroa_idx21 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 32, !dbg !17866
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 32 dereferenceable(24) %.sroa.0.32..sroa_idx21, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false), !dbg !17866, !noalias !17865
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !17860, !noalias !17806
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !dbg !17862, !noalias !17806
   %i.ae = getelementptr inbounds nuw i8, ptr %i.g, i64 56, !dbg !17868
   store i8 5, ptr %i.ae, align 8, !dbg !17868, !alias.scope !17795, !noalias !17870
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %i.g, ptr noundef nonnull align 8 dereferenceable(24) %6, i64 24, i1 false), !dbg !17868, !noalias !17870
+  %.sroa.0.32..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 32, !dbg !17868
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.g, ptr noundef nonnull align 32 dereferenceable(24) %.sroa.0.32..sroa_idx, i64 24, i1 false), !dbg !17868, !noalias !17870
   %i.af = getelementptr inbounds nuw i8, ptr %i.g, i64 24, !dbg !17868
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.af, ptr noundef nonnull align 8 dereferenceable(32) %5, i64 32, i1 false), !dbg !17868, !noalias !17870
-  call void @llvm.lifetime.end.p0(ptr nonnull %5), !dbg !17871
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.af, ptr noundef nonnull align 64 dereferenceable(32) %.sroa.0, i64 32, i1 false), !dbg !17868, !noalias !17870
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0), !dbg !17871
   call void @_RNvXNtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB4_14PrimitiveArrayxEINtNtCscgRAwXFJnXP_4core7convert4FromINtB2_21MutablePrimitiveArrayxEE4fromCslFlrwjHoTci_14polars_compute(ptr noalias noundef nonnull sret([88 x i8]) align 8 captures(address) dereferenceable(88) %i.i, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(88) %i.g), !dbg !17872
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !dbg !17875
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !dbg !17876
@@ -1903,14 +1900,12 @@ bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [24 x i8], align 8                ; 6 uses
   %i.c = alloca [40 x i8], align 8                ; 7 uses
-  %.sroa.9.i = alloca [16 x i8], align 8          ; 4 uses
   %i.d = alloca [72 x i8], align 8                ; 11 uses
   %i.e = alloca [8 x i8], align 8                 ; 4 uses
   %i.f = alloca [88 x i8], align 8                ; 18 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !dbg !18224
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 48, !dbg !18225
   %i.h = load i64, ptr %i.g, align 8, !dbg !18225, !noundef !12
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.9.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   store i64 %i.h, ptr %i.e, align 8, !noalias !18231
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !dbg !18234, !noalias !18231
@@ -1959,17 +1954,18 @@ bb.d:                                             ; preds = %bb.c
 _RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterRxINtNtNtCscgRAwXFJnXP_4core5slice4iter4IterxENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i.i: ; preds = %bb.c
   %.sroa.7.16.copyload.i = load ptr, ptr %i.c, align 8, !dbg !18295, !noalias !18231
   %.sroa.9.16..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.c, i64 8, !dbg !18295
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.9.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.9.16..sroa_idx.i, i64 16, i1 false), !dbg !18295, !noalias !18231
+  %.sroa.9.i.sroa.0.0.copyload = load <16 x i8>, ptr %.sroa.9.16..sroa_idx.i, align 8, !dbg !18295, !noalias !18231
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !18296, !noalias !18264
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !18296, !noalias !18264
   br label %_RNvNtNtNtCslFlrwjHoTci_14polars_compute6gather7sublist15fixed_size_list31sub_fixed_size_list_get_indexes.exit, !dbg !18297
 
 _RNvNtNtNtCslFlrwjHoTci_14polars_compute6gather7sublist15fixed_size_list31sub_fixed_size_list_get_indexes.exit: ; preds = %bb.a, %bb.b, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterRxINtNtNtCscgRAwXFJnXP_4core5slice4iter4IterxENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i.i
-  %.sroa.10.0.i = phi i64 [ %.sroa.5.0.copyload.i.i, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterRxINtNtNtCscgRAwXFJnXP_4core5slice4iter4IterxENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i.i ], [ undef, %bb.b ], [ undef, %bb.a ]
-  %.sroa.93.0.i = phi i64 [ %.sroa.4.0.copyload.i.i, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterRxINtNtNtCscgRAwXFJnXP_4core5slice4iter4IterxENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i.i ], [ undef, %bb.b ], [ undef, %bb.a ]
-  %.sroa.7.0.i = phi ptr [ %.sroa.7.16.copyload.i, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterRxINtNtNtCscgRAwXFJnXP_4core5slice4iter4IterxENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i.i ], [ %i.o, %bb.b ], [ %i.o, %bb.a ], !dbg !18298
-  %.sroa.5.0.i = phi ptr [ %i.o, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterRxINtNtNtCscgRAwXFJnXP_4core5slice4iter4IterxENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i.i ], [ %i.j, %bb.b ], [ %i.j, %bb.a ], !dbg !18298
-  %.sroa.02.0.i = phi ptr [ %i.j, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterRxINtNtNtCscgRAwXFJnXP_4core5slice4iter4IterxENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i.i ], [ null, %bb.b ], [ null, %bb.a ], !dbg !18298
+  %.sroa.9.i.sroa.0.0 = phi <16 x i8> [ undef, %bb.a ], [ undef, %bb.b ], [ %.sroa.9.i.sroa.0.0.copyload, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterRxINtNtNtCscgRAwXFJnXP_4core5slice4iter4IterxENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i.i ]
+  %.sroa.10.0.i = phi i64 [ undef, %bb.a ], [ undef, %bb.b ], [ %.sroa.5.0.copyload.i.i, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterRxINtNtNtCscgRAwXFJnXP_4core5slice4iter4IterxENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i.i ]
+  %.sroa.93.0.i = phi i64 [ undef, %bb.a ], [ undef, %bb.b ], [ %.sroa.4.0.copyload.i.i, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterRxINtNtNtCscgRAwXFJnXP_4core5slice4iter4IterxENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i.i ]
+  %.sroa.7.0.i = phi ptr [ %i.o, %bb.a ], [ %i.o, %bb.b ], [ %.sroa.7.16.copyload.i, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterRxINtNtNtCscgRAwXFJnXP_4core5slice4iter4IterxENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i.i ], !dbg !18298
+  %.sroa.5.0.i = phi ptr [ %i.j, %bb.a ], [ %i.j, %bb.b ], [ %i.o, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterRxINtNtNtCscgRAwXFJnXP_4core5slice4iter4IterxENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i.i ], !dbg !18298
+  %.sroa.02.0.i = phi ptr [ null, %bb.a ], [ null, %bb.b ], [ %i.j, %_RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipValidityIterRxINtNtNtCscgRAwXFJnXP_4core5slice4iter4IterxENtNtB4_8iterator10BitmapIterE3newCslFlrwjHoTci_14polars_compute.exit.i.i ], !dbg !18298
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !dbg !18299, !noalias !18231
   %i.w = getelementptr inbounds nuw i8, ptr %i.d, i64 8, !dbg !18300
   store ptr %.sroa.02.0.i, ptr %i.w, align 8, !dbg !18300, !noalias !18231
@@ -1978,7 +1974,7 @@ _RNvNtNtNtCslFlrwjHoTci_14polars_compute6gather7sublist15fixed_size_list31sub_fi
   %.sroa.0.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.d, i64 24, !dbg !18300
   store ptr %.sroa.7.0.i, ptr %.sroa.0.sroa.5.0..sroa_idx.i, align 8, !dbg !18300, !noalias !18231
   %.sroa.0.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.d, i64 32, !dbg !18300
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.sroa.6.0..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.9.i, i64 16, i1 false), !dbg !18300, !noalias !18231
+  store <16 x i8> %.sroa.9.i.sroa.0.0, ptr %.sroa.0.sroa.6.0..sroa_idx.i, align 8, !dbg !18300, !noalias !18231
   %.sroa.0.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.d, i64 48, !dbg !18300
   store i64 %.sroa.93.0.i, ptr %.sroa.0.sroa.7.0..sroa_idx.i, align 8, !dbg !18300, !noalias !18231
   %.sroa.0.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.d, i64 56, !dbg !18300
@@ -1988,7 +1984,6 @@ _RNvNtNtNtCslFlrwjHoTci_14polars_compute6gather7sublist15fixed_size_list31sub_fi
   store ptr %i.e, ptr %i.d, align 8, !dbg !18300, !noalias !18231
   call void @_RINvXs0_NtNtCs8774dFTUdNv_12polars_arrow6legacy5utilsINtNtNtBa_5array9primitive14PrimitiveArraymEINtB6_22FromTrustedLenIteratorINtNtCscgRAwXFJnXP_4core6option6OptionmEE24from_iter_trusted_lengthINtNtNtNtB26_4iter8adapters3map3MapINtNtB3b_9enumerate9EnumerateINtNtNtNtBa_6bitmap5utils12zip_validity11ZipValidityRxINtNtNtB26_5slice4iter4IterxENtNtB4d_8iterator10BitmapIterEENCNvNtNtNtCslFlrwjHoTci_14polars_compute6gather7sublist15fixed_size_list31sub_fixed_size_list_get_indexes0EEB68_(ptr noalias noundef nonnull sret([88 x i8]) align 8 captures(address) dereferenceable(88) %i.f, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(72) %i.d), !dbg !18305
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !dbg !18308, !noalias !18231
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.9.i), !dbg !18309
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !dbg !18309
   br i1 %3, label %_RNvYINtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive14PrimitiveArraymENtB7_5Array10null_countCslFlrwjHoTci_14polars_compute.exit.thread, label %bb.e, !dbg !18310
 

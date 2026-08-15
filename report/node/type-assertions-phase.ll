@@ -204,7 +204,6 @@ bb.a:
   %3 = alloca %"class.v8::internal::compiler::turboshaft::Type", align 8 ; 9 uses
   %4 = alloca %"class.v8::internal::compiler::turboshaft::Type", align 8 ; 10 uses
   %5 = alloca %"class.v8::internal::compiler::turboshaft::Type", align 8 ; 6 uses
-  %.sroa.3 = alloca [23 x i8], align 1            ; 3 uses
   %6 = alloca %"class.v8::internal::compiler::turboshaft::Type", align 8 ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 2 ; 2 uses
@@ -352,7 +351,6 @@ _ZN2v88internal8compiler10turboshaft21TypeInferenceAnalysis16GetTypeOrInvalidENS
   br i1 %i.bh, label %_ZN2v88internal8compiler10turboshaft21TypeInferenceAnalysis16GetTypeOrDefaultENS2_7OpIndexERKNS2_4TypeE.exit23.thread, label %_ZN2v88internal8compiler10turboshaft21TypeInferenceAnalysis16GetTypeOrDefaultENS2_7OpIndexERKNS2_4TypeE.exit23
 
 _ZN2v88internal8compiler10turboshaft21TypeInferenceAnalysis16GetTypeOrDefaultENS2_7OpIndexERKNS2_4TypeE.exit23.thread: ; preds = %_ZN2v88internal8compiler10turboshaft23GrowingOpIndexSidetableISt8optionalINS2_16SnapshotTableKeyINS2_4TypeENS2_9NoKeyDataEEEEEixENS2_7OpIndexE.exit.i.i14, %_ZN2v88internal8compiler10turboshaft21TypeInferenceAnalysis16GetTypeOrInvalidENS2_7OpIndexE.exit.i18
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(23) %.sroa.3, i8 0, i64 23, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
   store i8 1, ptr %3, align 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(23) %.sroa.3.0..sroa_idx, i8 0, i64 23, i1 false)
@@ -360,10 +358,10 @@ _ZN2v88internal8compiler10turboshaft21TypeInferenceAnalysis16GetTypeOrDefaultENS
 
 _ZN2v88internal8compiler10turboshaft21TypeInferenceAnalysis16GetTypeOrDefaultENS2_7OpIndexERKNS2_4TypeE.exit23: ; preds = %_ZN2v88internal8compiler10turboshaft21TypeInferenceAnalysis16GetTypeOrInvalidENS2_7OpIndexE.exit.i18
   %.sroa.6.0..sroa.0.0.copyload3.i.sroa_idx.i21 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload3.i.i19, i64 1
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(23) %.sroa.3, ptr noundef nonnull align 1 dereferenceable(23) %.sroa.6.0..sroa.0.0.copyload3.i.sroa_idx.i21, i64 23, i1 false)
+  %.sroa.3.sroa.0.0.copyload48 = load <23 x i8>, ptr %.sroa.6.0..sroa.0.0.copyload3.i.sroa_idx.i21, align 1
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
   store i8 %.sroa.0.0.copyload3.i20, ptr %3, align 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(23) %.sroa.3.0..sroa_idx, ptr noundef nonnull align 1 dereferenceable(23) %.sroa.3, i64 23, i1 false)
+  store <23 x i8> %.sroa.3.sroa.0.0.copyload48, ptr %.sroa.3.0..sroa_idx, align 1
   %i.bi = icmp eq i8 %.sroa.0.0.copyload3.i20, 1
   br i1 %i.bi, label %bb.i, label %bb.j
 

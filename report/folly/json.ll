@@ -204,7 +204,6 @@ _ZN3fmt2v96detail8copy_strIcPcNS1_19truncating_iteratorIS3_St17integral_constant
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZN3fmt2v96detail12write_paddedILNS0_5align4typeE2ENS1_19truncating_iteratorIPcSt17integral_constantIbLb0EEEEcRZNS1_14do_write_floatIS9_NS1_9dragonbox10decimal_fpIdEEcNS1_14digit_groupingIcEEEET_SG_RKT0_RKNS0_18basic_format_specsIT1_EENS1_11float_specsENS1_10locale_refEEUlS9_E0_EESH_SH_SO_mmOT2_(ptr dead_on_unwind noalias writable sret(%"class.fmt::v9::detail::truncating_iterator") align 8 %0, ptr noundef byval(%"class.fmt::v9::detail::truncating_iterator") align 8 %1, ptr noundef nonnull align 4 dereferenceable(16) %2, i64 noundef %3, i64 noundef %4, ptr noundef nonnull align 8 dereferenceable(72) %5) local_unnamed_addr #3 comdat {
 bb.a:
-  %.sroa.13 = alloca [7 x i8], align 1            ; 3 uses
   %6 = alloca %"class.fmt::v9::detail::truncating_iterator", align 8 ; 4 uses
   %7 = alloca %"class.fmt::v9::detail::truncating_iterator", align 8 ; 11 uses
   %8 = alloca %"class.fmt::v9::detail::truncating_iterator", align 8 ; 7 uses
@@ -233,7 +232,7 @@ bb.a:
   %.sroa.12.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 24
   %.sroa.12.0.copyload = load i8, ptr %.sroa.12.0..sroa_idx, align 8 ; 2 uses
   %.sroa.13.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 25 ; 3 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.13, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.13.0..sroa_idx, i64 7, i1 false)
+  %.sroa.13.sroa.0.0.copyload = load <7 x i8>, ptr %.sroa.13.0..sroa_idx, align 1 ; 2 uses
   %.not = icmp eq i64 %i.l, 0
   br i1 %.not, label %bb.c, label %bb.b
 
@@ -436,7 +435,7 @@ bb.h:                                             ; preds = %_ZZN3fmt2v96detail1
   %.sroa.12.0..sroa_idx69 = getelementptr inbounds nuw i8, ptr %11, i64 24
   store i8 %.sroa.8.0.extract.trunc, ptr %.sroa.12.0..sroa_idx69, align 8
   %.sroa.13.0..sroa_idx79 = getelementptr inbounds nuw i8, ptr %11, i64 25
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.13.0..sroa_idx79, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.13, i64 7, i1 false)
+  store <7 x i8> %.sroa.13.sroa.0.0.copyload, ptr %.sroa.13.0..sroa_idx79, align 1
   call void @_ZN3fmt2v96detail4fillINS1_19truncating_iteratorIPcSt17integral_constantIbLb0EEEEcEET_S8_mRKNS1_6fill_tIT0_EE(ptr dead_on_unwind nonnull writable sret(%"class.fmt::v9::detail::truncating_iterator") align 8 %10, ptr noundef nonnull byval(%"class.fmt::v9::detail::truncating_iterator") align 8 %11, i64 noundef %i.m, ptr noundef nonnull align 1 dereferenceable(5) %i.n)
   %.sroa.034.0.copyload40 = load ptr, ptr %10, align 8
   %.sroa.10.0..sroa_idx51 = getelementptr inbounds nuw i8, ptr %10, i64 8
@@ -461,7 +460,7 @@ bb.i:                                             ; preds = %bb.h, %_ZZN3fmt2v96
   %.sroa.690.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i8 %.sroa.12.1, ptr %.sroa.690.0..sroa_idx, align 8
   %.sroa.791.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 25
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.791.0..sroa_idx, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.13, i64 7, i1 false)
+  store <7 x i8> %.sroa.13.sroa.0.0.copyload, ptr %.sroa.791.0..sroa_idx, align 1
   ret void
 }
 
@@ -864,7 +863,6 @@ _ZN3fmt2v919basic_memory_bufferIiLm500ESaIiEED2Ev.exit32: ; preds = %bb.f, %bb.n
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZN3fmt2v96detail12write_paddedILNS0_5align4typeE2ENS1_19truncating_iteratorIPcSt17integral_constantIbLb0EEEEcRZNS1_14do_write_floatIS9_NS1_9dragonbox10decimal_fpIdEEcNS1_14digit_groupingIcEEEET_SG_RKT0_RKNS0_18basic_format_specsIT1_EENS1_11float_specsENS1_10locale_refEEUlS9_E1_EESH_SH_SO_mmOT2_(ptr dead_on_unwind noalias writable sret(%"class.fmt::v9::detail::truncating_iterator") align 8 %0, ptr noundef byval(%"class.fmt::v9::detail::truncating_iterator") align 8 %1, ptr noundef nonnull align 4 dereferenceable(16) %2, i64 noundef %3, i64 noundef %4, ptr noundef nonnull align 8 dereferenceable(64) %5) local_unnamed_addr #3 comdat {
 bb.a:
-  %.sroa.13 = alloca [7 x i8], align 1            ; 3 uses
   %6 = alloca %"class.fmt::v9::detail::truncating_iterator", align 8 ; 4 uses
   %7 = alloca %"class.fmt::v9::detail::truncating_iterator", align 8 ; 11 uses
   %8 = alloca %"class.fmt::v9::detail::truncating_iterator", align 8 ; 7 uses
@@ -893,7 +891,7 @@ bb.a:
   %.sroa.12.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 24
   %.sroa.12.0.copyload = load i8, ptr %.sroa.12.0..sroa_idx, align 8 ; 2 uses
   %.sroa.13.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 25 ; 3 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.13, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.13.0..sroa_idx, i64 7, i1 false)
+  %.sroa.13.sroa.0.0.copyload = load <7 x i8>, ptr %.sroa.13.0..sroa_idx, align 1 ; 2 uses
   %.not = icmp eq i64 %i.l, 0
   br i1 %.not, label %bb.c, label %bb.b
 
@@ -1068,7 +1066,7 @@ bb.f:                                             ; preds = %_ZZN3fmt2v96detail1
   %.sroa.12.0..sroa_idx62 = getelementptr inbounds nuw i8, ptr %11, i64 24
   store i8 %.sroa.7.0.extract.trunc, ptr %.sroa.12.0..sroa_idx62, align 8
   %.sroa.13.0..sroa_idx72 = getelementptr inbounds nuw i8, ptr %11, i64 25
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.13.0..sroa_idx72, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.13, i64 7, i1 false)
+  store <7 x i8> %.sroa.13.sroa.0.0.copyload, ptr %.sroa.13.0..sroa_idx72, align 1
   call void @_ZN3fmt2v96detail4fillINS1_19truncating_iteratorIPcSt17integral_constantIbLb0EEEEcEET_S8_mRKNS1_6fill_tIT0_EE(ptr dead_on_unwind nonnull writable sret(%"class.fmt::v9::detail::truncating_iterator") align 8 %10, ptr noundef nonnull byval(%"class.fmt::v9::detail::truncating_iterator") align 8 %11, i64 noundef %i.m, ptr noundef nonnull align 1 dereferenceable(5) %i.n)
   %.sroa.027.0.copyload33 = load ptr, ptr %10, align 8
   %.sroa.10.0..sroa_idx44 = getelementptr inbounds nuw i8, ptr %10, i64 8
@@ -1093,7 +1091,7 @@ bb.g:                                             ; preds = %bb.f, %_ZZN3fmt2v96
   %.sroa.684.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i8 %.sroa.12.1, ptr %.sroa.684.0..sroa_idx, align 8
   %.sroa.785.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 25
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.785.0..sroa_idx, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.13, i64 7, i1 false)
+  store <7 x i8> %.sroa.13.sroa.0.0.copyload, ptr %.sroa.785.0..sroa_idx, align 1
   ret void
 }
 
@@ -1496,7 +1494,6 @@ _ZN3fmt2v96detail14write_exponentIcNS1_19truncating_iteratorIPcSt17integral_cons
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZN3fmt2v96detail12write_paddedILNS0_5align4typeE2ENS1_19truncating_iteratorIPcSt17integral_constantIbLb0EEEEcRZNS1_14do_write_floatIS9_NS1_9dragonbox10decimal_fpIfEEcNS1_14digit_groupingIcEEEET_SG_RKT0_RKNS0_18basic_format_specsIT1_EENS1_11float_specsENS1_10locale_refEEUlS9_E0_EESH_SH_SO_mmOT2_(ptr dead_on_unwind noalias writable sret(%"class.fmt::v9::detail::truncating_iterator") align 8 %0, ptr noundef byval(%"class.fmt::v9::detail::truncating_iterator") align 8 %1, ptr noundef nonnull align 4 dereferenceable(16) %2, i64 noundef %3, i64 noundef %4, ptr noundef nonnull align 8 dereferenceable(72) %5) local_unnamed_addr #3 comdat {
 bb.a:
-  %.sroa.13 = alloca [7 x i8], align 1            ; 3 uses
   %6 = alloca %"class.fmt::v9::detail::truncating_iterator", align 8 ; 4 uses
   %7 = alloca %"class.fmt::v9::detail::truncating_iterator", align 8 ; 11 uses
   %8 = alloca %"class.fmt::v9::detail::truncating_iterator", align 8 ; 7 uses
@@ -1525,7 +1522,7 @@ bb.a:
   %.sroa.12.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 24
   %.sroa.12.0.copyload = load i8, ptr %.sroa.12.0..sroa_idx, align 8 ; 2 uses
   %.sroa.13.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 25 ; 3 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.13, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.13.0..sroa_idx, i64 7, i1 false)
+  %.sroa.13.sroa.0.0.copyload = load <7 x i8>, ptr %.sroa.13.0..sroa_idx, align 1 ; 2 uses
   %.not = icmp eq i64 %i.l, 0
   br i1 %.not, label %bb.c, label %bb.b
 
@@ -1728,7 +1725,7 @@ bb.h:                                             ; preds = %_ZZN3fmt2v96detail1
   %.sroa.12.0..sroa_idx69 = getelementptr inbounds nuw i8, ptr %11, i64 24
   store i8 %.sroa.8.0.extract.trunc, ptr %.sroa.12.0..sroa_idx69, align 8
   %.sroa.13.0..sroa_idx79 = getelementptr inbounds nuw i8, ptr %11, i64 25
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.13.0..sroa_idx79, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.13, i64 7, i1 false)
+  store <7 x i8> %.sroa.13.sroa.0.0.copyload, ptr %.sroa.13.0..sroa_idx79, align 1
   call void @_ZN3fmt2v96detail4fillINS1_19truncating_iteratorIPcSt17integral_constantIbLb0EEEEcEET_S8_mRKNS1_6fill_tIT0_EE(ptr dead_on_unwind nonnull writable sret(%"class.fmt::v9::detail::truncating_iterator") align 8 %10, ptr noundef nonnull byval(%"class.fmt::v9::detail::truncating_iterator") align 8 %11, i64 noundef %i.m, ptr noundef nonnull align 1 dereferenceable(5) %i.n)
   %.sroa.034.0.copyload40 = load ptr, ptr %10, align 8
   %.sroa.10.0..sroa_idx51 = getelementptr inbounds nuw i8, ptr %10, i64 8
@@ -1753,7 +1750,7 @@ bb.i:                                             ; preds = %bb.h, %_ZZN3fmt2v96
   %.sroa.690.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i8 %.sroa.12.1, ptr %.sroa.690.0..sroa_idx, align 8
   %.sroa.791.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 25
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.791.0..sroa_idx, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.13, i64 7, i1 false)
+  store <7 x i8> %.sroa.13.sroa.0.0.copyload, ptr %.sroa.791.0..sroa_idx, align 1
   ret void
 }
 
@@ -2088,7 +2085,6 @@ bb.p:                                             ; preds = %_ZN3fmt2v919basic_m
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZN3fmt2v96detail12write_paddedILNS0_5align4typeE2ENS1_19truncating_iteratorIPcSt17integral_constantIbLb0EEEEcRZNS1_14do_write_floatIS9_NS1_9dragonbox10decimal_fpIfEEcNS1_14digit_groupingIcEEEET_SG_RKT0_RKNS0_18basic_format_specsIT1_EENS1_11float_specsENS1_10locale_refEEUlS9_E1_EESH_SH_SO_mmOT2_(ptr dead_on_unwind noalias writable sret(%"class.fmt::v9::detail::truncating_iterator") align 8 %0, ptr noundef byval(%"class.fmt::v9::detail::truncating_iterator") align 8 %1, ptr noundef nonnull align 4 dereferenceable(16) %2, i64 noundef %3, i64 noundef %4, ptr noundef nonnull align 8 dereferenceable(64) %5) local_unnamed_addr #3 comdat {
 bb.a:
-  %.sroa.13 = alloca [7 x i8], align 1            ; 3 uses
   %6 = alloca %"class.fmt::v9::detail::truncating_iterator", align 8 ; 4 uses
   %7 = alloca %"class.fmt::v9::detail::truncating_iterator", align 8 ; 11 uses
   %8 = alloca %"class.fmt::v9::detail::truncating_iterator", align 8 ; 7 uses
@@ -2117,7 +2113,7 @@ bb.a:
   %.sroa.12.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 24
   %.sroa.12.0.copyload = load i8, ptr %.sroa.12.0..sroa_idx, align 8 ; 2 uses
   %.sroa.13.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 25 ; 3 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.13, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.13.0..sroa_idx, i64 7, i1 false)
+  %.sroa.13.sroa.0.0.copyload = load <7 x i8>, ptr %.sroa.13.0..sroa_idx, align 1 ; 2 uses
   %.not = icmp eq i64 %i.l, 0
   br i1 %.not, label %bb.c, label %bb.b
 
@@ -2292,7 +2288,7 @@ bb.f:                                             ; preds = %_ZZN3fmt2v96detail1
   %.sroa.12.0..sroa_idx62 = getelementptr inbounds nuw i8, ptr %11, i64 24
   store i8 %.sroa.7.0.extract.trunc, ptr %.sroa.12.0..sroa_idx62, align 8
   %.sroa.13.0..sroa_idx72 = getelementptr inbounds nuw i8, ptr %11, i64 25
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.13.0..sroa_idx72, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.13, i64 7, i1 false)
+  store <7 x i8> %.sroa.13.sroa.0.0.copyload, ptr %.sroa.13.0..sroa_idx72, align 1
   call void @_ZN3fmt2v96detail4fillINS1_19truncating_iteratorIPcSt17integral_constantIbLb0EEEEcEET_S8_mRKNS1_6fill_tIT0_EE(ptr dead_on_unwind nonnull writable sret(%"class.fmt::v9::detail::truncating_iterator") align 8 %10, ptr noundef nonnull byval(%"class.fmt::v9::detail::truncating_iterator") align 8 %11, i64 noundef %i.m, ptr noundef nonnull align 1 dereferenceable(5) %i.n)
   %.sroa.027.0.copyload33 = load ptr, ptr %10, align 8
   %.sroa.10.0..sroa_idx44 = getelementptr inbounds nuw i8, ptr %10, i64 8
@@ -2317,7 +2313,7 @@ bb.g:                                             ; preds = %bb.f, %_ZZN3fmt2v96
   %.sroa.684.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i8 %.sroa.12.1, ptr %.sroa.684.0..sroa_idx, align 8
   %.sroa.785.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 25
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.785.0..sroa_idx, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.13, i64 7, i1 false)
+  store <7 x i8> %.sroa.13.sroa.0.0.copyload, ptr %.sroa.785.0..sroa_idx, align 1
   ret void
 }
 

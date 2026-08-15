@@ -204,11 +204,6 @@ define dso_local void @_ZN9ClientMap9renderMapEPN5video12IVideoDriverEi(ptr noun
   %i.c = alloca i64, align 8                      ; 5 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %i.d = alloca i64, align 8                      ; 5 uses
-  %.sroa.03.i.i22.i.i.i.i = alloca [16 x i8], align 8 ; 4 uses
-  %.sroa.0.i23.i.i.i.i = alloca [16 x i8], align 8 ; 4 uses
-  %.sroa.03.i.i12.i.i.i.i = alloca [16 x i8], align 8 ; 4 uses
-  %.sroa.03.i.i.i.i.i.i = alloca [16 x i8], align 8 ; 4 uses
-  %.sroa.0.i.i.i.i.i = alloca [16 x i8], align 8  ; 4 uses
   %i.e = alloca i64, align 8                      ; 5 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 16 uses
@@ -611,8 +606,7 @@ bb.aq:                                            ; preds = %bb.as, %.lr.ph.i.i.
   br i1 %i.mu, label %.lr.ph.preheader.i.i.i.i.i.i.i.i.i.i, label %bb.ar
 
 .lr.ph.preheader.i.i.i.i.i.i.i.i.i.i:             ; preds = %bb.aq
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i.i.i.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.08.020.i.ptr.i.i.i.i, i64 16, i1 false)
+  %.sroa.0.i.i.i.i.i.sroa.0.0.copyload = load <16 x i8>, ptr %.sroa.08.020.i.ptr.i.i.i.i, align 8
   %i.mv = getelementptr inbounds nuw i8, ptr %.pn19.i.i.i.i.i, i64 48
   %i.mw = udiv exact i64 %.sroa.08.020.i.idx.i.i.i.i, 24 ; 2 uses
   %i.mx = and i64 %indvar, 1
@@ -660,14 +654,13 @@ bb.aq:                                            ; preds = %bb.as, %.lr.ph.i.i.
   br i1 %i.nq, label %.lr.ph.i.i.i.i.i.i.i.i.i.i, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEESE_ET0_T_SG_SF_.exit.i.i.i.i.i, !llvm.loop !534
 
 _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEESE_ET0_T_SG_SF_.exit.i.i.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i.i.i.prol.loopexit
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0207.1.i, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0.i.i.i.i.i, i64 12, i1 false), !tbaa.struct !533
+  %.sroa.0.i.i.i.i.i.sroa.0.0.vec.extract = shufflevector <16 x i8> %.sroa.0.i.i.i.i.i.sroa.0.0.copyload, <16 x i8> poison, <12 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11>
+  store <12 x i8> %.sroa.0.i.i.i.i.i.sroa.0.0.vec.extract, ptr %.sroa.0207.1.i, align 8
   store ptr %.val.i.i.i.i.i.i, ptr %i.ms, align 8, !tbaa !531
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i.i.i.i)
   br label %bb.as
 
 bb.ar:                                            ; preds = %bb.aq
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.03.i.i.i.i.i.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.03.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.08.020.i.ptr.i.i.i.i, i64 16, i1 false)
+  %.sroa.03.i.i.i.i.i.i.sroa.0.0.copyload = load <16 x i8>, ptr %.sroa.08.020.i.ptr.i.i.i.i, align 8
   %i.nr = getelementptr i8, ptr %.pn19.i.i.i.i.i, i64 16
   %.val2.i7.i.i.i.i.i.i = load ptr, ptr %i.nr, align 8, !tbaa !531 ; 2 uses
   %i.ns = icmp ult ptr %.val.i.i.i.i.i.i, %.val2.i7.i.i.i.i.i.i
@@ -687,10 +680,10 @@ bb.ar:                                            ; preds = %bb.aq
 
 "_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEENS0_5__ops14_Val_comp_iterIZL27transformBuffersToDrawOrderIZN9ClientMap9renderMapEPN5video12IVideoDriverEiE3$_0EjRKSB_IS2_INS4_IsEES8_ESaISO_EERSB_IN12_GLOBAL__N_114DrawDescriptorESaISU_EET_RSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE16CachedMeshBufferSt4hashIS15_ESt8equal_toIS15_ESaIS2_IKS15_S16_EEEEUlRKSY_RKT0_E_EEEvSY_S1I_.exit.i.i.i.i.i": ; preds = %.lr.ph.i.i.i.i.i.i, %bb.ar
   %.sroa.04.0.lcssa.i.i.i.i.i.i = phi ptr [ %.sroa.08.020.i.ptr.i.i.i.i, %bb.ar ], [ %.sroa.0.0.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i ] ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %.sroa.04.0.lcssa.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.03.i.i.i.i.i.i, i64 12, i1 false), !tbaa.struct !533
+  %.sroa.03.i.i.i.i.i.i.sroa.0.0.vec.extract = shufflevector <16 x i8> %.sroa.03.i.i.i.i.i.i.sroa.0.0.copyload, <16 x i8> poison, <12 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11>
+  store <12 x i8> %.sroa.03.i.i.i.i.i.i.sroa.0.0.vec.extract, ptr %.sroa.04.0.lcssa.i.i.i.i.i.i, align 8
   %24 = getelementptr inbounds nuw i8, ptr %.sroa.04.0.lcssa.i.i.i.i.i.i, i64 16
   store ptr %.val.i.i.i.i.i.i, ptr %24, align 8, !tbaa !531
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.03.i.i.i.i.i.i)
   br label %bb.as
 
 bb.as:                                            ; preds = %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEENS0_5__ops14_Val_comp_iterIZL27transformBuffersToDrawOrderIZN9ClientMap9renderMapEPN5video12IVideoDriverEiE3$_0EjRKSB_IS2_INS4_IsEES8_ESaISO_EERSB_IN12_GLOBAL__N_114DrawDescriptorESaISU_EET_RSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE16CachedMeshBufferSt4hashIS15_ESt8equal_toIS15_ESaIS2_IKS15_S16_EEEEUlRKSY_RKT0_E_EEEvSY_S1I_.exit.i.i.i.i.i", %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEESE_ET0_T_SG_SF_.exit.i.i.i.i.i
@@ -706,8 +699,7 @@ bb.as:                                            ; preds = %"_ZSt25__unguarded_
 
 .lr.ph.i13.i.i.i.i:                               ; preds = %"_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEENS0_5__ops15_Iter_comp_iterIZL27transformBuffersToDrawOrderIZN9ClientMap9renderMapEPN5video12IVideoDriverEiE3$_0EjRKSB_IS2_INS4_IsEES8_ESaISO_EERSB_IN12_GLOBAL__N_114DrawDescriptorESaISU_EET_RSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE16CachedMeshBufferSt4hashIS15_ESt8equal_toIS15_ESaIS2_IKS15_S16_EEEEUlRKSY_RKT0_E_EEEvSY_SY_S1I_.exit.i.i.i.i", %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEENS0_5__ops14_Val_comp_iterIZL27transformBuffersToDrawOrderIZN9ClientMap9renderMapEPN5video12IVideoDriverEiE3$_0EjRKSB_IS2_INS4_IsEES8_ESaISO_EERSB_IN12_GLOBAL__N_114DrawDescriptorESaISU_EET_RSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE16CachedMeshBufferSt4hashIS15_ESt8equal_toIS15_ESaIS2_IKS15_S16_EEEEUlRKSY_RKT0_E_EEEvSY_S1I_.exit.i15.i.i.i.i"
   %.sroa.0.07.i.i.i.i.i = phi ptr [ %i.oe, %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEENS0_5__ops14_Val_comp_iterIZL27transformBuffersToDrawOrderIZN9ClientMap9renderMapEPN5video12IVideoDriverEiE3$_0EjRKSB_IS2_INS4_IsEES8_ESaISO_EERSB_IN12_GLOBAL__N_114DrawDescriptorESaISU_EET_RSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE16CachedMeshBufferSt4hashIS15_ESt8equal_toIS15_ESaIS2_IKS15_S16_EEEEUlRKSY_RKT0_E_EEEvSY_S1I_.exit.i15.i.i.i.i" ], [ %i.nx, %"_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEENS0_5__ops15_Iter_comp_iterIZL27transformBuffersToDrawOrderIZN9ClientMap9renderMapEPN5video12IVideoDriverEiE3$_0EjRKSB_IS2_INS4_IsEES8_ESaISO_EERSB_IN12_GLOBAL__N_114DrawDescriptorESaISU_EET_RSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE16CachedMeshBufferSt4hashIS15_ESt8equal_toIS15_ESaIS2_IKS15_S16_EEEEUlRKSY_RKT0_E_EEEvSY_SY_S1I_.exit.i.i.i.i" ] ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.03.i.i12.i.i.i.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.03.i.i12.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.07.i.i.i.i.i, i64 16, i1 false)
+  %.sroa.03.i.i12.i.i.i.i.sroa.0.0.copyload = load <16 x i8>, ptr %.sroa.0.07.i.i.i.i.i, align 8
   %.sroa.4.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.07.i.i.i.i.i, i64 16
   %.sroa.4.0.copyload.i.i.i.i.i.i = load ptr, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i.i, align 8 ; 3 uses
   %i.ny = getelementptr i8, ptr %.sroa.0.07.i.i.i.i.i, i64 -8
@@ -729,10 +721,10 @@ bb.as:                                            ; preds = %"_ZSt25__unguarded_
 
 "_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEENS0_5__ops14_Val_comp_iterIZL27transformBuffersToDrawOrderIZN9ClientMap9renderMapEPN5video12IVideoDriverEiE3$_0EjRKSB_IS2_INS4_IsEES8_ESaISO_EERSB_IN12_GLOBAL__N_114DrawDescriptorESaISU_EET_RSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE16CachedMeshBufferSt4hashIS15_ESt8equal_toIS15_ESaIS2_IKS15_S16_EEEEUlRKSY_RKT0_E_EEEvSY_S1I_.exit.i15.i.i.i.i": ; preds = %.lr.ph.i.i18.i.i.i.i, %.lr.ph.i13.i.i.i.i
   %.sroa.04.0.lcssa.i.i16.i.i.i.i = phi ptr [ %.sroa.0.07.i.i.i.i.i, %.lr.ph.i13.i.i.i.i ], [ %.sroa.0.0.i.i20.i.i.i.i, %.lr.ph.i.i18.i.i.i.i ] ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %.sroa.04.0.lcssa.i.i16.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.03.i.i12.i.i.i.i, i64 12, i1 false), !tbaa.struct !533
+  %.sroa.03.i.i12.i.i.i.i.sroa.0.0.vec.extract = shufflevector <16 x i8> %.sroa.03.i.i12.i.i.i.i.sroa.0.0.copyload, <16 x i8> poison, <12 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11>
+  store <12 x i8> %.sroa.03.i.i12.i.i.i.i.sroa.0.0.vec.extract, ptr %.sroa.04.0.lcssa.i.i16.i.i.i.i, align 8
   %25 = getelementptr inbounds nuw i8, ptr %.sroa.04.0.lcssa.i.i16.i.i.i.i, i64 16
   store ptr %.sroa.4.0.copyload.i.i.i.i.i.i, ptr %25, align 8, !tbaa !531
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.03.i.i12.i.i.i.i)
   %i.oe = getelementptr inbounds nuw i8, ptr %.sroa.0.07.i.i.i.i.i, i64 24 ; 2 uses
   %.not.i17.i.i.i.i = icmp eq ptr %i.oe, %.sroa.13.1.i
   br i1 %.not.i17.i.i.i.i, label %"_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEEZL27transformBuffersToDrawOrderIZN9ClientMap9renderMapEPN5video12IVideoDriverEiE3$_0EjRKSB_IS2_INS4_IsEES8_ESaISM_EERSB_IN12_GLOBAL__N_114DrawDescriptorESaISS_EET_RSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE16CachedMeshBufferSt4hashIS13_ESt8equal_toIS13_ESaIS2_IKS13_S14_EEEEUlRKSW_RKT0_E_EvSW_SW_S1G_.exit.i", label %.lr.ph.i13.i.i.i.i, !llvm.loop !537
@@ -756,8 +748,7 @@ bb.at:                                            ; preds = %bb.aw, %.lr.ph.i27.
   br i1 %i.oh, label %bb.au, label %bb.av
 
 bb.au:                                            ; preds = %bb.at
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i23.i.i.i.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i23.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.08.020.i28.i.i.i.i, i64 16, i1 false)
+  %.sroa.0.i23.i.i.i.i.sroa.0.0.copyload = load <16 x i8>, ptr %.sroa.08.020.i28.i.i.i.i, align 8
   %i.oi = ptrtoint ptr %.sroa.08.020.i28.i.i.i.i to i64
   %i.oj = sub i64 %i.oi, %i.ml                    ; 2 uses
   %i.ok = icmp sgt i64 %i.oj, 0
@@ -784,14 +775,13 @@ bb.au:                                            ; preds = %bb.at
   br i1 %i.ot, label %.lr.ph.i.i.i.i.i.i43.i.i.i.i, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEESE_ET0_T_SG_SF_.exit.i41.i.i.i.i, !llvm.loop !534
 
 _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEESE_ET0_T_SG_SF_.exit.i41.i.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i43.i.i.i.i, %bb.au
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0207.1.i, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0.i23.i.i.i.i, i64 12, i1 false), !tbaa.struct !533
+  %.sroa.0.i23.i.i.i.i.sroa.0.0.vec.extract = shufflevector <16 x i8> %.sroa.0.i23.i.i.i.i.sroa.0.0.copyload, <16 x i8> poison, <12 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11>
+  store <12 x i8> %.sroa.0.i23.i.i.i.i.sroa.0.0.vec.extract, ptr %.sroa.0207.1.i, align 8
   store ptr %.val.i.i30.i.i.i.i, ptr %i.of, align 8, !tbaa !531
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i23.i.i.i.i)
   br label %bb.aw
 
 bb.av:                                            ; preds = %bb.at
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.03.i.i22.i.i.i.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.03.i.i22.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.08.020.i28.i.i.i.i, i64 16, i1 false)
+  %.sroa.03.i.i22.i.i.i.i.sroa.0.0.copyload = load <16 x i8>, ptr %.sroa.08.020.i28.i.i.i.i, align 8
   %i.ou = getelementptr i8, ptr %.pn19.i29.i.i.i.i, i64 16
   %.val2.i7.i.i32.i.i.i.i = load ptr, ptr %i.ou, align 8, !tbaa !531 ; 2 uses
   %i.ov = icmp ult ptr %.val.i.i30.i.i.i.i, %.val2.i7.i.i32.i.i.i.i
@@ -811,10 +801,10 @@ bb.av:                                            ; preds = %bb.at
 
 "_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEENS0_5__ops14_Val_comp_iterIZL27transformBuffersToDrawOrderIZN9ClientMap9renderMapEPN5video12IVideoDriverEiE3$_0EjRKSB_IS2_INS4_IsEES8_ESaISO_EERSB_IN12_GLOBAL__N_114DrawDescriptorESaISU_EET_RSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE16CachedMeshBufferSt4hashIS15_ESt8equal_toIS15_ESaIS2_IKS15_S16_EEEEUlRKSY_RKT0_E_EEEvSY_S1I_.exit.i33.i.i.i.i": ; preds = %.lr.ph.i.i37.i.i.i.i, %bb.av
   %.sroa.04.0.lcssa.i.i34.i.i.i.i = phi ptr [ %.sroa.08.020.i28.i.i.i.i, %bb.av ], [ %.sroa.0.0.i.i39.i.i.i.i, %.lr.ph.i.i37.i.i.i.i ] ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %.sroa.04.0.lcssa.i.i34.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.03.i.i22.i.i.i.i, i64 12, i1 false), !tbaa.struct !533
+  %.sroa.03.i.i22.i.i.i.i.sroa.0.0.vec.extract = shufflevector <16 x i8> %.sroa.03.i.i22.i.i.i.i.sroa.0.0.copyload, <16 x i8> poison, <12 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11>
+  store <12 x i8> %.sroa.03.i.i22.i.i.i.i.sroa.0.0.vec.extract, ptr %.sroa.04.0.lcssa.i.i34.i.i.i.i, align 8
   %26 = getelementptr inbounds nuw i8, ptr %.sroa.04.0.lcssa.i.i34.i.i.i.i, i64 16
   store ptr %.val.i.i30.i.i.i.i, ptr %26, align 8, !tbaa !531
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.03.i.i22.i.i.i.i)
   br label %bb.aw
 
 bb.aw:                                            ; preds = %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEENS0_5__ops14_Val_comp_iterIZL27transformBuffersToDrawOrderIZN9ClientMap9renderMapEPN5video12IVideoDriverEiE3$_0EjRKSB_IS2_INS4_IsEES8_ESaISO_EERSB_IN12_GLOBAL__N_114DrawDescriptorESaISU_EET_RSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE16CachedMeshBufferSt4hashIS15_ESt8equal_toIS15_ESaIS2_IKS15_S16_EEEEUlRKSY_RKT0_E_EEEvSY_S1I_.exit.i33.i.i.i.i", %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEESE_ET0_T_SG_SF_.exit.i41.i.i.i.i
@@ -1217,11 +1207,6 @@ define dso_local void @_ZN9ClientMap16renderMapShadowsEPN5video12IVideoDriverESt
   %6 = alloca %"struct.std::_Hashtable<std::__cxx11::basic_string<char>, std::pair<const std::__cxx11::basic_string<char>, CachedMeshBuffer>, std::allocator<std::pair<const std::__cxx11::basic_string<char>, CachedMeshBuffer>>, std::__detail::_Select1st, std::equal_to<std::__cxx11::basic_string<char>>, std::hash<std::__cxx11::basic_string<char>>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<true, false, true>>::_Scoped_node", align 8 ; 6 uses
   %i.b = alloca i8, align 1                       ; 4 uses
   %i.c = alloca i64, align 8                      ; 5 uses
-  %.sroa.03.i.i22.i.i.i.i = alloca [16 x i8], align 8 ; 4 uses
-  %.sroa.0.i23.i.i.i.i = alloca [16 x i8], align 8 ; 4 uses
-  %.sroa.03.i.i12.i.i.i.i = alloca [16 x i8], align 8 ; 4 uses
-  %.sroa.03.i.i.i.i.i.i = alloca [16 x i8], align 8 ; 4 uses
-  %.sroa.0.i.i.i.i.i = alloca [16 x i8], align 8  ; 4 uses
   %i.d = alloca i64, align 8                      ; 5 uses
   %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   %i.e = alloca ptr, align 8                      ; 5 uses
@@ -1624,8 +1609,7 @@ bb.z:                                             ; preds = %bb.ab, %.lr.ph.i.i.
   br i1 %i.il, label %.lr.ph.preheader.i.i.i.i.i.i.i.i.i.i, label %bb.aa
 
 .lr.ph.preheader.i.i.i.i.i.i.i.i.i.i:             ; preds = %bb.z
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i.i.i.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.08.020.i.ptr.i.i.i.i, i64 16, i1 false)
+  %.sroa.0.i.i.i.i.i.sroa.0.0.copyload = load <16 x i8>, ptr %.sroa.08.020.i.ptr.i.i.i.i, align 8
   %i.im = getelementptr inbounds nuw i8, ptr %.pn19.i.i.i.i.i, i64 48
   %i.in = udiv exact i64 %.sroa.08.020.i.idx.i.i.i.i, 24 ; 2 uses
   %i.io = and i64 %indvar, 1
@@ -1673,14 +1657,13 @@ bb.z:                                             ; preds = %bb.ab, %.lr.ph.i.i.
   br i1 %i.jh, label %.lr.ph.i.i.i.i.i.i.i.i.i.i, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEESE_ET0_T_SG_SF_.exit.i.i.i.i.i, !llvm.loop !534
 
 _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEESE_ET0_T_SG_SF_.exit.i.i.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i.i.i.prol.loopexit
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0198.1.i, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0.i.i.i.i.i, i64 12, i1 false), !tbaa.struct !533
+  %.sroa.0.i.i.i.i.i.sroa.0.0.vec.extract = shufflevector <16 x i8> %.sroa.0.i.i.i.i.i.sroa.0.0.copyload, <16 x i8> poison, <12 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11>
+  store <12 x i8> %.sroa.0.i.i.i.i.i.sroa.0.0.vec.extract, ptr %.sroa.0198.1.i, align 8
   store ptr %.val.i.i.i.i.i.i, ptr %i.ij, align 8, !tbaa !531
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i.i.i.i)
   br label %bb.ab
 
 bb.aa:                                            ; preds = %bb.z
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.03.i.i.i.i.i.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.03.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.08.020.i.ptr.i.i.i.i, i64 16, i1 false)
+  %.sroa.03.i.i.i.i.i.i.sroa.0.0.copyload = load <16 x i8>, ptr %.sroa.08.020.i.ptr.i.i.i.i, align 8
   %i.ji = getelementptr i8, ptr %.pn19.i.i.i.i.i, i64 16
   %.val2.i7.i.i.i.i.i.i = load ptr, ptr %i.ji, align 8, !tbaa !531 ; 2 uses
   %i.jj = icmp ult ptr %.val.i.i.i.i.i.i, %.val2.i7.i.i.i.i.i.i
@@ -1700,10 +1683,10 @@ bb.aa:                                            ; preds = %bb.z
 
 "_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEENS0_5__ops14_Val_comp_iterIZL27transformBuffersToDrawOrderIZN9ClientMap16renderMapShadowsEPN5video12IVideoDriverESt8functionIFvRNSJ_9SMaterialEbEEiiiE3$_0EjRKSB_IS2_INS4_IsEES8_ESaIST_EERSB_IN12_GLOBAL__N_114DrawDescriptorESaISZ_EET_RSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE16CachedMeshBufferSt4hashIS1A_ESt8equal_toIS1A_ESaIS2_IKS1A_S1B_EEEEUlRKS13_RKT0_E_EEEvS13_S1N_.exit.i.i.i.i.i": ; preds = %.lr.ph.i.i.i.i.i.i, %bb.aa
   %.sroa.04.0.lcssa.i.i.i.i.i.i = phi ptr [ %.sroa.08.020.i.ptr.i.i.i.i, %bb.aa ], [ %.sroa.0.0.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i ] ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %.sroa.04.0.lcssa.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.03.i.i.i.i.i.i, i64 12, i1 false), !tbaa.struct !533
+  %.sroa.03.i.i.i.i.i.i.sroa.0.0.vec.extract = shufflevector <16 x i8> %.sroa.03.i.i.i.i.i.i.sroa.0.0.copyload, <16 x i8> poison, <12 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11>
+  store <12 x i8> %.sroa.03.i.i.i.i.i.i.sroa.0.0.vec.extract, ptr %.sroa.04.0.lcssa.i.i.i.i.i.i, align 8
   %23 = getelementptr inbounds nuw i8, ptr %.sroa.04.0.lcssa.i.i.i.i.i.i, i64 16
   store ptr %.val.i.i.i.i.i.i, ptr %23, align 8, !tbaa !531
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.03.i.i.i.i.i.i)
   br label %bb.ab
 
 bb.ab:                                            ; preds = %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEENS0_5__ops14_Val_comp_iterIZL27transformBuffersToDrawOrderIZN9ClientMap16renderMapShadowsEPN5video12IVideoDriverESt8functionIFvRNSJ_9SMaterialEbEEiiiE3$_0EjRKSB_IS2_INS4_IsEES8_ESaIST_EERSB_IN12_GLOBAL__N_114DrawDescriptorESaISZ_EET_RSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE16CachedMeshBufferSt4hashIS1A_ESt8equal_toIS1A_ESaIS2_IKS1A_S1B_EEEEUlRKS13_RKT0_E_EEEvS13_S1N_.exit.i.i.i.i.i", %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEESE_ET0_T_SG_SF_.exit.i.i.i.i.i
@@ -1719,8 +1702,7 @@ bb.ab:                                            ; preds = %"_ZSt25__unguarded_
 
 .lr.ph.i13.i.i.i.i:                               ; preds = %"_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEENS0_5__ops15_Iter_comp_iterIZL27transformBuffersToDrawOrderIZN9ClientMap16renderMapShadowsEPN5video12IVideoDriverESt8functionIFvRNSJ_9SMaterialEbEEiiiE3$_0EjRKSB_IS2_INS4_IsEES8_ESaIST_EERSB_IN12_GLOBAL__N_114DrawDescriptorESaISZ_EET_RSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE16CachedMeshBufferSt4hashIS1A_ESt8equal_toIS1A_ESaIS2_IKS1A_S1B_EEEEUlRKS13_RKT0_E_EEEvS13_S13_S1N_.exit.i.i.i.i", %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEENS0_5__ops14_Val_comp_iterIZL27transformBuffersToDrawOrderIZN9ClientMap16renderMapShadowsEPN5video12IVideoDriverESt8functionIFvRNSJ_9SMaterialEbEEiiiE3$_0EjRKSB_IS2_INS4_IsEES8_ESaIST_EERSB_IN12_GLOBAL__N_114DrawDescriptorESaISZ_EET_RSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE16CachedMeshBufferSt4hashIS1A_ESt8equal_toIS1A_ESaIS2_IKS1A_S1B_EEEEUlRKS13_RKT0_E_EEEvS13_S1N_.exit.i15.i.i.i.i"
   %.sroa.0.07.i.i.i.i.i = phi ptr [ %i.jv, %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEENS0_5__ops14_Val_comp_iterIZL27transformBuffersToDrawOrderIZN9ClientMap16renderMapShadowsEPN5video12IVideoDriverESt8functionIFvRNSJ_9SMaterialEbEEiiiE3$_0EjRKSB_IS2_INS4_IsEES8_ESaIST_EERSB_IN12_GLOBAL__N_114DrawDescriptorESaISZ_EET_RSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE16CachedMeshBufferSt4hashIS1A_ESt8equal_toIS1A_ESaIS2_IKS1A_S1B_EEEEUlRKS13_RKT0_E_EEEvS13_S1N_.exit.i15.i.i.i.i" ], [ %i.jo, %"_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEENS0_5__ops15_Iter_comp_iterIZL27transformBuffersToDrawOrderIZN9ClientMap16renderMapShadowsEPN5video12IVideoDriverESt8functionIFvRNSJ_9SMaterialEbEEiiiE3$_0EjRKSB_IS2_INS4_IsEES8_ESaIST_EERSB_IN12_GLOBAL__N_114DrawDescriptorESaISZ_EET_RSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE16CachedMeshBufferSt4hashIS1A_ESt8equal_toIS1A_ESaIS2_IKS1A_S1B_EEEEUlRKS13_RKT0_E_EEEvS13_S13_S1N_.exit.i.i.i.i" ] ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.03.i.i12.i.i.i.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.03.i.i12.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.07.i.i.i.i.i, i64 16, i1 false)
+  %.sroa.03.i.i12.i.i.i.i.sroa.0.0.copyload = load <16 x i8>, ptr %.sroa.0.07.i.i.i.i.i, align 8
   %.sroa.4.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.07.i.i.i.i.i, i64 16
   %.sroa.4.0.copyload.i.i.i.i.i.i = load ptr, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i.i, align 8 ; 3 uses
   %i.jp = getelementptr i8, ptr %.sroa.0.07.i.i.i.i.i, i64 -8
@@ -1742,10 +1724,10 @@ bb.ab:                                            ; preds = %"_ZSt25__unguarded_
 
 "_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEENS0_5__ops14_Val_comp_iterIZL27transformBuffersToDrawOrderIZN9ClientMap16renderMapShadowsEPN5video12IVideoDriverESt8functionIFvRNSJ_9SMaterialEbEEiiiE3$_0EjRKSB_IS2_INS4_IsEES8_ESaIST_EERSB_IN12_GLOBAL__N_114DrawDescriptorESaISZ_EET_RSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE16CachedMeshBufferSt4hashIS1A_ESt8equal_toIS1A_ESaIS2_IKS1A_S1B_EEEEUlRKS13_RKT0_E_EEEvS13_S1N_.exit.i15.i.i.i.i": ; preds = %.lr.ph.i.i18.i.i.i.i, %.lr.ph.i13.i.i.i.i
   %.sroa.04.0.lcssa.i.i16.i.i.i.i = phi ptr [ %.sroa.0.07.i.i.i.i.i, %.lr.ph.i13.i.i.i.i ], [ %.sroa.0.0.i.i20.i.i.i.i, %.lr.ph.i.i18.i.i.i.i ] ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %.sroa.04.0.lcssa.i.i16.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.03.i.i12.i.i.i.i, i64 12, i1 false), !tbaa.struct !533
+  %.sroa.03.i.i12.i.i.i.i.sroa.0.0.vec.extract = shufflevector <16 x i8> %.sroa.03.i.i12.i.i.i.i.sroa.0.0.copyload, <16 x i8> poison, <12 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11>
+  store <12 x i8> %.sroa.03.i.i12.i.i.i.i.sroa.0.0.vec.extract, ptr %.sroa.04.0.lcssa.i.i16.i.i.i.i, align 8
   %24 = getelementptr inbounds nuw i8, ptr %.sroa.04.0.lcssa.i.i16.i.i.i.i, i64 16
   store ptr %.sroa.4.0.copyload.i.i.i.i.i.i, ptr %24, align 8, !tbaa !531
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.03.i.i12.i.i.i.i)
   %i.jv = getelementptr inbounds nuw i8, ptr %.sroa.0.07.i.i.i.i.i, i64 24 ; 2 uses
   %.not.i17.i.i.i.i = icmp eq ptr %i.jv, %.sroa.13.1.i
   br i1 %.not.i17.i.i.i.i, label %"_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEEZL27transformBuffersToDrawOrderIZN9ClientMap16renderMapShadowsEPN5video12IVideoDriverESt8functionIFvRNSH_9SMaterialEbEEiiiE3$_0EjRKSB_IS2_INS4_IsEES8_ESaISR_EERSB_IN12_GLOBAL__N_114DrawDescriptorESaISX_EET_RSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE16CachedMeshBufferSt4hashIS18_ESt8equal_toIS18_ESaIS2_IKS18_S19_EEEEUlRKS11_RKT0_E_EvS11_S11_S1L_.exit.i", label %.lr.ph.i13.i.i.i.i, !llvm.loop !869
@@ -1769,8 +1751,7 @@ bb.ac:                                            ; preds = %bb.af, %.lr.ph.i27.
   br i1 %i.jy, label %bb.ad, label %bb.ae
 
 bb.ad:                                            ; preds = %bb.ac
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i23.i.i.i.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i23.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.08.020.i28.i.i.i.i, i64 16, i1 false)
+  %.sroa.0.i23.i.i.i.i.sroa.0.0.copyload = load <16 x i8>, ptr %.sroa.08.020.i28.i.i.i.i, align 8
   %i.jz = ptrtoint ptr %.sroa.08.020.i28.i.i.i.i to i64
   %i.ka = sub i64 %i.jz, %i.ic                    ; 2 uses
   %i.kb = icmp sgt i64 %i.ka, 0
@@ -1797,14 +1778,13 @@ bb.ad:                                            ; preds = %bb.ac
   br i1 %i.kk, label %.lr.ph.i.i.i.i.i.i43.i.i.i.i, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEESE_ET0_T_SG_SF_.exit.i41.i.i.i.i, !llvm.loop !534
 
 _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEESE_ET0_T_SG_SF_.exit.i41.i.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i43.i.i.i.i, %bb.ad
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0198.1.i, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0.i23.i.i.i.i, i64 12, i1 false), !tbaa.struct !533
+  %.sroa.0.i23.i.i.i.i.sroa.0.0.vec.extract = shufflevector <16 x i8> %.sroa.0.i23.i.i.i.i.sroa.0.0.copyload, <16 x i8> poison, <12 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11>
+  store <12 x i8> %.sroa.0.i23.i.i.i.i.sroa.0.0.vec.extract, ptr %.sroa.0198.1.i, align 8
   store ptr %.val.i.i30.i.i.i.i, ptr %i.jw, align 8, !tbaa !531
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i23.i.i.i.i)
   br label %bb.af
 
 bb.ae:                                            ; preds = %bb.ac
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.03.i.i22.i.i.i.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.03.i.i22.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.08.020.i28.i.i.i.i, i64 16, i1 false)
+  %.sroa.03.i.i22.i.i.i.i.sroa.0.0.copyload = load <16 x i8>, ptr %.sroa.08.020.i28.i.i.i.i, align 8
   %i.kl = getelementptr i8, ptr %.pn19.i29.i.i.i.i, i64 16
   %.val2.i7.i.i32.i.i.i.i = load ptr, ptr %i.kl, align 8, !tbaa !531 ; 2 uses
   %i.km = icmp ult ptr %.val.i.i30.i.i.i.i, %.val2.i7.i.i32.i.i.i.i
@@ -1824,10 +1804,10 @@ bb.ae:                                            ; preds = %bb.ac
 
 "_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEENS0_5__ops14_Val_comp_iterIZL27transformBuffersToDrawOrderIZN9ClientMap16renderMapShadowsEPN5video12IVideoDriverESt8functionIFvRNSJ_9SMaterialEbEEiiiE3$_0EjRKSB_IS2_INS4_IsEES8_ESaIST_EERSB_IN12_GLOBAL__N_114DrawDescriptorESaISZ_EET_RSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE16CachedMeshBufferSt4hashIS1A_ESt8equal_toIS1A_ESaIS2_IKS1A_S1B_EEEEUlRKS13_RKT0_E_EEEvS13_S1N_.exit.i33.i.i.i.i": ; preds = %.lr.ph.i.i37.i.i.i.i, %bb.ae
   %.sroa.04.0.lcssa.i.i34.i.i.i.i = phi ptr [ %.sroa.08.020.i28.i.i.i.i, %bb.ae ], [ %.sroa.0.0.i.i39.i.i.i.i, %.lr.ph.i.i37.i.i.i.i ] ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %.sroa.04.0.lcssa.i.i34.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.03.i.i22.i.i.i.i, i64 12, i1 false), !tbaa.struct !533
+  %.sroa.03.i.i22.i.i.i.i.sroa.0.0.vec.extract = shufflevector <16 x i8> %.sroa.03.i.i22.i.i.i.i.sroa.0.0.copyload, <16 x i8> poison, <12 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11>
+  store <12 x i8> %.sroa.03.i.i22.i.i.i.i.sroa.0.0.vec.extract, ptr %.sroa.04.0.lcssa.i.i34.i.i.i.i, align 8
   %25 = getelementptr inbounds nuw i8, ptr %.sroa.04.0.lcssa.i.i34.i.i.i.i, i64 16
   store ptr %.val.i.i30.i.i.i.i, ptr %25, align 8, !tbaa !531
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.03.i.i22.i.i.i.i)
   br label %bb.af
 
 bb.af:                                            ; preds = %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEENS0_5__ops14_Val_comp_iterIZL27transformBuffersToDrawOrderIZN9ClientMap16renderMapShadowsEPN5video12IVideoDriverESt8functionIFvRNSJ_9SMaterialEbEEiiiE3$_0EjRKSB_IS2_INS4_IsEES8_ESaIST_EERSB_IN12_GLOBAL__N_114DrawDescriptorESaISZ_EET_RSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE16CachedMeshBufferSt4hashIS1A_ESt8equal_toIS1A_ESaIS2_IKS1A_S1B_EEEEUlRKS13_RKT0_E_EEEvS13_S1N_.exit.i33.i.i.i.i", %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEESE_ET0_T_SG_SF_.exit.i41.i.i.i.i
@@ -2230,8 +2210,6 @@ declare void @_Z15sanity_check_fnPKcS0_jS0_(ptr noundef, ptr noundef, i32 nounde
 ; Function Attrs: mustprogress nofree nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc void @"_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEElNS0_5__ops15_Iter_comp_iterIZL27transformBuffersToDrawOrderIZN9ClientMap9renderMapEPN5video12IVideoDriverEiE3$_0EjRKSB_IS2_INS4_IsEES8_ESaISO_EERSB_IN12_GLOBAL__N_114DrawDescriptorESaISU_EET_RSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE16CachedMeshBufferSt4hashIS15_ESt8equal_toIS15_ESaIS2_IKS15_S16_EEEEUlRKSY_RKT0_E_EEEvSY_SY_S1I_T1_"(ptr %0, ptr %1, i64 noundef %2) unnamed_addr #28 {
 bb.a:
-  %.sroa.05.i.i9.i = alloca [16 x i8], align 8    ; 4 uses
-  %.sroa.06.i.i.i = alloca [16 x i8], align 8     ; 4 uses
   %i.a = ptrtoint ptr %0 to i64                   ; 3 uses
   %i.b = ptrtoint ptr %1 to i64
   %i.c = sub i64 %i.b, %i.a
@@ -2270,8 +2248,7 @@ bb.b:                                             ; preds = %"_ZSt27__unguarded_
 bb.c:                                             ; preds = %"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEElS9_NS0_5__ops15_Iter_comp_iterIZL27transformBuffersToDrawOrderIZN9ClientMap9renderMapEPN5video12IVideoDriverEiE3$_0EjRKSB_IS2_INS4_IsEES8_ESaISO_EERSB_IN12_GLOBAL__N_114DrawDescriptorESaISU_EET_RSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE16CachedMeshBufferSt4hashIS15_ESt8equal_toIS15_ESaIS2_IKS15_S16_EEEEUlRKSY_RKT0_E_EEEvSY_S1I_S1I_T1_T2_.exit.i.i.i", %._crit_edge
   %.08.i.i.i = phi i64 [ %i.l, %._crit_edge ], [ %i.av, %"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEElS9_NS0_5__ops15_Iter_comp_iterIZL27transformBuffersToDrawOrderIZN9ClientMap9renderMapEPN5video12IVideoDriverEiE3$_0EjRKSB_IS2_INS4_IsEES8_ESaISO_EERSB_IN12_GLOBAL__N_114DrawDescriptorESaISU_EET_RSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE16CachedMeshBufferSt4hashIS15_ESt8equal_toIS15_ESaIS2_IKS15_S16_EEEEUlRKSY_RKT0_E_EEEvSY_S1I_S1I_T1_T2_.exit.i.i.i" ] ; 8 uses
   %i.v = getelementptr inbounds [24 x i8], ptr %0, i64 %.08.i.i.i ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.06.i.i.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.06.i.i.i, ptr noundef nonnull align 8 dereferenceable(16) %i.v, i64 16, i1 false)
+  %.sroa.06.i.i.i.sroa.0.0.copyload = load <16 x i8>, ptr %i.v, align 8
   %.sroa.49.0..sroa.0.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.v, i64 16
   %.sroa.49.0.copyload.i.i.i = load ptr, ptr %.sroa.49.0..sroa.0.0..sroa_idx.i.i.i, align 8 ; 2 uses
   %i.w = icmp slt i64 %.08.i.i.i, %i.n
@@ -2338,10 +2315,10 @@ bb.f:                                             ; preds = %.lr.ph.i.i.i.i.i
 "_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEElS9_NS0_5__ops15_Iter_comp_iterIZL27transformBuffersToDrawOrderIZN9ClientMap9renderMapEPN5video12IVideoDriverEiE3$_0EjRKSB_IS2_INS4_IsEES8_ESaISO_EERSB_IN12_GLOBAL__N_114DrawDescriptorESaISU_EET_RSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE16CachedMeshBufferSt4hashIS15_ESt8equal_toIS15_ESaIS2_IKS15_S16_EEEEUlRKSY_RKT0_E_EEEvSY_S1I_S1I_T1_T2_.exit.i.i.i": ; preds = %bb.f, %.lr.ph.i.i.i.i.i, %bb.e
   %.0.lcssa.i.i.i.i.i = phi i64 [ %.1.i.i.i.i, %bb.e ], [ %.010.i.i.i.i.i, %.lr.ph.i.i.i.i.i ], [ %.0911.i.i.i.i.i, %bb.f ]
   %i.au = getelementptr inbounds nuw [24 x i8], ptr %0, i64 %.0.lcssa.i.i.i.i.i ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.au, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.06.i.i.i, i64 12, i1 false)
+  %.sroa.06.i.i.i.sroa.0.0.vec.extract = shufflevector <16 x i8> %.sroa.06.i.i.i.sroa.0.0.copyload, <16 x i8> poison, <12 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11>
+  store <12 x i8> %.sroa.06.i.i.i.sroa.0.0.vec.extract, ptr %i.au, align 8
   %3 = getelementptr inbounds nuw i8, ptr %i.au, i64 16
   store ptr %.sroa.49.0.copyload.i.i.i, ptr %3, align 8, !tbaa !531
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.06.i.i.i)
   %.not.i.i.i = icmp eq i64 %.08.i.i.i, 0
   %i.av = add nsw i64 %.08.i.i.i, -1
   br i1 %.not.i.i.i, label %.lr.ph.i10.i, label %bb.c, !llvm.loop !988
@@ -2349,8 +2326,7 @@ bb.f:                                             ; preds = %.lr.ph.i.i.i.i.i
 .lr.ph.i10.i:                                     ; preds = %"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEElS9_NS0_5__ops15_Iter_comp_iterIZL27transformBuffersToDrawOrderIZN9ClientMap9renderMapEPN5video12IVideoDriverEiE3$_0EjRKSB_IS2_INS4_IsEES8_ESaISO_EERSB_IN12_GLOBAL__N_114DrawDescriptorESaISU_EET_RSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE16CachedMeshBufferSt4hashIS15_ESt8equal_toIS15_ESaIS2_IKS15_S16_EEEEUlRKSY_RKT0_E_EEEvSY_S1I_S1I_T1_T2_.exit.i.i.i", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEENS0_5__ops15_Iter_comp_iterIZL27transformBuffersToDrawOrderIZN9ClientMap9renderMapEPN5video12IVideoDriverEiE3$_0EjRKSB_IS2_INS4_IsEES8_ESaISO_EERSB_IN12_GLOBAL__N_114DrawDescriptorESaISU_EET_RSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE16CachedMeshBufferSt4hashIS15_ESt8equal_toIS15_ESaIS2_IKS15_S16_EEEEUlRKSY_RKT0_E_EEEvSY_SY_SY_RS1I_.exit.i21.i"
   %.sroa.0.03.i.i = phi ptr [ %i.aw, %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEENS0_5__ops15_Iter_comp_iterIZL27transformBuffersToDrawOrderIZN9ClientMap9renderMapEPN5video12IVideoDriverEiE3$_0EjRKSB_IS2_INS4_IsEES8_ESaISO_EERSB_IN12_GLOBAL__N_114DrawDescriptorESaISU_EET_RSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE16CachedMeshBufferSt4hashIS15_ESt8equal_toIS15_ESaIS2_IKS15_S16_EEEEUlRKSY_RKT0_E_EEEvSY_SY_SY_RS1I_.exit.i21.i" ], [ %storemerge26.lcssa, %"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEElS9_NS0_5__ops15_Iter_comp_iterIZL27transformBuffersToDrawOrderIZN9ClientMap9renderMapEPN5video12IVideoDriverEiE3$_0EjRKSB_IS2_INS4_IsEES8_ESaISO_EERSB_IN12_GLOBAL__N_114DrawDescriptorESaISU_EET_RSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE16CachedMeshBufferSt4hashIS15_ESt8equal_toIS15_ESaIS2_IKS15_S16_EEEEUlRKSY_RKT0_E_EEEvSY_S1I_S1I_T1_T2_.exit.i.i.i" ] ; 2 uses
   %i.aw = getelementptr inbounds i8, ptr %.sroa.0.03.i.i, i64 -24 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.05.i.i9.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.05.i.i9.i, ptr noundef nonnull align 8 dereferenceable(16) %i.aw, i64 16, i1 false)
+  %.sroa.05.i.i9.i.sroa.0.0.copyload = load <16 x i8>, ptr %i.aw, align 8
   %.sroa.48.0..sroa.0.0..sroa_idx.i.i.i = getelementptr inbounds i8, ptr %.sroa.0.03.i.i, i64 -8 ; 2 uses
   %.sroa.48.0.copyload.i.i.i = load ptr, ptr %.sroa.48.0..sroa.0.0..sroa_idx.i.i.i, align 8 ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.aw, ptr noundef nonnull align 8 dereferenceable(24) %0, i64 12, i1 false), !tbaa.struct !533
@@ -2440,10 +2416,10 @@ bb.i:                                             ; preds = %.lr.ph.i.i.i.i16.i
 "_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEENS0_5__ops15_Iter_comp_iterIZL27transformBuffersToDrawOrderIZN9ClientMap9renderMapEPN5video12IVideoDriverEiE3$_0EjRKSB_IS2_INS4_IsEES8_ESaISO_EERSB_IN12_GLOBAL__N_114DrawDescriptorESaISU_EET_RSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE16CachedMeshBufferSt4hashIS15_ESt8equal_toIS15_ESaIS2_IKS15_S16_EEEEUlRKSY_RKT0_E_EEEvSY_SY_SY_RS1I_.exit.i21.i": ; preds = %bb.i, %.lr.ph.i.i.i.i16.i, %bb.h
   %.0.lcssa.i.i.i.i22.i = phi i64 [ 0, %bb.h ], [ %.010.i.i.i.i17.i, %.lr.ph.i.i.i.i16.i ], [ 0, %bb.i ]
   %i.cj = getelementptr inbounds [24 x i8], ptr %0, i64 %.0.lcssa.i.i.i.i22.i ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.cj, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.05.i.i9.i, i64 12, i1 false)
+  %.sroa.05.i.i9.i.sroa.0.0.vec.extract = shufflevector <16 x i8> %.sroa.05.i.i9.i.sroa.0.0.copyload, <16 x i8> poison, <12 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11>
+  store <12 x i8> %.sroa.05.i.i9.i.sroa.0.0.vec.extract, ptr %i.cj, align 8
   %4 = getelementptr inbounds nuw i8, ptr %i.cj, i64 16
   store ptr %.sroa.48.0.copyload.i.i.i, ptr %4, align 8, !tbaa !531
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.05.i.i9.i)
   %i.ck = icmp sgt i64 %i.az, 24
   br i1 %i.ck, label %.lr.ph.i10.i, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEENS0_5__ops15_Iter_comp_iterIZL27transformBuffersToDrawOrderIZN9ClientMap9renderMapEPN5video12IVideoDriverEiE3$_0EjRKSB_IS2_INS4_IsEES8_ESaISO_EERSB_IN12_GLOBAL__N_114DrawDescriptorESaISU_EET_RSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE16CachedMeshBufferSt4hashIS15_ESt8equal_toIS15_ESaIS2_IKS15_S16_EEEEUlRKSY_RKT0_E_EEEvSY_SY_SY_S1I_.exit", !llvm.loop !989
 
@@ -2846,8 +2822,6 @@ bb.g:                                             ; preds = %_ZNSt6vectorIN12_GL
 ; Function Attrs: mustprogress nofree nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc void @"_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEElNS0_5__ops15_Iter_comp_iterIZL27transformBuffersToDrawOrderIZN9ClientMap16renderMapShadowsEPN5video12IVideoDriverESt8functionIFvRNSJ_9SMaterialEbEEiiiE3$_0EjRKSB_IS2_INS4_IsEES8_ESaIST_EERSB_IN12_GLOBAL__N_114DrawDescriptorESaISZ_EET_RSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE16CachedMeshBufferSt4hashIS1A_ESt8equal_toIS1A_ESaIS2_IKS1A_S1B_EEEEUlRKS13_RKT0_E_EEEvS13_S13_S1N_T1_"(ptr %0, ptr %1, i64 noundef %2) unnamed_addr #28 {
 bb.a:
-  %.sroa.05.i.i9.i = alloca [16 x i8], align 8    ; 4 uses
-  %.sroa.06.i.i.i = alloca [16 x i8], align 8     ; 4 uses
   %i.a = ptrtoint ptr %0 to i64                   ; 3 uses
   %i.b = ptrtoint ptr %1 to i64
   %i.c = sub i64 %i.b, %i.a
@@ -2886,8 +2860,7 @@ bb.b:                                             ; preds = %"_ZSt27__unguarded_
 bb.c:                                             ; preds = %"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEElS9_NS0_5__ops15_Iter_comp_iterIZL27transformBuffersToDrawOrderIZN9ClientMap16renderMapShadowsEPN5video12IVideoDriverESt8functionIFvRNSJ_9SMaterialEbEEiiiE3$_0EjRKSB_IS2_INS4_IsEES8_ESaIST_EERSB_IN12_GLOBAL__N_114DrawDescriptorESaISZ_EET_RSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE16CachedMeshBufferSt4hashIS1A_ESt8equal_toIS1A_ESaIS2_IKS1A_S1B_EEEEUlRKS13_RKT0_E_EEEvS13_S1N_S1N_T1_T2_.exit.i.i.i", %._crit_edge
   %.08.i.i.i = phi i64 [ %i.l, %._crit_edge ], [ %i.av, %"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEElS9_NS0_5__ops15_Iter_comp_iterIZL27transformBuffersToDrawOrderIZN9ClientMap16renderMapShadowsEPN5video12IVideoDriverESt8functionIFvRNSJ_9SMaterialEbEEiiiE3$_0EjRKSB_IS2_INS4_IsEES8_ESaIST_EERSB_IN12_GLOBAL__N_114DrawDescriptorESaISZ_EET_RSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE16CachedMeshBufferSt4hashIS1A_ESt8equal_toIS1A_ESaIS2_IKS1A_S1B_EEEEUlRKS13_RKT0_E_EEEvS13_S1N_S1N_T1_T2_.exit.i.i.i" ] ; 8 uses
   %i.v = getelementptr inbounds [24 x i8], ptr %0, i64 %.08.i.i.i ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.06.i.i.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.06.i.i.i, ptr noundef nonnull align 8 dereferenceable(16) %i.v, i64 16, i1 false)
+  %.sroa.06.i.i.i.sroa.0.0.copyload = load <16 x i8>, ptr %i.v, align 8
   %.sroa.49.0..sroa.0.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.v, i64 16
   %.sroa.49.0.copyload.i.i.i = load ptr, ptr %.sroa.49.0..sroa.0.0..sroa_idx.i.i.i, align 8 ; 2 uses
   %i.w = icmp slt i64 %.08.i.i.i, %i.n
@@ -2954,10 +2927,10 @@ bb.f:                                             ; preds = %.lr.ph.i.i.i.i.i
 "_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEElS9_NS0_5__ops15_Iter_comp_iterIZL27transformBuffersToDrawOrderIZN9ClientMap16renderMapShadowsEPN5video12IVideoDriverESt8functionIFvRNSJ_9SMaterialEbEEiiiE3$_0EjRKSB_IS2_INS4_IsEES8_ESaIST_EERSB_IN12_GLOBAL__N_114DrawDescriptorESaISZ_EET_RSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE16CachedMeshBufferSt4hashIS1A_ESt8equal_toIS1A_ESaIS2_IKS1A_S1B_EEEEUlRKS13_RKT0_E_EEEvS13_S1N_S1N_T1_T2_.exit.i.i.i": ; preds = %bb.f, %.lr.ph.i.i.i.i.i, %bb.e
   %.0.lcssa.i.i.i.i.i = phi i64 [ %.1.i.i.i.i, %bb.e ], [ %.010.i.i.i.i.i, %.lr.ph.i.i.i.i.i ], [ %.0911.i.i.i.i.i, %bb.f ]
   %i.au = getelementptr inbounds nuw [24 x i8], ptr %0, i64 %.0.lcssa.i.i.i.i.i ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.au, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.06.i.i.i, i64 12, i1 false)
+  %.sroa.06.i.i.i.sroa.0.0.vec.extract = shufflevector <16 x i8> %.sroa.06.i.i.i.sroa.0.0.copyload, <16 x i8> poison, <12 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11>
+  store <12 x i8> %.sroa.06.i.i.i.sroa.0.0.vec.extract, ptr %i.au, align 8
   %3 = getelementptr inbounds nuw i8, ptr %i.au, i64 16
   store ptr %.sroa.49.0.copyload.i.i.i, ptr %3, align 8, !tbaa !531
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.06.i.i.i)
   %.not.i.i.i = icmp eq i64 %.08.i.i.i, 0
   %i.av = add nsw i64 %.08.i.i.i, -1
   br i1 %.not.i.i.i, label %.lr.ph.i10.i, label %bb.c, !llvm.loop !1054
@@ -2965,8 +2938,7 @@ bb.f:                                             ; preds = %.lr.ph.i.i.i.i.i
 .lr.ph.i10.i:                                     ; preds = %"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEElS9_NS0_5__ops15_Iter_comp_iterIZL27transformBuffersToDrawOrderIZN9ClientMap16renderMapShadowsEPN5video12IVideoDriverESt8functionIFvRNSJ_9SMaterialEbEEiiiE3$_0EjRKSB_IS2_INS4_IsEES8_ESaIST_EERSB_IN12_GLOBAL__N_114DrawDescriptorESaISZ_EET_RSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE16CachedMeshBufferSt4hashIS1A_ESt8equal_toIS1A_ESaIS2_IKS1A_S1B_EEEEUlRKS13_RKT0_E_EEEvS13_S1N_S1N_T1_T2_.exit.i.i.i", %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEENS0_5__ops15_Iter_comp_iterIZL27transformBuffersToDrawOrderIZN9ClientMap16renderMapShadowsEPN5video12IVideoDriverESt8functionIFvRNSJ_9SMaterialEbEEiiiE3$_0EjRKSB_IS2_INS4_IsEES8_ESaIST_EERSB_IN12_GLOBAL__N_114DrawDescriptorESaISZ_EET_RSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE16CachedMeshBufferSt4hashIS1A_ESt8equal_toIS1A_ESaIS2_IKS1A_S1B_EEEEUlRKS13_RKT0_E_EEEvS13_S13_S13_RS1N_.exit.i21.i"
   %.sroa.0.03.i.i = phi ptr [ %i.aw, %"_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEENS0_5__ops15_Iter_comp_iterIZL27transformBuffersToDrawOrderIZN9ClientMap16renderMapShadowsEPN5video12IVideoDriverESt8functionIFvRNSJ_9SMaterialEbEEiiiE3$_0EjRKSB_IS2_INS4_IsEES8_ESaIST_EERSB_IN12_GLOBAL__N_114DrawDescriptorESaISZ_EET_RSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE16CachedMeshBufferSt4hashIS1A_ESt8equal_toIS1A_ESaIS2_IKS1A_S1B_EEEEUlRKS13_RKT0_E_EEEvS13_S13_S13_RS1N_.exit.i21.i" ], [ %storemerge26.lcssa, %"_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEElS9_NS0_5__ops15_Iter_comp_iterIZL27transformBuffersToDrawOrderIZN9ClientMap16renderMapShadowsEPN5video12IVideoDriverESt8functionIFvRNSJ_9SMaterialEbEEiiiE3$_0EjRKSB_IS2_INS4_IsEES8_ESaIST_EERSB_IN12_GLOBAL__N_114DrawDescriptorESaISZ_EET_RSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE16CachedMeshBufferSt4hashIS1A_ESt8equal_toIS1A_ESaIS2_IKS1A_S1B_EEEEUlRKS13_RKT0_E_EEEvS13_S1N_S1N_T1_T2_.exit.i.i.i" ] ; 2 uses
   %i.aw = getelementptr inbounds i8, ptr %.sroa.0.03.i.i, i64 -24 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.05.i.i9.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.05.i.i9.i, ptr noundef nonnull align 8 dereferenceable(16) %i.aw, i64 16, i1 false)
+  %.sroa.05.i.i9.i.sroa.0.0.copyload = load <16 x i8>, ptr %i.aw, align 8
   %.sroa.48.0..sroa.0.0..sroa_idx.i.i.i = getelementptr inbounds i8, ptr %.sroa.0.03.i.i, i64 -8 ; 2 uses
   %.sroa.48.0.copyload.i.i.i = load ptr, ptr %.sroa.48.0..sroa.0.0..sroa_idx.i.i.i, align 8 ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.aw, ptr noundef nonnull align 8 dereferenceable(24) %0, i64 12, i1 false), !tbaa.struct !533
@@ -3056,10 +3028,10 @@ bb.i:                                             ; preds = %.lr.ph.i.i.i.i16.i
 "_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEENS0_5__ops15_Iter_comp_iterIZL27transformBuffersToDrawOrderIZN9ClientMap16renderMapShadowsEPN5video12IVideoDriverESt8functionIFvRNSJ_9SMaterialEbEEiiiE3$_0EjRKSB_IS2_INS4_IsEES8_ESaIST_EERSB_IN12_GLOBAL__N_114DrawDescriptorESaISZ_EET_RSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE16CachedMeshBufferSt4hashIS1A_ESt8equal_toIS1A_ESaIS2_IKS1A_S1B_EEEEUlRKS13_RKT0_E_EEEvS13_S13_S13_RS1N_.exit.i21.i": ; preds = %bb.i, %.lr.ph.i.i.i.i16.i, %bb.h
   %.0.lcssa.i.i.i.i22.i = phi i64 [ 0, %bb.h ], [ %.010.i.i.i.i17.i, %.lr.ph.i.i.i.i16.i ], [ 0, %bb.i ]
   %i.cj = getelementptr inbounds [24 x i8], ptr %0, i64 %.0.lcssa.i.i.i.i22.i ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.cj, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.05.i.i9.i, i64 12, i1 false)
+  %.sroa.05.i.i9.i.sroa.0.0.vec.extract = shufflevector <16 x i8> %.sroa.05.i.i9.i.sroa.0.0.copyload, <16 x i8> poison, <12 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11>
+  store <12 x i8> %.sroa.05.i.i9.i.sroa.0.0.vec.extract, ptr %i.cj, align 8
   %4 = getelementptr inbounds nuw i8, ptr %i.cj, i64 16
   store ptr %.sroa.48.0.copyload.i.i.i, ptr %4, align 8, !tbaa !531
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.05.i.i9.i)
   %i.ck = icmp sgt i64 %i.az, 24
   br i1 %i.ck, label %.lr.ph.i10.i, label %"_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEENS0_5__ops15_Iter_comp_iterIZL27transformBuffersToDrawOrderIZN9ClientMap16renderMapShadowsEPN5video12IVideoDriverESt8functionIFvRNSJ_9SMaterialEbEEiiiE3$_0EjRKSB_IS2_INS4_IsEES8_ESaIST_EERSB_IN12_GLOBAL__N_114DrawDescriptorESaISZ_EET_RSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE16CachedMeshBufferSt4hashIS1A_ESt8equal_toIS1A_ESaIS2_IKS1A_S1B_EEEEUlRKS13_RKT0_E_EEEvS13_S13_S13_S1N_.exit", !llvm.loop !1055
 

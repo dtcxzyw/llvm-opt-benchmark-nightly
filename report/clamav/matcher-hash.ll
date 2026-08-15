@@ -203,9 +203,9 @@ declare ptr @cli_htu32_next(ptr noundef, ptr noundef) local_unnamed_addr #4
 define internal fastcc void @hm_sort(ptr noundef %0, i64 noundef %1, i64 noundef %2, i32 noundef range(i32 0, 65) %3) unnamed_addr #7 {
 bb.a:
   %i.a = alloca [32 x i8], align 16               ; 5 uses
-  %4 = alloca [32 x i8], align 16                 ; 6 uses
+  %.sroa.0 = alloca <32 x i8>, align 32           ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
-  call void @llvm.lifetime.start.p0(ptr nonnull %4)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   %i.b = add i64 %1, 1                            ; 2 uses
   %.not = icmp ult i64 %i.b, %2
   br i1 %.not, label %bb.b, label %bb.j
@@ -250,7 +250,7 @@ hm_cmp.exit.thread:                               ; preds = %bb.d, %hm_cmp.exit
   br i1 %i.v, label %bb.g, label %bb.e
 
 bb.e:                                             ; preds = %hm_cmp.exit.thread
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %4, ptr nonnull align 1 %i.o, i64 %i.d, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 32 %.sroa.0, ptr nonnull align 1 %i.o, i64 %i.d, i1 false)
   %i.w = load ptr, ptr %i.k, align 8, !tbaa !63
   %i.x = getelementptr inbounds nuw [8 x i8], ptr %i.w, i64 %.07688
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !64
@@ -264,7 +264,7 @@ bb.e:                                             ; preds = %hm_cmp.exit.thread
   store ptr %i.ad, ptr %i.ae, align 8, !tbaa !64
   %i.af = load ptr, ptr %0, align 8, !tbaa !62
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 %i.z
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ag, ptr nonnull align 16 %4, i64 %i.d, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ag, ptr nonnull align 32 %.sroa.0, i64 %i.d, i1 false)
   %i.ah = load ptr, ptr %i.k, align 8, !tbaa !63
   %i.ai = getelementptr inbounds nuw [8 x i8], ptr %i.ah, i64 %i.u
   store ptr %i.y, ptr %i.ai, align 8, !tbaa !64
@@ -294,7 +294,7 @@ bb.g:                                             ; preds = %hm_cmp.exit.thread,
 bb.h:                                             ; preds = %bb.g
   %i.ap = mul i64 %i.ao, %i.d
   %i.aq = getelementptr inbounds nuw i8, ptr %i.an, i64 %i.ap ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %4, ptr align 1 %i.aq, i64 %i.d, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 32 %.sroa.0, ptr align 1 %i.aq, i64 %i.d, i1 false)
   %i.ar = load ptr, ptr %i.k, align 8, !tbaa !63
   %i.as = getelementptr inbounds nuw [8 x i8], ptr %i.ar, i64 %i.ao
   %i.at = load ptr, ptr %i.as, align 8, !tbaa !64
@@ -307,7 +307,7 @@ bb.h:                                             ; preds = %bb.g
   store ptr %i.ax, ptr %i.ay, align 8, !tbaa !64
   %i.az = load ptr, ptr %0, align 8, !tbaa !62
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 %i.e
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ba, ptr nonnull align 16 %4, i64 %i.d, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ba, ptr nonnull align 32 %.sroa.0, i64 %i.d, i1 false)
   %i.bb = load ptr, ptr %i.k, align 8, !tbaa !63
   %i.bc = getelementptr inbounds nuw [8 x i8], ptr %i.bb, i64 %1
   store ptr %i.at, ptr %i.bc, align 8, !tbaa !64
@@ -319,7 +319,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.a, %bb.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %4)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
   ret void
 }

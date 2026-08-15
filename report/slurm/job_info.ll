@@ -201,49 +201,38 @@ define dso_local range(i32 -1, 1) i32 @slurm_network_callerid(ptr noundef byval(
 bb.a:
   %4 = alloca %struct.slurm_msg, align 8          ; 7 uses
   %5 = alloca %struct.slurm_msg, align 8          ; 12 uses
-  %.sroa.9 = alloca [16 x i8], align 8            ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #15
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #15
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.9)
   %i.a = tail call i32 @get_log_level() #15
   %i.b = icmp sgt i32 %i.a, 4
-  br i1 %i.b, label %bb.b, label %6
+  br i1 %i.b, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   tail call void (i32, ptr, ...) @log_var(i32 noundef 5, ptr noundef nonnull @.str.8) #15
-  br label %6
+  br label %bb.c
 
-6:                                                ; preds = %bb.b, %bb.a
+bb.c:                                             ; preds = %bb.b, %bb.a
   call void @slurm_msg_t_init(ptr noundef nonnull %5) #15
   call void @slurm_msg_t_init(ptr noundef nonnull %4) #15
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.9, i8 0, i64 16, i1 false)
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %8 = load i32, ptr %7, align 8                  ; 2 uses
-  %9 = trunc i32 %8 to i16
-  %10 = and i32 %8, 65535
-  %11 = icmp eq i32 %10, 10
-  br i1 %11, label %12, label %13
-
-12:                                               ; preds = %6
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.9, ptr noundef nonnull align 8 dereferenceable(16) %0, i64 16, i1 false)
-  br label %bb.c
-
-13:                                               ; preds = %6
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 40
+  %7 = load i32, ptr %6, align 8                  ; 2 uses
+  %8 = trunc i32 %7 to i16
+  %9 = and i32 %7, 65535
+  %10 = icmp eq i32 %9, 10                        ; 2 uses
+  %.sroa.9.sroa.0.0.copyload17 = load <16 x i8>, ptr %0, align 8
   %.sroa.8.4.copyload = load i32, ptr %0, align 8
-  br label %bb.c
-
-bb.c:                                             ; preds = %13, %12
-  %.sroa.8.0 = phi i32 [ 0, %12 ], [ %.sroa.8.4.copyload, %13 ]
+  %.sroa.9.sroa.0.0 = select i1 %10, <16 x i8> %.sroa.9.sroa.0.0.copyload17, <16 x i8> zeroinitializer
+  %.sroa.8.0 = select i1 %10, i32 0, i32 %.sroa.8.4.copyload
   %i.c = load i32, ptr getelementptr inbounds nuw (i8, ptr @slurm_conf, i64 1384), align 8
   %i.d = trunc i32 %i.c to i16
   %rev.i14 = call noundef i16 @llvm.bswap.i16(i16 %i.d)
-  store i16 %9, ptr %5, align 8
+  store i16 %8, ptr %5, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 2
   store i16 %rev.i14, ptr %.sroa.6.0..sroa_idx, align 2
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 4
   store i32 %.sroa.8.0, ptr %.sroa.8.0..sroa_idx, align 4
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.9.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.9, i64 16, i1 false)
+  store <16 x i8> %.sroa.9.sroa.0.0, ptr %.sroa.9.0..sroa_idx, align 8
   %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(104) %.sroa.10.0..sroa_idx, i8 0, i64 104, i1 false)
   %i.e = getelementptr inbounds nuw i8, ptr %5, i64 226
@@ -298,7 +287,6 @@ bb.i:                                             ; preds = %bb.f, %bb.e
 
 bb.j:                                             ; preds = %bb.c, %bb.i, %bb.h, %bb.g
   %.0 = phi i32 [ -1, %bb.g ], [ -1, %bb.h ], [ 0, %bb.i ], [ -1, %bb.c ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.9)
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #15
   ret i32 %.0

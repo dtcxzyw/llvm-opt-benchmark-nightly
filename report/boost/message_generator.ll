@@ -204,7 +204,7 @@ bb.a:
   %20 = alloca %"class.boost::optional.308", align 8 ; 7 uses
   %21 = alloca %"class.boost::beast::detail::buffers_ref", align 8 ; 4 uses
   %22 = alloca %"class.boost::beast::detail::buffers_ref", align 8 ; 4 uses
-  %.sroa.4101 = alloca [1047 x i8], align 1       ; 4 uses
+  %.sroa.4101.sroa.0 = alloca <1047 x i8>, align 2048 ; 5 uses
   %23 = alloca %"class.boost::optional.308", align 8 ; 8 uses
   %24 = alloca %"class.boost::beast::detail::buffers_ref", align 8 ; 4 uses
   %i.a = alloca i64, align 8                      ; 4 uses
@@ -607,7 +607,7 @@ bb.y:                                             ; preds = %bb.a
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.y, %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4101)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4101.sroa.0)
   call void @llvm.lifetime.start.p0(ptr nonnull %15)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1040) %15, i8 0, i64 1040, i1 false), !noalias !1917
   %i.ee = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
@@ -645,7 +645,7 @@ _ZN5boost5beast4http6detail20fragmented_test_body6writer3getERNS_6system10error_
   store i64 4, ptr %.sroa.43.0..sroa_idx.i46, align 8, !noalias !1917
   %i.em = load i8, ptr %i.ej, align 8, !tbaa !178, !range !66, !noalias !1917, !noundef !67
   store i8 1, ptr %i.ej, align 8, !tbaa !178, !noalias !1917
-  %.sroa.4101.8..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.4101, i64 7 ; 2 uses
+  %.sroa.4101.8..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.4101.sroa.0, i64 7
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1040) %.sroa.4101.8..sroa_idx, ptr noundef nonnull align 8 dereferenceable(1040) %15, i64 1040, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %15)
   %i.en = getelementptr inbounds nuw i8, ptr %1, i64 16
@@ -683,19 +683,20 @@ bb.ab:                                            ; preds = %_ZNK5boost6system10
   unreachable
 
 .thread130:                                       ; preds = %_ZNK5boost6system10error_codecvbEv.exit51, %bb.aa
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4101)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4101.sroa.0)
   br label %_ZN5boost5beast4http10serializerILb0ENS1_6detail20fragmented_test_bodyENS1_12basic_fieldsISaIcEEEE8do_visitILm3ENS1_17message_generator14generator_implILb0ES4_S7_E5visitEEEvRNS_6system10error_codeERT0_.exit
 
 bb.ac:                                            ; preds = %_ZNK5boost6system10error_codecvbEv.exit51.thread127
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #33
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1040) %i.et, ptr noundef nonnull align 1 dereferenceable(1040) %.sroa.4101.8..sroa_idx, i64 1040, i1 false), !tbaa.struct !1920
+  %.sroa.4101.sroa.0.7..sroa_idx205 = getelementptr inbounds nuw i8, ptr %.sroa.4101.sroa.0, i64 7
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1040) %i.et, ptr noundef nonnull align 1 dereferenceable(1040) %.sroa.4101.sroa.0.7..sroa_idx205, i64 1040, i1 false), !tbaa.struct !1920
   %i.ez = getelementptr inbounds nuw i8, ptr %0, i64 1184
   store ptr %i.et, ptr %i.ez, align 8, !tbaa !1898
   %i.fa = getelementptr inbounds nuw i8, ptr %0, i64 1192
   store i64 0, ptr %i.fa, align 8, !tbaa !1921
   store i8 3, ptr %i.eu, align 8, !tbaa !326
   store i32 42, ptr %i.e, align 8, !tbaa !1888
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4101)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4101.sroa.0)
   br label %bb.ad
 
 bb.ad:                                            ; preds = %._crit_edge, %bb.ac

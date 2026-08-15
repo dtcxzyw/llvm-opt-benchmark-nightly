@@ -201,12 +201,9 @@ declare i64 @file_tell(ptr noundef) local_unnamed_addr #2
 define internal fastcc range(i32 -1, 5) i32 @peektagged_read_packet(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [6 x i8], align 2                 ; 6 uses
-  %.sroa.54.sroa.10 = alloca [9 x i8], align 2    ; 4 uses
   %i.b = getelementptr i8, ptr %0, i64 120
   %i.c = load ptr, ptr %i.b, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.54.sroa.10)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(9) %.sroa.54.sroa.10, i8 0, i64 9, i1 false)
   %i.d = call zeroext i1 @wtap_read_bytes_or_eof(ptr noundef %1, ptr noundef nonnull %i.a, i32 noundef 6, ptr noundef %3, ptr noundef %4)
   br i1 %i.d, label %.lr.ph, label %._crit_edge.thread
 
@@ -609,7 +606,7 @@ switch.lookup:                                    ; preds = %bb.bc
   %.sroa.54.0..sroa_idx = getelementptr i8, ptr %2, i64 85
   store i16 0, ptr %.sroa.54.0..sroa_idx, align 1
   %.sroa.54.sroa.10.0..sroa.54.0..sroa_idx.sroa_idx = getelementptr i8, ptr %2, i64 87
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef align 1 dereferenceable(9) %.sroa.54.sroa.10.0..sroa.54.0..sroa_idx.sroa_idx, ptr noundef nonnull align 2 dereferenceable(9) %.sroa.54.sroa.10, i64 9, i1 false)
+  store <9 x i8> zeroinitializer, ptr %.sroa.54.sroa.10.0..sroa.54.0..sroa_idx.sroa_idx, align 1
   %.sroa.54383.0..sroa_idx = getelementptr i8, ptr %2, i64 96
   store i16 %.sroa.54383.4, ptr %.sroa.54383.0..sroa_idx, align 8
   %.sroa.73.0..sroa_idx = getelementptr i8, ptr %2, i64 98
@@ -701,7 +698,6 @@ bb.bn:                                            ; preds = %bb.bm, %bb.bi, %bb.
 
 ._crit_edge.thread:                               ; preds = %bb.a, %bb.bn, %._crit_edge, %bb.c, %bb.bl, %bb.bg, %g_strdup_inline.exit, %bb.ah, %g_strdup_inline.exit186, %g_strdup_inline.exit188, %g_strdup_inline.exit190, %g_strdup_inline.exit192, %g_strdup_inline.exit194, %g_strdup_inline.exit196
   %.0143 = phi i32 [ -1, %bb.ah ], [ -1, %._crit_edge ], [ %.1., %bb.bn ], [ 0, %bb.bg ], [ 0, %bb.bl ], [ -1, %g_strdup_inline.exit ], [ -1, %g_strdup_inline.exit186 ], [ -1, %g_strdup_inline.exit188 ], [ -1, %g_strdup_inline.exit190 ], [ -1, %g_strdup_inline.exit196 ], [ -1, %g_strdup_inline.exit194 ], [ -1, %g_strdup_inline.exit192 ], [ -1, %bb.c ], [ -1, %bb.a ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.54.sroa.10)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   ret i32 %.0143
 }

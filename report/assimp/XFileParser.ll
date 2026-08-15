@@ -204,7 +204,6 @@ bb.c:                                             ; preds = %bb.a
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZNSt6vectorI9aiColor4tIfESaIS1_EE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPS1_S3_EEmRKS1_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, i64 noundef %2, ptr noundef nonnull align 4 dereferenceable(16) %3) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.9 = alloca [15 x i8], align 1            ; 14 uses
   %.not = icmp eq i64 %2, 0
   br i1 %.not, label %bb.n, label %bb.b
 
@@ -221,10 +220,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not65, label %bb.j, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.9)
   %.sroa.4.8.copyload = load i8, ptr %3, align 4  ; 11 uses
   %.sroa.9.8..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 1
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(15) %.sroa.9, ptr noundef nonnull align 1 dereferenceable(15) %.sroa.9.8..sroa_idx, i64 15, i1 false)
+  %.sroa.9.sroa.0.0.copyload = load <15 x i8>, ptr %.sroa.9.8..sroa_idx, align 1 ; 11 uses
   %i.i = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.j = sub i64 %i.f, %i.i                       ; 3 uses
   %i.k = ashr exact i64 %i.j, 4                   ; 3 uses
@@ -323,7 +321,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
   %prol.iter144 = phi i64 [ %prol.iter144.next, %.lr.ph.i.i.i.prol ], [ 0, %bb.h ]
   store i8 %.sroa.4.8.copyload, ptr %.06.i.i.i.prol, align 4
   %.sroa.9.8..06.i.i.i.sroa_idx.prol = getelementptr inbounds nuw i8, ptr %.06.i.i.i.prol, i64 1
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(15) %.sroa.9.8..06.i.i.i.sroa_idx.prol, ptr noundef nonnull align 1 dereferenceable(15) %.sroa.9, i64 15, i1 false)
+  store <15 x i8> %.sroa.9.sroa.0.0.copyload, ptr %.sroa.9.8..06.i.i.i.sroa_idx.prol, align 1
   %i.ao = getelementptr inbounds nuw i8, ptr %.06.i.i.i.prol, i64 16 ; 2 uses
   %prol.iter144.next = add i64 %prol.iter144, 1   ; 2 uses
   %prol.iter144.cmp.not = icmp eq i64 %prol.iter144.next, %xtraiter142
@@ -332,28 +330,28 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
 .lr.ph.i.i.i.prol.loopexit:                       ; preds = %.lr.ph.i.i.i.prol, %bb.h
   %.06.i.i.i.unr = phi ptr [ %1, %bb.h ], [ %i.ao, %.lr.ph.i.i.i.prol ]
   %i.ap = icmp ult i64 %i.al, 48
-  br i1 %i.ap, label %_ZSt4fillIP9aiColor4tIfES1_EvT_S3_RKT0_.exit, label %.lr.ph.i.i.i
+  br i1 %i.ap, label %bb.n, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i.prol.loopexit, %.lr.ph.i.i.i
   %.06.i.i.i = phi ptr [ %i.at, %.lr.ph.i.i.i ], [ %.06.i.i.i.unr, %.lr.ph.i.i.i.prol.loopexit ] ; 9 uses
   store i8 %.sroa.4.8.copyload, ptr %.06.i.i.i, align 4
   %.sroa.9.8..06.i.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 1
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(15) %.sroa.9.8..06.i.i.i.sroa_idx, ptr noundef nonnull align 1 dereferenceable(15) %.sroa.9, i64 15, i1 false)
+  store <15 x i8> %.sroa.9.sroa.0.0.copyload, ptr %.sroa.9.8..06.i.i.i.sroa_idx, align 1
   %i.aq = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 16
   store i8 %.sroa.4.8.copyload, ptr %i.aq, align 4
   %.sroa.9.8..06.i.i.i.sroa_idx.1 = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 17
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(15) %.sroa.9.8..06.i.i.i.sroa_idx.1, ptr noundef nonnull align 1 dereferenceable(15) %.sroa.9, i64 15, i1 false)
+  store <15 x i8> %.sroa.9.sroa.0.0.copyload, ptr %.sroa.9.8..06.i.i.i.sroa_idx.1, align 1
   %i.ar = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 32
   store i8 %.sroa.4.8.copyload, ptr %i.ar, align 4
   %.sroa.9.8..06.i.i.i.sroa_idx.2 = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 33
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(15) %.sroa.9.8..06.i.i.i.sroa_idx.2, ptr noundef nonnull align 1 dereferenceable(15) %.sroa.9, i64 15, i1 false)
+  store <15 x i8> %.sroa.9.sroa.0.0.copyload, ptr %.sroa.9.8..06.i.i.i.sroa_idx.2, align 1
   %i.as = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 48
   store i8 %.sroa.4.8.copyload, ptr %i.as, align 4
   %.sroa.9.8..06.i.i.i.sroa_idx.3 = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 49
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(15) %.sroa.9.8..06.i.i.i.sroa_idx.3, ptr noundef nonnull align 1 dereferenceable(15) %.sroa.9, i64 15, i1 false)
+  store <15 x i8> %.sroa.9.sroa.0.0.copyload, ptr %.sroa.9.8..06.i.i.i.sroa_idx.3, align 1
   %i.at = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 64 ; 2 uses
   %.not.i.i.i.3 = icmp eq ptr %i.at, %i.ak
-  br i1 %.not.i.i.i.3, label %_ZSt4fillIP9aiColor4tIfES1_EvT_S3_RKT0_.exit, label %.lr.ph.i.i.i, !llvm.loop !118
+  br i1 %.not.i.i.i.3, label %bb.n, label %.lr.ph.i.i.i, !llvm.loop !118
 
 bb.i:                                             ; preds = %bb.c
   %i.au = sub nuw i64 %2, %i.k                    ; 4 uses
@@ -371,7 +369,7 @@ bb.i:                                             ; preds = %bb.c
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.i.i.i.prol ], [ 0, %.lr.ph.i.i.i.i.preheader ]
   store i8 %.sroa.4.8.copyload, ptr %.09.i.i.i.i.prol, align 4
   %.sroa.9.8..09.i.i.i.i.sroa_idx.prol = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.prol, i64 1
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(15) %.sroa.9.8..09.i.i.i.i.sroa_idx.prol, ptr noundef nonnull align 1 dereferenceable(15) %.sroa.9, i64 15, i1 false)
+  store <15 x i8> %.sroa.9.sroa.0.0.copyload, ptr %.sroa.9.8..09.i.i.i.i.sroa_idx.prol, align 1
   %i.av = add i64 %.068.i.i.i.i.prol, -1          ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.prol, i64 16 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
@@ -391,19 +389,19 @@ bb.i:                                             ; preds = %bb.c
   %.068.i.i.i.i = phi i64 [ %i.bc, %.lr.ph.i.i.i.i ], [ %.068.i.i.i.i.unr, %.lr.ph.i.i.i.i.prol.loopexit ]
   store i8 %.sroa.4.8.copyload, ptr %.09.i.i.i.i, align 4
   %.sroa.9.8..09.i.i.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i, i64 1
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(15) %.sroa.9.8..09.i.i.i.i.sroa_idx, ptr noundef nonnull align 1 dereferenceable(15) %.sroa.9, i64 15, i1 false)
+  store <15 x i8> %.sroa.9.sroa.0.0.copyload, ptr %.sroa.9.8..09.i.i.i.i.sroa_idx, align 1
   %i.az = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i, i64 16
   store i8 %.sroa.4.8.copyload, ptr %i.az, align 4
   %.sroa.9.8..09.i.i.i.i.sroa_idx.1 = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i, i64 17
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(15) %.sroa.9.8..09.i.i.i.i.sroa_idx.1, ptr noundef nonnull align 1 dereferenceable(15) %.sroa.9, i64 15, i1 false)
+  store <15 x i8> %.sroa.9.sroa.0.0.copyload, ptr %.sroa.9.8..09.i.i.i.i.sroa_idx.1, align 1
   %i.ba = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i, i64 32
   store i8 %.sroa.4.8.copyload, ptr %i.ba, align 4
   %.sroa.9.8..09.i.i.i.i.sroa_idx.2 = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i, i64 33
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(15) %.sroa.9.8..09.i.i.i.i.sroa_idx.2, ptr noundef nonnull align 1 dereferenceable(15) %.sroa.9, i64 15, i1 false)
+  store <15 x i8> %.sroa.9.sroa.0.0.copyload, ptr %.sroa.9.8..09.i.i.i.i.sroa_idx.2, align 1
   %i.bb = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i, i64 48
   store i8 %.sroa.4.8.copyload, ptr %i.bb, align 4
   %.sroa.9.8..09.i.i.i.i.sroa_idx.3 = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i, i64 49
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(15) %.sroa.9.8..09.i.i.i.i.sroa_idx.3, ptr noundef nonnull align 1 dereferenceable(15) %.sroa.9, i64 15, i1 false)
+  store <15 x i8> %.sroa.9.sroa.0.0.copyload, ptr %.sroa.9.8..09.i.i.i.i.sroa_idx.3, align 1
   %i.bc = add i64 %.068.i.i.i.i, -4               ; 2 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i, i64 64 ; 2 uses
   %.not.i.i.i.i.3 = icmp eq i64 %i.bc, 0
@@ -418,7 +416,7 @@ _ZSt24__uninitialized_fill_n_aIP9aiColor4tIfEmS1_S1_ET_S3_T0_RKT1_RSaIT2_E.exit:
 _ZSt22__uninitialized_move_aIP9aiColor4tIfES2_SaIS1_EET0_T_S5_S4_RT1_.exit75.thread: ; preds = %_ZSt24__uninitialized_fill_n_aIP9aiColor4tIfEmS1_S1_ET_S3_T0_RKT1_RSaIT2_E.exit
   %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 %i.j
   store ptr %i.bf, ptr %i.c, align 8
-  br label %_ZSt4fillIP9aiColor4tIfES1_EvT_S3_RKT0_.exit
+  br label %bb.n
 
 .lr.ph.i.i.i.i.i70:                               ; preds = %_ZSt24__uninitialized_fill_n_aIP9aiColor4tIfEmS1_S1_ET_S3_T0_RKT1_RSaIT2_E.exit, %.lr.ph.i.i.i.i.i70
   %.013.i.i.i.i.i71 = phi ptr [ %i.bh, %.lr.ph.i.i.i.i.i70 ], [ %i.be, %_ZSt24__uninitialized_fill_n_aIP9aiColor4tIfEmS1_S1_ET_S3_T0_RKT1_RSaIT2_E.exit ] ; 2 uses
@@ -439,14 +437,10 @@ _ZSt22__uninitialized_move_aIP9aiColor4tIfES2_SaIS1_EET0_T_S5_S4_RT1_.exit75: ; 
   %.06.i.i.i78 = phi ptr [ %i.bk, %.lr.ph.i.i.i77 ], [ %1, %_ZSt22__uninitialized_move_aIP9aiColor4tIfES2_SaIS1_EET0_T_S5_S4_RT1_.exit75 ] ; 3 uses
   store i8 %.sroa.4.8.copyload, ptr %.06.i.i.i78, align 4
   %.sroa.9.8..06.i.i.i78.sroa_idx = getelementptr inbounds nuw i8, ptr %.06.i.i.i78, i64 1
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(15) %.sroa.9.8..06.i.i.i78.sroa_idx, ptr noundef nonnull align 1 dereferenceable(15) %.sroa.9, i64 15, i1 false)
+  store <15 x i8> %.sroa.9.sroa.0.0.copyload, ptr %.sroa.9.8..06.i.i.i78.sroa_idx, align 1
   %i.bk = getelementptr inbounds nuw i8, ptr %.06.i.i.i78, i64 16 ; 2 uses
   %.not.i.i.i79 = icmp eq ptr %i.bk, %i.d
-  br i1 %.not.i.i.i79, label %_ZSt4fillIP9aiColor4tIfES1_EvT_S3_RKT0_.exit, label %.lr.ph.i.i.i77, !llvm.loop !118
-
-_ZSt4fillIP9aiColor4tIfES1_EvT_S3_RKT0_.exit:     ; preds = %.lr.ph.i.i.i77, %.lr.ph.i.i.i.prol.loopexit, %.lr.ph.i.i.i, %_ZSt22__uninitialized_move_aIP9aiColor4tIfES2_SaIS1_EET0_T_S5_S4_RT1_.exit75.thread
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.9)
-  br label %bb.n
+  br i1 %.not.i.i.i79, label %bb.n, label %.lr.ph.i.i.i77, !llvm.loop !118
 
 bb.j:                                             ; preds = %bb.b
   %i.bl = load ptr, ptr %0, align 8               ; 5 uses
@@ -563,7 +557,7 @@ _ZNSt12_Vector_baseI9aiColor4tIfESaIS1_EE13_M_deallocateEPS1_m.exit: ; preds = %
   store ptr %i.cr, ptr %i.a, align 8
   br label %bb.n
 
-bb.n:                                             ; preds = %_ZSt4fillIP9aiColor4tIfES1_EvT_S3_RKT0_.exit, %_ZNSt12_Vector_baseI9aiColor4tIfESaIS1_EE13_M_deallocateEPS1_m.exit, %bb.a
+bb.n:                                             ; preds = %_ZSt22__uninitialized_move_aIP9aiColor4tIfES2_SaIS1_EET0_T_S5_S4_RT1_.exit75.thread, %.lr.ph.i.i.i, %.lr.ph.i.i.i.prol.loopexit, %.lr.ph.i.i.i77, %_ZNSt12_Vector_baseI9aiColor4tIfESaIS1_EE13_M_deallocateEPS1_m.exit, %bb.a
   ret void
 }
 

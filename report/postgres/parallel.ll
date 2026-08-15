@@ -201,7 +201,6 @@ bb.a:
   %i.b = alloca i32, align 4                      ; 3 uses
   %i.c = alloca i32, align 4                      ; 4 uses
   %i.d = alloca i32, align 4                      ; 5 uses
-  %.sroa.0.i.i.i = alloca [16 x i64], align 8     ; 4 uses
   %3 = alloca %struct.fd_set, align 8             ; 10 uses
   %4 = alloca %struct.timeval, align 8            ; 5 uses
   %i.e = icmp eq i32 %2, 1
@@ -265,33 +264,28 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br i1 %.0, label %bb.e, label %bb.h
 
 bb.e:                                             ; preds = %._crit_edge.i.i
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(128) %.sroa.0.i.i.i, ptr noundef nonnull align 8 dereferenceable(128) %3, i64 128, i1 false)
+  %.sroa.0.i.i.i.sroa.0.0.copyload = load <16 x i64>, ptr %3, align 8
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.g, %bb.e
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(128) %3, ptr noundef nonnull align 8 dereferenceable(128) %.sroa.0.i.i.i, i64 128, i1 false)
-  %i.y = call i32 @select(i32 noundef %.046.lcssa.i.i, ptr noundef nonnull %3, ptr noundef null, ptr noundef null, ptr noundef null) #17 ; 2 uses
+  store <16 x i64> %.sroa.0.i.i.i.sroa.0.0.copyload, ptr %3, align 8
+  %i.y = call i32 @select(i32 noundef %.046.lcssa.i.i, ptr noundef nonnull %3, ptr noundef null, ptr noundef null, ptr noundef null) #17 ; 3 uses
   %i.z = icmp slt i32 %i.y, 0
-  br i1 %i.z, label %bb.g, label %select_loop.exit.i.i
+  br i1 %i.z, label %bb.g, label %bb.i
 
 bb.g:                                             ; preds = %bb.f
   %i.aa = tail call ptr @__errno_location() #20
   %i.ab = load i32, ptr %i.aa, align 4
   %i.ac = icmp eq i32 %i.ab, 4
-  br i1 %i.ac, label %bb.f, label %select_loop.exit.i.i
-
-select_loop.exit.i.i:                             ; preds = %bb.g, %bb.f
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i.i)
-  br label %bb.i
+  br i1 %i.ac, label %bb.f, label %bb.i
 
 bb.h:                                             ; preds = %._crit_edge.i.i
   %i.ad = call i32 @select(i32 noundef %.046.lcssa.i.i, ptr noundef nonnull %3, ptr noundef null, ptr noundef null, ptr noundef nonnull %4) #17 ; 2 uses
   %i.ae = icmp eq i32 %i.ad, 0
   br i1 %i.ae, label %getMessageFromWorker.exit.thread.i, label %bb.i
 
-bb.i:                                             ; preds = %bb.h, %select_loop.exit.i.i
-  %.143.i.i = phi i32 [ %i.y, %select_loop.exit.i.i ], [ %i.ad, %bb.h ]
+bb.i:                                             ; preds = %bb.f, %bb.g, %bb.h
+  %.143.i.i = phi i32 [ %i.ad, %bb.h ], [ %i.y, %bb.g ], [ %i.y, %bb.f ]
   %i.af = icmp slt i32 %.143.i.i, 0
   br i1 %i.af, label %bb.j, label %.preheader.i.i
 
@@ -693,9 +687,6 @@ declare i32 @wait(ptr noundef) local_unnamed_addr #2
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #13
 
 declare i32 @select(i32 noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #2
-
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
-declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #3
 
 ; Function Attrs: mustprogress nofree nosync nounwind willreturn memory(none)
 declare ptr @__errno_location() local_unnamed_addr #14

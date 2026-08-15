@@ -204,13 +204,9 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZNK6hermes18SourceMapGenerator25getInputSegmentForSegmentERKNS_9SourceMap7SegmentE(ptr dead_on_unwind noalias nofree writable writeonly sret(%"struct.std::pair") align 8 captures(none) initializes((0, 40)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(224) %1, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(28) %2) local_unnamed_addr #0 align 2 {
 bb.a:
-  %.sroa.0 = alloca [28 x i8], align 4            ; 4 uses
-  %.sroa.5 = alloca [3 x i8], align 1             ; 4 uses
   %3 = alloca %"class.llvh::Optional.18", align 4 ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.b = load i8, ptr %i.a, align 4, !tbaa !86, !range !17, !noundef !18
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5)
   %i.c = trunc nuw i8 %i.b to i1
   br i1 %i.c, label %bb.b, label %bb.e
 
@@ -245,26 +241,26 @@ bb.d:                                             ; preds = %bb.c
   %i.w = load i32, ptr %i.v, align 4, !tbaa !104
   %i.x = add nsw i32 %i.w, 1
   call void @_ZNK6hermes9SourceMap20getSegmentForAddressEjj(ptr dead_on_unwind nonnull writable sret(%"class.llvh::Optional.18") align 4 %3, ptr noundef nonnull align 8 dereferenceable(104) %i.r, i32 noundef %i.u, i32 noundef %i.x) #16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %.sroa.0, ptr noundef nonnull align 4 dereferenceable(28) %3, i64 28, i1 false)
+  %.sroa.0.sroa.0.0.copyload = load <28 x i8>, ptr %3, align 4
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 28
   %.sroa.4.0.copyload = load i8, ptr %.sroa.4.0..sroa_idx, align 4
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 29
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %.sroa.5, ptr noundef nonnull align 1 dereferenceable(3) %.sroa.5.0..sroa_idx, i64 3, i1 false)
+  %.sroa.5.sroa.0.0.copyload = load <3 x i8>, ptr %.sroa.5.0..sroa_idx, align 1
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #16
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b, %bb.a
+  %.sroa.0.sroa.0.0 = phi <28 x i8> [ undef, %bb.c ], [ %.sroa.0.sroa.0.0.copyload, %bb.d ], [ undef, %bb.b ], [ undef, %bb.a ]
+  %.sroa.5.sroa.0.0 = phi <3 x i8> [ undef, %bb.c ], [ %.sroa.5.sroa.0.0.copyload, %bb.d ], [ undef, %bb.b ], [ undef, %bb.a ]
   %.0 = phi ptr [ null, %bb.c ], [ %i.r, %bb.d ], [ null, %bb.b ], [ null, %bb.a ]
   %.sroa.4.0 = phi i8 [ 0, %bb.c ], [ %.sroa.4.0.copyload, %bb.d ], [ 0, %bb.b ], [ 0, %bb.a ]
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %0, ptr noundef nonnull align 4 dereferenceable(28) %.sroa.0, i64 28, i1 false)
+  store <28 x i8> %.sroa.0.sroa.0.0, ptr %0, align 8
   %.sroa.4.0..sroa_idx7 = getelementptr inbounds nuw i8, ptr %0, i64 28
   store i8 %.sroa.4.0, ptr %.sroa.4.0..sroa_idx7, align 4
   %.sroa.5.0..sroa_idx9 = getelementptr inbounds nuw i8, ptr %0, i64 29
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %.sroa.5.0..sroa_idx9, ptr noundef nonnull align 1 dereferenceable(3) %.sroa.5, i64 3, i1 false)
+  store <3 x i8> %.sroa.5.sroa.0.0, ptr %.sroa.5.0..sroa_idx9, align 1
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 32
   store ptr %.0, ptr %i.y, align 8, !tbaa !105, !alias.scope !111
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5)
   ret void
 }
 
@@ -650,7 +646,6 @@ _ZNSt6vectorIN4llvh9StringRefESaIS1_EEC2ISt15_Deque_iteratorINSt7__cxx1112basic_
 define hidden void @_ZNK6hermes18SourceMapGenerator25mergedWithInputSourceMapsEv(ptr dead_on_unwind noalias writable sret(%"class.hermes::SourceMapGenerator") align 8 %0, ptr noundef nonnull align 8 dereferenceable(224) %1) local_unnamed_addr #0 align 2 {
 bb.a:
   %2 = alloca %"class.llvh::Optional.18", align 4 ; 8 uses
-  %.sroa.15 = alloca [3 x i8], align 1            ; 7 uses
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %4 = alloca %"class.llvh::Optional", align 16   ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 88
@@ -928,10 +923,9 @@ _ZNK6hermes18SourceMapGenerator25getInputSegmentForSegmentERKNS_9SourceMap7Segme
   %.sroa.4.0.copyload.i = load i8, ptr %.sroa.4.0..sroa_idx.i, align 4, !noalias !173
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #16, !noalias !173
   %i.dy = trunc nuw i8 %.sroa.4.0.copyload.i to i1
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.15)
   %.sroa.075.0.copyload = load i32, ptr %.sroa.0123.0171, align 4 ; 2 uses
   %.sroa.15.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0123.0171, i64 25
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %.sroa.15, ptr noundef nonnull align 1 dereferenceable(3) %.sroa.15.0..sroa_idx, i64 3, i1 false)
+  %.sroa.15.sroa.0.0.copyload = load <3 x i8>, ptr %.sroa.15.0..sroa_idx, align 1 ; 2 uses
   %i.dz = trunc nuw i8 %.sroa.0.i.sroa.8.0.copyload to i1
   %or.cond = select i1 %i.dy, i1 %i.dz, i1 false
   br i1 %or.cond, label %bb.k, label %_ZN4llvh8OptionalIN6hermes6parser15JSONSharedValueEED2Ev.exit55
@@ -1313,10 +1307,9 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
   br label %_ZN4llvh8OptionalIN6hermes6parser15JSONSharedValueEED2Ev.exit55
 
 bb.bb:                                            ; preds = %.lr.ph, %bb.i, %bb.j
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.15)
   %.sroa.075.0.copyload269 = load i32, ptr %.sroa.0123.0171, align 4 ; 7 uses
   %.sroa.15.0..sroa_idx271 = getelementptr inbounds nuw i8, ptr %.sroa.0123.0171, i64 25
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %.sroa.15, ptr noundef nonnull align 1 dereferenceable(3) %.sroa.15.0..sroa_idx271, i64 3, i1 false)
+  %.sroa.15.sroa.0.0.copyload363 = load <3 x i8>, ptr %.sroa.15.0..sroa_idx271, align 1 ; 7 uses
   %i.jd = load i8, ptr %i.dc, align 4, !tbaa !86, !range !17, !noundef !18
   %i.je = trunc nuw i8 %i.jd to i1
   br i1 %i.je, label %bb.bc, label %_ZN4llvh8OptionalIN6hermes6parser15JSONSharedValueEED2Ev.exit55
@@ -1560,15 +1553,16 @@ bb.cb:                                            ; preds = %_ZN9__gnu_cxx27__ex
   br label %_ZN4llvh8OptionalIN6hermes6parser15JSONSharedValueEED2Ev.exit55
 
 _ZN4llvh8OptionalIN6hermes6parser15JSONSharedValueEED2Ev.exit55: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i, %_ZNK6hermes18SourceMapGenerator25getInputSegmentForSegmentERKNS_9SourceMap7SegmentE.exit, %_ZN6hermes18SourceMapGenerator9addSourceEN4llvh9StringRefENS1_8OptionalINS_6parser15JSONSharedValueEEE.exit50.thread351, %bb.cb, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i53, %bb.bx, %bb.bv, %_ZN6hermes18SourceMapGenerator9addSourceEN4llvh9StringRefENS1_8OptionalINS_6parser15JSONSharedValueEEE.exit50, %bb.bb
-  %.sroa.063.2317 = phi ptr [ %.sroa.063.1179, %_ZNK6hermes18SourceMapGenerator25getInputSegmentForSegmentERKNS_9SourceMap7SegmentE.exit ], [ %.sroa.063.3, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i ], [ %.sroa.063.1179, %bb.bb ], [ %.sroa.063.1179, %_ZN6hermes18SourceMapGenerator9addSourceEN4llvh9StringRefENS1_8OptionalINS_6parser15JSONSharedValueEEE.exit50 ], [ %.sroa.063.1179, %bb.bv ], [ %.sroa.063.1179, %bb.bx ], [ %.sroa.063.1179, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i53 ], [ %.sroa.063.1179, %bb.cb ], [ %.sroa.063.1179, %_ZN6hermes18SourceMapGenerator9addSourceEN4llvh9StringRefENS1_8OptionalINS_6parser15JSONSharedValueEEE.exit50.thread351 ] ; 2 uses
-  %.sroa.3.2315 = phi ptr [ %.sroa.3.1178, %_ZNK6hermes18SourceMapGenerator25getInputSegmentForSegmentERKNS_9SourceMap7SegmentE.exit ], [ %.sroa.3.3, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i ], [ %.sroa.3.1178, %bb.bb ], [ %.sroa.3.1178, %_ZN6hermes18SourceMapGenerator9addSourceEN4llvh9StringRefENS1_8OptionalINS_6parser15JSONSharedValueEEE.exit50 ], [ %.sroa.3.1178, %bb.bv ], [ %.sroa.3.1178, %bb.bx ], [ %.sroa.3.1178, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i53 ], [ %.sroa.3.1178, %bb.cb ], [ %.sroa.3.1178, %_ZN6hermes18SourceMapGenerator9addSourceEN4llvh9StringRefENS1_8OptionalINS_6parser15JSONSharedValueEEE.exit50.thread351 ] ; 2 uses
-  %.sroa.5.2313 = phi ptr [ %.sroa.5.1177, %_ZNK6hermes18SourceMapGenerator25getInputSegmentForSegmentERKNS_9SourceMap7SegmentE.exit ], [ %.sroa.5.3, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i ], [ %.sroa.5.1177, %bb.bb ], [ %.sroa.5.1177, %_ZN6hermes18SourceMapGenerator9addSourceEN4llvh9StringRefENS1_8OptionalINS_6parser15JSONSharedValueEEE.exit50 ], [ %.sroa.5.1177, %bb.bv ], [ %.sroa.5.1177, %bb.bx ], [ %.sroa.5.1177, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i53 ], [ %.sroa.5.1177, %bb.cb ], [ %.sroa.5.1177, %_ZN6hermes18SourceMapGenerator9addSourceEN4llvh9StringRefENS1_8OptionalINS_6parser15JSONSharedValueEEE.exit50.thread351 ] ; 2 uses
-  %.sroa.075.0.copyload278299 = phi i32 [ %.sroa.075.0.copyload, %_ZNK6hermes18SourceMapGenerator25getInputSegmentForSegmentERKNS_9SourceMap7SegmentE.exit ], [ %.sroa.075.0.copyload, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i ], [ %.sroa.075.0.copyload269, %bb.bb ], [ %.sroa.075.0.copyload269, %_ZN6hermes18SourceMapGenerator9addSourceEN4llvh9StringRefENS1_8OptionalINS_6parser15JSONSharedValueEEE.exit50 ], [ %.sroa.075.0.copyload269, %bb.bv ], [ %.sroa.075.0.copyload269, %bb.bx ], [ %.sroa.075.0.copyload269, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i53 ], [ %.sroa.075.0.copyload269, %bb.cb ], [ %.sroa.075.0.copyload269, %_ZN6hermes18SourceMapGenerator9addSourceEN4llvh9StringRefENS1_8OptionalINS_6parser15JSONSharedValueEEE.exit50.thread351 ] ; 2 uses
-  %.sroa.12.1 = phi i8 [ 0, %_ZNK6hermes18SourceMapGenerator25getInputSegmentForSegmentERKNS_9SourceMap7SegmentE.exit ], [ 1, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i ], [ 0, %bb.bb ], [ 1, %_ZN6hermes18SourceMapGenerator9addSourceEN4llvh9StringRefENS1_8OptionalINS_6parser15JSONSharedValueEEE.exit50 ], [ 1, %bb.bv ], [ 1, %bb.bx ], [ 1, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i53 ], [ 1, %bb.cb ], [ 1, %_ZN6hermes18SourceMapGenerator9addSourceEN4llvh9StringRefENS1_8OptionalINS_6parser15JSONSharedValueEEE.exit50.thread351 ] ; 2 uses
-  %.sroa.11.1 = phi i64 [ 0, %_ZNK6hermes18SourceMapGenerator25getInputSegmentForSegmentERKNS_9SourceMap7SegmentE.exit ], [ 0, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i ], [ 0, %bb.bb ], [ %.sroa.11.4.copyload, %_ZN6hermes18SourceMapGenerator9addSourceEN4llvh9StringRefENS1_8OptionalINS_6parser15JSONSharedValueEEE.exit50 ], [ %.sroa.11.4.copyload, %bb.bv ], [ %.sroa.11.4.copyload, %bb.bx ], [ %.sroa.11.4.copyload, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i53 ], [ %.sroa.11.4.copyload, %bb.cb ], [ %.sroa.11.4.copyload, %_ZN6hermes18SourceMapGenerator9addSourceEN4llvh9StringRefENS1_8OptionalINS_6parser15JSONSharedValueEEE.exit50.thread351 ] ; 2 uses
-  %.sroa.10.1 = phi i32 [ undef, %_ZNK6hermes18SourceMapGenerator25getInputSegmentForSegmentERKNS_9SourceMap7SegmentE.exit ], [ %.sroa.0.i.sroa.6.0.copyload, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i ], [ undef, %bb.bb ], [ %.sroa.10.4.copyload, %_ZN6hermes18SourceMapGenerator9addSourceEN4llvh9StringRefENS1_8OptionalINS_6parser15JSONSharedValueEEE.exit50 ], [ %.sroa.10.4.copyload, %bb.bv ], [ %.sroa.10.4.copyload, %bb.bx ], [ %.sroa.10.4.copyload, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i53 ], [ %.sroa.10.4.copyload, %bb.cb ], [ %.sroa.10.4.copyload, %_ZN6hermes18SourceMapGenerator9addSourceEN4llvh9StringRefENS1_8OptionalINS_6parser15JSONSharedValueEEE.exit50.thread351 ] ; 2 uses
-  %.sroa.9.1 = phi i32 [ undef, %_ZNK6hermes18SourceMapGenerator25getInputSegmentForSegmentERKNS_9SourceMap7SegmentE.exit ], [ %.sroa.0.i.sroa.5.0.copyload, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i ], [ undef, %bb.bb ], [ %.sroa.9.4.copyload, %_ZN6hermes18SourceMapGenerator9addSourceEN4llvh9StringRefENS1_8OptionalINS_6parser15JSONSharedValueEEE.exit50 ], [ %.sroa.9.4.copyload, %bb.bv ], [ %.sroa.9.4.copyload, %bb.bx ], [ %.sroa.9.4.copyload, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i53 ], [ %.sroa.9.4.copyload, %bb.cb ], [ %.sroa.9.4.copyload, %_ZN6hermes18SourceMapGenerator9addSourceEN4llvh9StringRefENS1_8OptionalINS_6parser15JSONSharedValueEEE.exit50.thread351 ] ; 2 uses
-  %.sroa.578.1 = phi i32 [ undef, %_ZNK6hermes18SourceMapGenerator25getInputSegmentForSegmentERKNS_9SourceMap7SegmentE.exit ], [ %i.iy, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i ], [ undef, %bb.bb ], [ %i.lu, %_ZN6hermes18SourceMapGenerator9addSourceEN4llvh9StringRefENS1_8OptionalINS_6parser15JSONSharedValueEEE.exit50 ], [ %i.lv, %bb.bv ], [ %i.lv, %bb.bx ], [ %i.lv, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i53 ], [ %i.lv, %bb.cb ], [ %i.lm, %_ZN6hermes18SourceMapGenerator9addSourceEN4llvh9StringRefENS1_8OptionalINS_6parser15JSONSharedValueEEE.exit50.thread351 ] ; 2 uses
+  %.sroa.15.sroa.0.0 = phi <3 x i8> [ %.sroa.15.sroa.0.0.copyload363, %bb.bv ], [ %.sroa.15.sroa.0.0.copyload363, %bb.bx ], [ %.sroa.15.sroa.0.0.copyload363, %bb.cb ], [ %.sroa.15.sroa.0.0.copyload363, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i53 ], [ %.sroa.15.sroa.0.0.copyload363, %_ZN6hermes18SourceMapGenerator9addSourceEN4llvh9StringRefENS1_8OptionalINS_6parser15JSONSharedValueEEE.exit50 ], [ %.sroa.15.sroa.0.0.copyload363, %_ZN6hermes18SourceMapGenerator9addSourceEN4llvh9StringRefENS1_8OptionalINS_6parser15JSONSharedValueEEE.exit50.thread351 ], [ %.sroa.15.sroa.0.0.copyload363, %bb.bb ], [ %.sroa.15.sroa.0.0.copyload, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i ], [ %.sroa.15.sroa.0.0.copyload, %_ZNK6hermes18SourceMapGenerator25getInputSegmentForSegmentERKNS_9SourceMap7SegmentE.exit ] ; 2 uses
+  %.sroa.063.2317 = phi ptr [ %.sroa.063.1179, %bb.bv ], [ %.sroa.063.1179, %bb.bx ], [ %.sroa.063.1179, %bb.cb ], [ %.sroa.063.1179, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i53 ], [ %.sroa.063.1179, %_ZN6hermes18SourceMapGenerator9addSourceEN4llvh9StringRefENS1_8OptionalINS_6parser15JSONSharedValueEEE.exit50 ], [ %.sroa.063.1179, %_ZN6hermes18SourceMapGenerator9addSourceEN4llvh9StringRefENS1_8OptionalINS_6parser15JSONSharedValueEEE.exit50.thread351 ], [ %.sroa.063.1179, %bb.bb ], [ %.sroa.063.3, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i ], [ %.sroa.063.1179, %_ZNK6hermes18SourceMapGenerator25getInputSegmentForSegmentERKNS_9SourceMap7SegmentE.exit ] ; 2 uses
+  %.sroa.3.2315 = phi ptr [ %.sroa.3.1178, %bb.bv ], [ %.sroa.3.1178, %bb.bx ], [ %.sroa.3.1178, %bb.cb ], [ %.sroa.3.1178, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i53 ], [ %.sroa.3.1178, %_ZN6hermes18SourceMapGenerator9addSourceEN4llvh9StringRefENS1_8OptionalINS_6parser15JSONSharedValueEEE.exit50 ], [ %.sroa.3.1178, %_ZN6hermes18SourceMapGenerator9addSourceEN4llvh9StringRefENS1_8OptionalINS_6parser15JSONSharedValueEEE.exit50.thread351 ], [ %.sroa.3.1178, %bb.bb ], [ %.sroa.3.3, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i ], [ %.sroa.3.1178, %_ZNK6hermes18SourceMapGenerator25getInputSegmentForSegmentERKNS_9SourceMap7SegmentE.exit ] ; 2 uses
+  %.sroa.5.2313 = phi ptr [ %.sroa.5.1177, %bb.bv ], [ %.sroa.5.1177, %bb.bx ], [ %.sroa.5.1177, %bb.cb ], [ %.sroa.5.1177, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i53 ], [ %.sroa.5.1177, %_ZN6hermes18SourceMapGenerator9addSourceEN4llvh9StringRefENS1_8OptionalINS_6parser15JSONSharedValueEEE.exit50 ], [ %.sroa.5.1177, %_ZN6hermes18SourceMapGenerator9addSourceEN4llvh9StringRefENS1_8OptionalINS_6parser15JSONSharedValueEEE.exit50.thread351 ], [ %.sroa.5.1177, %bb.bb ], [ %.sroa.5.3, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i ], [ %.sroa.5.1177, %_ZNK6hermes18SourceMapGenerator25getInputSegmentForSegmentERKNS_9SourceMap7SegmentE.exit ] ; 2 uses
+  %.sroa.075.0.copyload278299 = phi i32 [ %.sroa.075.0.copyload269, %bb.bv ], [ %.sroa.075.0.copyload269, %bb.bx ], [ %.sroa.075.0.copyload269, %bb.cb ], [ %.sroa.075.0.copyload269, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i53 ], [ %.sroa.075.0.copyload269, %_ZN6hermes18SourceMapGenerator9addSourceEN4llvh9StringRefENS1_8OptionalINS_6parser15JSONSharedValueEEE.exit50 ], [ %.sroa.075.0.copyload269, %_ZN6hermes18SourceMapGenerator9addSourceEN4llvh9StringRefENS1_8OptionalINS_6parser15JSONSharedValueEEE.exit50.thread351 ], [ %.sroa.075.0.copyload269, %bb.bb ], [ %.sroa.075.0.copyload, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i ], [ %.sroa.075.0.copyload, %_ZNK6hermes18SourceMapGenerator25getInputSegmentForSegmentERKNS_9SourceMap7SegmentE.exit ] ; 2 uses
+  %.sroa.12.1 = phi i8 [ 1, %bb.bv ], [ 1, %bb.bx ], [ 1, %bb.cb ], [ 1, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i53 ], [ 1, %_ZN6hermes18SourceMapGenerator9addSourceEN4llvh9StringRefENS1_8OptionalINS_6parser15JSONSharedValueEEE.exit50 ], [ 1, %_ZN6hermes18SourceMapGenerator9addSourceEN4llvh9StringRefENS1_8OptionalINS_6parser15JSONSharedValueEEE.exit50.thread351 ], [ 0, %bb.bb ], [ 1, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i ], [ 0, %_ZNK6hermes18SourceMapGenerator25getInputSegmentForSegmentERKNS_9SourceMap7SegmentE.exit ] ; 2 uses
+  %.sroa.11.1 = phi i64 [ %.sroa.11.4.copyload, %bb.bv ], [ %.sroa.11.4.copyload, %bb.bx ], [ %.sroa.11.4.copyload, %bb.cb ], [ %.sroa.11.4.copyload, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i53 ], [ %.sroa.11.4.copyload, %_ZN6hermes18SourceMapGenerator9addSourceEN4llvh9StringRefENS1_8OptionalINS_6parser15JSONSharedValueEEE.exit50 ], [ %.sroa.11.4.copyload, %_ZN6hermes18SourceMapGenerator9addSourceEN4llvh9StringRefENS1_8OptionalINS_6parser15JSONSharedValueEEE.exit50.thread351 ], [ 0, %bb.bb ], [ 0, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i ], [ 0, %_ZNK6hermes18SourceMapGenerator25getInputSegmentForSegmentERKNS_9SourceMap7SegmentE.exit ] ; 2 uses
+  %.sroa.10.1 = phi i32 [ %.sroa.10.4.copyload, %bb.bv ], [ %.sroa.10.4.copyload, %bb.bx ], [ %.sroa.10.4.copyload, %bb.cb ], [ %.sroa.10.4.copyload, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i53 ], [ %.sroa.10.4.copyload, %_ZN6hermes18SourceMapGenerator9addSourceEN4llvh9StringRefENS1_8OptionalINS_6parser15JSONSharedValueEEE.exit50 ], [ %.sroa.10.4.copyload, %_ZN6hermes18SourceMapGenerator9addSourceEN4llvh9StringRefENS1_8OptionalINS_6parser15JSONSharedValueEEE.exit50.thread351 ], [ undef, %bb.bb ], [ %.sroa.0.i.sroa.6.0.copyload, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i ], [ undef, %_ZNK6hermes18SourceMapGenerator25getInputSegmentForSegmentERKNS_9SourceMap7SegmentE.exit ] ; 2 uses
+  %.sroa.9.1 = phi i32 [ %.sroa.9.4.copyload, %bb.bv ], [ %.sroa.9.4.copyload, %bb.bx ], [ %.sroa.9.4.copyload, %bb.cb ], [ %.sroa.9.4.copyload, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i53 ], [ %.sroa.9.4.copyload, %_ZN6hermes18SourceMapGenerator9addSourceEN4llvh9StringRefENS1_8OptionalINS_6parser15JSONSharedValueEEE.exit50 ], [ %.sroa.9.4.copyload, %_ZN6hermes18SourceMapGenerator9addSourceEN4llvh9StringRefENS1_8OptionalINS_6parser15JSONSharedValueEEE.exit50.thread351 ], [ undef, %bb.bb ], [ %.sroa.0.i.sroa.5.0.copyload, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i ], [ undef, %_ZNK6hermes18SourceMapGenerator25getInputSegmentForSegmentERKNS_9SourceMap7SegmentE.exit ] ; 2 uses
+  %.sroa.578.1 = phi i32 [ %i.lv, %bb.bv ], [ %i.lv, %bb.bx ], [ %i.lv, %bb.cb ], [ %i.lv, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i53 ], [ %i.lu, %_ZN6hermes18SourceMapGenerator9addSourceEN4llvh9StringRefENS1_8OptionalINS_6parser15JSONSharedValueEEE.exit50 ], [ %i.lm, %_ZN6hermes18SourceMapGenerator9addSourceEN4llvh9StringRefENS1_8OptionalINS_6parser15JSONSharedValueEEE.exit50.thread351 ], [ undef, %bb.bb ], [ %i.iy, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i ], [ undef, %_ZNK6hermes18SourceMapGenerator25getInputSegmentForSegmentERKNS_9SourceMap7SegmentE.exit ] ; 2 uses
   %.not.i.i = icmp eq ptr %.sroa.9129.0173, %.sroa.14132.0172
   br i1 %.not.i.i, label %bb.cd, label %bb.cc
 
@@ -1585,7 +1579,7 @@ bb.cc:                                            ; preds = %_ZN4llvh8OptionalIN
   %.sroa.12.0..sroa_idx99 = getelementptr inbounds nuw i8, ptr %.sroa.9129.0173, i64 24
   store i8 %.sroa.12.1, ptr %.sroa.12.0..sroa_idx99, align 4
   %.sroa.15.0..sroa_idx103 = getelementptr inbounds nuw i8, ptr %.sroa.9129.0173, i64 25
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %.sroa.15.0..sroa_idx103, ptr noundef nonnull align 1 dereferenceable(3) %.sroa.15, i64 3, i1 false)
+  store <3 x i8> %.sroa.15.sroa.0.0, ptr %.sroa.15.0..sroa_idx103, align 1
   br label %_ZNSt6vectorIN6hermes9SourceMap7SegmentESaIS2_EE9push_backEOS2_.exit
 
 bb.cd:                                            ; preds = %_ZN4llvh8OptionalIN6hermes6parser15JSONSharedValueEED2Ev.exit55
@@ -1623,7 +1617,7 @@ _ZNKSt6vectorIN6hermes9SourceMap7SegmentESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i:
   %.sroa.12.0..sroa_idx101 = getelementptr inbounds nuw i8, ptr %i.mx, i64 24
   store i8 %.sroa.12.1, ptr %.sroa.12.0..sroa_idx101, align 4
   %.sroa.15.0..sroa_idx104 = getelementptr inbounds nuw i8, ptr %i.mx, i64 25
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %.sroa.15.0..sroa_idx104, ptr noundef nonnull align 1 dereferenceable(3) %.sroa.15, i64 3, i1 false)
+  store <3 x i8> %.sroa.15.sroa.0.0, ptr %.sroa.15.0..sroa_idx104, align 1
   %.not10.i.i.i.i.i.i = icmp eq ptr %.sroa.0126.0174, %.sroa.9129.0173
   br i1 %.not10.i.i.i.i.i.i, label %_ZNSt6vectorIN6hermes9SourceMap7SegmentESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i
 
@@ -1654,7 +1648,6 @@ _ZNSt6vectorIN6hermes9SourceMap7SegmentESaIS2_EE9push_backEOS2_.exit: ; preds = 
   %.0.lcssa.i.i.i.i.i.i.pn = phi ptr [ %.0.lcssa.i.i.i.i.i.i, %_ZNSt6vectorIN6hermes9SourceMap7SegmentESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i ], [ %.sroa.9129.0173, %bb.cc ]
   %.sroa.0126.1 = phi ptr [ %i.mw, %_ZNSt6vectorIN6hermes9SourceMap7SegmentESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i ], [ %.sroa.0126.0174, %bb.cc ] ; 2 uses
   %.sroa.9129.1 = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i.i.pn, i64 28 ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.15)
   %i.nb = getelementptr inbounds nuw i8, ptr %.sroa.0123.0171, i64 28 ; 2 uses
   %.not139 = icmp eq ptr %i.nb, %i.ck
   br i1 %.not139, label %._crit_edge, label %.lr.ph

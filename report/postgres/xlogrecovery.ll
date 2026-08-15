@@ -201,10 +201,8 @@ bb.a:
   %i.l = alloca i32, align 4                      ; 8 uses
   %4 = alloca %struct.stat, align 8               ; 7 uses
   %5 = alloca %struct.stat, align 8               ; 3 uses
-  %.sroa.23 = alloca [20 x i8], align 4           ; 5 uses
   %6 = alloca %struct.XLogReaderRoutine, align 8  ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #18
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.23)
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
   %i.n = load i32, ptr %i.m, align 8
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 5 uses
@@ -607,7 +605,7 @@ bb.bq:                                            ; preds = %bb.bp
   %.sroa.20.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.go, i64 8
   %.sroa.20.0.copyload = load i32, ptr %.sroa.20.0..sroa_idx, align 1 ; 2 uses
   %.sroa.23.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.go, i64 12
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.23, ptr noundef nonnull align 1 dereferenceable(20) %.sroa.23.0..sroa_idx, i64 20, i1 false)
+  %.sroa.23.sroa.0.0.copyload = load <20 x i8>, ptr %.sroa.23.0..sroa_idx, align 1
   %.sroa.2339.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.go, i64 32
   %.sroa.2339.0.copyload = load i64, ptr %.sroa.2339.0..sroa_idx, align 1
   %.sroa.25.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.go, i64 40
@@ -1010,7 +1008,7 @@ bb.df:                                            ; preds = %bb.dc, %bb.dd
   %.sroa.20.0..sroa_idx31 = getelementptr inbounds nuw i8, ptr %i.mu, i64 8
   %.sroa.20.0.copyload32 = load i32, ptr %.sroa.20.0..sroa_idx31, align 1 ; 3 uses
   %.sroa.23.0..sroa_idx37 = getelementptr inbounds nuw i8, ptr %i.mu, i64 12
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.23, ptr noundef nonnull align 1 dereferenceable(20) %.sroa.23.0..sroa_idx37, i64 20, i1 false)
+  %.sroa.23.sroa.0.0.copyload298 = load <20 x i8>, ptr %.sroa.23.0..sroa_idx37, align 1 ; 2 uses
   %.sroa.2339.0..sroa_idx40 = getelementptr inbounds nuw i8, ptr %i.mu, i64 32
   %.sroa.2339.0.copyload41 = load i64, ptr %.sroa.2339.0..sroa_idx40, align 1 ; 2 uses
   %.sroa.25.0..sroa_idx45 = getelementptr inbounds nuw i8, ptr %i.mu, i64 40
@@ -1057,6 +1055,7 @@ bb.dh:                                            ; preds = %bb.dg
   unreachable
 
 bb.di:                                            ; preds = %bb.df, %bb.dg, %.critedge
+  %.sroa.23.sroa.0.0 = phi <20 x i8> [ %.sroa.23.sroa.0.0.copyload, %.critedge ], [ %.sroa.23.sroa.0.0.copyload298, %bb.dg ], [ %.sroa.23.sroa.0.0.copyload298, %bb.df ]
   %.1184186 = phi i1 [ %or.cond32.i, %.critedge ], [ false, %bb.dg ], [ false, %bb.df ]
   %.sroa.34.sroa.0.0 = phi i64 [ %i.gq, %.critedge ], [ %i.mw, %bb.dg ], [ %i.mw, %bb.df ]
   %.sroa.3277.0 = phi i32 [ %.sroa.3277.0.copyload, %.critedge ], [ %.sroa.3277.0.copyload79, %bb.dg ], [ %.sroa.3277.0.copyload79, %bb.df ] ; 2 uses
@@ -1363,7 +1362,7 @@ bb.ff:                                            ; preds = %bb.fc, %bb.fe, %bb.
   store i64 %.sroa.014.0, ptr %i.q, align 8
   store i32 %.sroa.20.0, ptr %i.r, align 8
   %.sroa.23.0..sroa_idx38 = getelementptr inbounds nuw i8, ptr %0, i64 52
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.23.0..sroa_idx38, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.23, i64 20, i1 false)
+  store <20 x i8> %.sroa.23.sroa.0.0, ptr %.sroa.23.0..sroa_idx38, align 4
   %.sroa.2339.0..sroa_idx42 = getelementptr inbounds nuw i8, ptr %0, i64 72
   store i64 %.sroa.2339.0, ptr %.sroa.2339.0..sroa_idx42, align 8
   %.sroa.25.0..sroa_idx47 = getelementptr inbounds nuw i8, ptr %0, i64 80
@@ -1457,7 +1456,6 @@ bb.fp:                                            ; preds = %bb.fn, %bb.fo
   %i.sh = zext i1 %.not.i177 to i8
   store i8 %i.sh, ptr %2, align 1
   store i8 %.1, ptr %3, align 1
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.23)
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #18
   ret void
 }

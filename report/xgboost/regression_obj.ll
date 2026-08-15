@@ -204,8 +204,6 @@ bb.a:
   %8 = alloca %"struct.xgboost::common::OptionalWeights", align 8 ; 9 uses
   %9 = alloca %"class.xgboost::HostDeviceVector", align 8 ; 8 uses
   %10 = alloca %"struct.xgboost::common::Transform<>::Evaluator.531", align 8 ; 22 uses
-  %.sroa.291 = alloca [72 x i8], align 4          ; 2 uses
-  %.sroa.493 = alloca [24 x i8], align 4          ; 2 uses
   %11 = alloca %"struct.xgboost::Context", align 8 ; 9 uses
   %12 = alloca %"struct.xgboost::collective::Result", align 8 ; 7 uses
   %13 = alloca %"class.xgboost::HostDeviceVector", align 8 ; 9 uses
@@ -341,8 +339,6 @@ _ZNSt6vectorIdSaIdEEC2EmRKdRKS0_.exit:            ; preds = %bb.f
   %.0.i.i.i.i.i.i.i179 = phi ptr [ %i.bg, %_ZNSt6vectorIdSaIdEEC2EmRKdRKS0_.exit ], [ null, %_ZN7xgboost6common19MakeOptionalWeightsENS_9DeviceOrdERKNS_16HostDeviceVectorIfEE.exit ]
   %.sroa.096.0176 = phi ptr [ %i.be, %_ZNSt6vectorIdSaIdEEC2EmRKdRKS0_.exit ], [ null, %_ZN7xgboost6common19MakeOptionalWeightsENS_9DeviceOrdERKNS_16HostDeviceVectorIfEE.exit ] ; 4 uses
   %.sroa.17.0168 = phi i64 [ %i.bh, %_ZNSt6vectorIdSaIdEEC2EmRKdRKS0_.exit ], [ 0, %_ZN7xgboost6common19MakeOptionalWeightsENS_9DeviceOrdERKNS_16HostDeviceVectorIfEE.exit ] ; 3 uses
-  %.sroa.291.8..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.291, i64 4
-  %.sroa.493.152..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.493, i64 4
   %.sroa.4126.0..sroa_idx = getelementptr inbounds nuw i8, ptr %10, i64 4
   %.sroa.6128.0..sroa_idx = getelementptr inbounds nuw i8, ptr %10, i64 80
   %.sroa.7129.0..sroa_idx = getelementptr inbounds nuw i8, ptr %10, i64 88
@@ -378,10 +374,16 @@ bb.g:                                             ; preds = %bb.f
   br label %_ZNSt6vectorIdSaIdEED2Ev.exit79
 
 bb.h:                                             ; preds = %.lr.ph, %bb.k
+  %.sroa.291.sroa.0.0 = phi <72 x i8> [ undef, %.lr.ph ], [ %.sroa.291.sroa.0.4.vecblend, %bb.k ]
+  %.sroa.493.sroa.0.0 = phi <24 x i8> [ undef, %.lr.ph ], [ %.sroa.493.sroa.0.4.vecblend, %bb.k ]
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.k ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #21
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(68) %.sroa.291.8..sroa_idx, ptr noundef nonnull align 8 dereferenceable(68) %6, i64 68, i1 false), !tbaa.struct !908
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.493.152..sroa_idx, ptr noundef nonnull align 8 dereferenceable(20) %8, i64 20, i1 false), !tbaa.struct !1693
+  %.sroa.291.sroa.0.4.copyload = load <68 x i8>, ptr %6, align 8
+  %.sroa.291.sroa.0.4.vec.expand = shufflevector <68 x i8> %.sroa.291.sroa.0.4.copyload, <68 x i8> poison, <72 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 32, i32 33, i32 34, i32 35, i32 36, i32 37, i32 38, i32 39, i32 40, i32 41, i32 42, i32 43, i32 44, i32 45, i32 46, i32 47, i32 48, i32 49, i32 50, i32 51, i32 52, i32 53, i32 54, i32 55, i32 56, i32 57, i32 58, i32 59, i32 60, i32 61, i32 62, i32 63, i32 64, i32 65, i32 66, i32 67>
+  %.sroa.291.sroa.0.4.vecblend = shufflevector <72 x i8> %.sroa.291.sroa.0.0, <72 x i8> %.sroa.291.sroa.0.4.vec.expand, <72 x i32> <i32 0, i32 1, i32 2, i32 3, i32 76, i32 77, i32 78, i32 79, i32 80, i32 81, i32 82, i32 83, i32 84, i32 85, i32 86, i32 87, i32 88, i32 89, i32 90, i32 91, i32 92, i32 93, i32 94, i32 95, i32 96, i32 97, i32 98, i32 99, i32 100, i32 101, i32 102, i32 103, i32 104, i32 105, i32 106, i32 107, i32 108, i32 109, i32 110, i32 111, i32 112, i32 113, i32 114, i32 115, i32 116, i32 117, i32 118, i32 119, i32 120, i32 121, i32 122, i32 123, i32 124, i32 125, i32 126, i32 127, i32 128, i32 129, i32 130, i32 131, i32 132, i32 133, i32 134, i32 135, i32 136, i32 137, i32 138, i32 139, i32 140, i32 141, i32 142, i32 143> ; 2 uses
+  %.sroa.493.sroa.0.4.copyload = load <20 x i8>, ptr %8, align 8
+  %.sroa.493.sroa.0.4.vec.expand = shufflevector <20 x i8> %.sroa.493.sroa.0.4.copyload, <20 x i8> poison, <24 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19>
+  %.sroa.493.sroa.0.4.vecblend = shufflevector <24 x i8> %.sroa.493.sroa.0.0, <24 x i8> %.sroa.493.sroa.0.4.vec.expand, <24 x i32> <i32 0, i32 1, i32 2, i32 3, i32 28, i32 29, i32 30, i32 31, i32 32, i32 33, i32 34, i32 35, i32 36, i32 37, i32 38, i32 39, i32 40, i32 41, i32 42, i32 43, i32 44, i32 45, i32 46, i32 47> ; 2 uses
   %i.bp = load i64, ptr %2, align 8, !tbaa !1106
   %i.bq = load ptr, ptr %i.b, align 8, !tbaa !190
   %i.br = invoke noundef i32 @_ZNK7xgboost7Context7ThreadsEv(ptr noundef nonnull align 8 dereferenceable(5084) %i.bq)
@@ -391,8 +393,8 @@ bb.i:                                             ; preds = %bb.h
   %i.bs = load ptr, ptr %i.b, align 8, !tbaa !190
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bs, i64 40
   %.sroa.0.0.copyload.i68 = load i32, ptr %i.bt, align 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(72) %.sroa.4126.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(72) %.sroa.291, i64 72, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) %.sroa.15.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(24) %.sroa.493, i64 24, i1 false)
+  store <72 x i8> %.sroa.291.sroa.0.4.vecblend, ptr %.sroa.4126.0..sroa_idx, align 4
+  store <24 x i8> %.sroa.493.sroa.0.4.vecblend, ptr %.sroa.15.0..sroa_idx, align 4
   %i.bu = trunc nuw i64 %indvars.iv to i32
   store i32 %i.bu, ptr %10, align 8
   store i64 %i.m, ptr %.sroa.6128.0..sroa_idx, align 8
@@ -408,8 +410,8 @@ bb.i:                                             ; preds = %bb.h
   store i64 1, ptr %.sroa.4138.0..sroa_idx, align 8
   store i64 %i.bp, ptr %.sroa.5139.0..sroa_idx, align 8
   store i64 1, ptr %.sroa.6140.0..sroa_idx, align 8
-  store i32 %i.br, ptr %i.bj, align 8, !tbaa !1694, !alias.scope !1697
-  store i32 %.sroa.0.0.copyload.i68, ptr %i.bk, align 4, !alias.scope !1697
+  store i32 %i.br, ptr %i.bj, align 8, !tbaa !1693, !alias.scope !1696
+  store i32 %.sroa.0.0.copyload.i68, ptr %i.bk, align 4, !alias.scope !1696
   invoke void @_ZNK7xgboost6common9TransformILb0EE9EvaluatorIZNS_3obj17MeanAbsoluteError11GetGradientERKNS_16HostDeviceVectorIfEERKNS_8MetaInfoEiPNS_6linalg6TensorINS_6detail20GradientPairInternalIfEELi2EEEEUlmNS0_4SpanIfLm18446744073709551615EEEE_E4EvalIJPS7_EEEvDpT_(ptr noundef nonnull align 8 dereferenceable(216) %10, ptr noundef nonnull %9)
           to label %bb.j unwind label %bb.l
 
@@ -424,7 +426,7 @@ bb.k:                                             ; preds = %bb.j
   store double %i.bw, ptr %i.bx, align 8, !tbaa !999
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %i.m
-  br i1 %exitcond.not, label %._crit_edge, label %bb.h, !llvm.loop !1700
+  br i1 %exitcond.not, label %._crit_edge, label %bb.h, !llvm.loop !1699
 
 bb.l:                                             ; preds = %bb.i, %bb.h
   %i.by = landingpad { ptr, i32 }
@@ -469,7 +471,7 @@ _ZN7xgboost6linalg7MakeVecIdEEDaPT_mNS_9DeviceOrdE.exit: ; preds = %bb.n
           to label %.noexc69 unwind label %bb.t
 
 .noexc69:                                         ; preds = %_ZN7xgboost6linalg7MakeVecIdEEDaPT_mNS_9DeviceOrdE.exit
-  %i.ch = load ptr, ptr %i.cg, align 8, !tbaa !1701, !noalias !1703
+  %i.ch = load ptr, ptr %i.cg, align 8, !tbaa !1700, !noalias !1702
   invoke void @_ZN7xgboost10collective9AllreduceIdLi1EEENS0_6ResultEPKNS_7ContextERKNS0_9CommGroupENS_6linalg10TensorViewIT_XT0_EEENS0_2OpE(ptr dead_on_unwind nonnull writable sret(%"struct.xgboost::collective::Result") align 8 %12, ptr noundef nonnull %11, ptr noundef nonnull align 8 dereferenceable(64) %i.ch, ptr noundef nonnull byval(%"class.xgboost::linalg::TensorView.541") align 8 %5, i32 noundef 2)
           to label %bb.o unwind label %bb.t
 
@@ -534,7 +536,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <2 x float> %i.db, ptr %i.dc, align 4, !tbaa !81
   %index.next = add nuw i64 %index, 2             ; 2 uses
   %i.dd = icmp eq i64 %index.next, %n.vec
-  br i1 %i.dd, label %.lr.ph144.split.preheader203, label %vector.body, !llvm.loop !1708
+  br i1 %i.dd, label %.lr.ph144.split.preheader203, label %vector.body, !llvm.loop !1707
 
 .lr.ph144.split.us.preheader:                     ; preds = %.lr.ph144
   %min.iters.check193 = icmp ult i64 %i.cx, 9
@@ -555,7 +557,7 @@ vector.body196:                                   ; preds = %vector.body196, %ve
   store <4 x float> zeroinitializer, ptr %i.di, align 4, !tbaa !81
   %index.next198 = add nuw i64 %index197, 8       ; 2 uses
   %i.dj = icmp eq i64 %index.next198, %n.vec195
-  br i1 %i.dj, label %.lr.ph144.split.us.preheader202, label %vector.body196, !llvm.loop !1709
+  br i1 %i.dj, label %.lr.ph144.split.us.preheader202, label %vector.body196, !llvm.loop !1708
 
 .lr.ph144.split.us.preheader202:                  ; preds = %vector.body196, %.lr.ph144.split.us.preheader
   %indvars.iv155.ph = phi i64 [ 0, %.lr.ph144.split.us.preheader ], [ %n.vec195, %vector.body196 ]
@@ -571,7 +573,7 @@ _ZNK7xgboost6common4SpanIfLm18446744073709551615EEixEm.exit.us: ; preds = %.lr.p
   store float 0.000000e+00, ptr %i.dk, align 4, !tbaa !81
   %indvars.iv.next156 = add nuw nsw i64 %indvars.iv155, 1 ; 2 uses
   %exitcond160.not = icmp eq i64 %indvars.iv.next156, %i.m
-  br i1 %exitcond160.not, label %._crit_edge145, label %.lr.ph144.split.us, !llvm.loop !1710
+  br i1 %exitcond160.not, label %._crit_edge145, label %.lr.ph144.split.us, !llvm.loop !1709
 
 ._crit_edge145:                                   ; preds = %_ZNK7xgboost6common4SpanIfLm18446744073709551615EEixEm.exit74, %_ZNK7xgboost6common4SpanIfLm18446744073709551615EEixEm.exit.us, %bb.r
   %i.dl = load ptr, ptr %i.b, align 8, !tbaa !190
@@ -634,7 +636,7 @@ _ZNK7xgboost6common4SpanIfLm18446744073709551615EEixEm.exit74: ; preds = %.lr.ph
   store float %i.dz, ptr %i.ea, align 4, !tbaa !81
   %indvars.iv.next150 = add nuw nsw i64 %indvars.iv149, 1 ; 2 uses
   %exitcond154.not = icmp eq i64 %indvars.iv.next150, %i.m
-  br i1 %exitcond154.not, label %._crit_edge145, label %.lr.ph144.split, !llvm.loop !1711
+  br i1 %exitcond154.not, label %._crit_edge145, label %.lr.ph144.split, !llvm.loop !1710
 
 bb.y:                                             ; preds = %._crit_edge145
   %i.eb = invoke noundef nonnull align 8 dereferenceable(24) ptr @_ZNK7xgboost16HostDeviceVectorIfE15ConstHostVectorEv(ptr noundef nonnull align 8 dereferenceable(8) %13)
@@ -686,7 +688,7 @@ bb.aa:                                            ; preds = %_ZNK7xgboost16HostD
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %14, i64 152
   store ptr %.sroa.6.0, ptr %.sroa.6.0..sroa_idx, align 8, !tbaa !241
   %i.en = getelementptr inbounds nuw i8, ptr %14, i64 160
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %i.en, ptr noundef nonnull align 8 dereferenceable(20) %8, i64 20, i1 false), !tbaa.struct !1693
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %i.en, ptr noundef nonnull align 8 dereferenceable(20) %8, i64 20, i1 false), !tbaa.struct !1711
   %i.eo = getelementptr inbounds nuw i8, ptr %14, i64 184
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(68) %i.eo, ptr noundef nonnull align 8 dereferenceable(68) %7, i64 68, i1 false), !tbaa.struct !909
   invoke void @_ZN7xgboost6linalg17ElementWiseKernelIKfLi2EZNS_3obj17MeanAbsoluteError11GetGradientERKNS_16HostDeviceVectorIfEERKNS_8MetaInfoEiPNS0_6TensorINS_6detail20GradientPairInternalIfEELi2EEEEUlmmE_TnDaLi2EEEvPKNS_7ContextENS0_10TensorViewIT_XT0_EEEOT1_(ptr noundef %i.ek, ptr noundef nonnull byval(%"class.xgboost::linalg::TensorView") align 8 %6, ptr noundef nonnull align 8 dereferenceable(256) %14)
@@ -937,7 +939,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
           to label %.noexc75 unwind label %bb.j
 
 .noexc75:                                         ; preds = %bb.d
-  %i.x = load ptr, ptr %i.w, align 8, !tbaa !1701, !noalias !1720
+  %i.x = load ptr, ptr %i.w, align 8, !tbaa !1700, !noalias !1720
   invoke void @_ZN7xgboost10collective9AllreduceIdLi1EEENS0_6ResultEPKNS_7ContextERKNS0_9CommGroupENS_6linalg10TensorViewIT_XT0_EEENS0_2OpE(ptr dead_on_unwind nonnull writable sret(%"struct.xgboost::collective::Result") align 8 %5, ptr noundef nonnull %4, ptr noundef nonnull align 8 dereferenceable(64) %i.x, ptr noundef nonnull byval(%"class.xgboost::linalg::TensorView.541") align 8 %3, i32 noundef 2)
           to label %bb.e unwind label %bb.j
 
@@ -1340,7 +1342,7 @@ bb.g:                                             ; preds = %bb.f
   store ptr %1, ptr %i.b, align 8, !tbaa !359
   %.sroa.0.0.copyload.i.i.i = load i64, ptr %i.m, align 8, !tbaa !17
   %i.o = tail call noundef nonnull align 8 dereferenceable(24) ptr @_ZNK7xgboost16HostDeviceVectorIfE15ConstHostVectorEv(ptr noundef nonnull align 8 dereferenceable(8) %1) ; 0 uses
-  %i.p = load i32, ptr %i.n, align 8, !tbaa !1694
+  %i.p = load i32, ptr %i.n, align 8, !tbaa !1693
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #21
   store ptr %5, ptr %4, align 8, !tbaa !149
   %i.q = getelementptr inbounds nuw i8, ptr %4, i64 8
@@ -1360,7 +1362,7 @@ bb.h:                                             ; preds = %bb.f
   store ptr %1, ptr %i.a, align 8, !tbaa !359
   %.sroa.0.0.copyload.i.i = load i64, ptr %i.m, align 8, !tbaa !17
   %i.s = tail call noundef nonnull align 8 dereferenceable(24) ptr @_ZNK7xgboost16HostDeviceVectorIfE15ConstHostVectorEv(ptr noundef nonnull align 8 dereferenceable(8) %1) ; 0 uses
-  %i.t = load i32, ptr %i.n, align 8, !tbaa !1694
+  %i.t = load i32, ptr %i.n, align 8, !tbaa !1693
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #21
   store ptr %3, ptr %2, align 8, !tbaa !149
   %i.u = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -1763,25 +1765,25 @@ begin_hunk_2_@llvm.fmuladd.v2f64
 !1690 = distinct !{!1690, !1691, !"_ZN7xgboost6common19MakeOptionalWeightsENS_9DeviceOrdERKNS_16HostDeviceVectorIfEE: argument 0"}
 !1691 = distinct !{!1691, !"_ZN7xgboost6common19MakeOptionalWeightsENS_9DeviceOrdERKNS_16HostDeviceVectorIfEE"}
 !1692 = !{!1012, !67, i64 16}
-!1693 = !{i64 0, i64 8, !17, i64 8, i64 8, !241, i64 16, i64 4, !81}
-!1694 = !{!1695, !5, i64 208}
-!1695 = !{!"_ZTSN7xgboost6common9TransformILb0EE9EvaluatorIZNS_3obj17MeanAbsoluteError11GetGradientERKNS_16HostDeviceVectorIfEERKNS_8MetaInfoEiPNS_6linalg6TensorINS_6detail20GradientPairInternalIfEELi2EEEEUlmNS0_4SpanIfLm18446744073709551615EEEE_EE", !1696, i64 0, !246, i64 176, !5, i64 208, !248, i64 212}
-!1696 = !{!"_ZTSZN7xgboost3obj17MeanAbsoluteError11GetGradientERKNS_16HostDeviceVectorIfEERKNS_8MetaInfoEiPNS_6linalg6TensorINS_6detail20GradientPairInternalIfEELi2EEEEUlmNS_6common4SpanIfLm18446744073709551615EEEE_", !5, i64 0, !379, i64 8, !379, i64 80, !1012, i64 152}
-!1697 = !{!1698}
-!1698 = distinct !{!1698, !1699, !"_ZN7xgboost6common9TransformILb0EE4InitIZNS_3obj17MeanAbsoluteError11GetGradientERKNS_16HostDeviceVectorIfEERKNS_8MetaInfoEiPNS_6linalg6TensorINS_6detail20GradientPairInternalIfEELi2EEEEUlmNS0_4SpanIfLm18446744073709551615EEEE_EENS2_9EvaluatorIT_EESO_NS0_5RangeEiNS_9DeviceOrdE: argument 0"}
-!1699 = distinct !{!1699, !"_ZN7xgboost6common9TransformILb0EE4InitIZNS_3obj17MeanAbsoluteError11GetGradientERKNS_16HostDeviceVectorIfEERKNS_8MetaInfoEiPNS_6linalg6TensorINS_6detail20GradientPairInternalIfEELi2EEEEUlmNS0_4SpanIfLm18446744073709551615EEEE_EENS2_9EvaluatorIT_EESO_NS0_5RangeEiNS_9DeviceOrdE"}
-!1700 = distinct !{!1700, !33}
-!1701 = !{!1702, !1702, i64 0}
-!1702 = !{!"p1 _ZTSN7xgboost10collective9CommGroupE", !13, i64 0}
-!1703 = !{!1704, !1706}
-!1704 = distinct !{!1704, !1705, !"_ZN7xgboost10collective9AllreduceIdLi1EEENS0_6ResultEPKNS_7ContextENS_6linalg10TensorViewIT_XT0_EEENS0_2OpE: argument 0"}
-!1705 = distinct !{!1705, !"_ZN7xgboost10collective9AllreduceIdLi1EEENS0_6ResultEPKNS_7ContextENS_6linalg10TensorViewIT_XT0_EEENS0_2OpE"}
-!1706 = distinct !{!1706, !1707, !"_ZN7xgboost10collective9GlobalSumIdLi1EEENS0_6ResultEPKNS_7ContextENS_6linalg10TensorViewIT_XT0_EEE: argument 0"}
-!1707 = distinct !{!1707, !"_ZN7xgboost10collective9GlobalSumIdLi1EEENS0_6ResultEPKNS_7ContextENS_6linalg10TensorViewIT_XT0_EEE"}
+!1693 = !{!1694, !5, i64 208}
+!1694 = !{!"_ZTSN7xgboost6common9TransformILb0EE9EvaluatorIZNS_3obj17MeanAbsoluteError11GetGradientERKNS_16HostDeviceVectorIfEERKNS_8MetaInfoEiPNS_6linalg6TensorINS_6detail20GradientPairInternalIfEELi2EEEEUlmNS0_4SpanIfLm18446744073709551615EEEE_EE", !1695, i64 0, !246, i64 176, !5, i64 208, !248, i64 212}
+!1695 = !{!"_ZTSZN7xgboost3obj17MeanAbsoluteError11GetGradientERKNS_16HostDeviceVectorIfEERKNS_8MetaInfoEiPNS_6linalg6TensorINS_6detail20GradientPairInternalIfEELi2EEEEUlmNS_6common4SpanIfLm18446744073709551615EEEE_", !5, i64 0, !379, i64 8, !379, i64 80, !1012, i64 152}
+!1696 = !{!1697}
+!1697 = distinct !{!1697, !1698, !"_ZN7xgboost6common9TransformILb0EE4InitIZNS_3obj17MeanAbsoluteError11GetGradientERKNS_16HostDeviceVectorIfEERKNS_8MetaInfoEiPNS_6linalg6TensorINS_6detail20GradientPairInternalIfEELi2EEEEUlmNS0_4SpanIfLm18446744073709551615EEEE_EENS2_9EvaluatorIT_EESO_NS0_5RangeEiNS_9DeviceOrdE: argument 0"}
+!1698 = distinct !{!1698, !"_ZN7xgboost6common9TransformILb0EE4InitIZNS_3obj17MeanAbsoluteError11GetGradientERKNS_16HostDeviceVectorIfEERKNS_8MetaInfoEiPNS_6linalg6TensorINS_6detail20GradientPairInternalIfEELi2EEEEUlmNS0_4SpanIfLm18446744073709551615EEEE_EENS2_9EvaluatorIT_EESO_NS0_5RangeEiNS_9DeviceOrdE"}
+!1699 = distinct !{!1699, !33}
+!1700 = !{!1701, !1701, i64 0}
+!1701 = !{!"p1 _ZTSN7xgboost10collective9CommGroupE", !13, i64 0}
+!1702 = !{!1703, !1705}
+!1703 = distinct !{!1703, !1704, !"_ZN7xgboost10collective9AllreduceIdLi1EEENS0_6ResultEPKNS_7ContextENS_6linalg10TensorViewIT_XT0_EEENS0_2OpE: argument 0"}
+!1704 = distinct !{!1704, !"_ZN7xgboost10collective9AllreduceIdLi1EEENS0_6ResultEPKNS_7ContextENS_6linalg10TensorViewIT_XT0_EEENS0_2OpE"}
+!1705 = distinct !{!1705, !1706, !"_ZN7xgboost10collective9GlobalSumIdLi1EEENS0_6ResultEPKNS_7ContextENS_6linalg10TensorViewIT_XT0_EEE: argument 0"}
+!1706 = distinct !{!1706, !"_ZN7xgboost10collective9GlobalSumIdLi1EEENS0_6ResultEPKNS_7ContextENS_6linalg10TensorViewIT_XT0_EEE"}
+!1707 = distinct !{!1707, !33, !413, !414}
 !1708 = distinct !{!1708, !33, !413, !414}
-!1709 = distinct !{!1709, !33, !413, !414}
+!1709 = distinct !{!1709, !33, !414, !413}
 !1710 = distinct !{!1710, !33, !414, !413}
-!1711 = distinct !{!1711, !33, !414, !413}
+!1711 = !{i64 0, i64 8, !17, i64 8, i64 8, !241, i64 16, i64 4, !81}
 !1712 = !{!1713, !1713, i64 0}
 !1713 = !{!"p1 _ZTSN7xgboost10collective6detail10ResultImplE", !13, i64 0}
 !1714 = distinct !{null, null}

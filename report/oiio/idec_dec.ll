@@ -201,7 +201,7 @@ CheckMemBufferMode.exit.thread:                   ; preds = %bb.c, %bb.k, %bb.m,
 ; Function Attrs: nounwind uwtable
 define internal fastcc i32 @IDecode(ptr noundef nonnull %0) unnamed_addr #0 {
 bb.a:
-  %.sroa.6.i = alloca [52 x i8], align 4          ; 4 uses
+  %.sroa.6.i.sroa.0 = alloca <52 x i8>, align 64  ; 5 uses
   %i.a = alloca i32, align 4                      ; 3 uses
   %i.b = alloca i32, align 4                      ; 3 uses
   %1 = alloca %struct.WebPHeaderStructure, align 8 ; 12 uses
@@ -573,9 +573,9 @@ bb.ah:                                            ; preds = %bb.ag
   %i.fj = getelementptr inbounds nuw i8, ptr %i.ew, i64 440
   %i.fk = getelementptr inbounds nuw i8, ptr %i.ew, i64 432 ; 2 uses
   %i.fl = getelementptr inbounds nuw i8, ptr %i.ew, i64 2832 ; 3 uses
-  %.sroa.6.8..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.6.i, i64 4 ; 2 uses
-  %i.fm = getelementptr inbounds nuw i8, ptr %0, i64 328
-  %i.fn = getelementptr i8, ptr %0, i64 304       ; 2 uses
+  %.sroa.6.8..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 328
+  %i.fm = getelementptr i8, ptr %0, i64 304       ; 2 uses
+  %i.fn = getelementptr inbounds nuw i8, ptr %.sroa.6.i.sroa.0, i64 4
   br label %bb.ai
 
 IDecError.exit.i25:                               ; preds = %bb.ah
@@ -630,14 +630,14 @@ bb.an:                                            ; preds = %bb.am, %bb.ai
   %i.gd = and i32 %i.gc, %i.ga
   %i.ge = zext i32 %i.gd to i64
   %i.gf = getelementptr inbounds nuw [48 x i8], ptr %i.fj, i64 %i.ge ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6.i)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6.i.sroa.0)
   %i.gg = load ptr, ptr %i.fl, align 8, !tbaa !80 ; 2 uses
   %i.gh = getelementptr inbounds i8, ptr %i.gg, i64 -2
   %i.gi = load i16, ptr %i.gh, align 1
   %i.gj = sext i32 %i.gb to i64
   %i.gk = getelementptr inbounds [2 x i8], ptr %i.gg, i64 %i.gj
   %i.gl = load i16, ptr %i.gk, align 1
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(48) %.sroa.6.8..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(48) %i.gf, i64 48, i1 false), !tbaa.struct !81
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(48) %i.fn, ptr noundef nonnull align 8 dereferenceable(48) %i.gf, i64 48, i1 false), !tbaa.struct !81
   %i.gm = call i32 @VP8DecodeMB(ptr noundef nonnull %i.ew, ptr noundef nonnull %i.gf) #6
   %.not53.not.i = icmp eq i32 %i.gm, 0
   %i.gn = load i32, ptr %i.fk, align 8, !tbaa !79 ; 2 uses
@@ -648,7 +648,7 @@ bb.ao:                                            ; preds = %.lr.ph.i
   br i1 %i.go, label %bb.ap, label %bb.as
 
 bb.ap:                                            ; preds = %bb.ao
-  %.val.i24 = load i64, ptr %i.fn, align 8, !tbaa !47
+  %.val.i24 = load i64, ptr %i.fm, align 8, !tbaa !47
   %i.gp = getelementptr i8, ptr %0, i64 312
   %.val55.i = load i64, ptr %i.gp, align 8, !tbaa !48
   %i.gq = sub i64 %.val55.i, %.val.i24
@@ -707,7 +707,8 @@ bb.aw:                                            ; preds = %bb.at, %bb.as
   %i.hm = sext i32 %i.hl to i64
   %i.hn = getelementptr inbounds [2 x i8], ptr %i.hk, i64 %i.hm
   store i16 %i.gl, ptr %i.hn, align 1
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.gf, ptr noundef nonnull align 4 dereferenceable(48) %.sroa.6.8..sroa_idx.i, i64 48, i1 false), !tbaa.struct !81
+  %.sroa.6.i.sroa.0.4..sroa_idx115 = getelementptr inbounds nuw i8, ptr %.sroa.6.i.sroa.0, i64 4
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.gf, ptr noundef nonnull align 4 dereferenceable(48) %.sroa.6.i.sroa.0.4..sroa_idx115, i64 48, i1 false), !tbaa.struct !81
   br label %.thread.i
 
 bb.ax:                                            ; preds = %.lr.ph.i
@@ -716,20 +717,20 @@ bb.ax:                                            ; preds = %.lr.ph.i
 bb.ay:                                            ; preds = %bb.ax
   %i.ho = getelementptr inbounds nuw i8, ptr %i.gf, i64 16
   %i.hp = load ptr, ptr %i.ho, align 8, !tbaa !73
-  %i.hq = load ptr, ptr %i.fm, align 8, !tbaa !63
+  %i.hq = load ptr, ptr %.sroa.6.8..sroa_idx.i, align 8, !tbaa !63
   %i.hr = ptrtoint ptr %i.hp to i64
   %i.hs = ptrtoint ptr %i.hq to i64
   %i.ht = sub i64 %i.hr, %i.hs
-  store i64 %i.ht, ptr %i.fn, align 8, !tbaa !64
+  store i64 %i.ht, ptr %i.fm, align 8, !tbaa !64
   br label %bb.az
 
 .thread.i:                                        ; preds = %bb.aw, %IDecError.exit58.i, %IDecError.exit57.i
   %.2.ph.i = phi i32 [ 5, %bb.aw ], [ 3, %IDecError.exit57.i ], [ 3, %IDecError.exit58.i ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6.i.sroa.0)
   br label %DecodeRemaining.exitthread-pre-split
 
 bb.az:                                            ; preds = %bb.ay, %bb.ax
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6.i.sroa.0)
   %i.hu = load i32, ptr %i.fh, align 8, !tbaa !77
   %i.hv = add nsw i32 %i.hu, 1                    ; 3 uses
   store i32 %i.hv, ptr %i.fh, align 8, !tbaa !77

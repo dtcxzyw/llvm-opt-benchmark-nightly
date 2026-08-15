@@ -203,7 +203,6 @@ declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly 
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZNSt6vectorIN6Assimp3LWO3KeyESaIS2_EE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPS2_S4_EEmRKS2_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, i64 noundef %2, ptr noundef nonnull align 8 dereferenceable(36) %3) local_unnamed_addr #2 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.9 = alloca [39 x i8], align 1            ; 14 uses
   %.not = icmp eq i64 %2, 0
   br i1 %.not, label %bb.n, label %bb.b
 
@@ -220,10 +219,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not65, label %bb.j, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.9)
   %.sroa.4.8.copyload = load i8, ptr %3, align 8  ; 11 uses
   %.sroa.9.8..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 1
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(39) %.sroa.9, ptr noundef nonnull align 1 dereferenceable(39) %.sroa.9.8..sroa_idx, i64 39, i1 false)
+  %.sroa.9.sroa.0.0.copyload = load <39 x i8>, ptr %.sroa.9.8..sroa_idx, align 1 ; 11 uses
   %i.i = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.j = sub i64 %i.f, %i.i                       ; 3 uses
   %i.k = sdiv exact i64 %i.j, 40                  ; 3 uses
@@ -282,14 +280,18 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
   %i.aa = add nuw nsw i64 %i.z, 1
   %xtraiter142 = and i64 %i.aa, 3                 ; 2 uses
   %lcmp.mod143.not = icmp eq i64 %xtraiter142, 0
-  br i1 %lcmp.mod143.not, label %.lr.ph.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.prol
+  br i1 %lcmp.mod143.not, label %.lr.ph.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.prol.preheader
 
-.lr.ph.i.i.i.prol:                                ; preds = %bb.h, %.lr.ph.i.i.i.prol
-  %.06.i.i.i.prol = phi ptr [ %i.ab, %.lr.ph.i.i.i.prol ], [ %1, %bb.h ] ; 3 uses
-  %prol.iter144 = phi i64 [ %prol.iter144.next, %.lr.ph.i.i.i.prol ], [ 0, %bb.h ]
+.lr.ph.i.i.i.prol.preheader:                      ; preds = %bb.h
+  %.sroa.9.sroa.0.0.vec.extract161 = shufflevector <39 x i8> %.sroa.9.sroa.0.0.copyload, <39 x i8> poison, <35 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 32, i32 33, i32 34>
+  br label %.lr.ph.i.i.i.prol
+
+.lr.ph.i.i.i.prol:                                ; preds = %.lr.ph.i.i.i.prol, %.lr.ph.i.i.i.prol.preheader
+  %.06.i.i.i.prol = phi ptr [ %i.ab, %.lr.ph.i.i.i.prol ], [ %1, %.lr.ph.i.i.i.prol.preheader ] ; 3 uses
+  %prol.iter144 = phi i64 [ %prol.iter144.next, %.lr.ph.i.i.i.prol ], [ 0, %.lr.ph.i.i.i.prol.preheader ]
   store i8 %.sroa.4.8.copyload, ptr %.06.i.i.i.prol, align 8
   %.sroa.9.8..06.i.i.i.sroa_idx.prol = getelementptr inbounds nuw i8, ptr %.06.i.i.i.prol, i64 1
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(35) %.sroa.9.8..06.i.i.i.sroa_idx.prol, ptr noundef nonnull align 1 dereferenceable(35) %.sroa.9, i64 35, i1 false)
+  store <35 x i8> %.sroa.9.sroa.0.0.vec.extract161, ptr %.sroa.9.8..06.i.i.i.sroa_idx.prol, align 1
   %i.ab = getelementptr inbounds nuw i8, ptr %.06.i.i.i.prol, i64 40 ; 2 uses
   %prol.iter144.next = add i64 %prol.iter144, 1   ; 2 uses
   %prol.iter144.cmp.not = icmp eq i64 %prol.iter144.next, %xtraiter142
@@ -298,28 +300,35 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
 .lr.ph.i.i.i.prol.loopexit:                       ; preds = %.lr.ph.i.i.i.prol, %bb.h
   %.06.i.i.i.unr = phi ptr [ %1, %bb.h ], [ %i.ab, %.lr.ph.i.i.i.prol ]
   %i.ac = icmp ult i64 %i.y, 120
-  br i1 %i.ac, label %_ZSt4fillIPN6Assimp3LWO3KeyES2_EvT_S4_RKT0_.exit, label %.lr.ph.i.i.i
+  br i1 %i.ac, label %bb.n, label %.new
 
-.lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i.prol.loopexit, %.lr.ph.i.i.i
-  %.06.i.i.i = phi ptr [ %i.ag, %.lr.ph.i.i.i ], [ %.06.i.i.i.unr, %.lr.ph.i.i.i.prol.loopexit ] ; 9 uses
+.new:                                             ; preds = %.lr.ph.i.i.i.prol.loopexit
+  %.sroa.9.sroa.0.0.vec.extract = shufflevector <39 x i8> %.sroa.9.sroa.0.0.copyload, <39 x i8> poison, <35 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 32, i32 33, i32 34>
+  %.sroa.9.sroa.0.0.vec.extract163 = shufflevector <39 x i8> %.sroa.9.sroa.0.0.copyload, <39 x i8> poison, <35 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 32, i32 33, i32 34>
+  %.sroa.9.sroa.0.0.vec.extract165 = shufflevector <39 x i8> %.sroa.9.sroa.0.0.copyload, <39 x i8> poison, <35 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 32, i32 33, i32 34>
+  %.sroa.9.sroa.0.0.vec.extract167 = shufflevector <39 x i8> %.sroa.9.sroa.0.0.copyload, <39 x i8> poison, <35 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 32, i32 33, i32 34>
+  br label %.lr.ph.i.i.i
+
+.lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i, %.new
+  %.06.i.i.i = phi ptr [ %.06.i.i.i.unr, %.new ], [ %i.ag, %.lr.ph.i.i.i ] ; 9 uses
   store i8 %.sroa.4.8.copyload, ptr %.06.i.i.i, align 8
   %.sroa.9.8..06.i.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 1
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(35) %.sroa.9.8..06.i.i.i.sroa_idx, ptr noundef nonnull align 1 dereferenceable(35) %.sroa.9, i64 35, i1 false)
+  store <35 x i8> %.sroa.9.sroa.0.0.vec.extract, ptr %.sroa.9.8..06.i.i.i.sroa_idx, align 1
   %i.ad = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 40
   store i8 %.sroa.4.8.copyload, ptr %i.ad, align 8
   %.sroa.9.8..06.i.i.i.sroa_idx.1 = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 41
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(35) %.sroa.9.8..06.i.i.i.sroa_idx.1, ptr noundef nonnull align 1 dereferenceable(35) %.sroa.9, i64 35, i1 false)
+  store <35 x i8> %.sroa.9.sroa.0.0.vec.extract163, ptr %.sroa.9.8..06.i.i.i.sroa_idx.1, align 1
   %i.ae = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 80
   store i8 %.sroa.4.8.copyload, ptr %i.ae, align 8
   %.sroa.9.8..06.i.i.i.sroa_idx.2 = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 81
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(35) %.sroa.9.8..06.i.i.i.sroa_idx.2, ptr noundef nonnull align 1 dereferenceable(35) %.sroa.9, i64 35, i1 false)
+  store <35 x i8> %.sroa.9.sroa.0.0.vec.extract165, ptr %.sroa.9.8..06.i.i.i.sroa_idx.2, align 1
   %i.af = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 120
   store i8 %.sroa.4.8.copyload, ptr %i.af, align 8
   %.sroa.9.8..06.i.i.i.sroa_idx.3 = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 121
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(35) %.sroa.9.8..06.i.i.i.sroa_idx.3, ptr noundef nonnull align 1 dereferenceable(35) %.sroa.9, i64 35, i1 false)
+  store <35 x i8> %.sroa.9.sroa.0.0.vec.extract167, ptr %.sroa.9.8..06.i.i.i.sroa_idx.3, align 1
   %i.ag = getelementptr inbounds nuw i8, ptr %.06.i.i.i, i64 160 ; 2 uses
   %.not.i.i.i.3 = icmp eq ptr %i.ag, %i.x
-  br i1 %.not.i.i.i.3, label %_ZSt4fillIPN6Assimp3LWO3KeyES2_EvT_S4_RKT0_.exit, label %.lr.ph.i.i.i, !llvm.loop !41
+  br i1 %.not.i.i.i.3, label %bb.n, label %.lr.ph.i.i.i, !llvm.loop !41
 
 bb.i:                                             ; preds = %bb.c
   %i.ah = sub nuw i64 %2, %i.k                    ; 4 uses
@@ -337,7 +346,7 @@ bb.i:                                             ; preds = %bb.c
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.i.i.i.prol ], [ 0, %.lr.ph.i.i.i.i.preheader ]
   store i8 %.sroa.4.8.copyload, ptr %.09.i.i.i.i.prol, align 8
   %.sroa.9.8..09.i.i.i.i.sroa_idx.prol = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.prol, i64 1
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(39) %.sroa.9.8..09.i.i.i.i.sroa_idx.prol, ptr noundef nonnull align 1 dereferenceable(39) %.sroa.9, i64 39, i1 false)
+  store <39 x i8> %.sroa.9.sroa.0.0.copyload, ptr %.sroa.9.8..09.i.i.i.i.sroa_idx.prol, align 1
   %i.ai = add i64 %.068.i.i.i.i.prol, -1          ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.prol, i64 40 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
@@ -357,19 +366,19 @@ bb.i:                                             ; preds = %bb.c
   %.068.i.i.i.i = phi i64 [ %i.ap, %.lr.ph.i.i.i.i ], [ %.068.i.i.i.i.unr, %.lr.ph.i.i.i.i.prol.loopexit ]
   store i8 %.sroa.4.8.copyload, ptr %.09.i.i.i.i, align 8
   %.sroa.9.8..09.i.i.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i, i64 1
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(39) %.sroa.9.8..09.i.i.i.i.sroa_idx, ptr noundef nonnull align 1 dereferenceable(39) %.sroa.9, i64 39, i1 false)
+  store <39 x i8> %.sroa.9.sroa.0.0.copyload, ptr %.sroa.9.8..09.i.i.i.i.sroa_idx, align 1
   %i.am = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i, i64 40
   store i8 %.sroa.4.8.copyload, ptr %i.am, align 8
   %.sroa.9.8..09.i.i.i.i.sroa_idx.1 = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i, i64 41
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(39) %.sroa.9.8..09.i.i.i.i.sroa_idx.1, ptr noundef nonnull align 1 dereferenceable(39) %.sroa.9, i64 39, i1 false)
+  store <39 x i8> %.sroa.9.sroa.0.0.copyload, ptr %.sroa.9.8..09.i.i.i.i.sroa_idx.1, align 1
   %i.an = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i, i64 80
   store i8 %.sroa.4.8.copyload, ptr %i.an, align 8
   %.sroa.9.8..09.i.i.i.i.sroa_idx.2 = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i, i64 81
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(39) %.sroa.9.8..09.i.i.i.i.sroa_idx.2, ptr noundef nonnull align 1 dereferenceable(39) %.sroa.9, i64 39, i1 false)
+  store <39 x i8> %.sroa.9.sroa.0.0.copyload, ptr %.sroa.9.8..09.i.i.i.i.sroa_idx.2, align 1
   %i.ao = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i, i64 120
   store i8 %.sroa.4.8.copyload, ptr %i.ao, align 8
   %.sroa.9.8..09.i.i.i.i.sroa_idx.3 = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i, i64 121
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(39) %.sroa.9.8..09.i.i.i.i.sroa_idx.3, ptr noundef nonnull align 1 dereferenceable(39) %.sroa.9, i64 39, i1 false)
+  store <39 x i8> %.sroa.9.sroa.0.0.copyload, ptr %.sroa.9.8..09.i.i.i.i.sroa_idx.3, align 1
   %i.ap = add i64 %.068.i.i.i.i, -4               ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i, i64 160 ; 2 uses
   %.not.i.i.i.i.3 = icmp eq i64 %i.ap, 0
@@ -384,7 +393,7 @@ _ZSt24__uninitialized_fill_n_aIPN6Assimp3LWO3KeyEmS2_S2_ET_S4_T0_RKT1_RSaIT2_E.e
 _ZSt22__uninitialized_move_aIPN6Assimp3LWO3KeyES3_SaIS2_EET0_T_S6_S5_RT1_.exit75.thread: ; preds = %_ZSt24__uninitialized_fill_n_aIPN6Assimp3LWO3KeyEmS2_S2_ET_S4_T0_RKT1_RSaIT2_E.exit
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 %i.j
   store ptr %i.as, ptr %i.c, align 8
-  br label %_ZSt4fillIPN6Assimp3LWO3KeyES2_EvT_S4_RKT0_.exit
+  br label %bb.n
 
 .lr.ph.i.i.i.i.i70:                               ; preds = %_ZSt24__uninitialized_fill_n_aIPN6Assimp3LWO3KeyEmS2_S2_ET_S4_T0_RKT1_RSaIT2_E.exit, %.lr.ph.i.i.i.i.i70
   %.013.i.i.i.i.i71 = phi ptr [ %i.au, %.lr.ph.i.i.i.i.i70 ], [ %i.ar, %_ZSt24__uninitialized_fill_n_aIPN6Assimp3LWO3KeyEmS2_S2_ET_S4_T0_RKT1_RSaIT2_E.exit ] ; 2 uses
@@ -399,20 +408,17 @@ _ZSt22__uninitialized_move_aIPN6Assimp3LWO3KeyES3_SaIS2_EET0_T_S6_S5_RT1_.exit75
   %i.av = load ptr, ptr %i.c, align 8
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 %i.j
   store ptr %i.aw, ptr %i.c, align 8
+  %.sroa.9.sroa.0.0.vec.extract159 = shufflevector <39 x i8> %.sroa.9.sroa.0.0.copyload, <39 x i8> poison, <35 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 32, i32 33, i32 34>
   br label %.lr.ph.i.i.i77
 
 .lr.ph.i.i.i77:                                   ; preds = %_ZSt22__uninitialized_move_aIPN6Assimp3LWO3KeyES3_SaIS2_EET0_T_S6_S5_RT1_.exit75, %.lr.ph.i.i.i77
   %.06.i.i.i78 = phi ptr [ %i.ax, %.lr.ph.i.i.i77 ], [ %1, %_ZSt22__uninitialized_move_aIPN6Assimp3LWO3KeyES3_SaIS2_EET0_T_S6_S5_RT1_.exit75 ] ; 3 uses
   store i8 %.sroa.4.8.copyload, ptr %.06.i.i.i78, align 8
   %.sroa.9.8..06.i.i.i78.sroa_idx = getelementptr inbounds nuw i8, ptr %.06.i.i.i78, i64 1
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(35) %.sroa.9.8..06.i.i.i78.sroa_idx, ptr noundef nonnull align 1 dereferenceable(35) %.sroa.9, i64 35, i1 false)
+  store <35 x i8> %.sroa.9.sroa.0.0.vec.extract159, ptr %.sroa.9.8..06.i.i.i78.sroa_idx, align 1
   %i.ax = getelementptr inbounds nuw i8, ptr %.06.i.i.i78, i64 40 ; 2 uses
   %.not.i.i.i79 = icmp eq ptr %i.ax, %i.d
-  br i1 %.not.i.i.i79, label %_ZSt4fillIPN6Assimp3LWO3KeyES2_EvT_S4_RKT0_.exit, label %.lr.ph.i.i.i77, !llvm.loop !41
-
-_ZSt4fillIPN6Assimp3LWO3KeyES2_EvT_S4_RKT0_.exit: ; preds = %.lr.ph.i.i.i77, %.lr.ph.i.i.i.prol.loopexit, %.lr.ph.i.i.i, %_ZSt22__uninitialized_move_aIPN6Assimp3LWO3KeyES3_SaIS2_EET0_T_S6_S5_RT1_.exit75.thread
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.9)
-  br label %bb.n
+  br i1 %.not.i.i.i79, label %bb.n, label %.lr.ph.i.i.i77, !llvm.loop !41
 
 bb.j:                                             ; preds = %bb.b
   %i.ay = load ptr, ptr %0, align 8               ; 5 uses
@@ -529,7 +535,7 @@ _ZNSt12_Vector_baseIN6Assimp3LWO3KeyESaIS2_EE13_M_deallocateEPS2_m.exit: ; preds
   store ptr %i.ce, ptr %i.a, align 8
   br label %bb.n
 
-bb.n:                                             ; preds = %_ZSt4fillIPN6Assimp3LWO3KeyES2_EvT_S4_RKT0_.exit, %_ZNSt12_Vector_baseIN6Assimp3LWO3KeyESaIS2_EE13_M_deallocateEPS2_m.exit, %bb.a
+bb.n:                                             ; preds = %_ZSt22__uninitialized_move_aIPN6Assimp3LWO3KeyES3_SaIS2_EET0_T_S6_S5_RT1_.exit75.thread, %.lr.ph.i.i.i, %.lr.ph.i.i.i.prol.loopexit, %.lr.ph.i.i.i77, %_ZNSt12_Vector_baseIN6Assimp3LWO3KeyESaIS2_EE13_M_deallocateEPS2_m.exit, %bb.a
   ret void
 }
 

@@ -204,12 +204,10 @@ bb.bg:                                            ; preds = %_ZNSt6vectorIPKN4Lu
 ; Function Attrs: mustprogress uwtable
 define internal fastcc void @_ZN4LuauL18getmetatableHelperEPKNS_4TypeERKNS_8LocationENS_7NotNullINS_19TypeFunctionContextEEE(ptr dead_on_unwind noalias nofree writable writeonly align 8 captures(none) %0, ptr noundef %1, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(16) %2, ptr nofree readonly captures(none) %3) unnamed_addr #6 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.17 = alloca [7 x i8], align 1            ; 7 uses
   %4 = alloca %"struct.Luau::UnionType", align 8  ; 6 uses
   %5 = alloca %"class.std::vector.146", align 8   ; 10 uses
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %i.a = tail call noundef ptr @_ZN4Luau6followEPKNS_4TypeE(ptr noundef %1) ; 15 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.17)
   %.not.i.i = icmp eq ptr %i.a, null
   br i1 %.not.i.i, label %.thread193, label %bb.b
 
@@ -233,7 +231,7 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 112
   %.sroa.11.0.copyload = load i8, ptr %.sroa.11.0..sroa_idx, align 8
   %.sroa.17.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 113
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.17, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.17.0..sroa_idx, i64 7, i1 false)
+  %.sroa.17.sroa.0.0.copyload = load <7 x i8>, ptr %.sroa.17.0..sroa_idx, align 1
   br label %.critedge
 
 _ZN4Luau3getINS_13PrimitiveTypeEEEPKT_PKNS_4TypeE.exit: ; preds = %bb.b
@@ -297,20 +295,22 @@ bb.h:                                             ; preds = %_ZN4Luau3getINS_13P
   %.sroa.11.0..sroa_idx68 = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %.sroa.11.0.copyload69 = load i8, ptr %.sroa.11.0..sroa_idx68, align 8
   %.sroa.17.0..sroa_idx74 = getelementptr inbounds nuw i8, ptr %i.a, i64 25
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.17, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.17.0..sroa_idx74, i64 7, i1 false)
+  %.sroa.17.sroa.0.0.copyload243 = load <7 x i8>, ptr %.sroa.17.0..sroa_idx74, align 1
   br label %.thread132thread-pre-split
 
 .thread132thread-pre-split:                       ; preds = %bb.e, %bb.d, %bb.h
-  %.sroa.11.2138.ph = phi i8 [ %.sroa.11.0.copyload69, %bb.h ], [ 1, %bb.d ], [ 1, %bb.e ]
-  %.sroa.064.2136.ph = phi ptr [ %.sroa.064.0.copyload65, %bb.h ], [ %i.u, %bb.d ], [ %i.u, %bb.e ]
+  %.sroa.17.sroa.0.0 = phi <7 x i8> [ undef, %bb.d ], [ undef, %bb.e ], [ %.sroa.17.sroa.0.0.copyload243, %bb.h ]
+  %.sroa.11.2138.ph = phi i8 [ 1, %bb.d ], [ 1, %bb.e ], [ %.sroa.11.0.copyload69, %bb.h ]
+  %.sroa.064.2136.ph = phi ptr [ %i.u, %bb.d ], [ %i.u, %bb.e ], [ %.sroa.064.0.copyload65, %bb.h ]
   %.pr197 = load i32, ptr %i.a, align 8, !tbaa !113
   br label %.thread132
 
 .thread132:                                       ; preds = %bb.b, %.thread132thread-pre-split
-  %.pr198 = phi i32 [ %.pr197, %.thread132thread-pre-split ], [ %i.b, %bb.b ] ; 2 uses
-  %.3140 = phi i1 [ false, %.thread132thread-pre-split ], [ %i.c, %bb.b ]
-  %.sroa.11.2138 = phi i8 [ %.sroa.11.2138.ph, %.thread132thread-pre-split ], [ 0, %bb.b ] ; 2 uses
-  %.sroa.064.2136 = phi ptr [ %.sroa.064.2136.ph, %.thread132thread-pre-split ], [ undef, %bb.b ] ; 2 uses
+  %.sroa.17.sroa.0.1 = phi <7 x i8> [ undef, %bb.b ], [ %.sroa.17.sroa.0.0, %.thread132thread-pre-split ] ; 3 uses
+  %.pr198 = phi i32 [ %i.b, %bb.b ], [ %.pr197, %.thread132thread-pre-split ] ; 2 uses
+  %.3140 = phi i1 [ %i.c, %bb.b ], [ false, %.thread132thread-pre-split ]
+  %.sroa.11.2138 = phi i8 [ 0, %bb.b ], [ %.sroa.11.2138.ph, %.thread132thread-pre-split ] ; 2 uses
+  %.sroa.064.2136 = phi ptr [ undef, %bb.b ], [ %.sroa.064.2136.ph, %.thread132thread-pre-split ] ; 2 uses
   switch i32 %.pr198, label %bb.i [
     i32 5, label %_ZN4Luau3getINS_15StringSingletonEEEPKT_PKNS_13SingletonTypeE.exit
     i32 12, label %.critedge
@@ -332,7 +332,7 @@ _ZN4Luau3getINS_13PrimitiveTypeEEEPKT_PKNS_4TypeE.exit44: ; preds = %_ZN4Luau3ge
   %.sroa.11.0..sroa_idx70 = getelementptr inbounds nuw i8, ptr %i.am, i64 24
   %.sroa.11.0.copyload71 = load i8, ptr %.sroa.11.0..sroa_idx70, align 8
   %.sroa.17.0..sroa_idx75 = getelementptr inbounds nuw i8, ptr %i.am, i64 25
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.17, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.17.0..sroa_idx75, i64 7, i1 false)
+  %.sroa.17.sroa.0.0.copyload244 = load <7 x i8>, ptr %.sroa.17.0..sroa_idx75, align 1
   br label %.critedge
 
 bb.i:                                             ; preds = %.thread132
@@ -355,9 +355,10 @@ bb.i:                                             ; preds = %.thread132
   br label %bb.s
 
 .critedge:                                        ; preds = %.thread214, %.thread113, %_ZN4Luau3getINS_13PrimitiveTypeEEEPKT_PKNS_4TypeE.exit44, %_ZN4Luau3getINS_15StringSingletonEEEPKT_PKNS_13SingletonTypeE.exit, %.thread132, %bb.i
-  %.mux241 = phi ptr [ %.mux, %bb.i ], [ %.sroa.064.0.copyload, %.thread113 ], [ %.sroa.064.2136, %_ZN4Luau3getINS_15StringSingletonEEEPKT_PKNS_13SingletonTypeE.exit ], [ %.sroa.064.0.copyload66, %_ZN4Luau3getINS_13PrimitiveTypeEEEPKT_PKNS_4TypeE.exit44 ], [ %i.e, %.thread214 ], [ %i.a, %.thread132 ]
-  %i.au = phi i1 [ %i.ao, %bb.i ], [ true, %.thread113 ], [ true, %_ZN4Luau3getINS_15StringSingletonEEEPKT_PKNS_13SingletonTypeE.exit ], [ true, %_ZN4Luau3getINS_13PrimitiveTypeEEEPKT_PKNS_4TypeE.exit44 ], [ true, %.thread214 ], [ true, %.thread132 ]
-  %.sroa.11.4177240 = phi i8 [ %.sroa.11.2138, %bb.i ], [ %.sroa.11.0.copyload, %.thread113 ], [ %.sroa.11.2138, %_ZN4Luau3getINS_15StringSingletonEEEPKT_PKNS_13SingletonTypeE.exit ], [ %.sroa.11.0.copyload71, %_ZN4Luau3getINS_13PrimitiveTypeEEEPKT_PKNS_4TypeE.exit44 ], [ 1, %.thread214 ], [ 1, %.thread132 ]
+  %.sroa.17.sroa.0.2 = phi <7 x i8> [ %.sroa.17.sroa.0.1, %bb.i ], [ %.sroa.17.sroa.0.0.copyload244, %_ZN4Luau3getINS_13PrimitiveTypeEEEPKT_PKNS_4TypeE.exit44 ], [ %.sroa.17.sroa.0.1, %_ZN4Luau3getINS_15StringSingletonEEEPKT_PKNS_13SingletonTypeE.exit ], [ %.sroa.17.sroa.0.1, %.thread132 ], [ undef, %.thread214 ], [ %.sroa.17.sroa.0.0.copyload, %.thread113 ]
+  %.mux241 = phi ptr [ %.mux, %bb.i ], [ %.sroa.064.0.copyload66, %_ZN4Luau3getINS_13PrimitiveTypeEEEPKT_PKNS_4TypeE.exit44 ], [ %.sroa.064.2136, %_ZN4Luau3getINS_15StringSingletonEEEPKT_PKNS_13SingletonTypeE.exit ], [ %i.a, %.thread132 ], [ %i.e, %.thread214 ], [ %.sroa.064.0.copyload, %.thread113 ]
+  %i.au = phi i1 [ %i.ao, %bb.i ], [ true, %_ZN4Luau3getINS_13PrimitiveTypeEEEPKT_PKNS_4TypeE.exit44 ], [ true, %_ZN4Luau3getINS_15StringSingletonEEEPKT_PKNS_13SingletonTypeE.exit ], [ true, %.thread132 ], [ true, %.thread214 ], [ true, %.thread113 ]
+  %.sroa.11.4177240 = phi i8 [ %.sroa.11.2138, %bb.i ], [ %.sroa.11.0.copyload71, %_ZN4Luau3getINS_13PrimitiveTypeEEEPKT_PKNS_4TypeE.exit44 ], [ %.sroa.11.2138, %_ZN4Luau3getINS_15StringSingletonEEEPKT_PKNS_13SingletonTypeE.exit ], [ 1, %.thread132 ], [ 1, %.thread214 ], [ %.sroa.11.0.copyload, %.thread113 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #29
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
   %i.av = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
@@ -430,7 +431,7 @@ bb.n:                                             ; preds = %bb.m
   %.sroa.11.0..sroa_idx72 = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 1, ptr %.sroa.11.0..sroa_idx72, align 8
   %.sroa.17.0..sroa_idx76 = getelementptr inbounds nuw i8, ptr %0, i64 9
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.17.0..sroa_idx76, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.17, i64 7, i1 false)
+  store <7 x i8> %.sroa.17.sroa.0.2, ptr %.sroa.17.0..sroa_idx76, align 1
   br label %bb.p
 
 bb.o:                                             ; preds = %bb.m
@@ -516,12 +517,10 @@ _ZNSt6vectorIN4Luau9TypeErrorESaIS1_EED2Ev.exit:  ; preds = %_ZSt8_DestroyIPN4Lu
   br label %bb.s
 
 bb.s:                                             ; preds = %_ZNSt6vectorIN4Luau9TypeErrorESaIS1_EED2Ev.exit, %.thread193
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.17)
   ret void
 
 _ZN4Luau9UnionTypeD2Ev.exit41:                    ; preds = %bb.f, %bb.g, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit49
   %.pn34.pn = phi { ptr, i32 } [ %i.bh, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit49 ], [ %i.aa, %bb.g ], [ %i.aa, %bb.f ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.17)
   resume { ptr, i32 } %.pn34.pn
 }
 

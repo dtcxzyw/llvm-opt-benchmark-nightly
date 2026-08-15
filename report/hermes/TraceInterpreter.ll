@@ -204,7 +204,6 @@ bb.a:
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 14 uses
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 13 uses
   %10 = alloca %"class.std::vector.100", align 8  ; 14 uses
-  %.sroa.0 = alloca [20 x i8], align 1            ; 7 uses
   %11 = alloca %"struct.std::array", align 1      ; 5 uses
   %12 = alloca %"struct.std::array", align 1      ; 5 uses
   %13 = alloca %"struct.std::pair.117", align 8   ; 8 uses
@@ -548,8 +547,6 @@ bb.u:                                             ; preds = %bb.s, %bb.r, %.lr.p
 
 bb.v:                                             ; preds = %.lr.ph160, %_ZNSt4pairIKSt5arrayIhLm20EESt10shared_ptrIKN8facebook3jsi6BufferEEED2Ev.exit
   %.sroa.088.0158 = phi ptr [ %i.p, %.lr.ph160 ], [ %i.ex, %_ZNSt4pairIKSt5arrayIhLm20EESt10shared_ptrIKN8facebook3jsi6BufferEEED2Ev.exit ] ; 8 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(20) %.sroa.0, i8 0, i64 20, i1 false)
   %i.cv = load ptr, ptr %.sroa.088.0158, align 8, !tbaa !249 ; 2 uses
   %i.cw = load ptr, ptr %i.cv, align 8, !tbaa !94
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cw, i64 24
@@ -597,20 +594,20 @@ bb.ab:                                            ; preds = %bb.aa
           to label %bb.ac unwind label %bb.ae
 
 bb.ac:                                            ; preds = %bb.ab
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(20) %.sroa.0, ptr noundef nonnull align 1 dereferenceable(20) %11, i64 20, i1 false), !tbaa.struct !266
+  %.sroa.0.sroa.0.0.copyload = load <20 x i8>, ptr %11, align 1, !tbaa !74
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #35
   br label %bb.ak
 
 bb.ad:                                            ; preds = %bb.x, %bb.w, %bb.v
   %i.dt = landingpad { ptr, i32 }
           cleanup
-  br label %14
+  br label %.body
 
 bb.ae:                                            ; preds = %bb.ab, %bb.aa, %bb.z
   %i.du = landingpad { ptr, i32 }
           cleanup
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #35
-  br label %14
+  br label %.body
 
 bb.af:                                            ; preds = %bb.y
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #35
@@ -634,7 +631,7 @@ bb.ah:                                            ; preds = %bb.ag
           to label %bb.ai unwind label %bb.aj
 
 bb.ai:                                            ; preds = %bb.ah
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(20) %.sroa.0, ptr noundef nonnull align 1 dereferenceable(20) %12, i64 20, i1 false), !tbaa.struct !266
+  %.sroa.0.sroa.0.0.copyload345 = load <20 x i8>, ptr %12, align 1, !tbaa !74
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #35
   br label %bb.ak
 
@@ -642,11 +639,12 @@ bb.aj:                                            ; preds = %bb.ah, %bb.ag, %bb.
   %i.ef = landingpad { ptr, i32 }
           cleanup
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #35
-  br label %14
+  br label %.body
 
 bb.ak:                                            ; preds = %bb.ai, %bb.ac
+  %.sroa.0.sroa.0.0 = phi <20 x i8> [ %.sroa.0.sroa.0.0.copyload, %bb.ac ], [ %.sroa.0.sroa.0.0.copyload345, %bb.ai ]
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #35
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %13, ptr noundef nonnull align 1 dereferenceable(20) %.sroa.0, i64 20, i1 false), !tbaa.struct !266
+  store <20 x i8> %.sroa.0.sroa.0.0, ptr %13, align 8, !tbaa !74
   invoke void @_ZNSt12__shared_ptrIKN8facebook3jsi6BufferELN9__gnu_cxx12_Lock_policyE2EEC2IS3_St14default_deleteIS3_EvEEOSt10unique_ptrIT_T0_E(ptr noundef nonnull align 8 dereferenceable(16) %i.cq, ptr noundef nonnull align 8 dereferenceable(8) %.sroa.088.0158)
           to label %_ZNSt4pairIKSt5arrayIhLm20EESt10shared_ptrIKN8facebook3jsi6BufferEEEC2IRS1_St10unique_ptrIS7_St14default_deleteIS7_EETnNSt9enable_ifIXaaclsr5_PCCPE22_MoveConstructiblePairIT_T0_EEclsr5_PCCPE30_ImplicitlyMoveConvertiblePairISH_SI_EEEbE4typeELb1EEEOSH_OSI_.exit unwind label %bb.ar
 
@@ -673,11 +671,11 @@ bb.am:                                            ; preds = %bb.al
   %i.en = load ptr, ptr %i.eh, align 8, !tbaa !94
   %i.eo = getelementptr inbounds nuw i8, ptr %i.en, i64 16
   %i.ep = load ptr, ptr %i.eo, align 8
-  call void %i.ep(ptr noundef nonnull align 8 dereferenceable(16) %i.eh) #35, !inline_history !267
+  call void %i.ep(ptr noundef nonnull align 8 dereferenceable(16) %i.eh) #35, !inline_history !266
   %i.eq = load ptr, ptr %i.eh, align 8, !tbaa !94
   %i.er = getelementptr inbounds nuw i8, ptr %i.eq, i64 24
   %i.es = load ptr, ptr %i.er, align 8
-  call void %i.es(ptr noundef nonnull align 8 dereferenceable(16) %i.eh) #35, !inline_history !267
+  call void %i.es(ptr noundef nonnull align 8 dereferenceable(16) %i.eh) #35, !inline_history !266
   br label %_ZNSt4pairIKSt5arrayIhLm20EESt10shared_ptrIKN8facebook3jsi6BufferEEED2Ev.exit
 
 bb.an:                                            ; preds = %bb.al
@@ -705,7 +703,6 @@ bb.aq:                                            ; preds = %_ZN9__gnu_cxx27__ex
 
 _ZNSt4pairIKSt5arrayIhLm20EESt10shared_ptrIKN8facebook3jsi6BufferEEED2Ev.exit: ; preds = %_ZNSt3mapISt5arrayIhLm20EESt10shared_ptrIKN8facebook3jsi6BufferEESt4lessIS1_ESaISt4pairIKS1_S7_EEE6insertEOSC_.exit, %bb.am, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i, %bb.aq
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #35
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   %i.ex = getelementptr inbounds nuw i8, ptr %.sroa.088.0158, i64 8 ; 2 uses
   %.not115 = icmp eq ptr %i.ex, %i.o
   br i1 %.not115, label %._crit_edge161, label %bb.v
@@ -724,18 +721,13 @@ bb.as:                                            ; preds = %_ZNSt4pairIKSt5arra
 bb.at:                                            ; preds = %bb.as, %bb.ar
   %.pn = phi { ptr, i32 } [ %i.ez, %bb.as ], [ %i.ey, %bb.ar ]
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #35
-  br label %14
-
-14:                                               ; preds = %bb.at, %bb.aj, %bb.ae, %bb.ad
-  %.pn.pn = phi { ptr, i32 } [ %.pn, %bb.at ], [ %i.du, %bb.ae ], [ %i.ef, %bb.aj ], [ %i.dt, %bb.ad ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   br label %.body
 
 bb.au:                                            ; preds = %._crit_edge161
   %i.fa = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %.val = load ptr, ptr %i.fa, align 8, !tbaa !268 ; 2 uses
+  %.val = load ptr, ptr %i.fa, align 8, !tbaa !267 ; 2 uses
   %i.fb = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %.val62 = load ptr, ptr %i.fb, align 8, !tbaa !268 ; 2 uses
+  %.val62 = load ptr, ptr %i.fb, align 8, !tbaa !267 ; 2 uses
   %.not53.i = icmp eq ptr %.val, %.val62
   br i1 %.not53.i, label %_ZN8facebook6hermes7tracing12_GLOBAL__N_118verifyBundlesExistERKSt3mapISt5arrayIhLm20EESt10shared_ptrIKNS_3jsi6BufferEESt4lessIS5_ESaISt4pairIKS5_SA_EEERKNS1_10SynthTraceE.exit, label %.lr.ph.i
 
@@ -777,7 +769,7 @@ bb.aw:                                            ; preds = %bb.av
   %.1.in.i.i.i.i = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i, i64 %.1.in.v.i.i.i.i
   %.1.i.i.i.i = load ptr, ptr %.1.in.i.i.i.i, align 8, !tbaa !78 ; 2 uses
   %.not.i.i.i.i78 = icmp eq ptr %.1.i.i.i.i, null
-  br i1 %.not.i.i.i.i78, label %_ZNKSt8_Rb_treeISt5arrayIhLm20EESt4pairIKS1_St10shared_ptrIKN8facebook3jsi6BufferEEESt10_Select1stISA_ESt4lessIS1_ESaISA_EE14_M_lower_boundEPKSt13_Rb_tree_nodeISA_EPKSt18_Rb_tree_node_baseRS3_.exit.i.i.i, label %.lr.ph.i.i.i.i, !llvm.loop !269
+  br i1 %.not.i.i.i.i78, label %_ZNKSt8_Rb_treeISt5arrayIhLm20EESt4pairIKS1_St10shared_ptrIKN8facebook3jsi6BufferEEESt10_Select1stISA_ESt4lessIS1_ESaISA_EE14_M_lower_boundEPKSt13_Rb_tree_nodeISA_EPKSt18_Rb_tree_node_baseRS3_.exit.i.i.i, label %.lr.ph.i.i.i.i, !llvm.loop !268
 
 _ZNKSt8_Rb_treeISt5arrayIhLm20EESt4pairIKS1_St10shared_ptrIKN8facebook3jsi6BufferEEESt10_Select1stISA_ESt4lessIS1_ESaISA_EE14_M_lower_boundEPKSt13_Rb_tree_nodeISA_EPKSt18_Rb_tree_node_baseRS3_.exit.i.i.i: ; preds = %.lr.ph.i.i.i.i
   %i.fp = icmp eq ptr %.19.i.i.i.i, %i.ck
@@ -810,7 +802,7 @@ bb.ax:                                            ; preds = %_ZNKSt3mapISt5array
   br i1 %.not.i.i, label %bb.az, label %bb.ay
 
 bb.ay:                                            ; preds = %bb.ax
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(20) %.sroa.1018.056.i, ptr noundef nonnull align 1 dereferenceable(20) %i.fk, i64 20, i1 false), !tbaa.struct !266
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(20) %.sroa.1018.056.i, ptr noundef nonnull align 1 dereferenceable(20) %i.fk, i64 20, i1 false), !tbaa.struct !269
   %i.gc = getelementptr inbounds nuw i8, ptr %.sroa.1018.056.i, i64 20
   br label %_ZNSt6vectorISt5arrayIhLm20EESaIS1_EE12emplace_backIJRKS1_EEERS1_DpOT_.exit.i
 
@@ -843,7 +835,7 @@ _ZNKSt6vectorISt5arrayIhLm20EESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = 
 
 .noexc41.i:                                       ; preds = %_ZNKSt6vectorISt5arrayIhLm20EESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.go = getelementptr inbounds i8, ptr %i.gn, i64 %i.gf ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(20) %i.go, ptr noundef nonnull align 1 dereferenceable(20) %i.fk, i64 20, i1 false), !tbaa.struct !266
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(20) %i.go, ptr noundef nonnull align 1 dereferenceable(20) %i.fk, i64 20, i1 false), !tbaa.struct !269
   %i.gp = icmp sgt i64 %i.gf, 0
   br i1 %i.gp, label %bb.bb, label %_ZNSt6vectorISt5arrayIhLm20EESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i.i
 
@@ -1246,8 +1238,8 @@ _ZNSt6vectorISt10unique_ptrIKN8facebook3jsi6BufferESt14default_deleteIS4_EESaIS7
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #35
   ret void
 
-.body:                                            ; preds = %bb.ca, %bb.bz, %14
-  %.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn, %14 ], [ %.pn37.pn.i, %bb.bz ], [ %.pn37.pn.i, %bb.ca ]
+.body:                                            ; preds = %bb.ad, %bb.ae, %bb.aj, %bb.at, %bb.ca, %bb.bz
+  %.pn.pn.pn = phi { ptr, i32 } [ %.pn37.pn.i, %bb.ca ], [ %.pn37.pn.i, %bb.bz ], [ %.pn, %bb.at ], [ %i.du, %bb.ae ], [ %i.ef, %bb.aj ], [ %i.dt, %bb.ad ]
   call void @_ZNSt3mapISt5arrayIhLm20EESt10shared_ptrIKN8facebook3jsi6BufferEESt4lessIS1_ESaISt4pairIKS1_S7_EEED2Ev(ptr noundef nonnull align 8 dead_on_return(48) dereferenceable(48) %0) #35
   br label %_ZNSt10unique_ptrIN4llvh12MemoryBufferESt14default_deleteIS1_EED2Ev.exit70
 
@@ -1650,7 +1642,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.b = tail call noalias noundef nonnull dereferenceable(72) ptr @_Znwm(i64 noundef 72) #37 ; 10 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 32
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.c, ptr noundef nonnull align 8 dereferenceable(40) %i.a, i64 20, i1 false), !tbaa.struct !266
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.c, ptr noundef nonnull align 8 dereferenceable(40) %i.a, i64 20, i1 false), !tbaa.struct !269
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 56
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 64
@@ -1717,7 +1709,7 @@ bb.h:                                             ; preds = %bb.f, %_ZNSt8_Rb_tr
 .noexc:                                           ; preds = %.lr.ph
   %i.w = getelementptr inbounds nuw i8, ptr %.042, i64 32
   %i.x = getelementptr inbounds nuw i8, ptr %i.v, i64 32
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.x, ptr noundef nonnull align 8 dereferenceable(40) %i.w, i64 20, i1 false), !tbaa.struct !266
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.x, ptr noundef nonnull align 8 dereferenceable(40) %i.w, i64 20, i1 false), !tbaa.struct !269
   %i.y = getelementptr inbounds nuw i8, ptr %i.v, i64 56
   %i.z = getelementptr inbounds nuw i8, ptr %.042, i64 56
   %i.aa = getelementptr inbounds nuw i8, ptr %.042, i64 64
@@ -2120,7 +2112,7 @@ _ZNSt8_Rb_treeISt5arrayIhLm20EESt4pairIKS1_St10shared_ptrIKN8facebook3jsi6Buffer
   %i.q = phi i1 [ %i.p, %bb.d ], [ true, %select.unfold ]
   %i.r = tail call noalias noundef nonnull dereferenceable(72) ptr @_Znwm(i64 noundef 72) #37 ; 4 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 32
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.s, ptr noundef nonnull align 8 dereferenceable(40) %1, i64 20, i1 false), !tbaa.struct !266
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.s, ptr noundef nonnull align 8 dereferenceable(40) %1, i64 20, i1 false), !tbaa.struct !269
   %i.t = getelementptr inbounds nuw i8, ptr %i.r, i64 56
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 32
@@ -2523,10 +2515,10 @@ begin_hunk_4_@bcmp
 !263 = distinct !{null, null}
 !264 = distinct !{null}
 !265 = !{!14, !20, i64 229}
-!266 = !{i64 0, i64 20, !74}
-!267 = distinct !{ptr @_ZNSt4pairIKSt5arrayIhLm20EESt10shared_ptrIKN8facebook3jsi6BufferEEED2Ev, ptr @_ZNSt12__shared_ptrIKN8facebook3jsi6BufferELN9__gnu_cxx12_Lock_policyE2EED2Ev, ptr @_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EED2Ev, null}
-!268 = !{!105, !105, i64 0}
-!269 = distinct !{!269, !109}
+!266 = distinct !{ptr @_ZNSt4pairIKSt5arrayIhLm20EESt10shared_ptrIKN8facebook3jsi6BufferEEED2Ev, ptr @_ZNSt12__shared_ptrIKN8facebook3jsi6BufferELN9__gnu_cxx12_Lock_policyE2EED2Ev, ptr @_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EED2Ev, null}
+!267 = !{!105, !105, i64 0}
+!268 = distinct !{!268, !109}
+!269 = !{i64 0, i64 20, !74}
 !270 = distinct !{!270, !271}
 !271 = !{!"llvm.loop.peeled.count", i32 1}
 !272 = distinct !{!272, !271}

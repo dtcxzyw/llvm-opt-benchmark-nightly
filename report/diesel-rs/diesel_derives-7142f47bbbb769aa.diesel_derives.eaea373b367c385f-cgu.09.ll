@@ -201,11 +201,10 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
 define hidden void @_RNCNCNvCskarGseaywcB_14diesel_derives24___diesel_public_if_inner00B5_(ptr nofree writeonly sret([496 x i8]) align 8 captures(none) initializes((0, 496)) %0, ptr nofree readonly align 8 captures(none) %1, ptr nofree readonly align 8 captures(none) %2) unnamed_addr #5 {
 bb.a:
-  %3 = alloca [240 x i8], align 8                 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(240) %3, ptr noundef nonnull align 8 dereferenceable(240) %1, i64 240, i1 false)
+  %.sroa.0.0.copyload = load <240 x i8>, ptr %1, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(256) %0, ptr noundef nonnull align 8 dereferenceable(256) %2, i64 256, i1 false)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 256
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(240) %i.a, ptr noundef nonnull align 8 dereferenceable(240) %3, i64 240, i1 false)
+  store <240 x i8> %.sroa.0.0.copyload, ptr %i.a, align 8
   ret void
 }
 

@@ -204,11 +204,9 @@ declare void @_ZN4cvc58internal11FatalStreamD1Ev(ptr noundef nonnull align 1 der
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZN4cvc58internal4expr4attr16AttributeManager25deleteAttributesFromTableImEEvRNS2_8AttrHashIT_EERKSt6vectorImSaImEE(ptr noundef nonnull align 8 dereferenceable(344) %0, ptr noundef nonnull align 8 dereferenceable(56) %1, ptr noundef nonnull align 8 dereferenceable(24) %2) local_unnamed_addr #3 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.8 = alloca [7 x i8], align 1             ; 4 uses
   %3 = alloca %"class.cvc5::internal::expr::attr::AttrHash<unsigned long>::Iterator", align 8 ; 8 uses
   %4 = alloca %"class.cvc5::internal::expr::attr::AttrHash<unsigned long>::Iterator", align 8 ; 6 uses
   store i8 1, ptr %0, align 8, !tbaa !8
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.8)
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !70   ; 6 uses
   %i.c = icmp eq ptr %i.b, null
@@ -339,6 +337,7 @@ _ZNK4cvc58internal4expr4attr8AttrHashImE4sizeEv.exit: ; preds = %_ZNSt4pairIPN4c
   br label %bb.f
 
 bb.f:                                             ; preds = %.backedge, %.lr.ph74
+  %.sroa.8.sroa.0.0 = phi <7 x i8> [ undef, %.lr.ph74 ], [ %.sroa.8.sroa.0.1, %.backedge ] ; 3 uses
   %.sroa.17.073 = phi ptr [ %.sroa.17.2, %.lr.ph74 ], [ %.sroa.17.073.be, %.backedge ] ; 3 uses
   %.sroa.9.072 = phi ptr [ %.sroa.9.2, %.lr.ph74 ], [ %.sroa.9.072.be, %.backedge ] ; 4 uses
   %.sroa.844.071 = phi ptr [ %1, %.lr.ph74 ], [ %.sroa.844.071.be, %.backedge ] ; 3 uses
@@ -373,13 +372,13 @@ _ZSt13binary_searchIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEmEbT_S8
 .split:                                           ; preds = %_ZSt13binary_searchIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEmEbT_S8_RKT0_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #24
   store i8 0, ptr %4, align 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.8.0..sroa_idx, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.8, i64 7, i1 false)
+  store <7 x i8> %.sroa.8.sroa.0.0, ptr %.sroa.8.0..sroa_idx, align 1
   store ptr %.sroa.844.071, ptr %.sroa.844.0..sroa_idx, align 8
   store ptr %.sroa.9.072, ptr %.sroa.9.0..sroa_idx, align 8
   store ptr %.sroa.17.073, ptr %.sroa.17.0..sroa_idx, align 8
   call void @_ZN4cvc58internal4expr4attr8AttrHashImE5eraseENS4_8IteratorIS4_NSt8__detail14_Node_iteratorISt4pairIKPNS1_9NodeValueENS4_5IdMapEELb0ELb1EEEN9__gnu_cxx17__normal_iteratorIPS8_ImmESt6vectorISH_SaISH_EEEEEE(ptr dead_on_unwind nonnull writable sret(%"class.cvc5::internal::expr::attr::AttrHash<unsigned long>::Iterator") align 8 %3, ptr noundef nonnull align 8 dereferenceable(56) %1, ptr noundef nonnull byval(%"class.cvc5::internal::expr::attr::AttrHash<unsigned long>::Iterator") align 8 %4)
   %.sroa.041.0.copyload42 = load i8, ptr %3, align 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.8, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.8.0..sroa_idx43, i64 7, i1 false)
+  %.sroa.8.sroa.0.0.copyload149 = load <7 x i8>, ptr %.sroa.8.0..sroa_idx43, align 1
   %.sroa.844.0.copyload46 = load ptr, ptr %.sroa.844.0..sroa_idx45, align 8
   %.sroa.9.0.copyload48 = load ptr, ptr %.sroa.9.0..sroa_idx47, align 8
   %.sroa.17.0.copyload51 = load ptr, ptr %.sroa.17.0..sroa_idx50, align 8
@@ -388,9 +387,10 @@ _ZSt13binary_searchIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEmEbT_S8
   br i1 %i.bh, label %_ZNK4cvc58internal4expr4attr8AttrHashImE8IteratorIS4_NSt8__detail14_Node_iteratorISt4pairIKPNS1_9NodeValueENS4_5IdMapEELb0ELb1EEEN9__gnu_cxx17__normal_iteratorIPS8_ImmESt6vectorISH_SaISH_EEEEEneERKSN_.exit, label %.backedge
 
 .backedge:                                        ; preds = %_ZSt13binary_searchIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEmEbT_S8_RKT0_.exit.thread, %._ZN4cvc58internal4expr4attr8AttrHashImE8IteratorIS4_NSt8__detail14_Node_iteratorISt4pairIKPNS1_9NodeValueENS4_5IdMapEELb0ELb1EEEN9__gnu_cxx17__normal_iteratorIPS8_ImmESt6vectorISH_SaISH_EEEEEppEv.exit.loopexit_crit_edge, %.split
-  %.sroa.17.073.be = phi ptr [ %.sroa.17.0.copyload51, %.split ], [ %i.bs, %._ZN4cvc58internal4expr4attr8AttrHashImE8IteratorIS4_NSt8__detail14_Node_iteratorISt4pairIKPNS1_9NodeValueENS4_5IdMapEELb0ELb1EEEN9__gnu_cxx17__normal_iteratorIPS8_ImmESt6vectorISH_SaISH_EEEEEppEv.exit.loopexit_crit_edge ], [ %i.bi, %_ZSt13binary_searchIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEmEbT_S8_RKT0_.exit.thread ]
-  %.sroa.9.072.be = phi ptr [ %.sroa.9.0.copyload48, %.split ], [ %i.bq, %._ZN4cvc58internal4expr4attr8AttrHashImE8IteratorIS4_NSt8__detail14_Node_iteratorISt4pairIKPNS1_9NodeValueENS4_5IdMapEELb0ELb1EEEN9__gnu_cxx17__normal_iteratorIPS8_ImmESt6vectorISH_SaISH_EEEEEppEv.exit.loopexit_crit_edge ], [ %.sroa.9.072, %_ZSt13binary_searchIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEmEbT_S8_RKT0_.exit.thread ]
-  %.sroa.844.071.be = phi ptr [ %.sroa.844.0.copyload46, %.split ], [ %.sroa.844.071, %._ZN4cvc58internal4expr4attr8AttrHashImE8IteratorIS4_NSt8__detail14_Node_iteratorISt4pairIKPNS1_9NodeValueENS4_5IdMapEELb0ELb1EEEN9__gnu_cxx17__normal_iteratorIPS8_ImmESt6vectorISH_SaISH_EEEEEppEv.exit.loopexit_crit_edge ], [ %.sroa.844.071, %_ZSt13binary_searchIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEmEbT_S8_RKT0_.exit.thread ]
+  %.sroa.8.sroa.0.1 = phi <7 x i8> [ %.sroa.8.sroa.0.0, %._ZN4cvc58internal4expr4attr8AttrHashImE8IteratorIS4_NSt8__detail14_Node_iteratorISt4pairIKPNS1_9NodeValueENS4_5IdMapEELb0ELb1EEEN9__gnu_cxx17__normal_iteratorIPS8_ImmESt6vectorISH_SaISH_EEEEEppEv.exit.loopexit_crit_edge ], [ %.sroa.8.sroa.0.0, %_ZSt13binary_searchIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEmEbT_S8_RKT0_.exit.thread ], [ %.sroa.8.sroa.0.0.copyload149, %.split ]
+  %.sroa.17.073.be = phi ptr [ %i.bs, %._ZN4cvc58internal4expr4attr8AttrHashImE8IteratorIS4_NSt8__detail14_Node_iteratorISt4pairIKPNS1_9NodeValueENS4_5IdMapEELb0ELb1EEEN9__gnu_cxx17__normal_iteratorIPS8_ImmESt6vectorISH_SaISH_EEEEEppEv.exit.loopexit_crit_edge ], [ %i.bi, %_ZSt13binary_searchIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEmEbT_S8_RKT0_.exit.thread ], [ %.sroa.17.0.copyload51, %.split ]
+  %.sroa.9.072.be = phi ptr [ %i.bq, %._ZN4cvc58internal4expr4attr8AttrHashImE8IteratorIS4_NSt8__detail14_Node_iteratorISt4pairIKPNS1_9NodeValueENS4_5IdMapEELb0ELb1EEEN9__gnu_cxx17__normal_iteratorIPS8_ImmESt6vectorISH_SaISH_EEEEEppEv.exit.loopexit_crit_edge ], [ %.sroa.9.072, %_ZSt13binary_searchIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEmEbT_S8_RKT0_.exit.thread ], [ %.sroa.9.0.copyload48, %.split ]
+  %.sroa.844.071.be = phi ptr [ %.sroa.844.071, %._ZN4cvc58internal4expr4attr8AttrHashImE8IteratorIS4_NSt8__detail14_Node_iteratorISt4pairIKPNS1_9NodeValueENS4_5IdMapEELb0ELb1EEEN9__gnu_cxx17__normal_iteratorIPS8_ImmESt6vectorISH_SaISH_EEEEEppEv.exit.loopexit_crit_edge ], [ %.sroa.844.071, %_ZSt13binary_searchIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEmEbT_S8_RKT0_.exit.thread ], [ %.sroa.844.0.copyload46, %.split ]
   br label %bb.f, !llvm.loop !146
 
 _ZSt13binary_searchIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEmEbT_S8_RKT0_.exit.thread: ; preds = %_ZSt13__lower_boundIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEmNS0_5__ops14_Iter_less_valEET_SA_SA_RKT0_T1_.exit.i, %_ZSt13binary_searchIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEmEbT_S8_RKT0_.exit
@@ -505,18 +505,15 @@ bb.j:                                             ; preds = %_ZNK4cvc58internal4
   br label %bb.k
 
 bb.k:                                             ; preds = %_ZNK4cvc58internal4expr4attr8AttrHashImE4sizeEv.exit35.thread, %bb.j, %_ZNK4cvc58internal4expr4attr8AttrHashImE4sizeEv.exit35
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8)
   ret void
 }
 
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZN4cvc58internal4expr4attr16AttributeManager25deleteAttributesFromTableINS0_12NodeTemplateILb0EEEEEvRNS2_8AttrHashIT_EERKSt6vectorImSaImEE(ptr noundef nonnull align 8 dereferenceable(344) %0, ptr noundef nonnull align 8 dereferenceable(56) %1, ptr noundef nonnull align 8 dereferenceable(24) %2) local_unnamed_addr #3 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.8 = alloca [7 x i8], align 1             ; 4 uses
   %3 = alloca %"class.cvc5::internal::expr::attr::AttrHash<cvc5::internal::NodeTemplate<false>>::Iterator", align 8 ; 8 uses
   %4 = alloca %"class.cvc5::internal::expr::attr::AttrHash<cvc5::internal::NodeTemplate<false>>::Iterator", align 8 ; 6 uses
   store i8 1, ptr %0, align 8, !tbaa !8
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.8)
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !76   ; 6 uses
   %i.c = icmp eq ptr %i.b, null
@@ -652,6 +649,7 @@ _ZNK4cvc58internal4expr4attr8AttrHashINS0_12NodeTemplateILb0EEEE4sizeEv.exit: ; 
   br label %bb.f
 
 bb.f:                                             ; preds = %.backedge, %.lr.ph74
+  %.sroa.8.sroa.0.0 = phi <7 x i8> [ undef, %.lr.ph74 ], [ %.sroa.8.sroa.0.1, %.backedge ] ; 3 uses
   %.sroa.17.073 = phi ptr [ %.sroa.17.2, %.lr.ph74 ], [ %.sroa.17.073.be, %.backedge ] ; 3 uses
   %.sroa.9.072 = phi ptr [ %.sroa.9.2, %.lr.ph74 ], [ %.sroa.9.072.be, %.backedge ] ; 4 uses
   %.sroa.844.071 = phi ptr [ %1, %.lr.ph74 ], [ %.sroa.844.071.be, %.backedge ] ; 3 uses
@@ -686,13 +684,13 @@ _ZSt13binary_searchIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEmEbT_S8
 .split:                                           ; preds = %_ZSt13binary_searchIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEmEbT_S8_RKT0_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #24
   store i8 0, ptr %4, align 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.8.0..sroa_idx, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.8, i64 7, i1 false)
+  store <7 x i8> %.sroa.8.sroa.0.0, ptr %.sroa.8.0..sroa_idx, align 1
   store ptr %.sroa.844.071, ptr %.sroa.844.0..sroa_idx, align 8
   store ptr %.sroa.9.072, ptr %.sroa.9.0..sroa_idx, align 8
   store ptr %.sroa.17.073, ptr %.sroa.17.0..sroa_idx, align 8
   call void @_ZN4cvc58internal4expr4attr8AttrHashINS0_12NodeTemplateILb0EEEE5eraseENS6_8IteratorIS6_NSt8__detail14_Node_iteratorISt4pairIKPNS1_9NodeValueENS6_5IdMapEELb0ELb1EEEN9__gnu_cxx17__normal_iteratorIPSA_ImS5_ESt6vectorISJ_SaISJ_EEEEEE(ptr dead_on_unwind nonnull writable sret(%"class.cvc5::internal::expr::attr::AttrHash<cvc5::internal::NodeTemplate<false>>::Iterator") align 8 %3, ptr noundef nonnull align 8 dereferenceable(56) %1, ptr noundef nonnull byval(%"class.cvc5::internal::expr::attr::AttrHash<cvc5::internal::NodeTemplate<false>>::Iterator") align 8 %4)
   %.sroa.041.0.copyload42 = load i8, ptr %3, align 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.8, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.8.0..sroa_idx43, i64 7, i1 false)
+  %.sroa.8.sroa.0.0.copyload149 = load <7 x i8>, ptr %.sroa.8.0..sroa_idx43, align 1
   %.sroa.844.0.copyload46 = load ptr, ptr %.sroa.844.0..sroa_idx45, align 8
   %.sroa.9.0.copyload48 = load ptr, ptr %.sroa.9.0..sroa_idx47, align 8
   %.sroa.17.0.copyload51 = load ptr, ptr %.sroa.17.0..sroa_idx50, align 8
@@ -701,9 +699,10 @@ _ZSt13binary_searchIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEmEbT_S8
   br i1 %i.bl, label %_ZNK4cvc58internal4expr4attr8AttrHashINS0_12NodeTemplateILb0EEEE8IteratorIS6_NSt8__detail14_Node_iteratorISt4pairIKPNS1_9NodeValueENS6_5IdMapEELb0ELb1EEEN9__gnu_cxx17__normal_iteratorIPSA_ImS5_ESt6vectorISJ_SaISJ_EEEEEneERKSP_.exit, label %.backedge
 
 .backedge:                                        ; preds = %_ZSt13binary_searchIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEmEbT_S8_RKT0_.exit.thread, %._ZN4cvc58internal4expr4attr8AttrHashINS0_12NodeTemplateILb0EEEE8IteratorIS6_NSt8__detail14_Node_iteratorISt4pairIKPNS1_9NodeValueENS6_5IdMapEELb0ELb1EEEN9__gnu_cxx17__normal_iteratorIPSA_ImS5_ESt6vectorISJ_SaISJ_EEEEEppEv.exit.loopexit_crit_edge, %.split
-  %.sroa.17.073.be = phi ptr [ %.sroa.17.0.copyload51, %.split ], [ %i.bw, %._ZN4cvc58internal4expr4attr8AttrHashINS0_12NodeTemplateILb0EEEE8IteratorIS6_NSt8__detail14_Node_iteratorISt4pairIKPNS1_9NodeValueENS6_5IdMapEELb0ELb1EEEN9__gnu_cxx17__normal_iteratorIPSA_ImS5_ESt6vectorISJ_SaISJ_EEEEEppEv.exit.loopexit_crit_edge ], [ %i.bm, %_ZSt13binary_searchIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEmEbT_S8_RKT0_.exit.thread ]
-  %.sroa.9.072.be = phi ptr [ %.sroa.9.0.copyload48, %.split ], [ %i.bu, %._ZN4cvc58internal4expr4attr8AttrHashINS0_12NodeTemplateILb0EEEE8IteratorIS6_NSt8__detail14_Node_iteratorISt4pairIKPNS1_9NodeValueENS6_5IdMapEELb0ELb1EEEN9__gnu_cxx17__normal_iteratorIPSA_ImS5_ESt6vectorISJ_SaISJ_EEEEEppEv.exit.loopexit_crit_edge ], [ %.sroa.9.072, %_ZSt13binary_searchIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEmEbT_S8_RKT0_.exit.thread ]
-  %.sroa.844.071.be = phi ptr [ %.sroa.844.0.copyload46, %.split ], [ %.sroa.844.071, %._ZN4cvc58internal4expr4attr8AttrHashINS0_12NodeTemplateILb0EEEE8IteratorIS6_NSt8__detail14_Node_iteratorISt4pairIKPNS1_9NodeValueENS6_5IdMapEELb0ELb1EEEN9__gnu_cxx17__normal_iteratorIPSA_ImS5_ESt6vectorISJ_SaISJ_EEEEEppEv.exit.loopexit_crit_edge ], [ %.sroa.844.071, %_ZSt13binary_searchIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEmEbT_S8_RKT0_.exit.thread ]
+  %.sroa.8.sroa.0.1 = phi <7 x i8> [ %.sroa.8.sroa.0.0, %._ZN4cvc58internal4expr4attr8AttrHashINS0_12NodeTemplateILb0EEEE8IteratorIS6_NSt8__detail14_Node_iteratorISt4pairIKPNS1_9NodeValueENS6_5IdMapEELb0ELb1EEEN9__gnu_cxx17__normal_iteratorIPSA_ImS5_ESt6vectorISJ_SaISJ_EEEEEppEv.exit.loopexit_crit_edge ], [ %.sroa.8.sroa.0.0, %_ZSt13binary_searchIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEmEbT_S8_RKT0_.exit.thread ], [ %.sroa.8.sroa.0.0.copyload149, %.split ]
+  %.sroa.17.073.be = phi ptr [ %i.bw, %._ZN4cvc58internal4expr4attr8AttrHashINS0_12NodeTemplateILb0EEEE8IteratorIS6_NSt8__detail14_Node_iteratorISt4pairIKPNS1_9NodeValueENS6_5IdMapEELb0ELb1EEEN9__gnu_cxx17__normal_iteratorIPSA_ImS5_ESt6vectorISJ_SaISJ_EEEEEppEv.exit.loopexit_crit_edge ], [ %i.bm, %_ZSt13binary_searchIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEmEbT_S8_RKT0_.exit.thread ], [ %.sroa.17.0.copyload51, %.split ]
+  %.sroa.9.072.be = phi ptr [ %i.bu, %._ZN4cvc58internal4expr4attr8AttrHashINS0_12NodeTemplateILb0EEEE8IteratorIS6_NSt8__detail14_Node_iteratorISt4pairIKPNS1_9NodeValueENS6_5IdMapEELb0ELb1EEEN9__gnu_cxx17__normal_iteratorIPSA_ImS5_ESt6vectorISJ_SaISJ_EEEEEppEv.exit.loopexit_crit_edge ], [ %.sroa.9.072, %_ZSt13binary_searchIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEmEbT_S8_RKT0_.exit.thread ], [ %.sroa.9.0.copyload48, %.split ]
+  %.sroa.844.071.be = phi ptr [ %.sroa.844.071, %._ZN4cvc58internal4expr4attr8AttrHashINS0_12NodeTemplateILb0EEEE8IteratorIS6_NSt8__detail14_Node_iteratorISt4pairIKPNS1_9NodeValueENS6_5IdMapEELb0ELb1EEEN9__gnu_cxx17__normal_iteratorIPSA_ImS5_ESt6vectorISJ_SaISJ_EEEEEppEv.exit.loopexit_crit_edge ], [ %.sroa.844.071, %_ZSt13binary_searchIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEmEbT_S8_RKT0_.exit.thread ], [ %.sroa.844.0.copyload46, %.split ]
   br label %bb.f, !llvm.loop !162
 
 _ZSt13binary_searchIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEmEbT_S8_RKT0_.exit.thread: ; preds = %_ZSt13__lower_boundIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEmNS0_5__ops14_Iter_less_valEET_SA_SA_RKT0_T1_.exit.i, %_ZSt13binary_searchIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEmEbT_S8_RKT0_.exit
@@ -823,7 +822,6 @@ bb.j:                                             ; preds = %_ZNK4cvc58internal4
   br label %bb.k
 
 bb.k:                                             ; preds = %_ZNK4cvc58internal4expr4attr8AttrHashINS0_12NodeTemplateILb0EEEE4sizeEv.exit35.thread, %bb.j, %_ZNK4cvc58internal4expr4attr8AttrHashINS0_12NodeTemplateILb0EEEE4sizeEv.exit35
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8)
   ret void
 }
 

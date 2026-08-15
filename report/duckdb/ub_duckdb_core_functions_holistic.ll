@@ -204,7 +204,6 @@ bb.a:
   %i.s = alloca float, align 4                    ; 8 uses
   %i.t = alloca float, align 4                    ; 8 uses
   %4 = alloca %"struct.__gnu_cxx::__ops::_Iter_comp_iter.392", align 8 ; 9 uses
-  %.sroa.10 = alloca [7 x i8], align 1            ; 4 uses
   %i.u = icmp eq ptr %0, %2
   %i.v = icmp eq ptr %1, %2
   %or.cond = or i1 %i.u, %i.v
@@ -224,8 +223,7 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 16
   %.sroa.3.0.copyload = load i8, ptr %.sroa.3.0..sroa_idx, align 8, !tbaa !247 ; 4 uses
   %.sroa.417.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 17
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.10)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.10, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.417.0..sroa_idx, i64 7, i1 false)
+  %.sroa.10.sroa.0.0.copyload78 = load <7 x i8>, ptr %.sroa.417.0..sroa_idx, align 1
   %i.ad = icmp sgt i64 %i.y, 12
   br i1 %i.ad, label %.lr.ph.i.preheader, label %._crit_edge.i
 
@@ -253,7 +251,7 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 16
   store i8 %.sroa.3.0.copyload, ptr %.sroa.8.0..sroa_idx, align 8
   %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 17
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.10.0..sroa_idx, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.10, i64 7, i1 false)
+  store <7 x i8> %.sroa.10.sroa.0.0.copyload78, ptr %.sroa.10.0..sroa_idx, align 1
   %i.ai = ptrtoint ptr %i.ah to i64
   %i.aj = sub i64 %i.ai, %.lcssa24
   %i.ak = ashr exact i64 %i.aj, 2                 ; 5 uses
@@ -354,7 +352,7 @@ _ZSt13__heap_selectIPfN9__gnu_cxx5__ops15_Iter_comp_iterIN6duckdb15QuantileCompa
   %i.bm = load float, ptr %1, align 4, !tbaa !1313
   store float %i.bm, ptr %.054.i.lcssa, align 4, !tbaa !1313
   store float %i.bl, ptr %1, align 4, !tbaa !1313
-  br label %_ZSt13__introselectIPflN9__gnu_cxx5__ops15_Iter_comp_iterIN6duckdb15QuantileCompareINS4_12_GLOBAL__N_111MadAccessorIfffEEEEEEEvT_SB_SB_T0_T1_.exit
+  br label %bb.u
 
 bb.i:                                             ; preds = %.lr.ph, %.lr.ph.i
   %.01750.i31 = phi ptr [ %2, %.lr.ph ], [ %..017.i, %.lr.ph.i ] ; 4 uses
@@ -663,7 +661,7 @@ _ZSt27__unguarded_partition_pivotIPfN9__gnu_cxx5__ops15_Iter_comp_iterIN6duckdb1
   %.021.i.i = getelementptr inbounds nuw i8, ptr %.0.lcssa.i, i64 4 ; 2 uses
   %.not22.i.i = icmp eq ptr %.021.i.i, %.017.lcssa.i
   %or.cond.i = select i1 %i.ed, i1 true, i1 %.not22.i.i
-  br i1 %or.cond.i, label %_ZSt13__introselectIPflN9__gnu_cxx5__ops15_Iter_comp_iterIN6duckdb15QuantileCompareINS4_12_GLOBAL__N_111MadAccessorIfffEEEEEEEvT_SB_SB_T0_T1_.exit, label %.lr.ph.i21.preheader.i
+  br i1 %or.cond.i, label %bb.u, label %.lr.ph.i21.preheader.i
 
 .lr.ph.i21.preheader.i:                           ; preds = %._crit_edge.i
   %i.ee = trunc nuw i8 %.sroa.3.0.copyload to i1
@@ -798,13 +796,9 @@ _ZSt25__unguarded_linear_insertIPfN9__gnu_cxx5__ops14_Val_comp_iterIN6duckdb15Qu
 bb.t:                                             ; preds = %_ZSt25__unguarded_linear_insertIPfN9__gnu_cxx5__ops14_Val_comp_iterIN6duckdb15QuantileCompareINS4_12_GLOBAL__N_111MadAccessorIfffEEEEEEEvT_T0_.exit.i.i, %_ZSt13move_backwardIPfS0_ET0_T_S2_S1_.exit.i.i
   %.0.i.i = getelementptr inbounds nuw i8, ptr %.024.i.i, i64 4 ; 2 uses
   %.not.i.i = icmp eq ptr %.0.i.i, %.017.lcssa.i
-  br i1 %.not.i.i, label %_ZSt13__introselectIPflN9__gnu_cxx5__ops15_Iter_comp_iterIN6duckdb15QuantileCompareINS4_12_GLOBAL__N_111MadAccessorIfffEEEEEEEvT_SB_SB_T0_T1_.exit, label %.lr.ph.i21.i, !llvm.loop !2193
+  br i1 %.not.i.i, label %bb.u, label %.lr.ph.i21.i, !llvm.loop !2193
 
-_ZSt13__introselectIPflN9__gnu_cxx5__ops15_Iter_comp_iterIN6duckdb15QuantileCompareINS4_12_GLOBAL__N_111MadAccessorIfffEEEEEEEvT_SB_SB_T0_T1_.exit: ; preds = %bb.t, %_ZSt13__heap_selectIPfN9__gnu_cxx5__ops15_Iter_comp_iterIN6duckdb15QuantileCompareINS4_12_GLOBAL__N_111MadAccessorIfffEEEEEEEvT_SB_SB_T0_.exit.i, %._crit_edge.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.10)
-  br label %bb.u
-
-bb.u:                                             ; preds = %bb.a, %_ZSt13__introselectIPflN9__gnu_cxx5__ops15_Iter_comp_iterIN6duckdb15QuantileCompareINS4_12_GLOBAL__N_111MadAccessorIfffEEEEEEEvT_SB_SB_T0_T1_.exit
+bb.u:                                             ; preds = %._crit_edge.i, %_ZSt13__heap_selectIPfN9__gnu_cxx5__ops15_Iter_comp_iterIN6duckdb15QuantileCompareINS4_12_GLOBAL__N_111MadAccessorIfffEEEEEEEvT_SB_SB_T0_.exit.i, %bb.t, %bb.a
   ret void
 }
 
@@ -1207,7 +1201,6 @@ bb.a:
   %i.s = alloca double, align 8                   ; 8 uses
   %i.t = alloca double, align 8                   ; 8 uses
   %4 = alloca %"struct.__gnu_cxx::__ops::_Iter_comp_iter.670", align 8 ; 9 uses
-  %.sroa.10 = alloca [7 x i8], align 1            ; 4 uses
   %i.u = icmp eq ptr %0, %2
   %i.v = icmp eq ptr %1, %2
   %or.cond = or i1 %i.u, %i.v
@@ -1227,8 +1220,7 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 16
   %.sroa.3.0.copyload = load i8, ptr %.sroa.3.0..sroa_idx, align 8, !tbaa !247 ; 4 uses
   %.sroa.417.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 17
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.10)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.10, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.417.0..sroa_idx, i64 7, i1 false)
+  %.sroa.10.sroa.0.0.copyload78 = load <7 x i8>, ptr %.sroa.417.0..sroa_idx, align 1
   %i.ad = icmp sgt i64 %i.y, 24
   br i1 %i.ad, label %.lr.ph.i.preheader, label %._crit_edge.i
 
@@ -1256,7 +1248,7 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 16
   store i8 %.sroa.3.0.copyload, ptr %.sroa.8.0..sroa_idx, align 8
   %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 17
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.10.0..sroa_idx, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.10, i64 7, i1 false)
+  store <7 x i8> %.sroa.10.sroa.0.0.copyload78, ptr %.sroa.10.0..sroa_idx, align 1
   %i.ai = ptrtoint ptr %i.ah to i64
   %i.aj = sub i64 %i.ai, %.lcssa24
   %i.ak = ashr exact i64 %i.aj, 3                 ; 5 uses
@@ -1357,7 +1349,7 @@ _ZSt13__heap_selectIPdN9__gnu_cxx5__ops15_Iter_comp_iterIN6duckdb15QuantileCompa
   %i.bm = load double, ptr %1, align 8, !tbaa !776
   store double %i.bm, ptr %.054.i.lcssa, align 8, !tbaa !776
   store double %i.bl, ptr %1, align 8, !tbaa !776
-  br label %_ZSt13__introselectIPdlN9__gnu_cxx5__ops15_Iter_comp_iterIN6duckdb15QuantileCompareINS4_12_GLOBAL__N_111MadAccessorIdddEEEEEEEvT_SB_SB_T0_T1_.exit
+  br label %bb.u
 
 bb.i:                                             ; preds = %.lr.ph, %.lr.ph.i
   %.01750.i31 = phi ptr [ %2, %.lr.ph ], [ %..017.i, %.lr.ph.i ] ; 4 uses
@@ -1666,7 +1658,7 @@ _ZSt27__unguarded_partition_pivotIPdN9__gnu_cxx5__ops15_Iter_comp_iterIN6duckdb1
   %.021.i.i = getelementptr inbounds nuw i8, ptr %.0.lcssa.i, i64 8 ; 2 uses
   %.not22.i.i = icmp eq ptr %.021.i.i, %.017.lcssa.i
   %or.cond.i = select i1 %i.ed, i1 true, i1 %.not22.i.i
-  br i1 %or.cond.i, label %_ZSt13__introselectIPdlN9__gnu_cxx5__ops15_Iter_comp_iterIN6duckdb15QuantileCompareINS4_12_GLOBAL__N_111MadAccessorIdddEEEEEEEvT_SB_SB_T0_T1_.exit, label %.lr.ph.i21.preheader.i
+  br i1 %or.cond.i, label %bb.u, label %.lr.ph.i21.preheader.i
 
 .lr.ph.i21.preheader.i:                           ; preds = %._crit_edge.i
   %i.ee = trunc nuw i8 %.sroa.3.0.copyload to i1
@@ -1801,13 +1793,9 @@ _ZSt25__unguarded_linear_insertIPdN9__gnu_cxx5__ops14_Val_comp_iterIN6duckdb15Qu
 bb.t:                                             ; preds = %_ZSt25__unguarded_linear_insertIPdN9__gnu_cxx5__ops14_Val_comp_iterIN6duckdb15QuantileCompareINS4_12_GLOBAL__N_111MadAccessorIdddEEEEEEEvT_T0_.exit.i.i, %_ZSt13move_backwardIPdS0_ET0_T_S2_S1_.exit.i.i
   %.0.i.i = getelementptr inbounds nuw i8, ptr %.024.i.i, i64 8 ; 2 uses
   %.not.i.i = icmp eq ptr %.0.i.i, %.017.lcssa.i
-  br i1 %.not.i.i, label %_ZSt13__introselectIPdlN9__gnu_cxx5__ops15_Iter_comp_iterIN6duckdb15QuantileCompareINS4_12_GLOBAL__N_111MadAccessorIdddEEEEEEEvT_SB_SB_T0_T1_.exit, label %.lr.ph.i21.i, !llvm.loop !2555
+  br i1 %.not.i.i, label %bb.u, label %.lr.ph.i21.i, !llvm.loop !2555
 
-_ZSt13__introselectIPdlN9__gnu_cxx5__ops15_Iter_comp_iterIN6duckdb15QuantileCompareINS4_12_GLOBAL__N_111MadAccessorIdddEEEEEEEvT_SB_SB_T0_T1_.exit: ; preds = %bb.t, %_ZSt13__heap_selectIPdN9__gnu_cxx5__ops15_Iter_comp_iterIN6duckdb15QuantileCompareINS4_12_GLOBAL__N_111MadAccessorIdddEEEEEEEvT_SB_SB_T0_.exit.i, %._crit_edge.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.10)
-  br label %bb.u
-
-bb.u:                                             ; preds = %bb.a, %_ZSt13__introselectIPdlN9__gnu_cxx5__ops15_Iter_comp_iterIN6duckdb15QuantileCompareINS4_12_GLOBAL__N_111MadAccessorIdddEEEEEEEvT_SB_SB_T0_T1_.exit
+bb.u:                                             ; preds = %._crit_edge.i, %_ZSt13__heap_selectIPdN9__gnu_cxx5__ops15_Iter_comp_iterIN6duckdb15QuantileCompareINS4_12_GLOBAL__N_111MadAccessorIdddEEEEEEEvT_SB_SB_T0_.exit.i, %bb.t, %bb.a
   ret void
 }
 

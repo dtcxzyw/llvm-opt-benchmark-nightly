@@ -203,7 +203,6 @@ bb.a:
   %5 = alloca %"struct.osgeo::proj::QuadTree::QuadTree<unsigned int>::Node", align 8 ; 11 uses
   %6 = alloca %"struct.osgeo::proj::QuadTree::QuadTree<unsigned int>::Node", align 8 ; 11 uses
   %7 = alloca %"struct.osgeo::proj::QuadTree::QuadTree<unsigned int>::Node", align 8 ; 10 uses
-  %.sroa.5 = alloca [36 x i8], align 4            ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !344  ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 64
@@ -606,10 +605,10 @@ _ZNK5osgeo4proj8QuadTree7RectObj13isContainedByERKS2_.exit58: ; preds = %bb.ah
 _ZNSt6vectorISt4pairIjN5osgeo4proj8QuadTree7RectObjEESaIS5_EED2Ev.exit.thread: ; preds = %.critedge, %_ZNK5osgeo4proj8QuadTree7RectObjneERKS2_.exit51.thread, %_ZNK5osgeo4proj8QuadTree7RectObjneERKS2_.exit50.thread, %_ZNK5osgeo4proj8QuadTree7RectObjneERKS2_.exit.thread, %_ZN5osgeo4proj8QuadTree8QuadTreeIjE11splitBoundsERKNS1_7RectObjERS4_S7_.exit49, %_ZNK5osgeo4proj8QuadTree7RectObj13isContainedByERKS2_.exit54.thread, %bb.o, %bb.p, %_ZNK5osgeo4proj8QuadTree7RectObj13isContainedByERKS2_.exit55, %tailrecurse._crit_edge
   %.tr153160 = phi ptr [ %.tr153.lcssa162, %tailrecurse._crit_edge ], [ %.tr153.lcssa162, %_ZNK5osgeo4proj8QuadTree7RectObjneERKS2_.exit51.thread ], [ %.tr153.lcssa162, %_ZNK5osgeo4proj8QuadTree7RectObjneERKS2_.exit50.thread ], [ %.tr153.lcssa162, %_ZNK5osgeo4proj8QuadTree7RectObjneERKS2_.exit.thread ], [ %.tr153.lcssa162, %_ZN5osgeo4proj8QuadTree8QuadTreeIjE11splitBoundsERKNS1_7RectObjERS4_S7_.exit49 ], [ %.tr153.lcssa162, %_ZNK5osgeo4proj8QuadTree7RectObj13isContainedByERKS2_.exit54.thread ], [ %.tr153.lcssa162, %bb.o ], [ %.tr153.lcssa162, %bb.p ], [ %.tr153.lcssa162, %_ZNK5osgeo4proj8QuadTree7RectObj13isContainedByERKS2_.exit55 ], [ %.tr153163, %.critedge ] ; 3 uses
   %i.fa = getelementptr inbounds nuw i8, ptr %.tr153160, i64 32 ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5)
   %8 = load i32, ptr %2, align 4, !tbaa !181      ; 2 uses
-  %.sroa.5.8..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.5, i64 4
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(32) %.sroa.5.8..sroa_idx, ptr noundef nonnull align 8 dereferenceable(32) %3, i64 32, i1 false), !tbaa.struct !346
+  %.sroa.5.sroa.0.4.copyload = load <32 x i8>, ptr %3, align 8
+  %.sroa.5.sroa.0.4.vec.expand = shufflevector <32 x i8> %.sroa.5.sroa.0.4.copyload, <32 x i8> poison, <36 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  %.sroa.5.sroa.0.4.vecblend = shufflevector <36 x i8> %.sroa.5.sroa.0.4.vec.expand, <36 x i8> <i8 undef, i8 undef, i8 undef, i8 undef, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison>, <36 x i32> <i32 36, i32 37, i32 38, i32 39, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 32, i32 33, i32 34, i32 35> ; 2 uses
   %i.fb = getelementptr inbounds nuw i8, ptr %.tr153160, i64 40 ; 4 uses
   %i.fc = load ptr, ptr %i.fb, align 8, !tbaa !345 ; 6 uses
   %i.fd = getelementptr inbounds nuw i8, ptr %.tr153160, i64 48 ; 2 uses
@@ -620,11 +619,11 @@ _ZNSt6vectorISt4pairIjN5osgeo4proj8QuadTree7RectObjEESaIS5_EED2Ev.exit.thread: ;
 bb.ai:                                            ; preds = %_ZNSt6vectorISt4pairIjN5osgeo4proj8QuadTree7RectObjEESaIS5_EED2Ev.exit.thread
   store i32 %8, ptr %i.fc, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fc, i64 4
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(36) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(36) %.sroa.5, i64 36, i1 false)
+  store <36 x i8> %.sroa.5.sroa.0.4.vecblend, ptr %.sroa.5.0..sroa_idx, align 4
   %i.ff = load ptr, ptr %i.fb, align 8, !tbaa !345
   %i.fg = getelementptr inbounds nuw i8, ptr %i.ff, i64 40
   store ptr %i.fg, ptr %i.fb, align 8, !tbaa !345
-  br label %_ZNSt6vectorISt4pairIjN5osgeo4proj8QuadTree7RectObjEESaIS5_EE9push_backEOS5_.exit
+  br label %_ZNSt6vectorISt4pairIjN5osgeo4proj8QuadTree7RectObjEESaIS5_EED2Ev.exit
 
 bb.aj:                                            ; preds = %_ZNSt6vectorISt4pairIjN5osgeo4proj8QuadTree7RectObjEESaIS5_EED2Ev.exit.thread
   %i.fh = load ptr, ptr %i.fa, align 8, !tbaa !234 ; 5 uses
@@ -652,18 +651,18 @@ _ZNKSt6vectorISt4pairIjN5osgeo4proj8QuadTree7RectObjEESaIS5_EE12_M_check_lenEmPK
   %i.ft = getelementptr inbounds nuw i8, ptr %i.fs, i64 %i.fk ; 2 uses
   store i32 %8, ptr %i.ft, align 8
   %.sroa.5.0..sroa_idx61 = getelementptr inbounds nuw i8, ptr %i.ft, i64 4
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(36) %.sroa.5.0..sroa_idx61, ptr noundef nonnull align 4 dereferenceable(36) %.sroa.5, i64 36, i1 false)
+  store <36 x i8> %.sroa.5.sroa.0.4.vecblend, ptr %.sroa.5.0..sroa_idx61, align 4
   %.not10.i.i.i.i.i.i = icmp eq ptr %i.fh, %i.fc
   br i1 %.not10.i.i.i.i.i.i, label %_ZNSt6vectorISt4pairIjN5osgeo4proj8QuadTree7RectObjEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %_ZNKSt6vectorISt4pairIjN5osgeo4proj8QuadTree7RectObjEESaIS5_EE12_M_check_lenEmPKc.exit.i.i.i, %.lr.ph.i.i.i.i.i.i
   %.012.i.i.i.i.i.i = phi ptr [ %i.fv, %.lr.ph.i.i.i.i.i.i ], [ %i.fs, %_ZNKSt6vectorISt4pairIjN5osgeo4proj8QuadTree7RectObjEESaIS5_EE12_M_check_lenEmPKc.exit.i.i.i ] ; 2 uses
   %.0911.i.i.i.i.i.i = phi ptr [ %i.fu, %.lr.ph.i.i.i.i.i.i ], [ %i.fh, %_ZNKSt6vectorISt4pairIjN5osgeo4proj8QuadTree7RectObjEESaIS5_EE12_M_check_lenEmPKc.exit.i.i.i ] ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.012.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(40) %.0911.i.i.i.i.i.i, i64 40, i1 false), !alias.scope !347
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.012.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(40) %.0911.i.i.i.i.i.i, i64 40, i1 false), !alias.scope !346
   %i.fu = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i.i.i, i64 40 ; 2 uses
   %i.fv = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i.i, i64 40 ; 2 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.fu, %i.fc
-  br i1 %.not.i.i.i.i.i.i, label %_ZNSt6vectorISt4pairIjN5osgeo4proj8QuadTree7RectObjEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !351
+  br i1 %.not.i.i.i.i.i.i, label %_ZNSt6vectorISt4pairIjN5osgeo4proj8QuadTree7RectObjEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !350
 
 _ZNSt6vectorISt4pairIjN5osgeo4proj8QuadTree7RectObjEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i, %_ZNKSt6vectorISt4pairIjN5osgeo4proj8QuadTree7RectObjEESaIS5_EE12_M_check_lenEmPKc.exit.i.i.i
   %.0.lcssa.i.i.i.i.i.i = phi ptr [ %i.fs, %_ZNKSt6vectorISt4pairIjN5osgeo4proj8QuadTree7RectObjEESaIS5_EE12_M_check_lenEmPKc.exit.i.i.i ], [ %i.fv, %.lr.ph.i.i.i.i.i.i ]
@@ -680,13 +679,9 @@ _ZNSt6vectorISt4pairIjN5osgeo4proj8QuadTree7RectObjEESaIS5_EE17_M_realloc_insert
   store ptr %i.fw, ptr %i.fb, align 8, !tbaa !345
   %i.fx = getelementptr inbounds nuw [40 x i8], ptr %i.fs, i64 %i.fq
   store ptr %i.fx, ptr %i.fd, align 8, !tbaa !237
-  br label %_ZNSt6vectorISt4pairIjN5osgeo4proj8QuadTree7RectObjEESaIS5_EE9push_backEOS5_.exit
-
-_ZNSt6vectorISt4pairIjN5osgeo4proj8QuadTree7RectObjEESaIS5_EE9push_backEOS5_.exit: ; preds = %bb.ai, %_ZNSt6vectorISt4pairIjN5osgeo4proj8QuadTree7RectObjEESaIS5_EE17_M_realloc_insertIJS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5)
   br label %_ZNSt6vectorISt4pairIjN5osgeo4proj8QuadTree7RectObjEESaIS5_EED2Ev.exit
 
-_ZNSt6vectorISt4pairIjN5osgeo4proj8QuadTree7RectObjEESaIS5_EED2Ev.exit: ; preds = %bb.aa, %bb.ab, %_ZNSt6vectorISt4pairIjN5osgeo4proj8QuadTree7RectObjEESaIS5_EE9push_backEOS5_.exit
+_ZNSt6vectorISt4pairIjN5osgeo4proj8QuadTree7RectObjEESaIS5_EED2Ev.exit: ; preds = %_ZNSt6vectorISt4pairIjN5osgeo4proj8QuadTree7RectObjEESaIS5_EE17_M_realloc_insertIJS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i.i, %bb.ai, %bb.aa, %bb.ab
   ret void
 }
 
@@ -724,27 +719,27 @@ _ZNSt12_Vector_baseIN5osgeo4proj8QuadTree8QuadTreeIjE4NodeESaIS5_EE11_M_allocate
 .lr.ph.i.i.i:                                     ; preds = %_ZNSt12_Vector_baseIN5osgeo4proj8QuadTree8QuadTreeIjE4NodeESaIS5_EE11_M_allocateEm.exit, %.lr.ph.i.i.i
   %.012.i.i.i = phi ptr [ %i.ac, %.lr.ph.i.i.i ], [ %i.o, %_ZNSt12_Vector_baseIN5osgeo4proj8QuadTree8QuadTreeIjE4NodeESaIS5_EE11_M_allocateEm.exit ] ; 6 uses
   %.0911.i.i.i = phi ptr [ %i.ab, %.lr.ph.i.i.i ], [ %i.d, %_ZNSt12_Vector_baseIN5osgeo4proj8QuadTree8QuadTreeIjE4NodeESaIS5_EE11_M_allocateEm.exit ] ; 6 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !352)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !355)
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %.012.i.i.i, ptr noundef nonnull align 8 dereferenceable(80) %.0911.i.i.i, i64 32, i1 false), !tbaa.struct !346, !alias.scope !357
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !351)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !354)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %.012.i.i.i, ptr noundef nonnull align 8 dereferenceable(80) %.0911.i.i.i, i64 32, i1 false), !tbaa.struct !356, !alias.scope !357
   %i.p = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 32
   %i.q = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 32 ; 2 uses
-  %i.r = load <2 x ptr>, ptr %i.q, align 8, !tbaa !358, !alias.scope !355, !noalias !352
-  store <2 x ptr> %i.r, ptr %i.p, align 8, !tbaa !358, !alias.scope !352, !noalias !355
+  %i.r = load <2 x ptr>, ptr %i.q, align 8, !tbaa !358, !alias.scope !354, !noalias !351
+  store <2 x ptr> %i.r, ptr %i.p, align 8, !tbaa !358, !alias.scope !351, !noalias !354
   %i.s = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 48
   %i.t = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 48
-  %i.u = load ptr, ptr %i.t, align 8, !tbaa !237, !alias.scope !355, !noalias !352
-  store ptr %i.u, ptr %i.s, align 8, !tbaa !237, !alias.scope !352, !noalias !355
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.q, i8 0, i64 24, i1 false), !alias.scope !355, !noalias !352
+  %i.u = load ptr, ptr %i.t, align 8, !tbaa !237, !alias.scope !354, !noalias !351
+  store ptr %i.u, ptr %i.s, align 8, !tbaa !237, !alias.scope !351, !noalias !354
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.q, i8 0, i64 24, i1 false), !alias.scope !354, !noalias !351
   %i.v = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 56
   %i.w = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 56 ; 2 uses
-  %i.x = load <2 x ptr>, ptr %i.w, align 8, !tbaa !344, !alias.scope !355, !noalias !352
-  store <2 x ptr> %i.x, ptr %i.v, align 8, !tbaa !344, !alias.scope !352, !noalias !355
+  %i.x = load <2 x ptr>, ptr %i.w, align 8, !tbaa !344, !alias.scope !354, !noalias !351
+  store <2 x ptr> %i.x, ptr %i.v, align 8, !tbaa !344, !alias.scope !351, !noalias !354
   %i.y = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 72
   %i.z = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 72
-  %i.aa = load ptr, ptr %i.z, align 8, !tbaa !232, !alias.scope !355, !noalias !352
-  store ptr %i.aa, ptr %i.y, align 8, !tbaa !232, !alias.scope !352, !noalias !355
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.w, i8 0, i64 24, i1 false), !alias.scope !355, !noalias !352
+  %i.aa = load ptr, ptr %i.z, align 8, !tbaa !232, !alias.scope !354, !noalias !351
+  store ptr %i.aa, ptr %i.y, align 8, !tbaa !232, !alias.scope !351, !noalias !354
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.w, i8 0, i64 24, i1 false), !alias.scope !354, !noalias !351
   %i.ab = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 80 ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 80
   %.not.i.i.i = icmp eq ptr %i.ab, %i.k
@@ -790,7 +785,7 @@ bb.a:
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %i.b, ptr noundef nonnull align 8 dereferenceable(80) %1, i64 32, i1 false), !tbaa.struct !346
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %i.b, ptr noundef nonnull align 8 dereferenceable(80) %1, i64 32, i1 false), !tbaa.struct !356
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 32
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
   %i.g = load <2 x ptr>, ptr %i.f, align 8, !tbaa !358
@@ -911,7 +906,7 @@ _ZNKSt6vectorIN5osgeo4proj8QuadTree8QuadTreeIjE4NodeESaIS5_EE12_M_check_lenEmPKc
   %i.o = mul nuw nsw i64 %i.l, 80
   %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #27 ; 5 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.n ; 5 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %i.q, ptr noundef nonnull align 8 dereferenceable(80) %2, i64 32, i1 false), !tbaa.struct !346
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %i.q, ptr noundef nonnull align 8 dereferenceable(80) %2, i64 32, i1 false), !tbaa.struct !356
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 32
   %i.s = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
   %i.t = load <2 x ptr>, ptr %i.s, align 8, !tbaa !358
@@ -938,7 +933,7 @@ _ZNKSt6vectorIN5osgeo4proj8QuadTree8QuadTreeIjE4NodeESaIS5_EE12_M_check_lenEmPKc
   %.0911.i.i.i = phi ptr [ %i.ap, %.lr.ph.i.i.i ], [ %i.c, %_ZNKSt6vectorIN5osgeo4proj8QuadTree8QuadTreeIjE4NodeESaIS5_EE12_M_check_lenEmPKc.exit ] ; 6 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !361)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !364)
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %.012.i.i.i, ptr noundef nonnull align 8 dereferenceable(80) %.0911.i.i.i, i64 32, i1 false), !tbaa.struct !346, !alias.scope !366
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %.012.i.i.i, ptr noundef nonnull align 8 dereferenceable(80) %.0911.i.i.i, i64 32, i1 false), !tbaa.struct !356, !alias.scope !366
   %i.ad = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 32
   %i.ae = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 32 ; 2 uses
   %i.af = load <2 x ptr>, ptr %i.ae, align 8, !tbaa !358, !alias.scope !364, !noalias !361
@@ -973,7 +968,7 @@ _ZNSt6vectorIN5osgeo4proj8QuadTree8QuadTreeIjE4NodeESaIS5_EE11_S_relocateEPS5_S8
   %.0911.i.i.i19 = phi ptr [ %i.be, %.lr.ph.i.i.i17 ], [ %1, %_ZNSt6vectorIN5osgeo4proj8QuadTree8QuadTreeIjE4NodeESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit ] ; 6 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !367)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !370)
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %.012.i.i.i18, ptr noundef nonnull align 8 dereferenceable(80) %.0911.i.i.i19, i64 32, i1 false), !tbaa.struct !346, !alias.scope !372
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %.012.i.i.i18, ptr noundef nonnull align 8 dereferenceable(80) %.0911.i.i.i19, i64 32, i1 false), !tbaa.struct !356, !alias.scope !372
   %i.as = getelementptr inbounds nuw i8, ptr %.012.i.i.i18, i64 32
   %i.at = getelementptr inbounds nuw i8, ptr %.0911.i.i.i19, i64 32 ; 2 uses
   %i.au = load <2 x ptr>, ptr %i.at, align 8, !tbaa !358, !alias.scope !370, !noalias !367
@@ -1376,18 +1371,18 @@ begin_hunk_2_@llvm.fmuladd.v2f64
 !343 = !{ptr @_ZN13proj_nlohmann6detail9exceptionD2Ev}
 !344 = !{!229, !229, i64 0}
 !345 = !{!235, !236, i64 8}
-!346 = !{i64 0, i64 8, !150, i64 8, i64 8, !150, i64 16, i64 8, !150, i64 24, i64 8, !150}
-!347 = !{!348, !350}
-!348 = distinct !{!348, !349, !"_ZSt19__relocate_object_aISt4pairIjN5osgeo4proj8QuadTree7RectObjEES5_SaIS5_EEvPT_PT0_RT1_: argument 0"}
-!349 = distinct !{!349, !"_ZSt19__relocate_object_aISt4pairIjN5osgeo4proj8QuadTree7RectObjEES5_SaIS5_EEvPT_PT0_RT1_"}
-!350 = distinct !{!350, !349, !"_ZSt19__relocate_object_aISt4pairIjN5osgeo4proj8QuadTree7RectObjEES5_SaIS5_EEvPT_PT0_RT1_: argument 1"}
-!351 = distinct !{!351, !116}
-!352 = !{!353}
-!353 = distinct !{!353, !354, !"_ZSt19__relocate_object_aIN5osgeo4proj8QuadTree8QuadTreeIjE4NodeES5_SaIS5_EEvPT_PT0_RT1_: argument 0"}
-!354 = distinct !{!354, !"_ZSt19__relocate_object_aIN5osgeo4proj8QuadTree8QuadTreeIjE4NodeES5_SaIS5_EEvPT_PT0_RT1_"}
-!355 = !{!356}
-!356 = distinct !{!356, !354, !"_ZSt19__relocate_object_aIN5osgeo4proj8QuadTree8QuadTreeIjE4NodeES5_SaIS5_EEvPT_PT0_RT1_: argument 1"}
-!357 = !{!353, !356}
+!346 = !{!347, !349}
+!347 = distinct !{!347, !348, !"_ZSt19__relocate_object_aISt4pairIjN5osgeo4proj8QuadTree7RectObjEES5_SaIS5_EEvPT_PT0_RT1_: argument 0"}
+!348 = distinct !{!348, !"_ZSt19__relocate_object_aISt4pairIjN5osgeo4proj8QuadTree7RectObjEES5_SaIS5_EEvPT_PT0_RT1_"}
+!349 = distinct !{!349, !348, !"_ZSt19__relocate_object_aISt4pairIjN5osgeo4proj8QuadTree7RectObjEES5_SaIS5_EEvPT_PT0_RT1_: argument 1"}
+!350 = distinct !{!350, !116}
+!351 = !{!352}
+!352 = distinct !{!352, !353, !"_ZSt19__relocate_object_aIN5osgeo4proj8QuadTree8QuadTreeIjE4NodeES5_SaIS5_EEvPT_PT0_RT1_: argument 0"}
+!353 = distinct !{!353, !"_ZSt19__relocate_object_aIN5osgeo4proj8QuadTree8QuadTreeIjE4NodeES5_SaIS5_EEvPT_PT0_RT1_"}
+!354 = !{!355}
+!355 = distinct !{!355, !353, !"_ZSt19__relocate_object_aIN5osgeo4proj8QuadTree8QuadTreeIjE4NodeES5_SaIS5_EEvPT_PT0_RT1_: argument 1"}
+!356 = !{i64 0, i64 8, !150, i64 8, i64 8, !150, i64 16, i64 8, !150, i64 24, i64 8, !150}
+!357 = !{!352, !355}
 !358 = !{!236, !236, i64 0}
 !359 = distinct !{!359, !116}
 !360 = distinct !{null}

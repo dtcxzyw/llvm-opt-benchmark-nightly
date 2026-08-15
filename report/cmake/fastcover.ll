@@ -203,10 +203,8 @@ declare void @free(ptr allocptr noundef captures(none)) local_unnamed_addr #6
 ; Function Attrs: nounwind uwtable
 define dso_local i64 @ZDICT_optimizeTrainFromBuffer_fastCover(ptr nofree noundef writeonly captures(none) %0, i64 noundef %1, ptr noundef %2, ptr noundef %3, i32 noundef %4, ptr nofree noundef captures(none) %5) local_unnamed_addr #0 {
 bb.a:
-  %.sroa.10.sroa.4 = alloca [12 x i8], align 4    ; 4 uses
   %6 = alloca %struct.COVER_best_s, align 8       ; 18 uses
   %7 = alloca %struct.FASTCOVER_ctx_t, align 8    ; 9 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.10.sroa.4)
   %i.a = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
   %i.b = load i32, ptr %i.a, align 8, !tbaa !56   ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
@@ -338,7 +336,7 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   %.sroa.6175.0.copyload = load i32, ptr %i.a, align 8
   %.sroa.8179.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 36
   %i.br = getelementptr inbounds nuw i8, ptr %5, i64 44
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.10.sroa.4, ptr noundef nonnull align 4 dereferenceable(12) %i.br, i64 12, i1 false)
+  %.sroa.10.sroa.4.4.copyload = load <12 x i8>, ptr %i.br, align 4
   %i.bs = zext nneg i32 %i.ag to i64
   %i.bt = getelementptr inbounds nuw [8 x i8], ptr @FASTCOVER_defaultAccelParameters, i64 %i.bs
   %.sroa.0.0.copyload = load i64, ptr %i.bt, align 8
@@ -458,17 +456,17 @@ bb.af:                                            ; preds = %bb.ac
   %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ct, i64 52
   store i32 0, ptr %.sroa.10.0..sroa_idx, align 4, !tbaa !13
   %.sroa.10.sroa.4.0..sroa.10.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ct, i64 56
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.10.sroa.4.0..sroa.10.0..sroa_idx.sroa_idx, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.10.sroa.4, i64 12, i1 false), !tbaa.struct !66
+  store <12 x i8> %.sroa.10.sroa.4.4.copyload, ptr %.sroa.10.sroa.4.0..sroa.10.0..sroa_idx.sroa_idx, align 8
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ct, i64 68
   store i32 0, ptr %.sroa.11.0..sroa_idx, align 4
-  store i32 %.0135214, ptr %i.df, align 8, !tbaa !67
-  store i32 %.0134219, ptr %.sroa.5.0..sroa_idx, align 4, !tbaa !68
-  store double %i.f, ptr %.sroa.8.0..sroa_idx, align 8, !tbaa !69
-  store i32 %i.s, ptr %.sroa.6.0..sroa_idx, align 8, !tbaa !70
-  store i32 0, ptr %.sroa.9.0..sroa_idx, align 8, !tbaa !71
+  store i32 %.0135214, ptr %i.df, align 8, !tbaa !66
+  store i32 %.0134219, ptr %.sroa.5.0..sroa_idx, align 4, !tbaa !67
+  store double %i.f, ptr %.sroa.8.0..sroa_idx, align 8, !tbaa !68
+  store i32 %i.s, ptr %.sroa.6.0..sroa_idx, align 8, !tbaa !69
+  store i32 0, ptr %.sroa.9.0..sroa_idx, align 8, !tbaa !70
   %i.dg = load i32, ptr @g_displayLevel, align 4, !tbaa !13 ; 2 uses
   %i.dh = getelementptr inbounds nuw i8, ptr %i.ct, i64 60
-  store i32 %i.dg, ptr %i.dh, align 4, !tbaa !72
+  store i32 %i.dg, ptr %i.dh, align 4, !tbaa !71
   %i.di = load i32, ptr %i.cc, align 4, !tbaa !40
   %i.dj = icmp eq i32 %.0135214, 0
   %or.cond.i = or i1 %i.dj, %i.cs
@@ -557,7 +555,7 @@ bb.ar:                                            ; preds = %bb.ap, %bb.aj
   %.2132.ph = phi i32 [ %.1131216, %bb.aj ], [ %i.ee, %bb.ap ] ; 2 uses
   %i.eh = add i32 %.0135214, %i.v                 ; 2 uses
   %.not167 = icmp ugt i32 %i.eh, %i.o
-  br i1 %.not167, label %._crit_edge, label %bb.aa, !llvm.loop !73
+  br i1 %.not167, label %._crit_edge, label %bb.aa, !llvm.loop !72
 
 .thread205:                                       ; preds = %bb.aq, %bb.x
   %.4.ph = phi i64 [ %i.ck, %bb.x ], [ -64, %bb.aq ]
@@ -575,7 +573,7 @@ bb.ar:                                            ; preds = %bb.ap, %bb.aj
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #12
   %i.ek = add i32 %.0134219, 2                    ; 2 uses
   %.not163 = icmp ugt i32 %i.ek, %i.k
-  br i1 %.not163, label %._crit_edge223, label %.lr.ph222.split, !llvm.loop !74
+  br i1 %.not163, label %._crit_edge223, label %.lr.ph222.split, !llvm.loop !73
 
 ._crit_edge223:                                   ; preds = %._crit_edge, %bb.t
   br i1 %i.bv, label %bb.as, label %bb.at
@@ -589,7 +587,7 @@ bb.as:                                            ; preds = %._crit_edge223
 
 bb.at:                                            ; preds = %bb.as, %._crit_edge223
   %i.ep = getelementptr inbounds nuw i8, ptr %6, i64 160
-  %i.eq = load i64, ptr %i.ep, align 8, !tbaa !75 ; 2 uses
+  %i.eq = load i64, ptr %i.ep, align 8, !tbaa !74 ; 2 uses
   %i.er = icmp ult i64 %i.eq, -119
   br i1 %i.er, label %bb.av, label %bb.au
 
@@ -600,7 +598,7 @@ bb.au:                                            ; preds = %bb.at
 
 bb.av:                                            ; preds = %bb.at
   %i.es = getelementptr inbounds nuw i8, ptr %6, i64 104
-  %i.et = load i64, ptr %i.es, align 8, !tbaa !77 ; 2 uses
+  %i.et = load i64, ptr %i.es, align 8, !tbaa !76 ; 2 uses
   %i.eu = getelementptr inbounds nuw i8, ptr %6, i64 112
   %.sroa.5188.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 120
   %.sroa.7190.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 128
@@ -617,9 +615,9 @@ bb.av:                                            ; preds = %bb.at
   %i.ex = getelementptr inbounds nuw i8, ptr %5, i64 44
   %i.ey = getelementptr inbounds nuw i8, ptr %6, i64 144
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.ex, ptr noundef nonnull align 8 dereferenceable(12) %i.ey, i64 12, i1 false)
-  store i32 %.sroa.8191.0.copyload, ptr %.sroa.8179.0..sroa_idx, align 4, !tbaa !78
+  store i32 %.sroa.8191.0.copyload, ptr %.sroa.8179.0..sroa_idx, align 4, !tbaa !77
   %i.ez = getelementptr inbounds nuw i8, ptr %6, i64 96
-  %i.fa = load ptr, ptr %i.ez, align 8, !tbaa !79
+  %i.fa = load ptr, ptr %i.ez, align 8, !tbaa !78
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %0, ptr align 1 %i.fa, i64 %i.et, i1 false)
   call void @COVER_best_destroy(ptr noundef nonnull %6) #12
   call void @POOL_free(ptr noundef %.0142) #12
@@ -628,7 +626,6 @@ bb.av:                                            ; preds = %bb.at
 bb.aw:                                            ; preds = %.thread205, %bb.au, %bb.av, %bb.q, %bb.n, %bb.o, %bb.k, %bb.l, %bb.h, %bb.i, %bb.e, %bb.f, %bb.b, %bb.c
   %.6 = phi i64 [ -70, %bb.n ], [ -42, %bb.b ], [ -42, %bb.e ], [ -42, %bb.h ], [ -72, %bb.k ], [ %.4.ph, %.thread205 ], [ -64, %bb.q ], [ -42, %bb.c ], [ -42, %bb.f ], [ -42, %bb.i ], [ -72, %bb.l ], [ -70, %bb.o ], [ %i.eq, %bb.au ], [ %i.et, %bb.av ]
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #12
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.10.sroa.4)
   ret i64 %.6
 }
 
@@ -656,7 +653,7 @@ bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !61     ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #12
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %1, ptr noundef nonnull align 8 dereferenceable(48) %i.b, i64 48, i1 false), !tbaa.struct !80
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %1, ptr noundef nonnull align 8 dereferenceable(48) %i.b, i64 48, i1 false), !tbaa.struct !79
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.d = load i64, ptr %i.c, align 8, !tbaa !65   ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 68 ; 2 uses
@@ -715,7 +712,7 @@ bb.d:                                             ; preds = %bb.a
   %i.ao = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !34
   call void @COVER_selectDict(ptr dead_on_unwind nonnull writable sret(%struct.COVER_dictSelection) align 8 %3, ptr noundef nonnull %i.ah, i64 noundef %i.d, i64 noundef %i.ai, ptr noundef %i.aj, ptr noundef %i.al, i32 noundef %i.ag, i64 noundef %i.aa, i64 noundef %i.an, ptr noundef nonnull byval(%struct.ZDICT_cover_params_t) align 8 %1, ptr noundef %i.ap, i64 noundef -1) #12
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 24, i1 false), !tbaa.struct !82
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 24, i1 false), !tbaa.struct !81
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #12
   %i.aq = call i32 @COVER_dictSelectionIsError(ptr noundef nonnull byval(%struct.COVER_dictSelection) align 8 %2) #12
   %.not = icmp ne i32 %i.aq, 0
@@ -870,22 +867,21 @@ attributes #16 = { nounwind allocsize(0) }
 !63 = !{!"p1 _ZTS12COVER_best_s", !23, i64 0}
 !64 = !{!62, !63, i64 8}
 !65 = !{!62, !28, i64 16}
-!66 = !{i64 0, i64 4, !13, i64 4, i64 4, !13, i64 8, i64 4, !13}
-!67 = !{!62, !6, i64 24}
-!68 = !{!62, !6, i64 28}
-!69 = !{!62, !11, i64 40}
-!70 = !{!62, !6, i64 32}
-!71 = !{!62, !6, i64 48}
-!72 = !{!62, !6, i64 60}
+!66 = !{!62, !6, i64 24}
+!67 = !{!62, !6, i64 28}
+!68 = !{!62, !11, i64 40}
+!69 = !{!62, !6, i64 32}
+!70 = !{!62, !6, i64 48}
+!71 = !{!62, !6, i64 60}
+!72 = distinct !{!72, !43}
 !73 = distinct !{!73, !43}
-!74 = distinct !{!74, !43}
-!75 = !{!76, !28, i64 160}
-!76 = !{!"COVER_best_s", !7, i64 0, !7, i64 40, !28, i64 88, !23, i64 96, !28, i64 104, !17, i64 112, !28, i64 160}
-!77 = !{!76, !28, i64 104}
-!78 = !{!10, !6, i64 36}
-!79 = !{!76, !23, i64 96}
-!80 = !{i64 0, i64 4, !13, i64 4, i64 4, !13, i64 8, i64 4, !13, i64 12, i64 4, !13, i64 16, i64 8, !81, i64 24, i64 4, !13, i64 28, i64 4, !13, i64 32, i64 4, !13, i64 36, i64 4, !13, i64 40, i64 4, !13}
-!81 = !{!11, !11, i64 0}
-!82 = !{i64 0, i64 8, !83, i64 8, i64 8, !41, i64 16, i64 8, !41}
-!83 = !{!26, !26, i64 0}
+!74 = !{!75, !28, i64 160}
+!75 = !{!"COVER_best_s", !7, i64 0, !7, i64 40, !28, i64 88, !23, i64 96, !28, i64 104, !17, i64 112, !28, i64 160}
+!76 = !{!75, !28, i64 104}
+!77 = !{!10, !6, i64 36}
+!78 = !{!75, !23, i64 96}
+!79 = !{i64 0, i64 4, !13, i64 4, i64 4, !13, i64 8, i64 4, !13, i64 12, i64 4, !13, i64 16, i64 8, !80, i64 24, i64 4, !13, i64 28, i64 4, !13, i64 32, i64 4, !13, i64 36, i64 4, !13, i64 40, i64 4, !13}
+!80 = !{!11, !11, i64 0}
+!81 = !{i64 0, i64 8, !82, i64 8, i64 8, !41, i64 16, i64 8, !41}
+!82 = !{!26, !26, i64 0}
 end_hunk_0

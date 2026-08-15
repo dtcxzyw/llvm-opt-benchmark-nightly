@@ -204,9 +204,8 @@ define internal void @mpeg4_encode_mb(ptr noundef %0, ptr nofree noundef %1, i32
 bb.a:
   %i.a = alloca i32, align 4                      ; 15 uses
   %i.b = alloca i32, align 4                      ; 17 uses
-  %4 = alloca [6 x i32], align 16                 ; 10 uses
   %i.c = alloca [6 x i32], align 16               ; 10 uses
-  %i.d = alloca [6 x i32], align 16               ; 5 uses
+  %i.d = alloca [6 x i32], align 16               ; 10 uses
   %i.e = alloca [6 x ptr], align 16               ; 18 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #14
@@ -609,9 +608,8 @@ bb.gk:                                            ; preds = %.loopexit689
   br label %.critedge503
 
 bb.gl:                                            ; preds = %.thread
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #14
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #14
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #14
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #14
   %i.aua = getelementptr inbounds nuw i8, ptr %0, i64 1184
   %i.aub = load ptr, ptr %i.aua, align 16, !tbaa !176 ; 6 uses
@@ -641,7 +639,7 @@ bb.gl:                                            ; preds = %.thread
   %i.auz = icmp samesign ult i32 %i.auw, %i.auy   ; 3 uses
   %..i = zext i1 %i.auz to i32
   %.18.i = select i1 %i.auz, i32 %i.auu, i32 %i.auk
-  store i32 %..i, ptr %i.c, align 16, !tbaa !49
+  store i32 %..i, ptr %i.d, align 16, !tbaa !49
   %.in = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.ava = load i32, ptr %.in, align 8, !tbaa !49 ; 5 uses
   %i.avb = ashr i32 %i.ava, 1                     ; 3 uses
@@ -657,13 +655,13 @@ bb.gl:                                            ; preds = %.thread
   %i.avl = load i16, ptr %1, align 2, !tbaa !57
   %i.avm = sext i16 %i.avl to i32                 ; 2 uses
   %i.avn = sub nsw i32 %i.avm, %i.avk
-  store i32 %i.avn, ptr %4, align 16, !tbaa !49
+  store i32 %i.avn, ptr %i.c, align 16, !tbaa !49
   %i.avo = mul nsw i32 %i.ava, %i.avm
   %i.avp = tail call i32 @llvm.smax.i32(i32 %i.avo, i32 0)
   %i.avq = tail call i32 @llvm.umin.i32(i32 %i.avp, i32 2047)
   %i.avr = trunc nuw nsw i32 %i.avq to i16
   store i16 %i.avr, ptr %i.aug, align 2, !tbaa !57
-  %i.avs = getelementptr inbounds nuw i8, ptr %i.c, i64 4
+  %i.avs = getelementptr inbounds nuw i8, ptr %i.d, i64 4
   %i.avt = getelementptr inbounds nuw i8, ptr %0, i64 3124
   %i.avu = load i32, ptr %i.avt, align 4, !tbaa !49
   %i.avv = sext i32 %i.avu to i64
@@ -700,14 +698,14 @@ bb.gl:                                            ; preds = %.thread
   %i.awx = load i16, ptr %i.aww, align 2, !tbaa !57
   %i.awy = sext i16 %i.awx to i32                 ; 2 uses
   %i.awz = sub nsw i32 %i.awy, %i.awv
-  %i.axa = getelementptr inbounds nuw i8, ptr %4, i64 4
+  %i.axa = getelementptr inbounds nuw i8, ptr %i.c, i64 4
   store i32 %i.awz, ptr %i.axa, align 4, !tbaa !49
   %i.axb = mul nsw i32 %i.ava, %i.awy
   %i.axc = tail call i32 @llvm.smax.i32(i32 %i.axb, i32 0)
   %i.axd = tail call i32 @llvm.umin.i32(i32 %i.axc, i32 2047)
   %i.axe = trunc nuw nsw i32 %i.axd to i16
   store i16 %i.axe, ptr %i.avw, align 2, !tbaa !57
-  %i.axf = getelementptr inbounds nuw i8, ptr %i.c, i64 8
+  %i.axf = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.axg = getelementptr inbounds nuw i8, ptr %0, i64 3128
   %i.axh = load i32, ptr %i.axg, align 8, !tbaa !49
   %i.axi = sext i32 %i.axh to i64
@@ -744,14 +742,14 @@ bb.gl:                                            ; preds = %.thread
   %i.ayk = load i16, ptr %i.ayj, align 2, !tbaa !57
   %i.ayl = sext i16 %i.ayk to i32                 ; 2 uses
   %i.aym = sub nsw i32 %i.ayl, %i.ayi
-  %i.ayn = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %i.ayn = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store i32 %i.aym, ptr %i.ayn, align 8, !tbaa !49
   %i.ayo = mul nsw i32 %i.ava, %i.ayl
   %i.ayp = tail call i32 @llvm.smax.i32(i32 %i.ayo, i32 0)
   %i.ayq = tail call i32 @llvm.umin.i32(i32 %i.ayp, i32 2047)
   %i.ayr = trunc nuw nsw i32 %i.ayq to i16
   store i16 %i.ayr, ptr %i.axj, align 2, !tbaa !57
-  %i.ays = getelementptr inbounds nuw i8, ptr %i.c, i64 12
+  %i.ays = getelementptr inbounds nuw i8, ptr %i.d, i64 12
   %i.ayt = getelementptr inbounds nuw i8, ptr %0, i64 3132
   %i.ayu = load i32, ptr %i.ayt, align 4, !tbaa !49
   %i.ayv = sext i32 %i.ayu to i64
@@ -794,14 +792,14 @@ bb.gl:                                            ; preds = %.thread
   %i.bad = load i16, ptr %i.bac, align 2, !tbaa !57
   %i.bae = sext i16 %i.bad to i32                 ; 2 uses
   %i.baf = sub nsw i32 %i.bae, %i.bab
-  %i.bag = getelementptr inbounds nuw i8, ptr %4, i64 12
+  %i.bag = getelementptr inbounds nuw i8, ptr %i.c, i64 12
   store i32 %i.baf, ptr %i.bag, align 4, !tbaa !49
   %i.bah = mul nsw i32 %i.azr, %i.bae
   %i.bai = tail call i32 @llvm.smax.i32(i32 %i.bah, i32 0)
   %i.baj = tail call i32 @llvm.umin.i32(i32 %i.bai, i32 2047)
   %i.bak = trunc nuw nsw i32 %i.baj to i16
   store i16 %i.bak, ptr %i.ayw, align 2, !tbaa !57
-  %i.bal = getelementptr inbounds nuw i8, ptr %i.c, i64 16
+  %i.bal = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %i.bam = getelementptr inbounds nuw i8, ptr %0, i64 3136
   %i.ban = load i32, ptr %i.bam, align 16, !tbaa !49
   %i.bao = sext i32 %i.ban to i64
@@ -845,14 +843,14 @@ bb.gl:                                            ; preds = %.thread
   %i.bbw = load i16, ptr %i.bbv, align 2, !tbaa !57
   %i.bbx = sext i16 %i.bbw to i32                 ; 2 uses
   %i.bby = sub nsw i32 %i.bbx, %i.bbu
-  %i.bbz = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %i.bbz = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   store i32 %i.bby, ptr %i.bbz, align 16, !tbaa !49
   %i.bca = mul nsw i32 %i.bbk, %i.bbx
   %i.bcb = tail call i32 @llvm.smax.i32(i32 %i.bca, i32 0)
   %i.bcc = tail call i32 @llvm.umin.i32(i32 %i.bcb, i32 2047)
   %i.bcd = trunc nuw nsw i32 %i.bcc to i16
   store i16 %i.bcd, ptr %i.bap, align 2, !tbaa !57
-  %i.bce = getelementptr inbounds nuw i8, ptr %i.c, i64 20
+  %i.bce = getelementptr inbounds nuw i8, ptr %i.d, i64 20
   %i.bcf = getelementptr inbounds nuw i8, ptr %0, i64 3140
   %i.bcg = load i32, ptr %i.bcf, align 4, !tbaa !49
   %i.bch = sext i32 %i.bcg to i64
@@ -889,7 +887,7 @@ bb.gl:                                            ; preds = %.thread
   %i.bdj = load i16, ptr %i.bdi, align 2, !tbaa !57
   %i.bdk = sext i16 %i.bdj to i32                 ; 2 uses
   %i.bdl = sub nsw i32 %i.bdk, %i.bdh
-  %i.bdm = getelementptr inbounds nuw i8, ptr %4, i64 20
+  %i.bdm = getelementptr inbounds nuw i8, ptr %i.c, i64 20
   store i32 %i.bdl, ptr %i.bdm, align 4, !tbaa !49
   %i.bdn = mul nsw i32 %i.bbk, %i.bdk
   %i.bdo = tail call i32 @llvm.smax.i32(i32 %i.bdn, i32 0)
@@ -919,7 +917,7 @@ bb.gm:                                            ; preds = %bb.gl
   %i.bdy = getelementptr inbounds nuw i8, ptr %0, i64 1064
   %i.bdz = load ptr, ptr %i.bdy, align 8, !tbaa !46 ; 2 uses
   %i.bea = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 3 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.d, ptr noundef nonnull align 4 dereferenceable(24) %i.bea, i64 24, i1 false)
+  %.sroa.0.0.copyload = load <6 x i32>, ptr %i.bea, align 4 ; 2 uses
   %i.beb = getelementptr inbounds nuw i8, ptr %0, i64 216 ; 7 uses
   %i.bec = getelementptr inbounds nuw i8, ptr %0, i64 1192
   %i.bed = load ptr, ptr %i.bec, align 8, !tbaa !177 ; 7 uses
@@ -1032,7 +1030,7 @@ get_block_rate.exit.i:                            ; preds = %bb.gv, %bb.gn
   %i.bgi = shl nsw i32 %i.bgh, 4
   %i.bgj = sext i32 %i.bgi to i64
   %i.bgk = getelementptr inbounds [2 x i8], ptr %i.bed, i64 %i.bgj ; 66 uses
-  %i.bgl = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv.i
+  %i.bgl = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %indvars.iv.i
   %i.bgm = load i32, ptr %i.bgl, align 4, !tbaa !49
   %.not.i615 = icmp eq i32 %i.bgm, 0
   br i1 %.not.i615, label %bb.gy, label %bb.gw
@@ -1435,7 +1433,7 @@ bb.hn:                                            ; preds = %get_block_rate.exit
   br i1 %i.cbn, label %decide_ac_pred.exit, label %bb.ho
 
 bb.ho:                                            ; preds = %bb.hn
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) %i.bea, ptr noundef nonnull readonly align 16 dereferenceable(24) %i.d, i64 24, i1 false)
+  store <6 x i32> %.sroa.0.0.copyload, ptr %i.bea, align 4
   %i.cbo = load i32, ptr %i.auc, align 16, !tbaa !49
   %i.cbp = shl nsw i32 %i.cbo, 4
   %i.cbq = sext i32 %i.cbp to i64
@@ -1838,6 +1836,7 @@ decide_ac_pred.exit:                              ; preds = %.loopexit.i.i.5, %b
   br label %.loopexit692
 
 .loopexit692:                                     ; preds = %.preheader691, %decide_ac_pred.exit
+  %.sroa.0.0 = phi <6 x i32> [ undef, %.preheader691 ], [ %.sroa.0.0.copyload, %decide_ac_pred.exit ]
   %i.cna = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 2 uses
   %i.cnb = load i32, ptr %i.cna, align 4, !tbaa !49
   %i.cnc = icmp sgt i32 %i.cnb, 0
@@ -2240,7 +2239,7 @@ bb.jb:                                            ; preds = %bb.ja
   %i.cvn = sub i32 %i.cvm, %i.cvk
   %i.cvo = add i32 %i.cvn, %i.cvi
   store i32 %i.cvo, ptr %i.cvl, align 4, !tbaa !83
-  call fastcc void @mpeg4_encode_blocks_intra(ptr noundef nonnull %0, ptr noundef nonnull %1, ptr noundef %4, ptr noundef %i.e, ptr noundef nonnull %i.o, ptr noundef nonnull %i.n)
+  call fastcc void @mpeg4_encode_blocks_intra(ptr noundef nonnull %0, ptr noundef nonnull %1, ptr noundef %i.c, ptr noundef %i.e, ptr noundef nonnull %i.o, ptr noundef nonnull %i.n)
   %i.cvp = load ptr, ptr %i.cuy, align 16, !tbaa !59
   %i.cvq = load ptr, ptr %i.cva, align 8, !tbaa !81
   %i.cvr = ptrtoint ptr %i.cvp to i64
@@ -2261,7 +2260,7 @@ bb.jb:                                            ; preds = %bb.ja
   br label %bb.jc
 
 .critedge517:                                     ; preds = %bb.ja
-  call fastcc void @mpeg4_encode_blocks_intra(ptr noundef nonnull %0, ptr noundef nonnull %1, ptr noundef %4, ptr noundef %i.e, ptr noundef nonnull %i.o, ptr noundef nonnull %i.n)
+  call fastcc void @mpeg4_encode_blocks_intra(ptr noundef nonnull %0, ptr noundef nonnull %1, ptr noundef %i.c, ptr noundef %i.e, ptr noundef nonnull %i.o, ptr noundef nonnull %i.n)
   br label %bb.jc
 
 bb.jc:                                            ; preds = %.critedge517, %bb.jb
@@ -2274,7 +2273,7 @@ bb.jc:                                            ; preds = %.critedge517, %bb.j
   br i1 %.not501, label %restore_ac_coeffs.exit, label %bb.jd
 
 bb.jd:                                            ; preds = %bb.jc
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) %i.cna, ptr noundef nonnull readonly align 16 dereferenceable(24) %i.d, i64 24, i1 false)
+  store <6 x i32> %.sroa.0.0, ptr %i.cna, align 4
   %i.cwg = getelementptr inbounds nuw i8, ptr %0, i64 1192
   %i.cwh = load ptr, ptr %i.cwg, align 8, !tbaa !177
   %i.cwi = getelementptr inbounds nuw i8, ptr %0, i64 216
@@ -2303,7 +2302,7 @@ bb.je:                                            ; preds = %.loopexit.i653, %bb
   %i.cxb = getelementptr inbounds [2 x i8], ptr %i.cwh, i64 %i.cxa ; 12 uses
   %i.cxc = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %indvars.iv.i651
   store ptr %i.cwi, ptr %i.cxc, align 8, !tbaa !163
-  %i.cxd = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv.i651
+  %i.cxd = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %indvars.iv.i651
   %i.cxe = load i32, ptr %i.cxd, align 4, !tbaa !49
   %.not.i652 = icmp eq i32 %i.cxe, 0
   %i.cxf = getelementptr inbounds nuw [128 x i8], ptr %1, i64 %indvars.iv.i651 ; 11 uses
@@ -2395,9 +2394,8 @@ bb.je:                                            ; preds = %.loopexit.i653, %bb
 
 restore_ac_coeffs.exit:                           ; preds = %.loopexit.i653, %bb.jc
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #14
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #14
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #14
   br label %.critedge503
 
 .critedge503:                                     ; preds = %bb.db, %bb.da, %bb.z, %put_bits.exit, %bb.e, %restore_ac_coeffs.exit, %bb.gk, %bb.br, %.critedge, %.critedge512
@@ -2799,9 +2797,6 @@ bb.aa:                                            ; preds = %put_bits.exit52, %p
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.abs.i32(i32, i1 immarg) #7
-
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
-declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #2
 
 ; Function Attrs: cold nofree norecurse nosync nounwind optsize memory(write, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc void @init_uni_dc_tab() unnamed_addr #8 {

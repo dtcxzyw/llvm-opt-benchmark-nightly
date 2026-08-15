@@ -204,8 +204,6 @@ _ZSt26__unguarded_insertion_sortIPN6embree4sse217GeneralBVHBuilder12BuildRecordT
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZSt11__sort_heapIPN6embree4sse217GeneralBVHBuilder12BuildRecordTINS1_16PrimInfoExtRangeENS1_8BinSplitILm32EEEEEN9__gnu_cxx5__ops15_Iter_comp_iterISt7greaterIS7_EEEEvT_SF_RT0_(ptr noundef %0, ptr noundef %1, ptr noundef nonnull align 1 dereferenceable(1) %2) local_unnamed_addr #0 comdat {
 bb.a:
-  %.sroa.0.i.i = alloca [9 x i8], align 16        ; 5 uses
-  %.sroa.07.i = alloca { i64, i8, [7 x i8] }, align 16 ; 5 uses
   %i.a = ptrtoint ptr %0 to i64                   ; 2 uses
   %i.b = ptrtoint ptr %1 to i64
   %i.c = sub i64 %i.b, %i.a
@@ -223,8 +221,7 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %_ZSt10__pop_heapIPN6embree4sse217GeneralBVHBuilder12BuildRecordTINS1_16PrimInfoExtRangeENS1_8BinSplitILm32EEEEEN9__gnu_cxx5__ops15_Iter_comp_iterISt7greaterIS7_EEEEvT_SF_SF_RT0_.exit
   %.07 = phi ptr [ %1, %.lr.ph ], [ %i.j, %_ZSt10__pop_heapIPN6embree4sse217GeneralBVHBuilder12BuildRecordTINS1_16PrimInfoExtRangeENS1_8BinSplitILm32EEEEEN9__gnu_cxx5__ops15_Iter_comp_iterISt7greaterIS7_EEEEvT_SF_SF_RT0_.exit ] ; 7 uses
   %i.j = getelementptr inbounds i8, ptr %.07, i64 -112 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.07.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(9) %.sroa.07.i, ptr noundef nonnull align 16 dereferenceable(9) %i.j, i64 9, i1 false)
+  %.sroa.07.i.sroa.0.0.copyload = load <9 x i8>, ptr %i.j, align 16
   %i.k = getelementptr inbounds i8, ptr %.07, i64 -96 ; 2 uses
   %i.l = load <4 x float>, ptr %i.k, align 16
   %i.m = getelementptr inbounds i8, ptr %.07, i64 -80 ; 2 uses
@@ -251,7 +248,6 @@ bb.b:                                             ; preds = %.lr.ph, %_ZSt10__po
   %i.ab = ptrtoint ptr %i.j to i64
   %i.ac = sub i64 %i.ab, %i.a                     ; 3 uses
   %i.ad = sdiv exact i64 %i.ac, 112               ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i)
   %i.ae = add nsw i64 %i.ad, -1
   %i.af = sdiv i64 %i.ae, 2
   %i.ag = icmp sgt i64 %i.ac, 224
@@ -338,11 +334,9 @@ bb.c:                                             ; preds = %._crit_edge.i.i
   %i.cj = getelementptr inbounds nuw i8, ptr %i.bw, i64 80
   %i.ck = getelementptr inbounds nuw i8, ptr %i.bv, i64 80
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.cj, ptr noundef nonnull align 16 dereferenceable(24) %i.ck, i64 24, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(9) %.sroa.0.i.i, ptr noundef nonnull align 16 dereferenceable(9) %.sroa.07.i, i64 9, i1 false)
   br label %.lr.ph.i.preheader.i.i
 
 bb.d:                                             ; preds = %bb.c, %._crit_edge.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(9) %.sroa.0.i.i, ptr noundef nonnull align 16 dereferenceable(9) %.sroa.07.i, i64 9, i1 false)
   %.not.i = icmp eq i64 %.0.lcssa.i.i, 0
   br i1 %.not.i, label %_ZSt10__pop_heapIPN6embree4sse217GeneralBVHBuilder12BuildRecordTINS1_16PrimInfoExtRangeENS1_8BinSplitILm32EEEEEN9__gnu_cxx5__ops15_Iter_comp_iterISt7greaterIS7_EEEEvT_SF_SF_RT0_.exit, label %.lr.ph.i.preheader.i.i
 
@@ -391,7 +385,7 @@ bb.e:                                             ; preds = %.lr.ph.i.i.i
 _ZSt10__pop_heapIPN6embree4sse217GeneralBVHBuilder12BuildRecordTINS1_16PrimInfoExtRangeENS1_8BinSplitILm32EEEEEN9__gnu_cxx5__ops15_Iter_comp_iterISt7greaterIS7_EEEEvT_SF_SF_RT0_.exit: ; preds = %.lr.ph.i.i.i, %bb.e, %bb.d
   %.013.lcssa.i.i.i = phi i64 [ 0, %bb.d ], [ %.01316.i.i.i, %.lr.ph.i.i.i ], [ 0, %bb.e ]
   %i.dh = getelementptr inbounds [112 x i8], ptr %0, i64 %.013.lcssa.i.i.i ; 7 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(9) %i.dh, ptr noundef nonnull align 16 dereferenceable(9) %.sroa.0.i.i, i64 9, i1 false)
+  store <9 x i8> %.sroa.07.i.sroa.0.0.copyload, ptr %i.dh, align 16
   %i.di = getelementptr inbounds nuw i8, ptr %i.dh, i64 16
   store <4 x float> %i.l, ptr %i.di, align 16
   %i.dj = getelementptr inbounds nuw i8, ptr %i.dh, i64 32
@@ -404,8 +398,6 @@ _ZSt10__pop_heapIPN6embree4sse217GeneralBVHBuilder12BuildRecordTINS1_16PrimInfoE
   store i64 %i.t, ptr %i.dm, align 16
   %.sroa.13.80..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.dh, i64 88
   store <2 x i64> %i.v, ptr %.sroa.13.80..sroa_idx.i.i, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.07.i)
   %i.dn = icmp sgt i64 %i.ac, 112
   br i1 %i.dn, label %bb.b, label %._crit_edge, !llvm.loop !952
 
@@ -416,7 +408,6 @@ _ZSt10__pop_heapIPN6embree4sse217GeneralBVHBuilder12BuildRecordTINS1_16PrimInfoE
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZSt11__make_heapIPN6embree4sse217GeneralBVHBuilder12BuildRecordTINS1_16PrimInfoExtRangeENS1_8BinSplitILm32EEEEEN9__gnu_cxx5__ops15_Iter_comp_iterISt7greaterIS7_EEEEvT_SF_RT0_(ptr noundef %0, ptr noundef %1, ptr noundef nonnull align 1 dereferenceable(1) %2) local_unnamed_addr #0 comdat {
 bb.a:
-  %.sroa.0 = alloca [9 x i8], align 16            ; 2 uses
   %i.a = ptrtoint ptr %1 to i64
   %i.b = ptrtoint ptr %0 to i64
   %i.c = sub i64 %i.a, %i.b                       ; 2 uses
@@ -463,7 +454,7 @@ bb.c:                                             ; preds = %_ZSt13__adjust_heap
   %i.ak = getelementptr inbounds nuw i8, ptr %i.z, i64 88 ; 2 uses
   %i.al = load <2 x i64>, ptr %i.ak, align 8
   %i.am = load i64, ptr %i.ak, align 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(9) %.sroa.0, ptr noundef nonnull align 16 dereferenceable(9) %i.z, i64 9, i1 false)
+  %.sroa.0.sroa.0.0.copyload = load <9 x i8>, ptr %i.z, align 16
   %i.an = icmp slt i64 %.013, %i.i
   br i1 %i.an, label %.lr.ph.i, label %._crit_edge.i
 
@@ -579,7 +570,7 @@ bb.f:                                             ; preds = %.lr.ph.i.i
 _ZSt13__adjust_heapIPN6embree4sse217GeneralBVHBuilder12BuildRecordTINS1_16PrimInfoExtRangeENS1_8BinSplitILm32EEEEElS7_N9__gnu_cxx5__ops15_Iter_comp_iterISt7greaterIS7_EEEEvT_T0_SG_T1_T2_.exit: ; preds = %.lr.ph.i.i, %bb.f, %bb.e
   %.013.lcssa.i.i = phi i64 [ %.127.i, %bb.e ], [ %.017.i.i, %bb.f ], [ %.01316.i.i, %.lr.ph.i.i ]
   %i.cy = getelementptr inbounds nuw [112 x i8], ptr %0, i64 %.013.lcssa.i.i ; 7 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(9) %i.cy, ptr noundef nonnull align 16 dereferenceable(9) %.sroa.0, i64 9, i1 false)
+  store <9 x i8> %.sroa.0.sroa.0.0.copyload, ptr %i.cy, align 16
   %i.cz = getelementptr inbounds nuw i8, ptr %i.cy, i64 16
   store <4 x float> %i.ab, ptr %i.cz, align 16
   %i.da = getelementptr inbounds nuw i8, ptr %i.cy, i64 32

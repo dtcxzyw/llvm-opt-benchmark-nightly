@@ -204,8 +204,6 @@ declare noundef ptr @_Z22btAlignedAllocInternalmi(i64 noundef, i32 noundef) loca
 ; Function Attrs: uwtable
 define dso_local void @_ZN10btSoftBody10appendNoteEPKcRK9btVector3RK9btVector4PNS_4NodeES9_S9_S9_(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(1496) %0, ptr noundef %1, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(16) %2, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(16) %3, ptr noundef %4, ptr noundef %5, ptr noundef %6, ptr noundef %7) local_unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.6 = alloca [4 x float], align 8          ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6)
   %i.a = load atomic i8, ptr @_ZGVZL14ZeroInitializeIN10btSoftBody4NoteEEvRT_E9zerodummy acquire, align 8
   %i.b = icmp eq i8 %i.a, 0
   br i1 %i.b, label %bb.b, label %_ZL14ZeroInitializeIN10btSoftBody4NoteEEvRT_.exit, !prof !196
@@ -224,7 +222,7 @@ bb.c:                                             ; preds = %bb.b
 _ZL14ZeroInitializeIN10btSoftBody4NoteEEvRT_.exit: ; preds = %bb.a, %bb.b, %bb.c
   %.sroa.0.0.copyload = load ptr, ptr @_ZZL14ZeroInitializeIN10btSoftBody4NoteEEvRT_E9zerodummy, align 8
   %.sroa.13.0.copyload = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZL14ZeroInitializeIN10btSoftBody4NoteEEvRT_E9zerodummy, i64 36), align 4
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6, ptr noundef nonnull align 4 dereferenceable(16) %2, i64 16, i1 false), !tbaa.struct !198
+  %.sroa.6.sroa.0.0.copyload35 = load <4 x float>, ptr %2, align 4, !tbaa !185
   %i.e = load <4 x float>, ptr %3, align 4, !tbaa !159
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 788 ; 5 uses
   %i.g = load i32, ptr %i.f, align 4, !tbaa !106  ; 7 uses
@@ -344,7 +342,7 @@ _ZN20btAlignedObjectArrayIN10btSoftBody4NoteEE9push_backERKS1_.exit: ; preds = %
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.au, i64 8
   store ptr %1, ptr %.sroa.5.0..sroa_idx, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.au, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6, i64 16, i1 false)
+  store <4 x float> %.sroa.6.sroa.0.0.copyload35, ptr %.sroa.6.0..sroa_idx, align 8
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.au, i64 32
   store i32 %i.aq, ptr %.sroa.7.0..sroa_idx, align 8
   %.sroa.13.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.au, i64 36
@@ -362,7 +360,6 @@ _ZN20btAlignedObjectArrayIN10btSoftBody4NoteEE9push_backERKS1_.exit: ; preds = %
   %i.av = load i32, ptr %i.f, align 4, !tbaa !106
   %i.aw = add nsw i32 %i.av, 1
   store i32 %i.aw, ptr %i.f, align 4, !tbaa !106
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6)
   ret void
 }
 
@@ -765,7 +762,6 @@ bb.a:
   %.sroa.7 = alloca i32, align 4                  ; 7 uses
   %.sroa.11 = alloca i32, align 4                 ; 7 uses
   %8 = alloca %class.btVector3, align 4           ; 6 uses
-  %.sroa.038 = alloca [4 x float], align 4        ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 832 ; 26 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !109  ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 820 ; 5 uses
@@ -1168,10 +1164,9 @@ bb.bs:                                            ; preds = %bb.br
 
 bb.bt:                                            ; preds = %._crit_edge676, %.lr.ph580
   %i.sr = phi ptr [ %.pre677, %._crit_edge676 ], [ %i.sj, %.lr.ph580 ]
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.038)
   %i.ss = getelementptr inbounds nuw [120 x i8], ptr %i.sr, i64 %indvars.iv630 ; 2 uses
   %i.st = getelementptr inbounds nuw i8, ptr %i.ss, i64 48
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.038, ptr noundef nonnull align 8 dereferenceable(16) %i.st, i64 16, i1 false), !tbaa.struct !198
+  %.sroa.038.sroa.0.0.copyload = load <4 x float>, ptr %i.st, align 8, !tbaa !185
   %i.su = getelementptr inbounds nuw i8, ptr %i.ss, i64 96 ; 2 uses
   %i.sv = load float, ptr %i.su, align 8, !tbaa !199 ; 3 uses
   %i.sw = fcmp ogt float %i.sv, 0.000000e+00
@@ -1204,7 +1199,6 @@ bb.bw:                                            ; preds = %bb.br
 bb.bx:                                            ; preds = %bb.by
   %i.tf = landingpad { ptr, i32 }
           cleanup
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.038)
   br label %bb.cb
 
 bb.by:                                            ; preds = %bb.bu, %bb.bt
@@ -1221,8 +1215,7 @@ bb.bz:                                            ; preds = %bb.by
   %i.tk = sext i32 %i.th to i64
   %i.tl = getelementptr inbounds [120 x i8], ptr %i.tj, i64 %i.tk
   %i.tm = getelementptr inbounds nuw i8, ptr %i.tl, i64 48
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.tm, ptr noundef nonnull align 4 dereferenceable(16) %.sroa.038, i64 16, i1 false), !tbaa.struct !198
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.038)
+  store <4 x float> %.sroa.038.sroa.0.0.copyload, ptr %i.tm, align 8, !tbaa !185
   br label %bb.ca
 
 bb.ca:                                            ; preds = %bb.bz, %bb.bs

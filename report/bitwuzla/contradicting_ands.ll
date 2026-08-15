@@ -204,7 +204,6 @@ bb.a:
   %8 = alloca %"class.std::unordered_map.207", align 8 ; 13 uses
   %i.a = alloca i8, align 1                       ; 5 uses
   %9 = alloca %"class.std::reference_wrapper", align 8 ; 6 uses
-  %.sroa.5 = alloca [16 x i8], align 8            ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #19
   %i.b = tail call noundef ptr @_ZNK4bzla4Node5beginEv(ptr noundef nonnull align 8 dereferenceable(8) %2) ; 5 uses
   %i.c = tail call noundef ptr @_ZNK4bzla4Node3endEv(ptr noundef nonnull align 8 dereferenceable(8) %2) ; 3 uses
@@ -453,8 +452,6 @@ bb.w:                                             ; preds = %_ZNSt13unordered_ma
   br i1 %i.by, label %_ZNSt10_HashtableISt17reference_wrapperIKN4bzla4NodeEES4_SaIS4_ENSt8__detail9_IdentityESt8equal_toIS4_ESt4hashIS2_ENS6_18_Mod_range_hashingENS6_20_Default_ranged_hashENS6_20_Prime_rehash_policyENS6_17_Hashtable_traitsILb1ELb1ELb1EEEE5clearEv.exit.i.i, label %bb.x
 
 _ZNSt10_HashtableISt17reference_wrapperIKN4bzla4NodeEES4_SaIS4_ENSt8__detail9_IdentityESt8equal_toIS4_ESt4hashIS2_ENS6_18_Mod_range_hashingENS6_20_Default_ranged_hashENS6_20_Prime_rehash_policyENS6_17_Hashtable_traitsILb1ELb1ELb1EEEE5clearEv.exit.i.i: ; preds = %bb.w
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5, i8 0, i64 16, i1 false)
   %i.bz = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 1, ptr %i.bz, align 8, !tbaa !57, !alias.scope !70
   %i.ca = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -464,14 +461,12 @@ _ZNSt10_HashtableISt17reference_wrapperIKN4bzla4NodeEES4_SaIS4_ENSt8__detail9_Id
   %.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 36
   store i32 0, ptr %.sroa_idx, align 4
   %.sroa.5.32..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %10 = load i64, ptr %.sroa.5, align 8, !tbaa !16
-  store i64 %10, ptr %.sroa.5.32..sroa_idx, align 8, !tbaa !16
+  store <8 x i8> zeroinitializer, ptr %.sroa.5.32..sroa_idx, align 8, !tbaa !16
   %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   store ptr %i.cc, ptr %0, align 8, !tbaa !55, !alias.scope !70
   store ptr null, ptr %i.cc, align 8, !tbaa !73, !alias.scope !70
   %i.cd = getelementptr inbounds nuw i8, ptr %0, i64 56
   store i8 1, ptr %i.cd, align 8, !tbaa !74, !alias.scope !70
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5)
   br label %bb.ab
 
 bb.x:                                             ; preds = %bb.m, %bb.u, %bb.w

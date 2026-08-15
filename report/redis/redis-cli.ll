@@ -204,7 +204,6 @@ begin_hunk_0
 @.str.755 = private unnamed_addr constant [35 x i8] c"Error reading replies from server\0A\00", align 1
 @.str.757 = private unnamed_addr constant [33 x i8] c"Error writing to the server: %s\0A\00", align 1
 @.str.758 = private unnamed_addr constant [22 x i8] c"Server I/O Error: %s\0A\00", align 1
-@__const.pipeMode.echo = private unnamed_addr constant [44 x i8] c"\0D\0A*2\0D\0A$4\0D\0AECHO\0D\0A$20\0D\0A01234567890123456789\0D\0A\00", align 16
 @.str.760 = private unnamed_addr constant [30 x i8] c"Error reading from stdin: %s\0A\00", align 1
 @.str.761 = private unnamed_addr constant [37 x i8] c"No replies for %d seconds: exiting.\0A\00", align 1
 @.str.762 = private unnamed_addr constant [29 x i8] c"errors: %lld, replies: %lld\0A\00", align 1
@@ -607,32 +606,31 @@ bb.a:
   %i.ad = alloca [256 x i8], align 16             ; 3 uses
   %i.ae = alloca ptr, align 8                     ; 7 uses
   %i.af = alloca [20 x i8], align 16              ; 24 uses
-  %18 = alloca [44 x i8], align 16                ; 5 uses
+  %18 = alloca %struct.timeval, align 8           ; 5 uses
   %19 = alloca %struct.timeval, align 8           ; 5 uses
   %20 = alloca %struct.timeval, align 8           ; 5 uses
-  %21 = alloca %struct.timeval, align 8           ; 5 uses
   %i.ag = alloca ptr, align 8                     ; 19 uses
-  %22 = alloca %struct.dictType, align 8          ; 4 uses
+  %21 = alloca %struct.dictType, align 8          ; 4 uses
+  %22 = alloca %struct.timeval, align 8           ; 5 uses
   %23 = alloca %struct.timeval, align 8           ; 5 uses
   %24 = alloca %struct.timeval, align 8           ; 5 uses
   %25 = alloca %struct.timeval, align 8           ; 5 uses
   %26 = alloca %struct.timeval, align 8           ; 5 uses
-  %27 = alloca %struct.timeval, align 8           ; 5 uses
-  %28 = alloca [31 x %struct.distsamples], align 16 ; 4 uses
+  %27 = alloca [31 x %struct.distsamples], align 16 ; 4 uses
+  %28 = alloca %struct.timeval, align 8           ; 5 uses
   %29 = alloca %struct.timeval, align 8           ; 5 uses
   %30 = alloca %struct.timeval, align 8           ; 5 uses
   %31 = alloca %struct.timeval, align 8           ; 5 uses
   %32 = alloca %struct.timeval, align 8           ; 5 uses
   %33 = alloca %struct.timeval, align 8           ; 5 uses
   %34 = alloca %struct.timeval, align 8           ; 5 uses
-  %35 = alloca %struct.timeval, align 8           ; 5 uses
   %i.ah = alloca ptr, align 8                     ; 4 uses
   %i.ai = alloca ptr, align 8                     ; 4 uses
   %i.aj = alloca ptr, align 8                     ; 4 uses
   %i.ak = alloca ptr, align 8                     ; 4 uses
   %i.al = alloca ptr, align 8                     ; 4 uses
-  %36 = alloca %struct.timeval, align 8           ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %36) #32
+  %35 = alloca %struct.timeval, align 8           ; 5 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %35) #32
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) getelementptr inbounds nuw (i8, ptr @config, i64 64), i8 0, i64 64, i1 false)
   %i.am = tail call ptr @hi_sdsnew(ptr noundef nonnull @.str.132) #32
   store ptr %i.am, ptr @config, align 8, !tbaa !237
@@ -1035,10 +1033,10 @@ bb.ij:                                            ; preds = %bb.ii
   br label %bb.ik
 
 bb.ik:                                            ; preds = %bb.ij, %bb.ii
-  %i.abe = call i32 @gettimeofday(ptr noundef nonnull %36, ptr noundef null) #32 ; 0 uses
-  %i.abf = load i64, ptr %36, align 8, !tbaa !314
+  %i.abe = call i32 @gettimeofday(ptr noundef nonnull %35, ptr noundef null) #32 ; 0 uses
+  %i.abf = load i64, ptr %35, align 8, !tbaa !314
   %i.abg = mul nsw i64 %i.abf, 1000000
-  %i.abh = getelementptr inbounds nuw i8, ptr %36, i64 8
+  %i.abh = getelementptr inbounds nuw i8, ptr %35, i64 8
   %i.abi = load i64, ptr %i.abh, align 8, !tbaa !315
   %i.abj = add nsw i64 %i.abg, %i.abi
   %i.abk = call i32 @getpid() #32
@@ -1397,12 +1395,12 @@ bb.kf:                                            ; preds = %bb.kd
   %.not.i52 = icmp eq i64 %i.aeo, 0
   %i.aep = sdiv i64 %i.aeo, 1000
   %i.aeq = select i1 %.not.i52, i64 15000, i64 %i.aep
-  call void @llvm.lifetime.start.p0(ptr nonnull %35) #32
-  %i.aer = call i32 @gettimeofday(ptr noundef nonnull %35, ptr noundef null) #32 ; 0 uses
-  %i.aes = load i64, ptr %35, align 8, !tbaa !314
-  %i.aet = getelementptr inbounds nuw i8, ptr %35, i64 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %34) #32
+  %i.aer = call i32 @gettimeofday(ptr noundef nonnull %34, ptr noundef null) #32 ; 0 uses
+  %i.aes = load i64, ptr %34, align 8, !tbaa !314
+  %i.aet = getelementptr inbounds nuw i8, ptr %34, i64 8
   %i.aeu = load i64, ptr %i.aet, align 8, !tbaa !315
-  call void @llvm.lifetime.end.p0(ptr nonnull %35) #32
+  call void @llvm.lifetime.end.p0(ptr nonnull %34) #32
   %i.aev = load i64, ptr getelementptr inbounds nuw (i8, ptr @config, i64 136), align 8, !tbaa !267 ; 2 uses
   %i.aew = icmp eq i64 %i.aev, 0
   %i.aex = sdiv i64 %i.aev, 1000
@@ -1416,12 +1414,12 @@ bb.kf:                                            ; preds = %bb.kd
   %i.aez = mul nsw i64 %i.aes, 1000000
   %i.afa = add nsw i64 %i.aez, %i.aeu
   %i.afb = sdiv i64 %i.afa, 1000
-  %i.afc = getelementptr inbounds nuw i8, ptr %34, i64 8
-  %i.afd = getelementptr inbounds nuw i8, ptr %33, i64 8
-  %i.afe = getelementptr inbounds nuw i8, ptr %32, i64 8
-  %i.aff = getelementptr inbounds nuw i8, ptr %31, i64 8
-  %i.afg = getelementptr inbounds nuw i8, ptr %30, i64 8
-  %i.afh = getelementptr inbounds nuw i8, ptr %29, i64 8
+  %i.afc = getelementptr inbounds nuw i8, ptr %33, i64 8
+  %i.afd = getelementptr inbounds nuw i8, ptr %32, i64 8
+  %i.afe = getelementptr inbounds nuw i8, ptr %31, i64 8
+  %i.aff = getelementptr inbounds nuw i8, ptr %30, i64 8
+  %i.afg = getelementptr inbounds nuw i8, ptr %29, i64 8
+  %i.afh = getelementptr inbounds nuw i8, ptr %28, i64 8
   br label %bb.kh
 
 bb.kg:                                            ; preds = %bb.kf
@@ -1434,23 +1432,23 @@ bb.kh:                                            ; preds = %bb.ky, %.preheader.
   %.035.i = phi i64 [ %.136.i, %bb.ky ], [ 0, %.preheader.i53 ] ; 2 uses
   %.033.i = phi i64 [ %.3.i, %bb.ky ], [ 0, %.preheader.i53 ]
   %.0.i = phi i64 [ %.1.i, %bb.ky ], [ %i.afb, %.preheader.i53 ] ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %34) #32
-  %i.afi = call i32 @gettimeofday(ptr noundef nonnull %34, ptr noundef null) #32 ; 0 uses
-  %i.afj = load i64, ptr %34, align 8, !tbaa !314
+  call void @llvm.lifetime.start.p0(ptr nonnull %33) #32
+  %i.afi = call i32 @gettimeofday(ptr noundef nonnull %33, ptr noundef null) #32 ; 0 uses
+  %i.afj = load i64, ptr %33, align 8, !tbaa !314
   %i.afk = mul nsw i64 %i.afj, 1000000
   %i.afl = load i64, ptr %i.afc, align 8, !tbaa !315
   %i.afm = add nsw i64 %i.afk, %i.afl
-  call void @llvm.lifetime.end.p0(ptr nonnull %34) #32
+  call void @llvm.lifetime.end.p0(ptr nonnull %33) #32
   %.neg.i = sdiv i64 %i.afm, -1000
   %i.afn = load ptr, ptr @context, align 8, !tbaa !215
   %i.afo = call ptr (ptr, ptr, ...) @reconnectingRedisCommand(ptr noundef %i.afn, ptr noundef nonnull @.str.694)
-  call void @llvm.lifetime.start.p0(ptr nonnull %33) #32
-  %i.afp = call i32 @gettimeofday(ptr noundef nonnull %33, ptr noundef null) #32 ; 0 uses
-  %i.afq = load i64, ptr %33, align 8, !tbaa !314
+  call void @llvm.lifetime.start.p0(ptr nonnull %32) #32
+  %i.afp = call i32 @gettimeofday(ptr noundef nonnull %32, ptr noundef null) #32 ; 0 uses
+  %i.afq = load i64, ptr %32, align 8, !tbaa !314
   %i.afr = mul nsw i64 %i.afq, 1000000
   %i.afs = load i64, ptr %i.afd, align 8, !tbaa !315
   %i.aft = add nsw i64 %i.afr, %i.afs
-  call void @llvm.lifetime.end.p0(ptr nonnull %33) #32
+  call void @llvm.lifetime.end.p0(ptr nonnull %32) #32
   %i.afu = sdiv i64 %i.aft, 1000
   %i.afv = add nsw i64 %i.afu, %.neg.i            ; 7 uses
   call void @freeReplyObject(ptr noundef nonnull %i.afo) #32
@@ -1533,13 +1531,13 @@ bb.ku:                                            ; preds = %bb.kr
   br label %latencyModePrint.exit.i
 
 bb.kv:                                            ; preds = %bb.kq
-  call void @llvm.lifetime.start.p0(ptr nonnull %32) #32
-  %i.agr = call i32 @gettimeofday(ptr noundef nonnull %32, ptr noundef null) #32 ; 0 uses
-  %i.ags = load i64, ptr %32, align 8, !tbaa !314
+  call void @llvm.lifetime.start.p0(ptr nonnull %31) #32
+  %i.agr = call i32 @gettimeofday(ptr noundef nonnull %31, ptr noundef null) #32 ; 0 uses
+  %i.ags = load i64, ptr %31, align 8, !tbaa !314
   %i.agt = mul nsw i64 %i.ags, 1000000
   %i.agu = load i64, ptr %i.afe, align 8, !tbaa !315
   %i.agv = add nsw i64 %i.agt, %i.agu
-  call void @llvm.lifetime.end.p0(ptr nonnull %32) #32
+  call void @llvm.lifetime.end.p0(ptr nonnull %31) #32
   %i.agw = sdiv i64 %i.agv, 1000
   %i.agx = sub nsw i64 %i.agw, %.0.i
   %i.agy = load i64, ptr getelementptr inbounds nuw (i8, ptr @config, i64 136), align 8, !tbaa !267
@@ -1557,39 +1555,39 @@ latencyModePrint.exit.i:                          ; preds = %bb.kv, %bb.ku, %bb.
   br i1 %.not52.i, label %bb.ky, label %latencyModePrint.exit.thread.i
 
 latencyModePrint.exit.thread.i:                   ; preds = %latencyModePrint.exit.i, %bb.kr
-  call void @llvm.lifetime.start.p0(ptr nonnull %31) #32
-  %i.aha = call i32 @gettimeofday(ptr noundef nonnull %31, ptr noundef null) #32 ; 0 uses
-  %i.ahb = load i64, ptr %31, align 8, !tbaa !314
+  call void @llvm.lifetime.start.p0(ptr nonnull %30) #32
+  %i.aha = call i32 @gettimeofday(ptr noundef nonnull %30, ptr noundef null) #32 ; 0 uses
+  %i.ahb = load i64, ptr %30, align 8, !tbaa !314
   %i.ahc = mul nsw i64 %i.ahb, 1000000
   %i.ahd = load i64, ptr %i.aff, align 8, !tbaa !315
   %i.ahe = add nsw i64 %i.ahc, %i.ahd
-  call void @llvm.lifetime.end.p0(ptr nonnull %31) #32
+  call void @llvm.lifetime.end.p0(ptr nonnull %30) #32
   %i.ahf = sdiv i64 %i.ahe, 1000
   %i.ahg = sub nsw i64 %i.ahf, %.0.i
   %i.ahh = icmp sgt i64 %i.ahg, %i.aeq
   br i1 %i.ahh, label %bb.kx, label %bb.ky
 
 bb.kx:                                            ; preds = %latencyModePrint.exit.thread.i
-  call void @llvm.lifetime.start.p0(ptr nonnull %30) #32
-  %i.ahi = call i32 @gettimeofday(ptr noundef nonnull %30, ptr noundef null) #32 ; 0 uses
-  %i.ahj = load i64, ptr %30, align 8, !tbaa !314
+  call void @llvm.lifetime.start.p0(ptr nonnull %29) #32
+  %i.ahi = call i32 @gettimeofday(ptr noundef nonnull %29, ptr noundef null) #32 ; 0 uses
+  %i.ahj = load i64, ptr %29, align 8, !tbaa !314
   %i.ahk = mul nsw i64 %i.ahj, 1000000
   %i.ahl = load i64, ptr %i.afg, align 8, !tbaa !315
   %i.ahm = add nsw i64 %i.ahk, %i.ahl
-  call void @llvm.lifetime.end.p0(ptr nonnull %30) #32
+  call void @llvm.lifetime.end.p0(ptr nonnull %29) #32
   %i.ahn = sdiv i64 %i.ahm, 1000
   %i.aho = sub nsw i64 %i.ahn, %.0.i
   %i.ahp = sitofp i64 %i.aho to float
   %i.ahq = fdiv float %i.ahp, 1.000000e+03
   %i.ahr = fpext float %i.ahq to double
   %i.ahs = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.696, double noundef %i.ahr) ; 0 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %29) #32
-  %i.aht = call i32 @gettimeofday(ptr noundef nonnull %29, ptr noundef null) #32 ; 0 uses
-  %i.ahu = load i64, ptr %29, align 8, !tbaa !314
+  call void @llvm.lifetime.start.p0(ptr nonnull %28) #32
+  %i.aht = call i32 @gettimeofday(ptr noundef nonnull %28, ptr noundef null) #32 ; 0 uses
+  %i.ahu = load i64, ptr %28, align 8, !tbaa !314
   %i.ahv = mul nsw i64 %i.ahu, 1000000
   %i.ahw = load i64, ptr %i.afh, align 8, !tbaa !315
   %i.ahx = add nsw i64 %i.ahv, %i.ahw
-  call void @llvm.lifetime.end.p0(ptr nonnull %29) #32
+  call void @llvm.lifetime.end.p0(ptr nonnull %28) #32
   %i.ahy = sdiv i64 %i.ahx, 1000
   br label %bb.ky
 
@@ -1621,14 +1619,14 @@ bb.lc:                                            ; preds = %bb.la
   %.not.i56 = icmp eq i64 %i.aid, 0
   %i.aie = sdiv i64 %i.aid, 1000
   %i.aif = select i1 %.not.i56, i64 1000, i64 %i.aie
-  call void @llvm.lifetime.start.p0(ptr nonnull %27) #32
-  %i.aig = call i32 @gettimeofday(ptr noundef nonnull %27, ptr noundef null) #32 ; 0 uses
-  %i.aih = load i64, ptr %27, align 8, !tbaa !314
-  %i.aii = getelementptr inbounds nuw i8, ptr %27, i64 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %26) #32
+  %i.aig = call i32 @gettimeofday(ptr noundef nonnull %26, ptr noundef null) #32 ; 0 uses
+  %i.aih = load i64, ptr %26, align 8, !tbaa !314
+  %i.aii = getelementptr inbounds nuw i8, ptr %26, i64 8
   %i.aij = load i64, ptr %i.aii, align 8, !tbaa !315
-  call void @llvm.lifetime.end.p0(ptr nonnull %27) #32
-  call void @llvm.lifetime.start.p0(ptr nonnull %28) #32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(744) %28, ptr noundef nonnull align 16 dereferenceable(744) @__const.latencyDistMode.samples, i64 744, i1 false)
+  call void @llvm.lifetime.end.p0(ptr nonnull %26) #32
+  call void @llvm.lifetime.start.p0(ptr nonnull %27) #32
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(744) %27, ptr noundef nonnull align 16 dereferenceable(744) @__const.latencyDistMode.samples, i64 744, i1 false)
   %i.aik = load ptr, ptr @context, align 8, !tbaa !215
   %.not23.i = icmp eq ptr %i.aik, null
   br i1 %.not23.i, label %bb.ld, label %.preheader.i57
@@ -1636,10 +1634,10 @@ bb.lc:                                            ; preds = %bb.la
 .preheader.i57:                                   ; preds = %bb.lc
   %i.ail = mul nsw i64 %i.aih, 1000000
   %i.aim = add nsw i64 %i.ail, %i.aij
-  %i.ain = getelementptr inbounds nuw i8, ptr %26, i64 8
-  %i.aio = getelementptr inbounds nuw i8, ptr %25, i64 8
-  %i.aip = getelementptr inbounds nuw i8, ptr %24, i64 8
-  %i.aiq = getelementptr inbounds nuw i8, ptr %23, i64 8
+  %i.ain = getelementptr inbounds nuw i8, ptr %25, i64 8
+  %i.aio = getelementptr inbounds nuw i8, ptr %24, i64 8
+  %i.aip = getelementptr inbounds nuw i8, ptr %23, i64 8
+  %i.aiq = getelementptr inbounds nuw i8, ptr %22, i64 8
   br label %bb.le
 
 bb.ld:                                            ; preds = %bb.lc
@@ -1650,18 +1648,18 @@ bb.le:                                            ; preds = %bb.lm, %.preheader.
   %.016.i = phi i64 [ %.117.i, %bb.lm ], [ 0, %.preheader.i57 ]
   %.014.i = phi i64 [ %.115.i, %bb.lm ], [ %i.aim, %.preheader.i57 ] ; 3 uses
   %.0.i58 = phi i32 [ %.1.i62, %bb.lm ], [ 0, %.preheader.i57 ] ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %26) #32
-  %i.air = call i32 @gettimeofday(ptr noundef nonnull %26, ptr noundef null) #32 ; 0 uses
-  %i.ais = load i64, ptr %26, align 8, !tbaa !314
+  call void @llvm.lifetime.start.p0(ptr nonnull %25) #32
+  %i.air = call i32 @gettimeofday(ptr noundef nonnull %25, ptr noundef null) #32 ; 0 uses
+  %i.ais = load i64, ptr %25, align 8, !tbaa !314
   %i.ait = load i64, ptr %i.ain, align 8, !tbaa !315
-  call void @llvm.lifetime.end.p0(ptr nonnull %26) #32
+  call void @llvm.lifetime.end.p0(ptr nonnull %25) #32
   %i.aiu = load ptr, ptr @context, align 8, !tbaa !215
   %i.aiv = call ptr (ptr, ptr, ...) @reconnectingRedisCommand(ptr noundef %i.aiu, ptr noundef nonnull @.str.694)
-  call void @llvm.lifetime.start.p0(ptr nonnull %25) #32
-  %i.aiw = call i32 @gettimeofday(ptr noundef nonnull %25, ptr noundef null) #32 ; 0 uses
-  %i.aix = load i64, ptr %25, align 8, !tbaa !314
+  call void @llvm.lifetime.start.p0(ptr nonnull %24) #32
+  %i.aiw = call i32 @gettimeofday(ptr noundef nonnull %24, ptr noundef null) #32 ; 0 uses
+  %i.aix = load i64, ptr %24, align 8, !tbaa !314
   %i.aiy = load i64, ptr %i.aio, align 8, !tbaa !315
-  call void @llvm.lifetime.end.p0(ptr nonnull %25) #32
+  call void @llvm.lifetime.end.p0(ptr nonnull %24) #32
   %reass.add.i = sub i64 %i.aix, %i.ais
   %reass.mul.i = mul i64 %reass.add.i, 1000000
   %i.aiz = sub i64 %i.aiy, %i.ait
@@ -1671,7 +1669,7 @@ bb.le:                                            ; preds = %bb.lm, %.preheader.
 
 bb.lf:                                            ; preds = %bb.lf, %bb.le
   %indvars.iv.i59 = phi i64 [ %indvars.iv.next.i61, %bb.lf ], [ 0, %bb.le ] ; 2 uses
-  %i.ajb = getelementptr inbounds nuw [24 x i8], ptr %28, i64 %indvars.iv.i59 ; 2 uses
+  %i.ajb = getelementptr inbounds nuw [24 x i8], ptr %27, i64 %indvars.iv.i59 ; 2 uses
   %i.ajc = load i64, ptr %i.ajb, align 8, !tbaa !213 ; 2 uses
   %i.ajd = icmp ne i64 %i.ajc, 0
   %.not24.i = icmp sgt i64 %i.aja, %i.ajc
@@ -1689,12 +1687,12 @@ bb.lg:                                            ; preds = %bb.lf
   br i1 %.not25.i, label %bb.lm, label %bb.lh
 
 bb.lh:                                            ; preds = %bb.lg
-  call void @llvm.lifetime.start.p0(ptr nonnull %24) #32
-  %i.aji = call i32 @gettimeofday(ptr noundef nonnull %24, ptr noundef null) #32 ; 0 uses
-  %i.ajj = load i64, ptr %24, align 8, !tbaa !314
+  call void @llvm.lifetime.start.p0(ptr nonnull %23) #32
+  %i.aji = call i32 @gettimeofday(ptr noundef nonnull %23, ptr noundef null) #32 ; 0 uses
+  %i.ajj = load i64, ptr %23, align 8, !tbaa !314
   %i.ajk = mul nsw i64 %i.ajj, 1000000
   %i.ajl = load i64, ptr %i.aip, align 8, !tbaa !315
-  call void @llvm.lifetime.end.p0(ptr nonnull %24) #32
+  call void @llvm.lifetime.end.p0(ptr nonnull %23) #32
   %i.ajm = sub i64 %i.ajl, %.014.i
   %i.ajn = add i64 %i.ajm, %i.ajk
   %i.ajo = sdiv i64 %i.ajn, 1000
@@ -1743,7 +1741,7 @@ bb.lk:                                            ; preds = %showLatencyDistLege
 
 bb.ll:                                            ; preds = %bb.ll, %bb.lk
   %indvars.iv.i26.i = phi i64 [ %indvars.iv.next.i27.i, %bb.ll ], [ 0, %bb.lk ] ; 2 uses
-  %i.akf = getelementptr inbounds nuw [24 x i8], ptr %28, i64 %indvars.iv.i26.i ; 3 uses
+  %i.akf = getelementptr inbounds nuw [24 x i8], ptr %27, i64 %indvars.iv.i26.i ; 3 uses
   %i.akg = getelementptr inbounds nuw i8, ptr %i.akf, i64 8 ; 2 uses
   %i.akh = load i64, ptr %i.akg, align 8, !tbaa !208
   %i.aki = sitofp i64 %i.akh to double
@@ -1771,13 +1769,13 @@ showLatencyDistSamples.exit.i:                    ; preds = %bb.ll
   %puts.i28.i = call i32 @puts(ptr nonnull dereferenceable(1) @str.14) ; 0 uses
   %i.akz = load ptr, ptr @stdout, align 8, !tbaa !13
   %i.ala = call i32 @fflush(ptr noundef %i.akz)   ; 0 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %23) #32
-  %i.alb = call i32 @gettimeofday(ptr noundef nonnull %23, ptr noundef null) #32 ; 0 uses
-  %i.alc = load i64, ptr %23, align 8, !tbaa !314
+  call void @llvm.lifetime.start.p0(ptr nonnull %22) #32
+  %i.alb = call i32 @gettimeofday(ptr noundef nonnull %22, ptr noundef null) #32 ; 0 uses
+  %i.alc = load i64, ptr %22, align 8, !tbaa !314
   %i.ald = mul nsw i64 %i.alc, 1000000
   %i.ale = load i64, ptr %i.aiq, align 8, !tbaa !315
   %i.alf = add nsw i64 %i.ald, %i.ale
-  call void @llvm.lifetime.end.p0(ptr nonnull %23) #32
+  call void @llvm.lifetime.end.p0(ptr nonnull %22) #32
   br label %bb.lm
 
 bb.lm:                                            ; preds = %showLatencyDistSamples.exit.i, %bb.lh, %bb.lg
@@ -1805,14 +1803,14 @@ bb.lq:                                            ; preds = %bb.lo
   %i.alk = load i32, ptr getelementptr inbounds nuw (i8, ptr @config, i64 184), align 8, !tbaa !242 ; 2 uses
   %i.all = load i32, ptr getelementptr inbounds nuw (i8, ptr @config, i64 188), align 4, !tbaa !243 ; 5 uses
   %i.alm = load i32, ptr getelementptr inbounds nuw (i8, ptr @config, i64 192), align 8, !tbaa !244 ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %21) #32
-  %i.aln = call i32 @gettimeofday(ptr noundef nonnull %21, ptr noundef null) #32 ; 0 uses
-  %i.alo = load i64, ptr %21, align 8, !tbaa !314
+  call void @llvm.lifetime.start.p0(ptr nonnull %20) #32
+  %i.aln = call i32 @gettimeofday(ptr noundef nonnull %20, ptr noundef null) #32 ; 0 uses
+  %i.alo = load i64, ptr %20, align 8, !tbaa !314
   %i.alp = mul nsw i64 %i.alo, 1000000
-  %i.alq = getelementptr inbounds nuw i8, ptr %21, i64 8
+  %i.alq = getelementptr inbounds nuw i8, ptr %20, i64 8
   %i.alr = load i64, ptr %i.alq, align 8, !tbaa !315
   %i.als = add nsw i64 %i.alp, %i.alr
-  call void @llvm.lifetime.end.p0(ptr nonnull %21) #32
+  call void @llvm.lifetime.end.p0(ptr nonnull %20) #32
   %i.alt = sdiv i64 %i.als, 1000
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ag) #32
   %i.alu = load ptr, ptr @context, align 8, !tbaa !215
@@ -1869,8 +1867,8 @@ bb.lw:                                            ; preds = %bb.lu
   %i.amq = shl i64 %i.amg, 2
   %i.amr = and i64 %i.amq, 17179869180            ; 3 uses
   %i.ams = sitofp i32 %i.all to double
-  %i.amt = getelementptr inbounds nuw i8, ptr %20, i64 8
-  %i.amu = getelementptr inbounds nuw i8, ptr %19, i64 8
+  %i.amt = getelementptr inbounds nuw i8, ptr %19, i64 8
+  %i.amu = getelementptr inbounds nuw i8, ptr %18, i64 8
   %i.amv = sext i32 %i.all to i64                 ; 2 uses
   br label %bb.lx
 
@@ -2048,9 +2046,9 @@ bb.mk:                                            ; preds = %bb.mj
   br label %bb.na, !llvm.loop !323
 
 bb.ml:                                            ; preds = %bb.mj
-  call void @llvm.lifetime.start.p0(ptr nonnull %22) #32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %22, ptr noundef nonnull align 8 dereferenceable(120) @__const.vsetRecallMode.dtype, i64 120, i1 false)
-  %i.apk = call ptr @dictCreate(ptr noundef nonnull %22) #32 ; 3 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %21) #32
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %21, ptr noundef nonnull align 8 dereferenceable(120) @__const.vsetRecallMode.dtype, i64 120, i1 false)
+  %i.apk = call ptr @dictCreate(ptr noundef nonnull %21) #32 ; 3 uses
   %i.apl = getelementptr inbounds nuw i8, ptr %i.api, i64 48 ; 2 uses
   %i.apm = load i64, ptr %i.apl, align 8, !tbaa !33
   %.not214.i = icmp eq i64 %i.apm, 0
@@ -2102,13 +2100,13 @@ bb.mm:                                            ; preds = %bb.mm, %.lr.ph195.i
   %i.aqk = add nsw i64 %i.aqj, 1
   %i.aql = load ptr, ptr %i.ag, align 8, !tbaa !328
   %i.aqm = call zeroext i1 @hdr_record_value(ptr noundef %i.aql, i64 noundef %i.aqk) #32 ; 0 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %20) #32
-  %i.aqn = call i32 @gettimeofday(ptr noundef nonnull %20, ptr noundef null) #32 ; 0 uses
-  %i.aqo = load i64, ptr %20, align 8, !tbaa !314
+  call void @llvm.lifetime.start.p0(ptr nonnull %19) #32
+  %i.aqn = call i32 @gettimeofday(ptr noundef nonnull %19, ptr noundef null) #32 ; 0 uses
+  %i.aqo = load i64, ptr %19, align 8, !tbaa !314
   %i.aqp = mul nsw i64 %i.aqo, 1000000
   %i.aqq = load i64, ptr %i.amt, align 8, !tbaa !315
   %i.aqr = add nsw i64 %i.aqp, %i.aqq
-  call void @llvm.lifetime.end.p0(ptr nonnull %20) #32
+  call void @llvm.lifetime.end.p0(ptr nonnull %19) #32
   %i.aqs = sdiv i64 %i.aqr, 1000
   %i.aqt = add nsw i64 %.0131201.i, 300
   %i.aqu = icmp sgt i64 %i.aqs, %i.aqt
@@ -2144,13 +2142,13 @@ bb.mp:                                            ; preds = %bb.mo
   br i1 %.not171.i, label %bb.mq, label %bb.mx
 
 bb.mq:                                            ; preds = %bb.mp, %._crit_edge199.i
-  call void @llvm.lifetime.start.p0(ptr nonnull %19) #32
-  %i.ari = call i32 @gettimeofday(ptr noundef nonnull %19, ptr noundef null) #32 ; 0 uses
-  %i.arj = load i64, ptr %19, align 8, !tbaa !314
+  call void @llvm.lifetime.start.p0(ptr nonnull %18) #32
+  %i.ari = call i32 @gettimeofday(ptr noundef nonnull %18, ptr noundef null) #32 ; 0 uses
+  %i.arj = load i64, ptr %18, align 8, !tbaa !314
   %i.ark = mul nsw i64 %i.arj, 1000000
   %i.arl = load i64, ptr %i.amu, align 8, !tbaa !315
   %i.arm = add nsw i64 %i.ark, %i.arl
-  call void @llvm.lifetime.end.p0(ptr nonnull %19) #32
+  call void @llvm.lifetime.end.p0(ptr nonnull %18) #32
   %i.arn = sdiv i64 %i.arm, 1000
   %i.aro = uitofp i64 %i.aqh to double
   %i.arp = mul i64 %i.aqf, %i.amv
@@ -2202,7 +2200,7 @@ bb.my:                                            ; preds = %bb.mx
   br label %bb.mz
 
 bb.mz:                                            ; preds = %bb.my, %bb.mx
-  call void @llvm.lifetime.end.p0(ptr nonnull %22) #32
+  call void @llvm.lifetime.end.p0(ptr nonnull %21) #32
   br label %bb.na
 
 bb.na:                                            ; preds = %bb.mz, %bb.mk, %bb.mi, %bb.mg
@@ -2547,7 +2545,6 @@ bb.ov:                                            ; preds = %bb.ot
   %i.axe = load i32, ptr %i.axd, align 8, !tbaa !333
   %i.axf = and i32 %i.axe, -2
   store i32 %i.axf, ptr %i.axd, align 8, !tbaa !333
-  %37 = getelementptr inbounds nuw i8, ptr %18, i64 21
   %i.axg = getelementptr inbounds nuw i8, ptr %i.af, i64 1
   %i.axh = getelementptr inbounds nuw i8, ptr %i.af, i64 2
   %i.axi = getelementptr inbounds nuw i8, ptr %i.af, i64 3
@@ -2780,8 +2777,6 @@ bb.ps:                                            ; preds = %bb.pr
   ]
 
 bb.pt:                                            ; preds = %bb.ps
-  call void @llvm.lifetime.start.p0(ptr nonnull %18)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(44) %18, ptr noundef nonnull align 16 dereferenceable(44) @__const.pipeMode.echo, i64 44, i1 false)
   %i.bao = call i32 @rand() #32
   %i.bap = trunc i32 %i.bao to i8
   store i8 %i.bap, ptr %i.af, align 16, !tbaa !73
@@ -2842,10 +2837,11 @@ bb.pt:                                            ; preds = %bb.ps
   %i.bca = call i32 @rand() #32
   %i.bcb = trunc i32 %i.bca to i8
   store i8 %i.bcb, ptr %i.axy, align 1, !tbaa !73
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(20) %37, ptr noundef nonnull align 16 dereferenceable(20) %i.af, i64 20, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(43) %i.ac, ptr noundef nonnull align 16 dereferenceable(43) %18, i64 43, i1 false)
+  %.sroa.0.21.copyload = load <20 x i8>, ptr %i.af, align 16
+  %.sroa.0.21.vec.expand = shufflevector <20 x i8> %.sroa.0.21.copyload, <20 x i8> poison, <44 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 poison, i32 poison, i32 poison>
+  %.sroa.0.0.vec.extract = shufflevector <44 x i8> <i8 13, i8 10, i8 42, i8 50, i8 13, i8 10, i8 36, i8 52, i8 13, i8 10, i8 69, i8 67, i8 72, i8 79, i8 13, i8 10, i8 36, i8 50, i8 48, i8 13, i8 10, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 13, i8 10, i8 poison>, <44 x i8> %.sroa.0.21.vec.expand, <43 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 65, i32 66, i32 67, i32 68, i32 69, i32 70, i32 71, i32 72, i32 73, i32 74, i32 75, i32 76, i32 77, i32 78, i32 79, i32 80, i32 81, i32 82, i32 83, i32 84, i32 41, i32 42>
+  store <43 x i8> %.sroa.0.0.vec.extract, ptr %i.ac, align 16
   %puts112.i = call i32 @puts(ptr nonnull dereferenceable(1) @str.23) ; 0 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %18)
   br label %bb.pv
 
 bb.pu:                                            ; preds = %bb.ps
@@ -3248,7 +3244,7 @@ bb.aem:                                           ; preds = %.lr.ph47.i
 noninteractive.exit:                              ; preds = %.critedge41.i, %._crit_edge.i178, %bb.aee, %evalMode.exit
   %.0.shrunk = phi i1 [ %i.del, %evalMode.exit ], [ %i.dfl, %._crit_edge.i178 ], [ true, %.critedge41.i ], [ true, %bb.aee ]
   %.0 = zext i1 %.0.shrunk to i32
-  call void @llvm.lifetime.end.p0(ptr nonnull %36) #32
+  call void @llvm.lifetime.end.p0(ptr nonnull %35) #32
   ret i32 %.0
 }
 

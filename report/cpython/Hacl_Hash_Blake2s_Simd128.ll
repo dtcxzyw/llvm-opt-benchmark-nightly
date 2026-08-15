@@ -201,15 +201,13 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define hidden void @_Py_LibHacl_Hacl_Hash_Blake2s_Simd128_reset_with_key_and_params(ptr nofree noundef captures(none) initializes((32, 40)) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2) local_unnamed_addr #14 {
 bb.a:
-  %.sroa.8108.i = alloca [13 x i8], align 1       ; 4 uses
   %.sroa.0.0.copyload.i = load i8, ptr %0, align 8, !tbaa !10 ; 2 uses
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 2 uses
   %.sroa.4.0.copyload.i = load i8, ptr %.sroa.4.0..sroa_idx.i, align 1, !tbaa !10
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 2 ; 2 uses
   %.sroa.5.0.copyload.i = load i8, ptr %.sroa.5.0..sroa_idx.i, align 2, !tbaa !13
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.8108.i)
   %.sroa.6116.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 3 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(13) %.sroa.8108.i, ptr noundef nonnull align 1 dereferenceable(13) %.sroa.6116.0..sroa_idx.i, i64 13, i1 false)
+  %.sroa.8108.i.sroa.0.0.copyload = load <13 x i8>, ptr %.sroa.6116.0..sroa_idx.i, align 1
   %.sroa.7117.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %.sroa.7117.0.copyload.i = load ptr, ptr %.sroa.7117.0..sroa_idx.i, align 8, !tbaa !15 ; 5 uses
   %.sroa.8118.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
@@ -266,26 +264,23 @@ reset_raw.exit:                                   ; preds = %bb.a, %bb.b
   store i8 %.sroa.0.0.copyload.i, ptr %0, align 8, !tbaa !10
   store i8 %.sroa.4.0.copyload.i, ptr %.sroa.4.0..sroa_idx.i, align 1, !tbaa !10
   store i8 %.sroa.5.0.copyload.i, ptr %.sroa.5.0..sroa_idx.i, align 2, !tbaa !13
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(13) %.sroa.6116.0..sroa_idx.i, ptr noundef nonnull align 1 dereferenceable(13) %.sroa.8108.i, i64 13, i1 false)
+  store <13 x i8> %.sroa.8108.i.sroa.0.0.copyload, ptr %.sroa.6116.0..sroa_idx.i, align 1
   store ptr %.sroa.7117.0.copyload.i, ptr %.sroa.7117.0..sroa_idx.i, align 8, !tbaa !15
   store ptr %.sroa.8118.0.copyload.i, ptr %.sroa.8118.0..sroa_idx.i, align 8, !tbaa !17
   store i64 %..i, ptr %.sroa.9.0..sroa_idx.i, align 8, !tbaa !19
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8108.i)
   ret void
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define hidden void @_Py_LibHacl_Hacl_Hash_Blake2s_Simd128_reset_with_key(ptr nofree noundef captures(none) initializes((32, 40)) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #14 {
 bb.a:
-  %.sroa.8108.i = alloca [13 x i8], align 1       ; 4 uses
   %.sroa.0.0.copyload.i = load i8, ptr %0, align 8, !tbaa !10 ; 4 uses
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 2 uses
   %.sroa.4.0.copyload.i = load i8, ptr %.sroa.4.0..sroa_idx.i, align 1, !tbaa !10 ; 2 uses
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 2 ; 2 uses
   %.sroa.5.0.copyload.i = load i8, ptr %.sroa.5.0..sroa_idx.i, align 2, !tbaa !13
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.8108.i)
   %.sroa.6116.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 3 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(13) %.sroa.8108.i, ptr noundef nonnull align 1 dereferenceable(13) %.sroa.6116.0..sroa_idx.i, i64 13, i1 false)
+  %.sroa.8108.i.sroa.0.0.copyload = load <13 x i8>, ptr %.sroa.6116.0..sroa_idx.i, align 1
   %.sroa.7117.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %.sroa.7117.0.copyload.i = load ptr, ptr %.sroa.7117.0..sroa_idx.i, align 8, !tbaa !15 ; 5 uses
   %.sroa.8118.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
@@ -321,25 +316,22 @@ reset_raw.exit:                                   ; preds = %bb.a, %bb.b
   store i8 %.sroa.0.0.copyload.i, ptr %0, align 8, !tbaa !10
   store i8 %.sroa.4.0.copyload.i, ptr %.sroa.4.0..sroa_idx.i, align 1, !tbaa !10
   store i8 %.sroa.5.0.copyload.i, ptr %.sroa.5.0..sroa_idx.i, align 2, !tbaa !13
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(13) %.sroa.6116.0..sroa_idx.i, ptr noundef nonnull align 1 dereferenceable(13) %.sroa.8108.i, i64 13, i1 false)
+  store <13 x i8> %.sroa.8108.i.sroa.0.0.copyload, ptr %.sroa.6116.0..sroa_idx.i, align 1
   store ptr %.sroa.7117.0.copyload.i, ptr %.sroa.7117.0..sroa_idx.i, align 8, !tbaa !15
   store ptr %.sroa.8118.0.copyload.i, ptr %.sroa.8118.0..sroa_idx.i, align 8, !tbaa !17
   store i64 %..i, ptr %.sroa.9.0..sroa_idx.i, align 8, !tbaa !19
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8108.i)
   ret void
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(write, argmem: readwrite, target_mem: none) uwtable
 define hidden void @_Py_LibHacl_Hacl_Hash_Blake2s_Simd128_reset(ptr nofree noundef captures(none) initializes((32, 40)) %0) local_unnamed_addr #15 {
 _Py_LibHacl_Hacl_Hash_Blake2s_Simd128_reset_with_key.exit:
-  %.sroa.8108.i.i = alloca [13 x i8], align 1     ; 4 uses
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 2 uses
   %.sroa.4.0.copyload.i.i = load i8, ptr %.sroa.4.0..sroa_idx.i.i, align 1, !tbaa !10 ; 2 uses
   %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %0, i64 2 ; 2 uses
   %.sroa.5.0.copyload.i.i = load i8, ptr %.sroa.5.0..sroa_idx.i.i, align 2, !tbaa !13
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.8108.i.i)
   %.sroa.6116.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %0, i64 3 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(13) %.sroa.8108.i.i, ptr noundef nonnull align 1 dereferenceable(13) %.sroa.6116.0..sroa_idx.i.i, i64 13, i1 false)
+  %.sroa.8108.i.i.sroa.0.0.copyload = load <13 x i8>, ptr %.sroa.6116.0..sroa_idx.i.i, align 1
   %.sroa.7117.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %.sroa.0.0.insert.ext.i = zext i8 %.sroa.4.0.copyload.i.i to i32
   %i.a = xor i32 %.sroa.0.0.insert.ext.i, 1795745383
@@ -357,10 +349,9 @@ _Py_LibHacl_Hacl_Hash_Blake2s_Simd128_reset_with_key.exit:
   store i8 0, ptr %0, align 8, !tbaa !10
   store i8 %.sroa.4.0.copyload.i.i, ptr %.sroa.4.0..sroa_idx.i.i, align 1, !tbaa !10
   store i8 %.sroa.5.0.copyload.i.i, ptr %.sroa.5.0..sroa_idx.i.i, align 2, !tbaa !13
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(13) %.sroa.6116.0..sroa_idx.i.i, ptr noundef nonnull align 1 dereferenceable(13) %.sroa.8108.i.i, i64 13, i1 false)
+  store <13 x i8> %.sroa.8108.i.i.sroa.0.0.copyload, ptr %.sroa.6116.0..sroa_idx.i.i, align 1
   store <2 x ptr> %i.c, ptr %.sroa.7117.0..sroa_idx.i.i, align 8, !tbaa !15
   store i64 0, ptr %.sroa.9.0..sroa_idx.i.i, align 8, !tbaa !19
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8108.i.i)
   ret void
 }
 

@@ -103,7 +103,6 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.32 = private unnamed_addr constant [42 x i8] c"AGENT: %s: agent maximum delay %d seconds\00", align 1
 @.str.33 = private unnamed_addr constant [38 x i8] c"AGENT: %s: agent thread %lu timed out\00", align 1
 @__func__._update_wdog_state = private unnamed_addr constant [19 x i8] c"_update_wdog_state\00", align 1
-@__const._notify_slurmctld_jobs.step_id = private unnamed_addr constant { i64, i32, i32, i32, [4 x i8] } { i64 0, i32 0, i32 -2, i32 -2, [4 x i8] zeroinitializer }, align 8
 @.str.34 = private unnamed_addr constant [24 x i8] c"%s: invalid msg_type %u\00", align 1
 @__func__._notify_slurmctld_jobs = private unnamed_addr constant [23 x i8] c"_notify_slurmctld_jobs\00", align 1
 @__func__._queue_update_srun = private unnamed_addr constant [19 x i8] c"_queue_update_srun\00", align 1
@@ -140,7 +139,6 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.57 = private unnamed_addr constant [125 x i8] c"We were unable to forward message to '%s'.  Make sure the slurm.conf for each slurmd contain all other nodes in your system.\00", align 1
 @.str.58 = private unnamed_addr constant [40 x i8] c"Epilog failure on host %s, setting DOWN\00", align 1
 @.str.59 = private unnamed_addr constant [50 x i8] c"AGENT: %s: RPC to node %s failed, job not running\00", align 1
-@__const._queue_srun_no_resp.step_id = private unnamed_addr constant { i64, i32, i32, i32, [4 x i8] } { i64 0, i32 -2, i32 -2, i32 -2, [4 x i8] zeroinitializer }, align 8
 @.str.60 = private unnamed_addr constant [24 x i8] c"%s: invalid msg_type %s\00", align 1
 @__func__._queue_srun_no_resp = private unnamed_addr constant [20 x i8] c"_queue_srun_no_resp\00", align 1
 @.str.61 = private unnamed_addr constant [40 x i8] c"agent/is_node_resp: node:%s RPC:%s : %m\00", align 1
@@ -543,7 +541,6 @@ define internal noalias noundef ptr @_wdog(ptr noundef %0) #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %1 = alloca %struct.slurm_step_id_t, align 8    ; 9 uses
-  %.sroa.10.i = alloca [12 x i8], align 4         ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 4 uses
   %i.c = load ptr, ptr %i.b, align 8              ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 5 uses
@@ -795,8 +792,6 @@ bb.ac:                                            ; preds = %._crit_edge125.thre
   br i1 %.0, label %bb.ad, label %bb.an
 
 bb.ad:                                            ; preds = %bb.ac
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.10.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.10.i, ptr noundef nonnull align 4 dereferenceable(12) getelementptr inbounds nuw (i8, ptr @__const._notify_slurmctld_jobs.step_id, i64 12), i64 12, i1 false)
   %i.bw = load ptr, ptr %i.b, align 8
   %i.bx = load i32, ptr %i.d, align 8             ; 2 uses
   switch i32 %i.bx, label %bb.aj [
@@ -804,12 +799,12 @@ bb.ad:                                            ; preds = %bb.ac
     i32 7002, label %bb.af
     i32 4002, label %bb.ag
     i32 4026, label %bb.ah
-    i32 7004, label %_notify_slurmctld_jobs.exit
-    i32 7008, label %_notify_slurmctld_jobs.exit
-    i32 7007, label %_notify_slurmctld_jobs.exit
-    i32 7009, label %_notify_slurmctld_jobs.exit
-    i32 7005, label %_notify_slurmctld_jobs.exit
-    i32 7003, label %_notify_slurmctld_jobs.exit
+    i32 7004, label %_notify_slurmctld_nodes.exit
+    i32 7008, label %_notify_slurmctld_nodes.exit
+    i32 7007, label %_notify_slurmctld_nodes.exit
+    i32 7009, label %_notify_slurmctld_nodes.exit
+    i32 7005, label %_notify_slurmctld_nodes.exit
+    i32 7003, label %_notify_slurmctld_nodes.exit
   ]
 
 bb.ae:                                            ; preds = %bb.ad
@@ -817,7 +812,6 @@ bb.ae:                                            ; preds = %bb.ad
   %i.bz = load ptr, ptr %i.by, align 8
   %i.ca = load ptr, ptr %i.bz, align 8
   %i.cb = getelementptr inbounds nuw i8, ptr %i.ca, i64 8
-  %2 = load i32, ptr %i.cb, align 8
   br label %bb.ak
 
 bb.af:                                            ; preds = %bb.ad
@@ -826,9 +820,8 @@ bb.af:                                            ; preds = %bb.ad
   %i.ce = load ptr, ptr %i.cd, align 8            ; 3 uses
   %.sroa.0.0.copyload28.i = load i64, ptr %i.ce, align 8
   %.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ce, i64 8
-  %.sroa.7.0.copyload30.i = load i32, ptr %.sroa.7.0..sroa_idx.i, align 8
   %.sroa.10.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ce, i64 12
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.10.i, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.10.0..sroa_idx.i, i64 12, i1 false)
+  %.sroa.10.i.sroa.0.0.copyload220 = load <12 x i8>, ptr %.sroa.10.0..sroa_idx.i, align 4
   br label %bb.ak
 
 bb.ag:                                            ; preds = %bb.ad
@@ -837,7 +830,6 @@ bb.ag:                                            ; preds = %bb.ad
   %i.ch = load ptr, ptr %i.cg, align 8            ; 2 uses
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 160
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ch, i64 168
-  %3 = load i32, ptr %i.cj, align 8
   %i.ck = load i64, ptr %i.ci, align 8
   br label %bb.ak
 
@@ -846,54 +838,51 @@ bb.ah:                                            ; preds = %bb.ad
   %i.cm = load ptr, ptr %i.cl, align 8
   %i.cn = load ptr, ptr %i.cm, align 8            ; 3 uses
   %.not.i81 = icmp eq ptr %i.cn, null
-  br i1 %.not.i81, label %_notify_slurmctld_jobs.exit, label %bb.ai
+  br i1 %.not.i81, label %_notify_slurmctld_nodes.exit, label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah
   %i.co = tail call i32 @list_count(ptr noundef nonnull %i.cn) #14
   %i.cp = icmp eq i32 %i.co, 0
-  br i1 %i.cp, label %_notify_slurmctld_jobs.exit, label %.critedge.i
+  br i1 %i.cp, label %_notify_slurmctld_nodes.exit, label %.critedge.i
 
 .critedge.i:                                      ; preds = %bb.ai
   %i.cq = tail call ptr @list_peek(ptr noundef nonnull %i.cn) #14 ; 2 uses
   %i.cr = getelementptr inbounds nuw i8, ptr %i.cq, i64 160
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cq, i64 168
-  %4 = load i32, ptr %i.cs, align 8
   %i.ct = load i64, ptr %i.cr, align 8
   br label %bb.ak
 
 bb.aj:                                            ; preds = %bb.ad
   %i.cu = tail call i32 (ptr, ...) @error(ptr noundef nonnull @.str.34, ptr noundef nonnull @__func__._notify_slurmctld_jobs, i32 noundef %i.bx) #14 ; 0 uses
-  br label %_notify_slurmctld_jobs.exit
+  br label %_notify_slurmctld_nodes.exit
 
 bb.ak:                                            ; preds = %.critedge.i, %bb.ag, %bb.af, %bb.ae
-  %.sroa.7.0.i = phi i32 [ %2, %bb.ae ], [ %.sroa.7.0.copyload30.i, %bb.af ], [ %3, %bb.ag ], [ %4, %.critedge.i ]
+  %.sroa.10.i.sroa.0.0 = phi <12 x i8> [ <i8 -2, i8 -1, i8 -1, i8 -1, i8 -2, i8 -1, i8 -1, i8 -1, i8 0, i8 0, i8 0, i8 0>, %bb.ae ], [ %.sroa.10.i.sroa.0.0.copyload220, %bb.af ], [ <i8 -2, i8 -1, i8 -1, i8 -1, i8 -2, i8 -1, i8 -1, i8 -1, i8 0, i8 0, i8 0, i8 0>, %bb.ag ], [ <i8 -2, i8 -1, i8 -1, i8 -1, i8 -2, i8 -1, i8 -1, i8 -1, i8 0, i8 0, i8 0, i8 0>, %.critedge.i ]
+  %.sroa.7.0.i.in = phi ptr [ %i.cb, %bb.ae ], [ %.sroa.7.0..sroa_idx.i, %bb.af ], [ %i.cj, %bb.ag ], [ %i.cs, %.critedge.i ]
   %.sroa.0.0.i = phi i64 [ 0, %bb.ae ], [ %.sroa.0.0.copyload28.i, %bb.af ], [ %i.ck, %bb.ag ], [ %i.ct, %.critedge.i ]
   %i.cv = getelementptr inbounds nuw i8, ptr %i.bw, i64 8
   %i.cw = load i32, ptr %i.cv, align 8
   %i.cx = icmp eq i32 %i.cw, 2
-  br i1 %i.cx, label %bb.al, label %_notify_slurmctld_jobs.exit
+  br i1 %i.cx, label %bb.al, label %_notify_slurmctld_nodes.exit
 
 bb.al:                                            ; preds = %bb.ak
+  %.sroa.7.0.i = load i32, ptr %.sroa.7.0.i.in, align 8
   %i.cy = tail call ptr @slurm_xcalloc(i64 noundef 1, i64 noundef 24, i1 noundef zeroext true, i1 noundef zeroext false, ptr noundef nonnull @.str.3, i32 noundef 1626, ptr noundef nonnull @__func__._queue_update_srun) #14 ; 4 uses
   store i64 %.sroa.0.0.i, ptr %i.cy, align 8
   %.sroa.7.0..sroa_idx31.i = getelementptr inbounds nuw i8, ptr %i.cy, i64 8
   store i32 %.sroa.7.0.i, ptr %.sroa.7.0..sroa_idx31.i, align 8
   %.sroa.10.0..sroa_idx33.i = getelementptr inbounds nuw i8, ptr %i.cy, i64 12
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.10.0..sroa_idx33.i, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.10.i, i64 12, i1 false)
+  store <12 x i8> %.sroa.10.i.sroa.0.0, ptr %.sroa.10.0..sroa_idx33.i, align 4
   %i.cz = load ptr, ptr @update_srun_list, align 8
   tail call void @list_append(ptr noundef %i.cz, ptr noundef nonnull %i.cy) #14
   %i.da = tail call i32 @pthread_cond_signal(ptr noundef nonnull @update_srun_cond) #14 ; 2 uses
   %.not.i.i = icmp eq i32 %i.da, 0
-  br i1 %.not.i.i, label %_notify_slurmctld_jobs.exit, label %bb.am
+  br i1 %.not.i.i, label %_notify_slurmctld_nodes.exit, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
   %i.db = tail call ptr @__errno_location() #15
   store i32 %i.da, ptr %i.db, align 4
   %i.dc = tail call i32 (ptr, ...) @error(ptr noundef nonnull @.str.35, ptr noundef nonnull @.str.3, i32 noundef 1639, ptr noundef nonnull @__func__._queue_update_srun) #14 ; 0 uses
-  br label %_notify_slurmctld_jobs.exit
-
-_notify_slurmctld_jobs.exit:                      ; preds = %bb.ad, %bb.ad, %bb.ad, %bb.ad, %bb.ad, %bb.ad, %bb.ah, %bb.ai, %bb.aj, %bb.ak, %bb.al, %bb.am
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.10.i)
   br label %_notify_slurmctld_nodes.exit
 
 bb.an:                                            ; preds = %bb.ac
@@ -1296,7 +1285,7 @@ bb.dm:                                            ; preds = %bb.dl, %bb.dl, %bb.
   call void @ping_end() #14
   br label %_notify_slurmctld_nodes.exit
 
-_notify_slurmctld_nodes.exit:                     ; preds = %bb.dm, %bb.dl, %_notify_slurmctld_jobs.exit, %bb.an, %bb.aa, %bb.ab
+_notify_slurmctld_nodes.exit:                     ; preds = %bb.am, %bb.al, %bb.ak, %bb.aj, %bb.ai, %bb.ah, %bb.ad, %bb.ad, %bb.ad, %bb.ad, %bb.ad, %bb.ad, %bb.dm, %bb.dl, %bb.an, %bb.aa, %bb.ab
   %i.jq = load i32, ptr %i.g, align 8
   %.not134 = icmp eq i32 %i.jq, 0
   br i1 %.not134, label %._crit_edge132, label %.lr.ph131
@@ -1365,7 +1354,6 @@ declare ptr @slurm_strerror(i32 noundef) local_unnamed_addr #2
 ; Function Attrs: nounwind uwtable
 define internal noalias noundef ptr @_thread_per_group_rpc(ptr noundef %0) #0 {
 switch.edge:
-  %.sroa.10.i = alloca [12 x i8], align 4         ; 5 uses
   %i.a = alloca ptr, align 8                      ; 2 uses
   %1 = alloca %struct.slurm_msg, align 8          ; 18 uses
   %i.b = alloca ptr, align 8                      ; 5 uses
@@ -1535,8 +1523,6 @@ bb.q:                                             ; preds = %bb.m, %bb.p, %bb.j,
 bb.r:                                             ; preds = %bb.q
   %.val = load ptr, ptr %i.am, align 8            ; 9 uses
   %.val280 = load i16, ptr %i.aj, align 2         ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.10.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.10.i, ptr noundef nonnull align 4 dereferenceable(12) getelementptr inbounds nuw (i8, ptr @__const._queue_srun_no_resp.step_id, i64 12), i64 12, i1 false)
   switch i16 %.val280, label %bb.y [
     i16 4026, label %bb.s
     i16 4002, label %bb.v
@@ -1546,49 +1532,47 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.r
   %.not.i = icmp eq ptr %.val, null
-  br i1 %.not.i, label %_queue_srun_no_resp.exit, label %bb.t
+  br i1 %.not.i, label %bb.ab, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
   %i.bm = call i32 @list_count(ptr noundef nonnull %.val) #14
   %.not30.i = icmp eq i32 %i.bm, 0
-  br i1 %.not30.i, label %_queue_srun_no_resp.exit, label %bb.u
+  br i1 %.not30.i, label %bb.ab, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
   %i.bn = call ptr @list_peek(ptr noundef nonnull %.val) #14 ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bn, i64 160
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bn, i64 168
-  %2 = load i32, ptr %i.bp, align 8
   %i.bq = load i64, ptr %i.bo, align 8
   br label %bb.z
 
 bb.v:                                             ; preds = %bb.r
   %i.br = getelementptr inbounds nuw i8, ptr %.val, i64 160
   %i.bs = getelementptr inbounds nuw i8, ptr %.val, i64 168
-  %3 = load i32, ptr %i.bs, align 8
   %i.bt = load i64, ptr %i.br, align 8
   br label %bb.z
 
 bb.w:                                             ; preds = %bb.r
   %i.bu = getelementptr inbounds nuw i8, ptr %.val, i64 8
-  %4 = load i32, ptr %i.bu, align 8
   br label %bb.z
 
 bb.x:                                             ; preds = %bb.r
   %.sroa.0.0.copyload9.i = load i64, ptr %.val, align 8
   %.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.val, i64 8
-  %.sroa.7.0.copyload11.i = load i32, ptr %.sroa.7.0..sroa_idx.i, align 8
   %.sroa.10.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.val, i64 12
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.10.i, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.10.0..sroa_idx.i, i64 12, i1 false)
+  %.sroa.10.i.sroa.0.0.copyload410 = load <12 x i8>, ptr %.sroa.10.0..sroa_idx.i, align 4
   br label %bb.z
 
 bb.y:                                             ; preds = %bb.r
   %i.bv = call ptr @rpc_num2string(i16 noundef zeroext %.val280) #14
   %i.bw = call i32 (ptr, ...) @error(ptr noundef nonnull @.str.60, ptr noundef nonnull @__func__._queue_srun_no_resp, ptr noundef %i.bv) #14 ; 0 uses
-  br label %_queue_srun_no_resp.exit
+  br label %bb.ab
 
 bb.z:                                             ; preds = %bb.x, %bb.w, %bb.v, %bb.u
+  %.sroa.10.i.sroa.0.0 = phi <12 x i8> [ <i8 -2, i8 -1, i8 -1, i8 -1, i8 -2, i8 -1, i8 -1, i8 -1, i8 0, i8 0, i8 0, i8 0>, %bb.u ], [ <i8 -2, i8 -1, i8 -1, i8 -1, i8 -2, i8 -1, i8 -1, i8 -1, i8 0, i8 0, i8 0, i8 0>, %bb.v ], [ <i8 -2, i8 -1, i8 -1, i8 -1, i8 -2, i8 -1, i8 -1, i8 -1, i8 0, i8 0, i8 0, i8 0>, %bb.w ], [ %.sroa.10.i.sroa.0.0.copyload410, %bb.x ]
   %.sroa.0.1.i = phi i64 [ %i.bq, %bb.u ], [ %i.bt, %bb.v ], [ 0, %bb.w ], [ %.sroa.0.0.copyload9.i, %bb.x ]
-  %.sroa.7.1.i = phi i32 [ %2, %bb.u ], [ %3, %bb.v ], [ %4, %bb.w ], [ %.sroa.7.0.copyload11.i, %bb.x ]
+  %.sroa.7.1.i.in = phi ptr [ %i.bp, %bb.u ], [ %i.bs, %bb.v ], [ %i.bu, %bb.w ], [ %.sroa.7.0..sroa_idx.i, %bb.x ]
+  %.sroa.7.1.i = load i32, ptr %.sroa.7.1.i.in, align 8
   %i.bx = call ptr @slurm_xcalloc(i64 noundef 1, i64 noundef 32, i1 noundef zeroext true, i1 noundef zeroext false, ptr noundef nonnull @.str.3, i32 noundef 1677, ptr noundef nonnull @__func__._queue_srun_no_resp) #14 ; 5 uses
   %i.by = call i64 @time(ptr noundef null) #14
   store i64 %i.by, ptr %i.bx, align 8
@@ -1597,24 +1581,20 @@ bb.z:                                             ; preds = %bb.x, %bb.w, %bb.v,
   %.sroa.7.0..sroa_idx12.i = getelementptr inbounds nuw i8, ptr %i.bx, i64 16
   store i32 %.sroa.7.1.i, ptr %.sroa.7.0..sroa_idx12.i, align 8
   %.sroa.10.0..sroa_idx14.i = getelementptr inbounds nuw i8, ptr %i.bx, i64 20
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.10.0..sroa_idx14.i, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.10.i, i64 12, i1 false)
+  store <12 x i8> %.sroa.10.i.sroa.0.0, ptr %.sroa.10.0..sroa_idx14.i, align 4
   %i.ca = load ptr, ptr @srun_no_resp_list, align 8
   call void @list_append(ptr noundef %i.ca, ptr noundef nonnull %i.bx) #14
   %i.cb = call i32 @pthread_cond_signal(ptr noundef nonnull @update_srun_cond) #14 ; 2 uses
   %.not31.i = icmp eq i32 %i.cb, 0
-  br i1 %.not31.i, label %_queue_srun_no_resp.exit, label %bb.aa
+  br i1 %.not31.i, label %bb.ab, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
   %i.cc = tail call ptr @__errno_location() #15
   store i32 %i.cb, ptr %i.cc, align 4
   %i.cd = call i32 (ptr, ...) @error(ptr noundef nonnull @.str.35, ptr noundef nonnull @.str.3, i32 noundef 1684, ptr noundef nonnull @__func__._queue_srun_no_resp) #14 ; 0 uses
-  br label %_queue_srun_no_resp.exit
-
-_queue_srun_no_resp.exit:                         ; preds = %bb.s, %bb.t, %bb.y, %bb.z, %bb.aa
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.10.i)
   br label %bb.ab
 
-bb.ab:                                            ; preds = %_queue_srun_no_resp.exit, %bb.q
+bb.ab:                                            ; preds = %bb.aa, %bb.z, %bb.y, %bb.t, %bb.s, %bb.q
   %i.ce = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.cf = load i8, ptr %i.ce, align 8, !range !10, !noundef !11
   %i.cg = trunc nuw i8 %i.cf to i1

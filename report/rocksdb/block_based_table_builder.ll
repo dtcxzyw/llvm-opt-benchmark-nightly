@@ -204,7 +204,7 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4swapERS4_(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %1) local_unnamed_addr #6 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca [16 x i8], align 16                 ; 4 uses
+  %.sroa.0 = alloca <16 x i8>, align 16           ; 4 uses
   %i.a = icmp eq ptr %0, %1
   br i1 %i.a, label %bb.i, label %bb.b
 
@@ -237,13 +237,13 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not38, label %_ZNSt11char_traitsIcE4copyEPcPKcm.exit44, label %_ZNSt11char_traitsIcE4copyEPcPKcm.exit42
 
 _ZNSt11char_traitsIcE4copyEPcPKcm.exit42:         ; preds = %bb.e
-  call void @llvm.lifetime.start.p0(ptr nonnull %2)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   %i.n = add nuw nsw i64 %i.l, 1                  ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %2, ptr noundef nonnull align 8 dereferenceable(1) %i.i, i64 %i.n, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %.sroa.0, ptr noundef nonnull align 8 dereferenceable(1) %i.i, i64 %i.n, i1 false)
   %i.o = add nuw nsw i64 %i.f, 1
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.i, ptr noundef nonnull align 8 dereferenceable(1) %i.c, i64 %i.o, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.c, ptr noundef nonnull align 16 dereferenceable(1) %2, i64 %i.n, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %2)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.c, ptr noundef nonnull align 16 dereferenceable(1) %.sroa.0, i64 %i.n, i1 false)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   br label %bb.h
 
 bb.f:                                             ; preds = %bb.d
@@ -646,11 +646,10 @@ bb.a:
   %6 = alloca %"class.std::allocator", align 1    ; 3 uses
   %7 = alloca %"class.std::unique_ptr.190", align 8 ; 4 uses
   %8 = alloca %"class.std::unique_ptr.190", align 8 ; 4 uses
-  %9 = alloca %"class.rocksdb::Slice", align 8    ; 8 uses
+  %9 = alloca %"class.rocksdb::Slice", align 16   ; 8 uses
   %10 = alloca %"class.rocksdb::Status", align 8  ; 8 uses
   %11 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %12 = alloca %"struct.std::pair.311", align 8   ; 12 uses
-  %.sroa.5 = alloca [23 x i8], align 1            ; 5 uses
   %13 = alloca %"class.rocksdb::Status", align 8  ; 8 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 6 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !471   ; 2 uses
@@ -695,7 +694,7 @@ bb.d:                                             ; preds = %bb.a, %bb.a
 
 bb.e:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #34
-  store ptr @.str, ptr %9, align 8, !tbaa !9
+  store ptr @.str, ptr %9, align 16, !tbaa !9
   %i.o = getelementptr inbounds nuw i8, ptr %9, i64 8
   store i64 0, ptr %i.o, align 8, !tbaa !14
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #34
@@ -773,9 +772,9 @@ bb.h:                                             ; preds = %_ZN7rocksdb6StatusD
   call void @_ZSt12__str_concatINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEET_PKNS6_10value_typeENS6_9size_typeES9_SA_RKNS6_14allocator_typeE(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %11, ptr noundef nonnull @.str.91, i64 noundef 27, ptr noundef %i.ap, i64 noundef %i.ar, ptr noundef nonnull align 1 dereferenceable(1) %6)
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #34, !noalias !1257
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #34
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5)
-  %.sroa.5.8..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.5, i64 7
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %.sroa.5.8..sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %9, i64 16, i1 false), !tbaa.struct !455
+  %.sroa.5.sroa.0.7.copyload = load <16 x i8>, ptr %9, align 16
+  %.sroa.5.sroa.0.7.vec.expand = shufflevector <16 x i8> %.sroa.5.sroa.0.7.copyload, <16 x i8> poison, <23 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %.sroa.5.sroa.0.7.vecblend = shufflevector <23 x i8> %.sroa.5.sroa.0.7.vec.expand, <23 x i8> <i8 undef, i8 undef, i8 undef, i8 undef, i8 undef, i8 undef, i8 undef, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison>, <23 x i32> <i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22>
   %i.as = getelementptr inbounds nuw i8, ptr %12, i64 16 ; 7 uses
   store ptr %i.as, ptr %12, align 8, !tbaa !25
   %i.at = load ptr, ptr %11, align 8, !tbaa !28   ; 2 uses
@@ -840,7 +839,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k, %._cri
   %i.bf = getelementptr inbounds nuw i8, ptr %12, i64 32
   store i8 10, ptr %i.bf, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %12, i64 33
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(23) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 1 dereferenceable(23) %.sroa.5, i64 23, i1 false)
+  store <23 x i8> %.sroa.5.sroa.0.7.vecblend, ptr %.sroa.5.0..sroa_idx, align 1
   %i.bg = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.bh = invoke { ptr, i8 } @_ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_S6_IN7rocksdb9BlockTypeENS8_5SliceEEESaISC_ENSt8__detail10_Select1stESt8equal_toIS5_ESt4hashIS5_ENSE_18_Mod_range_hashingENSE_20_Default_ranged_hashENSE_20_Prime_rehash_policyENSE_17_Hashtable_traitsILb1ELb0ELb1EEEE10_M_emplaceIJSC_EEES6_INSE_14_Node_iteratorISC_Lb0ELb1EEEbESt17integral_constantIbLb1EEDpOT_(ptr noundef nonnull align 8 dereferenceable(56) %i.bg, ptr noundef nonnull align 8 dereferenceable(56) %12)
           to label %_ZNSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIN7rocksdb9BlockTypeENS7_5SliceEESt4hashIS5_ESt8equal_toIS5_ESaIS6_IKS5_SA_EEE6insertEOSG_.exit unwind label %bb.o ; 0 uses
@@ -857,7 +856,6 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   br label %_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES_IN7rocksdb9BlockTypeENS7_5SliceEEED2Ev.exit
 
 _ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES_IN7rocksdb9BlockTypeENS7_5SliceEEED2Ev.exit: ; preds = %_ZNSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIN7rocksdb9BlockTypeENS7_5SliceEESt4hashIS5_ESt8equal_toIS5_ESaIS6_IKS5_SA_EEE6insertEOSG_.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5)
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #34
   store i8 1, ptr %i.l, align 8, !tbaa !1223
   %i.bm = load ptr, ptr %11, align 8, !tbaa !28   ; 2 uses
@@ -903,7 +901,6 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 _ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES_IN7rocksdb9BlockTypeENS7_5SliceEEED2Ev.exit31: ; preds = %bb.o, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i29, %bb.n
   %.pn = phi { ptr, i32 } [ %i.br, %bb.n ], [ %i.bs, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i29 ], [ %i.bs, %bb.o ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5)
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #34
   %i.bx = load ptr, ptr %11, align 8, !tbaa !28   ; 2 uses
   %i.by = getelementptr inbounds nuw i8, ptr %11, i64 16 ; 2 uses

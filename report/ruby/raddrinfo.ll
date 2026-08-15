@@ -205,7 +205,7 @@ bb.a:
   %i.d = alloca i32, align 4                      ; 6 uses
   %i.e = alloca i32, align 4                      ; 6 uses
   %2 = alloca %union.union_sockaddr, align 8      ; 6 uses
-  %.sroa.5 = alloca [108 x i8], align 2           ; 5 uses
+  %.sroa.5.sroa.0 = alloca <108 x i8>, align 128  ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #17
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #17
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #17
@@ -397,8 +397,8 @@ bb.y:                                             ; preds = %bb.w, %bb.x
   br i1 %cond, label %bb.z, label %bb.ae
 
 bb.z:                                             ; preds = %bb.y
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(108) %.sroa.5, i8 0, i64 108, i1 false)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5.sroa.0)
+  store <108 x i8> zeroinitializer, ptr %.sroa.5.sroa.0, align 128
   %i.cb = call i64 @rb_string_value(ptr noundef nonnull %i.a) #17 ; 0 uses
   %i.cc = load i64, ptr %i.a, align 8, !tbaa !38
   %i.cd = inttoptr i64 %i.cc to ptr               ; 3 uses
@@ -429,14 +429,15 @@ RSTRING_PTR.exit38:                               ; preds = %bb.ab, %bb.ac
   br i1 %.not.i39, label %ruby_nonempty_memcpy.exit, label %bb.ad
 
 bb.ad:                                            ; preds = %RSTRING_PTR.exit38
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 2 %.sroa.5, ptr readonly align 1 %i.cm, i64 %i.cf, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 128 %.sroa.5.sroa.0, ptr readonly align 1 %i.cm, i64 %i.cf, i1 false)
   br label %ruby_nonempty_memcpy.exit
 
 ruby_nonempty_memcpy.exit:                        ; preds = %RSTRING_PTR.exit38, %bb.ad
   store i16 1, ptr %2, align 8
+  %.sroa.5.sroa.0.0..sroa.5.sroa.0.0.copyload = load <108 x i8>, ptr %.sroa.5.sroa.0, align 128
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 2
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(108) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 2 dereferenceable(108) %.sroa.5, i64 108, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5)
+  store <108 x i8> %.sroa.5.sroa.0.0..sroa.5.sroa.0.0.copyload, ptr %.sroa.5.0..sroa_idx, align 2
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5.sroa.0)
   br label %bb.ah
 
 bb.ae:                                            ; preds = %bb.y

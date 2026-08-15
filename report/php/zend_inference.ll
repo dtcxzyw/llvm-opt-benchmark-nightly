@@ -204,7 +204,6 @@ bb.kh:                                            ; preds = %bb.kg, %._crit_edge
 ; Function Attrs: nounwind uwtable
 define internal fastcc range(i32 -1, 1) i32 @zend_infer_types(ptr noundef %0, ptr noundef %1, ptr noundef %2, i64 noundef %3) unnamed_addr #0 {
 bb.a:
-  %.sroa.32.i = alloca [6 x i8], align 2          ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 40
   %i.b = load i32, ptr %i.a, align 8, !tbaa !12   ; 6 uses
   %i.c = zext i32 %i.b to i64
@@ -312,8 +311,6 @@ bb.i:                                             ; preds = %bb.h
   %i.ba = load i32, ptr %i.az, align 8, !tbaa !215 ; 2 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ax, i64 16
   %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !216
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.32.i)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(6) %.sroa.32.i, i8 0, i64 6, i1 false)
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.be = load i32, ptr %i.bd, align 4, !tbaa !96 ; 3 uses
   %i.bf = and i32 %i.be, 16777216
@@ -331,7 +328,7 @@ bb.j:                                             ; preds = %bb.i
   %i.bl = and i8 %i.bj, -4
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bk, i8 0, i64 24, i1 false)
   store i8 %i.bl, ptr %i.bi, align 4
-  br label %zend_func_return_info.exit
+  br label %bb.bx
 
 bb.k:                                             ; preds = %bb.i
   %i.bm = load i32, ptr %i.ay, align 8, !tbaa !138 ; 2 uses
@@ -360,6 +357,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   br label %bb.n
 
 bb.n:                                             ; preds = %is_recursive_tail_call.exit.i, %.lr.ph.i
+  %.sroa.32.i.sroa.0.0 = phi <6 x i8> [ zeroinitializer, %.lr.ph.i ], [ %.sroa.32.i.sroa.0.1, %is_recursive_tail_call.exit.i ] ; 16 uses
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %is_recursive_tail_call.exit.i ] ; 2 uses
   %.015816.i = phi i32 [ 0, %.lr.ph.i ], [ %.4.i, %is_recursive_tail_call.exit.i ] ; 5 uses
   %.016215.i = phi i32 [ -1, %.lr.ph.i ], [ %.6.i, %is_recursive_tail_call.exit.i ] ; 8 uses
@@ -762,7 +760,7 @@ bb.bp:                                            ; preds = %bb.bo
   %.sroa.28.0..sroa_idx60.i = getelementptr inbounds nuw i8, ptr %i.jo, i64 25
   %.sroa.28.0.copyload61.i = load i8, ptr %.sroa.28.0..sroa_idx60.i, align 1, !tbaa !123
   %.sroa.32.0..sroa_idx64.i = getelementptr inbounds nuw i8, ptr %i.jo, i64 26
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(6) %.sroa.32.i, ptr noundef nonnull align 2 dereferenceable(6) %.sroa.32.0..sroa_idx64.i, i64 6, i1 false), !tbaa.struct !102
+  %.sroa.32.i.sroa.0.0.copyload64 = load <6 x i8>, ptr %.sroa.32.0..sroa_idx64.i, align 2
   br label %is_recursive_tail_call.exit.i
 
 bb.bq:                                            ; preds = %bb.bo
@@ -796,14 +794,15 @@ bb.bu:                                            ; preds = %bb.bt
   br label %is_recursive_tail_call.exit.i
 
 is_recursive_tail_call.exit.i:                    ; preds = %bb.bu, %bb.bt, %bb.bq, %bb.bp, %bb.bn, %bb.bm, %bb.bl, %bb.bk, %bb.bj, %bb.bi, %bb.bf, %bb.be, %bb.bc, %bb.x, %bb.p, %bb.o, %bb.n
-  %.5181.i = phi ptr [ %.01769.i, %bb.n ], [ %.01769.i, %bb.o ], [ %.01769.i, %bb.p ], [ %.1177.i, %bb.bq ], [ %.1177.i, %bb.bk ], [ %.1177.i, %bb.bl ], [ %.1177.i, %bb.bm ], [ %.1177.i, %bb.bn ], [ %.1177.i, %bb.bt ], [ %.1177.i, %bb.bf ], [ %.1177.i, %bb.bj ], [ %.1177.i, %bb.bi ], [ %.1177.i, %bb.be ], [ %.1177.i, %bb.bc ], [ %.1177.i, %bb.bp ], [ %.1177.i, %bb.bu ], [ %.01769.i, %bb.x ] ; 2 uses
-  %.5174.i = phi i32 [ %.016910.i, %bb.n ], [ %.016910.i, %bb.o ], [ %.016910.i, %bb.p ], [ %.1170.i, %bb.bq ], [ %.1170.i, %bb.bk ], [ %.1170.i, %bb.bl ], [ %.1170.i, %bb.bm ], [ %.1170.i, %bb.bn ], [ %.1170.i, %bb.bt ], [ %.1170.i, %bb.bf ], [ %.1170.i, %bb.bj ], [ %.1170.i, %bb.bi ], [ %.1170.i, %bb.be ], [ %.1170.i, %bb.bc ], [ %.1170.i, %bb.bp ], [ %.1170.i, %bb.bu ], [ %.016910.i, %bb.x ] ; 2 uses
-  %.sroa.0.8.i = phi i64 [ %.sroa.0.011.i, %bb.n ], [ %.sroa.0.011.i, %bb.o ], [ %.sroa.0.011.i, %bb.p ], [ %.sroa.0.011.i, %bb.bq ], [ %.sroa.0.011.i, %bb.bk ], [ %.sroa.0.011.i, %bb.bl ], [ %.sroa.0.011.i, %bb.bm ], [ -9223372036854775808, %bb.bn ], [ %.sroa.0.3.i, %bb.bt ], [ %.sroa.0.011.i, %bb.bf ], [ %.sroa.0.1.i, %bb.bj ], [ %.sroa.0.1.i, %bb.bi ], [ %i.jf, %bb.be ], [ %.sroa.0.011.i, %bb.bc ], [ %.sroa.0.0.copyload47.i, %bb.bp ], [ %.sroa.0.3.i, %bb.bu ], [ %.sroa.0.011.i, %bb.x ] ; 2 uses
-  %.sroa.15.6.i = phi i64 [ %.sroa.15.012.i, %bb.n ], [ %.sroa.15.012.i, %bb.o ], [ %.sroa.15.012.i, %bb.p ], [ %.sroa.15.012.i, %bb.bq ], [ %.sroa.15.012.i, %bb.bk ], [ %.sroa.15.012.i, %bb.bl ], [ %.sroa.15.012.i, %bb.bm ], [ 9223372036854775807, %bb.bn ], [ 9223372036854775807, %bb.bt ], [ %.sroa.15.012.i, %bb.bf ], [ %.sroa.15.0..i, %bb.bj ], [ %.sroa.15.012.i, %bb.bi ], [ %i.jf, %bb.be ], [ %.sroa.15.012.i, %bb.bc ], [ %.sroa.15.0.copyload50.i, %bb.bp ], [ %.sroa.15.0.221.i, %bb.bu ], [ %.sroa.15.012.i, %bb.x ] ; 2 uses
-  %.sroa.24.7.i = phi i8 [ %.sroa.24.013.i, %bb.n ], [ %.sroa.24.013.i, %bb.o ], [ %.sroa.24.013.i, %bb.p ], [ %.sroa.24.013.i, %bb.bq ], [ %.sroa.24.013.i, %bb.bk ], [ %.sroa.24.013.i, %bb.bl ], [ %.sroa.24.013.i, %bb.bm ], [ 1, %bb.bn ], [ %.sroa.24.2.i, %bb.bt ], [ %.sroa.24.013.i, %bb.bf ], [ %.sroa.24.013.i, %bb.bj ], [ %.sroa.24.013.i, %bb.bi ], [ 0, %bb.be ], [ %.sroa.24.013.i, %bb.bc ], [ %.sroa.24.0.copyload57.i, %bb.bp ], [ %.sroa.24.2.i, %bb.bu ], [ %.sroa.24.013.i, %bb.x ] ; 2 uses
-  %.sroa.28.6.i = phi i8 [ %.sroa.28.014.i, %bb.n ], [ %.sroa.28.014.i, %bb.o ], [ %.sroa.28.014.i, %bb.p ], [ %.sroa.28.014.i, %bb.bq ], [ %.sroa.28.014.i, %bb.bk ], [ %.sroa.28.014.i, %bb.bl ], [ %.sroa.28.014.i, %bb.bm ], [ 1, %bb.bn ], [ 1, %bb.bt ], [ %.sroa.28.014.i, %bb.bf ], [ %.sroa.28.014.i, %bb.bj ], [ %.sroa.28.014.i, %bb.bi ], [ 0, %bb.be ], [ %.sroa.28.014.i, %bb.bc ], [ %.sroa.28.0.copyload61.i, %bb.bp ], [ %.sroa.28.014.i, %bb.bu ], [ %.sroa.28.014.i, %bb.x ] ; 2 uses
-  %.6.i = phi i32 [ %.016215.i, %bb.n ], [ %.016215.i, %bb.o ], [ %.016215.i, %bb.p ], [ 0, %bb.bq ], [ 0, %bb.bk ], [ 0, %bb.bl ], [ 0, %bb.bm ], [ 1, %bb.bn ], [ 1, %bb.bt ], [ 0, %bb.bf ], [ 1, %bb.bj ], [ 1, %bb.bi ], [ 1, %bb.be ], [ 0, %bb.bc ], [ 1, %bb.bp ], [ 1, %bb.bu ], [ %.016215.i, %bb.x ] ; 2 uses
-  %.4.i = phi i32 [ %.015816.i, %bb.n ], [ %.015816.i, %bb.o ], [ %.015816.i, %bb.p ], [ %i.ic, %bb.bq ], [ %i.ic, %bb.bk ], [ %i.ic, %bb.bl ], [ %i.ic, %bb.bm ], [ %i.ic, %bb.bn ], [ %i.ic, %bb.bt ], [ %i.ic, %bb.bf ], [ %i.ic, %bb.bj ], [ %i.ic, %bb.bi ], [ %i.ic, %bb.be ], [ %i.ic, %bb.bc ], [ %i.ic, %bb.bp ], [ %i.ic, %bb.bu ], [ %.015816.i, %bb.x ] ; 2 uses
+  %.sroa.32.i.sroa.0.1 = phi <6 x i8> [ %.sroa.32.i.sroa.0.0, %bb.n ], [ %.sroa.32.i.sroa.0.0, %bb.o ], [ %.sroa.32.i.sroa.0.0, %bb.p ], [ %.sroa.32.i.sroa.0.0, %bb.be ], [ %.sroa.32.i.sroa.0.0, %bb.bf ], [ %.sroa.32.i.sroa.0.0, %bb.bi ], [ %.sroa.32.i.sroa.0.0, %bb.bj ], [ %.sroa.32.i.sroa.0.0, %bb.bc ], [ %.sroa.32.i.sroa.0.0, %bb.bk ], [ %.sroa.32.i.sroa.0.0, %bb.bl ], [ %.sroa.32.i.sroa.0.0.copyload64, %bb.bp ], [ %.sroa.32.i.sroa.0.0, %bb.bq ], [ %.sroa.32.i.sroa.0.0, %bb.bt ], [ %.sroa.32.i.sroa.0.0, %bb.bu ], [ %.sroa.32.i.sroa.0.0, %bb.bn ], [ %.sroa.32.i.sroa.0.0, %bb.bm ], [ %.sroa.32.i.sroa.0.0, %bb.x ] ; 2 uses
+  %.5181.i = phi ptr [ %.01769.i, %bb.n ], [ %.01769.i, %bb.o ], [ %.01769.i, %bb.p ], [ %.1177.i, %bb.be ], [ %.1177.i, %bb.bf ], [ %.1177.i, %bb.bi ], [ %.1177.i, %bb.bj ], [ %.1177.i, %bb.bc ], [ %.1177.i, %bb.bk ], [ %.1177.i, %bb.bl ], [ %.1177.i, %bb.bp ], [ %.1177.i, %bb.bq ], [ %.1177.i, %bb.bt ], [ %.1177.i, %bb.bu ], [ %.1177.i, %bb.bn ], [ %.1177.i, %bb.bm ], [ %.01769.i, %bb.x ] ; 2 uses
+  %.5174.i = phi i32 [ %.016910.i, %bb.n ], [ %.016910.i, %bb.o ], [ %.016910.i, %bb.p ], [ %.1170.i, %bb.be ], [ %.1170.i, %bb.bf ], [ %.1170.i, %bb.bi ], [ %.1170.i, %bb.bj ], [ %.1170.i, %bb.bc ], [ %.1170.i, %bb.bk ], [ %.1170.i, %bb.bl ], [ %.1170.i, %bb.bp ], [ %.1170.i, %bb.bq ], [ %.1170.i, %bb.bt ], [ %.1170.i, %bb.bu ], [ %.1170.i, %bb.bn ], [ %.1170.i, %bb.bm ], [ %.016910.i, %bb.x ] ; 2 uses
+  %.sroa.0.8.i = phi i64 [ %.sroa.0.011.i, %bb.n ], [ %.sroa.0.011.i, %bb.o ], [ %.sroa.0.011.i, %bb.p ], [ %i.jf, %bb.be ], [ %.sroa.0.011.i, %bb.bf ], [ %.sroa.0.1.i, %bb.bi ], [ %.sroa.0.1.i, %bb.bj ], [ %.sroa.0.011.i, %bb.bc ], [ %.sroa.0.011.i, %bb.bk ], [ %.sroa.0.011.i, %bb.bl ], [ %.sroa.0.0.copyload47.i, %bb.bp ], [ %.sroa.0.011.i, %bb.bq ], [ %.sroa.0.3.i, %bb.bt ], [ %.sroa.0.3.i, %bb.bu ], [ -9223372036854775808, %bb.bn ], [ %.sroa.0.011.i, %bb.bm ], [ %.sroa.0.011.i, %bb.x ] ; 2 uses
+  %.sroa.15.6.i = phi i64 [ %.sroa.15.012.i, %bb.n ], [ %.sroa.15.012.i, %bb.o ], [ %.sroa.15.012.i, %bb.p ], [ %i.jf, %bb.be ], [ %.sroa.15.012.i, %bb.bf ], [ %.sroa.15.012.i, %bb.bi ], [ %.sroa.15.0..i, %bb.bj ], [ %.sroa.15.012.i, %bb.bc ], [ %.sroa.15.012.i, %bb.bk ], [ %.sroa.15.012.i, %bb.bl ], [ %.sroa.15.0.copyload50.i, %bb.bp ], [ %.sroa.15.012.i, %bb.bq ], [ 9223372036854775807, %bb.bt ], [ %.sroa.15.0.221.i, %bb.bu ], [ 9223372036854775807, %bb.bn ], [ %.sroa.15.012.i, %bb.bm ], [ %.sroa.15.012.i, %bb.x ] ; 2 uses
+  %.sroa.24.7.i = phi i8 [ %.sroa.24.013.i, %bb.n ], [ %.sroa.24.013.i, %bb.o ], [ %.sroa.24.013.i, %bb.p ], [ 0, %bb.be ], [ %.sroa.24.013.i, %bb.bf ], [ %.sroa.24.013.i, %bb.bi ], [ %.sroa.24.013.i, %bb.bj ], [ %.sroa.24.013.i, %bb.bc ], [ %.sroa.24.013.i, %bb.bk ], [ %.sroa.24.013.i, %bb.bl ], [ %.sroa.24.0.copyload57.i, %bb.bp ], [ %.sroa.24.013.i, %bb.bq ], [ %.sroa.24.2.i, %bb.bt ], [ %.sroa.24.2.i, %bb.bu ], [ 1, %bb.bn ], [ %.sroa.24.013.i, %bb.bm ], [ %.sroa.24.013.i, %bb.x ] ; 2 uses
+  %.sroa.28.6.i = phi i8 [ %.sroa.28.014.i, %bb.n ], [ %.sroa.28.014.i, %bb.o ], [ %.sroa.28.014.i, %bb.p ], [ 0, %bb.be ], [ %.sroa.28.014.i, %bb.bf ], [ %.sroa.28.014.i, %bb.bi ], [ %.sroa.28.014.i, %bb.bj ], [ %.sroa.28.014.i, %bb.bc ], [ %.sroa.28.014.i, %bb.bk ], [ %.sroa.28.014.i, %bb.bl ], [ %.sroa.28.0.copyload61.i, %bb.bp ], [ %.sroa.28.014.i, %bb.bq ], [ 1, %bb.bt ], [ %.sroa.28.014.i, %bb.bu ], [ 1, %bb.bn ], [ %.sroa.28.014.i, %bb.bm ], [ %.sroa.28.014.i, %bb.x ] ; 2 uses
+  %.6.i = phi i32 [ %.016215.i, %bb.n ], [ %.016215.i, %bb.o ], [ %.016215.i, %bb.p ], [ 1, %bb.be ], [ 0, %bb.bf ], [ 1, %bb.bi ], [ 1, %bb.bj ], [ 0, %bb.bc ], [ 0, %bb.bk ], [ 0, %bb.bl ], [ 1, %bb.bp ], [ 0, %bb.bq ], [ 1, %bb.bt ], [ 1, %bb.bu ], [ 1, %bb.bn ], [ 0, %bb.bm ], [ %.016215.i, %bb.x ] ; 2 uses
+  %.4.i = phi i32 [ %.015816.i, %bb.n ], [ %.015816.i, %bb.o ], [ %.015816.i, %bb.p ], [ %i.ic, %bb.be ], [ %i.ic, %bb.bf ], [ %i.ic, %bb.bi ], [ %i.ic, %bb.bj ], [ %i.ic, %bb.bc ], [ %i.ic, %bb.bk ], [ %i.ic, %bb.bl ], [ %i.ic, %bb.bp ], [ %i.ic, %bb.bq ], [ %i.ic, %bb.bt ], [ %i.ic, %bb.bu ], [ %i.ic, %bb.bn ], [ %i.ic, %bb.bm ], [ %.015816.i, %bb.x ] ; 2 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
   br i1 %exitcond.not.i, label %._crit_edge.loopexit.i, label %bb.n, !llvm.loop !223
@@ -813,14 +812,15 @@ is_recursive_tail_call.exit.i:                    ; preds = %bb.bu, %bb.bt, %bb.
   br label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %._crit_edge.loopexit.i, %bb.m
-  %.0176.lcssa.i = phi ptr [ null, %bb.m ], [ %.5181.i, %._crit_edge.loopexit.i ]
-  %.0169.lcssa.i = phi i32 [ -1, %bb.m ], [ %.5174.i, %._crit_edge.loopexit.i ] ; 2 uses
-  %.sroa.0.0.lcssa.i = phi i64 [ 0, %bb.m ], [ %.sroa.0.8.i, %._crit_edge.loopexit.i ]
-  %.sroa.15.0.lcssa.i = phi i64 [ 0, %bb.m ], [ %.sroa.15.6.i, %._crit_edge.loopexit.i ]
-  %.sroa.24.0.lcssa.i = phi i8 [ 0, %bb.m ], [ %.sroa.24.7.i, %._crit_edge.loopexit.i ]
-  %.sroa.28.0.lcssa.i = phi i8 [ 0, %bb.m ], [ %.sroa.28.6.i, %._crit_edge.loopexit.i ]
-  %.0162.lcssa.i = phi i32 [ -1, %bb.m ], [ %.6.i, %._crit_edge.loopexit.i ] ; 2 uses
-  %.0158.lcssa.i = phi i32 [ 0, %bb.m ], [ %i.ke, %._crit_edge.loopexit.i ]
+  %.sroa.32.i.sroa.0.2 = phi <6 x i8> [ %.sroa.32.i.sroa.0.1, %._crit_edge.loopexit.i ], [ zeroinitializer, %bb.m ]
+  %.0176.lcssa.i = phi ptr [ %.5181.i, %._crit_edge.loopexit.i ], [ null, %bb.m ]
+  %.0169.lcssa.i = phi i32 [ %.5174.i, %._crit_edge.loopexit.i ], [ -1, %bb.m ] ; 2 uses
+  %.sroa.0.0.lcssa.i = phi i64 [ %.sroa.0.8.i, %._crit_edge.loopexit.i ], [ 0, %bb.m ]
+  %.sroa.15.0.lcssa.i = phi i64 [ %.sroa.15.6.i, %._crit_edge.loopexit.i ], [ 0, %bb.m ]
+  %.sroa.24.0.lcssa.i = phi i8 [ %.sroa.24.7.i, %._crit_edge.loopexit.i ], [ 0, %bb.m ]
+  %.sroa.28.0.lcssa.i = phi i8 [ %.sroa.28.6.i, %._crit_edge.loopexit.i ], [ 0, %bb.m ]
+  %.0162.lcssa.i = phi i32 [ %.6.i, %._crit_edge.loopexit.i ], [ -1, %bb.m ] ; 2 uses
+  %.0158.lcssa.i = phi i32 [ %i.ke, %._crit_edge.loopexit.i ], [ 0, %bb.m ]
   %i.kf = and i32 %i.be, 8192
   %.not201.i = icmp eq i32 %i.kf, 0
   br i1 %.not201.i, label %bb.bv, label %._crit_edge._crit_edge.i
@@ -857,20 +857,16 @@ bb.bw:                                            ; preds = %bb.bv, %._crit_edge
   %.sroa.28.0..sroa_idx62.i = getelementptr inbounds nuw i8, ptr %i.ax, i64 137
   store i8 %.sroa.28.0.lcssa.i, ptr %.sroa.28.0..sroa_idx62.i, align 1, !tbaa !123
   %.sroa.32.0..sroa_idx65.i = getelementptr inbounds nuw i8, ptr %i.ax, i64 138
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(6) %.sroa.32.0..sroa_idx65.i, ptr noundef nonnull align 2 dereferenceable(6) %.sroa.32.i, i64 6, i1 false), !tbaa.struct !102
+  store <6 x i8> %.sroa.32.i.sroa.0.2, ptr %.sroa.32.0..sroa_idx65.i, align 2
   %i.kp = icmp ne i32 %.7.i, 0
   %i.kq = getelementptr inbounds nuw i8, ptr %i.ax, i64 116
   %i.kr = zext i1 %i.kp to i8
   %i.ks = and i8 %i.kn, -2
   %i.kt = or disjoint i8 %i.ks, %i.kr
   store i8 %i.kt, ptr %i.kq, align 4
-  br label %zend_func_return_info.exit
-
-zend_func_return_info.exit:                       ; preds = %bb.j, %bb.bw
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.32.i)
   br label %bb.bx
 
-bb.bx:                                            ; preds = %bb.h, %zend_func_return_info.exit
+bb.bx:                                            ; preds = %bb.bw, %bb.j, %bb.h
   br i1 %i.e, label %.sink.split, label %bb.by, !prof !22
 
 .sink.split:                                      ; preds = %bb.bx, %bb.e

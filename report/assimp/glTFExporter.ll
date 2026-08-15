@@ -204,7 +204,6 @@ bb.a:
   %3 = alloca %"class.rapidjson::GenericValue", align 8 ; 7 uses
   %4 = alloca %"class.rapidjson::GenericValue", align 8 ; 7 uses
   %5 = alloca %"class.rapidjson::GenericValue", align 8 ; 7 uses
-  %.sroa.0128 = alloca [14 x i8], align 8         ; 4 uses
   %6 = alloca %"class.rapidjson::GenericValue", align 8 ; 11 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 6 uses
   %i.b = load ptr, ptr %i.a, align 8
@@ -607,9 +606,7 @@ bb.r:                                             ; preds = %_ZN9rapidjson12Gene
   br i1 %i.hu, label %_ZN10glTFCommon10FindObjectERN9rapidjson12GenericValueINS0_4UTF8IcEENS0_19MemoryPoolAllocatorINS0_12CrtAllocatorEEEEEPKc.exit88, label %bb.s
 
 bb.s:                                             ; preds = %_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEE10FindMemberEPKc.exit.i82, %bb.r
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0128)
   %i.hv = getelementptr inbounds nuw i8, ptr %0, i64 16
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(14) %.sroa.0128, i8 0, i64 14, i1 false)
   %i.hw = load ptr, ptr %i.hv, align 8
   %i.hx = load i32, ptr %.138, align 8            ; 3 uses
   %i.hy = getelementptr inbounds nuw i8, ptr %.138, i64 4 ; 2 uses
@@ -667,13 +664,12 @@ bb.u:                                             ; preds = %._crit_edge, %.noex
   %.sroa.65.0..sroa_idx.i92 = getelementptr inbounds nuw i8, ptr %i.jb, i64 8
   store ptr %i.iw, ptr %.sroa.65.0..sroa_idx.i92, align 8
   %i.jc = getelementptr inbounds nuw i8, ptr %i.jb, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(14) %i.jc, ptr noundef nonnull align 8 dereferenceable(14) %.sroa.0128, i64 14, i1 false)
+  store <14 x i8> zeroinitializer, ptr %i.jc, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.jb, i64 30
   store i16 3, ptr %.sroa.6.0..sroa_idx, align 2
   %i.jd = load i32, ptr %.138, align 8
   %i.je = add i32 %i.jd, 1
   store i32 %i.je, ptr %.138, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0128)
   %i.jf = load ptr, ptr %i.fu, align 8            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #30
   %i.jg = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.jf) #36, !noalias !484
@@ -1076,7 +1072,6 @@ bb.a:
   %3 = alloca %"class.rapidjson::GenericValue", align 8 ; 7 uses
   %4 = alloca %"class.rapidjson::GenericValue", align 8 ; 7 uses
   %5 = alloca %"class.rapidjson::GenericValue", align 8 ; 7 uses
-  %.sroa.0128 = alloca [14 x i8], align 8         ; 4 uses
   %6 = alloca %"class.rapidjson::GenericValue", align 8 ; 11 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 6 uses
   %i.b = load ptr, ptr %i.a, align 8
@@ -1479,9 +1474,7 @@ bb.r:                                             ; preds = %_ZN9rapidjson12Gene
   br i1 %i.hu, label %_ZN10glTFCommon10FindObjectERN9rapidjson12GenericValueINS0_4UTF8IcEENS0_19MemoryPoolAllocatorINS0_12CrtAllocatorEEEEEPKc.exit88, label %bb.s
 
 bb.s:                                             ; preds = %_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEE10FindMemberEPKc.exit.i82, %bb.r
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0128)
   %i.hv = getelementptr inbounds nuw i8, ptr %0, i64 16
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(14) %.sroa.0128, i8 0, i64 14, i1 false)
   %i.hw = load ptr, ptr %i.hv, align 8
   %i.hx = load i32, ptr %.138, align 8            ; 3 uses
   %i.hy = getelementptr inbounds nuw i8, ptr %.138, i64 4 ; 2 uses
@@ -1539,13 +1532,12 @@ bb.u:                                             ; preds = %._crit_edge, %.noex
   %.sroa.65.0..sroa_idx.i92 = getelementptr inbounds nuw i8, ptr %i.jb, i64 8
   store ptr %i.iw, ptr %.sroa.65.0..sroa_idx.i92, align 8
   %i.jc = getelementptr inbounds nuw i8, ptr %i.jb, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(14) %i.jc, ptr noundef nonnull align 8 dereferenceable(14) %.sroa.0128, i64 14, i1 false)
+  store <14 x i8> zeroinitializer, ptr %i.jc, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.jb, i64 30
   store i16 3, ptr %.sroa.6.0..sroa_idx, align 2
   %i.jd = load i32, ptr %.138, align 8
   %i.je = add i32 %i.jd, 1
   store i32 %i.je, ptr %.138, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0128)
   %i.jf = load ptr, ptr %i.fu, align 8            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #30
   %i.jg = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.jf) #36, !noalias !517
@@ -1948,7 +1940,6 @@ bb.a:
   %3 = alloca %"class.rapidjson::GenericValue", align 8 ; 7 uses
   %4 = alloca %"class.rapidjson::GenericValue", align 8 ; 7 uses
   %5 = alloca %"class.rapidjson::GenericValue", align 8 ; 7 uses
-  %.sroa.0128 = alloca [14 x i8], align 8         ; 4 uses
   %6 = alloca %"class.rapidjson::GenericValue", align 8 ; 11 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 6 uses
   %i.b = load ptr, ptr %i.a, align 8
@@ -2351,9 +2342,7 @@ bb.r:                                             ; preds = %_ZN9rapidjson12Gene
   br i1 %i.hu, label %_ZN10glTFCommon10FindObjectERN9rapidjson12GenericValueINS0_4UTF8IcEENS0_19MemoryPoolAllocatorINS0_12CrtAllocatorEEEEEPKc.exit88, label %bb.s
 
 bb.s:                                             ; preds = %_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEE10FindMemberEPKc.exit.i82, %bb.r
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0128)
   %i.hv = getelementptr inbounds nuw i8, ptr %0, i64 16
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(14) %.sroa.0128, i8 0, i64 14, i1 false)
   %i.hw = load ptr, ptr %i.hv, align 8
   %i.hx = load i32, ptr %.138, align 8            ; 3 uses
   %i.hy = getelementptr inbounds nuw i8, ptr %.138, i64 4 ; 2 uses
@@ -2411,13 +2400,12 @@ bb.u:                                             ; preds = %._crit_edge, %.noex
   %.sroa.65.0..sroa_idx.i92 = getelementptr inbounds nuw i8, ptr %i.jb, i64 8
   store ptr %i.iw, ptr %.sroa.65.0..sroa_idx.i92, align 8
   %i.jc = getelementptr inbounds nuw i8, ptr %i.jb, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(14) %i.jc, ptr noundef nonnull align 8 dereferenceable(14) %.sroa.0128, i64 14, i1 false)
+  store <14 x i8> zeroinitializer, ptr %i.jc, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.jb, i64 30
   store i16 3, ptr %.sroa.6.0..sroa_idx, align 2
   %i.jd = load i32, ptr %.138, align 8
   %i.je = add i32 %i.jd, 1
   store i32 %i.je, ptr %.138, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0128)
   %i.jf = load ptr, ptr %i.fu, align 8            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #30
   %i.jg = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.jf) #36, !noalias !565
@@ -2820,7 +2808,6 @@ bb.a:
   %3 = alloca %"class.rapidjson::GenericValue", align 8 ; 7 uses
   %4 = alloca %"class.rapidjson::GenericValue", align 8 ; 7 uses
   %5 = alloca %"class.rapidjson::GenericValue", align 8 ; 7 uses
-  %.sroa.0128 = alloca [14 x i8], align 8         ; 4 uses
   %6 = alloca %"class.rapidjson::GenericValue", align 8 ; 11 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 6 uses
   %i.b = load ptr, ptr %i.a, align 8
@@ -3223,9 +3210,7 @@ bb.r:                                             ; preds = %_ZN9rapidjson12Gene
   br i1 %i.hu, label %_ZN10glTFCommon10FindObjectERN9rapidjson12GenericValueINS0_4UTF8IcEENS0_19MemoryPoolAllocatorINS0_12CrtAllocatorEEEEEPKc.exit88, label %bb.s
 
 bb.s:                                             ; preds = %_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEE10FindMemberEPKc.exit.i82, %bb.r
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0128)
   %i.hv = getelementptr inbounds nuw i8, ptr %0, i64 16
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(14) %.sroa.0128, i8 0, i64 14, i1 false)
   %i.hw = load ptr, ptr %i.hv, align 8
   %i.hx = load i32, ptr %.138, align 8            ; 3 uses
   %i.hy = getelementptr inbounds nuw i8, ptr %.138, i64 4 ; 2 uses
@@ -3283,13 +3268,12 @@ bb.u:                                             ; preds = %._crit_edge, %.noex
   %.sroa.65.0..sroa_idx.i92 = getelementptr inbounds nuw i8, ptr %i.jb, i64 8
   store ptr %i.iw, ptr %.sroa.65.0..sroa_idx.i92, align 8
   %i.jc = getelementptr inbounds nuw i8, ptr %i.jb, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(14) %i.jc, ptr noundef nonnull align 8 dereferenceable(14) %.sroa.0128, i64 14, i1 false)
+  store <14 x i8> zeroinitializer, ptr %i.jc, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.jb, i64 30
   store i16 3, ptr %.sroa.6.0..sroa_idx, align 2
   %i.jd = load i32, ptr %.138, align 8
   %i.je = add i32 %i.jd, 1
   store i32 %i.je, ptr %.138, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0128)
   %i.jf = load ptr, ptr %i.fu, align 8            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #30
   %i.jg = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.jf) #36, !noalias !593
@@ -3692,7 +3676,6 @@ bb.a:
   %3 = alloca %"class.rapidjson::GenericValue", align 8 ; 7 uses
   %4 = alloca %"class.rapidjson::GenericValue", align 8 ; 7 uses
   %5 = alloca %"class.rapidjson::GenericValue", align 8 ; 7 uses
-  %.sroa.0139 = alloca [14 x i8], align 8         ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 5 uses
   %i.b = load ptr, ptr %i.a, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
@@ -4095,9 +4078,7 @@ bb.r:                                             ; preds = %_ZN9rapidjson12Gene
   br i1 %i.hu, label %_ZN10glTFCommon10FindObjectERN9rapidjson12GenericValueINS0_4UTF8IcEENS0_19MemoryPoolAllocatorINS0_12CrtAllocatorEEEEEPKc.exit88, label %bb.s
 
 bb.s:                                             ; preds = %_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEE10FindMemberEPKc.exit.i82, %bb.r
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0139)
   %i.hv = getelementptr inbounds nuw i8, ptr %0, i64 16
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(14) %.sroa.0139, i8 0, i64 14, i1 false)
   %i.hw = load ptr, ptr %i.hv, align 8
   %i.hx = load i32, ptr %.138, align 8            ; 3 uses
   %i.hy = getelementptr inbounds nuw i8, ptr %.138, i64 4 ; 2 uses
@@ -4155,13 +4136,12 @@ bb.u:                                             ; preds = %._crit_edge, %.noex
   %.sroa.65.0..sroa_idx.i92 = getelementptr inbounds nuw i8, ptr %i.jb, i64 8
   store ptr %i.iw, ptr %.sroa.65.0..sroa_idx.i92, align 8
   %i.jc = getelementptr inbounds nuw i8, ptr %i.jb, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(14) %i.jc, ptr noundef nonnull align 8 dereferenceable(14) %.sroa.0139, i64 14, i1 false)
+  store <14 x i8> zeroinitializer, ptr %i.jc, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.jb, i64 30
   store i16 3, ptr %.sroa.6.0..sroa_idx, align 2
   %i.jd = load i32, ptr %.138, align 8
   %i.je = add i32 %i.jd, 1
   store i32 %i.je, ptr %.138, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0139)
   %i.jf = load ptr, ptr %i.fu, align 8            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #30
   %i.jg = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.jf) #36, !noalias !621
@@ -4564,7 +4544,6 @@ bb.a:
   %3 = alloca %"class.rapidjson::GenericValue", align 8 ; 7 uses
   %4 = alloca %"class.rapidjson::GenericValue", align 8 ; 7 uses
   %5 = alloca %"class.rapidjson::GenericValue", align 8 ; 7 uses
-  %.sroa.0128 = alloca [14 x i8], align 8         ; 4 uses
   %6 = alloca %"class.rapidjson::GenericValue", align 8 ; 11 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 6 uses
   %i.b = load ptr, ptr %i.a, align 8
@@ -4967,9 +4946,7 @@ bb.r:                                             ; preds = %_ZN9rapidjson12Gene
   br i1 %i.hu, label %_ZN10glTFCommon10FindObjectERN9rapidjson12GenericValueINS0_4UTF8IcEENS0_19MemoryPoolAllocatorINS0_12CrtAllocatorEEEEEPKc.exit88, label %bb.s
 
 bb.s:                                             ; preds = %_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEE10FindMemberEPKc.exit.i82, %bb.r
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0128)
   %i.hv = getelementptr inbounds nuw i8, ptr %0, i64 16
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(14) %.sroa.0128, i8 0, i64 14, i1 false)
   %i.hw = load ptr, ptr %i.hv, align 8
   %i.hx = load i32, ptr %.138, align 8            ; 3 uses
   %i.hy = getelementptr inbounds nuw i8, ptr %.138, i64 4 ; 2 uses
@@ -5027,13 +5004,12 @@ bb.u:                                             ; preds = %._crit_edge, %.noex
   %.sroa.65.0..sroa_idx.i92 = getelementptr inbounds nuw i8, ptr %i.jb, i64 8
   store ptr %i.iw, ptr %.sroa.65.0..sroa_idx.i92, align 8
   %i.jc = getelementptr inbounds nuw i8, ptr %i.jb, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(14) %i.jc, ptr noundef nonnull align 8 dereferenceable(14) %.sroa.0128, i64 14, i1 false)
+  store <14 x i8> zeroinitializer, ptr %i.jc, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.jb, i64 30
   store i16 3, ptr %.sroa.6.0..sroa_idx, align 2
   %i.jd = load i32, ptr %.138, align 8
   %i.je = add i32 %i.jd, 1
   store i32 %i.je, ptr %.138, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0128)
   %i.jf = load ptr, ptr %i.fu, align 8            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #30
   %i.jg = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.jf) #36, !noalias !646
@@ -5436,7 +5412,6 @@ bb.a:
   %3 = alloca %"class.rapidjson::GenericValue", align 8 ; 7 uses
   %4 = alloca %"class.rapidjson::GenericValue", align 8 ; 7 uses
   %5 = alloca %"class.rapidjson::GenericValue", align 8 ; 7 uses
-  %.sroa.0128 = alloca [14 x i8], align 8         ; 4 uses
   %6 = alloca %"class.rapidjson::GenericValue", align 8 ; 11 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 6 uses
   %i.b = load ptr, ptr %i.a, align 8
@@ -5839,9 +5814,7 @@ bb.r:                                             ; preds = %_ZN9rapidjson12Gene
   br i1 %i.hu, label %_ZN10glTFCommon10FindObjectERN9rapidjson12GenericValueINS0_4UTF8IcEENS0_19MemoryPoolAllocatorINS0_12CrtAllocatorEEEEEPKc.exit88, label %bb.s
 
 bb.s:                                             ; preds = %_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEE10FindMemberEPKc.exit.i82, %bb.r
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0128)
   %i.hv = getelementptr inbounds nuw i8, ptr %0, i64 16
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(14) %.sroa.0128, i8 0, i64 14, i1 false)
   %i.hw = load ptr, ptr %i.hv, align 8
   %i.hx = load i32, ptr %.138, align 8            ; 3 uses
   %i.hy = getelementptr inbounds nuw i8, ptr %.138, i64 4 ; 2 uses
@@ -5899,13 +5872,12 @@ bb.u:                                             ; preds = %._crit_edge, %.noex
   %.sroa.65.0..sroa_idx.i92 = getelementptr inbounds nuw i8, ptr %i.jb, i64 8
   store ptr %i.iw, ptr %.sroa.65.0..sroa_idx.i92, align 8
   %i.jc = getelementptr inbounds nuw i8, ptr %i.jb, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(14) %i.jc, ptr noundef nonnull align 8 dereferenceable(14) %.sroa.0128, i64 14, i1 false)
+  store <14 x i8> zeroinitializer, ptr %i.jc, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.jb, i64 30
   store i16 3, ptr %.sroa.6.0..sroa_idx, align 2
   %i.jd = load i32, ptr %.138, align 8
   %i.je = add i32 %i.jd, 1
   store i32 %i.je, ptr %.138, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0128)
   %i.jf = load ptr, ptr %i.fu, align 8            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #30
   %i.jg = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.jf) #36, !noalias !683
@@ -6308,7 +6280,6 @@ bb.a:
   %3 = alloca %"class.rapidjson::GenericValue", align 8 ; 7 uses
   %4 = alloca %"class.rapidjson::GenericValue", align 8 ; 7 uses
   %5 = alloca %"class.rapidjson::GenericValue", align 8 ; 7 uses
-  %.sroa.0128 = alloca [14 x i8], align 8         ; 4 uses
   %6 = alloca %"class.rapidjson::GenericValue", align 8 ; 11 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 6 uses
   %i.b = load ptr, ptr %i.a, align 8
@@ -6711,9 +6682,7 @@ bb.r:                                             ; preds = %_ZN9rapidjson12Gene
   br i1 %i.hu, label %_ZN10glTFCommon10FindObjectERN9rapidjson12GenericValueINS0_4UTF8IcEENS0_19MemoryPoolAllocatorINS0_12CrtAllocatorEEEEEPKc.exit88, label %bb.s
 
 bb.s:                                             ; preds = %_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEE10FindMemberEPKc.exit.i82, %bb.r
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0128)
   %i.hv = getelementptr inbounds nuw i8, ptr %0, i64 16
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(14) %.sroa.0128, i8 0, i64 14, i1 false)
   %i.hw = load ptr, ptr %i.hv, align 8
   %i.hx = load i32, ptr %.138, align 8            ; 3 uses
   %i.hy = getelementptr inbounds nuw i8, ptr %.138, i64 4 ; 2 uses
@@ -6771,13 +6740,12 @@ bb.u:                                             ; preds = %._crit_edge, %.noex
   %.sroa.65.0..sroa_idx.i92 = getelementptr inbounds nuw i8, ptr %i.jb, i64 8
   store ptr %i.iw, ptr %.sroa.65.0..sroa_idx.i92, align 8
   %i.jc = getelementptr inbounds nuw i8, ptr %i.jb, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(14) %i.jc, ptr noundef nonnull align 8 dereferenceable(14) %.sroa.0128, i64 14, i1 false)
+  store <14 x i8> zeroinitializer, ptr %i.jc, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.jb, i64 30
   store i16 3, ptr %.sroa.6.0..sroa_idx, align 2
   %i.jd = load i32, ptr %.138, align 8
   %i.je = add i32 %i.jd, 1
   store i32 %i.je, ptr %.138, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0128)
   %i.jf = load ptr, ptr %i.fu, align 8            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #30
   %i.jg = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.jf) #36, !noalias !717
@@ -7180,7 +7148,6 @@ bb.a:
   %3 = alloca %"class.rapidjson::GenericValue", align 8 ; 7 uses
   %4 = alloca %"class.rapidjson::GenericValue", align 8 ; 7 uses
   %5 = alloca %"class.rapidjson::GenericValue", align 8 ; 7 uses
-  %.sroa.0128 = alloca [14 x i8], align 8         ; 4 uses
   %6 = alloca %"class.rapidjson::GenericValue", align 8 ; 11 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 6 uses
   %i.b = load ptr, ptr %i.a, align 8
@@ -7583,9 +7550,7 @@ bb.r:                                             ; preds = %_ZN9rapidjson12Gene
   br i1 %i.hu, label %_ZN10glTFCommon10FindObjectERN9rapidjson12GenericValueINS0_4UTF8IcEENS0_19MemoryPoolAllocatorINS0_12CrtAllocatorEEEEEPKc.exit88, label %bb.s
 
 bb.s:                                             ; preds = %_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEE10FindMemberEPKc.exit.i82, %bb.r
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0128)
   %i.hv = getelementptr inbounds nuw i8, ptr %0, i64 16
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(14) %.sroa.0128, i8 0, i64 14, i1 false)
   %i.hw = load ptr, ptr %i.hv, align 8
   %i.hx = load i32, ptr %.138, align 8            ; 3 uses
   %i.hy = getelementptr inbounds nuw i8, ptr %.138, i64 4 ; 2 uses
@@ -7643,13 +7608,12 @@ bb.u:                                             ; preds = %._crit_edge, %.noex
   %.sroa.65.0..sroa_idx.i92 = getelementptr inbounds nuw i8, ptr %i.jb, i64 8
   store ptr %i.iw, ptr %.sroa.65.0..sroa_idx.i92, align 8
   %i.jc = getelementptr inbounds nuw i8, ptr %i.jb, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(14) %i.jc, ptr noundef nonnull align 8 dereferenceable(14) %.sroa.0128, i64 14, i1 false)
+  store <14 x i8> zeroinitializer, ptr %i.jc, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.jb, i64 30
   store i16 3, ptr %.sroa.6.0..sroa_idx, align 2
   %i.jd = load i32, ptr %.138, align 8
   %i.je = add i32 %i.jd, 1
   store i32 %i.je, ptr %.138, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0128)
   %i.jf = load ptr, ptr %i.fu, align 8            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #30
   %i.jg = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.jf) #36, !noalias !759
@@ -8052,7 +8016,6 @@ bb.a:
   %3 = alloca %"class.rapidjson::GenericValue", align 8 ; 7 uses
   %4 = alloca %"class.rapidjson::GenericValue", align 8 ; 7 uses
   %5 = alloca %"class.rapidjson::GenericValue", align 8 ; 7 uses
-  %.sroa.0128 = alloca [14 x i8], align 8         ; 4 uses
   %6 = alloca %"class.rapidjson::GenericValue", align 8 ; 11 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 6 uses
   %i.b = load ptr, ptr %i.a, align 8
@@ -8455,9 +8418,7 @@ bb.r:                                             ; preds = %_ZN9rapidjson12Gene
   br i1 %i.hu, label %_ZN10glTFCommon10FindObjectERN9rapidjson12GenericValueINS0_4UTF8IcEENS0_19MemoryPoolAllocatorINS0_12CrtAllocatorEEEEEPKc.exit88, label %bb.s
 
 bb.s:                                             ; preds = %_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEE10FindMemberEPKc.exit.i82, %bb.r
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0128)
   %i.hv = getelementptr inbounds nuw i8, ptr %0, i64 16
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(14) %.sroa.0128, i8 0, i64 14, i1 false)
   %i.hw = load ptr, ptr %i.hv, align 8
   %i.hx = load i32, ptr %.138, align 8            ; 3 uses
   %i.hy = getelementptr inbounds nuw i8, ptr %.138, i64 4 ; 2 uses
@@ -8515,13 +8476,12 @@ bb.u:                                             ; preds = %._crit_edge, %.noex
   %.sroa.65.0..sroa_idx.i92 = getelementptr inbounds nuw i8, ptr %i.jb, i64 8
   store ptr %i.iw, ptr %.sroa.65.0..sroa_idx.i92, align 8
   %i.jc = getelementptr inbounds nuw i8, ptr %i.jb, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(14) %i.jc, ptr noundef nonnull align 8 dereferenceable(14) %.sroa.0128, i64 14, i1 false)
+  store <14 x i8> zeroinitializer, ptr %i.jc, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.jb, i64 30
   store i16 3, ptr %.sroa.6.0..sroa_idx, align 2
   %i.jd = load i32, ptr %.138, align 8
   %i.je = add i32 %i.jd, 1
   store i32 %i.je, ptr %.138, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0128)
   %i.jf = load ptr, ptr %i.fu, align 8            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #30
   %i.jg = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.jf) #36, !noalias !799
@@ -8924,7 +8884,6 @@ bb.a:
   %3 = alloca %"class.rapidjson::GenericValue", align 8 ; 7 uses
   %4 = alloca %"class.rapidjson::GenericValue", align 8 ; 7 uses
   %5 = alloca %"class.rapidjson::GenericValue", align 8 ; 7 uses
-  %.sroa.0129 = alloca [14 x i8], align 8         ; 4 uses
   %6 = alloca %"class.rapidjson::GenericValue", align 8 ; 9 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 6 uses
   %i.b = load ptr, ptr %i.a, align 8
@@ -9327,9 +9286,7 @@ bb.r:                                             ; preds = %_ZN9rapidjson12Gene
   br i1 %i.hu, label %_ZN10glTFCommon10FindObjectERN9rapidjson12GenericValueINS0_4UTF8IcEENS0_19MemoryPoolAllocatorINS0_12CrtAllocatorEEEEEPKc.exit88, label %bb.s
 
 bb.s:                                             ; preds = %_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEE10FindMemberEPKc.exit.i82, %bb.r
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0129)
   %i.hv = getelementptr inbounds nuw i8, ptr %0, i64 16
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(14) %.sroa.0129, i8 0, i64 14, i1 false)
   %i.hw = load ptr, ptr %i.hv, align 8
   %i.hx = load i32, ptr %.138, align 8            ; 3 uses
   %i.hy = getelementptr inbounds nuw i8, ptr %.138, i64 4 ; 2 uses
@@ -9387,13 +9344,12 @@ bb.u:                                             ; preds = %._crit_edge, %.noex
   %.sroa.65.0..sroa_idx.i92 = getelementptr inbounds nuw i8, ptr %i.jb, i64 8
   store ptr %i.iw, ptr %.sroa.65.0..sroa_idx.i92, align 8
   %i.jc = getelementptr inbounds nuw i8, ptr %i.jb, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(14) %i.jc, ptr noundef nonnull align 8 dereferenceable(14) %.sroa.0129, i64 14, i1 false)
+  store <14 x i8> zeroinitializer, ptr %i.jc, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.jb, i64 30
   store i16 3, ptr %.sroa.6.0..sroa_idx, align 2
   %i.jd = load i32, ptr %.138, align 8
   %i.je = add i32 %i.jd, 1
   store i32 %i.je, ptr %.138, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0129)
   %i.jf = load ptr, ptr %i.fu, align 8            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #30
   %i.jg = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.jf) #36, !noalias !824
@@ -9796,7 +9752,6 @@ bb.a:
   %3 = alloca %"class.rapidjson::GenericValue", align 8 ; 7 uses
   %4 = alloca %"class.rapidjson::GenericValue", align 8 ; 7 uses
   %5 = alloca %"class.rapidjson::GenericValue", align 8 ; 7 uses
-  %.sroa.0128 = alloca [14 x i8], align 8         ; 4 uses
   %6 = alloca %"class.rapidjson::GenericValue", align 8 ; 11 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 6 uses
   %i.b = load ptr, ptr %i.a, align 8
@@ -10199,9 +10154,7 @@ bb.r:                                             ; preds = %_ZN9rapidjson12Gene
   br i1 %i.hu, label %_ZN10glTFCommon10FindObjectERN9rapidjson12GenericValueINS0_4UTF8IcEENS0_19MemoryPoolAllocatorINS0_12CrtAllocatorEEEEEPKc.exit88, label %bb.s
 
 bb.s:                                             ; preds = %_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEE10FindMemberEPKc.exit.i82, %bb.r
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0128)
   %i.hv = getelementptr inbounds nuw i8, ptr %0, i64 16
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(14) %.sroa.0128, i8 0, i64 14, i1 false)
   %i.hw = load ptr, ptr %i.hv, align 8
   %i.hx = load i32, ptr %.138, align 8            ; 3 uses
   %i.hy = getelementptr inbounds nuw i8, ptr %.138, i64 4 ; 2 uses
@@ -10259,13 +10212,12 @@ bb.u:                                             ; preds = %._crit_edge, %.noex
   %.sroa.65.0..sroa_idx.i92 = getelementptr inbounds nuw i8, ptr %i.jb, i64 8
   store ptr %i.iw, ptr %.sroa.65.0..sroa_idx.i92, align 8
   %i.jc = getelementptr inbounds nuw i8, ptr %i.jb, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(14) %i.jc, ptr noundef nonnull align 8 dereferenceable(14) %.sroa.0128, i64 14, i1 false)
+  store <14 x i8> zeroinitializer, ptr %i.jc, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.jb, i64 30
   store i16 3, ptr %.sroa.6.0..sroa_idx, align 2
   %i.jd = load i32, ptr %.138, align 8
   %i.je = add i32 %i.jd, 1
   store i32 %i.je, ptr %.138, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0128)
   %i.jf = load ptr, ptr %i.fu, align 8            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #30
   %i.jg = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.jf) #36, !noalias !849
@@ -10668,7 +10620,6 @@ bb.a:
   %3 = alloca %"class.rapidjson::GenericValue", align 8 ; 7 uses
   %4 = alloca %"class.rapidjson::GenericValue", align 8 ; 7 uses
   %5 = alloca %"class.rapidjson::GenericValue", align 8 ; 7 uses
-  %.sroa.0128 = alloca [14 x i8], align 8         ; 4 uses
   %6 = alloca %"class.rapidjson::GenericValue", align 8 ; 11 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 6 uses
   %i.b = load ptr, ptr %i.a, align 8
@@ -11071,9 +11022,7 @@ bb.r:                                             ; preds = %_ZN9rapidjson12Gene
   br i1 %i.hu, label %_ZN10glTFCommon10FindObjectERN9rapidjson12GenericValueINS0_4UTF8IcEENS0_19MemoryPoolAllocatorINS0_12CrtAllocatorEEEEEPKc.exit88, label %bb.s
 
 bb.s:                                             ; preds = %_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEE10FindMemberEPKc.exit.i82, %bb.r
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0128)
   %i.hv = getelementptr inbounds nuw i8, ptr %0, i64 16
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(14) %.sroa.0128, i8 0, i64 14, i1 false)
   %i.hw = load ptr, ptr %i.hv, align 8
   %i.hx = load i32, ptr %.138, align 8            ; 3 uses
   %i.hy = getelementptr inbounds nuw i8, ptr %.138, i64 4 ; 2 uses
@@ -11131,13 +11080,12 @@ bb.u:                                             ; preds = %._crit_edge, %.noex
   %.sroa.65.0..sroa_idx.i92 = getelementptr inbounds nuw i8, ptr %i.jb, i64 8
   store ptr %i.iw, ptr %.sroa.65.0..sroa_idx.i92, align 8
   %i.jc = getelementptr inbounds nuw i8, ptr %i.jb, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(14) %i.jc, ptr noundef nonnull align 8 dereferenceable(14) %.sroa.0128, i64 14, i1 false)
+  store <14 x i8> zeroinitializer, ptr %i.jc, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.jb, i64 30
   store i16 3, ptr %.sroa.6.0..sroa_idx, align 2
   %i.jd = load i32, ptr %.138, align 8
   %i.je = add i32 %i.jd, 1
   store i32 %i.je, ptr %.138, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0128)
   %i.jf = load ptr, ptr %i.fu, align 8            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #30
   %i.jg = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.jf) #36, !noalias !881
@@ -11540,7 +11488,6 @@ bb.a:
   %3 = alloca %"class.rapidjson::GenericValue", align 8 ; 7 uses
   %4 = alloca %"class.rapidjson::GenericValue", align 8 ; 7 uses
   %5 = alloca %"class.rapidjson::GenericValue", align 8 ; 7 uses
-  %.sroa.0139 = alloca [14 x i8], align 8         ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 5 uses
   %i.b = load ptr, ptr %i.a, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
@@ -11943,9 +11890,7 @@ bb.r:                                             ; preds = %_ZN9rapidjson12Gene
   br i1 %i.hu, label %_ZN10glTFCommon10FindObjectERN9rapidjson12GenericValueINS0_4UTF8IcEENS0_19MemoryPoolAllocatorINS0_12CrtAllocatorEEEEEPKc.exit88, label %bb.s
 
 bb.s:                                             ; preds = %_ZN9rapidjson12GenericValueINS_4UTF8IcEENS_19MemoryPoolAllocatorINS_12CrtAllocatorEEEE10FindMemberEPKc.exit.i82, %bb.r
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0139)
   %i.hv = getelementptr inbounds nuw i8, ptr %0, i64 16
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(14) %.sroa.0139, i8 0, i64 14, i1 false)
   %i.hw = load ptr, ptr %i.hv, align 8
   %i.hx = load i32, ptr %.138, align 8            ; 3 uses
   %i.hy = getelementptr inbounds nuw i8, ptr %.138, i64 4 ; 2 uses
@@ -12003,13 +11948,12 @@ bb.u:                                             ; preds = %._crit_edge, %.noex
   %.sroa.65.0..sroa_idx.i92 = getelementptr inbounds nuw i8, ptr %i.jb, i64 8
   store ptr %i.iw, ptr %.sroa.65.0..sroa_idx.i92, align 8
   %i.jc = getelementptr inbounds nuw i8, ptr %i.jb, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(14) %i.jc, ptr noundef nonnull align 8 dereferenceable(14) %.sroa.0139, i64 14, i1 false)
+  store <14 x i8> zeroinitializer, ptr %i.jc, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.jb, i64 30
   store i16 3, ptr %.sroa.6.0..sroa_idx, align 2
   %i.jd = load i32, ptr %.138, align 8
   %i.je = add i32 %i.jd, 1
   store i32 %i.je, ptr %.138, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0139)
   %i.jf = load ptr, ptr %i.fu, align 8            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #30
   %i.jg = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.jf) #36, !noalias !912

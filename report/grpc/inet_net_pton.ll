@@ -20,7 +20,7 @@ target triple = "x86_64-pc-linux-gnu"
 define range(i32 -2147483648, 2147483641) i32 @ares_inet_net_pton(i32 noundef %0, ptr noundef %1, ptr noundef %2, i64 noundef %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca [16 x i8], align 16               ; 11 uses
-  %.sroa.0.i = alloca [16 x i8], align 1          ; 4 uses
+  %.sroa.0.i.sroa.0 = alloca <16 x i8>, align 16  ; 4 uses
   %i.b = alloca [51 x i8], align 16               ; 7 uses
   switch i32 %0, label %bb.ab [
     i32 2, label %bb.b
@@ -32,7 +32,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.ab
 
 bb.c:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.sroa.0)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
   %i.d = tail call i64 @ares_strlen(ptr noundef %1) #8
   %i.e = icmp ugt i64 %i.d, 50
@@ -388,7 +388,8 @@ ares_inet_pton6.exit.i:                           ; preds = %bb.o, %bb.n, %.loop
   br label %ares_inet_net_pton_ipv6.exit
 
 .loopexit45.i:                                    ; preds = %.lr.ph161.i.i.prol.loopexit, %.lr.ph161.i.i, %middle.block, %vec.epilog.middle.block, %bb.u, %.preheader.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %.sroa.0.i, ptr noundef nonnull align 16 dereferenceable(16) %i.a, i64 16, i1 false)
+  %.sroa.0.i.sroa.0.0.copyload = load <16 x i8>, ptr %i.a, align 16
+  store <16 x i8> %.sroa.0.i.sroa.0.0.copyload, ptr %.sroa.0.i.sroa.0, align 16
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
   %i.cs = icmp eq ptr %.0.i, null
   br i1 %i.cs, label %getbits.exit.i, label %.preheader.i
@@ -445,14 +446,14 @@ bb.z:                                             ; preds = %getbits.exit.i
   br label %ares_inet_net_pton_ipv6.exit
 
 bb.aa:                                            ; preds = %getbits.exit.i
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %2, ptr nonnull align 1 %.sroa.0.i, i64 %i.dh, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %2, ptr nonnull align 16 %.sroa.0.i.sroa.0, i64 %i.dh, i1 false)
   %i.dk = trunc nuw nsw i64 %.020.i to i32
   br label %ares_inet_net_pton_ipv6.exit
 
 ares_inet_net_pton_ipv6.exit:                     ; preds = %bb.d, %ares_inet_pton6.exit.i, %.loopexit.i, %bb.z, %bb.aa
   %.011.i = phi i32 [ -1, %bb.d ], [ -1, %.loopexit.i ], [ -1, %bb.z ], [ %i.dk, %bb.aa ], [ -1, %ares_inet_pton6.exit.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #8
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.sroa.0)
   br label %bb.ab
 
 bb.ab:                                            ; preds = %bb.a, %ares_inet_net_pton_ipv6.exit, %bb.b
