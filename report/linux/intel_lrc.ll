@@ -204,9 +204,8 @@ bb.a:
   store ptr %i.b, ptr %i.c, align 8
   %i.d = getelementptr i8, ptr %1, i64 68
   %i.e = load i32, ptr %i.d, align 4
-  %i.f = add i32 %i.e, -1
-  %2 = or i32 %i.f, 4095                          ; 2 uses
-  %3 = add i32 %2, 1                              ; 2 uses
+  %i.f = add i32 %i.e, 4095                       ; 2 uses
+  %2 = and i32 %i.f, -4096                        ; 2 uses
   %i.g = load ptr, ptr %1, align 8
   %i.h = getelementptr i8, ptr %i.g, i64 1656
   %i.i = load i8, ptr %i.h, align 8
@@ -214,15 +213,15 @@ bb.a:
   br i1 %i.j, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.k = lshr exact i32 %3, 12
+  %i.k = lshr i32 %i.f, 12
   %i.l = trunc i32 %i.k to i8
   %i.m = getelementptr i8, ptr %0, i64 424
   store i8 %i.l, ptr %i.m, align 8
-  %i.n = add i32 %2, 8193
+  %i.n = add i32 %2, 8192
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %.0.i = phi i32 [ %i.n, %bb.b ], [ %3, %bb.a ]  ; 4 uses
+  %.0.i = phi i32 [ %i.n, %bb.b ], [ %2, %bb.a ]  ; 4 uses
   %i.o = getelementptr i8, ptr %0, i64 708
   %.val.i = load i8, ptr %i.o, align 4
   %.not.i = icmp eq i8 %.val.i, 0

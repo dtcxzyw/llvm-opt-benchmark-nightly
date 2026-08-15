@@ -138,9 +138,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i, label %bb.c, label %execmem_cache_alloc.exit
 
 bb.c:                                             ; preds = %bb.b
-  %i.j = add i64 %1, -1
-  %3 = or i64 %i.j, 2097151
-  %4 = add i64 %3, 1                              ; 4 uses
+  %i.j = add i64 %1, 2097151
+  %3 = and i64 %i.j, -2097152                     ; 4 uses
   %i.k = load i64, ptr @__default_kernel_pte_mask, align 8
   %i.l = and i64 %i.k, -9223372036854775453       ; 2 uses
   %i.m = getelementptr i8, ptr %i.c, i64 40       ; 2 uses
@@ -150,7 +149,7 @@ bb.c:                                             ; preds = %bb.b
   %i.q = load i64, ptr %i.p, align 8
   %i.r = zext i32 %i.n to i64                     ; 2 uses
   %i.s = tail call ptr @llvm.returnaddress.p0(i32 0) ; 4 uses
-  %i.t = tail call noalias ptr @__vmalloc_node_range_noprof(i64 noundef %4, i64 noundef %i.r, i64 noundef %i.o, i64 noundef %i.q, i32 noundef 11456, i64 %i.l, i64 noundef 1024, i32 noundef -1, ptr noundef %i.s) #11 ; 2 uses
+  %i.t = tail call noalias ptr @__vmalloc_node_range_noprof(i64 noundef %3, i64 noundef %i.r, i64 noundef %i.o, i64 noundef %i.q, i32 noundef 11456, i64 %i.l, i64 noundef 1024, i32 noundef -1, ptr noundef %i.s) #11 ; 2 uses
   %.not54.i.i.i = icmp eq ptr %i.t, null
   br i1 %.not54.i.i.i, label %bb.d, label %bb.k
 
@@ -163,7 +162,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.w = getelementptr i8, ptr %i.c, i64 24
   %i.x = load i64, ptr %i.w, align 8
-  %i.y = tail call noalias ptr @__vmalloc_node_range_noprof(i64 noundef %4, i64 noundef %i.r, i64 noundef %i.v, i64 noundef %i.x, i32 noundef 11456, i64 %i.l, i64 noundef 1024, i32 noundef -1, ptr noundef %i.s) #11 ; 2 uses
+  %i.y = tail call noalias ptr @__vmalloc_node_range_noprof(i64 noundef %3, i64 noundef %i.r, i64 noundef %i.v, i64 noundef %i.x, i32 noundef 11456, i64 %i.l, i64 noundef 1024, i32 noundef -1, ptr noundef %i.s) #11 ; 2 uses
   %.not56.i.i.i = icmp eq ptr %i.y, null
   br i1 %.not56.i.i.i, label %.thread.i.i.i, label %bb.k
 
@@ -209,7 +208,7 @@ bb.j:                                             ; preds = %.thread.i41.i.i
   br label %execmem_cache_alloc.exit
 
 bb.k:                                             ; preds = %bb.i, %bb.g, %bb.e, %bb.c
-  %.030.ph.i.i = phi i64 [ %i.h, %bb.i ], [ %i.h, %bb.g ], [ %4, %bb.c ], [ %4, %bb.e ] ; 2 uses
+  %.030.ph.i.i = phi i64 [ %i.h, %bb.i ], [ %i.h, %bb.g ], [ %3, %bb.c ], [ %3, %bb.e ] ; 2 uses
   %.029.ph.i.i = phi ptr [ %i.al, %bb.i ], [ %i.ah, %bb.g ], [ %i.t, %bb.c ], [ %i.y, %bb.e ] ; 4 uses
   %i.ao = tail call ptr @find_vm_area(ptr noundef nonnull %.029.ph.i.i) #9 ; 4 uses
   %.not34.i.i = icmp eq ptr %i.ao, null

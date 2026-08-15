@@ -182,10 +182,9 @@ bb.c:                                             ; preds = %bb.b
   %i.j = phi i32 [ %i.f, %bb.c ], [ %i.h, %.thread51 ]
   store i64 0, ptr %i.a, align 8, !annotation !10
   store i64 0, ptr %i.b, align 8, !annotation !10
-  %i.k = add i32 %i.j, -1
-  %0 = or i32 %i.k, 4095
-  %1 = add i32 %0, 1
-  store i32 %1, ptr @corruption_check_size, align 4
+  %i.k = add i32 %i.j, 4095
+  %0 = and i32 %i.k, -4096
+  store i32 %0, ptr @corruption_check_size, align 4
   store i64 0, ptr %i.c, align 8
   call void @__next_mem_range(ptr noundef nonnull %i.c, i32 noundef -1, i32 noundef 0, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @memblock, i64 16), ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @memblock, i64 56), ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, ptr noundef null) #9
   %i.l = load i64, ptr %i.c, align 8
@@ -196,13 +195,11 @@ bb.c:                                             ; preds = %bb.b
   %i.m = load i32, ptr @corruption_check_size, align 4
   %i.n = zext i32 %i.m to i64                     ; 4 uses
   %i.o = load i64, ptr %i.a, align 8
-  %2 = add i64 %i.o, -1
-  %3 = or i64 %2, 4095
-  %i.p = add i64 %3, 1                            ; 3 uses
-  %.not31 = icmp ult i64 %i.p, %i.n
-  %i.q = icmp ult i64 %i.p, 4097
-  %4 = select i1 %i.q, i64 4096, i64 %i.p
-  %i.r = select i1 %.not31, i64 %4, i64 %i.n      ; 4 uses
+  %i.p = add i64 %i.o, 4095
+  %1 = and i64 %i.p, -4096                        ; 2 uses
+  %i.q = icmp ult i64 %1, %i.n
+  %2 = call i64 @llvm.umax.i64(i64 %1, i64 4096)
+  %i.r = select i1 %i.q, i64 %2, i64 %i.n         ; 4 uses
   store i64 %i.r, ptr %i.a, align 8
   %i.s = load i64, ptr %i.b, align 8
   %i.t = and i64 %i.s, -4096                      ; 2 uses

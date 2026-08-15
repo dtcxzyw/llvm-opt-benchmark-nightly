@@ -203,12 +203,11 @@ bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
   store i64 0, ptr %i.a, align 8
-  %i.b = add i64 %2, -1
-  %3 = or i64 %i.b, 4095
-  %4 = add i64 %3, 1
+  %i.b = add i64 %2, 4095
+  %3 = and i64 %i.b, -4096
   %i.c = getelementptr i8, ptr %0, i64 2928
   %i.d = load ptr, ptr %i.c, align 8
-  %i.e = tail call ptr @i915_gem_object_create_region(ptr noundef %i.d, i64 noundef %4, i64 noundef 0, i32 noundef 0) #9 ; 8 uses
+  %i.e = tail call ptr @i915_gem_object_create_region(ptr noundef %i.d, i64 noundef %3, i64 noundef 0, i32 noundef 0) #9 ; 8 uses
   %i.f = icmp ugt ptr %i.e, inttoptr (i64 -4096 to ptr)
   br i1 %i.f, label %bb.h, label %bb.b
 

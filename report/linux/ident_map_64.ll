@@ -202,16 +202,15 @@ select.unfold:                                    ; preds = %select.unfold.i, %p
 define hidden void @kernel_add_identity_map(i64 noundef %0, i64 noundef %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = and i64 %0, -2097152                     ; 2 uses
-  %i.b = add i64 %1, -1
-  %2 = or i64 %i.b, 2097151
-  %3 = add i64 %2, 1                              ; 2 uses
-  %.not = icmp ult i64 %i.a, %3
+  %i.b = add i64 %1, 2097151
+  %2 = and i64 %i.b, -2097152                     ; 2 uses
+  %.not = icmp ult i64 %i.a, %2
   br i1 %.not, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
   %i.c = load i64, ptr @top_level_pgt, align 8
   %i.d = inttoptr i64 %i.c to ptr
-  %i.e = tail call i32 @kernel_ident_mapping_init(ptr noundef nonnull @mapping_info, ptr noundef %i.d, i64 noundef %i.a, i64 noundef %3) #6
+  %i.e = tail call i32 @kernel_ident_mapping_init(ptr noundef nonnull @mapping_info, ptr noundef %i.d, i64 noundef %i.a, i64 noundef %2) #6
   %.not8 = icmp eq i32 %i.e, 0
   br i1 %.not8, label %bb.d, label %bb.c
 
@@ -270,15 +269,14 @@ bb.d:                                             ; preds = %p4d_offset.exit
 
 bb.e:                                             ; preds = %bb.d, %bb.c
   %i.m = and i64 ptrtoint (ptr @_head to i64), -2097152 ; 2 uses
-  %1 = or i64 add (i64 ptrtoint (ptr @_end to i64), i64 -1), 2097151
-  %2 = add i64 %1, 1                              ; 2 uses
-  %.not.i8 = icmp ult i64 %i.m, %2
+  %1 = and i64 add (i64 ptrtoint (ptr @_end to i64), i64 2097151), -2097152 ; 2 uses
+  %.not.i8 = icmp ult i64 %i.m, %1
   br i1 %.not.i8, label %bb.f, label %kernel_add_identity_map.exit
 
 bb.f:                                             ; preds = %bb.e
   %i.n = load i64, ptr @top_level_pgt, align 8
   %i.o = inttoptr i64 %i.n to ptr
-  %i.p = tail call i32 @kernel_ident_mapping_init(ptr noundef nonnull @mapping_info, ptr noundef %i.o, i64 noundef %i.m, i64 noundef %2) #6
+  %i.p = tail call i32 @kernel_ident_mapping_init(ptr noundef nonnull @mapping_info, ptr noundef %i.o, i64 noundef %i.m, i64 noundef %1) #6
   %.not8.i = icmp eq i32 %i.p, 0
   br i1 %.not8.i, label %kernel_add_identity_map.exit, label %bb.g
 
@@ -292,16 +290,15 @@ kernel_add_identity_map.exit:                     ; preds = %bb.e, %bb.f
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 4096
   %i.s = ptrtoint ptr %i.r to i64
   %i.t = and i64 %i.q, -2097152                   ; 2 uses
-  %i.u = add i64 %i.s, -1
-  %3 = or i64 %i.u, 2097151
-  %4 = add i64 %3, 1                              ; 2 uses
-  %.not.i9 = icmp ult i64 %i.t, %4
+  %i.u = add i64 %i.s, 2097151
+  %2 = and i64 %i.u, -2097152                     ; 2 uses
+  %.not.i9 = icmp ult i64 %i.t, %2
   br i1 %.not.i9, label %bb.h, label %kernel_add_identity_map.exit11
 
 bb.h:                                             ; preds = %kernel_add_identity_map.exit
   %i.v = load i64, ptr @top_level_pgt, align 8
   %i.w = inttoptr i64 %i.v to ptr
-  %i.x = tail call i32 @kernel_ident_mapping_init(ptr noundef nonnull @mapping_info, ptr noundef %i.w, i64 noundef %i.t, i64 noundef %4) #6
+  %i.x = tail call i32 @kernel_ident_mapping_init(ptr noundef nonnull @mapping_info, ptr noundef %i.w, i64 noundef %i.t, i64 noundef %2) #6
   %.not8.i10 = icmp eq i32 %i.x, 0
   br i1 %.not8.i10, label %kernel_add_identity_map.exit11, label %bb.i
 
@@ -312,16 +309,15 @@ bb.i:                                             ; preds = %bb.h
 kernel_add_identity_map.exit11:                   ; preds = %kernel_add_identity_map.exit, %bb.h
   %i.y = tail call i64 @get_cmd_line_ptr() #5     ; 2 uses
   %i.z = and i64 %i.y, -2097152                   ; 2 uses
-  %i.aa = add i64 %i.y, 2047
-  %5 = or i64 %i.aa, 2097151
-  %6 = add i64 %5, 1                              ; 2 uses
-  %.not.i12 = icmp ult i64 %i.z, %6
+  %i.aa = add i64 %i.y, 2099199
+  %3 = and i64 %i.aa, -2097152                    ; 2 uses
+  %.not.i12 = icmp ult i64 %i.z, %3
   br i1 %.not.i12, label %bb.j, label %kernel_add_identity_map.exit14
 
 bb.j:                                             ; preds = %kernel_add_identity_map.exit11
   %i.ab = load i64, ptr @top_level_pgt, align 8
   %i.ac = inttoptr i64 %i.ab to ptr
-  %i.ad = tail call i32 @kernel_ident_mapping_init(ptr noundef nonnull @mapping_info, ptr noundef %i.ac, i64 noundef %i.z, i64 noundef %6) #6
+  %i.ad = tail call i32 @kernel_ident_mapping_init(ptr noundef nonnull @mapping_info, ptr noundef %i.ac, i64 noundef %i.z, i64 noundef %3) #6
   %.not8.i13 = icmp eq i32 %i.ad, 0
   br i1 %.not8.i13, label %kernel_add_identity_map.exit14, label %bb.k
 
@@ -343,17 +339,16 @@ kernel_add_identity_map.exit14:                   ; preds = %kernel_add_identity
   %i.ah = load i32, ptr %i.ag, align 4
   %i.ai = zext i32 %i.ah to i64
   %i.aj = and i64 %.0.in20, -2097152              ; 2 uses
-  %i.ak = add i64 %.0.in20, 15
+  %i.ak = add i64 %.0.in20, 2097167
   %i.al = add i64 %i.ak, %i.ai
-  %7 = or i64 %i.al, 2097151
-  %8 = add i64 %7, 1                              ; 2 uses
-  %.not.i15 = icmp ult i64 %i.aj, %8
+  %4 = and i64 %i.al, -2097152                    ; 2 uses
+  %.not.i15 = icmp ult i64 %i.aj, %4
   br i1 %.not.i15, label %bb.l, label %kernel_add_identity_map.exit17
 
 bb.l:                                             ; preds = %.lr.ph
   %i.am = load i64, ptr @top_level_pgt, align 8
   %i.an = inttoptr i64 %i.am to ptr
-  %i.ao = tail call i32 @kernel_ident_mapping_init(ptr noundef nonnull @mapping_info, ptr noundef %i.an, i64 noundef %i.aj, i64 noundef %8) #6
+  %i.ao = tail call i32 @kernel_ident_mapping_init(ptr noundef nonnull @mapping_info, ptr noundef %i.an, i64 noundef %i.aj, i64 noundef %4) #6
   %.not8.i16 = icmp eq i32 %i.ao, 0
   br i1 %.not8.i16, label %kernel_add_identity_map.exit17, label %bb.m
 
@@ -607,15 +602,14 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %2 = or i64 %i.a, 2097151
-  %3 = add i64 %2, 1                              ; 2 uses
-  %.not.i = icmp ult i64 %i.b, %3
+  %.not.i = icmp ult i64 %i.a, -2097152
   br i1 %.not.i, label %bb.d, label %kernel_add_identity_map.exit
 
 bb.d:                                             ; preds = %bb.c
+  %2 = add i64 %i.b, 2097152
   %i.g = load i64, ptr @top_level_pgt, align 8
   %i.h = inttoptr i64 %i.g to ptr
-  %i.i = tail call i32 @kernel_ident_mapping_init(ptr noundef nonnull @mapping_info, ptr noundef %i.h, i64 noundef %i.b, i64 noundef %3) #6
+  %i.i = tail call i32 @kernel_ident_mapping_init(ptr noundef nonnull @mapping_info, ptr noundef %i.h, i64 noundef %i.b, i64 noundef %2) #6
   %.not8.i = icmp eq i32 %i.i, 0
   br i1 %.not8.i, label %kernel_add_identity_map.exit, label %bb.e
 

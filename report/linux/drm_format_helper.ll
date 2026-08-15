@@ -203,10 +203,9 @@ drm_format_conv_state_reserve.exit.thread66.i:    ; preds = %bb.e
   br label %bb.j
 
 bb.f:                                             ; preds = %bb.b
-  %i.ad = add nsw i64 %i.p, -1
-  %8 = or i64 %i.ad, 7
-  %9 = add nsw i64 %8, 1                          ; 2 uses
-  %i.ae = add nsw i64 %9, %i.v                    ; 3 uses
+  %i.ad = add nsw i64 %i.p, 7
+  %8 = and i64 %i.ad, -8                          ; 2 uses
+  %i.ae = add nsw i64 %i.v, %8                    ; 3 uses
   %i.af = getelementptr i8, ptr %6, i64 8         ; 2 uses
   %i.ag = load i64, ptr %i.af, align 8
   %.not.i57.i = icmp ugt i64 %i.ae, %i.ag
@@ -235,7 +234,7 @@ bb.i:                                             ; preds = %bb.h
 
 drm_format_conv_state_reserve.exit62.i:           ; preds = %bb.i, %bb.h, %bb.g, %._crit_edge.i58.i
   %.0.i60.i = phi ptr [ null, %bb.h ], [ null, %bb.g ], [ %.pre.i59.i, %._crit_edge.i58.i ], [ %i.al, %bb.i ] ; 2 uses
-  %i.am = getelementptr i8, ptr %.0.i60.i, i64 %9
+  %i.am = getelementptr i8, ptr %.0.i60.i, i64 %8
   br label %drm_format_conv_state_reserve.exit.i
 
 drm_format_conv_state_reserve.exit.i:             ; preds = %drm_format_conv_state_reserve.exit62.i, %._crit_edge.i.i

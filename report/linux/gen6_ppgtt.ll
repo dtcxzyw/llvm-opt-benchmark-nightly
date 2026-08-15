@@ -201,16 +201,15 @@ bb.a:
   %i.a = getelementptr i8, ptr %0, i64 680
   %i.b = load ptr, ptr %i.a, align 8
   %i.c = and i64 %1, -65536                       ; 2 uses
-  %i.d = add i64 %2, -1
-  %3 = or i64 %i.d, 65535
-  %reass.sub = sub i64 %3, %i.c
-  %4 = add i64 %reass.sub, 1                      ; 2 uses
+  %i.d = add i64 %2, 65535
+  %3 = and i64 %i.d, -65536
+  %reass.sub = sub i64 %3, %i.c                   ; 2 uses
   %i.e = getelementptr i8, ptr %0, i64 688        ; 2 uses
   tail call void @mutex_lock(ptr noundef %i.e) #7
   %i.f = trunc i64 %1 to i32
   %i.g = lshr i32 %i.f, 22                        ; 2 uses
   %i.h = and i32 %i.g, 511
-  %.not = icmp eq i64 %4, 0
+  %.not = icmp eq i64 %reass.sub, 0
   br i1 %.not, label %._crit_edge, label %.critedge.lr.ph
 
 .critedge.lr.ph:                                  ; preds = %bb.a
@@ -224,7 +223,7 @@ bb.a:
 .critedge:                                        ; preds = %.critedge.lr.ph, %.critedge
   %indvars.iv = phi i64 [ %i.m, %.critedge.lr.ph ], [ %indvars.iv.next, %.critedge ] ; 4 uses
   %.035 = phi i64 [ %i.c, %.critedge.lr.ph ], [ %i.ac, %.critedge ] ; 3 uses
-  %.03134 = phi i64 [ %4, %.critedge.lr.ph ], [ %i.ad, %.critedge ] ; 2 uses
+  %.03134 = phi i64 [ %reass.sub, %.critedge.lr.ph ], [ %i.ad, %.critedge ] ; 2 uses
   %.val = load ptr, ptr %i.i, align 8
   %i.n = getelementptr [8 x i8], ptr %.val, i64 %indvars.iv
   %i.o = load ptr, ptr %i.n, align 8              ; 2 uses

@@ -201,19 +201,18 @@ bb.b:                                             ; preds = %bb.a
   %i.b = load i64, ptr @phys_initrd_start, align 8 ; 2 uses
   %i.c = and i64 %i.b, -4096                      ; 4 uses
   %i.d = and i64 %i.b, 4095
-  %i.e = add i64 %i.a, -1
+  %i.e = add i64 %i.a, 4095
   %i.f = add i64 %i.e, %i.d
-  %0 = or i64 %i.f, 4095
-  %1 = add i64 %0, 1                              ; 4 uses
-  %i.g = tail call zeroext i1 @memblock_is_region_memory(i64 noundef %i.c, i64 noundef %1) #20
+  %0 = and i64 %i.f, -4096                        ; 4 uses
+  %i.g = tail call zeroext i1 @memblock_is_region_memory(i64 noundef %i.c, i64 noundef %0) #20
   br i1 %i.g, label %bb.c, label %bb.e
 
 bb.c:                                             ; preds = %bb.b
-  %i.h = tail call zeroext i1 @memblock_is_region_reserved(i64 noundef %i.c, i64 noundef %1) #20
+  %i.h = tail call zeroext i1 @memblock_is_region_reserved(i64 noundef %i.c, i64 noundef %0) #20
   br i1 %i.h, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.i = tail call i32 @__memblock_reserve(i64 noundef range(i64 0, -4095) %i.c, i64 noundef range(i64 4096, 1) %1, i32 noundef -1, i32 noundef 0) #20 ; 0 uses
+  %i.i = tail call i32 @__memblock_reserve(i64 noundef range(i64 0, -4095) %i.c, i64 noundef range(i64 4096, 1) %0, i32 noundef -1, i32 noundef 0) #20 ; 0 uses
   %i.j = load i64, ptr @phys_initrd_start, align 8
   %i.k = load i64, ptr @page_offset_base, align 8
   %i.l = add i64 %i.k, %i.j                       ; 2 uses
@@ -226,7 +225,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c, %bb.b
   %.str.5.sink = phi ptr [ @.str.5, %bb.b ], [ @.str.6, %bb.c ]
-  %i.o = tail call i32 (ptr, ...) @_printk(ptr noundef nonnull %.str.5.sink, i64 noundef %i.c, i64 noundef %1) #21 ; 0 uses
+  %i.o = tail call i32 (ptr, ...) @_printk(ptr noundef nonnull %.str.5.sink, i64 noundef %i.c, i64 noundef %0) #21 ; 0 uses
   %i.p = tail call i32 (ptr, ...) @_printk(ptr noundef nonnull @.str.7) #21 ; 0 uses
   store i64 0, ptr @initrd_start, align 8
   store i64 0, ptr @initrd_end, align 8

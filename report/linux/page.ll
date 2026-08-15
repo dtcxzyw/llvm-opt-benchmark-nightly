@@ -201,14 +201,13 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.e = load i64, ptr @max_pfn, align 8
   %i.f = shl i64 %i.e, 3
-  %i.g = add i64 %i.f, -8
-  %5 = or i64 %i.g, 262136
-  %6 = add i64 %5, 8                              ; 2 uses
-  %.not53 = icmp ult i64 %i.a, %6
+  %i.g = add i64 %i.f, 262136
+  %5 = and i64 %i.g, -262144                      ; 2 uses
+  %.not53 = icmp ult i64 %i.a, %5
   br i1 %.not53, label %bb.c, label %.thread._crit_edge.thread
 
 bb.c:                                             ; preds = %bb.b
-  %i.h = sub nuw i64 %6, %i.a
+  %i.h = sub nuw i64 %5, %i.a
   %i.i = tail call i64 @llvm.umin.i64(i64 %1, i64 %i.h) ; 2 uses
   %.not546 = icmp eq i64 %i.i, 0
   br i1 %.not546, label %.thread._crit_edge.thread, label %.lr.ph

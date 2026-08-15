@@ -201,11 +201,10 @@ acpi_map.exit.thread:                             ; preds = %bb.i, %acpi_map.exi
   br label %bb.n
 
 bb.l:                                             ; preds = %acpi_map.exit
-  %i.ad = add i64 %i.e, -1
-  %2 = or i64 %i.ad, 4095
+  %i.ad = add i64 %i.e, 4095
+  %2 = and i64 %i.ad, -4096
   %i.ae = and i64 %0, -4096                       ; 2 uses
   %reass.sub = sub i64 %2, %i.ae
-  %3 = add i64 %reass.sub, 1
   store volatile ptr %i.p, ptr %i.p, align 8
   %i.af = getelementptr i8, ptr %i.p, i64 8       ; 2 uses
   store volatile ptr %i.p, ptr %i.af, align 8
@@ -217,7 +216,7 @@ bb.l:                                             ; preds = %acpi_map.exit
   %i.ak = getelementptr i8, ptr %i.p, i64 24
   store i64 %i.ae, ptr %i.ak, align 8
   %i.al = getelementptr i8, ptr %i.p, i64 32
-  store i64 %3, ptr %i.al, align 8
+  store i64 %reass.sub, ptr %i.al, align 8
   %i.am = getelementptr i8, ptr %i.p, i64 40
   store i64 1, ptr %i.am, align 8
   %i.an = load ptr, ptr getelementptr inbounds nuw (i8, ptr @acpi_ioremaps, i64 8), align 8 ; 2 uses

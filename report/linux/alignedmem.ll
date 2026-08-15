@@ -26,9 +26,8 @@ bb.a:
   %i.l = and i64 %i.i, %i.k
   %i.m = add i64 %i.l, -1
   store i64 %i.m, ptr %i.a, align 8
-  %i.n = add i64 %0, -1
-  %5 = or i64 %i.n, 4095
-  %6 = add i64 %5, 1                              ; 4 uses
+  %i.n = add i64 %0, 4095                         ; 3 uses
+  %5 = and i64 %i.n, -4096                        ; 2 uses
   %i.o = lshr i64 %spec.store.select, 12          ; 2 uses
   %i.p = trunc i64 %i.o to i32                    ; 2 uses
   %i.q = add i32 %i.p, -1                         ; 4 uses
@@ -40,7 +39,7 @@ bb.b:                                             ; preds = %bb.a
   %i.t = load ptr, ptr %i.s, align 8
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 40
   %i.v = load ptr, ptr %i.u, align 8
-  %i.w = lshr exact i64 %6, 12
+  %i.w = lshr i64 %i.n, 12
   %i.x = sext i32 %i.q to i64
   %i.y = add nsw i64 %i.w, %i.x
   %i.z = call win64cc i64 %i.v(i32 noundef 1, i32 noundef %4, i64 noundef %i.y, ptr noundef nonnull %i.a) #5
@@ -55,7 +54,7 @@ bb.c:                                             ; preds = %bb.a
   %i.ae = inttoptr i64 %i.ad to ptr
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 32
   %i.ag = load i32, ptr %i.af, align 8
-  %i.ah = lshr exact i64 %6, 12
+  %i.ah = lshr i64 %i.n, 12
   %i.ai = sext i32 %i.q to i64
   %i.aj = add nsw i64 %i.ah, %i.ai
   %i.ak = call i64 (i32, ...) @__efi64_thunk(i32 noundef %i.ag, i32 noundef 1, i32 noundef %4, i64 noundef %i.aj, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #5
@@ -131,7 +130,7 @@ bb.k:                                             ; preds = %.thread
   %i.bs = getelementptr inbounds nuw i8, ptr %i.br, i64 48
   %i.bt = load ptr, ptr %i.bs, align 8
   %i.bu = load i64, ptr %1, align 8
-  %i.bv = add i64 %i.bu, %6
+  %i.bv = add i64 %i.bu, %5
   %i.bw = sext i32 %.04250 to i64
   %i.bx = call win64cc i64 %i.bt(i64 noundef %i.bv, i64 noundef %i.bw) #5 ; 0 uses
   br label %bb.m
@@ -146,7 +145,7 @@ bb.l:                                             ; preds = %.thread
   %i.cd = getelementptr inbounds nuw i8, ptr %i.cc, i64 36
   %i.ce = load i32, ptr %i.cd, align 4
   %i.cf = load i64, ptr %1, align 8
-  %i.cg = add i64 %i.cf, %6
+  %i.cg = add i64 %i.cf, %5
   %i.ch = call i64 (i32, ...) @__efi64_thunk(i32 noundef %i.ce, i64 noundef %i.cg, i32 noundef 0, i32 noundef %.04250, ptr noundef nonnull %i.d) #5 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #4
   br label %bb.m

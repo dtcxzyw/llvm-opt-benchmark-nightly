@@ -203,11 +203,9 @@ bb.a:
   %i.d = getelementptr i8, ptr %0, i64 8          ; 3 uses
   %i.e = load i64, ptr %i.d, align 8              ; 2 uses
   %i.f = ashr i64 %i.e, 12                        ; 5 uses
-  %7 = add i64 %1, -1
-  %i.g = add i64 %7, %i.e
-  %8 = or i64 %i.g, 4095
-  %i.h = add i64 %8, 1
-  %i.i = lshr exact i64 %i.h, 12                  ; 3 uses
+  %i.g = add i64 %1, 4095
+  %i.h = add i64 %i.g, %i.e
+  %i.i = lshr i64 %i.h, 12                        ; 3 uses
   %i.j = tail call i64 asm "movq %gs:${1:a}, $0", "=r,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @current_task) #18, !srcloc !41
   %i.k = inttoptr i64 %i.j to ptr                 ; 3 uses
   %i.l = getelementptr i8, ptr %i.k, i64 2152
