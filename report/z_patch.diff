@@ -1,0 +1,329 @@
+diff --git a/llvm/lib/Analysis/ValueTracking.cpp b/llvm/lib/Analysis/ValueTracking.cpp
+index 28d47d8f7df27..f29abbade46b1 100644
+--- a/llvm/lib/Analysis/ValueTracking.cpp
++++ b/llvm/lib/Analysis/ValueTracking.cpp
+@@ -4116,6 +4116,21 @@ static bool isNonEqualPointersWithRecursiveGEP(const Value *A, const Value *B,
+           (StartOffset.sle(OffsetB) && StepOffset.isNegative()));
+ }
+ 
++static bool isNonEqualURemFromDomCondition(const Value *X, const Value *Rem,
++                                           const SimplifyQuery &Q) {
++  // Match Rem as a urem of X and Y.
++  const Value *Y;
++  if (!match(Rem, m_URem(m_Specific(X), m_Value(Y))))
++    return false;
++
++  // For a defined urem, X != X urem Y exactly when X u>= Y.
++  // Check whether a dominating branch condition implies that relationship
++  // between X and Y.
++  std::optional<bool> Implied =
++      isImpliedByDomCondition(ICmpInst::ICMP_UGE, X, Y, Q.CxtI, Q.DL);
++  return Implied && *Implied;
++}
++
+ static bool isKnownNonEqualFromContext(const Value *V1, const Value *V2,
+                                        const SimplifyQuery &Q, unsigned Depth) {
+   if (!Q.CxtI)
+@@ -4244,6 +4259,10 @@ static bool isKnownNonEqual(const Value *V1, const Value *V2,
+       match(V2, m_PtrToIntSameSize(Q.DL, m_Value(B))))
+     return isKnownNonEqual(A, B, DemandedElts, Q, Depth + 1);
+ 
++  if (isNonEqualURemFromDomCondition(V1, V2, Q) ||
++      isNonEqualURemFromDomCondition(V2, V1, Q))
++    return true;
++
+   if (isKnownNonEqualFromContext(V1, V2, Q, Depth))
+     return true;
+ 
+diff --git a/llvm/test/Transforms/InstSimplify/domcondition.ll b/llvm/test/Transforms/InstSimplify/domcondition.ll
+index 2893bb155bbe7..babeb4f0db499 100644
+--- a/llvm/test/Transforms/InstSimplify/domcondition.ll
++++ b/llvm/test/Transforms/InstSimplify/domcondition.ll
+@@ -118,6 +118,287 @@ cond.end:
+   ret i32 %cond
+ }
+ 
++; Direct isKnownNonEqual tests.
++
++; X != X urem Y is true if X u>= Y.
++define i1 @urem_not_equal_domcondition(i64 %x, i64 %y) {
++; CHECK-LABEL: @urem_not_equal_domcondition(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[COND:%.*]] = icmp uge i64 [[X:%.*]], [[Y:%.*]]
++; CHECK-NEXT:    br i1 [[COND]], label [[KNOWN:%.*]], label [[EXIT:%.*]]
++; CHECK:       known:
++; CHECK-NEXT:    ret i1 true
++; CHECK:       exit:
++; CHECK-NEXT:    ret i1 false
++;
++entry:
++  %cond = icmp uge i64 %x, %y
++  br i1 %cond, label %known, label %exit
++
++known:
++  %rem = urem i64 %x, %y
++  %cmp = icmp ne i64 %x, %rem
++  ret i1 %cmp
++
++exit:
++  ret i1 false
++}
++
++; X urem Y == X is false if X u>= Y.
++define i1 @urem_equal_commuted_domcondition(i64 %x, i64 %y) {
++; CHECK-LABEL: @urem_equal_commuted_domcondition(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[COND:%.*]] = icmp uge i64 [[X:%.*]], [[Y:%.*]]
++; CHECK-NEXT:    br i1 [[COND]], label [[KNOWN:%.*]], label [[EXIT:%.*]]
++; CHECK:       known:
++; CHECK-NEXT:    ret i1 false
++; CHECK:       exit:
++; CHECK-NEXT:    ret i1 true
++;
++entry:
++  %cond = icmp uge i64 %x, %y
++  br i1 %cond, label %known, label %exit
++
++known:
++  %rem = urem i64 %x, %y
++  %cmp = icmp eq i64 %rem, %x
++  ret i1 %cmp
++
++exit:
++  ret i1 true
++}
++
++; Equivalent comparisons against one.
++
++; (X - (X urem Y)) u>= 1 is true if X u>= Y.
++define i1 @urem_sub_uge_one_domcondition(i64 %x, i64 %y) {
++; CHECK-LABEL: @urem_sub_uge_one_domcondition(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[COND:%.*]] = icmp uge i64 [[X:%.*]], [[Y:%.*]]
++; CHECK-NEXT:    br i1 [[COND]], label [[KNOWN:%.*]], label [[EXIT:%.*]]
++; CHECK:       known:
++; CHECK-NEXT:    ret i1 true
++; CHECK:       exit:
++; CHECK-NEXT:    ret i1 false
++;
++entry:
++  %cond = icmp uge i64 %x, %y
++  br i1 %cond, label %known, label %exit
++
++known:
++  %rem = urem i64 %x, %y
++  %sub = sub i64 %x, %rem
++  %cmp = icmp uge i64 %sub, 1
++  ret i1 %cmp
++
++exit:
++  ret i1 false
++}
++
++; (X - (X urem Y)) u< 1 is false if X u>= Y.
++define i1 @urem_sub_ult_one_domcondition(i64 %x, i64 %y) {
++; CHECK-LABEL: @urem_sub_ult_one_domcondition(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[COND:%.*]] = icmp uge i64 [[X:%.*]], [[Y:%.*]]
++; CHECK-NEXT:    br i1 [[COND]], label [[KNOWN:%.*]], label [[EXIT:%.*]]
++; CHECK:       known:
++; CHECK-NEXT:    ret i1 false
++; CHECK:       exit:
++; CHECK-NEXT:    ret i1 true
++;
++entry:
++  %cond = icmp uge i64 %x, %y
++  br i1 %cond, label %known, label %exit
++
++known:
++  %rem = urem i64 %x, %y
++  %sub = sub i64 %x, %rem
++  %cmp = icmp ult i64 %sub, 1
++  ret i1 %cmp
++
++exit:
++  ret i1 true
++}
++
++; Equivalent unsigned comparisons against zero.
++
++; (X - (X urem Y)) u> 0 is true if X u>= Y.
++define i1 @urem_sub_ugt_zero_domcondition(i64 %x, i64 %y) {
++; CHECK-LABEL: @urem_sub_ugt_zero_domcondition(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[COND:%.*]] = icmp uge i64 [[X:%.*]], [[Y:%.*]]
++; CHECK-NEXT:    br i1 [[COND]], label [[KNOWN:%.*]], label [[EXIT:%.*]]
++; CHECK:       known:
++; CHECK-NEXT:    ret i1 true
++; CHECK:       exit:
++; CHECK-NEXT:    ret i1 false
++;
++entry:
++  %cond = icmp uge i64 %x, %y
++  br i1 %cond, label %known, label %exit
++
++known:
++  %rem = urem i64 %x, %y
++  %sub = sub i64 %x, %rem
++  %cmp = icmp ugt i64 %sub, 0
++  ret i1 %cmp
++
++exit:
++  ret i1 false
++}
++
++; (X - (X urem Y)) u<= 0 is false if X u>= Y.
++define i1 @urem_sub_ule_zero_domcondition(i64 %x, i64 %y) {
++; CHECK-LABEL: @urem_sub_ule_zero_domcondition(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[COND:%.*]] = icmp uge i64 [[X:%.*]], [[Y:%.*]]
++; CHECK-NEXT:    br i1 [[COND]], label [[KNOWN:%.*]], label [[EXIT:%.*]]
++; CHECK:       known:
++; CHECK-NEXT:    ret i1 false
++; CHECK:       exit:
++; CHECK-NEXT:    ret i1 true
++;
++entry:
++  %cond = icmp uge i64 %x, %y
++  br i1 %cond, label %known, label %exit
++
++known:
++  %rem = urem i64 %x, %y
++  %sub = sub i64 %x, %rem
++  %cmp = icmp ule i64 %sub, 0
++  ret i1 %cmp
++
++exit:
++  ret i1 true
++}
++
++; Equality comparisons against zero.
++
++; (X - (X urem Y)) != 0 is true if X u>= Y.
++define i1 @urem_sub_ne_zero_domcondition(i64 %x, i64 %y) {
++; CHECK-LABEL: @urem_sub_ne_zero_domcondition(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[COND:%.*]] = icmp uge i64 [[X:%.*]], [[Y:%.*]]
++; CHECK-NEXT:    br i1 [[COND]], label [[KNOWN:%.*]], label [[EXIT:%.*]]
++; CHECK:       known:
++; CHECK-NEXT:    ret i1 true
++; CHECK:       exit:
++; CHECK-NEXT:    ret i1 false
++;
++entry:
++  %cond = icmp uge i64 %x, %y
++  br i1 %cond, label %known, label %exit
++
++known:
++  %rem = urem i64 %x, %y
++  %sub = sub i64 %x, %rem
++  %cmp = icmp ne i64 %sub, 0
++  ret i1 %cmp
++
++exit:
++  ret i1 false
++}
++
++; (X - (X urem Y)) == 0 is false if X u>= Y.
++define i1 @urem_sub_eq_zero_domcondition(i64 %x, i64 %y) {
++; CHECK-LABEL: @urem_sub_eq_zero_domcondition(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[COND:%.*]] = icmp uge i64 [[X:%.*]], [[Y:%.*]]
++; CHECK-NEXT:    br i1 [[COND]], label [[KNOWN:%.*]], label [[EXIT:%.*]]
++; CHECK:       known:
++; CHECK-NEXT:    ret i1 false
++; CHECK:       exit:
++; CHECK-NEXT:    ret i1 true
++;
++entry:
++  %cond = icmp uge i64 %x, %y
++  br i1 %cond, label %known, label %exit
++
++known:
++  %rem = urem i64 %x, %y
++  %sub = sub i64 %x, %rem
++  %cmp = icmp eq i64 %sub, 0
++  ret i1 %cmp
++
++exit:
++  ret i1 true
++}
++
++; Intrinsic user.
++
++declare i64 @llvm.umax.i64(i64, i64)
++
++; umax(X - (X urem Y), 1) is X - (X urem Y) if X u>= Y.
++define i64 @urem_sub_umax_domcondition(i64 %x, i64 %y) {
++; CHECK-LABEL: @urem_sub_umax_domcondition(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[COND:%.*]] = icmp ult i64 [[X:%.*]], [[Y:%.*]]
++; CHECK-NEXT:    br i1 [[COND]], label [[EXIT:%.*]], label [[KNOWN:%.*]]
++; CHECK:       known:
++; CHECK-NEXT:    [[REM:%.*]] = urem i64 [[X]], [[Y]]
++; CHECK-NEXT:    [[SUB:%.*]] = sub i64 [[X]], [[REM]]
++; CHECK-NEXT:    ret i64 [[SUB]]
++; CHECK:       exit:
++; CHECK-NEXT:    ret i64 0
++;
++entry:
++  %cond = icmp ult i64 %x, %y
++  br i1 %cond, label %exit, label %known
++
++known:
++  %rem = urem i64 %x, %y
++  %sub = sub i64 %x, %rem
++  %max = call i64 @llvm.umax.i64(i64 %sub, i64 1)
++  ret i64 %max
++
++exit:
++  ret i64 0
++}
++
++; Negative tests.
++
++; Do not simplify (X - (X urem Y)) != 0 without a dominating condition.
++define i1 @urem_sub_nonzero_no_domcondition(i64 %x, i64 %y) {
++; CHECK-LABEL: @urem_sub_nonzero_no_domcondition(
++; CHECK-NEXT:    [[REM:%.*]] = urem i64 [[X:%.*]], [[Y:%.*]]
++; CHECK-NEXT:    [[SUB:%.*]] = sub i64 [[X]], [[REM]]
++; CHECK-NEXT:    [[CMP:%.*]] = icmp ne i64 [[SUB]], 0
++; CHECK-NEXT:    ret i1 [[CMP]]
++;
++  %rem = urem i64 %x, %y
++  %sub = sub i64 %x, %rem
++  %cmp = icmp ne i64 %sub, 0
++  ret i1 %cmp
++}
++
++; Do not simplify using X u>= Z when the remainder divisor is Y.
++define i1 @urem_sub_nonzero_wrong_divisor_domcondition(i64 %x, i64 %y, i64 %z) {
++; CHECK-LABEL: @urem_sub_nonzero_wrong_divisor_domcondition(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[COND:%.*]] = icmp uge i64 [[X:%.*]], [[Z:%.*]]
++; CHECK-NEXT:    br i1 [[COND]], label [[KNOWN:%.*]], label [[EXIT:%.*]]
++; CHECK:       known:
++; CHECK-NEXT:    [[REM:%.*]] = urem i64 [[X]], [[Y:%.*]]
++; CHECK-NEXT:    [[SUB:%.*]] = sub i64 [[X]], [[REM]]
++; CHECK-NEXT:    [[CMP:%.*]] = icmp ne i64 [[SUB]], 0
++; CHECK-NEXT:    ret i1 [[CMP]]
++; CHECK:       exit:
++; CHECK-NEXT:    ret i1 false
++;
++entry:
++  %cond = icmp uge i64 %x, %z
++  br i1 %cond, label %known, label %exit
++
++known:
++  %rem = urem i64 %x, %y
++  %sub = sub i64 %x, %rem
++  %cmp = icmp ne i64 %sub, 0
++  ret i1 %cmp
++
++exit:
++  ret i1 false
++}
++
+ define i32 @srem_domcondition(i32 %x, i32 %y) {
+ ; CHECK-LABEL: @srem_domcondition(
+ ; CHECK-NEXT:  entry:
