@@ -203,10 +203,9 @@ bb.ai:                                            ; preds = %._crit_edge138.i.i
 
 bb.aj:                                            ; preds = %bb.ao, %.lr.ph137.i.i
   %.075135.i.i = phi i32 [ %i.mh, %.lr.ph137.i.i ], [ %i.ob, %bb.ao ]
-  %i.mo = add i32 %.075135.i.i, -1
-  %5 = or i32 %i.mo, 4095
-  %6 = add i32 %5, 1                              ; 3 uses
-  %i.mp = zext i32 %6 to i64
+  %i.mo = add i32 %.075135.i.i, 4095
+  %5 = and i32 %i.mo, -4096                       ; 3 uses
+  %i.mp = zext i32 %5 to i64
   %i.mq = call noalias ptr @__kvmalloc_node_noprof(i64 noundef %i.mp, i64 noundef 1, i32 noundef 3264, i32 noundef -1) #17 ; 8 uses
   %i.mr = icmp ult ptr %i.mq, inttoptr (i64 17 to ptr)
   br i1 %i.mr, label %_kmalloc_noprof.exit114, label %bb.ak
@@ -218,7 +217,7 @@ bb.ak:                                            ; preds = %bb.aj
   br i1 %i.mu, label %.lr.ph.preheader.i.i, label %._crit_edge.i134.i
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.ak
-  %i.mv = sub i32 %6, %i.mj
+  %i.mv = sub i32 %5, %i.mj
   %i.mw = getelementptr i8, ptr %i.mq, i64 8
   br label %.lr.ph.i135.i
 
@@ -275,7 +274,7 @@ bb.an:                                            ; preds = %bb.al
 
 bb.ao:                                            ; preds = %bb.am
   call void @kvfree(ptr noundef %i.mq) #14
-  %i.oa = mul i32 %6, 5
+  %i.oa = mul i32 %5, 5
   %i.ob = lshr exact i32 %i.oa, 2                 ; 3 uses
   %i.oc = load i32, ptr @core_file_note_size_limit, align 4
   %.not.i139.i = icmp ult i32 %i.ob, %i.oc

@@ -198,10 +198,10 @@ fls64.exit:                                       ; preds = %_kzalloc_noprof.exi
   %i.w = lshr i64 %i.v, 4
   %i.x = load i64, ptr %.270, align 8
   %i.y = xor i64 %i.w, %i.x
-  %i.z = tail call i32 asm "bsrq $1,${0:q}", "=r,r,0,~{dirflag},~{fpsr},~{flags}"(i64 %i.y, i32 -1) #9, !srcloc !13 ; 2 uses
-  %3 = or i32 %i.z, 3
-  %i.aa = add i32 %.270.val, 1
-  %i.ab = add i32 %i.aa, %3                       ; 2 uses
+  %i.z = tail call i32 asm "bsrq $1,${0:q}", "=r,r,0,~{dirflag},~{fpsr},~{flags}"(i64 %i.y, i32 -1) #9, !srcloc !13
+  %3 = and i32 %i.z, -4                           ; 2 uses
+  %i.aa = add i32 %3, 4
+  %i.ab = add i32 %i.aa, %.270.val                ; 2 uses
   %i.ac = getelementptr i8, ptr %i.t, i64 8       ; 2 uses
   store i32 %i.ab, ptr %i.ac, align 8
   %i.ad = zext nneg i32 %i.ab to i64
@@ -230,8 +230,7 @@ bb.f:                                             ; preds = %fls64.exit, %bb.e
   %i.ap = getelementptr i8, ptr %i.t, i64 16
   store ptr %i.ao, ptr %i.ap, align 8
   %i.aq = load i64, ptr %.270, align 8
-  %4 = and i32 %i.z, -4
-  %i.ar = zext nneg i32 %4 to i64
+  %i.ar = zext nneg i32 %3 to i64
   %i.as = lshr i64 %i.aq, %i.ar                   ; 2 uses
   %i.at = trunc i64 %i.as to i32
   %i.au = and i32 %i.at, 15

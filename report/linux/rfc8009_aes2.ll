@@ -110,17 +110,17 @@ bb.c:                                             ; preds = %.critedge
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %8, i8 0, i64 64, i1 false), !annotation !18
   %i.j = getelementptr i8, ptr %1, i64 4          ; 2 uses
   %i.k = getelementptr i8, ptr %1, i64 32         ; 3 uses
+  %.val76 = load i32, ptr %i.j, align 4
+  %9 = add i32 %.val76, 79
+  %10 = or i32 %9, 7
+  %11 = add i32 %10, 1
   %.val80 = load ptr, ptr %i.k, align 8
-  %9 = getelementptr i8, ptr %.val80, i64 -16
-  %.val80.val = load i32, ptr %9, align 8
-  %10 = shl i32 %.val80.val, 1
-  %11 = add i32 %10, -2
-  %12 = or i32 %11, 14
-  %.val76.a = load i32, ptr %i.j, align 4
-  %13 = add i32 %.val76.a, 79
-  %14 = or i32 %13, 7
-  %15 = add i32 %12, %14
-  %i.l = add i32 %15, 3
+  %12 = getelementptr i8, ptr %.val80, i64 -16
+  %.val76.a = load i32, ptr %12, align 8
+  %13 = shl i32 %.val76.a, 1
+  %14 = add i32 %13, 14
+  %15 = and i32 %14, -16
+  %i.l = add i32 %11, %15
   %i.m = zext i32 %i.l to i64
   %i.n = tail call noalias align 8 ptr @__kmalloc_noprof(i64 noundef range(i64 0, 4294967296) %i.m, i32 noundef 3392) #8 ; 14 uses
   %.not71 = icmp eq ptr %i.n, null
@@ -136,10 +136,9 @@ bb.d:                                             ; preds = %.critedge74
   %.val79 = load ptr, ptr %i.k, align 8
   %i.t = getelementptr i8, ptr %.val79, i64 -16
   %.val79.val = load i32, ptr %i.t, align 8
-  %i.u = add i32 %.val79.val, -1
-  %16 = or i32 %i.u, 7
-  %17 = add i32 %16, 1
-  %i.v = zext i32 %17 to i64
+  %i.u = add i32 %.val79.val, 7
+  %16 = and i32 %i.u, -8
+  %i.v = zext i32 %16 to i64
   %i.w = getelementptr i8, ptr %i.s, i64 %i.v     ; 2 uses
   br i1 %7, label %bb.f, label %bb.e
 
@@ -171,9 +170,8 @@ sg_set_buf.exit:                                  ; preds = %bb.f
   %.val78 = load ptr, ptr %i.k, align 8
   %i.ag = getelementptr i8, ptr %.val78, i64 -16  ; 2 uses
   %.val78.val = load i32, ptr %i.ag, align 8
-  %i.ah = add i32 %.val78.val, -1
-  %18 = or i32 %i.ah, 7
-  %19 = add i32 %18, 1
+  %i.ah = add i32 %.val78.val, 7
+  %17 = and i32 %i.ah, -8
   %i.ai = ptrtoint ptr %i.w to i64                ; 2 uses
   %i.aj = add i64 %i.ai, 2147483648
   %i.ak = icmp ugt ptr %i.w, inttoptr (i64 -2147483649 to ptr)
@@ -194,7 +192,7 @@ sg_set_buf.exit:                                  ; preds = %bb.f
   %i.ax = getelementptr inbounds nuw i8, ptr %8, i64 8
   store i32 %i.at, ptr %i.ax, align 8
   %i.ay = getelementptr inbounds nuw i8, ptr %8, i64 12
-  store i32 %19, ptr %i.ay, align 4
+  store i32 %17, ptr %i.ay, align 4
   %i.az = getelementptr inbounds nuw i8, ptr %8, i64 32
   %i.ba = getelementptr inbounds nuw i8, ptr %8, i64 40
   store i32 0, ptr %i.ba, align 8
@@ -212,11 +210,10 @@ sg_set_buf.exit:                                  ; preds = %bb.f
   store i32 0, ptr %i.bi, align 8
   call void @llvm.memset.p0.i64(ptr noundef align 8 dereferenceable(16) %i.bh, i8 0, i64 16, i1 false)
   %.val77.val = load i32, ptr %i.ag, align 8
-  %i.bj = add i32 %.val77.val, -1
-  %20 = or i32 %i.bj, 7
-  %21 = add i32 %20, 1
+  %i.bj = add i32 %.val77.val, 7
+  %18 = and i32 %i.bj, -8
   %i.bk = getelementptr i8, ptr %i.n, i64 48
-  store i32 %21, ptr %i.bk, align 8
+  store i32 %18, ptr %i.bk, align 8
   %i.bl = trunc i64 %i.d to i32
   %i.bm = getelementptr i8, ptr %i.n, i64 64
   store ptr %8, ptr %i.bm, align 8
@@ -279,17 +276,17 @@ _kzalloc_noprof.exit:                             ; preds = %.critedge
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %6, i8 0, i64 64, i1 false), !annotation !18
   %i.k = getelementptr i8, ptr %1, i64 4          ; 2 uses
   %i.l = getelementptr i8, ptr %1, i64 32         ; 3 uses
+  %.val47 = load i32, ptr %i.k, align 4
+  %7 = add i32 %.val47, 79
+  %8 = or i32 %7, 7
+  %9 = add i32 %8, 1
   %.val51 = load ptr, ptr %i.l, align 8
-  %7 = getelementptr i8, ptr %.val51, i64 -16
-  %.val51.val = load i32, ptr %7, align 8
-  %8 = shl i32 %.val51.val, 1
-  %9 = add i32 %8, -2
-  %10 = or i32 %9, 14
-  %.val47.a = load i32, ptr %i.k, align 4
-  %11 = add i32 %.val47.a, 79
-  %12 = or i32 %11, 7
-  %13 = add i32 %10, %12
-  %i.m = add i32 %13, 3
+  %10 = getelementptr i8, ptr %.val51, i64 -16
+  %.val47.a = load i32, ptr %10, align 8
+  %11 = shl i32 %.val47.a, 1
+  %12 = add i32 %11, 14
+  %13 = and i32 %12, -16
+  %i.m = add i32 %9, %13
   %i.n = zext i32 %i.m to i64
   %i.o = tail call noalias align 8 ptr @__kmalloc_noprof(i64 noundef range(i64 0, 4294967296) %i.n, i32 noundef 3392) #8 ; 12 uses
   %.not45 = icmp eq ptr %i.o, null
@@ -315,18 +312,16 @@ sg_set_buf.exit:                                  ; preds = %bb.c
   %.val49 = load ptr, ptr %i.l, align 8
   %i.s = getelementptr i8, ptr %.val49, i64 -16   ; 2 uses
   %.val49.val = load i32, ptr %i.s, align 8
-  %i.t = add i32 %.val49.val, -1
-  %14 = or i32 %i.t, 7
-  %15 = add i32 %14, 1
+  %i.t = add i32 %.val49.val, 7
+  %14 = and i32 %i.t, -8
   %i.u = add i32 %.val46, 79
   %i.v = or i32 %i.u, 7
   %i.w = add i32 %i.v, 1
   %i.x = zext i32 %i.w to i64
   %i.y = getelementptr i8, ptr %i.o, i64 %i.x     ; 2 uses
-  %i.z = add i32 %.val50.val, -1
-  %16 = or i32 %i.z, 7
-  %17 = add i32 %16, 1
-  %i.aa = zext i32 %17 to i64
+  %i.z = add i32 %.val50.val, 7
+  %15 = and i32 %i.z, -8
+  %i.aa = zext i32 %15 to i64
   %i.ab = getelementptr i8, ptr %i.y, i64 %i.aa   ; 2 uses
   %i.ac = ptrtoint ptr %i.ab to i64               ; 2 uses
   %i.ad = add i64 %i.ac, 2147483648
@@ -348,7 +343,7 @@ sg_set_buf.exit:                                  ; preds = %bb.c
   %i.ar = getelementptr inbounds nuw i8, ptr %6, i64 8
   store i32 %i.an, ptr %i.ar, align 8
   %i.as = getelementptr inbounds nuw i8, ptr %6, i64 12
-  store i32 %15, ptr %i.as, align 4
+  store i32 %14, ptr %i.as, align 4
   %i.at = getelementptr inbounds nuw i8, ptr %6, i64 32
   %i.au = getelementptr inbounds nuw i8, ptr %6, i64 40
   store i32 0, ptr %i.au, align 8
@@ -366,11 +361,10 @@ sg_set_buf.exit:                                  ; preds = %bb.c
   store i32 0, ptr %i.bc, align 8
   call void @llvm.memset.p0.i64(ptr noundef align 8 dereferenceable(16) %i.bb, i8 0, i64 16, i1 false)
   %.val48.val = load i32, ptr %i.s, align 8
-  %i.bd = add i32 %.val48.val, -1
-  %18 = or i32 %i.bd, 7
-  %19 = add i32 %18, 1
+  %i.bd = add i32 %.val48.val, 7
+  %16 = and i32 %i.bd, -8
   %i.be = getelementptr i8, ptr %i.o, i64 48
-  store i32 %19, ptr %i.be, align 8
+  store i32 %16, ptr %i.be, align 8
   %i.bf = load i64, ptr %5, align 8
   %i.bg = trunc i64 %i.bf to i32
   %i.bh = getelementptr i8, ptr %i.o, i64 64
@@ -473,19 +467,19 @@ bb.f:                                             ; preds = %bb.e
   %i.s = load i32, ptr %2, align 8
   %i.t = add i32 %i.s, 5
   %i.u = load i32, ptr %3, align 8
-  %i.v = add i32 %i.t, %i.u                       ; 2 uses
-  %i.w = add i32 %i.v, 4                          ; 2 uses
-  %6 = getelementptr i8, ptr %.val93, i64 -16
-  %.val96.val = load i32, ptr %6, align 8
-  %i.x = add i32 %.val96.val, 7
+  %6 = add i32 %i.t, %i.u                         ; 2 uses
+  %i.v = add i32 %6, 4                            ; 2 uses
+  %i.w = add i32 %.val93.val, 7
+  %7 = and i32 %i.w, -8
+  %8 = or disjoint i32 %7, 2
+  %i.x = add i32 %6, 3
   %i.y = or i32 %i.x, 7
-  %i.z = add i32 %.val93.val, -1
-  %7 = or i32 %i.z, 7
-  %8 = add i32 %i.y, %7
-  %i.aa = add i32 %i.v, 3
+  %i.z = add i32 %8, %i.y
+  %9 = getelementptr i8, ptr %.val93, i64 -16
+  %.val96.val = load i32, ptr %9, align 8
+  %i.aa = add i32 %.val96.val, 7
   %i.ab = or i32 %i.aa, 7
-  %9 = add i32 %8, %i.ab
-  %i.ac = add i32 %9, 3
+  %i.ac = add i32 %i.z, %i.ab
   %i.ad = zext i32 %i.ac to i64
   %i.ae = tail call noalias align 8 ptr @__kmalloc_noprof(i64 noundef range(i64 0, 4294967296) %i.ad, i32 noundef 3392) #8 ; 7 uses
   %.not85 = icmp eq ptr %i.ae, null
@@ -508,10 +502,9 @@ bb.h:                                             ; preds = %bb.g
   %i.am = getelementptr i8, ptr %i.ae, i64 %i.al
   %i.an = getelementptr i8, ptr %.val95, i64 -8
   %.val91.val = load i32, ptr %i.an, align 8
-  %i.ao = add i32 %.val91.val, -1
-  %10 = or i32 %i.ao, 7
-  %11 = add i32 %10, 1
-  %i.ap = zext i32 %11 to i64
+  %i.ao = add i32 %.val91.val, 7
+  %10 = and i32 %i.ao, -8
+  %i.ap = zext i32 %10 to i64
   %i.aq = getelementptr i8, ptr %i.am, i64 %i.ap  ; 4 uses
   store i32 16777216, ptr %i.aq, align 8
   %i.ar = getelementptr i8, ptr %i.aq, i64 4      ; 2 uses
@@ -535,7 +528,7 @@ bb.h:                                             ; preds = %bb.g
   %i.bf = ptrtoint ptr %i.be to i64
   %i.bg = ptrtoint ptr %i.aq to i64
   %i.bh = sub i64 %i.bf, %i.bg
-  %i.bi = zext i32 %i.w to i64
+  %i.bi = zext i32 %i.v to i64
   %.not86 = icmp eq i64 %i.bh, %i.bi
   br i1 %.not86, label %.critedge90, label %bb.i, !prof !10
 
@@ -552,7 +545,7 @@ bb.i:                                             ; preds = %bb.h
   %i.bl = add i32 %i.bk, 1
   %i.bm = zext i32 %i.bl to i64
   %i.bn = getelementptr i8, ptr %i.ae, i64 %i.bm  ; 2 uses
-  %i.bo = tail call i32 @crypto_shash_finup(ptr noundef nonnull %i.ae, ptr noundef %i.aq, i32 noundef %i.w, ptr noundef %i.bn) #9 ; 3 uses
+  %i.bo = tail call i32 @crypto_shash_finup(ptr noundef nonnull %i.ae, ptr noundef %i.aq, i32 noundef %i.v, ptr noundef %i.bn) #9 ; 3 uses
   %i.bp = icmp slt i32 %i.bo, 0
   br i1 %i.bp, label %bb.k, label %bb.j
 

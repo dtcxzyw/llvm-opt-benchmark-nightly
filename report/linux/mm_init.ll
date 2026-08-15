@@ -201,11 +201,10 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = load i64, ptr @nr_kernel_pages, align 8
-  %i.b = add i64 %i.a, -1
-  %9 = or i64 %i.b, 255
-  %10 = add i64 %9, 1                             ; 4 uses
+  %i.b = add i64 %i.a, 255
+  %9 = and i64 %i.b, -256                         ; 4 uses
   %.not107 = icmp eq i64 %8, 0
-  %i.c = icmp ugt i64 %10, 16777216
+  %i.c = icmp ugt i64 %9, 16777216
   %or.cond150 = select i1 %.not107, i1 %i.c, i1 false
   br i1 %or.cond150, label %.lr.ph, label %.loopexit
 
@@ -214,7 +213,7 @@ bb.b:                                             ; preds = %bb.a
   %.091148 = phi i64 [ %i.e, %.lr.ph ], [ 16777216, %bb.b ]
   %i.d = add i32 %.084149, 1                      ; 2 uses
   %i.e = shl i64 %.091148, 2                      ; 2 uses
-  %i.f = icmp ult i64 %i.e, %10
+  %i.f = icmp ult i64 %i.e, %9
   br i1 %i.f, label %.lr.ph, label %.loopexit, !llvm.loop !43
 
 .loopexit:                                        ; preds = %.lr.ph, %bb.b
@@ -222,10 +221,10 @@ bb.b:                                             ; preds = %bb.a
   %i.g = icmp sgt i32 %.185, 12
   %i.h = add nsw i32 %.185, -12
   %i.i = zext nneg i32 %i.h to i64
-  %i.j = lshr i64 %10, %i.i
+  %i.j = lshr i64 %9, %i.i
   %i.k = sub i32 12, %.185
   %i.l = zext nneg i32 %i.k to i64
-  %i.m = shl i64 %10, %i.l
+  %i.m = shl i64 %9, %i.l
   %.0 = select i1 %i.g, i64 %i.j, i64 %i.m        ; 2 uses
   %i.n = mul i64 %.0, %1
   %i.o = icmp ult i64 %i.n, 4096
@@ -628,10 +627,9 @@ bb.n:                                             ; preds = %thread-pre-split, %
   br i1 %.not143, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.ba = add i64 %i.az, -1
-  %0 = or i64 %i.ba, 1023
-  %1 = add i64 %0, 1
-  %i.bb = tail call i64 @llvm.umin.i64(i64 %i.f, i64 %1) ; 2 uses
+  %i.ba = add i64 %i.az, 1023
+  %0 = and i64 %i.ba, -1024
+  %i.bb = tail call i64 @llvm.umin.i64(i64 %i.f, i64 %0) ; 2 uses
   store i64 %i.bb, ptr @required_movablecore, align 8
   %i.bc = sub i64 %i.f, %i.bb
   %i.bd = tail call i64 @llvm.umax.i64(i64 %.pre, i64 %i.bc) ; 2 uses
@@ -796,10 +794,9 @@ find_first_bit.exit155:                           ; preds = %.thread
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #21
   %i.cz = getelementptr [8 x i8], ptr @zone_movable_pfn, i64 %.1.in187 ; 4 uses
   %i.da = load i64, ptr %i.cz, align 8
-  %i.db = add i64 %i.da, -1
-  %2 = or i64 %i.db, 1023
-  %3 = add i64 %2, 1
-  store i64 %3, ptr %i.cz, align 8
+  %i.db = add i64 %i.da, 1023
+  %1 = and i64 %i.db, -1024
+  store i64 %1, ptr %i.cz, align 8
   call void @get_pfn_range_for_nid(i32 noundef %.1, ptr noundef nonnull %i.d, ptr noundef nonnull %i.e) #23
   %i.dc = load i64, ptr %i.cz, align 8
   %i.dd = load i64, ptr %i.e, align 8
@@ -1043,16 +1040,15 @@ bb.e:                                             ; preds = %bb.d
   %i.s = phi i64 [ 0, %bb.a ], [ %.pre, %._crit_edge.loopexit ] ; 2 uses
   %.08.lcssa = phi i32 [ 0, %bb.a ], [ %.2, %._crit_edge.loopexit ]
   %i.t = load i64, ptr %i.b, align 8
-  %i.u = add i64 %i.t, -1
-  %0 = or i64 %i.u, 32767
-  %1 = add i64 %0, 1                              ; 3 uses
-  store i64 %1, ptr %i.b, align 8
-  %i.v = icmp ult i64 %i.s, %1
+  %i.u = add i64 %i.t, 32767
+  %0 = and i64 %i.u, -32768                       ; 3 uses
+  store i64 %0, ptr %i.b, align 8
+  %i.v = icmp ult i64 %i.s, %0
   br i1 %i.v, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %._crit_edge
   %i.w = load i32, ptr %i.e, align 4
-  call fastcc void @init_unavailable_range(i64 noundef %i.s, i64 noundef %1, i32 noundef %.08.lcssa, i32 noundef %i.w) #22, !srcloc !80
+  call fastcc void @init_unavailable_range(i64 noundef %i.s, i64 noundef %0, i32 noundef %.08.lcssa, i32 noundef %i.w) #22, !srcloc !80
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %._crit_edge

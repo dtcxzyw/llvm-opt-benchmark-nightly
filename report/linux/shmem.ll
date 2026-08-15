@@ -201,16 +201,15 @@ bb.m:                                             ; preds = %bb.i, %bb.l
   br i1 %i.v, label %bb.n, label %bb.t
 
 bb.n:                                             ; preds = %bb.m
-  %i.ab = add i64 %i.s, -1
-  %3 = or i64 %i.ab, 4095
-  %4 = add i64 %3, 1                              ; 3 uses
-  %i.ac = icmp sgt i64 %i.q, %4                   ; 2 uses
+  %i.ab = add i64 %i.s, 4095
+  %3 = and i64 %i.ab, -4096                       ; 3 uses
+  %i.ac = icmp sgt i64 %i.q, %3                   ; 2 uses
   br i1 %i.ac, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
   %i.ad = getelementptr i8, ptr %.val, i64 48
   %i.ae = load ptr, ptr %i.ad, align 8
-  tail call void @unmap_mapping_range(ptr noundef %i.ae, i64 noundef %4, i64 noundef 0, i32 noundef 1) #19
+  tail call void @unmap_mapping_range(ptr noundef %i.ae, i64 noundef %3, i64 noundef 0, i32 noundef 1) #19
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %bb.n
@@ -229,7 +228,7 @@ bb.r:                                             ; preds = %bb.q, %bb.p
 bb.s:                                             ; preds = %bb.r
   %i.ah = getelementptr i8, ptr %.val, i64 48
   %i.ai = load ptr, ptr %i.ah, align 8
-  tail call void @unmap_mapping_range(ptr noundef %i.ai, i64 noundef %4, i64 noundef 0, i32 noundef 1) #19
+  tail call void @unmap_mapping_range(ptr noundef %i.ai, i64 noundef %3, i64 noundef 0, i32 noundef 1) #19
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.r, %bb.s, %bb.m, %bb.f, %bb.e
@@ -632,9 +631,8 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.j = getelementptr i8, ptr %0, i64 16
   %i.k = load ptr, ptr %i.j, align 8
-  %i.l = add i64 %2, -1
-  %6 = or i64 %i.l, 4095
-  %7 = add i64 %6, 1                              ; 4 uses
+  %i.l = add i64 %2, 4095                         ; 2 uses
+  %6 = and i64 %i.l, -4096                        ; 3 uses
   %i.m = add i64 %3, %2                           ; 3 uses
   %i.n = and i64 %i.m, -4096                      ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #21
@@ -652,7 +650,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.t = add i64 %i.n, -1
   store ptr %5, ptr %4, align 8
-  %i.u = lshr exact i64 %7, 12
+  %i.u = lshr i64 %i.l, 12
   %i.v = getelementptr inbounds nuw i8, ptr %4, i64 8
   store i64 %i.u, ptr %i.v, align 8
   %i.w = ashr i64 %i.m, 12
@@ -663,12 +661,12 @@ bb.e:                                             ; preds = %bb.d
   %i.z = getelementptr i8, ptr %.val121, i64 536  ; 2 uses
   store ptr %4, ptr %i.z, align 8
   call void @_raw_spin_unlock(ptr noundef %i.y) #19
-  %i.aa = icmp ugt i64 %i.t, %7
+  %i.aa = icmp ugt i64 %i.t, %6
   br i1 %i.aa, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %i.ab = sub i64 %i.n, %7
-  call void @unmap_mapping_range(ptr noundef %i.k, i64 noundef %7, i64 noundef %i.ab, i32 noundef 0) #19
+  %i.ab = sub i64 %i.n, %6
+  call void @unmap_mapping_range(ptr noundef %i.k, i64 noundef %6, i64 noundef %i.ab, i32 noundef 0) #19
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e

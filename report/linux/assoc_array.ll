@@ -203,13 +203,11 @@ bb.gh:                                            ; preds = %.thread517.i
   unreachable
 
 _kzalloc_noprof.exit313.i:                        ; preds = %.thread517.i
-  %5 = add nsw i32 %.1260.15519.i, -1
-  %6 = or i32 %5, 63
-  %i.aku = add i32 %6, 1                          ; 2 uses
-  %i.akv = sext i32 %i.aku to i64                 ; 2 uses
-  %i.akw = lshr exact i64 %i.akv, 6               ; 2 uses
-  %7 = lshr exact i64 %i.akv, 3
-  %i.akx = add nuw nsw i64 %7, 24
+  %i.aku = add nuw i32 %.1260.15519.i, 63
+  %i.akv = sext i32 %i.aku to i64
+  %i.akw = lshr i64 %i.akv, 6                     ; 4 uses
+  %5 = shl nuw nsw i64 %i.akw, 3
+  %i.akx = add nuw nsw i64 %5, 24
   %i.aky = tail call noalias align 8 ptr @__kmalloc_noprof(i64 noundef range(i64 -268435456, 2305843009213693969) %i.akx, i32 noundef 3520) #11 ; 7 uses
   %.not289.i = icmp eq ptr %i.aky, null
   br i1 %.not289.i, label %assoc_array_insert_in_empty_tree.exit, label %bb.gi
@@ -244,7 +242,7 @@ bb.gi:                                            ; preds = %_kzalloc_noprof.exi
   br i1 %i.alo, label %bb.gj, label %.preheader318.i, !prof !15
 
 .preheader318.i:                                  ; preds = %bb.gi
-  %.not346.i = icmp eq i32 %i.aku, 0
+  %.not346.i = icmp eq i64 %i.akw, 0
   br i1 %.not346.i, label %._crit_edge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.preheader318.i
@@ -611,12 +609,11 @@ bb.gu:                                            ; preds = %bb.gt, %bb.gs
   br i1 %i.avj, label %_kzalloc_noprof.exit163.i, label %bb.gw
 
 _kzalloc_noprof.exit163.i:                        ; preds = %bb.gu
-  %i.avk = add nsw i32 %i.avi, -1
-  %8 = or i32 %i.avk, 63
-  %9 = add i32 %8, 1
-  %10 = sext i32 %9 to i64
-  %11 = lshr exact i64 %10, 3                     ; 2 uses
-  %i.avl = add nuw nsw i64 %11, 24
+  %i.avk = add i32 %i.avi, 63
+  %6 = sext i32 %i.avk to i64
+  %7 = lshr i64 %6, 3
+  %8 = and i64 %7, 2305843009213693944            ; 2 uses
+  %i.avl = add nuw nsw i64 %8, 24
   %i.avm = tail call noalias align 8 ptr @__kmalloc_noprof(i64 noundef range(i64 -268435456, 2305843009213693969) %i.avl, i32 noundef 3520) #11 ; 7 uses
   %.not144.i = icmp eq ptr %i.avm, null
   br i1 %.not144.i, label %assoc_array_insert_in_empty_tree.exit, label %bb.gv
@@ -642,7 +639,7 @@ bb.gv:                                            ; preds = %_kzalloc_noprof.exi
   store ptr %i.avp, ptr %i.avy, align 8
   %i.avz = getelementptr i8, ptr %i.avm, i64 24
   %i.awa = getelementptr i8, ptr %i.asa, i64 24
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.avz, ptr align 8 %i.awa, i64 %11, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.avz, ptr align 8 %i.awa, i64 %8, i1 false)
   br label %assoc_array_insert_mid_shortcut.exit
 
 bb.gw:                                            ; preds = %bb.gu
@@ -1045,10 +1042,8 @@ _kmalloc_noprof.exit:                             ; preds = %bb.c
   %i.n = inttoptr i64 %i.m to ptr                 ; 4 uses
   %i.o = getelementptr i8, ptr %i.n, i64 12
   %i.p = load i32, ptr %i.o, align 4
-  %4 = add i32 %i.p, -1
-  %5 = or i32 %4, 63
-  %i.q = add i32 %5, 1
-  %i.r = ashr exact i32 %i.q, 6                   ; 2 uses
+  %i.q = add i32 %i.p, 63
+  %i.r = ashr i32 %i.q, 6                         ; 2 uses
   %i.s = sext i32 %i.r to i64
   %i.t = icmp slt i32 %i.r, 0
   %i.u = shl nsw i64 %i.s, 3

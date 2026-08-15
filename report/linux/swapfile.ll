@@ -204,7 +204,7 @@ destroy_swap_extents.exit:                        ; preds = %bb.q, %bb.p, %._cri
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
 define internal fastcc range(i32 -22, 1) i32 @setup_swap_clusters_info(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, i64 noundef range(i64 0, 4294967296) %2) unnamed_addr #0 align 16 prefalign(16) {
 bb.a:
-  %i.a = add nuw nsw i64 %2, 255
+  %i.a = add nuw nsw i64 %2, 255                  ; 2 uses
   %i.b = lshr i64 %i.a, 8                         ; 5 uses
   %i.c = mul nuw nsw i64 %i.b, 40
   %i.d = tail call noalias ptr @__kvmalloc_node_noprof(i64 noundef %i.c, i64 noundef 1, i32 noundef 3520, i32 noundef -1) #24 ; 12 uses
@@ -308,10 +308,8 @@ bb.d:                                             ; preds = %bb.g
   br i1 %i.ae, label %bb.e, label %.preheader106, !llvm.loop !225
 
 .preheader106:                                    ; preds = %bb.d, %.preheader107
-  %3 = add nsw i64 %2, -1
-  %4 = or i64 %3, 255                             ; 2 uses
-  %5 = add nsw i64 %4, 1
-  %i.af = icmp ult i64 %2, %5
+  %3 = and i64 %i.a, 8589934336                   ; 2 uses
+  %i.af = icmp samesign ult i64 %2, %3
   br i1 %i.af, label %.lr.ph118, label %._crit_edge119
 
 bb.e:                                             ; preds = %.lr.ph116, %bb.d
@@ -334,12 +332,12 @@ bb.g:                                             ; preds = %bb.e
   br i1 %.not102, label %bb.d, label %.thread
 
 bb.h:                                             ; preds = %.lr.ph118
-  %i.am = add i64 %.3117, 1
-  %exitcond133.not = icmp eq i64 %.3117, %4
+  %i.am = add nuw nsw i64 %.3117, 1               ; 2 uses
+  %exitcond133.not = icmp eq i64 %i.am, %3
   br i1 %exitcond133.not, label %._crit_edge119, label %.lr.ph118, !llvm.loop !227
 
 .lr.ph118:                                        ; preds = %.preheader106, %bb.h
-  %.3117 = phi i64 [ %i.am, %bb.h ], [ %2, %.preheader106 ] ; 3 uses
+  %.3117 = phi i64 [ %i.am, %bb.h ], [ %2, %.preheader106 ] ; 2 uses
   %i.an = trunc i64 %.3117 to i32
   %i.ao = tail call fastcc i32 @swap_cluster_setup_bad_slot(ptr noundef %0, ptr noundef %i.d, i32 noundef %i.an, i1 noundef zeroext true) #18, !srcloc !228 ; 2 uses
   %.not100 = icmp eq i32 %i.ao, 0

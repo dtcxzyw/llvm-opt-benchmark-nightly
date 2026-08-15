@@ -201,13 +201,11 @@ efi_open_file.exit.thread:                        ; preds = %bb.ah, %.thread43.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #4
   %i.ib = add i64 %i.ia, %.2                      ; 6 uses
-  %i.ic = add i64 %i.ib, -1
-  %12 = or i64 %i.ic, 4095
-  %13 = add i64 %12, 1
-  %i.id = add i64 %.2, -1
-  %14 = or i64 %i.id, 4095
-  %15 = add i64 %14, 1
-  %i.ie = icmp ugt i64 %13, %15
+  %i.ic = add i64 %i.ib, 4095
+  %12 = and i64 %i.ic, -4096
+  %i.id = add i64 %.2, 4095
+  %13 = and i64 %i.id, -4096
+  %i.ie = icmp ugt i64 %12, %13
   br i1 %i.ie, label %bb.ai, label %.thread157
 
 efi_open_file.exit:                               ; preds = %.thread.i116
