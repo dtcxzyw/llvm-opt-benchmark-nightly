@@ -204,14 +204,11 @@ bb.f:                                             ; preds = %bb.b, %bb.b
 
 .split74:                                         ; preds = %bb.f
   %i.eq = add i32 %.02089, 4
-  %i.er = tail call zeroext i16 @tvb_get_uint16(ptr noundef %0, i32 noundef %i.eq, i32 noundef range(i32 0, -2147483647) %1) ; 2 uses
-  %2 = lshr i16 %i.er, 2
-  %3 = and i16 %i.er, 3
-  %.not.i.i = icmp ne i16 %3, 0
-  %i.es = zext i1 %.not.i.i to i32
-  %narrow156.i = add nuw nsw i16 %2, 2
-  %spec.select.i.i = zext nneg i16 %narrow156.i to i32
-  %i.et = add nuw nsw i32 %spec.select.i.i, %i.es
+  %i.er = tail call zeroext i16 @tvb_get_uint16(ptr noundef %0, i32 noundef %i.eq, i32 noundef range(i32 0, -2147483647) %1)
+  %i.es = zext i16 %i.er to i32
+  %2 = add nuw nsw i32 %i.es, 3
+  %spec.select.i.i = lshr i32 %2, 2
+  %i.et = add nuw nsw i32 %spec.select.i.i, 2
   %i.eu = icmp eq i32 %i.et, %i.d
   br i1 %i.eu, label %consistentWithOrder.exit.thread, label %.critedge
 
@@ -270,14 +267,11 @@ bb.j:                                             ; preds = %bb.b, %bb.b, %bb.b
 
 .split67:                                         ; preds = %bb.j
   %i.fp = add i32 %.02089, 8
-  %i.fq = tail call zeroext i16 @tvb_get_uint16(ptr noundef %0, i32 noundef %i.fp, i32 noundef range(i32 0, -2147483647) %1) ; 2 uses
-  %4 = lshr i16 %i.fq, 2
-  %5 = and i16 %i.fq, 3
-  %.not.i128.i = icmp ne i16 %5, 0
-  %i.fr = zext i1 %.not.i128.i to i32
-  %narrow155.i = add nuw nsw i16 %4, 3
-  %spec.select.i129.i = zext nneg i16 %narrow155.i to i32
-  %i.fs = add nuw nsw i32 %spec.select.i129.i, %i.fr
+  %i.fq = tail call zeroext i16 @tvb_get_uint16(ptr noundef %0, i32 noundef %i.fp, i32 noundef range(i32 0, -2147483647) %1)
+  %i.fr = zext i16 %i.fq to i32
+  %3 = add nuw nsw i32 %i.fr, 3
+  %spec.select.i129.i = lshr i32 %3, 2
+  %i.fs = add nuw nsw i32 %spec.select.i129.i, 3
   %i.ft = icmp eq i32 %i.fs, %i.d
   br i1 %i.ft, label %consistentWithOrder.exit.thread, label %.critedge
 
@@ -291,14 +285,11 @@ bb.k:                                             ; preds = %bb.b, %bb.b, %bb.b
 
 .split66:                                         ; preds = %bb.k
   %i.fv = add i32 %.02089, 6
-  %i.fw = tail call zeroext i16 @tvb_get_uint16(ptr noundef %0, i32 noundef %i.fv, i32 noundef range(i32 0, -2147483647) %1) ; 2 uses
-  %6 = lshr i16 %i.fw, 2
-  %7 = and i16 %i.fw, 3
-  %.not.i130.i = icmp ne i16 %7, 0
-  %i.fx = zext i1 %.not.i130.i to i32
-  %narrow154.i = add nuw nsw i16 %6, 2
-  %spec.select.i131.i = zext nneg i16 %narrow154.i to i32
-  %i.fy = add nuw nsw i32 %spec.select.i131.i, %i.fx
+  %i.fw = tail call zeroext i16 @tvb_get_uint16(ptr noundef %0, i32 noundef %i.fv, i32 noundef range(i32 0, -2147483647) %1)
+  %i.fx = zext i16 %i.fw to i32
+  %4 = add nuw nsw i32 %i.fx, 3
+  %spec.select.i131.i = lshr i32 %4, 2
+  %i.fy = add nuw nsw i32 %spec.select.i131.i, 2
   %i.fz = icmp eq i32 %i.fy, %i.d
   br i1 %i.fz, label %consistentWithOrder.exit.thread, label %.critedge
 
@@ -426,14 +417,11 @@ bb.t:                                             ; preds = %bb.b
 
 .split60:                                         ; preds = %bb.t
   %i.iu = add i32 %.02089, 10
-  %i.iv = tail call zeroext i16 @tvb_get_uint16(ptr noundef %0, i32 noundef %i.iu, i32 noundef range(i32 0, -2147483647) %1) ; 2 uses
-  %8 = lshr i16 %i.iv, 2
-  %9 = and i16 %i.iv, 3
-  %.not.i132.i = icmp ne i16 %9, 0
-  %i.iw = zext i1 %.not.i132.i to i32
-  %narrow153.i = add nuw nsw i16 %8, 3
-  %spec.select.i133.i = zext nneg i16 %narrow153.i to i32
-  %i.ix = add nuw nsw i32 %spec.select.i133.i, %i.iw
+  %i.iv = tail call zeroext i16 @tvb_get_uint16(ptr noundef %0, i32 noundef %i.iu, i32 noundef range(i32 0, -2147483647) %1)
+  %i.iw = zext i16 %i.iv to i32
+  %5 = add nuw nsw i32 %i.iw, 3
+  %spec.select.i133.i = lshr i32 %5, 2
+  %i.ix = add nuw nsw i32 %spec.select.i133.i, 3
   %i.iy = icmp eq i32 %i.ix, %i.d
   br i1 %i.iy, label %consistentWithOrder.exit.thread, label %.critedge
 
@@ -505,14 +493,11 @@ bb.w:                                             ; preds = %bb.b
 
 .split69:                                         ; preds = %bb.w
   %i.jr = add i32 %.02089, 12
-  %i.js = tail call zeroext i16 @tvb_get_uint16(ptr noundef %0, i32 noundef %i.jr, i32 noundef range(i32 0, -2147483647) %1) ; 2 uses
-  %10 = lshr i16 %i.js, 2
-  %11 = and i16 %i.js, 3
-  %.not.i134.i = icmp ne i16 %11, 0
-  %i.jt = zext i1 %.not.i134.i to i32
-  %narrow152.i = add nuw nsw i16 %10, 4
-  %spec.select.i135.i = zext nneg i16 %narrow152.i to i32
-  %i.ju = add nuw nsw i32 %spec.select.i135.i, %i.jt
+  %i.js = tail call zeroext i16 @tvb_get_uint16(ptr noundef %0, i32 noundef %i.jr, i32 noundef range(i32 0, -2147483647) %1)
+  %i.jt = zext i16 %i.js to i32
+  %6 = add nuw nsw i32 %i.jt, 3
+  %spec.select.i135.i = lshr i32 %6, 2
+  %i.ju = add nuw nsw i32 %spec.select.i135.i, 4
   %i.jv = icmp eq i32 %i.ju, %i.d
   br i1 %i.jv, label %consistentWithOrder.exit.thread, label %.critedge
 
@@ -573,14 +558,11 @@ bb.z:                                             ; preds = %bb.b
   br i1 %i.lg, label %consistentWithOrder.exit, label %consistentWithOrder.exit.thread
 
 .split53:                                         ; preds = %bb.b
-  %i.lh = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef 1) ; 2 uses
-  %12 = lshr i8 %i.lh, 2
-  %13 = and i8 %i.lh, 3
-  %.not.i136.i = icmp ne i8 %13, 0
-  %i.li = zext i1 %.not.i136.i to i32
-  %narrow.i = add nuw nsw i8 %12, 1
-  %spec.select.i137.i = zext nneg i8 %narrow.i to i32
-  %i.lj = add nuw nsw i32 %spec.select.i137.i, %i.li
+  %i.lh = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef 1)
+  %i.li = zext i8 %i.lh to i32
+  %7 = add nuw nsw i32 %i.li, 3
+  %spec.select.i137.i = lshr i32 %7, 2
+  %i.lj = add nuw nsw i32 %spec.select.i137.i, 1
   %i.lk = icmp eq i32 %i.lj, %i.d
   br i1 %i.lk, label %consistentWithOrder.exit.thread, label %.critedge
 
