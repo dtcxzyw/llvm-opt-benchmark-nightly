@@ -24,9 +24,8 @@ bb.b:                                             ; preds = %bb.a
   %spec.store.select = call i64 @llvm.umax.i64(i64 %1, i64 4096) ; 4 uses
   %i.f = icmp eq i64 %5, 0
   %spec.select = select i1 %i.f, i64 %spec.store.select, i64 %5 ; 2 uses
-  %i.g = add i64 %0, -1
-  %7 = or i64 %i.g, 4095                          ; 2 uses
-  %8 = add i64 %7, 1                              ; 2 uses
+  %i.g = add i64 %0, 4095                         ; 2 uses
+  %7 = and i64 %i.g, -4096                        ; 2 uses
   %i.h = load ptr, ptr %i.b, align 8              ; 3 uses
   %i.i = load i64, ptr %i.h, align 8
   %.not102 = icmp eq i64 %i.i, 0
@@ -37,6 +36,7 @@ bb.b:                                             ; preds = %bb.a
   %i.k = sext i32 %i.j to i64                     ; 2 uses
   %notmask.i = shl nsw i64 -1, %i.k               ; 2 uses
   %i.l = xor i64 %notmask.i, -1
+  %invariant.op = sub i64 1, %7
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %get_entry_num_slots.exit
@@ -64,7 +64,7 @@ bb.c:                                             ; preds = %.lr.ph
   %i.z = add i64 %i.v, -1
   %i.aa = add i64 %i.z, %i.y
   %i.ab = call i64 @llvm.umin.i64(i64 %i.aa, i64 %6) ; 2 uses
-  %i.ac = icmp ult i64 %i.ab, %8
+  %i.ac = icmp ult i64 %i.ab, %7
   br i1 %i.ac, label %get_entry_num_slots.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -72,8 +72,8 @@ bb.d:                                             ; preds = %bb.c
   %i.ae = add i64 %i.ad, -1
   %i.af = or i64 %i.ae, %i.l
   %i.ag = add i64 %i.af, 1                        ; 2 uses
-  %9 = sub i64 %i.ab, %7
-  %i.ah = and i64 %9, %notmask.i                  ; 2 uses
+  %.reass.reass = add i64 %i.ab, %invariant.op
+  %i.ah = and i64 %.reass.reass, %notmask.i       ; 2 uses
   %i.ai = icmp ugt i64 %i.ag, %i.ah
   br i1 %i.ai, label %get_entry_num_slots.exit, label %bb.e
 
@@ -151,7 +151,7 @@ bb.j:                                             ; preds = %bb.h
   %i.br = add i64 %i.bq, 1
   %i.bs = add i64 %i.br, %i.bp
   store i64 %i.bs, ptr %i.c, align 8
-  %i.bt = lshr exact i64 %8, 12                   ; 2 uses
+  %i.bt = lshr i64 %i.g, 12                       ; 2 uses
   %i.bu = load i8, ptr @efi_is64, align 1, !range !7, !noundef !8
   %i.bv = trunc nuw i8 %i.bu to i1
   br i1 %i.bv, label %bb.k, label %bb.l
