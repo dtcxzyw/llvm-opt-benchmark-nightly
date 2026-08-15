@@ -201,9 +201,9 @@ bb.o:                                             ; preds = %bb.l
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS7_SaIS7_EEEElNS0_5__ops15_Iter_less_iterEEvT_SF_T0_T1_(ptr %0, ptr %1, i64 noundef %2) local_unnamed_addr #1 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = alloca [16 x i8], align 16                 ; 4 uses
+  %.sroa.0 = alloca <16 x i8>, align 16           ; 4 uses
+  %3 = alloca %"struct.__gnu_cxx::__ops::_Iter_less_iter", align 1 ; 3 uses
   %4 = alloca %"struct.__gnu_cxx::__ops::_Iter_less_iter", align 1 ; 3 uses
-  %5 = alloca %"struct.__gnu_cxx::__ops::_Iter_less_iter", align 1 ; 3 uses
   %i.a = ptrtoint ptr %0 to i64                   ; 3 uses
   %i.b = ptrtoint ptr %1 to i64
   %i.c = sub i64 %i.b, %i.a
@@ -223,23 +223,23 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph
   %storemerge17.lcssa = phi ptr [ %1, %.lr.ph ], [ %.sroa.021.1.i.i, %bb.b ] ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %5)
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
-  call void @_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_less_iterEEvT_SF_RT0_(ptr %0, ptr %storemerge17.lcssa, ptr noundef nonnull align 1 dereferenceable(1) %4)
-  call void @llvm.lifetime.end.p0(ptr nonnull %4)
+  call void @llvm.lifetime.start.p0(ptr nonnull %3)
+  call void @_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_less_iterEEvT_SF_RT0_(ptr %0, ptr %storemerge17.lcssa, ptr noundef nonnull align 1 dereferenceable(1) %3)
+  call void @llvm.lifetime.end.p0(ptr nonnull %3)
   br label %.lr.ph.i8.i
 
 .lr.ph.i8.i:                                      ; preds = %._crit_edge, %.lr.ph.i8.i
   %.sroa.0.05.i.i = phi ptr [ %i.j, %.lr.ph.i8.i ], [ %storemerge17.lcssa, %._crit_edge ]
   %i.j = getelementptr inbounds i8, ptr %.sroa.0.05.i.i, i64 -32 ; 4 uses
-  call void @_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_less_iterEEvT_SF_SF_RT0_(ptr %0, ptr nonnull %i.j, ptr nonnull %i.j, ptr noundef nonnull align 1 dereferenceable(1) %5)
+  call void @_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_less_iterEEvT_SF_SF_RT0_(ptr %0, ptr nonnull %i.j, ptr nonnull %i.j, ptr noundef nonnull align 1 dereferenceable(1) %4)
   %i.k = ptrtoint ptr %i.j to i64
   %i.l = sub i64 %i.k, %i.a
   %i.m = icmp sgt i64 %i.l, 32
   br i1 %i.m, label %.lr.ph.i8.i, label %_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_less_iterEEvT_SF_SF_T0_.exit, !llvm.loop !229
 
 _ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_less_iterEEvT_SF_SF_T0_.exit: ; preds = %.lr.ph.i8.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %5)
+  call void @llvm.lifetime.end.p0(ptr nonnull %4)
   br label %.loopexit
 
 .lr.ph47:                                         ; preds = %.lr.ph, %bb.b
@@ -348,13 +348,13 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not38.i, label %_ZNSt11char_traitsIcE4copyEPcPKcm.exit44.i, label %_ZNSt11char_traitsIcE4copyEPcPKcm.exit42.i
 
 _ZNSt11char_traitsIcE4copyEPcPKcm.exit42.i:       ; preds = %bb.h
-  call void @llvm.lifetime.start.p0(ptr nonnull %3)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   %i.at = add nuw nsw i64 %i.ad, 1                ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %3, ptr noundef nonnull align 8 dereferenceable(1) %i.aq, i64 %i.at, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %.sroa.0, ptr noundef nonnull align 8 dereferenceable(1) %i.aq, i64 %i.at, i1 false)
   %i.au = add nuw nsw i64 %i.t, 1
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.aq, ptr noundef nonnull align 8 dereferenceable(1) %i.am, i64 %i.au, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.am, ptr noundef nonnull align 16 dereferenceable(1) %3, i64 %i.at, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %3)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.am, ptr noundef nonnull align 16 dereferenceable(1) %.sroa.0, i64 %i.at, i1 false)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   br label %bb.k
 
 bb.i:                                             ; preds = %bb.g
@@ -757,7 +757,7 @@ bb.f:                                             ; preds = %_ZNK9__gnu_cxx5__op
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4swapERS4_(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %1) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca [16 x i8], align 16                 ; 4 uses
+  %.sroa.0 = alloca <16 x i8>, align 16           ; 4 uses
   %i.a = icmp eq ptr %0, %1
   br i1 %i.a, label %bb.i, label %bb.b
 
@@ -790,13 +790,13 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not38, label %_ZNSt11char_traitsIcE4copyEPcPKcm.exit44, label %_ZNSt11char_traitsIcE4copyEPcPKcm.exit42
 
 _ZNSt11char_traitsIcE4copyEPcPKcm.exit42:         ; preds = %bb.e
-  call void @llvm.lifetime.start.p0(ptr nonnull %2)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   %i.n = add nuw nsw i64 %i.l, 1                  ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %2, ptr noundef nonnull align 8 dereferenceable(1) %i.i, i64 %i.n, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %.sroa.0, ptr noundef nonnull align 8 dereferenceable(1) %i.i, i64 %i.n, i1 false)
   %i.o = add nuw nsw i64 %i.f, 1
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.i, ptr noundef nonnull align 8 dereferenceable(1) %i.c, i64 %i.o, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.c, ptr noundef nonnull align 16 dereferenceable(1) %2, i64 %i.n, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %2)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.c, ptr noundef nonnull align 16 dereferenceable(1) %.sroa.0, i64 %i.n, i1 false)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   br label %bb.h
 
 bb.f:                                             ; preds = %bb.d

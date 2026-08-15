@@ -204,7 +204,7 @@ _ZN7testing8internal9TraceInfoD2Ev.exit5:         ; preds = %.body, %_ZNKSt7__cx
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4swapERS4_(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %1) local_unnamed_addr #7 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca [16 x i8], align 16                 ; 4 uses
+  %.sroa.0 = alloca <16 x i8>, align 16           ; 4 uses
   %i.a = icmp eq ptr %0, %1
   br i1 %i.a, label %bb.i, label %bb.b
 
@@ -237,13 +237,13 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not38, label %_ZNSt11char_traitsIcE4copyEPcPKcm.exit44, label %_ZNSt11char_traitsIcE4copyEPcPKcm.exit42
 
 _ZNSt11char_traitsIcE4copyEPcPKcm.exit42:         ; preds = %bb.e
-  call void @llvm.lifetime.start.p0(ptr nonnull %2)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   %i.n = add nuw nsw i64 %i.l, 1                  ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %2, ptr noundef nonnull align 8 dereferenceable(1) %i.i, i64 %i.n, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %.sroa.0, ptr noundef nonnull align 8 dereferenceable(1) %i.i, i64 %i.n, i1 false)
   %i.o = add nuw nsw i64 %i.f, 1
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.i, ptr noundef nonnull align 8 dereferenceable(1) %i.c, i64 %i.o, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.c, ptr noundef nonnull align 16 dereferenceable(1) %2, i64 %i.n, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %2)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.c, ptr noundef nonnull align 16 dereferenceable(1) %.sroa.0, i64 %i.n, i1 false)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   br label %bb.h
 
 bb.f:                                             ; preds = %bb.d
