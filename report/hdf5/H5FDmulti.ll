@@ -201,12 +201,6 @@ declare i32 @H5Eclear2(i64 noundef) local_unnamed_addr #4
 ; Function Attrs: nounwind uwtable
 define internal fastcc range(i32 -1, 1) i32 @H5FD_split_populate_config(ptr noundef %0, i64 noundef %1, ptr noundef %2, i64 noundef %3, ptr nofree noundef nonnull captures(none) %4) unnamed_addr #0 {
 bb.a:
-  %.sroa.68 = alloca [3 x ptr], align 16          ; 4 uses
-  %.sroa.6 = alloca [3 x i64], align 16           ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.68)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %.sroa.6, i8 0, i64 24, i1 false), !tbaa !20
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %.sroa.68, i8 0, i64 24, i1 false), !tbaa !9
   %.not = icmp eq ptr %0, null
   br i1 %.not, label %bb.e, label %bb.b
 
@@ -426,7 +420,7 @@ bb.ah:                                            ; preds = %bb.ag
   %.sroa.52.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 56
   store i64 %3, ptr %.sroa.52.0..sroa_idx, align 8
   %.sroa.6.0..sroa_idx3 = getelementptr inbounds nuw i8, ptr %4, i64 64
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.6.0..sroa_idx3, ptr noundef nonnull align 16 dereferenceable(24) %.sroa.6, i64 24, i1 false)
+  store <3 x i64> zeroinitializer, ptr %.sroa.6.0..sroa_idx3, align 8
   %i.bk = getelementptr inbounds nuw i8, ptr %4, i64 88
   store ptr null, ptr %i.bk, align 8
   %.sroa.45.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 96
@@ -436,7 +430,7 @@ bb.ah:                                            ; preds = %bb.ag
   %.sroa.57.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 112
   store ptr @H5FD_split_populate_config.raw_name_g, ptr %.sroa.57.0..sroa_idx, align 8
   %.sroa.68.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 120
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.68.0..sroa_idx, ptr noundef nonnull align 16 dereferenceable(24) %.sroa.68, i64 24, i1 false)
+  store <3 x ptr> splat (ptr null), ptr %.sroa.68.0..sroa_idx, align 8
   %i.bl = getelementptr inbounds nuw i8, ptr %4, i64 144
   store i64 -1, ptr %i.bl, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 160
@@ -802,8 +796,6 @@ bb.ci:                                            ; preds = %bb.ch, %bb.cg
 
 .critedge:                                        ; preds = %bb.bk, %bb.ci, %bb.cf, %bb.ba, %bb.as
   %.4 = phi i32 [ -1, %bb.as ], [ -1, %bb.ba ], [ -1, %bb.bk ], [ 0, %bb.ci ], [ 0, %bb.cf ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.68)
   ret i32 %.4
 }
 

@@ -203,7 +203,6 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
 define dso_local range(i32 0, 123) i32 @sk_filter_trim_cap(ptr noundef %0, ptr noundef %1, i32 noundef %2) #0 align 16 prefalign(16) {
 bb.a:
-  %3 = alloca [20 x i8], align 16                 ; 5 uses
   %i.a = getelementptr i8, ptr %1, i64 126
   %.val = load i8, ptr %i.a, align 2
   %i.b = and i8 %.val, 64
@@ -282,8 +281,6 @@ bb.h:                                             ; preds = %bb.g
 
 __migrate_disable.exit.i:                         ; preds = %bb.h, %bb.g, %bb.f
   %i.ag = getelementptr i8, ptr %1, i64 48        ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(20) %3, i8 0, i64 20, i1 false)
   %i.ah = getelementptr i8, ptr %i.p, i64 2       ; 2 uses
   %i.ai = load i16, ptr %i.ah, align 2
   %i.aj = and i16 %i.ai, 8
@@ -291,11 +288,12 @@ __migrate_disable.exit.i:                         ; preds = %bb.h, %bb.g, %bb.f
   br i1 %.not.i2.i, label %bb.j, label %bb.i, !prof !21
 
 bb.i:                                             ; preds = %__migrate_disable.exit.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(20) %3, ptr noundef align 1 dereferenceable(20) %i.ag, i64 20, i1 false)
+  %.sroa.0.0.copyload = load <20 x i8>, ptr %i.ag, align 8
   tail call void @llvm.memset.p0.i64(ptr noundef align 1 dereferenceable(20) %i.ag, i8 0, i64 20, i1 false)
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %__migrate_disable.exit.i
+  %.sroa.0.0 = phi <20 x i8> [ zeroinitializer, %__migrate_disable.exit.i ], [ %.sroa.0.0.copyload, %bb.i ]
   callbr void asm sideeffect "1: jmp ${2:l} # objtool NOPs this \0A\09.pushsection __jump_table,  \22aw\22 \0A\09 .balign 8 \0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A.long 1b - . \0A\09.long ${2:l} - . \0A\09 .quad  ${0:c} + ${1:c} + 2 - . \0A\09.popsection \0A\09", "i,i,!i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @bpf_stats_enabled_key, i1 false) #39
           to label %arch_static_branch.exit.i.i.i [label %bb.k], !srcloc !22
 
@@ -337,11 +335,10 @@ __bpf_prog_run.exit.i.i:                          ; preds = %arch_static_branch.
   br i1 %.not9.i.i, label %__bpf_prog_run_save_cb.exit.i, label %bb.m, !prof !21
 
 bb.m:                                             ; preds = %__bpf_prog_run.exit.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef align 1 dereferenceable(20) %i.ag, ptr noundef nonnull align 16 dereferenceable(20) %3, i64 20, i1 false)
+  store <20 x i8> %.sroa.0.0, ptr %i.ag, align 8
   br label %__bpf_prog_run_save_cb.exit.i
 
 __bpf_prog_run_save_cb.exit.i:                    ; preds = %bb.m, %__bpf_prog_run.exit.i.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %3)
   %i.be = load i16, ptr %i.s, align 8             ; 2 uses
   %i.bf = icmp ugt i16 %i.be, 1
   br i1 %i.bf, label %bb.n, label %bb.o

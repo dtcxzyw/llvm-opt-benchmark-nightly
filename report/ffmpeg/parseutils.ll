@@ -203,7 +203,6 @@ bb.a:
   %4 = alloca %struct.tm, align 8                 ; 4 uses
   %i.b = alloca ptr, align 8                      ; 5 uses
   %5 = alloca %struct.tm, align 8                 ; 9 uses
-  %.sroa.8 = alloca [44 x i8], align 4            ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #15
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %3, i8 0, i64 56, i1 false)
@@ -514,7 +513,6 @@ bb.aa:                                            ; preds = %bb.z
   br label %bb.af
 
 bb.ab:                                            ; preds = %bb.w
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.8)
   br i1 %spec.select184, label %bb.ac, label %bb.ad
 
 bb.ac:                                            ; preds = %bb.ab
@@ -528,10 +526,9 @@ bb.ad:                                            ; preds = %bb.ab
 bb.ae:                                            ; preds = %bb.ad, %bb.ac
   %.sink = phi ptr [ %i.dc, %bb.ad ], [ %i.db, %bb.ac ]
   %.sroa.8.0..sroa_idx16 = getelementptr inbounds nuw i8, ptr %.sink, i64 12
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(44) %.sroa.8, ptr noundef nonnull align 4 dereferenceable(44) %.sroa.8.0..sroa_idx16, i64 44, i1 false)
+  %.sroa.8.sroa.0.0.copyload311 = load <44 x i8>, ptr %.sroa.8.0..sroa_idx16, align 4
   %.sroa.8.0..sroa_idx17 = getelementptr inbounds nuw i8, ptr %3, i64 12
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(44) %.sroa.8.0..sroa_idx17, ptr noundef nonnull align 4 dereferenceable(44) %.sroa.8, i64 44, i1 false), !tbaa.struct !43
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8)
+  store <44 x i8> %.sroa.8.sroa.0.0.copyload311, ptr %.sroa.8.0..sroa_idx17, align 4
   br label %.thread303
 
 .thread303.thread:                                ; preds = %switch.early.test, %switch.early.test
@@ -712,7 +709,7 @@ bb.d:                                             ; preds = %bb.c
   %.232.pn47 = phi ptr [ %.434, %bb.f ], [ %.232, %bb.d ], [ %.232, %bb.c ]
   %.0.be = phi ptr [ %i.a, %bb.f ], [ %i.l, %bb.d ], [ %.0, %bb.c ]
   %.232.be = getelementptr inbounds nuw i8, ptr %.232.pn47, i64 1
-  br label %bb.b, !llvm.loop !44
+  br label %bb.b, !llvm.loop !43
 
 .critedge:                                        ; preds = %bb.b, %bb.b, %bb.b
   store i8 0, ptr %.0, align 1, !tbaa !23
@@ -738,14 +735,14 @@ bb.d:                                             ; preds = %bb.c
   ]
 
 bb.e:                                             ; preds = %.preheader
-  br i1 %i.q, label %.sink.split, label %.preheader, !llvm.loop !45
+  br i1 %i.q, label %.sink.split, label %.preheader, !llvm.loop !44
 
 .sink.split:                                      ; preds = %bb.e
   %i.s = icmp eq i8 %i.r, 43
   %i.t = getelementptr inbounds nuw i8, ptr %.2.ph, i64 1
   %. = select i1 %i.s, i8 32, i8 %i.r
   store i8 %., ptr %.2.ph, align 1, !tbaa !23
-  br label %.preheader.outer, !llvm.loop !45
+  br label %.preheader.outer, !llvm.loop !44
 
 .critedge2:                                       ; preds = %.preheader, %.preheader, %.critedge
   %.434 = phi ptr [ %.232, %.critedge ], [ %.333, %.preheader ], [ %.333, %.preheader ] ; 2 uses
@@ -837,7 +834,6 @@ attributes #17 = { nounwind willreturn memory(read) }
 !40 = distinct !{!40, !21}
 !41 = distinct !{!41, !21}
 !42 = !{!32, !6, i64 32}
-!43 = !{i64 0, i64 4, !24, i64 4, i64 4, !24, i64 8, i64 4, !24, i64 12, i64 4, !24, i64 16, i64 4, !24, i64 20, i64 4, !24, i64 28, i64 8, !39, i64 36, i64 8, !22}
+!43 = distinct !{!43, !21}
 !44 = distinct !{!44, !21}
-!45 = distinct !{!45, !21}
 end_hunk_0

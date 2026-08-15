@@ -204,7 +204,6 @@ bb.a:
 define internal void @_ZN12_GLOBAL__N_142ChunkedQueue_OveralignmentEmplaceBack_Test8TestBodyEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %1 = alloca %"class.absl::lts_20260526::chunked_queue.489", align 8 ; 17 uses
-  %.sroa.7 = alloca [56 x i8], align 8            ; 5 uses
   %2 = alloca %"class.testing::AssertionResult", align 8 ; 7 uses
   %3 = alloca %"class.testing::Message", align 8  ; 7 uses
   %4 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
@@ -247,8 +246,6 @@ bb.c:                                             ; preds = %bb.a, %_ZN7testing1
   %i.i = phi ptr [ null, %bb.a ], [ %i.af, %_ZN7testing15AssertionResultD2Ev.exit ] ; 3 uses
   %i.j = phi ptr [ null, %bb.a ], [ %i.ab, %_ZN7testing15AssertionResultD2Ev.exit ] ; 3 uses
   %i.k = phi ptr [ null, %bb.a ], [ %i.aa, %_ZN7testing15AssertionResultD2Ev.exit ] ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.7)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %.sroa.7, i8 0, i64 56, i1 false)
   %i.l = icmp eq ptr %i.i, %i.j
   br i1 %i.l, label %bb.d, label %bb.h
 
@@ -313,8 +310,7 @@ bb.h:                                             ; preds = %bb.c, %_ZN4absl12lt
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ac, i64 4
   store i32 %.01042, ptr %.sroa.6.0..sroa_idx, align 4, !tbaa !177
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ac, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %.sroa.7.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(56) %.sroa.7, i64 56, i1 false), !tbaa.struct !50
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7)
+  store <56 x i8> zeroinitializer, ptr %.sroa.7.0..sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #22
   invoke void @_ZN7testing16AssertionSuccessEv(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %2)
           to label %_ZN7testing8internal8EqHelper7CompareImiTnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSC_RKS4_RKS5_.exit unwind label %bb.j
@@ -330,7 +326,6 @@ bb.i:                                             ; preds = %_ZN4absl12lts_20260
   store ptr %i.i, ptr %i.a, align 8
   store ptr %i.j, ptr %i.b, align 8
   store ptr %i.k, ptr %1, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7)
   br label %bb.w
 
 bb.j:                                             ; preds = %bb.h

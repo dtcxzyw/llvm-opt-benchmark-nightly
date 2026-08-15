@@ -201,10 +201,8 @@ bb.a:
   %i.a = alloca ptr, align 8                      ; 7 uses
   %i.b = alloca [256 x i8], align 16              ; 11 uses
   %i.c = alloca [80 x i8], align 16               ; 5 uses
-  %12 = alloca [32 x i8], align 16                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #8
-  call void @llvm.lifetime.start.p0(ptr nonnull %12)
   %i.d = tail call i32 @gcry_md_get_algo_dlen(i32 noundef %8) ; 2 uses
   %i.e = insertelement <8 x ptr> poison, ptr %0, i64 0
   %i.f = insertelement <8 x ptr> %i.e, ptr %2, i64 1
@@ -285,16 +283,16 @@ sha256.exit.thread:                               ; preds = %bb.d, %bb.e
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %12, ptr noundef nonnull align 1 dereferenceable(32) %i.ay, i64 noundef 32, i1 noundef false) #8
+  %.sroa.0.0.copyload = load <32 x i8>, ptr %i.ay, align 1
   %i.az = load ptr, ptr %i.a, align 8
   call void @gcry_md_close(ptr noundef %i.az)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %11, ptr noundef nonnull align 16 dereferenceable(16) %12, i64 noundef 16, i1 noundef false) #8
+  %.sroa.0.0.vec.extract = shufflevector <32 x i8> %.sroa.0.0.copyload, <32 x i8> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  store <16 x i8> %.sroa.0.0.vec.extract, ptr %11, align 1
   br label %bb.g
 
 bb.g:                                             ; preds = %sha256.exit.thread, %bb.a, %bb.f, %bb.c
   %.0 = phi i1 [ false, %bb.c ], [ true, %bb.f ], [ false, %bb.a ], [ false, %sha256.exit.thread ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %12)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #8
   ret i1 %.0
@@ -305,9 +303,7 @@ define hidden noundef zeroext i1 @dot11decrypt_derive_pmk_r1(ptr noundef %0, i64
 bb.a:
   %i.a = alloca ptr, align 8                      ; 7 uses
   %i.b = alloca [34 x i8], align 16               ; 9 uses
-  %9 = alloca [32 x i8], align 16                 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
-  call void @llvm.lifetime.start.p0(ptr nonnull %9)
   %i.c = insertelement <4 x ptr> poison, ptr %0, i64 0
   %i.d = insertelement <4 x ptr> %i.c, ptr %2, i64 1
   %i.e = insertelement <4 x ptr> %i.d, ptr %3, i64 2
@@ -355,16 +351,16 @@ sha256.exit.thread:                               ; preds = %bb.b, %bb.c
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %9, ptr noundef nonnull align 1 dereferenceable(32) %i.v, i64 noundef 32, i1 noundef false) #8
+  %.sroa.0.0.copyload = load <32 x i8>, ptr %i.v, align 1
   %i.w = load ptr, ptr %i.a, align 8
   call void @gcry_md_close(ptr noundef %i.w)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %8, ptr noundef nonnull align 16 dereferenceable(16) %9, i64 noundef 16, i1 noundef false) #8
+  %.sroa.0.0.vec.extract = shufflevector <32 x i8> %.sroa.0.0.copyload, <32 x i8> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  store <16 x i8> %.sroa.0.0.vec.extract, ptr %8, align 1
   br label %bb.e
 
 bb.e:                                             ; preds = %sha256.exit.thread, %bb.a, %bb.d
   %.0 = phi i1 [ true, %bb.d ], [ false, %bb.a ], [ false, %sha256.exit.thread ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %9)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #8
   ret i1 %.0
 }

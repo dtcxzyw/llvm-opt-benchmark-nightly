@@ -204,15 +204,15 @@ bb.g:                                             ; preds = %_ZN9Stockfish6Searc
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr dso_local void @_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN9Stockfish6Search8RootMoveESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_less_iterEEvT_T0_(ptr %0) local_unnamed_addr #4 comdat {
 bb.a:
-  %.sroa.6 = alloca [32 x i8], align 8            ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6)
+  %.sroa.6.sroa.0 = alloca <32 x i8>, align 32    ; 4 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6.sroa.0)
   %.sroa.05.0.copyload = load i64, ptr %0, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.sroa.4.0.copyload = load i32, ptr %.sroa.4.0..sroa_idx, align 8 ; 5 uses
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 12
   %.sroa.5.0.copyload = load i32, ptr %.sroa.5.0..sroa_idx, align 4 ; 3 uses
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %.sroa.6, ptr noundef nonnull align 8 dereferenceable(28) %.sroa.6.0..sroa_idx, i64 28, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 32 dereferenceable(28) %.sroa.6.sroa.0, ptr noundef nonnull align 8 dereferenceable(28) %.sroa.6.0..sroa_idx, i64 28, i1 false)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.b = load <2 x ptr>, ptr %i.a, align 8, !tbaa !291
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 64
@@ -282,7 +282,7 @@ _ZN9Stockfish6Search8RootMoveaSEOS1_.exit:        ; preds = %.lr.ph, %bb.b
   %.sroa.5.0..sroa_idx9 = getelementptr inbounds nuw i8, ptr %.sroa.015.0.lcssa, i64 12
   store i32 %.sroa.5.0.copyload, ptr %.sroa.5.0..sroa_idx9, align 4
   %.sroa.6.0..sroa_idx11 = getelementptr inbounds nuw i8, ptr %.sroa.015.0.lcssa, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %.sroa.6.0..sroa_idx11, ptr noundef nonnull align 8 dereferenceable(28) %.sroa.6, i64 28, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %.sroa.6.0..sroa_idx11, ptr noundef nonnull align 32 dereferenceable(28) %.sroa.6.sroa.0, i64 28, i1 false)
   %i.ag = getelementptr inbounds nuw i8, ptr %.sroa.015.0.lcssa, i64 48
   %i.ah = getelementptr inbounds nuw i8, ptr %.sroa.015.0.lcssa, i64 64
   store <2 x ptr> %i.b, ptr %i.ag, align 8, !tbaa !291
@@ -297,7 +297,7 @@ bb.c:                                             ; preds = %._crit_edge
   br label %_ZN9Stockfish6Search8RootMoveD2Ev.exit
 
 _ZN9Stockfish6Search8RootMoveD2Ev.exit:           ; preds = %bb.c, %._crit_edge
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6.sroa.0)
   ret void
 }
 
@@ -700,7 +700,6 @@ bb.x:                                             ; preds = %_ZN9Stockfish6Searc
 ; Function Attrs: mustprogress nounwind uwtable
 define internal fastcc void @"_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPN9Stockfish6Search8RootMoveESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS2_16syzygy_extend_pvERKNS2_10OptionsMapERKNS3_10LimitsTypeERNS2_8PositionERS4_RiE3$_1EEEvT_SO_T0_"(ptr %0, ptr nofree readnone captures(address) %1) unnamed_addr #4 {
 bb.a:
-  %.sroa.05.i = alloca [36 x i8], align 8         ; 4 uses
   %.sroa.0 = alloca { i64, i32, i32, i32, i32, i32, i8, i8, i32, i32, i32 }, align 8 ; 4 uses
   %i.a = icmp eq ptr %0, %1
   br i1 %i.a, label %.loopexit, label %.preheader
@@ -798,8 +797,7 @@ _ZN9Stockfish6Search8RootMoveD2Ev.exit:           ; preds = %bb.e, %_ZSt13move_b
   br label %bb.i
 
 bb.f:                                             ; preds = %bb.b
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.05.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(36) %.sroa.05.i, ptr noundef nonnull align 8 dereferenceable(36) %.sroa.010.023, i64 36, i1 false)
+  %.sroa.05.i.sroa.0.0.copyload = load <36 x i8>, ptr %.sroa.010.023, align 8
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.pn22, i64 112
   %i.ak = load i32, ptr %.sroa.5.0..sroa_idx.i, align 8
   %i.al = getelementptr inbounds nuw i8, ptr %.pn22, i64 120 ; 2 uses
@@ -854,7 +852,7 @@ _ZN9Stockfish6Search8RootMoveaSEOS1_.exit.i:      ; preds = %bb.g, %.lr.ph.i
   %i.bg = phi i64 [ 0, %bb.f ], [ %i.bf, %._crit_edge.loopexit.i ]
   %i.bh = phi ptr [ null, %bb.f ], [ %.pre.i, %._crit_edge.loopexit.i ] ; 3 uses
   %.sroa.012.0.lcssa.i = phi ptr [ %.sroa.010.023, %bb.f ], [ %.sroa.0.018.i, %._crit_edge.loopexit.i ] ; 5 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(36) %.sroa.012.0.lcssa.i, ptr noundef nonnull align 8 dereferenceable(36) %.sroa.05.i, i64 36, i1 false)
+  store <36 x i8> %.sroa.05.i.sroa.0.0.copyload, ptr %.sroa.012.0.lcssa.i, align 8
   %.sroa.4.0..sroa_idx6.i = getelementptr inbounds nuw i8, ptr %.sroa.012.0.lcssa.i, i64 36
   store i32 %.val.i, ptr %.sroa.4.0..sroa_idx6.i, align 4
   %.sroa.5.0..sroa_idx8.i = getelementptr inbounds nuw i8, ptr %.sroa.012.0.lcssa.i, i64 40
@@ -864,19 +862,15 @@ _ZN9Stockfish6Search8RootMoveaSEOS1_.exit.i:      ; preds = %bb.g, %.lr.ph.i
   store <2 x ptr> %i.am, ptr %i.bi, align 8, !tbaa !291
   store ptr %i.ao, ptr %i.bj, align 8, !tbaa !190
   %.not.i.i.i.i.i.i1.i = icmp eq ptr %i.bh, null
-  br i1 %.not.i.i.i.i.i.i1.i, label %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN9Stockfish6Search8RootMoveESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_comp_iterIZNS2_16syzygy_extend_pvERKNS2_10OptionsMapERKNS3_10LimitsTypeERNS2_8PositionERS4_RiE3$_1EEEvT_T0_.exit", label %bb.h
+  br i1 %.not.i.i.i.i.i.i1.i, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %._crit_edge.i
   %i.bk = ptrtoint ptr %i.bh to i64
   %i.bl = sub i64 %i.bg, %i.bk
   tail call void @_ZdlPvm(ptr noundef nonnull %i.bh, i64 noundef %i.bl) #38
-  br label %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN9Stockfish6Search8RootMoveESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_comp_iterIZNS2_16syzygy_extend_pvERKNS2_10OptionsMapERKNS3_10LimitsTypeERNS2_8PositionERS4_RiE3$_1EEEvT_T0_.exit"
-
-"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN9Stockfish6Search8RootMoveESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_comp_iterIZNS2_16syzygy_extend_pvERKNS2_10OptionsMapERKNS3_10LimitsTypeERNS2_8PositionERS4_RiE3$_1EEEvT_T0_.exit": ; preds = %._crit_edge.i, %bb.h
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.05.i)
   br label %bb.i
 
-bb.i:                                             ; preds = %_ZN9Stockfish6Search8RootMoveD2Ev.exit, %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN9Stockfish6Search8RootMoveESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_comp_iterIZNS2_16syzygy_extend_pvERKNS2_10OptionsMapERKNS3_10LimitsTypeERNS2_8PositionERS4_RiE3$_1EEEvT_T0_.exit"
+bb.i:                                             ; preds = %bb.h, %._crit_edge.i, %_ZN9Stockfish6Search8RootMoveD2Ev.exit
   %.sroa.010.0 = getelementptr inbounds nuw i8, ptr %.sroa.010.023, i64 72 ; 2 uses
   %.not = icmp eq ptr %.sroa.010.0, %1
   br i1 %.not, label %.loopexit, label %bb.b, !llvm.loop !829

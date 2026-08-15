@@ -103,7 +103,6 @@ define hidden noundef zeroext i1 @SDL_LoadWAV_IO_REAL(ptr noundef %0, i1 noundef
 bb.a:
   %i.a = alloca [2 x i32], align 4                ; 6 uses
   %i.b = alloca [2 x i32], align 4                ; 6 uses
-  %.sroa.8.i = alloca [28 x i8], align 4          ; 23 uses
   %.sroa.10.i = alloca { i64, ptr, i64 }, align 8 ; 23 uses
   %i.c = alloca i32, align 4                      ; 4 uses
   %i.d = alloca i32, align 4                      ; 5 uses
@@ -258,9 +257,7 @@ WaveGetFactChunkHint.exit:                        ; preds = %bb.y, %bb.z, %bb.aa
   %i.am = getelementptr inbounds nuw i8, ptr %5, i64 112 ; 2 uses
   store i32 %.0.i36, ptr %i.am, align 8
   %i.an = tail call i64 @SDL_GetIOSize_REAL(ptr noundef nonnull %0) #7 ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.8.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.10.i)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %.sroa.8.i, i8 0, i64 28, i1 false)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.10.i, i8 0, i64 24, i1 false)
   %i.ao = tail call ptr @SDL_GetHint_REAL(ptr noundef nonnull @.str.18) #7 ; 2 uses
   %.not.i37 = icmp eq ptr %i.ao, null
@@ -284,7 +281,6 @@ bb.ae:                                            ; preds = %bb.ad, %WaveGetFact
 .split:                                           ; preds = %bb.ae
   %i.au = call zeroext i1 (ptr, ...) @SDL_SetError_REAL(ptr noundef nonnull @.str.20) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.10.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8.i)
   br i1 %i.au, label %bb.ct, label %bb.cs
 
 WaveFreeChunkData.exit.i.i:                       ; preds = %bb.ae
@@ -328,7 +324,6 @@ bb.aj:                                            ; preds = %bb.ai
   %i.be = call zeroext i1 (ptr, ...) @SDL_SetError_REAL(ptr noundef nonnull %.str.23.sink.i) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.10.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8.i)
   br i1 %i.be, label %bb.ct, label %bb.cs
 
 bb.ak:                                            ; preds = %bb.aj
@@ -338,7 +333,6 @@ bb.ak:                                            ; preds = %bb.aj
 .split49:                                         ; preds = %bb.ah
   %i.bf = call zeroext i1 (ptr, ...) @SDL_SetError_REAL(ptr noundef nonnull @.str.24) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.10.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8.i)
   br i1 %i.bf, label %bb.ct, label %bb.cs
 
 bb.al:                                            ; preds = %bb.ak, %bb.ah
@@ -402,10 +396,10 @@ bb.ar:                                            ; preds = %bb.bq
 .split54:                                         ; preds = %bb.ar, %.lr.ph.i
   %i.cd = call zeroext i1 (ptr, ...) @SDL_SetError_REAL(ptr noundef nonnull @.str.25, i32 noundef %.1144.i) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.10.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8.i)
   br i1 %i.cd, label %bb.ct, label %bb.cs
 
 .lr.ph:                                           ; preds = %.lr.ph.i, %bb.ar
+  %.sroa.8.i.sroa.0.0 = phi <28 x i8> [ %.sroa.8.i.sroa.0.1, %bb.ar ], [ zeroinitializer, %.lr.ph.i ] ; 8 uses
   %i.ce = phi i32 [ %i.cc, %bb.ar ], [ 1, %.lr.ph.i ] ; 2 uses
   %.sroa.021.0251.i170 = phi i32 [ %.sroa.021.1.i, %bb.ar ], [ 0, %.lr.ph.i ] ; 8 uses
   %.sroa.0.0252.i169 = phi i32 [ %.sroa.0.1.i, %bb.ar ], [ 0, %.lr.ph.i ] ; 9 uses
@@ -460,7 +454,6 @@ bb.av:                                            ; preds = %bb.au, %bb.at, %Wav
 .split53:                                         ; preds = %bb.av
   %i.cv = call zeroext i1 (ptr, ...) @SDL_SetError_REAL(ptr noundef nonnull @.str.26) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.10.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8.i)
   br i1 %i.cv, label %bb.ct, label %bb.cs
 
 bb.aw:                                            ; preds = %bb.au
@@ -488,11 +481,10 @@ bb.ay:                                            ; preds = %bb.ax
 .split44:                                         ; preds = %bb.ay
   %i.db = call zeroext i1 (ptr, ...) @SDL_SetError_REAL(ptr noundef nonnull @.str.28) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.10.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8.i)
   br i1 %i.db, label %bb.ct, label %bb.cs
 
 bb.az:                                            ; preds = %bb.ay
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %.sroa.8.i, ptr noundef nonnull align 4 dereferenceable(28) %i.bo, i64 28, i1 false)
+  %.sroa.8.i.sroa.0.0.copyload198 = load <28 x i8>, ptr %i.bo, align 4
   br label %bb.bl
 
 bb.ba:                                            ; preds = %bb.aw
@@ -549,9 +541,10 @@ bb.bk:                                            ; preds = %bb.bj, %bb.bi
   br label %bb.bl
 
 bb.bl:                                            ; preds = %bb.bk, %bb.bg, %bb.be, %bb.bd, %bb.bc, %bb.az, %bb.ax, %bb.aw
-  %.sroa.021.1.i = phi i32 [ 544501094, %bb.ax ], [ 544501094, %bb.az ], [ %.sroa.021.0251.i170, %bb.bd ], [ %.sroa.021.0251.i170, %bb.bc ], [ %.sroa.021.0251.i170, %bb.bg ], [ %.sroa.021.0251.i170, %bb.bk ], [ %.sroa.021.0251.i170, %bb.be ], [ %.sroa.021.0251.i170, %bb.aw ] ; 3 uses
-  %.sroa.0.1.i = phi i32 [ %.sroa.0.0252.i169, %bb.ax ], [ %.sroa.0.0252.i169, %bb.az ], [ 1635017060, %bb.bd ], [ 1635017060, %bb.bc ], [ %.sroa.0.0252.i169, %bb.bg ], [ %.sroa.0.0252.i169, %bb.bk ], [ %.sroa.0.0252.i169, %bb.be ], [ %.sroa.0.0252.i169, %bb.aw ] ; 3 uses
-  %.sroa.9.1.i = phi i32 [ %.sroa.9.0253.i168, %bb.ax ], [ %.sroa.9.0253.i168, %bb.az ], [ %.sroa.9.0.copyload.i, %bb.bd ], [ %.sroa.9.0253.i168, %bb.bc ], [ %.sroa.9.0253.i168, %bb.bg ], [ %.sroa.9.0253.i168, %bb.bk ], [ %.sroa.9.0253.i168, %bb.be ], [ %.sroa.9.0253.i168, %bb.aw ] ; 3 uses
+  %.sroa.8.i.sroa.0.1 = phi <28 x i8> [ %.sroa.8.i.sroa.0.0, %bb.aw ], [ %.sroa.8.i.sroa.0.0, %bb.ax ], [ %.sroa.8.i.sroa.0.0.copyload198, %bb.az ], [ %.sroa.8.i.sroa.0.0, %bb.bc ], [ %.sroa.8.i.sroa.0.0, %bb.bd ], [ %.sroa.8.i.sroa.0.0, %bb.bg ], [ %.sroa.8.i.sroa.0.0, %bb.bk ], [ %.sroa.8.i.sroa.0.0, %bb.be ] ; 3 uses
+  %.sroa.021.1.i = phi i32 [ %.sroa.021.0251.i170, %bb.aw ], [ 544501094, %bb.ax ], [ 544501094, %bb.az ], [ %.sroa.021.0251.i170, %bb.bc ], [ %.sroa.021.0251.i170, %bb.bd ], [ %.sroa.021.0251.i170, %bb.bg ], [ %.sroa.021.0251.i170, %bb.bk ], [ %.sroa.021.0251.i170, %bb.be ] ; 3 uses
+  %.sroa.0.1.i = phi i32 [ %.sroa.0.0252.i169, %bb.aw ], [ %.sroa.0.0252.i169, %bb.ax ], [ %.sroa.0.0252.i169, %bb.az ], [ 1635017060, %bb.bc ], [ 1635017060, %bb.bd ], [ %.sroa.0.0252.i169, %bb.bg ], [ %.sroa.0.0252.i169, %bb.bk ], [ %.sroa.0.0252.i169, %bb.be ] ; 3 uses
+  %.sroa.9.1.i = phi i32 [ %.sroa.9.0253.i168, %bb.aw ], [ %.sroa.9.0253.i168, %bb.ax ], [ %.sroa.9.0253.i168, %bb.az ], [ %.sroa.9.0253.i168, %bb.bc ], [ %.sroa.9.0.copyload.i, %bb.bd ], [ %.sroa.9.0253.i168, %bb.bg ], [ %.sroa.9.0253.i168, %bb.bk ], [ %.sroa.9.0253.i168, %bb.be ] ; 3 uses
   %i.do = load i32, ptr %i.ac, align 4            ; 2 uses
   %i.dp = icmp eq i32 %i.do, 1
   br i1 %i.dp, label %bb.bm, label %bb.bn
@@ -567,7 +560,6 @@ bb.bm:                                            ; preds = %bb.bl
 .split45:                                         ; preds = %bb.bm
   %i.dv = call zeroext i1 (ptr, ...) @SDL_SetError_REAL(ptr noundef nonnull @.str.29) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.10.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8.i)
   br i1 %i.dv, label %bb.ct, label %bb.cs
 
 bb.bn:                                            ; preds = %bb.bl
@@ -611,6 +603,7 @@ bb.bq:                                            ; preds = %bb.bp, %bb.bn, %bb.
   br label %.loopexit.i
 
 .loopexit.i:                                      ; preds = %.loopexit.i.loopexit, %bb.av
+  %.sroa.8.i.sroa.0.2 = phi <28 x i8> [ %.sroa.8.i.sroa.0.0, %bb.av ], [ %.sroa.8.i.sroa.0.1, %.loopexit.i.loopexit ] ; 3 uses
   %.pre.i = phi i1 [ false, %bb.av ], [ %i.en, %.loopexit.i.loopexit ]
   %.sroa.021.0248.i = phi i32 [ %.sroa.021.0251.i170, %bb.av ], [ %.sroa.021.1.i, %.loopexit.i.loopexit ]
   %.sroa.0.0242.i = phi i32 [ %.sroa.0.0252.i169, %bb.av ], [ %.sroa.0.1.i, %.loopexit.i.loopexit ]
@@ -621,7 +614,6 @@ bb.bq:                                            ; preds = %bb.bp, %bb.bn, %bb.
 .loopexit.thread.i:                               ; preds = %.loopexit.i, %bb.aq
   %i.eo = call zeroext i1 (ptr, ...) @SDL_SetError_REAL(ptr noundef nonnull @.str.30) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.10.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8.i)
   br i1 %i.eo, label %bb.ct, label %bb.cs
 
 bb.br:                                            ; preds = %.loopexit.i
@@ -631,7 +623,6 @@ bb.br:                                            ; preds = %.loopexit.i
 .split52:                                         ; preds = %bb.br
   %i.ep = call zeroext i1 (ptr, ...) @SDL_SetError_REAL(ptr noundef nonnull @.str.31) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.10.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8.i)
   br i1 %i.ep, label %bb.ct, label %bb.cs
 
 bb.bs:                                            ; preds = %bb.br
@@ -668,7 +659,6 @@ bb.bw:                                            ; preds = %bb.bv
   %i.ez = call zeroext i1 (ptr, ...) @SDL_SetError_REAL(ptr noundef nonnull %.str.32.sink.i) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.10.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8.i)
   br i1 %i.ez, label %bb.ct, label %bb.cs
 
 bb.bx:                                            ; preds = %bb.bw
@@ -676,10 +666,11 @@ bb.bx:                                            ; preds = %bb.bw
   br label %bb.by
 
 bb.by:                                            ; preds = %bb.bx, %bb.bt, %bb.bs, %.thread293.i
-  %i.fa = phi i64 [ %i.em, %.thread293.i ], [ %i.et, %bb.bx ], [ %i.et, %bb.bt ], [ %i.et, %bb.bs ]
-  %.sroa.9.2215220295.i = phi i32 [ %.sroa.9.1.i, %.thread293.i ], [ %.sroa.9.0236.i, %bb.bx ], [ %.sroa.9.0236.i, %bb.bt ], [ %.sroa.9.0236.i, %bb.bs ] ; 3 uses
+  %.sroa.8.i.sroa.0.3 = phi <28 x i8> [ %.sroa.8.i.sroa.0.2, %bb.bt ], [ %.sroa.8.i.sroa.0.2, %bb.bx ], [ %.sroa.8.i.sroa.0.2, %bb.bs ], [ %.sroa.8.i.sroa.0.1, %.thread293.i ]
+  %i.fa = phi i64 [ %i.et, %bb.bt ], [ %i.et, %bb.bx ], [ %i.et, %bb.bs ], [ %i.em, %.thread293.i ]
+  %.sroa.9.2215220295.i = phi i32 [ %.sroa.9.0236.i, %bb.bt ], [ %.sroa.9.0236.i, %bb.bx ], [ %.sroa.9.0236.i, %bb.bs ], [ %.sroa.9.1.i, %.thread293.i ] ; 3 uses
   store i32 544501094, ptr %5, align 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %i.bo, ptr noundef nonnull align 4 dereferenceable(28) %.sroa.8.i, i64 28, i1 false)
+  store <28 x i8> %.sroa.8.i.sroa.0.3, ptr %i.bo, align 4
   %i.fb = load ptr, ptr %i.bw, align 8            ; 2 uses
   %.not.i.i180.i = icmp eq ptr %i.fb, null
   br i1 %.not.i.i180.i, label %WaveFreeChunkData.exit.i181.i, label %bb.bz
@@ -721,13 +712,11 @@ WaveReadPartialChunkData.exit.i:                  ; preds = %bb.cb
 .split51:                                         ; preds = %bb.cb, %bb.ca
   %i.fl = call zeroext i1 (ptr, ...) @SDL_SetError_REAL(ptr noundef nonnull @.str.33) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.10.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8.i)
   br i1 %i.fl, label %bb.ct, label %bb.cs
 
 .critedge.i:                                      ; preds = %WaveReadPartialChunkData.exit.i, %WaveFreeChunkData.exit.i181.i
   %i.fm = call zeroext i1 (ptr, ...) @SDL_SetError_REAL(ptr noundef nonnull @.str.34) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.10.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8.i)
   br i1 %i.fm, label %bb.ct, label %bb.cs
 
 bb.cc:                                            ; preds = %WaveReadPartialChunkData.exit.i
@@ -737,7 +726,6 @@ bb.cc:                                            ; preds = %WaveReadPartialChun
 .split50:                                         ; preds = %bb.cc
   %i.fo = call zeroext i1 (ptr, ...) @SDL_SetError_REAL(ptr noundef nonnull @.str.33) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.10.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8.i)
   br i1 %i.fo, label %bb.ct, label %bb.cs
 
 bb.cd:                                            ; preds = %bb.cc
@@ -790,7 +778,6 @@ bb.cj:                                            ; preds = %bb.ci
 .split48:                                         ; preds = %bb.cj
   %i.fz = call zeroext i1 (ptr, ...) @SDL_SetError_REAL(ptr noundef nonnull @.str.36) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.10.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8.i)
   br i1 %i.fz, label %bb.ct, label %bb.cs
 
 bb.ck:                                            ; preds = %bb.cj, %bb.ci
@@ -857,13 +844,11 @@ bb.cr:                                            ; preds = %bb.cp
   %i.gs = zext i16 %i.gq to i32
   %i.gt = call zeroext i1 (ptr, ...) @SDL_SetError_REAL(ptr noundef nonnull @.str.37, i32 noundef %i.gs) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.10.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8.i)
   br i1 %i.gt, label %bb.ct, label %bb.cs
 
 .split47:                                         ; preds = %bb.cp
   %i.gu = call zeroext i1 (ptr, ...) @SDL_SetError_REAL(ptr noundef nonnull @.str.38) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.10.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8.i)
   br i1 %i.gu, label %bb.ct, label %bb.cs
 
 switch.hole_check:                                ; preds = %bb.cr
@@ -885,19 +870,16 @@ WaveLoad.exit.thread42:                           ; preds = %switch.lookup, %bb.
   %.0146..i = select i1 %.0145.i, i64 %.0146.i, i64 %i.fa
   store i64 %.0146..i, ptr %i.bh, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.10.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8.i)
   br label %bb.ct
 
 WaveLoad.exit.thread:                             ; preds = %bb.ce, %bb.ch, %bb.cl, %bb.cm, %bb.cn, %bb.cd, %bb.co
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.10.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8.i)
   br label %bb.cs
 
 WaveLoad.exit:                                    ; preds = %WaveFreeChunkData.exit.i.i, %bb.af, %bb.ag
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #7
   %i.gw = call zeroext i1 (ptr, ...) @SDL_SetError_REAL(ptr noundef nonnull @.str.21) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.10.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8.i)
   br i1 %i.gw, label %bb.ct, label %bb.cs
 
 bb.cs:                                            ; preds = %.split54, %.split53, %.loopexit.thread.i, %.split52, %.split51, %.critedge.i, %.split50, %.split49, %.thread.i, %.split48, %.split47, %.thread222.i, %.split46, %.split45, %.split44, %.split, %WaveLoad.exit.thread, %WaveLoad.exit

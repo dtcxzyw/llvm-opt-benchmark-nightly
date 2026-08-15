@@ -204,7 +204,6 @@ $_ZTSN4grpc8internal16RpcMethodHandlerINS_8channelz2v18Channelz7ServiceENS3_16Ge
 @_ZTSN4grpc16ChannelInterfaceE = linkonce_odr constant [26 x i8] c"N4grpc16ChannelInterfaceE\00", comdat, align 1
 @.str.21 = private unnamed_addr constant [85 x i8] c"hooks_[static_cast<size_t>( experimental::InterceptionHookPoints::PRE_RECV_MESSAGE)]\00", align 1
 @.str.22 = private unnamed_addr constant [85 x i8] c"hooks_[static_cast<size_t>( experimental::InterceptionHookPoints::PRE_SEND_MESSAGE)]\00", align 1
-@.str.23 = private unnamed_addr constant [11 x i8] c"No payload\00", align 8
 @_ZN4grpc6Status2OKE = external local_unnamed_addr constant ptr, align 8
 @_ZTVN4grpc17ProtoBufferReaderE = linkonce_odr constant { [9 x ptr] } { [9 x ptr] [ptr null, ptr @_ZTIN4grpc17ProtoBufferReaderE, ptr @_ZN4grpc17ProtoBufferReaderD2Ev, ptr @_ZN4grpc17ProtoBufferReaderD0Ev, ptr @_ZN4grpc17ProtoBufferReader4NextEPPKvPi, ptr @_ZN4grpc17ProtoBufferReader6BackUpEi, ptr @_ZN4grpc17ProtoBufferReader4SkipEi, ptr @_ZNK4grpc17ProtoBufferReader9ByteCountEv, ptr @_ZN4grpc17ProtoBufferReader8ReadCordEPN4absl12lts_202505124CordEi] }, comdat, align 8
 @.str.24 = private unnamed_addr constant [39 x i8] c"Couldn't initialize byte buffer reader\00", align 1
@@ -607,7 +606,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   store ptr %i.c, ptr %i.b, align 8, !tbaa !281
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(10) %i.c, ptr noundef nonnull align 8 dereferenceable(10) @.str.23, i64 10, i1 false)
+  store <10 x i8> <i8 78, i8 111, i8 32, i8 112, i8 97, i8 121, i8 108, i8 111, i8 97, i8 100>, ptr %i.c, align 8
   %.sroa.2.16..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 34
   store i8 0, ptr %.sroa.2.16..sroa_idx, align 2
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16

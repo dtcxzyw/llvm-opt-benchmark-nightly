@@ -203,14 +203,13 @@ normalize_path_copy_len.exit:                     ; preds = %skip_slashes.exit89
 ; Function Attrs: nounwind uwtable
 define dso_local range(i32 -1, 1) i32 @strbuf_normalize_path(ptr nofree noundef captures(none) %0) local_unnamed_addr #3 {
 bb.a:
-  %1 = alloca [24 x i8], align 16                 ; 4 uses
-  %2 = alloca %struct.strbuf, align 8             ; 10 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #30
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) @__const.do_submodule_path.git_submodule_dir, i64 24, i1 false)
+  %1 = alloca %struct.strbuf, align 8             ; 10 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %1) #30
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) @__const.do_submodule_path.git_submodule_dir, i64 24, i1 false)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load i64, ptr %i.a, align 8, !tbaa !42
-  call void @strbuf_grow(ptr noundef nonnull %2, i64 noundef %i.b) #30
-  %i.c = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
+  call void @strbuf_grow(ptr noundef nonnull %1, i64 noundef %i.b) #30
+  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !45   ; 7 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !45   ; 9 uses
@@ -431,7 +430,7 @@ bb.k:                                             ; preds = %bb.i
   store i8 0, ptr %.256.us.i.i, align 1, !tbaa !12
   %i.bb = load ptr, ptr %i.c, align 8, !tbaa !45  ; 3 uses
   %i.bc = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.bb) #29 ; 3 uses
-  %i.bd = load i64, ptr %2, align 8, !tbaa !44
+  %i.bd = load i64, ptr %1, align 8, !tbaa !44
   %spec.select.i = call i64 @llvm.usub.sat.i64(i64 %i.bd, i64 1)
   %i.be = icmp ugt i64 %i.bc, %spec.select.i
   br i1 %i.be, label %bb.l, label %bb.m
@@ -441,7 +440,7 @@ bb.l:                                             ; preds = %bb.k
   unreachable
 
 bb.m:                                             ; preds = %bb.k
-  %i.bf = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %i.bf = getelementptr inbounds nuw i8, ptr %1, i64 8
   store i64 %i.bc, ptr %i.bf, align 8, !tbaa !42
   %.not9.i = icmp eq ptr %i.bb, @strbuf_slopbuf
   br i1 %.not9.i, label %bb.o, label %bb.n
@@ -461,17 +460,15 @@ bb.p:                                             ; preds = %bb.o
   unreachable
 
 strbuf_setlen.exit:                               ; preds = %bb.n, %bb.o
-  call void @llvm.lifetime.start.p0(ptr nonnull %1)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %1, ptr noundef nonnull align 1 dereferenceable(24) %0, i64 24, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %2, i64 24, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 16 dereferenceable(24) %1, i64 24, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %1)
+  %.sroa.0.0.copyload = load <24 x i8>, ptr %0, align 8
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false)
+  store <24 x i8> %.sroa.0.0.copyload, ptr %1, align 8
   br label %.loopexit
 
 .loopexit:                                        ; preds = %skip_slashes.exit89.us.i.i, %strbuf_setlen.exit
   %.0 = phi i32 [ 0, %strbuf_setlen.exit ], [ -1, %skip_slashes.exit89.us.i.i ]
-  call void @strbuf_release(ptr noundef nonnull %2) #30
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #30
+  call void @strbuf_release(ptr noundef nonnull %1) #30
+  call void @llvm.lifetime.end.p0(ptr nonnull %1) #30
   ret i32 %.0
 }
 

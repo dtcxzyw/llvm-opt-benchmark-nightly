@@ -204,10 +204,8 @@ emit_restart.exit.thread:                         ; preds = %bb.m, %flush_bits.e
 define internal void @finish_pass_huff(ptr noundef %0) #0 {
 bb.a:
   %i.a = alloca [512 x i8], align 16              ; 6 uses
-  %.sroa.26 = alloca [20 x i8], align 4           ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 560
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !56   ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.26)
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !85   ; 2 uses
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !86   ; 4 uses
@@ -218,7 +216,7 @@ bb.a:
   %.sroa.24.16..sroa_idx19 = getelementptr inbounds nuw i8, ptr %i.c, i64 40 ; 2 uses
   %.sroa.24.16.copyload20 = load i32, ptr %.sroa.24.16..sroa_idx19, align 8, !tbaa !3 ; 2 uses
   %.sroa.26.16..sroa_idx21 = getelementptr inbounds nuw i8, ptr %i.c, i64 44 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.26, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.26.16..sroa_idx21, i64 20, i1 false), !tbaa.struct !104
+  %.sroa.26.sroa.0.0.copyload36 = load <20 x i8>, ptr %.sroa.26.16..sroa_idx21, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   %i.j = sub i32 64, %.sroa.24.16.copyload20      ; 2 uses
   %i.k = icmp ugt i64 %i.h, 511                   ; 2 uses
@@ -303,7 +301,7 @@ bb.e:                                             ; preds = %.lr.ph76.i
   %i.aj = load ptr, ptr %i.d, align 8, !tbaa !85  ; 3 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 24
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !98
-  %i.am = call i32 %i.al(ptr noundef %0) #7, !inline_history !105
+  %i.am = call i32 %i.al(ptr noundef %0) #7, !inline_history !104
   %.not.i.i = icmp eq i32 %i.am, 0
   br i1 %.not.i.i, label %bb.h, label %dump_buffer.exit.i
 
@@ -350,8 +348,7 @@ bb.i:                                             ; preds = %flush_bits.exit.thr
   store i64 %.sroa.11.227, ptr %i.ax, align 8, !tbaa !92
   store i64 0, ptr %i.i, align 8, !tbaa !31
   store i32 64, ptr %.sroa.24.16..sroa_idx19, align 8, !tbaa !3
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.26.16..sroa_idx21, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.26, i64 20, i1 false), !tbaa.struct !104
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.26)
+  store <20 x i8> %.sroa.26.sroa.0.0.copyload36, ptr %.sroa.26.16..sroa_idx21, align 4
   ret void
 }
 
@@ -754,7 +751,7 @@ bb.pt:                                            ; preds = %bb.ps, %bb.pr
   %.13011173 = phi i64 [ %i.fui, %bb.pr ], [ %i.fum, %bb.ps ] ; 2 uses
   %.197 = phi ptr [ %.196, %bb.pr ], [ %.19514914, %bb.ps ] ; 2 uses
   %i.fun = icmp samesign ugt i32 %.6414915, 511
-  br i1 %i.fun, label %bb.pn, label %._crit_edge14918, !llvm.loop !106
+  br i1 %i.fun, label %bb.pn, label %._crit_edge14918, !llvm.loop !105
 
 ._crit_edge14918:                                 ; preds = %bb.pt, %bb.pm
   %.12911426.lcssa = phi i32 [ %.12811425, %bb.pm ], [ %.13011427, %bb.pt ] ; 2 uses
@@ -1112,7 +1109,7 @@ bb.qk:                                            ; preds = %bb.qj, %bb.qi
   %.13411177 = phi i64 [ %i.gbd, %bb.qi ], [ %i.gbh, %bb.qj ] ; 2 uses
   %.203 = phi ptr [ %.202, %bb.qi ], [ %.20114925, %bb.qj ] ; 2 uses
   %i.gbi = icmp samesign ugt i32 %.6614926, 511
-  br i1 %i.gbi, label %bb.qe, label %._crit_edge14929, !llvm.loop !107
+  br i1 %i.gbi, label %bb.qe, label %._crit_edge14929, !llvm.loop !106
 
 ._crit_edge14929:                                 ; preds = %bb.qk, %bb.qd
   %.13311430.lcssa = phi i32 [ %.13211429, %bb.qd ], [ %.13411431, %bb.qk ] ; 2 uses
@@ -1470,7 +1467,7 @@ bb.rb:                                            ; preds = %bb.ra, %bb.qz
   %.13811181 = phi i64 [ %i.ghy, %bb.qz ], [ %i.gic, %bb.ra ] ; 2 uses
   %.209 = phi ptr [ %.208, %bb.qz ], [ %.20714936, %bb.ra ] ; 2 uses
   %i.gid = icmp samesign ugt i32 %.6814937, 511
-  br i1 %i.gid, label %bb.qv, label %._crit_edge14940, !llvm.loop !108
+  br i1 %i.gid, label %bb.qv, label %._crit_edge14940, !llvm.loop !107
 
 ._crit_edge14940:                                 ; preds = %bb.rb, %bb.qu
   %.13711434.lcssa = phi i32 [ %.13611433, %bb.qu ], [ %.13811435, %bb.rb ] ; 2 uses
@@ -1828,7 +1825,7 @@ bb.rs:                                            ; preds = %bb.rr, %bb.rq
   %.14211185 = phi i64 [ %i.got, %bb.rq ], [ %i.gox, %bb.rr ] ; 2 uses
   %.215 = phi ptr [ %.214, %bb.rq ], [ %.21314947, %bb.rr ] ; 2 uses
   %i.goy = icmp samesign ugt i32 %.7014948, 511
-  br i1 %i.goy, label %bb.rm, label %._crit_edge14951, !llvm.loop !109
+  br i1 %i.goy, label %bb.rm, label %._crit_edge14951, !llvm.loop !108
 
 ._crit_edge14951:                                 ; preds = %bb.rs, %bb.rl
   %.14111438.lcssa = phi i32 [ %.14011437, %bb.rl ], [ %.14211439, %bb.rs ] ; 2 uses
@@ -2186,7 +2183,7 @@ bb.sj:                                            ; preds = %bb.si, %bb.sh
   %.14611189 = phi i64 [ %i.gvo, %bb.sh ], [ %i.gvs, %bb.si ] ; 2 uses
   %.221 = phi ptr [ %.220, %bb.sh ], [ %.21914958, %bb.si ] ; 2 uses
   %i.gvt = icmp samesign ugt i32 %.7214959, 511
-  br i1 %i.gvt, label %bb.sd, label %._crit_edge14962, !llvm.loop !110
+  br i1 %i.gvt, label %bb.sd, label %._crit_edge14962, !llvm.loop !109
 
 ._crit_edge14962:                                 ; preds = %bb.sj, %bb.sc
   %.14511442.lcssa = phi i32 [ %.14411441, %bb.sc ], [ %.14611443, %bb.sj ] ; 2 uses
@@ -2544,7 +2541,7 @@ bb.ta:                                            ; preds = %bb.sz, %bb.sy
   %.15011193 = phi i64 [ %i.hcj, %bb.sy ], [ %i.hcn, %bb.sz ] ; 2 uses
   %.227 = phi ptr [ %.226, %bb.sy ], [ %.22514969, %bb.sz ] ; 2 uses
   %i.hco = icmp samesign ugt i32 %.7414970, 511
-  br i1 %i.hco, label %bb.su, label %._crit_edge14973, !llvm.loop !111
+  br i1 %i.hco, label %bb.su, label %._crit_edge14973, !llvm.loop !110
 
 ._crit_edge14973:                                 ; preds = %bb.ta, %bb.st
   %.14911446.lcssa = phi i32 [ %.14811445, %bb.st ], [ %.15011447, %bb.ta ] ; 2 uses
@@ -2902,7 +2899,7 @@ bb.tr:                                            ; preds = %bb.tq, %bb.tp
   %.15411197 = phi i64 [ %i.hje, %bb.tp ], [ %i.hji, %bb.tq ] ; 2 uses
   %.233 = phi ptr [ %.232, %bb.tp ], [ %.23114980, %bb.tq ] ; 2 uses
   %i.hjj = icmp samesign ugt i32 %.7614981, 511
-  br i1 %i.hjj, label %bb.tl, label %._crit_edge14984, !llvm.loop !112
+  br i1 %i.hjj, label %bb.tl, label %._crit_edge14984, !llvm.loop !111
 
 ._crit_edge14984:                                 ; preds = %bb.tr, %bb.tk
   %.15311450.lcssa = phi i32 [ %.15211449, %bb.tk ], [ %.15411451, %bb.tr ] ; 2 uses
@@ -3260,7 +3257,7 @@ bb.ui:                                            ; preds = %bb.uh, %bb.ug
   %.15811201 = phi i64 [ %i.hpz, %bb.ug ], [ %i.hqd, %bb.uh ] ; 2 uses
   %.239 = phi ptr [ %.238, %bb.ug ], [ %.23714991, %bb.uh ] ; 2 uses
   %i.hqe = icmp samesign ugt i32 %.7814992, 511
-  br i1 %i.hqe, label %bb.uc, label %._crit_edge14995, !llvm.loop !113
+  br i1 %i.hqe, label %bb.uc, label %._crit_edge14995, !llvm.loop !112
 
 ._crit_edge14995:                                 ; preds = %bb.ui, %bb.ub
   %.15711454.lcssa = phi i32 [ %.15611453, %bb.ub ], [ %.15811455, %bb.ui ] ; 2 uses
@@ -3618,7 +3615,7 @@ bb.uz:                                            ; preds = %bb.uy, %bb.ux
   %.16211205 = phi i64 [ %i.hwu, %bb.ux ], [ %i.hwy, %bb.uy ] ; 2 uses
   %.245 = phi ptr [ %.244, %bb.ux ], [ %.24315002, %bb.uy ] ; 2 uses
   %i.hwz = icmp samesign ugt i32 %.8015003, 511
-  br i1 %i.hwz, label %bb.ut, label %._crit_edge15006, !llvm.loop !114
+  br i1 %i.hwz, label %bb.ut, label %._crit_edge15006, !llvm.loop !113
 
 ._crit_edge15006:                                 ; preds = %bb.uz, %bb.us
   %.16111458.lcssa = phi i32 [ %.16011457, %bb.us ], [ %.16211459, %bb.uz ] ; 2 uses
@@ -3976,7 +3973,7 @@ bb.vq:                                            ; preds = %bb.vp, %bb.vo
   %.16611209 = phi i64 [ %i.idp, %bb.vo ], [ %i.idt, %bb.vp ] ; 2 uses
   %.251 = phi ptr [ %.250, %bb.vo ], [ %.24915013, %bb.vp ] ; 2 uses
   %i.idu = icmp samesign ugt i32 %.8215014, 511
-  br i1 %i.idu, label %bb.vk, label %._crit_edge15017, !llvm.loop !115
+  br i1 %i.idu, label %bb.vk, label %._crit_edge15017, !llvm.loop !114
 
 ._crit_edge15017:                                 ; preds = %bb.vq, %bb.vj
   %.16511462.lcssa = phi i32 [ %.16411461, %bb.vj ], [ %.16611463, %bb.vq ] ; 2 uses
@@ -4334,7 +4331,7 @@ bb.wh:                                            ; preds = %bb.wg, %bb.wf
   %.17011213 = phi i64 [ %i.ikk, %bb.wf ], [ %i.iko, %bb.wg ] ; 2 uses
   %.257 = phi ptr [ %.256, %bb.wf ], [ %.25515024, %bb.wg ] ; 2 uses
   %i.ikp = icmp samesign ugt i32 %.8415025, 511
-  br i1 %i.ikp, label %bb.wb, label %._crit_edge15028, !llvm.loop !116
+  br i1 %i.ikp, label %bb.wb, label %._crit_edge15028, !llvm.loop !115
 
 ._crit_edge15028:                                 ; preds = %bb.wh, %bb.wa
   %.16911466.lcssa = phi i32 [ %.16811465, %bb.wa ], [ %.17011467, %bb.wh ] ; 2 uses
@@ -4692,7 +4689,7 @@ bb.wy:                                            ; preds = %bb.wx, %bb.ww
   %.17411217 = phi i64 [ %i.irf, %bb.ww ], [ %i.irj, %bb.wx ] ; 2 uses
   %.263 = phi ptr [ %.262, %bb.ww ], [ %.26115035, %bb.wx ] ; 2 uses
   %i.irk = icmp samesign ugt i32 %.8615036, 511
-  br i1 %i.irk, label %bb.ws, label %._crit_edge15039, !llvm.loop !117
+  br i1 %i.irk, label %bb.ws, label %._crit_edge15039, !llvm.loop !116
 
 ._crit_edge15039:                                 ; preds = %bb.wy, %bb.wr
   %.17311470.lcssa = phi i32 [ %.17211469, %bb.wr ], [ %.17411471, %bb.wy ] ; 2 uses
@@ -5050,7 +5047,7 @@ bb.xp:                                            ; preds = %bb.xo, %bb.xn
   %.17811221 = phi i64 [ %i.iya, %bb.xn ], [ %i.iye, %bb.xo ] ; 2 uses
   %.269 = phi ptr [ %.268, %bb.xn ], [ %.26715046, %bb.xo ] ; 2 uses
   %i.iyf = icmp samesign ugt i32 %.8815047, 511
-  br i1 %i.iyf, label %bb.xj, label %._crit_edge15050, !llvm.loop !118
+  br i1 %i.iyf, label %bb.xj, label %._crit_edge15050, !llvm.loop !117
 
 ._crit_edge15050:                                 ; preds = %bb.xp, %bb.xi
   %.17711474.lcssa = phi i32 [ %.17611473, %bb.xi ], [ %.17811475, %bb.xp ] ; 2 uses
@@ -5408,7 +5405,7 @@ bb.yg:                                            ; preds = %bb.yf, %bb.ye
   %.18211225 = phi i64 [ %i.jev, %bb.ye ], [ %i.jez, %bb.yf ] ; 2 uses
   %.275 = phi ptr [ %.274, %bb.ye ], [ %.27315057, %bb.yf ] ; 2 uses
   %i.jfa = icmp samesign ugt i32 %.9015058, 511
-  br i1 %i.jfa, label %bb.ya, label %._crit_edge15061, !llvm.loop !119
+  br i1 %i.jfa, label %bb.ya, label %._crit_edge15061, !llvm.loop !118
 
 ._crit_edge15061:                                 ; preds = %bb.yg, %bb.xz
   %.18111478.lcssa = phi i32 [ %.18011477, %bb.xz ], [ %.18211479, %bb.yg ] ; 2 uses
@@ -5766,7 +5763,7 @@ bb.yx:                                            ; preds = %bb.yw, %bb.yv
   %.18611229 = phi i64 [ %i.jlq, %bb.yv ], [ %i.jlu, %bb.yw ] ; 2 uses
   %.281 = phi ptr [ %.280, %bb.yv ], [ %.27915068, %bb.yw ] ; 2 uses
   %i.jlv = icmp samesign ugt i32 %.9215069, 511
-  br i1 %i.jlv, label %bb.yr, label %._crit_edge15072, !llvm.loop !120
+  br i1 %i.jlv, label %bb.yr, label %._crit_edge15072, !llvm.loop !119
 
 ._crit_edge15072:                                 ; preds = %bb.yx, %bb.yq
   %.18511482.lcssa = phi i32 [ %.18411481, %bb.yq ], [ %.18611483, %bb.yx ] ; 2 uses
@@ -6124,7 +6121,7 @@ bb.zo:                                            ; preds = %bb.zn, %bb.zm
   %.19011233 = phi i64 [ %i.jsl, %bb.zm ], [ %i.jsp, %bb.zn ] ; 2 uses
   %.287 = phi ptr [ %.286, %bb.zm ], [ %.28515079, %bb.zn ] ; 2 uses
   %i.jsq = icmp samesign ugt i32 %.9415080, 511
-  br i1 %i.jsq, label %bb.zi, label %._crit_edge15083, !llvm.loop !121
+  br i1 %i.jsq, label %bb.zi, label %._crit_edge15083, !llvm.loop !120
 
 ._crit_edge15083:                                 ; preds = %bb.zo, %bb.zh
   %.18911486.lcssa = phi i32 [ %.18811485, %bb.zh ], [ %.19011487, %bb.zo ] ; 2 uses
@@ -6482,7 +6479,7 @@ bb.aaf:                                           ; preds = %bb.aae, %bb.aad
   %.19411237 = phi i64 [ %i.jzg, %bb.aad ], [ %i.jzk, %bb.aae ] ; 2 uses
   %.293 = phi ptr [ %.292, %bb.aad ], [ %.29115090, %bb.aae ] ; 2 uses
   %i.jzl = icmp samesign ugt i32 %.9615091, 511
-  br i1 %i.jzl, label %bb.zz, label %._crit_edge15094, !llvm.loop !122
+  br i1 %i.jzl, label %bb.zz, label %._crit_edge15094, !llvm.loop !121
 
 ._crit_edge15094:                                 ; preds = %bb.aaf, %bb.zy
   %.19311490.lcssa = phi i32 [ %.19211489, %bb.zy ], [ %.19411491, %bb.aaf ] ; 2 uses
@@ -6840,7 +6837,7 @@ bb.aaw:                                           ; preds = %bb.aav, %bb.aau
   %.19811241 = phi i64 [ %i.kgb, %bb.aau ], [ %i.kgf, %bb.aav ] ; 2 uses
   %.299 = phi ptr [ %.298, %bb.aau ], [ %.29715101, %bb.aav ] ; 2 uses
   %i.kgg = icmp samesign ugt i32 %.9815102, 511
-  br i1 %i.kgg, label %bb.aaq, label %._crit_edge15105, !llvm.loop !123
+  br i1 %i.kgg, label %bb.aaq, label %._crit_edge15105, !llvm.loop !122
 
 ._crit_edge15105:                                 ; preds = %bb.aaw, %bb.aap
   %.19711494.lcssa = phi i32 [ %.19611493, %bb.aap ], [ %.19811495, %bb.aaw ] ; 2 uses
@@ -7198,7 +7195,7 @@ bb.abn:                                           ; preds = %bb.abm, %bb.abl
   %.20211245 = phi i64 [ %i.kmw, %bb.abl ], [ %i.kna, %bb.abm ] ; 2 uses
   %.305 = phi ptr [ %.304, %bb.abl ], [ %.30315112, %bb.abm ] ; 2 uses
   %i.knb = icmp samesign ugt i32 %.10015113, 511
-  br i1 %i.knb, label %bb.abh, label %._crit_edge15116, !llvm.loop !124
+  br i1 %i.knb, label %bb.abh, label %._crit_edge15116, !llvm.loop !123
 
 ._crit_edge15116:                                 ; preds = %bb.abn, %bb.abg
   %.20111498.lcssa = phi i32 [ %.20011497, %bb.abg ], [ %.20211499, %bb.abn ] ; 2 uses
@@ -7556,7 +7553,7 @@ bb.ace:                                           ; preds = %bb.acd, %bb.acc
   %.20611249 = phi i64 [ %i.ktr, %bb.acc ], [ %i.ktv, %bb.acd ] ; 2 uses
   %.311 = phi ptr [ %.310, %bb.acc ], [ %.30915123, %bb.acd ] ; 2 uses
   %i.ktw = icmp samesign ugt i32 %.10215124, 511
-  br i1 %i.ktw, label %bb.aby, label %._crit_edge15127, !llvm.loop !125
+  br i1 %i.ktw, label %bb.aby, label %._crit_edge15127, !llvm.loop !124
 
 ._crit_edge15127:                                 ; preds = %bb.ace, %bb.abx
   %.20511502.lcssa = phi i32 [ %.20411501, %bb.abx ], [ %.20611503, %bb.ace ] ; 2 uses
@@ -7914,7 +7911,7 @@ bb.acv:                                           ; preds = %bb.acu, %bb.act
   %.21011253 = phi i64 [ %i.lam, %bb.act ], [ %i.laq, %bb.acu ] ; 2 uses
   %.317 = phi ptr [ %.316, %bb.act ], [ %.31515134, %bb.acu ] ; 2 uses
   %i.lar = icmp samesign ugt i32 %.10415135, 511
-  br i1 %i.lar, label %bb.acp, label %._crit_edge15138, !llvm.loop !126
+  br i1 %i.lar, label %bb.acp, label %._crit_edge15138, !llvm.loop !125
 
 ._crit_edge15138:                                 ; preds = %bb.acv, %bb.aco
   %.20911506.lcssa = phi i32 [ %.20811505, %bb.aco ], [ %.21011507, %bb.acv ] ; 2 uses
@@ -8272,7 +8269,7 @@ bb.adm:                                           ; preds = %bb.adl, %bb.adk
   %.21411257 = phi i64 [ %i.lhh, %bb.adk ], [ %i.lhl, %bb.adl ] ; 2 uses
   %.323 = phi ptr [ %.322, %bb.adk ], [ %.32115145, %bb.adl ] ; 2 uses
   %i.lhm = icmp samesign ugt i32 %.10615146, 511
-  br i1 %i.lhm, label %bb.adg, label %._crit_edge15149, !llvm.loop !127
+  br i1 %i.lhm, label %bb.adg, label %._crit_edge15149, !llvm.loop !126
 
 ._crit_edge15149:                                 ; preds = %bb.adm, %bb.adf
   %.21311510.lcssa = phi i32 [ %.21211509, %bb.adf ], [ %.21411511, %bb.adm ] ; 2 uses
@@ -8630,7 +8627,7 @@ bb.aed:                                           ; preds = %bb.aec, %bb.aeb
   %.21811261 = phi i64 [ %i.loc, %bb.aeb ], [ %i.log, %bb.aec ] ; 2 uses
   %.329 = phi ptr [ %.328, %bb.aeb ], [ %.32715156, %bb.aec ] ; 2 uses
   %i.loh = icmp samesign ugt i32 %.10815157, 511
-  br i1 %i.loh, label %bb.adx, label %._crit_edge15160, !llvm.loop !128
+  br i1 %i.loh, label %bb.adx, label %._crit_edge15160, !llvm.loop !127
 
 ._crit_edge15160:                                 ; preds = %bb.aed, %bb.adw
   %.21711514.lcssa = phi i32 [ %.21611513, %bb.adw ], [ %.21811515, %bb.aed ] ; 2 uses
@@ -8988,7 +8985,7 @@ bb.aeu:                                           ; preds = %bb.aet, %bb.aes
   %.22211265 = phi i64 [ %i.lux, %bb.aes ], [ %i.lvb, %bb.aet ] ; 2 uses
   %.335 = phi ptr [ %.334, %bb.aes ], [ %.33315167, %bb.aet ] ; 2 uses
   %i.lvc = icmp samesign ugt i32 %.11015168, 511
-  br i1 %i.lvc, label %bb.aeo, label %._crit_edge15171, !llvm.loop !129
+  br i1 %i.lvc, label %bb.aeo, label %._crit_edge15171, !llvm.loop !128
 
 ._crit_edge15171:                                 ; preds = %bb.aeu, %bb.aen
   %.22111518.lcssa = phi i32 [ %.22011517, %bb.aen ], [ %.22211519, %bb.aeu ] ; 2 uses
@@ -9346,7 +9343,7 @@ bb.afl:                                           ; preds = %bb.afk, %bb.afj
   %.22611269 = phi i64 [ %i.mbs, %bb.afj ], [ %i.mbw, %bb.afk ] ; 2 uses
   %.341 = phi ptr [ %.340, %bb.afj ], [ %.33915178, %bb.afk ] ; 2 uses
   %i.mbx = icmp samesign ugt i32 %.11215179, 511
-  br i1 %i.mbx, label %bb.aff, label %._crit_edge15182, !llvm.loop !130
+  br i1 %i.mbx, label %bb.aff, label %._crit_edge15182, !llvm.loop !129
 
 ._crit_edge15182:                                 ; preds = %bb.afl, %bb.afe
   %.22511522.lcssa = phi i32 [ %.22411521, %bb.afe ], [ %.22611523, %bb.afl ] ; 2 uses
@@ -9704,7 +9701,7 @@ bb.agc:                                           ; preds = %bb.agb, %bb.aga
   %.23011273 = phi i64 [ %i.min, %bb.aga ], [ %i.mir, %bb.agb ] ; 2 uses
   %.347 = phi ptr [ %.346, %bb.aga ], [ %.34515189, %bb.agb ] ; 2 uses
   %i.mis = icmp samesign ugt i32 %.11415190, 511
-  br i1 %i.mis, label %bb.afw, label %._crit_edge15193, !llvm.loop !131
+  br i1 %i.mis, label %bb.afw, label %._crit_edge15193, !llvm.loop !130
 
 ._crit_edge15193:                                 ; preds = %bb.agc, %bb.afv
   %.22911526.lcssa = phi i32 [ %.22811525, %bb.afv ], [ %.23011527, %bb.agc ] ; 2 uses
@@ -10062,7 +10059,7 @@ bb.agt:                                           ; preds = %bb.ags, %bb.agr
   %.23411277 = phi i64 [ %i.mpi, %bb.agr ], [ %i.mpm, %bb.ags ] ; 2 uses
   %.353 = phi ptr [ %.352, %bb.agr ], [ %.35115200, %bb.ags ] ; 2 uses
   %i.mpn = icmp samesign ugt i32 %.11615201, 511
-  br i1 %i.mpn, label %bb.agn, label %._crit_edge15204, !llvm.loop !132
+  br i1 %i.mpn, label %bb.agn, label %._crit_edge15204, !llvm.loop !131
 
 ._crit_edge15204:                                 ; preds = %bb.agt, %bb.agm
   %.23311530.lcssa = phi i32 [ %.23211529, %bb.agm ], [ %.23411531, %bb.agt ] ; 2 uses
@@ -10420,7 +10417,7 @@ bb.ahk:                                           ; preds = %bb.ahj, %bb.ahi
   %.23811281 = phi i64 [ %i.mwd, %bb.ahi ], [ %i.mwh, %bb.ahj ] ; 2 uses
   %.359 = phi ptr [ %.358, %bb.ahi ], [ %.35715211, %bb.ahj ] ; 2 uses
   %i.mwi = icmp samesign ugt i32 %.11815212, 511
-  br i1 %i.mwi, label %bb.ahe, label %._crit_edge15215, !llvm.loop !133
+  br i1 %i.mwi, label %bb.ahe, label %._crit_edge15215, !llvm.loop !132
 
 ._crit_edge15215:                                 ; preds = %bb.ahk, %bb.ahd
   %.23711534.lcssa = phi i32 [ %.23611533, %bb.ahd ], [ %.23811535, %bb.ahk ] ; 2 uses
@@ -10778,7 +10775,7 @@ bb.aib:                                           ; preds = %bb.aia, %bb.ahz
   %.24211285 = phi i64 [ %i.ncy, %bb.ahz ], [ %i.ndc, %bb.aia ] ; 2 uses
   %.365 = phi ptr [ %.364, %bb.ahz ], [ %.36315222, %bb.aia ] ; 2 uses
   %i.ndd = icmp samesign ugt i32 %.12015223, 511
-  br i1 %i.ndd, label %bb.ahv, label %._crit_edge15226, !llvm.loop !134
+  br i1 %i.ndd, label %bb.ahv, label %._crit_edge15226, !llvm.loop !133
 
 ._crit_edge15226:                                 ; preds = %bb.aib, %bb.ahu
   %.24111538.lcssa = phi i32 [ %.24011537, %bb.ahu ], [ %.24211539, %bb.aib ] ; 2 uses
@@ -11136,7 +11133,7 @@ bb.ais:                                           ; preds = %bb.air, %bb.aiq
   %.24611289 = phi i64 [ %i.njt, %bb.aiq ], [ %i.njx, %bb.air ] ; 2 uses
   %.371 = phi ptr [ %.370, %bb.aiq ], [ %.36915233, %bb.air ] ; 2 uses
   %i.njy = icmp samesign ugt i32 %.12215234, 511
-  br i1 %i.njy, label %bb.aim, label %._crit_edge15237, !llvm.loop !135
+  br i1 %i.njy, label %bb.aim, label %._crit_edge15237, !llvm.loop !134
 
 ._crit_edge15237:                                 ; preds = %bb.ais, %bb.ail
   %.24511542.lcssa = phi i32 [ %.24411541, %bb.ail ], [ %.24611543, %bb.ais ] ; 2 uses
@@ -11490,7 +11487,7 @@ bb.aji:                                           ; preds = %bb.ajh, %bb.ajg
   %.25011293 = phi i64 [ %i.nqn, %bb.ajg ], [ %i.nqr, %bb.ajh ] ; 2 uses
   %.377 = phi ptr [ %.376, %bb.ajg ], [ %.37515244, %bb.ajh ] ; 2 uses
   %i.nqs = icmp samesign ugt i32 %.12415245, 511
-  br i1 %i.nqs, label %bb.ajc, label %._crit_edge15248, !llvm.loop !136
+  br i1 %i.nqs, label %bb.ajc, label %._crit_edge15248, !llvm.loop !135
 
 ._crit_edge15248:                                 ; preds = %bb.aji, %bb.ajb
   %.24911546.lcssa = phi i32 [ %.24811545, %bb.ajb ], [ %.25011547, %bb.aji ] ; 2 uses
@@ -11838,7 +11835,7 @@ bb.ajv:                                           ; preds = %.lr.ph15257
   %i.nxg = load ptr, ptr %i.nxf, align 8, !tbaa !85 ; 3 uses
   %i.nxh = getelementptr inbounds nuw i8, ptr %i.nxg, i64 24
   %i.nxi = load ptr, ptr %i.nxh, align 8, !tbaa !98
-  %i.nxj = call i32 %i.nxi(ptr noundef %i.nxe) #7, !inline_history !137
+  %i.nxj = call i32 %i.nxi(ptr noundef %i.nxe) #7, !inline_history !136
   %.not.i = icmp eq i32 %i.nxj, 0
   br i1 %.not.i, label %.critedge, label %dump_buffer.exit
 
@@ -11855,7 +11852,7 @@ bb.ajw:                                           ; preds = %dump_buffer.exit, %
   %i.nxo = phi i64 [ %i.nxm, %dump_buffer.exit ], [ %i.nxc, %.lr.ph15257 ]
   %i.nxp = sub i64 %.01091315255, %.010913.       ; 2 uses
   %.not13838 = icmp eq i64 %i.nxp, 0
-  br i1 %.not13838, label %.critedge, label %.lr.ph15257, !llvm.loop !138
+  br i1 %.not13838, label %.critedge, label %.lr.ph15257, !llvm.loop !137
 
 bb.ajx:                                           ; preds = %.thread
   %i.nxq = load ptr, ptr %0, align 8, !tbaa !89
@@ -12015,8 +12012,8 @@ attributes #7 = { nounwind }
 !101 = distinct !{null, null}
 !102 = !{!88, !88, i64 0}
 !103 = distinct !{!103, !38}
-!104 = !{i64 0, i64 16, !31}
-!105 = distinct !{null, null}
+!104 = distinct !{null, null}
+!105 = distinct !{!105, !38}
 !106 = distinct !{!106, !38}
 !107 = distinct !{!107, !38}
 !108 = distinct !{!108, !38}
@@ -12047,7 +12044,6 @@ attributes #7 = { nounwind }
 !133 = distinct !{!133, !38}
 !134 = distinct !{!134, !38}
 !135 = distinct !{!135, !38}
-!136 = distinct !{!136, !38}
-!137 = distinct !{null}
-!138 = distinct !{!138, !38}
+!136 = distinct !{null}
+!137 = distinct !{!137, !38}
 end_hunk_1

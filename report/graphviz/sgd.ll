@@ -29,13 +29,12 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define hidden void @sgd(ptr noundef %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %2 = alloca [16 x i8], align 16                 ; 4 uses
+  %2 = alloca %struct.bitarray_t, align 8         ; 5 uses
   %3 = alloca %struct.bitarray_t, align 8         ; 5 uses
   %4 = alloca %struct.bitarray_t, align 8         ; 5 uses
-  %5 = alloca %struct.bitarray_t, align 8         ; 5 uses
-  %6 = alloca %struct.bitarray_t, align 8         ; 14 uses
-  %7 = alloca %struct.bitarray_t, align 8         ; 13 uses
-  %8 = alloca %struct.rk_state_, align 8          ; 4 uses
+  %5 = alloca %struct.bitarray_t, align 8         ; 14 uses
+  %6 = alloca %struct.bitarray_t, align 8         ; 13 uses
+  %7 = alloca %struct.rk_state_, align 8          ; 4 uses
   switch i32 %1, label %bb.c [
     i32 1, label %.sink.split
     i32 3, label %bb.b
@@ -432,7 +431,7 @@ bb.ac:                                            ; preds = %bb.ab, %.lr.ph217.i
   br i1 %.not158.i, label %._crit_edge218.i, label %.lr.ph217.i, !llvm.loop !74
 
 bb.ad:                                            ; preds = %._crit_edge225.i
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #14
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #14
   %i.ez = load i64, ptr %i.ae, align 8, !tbaa !55 ; 9 uses
   %i.fa = icmp ult i64 %i.ez, 65
   br i1 %i.fa, label %bitarray_new.exit179.i, label %bb.ae
@@ -454,17 +453,17 @@ bb.af:                                            ; preds = %bb.ae
   unreachable
 
 bb.ag:                                            ; preds = %bb.ae
-  store ptr %i.fg, ptr %6, align 8
-  %i.fk = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
+  store ptr %i.fg, ptr %5, align 8
+  %i.fk = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
   store i64 %i.ez, ptr %i.fk, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #14
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #14
   %i.fl = tail call noalias ptr @calloc(i64 noundef %i.ff, i64 noundef 1) #16 ; 2 uses
   %i.fm = icmp eq ptr %i.fl, null
   br i1 %i.fm, label %bb.ah, label %bitarray_new.exit179.thread.i
 
 bitarray_new.exit179.thread.i:                    ; preds = %bb.ag
-  store ptr %i.fl, ptr %7, align 8
-  %i.fn = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 2 uses
+  store ptr %i.fl, ptr %6, align 8
+  %i.fn = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
   store i64 %i.ez, ptr %i.fn, align 8
   br label %.lr.ph254.i
 
@@ -475,12 +474,12 @@ bb.ah:                                            ; preds = %bb.ag
   unreachable
 
 bitarray_new.exit179.i:                           ; preds = %bb.ad
-  store ptr null, ptr %6, align 8
-  %i.fq = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
+  store ptr null, ptr %5, align 8
+  %i.fq = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
   store i64 %i.ez, ptr %i.fq, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #14
-  store ptr null, ptr %7, align 8
-  %i.fr = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 3 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #14
+  store ptr null, ptr %6, align 8
+  %i.fr = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 3 uses
   store i64 %i.ez, ptr %i.fr, align 8
   %.not256.i = icmp eq i64 %i.ez, 0
   br i1 %.not256.i, label %bitarray_reset.exit.i, label %.lr.ph254.i
@@ -488,9 +487,9 @@ bitarray_new.exit179.i:                           ; preds = %bb.ad
 .lr.ph254.i:                                      ; preds = %bitarray_new.exit179.i, %bitarray_new.exit179.thread.i
   %i.fs = phi ptr [ %i.fn, %bitarray_new.exit179.thread.i ], [ %i.fr, %bitarray_new.exit179.i ] ; 4 uses
   %i.ft = phi ptr [ %i.fk, %bitarray_new.exit179.thread.i ], [ %i.fq, %bitarray_new.exit179.i ] ; 4 uses
-  %i.fu = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %i.fv = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %i.fw = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %i.fu = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %i.fv = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %i.fw = getelementptr inbounds nuw i8, ptr %2, i64 8
   %.pre.i = load i64, ptr %i.cw, align 8, !tbaa !52
   br label %bb.ak
 
@@ -505,25 +504,25 @@ bitarray_new.exit179.i:                           ; preds = %bb.ad
   br i1 %i.fy, label %bb.ai, label %bitarray_reset.exit.i
 
 bb.ai:                                            ; preds = %._crit_edge255.i
-  %i.fz = load ptr, ptr %6, align 8, !tbaa !8
+  %i.fz = load ptr, ptr %5, align 8, !tbaa !8
   tail call void @free(ptr noundef %i.fz) #14
   br label %bitarray_reset.exit.i
 
 bitarray_reset.exit.i:                            ; preds = %bb.ai, %._crit_edge255.i, %bitarray_new.exit179.i
   %i.ga = phi ptr [ %i.fs, %bb.ai ], [ %i.fs, %._crit_edge255.i ], [ %i.fr, %bitarray_new.exit179.i ]
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %5, i8 0, i64 16, i1 false)
   %i.gb = load i64, ptr %i.ga, align 8, !tbaa !63
   %i.gc = icmp ugt i64 %i.gb, 64
   br i1 %i.gc, label %bb.aj, label %bitarray_reset.exit180.i
 
 bb.aj:                                            ; preds = %bitarray_reset.exit.i
-  %i.gd = load ptr, ptr %7, align 8, !tbaa !8
+  %i.gd = load ptr, ptr %6, align 8, !tbaa !8
   tail call void @free(ptr noundef %i.gd) #14
   br label %bitarray_reset.exit180.i
 
 bitarray_reset.exit180.i:                         ; preds = %bb.aj, %bitarray_reset.exit.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #14
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #14
   br label %extract_adjacency.exit
 
 bb.ak:                                            ; preds = %.loopexit.i, %.lr.ph254.i
@@ -538,7 +537,7 @@ bb.ak:                                            ; preds = %.loopexit.i, %.lr.p
 
 .lr.ph232.i:                                      ; preds = %bb.ak
   %i.gk = load ptr, ptr %i.cb, align 8, !tbaa !53
-  %.pre260.i = load ptr, ptr %6, align 8
+  %.pre260.i = load ptr, ptr %5, align 8
   br label %bb.al
 
 ._crit_edge233.loopexit.i:                        ; preds = %bb.am
@@ -554,7 +553,7 @@ bb.ak:                                            ; preds = %.loopexit.i, %.lr.p
 
 .lr.ph250.i:                                      ; preds = %._crit_edge233.i
   %i.go = load ptr, ptr %i.cb, align 8, !tbaa !53 ; 3 uses
-  %i.gp = load ptr, ptr %6, align 8               ; 2 uses
+  %i.gp = load ptr, ptr %5, align 8               ; 2 uses
   %i.gq = load ptr, ptr %i.cd, align 8, !tbaa !54 ; 2 uses
   %i.gr = sitofp i32 %.0149.lcssa.i to float
   br label %bb.an
@@ -567,11 +566,11 @@ bb.al:                                            ; preds = %bb.am, %.lr.ph232.i
   %i.gu = getelementptr inbounds nuw [8 x i8], ptr %i.gk, i64 %.0148230.i
   %i.gv = load i64, ptr %i.gu, align 8, !tbaa !52 ; 2 uses
   %i.gw = load i64, ptr %i.ft, align 8            ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %5)
-  store ptr %i.gt, ptr %5, align 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %4)
+  store ptr %i.gt, ptr %4, align 8
   store i64 %i.gw, ptr %i.fu, align 8
   %i.gx = icmp ult i64 %i.gw, 65                  ; 2 uses
-  %.0.i181.i = select i1 %i.gx, ptr %5, ptr %i.gt
+  %.0.i181.i = select i1 %i.gx, ptr %4, ptr %i.gt
   %i.gy = lshr i64 %i.gv, 3                       ; 2 uses
   %i.gz = getelementptr inbounds nuw i8, ptr %.0.i181.i, i64 %i.gy
   %i.ha = load i8, ptr %i.gz, align 1, !tbaa !8
@@ -579,18 +578,18 @@ bb.al:                                            ; preds = %bb.am, %.lr.ph232.i
   %i.hc = and i8 %i.hb, 7                         ; 2 uses
   %i.hd = lshr i8 %i.ha, %i.hc
   %i.he = trunc i8 %i.hd to i1
-  call void @llvm.lifetime.end.p0(ptr nonnull %5)
+  call void @llvm.lifetime.end.p0(ptr nonnull %4)
   br i1 %i.he, label %bb.am, label %bitarray_set.exit183.i
 
 bitarray_set.exit183.i:                           ; preds = %bb.al
-  %spec.select196.i = select i1 %i.gx, ptr %6, ptr %i.gt
+  %spec.select196.i = select i1 %i.gx, ptr %5, ptr %i.gt
   %i.hf = shl nuw i8 1, %i.hc
   %i.hg = getelementptr inbounds nuw i8, ptr %spec.select196.i, i64 %i.gy ; 2 uses
   %i.hh = load i8, ptr %i.hg, align 1, !tbaa !8
   %i.hi = or i8 %i.hh, %i.hf
   store i8 %i.hi, ptr %i.hg, align 1, !tbaa !8
   %i.hj = add nsw i32 %.0149229.i, 1
-  %.pre259.i = load ptr, ptr %6, align 8
+  %.pre259.i = load ptr, ptr %5, align 8
   %.pre261.i = load i64, ptr %i.gh, align 8, !tbaa !52
   br label %bb.am
 
@@ -633,7 +632,7 @@ bb.an:                                            ; preds = %._crit_edge247.i, %
   br label %._crit_edge247.i
 
 .lr.ph241.preheader.i:                            ; preds = %bb.an
-  %.pre264.i = load ptr, ptr %7, align 8
+  %.pre264.i = load ptr, ptr %6, align 8
   br label %.lr.ph241.i
 
 ._crit_edge242.i:                                 ; preds = %bb.ao
@@ -656,11 +655,11 @@ bb.an:                                            ; preds = %._crit_edge247.i, %
   %i.ii = getelementptr inbounds nuw [8 x i8], ptr %i.go, i64 %.0141239.i
   %i.ij = load i64, ptr %i.ii, align 8, !tbaa !52 ; 2 uses
   %i.ik = load i64, ptr %i.fs, align 8            ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4)
-  store ptr %i.ih, ptr %4, align 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %3)
+  store ptr %i.ih, ptr %3, align 8
   store i64 %i.ik, ptr %i.fv, align 8
   %i.il = icmp ult i64 %i.ik, 65                  ; 2 uses
-  %.0.i184.i = select i1 %i.il, ptr %4, ptr %i.ih
+  %.0.i184.i = select i1 %i.il, ptr %3, ptr %i.ih
   %i.im = lshr i64 %i.ij, 3                       ; 3 uses
   %i.in = getelementptr inbounds nuw i8, ptr %.0.i184.i, i64 %i.im
   %i.io = load i8, ptr %i.in, align 1, !tbaa !8
@@ -668,11 +667,11 @@ bb.an:                                            ; preds = %._crit_edge247.i, %
   %i.iq = and i8 %i.ip, 7                         ; 3 uses
   %i.ir = lshr i8 %i.io, %i.iq
   %i.is = trunc i8 %i.ir to i1
-  call void @llvm.lifetime.end.p0(ptr nonnull %4)
+  call void @llvm.lifetime.end.p0(ptr nonnull %3)
   br i1 %i.is, label %bb.ao, label %bitarray_set.exit186.i
 
 bitarray_set.exit186.i:                           ; preds = %.lr.ph241.i
-  %spec.select197.i = select i1 %i.il, ptr %7, ptr %i.ih
+  %spec.select197.i = select i1 %i.il, ptr %6, ptr %i.ih
   %i.it = shl nuw i8 1, %i.iq
   %i.iu = getelementptr inbounds nuw i8, ptr %spec.select197.i, i64 %i.im ; 2 uses
   %i.iv = load i8, ptr %i.iu, align 1, !tbaa !8
@@ -680,19 +679,19 @@ bitarray_set.exit186.i:                           ; preds = %.lr.ph241.i
   store i8 %i.iw, ptr %i.iu, align 1, !tbaa !8
   %i.ix = add nsw i32 %.0142238.i, 1
   %i.iy = load i64, ptr %i.ft, align 8            ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3)
-  store ptr %i.gp, ptr %3, align 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %2)
+  store ptr %i.gp, ptr %2, align 8
   store i64 %i.iy, ptr %i.fw, align 8
   %i.iz = icmp ult i64 %i.iy, 65
-  %.0.i187.i = select i1 %i.iz, ptr %3, ptr %i.gp
+  %.0.i187.i = select i1 %i.iz, ptr %2, ptr %i.gp
   %i.ja = getelementptr inbounds nuw i8, ptr %.0.i187.i, i64 %i.im
   %i.jb = load i8, ptr %i.ja, align 1, !tbaa !8
   %i.jc = lshr i8 %i.jb, %i.iq
-  call void @llvm.lifetime.end.p0(ptr nonnull %3)
+  call void @llvm.lifetime.end.p0(ptr nonnull %2)
   %i.jd = and i8 %i.jc, 1
   %i.je = zext nneg i8 %i.jd to i32
   %spec.select161.i = add nsw i32 %.0144237.i, %i.je
-  %.pre263.i = load ptr, ptr %7, align 8
+  %.pre263.i = load ptr, ptr %6, align 8
   %.pre265.i = load i64, ptr %i.hw, align 8, !tbaa !52
   br label %bb.ao
 
@@ -717,8 +716,8 @@ bitarray_set.exit189.i:                           ; preds = %._crit_edge242.i, %
   %i.jn = load i64, ptr %i.jm, align 8, !tbaa !52 ; 2 uses
   %i.jo = load i64, ptr %i.fs, align 8, !tbaa !63
   %i.jp = icmp ult i64 %i.jo, 65
-  %i.jq = load ptr, ptr %7, align 8
-  %spec.select198.i = select i1 %i.jp, ptr %7, ptr %i.jq
+  %i.jq = load ptr, ptr %6, align 8
+  %spec.select198.i = select i1 %i.jp, ptr %6, ptr %i.jq
   %i.jr = trunc i64 %i.jn to i8
   %i.js = and i8 %i.jr, 7
   %i.jt = shl nuw i8 1, %i.js
@@ -739,8 +738,8 @@ bitarray_set.exit191.i:                           ; preds = %bitarray_set.exit19
   %i.kd = load i64, ptr %i.kc, align 8, !tbaa !52 ; 2 uses
   %i.ke = load i64, ptr %i.ft, align 8, !tbaa !63
   %i.kf = icmp ult i64 %i.ke, 65
-  %i.kg = load ptr, ptr %6, align 8
-  %spec.select199.i = select i1 %i.kf, ptr %6, ptr %i.kg
+  %i.kg = load ptr, ptr %5, align 8
+  %spec.select199.i = select i1 %i.kf, ptr %5, ptr %i.kg
   %i.kh = trunc i64 %i.kd to i8
   %i.ki = and i8 %i.kh, 7
   %i.kj = shl nuw i8 1, %i.ki
@@ -1125,8 +1124,8 @@ bb.be:                                            ; preds = %._crit_edge200
   br label %bb.bf
 
 bb.bf:                                            ; preds = %bb.be, %._crit_edge200
-  call void @llvm.lifetime.start.p0(ptr nonnull %8) #14
-  call void @rk_seed(i64 noundef 0, ptr noundef nonnull %8) #14
+  call void @llvm.lifetime.start.p0(ptr nonnull %7) #14
+  call void @rk_seed(i64 noundef 0, ptr noundef nonnull %7) #14
   %i.sc = load i32, ptr @MaxIter, align 4, !tbaa !89
   %i.sd = icmp sgt i32 %i.sc, 0
   br i1 %i.sd, label %.lr.ph206, label %._crit_edge207
@@ -1150,16 +1149,14 @@ bb.bg:                                            ; preds = %.lr.ph206, %bb.bm
 .lr.ph.i168:                                      ; preds = %bb.bg, %.lr.ph.i168
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.lr.ph.i168 ], [ %i.se, %bb.bg ] ; 2 uses
   %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1 ; 3 uses
-  %i.sj = call i64 @rk_interval(i64 noundef %indvars.iv.next.i, ptr noundef nonnull %8) #14
-  call void @llvm.lifetime.start.p0(ptr nonnull %2)
+  %i.sj = call i64 @rk_interval(i64 noundef %indvars.iv.next.i, ptr noundef nonnull %7) #14
   %i.sk = getelementptr inbounds nuw [16 x i8], ptr %i.ac, i64 %indvars.iv.next.i ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %2, ptr noundef nonnull align 4 dereferenceable(16) %i.sk, i64 16, i1 false)
+  %.sroa.0.0.copyload = load <16 x i8>, ptr %i.sk, align 4
   %sext.i = shl i64 %i.sj, 32
   %i.sl = ashr exact i64 %sext.i, 28
   %i.sm = getelementptr inbounds i8, ptr %i.ac, i64 %i.sl ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.sk, ptr noundef nonnull align 4 dereferenceable(16) %i.sm, i64 16, i1 false), !tbaa.struct !94
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.sm, ptr noundef nonnull align 16 dereferenceable(16) %2, i64 16, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %2)
+  store <16 x i8> %.sroa.0.0.copyload, ptr %i.sm, align 4
   %i.sn = icmp samesign ugt i64 %indvars.iv.i, 2
   br i1 %i.sn, label %.lr.ph.i168, label %fisheryates_shuffle.exit, !llvm.loop !95
 
@@ -1339,7 +1336,7 @@ bb.bo:                                            ; preds = %bb.bn, %._crit_edge
 ._crit_edge211:                                   ; preds = %.epil.preheader342, %._crit_edge211.loopexit.unr-lcssa, %bb.bo
   call void @free(ptr noundef %i.qy) #14
   call void @free(ptr noundef %i.qx) #14
-  call void @llvm.lifetime.end.p0(ptr nonnull %8) #14
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #14
   ret void
 
 bb.bp:                                            ; preds = %bb.bp, %.lr.ph210.new

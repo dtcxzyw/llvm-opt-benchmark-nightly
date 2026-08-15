@@ -204,9 +204,7 @@ bb.a:
   %i.a = alloca [350 x i8], align 16              ; 4 uses
   %2 = alloca %struct.StrAccum, align 8           ; 11 uses
   %3 = alloca [1 x %struct.__va_list_tag], align 16 ; 5 uses
-  %4 = alloca [168 x i8], align 16                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #43
-  call void @llvm.lifetime.start.p0(ptr nonnull %4)
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.c = load i32, ptr %i.b, align 8, !tbaa !252
   %.not = icmp eq i32 %i.c, 0
@@ -296,7 +294,7 @@ sqlite3_free.exit:                                ; preds = %sqlite3VMPrintf.exi
   %i.ae = add i8 %i.ad, 1
   store i8 %i.ae, ptr %i.ac, align 1, !tbaa !380
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 184 ; 3 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(168) %4, ptr noundef nonnull align 8 dereferenceable(168) %i.af, i64 168, i1 false)
+  %.sroa.0.0.copyload = load <168 x i8>, ptr %i.af, align 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(168) %i.af, i8 0, i64 168, i1 false)
   %i.ag = call fastcc i32 @sqlite3RunParser(ptr noundef nonnull %0, ptr noundef nonnull %i.u, ptr noundef null) ; 0 uses
   %i.ah = getelementptr inbounds i8, ptr %i.u, i64 -8 ; 2 uses
@@ -307,14 +305,13 @@ sqlite3_free.exit:                                ; preds = %sqlite3VMPrintf.exi
   %i.al = sub nsw i64 %i.ak, %i.aj
   store i64 %i.al, ptr @mem.5, align 8, !tbaa !22
   call void @free(ptr noundef nonnull %i.ah) #43
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(168) %i.af, ptr noundef nonnull align 16 dereferenceable(168) %4, i64 168, i1 false)
+  store <168 x i8> %.sroa.0.0.copyload, ptr %i.af, align 8
   %i.am = load i8, ptr %i.ac, align 1, !tbaa !380
   %i.an = add i8 %i.am, -1
   store i8 %i.an, ptr %i.ac, align 1, !tbaa !380
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.a, %sqlite3_free.exit, %bb.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %4)
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #43
   ret void
 }
@@ -717,7 +714,6 @@ bb.ag:                                            ; preds = %.critedge.thread124
 define internal fastcc void @sqlite3CodeSubselect(ptr noundef %0, ptr nofree noundef captures(none) %1) unnamed_addr #5 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 5 uses
-  %.sroa.0 = alloca [12 x i8], align 8            ; 5 uses
   %.sroa.6 = alloca { ptr, [1 x ptr] }, align 8   ; 5 uses
   %2 = alloca %struct.SelectDest, align 4         ; 8 uses
   %3 = alloca %struct.SelectDest, align 4         ; 9 uses
@@ -902,7 +898,6 @@ sqlite3VdbeAddOp2.exit:                           ; preds = %bb.m, %resizeOpArra
   ]
 
 bb.n:                                             ; preds = %sqlite3VdbeAddOp2.exit
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6)
   %i.by = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   br label %tailrecurse.i
@@ -1020,7 +1015,6 @@ resizeOpArray.exit._crit_edge.i.i114:             ; preds = %resizeOpArray.exit.
 sqlite3VdbeAddOp1.exit118:                        ; preds = %resizeOpArray.exit.i.i111, %resizeOpArray.exit._crit_edge.i.i114
   %i.du = phi i32 [ %.pre204, %resizeOpArray.exit._crit_edge.i.i114 ], [ %.pre205, %resizeOpArray.exit.i.i111 ] ; 3 uses
   %.0.i.i113 = phi i32 [ %i.cp, %resizeOpArray.exit._crit_edge.i.i114 ], [ 0, %resizeOpArray.exit.i.i111 ] ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0, i8 0, i64 12, i1 false)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6, i8 0, i64 16, i1 false)
   %i.dv = load i32, ptr %i.cn, align 8, !tbaa !1330
   %i.dw = load i32, ptr %i.cq, align 4, !tbaa !147 ; 6 uses
@@ -1423,7 +1417,7 @@ bb.bi:                                            ; preds = %bb.bh, %bb.bg
   br i1 %.not56.i, label %bb.bk, label %bb.bj
 
 bb.bj:                                            ; preds = %bb.bi
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.lp, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0, i64 12, i1 false)
+  store <12 x i8> zeroinitializer, ptr %i.lp, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.lp, i64 12
   store i32 1, ptr %.sroa.5.0..sroa_idx, align 4
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.lp, i64 16
@@ -1442,7 +1436,6 @@ bb.bl:                                            ; preds = %bb.bk, %bb.bj
   br label %sqlite3VdbeChangeP4.exit
 
 sqlite3VdbeChangeP4.exit:                         ; preds = %sqlite3ReleaseTempReg.exit158, %bb.bf, %bb.bh, %bb.bl
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6)
   br label %bb.cc
 
@@ -1685,7 +1678,6 @@ bb.cf:                                            ; preds = %bb.ce
 
 .critedge94:                                      ; preds = %bb.aa
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #43
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6)
   br label %sqlite3VdbeJumpHere.exit
 

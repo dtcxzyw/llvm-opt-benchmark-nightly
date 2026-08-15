@@ -203,7 +203,6 @@ bb.a:
 define linkonce_odr noundef ptr @_ZN4absl12lts_2025051214flags_internal7FlagOpsISt8optionalIdEEEPvNS1_6FlagOpEPKvS5_S5_(i32 noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3) #0 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca double, align 8                   ; 5 uses
-  %.sroa.7 = alloca [7 x i8], align 1             ; 4 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 18 uses
   switch i32 %0, label %bb.r [
     i32 0, label %bb.b
@@ -241,11 +240,10 @@ bb.g:                                             ; preds = %bb.a
   br label %_ZNSt16allocator_traitsISaIZN4absl12lts_2025051214flags_internal7FlagOpsISt8optionalIdEEEPvNS2_6FlagOpEPKvS6_S6_E12AlignedSpaceEE8allocateERSB_m.exit
 
 bb.h:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.7)
   %.sroa.0.0.copyload23 = load double, ptr %2, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 9 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.7, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.7.0..sroa_idx, i64 7, i1 false)
+  %.sroa.7.sroa.0.0.copyload = load <7 x i8>, ptr %.sroa.7.0..sroa_idx, align 1
   %.sroa.0.0.copyload = load i64, ptr %1, align 8, !tbaa !24 ; 2 uses
   %i.c = icmp eq i64 %.sroa.0.0.copyload, 0
   br i1 %i.c, label %_ZN4absl12lts_202505129ParseFlagISt8optionalIdEEEbSt17basic_string_viewIcSt11char_traitsIcEEPT_PNSt7__cxx1112basic_stringIcS6_SaIcEEE.exit.thread, label %bb.i
@@ -264,19 +262,14 @@ _ZN4absl12lts_202505129ParseFlagISt8optionalIdEEEbSt17basic_string_viewIcSt11cha
 
 _ZN4absl12lts_202505129ParseFlagISt8optionalIdEEEbSt17basic_string_viewIcSt11char_traitsIcEEPT_PNSt7__cxx1112basic_stringIcS6_SaIcEEE.exit: ; preds = %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
-  br label %5
+  br label %_ZNSt16allocator_traitsISaIZN4absl12lts_2025051214flags_internal7FlagOpsISt8optionalIdEEEPvNS2_6FlagOpEPKvS6_S6_E12AlignedSpaceEE8allocateERSB_m.exit
 
 _ZN4absl12lts_202505129ParseFlagISt8optionalIdEEEbSt17basic_string_viewIcSt11char_traitsIcEEPT_PNSt7__cxx1112basic_stringIcS6_SaIcEEE.exit.thread: ; preds = %bb.h, %_ZN4absl12lts_202505129ParseFlagISt8optionalIdEEEbSt17basic_string_viewIcSt11char_traitsIcEEPT_PNSt7__cxx1112basic_stringIcS6_SaIcEEE.exit.thread35
   %.sroa.0.134 = phi double [ %i.e, %_ZN4absl12lts_202505129ParseFlagISt8optionalIdEEEbSt17basic_string_viewIcSt11char_traitsIcEEPT_PNSt7__cxx1112basic_stringIcS6_SaIcEEE.exit.thread35 ], [ %.sroa.0.0.copyload23, %bb.h ]
   %.sroa.5.133 = phi i8 [ 1, %_ZN4absl12lts_202505129ParseFlagISt8optionalIdEEEbSt17basic_string_viewIcSt11char_traitsIcEEPT_PNSt7__cxx1112basic_stringIcS6_SaIcEEE.exit.thread35 ], [ 0, %bb.h ]
   store double %.sroa.0.134, ptr %2, align 8
   store i8 %.sroa.5.133, ptr %.sroa.5.0..sroa_idx, align 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.7.0..sroa_idx, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.7, i64 7, i1 false)
-  br label %5
-
-5:                                                ; preds = %_ZN4absl12lts_202505129ParseFlagISt8optionalIdEEEbSt17basic_string_viewIcSt11char_traitsIcEEPT_PNSt7__cxx1112basic_stringIcS6_SaIcEEE.exit, %_ZN4absl12lts_202505129ParseFlagISt8optionalIdEEEbSt17basic_string_viewIcSt11char_traitsIcEEPT_PNSt7__cxx1112basic_stringIcS6_SaIcEEE.exit.thread
-  %.0 = phi ptr [ %2, %_ZN4absl12lts_202505129ParseFlagISt8optionalIdEEEbSt17basic_string_viewIcSt11char_traitsIcEEPT_PNSt7__cxx1112basic_stringIcS6_SaIcEEE.exit.thread ], [ null, %_ZN4absl12lts_202505129ParseFlagISt8optionalIdEEEbSt17basic_string_viewIcSt11char_traitsIcEEPT_PNSt7__cxx1112basic_stringIcS6_SaIcEEE.exit ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7)
+  store <7 x i8> %.sroa.7.sroa.0.0.copyload, ptr %.sroa.7.0..sroa_idx, align 1
   br label %_ZNSt16allocator_traitsISaIZN4absl12lts_2025051214flags_internal7FlagOpsISt8optionalIdEEEPvNS2_6FlagOpEPKvS6_S6_E12AlignedSpaceEE8allocateERSB_m.exit
 
 bb.j:                                             ; preds = %bb.a
@@ -403,8 +396,8 @@ bb.q:                                             ; preds = %bb.a
 bb.r:                                             ; preds = %bb.a
   br label %_ZNSt16allocator_traitsISaIZN4absl12lts_2025051214flags_internal7FlagOpsISt8optionalIdEEEPvNS2_6FlagOpEPKvS6_S6_E12AlignedSpaceEE8allocateERSB_m.exit
 
-_ZNSt16allocator_traitsISaIZN4absl12lts_2025051214flags_internal7FlagOpsISt8optionalIdEEEPvNS2_6FlagOpEPKvS6_S6_E12AlignedSpaceEE8allocateERSB_m.exit: ; preds = %bb.b, %bb.a, %bb.r, %bb.q, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %5, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c
-  %.1 = phi ptr [ null, %bb.r ], [ inttoptr (i64 16 to ptr), %bb.a ], [ null, %bb.c ], [ null, %bb.d ], [ null, %bb.e ], [ inttoptr (i64 88 to ptr), %bb.q ], [ @_ZN4absl12lts_2025051213base_internal11FastTypeTagISt8optionalIdEE9kDummyVarE, %bb.f ], [ @_ZTISt8optionalIdE, %bb.g ], [ %.0, %5 ], [ null, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %i.b, %bb.b ]
+_ZNSt16allocator_traitsISaIZN4absl12lts_2025051214flags_internal7FlagOpsISt8optionalIdEEEPvNS2_6FlagOpEPKvS6_S6_E12AlignedSpaceEE8allocateERSB_m.exit: ; preds = %_ZN4absl12lts_202505129ParseFlagISt8optionalIdEEEbSt17basic_string_viewIcSt11char_traitsIcEEPT_PNSt7__cxx1112basic_stringIcS6_SaIcEEE.exit.thread, %_ZN4absl12lts_202505129ParseFlagISt8optionalIdEEEbSt17basic_string_viewIcSt11char_traitsIcEEPT_PNSt7__cxx1112basic_stringIcS6_SaIcEEE.exit, %bb.b, %bb.a, %bb.r, %bb.q, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c
+  %.1 = phi ptr [ null, %bb.r ], [ inttoptr (i64 16 to ptr), %bb.a ], [ null, %bb.c ], [ null, %bb.d ], [ null, %bb.e ], [ inttoptr (i64 88 to ptr), %bb.q ], [ @_ZN4absl12lts_2025051213base_internal11FastTypeTagISt8optionalIdEE9kDummyVarE, %bb.f ], [ @_ZTISt8optionalIdE, %bb.g ], [ %i.b, %bb.b ], [ null, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %2, %_ZN4absl12lts_202505129ParseFlagISt8optionalIdEEEbSt17basic_string_viewIcSt11char_traitsIcEEPT_PNSt7__cxx1112basic_stringIcS6_SaIcEEE.exit.thread ], [ null, %_ZN4absl12lts_202505129ParseFlagISt8optionalIdEEEbSt17basic_string_viewIcSt11char_traitsIcEEPT_PNSt7__cxx1112basic_stringIcS6_SaIcEEE.exit ]
   ret ptr %.1
 }
 

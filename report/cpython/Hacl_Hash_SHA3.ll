@@ -203,21 +203,18 @@ bb.g:                                             ; preds = %bb.e, %bb.c, %bb.f,
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(write, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define hidden void @_Py_LibHacl_Hacl_Hash_SHA3_reset(ptr nofree noundef captures(none) initializes((24, 32)) %0) local_unnamed_addr #13 {
 bb.a:
-  %.sroa.0.sroa.4 = alloca [7 x i8], align 1      ; 4 uses
   %.sroa.0.0.copyload = load i8, ptr %0, align 8, !tbaa !18
   %.sroa.47.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.sroa.4)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.0.sroa.4, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.47.0..sroa_idx, i64 7, i1 false)
+  %.sroa.0.sroa.4.sroa.0.0.copyload12 = load <7 x i8>, ptr %.sroa.47.0..sroa_idx, align 1
   %.sroa.58.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.a = load <2 x ptr>, ptr %.sroa.58.0..sroa_idx, align 8, !tbaa !23
   %.sroa.58.0.copyload = load ptr, ptr %.sroa.58.0..sroa_idx, align 8, !tbaa !19
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(200) %.sroa.58.0.copyload, i8 0, i64 200, i1 false)
   store i8 %.sroa.0.0.copyload, ptr %0, align 8, !tbaa !18
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.47.0..sroa_idx, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.0.sroa.4, i64 7, i1 false), !tbaa.struct !24
+  store <7 x i8> %.sroa.0.sroa.4.sroa.0.0.copyload12, ptr %.sroa.47.0..sroa_idx, align 1
   store <2 x ptr> %i.a, ptr %.sroa.58.0..sroa_idx, align 8, !tbaa !23
   store i64 0, ptr %.sroa.7.0..sroa_idx, align 8, !tbaa !15
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.sroa.4)
   ret void
 }
 
@@ -225,7 +222,6 @@ bb.a:
 define hidden zeroext range(i8 0, 4) i8 @_Py_LibHacl_Hacl_Hash_SHA3_update(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2) local_unnamed_addr #2 {
 bb.a:
   %3 = alloca %struct.Hacl_Hash_SHA3_hash_buf_s, align 8 ; 2 uses
-  %.sroa.697 = alloca [7 x i8], align 1           ; 2 uses
   %4 = alloca %struct.Hacl_Hash_SHA3_hash_buf_s, align 8 ; 3 uses
   %.sroa.0159.0.copyload = load i8, ptr %0, align 8, !tbaa !18 ; 28 uses
   %.sroa.4160.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 3 uses
@@ -365,7 +361,7 @@ bb.i:                                             ; preds = %block_len.exit212
   br i1 %i.x, label %switch.lookup418, label %bb.o
 
 switch.lookup418:                                 ; preds = %bb.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.697, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.4160.0..sroa_idx, i64 7, i1 false)
+  %.sroa.697.sroa.0.0.copyload = load <7 x i8>, ptr %.sroa.4160.0..sroa_idx, align 1
   %.sroa.5103.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %.sroa.5103.0.copyload = load ptr, ptr %.sroa.5103.0..sroa_idx, align 8, !tbaa !19 ; 3 uses
   %.sroa.6104.0.copyload = load ptr, ptr %.sroa.5161.0..sroa_idx, align 8, !tbaa !21 ; 3 uses
@@ -557,7 +553,7 @@ block_len.exit240:                                ; preds = %block_len.exit238.t
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.sroa.6104.0.copyload, ptr align 1 %i.bm, i64 %i.bq, i1 false)
   %i.br = add i64 %.sroa.5162.0.copyload, %i.a
   store i8 %.sroa.0159.0.copyload, ptr %0, align 8, !tbaa !18
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.4160.0..sroa_idx, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.697, i64 7, i1 false)
+  store <7 x i8> %.sroa.697.sroa.0.0.copyload, ptr %.sroa.4160.0..sroa_idx, align 1
   store ptr %.sroa.5103.0.copyload, ptr %.sroa.5103.0..sroa_idx, align 8, !tbaa !19
   br label %.sink.split
 
@@ -960,7 +956,7 @@ begin_hunk_1_@_Py_LibHacl_Hacl_Hash_SHA3_absorb_inner_32:.preheader
   store i64 %i.jq, ptr %2, align 8, !tbaa !15
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 24
-  br i1 %exitcond.not, label %bb.a, label %bb.b, !llvm.loop !25
+  br i1 %exitcond.not, label %bb.a, label %bb.b, !llvm.loop !24
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
@@ -970,7 +966,7 @@ bb.a:
   %i.b = alloca [256 x i8], align 16              ; 5 uses
   %i.c = alloca [256 x i8], align 16              ; 18 uses
   %i.d = alloca [256 x i8], align 16              ; 5 uses
-  %4 = alloca [32 x i64], align 16                ; 3 uses
+  %.sroa.0 = alloca <32 x i64>, align 256         ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #19
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(200) %i.a, i8 0, i64 200, i1 false)
   %.not = icmp ult i32 %3, 168
@@ -1113,7 +1109,7 @@ bb.a:
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #19
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !26
+  br i1 %exitcond.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !25
 
 .lr.ph536:                                        ; preds = %._crit_edge
   %i.cq = udiv i32 %1, 168
@@ -1153,16 +1149,16 @@ bb.a:
   br label %._crit_edge537
 
 ._crit_edge537:                                   ; preds = %._crit_edge537.loopexit, %._crit_edge
-  %.200..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 200
+  %.200..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 200
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %.200..sroa_idx, i8 0, i64 56, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(200) %4, ptr noundef nonnull align 16 dereferenceable(200) %i.a, i64 200, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 256 dereferenceable(200) %.sroa.0, ptr noundef nonnull align 16 dereferenceable(200) %i.a, i64 200, i1 false)
   %i.cr = urem i32 %1, 168
   %i.cs = zext i32 %1 to i64
   %i.ct = getelementptr i8, ptr %0, i64 %i.cs
   %i.cu = zext nneg i32 %i.cr to i64              ; 2 uses
   %i.cv = sub nsw i64 0, %i.cu
   %i.cw = getelementptr i8, ptr %i.ct, i64 %i.cv
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.cw, ptr nonnull align 16 %4, i64 %i.cu, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.cw, ptr nonnull align 256 %.sroa.0, i64 %i.cu, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
@@ -1224,7 +1220,7 @@ bb.c:                                             ; preds = %bb.d
   store i64 %i.iq, ptr %i.bk, align 16, !tbaa !15
   %indvars.iv.next557 = add nuw nsw i64 %indvars.iv556, 1 ; 2 uses
   %exitcond560.not = icmp eq i64 %indvars.iv.next557, %wide.trip.count559
-  br i1 %exitcond560.not, label %._crit_edge537.loopexit, label %bb.b, !llvm.loop !27
+  br i1 %exitcond560.not, label %._crit_edge537.loopexit, label %bb.b, !llvm.loop !26
 
 bb.d:                                             ; preds = %bb.b, %bb.d
   %i.cz = phi i64 [ %.lcssa647690, %bb.b ], [ %i.hm, %bb.d ] ; 2 uses
@@ -1412,7 +1408,7 @@ bb.d:                                             ; preds = %bb.b, %bb.d
   %i.jy = xor i64 %i.jx, %i.eu                    ; 3 uses
   %indvars.iv.next553 = add nuw nsw i64 %indvars.iv552, 1 ; 2 uses
   %exitcond555.not = icmp eq i64 %indvars.iv.next553, 24
-  br i1 %exitcond555.not, label %bb.c, label %bb.d, !llvm.loop !28
+  br i1 %exitcond555.not, label %bb.c, label %bb.d, !llvm.loop !27
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
@@ -1422,7 +1418,7 @@ bb.a:
   %i.b = alloca [256 x i8], align 16              ; 5 uses
   %i.c = alloca [256 x i8], align 16              ; 18 uses
   %i.d = alloca [256 x i8], align 16              ; 5 uses
-  %4 = alloca [32 x i64], align 16                ; 3 uses
+  %.sroa.0 = alloca <32 x i64>, align 256         ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #19
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(200) %i.a, i8 0, i64 200, i1 false)
   %.not = icmp ult i32 %3, 136
@@ -1565,7 +1561,7 @@ bb.a:
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #19
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !29
+  br i1 %exitcond.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !28
 
 .lr.ph536:                                        ; preds = %._crit_edge
   %i.cq = udiv i32 %1, 136
@@ -1609,16 +1605,16 @@ bb.a:
   br label %._crit_edge537
 
 ._crit_edge537:                                   ; preds = %._crit_edge537.loopexit, %._crit_edge
-  %.200..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 200
+  %.200..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 200
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %.200..sroa_idx, i8 0, i64 56, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(200) %4, ptr noundef nonnull align 16 dereferenceable(200) %i.a, i64 200, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 256 dereferenceable(200) %.sroa.0, ptr noundef nonnull align 16 dereferenceable(200) %i.a, i64 200, i1 false)
   %i.cr = urem i32 %1, 136
   %i.cs = zext i32 %1 to i64
   %i.ct = getelementptr i8, ptr %0, i64 %i.cs
   %i.cu = zext nneg i32 %i.cr to i64              ; 2 uses
   %i.cv = sub nsw i64 0, %i.cu
   %i.cw = getelementptr i8, ptr %i.ct, i64 %i.cv
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.cw, ptr nonnull align 16 %4, i64 %i.cu, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.cw, ptr nonnull align 256 %.sroa.0, i64 %i.cu, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
@@ -1676,7 +1672,7 @@ bb.c:                                             ; preds = %bb.d
   store i64 %i.iq, ptr %i.bk, align 16, !tbaa !15
   %indvars.iv.next557 = add nuw nsw i64 %indvars.iv556, 1 ; 2 uses
   %exitcond560.not = icmp eq i64 %indvars.iv.next557, %wide.trip.count559
-  br i1 %exitcond560.not, label %._crit_edge537.loopexit, label %bb.b, !llvm.loop !30
+  br i1 %exitcond560.not, label %._crit_edge537.loopexit, label %bb.b, !llvm.loop !29
 
 bb.d:                                             ; preds = %bb.b, %bb.d
   %i.cz = phi i64 [ %.lcssa647690, %bb.b ], [ %i.hm, %bb.d ] ; 2 uses
@@ -1864,7 +1860,7 @@ bb.d:                                             ; preds = %bb.b, %bb.d
   %i.jy = xor i64 %i.jx, %i.eu                    ; 3 uses
   %indvars.iv.next553 = add nuw nsw i64 %indvars.iv552, 1 ; 2 uses
   %exitcond555.not = icmp eq i64 %indvars.iv.next553, 24
-  br i1 %exitcond555.not, label %bb.c, label %bb.d, !llvm.loop !31
+  br i1 %exitcond555.not, label %bb.c, label %bb.d, !llvm.loop !30
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
@@ -2007,7 +2003,7 @@ bb.a:
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #19
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !32
+  br i1 %exitcond.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !31
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
@@ -2150,7 +2146,7 @@ bb.a:
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #19
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !33
+  br i1 %exitcond.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !32
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
@@ -2293,7 +2289,7 @@ bb.a:
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #19
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !34
+  br i1 %exitcond.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !33
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
@@ -2436,7 +2432,7 @@ bb.a:
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #19
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !35
+  br i1 %exitcond.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !34
 }
 
 ; Function Attrs: mustprogress nofree nounwind willreturn memory(inaccessiblemem: readwrite, errnomem: write) uwtable
@@ -2480,7 +2476,7 @@ bb.a:
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !36
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !35
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
@@ -2658,7 +2654,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.c
 bb.c:                                             ; preds = %bb.d
   %indvars.iv.next568 = add nuw nsw i64 %indvars.iv567, 1 ; 2 uses
   %exitcond570.not = icmp eq i64 %indvars.iv.next568, %wide.trip.count
-  br i1 %exitcond570.not, label %._crit_edge, label %bb.b, !llvm.loop !37
+  br i1 %exitcond570.not, label %._crit_edge, label %bb.b, !llvm.loop !36
 
 bb.d:                                             ; preds = %bb.b, %bb.d
   %i.ab = phi i64 [ %.promoted593, %bb.b ], [ %i.ep, %bb.d ] ; 2 uses
@@ -2890,15 +2886,14 @@ bb.d:                                             ; preds = %bb.b, %bb.d
   store i64 %i.ha, ptr %0, align 8, !tbaa !15
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 24
-  br i1 %exitcond.not, label %bb.c, label %bb.d, !llvm.loop !38
+  br i1 %exitcond.not, label %bb.c, label %bb.d, !llvm.loop !37
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal fastcc void @squeeze(ptr nofree noundef nonnull captures(none) %0, i32 noundef range(i32 72, 169) %1, i32 noundef range(i32 1, 0) %2, ptr nofree noundef writeonly captures(none) %3) unnamed_addr #4 {
 bb.a:
-  %4 = alloca [256 x i8], align 16                ; 4 uses
-  %5 = alloca [32 x i64], align 16                ; 5 uses
-  %6 = alloca [32 x i64], align 16                ; 3 uses
+  %.sroa.0631 = alloca <32 x i64>, align 256      ; 4 uses
+  %.sroa.0 = alloca <32 x i64>, align 256         ; 3 uses
   %.not = icmp ugt i32 %1, %2
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
@@ -2931,34 +2926,33 @@ bb.a:
   %i.z = getelementptr i8, ptr %0, i64 192        ; 3 uses
   %umax = tail call i32 @llvm.umax.i32(i32 %i.a, i32 1)
   %wide.trip.count = zext nneg i32 %umax to i64
-  %.200..sroa_idx628 = getelementptr inbounds nuw i8, ptr %5, i64 200
   br label %bb.b
 
 ._crit_edge:                                      ; preds = %bb.c, %bb.a
-  %.200..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 200
+  %.200..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 200
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %.200..sroa_idx, i8 0, i64 56, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(200) %6, ptr noundef nonnull align 8 dereferenceable(200) %0, i64 200, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 256 dereferenceable(200) %.sroa.0, ptr noundef nonnull align 8 dereferenceable(200) %0, i64 200, i1 false)
   %i.aa = urem i32 %2, %1
   %i.ab = zext i32 %2 to i64
   %i.ac = getelementptr i8, ptr %3, i64 %i.ab
   %i.ad = zext nneg i32 %i.aa to i64              ; 2 uses
   %i.ae = sub nsw i64 0, %i.ad
   %i.af = getelementptr i8, ptr %i.ac, i64 %i.ae
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.af, ptr nonnull align 16 %6, i64 %i.ad, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.af, ptr nonnull align 256 %.sroa.0, i64 %i.ad, i1 false)
   ret void
 
 bb.b:                                             ; preds = %.lr.ph, %bb.c
   %indvars.iv583 = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next584, %bb.c ] ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4)
-  call void @llvm.lifetime.start.p0(ptr nonnull %5)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %.200..sroa_idx628, i8 0, i64 56, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(200) %5, ptr noundef nonnull align 8 dereferenceable(200) %0, i64 200, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %4, ptr noundef nonnull align 16 dereferenceable(256) %5, i64 256, i1 false)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0631)
+  %.sroa.0629.0.copyload630 = load <25 x i64>, ptr %0, align 8
+  %.sroa.0629.0.vec.expand = shufflevector <25 x i64> %.sroa.0629.0.copyload630, <25 x i64> poison, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %.sroa.0629.0.vecblend = shufflevector <32 x i64> %.sroa.0629.0.vec.expand, <32 x i64> <i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0>, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 57, i32 58, i32 59, i32 60, i32 61, i32 62, i32 63>
+  store <32 x i64> %.sroa.0629.0.vecblend, ptr %.sroa.0631, align 256
   %i.ag = trunc nuw nsw i64 %indvars.iv583 to i32
   %i.ah = mul i32 %1, %i.ag
   %i.ai = zext i32 %i.ah to i64
   %i.aj = getelementptr i8, ptr %3, i64 %i.ai
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.aj, ptr noundef nonnull align 16 dereferenceable(1) %4, i64 %i.b, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.aj, ptr noundef nonnull align 256 dereferenceable(1) %.sroa.0631, i64 %i.b, i1 false)
   %.pre = load i64, ptr %0, align 8, !tbaa !15
   %.pre590 = load i64, ptr %i.c, align 8, !tbaa !15
   %.pre591 = load i64, ptr %i.d, align 8, !tbaa !15
@@ -2987,11 +2981,10 @@ bb.b:                                             ; preds = %.lr.ph, %bb.c
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.d
-  call void @llvm.lifetime.end.p0(ptr nonnull %5)
-  call void @llvm.lifetime.end.p0(ptr nonnull %4)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0631)
   %indvars.iv.next584 = add nuw nsw i64 %indvars.iv583, 1 ; 2 uses
   %exitcond586.not = icmp eq i64 %indvars.iv.next584, %wide.trip.count
-  br i1 %exitcond586.not, label %._crit_edge, label %bb.b, !llvm.loop !39
+  br i1 %exitcond586.not, label %._crit_edge, label %bb.b, !llvm.loop !38
 
 bb.d:                                             ; preds = %bb.b, %bb.d
   %i.ak = phi i64 [ %.promoted612, %bb.b ], [ %i.ey, %bb.d ] ; 2 uses
@@ -3223,7 +3216,7 @@ bb.d:                                             ; preds = %bb.b, %bb.d
   store i64 %i.hj, ptr %0, align 8, !tbaa !15
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 24
-  br i1 %exitcond.not, label %bb.c, label %bb.d, !llvm.loop !40
+  br i1 %exitcond.not, label %bb.c, label %bb.d, !llvm.loop !39
 }
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -3286,7 +3279,7 @@ attributes #21 = { nounwind allocsize(0) }
 !21 = !{!22, !22, i64 0}
 !22 = !{!"p1 omnipotent char", !12, i64 0}
 !23 = !{!12, !12, i64 0}
-!24 = !{i64 7, i64 8, !19, i64 15, i64 8, !21, i64 23, i64 8, !15}
+!24 = distinct !{!24, !14}
 !25 = distinct !{!25, !14}
 !26 = distinct !{!26, !14}
 !27 = distinct !{!27, !14}
@@ -3302,5 +3295,4 @@ attributes #21 = { nounwind allocsize(0) }
 !37 = distinct !{!37, !14}
 !38 = distinct !{!38, !14}
 !39 = distinct !{!39, !14}
-!40 = distinct !{!40, !14}
 end_hunk_1

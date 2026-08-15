@@ -201,7 +201,6 @@ bb.a:
   %6 = alloca %"struct.Luau::UnificationTooComplex", align 1 ; 3 uses
   %7 = alloca %"struct.Luau::CloneState", align 8 ; 18 uses
   %8 = alloca %"class.std::shared_ptr.158", align 8 ; 7 uses
-  %.sroa.10 = alloca [7 x i8], align 1            ; 5 uses
   %9 = alloca %"struct.Luau::TxnLog", align 8     ; 15 uses
   %10 = alloca %"struct.Luau::ClonePublicInterface", align 8 ; 23 uses
   %11 = alloca %"struct.Luau::TypeFun", align 16  ; 11 uses
@@ -269,7 +268,6 @@ _ZNK4Luau6Module14getModuleScopeEv.exit:          ; preds = %bb.a, %bb.c, %bb.d
   %i.aa = phi ptr [ %i.r, %bb.a ], [ %i.r, %bb.c ], [ %.pre, %bb.d ] ; 9 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 96 ; 3 uses
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !187
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.10)
   %i.ad = icmp eq i32 %3, 1
   br i1 %i.ad, label %bb.f, label %bb.e
 
@@ -279,13 +277,14 @@ bb.e:                                             ; preds = %_ZNK4Luau6Module14g
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.aa, i64 112
   %.sroa.7.0.copyload = load i8, ptr %.sroa.7.0..sroa_idx, align 8
   %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.aa, i64 113
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.10, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.10.0..sroa_idx, i64 7, i1 false)
+  %.sroa.10.sroa.0.0.copyload = load <7 x i8>, ptr %.sroa.10.0..sroa_idx, align 1
   %i.af = trunc nuw i8 %.sroa.7.0.copyload to i1
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %_ZNK4Luau6Module14getModuleScopeEv.exit
-  %.sroa.087.0 = phi ptr [ %.sroa.087.0.copyload, %bb.e ], [ undef, %_ZNK4Luau6Module14getModuleScopeEv.exit ]
-  %.sroa.7.0 = phi i1 [ %i.af, %bb.e ], [ false, %_ZNK4Luau6Module14getModuleScopeEv.exit ]
+  %.sroa.10.sroa.0.0 = phi <7 x i8> [ undef, %_ZNK4Luau6Module14getModuleScopeEv.exit ], [ %.sroa.10.sroa.0.0.copyload, %bb.e ]
+  %.sroa.087.0 = phi ptr [ undef, %_ZNK4Luau6Module14getModuleScopeEv.exit ], [ %.sroa.087.0.copyload, %bb.e ]
+  %.sroa.7.0 = phi i1 [ false, %_ZNK4Luau6Module14getModuleScopeEv.exit ], [ %i.af, %bb.e ]
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #24
   %i.ag = getelementptr inbounds nuw i8, ptr %9, i64 40 ; 3 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %9, i64 80
@@ -419,7 +418,7 @@ _ZN4Luau20ClonePublicInterface13cloneTypePackEPKNS_11TypePackVarE.exit42: ; pred
   %.sroa.7.0..sroa_idx89 = getelementptr inbounds nuw i8, ptr %i.aa, i64 112
   store i8 1, ptr %.sroa.7.0..sroa_idx89, align 8
   %.sroa.10.0..sroa_idx91 = getelementptr inbounds nuw i8, ptr %i.aa, i64 113
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.10.0..sroa_idx91, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.10, i64 7, i1 false)
+  store <7 x i8> %.sroa.10.sroa.0.0, ptr %.sroa.10.0..sroa_idx91, align 1
   br label %bb.p
 
 bb.m:                                             ; preds = %bb.f
@@ -822,7 +821,6 @@ _ZN4Luau6detail14DenseHashTableIPKNS_4TypeESt4pairIS4_St10unique_ptrINS_11Pendin
 
 _ZN4Luau6detail14DenseHashTableIPKNS_4TypeESt4pairIS4_St10unique_ptrINS_11PendingTypeESt14default_deleteIS7_EEES5_IKS4_SA_ENS0_16ItemInterfaceMapIS4_SA_EENS_16DenseHashPointerESt8equal_toIS4_EED2Ev.exit: ; preds = %_ZN4Luau6TxnLogD2Ev.exit, %_ZN4Luau6detail14DenseHashTableIPKNS_4TypeESt4pairIS4_St10unique_ptrINS_11PendingTypeESt14default_deleteIS7_EEES5_IKS4_SA_ENS0_16ItemInterfaceMapIS4_SA_EENS_16DenseHashPointerESt8equal_toIS4_EE7destroyEv.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #24
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.10)
   %i.jg = load ptr, ptr %i.s, align 8, !tbaa !131 ; 8 uses
   %.not.i.i68 = icmp eq ptr %i.jg, null
   br i1 %.not.i.i68, label %_ZNSt12__shared_ptrIN4Luau5ScopeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, label %bb.ay
@@ -942,7 +940,6 @@ bb.bh:                                            ; preds = %bb.bg, %bb.m
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #24
   call void @_ZN4Luau6TxnLogD2Ev(ptr noundef nonnull align 8 dead_on_return(128) dereferenceable(128) %9) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #24
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.10)
   call void @_ZNSt12__shared_ptrIN4Luau5ScopeELN9__gnu_cxx12_Lock_policyE2EED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %8) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #24
   call void @_ZN4Luau10CloneStateD2Ev(ptr noundef nonnull align 8 dead_on_return(120) dereferenceable(120) %7) #24

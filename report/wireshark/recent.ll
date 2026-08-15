@@ -203,12 +203,6 @@ declare i32 @strncmp(ptr noundef captures(none), ptr noundef captures(none), i64
 ; Function Attrs: null_pointer_is_valid sspstrong uwtable
 define internal fastcc void @window_geom_recent_read_pair(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2) unnamed_addr #0 {
 bb.a:
-  %.sroa.8 = alloca [3 x i8], align 1             ; 4 uses
-  %.sroa.15 = alloca [3 x i8], align 1            ; 4 uses
-  %.sroa.21 = alloca [6 x i8], align 2            ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.8)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.15)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.21)
   %i.a = tail call i32 @strcmp(ptr noundef %1, ptr noundef nonnull dereferenceable(9) @.str.269) #12
   %i.b = icmp eq i32 %i.a, 0
   br i1 %i.b, label %bb.b, label %bb.d
@@ -251,7 +245,7 @@ window_geom_load.exit.thread:                     ; preds = %bb.f
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   %.sroa.5.0.copyload = load i8, ptr %.sroa.5.0..sroa_idx, align 8
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.l, i64 9
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %.sroa.8, ptr noundef nonnull align 1 dereferenceable(3) %.sroa.8.0..sroa_idx, i64 3, i1 false)
+  %.sroa.8.sroa.0.0.copyload = load <3 x i8>, ptr %.sroa.8.0..sroa_idx, align 1
   %.sroa.827.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.l, i64 12
   %.sroa.827.0.copyload = load i32, ptr %.sroa.827.0..sroa_idx, align 4
   %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.l, i64 16
@@ -259,7 +253,7 @@ window_geom_load.exit.thread:                     ; preds = %bb.f
   %.sroa.12.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.l, i64 20
   %.sroa.12.0.copyload = load i8, ptr %.sroa.12.0..sroa_idx, align 4
   %.sroa.15.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.l, i64 21
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %.sroa.15, ptr noundef nonnull align 1 dereferenceable(3) %.sroa.15.0..sroa_idx, i64 3, i1 false)
+  %.sroa.15.sroa.0.0.copyload = load <3 x i8>, ptr %.sroa.15.0..sroa_idx, align 1
   %.sroa.1535.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.l, i64 24
   %.sroa.1535.0.copyload = load i32, ptr %.sroa.1535.0..sroa_idx, align 8
   %.sroa.17.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.l, i64 28
@@ -269,22 +263,25 @@ window_geom_load.exit.thread:                     ; preds = %bb.f
   %.sroa.20.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.l, i64 33
   %.sroa.20.0.copyload = load i8, ptr %.sroa.20.0..sroa_idx, align 1
   %.sroa.21.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.l, i64 34
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(6) %.sroa.21, ptr noundef nonnull align 2 dereferenceable(6) %.sroa.21.0..sroa_idx, i64 6, i1 false)
+  %.sroa.21.sroa.0.0.copyload = load <6 x i8>, ptr %.sroa.21.0..sroa_idx, align 2
   %.sroa.2145.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.l, i64 40
   %.sroa.2145.0.copyload = load ptr, ptr %.sroa.2145.0..sroa_idx, align 8
   br label %sub_0
 
 sub_0:                                            ; preds = %window_geom_load.exit.thread, %bb.f
-  %.sroa.19.159 = phi i8 [ %.sroa.19.0.copyload, %window_geom_load.exit.thread ], [ undef, %bb.f ] ; 5 uses
-  %.sroa.20.158 = phi i8 [ %.sroa.20.0.copyload, %window_geom_load.exit.thread ], [ undef, %bb.f ] ; 5 uses
-  %.sroa.2145.0 = phi ptr [ %.sroa.2145.0.copyload, %window_geom_load.exit.thread ], [ null, %bb.f ] ; 5 uses
-  %.sroa.17.0 = phi i32 [ %.sroa.17.0.copyload, %window_geom_load.exit.thread ], [ -1, %bb.f ] ; 5 uses
-  %.sroa.1535.0 = phi i32 [ %.sroa.1535.0.copyload, %window_geom_load.exit.thread ], [ -1, %bb.f ] ; 5 uses
-  %.sroa.12.0 = phi i8 [ %.sroa.12.0.copyload, %window_geom_load.exit.thread ], [ 0, %bb.f ] ; 4 uses
-  %.sroa.10.0 = phi i32 [ %.sroa.10.0.copyload, %window_geom_load.exit.thread ], [ -1, %bb.f ] ; 5 uses
-  %.sroa.827.0 = phi i32 [ %.sroa.827.0.copyload, %window_geom_load.exit.thread ], [ -1, %bb.f ] ; 5 uses
-  %.sroa.5.0 = phi i8 [ %.sroa.5.0.copyload, %window_geom_load.exit.thread ], [ 0, %bb.f ] ; 4 uses
-  %.sroa.0.0 = phi ptr [ %.sroa.0.0.copyload, %window_geom_load.exit.thread ], [ null, %bb.f ]
+  %.sroa.8.sroa.0.0 = phi <3 x i8> [ undef, %bb.f ], [ %.sroa.8.sroa.0.0.copyload, %window_geom_load.exit.thread ]
+  %.sroa.15.sroa.0.0 = phi <3 x i8> [ undef, %bb.f ], [ %.sroa.15.sroa.0.0.copyload, %window_geom_load.exit.thread ]
+  %.sroa.21.sroa.0.0 = phi <6 x i8> [ undef, %bb.f ], [ %.sroa.21.sroa.0.0.copyload, %window_geom_load.exit.thread ]
+  %.sroa.19.159 = phi i8 [ undef, %bb.f ], [ %.sroa.19.0.copyload, %window_geom_load.exit.thread ] ; 5 uses
+  %.sroa.20.158 = phi i8 [ undef, %bb.f ], [ %.sroa.20.0.copyload, %window_geom_load.exit.thread ] ; 5 uses
+  %.sroa.2145.0 = phi ptr [ null, %bb.f ], [ %.sroa.2145.0.copyload, %window_geom_load.exit.thread ] ; 5 uses
+  %.sroa.17.0 = phi i32 [ -1, %bb.f ], [ %.sroa.17.0.copyload, %window_geom_load.exit.thread ] ; 5 uses
+  %.sroa.1535.0 = phi i32 [ -1, %bb.f ], [ %.sroa.1535.0.copyload, %window_geom_load.exit.thread ] ; 5 uses
+  %.sroa.12.0 = phi i8 [ 0, %bb.f ], [ %.sroa.12.0.copyload, %window_geom_load.exit.thread ] ; 4 uses
+  %.sroa.10.0 = phi i32 [ -1, %bb.f ], [ %.sroa.10.0.copyload, %window_geom_load.exit.thread ] ; 5 uses
+  %.sroa.827.0 = phi i32 [ -1, %bb.f ], [ %.sroa.827.0.copyload, %window_geom_load.exit.thread ] ; 5 uses
+  %.sroa.5.0 = phi i8 [ 0, %bb.f ], [ %.sroa.5.0.copyload, %window_geom_load.exit.thread ] ; 4 uses
+  %.sroa.0.0 = phi ptr [ null, %bb.f ], [ %.sroa.0.0.copyload, %window_geom_load.exit.thread ]
   %i.m = load i8, ptr %1, align 1
   switch i8 %i.m, label %.tail.thread [
     i8 120, label %window_geom_load.exit.tail
@@ -374,7 +371,7 @@ g_strdup_inline.exit24.i:                         ; preds = %bb.p, %bb.o
   %.sroa.5.0..sroa_idx24 = getelementptr inbounds nuw i8, ptr %i.an, i64 8
   store i8 %.sroa.5.1, ptr %.sroa.5.0..sroa_idx24, align 8
   %.sroa.8.0..sroa_idx26 = getelementptr inbounds nuw i8, ptr %i.an, i64 9
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %.sroa.8.0..sroa_idx26, ptr noundef nonnull align 1 dereferenceable(3) %.sroa.8, i64 3, i1 false)
+  store <3 x i8> %.sroa.8.sroa.0.0, ptr %.sroa.8.0..sroa_idx26, align 1
   %.sroa.827.0..sroa_idx28 = getelementptr inbounds nuw i8, ptr %i.an, i64 12
   store i32 %.sroa.827.1, ptr %.sroa.827.0..sroa_idx28, align 4
   %.sroa.10.0..sroa_idx30 = getelementptr inbounds nuw i8, ptr %i.an, i64 16
@@ -382,7 +379,7 @@ g_strdup_inline.exit24.i:                         ; preds = %bb.p, %bb.o
   %.sroa.12.0..sroa_idx32 = getelementptr inbounds nuw i8, ptr %i.an, i64 20
   store i8 %.sroa.12.1, ptr %.sroa.12.0..sroa_idx32, align 4
   %.sroa.15.0..sroa_idx34 = getelementptr inbounds nuw i8, ptr %i.an, i64 21
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %.sroa.15.0..sroa_idx34, ptr noundef nonnull align 1 dereferenceable(3) %.sroa.15, i64 3, i1 false)
+  store <3 x i8> %.sroa.15.sroa.0.0, ptr %.sroa.15.0..sroa_idx34, align 1
   %.sroa.1535.0..sroa_idx36 = getelementptr inbounds nuw i8, ptr %i.an, i64 24
   store i32 %.sroa.1535.1, ptr %.sroa.1535.0..sroa_idx36, align 8
   %.sroa.17.0..sroa_idx38 = getelementptr inbounds nuw i8, ptr %i.an, i64 28
@@ -392,7 +389,7 @@ g_strdup_inline.exit24.i:                         ; preds = %bb.p, %bb.o
   %.sroa.20.0..sroa_idx42 = getelementptr inbounds nuw i8, ptr %i.an, i64 33
   store i8 %.sroa.20.0, ptr %.sroa.20.0..sroa_idx42, align 1
   %.sroa.21.0..sroa_idx44 = getelementptr inbounds nuw i8, ptr %i.an, i64 34
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(6) %.sroa.21.0..sroa_idx44, ptr noundef nonnull align 2 dereferenceable(6) %.sroa.21, i64 6, i1 false)
+  store <6 x i8> %.sroa.21.sroa.0.0, ptr %.sroa.21.0..sroa_idx44, align 2
   %.sroa.2145.0..sroa_idx46 = getelementptr inbounds nuw i8, ptr %i.an, i64 40 ; 2 uses
   store ptr %.sroa.2145.1, ptr %.sroa.2145.0..sroa_idx46, align 8
   %i.ao = tail call noalias ptr @g_strdup(ptr noundef %0) ; 2 uses
@@ -404,9 +401,6 @@ g_strdup_inline.exit24.i:                         ; preds = %bb.p, %bb.o
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.n, %g_strdup_inline.exit24.i, %g_strdup_inline.exit6.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.15)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.21)
   ret void
 }
 

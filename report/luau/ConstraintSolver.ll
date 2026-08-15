@@ -203,8 +203,6 @@ define dso_local void @_ZN4Luau16ConstraintSolver15lookupTablePropENS_7NotNullIK
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %9 = alloca %"struct.Luau::ScopedSeenSet", align 8 ; 7 uses
-  %.sroa.6625 = alloca [7 x i8], align 1          ; 5 uses
-  %.sroa.6618 = alloca [7 x i8], align 1          ; 5 uses
   %10 = alloca %"struct.Luau::SingletonType", align 8 ; 7 uses
   %11 = alloca %"class.Luau::Variant.834", align 8 ; 9 uses
   %12 = alloca %"struct.Luau::StringSingleton", align 8 ; 12 uses
@@ -477,62 +475,50 @@ bb.y:                                             ; preds = %_ZN4Luau10getMutabl
   br label %bb.jj
 
 bb.z:                                             ; preds = %bb.w
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6625)
-  %40 = getelementptr inbounds nuw i8, ptr %i.by, i64 208
-  %.sroa.0620.0.copyload = load ptr, ptr %40, align 8
   %.sroa.5622.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.by, i64 216
   %.sroa.5622.0.copyload = load i8, ptr %.sroa.5622.0..sroa_idx, align 8
-  %.sroa.6625.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.by, i64 217
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.6625, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.6625.0..sroa_idx, i64 7, i1 false)
   %i.cc = trunc nuw i8 %.sroa.5622.0.copyload to i1
-  br i1 %i.cc, label %bb.aa, label %.critedge439
+  br i1 %i.cc, label %bb.aa, label %.critedge443
 
 bb.aa:                                            ; preds = %bb.z
+  %.sroa.6625.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.by, i64 217
+  %.sroa.6625.sroa.0.0.copyload = load <7 x i8>, ptr %.sroa.6625.0..sroa_idx, align 1
+  %40 = getelementptr inbounds nuw i8, ptr %i.by, i64 208
+  %.sroa.0620.0.copyload = load ptr, ptr %40, align 8
   %i.cd = getelementptr inbounds nuw i8, ptr %0, i64 24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
   store ptr %.sroa.0620.0.copyload, ptr %i.cd, align 8
   %.sroa.5622.0..sroa_idx623 = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i8 1, ptr %.sroa.5622.0..sroa_idx623, align 8
   %.sroa.6625.0..sroa_idx626 = getelementptr inbounds nuw i8, ptr %0, i64 33
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.6625.0..sroa_idx626, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.6625, i64 7, i1 false)
+  store <7 x i8> %.sroa.6625.sroa.0.0.copyload, ptr %.sroa.6625.0..sroa_idx626, align 1
   %i.ce = getelementptr inbounds nuw i8, ptr %0, i64 40
   store i8 0, ptr %i.ce, align 8, !tbaa !963
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6625)
   br label %.critedge461
 
 bb.ab:                                            ; preds = %bb.w
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6618)
-  %41 = getelementptr inbounds nuw i8, ptr %i.by, i64 224
-  %.sroa.0613.0.copyload = load ptr, ptr %41, align 8
   %.sroa.5615.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.by, i64 232
   %.sroa.5615.0.copyload = load i8, ptr %.sroa.5615.0..sroa_idx, align 8
-  %.sroa.6618.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.by, i64 233
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.6618, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.6618.0..sroa_idx, i64 7, i1 false)
   %i.cf = trunc nuw i8 %.sroa.5615.0.copyload to i1
-  br i1 %i.cf, label %bb.ac, label %.critedge441
+  br i1 %i.cf, label %bb.ac, label %.critedge443
 
 bb.ac:                                            ; preds = %bb.ab
+  %.sroa.6618.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.by, i64 233
+  %.sroa.6618.sroa.0.0.copyload = load <7 x i8>, ptr %.sroa.6618.0..sroa_idx, align 1
+  %41 = getelementptr inbounds nuw i8, ptr %i.by, i64 224
+  %.sroa.0613.0.copyload = load ptr, ptr %41, align 8
   %i.cg = getelementptr inbounds nuw i8, ptr %0, i64 24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
   store ptr %.sroa.0613.0.copyload, ptr %i.cg, align 8
   %.sroa.5615.0..sroa_idx616 = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i8 1, ptr %.sroa.5615.0..sroa_idx616, align 8
   %.sroa.6618.0..sroa_idx619 = getelementptr inbounds nuw i8, ptr %0, i64 33
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.6618.0..sroa_idx619, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.6618, i64 7, i1 false)
+  store <7 x i8> %.sroa.6618.sroa.0.0.copyload, ptr %.sroa.6618.0..sroa_idx619, align 1
   %i.ch = getelementptr inbounds nuw i8, ptr %0, i64 40
   store i8 0, ptr %i.ch, align 8, !tbaa !963
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6618)
   br label %.critedge461
 
-.critedge439:                                     ; preds = %bb.z
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6625)
-  br label %.critedge443
-
-.critedge441:                                     ; preds = %bb.ab
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6618)
-  br label %.critedge443
-
-.critedge443:                                     ; preds = %.critedge441, %.critedge439, %bb.w, %bb.v
+.critedge443:                                     ; preds = %bb.ab, %bb.z, %bb.w, %bb.v
   %i.ci = getelementptr inbounds nuw i8, ptr %i.bu, i64 56 ; 3 uses
   %i.cj = getelementptr inbounds nuw i8, ptr %i.bu, i64 80
   %i.ck = load i8, ptr %i.cj, align 8, !tbaa !780, !range !35, !noundef !36

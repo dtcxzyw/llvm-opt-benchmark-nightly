@@ -204,7 +204,6 @@ bb.a:
   %13 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %14 = alloca %"class.boost::system::error_code", align 8 ; 6 uses
   %15 = alloca %"class.boost::beast::http::message.8", align 8 ; 13 uses
-  %.sroa.446 = alloca [12 x i8], align 4          ; 6 uses
   %16 = alloca %"struct.boost::asio::detail::executor_function::impl<boost::asio::detail::work_dispatcher<boost::asio::detail::empty_work_function, boost::asio::detail::composed_op<boost::beast::http::detail::read_op<boost::asio::basic_stream_socket<boost::asio::ip::tcp>, boost::beast::basic_flat_buffer<std::allocator<char>>, false, boost::beast::http::detail::parser_is_done>, boost::asio::detail::composed_work<void (boost::asio::any_io_executor)>, boost::beast::http::detail::read_msg_op<boost::asio::basic_stream_socket<boost::asio::ip::tcp>, boost::beast::basic_flat_buffer<std::allocator<char>>, false, boost::beast::http::basic_string_body<char>, std::allocator<char>, (lambda at /opt-bench/work/boost/boost/libs/beast/test/doc/http_snippets.cpp:89:9)>, void (boost::system::error_code, unsigned long)>, boost::asio::any_io_executor>, std::allocator<void>>::ptr", align 8 ; 6 uses
   %17 = alloca %"class.boost::asio::detail::executor_function", align 8 ; 7 uses
   %18 = alloca %"class.boost::asio::detail::work_dispatcher", align 8 ; 17 uses
@@ -607,8 +606,7 @@ bb.at:                                            ; preds = %bb.as
 .critedge.thread:                                 ; preds = %bb.at
   %.sroa.048.0.copyload97 = load i32, ptr %2, align 8
   %.sroa.2.0..sroa_idx98 = getelementptr inbounds nuw i8, ptr %2, i64 4
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.446)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.446, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.2.0..sroa_idx98, i64 12, i1 false)
+  %.sroa.446.sroa.0.0.copyload109 = load <12 x i8>, ptr %.sroa.2.0..sroa_idx98, align 4
   %i.gw = getelementptr inbounds nuw i8, ptr %1, i64 104
   br label %bb.au
 
@@ -625,25 +623,26 @@ _ZNK5boost6system10error_codecvbEv.exit.thread51: ; preds = %bb.at, %bb.as
   %.sroa.3.0.copyload = phi i64 [ %.sroa.3.0.copyload.pre, %..critedge_crit_edge ], [ %i.gr, %_ZNK5boost6system10error_codecvbEv.exit.thread51 ] ; 2 uses
   %.sroa.048.0.copyload = load i32, ptr %2, align 8 ; 2 uses
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 4
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.446)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.446, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.2.0..sroa_idx, i64 12, i1 false)
+  %.sroa.446.sroa.0.0.copyload110 = load <12 x i8>, ptr %.sroa.2.0..sroa_idx, align 4 ; 2 uses
   %i.hc = getelementptr inbounds nuw i8, ptr %1, i64 104 ; 2 uses
   %.not.i.i.i.i = icmp eq i64 %.pre-phi, 0
   br i1 %.not.i.i.i.i, label %_ZNK5boost6system10error_codecvbEv.exit.thread5.i.i, label %bb.au
 
 bb.au:                                            ; preds = %.critedge.thread, %.critedge
-  %i.hd = phi ptr [ %i.gw, %.critedge.thread ], [ %i.hc, %.critedge ] ; 2 uses
-  %.sroa.048.0.copyload103 = phi i32 [ %.sroa.048.0.copyload97, %.critedge.thread ], [ %.sroa.048.0.copyload, %.critedge ] ; 2 uses
-  %.sroa.3.0.copyload102 = phi i64 [ %i.gr, %.critedge.thread ], [ %.sroa.3.0.copyload, %.critedge ] ; 2 uses
+  %.sroa.446.sroa.0.0 = phi <12 x i8> [ %.sroa.446.sroa.0.0.copyload110, %.critedge ], [ %.sroa.446.sroa.0.0.copyload109, %.critedge.thread ] ; 2 uses
+  %i.hd = phi ptr [ %i.hc, %.critedge ], [ %i.gw, %.critedge.thread ] ; 2 uses
+  %.sroa.048.0.copyload103 = phi i32 [ %.sroa.048.0.copyload, %.critedge ], [ %.sroa.048.0.copyload97, %.critedge.thread ] ; 2 uses
+  %.sroa.3.0.copyload102 = phi i64 [ %.sroa.3.0.copyload, %.critedge ], [ %i.gr, %.critedge.thread ] ; 2 uses
   %i.he = icmp ne i64 %.sroa.3.0.copyload102, 1
   %i.hf = icmp ne i32 %.sroa.048.0.copyload103, 0
   %or.cond.i.i = select i1 %i.he, i1 true, i1 %i.hf
   br i1 %or.cond.i.i, label %_ZNK5boost6system10error_codecvbEv.exit.thread.i.i, label %_ZNK5boost6system10error_codecvbEv.exit.thread5.i.i
 
 _ZNK5boost6system10error_codecvbEv.exit.thread5.i.i: ; preds = %bb.au, %.critedge
-  %i.hg = phi ptr [ %i.hd, %bb.au ], [ %i.hc, %.critedge ]
-  %.sroa.048.0.copyload104 = phi i32 [ 0, %bb.au ], [ %.sroa.048.0.copyload, %.critedge ]
-  %.sroa.3.0.copyload100 = phi i64 [ 1, %bb.au ], [ %.sroa.3.0.copyload, %.critedge ]
+  %.sroa.446.sroa.0.1 = phi <12 x i8> [ %.sroa.446.sroa.0.0.copyload110, %.critedge ], [ %.sroa.446.sroa.0.0, %bb.au ]
+  %i.hg = phi ptr [ %i.hc, %.critedge ], [ %i.hd, %bb.au ]
+  %.sroa.048.0.copyload104 = phi i32 [ %.sroa.048.0.copyload, %.critedge ], [ 0, %bb.au ]
+  %.sroa.3.0.copyload100 = phi i64 [ %.sroa.3.0.copyload, %.critedge ], [ 1, %bb.au ]
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #32
   %i.hh = getelementptr inbounds nuw i8, ptr %1, i64 264 ; 2 uses
   %i.hi = load ptr, ptr %i.hh, align 8, !tbaa !193, !nonnull !35, !align !36 ; 7 uses
@@ -754,6 +753,7 @@ _ZN5boost5beast4http7messageILb0ENS1_17basic_string_bodyIcSt11char_traitsIcESaIc
   br label %_ZNK5boost6system10error_codecvbEv.exit.thread.i.i
 
 _ZNK5boost6system10error_codecvbEv.exit.thread.i.i: ; preds = %_ZN5boost5beast4http7messageILb0ENS1_17basic_string_bodyIcSt11char_traitsIcESaIcEEENS1_12basic_fieldsIS6_EEED2Ev.exit.i.i, %bb.au
+  %.sroa.446.sroa.0.2 = phi <12 x i8> [ %.sroa.446.sroa.0.1, %_ZN5boost5beast4http7messageILb0ENS1_17basic_string_bodyIcSt11char_traitsIcESaIcEEENS1_12basic_fieldsIS6_EEED2Ev.exit.i.i ], [ %.sroa.446.sroa.0.0, %bb.au ]
   %i.jf = phi ptr [ %i.hg, %_ZN5boost5beast4http7messageILb0ENS1_17basic_string_bodyIcSt11char_traitsIcESaIcEEENS1_12basic_fieldsIS6_EEED2Ev.exit.i.i ], [ %i.hd, %bb.au ] ; 2 uses
   %.sroa.048.0.copyload105 = phi i32 [ %.sroa.048.0.copyload104, %_ZN5boost5beast4http7messageILb0ENS1_17basic_string_bodyIcSt11char_traitsIcESaIcEEENS1_12basic_fieldsIS6_EEED2Ev.exit.i.i ], [ %.sroa.048.0.copyload103, %bb.au ]
   %.sroa.3.0.copyload101 = phi i64 [ %.sroa.3.0.copyload100, %_ZN5boost5beast4http7messageILb0ENS1_17basic_string_bodyIcSt11char_traitsIcESaIcEEENS1_12basic_fieldsIS6_EEED2Ev.exit.i.i ], [ %.sroa.3.0.copyload102, %bb.au ]
@@ -778,7 +778,7 @@ _ZN5boost4asio19executor_work_guardINS0_15any_io_executorEvvE5resetEv.exit.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %14)
   store i32 %.sroa.048.0.copyload105, ptr %14, align 8
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %14, i64 4
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.5.0..sroa_idx.i, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.446, i64 12, i1 false)
+  store <12 x i8> %.sroa.446.sroa.0.2, ptr %.sroa.5.0..sroa_idx.i, align 4
   %.sroa.53.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %14, i64 16
   store i64 %.sroa.3.0.copyload101, ptr %.sroa.53.0..sroa_idx.i, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #32
@@ -873,7 +873,6 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit3.i.i.i.i: ; preds
 "_ZN5boost4asio6detail11composed_opINS_5beast4http6detail7read_opINS0_19basic_stream_socketINS0_2ip3tcpENS0_15any_io_executorEEENS3_17basic_flat_bufferISaIcEEELb0ENS5_14parser_is_doneEEENS1_13composed_workIFvSA_EEENS5_11read_msg_opISB_SE_Lb0ENS4_17basic_string_bodyIcSt11char_traitsIcESD_EESD_ZN17doc_http_snippets3fxxEvE3$_0EEJFvNS_6system10error_codeEmEEE8completeEST_m.exit": ; preds = %_ZNSolsEPFRSoS_E.exit.i.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i2.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #32
   call void @llvm.lifetime.end.p0(ptr nonnull %14)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.446)
   br label %_ZN5boost4asio6detail13coroutine_refD2Ev.exit.sink.split
 
 _ZN5boost4asio6detail13coroutine_refD2Ev.exit.sink.split: ; preds = %"_ZN5boost4asio6detail11composed_opINS_5beast4http6detail7read_opINS0_19basic_stream_socketINS0_2ip3tcpENS0_15any_io_executorEEENS3_17basic_flat_bufferISaIcEEELb0ENS5_14parser_is_doneEEENS1_13composed_workIFvSA_EEENS5_11read_msg_opISB_SE_Lb0ENS4_17basic_string_bodyIcSt11char_traitsIcESD_EESD_ZN17doc_http_snippets3fxxEvE3$_0EEJFvNS_6system10error_codeEmEEE8completeEST_m.exit", %bb.a

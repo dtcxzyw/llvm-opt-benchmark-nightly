@@ -15,7 +15,6 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define dso_local ptr @ParallelSlotsGetIdle(ptr nofree noundef captures(ret: address, provenance) %0, ptr noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %.sroa.0.i.i = alloca [16 x i64], align 8       ; 5 uses
   %2 = alloca %struct.fd_set, align 8             ; 11 uses
   %i.a = load i32, ptr %0, align 8                ; 2 uses
   %i.b = icmp sgt i32 %i.a, 0
@@ -206,14 +205,13 @@ bb.o:                                             ; preds = %bb.n, %bb.k
 
 bb.p:                                             ; preds = %._crit_edge.i
   call void @SetCancelConn(ptr noundef nonnull %.253.i) #8
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(128) %.sroa.0.i.i, ptr noundef nonnull align 8 dereferenceable(128) %2, i64 128, i1 false)
+  %.sroa.0.i.i.sroa.0.0.copyload = load <16 x i64>, ptr %2, align 8
   %i.bm = load volatile i32, ptr @CancelRequested, align 4
   %.not.i.i = icmp eq i32 %i.bm, 0
   br i1 %.not.i.i, label %.preheader.i.i, label %select_loop.exit.thread.i
 
 .preheader.i.i:                                   ; preds = %bb.p, %.preheader.i.i.backedge
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(128) %2, ptr noundef nonnull align 8 dereferenceable(128) %.sroa.0.i.i, i64 128, i1 false)
+  store <16 x i64> %.sroa.0.i.i.sroa.0.0.copyload, ptr %2, align 8
   %i.bn = call i32 @select(i32 noundef %i.bk, ptr noundef nonnull %2, ptr noundef null, ptr noundef null, ptr noundef null) #8 ; 2 uses
   %i.bo = icmp slt i32 %i.bn, 0
   br i1 %i.bo, label %bb.q, label %.critedge.i.i
@@ -237,12 +235,10 @@ bb.r:                                             ; preds = %.critedge.i.i
   br label %.preheader.i.i
 
 select_loop.exit.thread.i:                        ; preds = %bb.p, %.critedge.i.i, %bb.q
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i)
   call void @ResetCancelConn() #8
   br label %wait_on_slots.exit.thread
 
 select_loop.exit.i:                               ; preds = %bb.r
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i)
   call void @ResetCancelConn() #8
   %i.bu = load i32, ptr %0, align 8
   %i.bv = icmp sgt i32 %i.bu, 0
@@ -641,9 +637,6 @@ declare i32 @PQconsumeInput(ptr noundef) local_unnamed_addr #2
 declare i32 @PQisBusy(ptr noundef) local_unnamed_addr #2
 
 declare ptr @PQgetResult(ptr noundef) local_unnamed_addr #2
-
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
-declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1
 
 declare i32 @select(i32 noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #2
 

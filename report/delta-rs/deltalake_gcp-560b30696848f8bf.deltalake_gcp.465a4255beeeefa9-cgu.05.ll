@@ -201,7 +201,6 @@ bb.e:                                             ; preds = %bb.d, %_RINvMs6_NtC
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3mapINtB5_7HashMapNtNtNtCsjyY8HP3IvQ6_12object_store3gcp7builder15GoogleConfigKeyNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtNtCs2pqxYH9ZEk8_3std4hash6random11RandomStateE6insertCs62u4JVtZyFF_13deltalake_gcp(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias noundef align 8 dereferenceable(48) %1, i8 noundef range(i8 0, 23) %2, ptr noalias noundef align 8 captures(address) dead_on_return dereferenceable(24) %3) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %.sroa.4 = alloca [31 x i8], align 1            ; 4 uses
   %i.a = alloca [1 x i8], align 1                 ; 3 uses
   store i8 %2, ptr %i.a, align 1
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
@@ -317,9 +316,9 @@ bb.j:                                             ; preds = %bb.k, %bb.i
 
 bb.k:                                             ; preds = %bb.h, %bb.g
   %.sroa.3.0.i.ph.i = phi i64 [ %i.ao, %bb.h ], [ %.sroa.4.125.i.i, %bb.g ] ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4)
-  %.sroa.4.8..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.4, i64 7
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(24) %.sroa.4.8..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 24, i1 false)
+  %.sroa.4.sroa.0.7.copyload = load <24 x i8>, ptr %3, align 8
+  %.sroa.4.sroa.0.7.vec.expand = shufflevector <24 x i8> %.sroa.4.sroa.0.7.copyload, <24 x i8> poison, <31 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23>
+  %.sroa.4.sroa.0.7.vecblend = shufflevector <31 x i8> %.sroa.4.sroa.0.7.vec.expand, <31 x i8> <i8 undef, i8 undef, i8 undef, i8 undef, i8 undef, i8 undef, i8 undef, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison>, <31 x i32> <i32 31, i32 32, i32 33, i32 34, i32 35, i32 36, i32 37, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30>
   call void @llvm.experimental.noalias.scope.decl(metadata !129)
   %i.as = load ptr, ptr %1, align 8, !alias.scope !129, !noalias !132, !nonnull !3, !noundef !3 ; 3 uses
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 %.sroa.3.0.i.ph.i ; 2 uses
@@ -343,8 +342,7 @@ bb.k:                                             ; preds = %bb.h, %bb.g
   %i.bi = getelementptr inbounds i8, ptr %i.bh, i64 -32
   store i8 %2, ptr %i.bi, align 8, !noalias !129
   %.sroa.4.0..sroa_idx = getelementptr inbounds i8, ptr %i.bh, i64 -31
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(31) %.sroa.4.0..sroa_idx, ptr noundef nonnull align 1 dereferenceable(31) %.sroa.4, i64 31, i1 false), !noalias !129
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4)
+  store <31 x i8> %.sroa.4.sroa.0.7.vecblend, ptr %.sroa.4.0..sroa_idx, align 1, !noalias !129
   store i64 -9223372036854775808, ptr %0, align 8
   br label %bb.j
 

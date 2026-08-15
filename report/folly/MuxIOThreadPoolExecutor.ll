@@ -204,16 +204,14 @@ define linkonce_odr void @_ZN5folly6detail17distributed_mutex18lockImplementatio
 bb.a:
   %4 = alloca %"class.std::__exception_ptr::exception_ptr", align 8 ; 6 uses
   %5 = alloca %"class.folly::detail::distributed_mutex::Waiter", align 64 ; 10 uses
-  %.sroa.2 = alloca [40 x i8], align 8            ; 3 uses
   %i.a = alloca i32, align 4                      ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %5, i64 64 ; 2 uses
   %i.c = ptrtoint ptr %5 to i64
   %i.d = getelementptr inbounds nuw i8, ptr %5, i64 80 ; 3 uses
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 88 ; 2 uses
   %i.e = or disjoint i64 %i.c, 1                  ; 3 uses
-  %6 = getelementptr inbounds nuw i8, ptr %5, i64 72 ; 2 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %5, i64 96 ; 5 uses
-  %.sroa.2.24..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.2, i64 24
+  %i.f = getelementptr inbounds nuw i8, ptr %5, i64 72 ; 2 uses
+  %.sroa.2.24..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 96 ; 5 uses
   br label %_ZN5folly6detail17distributed_mutex6WaiterISt6atomicE10initializeEmNS0_17InlineFunctionRefIFvvELm48EEE.exit
 
 _ZN5folly6detail17distributed_mutex6WaiterISt6atomicE10initializeEmNS0_17InlineFunctionRefIFvvELm48EEE.exit: ; preds = %bb.j, %bb.a
@@ -223,10 +221,11 @@ _ZN5folly6detail17distributed_mutex6WaiterISt6atomicE10initializeEmNS0_17InlineF
   %.043 = phi i32 [ 8, %bb.a ], [ %.044, %bb.j ]  ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #30
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 64 dereferenceable(16) %i.b, i8 0, i64 16, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.2, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 24, i1 false)
+  %.sroa.2.sroa.0.0.copyload84 = load <24 x i8>, ptr %3, align 8
+  %.sroa.2.sroa.0.0.vec.expand = shufflevector <24 x i8> %.sroa.2.sroa.0.0.copyload84, <24 x i8> poison, <40 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.g = zext nneg i32 %.043 to i64
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.2.24..sroa_idx, i8 0, i64 16, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.2, i64 40, i1 false)
+  %.sroa.2.sroa.0.24.vecblend = shufflevector <40 x i8> %.sroa.2.sroa.0.0.vec.expand, <40 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0>, <40 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 64, i32 65, i32 66, i32 67, i32 68, i32 69, i32 70, i32 71, i32 72, i32 73, i32 74, i32 75, i32 76, i32 77, i32 78, i32 79>
+  store <40 x i8> %.sroa.2.sroa.0.24.vecblend, ptr %.sroa.5.0..sroa_idx, align 8
   store ptr @_ZN5folly6detail17InlineFunctionRefIFvvELm48EE10callInlineIKNS0_17distributed_mutex19TaskWithoutCoalesceIZNS_16ThrottledLifoSem16tryWaitUntilSlowINSt6chrono3_V212steady_clockENS9_8durationIlSt5ratioILl1ELl1000000000EEEEEEbRKNS9_10time_pointIT_T0_EEEUlvE_NS5_6WaiterISt6atomicEEEEEEvRKNS0_15aligned_storageILm40ELm8EE4typeE, ptr %i.d, align 16, !tbaa !58
   store atomic i64 %i.g, ptr %i.b release, align 64
   %i.h = atomicrmw xchg ptr %2, i64 %i.e acq_rel, align 8 ; 3 uses
@@ -241,7 +240,7 @@ bb.b:                                             ; preds = %_ZN5folly6detail17d
 _ZN5folly6detail17distributed_mutex33recordTimedWaiterAndClearTimedBitERbRm.exit: ; preds = %_ZN5folly6detail17distributed_mutex6WaiterISt6atomicE10initializeEmNS0_17InlineFunctionRefIFvvELm48EEE.exit, %bb.b
   %.149 = phi i8 [ %.048, %_ZN5folly6detail17distributed_mutex6WaiterISt6atomicE10initializeEmNS0_17InlineFunctionRefIFvvELm48EEE.exit ], [ 1, %bb.b ] ; 3 uses
   %.0 = phi i64 [ %i.h, %_ZN5folly6detail17distributed_mutex6WaiterISt6atomicE10initializeEmNS0_17InlineFunctionRefIFvvELm48EEE.exit ], [ %i.j, %bb.b ] ; 4 uses
-  store atomic i64 %.0, ptr %6 monotonic, align 8
+  store atomic i64 %.0, ptr %i.f monotonic, align 8
   %i.k = icmp eq i64 %.0, 0
   br i1 %i.k, label %.critedge, label %bb.c
 
@@ -266,7 +265,7 @@ bb.c:                                             ; preds = %_ZN5folly6detail17d
   br i1 %i.q, label %bb.d, label %_ZN5folly6detail17distributed_mutex4waitINS1_6WaiterISt6atomicEEEEbPT_jRS7_Rj.exit
 
 bb.d:                                             ; preds = %bb.c
-  %i.r = atomicrmw xchg ptr %i.f, i32 5 acq_rel, align 4
+  %i.r = atomicrmw xchg ptr %.sroa.2.24..sroa_idx, i32 5 acq_rel, align 4
   switch i32 %i.r, label %.lr.ph.i.i.preheader [
     i32 5, label %_ZN5folly6detail17distributed_mutex4waitINS1_6WaiterISt6atomicEEEEbPT_jRS7_Rj.exit.thread
     i32 2, label %_ZN5folly6detail17distributed_mutex4waitINS1_6WaiterISt6atomicEEEEbPT_jRS7_Rj.exit.thread56
@@ -283,19 +282,19 @@ bb.e:                                             ; preds = %.lr.ph.i.i.preheade
   br label %_ZN5folly6detail17distributed_mutex11doFutexWakeINS1_6WaiterISt6atomicEEEEvPT_.exit.i.i.peel
 
 _ZN5folly6detail17distributed_mutex11doFutexWakeINS1_6WaiterISt6atomicEEEEvPT_.exit.i.i.peel: ; preds = %bb.e, %.lr.ph.i.i.preheader
-  %i.u = call noundef i32 @_ZN5folly6detail13futexWaitImplEPKSt6atomicIjEjPKNSt6chrono10time_pointINS5_3_V212system_clockENS5_8durationIlSt5ratioILl1ELl1000000000EEEEEEPKNS6_INS7_12steady_clockESC_EEj(ptr noundef nonnull %i.f, i32 noundef 5, ptr noundef null, ptr noundef null, i32 noundef -1) ; 0 uses
-  %i.v = load atomic i32, ptr %i.f acquire, align 32
+  %i.u = call noundef i32 @_ZN5folly6detail13futexWaitImplEPKSt6atomicIjEjPKNSt6chrono10time_pointINS5_3_V212system_clockENS5_8durationIlSt5ratioILl1ELl1000000000EEEEEEPKNS6_INS7_12steady_clockESC_EEj(ptr noundef nonnull %.sroa.2.24..sroa_idx, i32 noundef 5, ptr noundef null, ptr noundef null, i32 noundef -1) ; 0 uses
+  %i.v = load atomic i32, ptr %.sroa.2.24..sroa_idx acquire, align 32
   %.not.i.i.peel = icmp eq i32 %i.v, 2
   br i1 %.not.i.i.peel, label %_ZN5folly6detail17distributed_mutex4waitINS1_6WaiterISt6atomicEEEEbPT_jRS7_Rj.exit.thread56, label %_ZN5folly6detail17distributed_mutex11doFutexWakeINS1_6WaiterISt6atomicEEEEvPT_.exit.i.i
 
 _ZN5folly6detail17distributed_mutex11doFutexWakeINS1_6WaiterISt6atomicEEEEvPT_.exit.i.i: ; preds = %_ZN5folly6detail17distributed_mutex11doFutexWakeINS1_6WaiterISt6atomicEEEEvPT_.exit.i.i.peel, %_ZN5folly6detail17distributed_mutex11doFutexWakeINS1_6WaiterISt6atomicEEEEvPT_.exit.i.i
-  %i.w = call noundef i32 @_ZN5folly6detail13futexWaitImplEPKSt6atomicIjEjPKNSt6chrono10time_pointINS5_3_V212system_clockENS5_8durationIlSt5ratioILl1ELl1000000000EEEEEEPKNS6_INS7_12steady_clockESC_EEj(ptr noundef nonnull %i.f, i32 noundef 5, ptr noundef null, ptr noundef null, i32 noundef -1) ; 0 uses
-  %i.x = load atomic i32, ptr %i.f acquire, align 32
+  %i.w = call noundef i32 @_ZN5folly6detail13futexWaitImplEPKSt6atomicIjEjPKNSt6chrono10time_pointINS5_3_V212system_clockENS5_8durationIlSt5ratioILl1ELl1000000000EEEEEEPKNS6_INS7_12steady_clockESC_EEj(ptr noundef nonnull %.sroa.2.24..sroa_idx, i32 noundef 5, ptr noundef null, ptr noundef null, i32 noundef -1) ; 0 uses
+  %i.x = load atomic i32, ptr %.sroa.2.24..sroa_idx acquire, align 32
   %.not.i.i = icmp eq i32 %i.x, 2
   br i1 %.not.i.i, label %_ZN5folly6detail17distributed_mutex4waitINS1_6WaiterISt6atomicEEEEbPT_jRS7_Rj.exit.thread56, label %_ZN5folly6detail17distributed_mutex11doFutexWakeINS1_6WaiterISt6atomicEEEEvPT_.exit.i.i, !llvm.loop !14553
 
 _ZN5folly6detail17distributed_mutex4waitINS1_6WaiterISt6atomicEEEEbPT_jRS7_Rj.exit.thread56: ; preds = %_ZN5folly6detail17distributed_mutex11doFutexWakeINS1_6WaiterISt6atomicEEEEvPT_.exit.i.i, %_ZN5folly6detail17distributed_mutex11doFutexWakeINS1_6WaiterISt6atomicEEEEvPT_.exit.i.i.peel, %bb.d
-  %i.y = load atomic i64, ptr %6 monotonic, align 8
+  %i.y = load atomic i64, ptr %i.f monotonic, align 8
   %i.z = and i64 %i.y, -2
   %i.aa = inttoptr i64 %i.z to ptr
   br label %bb.j, !llvm.loop !14554

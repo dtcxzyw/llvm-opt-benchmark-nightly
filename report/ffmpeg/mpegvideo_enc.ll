@@ -204,8 +204,6 @@ declare void @ff_h263_encode_gob_header(ptr noundef, i32 noundef) local_unnamed_
 ; Function Attrs: nounwind uwtable
 define internal fastcc void @encode_mb_hq(ptr noundef initializes((1200, 1204), (1272, 1276), (2816, 2848), (4436, 4440), (6332, 6372), (6528, 6532)) %0, ptr nofree noundef nonnull readonly captures(none) %1, ptr nofree noundef nonnull writeonly captures(none) %2, ptr nofree noundef nonnull readonly captures(none) %3, ptr nofree noundef nonnull readonly captures(none) %4, ptr nofree noundef nonnull readonly captures(none) %5, ptr nofree noundef nonnull captures(none) %6, ptr nofree noundef nonnull captures(none) %7, i32 noundef %8, i32 noundef %9) unnamed_addr #1 {
 bb.a:
-  %10 = alloca [3 x ptr], align 16                ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %10)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 2816 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 64
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.a, ptr noundef nonnull readonly align 8 dereferenceable(32) %i.b, i64 32, i1 false)
@@ -283,7 +281,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 3168 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %10, ptr noundef nonnull align 16 dereferenceable(24) %i.ax, i64 24, i1 false)
+  %.sroa.0.0.copyload = load <3 x ptr>, ptr %i.ax, align 16
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 1256
   %i.az = load ptr, ptr %i.ay, align 8, !tbaa !47 ; 2 uses
   store ptr %i.az, ptr %i.ax, align 16, !tbaa !100
@@ -305,6 +303,7 @@ bb.e:                                             ; preds = %bb.d
   unreachable
 
 bb.f:                                             ; preds = %bb.d, %bb.c
+  %.sroa.0.0 = phi <3 x ptr> [ undef, %bb.c ], [ %.sroa.0.0.copyload, %bb.d ]
   tail call fastcc void @encode_mb(ptr noundef nonnull %0, i32 noundef %8, i32 noundef %9)
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 4400
   %i.bj = load ptr, ptr %i.bi, align 16, !tbaa !61
@@ -707,7 +706,7 @@ bb.o:                                             ; preds = %sse_mb.exit, %bb.h
 
 bb.p:                                             ; preds = %bb.o
   %i.nc = getelementptr inbounds nuw i8, ptr %0, i64 3168
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.nc, ptr noundef nonnull align 16 dereferenceable(24) %10, i64 24, i1 false)
+  store <3 x ptr> %.sroa.0.0, ptr %i.nc, align 16
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %bb.o
@@ -818,7 +817,6 @@ save_context_after_encode.exit:                   ; preds = %bb.r, %bb.s
   br label %bb.t
 
 bb.t:                                             ; preds = %save_context_after_encode.exit, %bb.q
-  call void @llvm.lifetime.end.p0(ptr nonnull %10)
   ret void
 }
 

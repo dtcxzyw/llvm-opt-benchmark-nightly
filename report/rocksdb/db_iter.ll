@@ -204,8 +204,7 @@ bb.ba:                                            ; preds = %.thread, %_ZN7rocks
 define linkonce_odr void @_ZN7rocksdb7IterKey4SwapERS0_(ptr noundef nonnull align 8 dereferenceable(208) %0, ptr noundef nonnull align 8 dereferenceable(208) %1) local_unnamed_addr #5 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %2 = alloca %"class.rocksdb::Slice", align 8    ; 20 uses
-  %3 = alloca [39 x i8], align 16                 ; 4 uses
-  %4 = alloca [39 x i8], align 16                 ; 4 uses
+  %.sroa.086 = alloca <39 x i8>, align 64         ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !220  ; 3 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !219    ; 4 uses
@@ -228,17 +227,17 @@ bb.a:
   br i1 %or.cond, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %3)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.086)
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.u = load i64, ptr %i.s, align 8, !tbaa !208
   %i.v = load i64, ptr %i.t, align 8, !tbaa !208
   %i.w = tail call i64 @llvm.umax.i64(i64 %i.u, i64 %i.v)
   %i.x = tail call i64 @llvm.umin.i64(i64 %i.w, i64 39) ; 3 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %3, ptr nonnull align 8 %i.o, i64 %i.x, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 64 %.sroa.086, ptr nonnull align 8 %i.o, i64 %i.x, i1 false)
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.o, ptr nonnull align 8 %i.q, i64 %i.x, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.q, ptr nonnull align 16 %3, i64 %i.x, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %3)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.q, ptr nonnull align 64 %.sroa.086, i64 %i.x, i1 false)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.086)
   br label %bb.h
 
 bb.c:                                             ; preds = %bb.a
@@ -279,11 +278,9 @@ bb.h:                                             ; preds = %bb.d, %bb.g, %bb.f,
   br i1 %or.cond3, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
-  call void @llvm.lifetime.start.p0(ptr nonnull %4)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(39) %4, ptr noundef nonnull align 8 dereferenceable(39) %i.ad, i64 39, i1 false)
+  %.sroa.0.0.copyload = load <39 x i8>, ptr %i.ad, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(39) %i.ad, ptr noundef nonnull align 8 dereferenceable(39) %i.ag, i64 39, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(39) %i.ag, ptr noundef nonnull align 16 dereferenceable(39) %4, i64 39, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %4)
+  store <39 x i8> %.sroa.0.0.copyload, ptr %i.ag, align 8
   br label %bb.o
 
 bb.j:                                             ; preds = %bb.h
@@ -686,7 +683,7 @@ declare noundef nonnull align 8 dereferenceable(16) ptr @_ZN7rocksdb11SystemCloc
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4swapERS4_(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %1) local_unnamed_addr #5 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca [16 x i8], align 16                 ; 4 uses
+  %.sroa.0 = alloca <16 x i8>, align 16           ; 4 uses
   %i.a = icmp eq ptr %0, %1
   br i1 %i.a, label %bb.i, label %bb.b
 
@@ -719,13 +716,13 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not38, label %_ZNSt11char_traitsIcE4copyEPcPKcm.exit44, label %_ZNSt11char_traitsIcE4copyEPcPKcm.exit42
 
 _ZNSt11char_traitsIcE4copyEPcPKcm.exit42:         ; preds = %bb.e
-  call void @llvm.lifetime.start.p0(ptr nonnull %2)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   %i.n = add nuw nsw i64 %i.l, 1                  ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %2, ptr noundef nonnull align 8 dereferenceable(1) %i.i, i64 %i.n, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %.sroa.0, ptr noundef nonnull align 8 dereferenceable(1) %i.i, i64 %i.n, i1 false)
   %i.o = add nuw nsw i64 %i.f, 1
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.i, ptr noundef nonnull align 8 dereferenceable(1) %i.c, i64 %i.o, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.c, ptr noundef nonnull align 16 dereferenceable(1) %2, i64 %i.n, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %2)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.c, ptr noundef nonnull align 16 dereferenceable(1) %.sroa.0, i64 %i.n, i1 false)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   br label %bb.h
 
 bb.f:                                             ; preds = %bb.d

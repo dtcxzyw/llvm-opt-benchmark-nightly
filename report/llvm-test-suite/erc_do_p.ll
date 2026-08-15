@@ -204,9 +204,7 @@ declare i32 @ercCollect8PredBlocks(ptr noundef, i32 noundef, i32 noundef, ptr no
 ; Function Attrs: nounwind uwtable
 define internal fastcc void @concealByTrial(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef captures(none) %1, i32 noundef %2, ptr nofree noundef captures(none) %3, ptr nofree noundef nonnull readonly captures(none) %4, i32 noundef %5, ptr nofree noundef writeonly captures(none) %6) unnamed_addr #0 {
 bb.a:
-  %7 = alloca [3 x i32], align 4                  ; 6 uses
-  %i.a = alloca [3 x i32], align 8                ; 15 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %7)
+  %i.a = alloca [3 x i32], align 16               ; 15 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #23
   %i.b = ashr i32 %5, 4                           ; 4 uses
   %i.c = shl i32 %2, 2
@@ -236,6 +234,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.af, %bb.a
+  %.sroa.0.0 = phi <3 x i32> [ undef, %bb.a ], [ %.sroa.0.3, %bb.af ]
   %i.y = phi i1 [ true, %bb.a ], [ false, %bb.af ]
   %.1210 = phi i32 [ 3, %bb.a ], [ 2, %bb.af ]
   %.1195 = phi i32 [ 0, %bb.a ], [ %.4198, %bb.af ]
@@ -244,6 +243,7 @@ bb.b:                                             ; preds = %bb.af, %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %.loopexit
+  %.sroa.0.1 = phi <3 x i32> [ %.sroa.0.0, %bb.b ], [ %.sroa.0.3, %.loopexit ] ; 7 uses
   %indvars.iv = phi i64 [ 4, %bb.b ], [ %indvars.iv.next, %.loopexit ] ; 3 uses
   %.2251 = phi i32 [ %.1, %bb.b ], [ %.4, %.loopexit ] ; 2 uses
   %.2191250 = phi i32 [ %.1190, %bb.b ], [ %.4193, %.loopexit ] ; 2 uses
@@ -327,7 +327,7 @@ bb.n:                                             ; preds = %bb.l
   %.pn.peel = getelementptr inbounds nuw [24 x i8], ptr %i.ae, i64 %.pn.idx.peel ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %.pn.peel, i64 12
   %i.ax = load <2 x i32>, ptr %i.aw, align 4, !tbaa !4
-  store <2 x i32> %i.ax, ptr %i.a, align 8, !tbaa !4
+  store <2 x i32> %i.ax, ptr %i.a, align 16, !tbaa !4
   %i.ay = getelementptr inbounds nuw i8, ptr %.pn.peel, i64 20
   %i.az = load i32, ptr %i.ay, align 4, !tbaa !4
   br label %bb.q
@@ -339,7 +339,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m
 
 bb.p:                                             ; preds = %bb.o
   store i32 0, ptr %i.w, align 4, !tbaa !4
-  store i32 0, ptr %i.a, align 8, !tbaa !4
+  store i32 0, ptr %i.a, align 16, !tbaa !4
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %._crit_edge263
@@ -359,7 +359,7 @@ bb.q:                                             ; preds = %bb.p, %._crit_edge2
   br i1 %or.cond.peel, label %bb.v, label %.preheader235.preheader.peel
 
 .preheader235.preheader.peel:                     ; preds = %bb.q
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %7, ptr noundef nonnull align 8 dereferenceable(12) %i.a, i64 12, i1 false), !tbaa !4
+  %.sroa.0.0.copyload1 = load <3 x i32>, ptr %i.a, align 16, !tbaa !4
   %i.bj = load i8, ptr %i.ae, align 4, !tbaa !42  ; 2 uses
   %i.bk = icmp ugt i8 %i.bj, 2
   br i1 %i.bk, label %bb.s, label %bb.r
@@ -385,10 +385,11 @@ bb.u:                                             ; preds = %bb.t, %bb.s, %bb.r
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.n, %bb.u, %bb.q, %bb.o
-  %i.br = phi i1 [ %i.ba, %bb.o ], [ %i.bb, %bb.u ], [ %i.ar, %bb.n ], [ %i.bb, %bb.q ]
-  %.2221.peel = phi i32 [ %.0219244, %bb.o ], [ 1, %bb.u ], [ %.0219244, %bb.n ], [ 1, %bb.q ] ; 5 uses
-  %.3215.peel = phi i32 [ 1, %bb.o ], [ %.2214.peel, %bb.u ], [ %.0212246, %bb.n ], [ %.2214.peel, %bb.q ] ; 5 uses
-  %.3207.peel = phi i32 [ %.0204247, %bb.o ], [ %i.bg, %bb.u ], [ %.0204247, %bb.n ], [ %.0204247, %bb.q ] ; 6 uses
+  %.sroa.0.2 = phi <3 x i32> [ %.sroa.0.1, %bb.q ], [ %.sroa.0.0.copyload1, %bb.u ], [ %.sroa.0.1, %bb.o ], [ %.sroa.0.1, %bb.n ] ; 5 uses
+  %i.br = phi i1 [ %i.bb, %bb.q ], [ %i.bb, %bb.u ], [ %i.ba, %bb.o ], [ %i.ar, %bb.n ]
+  %.2221.peel = phi i32 [ 1, %bb.q ], [ 1, %bb.u ], [ %.0219244, %bb.o ], [ %.0219244, %bb.n ] ; 5 uses
+  %.3215.peel = phi i32 [ %.2214.peel, %bb.q ], [ %.2214.peel, %bb.u ], [ 1, %bb.o ], [ %.0212246, %bb.n ] ; 5 uses
+  %.3207.peel = phi i32 [ %.0204247, %bb.q ], [ %i.bg, %bb.u ], [ %.0204247, %bb.o ], [ %.0204247, %bb.n ] ; 6 uses
   %i.bs = and i1 %i.br, %i.ag
   br i1 %i.bs, label %.peel.next, label %.loopexit
 
@@ -418,7 +419,7 @@ bb.y:                                             ; preds = %bb.w, %bb.x
 
 bb.z:                                             ; preds = %bb.y
   store i32 0, ptr %i.w, align 4, !tbaa !4
-  store i32 0, ptr %i.a, align 8, !tbaa !4
+  store i32 0, ptr %i.a, align 16, !tbaa !4
   br label %bb.aa
 
 ._crit_edge264:                                   ; preds = %bb.w, %bb.x
@@ -426,7 +427,7 @@ bb.z:                                             ; preds = %bb.y
   %.pn = getelementptr inbounds nuw [24 x i8], ptr %i.ae, i64 %.pn.idx ; 2 uses
   %i.by = getelementptr inbounds nuw i8, ptr %.pn, i64 12
   %i.bz = load <2 x i32>, ptr %i.by, align 4, !tbaa !4
-  store <2 x i32> %i.bz, ptr %i.a, align 8, !tbaa !4
+  store <2 x i32> %i.bz, ptr %i.a, align 16, !tbaa !4
   %i.ca = getelementptr inbounds nuw i8, ptr %.pn, i64 20
   %i.cb = load i32, ptr %i.ca, align 4, !tbaa !4
   br label %bb.aa
@@ -447,7 +448,7 @@ bb.aa:                                            ; preds = %._crit_edge264, %bb
   br i1 %or.cond, label %.loopexit, label %.preheader235.preheader
 
 .preheader235.preheader:                          ; preds = %bb.aa
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %7, ptr noundef nonnull align 8 dereferenceable(12) %i.a, i64 12, i1 false), !tbaa !4
+  %.sroa.0.0.copyload = load <3 x i32>, ptr %i.a, align 16, !tbaa !4
   %i.cj = load i8, ptr %i.ae, align 4, !tbaa !42  ; 2 uses
   %i.ck = icmp ugt i8 %i.cj, 2
   br i1 %i.ck, label %bb.ab, label %bb.ac
@@ -473,12 +474,13 @@ bb.ae:                                            ; preds = %bb.ab, %bb.ac, %bb.
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.w, %bb.v, %bb.y, %bb.aa, %bb.ae, %bb.x, %bb.j, %bb.k, %bb.l, %bb.c
-  %.3222 = phi i32 [ %.0219244, %bb.j ], [ %.0219244, %bb.c ], [ %.0219244, %bb.l ], [ %.0219244, %bb.k ], [ %.2221.peel, %bb.v ], [ 1, %bb.ae ], [ %.2221.peel, %bb.y ], [ %.2221.peel, %bb.x ], [ %.2221.peel, %bb.w ], [ 1, %bb.aa ] ; 3 uses
-  %.4216 = phi i32 [ %.0212246, %bb.j ], [ %.0212246, %bb.c ], [ %.0212246, %bb.l ], [ %.0212246, %bb.k ], [ %.3215.peel, %bb.v ], [ %.2214, %bb.ae ], [ 1, %bb.y ], [ %.3215.peel, %bb.x ], [ %.3215.peel, %bb.w ], [ %.2214, %bb.aa ] ; 2 uses
-  %.4208 = phi i32 [ %.0204247, %bb.j ], [ %.0204247, %bb.c ], [ %.0204247, %bb.l ], [ %.0204247, %bb.k ], [ %.3207.peel, %bb.v ], [ %i.cg, %bb.ae ], [ %.3207.peel, %bb.y ], [ %.3207.peel, %bb.x ], [ %.3207.peel, %bb.w ], [ %.3207.peel, %bb.aa ] ; 2 uses
-  %.4198 = phi i32 [ %.3197, %bb.j ], [ %.2196249, %bb.c ], [ %.3197, %bb.l ], [ %.3197, %bb.k ], [ %.3197, %bb.v ], [ %.3197, %bb.ae ], [ %.3197, %bb.y ], [ %.3197, %bb.x ], [ %.3197, %bb.w ], [ %.3197, %bb.aa ] ; 2 uses
-  %.4193 = phi i32 [ %.3192, %bb.j ], [ %.2191250, %bb.c ], [ %.3192, %bb.l ], [ %.3192, %bb.k ], [ %.3192, %bb.v ], [ %.3192, %bb.ae ], [ %.3192, %bb.y ], [ %.3192, %bb.x ], [ %.3192, %bb.w ], [ %.3192, %bb.aa ] ; 2 uses
-  %.4 = phi i32 [ %.3, %bb.j ], [ %.2251, %bb.c ], [ %.3, %bb.l ], [ %.3, %bb.k ], [ %.3, %bb.v ], [ %.3, %bb.ae ], [ %.3, %bb.y ], [ %.3, %bb.x ], [ %.3, %bb.w ], [ %.3, %bb.aa ] ; 2 uses
+  %.sroa.0.3 = phi <3 x i32> [ %.sroa.0.1, %bb.c ], [ %.sroa.0.1, %bb.j ], [ %.sroa.0.1, %bb.l ], [ %.sroa.0.2, %bb.aa ], [ %.sroa.0.0.copyload, %bb.ae ], [ %.sroa.0.2, %bb.y ], [ %.sroa.0.2, %bb.w ], [ %.sroa.0.2, %bb.x ], [ %.sroa.0.2, %bb.v ], [ %.sroa.0.1, %bb.k ] ; 4 uses
+  %.3222 = phi i32 [ %.0219244, %bb.c ], [ %.0219244, %bb.j ], [ %.0219244, %bb.l ], [ 1, %bb.aa ], [ 1, %bb.ae ], [ %.2221.peel, %bb.y ], [ %.2221.peel, %bb.w ], [ %.2221.peel, %bb.x ], [ %.2221.peel, %bb.v ], [ %.0219244, %bb.k ] ; 3 uses
+  %.4216 = phi i32 [ %.0212246, %bb.c ], [ %.0212246, %bb.j ], [ %.0212246, %bb.l ], [ %.2214, %bb.aa ], [ %.2214, %bb.ae ], [ 1, %bb.y ], [ %.3215.peel, %bb.w ], [ %.3215.peel, %bb.x ], [ %.3215.peel, %bb.v ], [ %.0212246, %bb.k ] ; 2 uses
+  %.4208 = phi i32 [ %.0204247, %bb.c ], [ %.0204247, %bb.j ], [ %.0204247, %bb.l ], [ %.3207.peel, %bb.aa ], [ %i.cg, %bb.ae ], [ %.3207.peel, %bb.y ], [ %.3207.peel, %bb.w ], [ %.3207.peel, %bb.x ], [ %.3207.peel, %bb.v ], [ %.0204247, %bb.k ] ; 2 uses
+  %.4198 = phi i32 [ %.2196249, %bb.c ], [ %.3197, %bb.j ], [ %.3197, %bb.l ], [ %.3197, %bb.aa ], [ %.3197, %bb.ae ], [ %.3197, %bb.y ], [ %.3197, %bb.w ], [ %.3197, %bb.x ], [ %.3197, %bb.v ], [ %.3197, %bb.k ] ; 2 uses
+  %.4193 = phi i32 [ %.2191250, %bb.c ], [ %.3192, %bb.j ], [ %.3192, %bb.l ], [ %.3192, %bb.aa ], [ %.3192, %bb.ae ], [ %.3192, %bb.y ], [ %.3192, %bb.w ], [ %.3192, %bb.x ], [ %.3192, %bb.v ], [ %.3192, %bb.k ] ; 2 uses
+  %.4 = phi i32 [ %.2251, %bb.c ], [ %.3, %bb.j ], [ %.3, %bb.l ], [ %.3, %bb.aa ], [ %.3, %bb.ae ], [ %.3, %bb.y ], [ %.3, %bb.w ], [ %.3, %bb.x ], [ %.3, %bb.v ], [ %.3, %bb.k ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 8
   br i1 %exitcond.not, label %bb.af, label %bb.c, !llvm.loop !46
@@ -494,7 +496,7 @@ bb.ag:                                            ; preds = %bb.af
 
 bb.ah:                                            ; preds = %bb.ag
   store i32 0, ptr %i.w, align 4, !tbaa !4
-  store i32 0, ptr %i.a, align 8, !tbaa !4
+  store i32 0, ptr %i.a, align 16, !tbaa !4
   store i32 0, ptr %i.x, align 8, !tbaa !4
   %i.ct = load ptr, ptr @erc_img, align 8, !tbaa !14
   %i.cu = load i32, ptr %i.o, align 4, !tbaa !39
@@ -508,19 +510,19 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %or.cond3, label %bb.ai, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %bb.ah
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %7, ptr noundef nonnull align 8 dereferenceable(12) %i.a, i64 12, i1 false), !tbaa !4
+  %.sroa.0.0.copyload2 = load <3 x i32>, ptr %i.a, align 16, !tbaa !4
   store i8 0, ptr %i.e, align 4, !tbaa !42
   tail call fastcc void @copyPredMB(i32 noundef %i.l, ptr noundef %1, i32 noundef %5)
   br label %bb.ai
 
 bb.ai:                                            ; preds = %.preheader.preheader, %bb.ah, %bb.ag
+  %.sroa.0.4 = phi <3 x i32> [ %.sroa.0.3, %bb.ah ], [ %.sroa.0.0.copyload2, %.preheader.preheader ], [ %.sroa.0.3, %bb.ag ]
   %i.da = getelementptr inbounds nuw i8, ptr %i.e, i64 12
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.da, ptr noundef nonnull align 4 dereferenceable(12) %7, i64 12, i1 false), !tbaa !4
+  store <3 x i32> %.sroa.0.4, ptr %i.da, align 4, !tbaa !4
   %i.db = sext i32 %i.l to i64
   %i.dc = getelementptr inbounds [4 x i8], ptr %6, i64 %i.db
   store i32 2, ptr %i.dc, align 4, !tbaa !4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #23
-  call void @llvm.lifetime.end.p0(ptr nonnull %7)
   ret void
 }
 
@@ -922,9 +924,6 @@ declare i32 @llvm.smax.i32(i32, i32) #19
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.abs.i32(i32, i1 immarg) #20
-
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
-declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare range(i32 -1, 2) i32 @llvm.scmp.i32.i32(i32, i32) #19

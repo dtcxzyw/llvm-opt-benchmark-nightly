@@ -203,12 +203,9 @@ bb.c:                                             ; preds = %bb.a
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define void @_ZN3re26Regexp4SwapEPS0_(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(40) %0, ptr nofree noundef captures(none) %1) local_unnamed_addr #13 align 2 {
 bb.a:
-  %2 = alloca [40 x i8], align 16                 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %2, ptr noundef nonnull align 8 dereferenceable(40) %0, i64 40, i1 false)
+  %.sroa.0.0.copyload = load <40 x i8>, ptr %0, align 8
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef nonnull align 1 dereferenceable(40) %1, i64 40, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(40) %1, ptr noundef nonnull align 16 dereferenceable(40) %2, i64 40, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %2)
+  store <40 x i8> %.sroa.0.0.copyload, ptr %1, align 1
   ret void
 }
 

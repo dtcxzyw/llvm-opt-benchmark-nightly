@@ -68,7 +68,6 @@ $_ZTS5trail = comdat any
 define hidden noundef zeroext i1 @_ZN3nla12nla_throttle10insert_newENS0_13throttle_kindEjb(ptr noundef nonnull align 8 dereferenceable(40) %0, i32 noundef %1, i32 noundef %2, i1 noundef zeroext %3) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %4 = alloca %"struct.nla::nla_throttle::signature", align 4 ; 4 uses
-  %.sroa.6.i = alloca [8 x i32], align 8          ; 4 uses
   %5 = alloca %"struct.nla::nla_throttle::signature", align 4 ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #13
   %i.a = getelementptr inbounds nuw i8, ptr %5, i64 12
@@ -99,15 +98,14 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #13
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !30, !nonnull !17, !align !18 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.6.i, ptr noundef nonnull align 4 dereferenceable(32) %5, i64 32, i1 false)
+  %.sroa.6.i.sroa.0.0.copyload = load <8 x i32>, ptr %5, align 4
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 16
   %i.o = call noundef ptr @_ZN6region8allocateEm(ptr noundef nonnull align 8 dereferenceable(40) %i.n, i64 noundef 48) ; 4 uses
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTV10insert_mapI9hashtableIN3nla12nla_throttle9signatureENS2_14signature_hashE10default_eqIS3_EES3_E, i64 16), ptr %i.o, align 8, !tbaa !31
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   store ptr %0, ptr %i.p, align 8
   %.sroa.6.8..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.o, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.6.8..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.6.i, i64 32, i1 false)
+  store <8 x i32> %.sroa.6.i.sroa.0.0.copyload, ptr %.sroa.6.8..sroa_idx.i, align 8
   %i.q = load ptr, ptr %i.m, align 8, !tbaa !33   ; 4 uses
   %i.r = icmp eq ptr %i.q, null
   br i1 %i.r, label %.noexc6.i, label %bb.c
@@ -136,7 +134,6 @@ bb.d:                                             ; preds = %.noexc6.i, %bb.c
   store ptr %i.o, ptr %i.ab, align 8, !tbaa !37
   %i.ac = add i32 %i.x, 1
   store i32 %i.ac, ptr %i.z, align 4, !tbaa !8
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6.i)
   br label %_ZN3nla12nla_throttle15insert_new_implERKNS0_9signatureE.exit
 
 _ZN3nla12nla_throttle15insert_new_implERKNS0_9signatureE.exit: ; preds = %bb.b, %bb.d
@@ -151,7 +148,6 @@ declare void @llvm.lifetime.start.p0(ptr captures(none)) #1
 define hidden noundef zeroext i1 @_ZN3nla12nla_throttle15insert_new_implERKNS0_9signatureE(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef nonnull align 4 dereferenceable(32) %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %2 = alloca %"struct.nla::nla_throttle::signature", align 4 ; 4 uses
-  %.sroa.6 = alloca [8 x i32], align 8            ; 4 uses
   %i.a = tail call noundef ptr @_ZNK14core_hashtableI18default_hash_entryIN3nla12nla_throttle9signatureEENS2_14signature_hashE10default_eqIS3_EE9find_coreERKS3_(ptr noundef nonnull align 8 dereferenceable(20) %0, ptr noundef nonnull align 4 dereferenceable(32) %1)
   %i.b = icmp ne ptr %i.a, null                   ; 2 uses
   br i1 %i.b, label %bb.b, label %.noexc
@@ -172,15 +168,14 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #13
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !30, !nonnull !17, !align !18 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.6, ptr noundef nonnull align 4 dereferenceable(32) %1, i64 32, i1 false)
+  %.sroa.6.sroa.0.0.copyload10 = load <8 x i32>, ptr %1, align 4
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 16
   %i.k = call noundef ptr @_ZN6region8allocateEm(ptr noundef nonnull align 8 dereferenceable(40) %i.j, i64 noundef 48) ; 4 uses
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTV10insert_mapI9hashtableIN3nla12nla_throttle9signatureENS2_14signature_hashE10default_eqIS3_EES3_E, i64 16), ptr %i.k, align 8, !tbaa !31
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   store ptr %0, ptr %i.l, align 8
   %.sroa.6.8..sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.6.8..sroa_idx, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.6, i64 32, i1 false)
+  store <8 x i32> %.sroa.6.sroa.0.0.copyload10, ptr %.sroa.6.8..sroa_idx, align 8
   %i.m = load ptr, ptr %i.i, align 8, !tbaa !33   ; 4 uses
   %i.n = icmp eq ptr %i.m, null
   br i1 %i.n, label %.noexc6, label %bb.c
@@ -209,7 +204,6 @@ bb.d:                                             ; preds = %.noexc6, %bb.c
   store ptr %i.k, ptr %i.x, align 8, !tbaa !37
   %i.y = add i32 %i.t, 1
   store i32 %i.y, ptr %i.v, align 4, !tbaa !8
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6)
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.b
@@ -223,7 +217,6 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 define hidden noundef zeroext i1 @_ZN3nla12nla_throttle10insert_newENS0_13throttle_kindEjjjii(ptr noundef nonnull align 8 dereferenceable(40) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, i32 noundef %5, i32 noundef %6) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %7 = alloca %"struct.nla::nla_throttle::signature", align 4 ; 4 uses
-  %.sroa.6.i = alloca [8 x i32], align 8          ; 4 uses
   %8 = alloca %"struct.nla::nla_throttle::signature", align 4 ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #13
   %i.a = getelementptr inbounds nuw i8, ptr %8, i64 24
@@ -261,15 +254,14 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #13
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !30, !nonnull !17, !align !18 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.6.i, ptr noundef nonnull align 4 dereferenceable(32) %8, i64 32, i1 false)
+  %.sroa.6.i.sroa.0.0.copyload = load <8 x i32>, ptr %8, align 4
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 16
   %i.s = call noundef ptr @_ZN6region8allocateEm(ptr noundef nonnull align 8 dereferenceable(40) %i.r, i64 noundef 48) ; 4 uses
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTV10insert_mapI9hashtableIN3nla12nla_throttle9signatureENS2_14signature_hashE10default_eqIS3_EES3_E, i64 16), ptr %i.s, align 8, !tbaa !31
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 8
   store ptr %0, ptr %i.t, align 8
   %.sroa.6.8..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.s, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.6.8..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.6.i, i64 32, i1 false)
+  store <8 x i32> %.sroa.6.i.sroa.0.0.copyload, ptr %.sroa.6.8..sroa_idx.i, align 8
   %i.u = load ptr, ptr %i.q, align 8, !tbaa !33   ; 4 uses
   %i.v = icmp eq ptr %i.u, null
   br i1 %i.v, label %.noexc6.i, label %bb.c
@@ -298,7 +290,6 @@ bb.d:                                             ; preds = %.noexc6.i, %bb.c
   store ptr %i.s, ptr %i.af, align 8, !tbaa !37
   %i.ag = add i32 %i.ab, 1
   store i32 %i.ag, ptr %i.ad, align 4, !tbaa !8
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6.i)
   br label %_ZN3nla12nla_throttle15insert_new_implERKNS0_9signatureE.exit
 
 _ZN3nla12nla_throttle15insert_new_implERKNS0_9signatureE.exit: ; preds = %bb.b, %bb.d
@@ -310,7 +301,6 @@ _ZN3nla12nla_throttle15insert_new_implERKNS0_9signatureE.exit: ; preds = %bb.b, 
 define hidden noundef zeroext i1 @_ZN3nla12nla_throttle10insert_newENS0_13throttle_kindEjjRK8rationaljjjS4_jN2lp16lconstraint_kindE(ptr noundef nonnull align 8 dereferenceable(40) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %4, i32 noundef %5, i32 noundef %6, i32 noundef %7, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %8, i32 noundef %9, i32 noundef %10) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %11 = alloca %"struct.nla::nla_throttle::signature", align 4 ; 4 uses
-  %.sroa.6.i = alloca [8 x i32], align 8          ; 4 uses
   %12 = alloca %"struct.nla::nla_throttle::signature", align 4 ; 13 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #13
   store i32 %1, ptr %12, align 4, !tbaa !8
@@ -363,15 +353,14 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #13
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !30, !nonnull !17, !align !18 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.6.i, ptr noundef nonnull align 4 dereferenceable(32) %12, i64 32, i1 false)
+  %.sroa.6.i.sroa.0.0.copyload = load <8 x i32>, ptr %12, align 4
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 16
   %i.ae = call noundef ptr @_ZN6region8allocateEm(ptr noundef nonnull align 8 dereferenceable(40) %i.ad, i64 noundef 48) ; 4 uses
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTV10insert_mapI9hashtableIN3nla12nla_throttle9signatureENS2_14signature_hashE10default_eqIS3_EES3_E, i64 16), ptr %i.ae, align 8, !tbaa !31
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 8
   store ptr %0, ptr %i.af, align 8
   %.sroa.6.8..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ae, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.6.8..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.6.i, i64 32, i1 false)
+  store <8 x i32> %.sroa.6.i.sroa.0.0.copyload, ptr %.sroa.6.8..sroa_idx.i, align 8
   %i.ag = load ptr, ptr %i.ac, align 8, !tbaa !33 ; 4 uses
   %i.ah = icmp eq ptr %i.ag, null
   br i1 %i.ah, label %.noexc6.i, label %bb.c
@@ -400,7 +389,6 @@ bb.d:                                             ; preds = %.noexc6.i, %bb.c
   store ptr %i.ae, ptr %i.ar, align 8, !tbaa !37
   %i.as = add i32 %i.an, 1
   store i32 %i.as, ptr %i.ap, align 4, !tbaa !8
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6.i)
   br label %_ZN3nla12nla_throttle15insert_new_implERKNS0_9signatureE.exit
 
 _ZN3nla12nla_throttle15insert_new_implERKNS0_9signatureE.exit: ; preds = %bb.b, %bb.d
@@ -412,7 +400,6 @@ _ZN3nla12nla_throttle15insert_new_implERKNS0_9signatureE.exit: ; preds = %bb.b, 
 define hidden noundef zeroext i1 @_ZN3nla12nla_throttle10insert_newENS0_13throttle_kindEjjjbi(ptr noundef nonnull align 8 dereferenceable(40) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, i1 noundef zeroext %5, i32 noundef %6) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %7 = alloca %"struct.nla::nla_throttle::signature", align 4 ; 4 uses
-  %.sroa.6.i = alloca [8 x i32], align 8          ; 4 uses
   %8 = alloca %"struct.nla::nla_throttle::signature", align 4 ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #13
   %i.a = getelementptr inbounds nuw i8, ptr %8, i64 24
@@ -449,15 +436,14 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #13
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !30, !nonnull !17, !align !18 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.6.i, ptr noundef nonnull align 4 dereferenceable(32) %8, i64 32, i1 false)
+  %.sroa.6.i.sroa.0.0.copyload = load <8 x i32>, ptr %8, align 4
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 16
   %i.r = call noundef ptr @_ZN6region8allocateEm(ptr noundef nonnull align 8 dereferenceable(40) %i.q, i64 noundef 48) ; 4 uses
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTV10insert_mapI9hashtableIN3nla12nla_throttle9signatureENS2_14signature_hashE10default_eqIS3_EES3_E, i64 16), ptr %i.r, align 8, !tbaa !31
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 8
   store ptr %0, ptr %i.s, align 8
   %.sroa.6.8..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.r, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.6.8..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.6.i, i64 32, i1 false)
+  store <8 x i32> %.sroa.6.i.sroa.0.0.copyload, ptr %.sroa.6.8..sroa_idx.i, align 8
   %i.t = load ptr, ptr %i.p, align 8, !tbaa !33   ; 4 uses
   %i.u = icmp eq ptr %i.t, null
   br i1 %i.u, label %.noexc6.i, label %bb.c
@@ -486,7 +472,6 @@ bb.d:                                             ; preds = %.noexc6.i, %bb.c
   store ptr %i.r, ptr %i.ae, align 8, !tbaa !37
   %i.af = add i32 %i.aa, 1
   store i32 %i.af, ptr %i.ac, align 4, !tbaa !8
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6.i)
   br label %_ZN3nla12nla_throttle15insert_new_implERKNS0_9signatureE.exit
 
 _ZN3nla12nla_throttle15insert_new_implERKNS0_9signatureE.exit: ; preds = %bb.b, %bb.d
@@ -498,7 +483,6 @@ _ZN3nla12nla_throttle15insert_new_implERKNS0_9signatureE.exit: ; preds = %bb.b, 
 define hidden noundef zeroext i1 @_ZN3nla12nla_throttle10insert_newENS0_13throttle_kindEjjjb(ptr noundef nonnull align 8 dereferenceable(40) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, i1 noundef zeroext %5) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %6 = alloca %"struct.nla::nla_throttle::signature", align 4 ; 4 uses
-  %.sroa.6.i = alloca [8 x i32], align 8          ; 4 uses
   %7 = alloca %"struct.nla::nla_throttle::signature", align 4 ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #13
   %i.a = getelementptr inbounds nuw i8, ptr %7, i64 20
@@ -533,15 +517,14 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #13
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !30, !nonnull !17, !align !18 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.6.i, ptr noundef nonnull align 4 dereferenceable(32) %7, i64 32, i1 false)
+  %.sroa.6.i.sroa.0.0.copyload = load <8 x i32>, ptr %7, align 4
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 16
   %i.q = call noundef ptr @_ZN6region8allocateEm(ptr noundef nonnull align 8 dereferenceable(40) %i.p, i64 noundef 48) ; 4 uses
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTV10insert_mapI9hashtableIN3nla12nla_throttle9signatureENS2_14signature_hashE10default_eqIS3_EES3_E, i64 16), ptr %i.q, align 8, !tbaa !31
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 8
   store ptr %0, ptr %i.r, align 8
   %.sroa.6.8..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.q, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.6.8..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.6.i, i64 32, i1 false)
+  store <8 x i32> %.sroa.6.i.sroa.0.0.copyload, ptr %.sroa.6.8..sroa_idx.i, align 8
   %i.s = load ptr, ptr %i.o, align 8, !tbaa !33   ; 4 uses
   %i.t = icmp eq ptr %i.s, null
   br i1 %i.t, label %.noexc6.i, label %bb.c
@@ -570,7 +553,6 @@ bb.d:                                             ; preds = %.noexc6.i, %bb.c
   store ptr %i.q, ptr %i.ad, align 8, !tbaa !37
   %i.ae = add i32 %i.z, 1
   store i32 %i.ae, ptr %i.ab, align 4, !tbaa !8
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6.i)
   br label %_ZN3nla12nla_throttle15insert_new_implERKNS0_9signatureE.exit
 
 _ZN3nla12nla_throttle15insert_new_implERKNS0_9signatureE.exit: ; preds = %bb.b, %bb.d

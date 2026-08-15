@@ -204,7 +204,6 @@ bb.e:                                             ; preds = %bb.d
 define linkonce_odr hidden void @_ZN5boost5redis7adapter6detail7wrapperINS_6system6resultISt8optionalISt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESD_St4hashISD_ESt8equal_toISD_ESaISt4pairIKSD_SD_EEEENS1_5errorEEEE7on_nodeISt17basic_string_viewIcSB_EEEvRKNS0_5resp310basic_nodeIT_EERNS4_10error_codeE(ptr noundef nonnull align 8 dereferenceable(25) %0, ptr noundef nonnull align 8 dereferenceable(40) %1, ptr noundef nonnull align 8 dereferenceable(24) %2) local_unnamed_addr #8 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %"struct.boost::source_location", align 8 ; 7 uses
-  %.sroa.5 = alloca [16 x i8], align 8            ; 4 uses
   %4 = alloca %"struct.boost::source_location", align 8 ; 7 uses
   %5 = alloca %"struct.boost::source_location", align 8 ; 8 uses
   %i.a = load ptr, ptr %0, align 8, !tbaa !556
@@ -260,8 +259,6 @@ _ZNR5boost6system6resultISt8optionalISt13unordered_mapINSt7__cxx1112basic_string
   br label %_ZNR5boost6system6resultISt8optionalISt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_St4hashIS9_ESt8equal_toIS9_ESaISt4pairIKS9_S9_EEEENS_5redis7adapter5errorEE5valueERKNS_15source_locationE.exit8
 
 _ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_S5_ESaIS8_ENSt8__detail10_Select1stESt8equal_toIS5_ESt4hashIS5_ENSA_18_Mod_range_hashingENSA_20_Default_ranged_hashENSA_20_Prime_rehash_policyENSA_17_Hashtable_traitsILb1ELb0ELb1EEEE5clearEv.exit.i: ; preds = %_ZNR5boost6system6resultISt8optionalISt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_St4hashIS9_ESt8equal_toIS9_ESaISt4pairIKS9_S9_EEEENS_5redis7adapter5errorEE5valueERKNS_15source_locationE.exit
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5, i8 0, i64 16, i1 false)
   %i.u = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   store i64 1, ptr %i.u, align 8, !tbaa !440
   %i.v = getelementptr inbounds nuw i8, ptr %i.k, i64 16
@@ -271,13 +268,11 @@ _ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS
   %.sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 36
   store i32 0, ptr %.sroa_idx, align 4
   %.sroa.5.32..sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 40
-  %6 = load i64, ptr %.sroa.5, align 8, !tbaa !15
-  store i64 %6, ptr %.sroa.5.32..sroa_idx, align 8, !tbaa !15
+  store <8 x i8> zeroinitializer, ptr %.sroa.5.32..sroa_idx, align 8, !tbaa !15
   %i.x = getelementptr inbounds nuw i8, ptr %i.k, i64 48 ; 2 uses
   store ptr %i.x, ptr %i.k, align 8, !tbaa !438
   store ptr null, ptr %i.x, align 8, !tbaa !1428
   store i8 1, ptr %i.r, align 8, !tbaa !537
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5)
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.z = load ptr, ptr %0, align 8, !tbaa !556    ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #28
@@ -680,7 +675,6 @@ bb.e:                                             ; preds = %bb.d
 define linkonce_odr hidden void @_ZN5boost5redis7adapter6detail7wrapperINS_6system6resultISt8optionalISt13unordered_setINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4hashISD_ESt8equal_toISD_ESaISD_EEENS1_5errorEEEE7on_nodeISt17basic_string_viewIcSB_EEEvRKNS0_5resp310basic_nodeIT_EERNS4_10error_codeE(ptr noundef nonnull align 8 dereferenceable(17) %0, ptr noundef nonnull align 8 dereferenceable(40) %1, ptr noundef nonnull align 8 dereferenceable(24) %2) local_unnamed_addr #8 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %"struct.boost::source_location", align 8 ; 7 uses
-  %.sroa.5 = alloca [16 x i8], align 8            ; 4 uses
   %4 = alloca %"struct.boost::source_location", align 8 ; 7 uses
   %5 = alloca %"struct.boost::source_location", align 8 ; 8 uses
   %i.a = load ptr, ptr %0, align 8, !tbaa !625
@@ -736,8 +730,6 @@ _ZNR5boost6system6resultISt8optionalISt13unordered_setINSt7__cxx1112basic_string
   br label %_ZNR5boost6system6resultISt8optionalISt13unordered_setINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4hashIS9_ESt8equal_toIS9_ESaIS9_EEENS_5redis7adapter5errorEE5valueERKNS_15source_locationE.exit8
 
 _ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_SaIS5_ENSt8__detail9_IdentityESt8equal_toIS5_ESt4hashIS5_ENS7_18_Mod_range_hashingENS7_20_Default_ranged_hashENS7_20_Prime_rehash_policyENS7_17_Hashtable_traitsILb1ELb1ELb1EEEE5clearEv.exit.i.i: ; preds = %_ZNR5boost6system6resultISt8optionalISt13unordered_setINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4hashIS9_ESt8equal_toIS9_ESaIS9_EEENS_5redis7adapter5errorEE5valueERKNS_15source_locationE.exit
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5, i8 0, i64 16, i1 false)
   %i.u = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   store i64 1, ptr %i.u, align 8, !tbaa !52
   %i.v = getelementptr inbounds nuw i8, ptr %i.k, i64 16
@@ -747,13 +739,11 @@ _ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_SaIS5_E
   %.sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 36
   store i32 0, ptr %.sroa_idx, align 4
   %.sroa.5.32..sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 40
-  %6 = load i64, ptr %.sroa.5, align 8, !tbaa !15
-  store i64 %6, ptr %.sroa.5.32..sroa_idx, align 8, !tbaa !15
+  store <8 x i8> zeroinitializer, ptr %.sroa.5.32..sroa_idx, align 8, !tbaa !15
   %i.x = getelementptr inbounds nuw i8, ptr %i.k, i64 48 ; 2 uses
   store ptr %i.x, ptr %i.k, align 8, !tbaa !51
   store ptr null, ptr %i.x, align 8, !tbaa !933
   store i8 1, ptr %i.r, align 8, !tbaa !604
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5)
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.z = load ptr, ptr %0, align 8, !tbaa !625    ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #28
@@ -1156,7 +1146,6 @@ bb.u:                                             ; preds = %_ZN5boost5redis7ada
 define linkonce_odr hidden void @_ZN5boost4mp116detail19mp_with_index_impl_ILm2EE4callILm0ENS_8variant26detail20variant_ma_base_implILb1ELb0EJSt5arrayIiLm3EENS_5redis7adapter5errorEEE2L4EEEDTclclsr3stdE7declvalIT0_EEclL_ZSt7declvalISt17integral_constantImLm0EEEDTcl9__declvalIT_ELi0EEEvEEEEmOSF_(i64 noundef %0, ptr noundef nonnull align 8 dereferenceable(16) %1) local_unnamed_addr #8 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %2 = alloca %"struct.boost::redis::adapter::error", align 8 ; 7 uses
-  %.sroa.0.i.i = alloca [3 x i32], align 4        ; 4 uses
   %i.a = icmp eq i64 %0, 0
   %i.b = load ptr, ptr %1, align 8, !tbaa !1542   ; 11 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -1164,8 +1153,7 @@ bb.a:
   br i1 %i.a, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.0.i.i, ptr noundef nonnull align 8 dereferenceable(12) %i.d, i64 12, i1 false), !tbaa.struct !746
+  %.sroa.0.i.i.sroa.0.0.copyload = load <3 x i32>, ptr %i.d, align 8, !tbaa !19
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 40 ; 2 uses
   %i.f = load i8, ptr %i.e, align 8, !tbaa !94
   %i.g = icmp eq i8 %i.f, 2
@@ -1185,9 +1173,8 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   br label %_ZNK5boost8variant26detail20variant_ma_base_implILb1ELb0EJSt5arrayIiLm3EENS_5redis7adapter5errorEEE2L4clISt17integral_constantImLm0EEEEvT_.exit
 
 _ZNK5boost8variant26detail20variant_ma_base_implILb1ELb0EJSt5arrayIiLm3EENS_5redis7adapter5errorEEE2L4clISt17integral_constantImLm0EEEEvT_.exit: ; preds = %bb.c, %bb.b, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(41) %i.b, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.0.i.i, i64 12, i1 false), !tbaa.struct !746
+  store <3 x i32> %.sroa.0.i.i.sroa.0.0.copyload, ptr %i.b, align 8, !tbaa !19
   store i8 1, ptr %i.e, align 8, !tbaa !94
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i)
   br label %bb.h
 
 bb.d:                                             ; preds = %bb.a
@@ -1590,7 +1577,7 @@ define internal void @_GLOBAL__sub_I_test_low_level.cpp() #24 section ".text.sta
 bb.a:
   %0 = alloca [1 x %"struct.boost::redis::resp3::basic_node"], align 8 ; 10 uses
   %1 = alloca [7 x %"struct.boost::redis::resp3::basic_node"], align 8 ; 52 uses
-  %.sroa.0 = alloca [22 x i8], align 8            ; 4 uses
+  %.sroa.0.sroa.0 = alloca <22 x i8>, align 32    ; 4 uses
   %2 = alloca [8 x %"class.std::__cxx11::basic_string"], align 8 ; 39 uses
   %3 = alloca %"class.std::unordered_multimap", align 8 ; 12 uses
   %4 = alloca [4 x %"struct.std::pair"], align 8  ; 24 uses
@@ -1993,12 +1980,12 @@ __cxx_global_var_init.47.exit:                    ; preds = %_ZNSt7__cxx1112basi
   %i.axx = call i32 @__cxa_atexit(ptr nonnull @_ZN5boost6system6resultISt8optionalISt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_St4lessIS9_ESaISt4pairIKS9_S9_EEEENS_5redis7adapter5errorEED2Ev, ptr nonnull @_ZN12_GLOBAL__N_115map_expected_1dB5cxx11E, ptr nonnull @__dso_handle) #28 ; 0 uses
   call void @_ZN5boost6system6resultISt8optionalISt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS9_EEENS_5redis7adapter5errorEEC2ISB_SF_vEERKNS1_IT_T0_EE(ptr noundef nonnull align 8 dereferenceable(48) @_ZN12_GLOBAL__N_115map_expected_1eB5cxx11E, ptr noundef nonnull align 8 dereferenceable(48) @_ZN12_GLOBAL__N_115map_expected_1cB5cxx11E)
   %i.axy = call i32 @__cxa_atexit(ptr nonnull @_ZN5boost6system6resultISt8optionalISt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS9_EEENS_5redis7adapter5errorEED2Ev, ptr nonnull @_ZN12_GLOBAL__N_115map_expected_1eB5cxx11E, ptr nonnull @__dso_handle) #28 ; 0 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
-  %.sroa.0.16..sroa_idx803 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(6) %.sroa.0.16..sroa_idx803, ptr noundef nonnull align 1 dereferenceable(6) @.str.42, i64 6, i1 false)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.sroa.0)
+  %.sroa.0.16..sroa_idx803 = getelementptr inbounds nuw i8, ptr %.sroa.0.sroa.0, i64 16
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(6) %.sroa.0.16..sroa_idx803, ptr noundef nonnull align 1 dereferenceable(6) @.str.42, i64 6, i1 false)
   store ptr getelementptr inbounds nuw (i8, ptr @_ZN12_GLOBAL__N_17map_e1fB5cxx11E, i64 16), ptr @_ZN12_GLOBAL__N_17map_e1fB5cxx11E, align 8, !tbaa !11
-  %.sroa.0.16..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(6) getelementptr inbounds nuw (i8, ptr @_ZN12_GLOBAL__N_17map_e1fB5cxx11E, i64 16), ptr noundef nonnull align 8 dereferenceable(6) %.sroa.0.16..sroa_idx, i64 6, i1 false)
+  %.sroa.0.16..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0.sroa.0, i64 16
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(6) getelementptr inbounds nuw (i8, ptr @_ZN12_GLOBAL__N_17map_e1fB5cxx11E, i64 16), ptr noundef nonnull align 16 dereferenceable(6) %.sroa.0.16..sroa_idx, i64 6, i1 false)
   store i8 0, ptr getelementptr inbounds nuw (i8, ptr @_ZN12_GLOBAL__N_17map_e1fB5cxx11E, i64 22), align 2
   store i64 6, ptr getelementptr inbounds nuw (i8, ptr @_ZN12_GLOBAL__N_17map_e1fB5cxx11E, i64 8), align 8, !tbaa !20
   store i8 1, ptr getelementptr inbounds nuw (i8, ptr @_ZN12_GLOBAL__N_17map_e1fB5cxx11E, i64 40), align 8, !tbaa !159
@@ -2038,7 +2025,7 @@ __cxx_global_var_init.47.exit:                    ; preds = %_ZNSt7__cxx1112basi
   store i64 4, ptr getelementptr inbounds nuw (i8, ptr @_ZN12_GLOBAL__N_17map_e1fB5cxx11E, i64 344), align 8, !tbaa !20
   store i8 1, ptr getelementptr inbounds nuw (i8, ptr @_ZN12_GLOBAL__N_17map_e1fB5cxx11E, i64 376), align 8, !tbaa !159
   store i8 1, ptr getelementptr inbounds nuw (i8, ptr @_ZN12_GLOBAL__N_17map_e1fB5cxx11E, i64 384), align 8, !tbaa !136
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.sroa.0)
   %i.axz = call i32 @__cxa_atexit(ptr nonnull @_ZN5boost6system6resultISt5tupleIJNS1_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_5redis7adapter5errorEEESC_SC_SC_SC_SC_SC_SC_EESB_ED2Ev, ptr nonnull @_ZN12_GLOBAL__N_17map_e1fB5cxx11E, ptr nonnull @__dso_handle) #28 ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #28
   store i32 4, ptr %1, align 8, !tbaa !225

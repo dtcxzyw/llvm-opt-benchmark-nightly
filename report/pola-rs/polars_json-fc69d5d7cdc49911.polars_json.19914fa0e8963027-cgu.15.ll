@@ -203,7 +203,6 @@ bb.a:
   %i.b = alloca [24 x i8], align 8                ; 4 uses
   %i.c = alloca [24 x i8], align 8                ; 4 uses
   %i.d = alloca [64 x i8], align 8                ; 8 uses
-  %.sroa.4 = alloca [24 x i8], align 8            ; 4 uses
   %i.e = alloca [64 x i8], align 16               ; 6 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 16, !dbg !2963 ; 4 uses
   store i64 0, ptr %i.f, align 8, !dbg !2963
@@ -238,7 +237,6 @@ _RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCs2c5WrizoNH7_11po
 bb.c:                                             ; preds = %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCs2c5WrizoNH7_11polars_json.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !dbg !3031
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.d, ptr noundef nonnull align 16 dereferenceable(64) %i.e, i64 64, i1 false), !dbg !3033
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4), !dbg !3031
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3034), !dbg !3031
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !dbg !3037
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !3037, !noalias !3041
@@ -261,7 +259,7 @@ _RINvMNtCscgRAwXFJnXP_4core6optionINtB3_6OptionReE11map_or_elseNtNtCsgZ49sUHp3tW
           to label %bb.e unwind label %bb.d, !dbg !3060, !noalias !3058
 
 bb.e:                                             ; preds = %_RINvMNtCscgRAwXFJnXP_4core6optionINtB3_6OptionReE11map_or_elseNtNtCsgZ49sUHp3tW_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECs2c5WrizoNH7_11polars_json.exit.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.4, ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 24, i1 false), !dbg !3065, !noalias !3034
+  %.sroa.4.sroa.0.0.copyload1 = load <24 x i8>, ptr %i.c, align 8, !dbg !3065, !noalias !3034
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !dbg !3059, !noalias !3041
   call void @llvm.experimental.noalias.scope.decl(metadata !3066), !dbg !3059
   call void @llvm.experimental.noalias.scope.decl(metadata !3069), !dbg !3072
@@ -357,18 +355,17 @@ _RNCNvNtNtCs2c5WrizoNH7_11polars_json6ndjson4file11parse_value0B7_.exit: ; preds
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !3089
   store i64 2, ptr %i.ac, align 8, !dbg !3089
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !3089
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %.sroa.4.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.4, i64 24, i1 false), !dbg !3089
-  store i64 1, ptr %0, align 16, !dbg !3089
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4), !dbg !3090
-  br label %bb.l, !dbg !3091
+  store <24 x i8> %.sroa.4.sroa.0.0.copyload1, ptr %.sroa.4.0..sroa_idx, align 16, !dbg !3089
+  br label %bb.l, !dbg !3090
 
 bb.k:                                             ; preds = %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCs2c5WrizoNH7_11polars_json.exit
-  %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !3092
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.ad, ptr noundef nonnull align 16 dereferenceable(32) %i.e, i64 32, i1 false), !dbg !3094
-  store i64 0, ptr %0, align 16, !dbg !3092
-  br label %bb.l, !dbg !3095
+  %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !3091
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.ad, ptr noundef nonnull align 16 dereferenceable(32) %i.e, i64 32, i1 false), !dbg !3093
+  br label %bb.l, !dbg !3094
 
 bb.l:                                             ; preds = %bb.k, %_RNCNvNtNtCs2c5WrizoNH7_11polars_json6ndjson4file11parse_value0B7_.exit
+  %storemerge = phi i64 [ 1, %_RNCNvNtNtCs2c5WrizoNH7_11polars_json6ndjson4file11parse_value0B7_.exit ], [ 0, %bb.k ], !dbg !3095
+  store i64 %storemerge, ptr %0, align 16, !dbg !3095
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !dbg !3096
   ret void, !dbg !3097
 }
@@ -771,12 +768,12 @@ begin_hunk_1_@llvm.abs.i32
 !3087 = !DILocation(line: 95, column: 70, scope: !3038, inlinedAt: !3040)
 !3088 = !DILocation(line: 968, column: 31, scope: !3032, inlinedAt: !3028)
 !3089 = !DILocation(line: 968, column: 23, scope: !3032, inlinedAt: !3028)
-!3090 = !DILocation(line: 968, column: 32, scope: !3032, inlinedAt: !3028)
-!3091 = !DILocation(line: 968, column: 32, scope: !3027, inlinedAt: !3028)
-!3092 = !DILocation(line: 967, column: 22, scope: !3093, inlinedAt: !3028)
-!3093 = distinct !DILexicalBlock(scope: !3027, file: !237, line: 967, column: 13)
-!3094 = !DILocation(line: 967, column: 16, scope: !3027, inlinedAt: !3028)
-!3095 = !DILocation(line: 970, column: 5, scope: !3027, inlinedAt: !3028)
+!3090 = !DILocation(line: 968, column: 32, scope: !3027, inlinedAt: !3028)
+!3091 = !DILocation(line: 967, column: 22, scope: !3092, inlinedAt: !3028)
+!3092 = distinct !DILexicalBlock(scope: !3027, file: !237, line: 967, column: 13)
+!3093 = !DILocation(line: 967, column: 16, scope: !3027, inlinedAt: !3028)
+!3094 = !DILocation(line: 970, column: 5, scope: !3027, inlinedAt: !3028)
+!3095 = !DILocation(line: 0, scope: !3027, inlinedAt: !3028)
 !3096 = !DILocation(line: 95, column: 70, scope: !2958)
 !3097 = !DILocation(line: 96, column: 2, scope: !2958)
 !3098 = !DILocation(line: 18, column: 13, scope: !1784)

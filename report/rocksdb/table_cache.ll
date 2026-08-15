@@ -203,7 +203,6 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit4: ; preds = %_ZN7
 ; Function Attrs: mustprogress uwtable
 define void @_ZN7rocksdb10TableCache14GetTableReaderERKNS_11ReadOptionsERKNS_11FileOptionsERKNS_21InternalKeyComparatorERKNS_12FileMetaDataEbPNS_13HistogramImplEPSt10unique_ptrINS_11TableReaderESt14default_deleteISG_EERKNS_16MutableCFOptionsEbibmNS_11TemperatureEPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEb(ptr dead_on_unwind noalias nofree writable sret(%"class.rocksdb::Status") align 8 captures(address) %0, ptr noundef nonnull align 8 dereferenceable(152) %1, ptr noundef nonnull align 8 dereferenceable(192) %2, ptr noundef nonnull align 8 dereferenceable(216) %3, ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 8 dereferenceable(417) %5, i1 noundef zeroext %6, ptr noundef %7, ptr noundef %8, ptr noundef nonnull align 8 dereferenceable(736) %9, i1 noundef zeroext %10, i32 noundef %11, i1 noundef zeroext %12, i64 noundef %13, i8 noundef zeroext %14, ptr noundef %15, i1 noundef zeroext %16) local_unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.0 = alloca [2 x i64], align 8            ; 3 uses
   %17 = alloca %"class.std::unique_ptr", align 8  ; 6 uses
   %18 = alloca %"class.std::__cxx11::basic_string", align 8 ; 21 uses
   %19 = alloca %"class.std::unique_ptr.158", align 8 ; 11 uses
@@ -606,11 +605,11 @@ bb.bk:                                            ; preds = %bb.bj
   %i.jh = getelementptr inbounds nuw i8, ptr %i.jg, i64 9
   %i.ji = load i8, ptr %i.jh, align 1, !tbaa !462, !range !129, !noundef !58
   %i.jj = trunc nuw i8 %i.ji to i1
-  br i1 %i.jj, label %bb.bl, label %30
+  br i1 %i.jj, label %bb.bl, label %bb.bp
 
 bb.bl:                                            ; preds = %bb.bk
   %i.jk = getelementptr inbounds nuw i8, ptr %5, i64 288
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0, ptr noundef nonnull align 8 dereferenceable(16) %i.jk, i64 16, i1 false)
+  %.sroa.0.sroa.0.0.copyload = load <2 x i64>, ptr %i.jk, align 8
   br label %bb.bp
 
 bb.bm:                                            ; preds = %.thread21.i, %.noexc137, %bb.bg
@@ -629,11 +628,8 @@ bb.bo:                                            ; preds = %bb.bj
   call void @_ZdlPvm(ptr noundef nonnull %i.is, i64 noundef 208) #24
   br label %bb.cc
 
-30:                                               ; preds = %bb.bk
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0, i8 0, i64 16, i1 false)
-  br label %bb.bp
-
-bb.bp:                                            ; preds = %30, %bb.bl
+bb.bp:                                            ; preds = %bb.bk, %bb.bl
+  %.sroa.0.sroa.0.0 = phi <2 x i64> [ %.sroa.0.sroa.0.0.copyload, %bb.bl ], [ zeroinitializer, %bb.bk ]
   call void @llvm.lifetime.start.p0(ptr nonnull %28) #25
   %i.jo = getelementptr inbounds nuw i8, ptr %9, i64 72
   %i.jp = getelementptr inbounds nuw i8, ptr %9, i64 624
@@ -743,7 +739,7 @@ bb.bu:                                            ; preds = %bb.bt, %bb.bs, %._c
   %i.lh = getelementptr inbounds nuw i8, ptr %28, i64 104
   store i64 %i.jz, ptr %i.lh, align 8, !tbaa !515
   %i.li = getelementptr inbounds nuw i8, ptr %28, i64 112
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.li, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0, i64 16, i1 false)
+  store <2 x i64> %.sroa.0.sroa.0.0, ptr %i.li, align 8
   %i.lj = getelementptr inbounds nuw i8, ptr %28, i64 128
   store i8 %i.js, ptr %i.lj, align 8, !tbaa !516
   %i.lk = getelementptr inbounds nuw i8, ptr %28, i64 136

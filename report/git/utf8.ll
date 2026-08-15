@@ -203,17 +203,16 @@ declare void @free(ptr allocptr noundef captures(none)) local_unnamed_addr #8
 ; Function Attrs: nounwind uwtable
 define dso_local void @strbuf_utf8_replace(ptr nofree noundef captures(none) %0, i32 noundef %1, i32 noundef %2, ptr noundef %3) local_unnamed_addr #4 {
 bb.a:
-  %4 = alloca [24 x i8], align 16                 ; 4 uses
   %i.a = alloca ptr, align 8                      ; 6 uses
-  %5 = alloca %struct.strbuf, align 8             ; 9 uses
+  %4 = alloca %struct.strbuf, align 8             ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #22
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !32   ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.e = load i64, ptr %i.d, align 8, !tbaa !26   ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.e ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #22
-  call void @strbuf_init(ptr noundef nonnull %5, i64 noundef %i.e) #22
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
+  call void @strbuf_init(ptr noundef nonnull %4, i64 noundef %i.e) #22
   %.not = icmp eq i64 %i.e, 0
   br i1 %.not, label %.thread, label %.preheader.lr.ph
 
@@ -261,7 +260,7 @@ display_mode_esc_sequence_len.exit:               ; preds = %bb.b
   %i.t = ptrtoint ptr %i.s to i64
   %i.u = ptrtoint ptr %i.i to i64
   %i.v = sub i64 %i.t, %i.u                       ; 2 uses
-  call void @strbuf_add(ptr noundef nonnull %5, ptr noundef nonnull %i.i, i64 noundef %i.v) #22
+  call void @strbuf_add(ptr noundef nonnull %4, ptr noundef nonnull %i.i, i64 noundef %i.v) #22
   %i.w = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.v ; 3 uses
   %i.x = load i8, ptr %i.w, align 1, !tbaa !12
   %.not.i = icmp eq i8 %i.x, 27
@@ -382,14 +381,14 @@ bb.o:                                             ; preds = %utf8_width.exit.thr
 
 bb.p:                                             ; preds = %bb.o
   %i.be = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %.02264) #21
-  call void @strbuf_add(ptr noundef nonnull %5, ptr noundef nonnull %.02264, i64 noundef %i.be) #22
+  call void @strbuf_add(ptr noundef nonnull %4, ptr noundef nonnull %.02264, i64 noundef %i.be) #22
   br label %bb.r
 
 bb.q:                                             ; preds = %utf8_width.exit.thread
   %i.bf = ptrtoint ptr %i.z to i64
   %i.bg = ptrtoint ptr %.lcssa54 to i64
   %i.bh = sub i64 %i.bf, %i.bg
-  call void @strbuf_add(ptr noundef nonnull %5, ptr noundef nonnull %.lcssa54, i64 noundef %i.bh) #22
+  call void @strbuf_add(ptr noundef nonnull %4, ptr noundef nonnull %.lcssa54, i64 noundef %i.bh) #22
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %bb.p, %bb.o
@@ -400,16 +399,14 @@ bb.r:                                             ; preds = %bb.q, %bb.p, %bb.o
   br i1 %i.bk, label %.preheader, label %.thread
 
 .thread:                                          ; preds = %bb.r, %display_mode_esc_sequence_len.exit.thread, %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %4)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %4, ptr noundef nonnull align 1 dereferenceable(24) %0, i64 24, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %5, i64 24, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, ptr noundef nonnull align 16 dereferenceable(24) %4, i64 24, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %4)
+  %.sroa.0.0.copyload = load <24 x i8>, ptr %0, align 8
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %4, i64 24, i1 false)
+  store <24 x i8> %.sroa.0.0.copyload, ptr %4, align 8
   br label %.thread46
 
 .thread46:                                        ; preds = %utf8_width.exit, %.thread
-  call void @strbuf_release(ptr noundef nonnull %5) #22
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #22
+  call void @strbuf_release(ptr noundef nonnull %4) #22
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #22
   ret void
 }

@@ -204,7 +204,6 @@ bb.a:
   %4 = alloca %"class.std::allocator.83", align 1 ; 4 uses
   %5 = alloca %"class.euf::justification", align 8 ; 4 uses
   %6 = alloca %class.ptr_vector, align 8          ; 12 uses
-  %.sroa.5 = alloca [44 x i8], align 4            ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false)
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -607,9 +606,9 @@ _ZN3euf9ac_plugin10monomial_t3endEv.exit73:       ; preds = %._crit_edge113
 
 ._crit_edge117:                                   ; preds = %.lr.ph116.prol.loopexit, %.lr.ph116, %._crit_edge113, %_ZN3euf9ac_plugin10monomial_t3endEv.exit73
   %i.io = getelementptr inbounds nuw i8, ptr %0, i64 296 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5)
-  %.sroa.5.8..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.5, i64 4
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(40) %.sroa.5.8..sroa_idx, ptr noundef nonnull align 8 dereferenceable(40) %2, i64 40, i1 false), !tbaa.struct !304
+  %.sroa.5.sroa.0.4.copyload = load <40 x i8>, ptr %2, align 8
+  %.sroa.5.sroa.0.4.vec.expand = shufflevector <40 x i8> %.sroa.5.sroa.0.4.copyload, <40 x i8> poison, <44 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 32, i32 33, i32 34, i32 35, i32 36, i32 37, i32 38, i32 39>
+  %.sroa.5.sroa.0.4.vecblend = shufflevector <44 x i8> %.sroa.5.sroa.0.4.vec.expand, <44 x i8> <i8 undef, i8 undef, i8 undef, i8 undef, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison>, <44 x i32> <i32 44, i32 45, i32 46, i32 47, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 32, i32 33, i32 34, i32 35, i32 36, i32 37, i32 38, i32 39, i32 40, i32 41, i32 42, i32 43>
   %i.ip = load ptr, ptr %i.io, align 8, !tbaa !112 ; 4 uses
   %i.iq = icmp eq ptr %i.ip, null
   br i1 %i.iq, label %bb.aj, label %bb.ai
@@ -684,13 +683,12 @@ bb.ak:                                            ; preds = %.noexc77, %bb.ai
   %i.kf = getelementptr inbounds nuw [48 x i8], ptr %i.kd, i64 %i.ke ; 2 uses
   store i32 %1, ptr %i.kf, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.kf, i64 4
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(44) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(44) %.sroa.5, i64 44, i1 false)
+  store <44 x i8> %.sroa.5.sroa.0.4.vecblend, ptr %.sroa.5.0..sroa_idx, align 4
   %i.kg = load ptr, ptr %i.io, align 8, !tbaa !112
   %i.kh = getelementptr inbounds i8, ptr %i.kg, i64 -4 ; 2 uses
   %i.ki = load i32, ptr %i.kh, align 4, !tbaa !118
   %i.kj = add i32 %i.ki, 1
   store i32 %i.kj, ptr %i.kh, align 4, !tbaa !118
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5)
   %i.kk = getelementptr inbounds nuw i8, ptr %0, i64 272 ; 3 uses
   %i.kl = load ptr, ptr %i.kk, align 8, !tbaa !113 ; 4 uses
   %i.km = icmp eq ptr %i.kl, null
@@ -789,7 +787,6 @@ _ZN6vectorIPN3euf9ac_plugin4nodeELb0EjED2Ev.exit: ; preds = %bb.ao, %bb.ap
 bb.ar:                                            ; preds = %bb.aj
   %i.lr = landingpad { ptr, i32 }
           cleanup
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5)
   br label %.body
 
 .body:                                            ; preds = %.loopexit.loopexit, %.loopexit.loopexit.split-lp, %.loopexit.split-lp, %.loopexit101, %.loopexit.split-lp102, %bb.v, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread.i, %bb.ar, %bb.k, %bb.f

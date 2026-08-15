@@ -204,7 +204,6 @@ declare void @_ZN6hermes3hbc25BytecodeFunctionGenerator19addExceptionHandlerENS0
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZN6hermes3hbc7HBCISel17generateJumpTableEv(ptr noundef nonnull align 8 dereferenceable(392) %0) local_unnamed_addr #0 align 2 {
 bb.a:
-  %.sroa.7.i.i.i.i.i = alloca [12 x i8], align 4  ; 4 uses
   %1 = alloca %"class.std::vector.61", align 8    ; 10 uses
   %2 = alloca %"class.llvh::SmallVector.91", align 8 ; 11 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 296
@@ -273,12 +272,11 @@ bb.d:                                             ; preds = %bb.c
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.d, %"_ZSt25__unguarded_linear_insertIPN4llvh6detail12DenseMapPairIPN6hermes13SwitchImmInstENS3_3hbc7HBCISel13SwitchImmInfoEEEN9__gnu_cxx5__ops14_Val_comp_iterIZNS7_17generateJumpTableEvE3$_0EEEvT_T0_.exit.i.i.i.i"
   %.08.i.i.i.i = phi ptr [ %i.bf, %"_ZSt25__unguarded_linear_insertIPN4llvh6detail12DenseMapPairIPN6hermes13SwitchImmInstENS3_3hbc7HBCISel13SwitchImmInfoEEEN9__gnu_cxx5__ops14_Val_comp_iterIZNS7_17generateJumpTableEvE3$_0EEEvT_T0_.exit.i.i.i.i" ], [ %i.x, %bb.d ] ; 9 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.7.i.i.i.i.i)
   %i.y = load ptr, ptr %.08.i.i.i.i, align 8, !tbaa !139
   %i.z = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i, i64 8
   %.sroa.4.8.copyload.i.i.i.i.i = load i32, ptr %i.z, align 8 ; 3 uses
   %.sroa.7.8..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i, i64 12
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.7.i.i.i.i.i, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.7.8..sroa_idx.i.i.i.i.i, i64 12, i1 false)
+  %.sroa.7.i.i.i.i.i.sroa.0.0.copyload = load <12 x i8>, ptr %.sroa.7.8..sroa_idx.i.i.i.i.i, align 4
   %i.aa = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i, i64 24 ; 2 uses
   %i.ab = load <2 x ptr>, ptr %i.aa, align 8, !tbaa !141
   %i.ac = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i, i64 40
@@ -339,7 +337,7 @@ _ZN4llvh6detail12DenseMapPairIPN6hermes13SwitchImmInstENS2_3hbc7HBCISel13SwitchI
   %i.ba = getelementptr inbounds nuw i8, ptr %.09.lcssa.i.i.i.i.i, i64 8
   store i32 %.sroa.4.8.copyload.i.i.i.i.i, ptr %i.ba, align 8
   %.sroa.7.8..sroa_idx13.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.09.lcssa.i.i.i.i.i, i64 12
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.7.8..sroa_idx13.i.i.i.i.i, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.7.i.i.i.i.i, i64 12, i1 false)
+  store <12 x i8> %.sroa.7.i.i.i.i.i.sroa.0.0.copyload, ptr %.sroa.7.8..sroa_idx13.i.i.i.i.i, align 4
   %i.bb = getelementptr inbounds nuw i8, ptr %.09.lcssa.i.i.i.i.i, i64 24
   %i.bc = getelementptr inbounds nuw i8, ptr %.09.lcssa.i.i.i.i.i, i64 40
   store <2 x ptr> %i.ab, ptr %i.bb, align 8, !tbaa !141
@@ -354,7 +352,6 @@ bb.f:                                             ; preds = %._crit_edge.i.i.i.i
   br label %"_ZSt25__unguarded_linear_insertIPN4llvh6detail12DenseMapPairIPN6hermes13SwitchImmInstENS3_3hbc7HBCISel13SwitchImmInfoEEEN9__gnu_cxx5__ops14_Val_comp_iterIZNS7_17generateJumpTableEvE3$_0EEEvT_T0_.exit.i.i.i.i"
 
 "_ZSt25__unguarded_linear_insertIPN4llvh6detail12DenseMapPairIPN6hermes13SwitchImmInstENS3_3hbc7HBCISel13SwitchImmInfoEEEN9__gnu_cxx5__ops14_Val_comp_iterIZNS7_17generateJumpTableEvE3$_0EEEvT_T0_.exit.i.i.i.i": ; preds = %bb.f, %._crit_edge.i.i.i.i.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7.i.i.i.i.i)
   %i.bf = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i, i64 48 ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %i.bf, %i.s
   br i1 %.not.i.i.i.i, label %"_ZSt4sortIPN4llvh6detail12DenseMapPairIPN6hermes13SwitchImmInstENS3_3hbc7HBCISel13SwitchImmInfoEEEZNS7_17generateJumpTableEvE3$_0EvT_SC_T0_.exit", label %.lr.ph.i.i.i.i, !llvm.loop !146
@@ -757,7 +754,6 @@ bb.s:                                             ; preds = %bb.r
 ; Function Attrs: mustprogress nounwind uwtable
 define internal fastcc void @"_ZSt13__adjust_heapIPN4llvh6detail12DenseMapPairIPN6hermes13SwitchImmInstENS3_3hbc7HBCISel13SwitchImmInfoEEElS9_N9__gnu_cxx5__ops15_Iter_comp_iterIZNS7_17generateJumpTableEvE3$_0EEEvT_T0_SH_T1_T2_"(ptr nofree noundef captures(none) %0, i64 noundef range(i64 0, 96076792050570581) %1, i64 noundef range(i64 -192153584101141162, 192153584101141163) %2, ptr nofree noundef nonnull captures(none) %3) unnamed_addr #0 {
 bb.a:
-  %.sroa.5 = alloca [12 x i8], align 4            ; 2 uses
   %i.a = add nsw i64 %2, -1
   %i.b = sdiv i64 %i.a, 2                         ; 2 uses
   %i.c = icmp slt i64 %1, %i.b
@@ -857,7 +853,7 @@ _ZN4llvh6detail12DenseMapPairIPN6hermes13SwitchImmInstENS2_3hbc7HBCISel13SwitchI
   %i.ba = getelementptr inbounds nuw i8, ptr %3, i64 8
   %.sroa.2.8.copyload = load i32, ptr %i.ba, align 8 ; 2 uses
   %.sroa.5.8..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 12
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.5, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.5.8..sroa_idx, i64 12, i1 false)
+  %.sroa.5.sroa.0.0.copyload = load <12 x i8>, ptr %.sroa.5.8..sroa_idx, align 4
   %i.bb = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 2 uses
   %i.bc = load <2 x ptr>, ptr %i.bb, align 8, !tbaa !141
   %i.bd = getelementptr inbounds nuw i8, ptr %3, i64 40
@@ -914,7 +910,7 @@ _ZN4llvh6detail12DenseMapPairIPN6hermes13SwitchImmInstENS2_3hbc7HBCISel13SwitchI
   %i.bz = getelementptr inbounds nuw i8, ptr %i.by, i64 8
   store i32 %.sroa.2.8.copyload, ptr %i.bz, align 8
   %.sroa.5.8..sroa_idx32 = getelementptr inbounds nuw i8, ptr %i.by, i64 12
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.5.8..sroa_idx32, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.5, i64 12, i1 false)
+  store <12 x i8> %.sroa.5.sroa.0.0.copyload, ptr %.sroa.5.8..sroa_idx32, align 4
   %i.ca = getelementptr inbounds nuw i8, ptr %i.by, i64 24 ; 2 uses
   %i.cb = load ptr, ptr %i.ca, align 8, !tbaa !144 ; 3 uses
   %i.cc = getelementptr inbounds nuw i8, ptr %i.by, i64 40 ; 2 uses
@@ -941,7 +937,6 @@ declare i64 @llvm.ctlz.i64(i64, i1 immarg) #15
 ; Function Attrs: mustprogress nounwind uwtable
 define internal fastcc void @"_ZSt16__insertion_sortIPN4llvh6detail12DenseMapPairIPN6hermes13SwitchImmInstENS3_3hbc7HBCISel13SwitchImmInfoEEEN9__gnu_cxx5__ops15_Iter_comp_iterIZNS7_17generateJumpTableEvE3$_0EEEvT_SG_T0_"(ptr noundef %0, ptr nofree noundef readnone captures(address) %1) unnamed_addr #0 {
 bb.a:
-  %.sroa.7.i = alloca [12 x i8], align 4          ; 4 uses
   %.sroa.4 = alloca { i32, ptr }, align 8         ; 4 uses
   %i.a = icmp eq ptr %0, %1
   br i1 %i.a, label %.loopexit, label %.preheader
@@ -1045,10 +1040,9 @@ _ZNSt4pairIPN6hermes13SwitchImmInstENS0_3hbc7HBCISel13SwitchImmInfoEED2Ev.exit: 
   br label %bb.i
 
 bb.f:                                             ; preds = %bb.b
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.7.i)
   %i.ao = load ptr, ptr %.022, align 8, !tbaa !139
   %.sroa.7.8..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.pn21, i64 60
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.7.i, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.7.8..sroa_idx.i, i64 12, i1 false)
+  %.sroa.7.i.sroa.0.0.copyload = load <12 x i8>, ptr %.sroa.7.8..sroa_idx.i, align 4
   %i.ap = getelementptr inbounds nuw i8, ptr %.pn21, i64 72 ; 2 uses
   %i.aq = load <2 x ptr>, ptr %i.ap, align 8, !tbaa !141
   %i.ar = getelementptr inbounds nuw i8, ptr %.pn21, i64 88
@@ -1109,25 +1103,21 @@ _ZN4llvh6detail12DenseMapPairIPN6hermes13SwitchImmInstENS2_3hbc7HBCISel13SwitchI
   %i.bp = getelementptr inbounds nuw i8, ptr %.09.lcssa.i, i64 8
   store i32 %.0.val, ptr %i.bp, align 8
   %.sroa.7.8..sroa_idx13.i = getelementptr inbounds nuw i8, ptr %.09.lcssa.i, i64 12
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.7.8..sroa_idx13.i, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.7.i, i64 12, i1 false)
+  store <12 x i8> %.sroa.7.i.sroa.0.0.copyload, ptr %.sroa.7.8..sroa_idx13.i, align 4
   %i.bq = getelementptr inbounds nuw i8, ptr %.09.lcssa.i, i64 24
   %i.br = getelementptr inbounds nuw i8, ptr %.09.lcssa.i, i64 40
   store <2 x ptr> %i.aq, ptr %i.bq, align 8, !tbaa !141
   store ptr %i.as, ptr %i.br, align 8, !tbaa !142
   %.not.i.i.i.i.i.i.i.i10.i = icmp eq ptr %i.bo, null
-  br i1 %.not.i.i.i.i.i.i.i.i10.i, label %"_ZSt25__unguarded_linear_insertIPN4llvh6detail12DenseMapPairIPN6hermes13SwitchImmInstENS3_3hbc7HBCISel13SwitchImmInfoEEEN9__gnu_cxx5__ops14_Val_comp_iterIZNS7_17generateJumpTableEvE3$_0EEEvT_T0_.exit", label %bb.h
+  br i1 %.not.i.i.i.i.i.i.i.i10.i, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %._crit_edge.i
   %i.bs = ptrtoint ptr %i.bo to i64
   %i.bt = sub i64 %i.bn, %i.bs
   tail call void @_ZdlPvm(ptr noundef nonnull %i.bo, i64 noundef %i.bt) #22
-  br label %"_ZSt25__unguarded_linear_insertIPN4llvh6detail12DenseMapPairIPN6hermes13SwitchImmInstENS3_3hbc7HBCISel13SwitchImmInfoEEEN9__gnu_cxx5__ops14_Val_comp_iterIZNS7_17generateJumpTableEvE3$_0EEEvT_T0_.exit"
-
-"_ZSt25__unguarded_linear_insertIPN4llvh6detail12DenseMapPairIPN6hermes13SwitchImmInstENS3_3hbc7HBCISel13SwitchImmInfoEEEN9__gnu_cxx5__ops14_Val_comp_iterIZNS7_17generateJumpTableEvE3$_0EEEvT_T0_.exit": ; preds = %._crit_edge.i, %bb.h
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7.i)
   br label %bb.i
 
-bb.i:                                             ; preds = %_ZNSt4pairIPN6hermes13SwitchImmInstENS0_3hbc7HBCISel13SwitchImmInfoEED2Ev.exit, %"_ZSt25__unguarded_linear_insertIPN4llvh6detail12DenseMapPairIPN6hermes13SwitchImmInstENS3_3hbc7HBCISel13SwitchImmInfoEEEN9__gnu_cxx5__ops14_Val_comp_iterIZNS7_17generateJumpTableEvE3$_0EEEvT_T0_.exit"
+bb.i:                                             ; preds = %bb.h, %._crit_edge.i, %_ZNSt4pairIPN6hermes13SwitchImmInstENS0_3hbc7HBCISel13SwitchImmInfoEED2Ev.exit
   %.0 = getelementptr inbounds nuw i8, ptr %.022, i64 48 ; 2 uses
   %.not = icmp eq ptr %.0, %1
   br i1 %.not, label %.loopexit, label %bb.b, !llvm.loop !587

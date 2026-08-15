@@ -22,15 +22,13 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define hidden void @closest_pairs2graph(ptr noundef %0, i32 noundef %1, i32 noundef %2, ptr nofree noundef writeonly captures(none) %3) local_unnamed_addr #0 {
 bb.a:
-  %4 = alloca [24 x i8], align 16                 ; 4 uses
-  %5 = alloca [24 x i8], align 16                 ; 4 uses
-  %6 = alloca %struct.PairHeap, align 8           ; 12 uses
-  %7 = alloca %struct.Pair, align 8               ; 9 uses
-  %8 = alloca %struct.pairs_t, align 8            ; 20 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %8) #18
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %8, i8 0, i64 64, i1 false)
-  %i.a = sext i32 %1 to i64                       ; 28 uses
+  %4 = alloca %struct.PairHeap, align 8           ; 12 uses
+  %5 = alloca %struct.Pair, align 8               ; 9 uses
+  %6 = alloca %struct.pairs_t, align 8            ; 20 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #18
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %6, i8 0, i64 64, i1 false)
+  %i.a = sext i32 %1 to i64                       ; 28 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #18
   %.not.i.i = icmp eq i32 %1, 0                   ; 4 uses
   br i1 %.not.i.i, label %._crit_edge.i.thread.i, label %bb.b
 
@@ -69,7 +67,7 @@ bb.f:                                             ; preds = %gv_calloc.exit.i
   unreachable
 
 bb.g:                                             ; preds = %gv_calloc.exit.i
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #18
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #18
   %i.n = tail call noalias ptr @calloc(i64 noundef range(i64 -2147483648, 2147483648) %i.a, i64 noundef 8) #21 ; 27 uses
   %i.o = icmp eq ptr %i.n, null
   br i1 %i.o, label %bb.h, label %gv_calloc.exit96.i
@@ -137,17 +135,17 @@ bb.j:                                             ; preds = %._crit_edge.i
 ._crit_edge.i.thread.i:                           ; preds = %bb.a
   %i.ac = tail call noalias ptr @calloc(i64 noundef 0, i64 noundef 8) #21
   %i.ad = tail call noalias ptr @calloc(i64 noundef 0, i64 noundef 8) #21
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #18
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #18
   %i.ae = tail call noalias ptr @calloc(i64 noundef 0, i64 noundef 8) #21
   %i.af = tail call noalias ptr @calloc(i64 noundef 0, i64 noundef 8) #21
   %i.ag = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @gv_sort_compar)
   %i.ah = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @gv_sort_arg)
   store ptr null, ptr %i.ag, align 8, !tbaa !17
   store ptr null, ptr %i.ah, align 8, !tbaa !17
-  %i.ai = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
+  %i.ai = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ai, i8 0, i64 16, i1 false)
   %i.aj = tail call noalias ptr @calloc(i64 noundef 0, i64 noundef 24) #21 ; 2 uses
-  store ptr %i.aj, ptr %6, align 8, !tbaa !18
+  store ptr %i.aj, ptr %4, align 8, !tbaa !18
   br label %.preheader.i
 
 .lr.ph140.preheader.i:                            ; preds = %bb.j, %._crit_edge.i
@@ -196,9 +194,9 @@ bb.j:                                             ; preds = %._crit_edge.i
 
 ._crit_edge141.i:                                 ; preds = %.lr.ph140.i.epil, %._crit_edge141.i.unr-lcssa
   %i.au = add nsw i64 %i.a, -1                    ; 8 uses
-  %i.av = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 4 uses
+  %i.av = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 4 uses
   store i64 %i.au, ptr %i.av, align 8, !tbaa !23
-  %i.aw = getelementptr inbounds nuw i8, ptr %6, i64 16
+  %i.aw = getelementptr inbounds nuw i8, ptr %4, i64 16
   store i64 %i.au, ptr %i.aw, align 8, !tbaa !24
   br i1 %.not201.i, label %._crit_edge.i.i, label %bb.k
 
@@ -215,7 +213,7 @@ bb.l:                                             ; preds = %bb.k
   unreachable
 
 .lr.ph.split.preheader.i.i:                       ; preds = %bb.k
-  store ptr %i.ax, ptr %6, align 8, !tbaa !18
+  store ptr %i.ax, ptr %4, align 8, !tbaa !18
   %.pre.i.i = load i64, ptr %i.n, align 8, !tbaa !11 ; 3 uses
   %.phi.trans.insert.i.i = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.pre.i.i
   %.pre33.i.i = load double, ptr %.phi.trans.insert.i.i, align 8, !tbaa !25 ; 2 uses
@@ -229,7 +227,7 @@ bb.l:                                             ; preds = %bb.k
 
 ._crit_edge.i.i:                                  ; preds = %._crit_edge141.i
   %i.bd = tail call noalias ptr @calloc(i64 noundef 0, i64 noundef 24) #21 ; 2 uses
-  store ptr %i.bd, ptr %6, align 8, !tbaa !18
+  store ptr %i.bd, ptr %4, align 8, !tbaa !18
   br label %.preheader.preheader.i.i
 
 .preheader.preheader.i.i.loopexit.unr-lcssa:      ; preds = %.lr.ph.split.i.i
@@ -363,13 +361,11 @@ bb.w:                                             ; preds = %bb.v, %bb.u, %bb.t,
   br i1 %i.dc, label %heapify.exit.i.i, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  call void @llvm.lifetime.start.p0(ptr nonnull %5)
   %i.dd = getelementptr inbounds nuw [24 x i8], ptr %i.bm, i64 %.138.i.i.i ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %5, ptr noundef nonnull align 8 dereferenceable(24) %i.dd, i64 24, i1 false)
+  %.sroa.0.0.copyload = load <24 x i8>, ptr %i.dd, align 8
   %i.de = getelementptr inbounds nuw [24 x i8], ptr %i.bm, i64 %.036.i.i.i ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.dd, ptr noundef nonnull align 8 dereferenceable(24) %i.de, i64 24, i1 false), !tbaa.struct !30
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.de, ptr noundef nonnull align 16 dereferenceable(24) %5, i64 24, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %5)
+  store <24 x i8> %.sroa.0.0.copyload, ptr %i.de, align 8
   br label %bb.m
 
 heapify.exit.i.i:                                 ; preds = %bb.w
@@ -517,11 +513,11 @@ initHeap.exit.i:                                  ; preds = %heapify.exit.i.i
   br i1 %i.fj, label %.lr.ph147.i, label %find_closest_pairs.exit
 
 .lr.ph147.i:                                      ; preds = %.preheader.i
-  %i.fk = getelementptr inbounds nuw i8, ptr %8, i64 40 ; 2 uses
-  %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %8, i64 48
-  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %8, i64 56
-  %i.fl = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 2 uses
-  %i.fm = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 2 uses
+  %i.fk = getelementptr inbounds nuw i8, ptr %6, i64 40 ; 2 uses
+  %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %6, i64 48
+  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %6, i64 56
+  %i.fl = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
+  %i.fm = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
   br label %bb.y
 
 .lr.ph145.split.i:                                ; preds = %.lr.ph145.split.i, %.lr.ph145.split.preheader.i.new
@@ -556,7 +552,7 @@ bb.y:                                             ; preds = %bb.ar, %.lr.ph147.i
   %.083146.i = phi i32 [ 0, %.lr.ph147.i ], [ %i.it, %bb.ar ]
   %i.ge = load i64, ptr %i.fd, align 8, !tbaa !23 ; 3 uses
   %.not136.i = icmp eq i64 %i.ge, 0
-  %.val.pre.pre157.i = load ptr, ptr %6, align 8, !tbaa !18 ; 12 uses
+  %.val.pre.pre157.i = load ptr, ptr %4, align 8, !tbaa !18 ; 12 uses
   br i1 %.not136.i, label %find_closest_pairs.exit, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
@@ -636,21 +632,19 @@ bb.ak:                                            ; preds = %bb.aj, %bb.ai, %bb.
   br i1 %i.hg, label %extractMax.exit.i, label %bb.al
 
 bb.al:                                            ; preds = %bb.ak
-  call void @llvm.lifetime.start.p0(ptr nonnull %4)
   %i.hh = getelementptr inbounds nuw [24 x i8], ptr %.val.pre.pre157.i, i64 %.138.i.i106.i ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(24) %i.hh, i64 24, i1 false)
+  %.sroa.0118.0.copyload = load <24 x i8>, ptr %i.hh, align 8
   %i.hi = getelementptr inbounds nuw [24 x i8], ptr %.val.pre.pre157.i, i64 %.036.i.i104.i ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.hh, ptr noundef nonnull align 8 dereferenceable(24) %i.hi, i64 24, i1 false), !tbaa.struct !30
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.hi, ptr noundef nonnull align 16 dereferenceable(24) %4, i64 24, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %4)
+  store <24 x i8> %.sroa.0118.0.copyload, ptr %i.hi, align 8
   br label %bb.aa
 
 extractMax.exit.i:                                ; preds = %bb.ak
   store i64 %.sroa.0.0.copyload.i, ptr %i.fk, align 8, !tbaa !11
   store i64 %.sroa.9.0.copyload.i, ptr %.sroa.4.0..sroa_idx.i, align 8, !tbaa !11
   store double %.sroa.13.0.copyload.i, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !25
-  %i.hj = call i64 @gv_list_append_slot_(ptr noundef nonnull %8, i64 noundef 24) #18
-  %i.hk = load ptr, ptr %8, align 8, !tbaa !37
+  %i.hj = call i64 @gv_list_append_slot_(ptr noundef nonnull %6, i64 noundef 24) #18
+  %i.hk = load ptr, ptr %6, align 8, !tbaa !37
   %i.hl = getelementptr inbounds nuw [24 x i8], ptr %i.hk, i64 %i.hj
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.hl, ptr noundef nonnull align 8 dereferenceable(24) %i.fk, i64 24, i1 false), !tbaa.struct !30
   %i.hm = getelementptr inbounds nuw [8 x i8], ptr %i.fi, i64 %.sroa.0.0.copyload.i
@@ -672,7 +666,7 @@ bb.am:                                            ; preds = %extractMax.exit.i
   br i1 %i.hx, label %bb.an, label %bb.ao
 
 bb.an:                                            ; preds = %bb.am
-  store i64 %i.hs, ptr %7, align 8, !tbaa !38
+  store i64 %i.hs, ptr %5, align 8, !tbaa !38
   store i64 %.sroa.9.0.copyload.i, ptr %i.fl, align 8, !tbaa !39
   %i.hy = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.9.0.copyload.i
   %i.hz = load double, ptr %i.hy, align 8, !tbaa !25
@@ -680,7 +674,7 @@ bb.an:                                            ; preds = %bb.am
   %i.ib = load double, ptr %i.ia, align 8, !tbaa !25
   %i.ic = fsub double %i.hz, %i.ib
   store double %i.ic, ptr %i.fm, align 8, !tbaa !28
-  call fastcc void @insert(ptr noundef %6, ptr noundef nonnull byval(%struct.Pair) align 8 %7)
+  call fastcc void @insert(ptr noundef %4, ptr noundef nonnull byval(%struct.Pair) align 8 %5)
   store i64 %.sroa.9.0.copyload.i, ptr %i.ht, align 8, !tbaa !11
   %i.id = getelementptr inbounds nuw [8 x i8], ptr %i.fg, i64 %.sroa.9.0.copyload.i
   store i64 %i.hs, ptr %i.id, align 8, !tbaa !11
@@ -702,7 +696,7 @@ bb.ap:                                            ; preds = %bb.ao
   br i1 %i.im, label %bb.aq, label %bb.ar
 
 bb.aq:                                            ; preds = %bb.ap
-  store i64 %.sroa.0.0.copyload.i, ptr %7, align 8, !tbaa !38
+  store i64 %.sroa.0.0.copyload.i, ptr %5, align 8, !tbaa !38
   store i64 %i.ih, ptr %i.fl, align 8, !tbaa !39
   %i.in = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.ih
   %i.io = load double, ptr %i.in, align 8, !tbaa !25
@@ -710,7 +704,7 @@ bb.aq:                                            ; preds = %bb.ap
   %i.iq = load double, ptr %i.ip, align 8, !tbaa !25
   %i.ir = fsub double %i.io, %i.iq
   store double %i.ir, ptr %i.fm, align 8, !tbaa !28
-  call fastcc void @insert(ptr noundef %6, ptr noundef nonnull byval(%struct.Pair) align 8 %7)
+  call fastcc void @insert(ptr noundef %4, ptr noundef nonnull byval(%struct.Pair) align 8 %5)
   store i64 %.sroa.0.0.copyload.i, ptr %i.ii, align 8, !tbaa !11
   %i.is = getelementptr inbounds nuw [8 x i8], ptr %i.fh, i64 %.sroa.0.0.copyload.i
   store i64 %i.ih, ptr %i.is, align 8, !tbaa !11
@@ -722,7 +716,7 @@ bb.ar:                                            ; preds = %bb.aq, %bb.ap, %bb.
   br i1 %exitcond154.not.i, label %.extractMax.exit.thread.loopexit_crit_edge.i, label %bb.y, !llvm.loop !40
 
 .extractMax.exit.thread.loopexit_crit_edge.i:     ; preds = %bb.ar
-  %.val.pre.pre.i = load ptr, ptr %6, align 8, !tbaa !18
+  %.val.pre.pre.i = load ptr, ptr %4, align 8, !tbaa !18
   br label %find_closest_pairs.exit, !llvm.loop !40
 
 find_closest_pairs.exit:                          ; preds = %bb.y, %.preheader.i, %.extractMax.exit.thread.loopexit_crit_edge.i
@@ -732,8 +726,8 @@ find_closest_pairs.exit:                          ; preds = %bb.y, %.preheader.i
   call void @free(ptr noundef %i.ff) #18
   call void @free(ptr noundef %i.fi) #18
   call void @free(ptr noundef %.val.i) #18
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #18
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #18
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #18
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #18
   br i1 %.not.i.i, label %.thread.i.i, label %bb.as
 
 .thread.i.i:                                      ; preds = %find_closest_pairs.exit
@@ -764,7 +758,7 @@ bb.av:                                            ; preds = %bb.au
 
 gv_calloc.exit.i11:                               ; preds = %bb.au, %.thread.i.i
   %i.jc = phi ptr [ %i.iu, %.thread.i.i ], [ %i.ix, %bb.au ] ; 7 uses
-  %i.jd = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 4 uses
+  %i.jd = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 4 uses
   %.val.i12 = load i64, ptr %i.jd, align 8, !tbaa !41 ; 3 uses
   %i.je = shl i64 %.val.i12, 1
   %i.jf = add i64 %i.je, %i.a                     ; 11 uses
@@ -884,8 +878,8 @@ middle.block81:                                   ; preds = %vector.body78
 
 .lr.ph86.i:                                       ; preds = %.preheader83.i, %.lr.ph86.i
   %.05085.i = phi i64 [ %i.kn, %.lr.ph86.i ], [ 0, %.preheader83.i ] ; 2 uses
-  %i.ke = load ptr, ptr %8, align 8, !tbaa !37
-  %i.kf = call i64 @gv_list_get_(ptr noundef nonnull byval(%struct.list_t_) align 8 %8, i64 noundef %.05085.i) #18
+  %i.ke = load ptr, ptr %6, align 8, !tbaa !37
+  %i.kf = call i64 @gv_list_get_(ptr noundef nonnull byval(%struct.list_t_) align 8 %6, i64 noundef %.05085.i) #18
   %i.kg = getelementptr inbounds nuw [24 x i8], ptr %i.ke, i64 %i.kf ; 2 uses
   %.sroa.0.0.copyload.i15 = load i64, ptr %i.kg, align 8, !tbaa !11
   %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.kg, i64 8
@@ -967,8 +961,8 @@ bb.bc:                                            ; preds = %bb.bb
   br i1 %.not95.i, label %._crit_edge, label %.lr.ph98.i
 
 .lr.ph98.i:                                       ; preds = %._crit_edge93.i
-  %i.ld = getelementptr inbounds nuw i8, ptr %8, i64 32
-  %i.le = getelementptr inbounds nuw i8, ptr %8, i64 40
+  %i.ld = getelementptr inbounds nuw i8, ptr %6, i64 32
+  %i.le = getelementptr inbounds nuw i8, ptr %6, i64 40
   %i.lf = getelementptr inbounds nuw i8, ptr %i.lc, i64 16
   br label %bb.bd
 
@@ -1013,16 +1007,16 @@ bb.bc:                                            ; preds = %bb.bb
 
 bb.bd:                                            ; preds = %add_edge.exit.i, %.lr.ph98.i
   %.val16.i96.i = phi i64 [ %.val16.i94.i, %.lr.ph98.i ], [ %.val16.i.i, %add_edge.exit.i ]
-  %i.ma = load ptr, ptr %8, align 8, !tbaa !37
+  %i.ma = load ptr, ptr %6, align 8, !tbaa !37
   %i.mb = add i64 %.val16.i96.i, -1
-  %i.mc = call i64 @gv_list_get_(ptr noundef nonnull byval(%struct.list_t_) align 8 %8, i64 noundef %i.mb) #18
+  %i.mc = call i64 @gv_list_get_(ptr noundef nonnull byval(%struct.list_t_) align 8 %6, i64 noundef %i.mb) #18
   %i.md = getelementptr inbounds nuw [24 x i8], ptr %i.ma, i64 %i.mc ; 2 uses
   %.sroa.0.0.copyload71.i = load i64, ptr %i.md, align 8, !tbaa !11 ; 2 uses
   %.sroa.6.0..sroa_idx72.i = getelementptr inbounds nuw i8, ptr %i.md, i64 8
   %.sroa.6.0.copyload73.i = load i64, ptr %.sroa.6.0..sroa_idx72.i, align 8, !tbaa !11 ; 2 uses
   %.val.i.i = load i64, ptr %i.jd, align 8, !tbaa !41
   %i.me = add i64 %.val.i.i, -1
-  %i.mf = call i64 @gv_list_get_(ptr noundef nonnull byval(%struct.list_t_) align 8 %8, i64 noundef %i.me) #18
+  %i.mf = call i64 @gv_list_get_(ptr noundef nonnull byval(%struct.list_t_) align 8 %6, i64 noundef %i.me) #18
   %i.mg = load ptr, ptr %i.ld, align 8, !tbaa !59 ; 2 uses
   %magicptr.i.i = ptrtoint ptr %i.mg to i64
   switch i64 %magicptr.i.i, label %bb.bf [
@@ -1037,13 +1031,13 @@ bb.be:                                            ; preds = %bb.bd
   unreachable
 
 bb.bf:                                            ; preds = %bb.bd
-  %i.mj = load ptr, ptr %8, align 8, !tbaa !37
+  %i.mj = load ptr, ptr %6, align 8, !tbaa !37
   %i.mk = getelementptr inbounds nuw [24 x i8], ptr %i.mj, i64 %i.mf
   call void %i.mg(ptr noundef byval(%struct.Pair) align 8 %i.mk) #18, !inline_history !61
   br label %bb.bg
 
 bb.bg:                                            ; preds = %bb.bf, %bb.bd
-  call void @gv_list_pop_back_(ptr noundef nonnull %8, ptr noundef nonnull %i.le, i64 noundef 24) #18
+  call void @gv_list_pop_back_(ptr noundef nonnull %6, ptr noundef nonnull %i.le, i64 noundef 24) #18
   %i.ml = trunc i64 %.sroa.0.0.copyload71.i to i32
   %i.mm = trunc i64 %.sroa.6.0.copyload73.i to i32 ; 2 uses
   %sext.i = shl i64 %.sroa.0.0.copyload71.i, 32
@@ -1106,9 +1100,9 @@ add_edge.exit.i:                                  ; preds = %.lr.ph.i.i, %bb.bi,
 
 ._crit_edge:                                      ; preds = %add_edge.exit.i, %._crit_edge93.i
   store ptr %i.lc, ptr %3, align 8, !tbaa !17
-  call void @gv_list_clear_(ptr noundef nonnull %8, i64 noundef 24) #18
-  call void @gv_list_free_(ptr noundef nonnull %8) #18
-  call void @llvm.lifetime.end.p0(ptr nonnull %8) #18
+  call void @gv_list_clear_(ptr noundef nonnull %6, i64 noundef 24) #18
+  call void @gv_list_free_(ptr noundef nonnull %6) #18
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #18
   ret void
 }
 
@@ -1152,7 +1146,6 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define internal fastcc void @insert(ptr nofree noundef nonnull captures(none) %0, ptr nofree noundef readonly byval(%struct.Pair) align 8 captures(none) %1) unnamed_addr #0 {
 bb.a:
-  %2 = alloca [24 x i8], align 16                 ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !23   ; 8 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
@@ -1248,15 +1241,13 @@ bb.l:                                             ; preds = %bb.k
 
 .critedge2:                                       ; preds = %..critedge2_crit_edge, %.lr.ph
   %i.ai = phi ptr [ %.pre41, %..critedge2_crit_edge ], [ %i.w, %.lr.ph ] ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2)
   %i.aj = getelementptr inbounds nuw [24 x i8], ptr %i.ai, i64 %.037 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %i.aj, i64 24, i1 false)
+  %.sroa.0.0.copyload = load <24 x i8>, ptr %i.aj, align 8
   %i.ak = getelementptr inbounds nuw [24 x i8], ptr %i.ai, i64 %i.aa
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.aj, ptr noundef nonnull align 8 dereferenceable(24) %i.ak, i64 24, i1 false), !tbaa.struct !30
   %i.al = load ptr, ptr %0, align 8, !tbaa !18
   %i.am = getelementptr inbounds nuw [24 x i8], ptr %i.al, i64 %i.aa
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.am, ptr noundef nonnull align 16 dereferenceable(24) %2, i64 24, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %2)
+  store <24 x i8> %.sroa.0.0.copyload, ptr %i.am, align 8
   %.not = icmp eq i64 %i.aa, 0
   br i1 %.not, label %.critedge, label %.lr.ph, !llvm.loop !64
 

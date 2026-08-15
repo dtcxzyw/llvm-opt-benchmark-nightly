@@ -204,7 +204,6 @@ define internal fastcc void @_ZN3gmxL17setupForceOutputsEP18ForceHelperBuffersNS
 _ZN3gmx20ForceWithShiftForcesC2ERKNS_19ArrayRefWithPaddingINS_11BasicVectorIfEEEEbRKNS_8ArrayRefIS3_EE.exit:
   %5 = alloca %"class.gmx::ArrayRef", align 8     ; 5 uses
   %6 = alloca %"class.gmx::ArrayRef", align 8     ; 5 uses
-  %.sroa.8 = alloca [39 x i8], align 1            ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 3 ; 2 uses
   %i.b = load i8, ptr %i.a, align 1, !tbaa !157, !range !147, !noundef !148 ; 2 uses
   %i.c = trunc nuw i8 %i.b to i1                  ; 2 uses
@@ -314,24 +313,17 @@ _ZN3gmxL10clearRVecsENS_8ArrayRefINS_11BasicVectorIfEEEEb.exit29: ; preds = %.lr
   %.pre.pre = load i8, ptr %i.a, align 1, !tbaa !157, !range !147 ; 2 uses
   %i.ax = trunc nuw i8 %.pre.pre to i1
   %or.cond = select i1 %i.aw, i1 %i.ax, i1 false
-  br i1 %or.cond, label %bb.g, label %.thread
-
-.thread:                                          ; preds = %_ZN3gmxL10clearRVecsENS_8ArrayRefINS_11BasicVectorIfEEEEb.exit29
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.8)
-  br label %bb.h
+  br i1 %or.cond, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %_ZN3gmxL10clearRVecsENS_8ArrayRefINS_11BasicVectorIfEEEEb.exit29
   %i.ay = load i8, ptr %1, align 8, !tbaa !552, !range !147, !noundef !148
   %i.az = trunc nuw i8 %i.ay to i1
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.8)
   br i1 %i.az, label %bb.i, label %bb.h
 
-bb.h:                                             ; preds = %bb.g, %.thread
-  %i.ba = phi i8 [ 1, %bb.g ], [ %.pre.pre, %.thread ]
+bb.h:                                             ; preds = %_ZN3gmxL10clearRVecsENS_8ArrayRefINS_11BasicVectorIfEEEEb.exit29, %bb.g
+  %i.ba = phi i8 [ 1, %bb.g ], [ %.pre.pre, %_ZN3gmxL10clearRVecsENS_8ArrayRefINS_11BasicVectorIfEEEEb.exit29 ]
   %i.bb = load ptr, ptr %2, align 8, !tbaa !16
   %i.bc = load ptr, ptr %i.m, align 8, !tbaa !23
-  %.sroa.8.3.scevgep12.i.sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.8, i64 3
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(36) %.sroa.8.3.scevgep12.i.sroa_idx, i8 0, i64 36, i1 false), !tbaa !156
   br label %bb.k
 
 bb.i:                                             ; preds = %bb.g
@@ -343,13 +335,11 @@ bb.i:                                             ; preds = %bb.g
   %i.bi = ptrtoint ptr %i.be to i64
   %i.bj = sub i64 %i.bh, %i.bi
   %reass.sub28.fr = freeze i64 %i.bj              ; 4 uses
-  %7 = getelementptr inbounds nuw i8, ptr %i.be, i64 %reass.sub28.fr ; 2 uses
-  %.sroa.8.3.scevgep12.i.sroa_idx34 = getelementptr inbounds nuw i8, ptr %.sroa.8, i64 3
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(36) %.sroa.8.3.scevgep12.i.sroa_idx34, i8 0, i64 36, i1 false), !tbaa !156
+  %.sroa.8.3.scevgep12.i.sroa_idx34 = getelementptr inbounds nuw i8, ptr %i.be, i64 %reass.sub28.fr ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5)
   store ptr %i.be, ptr %5, align 8
   %i.bk = getelementptr inbounds nuw i8, ptr %5, i64 8
-  store ptr %7, ptr %i.bk, align 8
+  store ptr %.sroa.8.3.scevgep12.i.sroa_idx34, ptr %i.bk, align 8
   %i.bl = sdiv exact i64 %reass.sub28.fr, 12
   %i.bm = trunc i64 %i.bl to i32
   %i.bn = icmp slt i32 %i.bm, 2000
@@ -383,7 +373,7 @@ _ZN3gmxL10clearRVecsENS_8ArrayRefINS_11BasicVectorIfEEEEb.exit39: ; preds = %_ZL
 bb.k:                                             ; preds = %bb.h, %_ZN3gmxL10clearRVecsENS_8ArrayRefINS_11BasicVectorIfEEEEb.exit39
   %i.bs = phi i8 [ 1, %_ZN3gmxL10clearRVecsENS_8ArrayRefINS_11BasicVectorIfEEEEb.exit39 ], [ %i.ba, %bb.h ]
   %.sroa.0.019 = phi ptr [ %i.be, %_ZN3gmxL10clearRVecsENS_8ArrayRefINS_11BasicVectorIfEEEEb.exit39 ], [ %i.bb, %bb.h ]
-  %.sroa.5.016 = phi ptr [ %7, %_ZN3gmxL10clearRVecsENS_8ArrayRefINS_11BasicVectorIfEEEEb.exit39 ], [ %i.bc, %bb.h ]
+  %.sroa.5.016 = phi ptr [ %.sroa.8.3.scevgep12.i.sroa_idx34, %_ZN3gmxL10clearRVecsENS_8ArrayRefINS_11BasicVectorIfEEEEb.exit39 ], [ %i.bc, %bb.h ]
   %i.bt = load i8, ptr %1, align 8, !tbaa !552, !range !147, !noundef !148
   store ptr %i.l, ptr %0, align 8, !tbaa !16
   %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -405,8 +395,7 @@ bb.k:                                             ; preds = %bb.h, %_ZN3gmxL10cl
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 80
   store i8 %i.bs, ptr %.sroa.7.0..sroa_idx, align 8
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 81
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(39) %.sroa.8.0..sroa_idx, ptr noundef nonnull align 1 dereferenceable(39) %.sroa.8, i64 39, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8)
+  store <39 x i8> <i8 undef, i8 undef, i8 undef, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0>, ptr %.sroa.8.0..sroa_idx, align 1
   ret void
 }
 

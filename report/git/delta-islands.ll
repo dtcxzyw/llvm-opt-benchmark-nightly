@@ -203,8 +203,6 @@ bb.j:                                             ; preds = %bb.h, %bb.i, %bb.g
 ; Function Attrs: inlinehint nounwind uwtable
 define internal fastcc void @kh_resize_oid_map(ptr nofree noundef captures(none) %0, i32 noundef %1) unnamed_addr #5 {
 bb.a:
-  %.sroa.7 = alloca [32 x i8], align 4            ; 6 uses
-  %.sroa.4 = alloca [32 x i8], align 4            ; 4 uses
   %i.a = add i32 %1, -1                           ; 2 uses
   %i.b = lshr i32 %i.a, 1
   %i.c = or i32 %i.b, %i.a                        ; 2 uses
@@ -278,13 +276,12 @@ bb.c:                                             ; preds = %.lr.ph148, %bb.h
   br i1 %i.ax, label %bb.d, label %bb.h
 
 bb.d:                                             ; preds = %bb.c
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.7)
   %i.ay = load ptr, ptr %i.ak, align 8, !tbaa !22
   %i.az = zext i32 %.1146 to i64                  ; 2 uses
   %i.ba = getelementptr inbounds nuw [36 x i8], ptr %i.ay, i64 %i.az ; 2 uses
   %.sroa.0.0.copyload = load i32, ptr %i.ba, align 4
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ba, i64 4
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(32) %.sroa.7, ptr noundef nonnull align 4 dereferenceable(32) %.sroa.7.0..sroa_idx, i64 32, i1 false), !tbaa.struct !150
+  %.sroa.7.sroa.0.0.copyload = load <32 x i8>, ptr %.sroa.7.0..sroa_idx, align 4
   %i.bb = load ptr, ptr %i.am, align 8, !tbaa !27
   %i.bc = getelementptr inbounds nuw [8 x i8], ptr %i.bb, i64 %i.az
   %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !28
@@ -294,6 +291,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.g, %bb.d
+  %.sroa.7.sroa.0.0 = phi <32 x i8> [ %.sroa.7.sroa.0.0.copyload, %bb.d ], [ %.sroa.4.sroa.0.0.copyload, %bb.g ] ; 2 uses
   %i.bg = phi ptr [ %i.ao, %bb.d ], [ %i.cp, %bb.g ]
   %.sroa.0.0 = phi i32 [ %.sroa.0.0.copyload, %bb.d ], [ %.sroa.0121.0.copyload, %bb.g ] ; 3 uses
   %.098 = phi ptr [ %i.bd, %bb.d ], [ %i.cn, %bb.g ] ; 2 uses
@@ -324,7 +322,7 @@ bb.e:                                             ; preds = %bb.g, %bb.d
   %i.bx = shl nuw i32 2, %i.bw                    ; 2 uses
   %i.by = and i32 %i.bx, %i.bu
   %.not102 = icmp eq i32 %i.by, 0
-  br i1 %.not102, label %.lr.ph, label %._crit_edge, !llvm.loop !151
+  br i1 %.not102, label %.lr.ph, label %._crit_edge, !llvm.loop !150
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.e
   %.lcssa135 = phi i64 [ %i.bi, %bb.e ], [ %i.bs, %.lr.ph ] ; 3 uses
@@ -354,16 +352,13 @@ bb.f:                                             ; preds = %._crit_edge
   br i1 %i.ci, label %bb.g, label %split
 
 bb.g:                                             ; preds = %bb.f
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4)
   %i.cj = zext i32 %.095.lcssa to i64             ; 2 uses
   %i.ck = getelementptr inbounds nuw [36 x i8], ptr %.pre158, i64 %i.cj ; 3 uses
   %.sroa.0121.0.copyload = load i32, ptr %i.ck, align 4
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ck, i64 4 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(32) %.sroa.4, ptr noundef nonnull align 4 dereferenceable(32) %.sroa.4.0..sroa_idx, i64 32, i1 false), !tbaa.struct !150
+  %.sroa.4.sroa.0.0.copyload = load <32 x i8>, ptr %.sroa.4.0..sroa_idx, align 4
   store i32 %.sroa.0.0, ptr %i.ck, align 4
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(32) %.sroa.4.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(32) %.sroa.7, i64 32, i1 false), !tbaa.struct !150
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(32) %.sroa.7, ptr noundef nonnull align 4 dereferenceable(32) %.sroa.4, i64 32, i1 false), !tbaa.struct !150
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4)
+  store <32 x i8> %.sroa.7.sroa.0.0, ptr %.sroa.4.0..sroa_idx, align 4
   %i.cl = load ptr, ptr %i.am, align 8, !tbaa !27
   %i.cm = getelementptr inbounds nuw [8 x i8], ptr %i.cl, i64 %i.cj ; 2 uses
   %i.cn = load ptr, ptr %i.cm, align 8, !tbaa !28
@@ -382,11 +377,10 @@ split:                                            ; preds = %bb.f, %._crit_edge.
   %i.cv = getelementptr inbounds nuw [36 x i8], ptr %i.ct, i64 %i.cu ; 2 uses
   store i32 %.sroa.0.0, ptr %i.cv, align 4
   %.sroa.7.0..sroa_idx120 = getelementptr inbounds nuw i8, ptr %i.cv, i64 4
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(32) %.sroa.7.0..sroa_idx120, ptr noundef nonnull align 4 dereferenceable(32) %.sroa.7, i64 32, i1 false), !tbaa.struct !150
+  store <32 x i8> %.sroa.7.sroa.0.0, ptr %.sroa.7.0..sroa_idx120, align 4
   %i.cw = load ptr, ptr %i.am, align 8, !tbaa !27
   %i.cx = getelementptr inbounds nuw [8 x i8], ptr %i.cw, i64 %i.cu
   store ptr %.098, ptr %i.cx, align 8, !tbaa !28
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7)
   %.pre159 = load i32, ptr %0, align 8, !tbaa !15
   br label %bb.h
 
@@ -394,7 +388,7 @@ bb.h:                                             ; preds = %bb.c, %split
   %i.cy = phi i32 [ %i.an, %bb.c ], [ %.pre159, %split ] ; 3 uses
   %i.cz = add i32 %.1146, 1                       ; 2 uses
   %.not = icmp eq i32 %i.cz, %i.cy
-  br i1 %.not, label %._crit_edge149, label %bb.c, !llvm.loop !152
+  br i1 %.not, label %._crit_edge149, label %bb.c, !llvm.loop !151
 
 ._crit_edge149:                                   ; preds = %bb.h
   %i.da = icmp ugt i32 %i.cy, %spec.store.select
@@ -654,7 +648,6 @@ attributes #18 = { cold nounwind }
 !147 = !{!33, !40, i64 176}
 !148 = !{!33, !9, i64 20}
 !149 = distinct !{!149, !26}
-!150 = !{i64 0, i64 28, !24, i64 28, i64 4, !21}
+!150 = distinct !{!150, !26}
 !151 = distinct !{!151, !26}
-!152 = distinct !{!152, !26}
 end_hunk_0

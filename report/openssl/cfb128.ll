@@ -36,7 +36,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.f, label %.lr.ph127.peel, label %._crit_edge128
 
 .lr.ph127.peel:                                   ; preds = %.preheader112
-  tail call void %7(ptr noundef %4, ptr noundef %4, ptr noundef %3) #3
+  tail call void %7(ptr noundef %4, ptr noundef %4, ptr noundef %3) #2
   %i.g = icmp samesign ult i32 %.099.lcssa, 16
   br i1 %i.g, label %.lr.ph122.peel, label %._crit_edge.peel
 
@@ -102,7 +102,7 @@ bb.b:                                             ; preds = %bb.a
   %.1126 = phi ptr [ %i.ax, %.lr.ph127 ], [ %i.x, %.lr.ph127.preheader.peel.newph ] ; 3 uses
   %.192125 = phi ptr [ %i.aw, %.lr.ph127 ], [ %i.w, %.lr.ph127.preheader.peel.newph ] ; 3 uses
   %.196124 = phi i64 [ %i.av, %.lr.ph127 ], [ %i.v, %.lr.ph127.preheader.peel.newph ]
-  tail call void %7(ptr noundef %4, ptr noundef %4, ptr noundef %3) #3
+  tail call void %7(ptr noundef %4, ptr noundef %4, ptr noundef %3) #2
   %i.an = load i64, ptr %.1126, align 1, !tbaa !9
   %i.ao = load i64, ptr %4, align 1, !tbaa !9
   %i.ap = xor i64 %i.ao, %i.an                    ; 2 uses
@@ -130,7 +130,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not108, label %.loopexit111, label %iter.check
 
 iter.check:                                       ; preds = %._crit_edge128
-  tail call void %7(ptr noundef %4, ptr noundef %4, ptr noundef %3) #3
+  tail call void %7(ptr noundef %4, ptr noundef %4, ptr noundef %3) #2
   %min.iters.check = icmp samesign ult i64 %.196.lcssa, 8
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.scevcheck
 
@@ -257,7 +257,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   br i1 %i.ct, label %.lr.ph152.peel, label %._crit_edge153
 
 .lr.ph152.peel:                                   ; preds = %.preheader
-  tail call void %7(ptr noundef %4, ptr noundef %4, ptr noundef %3) #3
+  tail call void %7(ptr noundef %4, ptr noundef %4, ptr noundef %3) #2
   %i.cu = icmp samesign ult i32 %.5104.lcssa, 16
   br i1 %i.cu, label %.lr.ph146.peel, label %._crit_edge147.peel
 
@@ -323,7 +323,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %.3151 = phi ptr [ %i.el, %.lr.ph152 ], [ %i.dl, %.lr.ph152.preheader.peel.newph ] ; 3 uses
   %.394150 = phi ptr [ %i.ek, %.lr.ph152 ], [ %i.dk, %.lr.ph152.preheader.peel.newph ] ; 3 uses
   %.4149 = phi i64 [ %i.ej, %.lr.ph152 ], [ %i.dj, %.lr.ph152.preheader.peel.newph ]
-  tail call void %7(ptr noundef %4, ptr noundef %4, ptr noundef %3) #3
+  tail call void %7(ptr noundef %4, ptr noundef %4, ptr noundef %3) #2
   %i.eb = load i64, ptr %.3151, align 1, !tbaa !9 ; 2 uses
   %i.ec = load i64, ptr %4, align 1, !tbaa !9
   %i.ed = xor i64 %i.ec, %i.eb
@@ -351,7 +351,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   br i1 %.not106, label %.loopexit111, label %iter.check275
 
 iter.check275:                                    ; preds = %._crit_edge153
-  tail call void %7(ptr noundef %4, ptr noundef %4, ptr noundef %3) #3
+  tail call void %7(ptr noundef %4, ptr noundef %4, ptr noundef %3) #2
   %min.iters.check259 = icmp samesign ult i64 %.4.lcssa, 8
   br i1 %min.iters.check259, label %vec.epilog.scalar.ph276.preheader, label %vector.scevcheck240
 
@@ -475,12 +475,6 @@ vec.epilog.scalar.ph276:                          ; preds = %vec.epilog.scalar.p
   ret void
 }
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
-declare void @llvm.lifetime.start.p0(ptr captures(none)) #1
-
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
-declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
-
 ; Function Attrs: nounwind uwtable
 define void @CRYPTO_cfb128_1_encrypt(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef captures(none) %1, i64 noundef %2, ptr noundef %3, ptr noundef %4, ptr nofree noundef readnone captures(none) %5, i32 noundef %6, ptr nofree noundef readonly captures(none) %7) local_unnamed_addr #0 {
 bb.a:
@@ -504,7 +498,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %.not = icmp eq i32 %i.h, 0
   %i.i = select i1 %.not, i8 0, i8 -128           ; 2 uses
   %i.j = load <16 x i8>, ptr %4, align 1          ; 2 uses
-  tail call void %7(ptr noundef nonnull %4, ptr noundef nonnull %4, ptr noundef %3) #3, !inline_history !40
+  tail call void %7(ptr noundef nonnull %4, ptr noundef nonnull %4, ptr noundef %3) #2, !inline_history !40
   %i.k = load i8, ptr %4, align 1, !tbaa !11
   %i.l = xor i8 %i.k, %i.i                        ; 2 uses
   %..i = select i1 %.not.i, i8 %i.i, i8 %i.l
@@ -534,13 +528,11 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
 ; Function Attrs: nounwind uwtable
 define void @CRYPTO_cfb128_8_encrypt(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef writeonly captures(none) %1, i64 noundef %2, ptr noundef %3, ptr noundef %4, ptr nofree noundef readnone captures(none) %5, i32 noundef %6, ptr nofree noundef readonly captures(none) %7) local_unnamed_addr #0 {
 bb.a:
-  %.sroa.0 = alloca [16 x i8], align 16           ; 7 uses
   %.not = icmp eq i64 %2, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
   %.not.i = icmp eq i32 %6, 0
-  %.sroa.0.1..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 1 ; 2 uses
   %.sroa.4.1..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 15 ; 2 uses
   br i1 %.not.i, label %.lr.ph.split.us, label %.lr.ph.split
 
@@ -548,16 +540,15 @@ bb.a:
   %.010.us = phi i64 [ %i.f, %.lr.ph.split.us ], [ 0, %.lr.ph ] ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 %.010.us
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 %.010.us
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %.sroa.0, ptr noundef nonnull align 1 dereferenceable(16) %4, i64 16, i1 false)
-  tail call void %7(ptr noundef nonnull %4, ptr noundef nonnull %4, ptr noundef %3) #3, !inline_history !40
+  %.sroa.0.sroa.0.0.copyload16 = load <16 x i8>, ptr %4, align 1
+  tail call void %7(ptr noundef nonnull %4, ptr noundef nonnull %4, ptr noundef %3) #2, !inline_history !40
   %i.c = load i8, ptr %i.a, align 1, !tbaa !11    ; 2 uses
   %i.d = load i8, ptr %4, align 1, !tbaa !11
   %i.e = xor i8 %i.d, %i.c
   store i8 %i.e, ptr %i.b, align 1, !tbaa !11
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(15) %4, ptr noundef nonnull align 1 dereferenceable(15) %.sroa.0.1..sroa_idx, i64 15, i1 false)
+  %.sroa.0.sroa.0.1.vec.extract19 = shufflevector <16 x i8> %.sroa.0.sroa.0.0.copyload16, <16 x i8> poison, <15 x i32> <i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  store <15 x i8> %.sroa.0.sroa.0.1.vec.extract19, ptr %4, align 1
   store i8 %i.c, ptr %.sroa.4.1..sroa_idx, align 1
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   %i.f = add nuw i64 %.010.us, 1                  ; 2 uses
   %exitcond12.not = icmp eq i64 %i.f, %2
   br i1 %exitcond12.not, label %._crit_edge, label %.lr.ph.split.us, !llvm.loop !42
@@ -566,16 +557,15 @@ bb.a:
   %.010 = phi i64 [ %i.l, %.lr.ph.split ], [ 0, %.lr.ph ] ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 %.010
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 %.010
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %.sroa.0, ptr noundef nonnull align 1 dereferenceable(16) %4, i64 16, i1 false)
-  tail call void %7(ptr noundef nonnull %4, ptr noundef nonnull %4, ptr noundef %3) #3, !inline_history !40
+  %.sroa.0.sroa.0.0.copyload = load <16 x i8>, ptr %4, align 1
+  tail call void %7(ptr noundef nonnull %4, ptr noundef nonnull %4, ptr noundef %3) #2, !inline_history !40
   %i.i = load i8, ptr %i.g, align 1, !tbaa !11
   %i.j = load i8, ptr %4, align 1, !tbaa !11
   %i.k = xor i8 %i.j, %i.i                        ; 2 uses
   store i8 %i.k, ptr %i.h, align 1, !tbaa !11
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(15) %4, ptr noundef nonnull align 1 dereferenceable(15) %.sroa.0.1..sroa_idx, i64 15, i1 false)
+  %.sroa.0.sroa.0.1.vec.extract = shufflevector <16 x i8> %.sroa.0.sroa.0.0.copyload, <16 x i8> poison, <15 x i32> <i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  store <15 x i8> %.sroa.0.sroa.0.1.vec.extract, ptr %4, align 1
   store i8 %i.k, ptr %.sroa.4.1..sroa_idx, align 1
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   %i.l = add nuw i64 %.010, 1                     ; 2 uses
   %exitcond.not = icmp eq i64 %i.l, %2
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.split, !llvm.loop !42
@@ -584,16 +574,12 @@ bb.a:
   ret void
 }
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
-declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1
-
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <16 x i8> @llvm.fshl.v16i8(<16 x i8>, <16 x i8>, <16 x i8>) #2
+declare <16 x i8> @llvm.fshl.v16i8(<16 x i8>, <16 x i8>, <16 x i8>) #1
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
-attributes #2 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #3 = { nounwind }
+attributes #1 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #2 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

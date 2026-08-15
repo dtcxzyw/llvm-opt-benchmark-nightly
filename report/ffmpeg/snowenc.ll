@@ -204,8 +204,6 @@ bb.u:                                             ; preds = %.lr.ph, %bb.t
 ; Function Attrs: nounwind uwtable
 define internal range(i32 -2147483648, 1) i32 @encode_frame(ptr noundef %0, ptr noundef %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef writeonly captures(none) %3) #1 {
 bb.a:
-  %4 = alloca [32 x i8], align 16                 ; 4 uses
-  %5 = alloca [4224 x i8], align 16               ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !9    ; 140 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 156784 ; 5 uses
@@ -218,8 +216,6 @@ bb.a:
   %i.j = load i32, ptr %i.i, align 8, !tbaa !94   ; 4 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.h, i64 116
   %i.l = load i32, ptr %i.k, align 4, !tbaa !95   ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4)
-  call void @llvm.lifetime.start.p0(ptr nonnull %5)
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 6368 ; 7 uses
   %i.n = load i32, ptr %i.m, align 8, !tbaa !117
   %i.o = getelementptr inbounds nuw i8, ptr %i.b, i64 6372 ; 10 uses
@@ -622,12 +618,14 @@ bb.aa:                                            ; preds = %bb.z, %.loopexit935
 
 bb.ab:                                            ; preds = %bb.aa
   %i.kn = getelementptr inbounds nuw i8, ptr %i.b, i64 1856
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %4, ptr noundef nonnull align 8 dereferenceable(32) %i.kn, i64 32, i1 false)
+  %.sroa.02206.0.copyload = load <32 x i8>, ptr %i.kn, align 16
   %i.ko = getelementptr inbounds nuw i8, ptr %i.b, i64 1888
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(4224) %5, ptr noundef nonnull align 8 dereferenceable(4224) %i.ko, i64 4224, i1 false)
+  %.sroa.0.0.copyload = load <4224 x i8>, ptr %i.ko, align 16
   br label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab, %bb.aa
+  %.sroa.02206.0 = phi <32 x i8> [ undef, %bb.aa ], [ %.sroa.02206.0.copyload, %bb.ab ]
+  %.sroa.0.0 = phi <4224 x i8> [ undef, %bb.aa ], [ %.sroa.0.0.copyload, %bb.ab ]
   %i.kp = getelementptr inbounds nuw i8, ptr %i.b, i64 6136 ; 9 uses
   %i.kq = getelementptr inbounds nuw i8, ptr %i.b, i64 6336 ; 4 uses
   %i.kr = getelementptr inbounds nuw i8, ptr %i.b, i64 6332 ; 4 uses
@@ -1030,8 +1028,8 @@ bb.bs:                                            ; preds = %ratecontrol_1pass.e
   %i.axi = load ptr, ptr %i.w, align 8, !tbaa !122
   %i.axj = load i32, ptr %i.y, align 8, !tbaa !124
   tail call void @ff_init_range_encoder(ptr noundef nonnull %i.d, ptr noundef %i.axi, i32 noundef %i.axj) #12
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.lr, ptr noundef nonnull align 16 dereferenceable(32) %4, i64 32, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(4224) %i.ls, ptr noundef nonnull align 16 dereferenceable(4224) %5, i64 4224, i1 false)
+  store <32 x i8> %.sroa.02206.0, ptr %i.lr, align 16
+  store <4224 x i8> %.sroa.0.0, ptr %i.ls, align 16
   tail call fastcc void @encode_header(ptr noundef nonnull %i.b)
   tail call fastcc void @encode_blocks(ptr noundef nonnull %i.b, i32 noundef 0)
   br label %bb.bt
@@ -1434,8 +1432,6 @@ bb.ij:                                            ; preds = %bb.ii, %bb.ih
 
 get_encode_buffer.exit.thread:                    ; preds = %ratecontrol_1pass.exit, %._crit_edge105.thread.i, %bb.s, %bb.ic, %bb.f, %bb.a, %bb.ij, %bb.ah
   %.6 = phi i32 [ %i.u, %bb.a ], [ -1, %bb.f ], [ -22, %bb.ah ], [ %i.gs, %bb.s ], [ %i.ecz, %bb.ic ], [ 0, %bb.ij ], [ -1, %._crit_edge105.thread.i ], [ -1, %ratecontrol_1pass.exit ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %5)
-  call void @llvm.lifetime.end.p0(ptr nonnull %4)
   ret i32 %.6
 }
 
@@ -1838,7 +1834,6 @@ bb.a:
   %18 = alloca %struct.BlockNode, align 2         ; 4 uses
   %i.a = alloca [3 x i32], align 4                ; 6 uses
   %19 = alloca %struct.RangeCoder, align 8        ; 4 uses
-  %20 = alloca [4224 x i8], align 16              ; 4 uses
   %.sroa.6.i = alloca { [3 x i8], i8, i8 }, align 8 ; 5 uses
   %i.b = alloca [32 x [32 x i8]], align 16        ; 60 uses
   %i.c = alloca [4 x ptr], align 16               ; 7 uses
@@ -1869,9 +1864,8 @@ bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %19)
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(560) %19, ptr noundef nonnull align 8 dereferenceable(560) %i.s, i64 560, i1 false), !tbaa.struct !443
-  call void @llvm.lifetime.start.p0(ptr nonnull %20)
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 1888 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(4224) %20, ptr noundef nonnull align 8 dereferenceable(4224) %i.t, i64 4224, i1 false)
+  %.sroa.0.0.copyload = load <4224 x i8>, ptr %i.t, align 8
   %i.u = icmp sgt i32 %i.g, 0
   %i.v = icmp sgt i32 %.fr64, 0
   %or.cond1088.i = and i1 %i.u, %i.v
@@ -1905,8 +1899,7 @@ bb.c:                                             ; preds = %bb.b
 
 ._crit_edge653.i:                                 ; preds = %._crit_edge.i, %bb.c
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(560) %i.s, ptr noundef nonnull align 8 dereferenceable(560) %19, i64 560, i1 false), !tbaa.struct !443
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(4224) %i.t, ptr noundef nonnull align 16 dereferenceable(4224) %20, i64 4224, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %20)
+  store <4224 x i8> %.sroa.0.0.copyload, ptr %i.t, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %19)
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
   %i.ai = icmp sgt i32 %i.r, 0

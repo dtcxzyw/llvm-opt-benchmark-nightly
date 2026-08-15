@@ -201,8 +201,6 @@ bb.a:
   %5 = alloca %struct.wg_qqword, align 1          ; 30 uses
   %6 = alloca %struct.wg_qqword, align 1          ; 5 uses
   %7 = alloca %struct.wg_qqword, align 1          ; 5 uses
-  %.sroa.08.i.i = alloca [32 x i8], align 1       ; 11 uses
-  %.sroa.0.i.i = alloca [32 x i8], align 1        ; 11 uses
   %8 = alloca %struct.wg_qqword, align 1          ; 18 uses
   %9 = alloca [2 x %struct.wg_qqword], align 16   ; 5 uses
   %i.l = alloca i32, align 4                      ; 5 uses
@@ -605,10 +603,8 @@ bb.cp:                                            ; preds = %bb.co
 
 wg_kdf.exit68.i.i:                                ; preds = %bb.co
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #17
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.08.i.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %.sroa.08.i.i, ptr noundef nonnull align 1 dereferenceable(32) %5, i64 32, i1 false)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %.sroa.0.i.i, ptr noundef nonnull align 16 dereferenceable(32) %4, i64 32, i1 false)
+  %.sroa.08.i.i.sroa.0.0.copyload = load <32 x i8>, ptr %5, align 1 ; 8 uses
+  %.sroa.0.i.i.sroa.0.0.copyload = load <32 x i8>, ptr %4, align 16 ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #17
   br label %bb.cq
 
@@ -619,38 +615,38 @@ bb.cq:                                            ; preds = %bb.dn, %wg_kdf.exit
   br i1 %.not17.i.i.i, label %.lr.ph.i.i.i, label %bb.cy
 
 bb.cr:                                            ; preds = %wg_kdf.exit69.i.i.jt1
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %5, ptr noundef nonnull align 1 dereferenceable(32) %.sroa.08.i.i, i64 32, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %4, ptr noundef nonnull align 1 dereferenceable(32) %.sroa.0.i.i, i64 32, i1 false)
+  store <32 x i8> %.sroa.08.i.i.sroa.0.0.copyload, ptr %5, align 1
+  store <32 x i8> %.sroa.0.i.i.sroa.0.0.copyload, ptr %4, align 16
   %.not17.i.i.i.jt1 = icmp eq ptr %i.li, null
   br i1 %.not17.i.i.i.jt1, label %.loopexit19.i.i.i, label %bb.cy
 
 bb.cs:                                            ; preds = %wg_kdf.exit69.i.i.jt2
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %5, ptr noundef nonnull align 1 dereferenceable(32) %.sroa.08.i.i, i64 32, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %4, ptr noundef nonnull align 1 dereferenceable(32) %.sroa.0.i.i, i64 32, i1 false)
+  store <32 x i8> %.sroa.08.i.i.sroa.0.0.copyload, ptr %5, align 1
+  store <32 x i8> %.sroa.0.i.i.sroa.0.0.copyload, ptr %4, align 16
   %.not17.i.i.i.jt2 = icmp eq ptr %i.lm, null
   br i1 %.not17.i.i.i.jt2, label %.lr.ph.i.i.jt2.i, label %bb.cy
 
 bb.ct:                                            ; preds = %wg_kdf.exit69.i.jt1.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %5, ptr noundef nonnull align 1 dereferenceable(32) %.sroa.08.i.i, i64 32, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %4, ptr noundef nonnull align 1 dereferenceable(32) %.sroa.0.i.i, i64 32, i1 false)
+  store <32 x i8> %.sroa.08.i.i.sroa.0.0.copyload, ptr %5, align 1
+  store <32 x i8> %.sroa.0.i.i.sroa.0.0.copyload, ptr %4, align 16
   %.not17.i.i.jt1.i = icmp eq ptr %i.lq, null
   br i1 %.not17.i.i.jt1.i, label %.loopexit19.i.i.i, label %bb.cz
 
 bb.cu:                                            ; preds = %wg_kdf.exit69.i.jt2.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %5, ptr noundef nonnull align 1 dereferenceable(32) %.sroa.08.i.i, i64 32, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %4, ptr noundef nonnull align 1 dereferenceable(32) %.sroa.0.i.i, i64 32, i1 false)
+  store <32 x i8> %.sroa.08.i.i.sroa.0.0.copyload, ptr %5, align 1
+  store <32 x i8> %.sroa.0.i.i.sroa.0.0.copyload, ptr %4, align 16
   %.not17.i.i.jt2.i = icmp eq ptr %i.lu, null
   br i1 %.not17.i.i.jt2.i, label %.lr.ph.i.i.jt2.i, label %bb.da
 
 bb.cv:                                            ; preds = %wg_kdf.exit69.jt1.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %5, ptr noundef nonnull align 1 dereferenceable(32) %.sroa.08.i.i, i64 32, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %4, ptr noundef nonnull align 1 dereferenceable(32) %.sroa.0.i.i, i64 32, i1 false)
+  store <32 x i8> %.sroa.08.i.i.sroa.0.0.copyload, ptr %5, align 1
+  store <32 x i8> %.sroa.0.i.i.sroa.0.0.copyload, ptr %4, align 16
   %.not17.i.jt1.i.i = icmp eq ptr %i.ma, null
   br i1 %.not17.i.jt1.i.i, label %.loopexit19.i.i.i, label %bb.db
 
 bb.cw:                                            ; preds = %wg_kdf.exit69.jt2.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %5, ptr noundef nonnull align 1 dereferenceable(32) %.sroa.08.i.i, i64 32, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %4, ptr noundef nonnull align 1 dereferenceable(32) %.sroa.0.i.i, i64 32, i1 false)
+  store <32 x i8> %.sroa.08.i.i.sroa.0.0.copyload, ptr %5, align 1
+  store <32 x i8> %.sroa.0.i.i.sroa.0.0.copyload, ptr %4, align 16
   %.not17.i.jt2.i.i = icmp eq ptr %i.me, null
   br i1 %.not17.i.jt2.i.i, label %.lr.ph.i.i.jt2.i, label %bb.dc
 
@@ -665,8 +661,8 @@ default.unreachable128:                           ; preds = %.lr.ph.i.i.i
   ], !llvm.loop !9
 
 .lr.ph.i.jt3.i.i:                                 ; preds = %wg_kdf.exit69.jt3.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %5, ptr noundef nonnull align 1 dereferenceable(32) %.sroa.08.i.i, i64 32, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %4, ptr noundef nonnull align 1 dereferenceable(32) %.sroa.0.i.i, i64 32, i1 false)
+  store <32 x i8> %.sroa.08.i.i.sroa.0.0.copyload, ptr %5, align 1
+  store <32 x i8> %.sroa.0.i.i.sroa.0.0.copyload, ptr %4, align 16
   %.phi.trans.insert.i.i = getelementptr i8, ptr %i.iu, i64 28
   %.pre.i.i = load i8, ptr %.phi.trans.insert.i.i, align 4
   %i.kv = and i8 %.pre.i.i, 2
@@ -856,8 +852,8 @@ wg_kdf.exit69.jt2.i.i:                            ; preds = %bb.dm
   br i1 %i.ne, label %wg_psk_iter_next.exit.thread.i.i, label %bb.cw
 
 bb.dn:                                            ; preds = %wg_kdf.exit69.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %5, ptr noundef nonnull align 1 dereferenceable(32) %.sroa.08.i.i, i64 32, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %4, ptr noundef nonnull align 1 dereferenceable(32) %.sroa.0.i.i, i64 32, i1 false)
+  store <32 x i8> %.sroa.08.i.i.sroa.0.0.copyload, ptr %5, align 1
+  store <32 x i8> %.sroa.0.i.i.sroa.0.0.copyload, ptr %4, align 16
   br label %bb.cq, !llvm.loop !10
 
 wg_psk_iter_next.exit.thread.i.i:                 ; preds = %wg_kdf.exit69.jt2.i.i, %wg_kdf.exit69.jt1.i.i, %wg_kdf.exit69.i.jt2.i, %wg_kdf.exit69.i.jt1.i, %wg_kdf.exit69.i.i, %wg_kdf.exit69.i.i.jt2, %wg_kdf.exit69.i.i.jt1, %wg_kdf.exit69.jt3.i.i
@@ -936,8 +932,6 @@ wg_create_cipher.exit76.i.i:                      ; preds = %bb.dv, %bb.du, %wg_
 
 bb.dw:                                            ; preds = %wg_create_cipher.exit76.i.i, %.lr.ph.i.jt3.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #17
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.08.i.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #17

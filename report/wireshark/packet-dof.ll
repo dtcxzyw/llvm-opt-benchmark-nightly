@@ -204,11 +204,9 @@ declare ptr @add_new_data_source(ptr noundef, ptr noundef, ptr noundef) local_un
 ; Function Attrs: null_pointer_is_valid sspstrong uwtable
 define internal fastcc range(i32 0, 2) i32 @decrypt(ptr nofree noundef nonnull readonly captures(none) %0, ptr nofree noundef nonnull readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef readonly captures(none) %3, i32 noundef %4, ptr nofree noundef captures(address_is_null) %5, i32 noundef %6) unnamed_addr #0 {
 bb.a:
-  %.sroa.5 = alloca [11 x i8], align 1            ; 5 uses
   %i.a = alloca [16 x i8], align 16               ; 30 uses
   %i.b = alloca [16 x i8], align 16               ; 21 uses
   %i.c = alloca [16 x i8], align 16               ; 16 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #26
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #26
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #26
@@ -249,7 +247,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br i1 %.not, label %bb.o, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(11) %.sroa.5, ptr noundef align 1 dereferenceable(11) %2, i64 11, i1 false)
+  %.sroa.5.sroa.0.0.copyload91 = load <11 x i8>, ptr %2, align 1 ; 2 uses
   %i.s = load i8, ptr %i.f, align 2               ; 2 uses
   %i.t = zext i8 %i.s to i32
   %i.u = sub i32 %6, %i.t
@@ -279,7 +277,7 @@ bb.i:                                             ; preds = %bb.h
   %spec.select = add i8 %.sroa.10.0, %i.aa        ; 2 uses
   %i.ab = add i8 %.sroa.14.0, 1                   ; 2 uses
   store i8 3, ptr %i.a, align 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(11) %.sroa.5.0..sroa_idx66, ptr noundef nonnull align 1 dereferenceable(11) %.sroa.5, i64 11, i1 false)
+  store <11 x i8> %.sroa.5.sroa.0.0.copyload91, ptr %.sroa.5.0..sroa_idx66, align 1
   store i8 0, ptr %.sroa.6.0..sroa_idx67, align 4
   store i8 0, ptr %.sroa.8.0..sroa_idx69, align 1
   store i8 %spec.select, ptr %.sroa.10.0..sroa_idx71, align 2
@@ -314,7 +312,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   %i.ar = call ptr @__memcpy_chk(ptr noundef nonnull %i.b, ptr noundef %i.ap, i64 noundef %i.aq, i64 noundef 16) #26, !alias.scope !83 ; 0 uses
   store i8 3, ptr %i.a, align 16
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(11) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 1 dereferenceable(11) %.sroa.5, i64 11, i1 false)
+  store <11 x i8> %.sroa.5.sroa.0.0.copyload91, ptr %.sroa.5.0..sroa_idx, align 1
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 12
   %i.as = getelementptr i8, ptr %0, i64 8         ; 2 uses
   store i32 0, ptr %.sroa.6.0..sroa_idx, align 4
@@ -596,7 +594,6 @@ bb.o:                                             ; preds = %generateMac.exit, %
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #26
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5)
   ret i32 %.039
 }
 

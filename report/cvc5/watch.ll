@@ -201,7 +201,6 @@ _ZN7CaDiCaL8Internal13watch_literalEiiPNS_6ClauseE.exit25: ; preds = %bb.f, %_ZN
 ; Function Attrs: mustprogress uwtable
 define void @_ZN7CaDiCaL8Internal12sort_watchesEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(5704) %0) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.023 = alloca [12 x i8], align 8          ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 5696
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !159, !nonnull !160, !align !161
   %i.c = load i32, ptr %i.b, align 4, !tbaa !162  ; 2 uses
@@ -248,8 +247,7 @@ bb.c:                                             ; preds = %.lr.ph76, %_ZSt4cop
   %.sroa.17.164 = phi ptr [ %.sroa.17.2, %_ZNSt6vectorIN7CaDiCaL5WatchESaIS1_EE9push_backERKS1_.exit ], [ %.sroa.17.072, %bb.c ] ; 3 uses
   %.sroa.030.063 = phi ptr [ %i.ai, %_ZNSt6vectorIN7CaDiCaL5WatchESaIS1_EE9push_backERKS1_.exit ], [ %i.o, %bb.c ] ; 5 uses
   %.sroa.033.062 = phi ptr [ %.sroa.033.1, %_ZNSt6vectorIN7CaDiCaL5WatchESaIS1_EE9push_backERKS1_.exit ], [ %i.o, %bb.c ] ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.023)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %.sroa.023, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.030.063, i64 12, i1 false), !tbaa.struct !177
+  %.sroa.023.sroa.0.0.copyload = load <12 x i8>, ptr %.sroa.030.063, align 8
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.030.063, i64 12
   %.sroa.7.0.copyload = load i32, ptr %.sroa.7.0..sroa_idx, align 4, !tbaa !162 ; 3 uses
   %i.p = icmp eq i32 %.sroa.7.0.copyload, 2
@@ -274,7 +272,6 @@ bb.d:                                             ; preds = %.lr.ph
 
 bb.e:                                             ; preds = %.loopexit.split-lp, %.loopexit
   %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.023)
   %.not.i.i.i21 = icmp eq ptr %.sroa.041.166, null
   br i1 %.not.i.i.i21, label %_ZNSt6vectorIN7CaDiCaL5WatchESaIS1_EED2Ev.exit22, label %bb.n
 
@@ -318,7 +315,7 @@ _ZNKSt6vectorIN7CaDiCaL5WatchESaIS1_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %b
 
 .noexc20:                                         ; preds = %_ZNKSt6vectorIN7CaDiCaL5WatchESaIS1_EE12_M_check_lenEmPKc.exit.i.i
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 %i.u ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.ad, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.023, i64 12, i1 false), !tbaa.struct !177
+  store <12 x i8> %.sroa.023.sroa.0.0.copyload, ptr %i.ad, align 8
   %.sroa.7.0..sroa_idx27 = getelementptr inbounds nuw i8, ptr %i.ad, i64 12
   store i32 %.sroa.7.0.copyload, ptr %.sroa.7.0..sroa_idx27, align 4, !tbaa !162
   %.not10.i.i.i.i.i.i = icmp eq ptr %.sroa.041.166, %.sroa.10.165
@@ -352,7 +349,6 @@ _ZNSt6vectorIN7CaDiCaL5WatchESaIS1_EE9push_backERKS1_.exit: ; preds = %_ZNSt6vec
   %.sroa.17.2 = phi ptr [ %.sroa.17.164, %bb.d ], [ %.sroa.17.164, %bb.g ], [ %i.ah, %_ZNSt6vectorIN7CaDiCaL5WatchESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ] ; 2 uses
   %.sroa.10.2 = phi ptr [ %.sroa.10.165, %bb.d ], [ %i.r, %bb.g ], [ %i.ag, %_ZNSt6vectorIN7CaDiCaL5WatchESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ] ; 2 uses
   %.sroa.041.2 = phi ptr [ %.sroa.041.166, %bb.d ], [ %.sroa.041.166, %bb.g ], [ %i.ac, %_ZNSt6vectorIN7CaDiCaL5WatchESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ] ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.023)
   %i.ai = getelementptr inbounds nuw i8, ptr %.sroa.030.063, i64 16 ; 2 uses
   %.not49 = icmp eq ptr %i.ai, %i.n
   br i1 %.not49, label %._crit_edge, label %.lr.ph, !llvm.loop !192

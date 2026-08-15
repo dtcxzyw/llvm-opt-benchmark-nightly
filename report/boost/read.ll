@@ -204,7 +204,6 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
 define void @_ZN5boost6cobalt2io8read_all8initiateENS0_18completion_handlerIJNS_6system10error_codeEmEEE(ptr noundef nonnull align 8 dereferenceable(72) %0, ptr noundef align 8 %1) unnamed_addr #7 align 2 personality ptr @__gxx_personality_v0 {
 .from.:
   %2 = alloca %"class.boost::asio::any_io_executor", align 8 ; 10 uses
-  %.sroa.9 = alloca [12 x i8], align 4            ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 64
   %.sroa.0.0.copyload.i.i = load ptr, ptr %i.a, align 8, !tbaa !19 ; 3 uses
   %i.b = load ptr, ptr %.sroa.0.0.copyload.i.i, align 8, !tbaa !9
@@ -527,8 +526,7 @@ bb.k:                                             ; preds = %_ZNSt15__exception_
 bb.l:                                             ; preds = %bb.i
   %.058.reload = load i64, ptr %.058.spill.addr, align 16, !tbaa !58
   %i.cr = load i64, ptr %i.bi, align 8, !tbaa !60, !noalias !94 ; 5 uses
-  %.sroa.650.8.copyload = load i32, ptr %i.bl, align 16 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.9, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.9.8..sroa_idx223, i64 12, i1 false)
+  %.sroa.9.sroa.0.0.copyload = load <12 x i8>, ptr %.sroa.9.8..sroa_idx223, align 4
   %.sroa.952.8.copyload = load i64, ptr %.sroa.952.8..sroa_idx224, align 16, !tbaa !60 ; 3 uses
   %i.cs = add i64 %i.cr, %.058.reload             ; 4 uses
   %i.ct = and i64 %.sroa.952.8.copyload, 1
@@ -536,6 +534,7 @@ bb.l:                                             ; preds = %bb.i
   br i1 %.not.i.i34, label %_ZNK5boost6system10error_codecvbEv.exit.thread64, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
+  %.sroa.650.8.copyload = load i32, ptr %i.bl, align 16 ; 2 uses
   %i.cu = icmp ne i64 %.sroa.952.8.copyload, 1
   %i.cv = icmp ne i32 %.sroa.650.8.copyload, 0
   %or.cond = select i1 %i.cu, i1 true, i1 %i.cv
@@ -548,7 +547,7 @@ _ZN5boost6cobalt2io23mutable_buffer_sequencepLEm.exit.thread: ; preds = %bb.m
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cw, i64 8
   store i32 %.sroa.650.8.copyload, ptr %i.cy, align 8
   %.sroa.247.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cw, i64 12
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.247.sroa.2.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.9, i64 12, i1 false)
+  store <12 x i8> %.sroa.9.sroa.0.0.copyload, ptr %.sroa.247.sroa.2.0..sroa_idx, align 4
   %.sroa.247.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cw, i64 24
   store i64 %.sroa.952.8.copyload, ptr %.sroa.247.sroa.3.0..sroa_idx, align 8, !tbaa !60
   store i8 1, ptr %i.cx, align 8, !tbaa !91
@@ -951,7 +950,6 @@ bb.b:                                             ; preds = %bb.a
 define void @_ZN5boost6cobalt2io11read_all_at8initiateENS0_18completion_handlerIJNS_6system10error_codeEmEEE(ptr noundef nonnull align 8 dereferenceable(80) %0, ptr noundef align 8 %1) unnamed_addr #7 align 2 personality ptr @__gxx_personality_v0 {
 .from.:
   %2 = alloca %"class.boost::asio::any_io_executor", align 8 ; 10 uses
-  %.sroa.10 = alloca [12 x i8], align 4           ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 64
   %.sroa.0.0.copyload.i.i = load ptr, ptr %i.a, align 8, !tbaa !19 ; 3 uses
   %i.b = load ptr, ptr %.sroa.0.0.copyload.i.i, align 8, !tbaa !9
@@ -1274,8 +1272,7 @@ bb.k:                                             ; preds = %_ZNSt15__exception_
 bb.l:                                             ; preds = %bb.i
   %.059.reload = load i64, ptr %.059.spill.addr, align 16, !tbaa !129
   %i.cr = load i64, ptr %i.bi, align 8, !tbaa !60, !noalias !136 ; 6 uses
-  %.sroa.7.8.copyload = load i32, ptr %i.bl, align 16 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.10, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.10.8..sroa_idx225, i64 12, i1 false)
+  %.sroa.10.sroa.0.0.copyload = load <12 x i8>, ptr %.sroa.10.8..sroa_idx225, align 4
   %.sroa.1053.8.copyload = load i64, ptr %.sroa.1053.8..sroa_idx226, align 16, !tbaa !60 ; 3 uses
   %i.cs = add i64 %i.cr, %.059.reload             ; 4 uses
   %i.ct = and i64 %.sroa.1053.8.copyload, 1
@@ -1283,6 +1280,7 @@ bb.l:                                             ; preds = %bb.i
   br i1 %.not.i.i35, label %_ZNK5boost6system10error_codecvbEv.exit.thread65, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
+  %.sroa.7.8.copyload = load i32, ptr %i.bl, align 16 ; 2 uses
   %i.cu = icmp ne i64 %.sroa.1053.8.copyload, 1
   %i.cv = icmp ne i32 %.sroa.7.8.copyload, 0
   %or.cond = select i1 %i.cu, i1 true, i1 %i.cv
@@ -1295,7 +1293,7 @@ bb.m:                                             ; preds = %bb.l
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cw, i64 8
   store i32 %.sroa.7.8.copyload, ptr %i.cy, align 8
   %.sroa.248.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cw, i64 12
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.248.sroa.2.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.10, i64 12, i1 false)
+  store <12 x i8> %.sroa.10.sroa.0.0.copyload, ptr %.sroa.248.sroa.2.0..sroa_idx, align 4
   %.sroa.248.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cw, i64 24
   store i64 %.sroa.1053.8.copyload, ptr %.sroa.248.sroa.3.0..sroa_idx, align 8, !tbaa !60
   store i8 1, ptr %i.cx, align 8, !tbaa !91
@@ -1698,7 +1696,6 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #24
 define internal void @_ZN5boost6cobalt2io8read_all8initiateENS0_18completion_handlerIJNS_6system10error_codeEmEEE.resume(ptr noundef nonnull align 8 dereferenceable(368) %0) #7 align 2 personality ptr @__gxx_personality_v0 {
 resume.0:
   %1 = alloca %"class.boost::asio::any_io_executor", align 8 ; 9 uses
-  %.sroa.9 = alloca [12 x i8], align 4            ; 2 uses
   %.reload.addr254 = getelementptr inbounds nuw i8, ptr %0, i64 224 ; 4 uses
   %.reload.addr256 = getelementptr inbounds nuw i8, ptr %0, i64 320 ; 2 uses
   %.reload.addr257 = getelementptr inbounds nuw i8, ptr %0, i64 336 ; 5 uses
@@ -1882,8 +1879,7 @@ bb.g:                                             ; preds = %_ZNSt15__exception_
 .lr.ph71:                                         ; preds = %resume.0, %.backedge
   %.058.reload = load i64, ptr %.058.reload.addr, align 8, !tbaa !58
   %i.an = load i64, ptr %i.c, align 8, !tbaa !60, !noalias !227 ; 5 uses
-  %.sroa.650.8.copyload = load i32, ptr %i.b, align 8 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.9, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.9.8..sroa_idx223, i64 12, i1 false)
+  %.sroa.9.sroa.0.0.copyload = load <12 x i8>, ptr %.sroa.9.8..sroa_idx223, align 4
   %.sroa.952.8.copyload = load i64, ptr %.sroa.952.8..sroa_idx224, align 8, !tbaa !60 ; 3 uses
   %i.ao = add i64 %i.an, %.058.reload             ; 4 uses
   %i.ap = and i64 %.sroa.952.8.copyload, 1
@@ -1891,6 +1887,7 @@ bb.g:                                             ; preds = %_ZNSt15__exception_
   br i1 %.not.i.i34, label %_ZNK5boost6system10error_codecvbEv.exit.thread64, label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph71
+  %.sroa.650.8.copyload = load i32, ptr %i.b, align 8 ; 2 uses
   %i.aq = icmp ne i64 %.sroa.952.8.copyload, 1
   %i.ar = icmp ne i32 %.sroa.650.8.copyload, 0
   %or.cond = select i1 %i.aq, i1 true, i1 %i.ar
@@ -1904,7 +1901,7 @@ _ZN5boost6cobalt2io23mutable_buffer_sequencepLEm.exit.thread: ; preds = %bb.h
   %i.av = getelementptr inbounds nuw i8, ptr %i.at, i64 8
   store i32 %.sroa.650.8.copyload, ptr %i.av, align 8
   %.sroa.247.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.at, i64 12
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.247.sroa.2.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.9, i64 12, i1 false)
+  store <12 x i8> %.sroa.9.sroa.0.0.copyload, ptr %.sroa.247.sroa.2.0..sroa_idx, align 4
   %.sroa.247.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.at, i64 24
   store i64 %.sroa.952.8.copyload, ptr %.sroa.247.sroa.3.0..sroa_idx, align 8, !tbaa !60
   store i8 1, ptr %i.au, align 8, !tbaa !91
@@ -2307,7 +2304,6 @@ _ZN5boost6cobalt6detail19composition_promiseIJNS_6system10error_codeEmEEdlEPv.ex
 define internal void @_ZN5boost6cobalt2io11read_all_at8initiateENS0_18completion_handlerIJNS_6system10error_codeEmEEE.resume(ptr noundef nonnull align 8 dereferenceable(368) %0) #7 align 2 personality ptr @__gxx_personality_v0 {
 resume.0:
   %1 = alloca %"class.boost::asio::any_io_executor", align 8 ; 9 uses
-  %.sroa.10 = alloca [12 x i8], align 4           ; 2 uses
   %.reload.addr258 = getelementptr inbounds nuw i8, ptr %0, i64 224 ; 4 uses
   %.reload.addr260 = getelementptr inbounds nuw i8, ptr %0, i64 320 ; 2 uses
   %.reload.addr261 = getelementptr inbounds nuw i8, ptr %0, i64 336 ; 5 uses
@@ -2495,8 +2491,7 @@ bb.g:                                             ; preds = %_ZNSt15__exception_
 .lr.ph71:                                         ; preds = %resume.0, %.backedge
   %.059.reload = load i64, ptr %.059.reload.addr, align 8, !tbaa !129
   %i.aq = load i64, ptr %i.c, align 8, !tbaa !60, !noalias !246 ; 6 uses
-  %.sroa.7.8.copyload = load i32, ptr %i.b, align 8 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.10, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.10.8..sroa_idx225, i64 12, i1 false)
+  %.sroa.10.sroa.0.0.copyload = load <12 x i8>, ptr %.sroa.10.8..sroa_idx225, align 4
   %.sroa.1053.8.copyload = load i64, ptr %.sroa.1053.8..sroa_idx226, align 8, !tbaa !60 ; 3 uses
   %i.ar = add i64 %i.aq, %.059.reload             ; 4 uses
   %i.as = and i64 %.sroa.1053.8.copyload, 1
@@ -2504,6 +2499,7 @@ bb.g:                                             ; preds = %_ZNSt15__exception_
   br i1 %.not.i.i35, label %_ZNK5boost6system10error_codecvbEv.exit.thread65, label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph71
+  %.sroa.7.8.copyload = load i32, ptr %i.b, align 8 ; 2 uses
   %i.at = icmp ne i64 %.sroa.1053.8.copyload, 1
   %i.au = icmp ne i32 %.sroa.7.8.copyload, 0
   %or.cond = select i1 %i.at, i1 true, i1 %i.au
@@ -2517,7 +2513,7 @@ bb.h:                                             ; preds = %.lr.ph71
   %i.ay = getelementptr inbounds nuw i8, ptr %i.aw, i64 8
   store i32 %.sroa.7.8.copyload, ptr %i.ay, align 8
   %.sroa.248.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.aw, i64 12
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.248.sroa.2.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.10, i64 12, i1 false)
+  store <12 x i8> %.sroa.10.sroa.0.0.copyload, ptr %.sroa.248.sroa.2.0..sroa_idx, align 4
   %.sroa.248.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.aw, i64 24
   store i64 %.sroa.1053.8.copyload, ptr %.sroa.248.sroa.3.0..sroa_idx, align 8, !tbaa !60
   store i8 1, ptr %i.ax, align 8, !tbaa !91

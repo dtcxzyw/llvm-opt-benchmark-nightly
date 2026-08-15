@@ -19,8 +19,6 @@ target triple = "x86_64-unknown-linux-gnu"
 define void @_RNvCspz30MYDFtM_7uu_link6uu_app(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([712 x i8]) align 8 captures(none) dereferenceable(712) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 _RINvMs0_NtNtCsgNwXemyrBWj_12clap_builder7builder7commandNtB6_7Command13help_templateNtNtB8_10styled_str9StyledStrECspz30MYDFtM_7uu_link.exit:
   %i.a = alloca [640 x i8], align 8               ; 58 uses
-  %.sroa.0 = alloca [80 x i8], align 8            ; 4 uses
-  %.sroa.983 = alloca [536 x i8], align 8         ; 4 uses
   %i.b = alloca [640 x i8], align 8               ; 6 uses
   %i.c = alloca [24 x i8], align 8                ; 6 uses
   %i.d = alloca [24 x i8], align 8                ; 6 uses
@@ -173,8 +171,6 @@ _RINvMs0_NtNtCsgNwXemyrBWj_12clap_builder7builder7commandNtB6_7Command13help_tem
   %.sroa.0.sroa.6.sroa.28.0..sroa.0.sroa.6.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.g, i64 696
   store <4 x i32> <i32 -1, i32 128, i32 128, i32 0>, ptr %.sroa.0.sroa.6.sroa.28.0..sroa.0.sroa.6.0..sroa_idx.sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.983)
   %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 576
   %i.p = getelementptr inbounds nuw i8, ptr %i.a, i64 584
   %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 488
@@ -329,13 +325,13 @@ bb.c:                                             ; preds = %_RNvMsG_NtCs7tKScEo
   store i64 3467203893602029906, ptr %.sroa.13.0..sroa_idx7.i.i, align 8, !noalias !65
   %i.ap = add i64 %i.ak, 1
   store i64 %i.ap, ptr %.sroa.661.sroa.5.0..sroa.661.0..sroa_idx.sroa_idx.i, align 8, !alias.scope !59, !noalias !62
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.0, ptr noundef nonnull align 8 dereferenceable(80) %i.a, i64 80, i1 false), !alias.scope !66
+  %.sroa.0.sroa.0.0.copyload = load <80 x i8>, ptr %i.a, align 8, !alias.scope !66
   %.sroa.474.0.copyload = load i64, ptr %i.t, align 8, !alias.scope !66
   %.sroa.677.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 88
   %.sroa.677.0.copyload = load ptr, ptr %.sroa.677.0..sroa_idx, align 8, !alias.scope !66 ; 4 uses
   %.sroa.880.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 96
   %.sroa.880.0.copyload = load ptr, ptr %.sroa.880.0..sroa_idx, align 8, !alias.scope !66 ; 4 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(536) %.sroa.983, ptr noundef nonnull align 8 dereferenceable(536) %i.u, i64 536, i1 false), !alias.scope !66
+  %.sroa.983.sroa.0.0.copyload = load <536 x i8>, ptr %i.u, align 8, !alias.scope !66
   call void @llvm.experimental.noalias.scope.decl(metadata !67)
   call void @llvm.experimental.noalias.scope.decl(metadata !70)
   %.sroa.474.0.copyload.off = add i64 %.sroa.474.0.copyload, -4
@@ -367,13 +363,11 @@ _RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9All
   br label %_RINvMs_NtNtCsgNwXemyrBWj_12clap_builder7builder3argNtB5_3Arg12value_parserNtNtB7_12value_parser11ValueParserECspz30MYDFtM_7uu_link.exit
 
 _RINvMs_NtNtCsgNwXemyrBWj_12clap_builder7builder3argNtB5_3Arg12value_parserNtNtB7_12value_parser11ValueParserECspz30MYDFtM_7uu_link.exit: ; preds = %bb.c, %bb.f, %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %i.b, ptr noundef nonnull align 8 dereferenceable(80) %.sroa.0, i64 80, i1 false), !alias.scope !82, !noalias !83
+  store <80 x i8> %.sroa.0.sroa.0.0.copyload, ptr %i.b, align 8, !alias.scope !82, !noalias !83
   %.sroa.474.0..sroa_idx75 = getelementptr inbounds nuw i8, ptr %i.b, i64 80
   store i64 2, ptr %.sroa.474.0..sroa_idx75, align 8, !alias.scope !82, !noalias !83
   %.sroa.983.0..sroa_idx84 = getelementptr inbounds nuw i8, ptr %i.b, i64 104
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(536) %.sroa.983.0..sroa_idx84, ptr noundef nonnull align 8 dereferenceable(536) %.sroa.983, i64 536, i1 false), !alias.scope !82, !noalias !83
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.983)
+  store <536 x i8> %.sroa.983.sroa.0.0.copyload, ptr %.sroa.983.0..sroa_idx84, align 8, !alias.scope !82, !noalias !83
   call void @_RNvMNtNtCsgNwXemyrBWj_12clap_builder7builder7commandNtB2_7Command12arg_internal(ptr noalias nofree noundef nonnull align 8 dereferenceable(712) %i.g, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(640) %i.b) #10
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(712) %0, ptr noundef nonnull align 8 dereferenceable(712) %i.g, i64 712, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)

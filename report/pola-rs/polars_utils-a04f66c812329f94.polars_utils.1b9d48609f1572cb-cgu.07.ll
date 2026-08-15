@@ -201,7 +201,6 @@ bb.a:
   %i.k = alloca [32 x i8], align 8                ; 9 uses
   %i.l = alloca [88 x i8], align 8                ; 16 uses
   %i.m = alloca [8 x i8], align 8                 ; 6 uses
-  %.sroa.537 = alloca [27 x i8], align 1          ; 4 uses
   %i.n = alloca [32 x i8], align 8                ; 5 uses
   %i.o = alloca [32 x i8], align 8                ; 5 uses
   %i.p = alloca [24 x i8], align 8                ; 5 uses
@@ -327,9 +326,9 @@ bb.m:                                             ; preds = %bb.l
           to label %bb.i unwind label %bb.bm, !dbg !335
 
 _RNvMsc_NtCs8RCgFHiPUyX_15crossbeam_deque5dequeINtB5_5BlockNtNtCs4BcJZGCY6Ba_10rayon_core3job6JobRefE3newCs2mZqlW55729_12polars_utils.exit: ; preds = %bb.k
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.537), !dbg !356
-  %.sroa.537.8..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.537, i64 3, !dbg !357
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(24) %.sroa.537.8..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %i.t, i64 24, i1 false), !dbg !357
+  %.sroa.537.sroa.0.3.copyload = load <24 x i8>, ptr %i.t, align 8, !dbg !356
+  %.sroa.537.sroa.0.3.vec.expand = shufflevector <24 x i8> %.sroa.537.sroa.0.3.copyload, <24 x i8> poison, <27 x i32> <i32 poison, i32 poison, i32 poison, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23>, !dbg !356
+  %.sroa.537.sroa.0.3.vecblend = shufflevector <27 x i8> %.sroa.537.sroa.0.3.vec.expand, <27 x i8> <i8 undef, i8 undef, i8 undef, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison>, <27 x i32> <i32 27, i32 28, i32 29, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26>, !dbg !356
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 24, !dbg !363 ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %1, i64 56, !dbg !373 ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %1, i64 72, !dbg !381 ; 2 uses
@@ -339,8 +338,7 @@ _RNvMsc_NtCs8RCgFHiPUyX_15crossbeam_deque5dequeINtB5_5BlockNtNtCs4BcJZGCY6Ba_10r
   %.sroa.12.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 472, !dbg !387
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.12.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(32) %i.n, i64 32, i1 false), !dbg !393
   %.sroa.0.sroa.9.sroa.5.0..sroa.0.sroa.9.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 389, !dbg !387
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(27) %.sroa.0.sroa.9.sroa.5.0..sroa.0.sroa.9.0..sroa_idx.sroa_idx, ptr noundef nonnull align 1 dereferenceable(27) %.sroa.537, i64 27, i1 false), !dbg !393
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.537), !dbg !335
+  store <27 x i8> %.sroa.537.sroa.0.3.vecblend, ptr %.sroa.0.sroa.9.sroa.5.0..sroa.0.sroa.9.0..sroa_idx.sroa_idx, align 1, !dbg !393
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n), !dbg !335
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p), !dbg !335
   store i64 1, ptr %i.d, align 128, !dbg !387
@@ -743,13 +741,13 @@ begin_hunk_1_@llvm.memset.p0.i64
 !353 = distinct !DILexicalBlock(scope: !339, file: !340, line: 1240, column: 9)
 !354 = !{!"branch_weights", !"expected", i32 1, i32 2000}
 !355 = !DILocation(line: 1243, column: 13, scope: !353, inlinedAt: !344)
-!356 = !DILocation(line: 275, column: 25, scope: !292)
-!357 = !DILocation(line: 351, column: 9, scope: !358, inlinedAt: !356)
-!358 = distinct !DISubprogram(name: "new<alloc::vec::Vec<crossbeam_deque::deque::Worker<rayon_core::job::JobRef>, alloc::alloc::Global>>", linkageName: "_RNvMs4_NtNtNtCsh8eZTKRCwoO_3std4sync6poison5mutexINtB5_5MutexINtNtCsgZ49sUHp3tW_5alloc3vec3VecINtNtCs8RCgFHiPUyX_15crossbeam_deque5deque6WorkerNtNtCs4BcJZGCY6Ba_10rayon_core3job6JobRefEEE3newCs2mZqlW55729_12polars_utils", scope: !360, file: !359, line: 350, type: !12, scopeLine: 350, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !13)
-!359 = !DIFile(filename: "library/std/src/sync/poison/mutex.rs", directory: "/rustc/48cc71ee88cd0f11217eced958b9930970da998b", checksumkind: CSK_MD5, checksum: "78bfced6bc07033bbd081e9ae0e8ed7e")
-!360 = !DINamespace(name: "Mutex", scope: !361)
-!361 = !DINamespace(name: "mutex", scope: !362)
-!362 = !DINamespace(name: "poison", scope: !91)
+!356 = !DILocation(line: 351, column: 9, scope: !357, inlinedAt: !362)
+!357 = distinct !DISubprogram(name: "new<alloc::vec::Vec<crossbeam_deque::deque::Worker<rayon_core::job::JobRef>, alloc::alloc::Global>>", linkageName: "_RNvMs4_NtNtNtCsh8eZTKRCwoO_3std4sync6poison5mutexINtB5_5MutexINtNtCsgZ49sUHp3tW_5alloc3vec3VecINtNtCs8RCgFHiPUyX_15crossbeam_deque5deque6WorkerNtNtCs4BcJZGCY6Ba_10rayon_core3job6JobRefEEE3newCs2mZqlW55729_12polars_utils", scope: !359, file: !358, line: 350, type: !12, scopeLine: 350, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !13)
+!358 = !DIFile(filename: "library/std/src/sync/poison/mutex.rs", directory: "/rustc/48cc71ee88cd0f11217eced958b9930970da998b", checksumkind: CSK_MD5, checksum: "78bfced6bc07033bbd081e9ae0e8ed7e")
+!359 = !DINamespace(name: "Mutex", scope: !360)
+!360 = !DINamespace(name: "mutex", scope: !361)
+!361 = !DINamespace(name: "poison", scope: !91)
+!362 = !DILocation(line: 275, column: 25, scope: !292)
 !363 = !DILocation(line: 929, column: 22, scope: !364, inlinedAt: !365)
 !364 = distinct !DISubprogram(name: "replace<core::option::Option<alloc::boxed::Box<(dyn core::ops::function::Fn<(alloc::boxed::Box<(dyn core::any::Any + core::marker::Send), alloc::alloc::Global>), Output=()> + core::marker::Send + core::marker::Sync), alloc::alloc::Global>>>", linkageName: "_RINvNtCscgRAwXFJnXP_4core3mem7replaceINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDINtNtNtB4_3ops8function2FnTIBW_DNtNtB4_3any3AnyNtNtB4_6marker4SendEL_EEEp6OutputuB2g_NtB2i_4SyncEL_EEECs2mZqlW55729_12polars_utils", scope: !19, file: !135, line: 915, type: !12, scopeLine: 915, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !13)
 !365 = !DILocation(line: 1901, column: 9, scope: !366, inlinedAt: !370)
@@ -1152,8 +1150,8 @@ begin_hunk_2_@llvm.memset.p0.i64
 !789 = !DINamespace(name: "UnsafeCell", scope: !790)
 !790 = !DINamespace(name: "cell", scope: !20)
 !791 = distinct !DILocation(line: 736, column: 39, scope: !792, inlinedAt: !794)
-!792 = distinct !DISubprogram(name: "deref_mut<bool>", linkageName: "_RNvXsb_NtNtNtCsh8eZTKRCwoO_3std4sync6poison5mutexINtB5_10MutexGuardbENtNtNtCscgRAwXFJnXP_4core3ops5deref8DerefMut9deref_mutCs2mZqlW55729_12polars_utils", scope: !793, file: !359, line: 735, type: !12, scopeLine: 735, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !13)
-!793 = !DINamespace(name: "{impl#13}", scope: !361)
+!792 = distinct !DISubprogram(name: "deref_mut<bool>", linkageName: "_RNvXsb_NtNtNtCsh8eZTKRCwoO_3std4sync6poison5mutexINtB5_10MutexGuardbENtNtNtCscgRAwXFJnXP_4core3ops5deref8DerefMut9deref_mutCs2mZqlW55729_12polars_utils", scope: !793, file: !358, line: 735, type: !12, scopeLine: 735, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !13)
+!793 = !DINamespace(name: "{impl#13}", scope: !360)
 !794 = distinct !DILocation(line: 264, column: 9, scope: !795, inlinedAt: !764)
 !795 = distinct !DILexicalBlock(scope: !760, file: !761, line: 263, column: 9)
 !796 = !DILocation(line: 264, column: 9, scope: !795, inlinedAt: !764)
@@ -1161,15 +1159,15 @@ begin_hunk_2_@llvm.memset.p0.i64
 !798 = !DILocation(line: 265, column: 19, scope: !795, inlinedAt: !764)
 !799 = !DILocation(line: 266, column: 5, scope: !760, inlinedAt: !764)
 !800 = !DILocation(line: 745, column: 13, scope: !801, inlinedAt: !803)
-!801 = distinct !DISubprogram(name: "drop<bool>", linkageName: "_RNvXsc_NtNtNtCsh8eZTKRCwoO_3std4sync6poison5mutexINtB5_10MutexGuardbENtNtNtCscgRAwXFJnXP_4core3ops4drop4Drop4dropCs2mZqlW55729_12polars_utils", scope: !802, file: !359, line: 743, type: !74, scopeLine: 743, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !13)
-!802 = !DINamespace(name: "{impl#14}", scope: !361)
+!801 = distinct !DISubprogram(name: "drop<bool>", linkageName: "_RNvXsc_NtNtNtCsh8eZTKRCwoO_3std4sync6poison5mutexINtB5_10MutexGuardbENtNtNtCscgRAwXFJnXP_4core3ops4drop4Drop4dropCs2mZqlW55729_12polars_utils", scope: !802, file: !358, line: 743, type: !74, scopeLine: 743, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !13)
+!802 = !DINamespace(name: "{impl#14}", scope: !360)
 !803 = distinct !DILocation(line: 810, column: 1, scope: !804, inlinedAt: !805)
 !804 = distinct !DISubprogram(name: "drop_in_place<std::sync::poison::mutex::MutexGuard<bool>>", linkageName: "_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtNtNtCsh8eZTKRCwoO_3std4sync6poison5mutex10MutexGuardbEECs2mZqlW55729_12polars_utils", scope: !62, file: !61, line: 810, type: !74, scopeLine: 810, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !13)
 !805 = distinct !DILocation(line: 266, column: 5, scope: !760, inlinedAt: !764)
 !806 = !DILocation(line: 129, column: 13, scope: !807, inlinedAt: !810)
 !807 = distinct !DISubprogram(name: "done", linkageName: "_RNvMNtNtCsh8eZTKRCwoO_3std4sync6poisonNtB2_4Flag4done", scope: !809, file: !808, line: 128, type: !74, scopeLine: 128, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !13)
 !808 = !DIFile(filename: "library/std/src/sync/poison.rs", directory: "/rustc/48cc71ee88cd0f11217eced958b9930970da998b", checksumkind: CSK_MD5, checksum: "2e3c11b46f6d3701d7040e42c871708c")
-!809 = !DINamespace(name: "Flag", scope: !362)
+!809 = !DINamespace(name: "Flag", scope: !361)
 !810 = distinct !DILocation(line: 745, column: 30, scope: !801, inlinedAt: !803)
 !811 = !DILocation(line: 3904, column: 24, scope: !812, inlinedAt: !813)
 !812 = distinct !DISubprogram(name: "atomic_load<usize>", linkageName: "_RINvNtNtCscgRAwXFJnXP_4core4sync6atomic11atomic_loadjECs2mZqlW55729_12polars_utils", scope: !72, file: !71, line: 3900, type: !12, scopeLine: 3900, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !13)

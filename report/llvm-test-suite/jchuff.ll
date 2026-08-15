@@ -204,10 +204,8 @@ emit_restart.exit.thread:                         ; preds = %bb.h, %bb.e, %bb.r,
 ; Function Attrs: nounwind uwtable
 define internal void @finish_pass_huff(ptr noundef %0) #0 {
 bb.a:
-  %.sroa.24 = alloca [20 x i8], align 4           ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 488
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !54   ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.24)
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 4 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !82   ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !83   ; 2 uses
@@ -218,7 +216,7 @@ bb.a:
   %.sroa.22.16..sroa_idx16 = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 2 uses
   %.sroa.22.16.copyload17 = load i32, ptr %.sroa.22.16..sroa_idx16, align 8, !tbaa !4 ; 4 uses
   %.sroa.24.16..sroa_idx18 = getelementptr inbounds nuw i8, ptr %i.b, i64 36 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.24, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.24.16..sroa_idx18, i64 20, i1 false), !tbaa.struct !106
+  %.sroa.24.sroa.0.0.copyload36 = load <20 x i8>, ptr %.sroa.24.16..sroa_idx18, align 4
   %i.i = icmp sgt i32 %.sroa.22.16.copyload17, 0
   br i1 %i.i, label %.lr.ph.i.i, label %flush_bits.exit
 
@@ -247,7 +245,7 @@ bb.c:                                             ; preds = %bb.b
   %i.t = load ptr, ptr %i.c, align 8, !tbaa !82   ; 3 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 24
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !95
-  %i.w = tail call i32 %i.v(ptr noundef %0) #8, !inline_history !107
+  %i.w = tail call i32 %i.v(ptr noundef %0) #8, !inline_history !106
   %.not.i.i.i = icmp eq i32 %i.w, 0
   br i1 %.not.i.i.i, label %bb.h, label %dump_buffer.exit.i.i
 
@@ -275,7 +273,7 @@ bb.f:                                             ; preds = %bb.e
   %i.af = load ptr, ptr %i.c, align 8, !tbaa !82  ; 3 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 24
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !95
-  %i.ai = tail call i32 %i.ah(ptr noundef %0) #8, !inline_history !107
+  %i.ai = tail call i32 %i.ah(ptr noundef %0) #8, !inline_history !106
   %.not.i37.i.i = icmp eq i32 %i.ai, 0
   br i1 %.not.i37.i.i, label %bb.h, label %dump_buffer.exit39.i.i
 
@@ -313,8 +311,7 @@ flush_bits.exit:                                  ; preds = %bb.g, %bb.a, %bb.h
   store i64 %.sroa.10.431, ptr %i.at, align 8, !tbaa !89
   store i64 %.sroa.18.029, ptr %i.h, align 8, !tbaa !35
   store i32 %.sroa.22.027, ptr %.sroa.22.16..sroa_idx16, align 8, !tbaa !4
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.24.16..sroa_idx18, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.24, i64 20, i1 false), !tbaa.struct !106
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.24)
+  store <20 x i8> %.sroa.24.sroa.0.0.copyload36, ptr %.sroa.24.16..sroa_idx18, align 4
   ret void
 }
 
@@ -455,6 +452,5 @@ attributes #8 = { nounwind }
 !103 = distinct !{!103, !32}
 !104 = distinct !{!104, !32}
 !105 = distinct !{!105, !32}
-!106 = !{i64 0, i64 16, !30}
-!107 = distinct !{null, null, null}
+!106 = distinct !{null, null, null}
 end_hunk_0

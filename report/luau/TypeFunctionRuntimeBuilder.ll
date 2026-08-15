@@ -203,7 +203,6 @@ _ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN4Luau20TypeFuncti
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local noundef ptr @_ZN4Luau14TypedAllocatorINS_23TypeFunctionTypePackVarEE8allocateIJNS_20TypeFunctionTypePackEEEEPS1_DpOT_(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef nonnull align 8 dereferenceable(40) %1) local_unnamed_addr #6 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.4 = alloca [16 x i8], align 8            ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 4 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !323  ; 2 uses
   %i.c = icmp ugt i64 %i.b, 681
@@ -227,13 +226,13 @@ _ZN4Luau7VariantIJNS_20TypeFunctionTypePackENS_28TypeFunctionVariadicTypePackENS
   %i.m = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %i.n = load <2 x ptr>, ptr %1, align 8, !tbaa !204
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %1, i8 0, i64 24, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4, ptr noundef nonnull align 8 dereferenceable(16) %i.l, i64 16, i1 false)
+  %.sroa.4.sroa.0.0.copyload = load <16 x i8>, ptr %i.l, align 8
   store i32 0, ptr %i.i, align 8, !tbaa !330
   store <2 x ptr> %i.n, ptr %i.m, align 8, !tbaa !204
   %i.o = getelementptr inbounds nuw i8, ptr %i.i, i64 24
   store ptr %i.k, ptr %i.o, align 8, !tbaa !222
   %i.p = getelementptr inbounds nuw i8, ptr %i.i, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.p, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4, i64 16, i1 false)
+  store <16 x i8> %.sroa.4.sroa.0.0.copyload, ptr %i.p, align 8
   %i.q = load i64, ptr %i.a, align 8, !tbaa !323
   %i.r = add i64 %i.q, 1
   store i64 %i.r, ptr %i.a, align 8, !tbaa !323
@@ -243,7 +242,6 @@ _ZN4Luau7VariantIJNS_20TypeFunctionTypePackENS_28TypeFunctionVariadicTypePackENS
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local noundef ptr @_ZN4Luau14TypedAllocatorINS_16TypeFunctionTypeEE8allocateIJNS_24TypeFunctionFunctionTypeEEEEPS1_DpOT_(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef nonnull align 8 dereferenceable(88) %1) local_unnamed_addr #6 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.7 = alloca [16 x i8], align 8            ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 4 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !196  ; 2 uses
   %i.c = icmp ugt i64 %i.b, 214
@@ -276,7 +274,7 @@ _ZN4Luau7VariantIJNS_25TypeFunctionPrimitiveTypeENS_19TypeFunctionAnyTypeENS_23T
   %i.u = getelementptr inbounds nuw i8, ptr %i.i, i64 32
   %i.v = load <2 x ptr>, ptr %i.l, align 8, !tbaa !329
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, i8 0, i64 24, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.7, ptr noundef nonnull align 8 dereferenceable(16) %i.n, i64 16, i1 false)
+  %.sroa.7.sroa.0.0.copyload = load <16 x i8>, ptr %i.n, align 8
   %i.w = load ptr, ptr %i.p, align 8, !tbaa !333
   %i.x = getelementptr inbounds nuw i8, ptr %i.i, i64 48
   %i.y = getelementptr inbounds nuw i8, ptr %i.i, i64 56
@@ -288,7 +286,7 @@ _ZN4Luau7VariantIJNS_25TypeFunctionPrimitiveTypeENS_19TypeFunctionAnyTypeENS_23T
   store ptr %i.k, ptr %i.t, align 8, !tbaa !222
   store <2 x ptr> %i.v, ptr %i.u, align 8, !tbaa !329
   store ptr %i.s, ptr %i.x, align 8, !tbaa !332
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.y, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.7, i64 16, i1 false)
+  store <16 x i8> %.sroa.7.sroa.0.0.copyload, ptr %i.y, align 8
   store <2 x ptr> %i.aa, ptr %i.z, align 8, !tbaa !334
   %i.ab = getelementptr inbounds nuw i8, ptr %i.i, i64 88
   store ptr %i.w, ptr %i.ab, align 8, !tbaa !333

@@ -204,8 +204,6 @@ bb.a:
   %i.a = alloca i64, align 8                      ; 5 uses
   %i.b = alloca i64, align 8                      ; 5 uses
   %2 = alloca %"struct.LIEF::ELF::CorePrPsInfo::info_t", align 8 ; 16 uses
-  %.sroa.16 = alloca [16 x i8], align 4           ; 4 uses
-  %.sroa.17 = alloca [80 x i8], align 4           ; 4 uses
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 13 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #23
@@ -230,8 +228,6 @@ bb.a:
   %i.m = ptrtoint ptr %i.l to i64
   %i.n = ptrtoint ptr %i.j to i64
   %i.o = sub i64 %i.m, %i.n
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.16)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.17)
   %i.p = icmp ult i64 %i.o, 124
   %.not = icmp eq ptr %i.j, null
   %or.cond = or i1 %.not, %i.p
@@ -249,8 +245,8 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.14.0..fca.0.extract.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.j, i64 44
   %.sroa.014.sroa.8.0.extract.shift = lshr i32 %.sroa.0.0.copyload, 24
   %.sroa.014.sroa.8.0.extract.trunc = trunc nuw i32 %.sroa.014.sroa.8.0.extract.shift to i8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.16, ptr noundef nonnull align 1 dereferenceable(16) %.sroa.13.0..fca.0.extract.i.sroa_idx, i64 16, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(80) %.sroa.17, ptr noundef nonnull align 1 dereferenceable(80) %.sroa.14.0..fca.0.extract.i.sroa_idx, i64 80, i1 false)
+  %.sroa.16.sroa.0.0.copyload172 = load <16 x i8>, ptr %.sroa.13.0..fca.0.extract.i.sroa_idx, align 1
+  %.sroa.17.sroa.0.0.copyload171 = load <80 x i8>, ptr %.sroa.14.0..fca.0.extract.i.sroa_idx, align 1
   %i.s = trunc i32 %.sroa.0.0.copyload to i16
   store i16 %i.s, ptr %2, align 8
   %i.t = and i32 %.sroa.0.0.copyload, 16711680
@@ -276,7 +272,7 @@ bb.b:                                             ; preds = %bb.a
   store ptr %i.ad, ptr %3, align 8, !tbaa !44
   %i.ae = load i64, ptr %i.b, align 8, !tbaa !43  ; 3 uses
   store i64 %i.ae, ptr %i.ac, align 8, !tbaa !24
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.ad, ptr noundef nonnull align 4 dereferenceable(16) %.sroa.16, i64 16, i1 false)
+  store <16 x i8> %.sroa.16.sroa.0.0.copyload172, ptr %i.ad, align 1
   %i.af = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 6 uses
   store i64 %i.ae, ptr %i.af, align 8, !tbaa !26
   %i.ag = load ptr, ptr %3, align 8, !tbaa !44
@@ -370,7 +366,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt
   store ptr %i.bb, ptr %4, align 8, !tbaa !44
   %i.bc = load i64, ptr %i.a, align 8, !tbaa !43  ; 3 uses
   store i64 %i.bc, ptr %i.ba, align 8, !tbaa !24
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(80) %i.bb, ptr noundef nonnull align 4 dereferenceable(80) %.sroa.17, i64 80, i1 false)
+  store <80 x i8> %.sroa.17.sroa.0.0.copyload171, ptr %i.bb, align 1
   %i.bd = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 6 uses
   store i64 %i.bc, ptr %i.bd, align 8, !tbaa !26
   %i.be = getelementptr inbounds nuw i8, ptr %i.bb, i64 %i.bc
@@ -517,8 +513,6 @@ _ZN4LIEF3ELF12CorePrPsInfo6info_tD2Ev.exit:       ; preds = %.thread, %._ZNKSt7_
   %.sink = phi i8 [ 1, %.thread ], [ 0, %._ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i_crit_edge ]
   %i.cr = getelementptr inbounds nuw i8, ptr %0, i64 104
   store i8 %.sink, ptr %i.cr, align 8, !tbaa !48
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.16)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.17)
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #23
   ret void
 }
@@ -529,8 +523,6 @@ bb.a:
   %i.a = alloca i64, align 8                      ; 5 uses
   %i.b = alloca i64, align 8                      ; 5 uses
   %2 = alloca %"struct.LIEF::ELF::CorePrPsInfo::info_t", align 8 ; 16 uses
-  %.sroa.16 = alloca [16 x i8], align 8           ; 4 uses
-  %.sroa.17 = alloca [80 x i8], align 8           ; 4 uses
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 13 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #23
@@ -555,8 +547,6 @@ bb.a:
   %i.m = ptrtoint ptr %i.l to i64
   %i.n = ptrtoint ptr %i.j to i64
   %i.o = sub i64 %i.m, %i.n
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.16)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.17)
   %i.p = icmp ult i64 %i.o, 136
   %.not = icmp eq ptr %i.j, null
   %or.cond = or i1 %.not, %i.p
@@ -574,8 +564,8 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.14.0..fca.0.extract.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.j, i64 56
   %.sroa.014.sroa.8.0.extract.shift = lshr i32 %.sroa.0.0.copyload, 24
   %.sroa.014.sroa.8.0.extract.trunc = trunc nuw i32 %.sroa.014.sroa.8.0.extract.shift to i8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.16, ptr noundef nonnull align 1 dereferenceable(16) %.sroa.13.0..fca.0.extract.i.sroa_idx, i64 16, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.17, ptr noundef nonnull align 1 dereferenceable(80) %.sroa.14.0..fca.0.extract.i.sroa_idx, i64 80, i1 false)
+  %.sroa.16.sroa.0.0.copyload173 = load <16 x i8>, ptr %.sroa.13.0..fca.0.extract.i.sroa_idx, align 1
+  %.sroa.17.sroa.0.0.copyload172 = load <80 x i8>, ptr %.sroa.14.0..fca.0.extract.i.sroa_idx, align 1
   %i.s = trunc i32 %.sroa.0.0.copyload to i16
   store i16 %i.s, ptr %2, align 8
   %i.t = and i32 %.sroa.0.0.copyload, 16711680
@@ -599,7 +589,7 @@ bb.b:                                             ; preds = %bb.a
   store ptr %i.ab, ptr %3, align 8, !tbaa !44
   %i.ac = load i64, ptr %i.b, align 8, !tbaa !43  ; 3 uses
   store i64 %i.ac, ptr %i.aa, align 8, !tbaa !24
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.ab, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.16, i64 16, i1 false)
+  store <16 x i8> %.sroa.16.sroa.0.0.copyload173, ptr %i.ab, align 1
   %i.ad = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 6 uses
   store i64 %i.ac, ptr %i.ad, align 8, !tbaa !26
   %i.ae = load ptr, ptr %3, align 8, !tbaa !44
@@ -693,7 +683,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt
   store ptr %i.az, ptr %4, align 8, !tbaa !44
   %i.ba = load i64, ptr %i.a, align 8, !tbaa !43  ; 3 uses
   store i64 %i.ba, ptr %i.ay, align 8, !tbaa !24
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(80) %i.az, ptr noundef nonnull align 8 dereferenceable(80) %.sroa.17, i64 80, i1 false)
+  store <80 x i8> %.sroa.17.sroa.0.0.copyload172, ptr %i.az, align 1
   %i.bb = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 6 uses
   store i64 %i.ba, ptr %i.bb, align 8, !tbaa !26
   %i.bc = getelementptr inbounds nuw i8, ptr %i.az, i64 %i.ba
@@ -840,8 +830,6 @@ _ZN4LIEF3ELF12CorePrPsInfo6info_tD2Ev.exit:       ; preds = %.thread, %._ZNKSt7_
   %.sink = phi i8 [ 1, %.thread ], [ 0, %._ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i_crit_edge ]
   %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 104
   store i8 %.sink, ptr %i.cp, align 8, !tbaa !48
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.16)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.17)
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #23
   ret void
 }
