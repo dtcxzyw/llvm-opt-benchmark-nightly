@@ -203,11 +203,11 @@ bb.a:
   %7 = alloca %struct.XLogReaderRoutine, align 8  ; 6 uses
   %i.h = alloca [3 x i64], align 16               ; 7 uses
   %i.i = alloca [3 x i8], align 1                 ; 7 uses
-  %.sroa.0.i = alloca [88 x i8], align 8          ; 3 uses
+  %.sroa.0.i.sroa.0 = alloca <88 x i8>, align 128 ; 3 uses
   %.sroa.3.i = alloca i32, align 8                ; 3 uses
   %.sroa.4.i.sroa.0 = alloca <3 x i32>, align 16  ; 3 uses
   %.sroa.410.i = alloca i64, align 8              ; 3 uses
-  %.sroa.9.i = alloca [184 x i8], align 8         ; 3 uses
+  %.sroa.9.i.sroa.0 = alloca <184 x i8>, align 256 ; 3 uses
   %i.j = alloca [64 x i8], align 16               ; 4 uses
   %i.k = alloca i32, align 4                      ; 5 uses
   %i.l = alloca i32, align 4                      ; 4 uses
@@ -515,11 +515,11 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae
   br label %ReadReplicationSlot.exit
 
 bb.ah:                                            ; preds = %bb.af
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.sroa.0)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.3.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4.i.sroa.0)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.410.i)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.9.i)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.9.i.sroa.0)
   %i.dl = call i8 asm sideeffect "\09lock\09\09\09\0A\09xchgb\09$0,$1\09\0A", "=q,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i8) %i.de, i8 1, ptr nonnull elementtype(i8) %i.de) #15, !srcloc !7
   %.not.i.i43 = icmp eq i8 %i.dl, 0
   br i1 %.not.i.i43, label %SpinLockAcquire.exit.i44, label %bb.ai
@@ -529,7 +529,8 @@ bb.ai:                                            ; preds = %bb.ah
   br label %SpinLockAcquire.exit.i44
 
 SpinLockAcquire.exit.i44:                         ; preds = %bb.ai, %bb.ah
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %.sroa.0.i, ptr nonnull align 8 %i.de, i64 88, i1 true)
+  %.sroa.0.i.sroa.0.0.copyload = load volatile <88 x i8>, ptr %i.de, align 8
+  store volatile <88 x i8> %.sroa.0.i.sroa.0.0.copyload, ptr %.sroa.0.i.sroa.0, align 128
   %.sroa.3.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.de, i64 88
   %.sroa.3.0.copyload.i = load volatile i32, ptr %.sroa.3.0..sroa_idx.i, align 8 ; 2 uses
   store volatile i32 %.sroa.3.0.copyload.i, ptr %.sroa.3.i, align 8
@@ -540,7 +541,8 @@ SpinLockAcquire.exit.i44:                         ; preds = %bb.ai, %bb.ah
   %.sroa.410.0.copyload.i = load volatile i64, ptr %.sroa.410.0..sroa_idx.i, align 8 ; 5 uses
   store volatile i64 %.sroa.410.0.copyload.i, ptr %.sroa.410.i, align 8
   %.sroa.9.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.de, i64 112
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %.sroa.9.i, ptr nonnull align 8 %.sroa.9.0..sroa_idx.i, i64 184, i1 true)
+  %.sroa.9.i.sroa.0.0.copyload = load volatile <184 x i8>, ptr %.sroa.9.0..sroa_idx.i, align 8
+  store volatile <184 x i8> %.sroa.9.i.sroa.0.0.copyload, ptr %.sroa.9.i.sroa.0, align 256
   call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #15, !srcloc !8
   store volatile i8 0, ptr %i.de, align 8
   %i.dn = load ptr, ptr @MainLWLockArray, align 8
@@ -604,11 +606,11 @@ bb.ao:                                            ; preds = %bb.an, %bb.am
   br label %.thread.i
 
 .thread.i:                                        ; preds = %bb.ao, %bb.ak
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.sroa.0)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.3.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4.i.sroa.0)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.410.i)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.9.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.9.i.sroa.0)
   br label %ReadReplicationSlot.exit
 
 ReadReplicationSlot.exit:                         ; preds = %bb.ag, %.thread.i

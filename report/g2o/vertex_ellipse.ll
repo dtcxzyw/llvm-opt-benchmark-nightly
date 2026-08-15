@@ -204,7 +204,6 @@ bb.a:
   %4 = alloca %"class.Eigen::Transpose.1169", align 8 ; 10 uses
   %5 = alloca %"class.Eigen::Transpose.1176", align 8 ; 15 uses
   %i.a = alloca float, align 4                    ; 4 uses
-  %.sroa.7115 = alloca [64 x i8], align 8         ; 2 uses
   %.sroa.23 = alloca %"class.Eigen::internal::BlockImpl_dense.163", align 8 ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.c = load i64, ptr %i.b, align 8, !tbaa !81   ; 5 uses
@@ -214,7 +213,6 @@ bb.a:
 
 .lr.ph187:                                        ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.sroa.7115.24..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.7115, i64 8
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %.sroa.5179.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 16
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 24
@@ -251,6 +249,7 @@ bb.a:
   ret void
 
 bb.b:                                             ; preds = %.lr.ph187, %.loopexit
+  %.sroa.7115.sroa.0.0 = phi <64 x i8> [ undef, %.lr.ph187 ], [ %.sroa.7115.sroa.0.1, %.loopexit ] ; 2 uses
   %indvar = phi i64 [ 0, %.lr.ph187 ], [ %indvar.next, %.loopexit ] ; 3 uses
   %.047186 = phi i64 [ %i.d, %.lr.ph187 ], [ %i.hh, %.loopexit ] ; 15 uses
   %i.m = shl i64 %indvar, 2
@@ -274,7 +273,9 @@ bb.c:                                             ; preds = %bb.b
   %i.y = load ptr, ptr %1, align 8, !tbaa !125, !noalias !483 ; 2 uses
   %.idx.i.i.i.i = shl nsw i64 %.047186, 3
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 %.idx.i.i.i.i ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %.sroa.7115.24..sroa_idx, ptr noundef nonnull align 8 dereferenceable(56) %1, i64 56, i1 false)
+  %.sroa.7115.sroa.0.8.copyload = load <56 x i8>, ptr %1, align 8
+  %.sroa.7115.sroa.0.8.vec.expand = shufflevector <56 x i8> %.sroa.7115.sroa.0.8.copyload, <56 x i8> poison, <64 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 32, i32 33, i32 34, i32 35, i32 36, i32 37, i32 38, i32 39, i32 40, i32 41, i32 42, i32 43, i32 44, i32 45, i32 46, i32 47, i32 48, i32 49, i32 50, i32 51, i32 52, i32 53, i32 54, i32 55>
+  %.sroa.7115.sroa.0.8.vecblend = shufflevector <64 x i8> %.sroa.7115.sroa.0.0, <64 x i8> %.sroa.7115.sroa.0.8.vec.expand, <64 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 72, i32 73, i32 74, i32 75, i32 76, i32 77, i32 78, i32 79, i32 80, i32 81, i32 82, i32 83, i32 84, i32 85, i32 86, i32 87, i32 88, i32 89, i32 90, i32 91, i32 92, i32 93, i32 94, i32 95, i32 96, i32 97, i32 98, i32 99, i32 100, i32 101, i32 102, i32 103, i32 104, i32 105, i32 106, i32 107, i32 108, i32 109, i32 110, i32 111, i32 112, i32 113, i32 114, i32 115, i32 116, i32 117, i32 118, i32 119, i32 120, i32 121, i32 122, i32 123, i32 124, i32 125, i32 126, i32 127> ; 3 uses
   %i.aa = getelementptr inbounds [4 x i8], ptr %i.z, i64 %.neg
   %i.ab = load i64, ptr %i.b, align 8, !tbaa !81, !noalias !486
   %i.ac = sub nsw i64 %i.ab, %i.s                 ; 2 uses
@@ -380,7 +381,7 @@ _ZN5Eigen7NoAliasINS_5BlockINS1_INS_6MatrixIfLin1ELin1ELi1ELin1ELin1EEELi1ELin1E
   store i64 %i.t, ptr %.sroa.8166.32..sroa_idx, align 8
   store ptr %i.z, ptr %.sroa.10168.32..sroa_idx, align 8
   store i64 %i.q, ptr %.sroa.11169.32..sroa_idx, align 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %.sroa.12170.32..sroa_idx, ptr noundef nonnull align 8 dereferenceable(64) %.sroa.7115, i64 64, i1 false)
+  store <64 x i8> %.sroa.7115.sroa.0.8.vecblend, ptr %.sroa.12170.32..sroa_idx, align 8
   store i64 0, ptr %.sroa.13171.32..sroa_idx, align 8
   store i64 %.047186, ptr %.sroa.14172.32..sroa_idx, align 8
   store i64 2, ptr %.sroa.15173.32..sroa_idx, align 8
@@ -678,6 +679,7 @@ _ZN5Eigen10MatrixBaseINS_5BlockINS1_INS_6MatrixIfLin1ELin1ELi1ELin1ELin1EEELi1EL
   br i1 %i.gy, label %.lr.ph, label %.loopexit, !llvm.loop !510
 
 .loopexit:                                        ; preds = %_ZN5Eigen10MatrixBaseINS_5BlockINS1_INS_6MatrixIfLin1ELin1ELi1ELin1ELin1EEELi1ELin1ELb1EEELi1ELin1ELb0EEEEpLINS_13CwiseBinaryOpINS_8internal17scalar_product_opIffEEKNS_14CwiseNullaryOpINS9_18scalar_constant_opIfEEKNS2_IfLi1ELin1ELi1ELi1ELin1EEEEEKS5_EEEERS5_RKNS0_IT_EE.exit, %_ZN5Eigen7NoAliasINS_5BlockINS1_INS_6MatrixIfLin1ELin1ELi1ELin1ELin1EEELi1ELin1ELb1EEELi1ELin1ELb0EEENS_10MatrixBaseEEaSINS_7ProductINS_13CwiseBinaryOpINS_8internal17scalar_product_opIffEEKNS_14CwiseNullaryOpINSB_18scalar_constant_opIfEEKNS2_IfLi1ELin1ELi1ELi1ELi2EEEEEKNS_9TransposeIKNS1_IKNS1_IKNS1_INS2_IfLi2ELi2ELi0ELi2ELi2EEELin1ELin1ELb0EEELin1ELi1ELb1EEELin1ELi1ELb0EEEEEEENS_14TriangularViewIKNS1_ISO_Lin1ELin1ELb0EEELj5EEELi0EEEEERS5_RKNS6_IT_EE.exit, %bb.b
+  %.sroa.7115.sroa.0.1 = phi <64 x i8> [ %.sroa.7115.sroa.0.0, %bb.b ], [ %.sroa.7115.sroa.0.8.vecblend, %_ZN5Eigen7NoAliasINS_5BlockINS1_INS_6MatrixIfLin1ELin1ELi1ELin1ELin1EEELi1ELin1ELb1EEELi1ELin1ELb0EEENS_10MatrixBaseEEaSINS_7ProductINS_13CwiseBinaryOpINS_8internal17scalar_product_opIffEEKNS_14CwiseNullaryOpINSB_18scalar_constant_opIfEEKNS2_IfLi1ELin1ELi1ELi1ELi2EEEEEKNS_9TransposeIKNS1_IKNS1_IKNS1_INS2_IfLi2ELi2ELi0ELi2ELi2EEELin1ELin1ELb0EEELin1ELi1ELb1EEELin1ELi1ELb0EEEEEEENS_14TriangularViewIKNS1_ISO_Lin1ELin1ELb0EEELj5EEELi0EEEEERS5_RKNS6_IT_EE.exit ], [ %.sroa.7115.sroa.0.8.vecblend, %_ZN5Eigen10MatrixBaseINS_5BlockINS1_INS_6MatrixIfLin1ELin1ELi1ELin1ELin1EEELi1ELin1ELb1EEELi1ELin1ELb0EEEEpLINS_13CwiseBinaryOpINS_8internal17scalar_product_opIffEEKNS_14CwiseNullaryOpINS9_18scalar_constant_opIfEEKNS2_IfLi1ELin1ELi1ELi1ELin1EEEEEKS5_EEEERS5_RKNS0_IT_EE.exit ]
   %i.gz = load ptr, ptr %2, align 8, !tbaa !378
   %i.ha = getelementptr inbounds nuw [4 x i8], ptr %i.gz, i64 %.047186
   %i.hb = load float, ptr %i.ha, align 4, !tbaa !19
@@ -700,7 +702,6 @@ bb.a:
   %4 = alloca %"class.Eigen::Transpose.1169", align 8 ; 10 uses
   %5 = alloca %"class.Eigen::Transpose.1176", align 8 ; 15 uses
   %i.a = alloca float, align 4                    ; 4 uses
-  %.sroa.7115 = alloca [64 x i8], align 8         ; 2 uses
   %.sroa.23 = alloca %"class.Eigen::internal::BlockImpl_dense.163", align 8 ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.c = load i64, ptr %i.b, align 8, !tbaa !81   ; 5 uses
@@ -710,7 +711,6 @@ bb.a:
 
 .lr.ph187:                                        ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.sroa.7115.24..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.7115, i64 8
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %.sroa.5179.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 16
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 24
@@ -747,6 +747,7 @@ bb.a:
   ret void
 
 bb.b:                                             ; preds = %.lr.ph187, %.loopexit
+  %.sroa.7115.sroa.0.0 = phi <64 x i8> [ undef, %.lr.ph187 ], [ %.sroa.7115.sroa.0.1, %.loopexit ] ; 2 uses
   %indvar = phi i64 [ 0, %.lr.ph187 ], [ %indvar.next, %.loopexit ] ; 3 uses
   %.047186 = phi i64 [ %i.d, %.lr.ph187 ], [ %i.hh, %.loopexit ] ; 15 uses
   %i.m = shl i64 %indvar, 2
@@ -770,7 +771,9 @@ bb.c:                                             ; preds = %bb.b
   %i.y = load ptr, ptr %1, align 8, !tbaa !125, !noalias !512 ; 2 uses
   %.idx.i.i.i.i = shl nsw i64 %.047186, 3
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 %.idx.i.i.i.i ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %.sroa.7115.24..sroa_idx, ptr noundef nonnull align 8 dereferenceable(56) %1, i64 56, i1 false)
+  %.sroa.7115.sroa.0.8.copyload = load <56 x i8>, ptr %1, align 8
+  %.sroa.7115.sroa.0.8.vec.expand = shufflevector <56 x i8> %.sroa.7115.sroa.0.8.copyload, <56 x i8> poison, <64 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 32, i32 33, i32 34, i32 35, i32 36, i32 37, i32 38, i32 39, i32 40, i32 41, i32 42, i32 43, i32 44, i32 45, i32 46, i32 47, i32 48, i32 49, i32 50, i32 51, i32 52, i32 53, i32 54, i32 55>
+  %.sroa.7115.sroa.0.8.vecblend = shufflevector <64 x i8> %.sroa.7115.sroa.0.0, <64 x i8> %.sroa.7115.sroa.0.8.vec.expand, <64 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 72, i32 73, i32 74, i32 75, i32 76, i32 77, i32 78, i32 79, i32 80, i32 81, i32 82, i32 83, i32 84, i32 85, i32 86, i32 87, i32 88, i32 89, i32 90, i32 91, i32 92, i32 93, i32 94, i32 95, i32 96, i32 97, i32 98, i32 99, i32 100, i32 101, i32 102, i32 103, i32 104, i32 105, i32 106, i32 107, i32 108, i32 109, i32 110, i32 111, i32 112, i32 113, i32 114, i32 115, i32 116, i32 117, i32 118, i32 119, i32 120, i32 121, i32 122, i32 123, i32 124, i32 125, i32 126, i32 127> ; 3 uses
   %i.aa = getelementptr inbounds [4 x i8], ptr %i.z, i64 %.neg
   %i.ab = load i64, ptr %i.b, align 8, !tbaa !81, !noalias !515
   %i.ac = sub nsw i64 %i.ab, %i.s                 ; 2 uses
@@ -876,7 +879,7 @@ _ZN5Eigen7NoAliasINS_5BlockINS1_INS_6MatrixIfLin1ELin1ELi1ELin1ELin1EEELi1ELin1E
   store i64 %i.t, ptr %.sroa.8166.32..sroa_idx, align 8
   store ptr %i.z, ptr %.sroa.10168.32..sroa_idx, align 8
   store i64 %i.q, ptr %.sroa.11169.32..sroa_idx, align 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %.sroa.12170.32..sroa_idx, ptr noundef nonnull align 8 dereferenceable(64) %.sroa.7115, i64 64, i1 false)
+  store <64 x i8> %.sroa.7115.sroa.0.8.vecblend, ptr %.sroa.12170.32..sroa_idx, align 8
   store i64 0, ptr %.sroa.13171.32..sroa_idx, align 8
   store i64 %.047186, ptr %.sroa.14172.32..sroa_idx, align 8
   store i64 2, ptr %.sroa.15173.32..sroa_idx, align 8
@@ -1174,6 +1177,7 @@ _ZN5Eigen10MatrixBaseINS_5BlockINS1_INS_6MatrixIfLin1ELin1ELi1ELin1ELin1EEELi1EL
   br i1 %i.gy, label %.lr.ph, label %.loopexit, !llvm.loop !538
 
 .loopexit:                                        ; preds = %_ZN5Eigen10MatrixBaseINS_5BlockINS1_INS_6MatrixIfLin1ELin1ELi1ELin1ELin1EEELi1ELin1ELb1EEELi1ELin1ELb0EEEEpLINS_13CwiseBinaryOpINS_8internal17scalar_product_opIffEEKNS_14CwiseNullaryOpINS9_18scalar_constant_opIfEEKNS2_IfLi1ELin1ELi1ELi1ELin1EEEEEKS5_EEEERS5_RKNS0_IT_EE.exit, %_ZN5Eigen7NoAliasINS_5BlockINS1_INS_6MatrixIfLin1ELin1ELi1ELin1ELin1EEELi1ELin1ELb1EEELi1ELin1ELb0EEENS_10MatrixBaseEEaSINS_7ProductINS_13CwiseBinaryOpINS_8internal17scalar_product_opIffEEKNS_14CwiseNullaryOpINSB_18scalar_constant_opIfEEKNS2_IfLi1ELin1ELi1ELi1ELi2EEEEEKNS_9TransposeIKNS1_IKNS1_IKNS1_INS2_IfLi2ELi2ELi0ELi2ELi2EEELin1ELin1ELb0EEELin1ELi1ELb1EEELin1ELi1ELb0EEEEEEENS_14TriangularViewIKNS1_ISO_Lin1ELin1ELb0EEELj5EEELi0EEEEERS5_RKNS6_IT_EE.exit, %bb.b
+  %.sroa.7115.sroa.0.1 = phi <64 x i8> [ %.sroa.7115.sroa.0.0, %bb.b ], [ %.sroa.7115.sroa.0.8.vecblend, %_ZN5Eigen7NoAliasINS_5BlockINS1_INS_6MatrixIfLin1ELin1ELi1ELin1ELin1EEELi1ELin1ELb1EEELi1ELin1ELb0EEENS_10MatrixBaseEEaSINS_7ProductINS_13CwiseBinaryOpINS_8internal17scalar_product_opIffEEKNS_14CwiseNullaryOpINSB_18scalar_constant_opIfEEKNS2_IfLi1ELin1ELi1ELi1ELi2EEEEEKNS_9TransposeIKNS1_IKNS1_IKNS1_INS2_IfLi2ELi2ELi0ELi2ELi2EEELin1ELin1ELb0EEELin1ELi1ELb1EEELin1ELi1ELb0EEEEEEENS_14TriangularViewIKNS1_ISO_Lin1ELin1ELb0EEELj5EEELi0EEEEERS5_RKNS6_IT_EE.exit ], [ %.sroa.7115.sroa.0.8.vecblend, %_ZN5Eigen10MatrixBaseINS_5BlockINS1_INS_6MatrixIfLin1ELin1ELi1ELin1ELin1EEELi1ELin1ELb1EEELi1ELin1ELb0EEEEpLINS_13CwiseBinaryOpINS_8internal17scalar_product_opIffEEKNS_14CwiseNullaryOpINS9_18scalar_constant_opIfEEKNS2_IfLi1ELin1ELi1ELi1ELin1EEEEEKS5_EEEERS5_RKNS0_IT_EE.exit ]
   %i.gz = load ptr, ptr %2, align 8, !tbaa !378
   %i.ha = getelementptr inbounds nuw [4 x i8], ptr %i.gz, i64 %.047186
   %i.hb = load float, ptr %i.ha, align 4, !tbaa !19

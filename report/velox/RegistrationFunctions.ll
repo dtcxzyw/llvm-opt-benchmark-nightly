@@ -204,7 +204,7 @@ _ZNSt12_Vector_baseISt4pairInnESaIS1_EED2Ev.exit: ; preds = %bb.a, %bb.b
 define linkonce_odr void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPSt5tupleIJnaEESt6vectorIS3_SaIS3_EEEElNS0_5__ops15_Iter_comp_iterIZN8facebook5velox9functions24IPPrefixCollapseFunctionINSC_4exec10VectorExecEE4callERNSF_11ArrayWriterINSC_10CustomTypeINSC_9IPPrefixTELb0EEEEERKNSF_9ArrayViewILb1ESL_EEEUlRKT_RKT0_E_EEEvSS_SS_SV_T1_(ptr %0, ptr %1, i64 noundef %2) local_unnamed_addr #0 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %"class.std::tuple.1964", align 16  ; 5 uses
-  %.sroa.4.i.i.i = alloca [31 x i8], align 1      ; 3 uses
+  %.sroa.4.i.i.i.sroa.0 = alloca <31 x i8>, align 32 ; 4 uses
   %4 = alloca %"class.std::tuple.1964", align 16  ; 5 uses
   %i.a = ptrtoint ptr %0 to i64                   ; 3 uses
   %i.b = ptrtoint ptr %1 to i64
@@ -245,20 +245,21 @@ bb.c:                                             ; preds = %bb.c, %._crit_edge
 
 .lr.ph.i.i:                                       ; preds = %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
-  %.sroa.4.16..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.4.i.i.i, i64 15 ; 2 uses
-  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.q = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %.sroa.4.16..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %i.p = getelementptr inbounds nuw i8, ptr %.sroa.4.i.i.i.sroa.0, i64 15
+  %i.q = getelementptr inbounds nuw i8, ptr %.sroa.4.i.i.i.sroa.0, i64 15
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.d, %.lr.ph.i.i
   %.sroa.0.05.i.i = phi ptr [ %storemerge22.lcssa, %.lr.ph.i.i ], [ %i.r, %bb.d ] ; 2 uses
   %i.r = getelementptr inbounds i8, ptr %.sroa.0.05.i.i, i64 -32 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4.i.i.i)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4.i.i.i.sroa.0)
   %i.s = load i8, ptr %i.r, align 1, !tbaa !27
   %i.t = getelementptr inbounds i8, ptr %.sroa.0.05.i.i, i64 -16 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %.sroa.4.16..sroa_idx.i.i.i, ptr noundef nonnull align 16 dereferenceable(16) %i.t, i64 16, i1 false), !tbaa.struct !5190
-  %i.u = load i128, ptr %i.p, align 16, !tbaa !560
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.p, ptr noundef nonnull align 16 dereferenceable(16) %i.t, i64 16, i1 false), !tbaa.struct !5190
+  %i.u = load i128, ptr %5, align 16, !tbaa !560
   store i128 %i.u, ptr %i.t, align 16, !tbaa !560
   %i.v = load i8, ptr %0, align 16, !tbaa !27
   store i8 %i.v, ptr %i.r, align 16, !tbaa !27
@@ -266,9 +267,9 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph.i.i
   %i.x = sub i64 %i.w, %i.a                       ; 2 uses
   %i.y = ashr exact i64 %i.x, 5
   store i8 %i.s, ptr %4, align 16, !tbaa !27
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.q, ptr noundef nonnull align 1 dereferenceable(16) %.sroa.4.16..sroa_idx.i.i.i, i64 16, i1 false), !tbaa.struct !5190
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %.sroa.4.16..sroa_idx.i.i.i, ptr noundef nonnull align 1 dereferenceable(16) %i.q, i64 16, i1 false), !tbaa.struct !5190
   call void @_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPSt5tupleIJnaEESt6vectorIS3_SaIS3_EEEElS3_NS0_5__ops15_Iter_comp_iterIZN8facebook5velox9functions24IPPrefixCollapseFunctionINSC_4exec10VectorExecEE4callERNSF_11ArrayWriterINSC_10CustomTypeINSC_9IPPrefixTELb0EEEEERKNSF_9ArrayViewILb1ESL_EEEUlRKT_RKT0_E_EEEvSS_SV_SV_T1_T2_(ptr nonnull %0, i64 noundef 0, i64 noundef %i.y, ptr noundef nonnull align 16 dead_on_return %4)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4.i.i.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4.i.i.i.sroa.0)
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
   %i.z = icmp sgt i64 %i.x, 32
   br i1 %i.z, label %bb.d, label %_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPSt5tupleIJnaEESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterIZN8facebook5velox9functions24IPPrefixCollapseFunctionINSC_4exec10VectorExecEE4callERNSF_11ArrayWriterINSC_10CustomTypeINSC_9IPPrefixTELb0EEEEERKNSF_9ArrayViewILb1ESL_EEEUlRKT_RKT0_E_EEEvSS_SS_SS_SV_.exit, !llvm.loop !5237

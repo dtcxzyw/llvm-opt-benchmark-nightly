@@ -203,8 +203,7 @@ bb.a:
   %8 = alloca %struct.gr_info, align 8            ; 4 uses
   %9 = alloca %struct.gr_info, align 8            ; 4 uses
   %10 = alloca %struct.III_scalefac_t, align 4    ; 4 uses
-  %11 = alloca [576 x i32], align 16              ; 4 uses
-  %12 = alloca %struct.III_psy_xmin, align 8      ; 7 uses
+  %11 = alloca %struct.III_psy_xmin, align 8      ; 7 uses
   %i.a = alloca [2 x [2 x i32]], align 16         ; 10 uses
   %i.b = alloca [4 x double], align 16            ; 8 uses
   %i.c = alloca [15 x i32], align 16              ; 6 uses
@@ -213,8 +212,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %8)
   call void @llvm.lifetime.start.p0(ptr nonnull %9)
   call void @llvm.lifetime.start.p0(ptr nonnull %10)
-  call void @llvm.lifetime.start.p0(ptr nonnull %11)
-  call void @llvm.lifetime.start.p0(ptr nonnull %12) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %11) #11
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #11
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #11
@@ -285,6 +283,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph407, %._crit_edge400
+  %.sroa.0.0 = phi <576 x i32> [ undef, %.lr.ph407 ], [ %.sroa.0.5, %._crit_edge400 ] ; 2 uses
   %indvars.iv466 = phi i64 [ 0, %.lr.ph407 ], [ %indvars.iv.next467, %._crit_edge400 ] ; 9 uses
   %.0284405 = phi i32 [ 0, %.lr.ph407 ], [ %.1285.lcssa, %._crit_edge400 ] ; 2 uses
   %.0304403 = phi i32 [ 0, %.lr.ph407 ], [ %.1305.lcssa, %._crit_edge400 ] ; 2 uses
@@ -317,6 +316,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph399, %bb.v
+  %.sroa.0.1 = phi <576 x i32> [ %.sroa.0.0, %.lr.ph399 ], [ %.sroa.0.4, %bb.v ] ; 2 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph399 ], [ %indvars.iv.next, %bb.v ] ; 12 uses
   %.1285397 = phi i32 [ %.0284405, %.lr.ph399 ], [ %.3, %bb.v ]
   %.1305394 = phi i32 [ %.0304403, %.lr.ph399 ], [ %.2306, %bb.v ] ; 2 uses
@@ -490,7 +490,7 @@ init_outer_loop.exit.thread354:                   ; preds = %.thread.i, %.thread
   %i.ev = fptrunc double %i.eu to float
   store float %i.ev, ptr @masking_lower, align 4, !tbaa !43
   %i.ew = getelementptr inbounds nuw [976 x i8], ptr %i.ar, i64 %indvars.iv ; 2 uses
-  %i.ex = call i32 @calc_xmin(ptr noundef %0, ptr noundef nonnull %i.au, ptr noundef %i.ew, ptr noundef nonnull %i.at, ptr noundef nonnull %12) #11
+  %i.ex = call i32 @calc_xmin(ptr noundef %0, ptr noundef nonnull %i.au, ptr noundef %i.ew, ptr noundef nonnull %i.at, ptr noundef nonnull %11) #11
   %i.ey = icmp eq i32 %i.ex, 0                    ; 2 uses
   %spec.select = select i1 %i.ey, i32 125, i32 %.0300.lcssa ; 2 uses
   %spec.select328 = select i1 %i.ey, i32 1, i32 %.1285397
@@ -534,6 +534,7 @@ bb.l:                                             ; preds = %bb.k, %init_outer_l
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.r, %bb.l
+  %.sroa.0.2 = phi <576 x i32> [ %.sroa.0.1, %bb.l ], [ %.sroa.0.3, %bb.r ] ; 2 uses
   %.0298 = phi i32 [ %i.fw, %bb.l ], [ %.1299362369, %bb.r ] ; 5 uses
   %.0280 = phi i32 [ %i.fz, %bb.l ], [ %.2282, %bb.r ] ; 3 uses
   %.0 = phi i32 [ %i.fy, %bb.l ], [ %.2, %bb.r ]  ; 6 uses
@@ -562,8 +563,8 @@ bb.o:                                             ; preds = %bb.m
   %i.gr = call double @pow(double noundef 1.000000e+01, double noundef %i.gq) #11, !tbaa !4
   %i.gs = fptrunc double %i.gr to float
   store float %i.gs, ptr @masking_lower, align 4, !tbaa !43
-  %i.gt = call i32 @calc_xmin(ptr noundef %0, ptr noundef nonnull %i.au, ptr noundef %i.ew, ptr noundef nonnull %i.at, ptr noundef nonnull %12) #11 ; 0 uses
-  call void @outer_loop(ptr noundef %0, ptr noundef nonnull %i.au, i32 noundef %.0, ptr noundef nonnull %i.b, ptr noundef nonnull %12, ptr noundef %i.ga, ptr noundef %i.gb, ptr noundef nonnull %i.at, ptr nonnull poison, i32 noundef %i.gc)
+  %i.gt = call i32 @calc_xmin(ptr noundef %0, ptr noundef nonnull %i.au, ptr noundef %i.ew, ptr noundef nonnull %i.at, ptr noundef nonnull %11) #11 ; 0 uses
+  call void @outer_loop(ptr noundef %0, ptr noundef nonnull %i.au, i32 noundef %.0, ptr noundef nonnull %i.b, ptr noundef nonnull %11, ptr noundef %i.ga, ptr noundef %i.gb, ptr noundef nonnull %i.at, ptr nonnull poison, i32 noundef %i.gc)
   %i.gu = load double, ptr %i.b, align 16, !tbaa !14
   %i.gv = fptosi double %i.gu to i32
   %i.gw = load double, ptr %i.ae, align 8, !tbaa !14
@@ -581,7 +582,7 @@ bb.o:                                             ; preds = %bb.m
 bb.p:                                             ; preds = %bb.o
   %i.hc = load i32, ptr %i.at, align 8, !tbaa !35
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(244) %10, ptr noundef nonnull align 4 dereferenceable(244) %i.gb, i64 244, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(2304) %11, ptr noundef nonnull align 4 dereferenceable(2304) %i.ga, i64 2304, i1 false)
+  %.sroa.0.0.copyload600 = load <576 x i32>, ptr %i.ga, align 4
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %8, ptr noundef nonnull align 8 dereferenceable(120) %i.at, i64 120, i1 false)
   %i.hd = sub nsw i32 %.0, %.0298
   br label %bb.r
@@ -591,8 +592,9 @@ bb.q:                                             ; preds = %bb.o
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.p, %bb.q, %bb.n
-  %.2282 = phi i32 [ %.0280, %bb.n ], [ %i.hc, %bb.p ], [ %.0280, %bb.q ] ; 2 uses
-  %.2 = phi i32 [ %i.gd, %bb.n ], [ %i.hd, %bb.p ], [ %i.he, %bb.q ]
+  %.sroa.0.3 = phi <576 x i32> [ %.sroa.0.2, %bb.q ], [ %.sroa.0.0.copyload600, %bb.p ], [ %.sroa.0.2, %bb.n ] ; 3 uses
+  %.2282 = phi i32 [ %.0280, %bb.q ], [ %i.hc, %bb.p ], [ %.0280, %bb.n ] ; 2 uses
+  %.2 = phi i32 [ %i.he, %bb.q ], [ %i.hd, %bb.p ], [ %i.gd, %bb.n ]
   %.1299362369 = lshr i32 %.0298, 1
   %i.hf = icmp sgt i32 %.0298, 21
   br i1 %i.hf, label %bb.m, label %bb.s, !llvm.loop !49
@@ -604,7 +606,7 @@ bb.s:                                             ; preds = %bb.r
 bb.t:                                             ; preds = %bb.s
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %i.at, ptr noundef nonnull align 8 dereferenceable(120) %8, i64 120, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(244) %i.gb, ptr noundef nonnull align 4 dereferenceable(244) %10, i64 244, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(2304) %i.ga, ptr noundef nonnull align 16 dereferenceable(2304) %11, i64 2304, i1 false)
+  store <576 x i32> %.sroa.0.3, ptr %i.ga, align 4
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %bb.s
@@ -615,6 +617,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.u, %init_outer_loop.exit.thread
+  %.sroa.0.4 = phi <576 x i32> [ %.sroa.0.3, %bb.u ], [ %.sroa.0.1, %init_outer_loop.exit.thread ] ; 2 uses
   %.2306 = phi i32 [ %i.hi, %bb.u ], [ %.1305394, %init_outer_loop.exit.thread ] ; 2 uses
   %.3 = phi i32 [ %spec.select328, %bb.u ], [ 1, %init_outer_loop.exit.thread ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
@@ -622,6 +625,7 @@ bb.v:                                             ; preds = %bb.u, %init_outer_l
   br i1 %exitcond.not, label %._crit_edge400, label %bb.h, !llvm.loop !50
 
 ._crit_edge400:                                   ; preds = %bb.v, %bb.g
+  %.sroa.0.5 = phi <576 x i32> [ %.sroa.0.0, %bb.g ], [ %.sroa.0.4, %bb.v ]
   %.1305.lcssa = phi i32 [ %.0304403, %bb.g ], [ %.2306, %bb.v ] ; 4 uses
   %.1285.lcssa = phi i32 [ %.0284405, %bb.g ], [ %.3, %bb.v ] ; 2 uses
   %indvars.iv.next467 = add nuw nsw i64 %indvars.iv466, 1 ; 2 uses
@@ -1024,11 +1028,11 @@ init_outer_loop.exit351.thread359:                ; preds = %.thread.i333, %.thr
   %i.qq = fptrunc double %i.qp to float
   store float %i.qq, ptr @masking_lower, align 4, !tbaa !43
   %i.qr = getelementptr inbounds nuw [976 x i8], ptr %i.lw, i64 %indvars.iv494
-  %i.qs = call i32 @calc_xmin(ptr noundef %0, ptr noundef nonnull %i.mh, ptr noundef %i.qr, ptr noundef nonnull %i.mg, ptr noundef nonnull %12) #11 ; 0 uses
+  %i.qs = call i32 @calc_xmin(ptr noundef %0, ptr noundef nonnull %i.mh, ptr noundef %i.qr, ptr noundef nonnull %i.mg, ptr noundef nonnull %11) #11 ; 0 uses
   %i.qt = getelementptr inbounds nuw [2304 x i8], ptr %i.lu, i64 %indvars.iv494
   %i.qu = getelementptr inbounds nuw [244 x i8], ptr %i.lt, i64 %indvars.iv494
   %i.qv = trunc nuw nsw i64 %indvars.iv494 to i32
-  call void @outer_loop(ptr noundef %0, ptr noundef nonnull %i.mh, i32 noundef %i.qc, ptr noundef nonnull %i.b, ptr noundef nonnull %12, ptr noundef %i.qt, ptr noundef %i.qu, ptr noundef nonnull %i.mg, ptr nonnull poison, i32 noundef %i.qv)
+  call void @outer_loop(ptr noundef %0, ptr noundef nonnull %i.mh, i32 noundef %i.qc, ptr noundef nonnull %i.b, ptr noundef nonnull %11, ptr noundef %i.qt, ptr noundef %i.qu, ptr noundef nonnull %i.mg, ptr nonnull poison, i32 noundef %i.qv)
   br label %bb.ad
 
 bb.ad:                                            ; preds = %bb.z, %init_outer_loop.exit351.thread359, %init_outer_loop.exit351.thread
@@ -1188,8 +1192,7 @@ bb.am:                                            ; preds = %bb.al
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
-  call void @llvm.lifetime.end.p0(ptr nonnull %12) #11
-  call void @llvm.lifetime.end.p0(ptr nonnull %11)
+  call void @llvm.lifetime.end.p0(ptr nonnull %11) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %10)
   call void @llvm.lifetime.end.p0(ptr nonnull %9)
   call void @llvm.lifetime.end.p0(ptr nonnull %8)

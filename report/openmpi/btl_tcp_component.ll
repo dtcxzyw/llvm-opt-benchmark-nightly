@@ -203,9 +203,7 @@ declare i32 @opal_ifnametokindex(ptr noundef) local_unnamed_addr #3
 define internal fastcc void @mca_btl_tcp_create(i32 noundef %0, ptr noundef nonnull %1) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [256 x i8], align 16              ; 10 uses
-  %.sroa.6 = alloca [126 x i8], align 2           ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6)
   %i.b = load volatile ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_if_list, i64 32), align 8, !tbaa !73 ; 4 uses
   %.not.not109 = icmp eq ptr %i.b, getelementptr inbounds nuw (i8, ptr @opal_if_list, i64 16)
   br i1 %.not.not109, label %.critedge, label %.lr.ph
@@ -227,20 +225,16 @@ bb.a:
   br i1 %.not97.us, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %.lr.ph.split.us.split
-  %2 = getelementptr inbounds nuw i8, ptr %.094110.us, i64 72
-  %3 = load i32, ptr %2, align 8, !tbaa !156
   %i.g = getelementptr inbounds nuw i8, ptr %.094110.us, i64 88
   %.sroa.0.0.copyload.us = load i16, ptr %i.g, align 8
-  %.sroa.6.0..sroa_idx.us = getelementptr inbounds nuw i8, ptr %.094110.us, i64 90
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(126) %.sroa.6, ptr noundef nonnull align 2 dereferenceable(126) %.sroa.6.0..sroa_idx.us, i64 126, i1 false)
   %i.h = icmp eq i16 %.sroa.0.0.copyload.us, 10
-  br i1 %i.h, label %.split.us, label %bb.c
+  br i1 %i.h, label %.split.us.loopexit15, label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %.lr.ph.split.us.split
   %i.i = getelementptr inbounds nuw i8, ptr %.094110.us, i64 16
   %i.j = load volatile ptr, ptr %i.i, align 8, !tbaa !66 ; 2 uses
   %.not.not.us = icmp eq ptr %i.j, getelementptr inbounds nuw (i8, ptr @opal_if_list, i64 16)
-  br i1 %.not.not.us, label %.critedge, label %.lr.ph.split.us.split, !llvm.loop !157
+  br i1 %.not.not.us, label %.critedge, label %.lr.ph.split.us.split, !llvm.loop !156
 
 .lr.ph.split.split.us:                            ; preds = %.lr.ph, %bb.e
   %.094110.us113 = phi ptr [ %i.q, %bb.e ], [ %i.b, %.lr.ph ] ; 6 uses
@@ -251,23 +245,19 @@ bb.c:                                             ; preds = %bb.b, %.lr.ph.split
   br i1 %.not97.us114, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %.lr.ph.split.split.us
-  %4 = getelementptr inbounds nuw i8, ptr %.094110.us113, i64 72
-  %5 = load i32, ptr %4, align 8, !tbaa !156
   %i.n = getelementptr inbounds nuw i8, ptr %.094110.us113, i64 88
   %.sroa.0.0.copyload.us115 = load i16, ptr %i.n, align 8
-  %.sroa.6.0..sroa_idx.us116 = getelementptr inbounds nuw i8, ptr %.094110.us113, i64 90
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(126) %.sroa.6, ptr noundef nonnull align 2 dereferenceable(126) %.sroa.6.0..sroa_idx.us116, i64 126, i1 false)
   %i.o = icmp eq i16 %.sroa.0.0.copyload.us115, 2
-  br i1 %i.o, label %.split.us, label %bb.e
+  br i1 %i.o, label %.split.us.loopexit19, label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %.lr.ph.split.split.us
   %i.p = getelementptr inbounds nuw i8, ptr %.094110.us113, i64 16
   %i.q = load volatile ptr, ptr %i.p, align 8, !tbaa !66 ; 2 uses
   %.not.not.us118 = icmp eq ptr %i.q, getelementptr inbounds nuw (i8, ptr @opal_if_list, i64 16)
-  br i1 %.not.not.us118, label %.critedge, label %.lr.ph.split.split.us, !llvm.loop !157
+  br i1 %.not.not.us118, label %.critedge, label %.lr.ph.split.split.us, !llvm.loop !156
 
 .lr.ph.split.split:                               ; preds = %.lr.ph, %bb.g
-  %.094110 = phi ptr [ %i.w, %bb.g ], [ %i.b, %.lr.ph ] ; 7 uses
+  %.094110 = phi ptr [ %i.w, %bb.g ], [ %i.b, %.lr.ph ] ; 6 uses
   %i.r = getelementptr inbounds nuw i8, ptr %.094110, i64 76
   %i.s = load i16, ptr %i.r, align 4, !tbaa !154
   %i.t = zext i16 %i.s to i32
@@ -275,27 +265,41 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph.split
   br i1 %.not97, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %.lr.ph.split.split
-  %6 = getelementptr inbounds nuw i8, ptr %.094110, i64 72
-  %7 = load i32, ptr %6, align 8, !tbaa !156      ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %.094110, i64 88
-  %.sroa.0.0.copyload = load i16, ptr %i.u, align 8 ; 3 uses
-  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.094110, i64 90
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(126) %.sroa.6, ptr noundef nonnull align 2 dereferenceable(126) %.sroa.6.0..sroa_idx, i64 126, i1 false)
+  %.sroa.0.0.copyload = load i16, ptr %i.u, align 8 ; 2 uses
   switch i16 %.sroa.0.0.copyload, label %bb.g [
-    i16 2, label %.split.us
-    i16 10, label %.split.us
+    i16 2, label %.split.us.loopexit
+    i16 10, label %.split.us.loopexit
   ]
 
 bb.g:                                             ; preds = %bb.f, %.lr.ph.split.split
   %i.v = getelementptr inbounds nuw i8, ptr %.094110, i64 16
   %i.w = load volatile ptr, ptr %i.v, align 8, !tbaa !66 ; 2 uses
   %.not.not = icmp eq ptr %i.w, getelementptr inbounds nuw (i8, ptr @opal_if_list, i64 16)
-  br i1 %.not.not, label %.critedge, label %.lr.ph.split.split, !llvm.loop !157
+  br i1 %.not.not, label %.critedge, label %.lr.ph.split.split, !llvm.loop !156
 
-.split.us:                                        ; preds = %bb.d, %bb.b, %bb.f, %bb.f
-  %.us-phi = phi i32 [ %3, %bb.b ], [ %7, %bb.f ], [ %7, %bb.f ], [ %5, %bb.d ]
-  %.us-phi111 = phi i16 [ 10, %bb.b ], [ %.sroa.0.0.copyload, %bb.f ], [ %.sroa.0.0.copyload, %bb.f ], [ 2, %bb.d ]
-  %.us-phi112 = phi ptr [ %.094110.us, %bb.b ], [ %.094110, %bb.f ], [ %.094110, %bb.f ], [ %.094110.us113, %bb.d ] ; 4 uses
+.split.us.loopexit:                               ; preds = %bb.f, %bb.f
+  %2 = getelementptr inbounds nuw i8, ptr %.094110, i64 72
+  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.094110, i64 90
+  br label %.split.us
+
+.split.us.loopexit15:                             ; preds = %bb.b
+  %3 = getelementptr inbounds nuw i8, ptr %.094110.us, i64 72
+  %.sroa.6.0..sroa_idx.us = getelementptr inbounds nuw i8, ptr %.094110.us, i64 90
+  br label %.split.us
+
+.split.us.loopexit19:                             ; preds = %bb.d
+  %4 = getelementptr inbounds nuw i8, ptr %.094110.us113, i64 72
+  %.sroa.6.0..sroa_idx.us116 = getelementptr inbounds nuw i8, ptr %.094110.us113, i64 90
+  br label %.split.us
+
+.split.us:                                        ; preds = %.split.us.loopexit19, %.split.us.loopexit15, %.split.us.loopexit
+  %.sroa.6.sroa.0.0.in = phi ptr [ %.sroa.6.0..sroa_idx, %.split.us.loopexit ], [ %.sroa.6.0..sroa_idx.us, %.split.us.loopexit15 ], [ %.sroa.6.0..sroa_idx.us116, %.split.us.loopexit19 ]
+  %.us-phi.in = phi ptr [ %2, %.split.us.loopexit ], [ %3, %.split.us.loopexit15 ], [ %4, %.split.us.loopexit19 ]
+  %.us-phi111 = phi i16 [ %.sroa.0.0.copyload, %.split.us.loopexit ], [ 10, %.split.us.loopexit15 ], [ 2, %.split.us.loopexit19 ]
+  %.us-phi112 = phi ptr [ %.094110, %.split.us.loopexit ], [ %.094110.us, %.split.us.loopexit15 ], [ %.094110.us113, %.split.us.loopexit19 ] ; 4 uses
+  %.us-phi = load i32, ptr %.us-phi.in, align 8, !tbaa !157
+  %.sroa.6.sroa.0.0 = load <126 x i8>, ptr %.sroa.6.sroa.0.0.in, align 2
   %i.x = load i32, ptr getelementptr inbounds nuw (i8, ptr @mca_btl_tcp_component, i64 288), align 16, !tbaa !97
   %i.y = icmp sgt i32 %i.x, 0
   br i1 %i.y, label %.lr.ph128, label %.critedge
@@ -426,7 +430,7 @@ opal_obj_run_constructors.exit105:                ; preds = %.lr.ph.i102, %bb.p
   %i.bp = getelementptr inbounds nuw i8, ptr %i.ae, i64 568 ; 5 uses
   store i16 %.us-phi111, ptr %i.bp, align 8
   %.sroa.6.0..sroa_idx8 = getelementptr inbounds nuw i8, ptr %i.ae, i64 570
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(126) %.sroa.6.0..sroa_idx8, ptr noundef nonnull align 2 dereferenceable(126) %.sroa.6, i64 126, i1 false)
+  store <126 x i8> %.sroa.6.sroa.0.0, ptr %.sroa.6.0..sroa_idx8, align 2
   %i.bq = load i32, ptr %i.aa, align 8, !tbaa !161
   %i.br = getelementptr inbounds nuw i8, ptr %i.ae, i64 696
   store i32 %i.bq, ptr %i.br, align 8, !tbaa !129
@@ -480,7 +484,7 @@ bb.v:                                             ; preds = %bb.u, %bb.t
   %i.co = getelementptr inbounds nuw i8, ptr %i.ah, i64 40
   call void @opal_string_copy(ptr noundef nonnull %i.co, ptr noundef nonnull %1, i64 noundef 32) #15
   %i.cp = getelementptr inbounds nuw i8, ptr %i.ah, i64 72
-  store i32 %.us-phi, ptr %i.cp, align 8, !tbaa !156
+  store i32 %.us-phi, ptr %i.cp, align 8, !tbaa !157
   %i.cq = load i16, ptr %i.bo, align 4, !tbaa !127
   %i.cr = getelementptr inbounds nuw i8, ptr %i.ah, i64 76
   store i16 %i.cq, ptr %i.cr, align 4, !tbaa !154
@@ -539,7 +543,6 @@ bb.x:                                             ; preds = %bb.v, %bb.w
   br i1 %i.dy, label %bb.h, label %.critedge, !llvm.loop !167
 
 .critedge:                                        ; preds = %bb.e, %bb.c, %bb.g, %bb.h, %bb.x, %bb.a, %.split.us, %opal_obj_new.exit
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #15
   ret void
 }
@@ -942,8 +945,8 @@ attributes #18 = { nounwind willreturn memory(none) }
 !153 = distinct !{!153, !60}
 !154 = !{!155, !32, i64 76}
 !155 = !{!"opal_if_t", !19, i64 0, !6, i64 40, !5, i64 72, !32, i64 76, !32, i64 78, !5, i64 80, !5, i64 84, !85, i64 88, !5, i64 216, !5, i64 220, !6, i64 224, !5, i64 232}
-!156 = !{!155, !5, i64 72}
-!157 = distinct !{!157, !60}
+!156 = distinct !{!156, !60}
+!157 = !{!155, !5, i64 72}
 !158 = !{!54, !21, i64 56}
 !159 = distinct !{null, null}
 !160 = !{!82, !5, i64 560}

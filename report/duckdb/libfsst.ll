@@ -195,7 +195,7 @@ bb.a:
   %5 = alloca %"struct.libfsst::Symbol", align 8  ; 5 uses
   %i.a = alloca i64, align 8                      ; 5 uses
   %i.b = alloca [256 x i16], align 16             ; 5 uses
-  %6 = alloca [1024 x i8], align 16               ; 5 uses
+  %.sroa.0 = alloca <1024 x i8>, align 1024       ; 6 uses
   %i.c = tail call noalias noundef nonnull dereferenceable(156192) ptr @_Znwm(i64 noundef 156192) #21 ; 46 uses
   %.ptr25.i = getelementptr inbounds nuw i8, ptr %i.c, i64 131584 ; 10 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 156162
@@ -598,12 +598,12 @@ bb.g:                                             ; preds = %.lr.ph105, %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %.outer._crit_edge, %bb.d
-  call void @llvm.lifetime.start.p0(ptr nonnull %6)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   %i.fr = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.fs = getelementptr inbounds nuw i8, ptr %0, i64 512 ; 4 uses
   %i.ft = getelementptr inbounds nuw i8, ptr %0, i64 132096
   %i.fu = getelementptr inbounds nuw i8, ptr %0, i64 1024 ; 2 uses
-  %i.fv = getelementptr inbounds nuw i8, ptr %6, i64 512 ; 2 uses
+  %i.fv = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 512
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.ap, %bb.h
@@ -988,8 +988,8 @@ _ZN7libfsst8Counters9count2IncEjj.exit91.i.backedge: ; preds = %bb.am, %bb.al, %
   br i1 %.not47, label %bb.ao, label %bb.an
 
 bb.an:                                            ; preds = %"_ZZN7libfsst16buildSymbolTableERNS_8CountersESt6vectorIPKhSaIS4_EEPKmbENK3$_1clEPNS_11SymbolTableES1_.exit"
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(512) %6, ptr noundef nonnull align 1 dereferenceable(394240) %0, i64 512, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(512) %i.fv, ptr noundef nonnull align 1 dereferenceable(512) %i.fs, i64 512, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1024 dereferenceable(512) %.sroa.0, ptr noundef nonnull align 1 dereferenceable(512) %0, i64 512, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 512 dereferenceable(512) %i.fv, ptr noundef nonnull align 1 dereferenceable(512) %i.fs, i64 512, i1 false)
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(156186) %i.bv, ptr noundef nonnull align 8 dereferenceable(156186) %i.c, i64 156186, i1 false), !tbaa.struct !52
   br label %bb.ao
 
@@ -1005,11 +1005,12 @@ bb.ap:                                            ; preds = %bb.ao
 
 bb.aq:                                            ; preds = %bb.ao
   tail call void @_ZdlPv(ptr noundef nonnull %i.c) #23
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(394240) %0, ptr noundef nonnull align 16 dereferenceable(512) %6, i64 512, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(512) %i.fs, ptr noundef nonnull align 16 dereferenceable(512) %i.fv, i64 512, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(512) %0, ptr noundef nonnull align 1024 dereferenceable(512) %.sroa.0, i64 512, i1 false)
+  %.sroa.0.512..sroa_idx140 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 512
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(512) %i.fs, ptr noundef nonnull align 512 dereferenceable(512) %.sroa.0.512..sroa_idx140, i64 512, i1 false)
   call fastcc void @"_ZZN7libfsst16buildSymbolTableERNS_8CountersESt6vectorIPKhSaIS4_EEPKmbENK3$_2clEPNS_11SymbolTableES1_"(ptr nonnull %i.a, ptr noundef %i.bv, ptr noundef nonnull align 1 dereferenceable(394240) %0)
   tail call void @_ZN7libfsst11SymbolTable8finalizeEh(ptr noundef nonnull align 8 dereferenceable(156186) %i.bv, i8 noundef zeroext %i.en)
-  call void @llvm.lifetime.end.p0(ptr nonnull %6)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #22
   ret ptr %i.bv
 }
