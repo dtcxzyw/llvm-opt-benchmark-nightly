@@ -204,8 +204,8 @@ bb.ad:                                            ; preds = %detect_data_type.ex
   %i.cf = getelementptr inbounds nuw i8, ptr %0, i64 2812 ; 2 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %0, i64 2820 ; 2 uses
   %i.ch = getelementptr inbounds nuw i8, ptr %0, i64 2816 ; 2 uses
-  %i.ci = add nuw i32 %i.bw, 1
-  %wide.trip.count.i.i = zext i32 %i.ci to i64
+  %i.ci = add nuw nsw i32 %i.bw, 1
+  %wide.trip.count.i.i = zext nneg i32 %i.ci to i64
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.aq, %.lr.ph.i.i
@@ -316,8 +316,8 @@ scan_tree.exit.i:                                 ; preds = %bb.aq, %bb.ad
   %i.dt = getelementptr inbounds nuw i8, ptr %0, i64 2812 ; 2 uses
   %i.du = getelementptr inbounds nuw i8, ptr %0, i64 2820 ; 2 uses
   %i.dv = getelementptr inbounds nuw i8, ptr %0, i64 2816 ; 2 uses
-  %i.dw = add nuw i32 %i.dk, 1
-  %wide.trip.count.i18.i = zext i32 %i.dw to i64
+  %i.dw = add nuw nsw i32 %i.dk, 1
+  %wide.trip.count.i18.i = zext nneg i32 %i.dw to i64
   br label %bb.ar
 
 bb.ar:                                            ; preds = %bb.bd, %.lr.ph.i15.i

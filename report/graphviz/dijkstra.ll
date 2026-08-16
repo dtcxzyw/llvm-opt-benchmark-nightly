@@ -163,13 +163,13 @@ bb.q:                                             ; preds = %bb.p
   %i.ah = xor i32 %i.k, -1
   %i.ai = add i32 %0, %i.ah
   %i.aj = lshr i32 %i.ai, 1                       ; 2 uses
-  %i.ak = add nuw i32 %i.aj, 1
-  %wide.trip.count.i = zext i32 %i.ak to i64      ; 5 uses
+  %i.ak = add nuw nsw i32 %i.aj, 1
+  %wide.trip.count.i = zext nneg i32 %i.ak to i64 ; 5 uses
   %min.iters.check = icmp eq i32 %i.aj, 0
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader.i
-  %n.vec = and i64 %wide.trip.count.i, 4294967294 ; 4 uses
+  %n.vec = and i64 %wide.trip.count.i, 2147483646 ; 4 uses
   %i.al = shl nuw nsw i64 %n.vec, 1
   br label %vector.body
 

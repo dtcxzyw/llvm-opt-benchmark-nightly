@@ -205,7 +205,7 @@ bb.au:                                            ; preds = %bb.as
 
 bb.av:                                            ; preds = %bb.au, %bb.at, %.critedge.i.i
   %i.ia = phi i32 [ 0, %bb.at ], [ 0, %bb.au ], [ %.pr.i.i, %.critedge.i.i ] ; 2 uses
-  %.090125.i.i = phi i32 [ %.090126.i.i, %bb.at ], [ %.090126.i.i, %bb.au ], [ %i.hm, %.critedge.i.i ] ; 7 uses
+  %.090125.i.i = phi i32 [ %.090126.i.i, %bb.at ], [ %.090126.i.i, %bb.au ], [ %i.hm, %.critedge.i.i ] ; 8 uses
   %.086122.i.i = phi ptr [ %.086127.i.i, %bb.at ], [ %.086127.i.i, %bb.au ], [ %i.hn, %.critedge.i.i ]
   %.084119.i.i = phi ptr [ %.084128.i.i, %bb.at ], [ %.084128.i.i, %bb.au ], [ %i.hl, %.critedge.i.i ]
   %.089.i.i = phi ptr [ %i.hy, %bb.at ], [ %i.hz, %bb.au ], [ null, %.critedge.i.i ] ; 3 uses
@@ -234,7 +234,7 @@ bb.ax:                                            ; preds = %bb.aw
 bb.ay:                                            ; preds = %bb.aw
   store i32 0, ptr %i.d, align 4, !tbaa !17
   call void @sqlite3_free(ptr noundef %.089.i.i) #45
-  %i.ii = add i32 %.090125.i.i, 1                 ; 2 uses
+  %i.ii = add nuw i32 %.090125.i.i, 1
   %i.ij = zext i32 %i.ii to i64                   ; 4 uses
   %i.ik = shl nuw nsw i64 %i.ij, 3                ; 2 uses
   %i.il = call ptr @sqlite3_malloc64(i64 noundef %i.ik) #45 ; 11 uses
@@ -249,7 +249,7 @@ bb.az:                                            ; preds = %bb.ay
   br i1 %i.io, label %.preheader115.i.i.preheader, label %idxMalloc.exit.threadthread-pre-split.i.i
 
 .preheader115.i.i.preheader:                      ; preds = %bb.az
-  %min.iters.check291 = icmp ult i32 %i.ii, 4
+  %min.iters.check291 = icmp ult i32 %.090125.i.i, 3
   br i1 %min.iters.check291, label %.preheader115.i.i.preheader314, label %vector.ph292
 
 vector.ph292:                                     ; preds = %.preheader115.i.i.preheader

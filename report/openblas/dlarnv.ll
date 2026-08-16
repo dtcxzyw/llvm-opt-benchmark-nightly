@@ -66,7 +66,7 @@ bb.a:
 .lr.ph.preheader:                                 ; preds = %.preheader50
   %i.ae = add i32 %i.v, %indvars.iv67
   %smin = call i32 @llvm.smin.i32(i32 %i.ae, i32 63)
-  %i.af = add nsw i32 %smin, 2
+  %i.af = add nuw nsw i32 %smin, 2
   %wide.trip.count = zext i32 %i.af to i64
   %invariant.gep = getelementptr [8 x i8], ptr %i.c, i64 %indvars.iv78
   br label %.lr.ph
@@ -77,16 +77,16 @@ bb.a:
 
 iter.check:                                       ; preds = %.preheader48
   %i.ag = add i32 %i.v, %indvars.iv67
-  %smin72 = call i32 @llvm.smin.i32(i32 %i.ag, i32 63)
-  %i.ah = add nsw i32 %smin72, 2
+  %smin72 = call i32 @llvm.smin.i32(i32 %i.ag, i32 63) ; 3 uses
+  %i.ah = add nuw nsw i32 %smin72, 2
   %wide.trip.count73 = zext i32 %i.ah to i64      ; 2 uses
   %invariant.gep82 = getelementptr [8 x i8], ptr %i.c, i64 %indvars.iv78 ; 18 uses
-  %i.ai = add nsw i64 %wide.trip.count73, -1      ; 7 uses
-  %min.iters.check = icmp ult i64 %i.ai, 4
+  %i.ai = add nsw i64 %wide.trip.count73, -1      ; 5 uses
+  %min.iters.check = icmp ult i32 %smin72, 3
   br i1 %min.iters.check, label %.lr.ph56.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check85 = icmp ult i64 %i.ai, 16
+  %min.iters.check85 = icmp ult i32 %smin72, 15
   br i1 %min.iters.check85, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check

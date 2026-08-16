@@ -203,8 +203,8 @@ bb.tc:                                            ; preds = %bb.tb
 
 .preheader15806.preheader:                        ; preds = %bb.tc
   %umin = tail call i32 @llvm.umin.i32(i32 %indvars.iv15901, i32 %indvars.iv15903)
-  %i.dob = add nuw i32 %umin, %indvars.iv15905
-  %wide.trip.count = zext i32 %i.dob to i64
+  %i.dob = add nuw nsw i32 %umin, %indvars.iv15905
+  %wide.trip.count = zext nneg i32 %i.dob to i64
   br label %.preheader15806
 
 .preheader15806:                                  ; preds = %.preheader15806.preheader, %.preheader15806

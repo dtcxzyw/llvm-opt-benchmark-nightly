@@ -204,11 +204,11 @@ bb.a:
   %i.x = sext i32 %i.w to i64                     ; 2 uses
   %i.y = add i32 %i.b, -2                         ; 8 uses
   %i.z = lshr i32 %i.y, 1
-  %i.aa = add nuw i32 %i.z, 2                     ; 4 uses
+  %i.aa = add nuw nsw i32 %i.z, 2                 ; 4 uses
   %wide.trip.count122 = zext nneg i32 %i.h to i64 ; 7 uses
-  %wide.trip.count = zext i32 %i.aa to i64
+  %wide.trip.count = zext nneg i32 %i.aa to i64
   %i.ab = zext nneg i32 %i.aa to i64
-  %wide.trip.count117 = zext i32 %i.aa to i64
+  %wide.trip.count117 = zext nneg i32 %i.aa to i64
   %i.ac = zext nneg i32 %i.aa to i64
   %i.ad = getelementptr i8, ptr %i.o, i64 %i.q
   %scevgep = getelementptr i8, ptr %i.ad, i64 4   ; 2 uses

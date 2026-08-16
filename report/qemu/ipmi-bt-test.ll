@@ -203,7 +203,7 @@ bb.j:                                             ; preds = %bb.h
 iter.check:                                       ; preds = %bb.j
   %i.ad = add i32 %i.w, -2                        ; 2 uses
   %i.ae = zext nneg i32 %i.ad to i64              ; 2 uses
-  %scevgep.i = getelementptr i8, ptr %i.a, i64 %i.ae
+  %scevgep.i = getelementptr nuw i8, ptr %i.a, i64 %i.ae
   %i.af = add nuw nsw i64 %i.ae, 1                ; 5 uses
   %min.iters.check = icmp ult i32 %i.ad, 31
   br i1 %min.iters.check, label %vec.epilog.ph, label %vector.ph

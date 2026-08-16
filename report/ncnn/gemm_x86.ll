@@ -204,7 +204,7 @@ bb.a:
   %i.z = add i32 %6, -12                          ; 2 uses
   %i.aa = urem i32 %i.z, 12
   %i.ab = sub nuw i32 %i.z, %i.aa
-  %i.ac = add i32 %i.ab, 12
+  %i.ac = add nuw nsw i32 %i.ab, 12
   %i.ad = add i32 %8, -1                          ; 2 uses
   %i.ae = zext i32 %i.ad to i64                   ; 4 uses
   %i.af = shl nuw nsw i64 %i.ae, 5
@@ -253,7 +253,7 @@ bb.a:
   %i.az = add i32 %6, -12                         ; 2 uses
   %i.ba = urem i32 %i.az, 12
   %i.bb = sub nuw i32 %i.az, %i.ba
-  %i.bc = add i32 %i.bb, 12
+  %i.bc = add nuw nsw i32 %i.bb, 12
   %i.bd = add i32 %8, -1
   %i.be = zext i32 %i.bd to i64                   ; 4 uses
   %i.bf = shl nuw nsw i64 %i.be, 5
@@ -656,7 +656,7 @@ bb.bn:                                            ; preds = %bb.bk, %.thread801,
   %i.aaw = add i32 %6, -12                        ; 2 uses
   %i.aax = urem i32 %i.aaw, 12
   %i.aay = sub nuw i32 %i.aaw, %i.aax
-  %i.aaz = add i32 %i.aay, 12
+  %i.aaz = add nuw nsw i32 %i.aay, 12
   %i.aba = lshr i32 %i.aat, 2
   %i.abb = zext nneg i32 %i.aba to i64            ; 6 uses
   %i.abc = shl nuw nsw i64 %i.abb, 7

@@ -204,8 +204,8 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 
 png_unpremultiply.exit.us.us.preheader:           ; preds = %bb.e
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.07184.us, i8 -1, i64 %i.aa, i1 false), !tbaa !47
-  %scevgep = getelementptr i8, ptr %.07383.us, i64 %i.ab
-  %scevgep109 = getelementptr i8, ptr %.07184.us, i64 %i.z
+  %scevgep = getelementptr nuw i8, ptr %.07383.us, i64 %i.ab
+  %scevgep109 = getelementptr nuw i8, ptr %.07184.us, i64 %i.z
   br label %.split81.us92
 
 .split.us95:                                      ; preds = %bb.e
