@@ -1,3 +1,5 @@
+inline.NumInlined: 134
+inline.NumDeleted: 57
 begin_hunk_0_@vfio_listener_begin:bb.a
   %.not = icmp eq ptr %i.e, null
   br i1 %.not, label %bb.c, label %bb.b
@@ -199,11 +201,11 @@ trace_vfio_listener_region_del.exit:              ; preds = %bb.n, %bb.o, %bb.p,
 
 bb.r:                                             ; preds = %trace_vfio_listener_region_del.exit
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 224
-  %i.bg = load i64, ptr %i.bf, align 8
-  %3 = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.bg, i1 true)
-  %notmask = shl nsw i64 -1, %3
-  %4 = xor i64 %notmask, -1                       ; 2 uses
-  %i.bh = and i64 %i.ap, %4
+  %i.bg = load i64, ptr %i.bf, align 8            ; 2 uses
+  %3 = add i64 %i.bg, -1
+  %4 = xor i64 %i.bg, -1
+  %5 = and i64 %3, %4                             ; 2 uses
+  %i.bh = and i64 %5, %i.ap
   %.not60 = icmp eq i64 %i.bh, 0
   br i1 %.not60, label %bb.s, label %.critedge65
 
@@ -217,7 +219,7 @@ bb.t:                                             ; preds = %bb.s
 
 int128_get64.exit:                                ; preds = %bb.s
   %i.bj = trunc nuw i128 %i.ay to i64
-  %i.bk = and i64 %4, %i.bj
+  %i.bk = and i64 %5, %i.bj
   %i.bl = icmp eq i64 %i.bk, 0
   br i1 %i.bl, label %.critedge.thread, label %.critedge65
 

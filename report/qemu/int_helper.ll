@@ -1,3 +1,6 @@
+inline.NumInlined: 11
+inline.NumDeleted: 8
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@helper_das:bb.a
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 296
   store i32 0, ptr %i.ah, align 8
@@ -199,14 +202,15 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
   %.015 = phi i32 [ %i.g, %.lr.ph ], [ 0, %bb.a ] ; 2 uses
   %.01014 = phi i64 [ %i.f, %.lr.ph ], [ 0, %bb.a ]
-  %.01113 = phi i64 [ %i.b, %.lr.ph ], [ %1, %bb.a ] ; 3 uses
-  %2 = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 range(i64 1, 0) %.01113, i1 true)
+  %.01113 = phi i64 [ %i.b, %.lr.ph ], [ %1, %bb.a ] ; 4 uses
   %i.a = add i64 %.01113, -1
   %i.b = and i64 %i.a, %.01113                    ; 2 uses
   %i.c = zext nneg i32 %.015 to i64
   %i.d = lshr i64 %0, %i.c
-  %i.e = and i64 %i.d, 1
-  %3 = shl nuw i64 %i.e, %2
+  %neg = sub i64 0, %.01113
+  %i.e = and i64 %.01113, %neg
+  %2 = trunc i64 %i.d to i1
+  %3 = select i1 %2, i64 %i.e, i64 0
   %i.f = or i64 %3, %.01014                       ; 2 uses
   %i.g = add i32 %.015, 1
   %.not = icmp eq i64 %i.b, 0

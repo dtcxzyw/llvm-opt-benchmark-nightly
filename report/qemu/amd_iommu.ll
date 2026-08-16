@@ -1,3 +1,5 @@
+inline.NumInlined: 393
+inline.NumDeleted: 155
 begin_hunk_0_@fetch_pte:bb.a
   %i.h = trunc i64 %i.g to i8
   %i.i = and i8 %i.h, 7                           ; 5 uses
@@ -199,9 +201,10 @@ bb.t:                                             ; preds = %bb.r
 
 large_pte_page_size.exit:                         ; preds = %bb.t
   %i.cb = and i64 %i.an, -4096
-  %i.cc = xor i64 %i.cb, -4096
-  %5 = call range(i64 12, 65) i64 @llvm.cttz.i64(i64 %i.cc, i1 true)
-  %i.cd = shl nuw i64 2, %5
+  %i.cc = xor i64 %i.cb, -4096                    ; 2 uses
+  %neg.i = sub i64 0, %i.cc
+  %5 = and i64 %i.cc, %neg.i
+  %i.cd = shl nuw i64 %5, 1
   store i64 %i.cd, ptr %4, align 8
   br label %amdvi_get_top_pt_level_and_perms.exit.thread
 
