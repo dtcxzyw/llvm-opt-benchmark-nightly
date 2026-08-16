@@ -203,15 +203,15 @@ tr_total_empty_squares.exit:                      ; preds = %.lr.ph.i46.epil.pre
 
 .lr.ph.i50:                                       ; preds = %tr_total_empty_squares.exit
   %i.gj = getelementptr inbounds [128 x i8], ptr @g_board, i64 %i.l ; 4 uses
-  %i.gk = add nuw i32 %i.gi, 1                    ; 2 uses
-  %wide.trip.count.i51 = zext i32 %i.gk to i64    ; 2 uses
+  %i.gk = add nuw nsw i32 %i.gi, 1                ; 2 uses
+  %wide.trip.count.i51 = zext nneg i32 %i.gk to i64 ; 2 uses
   %.pre.i52 = load i32, ptr %i.gj, align 16, !tbaa !4 ; 2 uses
   %xtraiter105 = and i64 %wide.trip.count.i51, 1
   %i.gl = icmp eq i32 %i.gi, 0
   br i1 %i.gl, label %.epil.preheader, label %.lr.ph.i50.new
 
 .lr.ph.i50.new:                                   ; preds = %.lr.ph.i50
-  %unroll_iter109 = and i64 %wide.trip.count.i51, 4294967294
+  %unroll_iter109 = and i64 %wide.trip.count.i51, 2147483646
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.k, %.lr.ph.i50.new
@@ -287,14 +287,14 @@ tr_border_length_col.exit:                        ; preds = %.epil.preheader, %t
 
 .lr.ph.i57:                                       ; preds = %tr_border_length_col.exit
   %i.if = getelementptr inbounds [128 x i8], ptr @g_board, i64 %i.l ; 3 uses
-  %i.ig = add nuw i32 %i.ie, 1                    ; 2 uses
-  %wide.trip.count.i58 = zext i32 %i.ig to i64    ; 2 uses
+  %i.ig = add nuw nsw i32 %i.ie, 1                ; 2 uses
+  %wide.trip.count.i58 = zext nneg i32 %i.ig to i64 ; 2 uses
   %xtraiter112 = and i64 %wide.trip.count.i58, 1
   %i.ih = icmp eq i32 %i.ie, 0
   br i1 %i.ih, label %.epil.preheader111, label %.lr.ph.i57.new
 
 .lr.ph.i57.new:                                   ; preds = %.lr.ph.i57
-  %unroll_iter116 = and i64 %wide.trip.count.i58, 4294967294
+  %unroll_iter116 = and i64 %wide.trip.count.i58, 2147483646
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.l, %.lr.ph.i57.new

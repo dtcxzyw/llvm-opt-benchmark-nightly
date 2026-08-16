@@ -203,8 +203,8 @@ bb.e:                                             ; preds = %.lr.ph141.split, %b
 
 .critedge4:                                       ; preds = %bb.e, %.lr.ph141, %.critedge2
   %.0.lcssa = phi i32 [ 0, %.critedge2 ], [ 0, %.lr.ph141 ], [ %i.bh, %bb.e ] ; 2 uses
-  %i.bk = add nuw i32 %.0.lcssa, 1                ; 2 uses
-  %1 = sext i32 %i.bk to i64
+  %i.bk = add nuw nsw i32 %.0.lcssa, 1            ; 2 uses
+  %1 = zext nneg i32 %i.bk to i64
   %i.bl = tail call noalias ptr @calloc(i64 noundef %1, i64 noundef 4) #26 ; 7 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.bn = load i32, ptr %i.bm, align 8, !tbaa !33 ; 3 uses
@@ -405,7 +405,7 @@ Vec_IntGrow.exit11.sink.split.i108:               ; preds = %bb.q, %Vec_IntGrow.
   %i.ep = zext nneg i32 %i.eo to i64
   %i.eq = tail call noalias ptr @calloc(i64 noundef %i.ep, i64 noundef 4) #26 ; 4 uses
   store i32 1, ptr %i.eq, align 4, !tbaa !45
-  %wide.trip.count166 = zext i32 %i.bk to i64
+  %wide.trip.count166 = zext nneg i32 %i.bk to i64
   br label %.lr.ph149
 
 .preheader:                                       ; preds = %Vec_IntPush.exit128

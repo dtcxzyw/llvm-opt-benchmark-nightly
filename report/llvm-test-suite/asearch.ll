@@ -94,9 +94,9 @@ bb.a:
   %i.ad = load i32, ptr @Init1, align 4, !tbaa !4 ; 13 uses
   %i.ae = load i32, ptr @NO_ERR_MASK, align 4, !tbaa !4 ; 12 uses
   %i.af = load i32, ptr @Init, align 4, !tbaa !4  ; 3 uses
-  %i.ag = add i32 %2, 1                           ; 4 uses
+  %i.ag = add i32 %2, 1
   %wide.trip.count = zext i32 %i.ag to i64        ; 11 uses
-  %min.iters.check = icmp ult i32 %i.ag, 8
+  %min.iters.check = icmp ult i32 %2, 7
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %._crit_edge
@@ -149,7 +149,7 @@ scalar.ph.preheader:                              ; preds = %._crit_edge, %middl
   %unroll_iter302 = and i64 %i.av, -2
   %lcmp.mod300.not = icmp eq i64 %xtraiter296, 0
   %lcmp.mod301 = trunc i64 %i.av to i1
-  %min.iters.check281 = icmp ult i32 %i.ag, 8
+  %min.iters.check281 = icmp ult i32 %2, 7
   %n.vec283 = and i64 %wide.trip.count, 4294967288 ; 3 uses
   %cmp.n290 = icmp eq i64 %n.vec283, %wide.trip.count
   %xtraiter304 = and i64 %i.av, 1
@@ -162,7 +162,7 @@ scalar.ph.preheader:                              ; preds = %._crit_edge, %middl
   %unroll_iter322 = and i64 %i.av, -2
   %lcmp.mod320.not = icmp eq i64 %xtraiter314, 0
   %lcmp.mod321 = trunc i64 %i.av to i1
-  %min.iters.check269 = icmp ult i32 %i.ag, 8
+  %min.iters.check269 = icmp ult i32 %2, 7
   %n.vec271 = and i64 %wide.trip.count, 4294967288 ; 3 uses
   %cmp.n278 = icmp eq i64 %n.vec271, %wide.trip.count
   %xtraiter324 = and i64 %i.av, 1

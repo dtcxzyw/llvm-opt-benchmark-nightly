@@ -204,8 +204,8 @@ bb.a:
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 2804 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 2812 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 2808 ; 2 uses
-  %i.l = add nuw i32 %2, 1
-  %wide.trip.count = zext i32 %i.l to i64
+  %i.l = add nuw nsw i32 %2, 1
+  %wide.trip.count = zext nneg i32 %i.l to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.n
@@ -322,8 +322,8 @@ bb.a:
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 2814
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 2808
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 2810
-  %i.p = add nuw i32 %2, 1
-  %wide.trip.count = zext i32 %i.p to i64
+  %i.p = add nuw nsw i32 %2, 1
+  %wide.trip.count = zext nneg i32 %i.p to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.ac
@@ -726,8 +726,8 @@ bb.a:
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 2804 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 2812 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 2808 ; 2 uses
-  %i.o = add nuw i32 %i.c, 1
-  %wide.trip.count.i = zext i32 %i.o to i64
+  %i.o = add nuw nsw i32 %i.c, 1
+  %wide.trip.count.i = zext nneg i32 %i.o to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.n, %.lr.ph.i
@@ -838,8 +838,8 @@ _ZN5boost5beast4zlib6detail14deflate_stream9scan_treeEPNS3_7ct_dataEi.exit: ; pr
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 2804 ; 2 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 2812 ; 2 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 2808 ; 2 uses
-  %i.bc = add nuw i32 %i.aq, 1
-  %wide.trip.count.i9 = zext i32 %i.bc to i64
+  %i.bc = add nuw nsw i32 %i.aq, 1
+  %wide.trip.count.i9 = zext nneg i32 %i.bc to i64
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.aa, %.lr.ph.i6

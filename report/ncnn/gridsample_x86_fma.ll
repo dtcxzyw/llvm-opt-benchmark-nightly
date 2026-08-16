@@ -204,7 +204,7 @@ _ZN4ncnn3MatD2Ev.exit517.lr.ph:                   ; preds = %.preheader848
   %i.u = add i32 %.fr926, -24                     ; 2 uses
   %i.v = urem i32 %i.u, 24
   %i.w = sub nuw i32 %i.u, %i.v
-  %i.x = add i32 %i.w, 24
+  %i.x = add nuw nsw i32 %i.w, 24
   br label %_ZN4ncnn3MatD2Ev.exit517
 
 _ZN4ncnn3MatD2Ev.exit517:                         ; preds = %_ZN4ncnn3MatD2Ev.exit517.lr.ph, %._crit_edge
@@ -607,7 +607,7 @@ _ZN4ncnn3MatD2Ev.exit517.lr.ph:                   ; preds = %.preheader848
   %i.u = add i32 %.fr926, -24                     ; 2 uses
   %i.v = urem i32 %i.u, 24
   %i.w = sub nuw i32 %i.u, %i.v
-  %i.x = add i32 %i.w, 24
+  %i.x = add nuw nsw i32 %i.w, 24
   br label %_ZN4ncnn3MatD2Ev.exit517
 
 _ZN4ncnn3MatD2Ev.exit517:                         ; preds = %_ZN4ncnn3MatD2Ev.exit517.lr.ph, %._crit_edge
@@ -1010,7 +1010,7 @@ _ZN4ncnn3MatD2Ev.exit517.lr.ph:                   ; preds = %.preheader858
   %i.u = add i32 %.fr936, -24                     ; 2 uses
   %i.v = urem i32 %i.u, 24
   %i.w = sub nuw i32 %i.u, %i.v
-  %i.x = add i32 %i.w, 24
+  %i.x = add nuw nsw i32 %i.w, 24
   br label %_ZN4ncnn3MatD2Ev.exit517
 
 _ZN4ncnn3MatD2Ev.exit517:                         ; preds = %_ZN4ncnn3MatD2Ev.exit517.lr.ph, %._crit_edge
@@ -1413,7 +1413,7 @@ _ZN4ncnn3MatD2Ev.exit517.lr.ph:                   ; preds = %.preheader858
   %i.u = add i32 %.fr936, -24                     ; 2 uses
   %i.v = urem i32 %i.u, 24
   %i.w = sub nuw i32 %i.u, %i.v
-  %i.x = add i32 %i.w, 24
+  %i.x = add nuw nsw i32 %i.w, 24
   br label %_ZN4ncnn3MatD2Ev.exit517
 
 _ZN4ncnn3MatD2Ev.exit517:                         ; preds = %_ZN4ncnn3MatD2Ev.exit517.lr.ph, %._crit_edge
@@ -1816,7 +1816,7 @@ _ZN4ncnn3MatD2Ev.exit517.lr.ph:                   ; preds = %.preheader869
   %i.u = add i32 %.fr947, -24                     ; 2 uses
   %i.v = urem i32 %i.u, 24
   %i.w = sub nuw i32 %i.u, %i.v
-  %i.x = add i32 %i.w, 24
+  %i.x = add nuw nsw i32 %i.w, 24
   br label %_ZN4ncnn3MatD2Ev.exit517
 
 _ZN4ncnn3MatD2Ev.exit517:                         ; preds = %_ZN4ncnn3MatD2Ev.exit517.lr.ph, %._crit_edge
@@ -2219,7 +2219,7 @@ _ZN4ncnn3MatD2Ev.exit517.lr.ph:                   ; preds = %.preheader858
   %i.u = add i32 %.fr936, -24                     ; 2 uses
   %i.v = urem i32 %i.u, 24
   %i.w = sub nuw i32 %i.u, %i.v
-  %i.x = add i32 %i.w, 24
+  %i.x = add nuw nsw i32 %i.w, 24
   br label %_ZN4ncnn3MatD2Ev.exit517
 
 _ZN4ncnn3MatD2Ev.exit517:                         ; preds = %_ZN4ncnn3MatD2Ev.exit517.lr.ph, %._crit_edge
@@ -2622,7 +2622,7 @@ _ZN4ncnn3MatD2Ev.exit167.lr.ph:                   ; preds = %.preheader314
   %i.u = add i32 %.fr368, -24                     ; 2 uses
   %i.v = urem i32 %i.u, 24
   %i.w = sub nuw i32 %i.u, %i.v
-  %i.x = add i32 %i.w, 24
+  %i.x = add nuw nsw i32 %i.w, 24
   br label %_ZN4ncnn3MatD2Ev.exit167
 
 _ZN4ncnn3MatD2Ev.exit167:                         ; preds = %_ZN4ncnn3MatD2Ev.exit167.lr.ph, %._crit_edge
@@ -2988,7 +2988,7 @@ _ZN4ncnn3MatD2Ev.exit167.lr.ph:                   ; preds = %.preheader314
   %i.u = add i32 %.fr368, -24                     ; 2 uses
   %i.v = urem i32 %i.u, 24
   %i.w = sub nuw i32 %i.u, %i.v
-  %i.x = add i32 %i.w, 24
+  %i.x = add nuw nsw i32 %i.w, 24
   br label %_ZN4ncnn3MatD2Ev.exit167
 
 _ZN4ncnn3MatD2Ev.exit167:                         ; preds = %_ZN4ncnn3MatD2Ev.exit167.lr.ph, %._crit_edge
@@ -3368,7 +3368,7 @@ _ZN4ncnn3MatD2Ev.exit167.lr.ph:                   ; preds = %.preheader324
   %i.u = add i32 %.fr378, -24                     ; 2 uses
   %i.v = urem i32 %i.u, 24
   %i.w = sub nuw i32 %i.u, %i.v
-  %i.x = add i32 %i.w, 24
+  %i.x = add nuw nsw i32 %i.w, 24
   br label %_ZN4ncnn3MatD2Ev.exit167
 
 _ZN4ncnn3MatD2Ev.exit167:                         ; preds = %_ZN4ncnn3MatD2Ev.exit167.lr.ph, %._crit_edge
@@ -3771,7 +3771,7 @@ _ZN4ncnn3MatD2Ev.exit167.lr.ph:                   ; preds = %.preheader324
   %i.u = add i32 %.fr378, -24                     ; 2 uses
   %i.v = urem i32 %i.u, 24
   %i.w = sub nuw i32 %i.u, %i.v
-  %i.x = add i32 %i.w, 24
+  %i.x = add nuw nsw i32 %i.w, 24
   br label %_ZN4ncnn3MatD2Ev.exit167
 
 _ZN4ncnn3MatD2Ev.exit167:                         ; preds = %_ZN4ncnn3MatD2Ev.exit167.lr.ph, %._crit_edge
@@ -4174,7 +4174,7 @@ _ZN4ncnn3MatD2Ev.exit167.lr.ph:                   ; preds = %.preheader335
   %i.u = add i32 %.fr389, -24                     ; 2 uses
   %i.v = urem i32 %i.u, 24
   %i.w = sub nuw i32 %i.u, %i.v
-  %i.x = add i32 %i.w, 24
+  %i.x = add nuw nsw i32 %i.w, 24
   br label %_ZN4ncnn3MatD2Ev.exit167
 
 _ZN4ncnn3MatD2Ev.exit167:                         ; preds = %_ZN4ncnn3MatD2Ev.exit167.lr.ph, %._crit_edge
@@ -4577,7 +4577,7 @@ _ZN4ncnn3MatD2Ev.exit167.lr.ph:                   ; preds = %.preheader329
   %i.u = add i32 %.fr383, -24                     ; 2 uses
   %i.v = urem i32 %i.u, 24
   %i.w = sub nuw i32 %i.u, %i.v
-  %i.x = add i32 %i.w, 24
+  %i.x = add nuw nsw i32 %i.w, 24
   br label %_ZN4ncnn3MatD2Ev.exit167
 
 _ZN4ncnn3MatD2Ev.exit167:                         ; preds = %_ZN4ncnn3MatD2Ev.exit167.lr.ph, %._crit_edge
