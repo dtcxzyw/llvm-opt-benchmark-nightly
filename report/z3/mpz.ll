@@ -204,8 +204,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.b, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.c = or i32 %1, %0
-  %2 = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.c, i1 true)
+  %i.c = or i32 %1, %0                            ; 2 uses
   %i.d = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %0, i1 true)
   %i.e = lshr exact i32 %0, %i.d                  ; 3 uses
   %i.f = icmp eq i32 %i.e, 1
@@ -232,7 +231,9 @@ bb.d:                                             ; preds = %bb.c
 
 .loopexit:                                        ; preds = %.preheader, %bb.d, %bb.c
   %.pn = phi i32 [ %1, %bb.d ], [ 1, %bb.c ], [ %i.m, %.preheader ]
-  %.0 = shl i32 %.pn, %2
+  %neg = sub i32 0, %i.c
+  %2 = and i32 %i.c, %neg
+  %.0 = mul i32 %.pn, %2
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.b, %bb.a, %.loopexit
@@ -635,8 +636,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.l, label %_Z5u_gcdjj.exit.thread, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.m = or i32 %.064, %spec.select
-  %11 = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.m, i1 true)
+  %i.m = or i32 %.064, %spec.select               ; 2 uses
   %i.n = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.i, i1 true)
   %i.o = lshr exact i32 %spec.select, %i.n        ; 3 uses
   %i.p = icmp eq i32 %i.o, 1
@@ -663,7 +663,9 @@ bb.h:                                             ; preds = %bb.g
 
 _Z5u_gcdjj.exit:                                  ; preds = %.preheader.i, %bb.g, %bb.h
   %.pn.i = phi i32 [ %.064, %bb.h ], [ 1, %bb.g ], [ %i.w, %.preheader.i ]
-  %.0.i = shl i32 %.pn.i, %11                     ; 3 uses
+  %neg.i = sub nsw i32 0, %i.m
+  %11 = and i32 %i.m, %neg.i
+  %.0.i = mul i32 %.pn.i, %11                     ; 3 uses
   %i.z = icmp sgt i32 %.0.i, -1
   br i1 %i.z, label %_Z5u_gcdjj.exit.thread, label %bb.i
 
@@ -1066,8 +1068,7 @@ bb.ay:                                            ; preds = %bb.ax
   br i1 %i.gg, label %_Z5u_gcdjj.exit97, label %bb.az
 
 bb.az:                                            ; preds = %bb.ay
-  %i.gh = or i32 %i.ge, %i.gd
-  %12 = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.gh, i1 true)
+  %i.gh = or i32 %i.ge, %i.gd                     ; 2 uses
   %i.gi = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.gd, i1 true)
   %i.gj = lshr exact i32 %i.gd, %i.gi             ; 3 uses
   %i.gk = icmp eq i32 %i.gj, 1
@@ -1094,11 +1095,13 @@ bb.ba:                                            ; preds = %bb.az
 
 .loopexit.i93:                                    ; preds = %.preheader.i89, %bb.ba, %bb.az
   %.pn.i94 = phi i32 [ %i.ge, %bb.ba ], [ 1, %bb.az ], [ %i.gr, %.preheader.i89 ]
-  %.0.i95 = shl i32 %.pn.i94, %12
+  %neg.i95 = sub i32 0, %i.gh
+  %12 = and i32 %i.gh, %neg.i95
+  %.0.i96 = mul i32 %.pn.i94, %12
   br label %_Z5u_gcdjj.exit97
 
 _Z5u_gcdjj.exit97:                                ; preds = %bb.ax, %bb.ay, %.loopexit.i93
-  %.1.i96 = phi i32 [ %.0.i95, %.loopexit.i93 ], [ %i.ge, %bb.ax ], [ %i.gd, %bb.ay ] ; 3 uses
+  %.1.i96 = phi i32 [ %.0.i96, %.loopexit.i93 ], [ %i.ge, %bb.ax ], [ %i.gd, %bb.ay ] ; 3 uses
   %i.gu = icmp sgt i32 %.1.i96, -1
   br i1 %i.gu, label %bb.bb, label %bb.bc
 
@@ -1501,8 +1504,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.l, label %_Z5u_gcdjj.exit.thread, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.m = or i32 %.064, %spec.select
-  %11 = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.m, i1 true)
+  %i.m = or i32 %.064, %spec.select               ; 2 uses
   %i.n = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.i, i1 true)
   %i.o = lshr exact i32 %spec.select, %i.n        ; 3 uses
   %i.p = icmp eq i32 %i.o, 1
@@ -1529,7 +1531,9 @@ bb.h:                                             ; preds = %bb.g
 
 _Z5u_gcdjj.exit:                                  ; preds = %.preheader.i, %bb.g, %bb.h
   %.pn.i = phi i32 [ %.064, %bb.h ], [ 1, %bb.g ], [ %i.w, %.preheader.i ]
-  %.0.i = shl i32 %.pn.i, %11                     ; 3 uses
+  %neg.i = sub nsw i32 0, %i.m
+  %11 = and i32 %i.m, %neg.i
+  %.0.i = mul i32 %.pn.i, %11                     ; 3 uses
   %i.z = icmp sgt i32 %.0.i, -1
   br i1 %i.z, label %_Z5u_gcdjj.exit.thread, label %bb.i
 
@@ -1932,8 +1936,7 @@ bb.ay:                                            ; preds = %bb.ax
   br i1 %i.gg, label %_Z5u_gcdjj.exit97, label %bb.az
 
 bb.az:                                            ; preds = %bb.ay
-  %i.gh = or i32 %i.ge, %i.gd
-  %12 = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.gh, i1 true)
+  %i.gh = or i32 %i.ge, %i.gd                     ; 2 uses
   %i.gi = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.gd, i1 true)
   %i.gj = lshr exact i32 %i.gd, %i.gi             ; 3 uses
   %i.gk = icmp eq i32 %i.gj, 1
@@ -1960,11 +1963,13 @@ bb.ba:                                            ; preds = %bb.az
 
 .loopexit.i93:                                    ; preds = %.preheader.i89, %bb.ba, %bb.az
   %.pn.i94 = phi i32 [ %i.ge, %bb.ba ], [ 1, %bb.az ], [ %i.gr, %.preheader.i89 ]
-  %.0.i95 = shl i32 %.pn.i94, %12
+  %neg.i95 = sub i32 0, %i.gh
+  %12 = and i32 %i.gh, %neg.i95
+  %.0.i96 = mul i32 %.pn.i94, %12
   br label %_Z5u_gcdjj.exit97
 
 _Z5u_gcdjj.exit97:                                ; preds = %bb.ax, %bb.ay, %.loopexit.i93
-  %.1.i96 = phi i32 [ %.0.i95, %.loopexit.i93 ], [ %i.ge, %bb.ax ], [ %i.gd, %bb.ay ] ; 3 uses
+  %.1.i96 = phi i32 [ %.0.i96, %.loopexit.i93 ], [ %i.ge, %bb.ax ], [ %i.gd, %bb.ay ] ; 3 uses
   %i.gu = icmp sgt i32 %.1.i96, -1
   br i1 %i.gu, label %bb.bb, label %bb.bc
 

@@ -203,7 +203,7 @@ bb.ew:                                            ; preds = %.lr.ph, %.thread50
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %.thread50 ] ; 2 uses
   %i.yl = getelementptr inbounds nuw [48 x i8], ptr %i.yd, i64 %indvars.iv ; 8 uses
   %i.ym = getelementptr inbounds nuw i8, ptr %i.yl, i64 8 ; 2 uses
-  %i.yn = load i32, ptr %i.ym, align 8, !tbaa !120 ; 11 uses
+  %i.yn = load i32, ptr %i.ym, align 8, !tbaa !120 ; 12 uses
   %i.yo = udiv i32 %.pre167, %i.yn
   %i.yp = getelementptr inbounds nuw i8, ptr %i.yl, i64 12 ; 2 uses
   store i32 %i.yo, ptr %i.yp, align 4, !tbaa !127
@@ -264,8 +264,9 @@ bb.fb:                                            ; preds = %bb.fa
 bb.fc:                                            ; preds = %bb.fb
   %i.zi = call range(i32 1, 33) i32 @llvm.ctpop.i32(i32 %i.yn)
   %.not238 = icmp samesign ult i32 %i.zi, 2
-  %7 = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.yn, i1 true)
-  %i.zj = shl nuw i32 4, %7
+  %neg = sub i32 0, %i.yn
+  %7 = and i32 %i.yn, %neg
+  %i.zj = shl nuw i32 %7, 2
   %.0 = select i1 %.not238, i32 %i.yn, i32 %i.zj
   %i.zk = udiv i32 %.pre167, %.0
   br label %.thread50.sink.split
