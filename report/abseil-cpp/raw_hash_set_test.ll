@@ -204,9 +204,6 @@ _ZN7testing8internal11MatcherBaseIRKSt6vectorImSaImEEED2Ev.exit: ; preds = %bb.a
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #17
 
-; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.cttz.i64(i64, i1 immarg) #14
-
 ; Function Attrs: noreturn
 declare void @_ZSt28__throw_bad_array_new_lengthv() local_unnamed_addr #10
 
@@ -609,17 +606,17 @@ _ZN7testing8internal26AssertionResultExpectationD2Ev.exit243: ; preds = %_ZNKSt1
 
 bb.l:                                             ; preds = %_ZN7testing8internal26AssertionResultExpectationD2Ev.exit243, %bb.z
   %.010541 = phi i64 [ 0, %_ZN7testing8internal26AssertionResultExpectationD2Ev.exit243 ], [ %i.bh, %bb.z ]
-  %i.ab = phi i64 [ 0, %_ZN7testing8internal26AssertionResultExpectationD2Ev.exit243 ], [ %i.bk, %bb.z ] ; 2 uses
+  %i.ab = phi i64 [ 0, %_ZN7testing8internal26AssertionResultExpectationD2Ev.exit243 ], [ %i.bk, %bb.z ] ; 3 uses
   %i.ac = add i64 %i.ab, 1                        ; 2 uses
   %i.ad = icmp ne i64 %i.ac, 0
   call void @llvm.assume(i1 %i.ad)
-  %7 = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.ac, i1 true)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #43
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #43
-  %notmask.i268 = shl nsw i64 -1, %7
-  %8 = xor i64 %notmask.i268, -1                  ; 2 uses
+  %neg = xor i64 %i.ab, -1
+  %7 = and i64 %i.ac, %neg
+  %8 = add i64 %7, -1                             ; 2 uses
   store i64 %8, ptr %i.b, align 8, !tbaa !52
-  %i.ae = icmp eq i64 %i.ab, %8
+  %i.ae = icmp eq i64 %8, %i.ab
   br i1 %i.ae, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
@@ -1022,17 +1019,17 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a, %bb.p
   %.02495 = phi i64 [ 0, %bb.a ], [ %i.aj, %bb.p ]
-  %i.d = phi i64 [ 0, %bb.a ], [ %i.am, %bb.p ]   ; 2 uses
+  %i.d = phi i64 [ 0, %bb.a ], [ %i.am, %bb.p ]   ; 3 uses
   %i.e = add i64 %i.d, 1                          ; 2 uses
   %i.f = icmp ne i64 %i.e, 0
   call void @llvm.assume(i1 %i.f)
-  %4 = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.e, i1 true)
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #43
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #43
-  %notmask.i = shl nsw i64 -1, %4
-  %5 = xor i64 %notmask.i, -1                     ; 2 uses
+  %neg = xor i64 %i.d, -1
+  %4 = and i64 %i.e, %neg
+  %5 = add i64 %4, -1                             ; 2 uses
   store i64 %5, ptr %i.b, align 8, !tbaa !52
-  %i.g = icmp eq i64 %i.d, %5
+  %i.g = icmp eq i64 %5, %i.d
   br i1 %i.g, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
@@ -1435,15 +1432,15 @@ _ZN7testing8internal26AssertionResultExpectationD2Ev.exit: ; preds = %_ZNKSt14de
 
 bb.w:                                             ; preds = %_ZN7testing8internal26AssertionResultExpectationD2Ev.exit, %bb.ak
   %.033169 = phi i64 [ 0, %_ZN7testing8internal26AssertionResultExpectationD2Ev.exit ], [ %i.cg, %bb.ak ]
-  %storemerge168 = phi i64 [ 0, %_ZN7testing8internal26AssertionResultExpectationD2Ev.exit ], [ %i.cj, %bb.ak ] ; 2 uses
+  %storemerge168 = phi i64 [ 0, %_ZN7testing8internal26AssertionResultExpectationD2Ev.exit ], [ %i.cj, %bb.ak ] ; 3 uses
   %i.bb = add i64 %storemerge168, 1               ; 2 uses
   %i.bc = icmp ne i64 %i.bb, 0
   call void @llvm.assume(i1 %i.bc)
-  %13 = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.bb, i1 true)
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #43
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #43
-  %notmask.i89 = shl nsw i64 -1, %13
-  %14 = xor i64 %notmask.i89, -1                  ; 2 uses
+  %neg = xor i64 %storemerge168, -1
+  %13 = and i64 %i.bb, %neg
+  %14 = add i64 %13, -1                           ; 2 uses
   store i64 %14, ptr %i.b, align 8, !tbaa !52
   %i.bd = icmp eq i64 %storemerge168, %14
   br i1 %i.bd, label %bb.x, label %bb.y
@@ -1605,15 +1602,15 @@ bb.am:                                            ; preds = %bb.ak
 
 bb.an:                                            ; preds = %bb.am, %bb.bb
   %.028172 = phi i64 [ 0, %bb.am ], [ %i.dq, %bb.bb ]
-  %storemerge46171 = phi i64 [ 0, %bb.am ], [ %i.dt, %bb.bb ] ; 2 uses
+  %storemerge46171 = phi i64 [ 0, %bb.am ], [ %i.dt, %bb.bb ] ; 3 uses
   %i.cl = add i64 %storemerge46171, 1             ; 2 uses
   %i.cm = icmp ne i64 %i.cl, 0
   call void @llvm.assume(i1 %i.cm)
-  %15 = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.cl, i1 true)
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #43
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #43
-  %notmask.i108 = shl nsw i64 -1, %15
-  %16 = xor i64 %notmask.i108, -1                 ; 2 uses
+  %neg206 = xor i64 %storemerge46171, -1
+  %15 = and i64 %i.cl, %neg206
+  %16 = add i64 %15, -1                           ; 2 uses
   store i64 %16, ptr %i.d, align 8, !tbaa !52
   %i.cn = icmp eq i64 %storemerge46171, %16
   br i1 %i.cn, label %bb.ao, label %bb.ap
