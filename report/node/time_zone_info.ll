@@ -1,4 +1,4 @@
-inline.NumInlined: 1273
+inline.NumInlined: 1274
 inline.NumDeleted: 541
 loop-unroll.NumCompletelyUnrolled: 3
 loop-unroll.NumRuntimeUnrolled: 4
@@ -204,9 +204,37 @@ bb.k:                                             ; preds = %_ZN4absl13time_inte
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.bi = load ptr, ptr %i.bh, align 8
   %i.bj = getelementptr inbounds i8, ptr %i.bi, i64 -40
-  %i.bk = load i8, ptr %i.bj, align 8
-  %i.bl = load i8, ptr %i.b, align 1
-  %6 = call noundef zeroext i1 @_ZNK4absl13time_internal4cctz12TimeZoneInfo16EquivTransitionsEhh(ptr noundef nonnull align 8 dereferenceable(192) %0, i8 noundef zeroext %i.bk, i8 noundef zeroext %i.bl)
+  %i.bk = load i8, ptr %i.bj, align 8             ; 2 uses
+  %i.bl = load i8, ptr %i.b, align 1              ; 2 uses
+  %6 = icmp eq i8 %i.bk, %i.bl
+  br i1 %6, label %bb.al, label %7
+
+7:                                                ; preds = %bb.k
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %9 = zext i8 %i.bk to i64
+  %10 = load ptr, ptr %8, align 8                 ; 2 uses
+  %11 = getelementptr inbounds nuw [48 x i8], ptr %10, i64 %9 ; 3 uses
+  %12 = zext i8 %i.bl to i64
+  %13 = getelementptr inbounds nuw [48 x i8], ptr %10, i64 %12 ; 3 uses
+  %14 = load i32, ptr %11, align 8
+  %15 = load i32, ptr %13, align 8
+  %.not.i39 = icmp eq i32 %14, %15
+  br i1 %.not.i39, label %16, label %bb.al
+
+16:                                               ; preds = %7
+  %17 = getelementptr inbounds nuw i8, ptr %11, i64 40
+  %18 = load i8, ptr %17, align 8, !range !5, !noundef !6
+  %19 = getelementptr inbounds nuw i8, ptr %13, i64 40
+  %20 = load i8, ptr %19, align 8, !range !5, !noundef !6
+  %.not11.i41 = icmp eq i8 %18, %20
+  br i1 %.not11.i41, label %21, label %bb.al
+
+21:                                               ; preds = %16
+  %22 = getelementptr inbounds nuw i8, ptr %11, i64 41
+  %23 = load i8, ptr %22, align 1
+  %24 = getelementptr inbounds nuw i8, ptr %13, i64 41
+  %25 = load i8, ptr %24, align 1
+  %.not12.i42 = icmp eq i8 %23, %25
   br label %bb.al
 
 _ZN4absl13time_internal4cctz12_GLOBAL__N_110AllYearDSTERKNS1_13PosixTimeZoneE.exit.thread: ; preds = %bb.j, %_ZN4absl13time_internal4cctz12_GLOBAL__N_110AllYearDSTERKNS1_13PosixTimeZoneE.exit
@@ -609,8 +637,8 @@ _ZN4absl13time_internal4cctz12_GLOBAL__N_16IsLeapEl.exit68: ; preds = %bb.ai, %b
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #24
   br label %bb.al
 
-bb.al:                                            ; preds = %bb.i, %.critedge, %bb.k
-  %.0 = phi i1 [ %6, %bb.k ], [ true, %.critedge ], [ false, %bb.i ]
+bb.al:                                            ; preds = %21, %16, %7, %bb.k, %bb.i, %.critedge
+  %.0 = phi i1 [ false, %bb.i ], [ true, %.critedge ], [ true, %bb.k ], [ false, %16 ], [ false, %7 ], [ %.not12.i42, %21 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #24
   br label %_ZNK4absl13time_internal4cctz12TimeZoneInfo16EquivTransitionsEhh.exit
 

@@ -204,18 +204,19 @@ bb.b:                                             ; preds = %.lr.ph28
 
 .lr.ph.i.preheader:                               ; preds = %bb.b
   %i.db = add nsw i64 %i.cs, -5                   ; 2 uses
-  %i.dc = lshr i64 %i.db, 2                       ; 2 uses
+  %i.dc = lshr i64 %i.db, 2
   %i.dd = add nuw nsw i64 %i.dc, 1                ; 2 uses
-  %3 = icmp eq i64 %i.dc, 0
-  br i1 %3, label %.lr.ph.i.epil.preheader, label %.lr.ph.i.preheader.new
+  %xtraiter77 = and i64 %i.dd, 3                  ; 3 uses
+  %3 = icmp ult i64 %i.db, 12
+  br i1 %3, label %BrotliReverseBits.exit.loopexit.unr-lcssa.a, label %.lr.ph.i.preheader.new
 
 .lr.ph.i.preheader.new:                           ; preds = %.lr.ph.i.preheader
-  %unroll_iter82 = and i64 %i.dd, 9223372036854775806
+  %unroll_iter82 = and i64 %i.dd, 9223372036854775804
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.i.preheader.new
   %.01115.i = phi i64 [ %i.cz, %.lr.ph.i.preheader.new ], [ %i.dr, %.lr.ph.i ]
-  %.01214.i = phi i16 [ %i.cu, %.lr.ph.i.preheader.new ], [ %i.dm, %.lr.ph.i ] ; 2 uses
+  %.01214.i = phi i16 [ %i.cu, %.lr.ph.i.preheader.new ], [ 0, %.lr.ph.i ] ; 3 uses
   %niter83 = phi i64 [ 0, %.lr.ph.i.preheader.new ], [ %niter83.next.1, %.lr.ph.i ]
   %i.de = lshr i16 %.01214.i, 4
   %i.df = and i16 %i.de, 15
@@ -225,37 +226,51 @@ bb.b:                                             ; preds = %.lr.ph28
   %i.dj = shl i64 %.01115.i, 8
   %i.dk = shl i64 %i.di, 4
   %i.dl = or i64 %i.dj, %i.dk
-  %i.dm = lshr i16 %.01214.i, 8                   ; 3 uses
+  %i.dm = lshr i16 %.01214.i, 8
   %i.dn = and i16 %i.dm, 15
-  %i.do = zext nneg i16 %i.dn to i64
+  %4 = zext nneg i16 %i.dn to i64
+  %5 = getelementptr inbounds nuw [8 x i8], ptr @BrotliReverseBits.kLut, i64 %4
+  %6 = load i64, ptr %5, align 8, !tbaa !22
+  %7 = or i64 %6, %i.dl
+  %8 = lshr i16 %.01214.i, 12
+  %i.do = zext nneg i16 %8 to i64
   %i.dp = getelementptr inbounds nuw [8 x i8], ptr @BrotliReverseBits.kLut, i64 %i.do
   %i.dq = load i64, ptr %i.dp, align 8, !tbaa !22
-  %i.dr = or i64 %i.dq, %i.dl                     ; 3 uses
-  %niter83.next.1 = add i64 %niter83, 2           ; 2 uses
+  %9 = shl i64 %7, 8
+  %10 = shl i64 %i.dq, 4
+  %i.dr = or i64 %9, %10                          ; 3 uses
+  %niter83.next.1 = add nuw i64 %niter83, 4       ; 2 uses
   %niter83.ncmp.1.not = icmp eq i64 %niter83.next.1, %unroll_iter82
-  br i1 %niter83.ncmp.1.not, label %BrotliReverseBits.exit.loopexit.unr-lcssa.a, label %.lr.ph.i, !llvm.loop !50
+  br i1 %niter83.ncmp.1.not, label %BrotliReverseBits.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !50
 
-BrotliReverseBits.exit.loopexit.unr-lcssa.a:      ; preds = %.lr.ph.i
-  %4 = and i64 %i.db, 4
-  %lcmp.mod79.not.not = icmp eq i64 %4, 0
-  br i1 %lcmp.mod79.not.not, label %.lr.ph.i.epil.preheader, label %BrotliReverseBits.exit
+BrotliReverseBits.exit.loopexit.unr-lcssa:        ; preds = %.lr.ph.i
+  %lcmp.mod79.not = icmp eq i64 %xtraiter77, 0
+  br i1 %lcmp.mod79.not, label %BrotliReverseBits.exit, label %BrotliReverseBits.exit.loopexit.unr-lcssa.a
 
-.lr.ph.i.epil.preheader:                          ; preds = %BrotliReverseBits.exit.loopexit.unr-lcssa.a, %.lr.ph.i.preheader
-  %.01115.i.epil.init.a = phi i64 [ %i.cz, %.lr.ph.i.preheader ], [ %i.dr, %BrotliReverseBits.exit.loopexit.unr-lcssa.a ]
-  %.01214.i.epil.init.a = phi i16 [ %i.cu, %.lr.ph.i.preheader ], [ %i.dm, %BrotliReverseBits.exit.loopexit.unr-lcssa.a ]
-  %lcmp.mod81 = trunc i64 %i.dd to i1
+BrotliReverseBits.exit.loopexit.unr-lcssa.a:      ; preds = %BrotliReverseBits.exit.loopexit.unr-lcssa, %.lr.ph.i.preheader
+  %.01115.i.epil.init = phi i64 [ %i.cz, %.lr.ph.i.preheader ], [ %i.dr, %BrotliReverseBits.exit.loopexit.unr-lcssa ]
+  %.01214.i.epil.init = phi i16 [ %i.cu, %.lr.ph.i.preheader ], [ 0, %BrotliReverseBits.exit.loopexit.unr-lcssa ]
+  %lcmp.mod81 = icmp ne i64 %xtraiter77, 0
   tail call void @llvm.assume(i1 %lcmp.mod81)
+  br label %.lr.ph.i.epil.preheader
+
+.lr.ph.i.epil.preheader:                          ; preds = %.lr.ph.i.epil.preheader, %BrotliReverseBits.exit.loopexit.unr-lcssa.a
+  %.01115.i.epil.init.a = phi i64 [ %i.dy, %.lr.ph.i.epil.preheader ], [ %.01115.i.epil.init, %BrotliReverseBits.exit.loopexit.unr-lcssa.a ]
+  %.01214.i.epil.init.a = phi i16 [ %i.dt, %.lr.ph.i.epil.preheader ], [ %.01214.i.epil.init, %BrotliReverseBits.exit.loopexit.unr-lcssa.a ]
+  %epil.iter78 = phi i64 [ %epil.iter78.next, %.lr.ph.i.epil.preheader ], [ 0, %BrotliReverseBits.exit.loopexit.unr-lcssa.a ]
   %i.ds = shl i64 %.01115.i.epil.init.a, 4
-  %i.dt = lshr i16 %.01214.i.epil.init.a, 4
+  %i.dt = lshr i16 %.01214.i.epil.init.a, 4       ; 2 uses
   %i.du = and i16 %i.dt, 15
   %i.dv = zext nneg i16 %i.du to i64
   %i.dw = getelementptr inbounds nuw [8 x i8], ptr @BrotliReverseBits.kLut, i64 %i.dv
   %i.dx = load i64, ptr %i.dw, align 8, !tbaa !22
-  %i.dy = or i64 %i.dx, %i.ds
-  br label %BrotliReverseBits.exit
+  %i.dy = or i64 %i.dx, %i.ds                     ; 2 uses
+  %epil.iter78.next = add i64 %epil.iter78, 1     ; 2 uses
+  %epil.iter78.cmp.not = icmp eq i64 %epil.iter78.next, %xtraiter77
+  br i1 %epil.iter78.cmp.not, label %BrotliReverseBits.exit, label %.lr.ph.i.epil.preheader, !llvm.loop !51
 
-BrotliReverseBits.exit:                           ; preds = %.lr.ph.i.epil.preheader, %BrotliReverseBits.exit.loopexit.unr-lcssa.a, %bb.b
-  %.011.lcssa.i = phi i64 [ %i.cz, %bb.b ], [ %i.dr, %BrotliReverseBits.exit.loopexit.unr-lcssa.a ], [ %i.dy, %.lr.ph.i.epil.preheader ]
+BrotliReverseBits.exit:                           ; preds = %BrotliReverseBits.exit.loopexit.unr-lcssa, %.lr.ph.i.epil.preheader, %bb.b
+  %.011.lcssa.i = phi i64 [ %i.cz, %bb.b ], [ %i.dr, %BrotliReverseBits.exit.loopexit.unr-lcssa ], [ %i.dy, %.lr.ph.i.epil.preheader ]
   %i.dz = sub nsw i64 0, %i.cs
   %i.ea = and i64 %i.dz, 3
   %i.eb = lshr i64 %.011.lcssa.i, %i.ea
@@ -267,7 +282,7 @@ BrotliReverseBits.exit:                           ; preds = %.lr.ph.i.epil.prehe
 bb.c:                                             ; preds = %.lr.ph28, %BrotliReverseBits.exit
   %i.ee = add nuw i64 %.227, 1                    ; 2 uses
   %exitcond33.not = icmp eq i64 %i.ee, %1
-  br i1 %exitcond33.not, label %._crit_edge29, label %.lr.ph28, !llvm.loop !51
+  br i1 %exitcond33.not, label %._crit_edge29, label %.lr.ph28, !llvm.loop !52
 
 ._crit_edge29:                                    ; preds = %bb.c, %._crit_edge
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #5
@@ -349,5 +364,6 @@ attributes #5 = { nounwind }
 !48 = distinct !{!48, !49}
 !49 = !{!"llvm.loop.unroll.disable"}
 !50 = distinct !{!50, !17}
-!51 = distinct !{!51, !17}
+!51 = distinct !{!51, !49}
+!52 = distinct !{!52, !17}
 end_hunk_0

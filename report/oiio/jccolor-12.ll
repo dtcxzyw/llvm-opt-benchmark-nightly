@@ -201,30 +201,32 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %bb.b
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.b ] ; 5 uses
-  %.05052 = phi ptr [ %i.s, %.lr.ph ], [ %6, %bb.b ] ; 4 uses
+  %.05052 = phi ptr [ %i.s, %.lr.ph ], [ %13, %bb.b ] ; 5 uses
   %i.ac = load i16, ptr %.05052, align 2, !tbaa !53
   %i.ad = and i16 %i.ac, 4095
   %i.ae = xor i16 %i.ad, 4095
   %i.af = getelementptr inbounds nuw i8, ptr %.05052, i64 2
-  %i.ag = getelementptr inbounds nuw i8, ptr %.05052, i64 6
+  %5 = load i16, ptr %i.af, align 2, !tbaa !53
+  %6 = and i16 %5, 4095
+  %7 = xor i16 %6, 4095
+  %i.ag = getelementptr inbounds nuw i8, ptr %.05052, i64 4
   %i.ah = load i16, ptr %i.ag, align 2, !tbaa !53
-  %5 = getelementptr inbounds nuw [2 x i8], ptr %i.ab, i64 %indvars.iv
-  %6 = getelementptr inbounds nuw i8, ptr %.05052, i64 8
-  %7 = zext nneg i16 %i.ae to i64
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %7 ; 3 uses
-  %9 = load i64, ptr %8, align 8, !tbaa !62
-  %10 = load <2 x i16>, ptr %i.af, align 2, !tbaa !53
-  %11 = and <2 x i16> %10, splat (i16 4095)
-  %12 = xor <2 x i16> %11, splat (i16 4095)       ; 2 uses
-  store i16 %i.ah, ptr %5, align 2, !tbaa !53
-  %13 = extractelement <2 x i16> %12, i64 0
-  %i.ai = zext nneg i16 %13 to i64
+  %8 = and i16 %i.ah, 4095
+  %9 = xor i16 %8, 4095
+  %10 = getelementptr inbounds nuw i8, ptr %.05052, i64 6
+  %11 = load i16, ptr %10, align 2, !tbaa !53
+  %12 = getelementptr inbounds nuw [2 x i8], ptr %i.ab, i64 %indvars.iv
+  store i16 %11, ptr %12, align 2, !tbaa !53
+  %13 = getelementptr inbounds nuw i8, ptr %.05052, i64 8
+  %14 = zext nneg i16 %i.ae to i64
+  %15 = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %14 ; 3 uses
+  %16 = load i64, ptr %15, align 8, !tbaa !62
+  %i.ai = zext nneg i16 %7 to i64
   %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.ai ; 3 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 32768
   %i.al = load i64, ptr %i.ak, align 8, !tbaa !62
-  %i.am = add nsw i64 %i.al, %9
-  %14 = extractelement <2 x i16> %12, i64 1
-  %i.an = zext nneg i16 %14 to i64
+  %i.am = add nsw i64 %i.al, %16
+  %i.an = zext nneg i16 %9 to i64
   %i.ao = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.an ; 3 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 65536
   %i.aq = load i64, ptr %i.ap, align 8, !tbaa !62
@@ -233,7 +235,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.at = trunc i64 %i.as to i16
   %i.au = getelementptr inbounds nuw [2 x i8], ptr %i.v, i64 %indvars.iv
   store i16 %i.at, ptr %i.au, align 2, !tbaa !53
-  %i.av = getelementptr inbounds nuw i8, ptr %8, i64 98304
+  %i.av = getelementptr inbounds nuw i8, ptr %15, i64 98304
   %i.aw = load i64, ptr %i.av, align 8, !tbaa !62
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aj, i64 131072
   %i.ay = load i64, ptr %i.ax, align 8, !tbaa !62
@@ -245,7 +247,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.be = trunc i64 %i.bd to i16
   %i.bf = getelementptr inbounds nuw [2 x i8], ptr %i.x, i64 %indvars.iv
   store i16 %i.be, ptr %i.bf, align 2, !tbaa !53
-  %i.bg = getelementptr inbounds nuw i8, ptr %8, i64 163840
+  %i.bg = getelementptr inbounds nuw i8, ptr %15, i64 163840
   %i.bh = load i64, ptr %i.bg, align 8, !tbaa !62
   %i.bi = getelementptr inbounds nuw i8, ptr %i.aj, i64 196608
   %i.bj = load i64, ptr %i.bi, align 8, !tbaa !62

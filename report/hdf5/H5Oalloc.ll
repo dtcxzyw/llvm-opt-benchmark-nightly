@@ -203,7 +203,7 @@ bb.ah:                                            ; preds = %bb.w, %bb.ag, %bb.y
   %.lcssa = phi i64 [ 0, %bb.v ], [ %i.fh, %._crit_edge.loopexit ] ; 3 uses
   %i.fn = add nuw nsw i64 %.lcssa, 1
   store i64 %i.fn, ptr %i.bi, align 8, !tbaa !43
-  %i.fo = getelementptr inbounds nuw [48 x i8], ptr %i.fm, i64 %.lcssa ; 8 uses
+  %i.fo = getelementptr inbounds nuw [48 x i8], ptr %i.fm, i64 %.lcssa ; 9 uses
   store ptr @H5O_MSG_NULL, ptr %i.fo, align 8, !tbaa !49
   %i.fp = getelementptr inbounds nuw i8, ptr %i.fo, i64 8
   store i8 1, ptr %i.fp, align 8, !tbaa !57
@@ -211,58 +211,50 @@ bb.ah:                                            ; preds = %bb.w, %bb.ag, %bb.y
   store ptr null, ptr %i.fq, align 8, !tbaa !58
   %i.fr = load ptr, ptr %i.ar, align 8, !tbaa !34
   %i.fs = zext i32 %i.cv to i64
-  %i.ft = getelementptr inbounds nuw [40 x i8], ptr %i.fr, i64 %i.fs ; 5 uses
+  %i.ft = getelementptr inbounds nuw [40 x i8], ptr %i.fr, i64 %i.fs ; 3 uses
   %i.fu = getelementptr inbounds nuw i8, ptr %i.ft, i64 24
   %i.fv = load ptr, ptr %i.fu, align 8, !tbaa !41 ; 3 uses
-  %i.fw = icmp eq i32 %i.ap, 1                    ; 2 uses
+  %i.fw = icmp eq i32 %i.ap, 1
   %i.fx = load i8, ptr %i.g, align 8, !tbaa !30   ; 2 uses
   %i.fy = icmp eq i8 %i.fx, 1                     ; 2 uses
   br i1 %i.fw, label %bb.ai, label %bb.aj
 
 bb.ai:                                            ; preds = %._crit_edge
-  br i1 %i.fy, label %.thread316, label %.thread398
+  br i1 %i.fy, label %.thread316, label %bb.ak
 
 .thread316:                                       ; preds = %bb.ai
   %i.fz = getelementptr inbounds nuw i8, ptr %i.fv, i64 24
   %i.ga = getelementptr inbounds nuw i8, ptr %i.fo, i64 32
   store ptr %i.fz, ptr %i.ga, align 8, !tbaa !54
-  %6 = getelementptr inbounds nuw i8, ptr %i.ft, i64 8
-  %7 = load i64, ptr %6, align 8, !tbaa !39
   br label %.thread318
-
-.thread398:                                       ; preds = %bb.ai
-  %8 = getelementptr inbounds nuw i8, ptr %1, i64 289
-  %9 = load i8, ptr %8, align 1, !tbaa !31
-  %10 = zext i8 %9 to i32                         ; 3 uses
-  %11 = lshr i32 %10, 1
-  %12 = and i32 %11, 16
-  %13 = lshr i32 %10, 2
-  %14 = and i32 %13, 4
-  %15 = and i32 %10, 3
-  %16 = shl nuw nsw i32 1, %15
-  %17 = or disjoint i32 %12, %14
-  %18 = or disjoint i32 %17, 10
-  %19 = add nuw nsw i32 %18, %16
-  %20 = zext nneg i32 %19 to i64
-  br label %bb.ak
 
 bb.aj:                                            ; preds = %._crit_edge
   %i.gb = icmp eq i8 %i.fx, 1
-  %i.gc = select i1 %i.fy, i64 0, i64 8           ; 2 uses
-  br i1 %i.gb, label %.thread402, label %bb.ak
+  %i.gc = select i1 %i.fy, i64 0, i64 8
+  %6 = getelementptr inbounds nuw i8, ptr %i.fv, i64 %i.gc ; 2 uses
+  br i1 %i.gb, label %.thread402, label %.thread319
 
 .thread402:                                       ; preds = %bb.aj
-  %21 = getelementptr inbounds nuw i8, ptr %i.fv, i64 %i.gc
-  %i.gd = getelementptr inbounds nuw i8, ptr %21, i64 8
+  %i.gd = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.ge = getelementptr inbounds nuw i8, ptr %i.fo, i64 32
   store ptr %i.gd, ptr %i.ge, align 8, !tbaa !54
-  %22 = getelementptr inbounds nuw i8, ptr %i.ft, i64 8
-  %23 = load i64, ptr %22, align 8, !tbaa !39
   br label %.thread318
 
-bb.ak:                                            ; preds = %.thread398, %bb.aj
-  %24 = phi i64 [ %20, %.thread398 ], [ %i.gc, %bb.aj ]
-  %i.gf = getelementptr inbounds nuw i8, ptr %i.fv, i64 %24
+bb.ak:                                            ; preds = %bb.ai
+  %7 = getelementptr inbounds nuw i8, ptr %1, i64 289
+  %8 = load i8, ptr %7, align 1, !tbaa !31
+  %9 = zext i8 %8 to i32                          ; 3 uses
+  %10 = lshr i32 %9, 1
+  %11 = and i32 %10, 16
+  %12 = lshr i32 %9, 2
+  %13 = and i32 %12, 4
+  %14 = and i32 %9, 3
+  %15 = shl nuw nsw i32 1, %14
+  %16 = or disjoint i32 %11, %13
+  %17 = or disjoint i32 %16, 10
+  %18 = add nuw nsw i32 %17, %15
+  %19 = zext nneg i32 %18 to i64
+  %i.gf = getelementptr inbounds nuw i8, ptr %i.fv, i64 %19
   %i.gg = getelementptr inbounds nuw i8, ptr %1, i64 289
   %i.gh = load i8, ptr %i.gg, align 1, !tbaa !31
   %i.gi = lshr i8 %i.gh, 1
@@ -271,29 +263,38 @@ bb.ak:                                            ; preds = %.thread398, %bb.aj
   %i.gl = getelementptr i8, ptr %i.gf, i64 %i.gk
   %i.gm = getelementptr inbounds nuw i8, ptr %i.fo, i64 32
   store ptr %i.gl, ptr %i.gm, align 8, !tbaa !54
-  %i.gn = getelementptr inbounds nuw i8, ptr %i.ft, i64 8
-  %25 = load i64, ptr %i.gn, align 8, !tbaa !39
-  %26 = getelementptr inbounds nuw i8, ptr %1, i64 289
-  %27 = load i8, ptr %26, align 1, !tbaa !31      ; 2 uses
-  br i1 %i.fw, label %.thread319, label %._crit_edge373
-
-.thread319:                                       ; preds = %bb.ak
-  %28 = zext i8 %27 to i32                        ; 3 uses
-  %29 = lshr i32 %28, 1
-  %30 = and i32 %29, 16
-  %31 = lshr i32 %28, 2
-  %32 = and i32 %31, 4
-  %33 = and i32 %28, 3
-  %34 = shl nuw nsw i32 1, %33
-  %35 = or disjoint i32 %30, %32
-  %36 = or disjoint i32 %35, 10
-  %37 = add nuw nsw i32 %36, %34
-  %38 = zext nneg i32 %37 to i64
+  %i.gn = getelementptr inbounds nuw i8, ptr %1, i64 289
+  %20 = load i8, ptr %i.gn, align 1, !tbaa !31    ; 2 uses
+  %21 = zext i8 %20 to i32                        ; 3 uses
+  %22 = lshr i32 %21, 1
+  %23 = and i32 %22, 16
+  %24 = lshr i32 %21, 2
+  %25 = and i32 %24, 4
+  %26 = and i32 %21, 3
+  %27 = shl nuw nsw i32 1, %26
+  %28 = or disjoint i32 %23, %25
+  %29 = or disjoint i32 %28, 10
+  %30 = add nuw nsw i32 %29, %27
+  %31 = zext nneg i32 %30 to i64
   br label %._crit_edge373
 
-._crit_edge373:                                   ; preds = %bb.ak, %.thread319
-  %i.go = phi i64 [ %38, %.thread319 ], [ 8, %bb.ak ]
-  %i.gp = lshr i8 %27, 1
+.thread319:                                       ; preds = %bb.aj
+  %32 = getelementptr inbounds nuw i8, ptr %1, i64 289
+  %33 = load i8, ptr %32, align 1, !tbaa !31
+  %34 = lshr i8 %33, 1
+  %35 = and i8 %34, 2
+  %36 = zext nneg i8 %35 to i64
+  %37 = getelementptr i8, ptr %6, i64 %36
+  %38 = getelementptr inbounds nuw i8, ptr %i.fo, i64 32
+  store ptr %37, ptr %38, align 8, !tbaa !54
+  %.phi.trans.insert374 = getelementptr inbounds nuw i8, ptr %1, i64 289
+  %.pre375 = load i8, ptr %.phi.trans.insert374, align 1, !tbaa !31
+  br label %._crit_edge373
+
+._crit_edge373:                                   ; preds = %.thread319, %bb.ak
+  %39 = phi i8 [ %20, %bb.ak ], [ %.pre375, %.thread319 ]
+  %i.go = phi i64 [ %31, %bb.ak ], [ 8, %.thread319 ]
+  %i.gp = lshr i8 %39, 1
   %i.gq = and i8 %i.gp, 2
   %i.gr = or disjoint i8 %i.gq, 4
   %i.gs = zext nneg i8 %i.gr to i64
@@ -301,10 +302,11 @@ bb.ak:                                            ; preds = %.thread398, %bb.aj
 
 .thread318:                                       ; preds = %.thread402, %.thread316, %._crit_edge373
   %i.gt = phi i64 [ %i.go, %._crit_edge373 ], [ 0, %.thread402 ], [ 16, %.thread316 ]
-  %i.gu = phi i64 [ %25, %._crit_edge373 ], [ %23, %.thread402 ], [ %7, %.thread316 ]
-  %39 = phi i64 [ %i.gs, %._crit_edge373 ], [ 8, %.thread402 ], [ 8, %.thread316 ]
-  %i.gv = add nuw nsw i64 %i.gt, %39
-  %i.gw = sub i64 %i.gu, %i.gv
+  %i.gu = phi i64 [ %i.gs, %._crit_edge373 ], [ 8, %.thread402 ], [ 8, %.thread316 ]
+  %.in410 = getelementptr inbounds nuw i8, ptr %i.ft, i64 8
+  %40 = load i64, ptr %.in410, align 8, !tbaa !39
+  %i.gv = add nuw nsw i64 %i.gt, %i.gu
+  %i.gw = sub i64 %40, %i.gv
   %i.gx = getelementptr inbounds nuw i8, ptr %i.fo, i64 40
   store i64 %i.gw, ptr %i.gx, align 8, !tbaa !53
   %i.gy = getelementptr inbounds nuw i8, ptr %i.fo, i64 16

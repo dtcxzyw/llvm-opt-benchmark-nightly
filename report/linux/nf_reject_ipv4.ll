@@ -1,5 +1,5 @@
-inline.NumInlined: 96
-inline.NumDeleted: 43
+inline.NumInlined: 98
+inline.NumDeleted: 44
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
@@ -33,11 +33,11 @@ module asm(target_features: "+cmov,+cx8,+fxsr,+retpoline-external-thunk,+retpoli
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
 define dso_local ptr @nf_reject_skb_v4_tcp_reset(ptr nofree noundef captures(address) %0, ptr noundef %1, ptr noundef %2, i32 noundef %3) #0 align 16 prefalign(16) {
 bb.a:
-  %4 = alloca %struct.tcphdr, align 4             ; 4 uses
+  %4 = alloca %struct.tcphdr, align 4             ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #7
-  %i.a = getelementptr i8, ptr %1, i64 112        ; 2 uses
+  %i.a = getelementptr i8, ptr %1, i64 112        ; 3 uses
   %.val24.i = load i32, ptr %i.a, align 8         ; 2 uses
-  %i.b = getelementptr i8, ptr %1, i64 116        ; 2 uses
+  %i.b = getelementptr i8, ptr %1, i64 116        ; 3 uses
   %.val25.i = load i32, ptr %i.b, align 4
   %i.c = sub i32 %.val24.i, %.val25.i             ; 2 uses
   %.not.i.i = icmp ult i32 %i.c, 20
@@ -55,11 +55,11 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c, %bb.a
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %4, i8 0, i64 20, i1 false), !annotation !11
-  %i.g = getelementptr i8, ptr %1, i64 184        ; 2 uses
+  %i.g = getelementptr i8, ptr %1, i64 184        ; 4 uses
   %.val26.i = load i16, ptr %i.g, align 8
-  %i.h = getelementptr i8, ptr %1, i64 200        ; 2 uses
-  %.val27.i = load ptr, ptr %i.h, align 8
-  %i.i = zext i16 %.val26.i to i64
+  %i.h = getelementptr i8, ptr %1, i64 200        ; 4 uses
+  %.val27.i = load ptr, ptr %i.h, align 8         ; 2 uses
+  %i.i = zext i16 %.val26.i to i64                ; 2 uses
   %i.j = getelementptr i8, ptr %.val27.i, i64 %i.i ; 2 uses
   %i.k = load i8, ptr %i.j, align 4               ; 3 uses
   %i.l = and i8 %i.k, 15
@@ -88,18 +88,85 @@ bb.g:                                             ; preds = %bb.f
   %.val21.i = load i32, ptr %i.b, align 4
   %i.w = sub i32 %i.r, %.val21.i                  ; 2 uses
   %.not.i14.i = icmp ult i32 %i.w, %i.u
-  br i1 %.not.i14.i, label %bb.h, label %nf_reject_iphdr_validate.exit.a, !prof !10
+  br i1 %.not.i14.i, label %bb.h, label %nf_reject_iphdr_validate.exit, !prof !10
 
 bb.h:                                             ; preds = %bb.g
   %i.x = sub nuw nsw i32 %i.u, %i.w
   %i.y = tail call ptr @__pskb_pull_tail(ptr noundef %1, i32 noundef %i.x) #8
   %.not9.i16.i = icmp eq ptr %i.y, null
-  br i1 %.not9.i16.i, label %nf_reject_iphdr_validate.exit.thread, label %nf_reject_iphdr_validate.exit.a, !prof !10
+  br i1 %.not9.i16.i, label %nf_reject_iphdr_validate.exit.thread, label %.nf_reject_iphdr_validate.exit_crit_edge, !prof !10
 
-nf_reject_iphdr_validate.exit.a:                  ; preds = %bb.h, %bb.g
-  %5 = call fastcc ptr @nf_reject_ip_tcphdr_get(ptr noundef %1, ptr noundef nonnull %4, i32 noundef %3) #9, !srcloc !12 ; 2 uses
-  %.not21 = icmp eq ptr %5, null
-  br i1 %.not21, label %nf_reject_iphdr_validate.exit.thread, label %bb.i
+.nf_reject_iphdr_validate.exit_crit_edge:         ; preds = %bb.h
+  %.val18.i.pre = load i16, ptr %i.g, align 8
+  %.val19.i.pre = load ptr, ptr %i.h, align 8
+  %.pre = zext i16 %.val18.i.pre to i64
+  br label %nf_reject_iphdr_validate.exit
+
+nf_reject_iphdr_validate.exit:                    ; preds = %.nf_reject_iphdr_validate.exit_crit_edge, %bb.g
+  %.pre-phi = phi i64 [ %.pre, %.nf_reject_iphdr_validate.exit_crit_edge ], [ %i.i, %bb.g ]
+  %.val19.i = phi ptr [ %.val19.i.pre, %.nf_reject_iphdr_validate.exit_crit_edge ], [ %.val27.i, %bb.g ]
+  %5 = getelementptr i8, ptr %.val19.i, i64 %.pre-phi ; 3 uses
+  %6 = getelementptr i8, ptr %5, i64 6
+  %7 = load i16, ptr %6, align 2
+  %8 = and i16 %7, -225
+  %.not.i24 = icmp eq i16 %8, 0
+  br i1 %.not.i24, label %9, label %nf_reject_iphdr_validate.exit.thread
+
+9:                                                ; preds = %nf_reject_iphdr_validate.exit
+  %10 = getelementptr i8, ptr %5, i64 9
+  %11 = load i8, ptr %10, align 1
+  %.not12.i = icmp eq i8 %11, 6
+  br i1 %.not12.i, label %12, label %nf_reject_iphdr_validate.exit.thread
+
+12:                                               ; preds = %9
+  %13 = load i8, ptr %5, align 4
+  %14 = shl i8 %13, 2
+  %15 = and i8 %14, 60                            ; 2 uses
+  %16 = zext nneg i8 %15 to i32                   ; 2 uses
+  %.val.i = load i32, ptr %i.a, align 8
+  %.val15.i = load i32, ptr %i.b, align 4
+  %17 = add i32 %.val15.i, %16
+  %18 = sub i32 %.val.i, %17
+  %.not.i.i26 = icmp slt i32 %18, 20
+  br i1 %.not.i.i26, label %19, label %__skb_header_pointer.exit.i, !prof !10
+
+19:                                               ; preds = %12
+  %.not13.i.i = icmp eq ptr %1, null
+  br i1 %.not13.i.i, label %nf_reject_iphdr_validate.exit.thread, label %20
+
+20:                                               ; preds = %19
+  %21 = call i32 @skb_copy_bits(ptr noundef nonnull %1, i32 noundef %16, ptr noundef nonnull %4, i32 noundef 20) #8
+  %22 = icmp slt i32 %21, 0
+  br i1 %22, label %nf_reject_iphdr_validate.exit.thread, label %__skb_header_pointer.exit.i.thread, !prof !10
+
+__skb_header_pointer.exit.i:                      ; preds = %12
+  %23 = getelementptr i8, ptr %1, i64 208
+  %24 = load ptr, ptr %23, align 8
+  %25 = zext nneg i8 %15 to i64
+  %26 = getelementptr i8, ptr %24, i64 %25        ; 2 uses
+  %27 = icmp eq ptr %26, null
+  br i1 %27, label %nf_reject_iphdr_validate.exit.thread, label %__skb_header_pointer.exit.i.thread
+
+__skb_header_pointer.exit.i.thread:               ; preds = %20, %__skb_header_pointer.exit.i
+  %.0.i.i31 = phi ptr [ %26, %__skb_header_pointer.exit.i ], [ %4, %20 ] ; 2 uses
+  %28 = getelementptr i8, ptr %.0.i.i31, i64 12
+  %29 = load i16, ptr %28, align 4
+  %30 = and i16 %29, 1024
+  %.not13.i = icmp eq i16 %30, 0
+  br i1 %.not13.i, label %nf_reject_iphdr_validate.exit.a, label %nf_reject_iphdr_validate.exit.thread
+
+nf_reject_iphdr_validate.exit.a:                  ; preds = %__skb_header_pointer.exit.i.thread
+  %.val20.i = load i16, ptr %i.g, align 8
+  %.val21.i27 = load ptr, ptr %i.h, align 8
+  %31 = zext i16 %.val20.i to i64
+  %32 = getelementptr i8, ptr %.val21.i27, i64 %31
+  %33 = load i8, ptr %32, align 4
+  %34 = shl i8 %33, 2
+  %35 = and i8 %34, 60
+  %36 = zext nneg i8 %35 to i32
+  %37 = call zeroext i16 @nf_ip_checksum(ptr noundef %1, i32 noundef %3, i32 noundef %36, i8 noundef zeroext 6) #8
+  %.not21 = icmp eq i16 %37, 0
+  br i1 %.not21, label %bb.i, label %nf_reject_iphdr_validate.exit.thread
 
 bb.i:                                             ; preds = %nf_reject_iphdr_validate.exit.a
   %i.z = call ptr @__alloc_skb(i32 noundef 136, i32 noundef 2080, i32 noundef 0, i32 noundef -1) #8 ; 11 uses
@@ -155,7 +222,7 @@ bb.j:                                             ; preds = %bb.i
   store i8 %i.ai, ptr %i.be, align 4
   %i.bf = getelementptr i8, ptr %i.z, i64 180
   store i16 8, ptr %i.bf, align 4
-  call fastcc void @nf_reject_ip_tcphdr_put(ptr noundef %i.z, ptr noundef %1, ptr noundef %5) #9, !srcloc !13
+  call fastcc void @nf_reject_ip_tcphdr_put(ptr noundef %i.z, ptr noundef %1, ptr noundef %.0.i.i31) #9, !srcloc !12
   %i.bg = getelementptr i8, ptr %i.z, i64 112
   %i.bh = load i32, ptr %i.bg, align 8
   %i.bi = trunc i32 %i.bh to i16
@@ -165,8 +232,8 @@ bb.j:                                             ; preds = %bb.i
   call void @ip_send_check(ptr noundef %i.as) #8
   br label %nf_reject_iphdr_validate.exit.thread
 
-nf_reject_iphdr_validate.exit.thread:             ; preds = %bb.h, %bb.c, %bb.b, %bb.f, %bb.e, %bb.d, %bb.i, %nf_reject_iphdr_validate.exit.a, %bb.j
-  %.0 = phi ptr [ %i.z, %bb.j ], [ null, %nf_reject_iphdr_validate.exit.a ], [ null, %bb.i ], [ null, %bb.d ], [ null, %bb.e ], [ null, %bb.f ], [ null, %bb.b ], [ null, %bb.c ], [ null, %bb.h ]
+nf_reject_iphdr_validate.exit.thread:             ; preds = %20, %19, %nf_reject_iphdr_validate.exit.a, %__skb_header_pointer.exit.i, %9, %nf_reject_iphdr_validate.exit, %__skb_header_pointer.exit.i.thread, %bb.h, %bb.c, %bb.b, %bb.f, %bb.e, %bb.d, %bb.i, %bb.j
+  %.0 = phi ptr [ %i.z, %bb.j ], [ null, %bb.h ], [ null, %bb.i ], [ null, %bb.d ], [ null, %bb.e ], [ null, %bb.f ], [ null, %bb.b ], [ null, %bb.c ], [ null, %__skb_header_pointer.exit.i.thread ], [ null, %nf_reject_iphdr_validate.exit ], [ null, %9 ], [ null, %__skb_header_pointer.exit.i ], [ null, %nf_reject_iphdr_validate.exit.a ], [ null, %19 ], [ null, %20 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #7
   ret ptr %.0
 }
@@ -176,87 +243,6 @@ declare void @llvm.lifetime.start.p0(ptr captures(none)) #1
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #2
-
-; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
-define internal fastcc ptr @nf_reject_ip_tcphdr_get(ptr noundef %0, ptr noundef %1, i32 noundef %2) unnamed_addr #0 align 16 prefalign(16) {
-  %4 = getelementptr i8, ptr %0, i64 184          ; 2 uses
-  %.val18 = load i16, ptr %4, align 8
-  %5 = getelementptr i8, ptr %0, i64 200          ; 2 uses
-  %.val19 = load ptr, ptr %5, align 8
-  %6 = zext i16 %.val18 to i64
-  %7 = getelementptr i8, ptr %.val19, i64 %6      ; 3 uses
-  %8 = getelementptr i8, ptr %7, i64 6
-  %9 = load i16, ptr %8, align 2
-  %10 = and i16 %9, -225
-  %.not = icmp eq i16 %10, 0
-  br i1 %.not, label %11, label %__skb_header_pointer.exit.thread
-
-11:                                               ; preds = %3
-  %12 = getelementptr i8, ptr %7, i64 9
-  %13 = load i8, ptr %12, align 1
-  %.not12 = icmp eq i8 %13, 6
-  br i1 %.not12, label %14, label %__skb_header_pointer.exit.thread
-
-14:                                               ; preds = %11
-  %15 = load i8, ptr %7, align 4
-  %16 = shl i8 %15, 2
-  %17 = and i8 %16, 60                            ; 2 uses
-  %18 = zext nneg i8 %17 to i32                   ; 2 uses
-  %19 = getelementptr i8, ptr %0, i64 112
-  %.val = load i32, ptr %19, align 8
-  %20 = getelementptr i8, ptr %0, i64 116
-  %.val15 = load i32, ptr %20, align 4
-  %21 = add i32 %.val15, %18
-  %22 = sub i32 %.val, %21
-  %.not.i = icmp slt i32 %22, 20
-  br i1 %.not.i, label %28, label %23, !prof !10
-
-23:                                               ; preds = %14
-  %24 = getelementptr i8, ptr %0, i64 208
-  %25 = load ptr, ptr %24, align 8
-  %26 = zext nneg i8 %17 to i64
-  %27 = getelementptr i8, ptr %25, i64 %26
-  br label %__skb_header_pointer.exit
-
-28:                                               ; preds = %14
-  %.not13.i = icmp eq ptr %0, null
-  br i1 %.not13.i, label %__skb_header_pointer.exit.thread, label %29
-
-29:                                               ; preds = %28
-  %30 = tail call i32 @skb_copy_bits(ptr noundef nonnull %0, i32 noundef %18, ptr noundef %1, i32 noundef 20) #8
-  %31 = icmp slt i32 %30, 0
-  br i1 %31, label %__skb_header_pointer.exit.thread, label %__skb_header_pointer.exit, !prof !10
-
-__skb_header_pointer.exit:                        ; preds = %29, %23
-  %.0.i = phi ptr [ %27, %23 ], [ %1, %29 ]       ; 3 uses
-  %32 = icmp eq ptr %.0.i, null
-  br i1 %32, label %__skb_header_pointer.exit.thread, label %33
-
-33:                                               ; preds = %__skb_header_pointer.exit
-  %34 = getelementptr i8, ptr %.0.i, i64 12
-  %35 = load i16, ptr %34, align 4
-  %36 = and i16 %35, 1024
-  %.not13 = icmp eq i16 %36, 0
-  br i1 %.not13, label %37, label %__skb_header_pointer.exit.thread
-
-37:                                               ; preds = %33
-  %.val20 = load i16, ptr %4, align 8
-  %.val21 = load ptr, ptr %5, align 8
-  %38 = zext i16 %.val20 to i64
-  %39 = getelementptr i8, ptr %.val21, i64 %38
-  %40 = load i8, ptr %39, align 4
-  %41 = shl i8 %40, 2
-  %42 = and i8 %41, 60
-  %43 = zext nneg i8 %42 to i32
-  %44 = tail call zeroext i16 @nf_ip_checksum(ptr noundef %0, i32 noundef %2, i32 noundef %43, i8 noundef zeroext 6) #8
-  %.not14 = icmp eq i16 %44, 0
-  %. = select i1 %.not14, ptr %.0.i, ptr null
-  br label %__skb_header_pointer.exit.thread
-
-__skb_header_pointer.exit.thread:                 ; preds = %29, %28, %37, %33, %__skb_header_pointer.exit, %11, %3
-  %.0 = phi ptr [ null, %33 ], [ null, %3 ], [ null, %11 ], [ null, %__skb_header_pointer.exit ], [ %., %37 ], [ null, %28 ], [ null, %29 ]
-  ret ptr %.0
-}
 
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
 define internal fastcc noundef ptr @nf_reject_iphdr_put(ptr noundef nonnull initializes((184, 186)) %0, i16 %.184.val, ptr nofree readonly captures(none) %.200.val, i8 noundef zeroext range(i8 1, 7) %1, i32 noundef %2) unnamed_addr #0 align 16 {
@@ -382,10 +368,10 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.ay = load i32, ptr %i.ax, align 4
   %i.az = getelementptr i8, ptr %i.aw, i64 16
   %i.ba = load i32, ptr %i.az, align 4
-  %i.bb = tail call i32 asm "  addl $1, $0\0A  adcl $2, $0\0A  adcl $3, $0\0A  adcl $$0, $0\0A", "=r,imr,imr,imr,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.ba, i32 %i.ay, i32 6656, i32 0) #10, !srcloc !14 ; 2 uses
+  %i.bb = tail call i32 asm "  addl $1, $0\0A  adcl $2, $0\0A  adcl $3, $0\0A  adcl $$0, $0\0A", "=r,imr,imr,imr,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.ba, i32 %i.ay, i32 6656, i32 0) #10, !srcloc !13 ; 2 uses
   %i.bc = shl i32 %i.bb, 16
   %i.bd = and i32 %i.bb, -65536
-  %i.be = tail call i32 asm "  addl $1,$0\0A  adcl $$0xffff,$0", "=r,r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.bc, i32 %i.bd) #11, !srcloc !15
+  %i.be = tail call i32 asm "  addl $1,$0\0A  adcl $$0xffff,$0", "=r,r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.bc, i32 %i.bd) #11, !srcloc !14
   %i.bf = xor i32 %i.be, -1
   %i.bg = lshr i32 %i.bf, 16
   %i.bh = trunc nuw i32 %i.bg to i16
@@ -598,7 +584,7 @@ pskb_trim_rcsum.exit.thread:                      ; preds = %pskb_trim_rcsum.exi
   %i.bm = getelementptr i8, ptr %.val68, i64 %.pre-phi92 ; 2 uses
   %i.bn = getelementptr i8, ptr %i.bm, i64 9
   %i.bo = load i8, ptr %i.bn, align 1             ; 2 uses
-  %i.bp = call fastcc i32 @skb_csum_unnecessary(ptr noundef %1) #9, !srcloc !16
+  %i.bp = call fastcc i32 @skb_csum_unnecessary(ptr noundef %1) #9, !srcloc !15
   %.not51 = icmp eq i32 %i.bp, 0
   br i1 %.not51, label %bb.p, label %bb.r
 
@@ -607,7 +593,7 @@ bb.p:                                             ; preds = %pskb_trim_rcsum.exi
   %i.br = shl i8 %i.bq, 2
   %i.bs = and i8 %i.br, 60
   %i.bt = zext nneg i8 %i.bs to i32
-  %i.bu = call fastcc zeroext i1 @nf_reject_verify_csum(ptr noundef %1, i32 noundef %i.bt, i8 noundef zeroext %i.bo) #9, !srcloc !17
+  %i.bu = call fastcc zeroext i1 @nf_reject_verify_csum(ptr noundef %1, i32 noundef %i.bt, i8 noundef zeroext %i.bo) #9, !srcloc !16
   br i1 %i.bu, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %bb.p
@@ -670,7 +656,7 @@ bb.s:                                             ; preds = %bb.r
   %i.dd = call i32 @csum_partial(ptr noundef %i.cx, i32 noundef %narrow, i32 noundef 0) #8 ; 2 uses
   %i.de = shl i32 %i.dd, 16
   %i.df = and i32 %i.dd, -65536
-  %i.dg = call i32 asm "  addl $1,$0\0A  adcl $$0xffff,$0", "=r,r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.de, i32 %i.df) #11, !srcloc !15
+  %i.dg = call i32 asm "  addl $1,$0\0A  adcl $$0xffff,$0", "=r,r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.de, i32 %i.df) #11, !srcloc !14
   %i.dh = xor i32 %i.dg, -1
   %i.di = lshr i32 %i.dh, 16
   %i.dj = trunc nuw i32 %i.di to i16
@@ -806,14 +792,80 @@ define dso_local void @nf_send_reset(ptr noundef %0, ptr noundef %1, ptr noundef
 bb.a:
   %i.a = alloca ptr, align 8                      ; 6 uses
   %4 = alloca %struct.flowi, align 8              ; 6 uses
-  %5 = alloca %struct.tcphdr, align 4             ; 4 uses
+  %5 = alloca %struct.tcphdr, align 4             ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #7
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %5, i8 0, i64 20, i1 false), !annotation !11
-  %6 = call fastcc ptr @nf_reject_ip_tcphdr_get(ptr noundef %2, ptr noundef nonnull %5, i32 noundef %3) #9, !srcloc !18 ; 2 uses
-  %.not = icmp eq ptr %6, null
-  br i1 %.not, label %bb.o, label %bb.b
+  %6 = getelementptr i8, ptr %2, i64 184          ; 4 uses
+  %.val18.i = load i16, ptr %6, align 8
+  %7 = getelementptr i8, ptr %2, i64 200          ; 4 uses
+  %.val19.i = load ptr, ptr %7, align 8
+  %8 = zext i16 %.val18.i to i64
+  %9 = getelementptr i8, ptr %.val19.i, i64 %8    ; 3 uses
+  %10 = getelementptr i8, ptr %9, i64 6
+  %11 = load i16, ptr %10, align 2
+  %12 = and i16 %11, -225
+  %.not = icmp eq i16 %12, 0
+  br i1 %.not, label %13, label %bb.o
 
-bb.b:                                             ; preds = %bb.a
+13:                                               ; preds = %bb.a
+  %14 = getelementptr i8, ptr %9, i64 9
+  %15 = load i8, ptr %14, align 1
+  %.not12.i = icmp eq i8 %15, 6
+  br i1 %.not12.i, label %16, label %bb.o
+
+16:                                               ; preds = %13
+  %17 = load i8, ptr %9, align 4
+  %18 = shl i8 %17, 2
+  %19 = and i8 %18, 60                            ; 2 uses
+  %20 = zext nneg i8 %19 to i32                   ; 2 uses
+  %21 = getelementptr i8, ptr %2, i64 112
+  %.val.i = load i32, ptr %21, align 8
+  %22 = getelementptr i8, ptr %2, i64 116
+  %.val15.i = load i32, ptr %22, align 4
+  %23 = add i32 %.val15.i, %20
+  %24 = sub i32 %.val.i, %23
+  %.not.i.i = icmp slt i32 %24, 20
+  br i1 %.not.i.i, label %25, label %__skb_header_pointer.exit.i, !prof !10
+
+25:                                               ; preds = %16
+  %.not13.i.i = icmp eq ptr %2, null
+  br i1 %.not13.i.i, label %bb.o, label %26
+
+26:                                               ; preds = %25
+  %27 = call i32 @skb_copy_bits(ptr noundef nonnull %2, i32 noundef %20, ptr noundef nonnull %5, i32 noundef 20) #8
+  %28 = icmp slt i32 %27, 0
+  br i1 %28, label %bb.o, label %__skb_header_pointer.exit.i.thread, !prof !10
+
+__skb_header_pointer.exit.i:                      ; preds = %16
+  %29 = getelementptr i8, ptr %2, i64 208
+  %30 = load ptr, ptr %29, align 8
+  %31 = zext nneg i8 %19 to i64
+  %32 = getelementptr i8, ptr %30, i64 %31        ; 2 uses
+  %33 = icmp eq ptr %32, null
+  br i1 %33, label %bb.o, label %__skb_header_pointer.exit.i.thread
+
+__skb_header_pointer.exit.i.thread:               ; preds = %26, %__skb_header_pointer.exit.i
+  %.0.i.i51 = phi ptr [ %32, %__skb_header_pointer.exit.i ], [ %5, %26 ] ; 2 uses
+  %34 = getelementptr i8, ptr %.0.i.i51, i64 12
+  %35 = load i16, ptr %34, align 4
+  %36 = and i16 %35, 1024
+  %.not13.i = icmp eq i16 %36, 0
+  br i1 %.not13.i, label %37, label %bb.o
+
+37:                                               ; preds = %__skb_header_pointer.exit.i.thread
+  %.val20.i = load i16, ptr %6, align 8
+  %.val21.i = load ptr, ptr %7, align 8
+  %38 = zext i16 %.val20.i to i64
+  %39 = getelementptr i8, ptr %.val21.i, i64 %38
+  %40 = load i8, ptr %39, align 4
+  %41 = shl i8 %40, 2
+  %42 = and i8 %41, 60
+  %43 = zext nneg i8 %42 to i32
+  %44 = call zeroext i16 @nf_ip_checksum(ptr noundef %2, i32 noundef %3, i32 noundef %43, i8 noundef zeroext 6) #8
+  %.not14.i = icmp eq i16 %44, 0
+  br i1 %.not14.i, label %bb.b, label %bb.o
+
+bb.b:                                             ; preds = %37
   %i.b = getelementptr i8, ptr %2, i64 88         ; 3 uses
   %.val41 = load i64, ptr %i.b, align 8           ; 2 uses
   %.not32 = icmp ult i64 %.val41, 2
@@ -823,11 +875,9 @@ bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   store ptr null, ptr %i.a, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #7
-  %7 = getelementptr i8, ptr %2, i64 184
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %4, i8 0, i64 88, i1 false)
-  %.val.i.a = load i16, ptr %7, align 8
-  %8 = getelementptr i8, ptr %2, i64 200
-  %.val4.i = load ptr, ptr %8, align 8
+  %.val.i.a = load i16, ptr %6, align 8
+  %.val4.i = load ptr, ptr %7, align 8
   %i.c = zext i16 %.val.i.a to i64
   %i.d = getelementptr i8, ptr %.val4.i, i64 %i.c
   %i.e = getelementptr i8, ptr %i.d, i64 12
@@ -935,10 +985,8 @@ bb.i:                                             ; preds = %bb.h
 ip4_dst_hoplimit.exit:                            ; preds = %bb.h, %bb.i
   %i.bd = phi ptr [ %.pre, %bb.i ], [ %i.an, %bb.h ]
   %.0.i46 = phi i32 [ %i.bc, %bb.i ], [ %i.av, %bb.h ]
-  %9 = getelementptr i8, ptr %2, i64 184
-  %.val = load i16, ptr %9, align 8
-  %10 = getelementptr i8, ptr %2, i64 200
-  %.val37 = load ptr, ptr %10, align 8
+  %.val = load i16, ptr %6, align 8
+  %.val37 = load ptr, ptr %7, align 8
   %i.be = zext i16 %.val to i64
   %i.bf = getelementptr i8, ptr %.val37, i64 %i.be ; 2 uses
   %i.bg = getelementptr i8, ptr %i.v, i64 200
@@ -974,7 +1022,7 @@ ip4_dst_hoplimit.exit:                            ; preds = %bb.h, %bb.i
   store i8 %i.bz, ptr %i.ca, align 4
   %i.cb = getelementptr i8, ptr %i.v, i64 180
   store i16 8, ptr %i.cb, align 4
-  call fastcc void @nf_reject_ip_tcphdr_put(ptr noundef %i.v, ptr noundef %2, ptr noundef %6) #9, !srcloc !19
+  call fastcc void @nf_reject_ip_tcphdr_put(ptr noundef %i.v, ptr noundef %2, ptr noundef %.0.i.i51) #9, !srcloc !17
   %i.cc = call i32 @ip_route_me_harder(ptr noundef %0, ptr noundef %1, ptr noundef nonnull %i.v, i32 noundef 0) #8
   %.not36 = icmp eq i32 %i.cc, 0
   br i1 %.not36, label %bb.j, label %bb.n
@@ -990,14 +1038,14 @@ bb.j:                                             ; preds = %ip4_dst_hoplimit.ex
   %i.cj = getelementptr i8, ptr %i.ci, i64 32
   %i.ck = load ptr, ptr %i.cj, align 32           ; 2 uses
   %i.cl = icmp eq ptr %i.ck, @ipv4_mtu
-  br i1 %i.cl, label %bb.k, label %bb.l, !prof !20
+  br i1 %i.cl, label %bb.k, label %bb.l, !prof !18
 
 bb.k:                                             ; preds = %bb.j
   %i.cm = call i32 @ipv4_mtu(ptr noundef %i.cg) #8
   br label %dst4_mtu.exit
 
 bb.l:                                             ; preds = %bb.j
-  %i.cn = call i32 %i.ck(ptr noundef %i.cg) #8, !inline_history !21
+  %i.cn = call i32 %i.ck(ptr noundef %i.cg) #8, !inline_history !19
   br label %dst4_mtu.exit
 
 dst4_mtu.exit:                                    ; preds = %bb.k, %bb.l
@@ -1021,7 +1069,7 @@ bb.n:                                             ; preds = %dst4_mtu.exit, %ip4
   call void @sk_skb_reason_drop(ptr noundef null, ptr noundef nonnull %i.v, i32 noundef 2) #8
   br label %bb.o
 
-bb.o:                                             ; preds = %nf_reject_fill_skb_dst.exit.thread, %bb.e, %bb.d, %bb.a, %bb.n, %bb.m
+bb.o:                                             ; preds = %26, %25, %37, %__skb_header_pointer.exit.i, %13, %bb.a, %__skb_header_pointer.exit.i.thread, %nf_reject_fill_skb_dst.exit.thread, %bb.e, %bb.d, %bb.n, %bb.m
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #7
   ret void
 }
@@ -1276,14 +1324,12 @@ attributes #11 = { nounwind memory(none) }
 !9 = !{!"Ubuntu clang version 24.0.0 (++20260807082003+f3bd40ce6ba5-1~exp1~20260807082012.1771)"}
 !10 = !{!"branch_weights", !"expected", i32 1, i32 2000}
 !11 = !{!"auto-init"}
-!12 = !{i64 1437}
-!13 = !{i64 1818}
-!14 = !{i64 8543933, i64 8543957, i64 8543980, i64 8544003}
-!15 = !{i64 8542184, i64 8542207}
-!16 = !{i64 3258}
-!17 = !{i64 3295}
-!18 = !{i64 6656}
-!19 = !{i64 7270}
-!20 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!21 = distinct !{null}
+!12 = !{i64 1818}
+!13 = !{i64 8543933, i64 8543957, i64 8543980, i64 8544003}
+!14 = !{i64 8542184, i64 8542207}
+!15 = !{i64 3258}
+!16 = !{i64 3295}
+!17 = !{i64 7270}
+!18 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!19 = distinct !{null}
 end_hunk_0

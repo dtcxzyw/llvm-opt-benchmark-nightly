@@ -204,8 +204,8 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define internal noundef signext range(i8 0, 2) i8 @_ZL12MBCSAddTableP12NewConverterP8UCMTableP20UConverterStaticData(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) initializes((79, 80)) %2) #2 {
 bb.a:
-  %i.a = alloca [1007 x i16], align 16            ; 7 uses
-  %i.b = alloca [1007 x i16], align 16            ; 9 uses
+  %i.a = alloca [1007 x i16], align 16            ; 9 uses
+  %i.b = alloca [1007 x i16], align 16            ; 11 uses
   %i.c = alloca [4096 x i16], align 16            ; 8 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.e = load i8, ptr %i.d, align 8, !tbaa !27    ; 2 uses
@@ -373,7 +373,7 @@ bb.m:                                             ; preds = %.loopexit76.i
 
 bb.n:                                             ; preds = %.loopexit76.i
   tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.bc, i8 0, i64 %.065.i, i1 false)
-  %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 65592 ; 5 uses
+  %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 65592 ; 9 uses
   store i16 64, ptr %i.bh, align 8, !tbaa !42
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 454464 ; 7 uses
   store i32 128, ptr %i.bi, align 8, !tbaa !50
@@ -776,23 +776,39 @@ bb.cq:                                            ; preds = %._crit_edge.i25.i
   br label %bb.cr
 
 bb.cr:                                            ; preds = %bb.cr, %._crit_edge._crit_edge.i30.i
-  %indvars.iv96.i.i = phi i64 [ 0, %._crit_edge._crit_edge.i30.i ], [ %indvars.iv.next97.i.i.1, %bb.cr ] ; 3 uses
-  %i.yk = getelementptr inbounds nuw [2 x i8], ptr %i.bh, i64 %indvars.iv96.i.i ; 2 uses
-  %i.yl = load i16, ptr %i.yk, align 2, !tbaa !42
+  %indvars.iv96.i.i = phi i64 [ 0, %._crit_edge._crit_edge.i30.i ], [ %indvars.iv.next97.i.i.1, %bb.cr ] ; 5 uses
+  %3 = getelementptr inbounds nuw [2 x i8], ptr %i.bh, i64 %indvars.iv96.i.i ; 2 uses
+  %4 = load i16, ptr %3, align 2, !tbaa !42
+  %5 = lshr i16 %4, 6
+  %6 = zext nneg i16 %5 to i64
+  %7 = getelementptr inbounds nuw [2 x i8], ptr %i.b, i64 %6
+  %8 = load i16, ptr %7, align 2, !tbaa !42
+  store i16 %8, ptr %3, align 2, !tbaa !42
+  %9 = getelementptr inbounds nuw [2 x i8], ptr %i.bh, i64 %indvars.iv96.i.i
+  %10 = getelementptr inbounds nuw i8, ptr %9, i64 2 ; 2 uses
+  %11 = load i16, ptr %10, align 2, !tbaa !42
+  %12 = lshr i16 %11, 6
+  %13 = zext nneg i16 %12 to i64
+  %14 = getelementptr inbounds nuw [2 x i8], ptr %i.b, i64 %13
+  %15 = load i16, ptr %14, align 2, !tbaa !42
+  store i16 %15, ptr %10, align 2, !tbaa !42
+  %i.yk = getelementptr inbounds nuw [2 x i8], ptr %i.bh, i64 %indvars.iv96.i.i
+  %16 = getelementptr inbounds nuw i8, ptr %i.yk, i64 4 ; 2 uses
+  %i.yl = load i16, ptr %16, align 2, !tbaa !42
   %i.ym = lshr i16 %i.yl, 6
   %i.yn = zext nneg i16 %i.ym to i64
   %i.yo = getelementptr inbounds nuw [2 x i8], ptr %i.b, i64 %i.yn
   %i.yp = load i16, ptr %i.yo, align 2, !tbaa !42
-  store i16 %i.yp, ptr %i.yk, align 2, !tbaa !42
+  store i16 %i.yp, ptr %16, align 2, !tbaa !42
   %i.yq = getelementptr inbounds nuw [2 x i8], ptr %i.bh, i64 %indvars.iv96.i.i
-  %i.yr = getelementptr inbounds nuw i8, ptr %i.yq, i64 2 ; 2 uses
+  %i.yr = getelementptr inbounds nuw i8, ptr %i.yq, i64 6 ; 2 uses
   %i.ys = load i16, ptr %i.yr, align 2, !tbaa !42
   %i.yt = lshr i16 %i.ys, 6
   %i.yu = zext nneg i16 %i.yt to i64
   %i.yv = getelementptr inbounds nuw [2 x i8], ptr %i.b, i64 %i.yu
   %i.yw = load i16, ptr %i.yv, align 2, !tbaa !42
   store i16 %i.yw, ptr %i.yr, align 2, !tbaa !42
-  %indvars.iv.next97.i.i.1 = add nuw nsw i64 %indvars.iv96.i.i, 2 ; 2 uses
+  %indvars.iv.next97.i.i.1 = add nuw nsw i64 %indvars.iv96.i.i, 4 ; 2 uses
   %exitcond99.not.i.i.1 = icmp eq i64 %indvars.iv.next97.i.i.1, 1088
   br i1 %exitcond99.not.i.i.1, label %_ZL19singleCompactStage2P8MBCSData.exit.i, label %bb.cr, !llvm.loop !78
 
@@ -1173,23 +1189,39 @@ bb.db:                                            ; preds = %._crit_edge.i37.i
   br label %bb.dc
 
 bb.dc:                                            ; preds = %bb.dc, %._crit_edge._crit_edge.i42.i
-  %indvars.iv98.i.i = phi i64 [ 0, %._crit_edge._crit_edge.i42.i ], [ %indvars.iv.next99.i.i.1, %bb.dc ] ; 3 uses
-  %i.afy = getelementptr inbounds nuw [2 x i8], ptr %i.bh, i64 %indvars.iv98.i.i ; 2 uses
-  %i.afz = load i16, ptr %i.afy, align 2, !tbaa !42
+  %indvars.iv98.i.i = phi i64 [ 0, %._crit_edge._crit_edge.i42.i ], [ %indvars.iv.next99.i.i.1, %bb.dc ] ; 5 uses
+  %17 = getelementptr inbounds nuw [2 x i8], ptr %i.bh, i64 %indvars.iv98.i.i ; 2 uses
+  %18 = load i16, ptr %17, align 2, !tbaa !42
+  %19 = lshr i16 %18, 6
+  %20 = zext nneg i16 %19 to i64
+  %21 = getelementptr inbounds nuw [2 x i8], ptr %i.a, i64 %20
+  %22 = load i16, ptr %21, align 2, !tbaa !42
+  store i16 %22, ptr %17, align 2, !tbaa !42
+  %23 = getelementptr inbounds nuw [2 x i8], ptr %i.bh, i64 %indvars.iv98.i.i
+  %24 = getelementptr inbounds nuw i8, ptr %23, i64 2 ; 2 uses
+  %25 = load i16, ptr %24, align 2, !tbaa !42
+  %26 = lshr i16 %25, 6
+  %27 = zext nneg i16 %26 to i64
+  %28 = getelementptr inbounds nuw [2 x i8], ptr %i.a, i64 %27
+  %29 = load i16, ptr %28, align 2, !tbaa !42
+  store i16 %29, ptr %24, align 2, !tbaa !42
+  %i.afy = getelementptr inbounds nuw [2 x i8], ptr %i.bh, i64 %indvars.iv98.i.i
+  %30 = getelementptr inbounds nuw i8, ptr %i.afy, i64 4 ; 2 uses
+  %i.afz = load i16, ptr %30, align 2, !tbaa !42
   %i.aga = lshr i16 %i.afz, 6
   %i.agb = zext nneg i16 %i.aga to i64
   %i.agc = getelementptr inbounds nuw [2 x i8], ptr %i.a, i64 %i.agb
   %i.agd = load i16, ptr %i.agc, align 2, !tbaa !42
-  store i16 %i.agd, ptr %i.afy, align 2, !tbaa !42
+  store i16 %i.agd, ptr %30, align 2, !tbaa !42
   %i.age = getelementptr inbounds nuw [2 x i8], ptr %i.bh, i64 %indvars.iv98.i.i
-  %i.agf = getelementptr inbounds nuw i8, ptr %i.age, i64 2 ; 2 uses
+  %i.agf = getelementptr inbounds nuw i8, ptr %i.age, i64 6 ; 2 uses
   %i.agg = load i16, ptr %i.agf, align 2, !tbaa !42
   %i.agh = lshr i16 %i.agg, 6
   %i.agi = zext nneg i16 %i.agh to i64
   %i.agj = getelementptr inbounds nuw [2 x i8], ptr %i.a, i64 %i.agi
   %i.agk = load i16, ptr %i.agj, align 2, !tbaa !42
   store i16 %i.agk, ptr %i.agf, align 2, !tbaa !42
-  %indvars.iv.next99.i.i.1 = add nuw nsw i64 %indvars.iv98.i.i, 2 ; 2 uses
+  %indvars.iv.next99.i.i.1 = add nuw nsw i64 %indvars.iv98.i.i, 4 ; 2 uses
   %exitcond101.not.i.i.1 = icmp eq i64 %indvars.iv.next99.i.i.1, 1088
   br i1 %exitcond101.not.i.i.1, label %_ZL13compactStage2P8MBCSData.exit.i, label %bb.dc, !llvm.loop !84
 

@@ -1,5 +1,5 @@
-inline.NumInlined: 50
-inline.NumDeleted: 24
+inline.NumInlined: 53
+inline.NumDeleted: 25
 loop-unroll.NumCompletelyUnrolled: 2
 loop-unroll.NumRuntimeUnrolled: 4
 loop-unroll.NumUnrolled: 6
@@ -11,7 +11,6 @@ target triple = "x86_64-pc-linux-gnu"
 %union.QemuVT100Head = type { %struct.QTailQLink }
 %struct.QTailQLink = type { ptr, ptr }
 %struct.pixman_rectangle16 = type { i16, i16, i16, i16 }
-%struct.TextAttributes = type { i16 }
 
 @color_table_rgb = internal unnamed_addr constant [2 x [8 x %struct.pixman_color]] [[8 x %struct.pixman_color] [%struct.pixman_color { i16 0, i16 0, i16 0, i16 -1 }, %struct.pixman_color { i16 0, i16 0, i16 -22016, i16 -1 }, %struct.pixman_color { i16 0, i16 -22016, i16 0, i16 -1 }, %struct.pixman_color { i16 0, i16 -22016, i16 -22016, i16 -1 }, %struct.pixman_color { i16 -22016, i16 0, i16 0, i16 -1 }, %struct.pixman_color { i16 -22016, i16 0, i16 -22016, i16 -1 }, %struct.pixman_color { i16 -22016, i16 -22016, i16 0, i16 -1 }, %struct.pixman_color { i16 -22016, i16 -22016, i16 -22016, i16 -1 }], [8 x %struct.pixman_color] [%struct.pixman_color { i16 0, i16 0, i16 0, i16 -1 }, %struct.pixman_color { i16 0, i16 0, i16 -256, i16 -1 }, %struct.pixman_color { i16 0, i16 -256, i16 0, i16 -1 }, %struct.pixman_color { i16 0, i16 -256, i16 -256, i16 -1 }, %struct.pixman_color { i16 -256, i16 0, i16 0, i16 -1 }, %struct.pixman_color { i16 -256, i16 0, i16 -256, i16 -1 }, %struct.pixman_color { i16 -256, i16 -256, i16 0, i16 -1 }, %struct.pixman_color { i16 -256, i16 -256, i16 -256, i16 -1 }]], align 16
 @.str = private unnamed_addr constant [2 x i8] c"\0D\00", align 1
@@ -197,66 +196,12 @@ declare i32 @pixman_image_get_width(ptr noundef) local_unnamed_addr #2
 declare i32 @pixman_image_get_height(ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal fastcc void @vt100_putcharxy(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, i32 noundef %2, i8 noundef zeroext %3, ptr nofree noundef readonly captures(none) %4) unnamed_addr #0 {
-  %6 = alloca %struct.pixman_color, align 8       ; 4 uses
-  %7 = alloca %struct.pixman_color, align 8       ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #10
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #10
-  %8 = load ptr, ptr %0, align 8                  ; 2 uses
-  %.not = icmp eq ptr %8, null
-  br i1 %.not, label %9, label %10
-
-9:                                                ; preds = %5
-  tail call void @__assert_fail(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.2, i32 noundef 70, ptr noundef nonnull @__PRETTY_FUNCTION__.vt100_putcharxy) #11
-  unreachable
-
-10:                                               ; preds = %5
-  %11 = load i16, ptr %4, align 1                 ; 4 uses
-  %12 = and i16 %11, 2048
-  %.not16 = icmp eq i16 %12, 0                    ; 2 uses
-  %13 = lshr i16 %11, 8
-  %14 = and i16 %13, 1
-  %15 = zext nneg i16 %14 to i64
-  %16 = getelementptr inbounds nuw [64 x i8], ptr @color_table_rgb, i64 %15 ; 2 uses
-  %17 = and i16 %11, 15
-  %18 = zext nneg i16 %17 to i64
-  %19 = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %18 ; 2 uses
-  %20 = lshr i16 %11, 4
-  %21 = and i16 %20, 15
-  %22 = zext nneg i16 %21 to i64
-  %23 = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %22 ; 2 uses
-  %. = select i1 %.not16, ptr %19, ptr %23
-  %.20 = select i1 %.not16, ptr %23, ptr %19
-  %.sink = load i64, ptr %.20, align 8
-  %.sink18 = load i64, ptr %., align 8
-  store i64 %.sink18, ptr %6, align 8
-  store i64 %.sink, ptr %7, align 8
-  %24 = zext i8 %3 to i64
-  %25 = getelementptr inbounds nuw [8 x i8], ptr @vt100_putcharxy.glyphs, i64 %24 ; 2 uses
-  %26 = load ptr, ptr %25, align 8                ; 2 uses
-  %.not17 = icmp eq ptr %26, null
-  br i1 %.not17, label %27, label %30
-
-27:                                               ; preds = %10
-  %28 = zext i8 %3 to i32
-  %29 = tail call ptr @qemu_pixman_glyph_from_vgafont(i32 noundef 16, ptr noundef nonnull @vgafont16, i32 noundef %28) #10 ; 2 uses
-  store ptr %29, ptr %25, align 8
-  %.pre = load ptr, ptr %0, align 8
-  br label %30
-
-30:                                               ; preds = %27, %10
-  %31 = phi ptr [ %.pre, %27 ], [ %8, %10 ]
-  %32 = phi ptr [ %29, %27 ], [ %26, %10 ]
-  call void @qemu_pixman_glyph_render(ptr noundef %32, ptr noundef %31, ptr noundef nonnull %6, ptr noundef nonnull %7, i32 noundef %1, i32 noundef %2, i32 noundef 8, i32 noundef 16) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #10
-  ret void
-}
-
-; Function Attrs: nounwind sspstrong uwtable
 define internal fastcc void @vt100_show_cursor(ptr nofree noundef captures(none) initializes((80, 84)) %0, i32 noundef range(i32 0, 2) %1) unnamed_addr #0 {
 bb.a:
-  %2 = alloca %struct.TextAttributes, align 2     ; 4 uses
+  %2 = alloca %struct.pixman_color, align 8       ; 4 uses
+  %3 = alloca %struct.pixman_color, align 8       ; 4 uses
+  %4 = alloca %struct.pixman_color, align 8       ; 4 uses
+  %5 = alloca %struct.pixman_color, align 8       ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 36
   %i.b = load i32, ptr %i.a, align 4              ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 80
@@ -291,25 +236,101 @@ bb.b:                                             ; preds = %bb.a
   %i.y = mul i32 %i.n, %i.e
   %i.z = add i32 %i.y, %spec.select
   %i.aa = sext i32 %i.z to i64
-  %i.ab = getelementptr inbounds [3 x i8], ptr %i.x, i64 %i.aa ; 3 uses
+  %i.ab = getelementptr inbounds [3 x i8], ptr %i.x, i64 %i.aa ; 2 uses
   %i.ac = icmp ne i32 %1, 0
   %i.ad = load i8, ptr @cursor_visible_phase, align 1, !range !13
   %i.ae = trunc nuw i8 %i.ad to i1
   %or.cond = select i1 %i.ac, i1 %i.ae, i1 false
-  br i1 %or.cond, label %bb.c, label %bb.d
+  %6 = load i8, ptr %i.ab, align 1                ; 4 uses
+  br i1 %or.cond, label %7, label %19
 
-bb.c:                                             ; preds = %bb.b
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #10
-  store i16 2055, ptr %2, align 2
-  %3 = load i8, ptr %i.ab, align 1
-  call fastcc void @vt100_putcharxy(ptr noundef nonnull %0, i32 noundef %spec.select, i32 noundef %.032, i8 noundef zeroext %3, ptr noundef nonnull %2)
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #10
+7:                                                ; preds = %bb.b
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #10
+  %8 = load ptr, ptr %0, align 8                  ; 2 uses
+  %.not.i = icmp eq ptr %8, null
+  br i1 %.not.i, label %9, label %10
+
+9:                                                ; preds = %7
+  tail call void @__assert_fail(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.2, i32 noundef 70, ptr noundef nonnull @__PRETTY_FUNCTION__.vt100_putcharxy) #11
+  unreachable
+
+10:                                               ; preds = %7
+  store i64 -281474976710656, ptr %4, align 8
+  store i64 -94555147818496, ptr %5, align 8
+  %11 = zext i8 %6 to i64
+  %12 = getelementptr inbounds nuw [8 x i8], ptr @vt100_putcharxy.glyphs, i64 %11 ; 2 uses
+  %13 = load ptr, ptr %12, align 8                ; 2 uses
+  %.not17.i = icmp eq ptr %13, null
+  br i1 %.not17.i, label %14, label %bb.c
+
+14:                                               ; preds = %10
+  %15 = zext i8 %6 to i32
+  %16 = tail call ptr @qemu_pixman_glyph_from_vgafont(i32 noundef 16, ptr noundef nonnull @vgafont16, i32 noundef %15) #10 ; 2 uses
+  store ptr %16, ptr %12, align 8
+  %.pre.i = load ptr, ptr %0, align 8
+  br label %bb.c
+
+bb.c:                                             ; preds = %10, %14
+  %17 = phi ptr [ %.pre.i, %14 ], [ %8, %10 ]
+  %18 = phi ptr [ %16, %14 ], [ %13, %10 ]
+  call void @qemu_pixman_glyph_render(ptr noundef %18, ptr noundef %17, ptr noundef nonnull %4, ptr noundef nonnull %5, i32 noundef %spec.select, i32 noundef %.032, i32 noundef 8, i32 noundef 16) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #10
   br label %bb.e
 
-bb.d:                                             ; preds = %bb.b
-  %4 = load i8, ptr %i.ab, align 1
-  %5 = getelementptr inbounds nuw i8, ptr %i.ab, i64 1
-  tail call fastcc void @vt100_putcharxy(ptr noundef nonnull %0, i32 noundef %spec.select, i32 noundef %.032, i8 noundef zeroext %4, ptr noundef nonnull %5)
+19:                                               ; preds = %bb.b
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #10
+  %20 = load ptr, ptr %0, align 8                 ; 2 uses
+  %.not.i36 = icmp eq ptr %20, null
+  br i1 %.not.i36, label %21, label %22
+
+21:                                               ; preds = %19
+  tail call void @__assert_fail(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.2, i32 noundef 70, ptr noundef nonnull @__PRETTY_FUNCTION__.vt100_putcharxy) #11
+  unreachable
+
+22:                                               ; preds = %19
+  %23 = getelementptr inbounds nuw i8, ptr %i.ab, i64 1
+  %24 = load i16, ptr %23, align 1                ; 4 uses
+  %25 = and i16 %24, 2048
+  %.not16.i37 = icmp eq i16 %25, 0                ; 2 uses
+  %26 = lshr i16 %24, 8
+  %27 = and i16 %26, 1
+  %28 = zext nneg i16 %27 to i64
+  %29 = getelementptr inbounds nuw [64 x i8], ptr @color_table_rgb, i64 %28 ; 2 uses
+  %30 = and i16 %24, 15
+  %31 = zext nneg i16 %30 to i64
+  %32 = getelementptr inbounds nuw [8 x i8], ptr %29, i64 %31 ; 2 uses
+  %33 = lshr i16 %24, 4
+  %34 = and i16 %33, 15
+  %35 = zext nneg i16 %34 to i64
+  %36 = getelementptr inbounds nuw [8 x i8], ptr %29, i64 %35 ; 2 uses
+  %..i38 = select i1 %.not16.i37, ptr %32, ptr %36
+  %.20.i39 = select i1 %.not16.i37, ptr %36, ptr %32
+  %.sink.i40 = load i64, ptr %.20.i39, align 8
+  %.sink18.i41 = load i64, ptr %..i38, align 8
+  store i64 %.sink18.i41, ptr %2, align 8
+  store i64 %.sink.i40, ptr %3, align 8
+  %37 = zext i8 %6 to i64
+  %38 = getelementptr inbounds nuw [8 x i8], ptr @vt100_putcharxy.glyphs, i64 %37 ; 2 uses
+  %39 = load ptr, ptr %38, align 8                ; 2 uses
+  %.not17.i42 = icmp eq ptr %39, null
+  br i1 %.not17.i42, label %40, label %bb.d
+
+40:                                               ; preds = %22
+  %41 = zext i8 %6 to i32
+  %42 = tail call ptr @qemu_pixman_glyph_from_vgafont(i32 noundef 16, ptr noundef nonnull @vgafont16, i32 noundef %41) #10 ; 2 uses
+  store ptr %42, ptr %38, align 8
+  %.pre.i43 = load ptr, ptr %0, align 8
+  br label %bb.d
+
+bb.d:                                             ; preds = %22, %40
+  %43 = phi ptr [ %.pre.i43, %40 ], [ %20, %22 ]
+  %44 = phi ptr [ %42, %40 ], [ %39, %22 ]
+  call void @qemu_pixman_glyph_render(ptr noundef %44, ptr noundef %43, ptr noundef nonnull %2, ptr noundef nonnull %3, i32 noundef %spec.select, i32 noundef %.032, i32 noundef 8, i32 noundef 16) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #10
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
@@ -712,6 +733,8 @@ declare i64 @strlen(ptr noundef captures(none)) local_unnamed_addr #6
 ; Function Attrs: nounwind sspstrong uwtable
 define internal fastcc void @vt100_update_xy(ptr nofree noundef captures(none) %0, i32 noundef %1, i32 noundef %2) unnamed_addr #0 {
 bb.a:
+  %3 = alloca %struct.pixman_color, align 8       ; 4 uses
+  %4 = alloca %struct.pixman_color, align 8       ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %i.b = load i32, ptr %i.a, align 8
   %i.c = tail call i32 @llvm.smin.i32(i32 %i.b, i32 %1)
@@ -757,20 +780,69 @@ bb.b:                                             ; preds = %bb.a
   %i.ag = add i32 %spec.select60, %i.af
   %i.ah = sext i32 %i.ag to i64
   %i.ai = getelementptr inbounds [3 x i8], ptr %i.ae, i64 %i.ah ; 2 uses
-  %i.aj = load i8, ptr %i.ai, align 1
-  %3 = getelementptr inbounds nuw i8, ptr %i.ai, i64 1
-  tail call fastcc void @vt100_putcharxy(ptr noundef nonnull %0, i32 noundef %spec.select60, i32 noundef %spec.select, i8 noundef zeroext %i.aj, ptr noundef nonnull %3)
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
-  %5 = load i32, ptr %4, align 8
-  %6 = shl i32 %spec.select60, 3                  ; 3 uses
-  %7 = icmp sgt i32 %5, %6
-  br i1 %7, label %bb.c, label %bb.d
+  %i.aj = load i8, ptr %i.ai, align 1             ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #10
+  %5 = load ptr, ptr %0, align 8                  ; 2 uses
+  %.not.i = icmp eq ptr %5, null
+  br i1 %.not.i, label %6, label %7
 
-bb.c:                                             ; preds = %bb.b
-  store i32 %6, ptr %4, align 8
+6:                                                ; preds = %bb.b
+  tail call void @__assert_fail(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.2, i32 noundef 70, ptr noundef nonnull @__PRETTY_FUNCTION__.vt100_putcharxy) #11
+  unreachable
+
+7:                                                ; preds = %bb.b
+  %8 = getelementptr inbounds nuw i8, ptr %i.ai, i64 1
+  %9 = load i16, ptr %8, align 1                  ; 4 uses
+  %10 = and i16 %9, 2048
+  %.not16.i = icmp eq i16 %10, 0                  ; 2 uses
+  %11 = lshr i16 %9, 8
+  %12 = and i16 %11, 1
+  %13 = zext nneg i16 %12 to i64
+  %14 = getelementptr inbounds nuw [64 x i8], ptr @color_table_rgb, i64 %13 ; 2 uses
+  %15 = and i16 %9, 15
+  %16 = zext nneg i16 %15 to i64
+  %17 = getelementptr inbounds nuw [8 x i8], ptr %14, i64 %16 ; 2 uses
+  %18 = lshr i16 %9, 4
+  %19 = and i16 %18, 15
+  %20 = zext nneg i16 %19 to i64
+  %21 = getelementptr inbounds nuw [8 x i8], ptr %14, i64 %20 ; 2 uses
+  %..i = select i1 %.not16.i, ptr %17, ptr %21
+  %.20.i = select i1 %.not16.i, ptr %21, ptr %17
+  %.sink.i = load i64, ptr %.20.i, align 8
+  %.sink18.i = load i64, ptr %..i, align 8
+  store i64 %.sink18.i, ptr %3, align 8
+  store i64 %.sink.i, ptr %4, align 8
+  %22 = zext i8 %i.aj to i64
+  %23 = getelementptr inbounds nuw [8 x i8], ptr @vt100_putcharxy.glyphs, i64 %22 ; 2 uses
+  %24 = load ptr, ptr %23, align 8                ; 2 uses
+  %.not17.i = icmp eq ptr %24, null
+  br i1 %.not17.i, label %25, label %vt100_putcharxy.exit
+
+25:                                               ; preds = %7
+  %26 = zext i8 %i.aj to i32
+  %27 = tail call ptr @qemu_pixman_glyph_from_vgafont(i32 noundef 16, ptr noundef nonnull @vgafont16, i32 noundef %26) #10 ; 2 uses
+  store ptr %27, ptr %23, align 8
+  %.pre.i = load ptr, ptr %0, align 8
+  br label %vt100_putcharxy.exit
+
+vt100_putcharxy.exit:                             ; preds = %7, %25
+  %28 = phi ptr [ %.pre.i, %25 ], [ %5, %7 ]
+  %29 = phi ptr [ %27, %25 ], [ %24, %7 ]
+  call void @qemu_pixman_glyph_render(ptr noundef %29, ptr noundef %28, ptr noundef nonnull %3, ptr noundef nonnull %4, i32 noundef %spec.select60, i32 noundef %spec.select, i32 noundef 8, i32 noundef 16) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #10
+  %30 = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
+  %31 = load i32, ptr %30, align 8
+  %32 = shl i32 %spec.select60, 3                 ; 3 uses
+  %33 = icmp sgt i32 %31, %32
+  br i1 %33, label %bb.c, label %bb.d
+
+bb.c:                                             ; preds = %vt100_putcharxy.exit
+  store i32 %32, ptr %30, align 8
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.c, %bb.b
+bb.d:                                             ; preds = %bb.c, %vt100_putcharxy.exit
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 92 ; 2 uses
   %i.al = load i32, ptr %i.ak, align 4
   %i.am = shl i32 %spec.select, 4                 ; 3 uses
@@ -784,7 +856,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e, %bb.d
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 2 uses
   %i.ap = load i32, ptr %i.ao, align 8
-  %i.aq = add i32 %6, 8                           ; 2 uses
+  %i.aq = add i32 %32, 8                          ; 2 uses
   %i.ar = icmp slt i32 %i.ap, %i.aq
   br i1 %i.ar, label %bb.g, label %bb.h
 

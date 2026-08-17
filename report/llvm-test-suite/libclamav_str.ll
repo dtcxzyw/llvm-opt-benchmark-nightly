@@ -1,7 +1,7 @@
 inline.NumInlined: 8
 inline.NumDeleted: 2
-loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 1
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -17,21 +17,21 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define dso_local ptr @cli_hex2ui(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #13
+  %i.a = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #14
   %i.b = trunc i64 %i.a to i32                    ; 5 uses
   %i.c = and i32 %i.b, 1
   %.not = icmp eq i32 %i.c, 0
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str, ptr noundef nonnull %0, i32 noundef %i.b) #14
+  tail call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str, ptr noundef nonnull %0, i32 noundef %i.b) #15
   br label %.loopexit
 
 bb.c:                                             ; preds = %bb.a
   %i.d = lshr exact i32 %i.b, 1
   %i.e = add nuw i32 %i.d, 1
   %i.f = zext i32 %i.e to i64
-  %i.g = tail call ptr @cli_calloc(i64 noundef %i.f, i64 noundef 2) #14 ; 8 uses
+  %i.g = tail call ptr @cli_calloc(i64 noundef %i.f, i64 noundef 2) #15 ; 8 uses
   %.not54 = icmp eq ptr %i.g, null
   br i1 %.not54, label %.loopexit, label %.preheader
 
@@ -75,7 +75,7 @@ bb.f:                                             ; preds = %bb.e
 
 .thread103:                                       ; preds = %.thread, %bb.f
   %i.y = phi i32 [ %i.w, %bb.f ], [ 63, %.thread ] ; 2 uses
-  %i.z = tail call ptr @__ctype_b_loc() #15
+  %i.z = tail call ptr @__ctype_b_loc() #16
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !9
   %i.ab = zext nneg i32 %i.y to i64               ; 2 uses
   %i.ac = getelementptr inbounds nuw [2 x i8], ptr %i.aa, i64 %i.ab
@@ -85,7 +85,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not.i, label %bb.g, label %cli_hex2int.exit
 
 bb.g:                                             ; preds = %.thread103
-  %i.af = tail call ptr @__ctype_tolower_loc() #15
+  %i.af = tail call ptr @__ctype_tolower_loc() #16
   %.pn.i = load ptr, ptr %i.af, align 8, !tbaa !14
   %.020.in.i = getelementptr inbounds nuw [4 x i8], ptr %.pn.i, i64 %i.ab
   %.020.i = load i32, ptr %.020.in.i, align 4, !tbaa !4 ; 3 uses
@@ -98,7 +98,7 @@ cli_hex2int.exit.thread77:                        ; preds = %bb.g
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  tail call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.5, i32 noundef %.020.i) #14
+  tail call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.5, i32 noundef %.020.i) #15
   br label %cli_hex2int.exit.thread
 
 cli_hex2int.exit:                                 ; preds = %.thread103
@@ -114,7 +114,7 @@ bb.i:                                             ; preds = %cli_hex2int.exit.th
   br label %bb.x
 
 cli_hex2int.exit.thread:                          ; preds = %bb.f, %cli_hex2int.exit, %bb.h
-  tail call void @free(ptr noundef %i.g) #14
+  tail call void @free(ptr noundef %i.g) #15
   br label %.loopexit
 
 bb.j:                                             ; preds = %bb.e
@@ -131,7 +131,7 @@ bb.j:                                             ; preds = %bb.e
   br i1 %i.ap, label %bb.k, label %cli_hex2int.exit61.thread
 
 bb.k:                                             ; preds = %.thread104
-  %i.aq = tail call ptr @__ctype_b_loc() #15
+  %i.aq = tail call ptr @__ctype_b_loc() #16
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !9
   %i.as = zext nneg i32 %i.ao to i64              ; 2 uses
   %i.at = getelementptr inbounds nuw [2 x i8], ptr %i.ar, i64 %i.as
@@ -141,7 +141,7 @@ bb.k:                                             ; preds = %.thread104
   br i1 %.not.i56, label %bb.l, label %cli_hex2int.exit61
 
 bb.l:                                             ; preds = %bb.k
-  %i.aw = tail call ptr @__ctype_tolower_loc() #15
+  %i.aw = tail call ptr @__ctype_tolower_loc() #16
   %.pn.i57 = load ptr, ptr %i.aw, align 8, !tbaa !14
   %.020.in.i58 = getelementptr inbounds nuw [4 x i8], ptr %.pn.i57, i64 %i.as
   %.020.i59 = load i32, ptr %.020.in.i58, align 4, !tbaa !4 ; 3 uses
@@ -154,7 +154,7 @@ cli_hex2int.exit61.thread81:                      ; preds = %bb.l
   br label %bb.n
 
 bb.m:                                             ; preds = %bb.l
-  tail call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.5, i32 noundef %.020.i59) #14
+  tail call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.5, i32 noundef %.020.i59) #15
   br label %cli_hex2int.exit61.thread
 
 cli_hex2int.exit61:                               ; preds = %bb.k
@@ -169,7 +169,7 @@ bb.n:                                             ; preds = %cli_hex2int.exit61.
   br label %bb.x
 
 cli_hex2int.exit61.thread:                        ; preds = %.thread104, %cli_hex2int.exit61, %bb.m
-  tail call void @free(ptr noundef %i.g) #14
+  tail call void @free(ptr noundef %i.g) #15
   br label %.loopexit
 
 bb.o:                                             ; preds = %bb.j
@@ -177,7 +177,7 @@ bb.o:                                             ; preds = %bb.j
   br i1 %i.bd, label %bb.p, label %cli_hex2int.exit68.thread
 
 bb.p:                                             ; preds = %bb.o
-  %i.be = tail call ptr @__ctype_b_loc() #15
+  %i.be = tail call ptr @__ctype_b_loc() #16
   %i.bf = load ptr, ptr %i.be, align 8, !tbaa !9  ; 2 uses
   %i.bg = zext nneg i32 %i.am to i64              ; 2 uses
   %i.bh = getelementptr inbounds nuw [2 x i8], ptr %i.bf, i64 %i.bg
@@ -187,7 +187,7 @@ bb.p:                                             ; preds = %bb.o
   br i1 %.not.i63, label %bb.q, label %cli_hex2int.exit68
 
 bb.q:                                             ; preds = %bb.p
-  %i.bk = tail call ptr @__ctype_tolower_loc() #15
+  %i.bk = tail call ptr @__ctype_tolower_loc() #16
   %.pn.i64 = load ptr, ptr %i.bk, align 8, !tbaa !14
   %.020.in.i65 = getelementptr inbounds nuw [4 x i8], ptr %.pn.i64, i64 %i.bg
   %.020.i66 = load i32, ptr %.020.in.i65, align 4, !tbaa !4 ; 3 uses
@@ -200,7 +200,7 @@ cli_hex2int.exit68.thread85:                      ; preds = %bb.q
   br label %bb.s
 
 bb.r:                                             ; preds = %bb.q
-  tail call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.5, i32 noundef %.020.i66) #14
+  tail call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.5, i32 noundef %.020.i66) #15
   br label %cli_hex2int.exit68.thread
 
 cli_hex2int.exit68:                               ; preds = %bb.p
@@ -222,7 +222,7 @@ bb.t:                                             ; preds = %bb.s
   br i1 %.not.i70, label %bb.u, label %cli_hex2int.exit75
 
 bb.u:                                             ; preds = %bb.t
-  %i.bu = tail call ptr @__ctype_tolower_loc() #15
+  %i.bu = tail call ptr @__ctype_tolower_loc() #16
   %.pn.i71 = load ptr, ptr %i.bu, align 8, !tbaa !14
   %.020.in.i72 = getelementptr inbounds nuw [4 x i8], ptr %.pn.i71, i64 %i.bq
   %.020.i73 = load i32, ptr %.020.in.i72, align 4, !tbaa !4 ; 3 uses
@@ -235,7 +235,7 @@ cli_hex2int.exit75.thread89:                      ; preds = %bb.u
   br label %bb.w
 
 bb.v:                                             ; preds = %bb.u
-  tail call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.5, i32 noundef %.020.i73) #14
+  tail call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.5, i32 noundef %.020.i73) #15
   br label %cli_hex2int.exit75.thread
 
 cli_hex2int.exit75:                               ; preds = %bb.t
@@ -251,11 +251,11 @@ bb.w:                                             ; preds = %cli_hex2int.exit75.
   br label %bb.x
 
 cli_hex2int.exit75.thread:                        ; preds = %bb.s, %cli_hex2int.exit75, %bb.v
-  tail call void @free(ptr noundef %i.g) #14
+  tail call void @free(ptr noundef %i.g) #15
   br label %.loopexit
 
 cli_hex2int.exit68.thread:                        ; preds = %bb.o, %cli_hex2int.exit68, %bb.r
-  tail call void @free(ptr noundef %i.g) #14
+  tail call void @free(ptr noundef %i.g) #15
   br label %.loopexit
 
 bb.x:                                             ; preds = %bb.j, %bb.d, %bb.i, %bb.w, %bb.n
@@ -284,21 +284,21 @@ declare void @free(ptr allocptr noundef captures(none)) local_unnamed_addr #3
 ; Function Attrs: nounwind uwtable
 define dso_local ptr @cli_hex2str(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #13
+  %i.a = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #14
   %i.b = trunc i64 %i.a to i32                    ; 5 uses
   %i.c = and i32 %i.b, 1
   %.not = icmp eq i32 %i.c, 0
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.1, ptr noundef nonnull %0, i32 noundef %i.b) #14
+  tail call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.1, ptr noundef nonnull %0, i32 noundef %i.b) #15
   br label %.loopexit
 
 bb.c:                                             ; preds = %bb.a
   %i.d = ashr exact i32 %i.b, 1
   %i.e = add nsw i32 %i.d, 1
   %i.f = sext i32 %i.e to i64
-  %i.g = tail call ptr @cli_calloc(i64 noundef %i.f, i64 noundef 1) #14 ; 6 uses
+  %i.g = tail call ptr @cli_calloc(i64 noundef %i.f, i64 noundef 1) #15 ; 6 uses
   %.not27 = icmp eq ptr %i.g, null
   br i1 %.not27, label %.loopexit, label %.preheader
 
@@ -316,7 +316,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.l, label %bb.d, label %cli_hex2int.exit.thread
 
 bb.d:                                             ; preds = %.lr.ph
-  %i.m = tail call ptr @__ctype_b_loc() #15
+  %i.m = tail call ptr @__ctype_b_loc() #16
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !9    ; 2 uses
   %i.o = zext nneg i32 %i.k to i64                ; 2 uses
   %i.p = getelementptr inbounds nuw [2 x i8], ptr %i.n, i64 %i.o
@@ -326,7 +326,7 @@ bb.d:                                             ; preds = %.lr.ph
   br i1 %.not.i, label %bb.e, label %cli_hex2int.exit
 
 bb.e:                                             ; preds = %bb.d
-  %i.s = tail call ptr @__ctype_tolower_loc() #15
+  %i.s = tail call ptr @__ctype_tolower_loc() #16
   %.pn.i = load ptr, ptr %i.s, align 8, !tbaa !14
   %.020.in.i = getelementptr inbounds nuw [4 x i8], ptr %.pn.i, i64 %i.o
   %.020.i = load i32, ptr %.020.in.i, align 4, !tbaa !4 ; 3 uses
@@ -339,7 +339,7 @@ cli_hex2int.exit.thread45:                        ; preds = %bb.e
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  tail call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.5, i32 noundef %.020.i) #14
+  tail call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.5, i32 noundef %.020.i) #15
   br label %cli_hex2int.exit.thread
 
 cli_hex2int.exit:                                 ; preds = %bb.d
@@ -368,7 +368,7 @@ bb.i:                                             ; preds = %bb.h
   br label %cli_hex2int.exit35
 
 bb.j:                                             ; preds = %bb.h
-  %i.ag = tail call ptr @__ctype_tolower_loc() #15
+  %i.ag = tail call ptr @__ctype_tolower_loc() #16
   %.pn.i31 = load ptr, ptr %i.ag, align 8, !tbaa !14
   %.020.in.i32 = getelementptr inbounds nuw [4 x i8], ptr %.pn.i31, i64 %i.ab
   %.020.i33 = load i32, ptr %.020.in.i32, align 4, !tbaa !4 ; 3 uses
@@ -381,7 +381,7 @@ bb.k:                                             ; preds = %bb.j
   br label %cli_hex2int.exit35
 
 bb.l:                                             ; preds = %bb.j
-  tail call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.5, i32 noundef %.020.i33) #14
+  tail call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.5, i32 noundef %.020.i33) #15
   br label %cli_hex2int.exit35.thread
 
 cli_hex2int.exit35:                               ; preds = %bb.i, %bb.k
@@ -402,11 +402,11 @@ bb.m:                                             ; preds = %cli_hex2int.exit35
   br i1 %i.ap, label %.lr.ph, label %.loopexit, !llvm.loop !18
 
 cli_hex2int.exit35.thread:                        ; preds = %bb.g, %cli_hex2int.exit35, %bb.l
-  tail call void @free(ptr noundef %i.g) #14
+  tail call void @free(ptr noundef %i.g) #15
   br label %.loopexit
 
 cli_hex2int.exit.thread:                          ; preds = %.lr.ph, %cli_hex2int.exit, %bb.f
-  tail call void @free(ptr noundef %i.g) #14
+  tail call void @free(ptr noundef %i.g) #15
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.m, %.preheader, %bb.c, %cli_hex2int.exit.thread, %cli_hex2int.exit35.thread, %bb.b
@@ -417,7 +417,7 @@ cli_hex2int.exit.thread:                          ; preds = %.lr.ph, %cli_hex2in
 ; Function Attrs: nounwind uwtable
 define dso_local i32 @cli_hex2num(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #13 ; 2 uses
+  %i.a = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #14 ; 2 uses
   %i.b = trunc i64 %i.a to i32                    ; 3 uses
   %i.c = and i32 %i.b, 1
   %.not = icmp eq i32 %i.c, 0
@@ -432,7 +432,7 @@ bb.a:
   br label %.lr.ph
 
 bb.b:                                             ; preds = %bb.a
-  tail call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.2, ptr noundef nonnull %0, i32 noundef %i.b) #14
+  tail call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.2, ptr noundef nonnull %0, i32 noundef %i.b) #15
   br label %cli_hex2int.exit.thread
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.f
@@ -445,7 +445,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.h, label %bb.c, label %cli_hex2int.exit.thread
 
 bb.c:                                             ; preds = %.lr.ph
-  %i.i = tail call ptr @__ctype_b_loc() #15
+  %i.i = tail call ptr @__ctype_b_loc() #16
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !9
   %i.k = zext nneg i32 %i.g to i64                ; 2 uses
   %i.l = getelementptr inbounds nuw [2 x i8], ptr %i.j, i64 %i.k
@@ -455,7 +455,7 @@ bb.c:                                             ; preds = %.lr.ph
   br i1 %.not.i, label %bb.d, label %cli_hex2int.exit
 
 bb.d:                                             ; preds = %bb.c
-  %i.o = tail call ptr @__ctype_tolower_loc() #15
+  %i.o = tail call ptr @__ctype_tolower_loc() #16
   %.pn.i = load ptr, ptr %i.o, align 8, !tbaa !14
   %.020.in.i = getelementptr inbounds nuw [4 x i8], ptr %.pn.i, i64 %i.k
   %.020.i = load i32, ptr %.020.in.i, align 4, !tbaa !4 ; 3 uses
@@ -468,7 +468,7 @@ cli_hex2int.exit.thread16:                        ; preds = %bb.d
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  tail call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.5, i32 noundef %.020.i) #14
+  tail call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.5, i32 noundef %.020.i) #15
   br label %cli_hex2int.exit.thread
 
 cli_hex2int.exit:                                 ; preds = %bb.c
@@ -495,26 +495,53 @@ bb.a:
   %i.a = shl i32 %1, 1
   %i.b = or disjoint i32 %i.a, 1
   %i.c = zext i32 %i.b to i64
-  %i.d = tail call ptr @cli_calloc(i64 noundef %i.c, i64 noundef 1) #14 ; 4 uses
+  %i.d = tail call ptr @cli_calloc(i64 noundef %i.c, i64 noundef 1) #15 ; 8 uses
   %i.e = icmp ne ptr %i.d, null
   %i.f = icmp ne i32 %1, 0
   %or.cond = and i1 %i.e, %i.f
   br i1 %or.cond, label %.lr.ph.preheader, label %.loopexit
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %wide.trip.count = zext i32 %1 to i64
+  %wide.trip.count = zext i32 %1 to i64           ; 2 uses
+  %xtraiter = and i64 %wide.trip.count, 1
+  %2 = icmp eq i32 %1, 1
+  br i1 %2, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
+
+.lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
+  %unroll_iter = and i64 %wide.trip.count, 4294967294
   br label %.lr.ph
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 2 uses
-  %.018 = phi i32 [ 0, %.lr.ph.preheader ], [ %i.w, %.lr.ph ] ; 3 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv ; 2 uses
+.lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
+  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader.new ], [ %indvars.iv.next, %.lr.ph ] ; 3 uses
+  %.018 = phi i32 [ 0, %.lr.ph.preheader.new ], [ %i.w, %.lr.ph ] ; 5 uses
+  %niter = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.1, %.lr.ph ]
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv ; 2 uses
+  %4 = load i8, ptr %3, align 1, !tbaa !8
+  %5 = lshr i8 %4, 4
+  %6 = zext nneg i8 %5 to i64
+  %7 = getelementptr inbounds nuw i8, ptr @__const.cli_str2hex.HEX, i64 %6
+  %8 = load i8, ptr %7, align 1, !tbaa !8
+  %9 = zext i32 %.018 to i64
+  %10 = getelementptr inbounds nuw i8, ptr %i.d, i64 %9
+  store i8 %8, ptr %10, align 1, !tbaa !8
+  %11 = load i8, ptr %3, align 1, !tbaa !8
+  %12 = and i8 %11, 15
+  %13 = zext nneg i8 %12 to i64
+  %14 = getelementptr inbounds nuw i8, ptr @__const.cli_str2hex.HEX, i64 %13
+  %15 = load i8, ptr %14, align 1, !tbaa !8
+  %16 = or disjoint i32 %.018, 1
+  %17 = zext i32 %16 to i64
+  %18 = getelementptr inbounds nuw i8, ptr %i.d, i64 %17
+  store i8 %15, ptr %18, align 1, !tbaa !8
+  %19 = or disjoint i32 %.018, 2
+  %20 = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv
+  %i.g = getelementptr inbounds nuw i8, ptr %20, i64 1 ; 2 uses
   %i.h = load i8, ptr %i.g, align 1, !tbaa !8
   %i.i = lshr i8 %i.h, 4
   %i.j = zext nneg i8 %i.i to i64
   %i.k = getelementptr inbounds nuw i8, ptr @__const.cli_str2hex.HEX, i64 %i.j
   %i.l = load i8, ptr %i.k, align 1, !tbaa !8
-  %i.m = zext i32 %.018 to i64
+  %i.m = zext i32 %19 to i64
   %i.n = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.m
   store i8 %i.l, ptr %i.n, align 1, !tbaa !8
   %i.o = load i8, ptr %i.g, align 1, !tbaa !8
@@ -522,16 +549,46 @@ bb.a:
   %i.q = zext nneg i8 %i.p to i64
   %i.r = getelementptr inbounds nuw i8, ptr @__const.cli_str2hex.HEX, i64 %i.q
   %i.s = load i8, ptr %i.r, align 1, !tbaa !8
-  %i.t = or disjoint i32 %.018, 1
+  %i.t = or disjoint i32 %.018, 3
   %i.u = zext i32 %i.t to i64
   %i.v = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.u
   store i8 %i.s, ptr %i.v, align 1, !tbaa !8
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %i.w = add i32 %.018, 2
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !20
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
+  %i.w = add i32 %.018, 4                         ; 2 uses
+  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %exitcond.not = icmp eq i64 %niter.next.1, %unroll_iter
+  br i1 %exitcond.not, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !20
 
-.loopexit:                                        ; preds = %.lr.ph, %bb.a
+.loopexit.loopexit.unr-lcssa:                     ; preds = %.lr.ph
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.loopexit, label %.lr.ph.epil.preheader
+
+.lr.ph.epil.preheader:                            ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph.preheader
+  %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %.loopexit.loopexit.unr-lcssa ]
+  %.018.epil.init = phi i32 [ 0, %.lr.ph.preheader ], [ %i.w, %.loopexit.loopexit.unr-lcssa ] ; 2 uses
+  %lcmp.mod21 = trunc i32 %1 to i1
+  tail call void @llvm.assume(i1 %lcmp.mod21)
+  %21 = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv.epil.init ; 2 uses
+  %22 = load i8, ptr %21, align 1, !tbaa !8
+  %23 = lshr i8 %22, 4
+  %24 = zext nneg i8 %23 to i64
+  %25 = getelementptr inbounds nuw i8, ptr @__const.cli_str2hex.HEX, i64 %24
+  %26 = load i8, ptr %25, align 1, !tbaa !8
+  %27 = zext i32 %.018.epil.init to i64
+  %28 = getelementptr inbounds nuw i8, ptr %i.d, i64 %27
+  store i8 %26, ptr %28, align 1, !tbaa !8
+  %29 = load i8, ptr %21, align 1, !tbaa !8
+  %30 = and i8 %29, 15
+  %31 = zext nneg i8 %30 to i64
+  %32 = getelementptr inbounds nuw i8, ptr @__const.cli_str2hex.HEX, i64 %31
+  %33 = load i8, ptr %32, align 1, !tbaa !8
+  %34 = or disjoint i32 %.018.epil.init, 1
+  %35 = zext i32 %34 to i64
+  %36 = getelementptr inbounds nuw i8, ptr %i.d, i64 %35
+  store i8 %33, ptr %36, align 1, !tbaa !8
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %.lr.ph.epil.preheader, %.loopexit.loopexit.unr-lcssa, %bb.a
   ret ptr %i.d
 }
 
@@ -542,14 +599,14 @@ bb.a:
   br i1 %i.a, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  tail call void (ptr, ...) @cli_warnmsg(ptr noundef nonnull @.str.3) #14
+  tail call void (ptr, ...) @cli_warnmsg(ptr noundef nonnull @.str.3) #15
   br label %.loopexit
 
 bb.c:                                             ; preds = %bb.a
   %i.b = lshr i32 %1, 1
   %i.c = add nuw i32 %i.b, 1
   %i.d = zext i32 %i.c to i64
-  %i.e = tail call ptr @cli_calloc(i64 noundef %i.d, i64 noundef 1) #14 ; 12 uses
+  %i.e = tail call ptr @cli_calloc(i64 noundef %i.d, i64 noundef 1) #15 ; 12 uses
   %.not22 = icmp eq ptr %i.e, null
   br i1 %.not22, label %.loopexit, label %iter.check
 
@@ -860,9 +917,9 @@ declare void @cli_warnmsg(ptr noundef, ...) local_unnamed_addr #2
 ; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(read) uwtable
 define dso_local range(i32 0, 2) i32 @cli_strbcasestr(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #4 {
 bb.a:
-  %i.a = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #13 ; 2 uses
+  %i.a = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #14 ; 2 uses
   %i.b = trunc i64 %i.a to i32
-  %i.c = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #13 ; 2 uses
+  %i.c = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #14 ; 2 uses
   %i.d = trunc i64 %i.c to i32
   %i.e = icmp slt i32 %i.b, %i.d
   br i1 %i.e, label %bb.c, label %bb.b
@@ -871,7 +928,7 @@ bb.b:                                             ; preds = %bb.a
   %i.f = sub i64 %i.a, %i.c
   %i.g = and i64 %i.f, 4294967295
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 %i.g
-  %i.i = tail call i32 @strcasecmp(ptr noundef nonnull %i.h, ptr noundef nonnull %1) #13
+  %i.i = tail call i32 @strcasecmp(ptr noundef nonnull %i.h, ptr noundef nonnull %1) #14
   %.not = icmp eq i32 %i.i, 0
   %i.j = zext i1 %.not to i32
   br label %bb.c
@@ -891,7 +948,7 @@ bb.a:
   br i1 %i.a, label %.critedge, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #13 ; 2 uses
+  %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #14 ; 2 uses
   %i.c = trunc i64 %i.b to i32                    ; 3 uses
   %i.d = icmp eq i32 %i.c, 0
   br i1 %i.d, label %.critedge, label %.preheader
@@ -942,7 +999,7 @@ bb.a:
   %.03855 = phi i32 [ %i.o, %.critedge ], [ 0, %bb.a ] ; 2 uses
   %.03954 = phi i32 [ %.140, %.critedge ], [ 0, %bb.a ] ; 2 uses
   %i.f = sext i8 %i.e to i32
-  %i.g = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %2, i32 noundef %i.f) #13
+  %i.g = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %2, i32 noundef %i.f) #14
   %.not49 = icmp eq ptr %i.g, null
   br i1 %.not49, label %.critedge, label %bb.b
 
@@ -961,7 +1018,7 @@ bb.c:                                             ; preds = %bb.d, %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.l = sext i8 %i.k to i32
-  %i.m = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %2, i32 noundef %i.l) #13
+  %i.m = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %2, i32 noundef %i.l) #14
   %.not51 = icmp eq ptr %i.m, null
   br i1 %.not51, label %.critedge.loopexit, label %bb.c, !llvm.loop !33
 
@@ -998,7 +1055,7 @@ bb.d:                                             ; preds = %bb.c
   %i.y = phi i8 [ %i.v, %.lr.ph60.preheader ], [ %i.ad, %bb.e ]
   %.059 = phi i32 [ %.038.lcssa, %.lr.ph60.preheader ], [ %i.ab, %bb.e ]
   %i.z = sext i8 %i.y to i32
-  %i.aa = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %2, i32 noundef %i.z) #13
+  %i.aa = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %2, i32 noundef %i.z) #14
   %.not47 = icmp eq ptr %i.aa, null
   br i1 %.not47, label %bb.e, label %._crit_edge61.split.loop.exit80
 
@@ -1023,13 +1080,13 @@ bb.f:                                             ; preds = %._crit_edge61
   %i.ag = sub nsw i32 %.0.lcssa.ph, %.038.lcssa   ; 2 uses
   %i.ah = add nsw i32 %i.ag, 1
   %i.ai = sext i32 %i.ah to i64
-  %i.aj = tail call ptr @cli_malloc(i64 noundef %i.ai) #14 ; 4 uses
+  %i.aj = tail call ptr @cli_malloc(i64 noundef %i.ai) #15 ; 4 uses
   %.not48 = icmp eq ptr %i.aj, null
   br i1 %.not48, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.ak = sext i32 %i.ag to i64                   ; 2 uses
-  %i.al = tail call ptr @strncpy(ptr noundef nonnull %i.aj, ptr noundef nonnull %i.w, i64 noundef %i.ak) #14 ; 0 uses
+  %i.al = tail call ptr @strncpy(ptr noundef nonnull %i.aj, ptr noundef nonnull %i.w, i64 noundef %i.ak) #15 ; 0 uses
   %i.am = getelementptr inbounds i8, ptr %i.aj, i64 %i.ak
   store i8 0, ptr %i.am, align 1, !tbaa !8
   br label %bb.h
@@ -1061,7 +1118,7 @@ bb.a:
   %.03549 = phi i32 [ %i.o, %.critedge ], [ 0, %bb.a ] ; 2 uses
   %.03648 = phi i32 [ %.137, %.critedge ], [ 0, %bb.a ] ; 2 uses
   %i.f = sext i8 %i.e to i32
-  %i.g = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %2, i32 noundef %i.f) #13
+  %i.g = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %2, i32 noundef %i.f) #14
   %.not43 = icmp eq ptr %i.g, null
   br i1 %.not43, label %.critedge, label %bb.b
 
@@ -1080,7 +1137,7 @@ bb.c:                                             ; preds = %bb.d, %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.l = sext i8 %i.k to i32
-  %i.m = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %2, i32 noundef %i.l) #13
+  %i.m = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %2, i32 noundef %i.l) #14
   %.not45 = icmp eq ptr %i.m, null
   br i1 %.not45, label %.critedge.loopexit, label %bb.c, !llvm.loop !36
 
@@ -1117,7 +1174,7 @@ bb.d:                                             ; preds = %bb.c
   %i.z = phi i8 [ %i.v, %.lr.ph54.preheader ], [ %i.ae, %bb.e ]
   %.053 = phi i32 [ %.035.lcssa, %.lr.ph54.preheader ], [ %i.ac, %bb.e ]
   %i.aa = sext i8 %i.z to i32
-  %i.ab = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %2, i32 noundef %i.aa) #13
+  %i.ab = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %2, i32 noundef %i.aa) #14
   %.not42 = icmp eq ptr %i.ab, null
   br i1 %.not42, label %bb.e, label %._crit_edge55.split.loop.exit73
 
@@ -1141,7 +1198,7 @@ bb.e:                                             ; preds = %.lr.ph54
 bb.f:                                             ; preds = %._crit_edge55
   %i.ah = sub nsw i32 %.0.lcssa.ph, %.035.lcssa
   %i.ai = sext i32 %i.ah to i64                   ; 2 uses
-  %i.aj = tail call ptr @strncpy(ptr noundef %3, ptr noundef nonnull %i.w, i64 noundef %i.ai) #14 ; 0 uses
+  %i.aj = tail call ptr @strncpy(ptr noundef %3, ptr noundef nonnull %i.w, i64 noundef %i.ai) #15 ; 0 uses
   %i.ak = getelementptr inbounds i8, ptr %3, i64 %i.ai
   store i8 0, ptr %i.ak, align 1, !tbaa !8
   br label %bb.g
@@ -1171,7 +1228,7 @@ bb.c:                                             ; preds = %bb.b
   %i.d = load i8, ptr %2, align 1, !tbaa !8
   %i.e = sext i8 %i.d to i32                      ; 2 uses
   %i.f = sext i32 %1 to i64
-  %i.g = tail call ptr @memchr(ptr noundef %0, i32 noundef %i.e, i64 noundef %i.f) #13 ; 2 uses
+  %i.g = tail call ptr @memchr(ptr noundef %0, i32 noundef %i.e, i64 noundef %i.f) #14 ; 2 uses
   %.not3842 = icmp eq ptr %i.g, null
   br i1 %.not3842, label %.loopexit, label %.lr.ph
 
@@ -1199,7 +1256,7 @@ bb.e:                                             ; preds = %bb.d
   %i.o = sext i1 %i.m to i32
   %.1 = add nsw i32 %i.k, %i.o                    ; 2 uses
   %i.p = sext i32 %.1 to i64
-  %i.q = tail call ptr @memchr(ptr noundef nonnull %.129, i32 noundef %i.e, i64 noundef %i.p) #13 ; 2 uses
+  %i.q = tail call ptr @memchr(ptr noundef nonnull %.129, i32 noundef %i.e, i64 noundef %i.p) #14 ; 2 uses
   %.not38 = icmp eq ptr %i.q, null
   br i1 %.not38, label %.loopexit, label %.lr.ph, !llvm.loop !39
 
@@ -1220,7 +1277,7 @@ bb.a:
   br i1 %or.cond, label %.preheader, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.4) #14
+  tail call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.4) #15
   br label %.loopexit
 
 .preheader:                                       ; preds = %bb.a, %.preheader
@@ -1254,7 +1311,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.c
   %i.b = add nuw i64 %.017, 1                     ; 3 uses
   %i.c = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %.017
   store ptr %.01216, ptr %i.c, align 8, !tbaa !41
-  %i.d = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %.01216, i32 noundef %i.a) #13 ; 3 uses
+  %i.d = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %.01216, i32 noundef %i.a) #14 ; 3 uses
   %.not = icmp eq ptr %i.d, null
   br i1 %.not, label %.preheader, label %bb.c
 
@@ -1295,6 +1352,9 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #12
 
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
+declare void @llvm.assume(i1 noundef) #13
+
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -1308,9 +1368,10 @@ attributes #9 = { nofree norecurse nosync nounwind memory(readwrite, inaccessibl
 attributes #10 = { mustprogress nofree nosync nounwind willreturn memory(none) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #11 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
 attributes #12 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #13 = { nounwind willreturn memory(read) }
-attributes #14 = { nounwind }
-attributes #15 = { nounwind willreturn memory(none) }
+attributes #13 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #14 = { nounwind willreturn memory(read) }
+attributes #15 = { nounwind }
+attributes #16 = { nounwind willreturn memory(none) }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

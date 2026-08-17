@@ -1,7 +1,7 @@
 inline.NumInlined: 37
 inline.NumDeleted: 4
-loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 1
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -121,21 +121,21 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: nounwind uwtable
 define ptr @cli_hex2ui(ptr noundef %0) local_unnamed_addr #2 {
 bb.a:
-  %i.a = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #21
+  %i.a = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #22
   %i.b = trunc i64 %i.a to i32                    ; 5 uses
   %i.c = and i32 %i.b, 1
   %.not = icmp eq i32 %i.c, 0
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str, ptr noundef nonnull %0, i32 noundef %i.b) #22
+  tail call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str, ptr noundef nonnull %0, i32 noundef %i.b) #23
   br label %cli_realhex2ui.exit
 
 bb.c:                                             ; preds = %bb.a
   %i.d = lshr exact i32 %i.b, 1
   %i.e = add nuw i32 %i.d, 1
   %i.f = zext i32 %i.e to i64
-  %i.g = tail call ptr @cli_max_calloc(i64 noundef %i.f, i64 noundef 2) #22 ; 5 uses
+  %i.g = tail call ptr @cli_max_calloc(i64 noundef %i.f, i64 noundef 2) #23 ; 5 uses
   %.not12 = icmp eq ptr %i.g, null
   br i1 %.not12, label %cli_realhex2ui.exit, label %bb.d
 
@@ -221,7 +221,7 @@ bb.m:                                             ; preds = %bb.h, %bb.l, %bb.i,
   br i1 %i.ap, label %.lr.ph.i, label %cli_realhex2ui.exit
 
 bb.n:                                             ; preds = %.thread, %bb.k, %bb.j, %bb.f
-  tail call void @free(ptr noundef %i.g) #22
+  tail call void @free(ptr noundef %i.g) #23
   br label %cli_realhex2ui.exit
 
 cli_realhex2ui.exit:                              ; preds = %bb.m, %bb.d, %bb.c, %bb.n, %bb.b
@@ -242,20 +242,20 @@ declare void @free(ptr allocptr noundef captures(none)) local_unnamed_addr #5
 ; Function Attrs: nounwind uwtable
 define ptr @cli_hex2str(ptr noundef %0) local_unnamed_addr #2 {
 bb.a:
-  %i.a = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #21 ; 5 uses
+  %i.a = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #22 ; 5 uses
   %i.b = and i64 %i.a, 1
   %.not = icmp eq i64 %i.b, 0
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = trunc i64 %i.a to i32
-  tail call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.1, ptr noundef nonnull %0, i32 noundef %i.c) #22
+  tail call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.1, ptr noundef nonnull %0, i32 noundef %i.c) #23
   br label %cli_hex2str_to.exit
 
 bb.c:                                             ; preds = %bb.a
   %i.d = lshr exact i64 %i.a, 1
   %i.e = add nuw i64 %i.d, 1
-  %i.f = tail call ptr @cli_max_calloc(i64 noundef %i.e, i64 noundef 1) #22 ; 5 uses
+  %i.f = tail call ptr @cli_max_calloc(i64 noundef %i.e, i64 noundef 1) #23 ; 5 uses
   %.not12 = icmp eq ptr %i.f, null
   br i1 %.not12, label %cli_hex2str_to.exit, label %bb.d
 
@@ -294,7 +294,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.x, label %.lr.ph.i, label %cli_hex2str_to.exit
 
 bb.g:                                             ; preds = %.lr.ph.i, %bb.e
-  tail call void @free(ptr noundef %i.f) #22
+  tail call void @free(ptr noundef %i.f) #23
   br label %cli_hex2str_to.exit
 
 cli_hex2str_to.exit:                              ; preds = %bb.f, %bb.d, %bb.c, %bb.g, %bb.b
@@ -346,7 +346,7 @@ bb.c:                                             ; preds = %bb.b
 ; Function Attrs: nounwind uwtable
 define i32 @cli_hex2num(ptr noundef %0) local_unnamed_addr #2 {
 bb.a:
-  %i.a = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #21 ; 2 uses
+  %i.a = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #22 ; 2 uses
   %i.b = trunc i64 %i.a to i32                    ; 3 uses
   %i.c = and i32 %i.b, 1
   %.not = icmp eq i32 %i.c, 0
@@ -361,7 +361,7 @@ bb.a:
   br label %.lr.ph
 
 bb.b:                                             ; preds = %bb.a
-  tail call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.2, ptr noundef nonnull %0, i32 noundef %i.b) #22
+  tail call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.2, ptr noundef nonnull %0, i32 noundef %i.b) #23
   br label %.loopexit
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.c
@@ -391,7 +391,7 @@ bb.c:                                             ; preds = %.lr.ph
 define i32 @cli_xtoi(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #2 {
 bb.a:
   %i.a = ptrtoaddr ptr %0 to i64
-  %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #21 ; 8 uses
+  %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #22 ; 8 uses
   %i.c = trunc i64 %i.b to i32                    ; 3 uses
   %i.d = and i32 %i.c, 1
   %i.e = icmp eq i32 %i.d, 0
@@ -427,7 +427,7 @@ bb.c:                                             ; preds = %bb.a
   %i.o = shl i64 %i.b, 32
   %sext = add i64 %i.o, 8589934592
   %i.p = ashr exact i64 %sext, 32
-  %i.q = tail call ptr @cli_max_calloc(i64 noundef %i.p, i64 noundef 1) #22 ; 13 uses
+  %i.q = tail call ptr @cli_max_calloc(i64 noundef %i.p, i64 noundef 1) #23 ; 13 uses
   %i.r = ptrtoaddr ptr %i.q to i64
   %i.s = icmp eq ptr %i.q, null
   br i1 %i.s, label %bb.d, label %.preheader
@@ -521,7 +521,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %i.ak, label %._crit_edge, label %.lr.ph
 
 bb.d:                                             ; preds = %bb.c
-  tail call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.3) #22
+  tail call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.3) #23
   br label %cli_hex2num.exit
 
 .lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
@@ -550,7 +550,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %exitcond.not.3, label %._crit_edge, label %.lr.ph, !llvm.loop !19
 
 ._crit_edge:                                      ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %middle.block, %vec.epilog.middle.block, %.preheader
-  %i.ax = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.q) #21 ; 2 uses
+  %i.ax = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.q) #22 ; 2 uses
   %i.ay = trunc i64 %i.ax to i32                  ; 3 uses
   %i.az = and i32 %i.ay, 1
   %.not.i17 = icmp eq i32 %i.az, 0
@@ -565,7 +565,7 @@ bb.d:                                             ; preds = %bb.c
   br label %.lr.ph.i22
 
 bb.e:                                             ; preds = %._crit_edge
-  tail call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.2, ptr noundef nonnull %i.q, i32 noundef %i.ay) #22
+  tail call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.2, ptr noundef nonnull %i.q, i32 noundef %i.ay) #23
   br label %cli_hex2num.exit27
 
 .lr.ph.i22:                                       ; preds = %bb.f, %.lr.ph.preheader.i20
@@ -588,7 +588,7 @@ bb.f:                                             ; preds = %.lr.ph.i22
 
 cli_hex2num.exit27:                               ; preds = %.lr.ph.i22, %bb.f, %.preheader.i19, %bb.e
   %.012.i18 = phi i32 [ -1, %bb.e ], [ 0, %.preheader.i19 ], [ %i.bi, %bb.f ], [ %.01315.i24, %.lr.ph.i22 ]
-  tail call void @free(ptr noundef %i.q) #22
+  tail call void @free(ptr noundef %i.q) #23
   br label %cli_hex2num.exit
 
 cli_hex2num.exit:                                 ; preds = %bb.b, %.lr.ph.i, %.preheader.i, %cli_hex2num.exit27, %bb.d
@@ -602,26 +602,53 @@ bb.a:
   %i.a = shl i32 %1, 1
   %i.b = or disjoint i32 %i.a, 1
   %i.c = zext i32 %i.b to i64
-  %i.d = tail call ptr @cli_max_calloc(i64 noundef %i.c, i64 noundef 1) #22 ; 4 uses
+  %i.d = tail call ptr @cli_max_calloc(i64 noundef %i.c, i64 noundef 1) #23 ; 8 uses
   %i.e = icmp ne ptr %i.d, null
   %i.f = icmp ne i32 %1, 0
   %or.cond = and i1 %i.e, %i.f
   br i1 %or.cond, label %.lr.ph.preheader, label %.loopexit
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %wide.trip.count = zext i32 %1 to i64
+  %wide.trip.count = zext i32 %1 to i64           ; 2 uses
+  %xtraiter = and i64 %wide.trip.count, 1
+  %2 = icmp eq i32 %1, 1
+  br i1 %2, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
+
+.lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
+  %unroll_iter = and i64 %wide.trip.count, 4294967294
   br label %.lr.ph
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 2 uses
-  %.018 = phi i32 [ 0, %.lr.ph.preheader ], [ %i.w, %.lr.ph ] ; 3 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv ; 2 uses
+.lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
+  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader.new ], [ %indvars.iv.next, %.lr.ph ] ; 3 uses
+  %.018 = phi i32 [ 0, %.lr.ph.preheader.new ], [ %i.w, %.lr.ph ] ; 5 uses
+  %niter = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.1, %.lr.ph ]
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv ; 2 uses
+  %4 = load i8, ptr %3, align 1, !tbaa !8
+  %5 = lshr i8 %4, 4
+  %6 = zext nneg i8 %5 to i64
+  %7 = getelementptr inbounds nuw i8, ptr @__const.cli_str2hex.HEX, i64 %6
+  %8 = load i8, ptr %7, align 1, !tbaa !8
+  %9 = zext i32 %.018 to i64
+  %10 = getelementptr inbounds nuw i8, ptr %i.d, i64 %9
+  store i8 %8, ptr %10, align 1, !tbaa !8
+  %11 = load i8, ptr %3, align 1, !tbaa !8
+  %12 = and i8 %11, 15
+  %13 = zext nneg i8 %12 to i64
+  %14 = getelementptr inbounds nuw i8, ptr @__const.cli_str2hex.HEX, i64 %13
+  %15 = load i8, ptr %14, align 1, !tbaa !8
+  %16 = or disjoint i32 %.018, 1
+  %17 = zext i32 %16 to i64
+  %18 = getelementptr inbounds nuw i8, ptr %i.d, i64 %17
+  store i8 %15, ptr %18, align 1, !tbaa !8
+  %19 = or disjoint i32 %.018, 2
+  %20 = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv
+  %i.g = getelementptr inbounds nuw i8, ptr %20, i64 1 ; 2 uses
   %i.h = load i8, ptr %i.g, align 1, !tbaa !8
   %i.i = lshr i8 %i.h, 4
   %i.j = zext nneg i8 %i.i to i64
   %i.k = getelementptr inbounds nuw i8, ptr @__const.cli_str2hex.HEX, i64 %i.j
   %i.l = load i8, ptr %i.k, align 1, !tbaa !8
-  %i.m = zext i32 %.018 to i64
+  %i.m = zext i32 %19 to i64
   %i.n = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.m
   store i8 %i.l, ptr %i.n, align 1, !tbaa !8
   %i.o = load i8, ptr %i.g, align 1, !tbaa !8
@@ -629,16 +656,46 @@ bb.a:
   %i.q = zext nneg i8 %i.p to i64
   %i.r = getelementptr inbounds nuw i8, ptr @__const.cli_str2hex.HEX, i64 %i.q
   %i.s = load i8, ptr %i.r, align 1, !tbaa !8
-  %i.t = or disjoint i32 %.018, 1
+  %i.t = or disjoint i32 %.018, 3
   %i.u = zext i32 %i.t to i64
   %i.v = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.u
   store i8 %i.s, ptr %i.v, align 1, !tbaa !8
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %i.w = add i32 %.018, 2
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.loopexit, label %.lr.ph
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
+  %i.w = add i32 %.018, 4                         ; 2 uses
+  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %exitcond.not = icmp eq i64 %niter.next.1, %unroll_iter
+  br i1 %exitcond.not, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph
 
-.loopexit:                                        ; preds = %.lr.ph, %bb.a
+.loopexit.loopexit.unr-lcssa:                     ; preds = %.lr.ph
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.loopexit, label %.lr.ph.epil.preheader
+
+.lr.ph.epil.preheader:                            ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph.preheader
+  %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %.loopexit.loopexit.unr-lcssa ]
+  %.018.epil.init = phi i32 [ 0, %.lr.ph.preheader ], [ %i.w, %.loopexit.loopexit.unr-lcssa ] ; 2 uses
+  %lcmp.mod21 = trunc i32 %1 to i1
+  tail call void @llvm.assume(i1 %lcmp.mod21)
+  %21 = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv.epil.init ; 2 uses
+  %22 = load i8, ptr %21, align 1, !tbaa !8
+  %23 = lshr i8 %22, 4
+  %24 = zext nneg i8 %23 to i64
+  %25 = getelementptr inbounds nuw i8, ptr @__const.cli_str2hex.HEX, i64 %24
+  %26 = load i8, ptr %25, align 1, !tbaa !8
+  %27 = zext i32 %.018.epil.init to i64
+  %28 = getelementptr inbounds nuw i8, ptr %i.d, i64 %27
+  store i8 %26, ptr %28, align 1, !tbaa !8
+  %29 = load i8, ptr %21, align 1, !tbaa !8
+  %30 = and i8 %29, 15
+  %31 = zext nneg i8 %30 to i64
+  %32 = getelementptr inbounds nuw i8, ptr @__const.cli_str2hex.HEX, i64 %31
+  %33 = load i8, ptr %32, align 1, !tbaa !8
+  %34 = or disjoint i32 %.018.epil.init, 1
+  %35 = zext i32 %34 to i64
+  %36 = getelementptr inbounds nuw i8, ptr %i.d, i64 %35
+  store i8 %33, ptr %36, align 1, !tbaa !8
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %.lr.ph.epil.preheader, %.loopexit.loopexit.unr-lcssa, %bb.a
   ret ptr %i.d
 }
 
@@ -648,9 +705,9 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 ; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(read) uwtable
 define range(i32 0, 2) i32 @cli_strbcasestr(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #6 {
 bb.a:
-  %i.a = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #21 ; 2 uses
+  %i.a = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #22 ; 2 uses
   %i.b = trunc i64 %i.a to i32
-  %i.c = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #21 ; 2 uses
+  %i.c = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #22 ; 2 uses
   %i.d = trunc i64 %i.c to i32
   %i.e = icmp slt i32 %i.b, %i.d
   br i1 %i.e, label %bb.c, label %bb.b
@@ -659,7 +716,7 @@ bb.b:                                             ; preds = %bb.a
   %i.f = sub i64 %i.a, %i.c
   %i.g = and i64 %i.f, 4294967295
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 %i.g
-  %i.i = tail call i32 @strcasecmp(ptr noundef nonnull %i.h, ptr noundef nonnull %1) #21
+  %i.i = tail call i32 @strcasecmp(ptr noundef nonnull %i.h, ptr noundef nonnull %1) #22
   %.not = icmp eq i32 %i.i, 0
   %i.j = zext i1 %.not to i32
   br label %bb.c
@@ -679,7 +736,7 @@ bb.a:
   br i1 %i.a, label %.critedge, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #21 ; 2 uses
+  %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #22 ; 2 uses
   %i.c = trunc i64 %i.b to i32                    ; 3 uses
   %i.d = icmp eq i32 %i.c, 0
   br i1 %i.d, label %.critedge, label %.preheader
@@ -730,7 +787,7 @@ bb.a:
   %.03855 = phi i32 [ %i.o, %.critedge ], [ 0, %bb.a ] ; 2 uses
   %.03954 = phi i32 [ %.140, %.critedge ], [ 0, %bb.a ] ; 2 uses
   %i.f = sext i8 %i.e to i32
-  %i.g = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %2, i32 noundef %i.f) #21
+  %i.g = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %2, i32 noundef %i.f) #22
   %.not49 = icmp eq ptr %i.g, null
   br i1 %.not49, label %.critedge, label %bb.b
 
@@ -749,7 +806,7 @@ bb.c:                                             ; preds = %bb.d, %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.l = sext i8 %i.k to i32
-  %i.m = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %2, i32 noundef %i.l) #21
+  %i.m = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %2, i32 noundef %i.l) #22
   %.not51 = icmp eq ptr %i.m, null
   br i1 %.not51, label %.critedge.loopexit, label %bb.c
 
@@ -786,7 +843,7 @@ bb.d:                                             ; preds = %bb.c
   %i.y = phi i8 [ %i.v, %.lr.ph60.preheader ], [ %i.ad, %bb.e ]
   %.059 = phi i32 [ %.038.lcssa, %.lr.ph60.preheader ], [ %i.ab, %bb.e ]
   %i.z = sext i8 %i.y to i32
-  %i.aa = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %2, i32 noundef %i.z) #21
+  %i.aa = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %2, i32 noundef %i.z) #22
   %.not47 = icmp eq ptr %i.aa, null
   br i1 %.not47, label %bb.e, label %._crit_edge61.split.loop.exit80
 
@@ -811,17 +868,17 @@ bb.f:                                             ; preds = %._crit_edge61
   %i.ag = sub nsw i32 %.0.lcssa.ph, %.038.lcssa   ; 2 uses
   %i.ah = add nsw i32 %i.ag, 1
   %i.ai = sext i32 %i.ah to i64
-  %i.aj = tail call ptr @cli_max_malloc(i64 noundef %i.ai) #22 ; 4 uses
+  %i.aj = tail call ptr @cli_max_malloc(i64 noundef %i.ai) #23 ; 4 uses
   %.not48 = icmp eq ptr %i.aj, null
   br i1 %.not48, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  tail call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.4) #22
+  tail call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.4) #23
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.f
   %i.ak = sext i32 %i.ag to i64                   ; 2 uses
-  %i.al = tail call ptr @strncpy(ptr noundef nonnull %i.aj, ptr noundef nonnull %i.w, i64 noundef %i.ak) #22 ; 0 uses
+  %i.al = tail call ptr @strncpy(ptr noundef nonnull %i.aj, ptr noundef nonnull %i.w, i64 noundef %i.ak) #23 ; 0 uses
   %i.am = getelementptr inbounds i8, ptr %i.aj, i64 %i.ak
   store i8 0, ptr %i.am, align 1, !tbaa !8
   br label %bb.i
@@ -853,7 +910,7 @@ bb.a:
   %.03549 = phi i32 [ %i.o, %.critedge ], [ 0, %bb.a ] ; 2 uses
   %.03648 = phi i32 [ %.137, %.critedge ], [ 0, %bb.a ] ; 2 uses
   %i.f = sext i8 %i.e to i32
-  %i.g = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %2, i32 noundef %i.f) #21
+  %i.g = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %2, i32 noundef %i.f) #22
   %.not43 = icmp eq ptr %i.g, null
   br i1 %.not43, label %.critedge, label %bb.b
 
@@ -872,7 +929,7 @@ bb.c:                                             ; preds = %bb.d, %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.l = sext i8 %i.k to i32
-  %i.m = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %2, i32 noundef %i.l) #21
+  %i.m = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %2, i32 noundef %i.l) #22
   %.not45 = icmp eq ptr %i.m, null
   br i1 %.not45, label %.critedge.loopexit, label %bb.c
 
@@ -909,7 +966,7 @@ bb.d:                                             ; preds = %bb.c
   %i.z = phi i8 [ %i.v, %.lr.ph54.preheader ], [ %i.ae, %bb.e ]
   %.053 = phi i32 [ %.035.lcssa, %.lr.ph54.preheader ], [ %i.ac, %bb.e ]
   %i.aa = sext i8 %i.z to i32
-  %i.ab = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %2, i32 noundef %i.aa) #21
+  %i.ab = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %2, i32 noundef %i.aa) #22
   %.not42 = icmp eq ptr %i.ab, null
   br i1 %.not42, label %bb.e, label %._crit_edge55.split.loop.exit73
 
@@ -933,7 +990,7 @@ bb.e:                                             ; preds = %.lr.ph54
 bb.f:                                             ; preds = %._crit_edge55
   %i.ah = sub nsw i32 %.0.lcssa.ph, %.035.lcssa
   %i.ai = sext i32 %i.ah to i64                   ; 2 uses
-  %i.aj = tail call ptr @strncpy(ptr noundef %3, ptr noundef nonnull %i.w, i64 noundef %i.ai) #22 ; 0 uses
+  %i.aj = tail call ptr @strncpy(ptr noundef %3, ptr noundef nonnull %i.w, i64 noundef %i.ai) #23 ; 0 uses
   %i.ak = getelementptr inbounds i8, ptr %3, i64 %i.ai
   store i8 0, ptr %i.ak, align 1, !tbaa !8
   br label %bb.g
@@ -961,7 +1018,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.e = sext i8 %i.d to i32
-  %i.f = tail call ptr @memchr(ptr noundef %0, i32 noundef %i.e, i64 noundef %1) #21
+  %i.f = tail call ptr @memchr(ptr noundef %0, i32 noundef %i.e, i64 noundef %1) #22
   br label %.loopexit
 
 bb.e:                                             ; preds = %bb.c
@@ -1017,7 +1074,7 @@ bb.a:
   br i1 %or.cond, label %.preheader, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.5) #22
+  tail call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.5) #23
   br label %.loopexit
 
 .preheader:                                       ; preds = %bb.a, %.preheader
@@ -1039,10 +1096,10 @@ bb.b:                                             ; preds = %bb.a
 define noundef ptr @__cli_strcasestr(ptr nofree noundef readonly captures(ret: address, provenance) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #10 {
 bb.a:
   %i.a = alloca [3 x i8], align 1                 ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #22
-  %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #21 ; 2 uses
-  %i.c = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #21
-  %i.d = tail call ptr @__ctype_tolower_loc() #23
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #23
+  %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #22 ; 2 uses
+  %i.c = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #22
+  %i.d = tail call ptr @__ctype_tolower_loc() #24
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !20
   %i.f = load i8, ptr %1, align 1, !tbaa !8
   %i.g = sext i8 %i.f to i64                      ; 2 uses
@@ -1050,7 +1107,7 @@ bb.a:
   %i.i = load i32, ptr %i.h, align 4, !tbaa !9
   %i.j = trunc i32 %i.i to i8
   store i8 %i.j, ptr %i.a, align 1, !tbaa !8
-  %i.k = tail call ptr @__ctype_toupper_loc() #23
+  %i.k = tail call ptr @__ctype_toupper_loc() #24
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !20
   %i.m = getelementptr inbounds [4 x i8], ptr %i.l, i64 %i.g
   %i.n = load i32, ptr %i.m, align 4, !tbaa !9
@@ -1059,20 +1116,20 @@ bb.a:
   store i8 %i.o, ptr %i.p, align 1, !tbaa !8
   %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 2
   store i8 0, ptr %i.q, align 1, !tbaa !8
-  %i.r = call i64 @strcspn(ptr noundef nonnull %0, ptr noundef nonnull %i.a) #21 ; 2 uses
+  %i.r = call i64 @strcspn(ptr noundef nonnull %0, ptr noundef nonnull %i.a) #22 ; 2 uses
   %.not21 = icmp eq i64 %i.r, %i.b
   br i1 %.not21, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %bb.b
   %.02022 = phi i64 [ %i.y, %bb.b ], [ %i.r, %bb.a ] ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 %.02022 ; 3 uses
-  %i.t = tail call i32 @strncasecmp(ptr noundef nonnull %i.s, ptr noundef nonnull %1, i64 noundef %i.c) #21
+  %i.t = tail call i32 @strncasecmp(ptr noundef nonnull %i.s, ptr noundef nonnull %1, i64 noundef %i.c) #22
   %i.u = icmp eq i32 %i.t, 0
   br i1 %i.u, label %._crit_edge, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
   %i.v = getelementptr inbounds nuw i8, ptr %i.s, i64 1
-  %i.w = call i64 @strcspn(ptr noundef nonnull %i.v, ptr noundef nonnull %i.a) #21
+  %i.w = call i64 @strcspn(ptr noundef nonnull %i.v, ptr noundef nonnull %i.a) #22
   %i.x = add i64 %.02022, 1
   %i.y = add i64 %i.x, %i.w                       ; 2 uses
   %.not = icmp eq i64 %i.y, %i.b
@@ -1080,7 +1137,7 @@ bb.b:                                             ; preds = %.lr.ph
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.b, %bb.a
   %.0 = phi ptr [ null, %bb.a ], [ null, %bb.b ], [ %i.s, %.lr.ph ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #22
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #23
   ret ptr %.0
 }
 
@@ -1103,9 +1160,9 @@ bb.a:
   br i1 %.not, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.a = tail call i64 @strnlen(ptr noundef nonnull %0, i64 noundef %1) #21 ; 3 uses
+  %i.a = tail call i64 @strnlen(ptr noundef nonnull %0, i64 noundef %1) #22 ; 3 uses
   %i.b = add i64 %i.a, 1
-  %i.c = tail call noalias ptr @malloc(i64 noundef %i.b) #24 ; 4 uses
+  %i.c = tail call noalias ptr @malloc(i64 noundef %i.b) #25 ; 4 uses
   %.not13 = icmp eq ptr %i.c, null
   br i1 %.not13, label %bb.d, label %bb.c
 
@@ -1158,7 +1215,7 @@ bb.a:
   br i1 %.not, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.a) #21 ; 2 uses
+  %i.c = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.a) #22 ; 2 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.g, %bb.b
@@ -1189,7 +1246,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.j, label %.loopexit, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.k = tail call i32 @strncmp(ptr noundef nonnull %i.i, ptr noundef nonnull %i.a, i64 noundef %i.c) #21
+  %i.k = tail call i32 @strncmp(ptr noundef nonnull %i.i, ptr noundef nonnull %i.a, i64 noundef %i.c) #22
   %.not21 = icmp eq i32 %i.k, 0
   br i1 %.not21, label %.loopexit, label %bb.c
 
@@ -1217,7 +1274,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.c
   %i.b = add nuw i64 %.01624, 1                   ; 5 uses
   %i.c = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %.01624
   store ptr %.01823, ptr %i.c, align 8, !tbaa !23
-  %i.d = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %.01823, i32 noundef %i.a) #21 ; 3 uses
+  %i.d = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %.01823, i32 noundef %i.a) #22 ; 3 uses
   %.not = icmp eq ptr %i.d, null
   br i1 %.not, label %.preheader, label %bb.c
 
@@ -1255,7 +1312,7 @@ bb.a:
   br i1 %i.b, label %.thread167, label %.preheader
 
 .preheader:                                       ; preds = %bb.a
-  %i.c = tail call ptr @__ctype_b_loc() #23
+  %i.c = tail call ptr @__ctype_b_loc() #24
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !25   ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 %1 ; 7 uses
   br label %bb.b
@@ -1426,7 +1483,7 @@ bb.u:                                             ; preds = %bb.r, %bb.s, %bb.t
   br i1 %i.bc, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %._crit_edge
-  %i.bd = tail call ptr @__errno_location() #23
+  %i.bd = tail call ptr @__errno_location() #24
   store i32 34, ptr %i.bd, align 4, !tbaa !9
   br label %.thread167
 
@@ -1461,7 +1518,7 @@ declare ptr @__errno_location() local_unnamed_addr #11
 define i64 @cli_strntoul(ptr noundef %0, i64 noundef %1, ptr nofree noundef writeonly captures(address_is_null) %2, i32 noundef %3) local_unnamed_addr #15 {
 bb.a:
   %i.a = ptrtoaddr ptr %0 to i64
-  %i.b = tail call ptr @__ctype_b_loc() #23
+  %i.b = tail call ptr @__ctype_b_loc() #24
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !25   ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 %1 ; 7 uses
   br label %bb.b
@@ -1631,7 +1688,7 @@ bb.u:                                             ; preds = %bb.r, %bb.s, %bb.t
   br i1 %i.ba, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %._crit_edge
-  %i.bb = tail call ptr @__errno_location() #23
+  %i.bb = tail call ptr @__errno_location() #24
   store i32 34, ptr %i.bb, align 4, !tbaa !9
   br label %.thread161
 
@@ -1660,7 +1717,7 @@ bb.y:                                             ; preds = %bb.x, %.thread161
 define range(i32 0, 28) i32 @cli_strntol_wrap(ptr noundef %0, i64 noundef %1, i32 noundef %2, i32 noundef %3, ptr nofree noundef writeonly captures(address_is_null) %4) local_unnamed_addr #15 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #22
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #23
   store ptr null, ptr %i.a, align 8, !tbaa !23
   %i.b = icmp ne i64 %1, 0
   %i.c = icmp ne ptr %0, null
@@ -1670,7 +1727,7 @@ bb.a:
   br i1 %or.cond3, label %bb.b, label %bb.h
 
 bb.b:                                             ; preds = %bb.a
-  %i.e = tail call ptr @__errno_location() #23    ; 2 uses
+  %i.e = tail call ptr @__errno_location() #24    ; 2 uses
   store i32 0, ptr %i.e, align 4, !tbaa !9
   %i.f = call i64 @cli_strntol(ptr noundef nonnull %0, i64 noundef %1, ptr noundef nonnull %i.a, i32 noundef %3) ; 2 uses
   %i.g = add i64 %i.f, -9223372036854775807
@@ -1705,7 +1762,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 
 bb.h:                                             ; preds = %bb.f, %bb.d, %bb.c, %bb.a, %bb.g
   %.0 = phi i32 [ 27, %bb.a ], [ 27, %bb.c ], [ 27, %bb.d ], [ 0, %bb.g ], [ 27, %bb.f ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #22
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #23
   ret i32 %.0
 }
 
@@ -1713,7 +1770,7 @@ bb.h:                                             ; preds = %bb.f, %bb.d, %bb.c,
 define range(i32 0, 28) i32 @cli_strntoul_wrap(ptr noundef %0, i64 noundef %1, i32 noundef %2, i32 noundef %3, ptr nofree noundef writeonly captures(address_is_null) %4) local_unnamed_addr #15 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #22
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #23
   store ptr null, ptr %i.a, align 8, !tbaa !23
   %i.b = icmp ne i64 %1, 0
   %i.c = icmp ne ptr %0, null
@@ -1723,7 +1780,7 @@ bb.a:
   br i1 %or.cond3, label %bb.b, label %bb.h
 
 bb.b:                                             ; preds = %bb.a
-  %i.e = tail call ptr @__errno_location() #23    ; 2 uses
+  %i.e = tail call ptr @__errno_location() #24    ; 2 uses
   store i32 0, ptr %i.e, align 4, !tbaa !9
   %i.f = call i64 @cli_strntoul(ptr noundef nonnull %0, i64 noundef %1, ptr noundef nonnull %i.a, i32 noundef %3) ; 2 uses
   %i.g = icmp eq i64 %i.f, -1
@@ -1757,7 +1814,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 
 bb.h:                                             ; preds = %bb.f, %bb.d, %bb.c, %bb.a, %bb.g
   %.0 = phi i32 [ 27, %bb.a ], [ 27, %bb.c ], [ 27, %bb.d ], [ 0, %bb.g ], [ 27, %bb.f ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #22
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #23
   ret i32 %.0
 }
 
@@ -1887,9 +1944,9 @@ bb.b:                                             ; preds = %.preheader
 ; Function Attrs: nounwind uwtable
 define ptr @cli_unescape(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #2 {
 bb.a:
-  %i.a = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #21 ; 5 uses
+  %i.a = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #22 ; 5 uses
   %i.b = add i64 %i.a, 1
-  %i.c = tail call ptr @cli_max_malloc(i64 noundef %i.b) #22 ; 5 uses
+  %i.c = tail call ptr @cli_max_malloc(i64 noundef %i.b) #23 ; 5 uses
   %.not = icmp eq ptr %i.c, null
   br i1 %.not, label %bb.b, label %.preheader
 
@@ -1898,7 +1955,7 @@ bb.a:
   br i1 %.not84, label %._crit_edge, label %.lr.ph
 
 bb.b:                                             ; preds = %bb.a
-  tail call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.7) #22
+  tail call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.7) #23
   br label %bb.v
 
 .lr.ph:                                           ; preds = %.preheader, %bb.u
@@ -1921,7 +1978,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not72, label %bb.e, label %bb.i
 
 bb.e:                                             ; preds = %bb.d
-  %i.j = tail call ptr @__ctype_b_loc() #23
+  %i.j = tail call ptr @__ctype_b_loc() #24
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !25   ; 4 uses
   %i.l = getelementptr i8, ptr %i.d, i64 2
   %i.m = load i8, ptr %i.l, align 1, !tbaa !8     ; 2 uses
@@ -1968,7 +2025,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f,
   br i1 %i.ak, label %bb.j, label %bb.t
 
 bb.j:                                             ; preds = %bb.i
-  %i.al = tail call ptr @__ctype_b_loc() #23
+  %i.al = tail call ptr @__ctype_b_loc() #24
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !25 ; 2 uses
   %i.an = getelementptr i8, ptr %i.d, i64 1
   %i.ao = load i8, ptr %i.an, align 1, !tbaa !8   ; 2 uses
@@ -2101,7 +2158,7 @@ bb.u:                                             ; preds = %bb.t, %output_utf8.
   %i.de = add i64 %.064.lcssa, 1
   %i.df = getelementptr inbounds nuw i8, ptr %i.c, i64 %.064.lcssa
   store i8 0, ptr %i.df, align 1, !tbaa !8
-  %i.dg = tail call ptr @cli_max_realloc_or_free(ptr noundef nonnull %i.c, i64 noundef %i.de) #22
+  %i.dg = tail call ptr @cli_max_realloc_or_free(ptr noundef nonnull %i.c, i64 noundef %i.de) #23
   br label %bb.v
 
 bb.v:                                             ; preds = %._crit_edge, %bb.b
@@ -2234,7 +2291,7 @@ bb.o:                                             ; preds = %bb.n
   %i.bf = add i64 %i.bd, 4096
   %..i = tail call i64 @llvm.umax.i64(i64 %i.bc, i64 %i.bf)
   %i.bg = and i64 %..i, 4294967295                ; 2 uses
-  %i.bh = tail call ptr @cli_max_realloc(ptr noundef %.pre, i64 noundef %i.bg) #22 ; 3 uses
+  %i.bh = tail call ptr @cli_max_realloc(ptr noundef %.pre, i64 noundef %i.bg) #23 ; 3 uses
   %.not.i = icmp eq ptr %i.bh, null
   br i1 %.not.i, label %textbuffer_ensure_capacity.exit.thread65, label %.thread.i
 
@@ -2324,7 +2381,7 @@ bb.y:                                             ; preds = %bb.x
   %i.co = add i64 %i.cm, 4096
   %..i.i = tail call i64 @llvm.umax.i64(i64 %i.cl, i64 %i.co)
   %i.cp = and i64 %..i.i, 4294967295              ; 2 uses
-  %i.cq = tail call ptr @cli_max_realloc(ptr noundef %.pre.i, i64 noundef %i.cp) #22 ; 3 uses
+  %i.cq = tail call ptr @cli_max_realloc(ptr noundef %.pre.i, i64 noundef %i.cp) #23 ; 3 uses
   %.not.i.i = icmp eq ptr %i.cq, null
   br i1 %.not.i.i, label %textbuffer_ensure_capacity.exit.thread65, label %.thread.i.i
 
@@ -2398,7 +2455,7 @@ bb.a:
   br i1 %or.cond3, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.8) #22
+  tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.8) #23
   br label %bb.k
 
 bb.c:                                             ; preds = %bb.a
@@ -2445,22 +2502,22 @@ bb.g:                                             ; preds = %bb.e, %bb.f
   %i.n = ptrtoint ptr %0 to i64
   %.neg = sub i64 %i.n, %i.m
   %i.o = add i64 %.neg, %1                        ; 2 uses
-  %i.p = tail call i64 @strnlen(ptr noundef %.1, i64 noundef %i.o) #21
+  %i.p = tail call i64 @strnlen(ptr noundef %.1, i64 noundef %i.o) #22
   %i.q = icmp eq i64 %i.p, 0
   br i1 %i.q, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.9) #22
+  tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.9) #23
   br label %bb.k
 
 bb.i:                                             ; preds = %bb.g
-  %i.r = tail call noalias ptr @strndup(ptr noundef %.1, i64 noundef %i.o) #22 ; 2 uses
+  %i.r = tail call noalias ptr @strndup(ptr noundef %.1, i64 noundef %i.o) #23 ; 2 uses
   store ptr %i.r, ptr %2, align 8, !tbaa !23
   %i.s = icmp eq ptr %i.r, null
   br i1 %i.s, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
-  tail call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.10) #22
+  tail call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.10) #23
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.i, %bb.j, %bb.h, %bb.b
@@ -2490,7 +2547,7 @@ bb.a:
   br i1 %.not78, label %.critedge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader
-  %i.e = tail call ptr @__ctype_b_loc() #23
+  %i.e = tail call ptr @__ctype_b_loc() #24
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.o
@@ -2608,6 +2665,9 @@ declare i32 @llvm.smax.i32(i32, i32) #19
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #19
 
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
+declare void @llvm.assume(i1 noundef) #21
+
 attributes #0 = { nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -2629,10 +2689,11 @@ attributes #17 = { nofree nosync nounwind memory(read, argmem: readwrite, inacce
 attributes #18 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
 attributes #19 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #20 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #21 = { nounwind willreturn memory(read) }
-attributes #22 = { nounwind }
-attributes #23 = { nounwind willreturn memory(none) }
-attributes #24 = { nounwind allocsize(0) }
+attributes #21 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #22 = { nounwind willreturn memory(read) }
+attributes #23 = { nounwind }
+attributes #24 = { nounwind willreturn memory(none) }
+attributes #25 = { nounwind allocsize(0) }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

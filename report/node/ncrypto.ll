@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %bb.a
 ; Function Attrs: mustprogress nounwind uwtable
 define internal fastcc void @_ZN7ncrypto12_GLOBAL__N_112PrintAltNameERKNS_10BIOPointerEPKcmNS0_13AltNameOptionES5_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %0, ptr noundef %1, i64 noundef %2, i32 noundef range(i32 0, 2) %3, ptr noundef %4) unnamed_addr #0 {
 bb.a:
-  %i.a = alloca i8, align 1                       ; 4 uses
-  %i.b = alloca [6 x i8], align 4                 ; 6 uses
+  %i.a = alloca i8, align 1                       ; 8 uses
+  %i.b = alloca [6 x i8], align 4                 ; 10 uses
   %i.c = icmp eq i64 %2, 0
   br i1 %i.c, label %_ZN7ncrypto12_GLOBAL__N_113IsSafeAltNameEPKcmNS0_13AltNameOptionE.exit, label %.lr.ph.i
 
@@ -275,25 +275,82 @@ bb.g:                                             ; preds = %bb.f, %_ZN7ncrypto1
   %i.r = load ptr, ptr %0, align 8
   %i.s = tail call i32 @BIO_write(ptr noundef %i.r, ptr noundef nonnull @.str.121, i32 noundef 1) #21 ; 0 uses
   %.not = icmp eq ptr %4, null
-  br i1 %.not, label %bb.i, label %bb.h
+  br i1 %.not, label %5, label %bb.h
 
 bb.h:                                             ; preds = %.loopexit
   %i.t = load ptr, ptr %0, align 8
   %i.u = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %i.t, ptr noundef nonnull @.str.120, ptr noundef nonnull %4) #21 ; 0 uses
-  br label %bb.i
+  br label %5
 
-bb.i:                                             ; preds = %bb.h, %.loopexit
-  %i.v = getelementptr inbounds nuw i8, ptr %i.b, i64 4
-  %i.w = getelementptr inbounds nuw i8, ptr %i.b, i64 5
-  br label %bb.k
+5:                                                ; preds = %bb.h, %.loopexit
+  %6 = getelementptr inbounds nuw i8, ptr %i.b, i64 4 ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %i.b, i64 5 ; 2 uses
+  br i1 %.not.i, label %.split.us, label %bb.k
 
-bb.j:                                             ; preds = %bb.q
+.split.us:                                        ; preds = %5, %31
+  %.036.us = phi i64 [ %32, %31 ], [ 0, %5 ]      ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #21
+  %8 = getelementptr inbounds nuw i8, ptr %1, i64 %.036.us
+  %9 = load i8, ptr %8, align 1                   ; 6 uses
+  store i8 %9, ptr %i.a, align 1
+  switch i8 %9, label %16 [
+    i8 92, label %13
+    i8 34, label %10
+  ]
+
+10:                                               ; preds = %.split.us
+  %11 = load ptr, ptr %0, align 8
+  %12 = call i32 @BIO_write(ptr noundef %11, ptr noundef nonnull @.str.123, i32 noundef 2) #21 ; 0 uses
+  br label %31
+
+13:                                               ; preds = %.split.us
+  %14 = load ptr, ptr %0, align 8
+  %15 = call i32 @BIO_write(ptr noundef %14, ptr noundef nonnull @.str.122, i32 noundef 2) #21 ; 0 uses
+  br label %31
+
+16:                                               ; preds = %.split.us
+  %17 = icmp ne i8 %9, 44
+  %18 = add i8 %9, -32
+  %19 = icmp ult i8 %18, 95
+  %or.cond5.us = and i1 %17, %19
+  br i1 %or.cond5.us, label %28, label %bb.i
+
+bb.i:                                             ; preds = %16
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #21
+  store <4 x i8> <i8 92, i8 117, i8 48, i8 48>, ptr %i.b, align 4
+  %20 = lshr i8 %9, 4
+  %21 = zext nneg i8 %20 to i64
+  %i.v = getelementptr inbounds nuw i8, ptr @__const._ZN7ncrypto12_GLOBAL__N_112PrintAltNameERKNS_10BIOPointerEPKcmNS0_13AltNameOptionES5_.hex, i64 %21
+  %22 = load i8, ptr %i.v, align 1
+  store i8 %22, ptr %6, align 4
+  %23 = and i8 %9, 15
+  %24 = zext nneg i8 %23 to i64
+  %i.w = getelementptr inbounds nuw i8, ptr @__const._ZN7ncrypto12_GLOBAL__N_112PrintAltNameERKNS_10BIOPointerEPKcmNS0_13AltNameOptionES5_.hex, i64 %24
+  %25 = load i8, ptr %i.w, align 1
+  store i8 %25, ptr %7, align 1
+  %26 = load ptr, ptr %0, align 8
+  %27 = call i32 @BIO_write(ptr noundef %26, ptr noundef nonnull %i.b, i32 noundef 6) #21 ; 0 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #21
+  br label %31
+
+28:                                               ; preds = %16
+  %29 = load ptr, ptr %0, align 8
+  %30 = call i32 @BIO_write(ptr noundef %29, ptr noundef nonnull %i.a, i32 noundef 1) #21 ; 0 uses
+  br label %31
+
+31:                                               ; preds = %28, %bb.i, %13, %10
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #21
+  %32 = add nuw i64 %.036.us, 1                   ; 2 uses
+  %exitcond46.not = icmp eq i64 %32, %2
+  br i1 %exitcond46.not, label %bb.j, label %.split.us, !llvm.loop !412
+
+bb.j:                                             ; preds = %bb.q, %31
   %i.x = load ptr, ptr %0, align 8
   %i.y = call i32 @BIO_write(ptr noundef %i.x, ptr noundef nonnull @.str.121, i32 noundef 1) #21 ; 0 uses
   br label %bb.r
 
-bb.k:                                             ; preds = %bb.i, %bb.q
-  %.036 = phi i64 [ 0, %bb.i ], [ %i.au, %bb.q ]  ; 2 uses
+bb.k:                                             ; preds = %5, %bb.q
+  %.036 = phi i64 [ %i.au, %bb.q ], [ 0, %5 ]     ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #21
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 %.036
   %i.aa = load i8, ptr %i.z, align 1              ; 7 uses
@@ -319,8 +376,7 @@ bb.n:                                             ; preds = %bb.k
   %i.ah = icmp ult i8 %i.ag, -95
   %or.cond5.not40 = or i1 %i.af, %i.ah
   %.not31 = icmp sgt i8 %i.aa, -1
-  %or.cond = or i1 %.not.i, %.not31
-  %or.cond37 = and i1 %or.cond5.not40, %or.cond
+  %or.cond37 = and i1 %or.cond5.not40, %.not31
   br i1 %or.cond37, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
@@ -335,12 +391,12 @@ bb.p:                                             ; preds = %bb.n
   %i.al = zext nneg i8 %i.ak to i64
   %i.am = getelementptr inbounds nuw i8, ptr @__const._ZN7ncrypto12_GLOBAL__N_112PrintAltNameERKNS_10BIOPointerEPKcmNS0_13AltNameOptionES5_.hex, i64 %i.al
   %i.an = load i8, ptr %i.am, align 1
-  store i8 %i.an, ptr %i.v, align 4
+  store i8 %i.an, ptr %6, align 4
   %i.ao = and i8 %i.aa, 15
   %i.ap = zext nneg i8 %i.ao to i64
   %i.aq = getelementptr inbounds nuw i8, ptr @__const._ZN7ncrypto12_GLOBAL__N_112PrintAltNameERKNS_10BIOPointerEPKcmNS0_13AltNameOptionES5_.hex, i64 %i.ap
   %i.ar = load i8, ptr %i.aq, align 1
-  store i8 %i.ar, ptr %i.w, align 1
+  store i8 %i.ar, ptr %7, align 1
   %i.as = load ptr, ptr %0, align 8
   %i.at = call i32 @BIO_write(ptr noundef %i.as, ptr noundef nonnull %i.b, i32 noundef 6) #21 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #21
