@@ -203,11 +203,9 @@ _ZN8rawspeed10ByteStream9skipBytesEj.exit:        ; preds = %bb.q
   tail call void @llvm.assume(i1 %i.bm)
   %i.bn = icmp sgt i32 %.sroa.6100.0.copyload, -1
   tail call void @llvm.assume(i1 %i.bn)
-  %5 = sub i32 %.sroa.6100.0.copyload, %i.bl      ; 2 uses
   %i.bo = zext i32 %i.bl to i64
+  %5 = sub nuw i32 %.sroa.6100.0.copyload, %i.bl
   %6 = getelementptr inbounds nuw i8, ptr %.sroa.098.0.copyload, i64 %i.bo
-  %7 = icmp sgt i32 %5, -1
-  tail call void @llvm.assume(i1 %7)
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #29
   %i.bp = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.bq = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses

@@ -201,7 +201,7 @@ bb.h:                                             ; preds = %bb.g
   br label %_ZNK5boost9container3dtl32insert_value_initialized_n_proxyINS0_13new_allocatorIhEEE31uninitialized_copy_n_and_updateIPhEEvRS4_T_m.exit.i.i.i
 
 _ZNK5boost9container3dtl32insert_value_initialized_n_proxyINS0_13new_allocatorIhEEE31uninitialized_copy_n_and_updateIPhEEvRS4_T_m.exit.i.i.i: ; preds = %bb.h, %bb.g
-  %i.ay = sub i64 %i.ac, %i.ax                    ; 2 uses
+  %i.ay = sub nuw i64 %i.ac, %i.ax                ; 2 uses
   %.not2833.i.i.i = icmp eq i64 %i.ay, 0
   br i1 %.not2833.i.i.i, label %_ZN5boost9container10deque_implIhNS0_13new_allocatorIhEELb0ENS0_9deque_optILm0ELm0EhLb0EEEE25priv_insert_back_aux_implINS0_3dtl32insert_value_initialized_n_proxyIS3_EEEENS0_14deque_iteratorIPhLb0ELj0ELj0EhEEmT_.exit, label %.lr.ph.i.i.i10
 
@@ -212,7 +212,7 @@ _ZNK5boost9container3dtl32insert_value_initialized_n_proxyINS0_13new_allocatorIh
   %i.ba = tail call i64 @llvm.umin.i64(i64 %.035.i.i.i, i64 32) ; 2 uses
   %i.bb = load ptr, ptr %i.az, align 8, !tbaa !61, !noalias !84
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.bb, i8 0, i64 %i.ba, i1 false), !noalias !84
-  %i.bc = sub i64 %.035.i.i.i, %i.ba              ; 2 uses
+  %i.bc = sub nuw i64 %.035.i.i.i, %i.ba          ; 2 uses
   %.not28.i.i.i = icmp eq i64 %i.bc, 0
   br i1 %.not28.i.i.i, label %_ZN5boost9container10deque_implIhNS0_13new_allocatorIhEELb0ENS0_9deque_optILm0ELm0EhLb0EEEE25priv_insert_back_aux_implINS0_3dtl32insert_value_initialized_n_proxyIS3_EEEENS0_14deque_iteratorIPhLb0ELj0ELj0EhEEmT_.exit, label %.lr.ph.i.i.i10, !llvm.loop !94
 
@@ -615,7 +615,7 @@ bb.i:                                             ; preds = %bb.h
   br label %_ZNK5boost9container3dtl32insert_value_initialized_n_proxyINS0_9allocatorIhLj2ELj0EEEE31uninitialized_copy_n_and_updateIPhEEvRS4_T_m.exit.i.i.i
 
 _ZNK5boost9container3dtl32insert_value_initialized_n_proxyINS0_9allocatorIhLj2ELj0EEEE31uninitialized_copy_n_and_updateIPhEEvRS4_T_m.exit.i.i.i: ; preds = %bb.i, %bb.h
-  %i.ba = sub i64 %i.ae, %i.az                    ; 2 uses
+  %i.ba = sub nuw i64 %i.ae, %i.az                ; 2 uses
   %.not2833.i.i.i = icmp eq i64 %i.ba, 0
   br i1 %.not2833.i.i.i, label %_ZN5boost9container10deque_implIhNS0_9allocatorIhLj2ELj0EEELb0ENS0_9deque_optILm0ELm0EhLb0EEEE25priv_insert_back_aux_implINS0_3dtl32insert_value_initialized_n_proxyIS3_EEEENS0_14deque_iteratorIPhLb0ELj0ELj0EhEEmT_.exit, label %.lr.ph.i.i.i10
 
@@ -626,7 +626,7 @@ _ZNK5boost9container3dtl32insert_value_initialized_n_proxyINS0_9allocatorIhLj2EL
   %i.bc = tail call i64 @llvm.umin.i64(i64 %.035.i.i.i, i64 32) ; 2 uses
   %i.bd = load ptr, ptr %i.bb, align 8, !tbaa !61, !noalias !114
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.bd, i8 0, i64 %i.bc, i1 false), !noalias !114
-  %i.be = sub i64 %.035.i.i.i, %i.bc              ; 2 uses
+  %i.be = sub nuw i64 %.035.i.i.i, %i.bc          ; 2 uses
   %.not28.i.i.i = icmp eq i64 %i.be, 0
   br i1 %.not28.i.i.i, label %_ZN5boost9container10deque_implIhNS0_9allocatorIhLj2ELj0EEELb0ENS0_9deque_optILm0ELm0EhLb0EEEE25priv_insert_back_aux_implINS0_3dtl32insert_value_initialized_n_proxyIS3_EEEENS0_14deque_iteratorIPhLb0ELj0ELj0EhEEmT_.exit, label %.lr.ph.i.i.i10, !llvm.loop !123
 
@@ -735,7 +735,7 @@ bb.a:
   %i.r = add nsw i64 %i.q, %i.p
   %i.s = select i1 %2, i64 %i.h, i64 %i.r
   %.not67 = icmp ult i64 %i.b, %i.s
-  br i1 %.not67, label %3, label %bb.b
+  br i1 %.not67, label %bb.p, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %.idx = shl nuw nsw i64 %i.m, 3
@@ -867,31 +867,22 @@ _ZN5boost9container6move_nIPPhS3_EENS0_3dtl37enable_if_memtransfer_copy_assignab
   %i.bn = and i8 %i.bm, 31
   %i.bo = add i8 %i.bl, %i.bn                     ; 2 uses
   store i8 %i.bo, ptr %i.j, align 2, !tbaa !76
-  br label %3
+  br label %bb.p
 
-3:                                                ; preds = %_ZN5boost9container6move_nIPPhS3_EENS0_3dtl37enable_if_memtransfer_copy_assignableIT_T0_S7_E4typeES6_mS7_.exit, %bb.a
-  %4 = phi i8 [ %i.bg, %_ZN5boost9container6move_nIPPhS3_EENS0_3dtl37enable_if_memtransfer_copy_assignableIT_T0_S7_E4typeES6_mS7_.exit ], [ %i.e, %bb.a ]
-  %5 = phi ptr [ %i.az, %_ZN5boost9container6move_nIPPhS3_EENS0_3dtl37enable_if_memtransfer_copy_assignableIT_T0_S7_E4typeES6_mS7_.exit ], [ %i.f, %bb.a ] ; 2 uses
-  %6 = phi i8 [ %i.bo, %_ZN5boost9container6move_nIPPhS3_EENS0_3dtl37enable_if_memtransfer_copy_assignableIT_T0_S7_E4typeES6_mS7_.exit ], [ %i.k, %bb.a ]
-  br i1 %2, label %bb.p, label %7
-
-bb.p:                                             ; preds = %3
-  %i.bp = lshr i8 %4, 5
+bb.p:                                             ; preds = %_ZN5boost9container6move_nIPPhS3_EENS0_3dtl37enable_if_memtransfer_copy_assignableIT_T0_S7_E4typeES6_mS7_.exit, %bb.a
+  %3 = phi i8 [ %i.bg, %_ZN5boost9container6move_nIPPhS3_EENS0_3dtl37enable_if_memtransfer_copy_assignableIT_T0_S7_E4typeES6_mS7_.exit ], [ %i.e, %bb.a ]
+  %4 = phi ptr [ %i.az, %_ZN5boost9container6move_nIPPhS3_EENS0_3dtl37enable_if_memtransfer_copy_assignableIT_T0_S7_E4typeES6_mS7_.exit ], [ %i.f, %bb.a ] ; 2 uses
+  %5 = phi i8 [ %i.bo, %_ZN5boost9container6move_nIPPhS3_EENS0_3dtl37enable_if_memtransfer_copy_assignableIT_T0_S7_E4typeES6_mS7_.exit ], [ %i.k, %bb.a ]
+  %6 = lshr i8 %5, 5
+  %7 = zext nneg i8 %6 to i64
+  %8 = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %7
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 8
+  %i.bp = lshr i8 %3, 5
   %i.bq = zext nneg i8 %i.bp to i64
-  %i.br = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %i.bq
+  %i.br = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.bq
   %i.bs = xor i64 %i.b, -1
   %i.bt = getelementptr inbounds [8 x i8], ptr %i.br, i64 %i.bs
-  br label %12
-
-7:                                                ; preds = %3
-  %8 = lshr i8 %6, 5
-  %9 = zext nneg i8 %8 to i64
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %9
-  %11 = getelementptr inbounds nuw i8, ptr %10, i64 8
-  br label %12
-
-12:                                               ; preds = %7, %bb.p
-  %.sink = phi ptr [ %11, %7 ], [ %i.bt, %bb.p ]
+  %.sink = select i1 %2, ptr %i.bt, ptr %9
   tail call void @_ZN5boost9container10deque_baseINS0_9allocatorIhLj2ELj0EEENS0_9deque_optILm0ELm0EhLb0EEELb0EE19prot_allocate_nodesEPPhm(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull %.sink, i64 noundef %i.c)
   ret void
 }
@@ -903,7 +894,7 @@ bb.a:
   %i.b = add nuw nsw i64 %i.a, 1                  ; 2 uses
   %i.c = tail call i64 @llvm.umax.i64(i64 %i.a, i64 1)
   %.sroa.speculated = add nuw nsw i64 %i.c, 3     ; 4 uses
-  %i.d = sub nsw i64 %.sroa.speculated, %i.b
+  %i.d = sub nuw nsw i64 %.sroa.speculated, %i.b
   %i.e = lshr i64 %i.d, 1                         ; 2 uses
   %i.f = shl i64 %.sroa.speculated, 5
   %i.g = add i64 %i.f, -288
@@ -965,7 +956,7 @@ bb.g:                                             ; preds = %bb.f
   resume { ptr, i32 } %i.t
 
 bb.h:                                             ; preds = %_ZN5boost9container10deque_baseINS0_9allocatorIhLj2ELj0EEENS0_9deque_optILm0ELm0EhLb0EEELb0EE17prot_allocate_mapEm.exit
-  %i.u = shl i64 %i.e, 5
+  %i.u = shl nuw i64 %i.e, 5
   %i.v = trunc i64 %i.u to i8                     ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 9
   store i8 %i.v, ptr %i.w, align 1, !tbaa !74
@@ -1368,7 +1359,7 @@ bb.h:                                             ; preds = %bb.g
   br label %_ZNK5boost9container3dtl32insert_value_initialized_n_proxyINS0_13new_allocatorIhEEE31uninitialized_copy_n_and_updateIPhEEvRS4_T_m.exit.i.i.i
 
 _ZNK5boost9container3dtl32insert_value_initialized_n_proxyINS0_13new_allocatorIhEEE31uninitialized_copy_n_and_updateIPhEEvRS4_T_m.exit.i.i.i: ; preds = %bb.h, %bb.g
-  %i.ay = sub i64 %i.ac, %i.ax                    ; 2 uses
+  %i.ay = sub nuw i64 %i.ac, %i.ax                ; 2 uses
   %.not2833.i.i.i = icmp eq i64 %i.ay, 0
   br i1 %.not2833.i.i.i, label %_ZN5boost9container10deque_implIhNS0_13new_allocatorIhEELb0ENS0_9deque_optILm0ELm0EtLb0EEEE25priv_insert_back_aux_implINS0_3dtl32insert_value_initialized_n_proxyIS3_EEEENS0_14deque_iteratorIPhLb0ELj0ELj0EtEEmT_.exit, label %.lr.ph.i.i.i10
 
@@ -1379,7 +1370,7 @@ _ZNK5boost9container3dtl32insert_value_initialized_n_proxyINS0_13new_allocatorIh
   %i.ba = tail call i64 @llvm.umin.i64(i64 %.035.i.i.i, i64 1024) ; 2 uses
   %i.bb = load ptr, ptr %i.az, align 8, !tbaa !61, !noalias !162
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.bb, i8 0, i64 %i.ba, i1 false), !noalias !162
-  %i.bc = sub i64 %.035.i.i.i, %i.ba              ; 2 uses
+  %i.bc = sub nuw i64 %.035.i.i.i, %i.ba          ; 2 uses
   %.not28.i.i.i = icmp eq i64 %i.bc, 0
   br i1 %.not28.i.i.i, label %_ZN5boost9container10deque_implIhNS0_13new_allocatorIhEELb0ENS0_9deque_optILm0ELm0EtLb0EEEE25priv_insert_back_aux_implINS0_3dtl32insert_value_initialized_n_proxyIS3_EEEENS0_14deque_iteratorIPhLb0ELj0ELj0EtEEmT_.exit, label %.lr.ph.i.i.i10, !llvm.loop !171
 
@@ -1782,7 +1773,7 @@ bb.i:                                             ; preds = %bb.h
   br label %_ZNK5boost9container3dtl32insert_value_initialized_n_proxyINS0_9allocatorIhLj2ELj0EEEE31uninitialized_copy_n_and_updateIPhEEvRS4_T_m.exit.i.i.i
 
 _ZNK5boost9container3dtl32insert_value_initialized_n_proxyINS0_9allocatorIhLj2ELj0EEEE31uninitialized_copy_n_and_updateIPhEEvRS4_T_m.exit.i.i.i: ; preds = %bb.i, %bb.h
-  %i.ba = sub i64 %i.ae, %i.az                    ; 2 uses
+  %i.ba = sub nuw i64 %i.ae, %i.az                ; 2 uses
   %.not2833.i.i.i = icmp eq i64 %i.ba, 0
   br i1 %.not2833.i.i.i, label %_ZN5boost9container10deque_implIhNS0_9allocatorIhLj2ELj0EEELb0ENS0_9deque_optILm0ELm0EtLb0EEEE25priv_insert_back_aux_implINS0_3dtl32insert_value_initialized_n_proxyIS3_EEEENS0_14deque_iteratorIPhLb0ELj0ELj0EtEEmT_.exit, label %.lr.ph.i.i.i10
 
@@ -1793,7 +1784,7 @@ _ZNK5boost9container3dtl32insert_value_initialized_n_proxyINS0_9allocatorIhLj2EL
   %i.bc = tail call i64 @llvm.umin.i64(i64 %.035.i.i.i, i64 1024) ; 2 uses
   %i.bd = load ptr, ptr %i.bb, align 8, !tbaa !61, !noalias !184
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.bd, i8 0, i64 %i.bc, i1 false), !noalias !184
-  %i.be = sub i64 %.035.i.i.i, %i.bc              ; 2 uses
+  %i.be = sub nuw i64 %.035.i.i.i, %i.bc          ; 2 uses
   %.not28.i.i.i = icmp eq i64 %i.be, 0
   br i1 %.not28.i.i.i, label %_ZN5boost9container10deque_implIhNS0_9allocatorIhLj2ELj0EEELb0ENS0_9deque_optILm0ELm0EtLb0EEEE25priv_insert_back_aux_implINS0_3dtl32insert_value_initialized_n_proxyIS3_EEEENS0_14deque_iteratorIPhLb0ELj0ELj0EtEEmT_.exit, label %.lr.ph.i.i.i10, !llvm.loop !193
 
@@ -1898,7 +1889,7 @@ bb.a:
   %i.r = add nsw i64 %i.q, %i.p
   %i.s = select i1 %2, i64 %i.h, i64 %i.r
   %.not67 = icmp ult i64 %i.b, %i.s
-  br i1 %.not67, label %3, label %bb.b
+  br i1 %.not67, label %bb.p, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %.idx = shl nuw nsw i64 %i.m, 3
@@ -2029,31 +2020,22 @@ _ZN5boost9container6move_nIPPhS3_EENS0_3dtl37enable_if_memtransfer_copy_assignab
   store <2 x i16> %i.bm, ptr %i.d, align 2, !tbaa !145
   %i.bn = extractelement <2 x i16> %i.bm, i64 0
   %i.bo = extractelement <2 x i16> %i.bm, i64 1
-  br label %3
+  br label %bb.p
 
-3:                                                ; preds = %_ZN5boost9container6move_nIPPhS3_EENS0_3dtl37enable_if_memtransfer_copy_assignableIT_T0_S7_E4typeES6_mS7_.exit, %bb.a
-  %4 = phi i16 [ %i.bn, %_ZN5boost9container6move_nIPPhS3_EENS0_3dtl37enable_if_memtransfer_copy_assignableIT_T0_S7_E4typeES6_mS7_.exit ], [ %i.e, %bb.a ]
-  %5 = phi ptr [ %i.az, %_ZN5boost9container6move_nIPPhS3_EENS0_3dtl37enable_if_memtransfer_copy_assignableIT_T0_S7_E4typeES6_mS7_.exit ], [ %i.f, %bb.a ] ; 2 uses
-  %6 = phi i16 [ %i.bo, %_ZN5boost9container6move_nIPPhS3_EENS0_3dtl37enable_if_memtransfer_copy_assignableIT_T0_S7_E4typeES6_mS7_.exit ], [ %i.k, %bb.a ]
-  br i1 %2, label %bb.p, label %7
-
-bb.p:                                             ; preds = %3
-  %i.bp = lshr i16 %4, 10
+bb.p:                                             ; preds = %_ZN5boost9container6move_nIPPhS3_EENS0_3dtl37enable_if_memtransfer_copy_assignableIT_T0_S7_E4typeES6_mS7_.exit, %bb.a
+  %3 = phi i16 [ %i.bn, %_ZN5boost9container6move_nIPPhS3_EENS0_3dtl37enable_if_memtransfer_copy_assignableIT_T0_S7_E4typeES6_mS7_.exit ], [ %i.e, %bb.a ]
+  %4 = phi ptr [ %i.az, %_ZN5boost9container6move_nIPPhS3_EENS0_3dtl37enable_if_memtransfer_copy_assignableIT_T0_S7_E4typeES6_mS7_.exit ], [ %i.f, %bb.a ] ; 2 uses
+  %5 = phi i16 [ %i.bo, %_ZN5boost9container6move_nIPPhS3_EENS0_3dtl37enable_if_memtransfer_copy_assignableIT_T0_S7_E4typeES6_mS7_.exit ], [ %i.k, %bb.a ]
+  %6 = lshr i16 %5, 10
+  %7 = zext nneg i16 %6 to i64
+  %8 = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %7
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 8
+  %i.bp = lshr i16 %3, 10
   %i.bq = zext nneg i16 %i.bp to i64
-  %i.br = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %i.bq
+  %i.br = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.bq
   %i.bs = xor i64 %i.b, -1
   %i.bt = getelementptr inbounds [8 x i8], ptr %i.br, i64 %i.bs
-  br label %12
-
-7:                                                ; preds = %3
-  %8 = lshr i16 %6, 10
-  %9 = zext nneg i16 %8 to i64
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %9
-  %11 = getelementptr inbounds nuw i8, ptr %10, i64 8
-  br label %12
-
-12:                                               ; preds = %7, %bb.p
-  %.sink = phi ptr [ %11, %7 ], [ %i.bt, %bb.p ]
+  %.sink = select i1 %2, ptr %i.bt, ptr %9
   tail call void @_ZN5boost9container10deque_baseINS0_9allocatorIhLj2ELj0EEENS0_9deque_optILm0ELm0EtLb0EEELb0EE19prot_allocate_nodesEPPhm(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull %.sink, i64 noundef %i.c)
   ret void
 }
@@ -2065,7 +2047,7 @@ bb.a:
   %i.b = add nuw nsw i64 %i.a, 1                  ; 2 uses
   %i.c = tail call i64 @llvm.umax.i64(i64 %i.a, i64 1)
   %.sroa.speculated = add nuw nsw i64 %i.c, 3     ; 4 uses
-  %i.d = sub nsw i64 %.sroa.speculated, %i.b
+  %i.d = sub nuw nsw i64 %.sroa.speculated, %i.b
   %i.e = lshr i64 %i.d, 1                         ; 2 uses
   %i.f = shl i64 %.sroa.speculated, 10
   %i.g = add i64 %i.f, -66560
@@ -2127,7 +2109,7 @@ bb.g:                                             ; preds = %bb.f
   resume { ptr, i32 } %i.t
 
 bb.h:                                             ; preds = %_ZN5boost9container10deque_baseINS0_9allocatorIhLj2ELj0EEENS0_9deque_optILm0ELm0EtLb0EEELb0EE17prot_allocate_mapEm.exit
-  %i.u = shl i64 %i.e, 10
+  %i.u = shl nuw i64 %i.e, 10
   %i.v = trunc i64 %i.u to i16                    ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 10
   store i16 %i.v, ptr %i.w, align 2, !tbaa !180

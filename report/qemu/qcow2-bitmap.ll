@@ -203,7 +203,7 @@ bb.v:                                             ; preds = %bb.t
   %i.cf = sext i32 %i.ce to i64
   %i.cg = add i64 %i.cc, %i.cf
   %i.ch = zext nneg i32 %.val.i.i to i64
-  %i.ci = lshr i64 %i.cg, %i.ch                   ; 18 uses
+  %i.ci = lshr i64 %i.cg, %i.ch                   ; 19 uses
   %i.cj = icmp ugt i64 %i.ci, 134217728
   %i.ck = sext i32 %.val111.i.i to i64
   %i.cl = mul nsw i64 %i.ci, %i.ck
@@ -312,7 +312,6 @@ bb.ak:                                            ; preds = %bb.aj
   br label %bb.al
 
 bb.al:                                            ; preds = %bb.ak, %bb.ai, %bb.ae
-  %5 = trunc nuw nsw i64 %i.ci to i32
   %.not13.i.i.i = icmp eq i64 %i.ci, 0
   br i1 %.not13.i.i.i, label %clear_bitmap_table.exit.i.i, label %.lr.ph.i.i.i
 
@@ -322,9 +321,8 @@ bb.al:                                            ; preds = %bb.ak, %bb.ai, %bb.
   br label %bb.am
 
 bb.am:                                            ; preds = %bb.ao, %.lr.ph.i.i.i
-  %.012.i.i.i = phi i32 [ 0, %.lr.ph.i.i.i ], [ %7, %bb.ao ] ; 2 uses
-  %6 = sext i32 %.012.i.i.i to i64
-  %i.ed = getelementptr inbounds [8 x i8], ptr %i.cn, i64 %6 ; 2 uses
+  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %bb.ao ], [ 0, %.lr.ph.i.i.i ] ; 2 uses
+  %i.ed = getelementptr inbounds nuw [8 x i8], ptr %i.cn, i64 %indvars.iv.i.i ; 2 uses
   %i.ee = load i64, ptr %i.ed, align 8
   %i.ef = and i64 %i.ee, 72057594037927424        ; 2 uses
   %.not.i.i.i = icmp eq i64 %i.ef, 0
@@ -338,8 +336,8 @@ bb.an:                                            ; preds = %bb.am
   br label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an, %bb.am
-  %7 = add nuw i32 %.012.i.i.i, 1                 ; 2 uses
-  %exitcond.not.i.i.i = icmp eq i32 %7, %5
+  %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
+  %exitcond.not.i.i.i = icmp eq i64 %indvars.iv.next.i.i, %i.ci
   br i1 %exitcond.not.i.i.i, label %clear_bitmap_table.exit.i.i, label %bb.am, !llvm.loop !21
 
 clear_bitmap_table.exit.i.i:                      ; preds = %bb.ao, %bb.al
@@ -348,7 +346,7 @@ clear_bitmap_table.exit.i.i:                      ; preds = %bb.ao, %bb.al
   br label %store_bitmap.exit.thread
 
 bb.ap:                                            ; preds = %.preheader.i.i
-  %i.ei = trunc nuw nsw i64 %i.ci to i32          ; 2 uses
+  %i.ei = trunc nuw nsw i64 %i.ci to i32
   call void @g_free(ptr noundef %i.cr) #13
   %i.ej = shl nuw nsw i64 %i.ci, 3                ; 5 uses
   %i.ek = call i64 @qcow2_alloc_clusters(ptr noundef nonnull %0, i64 noundef %i.ej) #13 ; 8 uses
@@ -492,9 +490,8 @@ bb.au:                                            ; preds = %bitmap_table_bswap_
   br label %bb.av
 
 bb.av:                                            ; preds = %bb.ax, %.lr.ph.i51.i
-  %.012.i.i = phi i32 [ 0, %.lr.ph.i51.i ], [ %9, %bb.ax ] ; 2 uses
-  %8 = sext i32 %.012.i.i to i64
-  %i.fv = getelementptr inbounds [8 x i8], ptr %i.cn, i64 %8 ; 2 uses
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.ax ], [ 0, %.lr.ph.i51.i ] ; 2 uses
+  %i.fv = getelementptr inbounds nuw [8 x i8], ptr %i.cn, i64 %indvars.iv.i ; 2 uses
   %i.fw = load i64, ptr %i.fv, align 8
   %i.fx = and i64 %i.fw, 72057594037927424        ; 2 uses
   %.not.i52.i = icmp eq i64 %i.fx, 0
@@ -508,8 +505,8 @@ bb.aw:                                            ; preds = %bb.av
   br label %bb.ax
 
 bb.ax:                                            ; preds = %bb.aw, %bb.av
-  %9 = add nuw i32 %.012.i.i, 1                   ; 2 uses
-  %exitcond.not.i53.i = icmp eq i32 %9, %i.ei
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
+  %exitcond.not.i53.i = icmp eq i64 %indvars.iv.next.i, %i.ci
   br i1 %exitcond.not.i53.i, label %clear_bitmap_table.exit.i, label %bb.av, !llvm.loop !21
 
 clear_bitmap_table.exit.i:                        ; preds = %bb.ax, %bb.au

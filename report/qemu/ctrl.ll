@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.j = load i32, ptr %i.i, align 4
   %i.k = zext i32 %i.j to i64                     ; 2 uses
   %i.l = urem i64 %i.e, %i.k
-  %i.m = sub nsw i64 %i.k, %i.l
+  %i.m = sub nuw nsw i64 %i.k, %i.l
   %i.n = and i64 %2, 4294967295
   %i.o = tail call i64 @llvm.umin.i64(i64 %i.m, i64 %i.n) ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 7624 ; 2 uses
@@ -459,7 +459,7 @@ bb.ac:                                            ; preds = %bb.aa
   br i1 %.not144.i, label %trace_pci_nvme_err_addr_read.exit149.i, label %trace_pci_nvme_err_addr_read.exit.thread.i
 
 trace_pci_nvme_err_addr_read.exit149.i:           ; preds = %bb.ac
-  %i.dq = sub i32 %.0116170.i, %i.dn              ; 2 uses
+  %i.dq = sub nuw i32 %.0116170.i, %i.dn          ; 2 uses
   %i.dr = add i32 %.1126.i, 1
   %.not140.i = icmp eq i32 %i.dq, 0
   br i1 %.not140.i, label %trace_pci_nvme_err_addr_read.exit.i, label %.preheader.i, !llvm.loop !10
@@ -715,7 +715,7 @@ bb.s:                                             ; preds = %bb.r
   br i1 %.not42.i, label %bb.t, label %nvme_map_sgl_data.exit.thread
 
 bb.t:                                             ; preds = %bb.s
-  %i.bm = sub i64 %4, %i.bi                       ; 2 uses
+  %i.bm = sub nuw i64 %4, %i.bi                   ; 2 uses
   store i64 %i.bm, ptr %i.a, align 8
   br label %nvme_map_sgl_data.exit, !llvm.loop !12
 
@@ -845,7 +845,7 @@ bb.aj:                                            ; preds = %bb.ai
   br i1 %.not42.i86, label %bb.ak, label %nvme_map_sgl_data.exit.thread.loopexit
 
 bb.ak:                                            ; preds = %bb.aj
-  %i.cx = sub i64 %i.cd, %i.cs
+  %i.cx = sub nuw i64 %i.cd, %i.cs
   br label %trace_pci_nvme_err_invalid_sgl_excess_length.exit.i87
 
 trace_pci_nvme_err_invalid_sgl_excess_length.exit.i87: ; preds = %bb.ak, %bb.ab
@@ -1248,7 +1248,7 @@ nvme_parse_pid.exit.i:                            ; preds = %bb.av
 
 bb.aw:                                            ; preds = %bb.ay, %.nvme_parse_pid.exit.thread_crit_edge.i
   %.035.i = phi i32 [ %i.i, %.nvme_parse_pid.exit.thread_crit_edge.i ], [ %i.fo, %bb.ay ] ; 2 uses
-  %i.fj = zext i32 %.035.i to i64                 ; 2 uses
+  %i.fj = zext nneg i32 %.035.i to i64            ; 2 uses
   %i.fk = load i64, ptr %i.fb, align 8            ; 3 uses
   %i.fl = icmp ugt i64 %i.fk, %i.fj
   br i1 %i.fl, label %bb.ax, label %bb.ay
@@ -1259,8 +1259,8 @@ bb.ax:                                            ; preds = %bb.aw
   br label %nvme_do_write_fdp.exit
 
 bb.ay:                                            ; preds = %bb.aw
-  %i.fn = trunc nuw i64 %i.fk to i32
-  %i.fo = sub i32 %.035.i, %i.fn                  ; 2 uses
+  %i.fn = trunc nuw nsw i64 %i.fk to i32
+  %i.fo = sub nuw nsw i32 %.035.i, %i.fn          ; 2 uses
   %i.fp = tail call fastcc zeroext i1 @nvme_update_ruh(ptr noundef readonly %0, ptr noundef %i.ds, i16 noundef zeroext %i.dy) ; 0 uses
   %.not29.i = icmp eq i32 %i.fo, 0
   br i1 %.not29.i, label %nvme_do_write_fdp.exit, label %bb.aw, !llvm.loop !62
@@ -1663,23 +1663,21 @@ bb.v:                                             ; preds = %.lr.ph126, %.lr.ph
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.lr.ph.i
   %.lcssa102 = phi i32 [ 0, %.lr.ph.i ], [ %i.bl, %._crit_edge.loopexit ]
   %.lcssa = phi ptr [ %i.bf, %.lr.ph.i ], [ %i.bj, %._crit_edge.loopexit ]
-  %i.bm = sub nsw i32 %i.bd, %.lcssa102
+  %i.bm = sub nuw nsw i32 %i.bd, %.lcssa102
   %i.bn = tail call i32 @llvm.smin.i32(i32 %i.bm, i32 127) ; 3 uses
-  %i.bo = trunc i32 %i.bn to i8
+  %i.bo = trunc nuw nsw i32 %i.bn to i8
   store i8 %i.bo, ptr %2, align 1
   %i.bp = getelementptr inbounds nuw i8, ptr %2, i64 32
-  %.mask.i = shl nsw i32 %i.bn, 5
-  %3 = and i32 %.mask.i, 8160
-  %i.bq = zext nneg i32 %3 to i64
+  %.mask.i = shl nuw nsw i32 %i.bn, 5
+  %i.bq = zext nneg i32 %.mask.i to i64
   %i.br = call ptr @__memcpy_chk(ptr noundef nonnull %i.bp, ptr noundef nonnull %.lcssa, i64 noundef %i.bq, i64 noundef 4064) #23, !alias.scope !81 ; 0 uses
-  %4 = and i32 %i.bn, 255
   br label %.loopexit.i
 
 .lr.ph..loopexit.i.loopexit_crit_edge:            ; preds = %.lr.ph
   br label %.loopexit.i, !llvm.loop !80
 
 .loopexit.i:                                      ; preds = %.lr.ph.preheader, %.lr.ph..loopexit.i.loopexit_crit_edge, %._crit_edge, %bb.u
-  %i.bs = phi i32 [ %4, %._crit_edge ], [ 0, %bb.u ], [ 0, %.lr.ph..loopexit.i.loopexit_crit_edge ], [ 0, %.lr.ph.preheader ]
+  %i.bs = phi i32 [ %i.bn, %._crit_edge ], [ 0, %bb.u ], [ 0, %.lr.ph..loopexit.i.loopexit_crit_edge ], [ 0, %.lr.ph.preheader ]
   %i.bt = load i32, ptr @trace_events_enabled_count, align 4
   %.not.i.i47 = icmp eq i32 %i.bt, 0
   br i1 %.not.i.i47, label %trace_pci_nvme_identify_sec_ctrl_list.exit.i, label %bb.w, !prof !7
@@ -2082,9 +2080,9 @@ bb.d:                                             ; preds = %bb.c
   %i.z = getelementptr inbounds nuw [8 x i8], ptr %i.t, i64 %indvars.iv ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 8
   %i.ab = xor i64 %indvars.iv, -1
-  %i.ac = add nsw i64 %i.r, %i.ab
-  %sext = shl i64 %i.ac, 32
-  %2 = ashr exact i64 %sext, 29
+  %i.ac = add nsw i64 %i.ab, %i.r
+  %sext = shl i64 %i.ac, 3
+  %2 = and i64 %sext, 34359738360
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 1 %i.z, ptr noundef nonnull align 1 %i.aa, i64 noundef range(i64 -17179869184, 17179869177) %2, i1 noundef false) #23
   %i.ad = load i8, ptr %i.p, align 16
   %i.ae = add i8 %i.ad, -1

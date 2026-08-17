@@ -14,7 +14,7 @@ define void @dsyr2_(ptr nofree noundef readonly captures(none) %0, ptr nofree no
 bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   %i.b = load i8, ptr %0, align 1, !tbaa !8       ; 3 uses
-  %i.c = load i32, ptr %1, align 4, !tbaa !9      ; 12 uses
+  %i.c = load i32, ptr %1, align 4, !tbaa !9      ; 11 uses
   %i.d = load double, ptr %2, align 8, !tbaa !10  ; 7 uses
   %i.e = load i32, ptr %8, align 4, !tbaa !9      ; 4 uses
   %i.f = load i32, ptr %4, align 4, !tbaa !9      ; 5 uses
@@ -70,8 +70,7 @@ bb.e:                                             ; preds = %bb.d
 
 .lr.ph:                                           ; preds = %.preheader119
   %i.y = sext i32 %i.e to i64
-  %9 = zext nneg i32 %i.c to i64
-  %wide.trip.count = zext nneg i32 %i.c to i64
+  %wide.trip.count = zext nneg i32 %i.c to i64    ; 2 uses
   br label %bb.g
 
 .preheader:                                       ; preds = %bb.e
@@ -101,7 +100,7 @@ bb.f:                                             ; preds = %.lr.ph125, %bb.f
 bb.g:                                             ; preds = %.lr.ph, %bb.g
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.g ] ; 4 uses
   %.1110121 = phi ptr [ %7, %.lr.ph ], [ %i.at, %bb.g ] ; 3 uses
-  %i.aj = sub nsw i64 %9, %indvars.iv             ; 2 uses
+  %i.aj = sub nuw nsw i64 %wide.trip.count, %indvars.iv ; 2 uses
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv ; 2 uses
   %i.al = load double, ptr %i.ak, align 8, !tbaa !10
   %i.am = fmul double %i.d, %i.al

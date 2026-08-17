@@ -201,13 +201,14 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.m, %bb.b, %bb.a
   %i.o = load ptr, ptr %2, align 8, !tbaa !51     ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 16
-  %i.q = load i8, ptr %i.p, align 8, !tbaa !53    ; 2 uses
-  %i.r = sext i8 %i.q to i64                      ; 2 uses
+  %i.q = load i8, ptr %i.p, align 8, !tbaa !53    ; 3 uses
+  %i.r = sext i8 %i.q to i64
   %i.s = icmp slt i8 %i.q, 11
   br i1 %i.s, label %bb.o, label %_ZN8facebook5velox12_GLOBAL__N_112toCacheIndexERKSt10shared_ptrIKNS0_4TypeEE.exit.thread
 
 bb.o:                                             ; preds = %bb.n
-  %i.t = getelementptr inbounds nuw [8 x i8], ptr @_ZZN8facebook5velox12_GLOBAL__N_112toCacheIndexERKSt10shared_ptrIKNS0_4TypeEEE15kSupportedTypes, i64 %i.r
+  %16 = zext nneg i8 %i.q to i64
+  %i.t = getelementptr inbounds nuw [8 x i8], ptr @_ZZN8facebook5velox12_GLOBAL__N_112toCacheIndexERKSt10shared_ptrIKNS0_4TypeEEE15kSupportedTypes, i64 %16
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !15
   %i.v = icmp eq ptr %i.u, %i.o
   %i.w = icmp slt i32 %3, 65537
@@ -610,13 +611,14 @@ bb.p:                                             ; preds = %bb.o
 bb.q:                                             ; preds = %bb.p, %bb.e, %bb.d
   %i.x = load ptr, ptr %i.i, align 8, !tbaa !51   ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 16
-  %i.z = load i8, ptr %i.y, align 8, !tbaa !53    ; 2 uses
-  %i.aa = sext i8 %i.z to i64                     ; 2 uses
+  %i.z = load i8, ptr %i.y, align 8, !tbaa !53    ; 3 uses
+  %i.aa = sext i8 %i.z to i64
   %i.ab = icmp slt i8 %i.z, 11
   br i1 %i.ab, label %bb.r, label %_ZNKSt12__shared_ptrIN8facebook5velox10BaseVectorELN9__gnu_cxx12_Lock_policyE2EE9use_countEv.exit.thread
 
 bb.r:                                             ; preds = %bb.q
-  %i.ac = getelementptr inbounds nuw [8 x i8], ptr @_ZZN8facebook5velox12_GLOBAL__N_112toCacheIndexERKSt10shared_ptrIKNS0_4TypeEEE15kSupportedTypes, i64 %i.aa
+  %13 = zext nneg i8 %i.z to i64
+  %i.ac = getelementptr inbounds nuw [8 x i8], ptr @_ZZN8facebook5velox12_GLOBAL__N_112toCacheIndexERKSt10shared_ptrIKNS0_4TypeEEE15kSupportedTypes, i64 %13
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !15
   %.not12 = icmp eq ptr %i.ad, %i.x
   br i1 %.not12, label %bb.al, label %_ZNKSt12__shared_ptrIN8facebook5velox10BaseVectorELN9__gnu_cxx12_Lock_policyE2EE9use_countEv.exit.thread

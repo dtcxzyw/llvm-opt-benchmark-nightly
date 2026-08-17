@@ -203,7 +203,8 @@ bb.e:                                             ; preds = %.thread
   %i.t = zext i8 %i.s to i32
   %i.u = add nsw i32 %i.t, -48                    ; 2 uses
   %indvars.iv.next55 = add nsw i64 %indvars.iv, -1 ; 2 uses
-  %i.v = icmp eq i64 %indvars.iv.next55, 0
+  %4 = and i64 %indvars.iv.next55, 4294967295
+  %i.v = icmp eq i64 %4, 0
   br i1 %i.v, label %bb.j, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
@@ -215,7 +216,8 @@ bb.f:                                             ; preds = %bb.e
   %i.ab = add nsw i32 %i.aa, -480
   %i.ac = add nsw i32 %i.ab, %i.u                 ; 2 uses
   %indvars.iv.next55.1 = add nsw i64 %indvars.iv, -2 ; 2 uses
-  %i.ad = icmp eq i64 %indvars.iv.next55.1, 0
+  %5 = and i64 %indvars.iv.next55.1, 4294967295
+  %i.ad = icmp eq i64 %5, 0
   br i1 %i.ad, label %bb.j, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
@@ -227,7 +229,8 @@ bb.g:                                             ; preds = %bb.f
   %i.aj = add nsw i32 %i.ai, -4800
   %i.ak = add nsw i32 %i.aj, %i.ac                ; 2 uses
   %indvars.iv.next55.2 = add nsw i64 %indvars.iv, -3 ; 2 uses
-  %i.al = icmp eq i64 %indvars.iv.next55.2, 0
+  %6 = and i64 %indvars.iv.next55.2, 4294967295
+  %i.al = icmp eq i64 %6, 0
   br i1 %i.al, label %bb.j, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
@@ -239,7 +242,8 @@ bb.h:                                             ; preds = %bb.g
   %i.ar = add nsw i32 %i.aq, -48000
   %i.as = add nsw i32 %i.ar, %i.ak                ; 2 uses
   %indvars.iv.next55.3 = add nsw i64 %indvars.iv, -4 ; 2 uses
-  %i.at = icmp eq i64 %indvars.iv.next55.3, 0
+  %7 = and i64 %indvars.iv.next55.3, 4294967295
+  %i.at = icmp eq i64 %7, 0
   br i1 %i.at, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h

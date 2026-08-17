@@ -204,7 +204,7 @@ bb.k:                                             ; preds = %bb.d, %bb.c
 bb.l:                                             ; preds = %.preheader167, %_ZNSt6vectorIhSaIhEED2Ev.exit86
   %.054214 = phi i32 [ 0, %.preheader167 ], [ %i.fm, %_ZNSt6vectorIhSaIhEED2Ev.exit86 ]
   %i.aw = call i32 @rand() #17
-  %i.ax = srem i32 %i.aw, 1000                    ; 3 uses
+  %i.ax = srem i32 %i.aw, 1000                    ; 2 uses
   %i.ay = invoke noalias noundef nonnull dereferenceable(5000) ptr @_Znwm(i64 noundef 5000) #19
           to label %bb.m unwind label %bb.n       ; 14 uses
 
@@ -214,7 +214,7 @@ bb.m:                                             ; preds = %bb.l
 
 .preheader166:                                    ; preds = %bb.s
   %i.az = mul nsw i32 %i.ax, 5
-  %12 = sext i32 %i.ax to i64                     ; 5 uses
+  %12 = zext i32 %i.ax to i64                     ; 6 uses
   %i.ba = sext i32 %i.az to i64                   ; 5 uses
   %i.bb = load ptr, ptr %i.i, align 8, !tbaa !93
   %i.bc = getelementptr inbounds nuw i8, ptr %i.ay, i64 %i.ba
@@ -338,24 +338,19 @@ bb.x:                                             ; preds = %bb.w
   %i.ds = load i32, ptr %i.j, align 4, !tbaa !95
   %i.dt = sext i32 %i.ds to i64
   invoke void @_ZN5faiss22pq4_set_packed_elementEPhhmmmm(ptr noundef %i.dm, i8 noundef zeroext %i.dr, i64 noundef %i.dt, i64 noundef 5, i64 noundef %12, i64 noundef 4)
-          to label %.preheader.preheader unwind label %bb.y
-
-.preheader.preheader:                             ; preds = %bb.x
-  %13 = zext i32 %i.ax to i64
-  br label %.preheader
+          to label %.preheader unwind label %bb.y
 
 bb.y:                                             ; preds = %bb.x, %bb.w, %bb.v, %bb.u, %.preheader166
   %i.du = landingpad { ptr, i32 }
           cleanup
   br label %_ZNSt6vectorIhSaIhEED2Ev.exit121
 
-.preheader:                                       ; preds = %.preheader.preheader, %.split212.us
-  %indvars.iv246 = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next247, %.split212.us ] ; 5 uses
+.preheader:                                       ; preds = %bb.x, %.split212.us
+  %indvars.iv246 = phi i64 [ %indvars.iv.next247, %.split212.us ], [ 0, %bb.x ] ; 5 uses
   %i.dv = mul nuw nsw i64 %indvars.iv246, 5
-  %i.dw = icmp eq i64 %indvars.iv246, %13
-  %.fr = freeze i1 %i.dw
+  %i.dw = icmp eq i64 %indvars.iv246, %12
   %invariant.gep309 = getelementptr inbounds nuw i8, ptr %i.ay, i64 %i.dv ; 2 uses
-  br i1 %.fr, label %.preheader.split.us, label %.preheader.split
+  br i1 %i.dw, label %.preheader.split.us, label %.preheader.split
 
 .preheader.split.us:                              ; preds = %.preheader, %_ZN7testing15AssertionResultD2Ev.exit97.us
   %indvars.iv242 = phi i64 [ %indvars.iv.next243, %_ZN7testing15AssertionResultD2Ev.exit97.us ], [ 0, %.preheader ] ; 3 uses
@@ -548,7 +543,7 @@ _ZNSt6vectorIhSaIhEED2Ev.exit86:                  ; preds = %.split212.us
   br i1 %exitcond250.not, label %bb.e, label %bb.l, !llvm.loop !106
 
 .split212.us:                                     ; preds = %_ZN7testing15AssertionResultD2Ev.exit117, %_ZN7testing15AssertionResultD2Ev.exit97.us
-  %indvars.iv.next247 = add nuw nsw i64 %indvars.iv246, 1 ; 2 uses
+  %indvars.iv.next247 = add i64 %indvars.iv246, 1 ; 2 uses
   %exitcond249.not = icmp eq i64 %indvars.iv.next247, 1000
   br i1 %exitcond249.not, label %_ZNSt6vectorIhSaIhEED2Ev.exit86, label %.preheader, !llvm.loop !107
 

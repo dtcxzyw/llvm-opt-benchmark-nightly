@@ -204,20 +204,18 @@ define dso_local noundef nonnull ptr @_Z19V3PreLex_scan_bytesPKci(ptr nofree nou
 bb.a:
   %i.a = add nsw i32 %1, 2
   %i.b = sext i32 %i.a to i64
-  %i.c = tail call noalias noundef ptr @malloc(i64 noundef %i.b) #41 ; 6 uses
+  %i.c = tail call noalias noundef ptr @malloc(i64 noundef %i.b) #41 ; 7 uses
   %.not = icmp eq ptr %i.c, null
   br i1 %.not, label %bb.b, label %.preheader
 
 .preheader:                                       ; preds = %bb.a
   %.not26 = icmp eq i32 %1, 0
-  %2 = zext i32 %1 to i64                         ; 2 uses
   br i1 %.not26, label %._crit_edge.thread, label %._crit_edge
 
 ._crit_edge.thread:                               ; preds = %.preheader
-  %3 = getelementptr i8, ptr %i.c, i64 %2         ; 2 uses
-  %i.d = getelementptr i8, ptr %3, i64 1
+  %i.d = getelementptr i8, ptr %i.c, i64 1
   store i8 0, ptr %i.d, align 1, !tbaa !29
-  store i8 0, ptr %3, align 1, !tbaa !29
+  store i8 0, ptr %i.c, align 1, !tbaa !29
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.a
@@ -225,9 +223,9 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 ._crit_edge:                                      ; preds = %.preheader
+  %2 = zext i32 %1 to i64                         ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.c, ptr align 1 %0, i64 %2, i1 false), !tbaa !29
-  %4 = sext i32 %1 to i64
-  %i.e = getelementptr i8, ptr %i.c, i64 %4       ; 2 uses
+  %i.e = getelementptr i8, ptr %i.c, i64 %2       ; 2 uses
   %i.f = getelementptr i8, ptr %i.e, i64 1
   store i8 0, ptr %i.f, align 1, !tbaa !29
   store i8 0, ptr %i.e, align 1, !tbaa !29
@@ -630,7 +628,7 @@ _ZNSt5dequeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE9pop_fro
   %storemerge.i = phi ptr [ %i.dn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i ], [ %i.dt, %_ZNSt5dequeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE16_M_pop_front_auxEv.exit.i ]
   store ptr %storemerge.i, ptr %i.ca, align 8, !tbaa !815
   %i.dv = load i64, ptr %i.bt, align 8, !tbaa !264 ; 3 uses
-  %i.dw = sub i64 %2, %.041121                    ; 5 uses
+  %i.dw = sub nuw i64 %2, %.041121                ; 5 uses
   %i.dx = icmp ugt i64 %i.dv, %i.dw
   br i1 %i.dx, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i, label %bb.y
 
@@ -1033,7 +1031,7 @@ _ZNSt11_Deque_baseIPK8FileLineSaIS2_EE15_M_allocate_mapEm.exit:
   %i.e = shl nuw nsw i64 %.sroa.speculated, 3
   %i.f = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.e) #50 ; 2 uses
   store ptr %i.f, ptr %0, align 8, !tbaa !1481
-  %i.g = sub nsw i64 %.sroa.speculated, %i.b
+  %i.g = sub nuw nsw i64 %.sroa.speculated, %i.b
   %i.h = lshr i64 %i.g, 1
   %i.i = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %i.h ; 6 uses
   %.idx = shl nuw nsw i64 %i.b, 3
@@ -1319,7 +1317,7 @@ _ZNSt11_Deque_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE1
   %i.f = shl nuw nsw i64 %.sroa.speculated, 3
   %i.g = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.f) #50 ; 2 uses
   store ptr %i.g, ptr %0, align 8, !tbaa !1509
-  %i.h = sub nsw i64 %.sroa.speculated, %i.e
+  %i.h = sub nuw nsw i64 %.sroa.speculated, %i.e
   %i.i = lshr i64 %i.h, 1
   %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %i.i ; 6 uses
   %.idx = shl nuw nsw i64 %i.e, 3
@@ -1722,7 +1720,7 @@ _ZNSt11_Deque_baseI10V3LangCodeSaIS0_EE15_M_allocate_mapEm.exit:
   %i.e = shl nuw nsw i64 %.sroa.speculated, 3
   %i.f = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.e) #50 ; 2 uses
   store ptr %i.f, ptr %0, align 8, !tbaa !1539
-  %i.g = sub nsw i64 %.sroa.speculated, %i.b
+  %i.g = sub nuw nsw i64 %.sroa.speculated, %i.b
   %i.h = lshr i64 %i.g, 1
   %i.i = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %i.h ; 6 uses
   %.idx = shl nuw nsw i64 %i.b, 3
@@ -1997,7 +1995,7 @@ _ZNSt11_Deque_baseIP10VPreStreamSaIS1_EE15_M_allocate_mapEm.exit:
   %i.e = shl nuw nsw i64 %.sroa.speculated, 3
   %i.f = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.e) #50 ; 2 uses
   store ptr %i.f, ptr %0, align 8, !tbaa !841
-  %i.g = sub nsw i64 %.sroa.speculated, %i.b
+  %i.g = sub nuw nsw i64 %.sroa.speculated, %i.b
   %i.h = lshr i64 %i.g, 1
   %i.i = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %i.h ; 6 uses
   %.idx = shl nuw nsw i64 %i.b, 3
@@ -2400,7 +2398,7 @@ _ZNSt11_Deque_baseIN12V3PreProcImp9ProcStateESaIS1_EE15_M_allocate_mapEm.exit:
   %i.e = shl nuw nsw i64 %.sroa.speculated, 3
   %i.f = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.e) #50 ; 2 uses
   store ptr %i.f, ptr %0, align 8, !tbaa !1464
-  %i.g = sub nsw i64 %.sroa.speculated, %i.b
+  %i.g = sub nuw nsw i64 %.sroa.speculated, %i.b
   %i.h = lshr i64 %i.g, 1
   %i.i = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %i.h ; 6 uses
   %.idx = shl nuw nsw i64 %i.b, 3
@@ -2539,7 +2537,7 @@ _ZNSt11_Deque_baseI10VDefineRefSaIS0_EE15_M_allocate_mapEm.exit: ; preds = %bb.a
   %i.g = shl nuw nsw i64 %.sroa.speculated, 3
   %i.h = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.g) #50 ; 2 uses
   store ptr %i.h, ptr %0, align 8, !tbaa !1605
-  %i.i = sub nsw i64 %.sroa.speculated, %i.f
+  %i.i = sub nuw nsw i64 %.sroa.speculated, %i.f
   %i.j = lshr i64 %i.i, 1
   %i.k = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %i.j ; 6 uses
   %.idx = shl nuw nsw i64 %i.f, 3
@@ -2662,7 +2660,7 @@ _ZNSt11_Deque_baseI11VPreIfEntrySaIS0_EE15_M_allocate_mapEm.exit:
   %i.e = shl nuw nsw i64 %.sroa.speculated, 3
   %i.f = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.e) #50 ; 2 uses
   store ptr %i.f, ptr %0, align 8, !tbaa !1460
-  %i.g = sub nsw i64 %.sroa.speculated, %i.b
+  %i.g = sub nuw nsw i64 %.sroa.speculated, %i.b
   %i.h = lshr i64 %i.g, 1
   %i.i = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %i.h ; 6 uses
   %.idx = shl nuw nsw i64 %i.b, 3
@@ -2825,7 +2823,7 @@ _ZNSt11_Deque_baseI14V3PreExprTokenSaIS0_EE15_M_allocate_mapEm.exit:
   %i.e = shl nuw nsw i64 %.sroa.speculated, 3
   %i.f = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.e) #50 ; 2 uses
   store ptr %i.f, ptr %0, align 8, !tbaa !1599
-  %i.g = sub nsw i64 %.sroa.speculated, %i.b
+  %i.g = sub nuw nsw i64 %.sroa.speculated, %i.b
   %i.h = lshr i64 %i.g, 1
   %i.i = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %i.h ; 6 uses
   %.idx = shl nuw nsw i64 %i.b, 3
@@ -3228,7 +3226,7 @@ _ZNSt11_Deque_baseI8FileLineSaIS0_EE15_M_allocate_mapEm.exit: ; preds = %bb.a
   %i.g = shl nuw nsw i64 %.sroa.speculated, 3
   %i.h = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.g) #50 ; 2 uses
   store ptr %i.h, ptr %0, align 8, !tbaa !1631
-  %i.i = sub nsw i64 %.sroa.speculated, %i.f
+  %i.i = sub nuw nsw i64 %.sroa.speculated, %i.f
   %i.j = lshr i64 %i.i, 1
   %i.k = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %i.j ; 6 uses
   %.idx = shl nuw nsw i64 %i.f, 3

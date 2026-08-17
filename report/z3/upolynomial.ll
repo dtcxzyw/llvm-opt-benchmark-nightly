@@ -204,14 +204,7 @@ _ZNK6vectorI3mpzLb0EjE4sizeEv.exit.i.i70:         ; preds = %_ZN13mpzzp_manager7
 ._crit_edge.i.i76:                                ; preds = %bb.g
   %.pre.i.i77 = load ptr, ptr %i.an, align 8, !tbaa !31 ; 3 uses
   %.not.i.i.i78 = icmp eq ptr %.pre.i.i77, null
-  br i1 %.not.i.i.i78, label %_ZNK6vectorI3mpzLb0EjE4sizeEv.exit.i, label %_ZN11upolynomial12core_manager5resetER7svectorI3mpzjE.exit80.thread104
-
-_ZN11upolynomial12core_manager5resetER7svectorI3mpzjE.exit80.thread104: ; preds = %._crit_edge.i.i76
-  %6 = getelementptr inbounds i8, ptr %.pre.i.i77, i64 -4
-  store i32 0, ptr %6, align 4, !tbaa !30
-  %7 = add i32 %1, 1
-  %8 = sub i32 %7, %3
-  br label %_ZNK6vectorI3mpzLb0EjE4sizeEv.exit.thread.i
+  br i1 %.not.i.i.i78, label %_ZNK6vectorI3mpzLb0EjE4sizeEv.exit.i, label %_ZNK6vectorI3mpzLb0EjE4sizeEv.exit.thread.i
 
 bb.g:                                             ; preds = %bb.g, %.lr.ph.i.i72
   %indvars.iv.i.i74 = phi i64 [ 0, %.lr.ph.i.i72 ], [ %indvars.iv.next.i.i75, %bb.g ] ; 2 uses
@@ -224,9 +217,9 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph.i.i72
   br i1 %i.av, label %._crit_edge.i.i76, label %bb.g, !llvm.loop !39
 
 _ZN11upolynomial12core_manager5resetER7svectorI3mpzjE.exit80: ; preds = %_ZNK6vectorI3mpzLb0EjE4sizeEv.exit.i.i70
-  %i.aw = sub i32 %1, %3
-  %i.ax = add i32 %i.aw, 1
-  br label %_ZNK6vectorI3mpzLb0EjE4sizeEv.exit.thread.i
+  %i.aw = sub nuw i32 %1, %3
+  %i.ax = add nuw i32 %i.aw, 1
+  br label %_ZNK6vectorI3mpzLb0EjE4sizeEv.exit.i.i81.preheader
 
 _ZNK6vectorI3mpzLb0EjE4sizeEv.exit.i:             ; preds = %._crit_edge.i.i76, %_ZN13mpzzp_manager7dividesERK3mpzS2_.exit69.thread
   %i.ay = add i32 %1, 1
@@ -234,19 +227,21 @@ _ZNK6vectorI3mpzLb0EjE4sizeEv.exit.i:             ; preds = %._crit_edge.i.i76, 
   %.not.i83 = icmp eq i32 %i.az, 0
   br i1 %.not.i83, label %_ZN6vectorI3mpzLb0EjE7reserveEj.exit, label %_ZNK6vectorI3mpzLb0EjE4sizeEv.exit.i.i81.preheader
 
-_ZNK6vectorI3mpzLb0EjE4sizeEv.exit.thread.i:      ; preds = %_ZN11upolynomial12core_manager5resetER7svectorI3mpzjE.exit80, %_ZN11upolynomial12core_manager5resetER7svectorI3mpzjE.exit80.thread104
-  %9 = phi i32 [ %8, %_ZN11upolynomial12core_manager5resetER7svectorI3mpzjE.exit80.thread104 ], [ %i.ax, %_ZN11upolynomial12core_manager5resetER7svectorI3mpzjE.exit80 ] ; 2 uses
-  %.pr106 = phi ptr [ %.pre.i.i77, %_ZN11upolynomial12core_manager5resetER7svectorI3mpzjE.exit80.thread104 ], [ %i.ao, %_ZN11upolynomial12core_manager5resetER7svectorI3mpzjE.exit80 ]
-  %.not141 = icmp eq i32 %9, 0
+_ZNK6vectorI3mpzLb0EjE4sizeEv.exit.thread.i:      ; preds = %._crit_edge.i.i76
+  %6 = getelementptr inbounds i8, ptr %.pre.i.i77, i64 -4
+  store i32 0, ptr %6, align 4, !tbaa !30
+  %7 = add i32 %1, 1
+  %8 = sub i32 %7, %3                             ; 2 uses
+  %.not141 = icmp eq i32 %8, 0
   br i1 %.not141, label %_ZN6vectorI3mpzLb0EjE7reserveEj.exit, label %_ZNK6vectorI3mpzLb0EjE4sizeEv.exit.i.i81.preheader
 
-_ZNK6vectorI3mpzLb0EjE4sizeEv.exit.i.i81.preheader: ; preds = %_ZNK6vectorI3mpzLb0EjE4sizeEv.exit.i, %_ZNK6vectorI3mpzLb0EjE4sizeEv.exit.thread.i
-  %.ph = phi i32 [ %9, %_ZNK6vectorI3mpzLb0EjE4sizeEv.exit.thread.i ], [ %i.az, %_ZNK6vectorI3mpzLb0EjE4sizeEv.exit.i ] ; 5 uses
-  %.ph164 = phi ptr [ %.pr106, %_ZNK6vectorI3mpzLb0EjE4sizeEv.exit.thread.i ], [ null, %_ZNK6vectorI3mpzLb0EjE4sizeEv.exit.i ]
+_ZNK6vectorI3mpzLb0EjE4sizeEv.exit.i.i81.preheader: ; preds = %_ZNK6vectorI3mpzLb0EjE4sizeEv.exit.i, %_ZN11upolynomial12core_manager5resetER7svectorI3mpzjE.exit80, %_ZNK6vectorI3mpzLb0EjE4sizeEv.exit.thread.i
+  %.ph = phi i32 [ %i.ax, %_ZN11upolynomial12core_manager5resetER7svectorI3mpzjE.exit80 ], [ %8, %_ZNK6vectorI3mpzLb0EjE4sizeEv.exit.thread.i ], [ %i.az, %_ZNK6vectorI3mpzLb0EjE4sizeEv.exit.i ] ; 5 uses
+  %.ph166 = phi ptr [ %i.ao, %_ZN11upolynomial12core_manager5resetER7svectorI3mpzjE.exit80 ], [ %.pre.i.i77, %_ZNK6vectorI3mpzLb0EjE4sizeEv.exit.thread.i ], [ null, %_ZNK6vectorI3mpzLb0EjE4sizeEv.exit.i ]
   br label %_ZNK6vectorI3mpzLb0EjE4sizeEv.exit.i.i81
 
 _ZNK6vectorI3mpzLb0EjE4sizeEv.exit.i.i81:         ; preds = %_ZNK6vectorI3mpzLb0EjE4sizeEv.exit.i.i81.preheader, %_ZNK6vectorI3mpzLb0EjE8capacityEv.exit.thread.i.i
-  %i.ba = phi ptr [ %.pr.pre.i.i, %_ZNK6vectorI3mpzLb0EjE8capacityEv.exit.thread.i.i ], [ %.ph164, %_ZNK6vectorI3mpzLb0EjE4sizeEv.exit.i.i81.preheader ] ; 6 uses
+  %i.ba = phi ptr [ %.pr.pre.i.i, %_ZNK6vectorI3mpzLb0EjE8capacityEv.exit.thread.i.i ], [ %.ph166, %_ZNK6vectorI3mpzLb0EjE4sizeEv.exit.i.i81.preheader ] ; 6 uses
   %i.bb = icmp eq ptr %i.ba, null
   br i1 %i.bb, label %_ZNK6vectorI3mpzLb0EjE8capacityEv.exit.thread.i.i, label %_ZNK6vectorI3mpzLb0EjE8capacityEv.exit.i.i
 
@@ -438,7 +433,7 @@ bb.h:                                             ; preds = %bb.h, %.lr.ph.i.i94
 
 _ZN13mpzzp_manager7dividesERK3mpzS2_.exit91.thread: ; preds = %_ZN13mpzzp_manager7dividesERK3mpzS2_.exit91._ZN13mpzzp_manager7dividesERK3mpzS2_.exit91.thread_crit_edge, %_ZN13mpzzp_manager7dividesERK3mpzS2_.exit87.thread
   %i.dt = phi ptr [ %.pre122, %_ZN13mpzzp_manager7dividesERK3mpzS2_.exit91._ZN13mpzzp_manager7dividesERK3mpzS2_.exit91.thread_crit_edge ], [ %.pre123, %_ZN13mpzzp_manager7dividesERK3mpzS2_.exit87.thread ]
-  %i.du = sub i32 %.062115156, %3                 ; 2 uses
+  %i.du = sub nuw i32 %.062115156, %3             ; 2 uses
   %i.dv = load ptr, ptr %i.an, align 8, !tbaa !31
   %i.dw = zext i32 %i.du to i64
   %i.dx = getelementptr inbounds nuw [16 x i8], ptr %i.dv, i64 %i.dw ; 2 uses
@@ -841,7 +836,7 @@ bb.c:                                             ; preds = %bb.b, %bb.o
   br i1 %i.k, label %_ZN11upolynomial12core_manager10checkpointEv.exit.preheader, label %bb.d
 
 _ZN11upolynomial12core_manager10checkpointEv.exit.preheader: ; preds = %bb.c
-  %i.l = sub i32 %1, %.03455
+  %i.l = sub nuw i32 %1, %.03455
   %i.m = icmp ugt i32 %i.l, 1
   br i1 %i.m, label %.lr.ph.preheader, label %_ZN11upolynomial12core_manager10checkpointEv.exit._crit_edge
 
@@ -1244,7 +1239,7 @@ bb.f:                                             ; preds = %bb.d
   br label %.body
 
 _ZN11upolynomial12core_manager10checkpointEv.exit: ; preds = %.noexc
-  %i.x = sub i32 %i.h, %.02156
+  %i.x = sub nuw i32 %i.h, %.02156
   %.not2453 = icmp ugt i32 %i.x, %i.i
   br i1 %.not2453, label %._crit_edge, label %.lr.ph
 

@@ -204,29 +204,20 @@ bb.ak:                                            ; preds = %bb.aj
   %.not.i64 = icmp eq i8 %i.dl, 0
   %i.dm = getelementptr inbounds nuw i8, ptr %0, i64 1652 ; 2 uses
   %i.dn = load i8, ptr %i.dm, align 4             ; 3 uses
-  br i1 %.not.i64, label %9, label %4
-
-4:                                                ; preds = %bb.ak
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 70620
-  %6 = and i8 %i.dn, 15
-  %narrow.i = mul nuw nsw i8 %6, 3
-  %7 = zext nneg i8 %narrow.i to i64
-  %8 = getelementptr inbounds nuw i8, ptr %5, i64 %7
-  br label %14
-
-9:                                                ; preds = %bb.ak
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 1660
-  %11 = zext i8 %i.dn to i64
-  %12 = mul nuw nsw i64 %11, 3
-  %13 = getelementptr inbounds nuw i8, ptr %10, i64 %12
-  br label %14
-
-14:                                               ; preds = %9, %4
-  %.sink13.i = phi ptr [ %13, %9 ], [ %8, %4 ]
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 1660
+  %5 = zext i8 %i.dn to i64
+  %6 = mul nuw nsw i64 %5, 3
+  %7 = getelementptr inbounds nuw i8, ptr %4, i64 %6
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 70620
+  %9 = and i8 %i.dn, 15
+  %narrow.i = mul nuw nsw i8 %9, 3
+  %10 = zext nneg i8 %narrow.i to i64
+  %11 = getelementptr inbounds nuw i8, ptr %8, i64 %10
+  %.sink13.i = select i1 %.not.i64, ptr %7, ptr %11
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %.sink13.i, ptr noundef nonnull align 1 dereferenceable(3) %i.dc, i64 noundef 3, i1 noundef false) #14
   store i8 0, ptr %i.dd, align 2
-  %15 = add i8 %i.dn, 1
-  store i8 %15, ptr %i.dm, align 4
+  %12 = add i8 %i.dn, 1
+  store i8 %12, ptr %i.dm, align 4
   br label %cirrus_vga_write_sr.exit
 
 bb.al:                                            ; preds = %trace_vga_cirrus_write_io.exit
@@ -358,7 +349,7 @@ bb.ax:                                            ; preds = %trace_vga_cirrus_wr
   store i8 %i.ev, ptr %i.ew, align 2
   br label %cirrus_vga_write_sr.exit
 
-cirrus_vga_write_sr.exit:                         ; preds = %bb.aw, %bb.av, %bb.au, %bb.at, %bb.as, %bb.ar, %bb.aq, %bb.ao, %bb.ao, %bb.ao, %bb.ao, %14, %bb.aj, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.aa, %bb.y, %bb.x, %bb.w, %bb.v, %bb.t, %bb.s, %trace_vga_cirrus_write_io.exit, %bb.o, %bb.p, %bb.q, %cirrus_write_hidden_dac.exit, %bb.ah, %bb.ai, %bb.al, %bb.am, %bb.an, %bb.ax, %bb.a
+cirrus_vga_write_sr.exit:                         ; preds = %bb.aw, %bb.av, %bb.au, %bb.at, %bb.as, %bb.ar, %bb.aq, %bb.ao, %bb.ao, %bb.ao, %bb.ao, %bb.ak, %bb.aj, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.aa, %bb.y, %bb.x, %bb.w, %bb.v, %bb.t, %bb.s, %trace_vga_cirrus_write_io.exit, %bb.o, %bb.p, %bb.q, %cirrus_write_hidden_dac.exit, %bb.ah, %bb.ai, %bb.al, %bb.am, %bb.an, %bb.ax, %bb.a
   ret void
 }
 

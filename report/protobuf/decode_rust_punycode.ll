@@ -203,7 +203,7 @@ bb.p:                                             ; preds = %._crit_edge
 
 bb.q:                                             ; preds = %bb.p
   %spec.store.select.i = call i32 @llvm.umin.i32(i32 %i.cg, i32 255) ; 3 uses
-  %i.cn = lshr i32 %spec.store.select.i, 5        ; 4 uses
+  %i.cn = lshr i32 %spec.store.select.i, 5        ; 10 uses
   %i.co = shl nuw nsw i32 %spec.store.select.i, 1
   %i.cp = and i32 %i.co, 62
   %i.cq = zext nneg i32 %i.cp to i64              ; 2 uses
@@ -236,13 +236,12 @@ bb.q:                                             ; preds = %bb.p
   %i.dh = call range(i64 0, 65) <2 x i64> @llvm.ctpop.v2i64(<2 x i64> %i.dg)
   %i.di = trunc nuw nsw <2 x i64> %i.dh to <2 x i32>
   %i.dj = add nuw nsw <2 x i32> %i.da, %i.di      ; 2 uses
-  %indvars.iv.next.i55 = add nsw i64 %i.cs, -1    ; 2 uses
-  %i.dk = icmp eq i64 %indvars.iv.next.i55, 0
+  %i.dk = icmp eq i32 %i.cn, 1
   br i1 %i.dk, label %.preheader.i, label %.lr.ph.i53.1
 
 .lr.ph.i53.1:                                     ; preds = %.lr.ph.i53
-  %i.dl = getelementptr [8 x i8], ptr %1, i64 %indvars.iv.next.i55
-  %i.dm = getelementptr i8, ptr %i.dl, i64 -8
+  %i.dl = getelementptr [8 x i8], ptr %1, i64 %i.cs
+  %i.dm = getelementptr i8, ptr %i.dl, i64 -16
   %i.dn = load i64, ptr %i.dm, align 8, !tbaa !17
   %i.do = insertelement <2 x i64> poison, i64 %i.dn, i64 0
   %i.dp = shufflevector <2 x i64> %i.do, <2 x i64> poison, <2 x i32> zeroinitializer
@@ -250,13 +249,12 @@ bb.q:                                             ; preds = %bb.p
   %i.dr = call range(i64 0, 65) <2 x i64> @llvm.ctpop.v2i64(<2 x i64> %i.dq)
   %i.ds = trunc nuw nsw <2 x i64> %i.dr to <2 x i32>
   %i.dt = add nuw nsw <2 x i32> %i.dj, %i.ds      ; 2 uses
-  %indvars.iv.next.i55.1 = add nsw i64 %i.cs, -2  ; 2 uses
-  %i.du = icmp eq i64 %indvars.iv.next.i55.1, 0
+  %i.du = icmp eq i32 %i.cn, 2
   br i1 %i.du, label %.preheader.i, label %.lr.ph.i53.2
 
 .lr.ph.i53.2:                                     ; preds = %.lr.ph.i53.1
-  %i.dv = getelementptr [8 x i8], ptr %1, i64 %indvars.iv.next.i55.1
-  %i.dw = getelementptr i8, ptr %i.dv, i64 -8
+  %i.dv = getelementptr [8 x i8], ptr %1, i64 %i.cs
+  %i.dw = getelementptr i8, ptr %i.dv, i64 -24
   %i.dx = load i64, ptr %i.dw, align 8, !tbaa !17
   %i.dy = insertelement <2 x i64> poison, i64 %i.dx, i64 0
   %i.dz = shufflevector <2 x i64> %i.dy, <2 x i64> poison, <2 x i32> zeroinitializer
@@ -264,13 +262,12 @@ bb.q:                                             ; preds = %bb.p
   %i.eb = call range(i64 0, 65) <2 x i64> @llvm.ctpop.v2i64(<2 x i64> %i.ea)
   %i.ec = trunc nuw nsw <2 x i64> %i.eb to <2 x i32>
   %i.ed = add nuw nsw <2 x i32> %i.dt, %i.ec      ; 2 uses
-  %indvars.iv.next.i55.2 = add nsw i64 %i.cs, -3  ; 2 uses
-  %i.ee = icmp eq i64 %indvars.iv.next.i55.2, 0
+  %i.ee = icmp eq i32 %i.cn, 3
   br i1 %i.ee, label %.preheader.i, label %.lr.ph.i53.3
 
 .lr.ph.i53.3:                                     ; preds = %.lr.ph.i53.2
-  %i.ef = getelementptr [8 x i8], ptr %1, i64 %indvars.iv.next.i55.2
-  %i.eg = getelementptr i8, ptr %i.ef, i64 -8
+  %i.ef = getelementptr [8 x i8], ptr %1, i64 %i.cs
+  %i.eg = getelementptr i8, ptr %i.ef, i64 -32
   %i.eh = load i64, ptr %i.eg, align 8, !tbaa !17
   %i.ei = insertelement <2 x i64> poison, i64 %i.eh, i64 0
   %i.ej = shufflevector <2 x i64> %i.ei, <2 x i64> poison, <2 x i32> zeroinitializer
@@ -278,13 +275,12 @@ bb.q:                                             ; preds = %bb.p
   %i.el = call range(i64 0, 65) <2 x i64> @llvm.ctpop.v2i64(<2 x i64> %i.ek)
   %i.em = trunc nuw nsw <2 x i64> %i.el to <2 x i32>
   %i.en = add nuw nsw <2 x i32> %i.ed, %i.em      ; 2 uses
-  %indvars.iv.next.i55.3 = add nsw i64 %i.cs, -4  ; 2 uses
-  %i.eo = icmp eq i64 %indvars.iv.next.i55.3, 0
+  %i.eo = icmp eq i32 %i.cn, 4
   br i1 %i.eo, label %.preheader.i, label %.lr.ph.i53.4
 
 .lr.ph.i53.4:                                     ; preds = %.lr.ph.i53.3
-  %i.ep = getelementptr [8 x i8], ptr %1, i64 %indvars.iv.next.i55.3
-  %i.eq = getelementptr i8, ptr %i.ep, i64 -8
+  %i.ep = getelementptr [8 x i8], ptr %1, i64 %i.cs
+  %i.eq = getelementptr i8, ptr %i.ep, i64 -40
   %i.er = load i64, ptr %i.eq, align 8, !tbaa !17
   %i.es = insertelement <2 x i64> poison, i64 %i.er, i64 0
   %i.et = shufflevector <2 x i64> %i.es, <2 x i64> poison, <2 x i32> zeroinitializer
@@ -292,13 +288,12 @@ bb.q:                                             ; preds = %bb.p
   %i.ev = call range(i64 0, 65) <2 x i64> @llvm.ctpop.v2i64(<2 x i64> %i.eu)
   %i.ew = trunc nuw nsw <2 x i64> %i.ev to <2 x i32>
   %i.ex = add nuw nsw <2 x i32> %i.en, %i.ew      ; 2 uses
-  %indvars.iv.next.i55.4 = add nsw i64 %i.cs, -5  ; 2 uses
-  %i.ey = icmp eq i64 %indvars.iv.next.i55.4, 0
+  %i.ey = icmp eq i32 %i.cn, 5
   br i1 %i.ey, label %.preheader.i, label %.lr.ph.i53.5
 
 .lr.ph.i53.5:                                     ; preds = %.lr.ph.i53.4
-  %i.ez = getelementptr [8 x i8], ptr %1, i64 %indvars.iv.next.i55.4
-  %i.fa = getelementptr i8, ptr %i.ez, i64 -8
+  %i.ez = getelementptr [8 x i8], ptr %1, i64 %i.cs
+  %i.fa = getelementptr i8, ptr %i.ez, i64 -48
   %i.fb = load i64, ptr %i.fa, align 8, !tbaa !17
   %i.fc = insertelement <2 x i64> poison, i64 %i.fb, i64 0
   %i.fd = shufflevector <2 x i64> %i.fc, <2 x i64> poison, <2 x i32> zeroinitializer
@@ -306,13 +301,12 @@ bb.q:                                             ; preds = %bb.p
   %i.ff = call range(i64 0, 65) <2 x i64> @llvm.ctpop.v2i64(<2 x i64> %i.fe)
   %i.fg = trunc nuw nsw <2 x i64> %i.ff to <2 x i32>
   %i.fh = add nuw nsw <2 x i32> %i.ex, %i.fg      ; 2 uses
-  %indvars.iv.next.i55.5 = add nsw i64 %i.cs, -6  ; 2 uses
-  %i.fi = icmp eq i64 %indvars.iv.next.i55.5, 0
+  %i.fi = icmp eq i32 %i.cn, 6
   br i1 %i.fi, label %.preheader.i, label %.lr.ph.i53.6
 
 .lr.ph.i53.6:                                     ; preds = %.lr.ph.i53.5
-  %i.fj = getelementptr [8 x i8], ptr %1, i64 %indvars.iv.next.i55.5
-  %i.fk = getelementptr i8, ptr %i.fj, i64 -8
+  %i.fj = getelementptr [8 x i8], ptr %1, i64 %i.cs
+  %i.fk = getelementptr i8, ptr %i.fj, i64 -56
   %i.fl = load i64, ptr %i.fk, align 8, !tbaa !17
   %i.fm = insertelement <2 x i64> poison, i64 %i.fl, i64 0
   %i.fn = shufflevector <2 x i64> %i.fm, <2 x i64> poison, <2 x i32> zeroinitializer

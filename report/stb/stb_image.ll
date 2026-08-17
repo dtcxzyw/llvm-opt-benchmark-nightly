@@ -203,7 +203,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.03034, ptr nonnull align 16 %i.a, i64 %i.o, i1 false)
   %i.p = getelementptr inbounds nuw i8, ptr %.03133, i64 %i.o
   %i.q = getelementptr inbounds nuw i8, ptr %.03034, i64 %i.o
-  %i.r = sub i64 %.02935, %i.o                    ; 2 uses
+  %i.r = sub nuw i64 %.02935, %i.o                ; 2 uses
   %.not = icmp eq i64 %i.r, 0
   br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !154
 
@@ -266,7 +266,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.i
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.03034.i, ptr nonnull align 16 %i.a, i64 %i.s, i1 false)
   %i.t = getelementptr inbounds nuw i8, ptr %.03133.i, i64 %i.s
   %i.u = getelementptr inbounds nuw i8, ptr %.03034.i, i64 %i.s
-  %i.v = sub i64 %.02935.i, %i.s                  ; 2 uses
+  %i.v = sub nuw i64 %.02935.i, %i.s              ; 2 uses
   %.not.i = icmp eq i64 %i.v, 0
   br i1 %.not.i, label %._crit_edge.i, label %bb.b, !llvm.loop !154
 
@@ -476,7 +476,7 @@ bb.l:                                             ; preds = %bb.l, %.lr.ph.i29
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.03034.i, ptr nonnull align 16 %i.a, i64 %i.bg, i1 false)
   %i.bh = getelementptr inbounds nuw i8, ptr %.03133.i, i64 %i.bg
   %i.bi = getelementptr inbounds nuw i8, ptr %.03034.i, i64 %i.bg
-  %i.bj = sub i64 %.02935.i, %i.bg                ; 2 uses
+  %i.bj = sub nuw i64 %.02935.i, %i.bg            ; 2 uses
   %.not.i = icmp eq i64 %i.bj, 0
   br i1 %.not.i, label %._crit_edge.i31, label %bb.l, !llvm.loop !154
 
@@ -687,7 +687,7 @@ bb.l:                                             ; preds = %bb.l, %.lr.ph.i29
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.03034.i, ptr nonnull align 16 %i.a, i64 %i.bi, i1 false)
   %i.bj = getelementptr inbounds nuw i8, ptr %.03133.i, i64 %i.bi
   %i.bk = getelementptr inbounds nuw i8, ptr %.03034.i, i64 %i.bi
-  %i.bl = sub i64 %.02935.i, %i.bi                ; 2 uses
+  %i.bl = sub nuw i64 %.02935.i, %i.bi            ; 2 uses
   %.not.i = icmp eq i64 %i.bl, 0
   br i1 %.not.i, label %._crit_edge.i31, label %bb.l, !llvm.loop !154
 
@@ -779,7 +779,7 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph.i
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.03034.i, ptr nonnull align 16 %i.a, i64 %i.y, i1 false)
   %i.z = getelementptr inbounds nuw i8, ptr %.03133.i, i64 %i.y
   %i.aa = getelementptr inbounds nuw i8, ptr %.03034.i, i64 %i.y
-  %i.ab = sub i64 %.02935.i, %i.y                 ; 2 uses
+  %i.ab = sub nuw i64 %.02935.i, %i.y             ; 2 uses
   %.not.i = icmp eq i64 %i.ab, 0
   br i1 %.not.i, label %._crit_edge.i, label %bb.g, !llvm.loop !154
 
@@ -1182,7 +1182,7 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.03034.i.i, ptr nonnull align 16 %i.a, i64 %i.al, i1 false)
   %i.am = getelementptr inbounds nuw i8, ptr %.03133.i.i, i64 %i.al
   %i.an = getelementptr inbounds nuw i8, ptr %.03034.i.i, i64 %i.al
-  %i.ao = sub i64 %.02935.i.i, %i.al              ; 2 uses
+  %i.ao = sub nuw i64 %.02935.i.i, %i.al          ; 2 uses
   %.not.i.i = icmp eq i64 %i.ao, 0
   br i1 %.not.i.i, label %._crit_edge.i.i, label %bb.e, !llvm.loop !154
 
@@ -1562,7 +1562,7 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.03034.i.i, ptr nonnull align 16 %i.a, i64 %i.aa, i1 false)
   %i.ab = getelementptr inbounds nuw i8, ptr %.03133.i.i, i64 %i.aa
   %i.ac = getelementptr inbounds nuw i8, ptr %.03034.i.i, i64 %i.aa
-  %i.ad = sub i64 %.02935.i.i, %i.aa              ; 2 uses
+  %i.ad = sub nuw i64 %.02935.i.i, %i.aa          ; 2 uses
   %.not.i.i = icmp eq i64 %i.ad, 0
   br i1 %.not.i.i, label %._crit_edge.i.i, label %bb.i, !llvm.loop !154
 
@@ -1965,7 +1965,7 @@ bb.e:                                             ; preds = %bb.d
   %i.q = trunc nuw nsw i64 %indvars.iv to i32
   %i.r = shl nuw nsw i32 %i.q, %i.n               ; 2 uses
   %i.s = and i32 %i.r, 511
-  %i.t = sub nsw i32 9, %i.k
+  %i.t = sub nuw nsw i32 9, %i.k
   %i.u = lshr i32 %i.s, %i.t
   %.highbits.mask = and i32 %i.r, 256
   %i.v = icmp eq i32 %.highbits.mask, 0
@@ -2295,7 +2295,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.q = shl i32 %i.e, %i.n
   store i32 %i.q, ptr %i.d, align 8, !tbaa !234
-  %i.r = sub nsw i32 %i.o, %i.n
+  %i.r = sub nuw nsw i32 %i.o, %i.n
   store i32 %i.r, ptr %i.a, align 4, !tbaa !232
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 1024
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.k
@@ -2332,7 +2332,7 @@ bb.j:                                             ; preds = %bb.h
   br i1 %i.af, label %bb.m, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.ag = sub nsw i32 32, %i.ab
+  %i.ag = sub nuw nsw i32 32, %i.ab
   %i.ah = lshr i32 %i.e, %i.ag
   %i.ai = getelementptr inbounds nuw [4 x i8], ptr @stbi__bmask, i64 %indvars.iv
   %i.aj = load i32, ptr %i.ai, align 4, !tbaa !27
@@ -2345,7 +2345,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %or.cond, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.ap = sub nsw i32 %i.ad, %i.ab
+  %i.ap = sub nuw nsw i32 %i.ad, %i.ab
   store i32 %i.ap, ptr %i.a, align 4, !tbaa !232
   %i.aq = shl i32 %i.e, %i.ab
   store i32 %i.aq, ptr %i.d, align 8, !tbaa !234
@@ -2513,7 +2513,7 @@ bb.d:                                             ; preds = %.thread
 bb.e:                                             ; preds = %bb.d
   %i.r = shl i32 %i.f, %i.o
   store i32 %i.r, ptr %i.e, align 8, !tbaa !234
-  %i.s = sub nsw i32 %i.p, %i.o
+  %i.s = sub nuw nsw i32 %i.p, %i.o
   store i32 %i.s, ptr %i.a, align 4, !tbaa !232
   %i.t = getelementptr inbounds nuw i8, ptr %2, i64 1024
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.l
@@ -2543,7 +2543,7 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.ad, label %.thread118.sink.split, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.ae = sub nsw i32 32, %i.aa
+  %i.ae = sub nuw nsw i32 32, %i.aa
   %i.af = lshr i32 %i.f, %i.ae
   %i.ag = getelementptr inbounds nuw [4 x i8], ptr @stbi__bmask, i64 %indvars.iv.i
   %i.ah = load i32, ptr %i.ag, align 4, !tbaa !27
@@ -2556,7 +2556,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %or.cond.i, label %.thread118.sink.split, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.an = sub nsw i32 %i.ac, %i.aa
+  %i.an = sub nuw nsw i32 %i.ac, %i.aa
   store i32 %i.an, ptr %i.a, align 4, !tbaa !232
   %i.ao = shl i32 %i.f, %i.aa
   store i32 %i.ao, ptr %i.e, align 8, !tbaa !234
@@ -2602,7 +2602,7 @@ bb.p:                                             ; preds = %bb.o
   %i.bc = and i32 %i.ax, %i.bb
   store i32 %i.bc, ptr %i.e, align 8, !tbaa !234
   %i.bd = and i32 %i.ax, %i.ba
-  %i.be = sub nsw i32 %i.au, %.1.i
+  %i.be = sub nuw nsw i32 %i.au, %.1.i
   store i32 %i.be, ptr %i.a, align 4, !tbaa !232
   %i.bf = getelementptr inbounds nuw [4 x i8], ptr @stbi__jbias, i64 %i.ay
   %i.bg = load i32, ptr %i.bf, align 4, !tbaa !27
@@ -2698,7 +2698,7 @@ bb.v:                                             ; preds = %bb.u
   %i.ct = add nsw i32 %i.cs, %.066                ; 2 uses
   %i.cu = shl i32 %i.ci, %i.co
   store i32 %i.cu, ptr %i.e, align 8, !tbaa !234
-  %i.cv = sub nsw i32 %i.cp, %i.co                ; 2 uses
+  %i.cv = sub nuw nsw i32 %i.cp, %i.co            ; 2 uses
   store i32 %i.cv, ptr %i.a, align 4, !tbaa !232
   %i.cw = add nsw i32 %i.ct, 1
   %i.cx = sext i32 %i.ct to i64
@@ -2745,7 +2745,7 @@ bb.z:                                             ; preds = %bb.y
 bb.aa:                                            ; preds = %bb.z
   %i.dr = shl i32 %i.di, %i.do
   store i32 %i.dr, ptr %i.e, align 8, !tbaa !234
-  %i.ds = sub nsw i32 %i.dp, %i.do                ; 2 uses
+  %i.ds = sub nuw nsw i32 %i.dp, %i.do            ; 2 uses
   store i32 %i.ds, ptr %i.a, align 4, !tbaa !232
   br label %stbi__jpeg_huff_decode.exit91
 
@@ -2772,7 +2772,7 @@ bb.ae:                                            ; preds = %bb.ad
   br i1 %i.ea, label %.thread118.sink.split, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
-  %i.eb = sub nsw i32 32, %i.dx
+  %i.eb = sub nuw nsw i32 32, %i.dx
   %i.ec = lshr i32 %i.di, %i.eb
   %i.ed = getelementptr inbounds nuw [4 x i8], ptr @stbi__bmask, i64 %indvars.iv.i88
   %i.ee = load i32, ptr %i.ed, align 4, !tbaa !27
@@ -2784,7 +2784,7 @@ bb.af:                                            ; preds = %bb.ae
   br i1 %or.cond.i90, label %.thread118.sink.split, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
-  %i.ej = sub nsw i32 %i.dz, %i.dx                ; 2 uses
+  %i.ej = sub nuw nsw i32 %i.dz, %i.dx            ; 2 uses
   store i32 %i.ej, ptr %i.a, align 4, !tbaa !232
   %i.ek = shl i32 %i.di, %i.dx
   store i32 %i.ek, ptr %i.e, align 8, !tbaa !234
@@ -2839,7 +2839,7 @@ bb.am:                                            ; preds = %bb.al
   %i.ff = and i32 %i.fa, %i.fe
   store i32 %i.ff, ptr %i.e, align 8, !tbaa !234
   %i.fg = and i32 %i.fa, %i.fd
-  %i.fh = sub nsw i32 %i.ex, %i.en                ; 2 uses
+  %i.fh = sub nuw nsw i32 %i.ex, %i.en            ; 2 uses
   store i32 %i.fh, ptr %i.a, align 4, !tbaa !232
   %i.fi = getelementptr inbounds nuw [4 x i8], ptr @stbi__jbias, i64 %i.fb
   %i.fj = load i32, ptr %i.fi, align 4, !tbaa !27
@@ -2945,7 +2945,7 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.i
   %i.y = shl i32 %i.m, %i.v
   store i32 %i.y, ptr %i.l, align 8, !tbaa !234
-  %i.z = sub nsw i32 %i.w, %i.v                   ; 2 uses
+  %i.z = sub nuw nsw i32 %i.w, %i.v               ; 2 uses
   store i32 %i.z, ptr %i.d, align 4, !tbaa !232
   %i.aa = getelementptr inbounds nuw i8, ptr %2, i64 1024
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 %i.s
@@ -2980,7 +2980,7 @@ bb.o:                                             ; preds = %bb.m
   br i1 %i.al, label %stbi__jpeg_huff_decode.exit.thread, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.am = sub nsw i32 32, %i.ah
+  %i.am = sub nuw nsw i32 32, %i.ah
   %i.an = lshr i32 %i.m, %i.am
   %i.ao = getelementptr inbounds nuw [4 x i8], ptr @stbi__bmask, i64 %indvars.iv.i
   %i.ap = load i32, ptr %i.ao, align 4, !tbaa !27
@@ -2993,7 +2993,7 @@ bb.p:                                             ; preds = %bb.o
   br i1 %or.cond.i, label %stbi__jpeg_huff_decode.exit.thread, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.av = sub nsw i32 %i.aj, %i.ah                ; 2 uses
+  %i.av = sub nuw nsw i32 %i.aj, %i.ah            ; 2 uses
   store i32 %i.av, ptr %i.d, align 4, !tbaa !232
   %i.aw = shl i32 %i.m, %i.ah
   store i32 %i.aw, ptr %i.l, align 8, !tbaa !234
@@ -3043,7 +3043,7 @@ bb.v:                                             ; preds = %bb.u
   %i.bl = and i32 %i.bg, %i.bk
   store i32 %i.bl, ptr %i.l, align 8, !tbaa !234
   %i.bm = and i32 %i.bg, %i.bj
-  %i.bn = sub nsw i32 %i.bd, %.1.i
+  %i.bn = sub nuw nsw i32 %i.bd, %.1.i
   store i32 %i.bn, ptr %i.d, align 4, !tbaa !232
   %i.bo = getelementptr inbounds nuw [4 x i8], ptr @stbi__jbias, i64 %i.bh
   %i.bp = load i32, ptr %i.bo, align 4, !tbaa !27
@@ -3234,7 +3234,7 @@ bb.k:                                             ; preds = %bb.i
   %i.ah = add nsw i32 %i.ag, %.0115               ; 2 uses
   %i.ai = shl i32 %i.v, %i.ab
   store i32 %i.ai, ptr %i.m, align 8, !tbaa !234
-  %i.aj = sub nsw i32 %i.ac, %i.ab                ; 2 uses
+  %i.aj = sub nuw nsw i32 %i.ac, %i.ab            ; 2 uses
   store i32 %i.aj, ptr %i.l, align 4, !tbaa !232
   %i.ak = add nsw i32 %i.ah, 1
   %i.al = sext i32 %i.ah to i64
@@ -3280,7 +3280,7 @@ bb.o:                                             ; preds = %bb.n
 bb.p:                                             ; preds = %bb.o
   %i.be = shl i32 %i.av, %i.bb
   store i32 %i.be, ptr %i.m, align 8, !tbaa !234
-  %i.bf = sub nsw i32 %i.bc, %i.bb                ; 2 uses
+  %i.bf = sub nuw nsw i32 %i.bc, %i.bb            ; 2 uses
   store i32 %i.bf, ptr %i.l, align 4, !tbaa !232
   br label %stbi__jpeg_huff_decode.exit
 
@@ -3312,7 +3312,7 @@ bb.u:                                             ; preds = %bb.s
   br i1 %i.bo, label %.loopexit, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %i.bp = sub nsw i32 32, %i.bk
+  %i.bp = sub nuw nsw i32 32, %i.bk
   %i.bq = lshr i32 %i.av, %i.bp
   %i.br = getelementptr inbounds nuw [4 x i8], ptr @stbi__bmask, i64 %indvars.iv.i
   %i.bs = load i32, ptr %i.br, align 4, !tbaa !27
@@ -3324,7 +3324,7 @@ bb.v:                                             ; preds = %bb.u
   br i1 %or.cond.i, label %.loopexit, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
-  %i.bx = sub nsw i32 %i.bm, %i.bk                ; 2 uses
+  %i.bx = sub nuw nsw i32 %i.bm, %i.bk            ; 2 uses
   store i32 %i.bx, ptr %i.l, align 4, !tbaa !232
   %i.by = shl i32 %i.av, %i.bk
   store i32 %i.by, ptr %i.m, align 8, !tbaa !234
@@ -3381,7 +3381,7 @@ bb.ac:                                            ; preds = %bb.ab
   %i.cq = and i32 %i.cl, %i.cp
   store i32 %i.cq, ptr %i.m, align 8, !tbaa !234
   %i.cr = and i32 %i.cl, %i.co
-  %i.cs = sub nsw i32 %i.ci, %i.cd
+  %i.cs = sub nuw nsw i32 %i.ci, %i.cd
   store i32 %i.cs, ptr %i.l, align 4, !tbaa !232
   br label %stbi__jpeg_get_bits.exit
 
@@ -3425,7 +3425,7 @@ bb.ah:                                            ; preds = %bb.ag
   %i.dl = and i32 %i.dg, %i.dk
   store i32 %i.dl, ptr %i.m, align 8, !tbaa !234
   %i.dm = and i32 %i.dg, %i.dj
-  %i.dn = sub nsw i32 %i.dd, %i.cc                ; 2 uses
+  %i.dn = sub nuw nsw i32 %i.dd, %i.cc            ; 2 uses
   store i32 %i.dn, ptr %i.l, align 4, !tbaa !232
   %i.do = getelementptr inbounds nuw [4 x i8], ptr @stbi__jbias, i64 %i.dh
   %i.dp = load i32, ptr %i.do, align 4, !tbaa !27
@@ -3575,7 +3575,7 @@ bb.at:                                            ; preds = %bb.as
 bb.au:                                            ; preds = %bb.at
   %i.fz = shl i32 %i.fo, %i.fw                    ; 2 uses
   store i32 %i.fz, ptr %i.eb, align 8, !tbaa !234
-  %i.ga = sub nsw i32 %i.fx, %i.fw                ; 2 uses
+  %i.ga = sub nuw nsw i32 %i.fx, %i.fw            ; 2 uses
   store i32 %i.ga, ptr %i.ea, align 4, !tbaa !232
   br label %stbi__jpeg_huff_decode.exit179
 
@@ -3607,7 +3607,7 @@ bb.az:                                            ; preds = %bb.ax
   br i1 %i.gj, label %.loopexit224, label %bb.ba
 
 bb.ba:                                            ; preds = %bb.az
-  %i.gk = sub nsw i32 32, %i.gf
+  %i.gk = sub nuw nsw i32 32, %i.gf
   %i.gl = lshr i32 %i.fo, %i.gk
   %i.gm = getelementptr inbounds nuw [4 x i8], ptr @stbi__bmask, i64 %indvars.iv.i176
   %i.gn = load i32, ptr %i.gm, align 4, !tbaa !27
@@ -3619,7 +3619,7 @@ bb.ba:                                            ; preds = %bb.az
   br i1 %or.cond.i178, label %.loopexit224, label %bb.bb
 
 bb.bb:                                            ; preds = %bb.ba
-  %i.gs = sub nsw i32 %i.gh, %i.gf                ; 2 uses
+  %i.gs = sub nuw nsw i32 %i.gh, %i.gf            ; 2 uses
   store i32 %i.gs, ptr %i.ea, align 4, !tbaa !232
   %i.gt = shl i32 %i.fo, %i.gf                    ; 2 uses
   store i32 %i.gt, ptr %i.eb, align 8, !tbaa !234
@@ -3680,7 +3680,7 @@ bb.bh:                                            ; preds = %bb.bg
   %i.hl = and i32 %i.hg, %i.hk
   store i32 %i.hl, ptr %i.eb, align 8, !tbaa !234
   %i.hm = and i32 %i.hg, %i.hj
-  %i.hn = sub nsw i32 %i.hd, %i.gz                ; 2 uses
+  %i.hn = sub nuw nsw i32 %i.hd, %i.gz            ; 2 uses
   store i32 %i.hn, ptr %i.ea, align 4, !tbaa !232
   br label %stbi__jpeg_get_bits.exit182
 
@@ -4083,7 +4083,7 @@ bb.at:                                            ; preds = %bb.as
   %i.ip = trunc nuw nsw i64 %indvars.iv.i to i32
   %i.iq = shl nuw nsw i32 %i.ip, %i.im            ; 2 uses
   %i.ir = and i32 %i.iq, 511
-  %i.is = sub nsw i32 9, %i.ij
+  %i.is = sub nuw nsw i32 9, %i.ij
   %i.it = lshr i32 %i.ir, %i.is
   %.highbits.mask.i = and i32 %i.iq, 256
   %i.iu = icmp eq i32 %.highbits.mask.i, 0
@@ -4486,8 +4486,8 @@ bb.l:                                             ; preds = %bb.j
   %i.bg = zext i32 %.030.i305 to i64              ; 17 uses
   %i.bh = zext i32 %i.z to i64
   %i.bi = icmp eq i32 %7, 0
-  %8 = sext i32 %6 to i64
-  %i.bj = getelementptr inbounds i8, ptr @stbi__depth_scale_table, i64 %8
+  %8 = zext nneg i32 %6 to i64
+  %i.bj = getelementptr inbounds nuw i8, ptr @stbi__depth_scale_table, i64 %8
   %wide.trip.count460 = zext i32 %5 to i64
   %wide.trip.count424 = zext i32 %spec.select to i64 ; 15 uses
   %wide.trip.count434 = zext nneg i32 %spec.select to i64
@@ -4890,7 +4890,7 @@ define range(i32 0, 2) i32 @stbi__create_png_image(ptr nofree noundef captures(n
 bb.a:
   %i.a = icmp eq i32 %4, 16
   %i.b = zext i1 %i.a to i32
-  %i.c = shl i32 %3, %i.b                         ; 6 uses
+  %i.c = shl i32 %3, %i.b                         ; 7 uses
   %.not = icmp eq i32 %6, 0
   %i.d = load ptr, ptr %0, align 8, !tbaa !32     ; 2 uses
   %i.e = load i32, ptr %i.d, align 8, !tbaa !44   ; 4 uses
@@ -4940,7 +4940,8 @@ stbi__malloc_mad3.exit:                           ; preds = %bb.e, %stbi__mul2si
 
 .preheader100:                                    ; preds = %stbi__malloc_mad3.exit
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %i.t = sext i32 %i.c to i64                     ; 9 uses
+  %7 = zext nneg i32 %i.c to i64                  ; 3 uses
+  %i.t = sext i32 %i.c to i64                     ; 6 uses
   br label %bb.f
 
 stbi__malloc_mad3.exit.thread:                    ; preds = %bb.c, %stbi__mul2sizes_valid.exit.i.i, %stbi__mul2sizes_valid.exit12.i.i, %stbi__mul2sizes_valid.exit.thread16.i.i, %stbi__malloc_mad3.exit
@@ -5037,7 +5038,7 @@ bb.g:                                             ; preds = %bb.f
   %i.bs = add nuw nsw i64 %indvars.iv, %i.bl
   %i.bt = mul nsw i64 %i.bs, %i.t
   %i.bu = getelementptr inbounds i8, ptr %.pre115, i64 %i.bt
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.br, ptr align 1 %i.bu, i64 %i.t, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.br, ptr align 1 %i.bu, i64 %7, i1 false)
   %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 2 uses
   %i.bv = mul nsw i64 %indvars.iv.next, %i.bd
   %i.bw = add nsw i64 %i.bv, %i.be
@@ -5046,7 +5047,7 @@ bb.g:                                             ; preds = %bb.f
   %i.bz = add nuw nsw i64 %indvars.iv.next, %i.bl
   %i.ca = mul nsw i64 %i.bz, %i.t
   %i.cb = getelementptr inbounds i8, ptr %.pre115, i64 %i.ca
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.by, ptr align 1 %i.cb, i64 %i.t, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.by, ptr align 1 %i.cb, i64 %7, i1 false)
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1.not = icmp eq i64 %niter.next.1, %unroll_iter
@@ -5065,7 +5066,7 @@ bb.g:                                             ; preds = %bb.f
   %i.cg = add nuw nsw i64 %indvars.iv.epil.init, %i.bl
   %i.ch = mul nsw i64 %i.cg, %i.t
   %i.ci = getelementptr inbounds i8, ptr %.pre115, i64 %i.ch
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.cf, ptr align 1 %i.ci, i64 %i.t, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.cf, ptr align 1 %i.ci, i64 %7, i1 false)
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.unr-lcssa, %.epil.preheader

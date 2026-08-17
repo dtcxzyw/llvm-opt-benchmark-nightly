@@ -204,7 +204,7 @@ bb.gq:                                            ; preds = %bb.gp, %bb.go
   br label %.loopexit3191
 
 bb.gr:                                            ; preds = %bb.gp
-  %i.yt = sub i32 %i.yj, %i.yo                    ; 5 uses
+  %i.yt = sub nuw i32 %i.yj, %i.yo                ; 5 uses
   %i.yu = getelementptr inbounds nuw i8, ptr %i.yn, i64 12
   %i.yv = load i32, ptr %i.yu, align 4, !tbaa !8
   %.not2553 = icmp eq i32 %i.yv, 0
@@ -607,12 +607,10 @@ bb.kw:                                            ; preds = %bb.kt, %bb.kv, %bb.
   br label %bb.me
 
 bb.kx:                                            ; preds = %bb.kv
-  %i.alx = sub nsw i64 %i.alu, %i.ale             ; 2 uses
-  %i.aly = getelementptr inbounds i8, ptr %i.ala, i64 %i.alx ; 4 uses
+  %i.alx = sub nuw nsw i64 %i.alu, %i.ale
+  %i.aly = getelementptr inbounds nuw i8, ptr %i.ala, i64 %i.alx ; 4 uses
   %i.alz = icmp ult i32 %i.aju, 32
-  %.not2601 = icmp slt i64 %i.alx, 0
-  %or.cond3167 = select i1 %i.alz, i1 true, i1 %.not2601
-  br i1 %or.cond3167, label %bb.kz, label %bb.ky
+  br i1 %i.alz, label %bb.kz, label %bb.ky
 
 bb.ky:                                            ; preds = %bb.kx
   %i.ama = ptrtoint ptr %i.aly to i64             ; 2 uses
@@ -1015,8 +1013,8 @@ bb.dv:                                            ; preds = %bb.du
 
 bb.dw:                                            ; preds = %.preheader974
   call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.285) #22
-  %i.kz = sub nsw i32 %i.ks, %i.kt
-  %i.la = zext i32 %i.kz to i64
+  %i.kz = sub nuw nsw i32 %i.ks, %i.kt
+  %i.la = zext nneg i32 %i.kz to i64
   %i.lb = add nuw nsw i64 %i.ky, %i.la
   br label %bb.dx
 
@@ -1419,8 +1417,8 @@ bb.hl:                                            ; preds = %.lr.ph1000.preheade
   br i1 %.not792.peel, label %bb.hm, label %.loopexit1030
 
 bb.hm:                                            ; preds = %bb.hl
-  %i.xh = sub nsw i32 %i.wr, %i.wu                ; 2 uses
-  %i.xi = icmp ugt i32 %i.xh, 6
+  %i.xh = sub nuw nsw i32 %i.wr, %i.wu            ; 2 uses
+  %i.xi = icmp samesign ugt i32 %i.xh, 6
   br i1 %i.xi, label %.lr.ph1000, label %.thread939
 
 .lr.ph1000:                                       ; preds = %bb.hm
@@ -1428,7 +1426,7 @@ bb.hm:                                            ; preds = %bb.hl
   %i.xk = getelementptr inbounds nuw i8, ptr %i.wq, i64 %i.xj ; 2 uses
   %.pre1043 = load i32, ptr %i.xk, align 1, !tbaa !36
   %i.xl = and i32 %.pre1043, 65535                ; 2 uses
-  %i.xm = icmp ugt i32 %i.xl, %i.xh
+  %i.xm = icmp samesign ugt i32 %i.xl, %i.xh
   br i1 %i.xm, label %.thread939, label %.loopexit1030
 
 .loopexit1030:                                    ; preds = %.lr.ph1000, %bb.hl
@@ -1579,7 +1577,7 @@ bb.ia:                                            ; preds = %bb.hz, %bb.hw
   br label %bb.ib
 
 bb.ib:                                            ; preds = %bb.hu, %bb.ia, %bb.hv, %.loopexit
-  %.1674 = sub i32 %.06731004, %i.yo              ; 2 uses
+  %.1674 = sub nuw nsw i32 %.06731004, %i.yo      ; 2 uses
   %.3691 = getelementptr inbounds nuw i8, ptr %.26901003, i64 %i.yr
   %i.zs = icmp ugt i32 %.1674, 6
   br i1 %i.zs, label %.lr.ph1006, label %.thread914
@@ -1982,7 +1980,7 @@ bb.m:                                             ; preds = %bb.k
 
 bb.n:                                             ; preds = %bb.m
   %i.au = trunc nuw i64 %i.am to i32              ; 2 uses
-  %i.av = sub i32 %i.o, %i.au
+  %i.av = sub nuw i32 %i.o, %i.au
   %i.aw = getelementptr inbounds nuw i8, ptr %i.ab, i64 16
   store i32 %i.au, ptr %i.aw, align 4, !tbaa !152
   %i.ax = getelementptr inbounds nuw i8, ptr %i.ab, i64 20

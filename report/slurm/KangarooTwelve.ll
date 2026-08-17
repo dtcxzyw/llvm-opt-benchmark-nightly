@@ -56,7 +56,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.p = trunc nuw i64 %i.m to i32
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 %i.m ; 2 uses
-  %i.r = sub i64 %2, %i.m                         ; 3 uses
+  %i.r = sub nuw i64 %2, %i.m                     ; 3 uses
   %i.s = load i32, ptr %i.i, align 8
   %i.t = add i32 %i.s, %i.p                       ; 2 uses
   store i32 %i.t, ptr %i.i, align 8
@@ -102,7 +102,7 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.g
   %i.af = trunc nuw i64 %i.ad to i32
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 %i.ad ; 2 uses
-  %i.ah = sub i64 %2, %i.ad                       ; 2 uses
+  %i.ah = sub nuw i64 %2, %i.ad                   ; 2 uses
   %i.ai = load i32, ptr %i.i, align 8
   %i.aj = add i32 %i.ai, %i.af                    ; 2 uses
   store i32 %i.aj, ptr %i.i, align 8
@@ -164,7 +164,7 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m
   %i.ax = getelementptr inbounds nuw i8, ptr %.372121, i64 %i.at
-  %i.ay = sub i64 %.383120, %i.at                 ; 2 uses
+  %i.ay = sub nuw i64 %.383120, %i.at             ; 2 uses
   %i.az = icmp ugt i64 %.383120, 8191
   br i1 %i.az, label %bb.o, label %bb.r
 
@@ -220,7 +220,7 @@ declare i32 @KeccakWidth1600_12rounds_SpongeSqueeze(ptr noundef, ptr noundef, i6
 ; Function Attrs: nounwind uwtable
 define dso_local i32 @KangarooTwelve_Final(ptr noundef %0, ptr noundef %1, ptr noundef %2, i64 noundef %3) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [11 x i8], align 1                ; 11 uses
+  %i.a = alloca [11 x i8], align 1                ; 10 uses
   %i.b = alloca [32 x i8], align 16               ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 452 ; 3 uses
@@ -364,17 +364,15 @@ right_encode.exit61.loopexit:                     ; preds = %.lr.ph22.i54
 
 right_encode.exit61:                              ; preds = %bb.j, %right_encode.exit61.loopexit
   %.017.lcssa29.i58 = phi i8 [ %i.ay, %right_encode.exit61.loopexit ], [ 0, %bb.j ]
-  %.pre-phi26.i59 = phi i32 [ %i.aj, %right_encode.exit61.loopexit ], [ 1, %bb.j ] ; 3 uses
+  %.pre-phi26.i59 = phi i32 [ %i.aj, %right_encode.exit61.loopexit ], [ 1, %bb.j ] ; 2 uses
   %.pre-phi.i60 = phi i64 [ %i.ax, %right_encode.exit61.loopexit ], [ 0, %bb.j ]
   %i.az = getelementptr inbounds nuw i8, ptr %i.a, i64 %.pre-phi.i60
   store i8 %.017.lcssa29.i58, ptr %i.az, align 1
   %i.ba = zext nneg i32 %.pre-phi26.i59 to i64
-  %i.bb = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.ba
+  %i.bb = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.ba ; 2 uses
   store i8 -1, ptr %i.bb, align 1
   %i.bc = add nuw nsw i32 %.pre-phi26.i59, 2
-  %4 = zext nneg i32 %.pre-phi26.i59 to i64
-  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 %4
-  %i.bd = getelementptr inbounds nuw i8, ptr %5, i64 1
+  %i.bd = getelementptr inbounds nuw i8, ptr %i.bb, i64 1
   store i8 -1, ptr %i.bd, align 1
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 216
   %i.bf = zext nneg i32 %i.bc to i64

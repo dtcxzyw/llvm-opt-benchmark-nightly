@@ -204,7 +204,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.e = shl i32 %i.a, %1
   %i.f = or i32 %i.e, %2
-  %i.g = sub nsw i32 %i.c, %1
+  %i.g = sub nuw nsw i32 %i.c, %1
   br label %put_bits_no_assert.exit
 
 bb.c:                                             ; preds = %bb.a
@@ -607,13 +607,12 @@ bb.bm:                                            ; preds = %bb.be
   br i1 %i.ow, label %.lr.ph574, label %.loopexit
 
 .lr.ph574:                                        ; preds = %bb.bm, %.lr.ph574
-  %.5437572 = phi i32 [ %i.pi, %.lr.ph574 ], [ %i.ov, %bb.bm ] ; 3 uses
-  %i.ox = zext nneg i32 %.5437572 to i64          ; 2 uses
+  %.5437572 = phi i32 [ %i.pi, %.lr.ph574 ], [ %i.ov, %bb.bm ] ; 2 uses
+  %i.ox = zext nneg i32 %.5437572 to i64          ; 3 uses
   %i.oy = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.ox
   %i.oz = load i32, ptr %i.oy, align 4, !tbaa !49
   %i.pa = trunc i32 %i.oz to i16
-  %5 = sext i32 %.5437572 to i64
-  %i.pb = getelementptr i8, ptr %.0361, i64 %5
+  %i.pb = getelementptr i8, ptr %.0361, i64 %i.ox
   %i.pc = getelementptr i8, ptr %i.pb, i64 -1
   %i.pd = load i8, ptr %i.pc, align 1, !tbaa !47
   %i.pe = zext i8 %i.pd to i64

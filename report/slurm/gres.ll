@@ -201,7 +201,7 @@ bb.q:                                             ; preds = %bb.o, %bb.n
 bb.r:                                             ; preds = %.lr.ph69, %.lr.ph
   %indvars.iv.next.i68 = phi i64 [ 2, %.lr.ph69 ], [ %indvars.iv.next.i, %.lr.ph ] ; 2 uses
   %i.cg = phi i64 [ %i.bz, %.lr.ph69 ], [ %i.ch, %.lr.ph ] ; 2 uses
-  %i.ch = sub nsw i64 %i.bx, %indvars.iv.next.i68 ; 2 uses
+  %i.ch = sub nuw nsw i64 %i.bx, %indvars.iv.next.i68 ; 2 uses
   %i.ci = getelementptr inbounds nuw i8, ptr %i.z, i64 %i.ch
   %i.cj = load i8, ptr %i.ci, align 1
   %i.ck = sext i8 %i.cj to i64
@@ -220,8 +220,7 @@ bb.r:                                             ; preds = %.lr.ph69, %.lr.ph
 
 ._crit_edge.thread.i:                             ; preds = %.lr.ph.preheader, %.lr.ph.._crit_edge.thread.i.loopexit_crit_edge, %._crit_edge.i
   %.015.lcssa29.i = phi i64 [ %i.cg, %._crit_edge.i ], [ 0, %.lr.ph.._crit_edge.thread.i.loopexit_crit_edge ], [ 0, %.lr.ph.preheader ]
-  %3 = and i64 %.015.lcssa29.i, 4294967295
-  %i.cp = getelementptr inbounds nuw i8, ptr %i.z, i64 %3
+  %i.cp = getelementptr inbounds nuw i8, ptr %i.z, i64 %.015.lcssa29.i
   %i.cq = call i64 @__isoc23_strtol(ptr noundef nonnull %i.cp, ptr noundef null, i32 noundef 10) #26, !inline_history !30
   %i.cr = trunc i64 %i.cq to i32
   br label %_init_gres_device.exit.thread52
@@ -624,9 +623,9 @@ bb.aq:                                            ; preds = %.lr.ph.split.us.spl
 
 bb.ar:                                            ; preds = %bb.aq
   %..us.i.i = call i64 @llvm.umin.i64(i64 %i.fn, i64 %.16.i) ; 2 uses
-  %i.fp = sub i64 %i.fn, %..us.i.i
+  %i.fp = sub nuw i64 %i.fn, %..us.i.i
   store i64 %i.fp, ptr %i.fm, align 8
-  %i.fq = sub i64 %.16.i, %..us.i.i
+  %i.fq = sub nuw i64 %.16.i, %..us.i.i
   call void @bit_set(ptr noundef %i.cf, i64 noundef %i.fl) #26
   br label %bb.as
 
@@ -654,9 +653,9 @@ bb.at:                                            ; preds = %.lr.ph.split.split.
 
 bb.au:                                            ; preds = %bb.at
   %..i.i = call i64 @llvm.umin.i64(i64 %i.fy, i64 %.14.i) ; 2 uses
-  %i.ga = sub i64 %i.fy, %..i.i
+  %i.ga = sub nuw i64 %i.fy, %..i.i
   store i64 %i.ga, ptr %i.fx, align 8
-  %i.gb = sub i64 %.14.i, %..i.i
+  %i.gb = sub nuw i64 %.14.i, %..i.i
   br label %bb.av
 
 bb.av:                                            ; preds = %bb.au, %bb.at
@@ -687,9 +686,9 @@ bb.aw:                                            ; preds = %.lr.ph.split.us.spl
 
 bb.ax:                                            ; preds = %bb.aw
   %..us.i65.i = call i64 @llvm.umin.i64(i64 %i.gj, i64 %.21.i) ; 2 uses
-  %i.gl = sub i64 %i.gj, %..us.i65.i
+  %i.gl = sub nuw i64 %i.gj, %..us.i65.i
   store i64 %i.gl, ptr %i.gi, align 8
-  %i.gm = sub i64 %.21.i, %..us.i65.i
+  %i.gm = sub nuw i64 %.21.i, %..us.i65.i
   call void @bit_set(ptr noundef %i.cf, i64 noundef %i.gh) #26
   br label %bb.ay
 
@@ -717,9 +716,9 @@ bb.az:                                            ; preds = %.lr.ph.split.split.
 
 bb.ba:                                            ; preds = %bb.az
   %..i60.i = call i64 @llvm.umin.i64(i64 %i.gu, i64 %.19.i) ; 2 uses
-  %i.gw = sub i64 %i.gu, %..i60.i
+  %i.gw = sub nuw i64 %i.gu, %..i60.i
   store i64 %i.gw, ptr %i.gt, align 8
-  %i.gx = sub i64 %.19.i, %..i60.i
+  %i.gx = sub nuw i64 %.19.i, %..i60.i
   br label %bb.bb
 
 bb.bb:                                            ; preds = %bb.ba, %bb.az

@@ -203,7 +203,7 @@ bb.k:                                             ; preds = %bb.z, %bb.h
   br i1 %or.cond46.i, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %._crit_edge.i, %bb.k
-  %i.ao = phi i64 [ %.pre83.i, %._crit_edge.i ], [ %i.ak, %bb.k ] ; 5 uses
+  %i.ao = phi i64 [ %.pre83.i, %._crit_edge.i ], [ %i.ak, %bb.k ] ; 6 uses
   %i.ap = phi i64 [ %.pre82.i, %._crit_edge.i ], [ %i.al, %bb.k ] ; 7 uses
   %i.aq = icmp sgt i64 %i.ap, -1
   call void @llvm.assume(i1 %i.aq)
@@ -237,7 +237,7 @@ bb.p:                                             ; preds = %bb.l
   call void @llvm.experimental.noalias.scope.decl(metadata !358)
   %i.ay = add nuw i64 %i.ao, 32
   %i.az = shl nuw i64 %i.ao, 1
-  %..i.i.i.i = call noundef i64 @llvm.umax.i64(i64 %i.ay, i64 range(i64 0, -1) %i.az) ; 4 uses
+  %..i.i.i.i = call noundef i64 @llvm.umax.i64(i64 %i.ay, i64 range(i64 0, -1) %i.az) ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !361
   call fastcc void @_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner11finish_growCskBwnbTnIhiv_6uu_cat(ptr noalias nofree noundef align 8 captures(none) dereferenceable(24) %i.c, i64 %i.ao, ptr %.pre84.i, i64 noundef %..i.i.i.i, i64 noundef 1, i64 noundef 1) #23, !noalias !362
   %i.ba = load i64, ptr %i.c, align 8, !range !363, !noalias !361, !noundef !5
@@ -251,6 +251,9 @@ _RNvMs2_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner11try_reserveCskBwnbTnIh
   %i.bd = icmp sgt i64 %..i.i.i.i, -1
   call void @llvm.assume(i1 %i.bd)
   store i64 %..i.i.i.i, ptr %i.f, align 8, !alias.scope !362, !noalias !350
+  %.pre.i.i = sub nuw nsw i64 %..i.i.i.i, %i.ao
+  %2 = icmp samesign ugt i64 %.pre.i.i, 31
+  call void @llvm.assume(i1 %2)
   br label %bb.q
 
 _RNvMs2_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner11try_reserveCskBwnbTnIhiv_6uu_cat.exit.i: ; preds = %bb.p
@@ -653,7 +656,7 @@ bb.ae:                                            ; preds = %.thread
   %.sroa.01.025.i.i.i130 = phi i64 [ %i.ec, %.lr.ph.i.i.i129 ], [ %i.dl, %bb.ae ] ; 2 uses
   %.sroa.05.024.i.i.i131 = phi i64 [ %i.eb, %.lr.ph.i.i.i129 ], [ 0, %bb.ae ] ; 2 uses
   %i.ds = lshr i64 %.sroa.01.025.i.i.i130, 1      ; 2 uses
-  %i.dt = add nuw i64 %i.ds, %.sroa.05.024.i.i.i131 ; 3 uses
+  %i.dt = add nuw nsw i64 %i.ds, %.sroa.05.024.i.i.i131 ; 3 uses
   %i.du = icmp ult i64 %i.dt, %i.dl
   call void @llvm.assume(i1 %i.du)
   %i.dv = getelementptr inbounds nuw [144 x i8], ptr %i.dk, i64 %i.dt ; 2 uses
@@ -671,7 +674,7 @@ bb.ae:                                            ; preds = %.thread
   %spec.select.i.i.i.i23.i.i.i137 = select i1 %i.dy, i64 %i.dz, i64 %i.dx
   %i.ea = icmp sgt i64 %spec.select.i.i.i.i23.i.i.i137, 0
   %i.eb = select i1 %i.ea, i64 %.sroa.05.024.i.i.i131, i64 %i.dt, !unpredictable !5 ; 2 uses
-  %i.ec = sub i64 %.sroa.01.025.i.i.i130, %i.ds   ; 2 uses
+  %i.ec = sub nuw nsw i64 %.sroa.01.025.i.i.i130, %i.ds ; 2 uses
   %i.ed = icmp ugt i64 %i.ec, 1
   br i1 %i.ed, label %.lr.ph.i.i.i129, label %._crit_edge.i.i.i118
 
@@ -791,7 +794,7 @@ bb.an:                                            ; preds = %.thread
   %.sroa.01.025.i.i.i175 = phi i64 [ %i.fm, %.lr.ph.i.i.i174 ], [ %i.ev, %bb.an ] ; 2 uses
   %.sroa.05.024.i.i.i176 = phi i64 [ %i.fl, %.lr.ph.i.i.i174 ], [ 0, %bb.an ] ; 2 uses
   %i.fc = lshr i64 %.sroa.01.025.i.i.i175, 1      ; 2 uses
-  %i.fd = add nuw i64 %i.fc, %.sroa.05.024.i.i.i176 ; 3 uses
+  %i.fd = add nuw nsw i64 %i.fc, %.sroa.05.024.i.i.i176 ; 3 uses
   %i.fe = icmp ult i64 %i.fd, %i.ev
   call void @llvm.assume(i1 %i.fe)
   %i.ff = getelementptr inbounds nuw [144 x i8], ptr %i.eu, i64 %i.fd ; 2 uses
@@ -809,7 +812,7 @@ bb.an:                                            ; preds = %.thread
   %spec.select.i.i.i.i23.i.i.i182 = select i1 %i.fi, i64 %i.fj, i64 %i.fh
   %i.fk = icmp sgt i64 %spec.select.i.i.i.i23.i.i.i182, 0
   %i.fl = select i1 %i.fk, i64 %.sroa.05.024.i.i.i176, i64 %i.fd, !unpredictable !5 ; 2 uses
-  %i.fm = sub i64 %.sroa.01.025.i.i.i175, %i.fc   ; 2 uses
+  %i.fm = sub nuw nsw i64 %.sroa.01.025.i.i.i175, %i.fc ; 2 uses
   %i.fn = icmp ugt i64 %i.fm, 1
   br i1 %i.fn, label %.lr.ph.i.i.i174, label %._crit_edge.i.i.i138
 

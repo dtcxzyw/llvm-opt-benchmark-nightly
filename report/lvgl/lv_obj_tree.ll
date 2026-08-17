@@ -203,7 +203,7 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.e, %.lr.ph.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.e ] ; 8 uses
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.e ] ; 5 uses
   %i.l = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %indvars.iv.i
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !36
   %i.n = icmp eq ptr %i.m, %0
@@ -221,10 +221,10 @@ bb.e:                                             ; preds = %bb.d
   br label %.preheader13.i
 
 bb.f:                                             ; preds = %bb.d
-  %i.o = trunc nuw nsw i64 %indvars.iv.i to i32   ; 4 uses
+  %i.o = trunc nuw nsw i64 %indvars.iv.i to i32   ; 10 uses
   %i.p = icmp slt i32 %1, 0
   %i.q = select i1 %i.p, i32 %.0.i44, i32 0
-  %spec.select = add i32 %i.q, %1                 ; 8 uses
+  %spec.select = add i32 %i.q, %1                 ; 10 uses
   %i.r = icmp slt i32 %spec.select, 0
   %.not42 = icmp sge i32 %spec.select, %.0.i44
   %or.cond.not48 = select i1 %i.r, i1 true, i1 %.not42
@@ -234,7 +234,7 @@ bb.f:                                             ; preds = %bb.d
 
 bb.g:                                             ; preds = %bb.f
   %i.t = icmp samesign ult i32 %spec.select, %i.o
-  br i1 %i.t, label %.preheader49.a, label %.preheader50
+  br i1 %i.t, label %.preheader49, label %.preheader50
 
 .preheader50:                                     ; preds = %bb.g
   %i.u = icmp samesign ugt i32 %spec.select, %i.o
@@ -254,22 +254,29 @@ bb.g:                                             ; preds = %bb.f
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, ptr noundef nonnull align 8 dereferenceable(1) %scevgep58, i64 %i.ab, i1 false), !tbaa !36
   br label %.loopexit
 
-.preheader49.a:                                   ; preds = %bb.g
+.preheader49:                                     ; preds = %bb.g
   %2 = load ptr, ptr %i.d, align 8, !tbaa !45     ; 4 uses
-  %3 = zext nneg i32 %spec.select to i64          ; 2 uses
-  %4 = sub nsw i64 %indvars.iv.i, %3              ; 3 uses
-  %min.iters.check = icmp ult i64 %4, 4
-  br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
+  %3 = sub nuw i32 %i.o, %spec.select             ; 3 uses
+  %min.iters.check = icmp ult i32 %3, 14
+  br i1 %min.iters.check, label %scalar.ph.preheader, label %.preheader49.a
+
+.preheader49.a:                                   ; preds = %.preheader49
+  %4 = trunc i64 %indvars.iv.i to i32
+  %5 = xor i32 %spec.select, -1
+  %6 = add i32 %5, %4
+  %7 = icmp ugt i32 %6, %i.o
+  br i1 %7, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.preheader49.a
-  %n.vec = and i64 %4, -4                         ; 3 uses
-  %5 = sub i64 %indvars.iv.i, %n.vec
+  %n.vec = and i32 %3, -4                         ; 3 uses
+  %8 = sub i32 %i.o, %n.vec
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %6 = sub i64 %indvars.iv.i, %index
-  %i.ac = getelementptr [8 x i8], ptr %2, i64 %6  ; 4 uses
+  %index = phi i32 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
+  %9 = sub i32 %i.o, %index
+  %10 = zext nneg i32 %9 to i64
+  %i.ac = getelementptr [8 x i8], ptr %2, i64 %10 ; 4 uses
   %i.ad = getelementptr i8, ptr %i.ac, i64 -16
   %i.ae = getelementptr i8, ptr %i.ac, i64 -32
   %wide.load = load <2 x ptr>, ptr %i.ad, align 8, !tbaa !36
@@ -278,26 +285,27 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.ag = getelementptr i8, ptr %i.ac, i64 -24
   store <2 x ptr> %wide.load, ptr %i.af, align 8, !tbaa !36
   store <2 x ptr> %wide.load66, ptr %i.ag, align 8, !tbaa !36
-  %index.next = add nuw i64 %index, 4             ; 2 uses
-  %i.ah = icmp eq i64 %index.next, %n.vec
+  %index.next = add nuw i32 %index, 4             ; 2 uses
+  %i.ah = icmp eq i32 %index.next, %n.vec
   br i1 %i.ah, label %middle.block, label %vector.body, !llvm.loop !67
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %4, %n.vec
+  %cmp.n = icmp eq i32 %3, %n.vec
   br i1 %cmp.n, label %.loopexit, label %scalar.ph.preheader
 
-scalar.ph.preheader:                              ; preds = %.preheader49.a, %middle.block
-  %indvars.iv.ph = phi i64 [ %indvars.iv.i, %.preheader49.a ], [ %5, %middle.block ]
+scalar.ph.preheader:                              ; preds = %.preheader49.a, %.preheader49, %middle.block
+  %.055.ph = phi i32 [ %i.o, %.preheader49.a ], [ %i.o, %.preheader49 ], [ %8, %middle.block ]
   br label %scalar.ph
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %scalar.ph ], [ %indvars.iv.ph, %scalar.ph.preheader ] ; 2 uses
-  %i.ai = getelementptr [8 x i8], ptr %2, i64 %indvars.iv ; 2 uses
+  %.055 = phi i32 [ %12, %scalar.ph ], [ %.055.ph, %scalar.ph.preheader ] ; 2 uses
+  %11 = zext nneg i32 %.055 to i64
+  %i.ai = getelementptr [8 x i8], ptr %2, i64 %11 ; 2 uses
   %i.aj = getelementptr i8, ptr %i.ai, i64 -8
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !36
   store ptr %i.ak, ptr %i.ai, align 8, !tbaa !36
-  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
-  %i.al = icmp sgt i64 %indvars.iv.next, %3
+  %12 = add nsw i32 %.055, -1                     ; 2 uses
+  %i.al = icmp sgt i32 %12, %spec.select
   br i1 %i.al, label %scalar.ph, label %.loopexit, !llvm.loop !70
 
 .loopexit:                                        ; preds = %scalar.ph, %middle.block, %.lr.ph, %.preheader50
@@ -700,7 +708,7 @@ attributes #7 = { nounwind }
 !67 = distinct !{!67, !35, !68, !69}
 !68 = !{!"llvm.loop.isvectorized", i32 1}
 !69 = !{!"llvm.loop.unroll.runtime.disable"}
-!70 = distinct !{!70, !35, !69, !68}
+!70 = distinct !{!70, !35, !68}
 !71 = !{!9, !10, i64 0}
 !72 = distinct !{!72, !35}
 !73 = distinct !{!73, !35}

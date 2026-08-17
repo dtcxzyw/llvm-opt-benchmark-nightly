@@ -135,9 +135,9 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.m
   %i.ae = xor i32 %i.f, -1
-  %i.af = add nsw i32 %.085, %i.ae                ; 8 uses
-  %6 = sext i32 %i.af to i64                      ; 3 uses
-  %i.ag = getelementptr inbounds i8, ptr %.084, i64 %6 ; 2 uses
+  %i.af = add nsw i32 %.085, %i.ae                ; 7 uses
+  %6 = zext i32 %i.af to i64                      ; 9 uses
+  %i.ag = getelementptr inbounds nuw i8, ptr %.084, i64 %6 ; 2 uses
   %i.ah = tail call noalias ptr @CRYPTO_malloc(i64 noundef %6, ptr noundef nonnull @.str, i32 noundef 108) #9 ; 18 uses
   %i.ai = icmp eq ptr %i.ah, null
   br i1 %i.ai, label %bb.af, label %bb.p
@@ -153,7 +153,6 @@ bb.p:                                             ; preds = %bb.o
   br i1 %i.am, label %iter.check, label %._crit_edge
 
 iter.check:                                       ; preds = %.preheader
-  %wide.trip.count = zext nneg i32 %i.af to i64   ; 6 uses
   %min.iters.check = icmp ult i32 %i.af, 4
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.main.loop.iter.check
 
@@ -162,8 +161,8 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
   br i1 %min.iters.check126, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.an = and i64 %wide.trip.count, 28
-  %n.vec = and i64 %wide.trip.count, 2147483616   ; 4 uses
+  %i.an = and i64 %6, 28
+  %n.vec = and i64 %6, 2147483616                 ; 4 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -185,7 +184,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.au, label %middle.block, label %vector.body, !llvm.loop !24
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
+  %cmp.n = icmp eq i64 %n.vec, %6
   br i1 %cmp.n, label %._crit_edge, label %vec.epilog.iter.check
 
 vec.epilog.iter.check:                            ; preds = %middle.block
@@ -194,7 +193,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec130 = and i64 %wide.trip.count, 2147483644 ; 3 uses
+  %n.vec130 = and i64 %6, 2147483644              ; 3 uses
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
@@ -210,7 +209,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   br i1 %i.ay, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !29
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
-  %cmp.n135 = icmp eq i64 %n.vec130, %wide.trip.count
+  %cmp.n135 = icmp eq i64 %n.vec130, %6
   br i1 %cmp.n135, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
@@ -226,7 +225,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.bd = xor i8 %i.bc, %i.ba
   store i8 %i.bd, ptr %i.bb, align 1, !tbaa !23
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %6
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !30
 
 ._crit_edge:                                      ; preds = %.lr.ph, %middle.block, %vec.epilog.middle.block, %.preheader
@@ -501,8 +500,8 @@ bb.r:                                             ; preds = %bb.q, %bb.o
   %.083 = phi ptr [ %i.y, %bb.q ], [ null, %bb.o ] ; 12 uses
   %i.ae = xor i32 %i.c, -1
   %i.af = add nsw i32 %.085, %i.ae
-  %6 = sext i32 %i.af to i64                      ; 2 uses
-  %i.ag = getelementptr inbounds i8, ptr %.084, i64 %6 ; 2 uses
+  %6 = zext nneg i32 %i.af to i64                 ; 2 uses
+  %i.ag = getelementptr inbounds nuw i8, ptr %.084, i64 %6 ; 2 uses
   %i.ah = tail call ptr @EVP_MD_CTX_new() #9      ; 13 uses
   %i.ai = icmp eq ptr %i.ah, null
   br i1 %i.ai, label %bb.ac, label %bb.s

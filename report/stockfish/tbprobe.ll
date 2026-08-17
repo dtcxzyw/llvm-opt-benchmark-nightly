@@ -204,15 +204,15 @@ bb.au:                                            ; preds = %bb.at, %_ZN9Stockfi
 .preheader130.thread.i.i.i:                       ; preds = %bb.au
   %i.ko = getelementptr inbounds nuw [240 x i8], ptr %i.iy, i64 %i.kn ; 4 uses
   %i.kp = getelementptr inbounds nuw i8, ptr %i.ko, i64 200 ; 2 uses
-  %i.kq = getelementptr inbounds nuw i8, ptr %i.ko, i64 204 ; 3 uses
-  %i.kr = getelementptr inbounds nuw i8, ptr %i.ko, i64 136 ; 2 uses
-  %i.ks = getelementptr inbounds nuw i8, ptr %i.ko, i64 144 ; 2 uses
+  %i.kq = getelementptr inbounds nuw i8, ptr %i.ko, i64 136 ; 2 uses
+  %i.kr = getelementptr inbounds nuw i8, ptr %i.ko, i64 144 ; 2 uses
+  %i.ks = getelementptr inbounds nuw i8, ptr %i.ko, i64 204 ; 3 uses
   %i.kt = icmp eq i8 %i.kb, 0                     ; 2 uses
   %i.ku = icmp eq i32 %i.kh, 0                    ; 2 uses
   %i.kv = load i8, ptr %i.ja, align 1, !range !206
   %i.kw = trunc nuw i8 %i.kv to i1
   store i32 1, ptr %i.kp, align 4, !tbaa !89
-  store i32 0, ptr %i.kq, align 4, !tbaa !89
+  store i32 0, ptr %i.ks, align 4, !tbaa !89
   br i1 %i.km, label %bb.az, label %.thread68.split.i.preheader.i.i.i
 
 iter.check:                                       ; preds = %bb.au
@@ -329,9 +329,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.mb = getelementptr inbounds nuw [240 x i8], ptr %i.iy, i64 %i.kn ; 5 uses
   %i.mc = getelementptr inbounds nuw i8, ptr %i.mb, i64 200 ; 6 uses
   %i.md = getelementptr inbounds nuw i8, ptr %i.mb, i64 128
-  %i.me = getelementptr inbounds nuw i8, ptr %i.mb, i64 204 ; 2 uses
-  %i.mf = getelementptr inbounds nuw i8, ptr %i.mb, i64 136 ; 2 uses
-  %i.mg = getelementptr inbounds nuw i8, ptr %i.mb, i64 144 ; 2 uses
+  %i.me = getelementptr inbounds nuw i8, ptr %i.mb, i64 136 ; 2 uses
+  %i.mf = getelementptr inbounds nuw i8, ptr %i.mb, i64 144 ; 2 uses
+  %i.mg = getelementptr inbounds nuw i8, ptr %i.mb, i64 204 ; 2 uses
   %i.mh = icmp eq i8 %i.kb, 0                     ; 2 uses
   %i.mi = icmp eq i32 %i.kh, 0                    ; 2 uses
   %i.mj = load i8, ptr %i.ja, align 1, !range !206
@@ -455,9 +455,9 @@ bb.az:                                            ; preds = %._crit_edge.i.i.i.i
   %.064.lcssa.i229.i.i.i = phi i32 [ 0, %.preheader130.thread.i.i.i ], [ %.064.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 2 uses
   %.1.lcssa214225.i.i.i = phi ptr [ %i.kj, %.preheader130.thread.i.i.i ], [ %.lcssa279, %._crit_edge.i.i.i.i ] ; 2 uses
   %i.ou = phi ptr [ %i.kp, %.preheader130.thread.i.i.i ], [ %i.mc, %._crit_edge.i.i.i.i ] ; 2 uses
-  %i.ov = phi ptr [ %i.kq, %.preheader130.thread.i.i.i ], [ %i.me, %._crit_edge.i.i.i.i ] ; 2 uses
-  %i.ow = phi ptr [ %i.kr, %.preheader130.thread.i.i.i ], [ %i.mf, %._crit_edge.i.i.i.i ] ; 4 uses
-  %i.ox = phi ptr [ %i.ks, %.preheader130.thread.i.i.i ], [ %i.mg, %._crit_edge.i.i.i.i ]
+  %i.ov = phi ptr [ %i.kq, %.preheader130.thread.i.i.i ], [ %i.me, %._crit_edge.i.i.i.i ] ; 4 uses
+  %i.ow = phi ptr [ %i.kr, %.preheader130.thread.i.i.i ], [ %i.mf, %._crit_edge.i.i.i.i ]
+  %i.ox = phi ptr [ %i.ks, %.preheader130.thread.i.i.i ], [ %i.mg, %._crit_edge.i.i.i.i ] ; 2 uses
   %i.oy = phi i1 [ %i.kt, %.preheader130.thread.i.i.i ], [ %i.mh, %._crit_edge.i.i.i.i ] ; 2 uses
   %i.oz = phi i1 [ %i.ku, %.preheader130.thread.i.i.i ], [ %i.mi, %._crit_edge.i.i.i.i ]
   %invariant.gep215223.i.i.i = getelementptr [4 x i8], ptr @_ZN9Stockfish12_GLOBAL__N_113LeadPawnsSizeE, i64 %indvars.iv178.i.i.i
@@ -466,21 +466,21 @@ bb.az:                                            ; preds = %._crit_edge.i.i.i.i
   br i1 %.not69.i.i.i.i, label %.thread68.split.us.i.preheader.i.i.i, label %bb.ba
 
 bb.ba:                                            ; preds = %bb.az
-  %i.pb = load i32, ptr %i.ov, align 4, !tbaa !89
+  %i.pb = load i32, ptr %i.ox, align 4, !tbaa !89
   %i.pc = sub i32 64, %i.pb
   br label %.thread68.split.us.i.preheader.i.i.i
 
 .thread68.split.i.preheader.i.i.i:                ; preds = %._crit_edge.i.i..thread68.split.i.preheader.i_crit_edge.i.i, %.preheader130.thread.i.i.i
-  %i.pd = phi i32 [ %.pre.i.i, %._crit_edge.i.i..thread68.split.i.preheader.i_crit_edge.i.i ], [ 1, %.preheader130.thread.i.i.i ] ; 2 uses
-  %i.pe = phi i64 [ %i.oa, %._crit_edge.i.i..thread68.split.i.preheader.i_crit_edge.i.i ], [ 1, %.preheader130.thread.i.i.i ] ; 2 uses
-  %.064.lcssa.i228.i.i.i = phi i32 [ %.064.lcssa.i.i.i.i, %._crit_edge.i.i..thread68.split.i.preheader.i_crit_edge.i.i ], [ 0, %.preheader130.thread.i.i.i ] ; 2 uses
-  %.1.lcssa214224.i.i.i = phi ptr [ %.lcssa279, %._crit_edge.i.i..thread68.split.i.preheader.i_crit_edge.i.i ], [ %i.kj, %.preheader130.thread.i.i.i ] ; 2 uses
-  %i.pf = phi ptr [ %i.me, %._crit_edge.i.i..thread68.split.i.preheader.i_crit_edge.i.i ], [ %i.kq, %.preheader130.thread.i.i.i ]
-  %i.pg = phi ptr [ %i.mf, %._crit_edge.i.i..thread68.split.i.preheader.i_crit_edge.i.i ], [ %i.kr, %.preheader130.thread.i.i.i ] ; 4 uses
-  %i.ph = phi ptr [ %i.mg, %._crit_edge.i.i..thread68.split.i.preheader.i_crit_edge.i.i ], [ %i.ks, %.preheader130.thread.i.i.i ]
-  %i.pi = phi i1 [ %i.mh, %._crit_edge.i.i..thread68.split.i.preheader.i_crit_edge.i.i ], [ %i.kt, %.preheader130.thread.i.i.i ] ; 2 uses
-  %i.pj = phi i1 [ %i.mi, %._crit_edge.i.i..thread68.split.i.preheader.i_crit_edge.i.i ], [ %i.ku, %.preheader130.thread.i.i.i ]
-  %i.pk = phi i1 [ %i.mk, %._crit_edge.i.i..thread68.split.i.preheader.i_crit_edge.i.i ], [ %i.kw, %.preheader130.thread.i.i.i ]
+  %i.pd = phi i32 [ 1, %.preheader130.thread.i.i.i ], [ %.pre.i.i, %._crit_edge.i.i..thread68.split.i.preheader.i_crit_edge.i.i ] ; 2 uses
+  %i.pe = phi i64 [ 1, %.preheader130.thread.i.i.i ], [ %i.oa, %._crit_edge.i.i..thread68.split.i.preheader.i_crit_edge.i.i ] ; 2 uses
+  %.064.lcssa.i228.i.i.i = phi i32 [ 0, %.preheader130.thread.i.i.i ], [ %.064.lcssa.i.i.i.i, %._crit_edge.i.i..thread68.split.i.preheader.i_crit_edge.i.i ] ; 2 uses
+  %.1.lcssa214224.i.i.i = phi ptr [ %i.kj, %.preheader130.thread.i.i.i ], [ %.lcssa279, %._crit_edge.i.i..thread68.split.i.preheader.i_crit_edge.i.i ] ; 2 uses
+  %i.pf = phi ptr [ %i.kq, %.preheader130.thread.i.i.i ], [ %i.me, %._crit_edge.i.i..thread68.split.i.preheader.i_crit_edge.i.i ] ; 4 uses
+  %i.pg = phi ptr [ %i.kr, %.preheader130.thread.i.i.i ], [ %i.mf, %._crit_edge.i.i..thread68.split.i.preheader.i_crit_edge.i.i ]
+  %i.ph = phi ptr [ %i.ks, %.preheader130.thread.i.i.i ], [ %i.mg, %._crit_edge.i.i..thread68.split.i.preheader.i_crit_edge.i.i ]
+  %i.pi = phi i1 [ %i.kt, %.preheader130.thread.i.i.i ], [ %i.mh, %._crit_edge.i.i..thread68.split.i.preheader.i_crit_edge.i.i ] ; 2 uses
+  %i.pj = phi i1 [ %i.ku, %.preheader130.thread.i.i.i ], [ %i.mi, %._crit_edge.i.i..thread68.split.i.preheader.i_crit_edge.i.i ]
+  %i.pk = phi i1 [ %i.kw, %.preheader130.thread.i.i.i ], [ %i.mk, %._crit_edge.i.i..thread68.split.i.preheader.i_crit_edge.i.i ]
   %i.pl = sub nsw i32 48, %i.pd
   %i.pm = sext i32 %i.pl to i64
   %invariant.gep.i.i.i.i = getelementptr [4 x i8], ptr @_ZN9Stockfish12_GLOBAL__N_18BinomialE, i64 %i.pm
@@ -526,7 +526,7 @@ bb.bb:                                            ; preds = %.critedge.us.i.i.i.
 
 bb.bc:                                            ; preds = %bb.bb
   %i.pw = sext i32 %.062.us.i147.i.i.i to i64     ; 2 uses
-  %i.px = getelementptr inbounds [8 x i8], ptr %i.ow, i64 %i.pw
+  %i.px = getelementptr inbounds [8 x i8], ptr %i.ov, i64 %i.pw
   store i64 %.059.us.i149.i.i.i, ptr %i.px, align 8, !tbaa !17
   %i.py = getelementptr inbounds [4 x i8], ptr %i.ou, i64 %i.pw
   %i.pz = load i32, ptr %i.py, align 4, !tbaa !89 ; 2 uses
@@ -539,14 +539,14 @@ bb.bc:                                            ; preds = %bb.bb
   br label %.thread68.split.us.i.i.i.i
 
 bb.bd:                                            ; preds = %bb.bb
-  store i64 %.059.us.i149.i.i.i, ptr %i.ox, align 8, !tbaa !17
-  %i.qg = load i32, ptr %i.ov, align 4, !tbaa !89
+  store i64 %.059.us.i149.i.i.i, ptr %i.ow, align 8, !tbaa !17
+  %i.qg = load i32, ptr %i.ox, align 4, !tbaa !89
   %i.qh = sext i32 %i.qg to i64
   %gep.us.i.i.i.i = getelementptr [256 x i8], ptr %invariant.gep.i236.i.i.i, i64 %i.qh
   br label %.thread68.split.us.i.i.i.i
 
 bb.be:                                            ; preds = %.critedge.us.i.i.i.i
-  store i64 %.059.us.i149.i.i.i, ptr %i.ow, align 8, !tbaa !17
+  store i64 %.059.us.i149.i.i.i, ptr %i.ov, align 8, !tbaa !17
   br label %.thread68.split.us.i.i.i.i
 
 .thread68.split.us.i.i.i.i:                       ; preds = %bb.be, %bb.bd, %bb.bc
@@ -573,7 +573,7 @@ bb.be:                                            ; preds = %.critedge.us.i.i.i.
   br i1 %i.ql, label %bb.bf, label %bb.bg
 
 bb.bf:                                            ; preds = %.critedge.i.i.i.i
-  store i64 %.059.i141.i.i.i, ptr %i.pg, align 8, !tbaa !17
+  store i64 %.059.i141.i.i.i, ptr %i.pf, align 8, !tbaa !17
   br label %.thread68.split.i.i.i.i
 
 bb.bg:                                            ; preds = %.critedge.i.i.i.i
@@ -581,8 +581,8 @@ bb.bg:                                            ; preds = %.critedge.i.i.i.i
   br i1 %i.qm, label %bb.bh, label %bb.bi
 
 bb.bh:                                            ; preds = %bb.bg
-  store i64 %.059.i141.i.i.i, ptr %i.ph, align 8, !tbaa !17
-  %i.qn = load i32, ptr %i.pf, align 4, !tbaa !89
+  store i64 %.059.i141.i.i.i, ptr %i.pg, align 8, !tbaa !17
+  %i.qn = load i32, ptr %i.ph, align 4, !tbaa !89
   %i.qo = sext i32 %i.qn to i64
   %gep.i.i.i.i = getelementptr [256 x i8], ptr %invariant.gep.i.i.i.i, i64 %i.qo
   %i.qp = load i32, ptr %gep.i.i.i.i, align 4, !tbaa !89
@@ -590,7 +590,7 @@ bb.bh:                                            ; preds = %bb.bg
 
 bb.bi:                                            ; preds = %bb.bg
   %i.qq = sext i32 %.062.i139.i.i.i to i64        ; 2 uses
-  %i.qr = getelementptr inbounds [8 x i8], ptr %i.pg, i64 %i.qq
+  %i.qr = getelementptr inbounds [8 x i8], ptr %i.pf, i64 %i.qq
   store i64 %.059.i141.i.i.i, ptr %i.qr, align 8, !tbaa !17
   %i.qs = getelementptr inbounds [4 x i8], ptr %i.jc, i64 %i.qq
   %i.qt = load i32, ptr %i.qs, align 4, !tbaa !89 ; 2 uses
@@ -618,11 +618,11 @@ bb.bi:                                            ; preds = %bb.bg
   br i1 %or.cond119.i.i.i, label %.critedge.i.i.i.i, label %_ZN9Stockfish12_GLOBAL__N_110set_groupsINS0_7TBTableILNS0_6TBTypeE1EEEEEvRT_PNS0_9PairsDataEPiNS_4FileE.exit.i.i.i, !llvm.loop !295
 
 _ZN9Stockfish12_GLOBAL__N_110set_groupsINS0_7TBTableILNS0_6TBTypeE1EEEEEvRT_PNS0_9PairsDataEPiNS_4FileE.exit.i.i.i: ; preds = %.thread68.split.i.i.i.i, %.thread68.split.us.i.i.i.i, %.thread68.split.us.i.preheader.i.i.i, %.thread68.split.i.preheader.i.i.i
-  %17 = phi ptr [ %i.ow, %.thread68.split.us.i.i.i.i ], [ %i.ow, %.thread68.split.us.i.preheader.i.i.i ], [ %i.pg, %.thread68.split.i.preheader.i.i.i ], [ %i.pg, %.thread68.split.i.i.i.i ]
+  %17 = phi i64 [ %i.ot, %.thread68.split.us.i.i.i.i ], [ %i.ot, %.thread68.split.us.i.preheader.i.i.i ], [ %i.pe, %.thread68.split.i.preheader.i.i.i ], [ %i.pe, %.thread68.split.i.i.i.i ]
   %.1.lcssa214224239.i.i.i = phi ptr [ %.1.lcssa214225.i.i.i, %.thread68.split.us.i.i.i.i ], [ %.1.lcssa214225.i.i.i, %.thread68.split.us.i.preheader.i.i.i ], [ %.1.lcssa214224.i.i.i, %.thread68.split.i.preheader.i.i.i ], [ %.1.lcssa214224.i.i.i, %.thread68.split.i.i.i.i ] ; 3 uses
-  %18 = phi i64 [ %i.ot, %.thread68.split.us.i.i.i.i ], [ %i.ot, %.thread68.split.us.i.preheader.i.i.i ], [ %i.pe, %.thread68.split.i.preheader.i.i.i ], [ %i.pe, %.thread68.split.i.i.i.i ]
+  %18 = phi ptr [ %i.ov, %.thread68.split.us.i.i.i.i ], [ %i.ov, %.thread68.split.us.i.preheader.i.i.i ], [ %i.pf, %.thread68.split.i.preheader.i.i.i ], [ %i.pf, %.thread68.split.i.i.i.i ]
   %.us-phi.i.i.i.i = phi i64 [ %.1.us.i.i.i.i, %.thread68.split.us.i.i.i.i ], [ 1, %.thread68.split.us.i.preheader.i.i.i ], [ 1, %.thread68.split.i.preheader.i.i.i ], [ %.1.i.i.i.i, %.thread68.split.i.i.i.i ]
-  %i.re = getelementptr inbounds [8 x i8], ptr %17, i64 %18
+  %i.re = getelementptr inbounds [8 x i8], ptr %18, i64 %17
   store i64 %.us-phi.i.i.i.i, ptr %i.re, align 8, !tbaa !17
   %indvars.iv.next179.i.i.i = add nuw nsw i64 %indvars.iv178.i.i.i, 1 ; 2 uses
   %exitcond182.i.i.i = icmp eq i64 %indvars.iv.next179.i.i.i, %wide.trip.count181.i.i.i
@@ -1025,7 +1025,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .preheader133.i.i:                                ; preds = %.loopexit.i.i.prol.loopexit, %.loopexit.i.i, %.preheader132.lr.ph.i.split.us.i.prol.loopexit, %.preheader132.lr.ph.i.split.us.i, %middle.block52, %vec.epilog.middle.block67, %middle.block, %vec.epilog.middle.block, %..preheader133_crit_edge.i.i
   %i.ni = phi i8 [ %.pre.i60.i, %..preheader133_crit_edge.i.i ], [ %i.jn, %middle.block ], [ %i.jn, %middle.block52 ], [ %i.jn, %vec.epilog.middle.block ], [ %i.jn, %.preheader132.lr.ph.i.split.us.i.prol.loopexit ], [ %i.jn, %vec.epilog.middle.block67 ], [ %i.jn, %.preheader132.lr.ph.i.split.us.i ], [ %i.jn, %.loopexit.i.i ], [ %i.jn, %.loopexit.i.i.prol.loopexit ]
   %.1.lcssa.i.i = phi ptr [ %i.jk, %..preheader133_crit_edge.i.i ], [ %i.ky, %middle.block ], [ %i.jy, %middle.block52 ], [ %i.ll, %vec.epilog.middle.block ], [ %i.nh, %.preheader132.lr.ph.i.split.us.i ], [ %i.ke, %vec.epilog.middle.block67 ], [ %.lcssa282.unr, %.preheader132.lr.ph.i.split.us.i.prol.loopexit ], [ %.lcssa281.unr, %.loopexit.i.i.prol.loopexit ], [ %i.po, %.loopexit.i.i ] ; 3 uses
-  %i.nj = trunc nuw i8 %i.ni to i1                ; 4 uses
+  %i.nj = trunc nuw i8 %i.ni to i1                ; 3 uses
   %i.nk = select i1 %i.nj, i64 %indvars.iv187.i.i, i64 0
   %invariant.gep.i.i = getelementptr inbounds nuw [240 x i8], ptr %i.hk, i64 %i.nk
   %invariant.gep139.i.i = getelementptr [4 x i8], ptr @_ZN9Stockfish12_GLOBAL__N_113LeadPawnsSizeE, i64 %indvars.iv187.i.i
@@ -1126,11 +1126,11 @@ bb.ao:                                            ; preds = %_ZN9Stockfish12_GLO
 bb.ap:                                            ; preds = %_ZN9Stockfish12_GLOBAL__N_110set_groupsINS0_7TBTableILNS0_6TBTypeE0EEEEEvRT_PNS0_9PairsDataEPiNS_4FileE.exit.i.i, %.preheader133.i.i
   %indvars.iv182.i.i = phi i64 [ 0, %.preheader133.i.i ], [ %indvars.iv.next183.i.i, %_ZN9Stockfish12_GLOBAL__N_110set_groupsINS0_7TBTableILNS0_6TBTypeE0EEEEEvRT_PNS0_9PairsDataEPiNS_4FileE.exit.i.i ] ; 3 uses
   %i.pp = and i64 %indvars.iv182.i.i, 1
-  %gep.i.i = getelementptr inbounds nuw [960 x i8], ptr %invariant.gep.i.i, i64 %i.pp ; 6 uses
-  %i.pq = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %indvars.iv182.i.i ; 2 uses
+  %gep.i.i = getelementptr inbounds nuw [960 x i8], ptr %invariant.gep.i.i, i64 %i.pp ; 10 uses
+  %i.pq = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %indvars.iv182.i.i ; 4 uses
   %i.pr = load i8, ptr %i.hp, align 1, !range !206
   %i.ps = trunc nuw i8 %i.pr to i1                ; 2 uses
-  %i.pt = getelementptr inbounds nuw i8, ptr %gep.i.i, i64 200 ; 7 uses
+  %i.pt = getelementptr inbounds nuw i8, ptr %gep.i.i, i64 200 ; 8 uses
   store i32 1, ptr %i.pt, align 4, !tbaa !89
   %i.pu = load i32, ptr %i.ho, align 8, !tbaa !202
   %i.pv = icmp sgt i32 %i.pu, 1
@@ -1148,7 +1148,7 @@ bb.ap:                                            ; preds = %_ZN9Stockfish12_GLO
   %i.pz = sext i32 %i.py to i64                   ; 2 uses
   %i.qa = getelementptr inbounds [4 x i8], ptr %i.pt, i64 %i.pz
   store i32 0, ptr %i.qa, align 4, !tbaa !89
-  br i1 %i.nj, label %bb.au, label %.thread68.i.i.i
+  br i1 %i.nj, label %bb.au, label %.thread68.split.preheader.i.i.i
 
 select.unfold.i.i:                                ; preds = %.lr.ph.i.i.i, %bb.at
   %indvars.iv.i.i.i = phi i64 [ %indvars.iv.next.i.i.i, %bb.at ], [ 1, %.lr.ph.i.i.i ] ; 2 uses
@@ -1200,26 +1200,39 @@ bb.av:                                            ; preds = %bb.au
   %i.qv = sub i32 64, %i.qu
   br label %.thread68.i.i.i
 
-.thread68.i.i.i:                                  ; preds = %bb.av, %bb.au, %._crit_edge.i.i.i
-  %12 = phi i32 [ 2, %bb.av ], [ 1, %bb.au ], [ 1, %._crit_edge.i.i.i ] ; 2 uses
-  %.neg71.i.i.i = phi i32 [ %i.qv, %bb.av ], [ 64, %bb.au ], [ 64, %._crit_edge.i.i.i ]
+.thread68.split.preheader.i.i.i:                  ; preds = %._crit_edge.i.i.i
+  %12 = load i32, ptr %i.pt, align 8, !tbaa !89   ; 2 uses
+  %13 = sub i32 64, %12
+  %14 = getelementptr inbounds nuw i8, ptr %i.pq, i64 4 ; 2 uses
+  %15 = getelementptr inbounds nuw i8, ptr %gep.i.i, i64 136 ; 2 uses
+  %16 = getelementptr inbounds nuw i8, ptr %gep.i.i, i64 144
+  %17 = getelementptr inbounds nuw i8, ptr %gep.i.i, i64 204
+  %18 = sub nsw i32 48, %12
+  %19 = sext i32 %18 to i64
+  %invariant.gep.i.i.i = getelementptr [4 x i8], ptr @_ZN9Stockfish12_GLOBAL__N_18BinomialE, i64 %19
+  %20 = select i1 %i.ps, i32 31332, i32 462
+  %.pre.pre.i.i.i = load i32, ptr %i.pq, align 8, !tbaa !89
+  br label %.thread68.split.i.i.i
+
+.thread68.i.i.i:                                  ; preds = %bb.av, %bb.au
+  %.ph.i.i.i = phi i32 [ 1, %bb.au ], [ 2, %bb.av ]
+  %.neg71.ph.i.i.i = phi i32 [ 64, %bb.au ], [ %i.qv, %bb.av ]
   %i.qw = load i32, ptr %i.pt, align 8, !tbaa !89 ; 3 uses
-  %i.qx = sub i32 %.neg71.i.i.i, %i.qw            ; 2 uses
-  %i.qy = getelementptr inbounds nuw i8, ptr %i.pq, i64 4 ; 4 uses
-  %i.qz = getelementptr inbounds nuw i8, ptr %gep.i.i, i64 136 ; 5 uses
-  %i.ra = getelementptr inbounds nuw i8, ptr %gep.i.i, i64 144 ; 2 uses
-  %i.rb = getelementptr inbounds nuw i8, ptr %gep.i.i, i64 204 ; 2 uses
+  %i.qx = sub i32 %.neg71.ph.i.i.i, %i.qw
+  %i.qy = getelementptr inbounds nuw i8, ptr %i.pq, i64 4 ; 2 uses
+  %i.qz = getelementptr inbounds nuw i8, ptr %gep.i.i, i64 136 ; 2 uses
+  %i.ra = getelementptr inbounds nuw i8, ptr %gep.i.i, i64 144
+  %i.rb = getelementptr inbounds nuw i8, ptr %gep.i.i, i64 204
   %i.rc = sub nsw i32 48, %i.qw
   %i.rd = sext i32 %i.rc to i64
-  %invariant.gep.i.i.i.a = getelementptr [4 x i8], ptr @_ZN9Stockfish12_GLOBAL__N_18BinomialE, i64 %i.rd ; 2 uses
-  %13 = select i1 %i.ps, i32 31332, i32 462
+  %invariant.gep.i.i.i.a = getelementptr [4 x i8], ptr @_ZN9Stockfish12_GLOBAL__N_18BinomialE, i64 %i.rd
   %i.re = sext i32 %i.qw to i64
   %gep140.i.i = getelementptr [16 x i8], ptr %invariant.gep139.i.i, i64 %i.re
-  %.pre78.pre.i.i.i = load i32, ptr %i.pq, align 8, !tbaa !89 ; 2 uses
-  br i1 %i.nj, label %.thread68.split.us.i.i.i, label %.thread68.split.i.i.i
+  %.pre78.pre.i.i.i = load i32, ptr %i.pq, align 8, !tbaa !89
+  br label %.thread68.split.us.i.i.i
 
-.thread68.split.us.i.i.i:                         ; preds = %.thread68.i.i.i, %bb.bb
-  %.062.us.i.i.i = phi i32 [ %.163.us.i.i.i, %bb.bb ], [ %12, %.thread68.i.i.i ] ; 5 uses
+.thread68.split.us.i.i.i:                         ; preds = %bb.bb, %.thread68.i.i.i
+  %.062.us.i.i.i = phi i32 [ %.163.us.i.i.i, %bb.bb ], [ %.ph.i.i.i, %.thread68.i.i.i ] ; 5 uses
   %.060.us.i.i.i = phi i32 [ %.161.us.i.i.i, %bb.bb ], [ %i.qx, %.thread68.i.i.i ] ; 4 uses
   %.059.us.i.i.i = phi i64 [ %.1.us.i.i.i, %bb.bb ], [ 1, %.thread68.i.i.i ] ; 5 uses
   %.0.us.i.i.i = phi i32 [ %i.rw, %bb.bb ], [ 0, %.thread68.i.i.i ] ; 4 uses
@@ -1276,18 +1289,18 @@ bb.bb:                                            ; preds = %bb.ba, %bb.az, %bb.
   %i.rw = add nuw nsw i32 %.0.us.i.i.i, 1
   br label %.thread68.split.us.i.i.i, !llvm.loop !444
 
-.thread68.split.i.i.i:                            ; preds = %.thread68.i.i.i, %bb.bh
-  %.062.i.i.i = phi i32 [ %.163.i.i.i, %bb.bh ], [ %12, %.thread68.i.i.i ] ; 5 uses
-  %.060.i.i.i = phi i32 [ %.161.i.i.i, %bb.bh ], [ %i.qx, %.thread68.i.i.i ] ; 4 uses
-  %.059.i.i.i = phi i64 [ %.1.i.i.i, %bb.bh ], [ 1, %.thread68.i.i.i ] ; 5 uses
-  %.0.i.i.i = phi i32 [ %i.sq, %bb.bh ], [ 0, %.thread68.i.i.i ] ; 4 uses
+.thread68.split.i.i.i:                            ; preds = %bb.bh, %.thread68.split.preheader.i.i.i
+  %.062.i.i.i = phi i32 [ %.163.i.i.i, %bb.bh ], [ 1, %.thread68.split.preheader.i.i.i ] ; 5 uses
+  %.060.i.i.i = phi i32 [ %.161.i.i.i, %bb.bh ], [ %13, %.thread68.split.preheader.i.i.i ] ; 4 uses
+  %.059.i.i.i = phi i64 [ %.1.i.i.i, %bb.bh ], [ 1, %.thread68.split.preheader.i.i.i ] ; 5 uses
+  %.0.i.i.i = phi i32 [ %i.sq, %bb.bh ], [ 0, %.thread68.split.preheader.i.i.i ] ; 4 uses
   %.not.i.i61.i = icmp sle i32 %.062.i.i.i, %.064.lcssa.i.i.i
-  %i.rx = icmp eq i32 %.0.i.i.i, %.pre78.pre.i.i.i ; 2 uses
+  %i.rx = icmp eq i32 %.0.i.i.i, %.pre.pre.i.i.i  ; 2 uses
   %or.cond80.i.i.i = select i1 %.not.i.i61.i, i1 true, i1 %i.rx
   br i1 %or.cond80.i.i.i, label %.critedge.i.i.i, label %bb.bc
 
 bb.bc:                                            ; preds = %.thread68.split.i.i.i
-  %i.ry = load i32, ptr %i.qy, align 4, !tbaa !89
+  %i.ry = load i32, ptr %14, align 4, !tbaa !89
   %i.rz = icmp eq i32 %.0.i.i.i, %i.ry
   br i1 %i.rz, label %.critedge.i.i.i, label %_ZN9Stockfish12_GLOBAL__N_110set_groupsINS0_7TBTableILNS0_6TBTypeE0EEEEEvRT_PNS0_9PairsDataEPiNS_4FileE.exit.i.i
 
@@ -1295,25 +1308,25 @@ bb.bc:                                            ; preds = %.thread68.split.i.i
   br i1 %i.rx, label %bb.bd, label %bb.be
 
 bb.bd:                                            ; preds = %.critedge.i.i.i
-  store i64 %.059.i.i.i, ptr %i.qz, align 8, !tbaa !17
+  store i64 %.059.i.i.i, ptr %15, align 8, !tbaa !17
   br label %bb.bh
 
 bb.be:                                            ; preds = %.critedge.i.i.i
-  %i.sa = load i32, ptr %i.qy, align 4, !tbaa !89
+  %i.sa = load i32, ptr %14, align 4, !tbaa !89
   %i.sb = icmp eq i32 %.0.i.i.i, %i.sa
   br i1 %i.sb, label %bb.bf, label %bb.bg
 
 bb.bf:                                            ; preds = %bb.be
-  store i64 %.059.i.i.i, ptr %i.ra, align 8, !tbaa !17
-  %i.sc = load i32, ptr %i.rb, align 4, !tbaa !89
+  store i64 %.059.i.i.i, ptr %16, align 8, !tbaa !17
+  %i.sc = load i32, ptr %17, align 4, !tbaa !89
   %i.sd = sext i32 %i.sc to i64
-  %gep.i.i.i = getelementptr [256 x i8], ptr %invariant.gep.i.i.i.a, i64 %i.sd
+  %gep.i.i.i = getelementptr [256 x i8], ptr %invariant.gep.i.i.i, i64 %i.sd
   %i.se = load i32, ptr %gep.i.i.i, align 4, !tbaa !89
   br label %bb.bh
 
 bb.bg:                                            ; preds = %bb.be
   %i.sf = sext i32 %.062.i.i.i to i64             ; 2 uses
-  %i.sg = getelementptr inbounds [8 x i8], ptr %i.qz, i64 %i.sf
+  %i.sg = getelementptr inbounds [8 x i8], ptr %15, i64 %i.sf
   store i64 %.059.i.i.i, ptr %i.sg, align 8, !tbaa !17
   %i.sh = getelementptr inbounds [4 x i8], ptr %i.pt, i64 %i.sf
   %i.si = load i32, ptr %i.sh, align 4, !tbaa !89 ; 2 uses
@@ -1329,7 +1342,7 @@ bb.bg:                                            ; preds = %bb.be
 bb.bh:                                            ; preds = %bb.bg, %bb.bf, %bb.bd
   %.163.i.i.i = phi i32 [ %i.so, %bb.bg ], [ %.062.i.i.i, %bb.bf ], [ %.062.i.i.i, %bb.bd ]
   %.161.i.i.i = phi i32 [ %i.sp, %bb.bg ], [ %.060.i.i.i, %bb.bf ], [ %.060.i.i.i, %bb.bd ]
-  %.pn.in.i.i.i = phi i32 [ %i.sn, %bb.bg ], [ %i.se, %bb.bf ], [ %13, %bb.bd ]
+  %.pn.in.i.i.i = phi i32 [ %i.sn, %bb.bg ], [ %i.se, %bb.bf ], [ %20, %bb.bd ]
   %.pn.i.i.i = sext i32 %.pn.in.i.i.i to i64
   %.1.i.i.i = mul i64 %.059.i.i.i, %.pn.i.i.i
   %i.sq = add nuw nsw i32 %.0.i.i.i, 1
@@ -1337,7 +1350,8 @@ bb.bh:                                            ; preds = %bb.bg, %bb.bf, %bb.
 
 _ZN9Stockfish12_GLOBAL__N_110set_groupsINS0_7TBTableILNS0_6TBTypeE0EEEEEvRT_PNS0_9PairsDataEPiNS_4FileE.exit.i.i: ; preds = %bb.bc, %bb.aw
   %.us-phi.i.i.i = phi i64 [ %.059.us.i.i.i, %bb.aw ], [ %.059.i.i.i, %bb.bc ]
-  %i.sr = getelementptr inbounds [8 x i8], ptr %i.qz, i64 %i.pz
+  %21 = getelementptr inbounds nuw i8, ptr %gep.i.i, i64 136
+  %i.sr = getelementptr inbounds [8 x i8], ptr %21, i64 %i.pz
   store i64 %.us-phi.i.i.i, ptr %i.sr, align 8, !tbaa !17
   %indvars.iv.next183.i.i = add nuw nsw i64 %indvars.iv182.i.i, 1 ; 2 uses
   %exitcond186.not.i.i = icmp eq i64 %indvars.iv.next183.i.i, %wide.trip.count185.i.i
@@ -1740,7 +1754,7 @@ bb.f:                                             ; preds = %bb.e
 _ZSt4moveIPN9Stockfish6SquareES2_ET0_T_S4_S3_.exit: ; preds = %bb.f
   %i.bo = load i8, ptr %.058, align 1, !tbaa !95
   %i.bp = getelementptr inbounds nuw i8, ptr %.058, i64 1
-  %i.bq = getelementptr inbounds i8, ptr %.058, i64 %.086
+  %i.bq = getelementptr inbounds nuw i8, ptr %.058, i64 %.086
   %gepdiff = add nsw i64 %.086, -1
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %.058, ptr nonnull align 1 %i.bp, i64 %gepdiff, i1 false)
   %i.br = getelementptr inbounds i8, ptr %i.bq, i64 -1

@@ -204,7 +204,7 @@ bb.az:                                            ; preds = %bb.ay, %bb.ax
   %.pre314 = phi i64 [ %i.fo, %bb.ay ], [ %.pre314.pre, %bb.ax ] ; 2 uses
   %.sroa.026.0 = phi i64 [ %i.fd, %bb.ay ], [ %i.fl, %bb.ax ] ; 2 uses
   %i.fp = zext i16 %i.ei to i64
-  %i.fq = sub nsw i16 %i.dz, %..i                 ; 2 uses
+  %i.fq = sub nuw nsw i16 %i.dz, %..i             ; 2 uses
   %.not90240 = icmp eq i16 %i.fq, 0
   br i1 %.not90240, label %._crit_edge245, label %.lr.ph244
 
@@ -218,7 +218,7 @@ bb.az:                                            ; preds = %bb.ay, %bb.ax
   %i.ft = phi i64 [ %i.gk, %bb.bj ], [ %.pre314, %bb.az ] ; 5 uses
   %.sroa.036.0242 = phi i16 [ %i.fu, %bb.bj ], [ %i.fq, %bb.az ]
   %.sroa.026.1241 = phi i64 [ %i.gp, %bb.bj ], [ %.sroa.026.0, %bb.az ] ; 5 uses
-  %i.fu = add i16 %.sroa.036.0242, -1             ; 3 uses
+  %i.fu = add nsw i16 %.sroa.036.0242, -1         ; 3 uses
   %i.fv = icmp ult i64 %.sroa.026.1241, %i.ft
   br i1 %i.fv, label %bb.bh, label %.invoke406
 
@@ -292,8 +292,7 @@ bb.bi:                                            ; preds = %bb.bh
 bb.bj:                                            ; preds = %_RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecNtNtCsksn9slvsHfS_10image_webp7huffman15HuffmanTreeNodeE8push_mutBJ_.exit128, %bb.bi
   %i.gk = phi i64 [ %i.ft, %bb.bi ], [ %i.hh, %_RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecNtNtCsksn9slvsHfS_10image_webp7huffman15HuffmanTreeNodeE8push_mutBJ_.exit128 ] ; 2 uses
   %.sroa.043.0 = phi i64 [ %.sroa.542.0.copyload, %bb.bi ], [ %i.gw, %_RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecNtNtCsksn9slvsHfS_10image_webp7huffman15HuffmanTreeNodeE8push_mutBJ_.exit128 ]
-  %2 = and i16 %i.fu, 63
-  %i.gl = zext nneg i16 %2 to i64
+  %i.gl = zext nneg i16 %i.fu to i64
   %i.gm = lshr i64 %i.fp, %i.gl
   %i.gn = and i64 %i.gm, 1
   %i.go = add nuw i64 %i.gn, %.sroa.026.1241
@@ -341,7 +340,7 @@ bb.bo:                                            ; preds = %_RINvNtCsj6eKBz9Db1
 bb.bp:                                            ; preds = %bb.bh
   %i.gv = icmp ult i64 %i.ft, 576460752303423488
   tail call void @llvm.assume(i1 %i.gv)
-  %i.gw = sub i64 %i.ft, %.sroa.026.1241          ; 2 uses
+  %i.gw = sub nuw i64 %i.ft, %.sroa.026.1241      ; 2 uses
   store i16 0, ptr %i.gj, align 8
   %.sroa.447.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.gj, i64 8
   store i64 %i.gw, ptr %.sroa.447.0..sroa_idx, align 8
