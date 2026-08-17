@@ -201,7 +201,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 }
 
 ; Function Attrs: nounwind uwtable
-define internal range(i32 -1, 1) i32 @connSocketBlockingConnect(ptr nofree noundef writeonly captures(none) initializes((8, 12)) %0, ptr noundef %1, i32 noundef %2, i64 noundef %3) #0 {
+define internal range(i32 -1, 1) i32 @connSocketBlockingConnect(ptr nofree noundef writeonly captures(none) %0, ptr noundef %1, i32 noundef %2, i64 noundef %3) #0 {
 bb.a:
   %i.a = tail call i32 @anetTcpNonBlockConnect(ptr noundef null, ptr noundef %1, i32 noundef %2) #11 ; 3 uses
   %i.b = icmp eq i32 %i.a, -1
@@ -212,8 +212,6 @@ bb.b:                                             ; preds = %bb.a
   store i32 5, ptr %i.c, align 8, !tbaa !19
   %i.d = tail call ptr @__errno_location() #12
   %i.e = load i32, ptr %i.d, align 4, !tbaa !9
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 12
-  store i32 %i.e, ptr %4, align 4, !tbaa !22
   br label %bb.f
 
 bb.c:                                             ; preds = %bb.a
@@ -225,19 +223,19 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i32 5, ptr %i.i, align 8, !tbaa !19
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 12
-  store i32 110, ptr %5, align 4, !tbaa !22
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.c
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i32 %i.a, ptr %i.j, align 8, !tbaa !13
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 3, ptr %6, align 8, !tbaa !19
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d, %bb.b
-  %.0 = phi i32 [ -1, %bb.b ], [ -1, %bb.d ], [ 0, %bb.e ]
+  %.sink15 = phi i64 [ 8, %bb.e ], [ 12, %bb.d ], [ 12, %bb.b ]
+  %.sink = phi i32 [ 3, %bb.e ], [ 110, %bb.d ], [ %i.e, %bb.b ]
+  %.0 = phi i32 [ 0, %bb.e ], [ -1, %bb.d ], [ -1, %bb.b ]
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 %.sink15
+  store i32 %.sink, ptr %4, align 4, !tbaa !9
   ret i32 %.0
 }
 

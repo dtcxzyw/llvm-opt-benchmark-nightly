@@ -204,7 +204,7 @@ _ZN4cvc58internal7Minisat3vecINS2_IjEEE5clearEb.exit: ; preds = %bb.a
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !289  ; 2 uses
   %.not.i3 = icmp eq ptr %i.n, null
-  br i1 %.not.i3, label %_ZN4cvc58internal7Minisat3vecIcE5clearEb.exit, label %.preheader.i4
+  br i1 %.not.i3, label %_ZN4cvc58internal7Minisat3vecIcE5clearEb.exit, label %.preheader.i4.thread
 
 _ZN4cvc58internal7Minisat3vecINS2_IjEEE5clearEb.exit.thread8: ; preds = %._crit_edge.i
   %i.o = load ptr, ptr %0, align 8, !tbaa !308
@@ -220,34 +220,33 @@ _ZN4cvc58internal7Minisat3vecINS2_IjEEE5clearEb.exit.thread8: ; preds = %._crit_
 .preheader.i4.thread10:                           ; preds = %_ZN4cvc58internal7Minisat3vecINS2_IjEEE5clearEb.exit.thread8
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i32 0, ptr %i.s, align 8, !tbaa !286
-  br label %bb.b
+  br label %.preheader.i4
 
 _ZN4cvc58internal7Minisat3vecINS2_IjEEE5clearEb.exit.thread: ; preds = %._crit_edge.i
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !289
   %.not.i37 = icmp eq ptr %i.u, null
-  br i1 %.not.i37, label %_ZN4cvc58internal7Minisat3vecIcE5clearEb.exit, label %.preheader.i4.thread
+  br i1 %.not.i37, label %_ZN4cvc58internal7Minisat3vecIcE5clearEb.exit, label %bb.b
 
-.preheader.i4.thread:                             ; preds = %_ZN4cvc58internal7Minisat3vecINS2_IjEEE5clearEb.exit.thread
+.preheader.i4.thread:                             ; preds = %_ZN4cvc58internal7Minisat3vecINS2_IjEEE5clearEb.exit
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i32 0, ptr %i.v, align 8, !tbaa !286
+  br i1 %1, label %.preheader.i4, label %_ZN4cvc58internal7Minisat3vecIcE5clearEb.exit
+
+.preheader.i4:                                    ; preds = %.preheader.i4.thread10, %.preheader.i4.thread
+  %2 = phi ptr [ %i.q, %.preheader.i4.thread10 ], [ %i.m, %.preheader.i4.thread ]
+  %3 = phi ptr [ %i.r, %.preheader.i4.thread10 ], [ %i.n, %.preheader.i4.thread ]
+  tail call void @free(ptr noundef nonnull %3) #29
+  store ptr null, ptr %2, align 8, !tbaa !289
+  br label %bb.b
+
+bb.b:                                             ; preds = %_ZN4cvc58internal7Minisat3vecINS2_IjEEE5clearEb.exit.thread, %.preheader.i4
+  %.sink15 = phi i64 [ 28, %.preheader.i4 ], [ 24, %_ZN4cvc58internal7Minisat3vecINS2_IjEEE5clearEb.exit.thread ]
+  %i.w = getelementptr inbounds nuw i8, ptr %0, i64 %.sink15
+  store i32 0, ptr %i.w, align 4, !tbaa !10
   br label %_ZN4cvc58internal7Minisat3vecIcE5clearEb.exit
 
-.preheader.i4:                                    ; preds = %_ZN4cvc58internal7Minisat3vecINS2_IjEEE5clearEb.exit
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i32 0, ptr %2, align 8, !tbaa !286
-  br i1 %1, label %bb.b, label %_ZN4cvc58internal7Minisat3vecIcE5clearEb.exit
-
-bb.b:                                             ; preds = %.preheader.i4.thread10, %.preheader.i4
-  %3 = phi ptr [ %i.q, %.preheader.i4.thread10 ], [ %i.m, %.preheader.i4 ]
-  %4 = phi ptr [ %i.r, %.preheader.i4.thread10 ], [ %i.n, %.preheader.i4 ]
-  tail call void @free(ptr noundef nonnull %4) #29
-  store ptr null, ptr %3, align 8, !tbaa !289
-  %i.w = getelementptr inbounds nuw i8, ptr %0, i64 28
-  store i32 0, ptr %i.w, align 4, !tbaa !288
-  br label %_ZN4cvc58internal7Minisat3vecIcE5clearEb.exit
-
-_ZN4cvc58internal7Minisat3vecIcE5clearEb.exit:    ; preds = %_ZN4cvc58internal7Minisat3vecINS2_IjEEE5clearEb.exit.thread8, %.preheader.i4.thread, %_ZN4cvc58internal7Minisat3vecINS2_IjEEE5clearEb.exit.thread, %_ZN4cvc58internal7Minisat3vecINS2_IjEEE5clearEb.exit, %.preheader.i4, %bb.b
+_ZN4cvc58internal7Minisat3vecIcE5clearEb.exit:    ; preds = %bb.b, %_ZN4cvc58internal7Minisat3vecINS2_IjEEE5clearEb.exit.thread8, %_ZN4cvc58internal7Minisat3vecINS2_IjEEE5clearEb.exit.thread, %_ZN4cvc58internal7Minisat3vecINS2_IjEEE5clearEb.exit, %.preheader.i4.thread
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !293  ; 2 uses
   %.not.i5 = icmp eq ptr %i.y, null

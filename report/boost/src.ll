@@ -205,7 +205,7 @@ bb.a:
   %i.h = alloca i8, align 1                       ; 4 uses
   %i.i = alloca i8, align 1                       ; 4 uses
   %i.j = alloca i8, align 1                       ; 4 uses
-  %.sroa.079.0.copyload = load ptr, ptr %1, align 8, !tbaa !176 ; 14 uses
+  %.sroa.079.0.copyload = load ptr, ptr %1, align 8, !tbaa !176 ; 13 uses
   %.sroa.55.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.55.0.copyload = load ptr, ptr %.sroa.55.0..sroa_idx, align 8, !tbaa !176 ; 13 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 3 uses
@@ -229,7 +229,7 @@ bb.b:                                             ; preds = %bb.a
     i8 8, label %.thread139
     i8 1, label %.thread127
     i8 2, label %bb.m
-    i8 3, label %2
+    i8 3, label %.sink.split
     i8 4, label %.thread131
     i8 5, label %.thread133
     i8 6, label %.thread135
@@ -383,9 +383,19 @@ _ZN5boost4json6detail6writer7suspendENS2_5stateE.exit60: ; preds = %bb.l
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h)
   br label %.thread141
 
-bb.m:                                             ; preds = %_ZN5boost4json6detail15count_unescapedEPKcm.exit, %bb.h, %bb.b, %6, %2
-  %.sroa.0.2 = phi ptr [ %.sroa.0.0.copyload, %bb.b ], [ %.sroa.0.8, %6 ], [ %.sroa.0.0.copyload, %2 ], [ %i.bi, %bb.h ], [ %.sroa.0.0.copyload, %_ZN5boost4json6detail15count_unescapedEPKcm.exit ] ; 4 uses
-  %.sroa.079.3 = phi ptr [ %.sroa.079.0.copyload, %bb.b ], [ %9, %6 ], [ %5, %2 ], [ %i.bh, %bb.h ], [ %.sroa.079.1, %_ZN5boost4json6detail15count_unescapedEPKcm.exit ] ; 4 uses
+.sink.split:                                      ; preds = %.thread139, %bb.b
+  %.sink = phi i64 [ 80, %bb.b ], [ 81, %.thread139 ]
+  %.sroa.079.10.sink256 = phi ptr [ %.sroa.079.0.copyload, %bb.b ], [ %.sroa.079.10, %.thread139 ] ; 2 uses
+  %.sroa.0.2.ph = phi ptr [ %.sroa.0.0.copyload, %bb.b ], [ %.sroa.0.8, %.thread139 ]
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 %.sink
+  %3 = load i8, ptr %2, align 1, !tbaa !19
+  %4 = getelementptr inbounds nuw i8, ptr %.sroa.079.10.sink256, i64 1
+  store i8 %3, ptr %.sroa.079.10.sink256, align 1, !tbaa !19
+  br label %bb.m
+
+bb.m:                                             ; preds = %.sink.split, %_ZN5boost4json6detail15count_unescapedEPKcm.exit, %bb.h, %bb.b
+  %.sroa.0.2 = phi ptr [ %.sroa.0.0.copyload, %bb.b ], [ %i.bi, %bb.h ], [ %.sroa.0.0.copyload, %_ZN5boost4json6detail15count_unescapedEPKcm.exit ], [ %.sroa.0.2.ph, %.sink.split ] ; 4 uses
+  %.sroa.079.3 = phi ptr [ %.sroa.079.0.copyload, %bb.b ], [ %i.bh, %bb.h ], [ %.sroa.079.1, %_ZN5boost4json6detail15count_unescapedEPKcm.exit ], [ %4, %.sink.split ] ; 4 uses
   %i.bm = icmp ult ptr %.sroa.079.3, %.sroa.55.0.copyload
   br i1 %i.bm, label %.lr.ph, label %._crit_edge, !prof !449
 
@@ -503,13 +513,6 @@ _ZN5boost4json6detail6writer7suspendENS2_5stateE.exit62: ; preds = %._crit_edge
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   br label %.thread141
 
-2:                                                ; preds = %bb.b
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 80
-  %4 = load i8, ptr %3, align 8, !tbaa !19
-  %5 = getelementptr inbounds nuw i8, ptr %.sroa.079.0.copyload, i64 1
-  store i8 %4, ptr %.sroa.079.0.copyload, align 1, !tbaa !19
-  br label %bb.m
-
 .thread131:                                       ; preds = %bb.b, %.thread150
   %.sroa.0.4 = phi ptr [ %i.bu, %.thread150 ], [ %.sroa.0.0.copyload, %bb.b ] ; 3 uses
   %.sroa.079.6 = phi ptr [ %i.cq, %.thread150 ], [ %.sroa.079.0.copyload, %bb.b ] ; 5 uses
@@ -598,16 +601,9 @@ _ZN5boost4json6detail6writer7suspendENS2_5stateE.exit66: ; preds = %bb.ad
 
 .thread139:                                       ; preds = %bb.b, %bb.ac
   %.sroa.0.8 = phi ptr [ %.sroa.0.7, %bb.ac ], [ %.sroa.0.0.copyload, %bb.b ] ; 3 uses
-  %.sroa.079.10 = phi ptr [ %i.dg, %bb.ac ], [ %.sroa.079.0.copyload, %bb.b ] ; 5 uses
+  %.sroa.079.10 = phi ptr [ %i.dg, %bb.ac ], [ %.sroa.079.0.copyload, %bb.b ] ; 4 uses
   %i.dh = icmp ult ptr %.sroa.079.10, %.sroa.55.0.copyload
-  br i1 %i.dh, label %6, label %bb.ae, !prof !319
-
-6:                                                ; preds = %.thread139
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 81
-  %8 = load i8, ptr %7, align 1, !tbaa !19
-  %9 = getelementptr inbounds nuw i8, ptr %.sroa.079.10, i64 1
-  store i8 %8, ptr %.sroa.079.10, align 1, !tbaa !19
-  br label %bb.m
+  br i1 %i.dh, label %.sink.split, label %bb.ae, !prof !319
 
 bb.ae:                                            ; preds = %.thread139
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)

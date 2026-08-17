@@ -203,21 +203,17 @@ define linkonce_odr void @_ZN6icu_7820DecimalFormatSymbols9setSymbolENS0_19ENumb
 bb.a:
   %4 = alloca %"class.icu_78::UnicodeString", align 8 ; 45 uses
   switch i32 %1, label %bb.c [
-    i32 8, label %5
+    i32 8, label %.thread23
     i32 9, label %bb.b
   ]
 
-5:                                                ; preds = %bb.a
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 2448
-  store i8 1, ptr %6, align 8, !tbaa !38
-  br label %.thread23
-
 bb.b:                                             ; preds = %bb.a
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 2449
-  store i8 1, ptr %7, align 1, !tbaa !43
   br label %.thread23
 
-.thread23:                                        ; preds = %5, %bb.b
+.thread23:                                        ; preds = %bb.a, %bb.b
+  %.sink30 = phi i64 [ 2449, %bb.b ], [ 2448, %bb.a ]
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 %.sink30
+  store i8 1, ptr %5, align 1, !tbaa !12
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = zext nneg i32 %1 to i64
   %i.c = getelementptr inbounds nuw [64 x i8], ptr %i.a, i64 %i.b
@@ -253,7 +249,7 @@ bb.g:                                             ; preds = %bb.f
 
 .thread25.loopexit:                               ; preds = %bb.g
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 1928
-  store i32 %i.k, ptr %i.p, align 8, !tbaa !44
+  store i32 %i.k, ptr %i.p, align 8, !tbaa !38
   %i.q = add nsw i32 %i.k, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #11
   call void @_ZN6icu_7813UnicodeStringC1Ei(ptr noundef nonnull align 8 dereferenceable(64) %4, i32 noundef %i.q)
@@ -321,7 +317,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 1928
-  store i32 -1, ptr %i.ar, align 8, !tbaa !44
+  store i32 -1, ptr %i.ar, align 8, !tbaa !38
   br label %.thread25
 
 bb.i:                                             ; preds = %bb.d
@@ -331,7 +327,7 @@ bb.i:                                             ; preds = %bb.d
 
 bb.j:                                             ; preds = %bb.i
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 1928
-  store i32 -1, ptr %i.at, align 8, !tbaa !44
+  store i32 -1, ptr %i.at, align 8, !tbaa !38
   br label %.thread25
 
 .thread25:                                        ; preds = %.thread25.loopexit, %bb.c, %.thread23, %bb.h, %bb.i, %bb.j
@@ -708,11 +704,9 @@ attributes #12 = { nounwind willreturn memory(read) }
 !35 = distinct !{!35, !36}
 !36 = !{!"llvm.loop.mustprogress"}
 !37 = distinct !{!37, !36}
-!38 = !{!39, !6, i64 2448}
+!38 = !{!39, !5, i64 1928}
 !39 = !{!"_ZTSN6icu_7820DecimalFormatSymbolsE", !15, i64 0, !6, i64 8, !40, i64 1864, !5, i64 1928, !42, i64 1936, !42, i64 1976, !42, i64 2016, !23, i64 2056, !6, i64 2064, !6, i64 2256, !6, i64 2448, !6, i64 2449, !6, i64 2450}
 !40 = !{!"_ZTSN6icu_7813UnicodeStringE", !41, i64 0, !6, i64 8}
 !41 = !{!"_ZTSN6icu_7811ReplaceableE", !15, i64 0}
 !42 = !{!"_ZTSN6icu_786LocaleE", !15, i64 0, !6, i64 8}
-!43 = !{!39, !6, i64 2449}
-!44 = !{!39, !5, i64 1928}
 end_hunk_0

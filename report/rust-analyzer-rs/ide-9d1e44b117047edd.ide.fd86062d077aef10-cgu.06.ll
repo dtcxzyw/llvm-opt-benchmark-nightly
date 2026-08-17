@@ -204,8 +204,6 @@ bb.c:                                             ; preds = %bb.a
   store ptr @166, ptr %0, align 16
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 21, ptr %i.ai, align 8
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 21
-  store i8 2, ptr %4, align 1
   br label %bb.ha
 
 bb.d:                                             ; preds = %bb.b
@@ -508,16 +506,12 @@ _RNCNvXs9_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeINtB7_9IeeeFloatNtB7_5HalfSENtB9_5
   store i8 %.sroa.0130.0, ptr %.sroa.458.0..sroa_idx, align 1
   %.sroa.559.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 22
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(10) %.sroa.559.0..sroa_idx, ptr noundef nonnull align 2 dereferenceable(10) %.sroa.14, i64 10, i1 false)
-  %.sroa.660.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store i8 0, ptr %.sroa.660.0..sroa_idx, align 16
   br label %bb.ha
 
 bb.ab:                                            ; preds = %bb.aa
   store ptr @164, ptr %0, align 16
   %i.fh = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 20, ptr %i.fh, align 8
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 21
-  store i8 2, ptr %5, align 1
   br label %bb.ha
 
 .thread272:                                       ; preds = %bb.j, %bb.g, %bb.aa
@@ -920,8 +914,6 @@ _RNvMsb_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeINtB5_9IeeeFloatNtB5_5HalfSE19from_d
   store ptr %i.ade, ptr %0, align 16
   %i.adf = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.0214.sroa.14.0283, ptr %i.adf, align 8
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 21
-  store i8 2, ptr %6, align 1
   br label %bb.ha
 
 _RNvMsb_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeINtB5_9IeeeFloatNtB5_5HalfSE19from_decimal_stringCslLuZgPVt6hg_3ide.exit.thread287: ; preds = %bb.ba, %.thread.i, %bb.ex, %bb.ew, %_RNvMsb_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeINtB5_9IeeeFloatNtB5_5HalfSE19from_decimal_stringCslLuZgPVt6hg_3ide.exit
@@ -954,8 +946,6 @@ bb.fb:                                            ; preds = %bb.gz, %_RNvMsb_NtC
   store i8 %spec.select.i172, ptr %.sroa.096.sroa.4.0..sroa_idx, align 1
   %.sroa.096.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 22
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(10) %.sroa.096.sroa.5.0..sroa_idx, ptr noundef nonnull align 2 dereferenceable(10) %.sroa.9140, i64 10, i1 false)
-  %.sroa.497.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store i8 %.sroa.0136.0, ptr %.sroa.497.0..sroa_idx, align 16
   br label %bb.ha
 
 bb.fc:                                            ; preds = %bb.fa
@@ -1358,8 +1348,6 @@ bb.gx:                                            ; preds = %bb.fa
   store ptr @165, ptr %0, align 16
   %i.apg = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 14, ptr %i.apg, align 8
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 21
-  store i8 2, ptr %7, align 1
   br label %bb.ha
 
 bb.gy:                                            ; preds = %_RNvMsb_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeINtB5_9IeeeFloatNtB5_5HalfSE23from_hexadecimal_stringCslLuZgPVt6hg_3ide.exit.thread, %_RNvMsb_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeINtB5_9IeeeFloatNtB5_5HalfSE23from_hexadecimal_stringCslLuZgPVt6hg_3ide.exit
@@ -1370,8 +1358,6 @@ bb.gy:                                            ; preds = %_RNvMsb_NtCs6ZvMrL6
   store ptr %i.aph, ptr %0, align 16
   %i.apk = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %i.apj, ptr %i.apk, align 8
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 21
-  store i8 2, ptr %8, align 1
   br label %bb.ha
 
 bb.gz:                                            ; preds = %_RNvMsb_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeINtB5_9IeeeFloatNtB5_5HalfSE23from_hexadecimal_stringCslLuZgPVt6hg_3ide.exit.thread595, %_RNvMsb_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeINtB5_9IeeeFloatNtB5_5HalfSE23from_hexadecimal_stringCslLuZgPVt6hg_3ide.exit
@@ -1391,6 +1377,10 @@ bb.gz:                                            ; preds = %_RNvMsb_NtCs6ZvMrL6
   br label %bb.fb
 
 bb.ha:                                            ; preds = %bb.ab, %_RNCNvXs9_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeINtB7_9IeeeFloatNtB7_5HalfSENtB9_5Float10from_str_rs4_0CslLuZgPVt6hg_3ide.exit.thread, %bb.gy, %bb.gx, %_RNvMsb_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeINtB5_9IeeeFloatNtB5_5HalfSE19from_decimal_stringCslLuZgPVt6hg_3ide.exit.thread, %bb.fb, %bb.c
+  %.sink812 = phi i64 [ 21, %bb.ab ], [ 32, %_RNCNvXs9_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeINtB7_9IeeeFloatNtB7_5HalfSENtB9_5Float10from_str_rs4_0CslLuZgPVt6hg_3ide.exit.thread ], [ 21, %bb.gy ], [ 21, %bb.gx ], [ 21, %_RNvMsb_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeINtB5_9IeeeFloatNtB5_5HalfSE19from_decimal_stringCslLuZgPVt6hg_3ide.exit.thread ], [ 32, %bb.fb ], [ 21, %bb.c ]
+  %.sink810 = phi i8 [ 2, %bb.ab ], [ 0, %_RNCNvXs9_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeINtB7_9IeeeFloatNtB7_5HalfSENtB9_5Float10from_str_rs4_0CslLuZgPVt6hg_3ide.exit.thread ], [ 2, %bb.gy ], [ 2, %bb.gx ], [ 2, %_RNvMsb_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeINtB5_9IeeeFloatNtB5_5HalfSE19from_decimal_stringCslLuZgPVt6hg_3ide.exit.thread ], [ %.sroa.0136.0, %bb.fb ], [ 2, %bb.c ]
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 %.sink812
+  store i8 %.sink810, ptr %4, align 1
   ret void
 }
 
@@ -1454,8 +1444,6 @@ bb.c:                                             ; preds = %bb.a
   store ptr @166, ptr %0, align 16
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 21, ptr %i.ai, align 8
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 21
-  store i8 2, ptr %4, align 1
   br label %bb.ha
 
 bb.d:                                             ; preds = %bb.b
@@ -1758,16 +1746,12 @@ _RNCNvXs9_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeINtB7_9IeeeFloatNtB7_5QuadSENtB9_5
   store i8 %.sroa.0130.0, ptr %.sroa.458.0..sroa_idx, align 1
   %.sroa.559.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 22
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(10) %.sroa.559.0..sroa_idx, ptr noundef nonnull align 2 dereferenceable(10) %.sroa.14, i64 10, i1 false)
-  %.sroa.660.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store i8 0, ptr %.sroa.660.0..sroa_idx, align 16
   br label %bb.ha
 
 bb.ab:                                            ; preds = %bb.aa
   store ptr @164, ptr %0, align 16
   %i.fh = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 20, ptr %i.fh, align 8
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 21
-  store i8 2, ptr %5, align 1
   br label %bb.ha
 
 .thread272:                                       ; preds = %bb.j, %bb.g, %bb.aa
@@ -2170,8 +2154,6 @@ _RNvMsb_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeINtB5_9IeeeFloatNtB5_5QuadSE19from_d
   store ptr %i.ade, ptr %0, align 16
   %i.adf = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.0214.sroa.14.0283, ptr %i.adf, align 8
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 21
-  store i8 2, ptr %6, align 1
   br label %bb.ha
 
 _RNvMsb_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeINtB5_9IeeeFloatNtB5_5QuadSE19from_decimal_stringCslLuZgPVt6hg_3ide.exit.thread287: ; preds = %bb.ba, %.thread.i, %bb.ex, %bb.ew, %_RNvMsb_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeINtB5_9IeeeFloatNtB5_5QuadSE19from_decimal_stringCslLuZgPVt6hg_3ide.exit
@@ -2204,8 +2186,6 @@ bb.fb:                                            ; preds = %bb.gz, %_RNvMsb_NtC
   store i8 %spec.select.i172, ptr %.sroa.096.sroa.4.0..sroa_idx, align 1
   %.sroa.096.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 22
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(10) %.sroa.096.sroa.5.0..sroa_idx, ptr noundef nonnull align 2 dereferenceable(10) %.sroa.9140, i64 10, i1 false)
-  %.sroa.497.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store i8 %.sroa.0136.0, ptr %.sroa.497.0..sroa_idx, align 16
   br label %bb.ha
 
 bb.fc:                                            ; preds = %bb.fa
@@ -2608,8 +2588,6 @@ bb.gx:                                            ; preds = %bb.fa
   store ptr @165, ptr %0, align 16
   %i.apg = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 14, ptr %i.apg, align 8
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 21
-  store i8 2, ptr %7, align 1
   br label %bb.ha
 
 bb.gy:                                            ; preds = %_RNvMsb_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeINtB5_9IeeeFloatNtB5_5QuadSE23from_hexadecimal_stringCslLuZgPVt6hg_3ide.exit.thread, %_RNvMsb_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeINtB5_9IeeeFloatNtB5_5QuadSE23from_hexadecimal_stringCslLuZgPVt6hg_3ide.exit
@@ -2620,8 +2598,6 @@ bb.gy:                                            ; preds = %_RNvMsb_NtCs6ZvMrL6
   store ptr %i.aph, ptr %0, align 16
   %i.apk = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %i.apj, ptr %i.apk, align 8
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 21
-  store i8 2, ptr %8, align 1
   br label %bb.ha
 
 bb.gz:                                            ; preds = %_RNvMsb_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeINtB5_9IeeeFloatNtB5_5QuadSE23from_hexadecimal_stringCslLuZgPVt6hg_3ide.exit.thread595, %_RNvMsb_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeINtB5_9IeeeFloatNtB5_5QuadSE23from_hexadecimal_stringCslLuZgPVt6hg_3ide.exit
@@ -2641,6 +2617,10 @@ bb.gz:                                            ; preds = %_RNvMsb_NtCs6ZvMrL6
   br label %bb.fb
 
 bb.ha:                                            ; preds = %bb.ab, %_RNCNvXs9_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeINtB7_9IeeeFloatNtB7_5QuadSENtB9_5Float10from_str_rs4_0CslLuZgPVt6hg_3ide.exit.thread, %bb.gy, %bb.gx, %_RNvMsb_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeINtB5_9IeeeFloatNtB5_5QuadSE19from_decimal_stringCslLuZgPVt6hg_3ide.exit.thread, %bb.fb, %bb.c
+  %.sink812 = phi i64 [ 21, %bb.ab ], [ 32, %_RNCNvXs9_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeINtB7_9IeeeFloatNtB7_5QuadSENtB9_5Float10from_str_rs4_0CslLuZgPVt6hg_3ide.exit.thread ], [ 21, %bb.gy ], [ 21, %bb.gx ], [ 21, %_RNvMsb_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeINtB5_9IeeeFloatNtB5_5QuadSE19from_decimal_stringCslLuZgPVt6hg_3ide.exit.thread ], [ 32, %bb.fb ], [ 21, %bb.c ]
+  %.sink810 = phi i8 [ 2, %bb.ab ], [ 0, %_RNCNvXs9_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeINtB7_9IeeeFloatNtB7_5QuadSENtB9_5Float10from_str_rs4_0CslLuZgPVt6hg_3ide.exit.thread ], [ 2, %bb.gy ], [ 2, %bb.gx ], [ 2, %_RNvMsb_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeINtB5_9IeeeFloatNtB5_5QuadSE19from_decimal_stringCslLuZgPVt6hg_3ide.exit.thread ], [ %.sroa.0136.0, %bb.fb ], [ 2, %bb.c ]
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 %.sink812
+  store i8 %.sink810, ptr %4, align 1
   ret void
 }
 

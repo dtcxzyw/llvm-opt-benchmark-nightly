@@ -203,7 +203,7 @@ bb.a:
   br i1 %.not65, label %.thread63, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %bb.c
-  %.066 = phi ptr [ %i.c, %bb.c ], [ %1, %bb.a ]  ; 21 uses
+  %.066 = phi ptr [ %i.c, %bb.c ], [ %1, %bb.a ]  ; 17 uses
   %i.c = getelementptr inbounds i8, ptr %.066, i64 -32 ; 5 uses
   %i.d = getelementptr inbounds i8, ptr %.066, i64 -1
   %i.e = load i8, ptr %i.d, align 1, !tbaa !21
@@ -234,29 +234,13 @@ bb.e:                                             ; preds = %bb.d
   %i.j = getelementptr inbounds i8, ptr %.066, i64 -3
   %i.k = load i8, ptr %i.j, align 1, !tbaa !12
   %i.l = icmp eq i8 %i.k, 8
-  br i1 %i.l, label %4, label %.thread63
-
-4:                                                ; preds = %bb.e
-  store i64 -1, ptr %3, align 8, !tbaa !86
-  %5 = getelementptr inbounds i8, ptr %.066, i64 -24
-  %6 = load i32, ptr %5, align 8, !tbaa !15
-  %7 = lshr i32 %6, 4
-  %8 = add nsw i32 %7, -5
-  br label %.thread63
+  br i1 %i.l, label %bb.ab, label %.thread63
 
 bb.f:                                             ; preds = %bb.d
   %i.m = getelementptr inbounds i8, ptr %.066, i64 -3
   %i.n = load i8, ptr %i.m, align 1, !tbaa !12
   %i.o = icmp eq i8 %i.n, 8
-  br i1 %i.o, label %9, label %.thread63
-
-9:                                                ; preds = %bb.f
-  store i64 1, ptr %3, align 8, !tbaa !86
-  %10 = getelementptr inbounds i8, ptr %.066, i64 -24
-  %11 = load i32, ptr %10, align 8, !tbaa !15
-  %12 = lshr i32 %11, 4
-  %13 = add nsw i32 %12, -5
-  br label %.thread63
+  br i1 %i.o, label %bb.ab, label %.thread63
 
 bb.g:                                             ; preds = %bb.d
   %i.p = getelementptr inbounds i8, ptr %.066, i64 -3
@@ -307,12 +291,7 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m
   %i.an = sub nsw i64 0, %i.am
-  store i64 %i.an, ptr %3, align 8, !tbaa !86
-  %14 = getelementptr inbounds i8, ptr %.066, i64 -24
-  %15 = load i32, ptr %14, align 8, !tbaa !15
-  %16 = lshr i32 %15, 4
-  %17 = add nsw i32 %16, -5
-  br label %.thread63
+  br label %bb.ab
 
 bb.o:                                             ; preds = %bb.g
   %i.ao = icmp eq i8 %i.t, 8
@@ -357,12 +336,7 @@ bb.t:                                             ; preds = %bb.s
 
 bb.u:                                             ; preds = %bb.t
   %i.bi = sub nsw i64 0, %i.bh
-  store i64 %i.bi, ptr %3, align 8, !tbaa !86
-  %18 = getelementptr inbounds i8, ptr %.066, i64 -20
-  %19 = load i32, ptr %18, align 4, !tbaa !15
-  %20 = lshr i32 %19, 4
-  %21 = add nsw i32 %20, -5
-  br label %.thread63
+  br label %bb.ab
 
 bb.v:                                             ; preds = %bb.d
   %i.bj = getelementptr inbounds i8, ptr %.066, i64 -3
@@ -404,19 +378,24 @@ bb.aa:                                            ; preds = %bb.z, %bb.y
   %i.cd = getelementptr inbounds nuw i8, ptr %i.cc, i64 8
   %i.ce = load i8, ptr %i.cd, align 8, !tbaa !15
   %i.cf = icmp eq i8 %i.ce, 4
-  br i1 %i.cf, label %bb.ab, label %.thread63
+  br i1 %i.cf, label %4, label %.thread63
 
-bb.ab:                                            ; preds = %bb.aa
-  %22 = load i64, ptr %i.cc, align 8, !tbaa !15
-  store i64 %22, ptr %3, align 8, !tbaa !86
-  %i.cg = getelementptr inbounds i8, ptr %.066, i64 -24
-  %i.ch = load i32, ptr %i.cg, align 8, !tbaa !15
+4:                                                ; preds = %bb.aa
+  %5 = load i64, ptr %i.cc, align 8, !tbaa !15
+  br label %bb.ab
+
+bb.ab:                                            ; preds = %bb.f, %bb.e, %bb.n, %bb.u, %4
+  %.sink = phi i64 [ %5, %4 ], [ %i.bi, %bb.u ], [ %i.an, %bb.n ], [ -1, %bb.e ], [ 1, %bb.f ]
+  %.sink77 = phi i64 [ -24, %4 ], [ -20, %bb.u ], [ -24, %bb.n ], [ -24, %bb.e ], [ -24, %bb.f ]
+  store i64 %.sink, ptr %3, align 8, !tbaa !86
+  %i.cg = getelementptr inbounds i8, ptr %.066, i64 %.sink77
+  %i.ch = load i32, ptr %i.cg, align 4, !tbaa !15
   %i.ci = lshr i32 %i.ch, 4
   %i.cj = add nsw i32 %i.ci, -5
   br label %.thread63
 
-.thread63:                                        ; preds = %bb.c, %bb.a, %bb.h, %bb.f, %bb.aa, %bb.w, %bb.v, %bb.m, %bb.l, %bb.s, %bb.t, %bb.o, %bb.e, %bb.d, %bb.ab, %bb.u, %bb.n, %9, %4
-  %.052 = phi i32 [ %8, %4 ], [ %i.cj, %bb.ab ], [ %13, %9 ], [ %17, %bb.n ], [ %21, %bb.u ], [ -1, %bb.d ], [ -1, %bb.e ], [ -1, %bb.o ], [ -1, %bb.h ], [ -1, %bb.t ], [ -1, %bb.s ], [ -1, %bb.l ], [ -1, %bb.m ], [ -1, %bb.v ], [ -1, %bb.w ], [ -1, %bb.aa ], [ -1, %bb.f ], [ -1, %bb.a ], [ -1, %bb.c ]
+.thread63:                                        ; preds = %bb.c, %bb.ab, %bb.a, %bb.h, %bb.f, %bb.aa, %bb.w, %bb.v, %bb.m, %bb.l, %bb.s, %bb.t, %bb.o, %bb.e, %bb.d
+  %.052 = phi i32 [ -1, %bb.w ], [ -1, %bb.aa ], [ -1, %bb.f ], [ -1, %bb.a ], [ %i.cj, %bb.ab ], [ -1, %bb.d ], [ -1, %bb.e ], [ -1, %bb.o ], [ -1, %bb.h ], [ -1, %bb.t ], [ -1, %bb.s ], [ -1, %bb.l ], [ -1, %bb.m ], [ -1, %bb.v ], [ -1, %bb.c ]
   ret i32 %.052
 }
 

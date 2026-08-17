@@ -119,7 +119,7 @@ bb.g:                                             ; preds = %fl6_sock_lookup.exi
   br label %inet6_sk.exit.i
 
 inet6_sk.exit.i:                                  ; preds = %bb.g, %fl6_sock_lookup.exit.thread
-  %i.aa = phi ptr [ %i.z, %bb.g ], [ null, %fl6_sock_lookup.exit.thread ] ; 6 uses
+  %i.aa = phi ptr [ %i.z, %bb.g ], [ null, %fl6_sock_lookup.exit.thread ] ; 5 uses
   %i.ab = getelementptr i8, ptr %0, i64 20
   %i.ac = load i32, ptr %i.ab, align 4            ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef align 8 dereferenceable(88) %i.t, i8 0, i64 88, i1 false)
@@ -175,20 +175,13 @@ bb.i:                                             ; preds = %bb.h
   %.val.i72 = load i32, ptr %i.ah, align 8
   %i.bg = and i32 %.val.i72, 255
   %i.bh = icmp eq i32 %i.bg, 255
-  br i1 %i.bh, label %2, label %5
-
-2:                                                ; preds = %bb.i
-  %3 = getelementptr i8, ptr %i.aa, i64 64
-  %4 = load volatile i32, ptr %3, align 8
+  %..i = select i1 %i.bh, i64 64, i64 60
+  %2 = getelementptr i8, ptr %i.aa, i64 %..i
+  %3 = load volatile i32, ptr %2, align 4
   br label %ip6_datagram_flow_key_init.exit
 
-5:                                                ; preds = %bb.i
-  %6 = getelementptr i8, ptr %i.aa, i64 60
-  %7 = load volatile i32, ptr %6, align 4
-  br label %ip6_datagram_flow_key_init.exit
-
-ip6_datagram_flow_key_init.exit:                  ; preds = %inet6_sk.exit.i, %bb.h, %2, %5
-  %.1.i = phi i32 [ %i.bf, %bb.h ], [ %4, %2 ], [ %7, %5 ], [ %i.ac, %inet6_sk.exit.i ]
+ip6_datagram_flow_key_init.exit:                  ; preds = %inet6_sk.exit.i, %bb.h, %bb.i
+  %.1.i = phi i32 [ %i.bf, %bb.h ], [ %i.ac, %inet6_sk.exit.i ], [ %3, %bb.i ]
   store i32 %.1.i, ptr %i.t, align 8
   tail call void @security_sk_classify_flow(ptr noundef %0, ptr noundef %i.t) #6
   tail call void @__rcu_read_lock() #6

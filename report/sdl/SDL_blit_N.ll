@@ -199,7 +199,6 @@ bb.b:                                             ; preds = %bb.a
   %i.ci = zext nneg i8 %i.ch to i32
   %i.cj = shl i32 %i.cf, %i.ci
   %i.ck = or i32 %i.ca, %i.cj
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 27
   br label %bb.e
 
 bb.c:                                             ; preds = %bb.b
@@ -222,7 +221,6 @@ bb.c:                                             ; preds = %bb.b
   %i.db = zext nneg i8 %i.da to i32
   %i.dc = shl i32 %i.cy, %i.db
   %i.dd = or i32 %i.dc, %i.ct
-  %8 = getelementptr inbounds nuw i8, ptr %1, i64 26
   br label %bb.e
 
 bb.d:                                             ; preds = %.thread, %bb.b
@@ -245,15 +243,15 @@ bb.d:                                             ; preds = %.thread, %bb.b
   %i.du = zext nneg i8 %i.dt to i32
   %i.dv = shl i32 %i.dr, %i.du
   %i.dw = or i32 %i.dv, %i.dm
-  %9 = getelementptr inbounds nuw i8, ptr %1, i64 26
   br label %bb.e
 
 bb.e:                                             ; preds = %.thread119, %bb.c, %bb.d
-  %.sink141.in = phi ptr [ %7, %.thread119 ], [ %8, %bb.c ], [ %9, %bb.d ]
+  %.sink144 = phi i64 [ 27, %.thread119 ], [ 26, %bb.c ], [ 26, %bb.d ]
   %.sink138.a = phi i32 [ %i.bh, %.thread119 ], [ %.083, %bb.c ], [ %.083, %bb.d ]
   %.sink137 = phi i64 [ 31, %.thread119 ], [ 30, %bb.c ], [ 30, %bb.d ]
   %.sink = phi i32 [ %i.ck, %.thread119 ], [ %i.dd, %bb.c ], [ %i.dw, %bb.d ]
-  %.sink141 = load i8, ptr %.sink141.in, align 1
+  %7 = getelementptr inbounds nuw i8, ptr %1, i64 %.sink144
+  %.sink141 = load i8, ptr %7, align 1
   %i.dx = zext i8 %.sink141 to i32
   %i.dy = sub nsw i32 8, %i.dx
   %i.dz = lshr i32 %.sink138.a, %i.dy

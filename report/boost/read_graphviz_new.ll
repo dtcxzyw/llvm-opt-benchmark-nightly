@@ -204,9 +204,9 @@ bb.ad:                                            ; preds = %bb.x
   %i.ee = load i8, ptr %i.ed, align 1, !tbaa !22
   %i.ef = icmp eq i8 %i.ee, 4                     ; 2 uses
   %spec.select = select i1 %i.ef, ptr %i.bp, ptr %i.at ; 3 uses
-  %i.eg = tail call noundef i32 @_ZNK5boost13re_detail_60031cpp_regex_traits_implementationIcE16lookup_classnameEPKcS4_(ptr noundef nonnull align 8 dereferenceable(437) %i.aj, ptr noundef nonnull %spec.select, ptr noundef nonnull %i.ci) ; 3 uses
+  %i.eg = tail call noundef i32 @_ZNK5boost13re_detail_60031cpp_regex_traits_implementationIcE16lookup_classnameEPKcS4_(ptr noundef nonnull align 8 dereferenceable(437) %i.aj, ptr noundef nonnull %spec.select, ptr noundef nonnull %i.ci) ; 2 uses
   %i.eh = icmp eq i32 %i.eg, 0
-  br i1 %i.eh, label %bb.ae, label %16
+  br i1 %i.eh, label %bb.ae, label %bb.al
 
 bb.ae:                                            ; preds = %bb.ad
   %i.ei = getelementptr inbounds nuw i8, ptr %1, i64 84
@@ -268,24 +268,12 @@ bb.ak:                                            ; preds = %bb.ah, %bb.af, %bb.
   tail call void @_ZN5boost13re_detail_60018basic_regex_parserIcNS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE4failENS_15regex_constants10error_typeEl(ptr noundef nonnull align 8 dereferenceable(216) %0, i32 noundef 4, i64 noundef %i.fl)
   br label %.thread
 
-16:                                               ; preds = %bb.ad
-  br i1 %i.ef, label %21, label %17
-
-17:                                               ; preds = %16
-  %18 = getelementptr inbounds nuw i8, ptr %1, i64 76 ; 2 uses
-  %19 = load i32, ptr %18, align 4, !tbaa !531
-  %20 = or i32 %19, %i.eg
-  store i32 %20, ptr %18, align 4, !tbaa !531
-  br label %bb.al
-
-21:                                               ; preds = %16
-  %22 = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 2 uses
-  %23 = load i32, ptr %22, align 8, !tbaa !530
-  %24 = or i32 %23, %i.eg
-  store i32 %24, ptr %22, align 8, !tbaa !530
-  br label %bb.al
-
-bb.al:                                            ; preds = %17, %21
+bb.al:                                            ; preds = %bb.ad
+  %. = select i1 %i.ef, i64 80, i64 76
+  %16 = getelementptr inbounds nuw i8, ptr %1, i64 %. ; 2 uses
+  %17 = load i32, ptr %16, align 4, !tbaa !143
+  %18 = or i32 %17, %i.eg
+  store i32 %18, ptr %16, align 4, !tbaa !143
   %i.fm = getelementptr inbounds nuw i8, ptr %1, i64 84
   store i8 0, ptr %i.fm, align 4, !tbaa !532
   %i.fn = load ptr, ptr %i.i, align 8, !tbaa !435

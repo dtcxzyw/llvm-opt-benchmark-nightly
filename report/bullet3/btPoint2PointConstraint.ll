@@ -44,6 +44,8 @@ $_ZTS13btTypedObject = comdat any
 @_ZTS23btPoint2PointConstraint = dso_local constant [26 x i8] c"23btPoint2PointConstraint\00", align 1
 @.str = private unnamed_addr constant [33 x i8] c"btPoint2PointConstraintFloatData\00", align 1
 @llvm.global_ctors = appending global [0 x { i32, ptr, ptr }] zeroinitializer
+@switch.table._ZN23btPoint2PointConstraint8setParamEifi.1 = private unnamed_addr constant [4 x i8] c"\01\01\02\02", align 4
+@switch.table._ZNK23btPoint2PointConstraint8getParamEii = private unnamed_addr constant [4 x i16] [i16 360, i16 360, i16 364, i16 364], align 8
 
 @_ZN23btPoint2PointConstraintC1ER11btRigidBodyS1_RK9btVector3S4_ = dso_local unnamed_addr alias void (ptr, ptr, ptr, ptr, ptr), ptr @_ZN23btPoint2PointConstraintC2ER11btRigidBodyS1_RK9btVector3S4_
 @_ZN23btPoint2PointConstraintC1ER11btRigidBodyRK9btVector3 = dso_local unnamed_addr alias void (ptr, ptr, ptr), ptr @_ZN23btPoint2PointConstraintC2ER11btRigidBodyRK9btVector3
@@ -446,35 +448,31 @@ bb.a:
 define dso_local void @_ZN23btPoint2PointConstraint8setParamEifi(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(384) %0, i32 noundef %1, float noundef %2, i32 noundef %3) unnamed_addr #5 align 2 {
 bb.a:
   %.not = icmp eq i32 %3, -1
-  br i1 %.not, label %4, label %bb.c
+  br i1 %.not, label %bb.b, label %bb.c
 
-4:                                                ; preds = %bb.a
-  switch i32 %1, label %bb.c [
-    i32 1, label %5
-    i32 2, label %5
-    i32 3, label %bb.b
-    i32 4, label %bb.b
-  ]
+bb.b:                                             ; preds = %bb.a
+  %switch.tableidx = add i32 %1, -1               ; 3 uses
+  %4 = icmp ult i32 %switch.tableidx, 4
+  br i1 %4, label %.sink.split, label %bb.c
 
-5:                                                ; preds = %4, %4
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 360
-  store float %2, ptr %6, align 8, !tbaa !77
-  br label %.sink.split
-
-bb.b:                                             ; preds = %4, %4
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 364
-  store float %2, ptr %7, align 4, !tbaa !71
-  br label %.sink.split
-
-.sink.split:                                      ; preds = %bb.b, %5
-  %.sink6 = phi i32 [ 1, %5 ], [ 2, %bb.b ]
+.sink.split:                                      ; preds = %bb.b
+  %5 = zext nneg i32 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZNK23btPoint2PointConstraint8getParamEii, i64 %5
+  %switch.load = load i16, ptr %switch.gep, align 2
+  %switch.ext = zext i16 %switch.load to i64
+  %6 = zext nneg i32 %switch.tableidx to i64
+  %switch.gep8 = getelementptr inbounds nuw i8, ptr @switch.table._ZN23btPoint2PointConstraint8setParamEifi.1, i64 %6
+  %switch.load9 = load i8, ptr %switch.gep8, align 1
+  %switch.ext10 = zext i8 %switch.load9 to i32
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 %switch.ext
+  store float %2, ptr %7, align 4, !tbaa !25
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 356 ; 2 uses
   %i.b = load i32, ptr %i.a, align 4, !tbaa !13
-  %i.c = or i32 %i.b, %.sink6
+  %i.c = or i32 %i.b, %switch.ext10
   store i32 %i.c, ptr %i.a, align 4, !tbaa !13
   br label %bb.c
 
-bb.c:                                             ; preds = %.sink.split, %4, %bb.a
+bb.c:                                             ; preds = %bb.b, %.sink.split, %bb.a
   ret void
 }
 
@@ -482,28 +480,24 @@ bb.c:                                             ; preds = %.sink.split, %4, %b
 define dso_local noundef float @_ZNK23btPoint2PointConstraint8getParamEii(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(384) %0, i32 noundef %1, i32 noundef %2) unnamed_addr #9 align 2 {
 bb.a:
   %.not = icmp eq i32 %2, -1
-  br i1 %.not, label %3, label %bb.d
+  br i1 %.not, label %bb.b, label %bb.d
 
-3:                                                ; preds = %bb.a
-  switch i32 %1, label %bb.d [
-    i32 1, label %bb.b
-    i32 2, label %bb.b
-    i32 3, label %bb.c
-    i32 4, label %bb.c
-  ]
+bb.b:                                             ; preds = %bb.a
+  %switch.tableidx = add i32 %1, -1               ; 2 uses
+  %3 = icmp ult i32 %switch.tableidx, 4
+  br i1 %3, label %bb.c, label %bb.d
 
-bb.b:                                             ; preds = %3, %3
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 360
-  %5 = load float, ptr %4, align 8, !tbaa !77
+bb.c:                                             ; preds = %bb.b
+  %4 = zext nneg i32 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZNK23btPoint2PointConstraint8getParamEii, i64 %4
+  %switch.load = load i16, ptr %switch.gep, align 2
+  %switch.ext = zext i16 %switch.load to i64
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 %switch.ext
+  %i.b = load float, ptr %i.a, align 4, !tbaa !25
   br label %bb.d
 
-bb.c:                                             ; preds = %3, %3
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 364
-  %i.b = load float, ptr %i.a, align 4, !tbaa !71
-  br label %bb.d
-
-bb.d:                                             ; preds = %bb.b, %bb.c, %3, %bb.a
-  %.0 = phi float [ f0x7F7FFFFF, %bb.a ], [ f0x7F7FFFFF, %3 ], [ %5, %bb.b ], [ %i.b, %bb.c ]
+bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
+  %.0 = phi float [ f0x7F7FFFFF, %bb.a ], [ f0x7F7FFFFF, %bb.b ], [ %i.b, %bb.c ]
   ret float %.0
 }
 
@@ -725,5 +719,4 @@ attributes #18 = { noreturn nounwind }
 !74 = !{!62, !63, i64 72}
 !75 = !{!14, !17, i64 376}
 !76 = !{!62, !17, i64 84}
-!77 = !{!14, !17, i64 360}
 end_hunk_1

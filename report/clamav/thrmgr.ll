@@ -201,25 +201,22 @@ bb.b:                                             ; preds = %bb.a
   %i.g = add i32 %i.f, 1
   store i32 %i.g, ptr %i.e, align 4, !tbaa !62
   switch i32 %1, label %bb.e [
-    i32 0, label %bb.c
-    i32 1, label %bb.d
+    i32 0, label %bb.d
+    i32 1, label %bb.c
   ]
 
 bb.c:                                             ; preds = %bb.b
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 92 ; 2 uses
-  %3 = load i32, ptr %2, align 4, !tbaa !63
-  %4 = add i32 %3, 1
-  store i32 %4, ptr %2, align 4, !tbaa !63
-  br label %bb.e
+  br label %bb.d
 
-bb.d:                                             ; preds = %bb.b
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 2 uses
-  %i.i = load i32, ptr %i.h, align 8, !tbaa !64
+bb.d:                                             ; preds = %bb.b, %bb.c
+  %.sink36 = phi i64 [ 96, %bb.c ], [ 92, %bb.b ]
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 %.sink36 ; 2 uses
+  %i.i = load i32, ptr %i.h, align 4, !tbaa !44
   %i.j = add i32 %i.i, 1
-  store i32 %i.j, ptr %i.h, align 8, !tbaa !64
+  store i32 %i.j, ptr %i.h, align 4, !tbaa !44
   br label %bb.e
 
-bb.e:                                             ; preds = %bb.b, %bb.d, %bb.c
+bb.e:                                             ; preds = %bb.d, %bb.b
   %i.k = load i32, ptr %i.b, align 8, !tbaa !60   ; 2 uses
   %.not25 = icmp eq i32 %i.k, 0
   br i1 %.not25, label %.thread29, label %bb.f
@@ -288,8 +285,8 @@ bb.b:                                             ; preds = %.lr.ph, %bb.c
 bb.c:                                             ; preds = %bb.b
   %i.j = call i64 @time(ptr noundef null) #12
   %i.k = add nsw i64 %i.j, 5
-  store i64 %i.k, ptr %4, align 8, !tbaa !65
-  store i64 0, ptr %i.e, align 8, !tbaa !67
+  store i64 %i.k, ptr %4, align 8, !tbaa !63
+  store i64 0, ptr %i.e, align 8, !tbaa !65
   %i.l = call i32 @pthread_cond_timedwait(ptr noundef nonnull %i.f, ptr noundef nonnull %0, ptr noundef nonnull %4) #12 ; 0 uses
   %i.m = load i32, ptr %i.b, align 8, !tbaa !60
   %i.n = icmp ugt i32 %i.m, 1
@@ -298,10 +295,10 @@ bb.c:                                             ; preds = %bb.b
 ._crit_edge:                                      ; preds = %bb.c, %bb.b, %bb.a
   %.1 = phi i32 [ 0, %bb.a ], [ %i.h, %bb.b ], [ 0, %bb.c ]
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 92
-  %i.p = load i32, ptr %i.o, align 4, !tbaa !63
+  %i.p = load i32, ptr %i.o, align 4, !tbaa !66
   store i32 %i.p, ptr %1, align 4, !tbaa !44
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 96
-  %i.r = load i32, ptr %i.q, align 8, !tbaa !64
+  %i.r = load i32, ptr %i.q, align 8, !tbaa !67
   %i.s = add i32 %i.r, %.1
   store i32 %i.s, ptr %2, align 4, !tbaa !44
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 100
@@ -518,8 +515,8 @@ thrmgr_setactivetask.exit:                        ; preds = %thrmgr_setactiveeng
   %i.aj = load i32, ptr %i.c, align 8, !tbaa !23
   %i.ak = sext i32 %i.aj to i64
   %i.al = add nsw i64 %i.ai, %i.ak
-  store i64 %i.al, ptr %1, align 8, !tbaa !65
-  store i64 0, ptr %i.d, align 8, !tbaa !67
+  store i64 %i.al, ptr %1, align 8, !tbaa !63
+  store i64 0, ptr %i.d, align 8, !tbaa !65
   %i.am = load i32, ptr %i.e, align 8, !tbaa !21
   %i.an = add nsw i32 %i.am, 1
   store i32 %i.an, ptr %i.e, align 8, !tbaa !21
@@ -909,11 +906,11 @@ attributes #16 = { nounwind allocsize(0,1) }
 !60 = !{!61, !6, i64 88}
 !61 = !{!"jobgroup", !7, i64 0, !7, i64 40, !6, i64 88, !6, i64 92, !6, i64 96, !6, i64 100, !6, i64 104}
 !62 = !{!61, !6, i64 100}
-!63 = !{!61, !6, i64 92}
-!64 = !{!61, !6, i64 96}
-!65 = !{!66, !32, i64 0}
-!66 = !{!"timespec", !32, i64 0, !32, i64 8}
-!67 = !{!66, !32, i64 8}
+!63 = !{!64, !32, i64 0}
+!64 = !{!"timespec", !32, i64 0, !32, i64 8}
+!65 = !{!64, !32, i64 8}
+!66 = !{!61, !6, i64 92}
+!67 = !{!61, !6, i64 96}
 !68 = !{!61, !6, i64 104}
 !69 = !{!34, !17, i64 32}
 !70 = !{!26, !6, i64 20}

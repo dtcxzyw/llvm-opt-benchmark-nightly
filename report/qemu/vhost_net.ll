@@ -197,7 +197,7 @@ bb.a:
   %i.b = alloca ptr, align 8                      ; 5 uses
   %i.c = load i32, ptr %0, align 8
   %i.d = icmp eq i32 %i.c, 1                      ; 2 uses
-  %i.e = tail call noalias dereferenceable_or_null(968) ptr @g_malloc0(i64 noundef 968) #12 ; 23 uses
+  %i.e = tail call noalias dereferenceable_or_null(968) ptr @g_malloc0(i64 noundef 968) #12 ; 22 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #11
   store ptr null, ptr %i.b, align 8
@@ -256,12 +256,7 @@ vhost_net_get_fd.exit.thread:                     ; preds = %bb.d
 vhost_net_get_fd.exit:                            ; preds = %bb.d
   %i.ag = tail call i32 @tap_get_fd(ptr noundef nonnull %i.g) #11 ; 2 uses
   %i.ah = icmp slt i32 %i.ag, 0
-  br i1 %i.ah, label %bb.t, label %1
-
-1:                                                ; preds = %vhost_net_get_fd.exit
-  %2 = getelementptr inbounds nuw i8, ptr %i.e, i64 920
-  store i32 %i.ag, ptr %2, align 8
-  br label %bb.f
+  br i1 %i.ah, label %bb.t, label %bb.f
 
 bb.e:                                             ; preds = %bb.c
   %i.ai = getelementptr inbounds nuw i8, ptr %i.e, i64 920
@@ -269,11 +264,13 @@ bb.e:                                             ; preds = %bb.c
   %i.aj = getelementptr inbounds nuw i8, ptr %i.g, i64 336
   %i.ak = load i32, ptr %i.aj, align 8
   %i.al = mul i32 %i.ak, %i.l
-  %3 = getelementptr inbounds nuw i8, ptr %i.e, i64 444
-  store i32 %i.al, ptr %3, align 4
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.e, %1
+bb.f:                                             ; preds = %vhost_net_get_fd.exit, %bb.e
+  %.sink69 = phi i64 [ 444, %bb.e ], [ 920, %vhost_net_get_fd.exit ]
+  %.sink = phi i32 [ %i.al, %bb.e ], [ %i.ag, %vhost_net_get_fd.exit ]
+  %1 = getelementptr inbounds nuw i8, ptr %i.e, i64 %.sink69
+  store i32 %.sink, ptr %1, align 4
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.an = load ptr, ptr %i.am, align 8
   %i.ao = load i32, ptr %0, align 8

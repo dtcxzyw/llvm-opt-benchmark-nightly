@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.i, label %bb.bh, label %extcap_parse_arg_sentence.exit.thread
 
 .critedge.i:                                      ; preds = %bb.b
-  %i.j = tail call noalias dereferenceable_or_null(136) ptr @g_malloc0(i64 noundef 136) #8 ; 32 uses
+  %i.j = tail call noalias dereferenceable_or_null(136) ptr @g_malloc0(i64 noundef 136) #8 ; 31 uses
   %i.k = getelementptr i8, ptr %i.j, i64 80       ; 5 uses
   store i32 0, ptr %i.k, align 8
   %i.l = getelementptr i8, ptr %i.j, i64 51       ; 2 uses
@@ -371,9 +371,7 @@ bb.u:                                             ; preds = %bb.t
 bb.v:                                             ; preds = %bb.u
   %i.bm = getelementptr i8, ptr %i.j, i64 49
   store i8 0, ptr %i.bm, align 1
-  %1 = getelementptr i8, ptr %i.j, i64 50
-  store i8 1, ptr %1, align 2
-  br label %bb.y
+  br label %matches_regex.exit38
 
 bb.w:                                             ; preds = %bb.u
   %i.bn = tail call i32 @g_utf8_validate(ptr noundef nonnull %i.bj, i64 noundef -1, ptr noundef null)
@@ -386,13 +384,14 @@ bb.x:                                             ; preds = %bb.w
   %i.bq = zext i1 %i.bp to i8
   br label %matches_regex.exit38
 
-matches_regex.exit38:                             ; preds = %bb.w, %bb.x
-  %.0.i37 = phi i8 [ %i.bq, %bb.x ], [ 0, %bb.w ]
-  %i.br = getelementptr i8, ptr %i.j, i64 49
-  store i8 %.0.i37, ptr %i.br, align 1
+matches_regex.exit38:                             ; preds = %bb.x, %bb.w, %bb.v
+  %.sink74 = phi i64 [ 50, %bb.v ], [ 49, %bb.w ], [ 49, %bb.x ]
+  %.0.i37.sink = phi i8 [ 1, %bb.v ], [ 0, %bb.w ], [ %i.bq, %bb.x ]
+  %i.br = getelementptr i8, ptr %i.j, i64 %.sink74
+  store i8 %.0.i37.sink, ptr %i.br, align 1
   br label %bb.y
 
-bb.y:                                             ; preds = %matches_regex.exit38, %bb.v, %bb.t
+bb.y:                                             ; preds = %matches_regex.exit38, %bb.t
   %i.bs = load ptr, ptr %i.n, align 8
   %i.bt = tail call ptr @g_hash_table_lookup(ptr noundef %i.bs, ptr noundef nonnull inttoptr (i64 4 to ptr)) ; 17 uses
   %i.bu = icmp eq ptr %i.bt, null

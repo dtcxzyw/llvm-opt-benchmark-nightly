@@ -203,10 +203,6 @@ bb.bn:                                            ; preds = %bb.bm, %bb.bm
 bb.bo:                                            ; preds = %bb.bi, %bb.bi, %bb.bj
   %.sroa.0.0.i = phi i8 [ %i.fk, %bb.bj ], [ %i.fj, %bb.bi ], [ %i.fj, %bb.bi ]
   %i.fr = getelementptr inbounds nuw i8, ptr %i.ff, i64 8
-  %.sroa.0.0.i77 = load i32, ptr %i.fr, align 8, !noundef !9
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %3 = load i32, ptr %2, align 8, !noundef !9
-  %4 = icmp ne i32 %.sroa.0.0.i77, %3
   br label %.invoke
 
 .invoke209:                                       ; preds = %bb.bm, %bb.bl, %bb.bg
@@ -222,18 +218,19 @@ bb.bo:                                            ; preds = %bb.bi, %bb.bi, %bb.
 bb.bp:                                            ; preds = %bb.bm, %bb.bm, %bb.bn
   %.sroa.0.0.i78 = phi i8 [ %i.fq, %bb.bn ], [ %i.fp, %bb.bm ], [ %i.fp, %bb.bm ]
   %i.fy = getelementptr inbounds nuw i8, ptr %i.ey, i64 12
-  %.sroa.34.0.i83 = load i32, ptr %i.fy, align 4, !noundef !9
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 44
-  %6 = load i32, ptr %5, align 4, !noundef !9
-  %7 = icmp ne i32 %.sroa.34.0.i83, %6
   br label %.invoke
 
 .invoke:                                          ; preds = %bb.bo, %bb.bp
-  %i.fz = phi ptr [ %i.ff, %bb.bp ], [ %i.ey, %bb.bo ]
-  %.in = phi i8 [ %.sroa.0.0.i78, %bb.bp ], [ %.sroa.0.0.i, %bb.bo ]
-  %8 = phi i1 [ %7, %bb.bp ], [ %4, %bb.bo ]
-  %i.ga = trunc i8 %.in to i1
-  invoke fastcc void @_RNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules11pycodestyle5rules19literal_comparisons29generate_redundant_comparison(ptr noalias noundef align 8 captures(address) dereferenceable(24) %i.f, ptr noundef nonnull align 8 %1, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %.sroa.031.0, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.eu, i64 noundef %i.ew, ptr noundef nonnull align 8 %i.fz, i1 noundef zeroext %i.ga, i1 noundef zeroext %8)
+  %.sroa.0.0.i.sink = phi i8 [ %.sroa.0.0.i, %bb.bo ], [ %.sroa.0.0.i78, %bb.bp ]
+  %.sink = phi i64 [ 40, %bb.bo ], [ 44, %bb.bp ]
+  %i.fz = phi ptr [ %i.fr, %bb.bo ], [ %i.fy, %bb.bp ]
+  %2 = phi ptr [ %i.ey, %bb.bo ], [ %i.ff, %bb.bp ]
+  %.sroa.0.0.i77.sink = load i32, ptr %i.fz, align 4, !noundef !9
+  %i.ga = trunc nuw i8 %.sroa.0.0.i.sink to i1
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 %.sink
+  %4 = load i32, ptr %3, align 4, !noundef !9
+  %5 = icmp ne i32 %.sroa.0.0.i77.sink, %4
+  invoke fastcc void @_RNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules11pycodestyle5rules19literal_comparisons29generate_redundant_comparison(ptr noalias noundef align 8 captures(address) dereferenceable(24) %i.f, ptr noundef nonnull align 8 %1, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %.sroa.031.0, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.eu, i64 noundef %i.ew, ptr noundef nonnull align 8 %2, i1 noundef zeroext %i.ga, i1 noundef zeroext %5)
           to label %bb.bq unwind label %bb.bk
 
 bb.bq:                                            ; preds = %.invoke209, %.invoke

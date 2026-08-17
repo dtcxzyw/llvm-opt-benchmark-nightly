@@ -203,14 +203,7 @@ _RNCNvMNtNtNtCs7ZUl82OSlxp_6rustls6crypto9aws_lc_rs4quicNtB4_19HeaderProtectionK
   tail call void @llvm.assume(i1 %i.aa)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !424
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(24) %i.z, ptr noundef nonnull align 1 dereferenceable(24) @17, i64 24, i1 false), !noalias !424
-  store i8 13, ptr %0, align 8
-  %.sroa.538.sroa.4.0..sroa.538.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %i.w, ptr %.sroa.538.sroa.4.0..sroa.538.0..sroa_idx.sroa_idx, align 8
-  %.sroa.538.sroa.5.0..sroa.538.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr %i.z, ptr %.sroa.538.sroa.5.0..sroa.538.0..sroa_idx.sroa_idx, align 8
-  %.sroa.538.sroa.6.0..sroa.538.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i64 24, ptr %.sroa.538.sroa.6.0..sroa.538.0..sroa_idx.sroa_idx, align 8
-  br label %bb.i
+  br label %bb.k
 
 bb.g:                                             ; preds = %_RNvNtNtCs222MioR9bx1_9aws_lc_rs4aead4quic15cipher_new_mask.exit
   %i.ab = trunc i40 %.sroa.010.0.copyload.i to i8 ; 2 uses
@@ -260,7 +253,7 @@ bb.h:                                             ; preds = %_RNvNtNtCs222MioR9b
   %i.au = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   %i.av = load i64, ptr %i.au, align 8, !range !428, !noundef !4 ; 3 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.j, i64 16 ; 2 uses
-  br i1 %i.at, label %bb.j, label %bb.k, !prof !429
+  br i1 %i.at, label %bb.j, label %8, !prof !429
 
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCs7ZUl82OSlxp_6rustls.exit.thread: ; preds = %.lr.ph.preheader, %.lr.ph.1, %.lr.ph.2, %.lr.ph.3, %bb.g
   store i8 -1, ptr %0, align 8
@@ -295,7 +288,7 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
   store i8 %i.bl, ptr %i.bh, align 1
   br label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCs7ZUl82OSlxp_6rustls.exit.thread
 
-bb.i:                                             ; preds = %_RNCNvMNtNtNtCs7ZUl82OSlxp_6rustls6crypto9aws_lc_rs4quicNtB4_19HeaderProtectionKey12xor_in_place0Ba_.exit, %bb.k, %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCs7ZUl82OSlxp_6rustls.exit.thread
+bb.i:                                             ; preds = %bb.k, %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCs7ZUl82OSlxp_6rustls.exit.thread
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k)
   ret void
 
@@ -304,19 +297,25 @@ bb.j:                                             ; preds = %bb.h
   call void @_RNvNtCs4wP2HXfJTCR_5alloc7raw_vec12handle_error(i64 noundef %i.av, i64 %i.bm) #25
   unreachable
 
-bb.k:                                             ; preds = %bb.h
-  %8 = load ptr, ptr %i.aw, align 8, !nonnull !4, !noundef !4 ; 2 uses
-  %9 = icmp samesign ugt i64 %i.av, 21
-  call void @llvm.assume(i1 %9)
+8:                                                ; preds = %bb.h
+  %9 = load ptr, ptr %i.aw, align 8, !nonnull !4, !noundef !4 ; 2 uses
+  %10 = icmp samesign ugt i64 %i.av, 21
+  call void @llvm.assume(i1 %10)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(22) %8, ptr noundef nonnull align 1 dereferenceable(22) @20, i64 22, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(22) %9, ptr noundef nonnull align 1 dereferenceable(22) @20, i64 22, i1 false)
+  br label %bb.k
+
+bb.k:                                             ; preds = %8, %_RNCNvMNtNtNtCs7ZUl82OSlxp_6rustls6crypto9aws_lc_rs4quicNtB4_19HeaderProtectionKey12xor_in_place0Ba_.exit
+  %.sink76 = phi i64 [ %i.av, %8 ], [ %i.w, %_RNCNvMNtNtNtCs7ZUl82OSlxp_6rustls6crypto9aws_lc_rs4quicNtB4_19HeaderProtectionKey12xor_in_place0Ba_.exit ]
+  %.sink75 = phi ptr [ %9, %8 ], [ %i.z, %_RNCNvMNtNtNtCs7ZUl82OSlxp_6rustls6crypto9aws_lc_rs4quicNtB4_19HeaderProtectionKey12xor_in_place0Ba_.exit ]
+  %.sink = phi i64 [ 22, %8 ], [ 24, %_RNCNvMNtNtNtCs7ZUl82OSlxp_6rustls6crypto9aws_lc_rs4quicNtB4_19HeaderProtectionKey12xor_in_place0Ba_.exit ]
   store i8 13, ptr %0, align 8
   %.sroa.417.sroa.3.0..sroa.417.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %i.av, ptr %.sroa.417.sroa.3.0..sroa.417.0..sroa_idx.sroa_idx, align 8
+  store i64 %.sink76, ptr %.sroa.417.sroa.3.0..sroa.417.0..sroa_idx.sroa_idx, align 8
   %.sroa.417.sroa.4.0..sroa.417.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr %8, ptr %.sroa.417.sroa.4.0..sroa.417.0..sroa_idx.sroa_idx, align 8
+  store ptr %.sink75, ptr %.sroa.417.sroa.4.0..sroa.417.0..sroa_idx.sroa_idx, align 8
   %.sroa.417.sroa.5.0..sroa.417.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i64 22, ptr %.sroa.417.sroa.5.0..sroa.417.0..sroa_idx.sroa_idx, align 8
+  store i64 %.sink, ptr %.sroa.417.sroa.5.0..sroa.417.0..sroa_idx.sroa_idx, align 8
   br label %bb.i
 }
 

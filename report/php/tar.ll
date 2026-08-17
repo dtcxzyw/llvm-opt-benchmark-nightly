@@ -203,21 +203,17 @@ bb.ad:                                            ; preds = %bb.ac, %bb.u
 
 bb.ae:                                            ; preds = %bb.ad
   switch i32 %.pre, label %._crit_edge [
-    i32 0, label %3
+    i32 0, label %.thread
     i32 1, label %bb.af
   ]
 
-3:                                                ; preds = %bb.ae
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 16
-  store i8 0, ptr %4, align 8, !tbaa !79
-  br label %.thread
-
 bb.af:                                            ; preds = %bb.ae
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 17
-  store i8 0, ptr %5, align 1, !tbaa !80
   br label %.thread
 
-.thread:                                          ; preds = %3, %bb.af
+.thread:                                          ; preds = %bb.ae, %bb.af
+  %.sink192 = phi i64 [ 17, %bb.af ], [ 16, %bb.ae ]
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 %.sink192
+  store i8 0, ptr %3, align 1, !tbaa !89
   %i.jk = load i16, ptr %i.b, align 2
   %i.jl = and i16 %i.jk, -3
   store i16 %i.jl, ptr %i.b, align 2
@@ -260,9 +256,9 @@ bb.al:                                            ; preds = %.thread, %bb.ak, %b
   %i.jx = getelementptr inbounds nuw i8, ptr %0, i64 56
   store i32 0, ptr %i.jx, align 8, !tbaa !70
   %i.jy = getelementptr inbounds nuw i8, ptr %0, i64 64
-  store i64 %i.ic, ptr %i.jy, align 8, !tbaa !89
+  store i64 %i.ic, ptr %i.jy, align 8, !tbaa !90
   %i.jz = getelementptr inbounds nuw i8, ptr %0, i64 72
-  store i64 %i.ic, ptr %i.jz, align 8, !tbaa !90
+  store i64 %i.ic, ptr %i.jz, align 8, !tbaa !91
   br label %phar_entry_can_remove.exit.thread
 
 phar_entry_can_remove.exit.thread:                ; preds = %phar_entry_can_remove.exit, %bb.c, %bb.aa, %bb.ab, %bb.x, %bb.y, %bb.v, %bb.s, %bb.t, %bb.q, %bb.r, %bb.o, %bb.p, %bb.g, %bb.f, %bb.l, %.loopexit, %bb.a, %bb.al
@@ -456,6 +452,7 @@ attributes #17 = { nounwind allocsize(0) }
 !86 = distinct !{!86, !14, !15, !16}
 !87 = !{!56, !9, i64 12}
 !88 = !{!56, !26, i64 80}
-!89 = !{!56, !26, i64 64}
-!90 = !{!56, !26, i64 72}
+!89 = !{!28, !28, i64 0}
+!90 = !{!56, !26, i64 64}
+!91 = !{!56, !26, i64 72}
 end_hunk_0

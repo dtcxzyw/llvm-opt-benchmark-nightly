@@ -4,6 +4,8 @@ begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
 
+@switch.table._ZN6hermes6ESTree7isAsyncEPNS0_16FunctionLikeNodeE = private unnamed_addr constant [5 x i8] [i8 -127, i8 -127, i8 -127, i8 poison, i8 120], align 8
+
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define hidden noundef nonnull align 8 dereferenceable(16) ptr @_ZN6hermes6ESTree9getParamsEPNS0_16FunctionLikeNodeE(ptr nofree noundef readonly captures(ret: address, provenance) %0) local_unnamed_addr #0 {
 bb.a:
@@ -214,41 +216,29 @@ bb.b:                                             ; preds = %.sink.split, %bb.a
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define hidden noundef zeroext i1 @_ZN6hermes6ESTree7isAsyncEPNS0_16FunctionLikeNodeE(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %3 = load i32, ptr %2, align 8, !tbaa !7
-  switch i32 %3, label %bb.c [
-    i32 4, label %4
-    i32 5, label %8
-    i32 6, label %bb.a
-    i32 8, label %bb.b
-  ]
+bb.a:
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %1 = load i32, ptr %i.a, align 8, !tbaa !7
+  %switch.tableidx = add i32 %1, -4               ; 3 uses
+  %2 = icmp ult i32 %switch.tableidx, 5
+  %switch.maskindex = trunc i32 %switch.tableidx to i8
+  %switch.shifted = lshr i8 23, %switch.maskindex
+  %i.b = trunc i8 %switch.shifted to i1
+  %or.cond = select i1 %2, i1 %i.b, i1 false
+  br i1 %or.cond, label %bb.b, label %bb.c
 
-4:                                                ; preds = %1
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 129
-  %6 = load i8, ptr %5, align 1, !tbaa !42, !range !39, !noundef !40
-  %7 = trunc nuw i8 %6 to i1
-  br label %bb.c
-
-8:                                                ; preds = %1
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 129
-  %10 = load i8, ptr %9, align 1, !tbaa !43, !range !39, !noundef !40
-  %11 = trunc nuw i8 %10 to i1
-  br label %bb.c
-
-bb.a:                                             ; preds = %1
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 129
-  %12 = load i8, ptr %i.a, align 1, !tbaa !44, !range !39, !noundef !40
-  %i.b = trunc nuw i8 %12 to i1
-  br label %bb.c
-
-bb.b:                                             ; preds = %1
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 120
-  %i.d = load i8, ptr %i.c, align 8, !tbaa !45, !range !39, !noundef !40
+bb.b:                                             ; preds = %bb.a
+  %3 = zext nneg i32 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN6hermes6ESTree7isAsyncEPNS0_16FunctionLikeNodeE, i64 %3
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 %switch.ext
+  %i.d = load i8, ptr %i.c, align 1, !tbaa !38, !range !39, !noundef !40
   %i.e = trunc nuw i8 %i.d to i1
   br label %bb.c
 
-bb.c:                                             ; preds = %1, %bb.b, %bb.a, %8, %4
-  %.0 = phi i1 [ %i.e, %bb.b ], [ %7, %4 ], [ %11, %8 ], [ %i.b, %bb.a ], [ false, %1 ]
+bb.c:                                             ; preds = %bb.a, %bb.b
+  %.0 = phi i1 [ false, %bb.a ], [ %i.e, %bb.b ]
   ret i1 %.0
 }
 
@@ -302,8 +292,4 @@ attributes #2 = { mustprogress nofree norecurse nosync nounwind willreturn memor
 !39 = !{i8 0, i8 2}
 !40 = !{}
 !41 = !{!11, !12, i64 8}
-!42 = !{!19, !25, i64 129}
-!43 = !{!32, !25, i64 129}
-!44 = !{!30, !25, i64 129}
-!45 = !{!36, !25, i64 120}
 end_hunk_0

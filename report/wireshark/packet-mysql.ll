@@ -203,7 +203,7 @@ bb.i:                                             ; preds = %bb.h, %my_tvb_strsi
 ; Function Attrs: null_pointer_is_valid sspstrong uwtable
 define internal fastcc i32 @mysql_dissect_ok_packet(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr nofree noundef captures(none) %3) unnamed_addr #0 {
 bb.a:
-  %i.a = alloca ptr, align 8                      ; 5 uses
+  %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = getelementptr i8, ptr %1, i64 8          ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8
   tail call void @col_append_str(ptr noundef %i.c, i32 noundef 25, ptr noundef nonnull @.str.1272)
@@ -426,8 +426,6 @@ tvb_get_fle.exit98:                               ; preds = %bb.w, %bb.x, %bb.y,
 .lr.ph:                                           ; preds = %tvb_get_fle.exit98
   %i.cj = getelementptr i8, ptr %1, i64 416
   %i.ck = getelementptr i8, ptr %1, i64 80        ; 2 uses
-  %4 = getelementptr i8, ptr %3, i64 116
-  %5 = getelementptr i8, ptr %3, i64 112
   br label %bb.aa
 
 bb.aa:                                            ; preds = %.lr.ph, %add_session_tracker_entry_to_tree.exit
@@ -587,13 +585,7 @@ bb.aq:                                            ; preds = %tvb_get_fle.exit138
   %.val.val.i = load i16, ptr %i.ev, align 1
   %i.ew = and i16 %.val.val.i, 8
   %.not.i.i = icmp eq i16 %i.ew, 0
-  br i1 %.not.i.i, label %6, label %mysql_set_encoding_client.exit.i
-
-6:                                                ; preds = %bb.aq
-  %7 = load ptr, ptr %i.a, align 8
-  %8 = call fastcc i32 @charset_to_encoding(ptr noundef %7)
-  store i32 %8, ptr %5, align 8
-  br label %mysql_set_encoding_client.exit.i
+  br i1 %.not.i.i, label %bb.at, label %mysql_set_encoding_client.exit.i
 
 bb.ar:                                            ; preds = %tvb_get_fle.exit138.i
   br i1 %.0.i99, label %bb.as, label %mysql_set_encoding_client.exit.i
@@ -606,13 +598,15 @@ bb.as:                                            ; preds = %bb.ar
   %.not.i139.i = icmp eq i16 %i.ey, 0
   br i1 %.not.i139.i, label %bb.at, label %mysql_set_encoding_client.exit.i
 
-bb.at:                                            ; preds = %bb.as
+bb.at:                                            ; preds = %bb.as, %bb.aq
+  %.sink181.i = phi i64 [ 112, %bb.aq ], [ 116, %bb.as ]
   %i.ez = load ptr, ptr %i.a, align 8
   %i.fa = call fastcc i32 @charset_to_encoding(ptr noundef %i.ez)
+  %4 = getelementptr i8, ptr %3, i64 %.sink181.i
   store i32 %i.fa, ptr %4, align 4
   br label %mysql_set_encoding_client.exit.i
 
-mysql_set_encoding_client.exit.i:                 ; preds = %bb.at, %bb.as, %bb.ar, %6, %bb.aq
+mysql_set_encoding_client.exit.i:                 ; preds = %bb.at, %bb.as, %bb.ar, %bb.aq
   %i.fb = add i32 %i.eq, %i.es
   br label %add_session_tracker_entry_to_tree.exit
 

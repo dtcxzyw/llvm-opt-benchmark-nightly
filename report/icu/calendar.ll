@@ -203,25 +203,23 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.i
   store i8 0, ptr %i.l, align 1, !tbaa !42
   switch i32 %1, label %bb.g [
-    i32 2, label %bb.e
-    i32 23, label %bb.f
+    i32 2, label %bb.f
+    i32 23, label %bb.e
   ]
 
 bb.e:                                             ; preds = %bb.d
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 100
-  store i32 0, ptr %2, align 4, !tbaa !46
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 127
-  store i8 0, ptr %3, align 1, !tbaa !42
+  br label %bb.f
+
+bb.f:                                             ; preds = %bb.d, %bb.e
+  %.sink8 = phi i64 [ 16, %bb.e ], [ 100, %bb.d ]
+  %.sink7 = phi i64 [ 106, %bb.e ], [ 127, %bb.d ]
+  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 %.sink8
+  store i32 0, ptr %i.m, align 4, !tbaa !46
+  %i.n = getelementptr inbounds nuw i8, ptr %0, i64 %.sink7
+  store i8 0, ptr %i.n, align 1, !tbaa !42
   br label %bb.g
 
-bb.f:                                             ; preds = %bb.d
-  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i32 0, ptr %i.m, align 8, !tbaa !46
-  %i.n = getelementptr inbounds nuw i8, ptr %0, i64 106
-  store i8 0, ptr %i.n, align 2, !tbaa !42
-  br label %bb.g
-
-bb.g:                                             ; preds = %bb.e, %bb.d, %bb.f
+bb.g:                                             ; preds = %bb.f, %bb.d
   %i.o = load i8, ptr %i.b, align 8
   %i.p = and i8 %i.o, -16
   store i8 %i.p, ptr %i.b, align 8

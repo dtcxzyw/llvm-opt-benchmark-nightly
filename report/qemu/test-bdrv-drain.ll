@@ -203,28 +203,27 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.n = tail call ptr @blk_new(ptr noundef %i.m, i64 noundef 15, i64 noundef 15) #15 ; 4 uses
   %i.o = tail call i32 @blk_insert_bs(ptr noundef %i.n, ptr noundef %i.l, ptr noundef nonnull @error_abort) #15 ; 0 uses
   tail call void @blk_set_allow_aio_context_change(ptr noundef %i.n, i1 noundef zeroext true) #15
-  %i.p = tail call ptr @block_job_create(ptr noundef nonnull @.str.72, ptr noundef nonnull @test_job_driver, ptr noundef null, ptr noundef %i.a, i64 noundef 0, i64 noundef 15, i64 noundef 0, i32 noundef 0, ptr noundef null, ptr noundef null, ptr noundef nonnull @error_abort) #15 ; 15 uses
+  %i.p = tail call ptr @block_job_create(ptr noundef nonnull @.str.72, ptr noundef nonnull @test_job_driver, ptr noundef null, ptr noundef %i.a, i64 noundef 0, i64 noundef 15, i64 noundef 0, i32 noundef 0, ptr noundef null, ptr noundef null, ptr noundef nonnull @error_abort) #15 ; 14 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 520
   store ptr %i.a, ptr %i.q, align 8
   tail call void @bdrv_graph_wrlock_drained() #15
   %i.r = tail call i32 @block_job_add_bdrv(ptr noundef %i.p, ptr noundef nonnull @.str.71, ptr noundef %i.l, i64 noundef 0, i64 noundef 15, ptr noundef nonnull @error_abort) #15 ; 0 uses
   tail call void @bdrv_graph_wrunlock() #15
   switch i32 %2, label %bb.f [
-    i32 2, label %bb.e
-    i32 1, label %bb.d
+    i32 2, label %bb.d
+    i32 1, label %bb.e
   ]
 
 bb.d:                                             ; preds = %bb.c
-  %4 = getelementptr inbounds nuw i8, ptr %i.p, i64 528
-  store i32 -5, ptr %4, align 8
-  br label %bb.f
+  br label %bb.e
 
-bb.e:                                             ; preds = %bb.c
-  %i.s = getelementptr inbounds nuw i8, ptr %i.p, i64 532
+bb.e:                                             ; preds = %bb.c, %bb.d
+  %.sink281 = phi i64 [ 532, %bb.d ], [ 528, %bb.c ]
+  %i.s = getelementptr inbounds nuw i8, ptr %i.p, i64 %.sink281
   store i32 -5, ptr %i.s, align 4
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c
+bb.f:                                             ; preds = %bb.e, %bb.c
   tail call void @job_start(ptr noundef nonnull %i.p) #15
   br i1 %1, label %.preheader246, label %.split.us
 

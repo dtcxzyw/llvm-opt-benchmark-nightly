@@ -203,7 +203,7 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph.i.i.i:                                     ; preds = %bb.c, %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit13.i.i.i.i.i.thread
   %i.ah = phi ptr [ %i.ck, %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit13.i.i.i.i.i.thread ], [ %i.ag, %bb.c ] ; 3 uses
-  %.sroa.02.013.i.i.i = phi ptr [ %8, %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit13.i.i.i.i.i.thread ], [ %i.aa, %bb.c ] ; 6 uses
+  %.sroa.02.013.i.i.i = phi ptr [ %8, %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit13.i.i.i.i.i.thread ], [ %i.aa, %bb.c ] ; 5 uses
   %i.ai = load ptr, ptr %.sroa.02.013.i.i.i, align 8, !tbaa !519 ; 2 uses
   %i.aj = load ptr, ptr %i.ah, align 8, !tbaa !519 ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ai, i64 24
@@ -349,31 +349,30 @@ _ZN15TristateVisitor26assignmentOfValueOnAllBitsEPK10AstAssignWb.exit: ; preds =
 
 bb.r:                                             ; preds = %_ZN15TristateVisitor26assignmentOfValueOnAllBitsEPK10AstAssignWb.exit
   %i.cf = getelementptr inbounds nuw i8, ptr %i.ai, i64 48
-  %6 = load ptr, ptr %i.cf, align 8, !tbaa !241   ; 2 uses
-  %.not.not.i.i.i.i.i.i = icmp eq ptr %6, null
-  %7 = getelementptr inbounds nuw i8, ptr %i.aj, i64 48
-  %i.cg = load ptr, ptr %7, align 8, !tbaa !241   ; 2 uses
-  %.not.not.i9.i.i.i.i.i.a = icmp eq ptr %i.cg, null ; 2 uses
-  br i1 %.not.not.i.i.i.i.i.i, label %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit.i.i.i.i.i, label %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit.thread.i.i.i.i.i
+  %i.cg = load ptr, ptr %i.cf, align 8, !tbaa !241 ; 2 uses
+  %.not.not.i9.i.i.i.i.i.a = icmp eq ptr %i.cg, null
+  br i1 %.not.not.i9.i.i.i.i.i.a, label %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit.i.i.i.i.i, label %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit.thread.i.i.i.i.i
 
 _ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit.thread.i.i.i.i.i: ; preds = %bb.r
-  %i.ch = getelementptr inbounds nuw i8, ptr %6, i64 152
-  %.sroa.0.0.copyload.i8.i.i.i.i.i.i = load i8, ptr %i.ch, align 8, !tbaa !515 ; 2 uses
-  br i1 %.not.not.i9.i.i.i.i.i.a, label %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit13.i.i.i.i.i, label %.thread.i.i.i.i.i
+  %i.ch = getelementptr inbounds nuw i8, ptr %i.cg, i64 152
+  %.sroa.0.0.copyload.i8.i.i.i.i.i.i = load i8, ptr %i.ch, align 1, !tbaa !515
+  br label %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit.i.i.i.i.i
 
-_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit.i.i.i.i.i: ; preds = %bb.r
-  br i1 %.not.not.i9.i.i.i.i.i.a, label %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit13.i.i.i.i.i.thread, label %.thread.i.i.i.i.i
+_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit.i.i.i.i.i: ; preds = %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit.thread.i.i.i.i.i, %bb.r
+  %spec.select.i.i.i.i.i.i = phi i8 [ 6, %bb.r ], [ %.sroa.0.0.copyload.i8.i.i.i.i.i.i, %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit.thread.i.i.i.i.i ]
+  %6 = getelementptr inbounds nuw i8, ptr %i.aj, i64 48
+  %7 = load ptr, ptr %6, align 8, !tbaa !241      ; 2 uses
+  %.not.not.i9.i.i.i.i.i = icmp eq ptr %7, null
+  br i1 %.not.not.i9.i.i.i.i.i, label %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit13.i.i.i.i.i, label %.thread.i.i.i.i.i
 
-.thread.i.i.i.i.i:                                ; preds = %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit.i.i.i.i.i, %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit.thread.i.i.i.i.i
-  %spec.select.i1619.i.i.i.i.i = phi i8 [ %.sroa.0.0.copyload.i8.i.i.i.i.i.i, %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit.thread.i.i.i.i.i ], [ 6, %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit.i.i.i.i.i ]
-  %i.ci = getelementptr inbounds nuw i8, ptr %i.cg, i64 152
-  %.sroa.0.0.copyload.i8.i10.i.i.i.i.i = load i8, ptr %i.ci, align 8, !tbaa !515
+.thread.i.i.i.i.i:                                ; preds = %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit.i.i.i.i.i
+  %i.ci = getelementptr inbounds nuw i8, ptr %7, i64 152
+  %.sroa.0.0.copyload.i8.i10.i.i.i.i.i = load i8, ptr %i.ci, align 1, !tbaa !515
   br label %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit13.i.i.i.i.i
 
-_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit13.i.i.i.i.i: ; preds = %.thread.i.i.i.i.i, %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit.thread.i.i.i.i.i
-  %spec.select.i17.i.i.i.i.i = phi i8 [ %.sroa.0.0.copyload.i8.i.i.i.i.i.i, %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit.thread.i.i.i.i.i ], [ %spec.select.i1619.i.i.i.i.i, %.thread.i.i.i.i.i ]
-  %spec.select.i11.i.i.i.i.i = phi i8 [ 6, %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit.thread.i.i.i.i.i ], [ %.sroa.0.0.copyload.i8.i10.i.i.i.i.i, %.thread.i.i.i.i.i ]
-  %i.cj = icmp ult i8 %spec.select.i17.i.i.i.i.i, %spec.select.i11.i.i.i.i.i
+_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit13.i.i.i.i.i: ; preds = %.thread.i.i.i.i.i, %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit.i.i.i.i.i
+  %spec.select.i11.i.i.i.i.i = phi i8 [ 6, %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit.i.i.i.i.i ], [ %.sroa.0.0.copyload.i8.i10.i.i.i.i.i, %.thread.i.i.i.i.i ]
+  %i.cj = icmp ult i8 %spec.select.i.i.i.i.i.i, %spec.select.i11.i.i.i.i.i
   %cond.fr66 = freeze i1 %i.cj
   br i1 %cond.fr66, label %bb.s, label %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit13.i.i.i.i.i.thread
 
@@ -385,8 +384,8 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN15TristateVisitor29getStrongestAssignment
 bb.s:                                             ; preds = %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit13.i.i.i.i.i, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN15TristateVisitor29getStrongestAssignmentOfValueERKSt6vectorIP10AstAssignWSaIS5_EEbEUlPKS4_SB_E_EclINS_17__normal_iteratorIPKS5_S7_EESI_EEbT_T0_.exit.i.i.i
   br label %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit13.i.i.i.i.i.thread
 
-_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit13.i.i.i.i.i.thread: ; preds = %_ZN15TristateVisitor26assignmentOfValueOnAllBitsEPK10AstAssignWb.exit32, %bb.k, %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit.i.i.i.i.i, %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit13.i.i.i.i.i, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN15TristateVisitor29getStrongestAssignmentOfValueERKSt6vectorIP10AstAssignWSaIS5_EEbEUlPKS4_SB_E_EclINS_17__normal_iteratorIPKS5_S7_EESI_EEbT_T0_.exit.i.i.i, %bb.s
-  %8 = phi ptr [ %i.ah, %bb.s ], [ %.sroa.02.013.i.i.i, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN15TristateVisitor29getStrongestAssignmentOfValueERKSt6vectorIP10AstAssignWSaIS5_EEbEUlPKS4_SB_E_EclINS_17__normal_iteratorIPKS5_S7_EESI_EEbT_T0_.exit.i.i.i ], [ %.sroa.02.013.i.i.i, %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit.i.i.i.i.i ], [ %.sroa.02.013.i.i.i, %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit13.i.i.i.i.i ], [ %.sroa.02.013.i.i.i, %bb.k ], [ %.sroa.02.013.i.i.i, %_ZN15TristateVisitor26assignmentOfValueOnAllBitsEPK10AstAssignWb.exit32 ] ; 2 uses
+_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit13.i.i.i.i.i.thread: ; preds = %_ZN15TristateVisitor26assignmentOfValueOnAllBitsEPK10AstAssignWb.exit32, %bb.k, %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit13.i.i.i.i.i, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN15TristateVisitor29getStrongestAssignmentOfValueERKSt6vectorIP10AstAssignWSaIS5_EEbEUlPKS4_SB_E_EclINS_17__normal_iteratorIPKS5_S7_EESI_EEbT_T0_.exit.i.i.i, %bb.s
+  %8 = phi ptr [ %i.ah, %bb.s ], [ %.sroa.02.013.i.i.i, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN15TristateVisitor29getStrongestAssignmentOfValueERKSt6vectorIP10AstAssignWSaIS5_EEbEUlPKS4_SB_E_EclINS_17__normal_iteratorIPKS5_S7_EESI_EEbT_T0_.exit.i.i.i ], [ %.sroa.02.013.i.i.i, %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit13.i.i.i.i.i ], [ %.sroa.02.013.i.i.i, %bb.k ], [ %.sroa.02.013.i.i.i, %_ZN15TristateVisitor26assignmentOfValueOnAllBitsEPK10AstAssignWb.exit32 ] ; 2 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %i.ah, i64 8 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.ck, %i.z
   br i1 %.not.i.i.i, label %_ZSt11max_elementIN9__gnu_cxx17__normal_iteratorIPKP10AstAssignWSt6vectorIS3_SaIS3_EEEEZN15TristateVisitor29getStrongestAssignmentOfValueERKS8_bEUlPKS2_SE_E_ET_SG_SG_T0_.exit.i, label %.lr.ph.i.i.i, !llvm.loop !584
@@ -413,7 +412,7 @@ _ZN15TristateVisitor29getStrongestAssignmentOfValueERKSt6vectorIP10AstAssignWSaI
 
 .lr.ph.i.i.us.i:                                  ; preds = %_ZN15TristateVisitor29getStrongestAssignmentOfValueERKSt6vectorIP10AstAssignWSaIS2_EEb.exit, %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit13.i.i.i.i.us.i.thread
   %i.ct = phi ptr [ %i.ew, %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit13.i.i.i.i.us.i.thread ], [ %i.cs, %_ZN15TristateVisitor29getStrongestAssignmentOfValueERKSt6vectorIP10AstAssignWSaIS2_EEb.exit ] ; 3 uses
-  %.sroa.02.013.i.i.us.i = phi ptr [ %11, %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit13.i.i.i.i.us.i.thread ], [ %i.cp, %_ZN15TristateVisitor29getStrongestAssignmentOfValueERKSt6vectorIP10AstAssignWSaIS2_EEb.exit ] ; 6 uses
+  %.sroa.02.013.i.i.us.i = phi ptr [ %11, %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit13.i.i.i.i.us.i.thread ], [ %i.cp, %_ZN15TristateVisitor29getStrongestAssignmentOfValueERKSt6vectorIP10AstAssignWSaIS2_EEb.exit ] ; 5 uses
   %i.cu = load ptr, ptr %.sroa.02.013.i.i.us.i, align 8, !tbaa !519 ; 2 uses
   %i.cv = load ptr, ptr %i.ct, align 8, !tbaa !519 ; 2 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cu, i64 24
@@ -555,31 +554,30 @@ _ZN15TristateVisitor26assignmentOfValueOnAllBitsEPK10AstAssignWb.exit39: ; preds
 
 bb.ai:                                            ; preds = %_ZN15TristateVisitor26assignmentOfValueOnAllBitsEPK10AstAssignWb.exit39
   %i.er = getelementptr inbounds nuw i8, ptr %i.cu, i64 48
-  %9 = load ptr, ptr %i.er, align 8, !tbaa !241   ; 2 uses
-  %.not.not.i.i.i.i.i.us.i = icmp eq ptr %9, null
-  %10 = getelementptr inbounds nuw i8, ptr %i.cv, i64 48
-  %i.es = load ptr, ptr %10, align 8, !tbaa !241  ; 2 uses
-  %.not.not.i9.i.i.i.i.us.i = icmp eq ptr %i.es, null ; 2 uses
-  br i1 %.not.not.i.i.i.i.i.us.i, label %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit.i.i.i.i.us.i, label %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit.thread20.i.i.i.i.us.i
+  %i.es = load ptr, ptr %i.er, align 8, !tbaa !241 ; 2 uses
+  %.not.not.i9.i.i.i.i.us.i = icmp eq ptr %i.es, null
+  br i1 %.not.not.i9.i.i.i.i.us.i, label %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit.i.i.i.i.us.i, label %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit.thread20.i.i.i.i.us.i
 
 _ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit.thread20.i.i.i.i.us.i: ; preds = %bb.ai
-  %i.et = getelementptr inbounds nuw i8, ptr %9, i64 153
-  %.sroa.0.0.copyload.i.i.i.i.i.i.us.i = load i8, ptr %i.et, align 1, !tbaa !515 ; 2 uses
-  br i1 %.not.not.i9.i.i.i.i.us.i, label %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit13.i.i.i.i.us.i, label %.thread23.i.i.i.i.us.i
+  %i.et = getelementptr inbounds nuw i8, ptr %i.es, i64 153
+  %.sroa.0.0.copyload.i.i.i.i.i.i.us.i = load i8, ptr %i.et, align 1, !tbaa !515
+  br label %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit.i.i.i.i.us.i
 
-_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit.i.i.i.i.us.i: ; preds = %bb.ai
-  br i1 %.not.not.i9.i.i.i.i.us.i, label %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit13.i.i.i.i.us.i.thread, label %.thread23.i.i.i.i.us.i
+_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit.i.i.i.i.us.i: ; preds = %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit.thread20.i.i.i.i.us.i, %bb.ai
+  %spec.select.i.i.i.i.i.i29 = phi i8 [ 6, %bb.ai ], [ %.sroa.0.0.copyload.i.i.i.i.i.i.us.i, %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit.thread20.i.i.i.i.us.i ]
+  %9 = getelementptr inbounds nuw i8, ptr %i.cv, i64 48
+  %10 = load ptr, ptr %9, align 8, !tbaa !241     ; 2 uses
+  %.not.not.i9.i.i.i.i.i30 = icmp eq ptr %10, null
+  br i1 %.not.not.i9.i.i.i.i.i30, label %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit13.i.i.i.i.us.i, label %.thread23.i.i.i.i.us.i
 
-.thread23.i.i.i.i.us.i:                           ; preds = %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit.i.i.i.i.us.i, %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit.thread20.i.i.i.i.us.i
-  %spec.select.i1625.i.i.i.i.us.i = phi i8 [ %.sroa.0.0.copyload.i.i.i.i.i.i.us.i, %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit.thread20.i.i.i.i.us.i ], [ 6, %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit.i.i.i.i.us.i ]
-  %i.eu = getelementptr inbounds nuw i8, ptr %i.es, i64 153
+.thread23.i.i.i.i.us.i:                           ; preds = %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit.i.i.i.i.us.i
+  %i.eu = getelementptr inbounds nuw i8, ptr %10, i64 153
   %.sroa.0.0.copyload.i.i12.i.i.i.i.us.i = load i8, ptr %i.eu, align 1, !tbaa !515
   br label %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit13.i.i.i.i.us.i
 
-_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit13.i.i.i.i.us.i: ; preds = %.thread23.i.i.i.i.us.i, %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit.thread20.i.i.i.i.us.i
-  %spec.select.i17.i.i.i.i.us.i = phi i8 [ %spec.select.i1625.i.i.i.i.us.i, %.thread23.i.i.i.i.us.i ], [ %.sroa.0.0.copyload.i.i.i.i.i.i.us.i, %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit.thread20.i.i.i.i.us.i ]
-  %spec.select.i11.i.i.i.i.us.i = phi i8 [ %.sroa.0.0.copyload.i.i12.i.i.i.i.us.i, %.thread23.i.i.i.i.us.i ], [ 6, %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit.thread20.i.i.i.i.us.i ]
-  %i.ev = icmp ult i8 %spec.select.i17.i.i.i.i.us.i, %spec.select.i11.i.i.i.i.us.i
+_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit13.i.i.i.i.us.i: ; preds = %.thread23.i.i.i.i.us.i, %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit.i.i.i.i.us.i
+  %spec.select.i11.i.i.i.i.us.i = phi i8 [ 6, %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit.i.i.i.i.us.i ], [ %.sroa.0.0.copyload.i.i12.i.i.i.i.us.i, %.thread23.i.i.i.i.us.i ]
+  %i.ev = icmp ult i8 %spec.select.i.i.i.i.i.i29, %spec.select.i11.i.i.i.i.us.i
   %cond.fr7073 = freeze i1 %i.ev
   br i1 %cond.fr7073, label %bb.aj, label %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit13.i.i.i.i.us.i.thread
 
@@ -591,8 +589,8 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN15TristateVisitor29getStrongestAssignment
 bb.aj:                                            ; preds = %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit13.i.i.i.i.us.i, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN15TristateVisitor29getStrongestAssignmentOfValueERKSt6vectorIP10AstAssignWSaIS5_EEbEUlPKS4_SB_E_EclINS_17__normal_iteratorIPKS5_S7_EESI_EEbT_T0_.exit.i.i.us.i
   br label %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit13.i.i.i.i.us.i.thread
 
-_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit13.i.i.i.i.us.i.thread: ; preds = %_ZN15TristateVisitor26assignmentOfValueOnAllBitsEPK10AstAssignWb.exit46, %bb.ab, %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit.i.i.i.i.us.i, %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit13.i.i.i.i.us.i, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN15TristateVisitor29getStrongestAssignmentOfValueERKSt6vectorIP10AstAssignWSaIS5_EEbEUlPKS4_SB_E_EclINS_17__normal_iteratorIPKS5_S7_EESI_EEbT_T0_.exit.i.i.us.i, %bb.aj
-  %11 = phi ptr [ %i.ct, %bb.aj ], [ %.sroa.02.013.i.i.us.i, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN15TristateVisitor29getStrongestAssignmentOfValueERKSt6vectorIP10AstAssignWSaIS5_EEbEUlPKS4_SB_E_EclINS_17__normal_iteratorIPKS5_S7_EESI_EEbT_T0_.exit.i.i.us.i ], [ %.sroa.02.013.i.i.us.i, %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit.i.i.i.i.us.i ], [ %.sroa.02.013.i.i.us.i, %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit13.i.i.i.i.us.i ], [ %.sroa.02.013.i.i.us.i, %bb.ab ], [ %.sroa.02.013.i.i.us.i, %_ZN15TristateVisitor26assignmentOfValueOnAllBitsEPK10AstAssignWb.exit46 ] ; 2 uses
+_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit13.i.i.i.i.us.i.thread: ; preds = %_ZN15TristateVisitor26assignmentOfValueOnAllBitsEPK10AstAssignWb.exit46, %bb.ab, %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit13.i.i.i.i.us.i, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN15TristateVisitor29getStrongestAssignmentOfValueERKSt6vectorIP10AstAssignWSaIS5_EEbEUlPKS4_SB_E_EclINS_17__normal_iteratorIPKS5_S7_EESI_EEbT_T0_.exit.i.i.us.i, %bb.aj
+  %11 = phi ptr [ %i.ct, %bb.aj ], [ %.sroa.02.013.i.i.us.i, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN15TristateVisitor29getStrongestAssignmentOfValueERKSt6vectorIP10AstAssignWSaIS5_EEbEUlPKS4_SB_E_EclINS_17__normal_iteratorIPKS5_S7_EESI_EEbT_T0_.exit.i.i.us.i ], [ %.sroa.02.013.i.i.us.i, %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit13.i.i.i.i.us.i ], [ %.sroa.02.013.i.i.us.i, %bb.ab ], [ %.sroa.02.013.i.i.us.i, %_ZN15TristateVisitor26assignmentOfValueOnAllBitsEPK10AstAssignWb.exit46 ] ; 2 uses
   %i.ew = getelementptr inbounds nuw i8, ptr %i.ct, i64 8 ; 2 uses
   %.not.i.i.us.i = icmp eq ptr %i.ew, %i.cq
   br i1 %.not.i.i.us.i, label %_ZSt11max_elementIN9__gnu_cxx17__normal_iteratorIPKP10AstAssignWSt6vectorIS3_SaIS3_EEEEZN15TristateVisitor29getStrongestAssignmentOfValueERKS8_bEUlPKS2_SE_E_ET_SG_SG_T0_.exit.i14, label %.lr.ph.i.i.us.i, !llvm.loop !584
@@ -620,7 +618,7 @@ bb.al:                                            ; preds = %_ZN15TristateVisito
 
 bb.am:                                            ; preds = %bb.al
   %i.fd = getelementptr inbounds nuw i8, ptr %i.fc, i64 152
-  %.sroa.0.0.copyload.i8.i.i = load i8, ptr %i.fd, align 8, !tbaa !515
+  %.sroa.0.0.copyload.i8.i.i = load i8, ptr %i.fd, align 1, !tbaa !515
   br label %_ZZN15TristateVisitor47removeAssignmentsNotStrongerThanUniformConstantEvENKUlPK10AstAssignWbE_clES2_b.exit
 
 _ZZN15TristateVisitor47removeAssignmentsNotStrongerThanUniformConstantEvENKUlPK10AstAssignWbE_clES2_b.exit: ; preds = %bb.am, %bb.al, %_ZN15TristateVisitor29getStrongestAssignmentOfValueERKSt6vectorIP10AstAssignWSaIS2_EEb.exit16
@@ -687,7 +685,7 @@ bb.ap:                                            ; preds = %.lr.ph.i.i.i24
 
 bb.aq:                                            ; preds = %bb.ap
   %i.fr = getelementptr inbounds nuw i8, ptr %i.fq, i64 152
-  %.sroa.0.0.copyload.i8.i.i.i.i = load i8, ptr %i.fr, align 8, !tbaa !515
+  %.sroa.0.0.copyload.i8.i.i.i.i = load i8, ptr %i.fr, align 1, !tbaa !515
   %i.fs = getelementptr inbounds nuw i8, ptr %i.fq, i64 153
   %.sroa.0.0.copyload.i.i.i.i.i = load i8, ptr %i.fs, align 1, !tbaa !515
   br label %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit16.i.i.i
@@ -1090,7 +1088,7 @@ _ZN13TristateGraph10isTristateEPK7AstNode.exit15.thread.i.i.i.i: ; preds = %_ZN1
 
 bb.e:                                             ; preds = %_ZN13TristateGraph10isTristateEPK7AstNode.exit15.thread.i.i.i.i
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 152
-  %.sroa.0.0.copyload.i8.i.i.i.i.i = load i8, ptr %i.ax, align 8, !tbaa !515
+  %.sroa.0.0.copyload.i8.i.i.i.i.i = load i8, ptr %i.ax, align 1, !tbaa !515
   %i.ay = getelementptr inbounds nuw i8, ptr %i.aw, i64 153
   %.sroa.0.0.copyload.i.i.i.i.i.i = load i8, ptr %i.ay, align 1, !tbaa !515
   %i.az = call i8 @llvm.umin.i8(i8 %.sroa.0.0.copyload.i.i.i.i.i.i, i8 %.sroa.0.0.copyload.i8.i.i.i.i.i)
@@ -1105,7 +1103,7 @@ _ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit18.i.i.i.i: ; preds = %bb.
 
 bb.f:                                             ; preds = %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit18.i.i.i.i
   %i.bc = getelementptr inbounds nuw i8, ptr %i.bb, i64 152
-  %.sroa.0.0.copyload.i8.i20.i.i.i.i = load i8, ptr %i.bc, align 8, !tbaa !515
+  %.sroa.0.0.copyload.i8.i20.i.i.i.i = load i8, ptr %i.bc, align 1, !tbaa !515
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bb, i64 153
   %.sroa.0.0.copyload.i.i24.i.i.i.i = load i8, ptr %i.bd, align 1, !tbaa !515
   %i.be = call i8 @llvm.umin.i8(i8 %.sroa.0.0.copyload.i.i24.i.i.i.i, i8 %.sroa.0.0.copyload.i8.i20.i.i.i.i)
@@ -1154,7 +1152,7 @@ _ZN13TristateGraph10isTristateEPK7AstNode.exit.thread: ; preds = %_ZSt11max_elem
 
 bb.g:                                             ; preds = %_ZN13TristateGraph10isTristateEPK7AstNode.exit.thread
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 152
-  %.sroa.0.0.copyload.i8.i = load i8, ptr %i.bv, align 8, !tbaa !515
+  %.sroa.0.0.copyload.i8.i = load i8, ptr %i.bv, align 1, !tbaa !515
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bu, i64 153
   %.sroa.0.0.copyload.i.i = load i8, ptr %i.bw, align 1, !tbaa !515
   %i.bx = call i8 @llvm.umin.i8(i8 %.sroa.0.0.copyload.i.i, i8 %.sroa.0.0.copyload.i8.i)
@@ -1194,7 +1192,7 @@ bb.h:                                             ; preds = %.lr.ph.i.i.i
 
 bb.i:                                             ; preds = %bb.h
   %i.cg = getelementptr inbounds nuw i8, ptr %i.cf, i64 152
-  %.sroa.0.0.copyload.i8.i.i.i.i = load i8, ptr %i.cg, align 8, !tbaa !515
+  %.sroa.0.0.copyload.i8.i.i.i.i = load i8, ptr %i.cg, align 1, !tbaa !515
   %i.ch = getelementptr inbounds nuw i8, ptr %i.cf, i64 153
   %.sroa.0.0.copyload.i.i.i.i.i = load i8, ptr %i.ch, align 1, !tbaa !515
   br label %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit16.i.i.i
@@ -1597,7 +1595,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 152
-  %.sroa.0.0.copyload.i8.i.i.i = load i8, ptr %i.l, align 8, !tbaa !515
+  %.sroa.0.0.copyload.i8.i.i.i = load i8, ptr %i.l, align 1, !tbaa !515
   %i.m = getelementptr inbounds nuw i8, ptr %i.k, i64 153
   %.sroa.0.0.copyload.i.i.i.i = load i8, ptr %i.m, align 1, !tbaa !515
   br label %_ZN15TristateVisitor11getStrengthEPK10AstAssignWb.exit16.i.i

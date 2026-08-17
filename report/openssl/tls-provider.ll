@@ -203,7 +203,7 @@ bb.d:                                             ; preds = %bb.c
   br label %xor_freekey.exit
 
 bb.e:                                             ; preds = %bb.d
-  %i.h = call noalias ptr @CRYPTO_zalloc(i64 noundef 88, ptr noundef nonnull @.str, i32 noundef 690) #14 ; 10 uses
+  %i.h = call noalias ptr @CRYPTO_zalloc(i64 noundef 88, ptr noundef nonnull @.str, i32 noundef 690) #14 ; 8 uses
   %i.i = icmp eq ptr %i.h, null
   br i1 %i.i, label %bb.f, label %bb.g
 
@@ -217,7 +217,7 @@ bb.g:                                             ; preds = %bb.e
   %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 80 ; 2 uses
   store atomic i32 1, ptr %i.j seq_cst, align 4, !tbaa !35
   %.not36 = icmp eq i32 %2, 32
-  br i1 %.not36, label %4, label %bb.h
+  br i1 %.not36, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   call void @ERR_new() #14
@@ -225,24 +225,14 @@ bb.h:                                             ; preds = %bb.g
   call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 128, i32 noundef 7, ptr noundef null) #14
   br label %bb.j
 
-4:                                                ; preds = %bb.g
-  %5 = icmp eq i32 %3, 0
-  br i1 %5, label %6, label %9
-
-6:                                                ; preds = %4
-  %7 = getelementptr inbounds nuw i8, ptr %i.h, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %7, ptr noundef nonnull align 1 dereferenceable(32) %1, i64 32, i1 false)
-  %8 = getelementptr inbounds nuw i8, ptr %i.h, i64 68
-  store i32 1, ptr %8, align 4, !tbaa !44
-  br label %bb.i
-
-9:                                                ; preds = %4
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.h, ptr noundef nonnull align 1 dereferenceable(32) %1, i64 32, i1 false)
-  %10 = getelementptr inbounds nuw i8, ptr %i.h, i64 64
-  store i32 1, ptr %10, align 8, !tbaa !42
-  br label %bb.i
-
-bb.i:                                             ; preds = %9, %6
+bb.i:                                             ; preds = %bb.g
+  %4 = icmp eq i32 %3, 0                          ; 2 uses
+  %.sink.idx = select i1 %4, i64 32, i64 0
+  %.sink = getelementptr inbounds nuw i8, ptr %i.h, i64 %.sink.idx
+  %.sink8 = select i1 %4, i64 68, i64 64
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sink, ptr noundef nonnull align 1 dereferenceable(32) %1, i64 32, i1 false)
+  %5 = getelementptr inbounds nuw i8, ptr %i.h, i64 %.sink8
+  store i32 1, ptr %5, align 4, !tbaa !14
   %i.k = call ptr @OBJ_nid2sn(i32 noundef %i.e) #14
   %i.l = call ptr @CRYPTO_strdup(ptr noundef %i.k, ptr noundef nonnull @.str, i32 noundef 1244) #14 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.h, i64 72

@@ -201,7 +201,7 @@ bb.w:                                             ; preds = %bb.v, %_RNvMNtCsgQf
   %i.dl = load i64, ptr %i.ai, align 8, !alias.scope !3395, !noalias !3385, !noundef !11
   %i.dm = getelementptr inbounds i8, ptr %.sroa.741.072.i.i.i, i64 -16
   store atomic i64 %i.dl, ptr %i.dm monotonic, align 8, !noalias !3385
-  br label %2
+  br label %bb.y
 
 bb.x:                                             ; preds = %_RNvMNtCsgQfI1edjipl_9hashbrown11rustc_entryINtNtB4_3map7HashMapNtNtCs2AWtUsOyxgP_3std4path7PathBufNtNtCs8EvorvD8vmS_4ruff5cache9FileCacheNtCsjp5HOZs6k8V_10rustc_hash13FxBuildHasherE11rustc_entryB1C_.exit.i.i.i
   %.sroa.9.0.copyload45.i.i.i = load ptr, ptr %i.bg, align 8, !alias.scope !3447, !noalias !3448
@@ -220,24 +220,15 @@ bb.x:                                             ; preds = %_RNvMNtCsgQfI1edjip
 
 .noexc23.i.i.i:                                   ; preds = %bb.x
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !3449
-  br label %2
-
-2:                                                ; preds = %.noexc23.i.i.i, %bb.w
-  %.pn.i.i.i.i = phi ptr [ %i.dn, %.noexc23.i.i.i ], [ %.sroa.741.072.i.i.i, %bb.w ] ; 2 uses
-  %3 = icmp eq i8 %.sroa.7.sroa.6.0.copyload.i.i.i, 2
-  br i1 %3, label %4, label %6
-
-4:                                                ; preds = %2
-  %5 = getelementptr inbounds i8, ptr %.pn.i.i.i.i, i64 -7
-  store i8 1, ptr %5, align 1, !noalias !3385
   br label %bb.y
 
-6:                                                ; preds = %2
-  %7 = getelementptr inbounds i8, ptr %.pn.i.i.i.i, i64 -8
-  store i8 %.sroa.7.sroa.6.0.copyload.i.i.i, ptr %7, align 8, !noalias !3385
-  br label %bb.y
-
-bb.y:                                             ; preds = %6, %4
+bb.y:                                             ; preds = %.noexc23.i.i.i, %bb.w
+  %.pn.i.i.i.i = phi ptr [ %i.dn, %.noexc23.i.i.i ], [ %.sroa.741.072.i.i.i, %bb.w ]
+  %2 = icmp eq i8 %.sroa.7.sroa.6.0.copyload.i.i.i, 2 ; 2 uses
+  %..i.i.i = select i1 %2, i64 -7, i64 -8
+  %..sroa.7.sroa.6.0.copyload.i.i.i = select i1 %2, i8 1, i8 %.sroa.7.sroa.6.0.copyload.i.i.i
+  %3 = getelementptr inbounds i8, ptr %.pn.i.i.i.i, i64 %..i.i.i
+  store i8 %..sroa.7.sroa.6.0.copyload.i.i.i, ptr %3, align 1, !noalias !3385
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4.i.i.i)
   %i.do = load ptr, ptr %.sroa.6.0..sroa_idx.i.i.i, align 8, !alias.scope !3452, !noalias !3406, !nonnull !11, !noundef !11
   %i.dp = load ptr, ptr %.sroa.4.0..sroa_idx.i.i.i, align 8, !alias.scope !3452, !noalias !3406, !nonnull !11, !noundef !11 ; 2 uses

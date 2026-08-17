@@ -203,13 +203,14 @@ bb.am:                                            ; preds = %bb.ai
   store i8 1, ptr %i.ay, align 1, !noalias !2010
   %i.ei = getelementptr inbounds nuw i8, ptr %1, i64 960
   store i8 7, ptr %i.ei, align 8, !noalias !2010
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 1065
-  store i8 0, ptr %3, align 1, !noalias !2010
   br label %bb.an
 
-bb.an:                                            ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtCsdhoN4pTjS9m_8smallvec8SmallVecAINtNtCs4wP2HXfJTCR_5alloc4sync3ArcINtNtCs9RFwvXNxPyg_16hickory_resolver11name_server10NameServerNtNtNtCs5MfxasYgTEl_11hickory_net7runtime13tokio_runtime20TokioRuntimeProviderEEj2_EECsi17nFaBu4HY_10ech_client.exit250.i, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtCsdhoN4pTjS9m_8smallvec8SmallVecAINtNtCs4wP2HXfJTCR_5alloc4sync3ArcINtNtCs9RFwvXNxPyg_16hickory_resolver11name_server10NameServerNtNtNtCs5MfxasYgTEl_11hickory_net7runtime13tokio_runtime20TokioRuntimeProviderEEj2_EECsi17nFaBu4HY_10ech_client.exit213.i, %bb.am
-  %i.ej = phi ptr [ %i.tt, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtCsdhoN4pTjS9m_8smallvec8SmallVecAINtNtCs4wP2HXfJTCR_5alloc4sync3ArcINtNtCs9RFwvXNxPyg_16hickory_resolver11name_server10NameServerNtNtNtCs5MfxasYgTEl_11hickory_net7runtime13tokio_runtime20TokioRuntimeProviderEEj2_EECsi17nFaBu4HY_10ech_client.exit250.i ], [ %i.ev, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtCsdhoN4pTjS9m_8smallvec8SmallVecAINtNtCs4wP2HXfJTCR_5alloc4sync3ArcINtNtCs9RFwvXNxPyg_16hickory_resolver11name_server10NameServerNtNtNtCs5MfxasYgTEl_11hickory_net7runtime13tokio_runtime20TokioRuntimeProviderEEj2_EECsi17nFaBu4HY_10ech_client.exit213.i ], [ %i.av, %bb.am ] ; 13 uses
-  %i.ek = phi ptr [ %i.tu, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtCsdhoN4pTjS9m_8smallvec8SmallVecAINtNtCs4wP2HXfJTCR_5alloc4sync3ArcINtNtCs9RFwvXNxPyg_16hickory_resolver11name_server10NameServerNtNtNtCs5MfxasYgTEl_11hickory_net7runtime13tokio_runtime20TokioRuntimeProviderEEj2_EECsi17nFaBu4HY_10ech_client.exit250.i ], [ %i.ew, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtCsdhoN4pTjS9m_8smallvec8SmallVecAINtNtCs4wP2HXfJTCR_5alloc4sync3ArcINtNtCs9RFwvXNxPyg_16hickory_resolver11name_server10NameServerNtNtNtCs5MfxasYgTEl_11hickory_net7runtime13tokio_runtime20TokioRuntimeProviderEEj2_EECsi17nFaBu4HY_10ech_client.exit213.i ], [ %i.aw, %bb.am ] ; 13 uses
+bb.an:                                            ; preds = %bb.hj, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCsgO2xhGITpH9_12futures_util6stream17futures_unordered16FuturesUnorderedNCNCNCNvMs0_NtCs9RFwvXNxPyg_16hickory_resolver16name_server_poolINtB24_9PoolStateNtNtNtCs5MfxasYgTEl_11hickory_net7runtime13tokio_runtime20TokioRuntimeProviderE8try_send0s_00EECsi17nFaBu4HY_10ech_client.exit211.i, %bb.am
+  %i.ej = phi ptr [ %i.ev, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCsgO2xhGITpH9_12futures_util6stream17futures_unordered16FuturesUnorderedNCNCNCNvMs0_NtCs9RFwvXNxPyg_16hickory_resolver16name_server_poolINtB24_9PoolStateNtNtNtCs5MfxasYgTEl_11hickory_net7runtime13tokio_runtime20TokioRuntimeProviderE8try_send0s_00EECsi17nFaBu4HY_10ech_client.exit211.i ], [ %i.av, %bb.am ], [ %i.tt, %bb.hj ] ; 13 uses
+  %i.ek = phi ptr [ %i.ew, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCsgO2xhGITpH9_12futures_util6stream17futures_unordered16FuturesUnorderedNCNCNCNvMs0_NtCs9RFwvXNxPyg_16hickory_resolver16name_server_poolINtB24_9PoolStateNtNtNtCs5MfxasYgTEl_11hickory_net7runtime13tokio_runtime20TokioRuntimeProviderE8try_send0s_00EECsi17nFaBu4HY_10ech_client.exit211.i ], [ %i.aw, %bb.am ], [ %i.tu, %bb.hj ] ; 14 uses
+  %.sink450.i = phi i64 [ 786, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCsgO2xhGITpH9_12futures_util6stream17futures_unordered16FuturesUnorderedNCNCNCNvMs0_NtCs9RFwvXNxPyg_16hickory_resolver16name_server_poolINtB24_9PoolStateNtNtNtCs5MfxasYgTEl_11hickory_net7runtime13tokio_runtime20TokioRuntimeProviderE8try_send0s_00EECsi17nFaBu4HY_10ech_client.exit211.i ], [ 785, %bb.am ], [ 786, %bb.hj ]
+  %3 = getelementptr inbounds nuw i8, ptr %i.ek, i64 %.sink450.i
+  store i8 0, ptr %3, align 1, !noalias !2010
   %i.el = invoke { i64, i32 } @_RNvMNtCsaKJjC64KgbL_3std4timeNtB2_7Instant3now()
           to label %bb.et unwind label %bb.es, !noalias !2014 ; 2 uses
 
@@ -612,12 +613,7 @@ bb.er:                                            ; preds = %bb.eo
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCsgO2xhGITpH9_12futures_util6stream17futures_unordered16FuturesUnorderedNCNCNCNvMs0_NtCs9RFwvXNxPyg_16hickory_resolver16name_server_poolINtB24_9PoolStateNtNtNtCs5MfxasYgTEl_11hickory_net7runtime13tokio_runtime20TokioRuntimeProviderE8try_send0s_00EECsi17nFaBu4HY_10ech_client.exit211.i: ; preds = %bb.eq, %bb.ep
   %i.ne = getelementptr inbounds nuw i8, ptr %1, i64 1168
   invoke void @_RNvXsv_CsdhoN4pTjS9m_8smallvecINtB5_8SmallVecAINtNtCs4wP2HXfJTCR_5alloc4sync3ArcINtNtCs9RFwvXNxPyg_16hickory_resolver11name_server10NameServerNtNtNtCs5MfxasYgTEl_11hickory_net7runtime13tokio_runtime20TokioRuntimeProviderEEj2_ENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropCsi17nFaBu4HY_10ech_client(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.ne)
-          to label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtCsdhoN4pTjS9m_8smallvec8SmallVecAINtNtCs4wP2HXfJTCR_5alloc4sync3ArcINtNtCs9RFwvXNxPyg_16hickory_resolver11name_server10NameServerNtNtNtCs5MfxasYgTEl_11hickory_net7runtime13tokio_runtime20TokioRuntimeProviderEEj2_EECsi17nFaBu4HY_10ech_client.exit213.i unwind label %bb.eg, !noalias !2014
-
-_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtCsdhoN4pTjS9m_8smallvec8SmallVecAINtNtCs4wP2HXfJTCR_5alloc4sync3ArcINtNtCs9RFwvXNxPyg_16hickory_resolver11name_server10NameServerNtNtNtCs5MfxasYgTEl_11hickory_net7runtime13tokio_runtime20TokioRuntimeProviderEEj2_EECsi17nFaBu4HY_10ech_client.exit213.i: ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCsgO2xhGITpH9_12futures_util6stream17futures_unordered16FuturesUnorderedNCNCNCNvMs0_NtCs9RFwvXNxPyg_16hickory_resolver16name_server_poolINtB24_9PoolStateNtNtNtCs5MfxasYgTEl_11hickory_net7runtime13tokio_runtime20TokioRuntimeProviderE8try_send0s_00EECsi17nFaBu4HY_10ech_client.exit211.i
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 1066
-  store i8 0, ptr %4, align 2, !noalias !2010
-  br label %bb.an
+          to label %bb.an unwind label %bb.eg, !noalias !2014
 
 bb.es:                                            ; preds = %bb.an
   %i.nf = landingpad { ptr, i32 }
@@ -1020,12 +1016,7 @@ bb.hj:                                            ; preds = %bb.hg
   store i32 %spec.select.i.i.i, ptr %i.vf, align 8, !alias.scope !2303, !noalias !2010
   %i.vl = getelementptr inbounds nuw i8, ptr %1, i64 1032
   invoke void @_RNvXsv_CsdhoN4pTjS9m_8smallvecINtB5_8SmallVecAINtNtCs4wP2HXfJTCR_5alloc4sync3ArcINtNtCs9RFwvXNxPyg_16hickory_resolver11name_server10NameServerNtNtNtCs5MfxasYgTEl_11hickory_net7runtime13tokio_runtime20TokioRuntimeProviderEEj2_ENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropCsi17nFaBu4HY_10ech_client(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.vl)
-          to label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtCsdhoN4pTjS9m_8smallvec8SmallVecAINtNtCs4wP2HXfJTCR_5alloc4sync3ArcINtNtCs9RFwvXNxPyg_16hickory_resolver11name_server10NameServerNtNtNtCs5MfxasYgTEl_11hickory_net7runtime13tokio_runtime20TokioRuntimeProviderEEj2_EECsi17nFaBu4HY_10ech_client.exit250.i unwind label %bb.eu, !noalias !2014
-
-_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtCsdhoN4pTjS9m_8smallvec8SmallVecAINtNtCs4wP2HXfJTCR_5alloc4sync3ArcINtNtCs9RFwvXNxPyg_16hickory_resolver11name_server10NameServerNtNtNtCs5MfxasYgTEl_11hickory_net7runtime13tokio_runtime20TokioRuntimeProviderEEj2_EECsi17nFaBu4HY_10ech_client.exit250.i: ; preds = %bb.hj
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 1066
-  store i8 0, ptr %5, align 2, !noalias !2010
-  br label %bb.an
+          to label %bb.an unwind label %bb.eu, !noalias !2014
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtCsdhoN4pTjS9m_8smallvec8SmallVecAINtNtCs4wP2HXfJTCR_5alloc4sync3ArcINtNtCs9RFwvXNxPyg_16hickory_resolver11name_server10NameServerNtNtNtCs5MfxasYgTEl_11hickory_net7runtime13tokio_runtime20TokioRuntimeProviderEEj2_EECsi17nFaBu4HY_10ech_client.exit252.i: ; preds = %bb.hk, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtCsdhoN4pTjS9m_8smallvec8SmallVecAINtNtCs4wP2HXfJTCR_5alloc4sync3ArcINtNtCs9RFwvXNxPyg_16hickory_resolver11name_server10NameServerNtNtNtCs5MfxasYgTEl_11hickory_net7runtime13tokio_runtime20TokioRuntimeProviderEEj2_EECsi17nFaBu4HY_10ech_client.exit204.i
   store i8 0, ptr %i.mo, align 2, !noalias !2010

@@ -203,9 +203,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   store i32 1, ptr %2, align 4, !tbaa !10
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 20
-  store i16 0, ptr %3, align 4, !tbaa !16
-  br label %4
+  br label %bb.g
 
 bb.d:                                             ; preds = %bb.f, %bb.e, %bb.a
   %i.c = landingpad { ptr, i32 }
@@ -222,12 +220,10 @@ bb.f:                                             ; preds = %bb.e
   invoke void @u_charsToUChars_78(ptr noundef %i.d, ptr noundef nonnull %i.e, i32 noundef 4)
           to label %bb.g unwind label %bb.d
 
-bb.g:                                             ; preds = %bb.f
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 26
+bb.g:                                             ; preds = %bb.f, %bb.c
+  %.sink4 = phi i64 [ 20, %bb.c ], [ 26, %bb.f ]
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 %.sink4
   store i16 0, ptr %i.f, align 2, !tbaa !16
-  br label %4
-
-4:                                                ; preds = %bb.g, %bb.c
   ret void
 }
 

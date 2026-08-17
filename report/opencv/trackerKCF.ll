@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
   %i.f = load ptr, ptr %i.b, align 8, !tbaa !148
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   store ptr %i.g, ptr %i.b, align 8, !tbaa !148
-  br label %_ZNSt6vectorIPFvN2cv3MatENS0_5Rect_IiEERS1_ESaIS6_EE9push_backERKS6_.exit
+  br label %_ZNSt6vectorIPFvN2cv3MatENS0_5Rect_IiEERS1_ESaIS6_EE9push_backERKS6_.exit8
 
 bb.d:                                             ; preds = %bb.b
   %i.h = load ptr, ptr %i.a, align 8, !tbaa !149  ; 4 uses
@@ -252,12 +252,7 @@ _ZNSt6vectorIPFvN2cv3MatENS0_5Rect_IiEERS1_ESaIS6_EE17_M_realloc_insertIJRKS6_EE
   store ptr %i.v, ptr %i.b, align 8, !tbaa !148
   %i.w = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %i.q
   store ptr %i.w, ptr %i.d, align 8, !tbaa !231
-  br label %_ZNSt6vectorIPFvN2cv3MatENS0_5Rect_IiEERS1_ESaIS6_EE9push_backERKS6_.exit
-
-_ZNSt6vectorIPFvN2cv3MatENS0_5Rect_IiEERS1_ESaIS6_EE9push_backERKS6_.exit: ; preds = %bb.c, %_ZNSt6vectorIPFvN2cv3MatENS0_5Rect_IiEERS1_ESaIS6_EE17_M_realloc_insertIJRKS6_EEEvN9__gnu_cxx17__normal_iteratorIPS6_S8_EEDpOT_.exit.i
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 7424
-  store i8 1, ptr %3, align 8, !tbaa !16
-  br label %4
+  br label %_ZNSt6vectorIPFvN2cv3MatENS0_5Rect_IiEERS1_ESaIS6_EE9push_backERKS6_.exit8
 
 bb.h:                                             ; preds = %bb.a
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 7456 ; 2 uses
@@ -323,12 +318,10 @@ _ZNSt6vectorIPFvN2cv3MatENS0_5Rect_IiEERS1_ESaIS6_EE17_M_realloc_insertIJRKS6_EE
   store ptr %i.at, ptr %i.aa, align 8, !tbaa !231
   br label %_ZNSt6vectorIPFvN2cv3MatENS0_5Rect_IiEERS1_ESaIS6_EE9push_backERKS6_.exit8
 
-_ZNSt6vectorIPFvN2cv3MatENS0_5Rect_IiEERS1_ESaIS6_EE9push_backERKS6_.exit8: ; preds = %bb.i, %_ZNSt6vectorIPFvN2cv3MatENS0_5Rect_IiEERS1_ESaIS6_EE17_M_realloc_insertIJRKS6_EEEvN9__gnu_cxx17__normal_iteratorIPS6_S8_EEDpOT_.exit.i7
-  %i.au = getelementptr inbounds nuw i8, ptr %0, i64 7425
-  store i8 1, ptr %i.au, align 1, !tbaa !56
-  br label %4
-
-4:                                                ; preds = %_ZNSt6vectorIPFvN2cv3MatENS0_5Rect_IiEERS1_ESaIS6_EE9push_backERKS6_.exit8, %_ZNSt6vectorIPFvN2cv3MatENS0_5Rect_IiEERS1_ESaIS6_EE9push_backERKS6_.exit
+_ZNSt6vectorIPFvN2cv3MatENS0_5Rect_IiEERS1_ESaIS6_EE9push_backERKS6_.exit8: ; preds = %_ZNSt6vectorIPFvN2cv3MatENS0_5Rect_IiEERS1_ESaIS6_EE17_M_realloc_insertIJRKS6_EEEvN9__gnu_cxx17__normal_iteratorIPS6_S8_EEDpOT_.exit.i7, %bb.i, %_ZNSt6vectorIPFvN2cv3MatENS0_5Rect_IiEERS1_ESaIS6_EE17_M_realloc_insertIJRKS6_EEEvN9__gnu_cxx17__normal_iteratorIPS6_S8_EEDpOT_.exit.i, %bb.c
+  %.sink18 = phi i64 [ 7424, %_ZNSt6vectorIPFvN2cv3MatENS0_5Rect_IiEERS1_ESaIS6_EE17_M_realloc_insertIJRKS6_EEEvN9__gnu_cxx17__normal_iteratorIPS6_S8_EEDpOT_.exit.i ], [ 7424, %bb.c ], [ 7425, %bb.i ], [ 7425, %_ZNSt6vectorIPFvN2cv3MatENS0_5Rect_IiEERS1_ESaIS6_EE17_M_realloc_insertIJRKS6_EEEvN9__gnu_cxx17__normal_iteratorIPS6_S8_EEDpOT_.exit.i7 ]
+  %i.au = getelementptr inbounds nuw i8, ptr %0, i64 %.sink18
+  store i8 1, ptr %i.au, align 1, !tbaa !13
   ret void
 }
 

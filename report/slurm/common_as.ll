@@ -201,10 +201,12 @@ declare ptr @slurm_xstrdup(ptr noundef) local_unnamed_addr #1
 define dso_local range(i64 -9223372036854775808, 9223372036854775807) i64 @archive_setup_end_time(i64 noundef %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 3 uses
-  %2 = alloca %struct.tm, align 8                 ; 12 uses
+  %2 = alloca %struct.tm, align 8                 ; 10 uses
   store i64 %0, ptr %i.a, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #11
   %i.b = icmp eq i32 %1, -2
+  %.sink25.sroa.gep = getelementptr inbounds nuw i8, ptr %2, i64 12
+  %.sink25.sroa.gep26 = getelementptr inbounds nuw i8, ptr %2, i64 8
   br i1 %i.b, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
@@ -213,7 +215,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %sext = shl i32 %1, 16
-  %i.d = ashr exact i32 %sext, 16                 ; 5 uses
+  %i.d = ashr exact i32 %sext, 16                 ; 3 uses
   %i.e = icmp slt i32 %i.d, 0
   br i1 %i.e, label %bb.d, label %bb.e
 
@@ -237,58 +239,48 @@ bb.g:                                             ; preds = %bb.e
   store i32 0, ptr %i.j, align 4
   %i.k = and i32 %1, 65536
   %.not16 = icmp eq i32 %i.k, 0
-  br i1 %.not16, label %bb.i, label %bb.h
+  br i1 %.not16, label %bb.h, label %bb.m
 
 bb.h:                                             ; preds = %bb.g
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
-  %4 = load i32, ptr %3, align 8
-  %5 = sub nsw i32 %4, %i.d
-  store i32 %5, ptr %3, align 8
-  br label %bb.m
+  %3 = and i32 %1, 131072
+  %.not17 = icmp eq i32 %3, 0
+  br i1 %.not17, label %bb.i, label %bb.l
 
-bb.i:                                             ; preds = %bb.g
-  %i.l = and i32 %1, 131072
+bb.i:                                             ; preds = %bb.h
+  %i.l = and i32 %1, 262144
   %.not17.a = icmp eq i32 %i.l, 0
-  br i1 %.not17.a, label %9, label %bb.j
+  br i1 %.not17.a, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %6 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store i32 0, ptr %6, align 8
-  %i.m = getelementptr inbounds nuw i8, ptr %2, i64 12 ; 2 uses
-  %7 = load i32, ptr %i.m, align 4
-  %8 = sub nsw i32 %7, %i.d
-  store i32 %8, ptr %i.m, align 4
-  br label %bb.m
+  %i.m = getelementptr inbounds nuw i8, ptr %2, i64 8
+  store i32 0, ptr %i.m, align 8
+  br label %bb.l
 
-9:                                                ; preds = %bb.i
-  %10 = and i32 %1, 262144
-  %.not18 = icmp eq i32 %10, 0
-  br i1 %.not18, label %bb.l, label %bb.k
-
-bb.k:                                             ; preds = %9
-  %11 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store i32 0, ptr %11, align 8
-  %12 = getelementptr inbounds nuw i8, ptr %2, i64 12
-  store i32 1, ptr %12, align 4
-  %13 = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
-  %14 = load i32, ptr %13, align 8
-  %15 = sub nsw i32 %14, %i.d
-  store i32 %15, ptr %13, align 8
-  br label %bb.m
-
-bb.l:                                             ; preds = %9
-  %16 = tail call ptr @__errno_location() #12
-  store i32 22, ptr %16, align 4
-  %17 = call i32 (ptr, ...) @slurm_error(ptr noundef nonnull @.str.19) #11 ; 0 uses
+bb.k:                                             ; preds = %bb.i
+  %4 = tail call ptr @__errno_location() #12
+  store i32 22, ptr %4, align 4
+  %5 = call i32 (ptr, ...) @slurm_error(ptr noundef nonnull @.str.19) #11 ; 0 uses
   br label %bb.n
 
-bb.m:                                             ; preds = %bb.j, %bb.k, %bb.h
+bb.l:                                             ; preds = %bb.h, %bb.j
+  %.sink25.sroa.phi = phi ptr [ %.sink25.sroa.gep, %bb.j ], [ %.sink25.sroa.gep26, %bb.h ]
+  %.sink = phi i32 [ 1, %bb.j ], [ 0, %bb.h ]
+  %.sink23.ph = phi i64 [ 16, %bb.j ], [ 12, %bb.h ]
+  store i32 %.sink, ptr %.sink25.sroa.phi, align 4
+  br label %bb.m
+
+bb.m:                                             ; preds = %bb.l, %bb.g
+  %.sink23 = phi i64 [ 8, %bb.g ], [ %.sink23.ph, %bb.l ]
+  %6 = getelementptr inbounds nuw i8, ptr %2, i64 %.sink23 ; 2 uses
+  %7 = load i32, ptr %6, align 4
+  %8 = sub nsw i32 %7, %i.d
+  store i32 %8, ptr %6, align 4
   %i.n = call i64 @slurm_mktime(ptr noundef nonnull %2) #11
   %i.o = add nsw i64 %i.n, -1
   br label %bb.n
 
-bb.n:                                             ; preds = %bb.m, %bb.l, %bb.f, %bb.d, %bb.b
-  %.0 = phi i64 [ 0, %bb.b ], [ 0, %bb.d ], [ %i.o, %bb.m ], [ 0, %bb.l ], [ 0, %bb.f ]
+bb.n:                                             ; preds = %bb.m, %bb.k, %bb.f, %bb.d, %bb.b
+  %.0 = phi i64 [ 0, %bb.b ], [ 0, %bb.d ], [ %i.o, %bb.m ], [ 0, %bb.k ], [ 0, %bb.f ]
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #11
   ret i64 %.0
 }

@@ -201,7 +201,7 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g
   tail call void @dev_load(ptr noundef %0, ptr noundef %2) #14
   tail call void @__rcu_read_lock() #12
-  %i.i = tail call ptr @dev_get_by_name_rcu(ptr noundef %0, ptr noundef %2) #12 ; 13 uses
+  %i.i = tail call ptr @dev_get_by_name_rcu(ptr noundef %0, ptr noundef %2) #12 ; 12 uses
   %.not.i = icmp eq ptr %i.i, null
   br i1 %.not.i, label %dev_ifsioc_locked.exit, label %bb.k
 
@@ -255,11 +255,6 @@ bb.p:                                             ; preds = %bb.o
   %i.ab = trunc i64 %i.aa to i32
   %i.ac = getelementptr i8, ptr %2, i64 20
   store i32 %i.ab, ptr %i.ac, align 4
-  %5 = getelementptr i8, ptr %i.i, i64 336
-  %6 = load i64, ptr %5, align 16
-  %7 = trunc i64 %6 to i16
-  %8 = getelementptr i8, ptr %2, i64 24
-  store i16 %7, ptr %8, align 4
   br label %dev_getifmap.exit.i
 
 bb.q:                                             ; preds = %bb.o
@@ -268,17 +263,18 @@ bb.q:                                             ; preds = %bb.o
   %i.ae = load i64, ptr %i.ad, align 64
   %i.af = getelementptr i8, ptr %2, i64 24
   store i64 %i.ae, ptr %i.af, align 8
-  %9 = getelementptr i8, ptr %i.i, i64 336
-  %10 = load i64, ptr %9, align 16
-  %11 = trunc i64 %10 to i16
-  %12 = getelementptr i8, ptr %2, i64 32
-  store i16 %11, ptr %12, align 8
   br label %dev_getifmap.exit.i
 
 dev_getifmap.exit.i:                              ; preds = %bb.q, %bb.p
+  %.sink36.i.i = phi i64 [ 32, %bb.q ], [ 24, %bb.p ]
   %.sink33.i.i = phi i64 [ 34, %bb.q ], [ 26, %bb.p ]
   %.sink30.i.i = phi i64 [ 35, %bb.q ], [ 27, %bb.p ]
   %.sink27.i.i = phi i64 [ 36, %bb.q ], [ 28, %bb.p ]
+  %5 = getelementptr i8, ptr %i.i, i64 336
+  %6 = load i64, ptr %5, align 16
+  %7 = trunc i64 %6 to i16
+  %8 = getelementptr i8, ptr %2, i64 %.sink36.i.i
+  store i16 %7, ptr %8, align 4
   %i.ag = getelementptr i8, ptr %i.i, i64 820
   %i.ah = load i32, ptr %i.ag, align 4
   %i.ai = trunc i32 %i.ah to i8

@@ -203,33 +203,25 @@ _ZNK4Luau7CodeGen3X6416IrCallWrapperX6421getNextArgumentTargetENS1_7SizeX64E.exi
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 84
   %i.ac = load i32, ptr %i.ab, align 4, !tbaa !9
   %i.ad = icmp eq i32 %i.ac, 0
-  br i1 %i.ad, label %bb.f, label %6
+  br i1 %i.ad, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %_ZNK4Luau7CodeGen3X6416IrCallWrapperX6421getNextArgumentTargetENS1_7SizeX64E.exit
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 2 uses
-  %4 = load <2 x i32>, ptr %i.ae, align 8, !tbaa !72
-  %5 = add nsw <2 x i32> %4, splat (i32 1)
-  store <2 x i32> %5, ptr %i.ae, align 8, !tbaa !72
-  br label %10
+  %4 = load i32, ptr %i.ae, align 8, !tbaa !70
+  %5 = add nsw i32 %4, 1
+  store i32 %5, ptr %i.ae, align 8, !tbaa !70
+  br label %bb.h
 
-6:                                                ; preds = %_ZNK4Luau7CodeGen3X6416IrCallWrapperX6421getNextArgumentTargetENS1_7SizeX64E.exit
-  br i1 %i.g, label %bb.g, label %bb.h
+bb.g:                                             ; preds = %_ZNK4Luau7CodeGen3X6416IrCallWrapperX6421getNextArgumentTargetENS1_7SizeX64E.exit
+  %. = select i1 %i.g, i64 196, i64 192
+  br label %bb.h
 
-bb.g:                                             ; preds = %6
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 196 ; 2 uses
-  %8 = load i32, ptr %7, align 4, !tbaa !66
-  %9 = add nsw i32 %8, 1
-  store i32 %9, ptr %7, align 4, !tbaa !66
-  br label %10
-
-bb.h:                                             ; preds = %6
-  %i.af = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 2 uses
-  %i.ag = load i32, ptr %i.af, align 8, !tbaa !70
+bb.h:                                             ; preds = %bb.g, %bb.f
+  %.sink11 = phi i64 [ %., %bb.g ], [ 196, %bb.f ]
+  %i.af = getelementptr inbounds nuw i8, ptr %0, i64 %.sink11 ; 2 uses
+  %i.ag = load i32, ptr %i.af, align 4, !tbaa !72
   %i.ah = add nsw i32 %i.ag, 1
-  store i32 %i.ah, ptr %i.af, align 8, !tbaa !70
-  br label %10
-
-10:                                               ; preds = %bb.g, %bb.h, %bb.f
+  store i32 %i.ah, ptr %i.af, align 4, !tbaa !72
   ret void
 }
 

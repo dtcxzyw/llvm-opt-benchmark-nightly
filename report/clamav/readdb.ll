@@ -204,6 +204,8 @@ bb.a:
   store ptr null, ptr %i.a, align 8, !tbaa !41
   %i.f = load i8, ptr %2, align 1, !tbaa !8
   %i.g = icmp eq i8 %i.f, 36
+  %.sink203.sroa.gep = getelementptr inbounds nuw i8, ptr %i.e, i64 24
+  %.sink203.sroa.gep210 = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   br i1 %i.g, label %bb.b, label %bb.t
 
 bb.b:                                             ; preds = %bb.a
@@ -421,34 +423,28 @@ bb.ag:                                            ; preds = %bb.ae
   %i.br = load ptr, ptr %i.e, align 16            ; 3 uses
   %spec.select = select i1 %i.bq, ptr %i.br, ptr %3 ; 2 uses
   switch i32 %i.bo, label %._crit_edge.thread [
-    i32 3, label %9
+    i32 3, label %bb.ai
     i32 4, label %bb.ah
   ]
 
-9:                                                ; preds = %bb.ag
-  %10 = getelementptr inbounds nuw i8, ptr %i.e, i64 16
-  %11 = load ptr, ptr %10, align 16, !tbaa !55
-  br label %bb.ai
-
 bb.ah:                                            ; preds = %bb.ag
-  %12 = getelementptr inbounds nuw i8, ptr %i.e, i64 24
-  %13 = load ptr, ptr %12, align 8, !tbaa !55
   br label %bb.ai
 
-bb.ai:                                            ; preds = %bb.ah, %9
-  %.0111 = phi ptr [ %11, %9 ], [ %13, %bb.ah ]   ; 3 uses
-  %.not138 = icmp eq ptr %.0111, null
+bb.ai:                                            ; preds = %bb.ag, %bb.ah
+  %.0111 = phi ptr [ %.sink203.sroa.gep, %bb.ah ], [ %.sink203.sroa.gep210, %bb.ag ]
+  %9 = load ptr, ptr %.0111, align 8, !tbaa !55   ; 3 uses
+  %.not138 = icmp eq ptr %9, null
   br i1 %.not138, label %._crit_edge.thread, label %.preheader
 
 .preheader:                                       ; preds = %bb.ai
-  %i.bs = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %.0111) #19 ; 2 uses
+  %i.bs = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %9) #19 ; 2 uses
   %.not139183.not = icmp eq i64 %i.bs, 0
   br i1 %.not139183.not, label %._crit_edge.thread, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader, %switch.lookup
   %.0185 = phi i64 [ %i.bz, %switch.lookup ], [ 0, %.preheader ] ; 2 uses
   %.0110184 = phi i8 [ %i.by, %switch.lookup ], [ 0, %.preheader ]
-  %i.bt = getelementptr inbounds nuw i8, ptr %.0111, i64 %.0185
+  %i.bt = getelementptr inbounds nuw i8, ptr %9, i64 %.0185
   %i.bu = load i8, ptr %i.bt, align 1, !tbaa !8   ; 2 uses
   %switch.tableidx = add i8 %i.bu, -97            ; 3 uses
   %i.bv = icmp ult i8 %switch.tableidx, 23

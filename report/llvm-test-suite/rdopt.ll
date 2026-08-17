@@ -203,7 +203,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 12
   %i.e = load i32, ptr %i.d, align 4, !tbaa !101
   %i.f = sext i32 %i.e to i64
-  %i.g = getelementptr inbounds [536 x i8], ptr %i.c, i64 %i.f ; 40 uses
+  %i.g = getelementptr inbounds [536 x i8], ptr %i.c, i64 %i.f ; 38 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 20
   %i.i = load i32, ptr %i.h, align 4, !tbaa !41
   %i.j = icmp eq i32 %i.i, 1                      ; 3 uses
@@ -287,8 +287,6 @@ bb.b:                                             ; preds = %bb.a
   store i32 %i.aq, ptr %i.ar, align 4, !tbaa !4
   %i.as = load i8, ptr getelementptr inbounds nuw (i8, ptr @best8x8pdir, i64 35), align 1, !tbaa !46
   %i.at = sext i8 %i.as to i32
-  %1 = getelementptr inbounds nuw i8, ptr %i.g, i64 404
-  store i32 %i.at, ptr %1, align 4, !tbaa !4
   br label %.loopexit240.thread353
 
 .preheader243:                                    ; preds = %bb.b
@@ -296,8 +294,6 @@ bb.b:                                             ; preds = %bb.a
   %i.av = getelementptr inbounds nuw i8, ptr %i.g, i64 392
   store <4 x i32> splat (i32 14), ptr %i.au, align 8, !tbaa !4
   store <4 x i32> splat (i32 -1), ptr %i.av, align 8, !tbaa !4
-  %2 = getelementptr inbounds nuw i8, ptr %i.g, i64 472
-  store i32 0, ptr %2, align 8, !tbaa !133
   br label %.loopexit240.thread353
 
 .preheader241:                                    ; preds = %bb.b
@@ -340,8 +336,6 @@ bb.c:                                             ; preds = %bb.b
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bb, i64 3
   %i.br = load i8, ptr %i.bq, align 1, !tbaa !46
   %i.bs = sext i8 %i.br to i32
-  %3 = getelementptr inbounds nuw i8, ptr %i.g, i64 404
-  store i32 %i.bs, ptr %3, align 4, !tbaa !4
   br label %.loopexit240.thread353
 
 .loopexit240.thread:                              ; preds = %.preheader250, %.preheader246, %.preheader248
@@ -574,7 +568,11 @@ bb.e:                                             ; preds = %.loopexit240.thread
   br i1 %i.id, label %.lr.ph, label %.loopexit233.thread, !llvm.loop !139
 
 .loopexit240.thread353:                           ; preds = %.loopexit240, %.preheader243, %.preheader244
-  %i.ie = phi ptr [ %i.ay, %.loopexit240 ], [ %i.p, %.preheader244 ], [ %i.p, %.preheader243 ] ; 4 uses
+  %.sink363 = phi i64 [ 404, %.loopexit240 ], [ 472, %.preheader243 ], [ 404, %.preheader244 ]
+  %.sink = phi i32 [ %i.bs, %.loopexit240 ], [ 0, %.preheader243 ], [ %i.at, %.preheader244 ]
+  %i.ie = phi ptr [ %i.ay, %.loopexit240 ], [ %i.p, %.preheader243 ], [ %i.p, %.preheader244 ] ; 4 uses
+  %1 = getelementptr inbounds nuw i8, ptr %i.g, i64 %.sink363
+  store i32 %.sink, ptr %1, align 4, !tbaa !4
   br i1 %i.j, label %.preheader, label %.preheader234
 
 .preheader234:                                    ; preds = %.loopexit240.thread353

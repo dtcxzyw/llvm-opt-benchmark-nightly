@@ -201,7 +201,7 @@ bb.ak:                                            ; preds = %bb.ai
   %.0180236248254262 = phi i32 [ %.0180, %bb.j ], [ %.0180, %bb.ah ], [ %.0180, %bb.ah ], [ %.0180, %bb.ah ], [ %.0180, %bb.ag ], [ %.0180, %bb.w ], [ %.0180, %bb.x ], [ %.0180, %bb.x ], [ %.0180, %bb.x ], [ %.0180, %bb.x ], [ %.0180236249, %bb.s ], [ %.0180236249, %bb.s ], [ %.0180236249, %bb.s ], [ %.0180236249, %bb.s ], [ %.0180236249, %bb.s ], [ %.0180236249, %bb.s ], [ %.0180236249, %bb.r ]
   %.0238246255261 = phi ptr [ %.0, %bb.j ], [ %.0, %bb.ah ], [ %.0, %bb.ah ], [ %.0, %bb.ah ], [ %.0, %bb.ag ], [ %.0, %bb.w ], [ %.0, %bb.x ], [ %.0, %bb.x ], [ %.0, %bb.x ], [ %.0, %bb.x ], [ %.0238247, %bb.s ], [ %.0238247, %bb.s ], [ %.0238247, %bb.s ], [ %.0238247, %bb.s ], [ %.0238247, %bb.s ], [ %.0238247, %bb.s ], [ %.0238247, %bb.r ] ; 2 uses
   %i.ep = phi ptr [ %i.f, %bb.j ], [ %i.f, %bb.ah ], [ %i.f, %bb.ah ], [ %i.f, %bb.ah ], [ %i.f, %bb.ag ], [ %i.f, %bb.w ], [ %i.f, %bb.x ], [ %i.f, %bb.x ], [ %i.f, %bb.x ], [ %i.f, %bb.x ], [ %i.w, %bb.s ], [ %i.w, %bb.s ], [ %i.w, %bb.s ], [ %i.w, %bb.s ], [ %i.w, %bb.s ], [ %i.w, %bb.s ], [ %i.w, %bb.r ]
-  %i.eq = tail call noundef ptr @palloc0(i64 noundef 104) #8 ; 31 uses
+  %i.eq = tail call noundef ptr @palloc0(i64 noundef 104) #8 ; 30 uses
   store i32 48, ptr %i.eq, align 4
   %i.er = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.es = load i32, ptr %i.er, align 8
@@ -427,26 +427,25 @@ bb.az:                                            ; preds = %bb.ay, %bb.ax
 bb.ba:                                            ; preds = %bb.az
   %i.ja = tail call signext i8 @get_typtype(i32 noundef %i.iz) #8
   %i.jb = icmp eq i8 %i.ja, 100
-  br i1 %i.jb, label %bb.bb, label %bb.bd
+  br i1 %i.jb, label %bb.bb, label %bb.bc
 
 bb.bb:                                            ; preds = %bb.ba
   %i.jc = load ptr, ptr %i.gu, align 8
   %i.jd = getelementptr inbounds nuw i8, ptr %i.jc, i64 16
   %i.je = load i32, ptr %i.jd, align 8
   %i.jf = tail call zeroext i1 @DomainHasConstraints(i32 noundef %i.je, ptr noundef null) #8
-  br i1 %i.jf, label %bb.bc, label %bb.bd
+  br i1 %i.jf, label %bb.bd, label %bb.bc
 
-bb.bc:                                            ; preds = %bb.bb
-  %2 = getelementptr inbounds nuw i8, ptr %i.eq, i64 81
-  store i8 1, ptr %2, align 1
+bb.bc:                                            ; preds = %bb.bb, %bb.ba
+  br label %bb.bd
+
+bb.bd:                                            ; preds = %bb.bb, %bb.bc
+  %.sink291 = phi i64 [ 80, %bb.bc ], [ 81, %bb.bb ]
+  %i.jg = getelementptr inbounds nuw i8, ptr %i.eq, i64 %.sink291
+  store i8 1, ptr %i.jg, align 1
   br label %bb.be
 
-bb.bd:                                            ; preds = %bb.bb, %bb.ba
-  %i.jg = getelementptr inbounds nuw i8, ptr %i.eq, i64 80
-  store i8 1, ptr %i.jg, align 8
-  br label %bb.be
-
-bb.be:                                            ; preds = %bb.bc, %bb.bd, %bb.az
+bb.be:                                            ; preds = %bb.bd, %bb.az
   %i.jh = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.ji = load ptr, ptr %i.jh, align 8
   %i.jj = load ptr, ptr %i.gu, align 8

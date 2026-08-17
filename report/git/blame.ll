@@ -204,7 +204,7 @@ bb.aa:                                            ; preds = %bb.z
 
 bb.ab:                                            ; preds = %bb.ak, %.lr.ph.i101
   %indvars.iv.i103 = phi i64 [ 0, %.lr.ph.i101 ], [ %indvars.iv.next.i104, %bb.ak ] ; 4 uses
-  %.03750.i = phi ptr [ %.1151, %.lr.ph.i101 ], [ %.1.i, %bb.ak ] ; 14 uses
+  %.03750.i = phi ptr [ %.1151, %.lr.ph.i101 ], [ %.1.i, %bb.ak ] ; 13 uses
   %.03849.i = phi i32 [ 1, %.lr.ph.i101 ], [ %.139.i, %bb.ak ] ; 7 uses
   %indvars.iv.next.i104 = add nuw nsw i64 %indvars.iv.i103, 1 ; 4 uses
   %i.eo = icmp samesign ult i64 %indvars.iv.next.i104, %i.en
@@ -276,7 +276,7 @@ bb.af:                                            ; preds = %blame_origin_incref
   %i.fw = getelementptr inbounds nuw [8 x i8], ptr %gep, i64 %indvars.iv.i103
   %i.fx = load i32, ptr %i.fw, align 4, !tbaa !325
   %.not43.i = icmp eq i32 %i.fx, 0
-  br i1 %.not43.i, label %12, label %bb.ag
+  br i1 %.not43.i, label %bb.ai, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
   %i.fy = getelementptr inbounds nuw i8, ptr %.03750.i, i64 32
@@ -300,17 +300,14 @@ blame_origin_incref.exit45.i:                     ; preds = %bb.ah, %bb.ag
   %i.gg = getelementptr [8 x i8], ptr %gep, i64 %i.gf
   %i.gh = getelementptr i8, ptr %i.gg, i64 12
   %i.gi = load i32, ptr %i.gh, align 4, !tbaa !327
-  %11 = getelementptr inbounds nuw i8, ptr %.03750.i, i64 24
-  store i32 %i.gi, ptr %11, align 8, !tbaa !56
   br label %bb.ai
 
-12:                                               ; preds = %bb.af
-  %13 = getelementptr inbounds nuw i8, ptr %.03750.i, i64 36
-  store i32 1, ptr %13, align 4, !tbaa !59
-  br label %bb.ai
-
-bb.ai:                                            ; preds = %12, %blame_origin_incref.exit45.i
-  %.sink58.i = phi ptr [ %i.a, %12 ], [ %i.b, %blame_origin_incref.exit45.i ] ; 2 uses
+bb.ai:                                            ; preds = %blame_origin_incref.exit45.i, %bb.af
+  %.sink61.i = phi i64 [ 24, %blame_origin_incref.exit45.i ], [ 36, %bb.af ]
+  %.sink59.i = phi i32 [ %i.gi, %blame_origin_incref.exit45.i ], [ 1, %bb.af ]
+  %.sink58.i = phi ptr [ %i.b, %blame_origin_incref.exit45.i ], [ %i.a, %bb.af ] ; 2 uses
+  %11 = getelementptr inbounds nuw i8, ptr %.03750.i, i64 %.sink61.i
+  store i32 %.sink59.i, ptr %11, align 4, !tbaa !30
   %i.gj = load ptr, ptr %.sink58.i, align 8, !tbaa !38
   store ptr %i.gj, ptr %.03750.i, align 8, !tbaa !40
   store ptr %.03750.i, ptr %.sink58.i, align 8, !tbaa !38

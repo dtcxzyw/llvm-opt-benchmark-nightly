@@ -23,7 +23,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.c = load ptr, ptr %i.b, align 8              ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 4 uses
-  %i.e = load ptr, ptr %i.d, align 8              ; 28 uses
+  %i.e = load ptr, ptr %i.d, align 8              ; 27 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #7
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 51
   %i.g = load i8, ptr %i.f, align 1, !range !4, !noundef !5
@@ -392,10 +392,10 @@ select.unfold:                                    ; preds = %.loopexit, %bb.s, %
   br label %.thread
 
 .thread:                                          ; preds = %.thread.loopexit, %bb.n
-  %.4 = phi i32 [ -1, %bb.n ], [ %i.fu, %.thread.loopexit ] ; 4 uses
+  %.4 = phi i32 [ -1, %bb.n ], [ %i.fu, %.thread.loopexit ] ; 5 uses
   %i.fv = load i8, ptr %i.bi, align 4, !range !4, !noundef !5
   %i.fw = trunc nuw i8 %i.fv to i1
-  br i1 %i.fw, label %bb.z, label %.thread338
+  br i1 %i.fw, label %bb.z, label %bb.bm
 
 bb.z:                                             ; preds = %.thread
   %i.fx = getelementptr inbounds nuw i8, ptr %i.e, i64 22
@@ -541,12 +541,7 @@ bb.am:                                            ; preds = %bb.al, %BTreeTupleI
   %i.ii = call fastcc zeroext i1 @_bt_checkkeys(ptr noundef %0, ptr noundef %4, i1 noundef zeroext %i.ap, ptr noundef nonnull %i.gf, i32 noundef %i.ih) ; 0 uses
   %.pre = load i8, ptr %i.bi, align 4, !range !4
   %i.ij = trunc nuw i8 %.pre to i1
-  br i1 %i.ij, label %.thread337, label %.thread338
-
-.thread338:                                       ; preds = %.thread, %bb.am
-  %5 = getelementptr inbounds nuw i8, ptr %i.e, i64 121
-  store i8 0, ptr %5, align 1
-  br label %.thread337
+  br i1 %i.ij, label %.thread337, label %bb.bm
 
 bb.an:                                            ; preds = %bb.d
   br i1 %i.ap, label %bb.ao, label %bb.av
@@ -844,15 +839,19 @@ select.unfold291:                                 ; preds = %_bt_saveitem.exit27
   %i.ne = trunc nuw i8 %i.nd to i1
   br i1 %i.ne, label %.thread337, label %bb.bm
 
-bb.bm:                                            ; preds = %.thread293
-  %i.nf = getelementptr inbounds nuw i8, ptr %i.e, i64 120
-  store i8 0, ptr %i.nf, align 8
+bb.bm:                                            ; preds = %.thread293, %bb.am, %.thread
+  %.sink348 = phi i64 [ 121, %bb.am ], [ 121, %.thread ], [ 120, %.thread293 ]
+  %.9.sink.ph = phi i32 [ 0, %bb.am ], [ 0, %.thread ], [ %.9, %.thread293 ]
+  %.sink345.ph = phi i32 [ %.4, %bb.am ], [ %.4, %.thread ], [ 1357, %.thread293 ]
+  %.sink343.ph = phi i32 [ 0, %bb.am ], [ 0, %.thread ], [ 1357, %.thread293 ]
+  %i.nf = getelementptr inbounds nuw i8, ptr %i.e, i64 %.sink348
+  store i8 0, ptr %i.nf, align 1
   br label %.thread337
 
-.thread337:                                       ; preds = %.thread293, %bb.bm, %bb.am, %.thread338, %bb.aa, %bb.z
-  %.9.sink = phi i32 [ 0, %bb.am ], [ 0, %bb.z ], [ 0, %bb.aa ], [ 0, %.thread338 ], [ %.9, %bb.bm ], [ %.9, %.thread293 ] ; 2 uses
-  %.sink345 = phi i32 [ %.4, %bb.am ], [ %.4, %bb.z ], [ %.4, %bb.aa ], [ %.4, %.thread338 ], [ 1357, %bb.bm ], [ 1357, %.thread293 ] ; 2 uses
-  %.sink343 = phi i32 [ 0, %bb.am ], [ 0, %bb.z ], [ 0, %bb.aa ], [ 0, %.thread338 ], [ 1357, %bb.bm ], [ 1357, %.thread293 ]
+.thread337:                                       ; preds = %bb.bm, %.thread293, %bb.am, %bb.aa, %bb.z
+  %.9.sink = phi i32 [ 0, %bb.am ], [ 0, %bb.z ], [ 0, %bb.aa ], [ %.9, %.thread293 ], [ %.9.sink.ph, %bb.bm ] ; 2 uses
+  %.sink345 = phi i32 [ %.4, %bb.am ], [ %.4, %bb.z ], [ %.4, %bb.aa ], [ 1357, %.thread293 ], [ %.sink345.ph, %bb.bm ] ; 2 uses
+  %.sink343 = phi i32 [ 0, %bb.am ], [ 0, %bb.z ], [ 0, %bb.aa ], [ 1357, %.thread293 ], [ %.sink343.ph, %bb.bm ]
   %i.ng = getelementptr inbounds nuw i8, ptr %i.e, i64 124
   store i32 %.9.sink, ptr %i.ng, align 4
   %i.nh = getelementptr inbounds nuw i8, ptr %i.e, i64 128

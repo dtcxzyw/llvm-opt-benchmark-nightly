@@ -81,8 +81,6 @@ bb.b:                                             ; preds = %bb.a
   store i8 %i.aj, ptr %i.ak, align 1
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 20
   store i8 %i.ai, ptr %i.al, align 4
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 21
-  store i8 %i.ae, ptr %2, align 1
   br label %bb.g
 
 bb.c:                                             ; preds = %bb.a
@@ -93,8 +91,6 @@ bb.c:                                             ; preds = %bb.a
   %i.ap = add nuw i8 %i.aa, %i.ac                 ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 22
   store i8 %i.ap, ptr %i.aq, align 2
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 21
-  store i8 %i.aa, ptr %3, align 1
   br label %bb.g
 
 bb.d:                                             ; preds = %bb.a
@@ -110,8 +106,6 @@ bb.d:                                             ; preds = %bb.a
   %i.ay = add nuw nsw i32 %i.n, %i.au
   %i.az = sub nsw i32 %i.d, %i.ay
   %i.ba = trunc i32 %i.az to i8                   ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 20
-  store i8 %i.ba, ptr %4, align 4
   br label %bb.g
 
 bb.e:                                             ; preds = %bb.a
@@ -125,8 +119,6 @@ bb.e:                                             ; preds = %bb.a
   %i.bg = add nuw nsw i32 %i.s, %i.t
   %i.bh = sub nsw i32 %i.d, %i.bg
   %i.bi = trunc i32 %i.bh to i8                   ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 22
-  store i8 %i.bi, ptr %5, align 2
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.a
@@ -134,10 +126,14 @@ bb.f:                                             ; preds = %bb.a
   unreachable
 
 bb.g:                                             ; preds = %bb.e, %bb.d, %bb.c, %bb.b
+  %.sink36 = phi i64 [ 22, %bb.e ], [ 20, %bb.d ], [ 21, %bb.c ], [ 21, %bb.b ]
+  %.sink = phi i8 [ %i.bi, %bb.e ], [ %i.ba, %bb.d ], [ %i.aa, %bb.c ], [ %i.ae, %bb.b ]
   %i.bj = phi i8 [ %i.bi, %bb.e ], [ %i.as, %bb.d ], [ %i.ap, %bb.c ], [ 0, %bb.b ]
   %i.bk = phi i32 [ %i.bd, %bb.e ], [ %i.av, %bb.d ], [ %i.n, %bb.c ], [ %i.s, %bb.b ]
   %i.bl = phi i8 [ %i.bb, %bb.e ], [ %i.ba, %bb.d ], [ 0, %bb.c ], [ %i.ai, %bb.b ]
   %i.bm = phi i8 [ 0, %bb.e ], [ 0, %bb.d ], [ %i.an, %bb.c ], [ %i.aj, %bb.b ]
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 %.sink36
+  store i8 %.sink, ptr %2, align 1
   %notmask = shl nsw i32 -1, %i.k
   %i.bn = trunc i32 %notmask to i8
   %i.bo = xor i8 %i.bn, -1                        ; 2 uses

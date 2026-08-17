@@ -204,31 +204,26 @@ bb.gy:                                            ; preds = %bb.gx
   %i.wm = getelementptr inbounds nuw i8, ptr %0, i64 276
   %i.wn = load i8, ptr %i.wm, align 4, !tbaa !82
   switch i8 %i.wn, label %bb.hb [
-    i8 52, label %5
+    i8 52, label %.sink.split593
     i8 53, label %bb.gz
     i8 54, label %bb.ha
   ]
 
-5:                                                ; preds = %bb.gy
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 20
-  store i16 1716, ptr %6, align 4, !tbaa !165
-  br label %.sink.split593
-
 bb.gz:                                            ; preds = %bb.gy, %bb.gl
   %i.wo = getelementptr inbounds nuw i8, ptr %0, i64 20
   store i16 1956, ptr %i.wo, align 4, !tbaa !165
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 22
-  store i16 2607, ptr %7, align 2, !tbaa !164
   br label %.sink.split593
 
 bb.ha:                                            ; preds = %bb.gy
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 20
-  store i16 2136, ptr %8, align 4, !tbaa !165
   br label %.sink.split593
 
-.sink.split593:                                   ; preds = %5, %bb.ha, %bb.gz
-  %.sink596 = phi i64 [ 18, %bb.gz ], [ 22, %bb.ha ], [ 22, %5 ]
-  %.sink594 = phi i16 [ 2624, %bb.gz ], [ 2848, %bb.ha ], [ 2304, %5 ]
+.sink.split593:                                   ; preds = %bb.gy, %bb.ha, %bb.gz
+  %.sink599 = phi i64 [ 22, %bb.gz ], [ 20, %bb.ha ], [ 20, %bb.gy ]
+  %.sink597 = phi i16 [ 2607, %bb.gz ], [ 2136, %bb.ha ], [ 1716, %bb.gy ]
+  %.sink596 = phi i64 [ 18, %bb.gz ], [ 22, %bb.ha ], [ 22, %bb.gy ]
+  %.sink594 = phi i16 [ 2624, %bb.gz ], [ 2848, %bb.ha ], [ 2304, %bb.gy ]
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 %.sink599
+  store i16 %.sink597, ptr %5, align 2, !tbaa !88
   %i.wp = getelementptr inbounds nuw i8, ptr %0, i64 %.sink596
   store i16 %.sink594, ptr %i.wp, align 2, !tbaa !88
   br label %bb.hb

@@ -203,7 +203,7 @@ open_multi_pack_index_chain.exit.i:               ; preds = %bb.e
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.z, %.lr.ph.i.i
-  %.02144.i.i = phi ptr [ null, %.lr.ph.i.i ], [ %i.bc, %bb.z ] ; 9 uses
+  %.02144.i.i = phi ptr [ null, %.lr.ph.i.i ], [ %i.bc, %bb.z ] ; 8 uses
   %.02643.i.i = phi i32 [ 0, %.lr.ph.i.i ], [ %i.bx, %bb.z ]
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #21
   %i.an = call i32 @strbuf_getline_lf(ptr noundef nonnull %1, ptr noundef %i.af) #21
@@ -280,13 +280,7 @@ bb.s:                                             ; preds = %bb.r
 bb.t:                                             ; preds = %bb.s
   %i.bj = load i32, ptr @git_gettext_enabled, align 4, !tbaa !79
   %.not4.i.i.i.i = icmp eq i32 %i.bj, 0
-  br i1 %.not4.i.i.i.i, label %_.exit.i.i.i, label %6
-
-6:                                                ; preds = %bb.t
-  %7 = getelementptr inbounds nuw i8, ptr %.02144.i.i, i64 172
-  %8 = call ptr @dcgettext(ptr noundef null, ptr noundef nonnull @.str.58, i32 noundef 5) #21
-  %.pre20.i.i.i = load i32, ptr %7, align 4, !tbaa !82
-  br label %_.exit.i.i.i
+  br i1 %.not4.i.i.i.i, label %_.exit.i.i.i, label %bb.x
 
 bb.u:                                             ; preds = %bb.s
   %i.bk = getelementptr inbounds nuw i8, ptr %.02144.i.i, i64 168
@@ -295,31 +289,33 @@ bb.u:                                             ; preds = %bb.s
   %i.bn = load i32, ptr %i.bm, align 4, !tbaa !85 ; 2 uses
   %i.bo = xor i32 %i.bn, -1
   %i.bp = icmp ugt i32 %i.bl, %i.bo
-  br i1 %i.bp, label %bb.v, label %bb.x
+  br i1 %i.bp, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %bb.u
   %i.bq = load i32, ptr @git_gettext_enabled, align 4, !tbaa !79
   %.not4.i17.i.i.i = icmp eq i32 %i.bq, 0
-  br i1 %.not4.i17.i.i.i, label %_.exit.i.i.i, label %bb.w
+  br i1 %.not4.i17.i.i.i, label %_.exit.i.i.i, label %bb.x
 
-bb.w:                                             ; preds = %bb.v
-  %i.br = getelementptr inbounds nuw i8, ptr %.02144.i.i, i64 168
-  %9 = call ptr @dcgettext(ptr noundef null, ptr noundef nonnull @.str.59, i32 noundef 5) #21
-  %.pre.i.i.i = load i32, ptr %i.br, align 8, !tbaa !84
-  br label %_.exit.i.i.i
-
-bb.x:                                             ; preds = %bb.u
-  %10 = add i32 %i.bg, %i.be
-  %11 = getelementptr inbounds nuw i8, ptr %i.bc, i64 172
-  store i32 %10, ptr %11, align 4, !tbaa !82
-  %12 = add i32 %i.bn, %i.bl
-  %13 = getelementptr inbounds nuw i8, ptr %i.bc, i64 168
-  store i32 %12, ptr %13, align 8, !tbaa !84
+bb.w:                                             ; preds = %bb.u
+  %6 = add i32 %i.bg, %i.be
+  %i.br = getelementptr inbounds nuw i8, ptr %i.bc, i64 172
+  store i32 %6, ptr %i.br, align 4, !tbaa !82
+  %7 = add i32 %i.bn, %i.bl
+  %8 = getelementptr inbounds nuw i8, ptr %i.bc, i64 168
+  store i32 %7, ptr %8, align 8, !tbaa !84
   br label %bb.z
 
-_.exit.i.i.i:                                     ; preds = %bb.w, %bb.v, %6, %bb.t
-  %.sink106.i.i = phi i32 [ %i.be, %bb.t ], [ %.pre20.i.i.i, %6 ], [ %.pre.i.i.i, %bb.w ], [ %i.bl, %bb.v ]
-  %.0.i.i.sink.i.i = phi ptr [ @.str.58, %bb.t ], [ %8, %6 ], [ %9, %bb.w ], [ @.str.59, %bb.v ]
+bb.x:                                             ; preds = %bb.v, %bb.t
+  %.sink87 = phi i64 [ 172, %bb.t ], [ 168, %bb.v ]
+  %.str.59.sink = phi ptr [ @.str.58, %bb.t ], [ @.str.59, %bb.v ]
+  %9 = getelementptr inbounds nuw i8, ptr %.02144.i.i, i64 %.sink87
+  %10 = call ptr @dcgettext(ptr noundef null, ptr noundef nonnull %.str.59.sink, i32 noundef 5) #21
+  %.pre.i.i.i = load i32, ptr %9, align 4, !tbaa !79
+  br label %_.exit.i.i.i
+
+_.exit.i.i.i:                                     ; preds = %bb.x, %bb.v, %bb.t
+  %.sink106.i.i = phi i32 [ %i.be, %bb.t ], [ %i.bl, %bb.v ], [ %.pre.i.i.i, %bb.x ]
+  %.0.i.i.sink.i.i = phi ptr [ @.str.58, %bb.t ], [ @.str.59, %bb.v ], [ %10, %bb.x ]
   %i.bs = zext i32 %.sink106.i.i to i64
   call void (ptr, ...) @warning(ptr noundef %.0.i.i.sink.i.i, i64 noundef %i.bs) #21
   call void @close_midx(ptr noundef nonnull %i.bc)
@@ -343,7 +339,7 @@ _.exit35.i.i:                                     ; preds = %bb.y, %.loopexit11.
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #21
   br label %load_midx_chain_fd_st.exit.i
 
-bb.z:                                             ; preds = %bb.x, %bb.r
+bb.z:                                             ; preds = %bb.w, %bb.r
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bc, i64 160
   store ptr %.02144.i.i, ptr %i.bv, align 8, !tbaa !86
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bc, i64 68

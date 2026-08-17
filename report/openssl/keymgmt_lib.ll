@@ -201,33 +201,26 @@ bb.a:
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #5
   %i.e = call i32 @evp_keymgmt_get_params(ptr noundef %0, ptr noundef %1, ptr noundef nonnull %4) #5
   %.not = icmp eq i32 %i.e, 0
+  %.sink18.sroa.gep19 = getelementptr inbounds nuw i8, ptr %4, i64 32
   br i1 %.not, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
+  %.sink18.sroa.gep = getelementptr inbounds nuw i8, ptr %4, i64 72
   %i.f = call i32 @OSSL_PARAM_modified(ptr noundef nonnull %i.c) #5
   %.not9 = icmp eq i32 %i.f, 0
-  br i1 %.not9, label %bb.c, label %7
-
-7:                                                ; preds = %bb.b
-  %8 = getelementptr inbounds nuw i8, ptr %4, i64 72
-  %9 = load i64, ptr %8, align 8, !tbaa !56
-  br label %bb.d
+  br i1 %.not9, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
   %i.g = call i32 @OSSL_PARAM_modified(ptr noundef nonnull %4) #5
   %.not10 = icmp eq i32 %i.g, 0
-  br i1 %.not10, label %bb.e, label %10
+  br i1 %.not10, label %bb.e, label %bb.d
 
-10:                                               ; preds = %bb.c
-  %11 = getelementptr inbounds nuw i8, ptr %4, i64 32
-  %12 = load i64, ptr %11, align 16, !tbaa !56
-  br label %bb.d
-
-bb.d:                                             ; preds = %7, %10
-  %.sink17 = phi i64 [ %9, %7 ], [ %12, %10 ]
-  %.sink16 = phi ptr [ %i.b, %7 ], [ %i.a, %10 ]
-  %.0.ph = phi i32 [ 2, %7 ], [ 1, %10 ]
-  %i.h = icmp ult i64 %.sink17, 2
+bb.d:                                             ; preds = %bb.c, %bb.b
+  %.sink18.sroa.phi = phi ptr [ %.sink18.sroa.gep, %bb.b ], [ %.sink18.sroa.gep19, %bb.c ]
+  %.sink16 = phi ptr [ %i.b, %bb.b ], [ %i.a, %bb.c ]
+  %.0.ph = phi i32 [ 2, %bb.b ], [ 1, %bb.c ]
+  %7 = load i64, ptr %.sink18.sroa.phi, align 8, !tbaa !56
+  %i.h = icmp ult i64 %7, 2
   %.str.7. = select i1 %i.h, ptr @.str.7, ptr %.sink16
   %i.i = call i64 @OPENSSL_strlcpy(ptr noundef %2, ptr noundef nonnull %.str.7., i64 noundef %3) #5 ; 0 uses
   br label %bb.e

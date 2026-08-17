@@ -203,15 +203,9 @@ paths_and_oids_insert.exit.i:                     ; preds = %bb.n, %bb.m
   br i1 %.not20.i, label %bb.s, label %bb.o
 
 bb.o:                                             ; preds = %paths_and_oids_insert.exit.i
-  %i.cb = call ptr @lookup_tree(ptr noundef %0, ptr noundef nonnull %5) #24 ; 3 uses
+  %i.cb = call ptr @lookup_tree(ptr noundef %0, ptr noundef nonnull %5) #24 ; 2 uses
   %.not21.i = icmp eq ptr %i.cb, null
-  br i1 %.not21.i, label %bb.s, label %8
-
-8:                                                ; preds = %bb.o
-  %9 = load i64, ptr %i.cb, align 8
-  %10 = or i64 %9, 8589934592
-  store i64 %10, ptr %i.cb, align 8
-  br label %bb.s
+  br i1 %.not21.i, label %bb.s, label %bb.r
 
 bb.p:                                             ; preds = %.lr.ph.i38
   %i.cc = load i64, ptr %i.ax, align 8
@@ -220,17 +214,18 @@ bb.p:                                             ; preds = %.lr.ph.i38
   br i1 %.not18.i, label %bb.s, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.ce = call ptr @lookup_blob(ptr noundef %0, ptr noundef nonnull %5) #24 ; 3 uses
+  %i.ce = call ptr @lookup_blob(ptr noundef %0, ptr noundef nonnull %5) #24 ; 2 uses
   %.not19.i = icmp eq ptr %i.ce, null
   br i1 %.not19.i, label %bb.s, label %bb.r
 
-bb.r:                                             ; preds = %bb.q
-  %i.cf = load i64, ptr %i.ce, align 4
+bb.r:                                             ; preds = %bb.q, %bb.o
+  %.sink.i = phi ptr [ %i.cb, %bb.o ], [ %i.ce, %bb.q ] ; 2 uses
+  %i.cf = load i64, ptr %.sink.i, align 4
   %i.cg = or i64 %i.cf, 8589934592
-  store i64 %i.cg, ptr %i.ce, align 4
+  store i64 %i.cg, ptr %.sink.i, align 4
   br label %bb.s
 
-bb.s:                                             ; preds = %bb.r, %bb.q, %bb.p, %8, %bb.o, %paths_and_oids_insert.exit.i, %.lr.ph.i38
+bb.s:                                             ; preds = %bb.r, %bb.q, %bb.p, %bb.o, %paths_and_oids_insert.exit.i, %.lr.ph.i38
   %i.ch = call i32 @tree_entry(ptr noundef nonnull %4, ptr noundef nonnull %5) #24
   %.not17.i = icmp eq i32 %i.ch, 0
   br i1 %.not17.i, label %._crit_edge.i, label %.lr.ph.i38, !llvm.loop !67

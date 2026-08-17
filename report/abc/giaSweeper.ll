@@ -203,7 +203,7 @@ bb.a:
   %5 = alloca %struct.timespec, align 8           ; 5 uses
   %6 = alloca %struct.timespec, align 8           ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 792 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !12   ; 20 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !12   ; 18 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 92 ; 2 uses
   %i.d = load i32, ptr %i.c, align 4, !tbaa !59
   %i.e = add nsw i32 %i.d, 1
@@ -459,13 +459,9 @@ Abc_Clock.exit57:                                 ; preds = %bb.r, %bb.s
   %i.dt = add nsw i64 %i.dq, %i.ds
   store i64 %i.dt, ptr %i.dr, align 8, !tbaa !57
   %i.du = getelementptr inbounds nuw i8, ptr %i.b, i64 100 ; 2 uses
-  %7 = load i32, ptr %i.du, align 4, !tbaa !61
-  %8 = add nsw i32 %7, 1
-  store i32 %8, ptr %i.du, align 4, !tbaa !61
-  %9 = getelementptr inbounds nuw i8, ptr %i.b, i64 108 ; 2 uses
-  %i.dv = load i32, ptr %9, align 4, !tbaa !63
+  %i.dv = load i32, ptr %i.du, align 4, !tbaa !61
   %i.dw = add nsw i32 %i.dv, 1
-  store i32 %i.dw, ptr %9, align 4, !tbaa !63
+  store i32 %i.dw, ptr %i.du, align 4, !tbaa !61
   br label %bb.x
 
 bb.t:                                             ; preds = %Abc_Clock.exit55
@@ -499,10 +495,6 @@ Abc_Clock.exit59:                                 ; preds = %bb.t, %bb.u
   %i.eo = load i64, ptr %i.en, align 8, !tbaa !56
   %i.ep = add nsw i64 %i.em, %i.eo
   store i64 %i.ep, ptr %i.en, align 8, !tbaa !56
-  %10 = getelementptr inbounds nuw i8, ptr %i.b, i64 96 ; 2 uses
-  %11 = load i32, ptr %10, align 8, !tbaa !60
-  %12 = add nsw i32 %11, 1
-  store i32 %12, ptr %10, align 8, !tbaa !60
   br label %bb.x
 
 bb.v:                                             ; preds = %Abc_Clock.exit55
@@ -528,14 +520,15 @@ Abc_Clock.exit61:                                 ; preds = %bb.v, %bb.w
   %i.fa = load i64, ptr %i.ez, align 8, !tbaa !58
   %i.fb = add nsw i64 %i.ey, %i.fa
   store i64 %i.fb, ptr %i.ez, align 8, !tbaa !58
-  %13 = getelementptr inbounds nuw i8, ptr %i.b, i64 104 ; 2 uses
-  %14 = load i32, ptr %13, align 8, !tbaa !62
-  %15 = add nsw i32 %14, 1
-  store i32 %15, ptr %13, align 8, !tbaa !62
   br label %bb.x
 
 bb.x:                                             ; preds = %Abc_Clock.exit61, %Abc_Clock.exit59, %Abc_Clock.exit57
-  %.0 = phi i32 [ 1, %Abc_Clock.exit57 ], [ 0, %Abc_Clock.exit59 ], [ -1, %Abc_Clock.exit61 ]
+  %.sink74 = phi i64 [ 104, %Abc_Clock.exit61 ], [ 96, %Abc_Clock.exit59 ], [ 108, %Abc_Clock.exit57 ]
+  %.0 = phi i32 [ -1, %Abc_Clock.exit61 ], [ 0, %Abc_Clock.exit59 ], [ 1, %Abc_Clock.exit57 ]
+  %7 = getelementptr inbounds nuw i8, ptr %i.b, i64 %.sink74 ; 2 uses
+  %8 = load i32, ptr %7, align 4, !tbaa !46
+  %9 = add nsw i32 %8, 1
+  store i32 %9, ptr %7, align 4, !tbaa !46
   ret i32 %.0
 }
 

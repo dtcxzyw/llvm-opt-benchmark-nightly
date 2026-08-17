@@ -203,21 +203,17 @@ define linkonce_odr dso_local void @_ZN6icu_7820DecimalFormatSymbols9setSymbolEN
 bb.a:
   %4 = alloca %"class.icu_78::UnicodeString", align 8 ; 45 uses
   switch i32 %1, label %bb.c [
-    i32 8, label %5
+    i32 8, label %.thread23
     i32 9, label %bb.b
   ]
 
-5:                                                ; preds = %bb.a
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 2448
-  store i8 1, ptr %6, align 8
-  br label %.thread23
-
 bb.b:                                             ; preds = %bb.a
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 2449
-  store i8 1, ptr %7, align 1
   br label %.thread23
 
-.thread23:                                        ; preds = %5, %bb.b
+.thread23:                                        ; preds = %bb.a, %bb.b
+  %.sink30 = phi i64 [ 2449, %bb.b ], [ 2448, %bb.a ]
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 %.sink30
+  store i8 1, ptr %5, align 1
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = zext nneg i32 %1 to i64
   %i.c = getelementptr inbounds nuw [64 x i8], ptr %i.a, i64 %i.b

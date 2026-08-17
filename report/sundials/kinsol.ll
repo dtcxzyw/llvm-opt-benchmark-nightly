@@ -204,7 +204,7 @@ bb.bd:                                            ; preds = %bb.bc, %bb.bb
   %i.em = getelementptr inbounds nuw i8, ptr %0, i64 616 ; 7 uses
   %i.en = load i32, ptr %i.em, align 8, !tbaa !96
   %.not96.i = icmp eq i32 %i.en, 0
-  br i1 %.not96.i, label %7, label %bb.be
+  br i1 %.not96.i, label %bb.bg, label %bb.be
 
 bb.be:                                            ; preds = %bb.bd
   %i.eo = getelementptr inbounds nuw i8, ptr %0, i64 96
@@ -215,7 +215,7 @@ bb.be:                                            ; preds = %bb.bd
   store i32 %i.er, ptr %i.es, align 8, !tbaa !97
   switch i32 %i.ep, label %bb.bf [
     i32 1, label %.thread102.i
-    i32 3, label %5
+    i32 3, label %bb.bg
   ]
 
 .thread102.i:                                     ; preds = %bb.be
@@ -226,19 +226,13 @@ bb.be:                                            ; preds = %bb.bd
 bb.bf:                                            ; preds = %.thread102.i, %bb.be
   %i.eu = getelementptr inbounds nuw i8, ptr %0, i64 176
   store double 5.000000e-01, ptr %i.eu, align 8, !tbaa !98
-  br label %5
-
-5:                                                ; preds = %bb.bf, %bb.be
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 116
-  store i32 1, ptr %6, align 4, !tbaa !99
   br label %bb.bg
 
-7:                                                ; preds = %bb.bd
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 112
-  store i32 0, ptr %8, align 8, !tbaa !97
-  br label %bb.bg
-
-bb.bg:                                            ; preds = %7, %5
+bb.bg:                                            ; preds = %bb.bf, %bb.be, %bb.bd
+  %.sink112.i = phi i64 [ 116, %bb.bf ], [ 116, %bb.be ], [ 112, %bb.bd ]
+  %.sink110.i = phi i32 [ 1, %bb.bf ], [ 1, %bb.be ], [ 0, %bb.bd ]
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 %.sink112.i
+  store i32 %.sink110.i, ptr %5, align 4, !tbaa !99
   %i.ev = getelementptr inbounds nuw i8, ptr %0, i64 216 ; 19 uses
   %i.ew = getelementptr inbounds nuw i8, ptr %0, i64 224 ; 34 uses
   %i.ex = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 17 uses
@@ -641,7 +635,7 @@ bb.hb:                                            ; preds = %bb.ha, %.thread.i21
   br i1 %.not73.i, label %bb.hc, label %KINStop.exit.thread.jt4294966297.sink.split
 
 bb.hc:                                            ; preds = %bb.hb
-  %i.akx = load i32, ptr %i.hx, align 4, !tbaa !99
+  %i.akx = load i32, ptr %i.hx, align 4, !tbaa !135
   %.not74.i = icmp eq i32 %i.akx, 0
   br i1 %.not74.i, label %bb.hd, label %KINStop.exit.thread.jt4294966297
 
@@ -673,14 +667,14 @@ bb.hf:                                            ; preds = %bb.he
   br i1 %i.alh, label %bb.hg, label %bb.hh
 
 bb.hg:                                            ; preds = %bb.hf
-  %i.ali = load double, ptr %i.ia, align 8, !tbaa !135
+  %i.ali = load double, ptr %i.ia, align 8, !tbaa !136
   br label %bb.hj
 
 bb.hh:                                            ; preds = %bb.hf
-  %i.alj = load double, ptr %i.hz, align 8, !tbaa !136
+  %i.alj = load double, ptr %i.hz, align 8, !tbaa !137
   %i.alk = tail call double @exp(double noundef %i.alg) #13
   %i.all = fmul double %i.alj, %i.alk             ; 2 uses
-  %i.alm = load double, ptr %i.ia, align 8, !tbaa !135 ; 2 uses
+  %i.alm = load double, ptr %i.ia, align 8, !tbaa !136 ; 2 uses
   %i.aln = fcmp olt double %i.all, %i.alm
   br i1 %i.aln, label %bb.hi, label %bb.hj
 
@@ -837,7 +831,7 @@ declare void @N_VScale(double noundef, ptr noundef, ptr noundef) local_unnamed_a
 ; Function Attrs: nounwind uwtable
 define void @KINFree(ptr nofree noundef captures(none) %0) local_unnamed_addr #0 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !137    ; 27 uses
+  %i.a = load ptr, ptr %0, align 8, !tbaa !138    ; 27 uses
   %i.b = icmp eq ptr %i.a, null
   br i1 %i.b, label %bb.r, label %bb.b
 
@@ -962,7 +956,7 @@ bb.o:                                             ; preds = %bb.n
 
 KINFreeVectors.exit:                              ; preds = %bb.n, %bb.o
   %i.az = getelementptr inbounds nuw i8, ptr %i.a, i64 608
-  %i.ba = load ptr, ptr %i.az, align 8, !tbaa !138 ; 2 uses
+  %i.ba = load ptr, ptr %i.az, align 8, !tbaa !139 ; 2 uses
   %.not = icmp eq ptr %i.ba, null
   br i1 %.not, label %bb.q, label %bb.p
 
@@ -974,10 +968,10 @@ bb.q:                                             ; preds = %bb.p, %KINFreeVecto
   tail call void @KINFreeAA(ptr noundef nonnull %i.a) #13
   tail call void @KINFreeOrth(ptr noundef nonnull %i.a) #13
   %i.bc = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store ptr null, ptr %i.bc, align 8, !tbaa !139
-  %i.bd = load ptr, ptr %0, align 8, !tbaa !137
+  store ptr null, ptr %i.bc, align 8, !tbaa !140
+  %i.bd = load ptr, ptr %0, align 8, !tbaa !138
   tail call void @free(ptr noundef %i.bd) #13
-  store ptr null, ptr %0, align 8, !tbaa !137
+  store ptr null, ptr %0, align 8, !tbaa !138
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.a, %bb.q
@@ -1026,7 +1020,7 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.d, %bb.c
   %i.o = phi ptr [ %i.j, %bb.c ], [ %i.m, %bb.d ]
-  %i.p = load i32, ptr %i.o, align 4, !tbaa !140  ; 2 uses
+  %i.p = load i32, ptr %i.o, align 4, !tbaa !99   ; 2 uses
   switch i32 %i.p, label %bb.q [
     i32 0, label %bb.f
     i32 -13, label %bb.g
@@ -1429,7 +1423,7 @@ attributes #15 = { nounwind willreturn memory(read) }
 !96 = !{!9, !5, i64 616}
 !97 = !{!9, !5, i64 112}
 !98 = !{!9, !12, i64 176}
-!99 = !{!9, !5, i64 116}
+!99 = !{!5, !5, i64 0}
 !100 = distinct !{null}
 !101 = !{!9, !11, i64 584}
 !102 = !{!9, !12, i64 640}
@@ -1465,12 +1459,12 @@ attributes #15 = { nounwind willreturn memory(read) }
 !132 = distinct !{!132, !118}
 !133 = !{!9, !13, i64 248}
 !134 = !{!9, !13, i64 256}
-!135 = !{!9, !12, i64 696}
-!136 = !{!9, !12, i64 688}
-!137 = !{!11, !11, i64 0}
-!138 = !{!9, !11, i64 608}
-!139 = !{!9, !11, i64 8}
-!140 = !{!5, !5, i64 0}
+!135 = !{!9, !5, i64 116}
+!136 = !{!9, !12, i64 696}
+!137 = !{!9, !12, i64 688}
+!138 = !{!11, !11, i64 0}
+!139 = !{!9, !11, i64 608}
+!140 = !{!9, !11, i64 8}
 !141 = !{!9, !17, i64 536}
 !142 = !{!9, !15, i64 544}
 !143 = !{!9, !13, i64 472}

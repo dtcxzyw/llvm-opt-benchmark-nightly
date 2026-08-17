@@ -204,7 +204,7 @@ bb.hf:                                            ; preds = %parse_band_data.exi
   %i.byh = icmp slt i32 %.val32, -31
   %..i.i74 = tail call i32 @llvm.smin.i32(i32 %i.bye, i32 %i.byg)
   %.0.i.i75 = select i1 %i.byh, i32 %i.byd, i32 %..i.i74
-  %i.byi = add nsw i32 %.0.i.i75, %.val32         ; 7 uses
+  %i.byi = add nsw i32 %.0.i.i75, %.val32         ; 6 uses
   store i32 %i.byi, ptr %i.h, align 16, !tbaa !194
   %.sroa.0.0.copyload.i = load ptr, ptr %i.a, align 8, !tbaa !159 ; 2 uses
   %i.byj = lshr i32 %i.byi, 3
@@ -227,25 +227,21 @@ bb.hf:                                            ; preds = %parse_band_data.exi
   %i.bza = lshr i32 %i.byz, 16
   %i.bzb = or disjoint i32 %i.bza, %i.byq         ; 2 uses
   %i.bzc = icmp eq i32 %i.bzb, 33556560
-  br i1 %i.bzc, label %4, label %bb.hg
-
-4:                                                ; preds = %bb.hf
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8728
-  store i32 1, ptr %5, align 8, !tbaa !148
-  br label %bb.hi
+  br i1 %i.bzc, label %bb.hh, label %bb.hg
 
 bb.hg:                                            ; preds = %bb.hf
   %.mask = and i32 %i.bzb, -2
   %i.bzd = icmp eq i32 %.mask, -247463728
   br i1 %i.bzd, label %bb.hh, label %bb.hi
 
-bb.hh:                                            ; preds = %bb.hg
-  %i.bze = getelementptr inbounds nuw i8, ptr %0, i64 8732
-  store i32 1, ptr %i.bze, align 4, !tbaa !146
+bb.hh:                                            ; preds = %bb.hg, %bb.hf
+  %.sink666 = phi i64 [ 8728, %bb.hf ], [ 8732, %bb.hg ]
+  %i.bze = getelementptr inbounds nuw i8, ptr %0, i64 %.sink666
+  store i32 1, ptr %i.bze, align 4, !tbaa !76
   br label %bb.hi
 
-bb.hi:                                            ; preds = %4, %bb.hh, %bb.hg, %parse_band_data.exit
-  %.val8.i = phi i32 [ %i.byi, %4 ], [ %i.byi, %bb.hh ], [ %i.byi, %bb.hg ], [ %.val32, %parse_band_data.exit ]
+bb.hi:                                            ; preds = %bb.hh, %bb.hg, %parse_band_data.exit
+  %.val8.i = phi i32 [ %i.byi, %bb.hg ], [ %.val32, %parse_band_data.exit ], [ %i.byi, %bb.hh ]
   %i.bzf = icmp slt i32 %i.bxz, %.val8.i
   br i1 %i.bzf, label %bb.hk, label %bb.hj
 

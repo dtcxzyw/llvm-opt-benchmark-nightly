@@ -203,7 +203,7 @@ bb.aj:                                            ; preds = %bb.ai, %bb.ah
 bb.ak:                                            ; preds = %bb.ad, %bb.ad
   %i.ef = icmp eq i32 %i.ct, 2                    ; 5 uses
   %.v = select i1 %i.ef, i64 13976, i64 31224
-  %i.eg = getelementptr inbounds nuw i8, ptr %0, i64 %.v ; 38 uses
+  %i.eg = getelementptr inbounds nuw i8, ptr %0, i64 %.v ; 37 uses
   invoke void @_ZN10FileHeader5ResetEm(ptr noundef nonnull align 8 dereferenceable(17184) %i.eg, i64 noundef 0)
           to label %bb.al unwind label %bb.aw
 
@@ -375,12 +375,7 @@ bb.bc:                                            ; preds = %.sink.split, %bb.ba
 
 bb.bd:                                            ; preds = %bb.bc
   %i.gw = icmp ult i8 %i.gv, 6
-  br i1 %i.gw, label %bb.be, label %.thread259
-
-.thread259:                                       ; preds = %bb.bd
-  %7 = getelementptr inbounds nuw i8, ptr %i.eg, i64 8464
-  store i32 0, ptr %7, align 8, !tbaa !150
-  br label %bb.bg
+  br i1 %i.gw, label %bb.be, label %bb.bf
 
 bb.be:                                            ; preds = %bb.bd, %bb.bc, %bb.bc
   %storemerge = phi i32 [ 1, %bb.bc ], [ 1, %bb.bc ], [ 0, %bb.bd ]
@@ -391,15 +386,19 @@ bb.be:                                            ; preds = %bb.bd, %bb.bc, %bb.
   %i.gz = and i32 %i.gg, 61440
   %i.ha = icmp eq i32 %i.gz, 40960
   %or.cond = and i1 %i.gy, %i.ha
-  br i1 %or.cond, label %bb.bf, label %bb.bg
+  br i1 %or.cond, label %7, label %bb.bg
 
-bb.bf:                                            ; preds = %bb.be
+7:                                                ; preds = %bb.be
   store i32 1, ptr %i.gx, align 8, !tbaa !150
-  %i.hb = getelementptr inbounds nuw i8, ptr %i.eg, i64 8468
-  store i32 0, ptr %i.hb, align 4, !tbaa !112
+  br label %bb.bf
+
+bb.bf:                                            ; preds = %bb.bd, %7
+  %.sink306 = phi i64 [ 8468, %7 ], [ 8464, %bb.bd ]
+  %i.hb = getelementptr inbounds nuw i8, ptr %i.eg, i64 %.sink306
+  store i32 0, ptr %i.hb, align 4, !tbaa !82
   br label %bb.bg
 
-bb.bg:                                            ; preds = %.thread259, %bb.bf, %bb.be
+bb.bg:                                            ; preds = %bb.bf, %bb.be
   %.lobit = lshr i32 %i.gg, 31
   %i.hc = trunc nuw nsw i32 %.lobit to i8
   %i.hd = select i1 %i.ef, i8 0, i8 %i.hc

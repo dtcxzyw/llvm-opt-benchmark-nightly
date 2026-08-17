@@ -203,9 +203,9 @@ bb.d:                                             ; preds = %.lr.ph
   tail call void @_ZN3gmx8internal13assertHandlerEPKcS2_S2_S2_i(ptr noundef nonnull @.str.18, ptr noundef nonnull @.str.19, ptr noundef nonnull @"__PRETTY_FUNCTION__._ZZN3gmx25AnalysisDataModuleManager23notifyParallelDataStartEPNS_20AbstractAnalysisDataERKNS_27AnalysisDataParallelOptionsEENK3$_0clEv", ptr noundef nonnull @.str.1, i32 noundef 337) #18
   unreachable
 
-.lr.ph20:                                         ; preds = %._crit_edge, %7
-  %i.q = phi ptr [ %i.ai, %7 ], [ %i.i, %._crit_edge ] ; 3 uses
-  %.sroa.07.018 = phi ptr [ %8, %7 ], [ %i.m, %._crit_edge ] ; 4 uses
+.lr.ph20:                                         ; preds = %._crit_edge, %.lr.ph20
+  %i.q = phi ptr [ %i.ai, %.lr.ph20 ], [ %i.i, %._crit_edge ] ; 3 uses
+  %.sroa.07.018 = phi ptr [ %4, %.lr.ph20 ], [ %i.m, %._crit_edge ] ; 4 uses
   %i.r = load ptr, ptr %.sroa.07.018, align 8, !tbaa !84 ; 3 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.q, i64 24
   %i.t = load i8, ptr %i.s, align 1, !tbaa !65, !range !66, !noundef !67
@@ -227,27 +227,17 @@ bb.d:                                             ; preds = %.lr.ph
   %i.ag = getelementptr inbounds nuw i8, ptr %.sroa.07.018, i64 16
   %i.ah = zext i1 %i.af to i8
   store i8 %i.ah, ptr %i.ag, align 8, !tbaa !88
-  %i.ai = load ptr, ptr %0, align 8, !tbaa !76    ; 4 uses
-  br i1 %i.af, label %3, label %5
-
-3:                                                ; preds = %.lr.ph20
-  %4 = getelementptr inbounds nuw i8, ptr %i.ai, i64 29
-  store i8 1, ptr %4, align 1, !tbaa !20
-  br label %7
-
-5:                                                ; preds = %.lr.ph20
-  %6 = getelementptr inbounds nuw i8, ptr %i.ai, i64 28
-  store i8 1, ptr %6, align 4, !tbaa !19
-  br label %7
-
-7:                                                ; preds = %3, %5
-  %8 = getelementptr inbounds nuw i8, ptr %.sroa.07.018, i64 24 ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %i.ai, i64 8
-  %10 = load ptr, ptr %9, align 8, !tbaa !83
-  %.not15 = icmp eq ptr %8, %10
+  %i.ai = load ptr, ptr %0, align 8, !tbaa !76    ; 3 uses
+  %. = select i1 %i.af, i64 29, i64 28
+  %3 = getelementptr inbounds nuw i8, ptr %i.ai, i64 %.
+  store i8 1, ptr %3, align 1, !tbaa !65
+  %4 = getelementptr inbounds nuw i8, ptr %.sroa.07.018, i64 24 ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %i.ai, i64 8
+  %6 = load ptr, ptr %5, align 8, !tbaa !83
+  %.not15 = icmp eq ptr %4, %6
   br i1 %.not15, label %._crit_edge21, label %.lr.ph20, !llvm.loop !105
 
-._crit_edge21:                                    ; preds = %7, %._crit_edge
+._crit_edge21:                                    ; preds = %.lr.ph20, %._crit_edge
   ret void
 }
 

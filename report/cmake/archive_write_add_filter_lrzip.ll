@@ -146,7 +146,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 define internal range(i32 -20, 1) i32 @archive_write_lrzip_options(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(address_is_null) %2) #5 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !20   ; 6 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !20
   %i.c = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(12) @.str.4) #10
   %i.d = icmp eq i32 %i.c, 0
   br i1 %i.d, label %bb.b, label %bb.h
@@ -158,52 +158,27 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.f = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %2, ptr noundef nonnull dereferenceable(6) @.str.5) #10
   %i.g = icmp eq i32 %i.f, 0
-  br i1 %i.g, label %3, label %bb.d
-
-3:                                                ; preds = %bb.c
-  %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 12
-  store i32 1, ptr %4, align 4, !tbaa !26
-  br label %bb.l
+  br i1 %i.g, label %bb.k, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.h = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %2, ptr noundef nonnull dereferenceable(5) @.str.6) #10
   %i.i = icmp eq i32 %i.h, 0
-  br i1 %i.i, label %5, label %bb.e
-
-5:                                                ; preds = %bb.d
-  %6 = getelementptr inbounds nuw i8, ptr %i.b, i64 12
-  store i32 2, ptr %6, align 4, !tbaa !26
-  br label %bb.l
+  br i1 %i.i, label %bb.k, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.j = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %2, ptr noundef nonnull dereferenceable(4) @.str.7) #10
   %i.k = icmp eq i32 %i.j, 0
-  br i1 %i.k, label %7, label %bb.f
-
-7:                                                ; preds = %bb.e
-  %8 = getelementptr inbounds nuw i8, ptr %i.b, i64 12
-  store i32 3, ptr %8, align 4, !tbaa !26
-  br label %bb.l
+  br i1 %i.k, label %bb.k, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.l = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %2, ptr noundef nonnull dereferenceable(5) @.str.8) #10
   %i.m = icmp eq i32 %i.l, 0
-  br i1 %i.m, label %9, label %bb.g
-
-9:                                                ; preds = %bb.f
-  %10 = getelementptr inbounds nuw i8, ptr %i.b, i64 12
-  store i32 4, ptr %10, align 4, !tbaa !26
-  br label %bb.l
+  br i1 %i.m, label %bb.k, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.n = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %2, ptr noundef nonnull dereferenceable(5) @.str.9) #10
   %i.o = icmp eq i32 %i.n, 0
-  br i1 %i.o, label %11, label %bb.l
-
-11:                                               ; preds = %bb.g
-  %12 = getelementptr inbounds nuw i8, ptr %i.b, i64 12
-  store i32 5, ptr %12, align 4, !tbaa !26
-  br label %bb.l
+  br i1 %i.o, label %bb.k, label %bb.l
 
 bb.h:                                             ; preds = %bb.a
   %i.p = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(18) @.str.10) #10
@@ -222,17 +197,22 @@ bb.j:                                             ; preds = %bb.i
   %i.u = getelementptr inbounds nuw i8, ptr %2, i64 1
   %i.v = load i8, ptr %i.u, align 1, !tbaa !30
   %.not = icmp eq i8 %i.v, 0
-  br i1 %.not, label %bb.k, label %bb.l
+  br i1 %.not, label %3, label %bb.l
 
-bb.k:                                             ; preds = %bb.j
+3:                                                ; preds = %bb.j
   %narrow = add nsw i8 %i.s, -48
-  %13 = zext nneg i8 %narrow to i32
-  %i.w = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  store i32 %13, ptr %i.w, align 8, !tbaa !27
+  %4 = zext nneg i8 %narrow to i32
+  br label %bb.k
+
+bb.k:                                             ; preds = %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %3
+  %.sink25 = phi i64 [ 12, %bb.c ], [ 12, %bb.e ], [ 12, %bb.f ], [ 12, %bb.d ], [ 8, %3 ], [ 12, %bb.g ]
+  %.sink = phi i32 [ 1, %bb.c ], [ 3, %bb.e ], [ 4, %bb.f ], [ 2, %bb.d ], [ %4, %3 ], [ 5, %bb.g ]
+  %i.w = getelementptr inbounds nuw i8, ptr %i.b, i64 %.sink25
+  store i32 %.sink, ptr %i.w, align 4, !tbaa !31
   br label %bb.l
 
-bb.l:                                             ; preds = %bb.h, %bb.i, %bb.j, %5, %9, %11, %7, %3, %bb.g, %bb.b, %bb.k
-  %.0 = phi i32 [ -20, %bb.h ], [ -20, %bb.g ], [ -20, %bb.b ], [ 0, %5 ], [ 0, %bb.k ], [ 0, %3 ], [ 0, %7 ], [ 0, %11 ], [ 0, %9 ], [ -20, %bb.j ], [ -20, %bb.i ]
+bb.l:                                             ; preds = %bb.k, %bb.h, %bb.i, %bb.j, %bb.g, %bb.b
+  %.0 = phi i32 [ -20, %bb.h ], [ -20, %bb.g ], [ -20, %bb.b ], [ -20, %bb.j ], [ -20, %bb.i ], [ 0, %bb.k ]
   ret i32 %.0
 }
 
@@ -336,4 +316,5 @@ attributes #10 = { nounwind willreturn memory(read) }
 !28 = !{!29, !18, i64 0}
 !29 = !{!"archive_string", !18, i64 0, !15, i64 8, !15, i64 16}
 !30 = !{!7, !7, i64 0}
+!31 = !{!6, !6, i64 0}
 end_hunk_0

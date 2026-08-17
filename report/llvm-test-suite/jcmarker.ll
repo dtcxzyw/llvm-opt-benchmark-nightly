@@ -204,43 +204,36 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %bb.g
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.g ] ; 2 uses
   %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %indvars.iv
-  %i.k = load ptr, ptr %i.j, align 8, !tbaa !81   ; 4 uses
+  %i.k = load ptr, ptr %i.j, align 8, !tbaa !81   ; 2 uses
   %i.l = load i32, ptr %i.g, align 4, !tbaa !74
   %.not20 = icmp eq i32 %i.l, 0
-  br i1 %.not20, label %bb.f, label %bb.c
+  br i1 %.not20, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.m = load i32, ptr %i.h, align 4, !tbaa !82
   %i.n = icmp eq i32 %i.m, 0
-  br i1 %i.n, label %bb.d, label %bb.e
+  br i1 %i.n, label %bb.d, label %bb.f
 
 bb.d:                                             ; preds = %bb.c
   %i.o = load i32, ptr %i.i, align 4, !tbaa !83
   %i.p = icmp eq i32 %i.o, 0
-  br i1 %i.p, label %1, label %bb.g
+  br i1 %i.p, label %bb.f, label %bb.g
 
-1:                                                ; preds = %bb.d
-  %2 = getelementptr inbounds nuw i8, ptr %i.k, i64 20
-  %3 = load i32, ptr %2, align 4, !tbaa !76
-  tail call fastcc void @emit_dht(ptr noundef nonnull %0, i32 noundef %3, i32 noundef 0)
+bb.e:                                             ; preds = %bb.b
+  %i.q = getelementptr inbounds nuw i8, ptr %i.k, i64 20
+  %i.r = load i32, ptr %i.q, align 4, !tbaa !76
+  tail call fastcc void @emit_dht(ptr noundef nonnull %0, i32 noundef %i.r, i32 noundef 0)
+  br label %bb.f
+
+bb.f:                                             ; preds = %bb.c, %bb.d, %bb.e
+  %.sink = phi i64 [ 24, %bb.e ], [ 20, %bb.d ], [ 24, %bb.c ]
+  %.sink30 = phi i32 [ 1, %bb.e ], [ 0, %bb.d ], [ 1, %bb.c ]
+  %i.s = getelementptr inbounds nuw i8, ptr %i.k, i64 %.sink
+  %i.t = load i32, ptr %i.s, align 4, !tbaa !4
+  tail call fastcc void @emit_dht(ptr noundef nonnull %0, i32 noundef %i.t, i32 noundef %.sink30)
   br label %bb.g
 
-bb.e:                                             ; preds = %bb.c
-  %i.q = getelementptr inbounds nuw i8, ptr %i.k, i64 24
-  %i.r = load i32, ptr %i.q, align 8, !tbaa !77
-  tail call fastcc void @emit_dht(ptr noundef nonnull %0, i32 noundef %i.r, i32 noundef 1)
-  br label %bb.g
-
-bb.f:                                             ; preds = %bb.b
-  %4 = getelementptr inbounds nuw i8, ptr %i.k, i64 20
-  %5 = load i32, ptr %4, align 4, !tbaa !76
-  tail call fastcc void @emit_dht(ptr noundef nonnull %0, i32 noundef %5, i32 noundef 0)
-  %i.s = getelementptr inbounds nuw i8, ptr %i.k, i64 24
-  %i.t = load i32, ptr %i.s, align 8, !tbaa !77
-  tail call fastcc void @emit_dht(ptr noundef nonnull %0, i32 noundef %i.t, i32 noundef 1)
-  br label %bb.g
-
-bb.g:                                             ; preds = %bb.f, %bb.d, %1, %bb.e
+bb.g:                                             ; preds = %bb.f, %bb.d
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.u = load i32, ptr %i.c, align 4, !tbaa !80
   %i.v = sext i32 %i.u to i64

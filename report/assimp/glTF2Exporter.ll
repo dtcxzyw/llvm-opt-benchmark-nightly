@@ -204,9 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.i = load i8, ptr %i.h, align 1, !range !12, !noundef !13
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 120
   store i8 %i.i, ptr %i.j, align 8
-  %4 = getelementptr inbounds nuw i8, ptr %2, i64 121
-  store i8 1, ptr %4, align 1
-  br label %.loopexit
+  br label %.loopexit.sink.split
 
 bb.c:                                             ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -215,9 +213,7 @@ bb.c:                                             ; preds = %bb.a
   %i.n = sext i32 %i.m to i64
   %i.o = getelementptr inbounds nuw i8, ptr %2, i64 104
   store i64 %i.n, ptr %i.o, align 8
-  %5 = getelementptr inbounds nuw i8, ptr %2, i64 112
-  store i8 1, ptr %5, align 8
-  br label %.loopexit
+  br label %.loopexit.sink.split
 
 bb.d:                                             ; preds = %bb.a
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -225,9 +221,7 @@ bb.d:                                             ; preds = %bb.a
   %i.r = load i64, ptr %i.q, align 8
   %i.s = getelementptr inbounds nuw i8, ptr %2, i64 88
   store i64 %i.r, ptr %i.s, align 8
-  %6 = getelementptr inbounds nuw i8, ptr %2, i64 96
-  store i8 1, ptr %6, align 8
-  br label %.loopexit
+  br label %.loopexit.sink.split
 
 bb.e:                                             ; preds = %bb.a
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -236,9 +230,7 @@ bb.e:                                             ; preds = %bb.a
   %i.w = fpext float %i.v to double
   %i.x = getelementptr inbounds nuw i8, ptr %2, i64 72
   store double %i.w, ptr %i.x, align 8
-  %7 = getelementptr inbounds nuw i8, ptr %2, i64 80
-  store i8 1, ptr %7, align 8
-  br label %.loopexit
+  br label %.loopexit.sink.split
 
 bb.f:                                             ; preds = %bb.a
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -246,9 +238,7 @@ bb.f:                                             ; preds = %bb.a
   %i.aa = load double, ptr %i.z, align 8
   %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 72
   store double %i.aa, ptr %i.ab, align 8
-  %8 = getelementptr inbounds nuw i8, ptr %2, i64 80
-  store i8 1, ptr %8, align 8
-  br label %.loopexit
+  br label %.loopexit.sink.split
 
 bb.g:                                             ; preds = %bb.a
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -259,9 +249,7 @@ bb.g:                                             ; preds = %bb.a
   %i.ah = load i64, ptr %i.ag, align 8
   %i.ai = tail call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.ae) #31
   %i.aj = tail call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %i.af, i64 noundef 0, i64 noundef %i.ah, ptr noundef nonnull %i.ae, i64 noundef %i.ai) ; 0 uses
-  %9 = getelementptr inbounds nuw i8, ptr %2, i64 64
-  store i8 1, ptr %9, align 8
-  br label %.loopexit
+  br label %.loopexit.sink.split
 
 bb.h:                                             ; preds = %bb.a
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -354,7 +342,13 @@ _ZNSt6vectorIN5glTF215CustomExtensionESaIS1_EE2atEm.exit: ; preds = %bb.l
   %i.bx = icmp samesign ult i64 %indvars.iv.next, %i.bw
   br i1 %i.bx, label %bb.l, label %.loopexit, !llvm.loop !602
 
-.loopexit:                                        ; preds = %_ZNSt6vectorIN5glTF215CustomExtensionESaIS1_EE2atEm.exit, %_ZNSt6vectorIN5glTF215CustomExtensionESaIS1_EE6resizeEm.exit, %bb.a, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b
+.loopexit.sink.split:                             ; preds = %bb.b, %bb.c, %bb.d, %bb.e, %bb.f, %bb.g
+  %.sink46 = phi i64 [ 64, %bb.g ], [ 80, %bb.f ], [ 80, %bb.e ], [ 96, %bb.d ], [ 112, %bb.c ], [ 121, %bb.b ]
+  %4 = getelementptr inbounds nuw i8, ptr %2, i64 %.sink46
+  store i8 1, ptr %4, align 1
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %_ZNSt6vectorIN5glTF215CustomExtensionESaIS1_EE2atEm.exit, %.loopexit.sink.split, %_ZNSt6vectorIN5glTF215CustomExtensionESaIS1_EE6resizeEm.exit, %bb.a
   ret void
 }
 

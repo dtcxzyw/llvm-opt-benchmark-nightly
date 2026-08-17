@@ -203,7 +203,7 @@ bb.n:                                             ; preds = %bb.q
 
 bb.o:                                             ; preds = %get_bit_array.exit82, %bb.q
   %.061129 = phi i64 [ 0, %get_bit_array.exit82 ], [ %i.ds, %bb.q ] ; 2 uses
-  %i.dg = getelementptr inbounds nuw [24 x i8], ptr %3, i64 %.061129 ; 4 uses
+  %i.dg = getelementptr inbounds nuw [24 x i8], ptr %3, i64 %.061129 ; 3 uses
   %i.dh = load i64, ptr %i.dg, align 8, !tbaa !134
   %i.di = call i32 @bitmap_get(ptr noundef %i.de, i64 noundef %i.dh) #12
   %i.dj = icmp ne i32 %i.di, 0
@@ -212,26 +212,17 @@ bb.o:                                             ; preds = %get_bit_array.exit8
   %i.dm = call i32 @bitmap_get(ptr noundef %i.de, i64 noundef %i.dl) #12
   %i.dn = icmp ne i32 %i.dm, 0                    ; 2 uses
   %i.do = xor i1 %i.dj, %i.dn
-  br i1 %i.do, label %6, label %bb.q
+  br i1 %i.do, label %bb.p, label %bb.q
 
-6:                                                ; preds = %bb.o
-  br i1 %i.dn, label %7, label %bb.p
-
-7:                                                ; preds = %6
-  %8 = getelementptr inbounds nuw i8, ptr %i.dg, i64 20 ; 2 uses
-  %9 = load i32, ptr %8, align 4, !tbaa !114
-  %10 = add i32 %9, 1
-  store i32 %10, ptr %8, align 4, !tbaa !114
-  br label %bb.q
-
-bb.p:                                             ; preds = %6
-  %i.dp = getelementptr inbounds nuw i8, ptr %i.dg, i64 16 ; 2 uses
-  %i.dq = load i32, ptr %i.dp, align 8, !tbaa !112
+bb.p:                                             ; preds = %bb.o
+  %. = select i1 %i.dn, i64 20, i64 16
+  %i.dp = getelementptr inbounds nuw i8, ptr %i.dg, i64 %. ; 2 uses
+  %i.dq = load i32, ptr %i.dp, align 4, !tbaa !27
   %i.dr = add i32 %i.dq, 1
-  store i32 %i.dr, ptr %i.dp, align 8, !tbaa !112
+  store i32 %i.dr, ptr %i.dp, align 4, !tbaa !27
   br label %bb.q
 
-bb.q:                                             ; preds = %7, %bb.p, %bb.o
+bb.q:                                             ; preds = %bb.p, %bb.o
   %i.ds = add nuw i64 %.061129, 1                 ; 2 uses
   %exitcond142.not = icmp eq i64 %i.ds, %4
   br i1 %exitcond142.not, label %bb.n, label %bb.o, !llvm.loop !136

@@ -201,7 +201,7 @@ bb.y:                                             ; preds = %refreshTimeout.exit
 define internal range(i64 -1, 2147483648) i64 @redisSSLRead(ptr noundef %0, ptr noundef %1, i64 noundef %2) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 256
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !31   ; 4 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !31   ; 3 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !41
   %i.d = trunc i64 %2 to i32
   %i.e = tail call i32 @SSL_read(ptr noundef %i.c, ptr noundef %1, i32 noundef %i.d) #7 ; 4 uses
@@ -243,26 +243,25 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.e
   switch i32 %i.j, label %maybeCheckWant.exit [
-    i32 2, label %bb.i
-    i32 3, label %bb.j
+    i32 2, label %bb.j
+    i32 3, label %bb.i
   ]
 
 bb.i:                                             ; preds = %bb.h
-  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  store i32 1, ptr %3, align 8, !tbaa !54
-  br label %maybeCheckWant.exit.thread
+  br label %bb.j
 
-bb.j:                                             ; preds = %bb.h
-  %i.r = getelementptr inbounds nuw i8, ptr %i.b, i64 20
-  store i32 1, ptr %i.r, align 4, !tbaa !55
+bb.j:                                             ; preds = %bb.h, %bb.i
+  %.sink5.i = phi i64 [ 20, %bb.i ], [ 16, %bb.h ]
+  %i.r = getelementptr inbounds nuw i8, ptr %i.b, i64 %.sink5.i
+  store i32 1, ptr %i.r, align 4, !tbaa !6
   br label %maybeCheckWant.exit.thread
 
 maybeCheckWant.exit:                              ; preds = %bb.h
   tail call void @__redisSetError(ptr noundef nonnull %0, i32 noundef 1, ptr noundef null) #7
   br label %maybeCheckWant.exit.thread
 
-maybeCheckWant.exit.thread:                       ; preds = %bb.j, %bb.i, %bb.g, %maybeCheckWant.exit, %bb.f, %bb.d, %bb.b
-  %.1 = phi i64 [ %i.g, %bb.b ], [ -1, %bb.d ], [ -1, %maybeCheckWant.exit ], [ -1, %bb.g ], [ 0, %bb.f ], [ 0, %bb.i ], [ 0, %bb.j ]
+maybeCheckWant.exit.thread:                       ; preds = %bb.j, %bb.g, %maybeCheckWant.exit, %bb.f, %bb.d, %bb.b
+  %.1 = phi i64 [ %i.g, %bb.b ], [ -1, %bb.d ], [ -1, %maybeCheckWant.exit ], [ -1, %bb.g ], [ 0, %bb.f ], [ 0, %bb.j ]
   ret i64 %.1
 }
 
@@ -270,7 +269,7 @@ maybeCheckWant.exit.thread:                       ; preds = %bb.j, %bb.i, %bb.g,
 define internal range(i64 -1, 2147483648) i64 @redisSSLWrite(ptr noundef %0) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 256
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !31   ; 5 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !31   ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 3 uses
   %i.d = load i64, ptr %i.c, align 8, !tbaa !67   ; 2 uses
   %.not = icmp eq i64 %i.d, 0
@@ -347,18 +346,17 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j
   switch i32 %i.ae, label %maybeCheckWant.exit [
-    i32 2, label %bb.l
-    i32 3, label %bb.m
+    i32 2, label %bb.m
+    i32 3, label %bb.l
   ]
 
 bb.l:                                             ; preds = %bb.k
-  %1 = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  store i32 1, ptr %1, align 8, !tbaa !54
-  br label %maybeCheckWant.exit.thread
+  br label %bb.m
 
-bb.m:                                             ; preds = %bb.k
-  %i.aj = getelementptr inbounds nuw i8, ptr %i.b, i64 20
-  store i32 1, ptr %i.aj, align 4, !tbaa !55
+bb.m:                                             ; preds = %bb.k, %bb.l
+  %.sink5.i = phi i64 [ 20, %bb.l ], [ 16, %bb.k ]
+  %i.aj = getelementptr inbounds nuw i8, ptr %i.b, i64 %.sink5.i
+  store i32 1, ptr %i.aj, align 4, !tbaa !6
   br label %maybeCheckWant.exit.thread
 
 maybeCheckWant.exit:                              ; preds = %bb.k, %bb.j
@@ -369,8 +367,8 @@ bb.n:                                             ; preds = %bb.i, %bb.h
   %i.ak = zext nneg i32 %i.aa to i64
   br label %maybeCheckWant.exit.thread
 
-maybeCheckWant.exit.thread:                       ; preds = %bb.m, %bb.l, %maybeCheckWant.exit, %bb.n
-  %.1 = phi i64 [ %i.ak, %bb.n ], [ -1, %maybeCheckWant.exit ], [ 0, %bb.l ], [ 0, %bb.m ]
+maybeCheckWant.exit.thread:                       ; preds = %bb.m, %maybeCheckWant.exit, %bb.n
+  %.1 = phi i64 [ %i.ak, %bb.n ], [ -1, %maybeCheckWant.exit ], [ 0, %bb.m ]
   ret i64 %.1
 }
 

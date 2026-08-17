@@ -201,12 +201,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.b = load i64, ptr %i.a, align 8, !tbaa !13
   %i.c = icmp eq i64 %i.b, 4
-  br i1 %i.c, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread2
-
-_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread2: ; preds = %bb.a
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 48
-  store i8 0, ptr %3, align 8, !tbaa !376
-  br label %bb.c
+  br i1 %i.c, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit, label %bb.b
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit: ; preds = %bb.a
   %i.d = load ptr, ptr %1, align 8, !tbaa !25
@@ -219,12 +214,14 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   store i8 %i.j, ptr %i.i, align 8, !tbaa !376
   br i1 %i.h, label %bb.b, label %bb.c
 
-bb.b:                                             ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
-  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 49
-  store i8 1, ptr %i.k, align 1, !tbaa !377
+bb.b:                                             ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit, %bb.a
+  %.sink4 = phi i64 [ 48, %bb.a ], [ 49, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit ]
+  %.sink = phi i8 [ 0, %bb.a ], [ 1, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit ]
+  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 %.sink4
+  store i8 %.sink, ptr %i.k, align 1, !tbaa !148
   br label %bb.c
 
-bb.c:                                             ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread2, %bb.b, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
+bb.c:                                             ; preds = %bb.b, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
   ret void
 }
 
