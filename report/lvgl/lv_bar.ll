@@ -201,34 +201,28 @@ declare void @lv_anim_set_completed_cb(ptr noundef, ptr noundef) local_unnamed_a
 ; Function Attrs: nounwind uwtable
 define internal void @lv_bar_anim_completed(ptr nofree noundef readonly captures(none) %0) #0 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !83     ; 6 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !23   ; 5 uses
+  %i.a = load ptr, ptr %0, align 8, !tbaa !83     ; 5 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !23   ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   store i32 -1, ptr %i.c, align 8, !tbaa !26
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 112
   %i.e = icmp eq ptr %i.a, %i.d
-  br i1 %i.e, label %1, label %bb.b
-
-1:                                                ; preds = %bb.a
-  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 12
-  %3 = load i32, ptr %2, align 4, !tbaa !25
-  %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 72
-  store i32 %3, ptr %4, align 8, !tbaa !21
-  br label %bb.d
+  br i1 %i.e, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 136
   %i.g = icmp eq ptr %i.a, %i.f
   br i1 %i.g, label %bb.c, label %bb.d
 
-bb.c:                                             ; preds = %bb.b
+bb.c:                                             ; preds = %bb.b, %bb.a
+  %.sink14 = phi i64 [ 72, %bb.a ], [ 84, %bb.b ]
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 12
   %i.i = load i32, ptr %i.h, align 4, !tbaa !25
-  %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 84
-  store i32 %i.i, ptr %i.j, align 4, !tbaa !27
+  %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 %.sink14
+  store i32 %i.i, ptr %i.j, align 4, !tbaa !28
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.b, %bb.c, %1
+bb.d:                                             ; preds = %bb.c, %bb.b
   %i.k = tail call i32 @lv_obj_invalidate(ptr noundef %i.b) #6 ; 0 uses
   ret void
 }

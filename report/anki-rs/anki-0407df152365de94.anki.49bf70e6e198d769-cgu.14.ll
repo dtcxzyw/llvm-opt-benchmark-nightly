@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 208
   invoke fastcc void @"_ZN4core3ptr400drop_in_place$LT$axum..serve..handle_connection$LT$tokio..net..tcp..listener..TcpListener$C$axum..extract..connect_info..IntoMakeServiceWithConnectInfo$LT$axum..routing..Router$C$core..net..socket_addr..SocketAddr$GT$$C$axum..extension..AddExtension$LT$axum..routing..Router$C$axum..extract..connect_info..ConnectInfo$LT$core..net..socket_addr..SocketAddr$GT$$GT$$GT$..$u7b$$u7b$closure$u7d$$u7d$$GT$17he47c2019b38076c9E"(ptr noundef nonnull align 8 %i.d)
-          to label %bb.p unwind label %bb.o
+          to label %1 unwind label %bb.o
 
 bb.e:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 296
@@ -243,7 +243,7 @@ bb.j:                                             ; preds = %bb.g
   %i.p = getelementptr i8, ptr %0, i64 264
   %.val.i.i.i.i = load ptr, ptr %i.p, align 8, !align !6, !noundef !3 ; 2 uses
   %i.q = icmp eq ptr %.val.i.i.i.i, null
-  br i1 %i.q, label %"_ZN4core3ptr50drop_in_place$LT$tokio..sync..notify..Notified$GT$17hbe873f86435f4de0E.exit.i.i.i", label %bb.k
+  br i1 %i.q, label %bb.p, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %i.r = getelementptr i8, ptr %0, i64 272
@@ -251,7 +251,7 @@ bb.k:                                             ; preds = %bb.j
   %i.s = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i, i64 24
   %i.t = load ptr, ptr %i.s, align 8, !nonnull !3, !noundef !3
   invoke void %i.t(ptr noundef %.val1.i.i.i.i)
-          to label %"_ZN4core3ptr50drop_in_place$LT$tokio..sync..notify..Notified$GT$17hbe873f86435f4de0E.exit.i.i.i" unwind label %bb.m, !inline_history !460
+          to label %bb.p unwind label %bb.m, !inline_history !460
 
 bb.l:                                             ; preds = %bb.i
   %i.u = landingpad { ptr, i32 }
@@ -270,11 +270,6 @@ bb.m:                                             ; preds = %bb.k
   store i8 0, ptr %i.w, align 8
   br label %.body
 
-"_ZN4core3ptr50drop_in_place$LT$tokio..sync..notify..Notified$GT$17hbe873f86435f4de0E.exit.i.i.i": ; preds = %bb.k, %bb.j
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 224
-  store i8 0, ptr %1, align 8
-  br label %"_ZN4core3ptr100drop_in_place$LT$tokio..sync..watch..Sender$LT$$LP$$RP$$GT$..closed..$u7b$$u7b$closure$u7d$$u7d$$GT$17h80e3462729160627E.exit"
-
 bb.n:                                             ; preds = %bb.c
   %i.x = landingpad { ptr, i32 }
           cleanup
@@ -289,14 +284,18 @@ bb.o:                                             ; preds = %bb.d
   store i8 0, ptr %i.aa, align 4
   br label %.body
 
-bb.p:                                             ; preds = %bb.d
+1:                                                ; preds = %bb.d
   %2 = getelementptr inbounds nuw i8, ptr %0, i64 203
   store i8 0, ptr %2, align 1
-  %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 204
+  br label %bb.p
+
+bb.p:                                             ; preds = %bb.j, %bb.k, %1
+  %.sink32 = phi i64 [ 204, %1 ], [ 224, %bb.k ], [ 224, %bb.j ]
+  %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 %.sink32
   store i8 0, ptr %i.ab, align 4
   br label %"_ZN4core3ptr100drop_in_place$LT$tokio..sync..watch..Sender$LT$$LP$$RP$$GT$..closed..$u7b$$u7b$closure$u7d$$u7d$$GT$17h80e3462729160627E.exit"
 
-"_ZN4core3ptr100drop_in_place$LT$tokio..sync..watch..Sender$LT$$LP$$RP$$GT$..closed..$u7b$$u7b$closure$u7d$$u7d$$GT$17h80e3462729160627E.exit": ; preds = %"_ZN4core3ptr50drop_in_place$LT$tokio..sync..notify..Notified$GT$17hbe873f86435f4de0E.exit.i.i.i", %bb.f, %bb.e, %bb.c, %bb.p
+"_ZN4core3ptr100drop_in_place$LT$tokio..sync..watch..Sender$LT$$LP$$RP$$GT$..closed..$u7b$$u7b$closure$u7d$$u7d$$GT$17h80e3462729160627E.exit": ; preds = %bb.p, %bb.f, %bb.e, %bb.c
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 201 ; 2 uses
   %i.ad = load i8, ptr %i.ac, align 1, !range !121, !noundef !3
   %i.ae = trunc nuw i8 %i.ad to i1

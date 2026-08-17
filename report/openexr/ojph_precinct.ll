@@ -204,7 +204,7 @@ bb.ev:                                            ; preds = %.lr.ph531, %bb.fb
   %i.akb = add i32 %i.aka, %i.ajy                 ; 5 uses
   %i.akc = load i32, ptr %4, align 4, !tbaa !33
   %.not215 = icmp eq i32 %i.akc, 0
-  br i1 %.not215, label %bb.fa, label %bb.ew
+  br i1 %.not215, label %12, label %bb.ew
 
 bb.ew:                                            ; preds = %bb.ev
   %.not216 = icmp eq i32 %i.akb, 0
@@ -252,15 +252,18 @@ _ZN4ojph5localL13bb_read_chunkEPNS0_12bit_read_bufEjRPNS_11coded_listsEPNS_21mem
 bb.ez:                                            ; preds = %_ZN4ojph5localL13bb_read_chunkEPNS0_12bit_read_bufEjRPNS_11coded_listsEPNS_21mem_elastic_allocatorE.exit
   store i32 0, ptr %i.ajz, align 4, !tbaa !33
   store i32 0, ptr %.0195528, align 8, !tbaa !33
-  store i32 0, ptr %4, align 4, !tbaa !33
-  br label %bb.fb
+  br label %bb.fa
 
-bb.fa:                                            ; preds = %bb.ev
+12:                                               ; preds = %bb.ev
   store i32 0, ptr %i.ajz, align 4, !tbaa !33
-  store i32 0, ptr %.0195528, align 8, !tbaa !33
+  br label %bb.fa
+
+bb.fa:                                            ; preds = %12, %bb.ez
+  %.sink = phi ptr [ %4, %bb.ez ], [ %.0195528, %12 ]
+  store i32 0, ptr %.sink, align 4, !tbaa !33
   br label %bb.fb
 
-bb.fb:                                            ; preds = %bb.ew, %_ZN4ojph5localL13bb_read_chunkEPNS0_12bit_read_bufEjRPNS_11coded_listsEPNS_21mem_elastic_allocatorE.exit, %bb.ez, %bb.fa
+bb.fb:                                            ; preds = %bb.fa, %bb.ew, %_ZN4ojph5localL13bb_read_chunkEPNS0_12bit_read_bufEjRPNS_11coded_listsEPNS_21mem_elastic_allocatorE.exit
   %i.ald = add nuw i32 %.0194529, 1               ; 2 uses
   %i.ale = getelementptr inbounds nuw i8, ptr %.0195528, i64 32
   %exitcond560.not = icmp eq i32 %i.ald, %i.aji

@@ -205,8 +205,6 @@ bb.a:
   %i.ag = getelementptr inbounds nuw i8, ptr %4, i64 76 ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %4, i64 72 ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %4, i64 88 ; 2 uses
-  %22 = getelementptr inbounds nuw i8, ptr %4, i64 104 ; 2 uses
-  %23 = getelementptr inbounds nuw i8, ptr %4, i64 100 ; 2 uses
   %i.aj = fadd double %11, 1.000000e-01
   br label %bb.b
 
@@ -609,21 +607,12 @@ Emap_ManComputeRefs.exit:                         ; preds = %.lr.ph.i101, %bb.dy
   store i32 %i.alx, ptr %i.ai, align 8, !tbaa !169
   %i.aly = load i32, ptr %i.alg, align 8, !tbaa !97
   switch i32 %i.aly, label %bb.ec [
-    i32 2, label %24
+    i32 2, label %.sink.split332.i.i
     i32 3, label %bb.dz
   ]
 
-24:                                               ; preds = %Emap_ManComputeRefs.exit
-  %25 = load i32, ptr %23, align 4, !tbaa !177
-  %26 = add nsw i32 %25, 1
-  store i32 %26, ptr %23, align 4, !tbaa !177
-  br label %bb.ec
-
 bb.dz:                                            ; preds = %Emap_ManComputeRefs.exit
-  %27 = load i32, ptr %22, align 8, !tbaa !178
-  %28 = add nsw i32 %27, 1
-  store i32 %28, ptr %22, align 8, !tbaa !178
-  br label %bb.ec
+  br label %.sink.split332.i.i
 
 bb.ea:                                            ; preds = %.critedge.i145.i
   %i.alz = load i32, ptr %i.af, align 4, !tbaa !174
@@ -686,7 +675,15 @@ bb.eb:                                            ; preds = %bb.eb, %.lr.ph310.i
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.loopexit.i143.i.loopexit.unr-lcssa, label %bb.eb, !llvm.loop !210
 
-bb.ec:                                            ; preds = %bb.dz, %24, %Emap_ManComputeRefs.exit
+.sink.split332.i.i:                               ; preds = %bb.dz, %Emap_ManComputeRefs.exit
+  %.sink337.i.i = phi i64 [ 104, %bb.dz ], [ 100, %Emap_ManComputeRefs.exit ]
+  %22 = getelementptr inbounds nuw i8, ptr %4, i64 %.sink337.i.i ; 2 uses
+  %23 = load i32, ptr %22, align 4, !tbaa !58
+  %24 = add nsw i32 %23, 1
+  store i32 %24, ptr %22, align 4, !tbaa !58
+  br label %bb.ec
+
+bb.ec:                                            ; preds = %.sink.split332.i.i, %Emap_ManComputeRefs.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %17)
   call void @llvm.lifetime.end.p0(ptr nonnull %16)
   call void @llvm.lifetime.end.p0(ptr nonnull %15)

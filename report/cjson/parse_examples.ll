@@ -1,4 +1,4 @@
-inline.NumInlined: 139
+inline.NumInlined: 141
 inline.NumDeleted: 25
 loop-unroll.NumCompletelyUnrolled: 4
 loop-unroll.NumUnrolled: 4
@@ -203,19 +203,97 @@ bb.c:                                             ; preds = %.thread, %bb.b
 ; Function Attrs: nounwind sspstrong uwtable
 define internal void @test13_should_be_parsed_without_null_termination() #8 {
 bb.a:
-  %i.a = alloca [178 x i8], align 16              ; 4 uses
+  %0 = alloca %struct.parse_buffer, align 8       ; 9 uses
+  %i.a = alloca [178 x i8], align 16              ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #28
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(178) %i.a, ptr noundef nonnull align 16 dereferenceable(178) @__const.test14_should_not_be_parsed.test_14, i64 178, i1 false)
-  %0 = call ptr @cJSON_ParseWithLengthOpts(ptr noundef nonnull %i.a, i64 noundef 178, ptr noundef null, i32 noundef 0) ; 2 uses
-  %.not = icmp eq ptr %0, null
-  br i1 %.not, label %bb.b, label %.critedge
+  call void @llvm.lifetime.start.p0(ptr nonnull %0) #28
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  store i64 0, ptr %1, align 8
+  store ptr null, ptr @global_error.0, align 8, !tbaa !9
+  store i64 0, ptr @global_error.1, align 8, !tbaa !14
+  %.0.i.sroa.gep.i = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %.0.i.sroa.gep48.i = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  store ptr %i.a, ptr %0, align 8, !tbaa !33
+  store i64 178, ptr %.0.i.sroa.gep48.i, align 8, !tbaa !35
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 32
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) @global_hooks, i64 24, i1 false), !tbaa.struct !36
+  %global_hooks.val.i = load ptr, ptr @global_hooks, align 8, !tbaa !21
+  %3 = call ptr %global_hooks.val.i(i64 noundef 64) #28, !inline_history !99 ; 5 uses
+  %.not = icmp eq ptr %3, null
+  %.0.i.sroa.gep.promoted.i.sroa.gep = getelementptr inbounds nuw i8, ptr %i.a, i64 3
+  br i1 %.not, label %bb.b, label %4
 
-bb.b:                                             ; preds = %bb.a
+4:                                                ; preds = %bb.a
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %3, i8 0, i64 64, i1 false)
+  %5 = load i8, ptr %i.a, align 16                ; 2 uses
+  %.not14.i.i = icmp eq i8 %5, -17
+  br i1 %.not14.i.i, label %sub_1.i.i, label %skip_utf8_bom.exit.i
+
+sub_1.i.i:                                        ; preds = %4
+  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
+  %7 = load i8, ptr %6, align 1
+  %.not15.i.i = icmp eq i8 %7, -69
+  %8 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
+  %9 = load i8, ptr %8, align 2
+  %10 = icmp eq i8 %9, -65
+  %or.cond = select i1 %.not15.i.i, i1 %10, i1 false
+  br i1 %or.cond, label %11, label %buffer_skip_whitespace.exit.sink.split.i
+
+11:                                               ; preds = %sub_1.i.i
+  %.pr.pre = load i8, ptr %.0.i.sroa.gep.promoted.i.sroa.gep, align 1, !tbaa !40
+  br label %skip_utf8_bom.exit.i
+
+skip_utf8_bom.exit.i:                             ; preds = %11, %4
+  %12 = phi i8 [ %5, %4 ], [ %.pr.pre, %11 ]
+  %.0.i.sroa.gep.promoted.i = phi i64 [ 0, %4 ], [ 3, %11 ] ; 2 uses
+  %13 = icmp ult i8 %12, 33
+  br i1 %13, label %.lr.ph.i.preheader, label %buffer_skip_whitespace.exit.sink.split.i
+
+.lr.ph.i.preheader:                               ; preds = %skip_utf8_bom.exit.i
+  %14 = add nuw nsw i64 %.0.i.sroa.gep.promoted.i, 1
+  br label %.lr.ph.i.i
+
+.lr.ph.i.i:                                       ; preds = %.lr.ph.i.preheader, %.lr.ph.i
+  %15 = phi i64 [ %14, %.lr.ph.i.preheader ], [ %19, %.lr.ph.i ] ; 3 uses
+  %16 = getelementptr inbounds nuw i8, ptr %i.a, i64 %15
+  %17 = load i8, ptr %16, align 1, !tbaa !40
+  %18 = icmp ult i8 %17, 33
+  br i1 %18, label %.lr.ph.i, label %buffer_skip_whitespace.exit.sink.split.i
+
+.lr.ph.i:                                         ; preds = %.lr.ph.i.i
+  %19 = add nuw nsw i64 %15, 1                    ; 2 uses
+  %exitcond.not.i.i = icmp eq i64 %19, 178
+  br i1 %exitcond.not.i.i, label %buffer_skip_whitespace.exit.sink.split.i, label %.lr.ph.i.i
+
+buffer_skip_whitespace.exit.sink.split.i:         ; preds = %.lr.ph.i, %.lr.ph.i.i, %sub_1.i.i, %skip_utf8_bom.exit.i
+  %.lcssa62.sink.i = phi i64 [ %.0.i.sroa.gep.promoted.i, %skip_utf8_bom.exit.i ], [ 0, %sub_1.i.i ], [ %15, %.lr.ph.i.i ], [ 177, %.lr.ph.i ]
+  store i64 %.lcssa62.sink.i, ptr %.0.i.sroa.gep.i, align 8
+  %20 = call fastcc i32 @parse_value(ptr noundef %3, ptr noundef nonnull %0)
+  %.not.i = icmp eq i32 %20, 0
+  br i1 %.not.i, label %.thread55.i, label %.critedge
+
+.thread55.i:                                      ; preds = %buffer_skip_whitespace.exit.sink.split.i
+  call void @cJSON_Delete(ptr noundef nonnull %3)
+  %.pre75.i = load i64, ptr %.0.i.sroa.gep.i, align 8, !tbaa !39
+  %.pre76.i = load i64, ptr %.0.i.sroa.gep48.i, align 8, !tbaa !35
+  br label %bb.b
+
+bb.b:                                             ; preds = %bb.a, %.thread55.i
+  %21 = phi i64 [ %.pre76.i, %.thread55.i ], [ 178, %bb.a ] ; 2 uses
+  %22 = phi i64 [ %.pre75.i, %.thread55.i ], [ 0, %bb.a ] ; 2 uses
+  %23 = icmp ult i64 %22, %21
+  %spec.select.i = call i64 @llvm.usub.sat.i64(i64 %21, i64 1)
+  %.sroa.5.0.i = select i1 %23, i64 %22, i64 %spec.select.i
+  store ptr %i.a, ptr @global_error.0, align 8, !tbaa !41
+  store i64 %.sroa.5.0.i, ptr @global_error.1, align 8, !tbaa !42
+  call void @llvm.lifetime.end.p0(ptr nonnull %0) #28
   call void @UnityFail(ptr noundef nonnull @.str.51, i64 noundef 219) #28
   br label %bb.c
 
-.critedge:                                        ; preds = %bb.a
-  call void @cJSON_Delete(ptr noundef nonnull %0)
+.critedge:                                        ; preds = %buffer_skip_whitespace.exit.sink.split.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %0) #28
+  call void @cJSON_Delete(ptr noundef nonnull %3)
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %.critedge
@@ -226,19 +304,100 @@ bb.c:                                             ; preds = %bb.b, %.critedge
 ; Function Attrs: nounwind sspstrong uwtable
 define internal void @test14_should_not_be_parsed() #8 {
 bb.a:
-  %i.a = alloca [179 x i8], align 16              ; 4 uses
+  %0 = alloca %struct.parse_buffer, align 8       ; 9 uses
+  %i.a = alloca [179 x i8], align 16              ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #28
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(179) %i.a, ptr noundef nonnull align 16 dereferenceable(179) @__const.test14_should_not_be_parsed.test_14, i64 179, i1 false)
-  %0 = call ptr @cJSON_ParseWithLengthOpts(ptr noundef nonnull %i.a, i64 noundef 177, ptr noundef null, i32 noundef 0) ; 2 uses
-  %cond = icmp eq ptr %0, null
-  br i1 %cond, label %bb.c, label %bb.b
+  call void @llvm.lifetime.start.p0(ptr nonnull %0) #28
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  store i64 0, ptr %1, align 8
+  store ptr null, ptr @global_error.0, align 8, !tbaa !9
+  store i64 0, ptr @global_error.1, align 8, !tbaa !14
+  %.0.i.sroa.gep.i = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %.0.i.sroa.gep48.i = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  store ptr %i.a, ptr %0, align 8, !tbaa !33
+  store i64 177, ptr %.0.i.sroa.gep48.i, align 8, !tbaa !35
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 32
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) @global_hooks, i64 24, i1 false), !tbaa.struct !36
+  %global_hooks.val.i = load ptr, ptr @global_hooks, align 8, !tbaa !21
+  %3 = call ptr %global_hooks.val.i(i64 noundef 64) #28, !inline_history !99 ; 5 uses
+  %cond = icmp eq ptr %3, null
+  %.0.i.sroa.gep.promoted.i.sroa.gep = getelementptr inbounds nuw i8, ptr %i.a, i64 3
+  br i1 %cond, label %cJSON_ParseWithLengthOpts.exit.thread, label %4
 
-bb.b:                                             ; preds = %bb.a
-  call void @UnityFail(ptr noundef nonnull @.str.52, i64 noundef 245) #28
-  call void @cJSON_Delete(ptr noundef nonnull %0)
+4:                                                ; preds = %bb.a
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %3, i8 0, i64 64, i1 false)
+  %5 = load i8, ptr %i.a, align 16                ; 2 uses
+  %.not14.i.i = icmp eq i8 %5, -17
+  br i1 %.not14.i.i, label %sub_1.i.i, label %skip_utf8_bom.exit.i
+
+sub_1.i.i:                                        ; preds = %4
+  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
+  %7 = load i8, ptr %6, align 1
+  %.not15.i.i = icmp eq i8 %7, -69
+  %8 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
+  %9 = load i8, ptr %8, align 2
+  %10 = icmp eq i8 %9, -65
+  %or.cond = select i1 %.not15.i.i, i1 %10, i1 false
+  br i1 %or.cond, label %11, label %buffer_skip_whitespace.exit.sink.split.i
+
+11:                                               ; preds = %sub_1.i.i
+  %.pr.pre = load i8, ptr %.0.i.sroa.gep.promoted.i.sroa.gep, align 1, !tbaa !40
+  br label %skip_utf8_bom.exit.i
+
+skip_utf8_bom.exit.i:                             ; preds = %11, %4
+  %12 = phi i8 [ %5, %4 ], [ %.pr.pre, %11 ]
+  %.0.i.sroa.gep.promoted.i = phi i64 [ 0, %4 ], [ 3, %11 ] ; 2 uses
+  %13 = icmp ult i8 %12, 33
+  br i1 %13, label %.lr.ph.i.preheader, label %buffer_skip_whitespace.exit.sink.split.i
+
+.lr.ph.i.preheader:                               ; preds = %skip_utf8_bom.exit.i
+  %14 = add nuw nsw i64 %.0.i.sroa.gep.promoted.i, 1
+  br label %.lr.ph.i.i
+
+.lr.ph.i.i:                                       ; preds = %.lr.ph.i.preheader, %.lr.ph.i
+  %15 = phi i64 [ %14, %.lr.ph.i.preheader ], [ %19, %.lr.ph.i ] ; 3 uses
+  %16 = getelementptr inbounds nuw i8, ptr %i.a, i64 %15
+  %17 = load i8, ptr %16, align 1, !tbaa !40
+  %18 = icmp ult i8 %17, 33
+  br i1 %18, label %.lr.ph.i, label %buffer_skip_whitespace.exit.sink.split.i
+
+.lr.ph.i:                                         ; preds = %.lr.ph.i.i
+  %19 = add nuw nsw i64 %15, 1                    ; 2 uses
+  %exitcond.not.i.i = icmp eq i64 %19, 177
+  br i1 %exitcond.not.i.i, label %buffer_skip_whitespace.exit.sink.split.i, label %.lr.ph.i.i
+
+buffer_skip_whitespace.exit.sink.split.i:         ; preds = %.lr.ph.i, %.lr.ph.i.i, %sub_1.i.i, %skip_utf8_bom.exit.i
+  %.lcssa62.sink.i = phi i64 [ %.0.i.sroa.gep.promoted.i, %skip_utf8_bom.exit.i ], [ 0, %sub_1.i.i ], [ %15, %.lr.ph.i.i ], [ 176, %.lr.ph.i ]
+  store i64 %.lcssa62.sink.i, ptr %.0.i.sroa.gep.i, align 8
+  %20 = call fastcc i32 @parse_value(ptr noundef %3, ptr noundef nonnull %0)
+  %.not.i = icmp eq i32 %20, 0
+  br i1 %.not.i, label %.thread55.i, label %bb.b
+
+.thread55.i:                                      ; preds = %buffer_skip_whitespace.exit.sink.split.i
+  call void @cJSON_Delete(ptr noundef nonnull %3)
+  %.pre75.i = load i64, ptr %.0.i.sroa.gep.i, align 8, !tbaa !39
+  %.pre76.i = load i64, ptr %.0.i.sroa.gep48.i, align 8, !tbaa !35
+  br label %cJSON_ParseWithLengthOpts.exit.thread
+
+cJSON_ParseWithLengthOpts.exit.thread:            ; preds = %bb.a, %.thread55.i
+  %21 = phi i64 [ %.pre76.i, %.thread55.i ], [ 177, %bb.a ] ; 2 uses
+  %22 = phi i64 [ %.pre75.i, %.thread55.i ], [ 0, %bb.a ] ; 2 uses
+  %23 = icmp ult i64 %22, %21
+  %spec.select.i = call i64 @llvm.usub.sat.i64(i64 %21, i64 1)
+  %.sroa.5.0.i = select i1 %23, i64 %22, i64 %spec.select.i
+  store ptr %i.a, ptr @global_error.0, align 8, !tbaa !41
+  store i64 %.sroa.5.0.i, ptr @global_error.1, align 8, !tbaa !42
+  call void @llvm.lifetime.end.p0(ptr nonnull %0) #28
   br label %bb.c
 
-bb.c:                                             ; preds = %bb.a, %bb.b
+bb.b:                                             ; preds = %buffer_skip_whitespace.exit.sink.split.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %0) #28
+  call void @UnityFail(ptr noundef nonnull @.str.52, i64 noundef 245) #28
+  call void @cJSON_Delete(ptr noundef nonnull %3)
+  br label %bb.c
+
+bb.c:                                             ; preds = %cJSON_ParseWithLengthOpts.exit.thread, %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #28
   ret void
 }
@@ -641,4 +800,5 @@ attributes #31 = { nounwind allocsize(0) }
 !96 = distinct !{!96, !93}
 !97 = distinct !{!97, !93}
 !98 = distinct !{!98, !93}
+!99 = distinct !{ptr @cJSON_ParseWithLengthOpts, null}
 end_hunk_1

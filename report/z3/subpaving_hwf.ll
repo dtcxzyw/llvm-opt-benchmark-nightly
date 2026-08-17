@@ -204,8 +204,6 @@ bb.ax:                                            ; preds = %.split164, %_ZNK16i
   tail call void @_ZN11hwf_manager3setER3hwfi(ptr noundef nonnull align 8 dereferenceable(736) %i.pk, ptr noundef nonnull align 8 dereferenceable(8) %i.pj, i32 noundef 0)
   %i.pl = getelementptr inbounds nuw i8, ptr %3, i64 33
   store i8 1, ptr %i.pl, align 1, !tbaa !114
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 32
-  store i8 1, ptr %4, align 8, !tbaa !112
   br label %bb.be
 
 bb.ay:                                            ; preds = %.split164
@@ -255,7 +253,7 @@ bb.bb:                                            ; preds = %_ZNK16interval_mana
   %i.qm = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNK14parray_managerIN9subpaving9context_tINS0_10config_hwfEE18bound_array_configEE3getERKNS5_3refEj(ptr noundef nonnull align 8 dereferenceable(32) %i.qk, ptr noundef nonnull align 8 dereferenceable(12) %i.ql, i32 noundef %i.qj)
   %i.qn = load ptr, ptr %i.qm, align 8, !tbaa !59 ; 2 uses
   %i.qo = icmp eq ptr %i.qn, null
-  br i1 %i.qo, label %_ZNK16interval_managerIN9subpaving9context_tINS0_10config_hwfEE15interval_configEE13lower_is_openERKNS3_8intervalE.exit127, label %bb.bc
+  br i1 %i.qo, label %bb.be, label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bb
   %i.qp = getelementptr inbounds nuw i8, ptr %i.qn, i64 8
@@ -263,20 +261,18 @@ bb.bc:                                            ; preds = %bb.bb
   %i.qr = lshr i32 %i.qq, 30
   %i.qs = trunc nuw nsw i32 %i.qr to i8
   %i.qt = and i8 %i.qs, 1
-  br label %_ZNK16interval_managerIN9subpaving9context_tINS0_10config_hwfEE15interval_configEE13lower_is_openERKNS3_8intervalE.exit127
+  br label %bb.be
 
 bb.bd:                                            ; preds = %_ZNK16interval_managerIN9subpaving9context_tINS0_10config_hwfEE15interval_configEE5lowerERKNS3_8intervalE.exit125
   %i.qu = getelementptr inbounds nuw i8, ptr %1, i64 33
   %i.qv = load i8, ptr %i.qu, align 1, !tbaa !114, !range !111, !noundef !20
-  br label %_ZNK16interval_managerIN9subpaving9context_tINS0_10config_hwfEE15interval_configEE13lower_is_openERKNS3_8intervalE.exit127
-
-_ZNK16interval_managerIN9subpaving9context_tINS0_10config_hwfEE15interval_configEE13lower_is_openERKNS3_8intervalE.exit127: ; preds = %bb.bb, %bb.bc, %bb.bd
-  %.0.i.i126 = phi i8 [ %i.qv, %bb.bd ], [ 1, %bb.bb ], [ %i.qt, %bb.bc ]
-  %5 = getelementptr inbounds nuw i8, ptr %3, i64 33
-  store i8 %.0.i.i126, ptr %5, align 1, !tbaa !114
   br label %bb.be
 
-bb.be:                                            ; preds = %_ZNK16interval_managerIN9subpaving9context_tINS0_10config_hwfEE15interval_configEE13lower_is_openERKNS3_8intervalE.exit127, %bb.ax
+bb.be:                                            ; preds = %bb.bd, %bb.bc, %bb.bb, %bb.ax
+  %.sink183 = phi i64 [ 32, %bb.ax ], [ 33, %bb.bb ], [ 33, %bb.bc ], [ 33, %bb.bd ]
+  %.0.i.i126.sink = phi i8 [ 1, %bb.ax ], [ 1, %bb.bb ], [ %i.qt, %bb.bc ], [ %i.qv, %bb.bd ]
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 %.sink183
+  store i8 %.0.i.i126.sink, ptr %4, align 1, !tbaa !193
   %i.qw = load i8, ptr %1, align 8, !tbaa !101, !range !111, !noundef !20
   %i.qx = trunc nuw i8 %i.qw to i1
   br i1 %i.qx, label %.split165, label %_ZNK16interval_managerIN9subpaving9context_tINS0_10config_hwfEE15interval_configEE12upper_is_infERKNS3_8intervalE.exit128

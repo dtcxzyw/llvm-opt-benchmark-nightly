@@ -203,27 +203,15 @@ bb.a:
 
 ; Function Attrs: mustprogress uwtable
 define void @_ZN11ComprDataIO13SetEncryptionEb12CRYPT_METHODP11SecPasswordPKhS4_jPhS5_(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(266) %0, i1 noundef zeroext %1, i32 noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5, i32 noundef %6, ptr noundef %7, ptr noundef %8) local_unnamed_addr #0 align 2 {
-  br i1 %1, label %10, label %bb.a
-
-10:                                               ; preds = %9
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 128
-  %12 = load ptr, ptr %11, align 8, !tbaa !8
-  %13 = tail call noundef zeroext i1 @_ZN9CryptData12SetCryptKeysEb12CRYPT_METHODP11SecPasswordPKhS4_jPhS5_(ptr noundef nonnull align 8 dereferenceable(2516) %12, i1 noundef zeroext true, i32 noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5, i32 noundef %6, ptr noundef %7, ptr noundef %8)
-  %14 = getelementptr inbounds nuw i8, ptr %0, i64 264
-  %15 = zext i1 %13 to i8
-  store i8 %15, ptr %14, align 8, !tbaa !30
-  br label %16
-
-bb.a:                                             ; preds = %9
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 136
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !23
-  %i.c = tail call noundef zeroext i1 @_ZN9CryptData12SetCryptKeysEb12CRYPT_METHODP11SecPasswordPKhS4_jPhS5_(ptr noundef nonnull align 8 dereferenceable(2516) %i.b, i1 noundef zeroext false, i32 noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5, i32 noundef %6, ptr noundef %7, ptr noundef %8)
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 265
+bb.a:
+  %. = select i1 %1, i64 128, i64 136
+  %.22 = select i1 %1, i64 264, i64 265
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 %.
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !115
+  %i.c = tail call noundef zeroext i1 @_ZN9CryptData12SetCryptKeysEb12CRYPT_METHODP11SecPasswordPKhS4_jPhS5_(ptr noundef nonnull align 8 dereferenceable(2516) %i.b, i1 noundef zeroext %1, i32 noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5, i32 noundef %6, ptr noundef %7, ptr noundef %8)
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 %.22
   %i.e = zext i1 %i.c to i8
-  store i8 %i.e, ptr %i.d, align 1, !tbaa !31
-  br label %16
-
-16:                                               ; preds = %bb.a, %10
+  store i8 %i.e, ptr %i.d, align 1, !tbaa !26
   ret void
 }
 
@@ -272,7 +260,7 @@ bb.a:
 define void @_ZN11ComprDataIO18AdjustTotalArcSizeEP7Archive(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(266) %0, ptr noundef %1) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 20
-  %i.b = load i32, ptr %i.a, align 4, !tbaa !115
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !116
   %.not12 = icmp eq i32 %i.b, 1
   br i1 %.not12, label %bb.c, label %bb.b
 
@@ -283,24 +271,24 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a, %bb.b
   %i.d = phi i64 [ %i.c, %bb.b ], [ 0, %bb.a ]    ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 13840
-  %i.f = load i64, ptr %i.e, align 8, !tbaa !116  ; 3 uses
+  %i.f = load i64, ptr %i.e, align 8, !tbaa !117  ; 3 uses
   %.not = icmp eq i64 %i.f, 0
   br i1 %.not, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 200
-  store i64 %i.f, ptr %i.g, align 8, !tbaa !117
+  store i64 %i.f, ptr %i.g, align 8, !tbaa !118
   br label %bb.i
 
 bb.e:                                             ; preds = %bb.c
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 13856
-  %i.i = load i64, ptr %i.h, align 8, !tbaa !118  ; 3 uses
+  %i.i = load i64, ptr %i.h, align 8, !tbaa !119  ; 3 uses
   %.not11 = icmp eq i64 %i.i, 0
   br i1 %.not11, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 200
-  store i64 %i.i, ptr %i.j, align 8, !tbaa !117
+  store i64 %i.i, ptr %i.j, align 8, !tbaa !118
   br label %bb.i
 
 bb.g:                                             ; preds = %bb.e
@@ -309,13 +297,13 @@ bb.g:                                             ; preds = %bb.e
 
 ._crit_edge:                                      ; preds = %bb.g
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 200
-  %.pre = load i64, ptr %.phi.trans.insert, align 8, !tbaa !117
+  %.pre = load i64, ptr %.phi.trans.insert, align 8, !tbaa !118
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.g
   %i.l = add nsw i64 %i.d, -23                    ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 200
-  store i64 %i.l, ptr %i.m, align 8, !tbaa !117
+  store i64 %i.l, ptr %i.m, align 8, !tbaa !118
   br label %bb.i
 
 bb.i:                                             ; preds = %._crit_edge, %bb.h, %bb.f, %bb.d
@@ -493,8 +481,9 @@ attributes #18 = { noreturn nounwind }
 !112 = !{!9, !10, i64 82}
 !113 = !{!12, !12, i64 0}
 !114 = !{!11, !11, i64 0}
-!115 = !{!60, !61, i64 20}
-!116 = !{!59, !11, i64 13840}
-!117 = !{!9, !11, i64 200}
-!118 = !{!59, !11, i64 13856}
+!115 = !{!18, !18, i64 0}
+!116 = !{!60, !61, i64 20}
+!117 = !{!59, !11, i64 13840}
+!118 = !{!9, !11, i64 200}
+!119 = !{!59, !11, i64 13856}
 end_hunk_0

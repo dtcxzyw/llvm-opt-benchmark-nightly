@@ -204,22 +204,11 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #16
   tail call void @SDL_AssertJoysticksLocked() #16
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 328 ; 5 uses
-  %i.b = load ptr, ptr %i.a, align 8              ; 10 uses
+  %i.b = load ptr, ptr %i.a, align 8              ; 6 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 48
   %i.d = load i8, ptr %i.c, align 8, !range !6, !noundef !7
   %i.e = trunc nuw i8 %i.d to i1
-  br i1 %i.e, label %4, label %bb.b
-
-4:                                                ; preds = %bb.a
-  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 56
-  store i16 80, ptr %5, align 8
-  %6 = getelementptr inbounds nuw i8, ptr %i.b, i64 66
-  store i16 -1, ptr %6, align 2
-  %7 = getelementptr inbounds nuw i8, ptr %i.b, i64 72
-  store i16 %1, ptr %7, align 8
-  %8 = getelementptr inbounds nuw i8, ptr %i.b, i64 74
-  store i16 %2, ptr %8, align 2
-  br label %bb.e
+  br i1 %i.e, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 49
@@ -232,21 +221,25 @@ bb.c:                                             ; preds = %bb.b
   %i.j = lshr i16 %2, 1
   %narrow = add nuw i16 %i.j, %i.i
   %i.k = lshr i16 %narrow, 1
-  %9 = getelementptr inbounds nuw i8, ptr %i.b, i64 56
-  store i16 81, ptr %9, align 8
-  %10 = getelementptr inbounds nuw i8, ptr %i.b, i64 66
-  store i16 -1, ptr %10, align 2
-  %11 = getelementptr inbounds nuw i8, ptr %i.b, i64 72
-  store i16 90, ptr %11, align 8
-  %12 = getelementptr inbounds nuw i8, ptr %i.b, i64 76
-  store i16 %i.k, ptr %12, align 4
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.b
   %i.l = tail call zeroext i1 (ptr, ...) @SDL_SetError_REAL(ptr noundef nonnull @.str.23) #16
   br label %bb.j
 
-bb.e:                                             ; preds = %bb.c, %4
+bb.e:                                             ; preds = %bb.a, %bb.c
+  %.sink29 = phi i16 [ 81, %bb.c ], [ 80, %bb.a ]
+  %.sink26 = phi i16 [ 90, %bb.c ], [ %1, %bb.a ]
+  %.sink25 = phi i64 [ 76, %bb.c ], [ 74, %bb.a ]
+  %.sink = phi i16 [ %i.k, %bb.c ], [ %2, %bb.a ]
+  %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 56
+  store i16 %.sink29, ptr %4, align 8
+  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 66
+  store i16 -1, ptr %5, align 2
+  %6 = getelementptr inbounds nuw i8, ptr %i.b, i64 72
+  store i16 %.sink26, ptr %6, align 8
+  %7 = getelementptr inbounds nuw i8, ptr %i.b, i64 %.sink25
+  store i16 %.sink, ptr %7, align 2
   %i.m = load ptr, ptr %i.a, align 8              ; 2 uses
   %i.n = load i32, ptr %i.m, align 8
   %i.o = getelementptr inbounds nuw i8, ptr %i.m, i64 56

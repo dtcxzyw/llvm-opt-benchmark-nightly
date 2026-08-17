@@ -58,14 +58,7 @@ bb.c:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.e = load i32, ptr %i.d, align 8, !tbaa !16   ; 2 uses
   %i.f = icmp eq i32 %i.e, -1
-  br i1 %i.f, label %._crit_edge.thread, label %bb.d
-
-._crit_edge.thread:                               ; preds = %bb.c
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 12
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  br label %bb.e
+  br i1 %i.f, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -79,7 +72,7 @@ _ZNK4toku3omtIPNS_3wfg4nodeES3_Lb0EE4sizeEv.exit: ; preds = %bb.b, %bb.d
   %.0.i.in = phi ptr [ %i.c, %bb.b ], [ %i.k, %bb.d ]
   %.0.i = load i32, ptr %.0.i.in, align 4, !tbaa !13 ; 2 uses
   %.not = icmp eq i32 %.0.i, 0
-  br i1 %.not, label %._crit_edge, label %.lr.ph
+  br i1 %.not, label %bb.e, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZNK4toku3omtIPNS_3wfg4nodeES3_Lb0EE4sizeEv.exit
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -89,46 +82,30 @@ _ZNK4toku3omtIPNS_3wfg4nodeES3_Lb0EE4sizeEv.exit: ; preds = %bb.b, %bb.d
 
 ._crit_edge.loopexit:                             ; preds = %_ZNK4toku3omtIPNS_3wfg4nodeES3_Lb0EE5fetchEjPS3_.exit.thread
   %.pre = load i8, ptr %0, align 8, !tbaa !9, !range !14
-  br label %._crit_edge
+  br label %bb.e
 
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %_ZNK4toku3omtIPNS_3wfg4nodeES3_Lb0EE4sizeEv.exit
-  %5 = phi i8 [ %.pre, %._crit_edge.loopexit ], [ %i.a, %_ZNK4toku3omtIPNS_3wfg4nodeES3_Lb0EE4sizeEv.exit ]
-  %6 = trunc nuw i8 %5 to i1
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
-  br i1 %6, label %11, label %bb.e
-
-11:                                               ; preds = %._crit_edge
-  store i32 0, ptr %7, align 8, !tbaa !13
-  store i32 0, ptr %8, align 4, !tbaa !13
-  store i32 0, ptr %9, align 4, !tbaa !12
-  %12 = load ptr, ptr %10, align 8, !tbaa !13     ; 2 uses
-  %.not2.i = icmp eq ptr %12, null
-  br i1 %.not2.i, label %_ZN4toku3omtIPNS_3wfg4nodeES3_Lb0EE7destroyEv.exit, label %.sink.split.i
-
-bb.e:                                             ; preds = %._crit_edge.thread, %._crit_edge
-  %13 = phi ptr [ %4, %._crit_edge.thread ], [ %10, %._crit_edge ] ; 3 uses
-  %14 = phi ptr [ %3, %._crit_edge.thread ], [ %9, %._crit_edge ]
-  %15 = phi ptr [ %2, %._crit_edge.thread ], [ %8, %._crit_edge ]
-  %16 = phi ptr [ %1, %._crit_edge.thread ], [ %7, %._crit_edge ]
-  store i32 -1, ptr %16, align 4, !tbaa !16
-  store i32 0, ptr %15, align 4, !tbaa !13
-  store i32 0, ptr %14, align 4, !tbaa !12
-  %i.o = load ptr, ptr %13, align 8, !tbaa !13    ; 2 uses
+bb.e:                                             ; preds = %bb.c, %._crit_edge.loopexit, %_ZNK4toku3omtIPNS_3wfg4nodeES3_Lb0EE4sizeEv.exit
+  %1 = phi i8 [ %.pre, %._crit_edge.loopexit ], [ %i.a, %_ZNK4toku3omtIPNS_3wfg4nodeES3_Lb0EE4sizeEv.exit ], [ 0, %bb.c ]
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %3 = xor i8 %1, 1
+  %4 = zext nneg i8 %3 to i32
+  %..i.i = sub nsw i32 0, %4
+  store i32 %..i.i, ptr %2, align 8, !tbaa !13
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 12
+  store i32 0, ptr %5, align 4, !tbaa !13
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 4
+  store i32 0, ptr %6, align 4, !tbaa !12
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %i.o = load ptr, ptr %7, align 8, !tbaa !13     ; 2 uses
   %.not.i.a = icmp eq ptr %i.o, null
   br i1 %.not.i.a, label %_ZN4toku3omtIPNS_3wfg4nodeES3_Lb0EE7destroyEv.exit, label %.sink.split.i
 
-.sink.split.i:                                    ; preds = %bb.e, %11
-  %17 = phi ptr [ %10, %11 ], [ %13, %bb.e ]
-  %.sink.i = phi ptr [ %12, %11 ], [ %i.o, %bb.e ]
-  tail call void @_Z9toku_freePv(ptr noundef nonnull %.sink.i)
+.sink.split.i:                                    ; preds = %bb.e
+  tail call void @_Z9toku_freePv(ptr noundef nonnull %i.o)
   br label %_ZN4toku3omtIPNS_3wfg4nodeES3_Lb0EE7destroyEv.exit
 
-_ZN4toku3omtIPNS_3wfg4nodeES3_Lb0EE7destroyEv.exit: ; preds = %11, %bb.e, %.sink.split.i
-  %18 = phi ptr [ %10, %11 ], [ %13, %bb.e ], [ %17, %.sink.split.i ]
-  store ptr null, ptr %18, align 8, !tbaa !13
+_ZN4toku3omtIPNS_3wfg4nodeES3_Lb0EE7destroyEv.exit: ; preds = %bb.e, %.sink.split.i
+  store ptr null, ptr %7, align 8, !tbaa !13
   ret void
 
 bb.f:                                             ; preds = %.lr.ph, %_ZNK4toku3omtIPNS_3wfg4nodeES3_Lb0EE5fetchEjPS3_.exit.thread

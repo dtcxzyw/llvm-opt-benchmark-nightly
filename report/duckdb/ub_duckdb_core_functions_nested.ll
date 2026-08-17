@@ -204,16 +204,17 @@ bb.s:                                             ; preds = %bb.r
 bb.t:                                             ; preds = %bb.s
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %.sroa.0.i.sroa.4.i.i.i, ptr nonnull align 4 %i.j, i64 %i.en, i1 false)
   %.sroa.0.i.sroa.4.i.i.i.4..sroa.0.i.sroa.4.i.i.i.4..sroa.0.i.sroa.4.i.i.i.4..sroa.0.i.sroa.4.i.i.4..sroa.0.i.sroa.4.i.i.4..sroa.0.i.sroa.4.i.4..sroa.0.i.sroa.4.i.4..sroa.0.i.sroa.4.4..sroa.0.i.sroa.4.8..sroa.0.i.8..sroa.0.8..sroa.0.8..sroa.0.8..fca.1.load.pre.i.i.i.i = load ptr, ptr %.sroa.0.i.sroa.4.i.i.i.4.i.i.i.4.i.i.i.4.i.i.4.i.i.4.i.4.i.4.i.8..fca.1.gep.sroa_idx, align 4
-  %.sroa.0.i.sroa.4.i.i.i.0..sroa.0.i.sroa.4.i.i.i.0..sroa.0.i.sroa.4.i.i.i.0..sroa.0.i.sroa.4.i.i.0..sroa.0.i.sroa.4.i.i.0..sroa.0.i.sroa.4.i.0..sroa.0.i.sroa.4.i.0..sroa.0.i.sroa.4.0..sroa.0.i.sroa.4.4..sroa.0.i.0..sroa.0.0..sroa.0.0..sroa.0.0..fca.0.load.i12.pre.i.i.i = load i32, ptr %.sroa.0.i.sroa.4.i.i.i, align 4
+  br label %bb.u
+
+bb.u:                                             ; preds = %bb.t, %bb.r
+  %.sink.i.i = phi ptr [ %.sroa.0.i.sroa.4.i.i.i, %bb.t ], [ %i.eo, %bb.r ]
+  %.sroa.0.8..sroa.0.8..sroa.0.8..fca.1.load.i.i.ph.i.i = phi ptr [ %.sroa.0.i.sroa.4.i.i.i.4..sroa.0.i.sroa.4.i.i.i.4..sroa.0.i.sroa.4.i.i.i.4..sroa.0.i.sroa.4.i.i.4..sroa.0.i.sroa.4.i.i.4..sroa.0.i.sroa.4.i.4..sroa.0.i.sroa.4.i.4..sroa.0.i.sroa.4.4..sroa.0.i.sroa.4.8..sroa.0.i.8..sroa.0.8..sroa.0.8..sroa.0.8..fca.1.load.pre.i.i.i.i, %bb.t ], [ %i.eo, %bb.r ]
+  %i.es = load i32, ptr %.sink.i.i, align 1
   br label %_ZN6duckdb15OwningStringMapImSt3mapINS_8string_tEmSt4lessIS2_ESaISt4pairIKS2_mEEEE10CopyStringES2_.exit.i.i.i
 
-bb.u:                                             ; preds = %bb.r
-  %i.es = load i32, ptr %i.eo, align 1
-  br label %_ZN6duckdb15OwningStringMapImSt3mapINS_8string_tEmSt4lessIS2_ESaISt4pairIKS2_mEEEE10CopyStringES2_.exit.i.i.i
-
-_ZN6duckdb15OwningStringMapImSt3mapINS_8string_tEmSt4lessIS2_ESaISt4pairIKS2_mEEEE10CopyStringES2_.exit.i.i.i: ; preds = %bb.u, %bb.t, %bb.s
-  %.0.copyload.i11.i.i.i.i.i.i.i.i = phi i32 [ 0, %bb.s ], [ %.sroa.0.i.sroa.4.i.i.i.0..sroa.0.i.sroa.4.i.i.i.0..sroa.0.i.sroa.4.i.i.i.0..sroa.0.i.sroa.4.i.i.0..sroa.0.i.sroa.4.i.i.0..sroa.0.i.sroa.4.i.0..sroa.0.i.sroa.4.i.0..sroa.0.i.sroa.4.0..sroa.0.i.sroa.4.4..sroa.0.i.0..sroa.0.0..sroa.0.0..sroa.0.0..fca.0.load.i12.pre.i.i.i, %bb.t ], [ %i.es, %bb.u ] ; 7 uses
-  %7 = phi ptr [ null, %bb.s ], [ %.sroa.0.i.sroa.4.i.i.i.4..sroa.0.i.sroa.4.i.i.i.4..sroa.0.i.sroa.4.i.i.i.4..sroa.0.i.sroa.4.i.i.4..sroa.0.i.sroa.4.i.i.4..sroa.0.i.sroa.4.i.4..sroa.0.i.sroa.4.i.4..sroa.0.i.sroa.4.4..sroa.0.i.sroa.4.8..sroa.0.i.8..sroa.0.8..sroa.0.8..sroa.0.8..fca.1.load.pre.i.i.i.i, %bb.t ], [ %i.eo, %bb.u ] ; 4 uses
+_ZN6duckdb15OwningStringMapImSt3mapINS_8string_tEmSt4lessIS2_ESaISt4pairIKS2_mEEEE10CopyStringES2_.exit.i.i.i: ; preds = %bb.u, %bb.s
+  %.0.copyload.i11.i.i.i.i.i.i.i.i = phi i32 [ 0, %bb.s ], [ %i.es, %bb.u ] ; 7 uses
+  %7 = phi ptr [ null, %bb.s ], [ %.sroa.0.8..sroa.0.8..sroa.0.8..fca.1.load.i.i.ph.i.i, %bb.u ] ; 4 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.sroa.4.i.i.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
   %i.et = tail call noalias noundef nonnull dereferenceable(56) ptr @_Znwm(i64 noundef 56) #26 ; 7 uses
@@ -616,16 +617,17 @@ bb.f:                                             ; preds = %bb.e
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %.sroa.0.i.sroa.4.i, ptr nonnull align 4 %i.n, i64 %i.k, i1 false)
   %.sroa.0.i.sroa.4.i.4.i.4.i.4.i.8..fca.1.gep.sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0.i.sroa.4.i, i64 4
   %.sroa.0.i.sroa.4.i.4..sroa.0.i.sroa.4.i.4..sroa.0.i.sroa.4.i.4..sroa.0.i.sroa.4.4..sroa.0.i.sroa.4.8..sroa.0.i.8..sroa.0.8..sroa.0.8..sroa.0.8..fca.1.load.pre.i.i = load ptr, ptr %.sroa.0.i.sroa.4.i.4.i.4.i.4.i.8..fca.1.gep.sroa_idx, align 4
-  %.sroa.0.i.sroa.4.i.0..sroa.0.i.sroa.4.i.0..sroa.0.i.sroa.4.i.0..sroa.0.i.sroa.4.0..sroa.0.i.sroa.4.4..sroa.0.i.0..sroa.0.0..sroa.0.0..sroa.0.0..fca.0.load.i12.pre.i = load i32, ptr %.sroa.0.i.sroa.4.i, align 4
+  br label %bb.g
+
+bb.g:                                             ; preds = %bb.d, %bb.f
+  %.sink = phi ptr [ %.sroa.0.i.sroa.4.i, %bb.f ], [ %i.l, %bb.d ]
+  %.sroa.0.8..sroa.0.8..sroa.0.8..fca.1.load.i.i.ph = phi ptr [ %.sroa.0.i.sroa.4.i.4..sroa.0.i.sroa.4.i.4..sroa.0.i.sroa.4.i.4..sroa.0.i.sroa.4.4..sroa.0.i.sroa.4.8..sroa.0.i.8..sroa.0.8..sroa.0.8..sroa.0.8..fca.1.load.pre.i.i, %bb.f ], [ %i.l, %bb.d ]
+  %i.q = load i32, ptr %.sink, align 1
   br label %_ZN6duckdb15OwningStringMapImSt3mapINS_8string_tEmSt4lessIS2_ESaISt4pairIKS2_mEEEE10CopyStringES2_.exit.i
 
-bb.g:                                             ; preds = %bb.d
-  %i.q = load i32, ptr %i.l, align 1
-  br label %_ZN6duckdb15OwningStringMapImSt3mapINS_8string_tEmSt4lessIS2_ESaISt4pairIKS2_mEEEE10CopyStringES2_.exit.i
-
-_ZN6duckdb15OwningStringMapImSt3mapINS_8string_tEmSt4lessIS2_ESaISt4pairIKS2_mEEEE10CopyStringES2_.exit.i: ; preds = %bb.g, %bb.f, %bb.e
-  %.sroa.0.i.sroa.4.0..sroa.0.i.sroa.4.4..sroa.0.i.0..sroa.0.0..sroa.0.0..sroa.0.0..fca.0.load.i12.i = phi i32 [ 0, %bb.e ], [ %.sroa.0.i.sroa.4.i.0..sroa.0.i.sroa.4.i.0..sroa.0.i.sroa.4.i.0..sroa.0.i.sroa.4.0..sroa.0.i.sroa.4.4..sroa.0.i.0..sroa.0.0..sroa.0.0..sroa.0.0..fca.0.load.i12.pre.i, %bb.f ], [ %i.q, %bb.g ]
-  %.sroa.0.8..sroa.0.8..sroa.0.8..fca.1.load.i.i = phi ptr [ null, %bb.e ], [ %.sroa.0.i.sroa.4.i.4..sroa.0.i.sroa.4.i.4..sroa.0.i.sroa.4.i.4..sroa.0.i.sroa.4.4..sroa.0.i.sroa.4.8..sroa.0.i.8..sroa.0.8..sroa.0.8..sroa.0.8..fca.1.load.pre.i.i, %bb.f ], [ %i.l, %bb.g ]
+_ZN6duckdb15OwningStringMapImSt3mapINS_8string_tEmSt4lessIS2_ESaISt4pairIKS2_mEEEE10CopyStringES2_.exit.i: ; preds = %bb.g, %bb.e
+  %.sroa.0.i.sroa.4.0..sroa.0.i.sroa.4.4..sroa.0.i.0..sroa.0.0..sroa.0.0..sroa.0.0..fca.0.load.i12.i = phi i32 [ 0, %bb.e ], [ %i.q, %bb.g ]
+  %.sroa.0.8..sroa.0.8..sroa.0.8..fca.1.load.i.i = phi ptr [ null, %bb.e ], [ %.sroa.0.8..sroa.0.8..sroa.0.8..fca.1.load.i.i.ph, %bb.g ]
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.sroa.4.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
   store i32 %i.i, ptr %4, align 8
@@ -1028,16 +1030,17 @@ bb.f:                                             ; preds = %bb.e
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %.sroa.0.i.sroa.4.i, ptr nonnull align 4 %i.m, i64 %i.j, i1 false)
   %.sroa.0.i.sroa.4.i.4.i.4.i.4.i.8..fca.1.gep.sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0.i.sroa.4.i, i64 4
   %.sroa.0.i.sroa.4.i.4..sroa.0.i.sroa.4.i.4..sroa.0.i.sroa.4.i.4..sroa.0.i.sroa.4.4..sroa.0.i.sroa.4.8..sroa.0.i.8..sroa.0.8..sroa.0.8..sroa.0.8..fca.1.load.pre.i.i = load ptr, ptr %.sroa.0.i.sroa.4.i.4.i.4.i.4.i.8..fca.1.gep.sroa_idx, align 4
-  %.sroa.0.i.sroa.4.i.0..sroa.0.i.sroa.4.i.0..sroa.0.i.sroa.4.i.0..sroa.0.i.sroa.4.0..sroa.0.i.sroa.4.4..sroa.0.i.0..sroa.0.0..sroa.0.0..sroa.0.0..fca.0.load.i12.pre.i = load i32, ptr %.sroa.0.i.sroa.4.i, align 4
+  br label %bb.g
+
+bb.g:                                             ; preds = %bb.d, %bb.f
+  %.sink = phi ptr [ %.sroa.0.i.sroa.4.i, %bb.f ], [ %i.k, %bb.d ]
+  %.sroa.0.8..sroa.0.8..sroa.0.8..fca.1.load.i.i.ph = phi ptr [ %.sroa.0.i.sroa.4.i.4..sroa.0.i.sroa.4.i.4..sroa.0.i.sroa.4.i.4..sroa.0.i.sroa.4.4..sroa.0.i.sroa.4.8..sroa.0.i.8..sroa.0.8..sroa.0.8..sroa.0.8..fca.1.load.pre.i.i, %bb.f ], [ %i.k, %bb.d ]
+  %i.p = load i32, ptr %.sink, align 1
   br label %_ZN6duckdb15OwningStringMapImSt13unordered_mapINS_8string_tEmNS_10StringHashENS_14StringEqualityESaISt4pairIKS2_mEEEE10CopyStringES2_.exit.i
 
-bb.g:                                             ; preds = %bb.d
-  %i.p = load i32, ptr %i.k, align 1
-  br label %_ZN6duckdb15OwningStringMapImSt13unordered_mapINS_8string_tEmNS_10StringHashENS_14StringEqualityESaISt4pairIKS2_mEEEE10CopyStringES2_.exit.i
-
-_ZN6duckdb15OwningStringMapImSt13unordered_mapINS_8string_tEmNS_10StringHashENS_14StringEqualityESaISt4pairIKS2_mEEEE10CopyStringES2_.exit.i: ; preds = %bb.g, %bb.f, %bb.e
-  %.sroa.0.i.sroa.4.0..sroa.0.i.sroa.4.4..sroa.0.i.0..sroa.0.0..sroa.0.0..sroa.0.0..fca.0.load.i12.i = phi i32 [ 0, %bb.e ], [ %.sroa.0.i.sroa.4.i.0..sroa.0.i.sroa.4.i.0..sroa.0.i.sroa.4.i.0..sroa.0.i.sroa.4.0..sroa.0.i.sroa.4.4..sroa.0.i.0..sroa.0.0..sroa.0.0..sroa.0.0..fca.0.load.i12.pre.i, %bb.f ], [ %i.p, %bb.g ]
-  %.sroa.0.8..sroa.0.8..sroa.0.8..fca.1.load.i.i = phi ptr [ null, %bb.e ], [ %.sroa.0.i.sroa.4.i.4..sroa.0.i.sroa.4.i.4..sroa.0.i.sroa.4.i.4..sroa.0.i.sroa.4.4..sroa.0.i.sroa.4.8..sroa.0.i.8..sroa.0.8..sroa.0.8..sroa.0.8..fca.1.load.pre.i.i, %bb.f ], [ %i.k, %bb.g ]
+_ZN6duckdb15OwningStringMapImSt13unordered_mapINS_8string_tEmNS_10StringHashENS_14StringEqualityESaISt4pairIKS2_mEEEE10CopyStringES2_.exit.i: ; preds = %bb.g, %bb.e
+  %.sroa.0.i.sroa.4.0..sroa.0.i.sroa.4.4..sroa.0.i.0..sroa.0.0..sroa.0.0..sroa.0.0..fca.0.load.i12.i = phi i32 [ 0, %bb.e ], [ %i.p, %bb.g ]
+  %.sroa.0.8..sroa.0.8..sroa.0.8..fca.1.load.i.i = phi ptr [ null, %bb.e ], [ %.sroa.0.8..sroa.0.8..sroa.0.8..fca.1.load.i.i.ph, %bb.g ]
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.sroa.4.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
   store i32 %i.h, ptr %4, align 8

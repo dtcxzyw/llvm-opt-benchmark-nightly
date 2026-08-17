@@ -204,11 +204,9 @@ bb.k:                                             ; preds = %bb.j
 __get_moffset.exit:                               ; preds = %bb.f, %bb.h, %bb.k
   %.sink63.i = phi i64 [ 69, %bb.k ], [ 61, %bb.h ], [ 61, %bb.f ]
   %.sink.i = phi i8 [ 4, %bb.k ], [ 4, %bb.h ], [ 2, %bb.f ]
-  %1 = getelementptr i8, ptr %0, i64 %.sink63.i
-  store i8 %.sink.i, ptr %1, align 1
-  %i.ac = getelementptr i8, ptr %0, i64 68
-  store i8 1, ptr %i.ac, align 4
-  br label %bb.ac
+  %i.ac = getelementptr i8, ptr %0, i64 %.sink63.i
+  store i8 %.sink.i, ptr %i.ac, align 1
+  br label %.sink.split122
 
 bb.l:                                             ; preds = %bb.c
   %i.ad = and i32 %i.f, 28672
@@ -345,11 +343,15 @@ bb.ab:                                            ; preds = %bb.aa
   store ptr %i.bn, ptr %i.bl, align 8
   %i.br = sext i8 %.0.copyload to i32
   store i32 %i.br, ptr %i.bq, align 8
-  %2 = getelementptr i8, ptr %0, i64 69
-  store i8 1, ptr %2, align 1
+  br label %.sink.split122
+
+.sink.split122:                                   ; preds = %bb.ab, %__get_moffset.exit
+  %.sink124 = phi i64 [ 68, %__get_moffset.exit ], [ 69, %bb.ab ]
+  %1 = getelementptr i8, ptr %0, i64 %.sink124
+  store i8 1, ptr %1, align 1
   br label %bb.ac
 
-bb.ac:                                            ; preds = %__get_moffset.exit, %bb.z, %bb.ab, %bb.l
+bb.ac:                                            ; preds = %.sink.split122, %bb.z, %bb.l
   store i8 1, ptr %i.b, align 4
   br label %__get_moffset.exit.thread
 

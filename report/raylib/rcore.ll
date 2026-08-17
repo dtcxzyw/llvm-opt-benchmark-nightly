@@ -204,6 +204,7 @@ bb.a:
   ]
 
 bb.b:                                             ; preds = %bb.a
+  %.sink89.sroa.gep95 = getelementptr inbounds nuw i8, ptr %6, i64 56
   %i.cm = getelementptr inbounds nuw i8, ptr %2, i64 36
   %i.cn = load float, ptr %i.cm, align 4
   %i.co = fmul float %i.cn, f0x3C8EFA35
@@ -261,13 +262,12 @@ bb.b:                                             ; preds = %bb.a
   %i.ef = shufflevector <2 x float> %i.ee, <2 x float> poison, <2 x i32> zeroinitializer
   %i.eg = fdiv <2 x float> %i.ed, %i.ef
   store <2 x float> %i.eg, ptr %i.ci, align 8
-  %.sroa.1085.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 48
-  store i64 0, ptr %.sroa.1085.0..sroa_idx, align 8
-  %.sroa.1086.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 56
-  store float -1.000000e+00, ptr %.sroa.1086.0..sroa_idx, align 8
+  %.sroa.1086.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 48
+  store i64 0, ptr %.sroa.1086.0..sroa_idx, align 8
   br label %.sink.split
 
 bb.c:                                             ; preds = %bb.a
+  %.sink89.sroa.gep = getelementptr inbounds nuw i8, ptr %6, i64 52
   %i.eh = sitofp i32 %3 to double
   %i.ei = sitofp i32 %4 to double
   %i.ej = fdiv double %i.eh, %i.ei
@@ -314,12 +314,13 @@ bb.c:                                             ; preds = %bb.a
   %i.fo = shufflevector <2 x float> %i.fn, <2 x float> poison, <2 x i32> zeroinitializer
   %i.fp = fdiv <2 x float> %i.fm, %i.fo
   store <2 x float> %i.fp, ptr %i.ci, align 8
-  %.sroa.16.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 52
-  store float 0.000000e+00, ptr %.sroa.16.0..sroa_idx, align 4
   br label %.sink.split
 
 .sink.split:                                      ; preds = %bb.b, %bb.c
+  %.sink89.sroa.phi = phi ptr [ %.sink89.sroa.gep, %bb.c ], [ %.sink89.sroa.gep95, %bb.b ]
+  %.sink88 = phi float [ 0.000000e+00, %bb.c ], [ -1.000000e+00, %bb.b ]
   %.sink = phi float [ 1.000000e+00, %bb.c ], [ 0.000000e+00, %bb.b ]
+  store float %.sink88, ptr %.sink89.sroa.phi, align 4
   store float %.sink, ptr %i.cj, align 4
   br label %bb.d
 

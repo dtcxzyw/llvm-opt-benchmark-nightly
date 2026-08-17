@@ -203,32 +203,26 @@ bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %.sroa.9 = alloca [16 x i8], align 8            ; 9 uses
   %i.b = alloca [32 x i8], align 8                ; 6 uses
-  %i.c = load ptr, ptr %1, align 8, !nonnull !4, !align !237, !noundef !4 ; 8 uses
+  %i.c = load ptr, ptr %1, align 8, !nonnull !4, !align !237, !noundef !4 ; 6 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   %i.e = load i64, ptr %i.d, align 8, !range !3843, !noundef !4 ; 2 uses
-  switch i64 %i.e, label %bb.c [
+  switch i64 %i.e, label %bb.b [
     i64 -9223372036854775802, label %bb.d
-    i64 -9223372036854775801, label %3
-    i64 -9223372036854775800, label %bb.b
+    i64 -9223372036854775801, label %bb.c
+    i64 -9223372036854775800, label %bb.c
   ]
 
-3:                                                ; preds = %bb.a
-  %4 = getelementptr inbounds nuw i8, ptr %i.c, i64 40
-  %5 = load i32, ptr %4, align 8, !noundef !4
-  br label %bb.d
-
 bb.b:                                             ; preds = %bb.a
-  %6 = getelementptr inbounds nuw i8, ptr %i.c, i64 40
-  %7 = load i32, ptr %6, align 8, !noundef !4
-  br label %bb.d
+  br label %bb.c
 
-bb.c:                                             ; preds = %bb.a
-  %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 60
+bb.c:                                             ; preds = %bb.a, %bb.a, %bb.b
+  %.sink106 = phi i64 [ 60, %bb.b ], [ 40, %bb.a ], [ 40, %bb.a ]
+  %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 %.sink106
   %i.g = load i32, ptr %i.f, align 4, !noundef !4
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.a, %bb.c, %bb.b, %3
-  %.sroa.0.0 = phi i32 [ %i.g, %bb.c ], [ %5, %3 ], [ %7, %bb.b ], [ 1, %bb.a ] ; 3 uses
+bb.d:                                             ; preds = %bb.c, %bb.a
+  %.sroa.0.0 = phi i32 [ 1, %bb.a ], [ %i.g, %bb.c ] ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.i = load i8, ptr %i.h, align 8, !range !3844, !noundef !4 ; 5 uses
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 17 ; 3 uses

@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %get_urice.exit131, 
   %i.ci = phi i32 [ %i.ce, %get_urice.exit131 ], [ %i.bd, %get_urice.exit ] ; 9 uses
   %.1102 = phi i32 [ %i.cg, %get_urice.exit131 ], [ %.0101176246, %get_urice.exit ] ; 5 uses
   switch i32 %i.be, label %do_stereo.exit.thread [
-    i32 8, label %3
+    i32 8, label %do_stereo.exit.thread.sink.split
     i32 7, label %bb.g
     i32 6, label %bb.h
     i32 5, label %bb.j
@@ -247,11 +247,6 @@ bb.f:                                             ; preds = %get_urice.exit131, 
   %i.cv = shl nuw nsw i64 %i.cu, 2
   tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep196, i8 0, i64 %i.cv, i1 false), !tbaa !41
   br label %.loopexit
-
-3:                                                ; preds = %bb.f
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 48
-  store i32 1, ptr %4, align 8, !tbaa !48
-  br label %do_stereo.exit.thread
 
 bb.g:                                             ; preds = %bb.f
   %i.cw = lshr i32 %i.ci, 3
@@ -655,15 +650,21 @@ do_stereo.exit:                                   ; preds = %.preheader60.i.preh
   %i.ky = getelementptr [4 x i8], ptr %i.a, i64 %i.kn
   %i.kz = getelementptr i8, ptr %i.ky, i64 12
   %i.la = load i32, ptr %i.kz, align 4, !tbaa !41
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 1212
-  store i32 %i.la, ptr %5, align 4, !tbaa !41
+  br label %do_stereo.exit.thread.sink.split
+
+do_stereo.exit.thread.sink.split:                 ; preds = %bb.f, %.preheader
+  %.sink236 = phi i64 [ 1212, %.preheader ], [ 48, %bb.f ]
+  %.sink234 = phi i32 [ %i.la, %.preheader ], [ 1, %bb.f ]
+  %.2.ph = phi i32 [ 0, %.preheader ], [ -541478725, %bb.f ]
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 %.sink236
+  store i32 %.sink234, ptr %3, align 4, !tbaa !41
   br label %do_stereo.exit.thread
 
 get_urice.exit141.do_stereo.exit.thread.loopexit_crit_edge: ; preds = %get_urice.exit141
   br label %do_stereo.exit.thread, !llvm.loop !95
 
-do_stereo.exit.thread:                            ; preds = %bb.f, %do_stereo.exit, %get_urice.exit131, %bb.a, %get_urice.exit141.do_stereo.exit.thread.loopexit_crit_edge, %.preheader, %3, %.loopexit225
-  %.2 = phi i32 [ 0, %.loopexit225 ], [ 0, %.preheader ], [ -541478725, %3 ], [ -1094995529, %bb.a ], [ -1094995529, %get_urice.exit141.do_stereo.exit.thread.loopexit_crit_edge ], [ -1094995529, %get_urice.exit131 ], [ -1094995529, %do_stereo.exit ], [ -1094995529, %bb.f ]
+do_stereo.exit.thread:                            ; preds = %bb.f, %do_stereo.exit, %get_urice.exit131, %bb.a, %get_urice.exit141.do_stereo.exit.thread.loopexit_crit_edge, %do_stereo.exit.thread.sink.split, %.loopexit225
+  %.2 = phi i32 [ 0, %.loopexit225 ], [ %.2.ph, %do_stereo.exit.thread.sink.split ], [ -1094995529, %bb.a ], [ -1094995529, %get_urice.exit141.do_stereo.exit.thread.loopexit_crit_edge ], [ -1094995529, %get_urice.exit131 ], [ -1094995529, %do_stereo.exit ], [ -1094995529, %bb.f ]
   ret i32 %.2
 }
 

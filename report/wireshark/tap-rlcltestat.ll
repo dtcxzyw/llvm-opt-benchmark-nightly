@@ -203,7 +203,7 @@ bb.p:                                             ; preds = %bb.g
   br label %.thread88
 
 .thread88:                                        ; preds = %bb.i, %bb.o, %bb.p
-  %.191 = phi ptr [ %i.aa, %bb.p ], [ %i.aj, %bb.o ], [ %.068100, %bb.i ] ; 15 uses
+  %.191 = phi ptr [ %i.aa, %bb.p ], [ %i.aj, %bb.o ], [ %.068100, %bb.i ] ; 14 uses
   %i.bd = getelementptr i8, ptr %3, i64 4
   %i.be = load i16, ptr %i.bd, align 4
   %i.bf = getelementptr i8, ptr %.191, i64 10
@@ -231,13 +231,6 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef align 8 dereferenceable(16) %i.bo, ptr noundef align 8 dereferenceable(16) %i.bp, i64 16, i1 false)
   %i.bq = add i32 %i.bk, 1
   store i32 %i.bq, ptr %i.bj, align 8
-  %5 = getelementptr i8, ptr %3, i64 10
-  %6 = load i16, ptr %5, align 2
-  %7 = zext i16 %6 to i32
-  %8 = getelementptr i8, ptr %.191, i64 20        ; 2 uses
-  %9 = load i32, ptr %8, align 4
-  %10 = add i32 %9, %7
-  store i32 %10, ptr %8, align 4
   br label %bb.w
 
 bb.t:                                             ; preds = %.thread88
@@ -258,16 +251,17 @@ bb.v:                                             ; preds = %bb.u, %bb.t
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef align 8 dereferenceable(16) %i.bw, ptr noundef align 8 dereferenceable(16) %i.bx, i64 16, i1 false)
   %i.by = add i32 %i.bs, 1
   store i32 %i.by, ptr %i.br, align 4
-  %11 = getelementptr i8, ptr %3, i64 10
-  %12 = load i16, ptr %11, align 2
-  %13 = zext i16 %12 to i32
-  %14 = getelementptr i8, ptr %.191, i64 72       ; 2 uses
-  %15 = load i32, ptr %14, align 8
-  %16 = add i32 %15, %13
-  store i32 %16, ptr %14, align 8
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.v, %bb.s
+  %.sink112 = phi i64 [ 72, %bb.v ], [ 20, %bb.s ]
+  %5 = getelementptr i8, ptr %3, i64 10
+  %6 = load i16, ptr %5, align 2
+  %7 = zext i16 %6 to i32
+  %8 = getelementptr i8, ptr %.191, i64 %.sink112 ; 2 uses
+  %9 = load i32, ptr %8, align 4
+  %10 = add i32 %9, %7
+  store i32 %10, ptr %8, align 4
   %i.bz = load i8, ptr %i.bg, align 2
   %i.ca = icmp eq i8 %i.bz, 0
   %i.cb = getelementptr i8, ptr %3, i64 41

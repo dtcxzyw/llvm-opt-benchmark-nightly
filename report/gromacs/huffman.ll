@@ -184,7 +184,7 @@ middle.block673:                                  ; preds = %vector.body662
 
 ._crit_edge:                                      ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %middle.block673
   tail call void @Ptngc_merge_sort(ptr noundef nonnull %i.v, i64 noundef %i.a, i64 noundef 32, ptr noundef nonnull @comp_htree, ptr noundef null) #10
-  br i1 %i.e, label %.loopexit.thread, label %.lr.ph389
+  br i1 %i.e, label %.loopexit.thread, label %bb.c
 
 .loopexit.thread510:                              ; preds = %bb.b
   tail call void @Ptngc_merge_sort(ptr noundef %i.v, i64 noundef %i.a, i64 noundef 32, ptr noundef nonnull @comp_htree, ptr noundef null) #10
@@ -198,55 +198,31 @@ middle.block673:                                  ; preds = %vector.body662
   store i32 1, ptr %i.bg, align 4, !tbaa !24
   br label %.lr.ph392.preheader
 
-.lr.ph389:                                        ; preds = %._crit_edge, %bb.g
+bb.c:                                             ; preds = %._crit_edge, %bb.g
   %indvars.iv460 = phi i64 [ %indvars.iv.next461, %bb.g ], [ %i.g, %._crit_edge ] ; 5 uses
-  %11 = tail call ptr @Ptngc_warnmalloc_x(i64 noundef 32, ptr noundef nonnull @.str, i32 noundef 320) #10 ; 7 uses
-  %12 = tail call ptr @Ptngc_warnmalloc_x(i64 noundef 32, ptr noundef nonnull @.str, i32 noundef 321) #10 ; 7 uses
+  %11 = tail call ptr @Ptngc_warnmalloc_x(i64 noundef 32, ptr noundef nonnull @.str, i32 noundef 320) #10 ; 5 uses
+  %12 = tail call ptr @Ptngc_warnmalloc_x(i64 noundef 32, ptr noundef nonnull @.str, i32 noundef 321) #10 ; 5 uses
   %13 = getelementptr [32 x i8], ptr %i.v, i64 %indvars.iv460 ; 2 uses
   %14 = getelementptr i8, ptr %13, i64 -32
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %11, ptr noundef nonnull align 8 dereferenceable(32) %14, i64 32, i1 false), !tbaa.struct !25
   %15 = getelementptr i8, ptr %13, i64 -64
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %12, ptr noundef nonnull align 8 dereferenceable(32) %15, i64 32, i1 false), !tbaa.struct !25
   %16 = load i32, ptr %11, align 8, !tbaa !8
-  %17 = icmp eq i32 %16, 0
-  br i1 %17, label %18, label %22
-
-18:                                               ; preds = %.lr.ph389
-  %19 = getelementptr inbounds nuw i8, ptr %11, i64 8
-  %20 = load i32, ptr %19, align 8, !tbaa !8
-  %21 = getelementptr inbounds nuw i8, ptr %11, i64 12
-  store i32 0, ptr %21, align 4, !tbaa !8
-  br label %26
-
-22:                                               ; preds = %.lr.ph389
-  %23 = getelementptr inbounds nuw i8, ptr %11, i64 28
+  %17 = icmp eq i32 %16, 0                        ; 2 uses
+  %. = select i1 %17, i64 8, i64 28
+  %.557 = select i1 %17, i64 12, i64 24
+  %18 = getelementptr inbounds nuw i8, ptr %11, i64 %.
+  %19 = load i32, ptr %18, align 4, !tbaa !8
+  %20 = getelementptr inbounds nuw i8, ptr %11, i64 %.557
+  store i32 0, ptr %20, align 4, !tbaa !8
+  %21 = load i32, ptr %12, align 8, !tbaa !8
+  %22 = icmp eq i32 %21, 0                        ; 2 uses
+  %.sink554 = select i1 %22, i64 8, i64 28
+  %.sink553 = select i1 %22, i64 12, i64 24
+  %23 = getelementptr inbounds nuw i8, ptr %12, i64 %.sink554
   %24 = load i32, ptr %23, align 4, !tbaa !8
-  %25 = getelementptr inbounds nuw i8, ptr %11, i64 24
-  store i32 0, ptr %25, align 8, !tbaa !8
-  br label %26
-
-26:                                               ; preds = %22, %18
-  %.0187 = phi i32 [ %20, %18 ], [ %24, %22 ]
-  %27 = load i32, ptr %12, align 8, !tbaa !8
-  %28 = icmp eq i32 %27, 0
-  br i1 %28, label %29, label %33
-
-29:                                               ; preds = %26
-  %30 = getelementptr inbounds nuw i8, ptr %12, i64 8
-  %31 = load i32, ptr %30, align 8, !tbaa !8
-  %32 = getelementptr inbounds nuw i8, ptr %12, i64 12
-  store i32 1, ptr %32, align 4, !tbaa !8
-  br label %bb.c
-
-33:                                               ; preds = %26
-  %34 = getelementptr inbounds nuw i8, ptr %12, i64 28
-  %35 = load i32, ptr %34, align 4, !tbaa !8
-  %36 = getelementptr inbounds nuw i8, ptr %12, i64 24
-  store i32 1, ptr %36, align 8, !tbaa !8
-  br label %bb.c
-
-bb.c:                                             ; preds = %33, %29
-  %.0186 = phi i32 [ %31, %29 ], [ %35, %33 ]
+  %25 = getelementptr inbounds nuw i8, ptr %12, i64 %.sink553
+  store i32 1, ptr %25, align 4, !tbaa !8
   %indvars.iv.next461 = add nsw i64 %indvars.iv460, -1 ; 3 uses
   %i.bh = add nsw i64 %indvars.iv460, -2          ; 2 uses
   %i.bi = getelementptr inbounds nuw [32 x i8], ptr %i.v, i64 %i.bh ; 5 uses
@@ -255,7 +231,7 @@ bb.c:                                             ; preds = %33, %29
   store ptr %11, ptr %i.bj, align 8, !tbaa !8
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bi, i64 16
   store ptr %12, ptr %i.bk, align 8, !tbaa !8
-  %i.bl = add nsw i32 %.0186, %.0187              ; 2 uses
+  %i.bl = add nsw i32 %24, %19                    ; 2 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bi, i64 28
   store i32 %i.bl, ptr %i.bm, align 4, !tbaa !8
   %i.bn = icmp sgt i64 %indvars.iv460, 1
@@ -306,7 +282,7 @@ bb.f:                                             ; preds = %._crit_edge501
 
 bb.g:                                             ; preds = %bb.f, %._crit_edge501
   %i.cc = icmp sgt i64 %indvars.iv460, 2
-  br i1 %i.cc, label %.lr.ph389, label %.lr.ph392.preheader, !llvm.loop !26
+  br i1 %i.cc, label %bb.c, label %.lr.ph392.preheader, !llvm.loop !26
 
 .lr.ph392.preheader:                              ; preds = %bb.g, %.loopexit.thread
   tail call fastcc void @assign_codes(ptr noundef nonnull %i.v, ptr noundef %i.w, i32 noundef 0, i32 noundef 0, i32 noundef 1)

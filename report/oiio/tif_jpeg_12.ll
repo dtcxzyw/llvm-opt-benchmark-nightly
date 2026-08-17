@@ -203,7 +203,7 @@ JPEGFixupTagsSubsampling.exit:                    ; preds = %JPEGFixupTagsSubsam
 define internal range(i32 0, 2) i32 @JPEGPreDecode(ptr noundef %0, i16 noundef zeroext %1) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 1072 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !29   ; 35 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !29   ; 34 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 32
   %i.d = load i32, ptr %i.c, align 8, !tbaa !21
   %i.e = icmp eq i32 %i.d, 0
@@ -592,9 +592,7 @@ bb.at:                                            ; preds = %._crit_edge199
 bb.au:                                            ; preds = %bb.at
   %i.fe = getelementptr inbounds nuw i8, ptr %i.b, i64 60
   store i32 3, ptr %i.fe, align 4, !tbaa !21
-  %2 = getelementptr inbounds nuw i8, ptr %i.b, i64 64
-  store i32 2, ptr %2, align 8, !tbaa !21
-  br label %bb.ay
+  br label %bb.ax
 
 .thread:                                          ; preds = %bb.ar, %bb.at, %._crit_edge199
   %i.ff = getelementptr inbounds nuw i8, ptr %i.b, i64 60
@@ -617,16 +615,22 @@ bb.aw:                                            ; preds = %bb.av
   %.not183 = icmp eq i16 %i.fm, 1
   br i1 %.not183, label %bb.ay, label %bb.ax
 
-bb.ax:                                            ; preds = %bb.aw, %bb.av
-  %i.fn = getelementptr inbounds nuw i8, ptr %i.b, i64 92
-  store i32 1, ptr %i.fn, align 4, !tbaa !21
+bb.ax:                                            ; preds = %bb.av, %bb.aw, %bb.au
+  %.sink240 = phi i64 [ 64, %bb.au ], [ 92, %bb.aw ], [ 92, %bb.av ]
+  %.sink238 = phi i32 [ 2, %bb.au ], [ 1, %bb.aw ], [ 1, %bb.av ]
+  %.sink237.ph = phi i64 [ 92, %bb.au ], [ 100, %bb.aw ], [ 100, %bb.av ]
+  %JPEGDecode.sink234.ph = phi ptr [ @JPEGDecode, %bb.au ], [ @DecodeRowError, %bb.aw ], [ @DecodeRowError, %bb.av ]
+  %JPEGDecode.sink232.ph = phi ptr [ @JPEGDecode, %bb.au ], [ @JPEGDecodeRaw, %bb.aw ], [ @JPEGDecodeRaw, %bb.av ]
+  %.not184192.ph = phi i1 [ true, %bb.au ], [ false, %bb.aw ], [ false, %bb.av ]
+  %i.fn = getelementptr inbounds nuw i8, ptr %i.b, i64 %.sink240
+  store i32 %.sink238, ptr %i.fn, align 4, !tbaa !21
   br label %bb.ay
 
-bb.ay:                                            ; preds = %.thread, %bb.aw, %bb.au, %bb.ax
-  %.sink237 = phi i64 [ 100, %bb.ax ], [ 92, %bb.au ], [ 92, %bb.aw ], [ 92, %.thread ]
-  %JPEGDecode.sink234 = phi ptr [ @DecodeRowError, %bb.ax ], [ @JPEGDecode, %bb.au ], [ @JPEGDecode, %bb.aw ], [ @JPEGDecode, %.thread ]
-  %JPEGDecode.sink232 = phi ptr [ @JPEGDecodeRaw, %bb.ax ], [ @JPEGDecode, %bb.au ], [ @JPEGDecode, %bb.aw ], [ @JPEGDecode, %.thread ] ; 2 uses
-  %.not184192 = phi i1 [ false, %bb.ax ], [ true, %bb.au ], [ true, %bb.aw ], [ true, %.thread ]
+bb.ay:                                            ; preds = %bb.ax, %.thread, %bb.aw
+  %.sink237 = phi i64 [ 92, %bb.aw ], [ 92, %.thread ], [ %.sink237.ph, %bb.ax ]
+  %JPEGDecode.sink234 = phi ptr [ @JPEGDecode, %bb.aw ], [ @JPEGDecode, %.thread ], [ %JPEGDecode.sink234.ph, %bb.ax ]
+  %JPEGDecode.sink232 = phi ptr [ @JPEGDecode, %bb.aw ], [ @JPEGDecode, %.thread ], [ %JPEGDecode.sink232.ph, %bb.ax ] ; 2 uses
+  %.not184192 = phi i1 [ true, %bb.aw ], [ true, %.thread ], [ %.not184192.ph, %bb.ax ]
   %i.fo = getelementptr inbounds nuw i8, ptr %i.b, i64 %.sink237
   store i32 0, ptr %i.fo, align 4, !tbaa !21
   %i.fp = getelementptr inbounds nuw i8, ptr %0, i64 984

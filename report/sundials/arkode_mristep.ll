@@ -203,7 +203,7 @@ declare i32 @mriStep_GetNonlinSolvStats(ptr noundef, ptr noundef, ptr noundef) #
 define range(i32 -21, 1) i32 @mriStep_SetInnerForcing(ptr noundef %0, double noundef %1, double noundef %2, ptr noundef %3, i32 noundef %4) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 136
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !67   ; 18 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !67   ; 17 uses
   %i.c = icmp eq ptr %i.b, null
   br i1 %i.c, label %mriStep_AccessStepMem.exit, label %bb.b
 
@@ -213,28 +213,21 @@ mriStep_AccessStepMem.exit:                       ; preds = %bb.a
 
 bb.b:                                             ; preds = %bb.a
   %i.d = icmp sgt i32 %4, 0
-  br i1 %i.d, label %5, label %bb.l
+  br i1 %i.d, label %bb.c, label %bb.l
 
-5:                                                ; preds = %bb.b
-  %6 = getelementptr inbounds nuw i8, ptr %i.b, i64 24
-  %7 = load i32, ptr %6, align 8, !tbaa !143
-  %.not20 = icmp eq i32 %7, 0
-  br i1 %.not20, label %10, label %8
-
-8:                                                ; preds = %5
-  %9 = getelementptr inbounds nuw i8, ptr %i.b, i64 60
-  store i32 0, ptr %9, align 4, !tbaa !78
-  br label %bb.c
-
-10:                                               ; preds = %5
-  %11 = getelementptr inbounds nuw i8, ptr %i.b, i64 64
-  store i32 0, ptr %11, align 8, !tbaa !79
-  br label %bb.c
-
-bb.c:                                             ; preds = %10, %8
-  %12 = phi <2 x i32> [ <i32 0, i32 1>, %10 ], [ <i32 1, i32 0>, %8 ]
+bb.c:                                             ; preds = %bb.b
+  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 24
+  %6 = load i32, ptr %5, align 8, !tbaa !143
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 468
-  store <2 x i32> %12, ptr %i.e, align 4, !tbaa !80
+  %.not20 = icmp ne i32 %6, 0                     ; 2 uses
+  %. = select i1 %.not20, i64 60, i64 64
+  %7 = insertelement <2 x i1> poison, i1 %.not20, i64 0
+  %8 = shufflevector <2 x i1> %7, <2 x i1> poison, <2 x i32> zeroinitializer
+  %9 = xor <2 x i1> %8, <i1 false, i1 true>
+  %10 = getelementptr inbounds nuw i8, ptr %i.b, i64 %.
+  store i32 0, ptr %10, align 4, !tbaa !80
+  %11 = zext <2 x i1> %9 to <2 x i32>
+  store <2 x i32> %11, ptr %i.e, align 4, !tbaa !80
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 480
   store double %1, ptr %i.f, align 8, !tbaa !194
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 488

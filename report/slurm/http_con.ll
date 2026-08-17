@@ -201,9 +201,7 @@ bb.f:                                             ; preds = %bb.d, %bb.e, %bb.c
   store i16 9, ptr %i.c, align 2
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 121
   store i8 1, ptr %i.l, align 1
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 120
-  store i8 0, ptr %1, align 8
-  br label %bb.r
+  br label %bb.q
 
 bb.g:                                             ; preds = %bb.a
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 170
@@ -235,35 +233,25 @@ bb.k:                                             ; preds = %bb.i, %bb.j, %bb.h
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 120
   %i.w = load i8, ptr %i.v, align 8, !range !8, !noundef !9
   %i.x = trunc nuw i8 %i.w to i1
-  br i1 %i.x, label %bb.r, label %2
-
-2:                                                ; preds = %bb.k
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 121
-  store i8 1, ptr %3, align 1
-  br label %bb.r
+  br i1 %i.x, label %bb.r, label %bb.q
 
 bb.l:                                             ; preds = %bb.g
   %i.y = load i64, ptr getelementptr inbounds nuw (i8, ptr @slurm_conf, i64 336), align 8
   %i.z = and i64 %i.y, 1024
   %.not34 = icmp eq i64 %i.z, 0
-  br i1 %.not34, label %4, label %bb.m
+  br i1 %.not34, label %bb.q, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   %i.aa = tail call i32 @get_log_level() #7
   %i.ab = icmp sgt i32 %i.aa, 3
-  br i1 %i.ab, label %bb.n, label %4
+  br i1 %i.ab, label %bb.n, label %bb.q
 
 bb.n:                                             ; preds = %bb.m
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ad = load ptr, ptr %i.ac, align 8
   %i.ae = tail call ptr @conmgr_con_get_name(ptr noundef %i.ad) #7
   tail call void (i32, ptr, ...) @log_var(i32 noundef 4, ptr noundef nonnull @.str.38, ptr noundef nonnull @__func__._on_headers_complete, ptr noundef %i.ae) #7
-  br label %4
-
-4:                                                ; preds = %bb.m, %bb.n, %bb.l
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 120
-  store i8 1, ptr %5, align 8
-  br label %bb.r
+  br label %bb.q
 
 .thread40:                                        ; preds = %bb.g, %bb.a, %bb.b
   %i.af = load i64, ptr getelementptr inbounds nuw (i8, ptr @slurm_conf, i64 336), align 8
@@ -288,12 +276,14 @@ bb.p:                                             ; preds = %bb.o
   tail call void (i32, ptr, ...) @log_var(i32 noundef 4, ptr noundef nonnull @.str.39, ptr noundef nonnull @__func__._on_headers_complete, ptr noundef %i.al, i32 noundef %i.an, i32 noundef %i.aq) #7
   br label %bb.q
 
-bb.q:                                             ; preds = %bb.o, %bb.p, %.thread40
-  %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 120
-  store i8 1, ptr %i.ar, align 8
+bb.q:                                             ; preds = %.thread40, %bb.p, %bb.o, %bb.l, %bb.n, %bb.m, %bb.k, %bb.f
+  %.sink44 = phi i64 [ 120, %bb.f ], [ 120, %bb.l ], [ 121, %bb.k ], [ 120, %bb.m ], [ 120, %bb.n ], [ 120, %bb.o ], [ 120, %bb.p ], [ 120, %.thread40 ]
+  %.sink = phi i8 [ 0, %bb.f ], [ 1, %bb.l ], [ 1, %bb.k ], [ 1, %bb.m ], [ 1, %bb.n ], [ 1, %bb.o ], [ 1, %bb.p ], [ 1, %.thread40 ]
+  %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 %.sink44
+  store i8 %.sink, ptr %i.ar, align 1
   br label %bb.r
 
-bb.r:                                             ; preds = %2, %bb.k, %bb.q, %4, %bb.f
+bb.r:                                             ; preds = %bb.q, %bb.k
   %i.as = load i16, ptr %i.a, align 8
   %.not36 = icmp eq i16 %i.as, 0
   br i1 %.not36, label %bb.s, label %bb.t

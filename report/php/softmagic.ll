@@ -203,8 +203,6 @@ bb.g:                                             ; preds = %bb.f
   %i.s = sub i32 %i.r, %i.q                       ; 3 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 56
   store i32 %i.s, ptr %i.t, align 8, !tbaa !51
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 60
-  store i32 %i.s, ptr %6, align 4, !tbaa !59
   br label %bb.k
 
 bb.h:                                             ; preds = %bb.a
@@ -220,21 +218,21 @@ bb.i:                                             ; preds = %bb.b, %bb.h
   tail call void @buffer_init(ptr noundef nonnull %2, i32 noundef -1, ptr noundef null, ptr noundef %i.w, i64 noundef %i.y) #20
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 56
   store i32 %.0, ptr %i.z, align 8, !tbaa !51
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 60
-  store i32 0, ptr %7, align 4, !tbaa !59
   br label %bb.k
 
 bb.j:                                             ; preds = %bb.h
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 60
   %i.ab = load i32, ptr %i.aa, align 4, !tbaa !59
   %i.ac = add i32 %i.ab, %i.d                     ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 56
-  store i32 %i.ac, ptr %8, align 8, !tbaa !51
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.i, %bb.j, %bb.g
-  %i.ad = phi i32 [ %.0, %bb.i ], [ %i.s, %bb.g ], [ %i.ac, %bb.j ]
-  %.1 = phi i32 [ %.0, %bb.i ], [ %i.e, %bb.g ], [ %i.d, %bb.j ]
+  %.sink50 = phi i64 [ 60, %bb.i ], [ 56, %bb.j ], [ 60, %bb.g ]
+  %.sink = phi i32 [ 0, %bb.i ], [ %i.ac, %bb.j ], [ %i.s, %bb.g ]
+  %i.ad = phi i32 [ %.0, %bb.i ], [ %i.ac, %bb.j ], [ %i.s, %bb.g ]
+  %.1 = phi i32 [ %.0, %bb.i ], [ %i.d, %bb.j ], [ %i.e, %bb.g ]
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 %.sink50
+  store i32 %.sink, ptr %6, align 4, !tbaa !12
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 68
   %i.af = load i32, ptr %i.ae, align 4, !tbaa !24
   %i.ag = and i32 %i.af, 1

@@ -204,16 +204,13 @@ _RNvXsT_NtCs8K4cjrcxBsw_6hir_ty5inferNtB5_10AdjustmentNtNtCshzWfHUSfYae_4core5cl
   store ptr %i.j, ptr %0, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 %.sroa.0.0.i2, ptr %.sroa.4.0..sroa_idx, align 8
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 9
-  store i8 %.sroa.7.0.i, ptr %.sroa.5.0..sroa_idx, align 1
-  br label %2
+  br label %bb.g
 
-bb.g:                                             ; preds = %bb.a
-  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i8 -1, ptr %i.m, align 8
-  br label %2
-
-2:                                                ; preds = %bb.g, %_RNvXsT_NtCs8K4cjrcxBsw_6hir_ty5inferNtB5_10AdjustmentNtNtCshzWfHUSfYae_4core5clone5Clone5clone.exit
+bb.g:                                             ; preds = %bb.a, %_RNvXsT_NtCs8K4cjrcxBsw_6hir_ty5inferNtB5_10AdjustmentNtNtCshzWfHUSfYae_4core5clone5Clone5clone.exit
+  %.sink6 = phi i64 [ 9, %_RNvXsT_NtCs8K4cjrcxBsw_6hir_ty5inferNtB5_10AdjustmentNtNtCshzWfHUSfYae_4core5clone5Clone5clone.exit ], [ 8, %bb.a ]
+  %.sink = phi i8 [ %.sroa.7.0.i, %_RNvXsT_NtCs8K4cjrcxBsw_6hir_ty5inferNtB5_10AdjustmentNtNtCshzWfHUSfYae_4core5clone5Clone5clone.exit ], [ -1, %bb.a ]
+  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 %.sink6
+  store i8 %.sink, ptr %i.m, align 1
   ret void
 }
 

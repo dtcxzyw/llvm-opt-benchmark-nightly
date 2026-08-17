@@ -204,10 +204,6 @@ bb.cd:                                            ; preds = %Vec_IntPush.exit.4
   %i.lm = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.ln = load ptr, ptr %i.lm, align 8, !tbaa !137
   call fastcc void @Vec_IntPush(ptr noundef %i.ln, i32 noundef %i.lk)
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 108 ; 2 uses
-  %4 = load i32, ptr %3, align 4, !tbaa !165
-  %5 = add nsw i32 %4, 1
-  store i32 %5, ptr %3, align 4, !tbaa !165
   br label %bb.cf
 
 bb.ce:                                            ; preds = %Vec_IntPush.exit.4
@@ -219,18 +215,19 @@ bb.ce:                                            ; preds = %Vec_IntPush.exit.4
   %i.ls = getelementptr inbounds [4 x i8], ptr %.val104, i64 %i.lr
   %i.lt = load i32, ptr %i.ls, align 4, !tbaa !31
   %i.lu = load ptr, ptr %i.fx, align 8, !tbaa !124
-  %6 = getelementptr i8, ptr %i.lu, i64 4         ; 2 uses
-  %.val123 = load i32, ptr %6, align 4, !tbaa !87
-  %7 = add nsw i32 %.val123, -5
-  store i32 %7, ptr %6, align 4, !tbaa !87
-  %i.lv = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 2 uses
-  %i.lw = load i32, ptr %i.lv, align 8, !tbaa !164
-  %i.lx = add nsw i32 %i.lw, 1
-  store i32 %i.lx, ptr %i.lv, align 8, !tbaa !164
+  %i.lv = getelementptr i8, ptr %i.lu, i64 4      ; 2 uses
+  %i.lw = load i32, ptr %i.lv, align 4, !tbaa !87
+  %i.lx = add nsw i32 %i.lw, -5
+  store i32 %i.lx, ptr %i.lv, align 4, !tbaa !87
   br label %bb.cf
 
 bb.cf:                                            ; preds = %bb.ce, %bb.cd
-  %.2 = phi i32 [ %i.lk, %bb.cd ], [ %i.lt, %bb.ce ]
+  %.sink191 = phi i64 [ 104, %bb.ce ], [ 108, %bb.cd ]
+  %.2 = phi i32 [ %i.lt, %bb.ce ], [ %i.lk, %bb.cd ]
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 %.sink191 ; 2 uses
+  %4 = load i32, ptr %3, align 4, !tbaa !31
+  %5 = add nsw i32 %4, 1
+  store i32 %5, ptr %3, align 4, !tbaa !31
   %i.ly = xor i32 %.2, %i.fs
   br label %bb.cg
 

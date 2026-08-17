@@ -201,9 +201,7 @@ bb.c:                                             ; preds = %bb.b
   %i.g = trunc nuw i32 %1 to i16                  ; 2 uses
   store i16 %i.g, ptr %i.c, align 8, !tbaa !34
   %i.h = add nuw i16 %i.g, 1
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 18
-  store i16 %i.h, ptr %2, align 2, !tbaa !34
-  br label %bb.i
+  br label %bb.h
 
 bb.d:                                             ; preds = %bb.b
   %i.i = icmp eq i32 %1, 65535
@@ -217,16 +215,14 @@ bb.e:                                             ; preds = %bb.d
   store i16 -1, ptr %i.c, align 8, !tbaa !34
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 18
   store i16 1, ptr %i.l, align 2, !tbaa !34
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 20
-  store i16 0, ptr %3, align 4, !tbaa !34
-  br label %bb.i
+  br label %bb.h
 
 bb.f:                                             ; preds = %bb.d
   %i.m = icmp samesign ult i32 %1, 1114111
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i32 0, ptr %i.n, align 8, !tbaa !31
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
-  br i1 %i.m, label %bb.g, label %bb.h
+  br i1 %i.m, label %bb.g, label %2
 
 bb.g:                                             ; preds = %bb.f
   store i32 4, ptr %i.o, align 4, !tbaa !37
@@ -242,18 +238,21 @@ bb.g:                                             ; preds = %bb.f
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 20
   store i16 %i.v, ptr %i.w, align 4, !tbaa !34
   %i.x = trunc i32 %i.t to i16
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 22
-  store i16 %i.x, ptr %4, align 2, !tbaa !34
-  br label %bb.i
+  br label %bb.h
 
-bb.h:                                             ; preds = %bb.f
+2:                                                ; preds = %bb.f
   store i32 2, ptr %i.o, align 4, !tbaa !37
   store i16 16, ptr %i.c, align 8, !tbaa !34
-  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 18
-  store i16 -1, ptr %i.y, align 2, !tbaa !34
+  br label %bb.h
+
+bb.h:                                             ; preds = %bb.c, %bb.g, %2, %bb.e
+  %.sink36 = phi i64 [ 20, %bb.e ], [ 18, %2 ], [ 22, %bb.g ], [ 18, %bb.c ]
+  %.sink = phi i16 [ 0, %bb.e ], [ -1, %2 ], [ %i.x, %bb.g ], [ %i.h, %bb.c ]
+  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 %.sink36
+  store i16 %.sink, ptr %i.y, align 2, !tbaa !34
   br label %bb.i
 
-bb.i:                                             ; preds = %bb.e, %bb.h, %bb.g, %bb.a, %bb.c
+bb.i:                                             ; preds = %bb.h, %bb.a
   ret void
 }
 

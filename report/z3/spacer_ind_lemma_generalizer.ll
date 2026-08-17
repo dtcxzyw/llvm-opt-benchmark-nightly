@@ -203,8 +203,6 @@ bb.a:
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 280
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 292 ; 3 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 288
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.o = zext i32 %1 to i64
   %wide.trip.count = zext i32 %2 to i64
   br label %bb.b
@@ -607,7 +605,7 @@ bb.at:                                            ; preds = %bb.as, %.noexc50.i
 _ZN12_GLOBAL__N_127lemma_inductive_generalizer17is_cube_inductiveEv.exit.i: ; preds = %bb.at, %_ZNK6vectorIP4exprLb0EjE4sizeEv.exit46.i
   %.025.i = phi i32 [ %i.ez, %_ZNK6vectorIP4exprLb0EjE4sizeEv.exit46.i ], [ %i.hh, %bb.at ] ; 2 uses
   %i.hi = icmp eq i32 %.025.i, 0
-  br i1 %i.hi, label %_ZN6vectorIP4exprLb0EjE6shrinkEj.exit.i, label %12
+  br i1 %i.hi, label %_ZN6vectorIP4exprLb0EjE6shrinkEj.exit.i, label %bb.au
 
 _ZN6vectorIP4exprLb0EjE6shrinkEj.exit.i:          ; preds = %_ZN12_GLOBAL__N_127lemma_inductive_generalizer17is_cube_inductiveEv.exit.i, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE5emptyEv.exit.i.i, %_ZN12_GLOBAL__N_127lemma_inductive_generalizer17load_cube_to_coreEv.exit.i.i, %bb.h
   %i.hj = load ptr, ptr %i.c, align 8, !tbaa !166 ; 2 uses
@@ -615,19 +613,15 @@ _ZN6vectorIP4exprLb0EjE6shrinkEj.exit.i:          ; preds = %_ZN12_GLOBAL__N_127
   store ptr %i.r, ptr %i.hk, align 8, !tbaa !169
   %i.hl = getelementptr inbounds i8, ptr %i.hj, i64 -4
   store i32 %i.ai, ptr %i.hl, align 4, !tbaa !168
-  %10 = load i32, ptr %9, align 8, !tbaa !208
-  %11 = add i32 %10, 1
-  store i32 %11, ptr %9, align 8, !tbaa !208
   br label %bb.au
 
-12:                                               ; preds = %_ZN12_GLOBAL__N_127lemma_inductive_generalizer17is_cube_inductiveEv.exit.i
-  %13 = load i32, ptr %8, align 4, !tbaa !207
-  %14 = add i32 %13, 1
-  store i32 %14, ptr %8, align 4, !tbaa !207
-  br label %bb.au
-
-bb.au:                                            ; preds = %12, %_ZN6vectorIP4exprLb0EjE6shrinkEj.exit.i
-  %.02560.i = phi i32 [ %.025.i, %12 ], [ 0, %_ZN6vectorIP4exprLb0EjE6shrinkEj.exit.i ]
+bb.au:                                            ; preds = %_ZN6vectorIP4exprLb0EjE6shrinkEj.exit.i, %_ZN12_GLOBAL__N_127lemma_inductive_generalizer17is_cube_inductiveEv.exit.i
+  %.sink92.i = phi i64 [ 48, %_ZN6vectorIP4exprLb0EjE6shrinkEj.exit.i ], [ 44, %_ZN12_GLOBAL__N_127lemma_inductive_generalizer17is_cube_inductiveEv.exit.i ]
+  %.02560.i = phi i32 [ 0, %_ZN6vectorIP4exprLb0EjE6shrinkEj.exit.i ], [ %.025.i, %_ZN12_GLOBAL__N_127lemma_inductive_generalizer17is_cube_inductiveEv.exit.i ]
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 %.sink92.i ; 2 uses
+  %9 = load i32, ptr %8, align 4, !tbaa !168
+  %10 = add i32 %9, 1
+  store i32 %10, ptr %8, align 4, !tbaa !168
   %i.hm = load ptr, ptr %i.h, align 8, !tbaa !166 ; 5 uses
   %i.hn = icmp eq ptr %i.hm, null
   br i1 %i.hn, label %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEED2Ev.exit.i, label %_ZNK6vectorIP4exprLb0EjE4sizeEv.exit.i.i

@@ -204,7 +204,7 @@ _ZN4ncnn3MatD2Ev.exit:                            ; preds = %._crit_edge, %.lr.p
   %i.cv = trunc i64 %i.ct to i32
   %i.cw = mul nsw i32 %i.cs, %.044265
   %i.cx = sext i32 %i.cw to i64
-  %14 = icmp eq i32 %.045264, 0                   ; 5 uses
+  %14 = icmp ne i32 %.045264, 0                   ; 6 uses
   %i.cy = icmp sgt i32 %.sroa.speculated, 0       ; 5 uses
   %sext904.i = shl i64 %i.ct, 32                  ; 3 uses
   %i.cz = ashr exact i64 %sext904.i, 30           ; 5 uses
@@ -330,7 +330,7 @@ bb.i:                                             ; preds = %bb.q, %.lr.ph464.i
   %.0805461.i = phi ptr [ %i.es, %.lr.ph464.i ], [ %.2807.i, %bb.q ] ; 22 uses
   %.0820460.i = phi ptr [ %i.cq, %.lr.ph464.i ], [ %.1821.lcssa.i, %bb.q ] ; 2 uses
   %.0830459.i = phi i32 [ 0, %.lr.ph464.i ], [ %i.lb, %bb.q ] ; 2 uses
-  br i1 %14, label %bb.j, label %bb.l
+  br i1 %14, label %bb.l, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   br i1 %.not903.i, label %bb.m, label %bb.k
@@ -626,7 +626,7 @@ bb.r:                                             ; preds = %bb.z, %.lr.ph496.i
   %.3808494.i = phi ptr [ %.0805.lcssa.i, %.lr.ph496.i ], [ %.5810.i, %bb.z ] ; 17 uses
   %.2822493.i = phi ptr [ %.0820.lcssa.i, %.lr.ph496.i ], [ %.3823.lcssa.i, %bb.z ] ; 3 uses
   %.1831492.i = phi i32 [ %.0830.lcssa.i, %.lr.ph496.i ], [ %i.pk, %bb.z ] ; 2 uses
-  br i1 %14, label %bb.s, label %bb.u
+  br i1 %14, label %bb.u, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
   br i1 %.not900.i, label %bb.v, label %bb.t
@@ -851,7 +851,7 @@ bb.aa:                                            ; preds = %bb.ai, %.lr.ph520.i
   %.6811518.i = phi ptr [ %.3808.lcssa.i, %.lr.ph520.i ], [ %.8813.i, %bb.ai ] ; 12 uses
   %.4824517.i = phi ptr [ %.2822.lcssa.i, %.lr.ph520.i ], [ %.5825.lcssa.i, %bb.ai ] ; 3 uses
   %.2832516.i = phi i32 [ %.1831.lcssa.i, %.lr.ph520.i ], [ %i.rt, %bb.ai ]
-  br i1 %14, label %bb.ab, label %bb.ad
+  br i1 %14, label %bb.ad, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
   br i1 %.not897.i, label %bb.ae, label %bb.ac
@@ -991,7 +991,8 @@ bb.ai:                                            ; preds = %bb.ah, %bb.ag, %.th
   br i1 %i.rw, label %.lr.ph558.i, label %._crit_edge559.i
 
 .lr.ph558.i:                                      ; preds = %.preheader428.i
-  %.not891.i = icmp eq ptr %.1785.i, null
+  %.not891.i = icmp ne ptr %.1785.i, null
+  %brmerge.i = select i1 %14, i1 true, i1 %.not891.i
   br label %bb.as
 
 bb.aj:                                            ; preds = %bb.ar, %.lr.ph540.i
@@ -999,7 +1000,7 @@ bb.aj:                                            ; preds = %bb.ar, %.lr.ph540.i
   %.9814538.i = phi ptr [ %.6811.lcssa.i, %.lr.ph540.i ], [ %.11816.i, %bb.ar ] ; 12 uses
   %.6826537.i = phi ptr [ %.4824.lcssa.i, %.lr.ph540.i ], [ %.7827.lcssa.i, %bb.ar ] ; 4 uses
   %.3833536.i = phi i32 [ %.2832.lcssa.i, %.lr.ph540.i ], [ %i.uc, %bb.ar ]
-  br i1 %14, label %bb.ak, label %bb.am
+  br i1 %14, label %bb.am, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj
   br i1 %.not894.i, label %bb.an, label %bb.al
@@ -1155,21 +1156,15 @@ bb.as:                                            ; preds = %bb.ay, %.lr.ph558.i
   %.12817556.i = phi ptr [ %.9814.lcssa.i, %.lr.ph558.i ], [ %.14819.i, %bb.ay ] ; 9 uses
   %.8828555.i = phi ptr [ %.6826.lcssa.i, %.lr.ph558.i ], [ %.9829.lcssa.i, %bb.ay ] ; 4 uses
   %.4834554.i = phi i32 [ %.3833.lcssa.i, %.lr.ph558.i ], [ %i.wb, %bb.ay ]
-  br i1 %14, label %15, label %bb.at
-
-15:                                               ; preds = %bb.as
-  br i1 %.not891.i, label %bb.au, label %16
-
-16:                                               ; preds = %15
-  %17 = load <4 x float>, ptr %.1785.i, align 1, !tbaa !254
-  br label %bb.au
+  br i1 %brmerge.i, label %bb.at, label %bb.au
 
 bb.at:                                            ; preds = %bb.as
-  %i.uf = load <4 x float>, ptr %.5797557.i, align 16, !tbaa !254
+  %.5797557.mux.i = select i1 %14, ptr %.5797557.i, ptr %.1785.i
+  %i.uf = load <4 x float>, ptr %.5797557.mux.i, align 1, !tbaa !254
   br label %bb.au
 
-bb.au:                                            ; preds = %bb.at, %16, %15
-  %.0403.i = phi nsz <4 x float> [ %i.uf, %bb.at ], [ %17, %16 ], [ zeroinitializer, %15 ] ; 3 uses
+bb.au:                                            ; preds = %bb.at, %bb.as
+  %.0403.i = phi nsz <4 x float> [ zeroinitializer, %bb.as ], [ %i.uf, %bb.at ] ; 3 uses
   br i1 %i.cy, label %.lr.ph550.i.preheader, label %._crit_edge551.i
 
 .lr.ph550.i.preheader:                            ; preds = %bb.au

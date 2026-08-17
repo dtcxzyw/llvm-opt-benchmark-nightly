@@ -203,21 +203,20 @@ bb.a:
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
   %i.k = load i32, ptr %i.j, align 4, !tbaa !67
   switch i32 %i.k, label %bb.d [
-    i32 8, label %bb.b
-    i32 9, label %bb.c
+    i32 8, label %bb.c
+    i32 9, label %bb.b
   ]
 
 bb.b:                                             ; preds = %bb.a
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 200
-  store i32 1, ptr %3, align 8, !tbaa !54
+  br label %bb.c
+
+bb.c:                                             ; preds = %bb.a, %bb.b
+  %.sink130 = phi i64 [ 204, %bb.b ], [ 200, %bb.a ]
+  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 %.sink130
+  store i32 1, ptr %i.l, align 4, !tbaa !27
   br label %bb.d
 
-bb.c:                                             ; preds = %bb.a
-  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 204
-  store i32 1, ptr %i.l, align 4, !tbaa !55
-  br label %bb.d
-
-bb.d:                                             ; preds = %bb.a, %bb.c, %bb.b
+bb.d:                                             ; preds = %bb.c, %bb.a
   %i.m = icmp sgt i32 %i.g, 2147483632
   br i1 %i.m, label %bytestream2_put_be32.exit, label %bb.e
 

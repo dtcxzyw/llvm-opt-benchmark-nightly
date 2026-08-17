@@ -203,23 +203,13 @@ bb.w:                                             ; preds = %bb.v, %bb.u, %bb.t,
 bb.x:                                             ; preds = %bb.w, %bb.q
   %.363 = phi ptr [ %.262, %bb.w ], [ %.161, %bb.q ] ; 2 uses
   %.not87 = icmp eq ptr %.363, null
-  br i1 %.not87, label %bb.ad, label %6
+  br i1 %.not87, label %bb.ad, label %bb.y
 
-6:                                                ; preds = %bb.x
-  %7 = load i32, ptr %i.c, align 4, !tbaa !97     ; 2 uses
-  br i1 %5, label %8, label %10
-
-8:                                                ; preds = %6
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 4496
-  store i32 %7, ptr %9, align 8, !tbaa !104
-  br label %bb.y
-
-10:                                               ; preds = %6
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 4500
-  store i32 %7, ptr %11, align 4, !tbaa !98
-  br label %bb.y
-
-bb.y:                                             ; preds = %10, %8
+bb.y:                                             ; preds = %bb.x
+  %6 = load i32, ptr %i.c, align 4, !tbaa !97
+  %. = select i1 %5, i64 4496, i64 4500
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 %.
+  store i32 %6, ptr %7, align 4, !tbaa !113
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 2049
   %i.bd = load i32, ptr %i.bc, align 1
   %i.be = and i32 %i.bd, 134217728

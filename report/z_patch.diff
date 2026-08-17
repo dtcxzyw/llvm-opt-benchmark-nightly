@@ -1,0 +1,187 @@
+diff --git a/llvm/include/llvm/IR/Instruction.h b/llvm/include/llvm/IR/Instruction.h
+index 13646ec66d6b3..c6c9e0eb0e637 100644
+--- a/llvm/include/llvm/IR/Instruction.h
++++ b/llvm/include/llvm/IR/Instruction.h
+@@ -724,6 +724,13 @@ class Instruction : public User,
+   /// V and this instruction.
+   LLVM_ABI void andIRFlags(const Value *V);
+ 
++  /// Restricts this instruction's attributes to those which are shared
++  /// with I. This will essentially:
++  ///  1) Do a logical 'and' of this instruction's flags with I's flags.
++  ///  2) Find a common alignment with I, if both instructions support a notion
++  ///  of alignment.
++  LLVM_ABI void intersectIRAttributes(const Instruction *I);
++
+   /// Merge 2 debug locations and apply it to the Instruction. If the
+   /// instruction is a CallIns, we need to traverse the inline chain to find
+   /// the common scope. This is not efficient for N-way merging as each time
+diff --git a/llvm/lib/IR/Instruction.cpp b/llvm/lib/IR/Instruction.cpp
+index 099a54e684c96..586104de6d175 100644
+--- a/llvm/lib/IR/Instruction.cpp
++++ b/llvm/lib/IR/Instruction.cpp
+@@ -813,6 +813,27 @@ void Instruction::andIRFlags(const Value *V) {
+       DestICmp->setSameSign(DestICmp->hasSameSign() && SrcICmp->hasSameSign());
+ }
+ 
++void Instruction::intersectIRAttributes(const Instruction *I) {
++  andIRFlags(I);
++
++  auto IsLoadOrStore = [](const Instruction *I) {
++    return isa<LoadInst>(I) || isa<StoreInst>(I);
++  };
++  if (IsLoadOrStore(I)) {
++    if (IsLoadOrStore(this)) {
++      Align Common =
++          std::min(getLoadStoreAlignment(this), getLoadStoreAlignment(I));
++      assert(isAligned(Common, getLoadStoreAlignment(this).value()) &&
++             isAligned(Common, getLoadStoreAlignment(I).value()) &&
++             "Common alignment doesn't satisfy alignment constraints?");
++
++      setLoadStoreAlignment(this, Common);
++    }
++  }
++
++  // TODO: Should we intersect metadata here too?
++}
++
+ const char *Instruction::getOpcodeName(unsigned OpCode) {
+   switch (OpCode) {
+   // Terminators
+diff --git a/llvm/lib/Transforms/Utils/SimplifyCFG.cpp b/llvm/lib/Transforms/Utils/SimplifyCFG.cpp
+index 089892dc573f3..e29a682154e69 100644
+--- a/llvm/lib/Transforms/Utils/SimplifyCFG.cpp
++++ b/llvm/lib/Transforms/Utils/SimplifyCFG.cpp
+@@ -2248,7 +2248,8 @@ static bool canSinkInstructions(
+   const Instruction *I0 = Insts.front();
+   const auto I0MMRA = MMRAMetadata(*I0);
+   for (auto *I : Insts) {
+-    if (!I->isSameOperationAs(I0, Instruction::CompareUsingIntersectedAttrs))
++    if (!I->isSameOperationAs(I0, Instruction::CompareUsingIntersectedAttrs |
++                                      Instruction::CompareIgnoringAlignment))
+       return false;
+ 
+     // Treat MMRAs conservatively. This pass can be quite aggressive and
+@@ -2379,7 +2380,7 @@ static void sinkLastInstruction(ArrayRef<BasicBlock*> Blocks) {
+       // instead of using complex API for N-way merge.
+       I0->applyMergedLocation(I0->getDebugLoc(), I->getDebugLoc());
+       combineMetadataForCSE(I0, I, true);
+-      I0->andIRFlags(I);
++      I0->intersectIRAttributes(I);
+       if (auto *CB = dyn_cast<CallBase>(I0)) {
+         bool Success = CB->tryIntersectAttributes(cast<CallBase>(I));
+         assert(Success && "We should not be trying to sink callbases "
+diff --git a/llvm/test/Transforms/SimplifyCFG/X86/sink-common-code.ll b/llvm/test/Transforms/SimplifyCFG/X86/sink-common-code.ll
+index 8daa2334a4a68..4f98cfd39f6ee 100644
+--- a/llvm/test/Transforms/SimplifyCFG/X86/sink-common-code.ll
++++ b/llvm/test/Transforms/SimplifyCFG/X86/sink-common-code.ll
+@@ -2177,6 +2177,109 @@ join:
+   ret i32 %phi
+ }
+ 
++define void @store_different_alignments(i1 %c, ptr %p1, ptr %p2) {
++; CHECK-LABEL: @store_different_alignments(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[P1_P2:%.*]] = select i1 [[C:%.*]], ptr [[P1:%.*]], ptr [[P2:%.*]]
++; CHECK-NEXT:    store i8 0, ptr [[P1_P2]], align 1
++; CHECK-NEXT:    ret void
++;
++entry:
++  br i1 %c, label %if1, label %if2
++
++if1:
++  store i8 0, ptr %p1, align 2
++  br label %end
++
++if2:
++  store i8 0, ptr %p2, align 1
++  br label %end
++
++end:
++  ret void
++}
++
++define void @store_different_alignments_incompatible_attributes(i1 %c, ptr %p1, ptr %p2) {
++; CHECK-LABEL: @store_different_alignments_incompatible_attributes(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    br i1 [[C:%.*]], label [[IF1:%.*]], label [[IF2:%.*]]
++; CHECK:       if1:
++; CHECK-NEXT:    store volatile i8 0, ptr [[P1:%.*]], align 2
++; CHECK-NEXT:    br label [[END:%.*]]
++; CHECK:       if2:
++; CHECK-NEXT:    store i8 0, ptr [[P2:%.*]], align 1
++; CHECK-NEXT:    br label [[END]]
++; CHECK:       end:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br i1 %c, label %if1, label %if2
++
++if1:
++  store volatile i8 0, ptr %p1, align 2
++  br label %end
++
++if2:
++  store i8 0, ptr %p2, align 1
++  br label %end
++
++end:
++  ret void
++}
++
++define i8 @load_different_alignments(i1 %c, ptr %p1, ptr %p2) {
++; CHECK-LABEL: @load_different_alignments(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[P1_P2:%.*]] = select i1 [[C:%.*]], ptr [[P1:%.*]], ptr [[P2:%.*]]
++; CHECK-NEXT:    [[RET2:%.*]] = load i8, ptr [[P1_P2]], align 1
++; CHECK-NEXT:    ret i8 [[RET2]]
++;
++entry:
++  br i1 %c, label %if1, label %if2
++
++if1:
++  %ret1 = load i8, ptr %p1, align 2
++  br label %end
++
++if2:
++  %ret2 = load i8, ptr %p2, align 1
++  br label %end
++
++end:
++  %ret = phi i8 [ %ret1, %if1 ], [ %ret2, %if2 ]
++  ret i8 %ret
++}
++
++define i8 @load_different_alignments_incompatible_attributes(i1 %c, ptr %p1, ptr %p2) {
++; CHECK-LABEL: @load_different_alignments_incompatible_attributes(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    br i1 [[C:%.*]], label [[IF1:%.*]], label [[IF2:%.*]]
++; CHECK:       if1:
++; CHECK-NEXT:    [[RET1:%.*]] = load volatile i8, ptr [[P1:%.*]], align 2
++; CHECK-NEXT:    br label [[END:%.*]]
++; CHECK:       if2:
++; CHECK-NEXT:    [[RET2:%.*]] = load i8, ptr [[P2:%.*]], align 1
++; CHECK-NEXT:    br label [[END]]
++; CHECK:       end:
++; CHECK-NEXT:    [[RET:%.*]] = phi i8 [ [[RET1]], [[IF1]] ], [ [[RET2]], [[IF2]] ]
++; CHECK-NEXT:    ret i8 [[RET]]
++;
++entry:
++  br i1 %c, label %if1, label %if2
++
++if1:
++  %ret1 = load volatile i8, ptr %p1, align 2
++  br label %end
++
++if2:
++  %ret2 = load i8, ptr %p2, align 1
++  br label %end
++
++end:
++  %ret = phi i8 [ %ret1, %if1 ], [ %ret2, %if2 ]
++  ret i8 %ret
++}
++
+ declare void @dummy()
+ declare void @use.ptr(ptr)
+ 

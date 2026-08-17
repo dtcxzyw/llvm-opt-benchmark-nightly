@@ -203,17 +203,11 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.e = trunc i64 %2 to i32
   %i.f = zext nneg i32 %i.c to i64
-  %4 = getelementptr inbounds nuw [1104 x i8], ptr %0, i64 %i.f
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 12672
-  store i32 %i.e, ptr %5, align 16
   br label %bb.q
 
 bb.c:                                             ; preds = %bb.a
   %i.g = trunc i64 %2 to i32
   %i.h = zext nneg i32 %i.c to i64
-  %6 = getelementptr inbounds nuw [1104 x i8], ptr %0, i64 %i.h
-  %7 = getelementptr inbounds nuw i8, ptr %6, i64 12676
-  store i32 %i.g, ptr %7, align 4
   br label %bb.q
 
 bb.d:                                             ; preds = %bb.a
@@ -315,9 +309,6 @@ eth_pulse_irq.exit:                               ; preds = %.eth_pulse_irq.exit
   %.pre-phi = phi i64 [ %.pre, %.eth_pulse_irq.exit_crit_edge ], [ %i.ah, %bb.o ], [ %i.ah, %bb.n ], [ %i.j, %bb.l ], [ %i.j, %bb.k ], [ %i.j, %trace_ethlite_pkt_tx_size_too_big.exit ], [ %i.ah, %bb.m ]
   %i.as = trunc i64 %2 to i32
   %i.at = and i32 %i.as, -4
-  %8 = getelementptr inbounds nuw [1104 x i8], ptr %0, i64 %.pre-phi
-  %9 = getelementptr inbounds nuw i8, ptr %8, i64 12680
-  store i32 %i.at, ptr %9, align 8
   br label %bb.q
 
 bb.p:                                             ; preds = %bb.a
@@ -325,6 +316,12 @@ bb.p:                                             ; preds = %bb.a
   unreachable
 
 bb.q:                                             ; preds = %eth_pulse_irq.exit, %bb.c, %bb.b
+  %.pre-phi.sink = phi i64 [ %.pre-phi, %eth_pulse_irq.exit ], [ %i.h, %bb.c ], [ %i.f, %bb.b ]
+  %.sink37 = phi i64 [ 12680, %eth_pulse_irq.exit ], [ 12676, %bb.c ], [ 12672, %bb.b ]
+  %.sink = phi i32 [ %i.at, %eth_pulse_irq.exit ], [ %i.g, %bb.c ], [ %i.e, %bb.b ]
+  %4 = getelementptr inbounds nuw [1104 x i8], ptr %0, i64 %.pre-phi.sink
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 %.sink37
+  store i32 %.sink, ptr %5, align 4
   ret void
 }
 

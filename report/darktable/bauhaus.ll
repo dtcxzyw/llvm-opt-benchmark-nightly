@@ -201,24 +201,13 @@ bb.u:                                             ; preds = %bb.p, %bb.p
   %i.bs = getelementptr inbounds nuw i8, ptr %0, i64 248
   %i.bt = load float, ptr %i.bs, align 8, !tbaa !130
   %i.bu = fcmp reassoc nsz arcp contract afn olt float %i.bt, 0.000000e+00
-  %i.bv = xor i1 %i.br, %i.bu
-  br i1 %i.bv, label %4, label %8
-
-4:                                                ; preds = %bb.u
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 200
-  %6 = load float, ptr %5, align 8, !tbaa !160
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 184
-  store float %6, ptr %7, align 8, !tbaa !128
-  br label %12
-
-8:                                                ; preds = %bb.u
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 196
-  %10 = load float, ptr %9, align 4, !tbaa !162
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 180
-  store float %10, ptr %11, align 4, !tbaa !129
-  br label %12
-
-12:                                               ; preds = %8, %4
+  %i.bv = xor i1 %i.br, %i.bu                     ; 2 uses
+  %. = select i1 %i.bv, i64 200, i64 196
+  %.83 = select i1 %i.bv, i64 184, i64 180
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 %.
+  %5 = load float, ptr %4, align 4, !tbaa !154
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 %.83
+  store float %5, ptr %6, align 4, !tbaa !154
   tail call void @gtk_widget_queue_draw(ptr noundef nonnull %0) #26
   br label %bb.w
 
@@ -226,7 +215,7 @@ bb.v:                                             ; preds = %bb.p
   tail call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.87, i32 noundef %2) #26
   br label %bb.w
 
-bb.w:                                             ; preds = %bb.v, %12, %bb.t, %bb.q
+bb.w:                                             ; preds = %bb.v, %bb.u, %bb.t, %bb.q
   tail call fastcc void @_slider_zoom_toast(ptr noundef %0)
   br label %.thread
 

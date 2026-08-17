@@ -203,15 +203,15 @@ _RINvMs9_NvCs33K2ylI4knu_10hir_expand1__NtB8_11MacroCallId3locDNtCsgIpRO4v45SJ_7
   tail call void @llvm.assume(i1 %i.l)
   %i.m = getelementptr inbounds nuw [16 x i8], ptr %i.h, i64 %i.k
   %.sroa.0.0.i.i.i = load ptr, ptr %i.m, align 8, !noalias !1320, !nonnull !24, !noundef !24
-  %i.n = tail call noundef nonnull align 8 ptr @_RNvMs5_NtCsd9Lm8bEdjjY_5salsa8internedINtB5_14IngredientImplNtCs33K2ylI4knu_10hir_expand11MacroCallIdE6fieldsBY_(ptr noundef nonnull align 8 %.sroa.0.0.i.i.i, ptr noundef nonnull align 8 %i.c, i32 noundef range(i32 1, 0) %.sroa.0.0, i32 noundef %.sroa.3.0), !noalias !1320 ; 5 uses
+  %i.n = tail call noundef nonnull align 8 ptr @_RNvMs5_NtCsd9Lm8bEdjjY_5salsa8internedINtB5_14IngredientImplNtCs33K2ylI4knu_10hir_expand11MacroCallIdE6fieldsBY_(ptr noundef nonnull align 8 %.sroa.0.0.i.i.i, ptr noundef nonnull align 8 %i.c, i32 noundef range(i32 1, 0) %.sroa.0.0, i32 noundef %.sroa.3.0), !noalias !1320 ; 4 uses
   %i.o = add i32 %.sroa.01.0, 1                   ; 2 uses
   %i.p = load i32, ptr %i.n, align 8, !range !522, !noundef !24 ; 3 uses
   %i.q = add nsw i32 %i.p, -2
   %.inv = icmp samesign ult i32 %i.p, 2
   %narrow = select i1 %.inv, i32 2, i32 %i.q
   switch i32 %narrow, label %bb.d [
-    i32 0, label %bb.e
-    i32 1, label %bb.f
+    i32 0, label %bb.f
+    i32 1, label %bb.e
     i32 2, label %bb.g
   ]
 
@@ -219,19 +219,20 @@ bb.d:                                             ; preds = %_RINvMs9_NvCs33K2yl
   unreachable
 
 bb.e:                                             ; preds = %_RINvMs9_NvCs33K2ylI4knu_10hir_expand1__NtB8_11MacroCallId3locDNtCsgIpRO4v45SJ_7base_db14SourceDatabaseEL_EB8_.exit
-  %4 = getelementptr inbounds nuw i8, ptr %i.n, i64 8
-  %.sroa.03.0.copyload = load i32, ptr %4, align 8
-  br label %bb.g
+  br label %bb.f
 
-bb.f:                                             ; preds = %_RINvMs9_NvCs33K2ylI4knu_10hir_expand1__NtB8_11MacroCallId3locDNtCsgIpRO4v45SJ_7base_db14SourceDatabaseEL_EB8_.exit
-  %i.r = getelementptr inbounds nuw i8, ptr %i.n, i64 4
+bb.f:                                             ; preds = %_RINvMs9_NvCs33K2ylI4knu_10hir_expand1__NtB8_11MacroCallId3locDNtCsgIpRO4v45SJ_7base_db14SourceDatabaseEL_EB8_.exit, %bb.e
+  %.sink19 = phi i64 [ 4, %bb.e ], [ 8, %_RINvMs9_NvCs33K2ylI4knu_10hir_expand1__NtB8_11MacroCallId3locDNtCsgIpRO4v45SJ_7base_db14SourceDatabaseEL_EB8_.exit ]
+  %.sink17.ph = phi i64 [ 8, %bb.e ], [ 12, %_RINvMs9_NvCs33K2ylI4knu_10hir_expand1__NtB8_11MacroCallId3locDNtCsgIpRO4v45SJ_7base_db14SourceDatabaseEL_EB8_.exit ]
+  %.sink.ph = phi i64 [ 12, %bb.e ], [ 16, %_RINvMs9_NvCs33K2ylI4knu_10hir_expand1__NtB8_11MacroCallId3locDNtCsgIpRO4v45SJ_7base_db14SourceDatabaseEL_EB8_.exit ]
+  %i.r = getelementptr inbounds nuw i8, ptr %i.n, i64 %.sink19
   %.sroa.03.0.copyload4 = load i32, ptr %i.r, align 4
   br label %bb.g
 
-bb.g:                                             ; preds = %_RINvMs9_NvCs33K2ylI4knu_10hir_expand1__NtB8_11MacroCallId3locDNtCsgIpRO4v45SJ_7base_db14SourceDatabaseEL_EB8_.exit, %bb.f, %bb.e
-  %.sink17 = phi i64 [ 12, %bb.e ], [ 8, %bb.f ], [ 4, %_RINvMs9_NvCs33K2ylI4knu_10hir_expand1__NtB8_11MacroCallId3locDNtCsgIpRO4v45SJ_7base_db14SourceDatabaseEL_EB8_.exit ]
-  %.sink = phi i64 [ 16, %bb.e ], [ 12, %bb.f ], [ 8, %_RINvMs9_NvCs33K2ylI4knu_10hir_expand1__NtB8_11MacroCallId3locDNtCsgIpRO4v45SJ_7base_db14SourceDatabaseEL_EB8_.exit ]
-  %.sroa.03.0 = phi i32 [ %.sroa.03.0.copyload, %bb.e ], [ %.sroa.03.0.copyload4, %bb.f ], [ %i.p, %_RINvMs9_NvCs33K2ylI4knu_10hir_expand1__NtB8_11MacroCallId3locDNtCsgIpRO4v45SJ_7base_db14SourceDatabaseEL_EB8_.exit ]
+bb.g:                                             ; preds = %bb.f, %_RINvMs9_NvCs33K2ylI4knu_10hir_expand1__NtB8_11MacroCallId3locDNtCsgIpRO4v45SJ_7base_db14SourceDatabaseEL_EB8_.exit
+  %.sink17 = phi i64 [ 4, %_RINvMs9_NvCs33K2ylI4knu_10hir_expand1__NtB8_11MacroCallId3locDNtCsgIpRO4v45SJ_7base_db14SourceDatabaseEL_EB8_.exit ], [ %.sink17.ph, %bb.f ]
+  %.sink = phi i64 [ 8, %_RINvMs9_NvCs33K2ylI4knu_10hir_expand1__NtB8_11MacroCallId3locDNtCsgIpRO4v45SJ_7base_db14SourceDatabaseEL_EB8_.exit ], [ %.sink.ph, %bb.f ]
+  %.sroa.03.0 = phi i32 [ %i.p, %_RINvMs9_NvCs33K2ylI4knu_10hir_expand1__NtB8_11MacroCallId3locDNtCsgIpRO4v45SJ_7base_db14SourceDatabaseEL_EB8_.exit ], [ %.sroa.03.0.copyload4, %bb.f ]
   %i.s = trunc i32 %.sroa.03.0 to i1
   br i1 %i.s, label %bb.h, label %bb.i
 

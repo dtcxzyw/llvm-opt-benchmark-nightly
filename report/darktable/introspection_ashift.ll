@@ -204,7 +204,7 @@ bb.a:
   %i.d = alloca [2 x float], align 8              ; 6 uses
   %i.e = alloca [2 x float], align 4              ; 6 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 704
-  %i.g = load ptr, ptr %i.f, align 16, !tbaa !193 ; 41 uses
+  %i.g = load ptr, ptr %i.f, align 16, !tbaa !193 ; 40 uses
   %i.h = icmp eq i32 %5, 5
   %i.i = icmp eq i32 %4, 1                        ; 3 uses
   %or.cond = and i1 %i.i, %i.h
@@ -223,7 +223,7 @@ bb.c:                                             ; preds = %bb.b
   %i.m = getelementptr inbounds nuw i8, ptr %i.g, i64 192 ; 9 uses
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !269
   %i.o = icmp eq ptr %i.n, null                   ; 2 uses
-  %i.p = icmp eq i32 %4, 3                        ; 4 uses
+  %i.p = icmp eq i32 %4, 3                        ; 5 uses
   %or.cond3 = and i1 %i.p, %i.o
   br i1 %or.cond3, label %bb.d, label %bb.e
 
@@ -626,26 +626,18 @@ bb.ak:                                            ; preds = %._crit_edge.thread,
 
 ._crit_edge228.thread:                            ; preds = %.split275, %.thread, %._crit_edge228
   %.2184217 = phi i1 [ false, %.thread ], [ true, %._crit_edge228 ], [ true, %.split275 ] ; 2 uses
-  %or.cond9 = or i1 %i.bv, %.2184217              ; 3 uses
-  %or.cond11 = and i1 %i.p, %or.cond9
-  br i1 %or.cond11, label %8, label %10
-
-8:                                                ; preds = %._crit_edge228.thread
-  call void @dt_control_change_cursor(ptr noundef nonnull @.str.16) #34
-  %9 = getelementptr inbounds nuw i8, ptr %i.g, i64 160
-  store i32 1, ptr %9, align 8, !tbaa !328
-  br label %bb.am
-
-10:                                               ; preds = %._crit_edge228.thread
+  %or.cond9 = or i1 %i.bv, %.2184217              ; 2 uses
   br i1 %or.cond9, label %bb.al, label %bb.am
 
-bb.al:                                            ; preds = %10
-  call void @dt_control_change_cursor(ptr noundef nonnull @.str.17) #34
-  %i.ja = getelementptr inbounds nuw i8, ptr %i.g, i64 156
-  store i32 1, ptr %i.ja, align 4, !tbaa !329
+bb.al:                                            ; preds = %._crit_edge228.thread
+  %.mux = select i1 %i.p, i64 160, i64 156
+  %.str.16.mux = select i1 %i.p, ptr @.str.16, ptr @.str.17
+  call void @dt_control_change_cursor(ptr noundef nonnull %.str.16.mux) #34
+  %i.ja = getelementptr inbounds nuw i8, ptr %i.g, i64 %.mux
+  store i32 1, ptr %i.ja, align 4, !tbaa !41
   br label %bb.am
 
-bb.am:                                            ; preds = %bb.al, %10, %8
+bb.am:                                            ; preds = %._crit_edge228.thread, %bb.al
   br i1 %.2184217, label %bb.an, label %bb.ao
 
 bb.an:                                            ; preds = %bb.am

@@ -201,23 +201,19 @@ bb.x:                                             ; preds = %bb.w
   store ptr %i.hd, ptr %10, align 8
   %i.he = and i32 %i.hc, 65280
   %i.hf = icmp eq i32 %i.he, 65280
-  br i1 %i.hf, label %11, label %bb.y
-
-11:                                               ; preds = %bb.x
-  %12 = getelementptr i8, ptr %3, i64 105
-  store i8 1, ptr %12, align 1
-  br label %bb.aa
+  br i1 %i.hf, label %bb.z, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
   %.not = icmp eq i16 %i.gq, 0
   br i1 %.not, label %bb.aa, label %bb.z
 
-bb.z:                                             ; preds = %bb.y
-  %i.hg = getelementptr i8, ptr %3, i64 104
-  store i8 1, ptr %i.hg, align 8
+bb.z:                                             ; preds = %bb.y, %bb.x
+  %.sink672 = phi i64 [ 105, %bb.x ], [ 104, %bb.y ]
+  %i.hg = getelementptr i8, ptr %3, i64 %.sink672
+  store i8 1, ptr %i.hg, align 1
   br label %bb.aa
 
-bb.aa:                                            ; preds = %bb.y, %bb.z, %11
+bb.aa:                                            ; preds = %bb.z, %bb.y
   %i.hh = tail call ptr @wmem_file_scope()
   %i.hi = tail call noalias ptr @wmem_strdup(ptr noundef %i.hh, ptr noundef %i.gz)
   %i.hj = getelementptr i8, ptr %3, i64 88

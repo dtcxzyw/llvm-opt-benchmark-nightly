@@ -203,26 +203,19 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.h = tail call i32 @test_size_t_le(ptr noundef nonnull @.str.14, i32 noundef 13994, ptr noundef nonnull @.str.1455, ptr noundef nonnull @.str.1456, i64 noundef %4, i64 noundef 144) #24
   %.not33 = icmp eq i32 %i.h, 0
-  br i1 %.not33, label %bb.f, label %6
-
-6:                                                ; preds = %bb.c
-  %7 = getelementptr inbounds nuw i8, ptr %5, i64 8
-  store i32 %1, ptr %7, align 8, !tbaa !149
-  br label %bb.e
+  br i1 %.not33, label %bb.f, label %bb.e
 
 bb.d:                                             ; preds = %bb.b
   %i.i = tail call i32 @test_size_t_le(ptr noundef nonnull @.str.14, i32 noundef 14002, ptr noundef nonnull @.str.1455, ptr noundef nonnull @.str.1457, i64 noundef %4, i64 noundef 144) #24
   %.not32 = icmp eq i32 %i.i, 0
-  br i1 %.not32, label %bb.f, label %8
+  br i1 %.not32, label %bb.f, label %bb.e
 
-8:                                                ; preds = %bb.d
-  %9 = getelementptr inbounds nuw i8, ptr %5, i64 12
-  store i32 %1, ptr %9, align 4, !tbaa !150
-  br label %bb.e
-
-bb.e:                                             ; preds = %8, %6
-  %.sink41 = phi i64 [ 8408, %8 ], [ 8240, %6 ]
-  %.sink = phi i64 [ 8552, %8 ], [ 8384, %6 ]
+bb.e:                                             ; preds = %bb.d, %bb.c
+  %.sink43 = phi i64 [ 8, %bb.c ], [ 12, %bb.d ]
+  %.sink41 = phi i64 [ 8240, %bb.c ], [ 8408, %bb.d ]
+  %.sink = phi i64 [ 8384, %bb.c ], [ 8552, %bb.d ]
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 %.sink43
+  store i32 %1, ptr %6, align 4, !tbaa !17
   %i.j = getelementptr inbounds nuw i8, ptr %5, i64 %.sink41
   %i.k = add nsw i32 %1, -1
   %i.l = zext nneg i32 %i.k to i64                ; 2 uses
@@ -309,22 +302,12 @@ bb.a:
   %i.d = icmp eq ptr %i.c, %i.a
   %i.e = zext i1 %i.d to i32
   %i.f = tail call i32 @test_true(ptr noundef nonnull @.str.14, i32 noundef 13815, ptr noundef nonnull @.str.1452, i32 noundef %i.e) #24
-  %.not4.i.not = icmp eq i32 %i.f, 0
-  br i1 %.not4.i.not, label %3, label %5
-
-3:                                                ; preds = %bb.a
-  %4 = getelementptr inbounds nuw i8, ptr %2, i64 8596
-  store i32 1, ptr %4, align 4, !tbaa !146
-  br label %7
-
-5:                                                ; preds = %bb.a
-  %6 = getelementptr inbounds nuw i8, ptr %2, i64 8592
-  store i32 1, ptr %6, align 8, !tbaa !147
-  br label %7
-
-7:                                                ; preds = %5, %3
-  %.0 = phi i32 [ 1, %5 ], [ 0, %3 ]
-  ret i32 %.0
+  %.not4.i.not = icmp ne i32 %i.f, 0              ; 2 uses
+  %. = select i1 %.not4.i.not, i64 8592, i64 8596
+  %.5 = zext i1 %.not4.i.not to i32
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 %.
+  store i32 1, ptr %3, align 4, !tbaa !17
+  ret i32 %.5
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable

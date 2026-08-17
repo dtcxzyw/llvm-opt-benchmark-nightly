@@ -201,7 +201,7 @@ bb.a:
   %i.bi = alloca [4 x i8], align 4                ; 5 uses
   %i.bj = alloca [8 x i8], align 8                ; 3 uses
   %i.bk = alloca [32 x i8], align 4               ; 6 uses
-  %i.bl = alloca [32 x i8], align 4               ; 7 uses
+  %i.bl = alloca [32 x i8], align 4               ; 6 uses
   %i.bm = alloca [168 x i8], align 8              ; 23 uses
   %i.bn = alloca [208 x i8], align 8              ; 24 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bn)
@@ -604,7 +604,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc4sync3ArcNtNtNt
   invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtCsh8EDedVkTYb_13tlsserver_mio4ArgsEBD_(ptr noalias nofree noundef align 8 dereferenceable(208) %i.bn) #22
           to label %common.resume unwind label %bb.jr
 
-bb.ib:                                            ; preds = %bb.ih, %4, %bb.ie, %bb.id, %bb.ia
+bb.ib:                                            ; preds = %bb.ih, %bb.ii, %bb.ie, %bb.id, %bb.ia
   %i.ip = landingpad { ptr, i32 }
           cleanup
   br label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc4sync3ArcNtNtNtCs7ZUl82OSlxp_6rustls6server11server_conn12ServerConfigEECsh8EDedVkTYb_13tlsserver_mio.exit
@@ -649,28 +649,18 @@ bb.ih:                                            ; preds = %bb.ig
 bb.ii:                                            ; preds = %bb.ig
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(32) %i.bl, ptr noundef nonnull readonly align 4 dereferenceable(32) %i.bk, i64 32, i1 false), !alias.scope !803
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bk)
-  %i.iu = load i16, ptr %.sroa.28.0..sroa_idx.i, align 8, !noundef !23 ; 2 uses
+  %i.iu = load i16, ptr %.sroa.28.0..sroa_idx.i, align 8, !noundef !23
   %i.iv = load i16, ptr %i.bl, align 4, !range !805, !noundef !23
   %i.iw = trunc nuw i16 %i.iv to i1
-  br i1 %i.iw, label %0, label %2
-
-0:                                                ; preds = %bb.ii
-  %1 = getelementptr inbounds nuw i8, ptr %i.bl, i64 28
-  store i16 %i.iu, ptr %1, align 4
-  br label %4
-
-2:                                                ; preds = %bb.ii
-  %3 = getelementptr inbounds nuw i8, ptr %i.bl, i64 6
-  store i16 %i.iu, ptr %3, align 2
-  br label %4
-
-4:                                                ; preds = %2, %0
+  %..sroa.sel.v = select i1 %i.iw, i64 28, i64 6
+  %..sroa.sel = getelementptr inbounds nuw i8, ptr %i.bl, i64 %..sroa.sel.v
+  store i16 %i.iu, ptr %..sroa.sel, align 2
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bj)
-  %5 = invoke fastcc noundef nonnull ptr @_RNvCsh8EDedVkTYb_13tlsserver_mio11make_config(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(208) %i.bn)
+  %0 = invoke fastcc noundef nonnull ptr @_RNvCsh8EDedVkTYb_13tlsserver_mio11make_config(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(208) %i.bn)
           to label %bb.ij unwind label %bb.ib     ; 3 uses
 
-bb.ij:                                            ; preds = %4
-  store ptr %5, ptr %i.bj, align 8
+bb.ij:                                            ; preds = %bb.ii
+  store ptr %0, ptr %i.bj, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bi)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bh)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bg)
@@ -796,7 +786,7 @@ _RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultuNtNtNtB4_2io5error5ErrorE6unwrapC
   %i.jq = load i32, ptr %i.bi, align 4, !range !270, !noundef !23
   %i.jr = load i16, ptr %.sroa.2523.0..sroa_idx.i, align 8, !range !802, !noundef !23
   %i.js = load i16, ptr %.sroa.26.0..sroa_idx.i, align 2
-  invoke fastcc void @_RNvMCsh8EDedVkTYb_13tlsserver_mioNtB2_9TlsServer3new(ptr noalias nofree noundef align 8 captures(none) dereferenceable(72) %i.bc, i32 noundef %i.jq, i16 noundef %i.jr, i16 %i.js, ptr noundef nonnull %5)
+  invoke fastcc void @_RNvMCsh8EDedVkTYb_13tlsserver_mioNtB2_9TlsServer3new(ptr noalias nofree noundef align 8 captures(none) dereferenceable(72) %i.bc, i32 noundef %i.jq, i16 noundef %i.jr, i16 %i.js, ptr noundef nonnull %0)
           to label %bb.jb unwind label %bb.in
 
 bb.jb:                                            ; preds = %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultuNtNtNtB4_2io5error5ErrorE6unwrapCsh8EDedVkTYb_13tlsserver_mio.exit
@@ -949,7 +939,7 @@ bb.jt:                                            ; preds = %bb.jf
 
 bb.ju:                                            ; preds = %.thread58, %bb.ik
   %.pn.pn.pn.pn.pn.pn.ph = phi { ptr, i32 } [ %i.ix, %bb.ik ], [ %.pn.pn.pn.pn.pn61, %.thread58 ] ; 2 uses
-  %i.kp = atomicrmw sub ptr %5, i64 1 release, align 8, !noalias !812
+  %i.kp = atomicrmw sub ptr %0, i64 1 release, align 8, !noalias !812
   %i.kq = icmp eq i64 %i.kp, 1
   br i1 %i.kq, label %bb.jv, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc4sync3ArcNtNtNtCs7ZUl82OSlxp_6rustls6server11server_conn12ServerConfigEECsh8EDedVkTYb_13tlsserver_mio.exit
 

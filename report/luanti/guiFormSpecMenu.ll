@@ -204,27 +204,21 @@ bb.ae:                                            ; preds = %.critedge850.thread
   %i.gh = getelementptr inbounds nuw i8, ptr %1, i64 12
   %i.gi = load i32, ptr %i.gh, align 4, !tbaa !190
   switch i32 %i.gi, label %_ZN15GUIFormSpecMenu8tryCloseEv.exit [
-    i32 13, label %42
+    i32 13, label %bb.ah
     i32 38, label %bb.af
     i32 40, label %bb.ag
   ]
 
-42:                                               ; preds = %bb.ae
-  %43 = getelementptr inbounds nuw i8, ptr %0, i64 2154
-  store i8 1, ptr %43, align 2, !tbaa !234
-  br label %bb.ah
-
 bb.af:                                            ; preds = %bb.ae
-  %44 = getelementptr inbounds nuw i8, ptr %0, i64 2152
-  store i8 1, ptr %44, align 8, !tbaa !233
   br label %bb.ah
 
 bb.ag:                                            ; preds = %bb.ae
-  %45 = getelementptr inbounds nuw i8, ptr %0, i64 2153
-  store i8 1, ptr %45, align 1, !tbaa !232
   br label %bb.ah
 
-bb.ah:                                            ; preds = %bb.ag, %bb.af, %42
+bb.ah:                                            ; preds = %bb.ae, %bb.ag, %bb.af
+  %.sink2076 = phi i64 [ 2153, %bb.ag ], [ 2152, %bb.af ], [ 2154, %bb.ae ]
+  %42 = getelementptr inbounds nuw i8, ptr %0, i64 %.sink2076
+  store i8 1, ptr %42, align 1, !tbaa !448
   %i.gj = getelementptr inbounds nuw i8, ptr %0, i64 2154
   %i.gk = load i8, ptr %i.gj, align 2, !tbaa !234, !range !248, !noundef !249
   %i.gl = trunc nuw i8 %i.gk to i1

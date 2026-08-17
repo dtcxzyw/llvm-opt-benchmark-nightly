@@ -204,27 +204,23 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load i32, ptr %i.a, align 8, !tbaa !1616
   switch i32 %i.b, label %bb.d [
-    i32 0, label %bb.b
-    i32 1, label %bb.c
+    i32 0, label %bb.c
+    i32 1, label %bb.b
   ]
 
 bb.b:                                             ; preds = %bb.a
-  %2 = load ptr, ptr %0, align 8, !tbaa !1577
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 5872 ; 2 uses
-  %4 = load i32, ptr %3, align 16, !tbaa !1557
-  %5 = add nsw i32 %4, -1
-  store i32 %5, ptr %3, align 16, !tbaa !1557
-  br label %bb.d
+  br label %bb.c
 
-bb.c:                                             ; preds = %bb.a
+bb.c:                                             ; preds = %bb.a, %bb.b
+  %.sink40 = phi i64 [ 5876, %bb.b ], [ 5872, %bb.a ]
   %i.c = load ptr, ptr %0, align 8, !tbaa !1577
-  %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 5876 ; 2 uses
-  %i.e = load i32, ptr %i.d, align 4, !tbaa !1558
+  %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 %.sink40 ; 2 uses
+  %i.e = load i32, ptr %i.d, align 4, !tbaa !628
   %i.f = add nsw i32 %i.e, -1
-  store i32 %i.f, ptr %i.d, align 4, !tbaa !1558
+  store i32 %i.f, ptr %i.d, align 4, !tbaa !628
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.a, %bb.c, %bb.b
+bb.d:                                             ; preds = %bb.c, %bb.a
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.sroa.4.0.copyload = load ptr, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !1920 ; 6 uses
   tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 24) #33

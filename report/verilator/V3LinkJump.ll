@@ -203,21 +203,23 @@ bb.bc:                                            ; preds = %bb.bb
   %i.go = getelementptr inbounds nuw i8, ptr %i.gl, i64 152
   store i64 0, ptr %i.go, align 8
   invoke void @_ZN7AstNode7addOp1pEPS_(ptr noundef nonnull align 8 dereferenceable(160) %i.gl, ptr noundef nonnull %.484241)
-          to label %_ZN12AstJumpBlockC2EP8FileLineP7AstNode.exit unwind label %bb.bf
+          to label %bb.bd unwind label %bb.bf
 
-_ZN12AstJumpBlockC2EP8FileLineP7AstNode.exit:     ; preds = %bb.bc
-  %14 = ptrtoint ptr %i.gl to i64                 ; 2 uses
-  br i1 %2, label %bb.bd, label %15
-
-bb.bd:                                            ; preds = %_ZN12AstJumpBlockC2EP8FileLineP7AstNode.exit
-  %i.gp = getelementptr inbounds nuw i8, ptr %1, i64 104
+bb.bd:                                            ; preds = %bb.bc
+  %14 = ptrtoint ptr %i.gl to i64
+  %. = select i1 %2, i64 104, i64 120
+  %.293 = select i1 %2, i64 112, i64 116
+  %i.gp = getelementptr inbounds nuw i8, ptr %1, i64 %.
   store i64 %14, ptr %i.gp, align 8, !tbaa !17
-  %i.gq = load i32, ptr @_ZN12VNUser1InUse12s_userCntGblE, align 4, !tbaa !19
-  %i.gr = getelementptr inbounds nuw i8, ptr %1, i64 112
-  store i32 %i.gq, ptr %i.gr, align 8, !tbaa !213
-  br label %19
+  %i.gq = load i32, ptr @_ZN12VNUser1InUse12s_userCntGblE, align 4
+  %_ZN12VNUser2InUse12s_userCntGblE.val = load i32, ptr @_ZN12VNUser2InUse12s_userCntGblE, align 4
+  %15 = select i1 %2, i32 %i.gq, i32 %_ZN12VNUser2InUse12s_userCntGblE.val
+  %i.gr = getelementptr inbounds nuw i8, ptr %1, i64 %.293
+  store i32 %15, ptr %i.gr, align 4, !tbaa !19
+  invoke void @_ZN7AstNode6relinkEP10VNRelinker(ptr noundef nonnull align 8 dereferenceable(152) %i.gl, ptr noundef nonnull align 8 dereferenceable(32) %13)
+          to label %_ZN10VNRelinker6relinkEP7AstNode.exit.preheader unwind label %bb.be
 
-bb.be:                                            ; preds = %19, %bb.ba
+bb.be:                                            ; preds = %bb.bd, %bb.ba
   %i.gs = landingpad { ptr, i32 }
           cleanup
   br label %bb.bk
@@ -228,24 +230,12 @@ bb.bf:                                            ; preds = %bb.bc, %bb.bb
   call void @_ZdlPvm(ptr noundef nonnull %i.gl, i64 noundef 160) #24
   br label %bb.bk
 
-15:                                               ; preds = %_ZN12AstJumpBlockC2EP8FileLineP7AstNode.exit
-  %16 = getelementptr inbounds nuw i8, ptr %1, i64 120
-  store i64 %14, ptr %16, align 8, !tbaa !17
-  %17 = load i32, ptr @_ZN12VNUser2InUse12s_userCntGblE, align 4, !tbaa !19
-  %18 = getelementptr inbounds nuw i8, ptr %1, i64 116
-  store i32 %17, ptr %18, align 4, !tbaa !350
-  br label %19
-
-19:                                               ; preds = %15, %bb.bd
-  invoke void @_ZN7AstNode6relinkEP10VNRelinker(ptr noundef nonnull align 8 dereferenceable(152) %i.gl, ptr noundef nonnull align 8 dereferenceable(32) %13)
-          to label %_ZN10VNRelinker6relinkEP7AstNode.exit.preheader unwind label %bb.be
-
 bb.bg:                                            ; preds = %_ZN10VNRelinker6relinkEP7AstNode.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #23
   br label %_ZN7AstNode2asI12AstJumpBlockS_EEPT_PT0_.exit
 
-_ZN10VNRelinker6relinkEP7AstNode.exit.preheader:  ; preds = %19, %_ZN10VNRelinker6relinkEP7AstNode.exit
-  %.0242 = phi ptr [ %i.gv, %_ZN10VNRelinker6relinkEP7AstNode.exit ], [ %.484241, %19 ] ; 3 uses
+_ZN10VNRelinker6relinkEP7AstNode.exit.preheader:  ; preds = %bb.bd, %_ZN10VNRelinker6relinkEP7AstNode.exit
+  %.0242 = phi ptr [ %i.gv, %_ZN10VNRelinker6relinkEP7AstNode.exit ], [ %.484241, %bb.bd ] ; 3 uses
   %i.gu = getelementptr inbounds nuw i8, ptr %.0242, i64 8
   %i.gv = load ptr, ptr %i.gu, align 8, !tbaa !184 ; 2 uses
   %i.gw = getelementptr inbounds nuw i8, ptr %.0242, i64 64

@@ -204,7 +204,7 @@ bb.cu:                                            ; preds = %readFixedNumber.exi
 .lr.ph.i:                                         ; preds = %bb.cu, %bb.ec
   %indvars.iv180.i = phi i64 [ %indvars.iv.next181.i, %bb.ec ], [ 4, %bb.cu ] ; 7 uses
   %i.vw = load ptr, ptr %i.tc, align 8, !tbaa !114
-  %i.vx = getelementptr inbounds nuw [32 x i8], ptr %i.vw, i64 %indvars.iv180.i ; 20 uses
+  %i.vx = getelementptr inbounds nuw [32 x i8], ptr %i.vw, i64 %indvars.iv180.i ; 19 uses
   %i.vy = load i32, ptr %i.k, align 4, !tbaa !117 ; 4 uses
   %i.vz = add i32 %i.vy, 1                        ; 4 uses
   %i.wa = icmp ugt i32 %i.vz, %i.ti
@@ -212,7 +212,7 @@ bb.cu:                                            ; preds = %readFixedNumber.exi
 
 .preheader.i85.i:                                 ; preds = %.lr.ph.i
   %.not113.i = icmp eq i32 %i.vy, -1
-  br i1 %.not113.i, label %.thread.i152, label %.lr.ph.preheader.i89.i
+  br i1 %.not113.i, label %typealign.exit.i, label %.lr.ph.preheader.i89.i
 
 .lr.ph.preheader.i89.i:                           ; preds = %.preheader.i85.i
   %i.wb = zext i32 %i.vy to i64
@@ -239,7 +239,7 @@ bb.cy:                                            ; preds = %.lr.ph.preheader.i8
   %i.wg = and i32 %i.we, 15                       ; 4 uses
   store i32 %i.vz, ptr %i.k, align 4, !tbaa !117
   %trunc.i = trunc nuw nsw i32 %i.wg to i8
-  switch i8 %trunc.i, label %.thread.i152 [
+  switch i8 %trunc.i, label %typealign.exit.i [
     i8 1, label %bb.cz
     i8 2, label %bb.dd
     i8 3, label %bb.dd
@@ -598,9 +598,7 @@ bb.dx:                                            ; preds = %readTypeID.exit.i
 bb.dy:                                            ; preds = %bb.dx
   %i.aav = getelementptr inbounds nuw i8, ptr %i.vx, i64 24
   store i32 8, ptr %i.aav, align 8, !tbaa !115
-  %5 = getelementptr inbounds nuw i8, ptr %i.vx, i64 20
-  store i32 8, ptr %5, align 4, !tbaa !119
-  br label %bb.ec
+  br label %.thread.i152
 
 bb.dz:                                            ; preds = %bb.dx
   %i.aaw = getelementptr inbounds nuw i8, ptr %i.vx, i64 16
@@ -618,7 +616,7 @@ bb.dz:                                            ; preds = %bb.dx
 bb.ea:                                            ; preds = %bb.dz
   %i.abf = call fastcc i32 @typesize(ptr noundef nonnull %0, i16 noundef zeroext %i.abd)
   %i.abg = call i32 @llvm.umax.i32(i32 %i.abf, i32 1)
-  br label %typealign.exit.i
+  br label %.thread.i152
 
 bb.eb:                                            ; preds = %bb.dz
   %i.abh = zext nneg i16 %i.abd to i64
@@ -628,20 +626,21 @@ bb.eb:                                            ; preds = %bb.dz
   %i.abl = getelementptr inbounds nuw [32 x i8], ptr %i.abi, i64 %i.abk
   %i.abm = getelementptr inbounds nuw i8, ptr %i.abl, i64 24
   %i.abn = load i32, ptr %i.abm, align 8, !tbaa !115
-  br label %typealign.exit.i
+  br label %.thread.i152
 
-typealign.exit.i:                                 ; preds = %bb.eb, %bb.ea
-  %.0.i108.i = phi i32 [ %i.abg, %bb.ea ], [ %i.abn, %bb.eb ]
-  %6 = getelementptr inbounds nuw i8, ptr %i.vx, i64 24
-  store i32 %.0.i108.i, ptr %6, align 8, !tbaa !115
-  br label %bb.ec
-
-.thread.i152:                                     ; preds = %bb.cy, %.preheader.i85.i
-  %.027.lcssa.i87205.i = phi i32 [ 0, %.preheader.i85.i ], [ %i.wg, %bb.cy ]
-  call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.295, i32 noundef %.027.lcssa.i87205.i) #24
+typealign.exit.i:                                 ; preds = %bb.cy, %.preheader.i85.i
+  %.0.i108.i = phi i32 [ 0, %.preheader.i85.i ], [ %i.wg, %bb.cy ]
+  call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.295, i32 noundef %.0.i108.i) #24
   br label %bb.eh
 
-bb.ec:                                            ; preds = %typealign.exit.i, %bb.dy, %bb.dd, %bb.db
+.thread.i152:                                     ; preds = %bb.eb, %bb.ea, %bb.dy
+  %.sink275.i = phi i64 [ 20, %bb.dy ], [ 24, %bb.ea ], [ 24, %bb.eb ]
+  %.sink.i = phi i32 [ 8, %bb.dy ], [ %i.abg, %bb.ea ], [ %i.abn, %bb.eb ]
+  %5 = getelementptr inbounds nuw i8, ptr %i.vx, i64 %.sink275.i
+  store i32 %.sink.i, ptr %5, align 4, !tbaa !117
+  br label %bb.ec
+
+bb.ec:                                            ; preds = %.thread.i152, %bb.dd, %bb.db
   %indvars.iv.next181.i = add nuw nsw i64 %indvars.iv180.i, 1 ; 2 uses
   %i.abo = load i32, ptr %i.sr, align 8, !tbaa !145 ; 3 uses
   %i.abp = add i32 %i.abo, -1
@@ -704,8 +703,8 @@ bb.eg:                                            ; preds = %typealign.exit110.i
   %i.acw = icmp samesign ult i64 %indvars.iv.next184.i, %i.acv
   br i1 %i.acw, label %.lr.ph151.i, label %parseLSig.exit.jt1
 
-bb.eh:                                            ; preds = %bb.cq, %.loopexit365, %.thread.i152, %bb.dl, %bb.dp, %.loopexit208.i, %bb.de, %bb.da, %bb.dc, %bb.cx
-  %.2.i.ph = phi i32 [ 4, %bb.cx ], [ 4, %bb.dc ], [ 4, %bb.da ], [ 4, %bb.de ], [ 4, %.loopexit208.i ], [ 4, %bb.dp ], [ 4, %bb.dl ], [ 4, %.thread.i152 ], [ 22, %.loopexit365 ], [ 4, %bb.cq ]
+bb.eh:                                            ; preds = %bb.cq, %.loopexit365, %typealign.exit.i, %bb.dl, %bb.dp, %.loopexit208.i, %bb.de, %bb.da, %bb.dc, %bb.cx
+  %.2.i.ph = phi i32 [ 4, %bb.cx ], [ 4, %bb.dc ], [ 4, %bb.da ], [ 4, %bb.de ], [ 4, %.loopexit208.i ], [ 4, %bb.dp ], [ 4, %bb.dl ], [ 4, %typealign.exit.i ], [ 22, %.loopexit365 ], [ 4, %bb.cq ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k) #24
   call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.28, i32 noundef 2) #24

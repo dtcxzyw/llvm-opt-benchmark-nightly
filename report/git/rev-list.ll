@@ -203,7 +203,7 @@ bb.a:
   %2 = alloca %struct.object_info, align 8        ; 5 uses
   %3 = alloca %struct.strbuf, align 8             ; 8 uses
   %4 = alloca %struct.pretty_print_context, align 8 ; 10 uses
-  %i.b = load ptr, ptr %1, align 8, !tbaa !73     ; 16 uses
+  %i.b = load ptr, ptr %1, align 8, !tbaa !73     ; 14 uses
   %i.c = load ptr, ptr @progress, align 8, !tbaa !86
   %i.d = load i32, ptr @progress_counter, align 4, !tbaa !15
   %i.e = add i32 %i.d, 1                          ; 2 uses
@@ -285,43 +285,22 @@ bb.i:                                             ; preds = %bb.g
   %i.ai = load i64, ptr %i.g, align 4
   %i.aj = and i64 %i.ai, 16777216
   %.not75 = icmp eq i64 %i.aj, 0
-  br i1 %.not75, label %bb.k, label %5
+  br i1 %.not75, label %bb.k, label %bb.j
 
-5:                                                ; preds = %bb.i
-  %6 = load i64, ptr %0, align 8
-  %7 = lshr i64 %6, 32
-  %8 = trunc nuw i64 %7 to i32                    ; 2 uses
-  %9 = and i32 %8, 512
-  %.not95 = icmp eq i32 %9, 0
-  br i1 %.not95, label %14, label %10
-
-10:                                               ; preds = %5
-  %11 = getelementptr inbounds nuw i8, ptr %i.b, i64 2952 ; 2 uses
-  %12 = load i32, ptr %11, align 8, !tbaa !124
-  %13 = add nsw i32 %12, 1
-  store i32 %13, ptr %11, align 8, !tbaa !124
-  br label %bb.j
-
-14:                                               ; preds = %5
-  %15 = and i32 %8, 256
-  %.not96 = icmp eq i32 %15, 0
-  br i1 %.not96, label %20, label %16
-
-16:                                               ; preds = %14
-  %17 = getelementptr inbounds nuw i8, ptr %i.b, i64 2944 ; 2 uses
-  %18 = load i32, ptr %17, align 8, !tbaa !122
-  %19 = add nsw i32 %18, 1
-  store i32 %19, ptr %17, align 8, !tbaa !122
-  br label %bb.j
-
-20:                                               ; preds = %14
-  %21 = getelementptr inbounds nuw i8, ptr %i.b, i64 2948 ; 2 uses
-  %22 = load i32, ptr %21, align 4, !tbaa !123
-  %23 = add nsw i32 %22, 1
-  store i32 %23, ptr %21, align 4, !tbaa !123
-  br label %bb.j
-
-bb.j:                                             ; preds = %16, %20, %10
+bb.j:                                             ; preds = %bb.i
+  %5 = load i64, ptr %0, align 8
+  %6 = lshr i64 %5, 32
+  %7 = trunc nuw i64 %6 to i32                    ; 2 uses
+  %8 = and i32 %7, 512
+  %.not95 = icmp eq i32 %8, 0
+  %9 = and i32 %7, 256
+  %.not96 = icmp eq i32 %9, 0
+  %. = select i1 %.not96, i64 2948, i64 2944
+  %.sink109 = select i1 %.not95, i64 %., i64 2952
+  %10 = getelementptr inbounds nuw i8, ptr %i.b, i64 %.sink109 ; 2 uses
+  %11 = load i32, ptr %10, align 4, !tbaa !15
+  %12 = add nsw i32 %11, 1
+  store i32 %12, ptr %10, align 4, !tbaa !15
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !149
   call void @commit_list_free(ptr noundef %i.al) #12

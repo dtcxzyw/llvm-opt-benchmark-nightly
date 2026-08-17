@@ -204,7 +204,7 @@ _kzalloc_noprof.exit.i.i.i:                       ; preds = %bb.di
   %i.jc = zext nneg i16 %i.ip to i64
   %i.jd = mul nuw nsw i64 %i.jc, 80
   %i.je = add nuw nsw i64 %i.jd, 24               ; 2 uses
-  %i.jf = call noalias align 8 ptr @__kmalloc_noprof(i64 noundef %i.je, i32 noundef 3520) #19 ; 28 uses
+  %i.jf = call noalias align 8 ptr @__kmalloc_noprof(i64 noundef %i.je, i32 noundef 3520) #19 ; 27 uses
   %.not.i126.i.i = icmp eq ptr %i.jf, null
   br i1 %.not.i126.i.i, label %bb.dj, label %_kzalloc_noprof.exit.i127.i.i
 
@@ -406,14 +406,9 @@ bb.dw:                                            ; preds = %.critedge.i.i
   %i.lz = getelementptr inbounds nuw i8, ptr %7, i64 48
   %i.ma = load i16, ptr %i.lz, align 8
   switch i16 %i.ma, label %bb.dy [
-    i16 0, label %8
+    i16 0, label %.sink.split.i.i
     i16 1, label %bb.dx
   ]
-
-8:                                                ; preds = %._crit_edge.i.i
-  %9 = getelementptr i8, ptr %i.jf, i64 11
-  store i8 1, ptr %9, align 1
-  br label %.sink.split.i.i
 
 bb.dx:                                            ; preds = %._crit_edge.i.i
   %i.mb = load i32, ptr %7, align 8
@@ -463,11 +458,12 @@ bb.dx:                                            ; preds = %._crit_edge.i.i
   call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #15, !srcloc !137
   %i.nb = getelementptr i8, ptr %i.jf, i64 16
   store volatile ptr %i.mh, ptr %i.nb, align 8
-  %10 = getelementptr i8, ptr %i.jf, i64 12
-  store i8 1, ptr %10, align 4
   br label %.sink.split.i.i
 
-.sink.split.i.i:                                  ; preds = %.thread.i.i, %8
+.sink.split.i.i:                                  ; preds = %.thread.i.i, %._crit_edge.i.i
+  %.sink203.i.i = phi i64 [ 12, %.thread.i.i ], [ 11, %._crit_edge.i.i ]
+  %8 = getelementptr i8, ptr %i.jf, i64 %.sink203.i.i
+  store i8 1, ptr %8, align 1
   %i.nc = getelementptr i8, ptr %i.jf, i64 10
   store i8 1, ptr %i.nc, align 2
   br label %bb.dy

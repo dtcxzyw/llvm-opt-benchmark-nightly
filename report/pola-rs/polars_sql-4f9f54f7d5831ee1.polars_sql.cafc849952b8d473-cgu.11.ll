@@ -201,31 +201,30 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 28, !dbg !14930
   %i.d = load i32, ptr %i.c, align 4, !dbg !14930, !noundef !13
   %i.e = icmp eq i32 %i.d, 0, !dbg !14933
-  br i1 %i.e, label %2, label %bb.b, !dbg !14933
-
-2:                                                ; preds = %bb.a
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !14934
-  store i32 2, ptr %3, align 8, !dbg !14934
-  br label %bb.c, !dbg !14935
+  br i1 %i.e, label %bb.c, label %bb.b, !dbg !14933
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = getelementptr inbounds nuw i8, ptr %1, i64 72, !dbg !14936
-  %i.g = load i32, ptr %i.f, align 8, !dbg !14936, !range !171, !noundef !13 ; 4 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 76, !dbg !14936
-  %i.i = load i32, ptr %i.h, align 4, !dbg !14936, !noundef !13 ; 4 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %1, i64 88, !dbg !14937
-  %i.k = tail call noundef nonnull align 8 ptr @_RNvXs6_NtCs5ERpa6sqwDS_7slotmap5basicINtB5_7SlotMapNtNtCs2mZqlW55729_12polars_utils5cache6LruKeyINtBP_8LruEntryReINtNtCscgRAwXFJnXP_4core6option6OptionlEEEINtNtNtB1S_3ops5index5IndexBN_E5indexCshquuC4dCYVj_10polars_sql(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %1, i32 noundef %i.g, i32 noundef %i.i, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @29), !dbg !14939
-  %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 8, !dbg !14940
-  %i.m = tail call noundef i64 @_RINvYNtNtCsk79RHlfmHDk_8foldhash4fast11RandomStateNtNtCscgRAwXFJnXP_4core4hash11BuildHasher8hash_oneRReECshquuC4dCYVj_10polars_sql(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.j, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.l), !dbg !14941 ; 2 uses
-  tail call void @_RNvMs1_NtCs2mZqlW55729_12polars_utils5cacheINtB5_8LruCacheReINtNtCscgRAwXFJnXP_4core6option6OptionlEE15lru_list_unlinkCshquuC4dCYVj_10polars_sql(ptr noalias noundef nonnull align 8 dereferenceable(96) %1, i32 noundef %i.g, i32 noundef %i.i), !dbg !14942
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !dbg !14944
-  call void @_RNvMs3_NtCs5ERpa6sqwDS_7slotmap5basicINtB5_7SlotMapNtNtCs2mZqlW55729_12polars_utils5cache6LruKeyINtBP_8LruEntryReINtNtCscgRAwXFJnXP_4core6option6OptionlEEE6removeCshquuC4dCYVj_10polars_sql(ptr noalias noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %i.b, ptr noalias noundef nonnull align 8 dereferenceable(32) %1, i32 noundef %i.g, i32 noundef %i.i), !dbg !14945
-  %i.n = load i32, ptr %i.b, align 8, !dbg !14946, !range !7202, !noundef !13 ; 2 uses
-  %.not = icmp eq i32 %i.n, 2, !dbg !14946
-  br i1 %.not, label %bb.g, label %bb.d, !dbg !14949, !prof !50
+  %i.f = getelementptr inbounds nuw i8, ptr %1, i64 72, !dbg !14934
+  %i.g = load i32, ptr %i.f, align 8, !dbg !14934, !range !171, !noundef !13 ; 4 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 76, !dbg !14934
+  %i.i = load i32, ptr %i.h, align 4, !dbg !14934, !noundef !13 ; 4 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %1, i64 88, !dbg !14935
+  %i.k = tail call noundef nonnull align 8 ptr @_RNvXs6_NtCs5ERpa6sqwDS_7slotmap5basicINtB5_7SlotMapNtNtCs2mZqlW55729_12polars_utils5cache6LruKeyINtBP_8LruEntryReINtNtCscgRAwXFJnXP_4core6option6OptionlEEEINtNtNtB1S_3ops5index5IndexBN_E5indexCshquuC4dCYVj_10polars_sql(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %1, i32 noundef %i.g, i32 noundef %i.i, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @29), !dbg !14937
+  %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 8, !dbg !14938
+  %i.m = tail call noundef i64 @_RINvYNtNtCsk79RHlfmHDk_8foldhash4fast11RandomStateNtNtCscgRAwXFJnXP_4core4hash11BuildHasher8hash_oneRReECshquuC4dCYVj_10polars_sql(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.j, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.l), !dbg !14939 ; 2 uses
+  tail call void @_RNvMs1_NtCs2mZqlW55729_12polars_utils5cacheINtB5_8LruCacheReINtNtCscgRAwXFJnXP_4core6option6OptionlEE15lru_list_unlinkCshquuC4dCYVj_10polars_sql(ptr noalias noundef nonnull align 8 dereferenceable(96) %1, i32 noundef %i.g, i32 noundef %i.i), !dbg !14940
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !dbg !14942
+  call void @_RNvMs3_NtCs5ERpa6sqwDS_7slotmap5basicINtB5_7SlotMapNtNtCs2mZqlW55729_12polars_utils5cache6LruKeyINtBP_8LruEntryReINtNtCscgRAwXFJnXP_4core6option6OptionlEEE6removeCshquuC4dCYVj_10polars_sql(ptr noalias noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %i.b, ptr noalias noundef nonnull align 8 dereferenceable(32) %1, i32 noundef %i.g, i32 noundef %i.i), !dbg !14943
+  %i.n = load i32, ptr %i.b, align 8, !dbg !14944, !range !7202, !noundef !13 ; 2 uses
+  %.not = icmp eq i32 %i.n, 2, !dbg !14944
+  br i1 %.not, label %bb.g, label %bb.d, !dbg !14947, !prof !50
 
-bb.c:                                             ; preds = %_RNvMs6_NtCs7tGzs63DEEy_9hashbrown3rawINtB5_8RawTableNtNtCs2mZqlW55729_12polars_utils5cache6LruKeyE13remove_taggedCshquuC4dCYVj_10polars_sql.exit, %2
-  ret void, !dbg !14935
+bb.c:                                             ; preds = %bb.a, %_RNvMs6_NtCs7tGzs63DEEy_9hashbrown3rawINtB5_8RawTableNtNtCs2mZqlW55729_12polars_utils5cache6LruKeyE13remove_taggedCshquuC4dCYVj_10polars_sql.exit
+  %.sink = phi i64 [ 20, %_RNvMs6_NtCs7tGzs63DEEy_9hashbrown3rawINtB5_8RawTableNtNtCs2mZqlW55729_12polars_utils5cache6LruKeyE13remove_taggedCshquuC4dCYVj_10polars_sql.exit ], [ 16, %bb.a ]
+  %.sroa.4.0.copyload.sink = phi i32 [ %.sroa.4.0.copyload, %_RNvMs6_NtCs7tGzs63DEEy_9hashbrown3rawINtB5_8RawTableNtNtCs2mZqlW55729_12polars_utils5cache6LruKeyE13remove_taggedCshquuC4dCYVj_10polars_sql.exit ], [ 2, %bb.a ]
+  %.sroa.64.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 %.sink, !dbg !14948
+  store i32 %.sroa.4.0.copyload.sink, ptr %.sroa.64.0..sroa_idx, align 4, !dbg !14948
+  ret void, !dbg !14949
 
 bb.d:                                             ; preds = %bb.b
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 4, !dbg !14950
@@ -345,9 +344,7 @@ _RNvMs6_NtCs7tGzs63DEEy_9hashbrown3rawINtB5_8RawTableNtNtCs2mZqlW55729_12polars_
   store i64 %.sroa.6.0.copyload, ptr %.sroa.42.0..sroa_idx, align 8, !dbg !15159
   %.sroa.53.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !15159
   store i32 %i.n, ptr %.sroa.53.0..sroa_idx, align 8, !dbg !15159
-  %.sroa.64.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 20, !dbg !15159
-  store i32 %.sroa.4.0.copyload, ptr %.sroa.64.0..sroa_idx, align 4, !dbg !15159
-  br label %bb.c, !dbg !14935
+  br label %bb.c, !dbg !14949
 }
 
 ; Function Attrs: nonlazybind optsize uwtable
@@ -750,26 +747,26 @@ begin_hunk_1_@memcmp
 !14931 = distinct !DISubprogram(name: "is_empty<polars_utils::cache::LruKey, polars_utils::cache::LruEntry<&str, core::option::Option<i32>>>", linkageName: "_RNvMs3_NtCs5ERpa6sqwDS_7slotmap5basicINtB5_7SlotMapNtNtCs2mZqlW55729_12polars_utils5cache6LruKeyINtBP_8LruEntryReINtNtCscgRAwXFJnXP_4core6option6OptionlEEE8is_emptyCshquuC4dCYVj_10polars_sql", scope: !397, file: !396, line: 246, type: !12, scopeLine: 246, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !13)
 !14932 = !DILocation(line: 115, column: 26, scope: !14929)
 !14933 = !DILocation(line: 115, column: 12, scope: !14929)
-!14934 = !DILocation(line: 116, column: 20, scope: !14929)
-!14935 = !DILocation(line: 127, column: 6, scope: !14929)
-!14936 = !DILocation(line: 118, column: 23, scope: !14929)
-!14937 = !DILocation(line: 119, column: 20, scope: !14938)
-!14938 = distinct !DILexicalBlock(scope: !14929, file: !8, line: 118, column: 9)
-!14939 = !DILocation(line: 119, column: 61, scope: !14938)
-!14940 = !DILocation(line: 119, column: 47, scope: !14938)
-!14941 = !DILocation(line: 119, column: 38, scope: !14938)
-!14942 = !DILocation(line: 120, column: 14, scope: !14943)
-!14943 = distinct !DILexicalBlock(scope: !14938, file: !8, line: 119, column: 9)
-!14944 = !DILocation(line: 121, column: 25, scope: !14943)
-!14945 = !DILocation(line: 121, column: 39, scope: !14943)
-!14946 = !DILocation(line: 1014, column: 15, scope: !14947, inlinedAt: !14948)
-!14947 = distinct !DISubprogram(name: "unwrap<polars_utils::cache::LruEntry<&str, core::option::Option<i32>>>", linkageName: "_RNvMNtCscgRAwXFJnXP_4core6optionINtB2_6OptionINtNtCs2mZqlW55729_12polars_utils5cache8LruEntryReIBv_lEEE6unwrapCshquuC4dCYVj_10polars_sql", scope: !223, file: !222, line: 1013, type: !12, scopeLine: 1013, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !13)
-!14948 = !DILocation(line: 121, column: 55, scope: !14943)
-!14949 = !DILocation(line: 1014, column: 9, scope: !14947, inlinedAt: !14948)
-!14950 = !DILocation(line: 1015, column: 18, scope: !14947, inlinedAt: !14948)
-!14951 = !DILocation(line: 121, column: 62, scope: !14943)
+!14934 = !DILocation(line: 118, column: 23, scope: !14929)
+!14935 = !DILocation(line: 119, column: 20, scope: !14936)
+!14936 = distinct !DILexicalBlock(scope: !14929, file: !8, line: 118, column: 9)
+!14937 = !DILocation(line: 119, column: 61, scope: !14936)
+!14938 = !DILocation(line: 119, column: 47, scope: !14936)
+!14939 = !DILocation(line: 119, column: 38, scope: !14936)
+!14940 = !DILocation(line: 120, column: 14, scope: !14941)
+!14941 = distinct !DILexicalBlock(scope: !14936, file: !8, line: 119, column: 9)
+!14942 = !DILocation(line: 121, column: 25, scope: !14941)
+!14943 = !DILocation(line: 121, column: 39, scope: !14941)
+!14944 = !DILocation(line: 1014, column: 15, scope: !14945, inlinedAt: !14946)
+!14945 = distinct !DISubprogram(name: "unwrap<polars_utils::cache::LruEntry<&str, core::option::Option<i32>>>", linkageName: "_RNvMNtCscgRAwXFJnXP_4core6optionINtB2_6OptionINtNtCs2mZqlW55729_12polars_utils5cache8LruEntryReIBv_lEEE6unwrapCshquuC4dCYVj_10polars_sql", scope: !223, file: !222, line: 1013, type: !12, scopeLine: 1013, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !13)
+!14946 = !DILocation(line: 121, column: 55, scope: !14941)
+!14947 = !DILocation(line: 1014, column: 9, scope: !14945, inlinedAt: !14946)
+!14948 = !DILocation(line: 0, scope: !14929)
+!14949 = !DILocation(line: 127, column: 6, scope: !14929)
+!14950 = !DILocation(line: 1015, column: 18, scope: !14945, inlinedAt: !14946)
+!14951 = !DILocation(line: 121, column: 62, scope: !14941)
 !14952 = !DILocation(line: 122, column: 9, scope: !14953)
-!14953 = distinct !DILexicalBlock(scope: !14943, file: !8, line: 121, column: 9)
+!14953 = distinct !DILexicalBlock(scope: !14941, file: !8, line: 121, column: 9)
 !14954 = !{!14955}
 !14955 = distinct !{!14955, !14956, !"_RINvMs6_NtCs7tGzs63DEEy_9hashbrown3rawINtB6_8RawTableNtNtCs2mZqlW55729_12polars_utils5cache6LruKeyE4findNCNvMs1_BR_INtBR_8LruCacheReINtNtCscgRAwXFJnXP_4core6option6OptionlEE7pop_lru0ECshquuC4dCYVj_10polars_sql: argument 0"}
 !14956 = distinct !{!14956, !"_RINvMs6_NtCs7tGzs63DEEy_9hashbrown3rawINtB6_8RawTableNtNtCs2mZqlW55729_12polars_utils5cache6LruKeyE4findNCNvMs1_BR_INtBR_8LruCacheReINtNtCscgRAwXFJnXP_4core6option6OptionlEE7pop_lru0ECshquuC4dCYVj_10polars_sql"}
@@ -869,7 +866,7 @@ begin_hunk_1_@memcmp
 !15050 = !DILocation(line: 89, column: 9, scope: !2269, inlinedAt: !15051)
 !15051 = distinct !DILocation(line: 2043, column: 23, scope: !2128, inlinedAt: !14968)
 !15052 = !DILocation(line: 90, column: 9, scope: !2269, inlinedAt: !15051)
-!15053 = !DILocation(line: 1016, column: 21, scope: !14947, inlinedAt: !14948)
+!15053 = !DILocation(line: 1016, column: 21, scope: !14945, inlinedAt: !14946)
 !15054 = !DILocation(line: 1233, column: 17, scope: !15055, inlinedAt: !15056)
 !15055 = distinct !DISubprogram(name: "unwrap<hashbrown::table::OccupiedEntry<polars_utils::cache::LruKey, allocator_api2::stable::alloc::global::Global>, hashbrown::table::AbsentEntry<polars_utils::cache::LruKey, allocator_api2::stable::alloc::global::Global>>", linkageName: "_RNvMNtCscgRAwXFJnXP_4core6resultINtB2_6ResultINtNtCs7tGzs63DEEy_9hashbrown5table13OccupiedEntryNtNtCs2mZqlW55729_12polars_utils5cache6LruKeyEINtBK_11AbsentEntryB1v_EE6unwrapCshquuC4dCYVj_10polars_sql", scope: !375, file: !374, line: 1227, type: !12, scopeLine: 1227, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !13)
 !15056 = distinct !DILocation(line: 124, column: 14, scope: !14953)

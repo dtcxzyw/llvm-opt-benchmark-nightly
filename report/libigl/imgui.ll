@@ -204,7 +204,7 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local void @_ZN5ImGui10SetFocusIDEjP11ImGuiWindow(i32 noundef %0, ptr noundef %1) local_unnamed_addr #44 {
 bb.a:
-  %i.a = load ptr, ptr @GImGui, align 8, !tbaa !49 ; 11 uses
+  %i.a = load ptr, ptr @GImGui, align 8, !tbaa !49 ; 10 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 292
   %i.c = load i32, ptr %i.b, align 4, !tbaa !863  ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 7688 ; 2 uses
@@ -256,19 +256,9 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.ab = getelementptr inbounds nuw i8, ptr %i.a, i64 7312
   %i.ac = load i32, ptr %i.ab, align 8, !tbaa !414
   %i.ad = icmp eq i32 %i.ac, 4
-  br i1 %i.ad, label %2, label %4
-
-2:                                                ; preds = %bb.e
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 7763
-  store i8 1, ptr %3, align 1, !tbaa !421
-  br label %6
-
-4:                                                ; preds = %bb.e
-  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 7762
-  store i8 1, ptr %5, align 2, !tbaa !320
-  br label %6
-
-6:                                                ; preds = %4, %2
+  %. = select i1 %i.ad, i64 7763, i64 7762
+  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 %.
+  store i8 1, ptr %2, align 1, !tbaa !213
   ret void
 }
 
@@ -671,7 +661,7 @@ bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
 define dso_local void @_ZN5ImGui25NavMoveRequestApplyResultEv() local_unnamed_addr #49 {
 bb.a:
   %0 = alloca %struct.ImRect, align 8             ; 5 uses
-  %i.a = load ptr, ptr @GImGui, align 8, !tbaa !49 ; 34 uses
+  %i.a = load ptr, ptr @GImGui, align 8, !tbaa !49 ; 33 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 7848
   %i.c = load i32, ptr %i.b, align 8, !tbaa !971
   %.not = icmp eq i32 %i.c, 0
@@ -708,12 +698,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.o = and i32 %i.l, 2048
   %i.p = icmp eq i32 %i.o, 0
   %or.cond = and i1 %.not90, %i.p
-  br i1 %or.cond, label %1, label %bb.ah
-
-1:                                                ; preds = %bb.f
-  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 7762
-  store i8 0, ptr %2, align 2, !tbaa !320
-  br label %.sink.split
+  br i1 %or.cond, label %.sink.split, label %bb.ah
 
 bb.g:                                             ; preds = %bb.b, %bb.c
   %.ph = phi ptr [ %i.e, %bb.c ], [ %i.d, %bb.b ] ; 3 uses
@@ -977,11 +962,13 @@ bb.af:                                            ; preds = %bb.ae, %bb.ad
 bb.ag:                                            ; preds = %bb.af
   %i.eg = getelementptr inbounds nuw i8, ptr %i.a, i64 7762
   store i8 0, ptr %i.eg, align 2, !tbaa !320
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 7761
-  store i8 1, ptr %3, align 1, !tbaa !471
   br label %.sink.split
 
-.sink.split:                                      ; preds = %1, %bb.ag
+.sink.split:                                      ; preds = %bb.f, %bb.ag
+  %.sink117 = phi i64 [ 7761, %bb.ag ], [ 7762, %bb.f ]
+  %.sink = phi i8 [ 1, %bb.ag ], [ 0, %bb.f ]
+  %1 = getelementptr inbounds nuw i8, ptr %i.a, i64 %.sink117
+  store i8 %.sink, ptr %1, align 1, !tbaa !213
   %i.eh = getelementptr inbounds nuw i8, ptr %i.a, i64 7763
   store i8 1, ptr %i.eh, align 1, !tbaa !421
   br label %bb.ah

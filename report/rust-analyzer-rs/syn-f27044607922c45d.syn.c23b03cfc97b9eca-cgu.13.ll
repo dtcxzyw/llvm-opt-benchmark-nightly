@@ -203,9 +203,7 @@ bb.bd:                                            ; preds = %bb.bb
   store <2 x i32> %i.bu, ptr %.sroa.2.sroa.221.0..sroa.2.0..sroa_idx12.sroa_idx, align 8
   %.sroa.2.sroa.423.0..sroa.2.0..sroa_idx12.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40
   store ptr %i.bl, ptr %.sroa.2.sroa.423.0..sroa.2.0..sroa_idx12.sroa_idx, align 8
-  %.sroa.2.sroa.524.0..sroa.2.0..sroa_idx12.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 48
-  store i32 %.sroa.0.0.copyload, ptr %.sroa.2.sroa.524.0..sroa.2.0..sroa_idx12.sroa_idx, align 8
-  br label %.critedge
+  br label %.critedge.sink.split
 
 bb.be:                                            ; preds = %bb.bc
   %i.bv = load i32, ptr %i.bb, align 4
@@ -241,9 +239,7 @@ _RNvMNtCshzWfHUSfYae_4core6optionINtB2_6OptionNtNtCsgFSQ9XOTBNe_3syn5token5Const
   store ptr %i.bl, ptr %.sroa.2.sroa.4.0..sroa.2.0..sroa_idx.sroa_idx, align 8
   %.sroa.2.sroa.5.0..sroa.2.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 48
   store i32 %.sroa.0.0.copyload, ptr %.sroa.2.sroa.5.0..sroa.2.0..sroa_idx.sroa_idx, align 8
-  %.sroa.2.sroa.6.0..sroa.2.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 52
-  store i32 %i.br, ptr %.sroa.2.sroa.6.0..sroa.2.0..sroa_idx.sroa_idx, align 4
-  br label %.critedge
+  br label %.critedge.sink.split
 
 bb.bi:                                            ; preds = %.thread43.thread, %.thread47, %bb.bj, %bb.bh
   %i.bx = landingpad { ptr, i32 }
@@ -255,7 +251,14 @@ bb.bj:                                            ; preds = %bb.bh
   invoke void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCsbSS6DM8SDEO_5alloc5boxed3BoxNtNtCsgFSQ9XOTBNe_3syn4expr4ExprEEB1e_(ptr nonnull align 8 %i.o) #18
           to label %.thread43.thread unwind label %bb.bi
 
-.critedge:                                        ; preds = %_RNvMNtCshzWfHUSfYae_4core6optionINtB2_6OptionNtNtCsgFSQ9XOTBNe_3syn5token5ConstE6unwrapBL_.exit, %bb.bd, %bb.s
+.critedge.sink.split:                             ; preds = %bb.bd, %_RNvMNtCshzWfHUSfYae_4core6optionINtB2_6OptionNtNtCsgFSQ9XOTBNe_3syn5token5ConstE6unwrapBL_.exit
+  %.sink72 = phi i64 [ 52, %_RNvMNtCshzWfHUSfYae_4core6optionINtB2_6OptionNtNtCsgFSQ9XOTBNe_3syn5token5ConstE6unwrapBL_.exit ], [ 48, %bb.bd ]
+  %.sink = phi i32 [ %i.br, %_RNvMNtCshzWfHUSfYae_4core6optionINtB2_6OptionNtNtCsgFSQ9XOTBNe_3syn5token5ConstE6unwrapBL_.exit ], [ %.sroa.0.0.copyload, %bb.bd ]
+  %.sroa.2.sroa.6.0..sroa.2.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 %.sink72
+  store i32 %.sink, ptr %.sroa.2.sroa.6.0..sroa.2.0..sroa_idx.sroa_idx, align 4
+  br label %.critedge
+
+.critedge:                                        ; preds = %.critedge.sink.split, %bb.s
   call void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsgFSQ9XOTBNe_3syn5parse11ParseBufferEBF_(ptr nonnull align 8 %i.ae)
   br label %bb.bk
 

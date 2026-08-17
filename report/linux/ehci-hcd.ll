@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %bb.e, %list_splice_
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
 define internal fastcc noundef ptr @qh_make(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef captures(none) %1) unnamed_addr #0 align 16 {
 bb.a:
-  %i.a = tail call fastcc ptr @ehci_qh_alloc(ptr noundef %0, i32 noundef 2080) #21, !srcloc !204 ; 26 uses
+  %i.a = tail call fastcc ptr @ehci_qh_alloc(ptr noundef %0, i32 noundef 2080) #21, !srcloc !204 ; 25 uses
   %i.b = getelementptr i8, ptr %1, i64 64         ; 6 uses
   %i.c = load ptr, ptr %i.b, align 8              ; 2 uses
   %i.d = getelementptr i8, ptr %i.c, i64 48
@@ -305,9 +305,7 @@ bb.g:                                             ; preds = %.sink.split, %bb.f
   store i8 %i.bk, ptr %i.bl, align 4
   %i.bm = lshr i32 %i.bj, 3
   %i.bn = trunc nuw nsw i32 %i.bm to i8
-  %2 = getelementptr i8, ptr %i.a, i64 125
-  store i8 %i.bn, ptr %2, align 1
-  br label %bb.l
+  br label %.sink.split181
 
 bb.h:                                             ; preds = %bb.d
   %i.bo = tail call i64 @usb_calc_bus_time(i32 noundef %i.al, i32 noundef %i.m, i32 noundef 0, i32 noundef %i.w) #20
@@ -376,11 +374,16 @@ fls.exit:                                         ; preds = %bb.k, %bb.j
   %i.dd = getelementptr i8, ptr %i.a, i64 125
   store i8 %i.dc, ptr %i.dd, align 1
   %i.de = shl i8 %i.dc, 3
-  %3 = getelementptr i8, ptr %i.a, i64 124
-  store i8 %i.de, ptr %3, align 4
+  br label %.sink.split181
+
+.sink.split181:                                   ; preds = %fls.exit, %bb.g
+  %.sink183 = phi i64 [ 125, %bb.g ], [ 124, %fls.exit ]
+  %.sink = phi i8 [ %i.bn, %bb.g ], [ %i.de, %fls.exit ]
+  %2 = getelementptr i8, ptr %i.a, i64 %.sink183
+  store i8 %.sink, ptr %2, align 1
   br label %bb.l
 
-bb.l:                                             ; preds = %bb.g, %fls.exit, %bb.c
+bb.l:                                             ; preds = %.sink.split181, %bb.c
   %i.df = load ptr, ptr %i.b, align 8
   %i.dg = getelementptr i8, ptr %i.a, i64 80
   store ptr %i.df, ptr %i.dg, align 8

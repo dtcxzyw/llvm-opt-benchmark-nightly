@@ -204,7 +204,7 @@ bb.aq:                                            ; preds = %bb.ao
   %i.wd = sext i32 %i.wc to i64
   %i.we = getelementptr inbounds i8, ptr %i.vz, i64 %i.wd
   %i.wf = shl nuw nsw i64 %indvars.iv110.i, 2
-  %i.wg = getelementptr inbounds nuw i8, ptr %i.we, i64 %i.wf ; 3 uses
+  %i.wg = getelementptr inbounds nuw i8, ptr %i.we, i64 %i.wf ; 2 uses
   %i.wh = getelementptr inbounds nuw i8, ptr %i.wg, i64 2
   %i.wi = load i8, ptr %i.wh, align 1, !tbaa !62
   %i.wj = zext i8 %i.wi to i32                    ; 2 uses
@@ -212,11 +212,7 @@ bb.aq:                                            ; preds = %bb.ao
   %i.wl = getelementptr inbounds nuw i8, ptr %i.wk, i64 104
   %i.wm = load i32, ptr %i.wl, align 8, !tbaa !113
   %.not.i118 = icmp sgt i32 %i.wm, %i.wj
-  br i1 %.not.i118, label %bb.ar, label %6
-
-6:                                                ; preds = %.lr.ph99.i
-  store i32 0, ptr %i.wg, align 1, !tbaa !62
-  br label %bb.as
+  br i1 %.not.i118, label %bb.ar, label %bb.as
 
 bb.ar:                                            ; preds = %.lr.ph99.i
   %i.wn = load ptr, ptr %i.wk, align 8, !tbaa !103
@@ -224,10 +220,11 @@ bb.ar:                                            ; preds = %.lr.ph99.i
   %i.wp = zext nneg i32 %i.wo to i64
   %i.wq = getelementptr inbounds nuw i8, ptr %i.wn, i64 %i.wp
   %i.wr = load i32, ptr %i.wq, align 4, !tbaa !62
-  store i32 %i.wr, ptr %i.wg, align 4, !tbaa !62
   br label %bb.as
 
-bb.as:                                            ; preds = %bb.ar, %6
+bb.as:                                            ; preds = %bb.ar, %.lr.ph99.i
+  %.sink.i = phi i32 [ %i.wr, %bb.ar ], [ 0, %.lr.ph99.i ]
+  store i32 %.sink.i, ptr %i.wg, align 1, !tbaa !62
   %indvars.iv.next111.i = add nuw nsw i64 %indvars.iv110.i, 1 ; 2 uses
   %i.ws = load ptr, ptr %i.gz, align 8, !tbaa !153 ; 3 uses
   %i.wt = getelementptr inbounds nuw i8, ptr %i.ws, i64 104

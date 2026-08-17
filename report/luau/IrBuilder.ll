@@ -202,16 +202,13 @@ _ZN4Luau7CodeGen9IrBuilder11blockAtInstEj.exit:   ; preds = %bb.c, %bb.d
   store i8 0, ptr %i.al, align 8, !tbaa !12
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 10
   store i8 1, ptr %i.am, align 2, !tbaa !115
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 12
-  store i32 %.sroa.0.0.i, ptr %5, align 4, !tbaa !138
-  br label %6
+  br label %bb.e
 
-bb.e:                                             ; preds = %bb.a
-  %i.an = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i32 %i.e, ptr %i.an, align 8, !tbaa !116
-  br label %6
-
-6:                                                ; preds = %bb.e, %_ZN4Luau7CodeGen9IrBuilder11blockAtInstEj.exit
+bb.e:                                             ; preds = %bb.a, %_ZN4Luau7CodeGen9IrBuilder11blockAtInstEj.exit
+  %.sink11 = phi i64 [ 12, %_ZN4Luau7CodeGen9IrBuilder11blockAtInstEj.exit ], [ 16, %bb.a ]
+  %.sink = phi i32 [ %.sroa.0.0.i, %_ZN4Luau7CodeGen9IrBuilder11blockAtInstEj.exit ], [ %i.e, %bb.a ]
+  %i.an = getelementptr inbounds nuw i8, ptr %0, i64 %.sink11
+  store i32 %.sink, ptr %i.an, align 4, !tbaa !138
   ret void
 }
 

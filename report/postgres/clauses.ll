@@ -203,9 +203,7 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i
   %i.ai = load i32, ptr %i.a, align 4
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 12
-  store i32 %i.ai, ptr %2, align 4
-  br label %.critedge
+  br label %.critedge.sink.split
 
 bb.k:                                             ; preds = %bb.f
   %i.aj = tail call i32 @get_negator(i32 noundef %i.u) #7 ; 3 uses
@@ -239,16 +237,21 @@ bb.o:                                             ; preds = %bb.n
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 12
   store i32 %i.ax, ptr %i.ay, align 4
   %i.az = call i32 @get_opcode(i32 noundef %i.aj) #7
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i32 %i.az, ptr %3, align 8
-  br label %.critedge
+  br label %.critedge.sink.split
 
 .critedge.thread:                                 ; preds = %bb.c, %bb.m, %bb.l, %bb.k, %bb.h, %bb.g, %bb.e, %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   br label %bb.p
 
-.critedge:                                        ; preds = %bb.n, %bb.o, %bb.i, %bb.j
+.critedge.sink.split:                             ; preds = %bb.j, %bb.o
+  %.sink42 = phi i64 [ 16, %bb.o ], [ 12, %bb.j ]
+  %.sink = phi i32 [ %i.az, %bb.o ], [ %i.ai, %bb.j ]
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 %.sink42
+  store i32 %.sink, ptr %2, align 4
+  br label %.critedge
+
+.critedge:                                        ; preds = %.critedge.sink.split, %bb.n, %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   br label %bb.q

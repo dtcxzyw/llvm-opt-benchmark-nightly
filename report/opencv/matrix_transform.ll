@@ -204,11 +204,15 @@ define void @_ZN2cv6rotateERKNS_11_InputArrayERKNS_12_OutputArrayEi(ptr noundef 
 bb.a:
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %4 = alloca %"class.std::allocator", align 1    ; 3 uses
-  %5 = alloca %"class.cv::Mat", align 8           ; 18 uses
+  %5 = alloca %"class.cv::Mat", align 8           ; 14 uses
   %6 = alloca %"class.cv::Mat", align 8           ; 7 uses
   %7 = alloca %"class.cv::_InputArray", align 8   ; 10 uses
   %i.a = tail call noundef i32 @_ZNK2cv11_InputArray4dimsEi(ptr noundef nonnull align 8 dereferenceable(24) %0, i32 noundef -1)
   %i.b = icmp slt i32 %i.a, 3
+  %.sink61.sroa.gep = getelementptr inbounds nuw i8, ptr %5, i64 12
+  %.sink61.sroa.gep63 = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
+  %.sink62.sroa.gep = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %.sink62.sroa.gep64 = getelementptr inbounds nuw i8, ptr %5, i64 12 ; 2 uses
   br i1 %i.b, label %bb.g, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -298,59 +302,35 @@ _ZNK2cv11_InputArray6getMatEi.exit:               ; preds = %bb.m, %bb.n
           to label %bb.o unwind label %bb.q
 
 bb.o:                                             ; preds = %_ZNK2cv11_InputArray6getMatEi.exit
-  br i1 %i.r, label %bb.p, label %8
+  br i1 %i.r, label %bb.p, label %bb.r
 
 bb.p:                                             ; preds = %bb.o
   invoke void @_ZNK2cv12_OutputArray7releaseEv(ptr noundef nonnull align 8 dereferenceable(24) %1)
           to label %bb.ab unwind label %bb.q
 
-bb.q:                                             ; preds = %.invoke, %bb.p, %_ZNK2cv11_InputArray6getMatEi.exit
+bb.q:                                             ; preds = %bb.t, %bb.p, %_ZNK2cv11_InputArray6getMatEi.exit
   %i.s = landingpad { ptr, i32 }
           cleanup
   br label %bb.ae
 
-8:                                                ; preds = %bb.o
-  switch i32 %2, label %bb.t [
-    i32 0, label %9
-    i32 1, label %bb.r
-    i32 2, label %bb.s
+bb.r:                                             ; preds = %bb.o
+  switch i32 %2, label %bb.s [
+    i32 0, label %bb.t
+    i32 2, label %bb.t
   ]
 
-9:                                                ; preds = %8
-  %10 = getelementptr inbounds nuw i8, ptr %5, i64 12
-  %11 = load i32, ptr %10, align 4, !tbaa !47
-  %12 = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %13 = load i32, ptr %12, align 8, !tbaa !54
-  br label %.invoke
+bb.s:                                             ; preds = %bb.r
+  br label %bb.t
 
-bb.r:                                             ; preds = %8
-  %14 = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %15 = load i32, ptr %14, align 8, !tbaa !54
-  %16 = getelementptr inbounds nuw i8, ptr %5, i64 12
-  %17 = load i32, ptr %16, align 4, !tbaa !47
-  br label %.invoke
-
-bb.s:                                             ; preds = %8
-  %18 = getelementptr inbounds nuw i8, ptr %5, i64 12
-  %19 = load i32, ptr %18, align 4, !tbaa !47
-  %20 = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %21 = load i32, ptr %20, align 8, !tbaa !54
-  br label %.invoke
-
-bb.t:                                             ; preds = %8
-  %22 = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %23 = load i32, ptr %22, align 8, !tbaa !54
-  %24 = getelementptr inbounds nuw i8, ptr %5, i64 12
-  %i.t = load i32, ptr %24, align 4, !tbaa !47
-  br label %.invoke
-
-.invoke:                                          ; preds = %9, %bb.r, %bb.s, %bb.t
-  %25 = phi i32 [ %23, %bb.t ], [ %19, %bb.s ], [ %15, %bb.r ], [ %11, %9 ]
-  %26 = phi i32 [ %i.t, %bb.t ], [ %21, %bb.s ], [ %17, %bb.r ], [ %13, %9 ]
-  invoke void @_ZNK2cv12_OutputArray6createEiiiibNS0_9DepthMaskE(ptr noundef nonnull align 8 dereferenceable(24) %1, i32 noundef %25, i32 noundef %26, i32 noundef %i.q, i32 noundef -1, i1 noundef zeroext false, i32 noundef 0)
+bb.t:                                             ; preds = %bb.r, %bb.r, %bb.s
+  %.sink62.sroa.phi = phi ptr [ %.sink62.sroa.gep, %bb.s ], [ %.sink62.sroa.gep64, %bb.r ], [ %.sink62.sroa.gep64, %bb.r ]
+  %.sink61.sroa.phi = phi ptr [ %.sink61.sroa.gep, %bb.s ], [ %.sink61.sroa.gep63, %bb.r ], [ %.sink61.sroa.gep63, %bb.r ]
+  %8 = load i32, ptr %.sink62.sroa.phi, align 4, !tbaa !13
+  %i.t = load i32, ptr %.sink61.sroa.phi, align 4, !tbaa !13
+  invoke void @_ZNK2cv12_OutputArray6createEiiiibNS0_9DepthMaskE(ptr noundef nonnull align 8 dereferenceable(24) %1, i32 noundef %8, i32 noundef %i.t, i32 noundef %i.q, i32 noundef -1, i1 noundef zeroext false, i32 noundef 0)
           to label %bb.u unwind label %bb.q
 
-bb.u:                                             ; preds = %.invoke
+bb.u:                                             ; preds = %bb.t
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #17
   %i.u = invoke noundef i32 @_ZNK2cv11_InputArray4kindEv(ptr noundef nonnull align 8 dereferenceable(24) %1)
           to label %.noexc unwind label %bb.x

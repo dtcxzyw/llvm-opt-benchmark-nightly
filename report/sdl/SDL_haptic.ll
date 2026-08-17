@@ -201,10 +201,6 @@ bb.d:                                             ; preds = %bb.c
   store i16 1000, ptr %i.m, align 2
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 88
   store i16 16384, ptr %i.n, align 8
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 76
-  store i32 5000, ptr %1, align 4
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 94
-  store i16 0, ptr %2, align 2
   br label %bb.h
 
 bb.e:                                             ; preds = %bb.c
@@ -214,10 +210,6 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.e
   store i16 2048, ptr %i.a, align 8
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 60
-  store i32 5000, ptr %3, align 4
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 64
-  store i16 16384, ptr %4, align 8
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.e
@@ -225,9 +217,15 @@ bb.g:                                             ; preds = %bb.e
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.f, %bb.d
-  %.sink28.a = phi i64 [ 66, %bb.f ], [ 98, %bb.d ]
-  %.sink = phi i16 [ 16384, %bb.f ], [ 0, %bb.d ]
-  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 %.sink28.a
+  %.sink33 = phi i64 [ 60, %bb.f ], [ 76, %bb.d ]
+  %.sink28.a = phi i64 [ 64, %bb.f ], [ 94, %bb.d ]
+  %.sink = phi i16 [ 16384, %bb.f ], [ 0, %bb.d ] ; 2 uses
+  %.sink28 = phi i64 [ 66, %bb.f ], [ 98, %bb.d ]
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 %.sink33
+  store i32 5000, ptr %1, align 4
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 %.sink28.a
+  store i16 %.sink, ptr %2, align 2
+  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 %.sink28
   store i16 %.sink, ptr %i.q, align 2
   %i.r = tail call i32 @SDL_CreateHapticEffect_REAL(ptr noundef nonnull %0, ptr noundef nonnull %i.a) ; 2 uses
   store i32 %i.r, ptr %i.f, align 4
@@ -285,33 +283,29 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.d, %bb.e, %bb.f
   %.022 = phi float [ %1, %bb.e ], [ 0.000000e+00, %bb.f ], [ 1.000000e+00, %bb.d ]
   %i.k = fmul float %.022, 3.276700e+04
-  %i.l = fptosi float %i.k to i16                 ; 3 uses
+  %i.l = fptosi float %i.k to i16                 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   %i.n = load i16, ptr %i.m, align 8
   switch i16 %i.n, label %bb.j [
-    i16 2, label %bb.h
-    i16 2048, label %bb.i
+    i16 2, label %bb.i
+    i16 2048, label %bb.h
   ]
 
 bb.h:                                             ; preds = %bb.g
-  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 88
+  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 64
   store i16 %i.l, ptr %i.o, align 8
-  br label %.sink.split
+  br label %bb.i
 
-bb.i:                                             ; preds = %bb.g
-  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 64
-  store i16 %i.l, ptr %i.p, align 8
-  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 66
-  store i16 %i.l, ptr %i.q, align 2
-  br label %.sink.split
-
-.sink.split:                                      ; preds = %bb.h, %bb.i
-  %.sink31 = phi i64 [ 60, %bb.i ], [ 76, %bb.h ]
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 %.sink31
-  store i32 %2, ptr %3, align 4
+bb.i:                                             ; preds = %bb.g, %bb.h
+  %.sink32 = phi i64 [ 66, %bb.h ], [ 88, %bb.g ]
+  %.sink31 = phi i64 [ 60, %bb.h ], [ 76, %bb.g ]
+  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 %.sink32
+  store i16 %i.l, ptr %i.p, align 2
+  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 %.sink31
+  store i32 %2, ptr %i.q, align 4
   br label %bb.j
 
-bb.j:                                             ; preds = %.sink.split, %bb.g
+bb.j:                                             ; preds = %bb.i, %bb.g
   %i.r = tail call zeroext i1 @SDL_UpdateHapticEffect_REAL(ptr noundef nonnull %0, i32 noundef %i.f, ptr noundef nonnull %i.m)
   br i1 %i.r, label %bb.k, label %bb.l
 

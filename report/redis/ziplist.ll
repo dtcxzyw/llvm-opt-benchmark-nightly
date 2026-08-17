@@ -201,7 +201,6 @@ bb.h:                                             ; preds = %bb.e
 bb.i:                                             ; preds = %bb.e
   store i32 0, ptr %i.o, align 8, !tbaa !32
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 12
-  store i32 0, ptr %i.ad, align 4, !tbaa !23
   br label %bb.l
 
 bb.j:                                             ; preds = %bb.d
@@ -217,13 +216,11 @@ bb.k:                                             ; preds = %switch.hole_check, 
   %or.cond = icmp ult i8 %i.ai, -14
   %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 12
   store i32 0, ptr %i.aj, align 4, !tbaa !23
-  br i1 %or.cond, label %2, label %bb.m, !prof !31
+  br i1 %or.cond, label %bb.l, label %bb.m, !prof !31
 
-2:                                                ; preds = %bb.k
-  store i32 0, ptr %i.ae, align 8, !tbaa !32
-  br label %bb.l
-
-bb.l:                                             ; preds = %2, %bb.i
+bb.l:                                             ; preds = %bb.k, %bb.i
+  %.sink70 = phi ptr [ %i.ad, %bb.i ], [ %i.ae, %bb.k ]
+  store i32 0, ptr %.sink70, align 4, !tbaa !9
   tail call void @_serverAssert(ptr noundef nonnull @.str.34, ptr noundef nonnull @.str.1, i32 noundef 619) #18
   tail call void @abort() #19
   unreachable

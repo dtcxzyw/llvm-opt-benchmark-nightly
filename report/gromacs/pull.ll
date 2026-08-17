@@ -204,7 +204,7 @@ bb.ej:                                            ; preds = %bb.ei, %bb.eh
 
 bb.ek:                                            ; preds = %bb.ej, %bb.ed
   %i.xn = icmp eq i32 %.0106.lcssa67.i, 0
-  br i1 %i.xn, label %15, label %.preheader.i
+  br i1 %i.xn, label %_ZL21init_pull_group_indexP8_IO_FILERKN3gmx7MpiCommEiP17pull_group_work_tbPKiRK10gmx_mtop_tPK10t_inputrecf.exit, label %.preheader.i
 
 .preheader.i:                                     ; preds = %bb.ek
   %i.xo = load ptr, ptr %i.oh, align 8, !tbaa !19
@@ -223,21 +223,20 @@ bb.ek:                                            ; preds = %bb.ej, %bb.ed
   %or.cond124.i = select i1 %or.cond3.i, i1 %i.xz, i1 false
   br i1 %or.cond124.i, label %bb.el, label %bb.em
 
-15:                                               ; preds = %bb.ek
-  %16 = getelementptr inbounds nuw i8, ptr %i.of, i64 144
-  store float -1.000000e+00, ptr %16, align 8, !tbaa !208
-  br label %_ZL21init_pull_group_indexP8_IO_FILERKN3gmx7MpiCommEiP17pull_group_work_tbPKiRK10gmx_mtop_tPK10t_inputrecf.exit
-
 bb.el:                                            ; preds = %.preheader.i
   %i.ya = call i32 (ptr, ptr, ...) @fprintf(ptr noundef nonnull %0, ptr noundef nonnull @.str.88, i32 noundef %i.ra) #20 ; 0 uses
   br label %bb.em
 
 bb.em:                                            ; preds = %bb.el, %.preheader.i
-  %i.yb = getelementptr inbounds nuw i8, ptr %i.of, i64 140
-  store <2 x float> <float 1.000000e+00, float 0.000000e+00>, ptr %i.yb, align 4, !tbaa !68
+  %i.yb = getelementptr inbounds nuw i8, ptr %i.of, i64 144
+  store float 0.000000e+00, ptr %i.yb, align 8, !tbaa !208
   br label %_ZL21init_pull_group_indexP8_IO_FILERKN3gmx7MpiCommEiP17pull_group_work_tbPKiRK10gmx_mtop_tPK10t_inputrecf.exit
 
-_ZL21init_pull_group_indexP8_IO_FILERKN3gmx7MpiCommEiP17pull_group_work_tbPKiRK10gmx_mtop_tPK10t_inputrecf.exit: ; preds = %15, %bb.em
+_ZL21init_pull_group_indexP8_IO_FILERKN3gmx7MpiCommEiP17pull_group_work_tbPKiRK10gmx_mtop_tPK10t_inputrecf.exit: ; preds = %bb.ek, %bb.em
+  %.sink79.i = phi i64 [ 140, %bb.em ], [ 144, %bb.ek ]
+  %.sink.i = phi float [ 1.000000e+00, %bb.em ], [ -1.000000e+00, %bb.ek ]
+  %15 = getelementptr inbounds nuw i8, ptr %i.of, i64 %.sink79.i
+  store float %.sink.i, ptr %15, align 4, !tbaa !68
   %.pre466 = load ptr, ptr %i.nf, align 8, !tbaa !203
   %.pre467 = load ptr, ptr %i.d, align 8, !tbaa !108
   br label %bb.eo

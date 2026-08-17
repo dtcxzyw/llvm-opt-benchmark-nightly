@@ -203,7 +203,7 @@ bb.a:
   %2 = alloca %"class.con::PeerHelper", align 8   ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #29
   call void @_ZN3con10Connection11getPeerNoExEt(ptr dead_on_unwind nonnull writable sret(%"class.con::PeerHelper") align 8 %2, ptr noundef nonnull align 8 dereferenceable(520) %0, i16 noundef zeroext 1)
-  %i.a = load ptr, ptr %2, align 8, !tbaa !260    ; 21 uses
+  %i.a = load ptr, ptr %2, align 8, !tbaa !260    ; 16 uses
   %.not.i = icmp eq ptr %i.a, null
   br i1 %.not.i, label %bb.b, label %bb.e
 
@@ -276,10 +276,6 @@ _ZN3con7Channel24getCurrentDownloadRateKBEv.exit.us.1: ; preds = %_ZN3con7Channe
 
 _ZN3con7Channel24getCurrentDownloadRateKBEv.exit.us.2: ; preds = %_ZN3con7Channel24getCurrentDownloadRateKBEv.exit.us.1
   %.1.us.1 = fadd nsz float %i.h, %i.m
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 1648
-  %4 = load float, ptr %3, align 8, !tbaa !250
-  %5 = tail call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(40) %i.o) #29 ; 0 uses
-  %.1.us.2 = fadd nsz float %.1.us.1, %4
   br label %.split58.us
 
 _ZN3con7Channel20getAvgDownloadRateKBEv.exit.us:  ; preds = %.split.split.us60.preheader
@@ -302,10 +298,6 @@ _ZN3con7Channel20getAvgDownloadRateKBEv.exit.us.1: ; preds = %_ZN3con7Channel20g
 
 _ZN3con7Channel20getAvgDownloadRateKBEv.exit.us.2: ; preds = %_ZN3con7Channel20getAvgDownloadRateKBEv.exit.us.1
   %.1.us65.1 = fadd nsz float %i.r, %i.w
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 1652
-  %7 = load float, ptr %6, align 4, !tbaa !257
-  %8 = tail call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(40) %i.y) #29 ; 0 uses
-  %.1.us65.2 = fadd nsz float %.1.us65.1, %7
   br label %.split58.us
 
 _ZN3con7Channel24getCurrentIncomingRateKBEv.exit.us: ; preds = %.split.split.us74.preheader
@@ -328,10 +320,6 @@ _ZN3con7Channel24getCurrentIncomingRateKBEv.exit.us.1: ; preds = %_ZN3con7Channe
 
 _ZN3con7Channel24getCurrentIncomingRateKBEv.exit.us.2: ; preds = %_ZN3con7Channel24getCurrentIncomingRateKBEv.exit.us.1
   %.1.us79.1 = fadd nsz float %i.ab, %i.ag
-  %9 = getelementptr inbounds nuw i8, ptr %i.a, i64 1660
-  %10 = load float, ptr %9, align 4, !tbaa !252
-  %11 = tail call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(40) %i.ai) #29 ; 0 uses
-  %.1.us79.2 = fadd nsz float %.1.us79.1, %10
   br label %.split58.us
 
 _ZN3con7Channel20getAvgIncomingRateKBEv.exit.us:  ; preds = %.split.split.us88.preheader
@@ -354,10 +342,6 @@ _ZN3con7Channel20getAvgIncomingRateKBEv.exit.us.1: ; preds = %_ZN3con7Channel20g
 
 _ZN3con7Channel20getAvgIncomingRateKBEv.exit.us.2: ; preds = %_ZN3con7Channel20getAvgIncomingRateKBEv.exit.us.1
   %.1.us93.1 = fadd nsz float %i.al, %i.aq
-  %12 = getelementptr inbounds nuw i8, ptr %i.a, i64 1664
-  %13 = load float, ptr %12, align 8, !tbaa !259
-  %14 = tail call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(40) %i.as) #29 ; 0 uses
-  %.1.us93.2 = fadd nsz float %.1.us93.1, %13
   br label %.split58.us
 
 _ZN3con7Channel16getAvgLossRateKBEv.exit.us:      ; preds = %.split.split.us102.preheader
@@ -380,17 +364,19 @@ _ZN3con7Channel16getAvgLossRateKBEv.exit.us.1:    ; preds = %_ZN3con7Channel16ge
 
 _ZN3con7Channel16getAvgLossRateKBEv.exit.us.2:    ; preds = %_ZN3con7Channel16getAvgLossRateKBEv.exit.us.1
   %.1.us107.1 = fadd nsz float %i.av, %i.ba
-  %15 = getelementptr inbounds nuw i8, ptr %i.a, i64 1676
-  %16 = load float, ptr %15, align 4, !tbaa !258
-  %17 = tail call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(40) %i.bc) #29 ; 0 uses
-  %.1.us107.2 = fadd nsz float %.1.us107.1, %16
   br label %.split58.us
 
 .split58.us:                                      ; preds = %_ZN3con7Channel16getAvgLossRateKBEv.exit.us.2, %_ZN3con7Channel20getAvgIncomingRateKBEv.exit.us.2, %_ZN3con7Channel24getCurrentIncomingRateKBEv.exit.us.2, %_ZN3con7Channel20getAvgDownloadRateKBEv.exit.us.2, %_ZN3con7Channel24getCurrentDownloadRateKBEv.exit.us.2, %_ZN3con7Channel20getCurrentLossRateKBEv.exit.2
-  %.us-phi59 = phi float [ %.1.2, %_ZN3con7Channel20getCurrentLossRateKBEv.exit.2 ], [ %.1.us.2, %_ZN3con7Channel24getCurrentDownloadRateKBEv.exit.us.2 ], [ %.1.us65.2, %_ZN3con7Channel20getAvgDownloadRateKBEv.exit.us.2 ], [ %.1.us79.2, %_ZN3con7Channel24getCurrentIncomingRateKBEv.exit.us.2 ], [ %.1.us93.2, %_ZN3con7Channel20getAvgIncomingRateKBEv.exit.us.2 ], [ %.1.us107.2, %_ZN3con7Channel16getAvgLossRateKBEv.exit.us.2 ]
+  %.sink = phi i64 [ 1676, %_ZN3con7Channel16getAvgLossRateKBEv.exit.us.2 ], [ 1664, %_ZN3con7Channel20getAvgIncomingRateKBEv.exit.us.2 ], [ 1660, %_ZN3con7Channel24getCurrentIncomingRateKBEv.exit.us.2 ], [ 1652, %_ZN3con7Channel20getAvgDownloadRateKBEv.exit.us.2 ], [ 1648, %_ZN3con7Channel24getCurrentDownloadRateKBEv.exit.us.2 ], [ 1672, %_ZN3con7Channel20getCurrentLossRateKBEv.exit.2 ]
+  %.sink151 = phi ptr [ %i.bc, %_ZN3con7Channel16getAvgLossRateKBEv.exit.us.2 ], [ %i.as, %_ZN3con7Channel20getAvgIncomingRateKBEv.exit.us.2 ], [ %i.ai, %_ZN3con7Channel24getCurrentIncomingRateKBEv.exit.us.2 ], [ %i.y, %_ZN3con7Channel20getAvgDownloadRateKBEv.exit.us.2 ], [ %i.o, %_ZN3con7Channel24getCurrentDownloadRateKBEv.exit.us.2 ], [ %i.bo, %_ZN3con7Channel20getCurrentLossRateKBEv.exit.2 ]
+  %.us-phi59 = phi float [ %.1.us107.1, %_ZN3con7Channel16getAvgLossRateKBEv.exit.us.2 ], [ %.1.us93.1, %_ZN3con7Channel20getAvgIncomingRateKBEv.exit.us.2 ], [ %.1.us79.1, %_ZN3con7Channel24getCurrentIncomingRateKBEv.exit.us.2 ], [ %.1.us65.1, %_ZN3con7Channel20getAvgDownloadRateKBEv.exit.us.2 ], [ %.1.us.1, %_ZN3con7Channel24getCurrentDownloadRateKBEv.exit.us.2 ], [ %.1.1, %_ZN3con7Channel20getCurrentLossRateKBEv.exit.2 ]
+  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 %.sink
+  %4 = load float, ptr %3, align 4, !tbaa !125
+  %5 = tail call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(40) %.sink151) #29 ; 0 uses
+  %.1.us107.2 = fadd nsz float %.us-phi59, %4
   call void @_ZN3con10PeerHelperD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %2) #29
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #29
-  ret float %.us-phi59
+  ret float %.1.us107.2
 
 bb.f:                                             ; preds = %.invoke, %bb.g
   %i.be = landingpad { ptr, i32 }
@@ -425,10 +411,6 @@ _ZN3con7Channel20getCurrentLossRateKBEv.exit.1:   ; preds = %_ZN3con7Channel20ge
 
 _ZN3con7Channel20getCurrentLossRateKBEv.exit.2:   ; preds = %_ZN3con7Channel20getCurrentLossRateKBEv.exit.1
   %.1.1 = fadd nsz float %i.bh, %i.bm
-  %18 = getelementptr inbounds nuw i8, ptr %i.a, i64 1672
-  %19 = load float, ptr %18, align 8, !tbaa !251
-  %20 = tail call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(40) %i.bo) #29 ; 0 uses
-  %.1.2 = fadd nsz float %.1.1, %19
   br label %.split58.us
 
 bb.g:                                             ; preds = %bb.e

@@ -204,7 +204,7 @@ bb.a:
   store ptr %i.b, ptr %1, align 8, !tbaa !46
   %i.c = load i8, ptr %i.a, align 1, !tbaa !11    ; 2 uses
   store i32 0, ptr %2, align 4, !tbaa !40
-  switch i8 %i.c, label %bb.ak [
+  switch i8 %i.c, label %_ZL11getnumlimitP6HeaderPPKci.exit58 [
     i8 98, label %bb.b
     i8 66, label %bb.c
     i8 104, label %bb.d
@@ -223,11 +223,11 @@ bb.a:
     i8 99, label %bb.z
     i8 122, label %bb.am
     i8 120, label %bb.ad
-    i8 88, label %3
+    i8 88, label %bb.ae
     i8 32, label %bb.al
-    i8 60, label %4
-    i8 62, label %bb.ae
-    i8 61, label %bb.af
+    i8 60, label %bb.ak
+    i8 62, label %bb.af
+    i8 61, label %bb.ak
     i8 33, label %bb.ag
   ]
 
@@ -482,30 +482,18 @@ bb.ad:                                            ; preds = %bb.a
   store i32 1, ptr %2, align 4, !tbaa !40
   br label %bb.am
 
-3:                                                ; preds = %bb.a
+bb.ae:                                            ; preds = %bb.a
   br label %bb.am
 
-4:                                                ; preds = %bb.a
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 1, ptr %5, align 8, !tbaa !49
-  br label %bb.al
-
-bb.ae:                                            ; preds = %bb.a
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 0, ptr %6, align 8, !tbaa !49
-  br label %bb.al
-
 bb.af:                                            ; preds = %bb.a
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 1, ptr %7, align 8, !tbaa !49
-  br label %bb.al
+  br label %bb.ak
 
 bb.ag:                                            ; preds = %bb.a
   %i.cj = load i8, ptr %i.b, align 1, !tbaa !11
   %i.ck = sext i8 %i.cj to i32
   %i.cl = add nsw i32 %i.ck, -58
   %i.cm = icmp ult i32 %i.cl, -10
-  br i1 %i.cm, label %_ZL11getnumlimitP6HeaderPPKci.exit58, label %.preheader.i.i52
+  br i1 %i.cm, label %bb.ak, label %.preheader.i.i52
 
 .preheader.i.i52:                                 ; preds = %bb.ag, %.preheader.i.i52
   %i.cn = phi ptr [ %i.cp, %.preheader.i.i52 ], [ %i.b, %bb.ag ] ; 2 uses
@@ -538,30 +526,31 @@ bb.ai:                                            ; preds = %bb.ah
 _ZL6getnumP6HeaderPPKci.exit.i55:                 ; preds = %bb.ah
   %i.dc = add i32 %i.ct, -17
   %or.cond.i57 = icmp ult i32 %i.dc, -16
-  br i1 %or.cond.i57, label %bb.aj, label %_ZL11getnumlimitP6HeaderPPKci.exit58
+  br i1 %or.cond.i57, label %bb.aj, label %bb.ak
 
 bb.aj:                                            ; preds = %_ZL6getnumP6HeaderPPKci.exit.i55
   %i.dd = load ptr, ptr %0, align 8, !tbaa !47
   tail call void (ptr, ptr, ...) @_Z11luaL_errorLP9lua_StatePKcz(ptr noundef %i.dd, ptr noundef nonnull @.str.54, i32 noundef %i.ct, i32 noundef 16) #14
   unreachable
 
-_ZL11getnumlimitP6HeaderPPKci.exit58:             ; preds = %bb.ag, %_ZL6getnumP6HeaderPPKci.exit.i55
-  %.010.i.i5671 = phi i32 [ %i.ct, %_ZL6getnumP6HeaderPPKci.exit.i55 ], [ 8, %bb.ag ]
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 12
-  store i32 %.010.i.i5671, ptr %8, align 4, !tbaa !50
-  br label %bb.al
-
-bb.ak:                                            ; preds = %bb.a
-  %9 = sext i8 %i.c to i32
-  %10 = load ptr, ptr %0, align 8, !tbaa !47
-  tail call void (ptr, ptr, ...) @_Z11luaL_errorLP9lua_StatePKcz(ptr noundef %10, ptr noundef nonnull @.str.53, i32 noundef %9) #14
+_ZL11getnumlimitP6HeaderPPKci.exit58:             ; preds = %bb.a
+  %3 = sext i8 %i.c to i32
+  %4 = load ptr, ptr %0, align 8, !tbaa !47
+  tail call void (ptr, ptr, ...) @_Z11luaL_errorLP9lua_StatePKcz(ptr noundef %4, ptr noundef nonnull @.str.53, i32 noundef %3) #14
   unreachable
 
-bb.al:                                            ; preds = %_ZL11getnumlimitP6HeaderPPKci.exit58, %bb.af, %bb.ae, %4, %bb.a
+bb.ak:                                            ; preds = %_ZL6getnumP6HeaderPPKci.exit.i55, %bb.ag, %bb.a, %bb.a, %bb.af
+  %.sink104 = phi i64 [ 8, %bb.a ], [ 8, %bb.a ], [ 8, %bb.af ], [ 12, %bb.ag ], [ 12, %_ZL6getnumP6HeaderPPKci.exit.i55 ]
+  %.010.i.i5671.sink = phi i32 [ 1, %bb.a ], [ 1, %bb.a ], [ 0, %bb.af ], [ 8, %bb.ag ], [ %i.ct, %_ZL6getnumP6HeaderPPKci.exit.i55 ]
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 %.sink104
+  store i32 %.010.i.i5671.sink, ptr %5, align 4, !tbaa !40
+  br label %bb.al
+
+bb.al:                                            ; preds = %bb.ak, %bb.a
   br label %bb.am
 
-bb.am:                                            ; preds = %bb.a, %_ZL6getnumP6HeaderPPKci.exit, %bb.al, %3, %bb.ad, %_ZL11getnumlimitP6HeaderPPKci.exit51, %_ZL11getnumlimitP6HeaderPPKci.exit44, %_ZL11getnumlimitP6HeaderPPKci.exit, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b
-  %.0 = phi i32 [ 0, %bb.b ], [ 1, %bb.c ], [ 0, %bb.d ], [ 1, %bb.e ], [ 0, %bb.f ], [ 1, %bb.g ], [ 0, %bb.h ], [ 1, %bb.i ], [ 1, %bb.j ], [ 2, %bb.k ], [ 2, %bb.l ], [ 2, %bb.m ], [ 0, %_ZL11getnumlimitP6HeaderPPKci.exit ], [ 1, %_ZL11getnumlimitP6HeaderPPKci.exit44 ], [ 4, %_ZL11getnumlimitP6HeaderPPKci.exit51 ], [ 8, %bb.al ], [ 3, %_ZL6getnumP6HeaderPPKci.exit ], [ 6, %bb.ad ], [ 7, %3 ], [ 5, %bb.a ]
+bb.am:                                            ; preds = %bb.a, %_ZL6getnumP6HeaderPPKci.exit, %bb.al, %bb.ae, %bb.ad, %_ZL11getnumlimitP6HeaderPPKci.exit51, %_ZL11getnumlimitP6HeaderPPKci.exit44, %_ZL11getnumlimitP6HeaderPPKci.exit, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b
+  %.0 = phi i32 [ 0, %bb.b ], [ 1, %bb.c ], [ 0, %bb.d ], [ 1, %bb.e ], [ 0, %bb.f ], [ 1, %bb.g ], [ 0, %bb.h ], [ 1, %bb.i ], [ 1, %bb.j ], [ 2, %bb.k ], [ 2, %bb.l ], [ 2, %bb.m ], [ 0, %_ZL11getnumlimitP6HeaderPPKci.exit ], [ 1, %_ZL11getnumlimitP6HeaderPPKci.exit44 ], [ 4, %_ZL11getnumlimitP6HeaderPPKci.exit51 ], [ 8, %bb.al ], [ 3, %_ZL6getnumP6HeaderPPKci.exit ], [ 6, %bb.ad ], [ 7, %bb.ae ], [ 5, %bb.a ]
   ret i32 %.0
 }
 

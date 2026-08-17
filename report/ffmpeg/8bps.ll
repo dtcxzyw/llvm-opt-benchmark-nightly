@@ -15,7 +15,7 @@ target triple = "x86_64-pc-linux-gnu"
 define internal range(i32 -1094995529, 1) i32 @decode_init(ptr noundef %0) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !9    ; 6 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !9    ; 7 uses
   store ptr %0, ptr %i.b, align 8, !tbaa !29
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 648
   %i.d = load i32, ptr %i.c, align 8, !tbaa !32   ; 2 uses
@@ -30,22 +30,22 @@ bb.b:                                             ; preds = %bb.a
   store i32 11, ptr %i.e, align 8, !tbaa !33
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store i8 1, ptr %i.f, align 8, !tbaa !34
-  %1 = getelementptr inbounds nuw i8, ptr %i.b, i64 9
-  store i8 0, ptr %1, align 1, !tbaa !35
   br label %bb.f
 
 bb.c:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 136
   store i32 71, ptr %i.g, align 8, !tbaa !33
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  store <4 x i8> <i8 3, i8 2, i8 0, i8 1>, ptr %i.h, align 8, !tbaa !35
+  store i8 3, ptr %i.h, align 8, !tbaa !34
+  %1 = getelementptr inbounds nuw i8, ptr %i.b, i64 9
+  store i8 2, ptr %1, align 1, !tbaa !35
+  %2 = getelementptr inbounds nuw i8, ptr %i.b, i64 10
+  store i8 0, ptr %2, align 2, !tbaa !35
   br label %bb.f
 
 bb.d:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 136
   store i32 111, ptr %i.i, align 8, !tbaa !33
-  %2 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  store i8 4, ptr %2, align 8, !tbaa !34
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.a
@@ -53,6 +53,10 @@ bb.e:                                             ; preds = %bb.a
   br label %bb.h
 
 bb.f:                                             ; preds = %bb.d, %bb.c, %bb.b
+  %.sink22 = phi i64 [ 8, %bb.d ], [ 11, %bb.c ], [ 9, %bb.b ]
+  %.sink = phi i8 [ 4, %bb.d ], [ 1, %bb.c ], [ 0, %bb.b ]
+  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 %.sink22
+  store i8 %.sink, ptr %3, align 1, !tbaa !35
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 136
   %i.k = load i32, ptr %i.j, align 8, !tbaa !33
   %i.l = icmp eq i32 %i.k, 111

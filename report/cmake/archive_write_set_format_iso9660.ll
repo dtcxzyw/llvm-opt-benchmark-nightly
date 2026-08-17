@@ -204,7 +204,7 @@ bb.gd:                                            ; preds = %.loopexit96.i, %bb.
   %.169.i = phi ptr [ %.068.i, %bb.gc ], [ %.3.i221, %.loopexit96.i ] ; 7 uses
   %.063.i = phi i32 [ 0, %bb.gc ], [ %.265.i, %.loopexit96.i ] ; 5 uses
   %i.aim = getelementptr inbounds nuw i8, ptr %.169.i, i64 56 ; 2 uses
-  %i.ain = load i32, ptr %i.aim, align 8, !tbaa !154 ; 2 uses
+  %i.ain = load i32, ptr %i.aim, align 8, !tbaa !154 ; 3 uses
   %i.aio = icmp eq i32 %i.ain, 0
   br i1 %i.aio, label %_isoent_file_location.exit.i, label %bb.ge
 
@@ -215,6 +215,7 @@ bb.ge:                                            ; preds = %bb.gd
   br i1 %i.air, label %.lr.ph.i.i227, label %_isoent_file_location.exit.i
 
 .lr.ph.i.i227:                                    ; preds = %bb.ge, %bb.gm
+  %2 = phi i32 [ %3, %bb.gm ], [ %i.ain, %bb.ge ] ; 4 uses
   %.192.i = phi i32 [ %.293.i, %bb.gm ], [ %.091.i, %bb.ge ] ; 7 uses
   %indvars.iv.i.i228 = phi i64 [ %indvars.iv.next.i.i230, %bb.gm ], [ 0, %bb.ge ] ; 2 uses
   %i.ais = getelementptr inbounds nuw [8 x i8], ptr %i.aiq, i64 %indvars.iv.i.i228
@@ -232,7 +233,7 @@ bb.gf:                                            ; preds = %.lr.ph.i.i227
 
 bb.gg:                                            ; preds = %bb.gf
   %i.aiz = getelementptr inbounds nuw i8, ptr %i.ait, i64 24
-  %i.aja = load ptr, ptr %i.aiz, align 8, !tbaa !94 ; 6 uses
+  %i.aja = load ptr, ptr %i.aiz, align 8, !tbaa !94 ; 5 uses
   %i.ajb = getelementptr inbounds nuw i8, ptr %i.aja, i64 188
   %i.ajc = load i32, ptr %i.ajb, align 4, !tbaa !127
   %.not18.i.i = icmp eq i32 %i.ajc, 0
@@ -259,22 +260,24 @@ bb.gj:                                            ; preds = %bb.gi
 
 bb.gk:                                            ; preds = %bb.gj, %bb.gi
   %i.ajm = add nsw i32 %.192.i, -1
-  %2 = getelementptr inbounds nuw i8, ptr %i.aja, i64 164
-  store i32 %.192.i, ptr %2, align 4, !tbaa !207
+  br label %bb.gl
+
+bb.gl:                                            ; preds = %bb.gk, %bb.gj
+  %.394.i = phi i32 [ %i.ajm, %bb.gk ], [ %.192.i, %bb.gj ]
+  %.sink24.i.i = phi i64 [ 164, %bb.gk ], [ 184, %bb.gj ]
+  %.sink.i.i = phi i32 [ %.192.i, %bb.gk ], [ 1, %bb.gj ]
+  %i.ajn = getelementptr inbounds nuw i8, ptr %i.aja, i64 %.sink24.i.i
+  store i32 %.sink.i.i, ptr %i.ajn, align 4, !tbaa !104
+  %.pre117.i = load i32, ptr %i.aim, align 8, !tbaa !154
   br label %bb.gm
 
-bb.gl:                                            ; preds = %bb.gj
-  %i.ajn = getelementptr inbounds nuw i8, ptr %i.aja, i64 184
-  store i32 1, ptr %i.ajn, align 8, !tbaa !210
-  br label %bb.gm
-
-bb.gm:                                            ; preds = %bb.gl, %bb.gk, %bb.gh, %bb.gg, %bb.gf, %.lr.ph.i.i227
-  %.293.i = phi i32 [ %.192.i, %bb.gf ], [ %i.ajm, %bb.gk ], [ %.192.i, %bb.gl ], [ %.192.i, %bb.gh ], [ %.192.i, %bb.gg ], [ %.192.i, %.lr.ph.i.i227 ] ; 2 uses
+bb.gm:                                            ; preds = %bb.gl, %bb.gh, %bb.gg, %bb.gf, %.lr.ph.i.i227
+  %3 = phi i32 [ %2, %bb.gf ], [ %.pre117.i, %bb.gl ], [ %2, %bb.gh ], [ %2, %bb.gg ], [ %2, %.lr.ph.i.i227 ] ; 2 uses
+  %.293.i = phi i32 [ %.192.i, %bb.gf ], [ %.394.i, %bb.gl ], [ %.192.i, %bb.gh ], [ %.192.i, %bb.gg ], [ %.192.i, %.lr.ph.i.i227 ] ; 2 uses
   %indvars.iv.next.i.i230 = add nuw nsw i64 %indvars.iv.i.i228, 1 ; 2 uses
-  %3 = load i32, ptr %i.aim, align 8, !tbaa !154
   %i.ajo = sext i32 %3 to i64
   %i.ajp = icmp slt i64 %indvars.iv.next.i.i230, %i.ajo
-  br i1 %i.ajp, label %.lr.ph.i.i227, label %_isoent_file_location.exit.i, !llvm.loop !211
+  br i1 %i.ajp, label %.lr.ph.i.i227, label %_isoent_file_location.exit.i, !llvm.loop !210
 
 _isoent_file_location.exit.i:                     ; preds = %bb.gm, %bb.ge, %bb.gd
   %.394.i.a = phi i32 [ %.091.i, %bb.gd ], [ %.091.i, %bb.ge ], [ %.293.i, %bb.gm ]
@@ -327,7 +330,7 @@ bb.gs:                                            ; preds = %.lr.ph.i226
   %i.aki = getelementptr inbounds nuw i8, ptr %i.akd, i64 32
   %i.akj = load ptr, ptr %i.aki, align 8, !tbaa !60 ; 2 uses
   %.not86.i = icmp eq ptr %i.akd, %i.akj
-  br i1 %.not86.i, label %.loopexit96.i, label %.lr.ph.i226, !llvm.loop !212
+  br i1 %.not86.i, label %.loopexit96.i, label %.lr.ph.i226, !llvm.loop !211
 
 .loopexit96.i:                                    ; preds = %bb.gs, %.lr.ph.i226, %.thread.i225, %bb.gr
   %.3.i221 = phi ptr [ %i.ajr, %bb.gr ], [ %.169.i, %.thread.i225 ], [ %i.akf, %.lr.ph.i226 ], [ %i.akd, %bb.gs ] ; 3 uses
@@ -335,7 +338,7 @@ bb.gs:                                            ; preds = %.lr.ph.i226
   %i.akk = getelementptr inbounds nuw i8, ptr %.3.i221, i64 32
   %i.akl = load ptr, ptr %i.akk, align 8, !tbaa !60
   %.not87.i = icmp eq ptr %.3.i221, %i.akl
-  br i1 %.not87.i, label %bb.gt, label %bb.gd, !llvm.loop !213
+  br i1 %.not87.i, label %bb.gt, label %bb.gd, !llvm.loop !212
 
 bb.gt:                                            ; preds = %.loopexit96.i
   %i.akm = getelementptr inbounds nuw i8, ptr %i.f, i64 152
@@ -348,7 +351,7 @@ bb.gt:                                            ; preds = %.loopexit96.i
   %.0109.i = phi i32 [ %.2.i, %bb.gw ], [ 0, %bb.gt ] ; 2 uses
   %.273108.i = phi i32 [ %.4.i, %bb.gw ], [ %.172.i, %bb.gt ] ; 2 uses
   %i.akn = getelementptr inbounds nuw i8, ptr %.067110.i, i64 184
-  %i.ako = load i32, ptr %i.akn, align 8, !tbaa !210
+  %i.ako = load i32, ptr %i.akn, align 8, !tbaa !213
   %.not89.i = icmp eq i32 %i.ako, 0
   br i1 %.not89.i, label %bb.gw, label %bb.gu
 
@@ -751,7 +754,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j, %make_
   %.171 = phi i64 [ %.3, %bb.r ], [ 0, %bb.l ]    ; 4 uses
   %.14370 = phi i64 [ %.4, %bb.r ], [ %.042, %bb.l ] ; 4 uses
   %i.ci = getelementptr inbounds nuw i8, ptr %.04672, i64 184
-  %i.cj = load i32, ptr %i.ci, align 8, !tbaa !210
+  %i.cj = load i32, ptr %i.ci, align 8, !tbaa !213
   %.not58 = icmp eq i32 %i.cj, 0
   br i1 %.not58, label %bb.r, label %bb.m
 
@@ -1154,10 +1157,10 @@ begin_hunk_2_@llvm.assume
 !207 = !{!82, !6, i64 164}
 !208 = !{!82, !6, i64 160}
 !209 = !{!61, !64, i64 104}
-!210 = !{!82, !6, i64 184}
+!210 = distinct !{!210, !91}
 !211 = distinct !{!211, !91}
 !212 = distinct !{!212, !91}
-!213 = distinct !{!213, !91}
+!213 = !{!82, !6, i64 184}
 !214 = !{!84, !6, i64 20}
 !215 = distinct !{!215, !91}
 !216 = distinct !{!216, !91}

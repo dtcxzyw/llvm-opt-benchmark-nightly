@@ -201,7 +201,7 @@ _ZN4bssl28ssl_session_is_context_validEPKNS_13SSL_HANDSHAKEEPK14ssl_session_st.e
 define hidden noundef range(i32 0, 12) i32 @_ZN4bssl20ssl_get_prev_sessionEPNS_13SSL_HANDSHAKEEPSt10unique_ptrI14ssl_session_stNS_8internal7DeleterEEPbS8_PK22ssl_early_callback_ctx(ptr noundef %0, ptr nofree noundef captures(none) %1, ptr nofree noundef writeonly captures(none) %2, ptr nofree noundef writeonly captures(none) %3, ptr noundef %4) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %5 = alloca %struct.LHASH_CMP_KEY_SSL_SESSION, align 8 ; 5 uses
-  %.sroa.0.i.i = alloca i32, align 4              ; 6 uses
+  %.sroa.0.i.i = alloca i32, align 4              ; 5 uses
   %6 = alloca %"class.bssl::Span", align 8        ; 8 uses
   %7 = alloca %"class.std::unique_ptr", align 8   ; 8 uses
   %i.a = alloca i32, align 4                      ; 8 uses
@@ -320,28 +320,22 @@ bb.m:                                             ; preds = %_ZNSt10unique_ptrI1
   br i1 %.not.i, label %bb.n, label %_ZN4bssl8internal13MutexLockBaseIXadL_Z22CRYPTO_MUTEX_lock_readEEXadL_Z24CRYPTO_MUTEX_unlock_readEEED2Ev.exit.thread.i
 
 bb.n:                                             ; preds = %bb.m
-  %.sroa.0.0.copyload.i = load ptr, ptr %6, align 8 ; 3 uses
+  %.sroa.0.0.copyload.i = load ptr, ptr %6, align 8 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i)
   %i.ah = icmp samesign ult i64 %i.aa, 4
-  br i1 %i.ah, label %bb.o, label %_ZNK4bssl4SpanIKhEixEm.exit.i.i
+  br i1 %i.ah, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
   store i32 0, ptr %.sroa.0.i.i, align 4
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %.sroa.0.i.i, ptr readonly align 1 %.sroa.0.0.copyload.i, i64 %i.aa, i1 false)
-  %.sroa.0.2.gep19.sroa_idx.phi.trans.insert.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.i.i, i64 2
-  %.sroa.0.2..pre.i.i = load i8, ptr %.sroa.0.2.gep19.sroa_idx.phi.trans.insert.i.i, align 2, !tbaa !17
   br label %bb.p
 
-_ZNK4bssl4SpanIKhEixEm.exit.i.i:                  ; preds = %bb.n
-  %.sroa.07.0.sroa.gep20.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i, i64 2
+bb.p:                                             ; preds = %bb.n, %bb.o
+  %.sroa.0.0.copyload.i.sink = phi ptr [ %.sroa.0.i.i, %bb.o ], [ %.sroa.0.0.copyload.i, %bb.n ] ; 3 uses
+  %.sroa.07.0.sroa.gep20.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.sink, i64 2
   %11 = load i8, ptr %.sroa.07.0.sroa.gep20.i.i, align 1, !tbaa !17
-  br label %bb.p
-
-bb.p:                                             ; preds = %_ZNK4bssl4SpanIKhEixEm.exit.i.i, %bb.o
-  %.sink.i = phi i8 [ %11, %_ZNK4bssl4SpanIKhEixEm.exit.i.i ], [ %.sroa.0.2..pre.i.i, %bb.o ]
-  %.sroa.0.pn.i.i = phi ptr [ %.sroa.0.0.copyload.i, %_ZNK4bssl4SpanIKhEixEm.exit.i.i ], [ %.sroa.0.i.i, %bb.o ] ; 2 uses
-  %.sink34.in.i = load i16, ptr %.sroa.0.pn.i.i, align 1
-  %.sroa.0.pn.sroa.phi.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.pn.i.i, i64 3
+  %.sink34.in.i = load i16, ptr %.sroa.0.0.copyload.i.sink, align 1
+  %.sroa.0.pn.sroa.phi.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.sink, i64 3
   %i.ai = load i8, ptr %.sroa.0.pn.sroa.phi.i.i, align 1, !tbaa !17
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i)
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ad, i64 24 ; 3 uses
@@ -349,7 +343,7 @@ bb.p:                                             ; preds = %_ZNK4bssl4SpanIKhEi
           to label %_ZN4bssl8internal13MutexLockBaseIXadL_Z22CRYPTO_MUTEX_lock_readEEXadL_Z24CRYPTO_MUTEX_unlock_readEEEC2EP16pthread_rwlock_t.exit.i unwind label %bb.s
 
 _ZN4bssl8internal13MutexLockBaseIXadL_Z22CRYPTO_MUTEX_lock_readEEXadL_Z24CRYPTO_MUTEX_unlock_readEEEC2EP16pthread_rwlock_t.exit.i: ; preds = %bb.p
-  %i.ak = zext i8 %.sink.i to i32
+  %i.ak = zext i8 %11 to i32
   %i.al = shl nuw nsw i32 %i.ak, 16
   %.sink34.i = zext i16 %.sink34.in.i to i32
   %i.am = or disjoint i32 %i.al, %.sink34.i

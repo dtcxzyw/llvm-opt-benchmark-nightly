@@ -199,15 +199,11 @@ bb.aw:                                            ; preds = %bb.at
   %i.ei = call noalias ptr @malloc(i64 noundef %i.eh) #10 ; 3 uses
   store ptr %i.ei, ptr %i.cp, align 8, !tbaa !39
   %i.ej = icmp eq ptr %i.ei, null
-  br i1 %i.ej, label %0, label %.lr.ph350
+  br i1 %i.ej, label %bb.cs, label %.lr.ph350
 
 .lr.ph350:                                        ; preds = %bb.aw
   %.not233 = icmp eq i64 %.0197, 0
   br label %bb.ax
-
-0:                                                ; preds = %bb.aw
-  store i32 0, ptr %i.co, align 8, !tbaa !36
-  br label %bb.cs
 
 bb.ax:                                            ; preds = %.lr.ph350, %.loopexit
   %indvars.iv402 = phi i64 [ 0, %.lr.ph350 ], [ %indvars.iv.next403, %.loopexit ] ; 3 uses
@@ -295,11 +291,7 @@ bb.bh:                                            ; preds = %bb.be
   %i.fu = call noalias ptr @malloc(i64 noundef %i.ft) #10 ; 3 uses
   store ptr %i.fu, ptr %i.em, align 8, !tbaa !45
   %i.fv = icmp eq ptr %i.fu, null
-  br i1 %i.fv, label %1, label %.lr.ph
-
-1:                                                ; preds = %bb.bh
-  store i32 0, ptr %i.el, align 4, !tbaa !42
-  br label %bb.cs
+  br i1 %i.fv, label %bb.cs, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.bh, %bb.cr
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.cr ], [ 0, %bb.bh ] ; 3 uses
@@ -569,7 +561,9 @@ bb.cr:                                            ; preds = %bb.cg, %bb.cq
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j) #9
   br label %bb.dh
 
-bb.cs:                                            ; preds = %1, %0
+bb.cs:                                            ; preds = %bb.aw, %bb.bh
+  %.lcssa433.sink = phi ptr [ %i.el, %bb.bh ], [ %i.co, %bb.aw ]
+  store i32 0, ptr %.lcssa433.sink, align 4, !tbaa !26
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j) #9
   br label %bb.dc
 

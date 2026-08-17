@@ -201,36 +201,36 @@ bb.ac:                                            ; preds = %bb.ab
   %i.ek = getelementptr inbounds nuw i8, ptr %0, i64 141
   store i8 %i.ej, ptr %i.ek, align 1, !tbaa !98
   %i.el = trunc i64 %i.eg to i8
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 142
-  store i8 %i.el, ptr %6, align 2, !tbaa !99
   br label %bb.ae
 
 bb.ad:                                            ; preds = %bb.ab
   %i.em = getelementptr inbounds nuw i8, ptr %0, i64 140
   store i8 2, ptr %i.em, align 4, !tbaa !97
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 141
-  store i8 0, ptr %7, align 1, !tbaa !98
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad, %bb.ac
+  %.sink235 = phi i64 [ 141, %bb.ad ], [ 142, %bb.ac ]
+  %.sink233 = phi i8 [ 0, %bb.ad ], [ %i.el, %bb.ac ]
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 %.sink235
+  store i8 %.sink233, ptr %6, align 1, !tbaa !28
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #10
   %i.en = getelementptr inbounds nuw i8, ptr %.val, i64 168 ; 3 uses
-  %i.eo = load ptr, ptr %i.en, align 8, !tbaa !100
+  %i.eo = load ptr, ptr %i.en, align 8, !tbaa !99
   %i.ep = call i32 @pmix_ptl_base_make_connection(ptr noundef nonnull %0, ptr noundef %i.eo, ptr noundef %.0101, i64 noundef %.0102) #10
   %i.eq = icmp eq i32 %i.ep, 0
   br i1 %i.eq, label %bb.af, label %bb.al
 
 bb.af:                                            ; preds = %bb.ae
   %i.er = getelementptr inbounds nuw i8, ptr %.val, i64 152 ; 2 uses
-  %i.es = load ptr, ptr %i.er, align 8, !tbaa !101
+  %i.es = load ptr, ptr %i.er, align 8, !tbaa !100
   store ptr %i.es, ptr %i.c, align 8, !tbaa !8
   %i.et = getelementptr inbounds nuw i8, ptr %.val, i64 160
-  %i.eu = load i32, ptr %i.et, align 8, !tbaa !102
+  %i.eu = load i32, ptr %i.et, align 8, !tbaa !101
   store i32 %i.eu, ptr %i.d, align 4, !tbaa !11
-  %i.ev = load ptr, ptr %i.en, align 8, !tbaa !100
+  %i.ev = load ptr, ptr %i.en, align 8, !tbaa !99
   store ptr %i.ev, ptr %i.b, align 8, !tbaa !8
-  store ptr null, ptr %i.er, align 8, !tbaa !101
-  store ptr null, ptr %i.en, align 8, !tbaa !100
+  store ptr null, ptr %i.er, align 8, !tbaa !100
+  store ptr null, ptr %i.en, align 8, !tbaa !99
   %i.ew = load volatile i64, ptr %i.bs, align 8, !tbaa !81
   %i.ex = icmp eq i64 %i.ew, 0
   br i1 %i.ex, label %._crit_edge191, label %.lr.ph190
@@ -304,7 +304,7 @@ bb.aj:                                            ; preds = %pmix_obj_run_destru
 bb.ak:                                            ; preds = %bb.ai, %bb.aj, %pmix_obj_update.exit140
   %i.ga = load volatile i64, ptr %i.bs, align 8, !tbaa !81
   %i.gb = icmp eq i64 %i.ga, 0
-  br i1 %i.gb, label %._crit_edge191, label %.lr.ph190, !llvm.loop !103
+  br i1 %i.gb, label %._crit_edge191, label %.lr.ph190, !llvm.loop !102
 
 ._crit_edge191:                                   ; preds = %bb.ak, %bb.af
   %i.gc = load ptr, ptr %i.bg, align 8, !tbaa !75
@@ -419,7 +419,7 @@ bb.at:                                            ; preds = %pmix_obj_run_destru
 bb.au:                                            ; preds = %bb.as, %bb.at, %pmix_obj_update.exit
   %i.hv = load volatile i64, ptr %i.gp, align 8, !tbaa !81
   %i.hw = icmp eq i64 %i.hv, 0
-  br i1 %i.hw, label %._crit_edge197, label %bb.ap, !llvm.loop !104
+  br i1 %i.hw, label %._crit_edge197, label %bb.ap, !llvm.loop !103
 
 ._crit_edge197:                                   ; preds = %bb.au, %bb.ao
   %i.hx = load ptr, ptr %i.bg, align 8, !tbaa !75
@@ -717,10 +717,9 @@ attributes #14 = { noreturn nounwind }
 !96 = !{!"", !20, i64 0, !5, i64 144, !9, i64 152, !5, i64 160, !9, i64 168, !9, i64 176}
 !97 = !{!49, !6, i64 140}
 !98 = !{!49, !6, i64 141}
-!99 = !{!49, !6, i64 142}
-!100 = !{!96, !9, i64 168}
-!101 = !{!96, !9, i64 152}
-!102 = !{!96, !5, i64 160}
+!99 = !{!96, !9, i64 168}
+!100 = !{!96, !9, i64 152}
+!101 = !{!96, !5, i64 160}
+!102 = distinct !{!102, !27}
 !103 = distinct !{!103, !27}
-!104 = distinct !{!104, !27}
 end_hunk_0

@@ -204,7 +204,7 @@ bb.a:
   %i.i = sext i32 %i.h to i64
   %i.j = sext i32 %2 to i64                       ; 2 uses
   %i.k = icmp sgt i32 %5, 15
-  %11 = icmp eq i32 %6, 0                         ; 4 uses
+  %11 = icmp ne i32 %6, 0                         ; 5 uses
   %i.l = icmp sgt i32 %7, 1                       ; 4 uses
   %i.m = tail call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %i.b)
   %i.n = icmp eq i32 %i.m, 1                      ; 4 uses
@@ -285,7 +285,7 @@ bb.a:
   %i.bd = sext i32 %i.bc to i64
   %i.be = sext i32 %2 to i64                      ; 2 uses
   %i.bf = icmp sgt i32 %5, 15
-  %12 = icmp eq i32 %6, 0                         ; 4 uses
+  %12 = icmp ne i32 %6, 0                         ; 5 uses
   %i.bg = icmp sgt i32 %7, 1                      ; 4 uses
   %sext2649 = shl i64 %i.d, 32
   %i.bh = ashr exact i64 %sext2649, 31            ; 4 uses
@@ -347,8 +347,8 @@ bb.b:                                             ; preds = %.lr.ph9127, %._crit
   %.not2654 = icmp eq ptr %.023309124, null
   %i.cq = load ptr, ptr %0, align 8
   %i.cr = getelementptr inbounds [4 x i8], ptr %i.cq, i64 %i.j
-  %i.cs = getelementptr inbounds nuw [4 x i8], ptr %i.cr, i64 %indvars.iv ; 5 uses
-  %.12331 = select i1 %.not2654, ptr null, ptr %i.cs ; 6 uses
+  %i.cs = getelementptr inbounds nuw [4 x i8], ptr %i.cr, i64 %indvars.iv ; 4 uses
+  %.12331 = select i1 %.not2654, ptr null, ptr %i.cs ; 7 uses
   br i1 %i.k, label %.lr.ph8998, label %.preheader8918
 
 .lr.ph8998:                                       ; preds = %bb.b
@@ -373,7 +373,7 @@ bb.c:                                             ; preds = %.lr.ph8998, %.threa
   %.023578995 = phi ptr [ %i.cp, %.lr.ph8998 ], [ %.52362, %.thread6903 ] ; 55 uses
   %.023808994 = phi ptr [ %.0.val1, %.lr.ph8998 ], [ %.22382.lcssa, %.thread6903 ] ; 2 uses
   %.023968993 = phi i32 [ 0, %.lr.ph8998 ], [ %i.cpq, %.thread6903 ]
-  br i1 %11, label %bb.e, label %bb.d
+  br i1 %11, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
   %i.cv = load <16 x float>, ptr %.123368996, align 64, !tbaa !20
@@ -776,7 +776,7 @@ bb.m:                                             ; preds = %.lr.ph9053, %.threa
   %.623639051 = phi ptr [ %.02357.lcssa, %.lr.ph9053 ], [ %.112368, %.thread7326 ] ; 41 uses
   %.323839050 = phi ptr [ %.02380.lcssa, %.lr.ph9053 ], [ %.52385.lcssa, %.thread7326 ] ; 3 uses
   %.123979049 = phi i32 [ %.02396.lcssa, %.lr.ph9053 ], [ %i.enq, %.thread7326 ]
-  br i1 %11, label %bb.o, label %bb.n
+  br i1 %11, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %bb.m
   %i.cpv = load <16 x float>, ptr %.223379052, align 64, !tbaa !20
@@ -1179,7 +1179,8 @@ bb.v:                                             ; preds = %._crit_edge9039
   br i1 %i.ent, label %.lr.ph9119, label %._crit_edge9120
 
 .lr.ph9119:                                       ; preds = %.preheader8916
-  %.not2655 = icmp eq ptr %.12331, null
+  %.not2655 = icmp ne ptr %.12331, null
+  %brmerge = select i1 %11, i1 true, i1 %.not2655
   br label %bb.ag
 
 bb.w:                                             ; preds = %.lr.ph9092, %.thread7435
@@ -1187,7 +1188,7 @@ bb.w:                                             ; preds = %.lr.ph9092, %.threa
   %.1223699090 = phi ptr [ %.62363.lcssa, %.lr.ph9092 ], [ %.172374, %.thread7435 ] ; 34 uses
   %.623869089 = phi ptr [ %.32383.lcssa, %.lr.ph9092 ], [ %.82388.lcssa, %.thread7435 ] ; 4 uses
   %.223989088 = phi i32 [ %.12397.lcssa, %.lr.ph9092 ], [ %i.frl, %.thread7435 ]
-  br i1 %11, label %bb.y, label %bb.x
+  br i1 %11, label %bb.x, label %bb.y
 
 bb.x:                                             ; preds = %bb.w
   %i.enu = load <16 x float>, ptr %.323389091, align 64, !tbaa !20
@@ -1590,21 +1591,15 @@ bb.ag:                                            ; preds = %.lr.ph9119, %.threa
   %.1823759117 = phi ptr [ %.122369.lcssa, %.lr.ph9119 ], [ %.222379, %.thread7447 ] ; 30 uses
   %.923899116 = phi ptr [ %.62386.lcssa, %.lr.ph9119 ], [ %.112391.lcssa, %.thread7447 ] ; 4 uses
   %.323999115 = phi i32 [ %.22398.lcssa, %.lr.ph9119 ], [ %i.gcj, %.thread7447 ]
-  br i1 %11, label %13, label %bb.ah
-
-13:                                               ; preds = %bb.ag
-  br i1 %.not2655, label %bb.ai, label %14
-
-14:                                               ; preds = %13
-  %15 = load <16 x float>, ptr %i.cs, align 1, !tbaa !20
-  br label %bb.ai
+  br i1 %brmerge, label %bb.ah, label %bb.ai
 
 bb.ah:                                            ; preds = %bb.ag
-  %i.fro = load <16 x float>, ptr %.423399118, align 64, !tbaa !20
+  %.423399118.mux = select i1 %11, ptr %.423399118, ptr %.12331
+  %i.fro = load <16 x float>, ptr %.423399118.mux, align 1, !tbaa !20
   br label %bb.ai
 
-bb.ai:                                            ; preds = %13, %14, %bb.ah
-  %.05139 = phi nsz <16 x float> [ %i.fro, %bb.ah ], [ %15, %14 ], [ zeroinitializer, %13 ] ; 3 uses
+bb.ai:                                            ; preds = %bb.ag, %bb.ah
+  %.05139 = phi nsz <16 x float> [ zeroinitializer, %bb.ag ], [ %i.fro, %bb.ah ] ; 3 uses
   br i1 %i.l, label %.lr.ph9102.preheader, label %.preheader8912
 
 .lr.ph9102.preheader:                             ; preds = %bb.ai
@@ -2007,8 +2002,8 @@ bb.au:                                            ; preds = %.lr.ph9311, %._crit
   %.not2626 = icmp eq ptr %.223329309, null
   %i.gef = load ptr, ptr %0, align 8
   %i.geg = getelementptr inbounds [4 x i8], ptr %i.gef, i64 %i.be
-  %i.geh = getelementptr inbounds nuw [4 x i8], ptr %i.geg, i64 %indvars.iv10003 ; 5 uses
-  %.32333 = select i1 %.not2626, ptr null, ptr %i.geh ; 6 uses
+  %i.geh = getelementptr inbounds nuw [4 x i8], ptr %i.geg, i64 %indvars.iv10003 ; 4 uses
+  %.32333 = select i1 %.not2626, ptr null, ptr %i.geh ; 7 uses
   br i1 %i.bf, label %.lr.ph9183, label %.preheader8910
 
 .lr.ph9183:                                       ; preds = %bb.au
@@ -2033,7 +2028,7 @@ bb.av:                                            ; preds = %.lr.ph9183, %.threa
   %.024489180 = phi ptr [ %i.gee, %.lr.ph9183 ], [ %.42452, %.thread7851 ] ; 34 uses
   %.024679179 = phi ptr [ %.0.val1, %.lr.ph9183 ], [ %.22469.lcssa, %.thread7851 ] ; 2 uses
   %.024799178 = phi i32 [ 0, %.lr.ph9183 ], [ %i.hyo, %.thread7851 ]
-  br i1 %12, label %bb.ax, label %bb.aw
+  br i1 %12, label %bb.aw, label %bb.ax
 
 bb.aw:                                            ; preds = %bb.av
   %i.gek = load <16 x float>, ptr %.623419181, align 64, !tbaa !20
@@ -2436,7 +2431,7 @@ bb.be:                                            ; preds = %.lr.ph9238, %.threa
   %.524539236 = phi ptr [ %.02448.lcssa, %.lr.ph9238 ], [ %.92457, %.thread8263 ] ; 26 uses
   %.324709235 = phi ptr [ %.02467.lcssa, %.lr.ph9238 ], [ %.52472.lcssa, %.thread8263 ] ; 3 uses
   %.124809234 = phi i32 [ %.02479.lcssa, %.lr.ph9238 ], [ %i.jst, %.thread8263 ]
-  br i1 %12, label %bb.bg, label %bb.bf
+  br i1 %12, label %bb.bf, label %bb.bg
 
 bb.bf:                                            ; preds = %bb.be
   %i.hyt = load <8 x float>, ptr %.723429237, align 32, !tbaa !20
@@ -2839,7 +2834,8 @@ bb.bm:                                            ; preds = %._crit_edge9224
   br i1 %i.jsw, label %.lr.ph9304, label %._crit_edge9305
 
 .lr.ph9304:                                       ; preds = %.preheader8908
-  %.not2627 = icmp eq ptr %.32333, null
+  %.not2627 = icmp ne ptr %.32333, null
+  %brmerge10316 = select i1 %12, i1 true, i1 %.not2627
   br label %bb.bw
 
 bb.bn:                                            ; preds = %.lr.ph9277, %.thread8361
@@ -2847,7 +2843,7 @@ bb.bn:                                            ; preds = %.lr.ph9277, %.threa
   %.1024589275 = phi ptr [ %.52453.lcssa, %.lr.ph9277 ], [ %.142462, %.thread8361 ] ; 20 uses
   %.624739274 = phi ptr [ %.32470.lcssa, %.lr.ph9277 ], [ %.82475.lcssa, %.thread8361 ] ; 4 uses
   %.224819273 = phi i32 [ %.12480.lcssa, %.lr.ph9277 ], [ %i.kua, %.thread8361 ]
-  br i1 %12, label %bb.bp, label %bb.bo
+  br i1 %12, label %bb.bo, label %bb.bp
 
 bb.bo:                                            ; preds = %bb.bn
   %i.jsx = load <8 x float>, ptr %.823439276, align 32, !tbaa !20
@@ -3250,21 +3246,15 @@ bb.bw:                                            ; preds = %.lr.ph9304, %.threa
   %.1524639302 = phi ptr [ %.102458.lcssa, %.lr.ph9304 ], [ %.182466, %.thread8366 ] ; 16 uses
   %.924769301 = phi ptr [ %.62473.lcssa, %.lr.ph9304 ], [ %.112478.lcssa, %.thread8366 ] ; 4 uses
   %.324829300 = phi i32 [ %.22481.lcssa, %.lr.ph9304 ], [ %i.ldt, %.thread8366 ]
-  br i1 %12, label %16, label %bb.bx
-
-16:                                               ; preds = %bb.bw
-  br i1 %.not2627, label %bb.by, label %17
-
-17:                                               ; preds = %16
-  %18 = load <8 x float>, ptr %i.geh, align 1, !tbaa !20
-  br label %bb.by
+  br i1 %brmerge10316, label %bb.bx, label %bb.by
 
 bb.bx:                                            ; preds = %bb.bw
-  %i.kud = load <8 x float>, ptr %.923449303, align 32, !tbaa !20
+  %.923449303.mux = select i1 %12, ptr %.923449303, ptr %.32333
+  %i.kud = load <8 x float>, ptr %.923449303.mux, align 1, !tbaa !20
   br label %bb.by
 
-bb.by:                                            ; preds = %16, %17, %bb.bx
-  %.05227 = phi nsz <8 x float> [ %i.kud, %bb.bx ], [ %18, %17 ], [ zeroinitializer, %16 ] ; 3 uses
+bb.by:                                            ; preds = %bb.bw, %bb.bx
+  %.05227 = phi nsz <8 x float> [ zeroinitializer, %bb.bw ], [ %i.kud, %bb.bx ] ; 3 uses
   br i1 %i.bg, label %.lr.ph9287.preheader, label %.preheader8904
 
 .lr.ph9287.preheader:                             ; preds = %bb.by

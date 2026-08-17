@@ -203,7 +203,7 @@ bb.by:                                            ; preds = %bb.bx, %_ZStneIcSt1
 
 bb.bz:                                            ; preds = %bb.bv
   %i.kb = invoke ptr @_ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_9MediaInfoESaIS9_ENSt8__detail10_Select1stESt8equal_toIS5_ESt4hashIS5_ENSB_18_Mod_range_hashingENSB_20_Default_ranged_hashENSB_20_Prime_rehash_policyENSB_17_Hashtable_traitsILb1ELb0ELb1EEEE4findERS7_(ptr noundef nonnull align 8 dereferenceable(56) %i.hi, ptr noundef nonnull align 8 dereferenceable(32) %2)
-          to label %_ZNSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE9MediaInfoSt4hashIS5_ESt8equal_toIS5_ESaISt4pairIKS5_S6_EEE4findERSC_.exit162 unwind label %bb.cq ; 5 uses
+          to label %_ZNSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE9MediaInfoSt4hashIS5_ESt8equal_toIS5_ESaISt4pairIKS5_S6_EEE4findERSC_.exit162 unwind label %bb.cq ; 4 uses
 
 _ZNSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE9MediaInfoSt4hashIS5_ESt8equal_toIS5_ESaISt4pairIKS5_S6_EEE4findERSC_.exit162: ; preds = %bb.bz
   %i.kc = getelementptr inbounds nuw i8, ptr %1, i64 136 ; 3 uses
@@ -473,19 +473,18 @@ _ZN11StreamProxylsEPFRSoS0_E.exit199:             ; preds = %bb.cy, %bb.db
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit201: ; preds = %_ZN11StreamProxylsEPFRSoS0_E.exit199, %bb.ca
   %i.nc = getelementptr inbounds nuw i8, ptr %i.kb, i64 104
   store i8 1, ptr %i.nc, align 8, !tbaa !1582
-  %13 = getelementptr inbounds nuw i8, ptr %i.kb, i64 105
-  store i8 1, ptr %13, align 1, !tbaa !941
-  br label %bb.de
+  br label %bb.dd
 
 bb.dc:                                            ; preds = %_ZNSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE9MediaInfoSt4hashIS5_ESt8equal_toIS5_ESaISt4pairIKS5_S6_EEE4findERSC_.exit162
   br i1 %i.kh, label %bb.dd, label %bb.de
 
-bb.dd:                                            ; preds = %bb.dc
-  %i.nd = getelementptr inbounds nuw i8, ptr %i.kb, i64 106
-  store i8 1, ptr %i.nd, align 2, !tbaa !730
+bb.dd:                                            ; preds = %bb.dc, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit201
+  %.sink462 = phi i64 [ 105, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit201 ], [ 106, %bb.dc ]
+  %i.nd = getelementptr inbounds nuw i8, ptr %i.kb, i64 %.sink462
+  store i8 1, ptr %i.nd, align 1, !tbaa !583
   br label %bb.de
 
-bb.de:                                            ; preds = %bb.dc, %bb.dd, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit201
+bb.de:                                            ; preds = %bb.dd, %bb.dc
   %i.ne = getelementptr inbounds nuw i8, ptr %1, i64 104
   %i.nf = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 3 uses
   %i.ng = load i64, ptr %i.nf, align 8, !tbaa !80

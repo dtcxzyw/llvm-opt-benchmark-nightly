@@ -204,7 +204,7 @@ bb.ay:                                            ; preds = %xhci_ring_chain_len
   br i1 %.not.i138, label %.critedge132.lr.ph, label %xhci_ep_alloc_xfer.exit.thread
 
 .critedge132.lr.ph:                               ; preds = %bb.ay
-  %i.fg = call noalias dereferenceable_or_null(256) ptr @g_malloc0(i64 noundef 256) #19 ; 51 uses
+  %i.fg = call noalias dereferenceable_or_null(256) ptr @g_malloc0(i64 noundef 256) #19 ; 49 uses
   store ptr %0, ptr %i.fg, align 8
   %i.fh = zext nneg i32 %.2.i to i64
   %i.fi = call noalias ptr @g_malloc_n(i64 noundef %i.fh, i64 noundef 32) #20
@@ -472,8 +472,6 @@ xhci_check_intr_iso_kick.exit.i.i:                ; preds = %xhci_calc_intr_kick
   store i64 %i.jj, ptr %i.dj, align 8
   %i.jt = load ptr, ptr %i.dk, align 8
   call void @timer_del(ptr noundef %i.jt) #17
-  %4 = getelementptr inbounds nuw i8, ptr %i.fg, i64 185
-  store i8 0, ptr %4, align 1
   br label %bb.cf
 
 bb.bt:                                            ; preds = %trace_usb_xhci_xfer_start.exit.i146, %trace_usb_xhci_xfer_start.exit.i146
@@ -481,8 +479,6 @@ bb.bt:                                            ; preds = %trace_usb_xhci_xfer
   store i32 0, ptr %i.ju, align 4
   %i.jv = getelementptr inbounds nuw i8, ptr %i.fg, i64 197
   store i8 0, ptr %i.jv, align 1
-  %5 = getelementptr inbounds nuw i8, ptr %i.fg, i64 198
-  store i8 0, ptr %5, align 2
   br label %bb.cf
 
 bb.bu:                                            ; preds = %trace_usb_xhci_xfer_start.exit.i146, %trace_usb_xhci_xfer_start.exit.i146
@@ -571,8 +567,6 @@ xhci_check_intr_iso_kick.exit39.i.i:              ; preds = %xhci_calc_iso_kick.
   store i64 %i.ld, ptr %i.dj, align 8
   %i.ln = load ptr, ptr %i.dk, align 8
   call void @timer_del(ptr noundef %i.ln) #17
-  %6 = getelementptr inbounds nuw i8, ptr %i.fg, i64 185
-  store i8 0, ptr %6, align 1
   br label %bb.cf
 
 bb.cb:                                            ; preds = %trace_usb_xhci_xfer_start.exit.i146
@@ -596,6 +590,9 @@ bb.ce:                                            ; preds = %bb.cd
   br label %xhci_fire_ctl_transfer.exit
 
 bb.cf:                                            ; preds = %xhci_check_intr_iso_kick.exit39.i.i, %bb.bt, %xhci_check_intr_iso_kick.exit.i.i
+  %.sink51.i.i = phi i64 [ 185, %xhci_check_intr_iso_kick.exit39.i.i ], [ 185, %xhci_check_intr_iso_kick.exit.i.i ], [ 198, %bb.bt ]
+  %4 = getelementptr inbounds nuw i8, ptr %i.fg, i64 %.sink51.i.i
+  store i8 0, ptr %4, align 1
   %i.ls = call fastcc i32 @xhci_setup_packet(ptr noundef nonnull %i.fg)
   %i.lt = icmp slt i32 %i.ls, 0
   br i1 %i.lt, label %xhci_fire_ctl_transfer.exit, label %bb.cg

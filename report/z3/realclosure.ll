@@ -204,8 +204,6 @@ bb.q:                                             ; preds = %_Z3invIN11realclosu
   store i32 0, ptr %i.fd, align 8, !tbaa !64
   %i.fe = getelementptr inbounds nuw i8, ptr %2, i64 50
   store i8 1, ptr %i.fe, align 2, !tbaa !122
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 48
-  store i8 1, ptr %3, align 8, !tbaa !115
   br label %bb.u
 
 bb.r:                                             ; preds = %_Z3invIN11realclosure11mpbq_config15numeral_managerEEvRT_RNS3_7numeralER16ext_numeral_kind.exit50
@@ -282,11 +280,13 @@ _ZN12mpbq_manager3setER4mpbqRKS0_.exit52:         ; preds = %bb.s, %bb.t
   %i.gw = load i8, ptr %i.gv, align 1, !tbaa !123
   %i.gx = icmp ne i8 %i.gw, 0
   %i.gy = zext i1 %i.gx to i8
-  %4 = getelementptr inbounds nuw i8, ptr %2, i64 50
-  store i8 %i.gy, ptr %4, align 2, !tbaa !122
   br label %bb.u
 
 bb.u:                                             ; preds = %_ZN12mpbq_manager3setER4mpbqRKS0_.exit52, %bb.q
+  %.sink68 = phi i64 [ 50, %_ZN12mpbq_manager3setER4mpbqRKS0_.exit52 ], [ 48, %bb.q ]
+  %.sink66 = phi i8 [ %i.gy, %_ZN12mpbq_manager3setER4mpbqRKS0_.exit52 ], [ 1, %bb.q ]
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 %.sink68
+  store i8 %.sink66, ptr %3, align 2, !tbaa !12
   %i.gz = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
   %i.ha = load i32, ptr %i.gz, align 8, !tbaa !8
   %i.hb = load i32, ptr %i.b, align 8, !tbaa !8
@@ -689,8 +689,6 @@ bb.c:                                             ; preds = %bb.b
   store i32 0, ptr %i.n, align 8, !tbaa !64
   %i.o = getelementptr inbounds nuw i8, ptr %2, i64 51
   store i8 1, ptr %i.o, align 1, !tbaa !123
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 49
-  store i8 1, ptr %3, align 1, !tbaa !124
   br label %bb.s
 
 bb.d:                                             ; preds = %bb.b
@@ -740,8 +738,6 @@ _ZN12mpbq_manager3setER4mpbqRKS0_.exit:           ; preds = %bb.e, %bb.f
   store i32 0, ptr %i.ao, align 8, !tbaa !64
   %i.ap = getelementptr inbounds nuw i8, ptr %2, i64 49
   store i8 1, ptr %i.ap, align 1, !tbaa !124
-  %4 = getelementptr inbounds nuw i8, ptr %2, i64 51
-  store i8 1, ptr %4, align 1, !tbaa !123
   br label %bb.s
 
 bb.g:                                             ; preds = %bb.a
@@ -794,8 +790,6 @@ _ZN12mpbq_manager3setER4mpbqRKS0_.exit41:         ; preds = %bb.i, %bb.j
   store i32 0, ptr %i.bp, align 8, !tbaa !64
   %i.bq = getelementptr inbounds nuw i8, ptr %2, i64 48
   store i8 1, ptr %i.bq, align 8, !tbaa !115
-  %5 = getelementptr inbounds nuw i8, ptr %2, i64 50
-  store i8 1, ptr %5, align 2, !tbaa !122
   br label %bb.s
 
 bb.k:                                             ; preds = %bb.g
@@ -915,11 +909,13 @@ bb.r:                                             ; preds = %_ZN12mpbq_manager3s
   %i.ef = getelementptr inbounds nuw i8, ptr %2, i64 50
   store i8 %i.ee, ptr %i.ef, align 2, !tbaa !122
   %i.eg = zext i1 %i.ea to i8
-  %6 = getelementptr inbounds nuw i8, ptr %2, i64 51
-  store i8 %i.eg, ptr %6, align 1, !tbaa !123
   br label %bb.s
 
 bb.s:                                             ; preds = %_ZN12mpbq_manager3setER4mpbqRKS0_.exit41, %bb.r, %bb.c, %_ZN12mpbq_manager3setER4mpbqRKS0_.exit
+  %.sink48 = phi i64 [ 50, %_ZN12mpbq_manager3setER4mpbqRKS0_.exit41 ], [ 51, %bb.r ], [ 49, %bb.c ], [ 51, %_ZN12mpbq_manager3setER4mpbqRKS0_.exit ]
+  %.sink = phi i8 [ 1, %_ZN12mpbq_manager3setER4mpbqRKS0_.exit41 ], [ %i.eg, %bb.r ], [ 1, %bb.c ], [ 1, %_ZN12mpbq_manager3setER4mpbqRKS0_.exit ]
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 %.sink48
+  store i8 %.sink, ptr %3, align 1, !tbaa !12
   ret void
 }
 

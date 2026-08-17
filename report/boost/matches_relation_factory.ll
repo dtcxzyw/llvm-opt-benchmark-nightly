@@ -204,9 +204,9 @@ bb.ad:                                            ; preds = %bb.x
   %i.ee = load i8, ptr %i.ed, align 1, !tbaa !16
   %i.ef = icmp eq i8 %i.ee, 4                     ; 2 uses
   %spec.select = select i1 %i.ef, ptr %i.bp, ptr %i.at ; 3 uses
-  %i.eg = tail call noundef i32 @_ZNK5boost13re_detail_60031cpp_regex_traits_implementationIcE16lookup_classnameEPKcS4_(ptr noundef nonnull align 8 dereferenceable(437) %i.aj, ptr noundef nonnull %spec.select, ptr noundef nonnull %i.ci) ; 3 uses
+  %i.eg = tail call noundef i32 @_ZNK5boost13re_detail_60031cpp_regex_traits_implementationIcE16lookup_classnameEPKcS4_(ptr noundef nonnull align 8 dereferenceable(437) %i.aj, ptr noundef nonnull %spec.select, ptr noundef nonnull %i.ci) ; 2 uses
   %i.eh = icmp eq i32 %i.eg, 0
-  br i1 %i.eh, label %bb.ae, label %16
+  br i1 %i.eh, label %bb.ae, label %bb.al
 
 bb.ae:                                            ; preds = %bb.ad
   %i.ei = getelementptr inbounds nuw i8, ptr %1, i64 84
@@ -268,24 +268,12 @@ bb.ak:                                            ; preds = %bb.ah, %bb.af, %bb.
   tail call void @_ZN5boost13re_detail_60018basic_regex_parserIcNS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE4failENS_15regex_constants10error_typeEl(ptr noundef nonnull align 8 dereferenceable(216) %0, i32 noundef 4, i64 noundef %i.fl)
   br label %.thread
 
-16:                                               ; preds = %bb.ad
-  br i1 %i.ef, label %21, label %17
-
-17:                                               ; preds = %16
-  %18 = getelementptr inbounds nuw i8, ptr %1, i64 76 ; 2 uses
-  %19 = load i32, ptr %18, align 4, !tbaa !401
-  %20 = or i32 %19, %i.eg
-  store i32 %20, ptr %18, align 4, !tbaa !401
-  br label %bb.al
-
-21:                                               ; preds = %16
-  %22 = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 2 uses
-  %23 = load i32, ptr %22, align 8, !tbaa !400
-  %24 = or i32 %23, %i.eg
-  store i32 %24, ptr %22, align 8, !tbaa !400
-  br label %bb.al
-
-bb.al:                                            ; preds = %17, %21
+bb.al:                                            ; preds = %bb.ad
+  %. = select i1 %i.ef, i64 80, i64 76
+  %16 = getelementptr inbounds nuw i8, ptr %1, i64 %. ; 2 uses
+  %17 = load i32, ptr %16, align 4, !tbaa !18
+  %18 = or i32 %17, %i.eg
+  store i32 %18, ptr %16, align 4, !tbaa !18
   %i.fm = getelementptr inbounds nuw i8, ptr %1, i64 84
   store i8 0, ptr %i.fm, align 4, !tbaa !402
   %i.fn = load ptr, ptr %i.i, align 8, !tbaa !305
@@ -688,9 +676,9 @@ bb.ac:                                            ; preds = %bb.w
   %spec.select = select i1 %i.ex, ptr %i.bz, ptr %i.bc ; 4 uses
   %i.ey = load ptr, ptr %i.ah, align 8, !tbaa !991, !nonnull !48, !align !49
   %i.ez = load ptr, ptr %i.ey, align 8, !tbaa !848
-  %i.fa = tail call noundef i32 @_ZNK5boost13re_detail_60031cpp_regex_traits_implementationIwE16lookup_classnameEPKwS4_(ptr noundef nonnull align 8 dereferenceable(232) %i.ez, ptr noundef nonnull %spec.select, ptr noundef nonnull %i.ct) ; 3 uses
+  %i.fa = tail call noundef i32 @_ZNK5boost13re_detail_60031cpp_regex_traits_implementationIwE16lookup_classnameEPKwS4_(ptr noundef nonnull align 8 dereferenceable(232) %i.ez, ptr noundef nonnull %spec.select, ptr noundef nonnull %i.ct) ; 2 uses
   %i.fb = icmp eq i32 %i.fa, 0
-  br i1 %i.fb, label %bb.ad, label %16
+  br i1 %i.fb, label %bb.ad, label %bb.al
 
 bb.ad:                                            ; preds = %bb.ac
   %i.fc = getelementptr inbounds nuw i8, ptr %1, i64 84
@@ -755,24 +743,12 @@ bb.ak:                                            ; preds = %bb.ae, %bb.af, %bb.
   tail call void @_ZN5boost13re_detail_60018basic_regex_parserIwNS_12regex_traitsIwNS_16cpp_regex_traitsIwEEEEE4failENS_15regex_constants10error_typeEl(ptr noundef nonnull align 8 dereferenceable(216) %0, i32 noundef 4, i64 noundef %i.gi)
   br label %.thread
 
-16:                                               ; preds = %bb.ac
-  br i1 %i.ex, label %21, label %17
-
-17:                                               ; preds = %16
-  %18 = getelementptr inbounds nuw i8, ptr %1, i64 76 ; 2 uses
-  %19 = load i32, ptr %18, align 4, !tbaa !1047
-  %20 = or i32 %19, %i.fa
-  store i32 %20, ptr %18, align 4, !tbaa !1047
-  br label %bb.al
-
-21:                                               ; preds = %16
-  %22 = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 2 uses
-  %23 = load i32, ptr %22, align 8, !tbaa !1046
-  %24 = or i32 %23, %i.fa
-  store i32 %24, ptr %22, align 8, !tbaa !1046
-  br label %bb.al
-
-bb.al:                                            ; preds = %17, %21
+bb.al:                                            ; preds = %bb.ac
+  %. = select i1 %i.ex, i64 80, i64 76
+  %16 = getelementptr inbounds nuw i8, ptr %1, i64 %. ; 2 uses
+  %17 = load i32, ptr %16, align 4, !tbaa !18
+  %18 = or i32 %17, %i.fa
+  store i32 %18, ptr %16, align 4, !tbaa !18
   %i.gj = getelementptr inbounds nuw i8, ptr %1, i64 84
   store i8 0, ptr %i.gj, align 4, !tbaa !1048
   %i.gk = load ptr, ptr %i.i, align 8, !tbaa !975

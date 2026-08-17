@@ -204,10 +204,6 @@ Abc_Clock.exit87:                                 ; preds = %bb.e, %bb.f
   %i.ar = sext i32 %i.aq to i64
   %i.as = shl nsw i64 %i.ar, 2
   call void @llvm.memset.p0.i64(ptr align 4 %3, i8 -1, i64 %i.as, i1 false)
-  %19 = getelementptr inbounds nuw i8, ptr %0, i64 148 ; 2 uses
-  %20 = load i32, ptr %19, align 4, !tbaa !67
-  %21 = add nsw i32 %20, 1
-  store i32 %21, ptr %19, align 4, !tbaa !67
   br label %bb.ak
 
 bb.g:                                             ; preds = %Abc_Clock.exit85
@@ -391,10 +387,6 @@ bb.s:                                             ; preds = %bb.r, %Abc_Clock.ex
   %i.ei = sext i32 %i.eh to i64
   %i.ej = shl nsw i64 %i.ei, 2
   call void @llvm.memset.p0.i64(ptr align 4 %3, i8 -1, i64 %i.ej, i1 false)
-  %22 = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 2 uses
-  %23 = load i32, ptr %22, align 8, !tbaa !68
-  %24 = add nsw i32 %23, 1
-  store i32 %24, ptr %22, align 8, !tbaa !68
   br label %bb.ak
 
 bb.t:                                             ; preds = %bb.o
@@ -531,10 +523,6 @@ bb.ac:                                            ; preds = %bb.ab, %Abc_Clock.e
   %i.gv = sext i32 %i.gu to i64
   %i.gw = shl nsw i64 %i.gv, 2
   call void @llvm.memset.p0.i64(ptr align 4 %3, i8 -1, i64 %i.gw, i1 false)
-  %25 = getelementptr inbounds nuw i8, ptr %0, i64 156 ; 2 uses
-  %26 = load i32, ptr %25, align 4, !tbaa !69
-  %27 = add nsw i32 %26, 1
-  store i32 %27, ptr %25, align 4, !tbaa !69
   br label %bb.ak
 
 bb.ad:                                            ; preds = %Abc_Clock.exit101
@@ -910,14 +898,16 @@ Abc_Clock.exit118:                                ; preds = %bb.ai, %bb.aj
   %i.mz = sitofp i32 %i.mv to double
   %i.na = fdiv double %i.my, %i.mz
   %i.nb = fptosi double %i.na to i32
-  %28 = getelementptr inbounds nuw i8, ptr %0, i64 164 ; 2 uses
-  %29 = load i32, ptr %28, align 4, !tbaa !171
-  %30 = add nsw i32 %29, %i.nb
-  store i32 %30, ptr %28, align 4, !tbaa !171
   br label %bb.ak
 
 bb.ak:                                            ; preds = %Abc_Clock.exit118, %bb.ac, %bb.s, %Abc_Clock.exit87
-  %.0 = phi i32 [ 0, %bb.s ], [ %.0.lcssa.i.i, %Abc_Clock.exit118 ], [ 0, %bb.ac ], [ 0, %Abc_Clock.exit87 ]
+  %.sink145 = phi i64 [ 164, %Abc_Clock.exit118 ], [ 156, %bb.ac ], [ 152, %bb.s ], [ 148, %Abc_Clock.exit87 ]
+  %.sink144 = phi i32 [ %i.nb, %Abc_Clock.exit118 ], [ 1, %bb.ac ], [ 1, %bb.s ], [ 1, %Abc_Clock.exit87 ]
+  %.0 = phi i32 [ %.0.lcssa.i.i, %Abc_Clock.exit118 ], [ 0, %bb.ac ], [ 0, %bb.s ], [ 0, %Abc_Clock.exit87 ]
+  %19 = getelementptr inbounds nuw i8, ptr %0, i64 %.sink145 ; 2 uses
+  %20 = load i32, ptr %19, align 4, !tbaa !52
+  %21 = add nsw i32 %20, %.sink144
+  store i32 %21, ptr %19, align 4, !tbaa !52
   ret i32 %.0
 }
 
@@ -1174,5 +1164,4 @@ attributes #25 = { nounwind allocsize(1) }
 !168 = distinct !{!168, !47, !133, !132}
 !169 = distinct !{!169, !47, !132, !133}
 !170 = distinct !{!170, !47, !133, !132}
-!171 = !{!9, !5, i64 164}
 end_hunk_0
