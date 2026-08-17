@@ -203,35 +203,25 @@ __skb_gro_checksum_validate_needed.exit:          ; preds = %bb.d
   %i.t = load i16, ptr %i.s, align 2              ; 4 uses
   %i.u = and i16 %i.t, 56
   %i.v = icmp eq i16 %i.u, 0
-  br i1 %i.v, label %2, label %.critedge25
+  br i1 %i.v, label %ip6_gro_compute_pseudo.exit, label %.critedge25
 
-2:                                                ; preds = %__skb_gro_checksum_validate_needed.exit
-  %3 = getelementptr i8, ptr %1, i64 48
-  %.val7.i.i = load i32, ptr %3, align 8
-  %.not.i.i = icmp ugt i32 %.val.i.i26, %.val7.i.i
-  br i1 %.not.i.i, label %11, label %4
-
-4:                                                ; preds = %2
-  %5 = getelementptr i8, ptr %1, i64 76
-  %6 = lshr i16 %i.t, 1
-  %7 = and i16 %6, 1
-  %8 = zext nneg i16 %7 to i64
-  %9 = getelementptr [2 x i8], ptr %5, i64 %8
-  %10 = getelementptr i8, ptr %1, i64 40
-  br label %ip6_gro_compute_pseudo.exit
-
-11:                                               ; preds = %2
-  %12 = getelementptr i8, ptr %1, i64 208
-  %13 = getelementptr i8, ptr %1, i64 76
-  %14 = lshr i16 %i.t, 1
-  %15 = and i16 %14, 1
-  %16 = zext nneg i16 %15 to i64
-  %17 = getelementptr [2 x i8], ptr %13, i64 %16
-  br label %ip6_gro_compute_pseudo.exit
-
-ip6_gro_compute_pseudo.exit:                      ; preds = %4, %11
-  %.sink10.in.i.i = phi ptr [ %17, %11 ], [ %9, %4 ]
-  %.sink.in.i.i = phi ptr [ %12, %11 ], [ %10, %4 ]
+ip6_gro_compute_pseudo.exit:                      ; preds = %__skb_gro_checksum_validate_needed.exit
+  %2 = getelementptr i8, ptr %1, i64 48
+  %.val7.i.i = load i32, ptr %2, align 8
+  %.not.i.i = icmp ugt i32 %.val.i.i26, %.val7.i.i ; 2 uses
+  %3 = getelementptr i8, ptr %1, i64 76
+  %4 = lshr i16 %i.t, 1
+  %5 = and i16 %4, 1
+  %6 = zext nneg i16 %5 to i64
+  %7 = getelementptr [2 x i8], ptr %3, i64 %6
+  %8 = getelementptr i8, ptr %1, i64 76
+  %9 = lshr i16 %i.t, 1
+  %10 = and i16 %9, 1
+  %11 = zext nneg i16 %10 to i64
+  %12 = getelementptr [2 x i8], ptr %8, i64 %11
+  %.sink10.in.i.i = select i1 %.not.i.i, ptr %7, ptr %12
+  %.sink.in.i.i.v = select i1 %.not.i.i, i64 208, i64 40
+  %.sink.in.i.i = getelementptr i8, ptr %1, i64 %.sink.in.i.i.v
   %.sink.i.i = load ptr, ptr %.sink.in.i.i, align 8
   %.sink10.i.i = load i16, ptr %.sink10.in.i.i, align 2
   %i.w = zext i16 %.sink10.i.i to i64
@@ -634,12 +624,12 @@ bb.am:                                            ; preds = %bb.al, %._crit_edge
 ip6_gro_compute_pseudo.exit:                      ; preds = %bb.am
   %.val7.i.i = load i32, ptr %i.e, align 8
   %.not.i.i122 = icmp ugt i32 %.val.i.i121, %.val7.i.i
-  %. = select i1 %.not.i.i122, ptr %i.ce, ptr %i.d
   %.pn.in.in = lshr i16 %i.fj, 1
   %.pn.in = and i16 %.pn.in.in, 1
   %.pn = zext nneg i16 %.pn.in to i64
   %.sink10.in.i.i = getelementptr [2 x i8], ptr %i.n, i64 %.pn
-  %.sink.i.i = load ptr, ptr %., align 8
+  %.sink.in.i.i = select i1 %.not.i.i122, ptr %i.ce, ptr %i.d
+  %.sink.i.i = load ptr, ptr %.sink.in.i.i, align 8
   %.sink10.i.i = load i16, ptr %.sink10.in.i.i, align 2
   %i.gg = zext i16 %.sink10.i.i to i64
   %i.gh = getelementptr i8, ptr %.sink.i.i, i64 %i.gg ; 4 uses

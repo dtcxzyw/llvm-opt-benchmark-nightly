@@ -203,42 +203,33 @@ bb.a:
   %4 = alloca %"class.boost::container::basic_string", align 8 ; 24 uses
   %5 = alloca %"class.boost::container::basic_string.0", align 8 ; 24 uses
   %6 = alloca %"class.boost::container::basic_string", align 8 ; 23 uses
-  %7 = alloca %"class.boost::container::basic_string", align 8 ; 24 uses
+  %7 = alloca %"class.boost::container::basic_string", align 8 ; 22 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #26
   store i8 1, ptr %4, align 8, !alias.scope !9
   %i.b = getelementptr inbounds nuw i8, ptr %4, i64 1 ; 4 uses
   store i8 0, ptr %i.b, align 1, !tbaa !12, !alias.scope !9
   %i.c = invoke noundef zeroext i1 @_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE24priv_reserve_no_null_endEm(ptr noundef nonnull align 8 dereferenceable(24) %4, i64 noundef 3)
-          to label %.noexc.i unwind label %.body.i
+          to label %bb.b unwind label %.body.i
 
-.noexc.i:                                         ; preds = %bb.a
-  br i1 %i.c, label %bb.b, label %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE7reserveEm.exit.i.i.i.i.i
-
-bb.b:                                             ; preds = %.noexc.i
-  %8 = load i8, ptr %4, align 8, !tbaa !12, !alias.scope !9 ; 2 uses
-  %9 = trunc i8 %8 to i1
-  br i1 %9, label %10, label %bb.c
-
-10:                                               ; preds = %bb.b
-  %11 = lshr i8 %8, 1
-  %12 = zext nneg i8 %11 to i64
-  %13 = getelementptr inbounds nuw i8, ptr %i.b, i64 %12
-  br label %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE21priv_terminate_stringEv.exit.i.i.i.i.i.i.i
+bb.b:                                             ; preds = %bb.a
+  br i1 %i.c, label %bb.c, label %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE7reserveEm.exit.i.i.i.i.i
 
 bb.c:                                             ; preds = %bb.b
+  %8 = load i8, ptr %4, align 8, !tbaa !12, !alias.scope !9 ; 2 uses
+  %9 = trunc i8 %8 to i1
+  %10 = lshr i8 %8, 1
+  %11 = zext nneg i8 %10 to i64
+  %12 = getelementptr inbounds nuw i8, ptr %i.b, i64 %11
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 16
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !13, !alias.scope !9
+  %i.e = load ptr, ptr %i.d, align 8, !alias.scope !9
   %i.f = load i64, ptr %4, align 8, !alias.scope !9
   %i.g = lshr i64 %i.f, 1
   %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.g
-  br label %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE21priv_terminate_stringEv.exit.i.i.i.i.i.i.i
-
-_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE21priv_terminate_stringEv.exit.i.i.i.i.i.i.i: ; preds = %bb.c, %10
-  %14 = phi ptr [ %13, %10 ], [ %i.h, %bb.c ]
-  store i8 0, ptr %14, align 1, !tbaa !12
+  %13 = select i1 %9, ptr %12, ptr %i.h
+  store i8 0, ptr %13, align 1, !tbaa !12
   br label %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE7reserveEm.exit.i.i.i.i.i
 
-_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE7reserveEm.exit.i.i.i.i.i: ; preds = %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE21priv_terminate_stringEv.exit.i.i.i.i.i.i.i, %.noexc.i
+_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE7reserveEm.exit.i.i.i.i.i: ; preds = %bb.c, %bb.b
   %i.i = load i8, ptr %4, align 8, !tbaa !12, !alias.scope !9
   %i.j = trunc i8 %i.i to i1                      ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 4 uses
@@ -333,36 +324,27 @@ _ZN5boost9container3dtl17basic_string_baseINS0_13new_allocatorIcEEvED2Ev.exit: ;
   %i.ax = getelementptr inbounds nuw i8, ptr %5, i64 4 ; 4 uses
   store i32 0, ptr %i.ax, align 4, !tbaa !22, !alias.scope !19
   %i.ay = invoke noundef zeroext i1 @_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE24priv_reserve_no_null_endEm(ptr noundef nonnull align 8 dereferenceable(24) %5, i64 noundef 3)
-          to label %.noexc.i4 unwind label %.body.i3
+          to label %bb.i unwind label %.body.i3
 
-.noexc.i4:                                        ; preds = %_ZN5boost9container3dtl17basic_string_baseINS0_13new_allocatorIcEEvED2Ev.exit
-  br i1 %i.ay, label %bb.i, label %_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE7reserveEm.exit.i.i.i.i.i
-
-bb.i:                                             ; preds = %.noexc.i4
-  %15 = load i8, ptr %5, align 8, !tbaa !12, !alias.scope !19 ; 2 uses
-  %16 = trunc i8 %15 to i1
-  br i1 %16, label %17, label %bb.j
-
-17:                                               ; preds = %bb.i
-  %18 = lshr i8 %15, 1
-  %19 = zext nneg i8 %18 to i64
-  %20 = getelementptr inbounds nuw [4 x i8], ptr %i.ax, i64 %19
-  br label %_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE21priv_terminate_stringEv.exit.i.i.i.i.i.i.i
+bb.i:                                             ; preds = %_ZN5boost9container3dtl17basic_string_baseINS0_13new_allocatorIcEEvED2Ev.exit
+  br i1 %i.ay, label %bb.j, label %_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE7reserveEm.exit.i.i.i.i.i
 
 bb.j:                                             ; preds = %bb.i
+  %14 = load i8, ptr %5, align 8, !tbaa !12, !alias.scope !19 ; 2 uses
+  %15 = trunc i8 %14 to i1
+  %16 = lshr i8 %14, 1
+  %17 = zext nneg i8 %16 to i64
+  %18 = getelementptr inbounds nuw [4 x i8], ptr %i.ax, i64 %17
   %i.az = getelementptr inbounds nuw i8, ptr %5, i64 16
-  %i.ba = load ptr, ptr %i.az, align 8, !tbaa !24, !alias.scope !19
+  %i.ba = load ptr, ptr %i.az, align 8, !alias.scope !19
   %i.bb = load i64, ptr %5, align 8, !alias.scope !19
   %i.bc = lshr i64 %i.bb, 1
   %i.bd = getelementptr inbounds nuw [4 x i8], ptr %i.ba, i64 %i.bc
-  br label %_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE21priv_terminate_stringEv.exit.i.i.i.i.i.i.i
-
-_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE21priv_terminate_stringEv.exit.i.i.i.i.i.i.i: ; preds = %bb.j, %17
-  %21 = phi ptr [ %20, %17 ], [ %i.bd, %bb.j ]
-  store i32 0, ptr %21, align 4, !tbaa !22
+  %19 = select i1 %15, ptr %18, ptr %i.bd
+  store i32 0, ptr %19, align 4, !tbaa !22
   br label %_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE7reserveEm.exit.i.i.i.i.i
 
-_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE7reserveEm.exit.i.i.i.i.i: ; preds = %_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE21priv_terminate_stringEv.exit.i.i.i.i.i.i.i, %.noexc.i4
+_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE7reserveEm.exit.i.i.i.i.i: ; preds = %bb.j, %bb.i
   %i.be = load i8, ptr %5, align 8, !tbaa !12, !alias.scope !19
   %i.bf = trunc i8 %i.be to i1                    ; 2 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 4 uses
@@ -472,36 +454,27 @@ bb.p:                                             ; preds = %_ZN5boost9container
   %i.cx = ptrtoint ptr %i.cv to i64
   %i.cy = sub i64 %i.cw, %i.cx                    ; 5 uses
   %i.cz = invoke noundef zeroext i1 @_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE24priv_reserve_no_null_endEm(ptr noundef nonnull align 8 dereferenceable(24) %6, i64 noundef %i.cy)
-          to label %.noexc3.i unwind label %.body.i6
+          to label %bb.q unwind label %.body.i6
 
-.noexc3.i:                                        ; preds = %bb.p
-  br i1 %i.cz, label %bb.q, label %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE7reserveEm.exit.i.i.i.i.i8
-
-bb.q:                                             ; preds = %.noexc3.i
-  %22 = load i8, ptr %6, align 8, !tbaa !12, !alias.scope !28 ; 2 uses
-  %23 = trunc i8 %22 to i1
-  br i1 %23, label %24, label %bb.r
-
-24:                                               ; preds = %bb.q
-  %25 = lshr i8 %22, 1
-  %26 = zext nneg i8 %25 to i64
-  %27 = getelementptr inbounds nuw i8, ptr %i.co, i64 %26
-  br label %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE21priv_terminate_stringEv.exit.i.i.i.i.i.i.i10
+bb.q:                                             ; preds = %bb.p
+  br i1 %i.cz, label %bb.r, label %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE7reserveEm.exit.i.i.i.i.i8
 
 bb.r:                                             ; preds = %bb.q
+  %20 = load i8, ptr %6, align 8, !tbaa !12, !alias.scope !28 ; 2 uses
+  %21 = trunc i8 %20 to i1
+  %22 = lshr i8 %20, 1
+  %23 = zext nneg i8 %22 to i64
+  %24 = getelementptr inbounds nuw i8, ptr %i.co, i64 %23
   %i.da = getelementptr inbounds nuw i8, ptr %6, i64 16
-  %i.db = load ptr, ptr %i.da, align 8, !tbaa !13, !alias.scope !28
+  %i.db = load ptr, ptr %i.da, align 8, !alias.scope !28
   %i.dc = load i64, ptr %6, align 8, !alias.scope !28
   %i.dd = lshr i64 %i.dc, 1
   %i.de = getelementptr inbounds nuw i8, ptr %i.db, i64 %i.dd
-  br label %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE21priv_terminate_stringEv.exit.i.i.i.i.i.i.i10
-
-_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE21priv_terminate_stringEv.exit.i.i.i.i.i.i.i10: ; preds = %bb.r, %24
-  %28 = phi ptr [ %27, %24 ], [ %i.de, %bb.r ]
-  store i8 0, ptr %28, align 1, !tbaa !12
+  %25 = select i1 %21, ptr %24, ptr %i.de
+  store i8 0, ptr %25, align 1, !tbaa !12
   br label %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE7reserveEm.exit.i.i.i.i.i8
 
-_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE7reserveEm.exit.i.i.i.i.i8: ; preds = %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE21priv_terminate_stringEv.exit.i.i.i.i.i.i.i10, %.noexc3.i
+_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE7reserveEm.exit.i.i.i.i.i8: ; preds = %bb.r, %bb.q
   %i.df = load i8, ptr %6, align 8, !tbaa !12, !alias.scope !28
   %i.dg = trunc i8 %i.df to i1
   %i.dh = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 4 uses
@@ -614,44 +587,34 @@ _ZN5boost9container3dtl17basic_string_baseINS0_13new_allocatorIcEEvED2Ev.exit14:
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #26
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #26
   store i8 1, ptr %7, align 8
-  %i.fj = getelementptr inbounds nuw i8, ptr %7, i64 1 ; 5 uses
-  store i8 0, ptr %i.fj, align 1, !tbaa !12
+  %26 = getelementptr inbounds nuw i8, ptr %7, i64 1 ; 5 uses
+  %i.fj = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 7 uses
+  store i8 0, ptr %26, align 1, !tbaa !12
   %i.fk = invoke noundef zeroext i1 @_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE24priv_reserve_no_null_endEm(ptr noundef nonnull align 8 dereferenceable(24) %7, i64 noundef 4)
-          to label %.noexc.i15 unwind label %bb.ad
+          to label %bb.ab unwind label %bb.ad
 
-.noexc.i15:                                       ; preds = %_ZN5boost9container3dtl17basic_string_baseINS0_13new_allocatorIcEEvED2Ev.exit14
-  br i1 %i.fk, label %bb.ab, label %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE7reserveEm.exit.i.i
-
-bb.ab:                                            ; preds = %.noexc.i15
-  %29 = load i8, ptr %7, align 8, !tbaa !12       ; 2 uses
-  %30 = trunc i8 %29 to i1
-  br i1 %30, label %31, label %bb.ac
-
-31:                                               ; preds = %bb.ab
-  %32 = lshr i8 %29, 1
-  %33 = zext nneg i8 %32 to i64
-  %34 = getelementptr inbounds nuw i8, ptr %i.fj, i64 %33
-  br label %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE21priv_terminate_stringEv.exit.i.i.i.i
+bb.ab:                                            ; preds = %_ZN5boost9container3dtl17basic_string_baseINS0_13new_allocatorIcEEvED2Ev.exit14
+  br i1 %i.fk, label %bb.ac, label %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE7reserveEm.exit.i.i
 
 bb.ac:                                            ; preds = %bb.ab
-  %i.fl = getelementptr inbounds nuw i8, ptr %7, i64 16
-  %i.fm = load ptr, ptr %i.fl, align 8, !tbaa !13
+  %27 = load i8, ptr %7, align 8, !tbaa !12       ; 2 uses
+  %28 = trunc i8 %27 to i1
+  %29 = lshr i8 %27, 1
+  %30 = zext nneg i8 %29 to i64
+  %i.fl = getelementptr inbounds nuw i8, ptr %26, i64 %30
+  %i.fm = load ptr, ptr %i.fj, align 8
   %i.fn = load i64, ptr %7, align 8
   %i.fo = lshr i64 %i.fn, 1
   %i.fp = getelementptr inbounds nuw i8, ptr %i.fm, i64 %i.fo
-  br label %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE21priv_terminate_stringEv.exit.i.i.i.i
-
-_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE21priv_terminate_stringEv.exit.i.i.i.i: ; preds = %bb.ac, %31
-  %35 = phi ptr [ %34, %31 ], [ %i.fp, %bb.ac ]
-  store i8 0, ptr %35, align 1, !tbaa !12
+  %31 = select i1 %28, ptr %i.fl, ptr %i.fp
+  store i8 0, ptr %31, align 1, !tbaa !12
   br label %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE7reserveEm.exit.i.i
 
-_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE7reserveEm.exit.i.i: ; preds = %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE21priv_terminate_stringEv.exit.i.i.i.i, %.noexc.i15
+_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE7reserveEm.exit.i.i: ; preds = %bb.ac, %bb.ab
   %i.fq = load i8, ptr %7, align 8, !tbaa !12
   %i.fr = trunc i8 %i.fq to i1                    ; 2 uses
-  %36 = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 5 uses
-  %i.fs = load ptr, ptr %36, align 8              ; 2 uses
-  %i.ft = select i1 %i.fr, ptr %i.fj, ptr %i.fs
+  %i.fs = load ptr, ptr %i.fj, align 8            ; 2 uses
+  %i.ft = select i1 %i.fr, ptr %26, ptr %i.fs
   store i32 808464433, ptr %i.ft, align 1
   %.sroa.gep35.a = getelementptr inbounds nuw i8, ptr %7, i64 5
   %.sroa.gep36 = getelementptr inbounds nuw i8, ptr %i.fs, i64 4
@@ -663,7 +626,7 @@ _ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE7reserveEm.exit.i.i: ; p
 
 .thread:                                          ; preds = %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE7reserveEm.exit.i.i
   store i8 9, ptr %7, align 8
-  %i.fw = load ptr, ptr %36, align 8
+  %i.fw = load ptr, ptr %i.fj, align 8
   br label %.split
 
 bb.ad:                                            ; preds = %_ZN5boost9container3dtl17basic_string_baseINS0_13new_allocatorIcEEvED2Ev.exit14
@@ -674,8 +637,7 @@ bb.ad:                                            ; preds = %_ZN5boost9container
   br i1 %i.fz, label %common.resume, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
-  %37 = getelementptr inbounds nuw i8, ptr %7, i64 16
-  %i.ga = load ptr, ptr %37, align 8, !tbaa !13   ; 2 uses
+  %i.ga = load ptr, ptr %i.fj, align 8, !tbaa !13 ; 2 uses
   %i.gb = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.gc = load i64, ptr %i.gb, align 8, !tbaa !18 ; 2 uses
   %i.gd = icmp ne ptr %i.ga, null
@@ -694,12 +656,12 @@ _ZN5boost9container12basic_stringIcSt11char_traitsIcEvvEC2EPKc.exit: ; preds = %
   %i.gh = or disjoint i64 %i.gg, 8
   store i64 %i.gh, ptr %7, align 8
   %i.gi = trunc i64 %.fr to i1                    ; 2 uses
-  %i.gj = load ptr, ptr %36, align 8              ; 2 uses
-  %spec.select = select i1 %i.gi, ptr %i.fj, ptr %i.gj
+  %i.gj = load ptr, ptr %i.fj, align 8            ; 2 uses
+  %spec.select = select i1 %i.gi, ptr %26, ptr %i.gj
   br label %.split
 
 .split:                                           ; preds = %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvEC2EPKc.exit, %.thread
-  %i.gk = phi ptr [ %spec.select, %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvEC2EPKc.exit ], [ %i.fj, %.thread ] ; 3 uses
+  %i.gk = phi ptr [ %spec.select, %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvEC2EPKc.exit ], [ %26, %.thread ] ; 3 uses
   %i.gl = phi i1 [ %i.gi, %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvEC2EPKc.exit ], [ true, %.thread ]
   %i.gm = phi ptr [ %i.gj, %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvEC2EPKc.exit ], [ %i.fw, %.thread ]
   %i.gn = getelementptr inbounds nuw i8, ptr %i.gk, i64 4
@@ -783,7 +745,7 @@ bb.ak:                                            ; preds = %_ZN5boost12lexical_
   br i1 %i.hi, label %_ZN5boost9container3dtl17basic_string_baseINS0_13new_allocatorIcEEvED2Ev.exit17, label %bb.al
 
 bb.al:                                            ; preds = %bb.ak
-  %i.hj = load ptr, ptr %36, align 8, !tbaa !13   ; 2 uses
+  %i.hj = load ptr, ptr %i.fj, align 8, !tbaa !13 ; 2 uses
   %i.hk = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.hl = load i64, ptr %i.hk, align 8, !tbaa !18 ; 2 uses
   %i.hm = icmp ne ptr %i.hj, null
@@ -884,7 +846,7 @@ bb.aw:                                            ; preds = %bb.ah, %_ZN5boost12
   br i1 %i.ip, label %_ZN5boost9container3dtl17basic_string_baseINS0_13new_allocatorIcEEvED2Ev.exit25, label %bb.ax
 
 bb.ax:                                            ; preds = %.body
-  %i.iq = load ptr, ptr %36, align 8, !tbaa !13   ; 2 uses
+  %i.iq = load ptr, ptr %i.fj, align 8, !tbaa !13 ; 2 uses
   %i.ir = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.is = load i64, ptr %i.ir, align 8, !tbaa !18 ; 2 uses
   %i.it = icmp ne ptr %i.iq, null
@@ -1090,7 +1052,7 @@ define hidden void @_Z42testing_boost_containers_string_std_stringv() local_unna
 ._crit_edge.i.i:
   %i.a = alloca i64, align 8                      ; 6 uses
   %0 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
-  %1 = alloca %"class.boost::container::basic_string", align 8 ; 23 uses
+  %1 = alloca %"class.boost::container::basic_string", align 8 ; 21 uses
   %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 15 uses
   %3 = alloca %"class.boost::container::basic_string", align 8 ; 23 uses
   %4 = alloca %"class.std::__cxx11::basic_string.4", align 8 ; 12 uses
@@ -1107,44 +1069,34 @@ define hidden void @_Z42testing_boost_containers_string_std_stringv() local_unna
   store i8 0, ptr %i.d, align 1, !tbaa !12
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #26
   store i8 1, ptr %1, align 8
-  %i.e = getelementptr inbounds nuw i8, ptr %1, i64 1 ; 5 uses
-  store i8 0, ptr %i.e, align 1, !tbaa !12
+  %8 = getelementptr inbounds nuw i8, ptr %1, i64 1 ; 5 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 6 uses
+  store i8 0, ptr %8, align 1, !tbaa !12
   %i.f = invoke noundef zeroext i1 @_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE24priv_reserve_no_null_endEm(ptr noundef nonnull align 8 dereferenceable(24) %1, i64 noundef 9)
-          to label %.noexc.i24 unwind label %bb.c
+          to label %bb.a unwind label %bb.c
 
-.noexc.i24:                                       ; preds = %._crit_edge.i.i
-  br i1 %i.f, label %bb.a, label %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE7reserveEm.exit.i.i
-
-bb.a:                                             ; preds = %.noexc.i24
-  %8 = load i8, ptr %1, align 8, !tbaa !12        ; 2 uses
-  %9 = trunc i8 %8 to i1
-  br i1 %9, label %10, label %bb.b
-
-10:                                               ; preds = %bb.a
-  %11 = lshr i8 %8, 1
-  %12 = zext nneg i8 %11 to i64
-  %13 = getelementptr inbounds nuw i8, ptr %i.e, i64 %12
-  br label %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE21priv_terminate_stringEv.exit.i.i.i.i
+bb.a:                                             ; preds = %._crit_edge.i.i
+  br i1 %i.f, label %bb.b, label %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE7reserveEm.exit.i.i
 
 bb.b:                                             ; preds = %bb.a
-  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !13
+  %9 = load i8, ptr %1, align 8, !tbaa !12        ; 2 uses
+  %10 = trunc i8 %9 to i1
+  %11 = lshr i8 %9, 1
+  %12 = zext nneg i8 %11 to i64
+  %i.g = getelementptr inbounds nuw i8, ptr %8, i64 %12
+  %i.h = load ptr, ptr %i.e, align 8
   %i.i = load i64, ptr %1, align 8
   %i.j = lshr i64 %i.i, 1
   %i.k = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.j
-  br label %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE21priv_terminate_stringEv.exit.i.i.i.i
-
-_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE21priv_terminate_stringEv.exit.i.i.i.i: ; preds = %bb.b, %10
-  %14 = phi ptr [ %13, %10 ], [ %i.k, %bb.b ]
-  store i8 0, ptr %14, align 1, !tbaa !12
+  %13 = select i1 %10, ptr %i.g, ptr %i.k
+  store i8 0, ptr %13, align 1, !tbaa !12
   br label %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE7reserveEm.exit.i.i
 
-_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE7reserveEm.exit.i.i: ; preds = %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE21priv_terminate_stringEv.exit.i.i.i.i, %.noexc.i24
+_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE7reserveEm.exit.i.i: ; preds = %bb.b, %bb.a
   %i.l = load i8, ptr %1, align 8, !tbaa !12
   %i.m = trunc i8 %i.l to i1                      ; 2 uses
-  %15 = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 4 uses
-  %i.n = load ptr, ptr %15, align 8               ; 2 uses
-  %i.o = select i1 %i.m, ptr %i.e, ptr %i.n
+  %i.n = load ptr, ptr %i.e, align 8              ; 2 uses
+  %i.o = select i1 %i.m, ptr %8, ptr %i.n
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(9) %i.o, ptr noundef nonnull align 1 dereferenceable(9) @.str.9, i64 9, i1 false)
   %.sroa.gep = getelementptr inbounds nuw i8, ptr %1, i64 10
   %.sroa.gep80 = getelementptr inbounds nuw i8, ptr %i.n, i64 9
@@ -1172,8 +1124,7 @@ bb.c:                                             ; preds = %._crit_edge.i.i
   br i1 %i.v, label %.body, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %16 = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.w = load ptr, ptr %16, align 8, !tbaa !13    ; 2 uses
+  %i.w = load ptr, ptr %i.e, align 8, !tbaa !13   ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.y = load i64, ptr %i.x, align 8, !tbaa !18   ; 2 uses
   %i.z = icmp ne ptr %i.w, null
@@ -1199,12 +1150,12 @@ _ZN5boost9container12basic_stringIcSt11char_traitsIcEvvEC2EPKc.exit: ; preds = %
   %i.ag = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   store i64 0, ptr %i.ag, align 8, !tbaa !84, !alias.scope !89
   store i8 0, ptr %i.af, align 8, !tbaa !12, !alias.scope !89
-  %i.ah = load ptr, ptr %15, align 8, !noalias !89
-  %spec.select = select i1 %i.ae, ptr %i.e, ptr %i.ah
+  %i.ah = load ptr, ptr %i.e, align 8, !noalias !89
+  %spec.select = select i1 %i.ae, ptr %8, ptr %i.ah
   br label %.split
 
 .split:                                           ; preds = %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvEC2EPKc.exit, %.thread
-  %i.ai = phi ptr [ %spec.select, %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvEC2EPKc.exit ], [ %i.e, %.thread ]
+  %i.ai = phi ptr [ %spec.select, %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvEC2EPKc.exit ], [ %8, %.thread ]
   %i.aj = phi ptr [ %i.af, %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvEC2EPKc.exit ], [ %i.r, %.thread ] ; 5 uses
   %i.ak = phi ptr [ %i.ag, %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvEC2EPKc.exit ], [ %i.s, %.thread ]
   %i.al = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %2, i64 noundef 0, i64 noundef 0, ptr noundef %i.ai, i64 noundef 9)
@@ -1262,36 +1213,27 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.g,
   %i.bj = load ptr, ptr %0, align 8, !tbaa !91, !noalias !92
   %i.bk = load i64, ptr %i.c, align 8, !tbaa !84, !noalias !92 ; 6 uses
   %i.bl = invoke noundef zeroext i1 @_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE24priv_reserve_no_null_endEm(ptr noundef nonnull align 8 dereferenceable(24) %3, i64 noundef %i.bk)
-          to label %.noexc.i28 unwind label %.body.i27
+          to label %bb.h unwind label %.body.i27
 
-.noexc.i28:                                       ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
-  br i1 %i.bl, label %bb.h, label %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE7reserveEm.exit.i.i.i.i.i
-
-bb.h:                                             ; preds = %.noexc.i28
-  %17 = load i8, ptr %3, align 8, !tbaa !12, !alias.scope !92 ; 2 uses
-  %18 = trunc i8 %17 to i1
-  br i1 %18, label %19, label %bb.i
-
-19:                                               ; preds = %bb.h
-  %20 = lshr i8 %17, 1
-  %21 = zext nneg i8 %20 to i64
-  %22 = getelementptr inbounds nuw i8, ptr %i.bi, i64 %21
-  br label %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE21priv_terminate_stringEv.exit.i.i.i.i.i.i.i
+bb.h:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
+  br i1 %i.bl, label %bb.i, label %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE7reserveEm.exit.i.i.i.i.i
 
 bb.i:                                             ; preds = %bb.h
+  %14 = load i8, ptr %3, align 8, !tbaa !12, !alias.scope !92 ; 2 uses
+  %15 = trunc i8 %14 to i1
+  %16 = lshr i8 %14, 1
+  %17 = zext nneg i8 %16 to i64
+  %18 = getelementptr inbounds nuw i8, ptr %i.bi, i64 %17
   %i.bm = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %i.bn = load ptr, ptr %i.bm, align 8, !tbaa !13, !alias.scope !92
+  %i.bn = load ptr, ptr %i.bm, align 8, !alias.scope !92
   %i.bo = load i64, ptr %3, align 8, !alias.scope !92
   %i.bp = lshr i64 %i.bo, 1
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bn, i64 %i.bp
-  br label %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE21priv_terminate_stringEv.exit.i.i.i.i.i.i.i
-
-_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE21priv_terminate_stringEv.exit.i.i.i.i.i.i.i: ; preds = %bb.i, %19
-  %23 = phi ptr [ %22, %19 ], [ %i.bq, %bb.i ]
-  store i8 0, ptr %23, align 1, !tbaa !12
+  %19 = select i1 %15, ptr %18, ptr %i.bq
+  store i8 0, ptr %19, align 1, !tbaa !12
   br label %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE7reserveEm.exit.i.i.i.i.i
 
-_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE7reserveEm.exit.i.i.i.i.i: ; preds = %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE21priv_terminate_stringEv.exit.i.i.i.i.i.i.i, %.noexc.i28
+_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE7reserveEm.exit.i.i.i.i.i: ; preds = %bb.i, %bb.h
   %i.br = load i8, ptr %3, align 8, !tbaa !12, !alias.scope !92
   %i.bs = trunc i8 %i.br to i1
   %i.bt = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 4 uses
@@ -1492,36 +1434,27 @@ _ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit: ; preds = %bb.u,
   %i.ff = load i64, ptr %i.dy, align 8, !tbaa !100, !noalias !104 ; 6 uses
   %.idx3.i.i.i = shl nuw nsw i64 %i.ff, 2
   %i.fg = invoke noundef zeroext i1 @_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE24priv_reserve_no_null_endEm(ptr noundef nonnull align 8 dereferenceable(24) %7, i64 noundef %i.ff)
-          to label %.noexc.i39 unwind label %.body.i38
+          to label %bb.v unwind label %.body.i38
 
-.noexc.i39:                                       ; preds = %_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit
-  br i1 %i.fg, label %bb.v, label %_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE7reserveEm.exit.i.i.i.i.i
-
-bb.v:                                             ; preds = %.noexc.i39
-  %24 = load i8, ptr %7, align 8, !tbaa !12, !alias.scope !104 ; 2 uses
-  %25 = trunc i8 %24 to i1
-  br i1 %25, label %26, label %bb.w
-
-26:                                               ; preds = %bb.v
-  %27 = lshr i8 %24, 1
-  %28 = zext nneg i8 %27 to i64
-  %29 = getelementptr inbounds nuw [4 x i8], ptr %i.fd, i64 %28
-  br label %_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE21priv_terminate_stringEv.exit.i.i.i.i.i.i.i
+bb.v:                                             ; preds = %_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit
+  br i1 %i.fg, label %bb.w, label %_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE7reserveEm.exit.i.i.i.i.i
 
 bb.w:                                             ; preds = %bb.v
+  %20 = load i8, ptr %7, align 8, !tbaa !12, !alias.scope !104 ; 2 uses
+  %21 = trunc i8 %20 to i1
+  %22 = lshr i8 %20, 1
+  %23 = zext nneg i8 %22 to i64
+  %24 = getelementptr inbounds nuw [4 x i8], ptr %i.fd, i64 %23
   %i.fh = getelementptr inbounds nuw i8, ptr %7, i64 16
-  %i.fi = load ptr, ptr %i.fh, align 8, !tbaa !24, !alias.scope !104
+  %i.fi = load ptr, ptr %i.fh, align 8, !alias.scope !104
   %i.fj = load i64, ptr %7, align 8, !alias.scope !104
   %i.fk = lshr i64 %i.fj, 1
   %i.fl = getelementptr inbounds nuw [4 x i8], ptr %i.fi, i64 %i.fk
-  br label %_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE21priv_terminate_stringEv.exit.i.i.i.i.i.i.i
-
-_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE21priv_terminate_stringEv.exit.i.i.i.i.i.i.i: ; preds = %bb.w, %26
-  %30 = phi ptr [ %29, %26 ], [ %i.fl, %bb.w ]
-  store i32 0, ptr %30, align 4, !tbaa !22
+  %25 = select i1 %21, ptr %24, ptr %i.fl
+  store i32 0, ptr %25, align 4, !tbaa !22
   br label %_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE7reserveEm.exit.i.i.i.i.i
 
-_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE7reserveEm.exit.i.i.i.i.i: ; preds = %_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE21priv_terminate_stringEv.exit.i.i.i.i.i.i.i, %.noexc.i39
+_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE7reserveEm.exit.i.i.i.i.i: ; preds = %bb.w, %bb.v
   %i.fm = load i8, ptr %7, align 8, !tbaa !12, !alias.scope !104
   %i.fn = trunc i8 %i.fm to i1
   %i.fo = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 4 uses
@@ -1658,7 +1591,7 @@ _ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit47: ; preds = %_ZN
   br i1 %i.hy, label %_ZN5boost9container3dtl17basic_string_baseINS0_13new_allocatorIcEEvED2Ev.exit49, label %bb.ah
 
 bb.ah:                                            ; preds = %_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit47
-  %i.hz = load ptr, ptr %15, align 8, !tbaa !13   ; 2 uses
+  %i.hz = load ptr, ptr %i.e, align 8, !tbaa !13  ; 2 uses
   %i.ia = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.ib = load i64, ptr %i.ia, align 8, !tbaa !18 ; 2 uses
   %i.ic = icmp ne ptr %i.hz, null
@@ -1837,7 +1770,7 @@ bb.av:                                            ; preds = %_ZNSt7__cxx1112basi
   br i1 %i.ka, label %.body, label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av
-  %i.kb = load ptr, ptr %15, align 8, !tbaa !13   ; 2 uses
+  %i.kb = load ptr, ptr %i.e, align 8, !tbaa !13  ; 2 uses
   %i.kc = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.kd = load i64, ptr %i.kc, align 8, !tbaa !18 ; 2 uses
   %i.ke = icmp ne ptr %i.kb, null
@@ -1872,44 +1805,34 @@ define linkonce_odr hidden void @_ZN5boost9container12basic_stringIwSt11char_tra
 bb.a:
   store i8 1, ptr %0, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 3 uses
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   store i32 0, ptr %i.a, align 4, !tbaa !22
   %i.b = tail call noundef i64 @wcslen(ptr noundef %1) #27 ; 6 uses
   %.idx = shl nuw nsw i64 %i.b, 2
   %i.c = invoke noundef zeroext i1 @_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE24priv_reserve_no_null_endEm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %i.b)
-          to label %.noexc unwind label %bb.g
+          to label %bb.b unwind label %bb.g
 
-.noexc:                                           ; preds = %bb.a
-  br i1 %i.c, label %bb.b, label %_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE7reserveEm.exit.i
-
-bb.b:                                             ; preds = %.noexc
-  %2 = load i8, ptr %0, align 8, !tbaa !12        ; 2 uses
-  %3 = trunc i8 %2 to i1
-  br i1 %3, label %4, label %bb.c
-
-4:                                                ; preds = %bb.b
-  %5 = lshr i8 %2, 1
-  %6 = zext nneg i8 %5 to i64
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %6
-  br label %_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE21priv_terminate_stringEv.exit.i.i.i
+bb.b:                                             ; preds = %bb.a
+  br i1 %i.c, label %bb.c, label %_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE7reserveEm.exit.i
 
 bb.c:                                             ; preds = %bb.b
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.d = load ptr, ptr %8, align 8, !tbaa !24
+  %3 = load i8, ptr %0, align 8, !tbaa !12        ; 2 uses
+  %4 = trunc i8 %3 to i1
+  %5 = lshr i8 %3, 1
+  %6 = zext nneg i8 %5 to i64
+  %7 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %6
+  %i.d = load ptr, ptr %2, align 8
   %i.e = load i64, ptr %0, align 8
   %i.f = lshr i64 %i.e, 1
   %i.g = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %i.f
-  br label %_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE21priv_terminate_stringEv.exit.i.i.i
-
-_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE21priv_terminate_stringEv.exit.i.i.i: ; preds = %bb.c, %4
-  %9 = phi ptr [ %7, %4 ], [ %i.g, %bb.c ]
-  store i32 0, ptr %9, align 4, !tbaa !22
+  %8 = select i1 %4, ptr %7, ptr %i.g
+  store i32 0, ptr %8, align 4, !tbaa !22
   br label %_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE7reserveEm.exit.i
 
-_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE7reserveEm.exit.i: ; preds = %_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE21priv_terminate_stringEv.exit.i.i.i, %.noexc
+_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE7reserveEm.exit.i: ; preds = %bb.c, %bb.b
   %i.h = load i8, ptr %0, align 8, !tbaa !12
   %i.i = trunc i8 %i.h to i1
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.j = load ptr, ptr %10, align 8
+  %i.j = load ptr, ptr %2, align 8
   %i.k = select i1 %i.i, ptr %i.a, ptr %i.j       ; 2 uses
   %i.l = icmp eq i64 %i.b, 0
   br i1 %i.l, label %_ZNSt11char_traitsIwE4copyEPwPKwm.exit.i, label %bb.d
@@ -2312,37 +2235,28 @@ bb.e:                                             ; preds = %_ZN5boost6detail5lc
   %i.ay = sub i64 %i.aw, %i.ax                    ; 3 uses
   %i.az = ashr exact i64 %i.ay, 2                 ; 3 uses
   %i.ba = invoke noundef zeroext i1 @_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE24priv_reserve_no_null_endEm(ptr noundef nonnull align 8 dereferenceable(24) %1, i64 noundef %i.az)
-          to label %.noexc8 unwind label %bb.k
+          to label %bb.f unwind label %bb.k
 
-.noexc8:                                          ; preds = %bb.e
-  br i1 %i.ba, label %bb.f, label %_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE7reserveEm.exit.i.i
-
-bb.f:                                             ; preds = %.noexc8
-  %3 = load i8, ptr %1, align 8, !tbaa !12        ; 2 uses
-  %4 = trunc i8 %3 to i1
-  br i1 %4, label %5, label %bb.g
-
-5:                                                ; preds = %bb.f
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %7 = lshr i8 %3, 1
-  %8 = zext nneg i8 %7 to i64
-  %9 = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %8
-  br label %_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE21priv_terminate_stringEv.exit.i.i.i.i
+bb.f:                                             ; preds = %bb.e
+  br i1 %i.ba, label %bb.g, label %_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE7reserveEm.exit.i.i
 
 bb.g:                                             ; preds = %bb.f
+  %3 = load i8, ptr %1, align 8, !tbaa !12        ; 2 uses
+  %4 = trunc i8 %3 to i1
+  %5 = getelementptr inbounds nuw i8, ptr %1, i64 4
+  %6 = lshr i8 %3, 1
+  %7 = zext nneg i8 %6 to i64
+  %8 = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %7
   %i.bb = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !24
+  %i.bc = load ptr, ptr %i.bb, align 8
   %i.bd = load i64, ptr %1, align 8
   %i.be = lshr i64 %i.bd, 1
   %i.bf = getelementptr inbounds nuw [4 x i8], ptr %i.bc, i64 %i.be
-  br label %_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE21priv_terminate_stringEv.exit.i.i.i.i
-
-_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE21priv_terminate_stringEv.exit.i.i.i.i: ; preds = %bb.g, %5
-  %10 = phi ptr [ %9, %5 ], [ %i.bf, %bb.g ]
-  store i32 0, ptr %10, align 4, !tbaa !22
+  %9 = select i1 %4, ptr %8, ptr %i.bf
+  store i32 0, ptr %9, align 4, !tbaa !22
   br label %_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE7reserveEm.exit.i.i
 
-_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE7reserveEm.exit.i.i: ; preds = %_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE21priv_terminate_stringEv.exit.i.i.i.i, %.noexc8
+_ZN5boost9container12basic_stringIwSt11char_traitsIwEvvE7reserveEm.exit.i.i: ; preds = %bb.g, %bb.f
   %i.bg = load i8, ptr %1, align 8, !tbaa !12
   %i.bh = trunc i8 %i.bg to i1
   %i.bi = getelementptr inbounds nuw i8, ptr %1, i64 4
