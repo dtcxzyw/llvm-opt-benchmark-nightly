@@ -204,23 +204,18 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.cc, label %bb.f, label %bb.k
 
 bb.f:                                             ; preds = %bb.e
-  %i.cd = shl nsw i32 %.pre.i, 1                  ; 9 uses
+  %i.cd = shl nsw i32 %.pre.i, 1                  ; 8 uses
   %i.ce = icmp sgt i32 %i.cd, %.pre.i
-  br i1 %i.ce, label %5, label %.loopexit
+  br i1 %i.ce, label %..lr.ph.i_crit_edge, label %.loopexit
 
-5:                                                ; preds = %bb.f
-  %6 = icmp slt i32 %i.aj, %i.cd
-  br i1 %6, label %bb.g, label %..lr.ph.i_crit_edge
+..lr.ph.i_crit_edge:                              ; preds = %bb.f
+  %5 = icmp slt i32 %i.aj, %i.cd
+  %6 = zext nneg i32 %i.cd to i64
+  %.pre113 = shl nuw nsw i64 %6, 3                ; 2 uses
+  br i1 %5, label %bb.g, label %.lr.ph.i
 
-..lr.ph.i_crit_edge:                              ; preds = %5
-  %.pre = sext i32 %i.cd to i64
-  %.pre113 = shl nsw i64 %.pre, 3
-  br label %.lr.ph.i
-
-bb.g:                                             ; preds = %5
-  %7 = zext nneg i32 %i.cd to i64
-  %8 = shl nuw nsw i64 %7, 3                      ; 2 uses
-  %i.cf = invoke noundef ptr @_Z22btAlignedAllocInternalmi(i64 noundef %8, i32 noundef 16)
+bb.g:                                             ; preds = %..lr.ph.i_crit_edge
+  %i.cf = invoke noundef ptr @_Z22btAlignedAllocInternalmi(i64 noundef %.pre113, i32 noundef 16)
           to label %.noexc41 unwind label %bb.j   ; 10 uses
 
 .noexc41:                                         ; preds = %bb.g
@@ -326,15 +321,14 @@ _ZN20btAlignedObjectArrayIPK10btDbvtNodeE10deallocateEv.exit.i.i: ; preds = %bb.
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %..lr.ph.i_crit_edge, %_ZN20btAlignedObjectArrayIPK10btDbvtNodeE10deallocateEv.exit.i.i
-  %.pre-phi = phi i64 [ %.pre113, %..lr.ph.i_crit_edge ], [ %8, %_ZN20btAlignedObjectArrayIPK10btDbvtNodeE10deallocateEv.exit.i.i ]
-  %i.dg = phi ptr [ %i.ai, %..lr.ph.i_crit_edge ], [ %i.cf, %_ZN20btAlignedObjectArrayIPK10btDbvtNodeE10deallocateEv.exit.i.i ]
-  %i.dh = phi ptr [ %i.ak, %..lr.ph.i_crit_edge ], [ %i.cf, %_ZN20btAlignedObjectArrayIPK10btDbvtNodeE10deallocateEv.exit.i.i ]
-  %i.di = phi i8 [ %.old, %..lr.ph.i_crit_edge ], [ 1, %_ZN20btAlignedObjectArrayIPK10btDbvtNodeE10deallocateEv.exit.i.i ]
-  %i.dj = phi i32 [ %i.aj, %..lr.ph.i_crit_edge ], [ %i.cd, %_ZN20btAlignedObjectArrayIPK10btDbvtNodeE10deallocateEv.exit.i.i ]
-  %9 = sext i32 %.pre.i to i64
-  %i.dk = shl nsw i64 %9, 3                       ; 2 uses
-  %scevgep = getelementptr i8, ptr %i.dh, i64 %i.dk
-  %i.dl = sub nsw i64 %.pre-phi, %i.dk
+  %i.dg = phi ptr [ %i.cf, %_ZN20btAlignedObjectArrayIPK10btDbvtNodeE10deallocateEv.exit.i.i ], [ %i.ai, %..lr.ph.i_crit_edge ]
+  %i.dh = phi ptr [ %i.cf, %_ZN20btAlignedObjectArrayIPK10btDbvtNodeE10deallocateEv.exit.i.i ], [ %i.ak, %..lr.ph.i_crit_edge ]
+  %i.di = phi i8 [ 1, %_ZN20btAlignedObjectArrayIPK10btDbvtNodeE10deallocateEv.exit.i.i ], [ %.old, %..lr.ph.i_crit_edge ]
+  %i.dj = phi i32 [ %i.cd, %_ZN20btAlignedObjectArrayIPK10btDbvtNodeE10deallocateEv.exit.i.i ], [ %i.aj, %..lr.ph.i_crit_edge ]
+  %7 = zext i32 %.pre.i to i64
+  %i.dk = shl nuw nsw i64 %7, 3                   ; 2 uses
+  %scevgep = getelementptr nuw i8, ptr %i.dh, i64 %i.dk
+  %i.dl = sub nsw i64 %.pre113, %i.dk
   call void @llvm.memset.p0.i64(ptr align 8 %scevgep, i8 0, i64 %i.dl, i1 false), !tbaa !873
   br label %.loopexit
 

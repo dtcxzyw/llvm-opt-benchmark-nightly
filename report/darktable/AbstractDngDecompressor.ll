@@ -203,13 +203,11 @@ bb.a:                                             ; preds = %.lr.ph, %bb.y
   call void @llvm.assume(i1 %i.x)
   %i.y = icmp sgt i32 %i.u, -1
   call void @llvm.assume(i1 %i.y)
-  %i.z = sub i32 %i.u, %i.w                       ; 2 uses
+  %i.z = sub nuw i32 %i.u, %i.w
   %i.aa = zext i32 %i.w to i64
   %i.ab = getelementptr inbounds nuw i8, ptr %.040, i64 16
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !179
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 %i.aa
-  %8 = icmp sgt i32 %i.z, -1
-  call void @llvm.assume(i1 %8)
   %i.ae = load ptr, ptr %i.n, align 8, !tbaa !113 ; 2 uses
   %i.af = load <2 x ptr>, ptr %0, align 8, !tbaa !180
   store <2 x ptr> %i.af, ptr %3, align 16, !tbaa !180
@@ -612,13 +610,11 @@ bb.a:                                             ; preds = %.lr.ph, %bb.p
   call void @llvm.assume(i1 %i.v)
   %i.w = icmp sgt i32 %i.s, -1
   call void @llvm.assume(i1 %i.w)
-  %i.x = sub i32 %i.s, %i.u                       ; 2 uses
+  %i.x = sub nuw i32 %i.s, %i.u
   %i.y = zext i32 %i.u to i64
   %i.z = getelementptr inbounds nuw i8, ptr %.033, i64 16
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !179
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 %i.y
-  %6 = icmp sgt i32 %i.x, -1
-  call void @llvm.assume(i1 %6)
   %i.ac = load ptr, ptr %i.m, align 8, !tbaa !113 ; 2 uses
   %i.ad = load <2 x ptr>, ptr %0, align 8, !tbaa !180
   %.not.i.i.i.i = icmp eq ptr %i.ac, null

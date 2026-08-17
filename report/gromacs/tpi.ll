@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %_ZSt27__uninitializ
 define void @_ZNK3gmx21TestParticleInsertion17checkEnergyGroupsENS_8ArrayRefIKNS_27AtomInfoWithinMoleculeBlockEEEP8_IO_FILE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(472) %0, ptr nofree readnone captures(none) %1, ptr nofree readonly captures(none) %2, ptr nofree noundef captures(none) %3) local_unnamed_addr #9 align 2 {
 bb.a:
   %i.a = getelementptr inbounds i8, ptr %2, i64 -32
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !193  ; 3 uses
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !193  ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 312
   %i.d = load i32, ptr %i.c, align 8, !tbaa !179
   %i.e = icmp eq i32 %i.b, %i.d
@@ -225,18 +225,17 @@ bb.c:                                             ; preds = %bb.a
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !176
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 372
   %i.k = load i32, ptr %i.j, align 4, !tbaa !254
-  %4 = sext i32 %i.b to i64                       ; 2 uses
   br label %.critedge
 
 bb.d:                                             ; preds = %.critedge
-  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
-  %5 = trunc nsw i64 %indvars.iv.next to i32
-  %.not14 = icmp eq i32 %i.g, %5
+  %4 = add nsw i32 %.sroa.08.016, 1               ; 2 uses
+  %.not14 = icmp eq i32 %4, %i.g
   br i1 %.not14, label %.loopexit, label %.critedge
 
 .critedge:                                        ; preds = %.critedge.lr.ph, %bb.d
-  %indvars.iv = phi i64 [ %4, %.critedge.lr.ph ], [ %indvars.iv.next, %bb.d ] ; 2 uses
-  %6 = sub nsw i64 %indvars.iv, %4
+  %.sroa.08.016 = phi i32 [ %i.b, %.critedge.lr.ph ], [ %4, %bb.d ] ; 2 uses
+  %5 = sub nsw i32 %.sroa.08.016, %i.b
+  %6 = zext nneg i32 %5 to i64
   %i.l = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %6
   %i.m = load i32, ptr %i.l, align 4, !tbaa !253
   %i.n = and i32 %i.m, 255
@@ -639,7 +638,7 @@ bb.cr:                                            ; preds = %bb.cq
   %i.xh = getelementptr inbounds nuw i8, ptr %i.xb, i64 %i.xg ; 2 uses
   %i.xi = load ptr, ptr %i.j, align 8, !tbaa !673
   %i.xj = getelementptr inbounds i8, ptr %i.xh, i64 -32
-  %i.xk = load i32, ptr %i.xj, align 8, !tbaa !193 ; 3 uses
+  %i.xk = load i32, ptr %i.xj, align 8, !tbaa !193 ; 4 uses
   %i.xl = getelementptr inbounds nuw i8, ptr %12, i64 312
   %i.xm = load i32, ptr %i.xl, align 8, !tbaa !179
   %i.xn = icmp eq i32 %i.xk, %i.xm
@@ -663,18 +662,17 @@ bb.ct:                                            ; preds = %bb.cr
   %i.xr = load ptr, ptr %i.xq, align 8, !tbaa !176
   %i.xs = getelementptr inbounds nuw i8, ptr %12, i64 372
   %i.xt = load i32, ptr %i.xs, align 4, !tbaa !254
-  %23 = sext i32 %i.xk to i64                     ; 2 uses
   br label %.critedge.i
 
 bb.cu:                                            ; preds = %.critedge.i
-  %indvars.iv.next.i = add nsw i64 %indvars.iv.i325, 1 ; 2 uses
-  %24 = trunc nsw i64 %indvars.iv.next.i to i32
-  %.not14.i = icmp eq i32 %i.xp, %24
+  %23 = add nsw i32 %.sroa.08.016.i, 1            ; 2 uses
+  %.not14.i = icmp eq i32 %23, %i.xp
   br i1 %.not14.i, label %_ZNK3gmx21TestParticleInsertion17checkEnergyGroupsENS_8ArrayRefIKNS_27AtomInfoWithinMoleculeBlockEEEP8_IO_FILE.exit, label %.critedge.i
 
 .critedge.i:                                      ; preds = %bb.cu, %.critedge.lr.ph.i
-  %indvars.iv.i325 = phi i64 [ %23, %.critedge.lr.ph.i ], [ %indvars.iv.next.i, %bb.cu ] ; 2 uses
-  %25 = sub nsw i64 %indvars.iv.i325, %23
+  %.sroa.08.016.i = phi i32 [ %i.xk, %.critedge.lr.ph.i ], [ %23, %bb.cu ] ; 2 uses
+  %24 = sub nsw i32 %.sroa.08.016.i, %i.xk
+  %25 = zext nneg i32 %24 to i64
   %i.xu = getelementptr inbounds nuw [4 x i8], ptr %i.xr, i64 %25
   %i.xv = load i32, ptr %i.xu, align 4, !tbaa !253
   %i.xw = and i32 %i.xv, 255

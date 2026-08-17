@@ -205,7 +205,7 @@ bb.em:                                            ; preds = %bb.ek
   call void @sqlite3_str_appendchar(ptr noundef %i.vy, i32 noundef %i.wf, i8 noundef signext 32) #45
   %i.wg = load ptr, ptr %i.vp, align 8, !tbaa !95
   call fastcc void @qrfAppendWithTabs(ptr noundef %i.vy, ptr noundef %i.wg, i32 noundef %spec.select315.i)
-  %i.wh = sub nsw i32 %i.vz, %i.wf
+  %i.wh = sub nuw nsw i32 %i.vz, %i.wf
   call void @sqlite3_str_appendchar(ptr noundef %i.vy, i32 noundef %i.wh, i8 noundef signext 32) #45
   br label %qrfPrintAligned.exit330.i
 
@@ -608,29 +608,24 @@ bb.f:                                             ; preds = %bb.d
 .lr.ph:                                           ; preds = %bb.f
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !182
-  %3 = zext nneg i32 %i.h to i64
-  %4 = zext nneg i32 %spec.store.select to i64
   br label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph, %bb.h
-  %indvars.iv = phi i64 [ %3, %.lr.ph ], [ %indvars.iv.next, %bb.h ] ; 3 uses
-  %i.l = getelementptr i8, ptr %i.k, i64 %indvars.iv
+  %.05765 = phi i32 [ %i.h, %.lr.ph ], [ %4, %bb.h ] ; 3 uses
+  %3 = zext nneg i32 %.05765 to i64
+  %i.l = getelementptr i8, ptr %i.k, i64 %3
   %i.m = getelementptr i8, ptr %i.l, i64 -1
   %i.n = load i8, ptr %i.m, align 1, !tbaa !16
   %i.o = icmp eq i8 %i.n, 0
-  br i1 %i.o, label %bb.h, label %.critedge.loopexit.split.loop.exit89
+  br i1 %i.o, label %bb.h, label %.critedge
 
 bb.h:                                             ; preds = %bb.g
-  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
-  %i.p = icmp sgt i64 %indvars.iv.next, %4
+  %4 = add nsw i32 %.05765, -1                    ; 2 uses
+  %i.p = icmp sgt i32 %4, %spec.store.select
   br i1 %i.p, label %bb.g, label %.critedge, !llvm.loop !857
 
-.critedge.loopexit.split.loop.exit89:             ; preds = %bb.g
-  %5 = trunc nuw nsw i64 %indvars.iv to i32
-  br label %.critedge
-
-.critedge:                                        ; preds = %bb.h, %.critedge.loopexit.split.loop.exit89, %bb.f
-  %.057.lcssa = phi i32 [ %i.h, %bb.f ], [ %5, %.critedge.loopexit.split.loop.exit89 ], [ %spec.store.select, %bb.h ] ; 5 uses
+.critedge:                                        ; preds = %bb.g, %bb.h, %bb.f
+  %.057.lcssa = phi i32 [ %i.h, %bb.f ], [ %spec.store.select, %bb.h ], [ %.05765, %bb.g ] ; 5 uses
   %i.q = icmp sgt i32 %.057.lcssa, 0
   br i1 %i.q, label %.lr.ph69, label %.critedge2
 

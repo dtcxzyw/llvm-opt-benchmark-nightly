@@ -203,8 +203,6 @@ _ZN6icu_789UVector6414ensureCapacityEiR10UErrorCode.exit: ; preds = %bb.m, %bb.c
 
 .lr.ph:                                           ; preds = %_ZN6icu_789UVector6414ensureCapacityEiR10UErrorCode.exit
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %4 = zext nneg i32 %i.w to i64
-  %5 = zext nneg i32 %2 to i64
   br label %bb.n
 
 ._crit_edge:                                      ; preds = %bb.n, %_ZN6icu_789UVector6414ensureCapacityEiR10UErrorCode.exit
@@ -219,14 +217,15 @@ _ZN6icu_789UVector6414ensureCapacityEiR10UErrorCode.exit: ; preds = %bb.m, %bb.c
   br label %_ZN6icu_789UVector6414ensureCapacityEiR10UErrorCode.exit.thread
 
 bb.n:                                             ; preds = %.lr.ph, %bb.n
-  %indvars.iv = phi i64 [ %4, %.lr.ph ], [ %indvars.iv.next, %bb.n ] ; 2 uses
+  %.015 = phi i32 [ %i.w, %.lr.ph ], [ %5, %bb.n ] ; 2 uses
   %i.af = load ptr, ptr %i.y, align 8
-  %i.ag = getelementptr [8 x i8], ptr %i.af, i64 %indvars.iv ; 2 uses
+  %4 = zext nneg i32 %.015 to i64
+  %i.ag = getelementptr [8 x i8], ptr %i.af, i64 %4 ; 2 uses
   %i.ah = getelementptr i8, ptr %i.ag, i64 -8
   %i.ai = load i64, ptr %i.ah, align 8
   store i64 %i.ai, ptr %i.ag, align 8
-  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
-  %i.aj = icmp samesign ugt i64 %indvars.iv.next, %5
+  %5 = add nsw i32 %.015, -1                      ; 2 uses
+  %i.aj = icmp samesign ugt i32 %5, %2
   br i1 %i.aj, label %bb.n, label %._crit_edge, !llvm.loop !13
 
 _ZN6icu_789UVector6414ensureCapacityEiR10UErrorCode.exit.thread: ; preds = %bb.l, %bb.j, %bb.h, %bb.f, %bb.d, %._crit_edge, %bb.b, %bb.a

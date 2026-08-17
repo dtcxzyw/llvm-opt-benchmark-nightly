@@ -203,7 +203,7 @@ _ZN2cv10AutoBufferIiLm264EEC2Em.exit106:          ; preds = %.noexc103
   %i.bo = phi ptr [ %i.bk, %.lr.ph ], [ %i.as, %_ZN2cv10AutoBufferIiLm264EEC2Em.exit106.thread184 ] ; 3 uses
   %i.bp = phi ptr [ %i.av, %.lr.ph ], [ null, %_ZN2cv10AutoBufferIiLm264EEC2Em.exit106.thread184 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #28
-  %10 = sext i32 %3 to i64                        ; 2 uses
+  %10 = zext i32 %3 to i64                        ; 3 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 4 uses
   store ptr %i.bq, ptr %9, align 8, !tbaa !416
   %i.br = getelementptr inbounds nuw i8, ptr %9, i64 8
@@ -247,7 +247,6 @@ _ZN2cv10AutoBufferIiLm264EEC2Em.exit109:          ; preds = %.noexc108, %._crit_
   %.not24.i = icmp samesign eq i64 %.idx.i, 0     ; 2 uses
   %.not23.i = icmp eq i64 %i.ce, 0                ; 2 uses
   %i.cf = icmp samesign ugt i32 %4, 1
-  %wide.trip.count167 = zext nneg i32 %3 to i64
   %wide.trip.count = zext nneg i32 %4 to i64
   %i.cg = add i64 %i.cd, -8                       ; 2 uses
   %i.ch = lshr i64 %i.cg, 3
@@ -525,7 +524,7 @@ bb.ab:                                            ; preds = %bb.aa, %._crit_edge
   %i.fu = add nsw i32 %i.ft, 1
   store i32 %i.fu, ptr %i.fs, align 4, !tbaa !59
   %indvars.iv.next165 = add nuw nsw i64 %indvars.iv164, 1 ; 2 uses
-  %exitcond168.not = icmp eq i64 %indvars.iv.next165, %wide.trip.count167
+  %exitcond168.not = icmp eq i64 %indvars.iv.next165, %10
   br i1 %exitcond168.not, label %._crit_edge158, label %bb.v, !llvm.loop !424
 
 bb.ac:                                            ; preds = %._crit_edge158
@@ -928,7 +927,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i64 0, ptr %i.a, align 8, !tbaa !14
-  %i.j = sub i32 %i.c, %.02337.i
+  %i.j = sub nuw i32 %i.c, %.02337.i
   %i.k = zext i32 %i.j to i64
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.a, ptr align 8 %.038.i, i64 %i.k, i1 false)
   %.0..0..0..0..0..0..i = load i64, ptr %i.a, align 8, !tbaa !14
@@ -1331,7 +1330,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   store i64 0, ptr %i.c, align 8, !tbaa !14
-  %i.u = sub i32 %i.n, %.02337.i
+  %i.u = sub nuw i32 %i.n, %.02337.i
   %i.v = zext i32 %i.u to i64
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.c, ptr align 8 %.038.i, i64 %i.v, i1 false)
   %.0..0..0..0..0..0..i = load i64, ptr %i.c, align 8, !tbaa !14

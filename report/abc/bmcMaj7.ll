@@ -204,8 +204,8 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   br i1 %narrow.i.not51.i, label %.sink.split.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.o, %.lr.ph.i
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.lr.ph.i ], [ 0, %bb.o ]
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 5 uses
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.lr.ph.i ], [ 0, %bb.o ] ; 2 uses
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 4 uses
   %i.dn = getelementptr inbounds nuw i8, ptr %.038.i, i64 %indvars.iv.next.i
   %i.do = load i8, ptr %i.dn, align 1, !tbaa !33  ; 2 uses
   %i.dp = add i8 %i.do, -58
@@ -245,16 +245,14 @@ bb.p:                                             ; preds = %._crit_edge.i
   %.fr.i = phi i32 [ %i.dx, %.lr.ph.preheader.i.i ], [ 2, %bb.p ], [ 2, %switch.hole_check ] ; 4 uses
   %i.ed = phi i64 [ %i.ec, %.lr.ph.preheader.i.i ], [ 8, %bb.p ], [ 8, %switch.hole_check ]
   call void @llvm.memset.p0.i64(ptr align 8 %i.ag, i8 0, i64 %i.ed, i1 false), !tbaa !59
-  %sext = shl i64 %indvars.iv.next.i, 32
-  %5 = ashr exact i64 %sext, 32
   %wide.trip.count.i = and i64 %indvars.iv.next.i, 4294967295
-  %6 = getelementptr i8, ptr %.038.i, i64 %5
   br label %.lr.ph57.i
 
 .lr.ph57.i:                                       ; preds = %Abc_TtReadHexDigit.exit.i, %.lr.ph57.preheader.i
   %indvars.iv66.i = phi i64 [ 0, %.lr.ph57.preheader.i ], [ %indvars.iv.next67.i, %Abc_TtReadHexDigit.exit.i ] ; 4 uses
-  %7 = xor i64 %indvars.iv66.i, -1
-  %i.ee = getelementptr i8, ptr %6, i64 %7
+  %5 = sub nsw i64 %indvars.iv.i, %indvars.iv66.i
+  %6 = and i64 %5, 4294967295
+  %i.ee = getelementptr inbounds nuw i8, ptr %.038.i, i64 %6
   %i.ef = load i8, ptr %i.ee, align 1, !tbaa !33  ; 4 uses
   %i.eg = sext i8 %i.ef to i64                    ; 3 uses
   %i.eh = add i8 %i.ef, -48

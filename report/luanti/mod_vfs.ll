@@ -201,7 +201,7 @@ bb.a:
   br i1 %i.b, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = add nuw i64 %i.a, 1                      ; 6 uses
+  %i.c = add nuw i64 %i.a, 1                      ; 5 uses
   %i.d = tail call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE17find_first_not_ofEcm(ptr noundef nonnull align 8 dereferenceable(32) %1, i8 noundef signext 47, i64 noundef %i.c) #18 ; 2 uses
   %i.e = icmp ugt i64 %i.d, %i.c
   br i1 %i.e, label %bb.c, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEmm.exit
@@ -217,10 +217,9 @@ bb.d:                                             ; preds = %bb.c
   unreachable
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i: ; preds = %bb.c
-  %2 = sub nuw i64 %i.d, %i.c
-  %i.h = sub i64 %i.g, %i.c
-  %spec.select.i.i = tail call noundef i64 @llvm.umin.i64(i64 %2, i64 %i.h)
-  tail call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_eraseEmm(ptr noundef nonnull align 8 dereferenceable(32) %1, i64 noundef %i.c, i64 noundef %spec.select.i.i)
+  %2 = tail call i64 @llvm.umin.i64(i64 %i.d, i64 %i.g)
+  %i.h = sub nuw i64 %2, %i.c
+  tail call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_eraseEmm(ptr noundef nonnull align 8 dereferenceable(32) %1, i64 noundef %i.c, i64 noundef %i.h)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEmm.exit
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEmm.exit: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i, %bb.b

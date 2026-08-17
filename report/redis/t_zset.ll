@@ -203,7 +203,7 @@ zslCompareWithNode.exit.thread34.i.zslCompareWithNode.exit.thread.i.loopexit_cri
 
 zslCompareWithNode.exit.thread.i:                 ; preds = %.lr.ph.i, %zslCompareWithNode.exit.i, %.lr.ph.i.preheader, %zslCompareWithNode.exit.thread34.i.zslCompareWithNode.exit.thread.i.loopexit_crit_edge, %.preheader.i
   %.1.lcssa.i = phi ptr [ %.046.i, %.preheader.i ], [ %.046.i, %.lr.ph.i.preheader ], [ %i.ev, %zslCompareWithNode.exit.thread34.i.zslCompareWithNode.exit.thread.i.loopexit_crit_edge ], [ %i.ev, %.lr.ph.i ], [ %.138.i128, %zslCompareWithNode.exit.i ] ; 3 uses
-  %i.ez = getelementptr inbounds [8 x i8], ptr %i.a, i64 %indvars.iv.next.i
+  %i.ez = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv.next.i
   store ptr %.1.lcssa.i, ptr %i.ez, align 8, !tbaa !29
   %i.fa = icmp sgt i64 %indvars.iv.i, 1
   br i1 %i.fa, label %.preheader.i, label %._crit_edge.i, !llvm.loop !142
@@ -523,7 +523,7 @@ zslCompareWithNode.exit.thread22.i.zslCompareWithNode.exit.thread.i.loopexit_cri
 
 zslCompareWithNode.exit.thread.i:                 ; preds = %.lr.ph.i, %zslCompareWithNode.exit.i, %.lr.ph.i.preheader, %zslCompareWithNode.exit.thread22.i.zslCompareWithNode.exit.thread.i.loopexit_crit_edge, %.preheader.i
   %.1.lcssa.i = phi ptr [ %.034.i, %.preheader.i ], [ %.034.i, %.lr.ph.i.preheader ], [ %i.aj, %zslCompareWithNode.exit.thread22.i.zslCompareWithNode.exit.thread.i.loopexit_crit_edge ], [ %i.aj, %.lr.ph.i ], [ %.126.i9, %zslCompareWithNode.exit.i ] ; 3 uses
-  %i.an = getelementptr inbounds [8 x i8], ptr %i.b, i64 %indvars.iv.next.i
+  %i.an = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv.next.i
   store ptr %.1.lcssa.i, ptr %i.an, align 8, !tbaa !29
   %i.ao = icmp sgt i64 %indvars.iv.i, 1
   br i1 %i.ao, label %.preheader.i, label %._crit_edge.i, !llvm.loop !146
@@ -926,7 +926,7 @@ zslGetNodeSpanAtLevel.exit39:                     ; preds = %zslGetNodeSpanAtLev
 .critedge:                                        ; preds = %zslGetNodeSpanAtLevel.exit, %zslGetNodeSpanAtLevel.exit39, %.thread.us, %zslGetNodeSpanAtLevel.exit.thread.us, %.preheader
   %.135.lcssa = phi i64 [ %.03466, %.preheader ], [ %i.y, %.thread.us ], [ %i.y, %zslGetNodeSpanAtLevel.exit.thread.us ], [ %i.af, %zslGetNodeSpanAtLevel.exit39 ], [ %.13546, %zslGetNodeSpanAtLevel.exit ] ; 2 uses
   %.1.lcssa = phi ptr [ %.068, %.preheader ], [ %i.w, %.thread.us ], [ %i.w, %zslGetNodeSpanAtLevel.exit.thread.us ], [ %i.ab, %zslGetNodeSpanAtLevel.exit39 ], [ %.147, %zslGetNodeSpanAtLevel.exit ] ; 3 uses
-  %i.aj = getelementptr inbounds [8 x i8], ptr %i.b, i64 %indvars.iv.next
+  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv.next
   store ptr %.1.lcssa, ptr %i.aj, align 8, !tbaa !29
   %i.ak = icmp sgt i64 %indvars.iv, 1
   br i1 %i.ak, label %.preheader, label %._crit_edge.loopexit, !llvm.loop !178
@@ -1128,7 +1128,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.in.i, label %bb.b, label %.critedge, !llvm.loop !180
 
 .critedge:                                        ; preds = %bb.b, %bb.c
-  %i.p = getelementptr inbounds [8 x i8], ptr %i.b, i64 %indvars.iv.next
+  %i.p = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv.next
   store ptr %.1, ptr %i.p, align 8, !tbaa !29
   %i.q = icmp sgt i64 %indvars.iv, 1
   br i1 %i.q, label %.preheader, label %._crit_edge, !llvm.loop !181
@@ -1384,7 +1384,7 @@ zslLexValueGteMin.exit.thread:                    ; preds = %zslLexValueGteMin.e
 
 .critedge:                                        ; preds = %zslLexValueGteMin.exit, %zslLexValueGteMin.exit.thread, %bb.e, %bb.i, %bb.f, %.preheader
   %.1.lcssa = phi ptr [ %.066, %.preheader ], [ %.152, %bb.f ], [ %.152, %bb.i ], [ %.152, %bb.e ], [ %i.ag, %zslLexValueGteMin.exit.thread ], [ %.152, %zslLexValueGteMin.exit ] ; 3 uses
-  %i.aj = getelementptr inbounds [8 x i8], ptr %i.b, i64 %indvars.iv.next
+  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv.next
   store ptr %.1.lcssa, ptr %i.aj, align 8, !tbaa !29
   %i.ak = icmp sgt i64 %indvars.iv, 1
   br i1 %i.ak, label %.preheader, label %._crit_edge, !llvm.loop !184
@@ -1787,7 +1787,7 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %.not98, label %zslGetElementByRank.exit, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
-  %i.bz = sub nsw i64 %.0.i, %spec.store.select   ; 7 uses
+  %i.bz = sub nuw nsw i64 %.0.i, %spec.store.select ; 7 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bw, i64 24
   %i.cb = load i32, ptr %i.ca, align 8, !tbaa !18 ; 2 uses
   %i.cc = icmp sgt i32 %i.cb, 0
@@ -1822,7 +1822,7 @@ bb.ac:                                            ; preds = %.critedge.i.i
   %i.ck = load ptr, ptr %i.ch, align 8, !tbaa !31
   %.not.i.us40.i.i = icmp ne ptr %i.ck, null
   %i.cl = zext i1 %.not.i.us40.i.i to i64
-  %i.cm = add i64 %.01845.i.i, %i.cl              ; 4 uses
+  %i.cm = add nuw i64 %.01845.i.i, %i.cl          ; 4 uses
   %.not2227.us41.i.i = icmp ugt i64 %i.cm, %i.bz
   br i1 %.not2227.us41.i.i, label %.critedge.thread.i.i, label %.thread.us.i.preheader.i
 
@@ -1830,8 +1830,7 @@ bb.ac:                                            ; preds = %.critedge.i.i
   %i.cn = getelementptr inbounds nuw i8, ptr %i.cj, i64 16
   %i.co = load ptr, ptr %i.cn, align 8, !tbaa !31 ; 2 uses
   %.not.us.i.peel.i = icmp eq ptr %i.co, null
-  %6 = add i64 %i.cm, 1
-  %.not2227.us.i.peel.i = icmp ugt i64 %6, %i.bz
+  %.not2227.us.i.peel.i = icmp uge i64 %i.cm, %i.bz
   %or.cond.i.peel.i = or i1 %.not2227.us.i.peel.i, %.not.us.i.peel.i
   br i1 %or.cond.i.peel.i, label %.critedge.i.thread.i, label %.thread.us.i.i
 
@@ -2234,7 +2233,7 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae
 bb.ah:                                            ; preds = %bb.ag, %bb.ah
   %.2 = phi i64 [ %.0, %bb.ag ], [ %i.co, %bb.ah ] ; 2 uses
   %i.cn = tail call i64 @llvm.umin.i64(i64 %.2, i64 %i.ch) ; 2 uses
-  %i.co = sub i64 %.2, %i.cn                      ; 2 uses
+  %i.co = sub nuw nsw i64 %.2, %i.cn              ; 2 uses
   %i.cp = load ptr, ptr %i.cl, align 8, !tbaa !75
   %i.cq = trunc nuw nsw i64 %i.cn to i32          ; 2 uses
   tail call void @lpRandomPairs(ptr noundef %i.cp, i32 noundef %i.cq, ptr noundef %i.cj, ptr noundef %.0160, i32 noundef 2) #17

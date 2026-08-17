@@ -204,8 +204,8 @@ bb.a:
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !19
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 16
   %i.m = load ptr, ptr %i.l, align 8
-  %i.n = tail call noundef i32 %i.m(ptr noundef nonnull align 8 dereferenceable(8) %i.j) ; 4 uses
-  %i.o = zext i32 %i.n to i64                     ; 3 uses
+  %i.n = tail call noundef i32 %i.m(ptr noundef nonnull align 8 dereferenceable(8) %i.j) ; 3 uses
+  %i.o = zext i32 %i.n to i64                     ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #28
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %7, i8 0, i64 24, i1 false)
   %i.p = load ptr, ptr %3, align 8, !tbaa !171    ; 2 uses
@@ -608,11 +608,10 @@ bb.w:                                             ; preds = %bb.v, %bb.u
 
 ._crit_edge174:                                   ; preds = %._crit_edge, %bb.c
   %i.fm = phi i64 [ %i.i, %bb.c ], [ %i.dy, %._crit_edge ] ; 10 uses
-  %14 = sext i32 %i.n to i64
-  %i.fn = shl nsw i64 %14, 29
-  %i.fo = add nsw i64 %i.fn, 33822867456
-  %sext = ashr i64 %i.fo, 32
-  %i.fp = and i64 %sext, -8                       ; 4 uses
+  %i.fn = shl nuw nsw i64 %i.o, 29
+  %i.fo = add nuw nsw i64 %i.fn, 33822867456
+  %sext = lshr i64 %i.fo, 32
+  %i.fp = and i64 %sext, 536870904                ; 4 uses
   %.not187 = icmp eq i64 %i.fm, 0
   br i1 %.not187, label %.preheader, label %.lr.ph177
 
@@ -1015,7 +1014,7 @@ _ZNK8facebook5velox6Buffer9asMutableIcEEPT_v.exit: ; preds = %bb.f
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !180
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 %1
-  %gepdiff = sub nsw i64 %2, %1
+  %gepdiff = sub nuw nsw i64 %2, %1
   %i.s = load i8, ptr %3, align 1, !tbaa !112
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.r, i8 %i.s, i64 %gepdiff, i1 false)
   br label %_ZSt4fillIPccEvT_S1_RKT0_.exit
@@ -1418,7 +1417,7 @@ _ZNK8facebook5velox6Buffer9asMutableIaEEPT_v.exit: ; preds = %bb.f
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !180
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 %1
-  %gepdiff = sub nsw i64 %2, %1
+  %gepdiff = sub nuw nsw i64 %2, %1
   %i.s = load i8, ptr %3, align 1, !tbaa !112
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.r, i8 %i.s, i64 %gepdiff, i1 false)
   br label %_ZSt4fillIPaaEvT_S1_RKT0_.exit

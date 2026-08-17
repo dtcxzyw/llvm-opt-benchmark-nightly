@@ -204,9 +204,8 @@ bb.ba:                                            ; preds = %.lr.ph220, %_ZN11as
   store ptr %i.jb, ptr %i.ea, align 8, !tbaa !190
   %i.jc = getelementptr inbounds nuw [8 x i8], ptr %spec.select, i64 %indvars.iv229
   %i.jd = load ptr, ptr %i.jc, align 8, !tbaa !169
-  %i.je = sub nsw i64 %indvars.iv236, %indvars.iv229
-  %16 = and i64 %i.je, 4294967295
-  %i.jf = getelementptr inbounds nuw [8 x i8], ptr %spec.select206, i64 %16
+  %i.je = sub nuw nsw i64 %indvars.iv236, %indvars.iv229
+  %i.jf = getelementptr inbounds nuw [8 x i8], ptr %spec.select206, i64 %i.je
   %i.jg = load ptr, ptr %i.jf, align 8, !tbaa !169
   %i.jh = load ptr, ptr %0, align 8, !tbaa !335, !nonnull !129, !align !130
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #21
@@ -609,7 +608,7 @@ _ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE5resetEv.exit:
           to label %bb.u unwind label %.loopexit.split-lp
 
 bb.u:                                             ; preds = %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE5resetEv.exit
-  %i.dx = trunc nuw i64 %indvars.iv146 to i32
+  %i.dx = trunc i64 %indvars.iv146 to i32
   %i.dy = sub i32 %1, %i.dx                       ; 2 uses
   %i.dz = add i32 %i.dy, -1
   %i.ea = load ptr, ptr %7, align 8, !tbaa !199   ; 3 uses
@@ -1012,10 +1011,10 @@ bb.e:                                             ; preds = %_ZNK8rational11is_u
 
 _ZNK8rational10get_uint64Ev.exit:                 ; preds = %bb.e
   %i.x = trunc i64 %i.w to i32
-  %i.y = urem i32 %i.x, %1
-  %i.z = sub i32 %1, %i.y                         ; 3 uses
-  %10 = icmp ult i32 %i.z, %1
-  br i1 %10, label %.lr.ph.i, label %_ZNK8rational10get_uint64Ev.exit..lr.ph25.i_crit_edge
+  %i.y = urem i32 %i.x, %1                        ; 2 uses
+  %i.z = sub nuw i32 %1, %i.y                     ; 2 uses
+  %.not.i = icmp eq i32 %i.y, 0
+  br i1 %.not.i, label %_ZNK8rational10get_uint64Ev.exit..lr.ph25.i_crit_edge, label %.lr.ph.i
 
 _ZNK8rational10get_uint64Ev.exit..lr.ph25.i_crit_edge: ; preds = %_ZNK8rational10get_uint64Ev.exit
   %.pre144 = zext i32 %i.z to i64
@@ -1418,11 +1417,11 @@ bb.az:                                            ; preds = %.body, %bb.l, %bb.f
 define linkonce_odr hidden void @_ZN15bit_blaster_tplI11blaster_cfgE15mk_rotate_rightEjPKP4exprjR10ref_vectorIS2_11ast_managerE(ptr noundef nonnull align 8 dereferenceable(24) %0, i32 noundef %1, ptr noundef %2, i32 noundef %3, ptr noundef nonnull align 8 dereferenceable(16) %4) local_unnamed_addr #0 comdat align 2 {
 bb.a:
   %i.a = urem i32 %3, %1
-  %i.b = sub i32 %1, %i.a
-  %i.c = urem i32 %i.b, %1
-  %i.d = sub i32 %1, %i.c                         ; 3 uses
-  %5 = icmp ult i32 %i.d, %1
-  br i1 %5, label %.lr.ph.i, label %..lr.ph25.i_crit_edge
+  %i.b = sub nuw i32 %1, %i.a
+  %i.c = urem i32 %i.b, %1                        ; 2 uses
+  %i.d = sub nuw i32 %1, %i.c                     ; 2 uses
+  %.not.i = icmp eq i32 %i.c, 0
+  br i1 %.not.i, label %..lr.ph25.i_crit_edge, label %.lr.ph.i
 
 ..lr.ph25.i_crit_edge:                            ; preds = %bb.a
   %.pre = zext i32 %i.d to i64

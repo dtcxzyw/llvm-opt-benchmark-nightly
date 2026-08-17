@@ -204,7 +204,7 @@ bb.y:                                             ; preds = %bb.x
   br i1 %or.cond, label %bb.z, label %bb.ae
 
 bb.z:                                             ; preds = %bb.y
-  %i.cf = sub nsw i64 %i.bv, %.2163
+  %i.cf = sub nuw nsw i64 %i.bv, %.2163
   %i.cg = zext nneg i8 %i.g to i64
   %i.ch = lshr i64 %i.cf, %i.cg
   br label %bb.af
@@ -607,7 +607,7 @@ bb.ci:                                            ; preds = %bb.cc
   br i1 %.3, label %bb.cj, label %bb.ck
 
 bb.cj:                                            ; preds = %bb.ci
-  %i.ly = sub nsw i64 %i.lf, %.1162
+  %i.ly = sub nuw nsw i64 %i.lf, %.1162
   %i.lz = zext nneg i8 %i.g to i64
   %i.ma = lshr i64 %i.ly, %i.lz
   br label %bb.cq
@@ -1010,16 +1010,14 @@ bb.cy:                                            ; preds = %bb.cp
   %i.mp = zext nneg i32 %i.he to i64
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.iq, i8 0, i64 %i.mp, i1 false)
   %.not432 = icmp eq i64 %i.gp, 0
-  br i1 %.not432, label %.loopexit, label %.lr.ph419.preheader
+  br i1 %.not432, label %.loopexit, label %.lr.ph419
 
-.lr.ph419.preheader:                              ; preds = %bb.cy
-  %7 = getelementptr i8, ptr %.1.i, i64 %i.gp
-  br label %.lr.ph419
-
-.lr.ph419:                                        ; preds = %.lr.ph419.preheader, %bb.dd
-  %indvars.iv466 = phi i64 [ 0, %.lr.ph419.preheader ], [ %indvars.iv.next467, %bb.dd ] ; 3 uses
+.lr.ph419:                                        ; preds = %bb.cy, %bb.dd
+  %indvars.iv466 = phi i64 [ %indvars.iv.next467, %bb.dd ], [ 0, %bb.cy ] ; 3 uses
   %i.mq = xor i64 %indvars.iv466, -1
-  %i.mr = getelementptr i8, ptr %7, i64 %i.mq
+  %7 = add nsw i64 %i.gp, %i.mq
+  %8 = and i64 %7, 4294967295
+  %i.mr = getelementptr inbounds nuw i8, ptr %.1.i, i64 %8
   %i.ms = load i8, ptr %i.mr, align 1, !tbaa !35  ; 3 uses
   %i.mt = zext i8 %i.ms to i32                    ; 3 uses
   %i.mu = add nsw i32 %i.mt, -48                  ; 2 uses
@@ -1044,8 +1042,8 @@ bb.db:                                            ; preds = %bb.cz
 
 js_to_digit.exit244:                              ; preds = %.lr.ph419, %bb.da, %bb.db
   %.0.i243 = phi i32 [ %spec.select.i242, %bb.db ], [ %i.mw, %bb.da ], [ %i.mu, %.lr.ph419 ] ; 2 uses
-  %i.mz = trunc nuw nsw i64 %indvars.iv466 to i32
-  %i.na = mul nuw nsw i32 %i.gv, %i.mz            ; 2 uses
+  %i.mz = trunc i64 %indvars.iv466 to i32
+  %i.na = mul i32 %i.gv, %i.mz                    ; 2 uses
   %i.nb = and i32 %i.na, 31                       ; 3 uses
   %i.nc = lshr i32 %i.na, 5
   %i.nd = shl i32 %.0.i243, %i.nb
@@ -1448,7 +1446,7 @@ str16.exit:                                       ; preds = %bb.d, %bb.e, %bb.f
   %.0.i.i = phi ptr [ %i.f, %bb.d ], [ %i.m, %bb.e ], [ %i.o, %bb.f ]
   %i.p = zext i32 %2 to i64
   %i.q = getelementptr inbounds nuw [2 x i8], ptr %.0.i.i, i64 %i.p
-  %i.r = sub i32 %3, %2
+  %i.r = sub nuw i32 %3, %2
   %i.s = tail call fastcc i32 @string_buffer_write16(ptr noundef %0, ptr noundef %i.q, i32 noundef %i.r)
   br label %string_buffer_write8.exit
 
@@ -1487,7 +1485,7 @@ str8.exit:                                        ; preds = %bb.i, %bb.j, %bb.k
   %.0.i.i16 = phi ptr [ %i.t, %bb.i ], [ %i.aa, %bb.j ], [ %i.ac, %bb.k ]
   %i.ad = zext i32 %2 to i64
   %i.ae = getelementptr inbounds nuw i8, ptr %.0.i.i16, i64 %i.ad ; 2 uses
-  %i.af = sub i32 %3, %2                          ; 5 uses
+  %i.af = sub nuw i32 %3, %2                      ; 5 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
   %i.ah = load i32, ptr %i.ag, align 8, !tbaa !1072
   %i.ai = add nsw i32 %i.ah, %i.af                ; 2 uses
@@ -1890,7 +1888,7 @@ js_string_memcmp_pos.exit:                        ; preds = %.lr.ph.i40.i, %.lr.
   br i1 %.not55, label %js_string_memcmp_pos.exit.thread, label %.loopexit
 
 js_string_memcmp_pos.exit.thread:                 ; preds = %bb.w, %bb.u, %bb.t, %bb.v, %js_string_memcmp_pos.exit
-  %i.di = sub i32 %.047104, %..i74                ; 2 uses
+  %i.di = sub nuw i32 %.047104, %..i74            ; 2 uses
   %i.dj = add i32 %..i74, %.045105                ; 2 uses
   %i.dk = load i64, ptr %.040109, align 8
   %i.dl = trunc i64 %i.dk to i32
@@ -2293,9 +2291,9 @@ bb.s:                                             ; preds = %bb.r
   %.081106 = phi i64 [ %i.bz, %set_value.exit ], [ 0, %bb.s ] ; 3 uses
   %i.bd = load ptr, ptr %i.o, align 8, !tbaa !35  ; 2 uses
   %i.be = sub nsw i64 %.084, %.081106
-  %i.bf = getelementptr inbounds [16 x i8], ptr %i.bd, i64 %i.be ; 3 uses
+  %i.bf = getelementptr inbounds nuw [16 x i8], ptr %i.bd, i64 %i.be ; 3 uses
   %i.bg = sub nsw i64 %.080, %.081106
-  %i.bh = getelementptr inbounds [16 x i8], ptr %i.bd, i64 %i.bg ; 2 uses
+  %i.bh = getelementptr inbounds nuw [16 x i8], ptr %i.bd, i64 %i.bg ; 2 uses
   %i.bi = load i64, ptr %i.bh, align 8            ; 2 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bh, i64 8
   %i.bk = load i64, ptr %i.bj, align 8            ; 2 uses
@@ -2341,9 +2339,9 @@ set_value.exit:                                   ; preds = %js_dup.exit, %bb.u,
   br i1 %exitcond128.not, label %.loopexit, label %.lr.ph107, !llvm.loop !1775
 
 bb.w:                                             ; preds = %bb.r
-  %i.ca = sub nsw i64 %i.aw, %.080
+  %i.ca = sub nuw nsw i64 %i.aw, %.080
   %..i95 = tail call noundef i64 @llvm.smin.i64(i64 %i.az, i64 %i.ca)
-  %i.cb = sub nsw i64 %i.aw, %.084
+  %i.cb = sub nuw nsw i64 %i.aw, %.084
   %..i96 = tail call noundef i64 @llvm.smin.i64(i64 %..i95, i64 %i.cb) ; 4 uses
   %i.cc = icmp sgt i64 %..i96, 0
   br i1 %i.cc, label %.lr.ph, label %.loopexit
@@ -2746,7 +2744,7 @@ bb.ab:                                            ; preds = %bb.w, %bb.x, %bb.y
   store i32 0, ptr %i.cv, align 8, !tbaa !80
   %i.cw = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
   store ptr %i.bu, ptr %i.cw, align 8, !tbaa !1076
-  %i.cx = sub nsw i32 %.1.sink.i.i.ph, %i.ad      ; 3 uses
+  %i.cx = sub nuw nsw i32 %.1.sink.i.i.ph, %i.ad  ; 3 uses
   %.not71 = icmp eq i32 %5, 0                     ; 2 uses
   br i1 %.not71, label %bb.ad, label %bb.ac
 
@@ -2760,13 +2758,13 @@ bb.ad:                                            ; preds = %bb.ac, %bb.ab
   br i1 %.not73, label %bb.af, label %.preheader
 
 .preheader:                                       ; preds = %bb.ad
-  %7 = icmp sgt i32 %i.cx, 0
-  br i1 %7, label %.lr.ph, label %.loopexit
+  %.not131 = icmp eq i32 %i.cx, 0
+  br i1 %.not131, label %.loopexit, label %.lr.ph
 
 bb.ae:                                            ; preds = %.lr.ph
-  %i.cz = sub nsw i32 %.098121, %i.dd             ; 2 uses
-  %8 = icmp sgt i32 %i.cz, 0
-  br i1 %8, label %.lr.ph, label %.loopexit
+  %i.cz = sub nuw nsw i32 %.098121, %i.dd         ; 2 uses
+  %.not = icmp eq i32 %i.cz, 0
+  br i1 %.not, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader, %bb.ae
   %.098121 = phi i32 [ %i.cz, %bb.ae ], [ %i.cx, %.preheader ] ; 2 uses

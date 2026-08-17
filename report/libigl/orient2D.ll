@@ -204,7 +204,7 @@ bb.a:
   %i.c = trunc i128 %1 to i64
   %i.d = and i64 %i.c, 63                         ; 9 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 5 uses
-  %i.f = load i64, ptr %i.e, align 16, !tbaa !48  ; 9 uses
+  %i.f = load i64, ptr %i.e, align 16, !tbaa !48  ; 8 uses
   %i.g = icmp eq i64 %i.f, 1
   br i1 %i.g, label %bb.b, label %bb.c
 
@@ -300,7 +300,7 @@ _ZN5boost14multiprecision8backends12cpp_int_baseILm512ELm18446744073709551615ELN
   %i.aq = phi i8 [ %.pre113, %bb.h ], [ %.pre, %bb.i ]
   %i.ar = trunc nuw i8 %i.aq to i1                ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.at = select i1 %i.ar, ptr %0, ptr %.pre117   ; 20 uses
+  %i.at = select i1 %i.ar, ptr %0, ptr %.pre117   ; 19 uses
   %i.au = icmp ult i64 %i.y, %i.b
   br i1 %i.au, label %bb.j, label %bb.p
 
@@ -358,14 +358,14 @@ _ZN5boost14multiprecision8backends15cpp_int_backendILm512ELm0ELNS0_16cpp_integer
 
 bb.p:                                             ; preds = %_ZN5boost14multiprecision8backends12cpp_int_baseILm512ELm18446744073709551615ELNS0_16cpp_integer_typeE1ELNS0_18cpp_int_check_typeE0ESaIyELb0EE6resizeEmm.exit
   %.not95 = icmp ult i64 %i.y, 288230376151711745
-  %i.bf = sub i64 %i.y, %spec.select.i            ; 3 uses
+  %i.bf = sub i64 %i.y, %spec.select.i            ; 2 uses
   br i1 %.not95, label %bb.q, label %bb.u
 
 bb.q:                                             ; preds = %bb.p
   %i.bg = add i64 %i.f, %i.b
   %i.bh = icmp ugt i64 %i.y, %i.bg
   %i.bi = xor i64 %i.bf, -1                       ; 3 uses
-  %i.bj = getelementptr [8 x i8], ptr %i.at, i64 %i.f
+  %i.bj = getelementptr [8 x i8], ptr %i.at, i64 %i.f ; 2 uses
   %i.bk = getelementptr [8 x i8], ptr %i.bj, i64 %i.bi
   %i.bl = load i64, ptr %i.bk, align 8, !tbaa !55 ; 2 uses
   br i1 %i.bh, label %bb.r, label %bb.s
@@ -388,10 +388,8 @@ bb.s:                                             ; preds = %bb.q
   br i1 %i.bu, label %bb.t, label %bb.u
 
 bb.t:                                             ; preds = %bb.s
-  %2 = add i64 %i.f, -2
-  %3 = sub i64 %2, %i.bf
-  %4 = getelementptr inbounds nuw [8 x i8], ptr %i.at, i64 %3
-  %i.bv = load i64, ptr %4, align 8, !tbaa !55
+  %2 = getelementptr i8, ptr %i.bj, i64 -16
+  %i.bv = load i64, ptr %2, align 8, !tbaa !55
   %i.bw = sub nuw nsw i64 64, %i.d
   %i.bx = lshr i64 %i.bv, %i.bw
   %i.by = or disjoint i64 %i.bx, %i.br

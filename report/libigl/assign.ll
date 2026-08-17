@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %_ZN5boost14multipre
   br i1 %i.bc, label %bb.n, label %bb.q
 
 bb.n:                                             ; preds = %bb.m
-  %i.bd = sub i64 %i.ag, %i.af
+  %i.bd = sub nuw i64 %i.ag, %i.af
   store i64 %i.bd, ptr %i.y, align 8, !tbaa !118
   %i.be = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.bf = load i8, ptr %i.be, align 8, !tbaa !126, !range !116, !noundef !117 ; 2 uses
@@ -607,7 +607,7 @@ bb.a:
   %i.c = trunc i128 %1 to i64
   %i.d = and i64 %i.c, 63                         ; 9 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
-  %i.f = load i64, ptr %i.e, align 16, !tbaa !113 ; 9 uses
+  %i.f = load i64, ptr %i.e, align 16, !tbaa !113 ; 8 uses
   %i.g = icmp eq i64 %i.f, 1
   br i1 %i.g, label %bb.b, label %bb.c
 
@@ -703,7 +703,7 @@ _ZN5boost14multiprecision8backends12cpp_int_baseILm0ELm18446744073709551615ELNS0
   %i.aq = phi i8 [ %.pre113, %bb.h ], [ %.pre, %bb.i ]
   %i.ar = trunc nuw i8 %i.aq to i1                ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.at = select i1 %i.ar, ptr %0, ptr %.pre117   ; 20 uses
+  %i.at = select i1 %i.ar, ptr %0, ptr %.pre117   ; 19 uses
   %i.au = icmp ult i64 %i.y, %i.b
   br i1 %i.au, label %bb.j, label %bb.p
 
@@ -761,14 +761,14 @@ _ZN5boost14multiprecision8backends15cpp_int_backendILm0ELm0ELNS0_16cpp_integer_t
 
 bb.p:                                             ; preds = %_ZN5boost14multiprecision8backends12cpp_int_baseILm0ELm18446744073709551615ELNS0_16cpp_integer_typeE1ELNS0_18cpp_int_check_typeE0ESaIyELb0EE6resizeEmm.exit
   %.not95 = icmp ult i64 %i.y, 288230376151711745
-  %i.bf = sub i64 %i.y, %spec.select.i            ; 3 uses
+  %i.bf = sub i64 %i.y, %spec.select.i            ; 2 uses
   br i1 %.not95, label %bb.q, label %bb.u
 
 bb.q:                                             ; preds = %bb.p
   %i.bg = add i64 %i.f, %i.b
   %i.bh = icmp ugt i64 %i.y, %i.bg
   %i.bi = xor i64 %i.bf, -1                       ; 3 uses
-  %i.bj = getelementptr [8 x i8], ptr %i.at, i64 %i.f
+  %i.bj = getelementptr [8 x i8], ptr %i.at, i64 %i.f ; 2 uses
   %i.bk = getelementptr [8 x i8], ptr %i.bj, i64 %i.bi
   %i.bl = load i64, ptr %i.bk, align 8, !tbaa !118 ; 2 uses
   br i1 %i.bh, label %bb.r, label %bb.s
@@ -791,10 +791,8 @@ bb.s:                                             ; preds = %bb.q
   br i1 %i.bu, label %bb.t, label %bb.u
 
 bb.t:                                             ; preds = %bb.s
-  %2 = add i64 %i.f, -2
-  %3 = sub i64 %2, %i.bf
-  %4 = getelementptr inbounds nuw [8 x i8], ptr %i.at, i64 %3
-  %i.bv = load i64, ptr %4, align 8, !tbaa !118
+  %2 = getelementptr i8, ptr %i.bj, i64 -16
+  %i.bv = load i64, ptr %2, align 8, !tbaa !118
   %i.bw = sub nuw nsw i64 64, %i.d
   %i.bx = lshr i64 %i.bv, %i.bw
   %i.by = or disjoint i64 %i.bx, %i.br
@@ -1197,7 +1195,7 @@ _ZSt13__countr_zeroIoEiT_.exit35.i.i.i:           ; preds = %bb.au, %bb.at
   %.02741.i.i.i = phi i128 [ %.142.i.i.i, %_ZSt13__countr_zeroIoEiT_.exit38.i.i.i ], [ %i.gd, %_ZSt13__countr_zeroIoEiT_.exit35.i.i.i ]
   %.02840.i.i.i = phi i128 [ %i.hc, %_ZSt13__countr_zeroIoEiT_.exit38.i.i.i ], [ %i.gn, %_ZSt13__countr_zeroIoEiT_.exit35.i.i.i ]
   %.129.i.i.i = call i128 @llvm.umax.i128(i128 %.02741.i.i.i, i128 %.02840.i.i.i)
-  %i.gs = sub i128 %.129.i.i.i, %.142.i.i.i       ; 3 uses
+  %i.gs = sub nuw i128 %.129.i.i.i, %.142.i.i.i   ; 3 uses
   %i.gt = trunc i128 %i.gs to i64                 ; 2 uses
   %.not.i36.i.i.i = icmp eq i64 %i.gt, 0
   br i1 %.not.i36.i.i.i, label %bb.aw, label %bb.av
@@ -1600,7 +1598,7 @@ _ZN5boost14multiprecision8backends12cpp_int_baseILm0ELm18446744073709551615ELNS0
   %.02736.i.i = phi i64 [ %spec.select3337.i.i, %.lr.ph.i.i ], [ %i.de, %_ZN5boost14multiprecision8backends12cpp_int_baseILm0ELm18446744073709551615ELNS0_16cpp_integer_typeE1ELNS0_18cpp_int_check_typeE0ESaIyELb0EE4signEb.exit.thread47 ]
   %.02835.i.i = phi i64 [ %i.dm, %.lr.ph.i.i ], [ %i.dh, %_ZN5boost14multiprecision8backends12cpp_int_baseILm0ELm18446744073709551615ELNS0_16cpp_integer_typeE1ELNS0_18cpp_int_check_typeE0ESaIyELb0EE4signEb.exit.thread47 ]
   %spec.select.i.i17 = tail call i64 @llvm.umax.i64(i64 %.02736.i.i, i64 %.02835.i.i)
-  %i.dk = sub i64 %spec.select.i.i17, %spec.select3337.i.i ; 2 uses
+  %i.dk = sub nuw i64 %spec.select.i.i17, %spec.select3337.i.i ; 2 uses
   %i.dl = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.dk, i1 true)
   %i.dm = lshr exact i64 %i.dk, %i.dl             ; 3 uses
   %spec.select33.i.i = tail call i64 @llvm.umin.i64(i64 %spec.select3337.i.i, i64 %i.dm) ; 2 uses
@@ -2003,7 +2001,7 @@ bb.p:                                             ; preds = %bb.o
   br i1 %i.eh, label %.thread204, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.ei = sub i128 %.2190, %.3194.lcssa
+  %i.ei = sub nuw i128 %.2190, %.3194.lcssa
   %i.ej = add nuw nsw i128 %i.ea, %i.dy
   %i.ek = icmp ult i128 %i.ei, %i.ej
   br i1 %i.ek, label %.thread204, label %bb.t
@@ -2013,7 +2011,7 @@ bb.r:                                             ; preds = %bb.o
   br i1 %i.el, label %bb.u, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.em = sub i128 %.2190, %.3194.lcssa
+  %i.em = sub nuw i128 %.2190, %.3194.lcssa
   %i.en = zext i64 %i.ed to i128
   %i.eo = zext i64 %i.dl to i128
   %i.ep = add nuw nsw i128 %i.en, %i.eo
@@ -2416,7 +2414,7 @@ bb.c:                                             ; preds = %bb.b
   %.02736.i = phi i64 [ %spec.select3337.i, %.lr.ph.i ], [ %i.e, %bb.c ]
   %.02835.i = phi i64 [ %i.o, %.lr.ph.i ], [ %i.h, %bb.c ]
   %spec.select.i = tail call i64 @llvm.umax.i64(i64 %.02736.i, i64 %.02835.i)
-  %i.m = sub i64 %spec.select.i, %spec.select3337.i ; 2 uses
+  %i.m = sub nuw i64 %spec.select.i, %spec.select3337.i ; 2 uses
   %i.n = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.m, i1 true)
   %i.o = lshr exact i64 %i.m, %i.n                ; 3 uses
   %spec.select33.i = tail call i64 @llvm.umin.i64(i64 %spec.select3337.i, i64 %i.o) ; 2 uses

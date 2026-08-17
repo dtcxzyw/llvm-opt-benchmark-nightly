@@ -204,7 +204,7 @@ _ZN7xgboost6linalg6TensorINS_6detail20GradientPairInternalIdEELi2EE5SliceIJRiNS0
   %i.ai = zext i32 %6 to i64
   %i.aj = load ptr, ptr %i.f, align 8, !tbaa !508 ; 2 uses
   %i.ak = getelementptr inbounds nuw [4 x i8], ptr %i.aj, i64 %i.ai
-  %i.al = load i32, ptr %i.ak, align 4, !tbaa !54 ; 6 uses
+  %i.al = load i32, ptr %i.ak, align 4, !tbaa !54 ; 10 uses
   %i.am = add i32 %6, 1
   %i.an = zext i32 %i.am to i64
   %i.ao = getelementptr inbounds nuw [4 x i8], ptr %i.aj, i64 %i.an
@@ -366,7 +366,7 @@ bb.q:                                             ; preds = %bb.o
   br i1 %.not204, label %_ZSt8for_eachIN7xgboost6common6detail12SpanIteratorINS1_4SpanIKmLm18446744073709551615EEELb0EEEZNS0_4tree18HistMultiEvaluator13EnumeratePartILi1EEEvRKNS1_13HistogramCutsES6_NS4_INS4_IKNS0_6detail20GradientPairInternalIdEELm18446744073709551615EEELm18446744073709551615EEEjiRKNS8_13TreeEvaluator14SplitEvaluatorINS8_10TrainParamEEEPNS8_19SplitEntryContainerISt6vectorISG_SaISG_EEEEEUlmE_ET0_T_SY_SX_.exit, label %.lr.ph207
 
 .lr.ph207:                                        ; preds = %bb.q
-  %i.cn = sext i32 %i.al to i64                   ; 13 uses
+  %i.cn = sext i32 %i.al to i64                   ; 9 uses
   %i.co = icmp eq i32 %.fr216, -1                 ; 2 uses
   %i.cp = sext i32 %.fr216 to i64                 ; 4 uses
   %i.cq = add nsw i64 %i.cp, %i.cn                ; 3 uses
@@ -374,8 +374,8 @@ bb.q:                                             ; preds = %bb.o
   br i1 %i.co, label %.lr.ph207.split.us, label %.lr.ph207.split
 
 .lr.ph207.split.us:                               ; preds = %.lr.ph207, %bb.s
-  %indvars.iv232 = phi i64 [ %indvars.iv.next233, %bb.s ], [ %i.cn, %.lr.ph207 ] ; 3 uses
-  %.044206.us.a = phi i32 [ %spec.select.us, %bb.s ], [ -1, %.lr.ph207 ]
+  %.044206.us = phi i32 [ %spec.select.us, %bb.s ], [ -1, %.lr.ph207 ]
+  %.044206.us.a = phi i32 [ %16, %bb.s ], [ %i.al, %.lr.ph207 ] ; 3 uses
   %i.cs = load i64, ptr %i.c, align 8, !tbaa !36  ; 2 uses
   %.not219 = icmp eq i64 %i.cs, 0
   br i1 %.not219, label %._crit_edge.split.us.split.us.us, label %.lr.ph.us
@@ -392,15 +392,14 @@ bb.r:                                             ; preds = %._crit_edge.split.u
           to label %bb.s unwind label %.split209.us
 
 bb.s:                                             ; preds = %bb.r
-  %16 = trunc nsw i64 %indvars.iv232 to i32
-  %spec.select.us = select i1 %i.cx, i32 %16, i32 %.044206.us.a ; 2 uses
-  %indvars.iv.next233 = add nsw i64 %indvars.iv232, 1 ; 2 uses
-  %17 = trunc nsw i64 %indvars.iv.next233 to i32
-  %.not.us = icmp eq i32 %i.aw, %17
+  %spec.select.us = select i1 %i.cx, i32 %.044206.us.a, i32 %.044206.us ; 2 uses
+  %16 = add nsw i32 %.044206.us.a, 1              ; 2 uses
+  %.not.us = icmp eq i32 %16, %i.aw
   br i1 %.not.us, label %._crit_edge, label %.lr.ph207.split.us, !llvm.loop !1696
 
 .lr.ph.us:                                        ; preds = %.lr.ph207.split.us
-  %18 = sub nsw i64 %indvars.iv232, %i.cn         ; 2 uses
+  %17 = sub nsw i32 %.044206.us.a, %i.al
+  %18 = zext nneg i32 %17 to i64                  ; 2 uses
   %i.cy = icmp ugt i64 %2, %18
   %i.cz = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %18
   %i.da = load i64, ptr %12, align 8
@@ -478,16 +477,17 @@ bb.w:                                             ; preds = %bb.k
   br label %bb.be
 
 .lr.ph207.split:                                  ; preds = %.lr.ph207, %bb.af
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.af ], [ %i.cn, %.lr.ph207 ] ; 3 uses
-  %.044206.a = phi i32 [ %spec.select, %bb.af ], [ -1, %.lr.ph207 ]
+  %.044206 = phi i32 [ %spec.select, %bb.af ], [ -1, %.lr.ph207 ]
+  %.044206.a = phi i32 [ %21, %bb.af ], [ %i.al, %.lr.ph207 ] ; 3 uses
   %i.ei = load i64, ptr %i.c, align 8, !tbaa !36  ; 3 uses
   %.not217 = icmp eq i64 %i.ei, 0
   br i1 %.not217, label %._crit_edge.split.us.split, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph207.split
-  %19 = sub nsw i64 %indvars.iv, %i.cn            ; 2 uses
-  %i.ej = icmp ugt i64 %2, %19
-  %i.ek = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %19 ; 2 uses
+  %19 = sub nsw i32 %.044206.a, %i.al
+  %20 = zext nneg i32 %19 to i64                  ; 2 uses
+  %i.ej = icmp ugt i64 %2, %20
+  %i.ek = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %20 ; 2 uses
   %i.el = load i64, ptr %12, align 8              ; 2 uses
   %i.em = load ptr, ptr %.sroa.9.0..sroa_idx.i.i80, align 8 ; 2 uses
   %i.en = load i64, ptr %11, align 8              ; 2 uses
@@ -643,11 +643,9 @@ bb.ae:                                            ; preds = %._crit_edge.split.u
           to label %bb.af unwind label %.split209
 
 bb.af:                                            ; preds = %bb.ae
-  %20 = trunc nsw i64 %indvars.iv to i32
-  %spec.select = select i1 %i.gu, i32 %20, i32 %.044206.a ; 2 uses
-  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
-  %21 = trunc nsw i64 %indvars.iv.next to i32
-  %.not = icmp eq i32 %i.aw, %21
+  %spec.select = select i1 %i.gu, i32 %.044206.a, i32 %.044206 ; 2 uses
+  %21 = add nsw i32 %.044206.a, 1                 ; 2 uses
+  %.not = icmp eq i32 %21, %i.aw
   br i1 %.not, label %._crit_edge, label %.lr.ph207.split, !llvm.loop !1696
 
 .split209:                                        ; preds = %bb.ae, %._crit_edge.split.us.split
@@ -1050,7 +1048,7 @@ _ZSt4moveIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES6_ET0_T_S8_S7_.ex
   %i.aj = load i64, ptr %.sroa.042.0, align 8, !tbaa !36
   %i.ak = getelementptr inbounds nuw i8, ptr %.sroa.042.0, i64 8
   %.idx87 = shl nsw i64 %.0, 3                    ; 2 uses
-  %i.al = getelementptr inbounds i8, ptr %.sroa.042.0, i64 %.idx87
+  %i.al = getelementptr inbounds nuw i8, ptr %.sroa.042.0, i64 %.idx87
   %gepdiff = add nsw i64 %.idx87, -8
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %.sroa.042.0, ptr nonnull align 8 %i.ak, i64 %gepdiff, i1 false)
   %i.am = getelementptr inbounds i8, ptr %i.al, i64 -8
@@ -1453,7 +1451,7 @@ bb.a:
   %i.k = zext i32 %6 to i64
   %i.l = load ptr, ptr %i.d, align 8, !tbaa !508  ; 2 uses
   %i.m = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %i.k
-  %i.n = load i32, ptr %i.m, align 4, !tbaa !54   ; 5 uses
+  %i.n = load i32, ptr %i.m, align 4, !tbaa !54   ; 7 uses
   %i.o = add i32 %6, 1
   %i.p = zext i32 %i.o to i64
   %i.q = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %i.p
@@ -1474,7 +1472,7 @@ bb.a:
   %i.aa = getelementptr inbounds nuw i8, ptr %10, i64 48 ; 3 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(25) %i.z, i8 0, i64 25, i1 false)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.aa, i8 0, i64 32, i1 false)
-  %i.ab = sext i32 %i.n to i64                    ; 7 uses
+  %i.ab = sext i32 %i.n to i64                    ; 5 uses
   %i.ac = sext i32 %i.s to i64                    ; 3 uses
   %i.ad = icmp eq i32 %i.s, -1
   br i1 %i.ad, label %.split.i, label %bb.b
@@ -1530,11 +1528,12 @@ bb.h:                                             ; preds = %.lr.ph, %_ZN7xgboos
   %i.as = phi float [ 0.000000e+00, %.lr.ph ], [ %i.bp, %_ZN7xgboost4tree19SplitEntryContainerINS0_9GradStatsEE6UpdateIS2_EEbfjfbbRKT_S7_.exit.thread ] ; 3 uses
   %i.at = phi float [ 0.000000e+00, %.lr.ph ], [ %i.bq, %_ZN7xgboost4tree19SplitEntryContainerINS0_9GradStatsEE6UpdateIS2_EEbfjfbbRKT_S7_.exit.thread ] ; 5 uses
   %i.au = phi i32 [ 0, %.lr.ph ], [ %i.br, %_ZN7xgboost4tree19SplitEntryContainerINS0_9GradStatsEE6UpdateIS2_EEbfjfbbRKT_S7_.exit.thread ] ; 4 uses
-  %indvars.iv = phi i64 [ %i.ab, %.lr.ph ], [ %indvars.iv.next, %_ZN7xgboost4tree19SplitEntryContainerINS0_9GradStatsEE6UpdateIS2_EEbfjfbbRKT_S7_.exit.thread ] ; 3 uses
-  %.045143.a = phi i32 [ -1, %.lr.ph ], [ %i.bs, %_ZN7xgboost4tree19SplitEntryContainerINS0_9GradStatsEE6UpdateIS2_EEbfjfbbRKT_S7_.exit.thread ] ; 3 uses
+  %.045143 = phi i32 [ -1, %.lr.ph ], [ %i.bs, %_ZN7xgboost4tree19SplitEntryContainerINS0_9GradStatsEE6UpdateIS2_EEbfjfbbRKT_S7_.exit.thread ] ; 3 uses
+  %.045143.a = phi i32 [ %i.n, %.lr.ph ], [ %17, %_ZN7xgboost4tree19SplitEntryContainerINS0_9GradStatsEE6UpdateIS2_EEbfjfbbRKT_S7_.exit.thread ] ; 3 uses
   %i.av = phi <2 x double> [ zeroinitializer, %.lr.ph ], [ %i.bc, %_ZN7xgboost4tree19SplitEntryContainerINS0_9GradStatsEE6UpdateIS2_EEbfjfbbRKT_S7_.exit.thread ]
-  %15 = sub nsw i64 %indvars.iv, %i.ab            ; 2 uses
-  %i.aw = icmp ugt i64 %2, %15
+  %15 = sub nsw i32 %.045143.a, %i.n
+  %16 = zext nneg i32 %15 to i64                  ; 2 uses
+  %i.aw = icmp ugt i64 %2, %16
   br i1 %i.aw, label %_ZNK7xgboost6common4SpanIKmLm18446744073709551615EEixEm.exit, label %bb.i, !prof !218
 
 bb.i:                                             ; preds = %bb.h
@@ -1542,7 +1541,7 @@ bb.i:                                             ; preds = %bb.h
   unreachable
 
 _ZNK7xgboost6common4SpanIKmLm18446744073709551615EEixEm.exit: ; preds = %bb.h
-  %i.ax = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %15
+  %i.ax = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %16
   %i.ay = load i64, ptr %i.ax, align 8, !tbaa !36 ; 2 uses
   %i.az = icmp ult i64 %i.ay, %i.ag
   br i1 %i.az, label %_ZNK7xgboost6common4SpanIKNS_6detail20GradientPairInternalIdEELm18446744073709551615EEixEm.exit60, label %bb.j, !prof !218
@@ -1591,7 +1590,6 @@ bb.l:                                             ; preds = %_ZNK7xgboost4tree19
   store i8 1, ptr %i.ap, align 8, !tbaa !3140
   store <2 x double> %i.be, ptr %i.aa, align 8, !tbaa !1048
   store <2 x double> %i.bc, ptr %i.aq, align 8, !tbaa !1048
-  %16 = trunc nsw i64 %indvars.iv to i32
   br label %_ZN7xgboost4tree19SplitEntryContainerINS0_9GradStatsEE6UpdateIS2_EEbfjfbbRKT_S7_.exit.thread
 
 _ZN7xgboost4tree19SplitEntryContainerINS0_9GradStatsEE6UpdateIS2_EEbfjfbbRKT_S7_.exit.thread: ; preds = %_ZNK7xgboost6common4SpanIKNS_6detail20GradientPairInternalIdEELm18446744073709551615EEixEm.exit60, %_ZNK7xgboost4tree19SplitEntryContainerINS0_9GradStatsEE11NeedReplaceEfj.exit.i, %.split.i61, %bb.l
@@ -1599,10 +1597,9 @@ _ZN7xgboost4tree19SplitEntryContainerINS0_9GradStatsEE6UpdateIS2_EEbfjfbbRKT_S7_
   %i.bp = phi float [ +qnan, %bb.l ], [ %i.as, %.split.i61 ], [ %i.as, %_ZNK7xgboost4tree19SplitEntryContainerINS0_9GradStatsEE11NeedReplaceEfj.exit.i ], [ %i.as, %_ZNK7xgboost6common4SpanIKNS_6detail20GradientPairInternalIdEELm18446744073709551615EEixEm.exit60 ] ; 5 uses
   %i.bq = phi float [ %i.bi, %bb.l ], [ %i.at, %.split.i61 ], [ %i.at, %_ZNK7xgboost4tree19SplitEntryContainerINS0_9GradStatsEE11NeedReplaceEfj.exit.i ], [ %i.at, %_ZNK7xgboost6common4SpanIKNS_6detail20GradientPairInternalIdEELm18446744073709551615EEixEm.exit60 ] ; 5 uses
   %i.br = phi i32 [ %i.ao, %bb.l ], [ %i.au, %.split.i61 ], [ %i.au, %_ZNK7xgboost4tree19SplitEntryContainerINS0_9GradStatsEE11NeedReplaceEfj.exit.i ], [ %i.au, %_ZNK7xgboost6common4SpanIKNS_6detail20GradientPairInternalIdEELm18446744073709551615EEixEm.exit60 ] ; 5 uses
-  %i.bs = phi i32 [ %16, %bb.l ], [ %.045143.a, %.split.i61 ], [ %.045143.a, %_ZNK7xgboost4tree19SplitEntryContainerINS0_9GradStatsEE11NeedReplaceEfj.exit.i ], [ %.045143.a, %_ZNK7xgboost6common4SpanIKNS_6detail20GradientPairInternalIdEELm18446744073709551615EEixEm.exit60 ] ; 3 uses
-  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
-  %17 = trunc nsw i64 %indvars.iv.next to i32
-  %.not = icmp eq i32 %i.am, %17
+  %i.bs = phi i32 [ %.045143.a, %bb.l ], [ %.045143, %.split.i61 ], [ %.045143, %_ZNK7xgboost4tree19SplitEntryContainerINS0_9GradStatsEE11NeedReplaceEfj.exit.i ], [ %.045143, %_ZNK7xgboost6common4SpanIKNS_6detail20GradientPairInternalIdEELm18446744073709551615EEixEm.exit60 ] ; 3 uses
+  %17 = add nsw i32 %.045143.a, 1                 ; 2 uses
+  %.not = icmp eq i32 %17, %i.am
   br i1 %.not, label %._crit_edge, label %bb.h, !llvm.loop !3232
 
 bb.m:                                             ; preds = %._crit_edge

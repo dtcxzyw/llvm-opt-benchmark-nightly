@@ -201,9 +201,7 @@ tcg_gen_shri_i32.exit52:                          ; preds = %bb.h
 
 tcg_gen_shli_i32.exit:                            ; preds = %bb.h
   %i.by = sub nuw nsw i32 32, %3                  ; 2 uses
-  %i.bz = sub nsw i32 %i.by, %2                   ; 2 uses
-  %or.cond.i53 = icmp ult i32 %i.bz, 32
-  tail call void @llvm.assume(i1 %or.cond.i53)
+  %i.bz = sub nuw nsw i32 %i.by, %2
   %i.ca = tail call ptr @tcg_constant_i32(i32 noundef %i.bz) #6
   %i.cb = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx) ; 2 uses
   %i.cc = load ptr, ptr %i.cb, align 8            ; 3 uses
@@ -606,9 +604,7 @@ tcg_gen_shri_i32.exit:                            ; preds = %.tcg_gen_shri_i32.e
 
 tcg_gen_shli_i32.exit:                            ; preds = %bb.i
   %i.ci = sub nuw nsw i32 32, %3                  ; 2 uses
-  %i.cj = sub nsw i32 %i.ci, %2                   ; 2 uses
-  %or.cond.i47 = icmp ult i32 %i.cj, 32
-  tail call void @llvm.assume(i1 %or.cond.i47)
+  %i.cj = sub nuw nsw i32 %i.ci, %2
   %i.ck = tail call ptr @tcg_constant_i32(i32 noundef %i.cj) #6
   %i.cl = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx) ; 2 uses
   %i.cm = load ptr, ptr %i.cl, align 8            ; 3 uses
@@ -1011,9 +1007,6 @@ tcg_gen_shri_i64.exit53:                          ; preds = %bb.g
 
 bb.h:                                             ; preds = %bb.g
   %i.ca = sub nuw nsw i32 64, %3                  ; 3 uses
-  %4 = sub nsw i32 %i.ca, %2                      ; 2 uses
-  %or.cond.i54 = icmp ult i32 %4, 64
-  tail call void @llvm.assume(i1 %or.cond.i54)
   %i.cb = icmp eq i32 %i.ca, %2
   br i1 %i.cb, label %bb.i, label %bb.k
 
@@ -1034,6 +1027,7 @@ bb.j:                                             ; preds = %bb.i
   br label %tcg_gen_shli_i64.exit
 
 bb.k:                                             ; preds = %bb.h
+  %4 = sub nuw nsw i32 %i.ca, %2
   %i.cl = zext nneg i32 %4 to i64
   %i.cm = tail call ptr @tcg_constant_i64(i64 noundef %i.cl) #6
   %i.cn = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx)
@@ -1436,9 +1430,7 @@ tcg_gen_shri_i64.exit:                            ; preds = %.tcg_gen_shri_i64.e
 
 tcg_target_sextract_valid.exit44:                 ; preds = %tcg_target_sextract_valid.exit39
   %i.ci = sub nuw nsw i32 64, %3                  ; 2 uses
-  %i.cj = sub nsw i32 %i.ci, %2                   ; 2 uses
-  %or.cond.i47 = icmp ult i32 %i.cj, 64
-  tail call void @llvm.assume(i1 %or.cond.i47)
+  %i.cj = sub nuw nsw i32 %i.ci, %2
   %i.ck = zext nneg i32 %i.cj to i64
   %i.cl = tail call ptr @tcg_constant_i64(i64 noundef %i.ck) #6
   %i.cm = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx) ; 2 uses

@@ -204,7 +204,7 @@ dt_get_debug_wtime.exit:                          ; preds = %bb.a, %bb.b
   %i.l = load ptr, ptr %2, align 8, !tbaa !21
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !24   ; 6 uses
   %i.n = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.o = load i32, ptr %i.n, align 4, !tbaa !136  ; 4 uses
+  %i.o = load i32, ptr %i.n, align 4, !tbaa !136  ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %3, i64 12
   %i.q = load i32, ptr %i.p, align 4, !tbaa !137  ; 3 uses
   %i.r = load i32, ptr %3, align 4, !tbaa !138    ; 3 uses
@@ -607,14 +607,13 @@ bb.l:                                             ; preds = %bb.k
 
 .lr.ph265:                                        ; preds = %._crit_edge258.split
   %i.jc = icmp sgt i32 %i.o, 0
-  %9 = sext i32 %i.o to i64
+  %9 = zext i32 %i.o to i64                       ; 2 uses
   br i1 %i.jc, label %.lr.ph261.preheader, label %._crit_edge266.split
 
 .lr.ph261.preheader:                              ; preds = %.lr.ph265
   %i.jd = mul nsw i32 %i.ac, %i.ac
   %i.je = uitofp nneg i32 %i.jd to float
   %wide.trip.count306 = zext nneg i32 %i.q to i64
-  %wide.trip.count301 = zext nneg i32 %i.o to i64
   %i.jf = fdiv reassoc nsz arcp contract afn float 1.000000e+00, %i.je
   br label %.lr.ph261
 
@@ -735,7 +734,7 @@ bb.q:                                             ; preds = %.lr.ph261, %bb.q
   %i.lt = getelementptr [4 x i8], ptr %i.kt, i64 %indvars.iv298
   store float %i.ls, ptr %i.lt, align 4, !tbaa !29
   %indvars.iv.next299 = add nuw nsw i64 %indvars.iv298, 1 ; 2 uses
-  %exitcond302.not = icmp eq i64 %indvars.iv.next299, %wide.trip.count301
+  %exitcond302.not = icmp eq i64 %indvars.iv.next299, %9
   br i1 %exitcond302.not, label %._crit_edge262, label %bb.q
 
 bb.r:                                             ; preds = %._crit_edge266.split

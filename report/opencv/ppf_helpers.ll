@@ -204,7 +204,7 @@ _ZN2cv10AutoBufferIiLm264EEC2Em.exit106:          ; preds = %.noexc103
   %i.bk = phi ptr [ %i.bg, %.lr.ph ], [ %i.ao, %_ZN2cv10AutoBufferIiLm264EEC2Em.exit106.thread192 ] ; 3 uses
   %i.bl = phi ptr [ %i.ar, %.lr.ph ], [ null, %_ZN2cv10AutoBufferIiLm264EEC2Em.exit106.thread192 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #33
-  %10 = sext i32 %3 to i64                        ; 2 uses
+  %10 = zext i32 %3 to i64                        ; 3 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 4 uses
   store ptr %i.bm, ptr %9, align 8, !tbaa !771
   %i.bn = getelementptr inbounds nuw i8, ptr %9, i64 8
@@ -246,7 +246,6 @@ _ZN2cv10AutoBufferIiLm264EEC2Em.exit109:          ; preds = %.noexc108, %._crit_
   %.idx.i = shl nuw nsw i64 %i.bz, 2
   %i.ca = icmp ugt i64 %i.bz, 3                   ; 2 uses
   %i.cb = icmp samesign ugt i32 %4, 1
-  %wide.trip.count176 = zext nneg i32 %3 to i64
   %.pre = load i32, ptr %i.s, align 4, !tbaa !111
   %i.cc = sext i32 %.pre to i64
   %i.cd = mul i64 %i.bx, %i.cc
@@ -435,7 +434,7 @@ bb.z:                                             ; preds = %bb.y, %._crit_edge1
   %i.fw = add nsw i32 %i.fv, 1
   store i32 %i.fw, ptr %i.fu, align 4, !tbaa !111
   %indvars.iv.next174 = add nuw nsw i64 %indvars.iv173, 1 ; 2 uses
-  %exitcond177.not = icmp eq i64 %indvars.iv.next174, %wide.trip.count176
+  %exitcond177.not = icmp eq i64 %indvars.iv.next174, %10
   br i1 %exitcond177.not, label %._crit_edge161, label %bb.v, !llvm.loop !775
 
 bb.aa:                                            ; preds = %._crit_edge161

@@ -204,7 +204,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 80
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !244 ; 11 uses
   %i.av = zext nneg i32 %2 to i64                 ; 7 uses
-  %i.aw = getelementptr [8 x i8], ptr %i.au, i64 %i.av ; 15 uses
+  %i.aw = getelementptr [8 x i8], ptr %i.au, i64 %i.av ; 14 uses
   %wide.trip.count = zext nneg i32 %i.h to i64
   br label %.lr.ph
 
@@ -534,29 +534,27 @@ bb.u:                                             ; preds = %bb.n
   %i.ig = fmul <2 x float> %i.hm, %i.if
   %i.ih = load <2 x float>, ptr %i.ie, align 4, !tbaa !8
   %i.ii = fadd <2 x float> %i.ig, %i.ih
-  %i.ij = shl nsw i32 %i.g, 2                     ; 2 uses
+  %i.ij = shl nsw i32 %i.g, 2
   %i.ik = zext nneg i32 %i.ij to i64
-  %i.il = getelementptr inbounds nuw [8 x i8], ptr %i.aw, i64 %i.ik
+  %i.il = getelementptr inbounds nuw [8 x i8], ptr %i.aw, i64 %i.ik ; 4 uses
   store <2 x float> %i.ii, ptr %i.il, align 4
   %i.im = load <2 x float>, ptr %i.bu, align 4, !tbaa !8
   %i.in = fmul <2 x float> %i.hu, %i.im
   %i.io = load <2 x float>, ptr %i.ie, align 4, !tbaa !8
   %i.ip = fadd <2 x float> %i.in, %i.io
-  %6 = zext nneg i32 %i.ij to i64
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %i.aw, i64 %6 ; 3 uses
-  %i.iq = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %i.iq = getelementptr inbounds nuw i8, ptr %i.il, i64 8
   store <2 x float> %i.ip, ptr %i.iq, align 4
   %i.ir = load <2 x float>, ptr %i.bu, align 4, !tbaa !8
   %i.is = fmul <2 x float> %i.hu, %i.ir
   %i.it = load <2 x float>, ptr %i.ie, align 4, !tbaa !8
   %i.iu = fsub <2 x float> %i.it, %i.is
-  %i.iv = getelementptr inbounds nuw i8, ptr %7, i64 16
+  %i.iv = getelementptr inbounds nuw i8, ptr %i.il, i64 16
   store <2 x float> %i.iu, ptr %i.iv, align 4
   %i.iw = load <2 x float>, ptr %i.bu, align 4, !tbaa !8
   %i.ix = fmul <2 x float> %i.hm, %i.iw
   %i.iy = load <2 x float>, ptr %i.ie, align 4, !tbaa !8
   %i.iz = fsub <2 x float> %i.iy, %i.ix
-  %i.ja = getelementptr inbounds nuw i8, ptr %7, i64 24
+  %i.ja = getelementptr inbounds nuw i8, ptr %i.il, i64 24
   store <2 x float> %i.iz, ptr %i.ja, align 4
   br label %.lr.ph556
 
@@ -959,9 +957,10 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.l
   %i.bl = add nuw nsw i32 %i.bi, 2
-  %i.bm = sub nsw i32 %i.bd, %i.bk
-  %.neg.lhs.trunc = trunc nsw i32 %i.bm to i8
-  %.neg120 = sdiv i8 %.neg.lhs.trunc, -2
+  %i.bm = sub nuw nsw i32 %i.bd, %i.bk
+  %.neg.lhs.trunc = trunc nuw nsw i32 %i.bm to i8
+  %.neg120132 = lshr i8 %.neg.lhs.trunc, 1
+  %.neg120 = sub nsw i8 0, %.neg120132
   %.neg.sext = sext i8 %.neg120 to i32
   %i.bn = add nsw i32 %i.bd, %.neg.sext
   br label %bb.n
@@ -1364,9 +1363,9 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.ai = getelementptr inbounds nuw i8, ptr %i.b, i64 10
-  %i.aj = sub nsw i32 %0, %i.z
-  %i.ak = shl nsw i32 %i.aj, 1
-  %i.al = zext i32 %i.ak to i64
+  %i.aj = sub nuw nsw i32 %0, %i.z
+  %i.ak = shl nuw nsw i32 %i.aj, 1
+  %i.al = zext nneg i32 %i.ak to i64
   %i.am = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.al ; 2 uses
   %.val165 = load i8, ptr %i.am, align 1, !tbaa !31
   %i.an = getelementptr i8, ptr %i.am, i64 1
@@ -1576,10 +1575,10 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.h
   %i.fn = zext i16 %i.fa to i64
   %i.fo = getelementptr inbounds nuw i8, ptr %.8.val, i64 %i.fn
-  %i.fp = sub nsw i32 %0, %i.ei
-  %i.fq = shl nsw i32 %i.fp, 1
-  %1 = sext i32 %i.fq to i64
-  %i.fr = getelementptr inbounds i8, ptr %i.fo, i64 %1
+  %i.fp = sub nuw nsw i32 %0, %i.ei
+  %i.fq = shl nuw nsw i32 %i.fp, 1
+  %1 = zext nneg i32 %i.fq to i64
+  %i.fr = getelementptr inbounds nuw i8, ptr %i.fo, i64 %1
   %i.fs = getelementptr inbounds nuw i8, ptr %i.fr, i64 %i.a
   %i.ft = getelementptr inbounds nuw i8, ptr %i.fs, i64 %i.es
   %i.fu = getelementptr inbounds nuw i8, ptr %i.ft, i64 16
