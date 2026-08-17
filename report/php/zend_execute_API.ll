@@ -1,4 +1,4 @@
-inline.NumInlined: 25
+inline.NumInlined: 26
 inline.NumDeleted: 1
 loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumUnrolled: 1
@@ -203,11 +203,34 @@ bb.af:                                            ; preds = %bb.ae
   %i.ca = load i32, ptr %i.a, align 4, !tbaa !12
   %i.cb = and i32 %i.ca, 32
   %.not74 = icmp eq i32 %i.cb, 0
-  br i1 %.not74, label %bb.ag, label %bb.ak
+  br i1 %.not74, label %3, label %bb.ak
 
-bb.ag:                                            ; preds = %bb.af
-  %3 = tail call zeroext i1 @zend_is_valid_class_name(ptr noundef nonnull %0)
-  br i1 %3, label %bb.ak, label %bb.ah
+3:                                                ; preds = %bb.af
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %6 = load i64, ptr %5, align 8, !tbaa !170      ; 2 uses
+  %7 = icmp eq i64 %6, 0
+  br i1 %7, label %bb.ak, label %bb.ag
+
+8:                                                ; preds = %bb.ag
+  %9 = add nuw i64 %.01112.i, 1                   ; 2 uses
+  %exitcond.not.i = icmp eq i64 %9, %6
+  br i1 %exitcond.not.i, label %bb.ak, label %bb.ag, !llvm.loop !215
+
+bb.ag:                                            ; preds = %3, %8
+  %.01112.i = phi i64 [ %9, %8 ], [ 0, %3 ]       ; 2 uses
+  %10 = getelementptr inbounds nuw i8, ptr %4, i64 %.01112.i
+  %11 = load i8, ptr %10, align 1, !tbaa !12      ; 2 uses
+  %12 = lshr i8 %11, 5
+  %13 = zext nneg i8 %12 to i64
+  %14 = getelementptr inbounds nuw [4 x i8], ptr @valid_chars, i64 %13
+  %15 = load i32, ptr %14, align 4, !tbaa !106
+  %16 = and i8 %11, 31
+  %17 = zext nneg i8 %16 to i32
+  %18 = shl nuw i32 1, %17
+  %19 = and i32 %18, %15
+  %.not.not.not.i = icmp eq i32 %19, 0
+  br i1 %.not.not.not.i, label %bb.ah, label %8
 
 bb.ah:                                            ; preds = %bb.ag
   %i.cc = getelementptr inbounds nuw i8, ptr %.062101, i64 4
@@ -229,7 +252,7 @@ bb.aj:                                            ; preds = %bb.ai
   tail call void @_efree(ptr noundef nonnull %.062101) #23
   br label %zend_string_release_ex.exit94
 
-bb.ak:                                            ; preds = %bb.ag, %bb.af, %bb.ae
+bb.ak:                                            ; preds = %8, %3, %bb.af, %bb.ae
   %i.cj = load ptr, ptr getelementptr inbounds nuw (i8, ptr @executor_globals, i64 576), align 8, !tbaa !52 ; 2 uses
   %i.ck = icmp eq ptr %i.cj, null
   br i1 %i.ck, label %bb.al, label %bb.am

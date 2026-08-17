@@ -1,7 +1,7 @@
 inline.NumInlined: 464
 inline.NumDeleted: 182
-loop-unroll.NumRuntimeUnrolled: 6
-loop-unroll.NumUnrolled: 13
+loop-unroll.NumRuntimeUnrolled: 7
+loop-unroll.NumUnrolled: 14
 begin_hunk_0_@_ZN2cv8ximgproc20weightedMedianFilterERKNS_11_InputArrayES3_RKNS_12_OutputArrayEidiS3_:bb.a
           cleanup                                 ; 2 uses
   %i.as = load ptr, ptr %46, align 8, !tbaa !8    ; 2 uses
@@ -203,7 +203,7 @@ bb.be:                                            ; preds = %bb.bd
   %i.cw = load i32, ptr %i.cv, align 4, !tbaa !44
   %i.cx = getelementptr inbounds nuw i8, ptr %43, i64 8
   %i.cy = load i32, ptr %i.cx, align 8, !tbaa !45
-  %i.cz = mul i32 %i.cy, %i.cw                    ; 3 uses
+  %i.cz = mul i32 %i.cy, %i.cw                    ; 5 uses
   %i.da = load i32, ptr %43, align 8, !tbaa !24
   %i.db = lshr i32 %i.da, 5
   %i.dc = and i32 %i.db, 127
@@ -606,16 +606,51 @@ bb.cs:                                            ; preds = %bb.cr
 bb.ct:                                            ; preds = %bb.cs
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %37) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %37) #16
-  %i.jr = load ptr, ptr %i.bf, align 8, !tbaa !34
-  br i1 %i.ft, label %.lr.ph328.i.a, label %._crit_edge329.i
+  %i.jr = load ptr, ptr %i.bf, align 8, !tbaa !34 ; 3 uses
+  br i1 %i.ft, label %.lr.ph328.i, label %._crit_edge329.i
 
-.lr.ph328.i.a:                                    ; preds = %bb.ct
-  %i.js = getelementptr inbounds nuw i8, ptr %29, i64 24
-  %60 = load ptr, ptr %i.js, align 8, !tbaa !34
-  %wide.trip.count.i.a = zext nneg i32 %i.cz to i64
+.lr.ph328.i:                                      ; preds = %bb.ct
+  %60 = getelementptr inbounds nuw i8, ptr %29, i64 24
+  %61 = load ptr, ptr %60, align 8, !tbaa !34     ; 3 uses
+  %wide.trip.count.i = zext nneg i32 %i.cz to i64 ; 2 uses
+  %xtraiter500 = and i64 %wide.trip.count.i, 1
+  %62 = icmp eq i32 %i.cz, 1
+  br i1 %62, label %.lr.ph328.i.a, label %.lr.ph328.i.new
+
+.lr.ph328.i.new:                                  ; preds = %.lr.ph328.i
+  %unroll_iter = and i64 %wide.trip.count.i, 2147483646
   br label %bb.cx
 
-._crit_edge329.i:                                 ; preds = %bb.cx, %bb.ct
+._crit_edge329.i.loopexit.unr-lcssa:              ; preds = %bb.cx
+  %lcmp.mod501.not = icmp eq i64 %xtraiter500, 0
+  br i1 %lcmp.mod501.not, label %._crit_edge329.i, label %.lr.ph328.i.a
+
+.lr.ph328.i.a:                                    ; preds = %._crit_edge329.i.loopexit.unr-lcssa, %.lr.ph328.i
+  %indvars.iv373.i.epil.init = phi i64 [ 0, %.lr.ph328.i ], [ %indvars.iv.next374.i.1, %._crit_edge329.i.loopexit.unr-lcssa ]
+  %indvars.iv371.i.epil.init = phi i64 [ 0, %.lr.ph328.i ], [ %indvars.iv.next374.i, %._crit_edge329.i.loopexit.unr-lcssa ]
+  %lcmp.mod502 = trunc i32 %i.cz to i1
+  call void @llvm.assume(i1 %lcmp.mod502)
+  %63 = getelementptr inbounds nuw i8, ptr %i.jr, i64 %indvars.iv371.i.epil.init ; 3 uses
+  %64 = load i8, ptr %63, align 1, !tbaa !14
+  %65 = lshr i8 %64, 2
+  %66 = getelementptr inbounds nuw i8, ptr %63, i64 1
+  %67 = load i8, ptr %66, align 1, !tbaa !14
+  %68 = lshr i8 %67, 2
+  %i.js = getelementptr inbounds nuw i8, ptr %63, i64 2
+  %69 = load i8, ptr %i.js, align 1, !tbaa !14
+  %70 = lshr i8 %69, 2
+  %71 = zext nneg i8 %65 to i64
+  %72 = getelementptr inbounds nuw [16384 x i8], ptr @_ZZN12_GLOBAL__N_115featureIndexingERN2cv3MatERPPfRifiE4hash, i64 %71
+  %73 = zext nneg i8 %68 to i64
+  %74 = getelementptr inbounds nuw [256 x i8], ptr %72, i64 %73
+  %wide.trip.count.i.a = zext nneg i8 %70 to i64
+  %75 = getelementptr inbounds nuw [4 x i8], ptr %74, i64 %wide.trip.count.i.a
+  %76 = load i32, ptr %75, align 4, !tbaa !52
+  %77 = getelementptr inbounds nuw [4 x i8], ptr %61, i64 %indvars.iv373.i.epil.init
+  store i32 %76, ptr %77, align 4, !tbaa !52
+  br label %._crit_edge329.i
+
+._crit_edge329.i:                                 ; preds = %.lr.ph328.i.a, %._crit_edge329.i.loopexit.unr-lcssa, %bb.ct
   %i.jt = zext i32 %.sroa.speculated274.i to i64  ; 22 uses
   %i.ju = icmp slt i32 %.0301.lcssa.i, 0          ; 2 uses
   %i.jv = shl nuw nsw i64 %i.jt, 3
@@ -708,16 +743,36 @@ bb.cw:                                            ; preds = %.noexc232.i, %._cri
           cleanup
   br label %bb.dh
 
-bb.cx:                                            ; preds = %bb.cx, %.lr.ph328.i.a
-  %indvars.iv373.i.a = phi i64 [ 0, %.lr.ph328.i.a ], [ %indvars.iv.next374.i, %bb.cx ] ; 2 uses
-  %indvars.iv371.i = phi i64 [ 0, %.lr.ph328.i.a ], [ %indvars.iv.next372.i, %bb.cx ] ; 2 uses
-  %i.lg = getelementptr inbounds nuw i8, ptr %i.jr, i64 %indvars.iv371.i ; 3 uses
+bb.cx:                                            ; preds = %bb.cx, %.lr.ph328.i.new
+  %indvars.iv373.i = phi i64 [ 0, %.lr.ph328.i.new ], [ %indvars.iv.next374.i.1, %bb.cx ] ; 3 uses
+  %indvars.iv373.i.a = phi i64 [ 0, %.lr.ph328.i.new ], [ %indvars.iv.next374.i, %bb.cx ] ; 3 uses
+  %indvars.iv371.i = phi i64 [ 0, %.lr.ph328.i.new ], [ %indvars.iv.next372.i, %bb.cx ]
+  %78 = getelementptr inbounds nuw i8, ptr %i.jr, i64 %indvars.iv373.i.a ; 3 uses
+  %79 = load i8, ptr %78, align 1, !tbaa !14
+  %80 = lshr i8 %79, 2
+  %81 = getelementptr inbounds nuw i8, ptr %78, i64 1
+  %82 = load i8, ptr %81, align 1, !tbaa !14
+  %83 = lshr i8 %82, 2
+  %84 = getelementptr inbounds nuw i8, ptr %78, i64 2
+  %85 = load i8, ptr %84, align 1, !tbaa !14
+  %86 = lshr i8 %85, 2
+  %87 = zext nneg i8 %80 to i64
+  %88 = getelementptr inbounds nuw [16384 x i8], ptr @_ZZN12_GLOBAL__N_115featureIndexingERN2cv3MatERPPfRifiE4hash, i64 %87
+  %89 = zext nneg i8 %83 to i64
+  %90 = getelementptr inbounds nuw [256 x i8], ptr %88, i64 %89
+  %91 = zext nneg i8 %86 to i64
+  %92 = getelementptr inbounds nuw [4 x i8], ptr %90, i64 %91
+  %93 = load i32, ptr %92, align 4, !tbaa !52
+  %94 = getelementptr inbounds nuw [4 x i8], ptr %61, i64 %indvars.iv373.i
+  store i32 %93, ptr %94, align 4, !tbaa !52
+  %95 = getelementptr inbounds nuw i8, ptr %i.jr, i64 %indvars.iv373.i.a ; 3 uses
+  %i.lg = getelementptr inbounds nuw i8, ptr %95, i64 3
   %i.lh = load i8, ptr %i.lg, align 1, !tbaa !14
   %i.li = lshr i8 %i.lh, 2
-  %i.lj = getelementptr inbounds nuw i8, ptr %i.lg, i64 1
+  %i.lj = getelementptr inbounds nuw i8, ptr %95, i64 4
   %i.lk = load i8, ptr %i.lj, align 1, !tbaa !14
   %i.ll = lshr i8 %i.lk, 2
-  %i.lm = getelementptr inbounds nuw i8, ptr %i.lg, i64 2
+  %i.lm = getelementptr inbounds nuw i8, ptr %95, i64 5
   %i.ln = load i8, ptr %i.lm, align 1, !tbaa !14
   %i.lo = lshr i8 %i.ln, 2
   %i.lp = zext nneg i8 %i.li to i64
@@ -727,12 +782,14 @@ bb.cx:                                            ; preds = %bb.cx, %.lr.ph328.i
   %i.lt = zext nneg i8 %i.lo to i64
   %i.lu = getelementptr inbounds nuw [4 x i8], ptr %i.ls, i64 %i.lt
   %i.lv = load i32, ptr %i.lu, align 4, !tbaa !52
-  %i.lw = getelementptr inbounds nuw [4 x i8], ptr %60, i64 %indvars.iv373.i.a
-  store i32 %i.lv, ptr %i.lw, align 4, !tbaa !52
-  %indvars.iv.next374.i = add nuw nsw i64 %indvars.iv373.i.a, 1 ; 2 uses
-  %indvars.iv.next372.i = add nuw nsw i64 %indvars.iv371.i, 3
-  %exitcond378.not.i = icmp eq i64 %indvars.iv.next374.i, %wide.trip.count.i.a
-  br i1 %exitcond378.not.i, label %._crit_edge329.i, label %bb.cx, !llvm.loop !61
+  %i.lw = getelementptr inbounds nuw [4 x i8], ptr %61, i64 %indvars.iv373.i
+  %96 = getelementptr inbounds nuw i8, ptr %i.lw, i64 4
+  store i32 %i.lv, ptr %96, align 4, !tbaa !52
+  %indvars.iv.next374.i.1 = add nuw nsw i64 %indvars.iv373.i, 2 ; 2 uses
+  %indvars.iv.next374.i = add nuw nsw i64 %indvars.iv373.i.a, 6 ; 2 uses
+  %indvars.iv.next372.i = add i64 %indvars.iv371.i, 2 ; 2 uses
+  %exitcond378.not.i = icmp eq i64 %indvars.iv.next372.i, %unroll_iter
+  br i1 %exitcond378.not.i, label %._crit_edge329.i.loopexit.unr-lcssa, label %bb.cx, !llvm.loop !61
 
 _ZN12_GLOBAL__N_17float2DEii.exit234.i.loopexit.unr-lcssa: ; preds = %.lr.ph.i228.i
   %lcmp.mod501.not.a = icmp eq i64 %xtraiter500.a, 0

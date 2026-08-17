@@ -203,7 +203,7 @@ bb.b:                                             ; preds = %.preheader
 define internal void @CollectHistogram_C(ptr noalias noundef %0, ptr noalias noundef %1, i32 noundef %2, i32 noundef %3, ptr noalias nofree noundef writeonly captures(none) %4) #2 {
 bb.a:
   %i.a = alloca [32 x i32], align 16              ; 20 uses
-  %i.b = alloca [16 x i16], align 16              ; 11 uses
+  %i.b = alloca [16 x i16], align 16              ; 19 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #17
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(128) %i.a, i8 0, i64 128, i1 false)
   %i.c = icmp slt i32 %2, %3
@@ -211,13 +211,21 @@ bb.a:
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %i.d = sext i32 %2 to i64
+  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 2
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 4
+  %6 = getelementptr inbounds nuw i8, ptr %i.b, i64 6
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  %7 = getelementptr inbounds nuw i8, ptr %i.b, i64 10
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 12
+  %8 = getelementptr inbounds nuw i8, ptr %i.b, i64 14
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 16
+  %9 = getelementptr inbounds nuw i8, ptr %i.b, i64 18
   %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 20
+  %10 = getelementptr inbounds nuw i8, ptr %i.b, i64 22
   %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 24
+  %11 = getelementptr inbounds nuw i8, ptr %i.b, i64 26
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 28
+  %12 = getelementptr inbounds nuw i8, ptr %i.b, i64 30
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
@@ -230,138 +238,146 @@ bb.a:
   %i.p = getelementptr inbounds i8, ptr %0, i64 %i.o
   %i.q = getelementptr inbounds i8, ptr %1, i64 %i.o
   call void %i.l(ptr noundef %i.p, ptr noundef %i.q, ptr noundef nonnull %i.b) #17
-  %5 = load <2 x i16>, ptr %i.b, align 16, !tbaa !18
-  %6 = call <2 x i16> @llvm.abs.v2i16(<2 x i16> %5, i1 false)
-  %7 = lshr <2 x i16> %6, splat (i16 3)
-  %8 = call <2 x i16> @llvm.umin.v2i16(<2 x i16> %7, <2 x i16> splat (i16 31))
-  %9 = trunc nuw nsw <2 x i16> %8 to <2 x i8>     ; 2 uses
-  %10 = extractelement <2 x i8> %9, i64 0
-  %i.r = zext nneg i8 %10 to i64
+  %13 = load i16, ptr %i.b, align 16, !tbaa !18
+  %14 = call i16 @llvm.abs.i16(i16 %13, i1 false)
+  %15 = lshr i16 %14, 3
+  %16 = call i16 @llvm.umin.i16(i16 %15, i16 31)
+  %i.r = zext nneg i16 %16 to i64
   %i.s = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.r ; 2 uses
   %i.t = load i32, ptr %i.s, align 4, !tbaa !3
   %i.u = add nsw i32 %i.t, 1
   store i32 %i.u, ptr %i.s, align 4, !tbaa !3
-  %11 = extractelement <2 x i8> %9, i64 1
-  %i.v = zext nneg i8 %11 to i64
+  %17 = load i16, ptr %5, align 2, !tbaa !18
+  %18 = call i16 @llvm.abs.i16(i16 %17, i1 false)
+  %19 = lshr i16 %18, 3
+  %20 = call i16 @llvm.umin.i16(i16 %19, i16 31)
+  %i.v = zext nneg i16 %20 to i64
   %i.w = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.v ; 2 uses
   %i.x = load i32, ptr %i.w, align 4, !tbaa !3
   %i.y = add nsw i32 %i.x, 1
   store i32 %i.y, ptr %i.w, align 4, !tbaa !3
-  %12 = load <2 x i16>, ptr %i.e, align 4, !tbaa !18
-  %13 = call <2 x i16> @llvm.abs.v2i16(<2 x i16> %12, i1 false)
-  %14 = lshr <2 x i16> %13, splat (i16 3)
-  %15 = call <2 x i16> @llvm.umin.v2i16(<2 x i16> %14, <2 x i16> splat (i16 31))
-  %16 = trunc nuw nsw <2 x i16> %15 to <2 x i8>   ; 2 uses
-  %17 = extractelement <2 x i8> %16, i64 0
-  %i.z = zext nneg i8 %17 to i64
+  %21 = load i16, ptr %i.e, align 4, !tbaa !18
+  %22 = call i16 @llvm.abs.i16(i16 %21, i1 false)
+  %23 = lshr i16 %22, 3
+  %24 = call i16 @llvm.umin.i16(i16 %23, i16 31)
+  %i.z = zext nneg i16 %24 to i64
   %i.aa = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.z ; 2 uses
   %i.ab = load i32, ptr %i.aa, align 4, !tbaa !3
   %i.ac = add nsw i32 %i.ab, 1
   store i32 %i.ac, ptr %i.aa, align 4, !tbaa !3
-  %18 = extractelement <2 x i8> %16, i64 1
-  %i.ad = zext nneg i8 %18 to i64
+  %25 = load i16, ptr %6, align 2, !tbaa !18
+  %26 = call i16 @llvm.abs.i16(i16 %25, i1 false)
+  %27 = lshr i16 %26, 3
+  %28 = call i16 @llvm.umin.i16(i16 %27, i16 31)
+  %i.ad = zext nneg i16 %28 to i64
   %i.ae = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.ad ; 2 uses
   %i.af = load i32, ptr %i.ae, align 4, !tbaa !3
   %i.ag = add nsw i32 %i.af, 1
   store i32 %i.ag, ptr %i.ae, align 4, !tbaa !3
-  %19 = load <2 x i16>, ptr %i.f, align 8, !tbaa !18
-  %20 = call <2 x i16> @llvm.abs.v2i16(<2 x i16> %19, i1 false)
-  %21 = lshr <2 x i16> %20, splat (i16 3)
-  %22 = call <2 x i16> @llvm.umin.v2i16(<2 x i16> %21, <2 x i16> splat (i16 31))
-  %23 = trunc nuw nsw <2 x i16> %22 to <2 x i8>   ; 2 uses
-  %24 = extractelement <2 x i8> %23, i64 0
-  %i.ah = zext nneg i8 %24 to i64
+  %29 = load i16, ptr %i.f, align 8, !tbaa !18
+  %30 = call i16 @llvm.abs.i16(i16 %29, i1 false)
+  %31 = lshr i16 %30, 3
+  %32 = call i16 @llvm.umin.i16(i16 %31, i16 31)
+  %i.ah = zext nneg i16 %32 to i64
   %i.ai = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.ah ; 2 uses
   %i.aj = load i32, ptr %i.ai, align 4, !tbaa !3
   %i.ak = add nsw i32 %i.aj, 1
   store i32 %i.ak, ptr %i.ai, align 4, !tbaa !3
-  %25 = extractelement <2 x i8> %23, i64 1
-  %i.al = zext nneg i8 %25 to i64
+  %33 = load i16, ptr %7, align 2, !tbaa !18
+  %34 = call i16 @llvm.abs.i16(i16 %33, i1 false)
+  %35 = lshr i16 %34, 3
+  %36 = call i16 @llvm.umin.i16(i16 %35, i16 31)
+  %i.al = zext nneg i16 %36 to i64
   %i.am = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.al ; 2 uses
   %i.an = load i32, ptr %i.am, align 4, !tbaa !3
   %i.ao = add nsw i32 %i.an, 1
   store i32 %i.ao, ptr %i.am, align 4, !tbaa !3
-  %26 = load <2 x i16>, ptr %i.g, align 4, !tbaa !18
-  %27 = call <2 x i16> @llvm.abs.v2i16(<2 x i16> %26, i1 false)
-  %28 = lshr <2 x i16> %27, splat (i16 3)
-  %29 = call <2 x i16> @llvm.umin.v2i16(<2 x i16> %28, <2 x i16> splat (i16 31))
-  %30 = trunc nuw nsw <2 x i16> %29 to <2 x i8>   ; 2 uses
-  %31 = extractelement <2 x i8> %30, i64 0
-  %i.ap = zext nneg i8 %31 to i64
+  %37 = load i16, ptr %i.g, align 4, !tbaa !18
+  %38 = call i16 @llvm.abs.i16(i16 %37, i1 false)
+  %39 = lshr i16 %38, 3
+  %40 = call i16 @llvm.umin.i16(i16 %39, i16 31)
+  %i.ap = zext nneg i16 %40 to i64
   %i.aq = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.ap ; 2 uses
   %i.ar = load i32, ptr %i.aq, align 4, !tbaa !3
   %i.as = add nsw i32 %i.ar, 1
   store i32 %i.as, ptr %i.aq, align 4, !tbaa !3
-  %32 = extractelement <2 x i8> %30, i64 1
-  %i.at = zext nneg i8 %32 to i64
+  %41 = load i16, ptr %8, align 2, !tbaa !18
+  %42 = call i16 @llvm.abs.i16(i16 %41, i1 false)
+  %43 = lshr i16 %42, 3
+  %44 = call i16 @llvm.umin.i16(i16 %43, i16 31)
+  %i.at = zext nneg i16 %44 to i64
   %i.au = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.at ; 2 uses
   %i.av = load i32, ptr %i.au, align 4, !tbaa !3
   %i.aw = add nsw i32 %i.av, 1
   store i32 %i.aw, ptr %i.au, align 4, !tbaa !3
-  %33 = load <2 x i16>, ptr %i.h, align 16, !tbaa !18
-  %34 = call <2 x i16> @llvm.abs.v2i16(<2 x i16> %33, i1 false)
-  %35 = lshr <2 x i16> %34, splat (i16 3)
-  %36 = call <2 x i16> @llvm.umin.v2i16(<2 x i16> %35, <2 x i16> splat (i16 31))
-  %37 = trunc nuw nsw <2 x i16> %36 to <2 x i8>   ; 2 uses
-  %38 = extractelement <2 x i8> %37, i64 0
-  %i.ax = zext nneg i8 %38 to i64
+  %45 = load i16, ptr %i.h, align 16, !tbaa !18
+  %46 = call i16 @llvm.abs.i16(i16 %45, i1 false)
+  %47 = lshr i16 %46, 3
+  %48 = call i16 @llvm.umin.i16(i16 %47, i16 31)
+  %i.ax = zext nneg i16 %48 to i64
   %i.ay = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.ax ; 2 uses
   %i.az = load i32, ptr %i.ay, align 4, !tbaa !3
   %i.ba = add nsw i32 %i.az, 1
   store i32 %i.ba, ptr %i.ay, align 4, !tbaa !3
-  %39 = extractelement <2 x i8> %37, i64 1
-  %i.bb = zext nneg i8 %39 to i64
+  %49 = load i16, ptr %9, align 2, !tbaa !18
+  %50 = call i16 @llvm.abs.i16(i16 %49, i1 false)
+  %51 = lshr i16 %50, 3
+  %52 = call i16 @llvm.umin.i16(i16 %51, i16 31)
+  %i.bb = zext nneg i16 %52 to i64
   %i.bc = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.bb ; 2 uses
   %i.bd = load i32, ptr %i.bc, align 4, !tbaa !3
   %i.be = add nsw i32 %i.bd, 1
   store i32 %i.be, ptr %i.bc, align 4, !tbaa !3
-  %40 = load <2 x i16>, ptr %i.i, align 4, !tbaa !18
-  %41 = call <2 x i16> @llvm.abs.v2i16(<2 x i16> %40, i1 false)
-  %42 = lshr <2 x i16> %41, splat (i16 3)
-  %43 = call <2 x i16> @llvm.umin.v2i16(<2 x i16> %42, <2 x i16> splat (i16 31))
-  %44 = trunc nuw nsw <2 x i16> %43 to <2 x i8>   ; 2 uses
-  %45 = extractelement <2 x i8> %44, i64 0
-  %i.bf = zext nneg i8 %45 to i64
+  %53 = load i16, ptr %i.i, align 4, !tbaa !18
+  %54 = call i16 @llvm.abs.i16(i16 %53, i1 false)
+  %55 = lshr i16 %54, 3
+  %56 = call i16 @llvm.umin.i16(i16 %55, i16 31)
+  %i.bf = zext nneg i16 %56 to i64
   %i.bg = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.bf ; 2 uses
   %i.bh = load i32, ptr %i.bg, align 4, !tbaa !3
   %i.bi = add nsw i32 %i.bh, 1
   store i32 %i.bi, ptr %i.bg, align 4, !tbaa !3
-  %46 = extractelement <2 x i8> %44, i64 1
-  %i.bj = zext nneg i8 %46 to i64
+  %57 = load i16, ptr %10, align 2, !tbaa !18
+  %58 = call i16 @llvm.abs.i16(i16 %57, i1 false)
+  %59 = lshr i16 %58, 3
+  %60 = call i16 @llvm.umin.i16(i16 %59, i16 31)
+  %i.bj = zext nneg i16 %60 to i64
   %i.bk = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.bj ; 2 uses
   %i.bl = load i32, ptr %i.bk, align 4, !tbaa !3
   %i.bm = add nsw i32 %i.bl, 1
   store i32 %i.bm, ptr %i.bk, align 4, !tbaa !3
-  %47 = load <2 x i16>, ptr %i.j, align 8, !tbaa !18
-  %48 = call <2 x i16> @llvm.abs.v2i16(<2 x i16> %47, i1 false)
-  %49 = lshr <2 x i16> %48, splat (i16 3)
-  %50 = call <2 x i16> @llvm.umin.v2i16(<2 x i16> %49, <2 x i16> splat (i16 31))
-  %51 = trunc nuw nsw <2 x i16> %50 to <2 x i8>   ; 2 uses
-  %52 = extractelement <2 x i8> %51, i64 0
-  %i.bn = zext nneg i8 %52 to i64
+  %61 = load i16, ptr %i.j, align 8, !tbaa !18
+  %62 = call i16 @llvm.abs.i16(i16 %61, i1 false)
+  %63 = lshr i16 %62, 3
+  %64 = call i16 @llvm.umin.i16(i16 %63, i16 31)
+  %i.bn = zext nneg i16 %64 to i64
   %i.bo = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.bn ; 2 uses
   %i.bp = load i32, ptr %i.bo, align 4, !tbaa !3
   %i.bq = add nsw i32 %i.bp, 1
   store i32 %i.bq, ptr %i.bo, align 4, !tbaa !3
-  %53 = extractelement <2 x i8> %51, i64 1
-  %i.br = zext nneg i8 %53 to i64
+  %65 = load i16, ptr %11, align 2, !tbaa !18
+  %66 = call i16 @llvm.abs.i16(i16 %65, i1 false)
+  %67 = lshr i16 %66, 3
+  %68 = call i16 @llvm.umin.i16(i16 %67, i16 31)
+  %i.br = zext nneg i16 %68 to i64
   %i.bs = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.br ; 2 uses
   %i.bt = load i32, ptr %i.bs, align 4, !tbaa !3
   %i.bu = add nsw i32 %i.bt, 1
   store i32 %i.bu, ptr %i.bs, align 4, !tbaa !3
-  %54 = load <2 x i16>, ptr %i.k, align 4, !tbaa !18
-  %55 = call <2 x i16> @llvm.abs.v2i16(<2 x i16> %54, i1 false)
-  %56 = lshr <2 x i16> %55, splat (i16 3)
-  %57 = call <2 x i16> @llvm.umin.v2i16(<2 x i16> %56, <2 x i16> splat (i16 31))
-  %58 = trunc nuw nsw <2 x i16> %57 to <2 x i8>   ; 2 uses
-  %59 = extractelement <2 x i8> %58, i64 0
-  %i.bv = zext nneg i8 %59 to i64
+  %69 = load i16, ptr %i.k, align 4, !tbaa !18
+  %70 = call i16 @llvm.abs.i16(i16 %69, i1 false)
+  %71 = lshr i16 %70, 3
+  %72 = call i16 @llvm.umin.i16(i16 %71, i16 31)
+  %i.bv = zext nneg i16 %72 to i64
   %i.bw = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.bv ; 2 uses
   %i.bx = load i32, ptr %i.bw, align 4, !tbaa !3
   %i.by = add nsw i32 %i.bx, 1
   store i32 %i.by, ptr %i.bw, align 4, !tbaa !3
-  %60 = extractelement <2 x i8> %58, i64 1
-  %i.bz = zext nneg i8 %60 to i64
+  %73 = load i16, ptr %12, align 2, !tbaa !18
+  %74 = call i16 @llvm.abs.i16(i16 %73, i1 false)
+  %75 = lshr i16 %74, 3
+  %76 = call i16 @llvm.umin.i16(i16 %75, i16 31)
+  %i.bz = zext nneg i16 %76 to i64
   %i.ca = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.bz ; 2 uses
   %i.cb = load i32, ptr %i.ca, align 4, !tbaa !3
   %i.cc = add nsw i32 %i.cb, 1
@@ -764,6 +780,9 @@ declare i32 @llvm.smax.i32(i32, i32) #15
 declare void @llvm.experimental.noalias.scope.decl(metadata) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.umin.i16(i16, i16) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <16 x i32> @llvm.smax.v16i32(<16 x i32>, <16 x i32>) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -780,12 +799,6 @@ declare <4 x i32> @llvm.abs.v4i32(<4 x i32>, i1 immarg) #13
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #15
-
-; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x i16> @llvm.abs.v2i16(<2 x i16>, i1 immarg) #13
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x i16> @llvm.umin.v2i16(<2 x i16>, <2 x i16>) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v16i32(<16 x i32>) #15

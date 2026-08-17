@@ -1,4 +1,4 @@
-inline.NumInlined: 230
+inline.NumInlined: 231
 inline.NumDeleted: 61
 loop-unroll.NumCompletelyUnrolled: 16
 loop-unroll.NumRuntimeUnrolled: 10
@@ -204,7 +204,7 @@ _ZNK20btAxisSweep3InternalItE8quantizeEPtRK9btVector3i.exit51: ; preds = %_ZNK20
   %i.cs = phi i16 [ 1, %bb.e ], [ %i.cr, %_ZNK20btAxisSweep3InternalItE8quantizeEPtRK9btVector3i.exit51.sink.split ]
   %i.ct = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   %i.cu = load i16, ptr %i.ct, align 8, !tbaa !42 ; 9 uses
-  %i.cv = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 11 uses
+  %i.cv = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 13 uses
   %i.cw = load ptr, ptr %i.cv, align 8, !tbaa !39 ; 2 uses
   %i.cx = zext i16 %i.cu to i64
   %i.cy = getelementptr inbounds nuw [80 x i8], ptr %i.cw, i64 %i.cx ; 15 uses
@@ -473,7 +473,7 @@ _ZN20btAxisSweep3InternalItE11sortMinDownEitP12btDispatcherb.exit64: ; preds = %
   %i.jj = load i16, ptr %i.ji, align 2, !tbaa !78
   %i.jk = load i16, ptr %.03540.i65, align 2, !tbaa !78 ; 2 uses
   %i.jl = icmp ult i16 %i.jj, %i.jk
-  br i1 %i.jl, label %.lr.ph.i66, label %_ZN20btAxisSweep3InternalItE11sortMaxDownEitP12btDispatcherb.exit73.a
+  br i1 %i.jl, label %.lr.ph.i66, label %_ZN20btAxisSweep3InternalItE11sortMaxDownEitP12btDispatcherb.exit73
 
 .lr.ph.i66:                                       ; preds = %_ZN20btAxisSweep3InternalItE11sortMinDownEitP12btDispatcherb.exit64
   %i.jm = load ptr, ptr %i.cv, align 8, !tbaa !39
@@ -512,15 +512,119 @@ _ZN20btAxisSweep3InternalItE11sortMinDownEitP12btDispatcherb.exit64: ; preds = %
   %i.ki = load i16, ptr %i.kh, align 2, !tbaa !78
   %i.kj = load i16, ptr %.035.i72, align 2, !tbaa !78 ; 2 uses
   %i.kk = icmp ult i16 %i.ki, %i.kj
-  br i1 %i.kk, label %.lr.ph.split.i67, label %_ZN20btAxisSweep3InternalItE11sortMaxDownEitP12btDispatcherb.exit73.a
+  br i1 %i.kk, label %.lr.ph.split.i67, label %_ZN20btAxisSweep3InternalItE11sortMaxDownEitP12btDispatcherb.exit73
 
-_ZN20btAxisSweep3InternalItE11sortMaxDownEitP12btDispatcherb.exit73.a: ; preds = %.lr.ph.split.i67, %_ZN20btAxisSweep3InternalItE11sortMinDownEitP12btDispatcherb.exit64
-  %i.kl = getelementptr inbounds nuw i8, ptr %i.cy, i64 64
-  %i.km = load i16, ptr %i.kl, align 8, !tbaa !46
-  tail call void @_ZN20btAxisSweep3InternalItE11sortMinDownEitP12btDispatcherb(ptr noundef nonnull align 8 dereferenceable(168) %0, i32 noundef 2, i16 noundef zeroext %i.km, ptr noundef %6, i1 noundef zeroext true)
-  %i.kn = getelementptr inbounds nuw i8, ptr %i.cy, i64 70
-  %i.ko = load i16, ptr %i.kn, align 2, !tbaa !46
-  tail call void @_ZN20btAxisSweep3InternalItE11sortMaxDownEitP12btDispatcherb(ptr noundef nonnull align 8 dereferenceable(168) %0, i32 noundef 2, i16 noundef zeroext %i.ko, ptr noundef %6, i1 noundef zeroext true)
+_ZN20btAxisSweep3InternalItE11sortMaxDownEitP12btDispatcherb.exit73: ; preds = %.lr.ph.split.i67, %_ZN20btAxisSweep3InternalItE11sortMinDownEitP12btDispatcherb.exit64
+  %8 = getelementptr inbounds nuw i8, ptr %i.cy, i64 64
+  %9 = load i16, ptr %8, align 8, !tbaa !46
+  %10 = getelementptr inbounds nuw i8, ptr %0, i64 96
+  %11 = load ptr, ptr %10, align 8, !tbaa !50
+  %12 = zext i16 %9 to i64
+  %13 = getelementptr inbounds nuw [4 x i8], ptr %11, i64 %12 ; 4 uses
+  %14 = getelementptr inbounds nuw i8, ptr %13, i64 2
+  %15 = load i16, ptr %14, align 2, !tbaa !80
+  %16 = load ptr, ptr %i.cv, align 8, !tbaa !39
+  %17 = zext i16 %15 to i64
+  %18 = getelementptr inbounds nuw [80 x i8], ptr %16, i64 %17 ; 7 uses
+  %.03136.i74 = getelementptr inbounds i8, ptr %13, i64 -4 ; 2 uses
+  %19 = load i16, ptr %13, align 2, !tbaa !78
+  %20 = load i16, ptr %.03136.i74, align 2, !tbaa !78 ; 2 uses
+  %21 = icmp ult i16 %19, %20
+  br i1 %21, label %.lr.ph.i75, label %_ZN20btAxisSweep3InternalItE11sortMinDownEitP12btDispatcherb.exit76
+
+.lr.ph.i75:                                       ; preds = %_ZN20btAxisSweep3InternalItE11sortMaxDownEitP12btDispatcherb.exit73
+  %22 = getelementptr inbounds nuw i8, ptr %18, i64 66
+  %23 = getelementptr inbounds nuw i8, ptr %18, i64 60
+  %24 = getelementptr inbounds nuw i8, ptr %18, i64 68
+  %25 = getelementptr inbounds nuw i8, ptr %18, i64 62
+  %26 = getelementptr inbounds nuw i8, ptr %0, i64 128
+  %27 = getelementptr inbounds nuw i8, ptr %0, i64 136
+  %28 = getelementptr inbounds nuw i8, ptr %18, i64 64 ; 2 uses
+  br label %.lr.ph.split.us.i
+
+.lr.ph.split.us.i:                                ; preds = %_ZN20btAxisSweep3InternalItE11sortMaxDownEitP12btDispatcherb.exit73.a, %.lr.ph.i75
+  %29 = phi i16 [ %i.ko, %_ZN20btAxisSweep3InternalItE11sortMaxDownEitP12btDispatcherb.exit73.a ], [ %20, %.lr.ph.i75 ]
+  %.03139.us.i = phi ptr [ %i.kn, %_ZN20btAxisSweep3InternalItE11sortMaxDownEitP12btDispatcherb.exit73.a ], [ %.03136.i74, %.lr.ph.i75 ] ; 3 uses
+  %.038.us.i = phi ptr [ %72, %_ZN20btAxisSweep3InternalItE11sortMaxDownEitP12btDispatcherb.exit73.a ], [ %13, %.lr.ph.i75 ] ; 4 uses
+  %30 = getelementptr inbounds i8, ptr %.038.us.i, i64 -2
+  %31 = load i16, ptr %30, align 2, !tbaa !80
+  %32 = load ptr, ptr %i.cv, align 8, !tbaa !39
+  %33 = zext i16 %31 to i64
+  %34 = getelementptr inbounds nuw [80 x i8], ptr %32, i64 %33 ; 7 uses
+  %35 = and i16 %29, 1
+  %.not.us.i = icmp eq i16 %35, 0
+  br i1 %.not.us.i, label %_ZN20btAxisSweep3InternalItE11sortMaxDownEitP12btDispatcherb.exit73.a, label %36
+
+36:                                               ; preds = %.lr.ph.split.us.i
+  %37 = load i16, ptr %22, align 2, !tbaa !46
+  %38 = getelementptr inbounds nuw i8, ptr %34, i64 60
+  %39 = load i16, ptr %38, align 2, !tbaa !46
+  %40 = icmp ult i16 %37, %39
+  br i1 %40, label %_ZN20btAxisSweep3InternalItE11sortMaxDownEitP12btDispatcherb.exit73.a, label %41
+
+41:                                               ; preds = %36
+  %42 = getelementptr inbounds nuw i8, ptr %34, i64 66
+  %43 = load i16, ptr %42, align 2, !tbaa !46
+  %44 = load i16, ptr %23, align 2, !tbaa !46
+  %45 = icmp ult i16 %43, %44
+  br i1 %45, label %_ZN20btAxisSweep3InternalItE11sortMaxDownEitP12btDispatcherb.exit73.a, label %46
+
+46:                                               ; preds = %41
+  %47 = load i16, ptr %24, align 2, !tbaa !46
+  %48 = getelementptr inbounds nuw i8, ptr %34, i64 62
+  %49 = load i16, ptr %48, align 2, !tbaa !46
+  %50 = icmp ult i16 %47, %49
+  br i1 %50, label %_ZN20btAxisSweep3InternalItE11sortMaxDownEitP12btDispatcherb.exit73.a, label %_ZN20btAxisSweep3InternalItE13testOverlap2DEPKNS0_6HandleES3_ii.exit.us.i
+
+_ZN20btAxisSweep3InternalItE13testOverlap2DEPKNS0_6HandleES3_ii.exit.us.i: ; preds = %46
+  %51 = getelementptr inbounds nuw i8, ptr %34, i64 68
+  %52 = load i16, ptr %51, align 2, !tbaa !46
+  %53 = load i16, ptr %25, align 2, !tbaa !46
+  %.not35.us.i = icmp ult i16 %52, %53
+  br i1 %.not35.us.i, label %_ZN20btAxisSweep3InternalItE11sortMaxDownEitP12btDispatcherb.exit73.a, label %54
+
+54:                                               ; preds = %_ZN20btAxisSweep3InternalItE13testOverlap2DEPKNS0_6HandleES3_ii.exit.us.i
+  %55 = load ptr, ptr %26, align 8, !tbaa !22     ; 2 uses
+  %56 = load ptr, ptr %55, align 8, !tbaa !8
+  %57 = getelementptr inbounds nuw i8, ptr %56, i64 16
+  %58 = load ptr, ptr %57, align 8
+  %59 = tail call noundef ptr %58(ptr noundef nonnull align 8 dereferenceable(8) %55, ptr noundef nonnull %18, ptr noundef nonnull %34), !inline_history !97 ; 0 uses
+  %60 = load ptr, ptr %27, align 8, !tbaa !23     ; 3 uses
+  %.not33.us.i = icmp eq ptr %60, null
+  br i1 %.not33.us.i, label %_ZN20btAxisSweep3InternalItE11sortMaxDownEitP12btDispatcherb.exit73.a, label %61
+
+61:                                               ; preds = %54
+  %62 = load ptr, ptr %60, align 8, !tbaa !8
+  %63 = getelementptr inbounds nuw i8, ptr %62, i64 16
+  %64 = load ptr, ptr %63, align 8
+  %65 = tail call noundef ptr %64(ptr noundef nonnull align 8 dereferenceable(8) %60, ptr noundef nonnull %18, ptr noundef nonnull %34), !inline_history !97 ; 0 uses
+  br label %_ZN20btAxisSweep3InternalItE11sortMaxDownEitP12btDispatcherb.exit73.a
+
+_ZN20btAxisSweep3InternalItE11sortMaxDownEitP12btDispatcherb.exit73.a: ; preds = %61, %54, %_ZN20btAxisSweep3InternalItE13testOverlap2DEPKNS0_6HandleES3_ii.exit.us.i, %46, %41, %36, %.lr.ph.split.us.i
+  %.sink.i = phi i64 [ 66, %36 ], [ 66, %61 ], [ 66, %54 ], [ 66, %_ZN20btAxisSweep3InternalItE13testOverlap2DEPKNS0_6HandleES3_ii.exit.us.i ], [ 66, %46 ], [ 66, %41 ], [ 60, %.lr.ph.split.us.i ]
+  %66 = getelementptr inbounds nuw i8, ptr %34, i64 %.sink.i
+  %i.kl = getelementptr inbounds nuw i8, ptr %66, i64 4 ; 2 uses
+  %67 = load i16, ptr %i.kl, align 2, !tbaa !46
+  %68 = add i16 %67, 1
+  store i16 %68, ptr %i.kl, align 2, !tbaa !46
+  %i.km = load i16, ptr %28, align 2, !tbaa !46
+  %69 = add i16 %i.km, -1
+  store i16 %69, ptr %28, align 2, !tbaa !46
+  %70 = load i32, ptr %.038.us.i, align 2
+  %71 = load i32, ptr %.03139.us.i, align 2
+  store i32 %71, ptr %.038.us.i, align 2
+  store i32 %70, ptr %.03139.us.i, align 2
+  %72 = getelementptr inbounds i8, ptr %.038.us.i, i64 -4 ; 2 uses
+  %i.kn = getelementptr inbounds i8, ptr %.03139.us.i, i64 -4 ; 2 uses
+  %73 = load i16, ptr %72, align 2, !tbaa !78
+  %i.ko = load i16, ptr %i.kn, align 2, !tbaa !78 ; 2 uses
+  %74 = icmp ult i16 %73, %i.ko
+  br i1 %74, label %.lr.ph.split.us.i, label %_ZN20btAxisSweep3InternalItE11sortMinDownEitP12btDispatcherb.exit76
+
+_ZN20btAxisSweep3InternalItE11sortMinDownEitP12btDispatcherb.exit76: ; preds = %_ZN20btAxisSweep3InternalItE11sortMaxDownEitP12btDispatcherb.exit73.a, %_ZN20btAxisSweep3InternalItE11sortMaxDownEitP12btDispatcherb.exit73
+  %75 = getelementptr inbounds nuw i8, ptr %i.cy, i64 70
+  %76 = load i16, ptr %75, align 2, !tbaa !46
+  tail call void @_ZN20btAxisSweep3InternalItE11sortMaxDownEitP12btDispatcherb(ptr noundef nonnull align 8 dereferenceable(168) %0, i32 noundef 2, i16 noundef zeroext %76, ptr noundef %6, i1 noundef zeroext true)
   ret i16 %i.cu
 }
 
@@ -923,7 +1027,7 @@ tailrecurse:                                      ; preds = %bb.ab, %bb.a
   %i.f = getelementptr inbounds [32 x i8], ptr %i.b, i64 %i.e ; 3 uses
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !88   ; 4 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.f, i64 8
-  %i.i = load ptr, ptr %i.h, align 8, !tbaa !97   ; 4 uses
+  %i.i = load ptr, ptr %i.h, align 8, !tbaa !98   ; 4 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.f, i64 16
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !84   ; 2 uses
   %.not22.i = icmp eq ptr %i.g, null              ; 2 uses
@@ -962,7 +1066,7 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f, %bb.e
   %i.v = phi i32 [ %i.u, %bb.f ], [ -1, %bb.e ]
   %i.w = getelementptr inbounds nuw i8, ptr %i.p, i64 8
-  %i.x = load ptr, ptr %i.w, align 8, !tbaa !97   ; 4 uses
+  %i.x = load ptr, ptr %i.w, align 8, !tbaa !98   ; 4 uses
   %.not23.i = icmp eq ptr %i.x, null
   br i1 %.not23.i, label %bb.i, label %bb.h
 
@@ -1045,7 +1149,7 @@ bb.r:                                             ; preds = %bb.q
 bb.s:                                             ; preds = %bb.r, %bb.q
   %i.au = phi i32 [ %i.at, %bb.r ], [ -1, %bb.q ]
   %i.av = getelementptr inbounds nuw i8, ptr %i.am, i64 8
-  %i.aw = load ptr, ptr %i.av, align 8, !tbaa !97 ; 3 uses
+  %i.aw = load ptr, ptr %i.av, align 8, !tbaa !98 ; 3 uses
   %.not24.i33 = icmp eq ptr %i.aw, null
   br i1 %.not24.i33, label %bb.u, label %bb.t
 
@@ -1092,7 +1196,7 @@ _ZN29btBroadphasePairSortPredicateclERK16btBroadphasePairS2_.exit37.thread41: ; 
 bb.x:                                             ; preds = %_ZN29btBroadphasePairSortPredicateclERK16btBroadphasePairS2_.exit37.thread41
   %i.bi = getelementptr inbounds nuw i8, ptr %i.p, i64 16
   %i.bj = load <2 x ptr>, ptr %i.bi, align 8, !tbaa !37
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.p, ptr noundef nonnull align 8 dereferenceable(32) %i.am, i64 32, i1 false), !tbaa.struct !98
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.p, ptr noundef nonnull align 8 dereferenceable(32) %i.am, i64 32, i1 false), !tbaa.struct !99
   %i.bk = load ptr, ptr %i.a, align 8, !tbaa !82
   %i.bl = getelementptr inbounds [32 x i8], ptr %i.bk, i64 %indvars.iv55 ; 3 uses
   store ptr %i.q, ptr %i.bl, align 8, !tbaa !83
@@ -1495,7 +1599,7 @@ bb.i:                                             ; preds = %_ZN20btAxisSweep3In
   %i.lz = load ptr, ptr %i.ly, align 8, !tbaa !8
   %i.ma = getelementptr inbounds nuw i8, ptr %i.lz, i64 16
   %i.mb = load ptr, ptr %i.ma, align 8
-  %i.mc = tail call noundef ptr %i.mb(ptr noundef nonnull align 8 dereferenceable(8) %i.ly, ptr noundef nonnull %i.kr, ptr noundef nonnull %i.lh), !inline_history !100 ; 0 uses
+  %i.mc = tail call noundef ptr %i.mb(ptr noundef nonnull align 8 dereferenceable(8) %i.ly, ptr noundef nonnull %i.kr, ptr noundef nonnull %i.lh), !inline_history !101 ; 0 uses
   %i.md = load ptr, ptr %i.la, align 8, !tbaa !57 ; 3 uses
   %.not33.us.i = icmp eq ptr %i.md, null
   br i1 %.not33.us.i, label %_ZN20btAxisSweep3InternalIjE13testOverlap2DEPKNS0_6HandleES3_ii.exit.thread.us.i, label %bb.j
@@ -1504,7 +1608,7 @@ bb.j:                                             ; preds = %bb.i
   %i.me = load ptr, ptr %i.md, align 8, !tbaa !8
   %i.mf = getelementptr inbounds nuw i8, ptr %i.me, i64 16
   %i.mg = load ptr, ptr %i.mf, align 8
-  %i.mh = tail call noundef ptr %i.mg(ptr noundef nonnull align 8 dereferenceable(8) %i.md, ptr noundef nonnull %i.kr, ptr noundef nonnull %i.lh), !inline_history !100 ; 0 uses
+  %i.mh = tail call noundef ptr %i.mg(ptr noundef nonnull align 8 dereferenceable(8) %i.md, ptr noundef nonnull %i.kr, ptr noundef nonnull %i.lh), !inline_history !101 ; 0 uses
   br label %_ZN20btAxisSweep3InternalIjE13testOverlap2DEPKNS0_6HandleES3_ii.exit.thread.us.i
 
 _ZN20btAxisSweep3InternalIjE13testOverlap2DEPKNS0_6HandleES3_ii.exit.thread.us.i: ; preds = %bb.j, %bb.i, %_ZN20btAxisSweep3InternalIjE13testOverlap2DEPKNS0_6HandleES3_ii.exit.us.i, %bb.h, %bb.g, %bb.f, %.lr.ph.split.us.i
@@ -1907,8 +2011,9 @@ attributes #13 = { builtin nounwind }
 !94 = !{ptr @_ZN15btNullPairCacheD2Ev}
 !95 = !{!44, !13, i64 8}
 !96 = !{!44, !13, i64 10}
-!97 = !{!85, !76, i64 8}
-!98 = !{i64 0, i64 8, !83, i64 8, i64 8, !83, i64 16, i64 8, !99, i64 24, i64 8, !37}
-!99 = !{!86, !86, i64 0}
-!100 = !{ptr @_ZN20btAxisSweep3InternalIjE11sortMinDownEijP12btDispatcherb}
+!97 = !{ptr @_ZN20btAxisSweep3InternalItE11sortMinDownEitP12btDispatcherb}
+!98 = !{!85, !76, i64 8}
+!99 = !{i64 0, i64 8, !83, i64 8, i64 8, !83, i64 16, i64 8, !100, i64 24, i64 8, !37}
+!100 = !{!86, !86, i64 0}
+!101 = !{ptr @_ZN20btAxisSweep3InternalIjE11sortMinDownEijP12btDispatcherb}
 end_hunk_3

@@ -1,8 +1,8 @@
 inline.NumInlined: 44
 inline.NumDeleted: 22
 loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumRuntimeUnrolled: 48
-loop-unroll.NumUnrolled: 49
+loop-unroll.NumRuntimeUnrolled: 50
+loop-unroll.NumUnrolled: 51
 begin_hunk_0_@png_do_read_transformations:bb.a
   %.not4653.i = icmp eq i32 %i.bxs, 0
   br i1 %.not4653.i, label %png_do_encode_alpha.exit, label %.lr.ph.preheader.i222
@@ -204,12 +204,12 @@ png_do_chop.exit:                                 ; preds = %._crit_edge.i230, %
 
 bb.he:                                            ; preds = %png_do_chop.exit
   %i.cdr = load ptr, ptr %i.b, align 8, !tbaa !204
-  %i.cds = getelementptr inbounds nuw i8, ptr %i.cdr, i64 1 ; 6 uses
+  %i.cds = getelementptr inbounds nuw i8, ptr %i.cdr, i64 1 ; 10 uses
   %i.cdt = getelementptr inbounds nuw i8, ptr %0, i64 944
-  %i.cdu = load ptr, ptr %i.cdt, align 8, !tbaa !94 ; 3 uses
+  %i.cdu = load ptr, ptr %i.cdt, align 8, !tbaa !94 ; 7 uses
   %i.cdv = getelementptr inbounds nuw i8, ptr %0, i64 952
   %i.cdw = load ptr, ptr %i.cdv, align 8, !tbaa !56 ; 6 uses
-  %i.cdx = load i32, ptr %1, align 8, !tbaa !207  ; 12 uses
+  %i.cdx = load i32, ptr %1, align 8, !tbaa !207  ; 18 uses
   %i.cdy = getelementptr inbounds nuw i8, ptr %1, i64 17 ; 3 uses
   %i.cdz = load i8, ptr %i.cdy, align 1, !tbaa !208
   %i.cea = icmp eq i8 %i.cdz, 8
@@ -221,13 +221,22 @@ bb.hf:                                            ; preds = %bb.he
   %i.ced = icmp eq i8 %i.cec, 2
   %i.cee = icmp ne ptr %i.cdu, null               ; 2 uses
   %or.cond.i232 = and i1 %i.cee, %i.ced
-  br i1 %or.cond.i232, label %.preheader.i241.a, label %bb.hi
+  br i1 %or.cond.i232, label %.preheader.i241, label %bb.hi
 
-.preheader.i241.a:                                ; preds = %bb.hf
-  %.not93.i.a = icmp eq i32 %i.cdx, 0
-  br i1 %.not93.i.a, label %._crit_edge91.thread.i, label %.lr.ph90.i
+.preheader.i241:                                  ; preds = %bb.hf
+  %.not93.i = icmp eq i32 %i.cdx, 0
+  br i1 %.not93.i, label %._crit_edge91.thread.i, label %.preheader.i241.a
 
-._crit_edge91.thread.i:                           ; preds = %.preheader.i241.a
+.preheader.i241.a:                                ; preds = %.preheader.i241
+  %xtraiter825 = and i32 %i.cdx, 1
+  %.not93.i.a = icmp eq i32 %i.cdx, 1
+  br i1 %.not93.i.a, label %.lr.ph90.i.epil.preheader, label %.lr.ph90.i.preheader.new
+
+.lr.ph90.i.preheader.new:                         ; preds = %.preheader.i241.a
+  %unroll_iter829 = and i32 %i.cdx, -2
+  br label %.lr.ph90.i
+
+._crit_edge91.thread.i:                           ; preds = %.preheader.i241
   store i8 3, ptr %i.ceb, align 8, !tbaa !205
   %i.cef = getelementptr inbounds nuw i8, ptr %1, i64 18
   store i8 1, ptr %i.cef, align 2, !tbaa !216
@@ -235,15 +244,35 @@ bb.hf:                                            ; preds = %bb.he
   store i8 8, ptr %i.ceg, align 1, !tbaa !212
   br label %bb.hg
 
-.lr.ph90.i:                                       ; preds = %.preheader.i241.a, %.lr.ph90.i
-  %.089.i = phi ptr [ %i.cel, %.lr.ph90.i ], [ %i.cds, %.preheader.i241.a ] ; 4 uses
-  %.06988.i = phi ptr [ %i.cez, %.lr.ph90.i ], [ %i.cds, %.preheader.i241.a ] ; 2 uses
-  %.07187.i = phi i32 [ %i.cfa, %.lr.ph90.i ], [ 0, %.preheader.i241.a ]
-  %i.ceh = getelementptr inbounds nuw i8, ptr %.089.i, i64 1
-  %i.cei = load i8, ptr %.089.i, align 1, !tbaa !29
-  %i.cej = getelementptr inbounds nuw i8, ptr %.089.i, i64 2
+.lr.ph90.i:                                       ; preds = %.lr.ph90.i, %.lr.ph90.i.preheader.new
+  %.089.i = phi ptr [ %i.cds, %.lr.ph90.i.preheader.new ], [ %i.cel, %.lr.ph90.i ] ; 7 uses
+  %.06988.i = phi ptr [ %i.cds, %.lr.ph90.i.preheader.new ], [ %i.cez, %.lr.ph90.i ] ; 3 uses
+  %.07187.i = phi i32 [ 0, %.lr.ph90.i.preheader.new ], [ %i.cfa, %.lr.ph90.i ]
+  %2 = getelementptr inbounds nuw i8, ptr %.089.i, i64 1
+  %3 = load i8, ptr %.089.i, align 1, !tbaa !29
+  %4 = getelementptr inbounds nuw i8, ptr %.089.i, i64 2
+  %5 = load i8, ptr %2, align 1, !tbaa !29
+  %6 = getelementptr inbounds nuw i8, ptr %.089.i, i64 3
+  %7 = load i8, ptr %4, align 1, !tbaa !29
+  %8 = lshr i8 %3, 3
+  %9 = zext nneg i8 %8 to i64
+  %10 = shl nuw nsw i64 %9, 10
+  %11 = lshr i8 %5, 3
+  %12 = zext nneg i8 %11 to i64
+  %13 = shl nuw nsw i64 %12, 5
+  %14 = lshr i8 %7, 3
+  %15 = zext nneg i8 %14 to i64
+  %16 = getelementptr inbounds nuw i8, ptr %i.cdu, i64 %10
+  %17 = getelementptr inbounds nuw i8, ptr %16, i64 %13
+  %18 = getelementptr inbounds nuw i8, ptr %17, i64 %15
+  %19 = load i8, ptr %18, align 1, !tbaa !29
+  %20 = getelementptr inbounds nuw i8, ptr %.06988.i, i64 1
+  store i8 %19, ptr %.06988.i, align 1, !tbaa !29
+  %i.ceh = getelementptr inbounds nuw i8, ptr %.089.i, i64 4
+  %i.cei = load i8, ptr %6, align 1, !tbaa !29
+  %i.cej = getelementptr inbounds nuw i8, ptr %.089.i, i64 5
   %i.cek = load i8, ptr %i.ceh, align 1, !tbaa !29
-  %i.cel = getelementptr inbounds nuw i8, ptr %.089.i, i64 3
+  %i.cel = getelementptr inbounds nuw i8, ptr %.089.i, i64 6 ; 2 uses
   %i.cem = load i8, ptr %i.cej, align 1, !tbaa !29
   %i.cen = lshr i8 %i.cei, 3
   %i.ceo = zext nneg i8 %i.cen to i64
@@ -257,13 +286,42 @@ bb.hf:                                            ; preds = %bb.he
   %i.cew = getelementptr inbounds nuw i8, ptr %i.cev, i64 %i.ces
   %i.cex = getelementptr inbounds nuw i8, ptr %i.cew, i64 %i.ceu
   %i.cey = load i8, ptr %i.cex, align 1, !tbaa !29
-  %i.cez = getelementptr inbounds nuw i8, ptr %.06988.i, i64 1
-  store i8 %i.cey, ptr %.06988.i, align 1, !tbaa !29
-  %i.cfa = add nuw i32 %.07187.i, 1               ; 2 uses
-  %exitcond95.not.i = icmp eq i32 %i.cfa, %i.cdx
-  br i1 %exitcond95.not.i, label %._crit_edge91.i, label %.lr.ph90.i, !llvm.loop !279
+  %i.cez = getelementptr inbounds nuw i8, ptr %.06988.i, i64 2 ; 2 uses
+  store i8 %i.cey, ptr %20, align 1, !tbaa !29
+  %i.cfa = add nuw i32 %.07187.i, 2               ; 2 uses
+  %exitcond95.not.i = icmp eq i32 %i.cfa, %unroll_iter829
+  br i1 %exitcond95.not.i, label %._crit_edge91.i.unr-lcssa, label %.lr.ph90.i, !llvm.loop !279
 
-._crit_edge91.i:                                  ; preds = %.lr.ph90.i
+._crit_edge91.i.unr-lcssa:                        ; preds = %.lr.ph90.i
+  %lcmp.mod827.not = icmp eq i32 %xtraiter825, 0
+  br i1 %lcmp.mod827.not, label %._crit_edge91.i, label %.lr.ph90.i.epil.preheader
+
+.lr.ph90.i.epil.preheader:                        ; preds = %._crit_edge91.i.unr-lcssa, %.preheader.i241.a
+  %.089.i.epil.init = phi ptr [ %i.cds, %.preheader.i241.a ], [ %i.cel, %._crit_edge91.i.unr-lcssa ] ; 3 uses
+  %.06988.i.epil.init = phi ptr [ %i.cds, %.preheader.i241.a ], [ %i.cez, %._crit_edge91.i.unr-lcssa ]
+  %lcmp.mod828 = trunc i32 %i.cdx to i1
+  tail call void @llvm.assume(i1 %lcmp.mod828)
+  %21 = getelementptr inbounds nuw i8, ptr %.089.i.epil.init, i64 1
+  %22 = load i8, ptr %.089.i.epil.init, align 1, !tbaa !29
+  %23 = getelementptr inbounds nuw i8, ptr %.089.i.epil.init, i64 2
+  %24 = load i8, ptr %21, align 1, !tbaa !29
+  %25 = load i8, ptr %23, align 1, !tbaa !29
+  %26 = lshr i8 %22, 3
+  %27 = zext nneg i8 %26 to i64
+  %28 = shl nuw nsw i64 %27, 10
+  %29 = lshr i8 %24, 3
+  %30 = zext nneg i8 %29 to i64
+  %31 = shl nuw nsw i64 %30, 5
+  %32 = lshr i8 %25, 3
+  %33 = zext nneg i8 %32 to i64
+  %34 = getelementptr inbounds nuw i8, ptr %i.cdu, i64 %28
+  %35 = getelementptr inbounds nuw i8, ptr %34, i64 %31
+  %36 = getelementptr inbounds nuw i8, ptr %35, i64 %33
+  %37 = load i8, ptr %36, align 1, !tbaa !29
+  store i8 %37, ptr %.06988.i.epil.init, align 1, !tbaa !29
+  br label %._crit_edge91.i
+
+._crit_edge91.i:                                  ; preds = %._crit_edge91.i.unr-lcssa, %.lr.ph90.i.epil.preheader
   %.pre96.i = load i8, ptr %i.cdy, align 1, !tbaa !208 ; 4 uses
   store i8 3, ptr %i.ceb, align 8, !tbaa !205
   %i.cfb = getelementptr inbounds nuw i8, ptr %1, i64 18
@@ -292,13 +350,22 @@ bb.hh:                                            ; preds = %._crit_edge91.i
 bb.hi:                                            ; preds = %bb.hf
   %i.cfo = icmp eq i8 %i.cec, 6
   %or.cond3.i233 = and i1 %i.cee, %i.cfo
-  br i1 %or.cond3.i233, label %.preheader79.i.a, label %bb.hl
+  br i1 %or.cond3.i233, label %.preheader79.i, label %bb.hl
 
-.preheader79.i.a:                                 ; preds = %bb.hi
-  %.not.i237.a = icmp eq i32 %i.cdx, 0
-  br i1 %.not.i237.a, label %._crit_edge.thread.i, label %.lr.ph86.i
+.preheader79.i:                                   ; preds = %bb.hi
+  %.not.i237 = icmp eq i32 %i.cdx, 0
+  br i1 %.not.i237, label %._crit_edge.thread.i, label %.preheader79.i.a
 
-._crit_edge.thread.i:                             ; preds = %.preheader79.i.a
+.preheader79.i.a:                                 ; preds = %.preheader79.i
+  %xtraiter819 = and i32 %i.cdx, 1
+  %.not.i237.a = icmp eq i32 %i.cdx, 1
+  br i1 %.not.i237.a, label %.lr.ph86.i.epil.preheader, label %.lr.ph86.i.preheader.new
+
+.lr.ph86.i.preheader.new:                         ; preds = %.preheader79.i.a
+  %unroll_iter823 = and i32 %i.cdx, -2
+  br label %.lr.ph86.i
+
+._crit_edge.thread.i:                             ; preds = %.preheader79.i
   store i8 3, ptr %i.ceb, align 8, !tbaa !205
   %i.cfp = getelementptr inbounds nuw i8, ptr %1, i64 18
   store i8 1, ptr %i.cfp, align 2, !tbaa !216
@@ -306,16 +373,36 @@ bb.hi:                                            ; preds = %bb.hf
   store i8 8, ptr %i.cfq, align 1, !tbaa !212
   br label %bb.hj
 
-.lr.ph86.i:                                       ; preds = %.preheader79.i.a, %.lr.ph86.i
-  %.185.i = phi ptr [ %i.cfw, %.lr.ph86.i ], [ %i.cds, %.preheader79.i.a ] ; 4 uses
-  %.17084.i = phi ptr [ %i.cgj, %.lr.ph86.i ], [ %i.cds, %.preheader79.i.a ] ; 2 uses
-  %.17283.i = phi i32 [ %i.cgk, %.lr.ph86.i ], [ 0, %.preheader79.i.a ]
-  %i.cfr = getelementptr inbounds nuw i8, ptr %.185.i, i64 1
-  %i.cfs = load i8, ptr %.185.i, align 1, !tbaa !29
-  %i.cft = getelementptr inbounds nuw i8, ptr %.185.i, i64 2
+.lr.ph86.i:                                       ; preds = %.lr.ph86.i, %.lr.ph86.i.preheader.new
+  %.185.i = phi ptr [ %i.cds, %.lr.ph86.i.preheader.new ], [ %i.cfw, %.lr.ph86.i ] ; 7 uses
+  %.17084.i = phi ptr [ %i.cds, %.lr.ph86.i.preheader.new ], [ %i.cgj, %.lr.ph86.i ] ; 3 uses
+  %.17283.i = phi i32 [ 0, %.lr.ph86.i.preheader.new ], [ %i.cgk, %.lr.ph86.i ]
+  %38 = getelementptr inbounds nuw i8, ptr %.185.i, i64 1
+  %39 = load i8, ptr %.185.i, align 1, !tbaa !29
+  %40 = getelementptr inbounds nuw i8, ptr %.185.i, i64 2
+  %41 = load i8, ptr %38, align 1, !tbaa !29
+  %42 = load i8, ptr %40, align 1, !tbaa !29
+  %43 = getelementptr inbounds nuw i8, ptr %.185.i, i64 4
+  %44 = lshr i8 %39, 3
+  %45 = zext nneg i8 %44 to i64
+  %46 = shl nuw nsw i64 %45, 10
+  %47 = lshr i8 %41, 3
+  %48 = zext nneg i8 %47 to i64
+  %49 = shl nuw nsw i64 %48, 5
+  %50 = lshr i8 %42, 3
+  %51 = zext nneg i8 %50 to i64
+  %52 = getelementptr inbounds nuw i8, ptr %i.cdu, i64 %46
+  %53 = getelementptr inbounds nuw i8, ptr %52, i64 %49
+  %54 = getelementptr inbounds nuw i8, ptr %53, i64 %51
+  %55 = load i8, ptr %54, align 1, !tbaa !29
+  %56 = getelementptr inbounds nuw i8, ptr %.17084.i, i64 1
+  store i8 %55, ptr %.17084.i, align 1, !tbaa !29
+  %i.cfr = getelementptr inbounds nuw i8, ptr %.185.i, i64 5
+  %i.cfs = load i8, ptr %43, align 1, !tbaa !29
+  %i.cft = getelementptr inbounds nuw i8, ptr %.185.i, i64 6
   %i.cfu = load i8, ptr %i.cfr, align 1, !tbaa !29
   %i.cfv = load i8, ptr %i.cft, align 1, !tbaa !29
-  %i.cfw = getelementptr inbounds nuw i8, ptr %.185.i, i64 4
+  %i.cfw = getelementptr inbounds nuw i8, ptr %.185.i, i64 8 ; 2 uses
   %i.cfx = lshr i8 %i.cfs, 3
   %i.cfy = zext nneg i8 %i.cfx to i64
   %i.cfz = shl nuw nsw i64 %i.cfy, 10
@@ -328,13 +415,42 @@ bb.hi:                                            ; preds = %bb.hf
   %i.cgg = getelementptr inbounds nuw i8, ptr %i.cgf, i64 %i.cgc
   %i.cgh = getelementptr inbounds nuw i8, ptr %i.cgg, i64 %i.cge
   %i.cgi = load i8, ptr %i.cgh, align 1, !tbaa !29
-  %i.cgj = getelementptr inbounds nuw i8, ptr %.17084.i, i64 1
-  store i8 %i.cgi, ptr %.17084.i, align 1, !tbaa !29
-  %i.cgk = add nuw i32 %.17283.i, 1               ; 2 uses
-  %exitcond94.not.i = icmp eq i32 %i.cgk, %i.cdx
-  br i1 %exitcond94.not.i, label %._crit_edge.i238, label %.lr.ph86.i, !llvm.loop !280
+  %i.cgj = getelementptr inbounds nuw i8, ptr %.17084.i, i64 2 ; 2 uses
+  store i8 %i.cgi, ptr %56, align 1, !tbaa !29
+  %i.cgk = add nuw i32 %.17283.i, 2               ; 2 uses
+  %exitcond94.not.i = icmp eq i32 %i.cgk, %unroll_iter823
+  br i1 %exitcond94.not.i, label %._crit_edge.i238.unr-lcssa, label %.lr.ph86.i, !llvm.loop !280
 
-._crit_edge.i238:                                 ; preds = %.lr.ph86.i
+._crit_edge.i238.unr-lcssa:                       ; preds = %.lr.ph86.i
+  %lcmp.mod821.not = icmp eq i32 %xtraiter819, 0
+  br i1 %lcmp.mod821.not, label %._crit_edge.i238, label %.lr.ph86.i.epil.preheader
+
+.lr.ph86.i.epil.preheader:                        ; preds = %._crit_edge.i238.unr-lcssa, %.preheader79.i.a
+  %.185.i.epil.init = phi ptr [ %i.cds, %.preheader79.i.a ], [ %i.cfw, %._crit_edge.i238.unr-lcssa ] ; 3 uses
+  %.17084.i.epil.init = phi ptr [ %i.cds, %.preheader79.i.a ], [ %i.cgj, %._crit_edge.i238.unr-lcssa ]
+  %lcmp.mod822 = trunc i32 %i.cdx to i1
+  tail call void @llvm.assume(i1 %lcmp.mod822)
+  %57 = getelementptr inbounds nuw i8, ptr %.185.i.epil.init, i64 1
+  %58 = load i8, ptr %.185.i.epil.init, align 1, !tbaa !29
+  %59 = getelementptr inbounds nuw i8, ptr %.185.i.epil.init, i64 2
+  %60 = load i8, ptr %57, align 1, !tbaa !29
+  %61 = load i8, ptr %59, align 1, !tbaa !29
+  %62 = lshr i8 %58, 3
+  %63 = zext nneg i8 %62 to i64
+  %64 = shl nuw nsw i64 %63, 10
+  %65 = lshr i8 %60, 3
+  %66 = zext nneg i8 %65 to i64
+  %67 = shl nuw nsw i64 %66, 5
+  %68 = lshr i8 %61, 3
+  %69 = zext nneg i8 %68 to i64
+  %70 = getelementptr inbounds nuw i8, ptr %i.cdu, i64 %64
+  %71 = getelementptr inbounds nuw i8, ptr %70, i64 %67
+  %72 = getelementptr inbounds nuw i8, ptr %71, i64 %69
+  %73 = load i8, ptr %72, align 1, !tbaa !29
+  store i8 %73, ptr %.17084.i.epil.init, align 1, !tbaa !29
+  br label %._crit_edge.i238
+
+._crit_edge.i238:                                 ; preds = %._crit_edge.i238.unr-lcssa, %.lr.ph86.i.epil.preheader
   %.pre.i239 = load i8, ptr %i.cdy, align 1, !tbaa !208 ; 4 uses
   store i8 3, ptr %i.ceb, align 8, !tbaa !205
   %i.cgl = getelementptr inbounds nuw i8, ptr %1, i64 18

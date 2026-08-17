@@ -1,7 +1,8 @@
 inline.NumInlined: 68
 inline.NumDeleted: 13
 loop-unroll.NumCompletelyUnrolled: 2
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 3
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -25,18 +26,18 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.c = load i64, ptr %i.b, align 8
   %i.d = inttoptr i64 %i.c to ptr
-  %i.e = tail call ptr @pg_detoast_datum(ptr noundef %i.d) #9 ; 3 uses
+  %i.e = tail call ptr @pg_detoast_datum(ptr noundef %i.d) #10 ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.g = load i64, ptr %i.f, align 8
   %i.h = inttoptr i64 %i.g to ptr
-  %i.i = tail call ptr @pg_detoast_datum(ptr noundef %i.h) #9 ; 3 uses
+  %i.i = tail call ptr @pg_detoast_datum(ptr noundef %i.h) #10 ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %i.k = load i64, ptr %i.j, align 8              ; 2 uses
   %i.l = inttoptr i64 %i.k to ptr                 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.n = load i64, ptr %i.m, align 8
   %i.o = trunc i64 %i.n to i32
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   call fastcc void @getWeights(ptr noundef %i.e, ptr noundef %i.a)
   %i.p = call fastcc float @calc_rank(ptr noundef nonnull %i.a, ptr noundef %i.i, ptr noundef %i.l, i32 noundef %i.o)
   %i.q = load i64, ptr %i.b, align 8
@@ -45,7 +46,7 @@ bb.a:
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @pfree(ptr noundef %i.e) #9
+  tail call void @pfree(ptr noundef %i.e) #10
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -55,7 +56,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   br i1 %.not19, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  tail call void @pfree(ptr noundef %i.i) #9
+  tail call void @pfree(ptr noundef %i.i) #10
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.c, %bb.d
@@ -64,13 +65,13 @@ bb.e:                                             ; preds = %bb.c, %bb.d
   br i1 %.not20, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  tail call void @pfree(ptr noundef %i.l) #9
+  tail call void @pfree(ptr noundef %i.l) #10
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   %i.v = bitcast float %i.p to i32
   %i.w = sext i32 %i.v to i64
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
   ret i64 %i.w
 }
 
@@ -88,34 +89,34 @@ bb.a:
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = tail call zeroext i1 @errstart_cold(i32 noundef 21, ptr noundef null) #10 ; 0 uses
-  %i.d = tail call i32 @errcode(i32 noundef 352845954) #9 ; 0 uses
-  %i.e = tail call i32 (ptr, ...) @errmsg(ptr noundef nonnull @.str) #9 ; 0 uses
-  tail call void @errfinish(ptr noundef nonnull @.str.1, i32 noundef 438, ptr noundef nonnull @__func__.getWeights) #9
+  %i.c = tail call zeroext i1 @errstart_cold(i32 noundef 21, ptr noundef null) #11 ; 0 uses
+  %i.d = tail call i32 @errcode(i32 noundef 352845954) #10 ; 0 uses
+  %i.e = tail call i32 (ptr, ...) @errmsg(ptr noundef nonnull @.str) #10 ; 0 uses
+  tail call void @errfinish(ptr noundef nonnull @.str.1, i32 noundef 438, ptr noundef nonnull @__func__.getWeights) #10
   unreachable
 
 bb.c:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.g = tail call i32 @ArrayGetNItems(i32 noundef 1, ptr noundef nonnull %i.f) #9
+  %i.g = tail call i32 @ArrayGetNItems(i32 noundef 1, ptr noundef nonnull %i.f) #10
   %i.h = icmp slt i32 %i.g, 4
   br i1 %i.h, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.i = tail call zeroext i1 @errstart_cold(i32 noundef 21, ptr noundef null) #10 ; 0 uses
-  %i.j = tail call i32 @errcode(i32 noundef 352845954) #9 ; 0 uses
-  %i.k = tail call i32 (ptr, ...) @errmsg(ptr noundef nonnull @.str.2) #9 ; 0 uses
-  tail call void @errfinish(ptr noundef nonnull @.str.1, i32 noundef 443, ptr noundef nonnull @__func__.getWeights) #9
+  %i.i = tail call zeroext i1 @errstart_cold(i32 noundef 21, ptr noundef null) #11 ; 0 uses
+  %i.j = tail call i32 @errcode(i32 noundef 352845954) #10 ; 0 uses
+  %i.k = tail call i32 (ptr, ...) @errmsg(ptr noundef nonnull @.str.2) #10 ; 0 uses
+  tail call void @errfinish(ptr noundef nonnull @.str.1, i32 noundef 443, ptr noundef nonnull @__func__.getWeights) #10
   unreachable
 
 bb.e:                                             ; preds = %bb.c
-  %i.l = tail call zeroext i1 @array_contains_nulls(ptr noundef nonnull %0) #9
+  %i.l = tail call zeroext i1 @array_contains_nulls(ptr noundef nonnull %0) #10
   br i1 %i.l, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %i.m = tail call zeroext i1 @errstart_cold(i32 noundef 21, ptr noundef null) #10 ; 0 uses
-  %i.n = tail call i32 @errcode(i32 noundef 67108994) #9 ; 0 uses
-  %i.o = tail call i32 (ptr, ...) @errmsg(ptr noundef nonnull @.str.3) #9 ; 0 uses
-  tail call void @errfinish(ptr noundef nonnull @.str.1, i32 noundef 448, ptr noundef nonnull @__func__.getWeights) #9
+  %i.m = tail call zeroext i1 @errstart_cold(i32 noundef 21, ptr noundef null) #11 ; 0 uses
+  %i.n = tail call i32 @errcode(i32 noundef 67108994) #10 ; 0 uses
+  %i.o = tail call i32 (ptr, ...) @errmsg(ptr noundef nonnull @.str.3) #10 ; 0 uses
+  tail call void @errfinish(ptr noundef nonnull @.str.1, i32 noundef 448, ptr noundef nonnull @__func__.getWeights) #10
   unreachable
 
 bb.g:                                             ; preds = %bb.e
@@ -203,10 +204,10 @@ bb.r:                                             ; preds = %bb.j
   br i1 %i.ap, label %bb.s, label %bb.k
 
 bb.s:                                             ; preds = %bb.p, %bb.n, %bb.l, %bb.r
-  %i.aq = tail call zeroext i1 @errstart_cold(i32 noundef 21, ptr noundef null) #10 ; 0 uses
-  %i.ar = tail call i32 @errcode(i32 noundef 50856066) #9 ; 0 uses
-  %i.as = tail call i32 (ptr, ...) @errmsg(ptr noundef nonnull @.str.4) #9 ; 0 uses
-  tail call void @errfinish(ptr noundef nonnull @.str.1, i32 noundef 457, ptr noundef nonnull @__func__.getWeights) #9
+  %i.aq = tail call zeroext i1 @errstart_cold(i32 noundef 21, ptr noundef null) #11 ; 0 uses
+  %i.ar = tail call i32 @errcode(i32 noundef 50856066) #10 ; 0 uses
+  %i.as = tail call i32 (ptr, ...) @errmsg(ptr noundef nonnull @.str.4) #10 ; 0 uses
+  tail call void @errfinish(ptr noundef nonnull @.str.1, i32 noundef 457, ptr noundef nonnull @__func__.getWeights) #10
   unreachable
 }
 
@@ -242,9 +243,9 @@ bb.d:                                             ; preds = %bb.c
   ]
 
 bb.e:                                             ; preds = %bb.d, %bb.d
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #9
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
   store i32 %i.g, ptr %i.b, align 4
   %i.l = call fastcc ptr @SortAndUniqItems(ptr noundef nonnull %2, ptr noundef %i.b) ; 3 uses
   %i.m = load i32, ptr %i.b, align 4              ; 2 uses
@@ -252,14 +253,14 @@ bb.e:                                             ; preds = %bb.d, %bb.d
   br i1 %i.n, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  tail call void @pfree(ptr noundef %i.l) #9
+  tail call void @pfree(ptr noundef %i.l) #10
   %i.o = tail call fastcc float @calc_rank_or(ptr noundef readonly %0, ptr noundef nonnull %1, ptr noundef nonnull %2)
   br label %calc_rank_and.exit
 
 bb.g:                                             ; preds = %bb.e
   %i.p = load i32, ptr %i.f, align 4
   %i.q = sext i32 %i.p to i64
-  %i.r = tail call ptr @palloc0_mul(i64 noundef 8, i64 noundef %i.q) #9 ; 3 uses
+  %i.r = tail call ptr @palloc0_mul(i64 noundef 8, i64 noundef %i.q) #10 ; 3 uses
   store i16 1, ptr %4, align 2
   %i.s = getelementptr inbounds nuw i8, ptr %4, i64 2
   store i16 16383, ptr %i.s, align 2
@@ -365,30 +366,19 @@ bb.i:                                             ; preds = %.lr.ph102.split.us.
 bb.j:                                             ; preds = %bb.n, %.preheader.us.us.us.i
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.n ], [ 0, %.preheader.us.us.us.i ] ; 2 uses
   %.488.us.us.us.i = phi float [ %.5.us.us.us.i, %bb.n ], [ %.390.us.us.us.i, %.preheader.us.us.us.i ] ; 3 uses
-  %i.ba = load i16, ptr %i.az, align 2            ; 2 uses
+  %i.ba = load i16, ptr %i.az, align 2            ; 3 uses
   %i.bb = and i16 %i.ba, 16383                    ; 2 uses
   %i.bc = zext nneg i16 %i.bb to i32
   %i.bd = getelementptr inbounds nuw [2 x i8], ptr %i.ay, i64 %indvars.iv.i
-  %i.be = load i16, ptr %i.bd, align 2            ; 2 uses
+  %i.be = load i16, ptr %i.bd, align 2            ; 3 uses
   %i.bf = and i16 %i.be, 16383                    ; 2 uses
   %i.bg = zext nneg i16 %i.bf to i32
   %i.bh = sub nsw i32 %i.bc, %i.bg
-  %i.bi = call i32 @llvm.abs.i32(i32 %i.bh, i1 true)
+  %i.bi = call i32 @llvm.abs.i32(i32 %i.bh, i1 true) ; 2 uses
   %.not84.us.us.us.i = icmp eq i16 %i.bb, %i.bf
   br i1 %.not84.us.us.us.i, label %5, label %bb.k
 
-5:                                                ; preds = %bb.j
-  %6 = load ptr, ptr %i.ab, align 8
-  %7 = icmp eq ptr %6, %4
-  br i1 %7, label %bb.k, label %8
-
-8:                                                ; preds = %5
-  %9 = load ptr, ptr %i.av, align 8
-  %10 = icmp eq ptr %9, %4
-  br i1 %10, label %bb.k, label %bb.n
-
-bb.k:                                             ; preds = %8, %5, %bb.j
-  %spec.store.select.us.us.us.i = phi i32 [ 16384, %8 ], [ 16384, %5 ], [ %i.bi, %bb.j ] ; 2 uses
+bb.k:                                             ; preds = %bb.j
   %i.bj = lshr i16 %i.ba, 14
   %i.bk = zext nneg i16 %i.bj to i64
   %i.bl = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.bk
@@ -397,24 +387,47 @@ bb.k:                                             ; preds = %8, %5, %bb.j
   %i.bo = zext nneg i16 %i.bn to i64
   %i.bp = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.bo
   %i.bq = load float, ptr %i.bp, align 4
-  %i.br = fmul float %i.bm, %i.bq
-  %i.bs = icmp samesign ugt i32 %spec.store.select.us.us.us.i, 100
+  %i.br = fmul float %i.bm, %i.bq                 ; 2 uses
+  %i.bs = icmp samesign ugt i32 %i.bi, 100
   br i1 %i.bs, label %word_distance.exit.us.us.us.i, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.bt = uitofp nneg i32 %spec.store.select.us.us.us.i to double
+  %i.bt = uitofp nneg i32 %i.bi to double
   %i.bu = fdiv double %i.bt, 1.500000e+00
   %i.bv = fadd double %i.bu, -2.000000e+00
-  %i.bw = call double @exp(double noundef %i.bv) #9
+  %i.bw = call double @exp(double noundef %i.bv) #10
   %i.bx = call double @llvm.fmuladd.f64(double %i.bw, double 5.000000e-02, double 1.005000e+00)
   %i.by = fdiv double 1.000000e+00, %i.bx
   %i.bz = fptrunc double %i.by to float
   br label %word_distance.exit.us.us.us.i
 
-word_distance.exit.us.us.us.i:                    ; preds = %bb.l, %bb.k
-  %.0.i.us.us.us.i = phi float [ %i.bz, %bb.l ], [ 1.000000e-30, %bb.k ]
-  %i.ca = fmul float %i.br, %.0.i.us.us.us.i
-  %sqrtf.us.us.us.i = call float @sqrtf(float noundef %i.ca) #9 ; 2 uses
+5:                                                ; preds = %bb.j
+  %6 = load ptr, ptr %i.ab, align 8
+  %7 = icmp eq ptr %6, %4
+  br i1 %7, label %.thread.us.us.us.i, label %8
+
+8:                                                ; preds = %5
+  %9 = load ptr, ptr %i.av, align 8
+  %10 = icmp eq ptr %9, %4
+  br i1 %10, label %.thread.us.us.us.i, label %bb.n
+
+.thread.us.us.us.i:                               ; preds = %8, %5
+  %11 = lshr i16 %i.ba, 14
+  %12 = zext nneg i16 %11 to i64
+  %13 = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %12
+  %14 = load float, ptr %13, align 4
+  %15 = lshr i16 %i.be, 14
+  %16 = zext nneg i16 %15 to i64
+  %17 = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %16
+  %18 = load float, ptr %17, align 4
+  %19 = fmul float %14, %18
+  br label %word_distance.exit.us.us.us.i
+
+word_distance.exit.us.us.us.i:                    ; preds = %.thread.us.us.us.i, %bb.l, %bb.k
+  %20 = phi float [ %i.br, %bb.l ], [ %i.br, %bb.k ], [ %19, %.thread.us.us.us.i ]
+  %.0.i.us.us.us.i = phi float [ %i.bz, %bb.l ], [ 1.000000e-30, %bb.k ], [ 1.000000e-30, %.thread.us.us.us.i ]
+  %i.ca = fmul float %20, %.0.i.us.us.us.i
+  %sqrtf.us.us.us.i = call float @sqrtf(float noundef %i.ca) #10 ; 2 uses
   %i.cb = fcmp olt float %.488.us.us.us.i, 0.000000e+00
   br i1 %i.cb, label %bb.n, label %bb.m
 
@@ -477,15 +490,15 @@ bb.p:                                             ; preds = %bb.o, %.lr.ph102.sp
   br i1 %exitcond131.not.i, label %bb.q, label %bb.h, !llvm.loop !9
 
 bb.q:                                             ; preds = %.loopexit86.i
-  call void @pfree(ptr noundef %i.r) #9
-  call void @pfree(ptr noundef %i.l) #9
+  call void @pfree(ptr noundef %i.r) #10
+  call void @pfree(ptr noundef %i.l) #10
   br label %calc_rank_and.exit
 
 calc_rank_and.exit:                               ; preds = %bb.f, %bb.q
   %.0.i = phi float [ %i.o, %bb.f ], [ %.7.i, %bb.q ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #10
   br label %bb.s
 
 bb.r:                                             ; preds = %bb.d, %bb.c
@@ -545,7 +558,7 @@ bb.v:                                             ; preds = %.lr.ph.i
 cnt_length.exit:                                  ; preds = %.thread.i
   %i.dw = add i32 %i.dt, 1
   %i.dx = sitofp i32 %i.dw to double
-  %i.dy = call double @log(double noundef %i.dx) #9
+  %i.dy = call double @log(double noundef %i.dx) #10
   %i.dz = fdiv double %i.dy, f0x3FE62E42FEFA39EF
   %i.ea = fpext float %.034 to double
   %i.eb = fdiv double %i.ea, %i.dz
@@ -636,7 +649,7 @@ bb.ad:                                            ; preds = %bb.ac
 bb.ae:                                            ; preds = %bb.ad
   %i.fh = add nuw i32 %i.ff, 1
   %i.fi = sitofp i32 %i.fh to double
-  %i.fj = call double @log(double noundef %i.fi) #9
+  %i.fj = call double @log(double noundef %i.fi) #10
   %i.fk = fdiv double %i.fj, f0x3FE62E42FEFA39EF
   %i.fl = fpext float %.3 to double
   %i.fm = fdiv double %i.fl, %i.fk
@@ -669,15 +682,15 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.c = load i64, ptr %i.b, align 8
   %i.d = inttoptr i64 %i.c to ptr
-  %i.e = tail call ptr @pg_detoast_datum(ptr noundef %i.d) #9 ; 3 uses
+  %i.e = tail call ptr @pg_detoast_datum(ptr noundef %i.d) #10 ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.g = load i64, ptr %i.f, align 8
   %i.h = inttoptr i64 %i.g to ptr
-  %i.i = tail call ptr @pg_detoast_datum(ptr noundef %i.h) #9 ; 3 uses
+  %i.i = tail call ptr @pg_detoast_datum(ptr noundef %i.h) #10 ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %i.k = load i64, ptr %i.j, align 8              ; 2 uses
   %i.l = inttoptr i64 %i.k to ptr                 ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   call fastcc void @getWeights(ptr noundef %i.e, ptr noundef %i.a)
   %i.m = call fastcc float @calc_rank(ptr noundef nonnull %i.a, ptr noundef %i.i, ptr noundef %i.l, i32 noundef 0)
   %i.n = load i64, ptr %i.b, align 8
@@ -686,7 +699,7 @@ bb.a:
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @pfree(ptr noundef %i.e) #9
+  tail call void @pfree(ptr noundef %i.e) #10
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -696,7 +709,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   br i1 %.not18, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  tail call void @pfree(ptr noundef %i.i) #9
+  tail call void @pfree(ptr noundef %i.i) #10
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.c, %bb.d
@@ -705,13 +718,13 @@ bb.e:                                             ; preds = %bb.c, %bb.d
   br i1 %.not19, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  tail call void @pfree(ptr noundef %i.l) #9
+  tail call void @pfree(ptr noundef %i.l) #10
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   %i.s = bitcast float %i.m to i32
   %i.t = sext i32 %i.s to i64
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
   ret i64 %i.t
 }
 
@@ -721,7 +734,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.b = load i64, ptr %i.a, align 8
   %i.c = inttoptr i64 %i.b to ptr
-  %i.d = tail call ptr @pg_detoast_datum(ptr noundef %i.c) #9 ; 3 uses
+  %i.d = tail call ptr @pg_detoast_datum(ptr noundef %i.c) #10 ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.f = load i64, ptr %i.e, align 8              ; 2 uses
   %i.g = inttoptr i64 %i.f to ptr                 ; 2 uses
@@ -735,7 +748,7 @@ bb.a:
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @pfree(ptr noundef %i.d) #9
+  tail call void @pfree(ptr noundef %i.d) #10
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -744,7 +757,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   br i1 %.not13, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  tail call void @pfree(ptr noundef %i.g) #9
+  tail call void @pfree(ptr noundef %i.g) #10
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
@@ -759,7 +772,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.b = load i64, ptr %i.a, align 8
   %i.c = inttoptr i64 %i.b to ptr
-  %i.d = tail call ptr @pg_detoast_datum(ptr noundef %i.c) #9 ; 3 uses
+  %i.d = tail call ptr @pg_detoast_datum(ptr noundef %i.c) #10 ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.f = load i64, ptr %i.e, align 8              ; 2 uses
   %i.g = inttoptr i64 %i.f to ptr                 ; 2 uses
@@ -770,7 +783,7 @@ bb.a:
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @pfree(ptr noundef %i.d) #9
+  tail call void @pfree(ptr noundef %i.d) #10
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -779,7 +792,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   br i1 %.not12, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  tail call void @pfree(ptr noundef %i.g) #9
+  tail call void @pfree(ptr noundef %i.g) #10
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
@@ -795,18 +808,18 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.c = load i64, ptr %i.b, align 8
   %i.d = inttoptr i64 %i.c to ptr
-  %i.e = tail call ptr @pg_detoast_datum(ptr noundef %i.d) #9 ; 3 uses
+  %i.e = tail call ptr @pg_detoast_datum(ptr noundef %i.d) #10 ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.g = load i64, ptr %i.f, align 8
   %i.h = inttoptr i64 %i.g to ptr
-  %i.i = tail call ptr @pg_detoast_datum(ptr noundef %i.h) #9 ; 3 uses
+  %i.i = tail call ptr @pg_detoast_datum(ptr noundef %i.h) #10 ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %i.k = load i64, ptr %i.j, align 8              ; 2 uses
   %i.l = inttoptr i64 %i.k to ptr                 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.n = load i64, ptr %i.m, align 8
   %i.o = trunc i64 %i.n to i32
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   call fastcc void @getWeights(ptr noundef %i.e, ptr noundef %i.a)
   %i.p = call fastcc float @calc_rank_cd(ptr noundef nonnull %i.a, ptr noundef %i.i, ptr noundef %i.l, i32 noundef %i.o)
   %i.q = load i64, ptr %i.b, align 8
@@ -815,7 +828,7 @@ bb.a:
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @pfree(ptr noundef %i.e) #9
+  tail call void @pfree(ptr noundef %i.e) #10
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -825,7 +838,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   br i1 %.not19, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  tail call void @pfree(ptr noundef %i.i) #9
+  tail call void @pfree(ptr noundef %i.i) #10
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.c, %bb.d
@@ -834,13 +847,13 @@ bb.e:                                             ; preds = %bb.c, %bb.d
   br i1 %.not20, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  tail call void @pfree(ptr noundef %i.l) #9
+  tail call void @pfree(ptr noundef %i.l) #10
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   %i.v = bitcast float %i.p to i32
   %i.w = sext i32 %i.v to i64
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
   ret i64 %i.w
 }
 
@@ -850,8 +863,8 @@ bb.a:
   %i.a = alloca i32, align 4                      ; 6 uses
   %i.b = alloca [4 x double], align 16            ; 10 uses
   %4 = alloca %struct.QueryRepresentation, align 8 ; 16 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #9
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #10
   %i.c = load float, ptr %0, align 4              ; 3 uses
   %i.d = fcmp ult float %i.c, 0.000000e+00
   br i1 %i.d, label %.thread, label %bb.b
@@ -862,10 +875,10 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.f, label %bb.c, label %.thread
 
 bb.c:                                             ; preds = %bb.h, %bb.f, %bb.d, %bb.b
-  %i.g = tail call zeroext i1 @errstart_cold(i32 noundef 21, ptr noundef null) #10 ; 0 uses
-  %i.h = tail call i32 @errcode(i32 noundef 50856066) #9 ; 0 uses
-  %i.i = tail call i32 (ptr, ...) @errmsg(ptr noundef nonnull @.str.4) #9 ; 0 uses
-  tail call void @errfinish(ptr noundef nonnull @.str.1, i32 noundef 899, ptr noundef nonnull @__func__.calc_rank_cd) #9
+  %i.g = tail call zeroext i1 @errstart_cold(i32 noundef 21, ptr noundef null) #11 ; 0 uses
+  %i.h = tail call i32 @errcode(i32 noundef 50856066) #10 ; 0 uses
+  %i.i = tail call i32 (ptr, ...) @errmsg(ptr noundef nonnull @.str.4) #10 ; 0 uses
+  tail call void @errfinish(ptr noundef nonnull @.str.1, i32 noundef 899, ptr noundef nonnull @__func__.calc_rank_cd) #10
   unreachable
 
 .thread:                                          ; preds = %bb.a, %bb.b
@@ -938,15 +951,15 @@ bb.i:                                             ; preds = %.thread224, %bb.h
   %i.ap = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 3 uses
   %i.aq = load i32, ptr %i.ap, align 4
   %i.ar = sext i32 %i.aq to i64
-  %i.as = tail call ptr @palloc0_mul(i64 noundef 32776, i64 noundef %i.ar) #9 ; 2 uses
+  %i.as = tail call ptr @palloc0_mul(i64 noundef 32776, i64 noundef %i.ar) #10 ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 11 uses
   store ptr %i.as, ptr %i.at, align 8
   %i.au = getelementptr inbounds nuw i8, ptr %2, i64 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   %i.av = load i32, ptr %i.ap, align 4
   %i.aw = shl i32 %i.av, 2                        ; 2 uses
   %i.ax = sext i32 %i.aw to i64
-  %i.ay = tail call ptr @palloc_mul(i64 noundef 24, i64 noundef %i.ax) #9 ; 2 uses
+  %i.ay = tail call ptr @palloc_mul(i64 noundef 24, i64 noundef %i.ax) #10 ; 2 uses
   %i.az = load i32, ptr %i.ap, align 4
   %i.ba = icmp sgt i32 %i.az, 0
   br i1 %i.ba, label %.lr.ph145.i, label %get_docrep.exit.thread
@@ -1044,7 +1057,7 @@ bb.n:                                             ; preds = %bb.l
   %i.cl = shl i32 %.2102124.i, 1                  ; 4 uses
   %i.cm = sext i32 %i.cl to i64
   %i.cn = mul nsw i64 %i.cm, 24
-  %i.co = tail call ptr @repalloc(ptr noundef %.2125.i, i64 noundef %i.cn) #9 ; 2 uses
+  %i.co = tail call ptr @repalloc(ptr noundef %.2125.i, i64 noundef %i.cn) #10 ; 2 uses
   %.not112.i = icmp slt i32 %i.cf, %i.cl
   br i1 %.not112.i, label %.preheader.i, label %.lr.ph126.i, !llvm.loop !12
 
@@ -1127,12 +1140,12 @@ bb.q:                                             ; preds = %bb.p, %bb.o
 bb.r:                                             ; preds = %._crit_edge146.i
   %i.dr = getelementptr inbounds nuw i8, ptr %i.dl, i64 4
   %i.ds = zext nneg i32 %.4.i to i64              ; 2 uses
-  tail call void @pg_qsort(ptr noundef %.3.i, i64 noundef %i.ds, i64 noundef 24, ptr noundef nonnull @compareDocR) #9
+  tail call void @pg_qsort(ptr noundef %.3.i, i64 noundef %i.ds, i64 noundef 24, ptr noundef nonnull @compareDocR) #10
   %i.dt = getelementptr inbounds nuw i8, ptr %.3.i, i64 16
   %i.du = load i16, ptr %i.dt, align 8            ; 2 uses
   %i.dv = load i32, ptr %i.dr, align 4
   %i.dw = sext i32 %i.dv to i64
-  %i.dx = tail call ptr @palloc_mul(i64 noundef 8, i64 noundef %i.dw) #9 ; 3 uses
+  %i.dx = tail call ptr @palloc_mul(i64 noundef 8, i64 noundef %i.dw) #10 ; 3 uses
   %i.dy = load ptr, ptr %.3.i, align 8
   store ptr %i.dy, ptr %i.dx, align 8
   %i.dz = ptrtoint ptr %.3.i to i64               ; 4 uses
@@ -1185,7 +1198,7 @@ bb.u:                                             ; preds = %bb.s, %.lr.ph157.i
   %i.er = getelementptr inbounds nuw i8, ptr %i.eq, i64 4
   %i.es = load i32, ptr %i.er, align 4
   %i.et = sext i32 %i.es to i64
-  %i.eu = tail call ptr @palloc_mul(i64 noundef 8, i64 noundef %i.et) #9 ; 2 uses
+  %i.eu = tail call ptr @palloc_mul(i64 noundef 8, i64 noundef %i.et) #10 ; 2 uses
   %i.ev = load ptr, ptr %.092155.i, align 8
   store ptr %i.ev, ptr %i.eu, align 8
   br label %bb.v
@@ -1205,9 +1218,9 @@ bb.v:                                             ; preds = %bb.u, %bb.t
 get_docrep.exit.thread:                           ; preds = %._crit_edge146.i.get_docrep.exit.thread_crit_edge, %bb.i
   %i.fa = phi ptr [ %.pre, %._crit_edge146.i.get_docrep.exit.thread_crit_edge ], [ %i.as, %bb.i ]
   %.094.lcssa186.i = phi ptr [ %.3.i, %._crit_edge146.i.get_docrep.exit.thread_crit_edge ], [ %i.ay, %bb.i ]
-  tail call void @pfree(ptr noundef %.094.lcssa186.i) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
-  tail call void @pfree(ptr noundef %i.fa) #9
+  tail call void @pfree(ptr noundef %.094.lcssa186.i) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
+  tail call void @pfree(ptr noundef %i.fa) #10
   br label %bb.bd
 
 get_docrep.exit:                                  ; preds = %bb.v, %bb.r
@@ -1220,7 +1233,7 @@ get_docrep.exit:                                  ; preds = %bb.v, %bb.r
   store i16 %.sroa.9.0.lcssa.i, ptr %.sroa.9.0..sroa_idx4.i, align 8
   %.sroa.148.0..sroa_idx9.i = getelementptr inbounds nuw i8, ptr %.0.lcssa.i, i64 16
   store i16 %.sroa.148.0.lcssa.i, ptr %.sroa.148.0..sroa_idx9.i, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
   %i.fb = getelementptr inbounds nuw i8, ptr %.0.lcssa.i, i64 24
   %i.fc = ptrtoint ptr %i.fb to i64
   %i.fd = sub i64 %i.fc, %i.dz
@@ -1242,7 +1255,7 @@ bb.w:                                             ; preds = %get_docrep.exit, %b
 
 tailrecurse.i:                                    ; preds = %.loopexit.i108.thread, %bb.w
   %indvars.iv = phi i64 [ %indvars.iv.next, %.loopexit.i108.thread ], [ %i.fh, %bb.w ] ; 5 uses
-  call void @check_stack_depth() #9, !inline_history !16
+  call void @check_stack_depth() #10, !inline_history !16
   %i.fi = load ptr, ptr %4, align 8
   %i.fj = getelementptr inbounds nuw i8, ptr %i.fi, i64 4
   %i.fk = load i32, ptr %i.fj, align 4
@@ -1364,7 +1377,7 @@ bb.ac:                                            ; preds = %.sink.split.i.i, %b
 fillQueryRepresentationData.exit.i:               ; preds = %bb.ac, %.lr.ph.i106
   %i.ht = load ptr, ptr %4, align 8
   %i.hu = getelementptr inbounds nuw i8, ptr %i.ht, i64 8
-  %i.hv = call zeroext i1 @TS_execute(ptr noundef nonnull %i.hu, ptr noundef nonnull %4, i32 noundef 0, ptr noundef nonnull @checkcondition_QueryOperand) #9, !inline_history !16
+  %i.hv = call zeroext i1 @TS_execute(ptr noundef nonnull %i.hu, ptr noundef nonnull %4, i32 noundef 0, ptr noundef nonnull @checkcondition_QueryOperand) #10, !inline_history !16
   br i1 %i.hv, label %bb.ad, label %bb.af
 
 bb.ad:                                            ; preds = %fillQueryRepresentationData.exit.i
@@ -1505,7 +1518,7 @@ bb.al:                                            ; preds = %.sink.split.i69.i, 
 fillQueryRepresentationData.exit71.i:             ; preds = %bb.al, %.lr.ph86.i
   %i.kp = load ptr, ptr %4, align 8
   %i.kq = getelementptr inbounds nuw i8, ptr %i.kp, i64 8
-  %i.kr = call zeroext i1 @TS_execute(ptr noundef nonnull %i.kq, ptr noundef nonnull %4, i32 noundef 0, ptr noundef nonnull @checkcondition_QueryOperand) #9, !inline_history !16
+  %i.kr = call zeroext i1 @TS_execute(ptr noundef nonnull %i.kq, ptr noundef nonnull %4, i32 noundef 0, ptr noundef nonnull @checkcondition_QueryOperand) #10, !inline_history !16
   br i1 %i.kr, label %.loopexit.i108, label %bb.am
 
 bb.am:                                            ; preds = %fillQueryRepresentationData.exit71.i
@@ -1640,7 +1653,7 @@ bb.as:                                            ; preds = %.lr.ph.i109
 cnt_length.exit:                                  ; preds = %.thread.i
   %i.ng = add i32 %i.nd, 1
   %i.nh = sitofp i32 %i.ng to double
-  %i.ni = call double @log(double noundef %i.nh) #9
+  %i.ni = call double @log(double noundef %i.nh) #10
   %i.nj = fdiv double %i.mo, %i.ni
   br label %bb.at
 
@@ -1737,7 +1750,7 @@ bb.ba:                                            ; preds = %bb.az
 bb.bb:                                            ; preds = %bb.ba
   %i.ou = add nuw i32 %i.os, 1
   %i.ov = sitofp i32 %i.ou to double
-  %i.ow = call double @log(double noundef %i.ov) #9
+  %i.ow = call double @log(double noundef %i.ov) #10
   %i.ox = fdiv double %i.ow, f0x3FE62E42FEFA39EF
   %i.oy = fdiv double %.4, %i.ox
   br label %bb.bc
@@ -1749,16 +1762,16 @@ bb.bc:                                            ; preds = %bb.bb, %bb.ba, %bb.
   %i.pa = fadd double %.5, 1.000000e+00
   %i.pb = fdiv double %.5, %i.pa
   %.6 = select i1 %.not104, double %.5, double %i.pb
-  call void @pfree(ptr noundef nonnull %.3.i) #9
+  call void @pfree(ptr noundef nonnull %.3.i) #10
   %i.pc = load ptr, ptr %i.at, align 8
-  call void @pfree(ptr noundef %i.pc) #9
+  call void @pfree(ptr noundef %i.pc) #10
   %i.pd = fptrunc double %.6 to float
   br label %bb.bd
 
 bb.bd:                                            ; preds = %bb.bc, %get_docrep.exit.thread
   %.082 = phi float [ %i.pd, %bb.bc ], [ 0.000000e+00, %get_docrep.exit.thread ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #10
   ret float %.082
 }
 
@@ -1769,15 +1782,15 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.c = load i64, ptr %i.b, align 8
   %i.d = inttoptr i64 %i.c to ptr
-  %i.e = tail call ptr @pg_detoast_datum(ptr noundef %i.d) #9 ; 3 uses
+  %i.e = tail call ptr @pg_detoast_datum(ptr noundef %i.d) #10 ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.g = load i64, ptr %i.f, align 8
   %i.h = inttoptr i64 %i.g to ptr
-  %i.i = tail call ptr @pg_detoast_datum(ptr noundef %i.h) #9 ; 3 uses
+  %i.i = tail call ptr @pg_detoast_datum(ptr noundef %i.h) #10 ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %i.k = load i64, ptr %i.j, align 8              ; 2 uses
   %i.l = inttoptr i64 %i.k to ptr                 ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   call fastcc void @getWeights(ptr noundef %i.e, ptr noundef %i.a)
   %i.m = call fastcc float @calc_rank_cd(ptr noundef nonnull %i.a, ptr noundef %i.i, ptr noundef %i.l, i32 noundef 0)
   %i.n = load i64, ptr %i.b, align 8
@@ -1786,7 +1799,7 @@ bb.a:
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @pfree(ptr noundef %i.e) #9
+  tail call void @pfree(ptr noundef %i.e) #10
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -1796,7 +1809,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   br i1 %.not18, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  tail call void @pfree(ptr noundef %i.i) #9
+  tail call void @pfree(ptr noundef %i.i) #10
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.c, %bb.d
@@ -1805,13 +1818,13 @@ bb.e:                                             ; preds = %bb.c, %bb.d
   br i1 %.not19, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  tail call void @pfree(ptr noundef %i.l) #9
+  tail call void @pfree(ptr noundef %i.l) #10
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   %i.s = bitcast float %i.m to i32
   %i.t = sext i32 %i.s to i64
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
   ret i64 %i.t
 }
 
@@ -1821,7 +1834,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.b = load i64, ptr %i.a, align 8
   %i.c = inttoptr i64 %i.b to ptr
-  %i.d = tail call ptr @pg_detoast_datum(ptr noundef %i.c) #9 ; 3 uses
+  %i.d = tail call ptr @pg_detoast_datum(ptr noundef %i.c) #10 ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.f = load i64, ptr %i.e, align 8              ; 2 uses
   %i.g = inttoptr i64 %i.f to ptr                 ; 2 uses
@@ -1835,7 +1848,7 @@ bb.a:
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @pfree(ptr noundef %i.d) #9
+  tail call void @pfree(ptr noundef %i.d) #10
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -1844,7 +1857,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   br i1 %.not13, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  tail call void @pfree(ptr noundef %i.g) #9
+  tail call void @pfree(ptr noundef %i.g) #10
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
@@ -1859,7 +1872,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.b = load i64, ptr %i.a, align 8
   %i.c = inttoptr i64 %i.b to ptr
-  %i.d = tail call ptr @pg_detoast_datum(ptr noundef %i.c) #9 ; 3 uses
+  %i.d = tail call ptr @pg_detoast_datum(ptr noundef %i.c) #10 ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.f = load i64, ptr %i.e, align 8              ; 2 uses
   %i.g = inttoptr i64 %i.f to ptr                 ; 2 uses
@@ -1870,7 +1883,7 @@ bb.a:
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @pfree(ptr noundef %i.d) #9
+  tail call void @pfree(ptr noundef %i.d) #10
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -1879,7 +1892,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   br i1 %.not12, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  tail call void @pfree(ptr noundef %i.g) #9
+  tail call void @pfree(ptr noundef %i.g) #10
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
@@ -1907,9 +1920,9 @@ bb.a:
   %3 = alloca %struct.WordEntryPosVector1, align 2 ; 5 uses
   %i.a = alloca i32, align 4                      ; 4 uses
   %i.b = alloca i32, align 4                      ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #9
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.d = load i32, ptr %i.c, align 4
   store i32 %i.d, ptr %i.b, align 4
@@ -1969,49 +1982,105 @@ bb.c:                                             ; preds = %.lr.ph70
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph70, %bb.c
-  %.056 = phi ptr [ %i.af, %bb.c ], [ %i.e, %.lr.ph70 ]
+  %.056 = phi ptr [ %i.af, %bb.c ], [ %i.e, %.lr.ph70 ] ; 3 uses
   %.055.in.in = phi ptr [ %i.ac, %bb.c ], [ %3, %.lr.ph70 ]
-  %.055.in = load i16, ptr %.055.in.in, align 1   ; 2 uses
+  %.055.in = load i16, ptr %.055.in.in, align 1   ; 4 uses
   %.not79 = icmp eq i16 %.055.in, 0
-  br i1 %.not79, label %._crit_edge, label %.lr.ph.preheader.a
+  br i1 %.not79, label %._crit_edge, label %.lr.ph.preheader
 
-.lr.ph.preheader.a:                               ; preds = %bb.d
-  %wide.trip.count = zext i16 %.055.in to i64
+.lr.ph.preheader:                                 ; preds = %bb.d
+  %wide.trip.count = zext i16 %.055.in to i64     ; 2 uses
+  %xtraiter = and i64 %wide.trip.count, 1
+  %4 = icmp eq i16 %.055.in, 1
+  br i1 %4, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.a
+
+.lr.ph.preheader.a:                               ; preds = %.lr.ph.preheader
+  %unroll_iter = and i64 %wide.trip.count, 65534
   br label %.lr.ph
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader.a, %.lr.ph
-  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader.a ], [ %indvars.iv.next.a, %.lr.ph ] ; 3 uses
+.lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.a
+  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader.a ], [ %indvars.iv.next.a, %.lr.ph ] ; 4 uses
   %.065 = phi i32 [ 0, %.lr.ph.preheader.a ], [ %.1.a, %.lr.ph ]
   %.04764 = phi float [ -1.000000e+00, %.lr.ph.preheader.a ], [ %.148.a, %.lr.ph ] ; 2 uses
   %.04963 = phi float [ 0.000000e+00, %.lr.ph.preheader.a ], [ %i.aq, %.lr.ph ]
-  %i.ag = getelementptr inbounds nuw [2 x i8], ptr %.056, i64 %indvars.iv
+  %niter = phi i64 [ 0, %.lr.ph.preheader.a ], [ %niter.next.1, %.lr.ph ]
+  %5 = getelementptr inbounds nuw [2 x i8], ptr %.056, i64 %indvars.iv
+  %6 = load i16, ptr %5, align 2
+  %7 = lshr i16 %6, 14
+  %8 = zext nneg i16 %7 to i64
+  %9 = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %8
+  %10 = load float, ptr %9, align 4               ; 3 uses
+  %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 3 uses
+  %11 = trunc nuw nsw i64 %indvars.iv.next to i32 ; 2 uses
+  %12 = mul i32 %11, %11
+  %13 = sitofp i32 %12 to float
+  %14 = fdiv float %10, %13
+  %15 = fadd float %.04963, %14
+  %16 = fcmp ogt float %10, %.04764               ; 2 uses
+  %.148 = select i1 %16, float %10, float %.04764 ; 2 uses
+  %17 = trunc nuw nsw i64 %indvars.iv to i32
+  %.1 = select i1 %16, i32 %17, i32 %.065
+  %i.ag = getelementptr inbounds nuw [2 x i8], ptr %.056, i64 %indvars.iv.next
   %i.ah = load i16, ptr %i.ag, align 2
   %i.ai = lshr i16 %i.ah, 14
   %i.aj = zext nneg i16 %i.ai to i64
   %i.ak = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.aj
   %i.al = load float, ptr %i.ak, align 4          ; 3 uses
-  %indvars.iv.next.a = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
+  %indvars.iv.next.a = add nuw nsw i64 %indvars.iv, 2 ; 3 uses
   %i.am = trunc nuw nsw i64 %indvars.iv.next.a to i32 ; 2 uses
   %i.an = mul i32 %i.am, %i.am
   %i.ao = sitofp i32 %i.an to float
   %i.ap = fdiv float %i.al, %i.ao
-  %i.aq = fadd float %.04963, %i.ap               ; 2 uses
-  %i.ar = fcmp ogt float %i.al, %.04764           ; 2 uses
-  %.148.a = select i1 %i.ar, float %i.al, float %.04764 ; 2 uses
-  %i.as = trunc nuw nsw i64 %indvars.iv to i32
-  %.1.a = select i1 %i.ar, i32 %i.as, i32 %.065   ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next.a, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !25
+  %i.aq = fadd float %15, %i.ap                   ; 3 uses
+  %i.ar = fcmp ogt float %i.al, %.148             ; 2 uses
+  %.148.a = select i1 %i.ar, float %i.al, float %.148 ; 3 uses
+  %i.as = trunc nuw nsw i64 %indvars.iv.next to i32
+  %.1.a = select i1 %i.ar, i32 %i.as, i32 %.1     ; 3 uses
+  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %exitcond.not = icmp eq i64 %niter.next.1, %unroll_iter
+  br i1 %exitcond.not, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !25
 
-._crit_edge.loopexit:                             ; preds = %.lr.ph
-  %i.at = add nuw nsw i32 %.1.a, 1                ; 2 uses
+._crit_edge.loopexit.unr-lcssa:                   ; preds = %.lr.ph
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %._crit_edge.loopexit, label %.lr.ph.epil.preheader
+
+.lr.ph.epil.preheader:                            ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.preheader
+  %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next.a, %._crit_edge.loopexit.unr-lcssa ] ; 3 uses
+  %.065.epil.init = phi i32 [ 0, %.lr.ph.preheader ], [ %.1.a, %._crit_edge.loopexit.unr-lcssa ]
+  %.04764.epil.init = phi float [ -1.000000e+00, %.lr.ph.preheader ], [ %.148.a, %._crit_edge.loopexit.unr-lcssa ] ; 2 uses
+  %.04963.epil.init = phi float [ 0.000000e+00, %.lr.ph.preheader ], [ %i.aq, %._crit_edge.loopexit.unr-lcssa ]
+  %lcmp.mod94 = trunc i16 %.055.in to i1
+  tail call void @llvm.assume(i1 %lcmp.mod94)
+  %18 = getelementptr inbounds nuw [2 x i8], ptr %.056, i64 %indvars.iv.epil.init
+  %19 = load i16, ptr %18, align 2
+  %20 = lshr i16 %19, 14
+  %21 = zext nneg i16 %20 to i64
+  %22 = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %21
+  %23 = load float, ptr %22, align 4              ; 3 uses
+  %24 = trunc i64 %indvars.iv.epil.init to i32
+  %25 = add i32 %24, 1                            ; 2 uses
+  %26 = mul i32 %25, %25
+  %27 = sitofp i32 %26 to float
+  %28 = fdiv float %23, %27
+  %29 = fadd float %.04963.epil.init, %28
+  %30 = fcmp ogt float %23, %.04764.epil.init     ; 2 uses
+  %.148.epil = select i1 %30, float %23, float %.04764.epil.init
+  %31 = trunc nuw nsw i64 %indvars.iv.epil.init to i32
+  %.1.epil = select i1 %30, i32 %31, i32 %.065.epil.init
+  br label %._crit_edge.loopexit
+
+._crit_edge.loopexit:                             ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.epil.preheader
+  %.lcssa = phi float [ %i.aq, %._crit_edge.loopexit.unr-lcssa ], [ %29, %.lr.ph.epil.preheader ]
+  %.148.lcssa = phi float [ %.148.a, %._crit_edge.loopexit.unr-lcssa ], [ %.148.epil, %.lr.ph.epil.preheader ]
+  %.1.lcssa = phi i32 [ %.1.a, %._crit_edge.loopexit.unr-lcssa ], [ %.1.epil, %.lr.ph.epil.preheader ]
+  %i.at = add nuw nsw i32 %.1.lcssa, 1            ; 2 uses
   %i.au = mul i32 %i.at, %i.at
   %i.av = sitofp i32 %i.au to float
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.d
-  %.049.lcssa = phi float [ 0.000000e+00, %bb.d ], [ %i.aq, %._crit_edge.loopexit ]
-  %.047.lcssa = phi float [ -1.000000e+00, %bb.d ], [ %.148.a, %._crit_edge.loopexit ] ; 2 uses
+  %.049.lcssa = phi float [ 0.000000e+00, %bb.d ], [ %.lcssa, %._crit_edge.loopexit ]
+  %.047.lcssa = phi float [ -1.000000e+00, %bb.d ], [ %.148.lcssa, %._crit_edge.loopexit ] ; 2 uses
   %.0.lcssa = phi float [ 1.000000e+00, %bb.d ], [ %i.av, %._crit_edge.loopexit ]
   %i.aw = fpext float %.15268 to double
   %i.ax = fdiv float %.047.lcssa, %.0.lcssa
@@ -2039,10 +2108,10 @@ bb.d:                                             ; preds = %.lr.ph70, %bb.c
   %i.bj = uitofp nneg i32 %i.g to float
   %i.bk = fdiv float %.051.lcssa, %i.bj
   %.3 = select i1 %i.h, float %i.bk, float %.051.lcssa
-  tail call void @pfree(ptr noundef %i.f) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #9
+  tail call void @pfree(ptr noundef %i.f) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #10
   ret float %.3
 }
 
@@ -2060,7 +2129,7 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.e ; 3 uses
   %i.g = load i32, ptr %1, align 4
   %i.h = sext i32 %i.g to i64
-  %i.i = tail call ptr @palloc_mul(i64 noundef 8, i64 noundef %i.h) #9 ; 8 uses
+  %i.i = tail call ptr @palloc_mul(i64 noundef 8, i64 noundef %i.h) #10 ; 8 uses
   %i.j = load i32, ptr %1, align 4                ; 2 uses
   %i.k = add i32 %i.j, -1                         ; 2 uses
   store i32 %i.k, ptr %1, align 4
@@ -2103,7 +2172,7 @@ bb.c:                                             ; preds = %bb.b, %.lr.ph
 
 bb.d:                                             ; preds = %._crit_edge
   %i.y = and i64 %i.v, 2147483647
-  tail call void @qsort_arg(ptr noundef %i.i, i64 noundef %i.y, i64 noundef 8, ptr noundef nonnull @compareQueryOperand, ptr noundef nonnull %i.f) #9
+  tail call void @qsort_arg(ptr noundef %i.i, i64 noundef %i.y, i64 noundef 8, ptr noundef nonnull @compareQueryOperand, ptr noundef nonnull %i.f) #10
   %i.z = load i32, ptr %1, align 4
   %i.aa = icmp sgt i32 %i.z, 1
   br i1 %i.aa, label %.lr.ph48.preheader, label %._crit_edge49
@@ -2129,7 +2198,7 @@ bb.d:                                             ; preds = %._crit_edge
   %i.am = zext nneg i32 %i.al to i64
   %i.an = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.am
   %i.ao = and i32 %i.ak, 4095
-  %i.ap = tail call i32 @tsCompareString(ptr noundef nonnull %i.ah, i32 noundef %i.ai, ptr noundef nonnull %i.an, i32 noundef %i.ao, i1 noundef zeroext false) #9
+  %i.ap = tail call i32 @tsCompareString(ptr noundef nonnull %i.ah, i32 noundef %i.ai, ptr noundef nonnull %i.an, i32 noundef %i.ao, i1 noundef zeroext false) #10
   %.not40 = icmp eq i32 %i.ap, 0
   br i1 %.not40, label %bb.f, label %bb.e
 
@@ -2212,7 +2281,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.d
   %i.ae = getelementptr inbounds nuw i8, ptr %i.aa, i64 %i.ad
   %i.af = lshr i32 %i.ab, 1
   %i.ag = and i32 %i.af, 2047
-  %i.ah = tail call i32 @tsCompareString(ptr noundef nonnull %i.w, i32 noundef %i.x, ptr noundef nonnull %i.ae, i32 noundef %i.ag, i1 noundef zeroext false) #9 ; 2 uses
+  %i.ah = tail call i32 @tsCompareString(ptr noundef nonnull %i.w, i32 noundef %i.x, ptr noundef nonnull %i.ae, i32 noundef %i.ag, i1 noundef zeroext false) #10 ; 2 uses
   %i.ai = icmp eq i32 %i.ah, 0
   br i1 %i.ai, label %bb.c, label %bb.d
 
@@ -2272,7 +2341,7 @@ bb.f:                                             ; preds = %.lr.ph59, %bb.g
   %i.bk = getelementptr inbounds nuw i8, ptr %i.ax, i64 %i.bj
   %i.bl = lshr i32 %i.bh, 1
   %i.bm = and i32 %i.bl, 2047
-  %i.bn = tail call i32 @tsCompareString(ptr noundef nonnull %i.bf, i32 noundef %i.bg, ptr noundef nonnull %i.bk, i32 noundef %i.bm, i1 noundef zeroext true) #9
+  %i.bn = tail call i32 @tsCompareString(ptr noundef nonnull %i.bf, i32 noundef %i.bg, ptr noundef nonnull %i.bk, i32 noundef %i.bm, i1 noundef zeroext true) #10
   %i.bo = icmp eq i32 %i.bn, 0
   br i1 %i.bo, label %bb.g, label %.critedge
 
@@ -2321,7 +2390,7 @@ bb.a:
   %i.l = zext nneg i32 %i.k to i64
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 %i.l
   %i.n = and i32 %i.j, 4095
-  %i.o = tail call i32 @tsCompareString(ptr noundef %i.g, i32 noundef %i.h, ptr noundef %i.m, i32 noundef %i.n, i1 noundef zeroext false) #9
+  %i.o = tail call i32 @tsCompareString(ptr noundef %i.g, i32 noundef %i.h, ptr noundef %i.m, i32 noundef %i.n, i1 noundef zeroext false) #10
   ret i32 %i.o
 }
 
@@ -2431,6 +2500,9 @@ bb.e:                                             ; preds = %bb.b, %bb.d, %bb.c,
   ret i32 %.0
 }
 
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
+declare void @llvm.assume(i1 noundef) #9
+
 declare float @sqrtf(float) local_unnamed_addr
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -2448,8 +2520,9 @@ attributes #5 = { nocallback nofree nosync nounwind speculatable willreturn memo
 attributes #6 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #7 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #8 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #9 = { nounwind }
-attributes #10 = { cold nounwind }
+attributes #9 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #10 = { nounwind }
+attributes #11 = { cold nounwind }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

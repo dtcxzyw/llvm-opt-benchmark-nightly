@@ -2,7 +2,7 @@ inline.NumInlined: 15186
 inline.NumDeleted: 6591
 loop-unroll.NumCompletelyUnrolled: 45
 loop-unroll.NumRuntimeUnrolled: 49
-loop-unroll.NumUnrolled: 94
+loop-unroll.NumUnrolled: 95
 begin_hunk_0_@"_ZN12sharded_slab5shard18Shard$LT$T$C$C$GT$19clear_after_release17h05220815bb791f72E":bb.a
 bb.s:                                             ; preds = %bb.r
   %i.by = getelementptr inbounds nuw i8, ptr %i.bs, i64 8
@@ -204,7 +204,7 @@ bb.a:
 ; Function Attrs: nonlazybind uwtable
 define internal noundef zeroext i1 @"_ZN13generic_array3hex91_$LT$impl$u20$core..fmt..LowerHex$u20$for$u20$generic_array..GenericArray$LT$u8$C$T$GT$$GT$3fmt17heffbcfe50c51ed45E"(ptr noalias noundef readonly align 1 captures(none) dereferenceable(32) %0, ptr noalias noundef align 8 dereferenceable(24) %1) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [64 x i8], align 1                ; 5 uses
+  %i.a = alloca [64 x i8], align 1                ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.c = load i32, ptr %i.b, align 8, !noundef !8
   %i.d = and i32 %i.c, 268435456
@@ -218,33 +218,53 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %i.a, i8 0, i64 64, i1 false), !alias.scope !9421
   tail call void @llvm.experimental.noalias.scope.decl(metadata !9424)
-  %.sroa.0.0.i.i = tail call noundef i64 @llvm.umin.i64(i64 %i.j, i64 32)
+  %.sroa.0.0.i.i = tail call noundef i64 @llvm.umin.i64(i64 %i.j, i64 32) ; 2 uses
   %.not.i = icmp eq i64 %.sroa.01.0, 0
   br i1 %.not.i, label %"_ZN98_$LT$core..iter..adapters..take..Take$LT$I$GT$$u20$as$u20$core..iter..adapters..take..SpecTake$GT$9spec_fold17h1cf1188c65e4d13bE.exit.thread", label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.a
-  %i.k = load ptr, ptr @_ZN13generic_array3hex11LOWER_CHARS17hb110f58be8abcfacE, align 8, !noalias !9427, !nonnull !8, !align !800 ; 2 uses
+  %i.k = load ptr, ptr @_ZN13generic_array3hex11LOWER_CHARS17hb110f58be8abcfacE, align 8, !noalias !9427, !nonnull !8, !align !800 ; 4 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %"_ZN110_$LT$core..iter..adapters..enumerate..Enumerate$LT$I$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold9enumerate28_$u7b$$u7b$closure$u7d$$u7d$17hd24b94f8676c7457E.exit.i.a", %.lr.ph.i
-  %.sroa.0.011.i = phi i64 [ 0, %.lr.ph.i ], [ %i.n, %"_ZN110_$LT$core..iter..adapters..enumerate..Enumerate$LT$I$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold9enumerate28_$u7b$$u7b$closure$u7d$$u7d$17hd24b94f8676c7457E.exit.i.a" ] ; 4 uses
+  %.sroa.0.011.i = phi i64 [ 0, %.lr.ph.i ], [ %i.n, %"_ZN110_$LT$core..iter..adapters..enumerate..Enumerate$LT$I$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold9enumerate28_$u7b$$u7b$closure$u7d$$u7d$17hd24b94f8676c7457E.exit.i.a" ] ; 5 uses
   %i.l = shl nuw nsw i64 %.sroa.0.011.i, 1        ; 2 uses
   %exitcond.not.i = icmp eq i64 %.sroa.0.011.i, 32
-  br i1 %exitcond.not.i, label %bb.c, label %"_ZN110_$LT$core..iter..adapters..enumerate..Enumerate$LT$I$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold9enumerate28_$u7b$$u7b$closure$u7d$$u7d$17hd24b94f8676c7457E.exit.i.a"
+  br i1 %exitcond.not.i, label %bb.c, label %"_ZN110_$LT$core..iter..adapters..enumerate..Enumerate$LT$I$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold9enumerate28_$u7b$$u7b$closure$u7d$$u7d$17hd24b94f8676c7457E.exit.i"
 
 bb.c:                                             ; preds = %bb.b
   tail call void @_ZN4core9panicking18panic_bounds_check17hbc09f5d79f1a5789E(i64 noundef %i.l, i64 noundef 64, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @235) #54, !noalias !9429
   unreachable
 
-"_ZN110_$LT$core..iter..adapters..enumerate..Enumerate$LT$I$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold9enumerate28_$u7b$$u7b$closure$u7d$$u7d$17hd24b94f8676c7457E.exit.i.a": ; preds = %bb.b
-  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.0.011.i
+"_ZN110_$LT$core..iter..adapters..enumerate..Enumerate$LT$I$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold9enumerate28_$u7b$$u7b$closure$u7d$$u7d$17hd24b94f8676c7457E.exit.i": ; preds = %bb.b
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.0.011.i
+  %.val9.i = load i8, ptr %2, align 1, !noalias !9427 ; 2 uses
+  %3 = or disjoint i64 %.sroa.0.011.i, 1          ; 3 uses
+  %4 = lshr i8 %.val9.i, 4
+  %5 = zext nneg i8 %4 to i64
+  %6 = getelementptr inbounds nuw i8, ptr %i.k, i64 %5
+  %7 = load i8, ptr %6, align 1, !noalias !9429, !noundef !8
+  %8 = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.l ; 2 uses
+  store i8 %7, ptr %8, align 1, !alias.scope !9424, !noalias !9432
+  %9 = and i8 %.val9.i, 15
+  %10 = zext nneg i8 %9 to i64
+  %11 = getelementptr inbounds nuw i8, ptr %i.k, i64 %10
+  %12 = load i8, ptr %11, align 1, !noalias !9429, !noundef !8
+  %13 = getelementptr inbounds nuw i8, ptr %8, i64 1
+  store i8 %12, ptr %13, align 1, !alias.scope !9424, !noalias !9432
+  %exitcond13.not.i = icmp eq i64 %3, %.sroa.0.0.i.i
+  br i1 %exitcond13.not.i, label %"_ZN98_$LT$core..iter..adapters..take..Take$LT$I$GT$$u20$as$u20$core..iter..adapters..take..SpecTake$GT$9spec_fold17h1cf1188c65e4d13bE.exit", label %"_ZN110_$LT$core..iter..adapters..enumerate..Enumerate$LT$I$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold9enumerate28_$u7b$$u7b$closure$u7d$$u7d$17hd24b94f8676c7457E.exit.i.a"
+
+"_ZN110_$LT$core..iter..adapters..enumerate..Enumerate$LT$I$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold9enumerate28_$u7b$$u7b$closure$u7d$$u7d$17hd24b94f8676c7457E.exit.i.a": ; preds = %"_ZN110_$LT$core..iter..adapters..enumerate..Enumerate$LT$I$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold9enumerate28_$u7b$$u7b$closure$u7d$$u7d$17hd24b94f8676c7457E.exit.i"
+  %14 = shl nuw nsw i64 %3, 1
+  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 %3
   %.val9.i.a = load i8, ptr %i.m, align 1, !noalias !9427 ; 2 uses
-  %i.n = add nuw nsw i64 %.sroa.0.011.i, 1        ; 2 uses
+  %i.n = add nuw nsw i64 %.sroa.0.011.i, 2        ; 2 uses
   %i.o = lshr i8 %.val9.i.a, 4
   %i.p = zext nneg i8 %i.o to i64
   %i.q = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.p
   %i.r = load i8, ptr %i.q, align 1, !noalias !9429, !noundef !8
-  %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.l ; 2 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 %14 ; 2 uses
   store i8 %i.r, ptr %i.s, align 1, !alias.scope !9424, !noalias !9432
   %i.t = and i8 %.val9.i.a, 15
   %i.u = zext nneg i8 %i.t to i64
@@ -255,7 +275,7 @@ bb.c:                                             ; preds = %bb.b
   %exitcond13.not.i.a = icmp eq i64 %i.n, %.sroa.0.0.i.i
   br i1 %exitcond13.not.i.a, label %"_ZN98_$LT$core..iter..adapters..take..Take$LT$I$GT$$u20$as$u20$core..iter..adapters..take..SpecTake$GT$9spec_fold17h1cf1188c65e4d13bE.exit", label %bb.b
 
-"_ZN98_$LT$core..iter..adapters..take..Take$LT$I$GT$$u20$as$u20$core..iter..adapters..take..SpecTake$GT$9spec_fold17h1cf1188c65e4d13bE.exit": ; preds = %"_ZN110_$LT$core..iter..adapters..enumerate..Enumerate$LT$I$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold9enumerate28_$u7b$$u7b$closure$u7d$$u7d$17hd24b94f8676c7457E.exit.i.a"
+"_ZN98_$LT$core..iter..adapters..take..Take$LT$I$GT$$u20$as$u20$core..iter..adapters..take..SpecTake$GT$9spec_fold17h1cf1188c65e4d13bE.exit": ; preds = %"_ZN110_$LT$core..iter..adapters..enumerate..Enumerate$LT$I$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold9enumerate28_$u7b$$u7b$closure$u7d$$u7d$17hd24b94f8676c7457E.exit.i.a", %"_ZN110_$LT$core..iter..adapters..enumerate..Enumerate$LT$I$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold9enumerate28_$u7b$$u7b$closure$u7d$$u7d$17hd24b94f8676c7457E.exit.i"
   %i.y = icmp samesign ult i64 %.sroa.01.0, 65
   br i1 %i.y, label %"_ZN98_$LT$core..iter..adapters..take..Take$LT$I$GT$$u20$as$u20$core..iter..adapters..take..SpecTake$GT$9spec_fold17h1cf1188c65e4d13bE.exit.thread", label %bb.d, !prof !9433
 

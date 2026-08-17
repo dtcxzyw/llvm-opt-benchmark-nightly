@@ -1,7 +1,8 @@
 inline.NumInlined: 496
 inline.NumDeleted: 207
 loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumUnrolled: 1
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 4
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -121,35 +122,95 @@ bb.e:                                             ; preds = %bb.c, %bb.d
   %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.a
   store i8 0, ptr %i.j, align 1, !tbaa !14
   %.not = icmp eq i64 %2, 0
-  br i1 %.not, label %._crit_edge, label %.lr.ph
+  br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
-.lr.ph:                                           ; preds = %bb.e, %.lr.ph
-  %.016.a = phi i64 [ %i.x, %.lr.ph ], [ 0, %bb.e ] ; 3 uses
-  %.01215 = phi i64 [ %i.ab, %.lr.ph ], [ 0, %bb.e ] ; 2 uses
-  %i.k = getelementptr inbounds nuw i8, ptr %1, i64 %.01215 ; 2 uses
+.lr.ph.preheader:                                 ; preds = %bb.e
+  %xtraiter = and i64 %2, 1
+  %3 = icmp eq i64 %2, 1
+  br i1 %3, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
+
+.lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
+  %unroll_iter = and i64 %2, -2
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
+  %.016 = phi i64 [ 0, %.lr.ph.preheader.new ], [ %i.x, %.lr.ph ] ; 4 uses
+  %.016.a = phi i64 [ 0, %.lr.ph.preheader.new ], [ %22, %.lr.ph ] ; 3 uses
+  %.01215 = phi i64 [ 0, %.lr.ph.preheader.new ], [ %i.ab, %.lr.ph ]
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 %.016.a ; 2 uses
+  %5 = load i8, ptr %4, align 1, !tbaa !14
+  %6 = lshr i8 %5, 4
+  %7 = zext nneg i8 %6 to i64
+  %8 = getelementptr inbounds nuw i8, ptr @.str, i64 %7
+  %9 = load i8, ptr %8, align 1, !tbaa !14
+  %10 = load ptr, ptr %0, align 8, !tbaa !11
+  %11 = getelementptr inbounds nuw i8, ptr %10, i64 %.016
+  store i8 %9, ptr %11, align 1, !tbaa !14
+  %12 = load i8, ptr %4, align 1, !tbaa !14
+  %13 = and i8 %12, 15
+  %14 = zext nneg i8 %13 to i64
+  %15 = getelementptr inbounds nuw i8, ptr @.str, i64 %14
+  %16 = load i8, ptr %15, align 1, !tbaa !14
+  %17 = or disjoint i64 %.016, 2                  ; 2 uses
+  %18 = load ptr, ptr %0, align 8, !tbaa !11
+  %19 = getelementptr inbounds nuw i8, ptr %18, i64 %.016
+  %20 = getelementptr inbounds nuw i8, ptr %19, i64 1
+  store i8 %16, ptr %20, align 1, !tbaa !14
+  %21 = getelementptr inbounds nuw i8, ptr %1, i64 %.016.a
+  %i.k = getelementptr inbounds nuw i8, ptr %21, i64 1 ; 2 uses
   %i.l = load i8, ptr %i.k, align 1, !tbaa !14
   %i.m = lshr i8 %i.l, 4
   %i.n = zext nneg i8 %i.m to i64
   %i.o = getelementptr inbounds nuw i8, ptr @.str, i64 %i.n
   %i.p = load i8, ptr %i.o, align 1, !tbaa !14
   %i.q = load ptr, ptr %0, align 8, !tbaa !11
-  %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 %.016.a
+  %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 %17
   store i8 %i.p, ptr %i.r, align 1, !tbaa !14
   %i.s = load i8, ptr %i.k, align 1, !tbaa !14
   %i.t = and i8 %i.s, 15
   %i.u = zext nneg i8 %i.t to i64
   %i.v = getelementptr inbounds nuw i8, ptr @.str, i64 %i.u
   %i.w = load i8, ptr %i.v, align 1, !tbaa !14
-  %i.x = add i64 %.016.a, 2
+  %i.x = add i64 %.016, 4                         ; 2 uses
   %i.y = load ptr, ptr %0, align 8, !tbaa !11
-  %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 %.016.a
+  %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 %17
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 1
   store i8 %i.w, ptr %i.aa, align 1, !tbaa !14
-  %i.ab = add nuw i64 %.01215, 1                  ; 2 uses
-  %exitcond.not = icmp eq i64 %i.ab, %2
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !16
+  %22 = add nuw i64 %.016.a, 2                    ; 2 uses
+  %i.ab = add nuw i64 %.01215, 2                  ; 2 uses
+  %exitcond.not = icmp eq i64 %i.ab, %unroll_iter
+  br i1 %exitcond.not, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !16
 
-._crit_edge:                                      ; preds = %.lr.ph, %bb.e
+._crit_edge.loopexit.unr-lcssa:                   ; preds = %.lr.ph
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %._crit_edge, label %.lr.ph.epil.preheader
+
+.lr.ph.epil.preheader:                            ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.preheader
+  %.016.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %i.x, %._crit_edge.loopexit.unr-lcssa ] ; 2 uses
+  %.01215.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %22, %._crit_edge.loopexit.unr-lcssa ]
+  %lcmp.mod18 = trunc i64 %2 to i1
+  tail call void @llvm.assume(i1 %lcmp.mod18)
+  %23 = getelementptr inbounds nuw i8, ptr %1, i64 %.01215.epil.init ; 2 uses
+  %24 = load i8, ptr %23, align 1, !tbaa !14
+  %25 = lshr i8 %24, 4
+  %26 = zext nneg i8 %25 to i64
+  %27 = getelementptr inbounds nuw i8, ptr @.str, i64 %26
+  %28 = load i8, ptr %27, align 1, !tbaa !14
+  %29 = load ptr, ptr %0, align 8, !tbaa !11
+  %30 = getelementptr inbounds nuw i8, ptr %29, i64 %.016.epil.init
+  store i8 %28, ptr %30, align 1, !tbaa !14
+  %31 = load i8, ptr %23, align 1, !tbaa !14
+  %32 = and i8 %31, 15
+  %33 = zext nneg i8 %32 to i64
+  %34 = getelementptr inbounds nuw i8, ptr @.str, i64 %33
+  %35 = load i8, ptr %34, align 1, !tbaa !14
+  %36 = load ptr, ptr %0, align 8, !tbaa !11
+  %37 = getelementptr inbounds nuw i8, ptr %36, i64 %.016.epil.init
+  %38 = getelementptr inbounds nuw i8, ptr %37, i64 1
+  store i8 %35, ptr %38, align 1, !tbaa !14
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %.lr.ph.epil.preheader, %._crit_edge.loopexit.unr-lcssa, %bb.e
   ret void
 }
 
@@ -552,35 +613,95 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.a
   store i8 0, ptr %i.j, align 1, !tbaa !14
   %.not.i = icmp eq i64 %2, 0
-  br i1 %.not.i, label %_ZN5arrow9HexEncodeB5cxx11EPKhm.exit, label %.lr.ph.i
+  br i1 %.not.i, label %_ZN5arrow9HexEncodeB5cxx11EPKhm.exit, label %.lr.ph.i.preheader
 
-.lr.ph.i:                                         ; preds = %bb.e, %.lr.ph.i
-  %.016.i.a = phi i64 [ %i.x, %.lr.ph.i ], [ 0, %bb.e ] ; 3 uses
-  %.01215.i = phi i64 [ %i.ab, %.lr.ph.i ], [ 0, %bb.e ] ; 2 uses
-  %i.k = getelementptr inbounds nuw i8, ptr %1, i64 %.01215.i ; 2 uses
+.lr.ph.i.preheader:                               ; preds = %bb.e
+  %xtraiter = and i64 %2, 1
+  %3 = icmp eq i64 %2, 1
+  br i1 %3, label %.lr.ph.i.epil.preheader, label %.lr.ph.i.preheader.new
+
+.lr.ph.i.preheader.new:                           ; preds = %.lr.ph.i.preheader
+  %unroll_iter = and i64 %2, -2
+  br label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.i.preheader.new
+  %.016.i = phi i64 [ 0, %.lr.ph.i.preheader.new ], [ %i.x, %.lr.ph.i ] ; 4 uses
+  %.016.i.a = phi i64 [ 0, %.lr.ph.i.preheader.new ], [ %22, %.lr.ph.i ] ; 3 uses
+  %.01215.i = phi i64 [ 0, %.lr.ph.i.preheader.new ], [ %i.ab, %.lr.ph.i ]
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 %.016.i.a ; 2 uses
+  %5 = load i8, ptr %4, align 1, !tbaa !14, !noalias !20
+  %6 = lshr i8 %5, 4
+  %7 = zext nneg i8 %6 to i64
+  %8 = getelementptr inbounds nuw i8, ptr @.str, i64 %7
+  %9 = load i8, ptr %8, align 1, !tbaa !14, !noalias !20
+  %10 = load ptr, ptr %0, align 8, !tbaa !11, !alias.scope !20
+  %11 = getelementptr inbounds nuw i8, ptr %10, i64 %.016.i
+  store i8 %9, ptr %11, align 1, !tbaa !14
+  %12 = load i8, ptr %4, align 1, !tbaa !14, !noalias !20
+  %13 = and i8 %12, 15
+  %14 = zext nneg i8 %13 to i64
+  %15 = getelementptr inbounds nuw i8, ptr @.str, i64 %14
+  %16 = load i8, ptr %15, align 1, !tbaa !14, !noalias !20
+  %17 = or disjoint i64 %.016.i, 2                ; 2 uses
+  %18 = load ptr, ptr %0, align 8, !tbaa !11, !alias.scope !20
+  %19 = getelementptr inbounds nuw i8, ptr %18, i64 %.016.i
+  %20 = getelementptr inbounds nuw i8, ptr %19, i64 1
+  store i8 %16, ptr %20, align 1, !tbaa !14
+  %21 = getelementptr inbounds nuw i8, ptr %1, i64 %.016.i.a
+  %i.k = getelementptr inbounds nuw i8, ptr %21, i64 1 ; 2 uses
   %i.l = load i8, ptr %i.k, align 1, !tbaa !14, !noalias !20
   %i.m = lshr i8 %i.l, 4
   %i.n = zext nneg i8 %i.m to i64
   %i.o = getelementptr inbounds nuw i8, ptr @.str, i64 %i.n
   %i.p = load i8, ptr %i.o, align 1, !tbaa !14, !noalias !20
   %i.q = load ptr, ptr %0, align 8, !tbaa !11, !alias.scope !20
-  %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 %.016.i.a
+  %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 %17
   store i8 %i.p, ptr %i.r, align 1, !tbaa !14
   %i.s = load i8, ptr %i.k, align 1, !tbaa !14, !noalias !20
   %i.t = and i8 %i.s, 15
   %i.u = zext nneg i8 %i.t to i64
   %i.v = getelementptr inbounds nuw i8, ptr @.str, i64 %i.u
   %i.w = load i8, ptr %i.v, align 1, !tbaa !14, !noalias !20
-  %i.x = add i64 %.016.i.a, 2
+  %i.x = add i64 %.016.i, 4                       ; 2 uses
   %i.y = load ptr, ptr %0, align 8, !tbaa !11, !alias.scope !20
-  %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 %.016.i.a
+  %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 %17
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 1
   store i8 %i.w, ptr %i.aa, align 1, !tbaa !14
-  %i.ab = add nuw i64 %.01215.i, 1                ; 2 uses
-  %exitcond.not.i = icmp eq i64 %i.ab, %2
-  br i1 %exitcond.not.i, label %_ZN5arrow9HexEncodeB5cxx11EPKhm.exit, label %.lr.ph.i, !llvm.loop !16
+  %22 = add nuw i64 %.016.i.a, 2                  ; 2 uses
+  %i.ab = add nuw i64 %.01215.i, 2                ; 2 uses
+  %exitcond.not.i = icmp eq i64 %i.ab, %unroll_iter
+  br i1 %exitcond.not.i, label %_ZN5arrow9HexEncodeB5cxx11EPKhm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !16
 
-_ZN5arrow9HexEncodeB5cxx11EPKhm.exit:             ; preds = %.lr.ph.i, %bb.e
+_ZN5arrow9HexEncodeB5cxx11EPKhm.exit.loopexit.unr-lcssa: ; preds = %.lr.ph.i
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %_ZN5arrow9HexEncodeB5cxx11EPKhm.exit, label %.lr.ph.i.epil.preheader
+
+.lr.ph.i.epil.preheader:                          ; preds = %_ZN5arrow9HexEncodeB5cxx11EPKhm.exit.loopexit.unr-lcssa, %.lr.ph.i.preheader
+  %.016.i.epil.init = phi i64 [ 0, %.lr.ph.i.preheader ], [ %i.x, %_ZN5arrow9HexEncodeB5cxx11EPKhm.exit.loopexit.unr-lcssa ] ; 2 uses
+  %.01215.i.epil.init = phi i64 [ 0, %.lr.ph.i.preheader ], [ %22, %_ZN5arrow9HexEncodeB5cxx11EPKhm.exit.loopexit.unr-lcssa ]
+  %lcmp.mod2 = trunc i64 %2 to i1
+  tail call void @llvm.assume(i1 %lcmp.mod2)
+  %23 = getelementptr inbounds nuw i8, ptr %1, i64 %.01215.i.epil.init ; 2 uses
+  %24 = load i8, ptr %23, align 1, !tbaa !14, !noalias !20
+  %25 = lshr i8 %24, 4
+  %26 = zext nneg i8 %25 to i64
+  %27 = getelementptr inbounds nuw i8, ptr @.str, i64 %26
+  %28 = load i8, ptr %27, align 1, !tbaa !14, !noalias !20
+  %29 = load ptr, ptr %0, align 8, !tbaa !11, !alias.scope !20
+  %30 = getelementptr inbounds nuw i8, ptr %29, i64 %.016.i.epil.init
+  store i8 %28, ptr %30, align 1, !tbaa !14
+  %31 = load i8, ptr %23, align 1, !tbaa !14, !noalias !20
+  %32 = and i8 %31, 15
+  %33 = zext nneg i8 %32 to i64
+  %34 = getelementptr inbounds nuw i8, ptr @.str, i64 %33
+  %35 = load i8, ptr %34, align 1, !tbaa !14, !noalias !20
+  %36 = load ptr, ptr %0, align 8, !tbaa !11, !alias.scope !20
+  %37 = getelementptr inbounds nuw i8, ptr %36, i64 %.016.i.epil.init
+  %38 = getelementptr inbounds nuw i8, ptr %37, i64 1
+  store i8 %35, ptr %38, align 1, !tbaa !14
+  br label %_ZN5arrow9HexEncodeB5cxx11EPKhm.exit
+
+_ZN5arrow9HexEncodeB5cxx11EPKhm.exit:             ; preds = %.lr.ph.i.epil.preheader, %_ZN5arrow9HexEncodeB5cxx11EPKhm.exit.loopexit.unr-lcssa, %bb.e
   ret void
 }
 
@@ -626,35 +747,95 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.a
   store i8 0, ptr %i.j, align 1, !tbaa !14
   %.not.i.i = icmp eq i64 %1, 0
-  br i1 %.not.i.i, label %_ZN5arrow9HexEncodeB5cxx11EPKcm.exit, label %.lr.ph.i.i
+  br i1 %.not.i.i, label %_ZN5arrow9HexEncodeB5cxx11EPKcm.exit, label %.lr.ph.i.i.preheader
 
-.lr.ph.i.i:                                       ; preds = %bb.e, %.lr.ph.i.i
-  %.016.i.i.a = phi i64 [ %i.x, %.lr.ph.i.i ], [ 0, %bb.e ] ; 3 uses
-  %.01215.i.i = phi i64 [ %i.ab, %.lr.ph.i.i ], [ 0, %bb.e ] ; 2 uses
-  %i.k = getelementptr inbounds nuw i8, ptr %2, i64 %.01215.i.i ; 2 uses
+.lr.ph.i.i.preheader:                             ; preds = %bb.e
+  %xtraiter = and i64 %1, 1
+  %3 = icmp eq i64 %1, 1
+  br i1 %3, label %.lr.ph.i.i.epil.preheader, label %.lr.ph.i.i.preheader.new
+
+.lr.ph.i.i.preheader.new:                         ; preds = %.lr.ph.i.i.preheader
+  %unroll_iter = and i64 %1, -2
+  br label %.lr.ph.i.i
+
+.lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.lr.ph.i.i.preheader.new
+  %.016.i.i = phi i64 [ 0, %.lr.ph.i.i.preheader.new ], [ %i.x, %.lr.ph.i.i ] ; 4 uses
+  %.016.i.i.a = phi i64 [ 0, %.lr.ph.i.i.preheader.new ], [ %22, %.lr.ph.i.i ] ; 3 uses
+  %.01215.i.i = phi i64 [ 0, %.lr.ph.i.i.preheader.new ], [ %i.ab, %.lr.ph.i.i ]
+  %4 = getelementptr inbounds nuw i8, ptr %2, i64 %.016.i.i.a ; 2 uses
+  %5 = load i8, ptr %4, align 1, !tbaa !14, !noalias !29
+  %6 = lshr i8 %5, 4
+  %7 = zext nneg i8 %6 to i64
+  %8 = getelementptr inbounds nuw i8, ptr @.str, i64 %7
+  %9 = load i8, ptr %8, align 1, !tbaa !14, !noalias !29
+  %10 = load ptr, ptr %0, align 8, !tbaa !11, !alias.scope !29
+  %11 = getelementptr inbounds nuw i8, ptr %10, i64 %.016.i.i
+  store i8 %9, ptr %11, align 1, !tbaa !14
+  %12 = load i8, ptr %4, align 1, !tbaa !14, !noalias !29
+  %13 = and i8 %12, 15
+  %14 = zext nneg i8 %13 to i64
+  %15 = getelementptr inbounds nuw i8, ptr @.str, i64 %14
+  %16 = load i8, ptr %15, align 1, !tbaa !14, !noalias !29
+  %17 = or disjoint i64 %.016.i.i, 2              ; 2 uses
+  %18 = load ptr, ptr %0, align 8, !tbaa !11, !alias.scope !29
+  %19 = getelementptr inbounds nuw i8, ptr %18, i64 %.016.i.i
+  %20 = getelementptr inbounds nuw i8, ptr %19, i64 1
+  store i8 %16, ptr %20, align 1, !tbaa !14
+  %21 = getelementptr inbounds nuw i8, ptr %2, i64 %.016.i.i.a
+  %i.k = getelementptr inbounds nuw i8, ptr %21, i64 1 ; 2 uses
   %i.l = load i8, ptr %i.k, align 1, !tbaa !14, !noalias !29
   %i.m = lshr i8 %i.l, 4
   %i.n = zext nneg i8 %i.m to i64
   %i.o = getelementptr inbounds nuw i8, ptr @.str, i64 %i.n
   %i.p = load i8, ptr %i.o, align 1, !tbaa !14, !noalias !29
   %i.q = load ptr, ptr %0, align 8, !tbaa !11, !alias.scope !29
-  %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 %.016.i.i.a
+  %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 %17
   store i8 %i.p, ptr %i.r, align 1, !tbaa !14
   %i.s = load i8, ptr %i.k, align 1, !tbaa !14, !noalias !29
   %i.t = and i8 %i.s, 15
   %i.u = zext nneg i8 %i.t to i64
   %i.v = getelementptr inbounds nuw i8, ptr @.str, i64 %i.u
   %i.w = load i8, ptr %i.v, align 1, !tbaa !14, !noalias !29
-  %i.x = add i64 %.016.i.i.a, 2
+  %i.x = add i64 %.016.i.i, 4                     ; 2 uses
   %i.y = load ptr, ptr %0, align 8, !tbaa !11, !alias.scope !29
-  %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 %.016.i.i.a
+  %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 %17
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 1
   store i8 %i.w, ptr %i.aa, align 1, !tbaa !14
-  %i.ab = add nuw i64 %.01215.i.i, 1              ; 2 uses
-  %exitcond.not.i.i = icmp eq i64 %i.ab, %1
-  br i1 %exitcond.not.i.i, label %_ZN5arrow9HexEncodeB5cxx11EPKcm.exit, label %.lr.ph.i.i, !llvm.loop !16
+  %22 = add nuw i64 %.016.i.i.a, 2                ; 2 uses
+  %i.ab = add nuw i64 %.01215.i.i, 2              ; 2 uses
+  %exitcond.not.i.i = icmp eq i64 %i.ab, %unroll_iter
+  br i1 %exitcond.not.i.i, label %_ZN5arrow9HexEncodeB5cxx11EPKcm.exit.loopexit.unr-lcssa, label %.lr.ph.i.i, !llvm.loop !16
 
-_ZN5arrow9HexEncodeB5cxx11EPKcm.exit:             ; preds = %.lr.ph.i.i, %bb.e
+_ZN5arrow9HexEncodeB5cxx11EPKcm.exit.loopexit.unr-lcssa: ; preds = %.lr.ph.i.i
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %_ZN5arrow9HexEncodeB5cxx11EPKcm.exit, label %.lr.ph.i.i.epil.preheader
+
+.lr.ph.i.i.epil.preheader:                        ; preds = %_ZN5arrow9HexEncodeB5cxx11EPKcm.exit.loopexit.unr-lcssa, %.lr.ph.i.i.preheader
+  %.016.i.i.epil.init = phi i64 [ 0, %.lr.ph.i.i.preheader ], [ %i.x, %_ZN5arrow9HexEncodeB5cxx11EPKcm.exit.loopexit.unr-lcssa ] ; 2 uses
+  %.01215.i.i.epil.init = phi i64 [ 0, %.lr.ph.i.i.preheader ], [ %22, %_ZN5arrow9HexEncodeB5cxx11EPKcm.exit.loopexit.unr-lcssa ]
+  %lcmp.mod2 = trunc i64 %1 to i1
+  tail call void @llvm.assume(i1 %lcmp.mod2)
+  %23 = getelementptr inbounds nuw i8, ptr %2, i64 %.01215.i.i.epil.init ; 2 uses
+  %24 = load i8, ptr %23, align 1, !tbaa !14, !noalias !29
+  %25 = lshr i8 %24, 4
+  %26 = zext nneg i8 %25 to i64
+  %27 = getelementptr inbounds nuw i8, ptr @.str, i64 %26
+  %28 = load i8, ptr %27, align 1, !tbaa !14, !noalias !29
+  %29 = load ptr, ptr %0, align 8, !tbaa !11, !alias.scope !29
+  %30 = getelementptr inbounds nuw i8, ptr %29, i64 %.016.i.i.epil.init
+  store i8 %28, ptr %30, align 1, !tbaa !14
+  %31 = load i8, ptr %23, align 1, !tbaa !14, !noalias !29
+  %32 = and i8 %31, 15
+  %33 = zext nneg i8 %32 to i64
+  %34 = getelementptr inbounds nuw i8, ptr @.str, i64 %33
+  %35 = load i8, ptr %34, align 1, !tbaa !14, !noalias !29
+  %36 = load ptr, ptr %0, align 8, !tbaa !11, !alias.scope !29
+  %37 = getelementptr inbounds nuw i8, ptr %36, i64 %.016.i.i.epil.init
+  %38 = getelementptr inbounds nuw i8, ptr %37, i64 1
+  store i8 %35, ptr %38, align 1, !tbaa !14
+  br label %_ZN5arrow9HexEncodeB5cxx11EPKcm.exit
+
+_ZN5arrow9HexEncodeB5cxx11EPKcm.exit:             ; preds = %.lr.ph.i.i.epil.preheader, %_ZN5arrow9HexEncodeB5cxx11EPKcm.exit.loopexit.unr-lcssa, %bb.e
   ret void
 }
 
