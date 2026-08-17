@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.preheader.us.us, %
   %i.i = phi i64 [ %.pre183, %.preheader.us.us ], [ %i.y, %.loopexit.us.us ] ; 2 uses
   %.395144.us.us = phi i64 [ %i.c, %.preheader.us.us ], [ %i.j, %.loopexit.us.us ] ; 2 uses
   %i.j = add nsw i64 %.395144.us.us, -1           ; 4 uses
-  %i.k = getelementptr inbounds [8 x i8], ptr %i.d, i64 %i.j ; 2 uses
+  %i.k = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.j ; 2 uses
   %i.l = load i64, ptr %i.k, align 8, !tbaa !183  ; 2 uses
   %i.m = icmp sgt i64 %i.i, %i.l
   br i1 %i.m, label %.lr.ph143.us.us, label %.loopexit.us.us
@@ -260,7 +260,7 @@ bb.g:                                             ; preds = %_ZN6casadi17Generic
   br i1 %i.z, label %bb.b, label %..loopexit118_crit_edge.us.us, !llvm.loop !1601
 
 .lr.ph143.us.us:                                  ; preds = %bb.b
-  %i.aa = getelementptr inbounds [8 x i8], ptr %.089147.us.us, i64 %i.j ; 3 uses
+  %i.aa = getelementptr inbounds nuw [8 x i8], ptr %.089147.us.us, i64 %i.j ; 3 uses
   br label %bb.c
 
 ..loopexit118_crit_edge.us.us:                    ; preds = %.loopexit.us.us
@@ -401,7 +401,7 @@ bb.n:                                             ; preds = %.preheader121.us, %
   %i.bd = phi i64 [ %.pre181, %.preheader121.us ], [ %i.bq, %.loopexit116.us ] ; 2 uses
   %.193136.us = phi i64 [ %i.c, %.preheader121.us ], [ %i.be, %.loopexit116.us ] ; 2 uses
   %i.be = add nsw i64 %.193136.us, -1             ; 3 uses
-  %i.bf = getelementptr inbounds [8 x i8], ptr %i.d, i64 %i.be ; 2 uses
+  %i.bf = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.be ; 2 uses
   %i.bg = load i64, ptr %i.bf, align 8, !tbaa !183 ; 2 uses
   %i.bh = icmp sgt i64 %i.bd, %i.bg
   br i1 %i.bh, label %.lr.ph135.us, label %.loopexit116.us
@@ -438,7 +438,7 @@ bb.p:                                             ; preds = %.noexc103.us
   br i1 %i.br, label %bb.n, label %..loopexit122_crit_edge.us, !llvm.loop !1606
 
 .lr.ph135.us:                                     ; preds = %bb.n
-  %i.bs = getelementptr inbounds [8 x i8], ptr %.089147.us165, i64 %i.be
+  %i.bs = getelementptr inbounds nuw [8 x i8], ptr %.089147.us165, i64 %i.be
   br label %bb.o
 
 ..loopexit122_crit_edge.us:                       ; preds = %.loopexit116.us
@@ -841,7 +841,7 @@ bb.i:                                             ; preds = %.loopexit.us.us.i, 
   %i.al = phi i64 [ %.pre142.pre.i, %.preheader.us.us.i ], [ %i.ao, %.loopexit.us.us.i ] ; 2 uses
   %.391122.us.us.i = phi i64 [ %i.ag, %.preheader.us.us.i ], [ %i.am, %.loopexit.us.us.i ] ; 2 uses
   %i.am = add nsw i64 %.391122.us.us.i, -1        ; 4 uses
-  %i.an = getelementptr inbounds [8 x i8], ptr %i.ah, i64 %i.am
+  %i.an = getelementptr inbounds nuw [8 x i8], ptr %i.ah, i64 %i.am
   %i.ao = load i64, ptr %i.an, align 8, !tbaa !183 ; 3 uses
   %i.ap = icmp sgt i64 %i.al, %i.ao
   br i1 %i.ap, label %.lr.ph121.us.us.i, label %.loopexit.us.us.i
@@ -879,7 +879,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   br i1 %i.bd, label %bb.i, label %..loopexit101_crit_edge.us.us.i, !llvm.loop !1631
 
 .lr.ph121.us.us.i:                                ; preds = %bb.i
-  %i.be = getelementptr inbounds [8 x i8], ptr %.0125.us.us.i, i64 %i.am ; 2 uses
+  %i.be = getelementptr inbounds nuw [8 x i8], ptr %.0125.us.us.i, i64 %i.am ; 2 uses
   br label %bb.j
 
 ..loopexit101_crit_edge.us.us.i:                  ; preds = %.loopexit.us.us.i
@@ -1282,7 +1282,7 @@ bb.i:                                             ; preds = %.loopexit99.us.i, %
   %i.al = phi i64 [ %.pre142.pre.i, %.preheader103.us.i ], [ %i.ao, %.loopexit99.us.i ] ; 2 uses
   %.290119.us.i = phi i64 [ %i.ag, %.preheader103.us.i ], [ %i.am, %.loopexit99.us.i ] ; 2 uses
   %i.am = add nsw i64 %.290119.us.i, -1           ; 4 uses
-  %i.an = getelementptr inbounds [8 x i8], ptr %i.ah, i64 %i.am
+  %i.an = getelementptr inbounds nuw [8 x i8], ptr %i.ah, i64 %i.am
   %i.ao = load i64, ptr %i.an, align 8, !tbaa !183 ; 3 uses
   %i.ap = icmp sgt i64 %i.al, %i.ao
   br i1 %i.ap, label %.lr.ph118.us.i, label %.loopexit99.us.i
@@ -1320,7 +1320,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   br i1 %i.bc, label %bb.i, label %..loopexit104_crit_edge.us.i, !llvm.loop !1655
 
 .lr.ph118.us.i:                                   ; preds = %bb.i
-  %i.bd = getelementptr inbounds [8 x i8], ptr %.0126.us.i, i64 %i.am ; 2 uses
+  %i.bd = getelementptr inbounds nuw [8 x i8], ptr %.0126.us.i, i64 %i.am ; 2 uses
   %.promoted166.i = load double, ptr %i.bd, align 8
   br label %bb.j
 
@@ -1568,7 +1568,7 @@ bb.h:                                             ; preds = %.preheader120.us, %
   %i.af = phi i64 [ %.pre183, %.preheader120.us ], [ %i.av, %.loopexit116.us ] ; 2 uses
   %.294141.us = phi i64 [ %i.c, %.preheader120.us ], [ %i.ag, %.loopexit116.us ] ; 2 uses
   %i.ag = add nsw i64 %.294141.us, -1             ; 4 uses
-  %i.ah = getelementptr inbounds [8 x i8], ptr %i.d, i64 %i.ag ; 2 uses
+  %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.ag ; 2 uses
   %i.ai = load i64, ptr %i.ah, align 8, !tbaa !183 ; 2 uses
   %i.aj = icmp sgt i64 %i.af, %i.ai
   br i1 %i.aj, label %.lr.ph140.us, label %.loopexit116.us
@@ -1624,7 +1624,7 @@ bb.m:                                             ; preds = %_ZN6casadi17Generic
   br i1 %i.aw, label %bb.h, label %..loopexit121_crit_edge.us, !llvm.loop !1661
 
 .lr.ph140.us:                                     ; preds = %bb.h
-  %i.ax = getelementptr inbounds [8 x i8], ptr %.089148.us, i64 %i.ag ; 4 uses
+  %i.ax = getelementptr inbounds nuw [8 x i8], ptr %.089148.us, i64 %i.ag ; 4 uses
   br label %bb.i
 
 ..loopexit121_crit_edge.us:                       ; preds = %.loopexit116.us
@@ -1744,13 +1744,13 @@ bb.q:                                             ; preds = %.preheader124, %.lo
   %i.by = phi i64 [ %.pre, %.preheader124 ], [ %i.bw, %.loopexit118 ] ; 2 uses
   %.092133 = phi i64 [ %i.c, %.preheader124 ], [ %i.bz, %.loopexit118 ] ; 2 uses
   %i.bz = add nsw i64 %.092133, -1                ; 3 uses
-  %i.ca = getelementptr inbounds [8 x i8], ptr %i.d, i64 %i.bz ; 2 uses
+  %i.ca = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.bz ; 2 uses
   %i.cb = load i64, ptr %i.ca, align 8, !tbaa !183 ; 2 uses
   %i.cc = icmp sgt i64 %i.by, %i.cb
   br i1 %i.cc, label %.lr.ph, label %.loopexit118
 
 .lr.ph:                                           ; preds = %bb.q
-  %i.cd = getelementptr inbounds [8 x i8], ptr %.089148, i64 %i.bz ; 2 uses
+  %i.cd = getelementptr inbounds nuw [8 x i8], ptr %.089148, i64 %i.bz ; 2 uses
   br label %bb.r
 
 bb.r:                                             ; preds = %.lr.ph, %bb.t
@@ -2153,7 +2153,7 @@ bb.i:                                             ; preds = %.loopexit99.us.i, %
   %i.al = phi i64 [ %.pre140.pre.i, %.preheader104.us.i ], [ %i.ao, %.loopexit99.us.i ] ; 6 uses
   %.189114.us.i = phi i64 [ %i.ag, %.preheader104.us.i ], [ %i.am, %.loopexit99.us.i ] ; 2 uses
   %i.am = add nsw i64 %.189114.us.i, -1           ; 3 uses
-  %i.an = getelementptr inbounds [8 x i8], ptr %i.ah, i64 %i.am
+  %i.an = getelementptr inbounds nuw [8 x i8], ptr %i.ah, i64 %i.am
   %i.ao = load i64, ptr %i.an, align 8, !tbaa !183 ; 5 uses
   %i.ap = icmp sgt i64 %i.al, %i.ao
   br i1 %i.ap, label %.lr.ph113.us.i, label %.loopexit99.us.i
@@ -2188,7 +2188,7 @@ bb.i:                                             ; preds = %.loopexit99.us.i, %
   br i1 %i.bj, label %bb.i, label %..loopexit105_crit_edge.us.i, !llvm.loop !1673
 
 .lr.ph113.us.i:                                   ; preds = %bb.i
-  %i.bk = getelementptr inbounds [8 x i8], ptr %.0125.us128.i, i64 %i.am ; 3 uses
+  %i.bk = getelementptr inbounds nuw [8 x i8], ptr %.0125.us128.i, i64 %i.am ; 3 uses
   %i.bl = sub i64 %i.al, %i.ao
   %.neg = add i64 %i.ao, 1
   %xtraiter = and i64 %i.bl, 1
@@ -2591,13 +2591,13 @@ bb.i:                                             ; preds = %.loopexit101.i, %.p
   %i.am = phi i64 [ %.pre.pre.i, %.preheader107.i ], [ %i.ap, %.loopexit101.i ] ; 6 uses
   %.088111.i = phi i64 [ %i.ag, %.preheader107.i ], [ %i.an, %.loopexit101.i ] ; 2 uses
   %i.an = add nsw i64 %.088111.i, -1              ; 3 uses
-  %i.ao = getelementptr inbounds [8 x i8], ptr %i.ah, i64 %i.an
+  %i.ao = getelementptr inbounds nuw [8 x i8], ptr %i.ah, i64 %i.an
   %i.ap = load i64, ptr %i.ao, align 8, !tbaa !183 ; 5 uses
   %i.aq = icmp sgt i64 %i.am, %i.ap
   br i1 %i.aq, label %.lr.ph.i, label %.loopexit101.i
 
 .lr.ph.i:                                         ; preds = %bb.i
-  %i.ar = getelementptr inbounds [8 x i8], ptr %.0126.i, i64 %i.an ; 4 uses
+  %i.ar = getelementptr inbounds nuw [8 x i8], ptr %.0126.i, i64 %i.an ; 4 uses
   %.promoted.i = load double, ptr %i.ar, align 8, !tbaa !560 ; 2 uses
   %i.as = sub i64 %i.am, %i.ap
   %.neg = add i64 %i.ap, 1

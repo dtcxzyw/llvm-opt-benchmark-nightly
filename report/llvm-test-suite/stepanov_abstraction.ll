@@ -203,7 +203,7 @@ _ZN9benchmark7sift_inIPddEEvlT_lT0_.exit:         ; preds = %.lr.ph50.i, %bb.e, 
 
 .thread:                                          ; preds = %._crit_edge.i21
   %i.az = add nsw i64 %.1.in43, -2                ; 2 uses
-  %i.ba = getelementptr inbounds [8 x i8], ptr %0, i64 %i.az
+  %i.ba = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.az
   %i.bb = load double, ptr %i.ba, align 8, !tbaa !32
   %i.bc = getelementptr inbounds [8 x i8], ptr %0, i64 %.0.lcssa.i23
   store double %i.bb, ptr %i.bc, align 8, !tbaa !32
@@ -262,7 +262,7 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %_ZN9benchmark7sift_inI14PointerWrapperIdEdEEvlT_lT0_.exit
   %.0.in42 = phi i64 [ %i.f, %.lr.ph ], [ %.0, %_ZN9benchmark7sift_inI14PointerWrapperIdEdEEvlT_lT0_.exit ] ; 4 uses
   %.0 = add nsw i64 %.0.in42, -1                  ; 5 uses
-  %i.i = getelementptr inbounds [8 x i8], ptr %0, i64 %.0
+  %i.i = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.0
   %i.j = load double, ptr %i.i, align 8, !tbaa !32 ; 2 uses
   %i.k = shl nuw i64 %.0, 1
   %i.l = add nuw nsw i64 %i.k, 2                  ; 3 uses
@@ -330,7 +330,7 @@ _ZN9benchmark7sift_inI14PointerWrapperIdEdEEvlT_lT0_.exit: ; preds = %.lr.ph58.i
 .lr.ph44:                                         ; preds = %_ZN9benchmark7sift_inI14PointerWrapperIdEdEEvlT_lT0_.exit, %_ZN9benchmark7sift_inI14PointerWrapperIdEdEEvlT_lT0_.exit29
   %.1.in43 = phi i64 [ %.1, %_ZN9benchmark7sift_inI14PointerWrapperIdEdEEvlT_lT0_.exit29 ], [ %i.d, %_ZN9benchmark7sift_inI14PointerWrapperIdEdEEvlT_lT0_.exit ] ; 4 uses
   %.1 = add nsw i64 %.1.in43, -1                  ; 4 uses
-  %i.ai = getelementptr inbounds [8 x i8], ptr %0, i64 %.1 ; 2 uses
+  %i.ai = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.1 ; 2 uses
   %i.aj = load double, ptr %i.ai, align 8, !tbaa !32 ; 2 uses
   %i.ak = load double, ptr %0, align 8, !tbaa !32
   store double %i.ak, ptr %i.ai, align 8, !tbaa !32
@@ -364,7 +364,7 @@ _ZN9benchmark7sift_inI14PointerWrapperIdEdEEvlT_lT0_.exit: ; preds = %.lr.ph58.i
 
 .thread:                                          ; preds = %._crit_edge.i16
   %i.az = add nsw i64 %.1.in43, -2                ; 2 uses
-  %i.ba = getelementptr inbounds [8 x i8], ptr %0, i64 %i.az
+  %i.ba = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.az
   %i.bb = load double, ptr %i.ba, align 8, !tbaa !32
   %i.bc = getelementptr inbounds [8 x i8], ptr %0, i64 %.0.lcssa.i18
   store double %i.bb, ptr %i.bc, align 8, !tbaa !32
@@ -525,7 +525,7 @@ _ZN9benchmark7sift_inIP12ValueWrapperIdES2_EEvlT_lT0_.exit: ; preds = %.lr.ph47.
 
 .thread:                                          ; preds = %._crit_edge.i22
   %i.ax = add nsw i64 %.1.in44, -2                ; 2 uses
-  %i.ay = getelementptr inbounds [8 x i8], ptr %0, i64 %i.ax
+  %i.ay = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.ax
   %i.az = getelementptr inbounds [8 x i8], ptr %0, i64 %.0.lcssa.i24
   %i.ba = load i64, ptr %i.ay, align 8, !tbaa !32
   store i64 %i.ba, ptr %i.az, align 8, !tbaa !32
@@ -584,7 +584,7 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %_ZN9benchmark7sift_inI14PointerWrapperI12ValueWrapperIdEES3_EEvlT_lT0_.exit
   %.0.in45 = phi i64 [ %i.f, %.lr.ph ], [ %.0, %_ZN9benchmark7sift_inI14PointerWrapperI12ValueWrapperIdEES3_EEvlT_lT0_.exit ] ; 4 uses
   %.0 = add nsw i64 %.0.in45, -1                  ; 5 uses
-  %i.i = getelementptr inbounds [8 x i8], ptr %0, i64 %.0
+  %i.i = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.0
   %.sroa.05.0.copyload = load double, ptr %i.i, align 8, !tbaa !32 ; 2 uses
   %i.j = shl nuw i64 %.0, 1
   %i.k = add nuw nsw i64 %i.j, 2                  ; 3 uses
@@ -652,7 +652,7 @@ _ZN9benchmark7sift_inI14PointerWrapperI12ValueWrapperIdEES3_EEvlT_lT0_.exit: ; p
 .lr.ph47:                                         ; preds = %_ZN9benchmark7sift_inI14PointerWrapperI12ValueWrapperIdEES3_EEvlT_lT0_.exit, %_ZN9benchmark7sift_inI14PointerWrapperI12ValueWrapperIdEES3_EEvlT_lT0_.exit32
   %.1.in46 = phi i64 [ %.1, %_ZN9benchmark7sift_inI14PointerWrapperI12ValueWrapperIdEES3_EEvlT_lT0_.exit32 ], [ %i.d, %_ZN9benchmark7sift_inI14PointerWrapperI12ValueWrapperIdEES3_EEvlT_lT0_.exit ] ; 4 uses
   %.1 = add nsw i64 %.1.in46, -1                  ; 4 uses
-  %i.ah = getelementptr inbounds [8 x i8], ptr %0, i64 %.1 ; 2 uses
+  %i.ah = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.1 ; 2 uses
   %.sroa.02.0.copyload = load double, ptr %i.ah, align 8, !tbaa !32 ; 2 uses
   %i.ai = load i64, ptr %0, align 8, !tbaa !32
   store i64 %i.ai, ptr %i.ah, align 8, !tbaa !32
@@ -686,7 +686,7 @@ _ZN9benchmark7sift_inI14PointerWrapperI12ValueWrapperIdEES3_EEvlT_lT0_.exit: ; p
 
 .thread:                                          ; preds = %._crit_edge.i19
   %i.ax = add nsw i64 %.1.in46, -2                ; 2 uses
-  %i.ay = getelementptr inbounds [8 x i8], ptr %0, i64 %i.ax
+  %i.ay = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.ax
   %i.az = getelementptr inbounds [8 x i8], ptr %0, i64 %.0.lcssa.i21
   %i.ba = load i64, ptr %i.ay, align 8, !tbaa !32
   store i64 %i.ba, ptr %i.az, align 8, !tbaa !32
@@ -847,7 +847,7 @@ _ZN9benchmark7sift_inIP12ValueWrapperIS1_IS1_IS1_IS1_IS1_IS1_IS1_IS1_IS1_IdEEEEE
 
 .thread:                                          ; preds = %._crit_edge.i22
   %i.ax = add nsw i64 %.1.in44, -2                ; 2 uses
-  %i.ay = getelementptr inbounds [8 x i8], ptr %0, i64 %i.ax
+  %i.ay = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.ax
   %i.az = getelementptr inbounds [8 x i8], ptr %0, i64 %.0.lcssa.i24
   %i.ba = load i64, ptr %i.ay, align 8, !tbaa !32
   store i64 %i.ba, ptr %i.az, align 8, !tbaa !32
@@ -906,7 +906,7 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %_ZN9benchmark7sift_inI14PointerWrapperI12ValueWrapperIS2_IS2_IS2_IS2_IS2_IS2_IS2_IS2_IS2_IdEEEEEEEEEEESC_EEvlT_lT0_.exit
   %.0.in45 = phi i64 [ %i.f, %.lr.ph ], [ %.0, %_ZN9benchmark7sift_inI14PointerWrapperI12ValueWrapperIS2_IS2_IS2_IS2_IS2_IS2_IS2_IS2_IS2_IdEEEEEEEEEEESC_EEvlT_lT0_.exit ] ; 4 uses
   %.0 = add nsw i64 %.0.in45, -1                  ; 5 uses
-  %i.i = getelementptr inbounds [8 x i8], ptr %0, i64 %.0
+  %i.i = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.0
   %.sroa.05.0.copyload = load double, ptr %i.i, align 8, !tbaa !32 ; 2 uses
   %i.j = shl nuw i64 %.0, 1
   %i.k = add nuw nsw i64 %i.j, 2                  ; 3 uses
@@ -974,7 +974,7 @@ _ZN9benchmark7sift_inI14PointerWrapperI12ValueWrapperIS2_IS2_IS2_IS2_IS2_IS2_IS2
 .lr.ph47:                                         ; preds = %_ZN9benchmark7sift_inI14PointerWrapperI12ValueWrapperIS2_IS2_IS2_IS2_IS2_IS2_IS2_IS2_IS2_IdEEEEEEEEEEESC_EEvlT_lT0_.exit, %_ZN9benchmark7sift_inI14PointerWrapperI12ValueWrapperIS2_IS2_IS2_IS2_IS2_IS2_IS2_IS2_IS2_IdEEEEEEEEEEESC_EEvlT_lT0_.exit32
   %.1.in46 = phi i64 [ %.1, %_ZN9benchmark7sift_inI14PointerWrapperI12ValueWrapperIS2_IS2_IS2_IS2_IS2_IS2_IS2_IS2_IS2_IdEEEEEEEEEEESC_EEvlT_lT0_.exit32 ], [ %i.d, %_ZN9benchmark7sift_inI14PointerWrapperI12ValueWrapperIS2_IS2_IS2_IS2_IS2_IS2_IS2_IS2_IS2_IdEEEEEEEEEEESC_EEvlT_lT0_.exit ] ; 4 uses
   %.1 = add nsw i64 %.1.in46, -1                  ; 4 uses
-  %i.ah = getelementptr inbounds [8 x i8], ptr %0, i64 %.1 ; 2 uses
+  %i.ah = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.1 ; 2 uses
   %.sroa.02.0.copyload = load double, ptr %i.ah, align 8, !tbaa !32 ; 2 uses
   %i.ai = load i64, ptr %0, align 8, !tbaa !32
   store i64 %i.ai, ptr %i.ah, align 8, !tbaa !32
@@ -1008,7 +1008,7 @@ _ZN9benchmark7sift_inI14PointerWrapperI12ValueWrapperIS2_IS2_IS2_IS2_IS2_IS2_IS2
 
 .thread:                                          ; preds = %._crit_edge.i19
   %i.ax = add nsw i64 %.1.in46, -2                ; 2 uses
-  %i.ay = getelementptr inbounds [8 x i8], ptr %0, i64 %i.ax
+  %i.ay = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.ax
   %i.az = getelementptr inbounds [8 x i8], ptr %0, i64 %.0.lcssa.i21
   %i.ba = load i64, ptr %i.ay, align 8, !tbaa !32
   store i64 %i.ba, ptr %i.az, align 8, !tbaa !32

@@ -203,7 +203,7 @@ _ZN5Eigen8internal15unary_evaluatorINS_9TransposeIKNS_12SparseMatrixIdLi0EiEEEEN
   %.02244.us.us = phi i64 [ %.022.us.us, %._crit_edge.us.us ], [ %.02243, %.split ] ; 5 uses
   %i.p = getelementptr [8 x i8], ptr %i.f, i64 %.02244.us.us ; 2 uses
   %i.q = load double, ptr %i.p, align 8, !tbaa !63 ; 3 uses
-  %i.r = getelementptr inbounds [4 x i8], ptr %i.m, i64 %.02244.us.us ; 2 uses
+  %i.r = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %.02244.us.us ; 2 uses
   %i.s = load i32, ptr %i.r, align 4, !tbaa !33   ; 2 uses
   %i.t = sext i32 %i.s to i64                     ; 2 uses
   %i.u = getelementptr i8, ptr %i.r, i64 4
@@ -301,10 +301,10 @@ _ZN5Eigen8internal15unary_evaluatorINS_9TransposeIKNS_12SparseMatrixIdLi0EiEEEEN
   %.02244 = phi i64 [ %.022, %._crit_edge ], [ %.02243, %.split ] ; 6 uses
   %i.bn = getelementptr [8 x i8], ptr %i.f, i64 %.02244 ; 2 uses
   %i.bo = load double, ptr %i.bn, align 8, !tbaa !63 ; 3 uses
-  %i.bp = getelementptr inbounds [4 x i8], ptr %i.m, i64 %.02244
+  %i.bp = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %.02244
   %i.bq = load i32, ptr %i.bp, align 4, !tbaa !33
   %i.br = sext i32 %i.bq to i64                   ; 5 uses
-  %i.bs = getelementptr inbounds [4 x i8], ptr %i.n, i64 %.02244
+  %i.bs = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %.02244
   %i.bt = load i32, ptr %i.bs, align 4, !tbaa !33 ; 2 uses
   %i.bu = sext i32 %i.bt to i64                   ; 3 uses
   %i.bv = add nsw i64 %i.bu, %i.br                ; 4 uses

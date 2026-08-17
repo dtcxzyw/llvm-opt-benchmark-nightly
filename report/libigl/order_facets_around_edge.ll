@@ -204,7 +204,7 @@ bb.at:                                            ; preds = %bb.aq, %bb.ap, %bb.
   %i.dx = load ptr, ptr %0, align 8, !tbaa !15, !noalias !42
   %i.dy = getelementptr inbounds [16 x i8], ptr %i.dx, i64 %i.dw
   %i.dz = load ptr, ptr %28, align 8, !tbaa !15, !noalias !45
-  %i.ea = getelementptr inbounds [16 x i8], ptr %i.dz, i64 %.091264
+  %i.ea = getelementptr inbounds nuw [16 x i8], ptr %i.dz, i64 %.091264
   %i.eb = load i64, ptr %i.cy, align 8, !tbaa !37, !noalias !45 ; 2 uses
   %i.ec = load i64, ptr %i.b, align 8, !tbaa !19
   %i.ed = load i64, ptr %i.cx, align 8, !tbaa !19
@@ -607,7 +607,7 @@ bb.cj:                                            ; preds = %bb.ci, %._crit_edge
 
 bb.ck:                                            ; preds = %.lr.ph278, %bb.cl
   %.086276 = phi i64 [ 0, %.lr.ph278 ], [ %i.ne, %bb.cl ] ; 4 uses
-  %i.na = getelementptr inbounds [4 x i8], ptr %i.mw, i64 %.086276
+  %i.na = getelementptr inbounds nuw [4 x i8], ptr %i.mw, i64 %.086276
   %i.nb = load i32, ptr %i.na, align 4, !tbaa !38
   %i.nc = sext i32 %i.nb to i64
   %i.nd = icmp eq i64 %i.ca, %i.nc
@@ -648,7 +648,7 @@ bb.cl:                                            ; preds = %bb.ck
   %i.nn = sext i32 %i.nm to i64
   %i.no = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0215.0370382, i64 %i.nn
   %i.np = load i64, ptr %i.no, align 8, !tbaa !31
-  %i.nq = getelementptr inbounds [4 x i8], ptr %i.ng, i64 %.0282.epil.init
+  %i.nq = getelementptr inbounds nuw [4 x i8], ptr %i.ng, i64 %.0282.epil.init
   %i.nr = trunc i64 %i.np to i32
   store i32 %i.nr, ptr %i.nq, align 4, !tbaa !38
   br label %._crit_edge285
@@ -765,7 +765,7 @@ bb.cw:                                            ; preds = %bb.cw, %.lr.ph284.n
   %i.pd = sext i32 %i.pc to i64
   %i.pe = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0215.0370382, i64 %i.pd
   %i.pf = load i64, ptr %i.pe, align 8, !tbaa !31
-  %i.pg = getelementptr inbounds [4 x i8], ptr %i.ng, i64 %.0282
+  %i.pg = getelementptr inbounds nuw [4 x i8], ptr %i.ng, i64 %.0282
   %i.ph = trunc i64 %i.pf to i32
   store i32 %i.ph, ptr %i.pg, align 4, !tbaa !38
   %i.pi = or disjoint i64 %.0282, 1               ; 2 uses
@@ -776,7 +776,7 @@ bb.cw:                                            ; preds = %bb.cw, %.lr.ph284.n
   %i.pn = sext i32 %i.pm to i64
   %i.po = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0215.0370382, i64 %i.pn
   %i.pp = load i64, ptr %i.po, align 8, !tbaa !31
-  %i.pq = getelementptr inbounds [4 x i8], ptr %i.ng, i64 %i.pi
+  %i.pq = getelementptr inbounds nuw [4 x i8], ptr %i.ng, i64 %i.pi
   %i.pr = trunc i64 %i.pp to i32
   store i32 %i.pr, ptr %i.pq, align 4, !tbaa !38
   %i.ps = add nuw i64 %.0282, 2                   ; 2 uses
@@ -1179,7 +1179,7 @@ bb.at:                                            ; preds = %bb.aq, %bb.ap, %bb.
   %i.dv = load ptr, ptr %0, align 8, !tbaa !15, !noalias !195
   %i.dw = getelementptr inbounds [16 x i8], ptr %i.dv, i64 %i.du
   %i.dx = load ptr, ptr %28, align 8, !tbaa !15, !noalias !198
-  %i.dy = getelementptr inbounds [16 x i8], ptr %i.dx, i64 %.091265
+  %i.dy = getelementptr inbounds nuw [16 x i8], ptr %i.dx, i64 %.091265
   %i.dz = load i64, ptr %i.cw, align 8, !tbaa !37, !noalias !198 ; 2 uses
   %i.ea = load i64, ptr %i.b, align 8, !tbaa !19
   %i.eb = load i64, ptr %i.cv, align 8, !tbaa !19
@@ -1582,7 +1582,7 @@ bb.cj:                                            ; preds = %bb.ci, %._crit_edge
 
 bb.ck:                                            ; preds = %.lr.ph279, %bb.cl
   %.086277 = phi i64 [ 0, %.lr.ph279 ], [ %i.na, %bb.cl ] ; 4 uses
-  %i.mw = getelementptr inbounds [4 x i8], ptr %i.ms, i64 %.086277
+  %i.mw = getelementptr inbounds nuw [4 x i8], ptr %i.ms, i64 %.086277
   %i.mx = load i32, ptr %i.mw, align 4, !tbaa !38
   %i.my = sext i32 %i.mx to i64
   %i.mz = icmp eq i64 %i.by, %i.my
@@ -1623,7 +1623,7 @@ bb.cl:                                            ; preds = %bb.ck
   %i.nj = sext i32 %i.ni to i64
   %i.nk = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0216.0370382, i64 %i.nj
   %i.nl = load i64, ptr %i.nk, align 8, !tbaa !31
-  %i.nm = getelementptr inbounds [4 x i8], ptr %i.nc, i64 %.0283.epil.init
+  %i.nm = getelementptr inbounds nuw [4 x i8], ptr %i.nc, i64 %.0283.epil.init
   %i.nn = trunc i64 %i.nl to i32
   store i32 %i.nn, ptr %i.nm, align 4, !tbaa !38
   br label %._crit_edge286
@@ -1740,7 +1740,7 @@ bb.cw:                                            ; preds = %bb.cw, %.lr.ph285.n
   %i.oz = sext i32 %i.oy to i64
   %i.pa = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0216.0370382, i64 %i.oz
   %i.pb = load i64, ptr %i.pa, align 8, !tbaa !31
-  %i.pc = getelementptr inbounds [4 x i8], ptr %i.nc, i64 %.0283
+  %i.pc = getelementptr inbounds nuw [4 x i8], ptr %i.nc, i64 %.0283
   %i.pd = trunc i64 %i.pb to i32
   store i32 %i.pd, ptr %i.pc, align 4, !tbaa !38
   %i.pe = or disjoint i64 %.0283, 1               ; 2 uses
@@ -1751,7 +1751,7 @@ bb.cw:                                            ; preds = %bb.cw, %.lr.ph285.n
   %i.pj = sext i32 %i.pi to i64
   %i.pk = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0216.0370382, i64 %i.pj
   %i.pl = load i64, ptr %i.pk, align 8, !tbaa !31
-  %i.pm = getelementptr inbounds [4 x i8], ptr %i.nc, i64 %i.pe
+  %i.pm = getelementptr inbounds nuw [4 x i8], ptr %i.nc, i64 %i.pe
   %i.pn = trunc i64 %i.pl to i32
   store i32 %i.pn, ptr %i.pm, align 4, !tbaa !38
   %i.po = add nuw i64 %.0283, 2                   ; 2 uses
@@ -2154,7 +2154,7 @@ bb.at:                                            ; preds = %bb.aq, %bb.ap, %bb.
   %i.du = load ptr, ptr %0, align 8, !tbaa !15, !noalias !228
   %i.dv = getelementptr inbounds [16 x i8], ptr %i.du, i64 %i.dt
   %i.dw = load ptr, ptr %28, align 8, !tbaa !15, !noalias !231
-  %i.dx = getelementptr inbounds [16 x i8], ptr %i.dw, i64 %.091265
+  %i.dx = getelementptr inbounds nuw [16 x i8], ptr %i.dw, i64 %.091265
   %i.dy = load i64, ptr %i.cv, align 8, !tbaa !37, !noalias !231 ; 2 uses
   %i.dz = load i64, ptr %i.b, align 8, !tbaa !19
   %i.ea = load i64, ptr %i.cu, align 8, !tbaa !19
@@ -2557,7 +2557,7 @@ bb.cj:                                            ; preds = %bb.ci, %._crit_edge
 
 bb.ck:                                            ; preds = %.lr.ph279, %bb.cl
   %.086277 = phi i64 [ 0, %.lr.ph279 ], [ %i.my, %bb.cl ] ; 4 uses
-  %i.mu = getelementptr inbounds [4 x i8], ptr %i.mq, i64 %.086277
+  %i.mu = getelementptr inbounds nuw [4 x i8], ptr %i.mq, i64 %.086277
   %i.mv = load i32, ptr %i.mu, align 4, !tbaa !38
   %i.mw = sext i32 %i.mv to i64
   %i.mx = icmp eq i64 %i.bx, %i.mw
@@ -2598,7 +2598,7 @@ bb.cl:                                            ; preds = %bb.ck
   %i.nh = sext i32 %i.ng to i64
   %i.ni = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0216.0370382, i64 %i.nh
   %i.nj = load i64, ptr %i.ni, align 8, !tbaa !31
-  %i.nk = getelementptr inbounds [4 x i8], ptr %i.na, i64 %.0283.epil.init
+  %i.nk = getelementptr inbounds nuw [4 x i8], ptr %i.na, i64 %.0283.epil.init
   %i.nl = trunc i64 %i.nj to i32
   store i32 %i.nl, ptr %i.nk, align 4, !tbaa !38
   br label %._crit_edge286
@@ -2715,7 +2715,7 @@ bb.cw:                                            ; preds = %bb.cw, %.lr.ph285.n
   %i.ox = sext i32 %i.ow to i64
   %i.oy = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0216.0370382, i64 %i.ox
   %i.oz = load i64, ptr %i.oy, align 8, !tbaa !31
-  %i.pa = getelementptr inbounds [4 x i8], ptr %i.na, i64 %.0283
+  %i.pa = getelementptr inbounds nuw [4 x i8], ptr %i.na, i64 %.0283
   %i.pb = trunc i64 %i.oz to i32
   store i32 %i.pb, ptr %i.pa, align 4, !tbaa !38
   %i.pc = or disjoint i64 %.0283, 1               ; 2 uses
@@ -2726,7 +2726,7 @@ bb.cw:                                            ; preds = %bb.cw, %.lr.ph285.n
   %i.ph = sext i32 %i.pg to i64
   %i.pi = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0216.0370382, i64 %i.ph
   %i.pj = load i64, ptr %i.pi, align 8, !tbaa !31
-  %i.pk = getelementptr inbounds [4 x i8], ptr %i.na, i64 %i.pc
+  %i.pk = getelementptr inbounds nuw [4 x i8], ptr %i.na, i64 %i.pc
   %i.pl = trunc i64 %i.pj to i32
   store i32 %i.pl, ptr %i.pk, align 4, !tbaa !38
   %i.pm = add nuw i64 %.0283, 2                   ; 2 uses
@@ -3129,7 +3129,7 @@ bb.bz:                                            ; preds = %bb.by, %._crit_edge
 
 bb.ca:                                            ; preds = %.lr.ph255, %bb.cb
   %.086253 = phi i64 [ 0, %.lr.ph255 ], [ %i.lt, %bb.cb ] ; 4 uses
-  %i.lp = getelementptr inbounds [4 x i8], ptr %i.ll, i64 %.086253
+  %i.lp = getelementptr inbounds nuw [4 x i8], ptr %i.ll, i64 %.086253
   %i.lq = load i32, ptr %i.lp, align 4, !tbaa !38
   %i.lr = sext i32 %i.lq to i64
   %i.ls = icmp eq i64 %i.ca, %i.lr
@@ -3170,7 +3170,7 @@ bb.cb:                                            ; preds = %bb.ca
   %i.mc = sext i32 %i.mb to i64
   %i.md = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0204.0327338, i64 %i.mc
   %i.me = load i64, ptr %i.md, align 8, !tbaa !31
-  %i.mf = getelementptr inbounds [4 x i8], ptr %i.lv, i64 %.0259.epil.init
+  %i.mf = getelementptr inbounds nuw [4 x i8], ptr %i.lv, i64 %.0259.epil.init
   %i.mg = trunc i64 %i.me to i32
   store i32 %i.mg, ptr %i.mf, align 4, !tbaa !38
   br label %._crit_edge262
@@ -3287,7 +3287,7 @@ bb.cm:                                            ; preds = %bb.cm, %.lr.ph261.n
   %i.ns = sext i32 %i.nr to i64
   %i.nt = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0204.0327338, i64 %i.ns
   %i.nu = load i64, ptr %i.nt, align 8, !tbaa !31
-  %i.nv = getelementptr inbounds [4 x i8], ptr %i.lv, i64 %.0259
+  %i.nv = getelementptr inbounds nuw [4 x i8], ptr %i.lv, i64 %.0259
   %i.nw = trunc i64 %i.nu to i32
   store i32 %i.nw, ptr %i.nv, align 4, !tbaa !38
   %i.nx = or disjoint i64 %.0259, 1               ; 2 uses
@@ -3298,7 +3298,7 @@ bb.cm:                                            ; preds = %bb.cm, %.lr.ph261.n
   %i.oc = sext i32 %i.ob to i64
   %i.od = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0204.0327338, i64 %i.oc
   %i.oe = load i64, ptr %i.od, align 8, !tbaa !31
-  %i.of = getelementptr inbounds [4 x i8], ptr %i.lv, i64 %i.nx
+  %i.of = getelementptr inbounds nuw [4 x i8], ptr %i.lv, i64 %i.nx
   %i.og = trunc i64 %i.oe to i32
   store i32 %i.og, ptr %i.of, align 4, !tbaa !38
   %i.oh = add nuw i64 %.0259, 2                   ; 2 uses
@@ -3701,7 +3701,7 @@ bb.bz:                                            ; preds = %bb.by, %._crit_edge
 
 bb.ca:                                            ; preds = %.lr.ph255, %bb.cb
   %.086253 = phi i64 [ 0, %.lr.ph255 ], [ %i.lt, %bb.cb ] ; 4 uses
-  %i.lp = getelementptr inbounds [4 x i8], ptr %i.ll, i64 %.086253
+  %i.lp = getelementptr inbounds nuw [4 x i8], ptr %i.ll, i64 %.086253
   %i.lq = load i32, ptr %i.lp, align 4, !tbaa !38
   %i.lr = sext i32 %i.lq to i64
   %i.ls = icmp eq i64 %i.ca, %i.lr
@@ -3742,7 +3742,7 @@ bb.cb:                                            ; preds = %bb.ca
   %i.mc = sext i32 %i.mb to i64
   %i.md = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0204.0327338, i64 %i.mc
   %i.me = load i64, ptr %i.md, align 8, !tbaa !31
-  %i.mf = getelementptr inbounds [4 x i8], ptr %i.lv, i64 %.0259.epil.init
+  %i.mf = getelementptr inbounds nuw [4 x i8], ptr %i.lv, i64 %.0259.epil.init
   %i.mg = trunc i64 %i.me to i32
   store i32 %i.mg, ptr %i.mf, align 4, !tbaa !38
   br label %._crit_edge262
@@ -3859,7 +3859,7 @@ bb.cm:                                            ; preds = %bb.cm, %.lr.ph261.n
   %i.ns = sext i32 %i.nr to i64
   %i.nt = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0204.0327338, i64 %i.ns
   %i.nu = load i64, ptr %i.nt, align 8, !tbaa !31
-  %i.nv = getelementptr inbounds [4 x i8], ptr %i.lv, i64 %.0259
+  %i.nv = getelementptr inbounds nuw [4 x i8], ptr %i.lv, i64 %.0259
   %i.nw = trunc i64 %i.nu to i32
   store i32 %i.nw, ptr %i.nv, align 4, !tbaa !38
   %i.nx = or disjoint i64 %.0259, 1               ; 2 uses
@@ -3870,7 +3870,7 @@ bb.cm:                                            ; preds = %bb.cm, %.lr.ph261.n
   %i.oc = sext i32 %i.ob to i64
   %i.od = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0204.0327338, i64 %i.oc
   %i.oe = load i64, ptr %i.od, align 8, !tbaa !31
-  %i.of = getelementptr inbounds [4 x i8], ptr %i.lv, i64 %i.nx
+  %i.of = getelementptr inbounds nuw [4 x i8], ptr %i.lv, i64 %i.nx
   %i.og = trunc i64 %i.oe to i32
   store i32 %i.og, ptr %i.of, align 4, !tbaa !38
   %i.oh = add nuw i64 %.0259, 2                   ; 2 uses
@@ -4273,7 +4273,7 @@ bb.bz:                                            ; preds = %bb.by, %._crit_edge
 
 bb.ca:                                            ; preds = %.lr.ph255, %bb.cb
   %.086253 = phi i64 [ 0, %.lr.ph255 ], [ %i.lr, %bb.cb ] ; 4 uses
-  %i.ln = getelementptr inbounds [4 x i8], ptr %i.lj, i64 %.086253
+  %i.ln = getelementptr inbounds nuw [4 x i8], ptr %i.lj, i64 %.086253
   %i.lo = load i32, ptr %i.ln, align 4, !tbaa !38
   %i.lp = sext i32 %i.lo to i64
   %i.lq = icmp eq i64 %i.bz, %i.lp
@@ -4314,7 +4314,7 @@ bb.cb:                                            ; preds = %bb.ca
   %i.ma = sext i32 %i.lz to i64
   %i.mb = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0204.0327338, i64 %i.ma
   %i.mc = load i64, ptr %i.mb, align 8, !tbaa !31
-  %i.md = getelementptr inbounds [4 x i8], ptr %i.lt, i64 %.0259.epil.init
+  %i.md = getelementptr inbounds nuw [4 x i8], ptr %i.lt, i64 %.0259.epil.init
   %i.me = trunc i64 %i.mc to i32
   store i32 %i.me, ptr %i.md, align 4, !tbaa !38
   br label %._crit_edge262
@@ -4431,7 +4431,7 @@ bb.cm:                                            ; preds = %bb.cm, %.lr.ph261.n
   %i.nq = sext i32 %i.np to i64
   %i.nr = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0204.0327338, i64 %i.nq
   %i.ns = load i64, ptr %i.nr, align 8, !tbaa !31
-  %i.nt = getelementptr inbounds [4 x i8], ptr %i.lt, i64 %.0259
+  %i.nt = getelementptr inbounds nuw [4 x i8], ptr %i.lt, i64 %.0259
   %i.nu = trunc i64 %i.ns to i32
   store i32 %i.nu, ptr %i.nt, align 4, !tbaa !38
   %i.nv = or disjoint i64 %.0259, 1               ; 2 uses
@@ -4442,7 +4442,7 @@ bb.cm:                                            ; preds = %bb.cm, %.lr.ph261.n
   %i.oa = sext i32 %i.nz to i64
   %i.ob = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0204.0327338, i64 %i.oa
   %i.oc = load i64, ptr %i.ob, align 8, !tbaa !31
-  %i.od = getelementptr inbounds [4 x i8], ptr %i.lt, i64 %i.nv
+  %i.od = getelementptr inbounds nuw [4 x i8], ptr %i.lt, i64 %i.nv
   %i.oe = trunc i64 %i.oc to i32
   store i32 %i.oe, ptr %i.od, align 4, !tbaa !38
   %i.of = add nuw i64 %.0259, 2                   ; 2 uses
@@ -4845,7 +4845,7 @@ bb.as:                                            ; preds = %bb.ap, %bb.ao, %bb.
   call void @llvm.lifetime.start.p0(ptr nonnull %37) #22
   call void @llvm.experimental.noalias.scope.decl(metadata !433)
   %i.ef = load ptr, ptr %36, align 8, !tbaa !422, !noalias !433
-  %i.eg = getelementptr inbounds [16 x i8], ptr %i.ef, i64 %.091224 ; 2 uses
+  %i.eg = getelementptr inbounds nuw [16 x i8], ptr %i.ef, i64 %.091224 ; 2 uses
   store ptr %i.eg, ptr %37, align 8, !tbaa !436, !alias.scope !433
   store ptr %36, ptr %i.da, align 8, !tbaa !439, !alias.scope !433
   store i64 %.091224, ptr %i.db, align 8, !tbaa !70, !alias.scope !433
@@ -5248,7 +5248,7 @@ bb.bx:                                            ; preds = %bb.bw, %._crit_edge
 
 bb.by:                                            ; preds = %.lr.ph234, %bb.bz
   %.086232 = phi i64 [ 0, %.lr.ph234 ], [ %i.lm, %bb.bz ] ; 4 uses
-  %i.li = getelementptr inbounds [4 x i8], ptr %i.le, i64 %.086232
+  %i.li = getelementptr inbounds nuw [4 x i8], ptr %i.le, i64 %.086232
   %i.lj = load i32, ptr %i.li, align 4, !tbaa !38
   %i.lk = sext i32 %i.lj to i64
   %i.ll = icmp eq i64 %i.ca, %i.lk
@@ -5289,7 +5289,7 @@ bb.bz:                                            ; preds = %bb.by
   %i.lv = sext i32 %i.lu to i64
   %i.lw = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0186.0299310, i64 %i.lv
   %i.lx = load i64, ptr %i.lw, align 8, !tbaa !31
-  %i.ly = getelementptr inbounds [4 x i8], ptr %i.lo, i64 %.0238.epil.init
+  %i.ly = getelementptr inbounds nuw [4 x i8], ptr %i.lo, i64 %.0238.epil.init
   %i.lz = trunc i64 %i.lx to i32
   store i32 %i.lz, ptr %i.ly, align 4, !tbaa !38
   br label %._crit_edge241
@@ -5408,7 +5408,7 @@ bb.ck:                                            ; preds = %bb.ck, %.lr.ph240.n
   %i.nk = sext i32 %i.nj to i64
   %i.nl = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0186.0299310, i64 %i.nk
   %i.nm = load i64, ptr %i.nl, align 8, !tbaa !31
-  %i.nn = getelementptr inbounds [4 x i8], ptr %i.lo, i64 %.0238
+  %i.nn = getelementptr inbounds nuw [4 x i8], ptr %i.lo, i64 %.0238
   %i.no = trunc i64 %i.nm to i32
   store i32 %i.no, ptr %i.nn, align 4, !tbaa !38
   %i.np = or disjoint i64 %.0238, 1               ; 2 uses
@@ -5419,7 +5419,7 @@ bb.ck:                                            ; preds = %bb.ck, %.lr.ph240.n
   %i.nu = sext i32 %i.nt to i64
   %i.nv = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0186.0299310, i64 %i.nu
   %i.nw = load i64, ptr %i.nv, align 8, !tbaa !31
-  %i.nx = getelementptr inbounds [4 x i8], ptr %i.lo, i64 %i.np
+  %i.nx = getelementptr inbounds nuw [4 x i8], ptr %i.lo, i64 %i.np
   %i.ny = trunc i64 %i.nw to i32
   store i32 %i.ny, ptr %i.nx, align 4, !tbaa !38
   %i.nz = add nuw i64 %.0238, 2                   ; 2 uses
@@ -5822,7 +5822,7 @@ bb.as:                                            ; preds = %bb.ap, %bb.ao, %bb.
   call void @llvm.lifetime.start.p0(ptr nonnull %37) #22
   call void @llvm.experimental.noalias.scope.decl(metadata !527)
   %i.ec = load ptr, ptr %36, align 8, !tbaa !422, !noalias !527
-  %i.ed = getelementptr inbounds [16 x i8], ptr %i.ec, i64 %.091223 ; 2 uses
+  %i.ed = getelementptr inbounds nuw [16 x i8], ptr %i.ec, i64 %.091223 ; 2 uses
   store ptr %i.ed, ptr %37, align 8, !tbaa !436, !alias.scope !527
   store ptr %36, ptr %i.cx, align 8, !tbaa !439, !alias.scope !527
   store i64 %.091223, ptr %i.cy, align 8, !tbaa !70, !alias.scope !527
@@ -6225,7 +6225,7 @@ bb.bx:                                            ; preds = %bb.bw, %._crit_edge
 
 bb.by:                                            ; preds = %.lr.ph233, %bb.bz
   %.086231 = phi i64 [ 0, %.lr.ph233 ], [ %i.lg, %bb.bz ] ; 4 uses
-  %i.lc = getelementptr inbounds [4 x i8], ptr %i.ky, i64 %.086231
+  %i.lc = getelementptr inbounds nuw [4 x i8], ptr %i.ky, i64 %.086231
   %i.ld = load i32, ptr %i.lc, align 4, !tbaa !38
   %i.le = sext i32 %i.ld to i64
   %i.lf = icmp eq i64 %i.bx, %i.le
@@ -6266,7 +6266,7 @@ bb.bz:                                            ; preds = %bb.by
   %i.lp = sext i32 %i.lo to i64
   %i.lq = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0186.0298309, i64 %i.lp
   %i.lr = load i64, ptr %i.lq, align 8, !tbaa !31
-  %i.ls = getelementptr inbounds [4 x i8], ptr %i.li, i64 %.0237.epil.init
+  %i.ls = getelementptr inbounds nuw [4 x i8], ptr %i.li, i64 %.0237.epil.init
   %i.lt = trunc i64 %i.lr to i32
   store i32 %i.lt, ptr %i.ls, align 4, !tbaa !38
   br label %._crit_edge240
@@ -6385,7 +6385,7 @@ bb.ck:                                            ; preds = %bb.ck, %.lr.ph239.n
   %i.ne = sext i32 %i.nd to i64
   %i.nf = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0186.0298309, i64 %i.ne
   %i.ng = load i64, ptr %i.nf, align 8, !tbaa !31
-  %i.nh = getelementptr inbounds [4 x i8], ptr %i.li, i64 %.0237
+  %i.nh = getelementptr inbounds nuw [4 x i8], ptr %i.li, i64 %.0237
   %i.ni = trunc i64 %i.ng to i32
   store i32 %i.ni, ptr %i.nh, align 4, !tbaa !38
   %i.nj = or disjoint i64 %.0237, 1               ; 2 uses
@@ -6396,7 +6396,7 @@ bb.ck:                                            ; preds = %bb.ck, %.lr.ph239.n
   %i.no = sext i32 %i.nn to i64
   %i.np = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0186.0298309, i64 %i.no
   %i.nq = load i64, ptr %i.np, align 8, !tbaa !31
-  %i.nr = getelementptr inbounds [4 x i8], ptr %i.li, i64 %i.nj
+  %i.nr = getelementptr inbounds nuw [4 x i8], ptr %i.li, i64 %i.nj
   %i.ns = trunc i64 %i.nq to i32
   store i32 %i.ns, ptr %i.nr, align 4, !tbaa !38
   %i.nt = add nuw i64 %.0237, 2                   ; 2 uses
@@ -6799,7 +6799,7 @@ bb.av:                                            ; preds = %bb.au
   %.0.i = phi i32 [ -1, %bb.au ], [ %i.ed, %bb.as ], [ %i.eg, %bb.at ], [ %spec.select.i, %bb.av ]
   %i.ej = sext i32 %.0.i to i64
   %i.ek = getelementptr inbounds [8 x i8], ptr %.pre, i64 %i.ej ; 3 uses
-  %i.el = getelementptr inbounds [8 x i8], ptr %i.dj, i64 %.091267 ; 3 uses
+  %i.el = getelementptr inbounds nuw [8 x i8], ptr %i.dj, i64 %.091267 ; 3 uses
   %i.em = load double, ptr %i.ek, align 8, !tbaa !562
   store double %i.em, ptr %i.el, align 8, !tbaa !562
   %i.en = getelementptr inbounds nuw [8 x i8], ptr %i.el, i64 %i.dh
@@ -7162,7 +7162,7 @@ bb.bq:                                            ; preds = %bb.bp, %._crit_edge
 
 bb.br:                                            ; preds = %.lr.ph281, %bb.bs
   %.086279 = phi i64 [ 0, %.lr.ph281 ], [ %i.kc, %bb.bs ] ; 4 uses
-  %i.jy = getelementptr inbounds [4 x i8], ptr %i.ju, i64 %.086279
+  %i.jy = getelementptr inbounds nuw [4 x i8], ptr %i.ju, i64 %.086279
   %i.jz = load i32, ptr %i.jy, align 4, !tbaa !38
   %i.ka = sext i32 %i.jz to i64
   %i.kb = icmp eq i64 %i.ca, %i.ka
@@ -7203,7 +7203,7 @@ bb.bs:                                            ; preds = %bb.br
   %i.kl = sext i32 %i.kk to i64
   %i.km = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0227.0346357365, i64 %i.kl
   %i.kn = load i64, ptr %i.km, align 8, !tbaa !31
-  %i.ko = getelementptr inbounds [4 x i8], ptr %i.ke, i64 %.0285.epil.init
+  %i.ko = getelementptr inbounds nuw [4 x i8], ptr %i.ke, i64 %.0285.epil.init
   %i.kp = trunc i64 %i.kn to i32
   store i32 %i.kp, ptr %i.ko, align 4, !tbaa !38
   br label %._crit_edge288
@@ -7255,7 +7255,7 @@ bb.bv:                                            ; preds = %bb.bv, %.lr.ph287.n
   %i.le = sext i32 %i.ld to i64
   %i.lf = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0227.0346357365, i64 %i.le
   %i.lg = load i64, ptr %i.lf, align 8, !tbaa !31
-  %i.lh = getelementptr inbounds [4 x i8], ptr %i.ke, i64 %.0285
+  %i.lh = getelementptr inbounds nuw [4 x i8], ptr %i.ke, i64 %.0285
   %i.li = trunc i64 %i.lg to i32
   store i32 %i.li, ptr %i.lh, align 4, !tbaa !38
   %i.lj = or disjoint i64 %.0285, 1               ; 2 uses
@@ -7266,7 +7266,7 @@ bb.bv:                                            ; preds = %bb.bv, %.lr.ph287.n
   %i.lo = sext i32 %i.ln to i64
   %i.lp = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0227.0346357365, i64 %i.lo
   %i.lq = load i64, ptr %i.lp, align 8, !tbaa !31
-  %i.lr = getelementptr inbounds [4 x i8], ptr %i.ke, i64 %i.lj
+  %i.lr = getelementptr inbounds nuw [4 x i8], ptr %i.ke, i64 %i.lj
   %i.ls = trunc i64 %i.lq to i32
   store i32 %i.ls, ptr %i.lr, align 4, !tbaa !38
   %i.lt = add nuw i64 %.0285, 2                   ; 2 uses
@@ -7669,7 +7669,7 @@ bb.av:                                            ; preds = %bb.au
   %.0.i = phi i32 [ -1, %bb.au ], [ %i.eb, %bb.as ], [ %i.ee, %bb.at ], [ %spec.select.i, %bb.av ]
   %i.eh = sext i32 %.0.i to i64
   %i.ei = getelementptr inbounds [8 x i8], ptr %.pre, i64 %i.eh ; 3 uses
-  %i.ej = getelementptr inbounds [8 x i8], ptr %i.dh, i64 %.091268 ; 3 uses
+  %i.ej = getelementptr inbounds nuw [8 x i8], ptr %i.dh, i64 %.091268 ; 3 uses
   %i.ek = load double, ptr %i.ei, align 8, !tbaa !562
   store double %i.ek, ptr %i.ej, align 8, !tbaa !562
   %i.el = getelementptr inbounds nuw [8 x i8], ptr %i.ej, i64 %i.df
@@ -8030,7 +8030,7 @@ bb.bq:                                            ; preds = %bb.bp, %._crit_edge
 
 bb.br:                                            ; preds = %.lr.ph282, %bb.bs
   %.086280 = phi i64 [ 0, %.lr.ph282 ], [ %i.jz, %bb.bs ] ; 4 uses
-  %i.jv = getelementptr inbounds [4 x i8], ptr %i.jr, i64 %.086280
+  %i.jv = getelementptr inbounds nuw [4 x i8], ptr %i.jr, i64 %.086280
   %i.jw = load i32, ptr %i.jv, align 4, !tbaa !38
   %i.jx = sext i32 %i.jw to i64
   %i.jy = icmp eq i64 %i.by, %i.jx
@@ -8071,7 +8071,7 @@ bb.bs:                                            ; preds = %bb.br
   %i.ki = sext i32 %i.kh to i64
   %i.kj = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0229.0346357365, i64 %i.ki
   %i.kk = load i64, ptr %i.kj, align 8, !tbaa !31
-  %i.kl = getelementptr inbounds [4 x i8], ptr %i.kb, i64 %.0286.epil.init
+  %i.kl = getelementptr inbounds nuw [4 x i8], ptr %i.kb, i64 %.0286.epil.init
   %i.km = trunc i64 %i.kk to i32
   store i32 %i.km, ptr %i.kl, align 4, !tbaa !38
   br label %._crit_edge289
@@ -8123,7 +8123,7 @@ bb.bv:                                            ; preds = %bb.bv, %.lr.ph288.n
   %i.lb = sext i32 %i.la to i64
   %i.lc = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0229.0346357365, i64 %i.lb
   %i.ld = load i64, ptr %i.lc, align 8, !tbaa !31
-  %i.le = getelementptr inbounds [4 x i8], ptr %i.kb, i64 %.0286
+  %i.le = getelementptr inbounds nuw [4 x i8], ptr %i.kb, i64 %.0286
   %i.lf = trunc i64 %i.ld to i32
   store i32 %i.lf, ptr %i.le, align 4, !tbaa !38
   %i.lg = or disjoint i64 %.0286, 1               ; 2 uses
@@ -8134,7 +8134,7 @@ bb.bv:                                            ; preds = %bb.bv, %.lr.ph288.n
   %i.ll = sext i32 %i.lk to i64
   %i.lm = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0229.0346357365, i64 %i.ll
   %i.ln = load i64, ptr %i.lm, align 8, !tbaa !31
-  %i.lo = getelementptr inbounds [4 x i8], ptr %i.kb, i64 %i.lg
+  %i.lo = getelementptr inbounds nuw [4 x i8], ptr %i.kb, i64 %i.lg
   %i.lp = trunc i64 %i.ln to i32
   store i32 %i.lp, ptr %i.lo, align 4, !tbaa !38
   %i.lq = add nuw i64 %.0286, 2                   ; 2 uses
@@ -8537,7 +8537,7 @@ _ZN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEC2ImiEERKT_RKT0_.exit: ; preds = %bb.ap
   %.0.i = phi i32 [ -1, %bb.aq ], [ %i.dr, %bb.ao ], [ %i.du, %bb.ap ], [ %spec.select.i, %bb.ar ]
   %i.dx = sext i32 %.0.i to i64
   %i.dy = getelementptr inbounds [8 x i8], ptr %i.dc, i64 %i.dx ; 3 uses
-  %i.dz = getelementptr inbounds [8 x i8], ptr %i.dd, i64 %.091248 ; 3 uses
+  %i.dz = getelementptr inbounds nuw [8 x i8], ptr %i.dd, i64 %.091248 ; 3 uses
   %i.ea = load double, ptr %i.dy, align 8, !tbaa !562
   store double %i.ea, ptr %i.dz, align 8, !tbaa !562
   %i.eb = getelementptr inbounds [8 x i8], ptr %i.dz, i64 %i.dg
@@ -8896,7 +8896,7 @@ bb.bj:                                            ; preds = %bb.bi, %._crit_edge
 
 bb.bk:                                            ; preds = %.lr.ph258, %bb.bl
   %.086256 = phi i64 [ 0, %.lr.ph258 ], [ %i.jt, %bb.bl ] ; 4 uses
-  %i.jp = getelementptr inbounds [4 x i8], ptr %i.jl, i64 %.086256
+  %i.jp = getelementptr inbounds nuw [4 x i8], ptr %i.jl, i64 %.086256
   %i.jq = load i32, ptr %i.jp, align 4, !tbaa !38
   %i.jr = sext i32 %i.jq to i64
   %i.js = icmp eq i64 %i.ca, %i.jr
@@ -8937,7 +8937,7 @@ bb.bl:                                            ; preds = %bb.bk
   %i.kc = sext i32 %i.kb to i64
   %i.kd = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0210.0318329, i64 %i.kc
   %i.ke = load i64, ptr %i.kd, align 8, !tbaa !31
-  %i.kf = getelementptr inbounds [4 x i8], ptr %i.jv, i64 %.0262.epil.init
+  %i.kf = getelementptr inbounds nuw [4 x i8], ptr %i.jv, i64 %.0262.epil.init
   %i.kg = trunc i64 %i.ke to i32
   store i32 %i.kg, ptr %i.kf, align 4, !tbaa !38
   br label %._crit_edge265
@@ -8989,7 +8989,7 @@ bb.bo:                                            ; preds = %bb.bo, %.lr.ph264.n
   %i.kv = sext i32 %i.ku to i64
   %i.kw = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0210.0318329, i64 %i.kv
   %i.kx = load i64, ptr %i.kw, align 8, !tbaa !31
-  %i.ky = getelementptr inbounds [4 x i8], ptr %i.jv, i64 %.0262
+  %i.ky = getelementptr inbounds nuw [4 x i8], ptr %i.jv, i64 %.0262
   %i.kz = trunc i64 %i.kx to i32
   store i32 %i.kz, ptr %i.ky, align 4, !tbaa !38
   %i.la = or disjoint i64 %.0262, 1               ; 2 uses
@@ -9000,7 +9000,7 @@ bb.bo:                                            ; preds = %bb.bo, %.lr.ph264.n
   %i.lf = sext i32 %i.le to i64
   %i.lg = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0210.0318329, i64 %i.lf
   %i.lh = load i64, ptr %i.lg, align 8, !tbaa !31
-  %i.li = getelementptr inbounds [4 x i8], ptr %i.jv, i64 %i.la
+  %i.li = getelementptr inbounds nuw [4 x i8], ptr %i.jv, i64 %i.la
   %i.lj = trunc i64 %i.lh to i32
   store i32 %i.lj, ptr %i.li, align 4, !tbaa !38
   %i.lk = add nuw i64 %.0262, 2                   ; 2 uses
@@ -9403,7 +9403,7 @@ _ZN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEC2ImiEERKT_RKT0_.exit: ; preds = %bb.ap
   %.0.i = phi i32 [ -1, %bb.aq ], [ %i.do, %bb.ao ], [ %i.dr, %bb.ap ], [ %spec.select.i, %bb.ar ]
   %i.du = sext i32 %.0.i to i64
   %i.dv = getelementptr inbounds [8 x i8], ptr %i.cz, i64 %i.du ; 3 uses
-  %i.dw = getelementptr inbounds [8 x i8], ptr %i.da, i64 %.091246 ; 3 uses
+  %i.dw = getelementptr inbounds nuw [8 x i8], ptr %i.da, i64 %.091246 ; 3 uses
   %i.dx = load double, ptr %i.dv, align 8, !tbaa !562
   store double %i.dx, ptr %i.dw, align 8, !tbaa !562
   %i.dy = getelementptr inbounds [8 x i8], ptr %i.dw, i64 %i.dd
@@ -9757,7 +9757,7 @@ bb.bj:                                            ; preds = %bb.bi, %._crit_edge
 
 bb.bk:                                            ; preds = %.lr.ph256, %bb.bl
   %.086254 = phi i64 [ 0, %.lr.ph256 ], [ %i.jm, %bb.bl ] ; 4 uses
-  %i.ji = getelementptr inbounds [4 x i8], ptr %i.je, i64 %.086254
+  %i.ji = getelementptr inbounds nuw [4 x i8], ptr %i.je, i64 %.086254
   %i.jj = load i32, ptr %i.ji, align 4, !tbaa !38
   %i.jk = sext i32 %i.jj to i64
   %i.jl = icmp eq i64 %i.bx, %i.jk
@@ -9798,7 +9798,7 @@ bb.bl:                                            ; preds = %bb.bk
   %i.jv = sext i32 %i.ju to i64
   %i.jw = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0209.0316327, i64 %i.jv
   %i.jx = load i64, ptr %i.jw, align 8, !tbaa !31
-  %i.jy = getelementptr inbounds [4 x i8], ptr %i.jo, i64 %.0260.epil.init
+  %i.jy = getelementptr inbounds nuw [4 x i8], ptr %i.jo, i64 %.0260.epil.init
   %i.jz = trunc i64 %i.jx to i32
   store i32 %i.jz, ptr %i.jy, align 4, !tbaa !38
   br label %._crit_edge263
@@ -9850,7 +9850,7 @@ bb.bo:                                            ; preds = %bb.bo, %.lr.ph262.n
   %i.ko = sext i32 %i.kn to i64
   %i.kp = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0209.0316327, i64 %i.ko
   %i.kq = load i64, ptr %i.kp, align 8, !tbaa !31
-  %i.kr = getelementptr inbounds [4 x i8], ptr %i.jo, i64 %.0260
+  %i.kr = getelementptr inbounds nuw [4 x i8], ptr %i.jo, i64 %.0260
   %i.ks = trunc i64 %i.kq to i32
   store i32 %i.ks, ptr %i.kr, align 4, !tbaa !38
   %i.kt = or disjoint i64 %.0260, 1               ; 2 uses
@@ -9861,7 +9861,7 @@ bb.bo:                                            ; preds = %bb.bo, %.lr.ph262.n
   %i.ky = sext i32 %i.kx to i64
   %i.kz = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0209.0316327, i64 %i.ky
   %i.la = load i64, ptr %i.kz, align 8, !tbaa !31
-  %i.lb = getelementptr inbounds [4 x i8], ptr %i.jo, i64 %i.kt
+  %i.lb = getelementptr inbounds nuw [4 x i8], ptr %i.jo, i64 %i.kt
   %i.lc = trunc i64 %i.la to i32
   store i32 %i.lc, ptr %i.lb, align 4, !tbaa !38
   %i.ld = add nuw i64 %.0260, 2                   ; 2 uses

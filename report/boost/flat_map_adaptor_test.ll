@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %_ZN5boost9container
   br i1 %.not.i101, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %.lr.ph.i100
-  %i.ar = getelementptr inbounds [8 x i8], ptr %i.al, i64 %.011.i ; 2 uses
+  %i.ar = getelementptr inbounds nuw [8 x i8], ptr %i.al, i64 %.011.i ; 2 uses
   %i.as = getelementptr inbounds [8 x i8], ptr %i.al, i64 %i.aq ; 2 uses
   %i.at = load <2 x i32>, ptr %i.ar, align 4, !tbaa !87
   %i.au = load <2 x i32>, ptr %i.as, align 4, !tbaa !87
@@ -607,7 +607,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph
   %i.k = load ptr, ptr %0, align 8, !tbaa !390    ; 2 uses
-  %i.l = getelementptr inbounds [8 x i8], ptr %i.k, i64 %.011 ; 2 uses
+  %i.l = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %.011 ; 2 uses
   %i.m = getelementptr inbounds [8 x i8], ptr %i.k, i64 %i.j ; 2 uses
   %i.n = load <2 x i32>, ptr %i.l, align 4, !tbaa !87
   %i.o = load <2 x i32>, ptr %i.m, align 4, !tbaa !87
@@ -1010,7 +1010,7 @@ bb.p:                                             ; preds = %_ZN5boost9container
   br i1 %.not.i102, label %bb.r, label %bb.q
 
 bb.q:                                             ; preds = %.lr.ph.i101
-  %i.bo = getelementptr inbounds [8 x i8], ptr %i.bi, i64 %.011.i ; 2 uses
+  %i.bo = getelementptr inbounds nuw [8 x i8], ptr %i.bi, i64 %.011.i ; 2 uses
   %i.bp = getelementptr inbounds [8 x i8], ptr %i.bi, i64 %i.bn ; 2 uses
   %i.bq = load <2 x i32>, ptr %i.bo, align 4, !tbaa !87
   %i.br = load <2 x i32>, ptr %i.bp, align 4, !tbaa !87
@@ -1413,7 +1413,7 @@ bb.t:                                             ; preds = %bb.x
   br i1 %.not.i119, label %bb.v, label %bb.u
 
 bb.u:                                             ; preds = %.lr.ph.i118
-  %i.dk = getelementptr inbounds [8 x i8], ptr %2, i64 %.011.i ; 2 uses
+  %i.dk = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %.011.i ; 2 uses
   %i.dl = getelementptr inbounds [8 x i8], ptr %2, i64 %i.dj ; 2 uses
   %i.dm = load <2 x i32>, ptr %i.dk, align 8, !tbaa !87
   %i.dn = load <2 x i32>, ptr %i.dl, align 8, !tbaa !87
@@ -1816,7 +1816,7 @@ _ZN5boost9container13stable_vectorISt4pairIiiEvE5beginEv.exit: ; preds = %bb.r, 
 
 bb.t:                                             ; preds = %.lr.ph.i102
   %i.cm = load ptr, ptr %storemerge.i, align 8, !tbaa !9439 ; 2 uses
-  %i.cn = getelementptr inbounds [8 x i8], ptr %i.cm, i64 %.011.i
+  %i.cn = getelementptr inbounds nuw [8 x i8], ptr %i.cm, i64 %.011.i
   %i.co = load ptr, ptr %i.cn, align 8, !tbaa !9438 ; 2 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %i.co, i64 8 ; 2 uses
   %i.cq = getelementptr inbounds [8 x i8], ptr %i.cm, i64 %i.cl
@@ -2219,7 +2219,7 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph
   %i.m = load ptr, ptr %0, align 8, !tbaa !9636
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !9439 ; 2 uses
-  %i.o = getelementptr inbounds [8 x i8], ptr %i.n, i64 %.011
+  %i.o = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %.011
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !9438 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 8 ; 2 uses
   %i.r = getelementptr inbounds [8 x i8], ptr %i.n, i64 %i.l
@@ -2622,7 +2622,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %or.cond.i, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.ak = getelementptr inbounds [8 x i8], ptr %i.ac, i64 %.015
+  %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %.015
   br label %_ZNK5boost9container14deque_iteratorIPSt4pairIiiELb0ELj0ELj0EmEixEl.exit
 
 bb.e:                                             ; preds = %bb.c

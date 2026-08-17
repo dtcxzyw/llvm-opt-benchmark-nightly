@@ -204,7 +204,7 @@ bb.x:                                             ; preds = %_ZNSt6vectorIiSaIiE
   %.sroa.14.0268 = phi ptr [ %.sroa.14.7, %_ZNSt6vectorImSaImEE9push_backEOm.exit ], [ null, %.preheader ] ; 23 uses
   %.sroa.25.0267 = phi ptr [ %.sroa.25.7, %_ZNSt6vectorImSaImEE9push_backEOm.exit ], [ null, %.preheader ] ; 11 uses
   %i.dd = load ptr, ptr %8, align 8, !tbaa !21
-  %i.de = getelementptr inbounds [4 x i8], ptr %i.dd, i64 %.084270
+  %i.de = getelementptr inbounds nuw [4 x i8], ptr %i.dd, i64 %.084270
   %i.df = load i32, ptr %i.de, align 4, !tbaa !22
   %i.dg = icmp eq i32 %i.df, 1
   br i1 %i.dg, label %bb.y, label %bb.ae
@@ -287,7 +287,7 @@ _ZNSt6vectorImSaImEE17_M_realloc_insertIJmEEEvN9__gnu_cxx17__normal_iteratorIPmS
 
 bb.ae:                                            ; preds = %.lr.ph271
   %i.ee = load ptr, ptr %7, align 8, !tbaa !21
-  %i.ef = getelementptr inbounds [4 x i8], ptr %i.ee, i64 %.084270
+  %i.ef = getelementptr inbounds nuw [4 x i8], ptr %i.ee, i64 %.084270
   %i.eg = load i32, ptr %i.ef, align 4, !tbaa !22
   switch i32 %i.eg, label %_ZNSt6vectorImSaImEE9push_backEOm.exit [
     i32 1, label %bb.af
@@ -690,7 +690,7 @@ bb.x:                                             ; preds = %_ZNSt6vectorIiSaIiE
   %.sroa.14.0253 = phi ptr [ %.sroa.14.7, %_ZNSt6vectorImSaImEE9push_backEOm.exit ], [ null, %.preheader ] ; 23 uses
   %.sroa.25.0252 = phi ptr [ %.sroa.25.7, %_ZNSt6vectorImSaImEE9push_backEOm.exit ], [ null, %.preheader ] ; 11 uses
   %i.dh = load ptr, ptr %8, align 8, !tbaa !21
-  %i.di = getelementptr inbounds [4 x i8], ptr %i.dh, i64 %.084255
+  %i.di = getelementptr inbounds nuw [4 x i8], ptr %i.dh, i64 %.084255
   %i.dj = load i32, ptr %i.di, align 4, !tbaa !22
   %i.dk = icmp eq i32 %i.dj, 1
   br i1 %i.dk, label %bb.y, label %bb.ae
@@ -773,7 +773,7 @@ _ZNSt6vectorImSaImEE17_M_realloc_insertIJmEEEvN9__gnu_cxx17__normal_iteratorIPmS
 
 bb.ae:                                            ; preds = %.lr.ph256
   %i.ei = load ptr, ptr %7, align 8, !tbaa !21
-  %i.ej = getelementptr inbounds [4 x i8], ptr %i.ei, i64 %.084255
+  %i.ej = getelementptr inbounds nuw [4 x i8], ptr %i.ei, i64 %.084255
   %i.ek = load i32, ptr %i.ej, align 4, !tbaa !22
   switch i32 %i.ek, label %_ZNSt6vectorImSaImEE9push_backEOm.exit [
     i32 1, label %bb.af
@@ -1176,7 +1176,7 @@ bb.x:                                             ; preds = %_ZNSt6vectorIiSaIiE
   %.sroa.14.0253 = phi ptr [ %.sroa.14.7, %_ZNSt6vectorImSaImEE9push_backEOm.exit ], [ null, %.preheader ] ; 23 uses
   %.sroa.25.0252 = phi ptr [ %.sroa.25.7, %_ZNSt6vectorImSaImEE9push_backEOm.exit ], [ null, %.preheader ] ; 11 uses
   %i.dh = load ptr, ptr %8, align 8, !tbaa !21
-  %i.di = getelementptr inbounds [4 x i8], ptr %i.dh, i64 %.084255
+  %i.di = getelementptr inbounds nuw [4 x i8], ptr %i.dh, i64 %.084255
   %i.dj = load i32, ptr %i.di, align 4, !tbaa !22
   %i.dk = icmp eq i32 %i.dj, 1
   br i1 %i.dk, label %bb.y, label %bb.ae
@@ -1259,7 +1259,7 @@ _ZNSt6vectorImSaImEE17_M_realloc_insertIJmEEEvN9__gnu_cxx17__normal_iteratorIPmS
 
 bb.ae:                                            ; preds = %.lr.ph256
   %i.ei = load ptr, ptr %7, align 8, !tbaa !21
-  %i.ej = getelementptr inbounds [4 x i8], ptr %i.ei, i64 %.084255
+  %i.ej = getelementptr inbounds nuw [4 x i8], ptr %i.ei, i64 %.084255
   %i.ek = load i32, ptr %i.ej, align 4, !tbaa !22
   switch i32 %i.ek, label %_ZNSt6vectorImSaImEE9push_backEOm.exit [
     i32 1, label %bb.af
