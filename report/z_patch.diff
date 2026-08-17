@@ -1,0 +1,1200 @@
+diff --git a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+index 638c7e276d311..3f118b01d5317 100644
+--- a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
++++ b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+@@ -30,6 +30,7 @@
+ #include "llvm/IR/DebugInfo.h"
+ #include "llvm/IR/Dominators.h"
+ #include "llvm/IR/Function.h"
++#include "llvm/IR/GetElementPtrTypeIterator.h"
+ #include "llvm/IR/IRBuilder.h"
+ #include "llvm/IR/InstrTypes.h"
+ #include "llvm/IR/Instructions.h"
+@@ -54,6 +55,8 @@ using namespace SCEVPatternMatch;
+ #define DEBUG_TYPE "constraint-elimination"
+ 
+ STATISTIC(NumCondsRemoved, "Number of instructions removed");
++STATISTIC(NumSExtConverted, "Number of sext converted to zext nneg");
++STATISTIC(NumNoWrapAdded, "Number of no-wrap flags added");
+ DEBUG_COUNTER(EliminatedCounter, "conds-eliminated",
+               "Controls which conditions are eliminated");
+ 
+@@ -61,6 +64,12 @@ static cl::opt<unsigned>
+     MaxRows("constraint-elimination-max-rows", cl::init(500), cl::Hidden,
+             cl::desc("Maximum number of rows to keep in constraint system"));
+ 
++static cl::opt<bool> MaterializeFlags(
++    "constraint-elimination-materialize-flags", cl::init(true), cl::Hidden,
++    cl::desc("Materialize facts implied by the constraint systems as flags on "
++             "instructions, so they remain available after the conditions they "
++             "were derived from have been removed."));
++
+ static cl::opt<bool> DumpReproducers(
+     "constraint-elimination-dump-reproducers", cl::init(false), cl::Hidden,
+     cl::desc("Dump IR to reproduce successful transformations."));
+@@ -99,7 +108,8 @@ struct FactOrCheck {
+                    /// min/mix intrinsic.
+     InstCheck,     /// An instruction to simplify (e.g. an overflow math
+                    /// intrinsics).
+-    UseCheck       /// An use of a compare instruction to simplify.
++    UseCheck,      /// An use of a compare instruction to simplify.
++    FlagCheck      /// An instruction whose flags may be strengthened.
+   };
+ 
+   union {
+@@ -147,10 +157,19 @@ struct FactOrCheck {
+     return FactOrCheck(EntryTy::InstCheck, DTN, CI);
+   }
+ 
++  /// Returns an entry to strengthen the flags of \p I using the facts that hold
++  /// on entry to \p I's block.
++  static FactOrCheck getFlagCheck(DomTreeNode *DTN, Instruction *I) {
++    return FactOrCheck(EntryTy::FlagCheck, DTN, I);
++  }
++
+   bool isCheck() const {
+-    return Ty == EntryTy::InstCheck || Ty == EntryTy::UseCheck;
++    return Ty == EntryTy::InstCheck || Ty == EntryTy::UseCheck ||
++           Ty == EntryTy::FlagCheck;
+   }
+ 
++  bool isFlagCheck() const { return Ty == EntryTy::FlagCheck; }
++
+   Instruction *getContextInst() const {
+     assert(!isConditionFact());
+     if (Ty == EntryTy::UseCheck)
+@@ -160,7 +179,7 @@ struct FactOrCheck {
+ 
+   Instruction *getInstructionToSimplify() const {
+     assert(isCheck());
+-    if (Ty == EntryTy::InstCheck)
++    if (Ty == EntryTy::InstCheck || Ty == EntryTy::FlagCheck)
+       return Inst;
+     // The use may have been simplified to a constant already.
+     return dyn_cast<Instruction>(*U);
+@@ -1206,6 +1225,124 @@ static bool getConstraintFromMemoryAccess(GetElementPtrInst &GEP,
+   return true;
+ }
+ 
++/// Returns true if \p I is missing a poison-generating flag that may be implied
++/// by the constraint systems. Only cases that need the relational reasoning of
++/// the systems are considered; flags that follow from the ranges of the operands
++/// alone are added by CorrelatedValuePropagation and InstCombine already.
++static bool canStrengthenFlags(Instruction *I) {
++  if (!MaterializeFlags)
++    return false;
++
++  switch (I->getOpcode()) {
++  case Instruction::SExt:
++    // Can be replaced by zext nneg, if the operand is non-negative.
++    return I->getType()->isIntegerTy();
++  case Instruction::Sub:
++    // A - B does not wrap unsigned, if A >=u B. Constant operands are handled
++    // by CorrelatedValuePropagation using ranges.
++    return I->getType()->isIntegerTy() &&
++           !cast<OverflowingBinaryOperator>(I)->hasNoUnsignedWrap() &&
++           !isa<Constant>(I->getOperand(1));
++  case Instruction::GetElementPtr: {
++    // nuw is implied by nusw together with non-negative offsets.
++    GEPNoWrapFlags NW = cast<GEPOperator>(I)->getNoWrapFlags();
++    return NW.hasNoUnsignedSignedWrap() && !NW.hasNoUnsignedWrap();
++  }
++  default:
++    return false;
++  }
++}
++
++/// The systems hold facts that are not explicit in the IR, in particular facts
++/// implied by conditions this pass then removes. Later passes cannot re-derive
++/// those facts. Try to materialize them as poison-generating flags on \p I,
++/// which remain valid independently of the conditions they were derived from.
++/// Returns true if \p I was modified.
++static bool tryToStrengthenFlags(Instruction *I, ConstraintInfo &Info,
++                                 SmallVectorImpl<Instruction *> &ToRemove) {
++  // Nothing is implied if there are no facts in scope.
++  if (Info.getCS(/*Signed=*/false).size() == 0 &&
++      Info.getCS(/*Signed=*/true).size() == 0)
++    return false;
++
++  const DataLayout &DL = I->getDataLayout();
++  // Returns true if the systems imply that \p V is non-negative. Cases known
++  // via ValueTracking are skipped, as flags for those are added by other
++  // passes.
++  auto NeedsSystemToProveNonNegative = [&Info, &DL](Value *V) {
++    return !isKnownNonNegative(V, DL) &&
++           Info.doesHold(CmpInst::ICMP_SGE, V,
++                         ConstantInt::getNullValue(V->getType()));
++  };
++
++  switch (I->getOpcode()) {
++  case Instruction::SExt: {
++    Value *Op = I->getOperand(0);
++    if (!NeedsSystemToProveNonNegative(Op))
++      return false;
++    LLVM_DEBUG(dbgs() << "Replacing sext by zext nneg: " << *I << "\n");
++    // Replace sext by zext nneg, which keeps the information that Op is
++    // non-negative available in the IR.
++    auto *ZExt =
++        CastInst::CreateZExtOrBitCast(Op, I->getType(), "", I->getIterator());
++    ZExt->setNonNeg();
++    ZExt->takeName(I);
++    ZExt->setDebugLoc(I->getDebugLoc());
++    I->replaceAllUsesWith(ZExt);
++    ToRemove.push_back(I);
++    ++NumSExtConverted;
++    return true;
++  }
++  case Instruction::Sub: {
++    auto *BO = cast<BinaryOperator>(I);
++    // Op0 - Op1 does not wrap unsigned, if Op0 >=u Op1.
++    if (!Info.doesHold(CmpInst::ICMP_UGE, BO->getOperand(0),
++                       BO->getOperand(1)))
++      return false;
++    LLVM_DEBUG(dbgs() << "Adding nuw to " << *I << "\n");
++    BO->setHasNoUnsignedWrap();
++    ++NumNoWrapAdded;
++    return true;
++  }
++  case Instruction::GetElementPtr: {
++    auto *GEP = cast<GetElementPtrInst>(I);
++    // A GEP with nusw whose offsets are all non-negative also does not wrap in
++    // the unsigned sense: for non-negative offsets, the signed and unsigned
++    // interpretation of each step agree.
++    bool NeedsSystem = false;
++    for (gep_type_iterator GTI = gep_type_begin(GEP), GTE = gep_type_end(GEP);
++         GTI != GTE; ++GTI) {
++      // Struct member offsets are always non-negative.
++      if (GTI.getStructTypeOrNull())
++        continue;
++      // Bail out if the offset is not a multiple of a fixed size.
++      if (!DL.getTypeAllocSize(GTI.getIndexedType()).isFixed())
++        return false;
++      Value *Idx = GTI.getOperand();
++      if (!Idx->getType()->isIntegerTy())
++        return false;
++      if (isKnownNonNegative(Idx, DL))
++        continue;
++      if (!Info.doesHold(CmpInst::ICMP_SGE, Idx,
++                         ConstantInt::getNullValue(Idx->getType())))
++        return false;
++      NeedsSystem = true;
++    }
++    // If all indices are known to be non-negative without the systems, adding
++    // the flag is left to other passes.
++    if (!NeedsSystem)
++      return false;
++    LLVM_DEBUG(dbgs() << "Adding nuw to " << *I << "\n");
++    GEP->setNoWrapFlags(GEP->getNoWrapFlags() |
++                        GEPNoWrapFlags::noUnsignedWrap());
++    ++NumNoWrapAdded;
++    return true;
++  }
++  default:
++    return false;
++  }
++}
++
+ void State::addInfoFor(BasicBlock &BB) {
+   addInfoForInductions(BB);
+   auto &DL = BB.getDataLayout();
+@@ -1318,6 +1455,11 @@ void State::addInfoFor(BasicBlock &BB) {
+         WorkList.push_back(FactOrCheck::getInstFact(DT.getNode(&BB), BO));
+     }
+ 
++    // Queue instructions that may have flags strengthened based on the facts
++    // that hold on entry to BB.
++    if (canStrengthenFlags(&I))
++      WorkList.push_back(FactOrCheck::getFlagCheck(DT.getNode(&BB), &I));
++
+     GuaranteedToExecute &= isGuaranteedToTransferExecutionToSuccessor(&I);
+   }
+ 
+@@ -2074,6 +2216,10 @@ static bool eliminateConstraints(Function &F, DominatorTree &DT, LoopInfo &LI,
+       Instruction *Inst = CB.getInstructionToSimplify();
+       if (!Inst)
+         continue;
++      if (CB.isFlagCheck()) {
++        Changed |= tryToStrengthenFlags(Inst, Info, ToRemove);
++        continue;
++      }
+       LLVM_DEBUG(dbgs() << "Processing condition to simplify: " << *Inst
+                         << "\n");
+       if (auto *II = dyn_cast<WithOverflowInst>(Inst)) {
+diff --git a/llvm/test/Transforms/ConstraintElimination/gep-arithmetic-add-signed-predicates.ll b/llvm/test/Transforms/ConstraintElimination/gep-arithmetic-add-signed-predicates.ll
+index b0a869683cc60..d062a579b5e39 100644
+--- a/llvm/test/Transforms/ConstraintElimination/gep-arithmetic-add-signed-predicates.ll
++++ b/llvm/test/Transforms/ConstraintElimination/gep-arithmetic-add-signed-predicates.ll
+@@ -92,7 +92,7 @@ define i4 @inc_ptr_N_could_be_negative(ptr %src, ptr %lower, ptr %upper, i8 %N,
+ ; CHECK-NEXT:    [[AND_STEP:%.*]] = and i1 [[STEP_POS]], [[STEP_SLT_N]]
+ ; CHECK-NEXT:    br i1 [[AND_STEP]], label [[PTR_CHECK:%.*]], label [[EXIT:%.*]]
+ ; CHECK:       ptr.check:
+-; CHECK-NEXT:    [[SRC_STEP:%.*]] = getelementptr inbounds i8, ptr [[SRC]], i8 [[STEP]]
++; CHECK-NEXT:    [[SRC_STEP:%.*]] = getelementptr inbounds nuw i8, ptr [[SRC]], i8 [[STEP]]
+ ; CHECK-NEXT:    [[CMP_STEP_START:%.*]] = icmp slt ptr [[SRC_STEP]], [[LOWER]]
+ ; CHECK-NEXT:    [[CMP_STEP_END:%.*]] = icmp sge ptr [[SRC_STEP]], [[UPPER]]
+ ; CHECK-NEXT:    [[OR_CHECK:%.*]] = or i1 [[CMP_STEP_START]], [[CMP_STEP_END]]
+@@ -147,7 +147,7 @@ define i4 @inc_ptr_src_sge_end(ptr %src, ptr %lower, ptr %upper, i16 %N, i16 %st
+ ; CHECK-NEXT:    [[AND_STEP:%.*]] = and i1 [[STEP_POS]], [[STEP_SLT_N]]
+ ; CHECK-NEXT:    br i1 [[AND_STEP]], label [[PTR_CHECK:%.*]], label [[EXIT:%.*]]
+ ; CHECK:       ptr.check:
+-; CHECK-NEXT:    [[SRC_STEP:%.*]] = getelementptr inbounds i8, ptr [[SRC]], i16 [[STEP]]
++; CHECK-NEXT:    [[SRC_STEP:%.*]] = getelementptr inbounds nuw i8, ptr [[SRC]], i16 [[STEP]]
+ ; CHECK-NEXT:    [[CMP_STEP_START:%.*]] = icmp slt ptr [[SRC_STEP]], [[LOWER]]
+ ; CHECK-NEXT:    [[CMP_STEP_END:%.*]] = icmp sge ptr [[SRC_STEP]], [[UPPER]]
+ ; CHECK-NEXT:    [[OR_CHECK:%.*]] = or i1 [[CMP_STEP_START]], [[CMP_STEP_END]]
+@@ -191,7 +191,7 @@ define i4 @inc_ptr_src_sge_end_no_nsw_add(ptr %src, ptr %lower, ptr %upper, i16
+ ; CHECK-NEXT:    [[IDX_POS:%.*]] = icmp sge i16 [[IDX:%.*]], 0
+ ; CHECK-NEXT:    br i1 [[IDX_POS]], label [[ENTRY:%.*]], label [[TRAP_BB:%.*]]
+ ; CHECK:       entry:
+-; CHECK-NEXT:    [[SRC_IDX:%.*]] = getelementptr inbounds i8, ptr [[SRC:%.*]], i16 [[IDX]]
++; CHECK-NEXT:    [[SRC_IDX:%.*]] = getelementptr inbounds nuw i8, ptr [[SRC:%.*]], i16 [[IDX]]
+ ; CHECK-NEXT:    [[CMP_SRC_START:%.*]] = icmp slt ptr [[SRC_IDX]], [[LOWER:%.*]]
+ ; CHECK-NEXT:    br i1 [[CMP_SRC_START]], label [[TRAP_BB]], label [[STEP_CHECK:%.*]]
+ ; CHECK:       trap.bb:
+@@ -236,7 +236,7 @@ define i4 @inc_ptr_src_sge_end_no_nsw_add_sge_0(ptr %src, ptr %lower, ptr %upper
+ ; CHECK-NEXT:    [[IDX_POS:%.*]] = icmp sge i16 [[IDX:%.*]], 0
+ ; CHECK-NEXT:    br i1 [[IDX_POS]], label [[ENTRY:%.*]], label [[TRAP_BB:%.*]]
+ ; CHECK:       entry:
+-; CHECK-NEXT:    [[SRC_IDX:%.*]] = getelementptr inbounds i8, ptr [[SRC:%.*]], i16 [[IDX]]
++; CHECK-NEXT:    [[SRC_IDX:%.*]] = getelementptr inbounds nuw i8, ptr [[SRC:%.*]], i16 [[IDX]]
+ ; CHECK-NEXT:    [[CMP_SRC_START:%.*]] = icmp slt ptr [[SRC_IDX]], [[LOWER:%.*]]
+ ; CHECK-NEXT:    br i1 [[CMP_SRC_START]], label [[TRAP_BB]], label [[STEP_CHECK:%.*]]
+ ; CHECK:       trap.bb:
+diff --git a/llvm/test/Transforms/ConstraintElimination/gep-arithmetic-add.ll b/llvm/test/Transforms/ConstraintElimination/gep-arithmetic-add.ll
+index 8dcac7832179a..7987de97de9b9 100644
+--- a/llvm/test/Transforms/ConstraintElimination/gep-arithmetic-add.ll
++++ b/llvm/test/Transforms/ConstraintElimination/gep-arithmetic-add.ll
+@@ -187,7 +187,7 @@ define i4 @inc_ptr_src_uge_end_no_nsw_add(ptr %src, ptr %lower, ptr %upper, i16
+ ; CHECK-NEXT:    [[IDX_POS:%.*]] = icmp sge i16 [[IDX:%.*]], 0
+ ; CHECK-NEXT:    br i1 [[IDX_POS]], label [[ENTRY:%.*]], label [[TRAP_BB:%.*]]
+ ; CHECK:       entry:
+-; CHECK-NEXT:    [[SRC_IDX:%.*]] = getelementptr inbounds i8, ptr [[SRC:%.*]], i16 [[IDX]]
++; CHECK-NEXT:    [[SRC_IDX:%.*]] = getelementptr inbounds nuw i8, ptr [[SRC:%.*]], i16 [[IDX]]
+ ; CHECK-NEXT:    [[CMP_SRC_START:%.*]] = icmp ult ptr [[SRC_IDX]], [[LOWER:%.*]]
+ ; CHECK-NEXT:    br i1 [[CMP_SRC_START]], label [[TRAP_BB]], label [[STEP_CHECK:%.*]]
+ ; CHECK:       trap.bb:
+@@ -232,7 +232,7 @@ define i4 @inc_ptr_src_uge_end_no_nsw_add_sge_0(ptr %src, ptr %lower, ptr %upper
+ ; CHECK-NEXT:    [[IDX_POS:%.*]] = icmp sge i16 [[IDX:%.*]], 0
+ ; CHECK-NEXT:    br i1 [[IDX_POS]], label [[ENTRY:%.*]], label [[TRAP_BB:%.*]]
+ ; CHECK:       entry:
+-; CHECK-NEXT:    [[SRC_IDX:%.*]] = getelementptr inbounds i8, ptr [[SRC:%.*]], i16 [[IDX]]
++; CHECK-NEXT:    [[SRC_IDX:%.*]] = getelementptr inbounds nuw i8, ptr [[SRC:%.*]], i16 [[IDX]]
+ ; CHECK-NEXT:    [[CMP_SRC_START:%.*]] = icmp ult ptr [[SRC_IDX]], [[LOWER:%.*]]
+ ; CHECK-NEXT:    br i1 [[CMP_SRC_START]], label [[TRAP_BB]], label [[STEP_CHECK:%.*]]
+ ; CHECK:       trap.bb:
+diff --git a/llvm/test/Transforms/ConstraintElimination/gep-arithmetic-different-types.ll b/llvm/test/Transforms/ConstraintElimination/gep-arithmetic-different-types.ll
+index fe67e0a822d9a..df1791852ab5f 100644
+--- a/llvm/test/Transforms/ConstraintElimination/gep-arithmetic-different-types.ll
++++ b/llvm/test/Transforms/ConstraintElimination/gep-arithmetic-different-types.ll
+@@ -57,12 +57,12 @@ define i1 @gep_var_positive_index(ptr %A, ptr %upper, i8 %idx) {
+ ; CHECK-LABEL: @gep_var_positive_index(
+ ; CHECK-NEXT:    [[IDX_POS:%.*]] = icmp sge i8 [[IDX:%.*]], 0
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[IDX_POS]])
+-; CHECK-NEXT:    [[ADD_I16_IDX:%.*]] = getelementptr inbounds i16, ptr [[A:%.*]], i8 [[IDX]]
++; CHECK-NEXT:    [[ADD_I16_IDX:%.*]] = getelementptr inbounds nuw i16, ptr [[A:%.*]], i8 [[IDX]]
+ ; CHECK-NEXT:    [[C_0:%.*]] = icmp ult ptr [[ADD_I16_IDX]], [[UPPER:%.*]]
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[C_0]])
+-; CHECK-NEXT:    [[ADD_I32_IDX:%.*]] = getelementptr inbounds i32, ptr [[A]], i8 [[IDX]]
++; CHECK-NEXT:    [[ADD_I32_IDX:%.*]] = getelementptr inbounds nuw i32, ptr [[A]], i8 [[IDX]]
+ ; CHECK-NEXT:    [[C_1:%.*]] = icmp ult ptr [[ADD_I32_IDX]], [[UPPER]]
+-; CHECK-NEXT:    [[ADD_I8_IDX:%.*]] = getelementptr inbounds i8, ptr [[A]], i8 [[IDX]]
++; CHECK-NEXT:    [[ADD_I8_IDX:%.*]] = getelementptr inbounds nuw i8, ptr [[A]], i8 [[IDX]]
+ ; CHECK-NEXT:    [[RES_1:%.*]] = xor i1 [[C_1]], true
+ ; CHECK-NEXT:    ret i1 [[RES_1]]
+ ;
+@@ -85,15 +85,15 @@ define i1 @gep_add_nsw_positive_index(ptr %A, ptr %upper, i8 %idx) {
+ ; CHECK-NEXT:    [[IDX_POS:%.*]] = icmp sge i8 [[IDX:%.*]], 0
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[IDX_POS]])
+ ; CHECK-NEXT:    [[IDX_3:%.*]] = add nsw i8 [[IDX]], 3
+-; CHECK-NEXT:    [[ADD_I8_IDX_3:%.*]] = getelementptr inbounds i8, ptr [[A:%.*]], i8 [[IDX_3]]
++; CHECK-NEXT:    [[ADD_I8_IDX_3:%.*]] = getelementptr inbounds nuw i8, ptr [[A:%.*]], i8 [[IDX_3]]
+ ; CHECK-NEXT:    [[C_0:%.*]] = icmp ult ptr [[ADD_I8_IDX_3]], [[UPPER:%.*]]
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[C_0]])
+ ; CHECK-NEXT:    [[IDX_1:%.*]] = add nsw i8 [[IDX]], 1
+-; CHECK-NEXT:    [[ADD_I32_IDX_1:%.*]] = getelementptr inbounds i32, ptr [[A]], i8 [[IDX_1]]
++; CHECK-NEXT:    [[ADD_I32_IDX_1:%.*]] = getelementptr inbounds nuw i32, ptr [[A]], i8 [[IDX_1]]
+ ; CHECK-NEXT:    [[C_1:%.*]] = icmp ult ptr [[ADD_I32_IDX_1]], [[UPPER]]
+-; CHECK-NEXT:    [[ADD_I8_IDX_1:%.*]] = getelementptr inbounds i8, ptr [[A]], i8 [[IDX_1]]
++; CHECK-NEXT:    [[ADD_I8_IDX_1:%.*]] = getelementptr inbounds nuw i8, ptr [[A]], i8 [[IDX_1]]
+ ; CHECK-NEXT:    [[RES_1:%.*]] = xor i1 [[C_1]], true
+-; CHECK-NEXT:    [[ADD_I16_IDX_1:%.*]] = getelementptr inbounds i16, ptr [[A]], i8 [[IDX_1]]
++; CHECK-NEXT:    [[ADD_I16_IDX_1:%.*]] = getelementptr inbounds nuw i16, ptr [[A]], i8 [[IDX_1]]
+ ; CHECK-NEXT:    [[C_2:%.*]] = icmp ult ptr [[ADD_I16_IDX_1]], [[UPPER]]
+ ; CHECK-NEXT:    [[RES_2:%.*]] = xor i1 [[RES_1]], [[C_2]]
+ ; CHECK-NEXT:    ret i1 [[RES_2]]
+@@ -124,13 +124,13 @@ define i1 @gep_shl_nsw_positive_index(ptr %A, ptr %upper, i8 %idx) {
+ ; CHECK-NEXT:    [[IDX_POS:%.*]] = icmp sge i8 [[IDX:%.*]], 0
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[IDX_POS]])
+ ; CHECK-NEXT:    [[IDX_2:%.*]] = shl nsw i8 [[IDX]], 2
+-; CHECK-NEXT:    [[ADD_I8_IDX_2:%.*]] = getelementptr inbounds i8, ptr [[A:%.*]], i8 [[IDX_2]]
++; CHECK-NEXT:    [[ADD_I8_IDX_2:%.*]] = getelementptr inbounds nuw i8, ptr [[A:%.*]], i8 [[IDX_2]]
+ ; CHECK-NEXT:    [[C_0:%.*]] = icmp ult ptr [[ADD_I8_IDX_2]], [[UPPER:%.*]]
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[C_0]])
+ ; CHECK-NEXT:    [[IDX_1:%.*]] = shl nsw i8 [[IDX]], 1
+-; CHECK-NEXT:    [[ADD_I32_IDX_1:%.*]] = getelementptr inbounds i32, ptr [[A]], i8 [[IDX_1]]
++; CHECK-NEXT:    [[ADD_I32_IDX_1:%.*]] = getelementptr inbounds nuw i32, ptr [[A]], i8 [[IDX_1]]
+ ; CHECK-NEXT:    [[C_1:%.*]] = icmp ult ptr [[ADD_I32_IDX_1]], [[UPPER]]
+-; CHECK-NEXT:    [[ADD_I8_IDX_1:%.*]] = getelementptr inbounds i8, ptr [[A]], i8 [[IDX_1]]
++; CHECK-NEXT:    [[ADD_I8_IDX_1:%.*]] = getelementptr inbounds nuw i8, ptr [[A]], i8 [[IDX_1]]
+ ; CHECK-NEXT:    [[T_1:%.*]] = icmp ult ptr [[ADD_I8_IDX_1]], [[UPPER]]
+ ; CHECK-NEXT:    [[RES_1:%.*]] = xor i1 [[C_1]], [[T_1]]
+ ; CHECK-NEXT:    ret i1 [[RES_1]]
+@@ -355,17 +355,17 @@ define i1 @gep_add_nsw_positive_index_struct(ptr %A, ptr %upper, i8 %idx) {
+ ; CHECK-NEXT:    [[IDX_POS:%.*]] = icmp sge i8 [[IDX:%.*]], 0
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[IDX_POS]])
+ ; CHECK-NEXT:    [[IDX_3:%.*]] = add nsw i8 [[IDX]], 2
+-; CHECK-NEXT:    [[ADD_I8_IDX_3:%.*]] = getelementptr inbounds [[STRUCT_T:%.*]], ptr [[A:%.*]], i8 [[IDX_3]]
++; CHECK-NEXT:    [[ADD_I8_IDX_3:%.*]] = getelementptr inbounds nuw [[STRUCT_T:%.*]], ptr [[A:%.*]], i8 [[IDX_3]]
+ ; CHECK-NEXT:    [[C_0:%.*]] = icmp ult ptr [[ADD_I8_IDX_3]], [[UPPER:%.*]]
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[C_0]])
+ ; CHECK-NEXT:    [[IDX_1:%.*]] = add nsw i8 [[IDX]], 1
+-; CHECK-NEXT:    [[ADD_I32_IDX_1:%.*]] = getelementptr inbounds i32, ptr [[A]], i8 [[IDX_1]]
++; CHECK-NEXT:    [[ADD_I32_IDX_1:%.*]] = getelementptr inbounds nuw i32, ptr [[A]], i8 [[IDX_1]]
+ ; CHECK-NEXT:    [[T_1:%.*]] = icmp ult ptr [[ADD_I32_IDX_1]], [[UPPER]]
+-; CHECK-NEXT:    [[ADD_I8_IDX_1:%.*]] = getelementptr inbounds i8, ptr [[A]], i8 [[IDX_1]]
++; CHECK-NEXT:    [[ADD_I8_IDX_1:%.*]] = getelementptr inbounds nuw i8, ptr [[A]], i8 [[IDX_1]]
+ ; CHECK-NEXT:    [[RES_1:%.*]] = xor i1 [[T_1]], true
+-; CHECK-NEXT:    [[ADD_I16_IDX_1:%.*]] = getelementptr inbounds i16, ptr [[A]], i8 [[IDX_1]]
++; CHECK-NEXT:    [[ADD_I16_IDX_1:%.*]] = getelementptr inbounds nuw i16, ptr [[A]], i8 [[IDX_1]]
+ ; CHECK-NEXT:    [[RES_2:%.*]] = xor i1 [[RES_1]], true
+-; CHECK-NEXT:    [[ADD_I64_IDX_1:%.*]] = getelementptr inbounds i64, ptr [[A]], i8 [[IDX_1]]
++; CHECK-NEXT:    [[ADD_I64_IDX_1:%.*]] = getelementptr inbounds nuw i64, ptr [[A]], i8 [[IDX_1]]
+ ; CHECK-NEXT:    [[C_1:%.*]] = icmp ult ptr [[ADD_I64_IDX_1]], [[UPPER]]
+ ; CHECK-NEXT:    [[RES_3:%.*]] = xor i1 [[RES_2]], [[C_1]]
+ ; CHECK-NEXT:    ret i1 [[RES_3]]
+diff --git a/llvm/test/Transforms/ConstraintElimination/gep-arithmetic-signed-predicates.ll b/llvm/test/Transforms/ConstraintElimination/gep-arithmetic-signed-predicates.ll
+index 8c28b0b9079e9..8b51f228c77cc 100644
+--- a/llvm/test/Transforms/ConstraintElimination/gep-arithmetic-signed-predicates.ll
++++ b/llvm/test/Transforms/ConstraintElimination/gep-arithmetic-signed-predicates.ll
+@@ -157,7 +157,7 @@ define i4 @ptr_N_signed_positive_explicit_check_constant_step(ptr %src, ptr %low
+ ; CHECK-NEXT:    [[N_POS:%.*]] = icmp sge i16 [[N:%.*]], 0
+ ; CHECK-NEXT:    br i1 [[N_POS]], label [[ENTRY_1:%.*]], label [[TRAP_BB:%.*]]
+ ; CHECK:       entry.1:
+-; CHECK-NEXT:    [[SRC_END:%.*]] = getelementptr inbounds i8, ptr [[SRC:%.*]], i16 [[N]]
++; CHECK-NEXT:    [[SRC_END:%.*]] = getelementptr inbounds nuw i8, ptr [[SRC:%.*]], i16 [[N]]
+ ; CHECK-NEXT:    [[CMP_SRC_START:%.*]] = icmp slt ptr [[SRC]], [[LOWER:%.*]]
+ ; CHECK-NEXT:    [[CMP_SRC_END:%.*]] = icmp sge ptr [[SRC_END]], [[UPPER:%.*]]
+ ; CHECK-NEXT:    [[OR_PRECOND_0:%.*]] = or i1 [[CMP_SRC_START]], [[CMP_SRC_END]]
+@@ -268,7 +268,7 @@ define i4 @ptr_N_and_step_signed_positive_explicit_check_constant_step(ptr %src,
+ ; CHECK-NEXT:    [[AND_1:%.*]] = and i1 [[N_POS]], [[STEP_POS]]
+ ; CHECK-NEXT:    br i1 [[AND_1]], label [[ENTRY_1:%.*]], label [[TRAP_BB:%.*]]
+ ; CHECK:       entry.1:
+-; CHECK-NEXT:    [[SRC_END:%.*]] = getelementptr inbounds i8, ptr [[SRC:%.*]], i16 [[N]]
++; CHECK-NEXT:    [[SRC_END:%.*]] = getelementptr inbounds nuw i8, ptr [[SRC:%.*]], i16 [[N]]
+ ; CHECK-NEXT:    [[CMP_SRC_START:%.*]] = icmp slt ptr [[SRC]], [[LOWER:%.*]]
+ ; CHECK-NEXT:    [[CMP_SRC_END:%.*]] = icmp sge ptr [[SRC_END]], [[UPPER:%.*]]
+ ; CHECK-NEXT:    [[OR_PRECOND_0:%.*]] = or i1 [[CMP_SRC_START]], [[CMP_SRC_END]]
+@@ -397,7 +397,7 @@ define i4 @ptr_N_signed_positive(ptr %src, ptr %lower, ptr %upper, i16 %N, i16 %
+ ; CHECK-NEXT:    [[AND_STEP:%.*]] = and i1 [[STEP_POS]], [[STEP_SLT_N]]
+ ; CHECK-NEXT:    br i1 [[AND_STEP]], label [[PTR_CHECK:%.*]], label [[EXIT:%.*]]
+ ; CHECK:       ptr.check:
+-; CHECK-NEXT:    [[SRC_STEP:%.*]] = getelementptr inbounds i8, ptr [[SRC]], i16 [[STEP]]
++; CHECK-NEXT:    [[SRC_STEP:%.*]] = getelementptr inbounds nuw i8, ptr [[SRC]], i16 [[STEP]]
+ ; CHECK-NEXT:    [[CMP_STEP_START:%.*]] = icmp slt ptr [[SRC_STEP]], [[LOWER]]
+ ; CHECK-NEXT:    [[CMP_STEP_END:%.*]] = icmp sge ptr [[SRC_STEP]], [[UPPER]]
+ ; CHECK-NEXT:    [[OR_CHECK:%.*]] = or i1 [[CMP_STEP_START]], [[CMP_STEP_END]]
+@@ -450,7 +450,7 @@ define i4 @ptr_N_could_be_negative(ptr %src, ptr %lower, ptr %upper, i8 %N, i8 %
+ ; CHECK-NEXT:    [[AND_STEP:%.*]] = and i1 [[STEP_POS]], [[STEP_SLT_N]]
+ ; CHECK-NEXT:    br i1 [[AND_STEP]], label [[PTR_CHECK:%.*]], label [[EXIT:%.*]]
+ ; CHECK:       ptr.check:
+-; CHECK-NEXT:    [[SRC_STEP:%.*]] = getelementptr inbounds i8, ptr [[SRC]], i8 [[STEP]]
++; CHECK-NEXT:    [[SRC_STEP:%.*]] = getelementptr inbounds nuw i8, ptr [[SRC]], i8 [[STEP]]
+ ; CHECK-NEXT:    [[CMP_STEP_START:%.*]] = icmp slt ptr [[SRC_STEP]], [[LOWER]]
+ ; CHECK-NEXT:    [[CMP_STEP_END:%.*]] = icmp sge ptr [[SRC_STEP]], [[UPPER]]
+ ; CHECK-NEXT:    [[OR_CHECK:%.*]] = or i1 [[CMP_STEP_START]], [[CMP_STEP_END]]
+@@ -503,7 +503,7 @@ define i4 @ptr_src_sge_end(ptr %src, ptr %lower, ptr %upper, i8 %N, i8 %step) {
+ ; CHECK-NEXT:    [[AND_STEP:%.*]] = and i1 [[STEP_POS]], [[STEP_SLT_N]]
+ ; CHECK-NEXT:    br i1 [[AND_STEP]], label [[PTR_CHECK:%.*]], label [[EXIT:%.*]]
+ ; CHECK:       ptr.check:
+-; CHECK-NEXT:    [[SRC_STEP:%.*]] = getelementptr inbounds i8, ptr [[SRC]], i8 [[STEP]]
++; CHECK-NEXT:    [[SRC_STEP:%.*]] = getelementptr inbounds nuw i8, ptr [[SRC]], i8 [[STEP]]
+ ; CHECK-NEXT:    [[CMP_STEP_START:%.*]] = icmp slt ptr [[SRC_STEP]], [[LOWER]]
+ ; CHECK-NEXT:    [[CMP_STEP_END:%.*]] = icmp sge ptr [[SRC_STEP]], [[UPPER]]
+ ; CHECK-NEXT:    [[OR_CHECK:%.*]] = or i1 [[CMP_STEP_START]], [[CMP_STEP_END]]
+@@ -559,7 +559,7 @@ define i4 @ptr_N_unsigned_positive(ptr %src, ptr %lower, ptr %upper, i16 %N, i16
+ ; CHECK-NEXT:    [[AND_STEP:%.*]] = and i1 [[STEP_POS]], [[STEP_SLT_N]]
+ ; CHECK-NEXT:    br i1 [[AND_STEP]], label [[PTR_CHECK:%.*]], label [[EXIT:%.*]]
+ ; CHECK:       ptr.check:
+-; CHECK-NEXT:    [[SRC_STEP:%.*]] = getelementptr inbounds i8, ptr [[SRC]], i16 [[STEP]]
++; CHECK-NEXT:    [[SRC_STEP:%.*]] = getelementptr inbounds nuw i8, ptr [[SRC]], i16 [[STEP]]
+ ; CHECK-NEXT:    [[CMP_STEP_START:%.*]] = icmp slt ptr [[SRC_STEP]], [[LOWER]]
+ ; CHECK-NEXT:    [[CMP_STEP_END:%.*]] = icmp sge ptr [[SRC_STEP]], [[UPPER]]
+ ; CHECK-NEXT:    [[OR_CHECK:%.*]] = or i1 [[CMP_STEP_START]], [[CMP_STEP_END]]
+@@ -613,7 +613,7 @@ define i4 @ptr_N_signed_positive_assume(ptr %src, ptr %lower, ptr %upper, i16 %N
+ ; CHECK-NEXT:    [[STEP_SLT_N:%.*]] = icmp slt i16 [[STEP]], [[N]]
+ ; CHECK-NEXT:    br i1 false, label [[PTR_CHECK:%.*]], label [[EXIT:%.*]]
+ ; CHECK:       ptr.check:
+-; CHECK-NEXT:    [[SRC_STEP:%.*]] = getelementptr inbounds i8, ptr [[SRC]], i16 [[STEP]]
++; CHECK-NEXT:    [[SRC_STEP:%.*]] = getelementptr inbounds nuw i8, ptr [[SRC]], i16 [[STEP]]
+ ; CHECK-NEXT:    [[CMP_STEP_START:%.*]] = icmp slt ptr [[SRC_STEP]], [[LOWER]]
+ ; CHECK-NEXT:    [[CMP_STEP_END:%.*]] = icmp sge ptr [[SRC_STEP]], [[UPPER]]
+ ; CHECK-NEXT:    [[OR_CHECK:%.*]] = or i1 [[CMP_STEP_START]], [[CMP_STEP_END]]
+diff --git a/llvm/test/Transforms/ConstraintElimination/gep-arithmetic.ll b/llvm/test/Transforms/ConstraintElimination/gep-arithmetic.ll
+index 23e1698136f5e..a00e2fc5f6667 100644
+--- a/llvm/test/Transforms/ConstraintElimination/gep-arithmetic.ll
++++ b/llvm/test/Transforms/ConstraintElimination/gep-arithmetic.ll
+@@ -151,7 +151,7 @@ define i4 @ptr_N_signed_positive_explicit_check_constant_step(ptr %src, ptr %low
+ ; CHECK-NEXT:    [[N_POS:%.*]] = icmp sge i16 [[N:%.*]], 0
+ ; CHECK-NEXT:    br i1 [[N_POS]], label [[ENTRY_1:%.*]], label [[TRAP_BB:%.*]]
+ ; CHECK:       entry.1:
+-; CHECK-NEXT:    [[SRC_END:%.*]] = getelementptr inbounds i8, ptr [[SRC:%.*]], i16 [[N]]
++; CHECK-NEXT:    [[SRC_END:%.*]] = getelementptr inbounds nuw i8, ptr [[SRC:%.*]], i16 [[N]]
+ ; CHECK-NEXT:    [[CMP_SRC_START:%.*]] = icmp ult ptr [[SRC]], [[LOWER:%.*]]
+ ; CHECK-NEXT:    [[CMP_SRC_END:%.*]] = icmp uge ptr [[SRC_END]], [[UPPER:%.*]]
+ ; CHECK-NEXT:    [[OR_PRECOND_0:%.*]] = or i1 [[CMP_SRC_START]], [[CMP_SRC_END]]
+@@ -260,7 +260,7 @@ define i4 @ptr_N_and_step_signed_positive_explicit_check_constant_step(ptr %src,
+ ; CHECK-NEXT:    [[AND_1:%.*]] = and i1 [[N_POS]], [[STEP_POS]]
+ ; CHECK-NEXT:    br i1 [[AND_1]], label [[ENTRY_1:%.*]], label [[TRAP_BB:%.*]]
+ ; CHECK:       entry.1:
+-; CHECK-NEXT:    [[SRC_END:%.*]] = getelementptr inbounds i8, ptr [[SRC:%.*]], i16 [[N]]
++; CHECK-NEXT:    [[SRC_END:%.*]] = getelementptr inbounds nuw i8, ptr [[SRC:%.*]], i16 [[N]]
+ ; CHECK-NEXT:    [[CMP_SRC_START:%.*]] = icmp ult ptr [[SRC]], [[LOWER:%.*]]
+ ; CHECK-NEXT:    [[CMP_SRC_END:%.*]] = icmp uge ptr [[SRC_END]], [[UPPER:%.*]]
+ ; CHECK-NEXT:    [[OR_PRECOND_0:%.*]] = or i1 [[CMP_SRC_START]], [[CMP_SRC_END]]
+@@ -384,7 +384,7 @@ define i4 @ptr_N_signed_positive(ptr %src, ptr %lower, ptr %upper, i16 %N, i16 %
+ ; CHECK-NEXT:    [[AND_STEP:%.*]] = and i1 true, [[STEP_ULT_N]]
+ ; CHECK-NEXT:    br i1 [[AND_STEP]], label [[PTR_CHECK:%.*]], label [[EXIT:%.*]]
+ ; CHECK:       ptr.check:
+-; CHECK-NEXT:    [[SRC_STEP:%.*]] = getelementptr inbounds i8, ptr [[SRC]], i16 [[STEP]]
++; CHECK-NEXT:    [[SRC_STEP:%.*]] = getelementptr inbounds nuw i8, ptr [[SRC]], i16 [[STEP]]
+ ; CHECK-NEXT:    [[OR_CHECK:%.*]] = or i1 false, false
+ ; CHECK-NEXT:    br i1 [[OR_CHECK]], label [[TRAP_BB]], label [[EXIT]]
+ ; CHECK:       exit:
+diff --git a/llvm/test/Transforms/ConstraintElimination/gep-sub-signed-predicates.ll b/llvm/test/Transforms/ConstraintElimination/gep-sub-signed-predicates.ll
+index 9de9afd5ee9be..a6f27c6231262 100644
+--- a/llvm/test/Transforms/ConstraintElimination/gep-sub-signed-predicates.ll
++++ b/llvm/test/Transforms/ConstraintElimination/gep-sub-signed-predicates.ll
+@@ -411,7 +411,7 @@ define i1 @gep_sub_1_slt_var_idx_lower_bound(ptr %lower, ptr %src, i8 %len) {
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[SRC_SGE_LOWER]])
+ ; CHECK-NEXT:    [[LEN_POS:%.*]] = icmp sge i8 [[LEN:%.*]], 0
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[LEN_POS]])
+-; CHECK-NEXT:    [[GEP_LEN:%.*]] = getelementptr inbounds i8, ptr [[SRC]], i8 [[LEN]]
++; CHECK-NEXT:    [[GEP_LEN:%.*]] = getelementptr inbounds nuw i8, ptr [[SRC]], i8 [[LEN]]
+ ; CHECK-NEXT:    [[GEP_SUB_1:%.*]] = getelementptr inbounds i8, ptr [[GEP_LEN]], i8 -1
+ ; CHECK-NEXT:    [[RES:%.*]] = icmp slt ptr [[GEP_SUB_1]], [[LOWER]]
+ ; CHECK-NEXT:    ret i1 [[RES]]
+@@ -438,7 +438,7 @@ define i1 @gep_sub_1_slt_var_idx_lower_bound_len_ne_0(ptr %lower, ptr %src, i8 %
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[SRC_SGE_LOWER]])
+ ; CHECK-NEXT:    [[LEN_POS:%.*]] = icmp sge i8 [[LEN]], 0
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[LEN_POS]])
+-; CHECK-NEXT:    [[GEP_LEN:%.*]] = getelementptr inbounds i8, ptr [[SRC]], i8 [[LEN]]
++; CHECK-NEXT:    [[GEP_LEN:%.*]] = getelementptr inbounds nuw i8, ptr [[SRC]], i8 [[LEN]]
+ ; CHECK-NEXT:    [[GEP_SUB_1:%.*]] = getelementptr inbounds i8, ptr [[GEP_LEN]], i8 -1
+ ; CHECK-NEXT:    [[RES:%.*]] = icmp slt ptr [[GEP_SUB_1]], [[LOWER]]
+ ; CHECK-NEXT:    ret i1 [[RES]]
+@@ -468,7 +468,7 @@ define i1 @gep_sub_2_slt_var_idx_lower_bound_len_ne_0(ptr %lower, ptr %src, i8 %
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[SRC_SGE_LOWER]])
+ ; CHECK-NEXT:    [[LEN_POS:%.*]] = icmp sge i8 [[LEN]], 0
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[LEN_POS]])
+-; CHECK-NEXT:    [[GEP_LEN:%.*]] = getelementptr inbounds i8, ptr [[SRC]], i8 [[LEN]]
++; CHECK-NEXT:    [[GEP_LEN:%.*]] = getelementptr inbounds nuw i8, ptr [[SRC]], i8 [[LEN]]
+ ; CHECK-NEXT:    [[GEP_SUB_2:%.*]] = getelementptr inbounds i8, ptr [[GEP_LEN]], i8 -2
+ ; CHECK-NEXT:    [[RES:%.*]] = icmp slt ptr [[GEP_SUB_2]], [[LOWER]]
+ ; CHECK-NEXT:    ret i1 [[RES]]
+@@ -522,7 +522,7 @@ define i1 @gep_i16_sub_1_sge_inbounds_var_idx(ptr %dst, i64 %off) {
+ ; CHECK-LABEL: @gep_i16_sub_1_sge_inbounds_var_idx(
+ ; CHECK-NEXT:    [[OFF_SGE:%.*]] = icmp sge i64 [[OFF:%.*]], 1
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[OFF_SGE]])
+-; CHECK-NEXT:    [[DST_ADD_3:%.*]] = getelementptr inbounds i8, ptr [[DST:%.*]], i64 [[OFF]]
++; CHECK-NEXT:    [[DST_ADD_3:%.*]] = getelementptr inbounds nuw i8, ptr [[DST:%.*]], i64 [[OFF]]
+ ; CHECK-NEXT:    [[DST_SUB_1:%.*]] = getelementptr inbounds i16, ptr [[DST_ADD_3]], i32 -1
+ ; CHECK-NEXT:    [[CMP_SUB_1:%.*]] = icmp sle ptr [[DST_SUB_1]], [[DST]]
+ ; CHECK-NEXT:    [[DST_SUB_2:%.*]] = getelementptr inbounds i16, ptr [[DST_ADD_3]], i64 -2
+diff --git a/llvm/test/Transforms/ConstraintElimination/gep-sub.ll b/llvm/test/Transforms/ConstraintElimination/gep-sub.ll
+index 6bc2a342eae82..a14b67ce7d692 100644
+--- a/llvm/test/Transforms/ConstraintElimination/gep-sub.ll
++++ b/llvm/test/Transforms/ConstraintElimination/gep-sub.ll
+@@ -430,7 +430,7 @@ define i1 @gep_sub_1_ult_var_idx_lower_bound(ptr %lower, ptr %src, i8 %len) {
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[SRC_UGE_LOWER]])
+ ; CHECK-NEXT:    [[LEN_POS:%.*]] = icmp sge i8 [[LEN:%.*]], 0
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[LEN_POS]])
+-; CHECK-NEXT:    [[GEP_LEN:%.*]] = getelementptr inbounds i8, ptr [[SRC]], i8 [[LEN]]
++; CHECK-NEXT:    [[GEP_LEN:%.*]] = getelementptr inbounds nuw i8, ptr [[SRC]], i8 [[LEN]]
+ ; CHECK-NEXT:    [[GEP_SUB_1:%.*]] = getelementptr inbounds i8, ptr [[GEP_LEN]], i8 -1
+ ; CHECK-NEXT:    [[RES:%.*]] = icmp ult ptr [[GEP_SUB_1]], [[LOWER]]
+ ; CHECK-NEXT:    ret i1 [[RES]]
+@@ -457,7 +457,7 @@ define i1 @gep_sub_1_ult_var_idx_lower_bound_len_ne_0(ptr %lower, ptr %src, i8 %
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[SRC_UGE_LOWER]])
+ ; CHECK-NEXT:    [[LEN_POS:%.*]] = icmp sge i8 [[LEN]], 0
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[LEN_POS]])
+-; CHECK-NEXT:    [[GEP_LEN:%.*]] = getelementptr inbounds i8, ptr [[SRC]], i8 [[LEN]]
++; CHECK-NEXT:    [[GEP_LEN:%.*]] = getelementptr inbounds nuw i8, ptr [[SRC]], i8 [[LEN]]
+ ; CHECK-NEXT:    [[GEP_SUB_1:%.*]] = getelementptr inbounds i8, ptr [[GEP_LEN]], i8 -1
+ ; CHECK-NEXT:    ret i1 false
+ ;
+@@ -486,7 +486,7 @@ define i1 @gep_sub_2_ult_var_idx_lower_bound_len_ne_0(ptr %lower, ptr %src, i8 %
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[SRC_UGE_LOWER]])
+ ; CHECK-NEXT:    [[LEN_POS:%.*]] = icmp sge i8 [[LEN]], 0
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[LEN_POS]])
+-; CHECK-NEXT:    [[GEP_LEN:%.*]] = getelementptr inbounds i8, ptr [[SRC]], i8 [[LEN]]
++; CHECK-NEXT:    [[GEP_LEN:%.*]] = getelementptr inbounds nuw i8, ptr [[SRC]], i8 [[LEN]]
+ ; CHECK-NEXT:    [[GEP_SUB_2:%.*]] = getelementptr inbounds i8, ptr [[GEP_LEN]], i8 -2
+ ; CHECK-NEXT:    [[RES:%.*]] = icmp ult ptr [[GEP_SUB_2]], [[LOWER]]
+ ; CHECK-NEXT:    ret i1 [[RES]]
+@@ -538,7 +538,7 @@ define i1 @gep_i16_sub_1_uge_inbounds_var_idx(ptr %dst, i64 %off) {
+ ; CHECK-LABEL: @gep_i16_sub_1_uge_inbounds_var_idx(
+ ; CHECK-NEXT:    [[OFF_UGE:%.*]] = icmp sge i64 [[OFF:%.*]], 1
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[OFF_UGE]])
+-; CHECK-NEXT:    [[DST_ADD_3:%.*]] = getelementptr inbounds i8, ptr [[DST:%.*]], i64 [[OFF]]
++; CHECK-NEXT:    [[DST_ADD_3:%.*]] = getelementptr inbounds nuw i8, ptr [[DST:%.*]], i64 [[OFF]]
+ ; CHECK-NEXT:    [[DST_SUB_1:%.*]] = getelementptr inbounds i16, ptr [[DST_ADD_3]], i32 -1
+ ; CHECK-NEXT:    [[CMP_SUB_1:%.*]] = icmp ule ptr [[DST_SUB_1]], [[DST]]
+ ; CHECK-NEXT:    [[DST_SUB_2:%.*]] = getelementptr inbounds i16, ptr [[DST_ADD_3]], i64 -2
+@@ -571,9 +571,9 @@ define i1 @gep_i32_two_indices_known_lt_and_positive(ptr %a, i8 %idx.1, i8 %idx.
+ ; CHECK-NEXT:    [[IDX_2_POS:%.*]] = icmp sge i8 [[IDX_2]], 0
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[IDX_1_POS]])
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[IDX_2_POS]])
+-; CHECK-NEXT:    [[GEP_1:%.*]] = getelementptr inbounds i32, ptr [[A:%.*]], i8 [[IDX_1]]
++; CHECK-NEXT:    [[GEP_1:%.*]] = getelementptr inbounds nuw i32, ptr [[A:%.*]], i8 [[IDX_1]]
+ ; CHECK-NEXT:    [[GEP_2:%.*]] = getelementptr inbounds i32, ptr [[GEP_1]], i8 -3
+-; CHECK-NEXT:    [[GEP_3:%.*]] = getelementptr inbounds i32, ptr [[A]], i8 [[IDX_2]]
++; CHECK-NEXT:    [[GEP_3:%.*]] = getelementptr inbounds nuw i32, ptr [[A]], i8 [[IDX_2]]
+ ; CHECK-NEXT:    [[GEP_4:%.*]] = getelementptr inbounds i32, ptr [[GEP_3]], i8 -3
+ ; CHECK-NEXT:    ret i1 true
+ ;
+@@ -618,9 +618,9 @@ define i1 @gep_i32_two_indices_known_positive_but_not_lt(ptr %a, i8 %idx.1, i8 %
+ ; CHECK-NEXT:    [[IDX_2_POS:%.*]] = icmp sge i8 [[IDX_2:%.*]], 0
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[IDX_1_POS]])
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[IDX_2_POS]])
+-; CHECK-NEXT:    [[GEP_1:%.*]] = getelementptr inbounds i32, ptr [[A:%.*]], i8 [[IDX_1]]
++; CHECK-NEXT:    [[GEP_1:%.*]] = getelementptr inbounds nuw i32, ptr [[A:%.*]], i8 [[IDX_1]]
+ ; CHECK-NEXT:    [[GEP_2:%.*]] = getelementptr inbounds i32, ptr [[GEP_1]], i8 -3
+-; CHECK-NEXT:    [[GEP_3:%.*]] = getelementptr inbounds i32, ptr [[A]], i8 [[IDX_2]]
++; CHECK-NEXT:    [[GEP_3:%.*]] = getelementptr inbounds nuw i32, ptr [[A]], i8 [[IDX_2]]
+ ; CHECK-NEXT:    [[GEP_4:%.*]] = getelementptr inbounds i32, ptr [[GEP_3]], i8 -3
+ ; CHECK-NEXT:    [[C:%.*]] = icmp ult ptr [[GEP_2]], [[GEP_4]]
+ ; CHECK-NEXT:    ret i1 [[C]]
+diff --git a/llvm/test/Transforms/ConstraintElimination/geps-i32-pointer-indexes.ll b/llvm/test/Transforms/ConstraintElimination/geps-i32-pointer-indexes.ll
+index 71941bb9b2ce2..184609d2c50b4 100644
+--- a/llvm/test/Transforms/ConstraintElimination/geps-i32-pointer-indexes.ll
++++ b/llvm/test/Transforms/ConstraintElimination/geps-i32-pointer-indexes.ll
+@@ -9,7 +9,7 @@ define i1 @gep_idx_implicit_truncate(ptr %dst, i64 %off) {
+ ; CHECK-LABEL: @gep_idx_implicit_truncate(
+ ; CHECK-NEXT:    [[POS:%.*]] = icmp sge i64 [[OFF:%.*]], 0
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[POS]])
+-; CHECK-NEXT:    [[GEP_OFF:%.*]] = getelementptr inbounds i8, ptr [[DST:%.*]], i64 [[OFF]]
++; CHECK-NEXT:    [[GEP_OFF:%.*]] = getelementptr inbounds nuw i8, ptr [[DST:%.*]], i64 [[OFF]]
+ ; CHECK-NEXT:    ret i1 true
+ ;
+   %pos = icmp sge i64 %off, 0
+diff --git a/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit.ll b/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit.ll
+index de63cd07df6b3..96e83ba0d82ec 100644
+--- a/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit.ll
++++ b/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit.ll
+@@ -92,7 +92,7 @@ define i1 @multi_exiting_loop_eq_same_unique_exit_const_compare_known_due_to_pre
+ ; CHECK-NEXT:    [[EXITCOND_NOT:%.*]] = icmp eq i32 [[IV]], 1234
+ ; CHECK-NEXT:    br i1 [[EXITCOND_NOT]], label %[[EXIT:.*]], label %[[LOOP_LATCH]]
+ ; CHECK:       [[LOOP_LATCH]]:
+-; CHECK-NEXT:    [[ARRAYIDX:%.*]] = getelementptr inbounds i8, ptr [[S]], i32 [[IV]]
++; CHECK-NEXT:    [[ARRAYIDX:%.*]] = getelementptr inbounds nuw i8, ptr [[S]], i32 [[IV]]
+ ; CHECK-NEXT:    [[TMP0:%.*]] = load i8, ptr [[ARRAYIDX]], align 1
+ ; CHECK-NEXT:    [[LATCH_C:%.*]] = icmp ult i8 [[TMP0]], 10
+ ; CHECK-NEXT:    [[IV_NEXT]] = add i32 [[IV]], 1
+diff --git a/llvm/test/Transforms/ConstraintElimination/loops-header-tested-pointer-cmps.ll b/llvm/test/Transforms/ConstraintElimination/loops-header-tested-pointer-cmps.ll
+index 66aeb85bf0a93..5ba23350af73e 100644
+--- a/llvm/test/Transforms/ConstraintElimination/loops-header-tested-pointer-cmps.ll
++++ b/llvm/test/Transforms/ConstraintElimination/loops-header-tested-pointer-cmps.ll
+@@ -464,7 +464,7 @@ define void @ne_check_in_loop_no_zext_n_positive_check(ptr %ptr, ptr %lower, ptr
+ ; CHECK-NEXT:    [[OR_T:%.*]] = or i1 [[N_SIGNED_POSITIVE]], [[CMP_PTR_LOWER]]
+ ; CHECK-NEXT:    br i1 [[OR_T]], label [[TRAP:%.*]], label [[PRE:%.*]]
+ ; CHECK:       pre:
+-; CHECK-NEXT:    [[ADD_PTR:%.*]] = getelementptr inbounds i8, ptr [[PTR]], i16 [[N]]
++; CHECK-NEXT:    [[ADD_PTR:%.*]] = getelementptr inbounds nuw i8, ptr [[PTR]], i16 [[N]]
+ ; CHECK-NEXT:    [[CMP_PTR_N_UPPER:%.*]] = icmp ult ptr [[ADD_PTR]], [[UPPER:%.*]]
+ ; CHECK-NEXT:    br i1 [[CMP_PTR_N_UPPER]], label [[FOR_COND_PREHEADER:%.*]], label [[TRAP]]
+ ; CHECK:       for.cond.preheader:
+diff --git a/llvm/test/Transforms/ConstraintElimination/materialize-flags.ll b/llvm/test/Transforms/ConstraintElimination/materialize-flags.ll
+new file mode 100644
+index 0000000000000..50ae6b72252e1
+--- /dev/null
++++ b/llvm/test/Transforms/ConstraintElimination/materialize-flags.ll
+@@ -0,0 +1,355 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -passes=constraint-elimination -S %s | FileCheck %s
++
++define i64 @sext_to_zext_nneg(i32 %n, i32 %m) {
++; CHECK-LABEL: define i64 @sext_to_zext_nneg(
++; CHECK-SAME: i32 [[N:%.*]], i32 [[M:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[C:%.*]] = icmp slt i32 [[N]], [[M]]
++; CHECK-NEXT:    br i1 [[C]], label %[[EXIT:.*]], label %[[THEN:.*]]
++; CHECK:       [[THEN]]:
++; CHECK-NEXT:    [[SUB:%.*]] = sub nsw i32 [[N]], [[M]]
++; CHECK-NEXT:    [[EXT:%.*]] = zext nneg i32 [[SUB]] to i64
++; CHECK-NEXT:    ret i64 [[EXT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret i64 0
++;
++entry:
++  %c = icmp slt i32 %n, %m
++  br i1 %c, label %exit, label %then
++
++then:
++  %sub = sub nsw i32 %n, %m
++  %ext = sext i32 %sub to i64
++  ret i64 %ext
++
++exit:
++  ret i64 0
++}
++
++define i64 @sext_to_zext_nneg_negated_condition(i32 %n, i32 %m) {
++; CHECK-LABEL: define i64 @sext_to_zext_nneg_negated_condition(
++; CHECK-SAME: i32 [[N:%.*]], i32 [[M:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[C:%.*]] = icmp slt i32 [[N]], [[M]]
++; CHECK-NEXT:    br i1 [[C]], label %[[THEN:.*]], label %[[EXIT:.*]]
++; CHECK:       [[THEN]]:
++; CHECK-NEXT:    [[SUB:%.*]] = sub nsw i32 [[N]], [[M]]
++; CHECK-NEXT:    [[EXT:%.*]] = sext i32 [[SUB]] to i64
++; CHECK-NEXT:    ret i64 [[EXT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret i64 0
++;
++entry:
++  %c = icmp slt i32 %n, %m
++  br i1 %c, label %then, label %exit
++
++then:
++  %sub = sub nsw i32 %n, %m
++  %ext = sext i32 %sub to i64
++  ret i64 %ext
++
++exit:
++  ret i64 0
++}
++
++; The operand is known non-negative via ValueTracking, so converting the sext is
++; left to InstCombine.
++define i64 @sext_no_conversion_known_via_value_tracking(i32 %n) {
++; CHECK-LABEL: define i64 @sext_no_conversion_known_via_value_tracking(
++; CHECK-SAME: i32 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[AND:%.*]] = and i32 [[N]], 255
++; CHECK-NEXT:    [[EXT:%.*]] = sext i32 [[AND]] to i64
++; CHECK-NEXT:    ret i64 [[EXT]]
++;
++entry:
++  %and = and i32 %n, 255
++  %ext = sext i32 %and to i64
++  ret i64 %ext
++}
++
++; The relational fact %a >=u %b cannot be expressed as a range.
++define i32 @sub_nuw_relational(i32 %a, i32 %b) {
++; CHECK-LABEL: define i32 @sub_nuw_relational(
++; CHECK-SAME: i32 [[A:%.*]], i32 [[B:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[C:%.*]] = icmp uge i32 [[A]], [[B]]
++; CHECK-NEXT:    br i1 [[C]], label %[[THEN:.*]], label %[[EXIT:.*]]
++; CHECK:       [[THEN]]:
++; CHECK-NEXT:    [[SUB:%.*]] = sub nuw i32 [[A]], [[B]]
++; CHECK-NEXT:    ret i32 [[SUB]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret i32 0
++;
++entry:
++  %c = icmp uge i32 %a, %b
++  br i1 %c, label %then, label %exit
++
++then:
++  %sub = sub i32 %a, %b
++  ret i32 %sub
++
++exit:
++  ret i32 0
++}
++
++; %a >=u %b and %b >=u %c imply %a >=u %c.
++define i32 @sub_nuw_transitive(i32 %a, i32 %b, i32 %c) {
++; CHECK-LABEL: define i32 @sub_nuw_transitive(
++; CHECK-SAME: i32 [[A:%.*]], i32 [[B:%.*]], i32 [[C:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[C_0:%.*]] = icmp uge i32 [[A]], [[B]]
++; CHECK-NEXT:    br i1 [[C_0]], label %[[BB_1:.*]], label %[[EXIT:.*]]
++; CHECK:       [[BB_1]]:
++; CHECK-NEXT:    [[C_1:%.*]] = icmp uge i32 [[B]], [[C]]
++; CHECK-NEXT:    br i1 [[C_1]], label %[[BB_2:.*]], label %[[EXIT]]
++; CHECK:       [[BB_2]]:
++; CHECK-NEXT:    [[SUB:%.*]] = sub nuw i32 [[A]], [[C]]
++; CHECK-NEXT:    ret i32 [[SUB]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret i32 0
++;
++entry:
++  %c.0 = icmp uge i32 %a, %b
++  br i1 %c.0, label %bb.1, label %exit
++
++bb.1:
++  %c.1 = icmp uge i32 %b, %c
++  br i1 %c.1, label %bb.2, label %exit
++
++bb.2:
++  %sub = sub i32 %a, %c
++  ret i32 %sub
++
++exit:
++  ret i32 0
++}
++
++; A signed fact does not imply the unsigned no-wrap flag.
++define i32 @sub_no_nuw_signed_fact(i32 %a, i32 %b) {
++; CHECK-LABEL: define i32 @sub_no_nuw_signed_fact(
++; CHECK-SAME: i32 [[A:%.*]], i32 [[B:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[C:%.*]] = icmp sge i32 [[A]], [[B]]
++; CHECK-NEXT:    br i1 [[C]], label %[[THEN:.*]], label %[[EXIT:.*]]
++; CHECK:       [[THEN]]:
++; CHECK-NEXT:    [[SUB:%.*]] = sub i32 [[A]], [[B]]
++; CHECK-NEXT:    ret i32 [[SUB]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret i32 0
++;
++entry:
++  %c = icmp sge i32 %a, %b
++  br i1 %c, label %then, label %exit
++
++then:
++  %sub = sub i32 %a, %b
++  ret i32 %sub
++
++exit:
++  ret i32 0
++}
++
++define ptr @gep_nuw_transitive(ptr %p, i64 %i, i64 %j) {
++; CHECK-LABEL: define ptr @gep_nuw_transitive(
++; CHECK-SAME: ptr [[P:%.*]], i64 [[I:%.*]], i64 [[J:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[C_0:%.*]] = icmp sgt i64 [[I]], [[J]]
++; CHECK-NEXT:    br i1 [[C_0]], label %[[BB_1:.*]], label %[[EXIT:.*]]
++; CHECK:       [[BB_1]]:
++; CHECK-NEXT:    [[C_1:%.*]] = icmp sgt i64 [[J]], 0
++; CHECK-NEXT:    br i1 [[C_1]], label %[[BB_2:.*]], label %[[EXIT]]
++; CHECK:       [[BB_2]]:
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr nusw nuw i32, ptr [[P]], i64 [[I]]
++; CHECK-NEXT:    ret ptr [[GEP]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret ptr null
++;
++entry:
++  %c.0 = icmp sgt i64 %i, %j
++  br i1 %c.0, label %bb.1, label %exit
++
++bb.1:
++  %c.1 = icmp sgt i64 %j, 0
++  br i1 %c.1, label %bb.2, label %exit
++
++bb.2:
++  %gep = getelementptr nusw i32, ptr %p, i64 %i
++  ret ptr %gep
++
++exit:
++  ret ptr null
++}
++
++define ptr @gep_no_nuw_unknown_index(ptr %p, i64 %i, i64 %n) {
++; CHECK-LABEL: define ptr @gep_no_nuw_unknown_index(
++; CHECK-SAME: ptr [[P:%.*]], i64 [[I:%.*]], i64 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[C:%.*]] = icmp sge i64 [[I]], [[N]]
++; CHECK-NEXT:    br i1 [[C]], label %[[EXIT:.*]], label %[[THEN:.*]]
++; CHECK:       [[THEN]]:
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr nusw i32, ptr [[P]], i64 [[I]]
++; CHECK-NEXT:    ret ptr [[GEP]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret ptr null
++;
++entry:
++  %c = icmp sge i64 %i, %n
++  br i1 %c, label %exit, label %then
++
++then:
++  %gep = getelementptr nusw i32, ptr %p, i64 %i
++  ret ptr %gep
++
++exit:
++  ret ptr null
++}
++
++; The negative constant index means the GEP wraps in the unsigned sense.
++define ptr @gep_no_nuw_negative_constant_index(ptr %p, i64 %i, i64 %j) {
++; CHECK-LABEL: define ptr @gep_no_nuw_negative_constant_index(
++; CHECK-SAME: ptr [[P:%.*]], i64 [[I:%.*]], i64 [[J:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[C_0:%.*]] = icmp sgt i64 [[I]], [[J]]
++; CHECK-NEXT:    br i1 [[C_0]], label %[[BB_1:.*]], label %[[EXIT:.*]]
++; CHECK:       [[BB_1]]:
++; CHECK-NEXT:    [[C_1:%.*]] = icmp sgt i64 [[J]], 0
++; CHECK-NEXT:    br i1 [[C_1]], label %[[BB_2:.*]], label %[[EXIT]]
++; CHECK:       [[BB_2]]:
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr nusw nuw i32, ptr [[P]], i64 [[I]]
++; CHECK-NEXT:    [[GEP_2:%.*]] = getelementptr nusw i32, ptr [[GEP]], i64 -1
++; CHECK-NEXT:    ret ptr [[GEP_2]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret ptr null
++;
++entry:
++  %c.0 = icmp sgt i64 %i, %j
++  br i1 %c.0, label %bb.1, label %exit
++
++bb.1:
++  %c.1 = icmp sgt i64 %j, 0
++  br i1 %c.1, label %bb.2, label %exit
++
++bb.2:
++  %gep = getelementptr nusw i32, ptr %p, i64 %i
++  %gep.2 = getelementptr nusw i32, ptr %gep, i64 -1
++  ret ptr %gep.2
++
++exit:
++  ret ptr null
++}
++
++; Without nusw, nuw cannot be implied by non-negative offsets.
++define ptr @gep_no_nusw(ptr %p, i64 %i, i64 %j) {
++; CHECK-LABEL: define ptr @gep_no_nusw(
++; CHECK-SAME: ptr [[P:%.*]], i64 [[I:%.*]], i64 [[J:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[C_0:%.*]] = icmp sgt i64 [[I]], [[J]]
++; CHECK-NEXT:    br i1 [[C_0]], label %[[BB_1:.*]], label %[[EXIT:.*]]
++; CHECK:       [[BB_1]]:
++; CHECK-NEXT:    [[C_1:%.*]] = icmp sgt i64 [[J]], 0
++; CHECK-NEXT:    br i1 [[C_1]], label %[[BB_2:.*]], label %[[EXIT]]
++; CHECK:       [[BB_2]]:
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr i32, ptr [[P]], i64 [[I]]
++; CHECK-NEXT:    ret ptr [[GEP]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret ptr null
++;
++entry:
++  %c.0 = icmp sgt i64 %i, %j
++  br i1 %c.0, label %bb.1, label %exit
++
++bb.1:
++  %c.1 = icmp sgt i64 %j, 0
++  br i1 %c.1, label %bb.2, label %exit
++
++bb.2:
++  %gep = getelementptr i32, ptr %p, i64 %i
++  ret ptr %gep
++
++exit:
++  ret ptr null
++}
++
++; All indices are known non-negative without the systems, so adding nuw is left
++; to other passes.
++define ptr @gep_no_nuw_constant_index(ptr %p) {
++; CHECK-LABEL: define ptr @gep_no_nuw_constant_index(
++; CHECK-SAME: ptr [[P:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[C:%.*]] = icmp ne ptr [[P]], null
++; CHECK-NEXT:    br i1 [[C]], label %[[THEN:.*]], label %[[EXIT:.*]]
++; CHECK:       [[THEN]]:
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr nusw i32, ptr [[P]], i64 3
++; CHECK-NEXT:    ret ptr [[GEP]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret ptr null
++;
++entry:
++  %c = icmp ne ptr %p, null
++  br i1 %c, label %then, label %exit
++
++then:
++  %gep = getelementptr nusw i32, ptr %p, i64 3
++  ret ptr %gep
++
++exit:
++  ret ptr null
++}
++
++define i64 @no_facts(i32 %n, i32 %m, ptr %p) {
++; CHECK-LABEL: define i64 @no_facts(
++; CHECK-SAME: i32 [[N:%.*]], i32 [[M:%.*]], ptr [[P:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[SUB:%.*]] = sub nsw i32 [[N]], [[M]]
++; CHECK-NEXT:    [[EXT:%.*]] = sext i32 [[SUB]] to i64
++; CHECK-NEXT:    [[SUB_2:%.*]] = sub i32 [[N]], [[M]]
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr nusw i32, ptr [[P]], i32 [[SUB_2]]
++; CHECK-NEXT:    store i32 0, ptr [[GEP]], align 4
++; CHECK-NEXT:    ret i64 [[EXT]]
++;
++entry:
++  %sub = sub nsw i32 %n, %m
++  %ext = sext i32 %sub to i64
++  %sub.2 = sub i32 %n, %m
++  %gep = getelementptr nusw i32, ptr %p, i32 %sub.2
++  store i32 0, ptr %gep, align 4
++  ret i64 %ext
++}
++
++; The lower bound for the induction phi provides the relation between %iv and
++; %start, which ValueTracking cannot derive as %start may be negative.
++define void @induction_start_bound(ptr %p, i32 %start, i32 %n) {
++; CHECK-LABEL: define void @induction_start_bound(
++; CHECK-SAME: ptr [[P:%.*]], i32 [[START:%.*]], i32 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i32 [ [[START]], %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    [[SUB:%.*]] = sub nsw i32 [[IV]], [[START]]
++; CHECK-NEXT:    [[IDX:%.*]] = zext nneg i32 [[SUB]] to i64
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr nusw i32, ptr [[P]], i64 [[IDX]]
++; CHECK-NEXT:    store i32 0, ptr [[GEP]], align 4
++; CHECK-NEXT:    [[IV_NEXT]] = add nsw i32 [[IV]], 1
++; CHECK-NEXT:    [[EC:%.*]] = icmp slt i32 [[IV_NEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[EC]], label %[[LOOP]], label %[[EXIT:.*]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br label %loop
++
++loop:
++  %iv = phi i32 [ %start, %entry ], [ %iv.next, %loop ]
++  %sub = sub nsw i32 %iv, %start
++  %idx = sext i32 %sub to i64
++  %gep = getelementptr nusw i32, ptr %p, i64 %idx
++  store i32 0, ptr %gep, align 4
++  %iv.next = add nsw i32 %iv, 1
++  %ec = icmp slt i32 %iv.next, %n
++  br i1 %ec, label %loop, label %exit
++
++exit:
++  ret void
++}
+diff --git a/llvm/test/Transforms/ConstraintElimination/monotonic-pointer-phis-early-exits.ll b/llvm/test/Transforms/ConstraintElimination/monotonic-pointer-phis-early-exits.ll
+index f05f324ef9322..9086acec1fdd8 100644
+--- a/llvm/test/Transforms/ConstraintElimination/monotonic-pointer-phis-early-exits.ll
++++ b/llvm/test/Transforms/ConstraintElimination/monotonic-pointer-phis-early-exits.ll
+@@ -321,7 +321,7 @@ define void @test_monotonic_ptr_iv_step_sign_positive_through_assume_multi_exit(
+ ; CHECK-NEXT:    br i1 [[AND]], label [[LOOP_LATCH]], label [[EXIT]]
+ ; CHECK:       loop.latch:
+ ; CHECK-NEXT:    call void @use(ptr [[PTR_IV]])
+-; CHECK-NEXT:    [[PTR_IV_NEXT]] = getelementptr inbounds i32, ptr [[PTR_IV]], i16 [[STEP]]
++; CHECK-NEXT:    [[PTR_IV_NEXT]] = getelementptr inbounds nuw i32, ptr [[PTR_IV]], i16 [[STEP]]
+ ; CHECK-NEXT:    br label [[LOOP_HEADER]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    ret void
+@@ -789,7 +789,7 @@ exit:
+ define void @test_monotonic_ptr_iv_inc_1_check_outside_loop(ptr %start, i16 %len) {
+ ; CHECK-LABEL: @test_monotonic_ptr_iv_inc_1_check_outside_loop(
+ ; CHECK-NEXT:  entry:
+-; CHECK-NEXT:    [[UPPER:%.*]] = getelementptr inbounds i32, ptr [[START:%.*]], i16 [[LEN:%.*]]
++; CHECK-NEXT:    [[UPPER:%.*]] = getelementptr inbounds nuw i32, ptr [[START:%.*]], i16 [[LEN:%.*]]
+ ; CHECK-NEXT:    [[LEN_NEG:%.*]] = icmp sge i16 [[LEN]], 0
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[LEN_NEG]])
+ ; CHECK-NEXT:    br label [[LOOP_PH:%.*]]
+diff --git a/llvm/test/Transforms/ConstraintElimination/monotonic-pointer-phis.ll b/llvm/test/Transforms/ConstraintElimination/monotonic-pointer-phis.ll
+index b3432695a96a5..ace9b5773557f 100644
+--- a/llvm/test/Transforms/ConstraintElimination/monotonic-pointer-phis.ll
++++ b/llvm/test/Transforms/ConstraintElimination/monotonic-pointer-phis.ll
+@@ -781,7 +781,7 @@ define void @test_monotonic_ptr_iv_step_sign_positive_through_assume(ptr %start,
+ ; CHECK-NEXT:    br i1 [[AND]], label [[LOOP_LATCH]], label [[EXIT]]
+ ; CHECK:       loop.latch:
+ ; CHECK-NEXT:    call void @use(ptr [[PTR_IV]])
+-; CHECK-NEXT:    [[PTR_IV_NEXT]] = getelementptr inbounds i32, ptr [[PTR_IV]], i16 [[STEP]]
++; CHECK-NEXT:    [[PTR_IV_NEXT]] = getelementptr inbounds nuw i32, ptr [[PTR_IV]], i16 [[STEP]]
+ ; CHECK-NEXT:    br label [[LOOP_HEADER]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    ret void
+@@ -979,7 +979,7 @@ exit:
+ define void @test_monotonic_ptr_iv_inc_1_loop_exits_on_ne(ptr %start, i16 %len) {
+ ; CHECK-LABEL: @test_monotonic_ptr_iv_inc_1_loop_exits_on_ne(
+ ; CHECK-NEXT:  entry:
+-; CHECK-NEXT:    [[UPPER:%.*]] = getelementptr inbounds i32, ptr [[START:%.*]], i16 [[LEN:%.*]]
++; CHECK-NEXT:    [[UPPER:%.*]] = getelementptr inbounds nuw i32, ptr [[START:%.*]], i16 [[LEN:%.*]]
+ ; CHECK-NEXT:    [[LEN_NEG:%.*]] = icmp sge i16 [[LEN]], 0
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[LEN_NEG]])
+ ; CHECK-NEXT:    br label [[LOOP_PH:%.*]]
+diff --git a/llvm/test/Transforms/ConstraintElimination/partial-decomposition.ll b/llvm/test/Transforms/ConstraintElimination/partial-decomposition.ll
+index ca5a7c3d10a91..c05498071f55b 100644
+--- a/llvm/test/Transforms/ConstraintElimination/partial-decomposition.ll
++++ b/llvm/test/Transforms/ConstraintElimination/partial-decomposition.ll
+@@ -257,7 +257,7 @@ define i1 @gep_nusw_index_known_non_negative(ptr %p, i64 %idx) {
+ ; CHECK-NEXT:  [[ENTRY:.*:]]
+ ; CHECK-NEXT:    [[C:%.*]] = icmp sge i64 [[IDX]], 0
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[C]])
+-; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 [[IDX]]
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds nuw i8, ptr [[P]], i64 [[IDX]]
+ ; CHECK-NEXT:    [[GEP_4:%.*]] = getelementptr inbounds i8, ptr [[GEP]], i64 4
+ ; CHECK-NEXT:    ret i1 true
+ ;
+diff --git a/llvm/test/Transforms/ConstraintElimination/reproducer-remarks.ll b/llvm/test/Transforms/ConstraintElimination/reproducer-remarks.ll
+index 44dc4e0f690cc..b80ad48fabfed 100644
+--- a/llvm/test/Transforms/ConstraintElimination/reproducer-remarks.ll
++++ b/llvm/test/Transforms/ConstraintElimination/reproducer-remarks.ll
+@@ -271,7 +271,7 @@ define i1 @shared_operand_no_const(i8 %a, i8 %b) {
+ ; CHECK-NEXT: entry:
+ ; CHECK-NEXT:   %0 = icmp ule i8 %b, %a
+ ; CHECK-NEXT:   call void @llvm.assume(i1 %0)
+-; CHECK-NEXT:   %sub = sub i8 %a, %b
++; CHECK-NEXT:   %sub = sub nuw i8 %a, %b
+ ; CHECK-NEXT:   %sub.2 = sub nuw i8 %sub, 0
+ ; CHECK-NEXT:   %c.5 = icmp ult i8 %sub.2, %sub
+ ; CHECK-NEXT:   ret i1 %c.5
+@@ -332,7 +332,7 @@ define i1 @test_both_signed_and_unsigned_conds_needed_in_reproducer(ptr %src, pt
+ ; CHECK-NEXT: entry:
+ ; CHECK-NEXT:   %0 = icmp sge i16 %N, 0
+ ; CHECK-NEXT:   call void @llvm.assume(i1 %0)
+-; CHECK-NEXT:   %src.end = getelementptr inbounds i8, ptr %src, i16 %N
++; CHECK-NEXT:   %src.end = getelementptr inbounds nuw i8, ptr %src, i16 %N
+ ; CHECK-NEXT:   %cmp.src.start = icmp ule ptr %src, %src.end
+ ; CHECK-NEXT:   ret i1 %cmp.src.start
+ ; CHECK-NEXT: }
+diff --git a/llvm/test/Transforms/ConstraintElimination/sub.ll b/llvm/test/Transforms/ConstraintElimination/sub.ll
+index df759e30365ec..751a6d72b4e6b 100644
+--- a/llvm/test/Transforms/ConstraintElimination/sub.ll
++++ b/llvm/test/Transforms/ConstraintElimination/sub.ll
+@@ -253,7 +253,7 @@ define i1 @sub_no_wrap_flags_ule(i8 %a, i8 %b) {
+ ; CHECK-NEXT:    call void @use(i1 [[C_NEG]])
+ ; CHECK-NEXT:    [[PRECOND:%.*]] = icmp ule i8 [[B]], [[A]]
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[PRECOND]])
+-; CHECK-NEXT:    [[SUB:%.*]] = sub i8 [[A]], [[B]]
++; CHECK-NEXT:    [[SUB:%.*]] = sub nuw i8 [[A]], [[B]]
+ ; CHECK-NEXT:    ret i1 true
+ ;
+ entry:
+diff --git a/llvm/test/Transforms/ConstraintElimination/transfer-signed-facts-to-unsigned.ll b/llvm/test/Transforms/ConstraintElimination/transfer-signed-facts-to-unsigned.ll
+index dc2a441bbfad7..c405a0a6292a3 100644
+--- a/llvm/test/Transforms/ConstraintElimination/transfer-signed-facts-to-unsigned.ll
++++ b/llvm/test/Transforms/ConstraintElimination/transfer-signed-facts-to-unsigned.ll
+@@ -156,7 +156,7 @@ define i1 @cnt_positive_sgt_against_base(ptr %p, i32 %cnt) {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp sgt i32 [[CNT:%.*]], -1
+ ; CHECK-NEXT:    tail call void @llvm.assume(i1 [[CMP]])
+-; CHECK-NEXT:    [[ADD_PTR:%.*]] = getelementptr inbounds i32, ptr [[P:%.*]], i32 [[CNT]]
++; CHECK-NEXT:    [[ADD_PTR:%.*]] = getelementptr inbounds nuw i32, ptr [[P:%.*]], i32 [[CNT]]
+ ; CHECK-NEXT:    br i1 true, label [[THEN:%.*]], label [[ELSE:%.*]]
+ ; CHECK:       then:
+ ; CHECK-NEXT:    ret i1 false
+@@ -498,7 +498,7 @@ entry:
+ define i32 @sge_2_gep(i32 %idx, ptr %src, i32 %idx.2) {
+ ; CHECK-LABEL: @sge_2_gep(
+ ; CHECK-NEXT:  entry:
+-; CHECK-NEXT:    [[IDX_EXT:%.*]] = sext i32 [[IDX:%.*]] to i64
++; CHECK-NEXT:    [[IDX_EXT:%.*]] = zext nneg i32 [[IDX:%.*]] to i64
+ ; CHECK-NEXT:    [[ADD_PTR:%.*]] = getelementptr inbounds i32, ptr [[SRC:%.*]], i64 [[IDX_EXT]]
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp sge i32 [[IDX]], 2
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[CMP]])
+diff --git a/llvm/test/Transforms/PhaseOrdering/constraint-elimination-materialize-flags.ll b/llvm/test/Transforms/PhaseOrdering/constraint-elimination-materialize-flags.ll
+new file mode 100644
+index 0000000000000..9c74d18770311
+--- /dev/null
++++ b/llvm/test/Transforms/PhaseOrdering/constraint-elimination-materialize-flags.ll
+@@ -0,0 +1,114 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --check-globals none --version 6
++; RUN: opt -passes='default<O3>' -S %s | FileCheck %s
++
++define void @index_mask_removed(ptr %A, i16 %start, i16 %v, i16 %n) {
++; CHECK-LABEL: define void @index_mask_removed(
++; CHECK-SAME: ptr nofree writeonly captures(none) [[A:%.*]], i16 [[START:%.*]], i16 [[V:%.*]], i16 [[N:%.*]]) local_unnamed_addr #[[ATTR0:[0-9]+]] {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[PRE:%.*]] = icmp slt i16 [[START]], [[V]]
++; CHECK-NEXT:    br i1 [[PRE]], label %[[EXIT:.*]], label %[[LOOP_PREHEADER:.*]]
++; CHECK:       [[LOOP_PREHEADER]]:
++; CHECK-NEXT:    [[TMP0:%.*]] = add i16 [[START]], 1
++; CHECK-NEXT:    [[TMP1:%.*]] = tail call i16 @llvm.smax.i16(i16 [[N]], i16 [[TMP0]])
++; CHECK-NEXT:    [[TMP2:%.*]] = xor i16 [[START]], -1
++; CHECK-NEXT:    [[TMP3:%.*]] = add i16 [[TMP1]], [[TMP2]]
++; CHECK-NEXT:    [[TMP4:%.*]] = zext i16 [[TMP3]] to i32
++; CHECK-NEXT:    [[TMP5:%.*]] = add nuw nsw i32 [[TMP4]], 1
++; CHECK-NEXT:    [[MIN_ITERS_CHECK:%.*]] = icmp ult i16 [[TMP3]], 11
++; CHECK-NEXT:    br i1 [[MIN_ITERS_CHECK]], label %[[LOOP_PREHEADER1:.*]], label %[[VECTOR_SCEVCHECK:.*]]
++; CHECK:       [[VECTOR_SCEVCHECK]]:
++; CHECK-NEXT:    [[TMP6:%.*]] = add i16 [[START]], 1
++; CHECK-NEXT:    [[SMAX:%.*]] = tail call i16 @llvm.smax.i16(i16 [[N]], i16 [[TMP6]])
++; CHECK-NEXT:    [[TMP7:%.*]] = sub i16 [[START]], [[V]]
++; CHECK-NEXT:    [[TMP8:%.*]] = sub i16 [[START]], [[SMAX]]
++; CHECK-NEXT:    [[TMP9:%.*]] = icmp ugt i16 [[TMP7]], [[TMP8]]
++; CHECK-NEXT:    br i1 [[TMP9]], label %[[LOOP_PREHEADER1]], label %[[VECTOR_PH:.*]]
++; CHECK:       [[VECTOR_PH]]:
++; CHECK-NEXT:    [[N_VEC:%.*]] = and i32 [[TMP5]], 131068
++; CHECK-NEXT:    [[TMP10:%.*]] = trunc i32 [[N_VEC]] to i16
++; CHECK-NEXT:    [[TMP11:%.*]] = add i16 [[START]], [[TMP10]]
++; CHECK-NEXT:    [[INVARIANT_OP:%.*]] = sub i16 [[START]], [[V]]
++; CHECK-NEXT:    br label %[[VECTOR_BODY:.*]]
++; CHECK:       [[VECTOR_BODY]]:
++; CHECK-NEXT:    [[INDEX:%.*]] = phi i32 [ 0, %[[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], %[[VECTOR_BODY]] ]
++; CHECK-NEXT:    [[TMP12:%.*]] = trunc i32 [[INDEX]] to i16
++; CHECK-NEXT:    [[DOTREASS:%.*]] = add i16 [[TMP12]], [[INVARIANT_OP]]
++; CHECK-NEXT:    [[TMP13:%.*]] = zext nneg i16 [[DOTREASS]] to i64
++; CHECK-NEXT:    [[TMP14:%.*]] = getelementptr inbounds nuw i8, ptr [[A]], i64 [[TMP13]]
++; CHECK-NEXT:    store <4 x i8> splat (i8 1), ptr [[TMP14]], align 1
++; CHECK-NEXT:    [[INDEX_NEXT]] = add nuw i32 [[INDEX]], 4
++; CHECK-NEXT:    [[TMP15:%.*]] = icmp eq i32 [[INDEX_NEXT]], [[N_VEC]]
++; CHECK-NEXT:    br i1 [[TMP15]], label %[[MIDDLE_BLOCK:.*]], label %[[VECTOR_BODY]], !llvm.loop [[LOOP0:![0-9]+]]
++; CHECK:       [[MIDDLE_BLOCK]]:
++; CHECK-NEXT:    [[CMP_N:%.*]] = icmp eq i32 [[TMP5]], [[N_VEC]]
++; CHECK-NEXT:    br i1 [[CMP_N]], label %[[EXIT]], label %[[LOOP_PREHEADER1]]
++; CHECK:       [[LOOP_PREHEADER1]]:
++; CHECK-NEXT:    [[IV_PH:%.*]] = phi i16 [ [[START]], %[[VECTOR_SCEVCHECK]] ], [ [[START]], %[[LOOP_PREHEADER]] ], [ [[TMP11]], %[[MIDDLE_BLOCK]] ]
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i16 [ [[IV_NEXT:%.*]], %[[LOOP]] ], [ [[IV_PH]], %[[LOOP_PREHEADER1]] ]
++; CHECK-NEXT:    [[OFF:%.*]] = sub nsw i16 [[IV]], [[V]]
++; CHECK-NEXT:    [[EXT:%.*]] = zext nneg i16 [[OFF]] to i64
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds nuw i8, ptr [[A]], i64 [[EXT]]
++; CHECK-NEXT:    store i8 1, ptr [[GEP]], align 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nsw i16 [[IV]], 1
++; CHECK-NEXT:    [[EC:%.*]] = icmp slt i16 [[IV_NEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[EC]], label %[[LOOP]], label %[[EXIT]], !llvm.loop [[LOOP3:![0-9]+]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %pre = icmp slt i16 %start, %v
++  br i1 %pre, label %exit, label %loop
++
++loop:
++  %iv = phi i16 [ %start, %entry ], [ %iv.next, %loop ]
++  %off = sub nsw i16 %iv, %v
++  %ext = sext i16 %off to i64
++  %mask = and i64 %ext, 4294967295
++  %gep = getelementptr inbounds i8, ptr %A, i64 %mask
++  store i8 1, ptr %gep, align 1
++  %iv.next = add nsw i16 %iv, 1
++  %ec = icmp slt i16 %iv.next, %n
++  br i1 %ec, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++; The i32 index does not need to be widened to i64 with sext-based address
++; arithmetic: 3 sext and 4 instructions in total are gone.
++define void @index_not_widened(ptr %A, i32 %start, i32 %v, i32 %n) {
++; CHECK-LABEL: define void @index_not_widened(
++; CHECK-SAME: ptr nofree writeonly captures(none) [[A:%.*]], i32 [[START:%.*]], i32 [[V:%.*]], i32 [[N:%.*]]) local_unnamed_addr #[[ATTR0]] {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[PRE:%.*]] = icmp slt i32 [[START]], [[V]]
++; CHECK-NEXT:    br i1 [[PRE]], label %[[EXIT:.*]], label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i32 [ [[IV_NEXT:%.*]], %[[LOOP]] ], [ [[START]], %[[ENTRY]] ]
++; CHECK-NEXT:    [[OFF:%.*]] = sub nsw i32 [[IV]], [[V]]
++; CHECK-NEXT:    [[TMP0:%.*]] = zext nneg i32 [[OFF]] to i64
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds nuw [4 x i8], ptr [[A]], i64 [[TMP0]]
++; CHECK-NEXT:    store i32 [[IV]], ptr [[GEP]], align 4
++; CHECK-NEXT:    [[IV_NEXT]] = add nsw i32 [[IV]], 1
++; CHECK-NEXT:    [[EC:%.*]] = icmp slt i32 [[IV_NEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[EC]], label %[[LOOP]], label %[[EXIT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %pre = icmp slt i32 %start, %v
++  br i1 %pre, label %exit, label %loop
++
++loop:
++  %iv = phi i32 [ %start, %entry ], [ %iv.next, %loop ]
++  %off = sub nsw i32 %iv, %v
++  %gep = getelementptr inbounds i32, ptr %A, i32 %off
++  store i32 %iv, ptr %gep, align 4
++  %iv.next = add nsw i32 %iv, 1
++  %ec = icmp slt i32 %iv.next, %n
++  br i1 %ec, label %loop, label %exit
++
++exit:
++  ret void
++}
