@@ -1,4 +1,4 @@
-inline.NumInlined: 75
+inline.NumInlined: 76
 inline.NumDeleted: 38
 begin_hunk_0_@_bt_truncate:bb.a
   br i1 %exitcond.not.i, label %_bt_keep_natts.exit, label %.lr.ph.i, !llvm.loop !14
@@ -201,7 +201,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 declare zeroext i1 @datum_image_eq(i64 noundef, i64 noundef, i1 noundef zeroext, i32 noundef) local_unnamed_addr #2
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define dso_local zeroext i1 @_bt_check_natts(ptr nofree noundef readonly captures(none) %0, i1 noundef zeroext %1, ptr nofree noundef readonly captures(address) %2, i16 noundef zeroext %3) local_unnamed_addr #9 {
+define dso_local zeroext i1 @_bt_check_natts(ptr nofree noundef readonly captures(none) %0, i1 noundef zeroext %1, ptr nofree noundef readonly captures(none) %2, i16 noundef zeroext %3) local_unnamed_addr #9 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 328
   %i.b = load ptr, ptr %i.a, align 8              ; 2 uses
@@ -226,7 +226,7 @@ bb.b:                                             ; preds = %bb.a
   %.val52 = load i32, ptr %i.p, align 4
   %i.q = and i32 %.val52, 32767
   %i.r = zext nneg i32 %i.q to i64
-  %i.s = getelementptr inbounds nuw i8, ptr %2, i64 %i.r ; 6 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %2, i64 %i.r ; 5 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 6
   %i.u = load i16, ptr %i.t, align 2
   %i.v = and i16 %i.u, 8192
@@ -328,14 +328,14 @@ bb.l:                                             ; preds = %bb.j, %bb.e
 
 BTreeTupleIsPivot.exit69:                         ; preds = %bb.l
   %i.ax = getelementptr i8, ptr %i.s, i64 4
-  %.val.i66 = load i16, ptr %i.ax, align 2
+  %.val.i66 = load i16, ptr %i.ax, align 2        ; 2 uses
   %i.ay = and i16 %.val.i66, 8192
   %.not.i67 = icmp eq i16 %i.ay, 0
   br i1 %.not.i67, label %BTreeTupleIsPosting.exit72, label %BTreeTupleIsPivot.exit69.thread
 
 BTreeTupleIsPosting.exit72:                       ; preds = %BTreeTupleIsPivot.exit69
-  %4 = tail call fastcc ptr @BTreeTupleGetHeapTID(ptr noundef nonnull %i.s)
-  %.not49 = icmp eq ptr %4, null
+  %4 = and i16 %.val.i66, 4096
+  %.not49 = icmp eq i16 %4, 0
   %.not50 = icmp eq i32 %i.ae, %i.ag
   %or.cond = select i1 %.not49, i1 true, i1 %.not50
   br i1 %or.cond, label %bb.m, label %BTreeTupleIsPivot.exit69.thread
@@ -346,8 +346,8 @@ bb.m:                                             ; preds = %BTreeTupleIsPosting
   %i.bb = select i1 %i.az, i1 %i.ba, i1 false
   br label %BTreeTupleIsPivot.exit69.thread
 
-BTreeTupleIsPivot.exit69.thread:                  ; preds = %bb.h, %.thread90, %BTreeTupleIsPivot.exit65, %bb.l, %BTreeTupleIsPivot.exit65.thread, %BTreeTupleIsPosting.exit72, %BTreeTupleIsPivot.exit69, %bb.i, %bb.a, %bb.m, %bb.k, %bb.f
-  %.0 = phi i1 [ true, %bb.a ], [ %spec.select, %BTreeTupleIsPivot.exit65 ], [ false, %.thread90 ], [ %i.aw, %bb.k ], [ false, %BTreeTupleIsPosting.exit72 ], [ false, %BTreeTupleIsPivot.exit69 ], [ %i.an, %BTreeTupleIsPivot.exit65.thread ], [ %i.bb, %bb.m ], [ %i.av, %bb.i ], [ %i.ar, %bb.f ], [ false, %bb.l ], [ %.mux, %bb.h ]
+BTreeTupleIsPivot.exit69.thread:                  ; preds = %bb.h, %.thread90, %BTreeTupleIsPosting.exit72, %BTreeTupleIsPivot.exit65, %bb.l, %BTreeTupleIsPivot.exit65.thread, %BTreeTupleIsPivot.exit69, %bb.i, %bb.a, %bb.m, %bb.k, %bb.f
+  %.0 = phi i1 [ true, %bb.a ], [ %spec.select, %BTreeTupleIsPivot.exit65 ], [ false, %.thread90 ], [ %i.aw, %bb.k ], [ %i.an, %BTreeTupleIsPivot.exit65.thread ], [ false, %BTreeTupleIsPivot.exit69 ], [ false, %BTreeTupleIsPosting.exit72 ], [ %i.bb, %bb.m ], [ %i.av, %bb.i ], [ %i.ar, %bb.f ], [ false, %bb.l ], [ %.mux, %bb.h ]
   ret i1 %.0
 }
 

@@ -203,7 +203,7 @@ bb.m:                                             ; preds = %bb.l
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN5boost6detail12test_resultsEvE8instance) #15
   br label %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE6rbeginEv.exit
 
-_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE6rbeginEv.exit: ; preds = %_Z20check_plus_zero_implIPcEvT_.exit3, %bb.l, %bb.m
+_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE6rbeginEv.exit: ; preds = %bb.m, %bb.l, %_Z20check_plus_zero_implIPcEvT_.exit3
   %i.y = load atomic i8, ptr @_ZGVZN5boost6detail12test_resultsEvE8instance acquire, align 8
   %i.z = icmp eq i8 %i.y, 0
   br i1 %i.z, label %bb.n, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE7crbeginEv.exit, !prof !9
@@ -220,7 +220,7 @@ bb.o:                                             ; preds = %bb.n
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN5boost6detail12test_resultsEvE8instance) #15
   br label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE7crbeginEv.exit
 
-_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE7crbeginEv.exit: ; preds = %bb.o, %bb.n, %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE6rbeginEv.exit
+_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE7crbeginEv.exit: ; preds = %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE6rbeginEv.exit, %bb.n, %bb.o
   %i.ac = load atomic i8, ptr @_ZGVZN5boost6detail12test_resultsEvE8instance acquire, align 8
   %i.ad = icmp eq i8 %i.ac, 0
   br i1 %i.ad, label %bb.p, label %_ZN5boost9container3dtl17basic_string_baseINS0_13new_allocatorIcEEvED2Ev.exit, !prof !9
