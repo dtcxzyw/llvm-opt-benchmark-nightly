@@ -1,8 +1,8 @@
 inline.NumInlined: 2999
 inline.NumDeleted: 733
 loop-unroll.NumCompletelyUnrolled: 6
-loop-unroll.NumRuntimeUnrolled: 159
-loop-unroll.NumUnrolled: 165
+loop-unroll.NumRuntimeUnrolled: 160
+loop-unroll.NumUnrolled: 166
 begin_hunk_0_@_ZNK5faiss16scalar_quantizer10DCTemplateINS0_19Quantizer8bitDirectILNS_9SIMDLevelE0EEENS0_12SimilarityIPILS3_0EEELS3_0EE13query_to_codeEPKh:bb.a
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
@@ -204,46 +204,97 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.d = load i64, ptr %i.c, align 8, !tbaa !390  ; 2 uses
   %i.e = mul i64 %i.d, %1
-  %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.e
+  %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.e ; 2 uses
   %i.g = mul i64 %i.d, %2
-  %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.g
+  %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.g ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %i.j = load i64, ptr %i.i, align 8, !tbaa !640  ; 2 uses
+  %i.j = load i64, ptr %i.i, align 8, !tbaa !640  ; 5 uses
   %.not.i = icmp eq i64 %i.j, 0
   br i1 %.not.i, label %_ZNK5faiss16scalar_quantizer10DCTemplateINS0_17QuantizerLloydMaxILi1ELNS_9SIMDLevelE0EEENS0_12SimilarityIPILS3_0EEELS3_0EE21compute_code_distanceEPKhS9_.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.l = load ptr, ptr %i.k, align 8, !tbaa !78   ; 2 uses
+  %i.l = load ptr, ptr %i.k, align 8, !tbaa !78   ; 6 uses
+  %xtraiter = and i64 %i.j, 1
+  %3 = icmp eq i64 %i.j, 1
+  br i1 %3, label %.epil.preheader, label %.lr.ph.i.new
+
+.lr.ph.i.new:                                     ; preds = %.lr.ph.i
+  %unroll_iter = and i64 %i.j, -2
   br label %bb.b
 
-bb.b:                                             ; preds = %bb.b, %.lr.ph.i
-  %.010.i = phi i64 [ 0, %.lr.ph.i ], [ %i.ae, %bb.b ] ; 3 uses
-  %.sroa.6.09.i = phi float [ 0.000000e+00, %.lr.ph.i ], [ %i.ad, %bb.b ]
+bb.b:                                             ; preds = %bb.b, %.lr.ph.i.new
+  %.010.i = phi i64 [ 0, %.lr.ph.i.new ], [ %18, %bb.b ] ; 4 uses
+  %.sroa.6.09.i = phi float [ 0.000000e+00, %.lr.ph.i.new ], [ %i.ad, %bb.b ]
+  %niter = phi i64 [ 0, %.lr.ph.i.new ], [ %i.ae, %bb.b ]
   %i.m = lshr i64 %.010.i, 3                      ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.m
-  %i.o = load i8, ptr %i.n, align 1, !tbaa !28
+  %i.o = load i8, ptr %i.n, align 1, !tbaa !28    ; 2 uses
   %i.p = trunc i64 %.010.i to i8
-  %i.q = and i8 %i.p, 7                           ; 2 uses
+  %i.q = and i8 %i.p, 6                           ; 2 uses
   %i.r = lshr i8 %i.o, %i.q
   %i.s = and i8 %i.r, 1
   %i.t = zext nneg i8 %i.s to i64
   %i.u = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %i.t
   %i.v = load float, ptr %i.u, align 4, !tbaa !37
   %i.w = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.m
-  %i.x = load i8, ptr %i.w, align 1, !tbaa !28
-  %i.y = lshr i8 %i.x, %i.q
+  %i.x = load i8, ptr %i.w, align 1, !tbaa !28    ; 2 uses
+  %4 = lshr i8 %i.x, %i.q
+  %5 = and i8 %4, 1
+  %6 = zext nneg i8 %5 to i64
+  %7 = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %6
+  %8 = load float, ptr %7, align 4, !tbaa !37
+  %9 = tail call float @llvm.fmuladd.f32(float %i.v, float %8, float %.sroa.6.09.i)
+  %10 = trunc i64 %.010.i to i8
+  %11 = and i8 %10, 6
+  %12 = or disjoint i8 %11, 1                     ; 2 uses
+  %13 = lshr i8 %i.o, %12
+  %14 = and i8 %13, 1
+  %15 = zext nneg i8 %14 to i64
+  %16 = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %15
+  %17 = load float, ptr %16, align 4, !tbaa !37
+  %i.y = lshr i8 %i.x, %12
   %i.z = and i8 %i.y, 1
   %i.aa = zext nneg i8 %i.z to i64
   %i.ab = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %i.aa
   %i.ac = load float, ptr %i.ab, align 4, !tbaa !37
-  %i.ad = tail call float @llvm.fmuladd.f32(float %i.v, float %i.ac, float %.sroa.6.09.i) ; 2 uses
-  %i.ae = add nuw i64 %.010.i, 1                  ; 2 uses
-  %exitcond.not.i = icmp eq i64 %i.ae, %i.j
-  br i1 %exitcond.not.i, label %_ZNK5faiss16scalar_quantizer10DCTemplateINS0_17QuantizerLloydMaxILi1ELNS_9SIMDLevelE0EEENS0_12SimilarityIPILS3_0EEELS3_0EE21compute_code_distanceEPKhS9_.exit, label %bb.b, !llvm.loop !642
+  %i.ad = tail call float @llvm.fmuladd.f32(float %17, float %i.ac, float %9) ; 3 uses
+  %18 = add nuw i64 %.010.i, 2                    ; 2 uses
+  %i.ae = add nuw i64 %niter, 2                   ; 2 uses
+  %exitcond.not.i = icmp eq i64 %i.ae, %unroll_iter
+  br i1 %exitcond.not.i, label %_ZNK5faiss16scalar_quantizer10DCTemplateINS0_17QuantizerLloydMaxILi1ELNS_9SIMDLevelE0EEENS0_12SimilarityIPILS3_0EEELS3_0EE21compute_code_distanceEPKhS9_.exit.loopexit.unr-lcssa, label %bb.b, !llvm.loop !642
 
-_ZNK5faiss16scalar_quantizer10DCTemplateINS0_17QuantizerLloydMaxILi1ELNS_9SIMDLevelE0EEENS0_12SimilarityIPILS3_0EEELS3_0EE21compute_code_distanceEPKhS9_.exit: ; preds = %bb.b, %bb.a
-  %.sroa.6.0.lcssa.i = phi float [ 0.000000e+00, %bb.a ], [ %i.ad, %bb.b ]
+_ZNK5faiss16scalar_quantizer10DCTemplateINS0_17QuantizerLloydMaxILi1ELNS_9SIMDLevelE0EEENS0_12SimilarityIPILS3_0EEELS3_0EE21compute_code_distanceEPKhS9_.exit.loopexit.unr-lcssa: ; preds = %bb.b
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %_ZNK5faiss16scalar_quantizer10DCTemplateINS0_17QuantizerLloydMaxILi1ELNS_9SIMDLevelE0EEENS0_12SimilarityIPILS3_0EEELS3_0EE21compute_code_distanceEPKhS9_.exit, label %.epil.preheader
+
+.epil.preheader:                                  ; preds = %_ZNK5faiss16scalar_quantizer10DCTemplateINS0_17QuantizerLloydMaxILi1ELNS_9SIMDLevelE0EEENS0_12SimilarityIPILS3_0EEELS3_0EE21compute_code_distanceEPKhS9_.exit.loopexit.unr-lcssa, %.lr.ph.i
+  %.010.i.epil.init = phi i64 [ 0, %.lr.ph.i ], [ %18, %_ZNK5faiss16scalar_quantizer10DCTemplateINS0_17QuantizerLloydMaxILi1ELNS_9SIMDLevelE0EEENS0_12SimilarityIPILS3_0EEELS3_0EE21compute_code_distanceEPKhS9_.exit.loopexit.unr-lcssa ] ; 2 uses
+  %.sroa.6.09.i.epil.init = phi float [ 0.000000e+00, %.lr.ph.i ], [ %i.ad, %_ZNK5faiss16scalar_quantizer10DCTemplateINS0_17QuantizerLloydMaxILi1ELNS_9SIMDLevelE0EEENS0_12SimilarityIPILS3_0EEELS3_0EE21compute_code_distanceEPKhS9_.exit.loopexit.unr-lcssa ]
+  %lcmp.mod3 = trunc i64 %i.j to i1
+  tail call void @llvm.assume(i1 %lcmp.mod3)
+  %19 = lshr i64 %.010.i.epil.init, 3             ; 2 uses
+  %20 = getelementptr inbounds nuw i8, ptr %i.f, i64 %19
+  %21 = load i8, ptr %20, align 1, !tbaa !28
+  %22 = trunc i64 %.010.i.epil.init to i8
+  %23 = and i8 %22, 7                             ; 2 uses
+  %24 = lshr i8 %21, %23
+  %25 = and i8 %24, 1
+  %26 = zext nneg i8 %25 to i64
+  %27 = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %26
+  %28 = load float, ptr %27, align 4, !tbaa !37
+  %29 = getelementptr inbounds nuw i8, ptr %i.h, i64 %19
+  %30 = load i8, ptr %29, align 1, !tbaa !28
+  %31 = lshr i8 %30, %23
+  %32 = and i8 %31, 1
+  %33 = zext nneg i8 %32 to i64
+  %34 = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %33
+  %35 = load float, ptr %34, align 4, !tbaa !37
+  %36 = tail call float @llvm.fmuladd.f32(float %28, float %35, float %.sroa.6.09.i.epil.init)
+  br label %_ZNK5faiss16scalar_quantizer10DCTemplateINS0_17QuantizerLloydMaxILi1ELNS_9SIMDLevelE0EEENS0_12SimilarityIPILS3_0EEELS3_0EE21compute_code_distanceEPKhS9_.exit
+
+_ZNK5faiss16scalar_quantizer10DCTemplateINS0_17QuantizerLloydMaxILi1ELNS_9SIMDLevelE0EEENS0_12SimilarityIPILS3_0EEELS3_0EE21compute_code_distanceEPKhS9_.exit: ; preds = %.epil.preheader, %_ZNK5faiss16scalar_quantizer10DCTemplateINS0_17QuantizerLloydMaxILi1ELNS_9SIMDLevelE0EEENS0_12SimilarityIPILS3_0EEELS3_0EE21compute_code_distanceEPKhS9_.exit.loopexit.unr-lcssa, %bb.a
+  %.sroa.6.0.lcssa.i = phi float [ 0.000000e+00, %bb.a ], [ %i.ad, %_ZNK5faiss16scalar_quantizer10DCTemplateINS0_17QuantizerLloydMaxILi1ELNS_9SIMDLevelE0EEENS0_12SimilarityIPILS3_0EEELS3_0EE21compute_code_distanceEPKhS9_.exit.loopexit.unr-lcssa ], [ %36, %.epil.preheader ]
   ret float %.sroa.6.0.lcssa.i
 }
 

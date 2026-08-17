@@ -204,7 +204,7 @@ bb.bd:                                            ; preds = %.preheader.6.i.i.i
   br label %bb.be
 
 bb.be:                                            ; preds = %bb.be, %bb.bd
-  %.0.i19.idx.i.i = phi i64 [ 16, %bb.bd ], [ %.0.i19.add.i.i, %bb.be ] ; 4 uses
+  %.0.i19.idx.i.i = phi i64 [ 16, %bb.bd ], [ %.0.i19.add.i.i, %bb.be ] ; 5 uses
   %.0.i19.ptr.i.i = getelementptr inbounds nuw i8, ptr %6, i64 %.0.i19.idx.i.i
   %i.sm = load i8, ptr %.0.i19.ptr.i.i, align 1, !tbaa !12
   %.not.i.i112.i = icmp eq i8 %i.sm, 0
@@ -212,8 +212,7 @@ bb.be:                                            ; preds = %bb.be, %bb.bd
   br i1 %.not.i.i112.i, label %tg3__strlen.exit.i.i, label %bb.be, !llvm.loop !169
 
 tg3__strlen.exit.i.i:                             ; preds = %bb.be
-  %gepdiff.i.i = add nsw i64 %.0.i19.idx.i.i, -16 ; 5 uses
-  %spec.select.i113.i = call i64 @llvm.umin.i64(i64 %gepdiff.i.i, i64 63) ; 7 uses
+  %gepdiff.i.i = add nsw i64 %.0.i19.idx.i.i, -16 ; 10 uses
   %.not7.i.i.i = icmp eq i64 %.0.i19.idx.i.i, 16
   br i1 %.not7.i.i.i, label %tg3__memcpy.exit.i.i, label %iter.check4078
 
@@ -222,24 +221,28 @@ iter.check4078:                                   ; preds = %tg3__strlen.exit.i.
   br i1 %min.iters.check4061, label %.lr.ph.i20.i.i.preheader, label %vector.main.loop.iter.check4062
 
 vector.main.loop.iter.check4062:                  ; preds = %iter.check4078
-  %min.iters.check4063 = icmp ult i64 %gepdiff.i.i, 16
+  %min.iters.check4063 = icmp ult i64 %gepdiff.i.i, 32
   br i1 %min.iters.check4063, label %vec.epilog.ph4082, label %vector.ph4064
 
 vector.ph4064:                                    ; preds = %vector.main.loop.iter.check4062
-  %i.sn = and i64 %spec.select.i113.i, 12
-  %n.vec4065 = and i64 %spec.select.i113.i, 48    ; 5 uses
+  %i.sn = and i64 %gepdiff.i.i, 28
+  %n.vec4065 = and i64 %gepdiff.i.i, -32          ; 5 uses
   %i.so = getelementptr i8, ptr %i.gx, i64 %n.vec4065
   %i.sp = getelementptr i8, ptr %i.j, i64 %n.vec4065
-  %i.sq = and i64 %spec.select.i113.i, 15
+  %i.sq = and i64 %gepdiff.i.i, 31
   br label %vector.body4066
 
 vector.body4066:                                  ; preds = %vector.body4066, %vector.ph4064
   %index4067 = phi i64 [ 0, %vector.ph4064 ], [ %index.next4071, %vector.body4066 ] ; 3 uses
-  %next.gep4068.a = getelementptr i8, ptr %i.gx, i64 %index4067
-  %next.gep4069 = getelementptr i8, ptr %i.j, i64 %index4067
-  %wide.load4070.a = load <16 x i8>, ptr %next.gep4068.a, align 8, !tbaa !12
-  store <16 x i8> %wide.load4070.a, ptr %next.gep4069, align 16, !tbaa !12
-  %index.next4071 = add nuw i64 %index4067, 16    ; 2 uses
+  %next.gep4068 = getelementptr i8, ptr %i.gx, i64 %index4067 ; 2 uses
+  %next.gep4068.a = getelementptr i8, ptr %i.j, i64 %index4067 ; 2 uses
+  %next.gep4069 = getelementptr i8, ptr %next.gep4068, i64 16
+  %wide.load4070 = load <16 x i8>, ptr %next.gep4068, align 8, !tbaa !12
+  %wide.load4070.a = load <16 x i8>, ptr %next.gep4069, align 8, !tbaa !12
+  %7 = getelementptr i8, ptr %next.gep4068.a, i64 16
+  store <16 x i8> %wide.load4070, ptr %next.gep4068.a, align 16, !tbaa !12
+  store <16 x i8> %wide.load4070.a, ptr %7, align 16, !tbaa !12
+  %index.next4071 = add nuw i64 %index4067, 32    ; 2 uses
   %i.sr = icmp eq i64 %index.next4071, %n.vec4065
   br i1 %i.sr, label %middle.block4072, label %vector.body4066, !llvm.loop !284
 
@@ -249,14 +252,14 @@ middle.block4072:                                 ; preds = %vector.body4066
 
 vec.epilog.iter.check4080:                        ; preds = %middle.block4072
   %min.epilog.iters.check4081 = icmp eq i64 %i.sn, 0
-  br i1 %min.epilog.iters.check4081, label %.lr.ph.i20.i.i.preheader, label %vec.epilog.ph4082, !prof !278
+  br i1 %min.epilog.iters.check4081, label %.lr.ph.i20.i.i.preheader, label %vec.epilog.ph4082, !prof !36
 
 vec.epilog.ph4082:                                ; preds = %vector.main.loop.iter.check4062, %vec.epilog.iter.check4080
   %vec.epilog.resume.val4074 = phi i64 [ %n.vec4065, %vec.epilog.iter.check4080 ], [ 0, %vector.main.loop.iter.check4062 ]
-  %n.vec4083 = and i64 %spec.select.i113.i, 60    ; 4 uses
+  %n.vec4083 = and i64 %gepdiff.i.i, -4           ; 4 uses
   %i.ss = getelementptr i8, ptr %i.gx, i64 %n.vec4083
   %i.st = getelementptr i8, ptr %i.j, i64 %n.vec4083
-  %i.su = and i64 %spec.select.i113.i, 3
+  %i.su = and i64 %.0.i19.idx.i.i, 3
   br label %vec.epilog.vector.body4084
 
 vec.epilog.vector.body4084:                       ; preds = %vec.epilog.vector.body4084, %vec.epilog.ph4082
@@ -276,14 +279,14 @@ vec.epilog.middle.block4090:                      ; preds = %vec.epilog.vector.b
 .lr.ph.i20.i.i.preheader:                         ; preds = %iter.check4078, %vec.epilog.iter.check4080, %vec.epilog.middle.block4090
   %.010.i.i.i.ph = phi ptr [ %i.gx, %iter.check4078 ], [ %i.so, %vec.epilog.iter.check4080 ], [ %i.ss, %vec.epilog.middle.block4090 ]
   %.059.i.i.i.ph = phi ptr [ %i.j, %iter.check4078 ], [ %i.sp, %vec.epilog.iter.check4080 ], [ %i.st, %vec.epilog.middle.block4090 ]
-  %.068.i.i.i.ph = phi i64 [ %spec.select.i113.i, %iter.check4078 ], [ %i.sq, %vec.epilog.iter.check4080 ], [ %i.su, %vec.epilog.middle.block4090 ]
+  %.068.i.i.i.ph = phi i64 [ %gepdiff.i.i, %iter.check4078 ], [ %i.sq, %vec.epilog.iter.check4080 ], [ %i.su, %vec.epilog.middle.block4090 ]
   br label %.lr.ph.i20.i.i
 
 .lr.ph.i20.i.i:                                   ; preds = %.lr.ph.i20.i.i.preheader, %.lr.ph.i20.i.i
   %.010.i.i.i = phi ptr [ %i.sx, %.lr.ph.i20.i.i ], [ %.010.i.i.i.ph, %.lr.ph.i20.i.i.preheader ] ; 2 uses
   %.059.i.i.i = phi ptr [ %i.sz, %.lr.ph.i20.i.i ], [ %.059.i.i.i.ph, %.lr.ph.i20.i.i.preheader ] ; 2 uses
   %.068.i.i.i = phi i64 [ %i.sw, %.lr.ph.i20.i.i ], [ %.068.i.i.i.ph, %.lr.ph.i20.i.i.preheader ]
-  %i.sw = add i64 %.068.i.i.i, -1                 ; 2 uses
+  %i.sw = add nsw i64 %.068.i.i.i, -1             ; 2 uses
   %i.sx = getelementptr inbounds nuw i8, ptr %.010.i.i.i, i64 1
   %i.sy = load i8, ptr %.010.i.i.i, align 1, !tbaa !12
   %i.sz = getelementptr inbounds nuw i8, ptr %.059.i.i.i, i64 1
@@ -292,7 +295,7 @@ vec.epilog.middle.block4090:                      ; preds = %vec.epilog.vector.b
   br i1 %.not.i21.i.i, label %tg3__memcpy.exit.i.i, label %.lr.ph.i20.i.i, !llvm.loop !286
 
 tg3__memcpy.exit.i.i:                             ; preds = %.lr.ph.i20.i.i, %middle.block4072, %vec.epilog.middle.block4090, %tg3__strlen.exit.i.i
-  %i.ta = getelementptr inbounds nuw i8, ptr %i.j, i64 %spec.select.i113.i
+  %i.ta = getelementptr inbounds nuw i8, ptr %i.j, i64 %gepdiff.i.i
   store i8 0, ptr %i.ta, align 1, !tbaa !12
   %i.tb = icmp eq i64 %gepdiff.i.i.i, 0
   br i1 %i.tb, label %tg3__decode_data_uri.exit.i, label %.preheader48.i.i.i

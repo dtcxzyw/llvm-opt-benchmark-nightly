@@ -26,25 +26,24 @@ target triple = "x86_64-pc-linux-gnu"
 
 ; Function Attrs: nounwind uwtable
 define dso_local void @pgstat_report_checkpointer() local_unnamed_addr #0 {
-  %1 = load ptr, ptr @pgStatLocal, align 8        ; 6 uses
-  %2 = load <8 x i64>, ptr @PendingCheckpointerStats, align 64
-  %3 = tail call i64 @llvm.vector.reduce.or.v8i64(<8 x i64> %2)
-  %.not45.i = icmp eq i64 %3, 0
-  br i1 %.not45.i, label %pg_memory_is_all_zeros.exit, label %pg_memory_is_all_zeros.exit.thread
-
-pg_memory_is_all_zeros.exit:                      ; preds = %0
+pg_memory_is_all_zeros.exit:
+  %0 = load <8 x i64>, ptr @PendingCheckpointerStats, align 64
+  %1 = tail call i64 @llvm.vector.reduce.or.v8i64(<8 x i64> %0)
+  %.not45.i = icmp eq i64 %1, 0
   %i.a = load i64, ptr getelementptr inbounds nuw (i8, ptr @PendingCheckpointerStats, i64 64), align 64
   %.not44.i = icmp eq i64 %i.a, 0
+  %or.cond.i = select i1 %.not45.i, i1 %.not44.i, i1 false
   %i.b = load i64, ptr getelementptr inbounds nuw (i8, ptr @PendingCheckpointerStats, i64 72), align 8
   %.not44.1.i = icmp eq i64 %i.b, 0
-  %or.cond.i.a = select i1 %.not44.i, i1 %.not44.1.i, i1 false
+  %or.cond.i.a = select i1 %or.cond.i, i1 %.not44.1.i, i1 false
   %i.c = load i64, ptr getelementptr inbounds nuw (i8, ptr @PendingCheckpointerStats, i64 80), align 16
   %.not44.2.i = icmp eq i64 %i.c, 0
   %or.cond10.i = select i1 %or.cond.i.a, i1 %.not44.2.i, i1 false
   br i1 %or.cond10.i, label %bb.a, label %pg_memory_is_all_zeros.exit.thread
 
-pg_memory_is_all_zeros.exit.thread:               ; preds = %0, %pg_memory_is_all_zeros.exit
-  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 688 ; 4 uses
+pg_memory_is_all_zeros.exit.thread:               ; preds = %pg_memory_is_all_zeros.exit
+  %2 = load ptr, ptr @pgStatLocal, align 8        ; 6 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %2, i64 688 ; 4 uses
   %i.e = load volatile i32, ptr @CritSectionCount, align 4
   %i.f = add i32 %i.e, 1
   store volatile i32 %i.f, ptr @CritSectionCount, align 4
@@ -52,27 +51,27 @@ pg_memory_is_all_zeros.exit.thread:               ; preds = %0, %pg_memory_is_al
   %i.h = add i32 %i.g, 1
   store i32 %i.h, ptr %i.d, align 4
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #5, !srcloc !4
-  %i.i = getelementptr inbounds nuw i8, ptr %1, i64 696 ; 2 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %2, i64 696 ; 2 uses
   %i.j = load <2 x i64>, ptr @PendingCheckpointerStats, align 64
   %i.k = load <2 x i64>, ptr %i.i, align 8
   %i.l = add <2 x i64> %i.k, %i.j
   store <2 x i64> %i.l, ptr %i.i, align 8
-  %i.m = getelementptr inbounds nuw i8, ptr %1, i64 712 ; 2 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %2, i64 712 ; 2 uses
   %i.n = load <2 x i64>, ptr getelementptr inbounds nuw (i8, ptr @PendingCheckpointerStats, i64 16), align 16
   %i.o = load <2 x i64>, ptr %i.m, align 8
   %i.p = add <2 x i64> %i.o, %i.n
   store <2 x i64> %i.p, ptr %i.m, align 8
-  %i.q = getelementptr inbounds nuw i8, ptr %1, i64 728 ; 2 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %2, i64 728 ; 2 uses
   %i.r = load <2 x i64>, ptr getelementptr inbounds nuw (i8, ptr @PendingCheckpointerStats, i64 32), align 32
   %i.s = load <2 x i64>, ptr %i.q, align 8
   %i.t = add <2 x i64> %i.s, %i.r
   store <2 x i64> %i.t, ptr %i.q, align 8
-  %i.u = getelementptr inbounds nuw i8, ptr %1, i64 744 ; 2 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %2, i64 744 ; 2 uses
   %i.v = load <2 x i64>, ptr getelementptr inbounds nuw (i8, ptr @PendingCheckpointerStats, i64 48), align 16
   %i.w = load <2 x i64>, ptr %i.u, align 8
   %i.x = add <2 x i64> %i.w, %i.v
   store <2 x i64> %i.x, ptr %i.u, align 8
-  %i.y = getelementptr inbounds nuw i8, ptr %1, i64 760 ; 2 uses
+  %i.y = getelementptr inbounds nuw i8, ptr %2, i64 760 ; 2 uses
   %i.z = load <2 x i64>, ptr getelementptr inbounds nuw (i8, ptr @PendingCheckpointerStats, i64 64), align 64
   %i.aa = load <2 x i64>, ptr %i.y, align 8
   %i.ab = add <2 x i64> %i.aa, %i.z

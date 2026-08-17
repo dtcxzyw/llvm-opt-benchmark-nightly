@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b, %bb.b, %bb.b,
 
 .loopexit750.i:                                   ; preds = %.preheader749.i, %.loopexit752.i
   %i.q = phi i8 [ %i.m, %.loopexit752.i ], [ %i.p, %.preheader749.i ] ; 3 uses
-  %.3454.i = phi ptr [ %.1452.i, %.loopexit752.i ], [ %i.o, %.preheader749.i ] ; 11 uses
+  %.3454.i = phi ptr [ %.1452.i, %.loopexit752.i ], [ %i.o, %.preheader749.i ] ; 10 uses
   %i.r = sext i8 %i.q to i32                      ; 2 uses
   %i.s = add i8 %i.q, -48
   %i.t = icmp ult i8 %i.s, 10
@@ -239,7 +239,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d
   %.1429.i = phi i32 [ %i.y, %bb.d ], [ %.0428877.i, %bb.f ], [ %.0428877.i, %bb.e ] ; 3 uses
   %.1423.i = phi i32 [ %.0422878.i, %bb.d ], [ %i.ac, %bb.f ], [ %.0422878.i, %bb.e ] ; 3 uses
   %i.ad = add nuw nsw i32 %.0484875.i, 1          ; 5 uses
-  %i.ae = getelementptr inbounds nuw i8, ptr %.4455876.i, i64 1 ; 6 uses
+  %i.ae = getelementptr inbounds nuw i8, ptr %.4455876.i, i64 1 ; 5 uses
   %i.af = load i8, ptr %i.ae, align 1, !tbaa !19  ; 3 uses
   %i.ag = sext i8 %i.af to i32                    ; 2 uses
   %i.ah = add i8 %i.af, -48
@@ -250,19 +250,15 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d
   %i.aj = ptrtoint ptr %i.ae to i64               ; 2 uses
   %i.ak = ptrtoint ptr %.3454.i to i64            ; 3 uses
   %i.al = sub i64 %i.aj, %i.ak
-  %i.am = trunc i64 %i.al to i32                  ; 4 uses
-  %4 = icmp ugt ptr %i.ae, %.3454.i
-  br i1 %4, label %.lr.ph887.preheader.i, label %.critedge.i
-
-.lr.ph887.preheader.i:                            ; preds = %._crit_edge.i
+  %4 = trunc i64 %i.al to i32                     ; 4 uses
   %5 = trunc i64 %i.aj to i32
-  %6 = trunc i64 %i.ak to i32
-  %7 = sub i32 %5, %6
+  %i.am = trunc i64 %i.ak to i32
+  %6 = sub i32 %5, %i.am
   br label %.lr.ph887.i
 
-.lr.ph887.i:                                      ; preds = %bb.h, %.lr.ph887.preheader.i
-  %.0447885.i = phi ptr [ %i.an, %bb.h ], [ %i.ae, %.lr.ph887.preheader.i ]
-  %.0466884.i = phi i32 [ %i.aq, %bb.h ], [ 0, %.lr.ph887.preheader.i ] ; 2 uses
+.lr.ph887.i:                                      ; preds = %bb.h, %._crit_edge.i
+  %.0447885.i = phi ptr [ %i.an, %bb.h ], [ %i.ae, %._crit_edge.i ]
+  %.0466884.i = phi i32 [ %i.aq, %bb.h ], [ 0, %._crit_edge.i ] ; 2 uses
   %i.an = getelementptr inbounds i8, ptr %.0447885.i, i64 -1 ; 3 uses
   %i.ao = load i8, ptr %i.an, align 1, !tbaa !19
   %i.ap = icmp eq i8 %i.ao, 48
@@ -273,8 +269,8 @@ bb.h:                                             ; preds = %.lr.ph887.i
   %i.ar = icmp ugt ptr %i.an, %.3454.i
   br i1 %i.ar, label %.lr.ph887.i, label %.critedge.i, !llvm.loop !21
 
-.critedge.i:                                      ; preds = %bb.h, %.lr.ph887.i, %._crit_edge.i
-  %.0466.lcssa.i = phi i32 [ 0, %._crit_edge.i ], [ %7, %bb.h ], [ %.0466884.i, %.lr.ph887.i ] ; 2 uses
+.critedge.i:                                      ; preds = %bb.h, %.lr.ph887.i
+  %.0466.lcssa.i.ph = phi i32 [ %6, %bb.h ], [ %.0466884.i, %.lr.ph887.i ] ; 2 uses
   %i.as = icmp eq i8 %i.af, 46
   br i1 %i.as, label %bb.i, label %bb.q
 
@@ -288,7 +284,7 @@ bb.i:                                             ; preds = %.critedge.i
   %i.aw = ptrtoint ptr %i.av to i64
   %i.ax = sub i64 %i.aw, %i.ak
   %i.ay = trunc i64 %i.ax to i32                  ; 2 uses
-  %i.az = sub nsw i32 %i.ay, %i.am
+  %i.az = sub nsw i32 %i.ay, %4
   br label %bb.j
 
 .preheader748.i:                                  ; preds = %.critedge.thread.i
@@ -319,11 +315,11 @@ bb.j:                                             ; preds = %bb.p, %bb.i
   %i.bi = phi i32 [ %i.cw, %bb.p ], [ %i.az, %bb.i ] ; 5 uses
   %.0484.lcssa115811751186.i = phi i32 [ %.0484.lcssa115811751185.i17, %bb.p ], [ %i.ad, %bb.i ] ; 5 uses
   %.sroa.6.0.i = phi i32 [ %.sroa.6.1.i19, %bb.p ], [ %i.ay, %bb.i ] ; 5 uses
-  %.sroa.0.0.i = phi i32 [ %.sroa.0.1.i21, %bb.p ], [ %i.am, %bb.i ] ; 5 uses
+  %.sroa.0.0.i = phi i32 [ %.sroa.0.1.i21, %bb.p ], [ %4, %bb.i ] ; 5 uses
   %.1485.i = phi i32 [ %.4488.i, %bb.p ], [ %i.ad, %bb.i ] ; 6 uses
   %.0477.i = phi i32 [ %.2479.i, %bb.p ], [ 0, %bb.i ] ; 3 uses
   %.1473.i = phi i32 [ %.3475.i, %bb.p ], [ 0, %bb.i ] ; 8 uses
-  %.1467.i = phi i32 [ %.3469.i, %bb.p ], [ %.0466.lcssa.i, %bb.i ] ; 2 uses
+  %.1467.i = phi i32 [ %.3469.i, %bb.p ], [ %.0466.lcssa.i.ph, %bb.i ] ; 2 uses
   %.6457.i = phi ptr [ %i.cx, %bb.p ], [ %i.av, %bb.i ] ; 6 uses
   %.0448.i = phi ptr [ %.1449.i28, %bb.p ], [ %.3454.i, %bb.i ] ; 5 uses
   %.2430.i = phi i32 [ %.7435.i, %bb.p ], [ %.1429.i, %bb.i ] ; 5 uses
@@ -463,13 +459,13 @@ bb.p:                                             ; preds = %bb.o, %bb.n, %bb.m,
 bb.q:                                             ; preds = %bb.j, %._crit_edge894.i, %.critedge.thread.i, %.critedge.i
   %.0484.lcssa11581174.i = phi i32 [ %.0484.lcssa115811751186.i, %bb.j ], [ 0, %._crit_edge894.i ], [ %i.ad, %.critedge.i ], [ 0, %.critedge.thread.i ] ; 2 uses
   %.sroa.12.0.i = phi i32 [ %i.bi, %bb.j ], [ 1, %._crit_edge894.i ], [ 0, %.critedge.i ], [ 0, %.critedge.thread.i ] ; 3 uses
-  %.sroa.6.2.i = phi i32 [ %.sroa.6.0.i, %bb.j ], [ 1, %._crit_edge894.i ], [ %i.am, %.critedge.i ], [ 0, %.critedge.thread.i ] ; 3 uses
-  %.sroa.0.2.i = phi i32 [ %.sroa.0.0.i, %bb.j ], [ 0, %._crit_edge894.i ], [ %i.am, %.critedge.i ], [ 0, %.critedge.thread.i ]
+  %.sroa.6.2.i = phi i32 [ %.sroa.6.0.i, %bb.j ], [ 1, %._crit_edge894.i ], [ %4, %.critedge.i ], [ 0, %.critedge.thread.i ] ; 3 uses
+  %.sroa.0.2.i = phi i32 [ %.sroa.0.0.i, %bb.j ], [ 0, %._crit_edge894.i ], [ %4, %.critedge.i ], [ 0, %.critedge.thread.i ]
   %.3515.i = phi i32 [ %.1513.i, %bb.j ], [ %.0512.lcssa.i, %._crit_edge894.i ], [ %i.ag, %.critedge.i ], [ %i.r, %.critedge.thread.i ]
   %.5489.i = phi i32 [ %.1485.i, %bb.j ], [ 0, %._crit_edge894.i ], [ %i.ad, %.critedge.i ], [ 0, %.critedge.thread.i ] ; 14 uses
   %.3480.i = phi i32 [ %.0477.i, %bb.j ], [ 0, %._crit_edge894.i ], [ 0, %.critedge.i ], [ 0, %.critedge.thread.i ]
   %.4476.i = phi i32 [ %.1473.i, %bb.j ], [ %.0472.lcssa.i, %._crit_edge894.i ], [ 0, %.critedge.i ], [ 0, %.critedge.thread.i ] ; 2 uses
-  %.4470.i = phi i32 [ %.1467.i, %bb.j ], [ 0, %._crit_edge894.i ], [ %.0466.lcssa.i, %.critedge.i ], [ 0, %.critedge.thread.i ]
+  %.4470.i = phi i32 [ %.1467.i, %bb.j ], [ 0, %._crit_edge894.i ], [ %.0466.lcssa.i.ph, %.critedge.i ], [ 0, %.critedge.thread.i ]
   %.8459.i = phi ptr [ %.6457.i, %bb.j ], [ %.5456.lcssa.i, %._crit_edge894.i ], [ %i.ae, %.critedge.i ], [ %.3454.i, %.critedge.thread.i ] ; 7 uses
   %.2450.i = phi ptr [ %.0448.i, %bb.j ], [ %.3454.i, %._crit_edge894.i ], [ %.3454.i, %.critedge.i ], [ %.3454.i, %.critedge.thread.i ] ; 15 uses
   %.8436.i = phi i32 [ %.2430.i, %bb.j ], [ 0, %._crit_edge894.i ], [ %.1429.i, %.critedge.i ], [ 0, %.critedge.thread.i ] ; 5 uses

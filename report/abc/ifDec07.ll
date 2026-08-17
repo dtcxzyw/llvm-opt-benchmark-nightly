@@ -204,7 +204,7 @@ If_Dec6MoveTo.exit:                               ; preds = %.lr.ph.i, %.prehead
   br i1 %exitcond180.not, label %bb.af, label %bb.a, !llvm.loop !37
 
 bb.a:                                             ; preds = %If_Dec6MoveTo.exit, %.loopexit
-  %.12997 = phi i32 [ 0, %If_Dec6MoveTo.exit ], [ %i.ct, %.loopexit ] ; 23 uses
+  %.12997 = phi i32 [ 0, %If_Dec6MoveTo.exit ], [ %i.ct, %.loopexit ] ; 22 uses
   %i.ct = add nuw nsw i32 %.12997, 1              ; 3 uses
   %i.cu = icmp samesign ult i32 %.12997, 3
   br i1 %i.cu, label %.lr.ph, label %.loopexit
@@ -303,7 +303,7 @@ vector.ph:                                        ; preds = %.lr.ph, %vector.ear
   %.02796 = phi i32 [ %i.ct, %.lr.ph ], [ %i.vu, %vector.early.exit ] ; 18 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i64 %0, ptr %i.a, align 8, !tbaa !12
-  %i.fb = icmp eq i32 %.02796, 1                  ; 3 uses
+  %i.fb = icmp eq i32 %.02796, 1                  ; 2 uses
   %i.fc = zext i1 %i.fb to i32                    ; 2 uses
   %i.fd = lshr i32 3, %.02796                     ; 2 uses
   %i.fe = icmp eq i32 %.02796, 2                  ; 2 uses
@@ -423,14 +423,11 @@ bb.c:                                             ; preds = %bb.b
 
 ._crit_edge.i:                                    ; preds = %bb.b
   %.not187.i = icmp eq i32 %.12997, 1
-  %or.cond207.i = or i1 %.not187.i, %i.fb
-  br i1 %or.cond207.i, label %._crit_edge.thread.i, label %bb.d
+  br i1 %.not187.i, label %._crit_edge.thread.i, label %bb.d
 
 ._crit_edge.thread.i:                             ; preds = %._crit_edge.i, %bb.c
   %.0174276.i = phi i32 [ 0, %._crit_edge.i ], [ 1, %bb.c ] ; 2 uses
-  %.not187.1.i = icmp eq i32 %.12997, 2
-  %or.cond207.1.i = or i1 %.not187.1.i, %i.fe
-  br i1 %or.cond207.1.i, label %._crit_edge.thread.i.thread, label %bb.d
+  br i1 %i.fe, label %._crit_edge.thread.i.thread, label %bb.d
 
 ._crit_edge.thread.i.thread:                      ; preds = %bb.c, %._crit_edge.thread.i
   %.0174276.i42 = phi i32 [ %.0174276.i, %._crit_edge.thread.i ], [ 2, %bb.c ]

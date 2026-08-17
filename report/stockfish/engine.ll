@@ -204,8 +204,10 @@ bb.h:                                             ; preds = %_ZSt8_DestroyIPSt3s
 
 _ZN9Stockfish10NumaConfigD2Ev.exit:               ; preds = %_ZSt8_DestroyIPSt3setImSt4lessImESaImEEEvT_S6_.exit.i.i, %bb.h
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #28
+  %66 = getelementptr inbounds nuw i8, ptr %0, i64 168
   %i.br = getelementptr inbounds nuw i8, ptr %0, i64 1184
   store i64 0, ptr %i.br, align 8, !tbaa !61
+  %67 = getelementptr inbounds nuw i8, ptr %0, i64 1216 ; 2 uses
   %i.bs = call noalias noundef nonnull dereferenceable(80) ptr @_Znwm(i64 noundef 80) #31 ; 11 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bs, i64 8
   store i64 8, ptr %i.bt, align 8, !tbaa !63
@@ -214,8 +216,6 @@ _ZN9Stockfish10NumaConfigD2Ev.exit:               ; preds = %_ZSt8_DestroyIPSt3s
   %.06.i.i.i.i.ptr = getelementptr inbounds nuw i8, ptr %i.bu, i64 24 ; 3 uses
   %i.bv = call noalias noundef nonnull dereferenceable(384) ptr @_Znwm(i64 noundef 384) #31 ; 7 uses
   store ptr %i.bv, ptr %.06.i.i.i.i.ptr, align 8, !tbaa !70
-  %66 = getelementptr inbounds nuw i8, ptr %0, i64 168
-  %67 = getelementptr inbounds nuw i8, ptr %0, i64 1216 ; 2 uses
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bs, i64 16
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bs, i64 40
   store ptr %.06.i.i.i.i.ptr, ptr %i.bx, align 8, !tbaa !71

@@ -204,7 +204,7 @@ bb.eb:                                            ; preds = %__drm_to_dev.exit.i
   br label %bb.ec
 
 bb.ec:                                            ; preds = %.thread.i.i.i, %.lr.ph.i149.i.i
-  %i.tu = phi i32 [ %i.tr, %.lr.ph.i149.i.i ], [ %i.vt, %.thread.i.i.i ] ; 4 uses
+  %i.tu = phi i32 [ %i.tr, %.lr.ph.i149.i.i ], [ %i.vt, %.thread.i.i.i ] ; 3 uses
   %indvars.iv.i150.i.i = phi i64 [ 0, %.lr.ph.i149.i.i ], [ %indvars.iv.next.i151.i.i, %.thread.i.i.i ] ; 2 uses
   %i.tv = load ptr, ptr %i.eg, align 8            ; 2 uses
   %i.tw = getelementptr [40 x i8], ptr %i.tv, i64 %indvars.iv.i150.i.i ; 2 uses
@@ -216,19 +216,15 @@ bb.ed:                                            ; preds = %bb.ec
   %i.ty = getelementptr i8, ptr %i.tw, i64 24
   %i.tz = load ptr, ptr %i.ty, align 8            ; 3 uses
   %i.ua = getelementptr i8, ptr %i.tz, i64 16
-  %i.ub = load ptr, ptr %i.ua, align 8            ; 8 uses
+  %i.ub = load ptr, ptr %i.ua, align 8            ; 7 uses
   %i.uc = getelementptr i8, ptr %i.tz, i64 8
   %i.ud = load ptr, ptr %i.uc, align 8
   %.not133.i.i.i = icmp eq ptr %i.ud, %.078.i.i
-  br i1 %.not133.i.i.i, label %5, label %.thread.i.i.i
+  br i1 %.not133.i.i.i, label %.lr.ph.i137.i.i.i, label %.thread.i.i.i
 
-5:                                                ; preds = %bb.ed
-  %6 = getelementptr i8, ptr %i.ub, i64 160
-  %7 = icmp slt i32 %i.tu, 1
-  br i1 %7, label %.loopexit.i.i.i, label %.lr.ph.i137.i.i.i
-
-.lr.ph.i137.i.i.i:                                ; preds = %5
-  %i.ue = getelementptr i8, ptr %i.ub, i64 152
+.lr.ph.i137.i.i.i:                                ; preds = %bb.ed
+  %5 = getelementptr i8, ptr %i.ub, i64 160
+  %i.ue = getelementptr i8, ptr %i.ub, i64 152    ; 2 uses
   %wide.trip.count.i.i.i.i = zext nneg i32 %i.tu to i64
   br label %bb.ee
 
@@ -254,7 +250,7 @@ bb.eg:                                            ; preds = %bb.ef
   br i1 %i.un, label %encoders_cloneable.exit.thread.i.i.i.i, label %bb.eh
 
 bb.eh:                                            ; preds = %bb.eg
-  %i.uo = load i16, ptr %6, align 8
+  %i.uo = load i16, ptr %5, align 8
   %i.up = zext i16 %i.uo to i64
   %i.uq = getelementptr i8, ptr %i.um, i64 152
   %i.ur = load i32, ptr %i.uq, align 8
@@ -290,7 +286,7 @@ bb.ei:                                            ; preds = %check_single_encode
   %i.ve = load ptr, ptr %i.vd, align 8
   br label %bb.el
 
-.loopexit.i.i.i:                                  ; preds = %encoders_cloneable.exit.thread.i.i.i.i, %5
+.loopexit.i.i.i:                                  ; preds = %encoders_cloneable.exit.thread.i.i.i.i
   %i.vf = getelementptr i8, ptr %i.ub, i64 272
   %i.vg = load ptr, ptr %i.vf, align 8            ; 2 uses
   %.not134.i.i.i = icmp eq ptr %i.vg, null
@@ -301,8 +297,7 @@ bb.ej:                                            ; preds = %.loopexit.i.i.i
   br label %.thread.sink.split.i.i.i
 
 bb.ek:                                            ; preds = %.loopexit.i.i.i
-  %8 = getelementptr i8, ptr %i.ub, i64 152
-  %i.vi = load i32, ptr %8, align 8
+  %i.vi = load i32, ptr %i.ue, align 8
   br label %.thread.sink.split.i.i.i
 
 bb.el:                                            ; preds = %bb.ei, %check_single_encoder_cloning.exit.i.i.i

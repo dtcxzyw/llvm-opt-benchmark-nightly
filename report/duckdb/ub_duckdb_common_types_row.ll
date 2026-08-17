@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.d
 define noundef zeroext i1 @_ZN6duckdb19TupleDataCollection4ScanERNS_18TupleDataScanStateERNS_9DataChunkE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(192) %0, ptr noundef nonnull align 8 dereferenceable(560) %1, ptr noundef nonnull align 8 dereferenceable(72) %2) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 544 ; 3 uses
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !420  ; 6 uses
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !420  ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !243  ; 2 uses
@@ -245,7 +245,7 @@ bb.b:                                             ; preds = %.preheader.i
   br i1 %.not13.peel.i, label %.peel.next.i, label %.loopexit
 
 .peel.next.i:                                     ; preds = %bb.b, %bb.c
-  %i.x = phi i64 [ %i.ae, %bb.c ], [ %i.w, %bb.b ] ; 5 uses
+  %i.x = phi i64 [ %i.ae, %bb.c ], [ %i.w, %bb.b ] ; 3 uses
   %i.y = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %i.x
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !245  ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 24
@@ -253,7 +253,7 @@ bb.b:                                             ; preds = %.preheader.i
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !422
   %i.ad = load ptr, ptr %i.aa, align 8, !tbaa !413
   %.not12.not.i = icmp eq ptr %i.ac, %i.ad
-  br i1 %.not12.not.i, label %bb.c, label %3
+  br i1 %.not12.not.i, label %bb.c, label %bb.f
 
 bb.c:                                             ; preds = %.peel.next.i
   %i.ae = add i64 %i.x, 1                         ; 3 uses
@@ -278,22 +278,18 @@ bb.e:                                             ; preds = %bb.d, %.loopexit
   store i64 0, ptr %i.aj, align 8, !tbaa !93
   br label %bb.h
 
-3:                                                ; preds = %.peel.next.i
+bb.f:                                             ; preds = %.peel.next.i
   store i64 1, ptr %i.k, align 8, !tbaa !421
-  %.not15 = icmp eq i64 %i.x, %i.b
-  br i1 %.not15, label %bb.g, label %bb.f
-
-bb.f:                                             ; preds = %3
   %i.ak = tail call noundef ptr @_ZNK6duckdb10shared_ptrINS_18TupleDataAllocatorELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(192) %i.m)
   tail call void @_ZN6duckdb18TupleDataAllocator21ReleaseOrStoreHandlesERNS_17TupleDataPinStateERNS_16TupleDataSegmentE(ptr noundef nonnull align 8 dereferenceable(128) %i.ak, ptr noundef nonnull align 8 dereferenceable(49) %1, ptr noundef nonnull align 8 dereferenceable(192) %i.m)
   br label %bb.g
 
-bb.g:                                             ; preds = %.thread, %bb.f, %3
-  %4 = phi i64 [ %.promoted.i, %.thread ], [ 0, %bb.f ], [ 0, %3 ]
-  %.lcssa.i28 = phi i64 [ %i.b, %.thread ], [ %i.x, %bb.f ], [ %i.x, %3 ]
+bb.g:                                             ; preds = %.thread, %bb.f
+  %3 = phi i64 [ %.promoted.i, %.thread ], [ 0, %bb.f ]
+  %.lcssa.i28 = phi i64 [ %i.b, %.thread ], [ %i.x, %bb.f ]
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.am = getelementptr inbounds nuw i8, ptr %1, i64 80
-  tail call void @_ZN6duckdb19TupleDataCollection11ScanAtIndexERNS_17TupleDataPinStateERNS_19TupleDataChunkStateERKNS_6vectorImLb1ESaImEEEmmRNS_9DataChunkE(ptr noundef nonnull align 8 dereferenceable(192) %0, ptr noundef nonnull align 8 dereferenceable(49) %1, ptr noundef nonnull align 8 dereferenceable(488) %i.al, ptr noundef nonnull align 8 dereferenceable(24) %i.am, i64 noundef %.lcssa.i28, i64 noundef %4, ptr noundef nonnull align 8 dereferenceable(72) %2)
+  tail call void @_ZN6duckdb19TupleDataCollection11ScanAtIndexERNS_17TupleDataPinStateERNS_19TupleDataChunkStateERKNS_6vectorImLb1ESaImEEEmmRNS_9DataChunkE(ptr noundef nonnull align 8 dereferenceable(192) %0, ptr noundef nonnull align 8 dereferenceable(49) %1, ptr noundef nonnull align 8 dereferenceable(488) %i.al, ptr noundef nonnull align 8 dereferenceable(24) %i.am, i64 noundef %.lcssa.i28, i64 noundef %3, ptr noundef nonnull align 8 dereferenceable(72) %2)
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.e

@@ -203,7 +203,7 @@ bb.i:                                             ; preds = %.lr.ph, %clear.exit
   %i.bh = getelementptr inbounds nuw [16 x i8], ptr %i.d, i64 %indvars.iv ; 2 uses
   %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bh, i64 8
   %i.bi = load <2 x double>, ptr %i.bh, align 8, !tbaa !28 ; 7 uses
-  %i.bj = extractelement <2 x double> %i.bi, i64 0 ; 10 uses
+  %i.bj = extractelement <2 x double> %i.bi, i64 0 ; 9 uses
   %.sroa.10.0.copyload = load double, ptr %.sroa.10.0..sroa_idx, align 8, !tbaa !28 ; 12 uses
   %i.bk = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %indvars.iv
   %i.bl = load i32, ptr %i.bk, align 4, !tbaa !27
@@ -246,7 +246,7 @@ bb.i:                                             ; preds = %.lr.ph, %clear.exit
   br i1 %.0.i99, label %.lr.ph.preheader.i, label %clear.exit.thread167
 
 .lr.ph.preheader.i:                               ; preds = %bb.i
-  %i.cu = fcmp une double %2, %i.bj               ; 2 uses
+  %i.cu = fcmp une double %2, %i.bj               ; 4 uses
   %i.cv = insertelement <2 x double> %i.bi, double %2, i64 1 ; 2 uses
   %i.cw = insertelement <2 x double> %i.ay, double %.sroa.10.0.copyload, i64 0
   %i.cx = extractelement <2 x double> %i.bx, i64 0 ; 4 uses
@@ -262,7 +262,6 @@ bb.j:                                             ; preds = %intersect.exit132
   br i1 %i.as, label %.lr.ph27.preheader.i, label %clear.exit.thread165
 
 .lr.ph27.preheader.i:                             ; preds = %.preheader.i
-  %4 = fcmp une double %2, %i.bj                  ; 2 uses
   %i.cz = shufflevector <2 x double> %i.bi, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %i.da = insertelement <2 x double> %i.cz, double %3, i64 1
   br label %.lr.ph27.i
@@ -384,8 +383,8 @@ intersect.exit132:                                ; preds = %bb.l, %.split43.i12
   %i.gd = select i1 %i.ga, i1 %i.gc, i1 false
   br i1 %i.gd, label %clear.exit.thread167, label %bb.j
 
-.lr.ph27.i:                                       ; preds = %intersect.exit, %.lr.ph27.preheader.i
-  %indvars.iv32.i = phi i64 [ %i.at, %.lr.ph27.preheader.i ], [ %indvars.iv.next33.i, %intersect.exit ] ; 3 uses
+.lr.ph27.i:                                       ; preds = %.lr.ph27.preheader.i, %intersect.exit
+  %indvars.iv32.i = phi i64 [ %indvars.iv.next33.i, %intersect.exit ], [ %i.at, %.lr.ph27.preheader.i ] ; 3 uses
   %i.ge = getelementptr inbounds [16 x i8], ptr %i.d, i64 %indvars.iv32.i
   %i.gf = getelementptr inbounds [4 x i8], ptr %i.f, i64 %indvars.iv32.i
   %i.gg = load i32, ptr %i.gf, align 4, !tbaa !27
@@ -409,7 +408,7 @@ intersect.exit132:                                ; preds = %bb.l, %.split43.i12
   br i1 %i.gv, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %.lr.ph27.i
-  br i1 %4, label %.split.i, label %inBetween.exit.i
+  br i1 %i.cu, label %.split.i, label %inBetween.exit.i
 
 .split.i:                                         ; preds = %bb.n
   %i.gw = extractelement <2 x double> %i.gj, i64 0 ; 4 uses
@@ -448,7 +447,7 @@ bb.o:                                             ; preds = %inBetween.exit.i, %
   br i1 %i.hs, label %bb.p, label %intersect.exit
 
 bb.p:                                             ; preds = %bb.o
-  br i1 %4, label %.split43.i, label %inBetween.exit42.i
+  br i1 %i.cu, label %.split43.i, label %inBetween.exit42.i
 
 .split43.i:                                       ; preds = %bb.p
   %i.ht = fcmp olt double %2, %i.gm

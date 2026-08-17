@@ -203,7 +203,7 @@ bb.a:
   %i.a = alloca i64, align 8                      ; 9 uses
   %6 = alloca %union.NBDReply, align 8            ; 4 uses
   %7 = alloca %struct.NBDStructuredReadHole, align 8 ; 6 uses
-  %8 = alloca [2 x %struct.iovec], align 16       ; 9 uses
+  %8 = alloca [2 x %struct.iovec], align 16       ; 8 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.c = load ptr, ptr %i.b, align 8
   %i.d = icmp ult i64 %4, 33554433
@@ -217,14 +217,13 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 32 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %8, i64 16
-  %i.h = getelementptr inbounds nuw i8, ptr %8, i64 24
+  %i.h = getelementptr inbounds nuw i8, ptr %8, i64 24 ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 220
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.k = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 112
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %8, i64 24
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.a
@@ -295,7 +294,7 @@ bb.i:                                             ; preds = %bb.h
 
 trace_nbd_co_send_chunk_read_hole.exit:           ; preds = %bb.i
   call void (ptr, ...) @qemu_log(ptr noundef nonnull @.str.80, i64 noundef %i.ac, i64 noundef %i.p, i64 noundef %i.x) #19
-  %.pre = load i64, ptr %.phi.trans.insert, align 8 ; 2 uses
+  %.pre = load i64, ptr %i.h, align 8             ; 2 uses
   %i.ah = icmp ult i64 %.pre, 33554441
   br i1 %i.ah, label %._crit_edge.thread.i, label %bb.j
 
@@ -303,8 +302,8 @@ bb.j:                                             ; preds = %trace_nbd_co_send_c
   call void @__assert_fail(ptr noundef nonnull @.str.54, ptr noundef nonnull @.str.1, i32 noundef 2111, ptr noundef nonnull @__PRETTY_FUNCTION__.set_be_chunk) #20
   unreachable
 
-._crit_edge.thread.i:                             ; preds = %bb.i, %bb.h, %bb.g, %trace_nbd_co_send_chunk_read_hole.exit
-  %i.ai = phi i64 [ %.pre, %trace_nbd_co_send_chunk_read_hole.exit ], [ 12, %bb.g ], [ 12, %bb.h ], [ 12, %bb.i ] ; 2 uses
+._crit_edge.thread.i:                             ; preds = %bb.g, %bb.h, %bb.i, %trace_nbd_co_send_chunk_read_hole.exit
+  %i.ai = phi i64 [ %.pre, %trace_nbd_co_send_chunk_read_hole.exit ], [ 12, %bb.i ], [ 12, %bb.h ], [ 12, %bb.g ] ; 2 uses
   %i.aj = load i32, ptr %i.i, align 4
   %i.ak = icmp ugt i32 %i.aj, 3
   %i.al = load ptr, ptr %8, align 16              ; 7 uses
