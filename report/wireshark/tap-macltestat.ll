@@ -198,21 +198,16 @@ bb.g:                                             ; preds = %bb.b, %bb.b
   %i.am = getelementptr i8, ptr %3, i64 16        ; 2 uses
   %i.an = load i8, ptr %i.am, align 8
   switch i8 %i.an, label %bb.j [
-    i8 0, label %bb.h
-    i8 1, label %bb.i
+    i8 0, label %bb.i
+    i8 1, label %bb.h
   ]
 
 bb.h:                                             ; preds = %bb.g
-  %5 = getelementptr i8, ptr %0, i64 36           ; 2 uses
-  %6 = load i16, ptr %5, align 4
-  %7 = getelementptr i8, ptr %3, i64 18
-  %8 = load i16, ptr %7, align 2
-  %. = tail call i16 @llvm.umax.i16(i16 %6, i16 %8)
-  store i16 %., ptr %5, align 4
-  br label %bb.j
+  br label %bb.i
 
-bb.i:                                             ; preds = %bb.g
-  %i.ao = getelementptr i8, ptr %0, i64 38        ; 2 uses
+bb.i:                                             ; preds = %bb.g, %bb.h
+  %.sink183 = phi i64 [ 38, %bb.h ], [ 36, %bb.g ]
+  %i.ao = getelementptr i8, ptr %0, i64 %.sink183 ; 2 uses
   %i.ap = load i16, ptr %i.ao, align 2
   %i.aq = getelementptr i8, ptr %3, i64 18
   %i.ar = load i16, ptr %i.aq, align 2
@@ -220,7 +215,7 @@ bb.i:                                             ; preds = %bb.g
   store i16 %.138, ptr %i.ao, align 2
   br label %bb.j
 
-bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g
+bb.j:                                             ; preds = %bb.i, %bb.g
   %i.as = getelementptr i8, ptr %0, i64 131120    ; 3 uses
   %i.at = load ptr, ptr %i.as, align 8            ; 2 uses
   %.not127 = icmp eq ptr %i.at, null

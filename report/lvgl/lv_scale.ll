@@ -201,10 +201,8 @@ bb.c:                                             ; preds = %bb.b
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 108
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 112
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 4 uses
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 96 ; 3 uses
-  %6 = getelementptr inbounds nuw i8, ptr %2, i64 96 ; 3 uses
-  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 140 ; 2 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %1, i64 96 ; 3 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %2, i64 96 ; 3 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %scale_store_section_line_tick_width_compensation.exit
@@ -269,56 +267,35 @@ bb.j:                                             ; preds = %bb.f, %.lr.ph
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #7
   call fastcc void @scale_get_tick_points(ptr noundef nonnull %0, i32 noundef %.04057, i1 noundef zeroext %i.s, ptr noundef %3, ptr noundef %4)
-  %i.ag = load i32, ptr %5, align 8, !tbaa !66
-  %i.ah = load i32, ptr %6, align 8, !tbaa !66
+  %i.ag = load i32, ptr %i.l, align 8, !tbaa !66
+  %i.ah = load i32, ptr %i.m, align 8, !tbaa !66
   %i.ai = icmp eq i32 %.04057, 0
   %i.aj = load i64, ptr %i.a, align 4
   %i.ak = trunc i64 %i.aj to i32
   %i.al = and i32 %i.ak, 32767
   %i.am = icmp eq i32 %i.al, %.04057              ; 2 uses
-  %i.an = select i1 %i.s, i32 %i.ag, i32 %i.ah    ; 4 uses
+  %i.an = select i1 %i.s, i32 %i.ag, i32 %i.ah
   %or.cond.i = or i1 %i.ai, %i.am
   br i1 %or.cond.i, label %bb.k, label %scale_store_main_line_tick_width_compensation.exit
 
 bb.k:                                             ; preds = %.loopexit
-  %i.ao = load i32, ptr %i.f, align 8, !tbaa !8   ; 3 uses
-  switch i32 %i.ao, label %7 [
+  %i.ao = load i32, ptr %i.f, align 8, !tbaa !8   ; 2 uses
+  switch i32 %i.ao, label %bb.l [
     i32 8, label %scale_store_main_line_tick_width_compensation.exit
     i32 16, label %scale_store_main_line_tick_width_compensation.exit
   ]
 
-7:                                                ; preds = %bb.k
-  br i1 %i.am, label %8, label %11
-
-8:                                                ; preds = %7
-  switch i32 %i.ao, label %10 [
-    i32 2, label %9
-    i32 4, label %9
-  ]
-
-9:                                                ; preds = %8, %8
-  store i32 %i.an, ptr %i.m, align 8, !tbaa !72
+bb.l:                                             ; preds = %bb.k
+  %5 = add i32 %i.ao, -2
+  %switch.and.i = and i32 %5, -3
+  %switch.selectcmp.i = icmp eq i32 %switch.and.i, 0
+  %6 = xor i1 %i.am, %switch.selectcmp.i
+  %.sink24.i = select i1 %6, i64 140, i64 136
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 %.sink24.i
+  store i32 %i.an, ptr %7, align 4, !tbaa !27
   br label %scale_store_main_line_tick_width_compensation.exit
 
-10:                                               ; preds = %8
-  store i32 %i.an, ptr %i.l, align 4, !tbaa !26
-  br label %scale_store_main_line_tick_width_compensation.exit
-
-11:                                               ; preds = %7
-  switch i32 %i.ao, label %bb.l [
-    i32 2, label %12
-    i32 4, label %12
-  ]
-
-12:                                               ; preds = %11, %11
-  store i32 %i.an, ptr %i.l, align 4, !tbaa !26
-  br label %scale_store_main_line_tick_width_compensation.exit
-
-bb.l:                                             ; preds = %11
-  store i32 %i.an, ptr %i.m, align 8, !tbaa !72
-  br label %scale_store_main_line_tick_width_compensation.exit
-
-scale_store_main_line_tick_width_compensation.exit: ; preds = %.loopexit, %bb.k, %bb.k, %9, %10, %12, %bb.l
+scale_store_main_line_tick_width_compensation.exit: ; preds = %.loopexit, %bb.k, %bb.k, %bb.l
   %i.ap = call ptr @lv_ll_get_tail(ptr noundef nonnull %i.k) #7 ; 2 uses
   %.not55.i = icmp eq ptr %i.ap, null
   br i1 %.not55.i, label %scale_store_section_line_tick_width_compensation.exit, label %.lr.ph.i
@@ -366,8 +343,8 @@ bb.s:                                             ; preds = %bb.r
   %i.bd = load i8, ptr %i.bc, align 8
   %i.be = and i8 %i.bd, 1
   %.not49.i = icmp eq i8 %i.be, 0
-  %.val50 = load i32, ptr %6, align 8
-  %.val51 = load i32, ptr %5, align 8
+  %.val50 = load i32, ptr %i.m, align 8
+  %.val51 = load i32, ptr %i.l, align 8
   %.0.i = select i1 %.not49.i, i32 %.val50, i32 %.val51 ; 4 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %.04356.i, i64 48
   %i.bg = load i64, ptr %3, align 8
@@ -394,7 +371,7 @@ bb.v:                                             ; preds = %bb.t
 bb.w:                                             ; preds = %bb.v, %bb.u, %bb.s
   %.1.i = phi i32 [ %i.bj, %bb.u ], [ %i.bk, %bb.v ], [ %.0.i, %bb.s ]
   %i.bl = getelementptr inbounds nuw i8, ptr %.04356.i, i64 40
-  store i32 %.1.i, ptr %i.bl, align 8, !tbaa !73
+  store i32 %.1.i, ptr %i.bl, align 8, !tbaa !72
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.w, %bb.r
@@ -408,8 +385,8 @@ bb.y:                                             ; preds = %bb.x
   %i.bq = load i8, ptr %i.bp, align 8
   %i.br = and i8 %i.bq, 2
   %.not51.i = icmp eq i8 %i.br, 0
-  %.val52 = load i32, ptr %6, align 8
-  %.val53 = load i32, ptr %5, align 8
+  %.val52 = load i32, ptr %i.m, align 8
+  %.val53 = load i32, ptr %i.l, align 8
   %.2.i = select i1 %.not51.i, i32 %.val52, i32 %.val53 ; 4 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %.04356.i, i64 56
   %i.bt = load i64, ptr %3, align 8
@@ -436,20 +413,20 @@ bb.ab:                                            ; preds = %bb.z
 bb.ac:                                            ; preds = %bb.ab, %bb.aa, %bb.y
   %.3.i = phi i32 [ %i.bw, %bb.aa ], [ %i.bx, %bb.ab ], [ %.2.i, %bb.y ]
   %i.by = getelementptr inbounds nuw i8, ptr %.04356.i, i64 44
-  store i32 %.3.i, ptr %i.by, align 4, !tbaa !74
+  store i32 %.3.i, ptr %i.by, align 4, !tbaa !73
   br label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac, %bb.x
   %i.bz = call ptr @lv_ll_get_prev(ptr noundef nonnull %i.k, ptr noundef nonnull %.04356.i) #7 ; 2 uses
   %.not.i46 = icmp eq ptr %i.bz, null
-  br i1 %.not.i46, label %scale_store_section_line_tick_width_compensation.exit, label %bb.m, !llvm.loop !75
+  br i1 %.not.i46, label %scale_store_section_line_tick_width_compensation.exit, label %bb.m, !llvm.loop !74
 
 scale_store_section_line_tick_width_compensation.exit: ; preds = %bb.ad, %scale_store_main_line_tick_width_compensation.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #7
   %i.ca = add nuw nsw i32 %.04057, 1              ; 2 uses
   %exitcond.not = icmp eq i32 %i.ca, %i.d
-  br i1 %exitcond.not, label %bb.ae, label %bb.d, !llvm.loop !76
+  br i1 %exitcond.not, label %bb.ae, label %bb.d, !llvm.loop !75
 
 bb.ae:                                            ; preds = %scale_store_section_line_tick_width_compensation.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #7
@@ -497,7 +474,7 @@ bb.c:                                             ; preds = %bb.b, %bb.b, %bb.b,
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #7
   call void @lv_draw_line_dsc_init(ptr noundef nonnull %3) #7
   %i.j = getelementptr inbounds nuw i8, ptr %3, i64 24
-  store ptr %i.c, ptr %i.j, align 8, !tbaa !77
+  store ptr %i.c, ptr %i.j, align 8, !tbaa !76
   call void @lv_obj_init_draw_line_dsc(ptr noundef nonnull %0, i32 noundef 0, ptr noundef nonnull %3) #7
   %i.k = call ptr @lv_obj_get_style_prop(ptr noundef nonnull %0, i32 noundef 0, i8 noundef zeroext 56) #7
   %i.l = ptrtoint ptr %i.k to i64
@@ -528,7 +505,7 @@ bb.c:                                             ; preds = %bb.b, %bb.b, %bb.b,
 
 bb.d:                                             ; preds = %bb.c
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.aa = load i32, ptr %i.z, align 8, !tbaa !78
+  %i.aa = load i32, ptr %i.z, align 8, !tbaa !77
   %i.ab = getelementptr inbounds nuw i8, ptr %3, i64 96
   %i.ac = load i32, ptr %i.ab, align 8, !tbaa !66
   %i.ad = sdiv i32 %i.ac, 2
@@ -538,7 +515,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %i.ah = load i32, ptr %i.ag, align 8, !tbaa !79
+  %i.ah = load i32, ptr %i.ag, align 8, !tbaa !78
   %i.ai = getelementptr inbounds nuw i8, ptr %3, i64 96
   %i.aj = load i32, ptr %i.ai, align 8, !tbaa !66
   %i.ak = sdiv i32 %i.aj, 2
@@ -548,10 +525,10 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.c
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %i.ao = load i32, ptr %i.an, align 8, !tbaa !79
+  %i.ao = load i32, ptr %i.an, align 8, !tbaa !78
   %i.ap = add nsw i32 %i.ao, %i.x
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 44
-  %i.ar = load i32, ptr %i.aq, align 4, !tbaa !80
+  %i.ar = load i32, ptr %i.aq, align 4, !tbaa !79
   %i.as = getelementptr inbounds nuw i8, ptr %3, i64 96
   %i.at = load i32, ptr %i.as, align 8, !tbaa !66
   %i.au = sdiv i32 %i.at, 2
@@ -561,10 +538,10 @@ bb.f:                                             ; preds = %bb.c
 
 bb.g:                                             ; preds = %bb.c
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %i.ay = load i32, ptr %i.ax, align 8, !tbaa !79
+  %i.ay = load i32, ptr %i.ax, align 8, !tbaa !78
   %i.az = add nsw i32 %i.ay, %i.u
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 52
-  %i.bb = load i32, ptr %i.ba, align 4, !tbaa !81
+  %i.bb = load i32, ptr %i.ba, align 4, !tbaa !80
   %i.bc = getelementptr inbounds nuw i8, ptr %3, i64 96
   %i.bd = load i32, ptr %i.bc, align 8, !tbaa !66
   %i.be = sdiv i32 %i.bd, 2
@@ -575,7 +552,7 @@ bb.g:                                             ; preds = %bb.c
 .thread.thread:                                   ; preds = %bb.d, %bb.e
   %.1.ph147 = phi i32 [ %i.af, %bb.d ], [ %i.am, %bb.e ]
   %.pn.in = getelementptr inbounds nuw i8, ptr %0, i64 44
-  %.pn = load i32, ptr %.pn.in, align 4, !tbaa !80
+  %.pn = load i32, ptr %.pn.in, align 4, !tbaa !79
   %.1125.ph146 = add nsw i32 %.pn, %i.o
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #7
@@ -584,11 +561,11 @@ bb.g:                                             ; preds = %bb.c
   %i.bi = getelementptr inbounds nuw i8, ptr %4, i64 4
   store i32 %i.bh, ptr %5, align 4, !tbaa !42
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 52
-  %i.bk = load i32, ptr %i.bj, align 4, !tbaa !81
+  %i.bk = load i32, ptr %i.bj, align 4, !tbaa !80
   %i.bl = sub nsw i32 %i.bk, %i.r
   %i.bm = getelementptr inbounds nuw i8, ptr %5, i64 4
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 136
-  %i.bo = load i32, ptr %i.bn, align 8, !tbaa !72
+  %i.bo = load i32, ptr %i.bn, align 8, !tbaa !81
   %.neg132 = sdiv i32 %i.bo, -2
   %i.bp = add i32 %.neg132, %.1125.ph146
   store i32 %i.bp, ptr %i.bi, align 4, !tbaa !44
@@ -607,12 +584,12 @@ bb.g:                                             ; preds = %bb.c
   %i.bu = getelementptr inbounds nuw i8, ptr %4, i64 4
   store i32 %.1125144, ptr %i.bu, align 4, !tbaa !44
   %i.bv = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.bw = load i32, ptr %i.bv, align 8, !tbaa !78
+  %i.bw = load i32, ptr %i.bv, align 8, !tbaa !77
   %i.bx = sub nsw i32 %i.bw, %i.u
   %i.by = getelementptr inbounds nuw i8, ptr %5, i64 4
   store i32 %.1125144, ptr %i.by, align 4, !tbaa !44
   %i.bz = getelementptr inbounds nuw i8, ptr %0, i64 136
-  %i.ca = load i32, ptr %i.bz, align 8, !tbaa !72
+  %i.ca = load i32, ptr %i.bz, align 8, !tbaa !81
   %.neg = sdiv i32 %i.ca, -2
   %i.cb = add i32 %.neg, %.1145
   store i32 %i.cb, ptr %4, align 4, !tbaa !42
@@ -649,13 +626,13 @@ bb.i:                                             ; preds = %.lr.ph160, %bb.l
   %.0126158 = phi ptr [ %i.cl, %.lr.ph160 ], [ %i.do, %bb.l ] ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #7
   call void @lv_draw_line_dsc_init(ptr noundef nonnull %6) #7
-  store ptr %i.c, ptr %i.cm, align 8, !tbaa !77
+  store ptr %i.c, ptr %i.cm, align 8, !tbaa !76
   call void @lv_obj_init_draw_line_dsc(ptr noundef nonnull %0, i32 noundef 0, ptr noundef nonnull %6) #7
   %i.cs = getelementptr inbounds nuw i8, ptr %.0126158, i64 40
-  %i.ct = load i32, ptr %i.cs, align 8, !tbaa !73
+  %i.ct = load i32, ptr %i.cs, align 8, !tbaa !72
   %i.cu = sdiv i32 %i.ct, 2                       ; 2 uses
   %i.cv = getelementptr inbounds nuw i8, ptr %.0126158, i64 44
-  %i.cw = load i32, ptr %i.cv, align 4, !tbaa !74
+  %i.cw = load i32, ptr %i.cv, align 4, !tbaa !73
   %i.cx = sdiv i32 %i.cw, 2                       ; 2 uses
   %i.cy = load i32, ptr %i.h, align 8, !tbaa !8
   switch i32 %i.cy, label %bb.k [
@@ -972,7 +949,7 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #7
   call void @lv_draw_line_dsc_init(ptr noundef nonnull %10) #7
   %i.h = getelementptr inbounds nuw i8, ptr %10, i64 24
-  store ptr %i.b, ptr %i.h, align 8, !tbaa !77
+  store ptr %i.b, ptr %i.h, align 8, !tbaa !76
   call void @lv_obj_init_draw_line_dsc(ptr noundef nonnull %0, i32 noundef 131072, ptr noundef nonnull %10) #7
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 3 uses
   %i.j = load i32, ptr %i.i, align 8, !tbaa !8
@@ -992,12 +969,12 @@ bb.d:                                             ; preds = %bb.b, %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #7
   call void @lv_draw_line_dsc_init(ptr noundef nonnull %11) #7
   %i.n = getelementptr inbounds nuw i8, ptr %11, i64 24
-  store ptr %i.b, ptr %i.n, align 8, !tbaa !77
+  store ptr %i.b, ptr %i.n, align 8, !tbaa !76
   call void @lv_obj_init_draw_line_dsc(ptr noundef nonnull %0, i32 noundef 327680, ptr noundef nonnull %11) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #7
   call void @lv_draw_line_dsc_init(ptr noundef nonnull %12) #7
   %i.o = getelementptr inbounds nuw i8, ptr %12, i64 24
-  store ptr %i.b, ptr %i.o, align 8, !tbaa !77
+  store ptr %i.b, ptr %i.o, align 8, !tbaa !76
   call void @lv_obj_init_draw_line_dsc(ptr noundef nonnull %0, i32 noundef 0, ptr noundef nonnull %12) #7
   %i.p = load i64, ptr %i.c, align 4
   %i.q = trunc i64 %i.p to i32
@@ -1400,14 +1377,14 @@ bb.e:                                             ; preds = %bb.d, %bb.d, %bb.d,
 
 .thread.thread186:                                ; preds = %bb.e
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.ag = load i32, ptr %i.af, align 8, !tbaa !78
+  %i.ag = load i32, ptr %i.af, align 8, !tbaa !77
   %i.ah = getelementptr inbounds nuw i8, ptr %5, i64 96
   %i.ai = load i32, ptr %i.ah, align 8, !tbaa !66
   %i.aj = sdiv i32 %i.ai, 2
   %i.ak = sub i32 %i.ag, %i.s
   %i.al = add i32 %i.ak, %i.aj
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 44
-  %i.an = load i32, ptr %i.am, align 4, !tbaa !80
+  %i.an = load i32, ptr %i.am, align 4, !tbaa !79
   %i.ao = add nsw i32 %i.m, %.sroa.0.0.extract.trunc.i169
   %i.ap = add nsw i32 %i.ao, %i.an
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 116
@@ -1419,25 +1396,25 @@ bb.e:                                             ; preds = %bb.d, %bb.d, %bb.d,
 
 .thread175:                                       ; preds = %bb.e
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %i.aw = load i32, ptr %i.av, align 8, !tbaa !79
+  %i.aw = load i32, ptr %i.av, align 8, !tbaa !78
   %i.ax = getelementptr inbounds nuw i8, ptr %5, i64 96
   %i.ay = load i32, ptr %i.ax, align 8, !tbaa !66
   %i.az = sdiv i32 %i.ay, 2
   %i.ba = add i32 %i.aw, %i.v
   %i.bb = add i32 %i.ba, %i.az
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 44
-  %i.bd = load i32, ptr %i.bc, align 4, !tbaa !80
+  %i.bd = load i32, ptr %i.bc, align 4, !tbaa !79
   %i.be = add nsw i32 %i.m, %.sroa.0.0.extract.trunc.i169
   %i.bf = add nsw i32 %i.be, %i.bd
   br label %bb.g
 
 .thread.thread:                                   ; preds = %bb.e
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %i.bh = load i32, ptr %i.bg, align 8, !tbaa !79
+  %i.bh = load i32, ptr %i.bg, align 8, !tbaa !78
   %i.bi = add nsw i32 %i.s, %.sroa.0.0.extract.trunc.i167
   %i.bj = add nsw i32 %i.bi, %i.bh
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 44
-  %i.bl = load i32, ptr %i.bk, align 4, !tbaa !80
+  %i.bl = load i32, ptr %i.bk, align 4, !tbaa !79
   %i.bm = getelementptr inbounds nuw i8, ptr %5, i64 96
   %i.bn = load i32, ptr %i.bm, align 8, !tbaa !66
   %i.bo = sdiv i32 %i.bn, 2
@@ -1452,11 +1429,11 @@ bb.e:                                             ; preds = %bb.d, %bb.d, %bb.d,
 
 bb.f:                                             ; preds = %bb.e
   %i.bw = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %i.bx = load i32, ptr %i.bw, align 8, !tbaa !79
+  %i.bx = load i32, ptr %i.bw, align 8, !tbaa !78
   %i.by = add nsw i32 %i.v, %.sroa.0.0.extract.trunc.i168
   %i.bz = add nsw i32 %i.by, %i.bx                ; 2 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %0, i64 52
-  %i.cb = load i32, ptr %i.ca, align 4, !tbaa !81
+  %i.cb = load i32, ptr %i.ca, align 4, !tbaa !80
   %i.cc = getelementptr inbounds nuw i8, ptr %5, i64 96
   %i.cd = load i32, ptr %i.cc, align 8, !tbaa !66
   %i.ce = sdiv i32 %i.cd, 2
@@ -1500,7 +1477,7 @@ bb.j:                                             ; preds = %.thread.thread186, 
   %.0149173192 = phi i32 [ %i.ap, %.thread.thread186 ], [ %.0149173, %.thread ], [ %.0149173, %.thread ]
   %.0148174191 = phi i32 [ %i.al, %.thread.thread186 ], [ %.0148174, %.thread ], [ %.0148174, %.thread ]
   %i.cr = getelementptr inbounds nuw i8, ptr %0, i64 52
-  %i.cs = load i32, ptr %i.cr, align 4, !tbaa !81
+  %i.cs = load i32, ptr %i.cr, align 4, !tbaa !80
   %i.ct = add i32 %i.p, %.sroa.0.0.extract.trunc.i170
   %i.cu = sub i32 %i.cs, %i.ct                    ; 2 uses
   %i.cv = icmp eq i32 %i.cp, %1
@@ -1543,7 +1520,7 @@ bb.n:                                             ; preds = %.thread.thread, %.t
 
 bb.o:                                             ; preds = %bb.n
   %i.dl = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.dm = load i32, ptr %i.dl, align 8, !tbaa !78
+  %i.dm = load i32, ptr %i.dl, align 8, !tbaa !77
   %i.dn = add i32 %i.v, %.sroa.0.0.extract.trunc.i168
   %i.do = sub i32 %i.dm, %i.dn
   br label %bb.r
@@ -1714,12 +1691,12 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.t = phi i32 [ %i.q, %bb.b ], [ %i.s, %bb.c ]
   %i.u = sdiv i32 %i.t, 2                         ; 3 uses
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %i.w = load i32, ptr %i.v, align 8, !tbaa !79
+  %i.w = load i32, ptr %i.v, align 8, !tbaa !78
   %i.x = add i32 %i.u, %.sroa.0.0.extract.trunc.i
   %i.y = add i32 %i.x, %i.w
   store i32 %i.y, ptr %1, align 4, !tbaa !42
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 44
-  %i.aa = load i32, ptr %i.z, align 4, !tbaa !80
+  %i.aa = load i32, ptr %i.z, align 4, !tbaa !79
   %i.ab = add i32 %i.u, %.sroa.0.0.extract.trunc.i27
   %i.ac = add i32 %i.ab, %i.aa
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 4
@@ -2003,16 +1980,16 @@ attributes #7 = { nounwind }
 !69 = !{!"p1 _ZTS11_lv_layer_t", !12, i64 0}
 !70 = !{!"", !6, i64 0, !6, i64 1, !6, i64 2}
 !71 = !{!"long", !6, i64 0}
-!72 = !{!9, !5, i64 136}
-!73 = !{!50, !5, i64 40}
-!74 = !{!50, !5, i64 44}
+!72 = !{!50, !5, i64 40}
+!73 = !{!50, !5, i64 44}
+!74 = distinct !{!74, !31}
 !75 = distinct !{!75, !31}
-!76 = distinct !{!76, !31}
-!77 = !{!67, !69, i64 24}
-!78 = !{!10, !5, i64 48}
-!79 = !{!10, !5, i64 40}
-!80 = !{!10, !5, i64 44}
-!81 = !{!10, !5, i64 52}
+!76 = !{!67, !69, i64 24}
+!77 = !{!10, !5, i64 48}
+!78 = !{!10, !5, i64 40}
+!79 = !{!10, !5, i64 44}
+!80 = !{!10, !5, i64 52}
+!81 = !{!9, !5, i64 136}
 !82 = !{!50, !5, i64 52}
 !83 = !{!50, !5, i64 60}
 !84 = !{!50, !5, i64 48}

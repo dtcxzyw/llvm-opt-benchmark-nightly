@@ -204,7 +204,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph58, %bb.al
   %indvars.iv67 = phi i64 [ 0, %.lr.ph58 ], [ %indvars.iv.next68, %bb.al ] ; 2 uses
-  %i.ak = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %indvars.iv67 ; 8 uses
+  %i.ak = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %indvars.iv67 ; 6 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 4
   %i.am = load i16, ptr %i.al, align 4, !tbaa !374 ; 2 uses
   %i.an = zext i16 %i.am to i32                   ; 2 uses
@@ -220,8 +220,6 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c, %bb.b
   %i.as = getelementptr inbounds nuw i8, ptr %i.ak, i64 10
   store i16 0, ptr %i.as, align 2, !tbaa !396
-  %3 = getelementptr inbounds nuw i8, ptr %i.ak, i64 8
-  store i16 0, ptr %3, align 4, !tbaa !404
   br label %bb.al
 
 bb.e:                                             ; preds = %bb.c
@@ -611,18 +609,18 @@ _ZL29stbrp__skyline_pack_rectangleP13stbrp_contextii.exit: ; preds = %bb.ak, %.c
   %i.gd = getelementptr inbounds nuw i8, ptr %i.ak, i64 8
   store i16 %i.ff, ptr %i.gd, align 4, !tbaa !404
   %i.ge = trunc i32 %.484.i.i to i16
-  %4 = getelementptr inbounds nuw i8, ptr %i.ak, i64 10
-  store i16 %i.ge, ptr %4, align 2, !tbaa !396
   br label %bb.al
 
 _ZL29stbrp__skyline_pack_rectangleP13stbrp_contextii.exit.thread: ; preds = %bb.e, %bb.f, %bb.ad, %bb.ae, %_ZL28stbrp__skyline_find_best_posP13stbrp_contextii.exit.i
   %i.gf = getelementptr inbounds nuw i8, ptr %i.ak, i64 10
   store i16 -1, ptr %i.gf, align 2, !tbaa !396
-  %5 = getelementptr inbounds nuw i8, ptr %i.ak, i64 8
-  store i16 -1, ptr %5, align 4, !tbaa !404
   br label %bb.al
 
 bb.al:                                            ; preds = %_ZL29stbrp__skyline_pack_rectangleP13stbrp_contextii.exit, %_ZL29stbrp__skyline_pack_rectangleP13stbrp_contextii.exit.thread, %bb.d
+  %.sink100 = phi i64 [ 10, %_ZL29stbrp__skyline_pack_rectangleP13stbrp_contextii.exit ], [ 8, %_ZL29stbrp__skyline_pack_rectangleP13stbrp_contextii.exit.thread ], [ 8, %bb.d ]
+  %.sink = phi i16 [ %i.ge, %_ZL29stbrp__skyline_pack_rectangleP13stbrp_contextii.exit ], [ -1, %_ZL29stbrp__skyline_pack_rectangleP13stbrp_contextii.exit.thread ], [ 0, %bb.d ]
+  %3 = getelementptr inbounds nuw i8, ptr %i.ak, i64 %.sink100
+  store i16 %.sink, ptr %3, align 2, !tbaa !93
   %indvars.iv.next68 = add nuw nsw i64 %indvars.iv67, 1 ; 2 uses
   %exitcond71.not = icmp eq i64 %indvars.iv.next68, %wide.trip.count70
   br i1 %exitcond71.not, label %._crit_edge59, label %bb.b, !llvm.loop !514

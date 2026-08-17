@@ -201,18 +201,18 @@ bb.p:                                             ; preds = %.loopexit
   %i.ci = getelementptr inbounds nuw i8, ptr %0, i64 141
   store i8 %i.ch, ptr %i.ci, align 1, !tbaa !105
   %i.cj = trunc i64 %i.ce to i8
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 142
-  store i8 %i.cj, ptr %7, align 2, !tbaa !106
   br label %bb.r
 
 bb.q:                                             ; preds = %.loopexit
   %i.ck = getelementptr inbounds nuw i8, ptr %0, i64 140
   store i8 2, ptr %i.ck, align 4, !tbaa !104
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 141
-  store i8 0, ptr %8, align 1, !tbaa !105
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %bb.p
+  %.sink104 = phi i64 [ 141, %bb.q ], [ 142, %bb.p ]
+  %.sink102 = phi i8 [ 0, %bb.q ], [ %i.cj, %bb.p ]
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 %.sink104
+  store i8 %.sink102, ptr %7, align 1, !tbaa !43
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #14
   br label %bb.s
 
@@ -296,7 +296,7 @@ bb.x:                                             ; preds = %pmix_obj_run_destru
 bb.y:                                             ; preds = %bb.w, %bb.x, %pmix_obj_update.exit
   %i.dr = load volatile i64, ptr %i.cl, align 8, !tbaa !80
   %i.ds = icmp eq i64 %i.dr, 0
-  br i1 %i.ds, label %._crit_edge88, label %bb.t, !llvm.loop !107
+  br i1 %i.ds, label %._crit_edge88, label %bb.t, !llvm.loop !106
 
 ._crit_edge88:                                    ; preds = %bb.y, %bb.s
   %i.dt = load ptr, ptr %i.d, align 8, !tbaa !37
@@ -498,7 +498,7 @@ bb.n:                                             ; preds = %pmix_obj_run_destru
 bb.o:                                             ; preds = %bb.m, %bb.n, %pmix_obj_update.exit67
   %i.bf = load volatile i64, ptr %i.o, align 8, !tbaa !80
   %i.bg = icmp eq i64 %i.bf, 0
-  br i1 %i.bg, label %._crit_edge115, label %bb.j, !llvm.loop !108
+  br i1 %i.bg, label %._crit_edge115, label %bb.j, !llvm.loop !107
 
 ._crit_edge115:                                   ; preds = %bb.o, %check_connections.exit
   %i.bh = load ptr, ptr %i.d, align 8, !tbaa !37
@@ -549,18 +549,18 @@ bb.p:                                             ; preds = %.loopexit
   %i.ce = getelementptr inbounds nuw i8, ptr %0, i64 141
   store i8 %i.cd, ptr %i.ce, align 1, !tbaa !105
   %i.cf = trunc i64 %i.ca to i8
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 142
-  store i8 %i.cf, ptr %9, align 2, !tbaa !106
   br label %bb.r
 
 bb.q:                                             ; preds = %.loopexit
   %i.cg = getelementptr inbounds nuw i8, ptr %0, i64 140
   store i8 2, ptr %i.cg, align 4, !tbaa !104
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 141
-  store i8 0, ptr %10, align 1, !tbaa !105
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %bb.p
+  %.sink139 = phi i64 [ 141, %bb.q ], [ 142, %bb.p ]
+  %.sink137 = phi i8 [ 0, %bb.q ], [ %i.cf, %bb.p ]
+  %9 = getelementptr inbounds nuw i8, ptr %0, i64 %.sink139
+  store i8 %.sink137, ptr %9, align 1, !tbaa !43
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #14
   %i.ch = getelementptr inbounds nuw i8, ptr %.val, i64 152 ; 2 uses
   %i.ci = load ptr, ptr %i.ch, align 8, !tbaa !101
@@ -646,7 +646,7 @@ bb.v:                                             ; preds = %pmix_obj_run_destru
 bb.w:                                             ; preds = %bb.u, %bb.v, %pmix_obj_update.exit66
   %i.dr = load volatile i64, ptr %i.o, align 8, !tbaa !80
   %i.ds = icmp eq i64 %i.dr, 0
-  br i1 %i.ds, label %._crit_edge118, label %.lr.ph117, !llvm.loop !109
+  br i1 %i.ds, label %._crit_edge118, label %.lr.ph117, !llvm.loop !108
 
 ._crit_edge118:                                   ; preds = %bb.w, %bb.r
   %i.dt = load ptr, ptr %i.d, align 8, !tbaa !37
@@ -751,7 +751,7 @@ bb.ae:                                            ; preds = %pmix_obj_run_destru
 bb.af:                                            ; preds = %bb.ad, %bb.ae, %pmix_obj_update.exit
   %i.fh = load volatile i64, ptr %i.o, align 8, !tbaa !80
   %i.fi = icmp eq i64 %i.fh, 0
-  br i1 %i.fi, label %._crit_edge, label %bb.aa, !llvm.loop !110
+  br i1 %i.fi, label %._crit_edge, label %bb.aa, !llvm.loop !109
 
 ._crit_edge:                                      ; preds = %bb.af, %bb.z
   %i.fj = load ptr, ptr %i.d, align 8, !tbaa !37
@@ -947,9 +947,8 @@ attributes #19 = { noreturn nounwind }
 !103 = !{!98, !11, i64 176}
 !104 = !{!62, !6, i64 140}
 !105 = !{!62, !6, i64 141}
-!106 = !{!62, !6, i64 142}
+!106 = distinct !{!106, !26}
 !107 = distinct !{!107, !26}
 !108 = distinct !{!108, !26}
 !109 = distinct !{!109, !26}
-!110 = distinct !{!110, !26}
 end_hunk_0

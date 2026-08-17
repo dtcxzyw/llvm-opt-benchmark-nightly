@@ -201,7 +201,7 @@ bb.a:
 .critedge.i:                                      ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store ptr %0, ptr %i.b, align 8, !tbaa !136
-  %i.i = zext nneg i32 %2 to i64                  ; 4 uses
+  %i.i = zext nneg i32 %2 to i64                  ; 3 uses
   %i.j = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.i
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 264 ; 2 uses
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !383  ; 3 uses
@@ -211,31 +211,21 @@ bb.a:
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 8
   store ptr %i.l, ptr %i.o, align 8, !tbaa !141
   %.not.i = icmp eq ptr %i.l, null
-  br i1 %.not.i, label %7, label %4
-
-4:                                                ; preds = %.critedge.i
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 256
   %5 = getelementptr inbounds nuw i8, ptr %i.l, i64 64
-  %6 = getelementptr inbounds nuw [16 x i8], ptr %5, i64 %i.i
-  store ptr %1, ptr %6, align 8, !tbaa !139
-  br label %10
-
-7:                                                ; preds = %.critedge.i
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 256
-  %9 = getelementptr inbounds nuw [16 x i8], ptr %8, i64 %i.i
-  store ptr %1, ptr %9, align 16, !tbaa !137
-  br label %10
-
-10:                                               ; preds = %7, %4
+  %.sink44.i = select i1 %.not.i, ptr %4, ptr %5
+  %6 = getelementptr inbounds nuw [16 x i8], ptr %.sink44.i, i64 %i.i
+  store ptr %1, ptr %6, align 8, !tbaa !142
   store ptr %1, ptr %i.k, align 8, !tbaa !383
-  %11 = load i8, ptr %i.d, align 1, !tbaa !135
-  %12 = or i8 %11, %i.g
-  store i8 %12, ptr %i.d, align 1, !tbaa !135
-  %13 = load atomic i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN9grpc_core24http2_stream_state_traceE, i64 8) monotonic, align 8, !range !143, !noundef !144
-  %14 = trunc nuw i8 %13 to i1
+  %7 = load i8, ptr %i.d, align 1, !tbaa !135
+  %8 = or i8 %7, %i.g
+  store i8 %8, ptr %i.d, align 1, !tbaa !135
+  %9 = load atomic i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN9grpc_core24http2_stream_state_traceE, i64 8) monotonic, align 8, !range !143, !noundef !144
+  %10 = trunc nuw i8 %9 to i1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #20
-  br i1 %14, label %bb.b, label %bb.f, !prof !133
+  br i1 %10, label %bb.b, label %bb.f, !prof !133
 
-bb.b:                                             ; preds = %10
+bb.b:                                             ; preds = %.critedge.i
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #20
   call void @_ZN4absl12lts_2025051212log_internal10LogMessageC1EPKciNS2_7InfoTagE(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull @.str.1, i32 noundef 126) #21
   %i.p = invoke noundef nonnull align 8 dereferenceable(16) ptr @_ZN4absl12lts_2025051212log_internal10LogMessagelsIP21grpc_chttp2_transportEERS2_RKT_(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(8) %i.b)
@@ -283,7 +273,7 @@ bb.e:                                             ; preds = %switch.lookup
   invoke void @_ZN4absl12lts_2025051212log_internal10LogMessage5FlushEv(ptr noundef nonnull align 8 dereferenceable(16) %i.y)
           to label %bb.g unwind label %bb.i
 
-bb.f:                                             ; preds = %10
+bb.f:                                             ; preds = %.critedge.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #20
   br label %_ZL20stream_list_add_tailP21grpc_chttp2_transportP18grpc_chttp2_stream26grpc_chttp2_stream_list_id.exit
 

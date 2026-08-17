@@ -203,29 +203,19 @@ bb.j:                                             ; preds = %._crit_edge, %bb.b
   tail call void @SDL_QuitSubSystem_REAL(i32 noundef 32768) #12
   %i.am = tail call i32 @SDL_GetPrimaryDisplay_REAL() #12
   %i.an = tail call i32 @SDL_GetNaturalDisplayOrientation_REAL(i32 noundef %i.am) #12
-  %i.ao = icmp eq i32 %i.an, 1
-  br i1 %i.ao, label %2, label %5
-
-2:                                                ; preds = %bb.j
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 272
-  store float 1.000000e+00, ptr %3, align 8
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 300
-  store float -1.000000e+00, ptr %4, align 4
-  br label %8
-
-5:                                                ; preds = %bb.j
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 276
-  store float -1.000000e+00, ptr %6, align 4
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 296
-  store float -1.000000e+00, ptr %7, align 8
-  br label %8
-
-8:                                                ; preds = %5, %2
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 292
-  store float 1.000000e+00, ptr %9, align 4
+  %i.ao = icmp eq i32 %i.an, 1                    ; 3 uses
+  %. = select i1 %i.ao, i64 272, i64 276
+  %.55 = select i1 %i.ao, float 1.000000e+00, float -1.000000e+00
+  %.56 = select i1 %i.ao, i64 300, i64 296
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 %.
+  store float %.55, ptr %2, align 4
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 %.56
+  store float -1.000000e+00, ptr %3, align 4
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 292
+  store float 1.000000e+00, ptr %4, align 4
   br i1 %1, label %.preheader40, label %.loopexit
 
-.preheader40:                                     ; preds = %8
+.preheader40:                                     ; preds = %bb.j
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 272 ; 2 uses
   %i.aq = load <4 x float>, ptr %i.ap, align 4
   %i.ar = fneg <4 x float> %i.aq
@@ -246,7 +236,7 @@ bb.j:                                             ; preds = %._crit_edge, %bb.b
   store float %i.bb, ptr %i.az, align 4
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.preheader40, %8, %bb.a
+.loopexit:                                        ; preds = %.preheader40, %bb.j, %bb.a
   ret void
 }
 

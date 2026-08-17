@@ -204,18 +204,17 @@ _ZN20btAlignedObjectArrayIPN10btSoftBody5JointEE10deallocateEv.exit.i.i: ; preds
   %i.cv = load i32, ptr %i.cu, align 8, !tbaa !679
   %i.cw = and i32 %i.cv, 3
   %.not26 = icmp eq i32 %i.cw, 0                  ; 2 uses
-  %i.cx = load ptr, ptr %i.au, align 8, !tbaa !656 ; 3 uses
+  %i.cx = load ptr, ptr %i.au, align 8, !tbaa !656 ; 2 uses
   %i.cy = getelementptr inbounds nuw i8, ptr %i.ai, i64 92 ; 2 uses
   %i.cz = load float, ptr %i.cy, align 4, !tbaa !616
   %i.da = getelementptr inbounds nuw i8, ptr %i.ai, i64 96 ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %i.cx, i64 364
-  %9 = getelementptr inbounds nuw i8, ptr %i.cx, i64 368
-  %.sink35.in = select i1 %.not26, ptr %8, ptr %9
-  %.sink = select i1 %.not26, i64 376, i64 380
-  %.sink35 = load float, ptr %.sink35.in, align 4, !tbaa !159
+  %. = select i1 %.not26, i64 364, i64 368
+  %.35 = select i1 %.not26, i64 376, i64 380
+  %8 = getelementptr inbounds nuw i8, ptr %i.cx, i64 %.
+  %.sink35 = load float, ptr %8, align 4, !tbaa !159
   %i.db = fmul float %.sink35, %i.cz
   store float %i.db, ptr %i.cy, align 4, !tbaa !616
-  %i.dc = getelementptr inbounds nuw i8, ptr %i.cx, i64 %.sink
+  %i.dc = getelementptr inbounds nuw i8, ptr %i.cx, i64 %.35
   %.sink30 = load float, ptr %i.dc, align 4, !tbaa !159
   %i.dd = load float, ptr %i.da, align 8, !tbaa !308
   %i.de = fmul float %.sink30, %i.dd

@@ -204,8 +204,6 @@ bb.ar:                                            ; preds = %.split161, %_ZNK16i
   tail call void @_ZN12mpff_manager5resetER4mpff(ptr noundef nonnull align 8 dereferenceable(89) %i.qa, ptr noundef nonnull align 4 dereferenceable(8) %i.qb)
   %i.qc = getelementptr inbounds nuw i8, ptr %3, i64 29
   store i8 1, ptr %i.qc, align 1, !tbaa !110
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 28
-  store i8 1, ptr %4, align 4, !tbaa !108
   br label %bb.ay
 
 bb.as:                                            ; preds = %.split161
@@ -255,7 +253,7 @@ bb.av:                                            ; preds = %_ZNK16interval_mana
   %i.rd = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNK14parray_managerIN9subpaving9context_tINS0_11config_mpffEE18bound_array_configEE3getERKNS5_3refEj(ptr noundef nonnull align 8 dereferenceable(32) %i.rb, ptr noundef nonnull align 8 dereferenceable(12) %i.rc, i32 noundef %i.ra)
   %i.re = load ptr, ptr %i.rd, align 8, !tbaa !48 ; 2 uses
   %i.rf = icmp eq ptr %i.re, null
-  br i1 %i.rf, label %_ZNK16interval_managerIN9subpaving9context_tINS0_11config_mpffEE15interval_configEE13lower_is_openERKNS3_8intervalE.exit124, label %bb.aw
+  br i1 %i.rf, label %bb.ay, label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av
   %i.rg = getelementptr inbounds nuw i8, ptr %i.re, i64 8
@@ -263,20 +261,18 @@ bb.aw:                                            ; preds = %bb.av
   %i.ri = lshr i32 %i.rh, 30
   %i.rj = trunc nuw nsw i32 %i.ri to i8
   %i.rk = and i8 %i.rj, 1
-  br label %_ZNK16interval_managerIN9subpaving9context_tINS0_11config_mpffEE15interval_configEE13lower_is_openERKNS3_8intervalE.exit124
+  br label %bb.ay
 
 bb.ax:                                            ; preds = %_ZNK16interval_managerIN9subpaving9context_tINS0_11config_mpffEE15interval_configEE5lowerERKNS3_8intervalE.exit122
   %i.rl = getelementptr inbounds nuw i8, ptr %1, i64 29
   %i.rm = load i8, ptr %i.rl, align 1, !tbaa !110, !range !107, !noundef !45
-  br label %_ZNK16interval_managerIN9subpaving9context_tINS0_11config_mpffEE15interval_configEE13lower_is_openERKNS3_8intervalE.exit124
-
-_ZNK16interval_managerIN9subpaving9context_tINS0_11config_mpffEE15interval_configEE13lower_is_openERKNS3_8intervalE.exit124: ; preds = %bb.av, %bb.aw, %bb.ax
-  %.0.i.i123 = phi i8 [ %i.rm, %bb.ax ], [ 1, %bb.av ], [ %i.rk, %bb.aw ]
-  %5 = getelementptr inbounds nuw i8, ptr %3, i64 29
-  store i8 %.0.i.i123, ptr %5, align 1, !tbaa !110
   br label %bb.ay
 
-bb.ay:                                            ; preds = %_ZNK16interval_managerIN9subpaving9context_tINS0_11config_mpffEE15interval_configEE13lower_is_openERKNS3_8intervalE.exit124, %bb.ar
+bb.ay:                                            ; preds = %bb.ax, %bb.aw, %bb.av, %bb.ar
+  %.sink190 = phi i64 [ 28, %bb.ar ], [ 29, %bb.av ], [ 29, %bb.aw ], [ 29, %bb.ax ]
+  %.0.i.i123.sink = phi i8 [ 1, %bb.ar ], [ 1, %bb.av ], [ %i.rk, %bb.aw ], [ %i.rm, %bb.ax ]
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 %.sink190
+  store i8 %.0.i.i123.sink, ptr %4, align 1, !tbaa !178
   %i.rn = load i8, ptr %1, align 8, !tbaa !90, !range !107, !noundef !45
   %i.ro = trunc nuw i8 %i.rn to i1
   br i1 %i.ro, label %.split162, label %_ZNK16interval_managerIN9subpaving9context_tINS0_11config_mpffEE15interval_configEE12upper_is_infERKNS3_8intervalE.exit125
@@ -679,8 +675,6 @@ bb.b:                                             ; preds = %bb.a
   store i8 0, ptr %i.h, align 8, !tbaa !109
   %i.i = getelementptr inbounds nuw i8, ptr %3, i64 29
   store i8 0, ptr %i.i, align 1, !tbaa !110
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 41
-  store i8 0, ptr %4, align 1, !tbaa !111
   br label %bb.dj
 
 bb.c:                                             ; preds = %bb.a
@@ -1083,11 +1077,13 @@ _Z3divI12mpff_managerEvRT_RKNS1_7numeralE16ext_numeral_kindS5_S6_RS3_RS6_.exit16
   store i8 %i.oo, ptr %i.op, align 4, !tbaa !108
   %i.oq = icmp eq i32 %.0, 2
   %i.or = zext i1 %i.oq to i8
-  %5 = getelementptr inbounds nuw i8, ptr %3, i64 40
-  store i8 %i.or, ptr %5, align 8, !tbaa !109
   br label %bb.dj
 
 bb.dj:                                            ; preds = %_Z3divI12mpff_managerEvRT_RKNS1_7numeralE16ext_numeral_kindS5_S6_RS3_RS6_.exit169, %bb.b
+  %.sink342 = phi i64 [ 40, %_Z3divI12mpff_managerEvRT_RKNS1_7numeralE16ext_numeral_kindS5_S6_RS3_RS6_.exit169 ], [ 41, %bb.b ]
+  %.sink = phi i8 [ %i.or, %_Z3divI12mpff_managerEvRT_RKNS1_7numeralE16ext_numeral_kindS5_S6_RS3_RS6_.exit169 ], [ 0, %bb.b ]
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 %.sink342
+  store i8 %.sink, ptr %4, align 1, !tbaa !178
   ret void
 }
 

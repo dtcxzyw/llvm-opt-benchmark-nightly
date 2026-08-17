@@ -203,7 +203,7 @@ bb.b:                                             ; preds = %bb.a
   %i.j = load ptr, ptr %i.i, align 8
   %i.k = ptrtoint ptr %i.j to i64
   %i.l = and i64 %i.k, -2
-  %i.m = inttoptr i64 %i.l to ptr                 ; 9 uses
+  %i.m = inttoptr i64 %i.l to ptr                 ; 7 uses
   %i.n = getelementptr i8, ptr %i.b, i64 1072
   %.val15 = load ptr, ptr %i.n, align 8           ; 2 uses
   tail call void asm sideeffect "decl %gs:$0", "=*m,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %.val15, ptr elementtype(i32) %.val15) #21, !srcloc !197
@@ -262,27 +262,18 @@ bb.f:                                             ; preds = %bb.e
   %i.ah = getelementptr i8, ptr %i.m, i64 20
   store i32 %i.ag, ptr %i.ah, align 4
   %i.ai = sdiv i64 %i.ad, 1000
-  %1 = trunc i64 %i.ai to i32
-  %2 = getelementptr i8, ptr %i.m, i64 24
-  store i32 %1, ptr %2, align 8
   br label %bb.j
 
 bb.g:                                             ; preds = %bb.e
   %i.aj = trunc i64 %i.ac to i32
   %i.ak = getelementptr i8, ptr %i.m, i64 16
   store i32 %i.aj, ptr %i.ak, align 4
-  %3 = trunc i64 %i.ad to i32
-  %4 = getelementptr i8, ptr %i.m, i64 20
-  store i32 %3, ptr %4, align 4
   br label %bb.j
 
 bb.h:                                             ; preds = %bb.e
   %i.al = trunc i64 %i.ac to i32
   %i.am = getelementptr i8, ptr %i.m, i64 4
   store i32 %i.al, ptr %i.am, align 4
-  %5 = trunc i64 %i.ad to i32
-  %6 = getelementptr i8, ptr %i.m, i64 8
-  store i32 %5, ptr %6, align 4
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.e
@@ -294,6 +285,11 @@ bb.i:                                             ; preds = %bb.e
   unreachable
 
 bb.j:                                             ; preds = %bb.h, %bb.g, %bb.f
+  %.sink34.i = phi i64 [ %i.ad, %bb.h ], [ %i.ad, %bb.g ], [ %i.ai, %bb.f ]
+  %.sink33.i = phi i64 [ 8, %bb.h ], [ 20, %bb.g ], [ 24, %bb.f ]
+  %1 = trunc i64 %.sink34.i to i32
+  %2 = getelementptr i8, ptr %i.m, i64 %.sink33.i
+  store i32 %1, ptr %2, align 4
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #21, !srcloc !202
   br label %__packet_set_timestamp.exit
 

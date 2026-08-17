@@ -88,21 +88,9 @@ bb.a:
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @PgArchShmemInit(ptr nofree readnone captures(none) %0) #1 {
-  %2 = load ptr, ptr @PgArch, align 8             ; 3 uses
-  %3 = ptrtoint ptr %2 to i64
-  %4 = and i64 %3, 7
-  %5 = icmp eq i64 %4, 0
-  br i1 %5, label %.preheader, label %6
-
-.preheader:                                       ; preds = %1
-  store i64 0, ptr %2, align 8
-  br label %bb.a
-
-6:                                                ; preds = %1
-  store i64 0, ptr %2, align 1
-  br label %bb.a
-
-bb.a:                                             ; preds = %.preheader, %6
+bb.a:
+  %1 = load ptr, ptr @PgArch, align 8
+  store i64 0, ptr %1, align 1
   %i.a = load ptr, ptr @PgArch, align 8
   store i32 -1, ptr %i.a, align 4
   %i.b = load ptr, ptr @PgArch, align 8

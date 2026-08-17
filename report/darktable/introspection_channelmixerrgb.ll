@@ -204,9 +204,9 @@ bb.a:
   %i.a = alloca [4 x float], align 16             ; 5 uses
   %i.b = alloca [4 x float], align 16             ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 680 ; 3 uses
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !245  ; 40 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !245  ; 39 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 704 ; 5 uses
-  %i.f = load ptr, ptr %i.e, align 16, !tbaa !52  ; 39 uses
+  %i.f = load ptr, ptr %i.e, align 16, !tbaa !52  ; 38 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 8 ; 3 uses
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !336
   %i.i = icmp eq ptr %1, %i.h
@@ -463,25 +463,22 @@ bb.z:                                             ; preds = %.thread178
   %i.eh = getelementptr inbounds nuw i8, ptr %i.d, i64 120
   %i.ei = load i32, ptr %i.eh, align 4, !tbaa !249
   switch i32 %i.ei, label %bb.ab [
-    i32 2, label %.thread179
-    i32 6, label %bb.aa
+    i32 2, label %bb.aa
+    i32 6, label %.thread179
   ]
 
 .thread179:                                       ; preds = %bb.z
-  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 144
-  %4 = load float, ptr %3, align 4, !tbaa !326
-  %5 = getelementptr inbounds nuw i8, ptr %i.f, i64 928
-  store float %4, ptr %5, align 32, !tbaa !337
-  br label %bb.ab
+  br label %bb.aa
 
-bb.aa:                                            ; preds = %bb.z
+bb.aa:                                            ; preds = %bb.z, %.thread179
+  %.sink200 = phi i64 [ 932, %.thread179 ], [ 928, %bb.z ]
   %i.ej = getelementptr inbounds nuw i8, ptr %i.d, i64 144
   %i.ek = load float, ptr %i.ej, align 4, !tbaa !326
-  %i.el = getelementptr inbounds nuw i8, ptr %i.f, i64 932
-  store float %i.ek, ptr %i.el, align 4, !tbaa !338
+  %i.el = getelementptr inbounds nuw i8, ptr %i.f, i64 %.sink200
+  store float %i.ek, ptr %i.el, align 4, !tbaa !14
   br label %bb.ab
 
-bb.ab:                                            ; preds = %bb.z, %.thread179, %bb.aa, %.thread178
+bb.ab:                                            ; preds = %bb.aa, %bb.z, %.thread178
   %i.em = load ptr, ptr %i.g, align 8, !tbaa !336
   %i.en = icmp eq ptr %1, %i.em
   br i1 %i.en, label %bb.ae, label %bb.ac

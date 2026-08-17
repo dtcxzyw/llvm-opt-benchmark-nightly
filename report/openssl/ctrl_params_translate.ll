@@ -203,12 +203,7 @@ bb.b:                                             ; preds = %bb.a
   %i.c = load i32, ptr %i.b, align 8, !tbaa !36
   %i.d = and i32 %i.c, 6
   %.not7 = icmp eq i32 %i.d, 0
-  br i1 %.not7, label %bb.g, label %3
-
-3:                                                ; preds = %bb.b
-  %4 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store i32 0, ptr %4, align 8, !tbaa !26
-  br label %bb.g
+  br i1 %.not7, label %bb.g, label %bb.f
 
 bb.c:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 48
@@ -230,17 +225,18 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   call void @ERR_new() #7
   call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 2071, ptr noundef nonnull @__func__.fix_group_ecx) #7
   call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 6, i32 noundef 524550, ptr noundef null) #7
-  %5 = getelementptr inbounds nuw i8, ptr %2, i64 28
-  store i32 0, ptr %5, align 4, !tbaa !31
+  br label %bb.f
+
+bb.f:                                             ; preds = %bb.d, %bb.b, %bb.e
+  %.sink9 = phi i64 [ 8, %bb.b ], [ 28, %bb.e ], [ 28, %bb.d ]
+  %.sink = phi i32 [ 0, %bb.b ], [ 0, %bb.e ], [ 1, %bb.d ]
+  %.0.ph = phi i32 [ 1, %bb.b ], [ 0, %bb.e ], [ 1, %bb.d ]
+  %i.n = getelementptr inbounds nuw i8, ptr %2, i64 %.sink9
+  store i32 %.sink, ptr %i.n, align 4, !tbaa !42
   br label %bb.g
 
-bb.f:                                             ; preds = %bb.d
-  %i.n = getelementptr inbounds nuw i8, ptr %2, i64 28
-  store i32 1, ptr %i.n, align 4, !tbaa !31
-  br label %bb.g
-
-bb.g:                                             ; preds = %bb.a, %bb.b, %bb.f, %bb.e, %3
-  %.0 = phi i32 [ 0, %bb.b ], [ 1, %3 ], [ 1, %bb.f ], [ 0, %bb.e ], [ 0, %bb.a ]
+bb.g:                                             ; preds = %bb.f, %bb.a, %bb.b
+  %.0 = phi i32 [ 0, %bb.b ], [ 0, %bb.a ], [ %.0.ph, %bb.f ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   ret i32 %.0
 }

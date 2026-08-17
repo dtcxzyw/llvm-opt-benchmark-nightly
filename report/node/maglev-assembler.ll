@@ -201,29 +201,25 @@ bb.a:
 define internal void @"_ZZN2v88internal6maglev15MaglevAssembler9ToBooleanENS0_8RegisterENS1_9CheckTypeENS1_12ZoneLabelRefES5_bEN3$_28__invokeEPS2_S3_S3_S5_S5_"(ptr noundef %0, i8 %1, i8 %2, ptr %3, ptr %4) #4 align 2 {
 bb.a:
   %5 = alloca %"class.v8::internal::Operand", align 8 ; 7 uses
-  %6 = alloca %"class.v8::internal::maglev::MaglevAssembler::TemporaryRegisterScope", align 8 ; 12 uses
+  %6 = alloca %"class.v8::internal::maglev::MaglevAssembler::TemporaryRegisterScope", align 8 ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #10
   store ptr %0, ptr %6, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 448 ; 3 uses
-  %i.c = load ptr, ptr %i.b, align 8              ; 5 uses
+  %i.c = load ptr, ptr %i.b, align 8              ; 4 uses
   store ptr %i.c, ptr %i.a, align 8
-  %i.d = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %6, i64 16
   %.not.i.i.i = icmp eq ptr %i.c, null
   br i1 %.not.i.i.i, label %.thread.i.i, label %bb.b
 
 .thread.i.i:                                      ; preds = %bb.a
-  store i16 0, ptr %i.d, align 8
   store ptr %6, ptr %i.b, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %6, i64 20
   br label %_ZN2v88internal6maglev15MaglevAssembler22TemporaryRegisterScopeC2EPS2_.exit.i
 
 bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 16
-  %7 = load i16, ptr %i.f, align 8
-  store i16 %7, ptr %i.d, align 8
-  %8 = getelementptr inbounds nuw i8, ptr %i.c, i64 18
-  %9 = load i16, ptr %8, align 2
+  %7 = load <2 x i16>, ptr %i.f, align 8
   store ptr %6, ptr %i.b, align 8
   %i.g = getelementptr inbounds nuw i8, ptr %6, i64 20
   %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 21
@@ -231,11 +227,10 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZN2v88internal6maglev15MaglevAssembler22TemporaryRegisterScopeC2EPS2_.exit.i
 
 _ZN2v88internal6maglev15MaglevAssembler22TemporaryRegisterScopeC2EPS2_.exit.i: ; preds = %bb.b, %.thread.i.i
-  %.sink = phi i16 [ 0, %.thread.i.i ], [ %9, %bb.b ]
   %i.j = phi ptr [ %i.e, %.thread.i.i ], [ %i.g, %bb.b ]
   %i.k = phi i8 [ 1, %.thread.i.i ], [ %i.i, %bb.b ]
-  %10 = getelementptr inbounds nuw i8, ptr %6, i64 18
-  store i16 %.sink, ptr %10, align 2
+  %8 = phi <2 x i16> [ zeroinitializer, %.thread.i.i ], [ %7, %bb.b ]
+  store <2 x i16> %8, ptr %i.d, align 8
   %i.l = getelementptr inbounds nuw i8, ptr %6, i64 21
   store i8 %i.k, ptr %i.l, align 1
   store i8 1, ptr %i.j, align 4

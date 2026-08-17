@@ -203,7 +203,7 @@ bb.a:
   %i.r = add i16 %i.p, %i.q
   %i.s = select i1 %2, i16 %i.i, i16 %i.r
   %i.t = icmp ugt i16 %i.e, %i.s
-  br i1 %i.t, label %bb.b, label %3
+  br i1 %i.t, label %bb.b, label %bb.l
 
 bb.b:                                             ; preds = %bb.a
   %i.u = shl nuw nsw i16 %i.n, 3
@@ -322,32 +322,23 @@ _ZN5boost9container6move_nIPPNS0_4test24movable_and_copyable_intES5_EENS0_3dtl37
   store <2 x i16> %i.by, ptr %i.f, align 2, !tbaa !509
   %i.bz = extractelement <2 x i16> %i.by, i64 0
   %i.ca = extractelement <2 x i16> %i.by, i64 1
-  br label %3
+  br label %bb.l
 
-3:                                                ; preds = %_ZN5boost9container6move_nIPPNS0_4test24movable_and_copyable_intES5_EENS0_3dtl37enable_if_memtransfer_copy_assignableIT_T0_S9_E4typeES8_mS9_.exit, %bb.a
-  %4 = phi i16 [ %i.bz, %_ZN5boost9container6move_nIPPNS0_4test24movable_and_copyable_intES5_EENS0_3dtl37enable_if_memtransfer_copy_assignableIT_T0_S9_E4typeES8_mS9_.exit ], [ %i.g, %bb.a ]
-  %5 = phi ptr [ %i.bj, %_ZN5boost9container6move_nIPPNS0_4test24movable_and_copyable_intES5_EENS0_3dtl37enable_if_memtransfer_copy_assignableIT_T0_S9_E4typeES8_mS9_.exit ], [ %i.h, %bb.a ] ; 2 uses
-  %6 = phi i16 [ %i.ca, %_ZN5boost9container6move_nIPPNS0_4test24movable_and_copyable_intES5_EENS0_3dtl37enable_if_memtransfer_copy_assignableIT_T0_S9_E4typeES8_mS9_.exit ], [ %i.m, %bb.a ]
-  br i1 %2, label %bb.l, label %7
-
-bb.l:                                             ; preds = %3
-  %i.cb = lshr i16 %4, 8
+bb.l:                                             ; preds = %_ZN5boost9container6move_nIPPNS0_4test24movable_and_copyable_intES5_EENS0_3dtl37enable_if_memtransfer_copy_assignableIT_T0_S9_E4typeES8_mS9_.exit, %bb.a
+  %3 = phi i16 [ %i.bz, %_ZN5boost9container6move_nIPPNS0_4test24movable_and_copyable_intES5_EENS0_3dtl37enable_if_memtransfer_copy_assignableIT_T0_S9_E4typeES8_mS9_.exit ], [ %i.g, %bb.a ]
+  %4 = phi ptr [ %i.bj, %_ZN5boost9container6move_nIPPNS0_4test24movable_and_copyable_intES5_EENS0_3dtl37enable_if_memtransfer_copy_assignableIT_T0_S9_E4typeES8_mS9_.exit ], [ %i.h, %bb.a ] ; 2 uses
+  %5 = phi i16 [ %i.ca, %_ZN5boost9container6move_nIPPNS0_4test24movable_and_copyable_intES5_EENS0_3dtl37enable_if_memtransfer_copy_assignableIT_T0_S9_E4typeES8_mS9_.exit ], [ %i.m, %bb.a ]
+  %6 = lshr i16 %5, 8
+  %7 = zext nneg i16 %6 to i64
+  %8 = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %7
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 8
+  %i.cb = lshr i16 %3, 8
   %i.cc = zext nneg i16 %i.cb to i64
-  %i.cd = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %i.cc
+  %i.cd = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.cc
   %i.ce = zext nneg i16 %i.e to i64
   %i.cf = sub nsw i64 0, %i.ce
   %i.cg = getelementptr inbounds [8 x i8], ptr %i.cd, i64 %i.cf
-  br label %12
-
-7:                                                ; preds = %3
-  %8 = lshr i16 %6, 8
-  %9 = zext nneg i16 %8 to i64
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %9
-  %11 = getelementptr inbounds nuw i8, ptr %10, i64 8
-  br label %12
-
-12:                                               ; preds = %7, %bb.l
-  %.sink = phi ptr [ %11, %7 ], [ %i.cg, %bb.l ]
+  %.sink = select i1 %2, ptr %i.cg, ptr %9
   tail call void @_ZN5boost9container10deque_baseINS0_4test25small_size_type_allocatorINS2_24movable_and_copyable_intEEENS0_9deque_optILm0ELm0EtLb0EEELb0EE19prot_allocate_nodesEPPS4_t(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef %.sink, i16 noundef zeroext %i.e)
   ret void
 }

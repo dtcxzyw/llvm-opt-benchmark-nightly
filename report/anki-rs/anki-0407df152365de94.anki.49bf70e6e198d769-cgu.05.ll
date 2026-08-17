@@ -204,12 +204,20 @@ bb.e:                                             ; preds = %.noexc3
   store i32 %i.ab, ptr %i.ac, align 4
   switch i8 %1, label %default.unreachable [
     i8 3, label %bb.f
-    i8 0, label %3
+    i8 0, label %.sink.split
     i8 1, label %bb.i
     i8 2, label %bb.j
   ]
 
-bb.f:                                             ; preds = %bb.e, %bb.j, %bb.i, %3
+.sink.split:                                      ; preds = %bb.e, %bb.i, %bb.j
+  %.sink7 = phi i64 [ 32, %bb.j ], [ 28, %bb.i ], [ 24, %bb.e ]
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 %.sink7 ; 2 uses
+  %4 = load i32, ptr %3, align 4, !noundef !3
+  %5 = add i32 %4, -1
+  store i32 %5, ptr %3, align 4
+  br label %bb.f
+
+bb.f:                                             ; preds = %.sink.split, %bb.e
   invoke void @"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17h06a2762e5e8eee94E"(ptr noalias noundef nonnull align 8 dereferenceable(40) %2)
           to label %"_ZN4core3ptr53drop_in_place$LT$anki..collection..backup..Backup$GT$17h7c39bc6d1b0f4ec2E.exit" unwind label %bb.g
 
@@ -236,26 +244,11 @@ common.resume:                                    ; preds = %bb.b, %bb.g
 default.unreachable:                              ; preds = %bb.e
   unreachable
 
-3:                                                ; preds = %bb.e
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %5 = load i32, ptr %4, align 8, !noundef !3
-  %6 = add i32 %5, -1
-  store i32 %6, ptr %4, align 8
-  br label %bb.f
-
 bb.i:                                             ; preds = %bb.e
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 2 uses
-  %8 = load i32, ptr %7, align 4, !noundef !3
-  %9 = add i32 %8, -1
-  store i32 %9, ptr %7, align 4
-  br label %bb.f
+  br label %.sink.split
 
 bb.j:                                             ; preds = %bb.e
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  %11 = load i32, ptr %10, align 8, !noundef !3
-  %12 = add i32 %11, -1
-  store i32 %12, ptr %10, align 8
-  br label %bb.f
+  br label %.sink.split
 
 bb.k:                                             ; preds = %bb.b
   %i.af = landingpad { ptr, i32 }

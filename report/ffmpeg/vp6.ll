@@ -203,8 +203,6 @@ vpx_rac_renorm.exit.i.i225.2:                     ; preds = %bb.bk, %bb.bj, %vpx
   store i32 %.0.i.i229.2, ptr %i.km, align 16, !tbaa !61
   %i.tk = or disjoint i32 %i.sk, %i.tj
   %i.tl = shl nuw nsw i32 2, %i.tk
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 1780
-  store i32 %i.tl, ptr %3, align 4, !tbaa !76
   br label %bb.bq
 
 bb.bl:                                            ; preds = %vpx_rac_renorm.exit.i178
@@ -253,20 +251,20 @@ bb.bo:                                            ; preds = %vpx_rac_renorm.exit
   %i.uj = sub nsw i32 %i.tq, %i.uh
   %i.uk = sub nuw i32 %.0.i.i175, %i.ui           ; 2 uses
   store i32 %i.uk, ptr %i.km, align 8, !tbaa !61
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 1776
-  store i32 1, ptr %4, align 16, !tbaa !75
   br label %bb.bq
 
 bb.bp:                                            ; preds = %vpx_rac_renorm.exit.i173
   store i32 %.0.i.i175, ptr %i.km, align 8, !tbaa !61
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 1776
-  store i32 0, ptr %5, align 16, !tbaa !75
   br label %bb.bq
 
 bb.bq:                                            ; preds = %bb.bo, %bb.bp, %vpx_rac_renorm.exit.i.i225.2
+  %.sink383 = phi i64 [ 1776, %bb.bo ], [ 1776, %bb.bp ], [ 1780, %vpx_rac_renorm.exit.i.i225.2 ]
+  %.sink381 = phi i32 [ 1, %bb.bo ], [ 0, %bb.bp ], [ %i.tl, %vpx_rac_renorm.exit.i.i225.2 ]
   %.promoted6.i234 = phi i32 [ %i.uk, %bb.bo ], [ %.0.i.i175, %bb.bp ], [ %.0.i.i229.2, %vpx_rac_renorm.exit.i.i225.2 ] ; 2 uses
   %.promoted4.i233 = phi i32 [ %.018.i.i174, %bb.bo ], [ %.018.i.i174, %bb.bp ], [ %.018.i.i.i226.2, %vpx_rac_renorm.exit.i.i225.2 ] ; 2 uses
   %.promoted.i232 = phi i32 [ %i.uj, %bb.bo ], [ %i.uh, %bb.bp ], [ %.sink.i228.2, %vpx_rac_renorm.exit.i.i225.2 ] ; 3 uses
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 %.sink383
+  store i32 %.sink381, ptr %3, align 4, !tbaa !84
   %i.ul = icmp samesign ugt i32 %i.kg, 7
   br i1 %i.ul, label %bb.br, label %bb.ca
 

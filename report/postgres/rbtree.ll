@@ -201,8 +201,7 @@ bb.c:                                             ; preds = %bb.b
   %i.h = load ptr, ptr %i.g, align 8
   %i.i = load ptr, ptr %i.b, align 8
   tail call void %i.h(ptr noundef %.04149, ptr noundef %1, ptr noundef %i.i) #6
-  store i8 0, ptr %2, align 1
-  br label %3
+  br label %rbt_insert_fixup.exit
 
 bb.d:                                             ; preds = %bb.b
   %i.j = icmp slt i32 %i.e, 0
@@ -224,7 +223,7 @@ bb.d:                                             ; preds = %bb.b
   %i.m = load ptr, ptr %i.l, align 8
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.o = load ptr, ptr %i.n, align 8
-  %i.p = tail call ptr %i.m(ptr noundef %i.o) #6  ; 11 uses
+  %i.p = tail call ptr %i.m(ptr noundef %i.o) #6  ; 14 uses
   store i8 1, ptr %i.p, align 8
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 8
   store ptr @sentinel, ptr %i.q, align 8
@@ -598,13 +597,10 @@ rbt_rotate_right.exit.i:                          ; preds = %bb.ba, %bb.az, %bb.
 rbt_rotate_right.exit.i.rbt_insert_fixup.exit.loopexit_crit_edge: ; preds = %rbt_rotate_right.exit.i
   br label %rbt_insert_fixup.exit, !llvm.loop !8
 
-rbt_insert_fixup.exit:                            ; preds = %.lr.ph.i, %.lr.ph.i.preheader, %rbt_rotate_right.exit.i.rbt_insert_fixup.exit.loopexit_crit_edge, %bb.i
-  %.lcssa.i = phi ptr [ %i.z, %bb.i ], [ %i.z, %.lr.ph.i.preheader ], [ %i.dm, %rbt_rotate_right.exit.i.rbt_insert_fixup.exit.loopexit_crit_edge ], [ %i.dm, %.lr.ph.i ]
-  store i8 0, ptr %.lcssa.i, align 8
-  br label %3
-
-3:                                                ; preds = %rbt_insert_fixup.exit, %bb.c
-  %.039 = phi ptr [ %.04149, %bb.c ], [ %i.p, %rbt_insert_fixup.exit ]
+rbt_insert_fixup.exit:                            ; preds = %.lr.ph.i, %bb.i, %rbt_rotate_right.exit.i.rbt_insert_fixup.exit.loopexit_crit_edge, %.lr.ph.i.preheader, %bb.c
+  %.lcssa.i.sink = phi ptr [ %2, %bb.c ], [ %i.z, %bb.i ], [ %i.z, %.lr.ph.i.preheader ], [ %i.dm, %rbt_rotate_right.exit.i.rbt_insert_fixup.exit.loopexit_crit_edge ], [ %i.dm, %.lr.ph.i ]
+  %.039 = phi ptr [ %.04149, %bb.c ], [ %i.p, %bb.i ], [ %i.p, %.lr.ph.i.preheader ], [ %i.p, %rbt_rotate_right.exit.i.rbt_insert_fixup.exit.loopexit_crit_edge ], [ %i.p, %.lr.ph.i ]
+  store i8 0, ptr %.lcssa.i.sink, align 1
   ret ptr %.039
 }
 

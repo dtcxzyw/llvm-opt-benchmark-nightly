@@ -203,7 +203,7 @@ bb.dv:                                            ; preds = %bb.du
 
 bb.dw:                                            ; preds = %bb.dt
   %i.vh = icmp ugt i8 %2, 8
-  br i1 %i.vh, label %bb.dx, label %.thread
+  br i1 %i.vh, label %bb.dx, label %bb.er
 
 bb.dx:                                            ; preds = %bb.dw
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #20
@@ -347,7 +347,7 @@ bb.ek:                                            ; preds = %.noexc466, %_ZNKSt9
 
 .critedge266:                                     ; preds = %bb.dz
   %i.ww = icmp ugt i8 %2, 14
-  br i1 %i.ww, label %bb.el, label %.thread
+  br i1 %i.ww, label %bb.el, label %bb.er
 
 bb.el:                                            ; preds = %.critedge266
   %i.wx = getelementptr inbounds nuw i8, ptr %0, i64 144
@@ -361,7 +361,7 @@ bb.em:                                            ; preds = %bb.ep, %bb.eo, %bb.
 
 bb.en:                                            ; preds = %bb.el
   %i.wz = icmp ugt i8 %2, 16
-  br i1 %i.wz, label %bb.eo, label %.thread
+  br i1 %i.wz, label %bb.eo, label %bb.er
 
 bb.eo:                                            ; preds = %bb.en
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #20
@@ -393,16 +393,13 @@ bb.eq:                                            ; preds = %.noexc405
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #20
   %i.xj = getelementptr inbounds nuw i8, ptr %0, i64 72
   store i32 %i.xi, ptr %i.xj, align 8, !tbaa !65
-  %41 = getelementptr inbounds nuw i8, ptr %0, i64 76
-  store i32 %i.xi, ptr %41, align 4, !tbaa !66
   br label %bb.er
 
-.thread:                                          ; preds = %bb.dw, %.critedge266, %bb.en
-  %42 = getelementptr inbounds nuw i8, ptr %0, i64 72
-  store i32 -1, ptr %42, align 8, !tbaa !65
-  br label %bb.er
-
-bb.er:                                            ; preds = %.thread, %bb.eq
+bb.er:                                            ; preds = %bb.en, %.critedge266, %bb.dw, %bb.eq
+  %.sink726 = phi i64 [ 76, %bb.eq ], [ 72, %bb.dw ], [ 72, %.critedge266 ], [ 72, %bb.en ]
+  %.sink = phi i32 [ %i.xi, %bb.eq ], [ -1, %bb.dw ], [ -1, %.critedge266 ], [ -1, %bb.en ]
+  %41 = getelementptr inbounds nuw i8, ptr %0, i64 %.sink726
+  store i32 %.sink, ptr %41, align 4, !tbaa !163
   call void @llvm.lifetime.start.p0(ptr nonnull %35) #20
   %i.xk = getelementptr inbounds nuw i8, ptr %35, i64 48
   store ptr %i.xk, ptr %35, align 8, !tbaa !185

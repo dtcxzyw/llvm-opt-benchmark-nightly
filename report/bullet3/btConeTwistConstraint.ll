@@ -203,42 +203,28 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a, %bb.a
   %or.cond = icmp ult i32 %2, 3
-  br i1 %or.cond, label %3, label %bb.c
-
-3:                                                ; preds = %bb.b
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 624
-  %5 = load float, ptr %4, align 8, !tbaa !146
-  br label %bb.g
+  br i1 %or.cond, label %bb.f, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.a = icmp ult i32 %2, 6
-  br i1 %i.a, label %6, label %bb.g
-
-6:                                                ; preds = %bb.c
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 456
-  %8 = load float, ptr %7, align 8, !tbaa !90
-  br label %bb.g
+  br i1 %i.a, label %bb.f, label %bb.g
 
 bb.d:                                             ; preds = %bb.a, %bb.a
   %or.cond5 = icmp ult i32 %2, 3
-  br i1 %or.cond5, label %9, label %bb.e
-
-9:                                                ; preds = %bb.d
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 620
-  %11 = load float, ptr %10, align 4, !tbaa !83
-  br label %bb.g
+  br i1 %or.cond5, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.b = icmp ult i32 %2, 6
   br i1 %i.b, label %bb.f, label %bb.g
 
-bb.f:                                             ; preds = %bb.e
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 628
-  %i.d = load float, ptr %i.c, align 4, !tbaa !30
+bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c, %bb.b
+  %.sink18 = phi i64 [ 456, %bb.c ], [ 620, %bb.d ], [ 624, %bb.b ], [ 628, %bb.e ]
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 %.sink18
+  %i.d = load float, ptr %i.c, align 4, !tbaa !28
   br label %bb.g
 
-bb.g:                                             ; preds = %bb.a, %9, %bb.e, %bb.f, %3, %bb.c, %6
-  %.0 = phi float [ 0.000000e+00, %bb.a ], [ %5, %3 ], [ %8, %6 ], [ 0.000000e+00, %bb.c ], [ %11, %9 ], [ %i.d, %bb.f ], [ 0.000000e+00, %bb.e ]
+bb.g:                                             ; preds = %bb.f, %bb.a, %bb.e, %bb.c
+  %.0 = phi float [ 0.000000e+00, %bb.a ], [ 0.000000e+00, %bb.c ], [ 0.000000e+00, %bb.e ], [ %i.d, %bb.f ]
   ret float %.0
 }
 

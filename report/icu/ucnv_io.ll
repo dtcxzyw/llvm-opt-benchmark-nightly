@@ -203,11 +203,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.b
   %i.k = load i8, ptr %0, align 1, !tbaa !8       ; 2 uses
   %.not2831.i = icmp eq i8 %i.k, 0
-  br i1 %.not2831.i, label %.thread82, label %.lr.ph.i
-
-.thread82:                                        ; preds = %bb.d
-  store i8 0, ptr %i.a, align 16, !tbaa !8
-  br label %.split.preheader
+  br i1 %.not2831.i, label %.split.preheader, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.d, %.critedge.i
   %i.l = phi i8 [ %i.aq, %.critedge.i ], [ %i.k, %bb.d ] ; 6 uses
@@ -252,7 +248,7 @@ bb.h:                                             ; preds = %bb.g
 .backedge.peel.i:                                 ; preds = %bb.h, %..backedge.peel_crit_edge.i
   %i.z = phi i8 [ %.pre.i, %..backedge.peel_crit_edge.i ], [ %i.s, %bb.h ] ; 2 uses
   %.not.peel.i = icmp eq i8 %i.z, 0
-  br i1 %.not.peel.i, label %.loopexit86, label %.peel.next.i
+  br i1 %.not.peel.i, label %.split.preheader, label %.peel.next.i
 
 .peel.next.i:                                     ; preds = %.backedge.peel.i, %.backedge.i
   %i.aa = phi i8 [ %i.an, %.backedge.i ], [ %i.z, %.backedge.peel.i ] ; 5 uses
@@ -291,7 +287,7 @@ bb.k:                                             ; preds = %bb.j
 .backedge.i:                                      ; preds = %bb.k, %..backedge_crit_edge.i
   %i.an = phi i8 [ %.pre48.i, %..backedge_crit_edge.i ], [ %i.ag, %bb.k ] ; 2 uses
   %.not.i = icmp eq i8 %i.an, 0
-  br i1 %.not.i, label %.loopexit86, label %.peel.next.i, !llvm.loop !9
+  br i1 %.not.i, label %.split.preheader, label %.peel.next.i, !llvm.loop !9
 
 .critedge.loopexit36.i:                           ; preds = %bb.e
   br label %.critedge.i
@@ -307,14 +303,11 @@ bb.k:                                             ; preds = %bb.j
   store i8 %.016.i, ptr %.018.ph32.i, align 1, !tbaa !8
   %i.aq = load i8, ptr %i.ao, align 1, !tbaa !8   ; 2 uses
   %.not28.i = icmp eq i8 %i.aq, 0
-  br i1 %.not28.i, label %.loopexit86, label %.lr.ph.i, !llvm.loop !12
+  br i1 %.not28.i, label %.split.preheader, label %.lr.ph.i, !llvm.loop !12
 
-.loopexit86:                                      ; preds = %.critedge.i, %.backedge.peel.i, %.backedge.i
-  %.018.ph.lcssa.i = phi ptr [ %.018.ph32.i, %.backedge.i ], [ %i.ap, %.critedge.i ], [ %.018.ph32.i, %.backedge.peel.i ]
-  store i8 0, ptr %.018.ph.lcssa.i, align 1, !tbaa !8
-  br label %.split.preheader
-
-.split.preheader:                                 ; preds = %.loopexit86, %.thread82
+.split.preheader:                                 ; preds = %.backedge.peel.i, %.critedge.i, %.backedge.i, %bb.d
+  %.018.ph.lcssa.i.sink = phi ptr [ %i.a, %bb.d ], [ %.018.ph32.i, %.backedge.i ], [ %i.ap, %.critedge.i ], [ %.018.ph32.i, %.backedge.peel.i ]
+  store i8 0, ptr %.018.ph.lcssa.i.sink, align 1, !tbaa !8
   %i.ar = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL10gMainTable, i64 84), align 4, !tbaa !33 ; 2 uses
   %i.as = lshr i32 %i.ar, 1
   %i.at = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZL10gMainTable, i64 64), align 8

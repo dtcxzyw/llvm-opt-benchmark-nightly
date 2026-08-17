@@ -201,7 +201,7 @@ bb.i:                                             ; preds = %abAppend.exit74.i
   br label %abAppend.exit75.i
 
 abAppend.exit75.i:                                ; preds = %bb.i, %abAppend.exit74.i
-  %.promoted100.i = phi i32 [ %i.bk, %abAppend.exit74.i ], [ %i.bp, %bb.i ] ; 6 uses
+  %.promoted100.i = phi i32 [ %i.bk, %abAppend.exit74.i ], [ %i.bp, %bb.i ] ; 5 uses
   %.promoted98.i = phi ptr [ %i.bl, %abAppend.exit74.i ], [ %i.br, %bb.i ] ; 4 uses
   %.b.i = load i1, ptr @maskmode, align 4
   br i1 %.b.i, label %.preheader.i, label %bb.k
@@ -313,17 +313,9 @@ bb.p:                                             ; preds = %refreshSearchResult
   %i.dr = trunc i64 %i.dq to i32
   %i.ds = add nsw i32 %.promoted100.i, %i.dr      ; 2 uses
   %i.dt = sext i32 %i.ds to i64
-  %i.du = tail call ptr @realloc(ptr noundef %.promoted98.i, i64 noundef %i.dt) #27 ; 3 uses
+  %i.du = tail call ptr @realloc(ptr noundef %.promoted98.i, i64 noundef %i.dt) #27 ; 2 uses
   %i.dv = icmp eq ptr %i.du, null
-  br i1 %i.dv, label %abAppend.exit77.i, label %4
-
-4:                                                ; preds = %bb.p
-  %5 = sext i32 %.promoted100.i to i64
-  %6 = getelementptr inbounds i8, ptr %i.du, i64 %5
-  %sext86.i = shl i64 %i.dq, 32
-  %7 = ashr exact i64 %sext86.i, 32
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %6, ptr nonnull align 16 @search_result_friendly, i64 %7, i1 false)
-  br label %abAppend.exit77.i.sink.split
+  br i1 %i.dv, label %abAppend.exit77.i, label %bb.r
 
 bb.q:                                             ; preds = %refreshSearchResult.exit.i
   %i.dw = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -332,23 +324,27 @@ bb.q:                                             ; preds = %refreshSearchResult
   %i.dz = trunc i64 %i.dy to i32
   %i.ea = add nsw i32 %.promoted100.i, %i.dz      ; 2 uses
   %i.eb = sext i32 %i.ea to i64
-  %i.ec = tail call ptr @realloc(ptr noundef %.promoted98.i, i64 noundef %i.eb) #27 ; 3 uses
+  %i.ec = tail call ptr @realloc(ptr noundef %.promoted98.i, i64 noundef %i.eb) #27 ; 2 uses
   %i.ed = icmp eq ptr %i.ec, null
   br i1 %i.ed, label %abAppend.exit77.i, label %bb.r
 
-bb.r:                                             ; preds = %bb.q
+bb.r:                                             ; preds = %bb.q, %bb.p
+  %.sink56 = phi ptr [ %i.du, %bb.p ], [ %i.ec, %bb.q ] ; 2 uses
+  %.sink55 = phi i64 [ %i.dq, %bb.p ], [ %i.dy, %bb.q ]
+  %.sink53 = phi ptr [ @search_result_friendly, %bb.p ], [ %i.dx, %bb.q ]
+  %.lcssa101.sink.i.ph = phi i32 [ %i.ds, %bb.p ], [ %i.ea, %bb.q ]
   %i.ee = sext i32 %.promoted100.i to i64
-  %i.ef = getelementptr inbounds i8, ptr %i.ec, i64 %i.ee
-  %sext87.i = shl i64 %i.dy, 32
+  %i.ef = getelementptr inbounds i8, ptr %.sink56, i64 %i.ee
+  %sext87.i = shl i64 %.sink55, 32
   %i.eg = ashr exact i64 %sext87.i, 32
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ef, ptr readonly align 1 %i.dx, i64 %i.eg, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ef, ptr align 1 %.sink53, i64 %i.eg, i1 false)
   br label %abAppend.exit77.i.sink.split
 
-abAppend.exit77.i.sink.split:                     ; preds = %abAppend.exit76.i, %.preheader.i, %4, %bb.r
-  %.lcssa99.i.sink = phi ptr [ %i.du, %4 ], [ %i.ec, %bb.r ], [ %.promoted98.i, %.preheader.i ], [ %i.cg, %abAppend.exit76.i ]
-  %.lcssa101.i.sink = phi i32 [ %i.ds, %4 ], [ %i.ea, %bb.r ], [ %.promoted100.i, %.preheader.i ], [ %i.cf, %abAppend.exit76.i ]
-  store ptr %.lcssa99.i.sink, ptr %3, align 8
-  store i32 %.lcssa101.i.sink, ptr %i.ad, align 8
+abAppend.exit77.i.sink.split:                     ; preds = %abAppend.exit76.i, %bb.r, %.preheader.i
+  %.lcssa99.sink.i = phi ptr [ %.promoted98.i, %.preheader.i ], [ %.sink56, %bb.r ], [ %i.cg, %abAppend.exit76.i ]
+  %.lcssa101.sink.i = phi i32 [ %.promoted100.i, %.preheader.i ], [ %.lcssa101.sink.i.ph, %bb.r ], [ %i.cf, %abAppend.exit76.i ]
+  store ptr %.lcssa99.sink.i, ptr %3, align 8
+  store i32 %.lcssa101.sink.i, ptr %i.ad, align 8
   br label %abAppend.exit77.i
 
 abAppend.exit77.i:                                ; preds = %abAppend.exit77.i.sink.split, %bb.q, %bb.p
@@ -631,7 +627,7 @@ bb.ak:                                            ; preds = %bb.aj
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.jc, ptr readonly align 1 %.025.lcssa.i, i64 %i.jd, i1 false)
   br label %abAppend.exit29.i.sink.split
 
-abAppend.exit29.i.sink.split:                     ; preds = %abAppend.exit28.i, %.preheader.i10, %bb.ak
+abAppend.exit29.i.sink.split:                     ; preds = %abAppend.exit28.i, %bb.ak, %.preheader.i10
   %.lcssa45.i.sink = phi ptr [ %i.iz, %bb.ak ], [ %.promoted.i6, %.preheader.i10 ], [ %i.iv, %abAppend.exit28.i ]
   %.lcssa47.i.sink = phi i32 [ %i.ix, %bb.ak ], [ %.promoted46.i, %.preheader.i10 ], [ %i.iu, %abAppend.exit28.i ]
   store ptr %.lcssa45.i.sink, ptr %1, align 8

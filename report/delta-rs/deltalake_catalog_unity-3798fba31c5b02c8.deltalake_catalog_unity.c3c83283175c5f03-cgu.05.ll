@@ -201,12 +201,12 @@ bb.e:                                             ; preds = %bb.d
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 728
   %i.i = load i8, ptr %i.h, align 8, !range !382, !noundef !3
   %cond.i.i = icmp eq i8 %i.i, 3
-  br i1 %cond.i.i, label %bb.f, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCNvMs5_CsgO8S5jLFugx_23deltalake_catalog_unityNtBO_12UnityCatalog14get_credential0EBO_.exit.i
+  br i1 %cond.i.i, label %bb.f, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCINvMs5_CsgO8S5jLFugx_23deltalake_catalog_unityNtBP_12UnityCatalog9get_tableReB1V_B1V_E0EBP_.exit.sink.split
 
 bb.f:                                             ; preds = %bb.e
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 520
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCINvMs_NtNtCsgO8S5jLFugx_23deltalake_catalog_unity6client5tokenINtBO_10TokenCacheNtNtCs6Po7BT7Nknu_5alloc6string6StringE18get_or_insert_withNCNCNvMs5_BS_NtBS_12UnityCatalog14get_credential00INtNtB4_3pin3PinINtNtB24_5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultINtBO_14TemporaryTokenB20_ENtBS_17UnityCatalogErrorENtNtB4_6marker4SendEL_EEB5K_E0EBS_(ptr noundef nonnull align 8 %i.j)
-          to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCNvMs5_CsgO8S5jLFugx_23deltalake_catalog_unityNtBO_12UnityCatalog14get_credential0EBO_.exit.i unwind label %bb.k
+          to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCINvMs5_CsgO8S5jLFugx_23deltalake_catalog_unityNtBP_12UnityCatalog9get_tableReB1V_B1V_E0EBP_.exit.sink.split unwind label %bb.k
 
 bb.g:                                             ; preds = %bb.d
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 512
@@ -234,17 +234,6 @@ bb.j:                                             ; preds = %bb.h
 bb.k:                                             ; preds = %bb.f
   %i.p = landingpad { ptr, i32 }
           cleanup
-  br label %2
-
-_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCNvMs5_CsgO8S5jLFugx_23deltalake_catalog_unityNtBO_12UnityCatalog14get_credential0EBO_.exit.i: ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCINvMNtNtCsgO6CtM78C4N_7reqwest10async_impl8responseNtBM_8Response4jsonNtNtCsgO8S5jLFugx_23deltalake_catalog_unity6models16GetTableResponseE0EB1U_.exit.i, %bb.f, %bb.e
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 505
-  store i8 0, ptr %1, align 1
-  br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCINvMs5_CsgO8S5jLFugx_23deltalake_catalog_unityNtBP_12UnityCatalog9get_tableReB1V_B1V_E0EBP_.exit
-
-2:                                                ; preds = %bb.m, %bb.k
-  %.pn.pn.i = phi { ptr, i32 } [ %.pn.i, %bb.m ], [ %i.p, %bb.k ]
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 505
-  store i8 0, ptr %3, align 1
   br label %.body
 
 bb.l:                                             ; preds = %bb.g
@@ -255,13 +244,13 @@ bb.l:                                             ; preds = %bb.g
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCINvMNtNtCsgO6CtM78C4N_7reqwest10async_impl8responseNtBM_8Response4jsonNtNtCsgO8S5jLFugx_23deltalake_catalog_unity6models16GetTableResponseE0EB1U_.exit.i: ; preds = %bb.j, %bb.i, %bb.h, %bb.g
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 504
   store i8 0, ptr %i.r, align 8
-  br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCNvMs5_CsgO8S5jLFugx_23deltalake_catalog_unityNtBO_12UnityCatalog14get_credential0EBO_.exit.i
+  br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCINvMs5_CsgO8S5jLFugx_23deltalake_catalog_unityNtBP_12UnityCatalog9get_tableReB1V_B1V_E0EBP_.exit.sink.split
 
 bb.m:                                             ; preds = %bb.n, %bb.l
   %.pn.i = phi { ptr, i32 } [ %i.t, %bb.n ], [ %i.q, %bb.l ]
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 504
   store i8 0, ptr %i.s, align 8
-  br label %2
+  br label %.body
 
 bb.n:                                             ; preds = %bb.j, %bb.i
   %i.t = landingpad { ptr, i32 }
@@ -276,7 +265,7 @@ bb.o:                                             ; preds = %bb.a
 bb.p:                                             ; preds = %bb.a
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 952
   %i.w = load i8, ptr %i.v, align 8, !range !382, !noundef !3
-  switch i8 %i.w, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCINvMNtNtCsgO6CtM78C4N_7reqwest10async_impl8responseNtBM_8Response4jsonNtNtCsgO8S5jLFugx_23deltalake_catalog_unity6models28TableTempCredentialsResponseE0EB1U_.exit [
+  switch i8 %i.w, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCINvMs5_CsgO8S5jLFugx_23deltalake_catalog_unityNtBP_12UnityCatalog9get_tableReB1V_B1V_E0EBP_.exit.sink.split [
     i8 0, label %bb.q
     i8 3, label %bb.r
   ]
@@ -284,12 +273,12 @@ bb.p:                                             ; preds = %bb.a
 bb.q:                                             ; preds = %bb.p
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 392
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCsgO6CtM78C4N_7reqwest10async_impl8response8ResponseECsgO8S5jLFugx_23deltalake_catalog_unity(ptr noalias noundef nonnull align 8 dereferenceable(136) %i.x)
-          to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCINvMNtNtCsgO6CtM78C4N_7reqwest10async_impl8responseNtBM_8Response4jsonNtNtCsgO8S5jLFugx_23deltalake_catalog_unity6models28TableTempCredentialsResponseE0EB1U_.exit unwind label %bb.aa
+          to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCINvMs5_CsgO8S5jLFugx_23deltalake_catalog_unityNtBP_12UnityCatalog9get_tableReB1V_B1V_E0EBP_.exit.sink.split unwind label %bb.aa
 
 bb.r:                                             ; preds = %bb.p
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 528
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCNvMNtNtCsgO6CtM78C4N_7reqwest10async_impl8responseNtBL_8Response5bytes0ECsgO8S5jLFugx_23deltalake_catalog_unity(ptr noundef nonnull align 8 %i.y)
-          to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCINvMNtNtCsgO6CtM78C4N_7reqwest10async_impl8responseNtBM_8Response4jsonNtNtCsgO8S5jLFugx_23deltalake_catalog_unity6models28TableTempCredentialsResponseE0EB1U_.exit unwind label %bb.aa
+          to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCINvMs5_CsgO8S5jLFugx_23deltalake_catalog_unityNtBP_12UnityCatalog9get_tableReB1V_B1V_E0EBP_.exit.sink.split unwind label %bb.aa
 
 bb.s:                                             ; preds = %bb.c
   %i.z = landingpad { ptr, i32 }
@@ -307,7 +296,13 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs4j34XAPZOn0_4http6header5va
   store i32 0, ptr %i.ab, align 8
   resume { ptr, i32 } %.pn7
 
-_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCINvMs5_CsgO8S5jLFugx_23deltalake_catalog_unityNtBP_12UnityCatalog9get_tableReB1V_B1V_E0EBP_.exit: ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCNvMs5_CsgO8S5jLFugx_23deltalake_catalog_unityNtBO_12UnityCatalog14get_credential0EBO_.exit.i, %bb.d, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCINvMNtNtCsgO6CtM78C4N_7reqwest10async_impl8responseNtBM_8Response4jsonNtNtCsgO8S5jLFugx_23deltalake_catalog_unity6models28TableTempCredentialsResponseE0EB1U_.exit
+_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCINvMs5_CsgO8S5jLFugx_23deltalake_catalog_unityNtBP_12UnityCatalog9get_tableReB1V_B1V_E0EBP_.exit.sink.split: ; preds = %bb.e, %bb.f, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCINvMNtNtCsgO6CtM78C4N_7reqwest10async_impl8responseNtBM_8Response4jsonNtNtCsgO8S5jLFugx_23deltalake_catalog_unity6models16GetTableResponseE0EB1U_.exit.i, %bb.x, %bb.r, %bb.q, %bb.p
+  %.sink14 = phi i64 [ 388, %bb.x ], [ 388, %bb.p ], [ 388, %bb.q ], [ 388, %bb.r ], [ 505, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCINvMNtNtCsgO6CtM78C4N_7reqwest10async_impl8responseNtBM_8Response4jsonNtNtCsgO8S5jLFugx_23deltalake_catalog_unity6models16GetTableResponseE0EB1U_.exit.i ], [ 505, %bb.f ], [ 505, %bb.e ]
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 %.sink14
+  store i8 0, ptr %1, align 1
+  br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCINvMs5_CsgO8S5jLFugx_23deltalake_catalog_unityNtBP_12UnityCatalog9get_tableReB1V_B1V_E0EBP_.exit
+
+_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCINvMs5_CsgO8S5jLFugx_23deltalake_catalog_unityNtBP_12UnityCatalog9get_tableReB1V_B1V_E0EBP_.exit: ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCINvMs5_CsgO8S5jLFugx_23deltalake_catalog_unityNtBP_12UnityCatalog9get_tableReB1V_B1V_E0EBP_.exit.sink.split, %bb.d
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 389
   store i8 0, ptr %i.ac, align 1
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 390
@@ -317,8 +312,11 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCINvMs5_CsgO8S5jLFugx_23deltalake_
   %i.ag = trunc nuw i8 %i.af to i1
   br i1 %i.ag, label %bb.ab, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCNvMs5_CsgO8S5jLFugx_23deltalake_catalog_unityNtBO_12UnityCatalog14get_credential0EBO_.exit
 
-.body:                                            ; preds = %2, %5
-  %.pn4.pn = phi { ptr, i32 } [ %.pn4, %5 ], [ %.pn.pn.i, %2 ] ; 2 uses
+.body:                                            ; preds = %bb.k, %bb.m, %bb.aa, %bb.y, %bb.v
+  %.sink15 = phi i64 [ 388, %bb.aa ], [ 388, %bb.v ], [ 388, %bb.y ], [ 505, %bb.m ], [ 505, %bb.k ]
+  %.pn4.pn = phi { ptr, i32 } [ %i.au, %bb.aa ], [ %.pn, %bb.v ], [ %i.as, %bb.y ], [ %.pn.i, %bb.m ], [ %i.p, %bb.k ] ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 %.sink15
+  store i8 0, ptr %2, align 1
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 389
   store i8 0, ptr %i.ah, align 1
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 390
@@ -344,7 +342,7 @@ bb.v:                                             ; preds = %bb.w, %bb.t
   %.pn = phi { ptr, i32 } [ %i.aq, %bb.w ], [ %i.am, %bb.t ]
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 392
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsgO8S5jLFugx_23deltalake_catalog_unity6models5TableEBK_(ptr noalias noundef align 8 dereferenceable(248) %i.ap) #20
-          to label %5 unwind label %bb.z
+          to label %.body unwind label %bb.z
 
 bb.w:                                             ; preds = %bb.u
   %i.aq = landingpad { ptr, i32 }
@@ -354,17 +352,12 @@ bb.w:                                             ; preds = %bb.u
 bb.x:                                             ; preds = %bb.u
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 392
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsgO8S5jLFugx_23deltalake_catalog_unity6models5TableEBK_(ptr noalias noundef align 8 dereferenceable(248) %i.ar)
-          to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCINvMNtNtCsgO6CtM78C4N_7reqwest10async_impl8responseNtBM_8Response4jsonNtNtCsgO8S5jLFugx_23deltalake_catalog_unity6models28TableTempCredentialsResponseE0EB1U_.exit unwind label %bb.y
+          to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCINvMs5_CsgO8S5jLFugx_23deltalake_catalog_unityNtBP_12UnityCatalog9get_tableReB1V_B1V_E0EBP_.exit.sink.split unwind label %bb.y
 
 bb.y:                                             ; preds = %bb.x
   %i.as = landingpad { ptr, i32 }
           cleanup
-  br label %5
-
-_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCINvMNtNtCsgO6CtM78C4N_7reqwest10async_impl8responseNtBM_8Response4jsonNtNtCsgO8S5jLFugx_23deltalake_catalog_unity6models28TableTempCredentialsResponseE0EB1U_.exit: ; preds = %bb.p, %bb.q, %bb.r, %bb.x
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 388
-  store i8 0, ptr %4, align 4
-  br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCINvMs5_CsgO8S5jLFugx_23deltalake_catalog_unityNtBP_12UnityCatalog9get_tableReB1V_B1V_E0EBP_.exit
+  br label %.body
 
 bb.z:                                             ; preds = %bb.ad, %bb.v, %bb.t
   %i.at = landingpad { ptr, i32 }
@@ -372,16 +365,10 @@ bb.z:                                             ; preds = %bb.ad, %bb.v, %bb.t
   tail call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #22
   unreachable
 
-5:                                                ; preds = %bb.v, %bb.y, %bb.aa
-  %.pn4 = phi { ptr, i32 } [ %i.au, %bb.aa ], [ %i.as, %bb.y ], [ %.pn, %bb.v ]
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 388
-  store i8 0, ptr %6, align 4
-  br label %.body
-
 bb.aa:                                            ; preds = %bb.r, %bb.q
   %i.au = landingpad { ptr, i32 }
           cleanup
-  br label %5
+  br label %.body
 
 bb.ab:                                            ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCINvMs5_CsgO8S5jLFugx_23deltalake_catalog_unityNtBP_12UnityCatalog9get_tableReB1V_B1V_E0EBP_.exit
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 88

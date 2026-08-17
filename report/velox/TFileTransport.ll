@@ -201,11 +201,7 @@ bb.ap:                                            ; preds = %.thread128.thread
 
 bb.aq:                                            ; preds = %bb.z
   %.not.i102 = icmp eq i32 %i.cp, 0
-  br i1 %.not.i102, label %_ZN6apache6thrift9transport20TFileTransportBuffer5resetEv.exit.thread, label %.lr.ph.i
-
-_ZN6apache6thrift9transport20TFileTransportBuffer5resetEv.exit.thread: ; preds = %bb.aq
-  store i32 0, ptr %i.cj, align 8, !tbaa !161
-  br label %.sink.split
+  br i1 %.not.i102, label %.sink.split, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %_ZN6apache6thrift9transport20TFileTransportBuffer7getNextEv.exit, %bb.aq
   %i.gm = getelementptr inbounds nuw i8, ptr %i.cj, i64 4 ; 2 uses
@@ -244,10 +240,11 @@ bb.au:                                            ; preds = %_ZN6apache6thrift9t
 
 _ZN6apache6thrift9transport20TFileTransportBuffer5resetEv.exit: ; preds = %bb.au
   store i32 0, ptr %i.cj, align 8, !tbaa !161
-  store i32 0, ptr %i.gm, align 4, !tbaa !153
   br label %.sink.split
 
-.sink.split:                                      ; preds = %_ZN6apache6thrift9transport20TFileTransportBuffer5resetEv.exit.thread, %_ZN6apache6thrift9transport20TFileTransportBuffer5resetEv.exit
+.sink.split:                                      ; preds = %bb.aq, %_ZN6apache6thrift9transport20TFileTransportBuffer5resetEv.exit
+  %.sink272 = phi ptr [ %i.gm, %_ZN6apache6thrift9transport20TFileTransportBuffer5resetEv.exit ], [ %i.cj, %bb.aq ]
+  store i32 0, ptr %.sink272, align 4, !tbaa !52
   store i32 0, ptr %i.cm, align 8, !tbaa !168
   br label %bb.av
 

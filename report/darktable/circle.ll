@@ -204,26 +204,16 @@ bb.al:                                            ; preds = %bb.ak
 
 ._crit_edge:                                      ; preds = %bb.ak
   %i.er = getelementptr inbounds nuw i8, ptr %i.eg, i64 2168
-  %i.es = load ptr, ptr %i.er, align 8, !tbaa !224 ; 11 uses
+  %i.es = load ptr, ptr %i.er, align 8, !tbaa !224 ; 10 uses
   %.not174.not = icmp eq ptr %i.es, null
-  br i1 %.not174.not, label %.critedge, label %11
+  br i1 %.not174.not, label %.critedge, label %bb.am
 
-11:                                               ; preds = %._crit_edge
-  %12 = and i32 %i.ee, 8
-  %.not175 = icmp eq i32 %12, 0
-  br i1 %.not175, label %15, label %13
-
-13:                                               ; preds = %11
-  %14 = getelementptr inbounds nuw i8, ptr %i.es, i64 116
-  store i32 1, ptr %14, align 4, !tbaa !186
-  br label %bb.am
-
-15:                                               ; preds = %11
-  %16 = getelementptr inbounds nuw i8, ptr %i.es, i64 112
-  store i32 1, ptr %16, align 8, !tbaa !185
-  br label %bb.am
-
-bb.am:                                            ; preds = %15, %13
+bb.am:                                            ; preds = %._crit_edge
+  %11 = and i32 %i.ee, 8
+  %.not175 = icmp eq i32 %11, 0
+  %. = select i1 %.not175, i64 112, i64 116
+  %12 = getelementptr inbounds nuw i8, ptr %i.es, i64 %.
+  store i32 1, ptr %12, align 4, !tbaa !24
   %i.et = getelementptr inbounds nuw i8, ptr %i.es, i64 164
   store i32 %.0141205, ptr %i.et, align 4, !tbaa !225
   %i.eu = getelementptr inbounds nuw i8, ptr %i.es, i64 160

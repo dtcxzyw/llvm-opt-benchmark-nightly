@@ -205,9 +205,7 @@ bb.eq:                                            ; preds = %bb.ep
   store i64 %i.vb, ptr %i.vc, align 8, !tbaa !512
   %i.vd = getelementptr inbounds nuw i8, ptr %0, i64 176
   store i32 0, ptr %i.vd, align 8, !tbaa !506
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 180
-  store i32 1, ptr %1, align 4, !tbaa !507
-  br label %bb.ex
+  br label %bb.ew
 
 bb.er:                                            ; preds = %bb.ep
   %i.ve = getelementptr inbounds nuw i8, ptr %i.pl, i64 16
@@ -229,20 +227,20 @@ bb.et:                                            ; preds = %bb.es
 
 bb.eu:                                            ; preds = %bb.et, %bb.es
   %i.vm = add nuw nsw i32 %i.po, 1
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 176
-  store i32 %i.vm, ptr %2, align 8, !tbaa !506
-  br label %bb.ex
+  br label %bb.ew
 
 bb.ev:                                            ; preds = %bb.er
   %i.vn = icmp eq i32 %i.vf, 0
   br i1 %i.vn, label %bb.ew, label %bb.ex
 
-bb.ew:                                            ; preds = %bb.ev
-  %i.vo = getelementptr inbounds nuw i8, ptr %0, i64 176
-  store i32 0, ptr %i.vo, align 8, !tbaa !506
+bb.ew:                                            ; preds = %bb.ev, %bb.eu, %bb.eq
+  %.sink184.i = phi i64 [ 176, %bb.eu ], [ 180, %bb.eq ], [ 176, %bb.ev ]
+  %.sink.i = phi i32 [ %i.vm, %bb.eu ], [ 1, %bb.eq ], [ 0, %bb.ev ]
+  %i.vo = getelementptr inbounds nuw i8, ptr %0, i64 %.sink184.i
+  store i32 %.sink.i, ptr %i.vo, align 4, !tbaa !17
   br label %bb.ex
 
-bb.ex:                                            ; preds = %bb.ew, %bb.ev, %bb.eu, %bb.eq
+bb.ex:                                            ; preds = %bb.ew, %bb.ev
   %i.vp = getelementptr inbounds nuw i8, ptr %0, i64 200
   store i32 %i.pn, ptr %i.vp, align 8, !tbaa !509
   store i64 %i.pm, ptr %i.pq, align 8, !tbaa !508

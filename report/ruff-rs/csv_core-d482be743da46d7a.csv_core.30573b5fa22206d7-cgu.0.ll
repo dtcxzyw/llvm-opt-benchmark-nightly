@@ -101,8 +101,6 @@ default.unreachable1:                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.e, %bb.e, %bb.b
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 13
   store i8 1, ptr %i.x, align 1
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 10
-  store i8 1, ptr %2, align 2
   br label %bb.g
 
 bb.e:                                             ; preds = %bb.b
@@ -117,13 +115,14 @@ bb.f:                                             ; preds = %bb.b
   unreachable
 
 bb.g:                                             ; preds = %bb.h, %bb.d
+  %.sink2 = phi i64 [ %i.aa, %bb.h ], [ 10, %bb.d ]
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 %.sink2
+  store i8 1, ptr %2, align 1
   %i.z = trunc nuw i8 %i.m to i1
   br i1 %i.z, label %bb.j, label %bb.i
 
 bb.h:                                             ; preds = %bb.e
   %i.aa = zext i8 %i.y to i64
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 %i.aa
-  store i8 1, ptr %3, align 1
   br label %bb.g
 
 bb.i:                                             ; preds = %bb.j, %bb.g

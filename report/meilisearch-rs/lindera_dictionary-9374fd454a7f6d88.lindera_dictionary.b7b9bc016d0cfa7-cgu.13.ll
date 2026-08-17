@@ -201,13 +201,13 @@ bb.a:
   br i1 %i.b, label %bb.b, label %_ZN18lindera_dictionary4mode7Penalty7penalty17hbf635fc347a91bf9E.exit
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.e = load i32, ptr %i.d, align 4
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 28
   %i.g = load i32, ptr %i.f, align 4
   %i.h = sub i32 %i.e, %i.g
-  %i.i = udiv i32 %i.h, 3                         ; 3 uses
+  %i.i = udiv i32 %i.h, 3                         ; 2 uses
   %i.j = zext nneg i32 %i.i to i64                ; 2 uses
   %i.k = load i64, ptr %i.c, align 8              ; 2 uses
   %.not.i = icmp ult i64 %i.k, %i.j
@@ -217,7 +217,7 @@ bb.c:                                             ; preds = %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 36
   %i.m = load i8, ptr %i.l, align 4
   %i.n = trunc nuw i8 %i.m to i1
-  br i1 %i.n, label %2, label %bb.d
+  br i1 %i.n, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -225,24 +225,18 @@ bb.d:                                             ; preds = %bb.c
   %i.q = icmp ult i64 %i.p, %i.j
   br i1 %i.q, label %bb.e, label %_ZN18lindera_dictionary4mode7Penalty7penalty17hbf635fc347a91bf9E.exit
 
-2:                                                ; preds = %bb.c
-  %3 = trunc nuw nsw i64 %i.k to i32
-  %4 = sub nsw i32 %i.i, %3
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %6 = load i32, ptr %5, align 8
-  %7 = mul i32 %6, %4
-  br label %_ZN18lindera_dictionary4mode7Penalty7penalty17hbf635fc347a91bf9E.exit
-
-bb.e:                                             ; preds = %bb.d
-  %i.r = trunc nuw nsw i64 %i.p to i32
+bb.e:                                             ; preds = %bb.d, %bb.c
+  %.sink8.i = phi i64 [ %i.k, %bb.c ], [ %i.p, %bb.d ]
+  %.sink.i = phi i64 [ 16, %bb.c ], [ 20, %bb.d ]
+  %i.r = trunc nuw nsw i64 %.sink8.i to i32
   %i.s = sub nsw i32 %i.i, %i.r
-  %i.t = getelementptr inbounds nuw i8, ptr %0, i64 28
+  %i.t = getelementptr inbounds nuw i8, ptr %i.c, i64 %.sink.i
   %i.u = load i32, ptr %i.t, align 4
   %i.v = mul i32 %i.u, %i.s
   br label %_ZN18lindera_dictionary4mode7Penalty7penalty17hbf635fc347a91bf9E.exit
 
-_ZN18lindera_dictionary4mode7Penalty7penalty17hbf635fc347a91bf9E.exit: ; preds = %bb.e, %2, %bb.d, %bb.b, %bb.a
-  %.sroa.0.0 = phi i32 [ 0, %bb.a ], [ 0, %bb.b ], [ %7, %2 ], [ %i.v, %bb.e ], [ 0, %bb.d ]
+_ZN18lindera_dictionary4mode7Penalty7penalty17hbf635fc347a91bf9E.exit: ; preds = %bb.e, %bb.d, %bb.b, %bb.a
+  %.sroa.0.0 = phi i32 [ 0, %bb.a ], [ 0, %bb.b ], [ 0, %bb.d ], [ %i.v, %bb.e ]
   ret i32 %.sroa.0.0
 }
 
@@ -274,7 +268,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 28
   %i.d = load i32, ptr %i.c, align 4
   %i.e = sub i32 %i.b, %i.d
-  %i.f = udiv i32 %i.e, 3                         ; 3 uses
+  %i.f = udiv i32 %i.e, 3                         ; 2 uses
   %i.g = zext nneg i32 %i.f to i64                ; 2 uses
   %i.h = load i64, ptr %0, align 8                ; 2 uses
   %.not = icmp ult i64 %i.h, %i.g
@@ -284,7 +278,7 @@ bb.b:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 36
   %i.j = load i8, ptr %i.i, align 4
   %i.k = trunc nuw i8 %i.j to i1
-  br i1 %i.k, label %2, label %bb.c
+  br i1 %i.k, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -292,24 +286,18 @@ bb.c:                                             ; preds = %bb.b
   %i.n = icmp ult i64 %i.m, %i.g
   br i1 %i.n, label %bb.d, label %bb.e
 
-2:                                                ; preds = %bb.b
-  %3 = trunc nuw nsw i64 %i.h to i32
-  %4 = sub nsw i32 %i.f, %3
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %6 = load i32, ptr %5, align 8
-  %7 = mul i32 %6, %4
-  br label %bb.e
-
-bb.d:                                             ; preds = %bb.c
-  %i.o = trunc nuw nsw i64 %i.m to i32
+bb.d:                                             ; preds = %bb.c, %bb.b
+  %.sink8 = phi i64 [ %i.h, %bb.b ], [ %i.m, %bb.c ]
+  %.sink = phi i64 [ 16, %bb.b ], [ 20, %bb.c ]
+  %i.o = trunc nuw nsw i64 %.sink8 to i32
   %i.p = sub nsw i32 %i.f, %i.o
-  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 20
+  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 %.sink
   %i.r = load i32, ptr %i.q, align 4
   %i.s = mul i32 %i.r, %i.p
   br label %bb.e
 
-bb.e:                                             ; preds = %bb.c, %bb.a, %bb.d, %2
-  %.sroa.0.0 = phi i32 [ 0, %bb.a ], [ %7, %2 ], [ %i.s, %bb.d ], [ 0, %bb.c ]
+bb.e:                                             ; preds = %bb.d, %bb.c, %bb.a
+  %.sroa.0.0 = phi i32 [ 0, %bb.a ], [ 0, %bb.c ], [ %i.s, %bb.d ]
   ret i32 %.sroa.0.0
 }
 
@@ -712,19 +700,19 @@ bb.a:
   %i.o = zext i16 %i.n to i32
   %i.p = tail call i32 @_ZN18lindera_dictionary10dictionary22connection_cost_matrix20ConnectionCostMatrix4cost17h5be7a7f72087495aE(ptr align 8 %i.g, i32 %i.j, i32 %i.o)
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.r = load ptr, ptr %i.q, align 8              ; 5 uses
+  %i.r = load ptr, ptr %i.q, align 8              ; 3 uses
   %i.s = load i64, ptr %i.r, align 8
   %i.t = trunc nuw i64 %i.s to i1
   br i1 %i.t, label %bb.b, label %_ZN18lindera_dictionary4mode4Mode12penalty_cost17h32867eea720d1fc0E.exit
 
 bb.b:                                             ; preds = %bb.a
-  %i.u = getelementptr inbounds nuw i8, ptr %i.r, i64 8
+  %i.u = getelementptr inbounds nuw i8, ptr %i.r, i64 8 ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   %i.w = load i32, ptr %i.v, align 4
   %i.x = getelementptr inbounds nuw i8, ptr %i.c, i64 28
   %i.y = load i32, ptr %i.x, align 4
   %i.z = sub i32 %i.w, %i.y
-  %i.aa = udiv i32 %i.z, 3                        ; 3 uses
+  %i.aa = udiv i32 %i.z, 3                        ; 2 uses
   %i.ab = zext nneg i32 %i.aa to i64              ; 2 uses
   %i.ac = load i64, ptr %i.u, align 8             ; 2 uses
   %.not.i.i = icmp ult i64 %i.ac, %i.ab
@@ -734,7 +722,7 @@ bb.c:                                             ; preds = %bb.b
   %i.ad = getelementptr inbounds nuw i8, ptr %i.c, i64 36
   %i.ae = load i8, ptr %i.ad, align 4
   %i.af = trunc nuw i8 %i.ae to i1
-  br i1 %i.af, label %2, label %bb.d
+  br i1 %i.af, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.ag = getelementptr inbounds nuw i8, ptr %i.r, i64 16
@@ -742,24 +730,18 @@ bb.d:                                             ; preds = %bb.c
   %i.ai = icmp ult i64 %i.ah, %i.ab
   br i1 %i.ai, label %bb.e, label %_ZN18lindera_dictionary4mode4Mode12penalty_cost17h32867eea720d1fc0E.exit
 
-2:                                                ; preds = %bb.c
-  %3 = trunc nuw nsw i64 %i.ac to i32
-  %4 = sub nsw i32 %i.aa, %3
-  %5 = getelementptr inbounds nuw i8, ptr %i.r, i64 24
-  %6 = load i32, ptr %5, align 8
-  %7 = mul i32 %6, %4
-  br label %_ZN18lindera_dictionary4mode4Mode12penalty_cost17h32867eea720d1fc0E.exit
-
-bb.e:                                             ; preds = %bb.d
-  %i.aj = trunc nuw nsw i64 %i.ah to i32
+bb.e:                                             ; preds = %bb.d, %bb.c
+  %.sink8.i.i = phi i64 [ %i.ac, %bb.c ], [ %i.ah, %bb.d ]
+  %.sink.i.i = phi i64 [ 16, %bb.c ], [ 20, %bb.d ]
+  %i.aj = trunc nuw nsw i64 %.sink8.i.i to i32
   %i.ak = sub nsw i32 %i.aa, %i.aj
-  %i.al = getelementptr inbounds nuw i8, ptr %i.r, i64 28
+  %i.al = getelementptr inbounds nuw i8, ptr %i.u, i64 %.sink.i.i
   %i.am = load i32, ptr %i.al, align 4
   %i.an = mul i32 %i.am, %i.ak
   br label %_ZN18lindera_dictionary4mode4Mode12penalty_cost17h32867eea720d1fc0E.exit
 
-_ZN18lindera_dictionary4mode4Mode12penalty_cost17h32867eea720d1fc0E.exit: ; preds = %bb.a, %bb.b, %bb.d, %2, %bb.e
-  %.sroa.0.0.i = phi i32 [ 0, %bb.a ], [ 0, %bb.b ], [ %7, %2 ], [ %i.an, %bb.e ], [ 0, %bb.d ]
+_ZN18lindera_dictionary4mode4Mode12penalty_cost17h32867eea720d1fc0E.exit: ; preds = %bb.a, %bb.b, %bb.d, %bb.e
+  %.sroa.0.0.i = phi i32 [ 0, %bb.a ], [ 0, %bb.b ], [ 0, %bb.d ], [ %i.an, %bb.e ]
   %i.ao = add i32 %i.p, %i.e
   %i.ap = add i32 %i.ao, %.sroa.0.0.i
   %i.aq = insertvalue { i32, i32 } poison, i32 %i.ap, 0

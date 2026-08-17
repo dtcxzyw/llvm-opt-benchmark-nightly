@@ -201,8 +201,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   switch i32 %1, label %bb.p [
-    i32 2, label %4
-    i32 3, label %4
+    i32 2, label %.sink.split
+    i32 3, label %.sink.split
     i32 4, label %bb.c
     i32 5, label %bb.d
     i32 6, label %bb.d
@@ -221,63 +221,28 @@ bb.b:                                             ; preds = %bb.a
     i32 0, label %bb.r
   ]
 
-4:                                                ; preds = %bb.b, %bb.b
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 100 ; 2 uses
-  %6 = load i32, ptr %5, align 4, !tbaa !47
-  %7 = add nsw i32 %6, %3
-  store i32 %7, ptr %5, align 4, !tbaa !47
-  br label %bb.p
-
 bb.c:                                             ; preds = %bb.b
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 2 uses
-  %9 = load i32, ptr %8, align 8, !tbaa !48
-  %10 = add nsw i32 %9, %3
-  store i32 %10, ptr %8, align 8, !tbaa !48
-  br label %bb.p
+  br label %.sink.split
 
 bb.d:                                             ; preds = %bb.b, %bb.b, %bb.b, %bb.b
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 92 ; 2 uses
-  %12 = load i32, ptr %11, align 4, !tbaa !49
-  %13 = add nsw i32 %12, %3
-  store i32 %13, ptr %11, align 4, !tbaa !49
-  br label %bb.p
+  br label %.sink.split
 
 bb.e:                                             ; preds = %bb.b, %bb.b
-  %14 = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
-  %15 = load i32, ptr %14, align 8, !tbaa !50
-  %16 = add nsw i32 %15, %3
-  store i32 %16, ptr %14, align 8, !tbaa !50
-  br label %bb.p
+  br label %.sink.split
 
 bb.f:                                             ; preds = %bb.b
   %i.b = mul nsw i32 %3, 12
-  %17 = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
-  %18 = load i32, ptr %17, align 8, !tbaa !50
-  %19 = add nsw i32 %18, %i.b
-  store i32 %19, ptr %17, align 8, !tbaa !50
-  br label %bb.p
+  br label %.sink.split
 
 bb.g:                                             ; preds = %bb.b
-  %20 = getelementptr inbounds nuw i8, ptr %0, i64 84 ; 2 uses
-  %21 = load i32, ptr %20, align 4, !tbaa !51
-  %22 = add nsw i32 %21, %3
-  store i32 %22, ptr %20, align 4, !tbaa !51
-  br label %bb.p
+  br label %.sink.split
 
 bb.h:                                             ; preds = %bb.b
-  %23 = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
-  %24 = load i32, ptr %23, align 8, !tbaa !52
-  %25 = add nsw i32 %24, %3
-  store i32 %25, ptr %23, align 8, !tbaa !52
-  br label %bb.p
+  br label %.sink.split
 
 bb.i:                                             ; preds = %bb.b, %bb.b, %bb.b
   %i.c = mul nsw i32 %3, 7
-  %26 = getelementptr inbounds nuw i8, ptr %0, i64 92 ; 2 uses
-  %27 = load i32, ptr %26, align 4, !tbaa !49
-  %28 = add nsw i32 %27, %i.c
-  store i32 %28, ptr %26, align 4, !tbaa !49
-  br label %bb.p
+  br label %.sink.split
 
 bb.j:                                             ; preds = %bb.b
   %i.d = tail call ptr @__cxa_allocate_exception(i64 16) #21 ; 3 uses
@@ -307,7 +272,16 @@ bb.o:                                             ; preds = %bb.m
           cleanup
   br label %bb.s
 
-bb.p:                                             ; preds = %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %4, %bb.b
+.sink.split:                                      ; preds = %bb.b, %bb.b, %bb.c, %bb.d, %bb.e, %bb.f, %bb.g, %bb.h, %bb.i
+  %.sink34 = phi i64 [ 92, %bb.i ], [ 80, %bb.h ], [ 84, %bb.g ], [ 88, %bb.f ], [ 88, %bb.e ], [ 92, %bb.d ], [ 96, %bb.c ], [ 100, %bb.b ], [ 100, %bb.b ]
+  %.sink33 = phi i32 [ %i.c, %bb.i ], [ %3, %bb.h ], [ %3, %bb.g ], [ %i.b, %bb.f ], [ %3, %bb.e ], [ %3, %bb.d ], [ %3, %bb.c ], [ %3, %bb.b ], [ %3, %bb.b ]
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 %.sink34 ; 2 uses
+  %5 = load i32, ptr %4, align 4, !tbaa !44
+  %6 = add nsw i32 %5, %.sink33
+  store i32 %6, ptr %4, align 4, !tbaa !44
+  br label %bb.p
+
+bb.p:                                             ; preds = %.sink.split, %bb.b
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 136
   store i8 0, ptr %i.h, align 8, !tbaa !45
   br label %.sink.split.a

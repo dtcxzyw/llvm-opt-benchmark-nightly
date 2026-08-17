@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.c
   br i1 %i.p, label %bb.f, label %set_file_encoding.exit
 
 bb.f:                                             ; preds = %bb.e
-  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 5 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 3 uses
   %i.r = load i32, ptr %i.q, align 8, !tbaa !189  ; 2 uses
   %i.s = icmp eq i32 %i.r, 0
   br i1 %i.s, label %bb.g, label %set_file_encoding.exit
@@ -223,12 +223,12 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.g
   %i.x = tail call i32 @png_gamma_significant(i32 noundef %i.v) #13
   %.not.i = icmp eq i32 %i.x, 0
-  br i1 %.not.i, label %set_file_encoding.exit.thread, label %bb.j
+  br i1 %.not.i, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   %i.y = add i32 %i.v, -10000001
   %or.cond.i.i = icmp ult i32 %i.y, -9999001
-  br i1 %or.cond.i.i, label %set_file_encoding.exit.thread189, label %png_gamma_not_sRGB.exit.i
+  br i1 %or.cond.i.i, label %bb.k, label %png_gamma_not_sRGB.exit.i
 
 png_gamma_not_sRGB.exit.i:                        ; preds = %bb.j
   %i.z = mul nuw nsw i32 %i.v, 11
@@ -236,26 +236,23 @@ png_gamma_not_sRGB.exit.i:                        ; preds = %bb.j
   %i.ab = udiv i32 %i.aa, 5
   %i.ac = tail call i32 @png_gamma_significant(i32 noundef %i.ab) #13
   %.not10.i = icmp eq i32 %i.ac, 0
-  br i1 %.not10.i, label %set_file_encoding.exit.thread189, label %bb.k
+  br i1 %.not10.i, label %bb.k, label %7
 
-bb.k:                                             ; preds = %png_gamma_not_sRGB.exit.i
+7:                                                ; preds = %png_gamma_not_sRGB.exit.i
   store i32 3, ptr %i.q, align 8, !tbaa !189
-  %7 = tail call i32 @png_reciprocal(i32 noundef %i.v) #13
-  %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 68
-  store i32 %7, ptr %i.ad, align 4, !tbaa !190
+  %8 = tail call i32 @png_reciprocal(i32 noundef %i.v) #13
+  br label %bb.k
+
+bb.k:                                             ; preds = %bb.i, %bb.j, %png_gamma_not_sRGB.exit.i, %7
+  %.sink14.i = phi i64 [ 68, %7 ], [ 64, %png_gamma_not_sRGB.exit.i ], [ 64, %bb.j ], [ 64, %bb.i ]
+  %.sink.i = phi i32 [ %8, %7 ], [ 1, %png_gamma_not_sRGB.exit.i ], [ 1, %bb.j ], [ 4, %bb.i ]
+  %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 %.sink14.i
+  store i32 %.sink.i, ptr %i.ad, align 4, !tbaa !3
   %.pre = load i32, ptr %i.q, align 8, !tbaa !189
   br label %set_file_encoding.exit
 
-set_file_encoding.exit.thread189:                 ; preds = %bb.j, %png_gamma_not_sRGB.exit.i
-  store i32 1, ptr %i.q, align 8, !tbaa !189
-  br label %bb.p
-
-set_file_encoding.exit.thread:                    ; preds = %bb.i
-  store i32 4, ptr %i.q, align 8, !tbaa !189
-  br label %bb.o
-
 set_file_encoding.exit:                           ; preds = %bb.f, %bb.k, %bb.e
-  %.0154 = phi i32 [ %6, %bb.e ], [ %i.r, %bb.f ], [ %.pre, %bb.k ] ; 2 uses
+  %.0154 = phi i32 [ %6, %bb.e ], [ %.pre, %bb.k ], [ %i.r, %bb.f ] ; 2 uses
   switch i32 %.0154, label %.thread178 [
     i32 3, label %bb.l
     i32 4, label %bb.o
@@ -330,14 +327,14 @@ bb.n:                                             ; preds = %bb.l
   %i.ci = and i32 %i.ch, 255
   br label %.thread178
 
-bb.o:                                             ; preds = %set_file_encoding.exit.thread, %set_file_encoding.exit
+bb.o:                                             ; preds = %set_file_encoding.exit
   %i.cj = mul i32 %2, 257
   %i.ck = mul i32 %3, 257
   %i.cl = mul i32 %4, 257
   %i.cm = mul nuw nsw i32 %5, 257
   br label %.thread
 
-bb.p:                                             ; preds = %set_file_encoding.exit.thread189, %set_file_encoding.exit
+bb.p:                                             ; preds = %set_file_encoding.exit
   %or.cond3 = or i1 %i.e, %i.l
   br i1 %or.cond3, label %bb.q, label %.thread178
 
@@ -736,7 +733,7 @@ bb.a:
   br i1 %i.a, label %bb.b, label %.thread
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 5 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 3 uses
   %i.c = load i32, ptr %i.b, align 8, !tbaa !189  ; 2 uses
   %i.d = icmp eq i32 %i.c, 0
   br i1 %i.d, label %bb.c, label %.thread
@@ -756,12 +753,12 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c
   %i.j = tail call i32 @png_gamma_significant(i32 noundef %i.h) #13
   %.not.i = icmp eq i32 %i.j, 0
-  br i1 %.not.i, label %.thread.thread17, label %bb.f
+  br i1 %.not.i, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.k = add i32 %i.h, -10000001
   %or.cond.i.i = icmp ult i32 %i.k, -9999001
-  br i1 %or.cond.i.i, label %.thread.thread, label %png_gamma_not_sRGB.exit.i
+  br i1 %or.cond.i.i, label %bb.g, label %png_gamma_not_sRGB.exit.i
 
 png_gamma_not_sRGB.exit.i:                        ; preds = %bb.f
   %i.l = mul nuw nsw i32 %i.h, 11
@@ -769,26 +766,23 @@ png_gamma_not_sRGB.exit.i:                        ; preds = %bb.f
   %i.n = udiv i32 %i.m, 5
   %i.o = tail call i32 @png_gamma_significant(i32 noundef %i.n) #13
   %.not10.i = icmp eq i32 %i.o, 0
-  br i1 %.not10.i, label %.thread.thread, label %bb.g
+  br i1 %.not10.i, label %bb.g, label %3
 
-bb.g:                                             ; preds = %png_gamma_not_sRGB.exit.i
+3:                                                ; preds = %png_gamma_not_sRGB.exit.i
   store i32 3, ptr %i.b, align 8, !tbaa !189
-  %3 = tail call i32 @png_reciprocal(i32 noundef %i.h) #13
-  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 68
-  store i32 %3, ptr %i.p, align 4, !tbaa !190
+  %4 = tail call i32 @png_reciprocal(i32 noundef %i.h) #13
+  br label %bb.g
+
+bb.g:                                             ; preds = %bb.e, %bb.f, %png_gamma_not_sRGB.exit.i, %3
+  %.sink14.i = phi i64 [ 68, %3 ], [ 64, %png_gamma_not_sRGB.exit.i ], [ 64, %bb.f ], [ 64, %bb.e ]
+  %.sink.i = phi i32 [ %4, %3 ], [ 1, %png_gamma_not_sRGB.exit.i ], [ 1, %bb.f ], [ 4, %bb.e ]
+  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 %.sink14.i
+  store i32 %.sink.i, ptr %i.p, align 4, !tbaa !3
   %.pre = load i32, ptr %i.b, align 8, !tbaa !189
   br label %.thread
 
-.thread.thread:                                   ; preds = %bb.f, %png_gamma_not_sRGB.exit.i
-  store i32 1, ptr %i.b, align 8, !tbaa !189
-  br label %bb.i
-
-.thread.thread17:                                 ; preds = %bb.e
-  store i32 4, ptr %i.b, align 8, !tbaa !189
-  br label %bb.j
-
-.thread:                                          ; preds = %bb.g, %bb.a, %bb.b
-  %.1 = phi i32 [ %2, %bb.a ], [ %i.c, %bb.b ], [ %.pre, %bb.g ]
+.thread:                                          ; preds = %bb.a, %bb.g, %bb.b
+  %.1 = phi i32 [ %.pre, %bb.g ], [ %i.c, %bb.b ], [ %2, %bb.a ]
   switch i32 %.1, label %bb.k [
     i32 3, label %bb.h
     i32 1, label %bb.i
@@ -804,14 +798,14 @@ bb.h:                                             ; preds = %.thread
   %i.u = zext i16 %i.t to i32
   br label %bb.l
 
-bb.i:                                             ; preds = %.thread.thread, %.thread
+bb.i:                                             ; preds = %.thread
   %i.v = zext nneg i32 %1 to i64
   %i.w = getelementptr inbounds nuw [2 x i8], ptr @png_sRGB_table, i64 %i.v
   %i.x = load i16, ptr %i.w, align 2, !tbaa !153
   %i.y = zext i16 %i.x to i32
   br label %bb.l
 
-bb.j:                                             ; preds = %.thread.thread17, %.thread
+bb.j:                                             ; preds = %.thread
   %i.z = mul nuw nsw i32 %1, 257
   br label %bb.l
 

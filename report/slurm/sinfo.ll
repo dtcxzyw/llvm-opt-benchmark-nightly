@@ -201,8 +201,8 @@ bb.av:                                            ; preds = %bb.au, %bb.at, %bb.
   %i.hm = zext i16 %i.hl to i32                   ; 2 uses
   %i.hn = load i16, ptr %1, align 8
   switch i32 %i.c, label %bb.aw [
-    i32 5, label %2
-    i32 3, label %2
+    i32 5, label %bb.ay
+    i32 3, label %bb.ay
   ]
 
 bb.aw:                                            ; preds = %bb.av
@@ -210,37 +210,22 @@ bb.aw:                                            ; preds = %bb.av
   %i.hp = zext i32 %i.ho to i64                   ; 2 uses
   %i.hq = and i64 %i.hp, 1024
   %.not205 = icmp eq i64 %i.hq, 0
-  br i1 %.not205, label %bb.ax, label %2
-
-2:                                                ; preds = %bb.av, %bb.av, %bb.aw
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %4 = load i32, ptr %3, align 8
-  %5 = add i32 %4, 1
-  store i32 %5, ptr %3, align 8
-  br label %bb.ay
+  br i1 %.not205, label %bb.ax, label %bb.ay
 
 bb.ax:                                            ; preds = %bb.aw
   %i.hr = and i64 %i.hp, 512
   %i.hs = icmp ne i64 %i.hr, 0
   %i.ht = icmp eq i32 %i.c, 1
   %or.cond3 = select i1 %i.hs, i1 true, i1 %i.ht
-  br i1 %or.cond3, label %6, label %10
-
-6:                                                ; preds = %bb.ax
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %8 = load i32, ptr %7, align 8
-  %9 = add i32 %8, 1
-  store i32 %9, ptr %7, align 8
+  %. = select i1 %or.cond3, i64 16, i64 12
   br label %bb.ay
 
-10:                                               ; preds = %bb.ax
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
-  %12 = load i32, ptr %11, align 4
-  %13 = add i32 %12, 1
-  store i32 %13, ptr %11, align 4
-  br label %bb.ay
-
-bb.ay:                                            ; preds = %6, %10, %2
+bb.ay:                                            ; preds = %bb.ax, %bb.aw, %bb.av, %bb.av
+  %.sink244 = phi i64 [ %., %bb.ax ], [ 8, %bb.aw ], [ 8, %bb.av ], [ 8, %bb.av ]
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 %.sink244 ; 2 uses
+  %3 = load i32, ptr %2, align 4
+  %4 = add i32 %3, 1
+  store i32 %4, ptr %2, align 4
   %i.hu = load i32, ptr %i.d, align 4
   %i.hv = add i32 %i.hu, 1
   store i32 %i.hv, ptr %i.d, align 4
@@ -253,7 +238,7 @@ bb.ay:                                            ; preds = %6, %10, %2
   %i.ib = load i32, ptr %i.ia, align 4
   %i.ic = add i32 %i.ib, %i.hm
   store i32 %i.ic, ptr %i.ia, align 4
-  %i.id = sub nsw i32 %i.hm, %i.hw                ; 2 uses
+  %i.id = sub nsw i32 %i.hm, %i.hw
   %i.ie = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.if = load i64, ptr %i.ie, align 8
   %i.ig = getelementptr inbounds nuw i8, ptr %0, i64 136
@@ -263,23 +248,14 @@ bb.ay:                                            ; preds = %6, %10, %2
   %i.ij = icmp ne i32 %i.ii, 0
   %i.ik = icmp eq i32 %i.c, 1
   %or.cond5 = select i1 %i.ij, i1 true, i1 %i.ik
-  br i1 %or.cond5, label %14, label %18
-
-14:                                               ; preds = %bb.ay
-  %15 = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  %16 = load i32, ptr %15, align 8
-  %17 = add i32 %16, %i.id
-  store i32 %17, ptr %15, align 8
+  %.248 = select i1 %or.cond5, i64 32, i64 28
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 %.248 ; 2 uses
+  %6 = load i32, ptr %5, align 4
+  %7 = add i32 %6, %i.id
+  store i32 %7, ptr %5, align 4
   br label %bb.az
 
-18:                                               ; preds = %bb.ay
-  %19 = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 2 uses
-  %20 = load i32, ptr %19, align 4
-  %21 = add i32 %20, %i.id
-  store i32 %21, ptr %19, align 4
-  br label %bb.az
-
-bb.az:                                            ; preds = %14, %18, %bb.c
+bb.az:                                            ; preds = %bb.ay, %bb.c
   ret void
 }
 

@@ -198,27 +198,24 @@ bb.a:
 define range(i32 -113, 1) i32 @mz_stream_mem_seek(ptr nofree noundef captures(none) %0, i64 noundef %1, i32 noundef %2) #0 {
 bb.a:
   switch i32 %2, label %mz_stream_mem_set_size.exit [
-    i32 1, label %bb.b
-    i32 2, label %bb.c
+    i32 1, label %bb.c
+    i32 2, label %bb.b
     i32 0, label %bb.d
   ]
 
 bb.b:                                             ; preds = %bb.a
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %4 = load i32, ptr %3, align 8, !tbaa !16
-  %5 = sext i32 %4 to i64
-  %6 = add nsw i64 %1, %5
-  br label %bb.d
+  br label %bb.c
 
-bb.c:                                             ; preds = %bb.a
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 36
-  %i.b = load i32, ptr %i.a, align 4, !tbaa !15
+bb.c:                                             ; preds = %bb.a, %bb.b
+  %.sink25 = phi i64 [ 36, %bb.b ], [ 40, %bb.a ]
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 %.sink25
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !20
   %i.c = sext i32 %i.b to i64
   %i.d = add nsw i64 %1, %i.c
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.a, %bb.c, %bb.b
-  %.0 = phi i64 [ %6, %bb.b ], [ %i.d, %bb.c ], [ %1, %bb.a ] ; 5 uses
+bb.d:                                             ; preds = %bb.c, %bb.a
+  %.0 = phi i64 [ %1, %bb.a ], [ %i.d, %bb.c ]    ; 5 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.f = load i32, ptr %i.e, align 8, !tbaa !19
   %i.g = sext i32 %i.f to i64                     ; 2 uses
@@ -317,7 +314,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.f, label %mz_stream_mem_get_buffer_at.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  store ptr %i.c, ptr %1, align 8, !tbaa !20
+  store ptr %i.c, ptr %1, align 8, !tbaa !21
   br label %mz_stream_mem_get_buffer_at.exit
 
 mz_stream_mem_get_buffer_at.exit:                 ; preds = %bb.a, %bb.b, %bb.c, %bb.d
@@ -348,7 +345,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 %1
-  store ptr %i.i, ptr %2, align 8, !tbaa !20
+  store ptr %i.i, ptr %2, align 8, !tbaa !21
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.a, %bb.b, %bb.c, %bb.d
@@ -381,7 +378,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.k = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.c
-  store ptr %i.k, ptr %1, align 8, !tbaa !20
+  store ptr %i.k, ptr %1, align 8, !tbaa !21
   br label %mz_stream_mem_get_buffer_at.exit
 
 mz_stream_mem_get_buffer_at.exit:                 ; preds = %bb.a, %bb.b, %bb.c, %bb.d
@@ -394,7 +391,7 @@ define void @mz_stream_mem_get_buffer_length(ptr nofree noundef readonly capture
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 36
   %i.b = load i32, ptr %i.a, align 4, !tbaa !15
-  store i32 %i.b, ptr %1, align 4, !tbaa !21
+  store i32 %i.b, ptr %1, align 4, !tbaa !20
   ret void
 }
 
@@ -441,7 +438,7 @@ bb.a:
   br i1 %.not, label %bb.h, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.a = load ptr, ptr %0, align 8, !tbaa !20     ; 4 uses
+  %i.a = load ptr, ptr %0, align 8, !tbaa !21     ; 4 uses
   %.not10 = icmp eq ptr %i.a, null
   br i1 %.not10, label %bb.g, label %bb.c
 
@@ -467,7 +464,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.b
-  store ptr null, ptr %0, align 8, !tbaa !20
+  store ptr null, ptr %0, align 8, !tbaa !21
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.a, %bb.g
@@ -532,7 +529,7 @@ attributes #14 = { nounwind allocsize(0,1) }
 !17 = !{!9, !5, i64 44}
 !18 = !{!9, !14, i64 24}
 !19 = !{!9, !5, i64 32}
-!20 = !{!12, !12, i64 0}
-!21 = !{!5, !5, i64 0}
+!20 = !{!5, !5, i64 0}
+!21 = !{!12, !12, i64 0}
 !22 = !{!9, !11, i64 0}
 end_hunk_0

@@ -203,9 +203,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.d
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 7064
   store i8 0, ptr %i.k, align 8
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 7065
-  store i8 0, ptr %1, align 1
-  br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCNvMs1_Cs9rVkZwOUgsI_13deltalake_awsNtBO_18DynamoDbLockClient16get_commit_entry0EBO_.exit
+  br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCNvMs1_Cs9rVkZwOUgsI_13deltalake_awsNtBO_18DynamoDbLockClient16get_commit_entry0EBO_.exit.sink.split
 
 bb.g:                                             ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 152
@@ -217,7 +215,13 @@ bb.h:                                             ; preds = %bb.a
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCNvNtCs14kWLkQVSKO_14deltalake_core8logstore17read_commit_entry0ECs9rVkZwOUgsI_13deltalake_aws(ptr noundef nonnull align 8 %i.m)
           to label %bb.q unwind label %bb.o
 
-_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCNvMs1_Cs9rVkZwOUgsI_13deltalake_awsNtBO_18DynamoDbLockClient16get_commit_entry0EBO_.exit: ; preds = %bb.t, %bb.f, %bb.c, %bb.b, %2
+_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCNvMs1_Cs9rVkZwOUgsI_13deltalake_awsNtBO_18DynamoDbLockClient16get_commit_entry0EBO_.exit.sink.split: ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtCs9rVkZwOUgsI_13deltalake_aws11CommitEntryEBI_.exit, %bb.f
+  %.sink15 = phi i64 [ 7065, %bb.f ], [ 88, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtCs9rVkZwOUgsI_13deltalake_aws11CommitEntryEBI_.exit ]
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 %.sink15
+  store i8 0, ptr %1, align 1
+  br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCNvMs1_Cs9rVkZwOUgsI_13deltalake_awsNtBO_18DynamoDbLockClient16get_commit_entry0EBO_.exit
+
+_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCNvMs1_Cs9rVkZwOUgsI_13deltalake_awsNtBO_18DynamoDbLockClient16get_commit_entry0EBO_.exit: ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCNvMs1_Cs9rVkZwOUgsI_13deltalake_awsNtBO_18DynamoDbLockClient16get_commit_entry0EBO_.exit.sink.split, %bb.t, %bb.c, %bb.b
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 88
   store i8 0, ptr %i.n, align 8
   br label %common.ret
@@ -265,7 +269,7 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtCs9rVkZwOUgsI_13deltalake_aws11Co
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.w = load i64, ptr %i.v, align 8, !range !33, !noundef !3
   %.not4 = icmp eq i64 %i.w, -9223372036854775807
-  br i1 %.not4, label %bb.t, label %2
+  br i1 %.not4, label %bb.t, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCNvMs1_Cs9rVkZwOUgsI_13deltalake_awsNtBO_18DynamoDbLockClient16get_commit_entry0EBO_.exit.sink.split
 
 bb.n:                                             ; preds = %bb.p, %bb.u, %bb.i
   %i.x = landingpad { ptr, i32 }
@@ -319,11 +323,6 @@ bb.t:                                             ; preds = %_RINvNtCsbvkFyIu7lg
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 32
   invoke void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs9rVkZwOUgsI_13deltalake_aws6errors15LockClientErrorEBK_(ptr noalias noundef nonnull align 8 dereferenceable(40) %i.ak)
           to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCNvMs1_Cs9rVkZwOUgsI_13deltalake_awsNtBO_18DynamoDbLockClient16get_commit_entry0EBO_.exit unwind label %.body11
-
-2:                                                ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtCs9rVkZwOUgsI_13deltalake_aws11CommitEntryEBI_.exit
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 88
-  store i8 0, ptr %3, align 8
-  br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCNvMs1_Cs9rVkZwOUgsI_13deltalake_awsNtBO_18DynamoDbLockClient16get_commit_entry0EBO_.exit
 
 .body11:                                          ; preds = %bb.t
   %i.al = landingpad { ptr, i32 }
@@ -585,9 +584,7 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.e
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8176
   store i8 0, ptr %i.m, align 8
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 8177
-  store i8 0, ptr %1, align 1
-  br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCNvMs1_Cs9rVkZwOUgsI_13deltalake_awsNtBO_18DynamoDbLockClient16get_latest_entry0EBO_.exit
+  br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCskQDtHcQtBkN_5tokio7runtime4task4join10JoinHandleINtNtB4_6result6ResultNtNtCs8ulvy0Wg6Ot_12delta_kernel11log_segment10LogSegmentNtNtB23_5error5ErrorEEECs9rVkZwOUgsI_13deltalake_aws.exit.i
 
 bb.h:                                             ; preds = %bb.a
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 152
@@ -612,12 +609,13 @@ bb.k:                                             ; preds = %bb.j
   store i8 0, ptr %i.s, align 8
   br label %.body
 
-_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCskQDtHcQtBkN_5tokio7runtime4task4join10JoinHandleINtNtB4_6result6ResultNtNtCs8ulvy0Wg6Ot_12delta_kernel11log_segment10LogSegmentNtNtB23_5error5ErrorEEECs9rVkZwOUgsI_13deltalake_aws.exit.i: ; preds = %bb.j
-  %i.t = getelementptr inbounds nuw i8, ptr %0, i64 136
-  store i8 0, ptr %i.t, align 8
+_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCskQDtHcQtBkN_5tokio7runtime4task4join10JoinHandleINtNtB4_6result6ResultNtNtCs8ulvy0Wg6Ot_12delta_kernel11log_segment10LogSegmentNtNtB23_5error5ErrorEEECs9rVkZwOUgsI_13deltalake_aws.exit.i: ; preds = %bb.j, %bb.g
+  %.sink8 = phi i64 [ 8177, %bb.g ], [ 136, %bb.j ]
+  %i.t = getelementptr inbounds nuw i8, ptr %0, i64 %.sink8
+  store i8 0, ptr %i.t, align 1
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCNvMs1_Cs9rVkZwOUgsI_13deltalake_awsNtBO_18DynamoDbLockClient16get_latest_entry0EBO_.exit
 
-_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCNvMs1_Cs9rVkZwOUgsI_13deltalake_awsNtBO_18DynamoDbLockClient16get_latest_entry0EBO_.exit: ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsjyY8HP3IvQ6_12object_store4path4PathECs9rVkZwOUgsI_13deltalake_aws.exit.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCskQDtHcQtBkN_5tokio7runtime4task4join10JoinHandleINtNtB4_6result6ResultNtNtCs8ulvy0Wg6Ot_12delta_kernel11log_segment10LogSegmentNtNtB23_5error5ErrorEEECs9rVkZwOUgsI_13deltalake_aws.exit.i, %bb.i, %bb.g, %bb.d, %bb.c, %bb.b
+_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCNvMs1_Cs9rVkZwOUgsI_13deltalake_awsNtBO_18DynamoDbLockClient16get_latest_entry0EBO_.exit: ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCskQDtHcQtBkN_5tokio7runtime4task4join10JoinHandleINtNtB4_6result6ResultNtNtCs8ulvy0Wg6Ot_12delta_kernel11log_segment10LogSegmentNtNtB23_5error5ErrorEEECs9rVkZwOUgsI_13deltalake_aws.exit.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsjyY8HP3IvQ6_12object_store4path4PathECs9rVkZwOUgsI_13deltalake_aws.exit.i, %bb.i, %bb.d, %bb.c, %bb.b
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 88
   store i8 0, ptr %i.u, align 8
   br label %common.ret

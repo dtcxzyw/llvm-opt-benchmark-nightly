@@ -204,25 +204,18 @@ bb.bt:                                            ; preds = %_ZNSt6vectorIPN2cv6
   br i1 %i.js, label %.loopexit342, label %.lr.ph516
 
 .lr.ph516:                                        ; preds = %bb.bt, %.loopexit
-  %.8514 = phi ptr [ %.12, %.loopexit ], [ %.4195.lcssa, %bb.bt ] ; 4 uses
-  %.sroa.26.5513 = phi ptr [ %.sroa.26.8, %.loopexit ], [ %.sroa.26.4.1, %bb.bt ] ; 4 uses
+  %.8514 = phi ptr [ %.12, %.loopexit ], [ %.4195.lcssa, %bb.bt ] ; 3 uses
+  %.sroa.26.5513 = phi ptr [ %.sroa.26.8, %.loopexit ], [ %.sroa.26.4.1, %bb.bt ] ; 3 uses
   %.sroa.13.5512 = phi ptr [ %.sroa.13.8, %.loopexit ], [ %.sroa.13.4.1, %bb.bt ]
-  %.sroa.0.5511 = phi ptr [ %.sroa.0.8, %.loopexit ], [ %.sroa.0.4.1, %bb.bt ] ; 4 uses
-  %i.jt = getelementptr inbounds i8, ptr %.sroa.13.5512, i64 -8 ; 5 uses
-  %i.ju = load ptr, ptr %i.jt, align 8, !tbaa !469 ; 9 uses
+  %.sroa.0.5511 = phi ptr [ %.sroa.0.8, %.loopexit ], [ %.sroa.0.4.1, %bb.bt ] ; 3 uses
+  %i.jt = getelementptr inbounds i8, ptr %.sroa.13.5512, i64 -8 ; 4 uses
+  %i.ju = load ptr, ptr %i.jt, align 8, !tbaa !469 ; 7 uses
   %i.jv = getelementptr inbounds nuw i8, ptr %i.ju, i64 28
   %i.jw = load i8, ptr %i.jv, align 4, !tbaa !467 ; 4 uses
   %i.jx = getelementptr inbounds nuw i8, ptr %i.ju, i64 12 ; 2 uses
   %.1171486 = load i32, ptr %i.jx, align 4, !tbaa !62 ; 2 uses
   %.not221487 = icmp eq i32 %.1171486, 0
-  br i1 %.not221487, label %.thread626, label %.lr.ph494
-
-.thread626:                                       ; preds = %.lr.ph516
-  %12 = getelementptr inbounds nuw i8, ptr %i.ju, i64 8
-  store i32 0, ptr %12, align 8, !tbaa !474
-  %13 = getelementptr inbounds nuw i8, ptr %i.ju, i64 16
-  store i32 0, ptr %13, align 8, !tbaa !472
-  br label %.loopexit
+  br i1 %.not221487, label %.loopexit.sink.split, label %.lr.ph494
 
 .lr.ph494:                                        ; preds = %.lr.ph516
   %i.jy = xor i8 %i.jw, 1
@@ -351,14 +344,7 @@ bb.cb:                                            ; preds = %bb.ca
   %i.md = getelementptr inbounds nuw i8, ptr %i.ju, i64 8
   store i32 %.6179, ptr %i.md, align 8, !tbaa !474
   %i.me = icmp sgt i32 %.6179, 0
-  br i1 %i.me, label %14, label %bb.cc
-
-14:                                               ; preds = %._crit_edge495
-  %15 = getelementptr inbounds nuw i8, ptr %i.ju, i64 16
-  store i32 %i.jr, ptr %15, align 8, !tbaa !472
-  %16 = getelementptr inbounds nuw i8, ptr %i.ju, i64 20
-  store i32 %.2, ptr %16, align 4, !tbaa !473
-  br label %.loopexit, !llvm.loop !486
+  br i1 %i.me, label %.loopexit.sink.split, label %bb.cc, !llvm.loop !486
 
 bb.cc:                                            ; preds = %._crit_edge495
   %.2172498.pr = load i32, ptr %i.jx, align 4, !tbaa !62 ; 2 uses
@@ -510,11 +496,22 @@ bb.cp:                                            ; preds = %bb.ch, %bb.ci, %_ZN
   %.not222 = icmp eq i32 %.2172, 0
   br i1 %.not222, label %.loopexit, label %bb.cd, !llvm.loop !487
 
-.loopexit:                                        ; preds = %bb.cp, %.thread626, %bb.cc, %14
-  %.sroa.0.8 = phi ptr [ %.sroa.0.5511, %14 ], [ %.sroa.0.5511, %bb.cc ], [ %.sroa.0.5511, %.thread626 ], [ %.sroa.0.7, %bb.cp ] ; 3 uses
-  %.sroa.13.8 = phi ptr [ %i.jt, %14 ], [ %i.jt, %bb.cc ], [ %i.jt, %.thread626 ], [ %.sroa.13.7, %bb.cp ] ; 3 uses
-  %.sroa.26.8 = phi ptr [ %.sroa.26.5513, %14 ], [ %.sroa.26.5513, %bb.cc ], [ %.sroa.26.5513, %.thread626 ], [ %.sroa.26.7, %bb.cp ] ; 2 uses
-  %.12 = phi ptr [ %.8514, %14 ], [ %.8514, %bb.cc ], [ %.8514, %.thread626 ], [ %.11, %bb.cp ] ; 2 uses
+.loopexit.sink.split:                             ; preds = %._crit_edge495, %.lr.ph516
+  %.sink695 = phi i64 [ 8, %.lr.ph516 ], [ 16, %._crit_edge495 ]
+  %.sink693 = phi i32 [ 0, %.lr.ph516 ], [ %i.jr, %._crit_edge495 ]
+  %.sink692 = phi i64 [ 16, %.lr.ph516 ], [ 20, %._crit_edge495 ]
+  %.sink690 = phi i32 [ 0, %.lr.ph516 ], [ %.2, %._crit_edge495 ]
+  %12 = getelementptr inbounds nuw i8, ptr %i.ju, i64 %.sink695
+  store i32 %.sink693, ptr %12, align 8, !tbaa !62
+  %13 = getelementptr inbounds nuw i8, ptr %i.ju, i64 %.sink692
+  store i32 %.sink690, ptr %13, align 4, !tbaa !62
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %bb.cp, %.loopexit.sink.split, %bb.cc
+  %.sroa.0.8 = phi ptr [ %.sroa.0.5511, %.loopexit.sink.split ], [ %.sroa.0.5511, %bb.cc ], [ %.sroa.0.7, %bb.cp ] ; 3 uses
+  %.sroa.13.8 = phi ptr [ %i.jt, %.loopexit.sink.split ], [ %i.jt, %bb.cc ], [ %.sroa.13.7, %bb.cp ] ; 3 uses
+  %.sroa.26.8 = phi ptr [ %.sroa.26.5513, %.loopexit.sink.split ], [ %.sroa.26.5513, %bb.cc ], [ %.sroa.26.7, %bb.cp ] ; 2 uses
+  %.12 = phi ptr [ %.8514, %.loopexit.sink.split ], [ %.8514, %bb.cc ], [ %.11, %bb.cp ] ; 2 uses
   %i.nw = icmp eq ptr %.sroa.0.8, %.sroa.13.8
   br i1 %i.nw, label %.loopexit342, label %.lr.ph516
 

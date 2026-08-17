@@ -203,6 +203,14 @@ define dso_local noundef zeroext i1 @_ZN12GUIModalMenu18simulateMouseEventE18ETO
 bb.a:
   %3 = alloca %struct.SEvent, align 8             ; 14 uses
   %4 = alloca %struct.SEvent, align 8             ; 14 uses
+  %.sink16.sroa.gep = getelementptr inbounds nuw i8, ptr %4, i64 24
+  %.sink16.sroa.gep20 = getelementptr inbounds nuw i8, ptr %4, i64 28
+  %.sink16.sroa.gep21 = getelementptr inbounds nuw i8, ptr %4, i64 24
+  %.sink16.sroa.gep22 = getelementptr inbounds nuw i8, ptr %4, i64 24
+  %.sink19.sroa.gep = getelementptr inbounds nuw i8, ptr %3, i64 24
+  %.sink19.sroa.gep23 = getelementptr inbounds nuw i8, ptr %3, i64 28
+  %.sink19.sroa.gep24 = getelementptr inbounds nuw i8, ptr %3, i64 24
+  %.sink19.sroa.gep25 = getelementptr inbounds nuw i8, ptr %3, i64 24
   br i1 %2, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -232,37 +240,29 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.m = getelementptr inbounds nuw i8, ptr %4, i64 20
   store i8 4, ptr %i.m, align 4
   switch i32 %1, label %.thread [
-    i32 0, label %5
+    i32 0, label %bb.h
     i32 2, label %bb.e
     i32 1, label %bb.f
     i32 3, label %bb.g
   ]
 
-5:                                                ; preds = %bb.d
-  %6 = getelementptr inbounds nuw i8, ptr %4, i64 24
-  store i32 1, ptr %6, align 8, !tbaa !12
-  br label %bb.h
-
 bb.e:                                             ; preds = %bb.d
-  %7 = getelementptr inbounds nuw i8, ptr %4, i64 28
-  store i32 8, ptr %7, align 4, !tbaa !12
-  %i.n = getelementptr inbounds nuw i8, ptr %4, i64 24
-  store i32 1, ptr %i.n, align 8, !tbaa !12
+  %i.n = getelementptr inbounds nuw i8, ptr %4, i64 28
+  store i32 8, ptr %i.n, align 4, !tbaa !12
   br label %bb.h
 
 bb.f:                                             ; preds = %bb.d
-  %8 = getelementptr inbounds nuw i8, ptr %4, i64 28
-  store i32 4, ptr %8, align 4, !tbaa !12
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.d
-  %9 = getelementptr inbounds nuw i8, ptr %4, i64 28
-  store i32 10, ptr %9, align 4, !tbaa !12
-  %i.o = getelementptr inbounds nuw i8, ptr %4, i64 24
-  store i32 1, ptr %i.o, align 8, !tbaa !12
+  %i.o = getelementptr inbounds nuw i8, ptr %4, i64 28
+  store i32 10, ptr %i.o, align 4, !tbaa !12
   br label %bb.h
 
-bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e, %5
+bb.h:                                             ; preds = %bb.d, %bb.g, %bb.f, %bb.e
+  %.sink16.sroa.phi = phi ptr [ %.sink16.sroa.gep, %bb.g ], [ %.sink16.sroa.gep20, %bb.f ], [ %.sink16.sroa.gep21, %bb.e ], [ %.sink16.sroa.gep22, %bb.d ]
+  %.sink = phi i32 [ 1, %bb.g ], [ 4, %bb.f ], [ 1, %bb.e ], [ 1, %bb.d ]
+  store i32 %.sink, ptr %.sink16.sroa.phi, align 4, !tbaa !12
   %i.p = load ptr, ptr %0, align 8, !tbaa !23
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 296
   %i.r = load ptr, ptr %i.q, align 8
@@ -298,37 +298,29 @@ bb.l:                                             ; preds = %bb.k
   %i.ac = getelementptr inbounds nuw i8, ptr %3, i64 20
   store i8 4, ptr %i.ac, align 4
   switch i32 %1, label %default.unreachable [
-    i32 0, label %10
+    i32 0, label %bb.p
     i32 2, label %bb.m
     i32 1, label %bb.n
     i32 3, label %bb.o
   ]
 
-10:                                               ; preds = %bb.l
-  %11 = getelementptr inbounds nuw i8, ptr %3, i64 24
-  store i32 1, ptr %11, align 8, !tbaa !12
-  br label %bb.p
-
 bb.m:                                             ; preds = %bb.l
-  %12 = getelementptr inbounds nuw i8, ptr %3, i64 28
-  store i32 8, ptr %12, align 4, !tbaa !12
-  %i.ad = getelementptr inbounds nuw i8, ptr %3, i64 24
-  store i32 1, ptr %i.ad, align 8, !tbaa !12
+  %i.ad = getelementptr inbounds nuw i8, ptr %3, i64 28
+  store i32 8, ptr %i.ad, align 4, !tbaa !12
   br label %bb.p
 
 bb.n:                                             ; preds = %bb.l
-  %13 = getelementptr inbounds nuw i8, ptr %3, i64 28
-  store i32 4, ptr %13, align 4, !tbaa !12
   br label %bb.p
 
 bb.o:                                             ; preds = %bb.l
-  %14 = getelementptr inbounds nuw i8, ptr %3, i64 28
-  store i32 10, ptr %14, align 4, !tbaa !12
-  %i.ae = getelementptr inbounds nuw i8, ptr %3, i64 24
-  store i32 1, ptr %i.ae, align 8, !tbaa !12
+  %i.ae = getelementptr inbounds nuw i8, ptr %3, i64 28
+  store i32 10, ptr %i.ae, align 4, !tbaa !12
   br label %bb.p
 
-bb.p:                                             ; preds = %bb.o, %bb.n, %bb.m, %10
+bb.p:                                             ; preds = %bb.l, %bb.o, %bb.n, %bb.m
+  %.sink19.sroa.phi = phi ptr [ %.sink19.sroa.gep, %bb.o ], [ %.sink19.sroa.gep23, %bb.n ], [ %.sink19.sroa.gep24, %bb.m ], [ %.sink19.sroa.gep25, %bb.l ]
+  %.sink17 = phi i32 [ 1, %bb.o ], [ 4, %bb.n ], [ 1, %bb.m ], [ 1, %bb.l ]
+  store i32 %.sink17, ptr %.sink19.sroa.phi, align 4, !tbaa !12
   %i.af = load ptr, ptr %0, align 8, !tbaa !23
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 296
   %i.ah = load ptr, ptr %i.ag, align 8

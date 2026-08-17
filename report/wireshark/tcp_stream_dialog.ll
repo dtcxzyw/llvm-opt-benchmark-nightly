@@ -204,14 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.h = getelementptr i8, ptr %0, i64 136
   %i.i = load i32, ptr %i.h, align 8
   %switch = icmp ult i32 %i.i, 5
-  br i1 %switch, label %4, label %bb.f
-
-4:                                                ; preds = %bb.b
-  %5 = getelementptr i8, ptr %0, i64 112          ; 2 uses
-  %6 = load i8, ptr %5, align 8, !range !7, !noundef !8
-  %not.5 = xor i8 %6, 1
-  store i8 %not.5, ptr %5, align 8
-  br label %.sink.split
+  br i1 %switch, label %bb.e, label %bb.f
 
 bb.c:                                             ; preds = %bb.a
   %i.j = getelementptr i8, ptr %i.d, i64 48
@@ -225,18 +218,16 @@ bb.d:                                             ; preds = %bb.c
   %switch6 = icmp ult i32 %i.n, 2
   br i1 %switch6, label %bb.e, label %bb.f
 
-bb.e:                                             ; preds = %bb.d
-  %i.o = getelementptr i8, ptr %0, i64 132        ; 2 uses
+bb.e:                                             ; preds = %bb.d, %bb.b
+  %.sink9 = phi i64 [ 112, %bb.b ], [ 132, %bb.d ]
+  %i.o = getelementptr i8, ptr %0, i64 %.sink9    ; 2 uses
   %i.p = load i8, ptr %i.o, align 4, !range !7, !noundef !8
   %not. = xor i8 %i.p, 1
   store i8 %not., ptr %i.o, align 4
-  br label %.sink.split
-
-.sink.split:                                      ; preds = %4, %bb.e
   tail call void @_ZN15TCPStreamDialog9fillGraphEbb(ptr noundef align 8 dereferenceable_or_null(608) %0, i1 noundef zeroext true, i1 noundef zeroext true)
   br label %bb.f
 
-bb.f:                                             ; preds = %.sink.split, %bb.d, %bb.b, %bb.c
+bb.f:                                             ; preds = %bb.e, %bb.d, %bb.b, %bb.c
   ret void
 }
 

@@ -203,12 +203,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.c = load volatile i32, ptr %i.b, align 4, !tbaa !95
   %.not10 = icmp eq i32 %i.c, 0
-  br i1 %.not10, label %bb.d, label %2
-
-2:                                                ; preds = %bb.c
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i32 1, ptr %3, align 8, !tbaa !179
-  br label %bb.h
+  br i1 %.not10, label %bb.d, label %bb.g
 
 bb.d:                                             ; preds = %bb.c, %bb.b
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -238,13 +233,14 @@ Abc_Clock.exit:                                   ; preds = %bb.e, %bb.f
   %.not12 = icmp slt i64 %.0.i, %i.n
   br i1 %.not12, label %bb.h, label %bb.g
 
-bb.g:                                             ; preds = %Abc_Clock.exit
-  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 20
-  store i32 1, ptr %i.o, align 4, !tbaa !180
+bb.g:                                             ; preds = %Abc_Clock.exit, %bb.c
+  %.sink15 = phi i64 [ 16, %bb.c ], [ 20, %Abc_Clock.exit ]
+  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 %.sink15
+  store i32 1, ptr %i.o, align 4, !tbaa !113
   br label %bb.h
 
-bb.h:                                             ; preds = %bb.d, %Abc_Clock.exit, %bb.a, %bb.g, %2
-  %.0 = phi i32 [ 0, %bb.a ], [ 1, %2 ], [ 1, %bb.g ], [ 0, %Abc_Clock.exit ], [ 0, %bb.d ]
+bb.h:                                             ; preds = %bb.g, %bb.d, %Abc_Clock.exit, %bb.a
+  %.0 = phi i32 [ 0, %bb.a ], [ 0, %Abc_Clock.exit ], [ 0, %bb.d ], [ 1, %bb.g ]
   ret i32 %.0
 }
 
@@ -542,6 +538,4 @@ attributes #19 = { nounwind allocsize(0) }
 !176 = distinct !{!176, !106}
 !177 = !{!10, !10, i64 0}
 !178 = distinct !{!178, !106}
-!179 = !{!154, !5, i64 16}
-!180 = !{!154, !5, i64 20}
 end_hunk_0

@@ -203,7 +203,7 @@ bb.u:                                             ; preds = %bb.t
   %i.du = zext i32 %i.dt to i64
   %i.dv = getelementptr inbounds nuw [32 x i8], ptr %i.dr, i64 %i.du
   %i.dw = zext i32 %i.dp to i64
-  %i.dx = getelementptr inbounds nuw [32 x i8], ptr %i.dv, i64 %i.dw ; 9 uses
+  %i.dx = getelementptr inbounds nuw [32 x i8], ptr %i.dv, i64 %i.dw ; 5 uses
   %i.dy = getelementptr inbounds i8, ptr %i.dx, i64 -32 ; 6 uses
   %i.dz = getelementptr inbounds i8, ptr %i.dx, i64 -4
   %i.ea = load i8, ptr %i.dz, align 4, !tbaa !106
@@ -242,10 +242,7 @@ bb.v:                                             ; preds = %bb.u, %bb.u
   %i.ej = ptrtoint ptr %i.ei to i64
   %i.ek = ptrtoint ptr %i.dy to i64
   %i.el = sub i64 %i.ej, %i.ek
-  %2 = trunc i64 %i.el to i32
-  %3 = getelementptr inbounds i8, ptr %i.dx, i64 -24
-  store i32 %2, ptr %3, align 8, !tbaa !48
-  br label %bb.ah
+  br label %.sink.split
 
 bb.w:                                             ; preds = %bb.u, %bb.u, %bb.u, %bb.u, %bb.u, %bb.u, %bb.u, %bb.u, %bb.u, %bb.u, %bb.u, %bb.u
   %i.em = load ptr, ptr %.221, align 8, !tbaa !134
@@ -259,10 +256,7 @@ bb.w:                                             ; preds = %bb.u, %bb.u, %bb.u,
   %i.eu = ptrtoint ptr %i.et to i64
   %i.ev = ptrtoint ptr %i.dy to i64
   %i.ew = sub i64 %i.eu, %i.ev
-  %4 = trunc i64 %i.ew to i32
-  %5 = getelementptr inbounds i8, ptr %i.dx, i64 -20
-  store i32 %4, ptr %5, align 4, !tbaa !48
-  br label %bb.ah
+  br label %.sink.split
 
 bb.x:                                             ; preds = %bb.u
   %i.ex = getelementptr inbounds i8, ptr %i.dx, i64 -12
@@ -283,10 +277,7 @@ bb.y:                                             ; preds = %bb.x
   %i.fi = ptrtoint ptr %i.fh to i64
   %i.fj = ptrtoint ptr %i.dy to i64
   %i.fk = sub i64 %i.fi, %i.fj
-  %6 = trunc i64 %i.fk to i32
-  %7 = getelementptr inbounds i8, ptr %i.dx, i64 -20
-  store i32 %6, ptr %7, align 4, !tbaa !48
-  br label %bb.ah
+  br label %.sink.split
 
 bb.z:                                             ; preds = %bb.u, %bb.u
   %i.fl = load ptr, ptr %.221, align 8, !tbaa !134
@@ -300,10 +291,7 @@ bb.z:                                             ; preds = %bb.u, %bb.u
   %i.ft = ptrtoint ptr %i.fs to i64
   %i.fu = ptrtoint ptr %i.dy to i64
   %i.fv = sub i64 %i.ft, %i.fu
-  %8 = trunc i64 %i.fv to i32
-  %9 = getelementptr inbounds i8, ptr %i.dx, i64 -12
-  store i32 %8, ptr %9, align 4, !tbaa !130
-  br label %bb.ah
+  br label %.sink.split
 
 bb.aa:                                            ; preds = %bb.u, %bb.u, %bb.u
   %i.fw = load ptr, ptr %i.dl, align 8, !tbaa !129
@@ -447,12 +435,17 @@ bb.ag:                                            ; preds = %.epil.preheader
   %i.iu = getelementptr inbounds nuw [32 x i8], ptr %i.ck, i64 %i.it
   %i.iv = ptrtoint ptr %i.iu to i64
   %i.iw = sub i64 %i.iv, %.pre-phi
-  %10 = trunc i64 %i.iw to i32
-  %11 = getelementptr inbounds i8, ptr %i.dx, i64 -12
-  store i32 %10, ptr %11, align 4, !tbaa !130
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.y, %._crit_edge19, %bb.z, %bb.w, %bb.v
+  %.sink76 = phi i64 [ %i.el, %bb.v ], [ %i.ew, %bb.w ], [ %i.fv, %bb.z ], [ %i.iw, %._crit_edge19 ], [ %i.fk, %bb.y ]
+  %.sink75 = phi i64 [ -24, %bb.v ], [ -20, %bb.w ], [ -12, %bb.z ], [ -12, %._crit_edge19 ], [ -20, %bb.y ]
+  %2 = trunc i64 %.sink76 to i32
+  %3 = getelementptr inbounds i8, ptr %i.dx, i64 %.sink75
+  store i32 %2, ptr %3, align 4, !tbaa !48
   br label %bb.ah
 
-bb.ah:                                            ; preds = %bb.u, %bb.v, %bb.w, %bb.z, %._crit_edge19, %bb.y, %bb.x, %bb.s, %bb.t
+bb.ah:                                            ; preds = %.sink.split, %bb.u, %bb.x, %bb.s, %bb.t
   %i.ix = getelementptr inbounds nuw i8, ptr %.221, i64 64 ; 2 uses
   %i.iy = icmp ult ptr %i.ix, %i.e
   br i1 %i.iy, label %bb.s, label %._crit_edge24, !llvm.loop !166

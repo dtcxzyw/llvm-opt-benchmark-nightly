@@ -203,23 +203,13 @@ bb.ac:                                            ; preds = %http_output_bearer.
 bb.ad:                                            ; preds = %bb.ac, %bb.v
   %.370 = phi ptr [ %.269, %bb.ac ], [ %.168, %bb.v ] ; 2 uses
   %.not102 = icmp eq ptr %.370, null
-  br i1 %.not102, label %bb.am, label %6
+  br i1 %.not102, label %bb.am, label %bb.ae
 
-6:                                                ; preds = %bb.ad
-  %7 = load i32, ptr %i.c, align 4, !tbaa !101    ; 2 uses
-  br i1 %5, label %8, label %10
-
-8:                                                ; preds = %6
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 4688
-  store i32 %7, ptr %9, align 8, !tbaa !109
-  br label %bb.ae
-
-10:                                               ; preds = %6
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 4692
-  store i32 %7, ptr %11, align 4, !tbaa !102
-  br label %bb.ae
-
-bb.ae:                                            ; preds = %10, %8
+bb.ae:                                            ; preds = %bb.ad
+  %6 = load i32, ptr %i.c, align 4, !tbaa !101
+  %. = select i1 %5, i64 4688, i64 4692
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 %.
+  store i32 %6, ptr %7, align 4, !tbaa !120
   %i.by = getelementptr inbounds nuw i8, ptr %0, i64 2187
   %i.bz = load i64, ptr %i.by, align 1
   %i.ca = and i64 %i.bz, 536870912
