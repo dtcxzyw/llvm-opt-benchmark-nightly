@@ -204,8 +204,8 @@ bb.eh:                                            ; preds = %bb.eg, %_ZN5ImGui15
 bb.ei:                                            ; preds = %bb.ek, %.preheader.i
   %indvars.iv100.i = phi i64 [ 512, %.preheader.i ], [ %indvars.iv.next101.i, %bb.ek ] ; 2 uses
   %i.aii = add nsw i64 %indvars.iv100.i, -512     ; 2 uses
-  %i.aij = getelementptr inbounds [16 x i8], ptr %i.acm, i64 %i.aii
-  %i.aik = getelementptr inbounds [12 x i8], ptr %i.acn, i64 %i.aii ; 4 uses
+  %i.aij = getelementptr inbounds nuw [16 x i8], ptr %i.acm, i64 %i.aii
+  %i.aik = getelementptr inbounds nuw [12 x i8], ptr %i.acn, i64 %i.aii ; 4 uses
   %i.ail = getelementptr inbounds nuw i8, ptr %i.aik, i64 4 ; 2 uses
   %i.aim = load i32, ptr %i.ail, align 4, !tbaa !620
   store i32 %i.aim, ptr %i.aik, align 4, !tbaa !622

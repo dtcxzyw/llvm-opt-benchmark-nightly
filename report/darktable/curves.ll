@@ -201,9 +201,9 @@ bb.c:                                             ; preds = %.preheader190
   %i.ez = getelementptr inbounds nuw [4 x i8], ptr %i.ey, i64 %indvars.iv233.epil.init
   store float %i.ew, ptr %i.ez, align 4, !tbaa !22
   %i.fa = load float, ptr %i.er, align 4, !tbaa !22 ; 2 uses
-  %i.fb = getelementptr inbounds [4 x i8], ptr %i.ey, i64 %i.eq
+  %i.fb = getelementptr inbounds nuw [4 x i8], ptr %i.ey, i64 %i.eq
   store float %i.fa, ptr %i.fb, align 4, !tbaa !22
-  %i.fc = getelementptr inbounds [8 x i8], ptr %i.g, i64 %i.eq
+  %i.fc = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %i.eq
   %i.fd = load ptr, ptr %i.fc, align 8, !tbaa !11
   %i.fe = getelementptr inbounds nuw [4 x i8], ptr %i.fd, i64 %indvars.iv233.epil.init
   store float %i.fa, ptr %i.fe, align 4, !tbaa !22
@@ -258,9 +258,9 @@ bb.c:                                             ; preds = %.preheader190
   %i.ge = getelementptr inbounds nuw [4 x i8], ptr %i.gd, i64 %indvars.iv233
   store float %i.gb, ptr %i.ge, align 4, !tbaa !22
   %i.gf = load float, ptr %i.fw, align 4, !tbaa !22 ; 2 uses
-  %i.gg = getelementptr inbounds [4 x i8], ptr %i.gd, i64 %i.fv
+  %i.gg = getelementptr inbounds nuw [4 x i8], ptr %i.gd, i64 %i.fv
   store float %i.gf, ptr %i.gg, align 4, !tbaa !22
-  %i.gh = getelementptr inbounds [8 x i8], ptr %i.g, i64 %i.fv
+  %i.gh = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %i.fv
   %i.gi = load ptr, ptr %i.gh, align 8, !tbaa !11
   %i.gj = getelementptr inbounds nuw [4 x i8], ptr %i.gi, i64 %indvars.iv233
   store float %i.gf, ptr %i.gj, align 4, !tbaa !22

@@ -204,7 +204,7 @@ bb.bj:                                            ; preds = %bb.bi
   %i.va = load ptr, ptr %i.us, align 8, !tbaa !150 ; 2 uses
   %i.vb = load ptr, ptr %i.ut, align 8, !tbaa !151 ; 2 uses
   %i.vc = load ptr, ptr %i.uu, align 8, !tbaa !152
-  %i.vd = getelementptr inbounds [4 x i8], ptr %i.vc, i64 %.02650.i.i ; 3 uses
+  %i.vd = getelementptr inbounds nuw [4 x i8], ptr %i.vc, i64 %.02650.i.i ; 3 uses
   %i.ve = load i32, ptr %i.vd, align 4, !tbaa !63
   %i.vf = sext i32 %i.ve to i64                   ; 7 uses
   %i.vg = load ptr, ptr %i.uv, align 8, !tbaa !153 ; 3 uses
@@ -218,7 +218,7 @@ bb.bk:                                            ; preds = %bb.bj
   br label %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit.i.i260
 
 bb.bl:                                            ; preds = %bb.bj
-  %i.vl = getelementptr inbounds [4 x i8], ptr %i.vg, i64 %.02650.i.i
+  %i.vl = getelementptr inbounds nuw [4 x i8], ptr %i.vg, i64 %.02650.i.i
   %i.vm = load i32, ptr %i.vl, align 4, !tbaa !63
   %i.vn = sext i32 %i.vm to i64
   %i.vo = add nsw i64 %i.vn, %i.vf
@@ -257,7 +257,7 @@ bb.bn:                                            ; preds = %._crit_edge.i.i262
   br label %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit29.i.i
 
 bb.bo:                                            ; preds = %._crit_edge.i.i262
-  %i.wa = getelementptr inbounds [4 x i8], ptr %i.vg, i64 %.02650.i.i
+  %i.wa = getelementptr inbounds nuw [4 x i8], ptr %i.vg, i64 %.02650.i.i
   %i.wb = load i32, ptr %i.wa, align 4, !tbaa !63
   %i.wc = sext i32 %i.wb to i64
   %i.wd = add nsw i64 %i.wc, %i.vf
@@ -660,7 +660,7 @@ bb.a:
   br i1 %i.q, label %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit.i.us, label %.critedge2.i.us
 
 _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit.i.us: ; preds = %.lr.ph52.preheader.i.split.us
-  %i.r = getelementptr inbounds [4 x i8], ptr %i.m, i64 %.02650.i.us ; 2 uses
+  %i.r = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %.02650.i.us ; 2 uses
   %i.s = load i32, ptr %i.r, align 4, !tbaa !63   ; 2 uses
   %i.t = sext i32 %i.s to i64                     ; 3 uses
   %i.u = getelementptr i8, ptr %i.r, i64 4
@@ -731,10 +731,10 @@ bb.c:                                             ; preds = %.lr.ph47.i.us
   br i1 %i.av, label %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit.i, label %.critedge2.i
 
 _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit.i: ; preds = %.lr.ph52.preheader.i.split
-  %i.aw = getelementptr inbounds [4 x i8], ptr %i.m, i64 %.02650.i
+  %i.aw = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %.02650.i
   %i.ax = load i32, ptr %i.aw, align 4, !tbaa !63
   %i.ay = sext i32 %i.ax to i64                   ; 4 uses
-  %i.az = getelementptr inbounds [4 x i8], ptr %.fr3, i64 %.02650.i
+  %i.az = getelementptr inbounds nuw [4 x i8], ptr %.fr3, i64 %.02650.i
   %i.ba = load i32, ptr %i.az, align 4, !tbaa !63 ; 2 uses
   %i.bb = sext i32 %i.ba to i64
   %i.bc = add nsw i64 %i.bb, %i.ay                ; 3 uses
@@ -1137,7 +1137,7 @@ bb.bn:                                            ; preds = %bb.bm
   %i.vt = load ptr, ptr %i.vl, align 8, !tbaa !150 ; 2 uses
   %i.vu = load ptr, ptr %i.vm, align 8, !tbaa !151 ; 2 uses
   %i.vv = load ptr, ptr %i.vn, align 8, !tbaa !152
-  %i.vw = getelementptr inbounds [4 x i8], ptr %i.vv, i64 %.02650.i.i ; 3 uses
+  %i.vw = getelementptr inbounds nuw [4 x i8], ptr %i.vv, i64 %.02650.i.i ; 3 uses
   %i.vx = load i32, ptr %i.vw, align 4, !tbaa !63
   %i.vy = sext i32 %i.vx to i64                   ; 7 uses
   %i.vz = load ptr, ptr %i.vo, align 8, !tbaa !153 ; 3 uses
@@ -1151,7 +1151,7 @@ bb.bo:                                            ; preds = %bb.bn
   br label %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit.i.i256
 
 bb.bp:                                            ; preds = %bb.bn
-  %i.we = getelementptr inbounds [4 x i8], ptr %i.vz, i64 %.02650.i.i
+  %i.we = getelementptr inbounds nuw [4 x i8], ptr %i.vz, i64 %.02650.i.i
   %i.wf = load i32, ptr %i.we, align 4, !tbaa !63
   %i.wg = sext i32 %i.wf to i64
   %i.wh = add nsw i64 %i.wg, %i.vy
@@ -1190,7 +1190,7 @@ bb.br:                                            ; preds = %._crit_edge.i.i258
   br label %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit29.i.i
 
 bb.bs:                                            ; preds = %._crit_edge.i.i258
-  %i.wt = getelementptr inbounds [4 x i8], ptr %i.vz, i64 %.02650.i.i
+  %i.wt = getelementptr inbounds nuw [4 x i8], ptr %i.vz, i64 %.02650.i.i
   %i.wu = load i32, ptr %i.wt, align 4, !tbaa !63
   %i.wv = sext i32 %i.wu to i64
   %i.ww = add nsw i64 %i.wv, %i.vy
@@ -1593,7 +1593,7 @@ bb.bp:                                            ; preds = %bb.bo
   %i.xl = load ptr, ptr %i.xd, align 8, !tbaa !150 ; 2 uses
   %i.xm = load ptr, ptr %i.xe, align 8, !tbaa !151 ; 2 uses
   %i.xn = load ptr, ptr %i.xf, align 8, !tbaa !152
-  %i.xo = getelementptr inbounds [4 x i8], ptr %i.xn, i64 %.02650.i.i ; 3 uses
+  %i.xo = getelementptr inbounds nuw [4 x i8], ptr %i.xn, i64 %.02650.i.i ; 3 uses
   %i.xp = load i32, ptr %i.xo, align 4, !tbaa !63
   %i.xq = sext i32 %i.xp to i64                   ; 7 uses
   %i.xr = load ptr, ptr %i.xg, align 8, !tbaa !153 ; 3 uses
@@ -1607,7 +1607,7 @@ bb.bq:                                            ; preds = %bb.bp
   br label %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit.i.i261
 
 bb.br:                                            ; preds = %bb.bp
-  %i.xw = getelementptr inbounds [4 x i8], ptr %i.xr, i64 %.02650.i.i
+  %i.xw = getelementptr inbounds nuw [4 x i8], ptr %i.xr, i64 %.02650.i.i
   %i.xx = load i32, ptr %i.xw, align 4, !tbaa !63
   %i.xy = sext i32 %i.xx to i64
   %i.xz = add nsw i64 %i.xy, %i.xq
@@ -1646,7 +1646,7 @@ bb.bt:                                            ; preds = %._crit_edge.i.i263
   br label %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit29.i.i
 
 bb.bu:                                            ; preds = %._crit_edge.i.i263
-  %i.yl = getelementptr inbounds [4 x i8], ptr %i.xr, i64 %.02650.i.i
+  %i.yl = getelementptr inbounds nuw [4 x i8], ptr %i.xr, i64 %.02650.i.i
   %i.ym = load i32, ptr %i.yl, align 4, !tbaa !63
   %i.yn = sext i32 %i.ym to i64
   %i.yo = add nsw i64 %i.yn, %i.xq
@@ -2049,7 +2049,7 @@ bb.bi:                                            ; preds = %bb.bh
   %i.vq = load ptr, ptr %i.vi, align 8, !tbaa !150 ; 2 uses
   %i.vr = load ptr, ptr %i.vj, align 8, !tbaa !151 ; 2 uses
   %i.vs = load ptr, ptr %i.vk, align 8, !tbaa !152
-  %i.vt = getelementptr inbounds [4 x i8], ptr %i.vs, i64 %.02650.i.i ; 3 uses
+  %i.vt = getelementptr inbounds nuw [4 x i8], ptr %i.vs, i64 %.02650.i.i ; 3 uses
   %i.vu = load i32, ptr %i.vt, align 4, !tbaa !63
   %i.vv = sext i32 %i.vu to i64                   ; 7 uses
   %i.vw = load ptr, ptr %i.vl, align 8, !tbaa !153 ; 3 uses
@@ -2063,7 +2063,7 @@ bb.bj:                                            ; preds = %bb.bi
   br label %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit.i.i260
 
 bb.bk:                                            ; preds = %bb.bi
-  %i.wb = getelementptr inbounds [4 x i8], ptr %i.vw, i64 %.02650.i.i
+  %i.wb = getelementptr inbounds nuw [4 x i8], ptr %i.vw, i64 %.02650.i.i
   %i.wc = load i32, ptr %i.wb, align 4, !tbaa !63
   %i.wd = sext i32 %i.wc to i64
   %i.we = add nsw i64 %i.wd, %i.vv
@@ -2102,7 +2102,7 @@ bb.bm:                                            ; preds = %._crit_edge.i.i262
   br label %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit29.i.i
 
 bb.bn:                                            ; preds = %._crit_edge.i.i262
-  %i.wq = getelementptr inbounds [4 x i8], ptr %i.vw, i64 %.02650.i.i
+  %i.wq = getelementptr inbounds nuw [4 x i8], ptr %i.vw, i64 %.02650.i.i
   %i.wr = load i32, ptr %i.wq, align 4, !tbaa !63
   %i.ws = sext i32 %i.wr to i64
   %i.wt = add nsw i64 %i.ws, %i.vv
@@ -2505,7 +2505,7 @@ bb.bn:                                            ; preds = %bb.bm
   %i.wc = load ptr, ptr %i.vu, align 8, !tbaa !150 ; 2 uses
   %i.wd = load ptr, ptr %i.vv, align 8, !tbaa !151 ; 2 uses
   %i.we = load ptr, ptr %i.vw, align 8, !tbaa !152
-  %i.wf = getelementptr inbounds [4 x i8], ptr %i.we, i64 %.02650.i.i ; 3 uses
+  %i.wf = getelementptr inbounds nuw [4 x i8], ptr %i.we, i64 %.02650.i.i ; 3 uses
   %i.wg = load i32, ptr %i.wf, align 4, !tbaa !63
   %i.wh = sext i32 %i.wg to i64                   ; 7 uses
   %i.wi = load ptr, ptr %i.vx, align 8, !tbaa !153 ; 3 uses
@@ -2519,7 +2519,7 @@ bb.bo:                                            ; preds = %bb.bn
   br label %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit.i.i258
 
 bb.bp:                                            ; preds = %bb.bn
-  %i.wn = getelementptr inbounds [4 x i8], ptr %i.wi, i64 %.02650.i.i
+  %i.wn = getelementptr inbounds nuw [4 x i8], ptr %i.wi, i64 %.02650.i.i
   %i.wo = load i32, ptr %i.wn, align 4, !tbaa !63
   %i.wp = sext i32 %i.wo to i64
   %i.wq = add nsw i64 %i.wp, %i.wh
@@ -2558,7 +2558,7 @@ bb.br:                                            ; preds = %._crit_edge.i.i260
   br label %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit29.i.i
 
 bb.bs:                                            ; preds = %._crit_edge.i.i260
-  %i.xc = getelementptr inbounds [4 x i8], ptr %i.wi, i64 %.02650.i.i
+  %i.xc = getelementptr inbounds nuw [4 x i8], ptr %i.wi, i64 %.02650.i.i
   %i.xd = load i32, ptr %i.xc, align 4, !tbaa !63
   %i.xe = sext i32 %i.xd to i64
   %i.xf = add nsw i64 %i.xe, %i.wh
@@ -2961,7 +2961,7 @@ _ZN5Eigen8internal15unary_evaluatorINS_9TransposeIKNS_12SparseMatrixIdLi0EiEEEEN
   %.02244.us.us = phi i64 [ %.022.us.us, %._crit_edge.us.us ], [ %.02243, %.split ] ; 5 uses
   %gep48.us.us = getelementptr [8 x i8], ptr %i.f, i64 %.02244.us.us ; 2 uses
   %i.p = load double, ptr %gep48.us.us, align 8, !tbaa !64 ; 3 uses
-  %i.q = getelementptr inbounds [4 x i8], ptr %i.m, i64 %.02244.us.us ; 2 uses
+  %i.q = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %.02244.us.us ; 2 uses
   %i.r = load i32, ptr %i.q, align 4, !tbaa !63   ; 2 uses
   %i.s = sext i32 %i.r to i64                     ; 2 uses
   %i.t = getelementptr i8, ptr %i.q, i64 4
@@ -3059,10 +3059,10 @@ _ZN5Eigen8internal15unary_evaluatorINS_9TransposeIKNS_12SparseMatrixIdLi0EiEEEEN
   %.02244 = phi i64 [ %.022, %._crit_edge ], [ %.02243, %.split ] ; 6 uses
   %gep48 = getelementptr [8 x i8], ptr %i.f, i64 %.02244 ; 2 uses
   %i.bj = load double, ptr %gep48, align 8, !tbaa !64 ; 3 uses
-  %i.bk = getelementptr inbounds [4 x i8], ptr %i.m, i64 %.02244
+  %i.bk = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %.02244
   %i.bl = load i32, ptr %i.bk, align 4, !tbaa !63
   %i.bm = sext i32 %i.bl to i64                   ; 5 uses
-  %i.bn = getelementptr inbounds [4 x i8], ptr %i.n, i64 %.02244
+  %i.bn = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %.02244
   %i.bo = load i32, ptr %i.bn, align 4, !tbaa !63 ; 2 uses
   %i.bp = sext i32 %i.bo to i64                   ; 3 uses
   %i.bq = add nsw i64 %i.bp, %i.bm                ; 4 uses
@@ -3465,7 +3465,7 @@ _ZN5Eigen8internal15unary_evaluatorINS_9TransposeIKNS_12SparseMatrixIdLi0EiEEEEN
   %.02145.us.us = phi i64 [ %.021.us.us, %._crit_edge.us.us ], [ %.02144, %.split ] ; 6 uses
   %gep49.us.us = getelementptr [8 x i8], ptr %i.f, i64 %.02145.us.us ; 2 uses
   %i.p = load double, ptr %gep49.us.us, align 8, !tbaa !64 ; 4 uses
-  %i.q = getelementptr inbounds [4 x i8], ptr %i.m, i64 %.02145.us.us ; 2 uses
+  %i.q = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %.02145.us.us ; 2 uses
   %i.r = load i32, ptr %i.q, align 4, !tbaa !63   ; 2 uses
   %i.s = sext i32 %i.r to i64                     ; 2 uses
   %i.t = getelementptr i8, ptr %i.q, i64 4
@@ -3565,10 +3565,10 @@ _ZN5Eigen8internal15unary_evaluatorINS_9TransposeIKNS_12SparseMatrixIdLi0EiEEEEN
   %.02145 = phi i64 [ %.021, %._crit_edge ], [ %.02144, %.split ] ; 7 uses
   %gep49 = getelementptr [8 x i8], ptr %i.f, i64 %.02145 ; 2 uses
   %i.bk = load double, ptr %gep49, align 8, !tbaa !64 ; 4 uses
-  %i.bl = getelementptr inbounds [4 x i8], ptr %i.m, i64 %.02145
+  %i.bl = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %.02145
   %i.bm = load i32, ptr %i.bl, align 4, !tbaa !63
   %i.bn = sext i32 %i.bm to i64                   ; 5 uses
-  %i.bo = getelementptr inbounds [4 x i8], ptr %i.n, i64 %.02145
+  %i.bo = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %.02145
   %i.bp = load i32, ptr %i.bo, align 4, !tbaa !63 ; 2 uses
   %i.bq = sext i32 %i.bp to i64                   ; 3 uses
   %i.br = add nsw i64 %i.bq, %i.bn                ; 3 uses
@@ -3971,7 +3971,7 @@ bb.d:                                             ; preds = %bb.b, %_ZN5Eigen10M
   %scevgep104 = getelementptr i8, ptr %i.aw, i64 %i.bc
   %i.bd = xor i64 %.04691, -1                     ; 2 uses
   %i.be = add nsw i64 %.092, %i.bd                ; 3 uses
-  %i.bf = getelementptr inbounds [8 x i8], ptr %3, i64 %i.be ; 2 uses
+  %i.bf = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.be ; 2 uses
   %i.bg = load double, ptr %i.bf, align 8, !tbaa !64 ; 2 uses
   %i.bh = fcmp une double %i.bg, 0.000000e+00
   br i1 %i.bh, label %bb.e, label %_ZN5Eigen10MatrixBaseINS_3MapINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEELi0ENS_6StrideILi0ELi0EEEEEEmIINS_13CwiseBinaryOpINS_8internal17scalar_product_opIddEEKNS_14CwiseNullaryOpINSA_18scalar_constant_opIdEEKS3_EEKNS_5BlockIKNSJ_IKNS1_IKNS2_IdLin1ELin1ELi0ELin1ELin1EEELi0ENS_11OuterStrideILin1EEEEELin1ELi1ELb1EEELin1ELi1ELb0EEEEEEERS6_RKNS0_IT_EE.exit
@@ -4374,7 +4374,7 @@ _ZN5Eigen8internal15unary_evaluatorINS_9TransposeIKNS_12SparseMatrixIdLi0EiEEEEN
   %.02244.us.us = phi i64 [ %.02243, %.lr.ph46.us ], [ %.022.us.us, %._crit_edge.us.us ] ; 5 uses
   %gep49.us.us = getelementptr [8 x i8], ptr %invariant.gep48.us, i64 %.02244.us.us ; 2 uses
   %i.v = load double, ptr %gep49.us.us, align 8, !tbaa !64 ; 3 uses
-  %i.w = getelementptr inbounds [4 x i8], ptr %i.r, i64 %.02244.us.us ; 2 uses
+  %i.w = getelementptr inbounds nuw [4 x i8], ptr %i.r, i64 %.02244.us.us ; 2 uses
   %i.x = load i32, ptr %i.w, align 4, !tbaa !63   ; 2 uses
   %i.y = sext i32 %i.x to i64                     ; 2 uses
   %i.z = getelementptr i8, ptr %i.w, i64 4
@@ -4488,10 +4488,10 @@ _ZN5Eigen8internal15unary_evaluatorINS_9TransposeIKNS_12SparseMatrixIdLi0EiEEEEN
   %.02244 = phi i64 [ %.02243, %.lr.ph46 ], [ %.022, %._crit_edge ] ; 6 uses
   %gep49 = getelementptr [8 x i8], ptr %invariant.gep48, i64 %.02244 ; 2 uses
   %i.bs = load double, ptr %gep49, align 8, !tbaa !64 ; 3 uses
-  %i.bt = getelementptr inbounds [4 x i8], ptr %i.r, i64 %.02244
+  %i.bt = getelementptr inbounds nuw [4 x i8], ptr %i.r, i64 %.02244
   %i.bu = load i32, ptr %i.bt, align 4, !tbaa !63
   %i.bv = sext i32 %i.bu to i64                   ; 5 uses
-  %i.bw = getelementptr inbounds [4 x i8], ptr %i.s, i64 %.02244
+  %i.bw = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %.02244
   %i.bx = load i32, ptr %i.bw, align 4, !tbaa !63 ; 2 uses
   %i.by = sext i32 %i.bx to i64                   ; 3 uses
   %i.bz = add nsw i64 %i.by, %i.bv                ; 4 uses
@@ -4894,7 +4894,7 @@ _ZN5Eigen8internal15unary_evaluatorINS_9TransposeIKNS_12SparseMatrixIdLi0EiEEEEN
   %.02145.us.us = phi i64 [ %.02144, %.lr.ph47.us ], [ %.021.us.us, %._crit_edge.us.us ] ; 6 uses
   %gep50.us.us = getelementptr [8 x i8], ptr %invariant.gep49.us, i64 %.02145.us.us ; 2 uses
   %i.v = load double, ptr %gep50.us.us, align 8, !tbaa !64 ; 4 uses
-  %i.w = getelementptr inbounds [4 x i8], ptr %i.r, i64 %.02145.us.us ; 2 uses
+  %i.w = getelementptr inbounds nuw [4 x i8], ptr %i.r, i64 %.02145.us.us ; 2 uses
   %i.x = load i32, ptr %i.w, align 4, !tbaa !63   ; 2 uses
   %i.y = sext i32 %i.x to i64                     ; 2 uses
   %i.z = getelementptr i8, ptr %i.w, i64 4
@@ -5010,10 +5010,10 @@ _ZN5Eigen8internal15unary_evaluatorINS_9TransposeIKNS_12SparseMatrixIdLi0EiEEEEN
   %.02145 = phi i64 [ %.02144, %.lr.ph47 ], [ %.021, %._crit_edge ] ; 7 uses
   %gep50 = getelementptr [8 x i8], ptr %invariant.gep49, i64 %.02145 ; 2 uses
   %i.bt = load double, ptr %gep50, align 8, !tbaa !64 ; 4 uses
-  %i.bu = getelementptr inbounds [4 x i8], ptr %i.r, i64 %.02145
+  %i.bu = getelementptr inbounds nuw [4 x i8], ptr %i.r, i64 %.02145
   %i.bv = load i32, ptr %i.bu, align 4, !tbaa !63
   %i.bw = sext i32 %i.bv to i64                   ; 5 uses
-  %i.bx = getelementptr inbounds [4 x i8], ptr %i.s, i64 %.02145
+  %i.bx = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %.02145
   %i.by = load i32, ptr %i.bx, align 4, !tbaa !63 ; 2 uses
   %i.bz = sext i32 %i.by to i64                   ; 3 uses
   %i.ca = add nsw i64 %i.bz, %i.bw                ; 3 uses

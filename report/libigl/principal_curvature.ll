@@ -204,7 +204,7 @@ _ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i54:      ; preds = %_ZNSt6vectorIiSaIiE
 bb.h:                                             ; preds = %_ZNSt6vectorIiSaIiEE5clearEv.exit, %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i54
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #29
   %i.ed = load ptr, ptr %i.a, align 8, !tbaa !55, !noalias !281
-  %i.ee = getelementptr inbounds [8 x i8], ptr %i.ed, i64 %.0124 ; 3 uses
+  %i.ee = getelementptr inbounds nuw [8 x i8], ptr %i.ed, i64 %.0124 ; 3 uses
   %i.ef = load i64, ptr %i.b, align 8, !tbaa !56  ; 2 uses
   %i.eg = load double, ptr %i.ee, align 8, !tbaa !60
   store double %i.eg, ptr %4, align 8, !tbaa !60
@@ -320,7 +320,7 @@ bb.q:                                             ; preds = %_ZNSt12_Vector_base
   %i.fq = phi ptr [ %.pre128, %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit.i ], [ %i.er, %bb.n ] ; 4 uses
   %i.fr = phi ptr [ %.pre127, %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit.i ], [ %i.es, %bb.n ] ; 2 uses
   %i.fs = load ptr, ptr %i.do, align 8, !tbaa !55, !noalias !284
-  %i.ft = getelementptr inbounds [8 x i8], ptr %i.fs, i64 %.0124 ; 3 uses
+  %i.ft = getelementptr inbounds nuw [8 x i8], ptr %i.fs, i64 %.0124 ; 3 uses
   %i.fu = load i64, ptr %i.dp, align 8, !tbaa !56 ; 2 uses
   %i.fv = load double, ptr %i.ft, align 8, !tbaa !60
   %i.fw = getelementptr inbounds [8 x i8], ptr %i.ft, i64 %i.fu
@@ -723,7 +723,7 @@ bb.h:                                             ; preds = %bb.g
   store i64 %i.de, ptr %i.ck, align 8, !tbaa !667, !alias.scope !664
   %i.dk = load ptr, ptr %i.bz, align 8, !tbaa !669, !nonnull !233, !align !646
   %i.dl = load ptr, ptr %i.dk, align 8, !tbaa !331
-  %i.dm = getelementptr inbounds [8 x i8], ptr %i.dl, i64 %.0117
+  %i.dm = getelementptr inbounds nuw [8 x i8], ptr %i.dl, i64 %.0117
   %i.dn = load ptr, ptr %2, align 8, !tbaa !230
   call void @_ZN5Eigen10MatrixBaseINS_5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELin1ELb0EEEE26applyHouseholderOnTheRightINS1_IKS3_Lin1ELi1ELb0EEEEEvRKT_RKdPd(ptr noundef nonnull align 1 dereferenceable(1) %3, ptr noundef nonnull align 8 dereferenceable(56) %4, ptr noundef nonnull align 8 dereferenceable(8) %i.dm, ptr noundef %i.dn)
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #29
@@ -765,7 +765,7 @@ bb.i:                                             ; preds = %bb.g
   store i64 %i.dw, ptr %i.by, align 8, !tbaa !667, !alias.scope !679
   %i.ec = load ptr, ptr %i.bz, align 8, !tbaa !669, !nonnull !233, !align !646
   %i.ed = load ptr, ptr %i.ec, align 8, !tbaa !331
-  %i.ee = getelementptr inbounds [8 x i8], ptr %i.ed, i64 %.0117
+  %i.ee = getelementptr inbounds nuw [8 x i8], ptr %i.ed, i64 %.0117
   %i.ef = load ptr, ptr %2, align 8, !tbaa !230
   call void @_ZN5Eigen10MatrixBaseINS_5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELin1ELb0EEEE25applyHouseholderOnTheLeftINS1_IKS3_Lin1ELi1ELb0EEEEEvRKT_RKdPd(ptr noundef nonnull align 1 dereferenceable(1) %5, ptr noundef nonnull align 8 dereferenceable(56) %6, ptr noundef nonnull align 8 dereferenceable(8) %i.ee, ptr noundef %i.ef)
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #29
@@ -1168,7 +1168,7 @@ bb.u:                                             ; preds = %bb.t
   store i64 %i.kp, ptr %i.jx, align 8, !tbaa !667, !alias.scope !701
   %i.kv = load ptr, ptr %i.jm, align 8, !tbaa !669, !nonnull !233, !align !646
   %i.kw = load ptr, ptr %i.kv, align 8, !tbaa !331
-  %i.kx = getelementptr inbounds [8 x i8], ptr %i.kw, i64 %.051114
+  %i.kx = getelementptr inbounds nuw [8 x i8], ptr %i.kw, i64 %.051114
   %i.ky = load ptr, ptr %2, align 8, !tbaa !230
   call void @_ZN5Eigen10MatrixBaseINS_5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELin1ELb0EEEE26applyHouseholderOnTheRightINS1_IKS3_Lin1ELi1ELb0EEEEEvRKT_RKdPd(ptr noundef nonnull align 1 dereferenceable(1) %7, ptr noundef nonnull align 8 dereferenceable(56) %8, ptr noundef nonnull align 8 dereferenceable(8) %i.kx, ptr noundef %i.ky)
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #29
@@ -1210,7 +1210,7 @@ bb.v:                                             ; preds = %bb.t
   store i64 %i.lh, ptr %i.jl, align 8, !tbaa !667, !alias.scope !711
   %i.ln = load ptr, ptr %i.jm, align 8, !tbaa !669, !nonnull !233, !align !646
   %i.lo = load ptr, ptr %i.ln, align 8, !tbaa !331
-  %i.lp = getelementptr inbounds [8 x i8], ptr %i.lo, i64 %.051114
+  %i.lp = getelementptr inbounds nuw [8 x i8], ptr %i.lo, i64 %.051114
   %i.lq = load ptr, ptr %2, align 8, !tbaa !230
   call void @_ZN5Eigen10MatrixBaseINS_5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELin1ELb0EEEE25applyHouseholderOnTheLeftINS1_IKS3_Lin1ELi1ELb0EEEEEvRKT_RKdPd(ptr noundef nonnull align 1 dereferenceable(1) %9, ptr noundef nonnull align 8 dereferenceable(56) %10, ptr noundef nonnull align 8 dereferenceable(8) %i.lp, ptr noundef %i.lq)
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #29
@@ -1613,7 +1613,7 @@ bb.h:                                             ; preds = %bb.g
   store i64 %i.de, ptr %i.ck, align 8, !tbaa !667, !alias.scope !1344
   %i.dk = load ptr, ptr %i.bz, align 8, !tbaa !669, !nonnull !233, !align !646
   %i.dl = load ptr, ptr %i.dk, align 8, !tbaa !331
-  %i.dm = getelementptr inbounds [8 x i8], ptr %i.dl, i64 %.0117
+  %i.dm = getelementptr inbounds nuw [8 x i8], ptr %i.dl, i64 %.0117
   %i.dn = load ptr, ptr %2, align 8, !tbaa !331
   call void @_ZN5Eigen10MatrixBaseINS_5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELin1ELb0EEEE26applyHouseholderOnTheRightINS1_IKS3_Lin1ELi1ELb0EEEEEvRKT_RKdPd(ptr noundef nonnull align 1 dereferenceable(1) %3, ptr noundef nonnull align 8 dereferenceable(56) %4, ptr noundef nonnull align 8 dereferenceable(8) %i.dm, ptr noundef %i.dn)
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #29
@@ -1655,7 +1655,7 @@ bb.i:                                             ; preds = %bb.g
   store i64 %i.dw, ptr %i.by, align 8, !tbaa !667, !alias.scope !1354
   %i.ec = load ptr, ptr %i.bz, align 8, !tbaa !669, !nonnull !233, !align !646
   %i.ed = load ptr, ptr %i.ec, align 8, !tbaa !331
-  %i.ee = getelementptr inbounds [8 x i8], ptr %i.ed, i64 %.0117
+  %i.ee = getelementptr inbounds nuw [8 x i8], ptr %i.ed, i64 %.0117
   %i.ef = load ptr, ptr %2, align 8, !tbaa !331
   call void @_ZN5Eigen10MatrixBaseINS_5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELin1ELb0EEEE25applyHouseholderOnTheLeftINS1_IKS3_Lin1ELi1ELb0EEEEEvRKT_RKdPd(ptr noundef nonnull align 1 dereferenceable(1) %5, ptr noundef nonnull align 8 dereferenceable(56) %6, ptr noundef nonnull align 8 dereferenceable(8) %i.ee, ptr noundef %i.ef)
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #29
@@ -2058,7 +2058,7 @@ bb.u:                                             ; preds = %bb.t
   store i64 %i.kp, ptr %i.jx, align 8, !tbaa !667, !alias.scope !1376
   %i.kv = load ptr, ptr %i.jm, align 8, !tbaa !669, !nonnull !233, !align !646
   %i.kw = load ptr, ptr %i.kv, align 8, !tbaa !331
-  %i.kx = getelementptr inbounds [8 x i8], ptr %i.kw, i64 %.051114
+  %i.kx = getelementptr inbounds nuw [8 x i8], ptr %i.kw, i64 %.051114
   %i.ky = load ptr, ptr %2, align 8, !tbaa !331
   call void @_ZN5Eigen10MatrixBaseINS_5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELin1ELb0EEEE26applyHouseholderOnTheRightINS1_IKS3_Lin1ELi1ELb0EEEEEvRKT_RKdPd(ptr noundef nonnull align 1 dereferenceable(1) %7, ptr noundef nonnull align 8 dereferenceable(56) %8, ptr noundef nonnull align 8 dereferenceable(8) %i.kx, ptr noundef %i.ky)
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #29
@@ -2100,7 +2100,7 @@ bb.v:                                             ; preds = %bb.t
   store i64 %i.lh, ptr %i.jl, align 8, !tbaa !667, !alias.scope !1386
   %i.ln = load ptr, ptr %i.jm, align 8, !tbaa !669, !nonnull !233, !align !646
   %i.lo = load ptr, ptr %i.ln, align 8, !tbaa !331
-  %i.lp = getelementptr inbounds [8 x i8], ptr %i.lo, i64 %.051114
+  %i.lp = getelementptr inbounds nuw [8 x i8], ptr %i.lo, i64 %.051114
   %i.lq = load ptr, ptr %2, align 8, !tbaa !331
   call void @_ZN5Eigen10MatrixBaseINS_5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELin1ELb0EEEE25applyHouseholderOnTheLeftINS1_IKS3_Lin1ELi1ELb0EEEEEvRKT_RKdPd(ptr noundef nonnull align 1 dereferenceable(1) %9, ptr noundef nonnull align 8 dereferenceable(56) %10, ptr noundef nonnull align 8 dereferenceable(8) %i.lp, ptr noundef %i.lq)
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #29
@@ -2503,7 +2503,7 @@ bb.d:                                             ; preds = %bb.c
   call void @llvm.experimental.noalias.scope.decl(metadata !1663)
   %i.aq = load ptr, ptr %0, align 8, !tbaa !1652, !noalias !1666, !nonnull !233, !align !1653 ; 2 uses
   %i.ar = getelementptr inbounds [8 x i8], ptr %i.aq, i64 %i.ao
-  %i.as = getelementptr inbounds i8, ptr %i.ar, i64 %.idx.i.i.i.i.i
+  %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 %.idx.i.i.i.i.i
   store ptr %i.as, ptr %4, align 8, !tbaa !1667, !alias.scope !1666
   store i64 %i.ap, ptr %i.aa, align 8, !tbaa !224, !alias.scope !1666
   store ptr %i.aq, ptr %i.ab, align 8, !tbaa !140, !alias.scope !1666
@@ -2511,7 +2511,7 @@ bb.d:                                             ; preds = %bb.c
   store i64 %.0107, ptr %i.ad, align 8, !tbaa !224, !alias.scope !1666
   store i64 2, ptr %i.ae, align 8, !tbaa !1669, !alias.scope !1666
   %i.at = load ptr, ptr %i.t, align 8, !tbaa !1671, !nonnull !233, !align !646
-  %i.au = getelementptr inbounds [8 x i8], ptr %i.at, i64 %.0107
+  %i.au = getelementptr inbounds nuw [8 x i8], ptr %i.at, i64 %.0107
   call void @_ZN5Eigen10MatrixBaseINS_5BlockINS_6MatrixIdLi2ELi2ELi0ELi2ELi2EEELin1ELin1ELb0EEEE26applyHouseholderOnTheRightINS1_IKS3_Lin1ELi1ELb0EEEEEvRKT_RKdPd(ptr noundef nonnull align 1 dereferenceable(1) %3, ptr noundef nonnull align 8 dereferenceable(56) %4, ptr noundef nonnull align 8 dereferenceable(8) %i.au, ptr noundef nonnull %2)
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #29
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #29
@@ -2531,7 +2531,7 @@ bb.e:                                             ; preds = %bb.c
   call void @llvm.experimental.noalias.scope.decl(metadata !1678)
   %i.av = load ptr, ptr %0, align 8, !tbaa !1652, !noalias !1681, !nonnull !233, !align !1653 ; 2 uses
   %i.aw = getelementptr inbounds [8 x i8], ptr %i.av, i64 %i.ao
-  %i.ax = getelementptr inbounds i8, ptr %i.aw, i64 %.idx.i.i.i.i.i
+  %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 %.idx.i.i.i.i.i
   store ptr %i.ax, ptr %6, align 8, !tbaa !1667, !alias.scope !1681
   store i64 %i.ap, ptr %i.o, align 8, !tbaa !224, !alias.scope !1681
   store ptr %i.av, ptr %i.p, align 8, !tbaa !140, !alias.scope !1681
@@ -2539,14 +2539,14 @@ bb.e:                                             ; preds = %bb.c
   store i64 %.0107, ptr %i.r, align 8, !tbaa !224, !alias.scope !1681
   store i64 2, ptr %i.s, align 8, !tbaa !1669, !alias.scope !1681
   %i.ay = load ptr, ptr %i.t, align 8, !tbaa !1671, !nonnull !233, !align !646
-  %i.az = getelementptr inbounds [8 x i8], ptr %i.ay, i64 %.0107
+  %i.az = getelementptr inbounds nuw [8 x i8], ptr %i.ay, i64 %.0107
   call void @_ZN5Eigen10MatrixBaseINS_5BlockINS_6MatrixIdLi2ELi2ELi0ELi2ELi2EEELin1ELin1ELb0EEEE25applyHouseholderOnTheLeftINS1_IKS3_Lin1ELi1ELb0EEEEEvRKT_RKdPd(ptr noundef nonnull align 1 dereferenceable(1) %5, ptr noundef nonnull align 8 dereferenceable(56) %6, ptr noundef nonnull align 8 dereferenceable(8) %i.az, ptr noundef nonnull %2)
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #29
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #29
   br label %_ZN5Eigen8internal13first_alignedILi16EdlEET1_PKT0_S2_.exit.i.i.i.i.i.i.i.i.i.i.i.i
 
 _ZN5Eigen8internal13first_alignedILi16EdlEET1_PKT0_S2_.exit.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %bb.e, %bb.d
-  %i.ba = getelementptr inbounds i8, ptr %1, i64 %.idx.i.i.i.i.i
+  %i.ba = getelementptr inbounds nuw i8, ptr %1, i64 %.idx.i.i.i.i.i
   %i.bb = sub nsw i64 2, %.0.in106                ; 3 uses
   %i.bc = getelementptr inbounds nuw [8 x i8], ptr %i.ba, i64 %.0.in106 ; 4 uses
   %i.bd = ptrtoint ptr %i.bc to i64
@@ -2731,7 +2731,7 @@ bb.j:                                             ; preds = %bb.i
   call void @llvm.experimental.noalias.scope.decl(metadata !1690)
   %i.eo = load ptr, ptr %0, align 8, !tbaa !1652, !noalias !1693, !nonnull !233, !align !1653 ; 2 uses
   %i.ep = getelementptr inbounds [8 x i8], ptr %i.eo, i64 %i.em
-  %i.eq = getelementptr inbounds i8, ptr %i.ep, i64 %.idx.i.i.i.i.i70
+  %i.eq = getelementptr inbounds nuw i8, ptr %i.ep, i64 %.idx.i.i.i.i.i70
   store ptr %i.eq, ptr %8, align 8, !tbaa !1667, !alias.scope !1693
   store i64 %i.en, ptr %i.ea, align 8, !tbaa !224, !alias.scope !1693
   store ptr %i.eo, ptr %i.eb, align 8, !tbaa !140, !alias.scope !1693
@@ -2739,7 +2739,7 @@ bb.j:                                             ; preds = %bb.i
   store i64 %.051104, ptr %i.ed, align 8, !tbaa !224, !alias.scope !1693
   store i64 2, ptr %i.ee, align 8, !tbaa !1669, !alias.scope !1693
   %i.er = load ptr, ptr %i.dt, align 8, !tbaa !1671, !nonnull !233, !align !646
-  %i.es = getelementptr inbounds [8 x i8], ptr %i.er, i64 %.051104
+  %i.es = getelementptr inbounds nuw [8 x i8], ptr %i.er, i64 %.051104
   call void @_ZN5Eigen10MatrixBaseINS_5BlockINS_6MatrixIdLi2ELi2ELi0ELi2ELi2EEELin1ELin1ELb0EEEE26applyHouseholderOnTheRightINS1_IKS3_Lin1ELi1ELb0EEEEEvRKT_RKdPd(ptr noundef nonnull align 1 dereferenceable(1) %7, ptr noundef nonnull align 8 dereferenceable(56) %8, ptr noundef nonnull align 8 dereferenceable(8) %i.es, ptr noundef nonnull %2)
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #29
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #29
@@ -2759,7 +2759,7 @@ bb.k:                                             ; preds = %bb.i
   call void @llvm.experimental.noalias.scope.decl(metadata !1700)
   %i.et = load ptr, ptr %0, align 8, !tbaa !1652, !noalias !1703, !nonnull !233, !align !1653 ; 2 uses
   %i.eu = getelementptr inbounds [8 x i8], ptr %i.et, i64 %i.em
-  %i.ev = getelementptr inbounds i8, ptr %i.eu, i64 %.idx.i.i.i.i.i70
+  %i.ev = getelementptr inbounds nuw i8, ptr %i.eu, i64 %.idx.i.i.i.i.i70
   store ptr %i.ev, ptr %10, align 8, !tbaa !1667, !alias.scope !1703
   store i64 %i.en, ptr %i.do, align 8, !tbaa !224, !alias.scope !1703
   store ptr %i.et, ptr %i.dp, align 8, !tbaa !140, !alias.scope !1703
@@ -2767,7 +2767,7 @@ bb.k:                                             ; preds = %bb.i
   store i64 %.051104, ptr %i.dr, align 8, !tbaa !224, !alias.scope !1703
   store i64 2, ptr %i.ds, align 8, !tbaa !1669, !alias.scope !1703
   %i.ew = load ptr, ptr %i.dt, align 8, !tbaa !1671, !nonnull !233, !align !646
-  %i.ex = getelementptr inbounds [8 x i8], ptr %i.ew, i64 %.051104
+  %i.ex = getelementptr inbounds nuw [8 x i8], ptr %i.ew, i64 %.051104
   call void @_ZN5Eigen10MatrixBaseINS_5BlockINS_6MatrixIdLi2ELi2ELi0ELi2ELi2EEELin1ELin1ELb0EEEE25applyHouseholderOnTheLeftINS1_IKS3_Lin1ELi1ELb0EEEEEvRKT_RKdPd(ptr noundef nonnull align 1 dereferenceable(1) %9, ptr noundef nonnull align 8 dereferenceable(56) %10, ptr noundef nonnull align 8 dereferenceable(8) %i.ex, ptr noundef nonnull %2)
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #29
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #29

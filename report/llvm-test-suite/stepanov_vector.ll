@@ -203,7 +203,7 @@ _ZN9benchmark7sift_inIPddEEvlT_lT0_.exit:         ; preds = %.lr.ph50.i, %bb.e, 
 
 .thread:                                          ; preds = %._crit_edge.i21
   %i.az = add nsw i64 %.1.in43, -2                ; 2 uses
-  %i.ba = getelementptr inbounds [8 x i8], ptr %0, i64 %i.az
+  %i.ba = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.az
   %i.bb = load double, ptr %i.ba, align 8, !tbaa !32
   %i.bc = getelementptr inbounds [8 x i8], ptr %0, i64 %.0.lcssa.i23
   store double %i.bb, ptr %i.bc, align 8, !tbaa !32
@@ -262,7 +262,7 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %_ZN9benchmark7sift_inIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdEEvlT_lT0_.exit
   %.0.in43 = phi i64 [ %i.f, %.lr.ph ], [ %.0, %_ZN9benchmark7sift_inIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdEEvlT_lT0_.exit ] ; 4 uses
   %.0 = add nsw i64 %.0.in43, -1                  ; 5 uses
-  %i.i = getelementptr inbounds [8 x i8], ptr %0, i64 %.0
+  %i.i = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.0
   %i.j = load double, ptr %i.i, align 8, !tbaa !32 ; 2 uses
   %i.k = shl nuw i64 %.0, 1
   %i.l = add nuw nsw i64 %i.k, 2                  ; 3 uses
@@ -330,7 +330,7 @@ _ZN9benchmark7sift_inIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdEEvlT
 .lr.ph45:                                         ; preds = %_ZN9benchmark7sift_inIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdEEvlT_lT0_.exit, %_ZN9benchmark7sift_inIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdEEvlT_lT0_.exit27
   %.1.in44 = phi i64 [ %.1, %_ZN9benchmark7sift_inIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdEEvlT_lT0_.exit27 ], [ %i.d, %_ZN9benchmark7sift_inIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdEEvlT_lT0_.exit ] ; 4 uses
   %.1 = add nsw i64 %.1.in44, -1                  ; 4 uses
-  %i.ai = getelementptr inbounds [8 x i8], ptr %0, i64 %.1 ; 2 uses
+  %i.ai = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.1 ; 2 uses
   %i.aj = load double, ptr %i.ai, align 8, !tbaa !32 ; 2 uses
   %i.ak = load double, ptr %0, align 8, !tbaa !32
   store double %i.ak, ptr %i.ai, align 8, !tbaa !32
@@ -364,7 +364,7 @@ _ZN9benchmark7sift_inIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEdEEvlT
 
 .thread:                                          ; preds = %._crit_edge.i14
   %i.az = add nsw i64 %.1.in44, -2                ; 2 uses
-  %i.ba = getelementptr inbounds [8 x i8], ptr %0, i64 %i.az
+  %i.ba = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.az
   %i.bb = load double, ptr %i.ba, align 8, !tbaa !32
   %i.bc = getelementptr inbounds [8 x i8], ptr %0, i64 %.0.lcssa.i16
   store double %i.bb, ptr %i.bc, align 8, !tbaa !32
@@ -767,7 +767,7 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %_ZN9benchmark7sift_inISt16reverse_iteratorIS1_IPdEEdEEvlT_lT0_.exit
   %.0.in44 = phi i64 [ %i.j, %.lr.ph ], [ %.0, %_ZN9benchmark7sift_inISt16reverse_iteratorIS1_IPdEEdEEvlT_lT0_.exit ] ; 4 uses
   %.0 = add nsw i64 %.0.in44, -1                  ; 5 uses
-  %i.m = getelementptr inbounds [8 x i8], ptr %i.b, i64 %.0
+  %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %.0
   %i.n = load double, ptr %i.m, align 8, !tbaa !32 ; 2 uses
   %i.o = shl nuw i64 %.0, 1
   %i.p = add nuw nsw i64 %i.o, 2                  ; 3 uses
@@ -835,7 +835,7 @@ _ZN9benchmark7sift_inISt16reverse_iteratorIS1_IPdEEdEEvlT_lT0_.exit: ; preds = %
 .lr.ph46:                                         ; preds = %_ZN9benchmark7sift_inISt16reverse_iteratorIS1_IPdEEdEEvlT_lT0_.exit, %_ZN9benchmark7sift_inISt16reverse_iteratorIS1_IPdEEdEEvlT_lT0_.exit26
   %.1.in45 = phi i64 [ %.1, %_ZN9benchmark7sift_inISt16reverse_iteratorIS1_IPdEEdEEvlT_lT0_.exit26 ], [ %i.h, %_ZN9benchmark7sift_inISt16reverse_iteratorIS1_IPdEEdEEvlT_lT0_.exit ] ; 4 uses
   %.1 = add nsw i64 %.1.in45, -1                  ; 4 uses
-  %i.am = getelementptr inbounds [8 x i8], ptr %i.b, i64 %.1 ; 2 uses
+  %i.am = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %.1 ; 2 uses
   %i.an = load double, ptr %i.am, align 8, !tbaa !32 ; 2 uses
   %i.ao = load double, ptr %i.b, align 8, !tbaa !32
   store double %i.ao, ptr %i.am, align 8, !tbaa !32
@@ -869,7 +869,7 @@ _ZN9benchmark7sift_inISt16reverse_iteratorIS1_IPdEEdEEvlT_lT0_.exit: ; preds = %
 
 .thread:                                          ; preds = %._crit_edge.i13
   %i.bd = add nsw i64 %.1.in45, -2                ; 2 uses
-  %i.be = getelementptr inbounds [8 x i8], ptr %i.b, i64 %i.bd
+  %i.be = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.bd
   %i.bf = load double, ptr %i.be, align 8, !tbaa !32
   %i.bg = getelementptr inbounds [8 x i8], ptr %i.b, i64 %.0.lcssa.i15
   store double %i.bf, ptr %i.bg, align 8, !tbaa !32
@@ -935,7 +935,7 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %_ZN9benchmark7sift_inISt16reverse_iteratorIS1_IN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEEdEEvlT_lT0_.exit
   %.0.in44 = phi i64 [ %i.i, %.lr.ph ], [ %.0, %_ZN9benchmark7sift_inISt16reverse_iteratorIS1_IN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEEdEEvlT_lT0_.exit ] ; 4 uses
   %.0 = add nsw i64 %.0.in44, -1                  ; 5 uses
-  %i.m = getelementptr inbounds [8 x i8], ptr %i.h, i64 %.0
+  %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %.0
   %i.n = load double, ptr %i.m, align 8, !tbaa !32 ; 2 uses
   %i.o = shl nuw i64 %.0, 1
   %i.p = add nuw nsw i64 %i.o, 2                  ; 3 uses
@@ -1003,7 +1003,7 @@ _ZN9benchmark7sift_inISt16reverse_iteratorIS1_IN9__gnu_cxx17__normal_iteratorIPd
 bb.f:                                             ; preds = %.lr.ph46, %_ZN9benchmark7sift_inISt16reverse_iteratorIS1_IN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEEdEEvlT_lT0_.exit26
   %.1.in45 = phi i64 [ %i.f, %.lr.ph46 ], [ %.1, %_ZN9benchmark7sift_inISt16reverse_iteratorIS1_IN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEEdEEvlT_lT0_.exit26 ] ; 4 uses
   %.1 = add nsw i64 %.1.in45, -1                  ; 4 uses
-  %i.am = getelementptr inbounds [8 x i8], ptr %i.l, i64 %.1 ; 2 uses
+  %i.am = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %.1 ; 2 uses
   %i.an = load double, ptr %i.am, align 8, !tbaa !32 ; 2 uses
   %i.ao = load double, ptr %i.l, align 8, !tbaa !32
   store double %i.ao, ptr %i.am, align 8, !tbaa !32
@@ -1037,7 +1037,7 @@ bb.f:                                             ; preds = %.lr.ph46, %_ZN9benc
 
 .thread:                                          ; preds = %._crit_edge.i13
   %i.bd = add nsw i64 %.1.in45, -2                ; 2 uses
-  %i.be = getelementptr inbounds [8 x i8], ptr %i.l, i64 %i.bd
+  %i.be = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %i.bd
   %i.bf = load double, ptr %i.be, align 8, !tbaa !32
   %i.bg = getelementptr inbounds [8 x i8], ptr %i.l, i64 %.0.lcssa.i15
   store double %i.bf, ptr %i.bg, align 8, !tbaa !32
