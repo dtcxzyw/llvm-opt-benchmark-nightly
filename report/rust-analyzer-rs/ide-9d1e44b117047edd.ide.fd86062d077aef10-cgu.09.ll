@@ -204,16 +204,18 @@ bb.a:
   %i.u = trunc nuw i64 %i.t to i1
   %i.v = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.w = load i64, ptr %i.v, align 8, !range !101, !noundef !13 ; 3 uses
-  %i.x = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 2 uses
+  %.sink.sroa.gep = getelementptr inbounds nuw i8, ptr %i.l, i64 28
+  %i.x = getelementptr inbounds nuw i8, ptr %i.l, i64 24
   br i1 %i.u, label %bb.b, label %bb.c, !prof !102
 
 bb.b:                                             ; preds = %bb.a
-  %i.y = load i64, ptr %i.x, align 8
+  %i.y = load i64, ptr %4, align 8
   tail call void @_RNvNtCsbSS6DM8SDEO_5alloc7raw_vec12handle_error(i64 noundef %i.w, i64 %i.y) #39
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %i.z = load ptr, ptr %i.x, align 8, !nonnull !13, !noundef !13
+  %i.z = load ptr, ptr %4, align 8, !nonnull !13, !noundef !13
   %i.aa = icmp samesign ugt i64 %i.w, 1
   tail call void @llvm.assume(i1 %i.aa)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
@@ -424,11 +426,12 @@ select.unfold:                                    ; preds = %._crit_edge.i.i, %b
   store ptr inttoptr (i64 8 to ptr), ptr %.sroa.433.0..sroa_idx, align 8
   %.sroa.534.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.l, i64 16
   store i64 0, ptr %.sroa.534.0..sroa_idx, align 8
-  %4 = getelementptr inbounds nuw i8, ptr %i.l, i64 24
-  store i32 0, ptr %4, align 8
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.w, %select.unfold
+  %.sink.sroa.phi = phi ptr [ %.sink.sroa.gep, %bb.w ], [ %i.x, %select.unfold ]
+  %.sroa.531.0.sink = phi i32 [ %.sroa.531.0, %bb.w ], [ 0, %select.unfold ]
+  store i32 %.sroa.531.0.sink, ptr %.sink.sroa.phi, align 4
   %i.cn = load i32, ptr %i.bh, align 4, !noundef !13
   invoke void @_RINvMs_NtCs6oosyzwIepl_6ide_db13source_changeNtB5_12SourceChange14from_text_editNtCs4sl5YdnrCxp_3vfs6FileIdECslLuZgPVt6hg_3ide(ptr noalias nofree noundef nonnull sret([96 x i8]) align 8 captures(none) dereferenceable(96) %i.m, i32 noundef %i.cn, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(32) %i.l)
           to label %bb.x unwind label %.loopexit.split-lp117
@@ -451,8 +454,6 @@ bb.w:                                             ; preds = %bb.u, %bb.v
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   %.sroa.428.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.l, i64 24
   store i32 %.sroa.030.0, ptr %.sroa.428.0..sroa_idx, align 8
-  %.sroa.529.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.l, i64 28
-  store i32 %.sroa.531.0, ptr %.sroa.529.0..sroa_idx, align 4
   br label %bb.t
 
 bb.x:                                             ; preds = %bb.t

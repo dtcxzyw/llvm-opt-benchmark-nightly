@@ -204,11 +204,9 @@ bb.k:                                             ; preds = %bb.j
 __get_moffset.exit:                               ; preds = %bb.f, %bb.h, %bb.k
   %.sink67.i = phi i64 [ 69, %bb.k ], [ 61, %bb.h ], [ 61, %bb.f ]
   %.sink.i = phi i8 [ 4, %bb.k ], [ 4, %bb.h ], [ 2, %bb.f ]
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 %.sink67.i
-  store i8 %.sink.i, ptr %1, align 1, !tbaa !31
-  %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 68
-  store i8 1, ptr %i.ac, align 4, !tbaa !30
-  br label %bb.ac
+  %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 %.sink67.i
+  store i8 %.sink.i, ptr %i.ac, align 1, !tbaa !31
+  br label %.sink.split128
 
 bb.l:                                             ; preds = %bb.c
   %i.ad = and i32 %i.f, 28672
@@ -345,11 +343,15 @@ bb.ab:                                            ; preds = %bb.aa
   store ptr %i.bn, ptr %i.bl, align 8, !tbaa !21
   %i.br = sext i8 %.0.copyload to i32
   store i32 %i.br, ptr %i.bq, align 8, !tbaa !30
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 69
-  store i8 1, ptr %2, align 1, !tbaa !31
+  br label %.sink.split128
+
+.sink.split128:                                   ; preds = %bb.ab, %__get_moffset.exit
+  %.sink130 = phi i64 [ 68, %__get_moffset.exit ], [ 69, %bb.ab ]
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 %.sink130
+  store i8 1, ptr %1, align 1, !tbaa !30
   br label %bb.ac
 
-bb.ac:                                            ; preds = %__get_moffset.exit, %bb.z, %bb.ab, %bb.l
+bb.ac:                                            ; preds = %.sink.split128, %bb.z, %bb.l
   store i8 1, ptr %i.b, align 4, !tbaa !30
   br label %__get_moffset.exit.thread
 

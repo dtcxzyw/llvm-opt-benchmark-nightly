@@ -204,20 +204,22 @@ _ZN5Gluco3vecIcE5clearEb.exit:                    ; preds = %_ZN5Gluco3vecINS0_I
   store i32 0, ptr %i.u, align 8, !tbaa !76
   tail call void @free(ptr noundef nonnull %i.t) #24
   store ptr null, ptr %i.s, align 8, !tbaa !75
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 44
-  store i32 0, ptr %2, align 4, !tbaa !82
-  br label %_ZN5Gluco3vecIiE5clearEb.exit
+  br label %_ZN5Gluco3vecIiE5clearEb.exit.sink.split
 
 bb.c:                                             ; preds = %bb.a
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i32 0, ptr %i.v, align 8, !tbaa !78
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i32 0, ptr %i.w, align 8, !tbaa !74
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 40
-  store i32 0, ptr %3, align 8, !tbaa !76
+  br label %_ZN5Gluco3vecIiE5clearEb.exit.sink.split
+
+_ZN5Gluco3vecIiE5clearEb.exit.sink.split:         ; preds = %bb.c, %.preheader.i7
+  %.sink12 = phi i64 [ 44, %.preheader.i7 ], [ 40, %bb.c ]
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 %.sink12
+  store i32 0, ptr %2, align 4, !tbaa !10
   br label %_ZN5Gluco3vecIiE5clearEb.exit
 
-_ZN5Gluco3vecIiE5clearEb.exit:                    ; preds = %.preheader.i7, %_ZN5Gluco3vecIcE5clearEb.exit, %bb.c
+_ZN5Gluco3vecIiE5clearEb.exit:                    ; preds = %_ZN5Gluco3vecIiE5clearEb.exit.sink.split, %_ZN5Gluco3vecIcE5clearEb.exit
   ret void
 }
 
@@ -620,7 +622,7 @@ _ZN5Gluco3vecIcE5clearEb.exit:                    ; preds = %_ZN5Gluco3vecIjE5cl
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 1328
   store i32 0, ptr %i.n, align 8, !tbaa !74
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 1344
-  store i32 0, ptr %i.o, align 8, !tbaa !76
+  store i32 0, ptr %i.o, align 8, !tbaa !10
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 1360
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !75
   %.not.i3 = icmp eq ptr %i.q, null

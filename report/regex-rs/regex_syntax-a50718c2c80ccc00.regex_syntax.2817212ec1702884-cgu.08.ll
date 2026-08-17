@@ -201,11 +201,13 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 24, !dbg !3997
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 8 dereferenceable(48) %i.e, i64 48, i1 false), !dbg !3997
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 152, !dbg !3998
-  store i32 1114112, ptr %2, align 8, !dbg !3998
-  br label %bb.d, !dbg !3999
+  br label %bb.d, !dbg !3998
 
 bb.d:                                             ; preds = %bb.g, %bb.c
+  %.sink = phi i64 [ 156, %bb.g ], [ 152, %bb.c ]
+  %.sroa.57.0.copyload.sink = phi i32 [ %.sroa.57.0.copyload, %bb.g ], [ 1114112, %bb.c ]
+  %.sroa.5.0..sroa_idx3 = getelementptr inbounds nuw i8, ptr %0, i64 %.sink, !dbg !3999
+  store i32 %.sroa.57.0.copyload.sink, ptr %.sroa.5.0..sroa_idx3, align 4, !dbg !3999
     #dbg_value(ptr %1, !1400, !DIExpression(), !4000)
     #dbg_value(ptr %1, !1410, !DIExpression(), !4002)
   invoke void @_RNvXsp_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecNtNtCs3roNzt6HBWW_12regex_syntax3ast12ClassSetItemENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropBJ_(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %1)
@@ -240,15 +242,17 @@ bb.g:                                             ; preds = %bb.a
   store i64 0, ptr %i.a, align 8, !dbg !4023
     #dbg_value(i1 true, !4024, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !4027)
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 8, !dbg !4029
-  %i.i = load ptr, ptr %i.h, align 8, !dbg !4029, !nonnull !15, !noundef !15 ; 2 uses
+  %i.i = load ptr, ptr %i.h, align 8, !dbg !4029, !nonnull !15, !noundef !15 ; 3 uses
     #dbg_value(ptr %i.i, !4036, !DIExpression(), !4041)
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(152) %0, ptr noundef nonnull align 8 dereferenceable(152) %i.i, i64 152, i1 false), !dbg !4043
   %.sroa.46.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.i, i64 152, !dbg !4043
-    #dbg_value(i32 poison, !3940, !DIExpression(DW_OP_LLVM_fragment, 1216, 32), !4044)
-    #dbg_value(i32 poison, !3940, !DIExpression(DW_OP_LLVM_fragment, 1248, 32), !4044)
-  %.sroa.4.0..sroa_idx1.a = getelementptr inbounds nuw i8, ptr %0, i64 152, !dbg !4045
-  %3 = load <2 x i32>, ptr %.sroa.46.0..sroa_idx, align 8, !dbg !4043
-  store <2 x i32> %3, ptr %.sroa.4.0..sroa_idx1.a, align 8, !dbg !4045
+  %.sroa.46.0.copyload = load i32, ptr %.sroa.46.0..sroa_idx, align 8, !dbg !4043
+  %.sroa.4.0..sroa_idx1.a = getelementptr inbounds nuw i8, ptr %i.i, i64 156, !dbg !4043
+  %.sroa.57.0.copyload = load i32, ptr %.sroa.4.0..sroa_idx1.a, align 4, !dbg !4043
+    #dbg_value(i32 %.sroa.46.0.copyload, !3940, !DIExpression(DW_OP_LLVM_fragment, 1216, 32), !4044)
+    #dbg_value(i32 %.sroa.57.0.copyload, !3940, !DIExpression(DW_OP_LLVM_fragment, 1248, 32), !4044)
+  %.sroa.4.0..sroa_idx1 = getelementptr inbounds nuw i8, ptr %0, i64 152, !dbg !4045
+  store i32 %.sroa.46.0.copyload, ptr %.sroa.4.0..sroa_idx1, align 8, !dbg !4045
   br label %bb.d, !dbg !4046
 
 bb.h:                                             ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs3roNzt6HBWW_12regex_syntax3ast13ClassSetUnionEBF_.exit, %bb.b
@@ -651,8 +655,8 @@ begin_hunk_1_@_RNvCshxk5dXoXnx9_7___rustc19___rust_alloc_zeroed
 !3995 = !DILocation(line: 1268, column: 18, scope: !3934)
 !3996 = !DILocation(line: 1270, column: 5, scope: !3934)
 !3997 = !DILocation(line: 1266, column: 38, scope: !3934)
-!3998 = !DILocation(line: 1266, column: 18, scope: !3934)
-!3999 = !DILocation(line: 1266, column: 47, scope: !3934)
+!3998 = !DILocation(line: 1266, column: 47, scope: !3934)
+!3999 = !DILocation(line: 0, scope: !3934)
 !4000 = !DILocation(line: 0, scope: !1401, inlinedAt: !4001)
 !4001 = distinct !DILocation(line: 1270, column: 5, scope: !3934)
 !4002 = !DILocation(line: 0, scope: !1411, inlinedAt: !4003)

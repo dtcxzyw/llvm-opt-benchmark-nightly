@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 ; Function Attrs: nonlazybind uwtable
 define void @"_ZN4anki7backend9ankidroid92_$LT$impl$u20$anki..services..BackendAnkidroidService$u20$for$u20$anki..backend..Backend$GT$25sched_timing_today_legacy17h82c8f3245bae9ca7E"(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([112 x i8]) align 8 captures(none) dereferenceable(112) initializes((0, 20)) %0, ptr noalias noundef readonly align 8 captures(none) dereferenceable(8) %1, ptr noalias noundef readonly align 8 captures(none) dead_on_return dereferenceable(32) %2) unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [112 x i8], align 8               ; 11 uses
+  %i.a = alloca [112 x i8], align 8               ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.c = load i64, ptr %i.b, align 8, !noundef !4
@@ -240,15 +240,17 @@ bb.d:                                             ; preds = %bb.c
   %.sroa.627.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %.sroa.627.0.copyload = load i64, ptr %.sroa.627.0..sroa_idx, align 8
   %.sroa.728.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  %.sroa.930.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  %.sroa.636.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %0, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.636.0..sroa_idx.a, ptr noundef nonnull align 8 dereferenceable(80) %.sroa.930.0..sroa_idx, i64 80, i1 false)
-  %.sroa.333.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %.sroa.434.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %3 = load <2 x i32>, ptr %.sroa.728.0..sroa_idx, align 8
+  %.sroa.728.0.copyload = load i32, ptr %.sroa.728.0..sroa_idx, align 8
+  %.sroa.636.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.a, i64 28
+  %.sroa.829.0.copyload = load i32, ptr %.sroa.636.0..sroa_idx.a, align 4
+  %.sroa.333.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.a, i64 32
+  %.sroa.434.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %0, i64 32
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.434.0..sroa_idx.a, ptr noundef nonnull align 8 dereferenceable(80) %.sroa.333.0..sroa_idx.a, i64 80, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  store i64 %.sroa.627.0.copyload, ptr %.sroa.333.0..sroa_idx.a, align 8
-  store <2 x i32> %3, ptr %.sroa.434.0..sroa_idx.a, align 8
+  %.sroa.333.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store i64 %.sroa.627.0.copyload, ptr %.sroa.333.0..sroa_idx, align 8
+  %.sroa.434.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
+  store i32 %.sroa.728.0.copyload, ptr %.sroa.434.0..sroa_idx, align 8
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.c
@@ -257,12 +259,14 @@ bb.e:                                             ; preds = %bb.c
   %.sroa.617.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %.sroa.617.0.copyload = load i32, ptr %.sroa.617.0..sroa_idx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i32 %.sroa.617.0.copyload, ptr %4, align 8
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
+  %.sink37 = phi i64 [ 16, %bb.e ], [ 28, %bb.d ]
+  %.sroa.617.0.copyload.sink = phi i32 [ %.sroa.617.0.copyload, %bb.e ], [ %.sroa.829.0.copyload, %bb.d ]
   %.sroa.526.0.copyload.sink = phi i64 [ %.sroa.516.0.copyload, %bb.e ], [ %.sroa.526.0.copyload, %bb.d ]
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 %.sink37
+  store i32 %.sroa.617.0.copyload.sink, ptr %3, align 4
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.526.0.copyload.sink, ptr %i.r, align 8
   store i64 %i.q, ptr %0, align 8

@@ -204,7 +204,7 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae
   %i.pn = lshr exact i32 128, %i.pm
   %i.po = and i32 %i.pn, %i.pl
   %.not89 = icmp eq i32 %i.po, 0
-  br i1 %.not89, label %bb.al, label %bb.ah
+  br i1 %.not89, label %3, label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag
   %i.pp = lshr i32 %spec.select.i110, 3
@@ -299,18 +299,21 @@ bb.ak:                                            ; preds = %bb.aj
   %i.rx = tail call i32 @llvm.umin.i32(i32 %.pre221.pre273, i32 %i.rw)
   store i32 %i.rx, ptr %i.bx, align 8, !tbaa !141
   %i.ry = trunc i32 %i.rv to i16
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 65852
-  store i16 %i.ry, ptr %3, align 4, !tbaa !79
-  br label %bb.am
+  br label %bb.al
 
-bb.al:                                            ; preds = %bb.ag
+3:                                                ; preds = %bb.ag
   %4 = getelementptr inbounds nuw i8, ptr %0, i64 65852
   store i16 0, ptr %4, align 4, !tbaa !79
-  %i.rz = getelementptr inbounds nuw i8, ptr %0, i64 65850
-  store i16 0, ptr %i.rz, align 2, !tbaa !77
+  br label %bb.al
+
+bb.al:                                            ; preds = %bb.ak, %3
+  %.sink308 = phi i64 [ 65850, %3 ], [ 65852, %bb.ak ]
+  %.sink = phi i16 [ 0, %3 ], [ %i.ry, %bb.ak ]
+  %i.rz = getelementptr inbounds nuw i8, ptr %0, i64 %.sink308
+  store i16 %.sink, ptr %i.rz, align 2, !tbaa !116
   br label %bb.am
 
-bb.am:                                            ; preds = %bb.al, %bb.ak, %bb.aj
+bb.am:                                            ; preds = %bb.al, %bb.aj
   %i.sa = getelementptr inbounds nuw i8, ptr %0, i64 68294 ; 3 uses
   store i8 0, ptr %i.sa, align 2, !tbaa !170
   br i1 %i.ad, label %.lr.ph.preheader, label %.lr.ph171

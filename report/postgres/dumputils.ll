@@ -1,7 +1,7 @@
 inline.NumInlined: 6
 inline.NumDeleted: 1
 loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@SplitGUCList:bb.a
   %i.al = load i16, ptr %i.ak, align 2
   %i.am = and i16 %i.al, 8192
@@ -203,9 +203,9 @@ declare noundef i32 @chmod(ptr noundef readonly captures(none), i32 noundef) loc
 ; Function Attrs: nounwind uwtable
 define dso_local ptr @generate_restrict_key() local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [64 x i8], align 16               ; 4 uses
+  %i.a = alloca [64 x i8], align 16               ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
-  %i.b = tail call ptr @palloc(i64 noundef 64) #11 ; 3 uses
+  %i.b = tail call ptr @palloc(i64 noundef 64) #11 ; 4 uses
   %i.c = call zeroext i1 @pg_strong_random(ptr noundef nonnull %i.a, i64 noundef 64) #11
   br i1 %i.c, label %.preheader, label %bb.c
 
@@ -214,19 +214,31 @@ bb.b:                                             ; preds = %.preheader
   store i8 0, ptr %i.d, align 1
   br label %bb.c
 
-.preheader:                                       ; preds = %bb.a, %.preheader
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.preheader ], [ 0, %bb.a ] ; 3 uses
+.preheader:                                       ; preds = %bb.a, %.preheader.1
+  %indvars.iv = phi i64 [ %indvars.iv.next.1, %.preheader.1 ], [ 0, %bb.a ] ; 5 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv
-  %i.f = load i8, ptr %i.e, align 1
+  %i.f = load i8, ptr %i.e, align 2
   %i.g = urem i8 %i.f, 62
   %i.h = zext nneg i8 %i.g to i64
   %i.i = getelementptr inbounds nuw i8, ptr @restrict_chars, i64 %i.h
   %i.j = load i8, ptr %i.i, align 1
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 %indvars.iv
   store i8 %i.j, ptr %i.k, align 1
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, 63
-  br i1 %exitcond.not, label %bb.b, label %.preheader, !llvm.loop !27
+  %exitcond.not = icmp eq i64 %indvars.iv, 62
+  br i1 %exitcond.not, label %bb.b, label %.preheader.1
+
+.preheader.1:                                     ; preds = %.preheader
+  %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 2 uses
+  %0 = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.next
+  %1 = load i8, ptr %0, align 1
+  %2 = urem i8 %1, 62
+  %3 = zext nneg i8 %2 to i64
+  %4 = getelementptr inbounds nuw i8, ptr @restrict_chars, i64 %3
+  %5 = load i8, ptr %4, align 1
+  %6 = getelementptr inbounds nuw i8, ptr %i.b, i64 %indvars.iv.next
+  store i8 %5, ptr %6, align 1
+  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2
+  br label %.preheader
 
 bb.c:                                             ; preds = %bb.a, %bb.b
   %.0 = phi ptr [ %i.b, %bb.b ], [ null, %bb.a ]
@@ -343,5 +355,4 @@ attributes #15 = { cold noreturn nounwind }
 !24 = distinct !{!24, !5}
 !25 = distinct !{!25, !5, !26}
 !26 = !{!"llvm.loop.peeled.count", i32 1}
-!27 = distinct !{!27, !5}
 end_hunk_0

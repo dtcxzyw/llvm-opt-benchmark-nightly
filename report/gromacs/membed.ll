@@ -204,32 +204,35 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.c = load float, ptr %i.b, align 8, !tbaa !14
+  %i.c = load float, ptr %i.b, align 8, !tbaa !14 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
-  %3 = load <2 x float>, ptr %i.d, align 8, !tbaa !15
-  %4 = insertelement <2 x float> poison, float %i.c, i64 0
-  %5 = shufflevector <2 x float> %4, <2 x float> poison, <2 x i32> zeroinitializer
-  %6 = fadd <2 x float> %5, %3
-  store <2 x float> %6, ptr %i.d, align 8, !tbaa !15
-  br label %bb.e
+  %3 = load float, ptr %i.d, align 8, !tbaa !15
+  %4 = fadd float %i.c, %3
+  store float %4, ptr %i.d, align 8, !tbaa !15
+  br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.f = load i32, ptr %i.e, align 4, !tbaa !16
   %i.g = add nsw i32 %i.f, %i.a
   %.not15 = icmp sgt i32 %0, %i.g
-  br i1 %.not15, label %bb.e, label %bb.d
+  br i1 %.not15, label %bb.e, label %5
 
-bb.d:                                             ; preds = %bb.c
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 12
-  %8 = load float, ptr %7, align 4, !tbaa !17
-  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
-  %i.i = load float, ptr %i.h, align 8, !tbaa !15
-  %i.j = fadd float %8, %i.i
-  store float %i.j, ptr %i.h, align 8, !tbaa !15
+5:                                                ; preds = %bb.c
+  %6 = getelementptr inbounds nuw i8, ptr %1, i64 12
+  %7 = load float, ptr %6, align 4, !tbaa !17
+  br label %bb.d
+
+bb.d:                                             ; preds = %bb.b, %5
+  %.sink22 = phi i64 [ 24, %5 ], [ 20, %bb.b ]
+  %.sink20 = phi float [ %7, %5 ], [ %i.c, %bb.b ]
+  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 %.sink22 ; 2 uses
+  %i.i = load float, ptr %i.h, align 4, !tbaa !15
+  %i.j = fadd float %.sink20, %i.i
+  store float %i.j, ptr %i.h, align 4, !tbaa !15
   br label %bb.e
 
-bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b
+bb.e:                                             ; preds = %bb.d, %bb.c
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !18   ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 40

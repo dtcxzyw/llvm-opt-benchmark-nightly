@@ -204,9 +204,7 @@ bb.c:                                             ; preds = %bb.b
   store i32 -1, ptr %i.i, align 4, !tbaa !558
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 28
   store i32 0, ptr %i.j, align 4, !tbaa !561
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i32 0, ptr %2, align 8, !tbaa !560
-  br label %bb.f
+  br label %bb.e
 
 bb.d:                                             ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -215,12 +213,14 @@ bb.d:                                             ; preds = %bb.a
   %.not11 = icmp eq i32 %i.l, %i.m
   br i1 %.not11, label %bb.f, label %bb.e
 
-bb.e:                                             ; preds = %bb.d
-  %i.n = getelementptr inbounds nuw i8, ptr %0, i64 28
-  store i32 %i.m, ptr %i.n, align 4, !tbaa !561
+bb.e:                                             ; preds = %bb.d, %bb.c
+  %.sink13 = phi i64 [ 24, %bb.c ], [ 28, %bb.d ]
+  %.sink = phi i32 [ 0, %bb.c ], [ %i.m, %bb.d ]
+  %i.n = getelementptr inbounds nuw i8, ptr %0, i64 %.sink13
+  store i32 %.sink, ptr %i.n, align 4, !tbaa !194
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.d, %bb.e, %bb.b, %bb.c
+bb.f:                                             ; preds = %bb.e, %bb.d, %bb.b
   ret void
 }
 
@@ -623,7 +623,7 @@ bb.ae:                                            ; preds = %bb.ad
   br label %bb.by
 
 bb.af:                                            ; preds = %bb.ad
-  %i.ek = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
+  %i.ek = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.el = load i32, ptr %i.ek, align 8, !tbaa !560
   %i.em = icmp eq i32 %i.el, %.0.i
   br i1 %i.em, label %bb.ag, label %bb.ah
@@ -903,8 +903,7 @@ bb.bl:                                            ; preds = %bb.bk
   store i32 -1, ptr %i.cy, align 4, !tbaa !558
   %i.ij = getelementptr inbounds nuw i8, ptr %0, i64 28
   store i32 0, ptr %i.ij, align 4, !tbaa !561
-  store i32 0, ptr %i.ek, align 8, !tbaa !560
-  br label %_ZN5ImGui14TabBarCloseTabEP11ImGuiTabBarP12ImGuiTabItem.exit
+  br label %bb.bn
 
 bb.bm:                                            ; preds = %bb.bj
   %i.ik = load i32, ptr %i.dy, align 8, !tbaa !554
@@ -912,12 +911,14 @@ bb.bm:                                            ; preds = %bb.bj
   %.not11.i = icmp eq i32 %i.ik, %i.il
   br i1 %.not11.i, label %_ZN5ImGui14TabBarCloseTabEP11ImGuiTabBarP12ImGuiTabItem.exit, label %bb.bn
 
-bb.bn:                                            ; preds = %bb.bm
-  %i.im = getelementptr inbounds nuw i8, ptr %0, i64 28
-  store i32 %i.il, ptr %i.im, align 4, !tbaa !561
+bb.bn:                                            ; preds = %bb.bm, %bb.bl
+  %.sink13.i = phi i64 [ 24, %bb.bl ], [ 28, %bb.bm ]
+  %.sink.i249 = phi i32 [ 0, %bb.bl ], [ %i.il, %bb.bm ]
+  %i.im = getelementptr inbounds nuw i8, ptr %0, i64 %.sink13.i
+  store i32 %.sink.i249, ptr %i.im, align 4, !tbaa !194
   br label %_ZN5ImGui14TabBarCloseTabEP11ImGuiTabBarP12ImGuiTabItem.exit
 
-_ZN5ImGui14TabBarCloseTabEP11ImGuiTabBarP12ImGuiTabItem.exit: ; preds = %bb.bn, %bb.bm, %bb.bl, %bb.bk, %bb.bi
+_ZN5ImGui14TabBarCloseTabEP11ImGuiTabBarP12ImGuiTabItem.exit: ; preds = %bb.bn, %bb.bm, %bb.bk, %bb.bi
   br i1 %i.fy, label %bb.bo, label %bb.bp
 
 bb.bo:                                            ; preds = %_ZN5ImGui14TabBarCloseTabEP11ImGuiTabBarP12ImGuiTabItem.exit

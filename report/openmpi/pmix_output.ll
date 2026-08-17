@@ -203,11 +203,11 @@ bb.f:                                             ; preds = %bb.e
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.preheader.preheader, %.preheader.1, %.preheader.2, %.preheader.3, %.preheader.4, %.preheader.5, %.preheader.6, %.preheader.7, %.preheader.8, %.preheader.9, %.preheader.10, %.preheader.11, %.preheader.12, %.preheader.13, %.preheader.14, %.preheader.15, %.preheader.16, %.preheader.17, %.preheader.18, %.preheader.19, %.preheader.20, %.preheader.21, %.preheader.22, %.preheader.23, %.preheader.24, %.preheader.25, %.preheader.26, %.preheader.27, %.preheader.28, %.preheader.29, %.preheader.30, %.preheader.31, %.preheader.32, %.preheader.33, %.preheader.34, %.preheader.35, %.preheader.36, %.preheader.37, %.preheader.38, %.preheader.39, %.preheader.40, %.preheader.41, %.preheader.42, %.preheader.43, %.preheader.44, %.preheader.45, %.preheader.46, %.preheader.47, %.preheader.48, %.preheader.49, %.preheader.50, %.preheader.51, %.preheader.52, %.preheader.53, %.preheader.54, %.preheader.55, %.preheader.56, %.preheader.57, %.preheader.58, %.preheader.59, %.preheader.60, %.preheader.61, %.preheader.62, %.preheader.63, %bb.f
-  %.1 = phi i32 [ %0, %bb.f ], [ 0, %.preheader.preheader ], [ 1, %.preheader.1 ], [ 2, %.preheader.2 ], [ 3, %.preheader.3 ], [ 4, %.preheader.4 ], [ 5, %.preheader.5 ], [ 6, %.preheader.6 ], [ 7, %.preheader.7 ], [ 8, %.preheader.8 ], [ 9, %.preheader.9 ], [ 10, %.preheader.10 ], [ 11, %.preheader.11 ], [ 12, %.preheader.12 ], [ 13, %.preheader.13 ], [ 14, %.preheader.14 ], [ 15, %.preheader.15 ], [ 16, %.preheader.16 ], [ 17, %.preheader.17 ], [ 18, %.preheader.18 ], [ 19, %.preheader.19 ], [ 20, %.preheader.20 ], [ 21, %.preheader.21 ], [ 22, %.preheader.22 ], [ 23, %.preheader.23 ], [ 24, %.preheader.24 ], [ 25, %.preheader.25 ], [ 26, %.preheader.26 ], [ 27, %.preheader.27 ], [ 28, %.preheader.28 ], [ 29, %.preheader.29 ], [ 30, %.preheader.30 ], [ 31, %.preheader.31 ], [ 32, %.preheader.32 ], [ 33, %.preheader.33 ], [ 34, %.preheader.34 ], [ 35, %.preheader.35 ], [ 36, %.preheader.36 ], [ 37, %.preheader.37 ], [ 38, %.preheader.38 ], [ 39, %.preheader.39 ], [ 40, %.preheader.40 ], [ 41, %.preheader.41 ], [ 42, %.preheader.42 ], [ 43, %.preheader.43 ], [ 44, %.preheader.44 ], [ 45, %.preheader.45 ], [ 46, %.preheader.46 ], [ 47, %.preheader.47 ], [ 48, %.preheader.48 ], [ 49, %.preheader.49 ], [ 50, %.preheader.50 ], [ 51, %.preheader.51 ], [ 52, %.preheader.52 ], [ 53, %.preheader.53 ], [ 54, %.preheader.54 ], [ 55, %.preheader.55 ], [ 56, %.preheader.56 ], [ 57, %.preheader.57 ], [ 58, %.preheader.58 ], [ 59, %.preheader.59 ], [ 60, %.preheader.60 ], [ 61, %.preheader.61 ], [ 62, %.preheader.62 ], [ 63, %.preheader.63 ] ; 3 uses
+  %.1 = phi i32 [ %0, %bb.f ], [ 0, %.preheader.preheader ], [ 1, %.preheader.1 ], [ 2, %.preheader.2 ], [ 3, %.preheader.3 ], [ 4, %.preheader.4 ], [ 5, %.preheader.5 ], [ 6, %.preheader.6 ], [ 7, %.preheader.7 ], [ 8, %.preheader.8 ], [ 9, %.preheader.9 ], [ 10, %.preheader.10 ], [ 11, %.preheader.11 ], [ 12, %.preheader.12 ], [ 13, %.preheader.13 ], [ 14, %.preheader.14 ], [ 15, %.preheader.15 ], [ 16, %.preheader.16 ], [ 17, %.preheader.17 ], [ 18, %.preheader.18 ], [ 19, %.preheader.19 ], [ 20, %.preheader.20 ], [ 21, %.preheader.21 ], [ 22, %.preheader.22 ], [ 23, %.preheader.23 ], [ 24, %.preheader.24 ], [ 25, %.preheader.25 ], [ 26, %.preheader.26 ], [ 27, %.preheader.27 ], [ 28, %.preheader.28 ], [ 29, %.preheader.29 ], [ 30, %.preheader.30 ], [ 31, %.preheader.31 ], [ 32, %.preheader.32 ], [ 33, %.preheader.33 ], [ 34, %.preheader.34 ], [ 35, %.preheader.35 ], [ 36, %.preheader.36 ], [ 37, %.preheader.37 ], [ 38, %.preheader.38 ], [ 39, %.preheader.39 ], [ 40, %.preheader.40 ], [ 41, %.preheader.41 ], [ 42, %.preheader.42 ], [ 43, %.preheader.43 ], [ 44, %.preheader.44 ], [ 45, %.preheader.45 ], [ 46, %.preheader.46 ], [ 47, %.preheader.47 ], [ 48, %.preheader.48 ], [ 49, %.preheader.49 ], [ 50, %.preheader.50 ], [ 51, %.preheader.51 ], [ 52, %.preheader.52 ], [ 53, %.preheader.53 ], [ 54, %.preheader.54 ], [ 55, %.preheader.55 ], [ 56, %.preheader.56 ], [ 57, %.preheader.57 ], [ 58, %.preheader.58 ], [ 59, %.preheader.59 ], [ 60, %.preheader.60 ], [ 61, %.preheader.61 ], [ 62, %.preheader.62 ], [ 63, %.preheader.63 ] ; 2 uses
   %i.ee = icmp eq ptr %1, null
   %spec.store.select = select i1 %i.ee, ptr @verbose, ptr %1 ; 9 uses
   %i.ef = sext i32 %.1 to i64
-  %i.eg = getelementptr inbounds [72 x i8], ptr @pmix_output_info, i64 %i.ef ; 21 uses
+  %i.eg = getelementptr inbounds [72 x i8], ptr @pmix_output_info, i64 %i.ef ; 19 uses
   store i8 1, ptr %i.eg, align 8, !tbaa !39
   %i.eh = getelementptr inbounds nuw i8, ptr %spec.store.select, i64 152
   %i.ei = load i8, ptr %i.eh, align 8, !tbaa !50, !range !31, !noundef !32
@@ -273,11 +273,7 @@ bb.m:                                             ; preds = %bb.l
   store i8 0, ptr %i.fh, align 4, !tbaa !59
   %i.fi = getelementptr inbounds nuw i8, ptr %i.eg, i64 53
   store i8 0, ptr %i.fi, align 1, !tbaa !60
-  %2 = getelementptr inbounds nuw i8, ptr %i.eg, i64 54
-  store i8 0, ptr %2, align 2, !tbaa !43
-  %3 = getelementptr inbounds nuw i8, ptr %i.eg, i64 64
-  store i32 -1, ptr %3, align 8, !tbaa !46
-  br label %.thread
+  br label %bb.r
 
 bb.n:                                             ; preds = %bb.l
   br i1 %.057, label %bb.p, label %bb.o
@@ -310,27 +306,34 @@ bb.q:                                             ; preds = %bb.p
   %i.ft = getelementptr inbounds nuw i8, ptr %spec.store.select, i64 160
   %i.fu = load ptr, ptr %i.ft, align 8, !tbaa !8  ; 2 uses
   %i.fv = icmp eq ptr %i.fu, null
-  br i1 %i.fv, label %bb.r, label %.sink.split
+  br i1 %i.fv, label %2, label %.sink.split
 
 .sink.split:                                      ; preds = %bb.q, %bb.p
   %.sink84.a = phi ptr [ %i.e, %bb.p ], [ %i.fu, %bb.q ]
   %i.fw = tail call noalias ptr @strdup(ptr noundef nonnull %.sink84.a) #20
+  br label %2
+
+2:                                                ; preds = %.sink.split, %bb.q
+  %.sink82 = phi ptr [ null, %bb.q ], [ %i.fw, %.sink.split ]
+  %3 = getelementptr inbounds nuw i8, ptr %i.eg, i64 56
+  store ptr %.sink82, ptr %3, align 8, !tbaa !44
+  %4 = getelementptr inbounds nuw i8, ptr %spec.store.select, i64 157
+  %5 = load i8, ptr %4, align 1, !tbaa !62, !range !31, !noundef !32
   br label %bb.r
 
-bb.r:                                             ; preds = %.sink.split, %bb.q
-  %.sink82 = phi ptr [ null, %bb.q ], [ %i.fw, %.sink.split ]
-  %4 = getelementptr inbounds nuw i8, ptr %i.eg, i64 56
-  store ptr %.sink82, ptr %4, align 8, !tbaa !44
-  %5 = getelementptr inbounds nuw i8, ptr %spec.store.select, i64 157
-  %6 = load i8, ptr %5, align 1, !tbaa !62, !range !31, !noundef !32
-  %i.fx = getelementptr inbounds nuw i8, ptr %i.eg, i64 55
-  store i8 %6, ptr %i.fx, align 1, !tbaa !45
-  %i.fy = getelementptr inbounds nuw i8, ptr %i.eg, i64 68
-  store i32 0, ptr %i.fy, align 4, !tbaa !47
+bb.r:                                             ; preds = %2, %bb.m
+  %.sink89 = phi i64 [ 54, %bb.m ], [ 55, %2 ]
+  %.sink87 = phi i8 [ 0, %bb.m ], [ %5, %2 ]
+  %.sink86 = phi i64 [ 64, %bb.m ], [ 68, %2 ]
+  %.sink84 = phi i32 [ -1, %bb.m ], [ 0, %2 ]
+  %i.fx = getelementptr inbounds nuw i8, ptr %i.eg, i64 %.sink89
+  store i8 %.sink87, ptr %i.fx, align 1, !tbaa !19
+  %i.fy = getelementptr inbounds nuw i8, ptr %i.eg, i64 %.sink86
+  store i32 %.sink84, ptr %i.fy, align 4, !tbaa !18
   br label %.thread
 
-.thread:                                          ; preds = %.preheader.63, %bb.m, %bb.r
-  %.0 = phi i32 [ %.1, %bb.m ], [ %.1, %bb.r ], [ -29, %.preheader.63 ]
+.thread:                                          ; preds = %bb.r, %.preheader.63
+  %.0 = phi i32 [ -29, %.preheader.63 ], [ %.1, %bb.r ]
   ret i32 %.0
 }
 

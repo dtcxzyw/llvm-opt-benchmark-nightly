@@ -204,12 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.d = load i32, ptr %1, align 4, !tbaa !124    ; 2 uses
   %i.e = and i32 %i.d, 65535
   %i.f = icmp eq i32 %i.e, 0
-  br i1 %i.f, label %2, label %bb.e
-
-2:                                                ; preds = %bb.b
-  %3 = ashr exact i32 %i.d, 16
-  store i32 %3, ptr %1, align 4, !tbaa !124
-  br label %bb.e
+  br i1 %i.f, label %bb.d, label %bb.e
 
 bb.c:                                             ; preds = %bb.a
   %i.g = load i32, ptr %1, align 8, !tbaa !126    ; 2 uses
@@ -217,20 +212,29 @@ bb.c:                                             ; preds = %bb.a
   %i.i = icmp eq i32 %i.h, 0
   br i1 %i.i, label %bb.d, label %bb.e
 
-bb.d:                                             ; preds = %bb.c
-  %i.j = ashr exact i32 %i.g, 16
-  store i32 %i.j, ptr %1, align 8, !tbaa !126
+bb.d:                                             ; preds = %bb.c, %bb.b
+  %.sink115 = phi i32 [ %i.d, %bb.b ], [ %i.g, %bb.c ]
+  %.sink101.ph = phi i64 [ 12, %bb.b ], [ 16, %bb.c ]
+  %.sink99.ph = phi i64 [ 15, %bb.b ], [ 19, %bb.c ]
+  %.sink93.ph = phi i64 [ 13, %bb.b ], [ 17, %bb.c ]
+  %.sink91.ph = phi i64 [ 14, %bb.b ], [ 18, %bb.c ]
+  %.sink85.ph = phi i64 [ 16, %bb.b ], [ 20, %bb.c ]
+  %.sink83.ph = phi i64 [ 19, %bb.b ], [ 23, %bb.c ]
+  %.sink.ph = phi i64 [ 17, %bb.b ], [ 21, %bb.c ]
+  %.sink76.ph = phi i64 [ 18, %bb.b ], [ 22, %bb.c ]
+  %i.j = ashr exact i32 %.sink115, 16
+  store i32 %i.j, ptr %1, align 4, !tbaa !85
   br label %bb.e
 
-bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b, %2
-  %.sink101 = phi i64 [ 12, %bb.b ], [ 12, %2 ], [ 16, %bb.d ], [ 16, %bb.c ]
-  %.sink99 = phi i64 [ 15, %bb.b ], [ 15, %2 ], [ 19, %bb.d ], [ 19, %bb.c ]
-  %.sink93 = phi i64 [ 13, %bb.b ], [ 13, %2 ], [ 17, %bb.d ], [ 17, %bb.c ]
-  %.sink91 = phi i64 [ 14, %bb.b ], [ 14, %2 ], [ 18, %bb.d ], [ 18, %bb.c ]
-  %.sink85 = phi i64 [ 16, %bb.b ], [ 16, %2 ], [ 20, %bb.d ], [ 20, %bb.c ]
-  %.sink83 = phi i64 [ 19, %bb.b ], [ 19, %2 ], [ 23, %bb.d ], [ 23, %bb.c ]
-  %.sink = phi i64 [ 17, %bb.b ], [ 17, %2 ], [ 21, %bb.d ], [ 21, %bb.c ]
-  %.sink76 = phi i64 [ 18, %bb.b ], [ 18, %2 ], [ 22, %bb.d ], [ 22, %bb.c ]
+bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
+  %.sink101 = phi i64 [ 12, %bb.b ], [ 16, %bb.c ], [ %.sink101.ph, %bb.d ]
+  %.sink99 = phi i64 [ 15, %bb.b ], [ 19, %bb.c ], [ %.sink99.ph, %bb.d ]
+  %.sink93 = phi i64 [ 13, %bb.b ], [ 17, %bb.c ], [ %.sink93.ph, %bb.d ]
+  %.sink91 = phi i64 [ 14, %bb.b ], [ 18, %bb.c ], [ %.sink91.ph, %bb.d ]
+  %.sink85 = phi i64 [ 16, %bb.b ], [ 20, %bb.c ], [ %.sink85.ph, %bb.d ]
+  %.sink83 = phi i64 [ 19, %bb.b ], [ 23, %bb.c ], [ %.sink83.ph, %bb.d ]
+  %.sink = phi i64 [ 17, %bb.b ], [ 21, %bb.c ], [ %.sink.ph, %bb.d ]
+  %.sink76 = phi i64 [ 18, %bb.b ], [ 22, %bb.c ], [ %.sink76.ph, %bb.d ]
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
   %i.l = load <4 x i8>, ptr %i.k, align 1, !tbaa !9
   %i.m = shufflevector <4 x i8> %i.l, <4 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
@@ -474,7 +478,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.i, %bb.a
-  %.021 = phi ptr [ %i.h, %bb.a ], [ %i.aw, %bb.i ] ; 16 uses
+  %.021 = phi ptr [ %i.h, %bb.a ], [ %i.aw, %bb.i ] ; 15 uses
   %.0 = phi i32 [ %i.k, %bb.a ], [ %i.ay, %bb.i ]
   %i.m = load i32, ptr %1, align 8, !tbaa !133
   switch i32 %i.m, label %bb.d [
@@ -501,12 +505,7 @@ bb.e:                                             ; preds = %bb.d
   %i.r = load i32, ptr %.021, align 4, !tbaa !124 ; 2 uses
   %i.s = and i32 %i.r, 65535
   %i.t = icmp eq i32 %i.s, 0
-  br i1 %i.t, label %2, label %_ZN6bParse5bFile7swapLenEPc.exit
-
-2:                                                ; preds = %bb.e
-  %3 = ashr exact i32 %i.r, 16
-  store i32 %3, ptr %.021, align 4, !tbaa !124
-  br label %_ZN6bParse5bFile7swapLenEPc.exit
+  br i1 %i.t, label %bb.g, label %_ZN6bParse5bFile7swapLenEPc.exit
 
 bb.f:                                             ; preds = %bb.d
   %i.u = load i32, ptr %.021, align 8, !tbaa !126 ; 2 uses
@@ -514,20 +513,29 @@ bb.f:                                             ; preds = %bb.d
   %i.w = icmp eq i32 %i.v, 0
   br i1 %i.w, label %bb.g, label %_ZN6bParse5bFile7swapLenEPc.exit
 
-bb.g:                                             ; preds = %bb.f
-  %i.x = ashr exact i32 %i.u, 16
-  store i32 %i.x, ptr %.021, align 8, !tbaa !126
+bb.g:                                             ; preds = %bb.f, %bb.e
+  %.sink115.i = phi i32 [ %i.r, %bb.e ], [ %i.u, %bb.f ]
+  %.sink101.ph.i = phi i64 [ 12, %bb.e ], [ 16, %bb.f ]
+  %.sink99.ph.i = phi i64 [ 15, %bb.e ], [ 19, %bb.f ]
+  %.sink93.ph.i = phi i64 [ 13, %bb.e ], [ 17, %bb.f ]
+  %.sink91.ph.i = phi i64 [ 14, %bb.e ], [ 18, %bb.f ]
+  %.sink85.ph.i = phi i64 [ 16, %bb.e ], [ 20, %bb.f ]
+  %.sink83.ph.i = phi i64 [ 19, %bb.e ], [ 23, %bb.f ]
+  %.sink.ph.i = phi i64 [ 17, %bb.e ], [ 21, %bb.f ]
+  %.sink76.ph.i = phi i64 [ 18, %bb.e ], [ 22, %bb.f ]
+  %i.x = ashr exact i32 %.sink115.i, 16
+  store i32 %i.x, ptr %.021, align 4, !tbaa !85
   br label %_ZN6bParse5bFile7swapLenEPc.exit
 
-_ZN6bParse5bFile7swapLenEPc.exit:                 ; preds = %bb.e, %2, %bb.f, %bb.g
-  %.sink101.i = phi i64 [ 12, %bb.e ], [ 12, %2 ], [ 16, %bb.g ], [ 16, %bb.f ]
-  %.sink99.i = phi i64 [ 15, %bb.e ], [ 15, %2 ], [ 19, %bb.g ], [ 19, %bb.f ]
-  %.sink93.i = phi i64 [ 13, %bb.e ], [ 13, %2 ], [ 17, %bb.g ], [ 17, %bb.f ]
-  %.sink91.i = phi i64 [ 14, %bb.e ], [ 14, %2 ], [ 18, %bb.g ], [ 18, %bb.f ]
-  %.sink85.i = phi i64 [ 16, %bb.e ], [ 16, %2 ], [ 20, %bb.g ], [ 20, %bb.f ]
-  %.sink83.i = phi i64 [ 19, %bb.e ], [ 19, %2 ], [ 23, %bb.g ], [ 23, %bb.f ]
-  %.sink.i = phi i64 [ 17, %bb.e ], [ 17, %2 ], [ 21, %bb.g ], [ 21, %bb.f ]
-  %.sink76.i = phi i64 [ 18, %bb.e ], [ 18, %2 ], [ 22, %bb.g ], [ 22, %bb.f ]
+_ZN6bParse5bFile7swapLenEPc.exit:                 ; preds = %bb.e, %bb.f, %bb.g
+  %.sink101.i = phi i64 [ 12, %bb.e ], [ 16, %bb.f ], [ %.sink101.ph.i, %bb.g ]
+  %.sink99.i = phi i64 [ 15, %bb.e ], [ 19, %bb.f ], [ %.sink99.ph.i, %bb.g ]
+  %.sink93.i = phi i64 [ 13, %bb.e ], [ 17, %bb.f ], [ %.sink93.ph.i, %bb.g ]
+  %.sink91.i = phi i64 [ 14, %bb.e ], [ 18, %bb.f ], [ %.sink91.ph.i, %bb.g ]
+  %.sink85.i = phi i64 [ 16, %bb.e ], [ 20, %bb.f ], [ %.sink85.ph.i, %bb.g ]
+  %.sink83.i = phi i64 [ 19, %bb.e ], [ 23, %bb.f ], [ %.sink83.ph.i, %bb.g ]
+  %.sink.i = phi i64 [ 17, %bb.e ], [ 21, %bb.f ], [ %.sink.ph.i, %bb.g ]
+  %.sink76.i = phi i64 [ 18, %bb.e ], [ 22, %bb.f ], [ %.sink76.ph.i, %bb.g ]
   %i.y = getelementptr inbounds nuw i8, ptr %.021, i64 4 ; 2 uses
   %i.z = load <4 x i8>, ptr %i.y, align 1, !tbaa !9
   %i.aa = shufflevector <4 x i8> %i.z, <4 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
