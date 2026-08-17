@@ -204,6 +204,8 @@ bb.a:
   %i.f = alloca [144 x i8], align 16              ; 13 uses
   %i.g = tail call noundef i8 @_RNvNtCsgjwxzEoLG5s_12polars_error5abort20try_register_catcher(), !dbg !100728 ; 2 uses
   %.not = icmp eq i8 %i.g, 2, !dbg !100729
+  %.sink87.sroa.gep = getelementptr inbounds nuw i8, ptr %i.f, i64 8, !dbg !100731
+  %.sink87.sroa.gep88 = getelementptr inbounds nuw i8, ptr %i.f, i64 16, !dbg !100731
   br i1 %.not, label %bb.c, label %bb.b, !dbg !100731
 
 bb.b:                                             ; preds = %bb.a
@@ -446,8 +448,6 @@ bb.y:                                             ; preds = %bb.u, %bb.t, %_RINv
   store ptr %.sroa.01.i.sroa.0.2, ptr %i.f, align 16, !dbg !100915
   %.sroa.446.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.f, i64 8, !dbg !100915
   store ptr %.sroa.01.i.sroa.5.2, ptr %.sroa.446.0..sroa_idx, align 8, !dbg !100915
-  %.sroa.547.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.f, i64 16, !dbg !100915
-  store ptr %.sroa.01.i.sroa.6.2, ptr %.sroa.547.0..sroa_idx, align 16, !dbg !100915
   br label %bb.aa, !dbg !100918
 
 bb.z:                                             ; preds = %.body25
@@ -456,14 +456,15 @@ bb.z:                                             ; preds = %.body25
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ap) ]
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.aq) ]
   store ptr %i.ap, ptr %i.f, align 16, !dbg !100919
-  %2 = getelementptr inbounds nuw i8, ptr %i.f, i64 8, !dbg !100919
-  store ptr %i.aq, ptr %2, align 8, !dbg !100919
   br label %bb.aa, !dbg !100918
 
 bb.aa:                                            ; preds = %bb.z, %bb.y
+  %.sink87.sroa.phi = phi ptr [ %.sink87.sroa.gep, %bb.z ], [ %.sink87.sroa.gep88, %bb.y ]
+  %.sink85 = phi ptr [ %i.aq, %bb.z ], [ %.sroa.01.i.sroa.6.2, %bb.y ]
   %.sink83 = phi i64 [ -9223372036854775778, %bb.z ], [ %.sroa.5.2.i, %bb.y ] ; 3 uses
   %.sroa.5.0.copyload = phi ptr [ %i.aq, %bb.z ], [ %.sroa.01.i.sroa.5.2, %bb.y ] ; 10 uses
   %.sroa.03.0.copyload = phi ptr [ %i.ap, %bb.z ], [ %.sroa.01.i.sroa.0.2, %bb.y ] ; 8 uses
+  store ptr %.sink85, ptr %.sink87.sroa.phi, align 8, !dbg !100920
   %i.ar = getelementptr inbounds nuw i8, ptr %i.f, i64 112, !dbg !100920
   store i64 %.sink83, ptr %i.ar, align 16, !dbg !100920
   invoke void @_RNvNtCsgjwxzEoLG5s_12polars_error5abort18unregister_catcher()

@@ -204,9 +204,9 @@ bb.ae:                                            ; preds = %bb.ad, %._crit_edge
   br i1 %i.dn, label %bb.ag, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
-  %i.do = getelementptr inbounds nuw i8, ptr %3, i64 620
-  store <2 x float> splat (float 1.000000e+00), ptr %i.do, align 4
-  br label %bb.ah
+  %i.do = getelementptr inbounds nuw i8, ptr %3, i64 624
+  store float 1.000000e+00, ptr %i.do, align 8
+  br label %.sink.split
 
 bb.ag:                                            ; preds = %bb.ae
   %i.dp = load float, ptr %i.r, align 8
@@ -214,11 +214,16 @@ bb.ag:                                            ; preds = %bb.ae
   store float %i.dp, ptr %i.dq, align 4
   %i.dr = load i32, ptr %i.u, align 4
   %i.ds = sitofp i32 %i.dr to float
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 624
-  store float %i.ds, ptr %4, align 8
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.af, %bb.ag
+  %.sink122 = phi i64 [ 624, %bb.ag ], [ 620, %bb.af ]
+  %.sink = phi float [ %i.ds, %bb.ag ], [ 1.000000e+00, %bb.af ]
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 %.sink122
+  store float %.sink, ptr %4, align 4
   br label %bb.ah
 
-bb.ah:                                            ; preds = %bb.d, %bb.ag, %bb.af, %bb.a
+bb.ah:                                            ; preds = %.sink.split, %bb.d, %bb.a
   ret void
 }
 

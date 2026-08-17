@@ -204,7 +204,7 @@ bb.jv:                                            ; preds = %bb.jt, %.thread3478
 .lr.ph3849:                                       ; preds = %.preheader3694, %bb.kp
   %.603848 = phi ptr [ %.63, %bb.kp ], [ %.56.lcssa, %.preheader3694 ] ; 14 uses
   %.1541773847 = phi ptr [ %i.emj, %bb.kp ], [ %.144176.lcssa, %.preheader3694 ] ; 5 uses
-  %.743863846 = phi ptr [ %.94388, %bb.kp ], [ %.44383.lcssa, %.preheader3694 ] ; 20 uses
+  %.743863846 = phi ptr [ %.94388, %bb.kp ], [ %.44383.lcssa, %.preheader3694 ] ; 18 uses
   %.244043845 = phi i32 [ %i.emk, %bb.kp ], [ %.14403.lcssa, %.preheader3694 ]
   %.827343844 = phi <4 x float> [ %.112737, %bb.kp ], [ %.32729.lcssa, %.preheader3694 ] ; 12 uses
   %i.eif = load <4 x i32>, ptr %.1541773847, align 16, !tbaa !116
@@ -356,7 +356,7 @@ bb.ki:                                            ; preds = %bb.kh, %.thread3493
 bb.kj:                                            ; preds = %bb.ki
   switch i32 %i.b, label %bb.km [
     i32 4, label %bb.kk
-    i32 1, label %bb.kl
+    i32 1, label %11
   ]
 
 bb.kk:                                            ; preds = %bb.kj
@@ -371,23 +371,26 @@ bb.kk:                                            ; preds = %bb.kj
   store <4 x float> %i.ell, ptr %.743863846, align 16, !tbaa !116
   %i.elp = getelementptr inbounds nuw i8, ptr %.743863846, i64 16
   store <4 x float> %i.elm, ptr %i.elp, align 16, !tbaa !116
-  %11 = getelementptr inbounds nuw i8, ptr %.743863846, i64 32
-  store <4 x float> %i.eln, ptr %11, align 16, !tbaa !116
-  %12 = getelementptr inbounds nuw i8, ptr %.743863846, i64 48
-  store <4 x float> %i.elo, ptr %12, align 16, !tbaa !116
-  br label %bb.km
+  br label %bb.kl
 
-bb.kl:                                            ; preds = %bb.kj
+11:                                               ; preds = %bb.kj
   store <4 x float> %.52631, ptr %.743863846, align 1, !tbaa !116
-  %13 = getelementptr inbounds nuw [4 x i8], ptr %.743863846, i64 %i.k
-  store <4 x float> %.52625, ptr %13, align 1, !tbaa !116
-  %i.elq = getelementptr inbounds nuw i8, ptr %.743863846, i64 %.idx4545
-  store <4 x float> %.52619, ptr %i.elq, align 1, !tbaa !116
-  %i.elr = getelementptr inbounds nuw i8, ptr %.743863846, i64 %.idx4546
-  store <4 x float> %.52613, ptr %i.elr, align 1, !tbaa !116
+  %12 = getelementptr inbounds nuw [4 x i8], ptr %.743863846, i64 %i.k
+  store <4 x float> %.52625, ptr %12, align 1, !tbaa !116
+  br label %bb.kl
+
+bb.kl:                                            ; preds = %11, %bb.kk
+  %.sink4186 = phi i64 [ 32, %bb.kk ], [ %.idx4545, %11 ]
+  %.sink4184 = phi <4 x float> [ %i.eln, %bb.kk ], [ %.52619, %11 ]
+  %.sink4183 = phi i64 [ 48, %bb.kk ], [ %.idx4546, %11 ]
+  %.sink4181 = phi <4 x float> [ %i.elo, %bb.kk ], [ %.52613, %11 ]
+  %i.elq = getelementptr inbounds nuw i8, ptr %.743863846, i64 %.sink4186
+  store <4 x float> %.sink4184, ptr %i.elq, align 1, !tbaa !116
+  %i.elr = getelementptr inbounds nuw i8, ptr %.743863846, i64 %.sink4183
+  store <4 x float> %.sink4181, ptr %i.elr, align 1, !tbaa !116
   br label %bb.km
 
-bb.km:                                            ; preds = %bb.kk, %bb.kj, %bb.kl
+bb.km:                                            ; preds = %bb.kl, %bb.kj
   %i.els = getelementptr inbounds nuw i8, ptr %.743863846, i64 %.idx4542
   br label %bb.kp
 
@@ -790,7 +793,7 @@ bb.on:                                            ; preds = %bb.ol, %bb.oe, %.th
   %.605586 = phi ptr [ %.63, %bb.pp ], [ %.56.lcssa, %.preheader5405 ] ; 14 uses
   %.1563525585 = phi ptr [ %i.iii, %bb.pp ], [ %.146351.lcssa, %.preheader5405 ] ; 5 uses
   %.965875584 = phi ptr [ %.126590, %bb.pp ], [ %.56583.lcssa, %.preheader5405 ] ; 20 uses
-  %.766065583 = phi ptr [ %.96608, %bb.pp ], [ %.46603.lcssa, %.preheader5405 ] ; 24 uses
+  %.766065583 = phi ptr [ %.96608, %bb.pp ], [ %.46603.lcssa, %.preheader5405 ] ; 22 uses
   %.266245582 = phi i32 [ %i.inx, %bb.pp ], [ %.16623.lcssa, %.preheader5405 ]
   %.840785581 = phi <4 x float> [ %.114081, %bb.pp ], [ %.34073.lcssa, %.preheader5405 ] ; 12 uses
   %i.iib = load <4 x float>, ptr %.1563525585, align 16, !tbaa !116 ; 2 uses
@@ -936,7 +939,7 @@ bb.pb:                                            ; preds = %bb.pa
 bb.pc:                                            ; preds = %bb.pb
   switch i32 %i.b, label %bb.pf [
     i32 4, label %bb.pd
-    i32 1, label %bb.pe
+    i32 1, label %11
   ]
 
 bb.pd:                                            ; preds = %bb.pc
@@ -951,23 +954,26 @@ bb.pd:                                            ; preds = %bb.pc
   store <4 x float> %i.iky, ptr %.766065583, align 16, !tbaa !116
   %i.ilc = getelementptr inbounds nuw i8, ptr %.766065583, i64 16
   store <4 x float> %i.ikz, ptr %i.ilc, align 16, !tbaa !116
-  %11 = getelementptr inbounds nuw i8, ptr %.766065583, i64 32
-  store <4 x float> %i.ila, ptr %11, align 16, !tbaa !116
-  %12 = getelementptr inbounds nuw i8, ptr %.766065583, i64 48
-  store <4 x float> %i.ilb, ptr %12, align 16, !tbaa !116
-  br label %bb.pf
+  br label %bb.pe
 
-bb.pe:                                            ; preds = %bb.pc
+11:                                               ; preds = %bb.pc
   store <4 x float> %.53959, ptr %.766065583, align 1, !tbaa !116
-  %13 = getelementptr inbounds nuw [4 x i8], ptr %.766065583, i64 %i.k
-  store <4 x float> %.53953, ptr %13, align 1, !tbaa !116
-  %i.ild = getelementptr inbounds nuw i8, ptr %.766065583, i64 %.idx6885
-  store <4 x float> %.53947, ptr %i.ild, align 1, !tbaa !116
-  %i.ile = getelementptr inbounds nuw i8, ptr %.766065583, i64 %.idx6892
-  store <4 x float> %.53941, ptr %i.ile, align 1, !tbaa !116
+  %12 = getelementptr inbounds nuw [4 x i8], ptr %.766065583, i64 %i.k
+  store <4 x float> %.53953, ptr %12, align 1, !tbaa !116
+  br label %bb.pe
+
+bb.pe:                                            ; preds = %11, %bb.pd
+  %.sink6178 = phi i64 [ 32, %bb.pd ], [ %.idx6885, %11 ]
+  %.sink6176 = phi <4 x float> [ %i.ila, %bb.pd ], [ %.53947, %11 ]
+  %.sink6175 = phi i64 [ 48, %bb.pd ], [ %.idx6892, %11 ]
+  %.sink6173 = phi <4 x float> [ %i.ilb, %bb.pd ], [ %.53941, %11 ]
+  %i.ild = getelementptr inbounds nuw i8, ptr %.766065583, i64 %.sink6178
+  store <4 x float> %.sink6176, ptr %i.ild, align 1, !tbaa !116
+  %i.ile = getelementptr inbounds nuw i8, ptr %.766065583, i64 %.sink6175
+  store <4 x float> %.sink6173, ptr %i.ile, align 1, !tbaa !116
   br label %bb.pf
 
-bb.pf:                                            ; preds = %bb.pd, %bb.pc, %bb.pe
+bb.pf:                                            ; preds = %bb.pe, %bb.pc
   %i.ilf = getelementptr inbounds nuw i8, ptr %.766065583, i64 %.idx6884
   br label %bb.pp
 

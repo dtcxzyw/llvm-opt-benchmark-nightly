@@ -202,7 +202,7 @@ rb_Digest_SHA512_Last.exit:                       ; preds = %bb.d, %bb.g, %bb.h
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define ptr @rb_Digest_SHA384_End(ptr nofree noundef captures(none) %0, ptr nofree noundef writeonly captures(address_is_null, ret: address, provenance) %1) local_unnamed_addr #3 {
 bb.a:
-  %i.a = alloca [48 x i8], align 16               ; 10 uses
+  %i.a = alloca [48 x i8], align 16               ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
   %.not = icmp eq ptr %1, null
   br i1 %.not, label %bb.k, label %bb.b
@@ -304,9 +304,9 @@ rb_Digest_SHA384_Finish.exit:                     ; preds = %bb.d, %bb.g, %bb.h
 
 bb.i:                                             ; preds = %bb.i, %rb_Digest_SHA384_Finish.exit
   %.01116.idx = phi i64 [ 0, %rb_Digest_SHA384_Finish.exit ], [ %.01116.add.1.a, %bb.i ] ; 4 uses
-  %.01215 = phi ptr [ %1, %rb_Digest_SHA384_Finish.exit ], [ %i.bt, %bb.i ] ; 5 uses
+  %.01215 = phi ptr [ %1, %rb_Digest_SHA384_Finish.exit ], [ %i.bt, %bb.i ] ; 7 uses
   %.01116.ptr = getelementptr inbounds nuw i8, ptr %i.a, i64 %.01116.idx
-  %i.ax = load i8, ptr %.01116.ptr, align 2, !tbaa !17 ; 2 uses
+  %i.ax = load i8, ptr %.01116.ptr, align 1, !tbaa !17 ; 2 uses
   %i.ay = lshr i8 %i.ax, 4
   %i.az = zext nneg i8 %i.ay to i64
   %i.ba = getelementptr inbounds nuw i8, ptr @.str, i64 %i.az
@@ -314,28 +314,43 @@ bb.i:                                             ; preds = %bb.i, %rb_Digest_SH
   %i.bc = getelementptr inbounds nuw i8, ptr %.01215, i64 1
   store i8 %i.bb, ptr %.01215, align 1, !tbaa !17
   %i.bd = and i8 %i.ax, 15
-  %i.be = zext nneg i8 %i.bd to i64
+  %2 = zext nneg i8 %i.bd to i64
+  %3 = getelementptr inbounds nuw i8, ptr @.str, i64 %2
+  %4 = load i8, ptr %3, align 1, !tbaa !17
+  %5 = getelementptr inbounds nuw i8, ptr %.01215, i64 2
+  store i8 %4, ptr %i.bc, align 1, !tbaa !17
+  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 %.01116.idx
+  %.01116.ptr.1 = getelementptr inbounds nuw i8, ptr %6, i64 1
+  %7 = load i8, ptr %.01116.ptr.1, align 1, !tbaa !17 ; 2 uses
+  %8 = lshr i8 %7, 4
+  %i.be = zext nneg i8 %8 to i64
   %i.bf = getelementptr inbounds nuw i8, ptr @.str, i64 %i.be
   %i.bg = load i8, ptr %i.bf, align 1, !tbaa !17
-  %i.bh = getelementptr inbounds nuw i8, ptr %.01215, i64 2
-  store i8 %i.bg, ptr %i.bc, align 1, !tbaa !17
-  %i.bi = getelementptr inbounds nuw i8, ptr %i.a, i64 %.01116.idx
-  %.01116.ptr.1.a = getelementptr inbounds nuw i8, ptr %i.bi, i64 1
+  %i.bh = getelementptr inbounds nuw i8, ptr %.01215, i64 3
+  store i8 %i.bg, ptr %5, align 1, !tbaa !17
+  %9 = and i8 %7, 15
+  %10 = zext nneg i8 %9 to i64
+  %11 = getelementptr inbounds nuw i8, ptr @.str, i64 %10
+  %12 = load i8, ptr %11, align 1, !tbaa !17
+  %i.bi = getelementptr inbounds nuw i8, ptr %.01215, i64 4
+  store i8 %12, ptr %i.bh, align 1, !tbaa !17
+  %.01116.add.1 = add nuw nsw i64 %.01116.idx, 2  ; 2 uses
+  %.01116.ptr.1.a = getelementptr inbounds nuw i8, ptr %i.a, i64 %.01116.add.1
   %i.bj = load i8, ptr %.01116.ptr.1.a, align 1, !tbaa !17 ; 2 uses
   %i.bk = lshr i8 %i.bj, 4
   %i.bl = zext nneg i8 %i.bk to i64
   %i.bm = getelementptr inbounds nuw i8, ptr @.str, i64 %i.bl
   %i.bn = load i8, ptr %i.bm, align 1, !tbaa !17
-  %i.bo = getelementptr inbounds nuw i8, ptr %.01215, i64 3
-  store i8 %i.bn, ptr %i.bh, align 1, !tbaa !17
+  %i.bo = getelementptr inbounds nuw i8, ptr %.01215, i64 5
+  store i8 %i.bn, ptr %i.bi, align 1, !tbaa !17
   %i.bp = and i8 %i.bj, 15
   %i.bq = zext nneg i8 %i.bp to i64
   %i.br = getelementptr inbounds nuw i8, ptr @.str, i64 %i.bq
   %i.bs = load i8, ptr %i.br, align 1, !tbaa !17
-  %i.bt = getelementptr inbounds nuw i8, ptr %.01215, i64 4 ; 3 uses
+  %i.bt = getelementptr inbounds nuw i8, ptr %.01215, i64 6 ; 3 uses
   store i8 %i.bs, ptr %i.bo, align 1, !tbaa !17
-  %.01116.add.1.a = add nuw nsw i64 %.01116.idx, 2
-  %exitcond.not.1 = icmp eq i64 %.01116.idx, 46
+  %.01116.add.1.a = add nuw nsw i64 %.01116.idx, 3
+  %exitcond.not.1 = icmp eq i64 %.01116.add.1, 47
   br i1 %exitcond.not.1, label %bb.j, label %bb.i, !llvm.loop !23
 
 bb.j:                                             ; preds = %bb.i

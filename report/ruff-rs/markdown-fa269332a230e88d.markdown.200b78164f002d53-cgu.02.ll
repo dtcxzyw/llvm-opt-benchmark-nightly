@@ -201,9 +201,7 @@ bb.c:                                             ; preds = %bb.a
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 651
   store i8 %i.o, ptr %i.q, align 1, !alias.scope !213
   store i8 0, ptr %i.d, align 8, !alias.scope !213
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 652
-  store i8 1, ptr %2, align 4, !alias.scope !213
-  br label %.sink.split
+  br label %.sink.split.sink.split
 
 bb.d:                                             ; preds = %bb.b
   tail call void @_RNvMNtCs2KzzoC5ewhj_8markdown9tokenizerNtB2_9Tokenizer4exit(ptr noalias noundef nonnull align 8 dereferenceable(664) %1, i8 noundef 50)
@@ -272,13 +270,20 @@ _RNvMNtCs2KzzoC5ewhj_8markdown9tokenizerNtB2_9Tokenizer7attempt.exit: ; preds = 
   store i64 1, ptr %i.aj, align 8
   %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 344
   store i64 -1, ptr %i.ak, align 8
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 409
-  store i8 -92, ptr %3, align 1
+  br label %.sink.split.sink.split
+
+.sink.split.sink.split:                           ; preds = %_RNvMNtCs2KzzoC5ewhj_8markdown9tokenizerNtB2_9Tokenizer7attempt.exit, %bb.c
+  %.sink10 = phi i64 [ 652, %bb.c ], [ 409, %_RNvMNtCs2KzzoC5ewhj_8markdown9tokenizerNtB2_9Tokenizer7attempt.exit ]
+  %.sink8 = phi i8 [ 1, %bb.c ], [ -92, %_RNvMNtCs2KzzoC5ewhj_8markdown9tokenizerNtB2_9Tokenizer7attempt.exit ]
+  %.sink6.ph = phi i16 [ 93, %bb.c ], [ 345, %_RNvMNtCs2KzzoC5ewhj_8markdown9tokenizerNtB2_9Tokenizer7attempt.exit ]
+  %.sink.ph.ph = phi i64 [ -9223372036854775808, %bb.c ], [ -9223372036854775807, %_RNvMNtCs2KzzoC5ewhj_8markdown9tokenizerNtB2_9Tokenizer7attempt.exit ]
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 %.sink10
+  store i8 %.sink8, ptr %2, align 1
   br label %.sink.split
 
-.sink.split:                                      ; preds = %bb.d, %bb.e, %bb.c, %_RNvMNtCs2KzzoC5ewhj_8markdown9tokenizerNtB2_9Tokenizer7attempt.exit
-  %.sink6 = phi i16 [ 345, %_RNvMNtCs2KzzoC5ewhj_8markdown9tokenizerNtB2_9Tokenizer7attempt.exit ], [ 93, %bb.c ], [ 94, %bb.e ], [ 94, %bb.d ]
-  %.sink.ph = phi i64 [ -9223372036854775807, %_RNvMNtCs2KzzoC5ewhj_8markdown9tokenizerNtB2_9Tokenizer7attempt.exit ], [ -9223372036854775808, %bb.c ], [ -9223372036854775807, %bb.e ], [ -9223372036854775807, %bb.d ]
+.sink.split:                                      ; preds = %.sink.split.sink.split, %bb.d, %bb.e
+  %.sink6 = phi i16 [ 94, %bb.e ], [ 94, %bb.d ], [ %.sink6.ph, %.sink.split.sink.split ]
+  %.sink.ph = phi i64 [ -9223372036854775807, %bb.e ], [ -9223372036854775807, %bb.d ], [ %.sink.ph.ph, %.sink.split.sink.split ]
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i16 %.sink6, ptr %i.al, align 8
   br label %bb.k

@@ -204,7 +204,7 @@ bb.dx:                                            ; preds = %bb.dw, %.thread3497
 .lr.ph3764.i:                                     ; preds = %.preheader3687.i, %bb.er
   %.283763.i = phi ptr [ %.31.i, %bb.er ], [ %.24.lcssa.i, %.preheader3687.i ] ; 14 uses
   %.718603762.i = phi ptr [ %i.avb, %bb.er ], [ %.61859.lcssa.i, %.preheader3687.i ] ; 5 uses
-  %.419473761.i = phi ptr [ %.61949.i, %bb.er ], [ %.11944.lcssa.i, %.preheader3687.i ] ; 20 uses
+  %.419473761.i = phi ptr [ %.61949.i, %bb.er ], [ %.11944.lcssa.i, %.preheader3687.i ] ; 18 uses
   %.119573760.i = phi i32 [ %i.avc, %bb.er ], [ %.01956.lcssa.i, %.preheader3687.i ]
   %.833293759.i = phi <4 x float> [ %.113332.i, %bb.er ], [ %.33324.lcssa.i, %.preheader3687.i ] ; 12 uses
   %i.aqt = load <4 x i32>, ptr %.718603762.i, align 16, !tbaa !116
@@ -360,7 +360,7 @@ bb.ek:                                            ; preds = %bb.ej, %.thread3512
 bb.el:                                            ; preds = %bb.ek
   switch i32 %i.c, label %bb.eo [
     i32 4, label %bb.em
-    i32 1, label %bb.en
+    i32 1, label %12
   ]
 
 bb.em:                                            ; preds = %bb.el
@@ -375,23 +375,26 @@ bb.em:                                            ; preds = %bb.el
   store <4 x float> %i.aud, ptr %.419473761.i, align 16, !tbaa !116
   %i.auh = getelementptr inbounds nuw i8, ptr %.419473761.i, i64 16
   store <4 x float> %i.aue, ptr %i.auh, align 16, !tbaa !116
-  %12 = getelementptr inbounds nuw i8, ptr %.419473761.i, i64 32
-  store <4 x float> %i.auf, ptr %12, align 16, !tbaa !116
-  %13 = getelementptr inbounds nuw i8, ptr %.419473761.i, i64 48
-  store <4 x float> %i.aug, ptr %13, align 16, !tbaa !116
-  br label %bb.eo
+  br label %bb.en
 
-bb.en:                                            ; preds = %bb.el
+12:                                               ; preds = %bb.el
   store <4 x float> %.53255.i, ptr %.419473761.i, align 1, !tbaa !116
-  %14 = getelementptr inbounds nuw [4 x i8], ptr %.419473761.i, i64 %i.l
-  store <4 x float> %.53249.i, ptr %14, align 1, !tbaa !116
-  %i.aui = getelementptr inbounds nuw i8, ptr %.419473761.i, i64 %.idx2054.i
-  store <4 x float> %.53243.i, ptr %i.aui, align 1, !tbaa !116
-  %i.auj = getelementptr inbounds nuw i8, ptr %.419473761.i, i64 %.idx2055.i
-  store <4 x float> %.53237.i, ptr %i.auj, align 1, !tbaa !116
+  %13 = getelementptr inbounds nuw [4 x i8], ptr %.419473761.i, i64 %i.l
+  store <4 x float> %.53249.i, ptr %13, align 1, !tbaa !116
+  br label %bb.en
+
+bb.en:                                            ; preds = %12, %bb.em
+  %.sink4019.i = phi i64 [ 32, %bb.em ], [ %.idx2054.i, %12 ]
+  %.sink4017.i = phi <4 x float> [ %i.auf, %bb.em ], [ %.53243.i, %12 ]
+  %.sink4016.i = phi i64 [ 48, %bb.em ], [ %.idx2055.i, %12 ]
+  %.sink4014.i = phi <4 x float> [ %i.aug, %bb.em ], [ %.53237.i, %12 ]
+  %i.aui = getelementptr inbounds nuw i8, ptr %.419473761.i, i64 %.sink4019.i
+  store <4 x float> %.sink4017.i, ptr %i.aui, align 1, !tbaa !116
+  %i.auj = getelementptr inbounds nuw i8, ptr %.419473761.i, i64 %.sink4016.i
+  store <4 x float> %.sink4014.i, ptr %i.auj, align 1, !tbaa !116
   br label %bb.eo
 
-bb.eo:                                            ; preds = %bb.en, %bb.em, %bb.el
+bb.eo:                                            ; preds = %bb.en, %bb.el
   %i.auk = getelementptr inbounds nuw i8, ptr %.419473761.i, i64 %.idx2056.i
   br label %bb.er
 
@@ -794,7 +797,7 @@ bb.fr:                                            ; preds = %bb.fp, %bb.fi, %.th
   %.281855 = phi ptr [ %.31, %bb.gt ], [ %.24.lcssa, %.preheader1774 ] ; 14 uses
   %.726921854 = phi ptr [ %i.ble, %bb.gt ], [ %.62691.lcssa, %.preheader1774 ] ; 5 uses
   %.527881853 = phi ptr [ %.82791, %bb.gt ], [ %.12784.lcssa, %.preheader1774 ] ; 20 uses
-  %.428121852 = phi ptr [ %.62814, %bb.gt ], [ %.12809.lcssa, %.preheader1774 ] ; 24 uses
+  %.428121852 = phi ptr [ %.62814, %bb.gt ], [ %.12809.lcssa, %.preheader1774 ] ; 22 uses
   %.128221851 = phi i32 [ %i.bqx, %bb.gt ], [ %.02821.lcssa, %.preheader1774 ]
   %.813631850 = phi <4 x float> [ %.111366, %bb.gt ], [ %.31358.lcssa, %.preheader1774 ] ; 12 uses
   %i.bkx = load <4 x float>, ptr %.726921854, align 16, !tbaa !116 ; 2 uses
@@ -944,7 +947,7 @@ bb.gf:                                            ; preds = %bb.ge
 bb.gg:                                            ; preds = %bb.gf
   switch i32 %i.b, label %bb.gj [
     i32 4, label %bb.gh
-    i32 1, label %bb.gi
+    i32 1, label %11
   ]
 
 bb.gh:                                            ; preds = %bb.gg
@@ -959,23 +962,26 @@ bb.gh:                                            ; preds = %bb.gg
   store <4 x float> %i.bny, ptr %.428121852, align 16, !tbaa !116
   %i.boc = getelementptr inbounds nuw i8, ptr %.428121852, i64 16
   store <4 x float> %i.bnz, ptr %i.boc, align 16, !tbaa !116
-  %11 = getelementptr inbounds nuw i8, ptr %.428121852, i64 32
-  store <4 x float> %i.boa, ptr %11, align 16, !tbaa !116
-  %12 = getelementptr inbounds nuw i8, ptr %.428121852, i64 48
-  store <4 x float> %i.bob, ptr %12, align 16, !tbaa !116
-  br label %bb.gj
+  br label %bb.gi
 
-bb.gi:                                            ; preds = %bb.gg
+11:                                               ; preds = %bb.gg
   store <4 x float> %.51301, ptr %.428121852, align 1, !tbaa !116
-  %13 = getelementptr inbounds nuw [4 x i8], ptr %.428121852, i64 %i.k
-  store <4 x float> %.51295, ptr %13, align 1, !tbaa !116
-  %i.bod = getelementptr inbounds nuw i8, ptr %.428121852, i64 %.idx2985
-  store <4 x float> %.51289, ptr %i.bod, align 1, !tbaa !116
-  %i.boe = getelementptr inbounds nuw i8, ptr %.428121852, i64 %.idx2987
-  store <4 x float> %.51283, ptr %i.boe, align 1, !tbaa !116
+  %12 = getelementptr inbounds nuw [4 x i8], ptr %.428121852, i64 %i.k
+  store <4 x float> %.51295, ptr %12, align 1, !tbaa !116
+  br label %bb.gi
+
+bb.gi:                                            ; preds = %11, %bb.gh
+  %.sink2201 = phi i64 [ 32, %bb.gh ], [ %.idx2985, %11 ]
+  %.sink2199 = phi <4 x float> [ %i.boa, %bb.gh ], [ %.51289, %11 ]
+  %.sink2198 = phi i64 [ 48, %bb.gh ], [ %.idx2987, %11 ]
+  %.sink2196 = phi <4 x float> [ %i.bob, %bb.gh ], [ %.51283, %11 ]
+  %i.bod = getelementptr inbounds nuw i8, ptr %.428121852, i64 %.sink2201
+  store <4 x float> %.sink2199, ptr %i.bod, align 1, !tbaa !116
+  %i.boe = getelementptr inbounds nuw i8, ptr %.428121852, i64 %.sink2198
+  store <4 x float> %.sink2196, ptr %i.boe, align 1, !tbaa !116
   br label %bb.gj
 
-bb.gj:                                            ; preds = %bb.gh, %bb.gg, %bb.gi
+bb.gj:                                            ; preds = %bb.gi, %bb.gg
   %i.bof = getelementptr inbounds nuw i8, ptr %.428121852, i64 %.idx2989
   br label %bb.gt
 

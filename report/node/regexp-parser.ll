@@ -203,9 +203,7 @@ _ZN2v88internal12_GLOBAL__N_116RegExpParserImplIhE11ReportErrorENS0_11RegExpErro
   %i.ea = getelementptr inbounds nuw i8, ptr %0, i64 56
   %.val.i24.i.i = load i32, ptr %i.ea, align 8
   store i32 %.val.i24.i.i, ptr %i.dv, align 8
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 92
-  store i8 0, ptr %3, align 4
-  br label %_ZN2v88internal12_GLOBAL__N_116RegExpParserImplIhE12ParsePatternEv.exit
+  br label %bb.x
 
 _ZN2v88internal12_GLOBAL__N_116RegExpParserImplIhE24PatchNamedBackReferencesEv.exit.i: ; preds = %_ZN2v88internal12_GLOBAL__N_116RegExpParserImplIhE11ReportErrorENS0_11RegExpErrorE.exit25.i.i
   %.pre.i = load i8, ptr %i.b, align 1, !range !5
@@ -240,13 +238,16 @@ _ZNK2v88internal10RegExpAtom6lengthEv.exit.i:     ; preds = %bb.v
   %i.ep = icmp eq i32 %.val.i, %i.en
   br i1 %i.ep, label %bb.x, label %_ZN2v88internal12_GLOBAL__N_116RegExpParserImplIhE12ParsePatternEv.exit
 
-bb.x:                                             ; preds = %_ZNK2v88internal10RegExpAtom6lengthEv.exit.i
-  %i.eq = getelementptr inbounds nuw i8, ptr %0, i64 93
-  store i8 1, ptr %i.eq, align 1
+bb.x:                                             ; preds = %_ZNK2v88internal10RegExpAtom6lengthEv.exit.i, %_ZN2v88internal12_GLOBAL__N_116RegExpParserImplIhE11ReportErrorENS0_11RegExpErrorE.exit.sink.split.i.i
+  %.sink29.i = phi i64 [ 92, %_ZN2v88internal12_GLOBAL__N_116RegExpParserImplIhE11ReportErrorENS0_11RegExpErrorE.exit.sink.split.i.i ], [ 93, %_ZNK2v88internal10RegExpAtom6lengthEv.exit.i ]
+  %.sink.i = phi i8 [ 0, %_ZN2v88internal12_GLOBAL__N_116RegExpParserImplIhE11ReportErrorENS0_11RegExpErrorE.exit.sink.split.i.i ], [ 1, %_ZNK2v88internal10RegExpAtom6lengthEv.exit.i ]
+  %.0.ph.i = phi ptr [ null, %_ZN2v88internal12_GLOBAL__N_116RegExpParserImplIhE11ReportErrorENS0_11RegExpErrorE.exit.sink.split.i.i ], [ %i.a, %_ZNK2v88internal10RegExpAtom6lengthEv.exit.i ]
+  %i.eq = getelementptr inbounds nuw i8, ptr %0, i64 %.sink29.i
+  store i8 %.sink.i, ptr %i.eq, align 1
   br label %_ZN2v88internal12_GLOBAL__N_116RegExpParserImplIhE12ParsePatternEv.exit
 
-_ZN2v88internal12_GLOBAL__N_116RegExpParserImplIhE12ParsePatternEv.exit: ; preds = %bb.a, %_ZNSt3mapIPN2v88internal13RegExpCaptureEPNS1_8ZoneListIiEENS1_12_GLOBAL__N_116RegExpParserImplIhE21RegExpCaptureNameLessENS1_13ZoneAllocatorISt4pairIKS3_S6_EEEE4findERSD_.exit.thread.i.i, %_ZN2v88internal12_GLOBAL__N_116RegExpParserImplIhE11ReportErrorENS0_11RegExpErrorE.exit.sink.split.i.i, %_ZN2v88internal12_GLOBAL__N_116RegExpParserImplIhE24PatchNamedBackReferencesEv.exit.i, %_ZN2v88internal12_GLOBAL__N_116RegExpParserImplIhE24PatchNamedBackReferencesEv.exit.thread25.i, %_ZNK2v88internal10RegExpAtom6lengthEv.exit.i, %bb.x
-  %.0.i = phi ptr [ null, %_ZN2v88internal12_GLOBAL__N_116RegExpParserImplIhE24PatchNamedBackReferencesEv.exit.i ], [ null, %bb.a ], [ %i.a, %bb.x ], [ %i.a, %_ZNK2v88internal10RegExpAtom6lengthEv.exit.i ], [ %i.a, %_ZN2v88internal12_GLOBAL__N_116RegExpParserImplIhE24PatchNamedBackReferencesEv.exit.thread25.i ], [ null, %_ZNSt3mapIPN2v88internal13RegExpCaptureEPNS1_8ZoneListIiEENS1_12_GLOBAL__N_116RegExpParserImplIhE21RegExpCaptureNameLessENS1_13ZoneAllocatorISt4pairIKS3_S6_EEEE4findERSD_.exit.thread.i.i ], [ null, %_ZN2v88internal12_GLOBAL__N_116RegExpParserImplIhE11ReportErrorENS0_11RegExpErrorE.exit.sink.split.i.i ] ; 4 uses
+_ZN2v88internal12_GLOBAL__N_116RegExpParserImplIhE12ParsePatternEv.exit: ; preds = %bb.a, %_ZNSt3mapIPN2v88internal13RegExpCaptureEPNS1_8ZoneListIiEENS1_12_GLOBAL__N_116RegExpParserImplIhE21RegExpCaptureNameLessENS1_13ZoneAllocatorISt4pairIKS3_S6_EEEE4findERSD_.exit.thread.i.i, %_ZN2v88internal12_GLOBAL__N_116RegExpParserImplIhE24PatchNamedBackReferencesEv.exit.i, %_ZN2v88internal12_GLOBAL__N_116RegExpParserImplIhE24PatchNamedBackReferencesEv.exit.thread25.i, %_ZNK2v88internal10RegExpAtom6lengthEv.exit.i, %bb.x
+  %.0.i = phi ptr [ null, %_ZN2v88internal12_GLOBAL__N_116RegExpParserImplIhE24PatchNamedBackReferencesEv.exit.i ], [ null, %bb.a ], [ null, %_ZNSt3mapIPN2v88internal13RegExpCaptureEPNS1_8ZoneListIiEENS1_12_GLOBAL__N_116RegExpParserImplIhE21RegExpCaptureNameLessENS1_13ZoneAllocatorISt4pairIKS3_S6_EEEE4findERSD_.exit.thread.i.i ], [ %i.a, %_ZNK2v88internal10RegExpAtom6lengthEv.exit.i ], [ %i.a, %_ZN2v88internal12_GLOBAL__N_116RegExpParserImplIhE24PatchNamedBackReferencesEv.exit.thread25.i ], [ %.0.ph.i, %bb.x ] ; 4 uses
   %.val13 = load i8, ptr %i.b, align 1, !range !5, !noundef !6
   %i.er = trunc nuw i8 %.val13 to i1              ; 2 uses
   br i1 %i.er, label %bb.y, label %bb.z

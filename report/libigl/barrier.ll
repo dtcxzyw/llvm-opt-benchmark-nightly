@@ -204,9 +204,7 @@ _ZN6embree9pause_cpuEm.exit25.preheader:          ; preds = %_ZN6embree9pause_cp
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 24
   store volatile i32 0, ptr %i.s, align 8
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #10, !srcloc !13
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 20
-  store volatile i32 1, ptr %2, align 4
-  br label %.loopexit
+  br label %.loopexit.sink.split
 
 .preheader:                                       ; preds = %_ZN6embree9pause_cpuEm.exit25.preheader, %.preheader
   tail call void @llvm.x86.sse2.pause()
@@ -294,9 +292,7 @@ _ZN6embree9pause_cpuEm.exit21.preheader:          ; preds = %_ZN6embree9pause_cp
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 20
   store volatile i32 0, ptr %i.aw, align 4
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #10, !srcloc !19
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store volatile i32 1, ptr %3, align 8
-  br label %.loopexit
+  br label %.loopexit.sink.split
 
 .preheader29:                                     ; preds = %_ZN6embree9pause_cpuEm.exit21.preheader, %.preheader29
   tail call void @llvm.x86.sse2.pause()
@@ -343,7 +339,13 @@ bb.f:                                             ; preds = %bb.e
   %i.bm = icmp eq i32 %i.bl, 0
   br i1 %i.bm, label %.preheader32, label %.loopexit, !prof !14, !llvm.loop !22
 
-.loopexit:                                        ; preds = %.preheader32, %.preheader28, %bb.f, %bb.d, %._crit_edge, %._crit_edge44
+.loopexit.sink.split:                             ; preds = %._crit_edge44, %._crit_edge
+  %.sink52 = phi i64 [ 24, %._crit_edge ], [ 20, %._crit_edge44 ]
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 %.sink52
+  store volatile i32 1, ptr %2, align 4
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %.preheader32, %.preheader28, %.loopexit.sink.split, %bb.f, %bb.d
   ret void
 }
 

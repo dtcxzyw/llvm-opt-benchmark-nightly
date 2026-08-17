@@ -204,7 +204,7 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !864  ; 3 uses
   store ptr null, ptr %i.a, align 8, !tbaa !864
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 216
-  store i8 0, ptr %i.c, align 8, !tbaa !867
+  store i8 0, ptr %i.c, align 8, !tbaa !469
   %i.d = icmp eq ptr %i.b, null
   br i1 %i.d, label %bb.c, label %bb.b
 
@@ -607,12 +607,7 @@ bb.b:                                             ; preds = %bb.a
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !864  ; 2 uses
   store ptr %1, ptr %i.j, align 8, !tbaa !864
   %i.l = icmp eq ptr %1, null
-  br i1 %i.l, label %3, label %bb.c
-
-3:                                                ; preds = %bb.b
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 216
-  store i8 0, ptr %4, align 8, !tbaa !867
-  br label %_ZN7rocksdb19IteratorWrapperBaseINS_5SliceEE3SetEPNS_20InternalIteratorBaseIS1_EE.exit
+  br i1 %i.l, label %_ZN7rocksdb19IteratorWrapperBaseINS_5SliceEE6UpdateEv.exit.sink.split.i, label %bb.c
 
 bb.c:                                             ; preds = %.thread, %bb.b
   %i.m = phi ptr [ %i.i, %.thread ], [ %i.k, %bb.b ] ; 2 uses
@@ -640,13 +635,19 @@ bb.d:                                             ; preds = %bb.c
   store i64 %i.aa, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !tbaa !439
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 208
   store i8 0, ptr %i.ac, align 8, !tbaa !2948
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 209
-  store i8 0, ptr %5, align 1, !tbaa !2949
+  br label %_ZN7rocksdb19IteratorWrapperBaseINS_5SliceEE6UpdateEv.exit.sink.split.i
+
+_ZN7rocksdb19IteratorWrapperBaseINS_5SliceEE6UpdateEv.exit.sink.split.i: ; preds = %bb.d, %bb.b
+  %3 = phi ptr [ %i.m, %bb.d ], [ %i.k, %bb.b ]
+  %4 = phi ptr [ %i.n, %bb.d ], [ %i.j, %bb.b ]   ; 2 uses
+  %.sink3.i = phi i64 [ 25, %bb.d ], [ 32, %bb.b ]
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 %.sink3.i
+  store i8 0, ptr %5, align 1, !tbaa !469
   br label %_ZN7rocksdb19IteratorWrapperBaseINS_5SliceEE3SetEPNS_20InternalIteratorBaseIS1_EE.exit
 
-_ZN7rocksdb19IteratorWrapperBaseINS_5SliceEE3SetEPNS_20InternalIteratorBaseIS1_EE.exit: ; preds = %3, %bb.c, %bb.d
-  %6 = phi ptr [ %i.k, %3 ], [ %i.m, %bb.c ], [ %i.m, %bb.d ] ; 9 uses
-  %7 = phi ptr [ %i.j, %3 ], [ %i.n, %bb.c ], [ %i.n, %bb.d ] ; 2 uses
+_ZN7rocksdb19IteratorWrapperBaseINS_5SliceEE3SetEPNS_20InternalIteratorBaseIS1_EE.exit: ; preds = %bb.c, %_ZN7rocksdb19IteratorWrapperBaseINS_5SliceEE6UpdateEv.exit.sink.split.i
+  %6 = phi ptr [ %i.m, %bb.c ], [ %3, %_ZN7rocksdb19IteratorWrapperBaseINS_5SliceEE6UpdateEv.exit.sink.split.i ] ; 9 uses
+  %7 = phi ptr [ %i.n, %bb.c ], [ %4, %_ZN7rocksdb19IteratorWrapperBaseINS_5SliceEE6UpdateEv.exit.sink.split.i ] ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 287
   %i.ae = load i8, ptr %i.ad, align 1, !tbaa !2996, !range !470, !noundef !471
   %i.af = trunc nuw i8 %i.ae to i1
