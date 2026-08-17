@@ -204,7 +204,19 @@ bb.ai:                                            ; preds = %bb.ah
   store i64 %i.eo, ptr %i.i, align 8
   %i.eq = add i64 %.sroa.061.0, %i.h              ; 4 uses
   %i.er = icmp ugt i64 %i.eq, %4
-  br i1 %i.er, label %_ZN6brotli3enc19backward_references24SearchInStaticDictionary17h1873242b353a1e2aE.exit.critedge, label %bb.aj
+  br i1 %i.er, label %.loopexit.thread, label %bb.aj
+
+.loopexit.thread:                                 ; preds = %bb.ai
+  %12 = load i16, ptr %i.cz, align 2, !noundef !27
+  %13 = and i16 %12, 255
+  %14 = zext nneg i16 %13 to i64
+  %15 = getelementptr inbounds nuw [4 x i8], ptr %i.cq, i64 %14
+  %16 = trunc i64 %7 to i32
+  store i32 %16, ptr %15, align 4
+  %17 = load i16, ptr %i.cz, align 2, !noundef !27
+  %18 = add i16 %17, 1
+  store i16 %18, ptr %i.cz, align 2
+  br label %_ZN6brotli3enc19backward_references24SearchInStaticDictionary17h1873242b353a1e2aE.exit
 
 bb.aj:                                            ; preds = %bb.ai
   %i.es = icmp ult i64 %i.eq, %3
@@ -240,20 +252,8 @@ bb.an:                                            ; preds = %.loopexit, %bb.j
   %.not107 = icmp eq ptr %1, null
   br i1 %.not107, label %_ZN6brotli3enc19backward_references24SearchInStaticDictionary17h1873242b353a1e2aE.exit, label %bb.ao
 
-_ZN6brotli3enc19backward_references24SearchInStaticDictionary17h1873242b353a1e2aE.exit.critedge: ; preds = %bb.ai
-  %12 = load i16, ptr %i.cz, align 2, !noundef !27
-  %13 = and i16 %12, 255
-  %14 = zext nneg i16 %13 to i64
-  %15 = getelementptr inbounds nuw [4 x i8], ptr %i.cq, i64 %14
-  %16 = trunc i64 %7 to i32
-  store i32 %16, ptr %15, align 4
-  %17 = load i16, ptr %i.cz, align 2, !noundef !27
-  %18 = add i16 %17, 1
-  store i16 %18, ptr %i.cz, align 2
-  br label %_ZN6brotli3enc19backward_references24SearchInStaticDictionary17h1873242b353a1e2aE.exit
-
-_ZN6brotli3enc19backward_references24SearchInStaticDictionary17h1873242b353a1e2aE.exit: ; preds = %_ZN6brotli3enc19backward_references24SearchInStaticDictionary17h1873242b353a1e2aE.exit.critedge, %.loopexit, %bb.aw, %bb.av, %bb.au, %bb.aq, %bb.an, %bb.j
-  %.sroa.027.7 = phi i1 [ true, %bb.j ], [ false, %bb.an ], [ false, %bb.aq ], [ %.sroa.05.1.i, %bb.au ], [ %.sroa.05.1.i, %bb.av ], [ true, %bb.aw ], [ true, %.loopexit ], [ true, %_ZN6brotli3enc19backward_references24SearchInStaticDictionary17h1873242b353a1e2aE.exit.critedge ]
+_ZN6brotli3enc19backward_references24SearchInStaticDictionary17h1873242b353a1e2aE.exit: ; preds = %.loopexit.thread, %.loopexit, %bb.aw, %bb.av, %bb.au, %bb.aq, %bb.an, %bb.j
+  %.sroa.027.7 = phi i1 [ true, %bb.j ], [ false, %bb.an ], [ false, %bb.aq ], [ %.sroa.05.1.i, %bb.au ], [ %.sroa.05.1.i, %bb.av ], [ true, %bb.aw ], [ true, %.loopexit ], [ true, %.loopexit.thread ]
   ret i1 %.sroa.027.7
 
 bb.ao:                                            ; preds = %bb.an

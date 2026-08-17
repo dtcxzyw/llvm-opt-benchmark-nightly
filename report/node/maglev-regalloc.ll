@@ -203,7 +203,6 @@ _ZNK2v88internal11RegListBaseINS0_8RegisterEE3hasES2_.exit.thread.i.i.i.i.10: ; 
 _ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratorppEv.exit.i.i.10: ; preds = %_ZNK2v88internal11RegListBaseINS0_8RegisterEE3hasES2_.exit.thread.i.i.i.i.10, %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratorppEv.exit.i.i.9
   %.0.i.i.i.i.10 = phi i64 [ %i.cm, %_ZNK2v88internal11RegListBaseINS0_8RegisterEE3hasES2_.exit.thread.i.i.i.i.10 ], [ 2, %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratorppEv.exit.i.i.9 ]
   store i64 %.0.i.i.i.i.10, ptr %i.cf, align 8
-  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 144
   %.sroa.0.0.copyload.i.i.i.i.i.11 = load i16, ptr %i.e, align 8
   %.not.i.i.i.i.11 = icmp sgt i16 %.sroa.0.0.copyload.i.i.i.i.i.11, -1
   br i1 %.not.i.i.i.i.11, label %_ZNK2v88internal11RegListBaseINS0_8RegisterEE3hasES2_.exit.thread.i.i.i.i.11, label %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratorppEv.exit.i.i.11
@@ -221,6 +220,7 @@ _ZNK2v88internal11RegListBaseINS0_8RegisterEE3hasES2_.exit.thread.i.i.i.i.11: ; 
 
 _ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratorppEv.exit.i.i.11: ; preds = %_ZNK2v88internal11RegListBaseINS0_8RegisterEE3hasES2_.exit.thread.i.i.i.i.11, %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratorppEv.exit.i.i.10
   %.0.i.i.i.i.11 = phi i64 [ %i.cs, %_ZNK2v88internal11RegListBaseINS0_8RegisterEE3hasES2_.exit.thread.i.i.i.i.11 ], [ 2, %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratorppEv.exit.i.i.10 ]
+  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 144
   store i64 %.0.i.i.i.i.11, ptr %3, align 8
   %i.ct = getelementptr inbounds nuw i8, ptr %i.b, i64 152
   %i.cu = getelementptr inbounds nuw i8, ptr %0, i64 264
@@ -506,7 +506,6 @@ _ZNK2v88internal11RegListBaseINS0_8RegisterEE3hasES2_.exit.thread.i.i.i.i.10: ; 
 _ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratorppEv.exit.i.i.10: ; preds = %_ZNK2v88internal11RegListBaseINS0_8RegisterEE3hasES2_.exit.thread.i.i.i.i.10, %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratorppEv.exit.i.i.9
   %.0.i.i.i.i.10 = phi i64 [ %i.ct, %_ZNK2v88internal11RegListBaseINS0_8RegisterEE3hasES2_.exit.thread.i.i.i.i.10 ], [ 2, %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratorppEv.exit.i.i.9 ]
   store i64 %.0.i.i.i.i.10, ptr %i.cm, align 8
-  %3 = getelementptr inbounds nuw i8, ptr %i.j, i64 88
   %.sroa.0.0.copyload.i.i.i.i.i.11 = load i16, ptr %i.l, align 8
   %.not.i.i.i.i.11 = icmp sgt i16 %.sroa.0.0.copyload.i.i.i.i.i.11, -1
   br i1 %.not.i.i.i.i.11, label %_ZNK2v88internal11RegListBaseINS0_8RegisterEE3hasES2_.exit.thread.i.i.i.i.11, label %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratorppEv.exit.i.i.11
@@ -524,6 +523,7 @@ _ZNK2v88internal11RegListBaseINS0_8RegisterEE3hasES2_.exit.thread.i.i.i.i.11: ; 
 
 _ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratorppEv.exit.i.i.11: ; preds = %_ZNK2v88internal11RegListBaseINS0_8RegisterEE3hasES2_.exit.thread.i.i.i.i.11, %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratorppEv.exit.i.i.10
   %.0.i.i.i.i.11 = phi i64 [ %i.cz, %_ZNK2v88internal11RegListBaseINS0_8RegisterEE3hasES2_.exit.thread.i.i.i.i.11 ], [ 2, %_ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratorppEv.exit.i.i.10 ]
+  %3 = getelementptr inbounds nuw i8, ptr %i.j, i64 88
   store i64 %.0.i.i.i.i.11, ptr %3, align 8
   %i.da = getelementptr inbounds nuw i8, ptr %i.j, i64 96
   %i.db = getelementptr inbounds nuw i8, ptr %0, i64 264
