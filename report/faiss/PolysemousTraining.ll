@@ -203,21 +203,21 @@ bb.a:
   %.val4 = load ptr, ptr %i.c, align 8
   %i.d = sext i32 %spec.select.i to i64           ; 2 uses
   %i.e = getelementptr inbounds [4 x i8], ptr %1, i64 %i.d
+  %4 = load i32, ptr %i.e, align 4, !tbaa !13     ; 2 uses
   %i.f = sext i32 %spec.select13.i to i64         ; 2 uses
   %i.g = getelementptr inbounds [4 x i8], ptr %1, i64 %i.f
+  %5 = load i32, ptr %i.g, align 4, !tbaa !13     ; 2 uses
   %i.h = zext i32 %spec.select13.i to i64         ; 5 uses
   %i.i = zext i32 %spec.select.i to i64           ; 5 uses
   %wide.trip.count.i.i.i = zext nneg i32 %.val to i64 ; 7 uses
   %i.j = mul nuw nsw i32 %.val, %.val
   %i.k = zext nneg i32 %i.j to i64
-  %4 = load i32, ptr %i.e, align 4, !tbaa !13     ; 2 uses
-  %5 = load i32, ptr %i.g, align 4, !tbaa !13     ; 2 uses
   br label %.lr.ph.i.us.i
 
 .lr.ph.i.us.i:                                    ; preds = %bb.i, %.lr.ph.i
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.i ], [ 0, %.lr.ph.i ] ; 5 uses
-  %.017.us.i = phi double [ %.1.us.i, %bb.i ], [ 0.000000e+00, %.lr.ph.i ]
-  %.02215.us.i = phi ptr [ %i.dl, %bb.i ], [ %.val4, %.lr.ph.i ] ; 3 uses
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.i ] ; 5 uses
+  %.017.us.i = phi double [ 0.000000e+00, %.lr.ph.i ], [ %.1.us.i, %bb.i ]
+  %.02215.us.i = phi ptr [ %.val4, %.lr.ph.i ], [ %i.dl, %bb.i ] ; 3 uses
   %i.l = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv.i
   %i.m = load i32, ptr %i.l, align 4, !tbaa !13   ; 4 uses
   %i.n = icmp eq i64 %indvars.iv.i, %i.i
@@ -399,18 +399,18 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %i.dk = getelementptr inbounds nuw [4 x i8], ptr %.0334.us.i.us.i, i64 %wide.trip.count.i.i.i
   %indvars.iv.next11.i.us.i = add nuw nsw i64 %indvars.iv10.i.us.i, 1 ; 2 uses
   %exitcond14.not.i.us.i = icmp eq i64 %indvars.iv.next11.i.us.i, %wide.trip.count.i.i.i
-  br i1 %exitcond14.not.i.us.i, label %_ZNK5faiss12_GLOBAL__N_114Score3ComputerIfdE14update_i_planeEPKiiiiiPKf.exit.loopexit.us.i, label %.lr.ph6.split.us.i.us.i, !llvm.loop !187
+  br i1 %exitcond14.not.i.us.i, label %_ZNK5faiss12_GLOBAL__N_114Score3ComputerIfdE14update_i_planeEPKiiiiiPKf.exit.loopexit.i, label %.lr.ph6.split.us.i.us.i, !llvm.loop !187
 
-bb.i:                                             ; preds = %_ZNK5faiss12_GLOBAL__N_114Score3ComputerIfdE14update_i_planeEPKiiiiiPKf.exit.loopexit.us.i, %_ZNK5faiss12_GLOBAL__N_114Score3ComputerIfdE14update_i_crossEPKiiiiiPKf.exit.us.i
-  %.1.us.i = phi double [ %6, %_ZNK5faiss12_GLOBAL__N_114Score3ComputerIfdE14update_i_planeEPKiiiiiPKf.exit.loopexit.us.i ], [ %i.cm, %_ZNK5faiss12_GLOBAL__N_114Score3ComputerIfdE14update_i_crossEPKiiiiiPKf.exit.us.i ] ; 2 uses
+_ZNK5faiss12_GLOBAL__N_114Score3ComputerIfdE14update_i_planeEPKiiiiiPKf.exit.loopexit.i: ; preds = %..loopexit_crit_edge.us.i.us.i
+  %6 = fadd double %i.cm, %.5.us.i.us.i
+  br label %bb.i
+
+bb.i:                                             ; preds = %_ZNK5faiss12_GLOBAL__N_114Score3ComputerIfdE14update_i_planeEPKiiiiiPKf.exit.loopexit.i, %_ZNK5faiss12_GLOBAL__N_114Score3ComputerIfdE14update_i_crossEPKiiiiiPKf.exit.us.i
+  %.1.us.i = phi double [ %6, %_ZNK5faiss12_GLOBAL__N_114Score3ComputerIfdE14update_i_planeEPKiiiiiPKf.exit.loopexit.i ], [ %i.cm, %_ZNK5faiss12_GLOBAL__N_114Score3ComputerIfdE14update_i_crossEPKiiiiiPKf.exit.us.i ] ; 2 uses
   %i.dl = getelementptr inbounds nuw [4 x i8], ptr %.02215.us.i, i64 %i.k
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i.i.i
   br i1 %exitcond.not.i, label %_ZNK5faiss12_GLOBAL__N_114Score3ComputerIfdE14compute_updateEPKiii.exit, label %.lr.ph.i.us.i, !llvm.loop !188
-
-_ZNK5faiss12_GLOBAL__N_114Score3ComputerIfdE14update_i_planeEPKiiiiiPKf.exit.loopexit.us.i: ; preds = %..loopexit_crit_edge.us.i.us.i
-  %6 = fadd double %i.cm, %.5.us.i.us.i
-  br label %bb.i
 
 _ZNK5faiss12_GLOBAL__N_114Score3ComputerIfdE14compute_updateEPKiii.exit: ; preds = %bb.i, %bb.a
   %.0.lcssa.i = phi double [ 0.000000e+00, %bb.a ], [ %.1.us.i, %bb.i ]

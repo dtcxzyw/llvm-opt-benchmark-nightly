@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %_RNvMNtCs6JMX4GRUq9
 _RNvMNtCs6JMX4GRUq9U_4core5sliceSNtCs5EcwQX7phGK_5uu_ls8PathData12split_at_mutBw_.exit11._crit_edge: ; preds = %_RNvMNtCs6JMX4GRUq9U_4core5sliceSNtCs5EcwQX7phGK_5uu_ls8PathData12split_at_mutBw_.exit11, %_RNvMNtCs6JMX4GRUq9U_4core5sliceSNtCs5EcwQX7phGK_5uu_ls8PathData12split_at_mutBw_.exit11.preheader.a
   ret void
 
-_RNvMNtCs6JMX4GRUq9U_4core5sliceSNtCs5EcwQX7phGK_5uu_ls8PathData12split_at_mutBw_.exit11: ; preds = %_RNvMNtCs6JMX4GRUq9U_4core5sliceSNtCs5EcwQX7phGK_5uu_ls8PathData12split_at_mutBw_.exit11, %.lr.ph.preheader
+_RNvMNtCs6JMX4GRUq9U_4core5sliceSNtCs5EcwQX7phGK_5uu_ls8PathData12split_at_mutBw_.exit11: ; preds = %.lr.ph.preheader, %_RNvMNtCs6JMX4GRUq9U_4core5sliceSNtCs5EcwQX7phGK_5uu_ls8PathData12split_at_mutBw_.exit11
   %.sroa.0.016 = phi i64 [ %i.ca, %_RNvMNtCs6JMX4GRUq9U_4core5sliceSNtCs5EcwQX7phGK_5uu_ls8PathData12split_at_mutBw_.exit11 ], [ 0, %.lr.ph.preheader ] ; 3 uses
   %i.b = xor i64 %.sroa.0.016, -1
   %i.c = getelementptr inbounds nuw [304 x i8], ptr %0, i64 %.sroa.0.016 ; 20 uses
