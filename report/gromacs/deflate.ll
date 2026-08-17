@@ -201,44 +201,35 @@ bb.h:                                             ; preds = %.thread149
   %i.ca = add i16 %i.bz, 1
   store i16 %i.ca, ptr %i.by, align 4, !tbaa !8
   %i.cb = icmp ult i16 %i.bt, 256
-  br i1 %i.cb, label %2, label %5
-
-2:                                                ; preds = %bb.h
-  %3 = zext nneg i16 %i.bt to i64
-  %4 = getelementptr inbounds nuw i8, ptr @_dist_code, i64 %3
-  br label %10
-
-5:                                                ; preds = %bb.h
-  %6 = lshr i16 %i.bt, 7
-  %7 = zext nneg i16 %6 to i64
-  %8 = getelementptr inbounds nuw i8, ptr @_dist_code, i64 %7
-  %9 = getelementptr inbounds nuw i8, ptr %8, i64 256
-  br label %10
-
-10:                                               ; preds = %5, %2
-  %.in.in = phi ptr [ %4, %2 ], [ %9, %5 ]
+  %2 = zext nneg i16 %i.bt to i64
+  %3 = getelementptr inbounds nuw i8, ptr @_dist_code, i64 %2
+  %4 = lshr i16 %i.bt, 7
+  %5 = zext nneg i16 %4 to i64
+  %6 = getelementptr inbounds nuw i8, ptr @_dist_code, i64 %5
+  %7 = getelementptr inbounds nuw i8, ptr %6, i64 256
+  %.in.in = select i1 %i.cb, ptr %3, ptr %7
   %.in = load i8, ptr %.in.in, align 1, !tbaa !8
-  %11 = zext i8 %.in to i64
-  %12 = getelementptr inbounds nuw [4 x i8], ptr %i.t, i64 %11 ; 2 uses
-  %13 = load i16, ptr %12, align 4, !tbaa !8
-  %14 = add i16 %13, 1
-  store i16 %14, ptr %12, align 4, !tbaa !8
-  %15 = load i32, ptr %i.n, align 4, !tbaa !110
-  %16 = load i32, ptr %i.q, align 8, !tbaa !41
-  %17 = add i32 %16, -1
-  %18 = icmp eq i32 %15, %17                      ; 2 uses
-  %19 = load i32, ptr %i.l, align 8, !tbaa !73    ; 4 uses
-  %20 = load i32, ptr %i.a, align 4, !tbaa !70
-  %21 = sub i32 %20, %19                          ; 2 uses
-  store i32 %21, ptr %i.a, align 4, !tbaa !70
-  %22 = load i32, ptr %i.u, align 8, !tbaa !61
-  %.not141 = icmp ule i32 %19, %22
-  %23 = icmp ugt i32 %21, 2
-  %or.cond144 = select i1 %.not141, i1 %23, i1 false
+  %8 = zext i8 %.in to i64
+  %9 = getelementptr inbounds nuw [4 x i8], ptr %i.t, i64 %8 ; 2 uses
+  %10 = load i16, ptr %9, align 4, !tbaa !8
+  %11 = add i16 %10, 1
+  store i16 %11, ptr %9, align 4, !tbaa !8
+  %12 = load i32, ptr %i.n, align 4, !tbaa !110
+  %13 = load i32, ptr %i.q, align 8, !tbaa !41
+  %14 = add i32 %13, -1
+  %15 = icmp eq i32 %12, %14                      ; 2 uses
+  %16 = load i32, ptr %i.l, align 8, !tbaa !73    ; 4 uses
+  %17 = load i32, ptr %i.a, align 4, !tbaa !70
+  %18 = sub i32 %17, %16                          ; 2 uses
+  store i32 %18, ptr %i.a, align 4, !tbaa !70
+  %19 = load i32, ptr %i.u, align 8, !tbaa !61
+  %.not141 = icmp ule i32 %16, %19
+  %20 = icmp ugt i32 %18, 2
+  %or.cond144 = select i1 %.not141, i1 %20, i1 false
   br i1 %or.cond144, label %bb.i, label %bb.k
 
-bb.i:                                             ; preds = %10
-  %i.cc = add i32 %19, -1                         ; 2 uses
+bb.i:                                             ; preds = %bb.h
+  %i.cc = add i32 %16, -1                         ; 2 uses
   store i32 %i.cc, ptr %i.l, align 8, !tbaa !73
   %i.cd = load i32, ptr %i.d, align 8, !tbaa !36
   %i.ce = load ptr, ptr %i.e, align 8, !tbaa !37
@@ -282,7 +273,7 @@ bb.j:                                             ; preds = %bb.j, %bb.i
 .split:                                           ; preds = %bb.j
   %i.dd = add i32 %i.cl, 2                        ; 2 uses
   store i32 %i.dd, ptr %i.f, align 4, !tbaa !68
-  br i1 %18, label %bb.l, label %.backedge
+  br i1 %15, label %bb.l, label %.backedge
 
 .split152:                                        ; preds = %.thread149
   %i.de = load ptr, ptr %i.e, align 8, !tbaa !37
@@ -320,9 +311,9 @@ bb.j:                                             ; preds = %bb.j, %bb.i
 .backedge:                                        ; preds = %.split152, %.split, %flush_pending.exit, %bb.k
   br label %bb.b
 
-bb.k:                                             ; preds = %10
+bb.k:                                             ; preds = %bb.h
   %i.ec = load i32, ptr %i.f, align 4, !tbaa !68
-  %i.ed = add i32 %i.ec, %19                      ; 4 uses
+  %i.ed = add i32 %i.ec, %16                      ; 4 uses
   store i32 %i.ed, ptr %i.f, align 4, !tbaa !68
   store i32 0, ptr %i.l, align 8, !tbaa !73
   %i.ee = load ptr, ptr %i.e, align 8, !tbaa !37  ; 2 uses
@@ -342,7 +333,7 @@ bb.k:                                             ; preds = %10
   %i.er = load i32, ptr %i.g, align 4, !tbaa !35
   %i.es = and i32 %i.eq, %i.er
   store i32 %i.es, ptr %i.c, align 8, !tbaa !75
-  br i1 %18, label %bb.l, label %.backedge
+  br i1 %15, label %bb.l, label %.backedge
 
 bb.l:                                             ; preds = %.split152, %.split, %bb.k
   %i.et = phi i32 [ %i.eb, %.split152 ], [ %i.dd, %.split ], [ %i.ed, %bb.k ]
@@ -745,43 +736,34 @@ bb.m:                                             ; preds = %bb.l
   %i.cv = add i16 %i.cu, 1
   store i16 %i.cv, ptr %i.ct, align 4, !tbaa !8
   %i.cw = icmp ult i16 %i.co, 256
-  br i1 %i.cw, label %2, label %5
-
-2:                                                ; preds = %bb.m
-  %3 = zext nneg i16 %i.co to i64
-  %4 = getelementptr inbounds nuw i8, ptr @_dist_code, i64 %3
-  br label %10
-
-5:                                                ; preds = %bb.m
-  %6 = lshr i16 %i.co, 7
-  %7 = zext nneg i16 %6 to i64
-  %8 = getelementptr inbounds nuw i8, ptr @_dist_code, i64 %7
-  %9 = getelementptr inbounds nuw i8, ptr %8, i64 256
-  br label %10
-
-10:                                               ; preds = %5, %2
-  %.in.in = phi ptr [ %4, %2 ], [ %9, %5 ]
+  %2 = zext nneg i16 %i.co to i64
+  %3 = getelementptr inbounds nuw i8, ptr @_dist_code, i64 %2
+  %4 = lshr i16 %i.co, 7
+  %5 = zext nneg i16 %4 to i64
+  %6 = getelementptr inbounds nuw i8, ptr @_dist_code, i64 %5
+  %7 = getelementptr inbounds nuw i8, ptr %6, i64 256
+  %.in.in = select i1 %i.cw, ptr %3, ptr %7
   %.in = load i8, ptr %.in.in, align 1, !tbaa !8
-  %11 = zext i8 %.in to i64
-  %12 = getelementptr inbounds nuw [4 x i8], ptr %i.v, i64 %11 ; 2 uses
-  %13 = load i16, ptr %12, align 4, !tbaa !8
-  %14 = add i16 %13, 1
-  store i16 %14, ptr %12, align 4, !tbaa !8
-  %15 = load i32, ptr %i.s, align 4, !tbaa !110
-  %16 = load i32, ptr %i.w, align 8, !tbaa !41
-  %17 = load i32, ptr %i.d, align 8, !tbaa !72    ; 2 uses
-  %18 = load i32, ptr %i.a, align 4, !tbaa !70
-  %reass.sub = sub i32 %18, %17
-  %19 = add i32 %reass.sub, 1
-  store i32 %19, ptr %i.a, align 4, !tbaa !70
-  %20 = add i32 %17, -2                           ; 2 uses
-  store i32 %20, ptr %i.d, align 8, !tbaa !72
+  %8 = zext i8 %.in to i64
+  %9 = getelementptr inbounds nuw [4 x i8], ptr %i.v, i64 %8 ; 2 uses
+  %10 = load i16, ptr %9, align 4, !tbaa !8
+  %11 = add i16 %10, 1
+  store i16 %11, ptr %9, align 4, !tbaa !8
+  %12 = load i32, ptr %i.s, align 4, !tbaa !110
+  %13 = load i32, ptr %i.w, align 8, !tbaa !41
+  %14 = load i32, ptr %i.d, align 8, !tbaa !72    ; 2 uses
+  %15 = load i32, ptr %i.a, align 4, !tbaa !70
+  %reass.sub = sub i32 %15, %14
+  %16 = add i32 %reass.sub, 1
+  store i32 %16, ptr %i.a, align 4, !tbaa !70
+  %17 = add i32 %14, -2                           ; 2 uses
+  store i32 %17, ptr %i.d, align 8, !tbaa !72
   %.promoted = load i32, ptr %i.j, align 4, !tbaa !68
   br label %bb.n
 
-bb.n:                                             ; preds = %bb.p, %10
-  %i.cx = phi i32 [ %i.dw, %bb.p ], [ %20, %10 ]
-  %i.cy = phi i32 [ %i.cz, %bb.p ], [ %.promoted, %10 ] ; 3 uses
+bb.n:                                             ; preds = %bb.p, %bb.m
+  %i.cx = phi i32 [ %i.dw, %bb.p ], [ %17, %bb.m ]
+  %i.cy = phi i32 [ %i.cz, %bb.p ], [ %.promoted, %bb.m ] ; 3 uses
   %i.cz = add i32 %i.cy, 1                        ; 5 uses
   store i32 %i.cz, ptr %i.j, align 4, !tbaa !68
   %.not179 = icmp ugt i32 %i.cz, %i.ca
@@ -822,8 +804,8 @@ bb.p:                                             ; preds = %bb.n, %bb.o
   br i1 %.not180, label %bb.q, label %bb.n, !llvm.loop !118
 
 bb.q:                                             ; preds = %bb.p
-  %i.dx = add i32 %16, -1
-  %i.dy = icmp eq i32 %15, %i.dx
+  %i.dx = add i32 %13, -1
+  %i.dy = icmp eq i32 %12, %i.dx
   store i32 0, ptr %i.x, align 8, !tbaa !74
   store i32 2, ptr %i.c, align 8, !tbaa !73
   %i.dz = add i32 %i.cy, 2                        ; 2 uses

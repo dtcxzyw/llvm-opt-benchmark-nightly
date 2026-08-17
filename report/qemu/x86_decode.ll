@@ -202,34 +202,25 @@ bb.n:                                             ; preds = %bb.l, %bb.m
   %i.an = and i8 %i.am, 8
   %spec.select.i.i34 = or disjoint i8 %i.an, %i.t ; 3 uses
   %cond.i.i = icmp eq i32 %i.d, 1
-  br i1 %cond.i.i, label %3, label %8
-
-3:                                                ; preds = %bb.n
-  %4 = icmp samesign ult i8 %spec.select.i.i34, 4
-  %5 = icmp ne i8 %i.al, 0
-  %or.cond3.i.i = or i1 %5, %4
-  %6 = zext nneg i8 %spec.select.i.i34 to i64
-  %7 = getelementptr [8 x i8], ptr %0, i64 %6
+  %3 = zext nneg i8 %spec.select.i.i34 to i64
+  %4 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %3
+  %5 = icmp samesign ult i8 %spec.select.i.i34, 4
+  %6 = icmp ne i8 %i.al, 0
+  %or.cond3.i.i = or i1 %6, %5
+  %7 = zext nneg i8 %spec.select.i.i34 to i64
+  %8 = getelementptr [8 x i8], ptr %0, i64 %7
   %spec.select.idx = select i1 %or.cond3.i.i, i64 0, i64 -31
-  %spec.select = getelementptr i8, ptr %7, i64 %spec.select.idx
-  br label %get_reg_val.exit
-
-8:                                                ; preds = %bb.n
-  %9 = zext nneg i8 %spec.select.i.i34 to i64
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %9
-  br label %get_reg_val.exit
-
-get_reg_val.exit:                                 ; preds = %3, %8
-  %.0.i.i = phi ptr [ %10, %8 ], [ %spec.select, %3 ]
-  %11 = sext i32 %i.d to i64
-  %12 = call ptr @__memcpy_chk(ptr noundef nonnull %i.a, ptr noundef nonnull %.0.i.i, i64 noundef range(i64 -2147483648, 2147483648) %11, i64 noundef 8) #15, !alias.scope !27 ; 0 uses
-  %13 = load i64, ptr %i.a, align 8
+  %spec.select = getelementptr i8, ptr %8, i64 %spec.select.idx
+  %.0.i.i = select i1 %cond.i.i, ptr %spec.select, ptr %4
+  %9 = sext i32 %i.d to i64
+  %10 = call ptr @__memcpy_chk(ptr noundef nonnull %i.a, ptr noundef nonnull %.0.i.i, i64 noundef range(i64 -2147483648, 2147483648) %9, i64 noundef 8) #15, !alias.scope !27 ; 0 uses
+  %11 = load i64, ptr %i.a, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #15
-  %14 = add i64 %13, %.0
+  %12 = add i64 %11, %.0
   br label %bb.o
 
-bb.o:                                             ; preds = %get_reg_val.exit, %bb.k, %bb.j, %bb.g
-  %.1 = phi i64 [ %i.w, %bb.g ], [ %14, %get_reg_val.exit ], [ %i.af, %bb.j ], [ %i.ai, %bb.k ]
+bb.o:                                             ; preds = %bb.n, %bb.k, %bb.j, %bb.g
+  %.1 = phi i64 [ %i.w, %bb.g ], [ %12, %bb.n ], [ %i.af, %bb.j ], [ %i.ai, %bb.k ]
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 12
   %i.ap = load i32, ptr %i.ao, align 4
   %i.aq = icmp eq i32 %i.ap, 31
@@ -327,34 +318,25 @@ bb.d:                                             ; preds = %bb.b, %bb.c
   %i.u = and i8 %.pre-phi, 8
   %spec.select.i.i42 = or disjoint i8 %i.u, %i.t  ; 3 uses
   %cond.i.i = icmp eq i32 %i.d, 1
-  br i1 %cond.i.i, label %3, label %8
-
-3:                                                ; preds = %bb.d
-  %4 = icmp samesign ult i8 %spec.select.i.i42, 4
-  %5 = icmp ne i8 %i.r, 0
-  %or.cond3.i.i = or i1 %5, %4
-  %6 = zext nneg i8 %spec.select.i.i42 to i64
-  %7 = getelementptr [8 x i8], ptr %0, i64 %6
+  %3 = zext nneg i8 %spec.select.i.i42 to i64
+  %4 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %3
+  %5 = icmp samesign ult i8 %spec.select.i.i42, 4
+  %6 = icmp ne i8 %i.r, 0
+  %or.cond3.i.i = or i1 %6, %5
+  %7 = zext nneg i8 %spec.select.i.i42 to i64
+  %8 = getelementptr [8 x i8], ptr %0, i64 %7
   %spec.select.idx = select i1 %or.cond3.i.i, i64 0, i64 -31
-  %spec.select = getelementptr i8, ptr %7, i64 %spec.select.idx
-  br label %get_reg_val.exit
-
-8:                                                ; preds = %bb.d
-  %9 = zext nneg i8 %spec.select.i.i42 to i64
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %9
-  br label %get_reg_val.exit
-
-get_reg_val.exit:                                 ; preds = %3, %8
-  %.0.i.i = phi ptr [ %10, %8 ], [ %spec.select, %3 ]
-  %11 = sext i32 %i.d to i64
-  %12 = call ptr @__memcpy_chk(ptr noundef nonnull %i.b, ptr noundef nonnull %.0.i.i, i64 noundef range(i64 -2147483648, 2147483648) %11, i64 noundef 8) #15, !alias.scope !31 ; 0 uses
-  %13 = load i64, ptr %i.b, align 8
+  %spec.select = getelementptr i8, ptr %8, i64 %spec.select.idx
+  %.0.i.i = select i1 %cond.i.i, ptr %spec.select, ptr %4
+  %9 = sext i32 %i.d to i64
+  %10 = call ptr @__memcpy_chk(ptr noundef nonnull %i.b, ptr noundef nonnull %.0.i.i, i64 noundef range(i64 -2147483648, 2147483648) %9, i64 noundef 8) #15, !alias.scope !31 ; 0 uses
+  %11 = load i64, ptr %i.b, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #15
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %bb.a, %get_reg_val.exit
-  %i.v = phi i8 [ %i.r, %get_reg_val.exit ], [ %i.o, %bb.a ] ; 3 uses
-  %.030 = phi i64 [ %13, %get_reg_val.exit ], [ 0, %bb.a ]
+._crit_edge:                                      ; preds = %bb.a, %bb.d
+  %i.v = phi i8 [ %i.r, %bb.d ], [ %i.o, %bb.a ]  ; 3 uses
+  %.030 = phi i64 [ %11, %bb.d ], [ 0, %bb.a ]
   %i.w = shl i8 %i.v, 2
   %i.x = and i8 %i.w, 8
   %spec.select3443 = or disjoint i8 %i.x, %i.i    ; 2 uses
@@ -577,27 +559,18 @@ bb.b:                                             ; preds = %bb.a
   %i.o = and i8 %i.n, 8
   %spec.select.i21 = or disjoint i8 %i.o, %i.i    ; 3 uses
   %cond.i = icmp eq i32 %i.m, 1
-  br i1 %cond.i, label %3, label %8
-
-3:                                                ; preds = %bb.b
-  %4 = icmp samesign ult i8 %spec.select.i21, 4
-  %5 = icmp ne i8 %i.k, 0
-  %or.cond3.i = or i1 %5, %4
-  %6 = zext nneg i8 %spec.select.i21 to i64
-  %7 = getelementptr [8 x i8], ptr %0, i64 %6
+  %3 = zext nneg i8 %spec.select.i21 to i64
+  %4 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %3
+  %5 = icmp samesign ult i8 %spec.select.i21, 4
+  %6 = icmp ne i8 %i.k, 0
+  %or.cond3.i = or i1 %6, %5
+  %7 = zext nneg i8 %spec.select.i21 to i64
+  %8 = getelementptr [8 x i8], ptr %0, i64 %7
   %spec.select.idx = select i1 %or.cond3.i, i64 0, i64 -31
-  %spec.select = getelementptr i8, ptr %7, i64 %spec.select.idx
-  br label %get_reg_ref.exit
-
-8:                                                ; preds = %bb.b
-  %9 = zext nneg i8 %spec.select.i21 to i64
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %9
-  br label %get_reg_ref.exit
-
-get_reg_ref.exit:                                 ; preds = %3, %8
-  %.0.i = phi ptr [ %10, %8 ], [ %spec.select, %3 ]
-  %11 = getelementptr inbounds nuw i8, ptr %2, i64 24
-  store ptr %.0.i, ptr %11, align 8
+  %spec.select = getelementptr i8, ptr %8, i64 %spec.select.idx
+  %.0.i = select i1 %cond.i, ptr %spec.select, ptr %4
+  %9 = getelementptr inbounds nuw i8, ptr %2, i64 24
+  store ptr %.0.i, ptr %9, align 8
   br label %bb.h
 
 bb.c:                                             ; preds = %bb.a
@@ -626,7 +599,7 @@ bb.g:                                             ; preds = %bb.c
   tail call void @abort() #16
   unreachable
 
-bb.h:                                             ; preds = %bb.f, %bb.e, %bb.d, %get_reg_ref.exit
+bb.h:                                             ; preds = %bb.f, %bb.e, %bb.d, %bb.b
   ret void
 }
 
