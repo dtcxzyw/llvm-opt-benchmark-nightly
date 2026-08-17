@@ -203,7 +203,7 @@ bb.e:                                             ; preds = %.noexc
 bb.f:                                             ; preds = %.noexc
   %i.j = shl nuw i64 %i.f, 1                      ; 2 uses
   %i.k = invoke ptr @OPENSSL_malloc(i64 noundef %i.j)
-          to label %.noexc44 unwind label %bb.g   ; 13 uses
+          to label %.noexc44 unwind label %bb.g   ; 12 uses
 
 .noexc44:                                         ; preds = %bb.f
   %i.l = icmp eq ptr %i.k, null
@@ -271,12 +271,11 @@ _ZSt4sortIPtEvT_S1_.exit.preheader:               ; preds = %.noexc45
   br i1 %.not3671, label %_ZN4bssl5ArrayItE16InitForOverwriteEm.exit.thread, label %_ZN4bssl5ArrayItEixEm.exit48
 
 _ZN4bssl5ArrayItEixEm.exit48:                     ; preds = %_ZSt4sortIPtEvT_S1_.exit.preheader, %_ZN4bssl5ArrayItEixEm.exit48
-  %.072 = phi i64 [ %i.aa, %_ZN4bssl5ArrayItEixEm.exit48 ], [ 1, %_ZSt4sortIPtEvT_S1_.exit.preheader ] ; 4 uses
-  %i.w = getelementptr [2 x i8], ptr %i.k, i64 %.072
+  %.072 = phi i64 [ %i.aa, %_ZN4bssl5ArrayItEixEm.exit48 ], [ 1, %_ZSt4sortIPtEvT_S1_.exit.preheader ] ; 3 uses
+  %i.w = getelementptr [2 x i8], ptr %i.k, i64 %.072 ; 2 uses
   %i.x = getelementptr i8, ptr %i.w, i64 -2
   %i.y = load i16, ptr %i.x, align 2, !tbaa !41
-  %4 = getelementptr inbounds nuw [2 x i8], ptr %i.k, i64 %.072
-  %i.z = load i16, ptr %4, align 2, !tbaa !41
+  %i.z = load i16, ptr %i.w, align 2, !tbaa !41
   %.not80 = icmp ne i16 %i.y, %i.z                ; 2 uses
   %i.aa = add nuw i64 %.072, 1
   %exitcond76.not = icmp ne i64 %.072, %.02669
@@ -679,13 +678,13 @@ bb.d:                                             ; preds = %bb.c
   br i1 %or.cond87, label %bb.e, label %_ZN4bssl5ArrayItED2Ev.exit
 
 bb.e:                                             ; preds = %bb.d
-  %i.p = lshr exact i64 %i.m, 1                   ; 4 uses
+  %i.p = lshr exact i64 %i.m, 1                   ; 3 uses
   invoke void @OPENSSL_free(ptr noundef null)
           to label %.noexc unwind label %bb.k
 
 .noexc:                                           ; preds = %bb.e
   %i.q = invoke ptr @OPENSSL_malloc(i64 noundef %i.m)
-          to label %.noexc65 unwind label %bb.k   ; 10 uses
+          to label %.noexc65 unwind label %bb.k   ; 9 uses
 
 .noexc65:                                         ; preds = %.noexc
   %i.r = icmp eq ptr %i.q, null
@@ -818,35 +817,25 @@ _ZN4bssl5ArrayItE16InitForOverwriteEm.exit._crit_edge: ; preds = %_ZN4bssl5Array
   br i1 %.not58104, label %.lr.ph.preheader, label %.critedge64
 
 .lr.ph.preheader:                                 ; preds = %.preheader.split
-  %4 = add nuw i64 %i.p, 1
   %umax = call i64 @llvm.umax.i64(i64 %i.p, i64 2)
-  br label %.lr.ph
+  br label %_ZN4bssl5ArrayItEixEm.exit66
 
 bb.o:                                             ; preds = %_ZN4bssl5ArrayItEixEm.exit66
   %i.ap = add nuw nsw i64 %.0105, 1               ; 2 uses
   %exitcond117.not = icmp eq i64 %i.ap, %umax
-  br i1 %exitcond117.not, label %.critedge64, label %.lr.ph, !llvm.loop !622
+  br i1 %exitcond117.not, label %.critedge64, label %_ZN4bssl5ArrayItEixEm.exit66, !llvm.loop !622
 
 bb.p:                                             ; preds = %bb.q, %_ZN4bssl5ArrayItE16InitForOverwriteEm.exit._crit_edge
   %i.aq = landingpad { ptr, i32 }
           cleanup
   br label %bb.v
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.o
-  %.0105 = phi i64 [ %i.ap, %bb.o ], [ 1, %.lr.ph.preheader ] ; 4 uses
-  %exitcond116.not = icmp eq i64 %.0105, %4
-  br i1 %exitcond116.not, label %5, label %_ZN4bssl5ArrayItEixEm.exit66
-
-5:                                                ; preds = %.lr.ph
-  call void @abort() #22
-  unreachable
-
-_ZN4bssl5ArrayItEixEm.exit66:                     ; preds = %.lr.ph
-  %i.ar = getelementptr [2 x i8], ptr %i.q, i64 %.0105
+_ZN4bssl5ArrayItEixEm.exit66:                     ; preds = %.lr.ph.preheader, %bb.o
+  %.0105 = phi i64 [ %i.ap, %bb.o ], [ 1, %.lr.ph.preheader ] ; 2 uses
+  %i.ar = getelementptr [2 x i8], ptr %i.q, i64 %.0105 ; 2 uses
   %i.as = getelementptr i8, ptr %i.ar, i64 -2
   %i.at = load i16, ptr %i.as, align 2, !tbaa !41
-  %6 = getelementptr inbounds nuw [2 x i8], ptr %i.q, i64 %.0105
-  %i.au = load i16, ptr %6, align 2, !tbaa !41
+  %i.au = load i16, ptr %i.ar, align 2, !tbaa !41
   %i.av = icmp eq i16 %i.at, %i.au
   br i1 %i.av, label %_ZN4bssl5ArrayItE16InitForOverwriteEm.exit.thread, label %bb.o
 

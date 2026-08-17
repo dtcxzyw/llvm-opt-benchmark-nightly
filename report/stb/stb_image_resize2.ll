@@ -204,7 +204,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 36
   %i.f = load i32, ptr %i.e, align 4, !tbaa !31   ; 4 uses
-  %i.g = load i32, ptr %i.d, align 8, !tbaa !32   ; 8 uses
+  %i.g = load i32, ptr %i.d, align 8, !tbaa !32   ; 7 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 100
   %i.i = load i32, ptr %i.h, align 4, !tbaa !33   ; 2 uses
   %i.j = icmp sgt i32 %i.f, 0
@@ -299,7 +299,7 @@ stbir__edge_wrap.exit.lr.ph:                      ; preds = %.preheader223
 .lr.ph242:                                        ; preds = %.preheader
   %i.aq = zext i32 %i.b to i64
   %i.ar = getelementptr inbounds nuw [8 x i8], ptr @stbir__edge_wrap_slow, i64 %i.aq
-  br label %2
+  br label %stbir__edge_wrap.exit221
 
 stbir__edge_wrap.exit:                            ; preds = %stbir__edge_wrap.exit.lr.ph, %stbir__edge_wrap.exit
   %.2236 = phi i32 [ %i.z, %stbir__edge_wrap.exit.lr.ph ], [ %i.au, %stbir__edge_wrap.exit ] ; 2 uses
@@ -313,27 +313,17 @@ stbir__edge_wrap.exit:                            ; preds = %stbir__edge_wrap.ex
   %exitcond.not = icmp eq i32 %i.au, 0
   br i1 %exitcond.not, label %.preheader, label %stbir__edge_wrap.exit, !llvm.loop !46
 
-2:                                                ; preds = %.lr.ph242, %stbir__edge_wrap.exit221
-  %.3241 = phi i32 [ %i.g, %.lr.ph242 ], [ %i.av, %stbir__edge_wrap.exit221 ] ; 5 uses
+stbir__edge_wrap.exit221:                         ; preds = %.lr.ph242, %stbir__edge_wrap.exit221
+  %.3241 = phi i32 [ %i.g, %.lr.ph242 ], [ %i.av, %stbir__edge_wrap.exit221 ] ; 2 uses
   %.0184240 = phi i32 [ -2147483647, %.lr.ph242 ], [ %.1185, %stbir__edge_wrap.exit221 ]
-  %.0186239 = phi i32 [ 2147483647, %.lr.ph242 ], [ %spec.select214, %stbir__edge_wrap.exit221 ]
-  %3 = icmp sgt i32 %.3241, -1
-  %4 = icmp slt i32 %.3241, %i.g
-  %or.cond.i219 = and i1 %3, %4
-  br i1 %or.cond.i219, label %stbir__edge_wrap.exit221, label %5
-
-5:                                                ; preds = %2
-  %6 = load ptr, ptr %i.ar, align 8, !tbaa !44
-  %7 = tail call i32 %6(i32 noundef %.3241, i32 noundef %i.g) #24, !inline_history !45
-  br label %stbir__edge_wrap.exit221
-
-stbir__edge_wrap.exit221:                         ; preds = %2, %5
-  %.0.i220 = phi i32 [ %7, %5 ], [ %.3241, %2 ]   ; 2 uses
-  %spec.select214 = tail call i32 @llvm.smin.i32(i32 %.0.i220, i32 %.0186239) ; 2 uses
-  %.1185 = tail call i32 @llvm.smax.i32(i32 %.0.i220, i32 %.0184240) ; 2 uses
+  %.0.i220 = phi i32 [ 2147483647, %.lr.ph242 ], [ %spec.select214, %stbir__edge_wrap.exit221 ]
+  %2 = load ptr, ptr %i.ar, align 8, !tbaa !44
+  %3 = tail call i32 %2(i32 noundef %.3241, i32 noundef %i.g) #24, !inline_history !45 ; 2 uses
+  %spec.select214 = tail call i32 @llvm.smin.i32(i32 %3, i32 %.0.i220) ; 2 uses
+  %.1185 = tail call i32 @llvm.smax.i32(i32 %3, i32 %.0184240) ; 2 uses
   %i.av = add nsw i32 %.3241, 1                   ; 2 uses
   %i.aw = icmp slt i32 %i.av, %i.ao
-  br i1 %i.aw, label %2, label %._crit_edge243, !llvm.loop !47
+  br i1 %i.aw, label %stbir__edge_wrap.exit221, label %._crit_edge243, !llvm.loop !47
 
 ._crit_edge243:                                   ; preds = %stbir__edge_wrap.exit221, %.preheader
   %.0186.lcssa = phi i32 [ 2147483647, %.preheader ], [ %spec.select214, %stbir__edge_wrap.exit221 ] ; 7 uses

@@ -204,12 +204,10 @@ sharedEdge.exit.1.i:                              ; preds = %bb.bb, %bb.ba, %bb.
   br label %bb.bc
 
 bb.bc:                                            ; preds = %sharedEdge.exit.1.i, %bb.ap
-  %i.lq = load i32, ptr %i.kj, align 4, !tbaa !46, !noalias !68 ; 4 uses
-  %.not.2.i = icmp ne i32 %i.lq, -1
+  %i.lq = load i32, ptr %i.kj, align 4, !tbaa !46, !noalias !68 ; 3 uses
   %i.lr = sext i32 %i.lq to i64
   %i.ls = icmp slt i64 %indvars.iv37.i, %i.lr
-  %or.cond.i = and i1 %.not.2.i, %i.ls
-  br i1 %or.cond.i, label %bb.bd, label %.critedge.i
+  br i1 %i.ls, label %bb.bd, label %.critedge.i
 
 bb.bd:                                            ; preds = %bb.bc
   %i.lt = load ptr, ptr %i.ge, align 8, !tbaa !55, !noalias !68 ; 2 uses

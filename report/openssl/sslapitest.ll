@@ -203,7 +203,6 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c,
 .preheader:                                       ; preds = %bb.f, %bb.af
   %.b.pre61 = phi i1 [ %.b.pre61.pre, %bb.f ], [ %.b.pre6164, %bb.af ] ; 2 uses
   %i.f = phi i1 [ false, %bb.f ], [ true, %bb.af ] ; 2 uses
-  %or.cond = phi i1 [ %i.e, %bb.f ], [ false, %bb.af ]
   %.03258 = phi i32 [ 771, %bb.f ], [ 772, %bb.af ]
   br label %bb.g
 
@@ -370,7 +369,7 @@ bb.ab:                                            ; preds = %bb.aa
   br i1 %.not53, label %.loopexit, label %.thread
 
 bb.ac:                                            ; preds = %bb.aa
-  br i1 %or.cond, label %bb.ad, label %.thread
+  br i1 %i.e, label %bb.ad, label %.thread
 
 bb.ad:                                            ; preds = %bb.ac
   %i.ce = call i32 @test_str_eq(ptr noundef nonnull @.str.14, i32 noundef 6235, ptr noundef nonnull @.str.633, ptr noundef nonnull @.str.630, ptr noundef %.036, ptr noundef %i.bx) #24

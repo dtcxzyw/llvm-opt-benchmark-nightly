@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.g, %bb.f, %bb.e
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !474
   %i.aa = call i32 @hb_color_line_get_color_stops(ptr noundef %2, i32 noundef 0, ptr noundef nonnull %i.a, ptr noundef %i.z) #12 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
-  %i.ab = load ptr, ptr %i.y, align 8, !tbaa !473 ; 5 uses
+  %i.ab = load ptr, ptr %i.y, align 8, !tbaa !473 ; 4 uses
   %i.ac = load i32, ptr %i.l, align 4, !tbaa !472 ; 3 uses
   %.not.i = icmp eq i32 %i.ac, 0
   br i1 %.not.i, label %"_ZN10hb_array_tI15hb_color_stop_tE5qsortIZL27hb_pdf_paint_sweep_gradientP16hb_paint_funcs_tPvP15hb_color_line_tffffS5_E3$_0EE17hb_sorted_array_tIS0_ET_.exit", label %bb.j, !prof !22
@@ -222,11 +222,10 @@ bb.j:                                             ; preds = %bb.i
   br label %.preheader.i.i
 
 .preheader.i.i:                                   ; preds = %.critedge.i.i, %.preheader.preheader.i.i
-  %.01519.i.i = phi ptr [ %.015.i.i, %.critedge.i.i ], [ %.01518.i.i, %.preheader.preheader.i.i ] ; 3 uses
-  %13 = icmp ugt ptr %.01519.i.i, %i.ab
-  br i1 %13, label %.lr.ph.i.i, label %.critedge.i.i
+  %.01519.i.i = phi ptr [ %.015.i.i, %.critedge.i.i ], [ %.01518.i.i, %.preheader.preheader.i.i ] ; 2 uses
+  br label %.lr.ph.i.i
 
-.lr.ph.i.i:                                       ; preds = %.preheader.i.i, %bb.k
+.lr.ph.i.i:                                       ; preds = %bb.k, %.preheader.i.i
   %.016.i.i = phi ptr [ %i.ae, %bb.k ], [ %.01519.i.i, %.preheader.i.i ] ; 4 uses
   %i.ae = getelementptr inbounds i8, ptr %.016.i.i, i64 -12 ; 5 uses
   %.val.i.i = load float, ptr %i.ae, align 4, !tbaa !703
@@ -234,7 +233,7 @@ bb.j:                                             ; preds = %bb.i
   %i.af = fcmp ogt float %.val.i.i, %.0.val.i.i
   br i1 %i.af, label %bb.k, label %.critedge.i.i
 
-.critedge.i.i:                                    ; preds = %bb.k, %.lr.ph.i.i, %.preheader.i.i
+.critedge.i.i:                                    ; preds = %bb.k, %.lr.ph.i.i
   %.015.i.i = getelementptr inbounds nuw i8, ptr %.01519.i.i, i64 12 ; 2 uses
   %i.ag = icmp ult ptr %.015.i.i, %i.ad
   br i1 %i.ag, label %.preheader.i.i, label %"_ZN10hb_array_tI15hb_color_stop_tE5qsortIZL27hb_pdf_paint_sweep_gradientP16hb_paint_funcs_tPvP15hb_color_line_tffffS5_E3$_0EE17hb_sorted_array_tIS0_ET_.exit", !llvm.loop !704
@@ -637,7 +636,7 @@ _ZN11hb_vector_tIcLb0EED2Ev.exit:                 ; preds = %_ZN18hb_pdf_resourc
 
 .preheader.preheader.i.i:                         ; preds = %bb.a
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 304 ; 4 uses
-  %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !473 ; 5 uses
+  %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !473 ; 4 uses
   %.sroa.2.8.insert.ext.i.i = zext i32 %i.b to i64 ; 2 uses
   tail call fastcc void @"_ZL13hb_qsort_loopI15hb_color_stop_tZL41hb_pdf_build_gradient_function_from_stopsP18hb_pdf_resources_tP17hb_vector_paint_tE3$_0EvPT_mT0_"(ptr noundef %i.ap, i64 noundef range(i64 1, 4294967296) %.sroa.2.8.insert.ext.i.i)
   %.idx.i.i = mul nuw nsw i64 %.sroa.2.8.insert.ext.i.i, 12
@@ -646,11 +645,10 @@ _ZN11hb_vector_tIcLb0EED2Ev.exit:                 ; preds = %_ZN18hb_pdf_resourc
   br label %.preheader.i.i
 
 .preheader.i.i:                                   ; preds = %.critedge.i.i.a, %.preheader.preheader.i.i
-  %.01519.i.i = phi ptr [ %.015.i.i, %.critedge.i.i.a ], [ %.01518.i.i, %.preheader.preheader.i.i ] ; 3 uses
-  %7 = icmp ugt ptr %.01519.i.i, %i.ap
-  br i1 %7, label %.lr.ph.i.i, label %.critedge.i.i.a
+  %.01519.i.i = phi ptr [ %.015.i.i, %.critedge.i.i.a ], [ %.01518.i.i, %.preheader.preheader.i.i ] ; 2 uses
+  br label %.lr.ph.i.i
 
-.lr.ph.i.i:                                       ; preds = %.preheader.i.i, %bb.k
+.lr.ph.i.i:                                       ; preds = %bb.k, %.preheader.i.i
   %.016.i.i = phi ptr [ %i.ar, %bb.k ], [ %.01519.i.i, %.preheader.i.i ] ; 4 uses
   %i.ar = getelementptr inbounds i8, ptr %.016.i.i, i64 -12 ; 5 uses
   %.val.i.i = load float, ptr %i.ar, align 4, !tbaa !703
@@ -658,7 +656,7 @@ _ZN11hb_vector_tIcLb0EED2Ev.exit:                 ; preds = %_ZN18hb_pdf_resourc
   %i.as = fcmp ogt float %.val.i.i, %.0.val.i.i
   br i1 %i.as, label %bb.k, label %.critedge.i.i.a
 
-.critedge.i.i.a:                                  ; preds = %bb.k, %.lr.ph.i.i, %.preheader.i.i
+.critedge.i.i.a:                                  ; preds = %bb.k, %.lr.ph.i.i
   %.015.i.i = getelementptr inbounds nuw i8, ptr %.01519.i.i, i64 12 ; 2 uses
   %i.at = icmp ult ptr %.015.i.i, %i.aq
   br i1 %i.at, label %.preheader.i.i, label %"_ZN10hb_array_tI15hb_color_stop_tE5qsortIZL41hb_pdf_build_gradient_function_from_stopsP18hb_pdf_resources_tP17hb_vector_paint_tE3$_0EE17hb_sorted_array_tIS0_ET_.exit", !llvm.loop !969

@@ -204,11 +204,10 @@ bb.a:
 define linkonce_odr hidden void @_ZNK2cv6stereo8Matching9Median9x1IhEclERKNS_5RangeE(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 4 dereferenceable(8) %1) unnamed_addr #3 comdat align 2 {
 bb.a:
   %i.a = alloca [9 x i8], align 1                 ; 42 uses
-  %i.b = load i32, ptr %1, align 4, !tbaa !102
-  %.fr = freeze i32 %i.b                          ; 2 uses
+  %i.b = load i32, ptr %1, align 4, !tbaa !102    ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
   %i.d = load i32, ptr %i.c, align 4, !tbaa !104
-  %i.e = icmp slt i32 %.fr, %i.d
+  %i.e = icmp slt i32 %i.b, %i.d
   br i1 %i.e, label %.preheader46.lr.ph, label %._crit_edge57
 
 .preheader46.lr.ph:                               ; preds = %bb.a
@@ -222,7 +221,7 @@ bb.a:
   br i1 %i.l, label %.preheader46.preheader, label %._crit_edge57
 
 .preheader46.preheader:                           ; preds = %.preheader46.lr.ph
-  %i.m = sext i32 %.fr to i64
+  %i.m = sext i32 %i.b to i64
   %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 1 ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 2 ; 4 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.a, i64 3 ; 5 uses

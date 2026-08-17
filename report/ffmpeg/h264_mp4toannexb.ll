@@ -203,7 +203,7 @@ bb.u:                                             ; preds = %.thread, %bb.t
   br i1 %epil.iter463.cmp.not, label %._crit_edge, label %.lr.ph.epil, !llvm.loop !49
 
 ._crit_edge:                                      ; preds = %.lr.ph.epil, %._crit_edge.unr-lcssa
-  %.lcssa = phi i32 [ %i.ei, %._crit_edge.unr-lcssa ], [ %i.en, %.lr.ph.epil ] ; 9 uses
+  %.lcssa = phi i32 [ %i.ei, %._crit_edge.unr-lcssa ], [ %i.en, %.lr.ph.epil ] ; 7 uses
   %i.eo = zext i8 %i.dl to i64
   %i.ep = getelementptr inbounds nuw i8, ptr %.0142, i64 %i.eo ; 9 uses
   %i.eq = zext i32 %.lcssa to i64                 ; 2 uses
@@ -270,9 +270,9 @@ bb.ac:                                            ; preds = %bb.ab
   br label %count_or_copy.exit
 
 count_or_copy.exit:                               ; preds = %._crit_edge.i192, %bb.ac
+  %.pre-phi367 = phi i64 [ %.pre24.i, %._crit_edge.i192 ], [ %i.fc, %bb.ac ]
   %.10 = phi ptr [ %.1267, %._crit_edge.i192 ], [ %i.fd, %bb.ac ]
-  %.pre-phi25.i = phi i64 [ %.pre24.i, %._crit_edge.i192 ], [ %i.fc, %bb.ac ]
-  %i.fe = add i64 %.pre-phi25.i, %.0258
+  %i.fe = add i64 %.0258, %.pre-phi367
   br label %.thread286
 
 bb.ad:                                            ; preds = %bb.w
@@ -321,9 +321,9 @@ bb.aj:                                            ; preds = %bb.ai
   br label %count_or_copy.exit197
 
 count_or_copy.exit197:                            ; preds = %._crit_edge.i195, %bb.aj
+  %.pre-phi365 = phi i64 [ %.pre24.i196, %._crit_edge.i195 ], [ %i.fr, %bb.aj ]
   %.11 = phi ptr [ %.1267, %._crit_edge.i195 ], [ %i.fs, %bb.aj ]
-  %.pre-phi25.i194 = phi i64 [ %.pre24.i196, %._crit_edge.i195 ], [ %i.fr, %bb.aj ]
-  %i.ft = add i64 %.pre-phi25.i194, %.0258
+  %i.ft = add i64 %.0258, %.pre-phi365
   br label %bb.ak
 
 bb.ak:                                            ; preds = %count_or_copy.exit197, %bb.ah
@@ -349,9 +349,9 @@ bb.am:                                            ; preds = %bb.al
   br label %count_or_copy.exit202
 
 count_or_copy.exit202:                            ; preds = %._crit_edge.i200, %bb.am
+  %.pre-phi363 = phi i64 [ %.pre24.i201, %._crit_edge.i200 ], [ %i.fw, %bb.am ]
   %.12 = phi ptr [ %.3269, %._crit_edge.i200 ], [ %i.fx, %bb.am ]
-  %.pre-phi25.i199 = phi i64 [ %.pre24.i201, %._crit_edge.i200 ], [ %i.fw, %bb.am ]
-  %i.fy = add i64 %.pre-phi25.i199, %.2260
+  %i.fy = add i64 %.2260, %.pre-phi363
   br label %.thread286
 
 .thread286:                                       ; preds = %bb.z, %bb.aa, %count_or_copy.exit, %bb.x, %bb.w, %bb.ae, %bb.ak, %count_or_copy.exit202, %bb.ag, %bb.af
@@ -390,9 +390,9 @@ bb.ap:                                            ; preds = %bb.ao
   br label %count_or_copy.exit207.a
 
 count_or_copy.exit207.a:                          ; preds = %._crit_edge.i205, %bb.ap
+  %.pre-phi361 = phi i64 [ %.pre24.i206, %._crit_edge.i205 ], [ %i.gf, %bb.ap ]
   %.13 = phi ptr [ %.4270, %._crit_edge.i205 ], [ %i.gg, %bb.ap ]
-  %.pre-phi25.i204 = phi i64 [ %.pre24.i206, %._crit_edge.i205 ], [ %i.gf, %bb.ap ]
-  %i.gh = add i64 %.pre-phi25.i204, %.3261
+  %i.gh = add i64 %.3261, %.pre-phi361
   br label %bb.aq
 
 bb.aq:                                            ; preds = %count_or_copy.exit207.a, %bb.an
@@ -417,9 +417,9 @@ bb.as:                                            ; preds = %bb.ar
   br label %count_or_copy.exit212.a
 
 count_or_copy.exit212.a:                          ; preds = %._crit_edge.i210, %bb.as
+  %.pre-phi359 = phi i64 [ %.pre24.i211, %._crit_edge.i210 ], [ %i.gk, %bb.as ]
   %.14 = phi ptr [ %.5271, %._crit_edge.i210 ], [ %i.gl, %bb.as ]
-  %.pre-phi25.i209 = phi i64 [ %.pre24.i211, %._crit_edge.i210 ], [ %i.gk, %bb.as ]
-  %i.gm = add i64 %.pre-phi25.i209, %.4262
+  %i.gm = add i64 %.4262, %.pre-phi359
   br label %bb.ay
 
 bb.at:                                            ; preds = %.thread286
@@ -451,9 +451,9 @@ bb.ax:                                            ; preds = %bb.aw
   br label %count_or_copy.exit217
 
 count_or_copy.exit217:                            ; preds = %._crit_edge.i215, %bb.ax
+  %.pre-phi = phi i64 [ %.pre24.i216, %._crit_edge.i215 ], [ %i.gq, %bb.ax ]
   %.15 = phi ptr [ %.4270, %._crit_edge.i215 ], [ %i.gr, %bb.ax ]
-  %.pre-phi25.i214 = phi i64 [ %.pre24.i216, %._crit_edge.i215 ], [ %i.gq, %bb.ax ]
-  %i.gs = add i64 %.pre-phi25.i214, %.3261
+  %i.gs = add i64 %.3261, %.pre-phi
   br label %bb.ay
 
 bb.ay:                                            ; preds = %bb.aq, %count_or_copy.exit212.a, %bb.at, %count_or_copy.exit217
@@ -472,10 +472,8 @@ bb.ay:                                            ; preds = %bb.aq, %count_or_co
 
 .split.thread417:                                 ; preds = %.thread400
   %i.gv = icmp eq i64 %.3261, 0                   ; 2 uses
-  %spec.select21.i421 = select i1 %i.gv, i8 4, i8 3 ; 2 uses
-  %2 = zext nneg i8 %spec.select21.i421 to i32    ; 2 uses
-  %3 = zext nneg i8 %spec.select21.i421 to i64
-  %i.gw = getelementptr inbounds nuw i8, ptr %.4270, i64 %3
+  %2 = select i1 %i.gv, i64 4, i64 3
+  %i.gw = getelementptr inbounds nuw i8, ptr %.4270, i64 %2
   %i.gx = sext i32 %.lcssa to i64
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.gw, ptr noundef nonnull readonly align 1 dereferenceable(1) %i.ep, i64 %i.gx, i1 false)
   br i1 %i.gv, label %bb.ba, label %bb.bb
@@ -483,62 +481,34 @@ bb.ay:                                            ; preds = %bb.aq, %count_or_co
 .thread293:                                       ; preds = %bb.av
   %i.gy = add nsw i8 %i.ez, -7
   %or.cond24297 = icmp ult i8 %i.gy, 2
-  br i1 %or.cond24297, label %._crit_edge.i220, label %.split.thread
+  br i1 %or.cond24297, label %bb.bd, label %.split.thread
 
 .split.thread:                                    ; preds = %.thread293
   %i.gz = icmp eq i64 %.3261, 0
   %spec.select21.i317 = select i1 %i.gz, i8 4, i8 3
-  br label %._crit_edge.i225
+  br label %count_or_copy.exit228
 
 .split160:                                        ; preds = %bb.ay
-  br i1 %.not.i191, label %._crit_edge.i220, label %.split160.thread
-
-._crit_edge.i220:                                 ; preds = %.thread293, %.split160
-  %.6272298313 = phi ptr [ %.6272, %.split160 ], [ %.4270, %.thread293 ]
-  %.5263300312 = phi i64 [ %.5263, %.split160 ], [ %.3261, %.thread293 ]
-  %.4140304310 = phi i8 [ %.4140, %.split160 ], [ %.3139292, %.thread293 ]
-  %.pre22.i = add nsw i32 %.lcssa, 4
-  %.pre24.i221 = sext i32 %.pre22.i to i64
-  br label %count_or_copy.exit222
+  br i1 %.not.i191, label %bb.bd, label %.split160.thread
 
 .split160.thread:                                 ; preds = %.thread400, %.split160
   %.6272405416 = phi ptr [ %.6272, %.split160 ], [ %.4270, %.thread400 ] ; 3 uses
   %.5263407415 = phi i64 [ %.5263, %.split160 ], [ %.3261, %.thread400 ]
   %.4140409414 = phi i8 [ %.4140, %.split160 ], [ %.3139292, %.thread400 ]
   %i.ha = getelementptr inbounds nuw i8, ptr %.6272405416, i64 4
-  %i.hb = sext i32 %.lcssa to i64
+  %i.hb = sext i32 %.lcssa to i64                 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ha, ptr noundef nonnull readonly align 1 dereferenceable(1) %i.ep, i64 %i.hb, i1 false)
   store i32 16777216, ptr %.6272405416, align 1, !tbaa !23
-  %4 = add nsw i32 %.lcssa, 4
-  %5 = sext i32 %4 to i64                         ; 2 uses
-  %i.hc = getelementptr inbounds i8, ptr %.6272405416, i64 %5
-  br label %count_or_copy.exit222
-
-count_or_copy.exit222:                            ; preds = %._crit_edge.i220, %.split160.thread
-  %.5263300311 = phi i64 [ %.5263300312, %._crit_edge.i220 ], [ %.5263407415, %.split160.thread ]
-  %.4140304309 = phi i8 [ %.4140304310, %._crit_edge.i220 ], [ %.4140409414, %.split160.thread ]
-  %.16 = phi ptr [ %.6272298313, %._crit_edge.i220 ], [ %i.hc, %.split160.thread ]
-  %.pre-phi25.i219 = phi i64 [ %.pre24.i221, %._crit_edge.i220 ], [ %5, %.split160.thread ]
-  %6 = add i64 %.pre-phi25.i219, %.5263300311
+  %3 = getelementptr i8, ptr %.6272405416, i64 %i.hb
+  %i.hc = getelementptr i8, ptr %3, i64 4
   br label %bb.bd
 
 .split:                                           ; preds = %bb.ay
   %i.hd = icmp eq i64 %.5263, 0                   ; 2 uses
-  %spec.select21.i = select i1 %i.hd, i8 4, i8 3  ; 3 uses
-  br i1 %.not.i191, label %._crit_edge.i225, label %bb.az
-
-._crit_edge.i225:                                 ; preds = %.split.thread, %.split
-  %spec.select21.i324 = phi i8 [ %spec.select21.i317, %.split.thread ], [ %spec.select21.i, %.split ]
-  %.6272299323 = phi ptr [ %.4270, %.split.thread ], [ %.6272, %.split ]
-  %.5263301322 = phi i64 [ %.3261, %.split.thread ], [ %.5263, %.split ]
-  %.4140303320 = phi i8 [ %.3139292, %.split.thread ], [ %.4140, %.split ]
-  %.pre.i = zext nneg i8 %spec.select21.i324 to i32
-  %.pre22.i226 = add nsw i32 %.lcssa, %.pre.i
-  %.pre24.i227 = sext i32 %.pre22.i226 to i64
-  br label %count_or_copy.exit228
+  %spec.select21.i = select i1 %i.hd, i8 4, i8 3  ; 2 uses
+  br i1 %.not.i191, label %count_or_copy.exit228, label %bb.az
 
 bb.az:                                            ; preds = %.split
-  %7 = zext nneg i8 %spec.select21.i to i32       ; 2 uses
   %i.he = zext nneg i8 %spec.select21.i to i64
   %i.hf = getelementptr inbounds nuw i8, ptr %.6272, i64 %i.he
   %i.hg = sext i32 %.lcssa to i64
@@ -546,14 +516,12 @@ bb.az:                                            ; preds = %.split
   br i1 %i.hd, label %bb.ba, label %bb.bb
 
 bb.ba:                                            ; preds = %.split.thread417, %bb.az
-  %8 = phi i32 [ %2, %.split.thread417 ], [ %7, %bb.az ]
   %.4140410422434 = phi i8 [ %.3139292, %.split.thread417 ], [ %.4140, %bb.az ]
   %.6272406424428 = phi ptr [ %.4270, %.split.thread417 ], [ %.6272, %bb.az ] ; 2 uses
   store i32 16777216, ptr %.6272406424428, align 1, !tbaa !23
   br label %bb.bc
 
 bb.bb:                                            ; preds = %.split.thread417, %bb.az
-  %9 = phi i32 [ %2, %.split.thread417 ], [ %7, %bb.az ]
   %.4140410422433 = phi i8 [ %.3139292, %.split.thread417 ], [ %.4140, %bb.az ]
   %.5263408423430 = phi i64 [ %.3261, %.split.thread417 ], [ %.5263, %bb.az ]
   %.6272406424426 = phi ptr [ %.4270, %.split.thread417 ], [ %.6272, %bb.az ] ; 4 uses
@@ -565,37 +533,42 @@ bb.bb:                                            ; preds = %.split.thread417, %
   br label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bb, %bb.ba
-  %10 = phi i32 [ %9, %bb.bb ], [ %8, %bb.ba ]
-  %.4140410422432 = phi i8 [ %.4140410422433, %bb.bb ], [ %.4140410422434, %bb.ba ]
-  %.5263408423429 = phi i64 [ %.5263408423430, %bb.bb ], [ 0, %bb.ba ]
-  %.6272406424427 = phi ptr [ %.6272406424426, %bb.bb ], [ %.6272406424428, %bb.ba ]
-  %i.hj = add nsw i32 %.lcssa, %10
-  %i.hk = sext i32 %i.hj to i64                   ; 2 uses
+  %.4140410422432 = phi i8 [ %.4140410422434, %bb.ba ], [ %.4140410422433, %bb.bb ]
+  %.5263408423429 = phi i64 [ 0, %bb.ba ], [ %.5263408423430, %bb.bb ]
+  %.6272406424427 = phi ptr [ %.6272406424428, %bb.ba ], [ %.6272406424426, %bb.bb ]
+  %.02428.i = phi i8 [ 4, %bb.ba ], [ 3, %bb.bb ] ; 2 uses
+  %4 = zext nneg i8 %.02428.i to i32
+  %i.hj = add nsw i32 %.lcssa, %4
+  %i.hk = sext i32 %i.hj to i64
   %i.hl = getelementptr inbounds i8, ptr %.6272406424427, i64 %i.hk
   br label %count_or_copy.exit228
 
-count_or_copy.exit228:                            ; preds = %._crit_edge.i225, %bb.bc
-  %.5263301321 = phi i64 [ %.5263301322, %._crit_edge.i225 ], [ %.5263408423429, %bb.bc ]
-  %.4140303319 = phi i8 [ %.4140303320, %._crit_edge.i225 ], [ %.4140410422432, %bb.bc ]
-  %.17 = phi ptr [ %.6272299323, %._crit_edge.i225 ], [ %i.hl, %bb.bc ]
-  %.pre-phi25.i224 = phi i64 [ %.pre24.i227, %._crit_edge.i225 ], [ %i.hk, %bb.bc ]
-  %11 = add i64 %.pre-phi25.i224, %.5263301321
+count_or_copy.exit228:                            ; preds = %.split.thread, %.split, %bb.bc
+  %.5249287303 = phi i64 [ %.5263, %.split ], [ %.5263408423429, %bb.bc ], [ %.3261, %.split.thread ]
+  %.4140289302 = phi i8 [ %.4140, %.split ], [ %.4140410422432, %bb.bc ], [ %.3139292, %.split.thread ]
+  %.17 = phi ptr [ %.6272, %.split ], [ %i.hl, %bb.bc ], [ %.4270, %.split.thread ]
+  %.025.i = phi i8 [ %spec.select21.i, %.split ], [ %.02428.i, %bb.bc ], [ %spec.select21.i317, %.split.thread ]
+  %5 = zext nneg i8 %.025.i to i32
   br label %bb.bd
 
-bb.bd:                                            ; preds = %count_or_copy.exit228, %count_or_copy.exit222
-  %.4140302 = phi i8 [ %.4140304309, %count_or_copy.exit222 ], [ %.4140303319, %count_or_copy.exit228 ]
-  %.7273 = phi ptr [ %.16, %count_or_copy.exit222 ], [ %.17, %count_or_copy.exit228 ]
-  %.6264 = phi i64 [ %6, %count_or_copy.exit222 ], [ %11, %count_or_copy.exit228 ]
+bb.bd:                                            ; preds = %.split160.thread, %.split160, %.thread293, %count_or_copy.exit228
+  %.sink = phi i32 [ %5, %count_or_copy.exit228 ], [ 4, %.thread293 ], [ 4, %.split160 ], [ 4, %.split160.thread ]
+  %.5249287303.sink = phi i64 [ %.5249287303, %count_or_copy.exit228 ], [ %.3261, %.thread293 ], [ %.5263, %.split160 ], [ %.5263407415, %.split160.thread ]
+  %.4140288 = phi i8 [ %.4140289302, %count_or_copy.exit228 ], [ %.3139292, %.thread293 ], [ %.4140, %.split160 ], [ %.4140409414, %.split160.thread ]
+  %.7259 = phi ptr [ %.17, %count_or_copy.exit228 ], [ %.4270, %.thread293 ], [ %.6272, %.split160 ], [ %i.hc, %.split160.thread ]
+  %6 = add nsw i32 %.lcssa, %.sink
+  %7 = sext i32 %6 to i64
+  %8 = add i64 %.5249287303.sink, %7
   %i.hm = icmp eq i8 %i.ez, 1                     ; 3 uses
   %.5156 = select i1 %i.hm, i8 0, i8 %.4155
   %.4148 = select i1 %i.hm, i8 0, i8 %.3147
-  %.5141 = select i1 %i.hm, i8 1, i8 %.4140302
+  %.5141 = select i1 %i.hm, i8 1, i8 %.4140288
   %i.hn = getelementptr inbounds nuw i8, ptr %i.ep, i64 %i.eq
   br label %.thread
 
 .thread:                                          ; preds = %._crit_edge.thread, %bb.bd, %bb.v
-  %.8.ph = phi ptr [ %.7273, %bb.bd ], [ %.1267, %bb.v ], [ %.1267, %._crit_edge.thread ]
-  %.7265.ph = phi i64 [ %.6264, %bb.bd ], [ %.0258, %bb.v ], [ %.0258, %._crit_edge.thread ] ; 3 uses
+  %.8.ph = phi ptr [ %.7259, %bb.bd ], [ %.1267, %bb.v ], [ %.1267, %._crit_edge.thread ]
+  %.7265.ph = phi i64 [ %8, %bb.bd ], [ %.0258, %bb.v ], [ %.0258, %._crit_edge.thread ] ; 3 uses
   %.6157.ph = phi i8 [ %.5156, %bb.bd ], [ %.1152, %bb.v ], [ %.1152, %._crit_edge.thread ] ; 2 uses
   %.5149.ph = phi i8 [ %.4148, %bb.bd ], [ %.1145, %bb.v ], [ %.1145, %._crit_edge.thread ] ; 2 uses
   %.1143.ph = phi ptr [ %i.hn, %bb.bd ], [ %i.ep, %bb.v ], [ %i.eu, %._crit_edge.thread ] ; 2 uses

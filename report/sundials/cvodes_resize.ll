@@ -201,7 +201,7 @@ bb.g:                                             ; preds = %.preheader.us, %bb.
 ; Function Attrs: nounwind uwtable
 define internal fastcc range(i32 -22, 1) i32 @cvBuildNordsieckArrayBDF(ptr nofree noundef nonnull readonly captures(none) %0, ptr nofree noundef nonnull readonly captures(none) %1, ptr noundef %2, ptr nofree noundef nonnull readonly captures(none) %3, i32 noundef %4, double noundef %5, ptr nofree noundef nonnull readonly captures(none) %6) unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [6 x double], align 16            ; 9 uses
+  %i.a = alloca [6 x double], align 16            ; 7 uses
   %.not = icmp ne ptr %2, null
   %i.b = icmp sgt i32 %4, 0
   %or.cond7.not127 = and i1 %.not, %i.b
@@ -260,8 +260,10 @@ bb.c:                                             ; preds = %.lr.ph
 
 .preheader141.lr.ph:                              ; preds = %.lr.ph154
   %i.n = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.o = zext nneg i32 %4 to i64                  ; 2 uses
-  br label %.preheader141
+  %i.o = zext nneg i32 %4 to i64
+  %7 = add nuw i32 %4, 1
+  %wide.trip.count196 = zext i32 %7 to i64
+  br label %.preheader141.split.us
 
 .lr.ph154:                                        ; preds = %.lr.ph154.preheader, %.lr.ph154
   %indvars.iv186 = phi i64 [ 1, %.lr.ph154.preheader ], [ %indvars.iv.next187, %.lr.ph154 ] ; 3 uses
@@ -275,62 +277,38 @@ bb.c:                                             ; preds = %.lr.ph
   %exitcond190.not = icmp eq i64 %indvars.iv.next187, %wide.trip.count189
   br i1 %exitcond190.not, label %.preheader141.lr.ph, label %.lr.ph154
 
-.preheader141:                                    ; preds = %.preheader141.lr.ph, %.split.us
-  %.0117157 = phi i32 [ 1, %.preheader141.lr.ph ], [ %21, %.split.us ] ; 3 uses
-  %7 = icmp eq i32 %.0117157, 1
-  br i1 %7, label %.preheader141.split, label %.preheader141.split.us.preheader
-
-.preheader141.split.us.preheader:                 ; preds = %.preheader141
-  %8 = sext i32 %.0117157 to i64                  ; 2 uses
-  br label %.preheader141.split.us
-
-.preheader141.split.us:                           ; preds = %.preheader141.split.us.preheader, %.preheader141.split.us
-  %indvars.iv191 = phi i64 [ %i.o, %.preheader141.split.us.preheader ], [ %indvars.iv.next192, %.preheader141.split.us ] ; 5 uses
-  %9 = sub nsw i64 %indvars.iv191, %8
-  %10 = getelementptr inbounds [8 x i8], ptr %i.a, i64 %9
-  %11 = load double, ptr %10, align 8, !tbaa !42
-  %12 = getelementptr inbounds [8 x i8], ptr %i.a, i64 %indvars.iv191
-  %13 = load double, ptr %12, align 8, !tbaa !42
-  %14 = fsub double %11, %13
-  %15 = fdiv double 1.000000e+00, %14             ; 2 uses
-  %16 = getelementptr [8 x i8], ptr %3, i64 %indvars.iv191 ; 2 uses
-  %17 = getelementptr i8, ptr %16, i64 -8
-  %18 = load ptr, ptr %17, align 8, !tbaa !25
-  %19 = fneg double %15
-  %20 = load ptr, ptr %16, align 8, !tbaa !25     ; 2 uses
-  tail call void @N_VLinearSum(double noundef %15, ptr noundef %18, double noundef %19, ptr noundef %20, ptr noundef %20) #4
-  %indvars.iv.next192 = add nsw i64 %indvars.iv191, -1
-  %.not136.us.not = icmp sgt i64 %indvars.iv191, %8
-  br i1 %.not136.us.not, label %.preheader141.split.us, label %.split.us
+.preheader141.split.us:                           ; preds = %.preheader141.lr.ph, %.split.us
+  %indvars.iv191 = phi i64 [ 1, %.preheader141.lr.ph ], [ %indvars.iv.next194, %.split.us ] ; 3 uses
+  br label %.preheader141.split
 
 .lr.ph162.preheader:                              ; preds = %.split.us
   %i.u = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %wide.trip.count
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !25
   %i.w = load ptr, ptr %6, align 8, !tbaa !25
   tail call void @N_VScale(double noundef 1.000000e+00, ptr noundef %i.v, ptr noundef %i.w) #4
-  %i.x = add nuw nsw i32 %4, 1
-  %wide.trip.count200 = zext nneg i32 %i.x to i64
+  %i.x = add nuw i32 %4, 1
+  %wide.trip.count200 = zext i32 %i.x to i64
   br label %.lr.ph162
 
-.split.us:                                        ; preds = %.preheader141.split.us, %bb.d, %.thread222
-  %21 = add i32 %.0117157, 1                      ; 2 uses
-  %.not133 = icmp sgt i32 %21, %4
-  br i1 %.not133, label %.lr.ph162.preheader, label %.preheader141
+.split.us:                                        ; preds = %10
+  %indvars.iv.next194 = add nuw nsw i64 %indvars.iv191, 1 ; 2 uses
+  %exitcond197.not = icmp eq i64 %indvars.iv.next194, %wide.trip.count196
+  br i1 %exitcond197.not, label %.lr.ph162.preheader, label %.preheader141.split.us
 
-.preheader141.split:                              ; preds = %.preheader141, %bb.d
-  %indvars.iv194 = phi i64 [ %indvars.iv.next195, %bb.d ], [ %i.o, %.preheader141 ] ; 6 uses
+.preheader141.split:                              ; preds = %.preheader141.split.us, %10
+  %indvars.iv194 = phi i64 [ %i.o, %.preheader141.split.us ], [ %indvars.iv.next191, %10 ] ; 6 uses
   %i.y = icmp eq i64 %indvars.iv194, 1
   br i1 %i.y, label %.thread222, label %bb.d
 
 .thread222:                                       ; preds = %.preheader141.split
   %i.z = load ptr, ptr %i.n, align 8, !tbaa !25
   tail call void @N_VScale(double noundef 1.000000e+00, ptr noundef nonnull %2, ptr noundef %i.z) #4
-  br label %.split.us
+  br label %10
 
 bb.d:                                             ; preds = %.preheader141.split
-  %22 = getelementptr [8 x i8], ptr %i.a, i64 %indvars.iv194
-  %23 = getelementptr i8, ptr %22, i64 -8
-  %i.aa = load double, ptr %23, align 8, !tbaa !42
+  %8 = sub nsw i64 %indvars.iv194, %indvars.iv191
+  %9 = getelementptr inbounds [8 x i8], ptr %i.a, i64 %8
+  %i.aa = load double, ptr %9, align 8, !tbaa !42
   %i.ab = getelementptr inbounds [8 x i8], ptr %i.a, i64 %indvars.iv194
   %i.ac = load double, ptr %i.ab, align 8, !tbaa !42
   %i.ad = fsub double %i.aa, %i.ac
@@ -341,8 +319,11 @@ bb.d:                                             ; preds = %.preheader141.split
   %i.ai = fneg double %i.ae
   %i.aj = load ptr, ptr %i.af, align 8, !tbaa !25 ; 2 uses
   tail call void @N_VLinearSum(double noundef %i.ae, ptr noundef %i.ah, double noundef %i.ai, ptr noundef %i.aj, ptr noundef %i.aj) #4
-  %indvars.iv.next195 = add nsw i64 %indvars.iv194, -1
-  %.not136.not = icmp sgt i64 %indvars.iv194, 1
+  br label %10
+
+10:                                               ; preds = %.thread222, %bb.d
+  %indvars.iv.next191 = add nsw i64 %indvars.iv194, -1
+  %.not136.not = icmp sgt i64 %indvars.iv194, %indvars.iv191
   br i1 %.not136.not, label %.preheader141.split, label %.split.us
 
 .lr.ph162:                                        ; preds = %.lr.ph162.preheader, %.lr.ph162

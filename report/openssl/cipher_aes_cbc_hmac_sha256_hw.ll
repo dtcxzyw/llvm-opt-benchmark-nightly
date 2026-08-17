@@ -203,8 +203,8 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
-  %.0357.i = phi i32 [ %i.ah, %bb.d ], [ %i.aa, %bb.c ], [ %i.aa, %bb.b ] ; 6 uses
-  %.0356.i = phi i32 [ %i.ag, %bb.d ], [ %i.x, %bb.c ], [ %i.x, %bb.b ] ; 8 uses
+  %.0357.i = phi i32 [ %i.ah, %bb.d ], [ %i.aa, %bb.c ], [ %i.aa, %bb.b ] ; 8 uses
+  %.0356.i = phi i32 [ %i.ag, %bb.d ], [ %i.x, %bb.c ], [ %i.x, %bb.b ] ; 7 uses
   store ptr %i.d, ptr %2, align 16, !tbaa !55
   store ptr %i.d, ptr %4, align 16, !tbaa !57
   %i.ai = getelementptr inbounds nuw i8, ptr %i.b, i64 21
@@ -287,7 +287,7 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph.i
   %i.ce = getelementptr inbounds nuw i8, ptr %0, i64 776
   %i.cf = getelementptr inbounds nuw i8, ptr %0, i64 777
   %i.cg = getelementptr inbounds nuw i8, ptr %0, i64 778
-  %i.ch = zext i32 %i.bh to i64                   ; 2 uses
+  %i.ch = zext i32 %i.bh to i64
   %i.ci = add nsw i64 %wide.trip.count.i, -2
   br label %bb.g
 
@@ -345,13 +345,11 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph383.sp
   store ptr %i.cv, ptr %i.do, align 16, !tbaa !55
   %i.dp = getelementptr inbounds nuw i8, ptr %i.do, i64 8
   store i32 1, ptr %i.dp, align 8, !tbaa !63
-  %indvars.iv.next420.i = add nuw nsw i64 %indvars.iv419.i, 1 ; 14 uses
+  %indvars.iv.next420.i = add nuw nsw i64 %indvars.iv419.i, 1 ; 13 uses
   %exitcond423.not.i = icmp eq i64 %indvars.iv419.i, %i.ci
   br i1 %exitcond423.not.i, label %._crit_edge384.loopexit.peel.begin.i, label %bb.g, !llvm.loop !64
 
 ._crit_edge384.loopexit.peel.begin.i:             ; preds = %bb.g
-  %6 = icmp eq i64 %indvars.iv.next420.i, %i.ch
-  %7 = select i1 %6, i32 %.0357.i, i32 %.0356.i   ; 3 uses
   %i.dq = getelementptr inbounds nuw [4 x i8], ptr %i.u, i64 %indvars.iv.next420.i
   store i32 %i.bi, ptr %i.dq, align 4, !tbaa !8
   %i.dr = getelementptr inbounds nuw [4 x i8], ptr %i.bl, i64 %indvars.iv.next420.i
@@ -378,11 +376,11 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph383.sp
   store i8 %i.cy, ptr %i.ec, align 1, !tbaa !20
   %i.ed = getelementptr inbounds nuw i8, ptr %i.ea, i64 10
   store i8 %i.da, ptr %i.ed, align 2, !tbaa !20
-  %i.ee = lshr i32 %7, 8
+  %i.ee = lshr i32 %.0357.i, 8
   %i.ef = trunc i32 %i.ee to i8
   %i.eg = getelementptr inbounds nuw i8, ptr %i.ea, i64 11
   store i8 %i.ef, ptr %i.eg, align 1, !tbaa !20
-  %i.eh = trunc i32 %7 to i8
+  %i.eh = trunc i32 %.0357.i to i8
   %i.ei = getelementptr inbounds nuw i8, ptr %i.ea, i64 12
   store i8 %i.eh, ptr %i.ei, align 4, !tbaa !20
   %i.ej = getelementptr inbounds nuw i8, ptr %i.ea, i64 13
@@ -391,7 +389,7 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph383.sp
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(51) %i.ej, ptr noundef nonnull align 1 dereferenceable(51) %i.el, i64 51, i1 false)
   %i.em = getelementptr inbounds nuw i8, ptr %i.el, i64 51
   store ptr %i.em, ptr %i.ek, align 16, !tbaa !55
-  %i.en = add i32 %7, -51
+  %i.en = add i32 %.0357.i, -51
   %i.eo = lshr i32 %i.en, 6
   %i.ep = getelementptr inbounds nuw i8, ptr %i.ek, i64 8
   store i32 %i.eo, ptr %i.ep, align 8, !tbaa !63

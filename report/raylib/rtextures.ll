@@ -204,7 +204,7 @@ bb.aw:                                            ; preds = %bb.av, %bb.au
   %i.lo = load ptr, ptr %0, align 8               ; 2 uses
   %i.lp = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.lq = load i32, ptr %i.bf, align 4            ; 4 uses
-  %i.lr = load i32, ptr %i.lp, align 8            ; 12 uses
+  %i.lr = load i32, ptr %i.lp, align 8            ; 11 uses
   %i.ls = sub i32 0, %i.lr                        ; 2 uses
   %i.lt = getelementptr inbounds nuw i8, ptr %0, i64 100
   %i.lu = load i32, ptr %i.lt, align 4            ; 2 uses
@@ -332,33 +332,26 @@ stbir__edge_wrap.exit.i:                          ; preds = %call.2.i.i, %call.1
   br i1 %exitcond.not.i342, label %.preheader.i, label %.lr.ph253.i
 
 bb.ax:                                            ; preds = %stbir__edge_wrap.exit232.i, %.lr.ph259.i
-  %.3258.i = phi i32 [ %i.lr, %.lr.ph259.i ], [ %i.np, %stbir__edge_wrap.exit232.i ] ; 14 uses
+  %.3258.i = phi i32 [ %i.lr, %.lr.ph259.i ], [ %i.np, %stbir__edge_wrap.exit232.i ] ; 9 uses
   %.0184257.i = phi i32 [ -2147483647, %.lr.ph259.i ], [ %.1185.i, %stbir__edge_wrap.exit232.i ]
   %.0186256.i = phi i32 [ 2147483647, %.lr.ph259.i ], [ %spec.select214.i, %stbir__edge_wrap.exit232.i ]
-  %9 = icmp sgt i32 %.3258.i, -1
-  %10 = icmp slt i32 %.3258.i, %i.lr              ; 2 uses
-  %or.cond.i219.i = and i1 %9, %10
-  br i1 %or.cond.i219.i, label %stbir__edge_wrap.exit232.i, label %11
-
-11:                                               ; preds = %bb.ax
   switch i32 %i.ln, label %default.switch.case.unreachable.i231.i [
     i32 0, label %call.0.i228.i
     i32 1, label %call.1.i225.i
     i32 2, label %call.2.i221.i
   ], !prof !514
 
-default.switch.case.unreachable.i231.i:           ; preds = %11
+default.switch.case.unreachable.i231.i:           ; preds = %bb.ax
   unreachable
 
-call.0.i228.i:                                    ; preds = %11
+call.0.i228.i:                                    ; preds = %bb.ax
   %i.ng = icmp slt i32 %.3258.i, 0
-  %spec.select.i.i229.i = tail call i32 @llvm.smin.i32(i32 %.3258.i, i32 %i.mn)
-  %.0.i.i230.i = select i1 %i.ng, i32 0, i32 %spec.select.i.i229.i
+  %.0.i.i230.i = select i1 %i.ng, i32 0, i32 %i.mn
   br label %stbir__edge_wrap.exit232.i
 
-call.1.i225.i:                                    ; preds = %11
+call.1.i225.i:                                    ; preds = %bb.ax
   %i.nh = icmp slt i32 %.3258.i, 0
-  br i1 %i.nh, label %bb.ay, label %12
+  br i1 %i.nh, label %bb.ay, label %bb.az
 
 bb.ay:                                            ; preds = %call.1.i225.i
   %i.ni = icmp sgt i32 %.3258.i, %i.ls
@@ -366,17 +359,14 @@ bb.ay:                                            ; preds = %call.1.i225.i
   %spec.select234.i = select i1 %i.ni, i32 %i.nj, i32 %i.mn
   br label %stbir__edge_wrap.exit232.i
 
-12:                                               ; preds = %call.1.i225.i
-  br i1 %10, label %stbir__edge_wrap.exit232.i, label %bb.az
-
-bb.az:                                            ; preds = %12
+bb.az:                                            ; preds = %call.1.i225.i
   %.not17.i.i226.i = icmp slt i32 %.3258.i, %i.na
   %i.nk = xor i32 %.3258.i, -1
   %i.nl = add i32 %i.na, %i.nk
   %.0.i10.i227.i = select i1 %.not17.i.i226.i, i32 %i.nl, i32 0
   br label %stbir__edge_wrap.exit232.i
 
-call.2.i221.i:                                    ; preds = %11
+call.2.i221.i:                                    ; preds = %bb.ax
   %i.nm = srem i32 %.3258.i, %i.lr                ; 3 uses
   %.not.i11.i222.i = icmp eq i32 %i.nm, 0
   %i.nn = add nsw i32 %i.nm, %i.lr
@@ -385,8 +375,8 @@ call.2.i221.i:                                    ; preds = %11
   %.010.i.i224.i = select i1 %i.no, i32 %spec.select.i12.i223.i, i32 %i.nm
   br label %stbir__edge_wrap.exit232.i
 
-stbir__edge_wrap.exit232.i:                       ; preds = %call.2.i221.i, %bb.az, %12, %bb.ay, %call.0.i228.i, %bb.ax
-  %.0.i220.i = phi i32 [ %.3258.i, %bb.ax ], [ %.0.i.i230.i, %call.0.i228.i ], [ %.3258.i, %12 ], [ %.010.i.i224.i, %call.2.i221.i ], [ %spec.select234.i, %bb.ay ], [ %.0.i10.i227.i, %bb.az ] ; 2 uses
+stbir__edge_wrap.exit232.i:                       ; preds = %call.2.i221.i, %bb.az, %bb.ay, %call.0.i228.i
+  %.0.i220.i = phi i32 [ %.0.i10.i227.i, %bb.az ], [ %.0.i.i230.i, %call.0.i228.i ], [ %spec.select234.i, %bb.ay ], [ %.010.i.i224.i, %call.2.i221.i ] ; 2 uses
   %spec.select214.i = tail call i32 @llvm.smin.i32(i32 %.0.i220.i, i32 %.0186256.i) ; 2 uses
   %.1185.i = tail call i32 @llvm.smax.i32(i32 %.0.i220.i, i32 %.0184257.i) ; 2 uses
   %i.np = add nsw i32 %.3258.i, 1                 ; 2 uses
@@ -789,7 +779,7 @@ stbir__insert_coeff.exit:                         ; preds = %._crit_edge68.i, %b
 ; Function Attrs: nounwind uwtable
 define internal fastcc void @stbir__cleanup_gathered_coefficients(i32 noundef %0, ptr nofree noundef nonnull writeonly captures(none) %1, ptr nofree noundef nonnull readonly captures(none) %2, i32 noundef %3, ptr nofree noundef captures(none) %4, ptr noundef %5, i32 noundef %6) unnamed_addr #24 {
 bb.a:
-  %i.a = load i32, ptr %2, align 4                ; 8 uses
+  %i.a = load i32, ptr %2, align 4                ; 7 uses
   %i.b = add nsw i32 %i.a, -1                     ; 8 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.d = load i32, ptr %i.c, align 4              ; 10 uses
@@ -1148,7 +1138,7 @@ stbir_overlapping_memcpy.exit:                    ; preds = %bb.h, %bb.g, %._cri
   %i.eg = sext i32 %i.a to i64
   %trunc = trunc nuw i32 %0 to i1                 ; 3 uses
   %i.eh = shl nsw i32 %i.a, 1                     ; 4 uses
-  %i.ei = sub nsw i32 0, %i.a                     ; 3 uses
+  %i.ei = sub nsw i32 0, %i.a                     ; 2 uses
   br label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph354, %.loopexit
@@ -1245,27 +1235,16 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.p, %stbir__insert_coeff.exit
   %indvars.iv373 = phi i64 [ %i.eg, %bb.p ], [ %indvars.iv.next374, %stbir__insert_coeff.exit ] ; 4 uses
-  %i.ff = trunc nsw i64 %indvars.iv373 to i32     ; 7 uses
+  %i.ff = trunc nsw i64 %indvars.iv373 to i32     ; 2 uses
   %i.fg = icmp slt i64 %indvars.iv373, 0          ; 2 uses
-  br i1 %trunc, label %call.1, label %call.0
+  br i1 %trunc, label %bb.s, label %bb.r
 
-call.0:                                           ; preds = %bb.q
-  %spec.select.i = tail call i32 @llvm.smin.i32(i32 %i.ff, i32 %i.b)
-  %.0.i = select i1 %i.fg, i32 0, i32 %spec.select.i
+bb.r:                                             ; preds = %bb.q
+  %spec.select463 = select i1 %i.fg, i32 0, i32 %i.b
   br label %.tail
 
-call.1:                                           ; preds = %bb.q
-  br i1 %i.fg, label %bb.r, label %bb.s
-
-bb.r:                                             ; preds = %call.1
-  %7 = icmp sgt i32 %i.ff, %i.ei
-  %8 = sub nsw i32 0, %i.ff
-  %spec.select463 = select i1 %7, i32 %8, i32 %i.b
-  br label %.tail
-
-bb.s:                                             ; preds = %call.1
-  %.not.i446 = icmp sgt i32 %i.a, %i.ff
-  br i1 %.not.i446, label %.tail, label %bb.t
+bb.s:                                             ; preds = %bb.q
+  br i1 %i.fg, label %.tail, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
   %.not17.i = icmp sgt i32 %i.eh, %i.ff
@@ -1274,8 +1253,8 @@ bb.t:                                             ; preds = %bb.s
   %.0.i447 = select i1 %.not17.i, i32 %i.fi, i32 0
   br label %.tail
 
-.tail:                                            ; preds = %bb.r, %bb.t, %bb.s, %call.0
-  %9 = phi i32 [ %.0.i, %call.0 ], [ %spec.select463, %bb.r ], [ %i.ff, %bb.s ], [ %.0.i447, %bb.t ] ; 13 uses
+.tail:                                            ; preds = %bb.s, %bb.t, %bb.r
+  %7 = phi i32 [ %spec.select463, %bb.r ], [ %.0.i447, %bb.t ], [ %i.b, %bb.s ] ; 13 uses
   %i.fj = sub nsw i64 %indvars.iv373, %i.fd
   %i.fk = getelementptr inbounds [4 x i8], ptr %.1203347, i64 %i.fj
   %i.fl = load float, ptr %i.fk, align 4          ; 4 uses
@@ -1285,26 +1264,26 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.fo, label %bb.u, label %bb.v
 
 bb.u:                                             ; preds = %.tail
-  store i32 %9, ptr %i.fb, align 4
-  store i32 %9, ptr %.1206346, align 4
+  store i32 %7, ptr %i.fb, align 4
+  store i32 %7, ptr %.1206346, align 4
   store float %i.fl, ptr %.1203347, align 4
   br label %stbir__insert_coeff.exit
 
 bb.v:                                             ; preds = %.tail
-  %.not.i236 = icmp sgt i32 %9, %i.fm
+  %.not.i236 = icmp sgt i32 %7, %i.fm
   br i1 %.not.i236, label %bb.z, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
-  %i.fp = icmp slt i32 %9, %i.fn
+  %i.fp = icmp slt i32 %7, %i.fn
   br i1 %i.fp, label %bb.x, label %bb.y
 
 bb.x:                                             ; preds = %bb.w
-  %i.fq = sub nsw i32 %i.fm, %9
+  %i.fq = sub nsw i32 %i.fm, %7
   %.not60.not.i = icmp slt i32 %i.fq, %6
   br i1 %.not60.not.i, label %.lr.ph.preheader.i, label %stbir__insert_coeff.exit
 
 .lr.ph.preheader.i:                               ; preds = %bb.x
-  %i.fr = sub nsw i32 %i.fn, %9                   ; 2 uses
+  %i.fr = sub nsw i32 %i.fn, %7                   ; 2 uses
   %i.fs = sub i32 %i.fm, %i.fn                    ; 2 uses
   %i.ft = zext i32 %i.fs to i64                   ; 5 uses
   %i.fu = sext i32 %i.fr to i64
@@ -1314,7 +1293,7 @@ bb.x:                                             ; preds = %bb.w
   br i1 %min.iters.check613, label %.lr.ph.i.preheader, label %vector.memcheck610
 
 vector.memcheck610:                               ; preds = %.lr.ph.preheader.i
-  %i.fw = sext i32 %9 to i64
+  %i.fw = sext i32 %7 to i64
   %i.fx = sext i32 %i.fn to i64
   %i.fy = sub nsw i64 %i.fw, %i.fx
   %i.fz = shl nsw i64 %i.fy, 2
@@ -1377,7 +1356,7 @@ middle.block621:                                  ; preds = %vector.body616
   br i1 %i.go, label %.lr.ph63.preheader.i, label %._crit_edge.i
 
 .lr.ph63.preheader.i:                             ; preds = %.preheader.i.loopexit
-  %i.gp = xor i32 %9, -1
+  %i.gp = xor i32 %7, -1
   %i.gq = add i32 %i.fn, %i.gp
   %i.gr = zext i32 %i.gq to i64
   %i.gs = shl nuw nsw i64 %i.gr, 2
@@ -1411,11 +1390,11 @@ middle.block621:                                  ; preds = %vector.body616
 
 ._crit_edge.i:                                    ; preds = %.lr.ph63.preheader.i, %.preheader.i.loopexit
   store float %i.fl, ptr %.1203347, align 4
-  store i32 %9, ptr %.1206346, align 4
+  store i32 %7, ptr %.1206346, align 4
   br label %stbir__insert_coeff.exit
 
 bb.y:                                             ; preds = %bb.w
-  %i.hb = sub nsw i32 %9, %i.fn
+  %i.hb = sub nsw i32 %7, %i.fn
   %i.hc = zext nneg i32 %i.hb to i64
   %i.hd = getelementptr inbounds nuw [4 x i8], ptr %.1203347, i64 %i.hc ; 2 uses
   %i.he = load float, ptr %i.hd, align 4
@@ -1424,7 +1403,7 @@ bb.y:                                             ; preds = %bb.w
   br label %stbir__insert_coeff.exit
 
 bb.z:                                             ; preds = %bb.v
-  %i.hg = sub nsw i32 %9, %i.fn                   ; 3 uses
+  %i.hg = sub nsw i32 %7, %i.fn                   ; 3 uses
   %.not59.not.i = icmp slt i32 %i.hg, %6
   br i1 %.not59.not.i, label %bb.aa, label %stbir__insert_coeff.exit
 
@@ -1438,7 +1417,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.hj = sext i32 %.05464.i to i64
   %i.hk = shl nsw i64 %i.hj, 2
   %scevgep73.i = getelementptr i8, ptr %.1203347, i64 %i.hk
-  %i.hl = add i32 %9, -2
+  %i.hl = add i32 %7, -2
   %i.hm = sub i32 %i.hl, %i.fm
   %i.hn = zext i32 %i.hm to i64
   %i.ho = shl nuw nsw i64 %i.hn, 2
@@ -1450,7 +1429,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.hq = sext i32 %i.hg to i64
   %i.hr = getelementptr inbounds [4 x i8], ptr %.1203347, i64 %i.hq
   store float %i.fl, ptr %i.hr, align 4
-  store i32 %9, ptr %i.fb, align 4
+  store i32 %7, ptr %i.fb, align 4
   br label %stbir__insert_coeff.exit
 
 stbir__insert_coeff.exit:                         ; preds = %bb.u, %bb.x, %._crit_edge.i, %bb.y, %bb.z, %._crit_edge68.i

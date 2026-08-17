@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %.critedge.i
   br label %.preheader, !llvm.loop !19
 
 spin_acquire_lock.exit:                           ; preds = %bb.e, %bb.c, %bb.d
-  %i.k = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_gm_, i64 40), align 8, !tbaa !34 ; 2 uses
+  %i.k = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_gm_, i64 40), align 8, !tbaa !34 ; 3 uses
   %.not47 = icmp eq ptr %i.k, null
   br i1 %.not47, label %bb.k, label %bb.g
 
@@ -213,53 +213,52 @@ bb.g:                                             ; preds = %spin_acquire_lock.e
   %i.m = add i64 %i.l, 80
   br label %.lr.ph.a
 
-.lr.ph.a:                                         ; preds = %.critedge, %bb.g
-  %.03469 = phi i64 [ 1, %bb.g ], [ %.135.lcssa.ph, %.critedge ]
+.lr.ph.a:                                         ; preds = %bb.g, %.critedge
+  %.03469 = phi i64 [ 1, %bb.g ], [ %.135.lcssa.ph, %.critedge ] ; 2 uses
   %.03868 = phi ptr [ getelementptr inbounds nuw (i8, ptr @_gm_, i64 888), %bb.g ], [ %i.ad, %.critedge ] ; 3 uses
-  %.03967 = phi i64 [ %i.m, %bb.g ], [ %.140.lcssa.ph, %.critedge ]
-  %i.n = load ptr, ptr %.03868, align 8, !tbaa !63 ; 4 uses
+  %.03967 = phi i64 [ %i.m, %bb.g ], [ %.140.lcssa.ph, %.critedge ] ; 2 uses
+  %i.n = load ptr, ptr %.03868, align 8, !tbaa !63 ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 16
   %i.p = ptrtoint ptr %i.o to i64
   %i.q = and i64 %i.p, 15                         ; 2 uses
   %i.r = icmp eq i64 %i.q, 0
   %i.s = sub nuw nsw i64 16, %i.q
-  %spec.select = select i1 %i.r, i64 0, i64 %i.s
-  %i.t = getelementptr inbounds nuw i8, ptr %i.n, i64 %spec.select
+  %spec.select = select i1 %i.r, i64 0, i64 %i.s  ; 2 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %i.n, i64 %spec.select ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %.03868, i64 8
-  %i.v = load i64, ptr %i.u, align 8, !tbaa !64
+  %i.v = load i64, ptr %i.u, align 8, !tbaa !64   ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.v
-  br label %bb.h
+  %0 = icmp samesign uge i64 %spec.select, %i.v
+  %.not5356 = icmp eq ptr %i.t, %i.k
+  %or.cond57 = or i1 %.not5356, %0
+  br i1 %or.cond57, label %.critedge, label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph.a, %bb.i
-  %.13559 = phi i64 [ %.03469, %.lr.ph.a ], [ %.236, %bb.i ] ; 3 uses
-  %.03758 = phi ptr [ %i.t, %.lr.ph.a ], [ %i.ab, %bb.i ] ; 4 uses
-  %.14057 = phi i64 [ %.03967, %.lr.ph.a ], [ %.241, %bb.i ] ; 3 uses
-  %0 = icmp uge ptr %.03758, %i.w
-  %.not53 = icmp eq ptr %.03758, %i.k
-  %or.cond = or i1 %.not53, %0
-  br i1 %or.cond, label %.critedge, label %1
-
-1:                                                ; preds = %bb.h
-  %2 = getelementptr inbounds nuw i8, ptr %.03758, i64 8
-  %3 = load i64, ptr %2, align 8, !tbaa !28       ; 3 uses
-  %.not54 = icmp eq i64 %3, 11
+  %.13559 = phi i64 [ %.236, %bb.i ], [ %.03469, %.lr.ph.a ] ; 2 uses
+  %.03758 = phi ptr [ %i.ab, %bb.i ], [ %i.t, %.lr.ph.a ] ; 2 uses
+  %.14057 = phi i64 [ %.241, %bb.i ], [ %.03967, %.lr.ph.a ] ; 2 uses
+  %1 = getelementptr inbounds nuw i8, ptr %.03758, i64 8
+  %2 = load i64, ptr %1, align 8, !tbaa !28       ; 3 uses
+  %.not54 = icmp eq i64 %2, 11
   br i1 %.not54, label %.critedge, label %bb.i
 
-bb.i:                                             ; preds = %1
-  %i.x = and i64 %3, 3
+bb.i:                                             ; preds = %bb.h
+  %i.x = and i64 %2, 3
   %.not55 = icmp eq i64 %i.x, 1                   ; 2 uses
-  %i.y = and i64 %3, -8                           ; 2 uses
+  %i.y = and i64 %2, -8                           ; 2 uses
   %i.z = select i1 %.not55, i64 %i.y, i64 0
   %.241 = add i64 %i.z, %.14057                   ; 2 uses
   %i.aa = zext i1 %.not55 to i64
   %.236 = add i64 %.13559, %i.aa                  ; 2 uses
-  %i.ab = getelementptr inbounds nuw i8, ptr %.03758, i64 %i.y ; 2 uses
-  %.not52 = icmp ult ptr %i.ab, %i.n
-  br i1 %.not52, label %.critedge, label %bb.h, !llvm.loop !110
+  %i.ab = getelementptr inbounds nuw i8, ptr %.03758, i64 %i.y ; 3 uses
+  %3 = icmp uge ptr %i.ab, %i.w
+  %.not53 = icmp eq ptr %i.ab, %i.k
+  %or.cond = or i1 %.not53, %3
+  br i1 %or.cond, label %.critedge, label %bb.h, !llvm.loop !110
 
-.critedge:                                        ; preds = %1, %bb.i, %bb.h
-  %.140.lcssa.ph = phi i64 [ %.14057, %1 ], [ %.241, %bb.i ], [ %.14057, %bb.h ] ; 2 uses
-  %.135.lcssa.ph = phi i64 [ %.13559, %1 ], [ %.236, %bb.i ], [ %.13559, %bb.h ] ; 3 uses
+.critedge:                                        ; preds = %bb.h, %bb.i, %.lr.ph.a
+  %.140.lcssa.ph = phi i64 [ %.03967, %.lr.ph.a ], [ %.241, %bb.i ], [ %.14057, %bb.h ] ; 2 uses
+  %.135.lcssa.ph = phi i64 [ %.03469, %.lr.ph.a ], [ %.236, %bb.i ], [ %.13559, %bb.h ] ; 3 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %.03868, i64 16
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !65 ; 2 uses
   %.not48 = icmp eq ptr %i.ad, null
@@ -356,7 +355,7 @@ bb.f:                                             ; preds = %.critedge.i.i
   br label %.preheader.i, !llvm.loop !19
 
 spin_acquire_lock.exit.i:                         ; preds = %bb.e, %bb.d, %bb.c
-  %i.k = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_gm_, i64 40), align 8, !tbaa !34, !noalias !112 ; 2 uses
+  %i.k = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_gm_, i64 40), align 8, !tbaa !34, !noalias !112 ; 3 uses
   %.not40.i = icmp eq ptr %i.k, null
   br i1 %.not40.i, label %.loopexit.i, label %bb.g
 
@@ -370,46 +369,45 @@ bb.g:                                             ; preds = %spin_acquire_lock.e
 
 .lr.ph.i.a:                                       ; preds = %.critedge.i, %bb.g
   %.03110.i = phi ptr [ getelementptr inbounds nuw (i8, ptr @_gm_, i64 888), %bb.g ], [ %i.ae, %.critedge.i ] ; 3 uses
-  %.0329.i = phi i64 [ %i.o, %bb.g ], [ %.1.lcssa.ph.i, %.critedge.i ]
-  %i.p = load ptr, ptr %.03110.i, align 8, !tbaa !63, !noalias !112 ; 4 uses
+  %.0329.i = phi i64 [ %i.o, %bb.g ], [ %.1.lcssa.ph.i, %.critedge.i ] ; 2 uses
+  %i.p = load ptr, ptr %.03110.i, align 8, !tbaa !63, !noalias !112 ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 16
   %i.r = ptrtoint ptr %i.q to i64
   %i.s = and i64 %i.r, 15                         ; 2 uses
   %i.t = icmp eq i64 %i.s, 0
   %i.u = sub nuw nsw i64 16, %i.s
-  %spec.select.i = select i1 %i.t, i64 0, i64 %i.u
-  %i.v = getelementptr inbounds nuw i8, ptr %i.p, i64 %spec.select.i
+  %spec.select.i = select i1 %i.t, i64 0, i64 %i.u ; 2 uses
+  %i.v = getelementptr inbounds nuw i8, ptr %i.p, i64 %spec.select.i ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %.03110.i, i64 8
-  %i.x = load i64, ptr %i.w, align 8, !tbaa !64, !noalias !112
+  %i.x = load i64, ptr %i.w, align 8, !tbaa !64, !noalias !112 ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.x
-  br label %bb.h
+  %1 = icmp samesign uge i64 %spec.select.i, %i.x
+  %.not442.i = icmp eq ptr %i.v, %i.k
+  %or.cond3.i = or i1 %1, %.not442.i
+  br i1 %or.cond3.i, label %.critedge.i, label %bb.h
 
-bb.h:                                             ; preds = %bb.i, %.lr.ph.i.a
-  %.04.i = phi ptr [ %i.v, %.lr.ph.i.a ], [ %i.ac, %bb.i ] ; 4 uses
-  %.13.i = phi i64 [ %.0329.i, %.lr.ph.i.a ], [ %.2.i, %bb.i ] ; 3 uses
-  %1 = icmp uge ptr %.04.i, %i.y
-  %.not44.i = icmp eq ptr %.04.i, %i.k
-  %or.cond.i = or i1 %.not44.i, %1
-  br i1 %or.cond.i, label %.critedge.i, label %2
-
-2:                                                ; preds = %bb.h
-  %3 = getelementptr inbounds nuw i8, ptr %.04.i, i64 8
-  %4 = load i64, ptr %3, align 8, !tbaa !28, !noalias !112 ; 3 uses
-  %.not45.i = icmp eq i64 %4, 11
+bb.h:                                             ; preds = %.lr.ph.i.a, %bb.i
+  %.04.i = phi ptr [ %i.ac, %bb.i ], [ %i.v, %.lr.ph.i.a ] ; 2 uses
+  %.13.i = phi i64 [ %.2.i, %bb.i ], [ %.0329.i, %.lr.ph.i.a ] ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %.04.i, i64 8
+  %3 = load i64, ptr %2, align 8, !tbaa !28, !noalias !112 ; 3 uses
+  %.not45.i = icmp eq i64 %3, 11
   br i1 %.not45.i, label %.critedge.i, label %bb.i
 
-bb.i:                                             ; preds = %2
-  %i.z = and i64 %4, 2
+bb.i:                                             ; preds = %bb.h
+  %i.z = and i64 %3, 2
   %.not46.i = icmp eq i64 %i.z, 0
-  %i.aa = and i64 %4, -8                          ; 2 uses
+  %i.aa = and i64 %3, -8                          ; 2 uses
   %i.ab = select i1 %.not46.i, i64 %i.aa, i64 0
   %.2.i = sub i64 %.13.i, %i.ab                   ; 2 uses
-  %i.ac = getelementptr inbounds nuw i8, ptr %.04.i, i64 %i.aa ; 2 uses
-  %.not43.i = icmp ult ptr %i.ac, %i.p
-  br i1 %.not43.i, label %.critedge.i, label %bb.h, !llvm.loop !115
+  %i.ac = getelementptr inbounds nuw i8, ptr %.04.i, i64 %i.aa ; 3 uses
+  %4 = icmp uge ptr %i.ac, %i.y
+  %.not44.i = icmp eq ptr %i.ac, %i.k
+  %or.cond.i = or i1 %.not44.i, %4
+  br i1 %or.cond.i, label %.critedge.i, label %bb.h, !llvm.loop !115
 
-.critedge.i:                                      ; preds = %bb.i, %2, %bb.h
-  %.1.lcssa.ph.i = phi i64 [ %.13.i, %2 ], [ %.2.i, %bb.i ], [ %.13.i, %bb.h ] ; 2 uses
+.critedge.i:                                      ; preds = %bb.i, %bb.h, %.lr.ph.i.a
+  %.1.lcssa.ph.i = phi i64 [ %.0329.i, %.lr.ph.i.a ], [ %.13.i, %bb.h ], [ %.2.i, %bb.i ] ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %.03110.i, i64 16
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !65, !noalias !112 ; 2 uses
   %.not41.i = icmp eq ptr %i.ae, null

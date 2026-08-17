@@ -204,7 +204,7 @@ bb.bu:                                            ; preds = %bb.bt
 
 bb.bv:                                            ; preds = %bb.bu, %bb.bt
   %.0216.i = phi i32 [ %spec.select252.i, %bb.bu ], [ %i.avq, %bb.bt ] ; 13 uses
-  %.0212.i = phi i32 [ %spec.store.select.i, %bb.bu ], [ 0, %bb.bt ] ; 8 uses
+  %.0212.i = phi i32 [ %spec.store.select.i, %bb.bu ], [ 0, %bb.bt ] ; 7 uses
   %i.ayz = zext nneg i32 %.0212.i to i64          ; 33 uses
   %.not36.i.i139 = icmp sgt i32 %.0212.i, %.0216.i ; 3 uses
   br i1 %.not36.i.i139, label %_ZL26GenerateGibbsProbabilitiesPKfPdS1_ii.exit.i, label %.lr.ph.preheader.i.i140
@@ -599,8 +599,7 @@ vec.epilog.middle.block726:                       ; preds = %vec.epilog.vector.b
   %i.bev = fmul nnan float %i.beu, f0x1F800000    ; 2 uses
   %i.bew = fcmp oeq float %i.bev, 1.000000e+00
   %.013.i.i.i.i = select i1 %i.bew, float 0.000000e+00, float %i.bev
-  %7 = tail call i32 @llvm.umax.i32(i32 %.0216.i, i32 %.0212.i)
-  %i.bex = zext nneg i32 %7 to i64
+  %i.bex = zext nneg i32 %.0216.i to i64
   br label %.lr.ph385.i
 
 .lr.ph385.i:                                      ; preds = %bb.bw, %.lr.ph385.preheader.i
@@ -1001,9 +1000,6 @@ declare i32 @llvm.usub.sat.i32(i32, i32) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #7
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v8i32(<8 x i32>) #7

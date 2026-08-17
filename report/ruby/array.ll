@@ -204,76 +204,64 @@ bb.g:                                             ; preds = %rb_ary_elt.exit37
   br i1 %exitcond.not, label %.loopexit, label %bb.h, !llvm.loop !78
 
 bb.h:                                             ; preds = %.lr.ph, %bb.g
-  %.01738 = phi i64 [ 0, %.lr.ph ], [ %i.u, %bb.g ] ; 5 uses
+  %.01738 = phi i64 [ 0, %.lr.ph ], [ %i.u, %bb.g ] ; 7 uses
   %i.v = load i64, ptr %i.b, align 8, !tbaa !11   ; 2 uses
   %i.w = and i64 %i.v, 8192
-  %.not.i.i = icmp eq i64 %i.w, 0                 ; 2 uses
-  br i1 %.not.i.i, label %5, label %bb.i
+  %.not.i.i = icmp eq i64 %i.w, 0
+  br i1 %.not.i.i, label %bb.i, label %rb_array_len.exit.i
 
 bb.i:                                             ; preds = %bb.h
-  %3 = lshr i64 %i.v, 15
-  %4 = and i64 %3, 127
-  br label %rb_array_len.exit.i
+  %3 = load i64, ptr %i.q, align 8, !tbaa !14
+  %.not.i27 = icmp sgt i64 %3, %.01738
+  br i1 %.not.i27, label %bb.j, label %rb_ary_elt.exit
 
-5:                                                ; preds = %bb.h
-  %6 = load i64, ptr %i.q, align 8, !tbaa !14
-  br label %rb_array_len.exit.i
+rb_array_len.exit.i:                              ; preds = %bb.h
+  %4 = lshr i64 %i.v, 15
+  %5 = and i64 %4, 127
+  %.not.i2743 = icmp samesign ugt i64 %5, %.01738
+  br i1 %.not.i2743, label %RARRAY_AREF.exit.i, label %rb_ary_elt.exit
 
-rb_array_len.exit.i:                              ; preds = %5, %bb.i
-  %.0.i.i = phi i64 [ %4, %bb.i ], [ %6, %5 ]
-  %.not.i27 = icmp sgt i64 %.0.i.i, %.01738
-  br i1 %.not.i27, label %7, label %rb_ary_elt.exit
-
-7:                                                ; preds = %rb_array_len.exit.i
-  br i1 %.not.i.i, label %bb.j, label %RARRAY_AREF.exit.i
-
-bb.j:                                             ; preds = %7
+bb.j:                                             ; preds = %bb.i
   %i.x = load ptr, ptr %i.r, align 8, !tbaa !14
   br label %RARRAY_AREF.exit.i
 
-RARRAY_AREF.exit.i:                               ; preds = %7, %bb.j
-  %.0.i.i.i = phi ptr [ %i.x, %bb.j ], [ %i.q, %7 ]
+RARRAY_AREF.exit.i:                               ; preds = %rb_array_len.exit.i, %bb.j
+  %.0.i.i.i = phi ptr [ %i.x, %bb.j ], [ %i.q, %rb_array_len.exit.i ]
   %i.y = getelementptr [8 x i8], ptr %.0.i.i.i, i64 %.01738
   %i.z = load i64, ptr %i.y, align 8, !tbaa !15
   br label %rb_ary_elt.exit
 
-rb_ary_elt.exit:                                  ; preds = %rb_array_len.exit.i, %RARRAY_AREF.exit.i
-  %.0.i28 = phi i64 [ %i.z, %RARRAY_AREF.exit.i ], [ 4, %rb_array_len.exit.i ]
+rb_ary_elt.exit:                                  ; preds = %rb_array_len.exit.i, %bb.i, %RARRAY_AREF.exit.i
+  %.0.i28 = phi i64 [ %i.z, %RARRAY_AREF.exit.i ], [ 4, %bb.i ], [ 4, %rb_array_len.exit.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #24
   %i.aa = load i64, ptr %i.i, align 8, !tbaa !11  ; 2 uses
   %i.ab = and i64 %i.aa, 8192
-  %.not.i.i29 = icmp eq i64 %i.ab, 0              ; 2 uses
-  br i1 %.not.i.i29, label %10, label %bb.k
+  %.not.i.i29 = icmp eq i64 %i.ab, 0
+  br i1 %.not.i.i29, label %bb.k, label %rb_array_len.exit.i30
 
 bb.k:                                             ; preds = %rb_ary_elt.exit
-  %8 = lshr i64 %i.aa, 15
-  %9 = and i64 %8, 127
-  br label %rb_array_len.exit.i30
+  %6 = load i64, ptr %i.s, align 8, !tbaa !14
+  %.not.i32 = icmp sgt i64 %6, %.01738
+  br i1 %.not.i32, label %bb.l, label %rb_ary_elt.exit37
 
-10:                                               ; preds = %rb_ary_elt.exit
-  %11 = load i64, ptr %i.s, align 8, !tbaa !14
-  br label %rb_array_len.exit.i30
+rb_array_len.exit.i30:                            ; preds = %rb_ary_elt.exit
+  %7 = lshr i64 %i.aa, 15
+  %8 = and i64 %7, 127
+  %.not.i3245 = icmp samesign ugt i64 %8, %.01738
+  br i1 %.not.i3245, label %RARRAY_AREF.exit.i35, label %rb_ary_elt.exit37
 
-rb_array_len.exit.i30:                            ; preds = %10, %bb.k
-  %.0.i.i31 = phi i64 [ %9, %bb.k ], [ %11, %10 ]
-  %.not.i32 = icmp sgt i64 %.0.i.i31, %.01738
-  br i1 %.not.i32, label %12, label %rb_ary_elt.exit37
-
-12:                                               ; preds = %rb_array_len.exit.i30
-  br i1 %.not.i.i29, label %bb.l, label %RARRAY_AREF.exit.i35
-
-bb.l:                                             ; preds = %12
+bb.l:                                             ; preds = %bb.k
   %i.ac = load ptr, ptr %i.t, align 8, !tbaa !14
   br label %RARRAY_AREF.exit.i35
 
-RARRAY_AREF.exit.i35:                             ; preds = %12, %bb.l
-  %.0.i.i.i36 = phi ptr [ %i.ac, %bb.l ], [ %i.s, %12 ]
+RARRAY_AREF.exit.i35:                             ; preds = %rb_array_len.exit.i30, %bb.l
+  %.0.i.i.i36 = phi ptr [ %i.ac, %bb.l ], [ %i.s, %rb_array_len.exit.i30 ]
   %i.ad = getelementptr [8 x i8], ptr %.0.i.i.i36, i64 %.01738
   %i.ae = load i64, ptr %i.ad, align 8, !tbaa !15
   br label %rb_ary_elt.exit37
 
-rb_ary_elt.exit37:                                ; preds = %rb_array_len.exit.i30, %RARRAY_AREF.exit.i35
-  %.0.i34 = phi i64 [ %i.ae, %RARRAY_AREF.exit.i35 ], [ 4, %rb_array_len.exit.i30 ]
+rb_ary_elt.exit37:                                ; preds = %rb_array_len.exit.i30, %bb.k, %RARRAY_AREF.exit.i35
+  %.0.i34 = phi i64 [ %i.ae, %RARRAY_AREF.exit.i35 ], [ 4, %bb.k ], [ 4, %rb_array_len.exit.i30 ]
   store i64 %.0.i34, ptr %i.a, align 8, !tbaa !15
   %i.af = call i64 @rb_funcallv(i64 noundef %.0.i28, i64 noundef 135, i32 noundef 1, ptr noundef nonnull %i.a) #24 ; 2 uses
   %.not23 = icmp eq i64 %i.af, 1

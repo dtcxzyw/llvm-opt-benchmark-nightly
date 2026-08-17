@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.h = icmp eq i16 %i.g, 1
-  %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 4 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 3 uses
   %i.j = load ptr, ptr %i.i, align 8
   %.0.i = select i1 %i.h, ptr %i.i, ptr %i.j
   %i.k = load ptr, ptr %.0.i, align 8, !tbaa !138
@@ -215,7 +215,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.n, label %bb.e, label %bb.j
 
 bb.e:                                             ; preds = %bb.d
-  %i.o = load i16, ptr %i.f, align 2, !tbaa !172  ; 4 uses
+  %i.o = load i16, ptr %i.f, align 2, !tbaa !172  ; 3 uses
   %i.p = zext i16 %i.o to i64
   %i.q = shl nuw nsw i64 %i.p, 3                  ; 3 uses
   %i.r = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.q) #30 ; 5 uses
@@ -245,11 +245,8 @@ bb.g:                                             ; preds = %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.e, %bb.h
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.h ], [ 1, %bb.e ] ; 3 uses
-  %2 = phi i16 [ %i.af, %bb.h ], [ %i.o, %bb.e ]
-  %3 = icmp ult i16 %2, 2
   %i.aa = load ptr, ptr %i.i, align 8
-  %.0.i36 = select i1 %3, ptr %i.i, ptr %i.aa
-  %i.ab = getelementptr inbounds nuw [8 x i8], ptr %.0.i36, i64 %indvars.iv
+  %i.ab = getelementptr inbounds nuw [8 x i8], ptr %i.aa, i64 %indvars.iv
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !138
   %i.ad = invoke noundef ptr @_ZN3re26Regexp6IncrefEv(ptr noundef nonnull align 8 dereferenceable(40) %i.ac)
           to label %bb.h unwind label %bb.g
@@ -258,7 +255,7 @@ bb.h:                                             ; preds = %.lr.ph
   %i.ae = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %indvars.iv
   store ptr %i.ad, ptr %i.ae, align 8, !tbaa !138
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %i.af = load i16, ptr %i.f, align 2, !tbaa !172 ; 3 uses
+  %i.af = load i16, ptr %i.f, align 2, !tbaa !172 ; 2 uses
   %i.ag = zext i16 %i.af to i64
   %i.ah = icmp samesign ult i64 %indvars.iv.next, %i.ag
   br i1 %i.ah, label %.lr.ph, label %._crit_edge, !llvm.loop !173

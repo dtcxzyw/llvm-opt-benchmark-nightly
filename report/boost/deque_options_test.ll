@@ -201,7 +201,7 @@ bb.a:
   %i.r = add nsw i64 %i.q, %i.p
   %i.s = select i1 %2, i64 %i.h, i64 %i.r
   %.not67 = icmp ult i64 %i.b, %i.s
-  br i1 %.not67, label %3, label %bb.b
+  br i1 %.not67, label %bb.p, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %.idx = shl nuw nsw i64 %i.m, 3
@@ -333,31 +333,22 @@ _ZN5boost9container6move_nIPPhS3_EENS0_3dtl37enable_if_memtransfer_copy_assignab
   %i.bn = and i8 %i.bm, 31
   %i.bo = add i8 %i.bl, %i.bn                     ; 2 uses
   store i8 %i.bo, ptr %i.j, align 2, !tbaa !76
-  br label %3
+  br label %bb.p
 
-3:                                                ; preds = %_ZN5boost9container6move_nIPPhS3_EENS0_3dtl37enable_if_memtransfer_copy_assignableIT_T0_S7_E4typeES6_mS7_.exit, %bb.a
-  %4 = phi i8 [ %i.bg, %_ZN5boost9container6move_nIPPhS3_EENS0_3dtl37enable_if_memtransfer_copy_assignableIT_T0_S7_E4typeES6_mS7_.exit ], [ %i.e, %bb.a ]
-  %5 = phi ptr [ %i.az, %_ZN5boost9container6move_nIPPhS3_EENS0_3dtl37enable_if_memtransfer_copy_assignableIT_T0_S7_E4typeES6_mS7_.exit ], [ %i.f, %bb.a ] ; 2 uses
-  %6 = phi i8 [ %i.bo, %_ZN5boost9container6move_nIPPhS3_EENS0_3dtl37enable_if_memtransfer_copy_assignableIT_T0_S7_E4typeES6_mS7_.exit ], [ %i.k, %bb.a ]
-  br i1 %2, label %bb.p, label %7
-
-bb.p:                                             ; preds = %3
-  %i.bp = lshr i8 %4, 5
+bb.p:                                             ; preds = %_ZN5boost9container6move_nIPPhS3_EENS0_3dtl37enable_if_memtransfer_copy_assignableIT_T0_S7_E4typeES6_mS7_.exit, %bb.a
+  %3 = phi i8 [ %i.bg, %_ZN5boost9container6move_nIPPhS3_EENS0_3dtl37enable_if_memtransfer_copy_assignableIT_T0_S7_E4typeES6_mS7_.exit ], [ %i.e, %bb.a ]
+  %4 = phi ptr [ %i.az, %_ZN5boost9container6move_nIPPhS3_EENS0_3dtl37enable_if_memtransfer_copy_assignableIT_T0_S7_E4typeES6_mS7_.exit ], [ %i.f, %bb.a ] ; 2 uses
+  %5 = phi i8 [ %i.bo, %_ZN5boost9container6move_nIPPhS3_EENS0_3dtl37enable_if_memtransfer_copy_assignableIT_T0_S7_E4typeES6_mS7_.exit ], [ %i.k, %bb.a ]
+  %6 = lshr i8 %5, 5
+  %7 = zext nneg i8 %6 to i64
+  %8 = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %7
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 8
+  %i.bp = lshr i8 %3, 5
   %i.bq = zext nneg i8 %i.bp to i64
-  %i.br = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %i.bq
+  %i.br = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.bq
   %i.bs = xor i64 %i.b, -1
   %i.bt = getelementptr inbounds [8 x i8], ptr %i.br, i64 %i.bs
-  br label %12
-
-7:                                                ; preds = %3
-  %8 = lshr i8 %6, 5
-  %9 = zext nneg i8 %8 to i64
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %9
-  %11 = getelementptr inbounds nuw i8, ptr %10, i64 8
-  br label %12
-
-12:                                               ; preds = %7, %bb.p
-  %.sink = phi ptr [ %11, %7 ], [ %i.bt, %bb.p ]
+  %.sink = select i1 %2, ptr %i.bt, ptr %9
   tail call void @_ZN5boost9container10deque_baseINS0_9allocatorIhLj2ELj0EEENS0_9deque_optILm0ELm0EhLb0EEELb0EE19prot_allocate_nodesEPPhm(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull %.sink, i64 noundef %i.c)
   ret void
 }
@@ -760,7 +751,7 @@ bb.a:
   %i.r = add nsw i64 %i.q, %i.p
   %i.s = select i1 %2, i64 %i.h, i64 %i.r
   %.not67 = icmp ult i64 %i.b, %i.s
-  br i1 %.not67, label %3, label %bb.b
+  br i1 %.not67, label %bb.p, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %.idx = shl nuw nsw i64 %i.m, 3
@@ -891,31 +882,22 @@ _ZN5boost9container6move_nIPPhS3_EENS0_3dtl37enable_if_memtransfer_copy_assignab
   store <2 x i16> %i.bm, ptr %i.d, align 2, !tbaa !145
   %i.bn = extractelement <2 x i16> %i.bm, i64 0
   %i.bo = extractelement <2 x i16> %i.bm, i64 1
-  br label %3
+  br label %bb.p
 
-3:                                                ; preds = %_ZN5boost9container6move_nIPPhS3_EENS0_3dtl37enable_if_memtransfer_copy_assignableIT_T0_S7_E4typeES6_mS7_.exit, %bb.a
-  %4 = phi i16 [ %i.bn, %_ZN5boost9container6move_nIPPhS3_EENS0_3dtl37enable_if_memtransfer_copy_assignableIT_T0_S7_E4typeES6_mS7_.exit ], [ %i.e, %bb.a ]
-  %5 = phi ptr [ %i.az, %_ZN5boost9container6move_nIPPhS3_EENS0_3dtl37enable_if_memtransfer_copy_assignableIT_T0_S7_E4typeES6_mS7_.exit ], [ %i.f, %bb.a ] ; 2 uses
-  %6 = phi i16 [ %i.bo, %_ZN5boost9container6move_nIPPhS3_EENS0_3dtl37enable_if_memtransfer_copy_assignableIT_T0_S7_E4typeES6_mS7_.exit ], [ %i.k, %bb.a ]
-  br i1 %2, label %bb.p, label %7
-
-bb.p:                                             ; preds = %3
-  %i.bp = lshr i16 %4, 10
+bb.p:                                             ; preds = %_ZN5boost9container6move_nIPPhS3_EENS0_3dtl37enable_if_memtransfer_copy_assignableIT_T0_S7_E4typeES6_mS7_.exit, %bb.a
+  %3 = phi i16 [ %i.bn, %_ZN5boost9container6move_nIPPhS3_EENS0_3dtl37enable_if_memtransfer_copy_assignableIT_T0_S7_E4typeES6_mS7_.exit ], [ %i.e, %bb.a ]
+  %4 = phi ptr [ %i.az, %_ZN5boost9container6move_nIPPhS3_EENS0_3dtl37enable_if_memtransfer_copy_assignableIT_T0_S7_E4typeES6_mS7_.exit ], [ %i.f, %bb.a ] ; 2 uses
+  %5 = phi i16 [ %i.bo, %_ZN5boost9container6move_nIPPhS3_EENS0_3dtl37enable_if_memtransfer_copy_assignableIT_T0_S7_E4typeES6_mS7_.exit ], [ %i.k, %bb.a ]
+  %6 = lshr i16 %5, 10
+  %7 = zext nneg i16 %6 to i64
+  %8 = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %7
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 8
+  %i.bp = lshr i16 %3, 10
   %i.bq = zext nneg i16 %i.bp to i64
-  %i.br = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %i.bq
+  %i.br = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.bq
   %i.bs = xor i64 %i.b, -1
   %i.bt = getelementptr inbounds [8 x i8], ptr %i.br, i64 %i.bs
-  br label %12
-
-7:                                                ; preds = %3
-  %8 = lshr i16 %6, 10
-  %9 = zext nneg i16 %8 to i64
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %9
-  %11 = getelementptr inbounds nuw i8, ptr %10, i64 8
-  br label %12
-
-12:                                               ; preds = %7, %bb.p
-  %.sink = phi ptr [ %11, %7 ], [ %i.bt, %bb.p ]
+  %.sink = select i1 %2, ptr %i.bt, ptr %9
   tail call void @_ZN5boost9container10deque_baseINS0_9allocatorIhLj2ELj0EEENS0_9deque_optILm0ELm0EtLb0EEELb0EE19prot_allocate_nodesEPPhm(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull %.sink, i64 noundef %i.c)
   ret void
 }

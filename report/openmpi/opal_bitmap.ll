@@ -203,7 +203,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   store i32 0, ptr %1, align 4, !tbaa !18
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
-  %i.c = load i32, ptr %i.b, align 8, !tbaa !14   ; 6 uses
+  %i.c = load i32, ptr %i.b, align 8, !tbaa !14   ; 5 uses
   %i.d = icmp sgt i32 %i.c, 0
   br i1 %i.d, label %.lr.ph, label %.critedge
 
@@ -223,7 +223,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.d
 bb.d:                                             ; preds = %bb.c
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.critedge.thread, label %bb.c, !llvm.loop !19
+  br i1 %exitcond.not, label %bb.e, label %bb.c, !llvm.loop !19
 
 .critedge.loopexit:                               ; preds = %bb.c
   %i.j = trunc nuw nsw i64 %indvars.iv to i32
@@ -232,15 +232,11 @@ bb.d:                                             ; preds = %bb.c
 .critedge:                                        ; preds = %.critedge.loopexit, %bb.b
   %.029.lcssa = phi i32 [ 0, %bb.b ], [ %i.j, %.critedge.loopexit ] ; 3 uses
   %i.k = icmp eq i32 %.029.lcssa, %i.c
-  br i1 %i.k, label %.critedge.thread, label %bb.j
+  br i1 %i.k, label %bb.e, label %bb.j
 
-.critedge.thread:                                 ; preds = %bb.d, %.critedge
+bb.e:                                             ; preds = %bb.d, %.critedge
   %2 = shl nsw i32 %i.c, 6                        ; 2 uses
   store i32 %2, ptr %1, align 4, !tbaa !18
-  %3 = icmp slt i32 %i.c, 0
-  br i1 %3, label %opal_bitmap_set_bit.exit, label %bb.e
-
-bb.e:                                             ; preds = %.critedge.thread
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 28
   %i.m = load i32, ptr %i.l, align 4, !tbaa !15   ; 3 uses
   %i.n = icmp sgt i32 %2, %i.m
@@ -320,8 +316,8 @@ bb.j:                                             ; preds = %.critedge
   store i32 %i.ax, ptr %1, align 4, !tbaa !18
   br label %opal_bitmap_set_bit.exit
 
-opal_bitmap_set_bit.exit:                         ; preds = %bb.i, %bb.g, %bb.e, %.critedge.thread, %bb.a, %._crit_edge
-  %.0 = phi i32 [ 0, %._crit_edge ], [ -5, %bb.a ], [ 0, %bb.i ], [ -5, %.critedge.thread ], [ -5, %bb.e ], [ -2, %bb.g ]
+opal_bitmap_set_bit.exit:                         ; preds = %bb.i, %bb.g, %bb.e, %bb.a, %._crit_edge
+  %.0 = phi i32 [ 0, %._crit_edge ], [ -5, %bb.a ], [ 0, %bb.i ], [ -2, %bb.g ], [ -5, %bb.e ]
   ret i32 %.0
 }
 

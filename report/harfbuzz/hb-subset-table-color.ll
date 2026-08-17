@@ -204,11 +204,10 @@ bb.u:                                             ; preds = %._crit_edge.i
   br label %.preheader.i.i.i.i.i.i
 
 .preheader.i.i.i.i.i.i:                           ; preds = %.critedge.i.i.i.i.i.i, %.preheader.preheader.i.i.i.i.i.i
-  %.01520.i.i.i.i.i.i = phi ptr [ %.015.i.i.i.i.i.i, %.critedge.i.i.i.i.i.i ], [ %.01519.i.i.i.i.i.i, %.preheader.preheader.i.i.i.i.i.i ] ; 3 uses
-  %18 = icmp ugt ptr %.01520.i.i.i.i.i.i, %.sroa.21.4.i
-  br i1 %18, label %.lr.ph.i.i.i.i.i.i, label %.critedge.i.i.i.i.i.i
+  %.01520.i.i.i.i.i.i = phi ptr [ %.015.i.i.i.i.i.i, %.critedge.i.i.i.i.i.i ], [ %.01519.i.i.i.i.i.i, %.preheader.preheader.i.i.i.i.i.i ] ; 2 uses
+  br label %.lr.ph.i.i.i.i.i.i
 
-.lr.ph.i.i.i.i.i.i:                               ; preds = %.preheader.i.i.i.i.i.i, %bb.w
+.lr.ph.i.i.i.i.i.i:                               ; preds = %bb.w, %.preheader.i.i.i.i.i.i
   %.017.i.i.i.i.i.i = phi ptr [ %i.ef, %bb.w ], [ %.01520.i.i.i.i.i.i, %.preheader.i.i.i.i.i.i ] ; 8 uses
   %i.ef = getelementptr inbounds i8, ptr %.017.i.i.i.i.i.i, i64 -24 ; 5 uses
   %i.eg = getelementptr inbounds i8, ptr %.017.i.i.i.i.i.i, i64 -8
@@ -243,7 +242,7 @@ bb.v:                                             ; preds = %.lr.ph.i.i.i.i.i.i
   %i.fd = fcmp ule double %i.ex, %i.ew
   br i1 %i.fd, label %.critedge.i.i.i.i.i.i, label %bb.w
 
-.critedge.i.i.i.i.i.i:                            ; preds = %bb.w, %bb.v, %.split.i.i.i.i.i.i, %.preheader.i.i.i.i.i.i
+.critedge.i.i.i.i.i.i:                            ; preds = %bb.w, %bb.v, %.split.i.i.i.i.i.i
   %.015.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.01520.i.i.i.i.i.i, i64 24 ; 2 uses
   %i.fe = icmp ult ptr %.015.i.i.i.i.i.i, %i.ee
   br i1 %i.fe, label %.preheader.i.i.i.i.i.i, label %_ZN11hb_vector_tI13lookup_size_tLb0EE5qsortEv.exit.i, !llvm.loop !437
@@ -515,7 +514,7 @@ _ZN11hb_vector_tI13lookup_size_tLb0EE5allocEjb.exit149.i: ; preds = %_ZN11hb_vec
   br label %_ZN11hb_vector_tI13lookup_size_tLb0EE4pushIJS0_EEEPS0_DpOT_.exit.i
 
 _ZN11hb_vector_tI13lookup_size_tLb0EE4pushIJS0_EEEPS0_DpOT_.exit.i: ; preds = %.critedge.i100.i, %_ZN11hb_vector_tI13lookup_size_tLb0EE5allocEjb.exit149.i
-  %.sroa.21.4.i = phi ptr [ %.sroa.21.3.i, %.critedge.i100.i ], [ %.sroa.21.0250.i, %_ZN11hb_vector_tI13lookup_size_tLb0EE5allocEjb.exit149.i ] ; 9 uses
+  %.sroa.21.4.i = phi ptr [ %.sroa.21.3.i, %.critedge.i100.i ], [ %.sroa.21.0250.i, %_ZN11hb_vector_tI13lookup_size_tLb0EE5allocEjb.exit149.i ] ; 8 uses
   %.sroa.11184.1.i = phi i32 [ %.pre289.i, %.critedge.i100.i ], [ %.sroa.11184.0251.i, %_ZN11hb_vector_tI13lookup_size_tLb0EE5allocEjb.exit149.i ] ; 4 uses
   %.sroa.0178.3.i = phi i32 [ %.sroa.0178.2.i, %.critedge.i100.i ], [ %.sroa.0178.4.i, %_ZN11hb_vector_tI13lookup_size_tLb0EE5allocEjb.exit149.i ] ; 4 uses
   call void @_ZN14hb_sparseset_tI23hb_bit_set_invertible_tED2Ev(ptr noundef nonnull align 8 dead_on_return(72) dereferenceable(72) %9) #20
@@ -918,7 +917,7 @@ bb.q:                                             ; preds = %bb.p, %_ZL9hb_memcp
   %.val.i = phi i32 [ %2, %bb.q ], [ %i.gc, %._crit_edge208 ]
   %.071.lcssa = phi ptr [ %.0.i298, %bb.q ], [ %.1.lcssa, %._crit_edge208 ] ; 2 uses
   %i.es = getelementptr inbounds nuw i8, ptr %.071.lcssa, i64 24
-  %i.et = load ptr, ptr %i.es, align 8, !tbaa !261 ; 5 uses
+  %i.et = load ptr, ptr %i.es, align 8, !tbaa !261 ; 4 uses
   %i.eu = getelementptr inbounds nuw i8, ptr %.071.lcssa, i64 20
   %i.ev = load i32, ptr %i.eu, align 4, !tbaa !260 ; 3 uses
   %.not.i.i.i.i = icmp eq i32 %i.ev, 0
@@ -937,11 +936,10 @@ bb.r:                                             ; preds = %._crit_edge216
   br label %.preheader.i.i.i.i.i
 
 .preheader.i.i.i.i.i:                             ; preds = %.critedge.i.i.i.i.i, %.preheader.preheader.i.i.i.i.i
-  %.01519.i.i.i.i.i = phi ptr [ %.015.i.i.i.i.i, %.critedge.i.i.i.i.i ], [ %.01518.i.i.i.i.i, %.preheader.preheader.i.i.i.i.i ] ; 3 uses
-  %5 = icmp ugt ptr %.01519.i.i.i.i.i, %i.et
-  br i1 %5, label %.lr.ph.i.i.i.i.i, label %.critedge.i.i.i.i.i
+  %.01519.i.i.i.i.i = phi ptr [ %.015.i.i.i.i.i, %.critedge.i.i.i.i.i ], [ %.01518.i.i.i.i.i, %.preheader.preheader.i.i.i.i.i ] ; 2 uses
+  br label %.lr.ph.i.i.i.i.i
 
-.lr.ph.i.i.i.i.i:                                 ; preds = %.preheader.i.i.i.i.i, %bb.s
+.lr.ph.i.i.i.i.i:                                 ; preds = %bb.s, %.preheader.i.i.i.i.i
   %.016.i.i.i.i.i = phi ptr [ %i.fj, %bb.s ], [ %.01519.i.i.i.i.i, %.preheader.i.i.i.i.i ] ; 7 uses
   %i.ex = getelementptr inbounds i8, ptr %.016.i.i.i.i.i, i64 -8
   %i.ey = load i32, ptr %i.ex, align 4, !tbaa !312 ; 2 uses
@@ -958,7 +956,7 @@ bb.r:                                             ; preds = %._crit_edge216
   %i.fh = icmp sgt i32 %.0.i.i.i.i.i.i.i, 0
   br i1 %i.fh, label %bb.s, label %.critedge.i.i.i.i.i
 
-.critedge.i.i.i.i.i:                              ; preds = %bb.s, %.lr.ph.i.i.i.i.i, %.preheader.i.i.i.i.i
+.critedge.i.i.i.i.i:                              ; preds = %bb.s, %.lr.ph.i.i.i.i.i
   %.015.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.01519.i.i.i.i.i, i64 12 ; 2 uses
   %i.fi = icmp ult ptr %.015.i.i.i.i.i, %i.ew
   br i1 %i.fi, label %.preheader.i.i.i.i.i, label %_ZN11hb_vector_tIN22hb_serialize_context_t8object_t6link_tELb0EE5qsortEv.exit, !llvm.loop !744
@@ -1361,7 +1359,7 @@ _ZN2OT7ArrayOfINS_8OffsetToINS_6Layout9GSUB_impl11LigatureSetINS2_10SmallTypesEE
 
 bb.aa:                                            ; preds = %_ZN2OT7ArrayOfINS_8OffsetToINS_6Layout9GSUB_impl11LigatureSetINS2_10SmallTypesEEENS_7NumTypeILb1EtLj2EEEvLb1EEES8_EixEi.exit
   %i.fo = sub nuw nsw i32 %i.fm, %i.fn
-  %i.fp = load ptr, ptr %i.do, align 8, !tbaa !261 ; 5 uses
+  %i.fp = load ptr, ptr %i.do, align 8, !tbaa !261 ; 4 uses
   %.not.i.i.i.i.i175 = icmp eq i32 %i.fn, 0
   br i1 %.not.i.i.i.i.i175, label %_ZN11hb_vector_tIN22hb_serialize_context_t8object_t6link_tELb0EE5qsortEv.exit.i, label %bb.ab, !prof !21
 
@@ -1378,11 +1376,10 @@ bb.ab:                                            ; preds = %bb.aa
   br label %.preheader.i.i.i.i.i.i
 
 .preheader.i.i.i.i.i.i:                           ; preds = %.critedge.i.i.i.i.i.i, %.preheader.preheader.i.i.i.i.i.i
-  %.01519.i.i.i.i.i.i = phi ptr [ %.015.i.i.i.i.i.i, %.critedge.i.i.i.i.i.i ], [ %.01518.i.i.i.i.i.i, %.preheader.preheader.i.i.i.i.i.i ] ; 3 uses
-  %6 = icmp ugt ptr %.01519.i.i.i.i.i.i, %i.fp
-  br i1 %6, label %.lr.ph.i.i.i.i.i.i, label %.critedge.i.i.i.i.i.i
+  %.01519.i.i.i.i.i.i = phi ptr [ %.015.i.i.i.i.i.i, %.critedge.i.i.i.i.i.i ], [ %.01518.i.i.i.i.i.i, %.preheader.preheader.i.i.i.i.i.i ] ; 2 uses
+  br label %.lr.ph.i.i.i.i.i.i
 
-.lr.ph.i.i.i.i.i.i:                               ; preds = %.preheader.i.i.i.i.i.i, %bb.ac
+.lr.ph.i.i.i.i.i.i:                               ; preds = %bb.ac, %.preheader.i.i.i.i.i.i
   %.016.i.i.i.i.i.i = phi ptr [ %i.gd, %bb.ac ], [ %.01519.i.i.i.i.i.i, %.preheader.i.i.i.i.i.i ] ; 7 uses
   %i.fr = getelementptr inbounds i8, ptr %.016.i.i.i.i.i.i, i64 -8
   %i.fs = load i32, ptr %i.fr, align 4, !tbaa !312 ; 2 uses
@@ -1399,7 +1396,7 @@ bb.ab:                                            ; preds = %bb.aa
   %i.gb = icmp sgt i32 %.0.i.i.i.i.i.i.i.i, 0
   br i1 %i.gb, label %bb.ac, label %.critedge.i.i.i.i.i.i
 
-.critedge.i.i.i.i.i.i:                            ; preds = %bb.ac, %.lr.ph.i.i.i.i.i.i, %.preheader.i.i.i.i.i.i
+.critedge.i.i.i.i.i.i:                            ; preds = %bb.ac, %.lr.ph.i.i.i.i.i.i
   %.015.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.01519.i.i.i.i.i.i, i64 12 ; 2 uses
   %i.gc = icmp ult ptr %.015.i.i.i.i.i.i, %i.fq
   br i1 %i.gc, label %.preheader.i.i.i.i.i.i, label %_ZN11hb_vector_tIN22hb_serialize_context_t8object_t6link_tELb0EE5qsortEv.exit.i, !llvm.loop !744
@@ -1802,7 +1799,7 @@ bb.a:
   br i1 %.not, label %_ZL15hb_qsort_inlineIN2OT20delta_row_encoding_tEZN10hb_array_tIS1_E6_qsortIS1_TnPN12hb_enable_ifIXsr3std18is_move_assignableIT_EE5valueEvE4typeELPv0EEE17hb_sorted_array_tIS1_E11hb_priorityILj1EEEUlRKS1_SG_E_EvPS6_mT0_.exit, label %bb.b, !prof !21
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = load ptr, ptr %0, align 8, !tbaa !2994   ; 5 uses
+  %i.c = load ptr, ptr %0, align 8, !tbaa !2994   ; 4 uses
   %i.d = zext i32 %i.b to i64                     ; 2 uses
   tail call fastcc void @_ZL13hb_qsort_loopIN2OT20delta_row_encoding_tEZN10hb_array_tIS1_E6_qsortIS1_TnPN12hb_enable_ifIXsr3std18is_move_assignableIT_EE5valueEvE4typeELPv0EEE17hb_sorted_array_tIS1_E11hb_priorityILj1EEEUlRKS1_SG_E_EvPS6_mT0_(ptr noundef %i.c, i64 noundef range(i64 1, 4294967296) %i.d)
   %.idx.i = mul nuw nsw i64 %i.d, 40
@@ -1815,9 +1812,8 @@ bb.b:                                             ; preds = %bb.a
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %.critedge.i, %.preheader.preheader.i
-  %.01520.i = phi ptr [ %.015.i, %.critedge.i ], [ %.01519.i, %.preheader.preheader.i ] ; 3 uses
-  %1 = icmp ugt ptr %.01520.i, %i.c
-  br i1 %1, label %.lr.ph.i, label %.critedge.i
+  %.01520.i = phi ptr [ %.015.i, %.critedge.i ], [ %.01519.i, %.preheader.preheader.i ] ; 2 uses
+  br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.preheader.i, %"_ZNK3$_9clIN2OT20delta_row_encoding_tEEEvRT_S4_.exit.i"
   %.017.i = phi ptr [ %i.f, %"_ZNK3$_9clIN2OT20delta_row_encoding_tEEEvRT_S4_.exit.i" ], [ %.01520.i, %.preheader.i ] ; 15 uses
@@ -1863,7 +1859,7 @@ _ZZN10hb_array_tIN2OT20delta_row_encoding_tEE6_qsortIS1_TnPN12hb_enable_ifIXsr3s
   %i.v = icmp sgt i32 %.0.i.i.i, 0
   br i1 %i.v, label %"_ZNK3$_9clIN2OT20delta_row_encoding_tEEEvRT_S4_.exit.i", label %.critedge.i
 
-.critedge.i:                                      ; preds = %"_ZNK3$_9clIN2OT20delta_row_encoding_tEEEvRT_S4_.exit.i", %_ZZN10hb_array_tIN2OT20delta_row_encoding_tEE6_qsortIS1_TnPN12hb_enable_ifIXsr3std18is_move_assignableIT_EE5valueEvE4typeELPv0EEE17hb_sorted_array_tIS1_E11hb_priorityILj1EEENKUlRKS1_SF_E_clESF_SF_.exit.i, %bb.f, %.preheader.i
+.critedge.i:                                      ; preds = %bb.f, %_ZZN10hb_array_tIN2OT20delta_row_encoding_tEE6_qsortIS1_TnPN12hb_enable_ifIXsr3std18is_move_assignableIT_EE5valueEvE4typeELPv0EEE17hb_sorted_array_tIS1_E11hb_priorityILj1EEENKUlRKS1_SF_E_clESF_SF_.exit.i, %"_ZNK3$_9clIN2OT20delta_row_encoding_tEEEvRT_S4_.exit.i"
   %.015.i = getelementptr inbounds nuw i8, ptr %.01520.i, i64 40 ; 2 uses
   %i.w = icmp ult ptr %.015.i, %i.e
   br i1 %i.w, label %.preheader.i, label %_ZL15hb_qsort_inlineIN2OT20delta_row_encoding_tEZN10hb_array_tIS1_E6_qsortIS1_TnPN12hb_enable_ifIXsr3std18is_move_assignableIT_EE5valueEvE4typeELPv0EEE17hb_sorted_array_tIS1_E11hb_priorityILj1EEEUlRKS1_SG_E_EvPS6_mT0_.exit, !llvm.loop !2995

@@ -204,7 +204,7 @@ bb.a:
   %9 = alloca %struct.tg3json_value, align 8      ; 12 uses
   %10 = alloca %struct.tg3json_value, align 8     ; 8 uses
   %11 = alloca %struct.tg3json_value, align 8     ; 8 uses
-  %12 = alloca %struct.tg3json_value, align 8     ; 11 uses
+  %12 = alloca %struct.tg3json_value, align 8     ; 10 uses
   %13 = alloca %struct.tg3json_value, align 8     ; 15 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #28
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, i8 0, i64 24, i1 false)
@@ -273,21 +273,17 @@ bb.d:                                             ; preds = %tg3__serialize_str.
   %i.v = getelementptr inbounds nuw i8, ptr %10, i64 8
   %i.w = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 3 uses
   %i.x = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 3 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %12, i64 8 ; 12 uses
-  %i.z = getelementptr inbounds nuw i8, ptr %12, i64 16 ; 12 uses
-  %14 = load i32, ptr %12, align 8
-  %15 = icmp eq i32 %14, 5
-  %.promoted = load i64, ptr %i.z, align 8
-  %.promoted93 = load ptr, ptr %i.y, align 8
+  %i.y = getelementptr inbounds nuw i8, ptr %12, i64 8 ; 11 uses
+  %i.z = getelementptr inbounds nuw i8, ptr %12, i64 16 ; 11 uses
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph, %.tg3json__init_value.exit_crit_edge.i.i
-  %.pre.i.i95 = phi ptr [ %.promoted93, %.lr.ph ], [ %.pre.i.i94, %.tg3json__init_value.exit_crit_edge.i.i ] ; 12 uses
-  %16 = phi i64 [ %.promoted, %.lr.ph ], [ %i.cq, %.tg3json__init_value.exit_crit_edge.i.i ] ; 15 uses
-  %indvars.iv.a = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %.tg3json__init_value.exit_crit_edge.i.i ] ; 2 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %.tg3json__init_value.exit_crit_edge.i.i ] ; 2 uses
+  %.pre.i.i70 = phi ptr [ null, %.lr.ph ], [ %.pre.i.i94, %.tg3json__init_value.exit_crit_edge.i.i ] ; 12 uses
+  %indvars.iv.a = phi i64 [ 0, %.lr.ph ], [ %i.cq, %.tg3json__init_value.exit_crit_edge.i.i ] ; 15 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #28
   %i.aa = load ptr, ptr %i.m, align 8, !tbaa !262
-  %i.ab = getelementptr inbounds nuw [104 x i8], ptr %i.aa, i64 %indvars.iv.a ; 10 uses
+  %i.ab = getelementptr inbounds nuw [104 x i8], ptr %i.aa, i64 %indvars.iv ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #28
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %13, i8 0, i64 24, i1 false)
@@ -336,8 +332,8 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   br i1 %.not86.i, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
-  store i64 %16, ptr %i.z, align 8
-  store ptr %.pre.i.i95, ptr %i.y, align 8
+  store i64 %indvars.iv.a, ptr %i.z, align 8
+  store ptr %.pre.i.i70, ptr %i.y, align 8
   call void @tg3json_value_free(ptr noundef nonnull %8)
   call void @tg3json_value_free(ptr noundef nonnull %6)
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #28
@@ -357,8 +353,8 @@ bb.k:                                             ; preds = %bb.i
   br i1 %.not.i.i, label %bb.l, label %tg3__json_set_take.exit.i
 
 bb.l:                                             ; preds = %._crit_edge.i
-  store i64 %16, ptr %i.z, align 8
-  store ptr %.pre.i.i95, ptr %i.y, align 8
+  store i64 %indvars.iv.a, ptr %i.z, align 8
+  store ptr %.pre.i.i70, ptr %i.y, align 8
   call void @tg3json_value_free(ptr noundef nonnull %6)
   call void @tg3json_value_free(ptr noundef nonnull %6)
   br label %tg3__serialize_primitive.exit.thread
@@ -380,8 +376,8 @@ bb.m:                                             ; preds = %tg3__json_set_take.
   br i1 %.not.i.i.i, label %tg3__json_set_int.exit.thread.i, label %tg3__json_set_int.exit.i
 
 tg3__json_set_int.exit.thread.i:                  ; preds = %bb.m
-  store i64 %16, ptr %i.z, align 8
-  store ptr %.pre.i.i95, ptr %i.y, align 8
+  store i64 %indvars.iv.a, ptr %i.z, align 8
+  store ptr %.pre.i.i70, ptr %i.y, align 8
   call void @tg3json_value_free(ptr noundef nonnull %5)
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #28
   br label %tg3__serialize_primitive.exit.thread
@@ -407,8 +403,8 @@ bb.o:                                             ; preds = %bb.n
   br i1 %.not.i.i89.i, label %tg3__json_set_int.exit92.thread.i, label %tg3__json_set_int.exit92.i
 
 tg3__json_set_int.exit92.thread.i:                ; preds = %bb.o
-  store i64 %16, ptr %i.z, align 8
-  store ptr %.pre.i.i95, ptr %i.y, align 8
+  store i64 %indvars.iv.a, ptr %i.z, align 8
+  store ptr %.pre.i.i70, ptr %i.y, align 8
   call void @tg3json_value_free(ptr noundef nonnull %4)
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #28
   br label %tg3__serialize_primitive.exit.thread
@@ -435,8 +431,8 @@ bb.q:                                             ; preds = %bb.p
   br i1 %.not.i.i.i.i, label %tg3__serialize_int.exit.thread111.i, label %tg3__serialize_int.exit.i
 
 tg3__serialize_int.exit.thread111.i:              ; preds = %bb.q
-  store i64 %16, ptr %i.z, align 8
-  store ptr %.pre.i.i95, ptr %i.y, align 8
+  store i64 %indvars.iv.a, ptr %i.z, align 8
+  store ptr %.pre.i.i70, ptr %i.y, align 8
   call void @tg3json_value_free(ptr noundef nonnull %3)
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #28
   br label %tg3__serialize_primitive.exit.thread
@@ -520,7 +516,7 @@ bb.w:                                             ; preds = %bb.v
   %exitcond165.not.i = icmp eq i64 %indvars.iv.next162.i, %wide.trip.count164.i
   br i1 %exitcond165.not.i, label %.loopexit, label %bb.t, !llvm.loop !492
 
-.loopexit:                                        ; preds = %bb.w, %.thread.i, %bb.s
+.loopexit:                                        ; preds = %bb.w, %bb.s, %.thread.i
   %indvars.iv.next167.i = add nuw nsw i64 %indvars.iv166.i, 1 ; 4 uses
   %.not25.i.i.i.us.i = icmp eq i64 %indvars.iv166.i, 0
   br i1 %.not25.i.i.i.us.i, label %._crit_edge.i.i.i.us.i, label %.lr.ph.i.i.i.us.i
@@ -560,8 +556,8 @@ bb.y:                                             ; preds = %._crit_edge.i.i.i.u
   br label %bb.t
 
 .thread114.i:                                     ; preds = %bb.v
-  store i64 %16, ptr %i.z, align 8
-  store ptr %.pre.i.i95, ptr %i.y, align 8
+  store i64 %indvars.iv.a, ptr %i.z, align 8
+  store ptr %.pre.i.i70, ptr %i.y, align 8
   store i64 %indvars.iv166.i, ptr %i.x, align 8
   store ptr %.pre.i.i138.us.i, ptr %i.w, align 8
   call void @tg3json_value_free(ptr noundef nonnull %10)
@@ -571,8 +567,8 @@ bb.y:                                             ; preds = %._crit_edge.i.i.i.u
   br label %.thread118.i
 
 .split.us.i:                                      ; preds = %bb.y, %._crit_edge.i.i.i.us.i
-  store i64 %16, ptr %i.z, align 8
-  store ptr %.pre.i.i95, ptr %i.y, align 8
+  store i64 %indvars.iv.a, ptr %i.z, align 8
+  store ptr %.pre.i.i70, ptr %i.y, align 8
   store i64 %indvars.iv166.i, ptr %i.x, align 8
   store ptr %.pre.i.i138.us.i, ptr %i.w, align 8
   call void @tg3json_value_free(ptr noundef nonnull %9)
@@ -592,8 +588,8 @@ bb.z:                                             ; preds = %.tg3json__init_valu
   br i1 %.not.i98.i, label %bb.aa, label %tg3__json_set_take.exit101.i
 
 bb.aa:                                            ; preds = %bb.z
-  store i64 %16, ptr %i.z, align 8
-  store ptr %.pre.i.i95, ptr %i.y, align 8
+  store i64 %indvars.iv.a, ptr %i.z, align 8
+  store ptr %.pre.i.i70, ptr %i.y, align 8
   call void @tg3json_value_free(ptr noundef nonnull %7)
   call void @tg3json_value_free(ptr noundef nonnull %7)
   br label %tg3__serialize_primitive.exit.thread
@@ -602,11 +598,11 @@ tg3__json_set_take.exit101.i:                     ; preds = %bb.z, %bb.r, %tg3__
   %i.co = getelementptr inbounds nuw i8, ptr %i.ab, i64 48
   %i.cp = call fastcc i32 @tg3__serialize_extras_ext(ptr noundef nonnull %13, ptr noundef nonnull readonly %i.co)
   %.not83.i = icmp eq i32 %i.cp, 0
-  br i1 %.not83.i, label %tg3__serialize_primitive.exit.thread.loopexit, label %17
+  br i1 %.not83.i, label %tg3__serialize_primitive.exit.thread.loopexit, label %bb.ab
 
 tg3__serialize_primitive.exit.thread.loopexit:    ; preds = %tg3__json_set_take.exit101.i
-  store i64 %16, ptr %i.z, align 8
-  store ptr %.pre.i.i95, ptr %i.y, align 8
+  store i64 %indvars.iv.a, ptr %i.z, align 8
+  store ptr %.pre.i.i70, ptr %i.y, align 8
   br label %tg3__serialize_primitive.exit.thread
 
 tg3__serialize_primitive.exit.thread:             ; preds = %tg3__serialize_primitive.exit.thread.loopexit, %bb.j, %bb.l, %tg3__json_set_int.exit.thread.i, %tg3__json_set_int.exit92.thread.i, %tg3__serialize_int.exit.thread111.i, %.thread118.i, %bb.aa
@@ -615,19 +611,16 @@ tg3__serialize_primitive.exit.thread:             ; preds = %tg3__serialize_prim
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #28
   br label %bb.af
 
-17:                                               ; preds = %tg3__json_set_take.exit101.i
+bb.ab:                                            ; preds = %tg3__json_set_take.exit101.i
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #28
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #28
-  br i1 %15, label %bb.ab, label %tg3__json_push_take.exit.thread
-
-bb.ab:                                            ; preds = %17
-  %i.cq = add i64 %16, 1                          ; 5 uses
-  %.not.i.not.i.i = icmp eq i64 %16, -1
+  %i.cq = add i64 %indvars.iv.a, 1                ; 5 uses
+  %.not.i.not.i.i = icmp eq i64 %indvars.iv.a, -1
   br i1 %.not.i.not.i.i, label %.tg3json__init_value.exit_crit_edge.i.i, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
-  %.not25.i.i.i = icmp eq i64 %16, 0
-  %spec.select.i.i.i = select i1 %.not25.i.i.i, i64 8, i64 %16 ; 3 uses
+  %.not25.i.i.i = icmp eq i64 %indvars.iv.a, 0
+  %spec.select.i.i.i = select i1 %.not25.i.i.i, i64 8, i64 %indvars.iv.a ; 3 uses
   %i.cr = icmp ult i64 %spec.select.i.i.i, %i.cq
   br i1 %i.cr, label %.lr.ph.i.i.i, label %._crit_edge.i.i.i
 
@@ -648,13 +641,13 @@ bb.ad:                                            ; preds = %.lr.ph.i.i.i
 
 bb.ae:                                            ; preds = %._crit_edge.i.i.i
   %i.cw = mul nuw i64 %.1.i.i.i, 24
-  %i.cx = call ptr @realloc(ptr noundef %.pre.i.i95, i64 noundef %i.cw) #29 ; 2 uses
+  %i.cx = call ptr @realloc(ptr noundef %.pre.i.i70, i64 noundef %i.cw) #29 ; 2 uses
   %.not26.i.i.i = icmp eq ptr %i.cx, null
   br i1 %.not26.i.i.i, label %tg3__json_push_take.exit.thread, label %.tg3json__init_value.exit_crit_edge.i.i
 
-tg3__json_push_take.exit.thread:                  ; preds = %17, %._crit_edge.i.i.i, %bb.ae
-  store i64 %16, ptr %i.z, align 8
-  store ptr %.pre.i.i95, ptr %i.y, align 8
+tg3__json_push_take.exit.thread:                  ; preds = %._crit_edge.i.i.i, %bb.ae
+  store i64 %indvars.iv.a, ptr %i.z, align 8
+  store ptr %.pre.i.i70, ptr %i.y, align 8
   call void @tg3json_value_free(ptr noundef nonnull %13)
   br label %bb.af
 
@@ -665,11 +658,11 @@ bb.af:                                            ; preds = %tg3__serialize_prim
   br label %bb.ai
 
 .tg3json__init_value.exit_crit_edge.i.i:          ; preds = %bb.ae, %bb.ab
-  %.pre.i.i94 = phi ptr [ %.pre.i.i95, %bb.ab ], [ %i.cx, %bb.ae ] ; 3 uses
-  %i.cy = getelementptr inbounds nuw [24 x i8], ptr %.pre.i.i94, i64 %16
+  %.pre.i.i94 = phi ptr [ %.pre.i.i70, %bb.ab ], [ %i.cx, %bb.ae ] ; 3 uses
+  %i.cy = getelementptr inbounds nuw [24 x i8], ptr %.pre.i.i94, i64 %indvars.iv.a
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.cy, ptr noundef nonnull align 8 dereferenceable(24) %13, i64 24, i1 false), !tbaa.struct !35
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #28
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv.a, 1 ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.cz = load i32, ptr %i.o, align 8, !tbaa !265
   %i.da = zext i32 %i.cz to i64
   %i.db = icmp samesign ult i64 %indvars.iv.next, %i.da

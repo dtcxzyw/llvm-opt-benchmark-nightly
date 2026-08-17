@@ -204,13 +204,12 @@ bb.k:                                             ; preds = %.lr.ph161
   br i1 %i.ar, label %.lr.ph161, label %.thread77
 
 .lr.ph161:                                        ; preds = %.lr.ph161.preheader, %bb.k
-  %indvars.iv.next128160 = phi i64 [ %indvars.iv.next128, %bb.k ], [ %indvars.iv.next128158, %.lr.ph161.preheader ] ; 4 uses
-  %indvars.iv127159 = phi i64 [ %indvars.iv.next128160, %bb.k ], [ 1, %.lr.ph161.preheader ]
+  %indvars.iv.next128160 = phi i64 [ %indvars.iv.next128, %bb.k ], [ %indvars.iv.next128158, %.lr.ph161.preheader ] ; 3 uses
   %i.as = getelementptr inbounds [40 x i8], ptr %i.l, i64 %indvars.iv.next128160
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 28
   %i.au = load i32, ptr %i.at, align 4, !tbaa !170
   %i.av = icmp eq i32 %i.au, %i.am
-  br i1 %i.av, label %3, label %bb.k
+  br i1 %i.av, label %.thread80, label %bb.k
 
 bb.l:                                             ; preds = %bb.f
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
@@ -218,12 +217,8 @@ bb.l:                                             ; preds = %bb.f
   %indvars.iv.next118 = add nuw nsw i32 %indvars.iv117, 1
   br i1 %exitcond.not, label %.thread77, label %bb.f
 
-3:                                                ; preds = %.lr.ph161
-  %4 = icmp eq i64 %indvars.iv127159, 0
-  br i1 %4, label %.thread77, label %.thread80
-
-.thread80:                                        ; preds = %.lr.ph155, %bb.i, %.lr.ph157, %3
-  %.582.in = phi i64 [ %indvars.iv.next128160, %3 ], [ %indvars.iv114, %bb.i ], [ %indvars.iv.next125, %.lr.ph157 ], [ %indvars.iv.next112154, %.lr.ph155 ]
+.thread80:                                        ; preds = %.lr.ph155, %bb.i, %.lr.ph157, %.lr.ph161
+  %.582.in = phi i64 [ %indvars.iv.next128160, %.lr.ph161 ], [ %indvars.iv.next125, %.lr.ph157 ], [ %indvars.iv114, %bb.i ], [ %indvars.iv.next112154, %.lr.ph155 ]
   %sext = shl i64 %.582.in, 32
   %i.aw = ashr exact i64 %sext, 32
   %i.ax = getelementptr inbounds [40 x i8], ptr %i.l, i64 %i.aw
@@ -248,8 +243,8 @@ bb.m:                                             ; preds = %.thread80
   tail call void @dt_control_set_mouse_over_id(i32 noundef %i.bg) #23
   br label %.thread77
 
-.thread77:                                        ; preds = %bb.l, %bb.j, %bb.k, %.preheader, %.thread77.sink.split, %bb.e, %.preheader84, %3, %bb.a
-  %.167 = phi i32 [ 1, %.thread77.sink.split ], [ 0, %bb.a ], [ 0, %.preheader ], [ 0, %3 ], [ 0, %bb.e ], [ 0, %.preheader84 ], [ 0, %bb.j ], [ 0, %bb.k ], [ 0, %bb.l ]
+.thread77:                                        ; preds = %bb.l, %bb.j, %bb.k, %.preheader, %.thread77.sink.split, %bb.e, %.preheader84, %bb.a
+  %.167 = phi i32 [ 1, %.thread77.sink.split ], [ 0, %bb.a ], [ 0, %.preheader ], [ 0, %.preheader84 ], [ 0, %bb.e ], [ 0, %bb.j ], [ 0, %bb.k ], [ 0, %bb.l ]
   ret i32 %.167
 }
 

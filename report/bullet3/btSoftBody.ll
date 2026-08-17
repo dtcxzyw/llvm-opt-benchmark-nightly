@@ -204,24 +204,18 @@ bb.o:                                             ; preds = %.lr.ph476, %.loopex
   %indvars.iv519 = phi i64 [ 1, %.lr.ph476 ], [ %indvars.iv.next520, %.loopexit448 ] ; 2 uses
   %indvars.iv.next525 = add nuw nsw i64 %indvars.iv524, 1 ; 3 uses
   %i.fn = icmp samesign ult i64 %indvars.iv.next525, %i.dy
-  br i1 %i.fn, label %.lr.ph472, label %.loopexit448
+  br i1 %i.fn, label %bb.p, label %.loopexit448
 
-.lr.ph472:                                        ; preds = %bb.o
-  %13 = trunc nuw nsw i64 %indvars.iv524 to i32   ; 2 uses
-  br label %bb.p
-
-bb.p:                                             ; preds = %.lr.ph472, %_ZL13ImplicitSolvePN10btSoftBody10ImplicitFnERK9btVector3S4_fi.exit.thread
-  %indvars.iv521 = phi i64 [ %indvars.iv519, %.lr.ph472 ], [ %indvars.iv.next522, %_ZL13ImplicitSolvePN10btSoftBody10ImplicitFnERK9btVector3S4_fi.exit.thread ] ; 3 uses
-  %14 = trunc nuw nsw i64 %indvars.iv521 to i32   ; 2 uses
-  %spec.select.i.i334 = call i32 @llvm.smin.i32(i32 %13, i32 %14)
-  %spec.select5.i.i335 = call i32 @llvm.smax.i32(i32 %13, i32 %14) ; 2 uses
-  %15 = add nuw nsw i32 %spec.select5.i.i335, 1
-  %16 = mul nuw nsw i32 %15, %spec.select5.i.i335
-  %17 = lshr i32 %16, 1
-  %18 = add nuw nsw i32 %17, %spec.select.i.i334
+bb.p:                                             ; preds = %bb.o, %_ZL13ImplicitSolvePN10btSoftBody10ImplicitFnERK9btVector3S4_fi.exit.thread
+  %indvars.iv521 = phi i64 [ %indvars.iv.next522, %_ZL13ImplicitSolvePN10btSoftBody10ImplicitFnERK9btVector3S4_fi.exit.thread ], [ %indvars.iv519, %bb.o ] ; 4 uses
+  %indvars.iv.next522 = add nuw nsw i64 %indvars.iv521, 1 ; 2 uses
+  %13 = add nuw i64 %indvars.iv521, 1
+  %14 = mul i64 %13, %indvars.iv521
+  %15 = lshr i64 %14, 1
+  %16 = and i64 %15, 2147483647
+  %17 = add nuw nsw i64 %16, %indvars.iv524       ; 2 uses
   %i.fo = load ptr, ptr %i.f, align 8, !tbaa !220
-  %19 = zext nneg i32 %18 to i64                  ; 2 uses
-  %i.fp = getelementptr inbounds nuw [4 x i8], ptr %i.fo, i64 %19
+  %i.fp = getelementptr inbounds nuw [4 x i8], ptr %i.fo, i64 %17
   %i.fq = load i32, ptr %i.fp, align 4, !tbaa !257
   %i.fr = icmp eq i32 %i.fq, -1
   br i1 %i.fr, label %bb.q, label %_ZL13ImplicitSolvePN10btSoftBody10ImplicitFnERK9btVector3S4_fi.exit.thread
@@ -427,7 +421,7 @@ bb.ae:                                            ; preds = %bb.ac, %bb.ad, %bb.
 bb.af:                                            ; preds = %bb.ae
   %i.jk = load i32, ptr %i.c, align 4, !tbaa !141
   %i.jl = load ptr, ptr %i.f, align 8, !tbaa !220
-  %i.jm = getelementptr inbounds nuw [4 x i8], ptr %i.jl, i64 %19
+  %i.jm = getelementptr inbounds nuw [4 x i8], ptr %i.jl, i64 %17
   %i.jn = add nsw i32 %i.jk, -1                   ; 2 uses
   store i32 %i.jn, ptr %i.jm, align 4, !tbaa !257
   %i.jo = load ptr, ptr %i.a, align 8, !tbaa !140
@@ -447,7 +441,6 @@ bb.ag:                                            ; preds = %bb.ae
   br label %bb.do
 
 _ZL13ImplicitSolvePN10btSoftBody10ImplicitFnERK9btVector3S4_fi.exit.thread: ; preds = %bb.x, %.noexc337, %bb.s, %_ZL13ImplicitSolvePN10btSoftBody10ImplicitFnERK9btVector3S4_fi.exit, %bb.af, %bb.p
-  %indvars.iv.next522 = add nuw nsw i64 %indvars.iv521, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next522, %wide.trip.count527
   br i1 %exitcond.not, label %.loopexit448, label %bb.p, !llvm.loop !848
 

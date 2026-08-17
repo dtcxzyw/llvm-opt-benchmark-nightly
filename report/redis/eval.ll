@@ -203,7 +203,7 @@ bb.d:                                             ; preds = %bb.b
 
 .lr.ph38:                                         ; preds = %bb.d, %ldbLogSourceLine.exit
   %indvars.iv43 = phi i64 [ %indvars.iv.next44, %ldbLogSourceLine.exit ], [ 0, %bb.d ] ; 2 uses
-  %i.p = phi i32 [ %i.ai, %ldbLogSourceLine.exit ], [ %i.n, %bb.d ] ; 2 uses
+  %i.p = phi i32 [ %i.ai, %ldbLogSourceLine.exit ], [ %i.n, %bb.d ]
   %i.q = getelementptr inbounds nuw [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @ldb, i64 40), i64 %indvars.iv43
   %i.r = load i32, ptr %i.q, align 4, !tbaa !9    ; 6 uses
   %i.s = icmp slt i32 %i.r, 1
@@ -222,10 +222,6 @@ bb.e:                                             ; preds = %.lr.ph38
 
 ldbGetSourceLine.exit.i:                          ; preds = %bb.e, %.lr.ph38
   %.0.i.i = phi ptr [ %i.y, %bb.e ], [ @.str.72, %.lr.ph38 ]
-  %2 = icmp sgt i32 %i.p, 0
-  br i1 %2, label %.lr.ph.preheader.i.i, label %ldbLogSourceLine.exit
-
-.lr.ph.preheader.i.i:                             ; preds = %ldbGetSourceLine.exit.i
   %wide.trip.count.i.i = zext nneg i32 %i.p to i64
   br label %.lr.ph.i.i
 
@@ -234,19 +230,19 @@ bb.f:                                             ; preds = %.lr.ph.i.i
   %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i, %wide.trip.count.i.i
   br i1 %exitcond.not.i.i, label %ldbLogSourceLine.exit, label %.lr.ph.i.i, !llvm.loop !169
 
-.lr.ph.i.i:                                       ; preds = %bb.f, %.lr.ph.preheader.i.i
-  %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.preheader.i.i ], [ %indvars.iv.next.i.i, %bb.f ] ; 2 uses
+.lr.ph.i.i:                                       ; preds = %bb.f, %ldbGetSourceLine.exit.i
+  %indvars.iv.i.i = phi i64 [ 0, %ldbGetSourceLine.exit.i ], [ %indvars.iv.next.i.i, %bb.f ] ; 2 uses
   %i.z = getelementptr inbounds nuw [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @ldb, i64 40), i64 %indvars.iv.i.i
   %i.aa = load i32, ptr %i.z, align 4, !tbaa !9
   %i.ab = icmp eq i32 %i.aa, %i.r
   br i1 %i.ab, label %ldbLogSourceLine.exit, label %bb.f
 
-ldbLogSourceLine.exit:                            ; preds = %bb.f, %.lr.ph.i.i, %ldbGetSourceLine.exit.i
-  %3 = phi ptr [ @.str.77, %ldbGetSourceLine.exit.i ], [ @.str.76, %.lr.ph.i.i ], [ @.str.77, %bb.f ]
-  %4 = phi ptr [ @.str.75, %ldbGetSourceLine.exit.i ], [ @.str.74, %.lr.ph.i.i ], [ @.str.75, %bb.f ]
+ldbLogSourceLine.exit:                            ; preds = %.lr.ph.i.i, %bb.f
+  %.ph = phi ptr [ @.str.76, %.lr.ph.i.i ], [ @.str.77, %bb.f ]
+  %.ph28 = phi ptr [ @.str.74, %.lr.ph.i.i ], [ @.str.75, %bb.f ]
   %i.ac = load i32, ptr getelementptr inbounds nuw (i8, ptr @ldb, i64 324), align 4, !tbaa !28
   %i.ad = icmp eq i32 %i.ac, %i.r
-  %.0.i = select i1 %i.ad, ptr %4, ptr %3
+  %.0.i = select i1 %i.ad, ptr %.ph28, ptr %.ph
   %i.ae = tail call ptr @sdsempty() #17
   %i.af = tail call ptr (ptr, ptr, ...) @sdscatprintf(ptr noundef %i.ae, ptr noundef nonnull @.str.78, ptr noundef nonnull %.0.i, i32 noundef %i.r, ptr noundef %.0.i.i) #17
   %i.ag = load ptr, ptr getelementptr inbounds nuw (i8, ptr @ldb, i64 16), align 8, !tbaa !31

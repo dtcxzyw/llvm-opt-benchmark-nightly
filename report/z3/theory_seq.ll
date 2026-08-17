@@ -204,14 +204,12 @@ bb.co:                                            ; preds = %bb.eq, %bb.eo, %bb.
   br label %.critedge
 
 .critedge:                                        ; preds = %.critedge.loopexit, %.preheader422
-  %.0111.lcssa = phi i32 [ 1, %.preheader422 ], [ %.0111.lcssa.ph, %.critedge.loopexit ] ; 3 uses
+  %.0111.lcssa = phi i32 [ 1, %.preheader422 ], [ %.0111.lcssa.ph, %.critedge.loopexit ] ; 2 uses
   %i.sg = invoke noundef zeroext i1 @_ZeqRK8rationalS1_(ptr noundef nonnull align 8 dereferenceable(32) %13, ptr noundef nonnull align 8 dereferenceable(32) %14)
           to label %bb.cp unwind label %.loopexit.split-lp424
 
 bb.cp:                                            ; preds = %.critedge
-  %16 = icmp ne i32 %.0111.lcssa, 0
-  %or.cond = and i1 %i.sg, %16
-  br i1 %or.cond, label %bb.cq, label %.critedge156
+  br i1 %i.sg, label %bb.cq, label %.critedge156
 
 bb.cq:                                            ; preds = %bb.cp
   %i.sh = load ptr, ptr %i.g, align 8, !tbaa !13  ; 2 uses
@@ -378,14 +376,12 @@ _ZN8rationalpLERKS_.exit311:                      ; preds = %bb.dh
   br label %.critedge6
 
 .critedge6:                                       ; preds = %.critedge6.loopexit, %.preheader
-  %.0110.lcssa = phi i32 [ 1, %.preheader ], [ %.0110.lcssa.ph, %.critedge6.loopexit ] ; 3 uses
+  %.0110.lcssa = phi i32 [ 1, %.preheader ], [ %.0110.lcssa.ph, %.critedge6.loopexit ] ; 2 uses
   %i.ut = invoke noundef zeroext i1 @_ZeqRK8rationalS1_(ptr noundef nonnull align 8 dereferenceable(32) %13, ptr noundef nonnull align 8 dereferenceable(32) %14)
           to label %bb.di unwind label %.loopexit.split-lp418
 
 bb.di:                                            ; preds = %.critedge6
-  %17 = icmp ne i32 %.0110.lcssa, 0
-  %or.cond8 = and i1 %i.ut, %17
-  br i1 %or.cond8, label %bb.dj, label %.critedge158
+  br i1 %i.ut, label %bb.dj, label %.critedge158
 
 bb.dj:                                            ; preds = %bb.di
   %i.uu = load ptr, ptr %i.a, align 8, !tbaa !13  ; 2 uses
