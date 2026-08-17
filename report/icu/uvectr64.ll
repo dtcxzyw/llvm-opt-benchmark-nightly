@@ -203,30 +203,35 @@ bb.m:                                             ; preds = %bb.k
   br label %_ZN6icu_789UVector6414ensureCapacityEiR10UErrorCode.exit
 
 _ZN6icu_789UVector6414ensureCapacityEiR10UErrorCode.exit: ; preds = %bb.m, %bb.c
-  %i.w = phi i32 [ %.pre, %bb.m ], [ %i.c, %bb.c ] ; 3 uses
+  %i.w = phi i32 [ %.pre, %bb.m ], [ %i.c, %bb.c ] ; 10 uses
   %i.x = icmp sgt i32 %i.w, %2
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !17   ; 3 uses
   br i1 %i.x, label %.lr.ph.a, label %._crit_edge
 
 .lr.ph.a:                                         ; preds = %_ZN6icu_789UVector6414ensureCapacityEiR10UErrorCode.exit
-  %4 = zext i32 %i.w to i64                       ; 5 uses
-  %5 = zext nneg i32 %2 to i64                    ; 2 uses
-  %6 = add nsw i64 %4, -1
-  %7 = tail call i64 @llvm.umin.i64(i64 %6, i64 %5)
-  %8 = sub nsw i64 %4, %7                         ; 3 uses
-  %min.iters.check = icmp ult i64 %8, 4
-  br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
+  %4 = add i32 %i.w, -1
+  %5 = tail call i32 @llvm.umin.i32(i32 %2, i32 %4)
+  %6 = sub i32 %i.w, %5                           ; 3 uses
+  %min.iters.check = icmp ult i32 %6, 14
+  br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
 
-vector.ph:                                        ; preds = %.lr.ph.a
-  %n.vec = and i64 %8, -4                         ; 3 uses
-  %9 = sub nsw i64 %4, %n.vec
+vector.scevcheck:                                 ; preds = %.lr.ph.a
+  %7 = add i32 %i.w, -1
+  %8 = tail call i32 @llvm.usub.sat.i32(i32 %7, i32 %2)
+  %9 = icmp ugt i32 %8, %i.w
+  br i1 %9, label %scalar.ph.preheader, label %vector.ph
+
+vector.ph:                                        ; preds = %vector.scevcheck
+  %n.vec = and i32 %6, -4                         ; 3 uses
+  %10 = sub i32 %i.w, %n.vec
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %10 = sub i64 %4, %index
-  %i.aa = getelementptr [8 x i8], ptr %i.z, i64 %10 ; 4 uses
+  %index = phi i32 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
+  %11 = sub i32 %i.w, %index
+  %12 = zext nneg i32 %11 to i64
+  %i.aa = getelementptr [8 x i8], ptr %i.z, i64 %12 ; 4 uses
   %i.ab = getelementptr i8, ptr %i.aa, i64 -16
   %i.ac = getelementptr i8, ptr %i.aa, i64 -32
   %wide.load = load <2 x i64>, ptr %i.ab, align 8, !tbaa !20
@@ -235,16 +240,16 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.ae = getelementptr i8, ptr %i.aa, i64 -24
   store <2 x i64> %wide.load, ptr %i.ad, align 8, !tbaa !20
   store <2 x i64> %wide.load22, ptr %i.ae, align 8, !tbaa !20
-  %index.next = add nuw i64 %index, 4             ; 2 uses
-  %i.af = icmp eq i64 %index.next, %n.vec
+  %index.next = add nuw i32 %index, 4             ; 2 uses
+  %i.af = icmp eq i32 %index.next, %n.vec
   br i1 %i.af, label %middle.block, label %vector.body, !llvm.loop !30
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %8, %n.vec
+  %cmp.n = icmp eq i32 %6, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %scalar.ph.preheader
 
-scalar.ph.preheader:                              ; preds = %.lr.ph.a, %middle.block
-  %indvars.iv.ph = phi i64 [ %4, %.lr.ph.a ], [ %9, %middle.block ]
+scalar.ph.preheader:                              ; preds = %vector.scevcheck, %.lr.ph.a, %middle.block
+  %.015.ph = phi i32 [ %i.w, %vector.scevcheck ], [ %i.w, %.lr.ph.a ], [ %10, %middle.block ]
   br label %scalar.ph
 
 ._crit_edge:                                      ; preds = %scalar.ph, %middle.block, %_ZN6icu_789UVector6414ensureCapacityEiR10UErrorCode.exit
@@ -256,13 +261,14 @@ scalar.ph.preheader:                              ; preds = %.lr.ph.a, %middle.b
   br label %_ZN6icu_789UVector6414ensureCapacityEiR10UErrorCode.exit.thread
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %scalar.ph ], [ %indvars.iv.ph, %scalar.ph.preheader ] ; 2 uses
-  %i.aj = getelementptr [8 x i8], ptr %i.z, i64 %indvars.iv ; 2 uses
+  %.015 = phi i32 [ %14, %scalar.ph ], [ %.015.ph, %scalar.ph.preheader ] ; 2 uses
+  %13 = zext nneg i32 %.015 to i64
+  %i.aj = getelementptr [8 x i8], ptr %i.z, i64 %13 ; 2 uses
   %i.ak = getelementptr i8, ptr %i.aj, i64 -8
   %i.al = load i64, ptr %i.ak, align 8, !tbaa !20
   store i64 %i.al, ptr %i.aj, align 8, !tbaa !20
-  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
-  %i.am = icmp samesign ugt i64 %indvars.iv.next, %5
+  %14 = add nsw i32 %.015, -1                     ; 2 uses
+  %i.am = icmp samesign ugt i32 %14, %2
   br i1 %i.am, label %scalar.ph, label %._crit_edge, !llvm.loop !31
 
 _ZN6icu_789UVector6414ensureCapacityEiR10UErrorCode.exit.thread: ; preds = %bb.l, %bb.j, %bb.h, %bb.f, %bb.d, %._crit_edge, %bb.b, %bb.a
@@ -409,7 +415,10 @@ declare i32 @llvm.smin.i32(i32, i32) #12
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #13
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #12
+declare i32 @llvm.umin.i32(i32, i32) #12
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.usub.sat.i32(i32, i32) #12
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -465,5 +474,5 @@ attributes #17 = { allocsize(1) }
 !28 = distinct !{!28, !23, !24}
 !29 = distinct !{!29, !23}
 !30 = distinct !{!30, !23, !24, !25}
-!31 = distinct !{!31, !23, !25, !24}
+!31 = distinct !{!31, !23, !24}
 end_hunk_0

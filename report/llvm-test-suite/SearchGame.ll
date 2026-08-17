@@ -203,20 +203,21 @@ bb.aa:                                            ; preds = %.lr.ph173, %bb.af
   br i1 %exitcond199.not.1, label %._crit_edge, label %.lr.ph, !llvm.loop !19
 
 ._crit_edge:                                      ; preds = %.lr.ph, %.lr.ph.prol.loopexit
-  %spec.select125.lcssa = phi i32 [ %spec.select125.lcssa.unr, %.lr.ph.prol.loopexit ], [ %spec.select125.1, %.lr.ph ] ; 2 uses
-  %.phi.trans.insert = sext i32 %spec.select125.lcssa to i64 ; 3 uses
+  %spec.select125.lcssa = phi i32 [ %spec.select125.lcssa.unr, %.lr.ph.prol.loopexit ], [ %spec.select125.1, %.lr.ph ] ; 3 uses
+  %.phi.trans.insert = sext i32 %spec.select125.lcssa to i64 ; 2 uses
   %.phi.trans.insert219 = getelementptr inbounds [4 x i8], ptr %i.a, i64 %.phi.trans.insert
   %.pre = load i32, ptr %.phi.trans.insert219, align 4, !tbaa !4 ; 2 uses
   %i.gs = icmp slt i64 %indvars.iv205, %.phi.trans.insert
   br i1 %i.gs, label %.lr.ph167.preheader, label %._crit_edge168
 
 .lr.ph167.preheader:                              ; preds = %._crit_edge
+  %2 = zext i32 %spec.select125.lcssa to i64
   %i.gt = trunc i64 %indvars.iv205 to i32
   %i.gu = xor i32 %i.gt, -1
   %i.gv = add i32 %spec.select125.lcssa, %i.gu
   %i.gw = zext i32 %i.gv to i64                   ; 2 uses
   %i.gx = shl nuw nsw i64 %i.gw, 2
-  %i.gy = sub nsw i64 %.phi.trans.insert, %i.gw
+  %i.gy = sub nsw i64 %2, %i.gw
   %i.gz = shl nsw i64 %i.gy, 2                    ; 2 uses
   %scevgep = getelementptr i8, ptr %i.a, i64 %i.gz
   %scevgep201 = getelementptr i8, ptr %scevgep200, i64 %i.gz

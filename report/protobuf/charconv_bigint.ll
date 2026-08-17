@@ -204,7 +204,7 @@ bb.n:                                             ; preds = %bb.i
 
 bb.o:                                             ; preds = %bb.o, %.lr.ph.i6
   %indvars.iv.i = phi i64 [ %i.ct, %.lr.ph.i6 ], [ %indvars.iv.next.i, %bb.o ] ; 3 uses
-  %i.da = sub nsw i64 %indvars.iv.i, %i.cu
+  %i.da = sub nuw nsw i64 %indvars.iv.i, %i.cu
   %i.db = getelementptr inbounds nuw [4 x i8], ptr %i.cs, i64 %i.da ; 2 uses
   %i.dc = load i32, ptr %i.db, align 4, !tbaa !3
   %i.dd = getelementptr i8, ptr %i.db, i64 -4
@@ -500,7 +500,7 @@ bb.i:                                             ; preds = %bb.d
 
 bb.j:                                             ; preds = %.lr.ph, %bb.j
   %indvars.iv = phi i64 [ %i.z, %.lr.ph ], [ %indvars.iv.next, %bb.j ] ; 3 uses
-  %i.ah = sub nsw i64 %indvars.iv, %i.aa
+  %i.ah = sub nuw nsw i64 %indvars.iv, %i.aa
   %i.ai = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %i.ah ; 2 uses
   %i.aj = load i32, ptr %i.ai, align 4, !tbaa !3
   %i.ak = getelementptr i8, ptr %i.ai, i64 -4
@@ -903,13 +903,17 @@ bb.f:                                             ; preds = %bb.e
   %i.cg = icmp ne i64 %.lcssa57, 0
   %i.ch = icmp slt i64 %indvars.iv, 3
   %or.cond.i.i = and i1 %i.ch, %i.cg
-  br i1 %or.cond.i.i, label %bb.g, label %_ZN4absl12lts_2025051216strings_internal11BigUnsignedILi4EE12AddWithCarryEim.exit.i
+  br i1 %or.cond.i.i, label %bb.g, label %._crit_edge.i13._ZN4absl12lts_2025051216strings_internal11BigUnsignedILi4EE12AddWithCarryEim.exit.i_crit_edge
+
+._crit_edge.i13._ZN4absl12lts_2025051216strings_internal11BigUnsignedILi4EE12AddWithCarryEim.exit.i_crit_edge: ; preds = %._crit_edge.i13
+  %.pre = load i32, ptr %0, align 4
+  br label %_ZN4absl12lts_2025051216strings_internal11BigUnsignedILi4EE12AddWithCarryEim.exit.i
 
 bb.g:                                             ; preds = %._crit_edge.i13
   %i.ci = lshr i64 %.lcssa57, 32                  ; 2 uses
   %i.cj = trunc nuw i64 %i.ci to i32              ; 2 uses
   %i.ck = trunc i64 %.lcssa57 to i32              ; 2 uses
-  %i.cl = getelementptr inbounds [4 x i8], ptr %i.b, i64 %i.cf ; 2 uses
+  %i.cl = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.cf ; 2 uses
   %i.cm = load i32, ptr %i.cl, align 4, !tbaa !3
   %i.cn = add i32 %i.cm, %i.ck                    ; 2 uses
   store i32 %i.cn, ptr %i.cl, align 4, !tbaa !3
@@ -989,16 +993,16 @@ bb.k:                                             ; preds = %bb.j
   %.sink35.i.i = phi i32 [ %i.dc, %_ZN4absl12lts_2025051216strings_internal11BigUnsignedILi4EE12AddWithCarryEij.exit.i.i ], [ %i.dq, %bb.k ], [ 5, %.preheader.i.i.i ], [ %i.do, %_ZN4absl12lts_2025051216strings_internal11BigUnsignedILi4EE12AddWithCarryEij.exit25.loopexit.i.i ]
   %i.dr = load i32, ptr %0, align 4, !tbaa !3
   %i.ds = tail call i32 @llvm.smax.i32(i32 %.sink35.i.i, i32 %i.dr)
-  %.sroa.speculated.i.i.i = tail call i32 @llvm.smin.i32(i32 %i.ds, i32 4)
+  %.sroa.speculated.i.i.i = tail call i32 @llvm.smin.i32(i32 %i.ds, i32 4) ; 2 uses
   store i32 %.sroa.speculated.i.i.i, ptr %0, align 4, !tbaa !7
   br label %_ZN4absl12lts_2025051216strings_internal11BigUnsignedILi4EE12AddWithCarryEim.exit.i
 
-_ZN4absl12lts_2025051216strings_internal11BigUnsignedILi4EE12AddWithCarryEim.exit.i: ; preds = %.sink.split.i.i, %._crit_edge.i13
+_ZN4absl12lts_2025051216strings_internal11BigUnsignedILi4EE12AddWithCarryEim.exit.i: ; preds = %._crit_edge.i13._ZN4absl12lts_2025051216strings_internal11BigUnsignedILi4EE12AddWithCarryEim.exit.i_crit_edge, %.sink.split.i.i
+  %2 = phi i32 [ %.pre, %._crit_edge.i13._ZN4absl12lts_2025051216strings_internal11BigUnsignedILi4EE12AddWithCarryEim.exit.i_crit_edge ], [ %.sroa.speculated.i.i.i, %.sink.split.i.i ]
   %i.dt = trunc i64 %.lcssa58 to i32
-  %i.du = getelementptr inbounds [4 x i8], ptr %i.b, i64 %indvars.iv
+  %i.du = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv
   store i32 %i.dt, ptr %i.du, align 4, !tbaa !3
   %.not.i14 = icmp eq i64 %.lcssa56, 0
-  %2 = load i32, ptr %0, align 4
   %i.dv = sext i32 %2 to i64
   %.not23.i = icmp slt i64 %indvars.iv, %i.dv
   %or.cond = select i1 %.not.i14, i1 true, i1 %.not23.i
@@ -1401,7 +1405,7 @@ bb.n:                                             ; preds = %bb.i
 
 bb.o:                                             ; preds = %bb.o, %.lr.ph.i6
   %indvars.iv.i = phi i64 [ %i.ct, %.lr.ph.i6 ], [ %indvars.iv.next.i, %bb.o ] ; 3 uses
-  %i.da = sub nsw i64 %indvars.iv.i, %i.cu
+  %i.da = sub nuw nsw i64 %indvars.iv.i, %i.cu
   %i.db = getelementptr inbounds nuw [4 x i8], ptr %i.cs, i64 %i.da ; 2 uses
   %i.dc = load i32, ptr %i.db, align 4, !tbaa !3
   %i.dd = getelementptr i8, ptr %i.db, i64 -4
@@ -1694,7 +1698,7 @@ bb.i:                                             ; preds = %bb.d
 
 bb.j:                                             ; preds = %.lr.ph, %bb.j
   %indvars.iv = phi i64 [ %i.z, %.lr.ph ], [ %indvars.iv.next, %bb.j ] ; 3 uses
-  %i.ah = sub nsw i64 %indvars.iv, %i.aa
+  %i.ah = sub nuw nsw i64 %indvars.iv, %i.aa
   %i.ai = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %i.ah ; 2 uses
   %i.aj = load i32, ptr %i.ai, align 4, !tbaa !3
   %i.ak = getelementptr i8, ptr %i.ai, i64 -4
@@ -2097,13 +2101,17 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph.i12
   %i.as = icmp ne i64 %i.al, 0
   %i.at = icmp slt i64 %indvars.iv, 83
   %or.cond.i.i = and i1 %i.at, %i.as
-  br i1 %or.cond.i.i, label %bb.e, label %_ZN4absl12lts_2025051216strings_internal11BigUnsignedILi84EE12AddWithCarryEim.exit.i
+  br i1 %or.cond.i.i, label %bb.e, label %._crit_edge.i13._ZN4absl12lts_2025051216strings_internal11BigUnsignedILi84EE12AddWithCarryEim.exit.i_crit_edge
+
+._crit_edge.i13._ZN4absl12lts_2025051216strings_internal11BigUnsignedILi84EE12AddWithCarryEim.exit.i_crit_edge: ; preds = %._crit_edge.i13
+  %.pre = load i32, ptr %0, align 4
+  br label %_ZN4absl12lts_2025051216strings_internal11BigUnsignedILi84EE12AddWithCarryEim.exit.i
 
 bb.e:                                             ; preds = %._crit_edge.i13
   %i.au = lshr i64 %i.al, 32                      ; 2 uses
   %i.av = trunc nuw i64 %i.au to i32              ; 2 uses
   %i.aw = trunc i64 %i.al to i32                  ; 2 uses
-  %i.ax = getelementptr inbounds [4 x i8], ptr %i.b, i64 %i.ar ; 2 uses
+  %i.ax = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.ar ; 2 uses
   %i.ay = load i32, ptr %i.ax, align 4, !tbaa !3
   %i.az = add i32 %i.ay, %i.aw                    ; 2 uses
   store i32 %i.az, ptr %i.ax, align 4, !tbaa !3
@@ -2183,16 +2191,16 @@ bb.i:                                             ; preds = %bb.h
   %.sink35.i.i = phi i32 [ %i.bo, %_ZN4absl12lts_2025051216strings_internal11BigUnsignedILi84EE12AddWithCarryEij.exit.i.i ], [ %i.cc, %bb.i ], [ 85, %.preheader.i.i.i ], [ %i.ca, %_ZN4absl12lts_2025051216strings_internal11BigUnsignedILi84EE12AddWithCarryEij.exit25.loopexit.i.i ]
   %i.cd = load i32, ptr %0, align 4, !tbaa !3
   %i.ce = tail call i32 @llvm.smax.i32(i32 %.sink35.i.i, i32 %i.cd)
-  %.sroa.speculated.i.i.i = tail call i32 @llvm.smin.i32(i32 %i.ce, i32 84)
+  %.sroa.speculated.i.i.i = tail call i32 @llvm.smin.i32(i32 %i.ce, i32 84) ; 2 uses
   store i32 %.sroa.speculated.i.i.i, ptr %0, align 4, !tbaa !44
   br label %_ZN4absl12lts_2025051216strings_internal11BigUnsignedILi84EE12AddWithCarryEim.exit.i
 
-_ZN4absl12lts_2025051216strings_internal11BigUnsignedILi84EE12AddWithCarryEim.exit.i: ; preds = %.sink.split.i.i, %._crit_edge.i13
+_ZN4absl12lts_2025051216strings_internal11BigUnsignedILi84EE12AddWithCarryEim.exit.i: ; preds = %._crit_edge.i13._ZN4absl12lts_2025051216strings_internal11BigUnsignedILi84EE12AddWithCarryEim.exit.i_crit_edge, %.sink.split.i.i
+  %2 = phi i32 [ %.pre, %._crit_edge.i13._ZN4absl12lts_2025051216strings_internal11BigUnsignedILi84EE12AddWithCarryEim.exit.i_crit_edge ], [ %.sroa.speculated.i.i.i, %.sink.split.i.i ]
   %i.cf = trunc i64 %i.aj to i32
-  %i.cg = getelementptr inbounds [4 x i8], ptr %i.b, i64 %indvars.iv
+  %i.cg = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv
   store i32 %i.cf, ptr %i.cg, align 4, !tbaa !3
   %.not.i14 = icmp eq i64 %i.am, 0
-  %2 = load i32, ptr %0, align 4
   %i.ch = sext i32 %2 to i64
   %.not23.i = icmp slt i64 %indvars.iv, %i.ch
   %or.cond = select i1 %.not.i14, i1 true, i1 %.not23.i

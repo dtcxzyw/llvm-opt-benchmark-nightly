@@ -204,7 +204,7 @@ bb.a:
   store <2 x float> %i.m, ptr %5, align 8
   %i.p = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
   store <2 x float> %i.o, ptr %i.p, align 8
-  %6 = sext i32 %3 to i64                         ; 6 uses
+  %6 = zext nneg i32 %3 to i64                    ; 6 uses
   %i.q = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %6
   %i.r = load float, ptr %i.q, align 4, !tbaa !171 ; 4 uses
   %i.s = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %6
@@ -475,7 +475,7 @@ bb.e:                                             ; preds = %.thread
   %.sroa.0.0.vec.insert.i = insertelement <2 x float> poison, float %i.as, i64 0
   %.sroa.0.4.vec.insert.i = insertelement <2 x float> %.sroa.0.0.vec.insert.i, float %i.av, i64 1
   store <2 x float> %.sroa.0.4.vec.insert.i, ptr %10, align 8
-  %13 = sext i32 %2 to i64                        ; 3 uses
+  %13 = zext nneg i32 %2 to i64                   ; 3 uses
   %i.ba = getelementptr inbounds nuw [4 x i8], ptr %10, i64 %13
   %i.bb = load float, ptr %i.ba, align 4, !tbaa !171 ; 2 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %i.c, i64 3352
@@ -521,7 +521,7 @@ bb.e:                                             ; preds = %.thread
   store <2 x float> %i.cg, ptr %8, align 8
   %i.cj = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 2 uses
   store <2 x float> %i.ci, ptr %i.cj, align 8
-  %14 = sext i32 %i.bt to i64                     ; 6 uses
+  %14 = zext nneg i32 %i.bt to i64                ; 6 uses
   %i.ck = getelementptr inbounds nuw [4 x i8], ptr %7, i64 %14
   %i.cl = load float, ptr %i.ck, align 4, !tbaa !171 ; 4 uses
   %i.cm = getelementptr inbounds nuw [4 x i8], ptr %8, i64 %14
@@ -924,7 +924,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %.val64.us = load ptr, ptr %i.y, align 8, !tbaa !476
-  %4 = sext i32 %i.aw to i64
+  %4 = zext nneg i32 %i.aw to i64
   %i.be = getelementptr i8, ptr %.val64.us, i64 %4
   %i.bf = getelementptr i8, ptr %i.be, i64 -1
   %i.bg = load i8, ptr %i.bf, align 1, !tbaa !387
@@ -983,7 +983,7 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i
   %.val64 = load ptr, ptr %i.y, align 8, !tbaa !476
-  %5 = sext i32 %i.cd to i64
+  %5 = zext nneg i32 %i.cd to i64
   %i.cl = getelementptr i8, ptr %.val64, i64 %5
   %i.cm = getelementptr i8, ptr %i.cl, i64 -1
   %i.cn = load i8, ptr %i.cm, align 1, !tbaa !387
@@ -1273,12 +1273,13 @@ bb.k:                                             ; preds = %bb.j
 
 ._ZN5ImStbL24stb_text_makeundo_deleteEP19ImGuiInputTextStatePNS_17STB_TexteditStateEii.exit_crit_edge.i: ; preds = %bb.k
   %.pre.i = sext i32 %i.l to i64
+  %.pre = zext nneg i32 %i.q to i64
   br label %_ZN5ImStbL19stb_textedit_deleteEP19ImGuiInputTextStatePNS_17STB_TexteditStateEii.exit
 
 .lr.ph.i.i:                                       ; preds = %bb.k
   %i.s = getelementptr i8, ptr %0, i64 32         ; 5 uses
   %i.t = sext i32 %i.l to i64                     ; 7 uses
-  %wide.trip.count.i.i = zext nneg i32 %i.q to i64 ; 2 uses
+  %wide.trip.count.i.i = zext nneg i32 %i.q to i64 ; 4 uses
   %xtraiter49 = and i64 %wide.trip.count.i.i, 3   ; 3 uses
   %i.u = icmp ult i32 %i.q, 4
   br i1 %i.u, label %.epil.preheader48, label %.lr.ph.i.i.new
@@ -1347,12 +1348,12 @@ bb.m:                                             ; preds = %bb.m, %.epil.prehea
   br i1 %epil.iter50.cmp.not, label %_ZN5ImStbL19stb_textedit_deleteEP19ImGuiInputTextStatePNS_17STB_TexteditStateEii.exit, label %bb.m, !llvm.loop !917
 
 _ZN5ImStbL19stb_textedit_deleteEP19ImGuiInputTextStatePNS_17STB_TexteditStateEii.exit: ; preds = %_ZN5ImStbL19stb_textedit_deleteEP19ImGuiInputTextStatePNS_17STB_TexteditStateEii.exit.loopexit.unr-lcssa, %bb.m, %._ZN5ImStbL24stb_text_makeundo_deleteEP19ImGuiInputTextStatePNS_17STB_TexteditStateEii.exit_crit_edge.i
+  %.pre-phi = phi i64 [ %.pre, %._ZN5ImStbL24stb_text_makeundo_deleteEP19ImGuiInputTextStatePNS_17STB_TexteditStateEii.exit_crit_edge.i ], [ %wide.trip.count.i.i, %bb.m ], [ %wide.trip.count.i.i, %_ZN5ImStbL19stb_textedit_deleteEP19ImGuiInputTextStatePNS_17STB_TexteditStateEii.exit.loopexit.unr-lcssa ]
   %.pre-phi.i = phi i64 [ %.pre.i, %._ZN5ImStbL24stb_text_makeundo_deleteEP19ImGuiInputTextStatePNS_17STB_TexteditStateEii.exit_crit_edge.i ], [ %i.t, %bb.m ], [ %i.t, %_ZN5ImStbL19stb_textedit_deleteEP19ImGuiInputTextStatePNS_17STB_TexteditStateEii.exit.loopexit.unr-lcssa ]
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !435
   %i.ar = getelementptr inbounds i8, ptr %i.aq, i64 %.pre-phi.i ; 2 uses
-  %2 = sext i32 %i.q to i64
-  %i.as = getelementptr inbounds i8, ptr %i.ar, i64 %2
+  %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 %.pre-phi
   %i.at = load i32, ptr %i.a, align 8, !tbaa !436
   %reass.sub38 = sub i32 %i.at, %i.k
   %i.au = add i32 %reass.sub38, 1
@@ -1378,12 +1379,13 @@ bb.n:                                             ; preds = %bb.j
 
 ._ZN5ImStbL24stb_text_makeundo_deleteEP19ImGuiInputTextStatePNS_17STB_TexteditStateEii.exit_crit_edge.i26: ; preds = %bb.n
   %.pre.i27 = sext i32 %i.k to i64
+  %.pre39 = zext nneg i32 %i.bb to i64
   br label %_ZN5ImStbL19stb_textedit_deleteEP19ImGuiInputTextStatePNS_17STB_TexteditStateEii.exit36
 
 .lr.ph.i.i30:                                     ; preds = %bb.n
   %i.bd = getelementptr i8, ptr %0, i64 32        ; 5 uses
   %i.be = sext i32 %i.k to i64                    ; 7 uses
-  %wide.trip.count.i.i31 = zext nneg i32 %i.bb to i64 ; 2 uses
+  %wide.trip.count.i.i31 = zext nneg i32 %i.bb to i64 ; 4 uses
   %xtraiter = and i64 %wide.trip.count.i.i31, 3   ; 3 uses
   %i.bf = icmp ult i32 %i.bb, 4
   br i1 %i.bf, label %.epil.preheader, label %.lr.ph.i.i30.new
@@ -1452,12 +1454,12 @@ bb.p:                                             ; preds = %bb.p, %.epil.prehea
   br i1 %epil.iter.cmp.not, label %_ZN5ImStbL19stb_textedit_deleteEP19ImGuiInputTextStatePNS_17STB_TexteditStateEii.exit36, label %bb.p, !llvm.loop !918
 
 _ZN5ImStbL19stb_textedit_deleteEP19ImGuiInputTextStatePNS_17STB_TexteditStateEii.exit36: ; preds = %_ZN5ImStbL19stb_textedit_deleteEP19ImGuiInputTextStatePNS_17STB_TexteditStateEii.exit36.loopexit.unr-lcssa, %bb.p, %._ZN5ImStbL24stb_text_makeundo_deleteEP19ImGuiInputTextStatePNS_17STB_TexteditStateEii.exit_crit_edge.i26
+  %.pre-phi40 = phi i64 [ %.pre39, %._ZN5ImStbL24stb_text_makeundo_deleteEP19ImGuiInputTextStatePNS_17STB_TexteditStateEii.exit_crit_edge.i26 ], [ %wide.trip.count.i.i31, %bb.p ], [ %wide.trip.count.i.i31, %_ZN5ImStbL19stb_textedit_deleteEP19ImGuiInputTextStatePNS_17STB_TexteditStateEii.exit36.loopexit.unr-lcssa ]
   %.pre-phi.i28 = phi i64 [ %.pre.i27, %._ZN5ImStbL24stb_text_makeundo_deleteEP19ImGuiInputTextStatePNS_17STB_TexteditStateEii.exit_crit_edge.i26 ], [ %i.be, %bb.p ], [ %i.be, %_ZN5ImStbL19stb_textedit_deleteEP19ImGuiInputTextStatePNS_17STB_TexteditStateEii.exit36.loopexit.unr-lcssa ]
   %i.ca = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.cb = load ptr, ptr %i.ca, align 8, !tbaa !435
   %i.cc = getelementptr inbounds i8, ptr %i.cb, i64 %.pre-phi.i28 ; 2 uses
-  %3 = sext i32 %i.bb to i64
-  %i.cd = getelementptr inbounds i8, ptr %i.cc, i64 %3
+  %i.cd = getelementptr inbounds nuw i8, ptr %i.cc, i64 %.pre-phi40
   %i.ce = load i32, ptr %i.a, align 8, !tbaa !436
   %reass.sub = sub i32 %i.ce, %i.l
   %i.cf = add i32 %reass.sub, 1

@@ -203,7 +203,7 @@ bb.w:                                             ; preds = %bb.v, %._crit_edge
 
 .loopexit159:                                     ; preds = %bb.e, %bb.m
   %.2126 = phi i32 [ %.1122, %bb.m ], [ %.0124, %bb.e ] ; 4 uses
-  %.3 = phi i32 [ %i.ad, %bb.m ], [ %.1122, %bb.e ] ; 3 uses
+  %.3 = phi i32 [ %i.ad, %bb.m ], [ %.1122, %bb.e ] ; 10 uses
   %or.cond7 = and i1 %i.s, %.not143
   br i1 %or.cond7, label %.preheader.preheader, label %bb.x
 
@@ -226,22 +226,12 @@ bb.x:                                             ; preds = %.loopexit159
   br i1 %or.cond9, label %bb.y, label %.loopexit
 
 bb.y:                                             ; preds = %bb.x
-  %i.br = sub nsw i32 8, %.3                      ; 2 uses
-  %i.bs = add nuw nsw i32 %i.br, %.2126           ; 10 uses
+  %i.br = sub i32 %.2126, %.3
+  %i.bs = add i32 %i.br, 8                        ; 10 uses
   %i.bt = icmp samesign ult i32 %i.bs, 7
-  br i1 %i.bt, label %.lr.ph178.preheader, label %.lr.ph182.preheader
+  br i1 %i.bt, label %.lr.ph178, label %.lr.ph182.preheader
 
-.lr.ph178.preheader:                              ; preds = %bb.y
-  %3 = zext nneg i32 %i.br to i64                 ; 7 uses
-  %4 = sub nuw nsw i64 7, %3
-  %5 = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %4
-  %6 = load i32, ptr %5, align 4, !tbaa !69
-  %7 = getelementptr inbounds nuw i8, ptr %2, i64 28
-  store i32 %6, ptr %7, align 4, !tbaa !69
-  %.not228 = icmp eq i32 %i.bs, 6
-  br i1 %.not228, label %.lr.ph182.preheader, label %.lr.ph178.1
-
-.lr.ph182.preheader:                              ; preds = %.lr.ph178.preheader, %.lr.ph178.1, %.lr.ph178.2, %.lr.ph178.3, %.lr.ph178.4, %.lr.ph178.5, %.lr.ph178.6, %bb.y
+.lr.ph182.preheader:                              ; preds = %.lr.ph178, %.lr.ph178.1, %.lr.ph178.2, %.lr.ph178.3, %.lr.ph178.4, %.lr.ph178.5, %.lr.ph178.6, %bb.y
   %i.bu = sub i32 9, %.3                          ; 3 uses
   %min.iters.check = icmp ult i32 %i.bu, 8
   br i1 %min.iters.check, label %.lr.ph182.preheader220, label %vector.ph
@@ -272,18 +262,30 @@ middle.block:                                     ; preds = %vector.body
   %.2117181.ph = phi i32 [ %i.bs, %.lr.ph182.preheader ], [ %i.bv, %middle.block ]
   br label %.lr.ph182
 
-.lr.ph178.1:                                      ; preds = %.lr.ph178.preheader
-  %8 = sub nsw i64 6, %3
-  %i.cc = getelementptr inbounds [4 x i8], ptr %2, i64 %8
+.lr.ph178:                                        ; preds = %bb.y
+  %3 = add i32 %.3, -1
+  %4 = zext nneg i32 %3 to i64
+  %5 = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %4
+  %6 = load i32, ptr %5, align 4, !tbaa !69
+  %7 = getelementptr inbounds nuw i8, ptr %2, i64 28
+  store i32 %6, ptr %7, align 4, !tbaa !69
+  %.not225 = icmp eq i32 %i.bs, 6
+  br i1 %.not225, label %.lr.ph182.preheader, label %.lr.ph178.1
+
+.lr.ph178.1:                                      ; preds = %.lr.ph178
+  %8 = add i32 %.3, -2
+  %9 = zext nneg i32 %8 to i64
+  %i.cc = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %9
   %i.cd = load i32, ptr %i.cc, align 4, !tbaa !69
   %i.ce = getelementptr inbounds nuw i8, ptr %2, i64 24
   store i32 %i.cd, ptr %i.ce, align 4, !tbaa !69
-  %i.cf = icmp ult i32 %i.bs, 5
+  %i.cf = icmp samesign ult i32 %i.bs, 5
   br i1 %i.cf, label %.lr.ph178.2, label %.lr.ph182.preheader
 
 .lr.ph178.2:                                      ; preds = %.lr.ph178.1
-  %9 = sub nsw i64 5, %3
-  %i.cg = getelementptr inbounds [4 x i8], ptr %2, i64 %9
+  %10 = add i32 %.3, -3
+  %11 = zext nneg i32 %10 to i64
+  %i.cg = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %11
   %i.ch = load i32, ptr %i.cg, align 4, !tbaa !69
   %i.ci = getelementptr inbounds nuw i8, ptr %2, i64 20
   store i32 %i.ch, ptr %i.ci, align 4, !tbaa !69
@@ -291,17 +293,19 @@ middle.block:                                     ; preds = %vector.body
   br i1 %.not229, label %.lr.ph182.preheader, label %.lr.ph178.3
 
 .lr.ph178.3:                                      ; preds = %.lr.ph178.2
-  %10 = sub nsw i64 4, %3
-  %i.cj = getelementptr inbounds [4 x i8], ptr %2, i64 %10
+  %12 = add i32 %.3, -4
+  %13 = zext nneg i32 %12 to i64
+  %i.cj = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %13
   %i.ck = load i32, ptr %i.cj, align 4, !tbaa !69
   %i.cl = getelementptr inbounds nuw i8, ptr %2, i64 16
   store i32 %i.ck, ptr %i.cl, align 4, !tbaa !69
-  %i.cm = icmp ult i32 %i.bs, 3
+  %i.cm = icmp samesign ult i32 %i.bs, 3
   br i1 %i.cm, label %.lr.ph178.4, label %.lr.ph182.preheader
 
 .lr.ph178.4:                                      ; preds = %.lr.ph178.3
-  %11 = sub nuw nsw i64 3, %3
-  %i.cn = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %11
+  %14 = add i32 %.3, -5
+  %15 = zext nneg i32 %14 to i64
+  %i.cn = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %15
   %i.co = load i32, ptr %i.cn, align 4, !tbaa !69
   %i.cp = getelementptr inbounds nuw i8, ptr %2, i64 12
   store i32 %i.co, ptr %i.cp, align 4, !tbaa !69
@@ -309,8 +313,9 @@ middle.block:                                     ; preds = %vector.body
   br i1 %.not230, label %.lr.ph182.preheader, label %.lr.ph178.5
 
 .lr.ph178.5:                                      ; preds = %.lr.ph178.4
-  %12 = sub nsw i64 2, %3
-  %i.cq = getelementptr inbounds [4 x i8], ptr %2, i64 %12
+  %16 = add i32 %.3, -6
+  %17 = zext nneg i32 %16 to i64
+  %i.cq = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %17
   %i.cr = load i32, ptr %i.cq, align 4, !tbaa !69
   %i.cs = getelementptr inbounds nuw i8, ptr %2, i64 8
   store i32 %i.cr, ptr %i.cs, align 4, !tbaa !69
@@ -318,8 +323,9 @@ middle.block:                                     ; preds = %vector.body
   br i1 %i.ct, label %.lr.ph178.6, label %.lr.ph182.preheader
 
 .lr.ph178.6:                                      ; preds = %.lr.ph178.5
-  %13 = sub nsw i64 1, %3
-  %i.cu = getelementptr inbounds [4 x i8], ptr %2, i64 %13
+  %18 = add i32 %.3, -7
+  %19 = zext nneg i32 %18 to i64
+  %i.cu = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %19
   %i.cv = load i32, ptr %i.cu, align 4, !tbaa !69
   %i.cw = getelementptr inbounds nuw i8, ptr %2, i64 4
   store i32 %i.cv, ptr %i.cw, align 4, !tbaa !69

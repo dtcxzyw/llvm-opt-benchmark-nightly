@@ -1,4 +1,4 @@
-inline.NumInlined: 1281
+inline.NumInlined: 1282
 inline.NumDeleted: 547
 loop-unroll.NumCompletelyUnrolled: 3
 loop-unroll.NumRuntimeUnrolled: 4
@@ -204,9 +204,37 @@ bb.q:                                             ; preds = %_ZN4absl12lts_20250
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.bl = load ptr, ptr %i.bk, align 8, !tbaa !54
   %i.bm = getelementptr inbounds i8, ptr %i.bl, i64 -40
-  %i.bn = load i8, ptr %i.bm, align 8, !tbaa !55
-  %i.bo = load i8, ptr %i.b, align 1, !tbaa !33
-  %6 = call noundef zeroext i1 @_ZNK4absl12lts_2025051213time_internal4cctz12TimeZoneInfo16EquivTransitionsEhh(ptr noundef nonnull align 8 dereferenceable(192) %0, i8 noundef zeroext %i.bn, i8 noundef zeroext %i.bo)
+  %i.bn = load i8, ptr %i.bm, align 8, !tbaa !55  ; 2 uses
+  %i.bo = load i8, ptr %i.b, align 1, !tbaa !33   ; 2 uses
+  %6 = icmp eq i8 %i.bn, %i.bo
+  br i1 %6, label %bb.ar, label %7
+
+7:                                                ; preds = %bb.q
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %9 = zext i8 %i.bn to i64
+  %10 = load ptr, ptr %8, align 8, !tbaa !16      ; 2 uses
+  %11 = getelementptr inbounds nuw [48 x i8], ptr %10, i64 %9 ; 3 uses
+  %12 = zext i8 %i.bo to i64
+  %13 = getelementptr inbounds nuw [48 x i8], ptr %10, i64 %12 ; 3 uses
+  %14 = load i32, ptr %11, align 8, !tbaa !23
+  %15 = load i32, ptr %13, align 8, !tbaa !23
+  %.not.i50 = icmp eq i32 %14, %15
+  br i1 %.not.i50, label %16, label %bb.ar
+
+16:                                               ; preds = %7
+  %17 = getelementptr inbounds nuw i8, ptr %11, i64 40
+  %18 = load i8, ptr %17, align 8, !tbaa !24, !range !25, !noundef !26
+  %19 = getelementptr inbounds nuw i8, ptr %13, i64 40
+  %20 = load i8, ptr %19, align 8, !tbaa !24, !range !25, !noundef !26
+  %.not11.i52 = icmp eq i8 %18, %20
+  br i1 %.not11.i52, label %21, label %bb.ar
+
+21:                                               ; preds = %16
+  %22 = getelementptr inbounds nuw i8, ptr %11, i64 41
+  %23 = load i8, ptr %22, align 1, !tbaa !18
+  %24 = getelementptr inbounds nuw i8, ptr %13, i64 41
+  %25 = load i8, ptr %24, align 1, !tbaa !18
+  %.not12.i53 = icmp eq i8 %23, %25
   br label %bb.ar
 
 _ZN4absl12lts_2025051213time_internal4cctz12_GLOBAL__N_110AllYearDSTERKNS2_13PosixTimeZoneE.exit.thread: ; preds = %bb.p, %_ZN4absl12lts_2025051213time_internal4cctz12_GLOBAL__N_110AllYearDSTERKNS2_13PosixTimeZoneE.exit
@@ -609,8 +637,8 @@ _ZN4absl12lts_2025051213time_internal4cctz12_GLOBAL__N_16IsLeapEl.exit82: ; pred
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #24
   br label %bb.ar
 
-bb.ar:                                            ; preds = %bb.n, %.critedge, %bb.q
-  %.0 = phi i1 [ %6, %bb.q ], [ true, %.critedge ], [ false, %bb.n ]
+bb.ar:                                            ; preds = %21, %16, %7, %bb.q, %bb.n, %.critedge
+  %.0 = phi i1 [ false, %bb.n ], [ true, %.critedge ], [ true, %bb.q ], [ false, %16 ], [ false, %7 ], [ %.not12.i53, %21 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #24
   br label %_ZNK4absl12lts_2025051213time_internal4cctz12TimeZoneInfo16EquivTransitionsEhh.exit
 

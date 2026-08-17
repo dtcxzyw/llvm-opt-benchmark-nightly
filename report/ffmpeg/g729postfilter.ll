@@ -203,8 +203,8 @@ bb.d:                                             ; preds = %bb.c
   %i.ot = zext i8 %i.os to i32
   %i.ou = add nuw nsw i32 %.1.i312.i, %i.ot       ; 2 uses
   %i.ov = trunc nuw nsw i32 %i.ou to i16
-  %i.ow = add nsw i16 %i.ov, -14                  ; 3 uses
-  %i.ox = sext i16 %i.ow to i32                   ; 6 uses
+  %i.ow = add nsw i16 %i.ov, -14                  ; 4 uses
+  %i.ox = sext i16 %i.ow to i32                   ; 5 uses
   %i.oy = icmp samesign ugt i32 %i.ou, 13
   br i1 %i.oy, label %bb.e, label %.thread.i
 
@@ -402,7 +402,8 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   %i.tj = zext nneg i16 %.0246.i to i32
   %i.tk = sub nsw i32 %i.tj, %i.oz
   %i.tl = shl nsw i32 %i.tk, 1
-  %.neg.i = sub nsw i32 %i.ox, %i.ss
+  %10 = zext nneg i16 %i.ow to i32
+  %.neg.i = sub nsw i32 %10, %i.ss
   %i.tm = add nsw i32 %.neg.i, %i.tl              ; 3 uses
   %i.tn = icmp sgt i32 %i.tm, 0
   br i1 %i.tn, label %bb.o, label %bb.p

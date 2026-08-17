@@ -203,28 +203,33 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d, %bb.c
   %.pre28 = phi ptr [ %i.j, %bb.d ], [ %.pre28.pre, %bb.c ] ; 3 uses
-  %i.k = phi i32 [ %.pre, %bb.d ], [ %i.c, %bb.c ] ; 3 uses
+  %i.k = phi i32 [ %.pre, %bb.d ], [ %i.c, %bb.c ] ; 10 uses
   %i.l = icmp sgt i32 %i.k, %1
   br i1 %i.l, label %.lr.ph.a, label %._crit_edge
 
 .lr.ph.a:                                         ; preds = %bb.e
-  %3 = zext i32 %i.k to i64                       ; 5 uses
-  %4 = zext nneg i32 %1 to i64                    ; 2 uses
-  %5 = add nsw i64 %3, -1
-  %6 = tail call i64 @llvm.umin.i64(i64 %5, i64 %4)
-  %7 = sub nsw i64 %3, %6                         ; 3 uses
-  %min.iters.check = icmp ult i64 %7, 4
-  br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
+  %3 = add i32 %i.k, -1
+  %4 = tail call i32 @llvm.umin.i32(i32 %1, i32 %3)
+  %5 = sub i32 %i.k, %4                           ; 3 uses
+  %min.iters.check = icmp ult i32 %5, 14
+  br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
 
-vector.ph:                                        ; preds = %.lr.ph.a
-  %n.vec = and i64 %7, -4                         ; 3 uses
-  %8 = sub nsw i64 %3, %n.vec
+vector.scevcheck:                                 ; preds = %.lr.ph.a
+  %6 = add i32 %i.k, -1
+  %7 = tail call i32 @llvm.usub.sat.i32(i32 %6, i32 %1)
+  %8 = icmp ugt i32 %7, %i.k
+  br i1 %8, label %scalar.ph.preheader, label %vector.ph
+
+vector.ph:                                        ; preds = %vector.scevcheck
+  %n.vec = and i32 %5, -4                         ; 3 uses
+  %9 = sub i32 %i.k, %n.vec
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %9 = sub i64 %3, %index
-  %i.m = getelementptr [8 x i8], ptr %.pre28, i64 %9 ; 4 uses
+  %index = phi i32 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
+  %10 = sub i32 %i.k, %index
+  %11 = zext nneg i32 %10 to i64
+  %i.m = getelementptr [8 x i8], ptr %.pre28, i64 %11 ; 4 uses
   %i.n = getelementptr i8, ptr %i.m, i64 -16
   %i.o = getelementptr i8, ptr %i.m, i64 -32
   %wide.load = load <2 x ptr>, ptr %i.n, align 8, !tbaa !70
@@ -233,26 +238,27 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.q = getelementptr i8, ptr %i.m, i64 -24
   store <2 x ptr> %wide.load, ptr %i.p, align 8, !tbaa !70
   store <2 x ptr> %wide.load32, ptr %i.q, align 8, !tbaa !70
-  %index.next = add nuw i64 %index, 4             ; 2 uses
-  %i.r = icmp eq i64 %index.next, %n.vec
+  %index.next = add nuw i32 %index, 4             ; 2 uses
+  %i.r = icmp eq i32 %index.next, %n.vec
   br i1 %i.r, label %middle.block, label %vector.body, !llvm.loop !587
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %7, %n.vec
+  %cmp.n = icmp eq i32 %5, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %scalar.ph.preheader
 
-scalar.ph.preheader:                              ; preds = %.lr.ph.a, %middle.block
-  %indvars.iv.ph = phi i64 [ %3, %.lr.ph.a ], [ %8, %middle.block ]
+scalar.ph.preheader:                              ; preds = %vector.scevcheck, %.lr.ph.a, %middle.block
+  %.026.ph = phi i32 [ %i.k, %vector.scevcheck ], [ %i.k, %.lr.ph.a ], [ %9, %middle.block ]
   br label %scalar.ph
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %scalar.ph ], [ %indvars.iv.ph, %scalar.ph.preheader ] ; 2 uses
-  %i.s = getelementptr [8 x i8], ptr %.pre28, i64 %indvars.iv ; 2 uses
+  %.026 = phi i32 [ %13, %scalar.ph ], [ %.026.ph, %scalar.ph.preheader ] ; 2 uses
+  %12 = zext nneg i32 %.026 to i64
+  %i.s = getelementptr [8 x i8], ptr %.pre28, i64 %12 ; 2 uses
   %i.t = getelementptr i8, ptr %i.s, i64 -8
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !70
   store ptr %i.u, ptr %i.s, align 8, !tbaa !70
-  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
-  %i.v = icmp samesign ugt i64 %indvars.iv.next, %4
+  %13 = add nsw i32 %.026, -1                     ; 2 uses
+  %i.v = icmp samesign ugt i32 %13, %1
   br i1 %i.v, label %scalar.ph, label %._crit_edge, !llvm.loop !590
 
 ._crit_edge:                                      ; preds = %scalar.ph, %middle.block, %bb.e
@@ -655,7 +661,7 @@ bb.g:                                             ; preds = %.lr.ph
   %.not50 = icmp slt i32 %i.aa, %i.b              ; 2 uses
   %i.ab = zext nneg i32 %i.aa to i64
   %i.ac = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.ab
-  %i.ad = sub nsw i32 %i.b, %i.aa
+  %i.ad = sub nuw nsw i32 %i.b, %i.aa
   %.sink = select i1 %.not50, ptr %i.ac, ptr null
   %storemerge = select i1 %.not50, i32 %i.ad, i32 0
   store ptr %.sink, ptr %0, align 8, !tbaa !368
@@ -1058,7 +1064,10 @@ declare i3 @llvm.bitreverse.i3(i3) #28
 declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly captures(none), i64, i1 immarg) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #28
+declare i32 @llvm.umin.i32(i32, i32) #28
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.usub.sat.i32(i32, i32) #28
 
 attributes #0 = { nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -1461,7 +1470,7 @@ begin_hunk_3_@llvm.umin.i64/@llvm.usub.sat.i32
 !587 = distinct !{!587, !27, !588, !589}
 !588 = !{!"llvm.loop.isvectorized", i32 1}
 !589 = !{!"llvm.loop.unroll.runtime.disable"}
-!590 = distinct !{!590, !27, !589, !588}
+!590 = distinct !{!590, !27, !588}
 !591 = !{!592, !23, i64 0}
 !592 = !{!"RedisModuleScanCursor", !23, i64 0, !10, i64 8}
 !593 = !{!592, !10, i64 8}

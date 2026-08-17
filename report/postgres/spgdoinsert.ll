@@ -203,22 +203,42 @@ bb.hc:                                            ; preds = %bb.hb, %bb.ha
   %i.ash = add nsw i32 %i.asd, -1
   %umin.i = call i32 @llvm.umin.i32(i32 %i.asg, i32 %i.ash) ; 3 uses
   %i.asi = add i32 %umin.i, 1                     ; 2 uses
-  %xtraiter3154 = and i32 %i.asi, 3               ; 3 uses
-  %i.asj = icmp ult i32 %umin.i, 3
+  %xtraiter3154 = and i32 %i.asi, 7               ; 3 uses
+  %i.asj = icmp ult i32 %umin.i, 7
   br i1 %i.asj, label %.lr.ph.i208.epil.preheader, label %.lr.ph.preheader.i.new
 
 .lr.ph.preheader.i.new:                           ; preds = %.lr.ph.preheader.i
-  %unroll_iter3159 = and i32 %i.asi, -4
+  %unroll_iter3159 = and i32 %i.asi, -8
   br label %.lr.ph.i208
 
 .lr.ph.i208:                                      ; preds = %.lr.ph.i208, %.lr.ph.preheader.i.new
   %.04.i = phi ptr [ %i.asb, %.lr.ph.preheader.i.new ], [ %i.asz, %.lr.ph.i208 ] ; 2 uses
   %niter3160 = phi i32 [ 0, %.lr.ph.preheader.i.new ], [ %niter3160.next.3, %.lr.ph.i208 ]
-  %i.ask = getelementptr i8, ptr %.04.i, i64 6
+  %14 = getelementptr i8, ptr %.04.i, i64 6
+  %.0.val.i = load i16, ptr %14, align 2
+  %15 = and i16 %.0.val.i, 8191
+  %16 = zext nneg i16 %15 to i64
+  %17 = getelementptr inbounds nuw i8, ptr %.04.i, i64 %16 ; 2 uses
+  %18 = getelementptr i8, ptr %17, i64 6
+  %.0.val.i.1 = load i16, ptr %18, align 2
+  %19 = and i16 %.0.val.i.1, 8191
+  %20 = zext nneg i16 %19 to i64
+  %21 = getelementptr inbounds nuw i8, ptr %17, i64 %20 ; 2 uses
+  %22 = getelementptr i8, ptr %21, i64 6
+  %.0.val.i.2 = load i16, ptr %22, align 2
+  %23 = and i16 %.0.val.i.2, 8191
+  %24 = zext nneg i16 %23 to i64
+  %25 = getelementptr inbounds nuw i8, ptr %21, i64 %24 ; 2 uses
+  %26 = getelementptr i8, ptr %25, i64 6
+  %.0.val.i.3 = load i16, ptr %26, align 2
+  %27 = and i16 %.0.val.i.3, 8191
+  %28 = zext nneg i16 %27 to i64
+  %29 = getelementptr inbounds nuw i8, ptr %25, i64 %28 ; 2 uses
+  %i.ask = getelementptr i8, ptr %29, i64 6
   %.0.val.i.a = load i16, ptr %i.ask, align 2
   %i.asl = and i16 %.0.val.i.a, 8191
   %i.asm = zext nneg i16 %i.asl to i64
-  %i.asn = getelementptr inbounds nuw i8, ptr %.04.i, i64 %i.asm ; 2 uses
+  %i.asn = getelementptr inbounds nuw i8, ptr %29, i64 %i.asm ; 2 uses
   %i.aso = getelementptr i8, ptr %i.asn, i64 6
   %.0.val.i.1.a = load i16, ptr %i.aso, align 2
   %i.asp = and i16 %.0.val.i.1.a, 8191
@@ -234,7 +254,7 @@ bb.hc:                                            ; preds = %bb.hb, %bb.ha
   %i.asx = and i16 %.0.val.i.3.a, 8191
   %i.asy = zext nneg i16 %i.asx to i64
   %i.asz = getelementptr inbounds nuw i8, ptr %i.asv, i64 %i.asy ; 3 uses
-  %niter3160.next.3 = add i32 %niter3160, 4       ; 2 uses
+  %niter3160.next.3 = add i32 %niter3160, 8       ; 2 uses
   %niter3160.ncmp.3 = icmp eq i32 %niter3160.next.3, %unroll_iter3159
   br i1 %niter3160.ncmp.3, label %._crit_edge.loopexit.i.unr-lcssa, label %.lr.ph.i208, !llvm.loop !31
 

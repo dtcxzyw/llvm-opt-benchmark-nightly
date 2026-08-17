@@ -201,9 +201,10 @@ bb.bi:                                            ; preds = %bb.bh
   %i.je = sub i32 %i.jd, %i.iv
   %i.jf = sext i32 %i.je to i64
   %i.jg = getelementptr inbounds [8 x i8], ptr %i.i, i64 %i.jf
-  %12 = sext i32 %i.iv to i64
-  %13 = sub nsw i64 %indvars.iv724, %12
-  %i.jh = getelementptr inbounds [8 x i8], ptr %i.j, i64 %13
+  %12 = trunc nsw i64 %indvars.iv724 to i32
+  %13 = sub nsw i32 %12, %i.iv
+  %14 = zext nneg i32 %13 to i64
+  %i.jh = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %14
   call void @daxpy_(ptr noundef nonnull %i.d, ptr noundef nonnull %i.c, ptr noundef %i.jg, ptr noundef nonnull @c__1, ptr noundef nonnull %i.jh, ptr noundef nonnull @c__1) #6
   store i32 %i.iu, ptr %i.b, align 4, !tbaa !8
   %i.ji = call i32 @idamax_(ptr noundef nonnull %i.b, ptr noundef nonnull %8, ptr noundef nonnull @c__1) #6
@@ -364,8 +365,8 @@ bb.bw:                                            ; preds = %bb.bv
   %i.md = sext i32 %i.mc to i64
   %i.me = getelementptr inbounds [8 x i8], ptr %i.i, i64 %i.md
   %i.mf = sub nsw i32 %.7690, %i.ly
-  %14 = sext i32 %i.mf to i64
-  %i.mg = getelementptr inbounds [8 x i8], ptr %i.j, i64 %14
+  %15 = zext nneg i32 %i.mf to i64
+  %i.mg = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %15
   %i.mh = call double @ddot_(ptr noundef nonnull %i.d, ptr noundef %i.me, ptr noundef nonnull @c__1, ptr noundef nonnull %i.mg, ptr noundef nonnull @c__1) #6
   br label %.loopexit
 

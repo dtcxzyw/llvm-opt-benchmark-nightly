@@ -204,7 +204,7 @@ _ZL15startsWithDigit10StringView.exit.i:          ; preds = %_ZNK10StringView10s
   br i1 %isdigit.i.i, label %bb.u, label %_ZL15startsWithDigit10StringView.exit.thread.i
 
 bb.u:                                             ; preds = %_ZL15startsWithDigit10StringView.exit.i
-  %2 = sext i8 %i.hs to i64
+  %2 = zext nneg i8 %i.hs to i64
   %i.hw = add nsw i64 %2, -48                     ; 2 uses
   %i.hx = getelementptr inbounds nuw i8, ptr %0, i64 192
   %i.hy = load i64, ptr %i.hx, align 8, !tbaa !51
@@ -607,7 +607,7 @@ _ZL15startsWithDigit10StringView.exit.i:          ; preds = %_ZN10StringView12co
   br i1 %isdigit.i.i, label %bb.i, label %.lr.ph.preheader.i
 
 bb.i:                                             ; preds = %_ZL15startsWithDigit10StringView.exit.i
-  %3 = sext i8 %i.av to i64
+  %3 = zext nneg i8 %i.av to i64
   %i.ax = add nsw i64 %3, -47
   %i.ay = getelementptr inbounds nuw i8, ptr %i.as, i64 1 ; 2 uses
   store ptr %i.ay, ptr %1, align 8, !tbaa !69
@@ -791,7 +791,7 @@ _ZL15startsWithDigit10StringView.exit.i.i:        ; preds = %_ZNK10StringView10s
   br i1 %isdigit.i.i.i, label %bb.ab, label %bb.ac
 
 bb.ab:                                            ; preds = %_ZL15startsWithDigit10StringView.exit.i.i
-  %4 = sext i8 %i.ct to i64
+  %4 = zext nneg i8 %i.ct to i64
   %i.dk = getelementptr i8, ptr @.str.33, i64 %4
   %i.dl = getelementptr i8, ptr %i.dk, i64 -48
   %i.dm = load i8, ptr %i.dl, align 1, !tbaa !9
@@ -894,7 +894,7 @@ _ZL15startsWithDigit10StringView.exit.i9.i:       ; preds = %_ZNK10StringView10s
   br i1 %isdigit.i.i11.i, label %bb.an, label %bb.ao
 
 bb.an:                                            ; preds = %_ZL15startsWithDigit10StringView.exit.i9.i
-  %5 = sext i8 %i.ej to i64
+  %5 = zext nneg i8 %i.ej to i64
   %i.fa = getelementptr i8, ptr @.str.33, i64 %5
   %i.fb = getelementptr i8, ptr %i.fa, i64 -48
   %i.fc = load i8, ptr %i.fb, align 1, !tbaa !9
@@ -1039,7 +1039,7 @@ _ZL15startsWithDigit10StringView.exit.i70:        ; preds = %_ZNK10StringView10s
   br i1 %isdigit.i.i72, label %bb.be, label %bb.bf
 
 bb.be:                                            ; preds = %_ZL15startsWithDigit10StringView.exit.i70
-  %6 = sext i8 %i.gl to i64
+  %6 = zext nneg i8 %i.gl to i64
   %i.hc = getelementptr i8, ptr @.str.33, i64 %6
   %i.hd = getelementptr i8, ptr %i.hc, i64 -48
   %i.he = load i8, ptr %i.hd, align 1, !tbaa !9
@@ -1411,7 +1411,7 @@ _ZL15startsWithDigit10StringView.exit.i.i:        ; preds = %_ZN10StringView12co
   br i1 %isdigit.i.i.i, label %bb.k, label %.lr.ph.preheader.i.i
 
 bb.k:                                             ; preds = %_ZL15startsWithDigit10StringView.exit.i.i
-  %2 = sext i8 %i.ch to i64
+  %2 = zext nneg i8 %i.ch to i64
   %i.cj = add nsw i64 %2, -47
   br label %_ZN12_GLOBAL__N_19Demangler14demangleNumberER10StringView.exit.i
 
@@ -1650,14 +1650,15 @@ _ZN10StringView12consumeFrontEc.exit.i.i:         ; preds = %bb.i, %_ZNK10String
   br i1 %i.bq, label %.sink.split.i, label %_ZL15startsWithDigit10StringView.exit.i.i
 
 _ZL15startsWithDigit10StringView.exit.i.i:        ; preds = %_ZN10StringView12consumeFrontEc.exit.i.i
-  %i.br = load i8, ptr %i.bp, align 1, !tbaa !9
-  %i.bs = sext i8 %i.br to i32                    ; 2 uses
+  %i.br = load i8, ptr %i.bp, align 1, !tbaa !9   ; 2 uses
+  %i.bs = sext i8 %i.br to i32
   %isdigittmp.i.i.i = add nsw i32 %i.bs, -48
   %isdigit.i.i.i = icmp ult i32 %isdigittmp.i.i.i, 10
   br i1 %isdigit.i.i.i, label %bb.j, label %.lr.ph.preheader.i.i
 
 bb.j:                                             ; preds = %_ZL15startsWithDigit10StringView.exit.i.i
-  %i.bt = add nsw i32 %i.bs, -47
+  %2 = zext i8 %i.br to i32
+  %i.bt = add nsw i32 %2, -47
   br label %_ZN12_GLOBAL__N_19Demangler14demangleNumberER10StringView.exit.i
 
 .lr.ph.preheader.i.i:                             ; preds = %_ZL15startsWithDigit10StringView.exit.i.i
@@ -2060,7 +2061,7 @@ _ZN10StringView12consumeFrontEc.exit.i128:        ; preds = %_ZN10StringView12co
   br i1 %isdigit.i.i131, label %bb.bb, label %.lr.ph.preheader.i132
 
 bb.bb:                                            ; preds = %_ZN10StringView12consumeFrontEc.exit.i128
-  %3 = sext i8 %i.kd to i64
+  %3 = zext nneg i8 %i.kd to i64
   %i.kh = add nsw i64 %3, -47
   br label %_ZN12_GLOBAL__N_19Demangler14demangleNumberER10StringView.exit143
 
@@ -2214,7 +2215,7 @@ _ZL15startsWithDigit10StringView.exit.i119:       ; preds = %_ZN10StringView12co
   br i1 %isdigit.i.i121, label %bb.bi, label %.lr.ph.preheader.i
 
 bb.bi:                                            ; preds = %_ZL15startsWithDigit10StringView.exit.i119
-  %4 = sext i8 %i.mt to i64
+  %4 = zext nneg i8 %i.mt to i64
   %i.mv = add nsw i64 %4, -47
   br label %_ZN12_GLOBAL__N_19Demangler14demangleNumberER10StringView.exit
 
@@ -2617,14 +2618,15 @@ _ZN10StringView12consumeFrontEc.exit.i.i:         ; preds = %bb.d, %_ZNK10String
   br i1 %i.ae, label %.sink.split.i, label %_ZL15startsWithDigit10StringView.exit.i.i
 
 _ZL15startsWithDigit10StringView.exit.i.i:        ; preds = %_ZN10StringView12consumeFrontEc.exit.i.i
-  %i.af = load i8, ptr %i.ac, align 1, !tbaa !9
-  %i.ag = sext i8 %i.af to i32                    ; 2 uses
+  %i.af = load i8, ptr %i.ac, align 1, !tbaa !9   ; 2 uses
+  %i.ag = sext i8 %i.af to i32
   %isdigittmp.i.i.i = add nsw i32 %i.ag, -48
   %isdigit.i.i.i = icmp ult i32 %isdigittmp.i.i.i, 10
   br i1 %isdigit.i.i.i, label %bb.e, label %.lr.ph.preheader.i.i
 
 bb.e:                                             ; preds = %_ZL15startsWithDigit10StringView.exit.i.i
-  %i.ah = add nsw i32 %i.ag, -47
+  %3 = zext i8 %i.af to i32
+  %i.ah = add nsw i32 %3, -47
   br label %_ZN12_GLOBAL__N_19Demangler14demangleNumberER10StringView.exit.i
 
 .lr.ph.preheader.i.i:                             ; preds = %_ZL15startsWithDigit10StringView.exit.i.i
@@ -2703,8 +2705,8 @@ _ZL15startsWithDigit10StringView.exit.i.i19:      ; preds = %_ZN10StringView12co
   br i1 %isdigit.i.i.i21, label %bb.i, label %.lr.ph.preheader.i.i22
 
 bb.i:                                             ; preds = %_ZL15startsWithDigit10StringView.exit.i.i19
-  %3 = sext i8 %i.be to i64
-  %i.bg = add nsw i64 %3, -47
+  %4 = zext nneg i8 %i.be to i64
+  %i.bg = add nsw i64 %4, -47
   br label %_ZN12_GLOBAL__N_19Demangler14demangleNumberER10StringView.exit.i29
 
 .lr.ph.preheader.i.i22:                           ; preds = %_ZL15startsWithDigit10StringView.exit.i.i19
@@ -2789,14 +2791,15 @@ _ZN10StringView12consumeFrontEc.exit.i.i34:       ; preds = %bb.n, %_ZNK10String
   br i1 %i.ch, label %.sink.split.i43, label %_ZL15startsWithDigit10StringView.exit.i.i35
 
 _ZL15startsWithDigit10StringView.exit.i.i35:      ; preds = %_ZN10StringView12consumeFrontEc.exit.i.i34
-  %i.ci = load i8, ptr %i.cf, align 1, !tbaa !9
-  %i.cj = sext i8 %i.ci to i32                    ; 2 uses
+  %i.ci = load i8, ptr %i.cf, align 1, !tbaa !9   ; 2 uses
+  %i.cj = sext i8 %i.ci to i32
   %isdigittmp.i.i.i36 = add nsw i32 %i.cj, -48
   %isdigit.i.i.i37 = icmp ult i32 %isdigittmp.i.i.i36, 10
   br i1 %isdigit.i.i.i37, label %bb.o, label %.lr.ph.preheader.i.i38
 
 bb.o:                                             ; preds = %_ZL15startsWithDigit10StringView.exit.i.i35
-  %i.ck = add nsw i32 %i.cj, -47
+  %5 = zext i8 %i.ci to i32
+  %i.ck = add nsw i32 %5, -47
   br label %_ZN12_GLOBAL__N_19Demangler14demangleNumberER10StringView.exit.i48
 
 .lr.ph.preheader.i.i38:                           ; preds = %_ZL15startsWithDigit10StringView.exit.i.i35
@@ -2869,14 +2872,15 @@ _ZN10StringView12consumeFrontEc.exit.i.i54:       ; preds = %bb.r, %_ZNK10String
   br i1 %i.dh, label %_ZN12_GLOBAL__N_19Demangler16demangleUnsignedER10StringView.exit72.thread, label %_ZL15startsWithDigit10StringView.exit.i.i55
 
 _ZL15startsWithDigit10StringView.exit.i.i55:      ; preds = %_ZN10StringView12consumeFrontEc.exit.i.i54
-  %i.di = load i8, ptr %i.df, align 1, !tbaa !9
-  %i.dj = sext i8 %i.di to i32                    ; 2 uses
+  %i.di = load i8, ptr %i.df, align 1, !tbaa !9   ; 2 uses
+  %i.dj = sext i8 %i.di to i32
   %isdigittmp.i.i.i56 = add nsw i32 %i.dj, -48
   %isdigit.i.i.i57 = icmp ult i32 %isdigittmp.i.i.i56, 10
   br i1 %isdigit.i.i.i57, label %bb.s, label %.lr.ph.preheader.i.i58
 
 bb.s:                                             ; preds = %_ZL15startsWithDigit10StringView.exit.i.i55
-  %i.dk = add nsw i32 %i.dj, -47
+  %6 = zext i8 %i.di to i32
+  %i.dk = add nsw i32 %6, -47
   br label %_ZN12_GLOBAL__N_19Demangler14demangleNumberER10StringView.exit.i68
 
 .lr.ph.preheader.i.i58:                           ; preds = %_ZL15startsWithDigit10StringView.exit.i.i55
@@ -3279,7 +3283,7 @@ _ZL15startsWithDigit10StringView.exit:            ; preds = %_ZN4llvh11ms_demang
   br i1 %isdigit.i, label %bb.h, label %bb.k
 
 bb.h:                                             ; preds = %_ZL15startsWithDigit10StringView.exit
-  %4 = sext i8 %i.bc to i64
+  %4 = zext nneg i8 %i.bc to i64
   %i.be = add nsw i64 %4, -48                     ; 2 uses
   %i.bf = load i64, ptr %i.aa, align 8, !tbaa !51
   %.not.i41 = icmp ult i64 %i.be, %i.bf
@@ -3567,7 +3571,7 @@ _ZL15startsWithDigit10StringView.exit.i.i:        ; preds = %_ZN10StringView12co
   br i1 %isdigit.i.i.i, label %bb.ab, label %.lr.ph.preheader.i.i
 
 bb.ab:                                            ; preds = %_ZL15startsWithDigit10StringView.exit.i.i
-  %5 = sext i8 %i.fp to i64
+  %5 = zext nneg i8 %i.fp to i64
   %i.fr = add nsw i64 %5, -47
   %i.fs = getelementptr inbounds nuw i8, ptr %i.fn, i64 1 ; 2 uses
   store ptr %i.fs, ptr %1, align 8, !tbaa !69
@@ -3903,7 +3907,7 @@ _ZL15startsWithDigit10StringView.exit:            ; preds = %bb.a
   br i1 %isdigit.i, label %bb.b, label %_ZL15startsWithDigit10StringView.exit.thread
 
 bb.b:                                             ; preds = %_ZL15startsWithDigit10StringView.exit
-  %2 = sext i8 %i.b to i64
+  %2 = zext nneg i8 %i.b to i64
   %i.d = add nsw i64 %2, -48                      ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 192
   %i.f = load i64, ptr %i.e, align 8, !tbaa !51
@@ -4306,7 +4310,7 @@ _ZL15startsWithDigit10StringView.exit.i.i218:     ; preds = %_ZN10StringView12co
   br i1 %isdigit.i.i.i220, label %bb.q, label %.lr.ph.preheader.i.i221
 
 bb.q:                                             ; preds = %_ZL15startsWithDigit10StringView.exit.i.i218
-  %3 = sext i8 %i.fv to i64
+  %3 = zext nneg i8 %i.fv to i64
   %i.fx = add nsw i64 %3, -47
   br label %_ZN12_GLOBAL__N_19Demangler14demangleNumberER10StringView.exit.i228
 
@@ -4406,7 +4410,7 @@ _ZL15startsWithDigit10StringView.exit.i.i10:      ; preds = %_ZN10StringView12co
   br i1 %isdigit.i.i.i12, label %bb.x, label %.lr.ph.preheader.i.i13
 
 bb.x:                                             ; preds = %_ZL15startsWithDigit10StringView.exit.i.i10
-  %4 = sext i8 %i.hc to i64
+  %4 = zext nneg i8 %i.hc to i64
   %i.he = add nsw i64 %4, -47
   br label %_ZN12_GLOBAL__N_19Demangler14demangleNumberER10StringView.exit.i21
 
@@ -4506,7 +4510,7 @@ _ZL15startsWithDigit10StringView.exit.i.i:        ; preds = %_ZN10StringView12co
   br i1 %isdigit.i.i.i, label %bb.ae, label %.lr.ph.preheader.i.i
 
 bb.ae:                                            ; preds = %_ZL15startsWithDigit10StringView.exit.i.i
-  %5 = sext i8 %i.ij to i64
+  %5 = zext nneg i8 %i.ij to i64
   %i.il = add nsw i64 %5, -47
   br label %_ZN12_GLOBAL__N_19Demangler14demangleNumberER10StringView.exit.i
 
@@ -4783,7 +4787,7 @@ _ZL15startsWithDigit10StringView.exit.i.i259:     ; preds = %_ZN10StringView12co
   br i1 %isdigit.i.i.i261, label %bb.av, label %.lr.ph.preheader.i.i262
 
 bb.av:                                            ; preds = %_ZL15startsWithDigit10StringView.exit.i.i259
-  %6 = sext i8 %i.mo to i64
+  %6 = zext nneg i8 %i.mo to i64
   %i.mq = add nsw i64 %6, -47
   br label %_ZN12_GLOBAL__N_19Demangler14demangleNumberER10StringView.exit.i270
 
@@ -4877,7 +4881,7 @@ _ZL15startsWithDigit10StringView.exit.i.i278:     ; preds = %_ZN10StringView12co
   br i1 %isdigit.i.i.i280, label %bb.bb, label %.lr.ph.preheader.i.i281
 
 bb.bb:                                            ; preds = %_ZL15startsWithDigit10StringView.exit.i.i278
-  %7 = sext i8 %i.ns to i64
+  %7 = zext nneg i8 %i.ns to i64
   %i.nu = add nsw i64 %7, -47
   br label %_ZN12_GLOBAL__N_19Demangler14demangleNumberER10StringView.exit.i289
 
@@ -5146,7 +5150,7 @@ _ZL15startsWithDigit10StringView.exit:            ; preds = %bb.a
   br i1 %isdigit.i, label %bb.b, label %_ZL15startsWithDigit10StringView.exit.thread
 
 bb.b:                                             ; preds = %_ZL15startsWithDigit10StringView.exit
-  %2 = sext i8 %i.b to i64
+  %2 = zext nneg i8 %i.b to i64
   %i.d = add nsw i64 %2, -48                      ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 192
   %i.f = load i64, ptr %i.e, align 8, !tbaa !51
@@ -5549,7 +5553,7 @@ _ZL15startsWithDigit10StringView.exit.i:          ; preds = %_ZN10StringView12co
   br i1 %isdigit.i.i, label %bb.c, label %.lr.ph.preheader.i
 
 bb.c:                                             ; preds = %_ZL15startsWithDigit10StringView.exit.i
-  %2 = sext i8 %i.k to i64
+  %2 = zext nneg i8 %i.k to i64
   %i.m = add nsw i64 %2, -47
   br label %_ZN12_GLOBAL__N_19Demangler14demangleNumberER10StringView.exit
 
@@ -5803,7 +5807,7 @@ _ZL15startsWithDigit10StringView.exit:            ; preds = %bb.a
   br i1 %isdigit.i, label %bb.b, label %_ZL15startsWithDigit10StringView.exit.thread
 
 bb.b:                                             ; preds = %_ZL15startsWithDigit10StringView.exit
-  %2 = sext i8 %i.b to i64
+  %2 = zext nneg i8 %i.b to i64
   %i.d = add nsw i64 %2, -48                      ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 192
   %i.f = load i64, ptr %i.e, align 8, !tbaa !51
@@ -6206,7 +6210,7 @@ _ZL15startsWithDigit10StringView.exit.i.i:        ; preds = %_ZN10StringView12co
   br i1 %isdigit.i.i.i, label %bb.al, label %.lr.ph.preheader.i.i
 
 bb.al:                                            ; preds = %_ZL15startsWithDigit10StringView.exit.i.i
-  %2 = sext i8 %i.bs to i64
+  %2 = zext nneg i8 %i.bs to i64
   %i.bu = add nsw i64 %2, -47
   br label %_ZN12_GLOBAL__N_19Demangler14demangleNumberER10StringView.exit.i
 
@@ -6369,7 +6373,7 @@ _ZL15startsWithDigit10StringView.exit.i.i42:      ; preds = %_ZN10StringView12co
   br i1 %isdigit.i.i.i44, label %bb.aw, label %.lr.ph.preheader.i.i45
 
 bb.aw:                                            ; preds = %_ZL15startsWithDigit10StringView.exit.i.i42
-  %3 = sext i8 %i.dz to i64
+  %3 = zext nneg i8 %i.dz to i64
   %i.eb = add nsw i64 %3, -47
   br label %_ZN12_GLOBAL__N_19Demangler14demangleNumberER10StringView.exit.i53
 
@@ -6462,7 +6466,7 @@ _ZL15startsWithDigit10StringView.exit.i.i61:      ; preds = %_ZN10StringView12co
   br i1 %isdigit.i.i.i63, label %bb.bc, label %.lr.ph.preheader.i.i64
 
 bb.bc:                                            ; preds = %_ZL15startsWithDigit10StringView.exit.i.i61
-  %4 = sext i8 %i.fd to i64
+  %4 = zext nneg i8 %i.fd to i64
   %i.ff = add nsw i64 %4, -47
   br label %_ZN12_GLOBAL__N_19Demangler14demangleNumberER10StringView.exit.i72
 
@@ -6559,7 +6563,7 @@ _ZL15startsWithDigit10StringView.exit.i.i80:      ; preds = %_ZN10StringView12co
   br i1 %isdigit.i.i.i82, label %bb.bj, label %.lr.ph.preheader.i.i83
 
 bb.bj:                                            ; preds = %_ZL15startsWithDigit10StringView.exit.i.i80
-  %5 = sext i8 %i.gi to i64
+  %5 = zext nneg i8 %i.gi to i64
   %i.gk = add nsw i64 %5, -47
   br label %_ZN12_GLOBAL__N_19Demangler14demangleNumberER10StringView.exit.i91
 
@@ -6652,7 +6656,7 @@ _ZL15startsWithDigit10StringView.exit.i.i99:      ; preds = %_ZN10StringView12co
   br i1 %isdigit.i.i.i101, label %bb.bp, label %.lr.ph.preheader.i.i102
 
 bb.bp:                                            ; preds = %_ZL15startsWithDigit10StringView.exit.i.i99
-  %6 = sext i8 %i.hm to i64
+  %6 = zext nneg i8 %i.hm to i64
   %i.ho = add nsw i64 %6, -47
   br label %_ZN12_GLOBAL__N_19Demangler14demangleNumberER10StringView.exit.i110
 
@@ -7013,7 +7017,7 @@ _ZL15startsWithDigit10StringView.exit.i:          ; preds = %bb.i
   br i1 %isdigit.i.i, label %bb.j, label %_ZL15startsWithDigit10StringView.exit.thread.i
 
 bb.j:                                             ; preds = %_ZL15startsWithDigit10StringView.exit.i
-  %3 = sext i8 %i.bi to i64
+  %3 = zext nneg i8 %i.bi to i64
   %i.bk = add nsw i64 %3, -48                     ; 2 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 192
   %i.bm = load i64, ptr %i.bl, align 8, !tbaa !51
