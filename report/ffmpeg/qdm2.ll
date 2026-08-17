@@ -2,7 +2,7 @@ inline.NumInlined: 120
 inline.NumDeleted: 32
 loop-unroll.NumCompletelyUnrolled: 26
 loop-unroll.NumRuntimeUnrolled: 11
-loop-unroll.NumUnrolled: 44
+loop-unroll.NumUnrolled: 45
 begin_hunk_0_@fill_tone_level_array:bb.a
   %i.z = getelementptr inbounds nuw [120 x i8], ptr %i.m, i64 %i.u
   %i.aa = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %indvars.iv
@@ -204,13 +204,13 @@ bb.b:                                             ; preds = %.split.us
 
 .preheader215:                                    ; preds = %.preheader216, %bb.f
   %indvars.iv289 = phi i64 [ 0, %.preheader216 ], [ %indvars.iv.next290, %bb.f ] ; 4 uses
-  %gep = getelementptr inbounds nuw [240 x i8], ptr %invariant.gep, i64 %indvars.iv289
-  %gep228 = getelementptr inbounds nuw [1920 x i8], ptr %invariant.gep227, i64 %indvars.iv289
-  %gep230 = getelementptr inbounds nuw [7680 x i8], ptr %invariant.gep229, i64 %indvars.iv289
+  %gep = getelementptr inbounds nuw [240 x i8], ptr %invariant.gep, i64 %indvars.iv289 ; 2 uses
+  %gep228 = getelementptr inbounds nuw [1920 x i8], ptr %invariant.gep227, i64 %indvars.iv289 ; 2 uses
+  %gep230 = getelementptr inbounds nuw [7680 x i8], ptr %invariant.gep229, i64 %indvars.iv289 ; 2 uses
   br label %bb.c
 
-bb.c:                                             ; preds = %.preheader215, %bb.e
-  %indvars.iv285 = phi i64 [ 0, %.preheader215 ], [ %indvars.iv.next286.a, %bb.e ] ; 4 uses
+bb.c:                                             ; preds = %bb.e, %.preheader215
+  %indvars.iv285 = phi i64 [ 0, %.preheader215 ], [ %indvars.iv.next286.a, %bb.e ] ; 6 uses
   %i.fi = lshr i64 %indvars.iv285, 3
   %i.fj = and i64 %i.fi, 536870911
   %i.fk = getelementptr inbounds nuw i8, ptr %gep, i64 %i.fj
@@ -218,20 +218,41 @@ bb.c:                                             ; preds = %.preheader215, %bb.
   %i.fm = getelementptr inbounds nuw i8, ptr %gep228, i64 %indvars.iv285
   store i8 %i.fl, ptr %i.fm, align 1, !tbaa !32
   %i.fn = icmp slt i8 %i.fl, 0
-  br i1 %i.fn, label %bb.e, label %bb.d
+  br i1 %i.fn, label %7, label %2
 
-bb.d:                                             ; preds = %bb.c
-  %i.fo = and i8 %i.fl, 63
+2:                                                ; preds = %bb.c
+  %3 = and i8 %i.fl, 63
+  %4 = zext nneg i8 %3 to i64
+  %5 = getelementptr inbounds nuw [4 x i8], ptr @fft_tone_level_table, i64 %4
+  %6 = load float, ptr %5, align 4, !tbaa !29
+  br label %7
+
+7:                                                ; preds = %bb.c, %2
+  %.sink = phi float [ %6, %2 ], [ 0.000000e+00, %bb.c ]
+  %8 = getelementptr inbounds nuw [4 x i8], ptr %gep230, i64 %indvars.iv285
+  store float %.sink, ptr %8, align 4, !tbaa !29
+  %indvars.iv.next286 = or disjoint i64 %indvars.iv285, 1 ; 2 uses
+  %9 = lshr i64 %indvars.iv285, 3
+  %10 = and i64 %9, 536870911
+  %11 = getelementptr inbounds nuw i8, ptr %gep, i64 %10
+  %12 = load i8, ptr %11, align 1, !tbaa !32      ; 3 uses
+  %13 = getelementptr inbounds nuw i8, ptr %gep228, i64 %indvars.iv.next286
+  store i8 %12, ptr %13, align 1, !tbaa !32
+  %14 = icmp slt i8 %12, 0
+  br i1 %14, label %bb.e, label %bb.d
+
+bb.d:                                             ; preds = %7
+  %i.fo = and i8 %12, 63
   %i.fp = zext nneg i8 %i.fo to i64
   %i.fq = getelementptr inbounds nuw [4 x i8], ptr @fft_tone_level_table, i64 %i.fp
   %i.fr = load float, ptr %i.fq, align 4, !tbaa !29
   br label %bb.e
 
-bb.e:                                             ; preds = %bb.c, %bb.d
-  %.sink.a = phi float [ %i.fr, %bb.d ], [ 0.000000e+00, %bb.c ]
-  %i.fs = getelementptr inbounds nuw [4 x i8], ptr %gep230, i64 %indvars.iv285
+bb.e:                                             ; preds = %bb.d, %7
+  %.sink.a = phi float [ %i.fr, %bb.d ], [ 0.000000e+00, %7 ]
+  %i.fs = getelementptr inbounds nuw [4 x i8], ptr %gep230, i64 %indvars.iv.next286
   store float %.sink.a, ptr %i.fs, align 4, !tbaa !29
-  %indvars.iv.next286.a = add nuw nsw i64 %indvars.iv285, 1 ; 2 uses
+  %indvars.iv.next286.a = add nuw nsw i64 %indvars.iv285, 2 ; 2 uses
   %exitcond288.not = icmp eq i64 %indvars.iv.next286.a, 64
   br i1 %exitcond288.not, label %bb.f, label %bb.c, !llvm.loop !180
 

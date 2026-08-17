@@ -203,17 +203,17 @@ bb.a:
   %i.e = alloca i32, align 4                      ; 5 uses
   %i.f = alloca [4 x i8], align 4                 ; 8 uses
   %i.g = alloca i32, align 4                      ; 4 uses
-  %i.h = alloca i8, align 1                       ; 5 uses
-  %i.i = alloca i32, align 4                      ; 7 uses
-  %2 = alloca %union.anon.45, align 4             ; 4 uses
+  %i.h = alloca i8, align 1                       ; 9 uses
+  %i.i = alloca i32, align 4                      ; 11 uses
+  %2 = alloca %union.anon.45, align 4             ; 5 uses
   %i.j = alloca i32, align 4                      ; 7 uses
   %i.k = alloca i8, align 1                       ; 4 uses
   %i.l = alloca i32, align 4                      ; 4 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 1364 ; 26 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 1364 ; 28 uses
   %i.n = load i32, ptr %i.m, align 4
   %i.o = and i32 %i.n, -4128769
   store i32 %i.o, ptr %i.m, align 4
-  %i.p = getelementptr i8, ptr %0, i64 1280       ; 21 uses
+  %i.p = getelementptr i8, ptr %0, i64 1280       ; 23 uses
   %.val19 = load i32, ptr %i.p, align 16
   %i.q = icmp slt i32 %.val19, -1073741824
   br i1 %i.q, label %bb.b, label %.loopexit
@@ -231,9 +231,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.v, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader
-  %i.w = getelementptr inbounds nuw i8, ptr %0, i64 1264 ; 4 uses
-  %i.x = getelementptr inbounds nuw i8, ptr %0, i64 1096 ; 9 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 1340 ; 15 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %0, i64 1264 ; 5 uses
+  %i.x = getelementptr inbounds nuw i8, ptr %0, i64 1096 ; 10 uses
+  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 1340 ; 17 uses
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 1269 ; 5 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 1372 ; 6 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 7
@@ -356,7 +356,7 @@ bb.p:                                             ; preds = %bb.l, %bb.h, %bb.g
 
 bb.q:                                             ; preds = %bb.p
   %.sroa.2.0.extract.shift.i.i = lshr i32 %i.am, 16 ; 4 uses
-  %.sroa.2.0.extract.trunc.i.i = trunc nuw i32 %.sroa.2.0.extract.shift.i.i to i16 ; 2 uses
+  %.sroa.2.0.extract.trunc.i.i = trunc nuw i32 %.sroa.2.0.extract.shift.i.i to i16 ; 4 uses
   %i.br = and i32 %i.an, 268435456
   %i.bs = icmp ne i32 %i.br, 0                    ; 4 uses
   %i.bt = lshr i32 %i.an, 16                      ; 2 uses
@@ -659,7 +659,7 @@ bb.ar:                                            ; preds = %dw_i3c_transfer_ccc
   br i1 %.not35.i.i.i, label %dw_i3c_tx.exit.i.i, label %.lr.ph.i52.i.i
 
 .lr.ph.i52.i.i:                                   ; preds = %bb.ar, %bb.bi
-  %.01534.i.i.i = phi i16 [ %i.ip, %bb.bi ], [ 0, %bb.ar ]
+  %.01534.i.i.i = phi i16 [ %.us-phi.i.i.i, %bb.bi ], [ 0, %bb.ar ] ; 2 uses
   %i.fv = call zeroext i1 @fifo8_is_empty(ptr noundef nonnull %i.ah) #6
   br i1 %i.fv, label %bb.as, label %bb.av
 
@@ -752,37 +752,107 @@ bb.az:                                            ; preds = %trace_dw_i3c_pop_tx
 dw_i3c_pop_tx.exit.i.i.i:                         ; preds = %bb.az, %trace_dw_i3c_pop_tx.exit.i.i.i.i, %bb.au
   %.0.i.i54.i.i = phi i32 [ 0, %bb.au ], [ %i.gm, %bb.az ], [ %i.gm, %trace_dw_i3c_pop_tx.exit.i.i.i.i ]
   store i32 %.0.i.i54.i.i, ptr %2, align 4
-  br label %bb.ba
+  br i1 %i.co, label %bb.ba, label %bb.bb
 
-bb.ba:                                            ; preds = %bb.bh, %dw_i3c_pop_tx.exit.i.i.i
-  %indvars.iv.i.i.i.a = phi i64 [ %indvars.iv.next.i.i.i, %bb.bh ], [ 0, %dw_i3c_pop_tx.exit.i.i.i ] ; 3 uses
-  %.132.i.i.i.a = phi i16 [ %i.ip, %bb.bh ], [ %.01534.i.i.i, %dw_i3c_pop_tx.exit.i.i.i ] ; 2 uses
+bb.ba:                                            ; preds = %dw_i3c_pop_tx.exit.i.i.i, %26
+  %indvars.iv.i.i.i.a = phi i64 [ %indvars.iv.next48.i.i.i, %26 ], [ 0, %dw_i3c_pop_tx.exit.i.i.i ] ; 3 uses
+  %.132.i.i.i.a = phi i16 [ %27, %26 ], [ %.01534.i.i.i, %dw_i3c_pop_tx.exit.i.i.i ] ; 2 uses
   %i.hr = getelementptr inbounds nuw i8, ptr %2, i64 %indvars.iv.i.i.i.a
   %i.hs = load i8, ptr %i.hr, align 1             ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   store i8 %i.hs, ptr %i.h, align 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #6
   store i32 0, ptr %i.i, align 4
-  %i.ht = load ptr, ptr %i.x, align 8             ; 2 uses
-  br i1 %i.co, label %.preheader.i.preheader.i.i.i, label %bb.bb
-
-.preheader.i.preheader.i.i.i:                     ; preds = %bb.ba
+  %i.ht = load ptr, ptr %i.x, align 8
   %3 = call i32 @legacy_i2c_send(ptr noundef %i.ht, i8 noundef zeroext %i.hs) #6
-  %.not.i25.i.i.i = icmp eq i32 %3, 0
-  br i1 %.not.i25.i.i.i, label %.thread.i.loopexit.i.i.i, label %.thread49.i.i.i.i
+  %.not.i25.us.i.i.i = icmp eq i32 %3, 0          ; 2 uses
+  br i1 %.not.i25.us.i.i.i, label %.thread.i.us.loopexit.i.i.i, label %.thread.i.loopexit.i.i.i
 
-.thread.i.loopexit.i.i.i:                         ; preds = %.preheader.i.preheader.i.i.i
-  %i.hu = load i32, ptr %i.i, align 4
-  %4 = add i32 %i.hu, 1
-  store i32 %4, ptr %i.i, align 4
-  br label %.thread.i.i.i.i
+.thread.i.us.loopexit.i.i.i:                      ; preds = %bb.ba
+  %4 = load i32, ptr %i.i, align 4
+  %5 = add i32 %4, 1                              ; 2 uses
+  store i32 %5, ptr %i.i, align 4
+  br label %.thread.i.us.i.i.i
 
-bb.bb:                                            ; preds = %bb.ba
-  %i.hv = call i32 @i3c_send(ptr noundef %i.ht, ptr noundef nonnull %i.h, i32 noundef 1, ptr noundef nonnull %i.i) #6
-  %.not45.i.i.i.i = icmp eq i32 %i.hv, 0
+6:                                                ; preds = %.thread.i.loopexit.i.i.i
+  %7 = load i8, ptr %i.h, align 1
+  %8 = zext i8 %7 to i32
+  call void (ptr, ...) @qemu_log(ptr noundef nonnull @.str.40, ptr noundef %29, i32 noundef %8) #6
+  br label %9
+
+9:                                                ; preds = %.thread.i.loopexit.i.i.i, %6
+  %10 = load i32, ptr %i.m, align 4
+  %11 = and i32 %10, -4144897
+  %12 = or disjoint i32 %11, 1249024
+  store i32 %12, ptr %i.m, align 4
+  %13 = load i32, ptr %i.y, align 4
+  %14 = or i32 %13, 512
+  store i32 %14, ptr %i.y, align 4
+  %15 = load i32, ptr %i.p, align 16
+  %16 = or i32 %15, 1073741824
+  store i32 %16, ptr %i.p, align 16
+  call void @g_free(ptr noundef %29) #6
+  %.pre.i55.i.i = load i32, ptr %i.i, align 4
+  br label %.thread.i.us.i.i.i
+
+.thread.i.us.i.i.i:                               ; preds = %9, %.thread.i.us.loopexit.i.i.i
+  %17 = phi i32 [ %5, %.thread.i.us.loopexit.i.i.i ], [ %.pre.i55.i.i, %9 ]
+  %18 = load i8, ptr %i.w, align 16
+  %19 = zext i8 %18 to i32
+  %20 = load i32, ptr @trace_events_enabled_count, align 4
+  %.not.i.i22.us.i.i.i = icmp eq i32 %20, 0
+  br i1 %.not.i.i22.us.i.i.i, label %dw_i3c_send.exit.us.i.i.i, label %21, !prof !7
+
+21:                                               ; preds = %.thread.i.us.i.i.i
+  %22 = load i16, ptr @_TRACE_DW_I3C_SEND_DSTATE, align 2
+  %.not2.i.i23.us.i.i.i = icmp eq i16 %22, 0
+  br i1 %.not2.i.i23.us.i.i.i, label %dw_i3c_send.exit.us.i.i.i, label %.preheader.i.preheader.i.i.i
+
+.preheader.i.preheader.i.i.i:                     ; preds = %21
+  %23 = load i32, ptr @qemu_loglevel, align 4
+  %24 = and i32 %23, 32768
+  %.not.i25.i.i.i = icmp eq i32 %24, 0
+  br i1 %.not.i25.i.i.i, label %dw_i3c_send.exit.us.i.i.i, label %25
+
+25:                                               ; preds = %.preheader.i.preheader.i.i.i
+  call void (ptr, ...) @qemu_log(ptr noundef nonnull @.str.44, i32 noundef range(i32 0, 256) %19, i32 noundef %17) #6
+  br label %dw_i3c_send.exit.us.i.i.i
+
+dw_i3c_send.exit.us.i.i.i:                        ; preds = %25, %.preheader.i.preheader.i.i.i, %21, %.thread.i.us.i.i.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.h)
+  br i1 %.not.i25.us.i.i.i, label %26, label %dw_i3c_tx.exit.i.i
+
+26:                                               ; preds = %dw_i3c_send.exit.us.i.i.i
+  %27 = add nuw i16 %.132.i.i.i.a, 1              ; 3 uses
+  %.not21.us.i.i.i = icmp ult i16 %27, %.sroa.2.0.extract.trunc.i.i
+  %indvars.iv.next48.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i.a, 1
+  %28 = icmp samesign ult i64 %indvars.iv.i.i.i.a, 3
+  %or.cond.i.i.i = select i1 %.not21.us.i.i.i, i1 %28, i1 false
+  br i1 %or.cond.i.i.i, label %bb.ba, label %bb.bi, !llvm.loop !17
+
+.thread.i.loopexit.i.i.i:                         ; preds = %bb.ba
+  %29 = call ptr @object_get_canonical_path(ptr noundef nonnull %0) #6 ; 2 uses
+  %i.hu = load i32, ptr @qemu_loglevel, align 4
+  %30 = and i32 %i.hu, 2048
+  %.not53.i.us.i.i.i = icmp eq i32 %30, 0
+  br i1 %.not53.i.us.i.i.i, label %9, label %6, !prof !7
+
+bb.bb:                                            ; preds = %dw_i3c_pop_tx.exit.i.i.i, %bb.bh
+  %indvars.iv.i.i.i = phi i64 [ %indvars.iv.next.i.i.i, %bb.bh ], [ 0, %dw_i3c_pop_tx.exit.i.i.i ] ; 3 uses
+  %.132.i.i.i = phi i16 [ %i.ip, %bb.bh ], [ %.01534.i.i.i, %dw_i3c_pop_tx.exit.i.i.i ] ; 2 uses
+  %31 = getelementptr inbounds nuw i8, ptr %2, i64 %indvars.iv.i.i.i
+  %32 = load i8, ptr %31, align 1
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
+  store i8 %32, ptr %i.h, align 1
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #6
+  store i32 0, ptr %i.i, align 4
+  %33 = load ptr, ptr %i.x, align 8
+  %i.hv = call i32 @i3c_send(ptr noundef %33, ptr noundef nonnull %i.h, i32 noundef 1, ptr noundef nonnull %i.i) #6
+  %.not45.i.i.i.i = icmp eq i32 %i.hv, 0          ; 2 uses
   br i1 %.not45.i.i.i.i, label %.thread.i.i.i.i, label %.thread49.i.i.i.i
 
-.thread49.i.i.i.i:                                ; preds = %bb.bb, %.preheader.i.preheader.i.i.i
+.thread49.i.i.i.i:                                ; preds = %bb.bb
   %i.hw = call ptr @object_get_canonical_path(ptr noundef nonnull %0) #6 ; 2 uses
   %i.hx = load i32, ptr @qemu_loglevel, align 4
   %i.hy = and i32 %i.hx, 2048
@@ -809,8 +879,7 @@ bb.bd:                                            ; preds = %bb.bc, %.thread49.i
   call void @g_free(ptr noundef %i.hw) #6
   br label %.thread.i.i.i.i
 
-.thread.i.i.i.i:                                  ; preds = %bb.bd, %bb.bb, %.thread.i.loopexit.i.i.i
-  %.not.i55.i.i = phi i1 [ true, %bb.bb ], [ false, %bb.bd ], [ true, %.thread.i.loopexit.i.i.i ]
+.thread.i.i.i.i:                                  ; preds = %bb.bd, %bb.bb
   %i.ii = load i8, ptr %i.w, align 16
   %i.ij = zext i8 %i.ii to i32
   %i.ik = load i32, ptr %i.i, align 4
@@ -836,21 +905,23 @@ bb.bg:                                            ; preds = %bb.bf
 dw_i3c_send.exit.i.i.i:                           ; preds = %bb.bg, %bb.bf, %bb.be, %.thread.i.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h)
-  br i1 %.not.i55.i.i, label %bb.bh, label %dw_i3c_tx.exit.i.i
+  br i1 %.not45.i.i.i.i, label %bb.bh, label %dw_i3c_tx.exit.i.i
 
 bb.bh:                                            ; preds = %dw_i3c_send.exit.i.i.i
-  %i.ip = add i16 %.132.i.i.i.a, 1                ; 4 uses
-  %.not21.i.i.i = icmp ult i16 %i.ip, %.sroa.2.0.extract.trunc.i.i ; 2 uses
-  %indvars.iv.next.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i.a, 1
-  %i.iq = icmp samesign ult i64 %indvars.iv.i.i.i.a, 3
+  %i.ip = add i16 %.132.i.i.i, 1                  ; 3 uses
+  %.not21.i.i.i = icmp ult i16 %i.ip, %.sroa.2.0.extract.trunc.i.i
+  %indvars.iv.next.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i, 1
+  %i.iq = icmp samesign ult i64 %indvars.iv.i.i.i, 3
   %or.cond.i.i.i.a = select i1 %.not21.i.i.i, i1 %i.iq, i1 false
-  br i1 %or.cond.i.i.i.a, label %bb.ba, label %bb.bi, !llvm.loop !17
+  br i1 %or.cond.i.i.i.a, label %bb.bb, label %bb.bi, !llvm.loop !17
 
-bb.bi:                                            ; preds = %bb.bh
-  br i1 %.not21.i.i.i, label %.lr.ph.i52.i.i, label %dw_i3c_tx.exit.i.i, !llvm.loop !18
+bb.bi:                                            ; preds = %bb.bh, %26
+  %.us-phi.i.i.i = phi i16 [ %27, %26 ], [ %i.ip, %bb.bh ] ; 3 uses
+  %34 = icmp ult i16 %.us-phi.i.i.i, %.sroa.2.0.extract.trunc.i.i
+  br i1 %34, label %.lr.ph.i52.i.i, label %dw_i3c_tx.exit.i.i, !llvm.loop !18
 
-dw_i3c_tx.exit.i.i:                               ; preds = %bb.bi, %dw_i3c_send.exit.i.i.i, %bb.ar
-  %.218.i.i.i = phi i16 [ %.132.i.i.i.a, %dw_i3c_send.exit.i.i.i ], [ 0, %bb.ar ], [ %i.ip, %bb.bi ]
+dw_i3c_tx.exit.i.i:                               ; preds = %bb.bi, %dw_i3c_send.exit.i.i.i, %dw_i3c_send.exit.us.i.i.i, %bb.ar
+  %.218.i.i.i = phi i16 [ %.132.i.i.i, %dw_i3c_send.exit.i.i.i ], [ %.132.i.i.i.a, %dw_i3c_send.exit.us.i.i.i ], [ 0, %bb.ar ], [ %.us-phi.i.i.i, %bb.bi ]
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #6
   br label %bb.bj
 

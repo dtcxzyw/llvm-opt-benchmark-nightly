@@ -204,16 +204,19 @@ begin_hunk_0_@_ZN7RSCoder4InitEi:bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %._crit_edge27.i, %.lr.ph32.i
-  %2 = phi i32 [ %i.et, %.lr.ph32.i ], [ %5, %._crit_edge27.i ] ; 3 uses
   %indvars.iv.i1 = phi i64 [ 1, %.lr.ph32.i ], [ %indvars.iv.next.i2, %._crit_edge27.i ] ; 3 uses
+  %2 = phi i32 [ %i.et, %.lr.ph32.i ], [ %5, %._crit_edge27.i ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #5
   %i.ez = icmp sgt i32 %2, 0
-  br i1 %i.ez, label %.lr.ph.i.preheader.i, label %._crit_edge27.i
+  br i1 %i.ez, label %.lr.ph23.preheader.i, label %.lr.ph.i.preheader.i
 
-.lr.ph.i.preheader.i:                             ; preds = %bb.d
+.lr.ph23.preheader.i:                             ; preds = %bb.d
   %3 = zext nneg i32 %2 to i64
   %4 = shl nuw nsw i64 %3, 2
   call void @llvm.memset.p0.i64(ptr nonnull align 16 %i.b, i8 0, i64 %4, i1 false), !tbaa !12
+  br label %.lr.ph.i.preheader.i
+
+.lr.ph.i.preheader.i:                             ; preds = %.lr.ph23.preheader.i, %bb.d
   %i.fa = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv.i1
   %i.fb = load i32, ptr %i.fa, align 4, !tbaa !12
   store i32 %i.fb, ptr %i.b, align 16, !tbaa !12
@@ -304,8 +307,8 @@ _ZN7RSCoder6pnMultEPiS0_S0_.exit.i:               ; preds = %.loopexit.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.a, ptr nonnull align 4 %i.ey, i64 %i.gl, i1 false), !tbaa !12
   br label %._crit_edge27.i
 
-._crit_edge27.i:                                  ; preds = %.lr.ph26.preheader.i, %_ZN7RSCoder6pnMultEPiS0_S0_.exit.i, %.preheader20.i.i, %bb.d
-  %5 = phi i32 [ %i.gh, %_ZN7RSCoder6pnMultEPiS0_S0_.exit.i ], [ %i.gh, %.lr.ph26.preheader.i ], [ %i.fe, %.preheader20.i.i ], [ %2, %bb.d ] ; 2 uses
+._crit_edge27.i:                                  ; preds = %.lr.ph26.preheader.i, %_ZN7RSCoder6pnMultEPiS0_S0_.exit.i, %.preheader20.i.i
+  %5 = phi i32 [ %i.gh, %_ZN7RSCoder6pnMultEPiS0_S0_.exit.i ], [ %i.gh, %.lr.ph26.preheader.i ], [ %i.fe, %.preheader20.i.i ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #5
   %indvars.iv.next.i2 = add nuw nsw i64 %indvars.iv.i1, 1
   %i.gm = sext i32 %5 to i64
@@ -643,16 +646,19 @@ bb.a:
   ret void
 
 bb.b:                                             ; preds = %.lr.ph32, %._crit_edge27
-  %1 = phi i32 [ %i.d, %.lr.ph32 ], [ %4, %._crit_edge27 ] ; 3 uses
   %indvars.iv = phi i64 [ 1, %.lr.ph32 ], [ %indvars.iv.next, %._crit_edge27 ] ; 3 uses
+  %1 = phi i32 [ %i.d, %.lr.ph32 ], [ %4, %._crit_edge27 ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #5
   %i.k = icmp sgt i32 %1, 0
-  br i1 %i.k, label %.lr.ph.i.preheader, label %._crit_edge27
+  br i1 %i.k, label %.lr.ph23.preheader, label %.lr.ph.i.preheader
 
-.lr.ph.i.preheader:                               ; preds = %bb.b
+.lr.ph23.preheader:                               ; preds = %bb.b
   %2 = zext nneg i32 %1 to i64
   %3 = shl nuw nsw i64 %2, 2
   call void @llvm.memset.p0.i64(ptr nonnull align 16 %i.b, i8 0, i64 %3, i1 false), !tbaa !12
+  br label %.lr.ph.i.preheader
+
+.lr.ph.i.preheader:                               ; preds = %.lr.ph23.preheader, %bb.b
   %i.l = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv
   %i.m = load i32, ptr %i.l, align 4, !tbaa !12
   store i32 %i.m, ptr %i.b, align 16, !tbaa !12
@@ -743,8 +749,8 @@ _ZN7RSCoder6pnMultEPiS0_S0_.exit:                 ; preds = %.loopexit.i
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.a, ptr nonnull align 4 %i.i, i64 %i.aw, i1 false), !tbaa !12
   br label %._crit_edge27
 
-._crit_edge27:                                    ; preds = %bb.b, %.preheader20.i, %.lr.ph26.preheader, %_ZN7RSCoder6pnMultEPiS0_S0_.exit
-  %4 = phi i32 [ %i.as, %_ZN7RSCoder6pnMultEPiS0_S0_.exit ], [ %i.as, %.lr.ph26.preheader ], [ %i.p, %.preheader20.i ], [ %1, %bb.b ] ; 2 uses
+._crit_edge27:                                    ; preds = %.preheader20.i, %.lr.ph26.preheader, %_ZN7RSCoder6pnMultEPiS0_S0_.exit
+  %4 = phi i32 [ %i.as, %_ZN7RSCoder6pnMultEPiS0_S0_.exit ], [ %i.as, %.lr.ph26.preheader ], [ %i.p, %.preheader20.i ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #5
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   %i.ax = sext i32 %4 to i64

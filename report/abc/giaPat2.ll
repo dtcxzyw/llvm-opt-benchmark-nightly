@@ -204,10 +204,9 @@ bb.a:
   %i.c = getelementptr i8, ptr %3, i64 4          ; 3 uses
   %i.d = getelementptr i8, ptr %3, i64 8          ; 2 uses
   %i.e = sext i32 %2 to i64
-  %i.f = sext i32 %1 to i64                       ; 3 uses
-  %5 = add i32 %1, -1
+  %i.f = sext i32 %1 to i64                       ; 4 uses
+  %5 = add nsw i64 %i.f, -1
   %i.g = shl nsw i64 %i.f, 4
-  %6 = sext i32 %5 to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.v
@@ -390,17 +389,19 @@ bb.t:                                             ; preds = %.lr.ph.i36
   br label %.critedge.i, !llvm.loop !108
 
 .critedge.i:                                      ; preds = %bb.t, %..critedge_crit_edge22.i
-  %.0.lcssa.i34 = phi i64 [ %indvars.iv.i37, %..critedge_crit_edge22.i ], [ %6, %bb.t ]
-  %.1.i35 = phi ptr [ %i.bg, %..critedge_crit_edge22.i ], [ %scevgep, %bb.t ] ; 2 uses
+  %6 = phi ptr [ %i.bg, %..critedge_crit_edge22.i ], [ %scevgep, %bb.t ] ; 2 uses
+  %.0.lcssa.i34.in = phi i64 [ %indvars.iv.i37, %..critedge_crit_edge22.i ], [ %5, %bb.t ]
   store i32 0, ptr %i.i, align 4, !tbaa !32
-  %i.bj = icmp slt i64 %indvars.iv, %.0.lcssa.i34
+  %sext = shl i64 %.0.lcssa.i34.in, 32
+  %7 = ashr exact i64 %sext, 32
+  %i.bj = icmp slt i64 %indvars.iv, %7
   br i1 %i.bj, label %bb.u, label %Min_ManRemoveItem.exit
 
 bb.u:                                             ; preds = %.critedge.i
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 8 dereferenceable(16) %i.h, i64 16, i1 false), !tbaa.struct !109
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.h, ptr noundef nonnull align 8 dereferenceable(16) %.1.i35, i64 16, i1 false), !tbaa.struct !109
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.1.i35, ptr noundef nonnull align 8 dereferenceable(16) %4, i64 16, i1 false), !tbaa.struct !109
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.h, ptr noundef nonnull align 8 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !109
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef nonnull align 8 dereferenceable(16) %4, i64 16, i1 false), !tbaa.struct !109
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
   br label %Min_ManRemoveItem.exit
 
