@@ -203,7 +203,7 @@ bb.w:                                             ; preds = %bb.v, %._crit_edge
   br i1 %or.cond156, label %.loopexit160, label %bb.e, !llvm.loop !92
 
 .loopexit159:                                     ; preds = %bb.e, %bb.m
-  %.2120 = phi i32 [ %.1116, %bb.m ], [ %.0118, %bb.e ] ; 4 uses
+  %.2120 = phi i32 [ %.1116, %bb.m ], [ %.0118, %bb.e ] ; 3 uses
   %.3 = phi i32 [ %i.ad, %bb.m ], [ %.1116, %bb.e ] ; 3 uses
   %or.cond7 = and i1 %i.s, %.not143
   br i1 %or.cond7, label %.preheader.preheader, label %bb.x
@@ -228,9 +228,9 @@ bb.x:                                             ; preds = %.loopexit159
 
 bb.y:                                             ; preds = %bb.x
   %i.br = sub nsw i32 8, %.3                      ; 2 uses
-  %i.bs = add nuw nsw i32 %i.br, %.2120           ; 10 uses
+  %i.bs = add nuw nsw i32 %i.br, %.2120           ; 8 uses
   %i.bt = icmp samesign ult i32 %i.bs, 7
-  br i1 %i.bt, label %.lr.ph178.preheader, label %.lr.ph182.preheader
+  br i1 %i.bt, label %.lr.ph178.preheader, label %vector.body
 
 .lr.ph178.preheader:                              ; preds = %bb.y
   %i.bu = zext nneg i32 %i.br to i64              ; 7 uses
@@ -240,38 +240,19 @@ bb.y:                                             ; preds = %bb.x
   %i.by = getelementptr inbounds nuw i8, ptr %2, i64 28
   store i32 %i.bx, ptr %i.by, align 4, !tbaa !69
   %.not227 = icmp eq i32 %i.bs, 6
-  br i1 %.not227, label %.lr.ph182.preheader, label %.lr.ph178.1
+  br i1 %.not227, label %vector.body, label %.lr.ph178.1
 
-.lr.ph182.preheader:                              ; preds = %.lr.ph178.preheader, %.lr.ph178.1, %.lr.ph178.2, %.lr.ph178.3, %.lr.ph178.4, %.lr.ph178.5, %.lr.ph178.6, %bb.y
-  %3 = sub i32 9, %.3                             ; 3 uses
-  %min.iters.check = icmp ult i32 %3, 8
-  br i1 %min.iters.check, label %.lr.ph182.preheader219, label %vector.ph
-
-vector.ph:                                        ; preds = %.lr.ph182.preheader
-  %n.vec = and i32 %3, -8                         ; 3 uses
-  %4 = sub i32 %i.bs, %n.vec
-  br label %vector.body
-
-vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i32 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.bz = sub i32 %i.bs, %index
-  %i.ca = zext nneg i32 %i.bz to i64
-  %5 = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.ca ; 2 uses
-  %6 = getelementptr inbounds i8, ptr %5, i64 -12
-  %7 = getelementptr inbounds i8, ptr %5, i64 -28
-  store <4 x i32> zeroinitializer, ptr %6, align 4, !tbaa !69
-  store <4 x i32> zeroinitializer, ptr %7, align 4, !tbaa !69
-  %index.next = add nuw i32 %index, 8             ; 2 uses
-  %8 = icmp eq i32 %index.next, %n.vec
-  br i1 %8, label %middle.block, label %vector.body, !llvm.loop !93
-
-middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i32 %3, %n.vec
-  br i1 %cmp.n, label %.loopexit, label %.lr.ph182.preheader219
-
-.lr.ph182.preheader219:                           ; preds = %.lr.ph182.preheader, %middle.block
-  %.2181.ph = phi i32 [ %i.bs, %.lr.ph182.preheader ], [ %4, %middle.block ]
-  br label %.lr.ph182
+vector.body:                                      ; preds = %.lr.ph178.preheader, %.lr.ph178.1, %.lr.ph178.2, %.lr.ph178.3, %.lr.ph178.4, %.lr.ph178.5, %.lr.ph178.6, %bb.y
+  %3 = zext nneg i32 %i.bs to i64
+  %i.bz = sub i32 8, %.3
+  %i.ca = zext i32 %i.bz to i64                   ; 2 uses
+  %4 = shl nuw nsw i64 %i.ca, 2
+  %5 = sub nsw i64 %3, %i.ca
+  %6 = shl nsw i64 %5, 2
+  %scevgep194 = getelementptr i8, ptr %2, i64 %6
+  %7 = add nuw nsw i64 %4, 4
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep194, i8 0, i64 %7, i1 false), !tbaa !69
+  br label %.loopexit
 
 .lr.ph178.1:                                      ; preds = %.lr.ph178.preheader
   %i.cb = sub nsw i64 6, %i.bu
@@ -280,7 +261,7 @@ middle.block:                                     ; preds = %vector.body
   %i.ce = getelementptr inbounds nuw i8, ptr %2, i64 24
   store i32 %i.cd, ptr %i.ce, align 4, !tbaa !69
   %i.cf = icmp ult i32 %i.bs, 5
-  br i1 %i.cf, label %.lr.ph178.2, label %.lr.ph182.preheader
+  br i1 %i.cf, label %.lr.ph178.2, label %vector.body
 
 .lr.ph178.2:                                      ; preds = %.lr.ph178.1
   %i.cg = sub nsw i64 5, %i.bu
@@ -289,7 +270,7 @@ middle.block:                                     ; preds = %vector.body
   %i.cj = getelementptr inbounds nuw i8, ptr %2, i64 20
   store i32 %i.ci, ptr %i.cj, align 4, !tbaa !69
   %.not228 = icmp eq i32 %i.bs, 4
-  br i1 %.not228, label %.lr.ph182.preheader, label %.lr.ph178.3
+  br i1 %.not228, label %vector.body, label %.lr.ph178.3
 
 .lr.ph178.3:                                      ; preds = %.lr.ph178.2
   %i.ck = sub nsw i64 4, %i.bu
@@ -298,7 +279,7 @@ middle.block:                                     ; preds = %vector.body
   %i.cn = getelementptr inbounds nuw i8, ptr %2, i64 16
   store i32 %i.cm, ptr %i.cn, align 4, !tbaa !69
   %i.co = icmp ult i32 %i.bs, 3
-  br i1 %i.co, label %.lr.ph178.4, label %.lr.ph182.preheader
+  br i1 %i.co, label %.lr.ph178.4, label %vector.body
 
 .lr.ph178.4:                                      ; preds = %.lr.ph178.3
   %i.cp = sub nuw nsw i64 3, %i.bu
@@ -307,7 +288,7 @@ middle.block:                                     ; preds = %vector.body
   %i.cs = getelementptr inbounds nuw i8, ptr %2, i64 12
   store i32 %i.cr, ptr %i.cs, align 4, !tbaa !69
   %.not229 = icmp eq i32 %i.bs, 2
-  br i1 %.not229, label %.lr.ph182.preheader, label %.lr.ph178.5
+  br i1 %.not229, label %vector.body, label %.lr.ph178.5
 
 .lr.ph178.5:                                      ; preds = %.lr.ph178.4
   %i.ct = sub nsw i64 2, %i.bu
@@ -316,7 +297,7 @@ middle.block:                                     ; preds = %vector.body
   %i.cw = getelementptr inbounds nuw i8, ptr %2, i64 8
   store i32 %i.cv, ptr %i.cw, align 4, !tbaa !69
   %i.cx = icmp eq i32 %i.bs, 0
-  br i1 %i.cx, label %.lr.ph178.6, label %.lr.ph182.preheader
+  br i1 %i.cx, label %.lr.ph178.6, label %vector.body
 
 .lr.ph178.6:                                      ; preds = %.lr.ph178.5
   %i.cy = sub nsw i64 1, %i.bu
@@ -324,18 +305,9 @@ middle.block:                                     ; preds = %vector.body
   %i.da = load i32, ptr %i.cz, align 4, !tbaa !69
   %i.db = getelementptr inbounds nuw i8, ptr %2, i64 4
   store i32 %i.da, ptr %i.db, align 4, !tbaa !69
-  br label %.lr.ph182.preheader
+  br label %vector.body
 
-.lr.ph182:                                        ; preds = %.lr.ph182.preheader219, %.lr.ph182
-  %.2181 = phi i32 [ %11, %.lr.ph182 ], [ %.2181.ph, %.lr.ph182.preheader219 ] ; 3 uses
-  %9 = zext nneg i32 %.2181 to i64
-  %10 = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %9
-  store i32 0, ptr %10, align 4, !tbaa !69
-  %11 = add nsw i32 %.2181, -1
-  %.not149.not = icmp samesign ugt i32 %.2181, %.2120
-  br i1 %.not149.not, label %.lr.ph182, label %.loopexit, !llvm.loop !96
-
-.loopexit:                                        ; preds = %.lr.ph182, %middle.block, %bb.x, %.preheader.preheader
+.loopexit:                                        ; preds = %vector.body, %bb.x, %.preheader.preheader
   %i.dc = icmp sgt i32 %.2120, -1
   %i.dd = icmp eq i32 %.3, 8
   %i.de = select i1 %i.dc, i1 true, i1 %i.dd
@@ -738,8 +710,4 @@ attributes #17 = { nounwind willreturn memory(none) }
 !90 = distinct !{!90, !54}
 !91 = distinct !{!91, !54}
 !92 = distinct !{!92, !54}
-!93 = distinct !{!93, !54, !94, !95}
-!94 = !{!"llvm.loop.isvectorized", i32 1}
-!95 = !{!"llvm.loop.unroll.runtime.disable"}
-!96 = distinct !{!96, !54, !95, !94}
 end_hunk_1
