@@ -204,9 +204,9 @@ attributes #20 = { noreturn }
 !13 = distinct !{!13, !11}
 !14 = distinct !{!14, !11}
 !15 = !{ptr @store_tag1, ptr @store_tag1_parallel}
-!16 = !{!"branch_weights", !"expected", i32 2082329127, i32 65154521}
+!16 = !{!"branch_weights", !"expected", i32 2081357329, i32 66126319}
 !17 = distinct !{!17, !11}
-!18 = !{!"branch_weights", !"expected", i32 2079335117, i32 68148531}
+!18 = !{!"branch_weights", !"expected", i32 2078270429, i32 69213219}
 !19 = !{i8 0, i8 2}
 !20 = !{}
 end_hunk_0

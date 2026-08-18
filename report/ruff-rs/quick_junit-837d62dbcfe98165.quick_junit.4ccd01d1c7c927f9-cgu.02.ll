@@ -201,7 +201,7 @@ begin_hunk_0_@llvm.experimental.noalias.scope.decl
 !302 = !{!303}
 !303 = distinct !{!303, !304, !"_RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VechE8push_mutCs6AO9qwSTTuL_11quick_junit: argument 0"}
 !304 = distinct !{!304, !"_RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VechE8push_mutCs6AO9qwSTTuL_11quick_junit"}
-!305 = !{!"branch_weights", !"expected", i32 3321194, i32 2144162454}
+!305 = !{!"branch_weights", !"expected", i32 2446409, i32 2145037239}
 !306 = !{!307}
 !307 = distinct !{!307, !308, !"_RNvXNtNtCs2isvxI5XMib_9quick_xml6parser7elementNtB2_13ElementParserNtB4_6Parser4feed: argument 1"}
 !308 = distinct !{!308, !"_RNvXNtNtCs2isvxI5XMib_9quick_xml6parser7elementNtB2_13ElementParserNtB4_6Parser4feed"}

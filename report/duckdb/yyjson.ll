@@ -203,7 +203,7 @@ bb.aqk:                                           ; preds = %.critedge689.i
 bb.aql:                                           ; preds = %bb.aqk
   %i.hch = sub nuw nsw i32 -1074, %i.hcd          ; 2 uses
   %i.hci = icmp samesign ult i32 %i.hcd, -1134
-  br i1 %i.hci, label %.thread3427, label %.thread3430, !prof !220
+  br i1 %i.hci, label %.thread3427, label %.thread3430, !prof !121
 
 .thread3427:                                      ; preds = %bb.aqk, %bb.aql
   %.0606.i3429 = phi i32 [ %i.hch, %bb.aql ], [ 64, %bb.aqk ]
@@ -606,7 +606,7 @@ vector.body10595:                                 ; preds = %vector.body10595, %
   store <2 x i64> %wide.load10598, ptr %i.hmp, align 8, !tbaa !91
   %index.next10599 = add nuw i64 %index10596, 4   ; 2 uses
   %i.hmq = icmp eq i64 %index.next10599, %n.vec10594
-  br i1 %i.hmq, label %middle.block10600, label %vector.body10595, !llvm.loop !221
+  br i1 %i.hmq, label %middle.block10600, label %vector.body10595, !llvm.loop !220
 
 middle.block10600:                                ; preds = %vector.body10595
   %cmp.n10601 = icmp eq i64 %n.vec10594, %i.hlr
@@ -632,7 +632,7 @@ scalar.ph10591.prol:                              ; preds = %scalar.ph10591.preh
   store i64 %i.hmu, ptr %i.hmy, align 8, !tbaa !91
   %prol.iter12379.next = add i64 %prol.iter12379, 1 ; 2 uses
   %prol.iter12379.cmp.not = icmp eq i64 %prol.iter12379.next, %xtraiter12377
-  br i1 %prol.iter12379.cmp.not, label %scalar.ph10591.prol.loopexit, label %scalar.ph10591.prol, !llvm.loop !222
+  br i1 %prol.iter12379.cmp.not, label %scalar.ph10591.prol.loopexit, label %scalar.ph10591.prol, !llvm.loop !221
 
 scalar.ph10591.prol.loopexit:                     ; preds = %scalar.ph10591.prol, %scalar.ph10591.preheader
   %indvars.iv6600.unr = phi i64 [ %indvars.iv6600.ph, %scalar.ph10591.preheader ], [ %i.hms, %scalar.ph10591.prol ]
@@ -674,7 +674,7 @@ scalar.ph10591:                                   ; preds = %scalar.ph10591.prol
   %i.hob = getelementptr inbounds nuw [8 x i8], ptr %i.hen, i64 %i.hoa
   store i64 %i.hnx, ptr %i.hob, align 8, !tbaa !91
   %.not46.i1288.wide.3 = icmp eq i64 %i.hnv, 0
-  br i1 %.not46.i1288.wide.3, label %.lr.ph5730.preheader, label %scalar.ph10591, !llvm.loop !223
+  br i1 %.not46.i1288.wide.3, label %.lr.ph5730.preheader, label %scalar.ph10591, !llvm.loop !222
 
 .lr.ph5730.preheader:                             ; preds = %scalar.ph10591.prol.loopexit, %scalar.ph10591, %middle.block10600, %.preheader4121
   %i.hoc = add i32 %i.hll, %i.hlo                 ; 2 uses
@@ -760,7 +760,7 @@ vector.body10578:                                 ; preds = %vector.body10578, %
   store <2 x i64> %i.hpl, ptr %i.hpr, align 8, !tbaa !91
   %index.next10584 = add nuw i64 %index10579, 4   ; 2 uses
   %i.hps = icmp eq i64 %index.next10584, %n.vec10573
-  br i1 %i.hps, label %middle.block10585, label %vector.body10578, !llvm.loop !224
+  br i1 %i.hps, label %middle.block10585, label %vector.body10578, !llvm.loop !223
 
 middle.block10585:                                ; preds = %vector.body10578
   %cmp.n10586 = icmp eq i64 %n.vec10573, %i.hoh
@@ -822,7 +822,7 @@ scalar.ph10570:                                   ; preds = %scalar.ph10570.prol
   %i.hrd = getelementptr inbounds nuw [8 x i8], ptr %i.hen, i64 %i.hrc
   store i64 %i.hqz, ptr %i.hrd, align 8, !tbaa !91
   %.not.i1284.wide.1 = icmp eq i64 %i.hqv, 0
-  br i1 %.not.i1284.wide.1, label %._crit_edge5718, label %scalar.ph10570, !llvm.loop !225
+  br i1 %.not.i1284.wide.1, label %._crit_edge5718, label %scalar.ph10570, !llvm.loop !224
 
 ._crit_edge5718:                                  ; preds = %scalar.ph10570.prol.loopexit, %scalar.ph10570, %middle.block10585, %bb.arp
   %i.hre = load i64, ptr %i.hen, align 8, !tbaa !91
@@ -909,7 +909,7 @@ vector.body10557:                                 ; preds = %vector.body10557, %
   store <2 x i64> %wide.load10560, ptr %i.hsx, align 8, !tbaa !91
   %index.next10561 = add nuw i64 %index10558, 4   ; 2 uses
   %i.hsy = icmp eq i64 %index.next10561, %n.vec10556
-  br i1 %i.hsy, label %middle.block10562, label %vector.body10557, !llvm.loop !226
+  br i1 %i.hsy, label %middle.block10562, label %vector.body10557, !llvm.loop !225
 
 middle.block10562:                                ; preds = %vector.body10557
   %cmp.n10563 = icmp eq i64 %n.vec10556, %i.hrz
@@ -935,7 +935,7 @@ scalar.ph10553.prol:                              ; preds = %scalar.ph10553.preh
   store i64 %i.htc, ptr %i.htg, align 8, !tbaa !91
   %prol.iter12373.next = add i64 %prol.iter12373, 1 ; 2 uses
   %prol.iter12373.cmp.not = icmp eq i64 %prol.iter12373.next, %xtraiter12371
-  br i1 %prol.iter12373.cmp.not, label %scalar.ph10553.prol.loopexit, label %scalar.ph10553.prol, !llvm.loop !227
+  br i1 %prol.iter12373.cmp.not, label %scalar.ph10553.prol.loopexit, label %scalar.ph10553.prol, !llvm.loop !226
 
 scalar.ph10553.prol.loopexit:                     ; preds = %scalar.ph10553.prol, %scalar.ph10553.preheader
   %indvars.iv6590.unr = phi i64 [ %indvars.iv6590.ph, %scalar.ph10553.preheader ], [ %i.hta, %scalar.ph10553.prol ]
@@ -977,7 +977,7 @@ scalar.ph10553:                                   ; preds = %scalar.ph10553.prol
   %i.huj = getelementptr inbounds nuw [8 x i8], ptr %i.hrx, i64 %i.hui
   store i64 %i.huf, ptr %i.huj, align 8, !tbaa !91
   %.not46.i1297.wide.3 = icmp eq i64 %i.hud, 0
-  br i1 %.not46.i1297.wide.3, label %._crit_edge5709, label %scalar.ph10553, !llvm.loop !228
+  br i1 %.not46.i1297.wide.3, label %._crit_edge5709, label %scalar.ph10553, !llvm.loop !227
 
 ._crit_edge5709:                                  ; preds = %scalar.ph10553.prol.loopexit, %scalar.ph10553, %middle.block10562, %.preheader4124
   %i.huk = add i32 %i.hrv, %i.hru
@@ -1067,7 +1067,7 @@ vector.body10540:                                 ; preds = %vector.body10540, %
   store <2 x i64> %i.hvt, ptr %i.hvz, align 8, !tbaa !91
   %index.next10546 = add nuw i64 %index10541, 4   ; 2 uses
   %i.hwa = icmp eq i64 %index.next10546, %n.vec10535
-  br i1 %i.hwa, label %middle.block10547, label %vector.body10540, !llvm.loop !229
+  br i1 %i.hwa, label %middle.block10547, label %vector.body10540, !llvm.loop !228
 
 middle.block10547:                                ; preds = %vector.body10540
   %cmp.n10548 = icmp eq i64 %n.vec10535, %i.hup
@@ -1129,7 +1129,7 @@ scalar.ph10532:                                   ; preds = %scalar.ph10532.prol
   %i.hxl = getelementptr inbounds nuw [8 x i8], ptr %i.huo, i64 %i.hxk
   store i64 %i.hxh, ptr %i.hxl, align 8, !tbaa !91
   %.not.i1293.wide.1 = icmp eq i64 %i.hxd, 0
-  br i1 %.not.i1293.wide.1, label %._crit_edge5701, label %scalar.ph10532, !llvm.loop !230
+  br i1 %.not.i1293.wide.1, label %._crit_edge5701, label %scalar.ph10532, !llvm.loop !229
 
 ._crit_edge5701:                                  ; preds = %scalar.ph10532.prol.loopexit, %scalar.ph10532, %middle.block10547, %bb.arr
   %i.hxm = load i64, ptr %i.huo, align 8, !tbaa !91
@@ -1532,7 +1532,7 @@ bb.awc:                                           ; preds = %bb.awb
   store ptr %i.iul, ptr %i.e, align 8, !tbaa !92
   %i.ium = load i8, ptr %i.iul, align 1, !tbaa !81
   %.not600.i207 = icmp eq i8 %i.ium, 44
-  br i1 %.not600.i207, label %.loopexit4118, label %.lr.ph5733, !llvm.loop !231
+  br i1 %.not600.i207, label %.loopexit4118, label %.lr.ph5733, !llvm.loop !230
 
 bb.awd:                                           ; preds = %bb.ase
   %i.iun = and i8 %i.gab, 1
@@ -1549,7 +1549,7 @@ bb.awd:                                           ; preds = %bb.ase
   %i.iut = load i8, ptr %i.ius, align 1, !tbaa !81
   %i.iuu = and i8 %i.iut, 1
   %.not3777 = icmp eq i8 %i.iuu, 0
-  br i1 %.not3777, label %.backedge4137.backedge, label %.preheader4132, !llvm.loop !232
+  br i1 %.not3777, label %.backedge4137.backedge, label %.preheader4132, !llvm.loop !231
 
 bb.awe:                                           ; preds = %bb.awd
   br i1 %.not3775, label %bb.axe, label %bb.awf, !prof !24
@@ -1799,7 +1799,7 @@ bb.axj:                                           ; preds = %.backedge4142
   %i.ixg = load i8, ptr %i.ixf, align 1, !tbaa !81
   %i.ixh = and i8 %i.ixg, 1
   %.not3834 = icmp eq i8 %i.ixh, 0
-  br i1 %.not3834, label %.backedge4142.backedge, label %.preheader4138, !llvm.loop !233
+  br i1 %.not3834, label %.backedge4142.backedge, label %.preheader4138, !llvm.loop !232
 
 bb.axk:                                           ; preds = %bb.axj
   br i1 %.not3833, label %_ZN13duckdb_yyjsonL15read_inf_or_nanEbPPhS1_PNS_10yyjson_valE.exit897.thread, label %bb.axl, !prof !24
@@ -2202,7 +2202,7 @@ bb.baw:                                           ; preds = %bb.bav
   store ptr %i.jrw, ptr %i.e, align 8, !tbaa !92
   %i.jrx = load i8, ptr %i.jrw, align 1, !tbaa !81
   %.not593.i = icmp eq i8 %i.jrx, 44
-  br i1 %.not593.i, label %.loopexit4118, label %.lr.ph5266, !llvm.loop !234
+  br i1 %.not593.i, label %.loopexit4118, label %.lr.ph5266, !llvm.loop !233
 
 bb.bax:                                           ; preds = %.backedge4197
   %i.jry = zext i8 %i.iyy to i64
@@ -2222,7 +2222,7 @@ bb.bax:                                           ; preds = %.backedge4197
   %i.jsh = load i8, ptr %i.jsg, align 1, !tbaa !81
   %i.jsi = and i8 %i.jsh, 1
   %.not3842 = icmp eq i8 %i.jsi, 0
-  br i1 %.not3842, label %.backedge4197.backedge, label %.preheader4193, !llvm.loop !235
+  br i1 %.not3842, label %.backedge4197.backedge, label %.preheader4193, !llvm.loop !234
 
 bb.bay:                                           ; preds = %bb.bax
   br i1 %.not3841, label %_ZN13duckdb_yyjsonL15read_inf_or_nanEbPPhS1_PNS_10yyjson_valE.exit897.thread, label %bb.baz, !prof !24
@@ -2274,7 +2274,7 @@ bb.bba:                                           ; preds = %bb.baz
   %i.jsz = load i8, ptr %i.jsy, align 1, !tbaa !81
   %i.jta = and i8 %i.jsz, 1
   %.not3642 = icmp eq i8 %i.jta, 0
-  br i1 %.not3642, label %.backedge4180, label %.preheader4177, !llvm.loop !236
+  br i1 %.not3642, label %.backedge4180, label %.preheader4177, !llvm.loop !235
 
 bb.bbb:                                           ; preds = %.lr.ph5383
   br i1 %.not3841, label %_ZN13duckdb_yyjsonL15read_inf_or_nanEbPPhS1_PNS_10yyjson_valE.exit897.thread, label %bb.bbc, !prof !24
@@ -2677,7 +2677,7 @@ bb.bfl:                                           ; preds = %bb.bfk
 bb.bfm:                                           ; preds = %bb.bfh
   %.pre6919 = add i8 %i.knh, -58
   %i.knz = icmp ult i8 %.pre6919, -10
-  br i1 %i.knz, label %.thread7502, label %bb.bfn, !prof !121
+  br i1 %i.knz, label %.thread7502, label %bb.bfn, !prof !236
 
 bb.bfn:                                           ; preds = %bb.bfm
   store ptr @.str.80, ptr %i.f, align 8, !tbaa !92
@@ -3080,23 +3080,23 @@ begin_hunk_5_@llvm.assume
 !217 = distinct !{!217, !27}
 !218 = distinct !{!218, !27}
 !219 = distinct !{null}
-!220 = !{!"branch_weights", !"expected", i32 2147481175, i32 2473}
-!221 = distinct !{!221, !27, !180, !181}
-!222 = distinct !{!222, !112}
-!223 = distinct !{!223, !27, !180}
-!224 = distinct !{!224, !27, !180, !181}
-!225 = distinct !{!225, !27, !180}
-!226 = distinct !{!226, !27, !180, !181}
-!227 = distinct !{!227, !112}
-!228 = distinct !{!228, !27, !180}
-!229 = distinct !{!229, !27, !180, !181}
-!230 = distinct !{!230, !27, !180}
+!220 = distinct !{!220, !27, !180, !181}
+!221 = distinct !{!221, !112}
+!222 = distinct !{!222, !27, !180}
+!223 = distinct !{!223, !27, !180, !181}
+!224 = distinct !{!224, !27, !180}
+!225 = distinct !{!225, !27, !180, !181}
+!226 = distinct !{!226, !112}
+!227 = distinct !{!227, !27, !180}
+!228 = distinct !{!228, !27, !180, !181}
+!229 = distinct !{!229, !27, !180}
+!230 = distinct !{!230, !27}
 !231 = distinct !{!231, !27}
 !232 = distinct !{!232, !27}
 !233 = distinct !{!233, !27}
 !234 = distinct !{!234, !27}
 !235 = distinct !{!235, !27}
-!236 = distinct !{!236, !27}
+!236 = !{!"branch_weights", !"expected", i32 1073741824, i32 1073741824}
 !237 = distinct !{!237, !27, !180, !181}
 !238 = distinct !{!238, !112}
 !239 = distinct !{!239, !27, !180}
