@@ -201,21 +201,21 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.s, label %"_ZN87_$LT$T$u20$as$u20$alloc..slice..$LT$impl$u20$$u5b$T$u5d$$GT$..to_vec_in..ConvertVec$GT$6to_vec17hf3728d45710e4894E.exit", label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h48f6be3e9b76576cE.exit.i", %bb.d
-  %.sroa.10.023.i = phi i64 [ %i.t, %bb.d ], [ %i.k, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h48f6be3e9b76576cE.exit.i" ]
-  %.sroa.012.022.i = phi ptr [ %i.w, %bb.d ], [ %i.f, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h48f6be3e9b76576cE.exit.i" ] ; 3 uses
-  %.sroa.7.021.i = phi i64 [ %i.v, %bb.d ], [ 0, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h48f6be3e9b76576cE.exit.i" ] ; 3 uses
-  %i.t = add i64 %.sroa.10.023.i, -1              ; 2 uses
-  %i.u = icmp eq ptr %.sroa.012.022.i, %i.r
+  %.sroa.012.023.i = phi ptr [ %i.w, %bb.d ], [ %i.f, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h48f6be3e9b76576cE.exit.i" ] ; 3 uses
+  %.sroa.7.022.i = phi i64 [ %i.v, %bb.d ], [ 0, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h48f6be3e9b76576cE.exit.i" ] ; 3 uses
+  %.sroa.7.021.i = phi i64 [ %i.t, %bb.d ], [ %i.k, %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h48f6be3e9b76576cE.exit.i" ]
+  %i.t = add i64 %.sroa.7.021.i, -1               ; 2 uses
+  %i.u = icmp eq ptr %.sroa.012.023.i, %i.r
   br i1 %i.u, label %"_ZN87_$LT$T$u20$as$u20$alloc..slice..$LT$impl$u20$$u5b$T$u5d$$GT$..to_vec_in..ConvertVec$GT$6to_vec17hf3728d45710e4894E.exit", label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph.i
-  invoke void @"_ZN60_$LT$alloc..string..String$u20$as$u20$core..clone..Clone$GT$5clone17he0bc0e0b0b5c0846E"(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.b, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %.sroa.012.022.i)
+  invoke void @"_ZN60_$LT$alloc..string..String$u20$as$u20$core..clone..Clone$GT$5clone17he0bc0e0b0b5c0846E"(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.b, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %.sroa.012.023.i)
           to label %bb.d unwind label %bb.f, !noalias !530
 
 bb.d:                                             ; preds = %bb.c
-  %i.v = add nuw nsw i64 %.sroa.7.021.i, 1
-  %i.w = getelementptr inbounds nuw i8, ptr %.sroa.012.022.i, i64 24
-  %i.x = getelementptr inbounds nuw [24 x i8], ptr %i.n, i64 %.sroa.7.021.i
+  %i.v = add nuw nsw i64 %.sroa.7.022.i, 1
+  %i.w = getelementptr inbounds nuw i8, ptr %.sroa.012.023.i, i64 24
+  %i.x = getelementptr inbounds nuw [24 x i8], ptr %i.n, i64 %.sroa.7.022.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.x, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false), !noalias !530
   %i.y = icmp eq i64 %i.t, 0
   br i1 %i.y, label %"_ZN87_$LT$T$u20$as$u20$alloc..slice..$LT$impl$u20$$u5b$T$u5d$$GT$..to_vec_in..ConvertVec$GT$6to_vec17hf3728d45710e4894E.exit", label %.lr.ph.i
@@ -229,7 +229,7 @@ bb.e:                                             ; preds = %bb.f
 bb.f:                                             ; preds = %bb.c
   %lpad.loopexit.i = landingpad { ptr, i32 }
           cleanup
-  store i64 %.sroa.7.021.i, ptr %i.q, align 8, !noalias !526
+  store i64 %.sroa.7.022.i, ptr %i.q, align 8, !noalias !526
   invoke fastcc void @"_ZN4core3ptr65drop_in_place$LT$alloc..vec..Vec$LT$alloc..string..String$GT$$GT$17h506966ad25289d0aE"(ptr noalias noundef align 8 dereferenceable(24) %i.c) #15
           to label %bb.g unwind label %bb.e, !noalias !530
 
@@ -373,7 +373,6 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %"_ZN67_$LT$ninja_gen..input..BuildInput$u20$as$u20$core..clone..Clone$GT$5clone17h9bf5381cb27e8ed8E.exit"
-  %.sroa.8.sroa.7.039 = phi i64 [ undef, %.lr.ph ], [ %.sroa.8.sroa.7.1, %"_ZN67_$LT$ninja_gen..input..BuildInput$u20$as$u20$core..clone..Clone$GT$5clone17h9bf5381cb27e8ed8E.exit" ]
   %.sroa.04.038 = phi ptr [ %i.j, %.lr.ph ], [ %i.z, %"_ZN67_$LT$ninja_gen..input..BuildInput$u20$as$u20$core..clone..Clone$GT$5clone17h9bf5381cb27e8ed8E.exit" ] ; 8 uses
   %.sroa.7.036 = phi i64 [ 0, %.lr.ph ], [ %i.aa, %"_ZN67_$LT$ninja_gen..input..BuildInput$u20$as$u20$core..clone..Clone$GT$5clone17h9bf5381cb27e8ed8E.exit" ] ; 3 uses
   %.sroa.10.035 = phi i64 [ %i.o, %.lr.ph ], [ %i.x, %"_ZN67_$LT$ninja_gen..input..BuildInput$u20$as$u20$core..clone..Clone$GT$5clone17h9bf5381cb27e8ed8E.exit" ]
@@ -489,14 +488,14 @@ bb.m:                                             ; preds = %bb.d
   br label %"_ZN67_$LT$ninja_gen..input..BuildInput$u20$as$u20$core..clone..Clone$GT$5clone17h9bf5381cb27e8ed8E.exit"
 
 "_ZN67_$LT$ninja_gen..input..BuildInput$u20$as$u20$core..clone..Clone$GT$5clone17h9bf5381cb27e8ed8E.exit": ; preds = %.noexc3, %"_ZN61_$LT$ninja_gen..input..Glob$u20$as$u20$core..clone..Clone$GT$5clone17h93fc481102d37dbaE.exit.i", %.noexc1, %.noexc, %bb.d
-  %.sroa.05.0.a = phi i64 [ -9223372036854775808, %.noexc ], [ -9223372036854775807, %.noexc1 ], [ %.sroa.015.0.copyload, %"_ZN61_$LT$ninja_gen..input..Glob$u20$as$u20$core..clone..Clone$GT$5clone17h93fc481102d37dbaE.exit.i" ], [ -9223372036854775805, %.noexc3 ], [ -9223372036854775804, %bb.d ]
-  %.sroa.8.sroa.7.1 = phi i64 [ %.sroa.8.sroa.7.0.copyload21, %.noexc ], [ %.sroa.8.sroa.7.0.copyload19, %.noexc1 ], [ %.sroa.0.0.i.i, %"_ZN61_$LT$ninja_gen..input..Glob$u20$as$u20$core..clone..Clone$GT$5clone17h93fc481102d37dbaE.exit.i" ], [ %.sroa.8.sroa.7.0.copyload, %.noexc3 ], [ %.sroa.8.sroa.7.039, %bb.d ] ; 2 uses
+  %.sroa.05.0.a = phi i64 [ %.sroa.8.sroa.7.0.copyload21, %.noexc ], [ %.sroa.8.sroa.7.0.copyload19, %.noexc1 ], [ %.sroa.0.0.i.i, %"_ZN61_$LT$ninja_gen..input..Glob$u20$as$u20$core..clone..Clone$GT$5clone17h93fc481102d37dbaE.exit.i" ], [ %.sroa.8.sroa.7.0.copyload, %.noexc3 ], [ undef, %bb.d ]
+  %.sroa.8.sroa.7.1 = phi i64 [ -9223372036854775808, %.noexc ], [ -9223372036854775807, %.noexc1 ], [ %.sroa.015.0.copyload, %"_ZN61_$LT$ninja_gen..input..Glob$u20$as$u20$core..clone..Clone$GT$5clone17h93fc481102d37dbaE.exit.i" ], [ -9223372036854775805, %.noexc3 ], [ -9223372036854775804, %bb.d ]
   %i.an = getelementptr inbounds nuw [48 x i8], ptr %i.r, i64 %.sroa.7.036 ; 4 uses
-  store i64 %.sroa.05.0.a, ptr %i.an, align 8, !noalias !553
+  store i64 %.sroa.8.sroa.7.1, ptr %i.an, align 8, !noalias !553
   %.sroa.413.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.an, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.413.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.8.sroa.0, i64 16, i1 false)
   %.sroa.413.sroa.4.0..sroa.413.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.an, i64 24
-  store i64 %.sroa.8.sroa.7.1, ptr %.sroa.413.sroa.4.0..sroa.413.0..sroa_idx.sroa_idx, align 8, !noalias !553
+  store i64 %.sroa.05.0.a, ptr %.sroa.413.sroa.4.0..sroa.413.0..sroa_idx.sroa_idx, align 8, !noalias !553
   %.sroa.514.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.an, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.514.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.11, i64 16, i1 false)
   %i.ao = icmp eq i64 %i.x, 0

@@ -35,10 +35,10 @@ bb.e:                                             ; preds = %bb.c
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.a
-  %.030 = phi i32 [ %.sroa.01.4.extract.trunc, %bb.e ], [ %.sroa.02.4.extract.trunc, %bb.a ] ; 3 uses
-  %.029 = phi i32 [ -54, %bb.e ], [ 0, %bb.a ]
+  %.030 = phi i32 [ -1077, %bb.e ], [ -1023, %bb.a ]
+  %.029 = phi i32 [ %.sroa.01.4.extract.trunc, %bb.e ], [ %.sroa.02.4.extract.trunc, %bb.a ] ; 3 uses
   %.028 = phi double [ %i.i, %bb.e ], [ %0, %bb.a ] ; 3 uses
-  %i.k = icmp sgt i32 %.030, 2146435071
+  %i.k = icmp sgt i32 %.029, 2146435071
   br i1 %i.k, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
@@ -46,11 +46,10 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.f
-  %i.m = ashr i32 %.030, 20
-  %1 = add nsw i32 %i.m, -1023
-  %i.n = add nsw i32 %1, %.029                    ; 2 uses
+  %i.m = ashr i32 %.029, 20
+  %i.n = add nsw i32 %.030, %i.m                  ; 2 uses
   %i.o = lshr i32 %i.n, 31                        ; 2 uses
-  %i.p = and i32 %.030, 1048575
+  %i.p = and i32 %.029, 1048575
   %i.q = shl nuw nsw i32 %i.o, 20
   %i.r = or disjoint i32 %i.q, %i.p
   %i.s = xor i32 %i.r, 1072693248

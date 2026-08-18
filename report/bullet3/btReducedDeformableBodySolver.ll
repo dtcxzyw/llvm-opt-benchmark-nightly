@@ -204,13 +204,13 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !51
   %i.c = icmp eq ptr %i.b, null
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !51   ; 8 uses
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !51   ; 7 uses
   br i1 %i.c, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 636
   %i.g = load float, ptr %i.f, align 4
-  %i.h = select i1 %3, float %i.g, float f0x37480000 ; 9 uses
+  %i.h = select i1 %3, float %i.g, float f0x37480000 ; 6 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 16 ; 2 uses
   br i1 %2, label %_Z8btSetMinIfEvRT_RKS0_.exit.i.i, label %bb.c
 
@@ -257,29 +257,23 @@ _Z8btSetMinIfEvRT_RKS0_.exit.i.i:                 ; preds = %bb.b
   br label %common.ret
 
 bb.c:                                             ; preds = %bb.b
-  %4 = load float, ptr %i.i, align 4, !tbaa !68, !noalias !451 ; 2 uses
-  %5 = fsub float %4, %i.h
-  %6 = getelementptr inbounds nuw i8, ptr %i.e, i64 20
-  %7 = load float, ptr %6, align 4, !tbaa !68, !noalias !451 ; 2 uses
-  %8 = fsub float %7, %i.h
   %i.aq = getelementptr inbounds nuw i8, ptr %i.e, i64 24
   %i.ar = load float, ptr %i.aq, align 4, !tbaa !68, !noalias !451 ; 2 uses
   %i.as = fsub float %i.ar, %i.h
-  %.sroa.0.0.vec.insert.i.i.i = insertelement <2 x float> poison, float %5, i64 0
-  %.sroa.0.4.vec.insert.i.i.i = insertelement <2 x float> %.sroa.0.0.vec.insert.i.i.i, float %8, i64 1
-  %.sroa.3.12.vec.insert.i.i.i = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.as, i64 0
-  %9 = fadd float %i.h, %4
-  %10 = fadd float %i.h, %7
-  %11 = fadd float %i.h, %i.ar
-  %.sroa.0.0.vec.insert.i6.i.i = insertelement <2 x float> poison, float %9, i64 0
-  %.sroa.0.4.vec.insert.i7.i.i = insertelement <2 x float> %.sroa.0.0.vec.insert.i6.i.i, float %10, i64 1
-  %.sroa.3.12.vec.insert.i8.i.i = insertelement <2 x float> <float poison, float 0.000000e+00>, float %11, i64 0
+  %.sroa.0.0.vec.insert.i.i.i = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.as, i64 0
+  %4 = load <2 x float>, ptr %i.i, align 4, !tbaa !68, !noalias !451 ; 2 uses
+  %.sroa.3.12.vec.insert.i.i.i = insertelement <2 x float> poison, float %i.h, i64 0
+  %5 = shufflevector <2 x float> %.sroa.3.12.vec.insert.i.i.i, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %6 = fsub <2 x float> %4, %5
+  %7 = fadd <2 x float> %5, %4
+  %8 = fadd float %i.h, %i.ar
+  %.sroa.3.12.vec.insert.i8.i.i = insertelement <2 x float> <float poison, float 0.000000e+00>, float %8, i64 0
   br label %common.ret
 
 common.ret:                                       ; preds = %bb.c, %_Z8btSetMinIfEvRT_RKS0_.exit.i.i
-  %.sroa.044.0 = phi <2 x float> [ %i.am, %_Z8btSetMinIfEvRT_RKS0_.exit.i.i ], [ %.sroa.0.4.vec.insert.i.i.i, %bb.c ]
-  %.sroa.1051.0 = phi <2 x float> [ %.sroa.1051.8.vec.insert, %_Z8btSetMinIfEvRT_RKS0_.exit.i.i ], [ %.sroa.3.12.vec.insert.i.i.i, %bb.c ]
-  %.sroa.1555.0 = phi <2 x float> [ %i.an, %_Z8btSetMinIfEvRT_RKS0_.exit.i.i ], [ %.sroa.0.4.vec.insert.i7.i.i, %bb.c ]
+  %.sroa.044.0 = phi <2 x float> [ %i.am, %_Z8btSetMinIfEvRT_RKS0_.exit.i.i ], [ %6, %bb.c ]
+  %.sroa.1051.0 = phi <2 x float> [ %.sroa.1051.8.vec.insert, %_Z8btSetMinIfEvRT_RKS0_.exit.i.i ], [ %.sroa.0.0.vec.insert.i.i.i, %bb.c ]
+  %.sroa.1555.0 = phi <2 x float> [ %i.an, %_Z8btSetMinIfEvRT_RKS0_.exit.i.i ], [ %7, %bb.c ]
   %.sroa.22.0 = phi <2 x float> [ %.sroa.22.24.vec.insert, %_Z8btSetMinIfEvRT_RKS0_.exit.i.i ], [ %.sroa.3.12.vec.insert.i8.i.i, %bb.c ]
   store <2 x float> %.sroa.044.0, ptr %1, align 8
   %.sroa.1051.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8

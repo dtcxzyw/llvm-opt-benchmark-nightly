@@ -204,8 +204,8 @@ bb.j:                                             ; preds = %._crit_edge.i
   br label %truncate_numeric_strbuf.exit
 
 truncate_numeric_strbuf.exit:                     ; preds = %bb.j, %bb.h, %.loopexit84
+  %.171 = phi i1 [ false, %.loopexit84 ], [ %i.aa, %bb.h ], [ %i.aa, %bb.j ] ; 11 uses
   %.4 = phi i32 [ %i.d, %.loopexit84 ], [ %.3.ph, %bb.h ], [ %.3.ph, %bb.j ]
-  %.1 = phi i1 [ false, %.loopexit84 ], [ %i.aa, %bb.h ], [ %i.aa, %bb.j ] ; 11 uses
   %i.ay = select i1 %.not.i.not, ptr @prefix_parameters_for_flags.si_prefixes, ptr @prefix_parameters_for_flags.iec_prefixes
   %i.az = sext i32 %.4 to i64
   %i.ba = getelementptr [8 x i8], ptr %i.ay, i64 %i.az
@@ -227,47 +227,47 @@ truncate_numeric_strbuf.exit:                     ; preds = %bb.j, %bb.h, %.loop
   ]
 
 bb.k:                                             ; preds = %truncate_numeric_strbuf.exit
-  %i.bc = select i1 %.1, ptr @.str.3, ptr @.str.4
+  %i.bc = select i1 %.171, ptr @.str.3, ptr @.str.4
   br label %.sink.split
 
 bb.l:                                             ; preds = %truncate_numeric_strbuf.exit
-  %i.bd = select i1 %.1, ptr @.str.5, ptr @.str.6
+  %i.bd = select i1 %.171, ptr @.str.5, ptr @.str.6
   br label %.sink.split
 
 bb.m:                                             ; preds = %truncate_numeric_strbuf.exit
-  %i.be = select i1 %.1, ptr @.str.7, ptr @.str.8
+  %i.be = select i1 %.171, ptr @.str.7, ptr @.str.8
   br label %.sink.split
 
 bb.n:                                             ; preds = %truncate_numeric_strbuf.exit
-  %i.bf = select i1 %.1, ptr @.str.9, ptr @.str.10
+  %i.bf = select i1 %.171, ptr @.str.9, ptr @.str.10
   br label %.sink.split
 
 bb.o:                                             ; preds = %truncate_numeric_strbuf.exit
-  %i.bg = select i1 %.1, ptr @.str.11, ptr @.str.12
+  %i.bg = select i1 %.171, ptr @.str.11, ptr @.str.12
   br label %.sink.split
 
 bb.p:                                             ; preds = %truncate_numeric_strbuf.exit
-  %i.bh = select i1 %.1, ptr @.str.13, ptr @.str.14
+  %i.bh = select i1 %.171, ptr @.str.13, ptr @.str.14
   br label %.sink.split
 
 bb.q:                                             ; preds = %truncate_numeric_strbuf.exit
-  %i.bi = select i1 %.1, ptr @.str.15, ptr @.str.16
+  %i.bi = select i1 %.171, ptr @.str.15, ptr @.str.16
   br label %.sink.split
 
 bb.r:                                             ; preds = %truncate_numeric_strbuf.exit
-  %i.bj = select i1 %.1, ptr @.str.17, ptr @.str.18
+  %i.bj = select i1 %.171, ptr @.str.17, ptr @.str.18
   br label %.sink.split
 
 bb.s:                                             ; preds = %truncate_numeric_strbuf.exit
-  %i.bk = select i1 %.1, ptr @.str.19, ptr @.str.20
+  %i.bk = select i1 %.171, ptr @.str.19, ptr @.str.20
   br label %.sink.split
 
 bb.t:                                             ; preds = %truncate_numeric_strbuf.exit
-  %i.bl = select i1 %.1, ptr @.str.21, ptr @.str.22
+  %i.bl = select i1 %.171, ptr @.str.21, ptr @.str.22
   br label %.sink.split
 
 bb.u:                                             ; preds = %truncate_numeric_strbuf.exit
-  %i.bm = select i1 %.1, ptr @.str.23, ptr @.str.24
+  %i.bm = select i1 %.171, ptr @.str.23, ptr @.str.24
   br label %.sink.split
 
 bb.v:                                             ; preds = %truncate_numeric_strbuf.exit
@@ -670,8 +670,8 @@ bb.b:                                             ; preds = %.lr.ph797, %bb.dx
   %i.f = phi i64 [ 128, %.lr.ph797 ], [ %i.qc, %bb.dx ] ; 3 uses
   %.0465789 = phi ptr [ %1, %.lr.ph797 ], [ %.4469, %bb.dx ] ; 8 uses
   %i.g = getelementptr i8, ptr %.0465789, i64 1   ; 25 uses
-  %i.h = load i8, ptr %.0465789, align 1          ; 11 uses
-  %i.i = zext i8 %i.h to i32                      ; 5 uses
+  %i.h = load i8, ptr %.0465789, align 1          ; 10 uses
+  %i.i = zext i8 %i.h to i32                      ; 6 uses
   %i.j = add i8 %i.h, -32
   %or.cond = icmp ult i8 %i.j, 95
   br i1 %or.cond, label %bb.c, label %bb.d
@@ -1015,7 +1015,7 @@ bb.ay:                                            ; preds = %bb.ax
   br i1 %i.en, label %.thread, label %.thread542
 
 .thread:                                          ; preds = %bb.aw, %bb.av, %bb.au, %bb.ax, %bb.ay
-  %.1417540 = phi i8 [ 1, %bb.ay ], [ 7, %bb.aw ], [ 15, %bb.av ], [ 31, %bb.au ], [ 3, %bb.ax ]
+  %.0416538 = phi i32 [ 1, %bb.ay ], [ 7, %bb.aw ], [ 15, %bb.av ], [ 31, %bb.au ], [ 3, %bb.ax ]
   %exitcond.not.1 = phi i1 [ false, %bb.ay ], [ false, %bb.aw ], [ true, %bb.av ], [ false, %bb.au ], [ false, %bb.ax ]
   %exitcond.not.2 = phi i1 [ false, %bb.ay ], [ true, %bb.aw ], [ false, %bb.av ], [ false, %bb.au ], [ false, %bb.ax ]
   %exitcond.not.3 = phi i1 [ false, %bb.ay ], [ false, %bb.aw ], [ false, %bb.av ], [ false, %bb.au ], [ true, %bb.ax ]
@@ -1027,8 +1027,7 @@ bb.ay:                                            ; preds = %bb.ax
   br i1 %.not5111049, label %.lr.ph1053, label %._crit_edge1057
 
 .lr.ph1053:                                       ; preds = %.thread
-  %4 = and i8 %.1417540, %i.h
-  %5 = zext nneg i8 %4 to i32
+  %4 = and i32 %.0416538, %i.i
   %i.ep = load i8, ptr %i.g, align 1              ; 4 uses
   %i.eq = zext i8 %i.ep to i32                    ; 2 uses
   %i.er = and i32 %i.eq, 192
@@ -1112,7 +1111,7 @@ bb.bl:                                            ; preds = %bb.bk
   br label %._crit_edge1057
 
 bb.bm:                                            ; preds = %.lr.ph1053
-  %i.fv = shl nuw nsw i32 %5, 6
+  %i.fv = shl nuw nsw i32 %4, 6
   %i.fw = and i32 %i.eq, 63
   %i.fx = or disjoint i32 %i.fw, %i.fv            ; 2 uses
   br i1 %i.ef, label %._crit_edge1054, label %bb.az, !llvm.loop !35

@@ -77,7 +77,6 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br label %.preheader172
 
 .preheader172:                                    ; preds = %.preheader172.lr.ph, %bb.v
-  %.0109210 = phi i8 [ undef, %.preheader172.lr.ph ], [ %.6, %bb.v ]
   %.0110209 = phi i32 [ %i.m, %.preheader172.lr.ph ], [ %.6116, %bb.v ] ; 3 uses
   %.0124208 = phi i32 [ %i.j, %.preheader172.lr.ph ], [ %.8, %bb.v ] ; 2 uses
   %.0131207 = phi i64 [ %i.h, %.preheader172.lr.ph ], [ %.6137, %bb.v ] ; 3 uses
@@ -150,7 +149,7 @@ bb.i:                                             ; preds = %bb.g, %bb.f, %.fold
   %.4135 = phi i64 [ %.0131207, %.preheader172 ], [ %.4135.ph, %._crit_edge.loopexit ] ; 5 uses
   %.3127 = phi i32 [ %.0124208, %.preheader172 ], [ %.3127.ph, %._crit_edge.loopexit ] ; 3 uses
   %.2112 = phi i32 [ %.0110209, %.preheader172 ], [ %i.am, %._crit_edge.loopexit ] ; 3 uses
-  %.2 = phi i8 [ %.0109210, %.preheader172 ], [ %i.ac, %._crit_edge.loopexit ] ; 2 uses
+  %.2 = phi i8 [ undef, %.preheader172 ], [ %i.ac, %._crit_edge.loopexit ] ; 2 uses
   %i.an = load i32, ptr %i.t, align 8, !tbaa !61
   %i.ao = trunc i32 %i.an to i1
   %i.ap = icmp ugt i64 %.4135, 36
@@ -225,11 +224,11 @@ bb.r:                                             ; preds = %bb.o, %bb.p, %bb.q,
 .loopexit:                                        ; preds = %bb.r, %bb.l
   %.7 = phi i32 [ %.3127, %bb.l ], [ %.6130, %bb.r ] ; 2 uses
   %.5115 = phi i32 [ %.2112, %bb.l ], [ %.4114, %bb.r ] ; 2 uses
-  %.5 = phi i8 [ %.2, %bb.l ], [ %.4.a, %bb.r ]   ; 2 uses
+  %.5 = phi i8 [ %.2, %bb.l ], [ %.4.a, %bb.r ]
   br i1 %.lcssa, label %.thread, label %bb.v
 
 .thread:                                          ; preds = %bb.n, %.loopexit
-  %.5163 = phi i8 [ %.5, %.loopexit ], [ %i.bf, %bb.n ] ; 7 uses
+  %.5163 = phi i8 [ %.5, %.loopexit ], [ %i.bf, %bb.n ] ; 4 uses
   %.5115162 = phi i32 [ %.5115, %.loopexit ], [ %i.be, %bb.n ] ; 4 uses
   %.7161 = phi i32 [ %.7, %.loopexit ], [ 0, %bb.n ] ; 4 uses
   %i.bk = trunc i64 %.4135 to i32
@@ -264,7 +263,6 @@ bb.v:                                             ; preds = %.loopexit, %bb.t, %
   %.6137 = phi i64 [ %.4135, %.loopexit ], [ 0, %bb.s ], [ 0, %.thread ], [ 0, %bb.t ] ; 2 uses
   %.8 = phi i32 [ %.7, %.loopexit ], [ %.7161, %bb.s ], [ %.7161, %.thread ], [ %.7161, %bb.t ] ; 2 uses
   %.6116 = phi i32 [ %.5115, %.loopexit ], [ %.5115162, %bb.s ], [ %.5115162, %.thread ], [ %.5115162, %bb.t ] ; 2 uses
-  %.6 = phi i8 [ %.5, %.loopexit ], [ %.5163, %bb.s ], [ %.5163, %.thread ], [ %.5163, %bb.t ]
   %i.bu = icmp slt i32 %.6116, %5
   br i1 %i.bu, label %.preheader172, label %.thread164
 

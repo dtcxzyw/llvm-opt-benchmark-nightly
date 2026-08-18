@@ -203,10 +203,10 @@ bb.y:                                             ; preds = %bb.v
   br label %bb.ch
 
 bb.z:                                             ; preds = %bb.x, %bb.w
-  %.057.a = phi i32 [ %i.ay, %bb.w ], [ %spec.select128, %bb.x ] ; 6 uses
-  %.152 = phi i32 [ %i.aw, %bb.w ], [ %spec.select, %bb.x ] ; 3 uses
-  %i.bq = icmp samesign ugt i32 %.152, 65535
-  %i.br = icmp samesign ugt i32 %.057.a, 65535
+  %.057.a = phi i32 [ %i.aw, %bb.w ], [ %spec.select, %bb.x ] ; 4 uses
+  %.152 = phi i32 [ %i.ay, %bb.w ], [ %spec.select128, %bb.x ] ; 3 uses
+  %i.bq = icmp samesign ugt i32 %.057.a, 65535
+  %i.br = icmp samesign ugt i32 %.152, 65535
   %or.cond = select i1 %i.bq, i1 true, i1 %i.br
   br i1 %or.cond, label %bb.aa, label %bb.ac
 
@@ -248,7 +248,8 @@ bb.ae:                                            ; preds = %bb.ad
 bb.af:                                            ; preds = %bb.ae
   %i.cc = load i32, ptr %i.o, align 4, !tbaa !79
   %.not90 = icmp eq i32 %i.cc, 0
-  %i.cd = zext nneg i32 %.152 to i64              ; 3 uses
+  %2 = add nuw nsw i32 %.152, 8
+  %i.cd = zext nneg i32 %2 to i64                 ; 2 uses
   %i.ce = load i32, ptr %i.y, align 8, !tbaa !84
   %i.cf = zext i32 %i.ce to i64                   ; 2 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %0, i64 5564
@@ -259,9 +260,8 @@ bb.af:                                            ; preds = %bb.ae
 
 bb.ag:                                            ; preds = %bb.af
   %i.ck = shl nuw nsw i32 %.057.a, 1
-  %2 = add nuw nsw i32 %i.ck, 16
-  %i.cl = zext nneg i32 %2 to i64
-  %i.cm = mul nuw nsw i64 %i.cl, %i.cd
+  %i.cl = zext nneg i32 %i.ck to i64
+  %i.cm = mul nuw nsw i64 %i.cl, %i.cd            ; 2 uses
   %i.cn = add nuw nsw i64 %i.cm, %i.cf
   %i.co = icmp samesign ugt i64 %i.cn, %i.cj
   br i1 %i.co, label %.invoke, label %bb.ai
@@ -275,11 +275,7 @@ bb.ah:                                            ; preds = %.invoke, %bb.bc, %b
   br label %bb.ch
 
 bb.ai:                                            ; preds = %bb.ag
-  %narrow = add nuw nsw i32 %.057.a, 8
-  %3 = zext nneg i32 %narrow to i64
-  %4 = shl nuw nsw i64 %i.cd, 1
-  %5 = mul nuw nsw i64 %4, %3
-  %i.cq = invoke noundef ptr @_ZN6LibRaw6mallocEm(ptr noundef nonnull align 8 dereferenceable(768512) %0, i64 noundef %5)
+  %i.cq = invoke noundef ptr @_ZN6LibRaw6mallocEm(ptr noundef nonnull align 8 dereferenceable(768512) %0, i64 noundef %i.cm)
           to label %bb.aj unwind label %bb.ah     ; 2 uses
 
 bb.aj:                                            ; preds = %bb.ai
@@ -299,8 +295,7 @@ bb.ak:                                            ; preds = %bb.aj
 
 bb.al:                                            ; preds = %bb.af
   %i.cw = shl nuw nsw i32 %.057.a, 3
-  %6 = add nuw nsw i32 %i.cw, 64
-  %i.cx = zext nneg i32 %6 to i64
+  %i.cx = zext nneg i32 %i.cw to i64
   %i.cy = mul nuw nsw i64 %i.cx, %i.cd
   %i.cz = add nuw nsw i64 %i.cy, %i.cf
   %i.da = icmp samesign ugt i64 %i.cz, %i.cj
@@ -342,11 +337,11 @@ bb.ap:                                            ; preds = %bb.ao
   br i1 %i.ds, label %bb.aq, label %bb.au
 
 bb.aq:                                            ; preds = %bb.ap, %bb.ao
-  %i.dt = zext nneg i32 %.152 to i64              ; 2 uses
+  %3 = add nuw nsw i32 %.152, 8
+  %i.dt = zext nneg i32 %3 to i64
   %i.du = shl nuw nsw i32 %.057.a, 1
-  %7 = add nuw nsw i32 %i.du, 16
-  %i.dv = zext nneg i32 %7 to i64
-  %i.dw = mul nuw nsw i64 %i.dv, %i.dt
+  %i.dv = zext nneg i32 %i.du to i64
+  %i.dw = mul nuw nsw i64 %i.dv, %i.dt            ; 2 uses
   %i.dx = load i32, ptr %i.y, align 8, !tbaa !84
   %i.dy = zext i32 %i.dx to i64
   %i.dz = add nuw nsw i64 %i.dw, %i.dy
@@ -358,11 +353,7 @@ bb.aq:                                            ; preds = %bb.ap, %bb.ao
   br i1 %i.ee, label %.invoke, label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq
-  %narrow130 = add nuw nsw i32 %.057.a, 8
-  %8 = zext nneg i32 %narrow130 to i64
-  %9 = shl nuw nsw i64 %i.dt, 1
-  %10 = mul nuw nsw i64 %9, %8
-  %i.ef = invoke noundef ptr @_ZN6LibRaw6mallocEm(ptr noundef nonnull align 8 dereferenceable(768512) %0, i64 noundef %10)
+  %i.ef = invoke noundef ptr @_ZN6LibRaw6mallocEm(ptr noundef nonnull align 8 dereferenceable(768512) %0, i64 noundef %i.dw)
           to label %bb.as unwind label %bb.ah     ; 2 uses
 
 bb.as:                                            ; preds = %bb.ar
@@ -693,14 +684,14 @@ bb.ch:                                            ; preds = %bb.ab, %bb.cf, %bb.
 
 bb.ci:                                            ; preds = %bb.ch, %bb.m, %bb.g
   %.pn120 = phi { ptr, i32 } [ %i.n, %bb.g ], [ %i.v, %bb.m ], [ %.pn117.pn, %bb.ch ] ; 3 uses
-  %.3 = extractvalue { ptr, i32 } %.pn120, 0      ; 3 uses
-  %.349 = extractvalue { ptr, i32 } %.pn120, 1    ; 3 uses
+  %.3 = extractvalue { ptr, i32 } %.pn120, 1      ; 3 uses
+  %.355 = extractvalue { ptr, i32 } %.pn120, 0    ; 3 uses
   %i.in = call i32 @llvm.eh.typeid.for.p0(ptr nonnull @_ZTISt9bad_alloc) #10
-  %i.io = icmp eq i32 %.349, %i.in
+  %i.io = icmp eq i32 %.3, %i.in
   br i1 %i.io, label %bb.cj, label %bb.cl
 
 bb.cj:                                            ; preds = %bb.ci
-  %i.ip = call ptr @__cxa_begin_catch(ptr %.3) #10 ; 0 uses
+  %i.ip = call ptr @__cxa_begin_catch(ptr %.355) #10 ; 0 uses
   invoke void @_ZN6LibRaw7recycleEv(ptr noundef nonnull align 8 dereferenceable(768512) %0)
           to label %bb.ck unwind label %bb.da
 
@@ -710,11 +701,11 @@ bb.ck:                                            ; preds = %bb.cj
 
 bb.cl:                                            ; preds = %bb.ci
   %i.iq = call i32 @llvm.eh.typeid.for.p0(ptr nonnull @_ZTI17LibRaw_exceptions) #10
-  %i.ir = icmp eq i32 %.349, %i.iq
+  %i.ir = icmp eq i32 %.3, %i.iq
   br i1 %i.ir, label %bb.cm, label %bb.cn
 
 bb.cm:                                            ; preds = %bb.cl
-  %i.is = call ptr @__cxa_begin_catch(ptr %.3) #10
+  %i.is = call ptr @__cxa_begin_catch(ptr %.355) #10
   %i.it = load i32, ptr %i.is, align 4, !tbaa !77
   switch i32 %i.it, label %bb.cz [
     i32 11, label %bb.cr
@@ -732,11 +723,11 @@ bb.cm:                                            ; preds = %bb.cl
 
 bb.cn:                                            ; preds = %bb.cl
   %i.iu = call i32 @llvm.eh.typeid.for.p0(ptr nonnull @_ZTISt9exception) #10
-  %i.iv = icmp eq i32 %.349, %i.iu
+  %i.iv = icmp eq i32 %.3, %i.iu
   br i1 %i.iv, label %bb.co, label %bb.dc
 
 bb.co:                                            ; preds = %bb.cn
-  %i.iw = call ptr @__cxa_begin_catch(ptr %.3) #10 ; 0 uses
+  %i.iw = call ptr @__cxa_begin_catch(ptr %.355) #10 ; 0 uses
   invoke void @_ZN6LibRaw7recycleEv(ptr noundef nonnull align 8 dereferenceable(768512) %0)
           to label %bb.cp unwind label %bb.cq
 

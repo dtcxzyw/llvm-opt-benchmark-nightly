@@ -203,21 +203,20 @@ _RNvXs1_NtNtNtCs7ZUl82OSlxp_6rustls4msgs8deframer9handshakeNtB5_20DissectHandsha
 
 bb.e:                                             ; preds = %.lr.ph, %_RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecNtNtNtNtCs7ZUl82OSlxp_6rustls4msgs8deframer9handshake12FragmentSpanE8push_mutBN_.exit6
   %i.aq = phi i64 [ %i.e, %.lr.ph ], [ %i.bm, %_RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecNtNtNtNtCs7ZUl82OSlxp_6rustls4msgs8deframer9handshake12FragmentSpanE8push_mutBN_.exit6 ]
-  %.sroa.816.047 = phi i64 [ undef, %.lr.ph ], [ %.sroa.816.1.ph, %_RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecNtNtNtNtCs7ZUl82OSlxp_6rustls4msgs8deframer9handshake12FragmentSpanE8push_mutBN_.exit6 ]
-  %.sroa.611.046 = phi i64 [ %i.ak, %.lr.ph ], [ %.sroa.611.2.ph.a, %_RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecNtNtNtNtCs7ZUl82OSlxp_6rustls4msgs8deframer9handshake12FragmentSpanE8push_mutBN_.exit6 ] ; 4 uses
-  %.sroa.010.045 = phi ptr [ %i.am, %.lr.ph ], [ %.sroa.010.2.ph, %_RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecNtNtNtNtCs7ZUl82OSlxp_6rustls4msgs8deframer9handshake12FragmentSpanE8push_mutBN_.exit6 ] ; 4 uses
+  %.sroa.010.044 = phi ptr [ %i.am, %.lr.ph ], [ %.sroa.010.2.ph, %_RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecNtNtNtNtCs7ZUl82OSlxp_6rustls4msgs8deframer9handshake12FragmentSpanE8push_mutBN_.exit6 ] ; 4 uses
+  %.sroa.611.046 = phi i64 [ %i.ak, %.lr.ph ], [ %.sroa.9.1.ph, %_RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecNtNtNtNtCs7ZUl82OSlxp_6rustls4msgs8deframer9handshake12FragmentSpanE8push_mutBN_.exit6 ] ; 4 uses
   %i.ar = icmp ult i64 %.sroa.611.046, 4
   br i1 %i.ar, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %i.as = ptrtoint ptr %.sroa.010.045 to i64
+  %i.as = ptrtoint ptr %.sroa.010.044 to i64
   %i.at = sub i64 %i.as, %i.ap                    ; 2 uses
   %i.au = add i64 %i.at, %.sroa.611.046
   br label %bb.i
 
 bb.g:                                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !107
-  %i.av = getelementptr inbounds nuw i8, ptr %.sroa.010.045, i64 1
+  %i.av = getelementptr inbounds nuw i8, ptr %.sroa.010.044, i64 1
   call void @_RNvYNtNtNtCs7ZUl82OSlxp_6rustls4msgs5codec3u24NtB4_5Codec10read_bytesB8_(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.av, i64 noundef 3), !noalias !107
   call void @llvm.experimental.noalias.scope.decl(metadata !111)
   %i.aw = load i8, ptr %i.b, align 8, !range !114, !alias.scope !111, !noalias !107, !noundef !4
@@ -232,17 +231,17 @@ bb.h:                                             ; preds = %bb.g
 
 _RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultNtNtNtCs7ZUl82OSlxp_6rustls4msgs5codec3u24NtNtBN_5error14InvalidMessageE6unwrapBN_.exit.i: ; preds = %bb.g
   %i.ax = add nsw i64 %.sroa.611.046, -4          ; 2 uses
-  %i.ay = getelementptr inbounds nuw i8, ptr %.sroa.010.045, i64 4
+  %i.ay = getelementptr inbounds nuw i8, ptr %.sroa.010.044, i64 4
   %i.az = load i32, ptr %i.an, align 4, !alias.scope !111, !noalias !107, !noundef !4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !107
   %i.ba = zext i32 %i.az to i64                   ; 5 uses
   %i.bb = icmp ugt i64 %i.ax, %i.ba               ; 2 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %i.ay, i64 %i.ba
   %i.bd = add nuw nsw i64 %i.ba, 4
-  %.sroa.010.1 = select i1 %i.bb, ptr %i.bc, ptr inttoptr (i64 1 to ptr)
   %.sroa.611.1 = call i64 @llvm.usub.sat.i64(i64 %i.ax, i64 %i.ba)
+  %.sroa.010.1 = select i1 %i.bb, ptr %i.bc, ptr inttoptr (i64 1 to ptr)
   %.sroa.01.0.i = select i1 %i.bb, i64 %i.bd, i64 %.sroa.611.046
-  %i.be = ptrtoint ptr %.sroa.010.045 to i64
+  %i.be = ptrtoint ptr %.sroa.010.044 to i64
   %i.bf = sub i64 %i.be, %i.ap                    ; 2 uses
   %i.bg = add i64 %i.bf, %.sroa.01.0.i
   %.pre48 = load i64, ptr %i.d, align 8, !alias.scope !117, !noalias !120
@@ -250,12 +249,12 @@ _RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultNtNtNtCs7ZUl82OSlxp_6rustls4msgs5c
 
 bb.i:                                             ; preds = %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultNtNtNtCs7ZUl82OSlxp_6rustls4msgs5codec3u24NtNtBN_5error14InvalidMessageE6unwrapBN_.exit.i, %bb.f
   %i.bh = phi i64 [ %i.aq, %bb.f ], [ %.pre48, %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultNtNtNtCs7ZUl82OSlxp_6rustls4msgs5codec3u24NtNtBN_5error14InvalidMessageE6unwrapBN_.exit.i ] ; 3 uses
+  %.sroa.11.0.ph = phi i64 [ %i.au, %bb.f ], [ %i.bg, %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultNtNtNtCs7ZUl82OSlxp_6rustls4msgs5codec3u24NtNtBN_5error14InvalidMessageE6unwrapBN_.exit.i ]
+  %.sroa.611.2.ph.a = phi i64 [ %i.at, %bb.f ], [ %i.bf, %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultNtNtNtCs7ZUl82OSlxp_6rustls4msgs5codec3u24NtNtBN_5error14InvalidMessageE6unwrapBN_.exit.i ]
+  %.sroa.015.0.ph.a = phi i64 [ undef, %bb.f ], [ %i.ba, %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultNtNtNtCs7ZUl82OSlxp_6rustls4msgs5codec3u24NtNtBN_5error14InvalidMessageE6unwrapBN_.exit.i ]
+  %.sroa.816.1.ph = phi i64 [ 0, %bb.f ], [ 1, %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultNtNtNtCs7ZUl82OSlxp_6rustls4msgs5codec3u24NtNtBN_5error14InvalidMessageE6unwrapBN_.exit.i ]
+  %.sroa.9.1.ph = phi i64 [ 0, %bb.f ], [ %.sroa.611.1, %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultNtNtNtCs7ZUl82OSlxp_6rustls4msgs5codec3u24NtNtBN_5error14InvalidMessageE6unwrapBN_.exit.i ] ; 2 uses
   %.sroa.010.2.ph = phi ptr [ inttoptr (i64 1 to ptr), %bb.f ], [ %.sroa.010.1, %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultNtNtNtCs7ZUl82OSlxp_6rustls4msgs5codec3u24NtNtBN_5error14InvalidMessageE6unwrapBN_.exit.i ]
-  %.sroa.611.2.ph.a = phi i64 [ 0, %bb.f ], [ %.sroa.611.1, %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultNtNtNtCs7ZUl82OSlxp_6rustls4msgs5codec3u24NtNtBN_5error14InvalidMessageE6unwrapBN_.exit.i ] ; 2 uses
-  %.sroa.015.0.ph.a = phi i64 [ 0, %bb.f ], [ 1, %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultNtNtNtCs7ZUl82OSlxp_6rustls4msgs5codec3u24NtNtBN_5error14InvalidMessageE6unwrapBN_.exit.i ]
-  %.sroa.816.1.ph = phi i64 [ %.sroa.816.047, %bb.f ], [ %i.ba, %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultNtNtNtCs7ZUl82OSlxp_6rustls4msgs5codec3u24NtNtBN_5error14InvalidMessageE6unwrapBN_.exit.i ] ; 2 uses
-  %.sroa.9.1.ph = phi i64 [ %i.at, %bb.f ], [ %i.bf, %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultNtNtNtCs7ZUl82OSlxp_6rustls4msgs5codec3u24NtNtBN_5error14InvalidMessageE6unwrapBN_.exit.i ]
-  %.sroa.11.1.ph = phi i64 [ %i.au, %bb.f ], [ %i.bg, %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultNtNtNtCs7ZUl82OSlxp_6rustls4msgs5codec3u24NtNtBN_5error14InvalidMessageE6unwrapBN_.exit.i ]
   %i.bi = load i64, ptr %0, align 8, !range !5, !alias.scope !117, !noalias !120, !noundef !4
   %i.bj = icmp eq i64 %i.bh, %i.bi
   br i1 %i.bj, label %bb.j, label %_RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecNtNtNtNtCs7ZUl82OSlxp_6rustls4msgs8deframer9handshake12FragmentSpanE8push_mutBN_.exit6
@@ -267,18 +266,18 @@ bb.j:                                             ; preds = %bb.i
 _RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecNtNtNtNtCs7ZUl82OSlxp_6rustls4msgs8deframer9handshake12FragmentSpanE8push_mutBN_.exit6: ; preds = %bb.i, %bb.j
   %i.bk = load ptr, ptr %i.f, align 8, !alias.scope !117, !noalias !120, !nonnull !4, !noundef !4
   %i.bl = getelementptr inbounds nuw [40 x i8], ptr %i.bk, i64 %i.bh ; 5 uses
-  store i64 %.sroa.015.0.ph.a, ptr %i.bl, align 8
+  store i64 %.sroa.816.1.ph, ptr %i.bl, align 8
   %.sroa.419.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bl, i64 8
-  store i64 %.sroa.816.1.ph, ptr %.sroa.419.0..sroa_idx, align 8
+  store i64 %.sroa.015.0.ph.a, ptr %.sroa.419.0..sroa_idx, align 8
   %.sroa.520.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bl, i64 16
-  store i64 %.sroa.9.1.ph, ptr %.sroa.520.0..sroa_idx, align 8
+  store i64 %.sroa.611.2.ph.a, ptr %.sroa.520.0..sroa_idx, align 8
   %.sroa.621.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bl, i64 24
-  store i64 %.sroa.11.1.ph, ptr %.sroa.621.0..sroa_idx, align 8
+  store i64 %.sroa.11.0.ph, ptr %.sroa.621.0..sroa_idx, align 8
   %.sroa.722.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bl, i64 32
   store <2 x i16> %i.ai, ptr %.sroa.722.0..sroa_idx, align 8
   %i.bm = add i64 %i.bh, 1                        ; 2 uses
   store i64 %i.bm, ptr %i.d, align 8, !alias.scope !117, !noalias !120
-  %i.bn = icmp eq i64 %.sroa.611.2.ph.a, 0
+  %i.bn = icmp eq i64 %.sroa.9.1.ph, 0
   br i1 %i.bn, label %_RNvXs1_NtNtNtCs7ZUl82OSlxp_6rustls4msgs8deframer9handshakeNtB5_20DissectHandshakeIterNtNtNtNtCsj6eKBz9Db1c_4core4iter6traits8iterator8Iterator4next.exit, label %bb.e
 }
 
@@ -681,8 +680,8 @@ bb.f:                                             ; preds = %bb.b, %switch.looku
   br label %bb.m
 
 bb.g:                                             ; preds = %bb.e, %bb.d, %bb.c, %bb.b
-  %.sroa.014.0.i = phi i64 [ 2, %bb.e ], [ 3, %bb.b ], [ 1, %bb.d ], [ 0, %bb.c ] ; 2 uses
   %.pn.i = phi { i64, ptr } [ %i.j, %bb.e ], [ %i.f, %bb.b ], [ %i.j, %bb.d ], [ %i.j, %bb.c ]
+  %.sroa.014.0.i = phi i64 [ 2, %bb.e ], [ 3, %bb.b ], [ 1, %bb.d ], [ 0, %bb.c ] ; 2 uses
   %.sroa.8.0.i = extractvalue { i64, ptr } %.pn.i, 1 ; 5 uses
   store i64 %.sroa.014.0.i, ptr %i.c, align 8
   %i.m = getelementptr inbounds nuw i8, ptr %i.c, i64 8

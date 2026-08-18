@@ -201,16 +201,16 @@ bb.n:                                             ; preds = %._crit_edge248, %bb
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.h, %bb.l, %bb.m, %bb.n
-  %.1173 = phi i32 [ %.0810.i, %bb.n ], [ %.0810.i, %bb.m ], [ %.0810.i, %bb.l ], [ %i.ad, %bb.h ]
-  %.1167 = phi i16 [ 0, %bb.n ], [ %i.o, %bb.m ], [ %i.o, %bb.l ], [ 0, %bb.h ]
+  %.1185 = phi i16 [ 0, %bb.n ], [ %i.o, %bb.m ], [ %i.o, %bb.l ], [ 0, %bb.h ]
+  %.1182 = phi i32 [ %.0810.i, %bb.n ], [ %.0810.i, %bb.m ], [ %.0810.i, %bb.l ], [ %i.ad, %bb.h ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #8
-  %i.bf = zext nneg i16 %.1167 to i32
-  %i.bg = zext i32 %.1173 to i64
+  %i.bf = zext nneg i16 %.1185 to i32
+  %i.bg = zext i32 %.1182 to i64
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %bb.a
-  %.2174 = phi i64 [ %i.bg, %bb.o ], [ 4294967295, %bb.a ]
-  %.2168 = phi i32 [ %i.bf, %bb.o ], [ 0, %bb.a ] ; 2 uses
+  %.2186 = phi i32 [ %i.bf, %bb.o ], [ 0, %bb.a ] ; 2 uses
+  %.2183 = phi i64 [ %i.bg, %bb.o ], [ 4294967295, %bb.a ]
   %i.bh = load ptr, ptr %i.d, align 8
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 216 ; 8 uses
   %i.bj = load i32, ptr %i.bi, align 8
@@ -224,7 +224,7 @@ bb.p:                                             ; preds = %bb.o, %bb.a
 .lr.ph231:                                        ; preds = %bb.p
   %i.bo = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 280 ; 3 uses
-  %i.bq = zext nneg i32 %.2168 to i64             ; 3 uses
+  %i.bq = zext nneg i32 %.2186 to i64             ; 3 uses
   br label %bb.q
 
 ._crit_edge232:                                   ; preds = %bb.aw
@@ -233,7 +233,6 @@ bb.p:                                             ; preds = %bb.o, %bb.a
 bb.q:                                             ; preds = %.lr.ph231, %bb.aw
   %indvars.iv243 = phi i64 [ 0, %.lr.ph231 ], [ %indvars.iv.next244, %bb.aw ] ; 4 uses
   %.0175229 = phi i1 [ false, %.lr.ph231 ], [ %.2177, %bb.aw ] ; 3 uses
-  %.0179228 = phi i16 [ undef, %.lr.ph231 ], [ %.4, %bb.aw ] ; 6 uses
   %i.br = load ptr, ptr %i.bo, align 8
   %i.bs = getelementptr inbounds nuw [104 x i8], ptr %i.br, i64 %indvars.iv243 ; 13 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bs, i64 72 ; 3 uses
@@ -242,7 +241,7 @@ bb.q:                                             ; preds = %.lr.ph231, %bb.aw
   %i.bw = zext i32 %i.bv to i64
   %i.bx = tail call i32 @slurm_bit_test(ptr noundef %i.bu, i64 noundef %i.bw) #8
   %i.by = icmp ne i32 %i.bx, 0                    ; 4 uses
-  %i.bz = icmp eq i64 %.2174, %indvars.iv243      ; 3 uses
+  %i.bz = icmp eq i64 %.2183, %indvars.iv243      ; 3 uses
   %or.cond3 = select i1 %i.bz, i1 true, i1 %i.by
   br i1 %or.cond3, label %bb.r, label %bb.aw
 
@@ -260,7 +259,7 @@ bb.s:                                             ; preds = %bb.r
 bb.t:                                             ; preds = %bb.s
   %i.cd = load ptr, ptr %i.bp, align 8
   %i.ce = load ptr, ptr %i.bs, align 8
-  tail call void (i32, ptr, ...) @slurm_log_var(i32 noundef 6, ptr noundef nonnull @.str.6, ptr noundef nonnull @plugin_type, ptr noundef nonnull @__func__.topology_p_add_rm_node, ptr noundef %i.cd, ptr noundef %i.ce, i32 noundef %.2168) #8
+  tail call void (i32, ptr, ...) @slurm_log_var(i32 noundef 6, ptr noundef nonnull @.str.6, ptr noundef nonnull @plugin_type, ptr noundef nonnull @__func__.topology_p_add_rm_node, ptr noundef %i.cd, ptr noundef %i.ce, i32 noundef %.2186) #8
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %bb.s
@@ -283,7 +282,6 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   br label %bb.v
 
 ._crit_edge:                                      ; preds = %bb.z, %bb.u
-  %.1180.lcssa = phi i16 [ %.0179228, %bb.u ], [ %.2181, %bb.z ]
   %i.co = tail call ptr @slurm_hostlist_ranged_string_xmalloc(ptr noundef %i.ca) #8
   store ptr %i.co, ptr %i.ci, align 8
   tail call void @slurm_hostlist_destroy(ptr noundef %i.ca) #8
@@ -291,7 +289,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s
 
 bb.v:                                             ; preds = %.lr.ph, %bb.z
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.z ] ; 4 uses
-  %.1180213 = phi i16 [ %.0179228, %.lr.ph ], [ %.2181, %bb.z ] ; 2 uses
+  %.1180213 = phi i16 [ undef, %.lr.ph ], [ %.2181, %bb.z ] ; 2 uses
   %.0183212 = phi i1 [ false, %.lr.ph ], [ %.1184, %bb.z ]
   %i.cp = icmp eq i64 %indvars.iv, %i.bq
   br i1 %i.cp, label %bb.w, label %bb.x
@@ -316,7 +314,7 @@ bb.y:                                             ; preds = %bb.x
 
 bb.z:                                             ; preds = %bb.x, %bb.y, %bb.w
   %.1184 = phi i1 [ true, %bb.w ], [ true, %bb.y ], [ false, %bb.x ]
-  %.2181 = phi i16 [ %i.cr, %bb.w ], [ %i.cv, %bb.y ], [ %.1180213, %bb.x ] ; 2 uses
+  %.2181 = phi i16 [ %i.cr, %bb.w ], [ %i.cv, %bb.y ], [ %.1180213, %bb.x ]
   %i.cx = load ptr, ptr @node_record_table_ptr, align 8
   %i.cy = getelementptr inbounds nuw [4 x i8], ptr %i.cm, i64 %indvars.iv
   %i.cz = load i32, ptr %i.cy, align 4
@@ -522,14 +520,12 @@ bb.au:                                            ; preds = %.sink.split, %bb.as
   br i1 %i.fw, label %bb.an, label %._crit_edge221, !llvm.loop !13
 
 bb.av:                                            ; preds = %._crit_edge226, %._crit_edge221, %bb.aj, %._crit_edge
-  %.3182 = phi i16 [ %.0179228, %._crit_edge226 ], [ %.0179228, %._crit_edge221 ], [ %.0179228, %bb.aj ], [ %.1180.lcssa, %._crit_edge ]
   %.1176 = phi i1 [ %.0175229, %._crit_edge226 ], [ true, %._crit_edge221 ], [ %.0175229, %bb.aj ], [ true, %._crit_edge ]
   %i.fx = trunc nuw nsw i64 %indvars.iv243 to i32
   tail call void @ring_record_update_ring_config(ptr noundef %2, i32 noundef %i.fx) #8
   br label %bb.aw
 
 bb.aw:                                            ; preds = %bb.q, %bb.av
-  %.4 = phi i16 [ %.3182, %bb.av ], [ %.0179228, %bb.q ]
   %.2177 = phi i1 [ %.1176, %bb.av ], [ %.0175229, %bb.q ] ; 2 uses
   %indvars.iv.next244 = add nuw nsw i64 %indvars.iv243, 1 ; 2 uses
   %i.fy = load i32, ptr %i.bl, align 8

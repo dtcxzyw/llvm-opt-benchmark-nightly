@@ -201,39 +201,51 @@ bb.c:                                             ; preds = %bb.b, %.lr.ph.i
 
 FindPenByInstanceId.exit:                         ; preds = %bb.c
   %i.j = getelementptr inbounds nuw i8, ptr %i.g, i64 76 ; 3 uses
-  %i.k = load i32, ptr %i.j, align 4              ; 3 uses
+  %i.k = load i32, ptr %i.j, align 4              ; 4 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.g, i64 68
   %i.m = load <2 x float>, ptr %i.l, align 4      ; 4 uses
-  %6 = and i32 %i.k, -2
-  %masksel = zext i1 %4 to i32
-  %.061 = or disjoint i32 %6, %masksel            ; 3 uses
-  %i.n = and i32 %i.k, 1073741824
+  %i.n = and i32 %i.k, 1
   %i.o = icmp eq i32 %i.n, 0                      ; 2 uses
-  %or.cond81.a = select i1 %3, i1 %i.o, i1 false
-  br i1 %or.cond81.a, label %.thread, label %bb.d
+  %or.cond81.a = select i1 %4, i1 %i.o, i1 false
+  br i1 %or.cond81.a, label %6, label %8
 
-.thread:                                          ; preds = %FindPenByInstanceId.exit
-  %i.p = or disjoint i32 %.061, 1073741824        ; 2 uses
+6:                                                ; preds = %FindPenByInstanceId.exit
+  %7 = or disjoint i32 %i.k, 1
+  br label %10
+
+8:                                                ; preds = %FindPenByInstanceId.exit
+  %or.cond79 = select i1 %4, i1 true, i1 %i.o
+  %9 = and i32 %i.k, -2
+  %spec.select84 = select i1 %4, i32 %i.k, i32 %9
+  br label %10
+
+10:                                               ; preds = %8, %6
+  %.063.not = phi i1 [ false, %6 ], [ %or.cond79, %8 ]
+  %.062 = phi i32 [ %7, %6 ], [ %spec.select84, %8 ] ; 4 uses
+  %11 = and i32 %.062, 1073741824
+  %12 = icmp eq i32 %11, 0                        ; 2 uses
+  %or.cond81 = select i1 %3, i1 %12, i1 false
+  br i1 %or.cond81, label %.thread, label %bb.d
+
+.thread:                                          ; preds = %10
+  %i.p = or disjoint i32 %.062, 1073741824        ; 2 uses
   store i32 %i.p, ptr %i.j, align 4
   %i.q = load ptr, ptr @pen_device_rwlock, align 8
   tail call void @SDL_UnlockRWLock_REAL(ptr noundef %i.q) #7
   br label %bb.e
 
-bb.d:                                             ; preds = %FindPenByInstanceId.exit
-  %7 = and i32 %i.k, 1
-  %8 = icmp eq i32 %7, 0
-  %.0.not = xor i1 %4, %8
-  %or.cond82 = select i1 %3, i1 true, i1 %i.o
-  %i.r = and i32 %.061, -1073741825
-  %spec.select85 = select i1 %3, i32 %.061, i32 %i.r ; 2 uses
-  %spec.select86.not = select i1 %or.cond82, i1 %.0.not, i1 false
-  store i32 %spec.select85, ptr %i.j, align 4
+bb.d:                                             ; preds = %10
+  %or.cond82 = select i1 %3, i1 true, i1 %12
+  %i.r = and i32 %.062, -1073741825
+  %spec.select85.not = select i1 %or.cond82, i1 %.063.not, i1 false
+  %spec.select86 = select i1 %3, i32 %.062, i32 %i.r ; 2 uses
+  store i32 %spec.select86, ptr %i.j, align 4
   %i.s = load ptr, ptr @pen_device_rwlock, align 8
   tail call void @SDL_UnlockRWLock_REAL(ptr noundef %i.s) #7
-  br i1 %spec.select86.not, label %bb.w, label %bb.e
+  br i1 %spec.select85.not, label %bb.w, label %bb.e
 
 bb.e:                                             ; preds = %.thread, %bb.d
-  %.16291 = phi i32 [ %i.p, %.thread ], [ %spec.select85, %bb.d ]
+  %.16291 = phi i32 [ %i.p, %.thread ], [ %spec.select86, %bb.d ]
   %i.t = select i1 %4, i32 4866, i32 4867         ; 2 uses
   %i.u = tail call zeroext i1 @SDL_EventEnabled_REAL(i32 noundef %i.t) #7
   br i1 %i.u, label %bb.f, label %bb.i

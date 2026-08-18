@@ -203,7 +203,7 @@ bb.a:
   %39 = alloca %"class.std::vector.35", align 16  ; 10 uses
   %40 = alloca %"class.arrow::Result.57", align 8 ; 13 uses
   %41 = alloca %"class.arrow::Result.102", align 8 ; 15 uses
-  %42 = alloca %"class.std::vector.35", align 16  ; 9 uses
+  %42 = alloca %"class.std::vector.35", align 8   ; 9 uses
   %43 = alloca %"class.arrow::Result.57", align 8 ; 16 uses
   %44 = alloca %"class.arrow::Result.144", align 8 ; 14 uses
   %45 = alloca %"class.std::vector.9", align 16   ; 12 uses
@@ -606,16 +606,15 @@ bb.agi:                                           ; preds = %bb.agf
   call void @llvm.lifetime.start.p0(ptr nonnull %42) #20, !noalias !499
   call void @llvm.experimental.noalias.scope.decl(metadata !564)
   call void @llvm.experimental.noalias.scope.decl(metadata !567)
-  %118 = getelementptr inbounds nuw i8, ptr %41, i64 8 ; 3 uses
-  %i.dah = getelementptr inbounds nuw i8, ptr %42, i64 8
-  %119 = load <2 x ptr>, ptr %118, align 8, !tbaa !203, !noalias !570
-  %120 = load ptr, ptr %118, align 8, !tbaa !116, !noalias !570
-  store <2 x ptr> %119, ptr %42, align 16, !tbaa !203, !alias.scope !571, !noalias !499
-  %i.dai = getelementptr inbounds nuw i8, ptr %42, i64 16 ; 2 uses
-  %i.daj = getelementptr inbounds nuw i8, ptr %41, i64 24
-  %121 = load ptr, ptr %i.daj, align 8, !tbaa !206, !noalias !570
-  store ptr %121, ptr %i.dai, align 16, !tbaa !206, !alias.scope !571, !noalias !499
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %118, i8 0, i64 24, i1 false), !noalias !570
+  %i.dah = getelementptr inbounds nuw i8, ptr %41, i64 8 ; 2 uses
+  %118 = load ptr, ptr %i.dah, align 8, !tbaa !116, !noalias !570 ; 2 uses
+  store ptr %118, ptr %42, align 8, !tbaa !116, !alias.scope !571, !noalias !499
+  %119 = getelementptr inbounds nuw i8, ptr %42, i64 8 ; 2 uses
+  %i.dai = getelementptr inbounds nuw i8, ptr %41, i64 16
+  %i.daj = getelementptr inbounds nuw i8, ptr %42, i64 16
+  %120 = load <2 x ptr>, ptr %i.dai, align 8, !tbaa !203, !noalias !570
+  store <2 x ptr> %120, ptr %119, align 8, !tbaa !203, !alias.scope !571, !noalias !499
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.dah, i8 0, i64 24, i1 false), !noalias !570
   call void @llvm.lifetime.start.p0(ptr nonnull %43) #20, !noalias !499
   call void @llvm.experimental.noalias.scope.decl(metadata !572)
   %i.dak = load ptr, ptr %i.cjw, align 8, !tbaa !42, !noalias !572
@@ -700,10 +699,10 @@ bb.agk:                                           ; preds = %.noexc74.i
 
 bb.agl:                                           ; preds = %bb.ahl, %.lr.ph153.i.i
   %i.dcb = phi ptr [ %i.dbl, %.lr.ph153.i.i ], [ %i.dhs, %bb.ahl ]
-  %.077150.i.i = phi ptr [ %i.dbw, %.lr.ph153.i.i ], [ %i.dhn, %bb.ahl ] ; 4 uses
-  %.079149.i.i = phi i64 [ 0, %.lr.ph153.i.i ], [ %i.dho, %bb.ahl ] ; 3 uses
-  %i.dcc = getelementptr inbounds nuw [16 x i8], ptr %i.dcb, i64 %.079149.i.i ; 5 uses
-  %i.dcd = getelementptr inbounds nuw [16 x i8], ptr %120, i64 %.079149.i.i
+  %.060151.i.i = phi i64 [ 0, %.lr.ph153.i.i ], [ %i.dho, %bb.ahl ] ; 3 uses
+  %.061149.i.i = phi ptr [ %i.dbw, %.lr.ph153.i.i ], [ %i.dhn, %bb.ahl ] ; 4 uses
+  %i.dcc = getelementptr inbounds nuw [16 x i8], ptr %i.dcb, i64 %.060151.i.i ; 5 uses
+  %i.dcd = getelementptr inbounds nuw [16 x i8], ptr %118, i64 %.060151.i.i
   %i.dce = load ptr, ptr %i.dcd, align 8, !tbaa !164, !noalias !572 ; 2 uses
   %i.dcf = getelementptr inbounds nuw i8, ptr %i.dce, i64 9
   %i.dcg = load i8, ptr %i.dcf, align 1, !tbaa !167, !range !65, !noalias !572, !noundef !66
@@ -760,7 +759,7 @@ _ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit98.i.i: ; preds = %bb.ago, %bb.agn
   %i.ddj = load i64, ptr %i.ddi, align 8, !tbaa !163, !noalias !572
   %i.ddk = getelementptr inbounds nuw i8, ptr %i.dcx, i64 16
   %i.ddl = load i64, ptr %i.ddk, align 8, !tbaa !119, !noalias !572
-  invoke void @_ZN5arrow8internal13TransposeIntsERKNS_8DataTypeES3_PKhPhlllPKi(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Status") align 8 %20, ptr noundef nonnull align 8 dereferenceable(72) %i.cjw, ptr noundef nonnull align 8 dereferenceable(72) %i.cjw, ptr noundef %.0.i97.i.i, ptr noundef %.077150.i.i, i64 noundef %i.ddj, i64 noundef 0, i64 noundef %i.ddl, ptr noundef %i.dck)
+  invoke void @_ZN5arrow8internal13TransposeIntsERKNS_8DataTypeES3_PKhPhlllPKi(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Status") align 8 %20, ptr noundef nonnull align 8 dereferenceable(72) %i.cjw, ptr noundef nonnull align 8 dereferenceable(72) %i.cjw, ptr noundef %.0.i97.i.i, ptr noundef %.061149.i.i, i64 noundef %i.ddj, i64 noundef 0, i64 noundef %i.ddl, ptr noundef %i.dck)
           to label %_ZN5arrow6StatusD2Ev.exit.i72.i unwind label %bb.ags, !noalias !572
 
 _ZN5arrow6StatusD2Ev.exit.i72.i:                  ; preds = %_ZNK5arrow9ArrayData9GetValuesIhEEPKT_il.exit98.i.i
@@ -951,7 +950,7 @@ bb.ahc:                                           ; preds = %bb.ahb
   %i.dgu = getelementptr inbounds nuw i8, ptr %i.dgt, i64 32
   %i.dgv = load i64, ptr %i.dgu, align 8, !tbaa !163, !noalias !572
   %i.dgw = add nsw i64 %i.dgv, %.069145.i.i
-  invoke void @_ZN5arrow8internal13TransposeIntsERKNS_8DataTypeES3_PKhPhlllPKi(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Status") align 8 %23, ptr noundef nonnull align 8 dereferenceable(72) %i.cjw, ptr noundef nonnull align 8 dereferenceable(72) %i.cjw, ptr noundef %.0.i.i.i, ptr noundef %.077150.i.i, i64 noundef %i.dgw, i64 noundef %.069145.i.i, i64 noundef %i.dgp, ptr noundef %i.dck)
+  invoke void @_ZN5arrow8internal13TransposeIntsERKNS_8DataTypeES3_PKhPhlllPKi(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Status") align 8 %23, ptr noundef nonnull align 8 dereferenceable(72) %i.cjw, ptr noundef nonnull align 8 dereferenceable(72) %i.cjw, ptr noundef %.0.i.i.i, ptr noundef %.061149.i.i, i64 noundef %i.dgw, i64 noundef %.069145.i.i, i64 noundef %i.dgp, ptr noundef %i.dck)
           to label %_ZN5arrow6StatusD2Ev.exit106.i.i unwind label %bb.ahg, !noalias !572
 
 _ZN5arrow6StatusD2Ev.exit106.i.i:                 ; preds = %bb.ahc
@@ -989,7 +988,7 @@ bb.ahh:                                           ; preds = %bb.ahb
 
 .lr.ph.i.i.i.i70.i:                               ; preds = %bb.ahh
   %i.dhe = mul nsw i64 %.069145.i.i, %i.dba
-  %i.dhf = getelementptr inbounds i8, ptr %.077150.i.i, i64 %i.dhe
+  %i.dhf = getelementptr inbounds i8, ptr %.061149.i.i, i64 %i.dhe
   %gepdiff.i.i = mul i64 %i.dgp, %i.dba
   call void @llvm.memset.p0.i64(ptr align 1 %i.dhf, i8 0, i64 %gepdiff.i.i, i1 false), !tbaa !45, !noalias !572
   br label %bb.ahi
@@ -1028,8 +1027,8 @@ bb.ahl:                                           ; preds = %_ZN5arrow6StatusD2E
   %i.dhk = getelementptr inbounds nuw i8, ptr %i.dhj, i64 16
   %i.dhl = load i64, ptr %i.dhk, align 8, !tbaa !119, !noalias !572
   %i.dhm = mul nsw i64 %i.dhl, %i.dba
-  %i.dhn = getelementptr inbounds i8, ptr %.077150.i.i, i64 %i.dhm
-  %i.dho = add nuw i64 %.079149.i.i, 1            ; 2 uses
+  %i.dhn = getelementptr inbounds i8, ptr %.061149.i.i, i64 %i.dhm
+  %i.dho = add nuw i64 %.060151.i.i, 1            ; 2 uses
   %i.dhp = load ptr, ptr %1, align 8, !tbaa !111, !noalias !576, !nonnull !66, !align !132 ; 2 uses
   %i.dhq = getelementptr inbounds nuw i8, ptr %i.dhp, i64 8
   %i.dhr = load ptr, ptr %i.dhq, align 8, !tbaa !71, !noalias !572
@@ -1286,8 +1285,8 @@ bb.aij:                                           ; preds = %_ZN5arrow6ResultISt
 
 _ZN5arrow6ResultISt10shared_ptrINS_6BufferEEED2Ev.exit96.i: ; preds = %bb.aij, %_ZN5arrow6ResultISt10shared_ptrINS_6BufferEEE7DestroyEv.exit.thread.i87.i, %_ZN5arrow6ResultISt10shared_ptrINS_6BufferEEE7DestroyEv.exit.i93.i
   call void @llvm.lifetime.end.p0(ptr nonnull %43) #20, !noalias !499
-  %i.dkr = load ptr, ptr %42, align 16, !tbaa !116, !noalias !499 ; 3 uses
-  %i.dks = load ptr, ptr %i.dah, align 8, !tbaa !113, !noalias !499 ; 2 uses
+  %i.dkr = load ptr, ptr %42, align 8, !tbaa !116, !noalias !499 ; 3 uses
+  %i.dks = load ptr, ptr %119, align 8, !tbaa !113, !noalias !499 ; 2 uses
   %.not4.i.i.i.i402 = icmp eq ptr %i.dkr, %i.dks
   br i1 %.not4.i.i.i.i402, label %_ZSt8_DestroyIPSt10shared_ptrIN5arrow6BufferEES3_EvT_S5_RSaIT0_E.exit.i.i410, label %.lr.ph.i.i.i.i403
 
@@ -1348,7 +1347,7 @@ _ZSt8_DestroyISt10shared_ptrIN5arrow6BufferEEEvPT_.exit.i.i.i.i408: ; preds = %b
   br i1 %.not.i.i.i98.i, label %_ZSt8_DestroyIPSt10shared_ptrIN5arrow6BufferEES3_EvT_S5_RSaIT0_E.exitthread-pre-split.i.i409, label %.lr.ph.i.i.i.i403, !llvm.loop !118
 
 _ZSt8_DestroyIPSt10shared_ptrIN5arrow6BufferEES3_EvT_S5_RSaIT0_E.exitthread-pre-split.i.i409: ; preds = %_ZSt8_DestroyISt10shared_ptrIN5arrow6BufferEEEvPT_.exit.i.i.i.i408
-  %.pr.i99.i = load ptr, ptr %42, align 16, !tbaa !116, !noalias !499
+  %.pr.i99.i = load ptr, ptr %42, align 8, !tbaa !116, !noalias !499
   br label %_ZSt8_DestroyIPSt10shared_ptrIN5arrow6BufferEES3_EvT_S5_RSaIT0_E.exit.i.i410
 
 _ZSt8_DestroyIPSt10shared_ptrIN5arrow6BufferEES3_EvT_S5_RSaIT0_E.exit.i.i410: ; preds = %_ZSt8_DestroyIPSt10shared_ptrIN5arrow6BufferEES3_EvT_S5_RSaIT0_E.exitthread-pre-split.i.i409, %_ZN5arrow6ResultISt10shared_ptrINS_6BufferEEED2Ev.exit96.i
@@ -1357,7 +1356,7 @@ _ZSt8_DestroyIPSt10shared_ptrIN5arrow6BufferEES3_EvT_S5_RSaIT0_E.exit.i.i410: ; 
   br i1 %.not.i.i1.i.i411, label %_ZNSt6vectorISt10shared_ptrIN5arrow6BufferEESaIS3_EED2Ev.exit.i412, label %bb.aiq
 
 bb.aiq:                                           ; preds = %_ZSt8_DestroyIPSt10shared_ptrIN5arrow6BufferEES3_EvT_S5_RSaIT0_E.exit.i.i410
-  %i.dlm = load ptr, ptr %i.dai, align 16, !tbaa !206, !noalias !499
+  %i.dlm = load ptr, ptr %i.daj, align 8, !tbaa !206, !noalias !499
   %i.dln = ptrtoint ptr %i.dlm to i64
   %i.dlo = ptrtoint ptr %i.dll to i64
   %i.dlp = sub i64 %i.dln, %i.dlo
@@ -1560,15 +1559,15 @@ bb.aji:                                           ; preds = %_ZN5arrow8internal2
   br label %bb.ajk
 
 bb.ajj:                                           ; preds = %_ZN5arrow9ArraySpanD2Ev.exit.i448
-  %i.dnq = getelementptr inbounds nuw i8, ptr %.sroa.011.019.i, i64 16 ; 2 uses
+  %i.dnq = getelementptr inbounds nuw i8, ptr %.sroa.011.020.i, i64 16 ; 2 uses
   %i.dnr = icmp eq ptr %i.dnq, %i.dnj
   br i1 %i.dnr, label %.critedge57.loopexit.i, label %bb.ajk
 
 bb.ajk:                                           ; preds = %bb.ajj, %.lr.ph.i436
-  %.020.i = phi i64 [ 0, %.lr.ph.i436 ], [ %i.dnx, %bb.ajj ]
-  %.sroa.011.019.i = phi ptr [ %i.dnh, %.lr.ph.i436 ], [ %i.dnq, %bb.ajj ] ; 2 uses
+  %.sroa.011.020.i = phi ptr [ %i.dnh, %.lr.ph.i436 ], [ %i.dnq, %bb.ajj ] ; 2 uses
+  %.019.i = phi i64 [ 0, %.lr.ph.i436 ], [ %i.dnx, %bb.ajj ]
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #20, !noalias !608
-  %i.dns = load ptr, ptr %.sroa.011.019.i, align 8, !tbaa !75, !noalias !608
+  %i.dns = load ptr, ptr %.sroa.011.020.i, align 8, !tbaa !75, !noalias !608
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(128) %11, i8 0, i64 16, i1 false), !noalias !608
   store i64 -1, ptr %i.dnl, align 8, !tbaa !233, !noalias !608
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(104) %i.dnm, i8 0, i64 104, i1 false), !noalias !608
@@ -1586,7 +1585,7 @@ _ZN5arrow9ArraySpanC2ERKNS_9ArrayDataE.exit.i439: ; preds = %bb.ajk
           to label %bb.ajm unwind label %bb.ajp, !noalias !608
 
 bb.ajm:                                           ; preds = %_ZN5arrow9ArraySpanC2ERKNS_9ArrayDataE.exit.i439
-  %i.dnv = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %.020.i, i64 %i.dnu) ; 2 uses
+  %i.dnv = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %.019.i, i64 %i.dnu) ; 2 uses
   %i.dnw = extractvalue { i64, i1 } %i.dnv, 1
   %i.dnx = extractvalue { i64, i1 } %i.dnv, 0     ; 2 uses
   %i.dny = load ptr, ptr %i.dnn, align 8, !tbaa !246, !noalias !608 ; 3 uses
@@ -1989,11 +1988,11 @@ bb.a:
   br i1 %i.a, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %.critedge
-  %.013 = phi i64 [ %i.f, %.critedge ], [ 0, %bb.a ]
-  %.sroa.09.012 = phi ptr [ %i.g, %.critedge ], [ %.0.val, %bb.a ] ; 2 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %.sroa.09.012, i64 16
+  %.sroa.09.014 = phi ptr [ %i.g, %.critedge ], [ %.0.val, %bb.a ] ; 2 uses
+  %.01113 = phi i64 [ %i.f, %.critedge ], [ 0, %bb.a ]
+  %i.b = getelementptr inbounds nuw i8, ptr %.sroa.09.014, i64 16
   %i.c = load i64, ptr %i.b, align 8, !tbaa !710
-  %i.d = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %.013, i64 %i.c) ; 2 uses
+  %i.d = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %.01113, i64 %i.c) ; 2 uses
   %i.e = extractvalue { i64, i1 } %i.d, 1
   br i1 %i.e, label %bb.b, label %.critedge
 
@@ -2003,7 +2002,7 @@ bb.b:                                             ; preds = %.lr.ph
 
 .critedge:                                        ; preds = %.lr.ph
   %i.f = extractvalue { i64, i1 } %i.d, 0         ; 2 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %.sroa.09.012, i64 24 ; 2 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %.sroa.09.014, i64 24 ; 2 uses
   %i.h = icmp eq ptr %i.g, %.8.val
   br i1 %i.h, label %._crit_edge, label %.lr.ph
 

@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %bb.g
   br label %.lr.ph671.i
 
 bb.i:                                             ; preds = %.lr.ph671.i, %.backedge.i
-  %.1116670.i = phi ptr [ %.1116.ph691.i, %.lr.ph671.i ], [ %.1116.be.i, %.backedge.i ] ; 4 uses
+  %.1116670.i = phi ptr [ %.1122.ph690.i, %.lr.ph671.i ], [ %.1116.be.i, %.backedge.i ] ; 4 uses
   %i.cr = load ptr, ptr %i.u, align 8, !tbaa !25
   %.val.i184.i = load ptr, ptr %i.w, align 8, !tbaa !51
   %.val4.i185.i = load i64, ptr %i.x, align 8, !tbaa !52
@@ -607,8 +607,8 @@ bb.cl:                                            ; preds = %bb.ag
   br label %bb.cm
 
 bb.cm:                                            ; preds = %._crit_edge.i.thread115, %._crit_edge.i.thread, %bb.cl, %.thread525.i
-  %.sroa.79.1.i = phi i32 [ %spec.select.i, %._crit_edge.i.thread115 ], [ %.sroa.35.0630.i, %.thread525.i ], [ %i.ew, %bb.cl ], [ %spec.select.i, %._crit_edge.i.thread ] ; 3 uses
   %.sroa.0.1.i = phi ptr [ %i.gb, %._crit_edge.i.thread115 ], [ %i.gb, %.thread525.i ], [ %i.fn, %bb.cl ], [ %i.gb, %._crit_edge.i.thread ] ; 5 uses
+  %.sroa.79.1.i = phi i32 [ %spec.select.i, %._crit_edge.i.thread115 ], [ %.sroa.35.0630.i, %.thread525.i ], [ %i.ew, %bb.cl ], [ %spec.select.i, %._crit_edge.i.thread ] ; 3 uses
   %i.aqn = icmp ult i32 %.sroa.79.1.i, 4
   br i1 %i.aqn, label %bb.cn, label %bb.co
 
@@ -619,7 +619,7 @@ bb.cn:                                            ; preds = %bb.cm, %.thread996.
   br label %.backedge.i
 
 bb.co:                                            ; preds = %bb.cm
-  %i.aqo = add i32 %.0120.ph690.i, 1              ; 2 uses
+  %i.aqo = add i32 %.0117.ph691.i, 1              ; 2 uses
   %i.aqp = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.d, i64 noundef 1023, ptr noundef nonnull @.str.474, ptr noundef nonnull %i.l, i32 noundef %i.aqo) #14 ; 0 uses
   store i8 0, ptr %i.cq, align 1, !tbaa !50
   %i.aqq = call i32 (ptr, i32, ...) @open(ptr noundef nonnull %i.d, i32 noundef 578, i32 noundef 384) #14 ; 6 uses
@@ -685,8 +685,8 @@ bb.cx:                                            ; preds = %bb.cw
   br i1 %i.arg, label %.lr.ph671.i, label %ea05.exit
 
 .lr.ph671.i:                                      ; preds = %.outer.i, %.lr.ph671.lr.ph.i
-  %.1116.ph691.i = phi ptr [ %scevgep.i, %.lr.ph671.lr.ph.i ], [ %i.fu, %.outer.i ]
-  %.0120.ph690.i = phi i32 [ 0, %.lr.ph671.lr.ph.i ], [ %i.aqo, %.outer.i ]
+  %.0117.ph691.i = phi i32 [ 0, %.lr.ph671.lr.ph.i ], [ %i.aqo, %.outer.i ]
+  %.1122.ph690.i = phi ptr [ %scevgep.i, %.lr.ph671.lr.ph.i ], [ %i.fu, %.outer.i ]
   br label %bb.i
 
 .thread551.i:                                     ; preds = %bb.al, %bb.af
@@ -765,12 +765,12 @@ bb.dd:                                            ; preds = %bb.db
   br label %bb.de
 
 bb.de:                                            ; preds = %bb.il, %.lr.ph491.i
-  %.0214489.i = phi ptr [ %i.aru, %.lr.ph491.i ], [ %.1215.i, %bb.il ] ; 4 uses
-  %.0221488.i = phi i32 [ 0, %.lr.ph491.i ], [ %.1222.i, %bb.il ] ; 4 uses
+  %.0221489.i = phi i32 [ 0, %.lr.ph491.i ], [ %.1222.i, %bb.il ] ; 4 uses
+  %.0236488.i = phi ptr [ %i.aru, %.lr.ph491.i ], [ %.1237.i, %bb.il ] ; 4 uses
   %i.asj = load ptr, ptr %i.arv, align 8, !tbaa !25
   %.val.i.i27 = load ptr, ptr %i.arw, align 8, !tbaa !51
   %.val4.i.i28 = load i64, ptr %i.arx, align 8, !tbaa !52
-  %i.ask = ptrtoint ptr %.0214489.i to i64
+  %i.ask = ptrtoint ptr %.0236488.i to i64
   %i.asl = ptrtoint ptr %.val.i.i27 to i64
   %i.asm = add i64 %.val4.i.i28, %i.asl
   %i.asn = sub i64 %i.ask, %i.asm
@@ -779,7 +779,7 @@ bb.de:                                            ; preds = %bb.il, %.lr.ph491.i
   br i1 %.not.i29, label %ea06.exit, label %bb.df
 
 bb.df:                                            ; preds = %bb.de
-  %i.asp = load i32, ptr %.0214489.i, align 1, !tbaa !50 ; 2 uses
+  %i.asp = load i32, ptr %.0236488.i, align 1, !tbaa !50 ; 2 uses
   %.not287.i = icmp eq i32 %i.asp, 1388987243
   br i1 %.not287.i, label %bb.dh, label %bb.dg
 
@@ -788,7 +788,7 @@ bb.dg:                                            ; preds = %bb.df
   br label %ea06.exit
 
 bb.dh:                                            ; preds = %bb.df
-  %i.asq = getelementptr inbounds nuw i8, ptr %.0214489.i, i64 4
+  %i.asq = getelementptr inbounds nuw i8, ptr %.0236488.i, i64 4
   %i.asr = load i32, ptr %i.asq, align 1, !tbaa !50 ; 2 uses
   %i.ass = xor i32 %i.asr, 44476                  ; 3 uses
   %i.ast = shl i32 %i.ass, 1                      ; 9 uses
@@ -796,7 +796,7 @@ bb.dh:                                            ; preds = %bb.df
   br i1 %i.asu, label %ea06.exit, label %bb.di
 
 bb.di:                                            ; preds = %bb.dh
-  %i.asv = getelementptr inbounds nuw i8, ptr %.0214489.i, i64 8 ; 3 uses
+  %i.asv = getelementptr inbounds nuw i8, ptr %.0236488.i, i64 8 ; 3 uses
   %i.asw = icmp ult i32 %i.ass, 300
   br i1 %i.asw, label %bb.dj, label %bb.dq
 
@@ -1199,7 +1199,7 @@ bb.eh:                                            ; preds = %bb.eg
 
 bb.ei:                                            ; preds = %bb.eg
   %i.bae = zext i32 %i.bac to i64
-  %i.baf = add i32 %.0221488.i, 1                 ; 6 uses
+  %i.baf = add i32 %.0221489.i, 1                 ; 6 uses
   %i.bag = call ptr @cli_max_malloc(i64 noundef %i.bae) #14 ; 2 uses
   store ptr %i.bag, ptr %i.asb, align 8, !tbaa !68
   %.not295.i = icmp eq ptr %i.bag, null
@@ -1331,16 +1331,13 @@ bb.ey:                                            ; preds = %bb.ex
   %i.bby = call fastcc i32 @getbits(ptr noundef %2, i32 noundef 8) ; 2 uses
   %i.bbz = icmp eq i32 %i.bby, 255
   %i.bca = add i32 %.0236.i, 255
-  br i1 %i.bbz, label %.preheader437.i, label %.loopexit438.loopexit.i
+  br i1 %i.bbz, label %.preheader437.i, label %.loopexit438.i
 
-.loopexit438.loopexit.i:                          ; preds = %.preheader437.i
-  %3 = add i32 %.0236.i, 3
-  br label %.loopexit438.i
-
-.loopexit438.i:                                   ; preds = %.loopexit438.loopexit.i, %bb.ey, %bb.ex, %bb.ew, %bb.ev
-  %.1237.i.a = phi i32 [ 3, %bb.ev ], [ 44, %bb.ey ], [ 13, %bb.ex ], [ 6, %bb.ew ], [ %3, %.loopexit438.loopexit.i ]
-  %.0234.i = phi i32 [ %i.bbq, %bb.ev ], [ %i.bbw, %bb.ey ], [ %i.bbu, %bb.ex ], [ %i.bbs, %bb.ew ], [ %i.bby, %.loopexit438.loopexit.i ]
-  %i.bcb = add i32 %.0234.i, %.1237.i.a           ; 5 uses
+.loopexit438.i:                                   ; preds = %.preheader437.i, %bb.ey, %bb.ex, %bb.ew, %bb.ev
+  %.1237.i.a = phi i32 [ %i.bbq, %bb.ev ], [ %i.bbw, %bb.ey ], [ %i.bbu, %bb.ex ], [ %i.bbs, %bb.ew ], [ %i.bby, %.preheader437.i ]
+  %.0234.i = phi i32 [ 0, %bb.ev ], [ 41, %bb.ey ], [ 10, %bb.ex ], [ 3, %bb.ew ], [ %.0236.i, %.preheader437.i ]
+  %3 = add nuw nsw i32 %.1237.i.a, 3
+  %i.bcb = add i32 %3, %.0234.i                   ; 5 uses
   %i.bcc = load i32, ptr %i.ash, align 8, !tbaa !74
   %.not303.i = icmp eq i32 %i.bcc, 0
   br i1 %.not303.i, label %bb.ez, label %.thread.i37
@@ -1743,8 +1740,8 @@ bb.ik:                                            ; preds = %bb.ij
   br i1 %.not317.i, label %bb.il, label %ea06.exit
 
 bb.il:                                            ; preds = %bb.ik, %bb.ij, %bb.fh, %bb.er, %bb.en, %bb.eh, %bb.ef, %bb.ed
-  %.1222.i = phi i32 [ %i.baf, %bb.er ], [ %i.baf, %bb.fh ], [ %.0221488.i, %bb.ed ], [ %i.baf, %bb.en ], [ %.0221488.i, %bb.ef ], [ %.0221488.i, %bb.eh ], [ %i.baf, %bb.ik ], [ %i.baf, %bb.ij ]
-  %.1215.i = phi ptr [ %i.bav, %bb.er ], [ %i.bav, %bb.fh ], [ %i.azn, %bb.ed ], [ %i.bav, %bb.en ], [ %i.baa, %bb.ef ], [ %i.azu, %bb.eh ], [ %i.bav, %bb.ik ], [ %i.bav, %bb.ij ]
+  %.1237.i = phi ptr [ %i.bav, %bb.er ], [ %i.bav, %bb.fh ], [ %i.azn, %bb.ed ], [ %i.bav, %bb.en ], [ %i.baa, %bb.ef ], [ %i.azu, %bb.eh ], [ %i.bav, %bb.ik ], [ %i.bav, %bb.ij ]
+  %.1222.i = phi i32 [ %i.baf, %bb.er ], [ %i.baf, %bb.fh ], [ %.0221489.i, %bb.ed ], [ %i.baf, %bb.en ], [ %.0221489.i, %bb.ef ], [ %.0221489.i, %bb.eh ], [ %i.baf, %bb.ik ], [ %i.baf, %bb.ij ]
   %i.brp = call i32 @cli_checklimits(ptr noundef nonnull @.str.506, ptr noundef nonnull %0, i64 noundef 0, i64 noundef 0, i64 noundef 0) #14 ; 2 uses
   %i.brq = icmp eq i32 %i.brp, 0
   br i1 %i.brq, label %bb.de, label %ea06.exit

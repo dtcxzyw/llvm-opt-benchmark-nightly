@@ -204,8 +204,8 @@ bb.bg:                                            ; preds = %bb.bf
   %i.mp = phi ptr [ %i.op, %bb.bm ], [ %i.kc, %bb.bg ]
   %i.mq = phi ptr [ %i.oq, %bb.bm ], [ %i.kb, %bb.bg ]
   %i.mr = phi i64 [ %i.os, %bb.bm ], [ 0, %bb.bg ] ; 2 uses
-  %.0202430 = phi i32 [ %i.or, %bb.bm ], [ 0, %bb.bg ]
-  %.0204429 = phi i32 [ %.1205, %bb.bm ], [ 0, %bb.bg ] ; 4 uses
+  %.0202430 = phi i32 [ %.1205, %bb.bm ], [ 0, %bb.bg ] ; 4 uses
+  %.0204429 = phi i32 [ %i.or, %bb.bm ], [ 0, %bb.bg ]
   %i.ms = getelementptr inbounds nuw [4 x i8], ptr %i.kk, i64 %i.mr ; 2 uses
   %i.mt = load i32, ptr %i.ms, align 4
   %.not229 = icmp eq i32 %i.mt, 0
@@ -232,7 +232,7 @@ bb.bi:                                            ; preds = %bb.bh
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.na, i8 0, i64 16, i1 false)
   store float 1.000000e+00, ptr %i.nb, align 4
   %i.nc = load ptr, ptr %i.hu, align 8
-  %i.nd = zext i32 %.0204429 to i64
+  %i.nd = zext i32 %.0202430 to i64
   %i.ne = getelementptr inbounds nuw [8 x i8], ptr %i.nc, i64 %i.nd
   store ptr %i.mu, ptr %i.ne, align 8
   %i.nf = load i32, ptr %i.ms, align 4            ; 3 uses
@@ -275,7 +275,7 @@ bb.bj:                                            ; preds = %bb.bi
   %i.nu = getelementptr inbounds nuw i8, ptr %i.nn, i64 1136
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.mv, ptr noundef nonnull align 4 dereferenceable(64) %i.nu, i64 64, i1 false)
   %i.nv = getelementptr inbounds nuw i8, ptr %i.nn, i64 1200
-  store i32 %.0204429, ptr %i.nv, align 4
+  store i32 %.0202430, ptr %i.nv, align 4
   %i.nw = getelementptr inbounds nuw i8, ptr %i.nn, i64 1044
   %i.nx = getelementptr inbounds nuw i8, ptr %i.nn, i64 1056
   %i.ny = getelementptr inbounds nuw i8, ptr %i.nn, i64 1060
@@ -304,7 +304,7 @@ bb.bl:                                            ; preds = %bb.bk, %.loopexit37
   %storemerge.i = phi float [ %i.om, %bb.bk ], [ 0.000000e+00, %.loopexit376 ]
   %i.on = fneg float %storemerge.i
   store float %i.on, ptr %i.nx, align 4
-  %i.oo = add i32 %.0204429, 1
+  %i.oo = add i32 %.0202430, 1
   %.pre496 = load ptr, ptr %i.fa, align 8
   %.pre497 = load ptr, ptr %i.da, align 8
   br label %bb.bm
@@ -312,8 +312,8 @@ bb.bl:                                            ; preds = %bb.bk, %.loopexit37
 bb.bm:                                            ; preds = %.lr.ph432, %bb.bl
   %i.op = phi ptr [ %.pre497, %bb.bl ], [ %i.mp, %.lr.ph432 ] ; 2 uses
   %i.oq = phi ptr [ %.pre496, %bb.bl ], [ %i.mq, %.lr.ph432 ] ; 2 uses
-  %.1205 = phi i32 [ %i.oo, %bb.bl ], [ %.0204429, %.lr.ph432 ]
-  %i.or = add i32 %.0202430, 1                    ; 2 uses
+  %.1205 = phi i32 [ %i.oo, %bb.bl ], [ %.0202430, %.lr.ph432 ]
+  %i.or = add i32 %.0204429, 1                    ; 2 uses
   %i.os = zext i32 %i.or to i64                   ; 2 uses
   %i.ot = ptrtoint ptr %i.oq to i64
   %i.ou = ptrtoint ptr %i.op to i64
@@ -716,11 +716,11 @@ bb.j:                                             ; preds = %bb.i
   %i.bp = load <2 x float>, ptr %i.bn, align 4    ; 5 uses
   %i.bq = extractelement <2 x float> %i.bp, i64 0 ; 7 uses
   %i.br = getelementptr inbounds nuw i8, ptr %i.bf, i64 1052
-  %i.bs = load <2 x float>, ptr %i.bo, align 4    ; 6 uses
+  %i.bs = load <2 x float>, ptr %i.bo, align 4    ; 7 uses
   %i.bt = load float, ptr %i.br, align 4          ; 7 uses
   %i.bu = fneg float %i.bq
   %i.bv = tail call float @llvm.fmuladd.f32(float %i.bu, float %i.bq, float 1.000000e+00)
-  %i.bw = extractelement <2 x float> %i.bs, i64 0 ; 5 uses
+  %i.bw = extractelement <2 x float> %i.bs, i64 0 ; 4 uses
   %i.bx = fneg float %i.bw
   %i.by = tail call float @llvm.fmuladd.f32(float %i.bx, float %i.bw, float %i.bv)
   %i.bz = fneg float %i.bt
@@ -733,12 +733,15 @@ bb.k:                                             ; preds = %bb.j
   br label %_ZN6Assimp3MD517ConvertQuaternionERK10aiVector3tIfER13aiQuaterniontIfE.exit
 
 _ZN6Assimp3MD517ConvertQuaternionERK10aiVector3tIfER13aiQuaterniontIfE.exit: ; preds = %bb.j, %bb.k
-  %storemerge.i = phi float [ %i.cc, %bb.k ], [ 0.000000e+00, %bb.j ] ; 4 uses
-  %i.cd = fneg float %storemerge.i                ; 3 uses
+  %storemerge.i = phi float [ %i.cc, %bb.k ], [ 0.000000e+00, %bb.j ] ; 3 uses
+  %i.cd = fneg float %storemerge.i                ; 2 uses
   %i.ce = fmul float %i.bt, %i.bt                 ; 2 uses
   %i.cf = tail call float @llvm.fmuladd.f32(float %i.bw, float %i.bw, float %i.ce)
-  %5 = fmul float %i.bt, %storemerge.i
-  %6 = fmul float %i.bw, %i.cd
+  %5 = shufflevector <2 x float> %i.bs, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
+  %6 = insertelement <2 x float> %5, float %i.bt, i64 0
+  %7 = insertelement <2 x float> poison, float %storemerge.i, i64 0
+  %8 = insertelement <2 x float> %7, float %i.cd, i64 1 ; 2 uses
+  %9 = fmul <2 x float> %6, %8
   %i.cg = fmul float %i.bt, %i.cd
   %i.ch = tail call float @llvm.fmuladd.f32(float %i.bq, float %i.bq, float %i.ce)
   %i.ci = fmul float %i.bq, %storemerge.i
@@ -754,9 +757,9 @@ _ZN6Assimp3MD517ConvertQuaternionERK10aiVector3tIfER13aiQuaterniontIfE.exit: ; p
   %i.cr = shufflevector <2 x float> %i.bs, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 poison> ; 3 uses
   %i.cs = shufflevector <4 x float> %i.cq, <4 x float> %i.cr, <4 x i32> <i32 poison, i32 1, i32 5, i32 3>
   %i.ct = insertelement <4 x float> %i.cs, float %i.cf, i64 0
-  %7 = insertelement <4 x float> <float 1.000000e+00, float poison, float poison, float 1.000000e+00>, float %5, i64 1
-  %8 = insertelement <4 x float> %7, float %6, i64 2
-  %i.cu = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.co, <4 x float> %i.ct, <4 x float> %8)
+  %10 = shufflevector <2 x float> %9, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %11 = shufflevector <4 x float> <float 1.000000e+00, float poison, float poison, float 1.000000e+00>, <4 x float> %10, <4 x i32> <i32 0, i32 4, i32 5, i32 3>
+  %i.cu = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.co, <4 x float> %i.ct, <4 x float> %11)
   %i.cv = fmul <4 x float> %i.cu, <float 1.000000e+00, float 2.000000e+00, float 2.000000e+00, float 0.000000e+00>
   store <4 x float> %i.cv, ptr %i.cm, align 4
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bf, i64 1088
@@ -771,9 +774,7 @@ _ZN6Assimp3MD517ConvertQuaternionERK10aiVector3tIfER13aiQuaterniontIfE.exit: ; p
   store <4 x float> %i.dd, ptr %.sroa.7.0..sroa_idx, align 4
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bf, i64 1104
   %i.de = shufflevector <2 x float> %i.bs, <2 x float> %i.bp, <2 x i32> <i32 0, i32 2>
-  %9 = insertelement <2 x float> poison, float %storemerge.i, i64 0
-  %10 = insertelement <2 x float> %9, float %i.cd, i64 1
-  %i.df = fmul <2 x float> %i.de, %10
+  %i.df = fmul <2 x float> %i.de, %8
   %i.dg = shufflevector <2 x float> %i.bp, <2 x float> %i.bs, <2 x i32> <i32 0, i32 2>
   %i.dh = insertelement <2 x float> poison, float %i.bt, i64 0
   %i.di = shufflevector <2 x float> %i.dh, <2 x float> poison, <2 x i32> zeroinitializer

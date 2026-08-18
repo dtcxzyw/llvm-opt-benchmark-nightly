@@ -73,8 +73,6 @@ define weak_odr void @_ZN3gmx15nbnxmKernelSimdIL12KernelLayout1ELNS_17KernelCoul
 
 bb.a:                                             ; preds = %.lr.ph3123, %.loopexit
   %.sroa.01515.03122 = phi ptr [ %i.aq, %.lr.ph3123 ], [ %i.api, %.loopexit ] ; 5 uses
-  %.sroa.72755.03121 = phi <16 x float> [ undef, %.lr.ph3123 ], [ %.sroa.72755.1, %.loopexit ]
-  %.sroa.02751.03120 = phi <16 x float> [ undef, %.lr.ph3123 ], [ %.sroa.02751.1, %.loopexit ]
   %i.au = getelementptr inbounds nuw i8, ptr %.sroa.01515.03122, i64 4
   %i.av = load i32, ptr %i.au, align 4, !tbaa !52 ; 3 uses
   %i.aw = and i32 %i.av, 127                      ; 2 uses
@@ -191,8 +189,8 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %.sroa.02751.1 = phi <16 x float> [ %i.ec, %bb.b ], [ %.sroa.02751.03120, %bb.a ] ; 5 uses
-  %.sroa.72755.1 = phi <16 x float> [ %i.ei, %bb.b ], [ %.sroa.72755.03121, %bb.a ] ; 5 uses
+  %.sroa.02751.1 = phi <16 x float> [ %i.ec, %bb.b ], [ undef, %bb.a ] ; 4 uses
+  %.sroa.72755.1 = phi <16 x float> [ %i.ei, %bb.b ], [ undef, %bb.a ] ; 4 uses
   %i.ej = sext i32 %i.cc to i64
   %i.ek = getelementptr [4 x i8], ptr %i.f, i64 %i.ej ; 8 uses
   %i.el = getelementptr i8, ptr %i.ek, i64 32

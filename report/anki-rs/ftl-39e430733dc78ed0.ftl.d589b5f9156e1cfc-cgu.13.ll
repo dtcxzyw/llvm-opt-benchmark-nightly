@@ -203,8 +203,6 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.u, %.lr.ph.i.i
-  %.sroa.75.071.i.i = phi ptr [ undef, %.lr.ph.i.i ], [ %.sroa.75.217.ph.i.i, %bb.u ] ; 2 uses
-  %.sroa.9.070.i.i = phi i64 [ undef, %.lr.ph.i.i ], [ %.sroa.9.215.ph.i.i, %bb.u ] ; 2 uses
   %.sroa.07.0.copyload.i.i = load ptr, ptr %i.h, align 8, !noalias !186 ; 2 uses
   %.sroa.2.0.copyload.i.i = load ptr, ptr %.sroa.2.0..sroa_idx.i.i, align 8, !noalias !186 ; 3 uses
   %i.j = icmp eq ptr %.sroa.07.0.copyload.i.i, null
@@ -245,8 +243,8 @@ bb.f:                                             ; preds = %bb.e
   %i.k = load i64, ptr %i.c, align 8, !range !96, !noalias !199, !noundef !5 ; 2 uses
   %.not.i.i.i.i.i = icmp eq i64 %i.k, -9223372036854775808
   %.sroa.6.i.sroa.0.0.copyload4.i.i.i.i = load i64, ptr %i.i, align 8, !noalias !199 ; 3 uses
-  %.sroa.6.i.sroa.7.0.copyload7.i.i.i.i = load ptr, ptr %.sroa.6.i.sroa.7.0..sroa_idx6.i.i.i.i, align 8, !noalias !199 ; 4 uses
-  %.sroa.6.i.sroa.8.0.copyload10.i.i.i.i = load i64, ptr %.sroa.6.i.sroa.8.0..sroa_idx9.i.i.i.i, align 8, !noalias !199 ; 3 uses
+  %.sroa.6.i.sroa.7.0.copyload7.i.i.i.i = load ptr, ptr %.sroa.6.i.sroa.7.0..sroa_idx6.i.i.i.i, align 8, !noalias !199 ; 3 uses
+  %.sroa.6.i.sroa.8.0.copyload10.i.i.i.i = load i64, ptr %.sroa.6.i.sroa.8.0..sroa_idx9.i.i.i.i, align 8, !noalias !199 ; 2 uses
   br i1 %.not.i.i.i.i.i, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
@@ -396,19 +394,17 @@ bb.t:                                             ; preds = %bb.s
   br label %"_ZN115_$LT$core..iter..adapters..filter_map..FilterMap$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8try_fold17h97998976caffeecbE.exit"
 
 "_ZN95_$LT$core..ops..control_flow..ControlFlow$LT$B$C$C$GT$$u20$as$u20$core..ops..try_trait..Try$GT$6branch17h77c7802d4425437dE.exit.i.i.a": ; preds = %"_ZN3ftl6string9all_langs28_$u7b$$u7b$closure$u7d$$u7d$17hc93dc5b57b724a6fE.exit.i.i.i.i", %"_ZN4core4iter8adapters10filter_map19filter_map_try_fold28_$u7b$$u7b$closure$u7d$$u7d$17h1fa4b2370b0c0583E.exit.thread19.i.i"
-  %.sroa.75.217.i.i = phi ptr [ %.sroa.75.071.i.i, %"_ZN4core4iter8adapters10filter_map19filter_map_try_fold28_$u7b$$u7b$closure$u7d$$u7d$17h1fa4b2370b0c0583E.exit.thread19.i.i" ], [ %.sroa.6.i.sroa.7.0.copyload7.i.i.i.i, %"_ZN3ftl6string9all_langs28_$u7b$$u7b$closure$u7d$$u7d$17hc93dc5b57b724a6fE.exit.i.i.i.i" ]
-  %.sroa.9.215.i.i = phi i64 [ %.sroa.9.070.i.i, %"_ZN4core4iter8adapters10filter_map19filter_map_try_fold28_$u7b$$u7b$closure$u7d$$u7d$17h1fa4b2370b0c0583E.exit.thread19.i.i" ], [ %.sroa.6.i.sroa.8.0.copyload10.i.i.i.i, %"_ZN3ftl6string9all_langs28_$u7b$$u7b$closure$u7d$$u7d$17hc93dc5b57b724a6fE.exit.i.i.i.i" ]
+  %.sroa.7.sroa.5.0.ph.i.i = phi i64 [ undef, %"_ZN4core4iter8adapters10filter_map19filter_map_try_fold28_$u7b$$u7b$closure$u7d$$u7d$17h1fa4b2370b0c0583E.exit.thread19.i.i" ], [ %.sroa.6.i.sroa.8.0.copyload10.i.i.i.i, %"_ZN3ftl6string9all_langs28_$u7b$$u7b$closure$u7d$$u7d$17hc93dc5b57b724a6fE.exit.i.i.i.i" ]
+  %.sroa.7.sroa.0.0.ph.i.i = phi ptr [ undef, %"_ZN4core4iter8adapters10filter_map19filter_map_try_fold28_$u7b$$u7b$closure$u7d$$u7d$17h1fa4b2370b0c0583E.exit.thread19.i.i" ], [ %.sroa.6.i.sroa.7.0.copyload7.i.i.i.i, %"_ZN3ftl6string9all_langs28_$u7b$$u7b$closure$u7d$$u7d$17hc93dc5b57b724a6fE.exit.i.i.i.i" ]
   %.sroa.0.0.i.i = phi i64 [ -9223372036854775808, %"_ZN4core4iter8adapters10filter_map19filter_map_try_fold28_$u7b$$u7b$closure$u7d$$u7d$17h1fa4b2370b0c0583E.exit.thread19.i.i" ], [ %.sroa.6.i.sroa.0.0.copyload4.i.i.i.i, %"_ZN3ftl6string9all_langs28_$u7b$$u7b$closure$u7d$$u7d$17hc93dc5b57b724a6fE.exit.i.i.i.i" ]
   store i64 %.sroa.0.0.i.i, ptr %0, align 8, !alias.scope !254, !noalias !253
   %.sroa.29.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %.sroa.75.217.i.i, ptr %.sroa.29.0..sroa_idx.i.i, align 8, !alias.scope !254, !noalias !253
+  store ptr %.sroa.7.sroa.0.0.ph.i.i, ptr %.sroa.29.0..sroa_idx.i.i, align 8, !alias.scope !254, !noalias !253
   %.sroa.310.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %.sroa.9.215.i.i, ptr %.sroa.310.0..sroa_idx.i.i, align 8, !alias.scope !254, !noalias !253
+  store i64 %.sroa.7.sroa.5.0.ph.i.i, ptr %.sroa.310.0..sroa_idx.i.i, align 8, !alias.scope !254, !noalias !253
   br label %"_ZN115_$LT$core..iter..adapters..filter_map..FilterMap$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8try_fold17h97998976caffeecbE.exit"
 
 bb.u:                                             ; preds = %"_ZN4core4iter8adapters10filter_map19filter_map_try_fold28_$u7b$$u7b$closure$u7d$$u7d$17h1fa4b2370b0c0583E.exit.thread.i.i", %"_ZN3ftl6string9all_langs28_$u7b$$u7b$closure$u7d$$u7d$17hc93dc5b57b724a6fE.exit.i.i.i.i"
-  %.sroa.75.217.ph.i.i = phi ptr [ %.sroa.75.071.i.i, %"_ZN4core4iter8adapters10filter_map19filter_map_try_fold28_$u7b$$u7b$closure$u7d$$u7d$17h1fa4b2370b0c0583E.exit.thread.i.i" ], [ %.sroa.6.i.sroa.7.0.copyload7.i.i.i.i, %"_ZN3ftl6string9all_langs28_$u7b$$u7b$closure$u7d$$u7d$17hc93dc5b57b724a6fE.exit.i.i.i.i" ]
-  %.sroa.9.215.ph.i.i = phi i64 [ %.sroa.9.070.i.i, %"_ZN4core4iter8adapters10filter_map19filter_map_try_fold28_$u7b$$u7b$closure$u7d$$u7d$17h1fa4b2370b0c0583E.exit.thread.i.i" ], [ %.sroa.6.i.sroa.8.0.copyload10.i.i.i.i, %"_ZN3ftl6string9all_langs28_$u7b$$u7b$closure$u7d$$u7d$17hc93dc5b57b724a6fE.exit.i.i.i.i" ]
   call void @"_ZN75_$LT$std..fs..ReadDir$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17ha276d4588f5dede9E"(ptr noalias noundef nonnull sret([48 x i8]) align 8 captures(address) dereferenceable(48) %i.e, ptr noalias noundef nonnull align 8 dereferenceable(16) %1), !noalias !185
   %i.ac = load i64, ptr %i.e, align 8, !range !84, !noalias !186, !noundef !5
   %i.ad = trunc nuw i64 %i.ac to i1

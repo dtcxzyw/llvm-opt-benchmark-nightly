@@ -201,7 +201,6 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %_RINvMsi_NtNtNtCsbSS6DM8SDEO_5alloc11collections5btree3mapINtB6_8BTreeMapNtNtBc_6string6StringNtNtCsiS54oC2UhYT_4toml5value5ValueE7get_muteEB1x_.exit
   %.sroa.0.093 = phi ptr [ %0, %.lr.ph ], [ %i.az, %_RINvMsi_NtNtNtCsbSS6DM8SDEO_5alloc11collections5btree3mapINtB6_8BTreeMapNtNtBc_6string6StringNtNtCsiS54oC2UhYT_4toml5value5ValueE7get_muteEB1x_.exit ] ; 4 uses
   %.sroa.012.092 = phi ptr [ %1, %.lr.ph ], [ %i.l, %_RINvMsi_NtNtNtCsbSS6DM8SDEO_5alloc11collections5btree3mapINtB6_8BTreeMapNtNtBc_6string6StringNtNtCsiS54oC2UhYT_4toml5value5ValueE7get_muteEB1x_.exit ] ; 3 uses
-  %.sroa.10.091 = phi i64 [ undef, %.lr.ph ], [ %.sroa.10.1, %_RINvMsi_NtNtNtCsbSS6DM8SDEO_5alloc11collections5btree3mapINtB6_8BTreeMapNtNtBc_6string6StringNtNtCsiS54oC2UhYT_4toml5value5ValueE7get_muteEB1x_.exit ] ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %.sroa.012.092, i64 16 ; 2 uses
   %i.m = load ptr, ptr %.sroa.012.092, align 8, !nonnull !4, !noundef !4 ; 3 uses
   %i.n = getelementptr inbounds nuw i8, ptr %.sroa.012.092, i64 8
@@ -295,7 +294,6 @@ bb.l:                                             ; preds = %_RINvMsi_NtNtNtCsbS
   br i1 %i.ak, label %bb.n, label %bb.q, !prof !238
 
 bb.m:                                             ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsiS54oC2UhYT_4toml5value5ValueEEB11_.exit, %_RINvMsi_NtNtNtCsbSS6DM8SDEO_5alloc11collections5btree3mapINtB6_8BTreeMapNtNtBc_6string6StringNtNtCsiS54oC2UhYT_4toml5value5ValueE3geteEB1x_.exit
-  %.sroa.10.1 = phi i64 [ %.sroa.10.274, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsiS54oC2UhYT_4toml5value5ValueEEB11_.exit ], [ %.sroa.10.091, %_RINvMsi_NtNtNtCsbSS6DM8SDEO_5alloc11collections5btree3mapINtB6_8BTreeMapNtNtBc_6string6StringNtNtCsiS54oC2UhYT_4toml5value5ValueE3geteEB1x_.exit ]
   %i.al = load i8, ptr %i.z, align 2, !range !181, !noundef !4
   %i.am = icmp samesign ult i8 %i.al, 2
   br i1 %i.am, label %bb.y, label %bb.aa, !prof !238
@@ -311,7 +309,7 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o
   call void @_RNvCsiZ68L5R9VjM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #22, !noalias !381
-  %i.ao = call noundef ptr @_RNvCsiZ68L5R9VjM_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.o, i64 noundef range(i64 1, -9223372036854775807) 1) #22, !noalias !381 ; 4 uses
+  %i.ao = call noundef ptr @_RNvCsiZ68L5R9VjM_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.o, i64 noundef range(i64 1, -9223372036854775807) 1) #22, !noalias !381 ; 3 uses
   %i.ap = icmp eq ptr %i.ao, null
   br i1 %i.ap, label %bb.r, label %bb.s
 
@@ -321,13 +319,11 @@ bb.q:                                             ; preds = %bb.l
 
 bb.r:                                             ; preds = %bb.n, %bb.p
   %.sroa.4.0.ph = phi i64 [ 1, %bb.p ], [ 0, %bb.n ]
-  %.sroa.10.2.ph = phi i64 [ %i.o, %bb.p ], [ %.sroa.10.091, %bb.n ]
-  invoke void @_RNvNtCsbSS6DM8SDEO_5alloc7raw_vec12handle_error(i64 noundef %.sroa.4.0.ph, i64 %.sroa.10.2.ph) #19
+  invoke void @_RNvNtCsbSS6DM8SDEO_5alloc7raw_vec12handle_error(i64 noundef %.sroa.4.0.ph, i64 %i.o) #19
           to label %bb.u unwind label %bb.w
 
 _RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsiS54oC2UhYT_4toml.exit.thread68: ; preds = %bb.o, %bb.s
   %i.aq = phi ptr [ %i.ao, %bb.s ], [ inttoptr (i64 1 to ptr), %bb.o ]
-  %.sroa.10.274 = phi i64 [ %3, %bb.s ], [ 1, %bb.o ]
   store i64 %i.o, ptr %i.d, align 8
   store ptr %i.aq, ptr %.sroa.445.0..sroa_idx, align 8
   store i64 %i.o, ptr %.sroa.646.0..sroa_idx, align 8
@@ -341,7 +337,6 @@ _RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsiS54o
   br i1 %i.as, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsiS54oC2UhYT_4toml5value5ValueEEB11_.exit, label %bb.t
 
 bb.s:                                             ; preds = %bb.p
-  %3 = ptrtoint ptr %i.ao to i64
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ao, ptr nonnull align 1 %i.m, i64 %i.o, i1 false)
   br label %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsiS54oC2UhYT_4toml.exit.thread68
 

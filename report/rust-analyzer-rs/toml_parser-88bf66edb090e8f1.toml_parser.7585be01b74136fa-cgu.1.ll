@@ -203,10 +203,10 @@ bb.d:                                             ; preds = %.lr.ph.i
   br label %_RNvNtCsil5KYoyU2ra_6winnow6stream6memmem.exit
 
 _RNvNtCsil5KYoyU2ra_6winnow6stream6memmem.exit:   ; preds = %bb.c, %bb.d
-  %.sroa.021.0 = phi i64 [ %.sroa.02.08.i, %bb.d ], [ %.sroa.14.090, %bb.c ] ; 11 uses
+  %.sroa.021.0 = phi i64 [ %.sroa.02.08.i, %bb.d ], [ %.sroa.14.090, %bb.c ] ; 10 uses
   %i.v = sub i64 %i.n, %i.c                       ; 3 uses
   %i.w = add i64 %.sroa.021.0, %i.v               ; 3 uses
-  %i.x = icmp eq i64 %.sroa.021.0, 0              ; 2 uses
+  %i.x = icmp eq i64 %.sroa.021.0, 0              ; 3 uses
   br i1 %i.x, label %_RNvMNtCshzWfHUSfYae_4core3stre16split_at_checked.exit, label %bb.e
 
 bb.e:                                             ; preds = %_RNvNtCsil5KYoyU2ra_6winnow6stream6memmem.exit
@@ -255,8 +255,7 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.q, %bb.r, %_RNvMNtCshzWfHUSfYae_4core3stre16split_at_checked.exit
   %.sroa.14.1 = phi i64 [ %i.aj, %bb.r ], [ %i.aj, %bb.q ], [ %.sroa.9.1, %_RNvMNtCshzWfHUSfYae_4core3stre16split_at_checked.exit ] ; 2 uses
   %.sroa.0.1 = phi ptr [ %i.ai, %bb.r ], [ %i.ai, %bb.q ], [ %.sroa.7.1, %_RNvMNtCshzWfHUSfYae_4core3stre16split_at_checked.exit ]
-  %6 = icmp eq i64 %.sroa.021.0, 0
-  br i1 %6, label %bb.t, label %bb.s
+  br i1 %i.x, label %bb.t, label %bb.s
 
 bb.j:                                             ; preds = %bb.h, %.split3.i61
   %i.ai = getelementptr inbounds nuw i8, ptr %.sroa.7.1, i64 1 ; 3 uses

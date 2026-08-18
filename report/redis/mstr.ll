@@ -203,7 +203,7 @@ bb.e:                                             ; preds = %switch.lookup
 bb.f:                                             ; preds = %bb.b, %bb.c, %bb.d, %bb.e
   %.0.i63 = phi i64 [ %i.s, %bb.e ], [ %i.q, %bb.d ], [ %i.n, %bb.c ], [ %i.k, %bb.b ] ; 2 uses
   %.sink.i41 = phi i64 [ -11, %bb.e ], [ -5, %bb.d ], [ -5, %bb.c ], [ -3, %bb.b ]
-  %.0.i42 = phi i64 [ 9, %bb.e ], [ 3, %bb.d ], [ 3, %bb.c ], [ 1, %bb.b ]
+  %.0.i42 = phi i64 [ 10, %bb.e ], [ 4, %bb.d ], [ 4, %bb.c ], [ 2, %bb.b ]
   %i.t = getelementptr inbounds i8, ptr %0, i64 %.sink.i41
   %i.u = load i16, ptr %i.t, align 2, !tbaa !14   ; 2 uses
   %.not10.i.i = icmp eq i16 %i.u, 0
@@ -241,8 +241,7 @@ mstrSumMetaLen.exit.loopexit.i:                   ; preds = %bb.i
 
 mstrAllocLen.exit:                                ; preds = %bb.f, %mstrSumMetaLen.exit.loopexit.i
   %i.ae = phi i64 [ %i.ad, %mstrSumMetaLen.exit.loopexit.i ], [ 2, %bb.f ]
-  %3 = add i64 %.0.i63, 1
-  %i.af = add i64 %3, %.0.i42
+  %i.af = add i64 %.0.i63, %.0.i42
   %i.ag = add i64 %i.af, %i.ae
   %i.ah = zext i16 %i.f to i32
   %i.ai = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.3, ptr noundef %0, ptr noundef %i.g, ptr noundef %0, i64 noundef %.0.i63, i64 noundef %i.ag, i32 noundef %i.ah) ; 0 uses
@@ -288,9 +287,8 @@ bb.m:                                             ; preds = %.critedge
 
 mstrAllocLen.exit61:                              ; preds = %bb.j, %bb.k, %bb.l, %bb.m
   %.0.i4372 = phi i64 [ %i.aw, %bb.m ], [ %i.au, %bb.l ], [ %i.ar, %bb.k ], [ %i.ao, %bb.j ] ; 2 uses
-  %.0.i49 = phi i64 [ 9, %bb.m ], [ 3, %bb.l ], [ 3, %bb.k ], [ 1, %bb.j ]
-  %4 = add i64 %.0.i4372, 1
-  %i.ax = add i64 %4, %.0.i49
+  %.0.i49 = phi i64 [ 10, %bb.m ], [ 4, %bb.l ], [ 4, %bb.k ], [ 2, %bb.j ]
+  %i.ax = add i64 %.0.i4372, %.0.i49
   %i.ay = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.2, ptr noundef nonnull %0, ptr noundef %i.ak, ptr noundef nonnull %0, i64 noundef %.0.i4372, i64 noundef %i.ax) ; 0 uses
   br label %.loopexit
 

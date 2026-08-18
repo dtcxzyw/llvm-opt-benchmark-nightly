@@ -35,10 +35,10 @@ bb.e:                                             ; preds = %bb.c
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.a
-  %.091 = phi i32 [ %.sroa.01.4.extract.trunc, %bb.e ], [ %.sroa.02.4.extract.trunc, %bb.a ] ; 4 uses
-  %.090 = phi i32 [ -54, %bb.e ], [ 0, %bb.a ]
+  %.091 = phi i32 [ -1077, %bb.e ], [ -1023, %bb.a ]
+  %.090 = phi i32 [ %.sroa.01.4.extract.trunc, %bb.e ], [ %.sroa.02.4.extract.trunc, %bb.a ] ; 4 uses
   %.089 = phi double [ %i.i, %bb.e ], [ %0, %bb.a ] ; 3 uses
-  %i.k = icmp sgt i32 %.091, 2146435071
+  %i.k = icmp sgt i32 %.090, 2146435071
   br i1 %i.k, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
@@ -46,10 +46,8 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.v
 
 bb.h:                                             ; preds = %bb.f
-  %i.m = ashr i32 %.091, 20
-  %1 = add nsw i32 %i.m, -1023
-  %2 = add nsw i32 %1, %.090
-  %i.n = and i32 %.091, 1048575                   ; 4 uses
+  %i.m = ashr i32 %.090, 20
+  %i.n = and i32 %.090, 1048575                   ; 4 uses
   %i.o = add nuw nsw i32 %i.n, 614244             ; 2 uses
   %i.p = and i32 %i.o, 1048576
   %i.q = or disjoint i32 %i.p, %i.n
@@ -61,9 +59,10 @@ bb.h:                                             ; preds = %bb.f
   %.sroa.0.4.insert.insert = or disjoint i64 %.sroa.0.4.insert.shift, %.sroa.0.4.insert.mask
   %i.t = bitcast i64 %.sroa.0.4.insert.insert to double
   %i.u = lshr i32 %i.o, 20
-  %i.v = add nsw i32 %2, %i.u                     ; 7 uses
+  %1 = add nsw i32 %.091, %i.m
+  %i.v = add nsw i32 %1, %i.u                     ; 7 uses
   %i.w = fadd double %i.t, -1.000000e+00          ; 15 uses
-  %i.x = add nsw i32 %.091, 2
+  %i.x = add nsw i32 %.090, 2
   %i.y = and i32 %i.x, 1048575
   %i.z = icmp samesign ult i32 %i.y, 3
   br i1 %i.z, label %bb.i, label %bb.o

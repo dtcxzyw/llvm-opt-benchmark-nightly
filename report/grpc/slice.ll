@@ -183,20 +183,18 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
-define void @grpc_slice_from_static_buffer(ptr dead_on_unwind noalias nofree writable writeonly sret(%struct.grpc_slice) align 8 captures(none) initializes((0, 32)) %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #3 {
+define void @grpc_slice_from_static_buffer(ptr dead_on_unwind noalias nofree writable writeonly sret(%struct.grpc_slice) align 8 captures(none) initializes((0, 24)) %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #3 {
 bb.a:
   store ptr inttoptr (i64 1 to ptr), ptr %0, align 8, !tbaa !32
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %2, ptr %.sroa.5.0..sroa_idx, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %1, ptr %.sroa.6.0..sroa_idx, align 8
-  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i64 0, ptr %.sroa.7.0..sroa_idx, align 8, !tbaa !12
   ret void
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define void @grpc_slice_from_static_string(ptr dead_on_unwind noalias nofree writable writeonly sret(%struct.grpc_slice) align 8 captures(none) initializes((0, 32)) %0, ptr noundef %1) local_unnamed_addr #5 {
+define void @grpc_slice_from_static_string(ptr dead_on_unwind noalias nofree writable writeonly sret(%struct.grpc_slice) align 8 captures(none) initializes((0, 24)) %0, ptr noundef %1) local_unnamed_addr #5 {
 bb.a:
   %i.a = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #24, !noalias !33
   store ptr inttoptr (i64 1 to ptr), ptr %0, align 8, !tbaa !32
@@ -204,8 +202,6 @@ bb.a:
   store i64 %i.a, ptr %.sroa.5.0..sroa_idx, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %1, ptr %.sroa.6.0..sroa_idx, align 8
-  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i64 0, ptr %.sroa.7.0..sroa_idx, align 8, !tbaa !12
   ret void
 }
 

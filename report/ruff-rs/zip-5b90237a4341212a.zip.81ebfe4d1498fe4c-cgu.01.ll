@@ -74,7 +74,7 @@ bb.g:                                             ; preds = %bb.c
   br i1 %i.v, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  %.sroa.8.0 = phi ptr [ %i.q, %bb.f ], [ %i.u, %bb.g ] ; 3 uses
+  %.sroa.8.0 = phi ptr [ %i.q, %bb.f ], [ %i.u, %bb.g ] ; 4 uses
   %i.w = tail call fastcc noundef i8 @_RNvMs3_NtNtCs2AWtUsOyxgP_3std2io5errorNtB5_5Error4kind(ptr %.sroa.8.0)
   %i.x = icmp eq i8 %i.w, 37
   %.sroa.443.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -96,7 +96,7 @@ bb.k:                                             ; preds = %bb.j, %bb.m
   %.sroa.0.2 = phi i64 [ 16, %bb.m ], [ %.sroa.0.1, %bb.j ]
   %i.ac = tail call { i64, ptr } @_RNvYINtNtNtCs4NRVxsYgnAr_4core2io6cursor6CursorRShENtNtCsb9zoKkpXuBA_3zip8unstable19LittleEndianReadExt11read_u64_leBR_(ptr noalias noundef nonnull align 8 dereferenceable(24) %1) ; 2 uses
   %i.ad = extractvalue { i64, ptr } %i.ac, 0
-  %i.ae = extractvalue { i64, ptr } %i.ac, 1      ; 4 uses
+  %i.ae = extractvalue { i64, ptr } %i.ac, 1      ; 5 uses
   %i.af = trunc nuw i64 %i.ad to i1
   br i1 %i.af, label %bb.n, label %bb.o
 
@@ -182,7 +182,8 @@ bb.x:                                             ; preds = %bb.n
   store ptr @0, ptr %.sroa.449.0..sroa_idx, align 8
   %.sroa.550.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 27, ptr %.sroa.550.0..sroa_idx, align 8
-  tail call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorECsb9zoKkpXuBA_3zip(ptr %i.ae)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ae) ]
+  tail call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorECsb9zoKkpXuBA_3zip(ptr nonnull %i.ae)
   br label %bb.w
 
 bb.y:                                             ; preds = %bb.n
@@ -195,7 +196,8 @@ bb.z:                                             ; preds = %bb.h
   store ptr @0, ptr %.sroa.443.0..sroa_idx, align 8
   %.sroa.544.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 27, ptr %.sroa.544.0..sroa_idx, align 8
-  tail call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorECsb9zoKkpXuBA_3zip(ptr %.sroa.8.0)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.0) ]
+  tail call fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorECsb9zoKkpXuBA_3zip(ptr nonnull %.sroa.8.0)
   br label %bb.w
 
 bb.aa:                                            ; preds = %bb.h

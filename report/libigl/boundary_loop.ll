@@ -204,7 +204,6 @@ _ZNSt3setIiSt4lessIiESaIiEE6insertESt23_Rb_tree_const_iteratorIiEOi.exit: ; pred
   br i1 %i.ei, label %.lr.ph, label %.preheader, !llvm.loop !68
 
 bb.v:                                             ; preds = %.lr.ph232, %_ZNSt6vectorIiSaIiEED2Ev.exit
-  %.0231 = phi i32 [ undef, %.lr.ph232 ], [ %.2.lcssa305309, %_ZNSt6vectorIiSaIiEED2Ev.exit ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #20
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %9, i8 0, i64 24, i1 false)
   %i.ej = load ptr, ptr %i.bp, align 8, !tbaa !58 ; 2 uses
@@ -325,7 +324,6 @@ _ZNSt6vectorIiSaIiEE9push_backERKi.exit:          ; preds = %bb.w, %_ZNSt6vector
   %i.gq = phi i64 [ %i.ly, %.loopexit ], [ %i.fx, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ] ; 6 uses
   %i.gr = phi ptr [ %i.lv, %.loopexit ], [ %i.fu, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ] ; 3 uses
   %i.gs = phi ptr [ %i.lu, %.loopexit ], [ %i.ft, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ] ; 3 uses
-  %.1229332 = phi i32 [ %.3, %.loopexit ], [ %.0231, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ]
   %i.gt = ashr exact i64 %i.gq, 2                 ; 3 uses
   %i.gu = load ptr, ptr %3, align 8, !tbaa !41, !noalias !69
   %i.gv = load i64, ptr %i.cg, align 8, !tbaa !42, !noalias !69 ; 6 uses
@@ -357,7 +355,7 @@ _ZNSt6vectorIiSaIiEE9push_backERKi.exit:          ; preds = %bb.w, %_ZNSt6vector
 
 bb.ab:                                            ; preds = %.lr.ph227, %.critedge
   %indvars.iv = phi i64 [ 0, %.lr.ph227 ], [ %indvars.iv.next, %.critedge ] ; 2 uses
-  %.2225 = phi i32 [ %.1229332, %.lr.ph227 ], [ %.3, %.critedge ] ; 3 uses
+  %.2225 = phi i32 [ undef, %.lr.ph227 ], [ %.3, %.critedge ] ; 3 uses
   %i.hc = getelementptr inbounds nuw [4 x i8], ptr %i.go, i64 %indvars.iv
   %i.hd = load i32, ptr %i.hc, align 4, !tbaa !19
   %i.he = sext i32 %i.hd to i64                   ; 2 uses
@@ -501,7 +499,7 @@ bb.ad:                                            ; preds = %bb.ac
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.ad, %bb.ac, %_ZNK5Eigen9DenseBaseINS_5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEE8minCoeffEv.exit
-  %.3 = phi i32 [ %.2225, %_ZNK5Eigen9DenseBaseINS_5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEE8minCoeffEv.exit ], [ %.2225, %bb.ac ], [ %spec.select190, %bb.ad ] ; 12 uses
+  %.3 = phi i32 [ %.2225, %_ZNK5Eigen9DenseBaseINS_5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEE8minCoeffEv.exit ], [ %.2225, %bb.ac ], [ %spec.select190, %bb.ad ] ; 9 uses
   %.259 = phi i1 [ false, %_ZNK5Eigen9DenseBaseINS_5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEE8minCoeffEv.exit ], [ false, %bb.ac ], [ %i.jw, %bb.ad ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.jx = icmp samesign uge i64 %indvars.iv.next, %i.gz
@@ -721,8 +719,7 @@ _ZNSt8_Rb_treeIiiSt9_IdentityIiESt4lessIiESaIiEE5clearEv.exit.i.i: ; preds = %bb
   %i.mn = icmp slt i32 %i.mm, 1
   br i1 %i.mn, label %.thread, label %.lr.ph227, !llvm.loop !82
 
-.thread:                                          ; preds = %._crit_edge, %.loopexit, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit
-  %.2.lcssa305309 = phi i32 [ %.0231, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ], [ %.3, %.loopexit ], [ %.3, %._crit_edge ]
+.thread:                                          ; preds = %.loopexit, %._crit_edge, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit
   %i.mo = load ptr, ptr %i.ci, align 8, !tbaa !28 ; 6 uses
   %i.mp = load ptr, ptr %i.cj, align 8, !tbaa !37
   %.not.i108 = icmp eq ptr %i.mo, %i.mp
