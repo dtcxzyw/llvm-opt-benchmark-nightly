@@ -203,7 +203,7 @@ bb.k:                                             ; preds = %_ZN20minEnclosingTr
   %i.bc = shufflevector <2 x float> %i.al, <2 x float> poison, <2 x i32> zeroinitializer
   %i.bd = insertelement <2 x double> poison, double %sqrt.i.i.i.i.i.i, i64 0
   %i.be = shufflevector <2 x double> %i.bd, <2 x double> poison, <2 x i32> zeroinitializer
-  %29 = extractelement <2 x float> %i.al, i64 1   ; 2 uses
+  %29 = shufflevector <2 x float> %i.al, <2 x float> poison, <2 x i32> <i32 1, i32 1>
   br label %_ZN20minEnclosingTriangleL14greaterOrEqualEdd.exit.thread.i.i.i.i
 
 _ZN20minEnclosingTriangleL14greaterOrEqualEdd.exit.thread.i.i.i.i: ; preds = %_ZN20minEnclosingTriangleL14greaterOrEqualEdd.exit.thread.i.i.i.i.backedge, %bb.k
@@ -217,11 +217,10 @@ _ZN20minEnclosingTriangleL14greaterOrEqualEdd.exit.thread.i.i.i.i: ; preds = %_Z
   %.sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.bl, i64 4
   %i.bm = load <2 x float>, ptr %i.bl, align 4    ; 2 uses
   %i.bn = load float, ptr %.sroa_idx.i.i.i.i.i, align 4 ; 2 uses
-  %30 = fsub float %29, %i.bf
-  %31 = fsub float %29, %i.bn
-  %i.bo = insertelement <2 x float> poison, float %31, i64 0
-  %32 = insertelement <2 x float> %i.bo, float %30, i64 1
-  %i.bp = fpext <2 x float> %32 to <2 x double>
+  %30 = insertelement <2 x float> poison, float %i.bn, i64 0
+  %i.bo = insertelement <2 x float> %30, float %i.bf, i64 1
+  %31 = fsub <2 x float> %29, %i.bo
+  %i.bp = fpext <2 x float> %31 to <2 x double>
   %i.bq = insertelement <2 x float> %i.bm, float %i.bg, i64 1
   %i.br = fsub <2 x float> %i.bc, %i.bq
   %i.bs = fpext <2 x float> %i.br to <2 x double>

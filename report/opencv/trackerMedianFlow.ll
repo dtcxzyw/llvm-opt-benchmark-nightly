@@ -203,7 +203,7 @@ bb.a:
   %i.b = bitcast i64 %2 to <2 x i32>
   %.sroa.019.0.extract.trunc = trunc i64 %2 to i32 ; 5 uses
   %i.c = sitofp <2 x i32> %i.b to <2 x double>
-  %i.d = fmul nnan <2 x double> %i.c, splat (double 5.000000e-01) ; 3 uses
+  %i.d = fmul nnan <2 x double> %i.c, splat (double 5.000000e-01) ; 2 uses
   %i.e = fsub <2 x double> %i.a, %i.d             ; 2 uses
   %i.f = tail call noundef i32 @llvm.x86.sse2.cvtsd2si(<2 x double> %i.e) ; 6 uses
   %i.g = shufflevector <2 x double> %i.e, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
@@ -319,23 +319,18 @@ _ZN2cveqIiEEbRKNS_5Rect_IT_EES5_.exit.thread:     ; preds = %bb.f
   store i32 16842752, ptr %6, align 8, !tbaa !53
   %i.at = getelementptr inbounds nuw i8, ptr %6, i64 8
   store ptr %1, ptr %i.at, align 8, !tbaa !56
-  %8 = sitofp i32 %i.f to double
-  %9 = extractelement <2 x double> %i.d, i64 0
-  %10 = fadd double %9, %8
-  %11 = fptrunc double %10 to float
-  %12 = sitofp i32 %i.h to double
-  %13 = extractelement <2 x double> %i.d, i64 1
-  %14 = fadd double %13, %12
-  %15 = fptrunc double %14 to float
-  %.sroa.0.0.vec.insert = insertelement <2 x float> poison, float %11, i64 0
-  %.sroa.0.4.vec.insert = insertelement <2 x float> %.sroa.0.0.vec.insert, float %15, i64 1
+  %8 = insertelement <2 x i32> poison, i32 %i.f, i64 0
+  %9 = insertelement <2 x i32> %8, i32 %i.h, i64 1
+  %10 = sitofp <2 x i32> %9 to <2 x double>
+  %11 = fadd <2 x double> %i.d, %10
+  %12 = fptrunc <2 x double> %11 to <2 x float>
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #25
   %i.au = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.av = getelementptr inbounds nuw i8, ptr %7, i64 16
   store i64 0, ptr %i.av, align 8
   store i32 33619968, ptr %7, align 8, !tbaa !53
   store ptr %0, ptr %i.au, align 8, !tbaa !56
-  invoke void @_ZN2cv13getRectSubPixERKNS_11_InputArrayENS_5Size_IiEENS_6Point_IfEERKNS_12_OutputArrayEi(ptr noundef nonnull align 8 dereferenceable(24) %6, i64 %2, <2 x float> %.sroa.0.4.vec.insert, ptr noundef nonnull align 8 dereferenceable(24) %7, i32 noundef -1)
+  invoke void @_ZN2cv13getRectSubPixERKNS_11_InputArrayENS_5Size_IiEENS_6Point_IfEERKNS_12_OutputArrayEi(ptr noundef nonnull align 8 dereferenceable(24) %6, i64 %2, <2 x float> %12, ptr noundef nonnull align 8 dereferenceable(24) %7, i32 noundef -1)
           to label %bb.l unwind label %bb.m
 
 bb.l:                                             ; preds = %_ZN2cveqIiEEbRKNS_5Rect_IT_EES5_.exit.thread

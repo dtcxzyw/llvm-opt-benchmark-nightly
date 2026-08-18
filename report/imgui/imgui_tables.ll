@@ -204,11 +204,11 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i, %bb.h
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 4 uses
-  %i.az = load float, ptr %i.ay, align 8, !tbaa !267 ; 9 uses
+  %i.az = load float, ptr %i.ay, align 8, !tbaa !267 ; 8 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %i.c, i64 284 ; 2 uses
   store float %i.az, ptr %i.ba, align 4, !tbaa !503
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 124 ; 4 uses
-  %i.bc = load float, ptr %i.bb, align 4, !tbaa !268 ; 8 uses
+  %i.bc = load float, ptr %i.bb, align 4, !tbaa !268 ; 7 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
   %i.be = load i32, ptr %i.bd, align 8, !tbaa !263 ; 5 uses
   %i.bf = add nsw i32 %i.be, 1                    ; 2 uses
@@ -393,36 +393,29 @@ bb.af:                                            ; preds = %bb.ae
   %.not179 = icmp ne i32 %.0, 0
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #4
   %i.ei = getelementptr inbounds nuw i8, ptr %0, i64 272
-  %i.ej = load float, ptr %i.ei, align 8, !tbaa !432 ; 2 uses
+  %i.ej = load float, ptr %i.ei, align 8, !tbaa !432
   %i.ek = getelementptr inbounds nuw i8, ptr %0, i64 280
-  %i.el = load float, ptr %i.ek, align 8, !tbaa !426 ; 2 uses
+  %i.el = load float, ptr %i.ek, align 8, !tbaa !426
   %i.em = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.en = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
   %i.eo = getelementptr inbounds nuw i8, ptr %1, i64 12
   %i.ep = getelementptr inbounds nuw i8, ptr %0, i64 304
-  %3 = load float, ptr %i.ep, align 8, !tbaa !232 ; 2 uses
-  %.inv.i.i = fcmp oge float %i.ej, %3
-  %..i.i = select i1 %.inv.i.i, float %i.ej, float %3
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 308
-  %5 = load float, ptr %4, align 4, !tbaa !233    ; 2 uses
-  %.inv12.i.i = fcmp oge float %i.bc, %5
-  %6 = select i1 %.inv12.i.i, float %i.bc, float %5 ; 2 uses
-  %.sroa.0.0.vec.insert.i.i = insertelement <2 x float> poison, float %..i.i, i64 0
-  %.sroa.0.4.vec.insert.i.i = insertelement <2 x float> %.sroa.0.0.vec.insert.i.i, float %6, i64 1
-  store <2 x float> %.sroa.0.4.vec.insert.i.i, ptr %1, align 8
+  %3 = load <2 x float>, ptr %i.ep, align 8, !tbaa !168 ; 2 uses
+  %4 = insertelement <2 x float> poison, float %i.ej, i64 0
+  %5 = insertelement <2 x float> %4, float %i.bc, i64 1 ; 2 uses
+  %6 = fcmp oge <2 x float> %5, %3
+  %7 = select <2 x i1> %6, <2 x float> %5, <2 x float> %3 ; 2 uses
+  store <2 x float> %7, ptr %1, align 8
   %i.eq = getelementptr inbounds nuw i8, ptr %0, i64 312
-  %7 = load float, ptr %i.eq, align 8, !tbaa !232 ; 2 uses
-  %8 = fcmp olt float %i.el, %7
-  %..i4.i = select i1 %8, float %i.el, float %7
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 316
-  %10 = load float, ptr %9, align 4, !tbaa !233   ; 2 uses
-  %11 = fcmp olt float %i.az, %10
-  %12 = select i1 %11, float %i.az, float %10     ; 2 uses
-  %.sroa.0.0.vec.insert.i5.i = insertelement <2 x float> poison, float %..i4.i, i64 0
-  %.sroa.0.4.vec.insert.i6.i = insertelement <2 x float> %.sroa.0.0.vec.insert.i5.i, float %12, i64 1
-  store <2 x float> %.sroa.0.4.vec.insert.i6.i, ptr %i.en, align 8
-  %13 = fcmp olt float %6, %12
-  %or.cond226 = select i1 %.not179, i1 %13, i1 false
+  %8 = load <2 x float>, ptr %i.eq, align 8, !tbaa !168 ; 2 uses
+  %9 = insertelement <2 x float> poison, float %i.el, i64 0
+  %10 = insertelement <2 x float> %9, float %i.az, i64 1 ; 2 uses
+  %11 = fcmp olt <2 x float> %10, %8
+  %12 = select <2 x i1> %11, <2 x float> %10, <2 x float> %8 ; 2 uses
+  store <2 x float> %12, ptr %i.en, align 8
+  %13 = fcmp olt <2 x float> %7, %12
+  %14 = extractelement <2 x i1> %13, i64 1
+  %or.cond226 = select i1 %.not179, i1 %14, i1 false
   br i1 %or.cond226, label %bb.ag, label %bb.ah
 
 bb.ag:                                            ; preds = %bb.af
@@ -469,9 +462,7 @@ bb.am:                                            ; preds = %bb.al
   %i.ff = getelementptr inbounds nuw i8, ptr %0, i64 280
   %i.fg = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
   %i.fh = getelementptr inbounds nuw i8, ptr %0, i64 304
-  %14 = getelementptr inbounds nuw i8, ptr %0, i64 308
   %i.fi = getelementptr inbounds nuw i8, ptr %0, i64 312
-  %15 = getelementptr inbounds nuw i8, ptr %0, i64 316
   %i.fj = getelementptr inbounds nuw i8, ptr %i.c, i64 712
   br label %bb.an
 
@@ -489,41 +480,38 @@ bb.an:                                            ; preds = %.lr.ph, %bb.ap
   %i.fs = load float, ptr %i.fr, align 4, !tbaa !422 ; 2 uses
   %i.ft = load float, ptr %i.fe, align 8, !tbaa !432 ; 2 uses
   %i.fu = fcmp oge float %i.fq, %i.ft
-  %i.fv = select i1 %i.fu, float %i.fq, float %i.ft ; 2 uses
+  %i.fv = select i1 %i.fu, float %i.fq, float %i.ft
   %i.fw = load float, ptr %i.ff, align 8, !tbaa !426 ; 2 uses
   %i.fx = fcmp olt float %i.fs, %i.fw
-  %i.fy = select i1 %i.fx, float %i.fs, float %i.fw ; 2 uses
-  %i.fz = load float, ptr %i.bb, align 4, !tbaa !268 ; 2 uses
-  %i.ga = load float, ptr %i.ay, align 8, !tbaa !267 ; 2 uses
-  %16 = load float, ptr %i.fh, align 8, !tbaa !232 ; 2 uses
-  %.inv.i.i191 = fcmp ole float %16, %i.fv
-  %..i.i192 = select i1 %.inv.i.i191, float %i.fv, float %16 ; 3 uses
-  %17 = load float, ptr %14, align 4, !tbaa !233  ; 2 uses
-  %.inv12.i.i193 = fcmp oge float %i.fz, %17
-  %18 = select i1 %.inv12.i.i193, float %i.fz, float %17 ; 2 uses
-  %.sroa.0.0.vec.insert.i.i194 = insertelement <2 x float> poison, float %..i.i192, i64 0
-  %.sroa.0.4.vec.insert.i.i195 = insertelement <2 x float> %.sroa.0.0.vec.insert.i.i194, float %18, i64 1
-  store <2 x float> %.sroa.0.4.vec.insert.i.i195, ptr %2, align 8
-  %19 = load float, ptr %i.fi, align 8, !tbaa !232 ; 2 uses
-  %20 = fcmp ogt float %19, %i.fy
-  %..i4.i196 = select i1 %20, float %i.fy, float %19 ; 3 uses
-  %21 = load float, ptr %15, align 4, !tbaa !233  ; 2 uses
-  %22 = fcmp olt float %i.ga, %21
-  %23 = select i1 %22, float %i.ga, float %21     ; 2 uses
-  %.sroa.0.0.vec.insert.i5.i197 = insertelement <2 x float> poison, float %..i4.i196, i64 0
-  %.sroa.0.4.vec.insert.i6.i198 = insertelement <2 x float> %.sroa.0.0.vec.insert.i5.i197, float %23, i64 1
-  store <2 x float> %.sroa.0.4.vec.insert.i6.i198, ptr %i.fg, align 8
+  %i.fy = select i1 %i.fx, float %i.fs, float %i.fw
+  %i.fz = load float, ptr %i.bb, align 4, !tbaa !268
+  %i.ga = load float, ptr %i.ay, align 8, !tbaa !267
+  %15 = load <2 x float>, ptr %i.fh, align 8, !tbaa !168 ; 2 uses
+  %.sroa.0.0.vec.insert.i.i194 = insertelement <2 x float> poison, float %i.fv, i64 0
+  %.sroa.0.4.vec.insert.i.i195 = insertelement <2 x float> %.sroa.0.0.vec.insert.i.i194, float %i.fz, i64 1 ; 2 uses
+  %16 = fcmp ole <2 x float> %15, %.sroa.0.4.vec.insert.i.i195
+  %17 = select <2 x i1> %16, <2 x float> %.sroa.0.4.vec.insert.i.i195, <2 x float> %15 ; 3 uses
+  store <2 x float> %17, ptr %2, align 8
+  %18 = load <2 x float>, ptr %i.fi, align 8, !tbaa !168 ; 2 uses
+  %19 = insertelement <2 x float> poison, float %i.fy, i64 0
+  %20 = insertelement <2 x float> %19, float %i.ga, i64 1 ; 2 uses
+  %21 = fcmp ogt <2 x float> %18, %20
+  %22 = select <2 x i1> %21, <2 x float> %20, <2 x float> %18 ; 3 uses
+  store <2 x float> %22, ptr %i.fg, align 8
   %i.gb = getelementptr inbounds nuw i8, ptr %i.fo, i64 36
   %i.gc = load float, ptr %i.gb, align 4, !tbaa !556 ; 2 uses
-  %i.gd = fcmp ole float %i.gc, %..i.i192
-  %i.ge = select i1 %i.gd, float %..i.i192, float %i.gc
+  %23 = extractelement <2 x float> %17, i64 0     ; 2 uses
+  %i.gd = fcmp ole float %i.gc, %23
+  %i.ge = select i1 %i.gd, float %23, float %i.gc
   store float %i.ge, ptr %2, align 8, !tbaa !405
   %i.gf = load float, ptr %i.fr, align 4, !tbaa !422 ; 2 uses
-  %i.gg = fcmp ogt float %i.gf, %..i4.i196
-  %i.gh = select i1 %i.gg, float %..i4.i196, float %i.gf
+  %24 = extractelement <2 x float> %22, i64 0     ; 2 uses
+  %i.gg = fcmp ogt float %i.gf, %24
+  %i.gh = select i1 %i.gg, float %24, float %i.gf
   store float %i.gh, ptr %i.fg, align 8, !tbaa !404
-  %24 = fcmp olt float %18, %23
-  br i1 %24, label %bb.ao, label %bb.ap
+  %25 = fcmp olt <2 x float> %17, %22
+  %26 = extractelement <2 x i1> %25, i64 1
+  br i1 %26, label %bb.ao, label %bb.ap
 
 bb.ao:                                            ; preds = %bb.an
   %i.gi = load ptr, ptr %i.fj, align 8, !tbaa !456

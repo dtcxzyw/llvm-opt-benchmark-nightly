@@ -204,8 +204,7 @@ _ZN11OpenImageIO4v3_113compare_valueIhfEEvRNS0_8ImageBuf13ConstIteratorIT_fEEiT0
 
 .preheader192.split:                              ; preds = %.preheader192.split.preheader, %.critedge.loopexit191
   %.0166 = phi float [ %.4.lcssa, %.critedge.loopexit191 ], [ 1.000000e+00, %.preheader192.split.preheader ] ; 2 uses
-  %.066 = phi double [ %11, %.critedge.loopexit191 ], [ 0.000000e+00, %.preheader192.split.preheader ] ; 2 uses
-  %.063 = phi double [ %10, %.critedge.loopexit191 ], [ 0.000000e+00, %.preheader192.split.preheader ] ; 2 uses
+  %10 = phi <2 x double> [ %13, %.critedge.loopexit191 ], [ zeroinitializer, %.preheader192.split.preheader ] ; 2 uses
   %i.jc = load i8, ptr %i.aj, align 8, !tbaa !172, !range !153, !noundef !154
   %i.jd = icmp eq i8 %i.jc, 0
   br i1 %i.jd, label %bb.am, label %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.preheader
@@ -226,7 +225,7 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit: ; preds = %bb.an
   %i.jk = load i32, ptr %i.ao, align 4, !tbaa !180
   %i.jl = load i32, ptr %i.ap, align 8, !tbaa !181
   %i.jm = icmp eq i32 %i.jk, %i.jl
-  br i1 %i.jm, label %.split.us277.loopexit26, label %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.preheader
+  br i1 %i.jm, label %.split.us277, label %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.preheader
 
 _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.preheader: ; preds = %.preheader192.split, %bb.am, %bb.an, %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit
   br label %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread
@@ -598,18 +597,14 @@ bb.bx:                                            ; preds = %bb.bw, %bb.bs, %bb.
   %.3185.lcssa = phi double [ %.4186.lcssa, %_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseppEv.exit140 ], [ %.3185239, %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit106 ]
   %.3171.lcssa = phi double [ %.4172.lcssa, %_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseppEv.exit140 ], [ %.3171240, %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit106 ]
   %.4.lcssa = phi float [ %.5.lcssa, %_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseppEv.exit140 ], [ %.4241, %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit106 ]
-  %10 = fadd double %.063, %.3171.lcssa
-  %11 = fadd double %.066, %.3185.lcssa
+  %11 = insertelement <2 x double> poison, double %.3171.lcssa, i64 0
+  %12 = insertelement <2 x double> %11, double %.3185.lcssa, i64 1
+  %13 = fadd <2 x double> %10, %12
   br label %.preheader192.split, !llvm.loop !229
 
-.split.us277.loopexit26:                          ; preds = %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit
-  %12 = insertelement <2 x double> poison, double %.063, i64 0
-  %13 = insertelement <2 x double> %12, double %.066, i64 1
-  br label %.split.us277
-
-.split.us277:                                     ; preds = %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.us, %.split.us277.loopexit26
-  %.us-phi = phi float [ %.0166, %.split.us277.loopexit26 ], [ %.0166.us, %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.us ]
-  %i.ox = phi <2 x double> [ %13, %.split.us277.loopexit26 ], [ %i.cf, %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.us ]
+.split.us277:                                     ; preds = %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit, %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.us
+  %.us-phi = phi float [ %.0166.us, %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.us ], [ %.0166, %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit ]
+  %i.ox = phi <2 x double> [ %i.cf, %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.us ], [ %10, %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit ]
   %i.oy = sext i32 %i.y to i64
   %i.oz = mul i64 %i.t, %i.oy
   %i.pa = uitofp i64 %i.oz to double
@@ -1012,8 +1007,7 @@ _ZN11OpenImageIO4v3_113compare_valueIhfEEvRNS0_8ImageBuf13ConstIteratorIT_fEEiT0
 
 .preheader192.split:                              ; preds = %.preheader192.split.preheader, %.critedge.loopexit191
   %.0166 = phi float [ %.4.lcssa, %.critedge.loopexit191 ], [ 1.000000e+00, %.preheader192.split.preheader ] ; 2 uses
-  %.066 = phi double [ %11, %.critedge.loopexit191 ], [ 0.000000e+00, %.preheader192.split.preheader ] ; 2 uses
-  %.063 = phi double [ %10, %.critedge.loopexit191 ], [ 0.000000e+00, %.preheader192.split.preheader ] ; 2 uses
+  %10 = phi <2 x double> [ %13, %.critedge.loopexit191 ], [ zeroinitializer, %.preheader192.split.preheader ] ; 2 uses
   %i.jc = load i8, ptr %i.aj, align 8, !tbaa !172, !range !153, !noundef !154
   %i.jd = icmp eq i8 %i.jc, 0
   br i1 %i.jd, label %bb.am, label %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.preheader
@@ -1034,7 +1028,7 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit: ; preds = %bb.an
   %i.jk = load i32, ptr %i.ao, align 4, !tbaa !180
   %i.jl = load i32, ptr %i.ap, align 8, !tbaa !181
   %i.jm = icmp eq i32 %i.jk, %i.jl
-  br i1 %i.jm, label %.split.us277.loopexit26, label %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.preheader
+  br i1 %i.jm, label %.split.us277, label %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.preheader
 
 _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.preheader: ; preds = %.preheader192.split, %bb.am, %bb.an, %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit
   br label %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread
@@ -1406,18 +1400,14 @@ bb.bx:                                            ; preds = %bb.bw, %bb.bs, %bb.
   %.3185.lcssa = phi double [ %.4186.lcssa, %_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseppEv.exit140 ], [ %.3185239, %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit106 ]
   %.3171.lcssa = phi double [ %.4172.lcssa, %_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseppEv.exit140 ], [ %.3171240, %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit106 ]
   %.4.lcssa = phi float [ %.5.lcssa, %_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseppEv.exit140 ], [ %.4241, %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit106 ]
-  %10 = fadd double %.063, %.3171.lcssa
-  %11 = fadd double %.066, %.3185.lcssa
+  %11 = insertelement <2 x double> poison, double %.3171.lcssa, i64 0
+  %12 = insertelement <2 x double> %11, double %.3185.lcssa, i64 1
+  %13 = fadd <2 x double> %10, %12
   br label %.preheader192.split, !llvm.loop !237
 
-.split.us277.loopexit26:                          ; preds = %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit
-  %12 = insertelement <2 x double> poison, double %.063, i64 0
-  %13 = insertelement <2 x double> %12, double %.066, i64 1
-  br label %.split.us277
-
-.split.us277:                                     ; preds = %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.us, %.split.us277.loopexit26
-  %.us-phi = phi float [ %.0166, %.split.us277.loopexit26 ], [ %.0166.us, %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.us ]
-  %i.ox = phi <2 x double> [ %13, %.split.us277.loopexit26 ], [ %i.cf, %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.us ]
+.split.us277:                                     ; preds = %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit, %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.us
+  %.us-phi = phi float [ %.0166.us, %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.us ], [ %.0166, %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit ]
+  %i.ox = phi <2 x double> [ %i.cf, %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.us ], [ %10, %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit ]
   %i.oy = sext i32 %i.y to i64
   %i.oz = mul i64 %i.t, %i.oy
   %i.pa = uitofp i64 %i.oz to double
@@ -1820,8 +1810,7 @@ _ZN11OpenImageIO4v3_113compare_valueItfEEvRNS0_8ImageBuf13ConstIteratorIT_fEEiT0
 
 .preheader192.split:                              ; preds = %.preheader192.split.preheader, %.critedge.loopexit191
   %.0166 = phi float [ %.4.lcssa, %.critedge.loopexit191 ], [ 1.000000e+00, %.preheader192.split.preheader ] ; 2 uses
-  %.066 = phi double [ %11, %.critedge.loopexit191 ], [ 0.000000e+00, %.preheader192.split.preheader ] ; 2 uses
-  %.063 = phi double [ %10, %.critedge.loopexit191 ], [ 0.000000e+00, %.preheader192.split.preheader ] ; 2 uses
+  %10 = phi <2 x double> [ %13, %.critedge.loopexit191 ], [ zeroinitializer, %.preheader192.split.preheader ] ; 2 uses
   %i.jc = load i8, ptr %i.aj, align 8, !tbaa !172, !range !153, !noundef !154
   %i.jd = icmp eq i8 %i.jc, 0
   br i1 %i.jd, label %bb.am, label %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.preheader
@@ -1842,7 +1831,7 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit: ; preds = %bb.an
   %i.jk = load i32, ptr %i.ao, align 4, !tbaa !180
   %i.jl = load i32, ptr %i.ap, align 8, !tbaa !181
   %i.jm = icmp eq i32 %i.jk, %i.jl
-  br i1 %i.jm, label %.split.us277.loopexit26, label %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.preheader
+  br i1 %i.jm, label %.split.us277, label %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.preheader
 
 _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.preheader: ; preds = %.preheader192.split, %bb.am, %bb.an, %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit
   br label %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread
@@ -2214,18 +2203,14 @@ bb.bx:                                            ; preds = %bb.bw, %bb.bs, %bb.
   %.3185.lcssa = phi double [ %.4186.lcssa, %_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseppEv.exit140 ], [ %.3185239, %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit106 ]
   %.3171.lcssa = phi double [ %.4172.lcssa, %_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseppEv.exit140 ], [ %.3171240, %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit106 ]
   %.4.lcssa = phi float [ %.5.lcssa, %_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseppEv.exit140 ], [ %.4241, %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit106 ]
-  %10 = fadd double %.063, %.3171.lcssa
-  %11 = fadd double %.066, %.3185.lcssa
+  %11 = insertelement <2 x double> poison, double %.3171.lcssa, i64 0
+  %12 = insertelement <2 x double> %11, double %.3185.lcssa, i64 1
+  %13 = fadd <2 x double> %10, %12
   br label %.preheader192.split, !llvm.loop !261
 
-.split.us277.loopexit26:                          ; preds = %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit
-  %12 = insertelement <2 x double> poison, double %.063, i64 0
-  %13 = insertelement <2 x double> %12, double %.066, i64 1
-  br label %.split.us277
-
-.split.us277:                                     ; preds = %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.us, %.split.us277.loopexit26
-  %.us-phi = phi float [ %.0166, %.split.us277.loopexit26 ], [ %.0166.us, %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.us ]
-  %i.ox = phi <2 x double> [ %13, %.split.us277.loopexit26 ], [ %i.cf, %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.us ]
+.split.us277:                                     ; preds = %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit, %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.us
+  %.us-phi = phi float [ %.0166.us, %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.us ], [ %.0166, %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit ]
+  %i.ox = phi <2 x double> [ %i.cf, %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.us ], [ %10, %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit ]
   %i.oy = sext i32 %i.y to i64
   %i.oz = mul i64 %i.t, %i.oy
   %i.pa = uitofp i64 %i.oz to double
@@ -2628,8 +2613,7 @@ _ZN11OpenImageIO4v3_113compare_valueItfEEvRNS0_8ImageBuf13ConstIteratorIT_fEEiT0
 
 .preheader192.split:                              ; preds = %.preheader192.split.preheader, %.critedge.loopexit191
   %.0166 = phi float [ %.4.lcssa, %.critedge.loopexit191 ], [ 1.000000e+00, %.preheader192.split.preheader ] ; 2 uses
-  %.066 = phi double [ %11, %.critedge.loopexit191 ], [ 0.000000e+00, %.preheader192.split.preheader ] ; 2 uses
-  %.063 = phi double [ %10, %.critedge.loopexit191 ], [ 0.000000e+00, %.preheader192.split.preheader ] ; 2 uses
+  %10 = phi <2 x double> [ %13, %.critedge.loopexit191 ], [ zeroinitializer, %.preheader192.split.preheader ] ; 2 uses
   %i.jc = load i8, ptr %i.aj, align 8, !tbaa !172, !range !153, !noundef !154
   %i.jd = icmp eq i8 %i.jc, 0
   br i1 %i.jd, label %bb.am, label %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.preheader
@@ -2650,7 +2634,7 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit: ; preds = %bb.an
   %i.jk = load i32, ptr %i.ao, align 4, !tbaa !180
   %i.jl = load i32, ptr %i.ap, align 8, !tbaa !181
   %i.jm = icmp eq i32 %i.jk, %i.jl
-  br i1 %i.jm, label %.split.us277.loopexit26, label %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.preheader
+  br i1 %i.jm, label %.split.us277, label %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.preheader
 
 _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.preheader: ; preds = %.preheader192.split, %bb.am, %bb.an, %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit
   br label %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread
@@ -3022,18 +3006,14 @@ bb.bx:                                            ; preds = %bb.bw, %bb.bs, %bb.
   %.3185.lcssa = phi double [ %.4186.lcssa, %_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseppEv.exit140 ], [ %.3185239, %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit106 ]
   %.3171.lcssa = phi double [ %.4172.lcssa, %_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseppEv.exit140 ], [ %.3171240, %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit106 ]
   %.4.lcssa = phi float [ %.5.lcssa, %_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseppEv.exit140 ], [ %.4241, %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit106 ]
-  %10 = fadd double %.063, %.3171.lcssa
-  %11 = fadd double %.066, %.3185.lcssa
+  %11 = insertelement <2 x double> poison, double %.3171.lcssa, i64 0
+  %12 = insertelement <2 x double> %11, double %.3185.lcssa, i64 1
+  %13 = fadd <2 x double> %10, %12
   br label %.preheader192.split, !llvm.loop !269
 
-.split.us277.loopexit26:                          ; preds = %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit
-  %12 = insertelement <2 x double> poison, double %.063, i64 0
-  %13 = insertelement <2 x double> %12, double %.066, i64 1
-  br label %.split.us277
-
-.split.us277:                                     ; preds = %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.us, %.split.us277.loopexit26
-  %.us-phi = phi float [ %.0166, %.split.us277.loopexit26 ], [ %.0166.us, %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.us ]
-  %i.ox = phi <2 x double> [ %13, %.split.us277.loopexit26 ], [ %i.cf, %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.us ]
+.split.us277:                                     ; preds = %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit, %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.us
+  %.us-phi = phi float [ %.0166.us, %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.us ], [ %.0166, %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit ]
+  %i.ox = phi <2 x double> [ %i.cf, %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.us ], [ %10, %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit ]
   %i.oy = sext i32 %i.y to i64
   %i.oz = mul i64 %i.t, %i.oy
   %i.pa = uitofp i64 %i.oz to double

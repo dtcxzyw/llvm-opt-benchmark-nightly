@@ -27,24 +27,23 @@ define dso_local void @_ZN18btStaticPlaneShapeC2ERK9btVector3f(ptr noundef nonnu
 bb.a:
   tail call void @_ZN14btConcaveShapeC2Ev(ptr noundef nonnull align 8 dereferenceable(28) %0)
   store ptr getelementptr inbounds nuw inrange(-16, 104) (i8, ptr @_ZTV18btStaticPlaneShape, i64 16), ptr %0, align 8, !tbaa !8
-  %3 = load float, ptr %1, align 4, !tbaa !10     ; 3 uses
-  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 4
+  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.b = load float, ptr %i.a, align 4, !tbaa !10 ; 3 uses
-  %4 = fmul float %i.b, %i.b
-  %5 = tail call float @llvm.fmuladd.f32(float %3, float %3, float %4)
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %7 = load float, ptr %6, align 4, !tbaa !10     ; 3 uses
-  %i.c = tail call noundef float @llvm.fmuladd.f32(float %7, float %7, float %5)
-  %sqrt.i.i = tail call noundef float @llvm.sqrt.f32(float %i.c)
-  %8 = fdiv float 1.000000e+00, %sqrt.i.i         ; 3 uses
-  %9 = fmul float %3, %8
-  %10 = fmul float %i.b, %8
-  %11 = fmul float %7, %8
-  %.sroa.0.0.vec.insert.i.i.i = insertelement <2 x float> poison, float %9, i64 0
-  %.sroa.0.4.vec.insert.i.i.i = insertelement <2 x float> %.sroa.0.0.vec.insert.i.i.i, float %10, i64 1
+  %3 = load <2 x float>, ptr %1, align 4, !tbaa !10 ; 4 uses
+  %foldExtExtBinop = fmul <2 x float> %3, %3
+  %4 = extractelement <2 x float> %foldExtExtBinop, i64 1
+  %5 = extractelement <2 x float> %3, i64 0       ; 2 uses
+  %i.c = tail call float @llvm.fmuladd.f32(float %5, float %5, float %4)
+  %6 = tail call noundef float @llvm.fmuladd.f32(float %i.b, float %i.b, float %i.c)
+  %sqrt.i.i = tail call noundef float @llvm.sqrt.f32(float %6)
+  %7 = fdiv float 1.000000e+00, %sqrt.i.i         ; 2 uses
+  %8 = insertelement <2 x float> poison, float %7, i64 0
+  %9 = shufflevector <2 x float> %8, <2 x float> poison, <2 x i32> zeroinitializer
+  %10 = fmul <2 x float> %3, %9
+  %11 = fmul float %i.b, %7
   %.sroa.3.12.vec.insert.i.i.i = insertelement <2 x float> <float poison, float 0.000000e+00>, float %11, i64 0
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 60
-  store <2 x float> %.sroa.0.4.vec.insert.i.i.i, ptr %i.d, align 4
+  store <2 x float> %10, ptr %i.d, align 4
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 68
   store <2 x float> %.sroa.3.12.vec.insert.i.i.i, ptr %i.e, align 4
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 76

@@ -203,7 +203,7 @@ bb.b:                                             ; preds = %bb.a
   br label %ieee_float32_to_uint32.exit.i
 
 ieee_float32_to_uint32.exit.i:                    ; preds = %bb.b, %bb.a
-  %.0.i.i = phi i64 [ %i.m, %bb.b ], [ 4294967295, %bb.a ] ; 2 uses
+  %.0.i.i = phi i64 [ %i.m, %bb.b ], [ 4294967295, %bb.a ]
   %i.n = fcmp uno double %i.e, 0.000000e+00
   br i1 %i.n, label %point_zorder_internal.exit, label %bb.c
 
@@ -218,14 +218,12 @@ bb.c:                                             ; preds = %ieee_float32_to_uin
   br label %point_zorder_internal.exit
 
 point_zorder_internal.exit:                       ; preds = %ieee_float32_to_uint32.exit.i, %bb.c
-  %.0.i5.i = phi i64 [ %i.s, %bb.c ], [ 4294967295, %ieee_float32_to_uint32.exit.i ] ; 2 uses
-  %2 = shl nuw nsw i64 %.0.i.i, 16
-  %3 = or i64 %2, %.0.i.i
-  %4 = shl nuw nsw i64 %.0.i5.i, 16
-  %5 = or i64 %4, %.0.i5.i
-  %6 = insertelement <2 x i64> poison, i64 %5, i64 0
-  %7 = insertelement <2 x i64> %6, i64 %3, i64 1
-  %i.t = and <2 x i64> %7, splat (i64 281470681808895) ; 2 uses
+  %.0.i5.i = phi i64 [ %i.s, %bb.c ], [ 4294967295, %ieee_float32_to_uint32.exit.i ]
+  %2 = insertelement <2 x i64> poison, i64 %.0.i5.i, i64 0
+  %3 = insertelement <2 x i64> %2, i64 %.0.i.i, i64 1 ; 2 uses
+  %4 = shl nuw nsw <2 x i64> %3, splat (i64 16)
+  %5 = or <2 x i64> %4, %3
+  %i.t = and <2 x i64> %5, splat (i64 281470681808895) ; 2 uses
   %i.u = shl nuw nsw <2 x i64> %i.t, splat (i64 8)
   %i.v = or <2 x i64> %i.u, %i.t
   %i.w = and <2 x i64> %i.v, splat (i64 71777214294589695) ; 2 uses
@@ -345,7 +343,7 @@ bb.e:                                             ; preds = %point_zorder_intern
   br label %ieee_float32_to_uint32.exit.i18
 
 ieee_float32_to_uint32.exit.i18:                  ; preds = %bb.e, %point_zorder_internal.exit
-  %.0.i.i19 = phi i64 [ %i.bg, %bb.e ], [ 4294967295, %point_zorder_internal.exit ] ; 2 uses
+  %.0.i.i19 = phi i64 [ %i.bg, %bb.e ], [ 4294967295, %point_zorder_internal.exit ]
   %i.bh = fcmp uno double %i.ay, 0.000000e+00
   br i1 %i.bh, label %point_zorder_internal.exit23, label %bb.f
 
@@ -360,14 +358,12 @@ bb.f:                                             ; preds = %ieee_float32_to_uin
   br label %point_zorder_internal.exit23
 
 point_zorder_internal.exit23:                     ; preds = %ieee_float32_to_uint32.exit.i18, %bb.f
-  %.0.i5.i22 = phi i64 [ %i.bm, %bb.f ], [ 4294967295, %ieee_float32_to_uint32.exit.i18 ] ; 2 uses
-  %3 = shl nuw nsw i64 %.0.i.i19, 16
-  %4 = or i64 %3, %.0.i.i19
-  %5 = shl nuw nsw i64 %.0.i5.i22, 16
-  %6 = or i64 %5, %.0.i5.i22
-  %7 = insertelement <2 x i64> poison, i64 %6, i64 0
-  %8 = insertelement <2 x i64> %7, i64 %4, i64 1
-  %i.bn = and <2 x i64> %8, splat (i64 281470681808895) ; 2 uses
+  %.0.i5.i22 = phi i64 [ %i.bm, %bb.f ], [ 4294967295, %ieee_float32_to_uint32.exit.i18 ]
+  %3 = insertelement <2 x i64> poison, i64 %.0.i5.i22, i64 0
+  %4 = insertelement <2 x i64> %3, i64 %.0.i.i19, i64 1 ; 2 uses
+  %5 = shl nuw nsw <2 x i64> %4, splat (i64 16)
+  %6 = or <2 x i64> %5, %4
+  %i.bn = and <2 x i64> %6, splat (i64 281470681808895) ; 2 uses
   %i.bo = shl nuw nsw <2 x i64> %i.bn, splat (i64 8)
   %i.bp = or <2 x i64> %i.bo, %i.bn
   %i.bq = and <2 x i64> %i.bp, splat (i64 71777214294589695) ; 2 uses

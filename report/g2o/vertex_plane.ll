@@ -204,19 +204,18 @@ bb.a:
   %2 = alloca %"class.Eigen::Matrix", align 8     ; 6 uses
   %3 = alloca %"class.Eigen::LLT", align 16       ; 14 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 128
-  %.sroa.09.0.copyload = load ptr, ptr %i.a, align 16 ; 9 uses
+  %.sroa.09.0.copyload = load ptr, ptr %i.a, align 16 ; 7 uses
   %i.b = load double, ptr %.sroa.09.0.copyload, align 8, !tbaa !36
   %i.c = fadd double %1, %i.b                     ; 2 uses
   %i.d = getelementptr i8, ptr %.sroa.09.0.copyload, i64 8
-  %i.e = fmul double %1, 0.000000e+00             ; 6 uses
+  %i.e = fmul double %1, 0.000000e+00             ; 3 uses
   %i.f = load double, ptr %i.d, align 8, !tbaa !36
   %i.g = fadd double %i.e, %i.f                   ; 4 uses
   %i.h = getelementptr i8, ptr %.sroa.09.0.copyload, i64 16
-  %4 = load double, ptr %i.h, align 8, !tbaa !36
-  %5 = fadd double %i.e, %4                       ; 3 uses
-  %6 = getelementptr i8, ptr %.sroa.09.0.copyload, i64 24
-  %7 = load double, ptr %6, align 8, !tbaa !36
-  %8 = fadd double %i.e, %7                       ; 2 uses
+  %4 = load <2 x double>, ptr %i.h, align 8, !tbaa !36
+  %5 = insertelement <2 x double> poison, double %i.e, i64 0
+  %6 = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %7 = fadd <2 x double> %6, %4                   ; 3 uses
   %i.i = getelementptr i8, ptr %.sroa.09.0.copyload, i64 32
   %i.j = load double, ptr %i.i, align 8, !tbaa !36
   %i.k = fadd double %1, %i.j                     ; 3 uses
@@ -224,26 +223,27 @@ bb.a:
   %i.m = load double, ptr %i.l, align 8, !tbaa !36
   %i.n = fadd double %i.e, %i.m                   ; 4 uses
   %i.o = getelementptr i8, ptr %.sroa.09.0.copyload, i64 48
-  %9 = load double, ptr %i.o, align 8, !tbaa !36
-  %10 = fadd double %i.e, %9                      ; 2 uses
-  %i.p = getelementptr i8, ptr %.sroa.09.0.copyload, i64 56
+  %8 = load <2 x double>, ptr %i.o, align 8, !tbaa !36
+  %9 = fadd <2 x double> %6, %8                   ; 3 uses
+  %i.p = getelementptr i8, ptr %.sroa.09.0.copyload, i64 64
   %i.q = load double, ptr %i.p, align 8, !tbaa !36
-  %i.r = fadd double %i.e, %i.q                   ; 3 uses
-  %11 = getelementptr i8, ptr %.sroa.09.0.copyload, i64 64
-  %12 = load double, ptr %11, align 8, !tbaa !36
-  %13 = fadd double %1, %12                       ; 4 uses
-  %14 = fneg double %i.n
-  %i.s = fmul double %i.r, %14
-  %15 = tail call double @llvm.fmuladd.f64(double %i.k, double %13, double %i.s)
-  %16 = fmul double %i.c, %15
-  %i.t = fneg double %5                           ; 2 uses
-  %i.u = fmul double %i.r, %i.t
-  %i.v = tail call double @llvm.fmuladd.f64(double %i.g, double %13, double %i.u)
-  %i.w = fmul double %8, %i.v
-  %i.x = fsub double %16, %i.w
+  %i.r = fadd double %1, %i.q                     ; 4 uses
+  %10 = fneg double %i.n
+  %11 = extractelement <2 x double> %9, i64 1     ; 2 uses
+  %12 = fmul double %11, %10
+  %13 = tail call double @llvm.fmuladd.f64(double %i.k, double %i.r, double %12)
+  %i.s = fmul double %i.c, %13
+  %14 = extractelement <2 x double> %7, i64 0     ; 2 uses
+  %i.t = fneg double %14                          ; 2 uses
+  %i.u = fmul double %11, %i.t
+  %i.v = tail call double @llvm.fmuladd.f64(double %i.g, double %i.r, double %i.u)
+  %15 = extractelement <2 x double> %7, i64 1
+  %i.w = fmul double %15, %i.v
+  %i.x = fsub double %i.s, %i.w
   %i.y = fmul double %i.k, %i.t
   %i.z = tail call double @llvm.fmuladd.f64(double %i.g, double %i.n, double %i.y)
-  %i.aa = fmul double %10, %i.z
+  %16 = extractelement <2 x double> %9, i64 0
+  %i.aa = fmul double %16, %i.z
   %i.ab = fadd double %i.aa, %i.x                 ; 3 uses
   %i.ac = fcmp uno double %i.ab, 0.000000e+00
   %i.ad = fcmp olt double %i.ab, f0x3CB0000000000000
@@ -251,35 +251,31 @@ bb.a:
   br i1 %or.cond, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %.sroa.18.48.vec.insert = insertelement <2 x double> poison, double %10, i64 0
-  %.sroa.18.56.vec.insert = insertelement <2 x double> %.sroa.18.48.vec.insert, double %i.r, i64 1
   %.sroa.13.32.vec.insert = insertelement <2 x double> poison, double %i.k, i64 0
-  %.sroa.13.40.vec.insert = insertelement <2 x double> %.sroa.13.32.vec.insert, double %i.n, i64 1 ; 2 uses
-  %.sroa.8.16.vec.insert = insertelement <2 x double> poison, double %5, i64 0
-  %.sroa.8.24.vec.insert = insertelement <2 x double> %.sroa.8.16.vec.insert, double %8, i64 1
+  %.sroa.8.24.vec.insert = insertelement <2 x double> %.sroa.13.32.vec.insert, double %i.n, i64 1 ; 2 uses
   %.sroa.012.0.vec.insert = insertelement <2 x double> poison, double %i.c, i64 0
   %.sroa.012.8.vec.insert = insertelement <2 x double> %.sroa.012.0.vec.insert, double %i.g, i64 1 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #19
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #19
   store <2 x double> %.sroa.012.8.vec.insert, ptr %3, align 16, !tbaa !13, !alias.scope !54
   %i.ae = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
-  store <2 x double> %.sroa.8.24.vec.insert, ptr %i.ae, align 16, !tbaa !13, !alias.scope !54
+  store <2 x double> %7, ptr %i.ae, align 16, !tbaa !13, !alias.scope !54
   %i.af = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
-  store <2 x double> %.sroa.13.40.vec.insert, ptr %i.af, align 16, !tbaa !13, !alias.scope !54
+  store <2 x double> %.sroa.8.24.vec.insert, ptr %i.af, align 16, !tbaa !13, !alias.scope !54
   %i.ag = getelementptr inbounds nuw i8, ptr %3, i64 48
-  store <2 x double> %.sroa.18.56.vec.insert, ptr %i.ag, align 16, !tbaa !13, !alias.scope !54
+  store <2 x double> %9, ptr %i.ag, align 16, !tbaa !13, !alias.scope !54
   %i.ah = getelementptr inbounds nuw i8, ptr %3, i64 64 ; 2 uses
-  store double %13, ptr %i.ah, align 16, !tbaa !36, !alias.scope !54
+  store double %i.r, ptr %i.ah, align 16, !tbaa !36, !alias.scope !54
   %i.ai = getelementptr inbounds nuw i8, ptr %3, i64 72
   %i.aj = tail call noundef <2 x double> @llvm.fabs.v2f64(<2 x double> %.sroa.012.8.vec.insert) ; 2 uses
   %shift = shufflevector <2 x double> %i.aj, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop = fadd <2 x double> %i.aj, %shift
   %i.ak = extractelement <2 x double> %foldExtExtBinop, i64 0
-  %i.al = tail call noundef double @llvm.fabs.f64(double %5) ; 2 uses
+  %i.al = tail call noundef double @llvm.fabs.f64(double %14) ; 2 uses
   %i.am = fadd double %i.al, %i.ak                ; 2 uses
   %i.an = fcmp ogt double %i.am, 0.000000e+00
   %i.ao = select i1 %i.an, double %i.am, double 0.000000e+00 ; 2 uses
-  %i.ap = tail call noundef <2 x double> @llvm.fabs.v2f64(<2 x double> %.sroa.13.40.vec.insert) ; 2 uses
+  %i.ap = tail call noundef <2 x double> @llvm.fabs.v2f64(<2 x double> %.sroa.8.24.vec.insert) ; 2 uses
   %shift27 = shufflevector <2 x double> %i.ap, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop28 = fadd <2 x double> %i.ap, %shift27
   %i.aq = extractelement <2 x double> %foldExtExtBinop28, i64 0
@@ -287,7 +283,7 @@ bb.b:                                             ; preds = %bb.a
   %i.as = fadd double %i.ar, %i.aq                ; 2 uses
   %i.at = fcmp ogt double %i.as, %i.ao
   %i.au = select i1 %i.at, double %i.as, double %i.ao ; 2 uses
-  %i.av = tail call noundef double @llvm.fabs.f64(double %13)
+  %i.av = tail call noundef double @llvm.fabs.f64(double %i.r)
   %i.aw = tail call noundef double @llvm.fabs.f64(double %i.n)
   %i.ax = fadd double %i.al, %i.aw
   %i.ay = fadd double %i.ax, %i.av                ; 2 uses

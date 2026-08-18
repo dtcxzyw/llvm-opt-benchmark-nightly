@@ -203,42 +203,40 @@ bb.a:
   %i.j = extractvalue { <2 x float>, <2 x float> } %i.h, 1
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 92
   %.sroa.0.0.vec.extract = extractelement <2 x float> %i.i, i64 0
-  %3 = load float, ptr %i.k, align 4, !tbaa !29   ; 2 uses
-  %.sroa.0.4.vec.extract = extractelement <2 x float> %i.i, i64 1
-  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 96
-  %i.m = load float, ptr %i.l, align 8, !tbaa !29 ; 2 uses
-  %4 = fmul float %.sroa.0.4.vec.extract, %i.m
-  %5 = tail call float @llvm.fmuladd.f32(float %.sroa.0.0.vec.extract, float %3, float %4)
-  %.sroa.5.8.vec.extract = extractelement <2 x float> %i.j, i64 0
-  %i.n = getelementptr inbounds nuw i8, ptr %0, i64 100
-  %i.o = load float, ptr %i.n, align 4, !tbaa !29 ; 2 uses
-  %6 = tail call noundef float @llvm.fmuladd.f32(float %.sroa.5.8.vec.extract, float %i.o, float %5)
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 160
-  %8 = load float, ptr %7, align 8, !tbaa !38
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 156 ; 2 uses
-  %10 = load float, ptr %9, align 4, !tbaa !36
-  %11 = fdiv float %6, %10
-  %12 = fsub float %8, %11                        ; 5 uses
-  %13 = getelementptr inbounds nuw i8, ptr %0, i64 164 ; 2 uses
-  %14 = load float, ptr %13, align 4, !tbaa !39
-  %i.p = fadd float %14, %12
-  store float %i.p, ptr %13, align 4, !tbaa !39
+  %.sroa.0.4.vec.extract = extractelement <2 x float> %i.j, i64 0
+  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 100
+  %i.m = load float, ptr %i.l, align 4, !tbaa !29 ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 160
+  %4 = load float, ptr %3, align 8, !tbaa !38
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 156 ; 2 uses
+  %6 = load float, ptr %5, align 4, !tbaa !36
+  %i.n = getelementptr inbounds nuw i8, ptr %0, i64 164 ; 2 uses
+  %i.o = load float, ptr %i.n, align 4, !tbaa !39
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #16
-  %15 = fmul float %3, %12
-  %16 = fmul float %i.m, %12
-  %i.q = fmul float %i.o, %12
-  %.sroa.0.0.vec.insert.i.i = insertelement <2 x float> poison, float %15, i64 0
-  %.sroa.0.4.vec.insert.i.i = insertelement <2 x float> %.sroa.0.0.vec.insert.i.i, float %16, i64 1
+  %7 = load <2 x float>, ptr %i.k, align 4, !tbaa !29 ; 3 uses
+  %foldExtExtBinop = fmul <2 x float> %i.i, %7
+  %8 = extractelement <2 x float> %foldExtExtBinop, i64 1
+  %9 = extractelement <2 x float> %7, i64 0
+  %10 = tail call float @llvm.fmuladd.f32(float %.sroa.0.0.vec.extract, float %9, float %8)
+  %11 = tail call noundef float @llvm.fmuladd.f32(float %.sroa.0.4.vec.extract, float %i.m, float %10)
+  %12 = fdiv float %11, %6
+  %13 = fsub float %4, %12                        ; 4 uses
+  %i.p = fadd float %i.o, %13
+  store float %i.p, ptr %i.n, align 4, !tbaa !39
+  %14 = insertelement <2 x float> poison, float %13, i64 0
+  %15 = shufflevector <2 x float> %14, <2 x float> poison, <2 x i32> zeroinitializer
+  %16 = fmul <2 x float> %7, %15
+  %i.q = fmul float %i.m, %13
   %.sroa.3.12.vec.insert.i.i = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.q, i64 0
-  store <2 x float> %.sroa.0.4.vec.insert.i.i, ptr %2, align 8
+  store <2 x float> %16, ptr %2, align 8
   %i.r = getelementptr inbounds nuw i8, ptr %2, i64 8
   store <2 x float> %.sroa.3.12.vec.insert.i.i, ptr %i.r, align 8
   %i.s = load ptr, ptr %0, align 8, !tbaa !19
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 48
   %i.u = load ptr, ptr %i.t, align 8
   call void %i.u(ptr noundef nonnull align 8 dereferenceable(172) %0, ptr noundef nonnull align 4 dereferenceable(16) %2)
-  %i.v = load float, ptr %9, align 4, !tbaa !36
-  %i.w = fmul float %12, %i.v                     ; 2 uses
+  %i.v = load float, ptr %5, align 4, !tbaa !36
+  %i.w = fmul float %13, %i.v                     ; 2 uses
   %i.x = fmul float %i.w, %i.w
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #16
   ret float %i.x

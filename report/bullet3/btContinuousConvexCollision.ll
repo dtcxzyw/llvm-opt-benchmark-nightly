@@ -201,9 +201,9 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #3
 ; Function Attrs: mustprogress uwtable
 define dso_local noundef zeroext i1 @_ZN27btContinuousConvexCollision16calcTimeOfImpactERK11btTransformS2_S2_S2_RN12btConvexCast10CastResultE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %0, ptr noundef nonnull align 4 dereferenceable(64) %1, ptr noundef nonnull align 4 dereferenceable(64) %2, ptr noundef nonnull align 4 dereferenceable(64) %3, ptr noundef nonnull align 4 dereferenceable(64) %4, ptr noundef nonnull align 8 dereferenceable(196) %5) unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %6 = alloca %class.btVector3, align 4           ; 6 uses
+  %6 = alloca %class.btVector3, align 8           ; 5 uses
   %i.a = alloca float, align 4                    ; 4 uses
-  %7 = alloca %class.btVector3, align 4           ; 6 uses
+  %7 = alloca %class.btVector3, align 8           ; 5 uses
   %i.b = alloca float, align 4                    ; 4 uses
   %8 = alloca %class.btVector3, align 8           ; 6 uses
   %9 = alloca %class.btVector3, align 8           ; 5 uses
@@ -237,19 +237,16 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #13
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #13
   call void @_ZN15btTransformUtil22calculateDiffAxisAngleERK11btTransformS2_R9btVector3Rf(ptr noundef nonnull align 4 dereferenceable(64) %1, ptr noundef nonnull align 4 dereferenceable(64) %2, ptr noundef nonnull align 4 dereferenceable(16) %7, ptr noundef nonnull align 4 dereferenceable(4) %i.b)
-  %19 = load float, ptr %7, align 4, !tbaa !33
-  %i.m = load float, ptr %i.b, align 4, !tbaa !33 ; 3 uses
-  %20 = fmul float %19, %i.m                      ; 3 uses
-  %21 = getelementptr inbounds nuw i8, ptr %7, i64 4
-  %22 = load float, ptr %21, align 4, !tbaa !33
-  %23 = fmul float %i.m, %22                      ; 3 uses
+  %i.m = load float, ptr %i.b, align 4, !tbaa !33 ; 2 uses
+  %19 = load <2 x float>, ptr %7, align 8, !tbaa !33
+  %20 = insertelement <2 x float> poison, float %i.m, i64 0
+  %21 = shufflevector <2 x float> %20, <2 x float> poison, <2 x i32> zeroinitializer
+  %22 = fmul <2 x float> %21, %19                 ; 4 uses
   %i.n = getelementptr inbounds nuw i8, ptr %7, i64 8
-  %i.o = load float, ptr %i.n, align 4, !tbaa !33
+  %i.o = load float, ptr %i.n, align 8, !tbaa !33
   %i.p = fmul float %i.m, %i.o                    ; 3 uses
-  %.sroa.0.0.vec.insert.i.i13.i = insertelement <2 x float> poison, float %20, i64 0
-  %.sroa.0.4.vec.insert.i.i14.i = insertelement <2 x float> %.sroa.0.0.vec.insert.i.i13.i, float %23, i64 1
   %.sroa.3.12.vec.insert.i.i15.i = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.p, i64 0
-  store <2 x float> %.sroa.0.4.vec.insert.i.i14.i, ptr %9, align 8
+  store <2 x float> %22, ptr %9, align 8
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %9, i64 8
   store <2 x float> %.sroa.3.12.vec.insert.i.i15.i, ptr %.sroa.4.0..sroa_idx.i, align 8, !tbaa !32
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #13
@@ -271,19 +268,16 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #13
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
   call void @_ZN15btTransformUtil22calculateDiffAxisAngleERK11btTransformS2_R9btVector3Rf(ptr noundef nonnull align 4 dereferenceable(64) %3, ptr noundef nonnull align 4 dereferenceable(64) %4, ptr noundef nonnull align 4 dereferenceable(16) %6, ptr noundef nonnull align 4 dereferenceable(4) %i.a)
-  %24 = load float, ptr %6, align 4, !tbaa !33
-  %i.aa = load float, ptr %i.a, align 4, !tbaa !33 ; 3 uses
-  %25 = fmul float %24, %i.aa                     ; 2 uses
-  %26 = getelementptr inbounds nuw i8, ptr %6, i64 4
-  %27 = load float, ptr %26, align 4, !tbaa !33
-  %28 = fmul float %i.aa, %27                     ; 2 uses
+  %i.aa = load float, ptr %i.a, align 4, !tbaa !33 ; 2 uses
+  %23 = load <2 x float>, ptr %6, align 8, !tbaa !33
+  %24 = insertelement <2 x float> poison, float %i.aa, i64 0
+  %25 = shufflevector <2 x float> %24, <2 x float> poison, <2 x i32> zeroinitializer
+  %26 = fmul <2 x float> %25, %23                 ; 3 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %i.ac = load float, ptr %i.ab, align 4, !tbaa !33
+  %i.ac = load float, ptr %i.ab, align 8, !tbaa !33
   %i.ad = fmul float %i.aa, %i.ac                 ; 2 uses
-  %.sroa.0.0.vec.insert.i.i13.i100 = insertelement <2 x float> poison, float %25, i64 0
-  %.sroa.0.4.vec.insert.i.i14.i101 = insertelement <2 x float> %.sroa.0.0.vec.insert.i.i13.i100, float %28, i64 1
   %.sroa.3.12.vec.insert.i.i15.i102 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.ad, i64 0
-  store <2 x float> %.sroa.0.4.vec.insert.i.i14.i101, ptr %11, align 8
+  store <2 x float> %26, ptr %11, align 8
   %.sroa.4.0..sroa_idx.i103 = getelementptr inbounds nuw i8, ptr %11, i64 8
   store <2 x float> %.sroa.3.12.vec.insert.i.i15.i102, ptr %.sroa.4.0..sroa_idx.i103, align 8, !tbaa !32
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
@@ -308,8 +302,10 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a, %bb.b
   %i.aq = phi float [ %i.ap, %bb.b ], [ 0.000000e+00, %bb.a ]
-  %29 = fmul float %23, %23
-  %i.ar = call float @llvm.fmuladd.f32(float %20, float %20, float %29)
+  %foldExtExtBinop = fmul <2 x float> %22, %22
+  %27 = extractelement <2 x float> %foldExtExtBinop, i64 1
+  %28 = extractelement <2 x float> %22, i64 0     ; 2 uses
+  %i.ar = call float @llvm.fmuladd.f32(float %28, float %28, float %27)
   %i.as = call noundef float @llvm.fmuladd.f32(float %i.p, float %i.p, float %i.ar)
   %sqrt.i = call noundef float @llvm.sqrt.f32(float %i.as)
   %foldExtExtBinop.a = fsub <2 x float> %i.u, %i.g ; 2 uses
@@ -320,11 +316,10 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.ax = fsub float %i.aw, %i.av                 ; 3 uses
   %i.ay = load float, ptr %.sroa.42.0..sroa_idx.i, align 8, !tbaa !33
   %i.az = fsub float %i.z, %i.ay                  ; 3 uses
-  %30 = insertelement <2 x float> poison, float %28, i64 0
-  %i.ba = insertelement <2 x float> %30, float %i.ax, i64 1 ; 2 uses
+  %29 = shufflevector <2 x float> %26, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %i.ba = insertelement <2 x float> %29, float %i.ax, i64 1 ; 2 uses
   %i.bb = fmul <2 x float> %i.ba, %i.ba
-  %31 = insertelement <2 x float> poison, float %25, i64 0
-  %i.bc = shufflevector <2 x float> %31, <2 x float> %foldExtExtBinop.a, <2 x i32> <i32 0, i32 2> ; 2 uses
+  %i.bc = shufflevector <2 x float> %26, <2 x float> %foldExtExtBinop.a, <2 x i32> <i32 0, i32 2> ; 2 uses
   %i.bd = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.bc, <2 x float> %i.bc, <2 x float> %i.bb)
   %i.be = insertelement <2 x float> poison, float %i.ad, i64 0
   %i.bf = insertelement <2 x float> %i.be, float %i.az, i64 1 ; 2 uses

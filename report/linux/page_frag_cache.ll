@@ -1,5 +1,5 @@
-inline.NumInlined: 34
-inline.NumDeleted: 20
+inline.NumInlined: 35
+inline.NumDeleted: 21
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
@@ -114,21 +114,49 @@ define dso_local ptr @__page_frag_alloc_align(ptr nofree noundef captures(none) 
 bb.a:
   %i.a = load i64, ptr %0, align 8                ; 2 uses
   %.not = icmp eq i64 %i.a, 0
-  br i1 %.not, label %bb.b, label %._crit_edge, !prof !11
+  br i1 %.not, label %4, label %._crit_edge, !prof !11
 
 ._crit_edge:                                      ; preds = %bb.a
   %.phi.trans.insert = getelementptr i8, ptr %0, i64 8
   %.pre = load i32, ptr %.phi.trans.insert, align 8
   br label %bb.d
 
-bb.b:                                             ; preds = %bb.f, %bb.a, %bb.h
-  %4 = tail call fastcc ptr @__page_frag_cache_refill(ptr noundef %0, i32 noundef %2) #5, !srcloc !12 ; 2 uses
-  %.not34 = icmp eq ptr %4, null
-  br i1 %.not34, label %bb.k, label %bb.c
+4:                                                ; preds = %bb.f, %bb.a, %bb.h
+  %5 = and i32 %2, -861185
+  %6 = or disjoint i32 %5, 860160
+  %7 = tail call i32 asm "movl %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i32) @numa_node) #5, !srcloc !12
+  %8 = tail call ptr @__alloc_pages_noprof(i32 noundef %6, i32 noundef 3, i32 noundef %7, ptr noundef null) #4 ; 2 uses
+  %.not.i = icmp eq ptr %8, null
+  br i1 %.not.i, label %bb.b, label %bb.c, !prof !11
 
-bb.c:                                             ; preds = %bb.b
-  %i.b = load i64, ptr %0, align 8
-  %i.c = getelementptr i8, ptr %4, i64 52         ; 2 uses
+bb.b:                                             ; preds = %4
+  %9 = tail call i32 asm "movl %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i32) @numa_node) #5, !srcloc !12
+  %10 = tail call ptr @__alloc_pages_noprof(i32 noundef %2, i32 noundef 0, i32 noundef %9, ptr noundef null) #4 ; 2 uses
+  %.not34 = icmp eq ptr %10, null
+  br i1 %.not34, label %__page_frag_cache_refill.exit.thread, label %bb.c
+
+__page_frag_cache_refill.exit.thread:             ; preds = %bb.b
+  store i64 0, ptr %0, align 8
+  br label %bb.k
+
+bb.c:                                             ; preds = %bb.b, %4
+  %.027.i = phi i64 [ 0, %bb.b ], [ 3, %4 ]
+  %.01925.i = phi ptr [ %10, %bb.b ], [ %8, %4 ]  ; 3 uses
+  %11 = getelementptr i8, ptr %.01925.i, i64 8
+  %.019.val.i = load ptr, ptr %11, align 8
+  %12 = ptrtoint ptr %.019.val.i to i64
+  %13 = load i64, ptr @vmemmap_base, align 8
+  %14 = ptrtoint ptr %.01925.i to i64
+  %15 = sub i64 %14, %13
+  %16 = shl i64 %15, 6
+  %i.b = load i64, ptr @page_offset_base, align 8
+  %17 = add i64 %16, %i.b
+  %18 = shl i64 %12, 7
+  %19 = and i64 %18, 256
+  %20 = or disjoint i64 %19, %.027.i
+  %21 = or i64 %20, %17                           ; 2 uses
+  store i64 %21, ptr %0, align 8
+  %i.c = getelementptr i8, ptr %.01925.i, i64 52  ; 2 uses
   tail call void asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock addl $1, $0", "=*m,ir,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.c, i32 32768, ptr elementtype(i32) %i.c) #3, !srcloc !13
   %i.d = getelementptr i8, ptr %0, i64 12
   store i32 32769, ptr %i.d, align 4
@@ -138,7 +166,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %._crit_edge, %bb.c
   %i.f = phi i32 [ 0, %bb.c ], [ %.pre, %._crit_edge ]
-  %.031 = phi i64 [ %i.b, %bb.c ], [ %i.a, %._crit_edge ] ; 5 uses
+  %.031 = phi i64 [ %21, %bb.c ], [ %i.a, %._crit_edge ] ; 5 uses
   %i.g = and i64 %.031, 255                       ; 2 uses
   %i.h = shl i64 4096, %i.g
   %i.i = trunc i64 %i.h to i32
@@ -179,7 +207,7 @@ bb.f:                                             ; preds = %bb.e
   %i.ag = icmp ult i8 %i.af, 2
   tail call void @llvm.assume(i1 %i.ag)
   %.not35 = icmp eq i8 %i.af, 0
-  br i1 %.not35, label %bb.b, label %bb.g
+  br i1 %.not35, label %4, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.ah = and i64 %.031, 256
@@ -189,7 +217,7 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.g
   %i.ai = trunc nuw nsw i64 %i.g to i32
   tail call void @free_frozen_pages(ptr noundef %i.ab, i32 noundef %i.ai) #4
-  br label %bb.b
+  br label %4
 
 bb.i:                                             ; preds = %bb.g
   store volatile i32 32769, ptr %i.ae, align 4
@@ -208,49 +236,9 @@ bb.j:                                             ; preds = %._crit_edge37, %bb.
   %i.ap = getelementptr i8, ptr %i.an, i64 %i.ao
   br label %bb.k
 
-bb.k:                                             ; preds = %bb.e, %bb.b, %bb.j
-  %.032 = phi ptr [ null, %bb.b ], [ %i.ap, %bb.j ], [ null, %bb.e ]
+bb.k:                                             ; preds = %__page_frag_cache_refill.exit.thread, %bb.e, %bb.j
+  %.032 = phi ptr [ null, %__page_frag_cache_refill.exit.thread ], [ %i.ap, %bb.j ], [ null, %bb.e ]
   ret ptr %.032
-}
-
-; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
-define internal fastcc ptr @__page_frag_cache_refill(ptr nofree noundef writeonly captures(none) initializes((0, 8)) %0, i32 noundef %1) unnamed_addr #0 align 16 prefalign(16) {
-  %3 = and i32 %1, -861185
-  %4 = or disjoint i32 %3, 860160
-  %5 = tail call i32 asm "movl %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i32) @numa_node) #6, !srcloc !15
-  %6 = tail call ptr @__alloc_pages_noprof(i32 noundef %4, i32 noundef 3, i32 noundef %5, ptr noundef null) #4 ; 2 uses
-  %.not = icmp eq ptr %6, null
-  br i1 %.not, label %7, label %.thread, !prof !11
-
-7:                                                ; preds = %2
-  %8 = tail call i32 asm "movl %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i32) @numa_node) #6, !srcloc !15
-  %9 = tail call ptr @__alloc_pages_noprof(i32 noundef %1, i32 noundef 0, i32 noundef %8, ptr noundef null) #4 ; 2 uses
-  %.not21 = icmp eq ptr %9, null
-  br i1 %.not21, label %22, label %.thread
-
-.thread:                                          ; preds = %2, %7
-  %.027 = phi i64 [ 0, %7 ], [ 3, %2 ]
-  %.01925 = phi ptr [ %9, %7 ], [ %6, %2 ]        ; 3 uses
-  %10 = getelementptr i8, ptr %.01925, i64 8
-  %.019.val = load ptr, ptr %10, align 8
-  %11 = ptrtoint ptr %.019.val to i64
-  %12 = load i64, ptr @vmemmap_base, align 8
-  %13 = ptrtoint ptr %.01925 to i64
-  %14 = sub i64 %13, %12
-  %15 = shl i64 %14, 6
-  %16 = load i64, ptr @page_offset_base, align 8
-  %17 = add i64 %15, %16
-  %18 = shl i64 %11, 7
-  %19 = and i64 %18, 256
-  %20 = or disjoint i64 %19, %.027
-  %21 = or i64 %20, %17
-  br label %22
-
-22:                                               ; preds = %7, %.thread
-  %.01926 = phi ptr [ %.01925, %.thread ], [ null, %7 ]
-  %23 = phi i64 [ %21, %.thread ], [ 0, %7 ]
-  store i64 %23, ptr %0, align 8
-  ret ptr %.01926
 }
 
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
@@ -277,7 +265,7 @@ bb.a:
   %i.s = and i64 %i.r, %i.o
   %i.t = inttoptr i64 %i.s to ptr                 ; 4 uses
   %i.u = getelementptr i8, ptr %i.t, i64 52       ; 2 uses
-  %i.v = tail call i8 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock decl $0", "=*m,={@cce},*m,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.u, ptr elementtype(i32) %i.u) #3, !srcloc !16 ; 2 uses
+  %i.v = tail call i8 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock decl $0", "=*m,={@cce},*m,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.u, ptr elementtype(i32) %i.u) #3, !srcloc !15 ; 2 uses
   %i.w = icmp ult i8 %i.v, 2
   tail call void @llvm.assume(i1 %i.w)
   %.not = icmp eq i8 %i.v, 0
@@ -316,8 +304,7 @@ attributes #1 = { noredzone null_pointer_is_valid "no-builtin-wcslen" "no-trappi
 attributes #2 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
 attributes #3 = { nounwind }
 attributes #4 = { noredzone nounwind "no-builtin-wcslen" }
-attributes #5 = { noredzone "no-builtin-wcslen" }
-attributes #6 = { nounwind memory(read) }
+attributes #5 = { nounwind memory(read) }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4, !5, !6, !7, !8}
 !llvm.ident = !{!9}
@@ -334,9 +321,8 @@ attributes #6 = { nounwind memory(read) }
 !9 = !{!"Ubuntu clang version 24.0.0 (++20260807082003+f3bd40ce6ba5-1~exp1~20260807082012.1771)"}
 !10 = !{i64 2148740023, i64 2148740062, i64 2148740083, i64 2148740120, i64 2148740143, i64 2148740152}
 !11 = !{!"branch_weights", !"expected", i32 1, i32 2000}
-!12 = !{i64 2992}
+!12 = !{i64 2152476946}
 !13 = !{i64 2148737803, i64 2148737842, i64 2148737863, i64 2148737900, i64 2148737923, i64 2148737794}
 !14 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!15 = !{i64 2152476946}
-!16 = !{i64 2148742635, i64 2148742674, i64 2148742695, i64 2148742732, i64 2148742755, i64 2148742764}
+!15 = !{i64 2148742635, i64 2148742674, i64 2148742695, i64 2148742732, i64 2148742755, i64 2148742764}
 end_hunk_0

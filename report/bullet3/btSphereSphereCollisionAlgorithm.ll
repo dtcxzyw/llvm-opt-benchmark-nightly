@@ -178,27 +178,24 @@ bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !34   ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.j = load ptr, ptr %i.i, align 8, !tbaa !35, !nonnull !28, !align !36 ; 3 uses
+  %i.j = load ptr, ptr %i.i, align 8, !tbaa !35, !nonnull !28, !align !36 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 48
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
-  %i.m = load ptr, ptr %i.l, align 8, !tbaa !35, !nonnull !28, !align !36 ; 3 uses
+  %i.m = load ptr, ptr %i.l, align 8, !tbaa !35, !nonnull !28, !align !36 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 48
-  %7 = load float, ptr %i.k, align 4, !tbaa !37
-  %8 = load float, ptr %i.n, align 4, !tbaa !37
-  %9 = fsub float %7, %8                          ; 3 uses
-  %i.o = getelementptr inbounds nuw i8, ptr %i.j, i64 52
+  %7 = load <2 x float>, ptr %i.k, align 4, !tbaa !37
+  %8 = load <2 x float>, ptr %i.n, align 4, !tbaa !37
+  %9 = fsub <2 x float> %7, %8                    ; 4 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %i.j, i64 56
   %i.p = load float, ptr %i.o, align 4, !tbaa !37
-  %i.q = getelementptr inbounds nuw i8, ptr %i.m, i64 52
+  %i.q = getelementptr inbounds nuw i8, ptr %i.m, i64 56
   %i.r = load float, ptr %i.q, align 4, !tbaa !37
   %i.s = fsub float %i.p, %i.r                    ; 3 uses
-  %10 = getelementptr inbounds nuw i8, ptr %i.j, i64 56
-  %11 = load float, ptr %10, align 4, !tbaa !37
-  %12 = getelementptr inbounds nuw i8, ptr %i.m, i64 56
-  %13 = load float, ptr %12, align 4, !tbaa !37
-  %14 = fsub float %11, %13                       ; 3 uses
-  %15 = fmul float %i.s, %i.s
-  %i.t = tail call float @llvm.fmuladd.f32(float %9, float %9, float %15)
-  %i.u = tail call noundef float @llvm.fmuladd.f32(float %14, float %14, float %i.t)
+  %foldExtExtBinop = fmul <2 x float> %9, %9
+  %10 = extractelement <2 x float> %foldExtExtBinop, i64 1
+  %11 = extractelement <2 x float> %9, i64 0      ; 2 uses
+  %i.t = tail call float @llvm.fmuladd.f32(float %11, float %11, float %10)
+  %i.u = tail call noundef float @llvm.fmuladd.f32(float %i.s, float %i.s, float %i.t)
   %sqrt.i = tail call noundef float @llvm.sqrt.f32(float %i.u) ; 4 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.f, i64 48
   %i.w = load float, ptr %i.v, align 4, !tbaa !37
@@ -262,20 +259,21 @@ bb.e:                                             ; preds = %_ZN20btPersistentMa
 
 bb.f:                                             ; preds = %bb.e
   %i.av = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %i.aw = fdiv float 1.000000e+00, %sqrt.i        ; 3 uses
-  %16 = fmul float %9, %i.aw                      ; 2 uses
-  %17 = fmul float %i.s, %i.aw                    ; 2 uses
-  %18 = fmul float %14, %i.aw                     ; 2 uses
-  %.sroa.0.0.vec.insert.i.i = insertelement <2 x float> poison, float %16, i64 0
-  %.sroa.0.4.vec.insert.i.i = insertelement <2 x float> %.sroa.0.0.vec.insert.i.i, float %17, i64 1
-  %.sroa.3.12.vec.insert.i.i = insertelement <2 x float> <float poison, float 0.000000e+00>, float %18, i64 0
-  store <2 x float> %.sroa.0.4.vec.insert.i.i, ptr %5, align 16
-  store <2 x float> %.sroa.3.12.vec.insert.i.i, ptr %i.av, align 8, !tbaa !47
+  %i.aw = fdiv float 1.000000e+00, %sqrt.i        ; 2 uses
+  %12 = insertelement <2 x float> poison, float %i.aw, i64 0
+  %13 = shufflevector <2 x float> %12, <2 x float> poison, <2 x i32> zeroinitializer
+  %14 = fmul <2 x float> %9, %13                  ; 3 uses
+  %15 = fmul float %i.s, %i.aw                    ; 2 uses
+  %.sroa.0.4.vec.insert.i.i = insertelement <2 x float> <float poison, float 0.000000e+00>, float %15, i64 0
+  store <2 x float> %14, ptr %5, align 16
+  store <2 x float> %.sroa.0.4.vec.insert.i.i, ptr %i.av, align 8, !tbaa !47
+  %16 = extractelement <2 x float> %14, i64 0
   %i.ax = fmul float %i.ae, %16
+  %17 = extractelement <2 x float> %14, i64 1
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
-  %i.ay = phi float [ %18, %bb.f ], [ 0.000000e+00, %bb.e ]
+  %i.ay = phi float [ %15, %bb.f ], [ 0.000000e+00, %bb.e ]
   %i.az = phi float [ %17, %bb.f ], [ 0.000000e+00, %bb.e ]
   %i.ba = phi float [ %i.ax, %bb.f ], [ %i.ae, %bb.e ]
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #11

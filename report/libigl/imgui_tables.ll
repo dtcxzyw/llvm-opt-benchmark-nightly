@@ -204,11 +204,11 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e, %bb.d
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 4 uses
-  %i.at = load float, ptr %i.as, align 8, !tbaa !191 ; 9 uses
+  %i.at = load float, ptr %i.as, align 8, !tbaa !191 ; 8 uses
   %i.au = getelementptr inbounds nuw i8, ptr %i.c, i64 220 ; 2 uses
   store float %i.at, ptr %i.au, align 4, !tbaa !398
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 132 ; 4 uses
-  %i.aw = load float, ptr %i.av, align 4, !tbaa !192 ; 8 uses
+  %i.aw = load float, ptr %i.av, align 4, !tbaa !192 ; 7 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 2 uses
   %i.ay = load i32, ptr %i.ax, align 8, !tbaa !186 ; 4 uses
   %i.az = add nsw i32 %i.ay, 1                    ; 2 uses
@@ -347,36 +347,29 @@ bb.v:                                             ; preds = %bb.u
   %.not165 = icmp ne i32 %.0, 0
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #20
   %i.dk = getelementptr inbounds nuw i8, ptr %0, i64 276
-  %i.dl = load float, ptr %i.dk, align 4, !tbaa !329 ; 2 uses
+  %i.dl = load float, ptr %i.dk, align 4, !tbaa !329
   %i.dm = getelementptr inbounds nuw i8, ptr %0, i64 284
-  %i.dn = load float, ptr %i.dm, align 4, !tbaa !285 ; 2 uses
+  %i.dn = load float, ptr %i.dm, align 4, !tbaa !285
   %i.do = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.dp = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
   %i.dq = getelementptr inbounds nuw i8, ptr %1, i64 12
   %i.dr = getelementptr inbounds nuw i8, ptr %0, i64 308
-  %.val5.i = load float, ptr %i.dr, align 4, !tbaa !168 ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 312
-  %.val6.i = load float, ptr %7, align 8, !tbaa !169 ; 2 uses
-  %.inv.i.i = fcmp oge float %i.dl, %.val5.i
-  %..i.i = select i1 %.inv.i.i, float %i.dl, float %.val5.i
-  %.inv6.i.i = fcmp oge float %i.aw, %.val6.i
-  %8 = select i1 %.inv6.i.i, float %i.aw, float %.val6.i ; 2 uses
-  %.sroa.0.0.vec.insert.i.i = insertelement <2 x float> poison, float %..i.i, i64 0
-  %.sroa.0.4.vec.insert.i.i = insertelement <2 x float> %.sroa.0.0.vec.insert.i.i, float %8, i64 1
-  store <2 x float> %.sroa.0.4.vec.insert.i.i, ptr %1, align 8
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 316
-  %.val9.i = load float, ptr %9, align 4, !tbaa !168 ; 2 uses
-  %i.ds = getelementptr inbounds nuw i8, ptr %0, i64 320
-  %.val10.i = load float, ptr %i.ds, align 8, !tbaa !169 ; 2 uses
-  %10 = fcmp olt float %i.dn, %.val9.i
-  %..i11.i = select i1 %10, float %i.dn, float %.val9.i
-  %11 = fcmp olt float %i.at, %.val10.i
-  %12 = select i1 %11, float %i.at, float %.val10.i ; 2 uses
-  %.sroa.0.0.vec.insert.i12.i = insertelement <2 x float> poison, float %..i11.i, i64 0
-  %.sroa.0.4.vec.insert.i13.i = insertelement <2 x float> %.sroa.0.0.vec.insert.i12.i, float %12, i64 1
-  store <2 x float> %.sroa.0.4.vec.insert.i13.i, ptr %i.dp, align 8
-  %13 = fcmp olt float %8, %12
-  %or.cond215 = select i1 %.not165, i1 %13, i1 false
+  %7 = load <2 x float>, ptr %i.dr, align 4, !tbaa !127 ; 2 uses
+  %.sroa.0.0.vec.insert.i.i = insertelement <2 x float> poison, float %i.dl, i64 0
+  %.sroa.0.4.vec.insert.i.i = insertelement <2 x float> %.sroa.0.0.vec.insert.i.i, float %i.aw, i64 1 ; 2 uses
+  %8 = fcmp oge <2 x float> %.sroa.0.4.vec.insert.i.i, %7
+  %9 = select <2 x i1> %8, <2 x float> %.sroa.0.4.vec.insert.i.i, <2 x float> %7 ; 2 uses
+  store <2 x float> %9, ptr %1, align 8
+  %i.ds = getelementptr inbounds nuw i8, ptr %0, i64 316
+  %10 = load <2 x float>, ptr %i.ds, align 4, !tbaa !127 ; 2 uses
+  %11 = insertelement <2 x float> poison, float %i.dn, i64 0
+  %12 = insertelement <2 x float> %11, float %i.at, i64 1 ; 2 uses
+  %13 = fcmp olt <2 x float> %12, %10
+  %14 = select <2 x i1> %13, <2 x float> %12, <2 x float> %10 ; 2 uses
+  store <2 x float> %14, ptr %i.dp, align 8
+  %15 = fcmp olt <2 x float> %9, %14
+  %16 = extractelement <2 x i1> %15, i64 1
+  %or.cond215 = select i1 %.not165, i1 %16, i1 false
   br i1 %or.cond215, label %bb.w, label %bb.x
 
 bb.w:                                             ; preds = %bb.v

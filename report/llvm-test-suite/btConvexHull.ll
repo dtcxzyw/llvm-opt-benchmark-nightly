@@ -187,32 +187,29 @@ declare void @__cxa_guard_release(ptr) local_unnamed_addr #3
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define dso_local { <2 x float>, <2 x float> } @_Z12PlaneProjectRK7btPlaneRK9btVector3(ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(20) %0, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(16) %1) local_unnamed_addr #0 {
 bb.a:
-  %2 = load float, ptr %1, align 4, !tbaa !8      ; 2 uses
-  %i.a = load float, ptr %0, align 4, !tbaa !8    ; 2 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 4
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %i.a = load float, ptr %2, align 4, !tbaa !8    ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load float, ptr %i.b, align 4, !tbaa !8  ; 2 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %i.e = load float, ptr %i.d, align 4, !tbaa !8  ; 2 uses
-  %3 = fmul float %i.c, %i.e
-  %4 = tail call float @llvm.fmuladd.f32(float %2, float %i.a, float %3)
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %6 = load float, ptr %5, align 4, !tbaa !8      ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %8 = load float, ptr %7, align 4, !tbaa !8      ; 2 uses
-  %i.f = tail call noundef float @llvm.fmuladd.f32(float %6, float %8, float %4)
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %10 = load float, ptr %9, align 4, !tbaa !11
-  %i.g = fadd float %i.f, %10                     ; 3 uses
-  %11 = fmul float %i.a, %i.g
-  %12 = fmul float %i.e, %i.g
-  %13 = fmul float %8, %i.g
-  %14 = fsub float %2, %11
-  %15 = fsub float %i.c, %12
-  %i.h = fsub float %6, %13
-  %.sroa.0.0.vec.insert.i5 = insertelement <2 x float> poison, float %14, i64 0
-  %.sroa.0.4.vec.insert.i6 = insertelement <2 x float> %.sroa.0.0.vec.insert.i5, float %15, i64 1
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %i.e = load float, ptr %i.d, align 4, !tbaa !11
+  %3 = load <2 x float>, ptr %1, align 4, !tbaa !8 ; 3 uses
+  %4 = load <2 x float>, ptr %0, align 4, !tbaa !8 ; 3 uses
+  %foldExtExtBinop = fmul <2 x float> %3, %4
+  %5 = extractelement <2 x float> %foldExtExtBinop, i64 1
+  %6 = extractelement <2 x float> %3, i64 0
+  %7 = extractelement <2 x float> %4, i64 0
+  %i.f = tail call float @llvm.fmuladd.f32(float %6, float %7, float %5)
+  %8 = tail call noundef float @llvm.fmuladd.f32(float %i.a, float %i.c, float %i.f)
+  %i.g = fadd float %8, %i.e                      ; 2 uses
+  %9 = insertelement <2 x float> poison, float %i.g, i64 0
+  %10 = shufflevector <2 x float> %9, <2 x float> poison, <2 x i32> zeroinitializer
+  %11 = fmul <2 x float> %4, %10
+  %12 = fmul float %i.c, %i.g
+  %13 = fsub <2 x float> %3, %11
+  %i.h = fsub float %i.a, %12
   %.sroa.3.12.vec.insert.i7 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.h, i64 0
-  %.fca.0.insert.i8 = insertvalue { <2 x float>, <2 x float> } poison, <2 x float> %.sroa.0.4.vec.insert.i6, 0
+  %.fca.0.insert.i8 = insertvalue { <2 x float>, <2 x float> } poison, <2 x float> %13, 0
   %.fca.1.insert.i9 = insertvalue { <2 x float>, <2 x float> } %.fca.0.insert.i8, <2 x float> %.sroa.3.12.vec.insert.i7, 1
   ret { <2 x float>, <2 x float> } %.fca.1.insert.i9
 }

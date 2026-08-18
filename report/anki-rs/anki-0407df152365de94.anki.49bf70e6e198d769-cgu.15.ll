@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.ao = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %..i.i, i64 208) ; 2 uses
-  %i.ap = extractvalue { i64, i1 } %i.ao, 0       ; 5 uses
+  %i.ap = extractvalue { i64, i1 } %i.ao, 0       ; 4 uses
   %i.aq = extractvalue { i64, i1 } %i.ao, 1
   %i.ar = icmp slt i64 %i.ap, 0
   %or.cond.i.i = or i1 %i.aq, %i.ar
@@ -212,30 +212,25 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !1413
-  %4 = icmp samesign ugt i64 %i.ap, 9223372036854775800
-  br i1 %4, label %bb.h, label %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i.i, !prof !397
+  %4 = icmp eq i64 %i.ap, 0
+  br i1 %4, label %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h10a3b5fe38ba3de6E.exit.i.i", label %bb.g
 
-_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i.i: ; preds = %bb.f
-  %5 = icmp eq i64 %i.ap, 0
-  br i1 %5, label %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h10a3b5fe38ba3de6E.exit.i.i", label %bb.g
-
-bb.g:                                             ; preds = %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i.i
+bb.g:                                             ; preds = %bb.f
   call void @_RNvCsiGVaDesi5rv_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #52, !noalias !1414
   %i.as = call noundef align 8 ptr @_RNvCsiGVaDesi5rv_7___rustc12___rust_alloc(i64 noundef %i.ap, i64 noundef range(i64 1, -9223372036854775807) 8) #52, !noalias !1414 ; 2 uses
   %i.at = icmp eq ptr %i.as, null
   br i1 %i.at, label %bb.h, label %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h10a3b5fe38ba3de6E.exit.i.i"
 
-bb.h:                                             ; preds = %bb.g, %bb.f
-  %.sroa.4.0.ph.i.i.i = phi i64 [ 8, %bb.g ], [ 0, %bb.f ]
-  invoke void @_ZN5alloc7raw_vec12handle_error17hf75f86448ab551dfE(i64 noundef %.sroa.4.0.ph.i.i.i, i64 %i.ap) #50
+bb.h:                                             ; preds = %bb.g
+  invoke void @_ZN5alloc7raw_vec12handle_error17hf75f86448ab551dfE(i64 noundef 8, i64 %i.ap) #50
           to label %.noexc.i unwind label %.loopexit.split-lp.i, !noalias !1400
 
 .noexc.i:                                         ; preds = %bb.h
   unreachable
 
-"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h10a3b5fe38ba3de6E.exit.i.i": ; preds = %bb.g, %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i.i
-  %.sroa.4.0.i.i.i = phi i64 [ 0, %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i.i ], [ %..i.i, %bb.g ] ; 2 uses
-  %.sroa.10.0.i.i.i = phi ptr [ inttoptr (i64 8 to ptr), %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i.i ], [ %i.as, %bb.g ]
+"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h10a3b5fe38ba3de6E.exit.i.i": ; preds = %bb.g, %bb.f
+  %.sroa.4.0.i.i.i = phi i64 [ 0, %bb.f ], [ %..i.i, %bb.g ] ; 2 uses
+  %.sroa.10.0.i.i.i = phi ptr [ inttoptr (i64 8 to ptr), %bb.f ], [ %i.as, %bb.g ]
   %i.au = icmp samesign ule i64 %..i.i, %.sroa.4.0.i.i.i
   call void @llvm.assume(i1 %i.au)
   store i64 %.sroa.4.0.i.i.i, ptr %i.c, align 8, !noalias !1413
@@ -638,7 +633,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.ao = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %..i.i, i64 208) ; 2 uses
-  %i.ap = extractvalue { i64, i1 } %i.ao, 0       ; 5 uses
+  %i.ap = extractvalue { i64, i1 } %i.ao, 0       ; 4 uses
   %i.aq = extractvalue { i64, i1 } %i.ao, 1
   %i.ar = icmp slt i64 %i.ap, 0
   %or.cond.i.i = or i1 %i.aq, %i.ar
@@ -646,30 +641,25 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !1450
-  %4 = icmp samesign ugt i64 %i.ap, 9223372036854775800
-  br i1 %4, label %bb.h, label %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i.i, !prof !397
+  %4 = icmp eq i64 %i.ap, 0
+  br i1 %4, label %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h10a3b5fe38ba3de6E.exit.i.i", label %bb.g
 
-_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i.i: ; preds = %bb.f
-  %5 = icmp eq i64 %i.ap, 0
-  br i1 %5, label %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h10a3b5fe38ba3de6E.exit.i.i", label %bb.g
-
-bb.g:                                             ; preds = %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i.i
+bb.g:                                             ; preds = %bb.f
   call void @_RNvCsiGVaDesi5rv_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #52, !noalias !1451
   %i.as = call noundef align 8 ptr @_RNvCsiGVaDesi5rv_7___rustc12___rust_alloc(i64 noundef %i.ap, i64 noundef range(i64 1, -9223372036854775807) 8) #52, !noalias !1451 ; 2 uses
   %i.at = icmp eq ptr %i.as, null
   br i1 %i.at, label %bb.h, label %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h10a3b5fe38ba3de6E.exit.i.i"
 
-bb.h:                                             ; preds = %bb.g, %bb.f
-  %.sroa.4.0.ph.i.i.i = phi i64 [ 8, %bb.g ], [ 0, %bb.f ]
-  invoke void @_ZN5alloc7raw_vec12handle_error17hf75f86448ab551dfE(i64 noundef %.sroa.4.0.ph.i.i.i, i64 %i.ap) #50
+bb.h:                                             ; preds = %bb.g
+  invoke void @_ZN5alloc7raw_vec12handle_error17hf75f86448ab551dfE(i64 noundef 8, i64 %i.ap) #50
           to label %.noexc.i unwind label %.loopexit.split-lp.i, !noalias !1437
 
 .noexc.i:                                         ; preds = %bb.h
   unreachable
 
-"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h10a3b5fe38ba3de6E.exit.i.i": ; preds = %bb.g, %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i.i
-  %.sroa.4.0.i.i.i = phi i64 [ 0, %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i.i ], [ %..i.i, %bb.g ] ; 2 uses
-  %.sroa.10.0.i.i.i = phi ptr [ inttoptr (i64 8 to ptr), %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i.i ], [ %i.as, %bb.g ]
+"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h10a3b5fe38ba3de6E.exit.i.i": ; preds = %bb.g, %bb.f
+  %.sroa.4.0.i.i.i = phi i64 [ 0, %bb.f ], [ %..i.i, %bb.g ] ; 2 uses
+  %.sroa.10.0.i.i.i = phi ptr [ inttoptr (i64 8 to ptr), %bb.f ], [ %i.as, %bb.g ]
   %i.au = icmp samesign ule i64 %..i.i, %.sroa.4.0.i.i.i
   call void @llvm.assume(i1 %i.au)
   store i64 %.sroa.4.0.i.i.i, ptr %i.c, align 8, !noalias !1450
@@ -1072,7 +1062,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.ao = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %..i.i, i64 208) ; 2 uses
-  %i.ap = extractvalue { i64, i1 } %i.ao, 0       ; 5 uses
+  %i.ap = extractvalue { i64, i1 } %i.ao, 0       ; 4 uses
   %i.aq = extractvalue { i64, i1 } %i.ao, 1
   %i.ar = icmp slt i64 %i.ap, 0
   %or.cond.i.i = or i1 %i.aq, %i.ar
@@ -1080,30 +1070,25 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !1501
-  %4 = icmp samesign ugt i64 %i.ap, 9223372036854775800
-  br i1 %4, label %bb.h, label %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i.i, !prof !397
+  %4 = icmp eq i64 %i.ap, 0
+  br i1 %4, label %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h10a3b5fe38ba3de6E.exit.i.i", label %bb.g
 
-_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i.i: ; preds = %bb.f
-  %5 = icmp eq i64 %i.ap, 0
-  br i1 %5, label %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h10a3b5fe38ba3de6E.exit.i.i", label %bb.g
-
-bb.g:                                             ; preds = %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i.i
+bb.g:                                             ; preds = %bb.f
   call void @_RNvCsiGVaDesi5rv_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #52, !noalias !1502
   %i.as = call noundef align 8 ptr @_RNvCsiGVaDesi5rv_7___rustc12___rust_alloc(i64 noundef %i.ap, i64 noundef range(i64 1, -9223372036854775807) 8) #52, !noalias !1502 ; 2 uses
   %i.at = icmp eq ptr %i.as, null
   br i1 %i.at, label %bb.h, label %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h10a3b5fe38ba3de6E.exit.i.i"
 
-bb.h:                                             ; preds = %bb.g, %bb.f
-  %.sroa.4.0.ph.i.i.i = phi i64 [ 8, %bb.g ], [ 0, %bb.f ]
-  invoke void @_ZN5alloc7raw_vec12handle_error17hf75f86448ab551dfE(i64 noundef %.sroa.4.0.ph.i.i.i, i64 %i.ap) #50
+bb.h:                                             ; preds = %bb.g
+  invoke void @_ZN5alloc7raw_vec12handle_error17hf75f86448ab551dfE(i64 noundef 8, i64 %i.ap) #50
           to label %.noexc.i unwind label %.loopexit.split-lp.i, !noalias !1488
 
 .noexc.i:                                         ; preds = %bb.h
   unreachable
 
-"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h10a3b5fe38ba3de6E.exit.i.i": ; preds = %bb.g, %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i.i
-  %.sroa.4.0.i.i.i = phi i64 [ 0, %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i.i ], [ %..i.i, %bb.g ] ; 2 uses
-  %.sroa.10.0.i.i.i = phi ptr [ inttoptr (i64 8 to ptr), %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i.i ], [ %i.as, %bb.g ]
+"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h10a3b5fe38ba3de6E.exit.i.i": ; preds = %bb.g, %bb.f
+  %.sroa.4.0.i.i.i = phi i64 [ 0, %bb.f ], [ %..i.i, %bb.g ] ; 2 uses
+  %.sroa.10.0.i.i.i = phi ptr [ inttoptr (i64 8 to ptr), %bb.f ], [ %i.as, %bb.g ]
   %i.au = icmp samesign ule i64 %..i.i, %.sroa.4.0.i.i.i
   call void @llvm.assume(i1 %i.au)
   store i64 %.sroa.4.0.i.i.i, ptr %i.c, align 8, !noalias !1501

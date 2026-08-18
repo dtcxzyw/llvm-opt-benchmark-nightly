@@ -203,7 +203,7 @@ bb.b:                                             ; preds = %bb.a
   br label %select.unfold
 
 select.unfold:                                    ; preds = %bb.b, %bb.a
-  %i.d = phi ptr [ %spec.select, %bb.b ], [ null, %bb.a ] ; 7 uses
+  %i.d = phi ptr [ %spec.select, %bb.b ], [ null, %bb.a ] ; 6 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 80
   %.not20 = icmp eq ptr %i.d, null
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(32) %1, i8 0, i64 32, i1 false)
@@ -214,19 +214,16 @@ bb.c:                                             ; preds = %select.unfold
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 360
   %i.g = load float, ptr %i.f, align 8, !tbaa !66 ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.d, i64 380
-  %3 = load float, ptr %i.h, align 4, !tbaa !51
-  %4 = fmul float %i.g, %3
-  %5 = getelementptr inbounds nuw i8, ptr %i.d, i64 384
-  %6 = load float, ptr %5, align 8, !tbaa !51
-  %7 = fmul float %i.g, %6
+  %3 = load <2 x float>, ptr %i.h, align 4, !tbaa !51 ; 2 uses
+  %4 = insertelement <2 x float> %3, float %i.g, i64 1
+  %5 = insertelement <2 x float> %3, float %i.g, i64 0
+  %6 = fmul <2 x float> %4, %5
   %i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 388
   %i.j = load float, ptr %i.i, align 4, !tbaa !51
   %i.k = fmul float %i.g, %i.j
-  %.sroa.0.0.vec.insert.i = insertelement <2 x float> poison, float %4, i64 0
-  %.sroa.0.4.vec.insert.i = insertelement <2 x float> %.sroa.0.0.vec.insert.i, float %7, i64 1
   %.sroa.3.12.vec.insert.i = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.k, i64 0
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 48
-  store <2 x float> %.sroa.0.4.vec.insert.i, ptr %i.l, align 8
+  store <2 x float> %6, ptr %i.l, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 56
   store <2 x float> %.sroa.3.12.vec.insert.i, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !73
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 72
@@ -629,19 +626,16 @@ _ZN20btAlignedObjectArrayI12btSolverBodyE6expandERKS0_.exit: ; preds = %bb.d, %b
 bb.k:                                             ; preds = %_ZN20btAlignedObjectArrayI12btSolverBodyE6expandERKS0_.exit
   %i.aw = load float, ptr %i.f, align 8, !tbaa !66 ; 3 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %1, i64 380
-  %2 = load float, ptr %i.ax, align 4, !tbaa !51
-  %3 = fmul float %i.aw, %2
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 384
-  %5 = load float, ptr %4, align 8, !tbaa !51
-  %6 = fmul float %i.aw, %5
+  %2 = load <2 x float>, ptr %i.ax, align 4, !tbaa !51 ; 2 uses
+  %3 = insertelement <2 x float> %2, float %i.aw, i64 1
+  %4 = insertelement <2 x float> %2, float %i.aw, i64 0
+  %5 = fmul <2 x float> %3, %4
   %i.ay = getelementptr inbounds nuw i8, ptr %1, i64 388
   %i.az = load float, ptr %i.ay, align 4, !tbaa !51
   %i.ba = fmul float %i.aw, %i.az
-  %.sroa.0.0.vec.insert.i.i = insertelement <2 x float> poison, float %3, i64 0
-  %.sroa.0.4.vec.insert.i.i = insertelement <2 x float> %.sroa.0.0.vec.insert.i.i, float %6, i64 1
   %.sroa.3.12.vec.insert.i.i = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.ba, i64 0
   %i.bb = getelementptr inbounds nuw i8, ptr %i.at, i64 48
-  store <2 x float> %.sroa.0.4.vec.insert.i.i, ptr %i.bb, align 8
+  store <2 x float> %5, ptr %i.bb, align 8
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.at, i64 56
   store <2 x float> %.sroa.3.12.vec.insert.i.i, ptr %.sroa.4.0..sroa_idx.i, align 8, !tbaa !73
   %i.bc = getelementptr inbounds nuw i8, ptr %i.at, i64 72
@@ -1044,7 +1038,7 @@ _ZN35btSequentialImpulseConstraintSolver10btRandInt2Ei.exit172: ; preds = %bb.h,
   %i.gg = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %indvars.iv366 ; 3 uses
   %i.gh = load ptr, ptr %i.gg, align 8, !tbaa !106 ; 4 uses
   %i.gi = getelementptr inbounds nuw i8, ptr %i.gh, i64 24
-  %i.gj = load ptr, ptr %i.gi, align 8, !tbaa !114, !nonnull !76, !align !116 ; 8 uses
+  %i.gj = load ptr, ptr %i.gi, align 8, !tbaa !114, !nonnull !76, !align !116 ; 7 uses
   %i.gk = getelementptr inbounds nuw i8, ptr %i.gj, i64 224 ; 2 uses
   %i.gl = load i32, ptr %i.gk, align 8, !tbaa !81 ; 2 uses
   %i.gm = icmp sgt i32 %i.gl, -1
@@ -1177,19 +1171,16 @@ _ZN20btAlignedObjectArrayI12btSolverBodyE6expandERKS0_.exit.i: ; preds = %_ZN20b
 bb.r:                                             ; preds = %_ZN20btAlignedObjectArrayI12btSolverBodyE6expandERKS0_.exit.i
   %i.hz = load float, ptr %i.gp, align 8, !tbaa !66 ; 3 uses
   %i.ia = getelementptr inbounds nuw i8, ptr %i.gj, i64 380
-  %10 = load float, ptr %i.ia, align 4, !tbaa !51
-  %11 = fmul float %i.hz, %10
-  %12 = getelementptr inbounds nuw i8, ptr %i.gj, i64 384
-  %13 = load float, ptr %12, align 8, !tbaa !51
-  %14 = fmul float %i.hz, %13
+  %10 = load <2 x float>, ptr %i.ia, align 4, !tbaa !51 ; 2 uses
+  %11 = insertelement <2 x float> %10, float %i.hz, i64 1
+  %12 = insertelement <2 x float> %10, float %i.hz, i64 0
+  %13 = fmul <2 x float> %11, %12
   %i.ib = getelementptr inbounds nuw i8, ptr %i.gj, i64 388
   %i.ic = load float, ptr %i.ib, align 4, !tbaa !51
   %i.id = fmul float %i.hz, %i.ic
-  %.sroa.0.0.vec.insert.i.i.i = insertelement <2 x float> poison, float %11, i64 0
-  %.sroa.0.4.vec.insert.i.i.i = insertelement <2 x float> %.sroa.0.0.vec.insert.i.i.i, float %14, i64 1
   %.sroa.3.12.vec.insert.i.i.i = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.id, i64 0
   %i.ie = getelementptr inbounds nuw i8, ptr %i.hw, i64 48
-  store <2 x float> %.sroa.0.4.vec.insert.i.i.i, ptr %i.ie, align 8
+  store <2 x float> %13, ptr %i.ie, align 8
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.hw, i64 56
   store <2 x float> %.sroa.3.12.vec.insert.i.i.i, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !tbaa !73
   %i.if = getelementptr inbounds nuw i8, ptr %i.hw, i64 72
@@ -1217,7 +1208,7 @@ _ZN35btSequentialImpulseConstraintSolver19getOrInitSolverBodyER17btCollisionObje
   %i.il = phi ptr [ %.pre, %_ZN35btSequentialImpulseConstraintSolver14initSolverBodyEP12btSolverBodyP17btCollisionObject.exit.i ], [ %i.gh, %bb.j ], [ %i.gh, %bb.i ], [ %i.gh, %.lr.ph282 ] ; 4 uses
   %.1.i = phi i32 [ %i.gs, %_ZN35btSequentialImpulseConstraintSolver14initSolverBodyEP12btSolverBodyP17btCollisionObject.exit.i ], [ 0, %bb.j ], [ 0, %bb.i ], [ %i.gl, %.lr.ph282 ]
   %i.im = getelementptr inbounds nuw i8, ptr %i.il, i64 32
-  %i.in = load ptr, ptr %i.im, align 8, !tbaa !117, !nonnull !76, !align !116 ; 8 uses
+  %i.in = load ptr, ptr %i.im, align 8, !tbaa !117, !nonnull !76, !align !116 ; 7 uses
   %i.io = getelementptr inbounds nuw i8, ptr %i.in, i64 224 ; 2 uses
   %i.ip = load i32, ptr %i.io, align 8, !tbaa !81 ; 2 uses
   %i.iq = icmp sgt i32 %i.ip, -1
@@ -1350,19 +1341,16 @@ _ZN20btAlignedObjectArrayI12btSolverBodyE6expandERKS0_.exit.i176: ; preds = %_ZN
 bb.ac:                                            ; preds = %_ZN20btAlignedObjectArrayI12btSolverBodyE6expandERKS0_.exit.i176
   %i.kd = load float, ptr %i.it, align 8, !tbaa !66 ; 3 uses
   %i.ke = getelementptr inbounds nuw i8, ptr %i.in, i64 380
-  %15 = load float, ptr %i.ke, align 4, !tbaa !51
-  %16 = fmul float %i.kd, %15
-  %17 = getelementptr inbounds nuw i8, ptr %i.in, i64 384
-  %18 = load float, ptr %17, align 8, !tbaa !51
-  %19 = fmul float %i.kd, %18
+  %14 = load <2 x float>, ptr %i.ke, align 4, !tbaa !51 ; 2 uses
+  %15 = insertelement <2 x float> %14, float %i.kd, i64 1
+  %16 = insertelement <2 x float> %14, float %i.kd, i64 0
+  %17 = fmul <2 x float> %15, %16
   %i.kf = getelementptr inbounds nuw i8, ptr %i.in, i64 388
   %i.kg = load float, ptr %i.kf, align 4, !tbaa !51
   %i.kh = fmul float %i.kd, %i.kg
-  %.sroa.0.0.vec.insert.i.i.i179 = insertelement <2 x float> poison, float %16, i64 0
-  %.sroa.0.4.vec.insert.i.i.i180 = insertelement <2 x float> %.sroa.0.0.vec.insert.i.i.i179, float %19, i64 1
   %.sroa.3.12.vec.insert.i.i.i181 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.kh, i64 0
   %i.ki = getelementptr inbounds nuw i8, ptr %i.ka, i64 48
-  store <2 x float> %.sroa.0.4.vec.insert.i.i.i180, ptr %i.ki, align 8
+  store <2 x float> %17, ptr %i.ki, align 8
   %.sroa.4.0..sroa_idx.i.i182 = getelementptr inbounds nuw i8, ptr %i.ka, i64 56
   store <2 x float> %.sroa.3.12.vec.insert.i.i.i181, ptr %.sroa.4.0..sroa_idx.i.i182, align 8, !tbaa !73
   %i.kj = getelementptr inbounds nuw i8, ptr %i.ka, i64 72
@@ -1679,7 +1667,7 @@ bb.ak:                                            ; preds = %bb.aj, %.lr.ph289
   %i.so = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %indvars.iv384 ; 3 uses
   %i.sp = load ptr, ptr %i.so, align 8, !tbaa !106 ; 4 uses
   %i.sq = getelementptr inbounds nuw i8, ptr %i.sp, i64 24
-  %i.sr = load ptr, ptr %i.sq, align 8, !tbaa !114, !nonnull !76, !align !116 ; 8 uses
+  %i.sr = load ptr, ptr %i.sq, align 8, !tbaa !114, !nonnull !76, !align !116 ; 7 uses
   %i.ss = getelementptr inbounds nuw i8, ptr %i.sr, i64 224 ; 2 uses
   %i.st = load i32, ptr %i.ss, align 8, !tbaa !81 ; 2 uses
   %i.su = icmp sgt i32 %i.st, -1
@@ -1812,19 +1800,16 @@ _ZN20btAlignedObjectArrayI12btSolverBodyE6expandERKS0_.exit.i202: ; preds = %_ZN
 bb.au:                                            ; preds = %_ZN20btAlignedObjectArrayI12btSolverBodyE6expandERKS0_.exit.i202
   %i.uh = load float, ptr %i.sx, align 8, !tbaa !66 ; 3 uses
   %i.ui = getelementptr inbounds nuw i8, ptr %i.sr, i64 380
-  %20 = load float, ptr %i.ui, align 4, !tbaa !51
-  %21 = fmul float %i.uh, %20
-  %22 = getelementptr inbounds nuw i8, ptr %i.sr, i64 384
-  %23 = load float, ptr %22, align 8, !tbaa !51
-  %24 = fmul float %i.uh, %23
+  %18 = load <2 x float>, ptr %i.ui, align 4, !tbaa !51 ; 2 uses
+  %19 = insertelement <2 x float> %18, float %i.uh, i64 1
+  %20 = insertelement <2 x float> %18, float %i.uh, i64 0
+  %21 = fmul <2 x float> %19, %20
   %i.uj = getelementptr inbounds nuw i8, ptr %i.sr, i64 388
   %i.uk = load float, ptr %i.uj, align 4, !tbaa !51
   %i.ul = fmul float %i.uh, %i.uk
-  %.sroa.0.0.vec.insert.i.i.i205 = insertelement <2 x float> poison, float %21, i64 0
-  %.sroa.0.4.vec.insert.i.i.i206 = insertelement <2 x float> %.sroa.0.0.vec.insert.i.i.i205, float %24, i64 1
   %.sroa.3.12.vec.insert.i.i.i207 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.ul, i64 0
   %i.um = getelementptr inbounds nuw i8, ptr %i.ue, i64 48
-  store <2 x float> %.sroa.0.4.vec.insert.i.i.i206, ptr %i.um, align 8
+  store <2 x float> %21, ptr %i.um, align 8
   %.sroa.4.0..sroa_idx.i.i208 = getelementptr inbounds nuw i8, ptr %i.ue, i64 56
   store <2 x float> %.sroa.3.12.vec.insert.i.i.i207, ptr %.sroa.4.0..sroa_idx.i.i208, align 8, !tbaa !73
   %i.un = getelementptr inbounds nuw i8, ptr %i.ue, i64 72
@@ -1852,7 +1837,7 @@ _ZN35btSequentialImpulseConstraintSolver19getOrInitSolverBodyER17btCollisionObje
   %i.ut = phi ptr [ %.pre434, %_ZN35btSequentialImpulseConstraintSolver14initSolverBodyEP12btSolverBodyP17btCollisionObject.exit.i204 ], [ %i.sp, %bb.am ], [ %i.sp, %bb.al ], [ %i.sp, %.lr.ph293 ] ; 4 uses
   %.1.i201 = phi i32 [ %i.ta, %_ZN35btSequentialImpulseConstraintSolver14initSolverBodyEP12btSolverBodyP17btCollisionObject.exit.i204 ], [ 0, %bb.am ], [ 0, %bb.al ], [ %i.st, %.lr.ph293 ]
   %i.uu = getelementptr inbounds nuw i8, ptr %i.ut, i64 32
-  %i.uv = load ptr, ptr %i.uu, align 8, !tbaa !117, !nonnull !76, !align !116 ; 8 uses
+  %i.uv = load ptr, ptr %i.uu, align 8, !tbaa !117, !nonnull !76, !align !116 ; 7 uses
   %i.uw = getelementptr inbounds nuw i8, ptr %i.uv, i64 224 ; 2 uses
   %i.ux = load i32, ptr %i.uw, align 8, !tbaa !81 ; 2 uses
   %i.uy = icmp sgt i32 %i.ux, -1
@@ -1985,19 +1970,16 @@ _ZN20btAlignedObjectArrayI12btSolverBodyE6expandERKS0_.exit.i228: ; preds = %_ZN
 bb.bf:                                            ; preds = %_ZN20btAlignedObjectArrayI12btSolverBodyE6expandERKS0_.exit.i228
   %i.wl = load float, ptr %i.vb, align 8, !tbaa !66 ; 3 uses
   %i.wm = getelementptr inbounds nuw i8, ptr %i.uv, i64 380
-  %25 = load float, ptr %i.wm, align 4, !tbaa !51
-  %26 = fmul float %i.wl, %25
-  %27 = getelementptr inbounds nuw i8, ptr %i.uv, i64 384
-  %28 = load float, ptr %27, align 8, !tbaa !51
-  %29 = fmul float %i.wl, %28
+  %22 = load <2 x float>, ptr %i.wm, align 4, !tbaa !51 ; 2 uses
+  %23 = insertelement <2 x float> %22, float %i.wl, i64 1
+  %24 = insertelement <2 x float> %22, float %i.wl, i64 0
+  %25 = fmul <2 x float> %23, %24
   %i.wn = getelementptr inbounds nuw i8, ptr %i.uv, i64 388
   %i.wo = load float, ptr %i.wn, align 4, !tbaa !51
   %i.wp = fmul float %i.wl, %i.wo
-  %.sroa.0.0.vec.insert.i.i.i231 = insertelement <2 x float> poison, float %26, i64 0
-  %.sroa.0.4.vec.insert.i.i.i232 = insertelement <2 x float> %.sroa.0.0.vec.insert.i.i.i231, float %29, i64 1
   %.sroa.3.12.vec.insert.i.i.i233 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.wp, i64 0
   %i.wq = getelementptr inbounds nuw i8, ptr %i.wi, i64 48
-  store <2 x float> %.sroa.0.4.vec.insert.i.i.i232, ptr %i.wq, align 8
+  store <2 x float> %25, ptr %i.wq, align 8
   %.sroa.4.0..sroa_idx.i.i234 = getelementptr inbounds nuw i8, ptr %i.wi, i64 56
   store <2 x float> %.sroa.3.12.vec.insert.i.i.i233, ptr %.sroa.4.0..sroa_idx.i.i234, align 8, !tbaa !73
   %i.wr = getelementptr inbounds nuw i8, ptr %i.wi, i64 72

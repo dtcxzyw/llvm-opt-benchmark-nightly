@@ -204,8 +204,9 @@ bb.n:                                             ; preds = %bb.m, %.thread.i
 bb.o:                                             ; preds = %bb.m, %bb.n
   %i.cv = phi i32 [ %i.cs, %bb.n ], [ %i.cr, %bb.m ]
   %i.cw = phi i32 [ %i.cu, %bb.n ], [ %.val, %bb.m ]
-  %10 = sitofp i32 %i.cv to double
-  %11 = sitofp i32 %i.cw to double
+  %10 = insertelement <2 x i32> poison, i32 %i.cv, i64 0
+  %11 = insertelement <2 x i32> %10, i32 %i.cw, i64 1
+  %12 = sitofp <2 x i32> %11 to <2 x double>
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #18
   store i32 0, ptr %i.o, align 8, !tbaa !66
   store i32 0, ptr %i.p, align 4, !tbaa !68
@@ -215,11 +216,9 @@ bb.o:                                             ; preds = %bb.m, %bb.n
   store i64 0, ptr %i.s, align 8
   store i32 33619968, ptr %9, align 8, !tbaa !69
   store ptr %7, ptr %i.r, align 8, !tbaa !71
-  %12 = fmul nnan double %10, 5.000000e-01
-  %13 = fmul nnan double %11, 5.000000e-01
-  %.sroa.0.0.vec.insert = insertelement <2 x double> poison, double %12, i64 0
-  %i.cx = call noundef i32 @llvm.x86.sse2.cvtsd2si(<2 x double> %.sroa.0.0.vec.insert)
-  %14 = insertelement <2 x double> poison, double %13, i64 0
+  %13 = fmul nnan <2 x double> %12, splat (double 5.000000e-01) ; 2 uses
+  %i.cx = call noundef i32 @llvm.x86.sse2.cvtsd2si(<2 x double> %13)
+  %14 = shufflevector <2 x double> %13, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %i.cy = call noundef i32 @llvm.x86.sse2.cvtsd2si(<2 x double> %14)
   %.sroa.2.0.insert.ext.i51 = zext i32 %i.cy to i64
   %.sroa.2.0.insert.shift.i52 = shl nuw i64 %.sroa.2.0.insert.ext.i51, 32

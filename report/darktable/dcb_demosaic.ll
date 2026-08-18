@@ -203,14 +203,10 @@ bb.c:                                             ; preds = %.lr.ph, %.thread202
   %i.de = sub nsw <4 x i32> %i.cv, %i.dd
   %i.df = tail call <4 x i32> @llvm.abs.v4i32(<4 x i32> %i.de, i1 true)
   %i.dg = add nuw nsw <4 x i32> %i.cy, %i.df
-  %i.dh = uitofp nneg <4 x i32> %i.dg to <4 x float> ; 4 uses
-  %1 = extractelement <4 x float> %i.dh, i64 0
-  %2 = fdiv reassoc nsz arcp contract afn float 1.000000e+00, %1 ; 2 uses
-  %3 = extractelement <4 x float> %i.dh, i64 1
-  %4 = fdiv reassoc nsz arcp contract afn float 1.000000e+00, %3 ; 2 uses
-  %i.di = extractelement <4 x float> %i.dh, i64 2
+  %i.dh = uitofp nneg <4 x i32> %i.dg to <4 x float> ; 3 uses
+  %i.di = extractelement <4 x float> %i.dh, i64 0
   %i.dj = fdiv reassoc nsz arcp contract afn float 1.000000e+00, %i.di ; 2 uses
-  %i.dk = extractelement <4 x float> %i.dh, i64 3
+  %i.dk = extractelement <4 x float> %i.dh, i64 1
   %i.dl = fdiv reassoc nsz arcp contract afn float 1.000000e+00, %i.dk ; 2 uses
   %i.dm = sub nsw i64 %indvars.iv, %i.r
   %gep = getelementptr [8 x i8], ptr %invariant.gep, i64 %i.dm
@@ -293,26 +289,35 @@ bb.c:                                             ; preds = %.lr.ph, %.thread202
   %i.gg = add nsw <4 x i32> %i.fe, %i.gf
   %i.gh = add nsw <4 x i32> %i.gg, %i.fw
   %i.gi = sitofp <4 x i32> %i.gh to <4 x float>
-  %i.gj = fmul reassoc nnan nsz arcp contract afn <4 x float> %i.gi, splat (float f0x3CAAAAAB)
-  %5 = fptosi <4 x float> %i.gj to <4 x i32>
-  %6 = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %5, <4 x i32> zeroinitializer)
-  %7 = tail call <4 x i32> @llvm.umin.v4i32(<4 x i32> %6, <4 x i32> splat (i32 65535))
-  %8 = uitofp nneg <4 x i32> %7 to <4 x float>    ; 4 uses
-  %i.gk = extractelement <4 x float> %8, i64 0
-  %i.gl = fmul reassoc nsz arcp contract afn float %2, %i.gk
-  %i.gm = extractelement <4 x float> %8, i64 1
-  %i.gn = fmul reassoc nsz arcp contract afn float %4, %i.gm
+  %i.gj = fmul reassoc nnan nsz arcp contract afn <4 x float> %i.gi, splat (float f0x3CAAAAAB) ; 2 uses
+  %1 = shufflevector <4 x float> %i.gj, <4 x float> poison, <2 x i32> <i32 0, i32 1>
+  %2 = fptosi <2 x float> %1 to <2 x i32>
+  %3 = tail call <2 x i32> @llvm.smax.v2i32(<2 x i32> %2, <2 x i32> zeroinitializer)
+  %4 = tail call <2 x i32> @llvm.umin.v2i32(<2 x i32> %3, <2 x i32> splat (i32 65535))
+  %5 = uitofp nneg <2 x i32> %4 to <2 x float>    ; 2 uses
+  %i.gk = extractelement <2 x float> %5, i64 0
+  %i.gl = fmul reassoc nsz arcp contract afn float %i.dj, %i.gk
+  %i.gm = extractelement <2 x float> %5, i64 1
+  %i.gn = fmul reassoc nsz arcp contract afn float %i.dl, %i.gm
   %i.go = fadd reassoc nsz arcp contract afn float %i.gn, %i.gl
-  %9 = extractelement <4 x float> %8, i64 2
-  %10 = fmul reassoc nsz arcp contract afn float %i.dj, %9
-  %i.gp = fadd reassoc nsz arcp contract afn float %i.go, %10
-  %i.gq = extractelement <4 x float> %8, i64 3
-  %11 = fmul reassoc nsz arcp contract afn float %i.dl, %i.gq
-  %i.gr = fadd reassoc nsz arcp contract afn float %i.gp, %11
-  %i.gs = fadd reassoc nsz arcp contract afn float %4, %2
-  %12 = fadd reassoc nsz arcp contract afn float %i.gs, %i.dj
-  %i.gt = fadd reassoc nsz arcp contract afn float %12, %i.dl
-  %i.gu = fdiv reassoc nsz arcp contract afn float %i.gr, %i.gt
+  %6 = shufflevector <4 x float> %i.dh, <4 x float> poison, <2 x i32> <i32 2, i32 3>
+  %7 = fdiv reassoc nsz arcp contract afn <2 x float> splat (float 1.000000e+00), %6 ; 3 uses
+  %8 = shufflevector <4 x float> %i.gj, <4 x float> poison, <2 x i32> <i32 2, i32 3>
+  %9 = fptosi <2 x float> %8 to <2 x i32>
+  %10 = tail call <2 x i32> @llvm.smax.v2i32(<2 x i32> %9, <2 x i32> zeroinitializer)
+  %11 = tail call <2 x i32> @llvm.umin.v2i32(<2 x i32> %10, <2 x i32> splat (i32 65535))
+  %12 = uitofp nneg <2 x i32> %11 to <2 x float>
+  %13 = fmul reassoc nsz arcp contract afn <2 x float> %7, %12 ; 2 uses
+  %14 = extractelement <2 x float> %13, i64 0
+  %i.gp = fadd reassoc nsz arcp contract afn float %i.go, %14
+  %i.gq = extractelement <2 x float> %13, i64 1
+  %15 = fadd reassoc nsz arcp contract afn float %i.gp, %i.gq
+  %i.gr = fadd reassoc nsz arcp contract afn float %i.dl, %i.dj
+  %16 = extractelement <2 x float> %7, i64 0
+  %i.gs = fadd reassoc nsz arcp contract afn float %i.gr, %16
+  %17 = extractelement <2 x float> %7, i64 1
+  %i.gt = fadd reassoc nsz arcp contract afn float %i.gs, %17
+  %i.gu = fdiv reassoc nsz arcp contract afn float %15, %i.gt
   %i.gv = fptosi float %i.gu to i32
   %i.gw = tail call i32 @llvm.smax.i32(i32 %i.gv, i32 0) ; 2 uses
   %i.gx = tail call i32 @llvm.umin.i32(i32 %i.gw, i32 65535)
@@ -714,12 +719,6 @@ declare float @llvm.vector.reduce.fadd.v4f32(float, <4 x float>) #5
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i32> @llvm.abs.v4i32(<4 x i32>, i1 immarg) #7
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <4 x i32> @llvm.smax.v4i32(<4 x i32>, <4 x i32>) #5
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <4 x i32> @llvm.umin.v4i32(<4 x i32>, <4 x i32>) #5
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="icelake-server" "target-features"="+64bit,+adx,+aes,+avx,+avx2,+avx512bitalg,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512ifma,+avx512vbmi,+avx512vbmi2,+avx512vl,+avx512vnni,+avx512vpopcntdq,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+gfni,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdpid,+rdrnd,+rdseed,+sahf,+sha,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+vaes,+vpclmulqdq,+wbnoinvd,+x87,+xsave,+xsavec,+xsaveopt,+xsaves,-amx-avx512,-amx-bf16,-amx-complex,-amx-fp16,-amx-fp8,-amx-int8,-amx-movrs,-amx-tile,-avx10.1,-avx10.2,-avx512bf16,-avx512bmm,-avx512fp16,-avx512vp2intersect,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-ccmp,-cf,-cldemote,-clzero,-cmpccxadd,-egpr,-enqcmd,-fma4,-hreset,-jmpabs,-kl,-lwp,-movdir64b,-movdiri,-movrs,-mwaitx,-ndd,-nf,-pconfig,-ppx,-prefetchi,-ptwrite,-push2pop2,-raoint,-rdpru,-rtm,-serialize,-sgx,-sha512,-shstk,-sm3,-sm4,-sse4a,-tbm,-tsxldtrk,-uintr,-usermsr,-waitpkg,-widekl,-xop,-zu" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="icelake-server" "target-features"="+64bit,+adx,+aes,+avx,+avx2,+avx512bitalg,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512ifma,+avx512vbmi,+avx512vbmi2,+avx512vl,+avx512vnni,+avx512vpopcntdq,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+gfni,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdpid,+rdrnd,+rdseed,+sahf,+sha,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+vaes,+vpclmulqdq,+wbnoinvd,+x87,+xsave,+xsavec,+xsaveopt,+xsaves,-amx-avx512,-amx-bf16,-amx-complex,-amx-fp16,-amx-fp8,-amx-int8,-amx-movrs,-amx-tile,-avx10.1,-avx10.2,-avx512bf16,-avx512bmm,-avx512fp16,-avx512vp2intersect,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-ccmp,-cf,-cldemote,-clzero,-cmpccxadd,-egpr,-enqcmd,-fma4,-hreset,-jmpabs,-kl,-lwp,-movdir64b,-movdiri,-movrs,-mwaitx,-ndd,-nf,-pconfig,-ppx,-prefetchi,-ptwrite,-push2pop2,-raoint,-rdpru,-rtm,-serialize,-sgx,-sha512,-shstk,-sm3,-sm4,-sse4a,-tbm,-tsxldtrk,-uintr,-usermsr,-waitpkg,-widekl,-xop,-zu" }

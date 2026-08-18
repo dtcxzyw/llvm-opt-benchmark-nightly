@@ -203,7 +203,7 @@ bb.a:
   %39 = alloca %"class.std::vector.28", align 16  ; 10 uses
   %40 = alloca %"class.arrow::Result.51", align 8 ; 10 uses
   %41 = alloca %"class.arrow::Result.96", align 8 ; 15 uses
-  %42 = alloca %"class.std::vector.28", align 16  ; 9 uses
+  %42 = alloca %"class.std::vector.28", align 8   ; 9 uses
   %43 = alloca %"class.arrow::Result.51", align 8 ; 16 uses
   %44 = alloca %"class.arrow::Result.139", align 8 ; 14 uses
   %45 = alloca %"class.std::vector.2", align 16   ; 12 uses
@@ -606,16 +606,15 @@ bb.aes:                                           ; preds = %bb.aep
   call void @llvm.lifetime.start.p0(ptr nonnull %42) #20, !noalias !471
   call void @llvm.experimental.noalias.scope.decl(metadata !534)
   call void @llvm.experimental.noalias.scope.decl(metadata !537)
-  %118 = getelementptr inbounds nuw i8, ptr %41, i64 8 ; 3 uses
-  %i.ctt = getelementptr inbounds nuw i8, ptr %42, i64 8
-  %119 = load <2 x ptr>, ptr %118, align 8, !tbaa !182, !noalias !540
-  %120 = load ptr, ptr %118, align 8, !tbaa !90, !noalias !540
-  store <2 x ptr> %119, ptr %42, align 16, !tbaa !182, !alias.scope !541, !noalias !471
-  %i.ctu = getelementptr inbounds nuw i8, ptr %42, i64 16 ; 2 uses
-  %i.ctv = getelementptr inbounds nuw i8, ptr %41, i64 24
-  %121 = load ptr, ptr %i.ctv, align 8, !tbaa !185, !noalias !540
-  store ptr %121, ptr %i.ctu, align 16, !tbaa !185, !alias.scope !541, !noalias !471
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %118, i8 0, i64 24, i1 false), !noalias !540
+  %i.ctt = getelementptr inbounds nuw i8, ptr %41, i64 8 ; 2 uses
+  %118 = load ptr, ptr %i.ctt, align 8, !tbaa !90, !noalias !540 ; 2 uses
+  store ptr %118, ptr %42, align 8, !tbaa !90, !alias.scope !541, !noalias !471
+  %119 = getelementptr inbounds nuw i8, ptr %42, i64 8 ; 2 uses
+  %i.ctu = getelementptr inbounds nuw i8, ptr %41, i64 16
+  %i.ctv = getelementptr inbounds nuw i8, ptr %42, i64 16
+  %120 = load <2 x ptr>, ptr %i.ctu, align 8, !tbaa !182, !noalias !540
+  store <2 x ptr> %120, ptr %119, align 8, !tbaa !182, !alias.scope !541, !noalias !471
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ctt, i8 0, i64 24, i1 false), !noalias !540
   call void @llvm.lifetime.start.p0(ptr nonnull %43) #20, !noalias !471
   call void @llvm.experimental.noalias.scope.decl(metadata !542)
   %i.ctw = load ptr, ptr %i.ces, align 8, !tbaa !17, !noalias !542
@@ -703,7 +702,7 @@ bb.aev:                                           ; preds = %bb.aft, %.lr.ph155.
   %.075152.i.i = phi ptr [ %i.cvg, %.lr.ph155.i.i ], [ %i.dar, %bb.aft ] ; 4 uses
   %.077151.i.i = phi i64 [ 0, %.lr.ph155.i.i ], [ %i.das, %bb.aft ] ; 3 uses
   %i.cvm = getelementptr inbounds nuw [16 x i8], ptr %i.cvl, i64 %.077151.i.i ; 5 uses
-  %i.cvn = getelementptr inbounds nuw [16 x i8], ptr %120, i64 %.077151.i.i
+  %i.cvn = getelementptr inbounds nuw [16 x i8], ptr %118, i64 %.077151.i.i
   %i.cvo = load ptr, ptr %i.cvn, align 8, !tbaa !139, !noalias !542 ; 2 uses
   %i.cvp = getelementptr inbounds nuw i8, ptr %i.cvo, i64 9
   %i.cvq = load i8, ptr %i.cvp, align 1, !tbaa !142, !range !150, !noalias !542, !noundef !106
@@ -1106,8 +1105,8 @@ _ZN5arrow6ResultISt10shared_ptrINS_6BufferEEE7DestroyEv.exit.thread.i77.i: ; pre
 
 _ZN5arrow6ResultISt10shared_ptrINS_6BufferEEED2Ev.exit86.i: ; preds = %_ZN5arrow6ResultISt10shared_ptrINS_6BufferEEE7DestroyEv.exit.thread.i77.i, %_ZN5arrow6ResultISt10shared_ptrINS_6BufferEEE7DestroyEv.exit.i83.i
   call void @llvm.lifetime.end.p0(ptr nonnull %43) #20, !noalias !471
-  %i.ddo = load ptr, ptr %42, align 16, !tbaa !90, !noalias !471 ; 3 uses
-  %i.ddp = load ptr, ptr %i.ctt, align 8, !tbaa !87, !noalias !471 ; 2 uses
+  %i.ddo = load ptr, ptr %42, align 8, !tbaa !90, !noalias !471 ; 3 uses
+  %i.ddp = load ptr, ptr %119, align 8, !tbaa !87, !noalias !471 ; 2 uses
   %.not4.i.i.i.i391 = icmp eq ptr %i.ddo, %i.ddp
   br i1 %.not4.i.i.i.i391, label %_ZSt8_DestroyIPSt10shared_ptrIN5arrow6BufferEES3_EvT_S5_RSaIT0_E.exit.i.i398, label %.lr.ph.i.i.i.i392
 
@@ -1168,7 +1167,7 @@ _ZSt8_DestroyISt10shared_ptrIN5arrow6BufferEEEvPT_.exit.i.i.i.i396: ; preds = %b
   br i1 %.not.i.i.i89.i, label %_ZSt8_DestroyIPSt10shared_ptrIN5arrow6BufferEES3_EvT_S5_RSaIT0_E.exitthread-pre-split.i.i397, label %.lr.ph.i.i.i.i392, !llvm.loop !92
 
 _ZSt8_DestroyIPSt10shared_ptrIN5arrow6BufferEES3_EvT_S5_RSaIT0_E.exitthread-pre-split.i.i397: ; preds = %_ZSt8_DestroyISt10shared_ptrIN5arrow6BufferEEEvPT_.exit.i.i.i.i396
-  %.pr.i90.i = load ptr, ptr %42, align 16, !tbaa !90, !noalias !471
+  %.pr.i90.i = load ptr, ptr %42, align 8, !tbaa !90, !noalias !471
   br label %_ZSt8_DestroyIPSt10shared_ptrIN5arrow6BufferEES3_EvT_S5_RSaIT0_E.exit.i.i398
 
 _ZSt8_DestroyIPSt10shared_ptrIN5arrow6BufferEES3_EvT_S5_RSaIT0_E.exit.i.i398: ; preds = %_ZSt8_DestroyIPSt10shared_ptrIN5arrow6BufferEES3_EvT_S5_RSaIT0_E.exitthread-pre-split.i.i397, %_ZN5arrow6ResultISt10shared_ptrINS_6BufferEEED2Ev.exit86.i
@@ -1177,7 +1176,7 @@ _ZSt8_DestroyIPSt10shared_ptrIN5arrow6BufferEES3_EvT_S5_RSaIT0_E.exit.i.i398: ; 
   br i1 %.not.i.i1.i.i399, label %_ZNSt6vectorISt10shared_ptrIN5arrow6BufferEESaIS3_EED2Ev.exit.i400, label %bb.agx
 
 bb.agx:                                           ; preds = %_ZSt8_DestroyIPSt10shared_ptrIN5arrow6BufferEES3_EvT_S5_RSaIT0_E.exit.i.i398
-  %i.dej = load ptr, ptr %i.ctu, align 16, !tbaa !185, !noalias !471
+  %i.dej = load ptr, ptr %i.ctv, align 8, !tbaa !185, !noalias !471
   %i.dek = ptrtoint ptr %i.dej to i64
   %i.del = ptrtoint ptr %i.dei to i64
   %i.dem = sub i64 %i.dek, %i.del

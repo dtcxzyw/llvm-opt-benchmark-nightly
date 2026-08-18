@@ -204,7 +204,7 @@ bb.pz:                                            ; preds = %bb.py, %bb.px
   store i32 0, ptr %i.cjg, align 8, !tbaa !1072
   %i.cjk = getelementptr inbounds nuw i8, ptr %i.cfm, i64 40
   %i.cjl = getelementptr inbounds nuw i8, ptr %i.cfm, i64 8224
-  %i.cjm = load ptr, ptr %i.cjl, align 8, !tbaa !389 ; 21 uses
+  %i.cjm = load ptr, ptr %i.cjl, align 8, !tbaa !389 ; 20 uses
   %i.cjn = load i32, ptr %i.cjk, align 8, !tbaa !920 ; 2 uses
   %i.cjo = and i32 %i.cjn, 2
   %.not.i303.i = icmp eq i32 %i.cjo, 0
@@ -607,20 +607,20 @@ bb.ud:                                            ; preds = %bb.uc
 bb.ue:                                            ; preds = %bb.ud, %bb.uc, %bb.tx, %bb.tw
   %i.dab = load i8, ptr %i.czg, align 8, !tbaa !655, !range !64, !noundef !204
   %i.dac = trunc nuw i8 %i.dab to i1
-  br i1 %i.dac, label %bb.uf, label %2
+  br i1 %i.dac, label %bb.uf, label %.thread239.i.i.a
 
 bb.uf:                                            ; preds = %bb.ue
   %i.dad = getelementptr inbounds nuw i8, ptr %i.cfm, i64 8304
   %i.dae = load i32, ptr %i.dad, align 8, !tbaa !653
   %i.daf = icmp eq i32 %i.dae, 3
-  br i1 %i.daf, label %bb.ug, label %2
+  br i1 %i.daf, label %bb.ug, label %.thread239.i.i.a
 
 bb.ug:                                            ; preds = %bb.uf
   %i.dag = getelementptr inbounds nuw i8, ptr %i.cfm, i64 8236 ; 2 uses
   %i.dah = load i32, ptr %i.dag, align 4, !tbaa !895
   %i.dai = icmp eq i32 %i.dah, 0
   %or.cond5.i306.i = select i1 %i.dai, i1 %i.cjx, i1 false
-  br i1 %or.cond5.i306.i, label %bb.uh, label %2
+  br i1 %or.cond5.i306.i, label %bb.uh, label %.thread239.i.i.a
 
 bb.uh:                                            ; preds = %bb.ug
   %i.daj = getelementptr inbounds nuw i8, ptr %i.cfm, i64 8388
@@ -647,7 +647,7 @@ bb.uh:                                            ; preds = %bb.ug
   %i.dbe = fadd <2 x float> %i.dba, %i.dbc        ; 4 uses
   %i.dbf = bitcast <2 x i1> %i.dat to i2
   %or.cond7.i.i.not = icmp eq i2 %i.dbf, 0
-  br i1 %or.cond7.i.i.not, label %.thread239.i.i.a, label %bb.ui
+  br i1 %or.cond7.i.i.not, label %bb.um, label %bb.ui
 
 bb.ui:                                            ; preds = %bb.uh
   %i.dbg = getelementptr inbounds nuw i8, ptr %i.cjm, i64 1016 ; 3 uses
@@ -675,7 +675,7 @@ _ZNK6ImRect8ContainsERKS_.exit.i.i:               ; preds = %bb.uk
   %i.dbt = load float, ptr %i.dbs, align 4, !tbaa !399
   %i.dbu = extractelement <2 x float> %i.dbe, i64 1
   %i.dbv = fcmp ugt float %i.dbt, %i.dbu
-  br i1 %i.dbv, label %_ZNK6ImRect8ContainsERKS_.exit.thread.i.i, label %.thread239.i.i.a
+  br i1 %i.dbv, label %_ZNK6ImRect8ContainsERKS_.exit.thread.i.i, label %bb.um
 
 _ZNK6ImRect8ContainsERKS_.exit.thread.i.i:        ; preds = %_ZNK6ImRect8ContainsERKS_.exit.i.i, %bb.uk, %bb.uj, %bb.ui
   %i.dbw = getelementptr inbounds nuw i8, ptr %i.cfm, i64 10404
@@ -726,49 +726,32 @@ _Z7ImClampRK6ImVec2S1_S1_.exit.i.i.i:             ; preds = %bb.ul, %_ZNK6ImRect
   store <2 x float> %i.ddb, ptr %i.dcw, align 4
   %i.ddc = getelementptr inbounds nuw i8, ptr %i.cfm, i64 8220
   store i32 0, ptr %i.ddc, align 4, !tbaa !400
-  br label %.thread239.i.i.a
-
-2:                                                ; preds = %bb.ug, %bb.uf, %bb.ue
-  br i1 %i.cjx, label %.thread239.i.i.a, label %_ZN5ImGuiL26NavUpdateCreateMoveRequestEv.exit.i
-
-.thread239.i.i.a:                                 ; preds = %2, %_Z7ImClampRK6ImVec2S1_S1_.exit.i.i.i, %_ZNK6ImRect8ContainsERKS_.exit.i.i, %bb.uh
-  %3 = getelementptr inbounds nuw i8, ptr %i.cjm, i64 1016
-  %4 = getelementptr inbounds nuw i8, ptr %i.cfm, i64 8236
-  %5 = load i32, ptr %4, align 4, !tbaa !895
-  %6 = zext i32 %5 to i64                         ; 2 uses
-  %7 = getelementptr inbounds nuw [16 x i8], ptr %3, i64 %6 ; 4 uses
-  %8 = load float, ptr %7, align 4, !tbaa !394    ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %7, i64 8
-  %10 = load float, ptr %9, align 4, !tbaa !395   ; 2 uses
-  %11 = fcmp ogt float %8, %10
-  %12 = getelementptr inbounds nuw i8, ptr %7, i64 4
-  %13 = load float, ptr %12, align 4              ; 2 uses
-  %14 = getelementptr inbounds nuw i8, ptr %7, i64 12
-  %15 = load float, ptr %14, align 4              ; 2 uses
-  %16 = fcmp ogt float %13, %15
-  %17 = select i1 %11, i1 true, i1 %16
-  br i1 %17, label %18, label %bb.um
-
-18:                                               ; preds = %.thread239.i.i.a
   br label %bb.um
 
-bb.um:                                            ; preds = %18, %.thread239.i.i.a
-  %.sroa.9.0.i.i = phi float [ 0.000000e+00, %18 ], [ %15, %.thread239.i.i.a ]
-  %.sroa.7.0.i.i = phi float [ 0.000000e+00, %18 ], [ %10, %.thread239.i.i.a ]
-  %.sroa.5.0.i.i = phi float [ 0.000000e+00, %18 ], [ %13, %.thread239.i.i.a ]
-  %.sroa.0.0.i.i = phi float [ 0.000000e+00, %18 ], [ %8, %.thread239.i.i.a ]
-  %i.ddd = getelementptr inbounds nuw i8, ptr %i.cjm, i64 296
-  %.sroa.0.0.copyload.i118.i.i = load float, ptr %i.ddd, align 8, !tbaa !8 ; 2 uses
-  %.sroa.5.0..sroa_idx.i119.i.i = getelementptr inbounds nuw i8, ptr %i.cjm, i64 300
-  %.sroa.5.0.copyload.i120.i.i = load float, ptr %.sroa.5.0..sroa_idx.i119.i.i, align 4, !tbaa !8 ; 2 uses
-  %19 = fadd float %.sroa.0.0.i.i, %.sroa.0.0.copyload.i118.i.i ; 2 uses
-  %20 = fadd float %.sroa.5.0.i.i, %.sroa.5.0.copyload.i120.i.i ; 4 uses
-  %21 = fadd float %.sroa.7.0.i.i, %.sroa.0.0.copyload.i118.i.i ; 2 uses
-  %22 = fadd float %.sroa.9.0.i.i, %.sroa.5.0.copyload.i120.i.i ; 4 uses
-  %.sroa.0.0.vec.insert.i121.i.i = insertelement <2 x float> poison, float %19, i64 0
-  %.sroa.0.4.vec.insert.i122.i.i = insertelement <2 x float> %.sroa.0.0.vec.insert.i121.i.i, float %20, i64 1 ; 3 uses
-  %.sroa.3.8.vec.insert.i123.i.i = insertelement <2 x float> poison, float %21, i64 0
-  %.sroa.3.12.vec.insert.i124.i.i = insertelement <2 x float> %.sroa.3.8.vec.insert.i123.i.i, float %22, i64 1 ; 3 uses
+.thread239.i.i.a:                                 ; preds = %bb.ug, %bb.uf, %bb.ue
+  br i1 %i.cjx, label %bb.um, label %_ZN5ImGuiL26NavUpdateCreateMoveRequestEv.exit.i
+
+bb.um:                                            ; preds = %.thread239.i.i.a, %_Z7ImClampRK6ImVec2S1_S1_.exit.i.i.i, %_ZNK6ImRect8ContainsERKS_.exit.i.i, %bb.uh
+  %2 = getelementptr inbounds nuw i8, ptr %i.cjm, i64 1016
+  %3 = getelementptr inbounds nuw i8, ptr %i.cfm, i64 8236
+  %4 = load i32, ptr %3, align 4, !tbaa !895
+  %5 = zext i32 %4 to i64                         ; 2 uses
+  %6 = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %5 ; 2 uses
+  %i.ddd = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %7 = load <2 x float>, ptr %6, align 4          ; 3 uses
+  %8 = load <2 x float>, ptr %i.ddd, align 4      ; 3 uses
+  %9 = extractelement <2 x float> %8, i64 0
+  %10 = extractelement <2 x float> %7, i64 0
+  %11 = fcmp ogt float %10, %9
+  %12 = fcmp ogt <2 x float> %7, %8
+  %13 = extractelement <2 x i1> %12, i64 1
+  %14 = select i1 %11, i1 true, i1 %13            ; 2 uses
+  %15 = select i1 %14, <2 x float> zeroinitializer, <2 x float> %8
+  %16 = select i1 %14, <2 x float> zeroinitializer, <2 x float> %7
+  %17 = getelementptr inbounds nuw i8, ptr %i.cjm, i64 296
+  %18 = load <2 x float>, ptr %17, align 8, !tbaa !8 ; 2 uses
+  %19 = fadd <2 x float> %16, %18                 ; 6 uses
+  %20 = fadd <2 x float> %15, %18                 ; 6 uses
   %i.dde = getelementptr inbounds nuw i8, ptr %i.cfm, i64 8388 ; 2 uses
   %i.ddf = load i32, ptr %i.dde, align 4, !tbaa !396 ; 7 uses
   %i.ddg = and i32 %i.ddf, 2048
@@ -778,25 +761,29 @@ bb.um:                                            ; preds = %18, %.thread239.i.i
 bb.un:                                            ; preds = %bb.um
   %i.ddh = getelementptr inbounds nuw i8, ptr %i.cjm, i64 552
   %i.ddi = load float, ptr %i.ddh, align 8, !tbaa !394
-  %i.ddj = fcmp ult float %19, %i.ddi
+  %21 = extractelement <2 x float> %19, i64 0
+  %i.ddj = fcmp ult float %21, %i.ddi
   br i1 %i.ddj, label %bb.ur, label %bb.uo
 
 bb.uo:                                            ; preds = %bb.un
   %i.ddk = getelementptr inbounds nuw i8, ptr %i.cjm, i64 556
   %i.ddl = load float, ptr %i.ddk, align 4, !tbaa !398
-  %i.ddm = fcmp ult float %20, %i.ddl
+  %22 = extractelement <2 x float> %19, i64 1
+  %i.ddm = fcmp ult float %22, %i.ddl
   br i1 %i.ddm, label %bb.ur, label %bb.up
 
 bb.up:                                            ; preds = %bb.uo
   %i.ddn = getelementptr inbounds nuw i8, ptr %i.cjm, i64 560
   %i.ddo = load float, ptr %i.ddn, align 8, !tbaa !395
-  %i.ddp = fcmp ugt float %21, %i.ddo
+  %23 = extractelement <2 x float> %20, i64 0
+  %i.ddp = fcmp ugt float %23, %i.ddo
   br i1 %i.ddp, label %bb.ur, label %_ZNK6ImRect8ContainsERKS_.exit127.i.i
 
 _ZNK6ImRect8ContainsERKS_.exit127.i.i:            ; preds = %bb.up
   %i.ddq = getelementptr inbounds nuw i8, ptr %i.cjm, i64 564
   %i.ddr = load float, ptr %i.ddq, align 4, !tbaa !399
-  %i.dds = fcmp ugt float %22, %i.ddr
+  %24 = extractelement <2 x float> %20, i64 1
+  %i.dds = fcmp ugt float %24, %i.ddr
   br i1 %i.dds, label %bb.ur, label %bb.uq
 
 bb.uq:                                            ; preds = %_ZNK6ImRect8ContainsERKS_.exit127.i.i
@@ -807,14 +794,16 @@ bb.uq:                                            ; preds = %_ZNK6ImRect8Contain
 bb.ur:                                            ; preds = %bb.uq, %_ZNK6ImRect8ContainsERKS_.exit127.i.i, %bb.up, %bb.uo, %bb.un
   %i.ddu = phi i32 [ %i.ddf, %bb.un ], [ %i.ddf, %bb.uo ], [ %i.ddf, %bb.up ], [ %i.ddt, %bb.uq ], [ %i.ddf, %_ZNK6ImRect8ContainsERKS_.exit127.i.i ] ; 2 uses
   %i.ddv = getelementptr inbounds nuw i8, ptr %i.cfm, i64 8428
-  store <2 x float> %.sroa.0.4.vec.insert.i122.i.i, ptr %i.ddv, align 4
+  store <2 x float> %19, ptr %i.ddv, align 4
   %.sroa.16.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.cfm, i64 8436
-  store <2 x float> %.sroa.3.12.vec.insert.i124.i.i, ptr %.sroa.16.0..sroa_idx.i.i, align 4
-  %i.ddw = fadd float %.0.i305.i, %20             ; 3 uses
-  %.sroa.0132.4.vec.insert.i.i = insertelement <2 x float> %.sroa.0.4.vec.insert.i122.i.i, float %i.ddw, i64 1 ; 2 uses
-  %i.ddx = fadd float %.0.i305.i, %22             ; 3 uses
-  %.sroa.16.12.vec.insert.i.i = insertelement <2 x float> %.sroa.3.12.vec.insert.i124.i.i, float %i.ddx, i64 1 ; 2 uses
-  %i.ddy = fcmp ogt float %20, %i.ddw
+  store <2 x float> %20, ptr %.sroa.16.0..sroa_idx.i.i, align 4
+  %25 = extractelement <2 x float> %19, i64 1     ; 2 uses
+  %i.ddw = fadd float %.0.i305.i, %25             ; 3 uses
+  %.sroa.0132.4.vec.insert.i.i = insertelement <2 x float> %19, float %i.ddw, i64 1 ; 2 uses
+  %26 = extractelement <2 x float> %20, i64 1     ; 2 uses
+  %i.ddx = fadd float %.0.i305.i, %26             ; 3 uses
+  %.sroa.16.12.vec.insert.i.i = insertelement <2 x float> %20, float %i.ddx, i64 1 ; 2 uses
+  %i.ddy = fcmp ogt float %25, %i.ddw
   br i1 %i.ddy, label %bb.us, label %bb.ut
 
 bb.us:                                            ; preds = %bb.ur
@@ -823,7 +812,7 @@ bb.us:                                            ; preds = %bb.ur
   br label %bb.ut
 
 bb.ut:                                            ; preds = %bb.us, %bb.ur
-  %i.dea = fcmp olt float %22, %i.ddx
+  %i.dea = fcmp olt float %26, %i.ddx
   br i1 %i.dea, label %bb.uu, label %_ZN6ImRect3AddERKS_.exit.i.i
 
 bb.uu:                                            ; preds = %bb.ut
@@ -833,8 +822,8 @@ bb.uu:                                            ; preds = %bb.ut
 
 _ZN6ImRect3AddERKS_.exit.i.i:                     ; preds = %bb.uu, %bb.ut, %bb.um
   %i.dec = phi i32 [ %i.ddf, %bb.um ], [ %i.ddu, %bb.ut ], [ %i.ddu, %bb.uu ]
-  %.sroa.16.0.i.i = phi <2 x float> [ %.sroa.3.12.vec.insert.i124.i.i, %bb.um ], [ %.sroa.16.12.vec.insert.i.i, %bb.ut ], [ %.sroa.16.12.vec.insert.i.i, %bb.uu ] ; 8 uses
-  %.sroa.0132.0.i.i = phi <2 x float> [ %.sroa.0.4.vec.insert.i122.i.i, %bb.um ], [ %.sroa.0132.4.vec.insert.i.i, %bb.ut ], [ %.sroa.0132.4.vec.insert.i.i, %bb.uu ] ; 8 uses
+  %.sroa.16.0.i.i = phi <2 x float> [ %20, %bb.um ], [ %.sroa.16.12.vec.insert.i.i, %bb.ut ], [ %.sroa.16.12.vec.insert.i.i, %bb.uu ] ; 8 uses
+  %.sroa.0132.0.i.i = phi <2 x float> [ %19, %bb.um ], [ %.sroa.0132.4.vec.insert.i.i, %bb.ut ], [ %.sroa.0132.4.vec.insert.i.i, %bb.uu ] ; 8 uses
   %i.ded = load i8, ptr %i.czg, align 8, !tbaa !655, !range !64, !noundef !204
   %i.dee = trunc nuw i8 %i.ded to i1
   br i1 %i.dee, label %bb.uv, label %_ZN5ImGuiL26NavUpdateCreateMoveRequestEv.exit.i
@@ -843,7 +832,7 @@ bb.uv:                                            ; preds = %_ZN6ImRect3AddERKS_
   %i.def = getelementptr inbounds nuw i8, ptr %i.cjm, i64 984
   %i.deg = load ptr, ptr %i.def, align 8, !tbaa !390
   %i.deh = getelementptr inbounds nuw i8, ptr %i.deg, i64 1048
-  %i.dei = getelementptr inbounds nuw [8 x i8], ptr %i.deh, i64 %6 ; 5 uses
+  %i.dei = getelementptr inbounds nuw [8 x i8], ptr %i.deh, i64 %5 ; 5 uses
   %i.dej = load i32, ptr %i.cxm, align 8, !tbaa !1074 ; 2 uses
   %i.dek = load ptr, ptr @GImGui, align 8, !tbaa !193
   %i.del = getelementptr inbounds nuw i8, ptr %i.dek, i64 8224
@@ -917,9 +906,9 @@ bb.vf:                                            ; preds = %bb.ve
   %.sroa.0132.4.vec.insert145.i.i = insertelement <2 x float> %.sroa.0132.0.i.i, float %i.dfj, i64 1
   br label %_ZN5ImGuiL26NavUpdateCreateMoveRequestEv.exit.i
 
-_ZN5ImGuiL26NavUpdateCreateMoveRequestEv.exit.i:  ; preds = %bb.vf, %bb.ve, %bb.vd, %bb.vc, %bb.vb, %_ZN6ImRect3AddERKS_.exit.i.i, %2
-  %.sroa.16.2.i.i = phi <2 x float> [ zeroinitializer, %2 ], [ %.sroa.16.0.i.i, %_ZN6ImRect3AddERKS_.exit.i.i ], [ %.sroa.16.8.vec.insert.i.i, %bb.vc ], [ %.sroa.16.0.i.i, %bb.vb ], [ %.sroa.16.12.vec.insert161.i.i, %bb.vf ], [ %.sroa.16.0.i.i, %bb.ve ], [ %.sroa.16.0.i.i, %bb.vd ]
-  %.sroa.0132.2.i.i = phi <2 x float> [ zeroinitializer, %2 ], [ %.sroa.0132.0.i.i, %_ZN6ImRect3AddERKS_.exit.i.i ], [ %.sroa.0132.0.vec.insert.i.i, %bb.vc ], [ %.sroa.0132.0.i.i, %bb.vb ], [ %.sroa.0132.4.vec.insert145.i.i, %bb.vf ], [ %.sroa.0132.0.i.i, %bb.ve ], [ %.sroa.0132.0.i.i, %bb.vd ]
+_ZN5ImGuiL26NavUpdateCreateMoveRequestEv.exit.i:  ; preds = %bb.vf, %bb.ve, %bb.vd, %bb.vc, %bb.vb, %_ZN6ImRect3AddERKS_.exit.i.i, %.thread239.i.i.a
+  %.sroa.16.2.i.i = phi <2 x float> [ zeroinitializer, %.thread239.i.i.a ], [ %.sroa.16.0.i.i, %_ZN6ImRect3AddERKS_.exit.i.i ], [ %.sroa.16.8.vec.insert.i.i, %bb.vc ], [ %.sroa.16.0.i.i, %bb.vb ], [ %.sroa.16.12.vec.insert161.i.i, %bb.vf ], [ %.sroa.16.0.i.i, %bb.ve ], [ %.sroa.16.0.i.i, %bb.vd ]
+  %.sroa.0132.2.i.i = phi <2 x float> [ zeroinitializer, %.thread239.i.i.a ], [ %.sroa.0132.0.i.i, %_ZN6ImRect3AddERKS_.exit.i.i ], [ %.sroa.0132.0.vec.insert.i.i, %bb.vc ], [ %.sroa.0132.0.i.i, %bb.vb ], [ %.sroa.0132.4.vec.insert145.i.i, %bb.vf ], [ %.sroa.0132.0.i.i, %bb.ve ], [ %.sroa.0132.0.i.i, %bb.vd ]
   %i.dfk = getelementptr inbounds nuw i8, ptr %i.cfm, i64 8412
   store <2 x float> %.sroa.0132.2.i.i, ptr %i.dfk, align 4
   %.sroa.16.0..sroa_idx148.i.i = getelementptr inbounds nuw i8, ptr %i.cfm, i64 8420
@@ -1322,12 +1311,12 @@ bb.mk:                                            ; preds = %.critedge._crit_edg
 
 bb.ml:                                            ; preds = %.critedge._crit_edge.i.i
   %i.chd = fadd float %i.cgl, %i.cgn
-  %31 = fsub float %i.cgw, %i.cgl
-  %32 = fadd float %i.cgp, 0.000000e+00
-  %.sroa.044.0.vec.insert49.i.i.i.i.a = insertelement <2 x float> poison, float %i.chd, i64 0
-  %.sroa.044.4.vec.insert55.i.i.i.i = insertelement <2 x float> %.sroa.044.0.vec.insert49.i.i.i.i.a, float %i.cgp, i64 1
-  %.sroa.10.8.vec.insert62.i.i.i.i = insertelement <2 x float> poison, float %31, i64 0
-  %.sroa.10.12.vec.insert68.i.i.i.i = insertelement <2 x float> %.sroa.10.8.vec.insert62.i.i.i.i, float %32, i64 1
+  %31 = insertelement <2 x float> poison, float %i.cgw, i64 0
+  %32 = insertelement <2 x float> %31, float %i.cgp, i64 1
+  %.sroa.044.0.vec.insert49.i.i.i.i.a = insertelement <2 x float> <float poison, float -0.000000e+00>, float %i.cgl, i64 0
+  %33 = fsub <2 x float> %32, %.sroa.044.0.vec.insert49.i.i.i.i.a
+  %.sroa.10.8.vec.insert62.i.i.i.i = insertelement <2 x float> poison, float %i.chd, i64 0
+  %.sroa.10.12.vec.insert68.i.i.i.i = insertelement <2 x float> %.sroa.10.8.vec.insert62.i.i.i.i, float %i.cgp, i64 1
   br label %_ZL29RenderWindowOuterSingleBorderP11ImGuiWindowijf.exit.i.i
 
 bb.mm:                                            ; preds = %.critedge._crit_edge.i.i
@@ -1340,8 +1329,8 @@ bb.mm:                                            ; preds = %.critedge._crit_edg
   br label %_ZL29RenderWindowOuterSingleBorderP11ImGuiWindowijf.exit.i.i
 
 _ZL29RenderWindowOuterSingleBorderP11ImGuiWindowijf.exit.i.i: ; preds = %bb.mm, %bb.ml, %bb.mk, %bb.mj, %.critedge._crit_edge.i.i
-  %.sroa.044.0.i.i.i.i = phi <2 x float> [ %.sroa.044.4.vec.insert57.i.i60.i.i, %bb.mm ], [ %.sroa.044.4.vec.insert.i.i.i.i, %bb.mj ], [ %.sroa.044.4.vec.insert53.i.i68.i.i, %bb.mk ], [ %.sroa.044.4.vec.insert55.i.i.i.i, %bb.ml ], [ zeroinitializer, %.critedge._crit_edge.i.i ] ; 3 uses
-  %.sroa.10.0.i.i.i.i = phi <2 x float> [ %.sroa.10.12.vec.insert70.i.i62.i.i, %bb.mm ], [ %.sroa.10.12.vec.insert.i.i.i.i, %bb.mj ], [ %.sroa.10.12.vec.insert66.i.i69.i.i, %bb.mk ], [ %.sroa.10.12.vec.insert68.i.i.i.i, %bb.ml ], [ zeroinitializer, %.critedge._crit_edge.i.i ]
+  %.sroa.044.0.i.i.i.i = phi <2 x float> [ %.sroa.044.4.vec.insert57.i.i60.i.i, %bb.mm ], [ %.sroa.044.4.vec.insert.i.i.i.i, %bb.mj ], [ %.sroa.044.4.vec.insert53.i.i68.i.i, %bb.mk ], [ %.sroa.10.12.vec.insert68.i.i.i.i, %bb.ml ], [ zeroinitializer, %.critedge._crit_edge.i.i ] ; 3 uses
+  %.sroa.10.0.i.i.i.i = phi <2 x float> [ %.sroa.10.12.vec.insert70.i.i62.i.i, %bb.mm ], [ %.sroa.10.12.vec.insert.i.i.i.i, %bb.mj ], [ %.sroa.10.12.vec.insert66.i.i69.i.i, %bb.mk ], [ %33, %bb.ml ], [ zeroinitializer, %.critedge._crit_edge.i.i ]
   %i.chg = sext i8 %spec.select.i.i to i64
   %i.chh = getelementptr inbounds [28 x i8], ptr @_ZL17resize_border_def, i64 %i.chg ; 4 uses
   %i.chi = getelementptr inbounds nuw i8, ptr %i.bqh, i64 712 ; 3 uses

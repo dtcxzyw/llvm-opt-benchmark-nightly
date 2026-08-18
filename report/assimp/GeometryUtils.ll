@@ -144,9 +144,6 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define noundef zeroext i1 @_ZN6Assimp13GeometryUtils14PlaneIntersectERK5aiRayRK10aiVector3tIfES7_RS5_(ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(24) %0, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(12) %1, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(12) %2, ptr nofree noundef nonnull writeonly align 4 captures(none) dereferenceable(12) %3) local_unnamed_addr #6 align 2 {
 bb.a:
-  %4 = load float, ptr %0, align 4                ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %6 = load float, ptr %5, align 4                ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load float, ptr %i.a, align 4            ; 2 uses
   %i.c = load float, ptr %2, align 4              ; 2 uses
@@ -155,10 +152,11 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.g = load float, ptr %i.f, align 4            ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 12
-  %7 = load float, ptr %i.h, align 4              ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %9 = load float, ptr %8, align 4                ; 2 uses
-  %i.i = fmul float %i.e, %9
+  %4 = load <2 x float>, ptr %0, align 4          ; 2 uses
+  %5 = load <2 x float>, ptr %i.h, align 4        ; 3 uses
+  %6 = extractelement <2 x float> %5, i64 1
+  %i.i = fmul float %i.e, %6
+  %7 = extractelement <2 x float> %5, i64 0
   %i.j = tail call float @llvm.fmuladd.f32(float %7, float %i.c, float %i.i)
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 20
   %i.l = load float, ptr %i.k, align 4            ; 2 uses
@@ -172,28 +170,25 @@ bb.b:                                             ; preds = %bb.a
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.q = load float, ptr %i.p, align 4
   %i.r = fsub float %i.q, %i.b
-  %10 = load float, ptr %1, align 4
-  %11 = fsub float %10, %4
-  %12 = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %13 = load float, ptr %12, align 4
-  %14 = fsub float %13, %6
-  %15 = fmul float %i.e, %14
-  %i.s = tail call float @llvm.fmuladd.f32(float %i.c, float %11, float %15)
+  %8 = load <2 x float>, ptr %1, align 4
+  %9 = fsub <2 x float> %8, %4                    ; 2 uses
+  %10 = extractelement <2 x float> %9, i64 1
+  %11 = fmul float %i.e, %10
+  %12 = extractelement <2 x float> %9, i64 0
+  %i.s = tail call float @llvm.fmuladd.f32(float %i.c, float %12, float %11)
   %i.t = tail call noundef float @llvm.fmuladd.f32(float %i.g, float %i.r, float %i.s)
-  %i.u = fdiv float %i.t, %i.m                    ; 4 uses
+  %i.u = fdiv float %i.t, %i.m                    ; 3 uses
   %i.v = fcmp olt float %i.u, 0.000000e+00
   br i1 %i.v, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %16 = fmul float %7, %i.u
-  %17 = fmul float %9, %i.u
-  %18 = fmul float %i.l, %i.u
-  %19 = fadd float %4, %16
-  %20 = fadd float %6, %17
-  %i.w = fadd float %i.b, %18
-  %.sroa.0.0.vec.insert.i29 = insertelement <2 x float> poison, float %19, i64 0
-  %.sroa.0.4.vec.insert.i30 = insertelement <2 x float> %.sroa.0.0.vec.insert.i29, float %20, i64 1
-  store <2 x float> %.sroa.0.4.vec.insert.i30, ptr %3, align 4
+  %13 = insertelement <2 x float> poison, float %i.u, i64 0
+  %14 = shufflevector <2 x float> %13, <2 x float> poison, <2 x i32> zeroinitializer
+  %15 = fmul <2 x float> %5, %14
+  %16 = fmul float %i.l, %i.u
+  %17 = fadd <2 x float> %4, %15
+  %i.w = fadd float %i.b, %16
+  store <2 x float> %17, ptr %3, align 4
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 8
   store float %i.w, ptr %.sroa.4.0..sroa_idx, align 4
   br label %bb.d
