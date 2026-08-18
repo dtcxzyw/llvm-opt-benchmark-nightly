@@ -134,7 +134,7 @@ bb.b:                                             ; preds = %bb.a
   %i.i = xor i64 %i.h, 126
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPSt5arrayIiLm3EESt6vectorIS3_SaIS3_EEEElNS0_5__ops15_Iter_comp_iterIPFbRKS3_SC_EEEEvT_SG_T0_T1_(ptr %.val.i.i.i, ptr %.val19.i.i.i, i64 noundef %i.i, ptr nonnull @_ZN5nblib18interactionSortKeyINS_23TwoParameterInteractionINS_25HarmonicBondTypeParameterEEEEENSt9enable_ifIXtlNS_8ContainsIT_NS_8TypeListIJS3_NS_11G96BondTypeENS_13CubicBondTypeENS_13MorseBondTypeENS1_INS_21FENEBondTypeParameterEEENS1_INS_38HalfAttractiveQuarticBondTypeParameterEEENS_10PairLJTypeEEEEEEEEbE4typeERKSt5arrayIiXpltlNS_7NCenterIS6_vEEELi1EEESP_)
   %i.j = icmp sgt i64 %i.e, 192
-  %scevgep.i.i.i.i.i.i.i.i = getelementptr i8, ptr %.val.i.i.i, i64 12 ; 3 uses
+  %scevgep.i.i.i.i.i.i.i.i = getelementptr i8, ptr %.val.i.i.i, i64 12 ; 4 uses
   br i1 %i.j, label %.lr.ph.i.i.i.i.i.i.i.i.i, label %bb.q
 
 .lr.ph.i.i.i.i.i.i.i.i.i:                         ; preds = %bb.b
@@ -363,7 +363,7 @@ bb.q:                                             ; preds = %bb.b
 
 .lr.ph.i22.i.i.i.i.i.i.i.i:                       ; preds = %bb.aa, %.lr.ph.i22.i.preheader.i.i.i.i.i.i.i
   %.sroa.0.022.i23.i.i.i.i.i.i.i.i = phi ptr [ %.sroa.0.0.i27.i.i.i.i.i.i.i.i, %bb.aa ], [ %scevgep.i.i.i.i.i.i.i.i, %.lr.ph.i22.i.preheader.i.i.i.i.i.i.i ] ; 12 uses
-  %.pn21.i24.i.i.i.i.i.i.i.i = phi ptr [ %.sroa.0.022.i23.i.i.i.i.i.i.i.i, %bb.aa ], [ %.val.i.i.i, %.lr.ph.i22.i.preheader.i.i.i.i.i.i.i ] ; 6 uses
+  %.pn21.i24.i.i.i.i.i.i.i.i = phi ptr [ %.sroa.0.022.i23.i.i.i.i.i.i.i.i, %bb.aa ], [ %.val.i.i.i, %.lr.ph.i22.i.preheader.i.i.i.i.i.i.i ] ; 5 uses
   %i.be = load i32, ptr %.sroa.0.022.i23.i.i.i.i.i.i.i.i, align 4, !tbaa !12 ; 7 uses
   %i.bf = load i32, ptr %.val.i.i.i, align 4, !tbaa !12 ; 2 uses
   %i.bg = icmp slt i32 %i.be, %i.bf
@@ -395,16 +395,12 @@ _ZN5nblib18interactionSortKeyINS_23TwoParameterInteractionINS_25HarmonicBondType
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.07.i18.i.i.i.i.i.i.i.i)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.07.i18.i.i.i.i.i.i.i.i, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.0.022.i23.i.i.i.i.i.i.i.i, i64 12, i1 false), !tbaa.struct !13
   %i.bo = ptrtoint ptr %.sroa.0.022.i23.i.i.i.i.i.i.i.i to i64
-  %i.bp = sub i64 %i.bo, %i.d                     ; 4 uses
+  %i.bp = sub i64 %i.bo, %i.d                     ; 3 uses
   %i.bq = icmp sgt i64 %i.bp, 12
   br i1 %i.bq, label %bb.t, label %bb.u, !prof !15
 
 bb.t:                                             ; preds = %_ZN5nblib18interactionSortKeyINS_23TwoParameterInteractionINS_25HarmonicBondTypeParameterEEEEENSt9enable_ifIXtlNS_8ContainsIT_NS_8TypeListIJS3_NS_11G96BondTypeENS_13CubicBondTypeENS_13MorseBondTypeENS1_INS_21FENEBondTypeParameterEEENS1_INS_38HalfAttractiveQuarticBondTypeParameterEEENS_10PairLJTypeEEEEEEEEbE4typeERKSt5arrayIiXpltlNS_7NCenterIS6_vEEELi1EEESP_.exit19.thread.i.i.i.i.i.i.i
-  %1 = getelementptr inbounds nuw i8, ptr %.pn21.i24.i.i.i.i.i.i.i.i, i64 24
-  %.neg26.i34.i.i.i.i.i.i.i.i = udiv exact i64 %i.bp, 12
-  %.neg26.neg.i35.i.i.i.i.i.i.i.i = sub nsw i64 0, %.neg26.i34.i.i.i.i.i.i.i.i
-  %2 = getelementptr inbounds [12 x i8], ptr %1, i64 %.neg26.neg.i35.i.i.i.i.i.i.i.i
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %2, ptr noundef nonnull align 4 dereferenceable(1) %.val.i.i.i, i64 %i.bp, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.i.i.i.i.i.i.i.i, ptr noundef nonnull align 4 dereferenceable(1) %.val.i.i.i, i64 %i.bp, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt5arrayIiLm3EESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.i33.i.i.i.i.i.i.i.i
 
 bb.u:                                             ; preds = %_ZN5nblib18interactionSortKeyINS_23TwoParameterInteractionINS_25HarmonicBondTypeParameterEEEEENSt9enable_ifIXtlNS_8ContainsIT_NS_8TypeListIJS3_NS_11G96BondTypeENS_13CubicBondTypeENS_13MorseBondTypeENS1_INS_21FENEBondTypeParameterEEENS1_INS_38HalfAttractiveQuarticBondTypeParameterEEENS_10PairLJTypeEEEEEEEEbE4typeERKSt5arrayIiXpltlNS_7NCenterIS6_vEEELi1EEESP_.exit19.thread.i.i.i.i.i.i.i
@@ -515,7 +511,7 @@ bb.ab:                                            ; preds = %"_ZZN5nblib16sortIn
   %i.cr = xor i64 %i.cq, 126
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPSt5arrayIiLm3EESt6vectorIS3_SaIS3_EEEElNS0_5__ops15_Iter_comp_iterIPFbRKS3_SC_EEEEvT_SG_T0_T1_(ptr %.val20.i.i.i.i.i.i, ptr %.val21.i.i.i.i.i.i, i64 noundef %i.cr, ptr nonnull @_ZN5nblib18interactionSortKeyINS_11G96BondTypeEEENSt9enable_ifIXtlNS_8ContainsIT_NS_8TypeListIJNS_23TwoParameterInteractionINS_25HarmonicBondTypeParameterEEES1_NS_13CubicBondTypeENS_13MorseBondTypeENS6_INS_21FENEBondTypeParameterEEENS6_INS_38HalfAttractiveQuarticBondTypeParameterEEENS_10PairLJTypeEEEEEEEEbE4typeERKSt5arrayIiXpltlNS_7NCenterIS4_vEEELi1EEESP_)
   %i.cs = icmp sgt i64 %i.cn, 192
-  %scevgep.i.i57.i.i.i.i.i.i = getelementptr i8, ptr %.val20.i.i.i.i.i.i, i64 12 ; 3 uses
+  %scevgep.i.i57.i.i.i.i.i.i = getelementptr i8, ptr %.val20.i.i.i.i.i.i, i64 12 ; 4 uses
   br i1 %i.cs, label %.lr.ph.i.i.i94.i.i.i.i.i.i, label %bb.aq
 
 .lr.ph.i.i.i94.i.i.i.i.i.i:                       ; preds = %bb.ab
@@ -744,7 +740,7 @@ bb.aq:                                            ; preds = %bb.ab
 
 .lr.ph.i22.i.i62.i.i.i.i.i.i:                     ; preds = %bb.ba, %.lr.ph.i22.i.preheader.i59.i.i.i.i.i.i
   %.sroa.0.022.i23.i.i63.i.i.i.i.i.i = phi ptr [ %.sroa.0.0.i27.i.i79.i.i.i.i.i.i, %bb.ba ], [ %scevgep.i.i57.i.i.i.i.i.i, %.lr.ph.i22.i.preheader.i59.i.i.i.i.i.i ] ; 12 uses
-  %.pn21.i24.i.i64.i.i.i.i.i.i = phi ptr [ %.sroa.0.022.i23.i.i63.i.i.i.i.i.i, %bb.ba ], [ %.val20.i.i.i.i.i.i, %.lr.ph.i22.i.preheader.i59.i.i.i.i.i.i ] ; 6 uses
+  %.pn21.i24.i.i64.i.i.i.i.i.i = phi ptr [ %.sroa.0.022.i23.i.i63.i.i.i.i.i.i, %bb.ba ], [ %.val20.i.i.i.i.i.i, %.lr.ph.i22.i.preheader.i59.i.i.i.i.i.i ] ; 5 uses
   %i.en = load i32, ptr %.sroa.0.022.i23.i.i63.i.i.i.i.i.i, align 4, !tbaa !12 ; 7 uses
   %i.eo = load i32, ptr %.val20.i.i.i.i.i.i, align 4, !tbaa !12 ; 2 uses
   %i.ep = icmp slt i32 %i.en, %i.eo
@@ -776,16 +772,12 @@ _ZN5nblib18interactionSortKeyINS_11G96BondTypeEEENSt9enable_ifIXtlNS_8ContainsIT
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.07.i18.i.i54.i.i.i.i.i.i)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.07.i18.i.i54.i.i.i.i.i.i, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.0.022.i23.i.i63.i.i.i.i.i.i, i64 12, i1 false), !tbaa.struct !13
   %i.ex = ptrtoint ptr %.sroa.0.022.i23.i.i63.i.i.i.i.i.i to i64
-  %i.ey = sub i64 %i.ex, %i.cm                    ; 4 uses
+  %i.ey = sub i64 %i.ex, %i.cm                    ; 3 uses
   %i.ez = icmp sgt i64 %i.ey, 12
   br i1 %i.ez, label %bb.at, label %bb.au, !prof !15
 
 bb.at:                                            ; preds = %_ZN5nblib18interactionSortKeyINS_11G96BondTypeEEENSt9enable_ifIXtlNS_8ContainsIT_NS_8TypeListIJNS_23TwoParameterInteractionINS_25HarmonicBondTypeParameterEEES1_NS_13CubicBondTypeENS_13MorseBondTypeENS6_INS_21FENEBondTypeParameterEEENS6_INS_38HalfAttractiveQuarticBondTypeParameterEEENS_10PairLJTypeEEEEEEEEbE4typeERKSt5arrayIiXpltlNS_7NCenterIS4_vEEELi1EEESP_.exit19.thread.i.i.i.i.i.i.i
-  %3 = getelementptr inbounds nuw i8, ptr %.pn21.i24.i.i64.i.i.i.i.i.i, i64 24
-  %.neg26.i34.i.i92.i.i.i.i.i.i = udiv exact i64 %i.ey, 12
-  %.neg26.neg.i35.i.i93.i.i.i.i.i.i = sub nsw i64 0, %.neg26.i34.i.i92.i.i.i.i.i.i
-  %4 = getelementptr inbounds [12 x i8], ptr %3, i64 %.neg26.neg.i35.i.i93.i.i.i.i.i.i
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %4, ptr noundef nonnull align 4 dereferenceable(1) %.val20.i.i.i.i.i.i, i64 %i.ey, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.i.i57.i.i.i.i.i.i, ptr noundef nonnull align 4 dereferenceable(1) %.val20.i.i.i.i.i.i, i64 %i.ey, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt5arrayIiLm3EESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.i33.i.i91.i.i.i.i.i.i
 
 bb.au:                                            ; preds = %_ZN5nblib18interactionSortKeyINS_11G96BondTypeEEENSt9enable_ifIXtlNS_8ContainsIT_NS_8TypeListIJNS_23TwoParameterInteractionINS_25HarmonicBondTypeParameterEEES1_NS_13CubicBondTypeENS_13MorseBondTypeENS6_INS_21FENEBondTypeParameterEEENS6_INS_38HalfAttractiveQuarticBondTypeParameterEEENS_10PairLJTypeEEEEEEEEbE4typeERKSt5arrayIiXpltlNS_7NCenterIS4_vEEELi1EEESP_.exit19.thread.i.i.i.i.i.i.i
@@ -896,7 +888,7 @@ bb.bb:                                            ; preds = %"_ZZN5nblib16sortIn
   %i.ga = xor i64 %i.fz, 126
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPSt5arrayIiLm3EESt6vectorIS3_SaIS3_EEEElNS0_5__ops15_Iter_comp_iterIPFbRKS3_SC_EEEEvT_SG_T0_T1_(ptr %.val22.i.i.i.i.i.i, ptr %.val23.i.i.i.i.i.i, i64 noundef %i.ga, ptr nonnull @_ZN5nblib18interactionSortKeyINS_13CubicBondTypeEEENSt9enable_ifIXtlNS_8ContainsIT_NS_8TypeListIJNS_23TwoParameterInteractionINS_25HarmonicBondTypeParameterEEENS_11G96BondTypeES1_NS_13MorseBondTypeENS6_INS_21FENEBondTypeParameterEEENS6_INS_38HalfAttractiveQuarticBondTypeParameterEEENS_10PairLJTypeEEEEEEEEbE4typeERKSt5arrayIiXpltlNS_7NCenterIS4_vEEELi1EEESP_)
   %i.gb = icmp sgt i64 %i.fw, 192
-  %scevgep.i.i159.i.i.i.i.i.i = getelementptr i8, ptr %.val22.i.i.i.i.i.i, i64 12 ; 3 uses
+  %scevgep.i.i159.i.i.i.i.i.i = getelementptr i8, ptr %.val22.i.i.i.i.i.i, i64 12 ; 4 uses
   br i1 %i.gb, label %.lr.ph.i.i.i196.i.i.i.i.i.i, label %bb.bq
 
 .lr.ph.i.i.i196.i.i.i.i.i.i:                      ; preds = %bb.bb
@@ -1125,7 +1117,7 @@ bb.bq:                                            ; preds = %bb.bb
 
 .lr.ph.i22.i.i164.i.i.i.i.i.i:                    ; preds = %bb.ca, %.lr.ph.i22.i.preheader.i161.i.i.i.i.i.i
   %.sroa.0.022.i23.i.i165.i.i.i.i.i.i = phi ptr [ %.sroa.0.0.i27.i.i181.i.i.i.i.i.i, %bb.ca ], [ %scevgep.i.i159.i.i.i.i.i.i, %.lr.ph.i22.i.preheader.i161.i.i.i.i.i.i ] ; 12 uses
-  %.pn21.i24.i.i166.i.i.i.i.i.i = phi ptr [ %.sroa.0.022.i23.i.i165.i.i.i.i.i.i, %bb.ca ], [ %.val22.i.i.i.i.i.i, %.lr.ph.i22.i.preheader.i161.i.i.i.i.i.i ] ; 6 uses
+  %.pn21.i24.i.i166.i.i.i.i.i.i = phi ptr [ %.sroa.0.022.i23.i.i165.i.i.i.i.i.i, %bb.ca ], [ %.val22.i.i.i.i.i.i, %.lr.ph.i22.i.preheader.i161.i.i.i.i.i.i ] ; 5 uses
   %i.hw = load i32, ptr %.sroa.0.022.i23.i.i165.i.i.i.i.i.i, align 4, !tbaa !12 ; 7 uses
   %i.hx = load i32, ptr %.val22.i.i.i.i.i.i, align 4, !tbaa !12 ; 2 uses
   %i.hy = icmp slt i32 %i.hw, %i.hx
@@ -1157,16 +1149,12 @@ _ZN5nblib18interactionSortKeyINS_13CubicBondTypeEEENSt9enable_ifIXtlNS_8Contains
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.07.i18.i.i156.i.i.i.i.i.i)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.07.i18.i.i156.i.i.i.i.i.i, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.0.022.i23.i.i165.i.i.i.i.i.i, i64 12, i1 false), !tbaa.struct !13
   %i.ig = ptrtoint ptr %.sroa.0.022.i23.i.i165.i.i.i.i.i.i to i64
-  %i.ih = sub i64 %i.ig, %i.fv                    ; 4 uses
+  %i.ih = sub i64 %i.ig, %i.fv                    ; 3 uses
   %i.ii = icmp sgt i64 %i.ih, 12
   br i1 %i.ii, label %bb.bt, label %bb.bu, !prof !15
 
 bb.bt:                                            ; preds = %_ZN5nblib18interactionSortKeyINS_13CubicBondTypeEEENSt9enable_ifIXtlNS_8ContainsIT_NS_8TypeListIJNS_23TwoParameterInteractionINS_25HarmonicBondTypeParameterEEENS_11G96BondTypeES1_NS_13MorseBondTypeENS6_INS_21FENEBondTypeParameterEEENS6_INS_38HalfAttractiveQuarticBondTypeParameterEEENS_10PairLJTypeEEEEEEEEbE4typeERKSt5arrayIiXpltlNS_7NCenterIS4_vEEELi1EEESP_.exit19.thread.i.i.i.i.i.i.i
-  %5 = getelementptr inbounds nuw i8, ptr %.pn21.i24.i.i166.i.i.i.i.i.i, i64 24
-  %.neg26.i34.i.i194.i.i.i.i.i.i = udiv exact i64 %i.ih, 12
-  %.neg26.neg.i35.i.i195.i.i.i.i.i.i = sub nsw i64 0, %.neg26.i34.i.i194.i.i.i.i.i.i
-  %6 = getelementptr inbounds [12 x i8], ptr %5, i64 %.neg26.neg.i35.i.i195.i.i.i.i.i.i
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %6, ptr noundef nonnull align 4 dereferenceable(1) %.val22.i.i.i.i.i.i, i64 %i.ih, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.i.i159.i.i.i.i.i.i, ptr noundef nonnull align 4 dereferenceable(1) %.val22.i.i.i.i.i.i, i64 %i.ih, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt5arrayIiLm3EESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.i33.i.i193.i.i.i.i.i.i
 
 bb.bu:                                            ; preds = %_ZN5nblib18interactionSortKeyINS_13CubicBondTypeEEENSt9enable_ifIXtlNS_8ContainsIT_NS_8TypeListIJNS_23TwoParameterInteractionINS_25HarmonicBondTypeParameterEEENS_11G96BondTypeES1_NS_13MorseBondTypeENS6_INS_21FENEBondTypeParameterEEENS6_INS_38HalfAttractiveQuarticBondTypeParameterEEENS_10PairLJTypeEEEEEEEEbE4typeERKSt5arrayIiXpltlNS_7NCenterIS4_vEEELi1EEESP_.exit19.thread.i.i.i.i.i.i.i
@@ -1277,7 +1265,7 @@ bb.cb:                                            ; preds = %"_ZZN5nblib16sortIn
   %i.jj = xor i64 %i.ji, 126
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPSt5arrayIiLm3EESt6vectorIS3_SaIS3_EEEElNS0_5__ops15_Iter_comp_iterIPFbRKS3_SC_EEEEvT_SG_T0_T1_(ptr %.val24.i.i.i.i.i.i, ptr %.val25.i.i.i.i.i.i, i64 noundef %i.jj, ptr nonnull @_ZN5nblib18interactionSortKeyINS_13MorseBondTypeEEENSt9enable_ifIXtlNS_8ContainsIT_NS_8TypeListIJNS_23TwoParameterInteractionINS_25HarmonicBondTypeParameterEEENS_11G96BondTypeENS_13CubicBondTypeES1_NS6_INS_21FENEBondTypeParameterEEENS6_INS_38HalfAttractiveQuarticBondTypeParameterEEENS_10PairLJTypeEEEEEEEEbE4typeERKSt5arrayIiXpltlNS_7NCenterIS4_vEEELi1EEESP_)
   %i.jk = icmp sgt i64 %i.jf, 192
-  %scevgep.i.i261.i.i.i.i.i.i = getelementptr i8, ptr %.val24.i.i.i.i.i.i, i64 12 ; 3 uses
+  %scevgep.i.i261.i.i.i.i.i.i = getelementptr i8, ptr %.val24.i.i.i.i.i.i, i64 12 ; 4 uses
   br i1 %i.jk, label %.lr.ph.i.i.i298.i.i.i.i.i.i, label %bb.cq
 
 .lr.ph.i.i.i298.i.i.i.i.i.i:                      ; preds = %bb.cb
@@ -1506,7 +1494,7 @@ bb.cq:                                            ; preds = %bb.cb
 
 .lr.ph.i22.i.i266.i.i.i.i.i.i:                    ; preds = %bb.da, %.lr.ph.i22.i.preheader.i263.i.i.i.i.i.i
   %.sroa.0.022.i23.i.i267.i.i.i.i.i.i = phi ptr [ %.sroa.0.0.i27.i.i283.i.i.i.i.i.i, %bb.da ], [ %scevgep.i.i261.i.i.i.i.i.i, %.lr.ph.i22.i.preheader.i263.i.i.i.i.i.i ] ; 12 uses
-  %.pn21.i24.i.i268.i.i.i.i.i.i = phi ptr [ %.sroa.0.022.i23.i.i267.i.i.i.i.i.i, %bb.da ], [ %.val24.i.i.i.i.i.i, %.lr.ph.i22.i.preheader.i263.i.i.i.i.i.i ] ; 6 uses
+  %.pn21.i24.i.i268.i.i.i.i.i.i = phi ptr [ %.sroa.0.022.i23.i.i267.i.i.i.i.i.i, %bb.da ], [ %.val24.i.i.i.i.i.i, %.lr.ph.i22.i.preheader.i263.i.i.i.i.i.i ] ; 5 uses
   %i.lf = load i32, ptr %.sroa.0.022.i23.i.i267.i.i.i.i.i.i, align 4, !tbaa !12 ; 7 uses
   %i.lg = load i32, ptr %.val24.i.i.i.i.i.i, align 4, !tbaa !12 ; 2 uses
   %i.lh = icmp slt i32 %i.lf, %i.lg
@@ -1538,16 +1526,12 @@ _ZN5nblib18interactionSortKeyINS_13MorseBondTypeEEENSt9enable_ifIXtlNS_8Contains
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.07.i18.i.i258.i.i.i.i.i.i)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.07.i18.i.i258.i.i.i.i.i.i, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.0.022.i23.i.i267.i.i.i.i.i.i, i64 12, i1 false), !tbaa.struct !13
   %i.lp = ptrtoint ptr %.sroa.0.022.i23.i.i267.i.i.i.i.i.i to i64
-  %i.lq = sub i64 %i.lp, %i.je                    ; 4 uses
+  %i.lq = sub i64 %i.lp, %i.je                    ; 3 uses
   %i.lr = icmp sgt i64 %i.lq, 12
   br i1 %i.lr, label %bb.ct, label %bb.cu, !prof !15
 
 bb.ct:                                            ; preds = %_ZN5nblib18interactionSortKeyINS_13MorseBondTypeEEENSt9enable_ifIXtlNS_8ContainsIT_NS_8TypeListIJNS_23TwoParameterInteractionINS_25HarmonicBondTypeParameterEEENS_11G96BondTypeENS_13CubicBondTypeES1_NS6_INS_21FENEBondTypeParameterEEENS6_INS_38HalfAttractiveQuarticBondTypeParameterEEENS_10PairLJTypeEEEEEEEEbE4typeERKSt5arrayIiXpltlNS_7NCenterIS4_vEEELi1EEESP_.exit19.thread.i.i.i.i.i.i.i
-  %7 = getelementptr inbounds nuw i8, ptr %.pn21.i24.i.i268.i.i.i.i.i.i, i64 24
-  %.neg26.i34.i.i296.i.i.i.i.i.i = udiv exact i64 %i.lq, 12
-  %.neg26.neg.i35.i.i297.i.i.i.i.i.i = sub nsw i64 0, %.neg26.i34.i.i296.i.i.i.i.i.i
-  %8 = getelementptr inbounds [12 x i8], ptr %7, i64 %.neg26.neg.i35.i.i297.i.i.i.i.i.i
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %8, ptr noundef nonnull align 4 dereferenceable(1) %.val24.i.i.i.i.i.i, i64 %i.lq, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.i.i261.i.i.i.i.i.i, ptr noundef nonnull align 4 dereferenceable(1) %.val24.i.i.i.i.i.i, i64 %i.lq, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt5arrayIiLm3EESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.i33.i.i295.i.i.i.i.i.i
 
 bb.cu:                                            ; preds = %_ZN5nblib18interactionSortKeyINS_13MorseBondTypeEEENSt9enable_ifIXtlNS_8ContainsIT_NS_8TypeListIJNS_23TwoParameterInteractionINS_25HarmonicBondTypeParameterEEENS_11G96BondTypeENS_13CubicBondTypeES1_NS6_INS_21FENEBondTypeParameterEEENS6_INS_38HalfAttractiveQuarticBondTypeParameterEEENS_10PairLJTypeEEEEEEEEbE4typeERKSt5arrayIiXpltlNS_7NCenterIS4_vEEELi1EEESP_.exit19.thread.i.i.i.i.i.i.i
@@ -1658,7 +1642,7 @@ bb.db:                                            ; preds = %"_ZZN5nblib16sortIn
   %i.ms = xor i64 %i.mr, 126
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPSt5arrayIiLm3EESt6vectorIS3_SaIS3_EEEElNS0_5__ops15_Iter_comp_iterIPFbRKS3_SC_EEEEvT_SG_T0_T1_(ptr %.val26.i.i.i.i.i.i, ptr %.val27.i.i.i.i.i.i, i64 noundef %i.ms, ptr nonnull @_ZN5nblib18interactionSortKeyINS_23TwoParameterInteractionINS_21FENEBondTypeParameterEEEEENSt9enable_ifIXtlNS_8ContainsIT_NS_8TypeListIJNS1_INS_25HarmonicBondTypeParameterEEENS_11G96BondTypeENS_13CubicBondTypeENS_13MorseBondTypeES3_NS1_INS_38HalfAttractiveQuarticBondTypeParameterEEENS_10PairLJTypeEEEEEEEEbE4typeERKSt5arrayIiXpltlNS_7NCenterIS6_vEEELi1EEESP_)
   %i.mt = icmp sgt i64 %i.mo, 192
-  %scevgep.i.i363.i.i.i.i.i.i = getelementptr i8, ptr %.val26.i.i.i.i.i.i, i64 12 ; 3 uses
+  %scevgep.i.i363.i.i.i.i.i.i = getelementptr i8, ptr %.val26.i.i.i.i.i.i, i64 12 ; 4 uses
   br i1 %i.mt, label %.lr.ph.i.i.i400.i.i.i.i.i.i, label %bb.dq
 
 .lr.ph.i.i.i400.i.i.i.i.i.i:                      ; preds = %bb.db
@@ -1887,7 +1871,7 @@ bb.dq:                                            ; preds = %bb.db
 
 .lr.ph.i22.i.i368.i.i.i.i.i.i:                    ; preds = %bb.ea, %.lr.ph.i22.i.preheader.i365.i.i.i.i.i.i
   %.sroa.0.022.i23.i.i369.i.i.i.i.i.i = phi ptr [ %.sroa.0.0.i27.i.i385.i.i.i.i.i.i, %bb.ea ], [ %scevgep.i.i363.i.i.i.i.i.i, %.lr.ph.i22.i.preheader.i365.i.i.i.i.i.i ] ; 12 uses
-  %.pn21.i24.i.i370.i.i.i.i.i.i = phi ptr [ %.sroa.0.022.i23.i.i369.i.i.i.i.i.i, %bb.ea ], [ %.val26.i.i.i.i.i.i, %.lr.ph.i22.i.preheader.i365.i.i.i.i.i.i ] ; 6 uses
+  %.pn21.i24.i.i370.i.i.i.i.i.i = phi ptr [ %.sroa.0.022.i23.i.i369.i.i.i.i.i.i, %bb.ea ], [ %.val26.i.i.i.i.i.i, %.lr.ph.i22.i.preheader.i365.i.i.i.i.i.i ] ; 5 uses
   %i.oo = load i32, ptr %.sroa.0.022.i23.i.i369.i.i.i.i.i.i, align 4, !tbaa !12 ; 7 uses
   %i.op = load i32, ptr %.val26.i.i.i.i.i.i, align 4, !tbaa !12 ; 2 uses
   %i.oq = icmp slt i32 %i.oo, %i.op
@@ -1919,16 +1903,12 @@ _ZN5nblib18interactionSortKeyINS_23TwoParameterInteractionINS_21FENEBondTypePara
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.07.i18.i.i360.i.i.i.i.i.i)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.07.i18.i.i360.i.i.i.i.i.i, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.0.022.i23.i.i369.i.i.i.i.i.i, i64 12, i1 false), !tbaa.struct !13
   %i.oy = ptrtoint ptr %.sroa.0.022.i23.i.i369.i.i.i.i.i.i to i64
-  %i.oz = sub i64 %i.oy, %i.mn                    ; 4 uses
+  %i.oz = sub i64 %i.oy, %i.mn                    ; 3 uses
   %i.pa = icmp sgt i64 %i.oz, 12
   br i1 %i.pa, label %bb.dt, label %bb.du, !prof !15
 
 bb.dt:                                            ; preds = %_ZN5nblib18interactionSortKeyINS_23TwoParameterInteractionINS_21FENEBondTypeParameterEEEEENSt9enable_ifIXtlNS_8ContainsIT_NS_8TypeListIJNS1_INS_25HarmonicBondTypeParameterEEENS_11G96BondTypeENS_13CubicBondTypeENS_13MorseBondTypeES3_NS1_INS_38HalfAttractiveQuarticBondTypeParameterEEENS_10PairLJTypeEEEEEEEEbE4typeERKSt5arrayIiXpltlNS_7NCenterIS6_vEEELi1EEESP_.exit19.thread.i.i.i.i.i.i.i
-  %9 = getelementptr inbounds nuw i8, ptr %.pn21.i24.i.i370.i.i.i.i.i.i, i64 24
-  %.neg26.i34.i.i398.i.i.i.i.i.i = udiv exact i64 %i.oz, 12
-  %.neg26.neg.i35.i.i399.i.i.i.i.i.i = sub nsw i64 0, %.neg26.i34.i.i398.i.i.i.i.i.i
-  %10 = getelementptr inbounds [12 x i8], ptr %9, i64 %.neg26.neg.i35.i.i399.i.i.i.i.i.i
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %10, ptr noundef nonnull align 4 dereferenceable(1) %.val26.i.i.i.i.i.i, i64 %i.oz, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.i.i363.i.i.i.i.i.i, ptr noundef nonnull align 4 dereferenceable(1) %.val26.i.i.i.i.i.i, i64 %i.oz, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt5arrayIiLm3EESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.i33.i.i397.i.i.i.i.i.i
 
 bb.du:                                            ; preds = %_ZN5nblib18interactionSortKeyINS_23TwoParameterInteractionINS_21FENEBondTypeParameterEEEEENSt9enable_ifIXtlNS_8ContainsIT_NS_8TypeListIJNS1_INS_25HarmonicBondTypeParameterEEENS_11G96BondTypeENS_13CubicBondTypeENS_13MorseBondTypeES3_NS1_INS_38HalfAttractiveQuarticBondTypeParameterEEENS_10PairLJTypeEEEEEEEEbE4typeERKSt5arrayIiXpltlNS_7NCenterIS6_vEEELi1EEESP_.exit19.thread.i.i.i.i.i.i.i
@@ -2039,7 +2019,7 @@ bb.eb:                                            ; preds = %"_ZZN5nblib16sortIn
   %i.qb = xor i64 %i.qa, 126
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPSt5arrayIiLm3EESt6vectorIS3_SaIS3_EEEElNS0_5__ops15_Iter_comp_iterIPFbRKS3_SC_EEEEvT_SG_T0_T1_(ptr %.val28.i.i.i.i.i.i, ptr %.val29.i.i.i.i.i.i, i64 noundef %i.qb, ptr nonnull @_ZN5nblib18interactionSortKeyINS_23TwoParameterInteractionINS_38HalfAttractiveQuarticBondTypeParameterEEEEENSt9enable_ifIXtlNS_8ContainsIT_NS_8TypeListIJNS1_INS_25HarmonicBondTypeParameterEEENS_11G96BondTypeENS_13CubicBondTypeENS_13MorseBondTypeENS1_INS_21FENEBondTypeParameterEEES3_NS_10PairLJTypeEEEEEEEEbE4typeERKSt5arrayIiXpltlNS_7NCenterIS6_vEEELi1EEESP_)
   %i.qc = icmp sgt i64 %i.px, 192
-  %scevgep.i.i465.i.i.i.i.i.i = getelementptr i8, ptr %.val28.i.i.i.i.i.i, i64 12 ; 3 uses
+  %scevgep.i.i465.i.i.i.i.i.i = getelementptr i8, ptr %.val28.i.i.i.i.i.i, i64 12 ; 4 uses
   br i1 %i.qc, label %.lr.ph.i.i.i502.i.i.i.i.i.i, label %bb.eq
 
 .lr.ph.i.i.i502.i.i.i.i.i.i:                      ; preds = %bb.eb
@@ -2268,7 +2248,7 @@ bb.eq:                                            ; preds = %bb.eb
 
 .lr.ph.i22.i.i470.i.i.i.i.i.i:                    ; preds = %bb.fa, %.lr.ph.i22.i.preheader.i467.i.i.i.i.i.i
   %.sroa.0.022.i23.i.i471.i.i.i.i.i.i = phi ptr [ %.sroa.0.0.i27.i.i487.i.i.i.i.i.i, %bb.fa ], [ %scevgep.i.i465.i.i.i.i.i.i, %.lr.ph.i22.i.preheader.i467.i.i.i.i.i.i ] ; 12 uses
-  %.pn21.i24.i.i472.i.i.i.i.i.i = phi ptr [ %.sroa.0.022.i23.i.i471.i.i.i.i.i.i, %bb.fa ], [ %.val28.i.i.i.i.i.i, %.lr.ph.i22.i.preheader.i467.i.i.i.i.i.i ] ; 6 uses
+  %.pn21.i24.i.i472.i.i.i.i.i.i = phi ptr [ %.sroa.0.022.i23.i.i471.i.i.i.i.i.i, %bb.fa ], [ %.val28.i.i.i.i.i.i, %.lr.ph.i22.i.preheader.i467.i.i.i.i.i.i ] ; 5 uses
   %i.rx = load i32, ptr %.sroa.0.022.i23.i.i471.i.i.i.i.i.i, align 4, !tbaa !12 ; 7 uses
   %i.ry = load i32, ptr %.val28.i.i.i.i.i.i, align 4, !tbaa !12 ; 2 uses
   %i.rz = icmp slt i32 %i.rx, %i.ry
@@ -2300,16 +2280,12 @@ _ZN5nblib18interactionSortKeyINS_23TwoParameterInteractionINS_38HalfAttractiveQu
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.07.i18.i.i462.i.i.i.i.i.i)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.07.i18.i.i462.i.i.i.i.i.i, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.0.022.i23.i.i471.i.i.i.i.i.i, i64 12, i1 false), !tbaa.struct !13
   %i.sh = ptrtoint ptr %.sroa.0.022.i23.i.i471.i.i.i.i.i.i to i64
-  %i.si = sub i64 %i.sh, %i.pw                    ; 4 uses
+  %i.si = sub i64 %i.sh, %i.pw                    ; 3 uses
   %i.sj = icmp sgt i64 %i.si, 12
   br i1 %i.sj, label %bb.et, label %bb.eu, !prof !15
 
 bb.et:                                            ; preds = %_ZN5nblib18interactionSortKeyINS_23TwoParameterInteractionINS_38HalfAttractiveQuarticBondTypeParameterEEEEENSt9enable_ifIXtlNS_8ContainsIT_NS_8TypeListIJNS1_INS_25HarmonicBondTypeParameterEEENS_11G96BondTypeENS_13CubicBondTypeENS_13MorseBondTypeENS1_INS_21FENEBondTypeParameterEEES3_NS_10PairLJTypeEEEEEEEEbE4typeERKSt5arrayIiXpltlNS_7NCenterIS6_vEEELi1EEESP_.exit19.thread.i.i.i.i.i.i.i
-  %11 = getelementptr inbounds nuw i8, ptr %.pn21.i24.i.i472.i.i.i.i.i.i, i64 24
-  %.neg26.i34.i.i500.i.i.i.i.i.i = udiv exact i64 %i.si, 12
-  %.neg26.neg.i35.i.i501.i.i.i.i.i.i = sub nsw i64 0, %.neg26.i34.i.i500.i.i.i.i.i.i
-  %12 = getelementptr inbounds [12 x i8], ptr %11, i64 %.neg26.neg.i35.i.i501.i.i.i.i.i.i
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %12, ptr noundef nonnull align 4 dereferenceable(1) %.val28.i.i.i.i.i.i, i64 %i.si, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.i.i465.i.i.i.i.i.i, ptr noundef nonnull align 4 dereferenceable(1) %.val28.i.i.i.i.i.i, i64 %i.si, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt5arrayIiLm3EESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.i33.i.i499.i.i.i.i.i.i
 
 bb.eu:                                            ; preds = %_ZN5nblib18interactionSortKeyINS_23TwoParameterInteractionINS_38HalfAttractiveQuarticBondTypeParameterEEEEENSt9enable_ifIXtlNS_8ContainsIT_NS_8TypeListIJNS1_INS_25HarmonicBondTypeParameterEEENS_11G96BondTypeENS_13CubicBondTypeENS_13MorseBondTypeENS1_INS_21FENEBondTypeParameterEEES3_NS_10PairLJTypeEEEEEEEEbE4typeERKSt5arrayIiXpltlNS_7NCenterIS6_vEEELi1EEESP_.exit19.thread.i.i.i.i.i.i.i
@@ -2420,7 +2396,7 @@ bb.fb:                                            ; preds = %"_ZZN5nblib16sortIn
   %i.tk = xor i64 %i.tj, 126
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPSt5arrayIiLm3EESt6vectorIS3_SaIS3_EEEElNS0_5__ops15_Iter_comp_iterIPFbRKS3_SC_EEEEvT_SG_T0_T1_(ptr %.val30.i.i.i.i.i.i, ptr %.val31.i.i.i.i.i.i, i64 noundef %i.tk, ptr nonnull @_ZN5nblib18interactionSortKeyINS_10PairLJTypeEEENSt9enable_ifIXtlNS_8ContainsIT_NS_8TypeListIJNS_23TwoParameterInteractionINS_25HarmonicBondTypeParameterEEENS_11G96BondTypeENS_13CubicBondTypeENS_13MorseBondTypeENS6_INS_21FENEBondTypeParameterEEENS6_INS_38HalfAttractiveQuarticBondTypeParameterEEES1_EEEEEEEbE4typeERKSt5arrayIiXpltlNS_7NCenterIS4_vEEELi1EEESP_)
   %i.tl = icmp sgt i64 %i.tg, 192
-  %scevgep.i.i567.i.i.i.i.i.i = getelementptr i8, ptr %.val30.i.i.i.i.i.i, i64 12 ; 3 uses
+  %scevgep.i.i567.i.i.i.i.i.i = getelementptr i8, ptr %.val30.i.i.i.i.i.i, i64 12 ; 4 uses
   br i1 %i.tl, label %.lr.ph.i.i.i604.i.i.i.i.i.i, label %bb.fq
 
 .lr.ph.i.i.i604.i.i.i.i.i.i:                      ; preds = %bb.fb
@@ -2649,7 +2625,7 @@ bb.fq:                                            ; preds = %bb.fb
 
 .lr.ph.i22.i.i572.i.i.i.i.i.i:                    ; preds = %bb.ga, %.lr.ph.i22.i.preheader.i569.i.i.i.i.i.i
   %.sroa.0.022.i23.i.i573.i.i.i.i.i.i = phi ptr [ %.sroa.0.0.i27.i.i589.i.i.i.i.i.i, %bb.ga ], [ %scevgep.i.i567.i.i.i.i.i.i, %.lr.ph.i22.i.preheader.i569.i.i.i.i.i.i ] ; 12 uses
-  %.pn21.i24.i.i574.i.i.i.i.i.i = phi ptr [ %.sroa.0.022.i23.i.i573.i.i.i.i.i.i, %bb.ga ], [ %.val30.i.i.i.i.i.i, %.lr.ph.i22.i.preheader.i569.i.i.i.i.i.i ] ; 6 uses
+  %.pn21.i24.i.i574.i.i.i.i.i.i = phi ptr [ %.sroa.0.022.i23.i.i573.i.i.i.i.i.i, %bb.ga ], [ %.val30.i.i.i.i.i.i, %.lr.ph.i22.i.preheader.i569.i.i.i.i.i.i ] ; 5 uses
   %i.vg = load i32, ptr %.sroa.0.022.i23.i.i573.i.i.i.i.i.i, align 4, !tbaa !12 ; 7 uses
   %i.vh = load i32, ptr %.val30.i.i.i.i.i.i, align 4, !tbaa !12 ; 2 uses
   %i.vi = icmp slt i32 %i.vg, %i.vh
@@ -2681,16 +2657,12 @@ _ZN5nblib18interactionSortKeyINS_10PairLJTypeEEENSt9enable_ifIXtlNS_8ContainsIT_
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.07.i18.i.i564.i.i.i.i.i.i)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.07.i18.i.i564.i.i.i.i.i.i, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.0.022.i23.i.i573.i.i.i.i.i.i, i64 12, i1 false), !tbaa.struct !13
   %i.vq = ptrtoint ptr %.sroa.0.022.i23.i.i573.i.i.i.i.i.i to i64
-  %i.vr = sub i64 %i.vq, %i.tf                    ; 4 uses
+  %i.vr = sub i64 %i.vq, %i.tf                    ; 3 uses
   %i.vs = icmp sgt i64 %i.vr, 12
   br i1 %i.vs, label %bb.ft, label %bb.fu, !prof !15
 
 bb.ft:                                            ; preds = %_ZN5nblib18interactionSortKeyINS_10PairLJTypeEEENSt9enable_ifIXtlNS_8ContainsIT_NS_8TypeListIJNS_23TwoParameterInteractionINS_25HarmonicBondTypeParameterEEENS_11G96BondTypeENS_13CubicBondTypeENS_13MorseBondTypeENS6_INS_21FENEBondTypeParameterEEENS6_INS_38HalfAttractiveQuarticBondTypeParameterEEES1_EEEEEEEbE4typeERKSt5arrayIiXpltlNS_7NCenterIS4_vEEELi1EEESP_.exit19.thread.i.i.i.i.i.i.i
-  %13 = getelementptr inbounds nuw i8, ptr %.pn21.i24.i.i574.i.i.i.i.i.i, i64 24
-  %.neg26.i34.i.i602.i.i.i.i.i.i = udiv exact i64 %i.vr, 12
-  %.neg26.neg.i35.i.i603.i.i.i.i.i.i = sub nsw i64 0, %.neg26.i34.i.i602.i.i.i.i.i.i
-  %14 = getelementptr inbounds [12 x i8], ptr %13, i64 %.neg26.neg.i35.i.i603.i.i.i.i.i.i
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %14, ptr noundef nonnull align 4 dereferenceable(1) %.val30.i.i.i.i.i.i, i64 %i.vr, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.i.i567.i.i.i.i.i.i, ptr noundef nonnull align 4 dereferenceable(1) %.val30.i.i.i.i.i.i, i64 %i.vr, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt5arrayIiLm3EESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.i33.i.i601.i.i.i.i.i.i
 
 bb.fu:                                            ; preds = %_ZN5nblib18interactionSortKeyINS_10PairLJTypeEEENSt9enable_ifIXtlNS_8ContainsIT_NS_8TypeListIJNS_23TwoParameterInteractionINS_25HarmonicBondTypeParameterEEENS_11G96BondTypeENS_13CubicBondTypeENS_13MorseBondTypeENS6_INS_21FENEBondTypeParameterEEENS6_INS_38HalfAttractiveQuarticBondTypeParameterEEES1_EEEEEEEbE4typeERKSt5arrayIiXpltlNS_7NCenterIS4_vEEELi1EEESP_.exit19.thread.i.i.i.i.i.i.i
@@ -3093,7 +3065,7 @@ bb.jv:                                            ; preds = %"_ZZN5nblib16sortIn
   %i.akt = xor i64 %i.aks, 126
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPSt5arrayIiLm5EESt6vectorIS3_SaIS3_EEEElNS0_5__ops15_Iter_comp_iterIPFbRKS3_SC_EEEEvT_SG_T0_T1_(ptr %.val46.i.i.i.i.i.i, ptr %.val47.i.i.i.i.i.i, i64 noundef %i.akt, ptr nonnull @_ZN5nblib18interactionSortKeyINS_14ProperDihedralEEENSt9enable_ifIXtlNS_8ContainsIT_NS_8TypeListIJS1_NS_16ImproperDihedralENS_24RyckaertBellemanDihedralEEEEEEEEbE4typeERKSt5arrayIiXpltlNS_7NCenterIS4_vEEELi1EEESH_)
   %i.aku = icmp sgt i64 %i.akp, 320
-  %scevgep.i.i1056.i.i.i.i.i.i = getelementptr i8, ptr %.val46.i.i.i.i.i.i, i64 20 ; 3 uses
+  %scevgep.i.i1056.i.i.i.i.i.i = getelementptr i8, ptr %.val46.i.i.i.i.i.i, i64 20 ; 4 uses
   br i1 %i.aku, label %.lr.ph.i.i.i1071.i.i.i.i.i.i, label %bb.kc
 
 .lr.ph.i.i.i1071.i.i.i.i.i.i:                     ; preds = %bb.jv
@@ -3212,7 +3184,7 @@ bb.kc:                                            ; preds = %bb.jv
 
 .lr.ph.i22.i.i1059.i.i.i.i.i.i:                   ; preds = %bb.ki, %.lr.ph.i22.i.preheader.i1058.i.i.i.i.i.i
   %.sroa.0.022.i23.i.i1060.i.i.i.i.i.i = phi ptr [ %.sroa.0.0.i27.i.i1063.i.i.i.i.i.i, %bb.ki ], [ %scevgep.i.i1056.i.i.i.i.i.i, %.lr.ph.i22.i.preheader.i1058.i.i.i.i.i.i ] ; 9 uses
-  %.pn21.i24.i.i1061.i.i.i.i.i.i = phi ptr [ %.sroa.0.022.i23.i.i1060.i.i.i.i.i.i, %bb.ki ], [ %.val46.i.i.i.i.i.i, %.lr.ph.i22.i.preheader.i1058.i.i.i.i.i.i ] ; 4 uses
+  %.pn21.i24.i.i1061.i.i.i.i.i.i = phi ptr [ %.sroa.0.022.i23.i.i1060.i.i.i.i.i.i, %bb.ki ], [ %.val46.i.i.i.i.i.i, %.lr.ph.i22.i.preheader.i1058.i.i.i.i.i.i ] ; 3 uses
   %i.als = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i23.i.i1060.i.i.i.i.i.i, i64 4
   %i.alt = load i32, ptr %i.als, align 4, !tbaa !12 ; 4 uses
   %i.alu = load i32, ptr %i.alr, align 4, !tbaa !12
@@ -3223,16 +3195,12 @@ bb.kd:                                            ; preds = %.lr.ph.i22.i.i1059.
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.07.i18.i.i1053.i.i.i.i.i.i)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.07.i18.i.i1053.i.i.i.i.i.i, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.0.022.i23.i.i1060.i.i.i.i.i.i, i64 20, i1 false), !tbaa.struct !28
   %i.alw = ptrtoint ptr %.sroa.0.022.i23.i.i1060.i.i.i.i.i.i to i64
-  %i.alx = sub i64 %i.alw, %i.ako                 ; 4 uses
+  %i.alx = sub i64 %i.alw, %i.ako                 ; 3 uses
   %i.aly = icmp sgt i64 %i.alx, 20
   br i1 %i.aly, label %bb.ke, label %bb.kf, !prof !15
 
 bb.ke:                                            ; preds = %bb.kd
-  %15 = getelementptr inbounds nuw i8, ptr %.pn21.i24.i.i1061.i.i.i.i.i.i, i64 40
-  %.neg26.i34.i.i1069.i.i.i.i.i.i = udiv exact i64 %i.alx, 20
-  %.neg26.neg.i35.i.i1070.i.i.i.i.i.i = sub nsw i64 0, %.neg26.i34.i.i1069.i.i.i.i.i.i
-  %16 = getelementptr inbounds [20 x i8], ptr %15, i64 %.neg26.neg.i35.i.i1070.i.i.i.i.i.i
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %16, ptr noundef nonnull align 4 dereferenceable(1) %.val46.i.i.i.i.i.i, i64 %i.alx, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.i.i1056.i.i.i.i.i.i, ptr noundef nonnull align 4 dereferenceable(1) %.val46.i.i.i.i.i.i, i64 %i.alx, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt5arrayIiLm5EESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.i33.i.i.i.i.i.i.i.i
 
 bb.kf:                                            ; preds = %bb.kd
@@ -3302,7 +3270,7 @@ bb.kj:                                            ; preds = %"_ZZN5nblib16sortIn
   %i.amp = xor i64 %i.amo, 126
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPSt5arrayIiLm5EESt6vectorIS3_SaIS3_EEEElNS0_5__ops15_Iter_comp_iterIPFbRKS3_SC_EEEEvT_SG_T0_T1_(ptr %.val48.i.i.i.i.i.i, ptr %.val49.i.i.i.i.i.i, i64 noundef %i.amp, ptr nonnull @_ZN5nblib18interactionSortKeyINS_16ImproperDihedralEEENSt9enable_ifIXtlNS_8ContainsIT_NS_8TypeListIJNS_14ProperDihedralES1_NS_24RyckaertBellemanDihedralEEEEEEEEbE4typeERKSt5arrayIiXpltlNS_7NCenterIS4_vEEELi1EEESH_)
   %i.amq = icmp sgt i64 %i.aml, 320
-  %scevgep.i.i1100.i.i.i.i.i.i = getelementptr i8, ptr %.val48.i.i.i.i.i.i, i64 20 ; 3 uses
+  %scevgep.i.i1100.i.i.i.i.i.i = getelementptr i8, ptr %.val48.i.i.i.i.i.i, i64 20 ; 4 uses
   br i1 %i.amq, label %.lr.ph.i.i.i1121.i.i.i.i.i.i, label %bb.kq
 
 .lr.ph.i.i.i1121.i.i.i.i.i.i:                     ; preds = %bb.kj
@@ -3421,7 +3389,7 @@ bb.kq:                                            ; preds = %bb.kj
 
 .lr.ph.i22.i.i1103.i.i.i.i.i.i:                   ; preds = %bb.kw, %.lr.ph.i22.i.preheader.i1102.i.i.i.i.i.i
   %.sroa.0.022.i23.i.i1104.i.i.i.i.i.i = phi ptr [ %.sroa.0.0.i27.i.i1112.i.i.i.i.i.i, %bb.kw ], [ %scevgep.i.i1100.i.i.i.i.i.i, %.lr.ph.i22.i.preheader.i1102.i.i.i.i.i.i ] ; 9 uses
-  %.pn21.i24.i.i1105.i.i.i.i.i.i = phi ptr [ %.sroa.0.022.i23.i.i1104.i.i.i.i.i.i, %bb.kw ], [ %.val48.i.i.i.i.i.i, %.lr.ph.i22.i.preheader.i1102.i.i.i.i.i.i ] ; 4 uses
+  %.pn21.i24.i.i1105.i.i.i.i.i.i = phi ptr [ %.sroa.0.022.i23.i.i1104.i.i.i.i.i.i, %bb.kw ], [ %.val48.i.i.i.i.i.i, %.lr.ph.i22.i.preheader.i1102.i.i.i.i.i.i ] ; 3 uses
   %i.ano = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i23.i.i1104.i.i.i.i.i.i, i64 4
   %i.anp = load i32, ptr %i.ano, align 4, !tbaa !12 ; 4 uses
   %i.anq = load i32, ptr %i.ann, align 4, !tbaa !12
@@ -3432,16 +3400,12 @@ bb.kr:                                            ; preds = %.lr.ph.i22.i.i1103.
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.07.i18.i.i1095.i.i.i.i.i.i)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.07.i18.i.i1095.i.i.i.i.i.i, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.0.022.i23.i.i1104.i.i.i.i.i.i, i64 20, i1 false), !tbaa.struct !28
   %i.ans = ptrtoint ptr %.sroa.0.022.i23.i.i1104.i.i.i.i.i.i to i64
-  %i.ant = sub i64 %i.ans, %i.amk                 ; 4 uses
+  %i.ant = sub i64 %i.ans, %i.amk                 ; 3 uses
   %i.anu = icmp sgt i64 %i.ant, 20
   br i1 %i.anu, label %bb.ks, label %bb.kt, !prof !15
 
 bb.ks:                                            ; preds = %bb.kr
-  %17 = getelementptr inbounds nuw i8, ptr %.pn21.i24.i.i1105.i.i.i.i.i.i, i64 40
-  %.neg26.i34.i.i1119.i.i.i.i.i.i = udiv exact i64 %i.ant, 20
-  %.neg26.neg.i35.i.i1120.i.i.i.i.i.i = sub nsw i64 0, %.neg26.i34.i.i1119.i.i.i.i.i.i
-  %18 = getelementptr inbounds [20 x i8], ptr %17, i64 %.neg26.neg.i35.i.i1120.i.i.i.i.i.i
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %18, ptr noundef nonnull align 4 dereferenceable(1) %.val48.i.i.i.i.i.i, i64 %i.ant, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.i.i1100.i.i.i.i.i.i, ptr noundef nonnull align 4 dereferenceable(1) %.val48.i.i.i.i.i.i, i64 %i.ant, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt5arrayIiLm5EESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.i33.i.i1118.i.i.i.i.i.i
 
 bb.kt:                                            ; preds = %bb.kr
@@ -3511,7 +3475,7 @@ bb.kx:                                            ; preds = %"_ZZN5nblib16sortIn
   %i.aol = xor i64 %i.aok, 126
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPSt5arrayIiLm5EESt6vectorIS3_SaIS3_EEEElNS0_5__ops15_Iter_comp_iterIPFbRKS3_SC_EEEEvT_SG_T0_T1_(ptr %.val50.i.i.i.i.i.i, ptr %.val51.i.i.i.i.i.i, i64 noundef %i.aol, ptr nonnull @_ZN5nblib18interactionSortKeyINS_24RyckaertBellemanDihedralEEENSt9enable_ifIXtlNS_8ContainsIT_NS_8TypeListIJNS_14ProperDihedralENS_16ImproperDihedralES1_EEEEEEEbE4typeERKSt5arrayIiXpltlNS_7NCenterIS4_vEEELi1EEESH_)
   %i.aom = icmp sgt i64 %i.aoh, 320
-  %scevgep.i.i1160.i.i.i.i.i.i = getelementptr i8, ptr %.val50.i.i.i.i.i.i, i64 20 ; 3 uses
+  %scevgep.i.i1160.i.i.i.i.i.i = getelementptr i8, ptr %.val50.i.i.i.i.i.i, i64 20 ; 4 uses
   br i1 %i.aom, label %.lr.ph.i.i.i1181.i.i.i.i.i.i, label %bb.le
 
 .lr.ph.i.i.i1181.i.i.i.i.i.i:                     ; preds = %bb.kx
@@ -3630,7 +3594,7 @@ bb.le:                                            ; preds = %bb.kx
 
 .lr.ph.i22.i.i1163.i.i.i.i.i.i:                   ; preds = %bb.lk, %.lr.ph.i22.i.preheader.i1162.i.i.i.i.i.i
   %.sroa.0.022.i23.i.i1164.i.i.i.i.i.i = phi ptr [ %.sroa.0.0.i27.i.i1172.i.i.i.i.i.i, %bb.lk ], [ %scevgep.i.i1160.i.i.i.i.i.i, %.lr.ph.i22.i.preheader.i1162.i.i.i.i.i.i ] ; 9 uses
-  %.pn21.i24.i.i1165.i.i.i.i.i.i = phi ptr [ %.sroa.0.022.i23.i.i1164.i.i.i.i.i.i, %bb.lk ], [ %.val50.i.i.i.i.i.i, %.lr.ph.i22.i.preheader.i1162.i.i.i.i.i.i ] ; 4 uses
+  %.pn21.i24.i.i1165.i.i.i.i.i.i = phi ptr [ %.sroa.0.022.i23.i.i1164.i.i.i.i.i.i, %bb.lk ], [ %.val50.i.i.i.i.i.i, %.lr.ph.i22.i.preheader.i1162.i.i.i.i.i.i ] ; 3 uses
   %i.apk = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i23.i.i1164.i.i.i.i.i.i, i64 4
   %i.apl = load i32, ptr %i.apk, align 4, !tbaa !12 ; 4 uses
   %i.apm = load i32, ptr %i.apj, align 4, !tbaa !12
@@ -3641,16 +3605,12 @@ bb.lf:                                            ; preds = %.lr.ph.i22.i.i1163.
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.07.i18.i.i1155.i.i.i.i.i.i)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.07.i18.i.i1155.i.i.i.i.i.i, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.0.022.i23.i.i1164.i.i.i.i.i.i, i64 20, i1 false), !tbaa.struct !28
   %i.apo = ptrtoint ptr %.sroa.0.022.i23.i.i1164.i.i.i.i.i.i to i64
-  %i.app = sub i64 %i.apo, %i.aog                 ; 4 uses
+  %i.app = sub i64 %i.apo, %i.aog                 ; 3 uses
   %i.apq = icmp sgt i64 %i.app, 20
   br i1 %i.apq, label %bb.lg, label %bb.lh, !prof !15
 
 bb.lg:                                            ; preds = %bb.lf
-  %19 = getelementptr inbounds nuw i8, ptr %.pn21.i24.i.i1165.i.i.i.i.i.i, i64 40
-  %.neg26.i34.i.i1179.i.i.i.i.i.i = udiv exact i64 %i.app, 20
-  %.neg26.neg.i35.i.i1180.i.i.i.i.i.i = sub nsw i64 0, %.neg26.i34.i.i1179.i.i.i.i.i.i
-  %20 = getelementptr inbounds [20 x i8], ptr %19, i64 %.neg26.neg.i35.i.i1180.i.i.i.i.i.i
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %20, ptr noundef nonnull align 4 dereferenceable(1) %.val50.i.i.i.i.i.i, i64 %i.app, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.i.i1160.i.i.i.i.i.i, ptr noundef nonnull align 4 dereferenceable(1) %.val50.i.i.i.i.i.i, i64 %i.app, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt5arrayIiLm5EESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.i33.i.i1178.i.i.i.i.i.i
 
 bb.lh:                                            ; preds = %bb.lf
@@ -3720,7 +3680,7 @@ bb.ll:                                            ; preds = %"_ZZN5nblib16sortIn
   %i.aqh = xor i64 %i.aqg, 126
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPSt5arrayIiLm6EESt6vectorIS3_SaIS3_EEEElNS0_5__ops15_Iter_comp_iterIPFbRKS3_SC_EEEEvT_SG_T0_T1_(ptr %.val52.i.i.i.i.i.i, ptr %.val53.i.i.i.i.i.i, i64 noundef %i.aqh, ptr nonnull @_ZN5nblib18interactionSortKeyINS_14Default5CenterEEENSt9enable_ifIXtlNS_8ContainsIT_NS_8TypeListIJS1_EEEEEEEbE4typeERKSt5arrayIiXpltlNS_7NCenterIS4_vEEELi1EEESF_)
   %i.aqi = icmp sgt i64 %i.aqd, 384
-  %scevgep.i.i1217.i.i.i.i.i.i = getelementptr i8, ptr %.val52.i.i.i.i.i.i, i64 24 ; 3 uses
+  %scevgep.i.i1217.i.i.i.i.i.i = getelementptr i8, ptr %.val52.i.i.i.i.i.i, i64 24 ; 4 uses
   br i1 %i.aqi, label %.lr.ph.i.i.i1242.i.i.i.i.i.i, label %bb.mp
 
 .lr.ph.i.i.i1242.i.i.i.i.i.i:                     ; preds = %bb.ll
@@ -4123,7 +4083,7 @@ bb.mp:                                            ; preds = %bb.ll
 
 .lr.ph.i22.i.i1220.i.i.i.i.i.i:                   ; preds = %bb.ni, %.lr.ph.i22.i.preheader.i1219.i.i.i.i.i.i
   %.sroa.0.022.i23.i.i1221.i.i.i.i.i.i = phi ptr [ %.sroa.0.0.i27.i.i1228.i.i.i.i.i.i, %bb.ni ], [ %scevgep.i.i1217.i.i.i.i.i.i, %.lr.ph.i22.i.preheader.i1219.i.i.i.i.i.i ] ; 18 uses
-  %.pn21.i24.i.i1222.i.i.i.i.i.i = phi ptr [ %.sroa.0.022.i23.i.i1221.i.i.i.i.i.i, %bb.ni ], [ %.val52.i.i.i.i.i.i, %.lr.ph.i22.i.preheader.i1219.i.i.i.i.i.i ] ; 9 uses
+  %.pn21.i24.i.i1222.i.i.i.i.i.i = phi ptr [ %.sroa.0.022.i23.i.i1221.i.i.i.i.i.i, %bb.ni ], [ %.val52.i.i.i.i.i.i, %.lr.ph.i22.i.preheader.i1219.i.i.i.i.i.i ] ; 8 uses
   %i.auq = load i32, ptr %.sroa.0.022.i23.i.i1221.i.i.i.i.i.i, align 4, !tbaa !12 ; 7 uses
   %i.aur = load i32, ptr %.val52.i.i.i.i.i.i, align 4, !tbaa !12 ; 2 uses
   %i.aus = icmp slt i32 %i.auq, %i.aur
@@ -4188,16 +4148,12 @@ _ZN5nblib18interactionSortKeyINS_14Default5CenterEEENSt9enable_ifIXtlNS_8Contain
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.07.i18.i.i1214.i.i.i.i.i.i)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) %.sroa.07.i18.i.i1214.i.i.i.i.i.i, ptr noundef nonnull align 4 dereferenceable(24) %.sroa.0.022.i23.i.i1221.i.i.i.i.i.i, i64 24, i1 false), !tbaa.struct !34
   %i.avm = ptrtoint ptr %.sroa.0.022.i23.i.i1221.i.i.i.i.i.i to i64
-  %i.avn = sub i64 %i.avm, %i.aqc                 ; 4 uses
+  %i.avn = sub i64 %i.avm, %i.aqc                 ; 3 uses
   %i.avo = icmp sgt i64 %i.avn, 24
   br i1 %i.avo, label %bb.mv, label %bb.mw, !prof !15
 
 bb.mv:                                            ; preds = %_ZN5nblib18interactionSortKeyINS_14Default5CenterEEENSt9enable_ifIXtlNS_8ContainsIT_NS_8TypeListIJS1_EEEEEEEbE4typeERKSt5arrayIiXpltlNS_7NCenterIS4_vEEELi1EEESF_.exit37.thread.i.i.i.i.i.i.i
-  %21 = getelementptr inbounds nuw i8, ptr %.pn21.i24.i.i1222.i.i.i.i.i.i, i64 48
-  %.neg26.i34.i.i1240.i.i.i.i.i.i = udiv exact i64 %i.avn, 24
-  %.neg26.neg.i35.i.i1241.i.i.i.i.i.i = sub nsw i64 0, %.neg26.i34.i.i1240.i.i.i.i.i.i
-  %22 = getelementptr inbounds [24 x i8], ptr %21, i64 %.neg26.neg.i35.i.i1241.i.i.i.i.i.i
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %22, ptr noundef nonnull align 4 dereferenceable(1) %.val52.i.i.i.i.i.i, i64 %i.avn, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.i.i1217.i.i.i.i.i.i, ptr noundef nonnull align 4 dereferenceable(1) %.val52.i.i.i.i.i.i, i64 %i.avn, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt5arrayIiLm6EESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.i33.i.i.i.i.i.i.i.i
 
 bb.mw:                                            ; preds = %_ZN5nblib18interactionSortKeyINS_14Default5CenterEEENSt9enable_ifIXtlNS_8ContainsIT_NS_8TypeListIJS1_EEEEEEEbE4typeERKSt5arrayIiXpltlNS_7NCenterIS4_vEEELi1EEESF_.exit37.thread.i.i.i.i.i.i.i

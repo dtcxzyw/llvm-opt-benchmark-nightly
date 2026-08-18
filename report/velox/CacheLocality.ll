@@ -203,17 +203,13 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt5tupleIJmmmEES
 
 .lr.ph.preheader.i.i.i.i.i:                       ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt5tupleIJmmmEESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit._crit_edge21
   %i.x = getelementptr inbounds nuw i8, ptr %.pn17, i64 48 ; 3 uses
-  %i.y = udiv i64 %i.v, 24                        ; 3 uses
-  %2 = icmp ugt i64 %i.v, 23
-  %.neg = sext i1 %2 to i64
-  %3 = add nuw nsw i64 %i.y, 1
-  %4 = add nsw i64 %3, %.neg                      ; 3 uses
-  %min.iters.check = icmp ult i64 %4, 4
+  %i.y = udiv i64 %i.v, 24                        ; 4 uses
+  %min.iters.check = icmp ult i64 %i.v, 96
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader.i.i.i.i.i
-  %n.vec = and i64 %4, -4                         ; 4 uses
-  %5 = sub nsw i64 %i.y, %n.vec
+  %n.vec = and i64 %i.y, 576460752303423484       ; 3 uses
+  %2 = and i64 %i.y, 3
   %i.z = mul i64 %n.vec, -24                      ; 2 uses
   %i.aa = getelementptr i8, ptr %i.x, i64 %i.z
   %i.ab = getelementptr i8, ptr %.sroa.07.018, i64 %i.z
@@ -233,11 +229,11 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.af, label %middle.block, label %vector.body, !llvm.loop !205
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %4, %n.vec
+  %cmp.n = icmp eq i64 %i.y, %n.vec
   br i1 %cmp.n, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt5tupleIJmmmEESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %.lr.ph.preheader.i.i.i.i.i, %middle.block
-  %.010.i.i.i.i.i.ph = phi i64 [ %i.y, %.lr.ph.preheader.i.i.i.i.i ], [ %5, %middle.block ]
+  %.010.i.i.i.i.i.ph = phi i64 [ %i.y, %.lr.ph.preheader.i.i.i.i.i ], [ %2, %middle.block ]
   %.069.i.i.i.i.i.ph = phi ptr [ %i.x, %.lr.ph.preheader.i.i.i.i.i ], [ %i.aa, %middle.block ]
   %.078.i.i.i.i.i.ph = phi ptr [ %.sroa.07.018, %.lr.ph.preheader.i.i.i.i.i ], [ %i.ab, %middle.block ]
   br label %.lr.ph.i.i.i.i.i

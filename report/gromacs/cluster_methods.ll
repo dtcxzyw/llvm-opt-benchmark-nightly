@@ -203,7 +203,7 @@ bb.a:
   %.fr192 = freeze i32 %i.d                       ; 5 uses
   %i.e = sdiv i32 %.fr192, 2                      ; 3 uses
   %i.f = sext i32 %i.e to i64                     ; 3 uses
-  %i.g = tail call noundef ptr @_Z11save_callocPKcS0_imm(ptr noundef nonnull @.str.26, ptr noundef nonnull @.str.27, i32 noundef 217, i64 noundef range(i64 -2147483648, 2147483648) %i.f, i64 noundef 12) ; 30 uses
+  %i.g = tail call noundef ptr @_Z11save_callocPKcS0_imm(ptr noundef nonnull @.str.26, ptr noundef nonnull @.str.27, i32 noundef 217, i64 noundef range(i64 -2147483648, 2147483648) %i.f, i64 noundef 12) ; 29 uses
   %i.h = icmp sgt i32 %i.b, 0                     ; 3 uses
   br i1 %i.h, label %.lr.ph171, label %._crit_edge
 
@@ -447,10 +447,10 @@ bb.j:                                             ; preds = %bb.i
   %i.ch = xor i64 %i.cg, 126
   tail call void @_ZSt16__introsort_loopIP6t_distlN9__gnu_cxx5__ops15_Iter_comp_iterIPFbRKS0_S6_EEEEvT_SA_T0_T1_(ptr noundef %i.g, ptr noundef %i.cd, i64 noundef %i.ch, ptr nonnull @_ZL13rms_dist_compRK6t_distS1_)
   %i.ci = icmp sgt i32 %.fr192, 33
+  %scevgep.i = getelementptr i8, ptr %i.g, i64 12 ; 3 uses
   br i1 %i.ci, label %bb.k, label %bb.r
 
 bb.k:                                             ; preds = %bb.j
-  %scevgep.i = getelementptr i8, ptr %i.g, i64 12
   %i.cj = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   br label %bb.l
 
@@ -609,13 +609,12 @@ bb.r:                                             ; preds = %bb.j
   br i1 %.not18.i.i, label %_ZSt4sortIP6t_distPFbRKS0_S3_EEvT_S6_T0_.exit, label %.lr.ph.i19.i.preheader
 
 .lr.ph.i19.i.preheader:                           ; preds = %bb.r
-  %.017.i18.i = getelementptr inbounds nuw i8, ptr %i.g, i64 12
   %i.eb = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   br label %.lr.ph.i19.i
 
 .lr.ph.i19.i:                                     ; preds = %.lr.ph.i19.i.preheader, %bb.x
-  %.020.i20.i = phi ptr [ %.0.i24.i, %bb.x ], [ %.017.i18.i, %.lr.ph.i19.i.preheader ] ; 8 uses
-  %.pn19.i21.i = phi ptr [ %.020.i20.i, %bb.x ], [ %i.g, %.lr.ph.i19.i.preheader ] ; 4 uses
+  %.020.i20.i = phi ptr [ %.0.i24.i, %bb.x ], [ %scevgep.i, %.lr.ph.i19.i.preheader ] ; 8 uses
+  %.pn19.i21.i = phi ptr [ %.020.i20.i, %bb.x ], [ %i.g, %.lr.ph.i19.i.preheader ] ; 3 uses
   %i.ec = getelementptr inbounds nuw i8, ptr %.020.i20.i, i64 8
   %i.ed = load float, ptr %i.ec, align 4, !tbaa !93 ; 4 uses
   %i.ee = load float, ptr %i.eb, align 4, !tbaa !93
@@ -626,16 +625,12 @@ bb.s:                                             ; preds = %.lr.ph.i19.i
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %3, ptr noundef nonnull align 4 dereferenceable(12) %.020.i20.i, i64 12, i1 false), !tbaa.struct !96
   %i.eg = ptrtoint ptr %.020.i20.i to i64
-  %i.eh = sub i64 %i.eg, %i.ce                    ; 4 uses
+  %i.eh = sub i64 %i.eg, %i.ce                    ; 3 uses
   %i.ei = icmp sgt i64 %i.eh, 12
   br i1 %i.ei, label %bb.t, label %bb.u, !prof !97
 
 bb.t:                                             ; preds = %bb.s
-  %8 = getelementptr inbounds nuw i8, ptr %.pn19.i21.i, i64 24
-  %.neg25.i31.i = udiv exact i64 %i.eh, 12
-  %.neg25.neg.i32.i = sub nsw i64 0, %.neg25.i31.i
-  %9 = getelementptr inbounds [12 x i8], ptr %8, i64 %.neg25.neg.i32.i
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %9, ptr noundef nonnull align 4 dereferenceable(1) %i.g, i64 %i.eh, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.i, ptr noundef nonnull align 4 dereferenceable(1) %i.g, i64 %i.eh, i1 false)
   br label %_ZSt13move_backwardIP6t_distS1_ET0_T_S3_S2_.exit.i30.i
 
 bb.u:                                             ; preds = %bb.s
@@ -1038,7 +1033,7 @@ bb.a:
   %i.j = shl nuw nsw i64 %i.i, 1
   %i.k = xor i64 %i.j, 126
   %i.l = icmp samesign ugt i32 %0, 16
-  %.017.i18.i = getelementptr i8, ptr %i.e, i64 12 ; 2 uses
+  %.017.i18.i = getelementptr i8, ptr %i.e, i64 12 ; 3 uses
   %.not18.i.i = icmp eq i32 %0, 1
   %i.m = getelementptr i8, ptr %i.e, i64 8        ; 3 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.e, i64 192 ; 4 uses
@@ -1349,7 +1344,7 @@ bb.g:                                             ; preds = %._crit_edge
 
 .lr.ph.i19.i:                                     ; preds = %bb.g, %bb.m
   %.020.i20.i = phi ptr [ %.0.i24.i, %bb.m ], [ %.017.i18.i, %bb.g ] ; 8 uses
-  %.pn19.i21.i = phi ptr [ %.020.i20.i, %bb.m ], [ %i.e, %bb.g ] ; 4 uses
+  %.pn19.i21.i = phi ptr [ %.020.i20.i, %bb.m ], [ %i.e, %bb.g ] ; 3 uses
   %i.dq = getelementptr inbounds nuw i8, ptr %.020.i20.i, i64 8
   %i.dr = load float, ptr %i.dq, align 4, !tbaa !93 ; 4 uses
   %i.ds = load float, ptr %i.m, align 4, !tbaa !93
@@ -1360,16 +1355,12 @@ bb.h:                                             ; preds = %.lr.ph.i19.i
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %6, ptr noundef nonnull align 4 dereferenceable(12) %.020.i20.i, i64 12, i1 false), !tbaa.struct !96
   %i.du = ptrtoint ptr %.020.i20.i to i64
-  %i.dv = sub i64 %i.du, %i.h                     ; 4 uses
+  %i.dv = sub i64 %i.du, %i.h                     ; 3 uses
   %i.dw = icmp sgt i64 %i.dv, 12
   br i1 %i.dw, label %bb.i, label %bb.j, !prof !97
 
 bb.i:                                             ; preds = %bb.h
-  %8 = getelementptr inbounds nuw i8, ptr %.pn19.i21.i, i64 24
-  %.neg25.i31.i = udiv exact i64 %i.dv, 12
-  %.neg25.neg.i32.i = sub nsw i64 0, %.neg25.i31.i
-  %9 = getelementptr inbounds [12 x i8], ptr %8, i64 %.neg25.neg.i32.i
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %9, ptr noundef nonnull align 4 dereferenceable(1) %i.e, i64 %i.dv, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.017.i18.i, ptr noundef nonnull align 4 dereferenceable(1) %i.e, i64 %i.dv, i1 false)
   br label %_ZSt13move_backwardIP6t_distS1_ET0_T_S3_S2_.exit.i30.i
 
 bb.j:                                             ; preds = %bb.h

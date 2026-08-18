@@ -204,10 +204,9 @@ bb.aa:                                            ; preds = %bb.t, %bb.u, %bb.w,
 bb.ab:                                            ; preds = %.preheader143, %._crit_edge162
   %indvars.iv173 = phi i64 [ 5, %.preheader143 ], [ %indvars.iv.next174, %._crit_edge162 ] ; 2 uses
   %.062163 = phi i64 [ 0, %.preheader143 ], [ %i.hd, %._crit_edge162 ] ; 9 uses
-  %9 = shl i64 %.062163, 2
-  %10 = sub i64 16, %9                            ; 2 uses
-  %11 = lshr exact i64 %10, 2
-  %i.dr = add nuw nsw i64 %11, 1
+  %9 = mul i64 %.062163, 4611686018427387903      ; 2 uses
+  %10 = add i64 %9, 5
+  %i.dr = add i64 %9, 4
   %umax175 = call i64 @llvm.umax.i64(i64 %indvars.iv173, i64 1)
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #25
   store i64 5, ptr %i.bz, align 8, !tbaa !225
@@ -260,7 +259,7 @@ bb.ad:                                            ; preds = %.lr.ph.i.i10.i.i.i.
 
 .lr.ph.i40.preheader.i.i.i.i.i:                   ; preds = %bb.ac
   %i.ec = getelementptr inbounds nuw i8, ptr %.ptr210, i64 12 ; 2 uses
-  %xtraiter = and i64 %i.dr, 7                    ; 2 uses
+  %xtraiter = and i64 %10, 7                      ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i40.i.i.i.i.i.prol.loopexit, label %.lr.ph.i40.i.i.i.i.i.prol
 
@@ -280,7 +279,7 @@ bb.ad:                                            ; preds = %.lr.ph.i.i10.i.i.i.
 .lr.ph.i40.i.i.i.i.i.prol.loopexit:               ; preds = %.lr.ph.i40.i.i.i.i.i.prol, %.lr.ph.i40.preheader.i.i.i.i.i
   %.018.i.i.i.i.i.i.idx.unr = phi i64 [ %.idx135, %.lr.ph.i40.preheader.i.i.i.i.i ], [ %.018.i.i.i.i.i.i.add.prol, %.lr.ph.i40.i.i.i.i.i.prol ]
   %.01517.i.i.i.i.i.i.unr = phi ptr [ %i.ec, %.lr.ph.i40.preheader.i.i.i.i.i ], [ %i.ee, %.lr.ph.i40.i.i.i.i.i.prol ]
-  %i.ef = icmp ult i64 %10, 28
+  %i.ef = icmp ult i64 %i.dr, 7
   br i1 %i.ef, label %.lr.ph.i43.i.i.i.i.i, label %.lr.ph.i40.i.i.i.i.i
 
 .lr.ph.i40.i.i.i.i.i:                             ; preds = %.lr.ph.i40.i.i.i.i.i.prol.loopexit, %.lr.ph.i40.i.i.i.i.i

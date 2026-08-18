@@ -204,7 +204,7 @@ bb.v:                                             ; preds = %._crit_edge199.i.i
   %i.fh = xor i64 %i.fg, 126
   call fastcc void @"_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPN8facebook5velox12_GLOBAL__N_114BufferMetadataESt6vectorIS5_SaIS5_EEEElNS0_5__ops15_Iter_comp_iterIZNS4_16writeStringViewsEiRKN5boost13intrusive_ptrINS3_6BufferEEERKS7_ISG_SaISG_EERSoE3$_0EEEvT_SQ_T0_T1_"(ptr %.sroa.0114.3.i.i, ptr nonnull %.sroa.17.2.i.i, i64 noundef %i.fh)
   %i.fi = icmp sgt i64 %i.fd, 384
-  %scevgep.i.i.i.i.i = getelementptr i8, ptr %.sroa.0114.3.i.i, i64 24 ; 2 uses
+  %scevgep.i.i.i.i.i = getelementptr i8, ptr %.sroa.0114.3.i.i, i64 24 ; 3 uses
   br i1 %i.fi, label %.lr.ph.i.i.i.i.i.i, label %bb.ab
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %bb.v, %bb.aa
@@ -307,7 +307,7 @@ bb.ab:                                            ; preds = %bb.v
 
 .lr.ph.i30.i.i.i.i.i:                             ; preds = %bb.ab, %bb.ah
   %.sroa.0.019.i31.i.i.i.i.i = phi ptr [ %.sroa.0.0.i40.i.i.i.i.i, %bb.ah ], [ %scevgep.i.i.i.i.i, %bb.ab ] ; 8 uses
-  %.pn18.i32.i.i.i.i.i = phi ptr [ %.sroa.0.019.i31.i.i.i.i.i, %bb.ah ], [ %.sroa.0114.3.i.i, %bb.ab ] ; 5 uses
+  %.pn18.i32.i.i.i.i.i = phi ptr [ %.sroa.0.019.i31.i.i.i.i.i, %bb.ah ], [ %.sroa.0114.3.i.i, %bb.ab ] ; 4 uses
   %.val2.i.i33.i.i.i.i.i = load ptr, ptr %.sroa.0.019.i31.i.i.i.i.i, align 8, !tbaa !96 ; 4 uses
   %.val3.i.i34.i.i.i.i.i = load ptr, ptr %.sroa.0114.3.i.i, align 8, !tbaa !96
   %i.fw = icmp ult ptr %.val2.i.i33.i.i.i.i.i, %.val3.i.i34.i.i.i.i.i
@@ -317,16 +317,12 @@ bb.ac:                                            ; preds = %.lr.ph.i30.i.i.i.i.
   call void @llvm.lifetime.start.p0(ptr nonnull %14)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %14, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.019.i31.i.i.i.i.i, i64 24, i1 false), !tbaa.struct !98
   %i.fx = ptrtoint ptr %.sroa.0.019.i31.i.i.i.i.i to i64
-  %i.fy = sub i64 %i.fx, %i.fc                    ; 4 uses
+  %i.fy = sub i64 %i.fx, %i.fc                    ; 3 uses
   %i.fz = icmp sgt i64 %i.fy, 24
   br i1 %i.fz, label %bb.ad, label %bb.ae, !prof !27
 
 bb.ad:                                            ; preds = %bb.ac
-  %21 = getelementptr inbounds nuw i8, ptr %.pn18.i32.i.i.i.i.i, i64 48
-  %.neg23.i47.i.i.i.i.i = udiv exact i64 %i.fy, 24
-  %.neg23.neg.i48.i.i.i.i.i = sub nsw i64 0, %.neg23.i47.i.i.i.i.i
-  %22 = getelementptr inbounds [24 x i8], ptr %21, i64 %.neg23.neg.i48.i.i.i.i.i
-  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %22, ptr noundef nonnull align 8 dereferenceable(1) %.sroa.0114.3.i.i, i64 %i.fy, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(1) %.sroa.0114.3.i.i, i64 %i.fy, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN8facebook5velox12_GLOBAL__N_114BufferMetadataESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit.i46.i.i.i.i.i
 
 bb.ae:                                            ; preds = %bb.ac
@@ -729,14 +725,14 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPZN8facebook5velo
 
 bb.h:                                             ; preds = %bb.a
   %i.w = icmp eq ptr %0, %1
-  %.sroa.0.016.i24 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
+  %.sroa.0.016.i24 = getelementptr i8, ptr %0, i64 24 ; 3 uses
   %i.x = icmp eq ptr %.sroa.0.016.i24, %1
-  %or.cond = select i1 %i.w, i1 true, i1 %i.x
+  %or.cond = or i1 %i.w, %i.x
   br i1 %or.cond, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPZN8facebook5velox10FlatVectorINS3_10StringViewEE30transferAndUpdateStringBuffersEPNS3_6memory10MemoryPoolEE21StringBufferRemappingSt6vectorISA_SaISA_EEEENS0_5__ops15_Iter_comp_iterIZNS6_30transferAndUpdateStringBuffersES9_EUlRKSA_SJ_E_EEEvT_SM_T0_.exit, label %.lr.ph.i25
 
 .lr.ph.i25:                                       ; preds = %bb.h, %bb.n
   %.sroa.0.018.i26 = phi ptr [ %.sroa.0.0.i32, %bb.n ], [ %.sroa.0.016.i24, %bb.h ] ; 7 uses
-  %.pn17.i27 = phi ptr [ %.sroa.0.018.i26, %bb.n ], [ %0, %bb.h ] ; 5 uses
+  %.pn17.i27 = phi ptr [ %.sroa.0.018.i26, %bb.n ], [ %0, %bb.h ] ; 4 uses
   %i.y = load ptr, ptr %.sroa.0.018.i26, align 8, !tbaa !1924 ; 4 uses
   %i.z = load ptr, ptr %0, align 8, !tbaa !1924
   %i.aa = icmp ult ptr %i.y, %i.z
@@ -746,16 +742,12 @@ bb.i:                                             ; preds = %.lr.ph.i25
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.018.i26, i64 24, i1 false), !tbaa.struct !98
   %i.ab = ptrtoint ptr %.sroa.0.018.i26 to i64
-  %i.ac = sub i64 %i.ab, %i.b                     ; 4 uses
+  %i.ac = sub i64 %i.ab, %i.b                     ; 3 uses
   %i.ad = icmp sgt i64 %i.ac, 24
   br i1 %i.ad, label %bb.j, label %bb.k, !prof !27
 
 bb.j:                                             ; preds = %bb.i
-  %4 = getelementptr inbounds nuw i8, ptr %.pn17.i27, i64 48
-  %.neg23.i38 = udiv exact i64 %i.ac, 24
-  %.neg23.neg.i39 = sub nsw i64 0, %.neg23.i38
-  %5 = getelementptr inbounds [24 x i8], ptr %4, i64 %.neg23.neg.i39
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %5, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.ac, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sroa.0.016.i24, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.ac, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPZN8facebook5velox10FlatVectorINS3_10StringViewEE30transferAndUpdateStringBuffersEPNS3_6memory10MemoryPoolEE21StringBufferRemappingSt6vectorISA_SaISA_EEEESF_ET0_T_SH_SG_.exit.i37
 
 bb.k:                                             ; preds = %bb.i

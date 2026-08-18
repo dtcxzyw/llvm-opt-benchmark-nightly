@@ -204,7 +204,7 @@ _ZNSt12_Vector_baseISt4pairIdSt13unordered_mapINSt7__cxx1112basic_stringIcSt11ch
   br label %bb.a
 
 bb.a:                                             ; preds = %.loopexit, %.lr.ph82
-  %.02381 = phi i64 [ 0, %.lr.ph82 ], [ %i.ec, %.loopexit ] ; 5 uses
+  %.02381 = phi i64 [ 0, %.lr.ph82 ], [ %i.ec, %.loopexit ] ; 4 uses
   %i.bb = load i64, ptr @_ZN5fLI6418FLAGS_bm_max_itersE, align 8, !tbaa !54
   %i.bc = trunc i64 %i.bb to i32                  ; 2 uses
   %i.bd = load i32, ptr @_ZN3fLI18FLAGS_bm_min_itersE, align 4, !tbaa !44 ; 2 uses
@@ -471,8 +471,6 @@ _ZN5folly6detail12TimeIterDataD2Ev.exit55:        ; preds = %_ZNSt10_HashtableIN
 .lr.ph.preheader.i.i:                             ; preds = %.split.loop.exit79
   %i.ei = getelementptr inbounds nuw i8, ptr %i.eg, i64 64 ; 2 uses
   %.val1.i.pre.i.i = load double, ptr %i.eg, align 8, !tbaa !6657 ; 2 uses
-  %8 = add nuw i64 %.02381, 288230376151711743
-  %9 = and i64 %8, 288230376151711743
   %xtraiter143 = and i64 %.02381, 3               ; 2 uses
   %lcmp.mod144.not = icmp eq i64 %xtraiter143, 0
   br i1 %lcmp.mod144.not, label %.lr.ph.i.i.prol.loopexit, label %.lr.ph.i.i.prol
@@ -484,25 +482,23 @@ _ZN5folly6detail12TimeIterDataD2Ev.exit55:        ; preds = %_ZNSt10_HashtableIN
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.i.prol ], [ 0, %.lr.ph.preheader.i.i ]
   %.val.i.i.i.prol = load double, ptr %i.ej, align 8, !tbaa !6657 ; 2 uses
   %i.ek = fcmp olt double %.val.i.i.i.prol, %.val1.i.i.i.prol ; 2 uses
-  %spec.select.i.i.prol = select i1 %i.ek, ptr %i.ej, ptr %.sroa.02.09.i.i.prol ; 3 uses
+  %spec.select.i.i.prol = select i1 %i.ek, ptr %i.ej, ptr %.sroa.02.09.i.i.prol ; 2 uses
   %i.el = getelementptr inbounds nuw i8, ptr %i.ej, i64 64 ; 2 uses
   %i.em = select i1 %i.ek, double %.val.i.i.i.prol, double %.val1.i.i.i.prol ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter143
   br i1 %prol.iter.cmp.not, label %.lr.ph.i.i.prol.loopexit, label %.lr.ph.i.i.prol, !llvm.loop !6720
 
-.lr.ph.i.i.prol.loopexit:                         ; preds = %.lr.ph.i.i.prol, %.lr.ph.preheader.i.i
-  %spec.select.i.i.lcssa.unr = phi ptr [ poison, %.lr.ph.preheader.i.i ], [ %spec.select.i.i.prol, %.lr.ph.i.i.prol ]
+.lr.ph.i.i.prol.loopexit:                         ; preds = %.lr.ph.preheader.i.i, %.lr.ph.i.i.prol
   %.val1.i.i.i.unr = phi double [ %.val1.i.pre.i.i, %.lr.ph.preheader.i.i ], [ %i.em, %.lr.ph.i.i.prol ]
   %.unr = phi ptr [ %i.ei, %.lr.ph.preheader.i.i ], [ %i.el, %.lr.ph.i.i.prol ]
   %.sroa.02.09.i.i.unr = phi ptr [ %i.eg, %.lr.ph.preheader.i.i ], [ %spec.select.i.i.prol, %.lr.ph.i.i.prol ]
-  %10 = icmp samesign ult i64 %9, 3
-  br i1 %10, label %"_ZSt11min_elementIN9__gnu_cxx17__normal_iteratorIPSt4pairIdSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN5folly10UserMetricESt4hashIS9_ESt8equal_toIS9_ESaIS2_IKS9_SB_EEEESt6vectorISK_SaISK_EEEEZNSA_L29runBenchmarkGetNSPerIterationERKSt8functionIFNSA_6detail12TimeIterDataEjEEdlE3$_0ET_SY_SY_T0_.exit", label %.lr.ph.i.i
+  br label %.lr.ph.i.i
 
-.lr.ph.i.i:                                       ; preds = %.lr.ph.i.i.prol.loopexit, %.lr.ph.i.i
-  %.val1.i.i.i = phi double [ %i.fa, %.lr.ph.i.i ], [ %.val1.i.i.i.unr, %.lr.ph.i.i.prol.loopexit ] ; 2 uses
-  %i.en = phi ptr [ %i.ey, %.lr.ph.i.i ], [ %.unr, %.lr.ph.i.i.prol.loopexit ] ; 6 uses
-  %.sroa.02.09.i.i = phi ptr [ %spec.select.i.i.3, %.lr.ph.i.i ], [ %.sroa.02.09.i.i.unr, %.lr.ph.i.i.prol.loopexit ]
+.lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.lr.ph.i.i.prol.loopexit
+  %.val1.i.i.i = phi double [ %.val1.i.i.i.unr, %.lr.ph.i.i.prol.loopexit ], [ %i.fa, %.lr.ph.i.i ] ; 2 uses
+  %i.en = phi ptr [ %.unr, %.lr.ph.i.i.prol.loopexit ], [ %i.ey, %.lr.ph.i.i ] ; 6 uses
+  %.sroa.02.09.i.i = phi ptr [ %.sroa.02.09.i.i.unr, %.lr.ph.i.i.prol.loopexit ], [ %spec.select.i.i.3, %.lr.ph.i.i ]
   %.val.i.i.i = load double, ptr %i.en, align 8, !tbaa !6657 ; 2 uses
   %i.eo = fcmp olt double %.val.i.i.i, %.val1.i.i.i ; 2 uses
   %spec.select.i.i = select i1 %i.eo, ptr %i.en, ptr %.sroa.02.09.i.i
@@ -526,8 +522,8 @@ _ZN5folly6detail12TimeIterDataD2Ev.exit55:        ; preds = %_ZNSt10_HashtableIN
   %i.fa = select i1 %i.ex, double %.val.i.i.i.3, double %i.ew
   br i1 %i.ez, label %"_ZSt11min_elementIN9__gnu_cxx17__normal_iteratorIPSt4pairIdSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN5folly10UserMetricESt4hashIS9_ESt8equal_toIS9_ESaIS2_IKS9_SB_EEEESt6vectorISK_SaISK_EEEEZNSA_L29runBenchmarkGetNSPerIterationERKSt8functionIFNSA_6detail12TimeIterDataEjEEdlE3$_0ET_SY_SY_T0_.exit", label %.lr.ph.i.i, !llvm.loop !6721
 
-"_ZSt11min_elementIN9__gnu_cxx17__normal_iteratorIPSt4pairIdSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN5folly10UserMetricESt4hashIS9_ESt8equal_toIS9_ESaIS2_IKS9_SB_EEEESt6vectorISK_SaISK_EEEEZNSA_L29runBenchmarkGetNSPerIterationERKSt8functionIFNSA_6detail12TimeIterDataEjEEdlE3$_0ET_SY_SY_T0_.exit": ; preds = %.lr.ph.i.i.prol.loopexit, %.lr.ph.i.i, %.split.loop.exit79
-  %.sroa.02.2.i.i = phi ptr [ %i.eg, %.split.loop.exit79 ], [ %spec.select.i.i.lcssa.unr, %.lr.ph.i.i.prol.loopexit ], [ %spec.select.i.i.3, %.lr.ph.i.i ] ; 5 uses
+"_ZSt11min_elementIN9__gnu_cxx17__normal_iteratorIPSt4pairIdSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN5folly10UserMetricESt4hashIS9_ESt8equal_toIS9_ESaIS2_IKS9_SB_EEEESt6vectorISK_SaISK_EEEEZNSA_L29runBenchmarkGetNSPerIterationERKSt8functionIFNSA_6detail12TimeIterDataEjEEdlE3$_0ET_SY_SY_T0_.exit": ; preds = %.lr.ph.i.i, %.split.loop.exit79
+  %.sroa.02.2.i.i = phi ptr [ %i.eg, %.split.loop.exit79 ], [ %spec.select.i.i.3, %.lr.ph.i.i ] ; 5 uses
   %i.fb = load double, ptr %.sroa.02.2.i.i, align 8, !tbaa !113 ; 2 uses
   %i.fc = fcmp ogt double %i.fb, 0.000000e+00
   %i.fd = getelementptr inbounds nuw i8, ptr %.sroa.02.2.i.i, i64 8

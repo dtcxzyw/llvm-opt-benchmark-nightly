@@ -204,7 +204,7 @@ bb.ad:                                            ; preds = %.thread572, %bb.ac,
   %i.fo = and i32 %.117.i153.6, %.pre-phi481
   %i.fp = icmp ne i32 %i.fo, 0
   %i.fq = zext i1 %i.fp to i32
-  %i.fr = or disjoint i32 %i.fn, %i.fq            ; 3 uses
+  %i.fr = or disjoint i32 %i.fn, %i.fq
   %i.fs = add nuw nsw i32 %i.fk, 1                ; 2 uses
   store i32 %i.fs, ptr %i.h, align 4, !tbaa !8
   %.not21.i152.7 = icmp samesign ult i32 %.117.i153.6, 2
@@ -373,7 +373,7 @@ bb.ap:                                            ; preds = %.thread590, %bb.ao,
   %i.ig = and i32 %.117.i163.6, %.pre-phi467
   %i.ih = icmp ne i32 %i.ig, 0
   %i.ii = zext i1 %i.ih to i32
-  %i.ij = or disjoint i32 %i.if, %i.ii            ; 3 uses
+  %i.ij = or disjoint i32 %i.if, %i.ii
   %i.ik = add nuw nsw i32 %i.ic, 1                ; 2 uses
   store i32 %i.ik, ptr %i.h, align 4, !tbaa !8
   %.not21.i162.7 = icmp samesign ult i32 %.117.i163.6, 2
@@ -741,17 +741,9 @@ readbits.exit187:                                 ; preds = %bb.bn, %bb.bo
   %i.od = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   %i.oe = getelementptr inbounds nuw i8, ptr %i.c, i64 72
   %i.of = zext nneg i32 %i.lc to i64
-  %4 = getelementptr inbounds nuw [4 x i8], ptr @magic, i64 %i.of
-  %5 = zext nneg i32 %i.ij to i64
-  %6 = getelementptr inbounds nuw [4 x i8], ptr @magic, i64 %5
-  %7 = zext nneg i32 %i.fr to i64
-  %i.og = getelementptr inbounds nuw [4 x i8], ptr @magic, i64 %7
+  %i.og = getelementptr inbounds nuw [4 x i8], ptr @magic, i64 %i.of
   %i.oh = zext nneg i32 %i.lc to i64
-  %8 = getelementptr inbounds nuw [4 x i8], ptr @magic, i64 %i.oh
-  %9 = zext nneg i32 %i.ij to i64
-  %10 = getelementptr inbounds nuw [4 x i8], ptr @magic, i64 %9
-  %11 = zext nneg i32 %i.fr to i64
-  %i.oi = getelementptr inbounds nuw [4 x i8], ptr @magic, i64 %11
+  %i.oi = getelementptr inbounds nuw [4 x i8], ptr @magic, i64 %i.oh
   %i.oj = getelementptr inbounds nuw i8, ptr %i.k, i64 12 ; 2 uses
   %i.ok = getelementptr inbounds nuw i8, ptr %i.k, i64 16 ; 2 uses
   %i.ol = getelementptr inbounds nuw i8, ptr %i.k, i64 20 ; 2 uses
@@ -896,16 +888,14 @@ default.unreachable:                              ; preds = %readbits.exit36.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #11
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(72) %i.e, ptr noundef nonnull align 16 dereferenceable(72) %i.j, i64 72, i1 false)
   store i32 0, ptr %i.ob, align 8, !tbaa !8
-  %i.qk = load i32, ptr %8, align 4, !tbaa !8
+  %i.qk = load i32, ptr %i.oi, align 4, !tbaa !8  ; 3 uses
   %i.ql = call i32 @Ptngc_largeint_div(i32 noundef %i.qk, ptr noundef nonnull %i.e, ptr noundef nonnull %i.f, i32 noundef 19) #11 ; 4 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(76) %i.e, ptr noundef nonnull align 16 dereferenceable(76) %i.f, i64 76, i1 false)
   store i32 %i.ql, ptr %.sroa.6.0..sroa_idx, align 8, !tbaa !8
-  %12 = load i32, ptr %10, align 4, !tbaa !8
-  %i.qm = call i32 @Ptngc_largeint_div(i32 noundef %12, ptr noundef nonnull %i.e, ptr noundef nonnull %i.f, i32 noundef 19) #11 ; 4 uses
+  %i.qm = call i32 @Ptngc_largeint_div(i32 noundef %i.qk, ptr noundef nonnull %i.e, ptr noundef nonnull %i.f, i32 noundef 19) #11 ; 4 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(76) %i.e, ptr noundef nonnull align 16 dereferenceable(76) %i.f, i64 76, i1 false)
   store i32 %i.qm, ptr %.sroa.5.0..sroa_idx, align 4, !tbaa !8
-  %13 = load i32, ptr %i.oi, align 4, !tbaa !8
-  %i.qn = call i32 @Ptngc_largeint_div(i32 noundef %13, ptr noundef nonnull %i.e, ptr noundef nonnull %i.f, i32 noundef 19) #11 ; 3 uses
+  %i.qn = call i32 @Ptngc_largeint_div(i32 noundef %i.qk, ptr noundef nonnull %i.e, ptr noundef nonnull %i.f, i32 noundef 19) #11 ; 3 uses
   store i32 %i.qn, ptr %i.k, align 16, !tbaa !8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #11
@@ -1301,7 +1291,7 @@ bb.cu:                                            ; preds = %bb.ct
 
 .preheader.preheader:                             ; preds = %bb.cu, %bb.ct
   %i.xd = add nuw nsw i32 %i.xa, 3                ; 2 uses
-  %i.xe = load i32, ptr %4, align 4, !tbaa !8
+  %i.xe = load i32, ptr %i.og, align 4, !tbaa !8  ; 3 uses
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %readmanybits.exit
@@ -1558,12 +1548,10 @@ readmanybits.exit:                                ; preds = %._crit_edge.i, %rea
   %i.aas = call i32 @Ptngc_largeint_div(i32 noundef %i.xe, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, i32 noundef 19) #11 ; 3 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(76) %i.a, ptr noundef nonnull align 16 dereferenceable(76) %i.b, i64 76, i1 false)
   store i32 %i.aas, ptr %.sroa.6.0..sroa_idx, align 8, !tbaa !8
-  %14 = load i32, ptr %6, align 4, !tbaa !8
-  %i.aat = call i32 @Ptngc_largeint_div(i32 noundef %14, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, i32 noundef 19) #11 ; 3 uses
+  %i.aat = call i32 @Ptngc_largeint_div(i32 noundef %i.xe, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, i32 noundef 19) #11 ; 3 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(76) %i.a, ptr noundef nonnull align 16 dereferenceable(76) %i.b, i64 76, i1 false)
   store i32 %i.aat, ptr %.sroa.5.0..sroa_idx, align 4, !tbaa !8
-  %15 = load i32, ptr %i.og, align 4, !tbaa !8
-  %i.aau = call i32 @Ptngc_largeint_div(i32 noundef %15, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, i32 noundef 19) #11 ; 3 uses
+  %i.aau = call i32 @Ptngc_largeint_div(i32 noundef %i.xe, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, i32 noundef 19) #11 ; 3 uses
   store i32 %i.aau, ptr %i.k, align 16, !tbaa !8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11

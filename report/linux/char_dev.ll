@@ -203,14 +203,11 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %i.ba, label %find_dynamic_major.exit.thread, label %.preheader.i
 
 .preheader.i:                                     ; preds = %bb.aa, %bb.ad
-  %.120.i = phi i32 [ %i.be, %bb.ad ], [ 511, %bb.aa ] ; 7 uses
-  %4 = urem i32 %.120.i, 255
-  %5 = zext nneg i32 %4 to i64
-  %6 = getelementptr [8 x i8], ptr @chrdevs, i64 %5
+  %.120.i = phi i32 [ %i.be, %bb.ad ], [ 511, %bb.aa ] ; 5 uses
   br label %bb.ab
 
 bb.ab:                                            ; preds = %bb.ac, %.preheader.i
-  %.0.in.i = phi ptr [ %6, %.preheader.i ], [ %.0.i, %bb.ac ]
+  %.0.in.i = phi ptr [ getelementptr inbounds nuw (i8, ptr @chrdevs, i64 8), %.preheader.i ], [ %.0.i, %bb.ac ]
   %.0.i = load ptr, ptr %.0.in.i, align 8         ; 3 uses
   %cond.i = icmp eq ptr %.0.i, null
   br i1 %cond.i, label %find_dynamic_major.exit, label %bb.ac
@@ -223,17 +220,15 @@ bb.ac:                                            ; preds = %bb.ab
 
 bb.ad:                                            ; preds = %bb.ac
   %i.be = add nsw i32 %.120.i, -1
-  %7 = icmp samesign ugt i32 %.120.i, 384
-  br i1 %7, label %.preheader.i, label %find_dynamic_major.exit.thread76, !llvm.loop !17
+  br label %.preheader.i
 
 find_dynamic_major.exit:                          ; preds = %bb.ab
   %i.bf = icmp slt i32 %.120.i, 0
   br i1 %i.bf, label %find_dynamic_major.exit.thread76, label %find_dynamic_major.exit.thread
 
-find_dynamic_major.exit.thread76:                 ; preds = %bb.ad, %find_dynamic_major.exit
-  %.014.i78 = phi i32 [ %.120.i, %find_dynamic_major.exit ], [ -16, %bb.ad ]
+find_dynamic_major.exit.thread76:                 ; preds = %find_dynamic_major.exit
   %i.bg = tail call i32 (ptr, ...) @_printk(ptr noundef nonnull @.str.6, ptr noundef %3) #11 ; 0 uses
-  %i.bh = sext i32 %.014.i78 to i64
+  %i.bh = sext i32 %.120.i to i64
   %i.bi = inttoptr i64 %i.bh to ptr
   br label %bb.ak
 
@@ -275,7 +270,7 @@ bb.ag:                                            ; preds = %bb.af
 bb.ah:                                            ; preds = %bb.af, %.lr.ph
   %.050 = load ptr, ptr %.05092, align 8          ; 2 uses
   %.not = icmp eq ptr %.050, null
-  br i1 %.not, label %.loopexit, label %.lr.ph, !llvm.loop !18
+  br i1 %.not, label %.loopexit, label %.lr.ph, !llvm.loop !17
 
 .loopexit:                                        ; preds = %bb.ah, %bb.ae, %find_dynamic_major.exit.thread, %bb.ag
   %.05187 = phi ptr [ %.05191, %bb.ag ], [ null, %find_dynamic_major.exit.thread ], [ %.05092, %bb.ah ], [ %.05191, %bb.ae ] ; 3 uses
@@ -326,7 +321,7 @@ declare dso_local void @kfree(ptr noundef) local_unnamed_addr #2
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
 define dso_local i32 @alloc_chrdev_region(ptr nofree noundef writeonly captures(none) %0, i32 noundef %1, i32 noundef %2, ptr noundef %3) #0 align 16 prefalign(16) {
 bb.a:
-  %i.a = tail call fastcc ptr @__register_chrdev_region(i32 noundef 0, i32 noundef %1, i32 noundef %2, ptr noundef %3) #10, !srcloc !19 ; 4 uses
+  %i.a = tail call fastcc ptr @__register_chrdev_region(i32 noundef 0, i32 noundef %1, i32 noundef %2, ptr noundef %3) #10, !srcloc !18 ; 4 uses
   %i.b = icmp ugt ptr %i.a, inttoptr (i64 -4096 to ptr)
   br i1 %i.b, label %bb.b, label %bb.c
 
@@ -353,7 +348,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
 define dso_local i32 @__register_chrdev(i32 noundef %0, i32 noundef %1, i32 noundef %2, ptr noundef %3, ptr noundef %4) #0 align 16 prefalign(16) {
 bb.a:
-  %i.a = tail call fastcc ptr @__register_chrdev_region(i32 noundef %0, i32 noundef %1, i32 noundef %2, ptr noundef %3) #10, !srcloc !20 ; 5 uses
+  %i.a = tail call fastcc ptr @__register_chrdev_region(i32 noundef %0, i32 noundef %1, i32 noundef %2, ptr noundef %3) #10, !srcloc !19 ; 5 uses
   %i.b = icmp ugt ptr %i.a, inttoptr (i64 -4096 to ptr)
   br i1 %i.b, label %bb.b, label %bb.c
 
@@ -389,12 +384,12 @@ bb.d:                                             ; preds = %bb.c
   %i.r = getelementptr i8, ptr %i.f, i64 100
   store i32 %2, ptr %i.r, align 4
   %i.s = icmp eq i32 %i.p, 0
-  br i1 %i.s, label %bb.e, label %.critedge.i, !prof !21
+  br i1 %i.s, label %bb.e, label %.critedge.i, !prof !20
 
 bb.e:                                             ; preds = %bb.d
-  tail call void asm sideeffect "540: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 540b - ., 3; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 540) #13, !srcloc !22
-  tail call void asm sideeffect "1:\09 ud2 \0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${0:c} - .\09# bug_entry::format\0A\09.long ${1:c} - .\09# bug_entry::file\0A\09.word ${2:c}\09# bug_entry::line\0A\09.word ${3:c}\09# bug_entry::flags\0A\09.org 2b + ${4:c}\0A.popsection\0A.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 1b - ., 8; .popsection", "i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @.str.2, ptr nonnull @.str.3, i32 483, i32 2305, i64 16) #13, !srcloc !23
-  tail call void asm sideeffect "541: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 541b - ., 4; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 541) #13, !srcloc !24
+  tail call void asm sideeffect "540: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 540b - ., 3; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 540) #13, !srcloc !21
+  tail call void asm sideeffect "1:\09 ud2 \0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${0:c} - .\09# bug_entry::format\0A\09.long ${1:c} - .\09# bug_entry::file\0A\09.word ${2:c}\09# bug_entry::line\0A\09.word ${3:c}\09# bug_entry::flags\0A\09.org 2b + ${4:c}\0A.popsection\0A.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 1b - ., 8; .popsection", "i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @.str.2, ptr nonnull @.str.3, i32 483, i32 2305, i64 16) #13, !srcloc !22
+  tail call void asm sideeffect "541: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 541b - ., 4; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 541) #13, !srcloc !23
   br label %bb.h
 
 .critedge.i:                                      ; preds = %bb.d
@@ -509,12 +504,12 @@ bb.a:
   %i.b = getelementptr i8, ptr %0, i64 100
   store i32 %2, ptr %i.b, align 4
   %i.c = icmp eq i32 %1, 0
-  br i1 %i.c, label %bb.b, label %.critedge, !prof !21
+  br i1 %i.c, label %bb.b, label %.critedge, !prof !20
 
 bb.b:                                             ; preds = %bb.a
-  tail call void asm sideeffect "540: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 540b - ., 3; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 540) #13, !srcloc !22
-  tail call void asm sideeffect "1:\09 ud2 \0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${0:c} - .\09# bug_entry::format\0A\09.long ${1:c} - .\09# bug_entry::file\0A\09.word ${2:c}\09# bug_entry::line\0A\09.word ${3:c}\09# bug_entry::flags\0A\09.org 2b + ${4:c}\0A.popsection\0A.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 1b - ., 8; .popsection", "i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @.str.2, ptr nonnull @.str.3, i32 483, i32 2305, i64 16) #13, !srcloc !23
-  tail call void asm sideeffect "541: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 541b - ., 4; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 541) #13, !srcloc !24
+  tail call void asm sideeffect "540: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 540b - ., 3; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 540) #13, !srcloc !21
+  tail call void asm sideeffect "1:\09 ud2 \0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${0:c} - .\09# bug_entry::format\0A\09.long ${1:c} - .\09# bug_entry::file\0A\09.word ${2:c}\09# bug_entry::line\0A\09.word ${3:c}\09# bug_entry::flags\0A\09.org 2b + ${4:c}\0A.popsection\0A.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 1b - ., 8; .popsection", "i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @.str.2, ptr nonnull @.str.3, i32 483, i32 2305, i64 16) #13, !srcloc !22
+  tail call void asm sideeffect "541: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 541b - ., 4; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 541) #13, !srcloc !23
   br label %bb.d
 
 .critedge:                                        ; preds = %bb.a
@@ -604,7 +599,7 @@ __unregister_chrdev_region.exit:                  ; preds = %bb.d, %.lr.ph, %bb.
   tail call void @mutex_unlock(ptr noundef nonnull @chrdevs_lock) #9
   tail call void @kfree(ptr noundef %i.x) #9
   %i.y = icmp ult i32 %i.e, %i.a
-  br i1 %i.y, label %.lr.ph, label %._crit_edge, !llvm.loop !25
+  br i1 %i.y, label %.lr.ph, label %._crit_edge, !llvm.loop !24
 
 ._crit_edge:                                      ; preds = %__unregister_chrdev_region.exit, %bb.a
   ret void
@@ -747,7 +742,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
-  store i32 0, ptr %i.a, align 4, !annotation !26
+  store i32 0, ptr %i.a, align 4, !annotation !25
   tail call void @_raw_spin_unlock(ptr noundef nonnull @cdev_lock) #9
   %i.d = load ptr, ptr @cdev_map, align 8
   %i.e = getelementptr i8, ptr %0, i64 76
@@ -929,12 +924,12 @@ bb.a:
   %i.b = load i8, ptr %i.a, align 4
   %i.c = and i8 %i.b, 1
   %.not = icmp eq i8 %i.c, 0
-  br i1 %.not, label %bb.b, label %bb.c, !prof !21
+  br i1 %.not, label %bb.b, label %bb.c, !prof !20
 
 bb.b:                                             ; preds = %bb.a
-  tail call void asm sideeffect "542: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 542b - ., 3; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 542) #13, !srcloc !27
-  tail call void asm sideeffect "1:\09 ud2 \0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${0:c} - .\09# bug_entry::format\0A\09.long ${1:c} - .\09# bug_entry::file\0A\09.word ${2:c}\09# bug_entry::line\0A\09.word ${3:c}\09# bug_entry::flags\0A\09.org 2b + ${4:c}\0A.popsection\0A.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 1b - ., 8; .popsection", "i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @.str.2, ptr nonnull @.str.3, i32 514, i32 2305, i64 16) #13, !srcloc !28
-  tail call void asm sideeffect "543: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 543b - ., 4; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 543) #13, !srcloc !29
+  tail call void asm sideeffect "542: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 542b - ., 3; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 542) #13, !srcloc !26
+  tail call void asm sideeffect "1:\09 ud2 \0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${0:c} - .\09# bug_entry::format\0A\09.long ${1:c} - .\09# bug_entry::file\0A\09.word ${2:c}\09# bug_entry::line\0A\09.word ${3:c}\09# bug_entry::flags\0A\09.org 2b + ${4:c}\0A.popsection\0A.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 1b - ., 8; .popsection", "i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @.str.2, ptr nonnull @.str.3, i32 514, i32 2305, i64 16) #13, !srcloc !27
+  tail call void asm sideeffect "543: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 543b - ., 4; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 543) #13, !srcloc !28
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
@@ -956,12 +951,12 @@ bb.b:                                             ; preds = %bb.a
   %i.d = load i8, ptr %i.c, align 4
   %i.e = and i8 %i.d, 1
   %.not.i = icmp eq i8 %i.e, 0
-  br i1 %.not.i, label %bb.c, label %cdev_set_parent.exit, !prof !21
+  br i1 %.not.i, label %bb.c, label %cdev_set_parent.exit, !prof !20
 
 bb.c:                                             ; preds = %bb.b
-  tail call void asm sideeffect "542: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 542b - ., 3; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 542) #13, !srcloc !27
-  tail call void asm sideeffect "1:\09 ud2 \0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${0:c} - .\09# bug_entry::format\0A\09.long ${1:c} - .\09# bug_entry::file\0A\09.word ${2:c}\09# bug_entry::line\0A\09.word ${3:c}\09# bug_entry::flags\0A\09.org 2b + ${4:c}\0A.popsection\0A.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 1b - ., 8; .popsection", "i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @.str.2, ptr nonnull @.str.3, i32 514, i32 2305, i64 16) #13, !srcloc !28
-  tail call void asm sideeffect "543: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 543b - ., 4; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 543) #13, !srcloc !29
+  tail call void asm sideeffect "542: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 542b - ., 3; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 542) #13, !srcloc !26
+  tail call void asm sideeffect "1:\09 ud2 \0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${0:c} - .\09# bug_entry::format\0A\09.long ${1:c} - .\09# bug_entry::file\0A\09.word ${2:c}\09# bug_entry::line\0A\09.word ${3:c}\09# bug_entry::flags\0A\09.org 2b + ${4:c}\0A.popsection\0A.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 1b - ., 8; .popsection", "i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @.str.2, ptr nonnull @.str.3, i32 514, i32 2305, i64 16) #13, !srcloc !27
+  tail call void asm sideeffect "543: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 543b - ., 4; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 543) #13, !srcloc !28
   br label %cdev_set_parent.exit
 
 cdev_set_parent.exit:                             ; preds = %bb.b, %bb.c
@@ -973,12 +968,12 @@ cdev_set_parent.exit:                             ; preds = %bb.b, %bb.c
   %i.i = getelementptr i8, ptr %0, i64 100
   store i32 1, ptr %i.i, align 4
   %i.j = icmp eq i32 %i.g, 0
-  br i1 %i.j, label %bb.d, label %.critedge.i, !prof !21
+  br i1 %i.j, label %bb.d, label %.critedge.i, !prof !20
 
 bb.d:                                             ; preds = %cdev_set_parent.exit
-  tail call void asm sideeffect "540: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 540b - ., 3; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 540) #13, !srcloc !22
-  tail call void asm sideeffect "1:\09 ud2 \0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${0:c} - .\09# bug_entry::format\0A\09.long ${1:c} - .\09# bug_entry::file\0A\09.word ${2:c}\09# bug_entry::line\0A\09.word ${3:c}\09# bug_entry::flags\0A\09.org 2b + ${4:c}\0A.popsection\0A.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 1b - ., 8; .popsection", "i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @.str.2, ptr nonnull @.str.3, i32 483, i32 2305, i64 16) #13, !srcloc !23
-  tail call void asm sideeffect "541: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 541b - ., 4; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 541) #13, !srcloc !24
+  tail call void asm sideeffect "540: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 540b - ., 3; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 540) #13, !srcloc !21
+  tail call void asm sideeffect "1:\09 ud2 \0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${0:c} - .\09# bug_entry::format\0A\09.long ${1:c} - .\09# bug_entry::file\0A\09.word ${2:c}\09# bug_entry::line\0A\09.word ${3:c}\09# bug_entry::flags\0A\09.org 2b + ${4:c}\0A.popsection\0A.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 1b - ., 8; .popsection", "i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @.str.2, ptr nonnull @.str.3, i32 483, i32 2305, i64 16) #13, !srcloc !22
+  tail call void asm sideeffect "541: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 541b - ., 4; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 541) #13, !srcloc !23
   br label %cdev_add.exit
 
 .critedge.i:                                      ; preds = %cdev_set_parent.exit
@@ -1155,7 +1150,7 @@ bb.a:
   store ptr null, ptr %i.j, align 8
   %i.k = load volatile ptr, ptr %i.c, align 8     ; 2 uses
   %.not.i = icmp eq ptr %i.k, %i.c
-  br i1 %.not.i, label %cdev_purge.exit, label %.lr.ph.i, !llvm.loop !30
+  br i1 %.not.i, label %cdev_purge.exit, label %.lr.ph.i, !llvm.loop !29
 
 cdev_purge.exit:                                  ; preds = %.lr.ph.i, %bb.a
   tail call void @_raw_spin_unlock(ptr noundef nonnull @cdev_lock) #9
@@ -1189,7 +1184,7 @@ bb.a:
   store ptr null, ptr %i.j, align 8
   %i.k = load volatile ptr, ptr %i.c, align 8     ; 2 uses
   %.not.i = icmp eq ptr %i.k, %i.c
-  br i1 %.not.i, label %cdev_purge.exit, label %.lr.ph.i, !llvm.loop !30
+  br i1 %.not.i, label %cdev_purge.exit, label %.lr.ph.i, !llvm.loop !29
 
 cdev_purge.exit:                                  ; preds = %.lr.ph.i, %bb.a
   tail call void @_raw_spin_unlock(ptr noundef nonnull @cdev_lock) #9
@@ -1239,17 +1234,16 @@ attributes #13 = { nounwind }
 !15 = distinct !{!15, !11}
 !16 = distinct !{!16, !11}
 !17 = distinct !{!17, !11}
-!18 = distinct !{!18, !11}
-!19 = !{i64 5615}
-!20 = !{i64 6871}
-!21 = !{!"branch_weights", !"expected", i32 1, i32 2000}
-!22 = !{i64 2156521085, i64 2156520960}
-!23 = !{i64 2156521608, i64 2156522665, i64 2156522698, i64 2156522733, i64 2156522749, i64 2156523676, i64 2156523734, i64 2156523783, i64 2156523593, i64 2156522808, i64 2156522840, i64 2156522923}
-!24 = !{i64 2156524076, i64 2156523952}
-!25 = distinct !{!25, !11}
-!26 = !{!"auto-init"}
-!27 = !{i64 2156525403, i64 2156525278}
-!28 = !{i64 2156525926, i64 2156526988, i64 2156527021, i64 2156527056, i64 2156527072, i64 2156527999, i64 2156528057, i64 2156528106, i64 2156527916, i64 2156527131, i64 2156527163, i64 2156527246}
-!29 = !{i64 2156528399, i64 2156528275}
-!30 = distinct !{!30, !11}
+!18 = !{i64 5615}
+!19 = !{i64 6871}
+!20 = !{!"branch_weights", !"expected", i32 1, i32 2000}
+!21 = !{i64 2156521085, i64 2156520960}
+!22 = !{i64 2156521608, i64 2156522665, i64 2156522698, i64 2156522733, i64 2156522749, i64 2156523676, i64 2156523734, i64 2156523783, i64 2156523593, i64 2156522808, i64 2156522840, i64 2156522923}
+!23 = !{i64 2156524076, i64 2156523952}
+!24 = distinct !{!24, !11}
+!25 = !{!"auto-init"}
+!26 = !{i64 2156525403, i64 2156525278}
+!27 = !{i64 2156525926, i64 2156526988, i64 2156527021, i64 2156527056, i64 2156527072, i64 2156527999, i64 2156528057, i64 2156528106, i64 2156527916, i64 2156527131, i64 2156527163, i64 2156527246}
+!28 = !{i64 2156528399, i64 2156528275}
+!29 = distinct !{!29, !11}
 end_hunk_0

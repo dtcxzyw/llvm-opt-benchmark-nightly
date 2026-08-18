@@ -203,7 +203,6 @@ bb.e:                                             ; preds = %bb.d
 
 .lr.ph.i.preheader:                               ; preds = %.lr.ph.preheader.i
   %i.q = add i64 %indvar, 1152921504606846975
-  %4 = and i64 %i.q, 1152921504606846975
   %xtraiter = and i64 %indvar, 7                  ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
@@ -223,7 +222,7 @@ bb.e:                                             ; preds = %bb.d
 .lr.ph.i.prol.loopexit:                           ; preds = %.lr.ph.i.prol, %.lr.ph.i.preheader
   %.unr = phi ptr [ %storemerge33.pre, %.lr.ph.i.preheader ], [ %i.t, %.lr.ph.i.prol ]
   %.01826.i32.unr = phi ptr [ @__ctest_suite_test_pointer, %.lr.ph.i.preheader ], [ %i.s, %.lr.ph.i.prol ]
-  %i.v = icmp samesign ult i64 %4, 7
+  %i.v = icmp ult i64 %i.q, 7
   br i1 %i.v, label %__ctest_linkTests.exit.loopexit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i

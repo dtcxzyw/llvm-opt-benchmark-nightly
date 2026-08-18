@@ -204,8 +204,7 @@ bb.a:
   %13 = alloca %"class.CGAL::Box_intersection_d::Box_with_handle_d", align 8 ; 4 uses
   %.sroa.10.i.i.i18.i = alloca [3 x double], align 8 ; 4 uses
   %.sroa.10.i.i.i.i = alloca [3 x double], align 8 ; 4 uses
-  %14 = alloca %class.anon.125, align 8           ; 5 uses
-  %15 = alloca %"class.CGAL::Box_intersection_d::Predicate_traits_d<CGAL::Box_intersection_d::Box_traits_d<CGAL::Box_intersection_d::Box_with_handle_d<double, 3, __gnu_cxx::__normal_iterator<CGAL::Triangle_3<CGAL::Epick> *, std::vector<CGAL::Triangle_3<CGAL::Epick>>>>>, true>::Spanning", align 8 ; 4 uses
+  %14 = alloca %"class.CGAL::Box_intersection_d::Predicate_traits_d<CGAL::Box_intersection_d::Box_traits_d<CGAL::Box_intersection_d::Box_with_handle_d<double, 3, __gnu_cxx::__normal_iterator<CGAL::Triangle_3<CGAL::Epick> *, std::vector<CGAL::Triangle_3<CGAL::Epick>>>>>, true>::Spanning", align 8 ; 4 uses
   %i.a = alloca double, align 8                   ; 8 uses
   %i.b = tail call align 4 ptr @llvm.threadlocal.address.p0(ptr align 4 @_ZZN4CGAL18Box_intersection_d12segment_treeIN9__gnu_cxx17__normal_iteratorIPNS0_17Box_with_handle_dIdLi3ENS3_IPNS_10Triangle_3INS_5EpickEEESt6vectorIS7_SaIS7_EEEENS0_14ID_FROM_HANDLEEEES9_ISE_SaISE_EEEESI_ZN3igl8copyleft4cgalL22intersect_other_helperIS6_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSO_IiLin1ELin1ELi0ELin1ELin1EEESP_SQ_SQ_NSO_INS_13Lazy_exact_ntIN5boost14multiprecision6numberINST_8backends16rational_adaptorINSV_15cpp_int_backendILm0ELm0ELNST_16cpp_integer_typeE1ELNST_18cpp_int_check_typeE0ESaIyEEEEELNST_26expression_template_optionE1EEEEELin1ELi3ELi0ELin1ELi3EEESQ_NSO_IiLin1ELi1ELi0ELin1ELi1EEES17_EEbRKNSN_10MatrixBaseIT0_EERKNS18_IT1_EERKNS18_IT2_EERKNS18_IT3_EERKNSL_28RemeshSelfIntersectionsParamERNSN_15PlainObjectBaseIT4_EERNS1S_IT5_EERNS1S_IT6_EERNS1S_IT7_EERNS1S_IT8_EEEUlRKSE_S29_E_dNS0_18Predicate_traits_dINS0_12Box_traits_dISE_EELb1EEEEEvT_S2F_S19_S19_S1H_S1H_S1D_S1L_libE5level) ; 6 uses
   %i.c = load i32, ptr %i.b, align 4, !tbaa !47
@@ -237,23 +236,21 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.h = icmp eq i32 %8, 0
+  %15 = ptrtoint ptr %1 to i64
+  %16 = ptrtoint ptr %0 to i64                    ; 2 uses
+  %17 = sub i64 %15, %16                          ; 2 uses
+  %18 = sdiv exact i64 %17, 56                    ; 2 uses
   br i1 %i.h, label %bb.d, label %bb.ai
 
 bb.d:                                             ; preds = %bb.c
-  call void @llvm.lifetime.start.p0(ptr nonnull %14)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %14, ptr noundef nonnull align 8 dereferenceable(48) %6, i64 48, i1 false)
-  %16 = ptrtoint ptr %1 to i64
-  %17 = ptrtoint ptr %0 to i64                    ; 2 uses
-  %18 = sub i64 %16, %17                          ; 2 uses
-  %19 = sdiv exact i64 %18, 56
-  %i.i = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %19, i1 true)
+  %i.i = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %18, i1 true)
   %i.j = shl nuw nsw i64 %i.i, 1
   %i.k = xor i64 %i.j, 126
   invoke void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_intersection_d17Box_with_handle_dIdLi3ENS1_IPNS2_10Triangle_3INS2_5EpickEEESt6vectorIS7_SaIS7_EEEENS3_14ID_FROM_HANDLEEEES9_ISE_SaISE_EEEElNS0_5__ops15_Iter_comp_iterINS3_18Predicate_traits_dINS3_12Box_traits_dISE_EELb1EE7CompareEEEEvT_SR_T0_T1_(ptr %0, ptr %1, i64 noundef %i.k, i32 0)
           to label %.noexc unwind label %.loopexit.split-lp.loopexit.split-lp
 
 .noexc:                                           ; preds = %bb.d
-  %i.l = icmp sgt i64 %18, 896
+  %i.l = icmp sgt i64 %17, 896
   br i1 %i.l, label %bb.e, label %.preheader.i.i
 
 bb.e:                                             ; preds = %.noexc
@@ -399,7 +396,7 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_inte
   br i1 %.not.us.i.i.i, label %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_intersection_d17Box_with_handle_dIdLi3ENS1_IPNS2_10Triangle_3INS2_5EpickEEESt6vectorIS7_SaIS7_EEEENS3_14ID_FROM_HANDLEEEES9_ISE_SaISE_EEEENS3_18Predicate_traits_dINS3_12Box_traits_dISE_EELb1EE7CompareEEvT_SO_T0_.exit.i, label %_ZN4CGAL18Box_intersection_d12Box_traits_dINS0_17Box_with_handle_dIdLi3EN9__gnu_cxx17__normal_iteratorIPNS_10Triangle_3INS_5EpickEEESt6vectorIS7_SaIS7_EEEENS0_14ID_FROM_HANDLEEEEE9min_coordERKSE_i.exit10.i.i.i.us.i.preheader.us.i.i.i, !llvm.loop !506
 
 .preheader.i.i:                                   ; preds = %.noexc
-  %.sroa.0.022.i.i = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
+  %.sroa.0.022.i.i = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 3 uses
   %.not23.i.i = icmp eq ptr %.sroa.0.022.i.i, %1
   br i1 %.not23.i.i, label %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_intersection_d17Box_with_handle_dIdLi3ENS1_IPNS2_10Triangle_3INS2_5EpickEEESt6vectorIS7_SaIS7_EEEENS3_14ID_FROM_HANDLEEEES9_ISE_SaISE_EEEENS3_18Predicate_traits_dINS3_12Box_traits_dISE_EELb1EE7CompareEEvT_SO_T0_.exit.i, label %.lr.ph.i.i
 
@@ -409,7 +406,7 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_inte
 
 bb.k:                                             ; preds = %bb.p, %.lr.ph.i.i
   %.sroa.0.025.i.i = phi ptr [ %.sroa.0.022.i.i, %.lr.ph.i.i ], [ %.sroa.0.0.i.i, %bb.p ] ; 6 uses
-  %.pn24.i.i = phi ptr [ %0, %.lr.ph.i.i ], [ %.sroa.0.025.i.i, %bb.p ] ; 6 uses
+  %.pn24.i.i = phi ptr [ %0, %.lr.ph.i.i ], [ %.sroa.0.025.i.i, %bb.p ] ; 5 uses
   %i.ap = load double, ptr %.sroa.0.025.i.i, align 8, !tbaa !249 ; 5 uses
   %i.aq = load double, ptr %0, align 8, !tbaa !249 ; 2 uses
   %i.ar = fcmp olt double %i.ap, %i.aq
@@ -430,16 +427,12 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4CGAL18Box_intersection_d18Predicate_trait
   call void @llvm.lifetime.start.p0(ptr nonnull %13)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %13, ptr noundef nonnull align 8 dereferenceable(56) %.sroa.0.025.i.i, i64 56, i1 false)
   %i.ax = ptrtoint ptr %.sroa.0.025.i.i to i64
-  %i.ay = sub i64 %i.ax, %17                      ; 4 uses
+  %i.ay = sub i64 %i.ax, %16                      ; 3 uses
   %i.az = icmp sgt i64 %i.ay, 56
   br i1 %i.az, label %bb.m, label %bb.n, !prof !503
 
 bb.m:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4CGAL18Box_intersection_d18Predicate_traits_dINS3_12Box_traits_dINS3_17Box_with_handle_dIdLi3ENS_17__normal_iteratorIPNS2_10Triangle_3INS2_5EpickEEESt6vectorISA_SaISA_EEEENS3_14ID_FROM_HANDLEEEEEELb1EE7CompareEEclINS7_IPSH_SC_ISH_SaISH_EEEESQ_EEbT_T0_.exit.thread.i.i
-  %20 = getelementptr inbounds nuw i8, ptr %.pn24.i.i, i64 112
-  %.neg34.i.i = udiv exact i64 %i.ay, 56
-  %.neg34.neg.i.i = sub nsw i64 0, %.neg34.i.i
-  %21 = getelementptr inbounds [56 x i8], ptr %20, i64 %.neg34.neg.i.i
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %21, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.ay, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sroa.0.022.i.i, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.ay, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_intersection_d17Box_with_handle_dIdLi3ENS1_IPNS2_10Triangle_3INS2_5EpickEEESt6vectorIS7_SaIS7_EEEENS3_14ID_FROM_HANDLEEEES9_ISE_SaISE_EEEESI_ET0_T_SK_SJ_.exit.i.i
 
 bb.n:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4CGAL18Box_intersection_d18Predicate_traits_dINS3_12Box_traits_dINS3_17Box_with_handle_dIdLi3ENS_17__normal_iteratorIPNS2_10Triangle_3INS2_5EpickEEESt6vectorISA_SaISA_EEEENS3_14ID_FROM_HANDLEEEEEELb1EE7CompareEEclINS7_IPSH_SC_ISH_SaISH_EEEESQ_EEbT_T0_.exit.thread.i.i
@@ -661,7 +654,7 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_inte
   br i1 %.not.us.i.i40.i, label %.preheader.i.preheader, label %_ZN4CGAL18Box_intersection_d12Box_traits_dINS0_17Box_with_handle_dIdLi3EN9__gnu_cxx17__normal_iteratorIPNS_10Triangle_3INS_5EpickEEESt6vectorIS7_SaIS7_EEEENS0_14ID_FROM_HANDLEEEEE9min_coordERKSE_i.exit10.i.i.i.us.i.preheader.us.i.i21.i, !llvm.loop !506
 
 .preheader.i80.i:                                 ; preds = %.noexc101
-  %.sroa.0.022.i81.i = getelementptr inbounds nuw i8, ptr %2, i64 56 ; 2 uses
+  %.sroa.0.022.i81.i = getelementptr inbounds nuw i8, ptr %2, i64 56 ; 3 uses
   %.not23.i82.i = icmp eq ptr %.sroa.0.022.i81.i, %3
   br i1 %.not23.i82.i, label %.preheader.i.preheader, label %.lr.ph.i83.i
 
@@ -671,7 +664,7 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_inte
 
 bb.w:                                             ; preds = %bb.ab, %.lr.ph.i83.i
   %.sroa.0.025.i84.i = phi ptr [ %.sroa.0.022.i81.i, %.lr.ph.i83.i ], [ %.sroa.0.0.i104.i, %bb.ab ] ; 6 uses
-  %.pn24.i85.i = phi ptr [ %2, %.lr.ph.i83.i ], [ %.sroa.0.025.i84.i, %bb.ab ] ; 6 uses
+  %.pn24.i85.i = phi ptr [ %2, %.lr.ph.i83.i ], [ %.sroa.0.025.i84.i, %bb.ab ] ; 5 uses
   %i.cu = load double, ptr %.sroa.0.025.i84.i, align 8, !tbaa !249 ; 5 uses
   %i.cv = load double, ptr %2, align 8, !tbaa !249 ; 2 uses
   %i.cw = fcmp olt double %i.cu, %i.cv
@@ -692,16 +685,12 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4CGAL18Box_intersection_d18Predicate_trait
   call void @llvm.lifetime.start.p0(ptr nonnull %11)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %11, ptr noundef nonnull align 8 dereferenceable(56) %.sroa.0.025.i84.i, i64 56, i1 false)
   %i.dc = ptrtoint ptr %.sroa.0.025.i84.i to i64
-  %i.dd = sub i64 %i.dc, %i.bk                    ; 4 uses
+  %i.dd = sub i64 %i.dc, %i.bk                    ; 3 uses
   %i.de = icmp sgt i64 %i.dd, 56
   br i1 %i.de, label %bb.y, label %bb.z, !prof !503
 
 bb.y:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4CGAL18Box_intersection_d18Predicate_traits_dINS3_12Box_traits_dINS3_17Box_with_handle_dIdLi3ENS_17__normal_iteratorIPNS2_10Triangle_3INS2_5EpickEEESt6vectorISA_SaISA_EEEENS3_14ID_FROM_HANDLEEEEEELb1EE7CompareEEclINS7_IPSH_SC_ISH_SaISH_EEEESQ_EEbT_T0_.exit.thread.i109.i
-  %22 = getelementptr inbounds nuw i8, ptr %.pn24.i85.i, i64 112
-  %.neg34.i111.i = udiv exact i64 %i.dd, 56
-  %.neg34.neg.i112.i = sub nsw i64 0, %.neg34.i111.i
-  %23 = getelementptr inbounds [56 x i8], ptr %22, i64 %.neg34.neg.i112.i
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %23, ptr noundef nonnull align 8 dereferenceable(1) %2, i64 %i.dd, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sroa.0.022.i81.i, ptr noundef nonnull align 8 dereferenceable(1) %2, i64 %i.dd, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_intersection_d17Box_with_handle_dIdLi3ENS1_IPNS2_10Triangle_3INS2_5EpickEEESt6vectorIS7_SaIS7_EEEENS3_14ID_FROM_HANDLEEEES9_ISE_SaISE_EEEESI_ET0_T_SK_SJ_.exit.i110.i
 
 bb.z:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4CGAL18Box_intersection_d18Predicate_traits_dINS3_12Box_traits_dINS3_17Box_with_handle_dIdLi3ENS_17__normal_iteratorIPNS2_10Triangle_3INS2_5EpickEEESt6vectorISA_SaISA_EEEENS3_14ID_FROM_HANDLEEEEEELb1EE7CompareEEclINS7_IPSH_SC_ISH_SaISH_EEEESQ_EEbT_T0_.exit.thread.i109.i
@@ -826,7 +815,7 @@ bb.ae:                                            ; preds = %.lr.ph181.split.us.
   br i1 %i.eg, label %.noexc102, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
-  invoke fastcc void @_ZZN3igl8copyleft4cgalL22intersect_other_helperIN4CGAL5EpickEN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS6_IiLin1ELin1ELi0ELin1ELin1EEES7_S8_S8_NS6_INS3_13Lazy_exact_ntIN5boost14multiprecision6numberINSB_8backends16rational_adaptorINSD_15cpp_int_backendILm0ELm0ELNSB_16cpp_integer_typeE1ELNSB_18cpp_int_check_typeE0ESaIyEEEEELNSB_26expression_template_optionE1EEEEELin1ELi3ELi0ELin1ELi3EEES8_NS6_IiLin1ELi1ELi0ELin1ELi1EEESP_EEbRKNS5_10MatrixBaseIT0_EERKNSQ_IT1_EERKNSQ_IT2_EERKNSQ_IT3_EERKNS1_28RemeshSelfIntersectionsParamERNS5_15PlainObjectBaseIT4_EERNS1A_IT5_EERNS1A_IT6_EERNS1A_IT7_EERNS1A_IT8_EEENKUlRKNS3_18Box_intersection_d17Box_with_handle_dIdLi3EN9__gnu_cxx17__normal_iteratorIPNS3_10Triangle_3IS4_EESt6vectorIS1V_SaIS1V_EEEENS1Q_14ID_FROM_HANDLEEEES24_E_clES24_S24_(ptr noundef nonnull readonly align 8 dereferenceable(48) %14, ptr %i.ee, ptr %i.ef)
+  invoke fastcc void @_ZZN3igl8copyleft4cgalL22intersect_other_helperIN4CGAL5EpickEN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS6_IiLin1ELin1ELi0ELin1ELin1EEES7_S8_S8_NS6_INS3_13Lazy_exact_ntIN5boost14multiprecision6numberINSB_8backends16rational_adaptorINSD_15cpp_int_backendILm0ELm0ELNSB_16cpp_integer_typeE1ELNSB_18cpp_int_check_typeE0ESaIyEEEEELNSB_26expression_template_optionE1EEEEELin1ELi3ELi0ELin1ELi3EEES8_NS6_IiLin1ELi1ELi0ELin1ELi1EEESP_EEbRKNS5_10MatrixBaseIT0_EERKNSQ_IT1_EERKNSQ_IT2_EERKNSQ_IT3_EERKNS1_28RemeshSelfIntersectionsParamERNS5_15PlainObjectBaseIT4_EERNS1A_IT5_EERNS1A_IT6_EERNS1A_IT7_EERNS1A_IT8_EEENKUlRKNS3_18Box_intersection_d17Box_with_handle_dIdLi3EN9__gnu_cxx17__normal_iteratorIPNS3_10Triangle_3IS4_EESt6vectorIS1V_SaIS1V_EEEENS1Q_14ID_FROM_HANDLEEEES24_E_clES24_S24_(ptr noundef nonnull readonly align 8 dereferenceable(48) %6, ptr %i.ee, ptr %i.ef)
           to label %.noexc102 unwind label %.loopexit
 
 .noexc102:                                        ; preds = %bb.af, %bb.ae
@@ -849,7 +838,7 @@ bb.ag:                                            ; preds = %.lr.ph181.split.i
   br i1 %i.eo, label %.noexc103, label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag
-  invoke fastcc void @_ZZN3igl8copyleft4cgalL22intersect_other_helperIN4CGAL5EpickEN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS6_IiLin1ELin1ELi0ELin1ELin1EEES7_S8_S8_NS6_INS3_13Lazy_exact_ntIN5boost14multiprecision6numberINSB_8backends16rational_adaptorINSD_15cpp_int_backendILm0ELm0ELNSB_16cpp_integer_typeE1ELNSB_18cpp_int_check_typeE0ESaIyEEEEELNSB_26expression_template_optionE1EEEEELin1ELi3ELi0ELin1ELi3EEES8_NS6_IiLin1ELi1ELi0ELin1ELi1EEESP_EEbRKNS5_10MatrixBaseIT0_EERKNSQ_IT1_EERKNSQ_IT2_EERKNSQ_IT3_EERKNS1_28RemeshSelfIntersectionsParamERNS5_15PlainObjectBaseIT4_EERNS1A_IT5_EERNS1A_IT6_EERNS1A_IT7_EERNS1A_IT8_EEENKUlRKNS3_18Box_intersection_d17Box_with_handle_dIdLi3EN9__gnu_cxx17__normal_iteratorIPNS3_10Triangle_3IS4_EESt6vectorIS1V_SaIS1V_EEEENS1Q_14ID_FROM_HANDLEEEES24_E_clES24_S24_(ptr noundef nonnull readonly align 8 dereferenceable(48) %14, ptr %i.en, ptr %i.em)
+  invoke fastcc void @_ZZN3igl8copyleft4cgalL22intersect_other_helperIN4CGAL5EpickEN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS6_IiLin1ELin1ELi0ELin1ELin1EEES7_S8_S8_NS6_INS3_13Lazy_exact_ntIN5boost14multiprecision6numberINSB_8backends16rational_adaptorINSD_15cpp_int_backendILm0ELm0ELNSB_16cpp_integer_typeE1ELNSB_18cpp_int_check_typeE0ESaIyEEEEELNSB_26expression_template_optionE1EEEEELin1ELi3ELi0ELin1ELi3EEES8_NS6_IiLin1ELi1ELi0ELin1ELi1EEESP_EEbRKNS5_10MatrixBaseIT0_EERKNSQ_IT1_EERKNSQ_IT2_EERKNSQ_IT3_EERKNS1_28RemeshSelfIntersectionsParamERNS5_15PlainObjectBaseIT4_EERNS1A_IT5_EERNS1A_IT6_EERNS1A_IT7_EERNS1A_IT8_EEENKUlRKNS3_18Box_intersection_d17Box_with_handle_dIdLi3EN9__gnu_cxx17__normal_iteratorIPNS3_10Triangle_3IS4_EESt6vectorIS1V_SaIS1V_EEEENS1Q_14ID_FROM_HANDLEEEES24_E_clES24_S24_(ptr noundef nonnull readonly align 8 dereferenceable(48) %6, ptr %i.en, ptr %i.em)
           to label %.noexc103 unwind label %.loopexit.split-lp.loopexit
 
 .noexc103:                                        ; preds = %bb.ah, %bb.ag
@@ -860,18 +849,10 @@ bb.ah:                                            ; preds = %bb.ag
 .critedge2.i:                                     ; preds = %.noexc103, %.lr.ph181.split.i, %.noexc102, %.lr.ph181.split.us.i, %.critedge.i
   %i.eq = getelementptr inbounds nuw i8, ptr %.sroa.0154.0185.i, i64 56 ; 2 uses
   %.not.i = icmp eq ptr %i.eq, %3
-  br i1 %.not.i, label %.loopexit130, label %.preheader.i, !llvm.loop !509
-
-.loopexit130:                                     ; preds = %.critedge2.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %14)
-  br label %bb.az
+  br i1 %.not.i, label %bb.az, label %.preheader.i, !llvm.loop !509
 
 bb.ai:                                            ; preds = %bb.c
-  %24 = ptrtoint ptr %1 to i64
-  %25 = ptrtoint ptr %0 to i64
-  %26 = sub i64 %24, %25
-  %27 = sdiv exact i64 %26, 56
-  %i.er = icmp slt i64 %27, %7
+  %i.er = icmp slt i64 %18, %7
   br i1 %i.er, label %bb.ak, label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai
@@ -893,12 +874,12 @@ bb.al:                                            ; preds = %bb.aj
   br i1 %or.cond100, label %.thread, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
-  store double %4, ptr %15, align 8, !tbaa !510
-  %i.ez = getelementptr inbounds nuw i8, ptr %15, i64 8
+  store double %4, ptr %14, align 8, !tbaa !510
+  %i.ez = getelementptr inbounds nuw i8, ptr %14, i64 8
   store double %5, ptr %i.ez, align 8, !tbaa !512
-  %i.fa = getelementptr inbounds nuw i8, ptr %15, i64 16
+  %i.fa = getelementptr inbounds nuw i8, ptr %14, i64 16
   store i32 %8, ptr %i.fa, align 8, !tbaa !513
-  %i.fb = invoke ptr @_ZSt9partitionIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_intersection_d17Box_with_handle_dIdLi3ENS1_IPNS2_10Triangle_3INS2_5EpickEEESt6vectorIS7_SaIS7_EEEENS3_14ID_FROM_HANDLEEEES9_ISE_SaISE_EEEENS3_18Predicate_traits_dINS3_12Box_traits_dISE_EELb1EE8SpanningEET_SO_SO_T0_(ptr %2, ptr %3, ptr noundef nonnull byval(%"class.CGAL::Box_intersection_d::Predicate_traits_d<CGAL::Box_intersection_d::Box_traits_d<CGAL::Box_intersection_d::Box_with_handle_d<double, 3, __gnu_cxx::__normal_iterator<CGAL::Triangle_3<CGAL::Epick> *, std::vector<CGAL::Triangle_3<CGAL::Epick>>>>>, true>::Spanning") align 8 %15)
+  %i.fb = invoke ptr @_ZSt9partitionIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_intersection_d17Box_with_handle_dIdLi3ENS1_IPNS2_10Triangle_3INS2_5EpickEEESt6vectorIS7_SaIS7_EEEENS3_14ID_FROM_HANDLEEEES9_ISE_SaISE_EEEENS3_18Predicate_traits_dINS3_12Box_traits_dISE_EELb1EE8SpanningEET_SO_SO_T0_(ptr %2, ptr %3, ptr noundef nonnull byval(%"class.CGAL::Box_intersection_d::Predicate_traits_d<CGAL::Box_intersection_d::Box_traits_d<CGAL::Box_intersection_d::Box_with_handle_d<double, 3, __gnu_cxx::__normal_iterator<CGAL::Triangle_3<CGAL::Epick> *, std::vector<CGAL::Triangle_3<CGAL::Epick>>>>>, true>::Spanning") align 8 %14)
           to label %bb.an unwind label %bb.aq     ; 5 uses
 
 bb.an:                                            ; preds = %bb.am
@@ -965,7 +946,7 @@ bb.ay:                                            ; preds = %bb.ax, %bb.as
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #22
   br label %bb.az
 
-bb.az:                                            ; preds = %bb.ak, %bb.a, %bb.b, %bb.ay, %.loopexit130
+bb.az:                                            ; preds = %.critedge2.i, %bb.ak, %bb.a, %bb.b, %bb.ay
   %i.fp = load i32, ptr %i.b, align 4, !tbaa !47
   %i.fq = add nsw i32 %i.fp, -1
   store i32 %i.fq, ptr %i.b, align 4, !tbaa !47
@@ -1170,7 +1151,7 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_inte
   br i1 %.not.us.i.i, label %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_intersection_d17Box_with_handle_dIdLi3ENS1_IPNS2_10Triangle_3INS2_5EpickEEESt6vectorIS7_SaIS7_EEEENS3_14ID_FROM_HANDLEEEES9_ISE_SaISE_EEEENS3_18Predicate_traits_dINS3_12Box_traits_dISE_EELb1EE7CompareEEvT_SO_T0_.exit, label %_ZN4CGAL18Box_intersection_d12Box_traits_dINS0_17Box_with_handle_dIdLi3EN9__gnu_cxx17__normal_iteratorIPNS_10Triangle_3INS_5EpickEEESt6vectorIS7_SaIS7_EEEENS0_14ID_FROM_HANDLEEEEE9min_coordERKSE_i.exit10.i.i.i.us.i.preheader.us.i.i, !llvm.loop !506
 
 .preheader.i:                                     ; preds = %bb.b
-  %.sroa.0.022.i = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
+  %.sroa.0.022.i = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 3 uses
   %.not23.i = icmp eq ptr %.sroa.0.022.i, %1
   br i1 %.not23.i, label %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_intersection_d17Box_with_handle_dIdLi3ENS1_IPNS2_10Triangle_3INS2_5EpickEEESt6vectorIS7_SaIS7_EEEENS3_14ID_FROM_HANDLEEEES9_ISE_SaISE_EEEENS3_18Predicate_traits_dINS3_12Box_traits_dISE_EELb1EE7CompareEEvT_SO_T0_.exit, label %.lr.ph.i
 
@@ -1180,7 +1161,7 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_inte
 
 bb.i:                                             ; preds = %bb.n, %.lr.ph.i
   %.sroa.0.025.i = phi ptr [ %.sroa.0.022.i, %.lr.ph.i ], [ %.sroa.0.0.i, %bb.n ] ; 6 uses
-  %.pn24.i = phi ptr [ %0, %.lr.ph.i ], [ %.sroa.0.025.i, %bb.n ] ; 6 uses
+  %.pn24.i = phi ptr [ %0, %.lr.ph.i ], [ %.sroa.0.025.i, %bb.n ] ; 5 uses
   %i.al = load double, ptr %.sroa.0.025.i, align 8, !tbaa !249 ; 5 uses
   %i.am = load double, ptr %0, align 8, !tbaa !249 ; 2 uses
   %i.an = fcmp olt double %i.al, %i.am
@@ -1201,16 +1182,12 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4CGAL18Box_intersection_d18Predicate_trait
   call void @llvm.lifetime.start.p0(ptr nonnull %10)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %10, ptr noundef nonnull align 8 dereferenceable(56) %.sroa.0.025.i, i64 56, i1 false)
   %i.at = ptrtoint ptr %.sroa.0.025.i to i64
-  %i.au = sub i64 %i.at, %i.b                     ; 4 uses
+  %i.au = sub i64 %i.at, %i.b                     ; 3 uses
   %i.av = icmp sgt i64 %i.au, 56
   br i1 %i.av, label %bb.k, label %bb.l, !prof !503
 
 bb.k:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4CGAL18Box_intersection_d18Predicate_traits_dINS3_12Box_traits_dINS3_17Box_with_handle_dIdLi3ENS_17__normal_iteratorIPNS2_10Triangle_3INS2_5EpickEEESt6vectorISA_SaISA_EEEENS3_14ID_FROM_HANDLEEEEEELb1EE7CompareEEclINS7_IPSH_SC_ISH_SaISH_EEEESQ_EEbT_T0_.exit.thread.i
-  %11 = getelementptr inbounds nuw i8, ptr %.pn24.i, i64 112
-  %.neg34.i = udiv exact i64 %i.au, 56
-  %.neg34.neg.i = sub nsw i64 0, %.neg34.i
-  %12 = getelementptr inbounds [56 x i8], ptr %11, i64 %.neg34.neg.i
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %12, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.au, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sroa.0.022.i, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.au, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_intersection_d17Box_with_handle_dIdLi3ENS1_IPNS2_10Triangle_3INS2_5EpickEEESt6vectorIS7_SaIS7_EEEENS3_14ID_FROM_HANDLEEEES9_ISE_SaISE_EEEESI_ET0_T_SK_SJ_.exit.i
 
 bb.l:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4CGAL18Box_intersection_d18Predicate_traits_dINS3_12Box_traits_dINS3_17Box_with_handle_dIdLi3ENS_17__normal_iteratorIPNS2_10Triangle_3INS2_5EpickEEESt6vectorISA_SaISA_EEEENS3_14ID_FROM_HANDLEEEEEELb1EE7CompareEEclINS7_IPSH_SC_ISH_SaISH_EEEESQ_EEbT_T0_.exit.thread.i
@@ -1433,7 +1410,7 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_inte
   br i1 %.not.us.i.i87, label %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_intersection_d17Box_with_handle_dIdLi3ENS1_IPNS2_10Triangle_3INS2_5EpickEEESt6vectorIS7_SaIS7_EEEENS3_14ID_FROM_HANDLEEEES9_ISE_SaISE_EEEENS3_18Predicate_traits_dINS3_12Box_traits_dISE_EELb1EE7CompareEEvT_SO_T0_.exit32, label %_ZN4CGAL18Box_intersection_d12Box_traits_dINS0_17Box_with_handle_dIdLi3EN9__gnu_cxx17__normal_iteratorIPNS_10Triangle_3INS_5EpickEEESt6vectorIS7_SaIS7_EEEENS0_14ID_FROM_HANDLEEEEE9min_coordERKSE_i.exit10.i.i.i.us.i.preheader.us.i.i68, !llvm.loop !506
 
 .preheader.i129:                                  ; preds = %bb.o
-  %.sroa.0.022.i130 = getelementptr inbounds nuw i8, ptr %2, i64 56 ; 2 uses
+  %.sroa.0.022.i130 = getelementptr inbounds nuw i8, ptr %2, i64 56 ; 3 uses
   %.not23.i131 = icmp eq ptr %.sroa.0.022.i130, %3
   br i1 %.not23.i131, label %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_intersection_d17Box_with_handle_dIdLi3ENS1_IPNS2_10Triangle_3INS2_5EpickEEESt6vectorIS7_SaIS7_EEEENS3_14ID_FROM_HANDLEEEES9_ISE_SaISE_EEEENS3_18Predicate_traits_dINS3_12Box_traits_dISE_EELb1EE7CompareEEvT_SO_T0_.exit32, label %.lr.ph.i132
 
@@ -1443,7 +1420,7 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_inte
 
 bb.v:                                             ; preds = %bb.aa, %.lr.ph.i132
   %.sroa.0.025.i133 = phi ptr [ %.sroa.0.022.i130, %.lr.ph.i132 ], [ %.sroa.0.0.i154, %bb.aa ] ; 6 uses
-  %.pn24.i134 = phi ptr [ %2, %.lr.ph.i132 ], [ %.sroa.0.025.i133, %bb.aa ] ; 6 uses
+  %.pn24.i134 = phi ptr [ %2, %.lr.ph.i132 ], [ %.sroa.0.025.i133, %bb.aa ] ; 5 uses
   %i.cq = load double, ptr %.sroa.0.025.i133, align 8, !tbaa !249 ; 5 uses
   %i.cr = load double, ptr %2, align 8, !tbaa !249 ; 2 uses
   %i.cs = fcmp olt double %i.cq, %i.cr
@@ -1464,16 +1441,12 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4CGAL18Box_intersection_d18Predicate_trait
   call void @llvm.lifetime.start.p0(ptr nonnull %8)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %8, ptr noundef nonnull align 8 dereferenceable(56) %.sroa.0.025.i133, i64 56, i1 false)
   %i.cy = ptrtoint ptr %.sroa.0.025.i133 to i64
-  %i.cz = sub i64 %i.cy, %i.bg                    ; 4 uses
+  %i.cz = sub i64 %i.cy, %i.bg                    ; 3 uses
   %i.da = icmp sgt i64 %i.cz, 56
   br i1 %i.da, label %bb.x, label %bb.y, !prof !503
 
 bb.x:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4CGAL18Box_intersection_d18Predicate_traits_dINS3_12Box_traits_dINS3_17Box_with_handle_dIdLi3ENS_17__normal_iteratorIPNS2_10Triangle_3INS2_5EpickEEESt6vectorISA_SaISA_EEEENS3_14ID_FROM_HANDLEEEEEELb1EE7CompareEEclINS7_IPSH_SC_ISH_SaISH_EEEESQ_EEbT_T0_.exit.thread.i159
-  %13 = getelementptr inbounds nuw i8, ptr %.pn24.i134, i64 112
-  %.neg34.i161 = udiv exact i64 %i.cz, 56
-  %.neg34.neg.i162 = sub nsw i64 0, %.neg34.i161
-  %14 = getelementptr inbounds [56 x i8], ptr %13, i64 %.neg34.neg.i162
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %14, ptr noundef nonnull align 8 dereferenceable(1) %2, i64 %i.cz, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sroa.0.022.i130, ptr noundef nonnull align 8 dereferenceable(1) %2, i64 %i.cz, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_intersection_d17Box_with_handle_dIdLi3ENS1_IPNS2_10Triangle_3INS2_5EpickEEESt6vectorIS7_SaIS7_EEEENS3_14ID_FROM_HANDLEEEES9_ISE_SaISE_EEEESI_ET0_T_SK_SJ_.exit.i160
 
 bb.y:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4CGAL18Box_intersection_d18Predicate_traits_dINS3_12Box_traits_dINS3_17Box_with_handle_dIdLi3ENS_17__normal_iteratorIPNS2_10Triangle_3INS2_5EpickEEESt6vectorISA_SaISA_EEEENS3_14ID_FROM_HANDLEEEEEELb1EE7CompareEEclINS7_IPSH_SC_ISH_SaISH_EEEESQ_EEbT_T0_.exit.thread.i159
@@ -1876,8 +1849,7 @@ bb.a:
   %13 = alloca %"class.CGAL::Box_intersection_d::Box_with_handle_d.461", align 8 ; 4 uses
   %.sroa.10.i.i.i18.i = alloca [3 x double], align 8 ; 4 uses
   %.sroa.10.i.i.i.i = alloca [3 x double], align 8 ; 4 uses
-  %14 = alloca %class.anon.457, align 8           ; 5 uses
-  %15 = alloca %"class.CGAL::Box_intersection_d::Predicate_traits_d<CGAL::Box_intersection_d::Box_traits_d<CGAL::Box_intersection_d::Box_with_handle_d<double, 3, __gnu_cxx::__normal_iterator<CGAL::Triangle_3<CGAL::Epeck> *, std::vector<CGAL::Triangle_3<CGAL::Epeck>>>>>, true>::Spanning", align 8 ; 4 uses
+  %14 = alloca %"class.CGAL::Box_intersection_d::Predicate_traits_d<CGAL::Box_intersection_d::Box_traits_d<CGAL::Box_intersection_d::Box_with_handle_d<double, 3, __gnu_cxx::__normal_iterator<CGAL::Triangle_3<CGAL::Epeck> *, std::vector<CGAL::Triangle_3<CGAL::Epeck>>>>>, true>::Spanning", align 8 ; 4 uses
   %i.a = alloca double, align 8                   ; 8 uses
   %i.b = tail call align 4 ptr @llvm.threadlocal.address.p0(ptr align 4 @_ZZN4CGAL18Box_intersection_d12segment_treeIN9__gnu_cxx17__normal_iteratorIPNS0_17Box_with_handle_dIdLi3ENS3_IPNS_10Triangle_3INS_5EpeckEEESt6vectorIS7_SaIS7_EEEENS0_14ID_FROM_HANDLEEEES9_ISE_SaISE_EEEESI_ZN3igl8copyleft4cgalL22intersect_other_helperIS6_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSO_IiLin1ELin1ELi0ELin1ELin1EEESP_SQ_SQ_NSO_INS_13Lazy_exact_ntIN5boost14multiprecision6numberINST_8backends16rational_adaptorINSV_15cpp_int_backendILm0ELm0ELNST_16cpp_integer_typeE1ELNST_18cpp_int_check_typeE0ESaIyEEEEELNST_26expression_template_optionE1EEEEELin1ELi3ELi0ELin1ELi3EEESQ_NSO_IiLin1ELi1ELi0ELin1ELi1EEES17_EEbRKNSN_10MatrixBaseIT0_EERKNS18_IT1_EERKNS18_IT2_EERKNS18_IT3_EERKNSL_28RemeshSelfIntersectionsParamERNSN_15PlainObjectBaseIT4_EERNS1S_IT5_EERNS1S_IT6_EERNS1S_IT7_EERNS1S_IT8_EEEUlRKSE_S29_E_dNS0_18Predicate_traits_dINS0_12Box_traits_dISE_EELb1EEEEEvT_S2F_S19_S19_S1H_S1H_S1D_S1L_libE5level) ; 6 uses
   %i.c = load i32, ptr %i.b, align 4, !tbaa !47
@@ -1909,23 +1881,21 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.h = icmp eq i32 %8, 0
+  %15 = ptrtoint ptr %1 to i64
+  %16 = ptrtoint ptr %0 to i64                    ; 2 uses
+  %17 = sub i64 %15, %16                          ; 2 uses
+  %18 = sdiv exact i64 %17, 56                    ; 2 uses
   br i1 %i.h, label %bb.d, label %bb.ai
 
 bb.d:                                             ; preds = %bb.c
-  call void @llvm.lifetime.start.p0(ptr nonnull %14)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %14, ptr noundef nonnull align 8 dereferenceable(48) %6, i64 48, i1 false)
-  %16 = ptrtoint ptr %1 to i64
-  %17 = ptrtoint ptr %0 to i64                    ; 2 uses
-  %18 = sub i64 %16, %17                          ; 2 uses
-  %19 = sdiv exact i64 %18, 56
-  %i.i = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %19, i1 true)
+  %i.i = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %18, i1 true)
   %i.j = shl nuw nsw i64 %i.i, 1
   %i.k = xor i64 %i.j, 126
   invoke void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_intersection_d17Box_with_handle_dIdLi3ENS1_IPNS2_10Triangle_3INS2_5EpeckEEESt6vectorIS7_SaIS7_EEEENS3_14ID_FROM_HANDLEEEES9_ISE_SaISE_EEEElNS0_5__ops15_Iter_comp_iterINS3_18Predicate_traits_dINS3_12Box_traits_dISE_EELb1EE7CompareEEEEvT_SR_T0_T1_(ptr %0, ptr %1, i64 noundef %i.k, i32 0)
           to label %.noexc unwind label %.loopexit.split-lp.loopexit.split-lp
 
 .noexc:                                           ; preds = %bb.d
-  %i.l = icmp sgt i64 %18, 896
+  %i.l = icmp sgt i64 %17, 896
   br i1 %i.l, label %bb.e, label %.preheader.i.i
 
 bb.e:                                             ; preds = %.noexc
@@ -2071,7 +2041,7 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_inte
   br i1 %.not.us.i.i.i, label %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_intersection_d17Box_with_handle_dIdLi3ENS1_IPNS2_10Triangle_3INS2_5EpeckEEESt6vectorIS7_SaIS7_EEEENS3_14ID_FROM_HANDLEEEES9_ISE_SaISE_EEEENS3_18Predicate_traits_dINS3_12Box_traits_dISE_EELb1EE7CompareEEvT_SO_T0_.exit.i, label %_ZN4CGAL18Box_intersection_d12Box_traits_dINS0_17Box_with_handle_dIdLi3EN9__gnu_cxx17__normal_iteratorIPNS_10Triangle_3INS_5EpeckEEESt6vectorIS7_SaIS7_EEEENS0_14ID_FROM_HANDLEEEEE9min_coordERKSE_i.exit10.i.i.i.us.i.preheader.us.i.i.i, !llvm.loop !1469
 
 .preheader.i.i:                                   ; preds = %.noexc
-  %.sroa.0.022.i.i = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
+  %.sroa.0.022.i.i = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 3 uses
   %.not23.i.i = icmp eq ptr %.sroa.0.022.i.i, %1
   br i1 %.not23.i.i, label %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_intersection_d17Box_with_handle_dIdLi3ENS1_IPNS2_10Triangle_3INS2_5EpeckEEESt6vectorIS7_SaIS7_EEEENS3_14ID_FROM_HANDLEEEES9_ISE_SaISE_EEEENS3_18Predicate_traits_dINS3_12Box_traits_dISE_EELb1EE7CompareEEvT_SO_T0_.exit.i, label %.lr.ph.i.i
 
@@ -2081,7 +2051,7 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_inte
 
 bb.k:                                             ; preds = %bb.p, %.lr.ph.i.i
   %.sroa.0.025.i.i = phi ptr [ %.sroa.0.022.i.i, %.lr.ph.i.i ], [ %.sroa.0.0.i.i, %bb.p ] ; 6 uses
-  %.pn24.i.i = phi ptr [ %0, %.lr.ph.i.i ], [ %.sroa.0.025.i.i, %bb.p ] ; 6 uses
+  %.pn24.i.i = phi ptr [ %0, %.lr.ph.i.i ], [ %.sroa.0.025.i.i, %bb.p ] ; 5 uses
   %i.ap = load double, ptr %.sroa.0.025.i.i, align 8, !tbaa !249 ; 5 uses
   %i.aq = load double, ptr %0, align 8, !tbaa !249 ; 2 uses
   %i.ar = fcmp olt double %i.ap, %i.aq
@@ -2102,16 +2072,12 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4CGAL18Box_intersection_d18Predicate_trait
   call void @llvm.lifetime.start.p0(ptr nonnull %13)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %13, ptr noundef nonnull align 8 dereferenceable(56) %.sroa.0.025.i.i, i64 56, i1 false)
   %i.ax = ptrtoint ptr %.sroa.0.025.i.i to i64
-  %i.ay = sub i64 %i.ax, %17                      ; 4 uses
+  %i.ay = sub i64 %i.ax, %16                      ; 3 uses
   %i.az = icmp sgt i64 %i.ay, 56
   br i1 %i.az, label %bb.m, label %bb.n, !prof !503
 
 bb.m:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4CGAL18Box_intersection_d18Predicate_traits_dINS3_12Box_traits_dINS3_17Box_with_handle_dIdLi3ENS_17__normal_iteratorIPNS2_10Triangle_3INS2_5EpeckEEESt6vectorISA_SaISA_EEEENS3_14ID_FROM_HANDLEEEEEELb1EE7CompareEEclINS7_IPSH_SC_ISH_SaISH_EEEESQ_EEbT_T0_.exit.thread.i.i
-  %20 = getelementptr inbounds nuw i8, ptr %.pn24.i.i, i64 112
-  %.neg34.i.i = udiv exact i64 %i.ay, 56
-  %.neg34.neg.i.i = sub nsw i64 0, %.neg34.i.i
-  %21 = getelementptr inbounds [56 x i8], ptr %20, i64 %.neg34.neg.i.i
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %21, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.ay, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sroa.0.022.i.i, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.ay, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_intersection_d17Box_with_handle_dIdLi3ENS1_IPNS2_10Triangle_3INS2_5EpeckEEESt6vectorIS7_SaIS7_EEEENS3_14ID_FROM_HANDLEEEES9_ISE_SaISE_EEEESI_ET0_T_SK_SJ_.exit.i.i
 
 bb.n:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4CGAL18Box_intersection_d18Predicate_traits_dINS3_12Box_traits_dINS3_17Box_with_handle_dIdLi3ENS_17__normal_iteratorIPNS2_10Triangle_3INS2_5EpeckEEESt6vectorISA_SaISA_EEEENS3_14ID_FROM_HANDLEEEEEELb1EE7CompareEEclINS7_IPSH_SC_ISH_SaISH_EEEESQ_EEbT_T0_.exit.thread.i.i
@@ -2333,7 +2299,7 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_inte
   br i1 %.not.us.i.i40.i, label %.preheader.i.preheader, label %_ZN4CGAL18Box_intersection_d12Box_traits_dINS0_17Box_with_handle_dIdLi3EN9__gnu_cxx17__normal_iteratorIPNS_10Triangle_3INS_5EpeckEEESt6vectorIS7_SaIS7_EEEENS0_14ID_FROM_HANDLEEEEE9min_coordERKSE_i.exit10.i.i.i.us.i.preheader.us.i.i21.i, !llvm.loop !1469
 
 .preheader.i80.i:                                 ; preds = %.noexc101
-  %.sroa.0.022.i81.i = getelementptr inbounds nuw i8, ptr %2, i64 56 ; 2 uses
+  %.sroa.0.022.i81.i = getelementptr inbounds nuw i8, ptr %2, i64 56 ; 3 uses
   %.not23.i82.i = icmp eq ptr %.sroa.0.022.i81.i, %3
   br i1 %.not23.i82.i, label %.preheader.i.preheader, label %.lr.ph.i83.i
 
@@ -2343,7 +2309,7 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_inte
 
 bb.w:                                             ; preds = %bb.ab, %.lr.ph.i83.i
   %.sroa.0.025.i84.i = phi ptr [ %.sroa.0.022.i81.i, %.lr.ph.i83.i ], [ %.sroa.0.0.i104.i, %bb.ab ] ; 6 uses
-  %.pn24.i85.i = phi ptr [ %2, %.lr.ph.i83.i ], [ %.sroa.0.025.i84.i, %bb.ab ] ; 6 uses
+  %.pn24.i85.i = phi ptr [ %2, %.lr.ph.i83.i ], [ %.sroa.0.025.i84.i, %bb.ab ] ; 5 uses
   %i.cu = load double, ptr %.sroa.0.025.i84.i, align 8, !tbaa !249 ; 5 uses
   %i.cv = load double, ptr %2, align 8, !tbaa !249 ; 2 uses
   %i.cw = fcmp olt double %i.cu, %i.cv
@@ -2364,16 +2330,12 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4CGAL18Box_intersection_d18Predicate_trait
   call void @llvm.lifetime.start.p0(ptr nonnull %11)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %11, ptr noundef nonnull align 8 dereferenceable(56) %.sroa.0.025.i84.i, i64 56, i1 false)
   %i.dc = ptrtoint ptr %.sroa.0.025.i84.i to i64
-  %i.dd = sub i64 %i.dc, %i.bk                    ; 4 uses
+  %i.dd = sub i64 %i.dc, %i.bk                    ; 3 uses
   %i.de = icmp sgt i64 %i.dd, 56
   br i1 %i.de, label %bb.y, label %bb.z, !prof !503
 
 bb.y:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4CGAL18Box_intersection_d18Predicate_traits_dINS3_12Box_traits_dINS3_17Box_with_handle_dIdLi3ENS_17__normal_iteratorIPNS2_10Triangle_3INS2_5EpeckEEESt6vectorISA_SaISA_EEEENS3_14ID_FROM_HANDLEEEEEELb1EE7CompareEEclINS7_IPSH_SC_ISH_SaISH_EEEESQ_EEbT_T0_.exit.thread.i109.i
-  %22 = getelementptr inbounds nuw i8, ptr %.pn24.i85.i, i64 112
-  %.neg34.i111.i = udiv exact i64 %i.dd, 56
-  %.neg34.neg.i112.i = sub nsw i64 0, %.neg34.i111.i
-  %23 = getelementptr inbounds [56 x i8], ptr %22, i64 %.neg34.neg.i112.i
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %23, ptr noundef nonnull align 8 dereferenceable(1) %2, i64 %i.dd, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sroa.0.022.i81.i, ptr noundef nonnull align 8 dereferenceable(1) %2, i64 %i.dd, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_intersection_d17Box_with_handle_dIdLi3ENS1_IPNS2_10Triangle_3INS2_5EpeckEEESt6vectorIS7_SaIS7_EEEENS3_14ID_FROM_HANDLEEEES9_ISE_SaISE_EEEESI_ET0_T_SK_SJ_.exit.i110.i
 
 bb.z:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4CGAL18Box_intersection_d18Predicate_traits_dINS3_12Box_traits_dINS3_17Box_with_handle_dIdLi3ENS_17__normal_iteratorIPNS2_10Triangle_3INS2_5EpeckEEESt6vectorISA_SaISA_EEEENS3_14ID_FROM_HANDLEEEEEELb1EE7CompareEEclINS7_IPSH_SC_ISH_SaISH_EEEESQ_EEbT_T0_.exit.thread.i109.i
@@ -2498,7 +2460,7 @@ bb.ae:                                            ; preds = %.lr.ph181.split.us.
   br i1 %i.eg, label %.noexc102, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
-  invoke fastcc void @_ZZN3igl8copyleft4cgalL22intersect_other_helperIN4CGAL5EpeckEN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS6_IiLin1ELin1ELi0ELin1ELin1EEES7_S8_S8_NS6_INS3_13Lazy_exact_ntIN5boost14multiprecision6numberINSB_8backends16rational_adaptorINSD_15cpp_int_backendILm0ELm0ELNSB_16cpp_integer_typeE1ELNSB_18cpp_int_check_typeE0ESaIyEEEEELNSB_26expression_template_optionE1EEEEELin1ELi3ELi0ELin1ELi3EEES8_NS6_IiLin1ELi1ELi0ELin1ELi1EEESP_EEbRKNS5_10MatrixBaseIT0_EERKNSQ_IT1_EERKNSQ_IT2_EERKNSQ_IT3_EERKNS1_28RemeshSelfIntersectionsParamERNS5_15PlainObjectBaseIT4_EERNS1A_IT5_EERNS1A_IT6_EERNS1A_IT7_EERNS1A_IT8_EEENKUlRKNS3_18Box_intersection_d17Box_with_handle_dIdLi3EN9__gnu_cxx17__normal_iteratorIPNS3_10Triangle_3IS4_EESt6vectorIS1V_SaIS1V_EEEENS1Q_14ID_FROM_HANDLEEEES24_E_clES24_S24_(ptr noundef nonnull readonly align 8 dereferenceable(48) %14, ptr %i.ee, ptr %i.ef)
+  invoke fastcc void @_ZZN3igl8copyleft4cgalL22intersect_other_helperIN4CGAL5EpeckEN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS6_IiLin1ELin1ELi0ELin1ELin1EEES7_S8_S8_NS6_INS3_13Lazy_exact_ntIN5boost14multiprecision6numberINSB_8backends16rational_adaptorINSD_15cpp_int_backendILm0ELm0ELNSB_16cpp_integer_typeE1ELNSB_18cpp_int_check_typeE0ESaIyEEEEELNSB_26expression_template_optionE1EEEEELin1ELi3ELi0ELin1ELi3EEES8_NS6_IiLin1ELi1ELi0ELin1ELi1EEESP_EEbRKNS5_10MatrixBaseIT0_EERKNSQ_IT1_EERKNSQ_IT2_EERKNSQ_IT3_EERKNS1_28RemeshSelfIntersectionsParamERNS5_15PlainObjectBaseIT4_EERNS1A_IT5_EERNS1A_IT6_EERNS1A_IT7_EERNS1A_IT8_EEENKUlRKNS3_18Box_intersection_d17Box_with_handle_dIdLi3EN9__gnu_cxx17__normal_iteratorIPNS3_10Triangle_3IS4_EESt6vectorIS1V_SaIS1V_EEEENS1Q_14ID_FROM_HANDLEEEES24_E_clES24_S24_(ptr noundef nonnull readonly align 8 dereferenceable(48) %6, ptr %i.ee, ptr %i.ef)
           to label %.noexc102 unwind label %.loopexit
 
 .noexc102:                                        ; preds = %bb.af, %bb.ae
@@ -2521,7 +2483,7 @@ bb.ag:                                            ; preds = %.lr.ph181.split.i
   br i1 %i.eo, label %.noexc103, label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag
-  invoke fastcc void @_ZZN3igl8copyleft4cgalL22intersect_other_helperIN4CGAL5EpeckEN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS6_IiLin1ELin1ELi0ELin1ELin1EEES7_S8_S8_NS6_INS3_13Lazy_exact_ntIN5boost14multiprecision6numberINSB_8backends16rational_adaptorINSD_15cpp_int_backendILm0ELm0ELNSB_16cpp_integer_typeE1ELNSB_18cpp_int_check_typeE0ESaIyEEEEELNSB_26expression_template_optionE1EEEEELin1ELi3ELi0ELin1ELi3EEES8_NS6_IiLin1ELi1ELi0ELin1ELi1EEESP_EEbRKNS5_10MatrixBaseIT0_EERKNSQ_IT1_EERKNSQ_IT2_EERKNSQ_IT3_EERKNS1_28RemeshSelfIntersectionsParamERNS5_15PlainObjectBaseIT4_EERNS1A_IT5_EERNS1A_IT6_EERNS1A_IT7_EERNS1A_IT8_EEENKUlRKNS3_18Box_intersection_d17Box_with_handle_dIdLi3EN9__gnu_cxx17__normal_iteratorIPNS3_10Triangle_3IS4_EESt6vectorIS1V_SaIS1V_EEEENS1Q_14ID_FROM_HANDLEEEES24_E_clES24_S24_(ptr noundef nonnull readonly align 8 dereferenceable(48) %14, ptr %i.en, ptr %i.em)
+  invoke fastcc void @_ZZN3igl8copyleft4cgalL22intersect_other_helperIN4CGAL5EpeckEN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS6_IiLin1ELin1ELi0ELin1ELin1EEES7_S8_S8_NS6_INS3_13Lazy_exact_ntIN5boost14multiprecision6numberINSB_8backends16rational_adaptorINSD_15cpp_int_backendILm0ELm0ELNSB_16cpp_integer_typeE1ELNSB_18cpp_int_check_typeE0ESaIyEEEEELNSB_26expression_template_optionE1EEEEELin1ELi3ELi0ELin1ELi3EEES8_NS6_IiLin1ELi1ELi0ELin1ELi1EEESP_EEbRKNS5_10MatrixBaseIT0_EERKNSQ_IT1_EERKNSQ_IT2_EERKNSQ_IT3_EERKNS1_28RemeshSelfIntersectionsParamERNS5_15PlainObjectBaseIT4_EERNS1A_IT5_EERNS1A_IT6_EERNS1A_IT7_EERNS1A_IT8_EEENKUlRKNS3_18Box_intersection_d17Box_with_handle_dIdLi3EN9__gnu_cxx17__normal_iteratorIPNS3_10Triangle_3IS4_EESt6vectorIS1V_SaIS1V_EEEENS1Q_14ID_FROM_HANDLEEEES24_E_clES24_S24_(ptr noundef nonnull readonly align 8 dereferenceable(48) %6, ptr %i.en, ptr %i.em)
           to label %.noexc103 unwind label %.loopexit.split-lp.loopexit
 
 .noexc103:                                        ; preds = %bb.ah, %bb.ag
@@ -2532,18 +2494,10 @@ bb.ah:                                            ; preds = %bb.ag
 .critedge2.i:                                     ; preds = %.noexc103, %.lr.ph181.split.i, %.noexc102, %.lr.ph181.split.us.i, %.critedge.i
   %i.eq = getelementptr inbounds nuw i8, ptr %.sroa.0154.0185.i, i64 56 ; 2 uses
   %.not.i = icmp eq ptr %i.eq, %3
-  br i1 %.not.i, label %.loopexit130, label %.preheader.i, !llvm.loop !1472
-
-.loopexit130:                                     ; preds = %.critedge2.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %14)
-  br label %bb.az
+  br i1 %.not.i, label %bb.az, label %.preheader.i, !llvm.loop !1472
 
 bb.ai:                                            ; preds = %bb.c
-  %24 = ptrtoint ptr %1 to i64
-  %25 = ptrtoint ptr %0 to i64
-  %26 = sub i64 %24, %25
-  %27 = sdiv exact i64 %26, 56
-  %i.er = icmp slt i64 %27, %7
+  %i.er = icmp slt i64 %18, %7
   br i1 %i.er, label %bb.ak, label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai
@@ -2565,12 +2519,12 @@ bb.al:                                            ; preds = %bb.aj
   br i1 %or.cond100, label %.thread, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
-  store double %4, ptr %15, align 8, !tbaa !1473
-  %i.ez = getelementptr inbounds nuw i8, ptr %15, i64 8
+  store double %4, ptr %14, align 8, !tbaa !1473
+  %i.ez = getelementptr inbounds nuw i8, ptr %14, i64 8
   store double %5, ptr %i.ez, align 8, !tbaa !1475
-  %i.fa = getelementptr inbounds nuw i8, ptr %15, i64 16
+  %i.fa = getelementptr inbounds nuw i8, ptr %14, i64 16
   store i32 %8, ptr %i.fa, align 8, !tbaa !1476
-  %i.fb = invoke ptr @_ZSt9partitionIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_intersection_d17Box_with_handle_dIdLi3ENS1_IPNS2_10Triangle_3INS2_5EpeckEEESt6vectorIS7_SaIS7_EEEENS3_14ID_FROM_HANDLEEEES9_ISE_SaISE_EEEENS3_18Predicate_traits_dINS3_12Box_traits_dISE_EELb1EE8SpanningEET_SO_SO_T0_(ptr %2, ptr %3, ptr noundef nonnull byval(%"class.CGAL::Box_intersection_d::Predicate_traits_d<CGAL::Box_intersection_d::Box_traits_d<CGAL::Box_intersection_d::Box_with_handle_d<double, 3, __gnu_cxx::__normal_iterator<CGAL::Triangle_3<CGAL::Epeck> *, std::vector<CGAL::Triangle_3<CGAL::Epeck>>>>>, true>::Spanning") align 8 %15)
+  %i.fb = invoke ptr @_ZSt9partitionIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_intersection_d17Box_with_handle_dIdLi3ENS1_IPNS2_10Triangle_3INS2_5EpeckEEESt6vectorIS7_SaIS7_EEEENS3_14ID_FROM_HANDLEEEES9_ISE_SaISE_EEEENS3_18Predicate_traits_dINS3_12Box_traits_dISE_EELb1EE8SpanningEET_SO_SO_T0_(ptr %2, ptr %3, ptr noundef nonnull byval(%"class.CGAL::Box_intersection_d::Predicate_traits_d<CGAL::Box_intersection_d::Box_traits_d<CGAL::Box_intersection_d::Box_with_handle_d<double, 3, __gnu_cxx::__normal_iterator<CGAL::Triangle_3<CGAL::Epeck> *, std::vector<CGAL::Triangle_3<CGAL::Epeck>>>>>, true>::Spanning") align 8 %14)
           to label %bb.an unwind label %bb.aq     ; 5 uses
 
 bb.an:                                            ; preds = %bb.am
@@ -2637,7 +2591,7 @@ bb.ay:                                            ; preds = %bb.ax, %bb.as
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #22
   br label %bb.az
 
-bb.az:                                            ; preds = %bb.ak, %bb.a, %bb.b, %bb.ay, %.loopexit130
+bb.az:                                            ; preds = %.critedge2.i, %bb.ak, %bb.a, %bb.b, %bb.ay
   %i.fp = load i32, ptr %i.b, align 4, !tbaa !47
   %i.fq = add nsw i32 %i.fp, -1
   store i32 %i.fq, ptr %i.b, align 4, !tbaa !47
@@ -2842,7 +2796,7 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_inte
   br i1 %.not.us.i.i, label %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_intersection_d17Box_with_handle_dIdLi3ENS1_IPNS2_10Triangle_3INS2_5EpeckEEESt6vectorIS7_SaIS7_EEEENS3_14ID_FROM_HANDLEEEES9_ISE_SaISE_EEEENS3_18Predicate_traits_dINS3_12Box_traits_dISE_EELb1EE7CompareEEvT_SO_T0_.exit, label %_ZN4CGAL18Box_intersection_d12Box_traits_dINS0_17Box_with_handle_dIdLi3EN9__gnu_cxx17__normal_iteratorIPNS_10Triangle_3INS_5EpeckEEESt6vectorIS7_SaIS7_EEEENS0_14ID_FROM_HANDLEEEEE9min_coordERKSE_i.exit10.i.i.i.us.i.preheader.us.i.i, !llvm.loop !1469
 
 .preheader.i:                                     ; preds = %bb.b
-  %.sroa.0.022.i = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
+  %.sroa.0.022.i = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 3 uses
   %.not23.i = icmp eq ptr %.sroa.0.022.i, %1
   br i1 %.not23.i, label %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_intersection_d17Box_with_handle_dIdLi3ENS1_IPNS2_10Triangle_3INS2_5EpeckEEESt6vectorIS7_SaIS7_EEEENS3_14ID_FROM_HANDLEEEES9_ISE_SaISE_EEEENS3_18Predicate_traits_dINS3_12Box_traits_dISE_EELb1EE7CompareEEvT_SO_T0_.exit, label %.lr.ph.i
 
@@ -2852,7 +2806,7 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_inte
 
 bb.i:                                             ; preds = %bb.n, %.lr.ph.i
   %.sroa.0.025.i = phi ptr [ %.sroa.0.022.i, %.lr.ph.i ], [ %.sroa.0.0.i, %bb.n ] ; 6 uses
-  %.pn24.i = phi ptr [ %0, %.lr.ph.i ], [ %.sroa.0.025.i, %bb.n ] ; 6 uses
+  %.pn24.i = phi ptr [ %0, %.lr.ph.i ], [ %.sroa.0.025.i, %bb.n ] ; 5 uses
   %i.al = load double, ptr %.sroa.0.025.i, align 8, !tbaa !249 ; 5 uses
   %i.am = load double, ptr %0, align 8, !tbaa !249 ; 2 uses
   %i.an = fcmp olt double %i.al, %i.am
@@ -2873,16 +2827,12 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4CGAL18Box_intersection_d18Predicate_trait
   call void @llvm.lifetime.start.p0(ptr nonnull %10)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %10, ptr noundef nonnull align 8 dereferenceable(56) %.sroa.0.025.i, i64 56, i1 false)
   %i.at = ptrtoint ptr %.sroa.0.025.i to i64
-  %i.au = sub i64 %i.at, %i.b                     ; 4 uses
+  %i.au = sub i64 %i.at, %i.b                     ; 3 uses
   %i.av = icmp sgt i64 %i.au, 56
   br i1 %i.av, label %bb.k, label %bb.l, !prof !503
 
 bb.k:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4CGAL18Box_intersection_d18Predicate_traits_dINS3_12Box_traits_dINS3_17Box_with_handle_dIdLi3ENS_17__normal_iteratorIPNS2_10Triangle_3INS2_5EpeckEEESt6vectorISA_SaISA_EEEENS3_14ID_FROM_HANDLEEEEEELb1EE7CompareEEclINS7_IPSH_SC_ISH_SaISH_EEEESQ_EEbT_T0_.exit.thread.i
-  %11 = getelementptr inbounds nuw i8, ptr %.pn24.i, i64 112
-  %.neg34.i = udiv exact i64 %i.au, 56
-  %.neg34.neg.i = sub nsw i64 0, %.neg34.i
-  %12 = getelementptr inbounds [56 x i8], ptr %11, i64 %.neg34.neg.i
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %12, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.au, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sroa.0.022.i, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.au, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_intersection_d17Box_with_handle_dIdLi3ENS1_IPNS2_10Triangle_3INS2_5EpeckEEESt6vectorIS7_SaIS7_EEEENS3_14ID_FROM_HANDLEEEES9_ISE_SaISE_EEEESI_ET0_T_SK_SJ_.exit.i
 
 bb.l:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4CGAL18Box_intersection_d18Predicate_traits_dINS3_12Box_traits_dINS3_17Box_with_handle_dIdLi3ENS_17__normal_iteratorIPNS2_10Triangle_3INS2_5EpeckEEESt6vectorISA_SaISA_EEEENS3_14ID_FROM_HANDLEEEEEELb1EE7CompareEEclINS7_IPSH_SC_ISH_SaISH_EEEESQ_EEbT_T0_.exit.thread.i
@@ -3105,7 +3055,7 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_inte
   br i1 %.not.us.i.i87, label %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_intersection_d17Box_with_handle_dIdLi3ENS1_IPNS2_10Triangle_3INS2_5EpeckEEESt6vectorIS7_SaIS7_EEEENS3_14ID_FROM_HANDLEEEES9_ISE_SaISE_EEEENS3_18Predicate_traits_dINS3_12Box_traits_dISE_EELb1EE7CompareEEvT_SO_T0_.exit32, label %_ZN4CGAL18Box_intersection_d12Box_traits_dINS0_17Box_with_handle_dIdLi3EN9__gnu_cxx17__normal_iteratorIPNS_10Triangle_3INS_5EpeckEEESt6vectorIS7_SaIS7_EEEENS0_14ID_FROM_HANDLEEEEE9min_coordERKSE_i.exit10.i.i.i.us.i.preheader.us.i.i68, !llvm.loop !1469
 
 .preheader.i129:                                  ; preds = %bb.o
-  %.sroa.0.022.i130 = getelementptr inbounds nuw i8, ptr %2, i64 56 ; 2 uses
+  %.sroa.0.022.i130 = getelementptr inbounds nuw i8, ptr %2, i64 56 ; 3 uses
   %.not23.i131 = icmp eq ptr %.sroa.0.022.i130, %3
   br i1 %.not23.i131, label %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_intersection_d17Box_with_handle_dIdLi3ENS1_IPNS2_10Triangle_3INS2_5EpeckEEESt6vectorIS7_SaIS7_EEEENS3_14ID_FROM_HANDLEEEES9_ISE_SaISE_EEEENS3_18Predicate_traits_dINS3_12Box_traits_dISE_EELb1EE7CompareEEvT_SO_T0_.exit32, label %.lr.ph.i132
 
@@ -3115,7 +3065,7 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_inte
 
 bb.v:                                             ; preds = %bb.aa, %.lr.ph.i132
   %.sroa.0.025.i133 = phi ptr [ %.sroa.0.022.i130, %.lr.ph.i132 ], [ %.sroa.0.0.i154, %bb.aa ] ; 6 uses
-  %.pn24.i134 = phi ptr [ %2, %.lr.ph.i132 ], [ %.sroa.0.025.i133, %bb.aa ] ; 6 uses
+  %.pn24.i134 = phi ptr [ %2, %.lr.ph.i132 ], [ %.sroa.0.025.i133, %bb.aa ] ; 5 uses
   %i.cq = load double, ptr %.sroa.0.025.i133, align 8, !tbaa !249 ; 5 uses
   %i.cr = load double, ptr %2, align 8, !tbaa !249 ; 2 uses
   %i.cs = fcmp olt double %i.cq, %i.cr
@@ -3136,16 +3086,12 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4CGAL18Box_intersection_d18Predicate_trait
   call void @llvm.lifetime.start.p0(ptr nonnull %8)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %8, ptr noundef nonnull align 8 dereferenceable(56) %.sroa.0.025.i133, i64 56, i1 false)
   %i.cy = ptrtoint ptr %.sroa.0.025.i133 to i64
-  %i.cz = sub i64 %i.cy, %i.bg                    ; 4 uses
+  %i.cz = sub i64 %i.cy, %i.bg                    ; 3 uses
   %i.da = icmp sgt i64 %i.cz, 56
   br i1 %i.da, label %bb.x, label %bb.y, !prof !503
 
 bb.x:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4CGAL18Box_intersection_d18Predicate_traits_dINS3_12Box_traits_dINS3_17Box_with_handle_dIdLi3ENS_17__normal_iteratorIPNS2_10Triangle_3INS2_5EpeckEEESt6vectorISA_SaISA_EEEENS3_14ID_FROM_HANDLEEEEEELb1EE7CompareEEclINS7_IPSH_SC_ISH_SaISH_EEEESQ_EEbT_T0_.exit.thread.i159
-  %13 = getelementptr inbounds nuw i8, ptr %.pn24.i134, i64 112
-  %.neg34.i161 = udiv exact i64 %i.cz, 56
-  %.neg34.neg.i162 = sub nsw i64 0, %.neg34.i161
-  %14 = getelementptr inbounds [56 x i8], ptr %13, i64 %.neg34.neg.i162
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %14, ptr noundef nonnull align 8 dereferenceable(1) %2, i64 %i.cz, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sroa.0.022.i130, ptr noundef nonnull align 8 dereferenceable(1) %2, i64 %i.cz, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_intersection_d17Box_with_handle_dIdLi3ENS1_IPNS2_10Triangle_3INS2_5EpeckEEESt6vectorIS7_SaIS7_EEEENS3_14ID_FROM_HANDLEEEES9_ISE_SaISE_EEEESI_ET0_T_SK_SJ_.exit.i160
 
 bb.y:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4CGAL18Box_intersection_d18Predicate_traits_dINS3_12Box_traits_dINS3_17Box_with_handle_dIdLi3ENS_17__normal_iteratorIPNS2_10Triangle_3INS2_5EpeckEEESt6vectorISA_SaISA_EEEENS3_14ID_FROM_HANDLEEEEEELb1EE7CompareEEclINS7_IPSH_SC_ISH_SaISH_EEEESQ_EEbT_T0_.exit.thread.i159
@@ -3548,8 +3494,7 @@ bb.a:
   %13 = alloca %"class.CGAL::Box_intersection_d::Box_with_handle_d.461", align 8 ; 4 uses
   %.sroa.10.i.i.i18.i = alloca [3 x double], align 8 ; 4 uses
   %.sroa.10.i.i.i.i = alloca [3 x double], align 8 ; 4 uses
-  %14 = alloca %class.anon.1135, align 8          ; 5 uses
-  %15 = alloca %"class.CGAL::Box_intersection_d::Predicate_traits_d<CGAL::Box_intersection_d::Box_traits_d<CGAL::Box_intersection_d::Box_with_handle_d<double, 3, __gnu_cxx::__normal_iterator<CGAL::Triangle_3<CGAL::Epeck> *, std::vector<CGAL::Triangle_3<CGAL::Epeck>>>>>, true>::Spanning", align 8 ; 4 uses
+  %14 = alloca %"class.CGAL::Box_intersection_d::Predicate_traits_d<CGAL::Box_intersection_d::Box_traits_d<CGAL::Box_intersection_d::Box_with_handle_d<double, 3, __gnu_cxx::__normal_iterator<CGAL::Triangle_3<CGAL::Epeck> *, std::vector<CGAL::Triangle_3<CGAL::Epeck>>>>>, true>::Spanning", align 8 ; 4 uses
   %i.a = alloca double, align 8                   ; 8 uses
   %i.b = tail call align 4 ptr @llvm.threadlocal.address.p0(ptr align 4 @_ZZN4CGAL18Box_intersection_d12segment_treeIN9__gnu_cxx17__normal_iteratorIPNS0_17Box_with_handle_dIdLi3ENS3_IPNS_10Triangle_3INS_5EpeckEEESt6vectorIS7_SaIS7_EEEENS0_14ID_FROM_HANDLEEEES9_ISE_SaISE_EEEESI_ZN3igl8copyleft4cgalL22intersect_other_helperIS6_N5Eigen6MatrixINS_13Lazy_exact_ntIN5boost14multiprecision6numberINSR_8backends16rational_adaptorINST_15cpp_int_backendILm0ELm0ELNSR_16cpp_integer_typeE1ELNSR_18cpp_int_check_typeE0ESaIyEEEEELNSR_26expression_template_optionE1EEEEELin1ELin1ELi1ELin1ELin1EEENSO_IiLin1ELin1ELi0ELin1ELin1EEES14_S15_S15_S14_S15_NSO_IiLin1ELi1ELi0ELin1ELi1EEES16_EEbRKNSN_10MatrixBaseIT0_EERKNS17_IT1_EERKNS17_IT2_EERKNS17_IT3_EERKNSL_28RemeshSelfIntersectionsParamERNSN_15PlainObjectBaseIT4_EERNS1R_IT5_EERNS1R_IT6_EERNS1R_IT7_EERNS1R_IT8_EEEUlRKSE_S28_E_dNS0_18Predicate_traits_dINS0_12Box_traits_dISE_EELb1EEEEEvT_S2E_S18_S18_S1G_S1G_S1C_S1K_libE5level) ; 6 uses
   %i.c = load i32, ptr %i.b, align 4, !tbaa !47
@@ -3581,23 +3526,21 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.h = icmp eq i32 %8, 0
+  %15 = ptrtoint ptr %1 to i64
+  %16 = ptrtoint ptr %0 to i64                    ; 2 uses
+  %17 = sub i64 %15, %16                          ; 2 uses
+  %18 = sdiv exact i64 %17, 56                    ; 2 uses
   br i1 %i.h, label %bb.d, label %bb.ai
 
 bb.d:                                             ; preds = %bb.c
-  call void @llvm.lifetime.start.p0(ptr nonnull %14)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %14, ptr noundef nonnull align 8 dereferenceable(48) %6, i64 48, i1 false)
-  %16 = ptrtoint ptr %1 to i64
-  %17 = ptrtoint ptr %0 to i64                    ; 2 uses
-  %18 = sub i64 %16, %17                          ; 2 uses
-  %19 = sdiv exact i64 %18, 56
-  %i.i = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %19, i1 true)
+  %i.i = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %18, i1 true)
   %i.j = shl nuw nsw i64 %i.i, 1
   %i.k = xor i64 %i.j, 126
   invoke void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_intersection_d17Box_with_handle_dIdLi3ENS1_IPNS2_10Triangle_3INS2_5EpeckEEESt6vectorIS7_SaIS7_EEEENS3_14ID_FROM_HANDLEEEES9_ISE_SaISE_EEEElNS0_5__ops15_Iter_comp_iterINS3_18Predicate_traits_dINS3_12Box_traits_dISE_EELb1EE7CompareEEEEvT_SR_T0_T1_(ptr %0, ptr %1, i64 noundef %i.k, i32 0)
           to label %.noexc unwind label %.loopexit.split-lp.loopexit.split-lp
 
 .noexc:                                           ; preds = %bb.d
-  %i.l = icmp sgt i64 %18, 896
+  %i.l = icmp sgt i64 %17, 896
   br i1 %i.l, label %bb.e, label %.preheader.i.i
 
 bb.e:                                             ; preds = %.noexc
@@ -3743,7 +3686,7 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_inte
   br i1 %.not.us.i.i.i, label %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_intersection_d17Box_with_handle_dIdLi3ENS1_IPNS2_10Triangle_3INS2_5EpeckEEESt6vectorIS7_SaIS7_EEEENS3_14ID_FROM_HANDLEEEES9_ISE_SaISE_EEEENS3_18Predicate_traits_dINS3_12Box_traits_dISE_EELb1EE7CompareEEvT_SO_T0_.exit.i, label %_ZN4CGAL18Box_intersection_d12Box_traits_dINS0_17Box_with_handle_dIdLi3EN9__gnu_cxx17__normal_iteratorIPNS_10Triangle_3INS_5EpeckEEESt6vectorIS7_SaIS7_EEEENS0_14ID_FROM_HANDLEEEEE9min_coordERKSE_i.exit10.i.i.i.us.i.preheader.us.i.i.i, !llvm.loop !1469
 
 .preheader.i.i:                                   ; preds = %.noexc
-  %.sroa.0.022.i.i = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
+  %.sroa.0.022.i.i = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 3 uses
   %.not23.i.i = icmp eq ptr %.sroa.0.022.i.i, %1
   br i1 %.not23.i.i, label %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_intersection_d17Box_with_handle_dIdLi3ENS1_IPNS2_10Triangle_3INS2_5EpeckEEESt6vectorIS7_SaIS7_EEEENS3_14ID_FROM_HANDLEEEES9_ISE_SaISE_EEEENS3_18Predicate_traits_dINS3_12Box_traits_dISE_EELb1EE7CompareEEvT_SO_T0_.exit.i, label %.lr.ph.i.i
 
@@ -3753,7 +3696,7 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_inte
 
 bb.k:                                             ; preds = %bb.p, %.lr.ph.i.i
   %.sroa.0.025.i.i = phi ptr [ %.sroa.0.022.i.i, %.lr.ph.i.i ], [ %.sroa.0.0.i.i, %bb.p ] ; 6 uses
-  %.pn24.i.i = phi ptr [ %0, %.lr.ph.i.i ], [ %.sroa.0.025.i.i, %bb.p ] ; 6 uses
+  %.pn24.i.i = phi ptr [ %0, %.lr.ph.i.i ], [ %.sroa.0.025.i.i, %bb.p ] ; 5 uses
   %i.ap = load double, ptr %.sroa.0.025.i.i, align 8, !tbaa !249 ; 5 uses
   %i.aq = load double, ptr %0, align 8, !tbaa !249 ; 2 uses
   %i.ar = fcmp olt double %i.ap, %i.aq
@@ -3774,16 +3717,12 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4CGAL18Box_intersection_d18Predicate_trait
   call void @llvm.lifetime.start.p0(ptr nonnull %13)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %13, ptr noundef nonnull align 8 dereferenceable(56) %.sroa.0.025.i.i, i64 56, i1 false)
   %i.ax = ptrtoint ptr %.sroa.0.025.i.i to i64
-  %i.ay = sub i64 %i.ax, %17                      ; 4 uses
+  %i.ay = sub i64 %i.ax, %16                      ; 3 uses
   %i.az = icmp sgt i64 %i.ay, 56
   br i1 %i.az, label %bb.m, label %bb.n, !prof !503
 
 bb.m:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4CGAL18Box_intersection_d18Predicate_traits_dINS3_12Box_traits_dINS3_17Box_with_handle_dIdLi3ENS_17__normal_iteratorIPNS2_10Triangle_3INS2_5EpeckEEESt6vectorISA_SaISA_EEEENS3_14ID_FROM_HANDLEEEEEELb1EE7CompareEEclINS7_IPSH_SC_ISH_SaISH_EEEESQ_EEbT_T0_.exit.thread.i.i
-  %20 = getelementptr inbounds nuw i8, ptr %.pn24.i.i, i64 112
-  %.neg34.i.i = udiv exact i64 %i.ay, 56
-  %.neg34.neg.i.i = sub nsw i64 0, %.neg34.i.i
-  %21 = getelementptr inbounds [56 x i8], ptr %20, i64 %.neg34.neg.i.i
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %21, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.ay, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sroa.0.022.i.i, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.ay, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_intersection_d17Box_with_handle_dIdLi3ENS1_IPNS2_10Triangle_3INS2_5EpeckEEESt6vectorIS7_SaIS7_EEEENS3_14ID_FROM_HANDLEEEES9_ISE_SaISE_EEEESI_ET0_T_SK_SJ_.exit.i.i
 
 bb.n:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4CGAL18Box_intersection_d18Predicate_traits_dINS3_12Box_traits_dINS3_17Box_with_handle_dIdLi3ENS_17__normal_iteratorIPNS2_10Triangle_3INS2_5EpeckEEESt6vectorISA_SaISA_EEEENS3_14ID_FROM_HANDLEEEEEELb1EE7CompareEEclINS7_IPSH_SC_ISH_SaISH_EEEESQ_EEbT_T0_.exit.thread.i.i
@@ -4005,7 +3944,7 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_inte
   br i1 %.not.us.i.i40.i, label %.preheader.i.preheader, label %_ZN4CGAL18Box_intersection_d12Box_traits_dINS0_17Box_with_handle_dIdLi3EN9__gnu_cxx17__normal_iteratorIPNS_10Triangle_3INS_5EpeckEEESt6vectorIS7_SaIS7_EEEENS0_14ID_FROM_HANDLEEEEE9min_coordERKSE_i.exit10.i.i.i.us.i.preheader.us.i.i21.i, !llvm.loop !1469
 
 .preheader.i80.i:                                 ; preds = %.noexc101
-  %.sroa.0.022.i81.i = getelementptr inbounds nuw i8, ptr %2, i64 56 ; 2 uses
+  %.sroa.0.022.i81.i = getelementptr inbounds nuw i8, ptr %2, i64 56 ; 3 uses
   %.not23.i82.i = icmp eq ptr %.sroa.0.022.i81.i, %3
   br i1 %.not23.i82.i, label %.preheader.i.preheader, label %.lr.ph.i83.i
 
@@ -4015,7 +3954,7 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_inte
 
 bb.w:                                             ; preds = %bb.ab, %.lr.ph.i83.i
   %.sroa.0.025.i84.i = phi ptr [ %.sroa.0.022.i81.i, %.lr.ph.i83.i ], [ %.sroa.0.0.i104.i, %bb.ab ] ; 6 uses
-  %.pn24.i85.i = phi ptr [ %2, %.lr.ph.i83.i ], [ %.sroa.0.025.i84.i, %bb.ab ] ; 6 uses
+  %.pn24.i85.i = phi ptr [ %2, %.lr.ph.i83.i ], [ %.sroa.0.025.i84.i, %bb.ab ] ; 5 uses
   %i.cu = load double, ptr %.sroa.0.025.i84.i, align 8, !tbaa !249 ; 5 uses
   %i.cv = load double, ptr %2, align 8, !tbaa !249 ; 2 uses
   %i.cw = fcmp olt double %i.cu, %i.cv
@@ -4036,16 +3975,12 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4CGAL18Box_intersection_d18Predicate_trait
   call void @llvm.lifetime.start.p0(ptr nonnull %11)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %11, ptr noundef nonnull align 8 dereferenceable(56) %.sroa.0.025.i84.i, i64 56, i1 false)
   %i.dc = ptrtoint ptr %.sroa.0.025.i84.i to i64
-  %i.dd = sub i64 %i.dc, %i.bk                    ; 4 uses
+  %i.dd = sub i64 %i.dc, %i.bk                    ; 3 uses
   %i.de = icmp sgt i64 %i.dd, 56
   br i1 %i.de, label %bb.y, label %bb.z, !prof !503
 
 bb.y:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4CGAL18Box_intersection_d18Predicate_traits_dINS3_12Box_traits_dINS3_17Box_with_handle_dIdLi3ENS_17__normal_iteratorIPNS2_10Triangle_3INS2_5EpeckEEESt6vectorISA_SaISA_EEEENS3_14ID_FROM_HANDLEEEEEELb1EE7CompareEEclINS7_IPSH_SC_ISH_SaISH_EEEESQ_EEbT_T0_.exit.thread.i109.i
-  %22 = getelementptr inbounds nuw i8, ptr %.pn24.i85.i, i64 112
-  %.neg34.i111.i = udiv exact i64 %i.dd, 56
-  %.neg34.neg.i112.i = sub nsw i64 0, %.neg34.i111.i
-  %23 = getelementptr inbounds [56 x i8], ptr %22, i64 %.neg34.neg.i112.i
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %23, ptr noundef nonnull align 8 dereferenceable(1) %2, i64 %i.dd, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sroa.0.022.i81.i, ptr noundef nonnull align 8 dereferenceable(1) %2, i64 %i.dd, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_intersection_d17Box_with_handle_dIdLi3ENS1_IPNS2_10Triangle_3INS2_5EpeckEEESt6vectorIS7_SaIS7_EEEENS3_14ID_FROM_HANDLEEEES9_ISE_SaISE_EEEESI_ET0_T_SK_SJ_.exit.i110.i
 
 bb.z:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4CGAL18Box_intersection_d18Predicate_traits_dINS3_12Box_traits_dINS3_17Box_with_handle_dIdLi3ENS_17__normal_iteratorIPNS2_10Triangle_3INS2_5EpeckEEESt6vectorISA_SaISA_EEEENS3_14ID_FROM_HANDLEEEEEELb1EE7CompareEEclINS7_IPSH_SC_ISH_SaISH_EEEESQ_EEbT_T0_.exit.thread.i109.i
@@ -4170,7 +4105,7 @@ bb.ae:                                            ; preds = %.lr.ph181.split.us.
   br i1 %i.eg, label %.noexc102, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
-  invoke fastcc void @_ZZN3igl8copyleft4cgalL22intersect_other_helperIN4CGAL5EpeckEN5Eigen6MatrixINS3_13Lazy_exact_ntIN5boost14multiprecision6numberINS9_8backends16rational_adaptorINSB_15cpp_int_backendILm0ELm0ELNS9_16cpp_integer_typeE1ELNS9_18cpp_int_check_typeE0ESaIyEEEEELNS9_26expression_template_optionE1EEEEELin1ELin1ELi1ELin1ELin1EEENS6_IiLin1ELin1ELi0ELin1ELin1EEESM_SN_SN_SM_SN_NS6_IiLin1ELi1ELi0ELin1ELi1EEESO_EEbRKNS5_10MatrixBaseIT0_EERKNSP_IT1_EERKNSP_IT2_EERKNSP_IT3_EERKNS1_28RemeshSelfIntersectionsParamERNS5_15PlainObjectBaseIT4_EERNS19_IT5_EERNS19_IT6_EERNS19_IT7_EERNS19_IT8_EEENKUlRKNS3_18Box_intersection_d17Box_with_handle_dIdLi3EN9__gnu_cxx17__normal_iteratorIPNS3_10Triangle_3IS4_EESt6vectorIS1U_SaIS1U_EEEENS1P_14ID_FROM_HANDLEEEES23_E_clES23_S23_(ptr noundef nonnull readonly align 8 dereferenceable(48) %14, ptr %i.ee, ptr %i.ef)
+  invoke fastcc void @_ZZN3igl8copyleft4cgalL22intersect_other_helperIN4CGAL5EpeckEN5Eigen6MatrixINS3_13Lazy_exact_ntIN5boost14multiprecision6numberINS9_8backends16rational_adaptorINSB_15cpp_int_backendILm0ELm0ELNS9_16cpp_integer_typeE1ELNS9_18cpp_int_check_typeE0ESaIyEEEEELNS9_26expression_template_optionE1EEEEELin1ELin1ELi1ELin1ELin1EEENS6_IiLin1ELin1ELi0ELin1ELin1EEESM_SN_SN_SM_SN_NS6_IiLin1ELi1ELi0ELin1ELi1EEESO_EEbRKNS5_10MatrixBaseIT0_EERKNSP_IT1_EERKNSP_IT2_EERKNSP_IT3_EERKNS1_28RemeshSelfIntersectionsParamERNS5_15PlainObjectBaseIT4_EERNS19_IT5_EERNS19_IT6_EERNS19_IT7_EERNS19_IT8_EEENKUlRKNS3_18Box_intersection_d17Box_with_handle_dIdLi3EN9__gnu_cxx17__normal_iteratorIPNS3_10Triangle_3IS4_EESt6vectorIS1U_SaIS1U_EEEENS1P_14ID_FROM_HANDLEEEES23_E_clES23_S23_(ptr noundef nonnull readonly align 8 dereferenceable(48) %6, ptr %i.ee, ptr %i.ef)
           to label %.noexc102 unwind label %.loopexit
 
 .noexc102:                                        ; preds = %bb.af, %bb.ae
@@ -4193,7 +4128,7 @@ bb.ag:                                            ; preds = %.lr.ph181.split.i
   br i1 %i.eo, label %.noexc103, label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag
-  invoke fastcc void @_ZZN3igl8copyleft4cgalL22intersect_other_helperIN4CGAL5EpeckEN5Eigen6MatrixINS3_13Lazy_exact_ntIN5boost14multiprecision6numberINS9_8backends16rational_adaptorINSB_15cpp_int_backendILm0ELm0ELNS9_16cpp_integer_typeE1ELNS9_18cpp_int_check_typeE0ESaIyEEEEELNS9_26expression_template_optionE1EEEEELin1ELin1ELi1ELin1ELin1EEENS6_IiLin1ELin1ELi0ELin1ELin1EEESM_SN_SN_SM_SN_NS6_IiLin1ELi1ELi0ELin1ELi1EEESO_EEbRKNS5_10MatrixBaseIT0_EERKNSP_IT1_EERKNSP_IT2_EERKNSP_IT3_EERKNS1_28RemeshSelfIntersectionsParamERNS5_15PlainObjectBaseIT4_EERNS19_IT5_EERNS19_IT6_EERNS19_IT7_EERNS19_IT8_EEENKUlRKNS3_18Box_intersection_d17Box_with_handle_dIdLi3EN9__gnu_cxx17__normal_iteratorIPNS3_10Triangle_3IS4_EESt6vectorIS1U_SaIS1U_EEEENS1P_14ID_FROM_HANDLEEEES23_E_clES23_S23_(ptr noundef nonnull readonly align 8 dereferenceable(48) %14, ptr %i.en, ptr %i.em)
+  invoke fastcc void @_ZZN3igl8copyleft4cgalL22intersect_other_helperIN4CGAL5EpeckEN5Eigen6MatrixINS3_13Lazy_exact_ntIN5boost14multiprecision6numberINS9_8backends16rational_adaptorINSB_15cpp_int_backendILm0ELm0ELNS9_16cpp_integer_typeE1ELNS9_18cpp_int_check_typeE0ESaIyEEEEELNS9_26expression_template_optionE1EEEEELin1ELin1ELi1ELin1ELin1EEENS6_IiLin1ELin1ELi0ELin1ELin1EEESM_SN_SN_SM_SN_NS6_IiLin1ELi1ELi0ELin1ELi1EEESO_EEbRKNS5_10MatrixBaseIT0_EERKNSP_IT1_EERKNSP_IT2_EERKNSP_IT3_EERKNS1_28RemeshSelfIntersectionsParamERNS5_15PlainObjectBaseIT4_EERNS19_IT5_EERNS19_IT6_EERNS19_IT7_EERNS19_IT8_EEENKUlRKNS3_18Box_intersection_d17Box_with_handle_dIdLi3EN9__gnu_cxx17__normal_iteratorIPNS3_10Triangle_3IS4_EESt6vectorIS1U_SaIS1U_EEEENS1P_14ID_FROM_HANDLEEEES23_E_clES23_S23_(ptr noundef nonnull readonly align 8 dereferenceable(48) %6, ptr %i.en, ptr %i.em)
           to label %.noexc103 unwind label %.loopexit.split-lp.loopexit
 
 .noexc103:                                        ; preds = %bb.ah, %bb.ag
@@ -4204,18 +4139,10 @@ bb.ah:                                            ; preds = %bb.ag
 .critedge2.i:                                     ; preds = %.noexc103, %.lr.ph181.split.i, %.noexc102, %.lr.ph181.split.us.i, %.critedge.i
   %i.eq = getelementptr inbounds nuw i8, ptr %.sroa.0154.0185.i, i64 56 ; 2 uses
   %.not.i = icmp eq ptr %i.eq, %3
-  br i1 %.not.i, label %.loopexit130, label %.preheader.i, !llvm.loop !3671
-
-.loopexit130:                                     ; preds = %.critedge2.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %14)
-  br label %bb.az
+  br i1 %.not.i, label %bb.az, label %.preheader.i, !llvm.loop !3671
 
 bb.ai:                                            ; preds = %bb.c
-  %24 = ptrtoint ptr %1 to i64
-  %25 = ptrtoint ptr %0 to i64
-  %26 = sub i64 %24, %25
-  %27 = sdiv exact i64 %26, 56
-  %i.er = icmp slt i64 %27, %7
+  %i.er = icmp slt i64 %18, %7
   br i1 %i.er, label %bb.ak, label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai
@@ -4237,12 +4164,12 @@ bb.al:                                            ; preds = %bb.aj
   br i1 %or.cond100, label %.thread, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
-  store double %4, ptr %15, align 8, !tbaa !1473
-  %i.ez = getelementptr inbounds nuw i8, ptr %15, i64 8
+  store double %4, ptr %14, align 8, !tbaa !1473
+  %i.ez = getelementptr inbounds nuw i8, ptr %14, i64 8
   store double %5, ptr %i.ez, align 8, !tbaa !1475
-  %i.fa = getelementptr inbounds nuw i8, ptr %15, i64 16
+  %i.fa = getelementptr inbounds nuw i8, ptr %14, i64 16
   store i32 %8, ptr %i.fa, align 8, !tbaa !1476
-  %i.fb = invoke ptr @_ZSt9partitionIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_intersection_d17Box_with_handle_dIdLi3ENS1_IPNS2_10Triangle_3INS2_5EpeckEEESt6vectorIS7_SaIS7_EEEENS3_14ID_FROM_HANDLEEEES9_ISE_SaISE_EEEENS3_18Predicate_traits_dINS3_12Box_traits_dISE_EELb1EE8SpanningEET_SO_SO_T0_(ptr %2, ptr %3, ptr noundef nonnull byval(%"class.CGAL::Box_intersection_d::Predicate_traits_d<CGAL::Box_intersection_d::Box_traits_d<CGAL::Box_intersection_d::Box_with_handle_d<double, 3, __gnu_cxx::__normal_iterator<CGAL::Triangle_3<CGAL::Epeck> *, std::vector<CGAL::Triangle_3<CGAL::Epeck>>>>>, true>::Spanning") align 8 %15)
+  %i.fb = invoke ptr @_ZSt9partitionIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_intersection_d17Box_with_handle_dIdLi3ENS1_IPNS2_10Triangle_3INS2_5EpeckEEESt6vectorIS7_SaIS7_EEEENS3_14ID_FROM_HANDLEEEES9_ISE_SaISE_EEEENS3_18Predicate_traits_dINS3_12Box_traits_dISE_EELb1EE8SpanningEET_SO_SO_T0_(ptr %2, ptr %3, ptr noundef nonnull byval(%"class.CGAL::Box_intersection_d::Predicate_traits_d<CGAL::Box_intersection_d::Box_traits_d<CGAL::Box_intersection_d::Box_with_handle_d<double, 3, __gnu_cxx::__normal_iterator<CGAL::Triangle_3<CGAL::Epeck> *, std::vector<CGAL::Triangle_3<CGAL::Epeck>>>>>, true>::Spanning") align 8 %14)
           to label %bb.an unwind label %bb.aq     ; 5 uses
 
 bb.an:                                            ; preds = %bb.am
@@ -4309,7 +4236,7 @@ bb.ay:                                            ; preds = %bb.ax, %bb.as
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #22
   br label %bb.az
 
-bb.az:                                            ; preds = %bb.ak, %bb.a, %bb.b, %bb.ay, %.loopexit130
+bb.az:                                            ; preds = %.critedge2.i, %bb.ak, %bb.a, %bb.b, %bb.ay
   %i.fp = load i32, ptr %i.b, align 4, !tbaa !47
   %i.fq = add nsw i32 %i.fp, -1
   store i32 %i.fq, ptr %i.b, align 4, !tbaa !47
@@ -4514,7 +4441,7 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_inte
   br i1 %.not.us.i.i, label %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_intersection_d17Box_with_handle_dIdLi3ENS1_IPNS2_10Triangle_3INS2_5EpeckEEESt6vectorIS7_SaIS7_EEEENS3_14ID_FROM_HANDLEEEES9_ISE_SaISE_EEEENS3_18Predicate_traits_dINS3_12Box_traits_dISE_EELb1EE7CompareEEvT_SO_T0_.exit, label %_ZN4CGAL18Box_intersection_d12Box_traits_dINS0_17Box_with_handle_dIdLi3EN9__gnu_cxx17__normal_iteratorIPNS_10Triangle_3INS_5EpeckEEESt6vectorIS7_SaIS7_EEEENS0_14ID_FROM_HANDLEEEEE9min_coordERKSE_i.exit10.i.i.i.us.i.preheader.us.i.i, !llvm.loop !1469
 
 .preheader.i:                                     ; preds = %bb.b
-  %.sroa.0.022.i = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
+  %.sroa.0.022.i = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 3 uses
   %.not23.i = icmp eq ptr %.sroa.0.022.i, %1
   br i1 %.not23.i, label %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_intersection_d17Box_with_handle_dIdLi3ENS1_IPNS2_10Triangle_3INS2_5EpeckEEESt6vectorIS7_SaIS7_EEEENS3_14ID_FROM_HANDLEEEES9_ISE_SaISE_EEEENS3_18Predicate_traits_dINS3_12Box_traits_dISE_EELb1EE7CompareEEvT_SO_T0_.exit, label %.lr.ph.i
 
@@ -4524,7 +4451,7 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_inte
 
 bb.i:                                             ; preds = %bb.n, %.lr.ph.i
   %.sroa.0.025.i = phi ptr [ %.sroa.0.022.i, %.lr.ph.i ], [ %.sroa.0.0.i, %bb.n ] ; 6 uses
-  %.pn24.i = phi ptr [ %0, %.lr.ph.i ], [ %.sroa.0.025.i, %bb.n ] ; 6 uses
+  %.pn24.i = phi ptr [ %0, %.lr.ph.i ], [ %.sroa.0.025.i, %bb.n ] ; 5 uses
   %i.al = load double, ptr %.sroa.0.025.i, align 8, !tbaa !249 ; 5 uses
   %i.am = load double, ptr %0, align 8, !tbaa !249 ; 2 uses
   %i.an = fcmp olt double %i.al, %i.am
@@ -4545,16 +4472,12 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4CGAL18Box_intersection_d18Predicate_trait
   call void @llvm.lifetime.start.p0(ptr nonnull %10)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %10, ptr noundef nonnull align 8 dereferenceable(56) %.sroa.0.025.i, i64 56, i1 false)
   %i.at = ptrtoint ptr %.sroa.0.025.i to i64
-  %i.au = sub i64 %i.at, %i.b                     ; 4 uses
+  %i.au = sub i64 %i.at, %i.b                     ; 3 uses
   %i.av = icmp sgt i64 %i.au, 56
   br i1 %i.av, label %bb.k, label %bb.l, !prof !503
 
 bb.k:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4CGAL18Box_intersection_d18Predicate_traits_dINS3_12Box_traits_dINS3_17Box_with_handle_dIdLi3ENS_17__normal_iteratorIPNS2_10Triangle_3INS2_5EpeckEEESt6vectorISA_SaISA_EEEENS3_14ID_FROM_HANDLEEEEEELb1EE7CompareEEclINS7_IPSH_SC_ISH_SaISH_EEEESQ_EEbT_T0_.exit.thread.i
-  %11 = getelementptr inbounds nuw i8, ptr %.pn24.i, i64 112
-  %.neg34.i = udiv exact i64 %i.au, 56
-  %.neg34.neg.i = sub nsw i64 0, %.neg34.i
-  %12 = getelementptr inbounds [56 x i8], ptr %11, i64 %.neg34.neg.i
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %12, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.au, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sroa.0.022.i, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.au, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_intersection_d17Box_with_handle_dIdLi3ENS1_IPNS2_10Triangle_3INS2_5EpeckEEESt6vectorIS7_SaIS7_EEEENS3_14ID_FROM_HANDLEEEES9_ISE_SaISE_EEEESI_ET0_T_SK_SJ_.exit.i
 
 bb.l:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4CGAL18Box_intersection_d18Predicate_traits_dINS3_12Box_traits_dINS3_17Box_with_handle_dIdLi3ENS_17__normal_iteratorIPNS2_10Triangle_3INS2_5EpeckEEESt6vectorISA_SaISA_EEEENS3_14ID_FROM_HANDLEEEEEELb1EE7CompareEEclINS7_IPSH_SC_ISH_SaISH_EEEESQ_EEbT_T0_.exit.thread.i
@@ -4777,7 +4700,7 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_inte
   br i1 %.not.us.i.i87, label %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_intersection_d17Box_with_handle_dIdLi3ENS1_IPNS2_10Triangle_3INS2_5EpeckEEESt6vectorIS7_SaIS7_EEEENS3_14ID_FROM_HANDLEEEES9_ISE_SaISE_EEEENS3_18Predicate_traits_dINS3_12Box_traits_dISE_EELb1EE7CompareEEvT_SO_T0_.exit32, label %_ZN4CGAL18Box_intersection_d12Box_traits_dINS0_17Box_with_handle_dIdLi3EN9__gnu_cxx17__normal_iteratorIPNS_10Triangle_3INS_5EpeckEEESt6vectorIS7_SaIS7_EEEENS0_14ID_FROM_HANDLEEEEE9min_coordERKSE_i.exit10.i.i.i.us.i.preheader.us.i.i68, !llvm.loop !1469
 
 .preheader.i129:                                  ; preds = %bb.o
-  %.sroa.0.022.i130 = getelementptr inbounds nuw i8, ptr %2, i64 56 ; 2 uses
+  %.sroa.0.022.i130 = getelementptr inbounds nuw i8, ptr %2, i64 56 ; 3 uses
   %.not23.i131 = icmp eq ptr %.sroa.0.022.i130, %3
   br i1 %.not23.i131, label %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_intersection_d17Box_with_handle_dIdLi3ENS1_IPNS2_10Triangle_3INS2_5EpeckEEESt6vectorIS7_SaIS7_EEEENS3_14ID_FROM_HANDLEEEES9_ISE_SaISE_EEEENS3_18Predicate_traits_dINS3_12Box_traits_dISE_EELb1EE7CompareEEvT_SO_T0_.exit32, label %.lr.ph.i132
 
@@ -4787,7 +4710,7 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_inte
 
 bb.v:                                             ; preds = %bb.aa, %.lr.ph.i132
   %.sroa.0.025.i133 = phi ptr [ %.sroa.0.022.i130, %.lr.ph.i132 ], [ %.sroa.0.0.i154, %bb.aa ] ; 6 uses
-  %.pn24.i134 = phi ptr [ %2, %.lr.ph.i132 ], [ %.sroa.0.025.i133, %bb.aa ] ; 6 uses
+  %.pn24.i134 = phi ptr [ %2, %.lr.ph.i132 ], [ %.sroa.0.025.i133, %bb.aa ] ; 5 uses
   %i.cq = load double, ptr %.sroa.0.025.i133, align 8, !tbaa !249 ; 5 uses
   %i.cr = load double, ptr %2, align 8, !tbaa !249 ; 2 uses
   %i.cs = fcmp olt double %i.cq, %i.cr
@@ -4808,16 +4731,12 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4CGAL18Box_intersection_d18Predicate_trait
   call void @llvm.lifetime.start.p0(ptr nonnull %8)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %8, ptr noundef nonnull align 8 dereferenceable(56) %.sroa.0.025.i133, i64 56, i1 false)
   %i.cy = ptrtoint ptr %.sroa.0.025.i133 to i64
-  %i.cz = sub i64 %i.cy, %i.bg                    ; 4 uses
+  %i.cz = sub i64 %i.cy, %i.bg                    ; 3 uses
   %i.da = icmp sgt i64 %i.cz, 56
   br i1 %i.da, label %bb.x, label %bb.y, !prof !503
 
 bb.x:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4CGAL18Box_intersection_d18Predicate_traits_dINS3_12Box_traits_dINS3_17Box_with_handle_dIdLi3ENS_17__normal_iteratorIPNS2_10Triangle_3INS2_5EpeckEEESt6vectorISA_SaISA_EEEENS3_14ID_FROM_HANDLEEEEEELb1EE7CompareEEclINS7_IPSH_SC_ISH_SaISH_EEEESQ_EEbT_T0_.exit.thread.i159
-  %13 = getelementptr inbounds nuw i8, ptr %.pn24.i134, i64 112
-  %.neg34.i161 = udiv exact i64 %i.cz, 56
-  %.neg34.neg.i162 = sub nsw i64 0, %.neg34.i161
-  %14 = getelementptr inbounds [56 x i8], ptr %13, i64 %.neg34.neg.i162
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %14, ptr noundef nonnull align 8 dereferenceable(1) %2, i64 %i.cz, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sroa.0.022.i130, ptr noundef nonnull align 8 dereferenceable(1) %2, i64 %i.cz, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN4CGAL18Box_intersection_d17Box_with_handle_dIdLi3ENS1_IPNS2_10Triangle_3INS2_5EpeckEEESt6vectorIS7_SaIS7_EEEENS3_14ID_FROM_HANDLEEEES9_ISE_SaISE_EEEESI_ET0_T_SK_SJ_.exit.i160
 
 bb.y:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4CGAL18Box_intersection_d18Predicate_traits_dINS3_12Box_traits_dINS3_17Box_with_handle_dIdLi3ENS_17__normal_iteratorIPNS2_10Triangle_3INS2_5EpeckEEESt6vectorISA_SaISA_EEEENS3_14ID_FROM_HANDLEEEEEELb1EE7CompareEEclINS7_IPSH_SC_ISH_SaISH_EEEESQ_EEbT_T0_.exit.thread.i159

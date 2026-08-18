@@ -203,25 +203,21 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.h = ptrtoint ptr %0 to i64
+  %scevgep25 = getelementptr i8, ptr %0, i64 -40
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.l
-  %indvar = phi i64 [ 0, %.lr.ph ], [ %indvar.next, %bb.l ] ; 2 uses
-  %.sroa.0.024 = phi ptr [ %.sroa.0.021, %.lr.ph ], [ %.sroa.0.0, %bb.l ] ; 8 uses
-  %.pn23 = phi ptr [ %0, %.lr.ph ], [ %.sroa.0.024, %bb.l ] ; 4 uses
-  %4 = mul i64 %indvar, 40                        ; 2 uses
-  %i.i = add i64 %4, 40
-  %5 = udiv i64 %i.i, 40                          ; 2 uses
-  %6 = icmp ult i64 %4, -40                       ; 2 uses
-  %umin.neg = sext i1 %6 to i64
-  %i.j = select i1 %6, i64 40, i64 0
-  %.neg = mul i64 %5, -40
-  %7 = add i64 %.neg, %i.j                        ; 2 uses
-  %scevgep = getelementptr i8, ptr %.sroa.0.024, i64 %7
-  %scevgep25.a = getelementptr i8, ptr %.pn23, i64 %7
-  %8 = add nuw nsw i64 %5, 1
-  %i.k = add nsw i64 %8, %umin.neg
-  %9 = mul nuw i64 %i.k, 40
+  %indvar = phi i64 [ 0, %.lr.ph ], [ %i.i, %bb.l ] ; 2 uses
+  %.sroa.0.024 = phi ptr [ %.sroa.0.021, %.lr.ph ], [ %.sroa.0.0, %bb.l ] ; 7 uses
+  %.pn23 = phi ptr [ %0, %.lr.ph ], [ %.sroa.0.024, %bb.l ] ; 3 uses
+  %i.i = add i64 %indvar, 1                       ; 2 uses
+  %.not32 = icmp eq i64 %i.i, 0
+  %i.j = select i1 %.not32, i64 0, i64 40         ; 3 uses
+  %scevgep = getelementptr i8, ptr %0, i64 %i.j
+  %scevgep25.a = getelementptr i8, ptr %scevgep25, i64 %i.j
+  %4 = mul i64 %indvar, 40
+  %i.k = add i64 %4, 80
+  %5 = sub i64 %i.k, %i.j
   %i.l = getelementptr inbounds nuw i8, ptr %.pn23, i64 72
   %i.m = load i64, ptr %i.l, align 8, !tbaa !35   ; 2 uses
   %i.n = load i64, ptr %i.b, align 8, !tbaa !35   ; 2 uses
@@ -268,7 +264,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.ag, label %.lr.ph.preheader.i.i.i.i.i, label %.loopexit
 
 .lr.ph.preheader.i.i.i.i.i:                       ; preds = %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZNK4geos6noding15SegmentNodeList7prepareEvE3$_0EclINS_17__normal_iteratorIPNS3_11SegmentNodeESt6vectorIS9_SaIS9_EEEESE_EEbT_T0_.exit.thread18"
-  call void @llvm.memmove.p0.p0.i64(ptr align 8 %scevgep, ptr align 8 %scevgep25.a, i64 %9, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr align 8 %scevgep, ptr align 8 %scevgep25.a, i64 %5, i1 false)
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.lr.ph.preheader.i.i.i.i.i, %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZNK4geos6noding15SegmentNodeList7prepareEvE3$_0EclINS_17__normal_iteratorIPNS3_11SegmentNodeESt6vectorIS9_SaIS9_EEEESE_EEbT_T0_.exit.thread18"
@@ -333,7 +329,6 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %.loopexit, %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN4geos6noding11SegmentNodeESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_comp_iterIZNKS3_15SegmentNodeList7prepareEvE3$_0EEEvT_T0_.exit"
   %.sroa.0.0 = getelementptr inbounds nuw i8, ptr %.sroa.0.024, i64 40 ; 2 uses
   %.not = icmp eq ptr %.sroa.0.0, %1
-  %indvar.next = add i64 %indvar, 1
   br i1 %.not, label %.loopexit20, label %bb.b, !llvm.loop !158
 
 .loopexit20:                                      ; preds = %bb.l, %.preheader, %bb.a

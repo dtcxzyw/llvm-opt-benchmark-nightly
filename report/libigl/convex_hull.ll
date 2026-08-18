@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %bb.a
   br i1 %i.ag, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPN4CGAL7Point_3INS2_5EpickEEESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterINS2_8internal19Projection_traits_3IS4_Li2EE9Less_xy_2EEEEvT_SI_T0_.exit, label %.preheader.i27
 
 .preheader.i27:                                   ; preds = %bb.h
-  %.sroa.0.020.i28 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
+  %.sroa.0.020.i28 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %.not21.i29 = icmp eq ptr %.sroa.0.020.i28, %1
   br i1 %.not21.i29, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPN4CGAL7Point_3INS2_5EpickEEESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterINS2_8internal19Projection_traits_3IS4_Li2EE9Less_xy_2EEEEvT_SI_T0_.exit, label %.lr.ph.i30
 
@@ -214,7 +214,7 @@ bb.h:                                             ; preds = %bb.a
 
 bb.i:                                             ; preds = %bb.n, %.lr.ph.i30
   %.sroa.0.023.i31 = phi ptr [ %.sroa.0.020.i28, %.lr.ph.i30 ], [ %.sroa.0.0.i49, %bb.n ] ; 6 uses
-  %.pn22.i32 = phi ptr [ %0, %.lr.ph.i30 ], [ %.sroa.0.023.i31, %bb.n ] ; 5 uses
+  %.pn22.i32 = phi ptr [ %0, %.lr.ph.i30 ], [ %.sroa.0.023.i31, %bb.n ] ; 4 uses
   %i.ai = load double, ptr %.sroa.0.023.i31, align 8, !tbaa !36 ; 5 uses
   %i.aj = load double, ptr %0, align 8, !tbaa !36 ; 2 uses
   %i.ak = fcmp olt double %i.ai, %i.aj
@@ -242,16 +242,12 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4CGAL8internal19Projection_traits_3INS2_5E
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.06.i26)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.06.i26, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.023.i31, i64 24, i1 false)
   %i.aq = ptrtoint ptr %.sroa.0.023.i31 to i64
-  %i.ar = sub i64 %i.aq, %i.b                     ; 4 uses
+  %i.ar = sub i64 %i.aq, %i.b                     ; 3 uses
   %i.as = icmp sgt i64 %i.ar, 24
   br i1 %i.as, label %bb.j, label %bb.k, !prof !827
 
 bb.j:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4CGAL8internal19Projection_traits_3INS2_5EpickELi2EE9Less_xy_2EEclINS_17__normal_iteratorIPNS2_7Point_3IS5_EESt6vectorISC_SaISC_EEEESH_EEbT_T0_.exit.thread.i53
-  %2 = getelementptr inbounds nuw i8, ptr %.pn22.i32, i64 48
-  %.neg28.i55 = udiv exact i64 %i.ar, 24
-  %.neg28.neg.i56 = sub nsw i64 0, %.neg28.i55
-  %3 = getelementptr inbounds [24 x i8], ptr %2, i64 %.neg28.neg.i56
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %3, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.ar, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sroa.0.020.i28, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.ar, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN4CGAL7Point_3INS2_5EpickEEESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit.i54
 
 bb.k:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4CGAL8internal19Projection_traits_3INS2_5EpickELi2EE9Less_xy_2EEclINS_17__normal_iteratorIPNS2_7Point_3IS5_EESt6vectorISC_SaISC_EEEESH_EEbT_T0_.exit.thread.i53
@@ -654,7 +650,7 @@ bb.h:                                             ; preds = %bb.a
   br i1 %i.ag, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPN4CGAL7Point_3INS2_5EpickEEESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS2_16ch_akl_toussaintISt14_List_iteratorIS5_ESt20back_insert_iteratorINSt7__cxx114listIS5_S8_EEENS2_22Projection_traits_xy_3IS4_EEEET0_T_SO_SN_RKT1_EUlRKS5_ST_E_EEEvSO_SO_SN_.exit, label %.preheader.i25
 
 .preheader.i25:                                   ; preds = %bb.h
-  %.sroa.0.022.i26 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
+  %.sroa.0.022.i26 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %.not23.i27 = icmp eq ptr %.sroa.0.022.i26, %1
   br i1 %.not23.i27, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPN4CGAL7Point_3INS2_5EpickEEESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS2_16ch_akl_toussaintISt14_List_iteratorIS5_ESt20back_insert_iteratorINSt7__cxx114listIS5_S8_EEENS2_22Projection_traits_xy_3IS4_EEEET0_T_SO_SN_RKT1_EUlRKS5_ST_E_EEEvSO_SO_SN_.exit, label %.lr.ph.i28
 
@@ -664,7 +660,7 @@ bb.h:                                             ; preds = %bb.a
 
 bb.i:                                             ; preds = %bb.n, %.lr.ph.i28
   %.sroa.0.025.i29 = phi ptr [ %.sroa.0.022.i26, %.lr.ph.i28 ], [ %.sroa.0.0.i47, %bb.n ] ; 6 uses
-  %.pn24.i30 = phi ptr [ %0, %.lr.ph.i28 ], [ %.sroa.0.025.i29, %bb.n ] ; 5 uses
+  %.pn24.i30 = phi ptr [ %0, %.lr.ph.i28 ], [ %.sroa.0.025.i29, %bb.n ] ; 4 uses
   %i.ai = load double, ptr %0, align 8, !tbaa !36 ; 2 uses
   %i.aj = load double, ptr %.sroa.0.025.i29, align 8, !tbaa !36 ; 5 uses
   %i.ak = fcmp olt double %i.ai, %i.aj
@@ -692,16 +688,12 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN4CGAL16ch_akl_toussaintISt14_List_iterato
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.07.i24)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.07.i24, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.025.i29, i64 24, i1 false)
   %i.aq = ptrtoint ptr %.sroa.0.025.i29 to i64
-  %i.ar = sub i64 %i.aq, %i.b                     ; 4 uses
+  %i.ar = sub i64 %i.aq, %i.b                     ; 3 uses
   %i.as = icmp sgt i64 %i.ar, 24
   br i1 %i.as, label %bb.j, label %bb.k, !prof !827
 
 bb.j:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN4CGAL16ch_akl_toussaintISt14_List_iteratorINS2_7Point_3INS2_5EpickEEEESt20back_insert_iteratorINSt7__cxx114listIS7_SaIS7_EEEENS2_22Projection_traits_xy_3IS6_EEEET0_T_SI_SH_RKT1_EUlRKS7_SN_E_EclINS_17__normal_iteratorIPS7_St6vectorIS7_SC_EEESV_EEbSI_SH_.exit.thread.i51
-  %3 = getelementptr inbounds nuw i8, ptr %.pn24.i30, i64 48
-  %.neg30.i53 = udiv exact i64 %i.ar, 24
-  %.neg30.neg.i54 = sub nsw i64 0, %.neg30.i53
-  %4 = getelementptr inbounds [24 x i8], ptr %3, i64 %.neg30.neg.i54
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %4, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.ar, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sroa.0.022.i26, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.ar, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN4CGAL7Point_3INS2_5EpickEEESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit.i52
 
 bb.k:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN4CGAL16ch_akl_toussaintISt14_List_iteratorINS2_7Point_3INS2_5EpickEEEESt20back_insert_iteratorINSt7__cxx114listIS7_SaIS7_EEEENS2_22Projection_traits_xy_3IS6_EEEET0_T_SI_SH_RKT1_EUlRKS7_SN_E_EclINS_17__normal_iteratorIPS7_St6vectorIS7_SC_EEESV_EEbSI_SH_.exit.thread.i51
@@ -1104,7 +1096,7 @@ bb.h:                                             ; preds = %bb.a
   br i1 %i.ag, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPN4CGAL7Point_3INS2_5EpickEEESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS2_16ch_akl_toussaintISt14_List_iteratorIS5_ESt20back_insert_iteratorINSt7__cxx114listIS5_S8_EEENS2_22Projection_traits_xy_3IS4_EEEET0_T_SO_SN_RKT1_EUlRKS5_ST_E0_EEEvSO_SO_SN_.exit, label %.preheader.i25
 
 .preheader.i25:                                   ; preds = %bb.h
-  %.sroa.0.022.i26 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
+  %.sroa.0.022.i26 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %.not23.i27 = icmp eq ptr %.sroa.0.022.i26, %1
   br i1 %.not23.i27, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPN4CGAL7Point_3INS2_5EpickEEESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS2_16ch_akl_toussaintISt14_List_iteratorIS5_ESt20back_insert_iteratorINSt7__cxx114listIS5_S8_EEENS2_22Projection_traits_xy_3IS4_EEEET0_T_SO_SN_RKT1_EUlRKS5_ST_E0_EEEvSO_SO_SN_.exit, label %.lr.ph.i28
 
@@ -1114,7 +1106,7 @@ bb.h:                                             ; preds = %bb.a
 
 bb.i:                                             ; preds = %bb.n, %.lr.ph.i28
   %.sroa.0.025.i29 = phi ptr [ %.sroa.0.022.i26, %.lr.ph.i28 ], [ %.sroa.0.0.i47, %bb.n ] ; 6 uses
-  %.pn24.i30 = phi ptr [ %0, %.lr.ph.i28 ], [ %.sroa.0.025.i29, %bb.n ] ; 5 uses
+  %.pn24.i30 = phi ptr [ %0, %.lr.ph.i28 ], [ %.sroa.0.025.i29, %bb.n ] ; 4 uses
   %i.ai = load double, ptr %0, align 8, !tbaa !36 ; 2 uses
   %i.aj = load double, ptr %.sroa.0.025.i29, align 8, !tbaa !36 ; 5 uses
   %i.ak = fcmp olt double %i.ai, %i.aj
@@ -1142,16 +1134,12 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN4CGAL16ch_akl_toussaintISt14_List_iterato
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.07.i24)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.07.i24, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.025.i29, i64 24, i1 false)
   %i.aq = ptrtoint ptr %.sroa.0.025.i29 to i64
-  %i.ar = sub i64 %i.aq, %i.b                     ; 4 uses
+  %i.ar = sub i64 %i.aq, %i.b                     ; 3 uses
   %i.as = icmp sgt i64 %i.ar, 24
   br i1 %i.as, label %bb.j, label %bb.k, !prof !827
 
 bb.j:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN4CGAL16ch_akl_toussaintISt14_List_iteratorINS2_7Point_3INS2_5EpickEEEESt20back_insert_iteratorINSt7__cxx114listIS7_SaIS7_EEEENS2_22Projection_traits_xy_3IS6_EEEET0_T_SI_SH_RKT1_EUlRKS7_SN_E0_EclINS_17__normal_iteratorIPS7_St6vectorIS7_SC_EEESV_EEbSI_SH_.exit.thread.i51
-  %3 = getelementptr inbounds nuw i8, ptr %.pn24.i30, i64 48
-  %.neg30.i53 = udiv exact i64 %i.ar, 24
-  %.neg30.neg.i54 = sub nsw i64 0, %.neg30.i53
-  %4 = getelementptr inbounds [24 x i8], ptr %3, i64 %.neg30.neg.i54
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %4, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.ar, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sroa.0.022.i26, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.ar, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN4CGAL7Point_3INS2_5EpickEEESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit.i52
 
 bb.k:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN4CGAL16ch_akl_toussaintISt14_List_iteratorINS2_7Point_3INS2_5EpickEEEESt20back_insert_iteratorINSt7__cxx114listIS7_SaIS7_EEEENS2_22Projection_traits_xy_3IS6_EEEET0_T_SI_SH_RKT1_EUlRKS7_SN_E0_EclINS_17__normal_iteratorIPS7_St6vectorIS7_SC_EEESV_EEbSI_SH_.exit.thread.i51
@@ -1554,7 +1542,7 @@ bb.h:                                             ; preds = %bb.a
   br i1 %i.ai, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPN4CGAL7Point_3INS2_5EpickEEESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterINS2_8internal19Projection_traits_3IS4_Li0EE9Less_xy_2EEEEvT_SI_T0_.exit, label %.preheader.i26
 
 .preheader.i26:                                   ; preds = %bb.h
-  %.sroa.0.020.i27 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
+  %.sroa.0.020.i27 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %.not21.i28 = icmp eq ptr %.sroa.0.020.i27, %1
   br i1 %.not21.i28, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPN4CGAL7Point_3INS2_5EpickEEESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterINS2_8internal19Projection_traits_3IS4_Li0EE9Less_xy_2EEEEvT_SI_T0_.exit, label %.lr.ph.i29
 
@@ -1565,7 +1553,7 @@ bb.h:                                             ; preds = %bb.a
 
 bb.i:                                             ; preds = %bb.n, %.lr.ph.i29
   %.sroa.0.023.i30 = phi ptr [ %.sroa.0.020.i27, %.lr.ph.i29 ], [ %.sroa.0.0.i47, %bb.n ] ; 6 uses
-  %.pn22.i31 = phi ptr [ %0, %.lr.ph.i29 ], [ %.sroa.0.023.i30, %bb.n ] ; 5 uses
+  %.pn22.i31 = phi ptr [ %0, %.lr.ph.i29 ], [ %.sroa.0.023.i30, %bb.n ] ; 4 uses
   %i.al = getelementptr inbounds nuw i8, ptr %.pn22.i31, i64 32
   %i.am = load double, ptr %i.al, align 8, !tbaa !36 ; 5 uses
   %i.an = load double, ptr %i.aj, align 8, !tbaa !36 ; 2 uses
@@ -1594,16 +1582,12 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4CGAL8internal19Projection_traits_3INS2_5E
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.06.i25)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.06.i25, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.023.i30, i64 24, i1 false)
   %i.au = ptrtoint ptr %.sroa.0.023.i30 to i64
-  %i.av = sub i64 %i.au, %i.b                     ; 4 uses
+  %i.av = sub i64 %i.au, %i.b                     ; 3 uses
   %i.aw = icmp sgt i64 %i.av, 24
   br i1 %i.aw, label %bb.j, label %bb.k, !prof !827
 
 bb.j:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4CGAL8internal19Projection_traits_3INS2_5EpickELi0EE9Less_xy_2EEclINS_17__normal_iteratorIPNS2_7Point_3IS5_EESt6vectorISC_SaISC_EEEESH_EEbT_T0_.exit.thread.i51
-  %2 = getelementptr inbounds nuw i8, ptr %.pn22.i31, i64 48
-  %.neg28.i53 = udiv exact i64 %i.av, 24
-  %.neg28.neg.i54 = sub nsw i64 0, %.neg28.i53
-  %3 = getelementptr inbounds [24 x i8], ptr %2, i64 %.neg28.neg.i54
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %3, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.av, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sroa.0.020.i27, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.av, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN4CGAL7Point_3INS2_5EpickEEESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit.i52
 
 bb.k:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4CGAL8internal19Projection_traits_3INS2_5EpickELi0EE9Less_xy_2EEclINS_17__normal_iteratorIPNS2_7Point_3IS5_EESt6vectorISC_SaISC_EEEESH_EEbT_T0_.exit.thread.i51
@@ -2006,7 +1990,7 @@ bb.h:                                             ; preds = %bb.a
   br i1 %i.ai, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPN4CGAL7Point_3INS2_5EpickEEESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS2_16ch_akl_toussaintISt14_List_iteratorIS5_ESt20back_insert_iteratorINSt7__cxx114listIS5_S8_EEENS2_22Projection_traits_yz_3IS4_EEEET0_T_SO_SN_RKT1_EUlRKS5_ST_E_EEEvSO_SO_SN_.exit, label %.preheader.i24
 
 .preheader.i24:                                   ; preds = %bb.h
-  %.sroa.0.022.i25 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
+  %.sroa.0.022.i25 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %.not23.i26 = icmp eq ptr %.sroa.0.022.i25, %1
   br i1 %.not23.i26, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPN4CGAL7Point_3INS2_5EpickEEESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS2_16ch_akl_toussaintISt14_List_iteratorIS5_ESt20back_insert_iteratorINSt7__cxx114listIS5_S8_EEENS2_22Projection_traits_yz_3IS4_EEEET0_T_SO_SN_RKT1_EUlRKS5_ST_E_EEEvSO_SO_SN_.exit, label %.lr.ph.i27
 
@@ -2017,7 +2001,7 @@ bb.h:                                             ; preds = %bb.a
 
 bb.i:                                             ; preds = %bb.n, %.lr.ph.i27
   %.sroa.0.025.i28 = phi ptr [ %.sroa.0.022.i25, %.lr.ph.i27 ], [ %.sroa.0.0.i45, %bb.n ] ; 6 uses
-  %.pn24.i29 = phi ptr [ %0, %.lr.ph.i27 ], [ %.sroa.0.025.i28, %bb.n ] ; 5 uses
+  %.pn24.i29 = phi ptr [ %0, %.lr.ph.i27 ], [ %.sroa.0.025.i28, %bb.n ] ; 4 uses
   %i.al = getelementptr inbounds nuw i8, ptr %.pn24.i29, i64 32
   %i.am = load double, ptr %i.aj, align 8, !tbaa !36 ; 2 uses
   %i.an = load double, ptr %i.al, align 8, !tbaa !36 ; 5 uses
@@ -2046,16 +2030,12 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN4CGAL16ch_akl_toussaintISt14_List_iterato
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.07.i23)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.07.i23, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.025.i28, i64 24, i1 false)
   %i.au = ptrtoint ptr %.sroa.0.025.i28 to i64
-  %i.av = sub i64 %i.au, %i.b                     ; 4 uses
+  %i.av = sub i64 %i.au, %i.b                     ; 3 uses
   %i.aw = icmp sgt i64 %i.av, 24
   br i1 %i.aw, label %bb.j, label %bb.k, !prof !827
 
 bb.j:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN4CGAL16ch_akl_toussaintISt14_List_iteratorINS2_7Point_3INS2_5EpickEEEESt20back_insert_iteratorINSt7__cxx114listIS7_SaIS7_EEEENS2_22Projection_traits_yz_3IS6_EEEET0_T_SI_SH_RKT1_EUlRKS7_SN_E_EclINS_17__normal_iteratorIPS7_St6vectorIS7_SC_EEESV_EEbSI_SH_.exit.thread.i49
-  %3 = getelementptr inbounds nuw i8, ptr %.pn24.i29, i64 48
-  %.neg30.i51 = udiv exact i64 %i.av, 24
-  %.neg30.neg.i52 = sub nsw i64 0, %.neg30.i51
-  %4 = getelementptr inbounds [24 x i8], ptr %3, i64 %.neg30.neg.i52
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %4, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.av, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sroa.0.022.i25, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.av, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN4CGAL7Point_3INS2_5EpickEEESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit.i50
 
 bb.k:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN4CGAL16ch_akl_toussaintISt14_List_iteratorINS2_7Point_3INS2_5EpickEEEESt20back_insert_iteratorINSt7__cxx114listIS7_SaIS7_EEEENS2_22Projection_traits_yz_3IS6_EEEET0_T_SI_SH_RKT1_EUlRKS7_SN_E_EclINS_17__normal_iteratorIPS7_St6vectorIS7_SC_EEESV_EEbSI_SH_.exit.thread.i49
@@ -2458,7 +2438,7 @@ bb.h:                                             ; preds = %bb.a
   br i1 %i.ai, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPN4CGAL7Point_3INS2_5EpickEEESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS2_16ch_akl_toussaintISt14_List_iteratorIS5_ESt20back_insert_iteratorINSt7__cxx114listIS5_S8_EEENS2_22Projection_traits_yz_3IS4_EEEET0_T_SO_SN_RKT1_EUlRKS5_ST_E0_EEEvSO_SO_SN_.exit, label %.preheader.i24
 
 .preheader.i24:                                   ; preds = %bb.h
-  %.sroa.0.022.i25 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
+  %.sroa.0.022.i25 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %.not23.i26 = icmp eq ptr %.sroa.0.022.i25, %1
   br i1 %.not23.i26, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPN4CGAL7Point_3INS2_5EpickEEESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS2_16ch_akl_toussaintISt14_List_iteratorIS5_ESt20back_insert_iteratorINSt7__cxx114listIS5_S8_EEENS2_22Projection_traits_yz_3IS4_EEEET0_T_SO_SN_RKT1_EUlRKS5_ST_E0_EEEvSO_SO_SN_.exit, label %.lr.ph.i27
 
@@ -2469,7 +2449,7 @@ bb.h:                                             ; preds = %bb.a
 
 bb.i:                                             ; preds = %bb.n, %.lr.ph.i27
   %.sroa.0.025.i28 = phi ptr [ %.sroa.0.022.i25, %.lr.ph.i27 ], [ %.sroa.0.0.i45, %bb.n ] ; 6 uses
-  %.pn24.i29 = phi ptr [ %0, %.lr.ph.i27 ], [ %.sroa.0.025.i28, %bb.n ] ; 5 uses
+  %.pn24.i29 = phi ptr [ %0, %.lr.ph.i27 ], [ %.sroa.0.025.i28, %bb.n ] ; 4 uses
   %i.al = getelementptr inbounds nuw i8, ptr %.pn24.i29, i64 32
   %i.am = load double, ptr %i.aj, align 8, !tbaa !36 ; 2 uses
   %i.an = load double, ptr %i.al, align 8, !tbaa !36 ; 5 uses
@@ -2498,16 +2478,12 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN4CGAL16ch_akl_toussaintISt14_List_iterato
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.07.i23)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.07.i23, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.025.i28, i64 24, i1 false)
   %i.au = ptrtoint ptr %.sroa.0.025.i28 to i64
-  %i.av = sub i64 %i.au, %i.b                     ; 4 uses
+  %i.av = sub i64 %i.au, %i.b                     ; 3 uses
   %i.aw = icmp sgt i64 %i.av, 24
   br i1 %i.aw, label %bb.j, label %bb.k, !prof !827
 
 bb.j:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN4CGAL16ch_akl_toussaintISt14_List_iteratorINS2_7Point_3INS2_5EpickEEEESt20back_insert_iteratorINSt7__cxx114listIS7_SaIS7_EEEENS2_22Projection_traits_yz_3IS6_EEEET0_T_SI_SH_RKT1_EUlRKS7_SN_E0_EclINS_17__normal_iteratorIPS7_St6vectorIS7_SC_EEESV_EEbSI_SH_.exit.thread.i49
-  %3 = getelementptr inbounds nuw i8, ptr %.pn24.i29, i64 48
-  %.neg30.i51 = udiv exact i64 %i.av, 24
-  %.neg30.neg.i52 = sub nsw i64 0, %.neg30.i51
-  %4 = getelementptr inbounds [24 x i8], ptr %3, i64 %.neg30.neg.i52
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %4, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.av, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sroa.0.022.i25, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.av, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN4CGAL7Point_3INS2_5EpickEEESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit.i50
 
 bb.k:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN4CGAL16ch_akl_toussaintISt14_List_iteratorINS2_7Point_3INS2_5EpickEEEESt20back_insert_iteratorINSt7__cxx114listIS7_SaIS7_EEEENS2_22Projection_traits_yz_3IS6_EEEET0_T_SI_SH_RKT1_EUlRKS7_SN_E0_EclINS_17__normal_iteratorIPS7_St6vectorIS7_SC_EEESV_EEbSI_SH_.exit.thread.i49
@@ -2910,7 +2886,7 @@ bb.h:                                             ; preds = %bb.a
   br i1 %i.af, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPN4CGAL7Point_3INS2_5EpickEEESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterINS2_8internal19Projection_traits_3IS4_Li1EE9Less_xy_2EEEEvT_SI_T0_.exit, label %.preheader.i27
 
 .preheader.i27:                                   ; preds = %bb.h
-  %.sroa.0.020.i28 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
+  %.sroa.0.020.i28 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %.not21.i29 = icmp eq ptr %.sroa.0.020.i28, %1
   br i1 %.not21.i29, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPN4CGAL7Point_3INS2_5EpickEEESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterINS2_8internal19Projection_traits_3IS4_Li1EE9Less_xy_2EEEEvT_SI_T0_.exit, label %.lr.ph.i30
 
@@ -2920,7 +2896,7 @@ bb.h:                                             ; preds = %bb.a
 
 bb.i:                                             ; preds = %bb.n, %.lr.ph.i30
   %.sroa.0.023.i31 = phi ptr [ %.sroa.0.020.i28, %.lr.ph.i30 ], [ %.sroa.0.0.i49, %bb.n ] ; 6 uses
-  %.pn22.i32 = phi ptr [ %0, %.lr.ph.i30 ], [ %.sroa.0.023.i31, %bb.n ] ; 5 uses
+  %.pn22.i32 = phi ptr [ %0, %.lr.ph.i30 ], [ %.sroa.0.023.i31, %bb.n ] ; 4 uses
   %i.ah = load double, ptr %.sroa.0.023.i31, align 8, !tbaa !36 ; 5 uses
   %i.ai = load double, ptr %0, align 8, !tbaa !36 ; 2 uses
   %i.aj = fcmp olt double %i.ah, %i.ai
@@ -2948,16 +2924,12 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4CGAL8internal19Projection_traits_3INS2_5E
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.06.i26)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.06.i26, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.023.i31, i64 24, i1 false)
   %i.ap = ptrtoint ptr %.sroa.0.023.i31 to i64
-  %i.aq = sub i64 %i.ap, %i.b                     ; 4 uses
+  %i.aq = sub i64 %i.ap, %i.b                     ; 3 uses
   %i.ar = icmp sgt i64 %i.aq, 24
   br i1 %i.ar, label %bb.j, label %bb.k, !prof !827
 
 bb.j:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4CGAL8internal19Projection_traits_3INS2_5EpickELi1EE9Less_xy_2EEclINS_17__normal_iteratorIPNS2_7Point_3IS5_EESt6vectorISC_SaISC_EEEESH_EEbT_T0_.exit.thread.i53
-  %2 = getelementptr inbounds nuw i8, ptr %.pn22.i32, i64 48
-  %.neg28.i55 = udiv exact i64 %i.aq, 24
-  %.neg28.neg.i56 = sub nsw i64 0, %.neg28.i55
-  %3 = getelementptr inbounds [24 x i8], ptr %2, i64 %.neg28.neg.i56
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %3, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.aq, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sroa.0.020.i28, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.aq, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN4CGAL7Point_3INS2_5EpickEEESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit.i54
 
 bb.k:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4CGAL8internal19Projection_traits_3INS2_5EpickELi1EE9Less_xy_2EEclINS_17__normal_iteratorIPNS2_7Point_3IS5_EESt6vectorISC_SaISC_EEEESH_EEbT_T0_.exit.thread.i53
@@ -3360,7 +3332,7 @@ bb.h:                                             ; preds = %bb.a
   br i1 %i.af, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPN4CGAL7Point_3INS2_5EpickEEESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS2_16ch_akl_toussaintISt14_List_iteratorIS5_ESt20back_insert_iteratorINSt7__cxx114listIS5_S8_EEENS2_22Projection_traits_xz_3IS4_EEEET0_T_SO_SN_RKT1_EUlRKS5_ST_E_EEEvSO_SO_SN_.exit, label %.preheader.i25
 
 .preheader.i25:                                   ; preds = %bb.h
-  %.sroa.0.022.i26 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
+  %.sroa.0.022.i26 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %.not23.i27 = icmp eq ptr %.sroa.0.022.i26, %1
   br i1 %.not23.i27, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPN4CGAL7Point_3INS2_5EpickEEESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS2_16ch_akl_toussaintISt14_List_iteratorIS5_ESt20back_insert_iteratorINSt7__cxx114listIS5_S8_EEENS2_22Projection_traits_xz_3IS4_EEEET0_T_SO_SN_RKT1_EUlRKS5_ST_E_EEEvSO_SO_SN_.exit, label %.lr.ph.i28
 
@@ -3370,7 +3342,7 @@ bb.h:                                             ; preds = %bb.a
 
 bb.i:                                             ; preds = %bb.n, %.lr.ph.i28
   %.sroa.0.025.i29 = phi ptr [ %.sroa.0.022.i26, %.lr.ph.i28 ], [ %.sroa.0.0.i47, %bb.n ] ; 6 uses
-  %.pn24.i30 = phi ptr [ %0, %.lr.ph.i28 ], [ %.sroa.0.025.i29, %bb.n ] ; 5 uses
+  %.pn24.i30 = phi ptr [ %0, %.lr.ph.i28 ], [ %.sroa.0.025.i29, %bb.n ] ; 4 uses
   %i.ah = load double, ptr %0, align 8, !tbaa !36 ; 2 uses
   %i.ai = load double, ptr %.sroa.0.025.i29, align 8, !tbaa !36 ; 5 uses
   %i.aj = fcmp olt double %i.ah, %i.ai
@@ -3398,16 +3370,12 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN4CGAL16ch_akl_toussaintISt14_List_iterato
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.07.i24)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.07.i24, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.025.i29, i64 24, i1 false)
   %i.ap = ptrtoint ptr %.sroa.0.025.i29 to i64
-  %i.aq = sub i64 %i.ap, %i.b                     ; 4 uses
+  %i.aq = sub i64 %i.ap, %i.b                     ; 3 uses
   %i.ar = icmp sgt i64 %i.aq, 24
   br i1 %i.ar, label %bb.j, label %bb.k, !prof !827
 
 bb.j:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN4CGAL16ch_akl_toussaintISt14_List_iteratorINS2_7Point_3INS2_5EpickEEEESt20back_insert_iteratorINSt7__cxx114listIS7_SaIS7_EEEENS2_22Projection_traits_xz_3IS6_EEEET0_T_SI_SH_RKT1_EUlRKS7_SN_E_EclINS_17__normal_iteratorIPS7_St6vectorIS7_SC_EEESV_EEbSI_SH_.exit.thread.i51
-  %3 = getelementptr inbounds nuw i8, ptr %.pn24.i30, i64 48
-  %.neg30.i53 = udiv exact i64 %i.aq, 24
-  %.neg30.neg.i54 = sub nsw i64 0, %.neg30.i53
-  %4 = getelementptr inbounds [24 x i8], ptr %3, i64 %.neg30.neg.i54
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %4, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.aq, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sroa.0.022.i26, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.aq, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN4CGAL7Point_3INS2_5EpickEEESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit.i52
 
 bb.k:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN4CGAL16ch_akl_toussaintISt14_List_iteratorINS2_7Point_3INS2_5EpickEEEESt20back_insert_iteratorINSt7__cxx114listIS7_SaIS7_EEEENS2_22Projection_traits_xz_3IS6_EEEET0_T_SI_SH_RKT1_EUlRKS7_SN_E_EclINS_17__normal_iteratorIPS7_St6vectorIS7_SC_EEESV_EEbSI_SH_.exit.thread.i51
@@ -3810,7 +3778,7 @@ bb.h:                                             ; preds = %bb.a
   br i1 %i.af, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPN4CGAL7Point_3INS2_5EpickEEESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS2_16ch_akl_toussaintISt14_List_iteratorIS5_ESt20back_insert_iteratorINSt7__cxx114listIS5_S8_EEENS2_22Projection_traits_xz_3IS4_EEEET0_T_SO_SN_RKT1_EUlRKS5_ST_E0_EEEvSO_SO_SN_.exit, label %.preheader.i25
 
 .preheader.i25:                                   ; preds = %bb.h
-  %.sroa.0.022.i26 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
+  %.sroa.0.022.i26 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %.not23.i27 = icmp eq ptr %.sroa.0.022.i26, %1
   br i1 %.not23.i27, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPN4CGAL7Point_3INS2_5EpickEEESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS2_16ch_akl_toussaintISt14_List_iteratorIS5_ESt20back_insert_iteratorINSt7__cxx114listIS5_S8_EEENS2_22Projection_traits_xz_3IS4_EEEET0_T_SO_SN_RKT1_EUlRKS5_ST_E0_EEEvSO_SO_SN_.exit, label %.lr.ph.i28
 
@@ -3820,7 +3788,7 @@ bb.h:                                             ; preds = %bb.a
 
 bb.i:                                             ; preds = %bb.n, %.lr.ph.i28
   %.sroa.0.025.i29 = phi ptr [ %.sroa.0.022.i26, %.lr.ph.i28 ], [ %.sroa.0.0.i47, %bb.n ] ; 6 uses
-  %.pn24.i30 = phi ptr [ %0, %.lr.ph.i28 ], [ %.sroa.0.025.i29, %bb.n ] ; 5 uses
+  %.pn24.i30 = phi ptr [ %0, %.lr.ph.i28 ], [ %.sroa.0.025.i29, %bb.n ] ; 4 uses
   %i.ah = load double, ptr %0, align 8, !tbaa !36 ; 2 uses
   %i.ai = load double, ptr %.sroa.0.025.i29, align 8, !tbaa !36 ; 5 uses
   %i.aj = fcmp olt double %i.ah, %i.ai
@@ -3848,16 +3816,12 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN4CGAL16ch_akl_toussaintISt14_List_iterato
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.07.i24)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.07.i24, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.025.i29, i64 24, i1 false)
   %i.ap = ptrtoint ptr %.sroa.0.025.i29 to i64
-  %i.aq = sub i64 %i.ap, %i.b                     ; 4 uses
+  %i.aq = sub i64 %i.ap, %i.b                     ; 3 uses
   %i.ar = icmp sgt i64 %i.aq, 24
   br i1 %i.ar, label %bb.j, label %bb.k, !prof !827
 
 bb.j:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN4CGAL16ch_akl_toussaintISt14_List_iteratorINS2_7Point_3INS2_5EpickEEEESt20back_insert_iteratorINSt7__cxx114listIS7_SaIS7_EEEENS2_22Projection_traits_xz_3IS6_EEEET0_T_SI_SH_RKT1_EUlRKS7_SN_E0_EclINS_17__normal_iteratorIPS7_St6vectorIS7_SC_EEESV_EEbSI_SH_.exit.thread.i51
-  %3 = getelementptr inbounds nuw i8, ptr %.pn24.i30, i64 48
-  %.neg30.i53 = udiv exact i64 %i.aq, 24
-  %.neg30.neg.i54 = sub nsw i64 0, %.neg30.i53
-  %4 = getelementptr inbounds [24 x i8], ptr %3, i64 %.neg30.neg.i54
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %4, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.aq, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sroa.0.022.i26, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.aq, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN4CGAL7Point_3INS2_5EpickEEESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit.i52
 
 bb.k:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZN4CGAL16ch_akl_toussaintISt14_List_iteratorINS2_7Point_3INS2_5EpickEEEESt20back_insert_iteratorINSt7__cxx114listIS7_SaIS7_EEEENS2_22Projection_traits_xz_3IS6_EEEET0_T_SI_SH_RKT1_EUlRKS7_SN_E0_EclINS_17__normal_iteratorIPS7_St6vectorIS7_SC_EEESV_EEbSI_SH_.exit.thread.i51

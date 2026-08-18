@@ -204,14 +204,15 @@ bb.a:
   br i1 %i.d, label %.lr.ph.i, label %bb.e
 
 .lr.ph.i:                                         ; preds = %bb.a
+  %.sroa.0.017.i.ptr = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.d, %.lr.ph.i
   %indvar.i = phi i64 [ 0, %.lr.ph.i ], [ %indvar.next.i, %bb.d ] ; 2 uses
   %.sroa.0.020.i.idx = phi i64 [ 48, %.lr.ph.i ], [ %.sroa.0.020.i.add, %bb.d ] ; 2 uses
-  %.pn19.i = phi ptr [ %0, %.lr.ph.i ], [ %.sroa.0.020.i.ptr, %bb.d ] ; 5 uses
-  %.sroa.0.020.i.ptr = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.0.020.i.idx ; 6 uses
+  %.pn19.i = phi ptr [ %0, %.lr.ph.i ], [ %.sroa.0.020.i.ptr, %bb.d ] ; 4 uses
+  %.sroa.0.020.i.ptr = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.0.020.i.idx ; 5 uses
   %i.f = load <2 x double>, ptr %.sroa.0.020.i.ptr, align 8, !tbaa !70 ; 3 uses
   %shift = shufflevector <2 x double> %i.f, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop = fadd <2 x double> %i.f, %shift
@@ -223,15 +224,11 @@ bb.b:                                             ; preds = %bb.d, %.lr.ph.i
   br i1 %i.k, label %.loopexit.i, label %bb.c
 
 .loopexit.i:                                      ; preds = %bb.b
-  %4 = add nuw i64 %indvar.i, 1                   ; 2 uses
-  %5 = mul nuw nsw i64 %4, 48
-  %.neg.i = mul nsw i64 %4, -48
-  %i.l = add nsw i64 %.neg.i, 48                  ; 2 uses
-  %scevgep22.i = getelementptr i8, ptr %.pn19.i, i64 %i.l
-  %scevgep.i = getelementptr i8, ptr %.sroa.0.020.i.ptr, i64 %i.l
+  %.neg.i = mul nuw nsw i64 %indvar.i, 48
+  %i.l = add nuw nsw i64 %.neg.i, 48
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %3, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.0.020.i.ptr, i64 48, i1 false), !tbaa.struct !166
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.i, ptr noundef nonnull align 8 dereferenceable(1) %scevgep22.i, i64 %5, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sroa.0.017.i.ptr, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.l, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 8 dereferenceable(48) %3, i64 48, i1 false), !tbaa.struct !166
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
   br label %bb.d
@@ -322,7 +319,7 @@ bb.e:                                             ; preds = %bb.a
   br i1 %i.ak, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPN4geos5index7strtree15TemplateSTRNodeIPKNS2_4geom10LinearRingENS4_14EnvelopeTraitsEEESt6vectorISB_SaISB_EEEENS0_5__ops15_Iter_comp_iterIZNS4_19TemplateSTRtreeImplIS9_SA_E10sortNodesXERKSG_SM_EUlRKSB_SO_E_EEEvT_SR_T0_.exit, label %.preheader.i25
 
 .preheader.i25:                                   ; preds = %bb.e
-  %.sroa.0.017.i26 = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
+  %.sroa.0.017.i26 = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
   %.not18.i27 = icmp eq ptr %.sroa.0.017.i26, %1
   br i1 %.not18.i27, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPN4geos5index7strtree15TemplateSTRNodeIPKNS2_4geom10LinearRingENS4_14EnvelopeTraitsEEESt6vectorISB_SaISB_EEEENS0_5__ops15_Iter_comp_iterIZNS4_19TemplateSTRtreeImplIS9_SA_E10sortNodesXERKSG_SM_EUlRKSB_SO_E_EEEvT_SR_T0_.exit, label %.lr.ph.i28
 
@@ -331,21 +328,11 @@ bb.e:                                             ; preds = %bb.a
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.i, %.lr.ph.i28
-  %indvar.i29 = phi i64 [ 0, %.lr.ph.i28 ], [ %indvar.next.i43, %bb.i ] ; 3 uses
-  %.sroa.0.020.i30 = phi ptr [ %.sroa.0.017.i26, %.lr.ph.i28 ], [ %.sroa.0.0.i41, %bb.i ] ; 8 uses
-  %.pn19.i31 = phi ptr [ %0, %.lr.ph.i28 ], [ %.sroa.0.020.i30, %bb.i ] ; 5 uses
-  %6 = mul nuw i64 %indvar.i29, 48
-  %7 = add i64 %6, 48
-  %8 = udiv i64 %7, 48                            ; 2 uses
-  %9 = icmp samesign ugt i64 %indvar.i29, 384307168202282324 ; 2 uses
-  %10 = select i1 %9, i64 0, i64 48
-  %.neg.i33 = mul i64 %8, -48
-  %11 = add i64 %.neg.i33, %10                    ; 2 uses
-  %scevgep.i34 = getelementptr i8, ptr %.sroa.0.020.i30, i64 %11
-  %scevgep22.i35 = getelementptr i8, ptr %.pn19.i31, i64 %11
-  %12 = zext i1 %9 to i64
-  %i.am = add nuw nsw i64 %8, %12
-  %13 = mul nuw i64 %i.am, 48
+  %indvar.i29 = phi i64 [ 0, %.lr.ph.i28 ], [ %indvar.next.i43, %bb.i ] ; 2 uses
+  %.sroa.0.020.i30 = phi ptr [ %.sroa.0.017.i26, %.lr.ph.i28 ], [ %.sroa.0.0.i41, %bb.i ] ; 7 uses
+  %.pn19.i31 = phi ptr [ %0, %.lr.ph.i28 ], [ %.sroa.0.020.i30, %bb.i ] ; 4 uses
+  %.neg.i33 = mul nuw i64 %indvar.i29, 48
+  %i.am = add nuw i64 %.neg.i33, 48
   %i.an = load <2 x double>, ptr %.sroa.0.020.i30, align 8, !tbaa !70 ; 3 uses
   %shift68 = shufflevector <2 x double> %i.an, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop69 = fadd <2 x double> %i.an, %shift68
@@ -365,7 +352,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.av, label %.lr.ph.preheader.i.i.i.i.i.i49, label %.loopexit.i48
 
 .lr.ph.preheader.i.i.i.i.i.i49:                   ; preds = %bb.g
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %scevgep.i34, ptr align 8 %scevgep22.i35, i64 %13, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sroa.0.017.i26, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.am, i1 false)
   br label %.loopexit.i48
 
 .loopexit.i48:                                    ; preds = %.lr.ph.preheader.i.i.i.i.i.i49, %bb.g
@@ -768,6 +755,7 @@ bb.a:
   br i1 %i.d, label %.lr.ph.i, label %bb.e
 
 .lr.ph.i:                                         ; preds = %bb.a
+  %.sroa.0.017.i.ptr = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24
   br label %bb.b
@@ -775,8 +763,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.d, %.lr.ph.i
   %indvar.i = phi i64 [ 0, %.lr.ph.i ], [ %indvar.next.i, %bb.d ] ; 2 uses
   %.sroa.0.020.i.idx = phi i64 [ 48, %.lr.ph.i ], [ %.sroa.0.020.i.add, %bb.d ] ; 2 uses
-  %.pn19.i = phi ptr [ %0, %.lr.ph.i ], [ %.sroa.0.020.i.ptr, %bb.d ] ; 5 uses
-  %.sroa.0.020.i.ptr = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.0.020.i.idx ; 6 uses
+  %.pn19.i = phi ptr [ %0, %.lr.ph.i ], [ %.sroa.0.020.i.ptr, %bb.d ] ; 4 uses
+  %.sroa.0.020.i.ptr = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.0.020.i.idx ; 5 uses
   %i.g = getelementptr inbounds nuw i8, ptr %.pn19.i, i64 64
   %i.h = load <2 x double>, ptr %i.g, align 8, !tbaa !70 ; 3 uses
   %shift = shufflevector <2 x double> %i.h, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
@@ -789,15 +777,11 @@ bb.b:                                             ; preds = %bb.d, %.lr.ph.i
   br i1 %i.m, label %.loopexit.i, label %bb.c
 
 .loopexit.i:                                      ; preds = %bb.b
-  %4 = add nuw i64 %indvar.i, 1                   ; 2 uses
-  %5 = mul nuw nsw i64 %4, 48
-  %.neg.i = mul nsw i64 %4, -48
-  %i.n = add nsw i64 %.neg.i, 48                  ; 2 uses
-  %scevgep22.i = getelementptr i8, ptr %.pn19.i, i64 %i.n
-  %scevgep.i = getelementptr i8, ptr %.sroa.0.020.i.ptr, i64 %i.n
+  %.neg.i = mul nuw nsw i64 %indvar.i, 48
+  %i.n = add nuw nsw i64 %.neg.i, 48
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %3, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.0.020.i.ptr, i64 48, i1 false), !tbaa.struct !166
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.i, ptr noundef nonnull align 8 dereferenceable(1) %scevgep22.i, i64 %5, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sroa.0.017.i.ptr, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.n, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 8 dereferenceable(48) %3, i64 48, i1 false), !tbaa.struct !166
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
   br label %bb.d
@@ -896,7 +880,7 @@ bb.e:                                             ; preds = %bb.a
   br i1 %i.aq, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPN4geos5index7strtree15TemplateSTRNodeIPKNS2_4geom10LinearRingENS4_14EnvelopeTraitsEEESt6vectorISB_SaISB_EEEENS0_5__ops15_Iter_comp_iterIZNS4_19TemplateSTRtreeImplIS9_SA_E10sortNodesYERKSG_SM_EUlRKSB_SO_E_EEEvT_SR_T0_.exit, label %.preheader.i27
 
 .preheader.i27:                                   ; preds = %bb.e
-  %.sroa.0.017.i28 = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
+  %.sroa.0.017.i28 = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
   %.not18.i29 = icmp eq ptr %.sroa.0.017.i28, %1
   br i1 %.not18.i29, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPN4geos5index7strtree15TemplateSTRNodeIPKNS2_4geom10LinearRingENS4_14EnvelopeTraitsEEESt6vectorISB_SaISB_EEEENS0_5__ops15_Iter_comp_iterIZNS4_19TemplateSTRtreeImplIS9_SA_E10sortNodesYERKSG_SM_EUlRKSB_SO_E_EEEvT_SR_T0_.exit, label %.lr.ph.i30
 
@@ -906,21 +890,11 @@ bb.e:                                             ; preds = %bb.a
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.i, %.lr.ph.i30
-  %indvar.i31 = phi i64 [ 0, %.lr.ph.i30 ], [ %indvar.next.i46, %bb.i ] ; 3 uses
-  %.sroa.0.020.i32 = phi ptr [ %.sroa.0.017.i28, %.lr.ph.i30 ], [ %.sroa.0.0.i44, %bb.i ] ; 8 uses
-  %.pn19.i33 = phi ptr [ %0, %.lr.ph.i30 ], [ %.sroa.0.020.i32, %bb.i ] ; 5 uses
-  %6 = mul nuw i64 %indvar.i31, 48
-  %7 = add i64 %6, 48
-  %8 = udiv i64 %7, 48                            ; 2 uses
-  %9 = icmp samesign ugt i64 %indvar.i31, 384307168202282324 ; 2 uses
-  %10 = select i1 %9, i64 0, i64 48
-  %.neg.i35 = mul i64 %8, -48
-  %11 = add i64 %.neg.i35, %10                    ; 2 uses
-  %scevgep.i36 = getelementptr i8, ptr %.sroa.0.020.i32, i64 %11
-  %scevgep22.i37 = getelementptr i8, ptr %.pn19.i33, i64 %11
-  %12 = zext i1 %9 to i64
-  %i.at = add nuw nsw i64 %8, %12
-  %13 = mul nuw i64 %i.at, 48
+  %indvar.i31 = phi i64 [ 0, %.lr.ph.i30 ], [ %indvar.next.i46, %bb.i ] ; 2 uses
+  %.sroa.0.020.i32 = phi ptr [ %.sroa.0.017.i28, %.lr.ph.i30 ], [ %.sroa.0.0.i44, %bb.i ] ; 7 uses
+  %.pn19.i33 = phi ptr [ %0, %.lr.ph.i30 ], [ %.sroa.0.020.i32, %bb.i ] ; 4 uses
+  %.neg.i35 = mul nuw i64 %indvar.i31, 48
+  %i.at = add nuw i64 %.neg.i35, 48
   %i.au = getelementptr inbounds nuw i8, ptr %.pn19.i33, i64 64
   %i.av = load <2 x double>, ptr %i.au, align 8, !tbaa !70 ; 3 uses
   %shift70 = shufflevector <2 x double> %i.av, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
@@ -941,7 +915,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.bd, label %.lr.ph.preheader.i.i.i.i.i.i51, label %.loopexit.i50
 
 .lr.ph.preheader.i.i.i.i.i.i51:                   ; preds = %bb.g
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %scevgep.i36, ptr align 8 %scevgep22.i37, i64 %13, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sroa.0.017.i28, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.at, i1 false)
   br label %.loopexit.i50
 
 .loopexit.i50:                                    ; preds = %.lr.ph.preheader.i.i.i.i.i.i51, %bb.g
