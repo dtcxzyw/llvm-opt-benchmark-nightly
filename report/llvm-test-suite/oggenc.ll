@@ -204,9 +204,9 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 .loopexit91.i.i:                                  ; preds = %.split.us.i.i, %.split.i.i
+  %indvars.iv139.lcssa169.sink.i.i = phi i64 [ %indvar.i, %.split.i.i ], [ %indvars.iv.i.i, %.split.us.i.i ]
   %.us-phi.i.i = phi i32 [ %.170.i.i, %.split.i.i ], [ %.170.us.i.i, %.split.us.i.i ]
-  %.us-phi97.in.i.i = phi i64 [ %indvars.iv138.i.i, %.split.i.i ], [ %indvars.iv.i.i, %.split.us.i.i ]
-  %.us-phi97.i.i = trunc i64 %.us-phi97.in.i.i to i32
+  %.us-phi97.i.i = trunc nsw i64 %indvars.iv139.lcssa169.sink.i.i to i32
   br label %bb.c
 
 bb.c:                                             ; preds = %.loopexit91.i.i, %bb.b
@@ -236,10 +236,10 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 
 .split.i.preheader.i:                             ; preds = %bb.f
   %i.p = shl nsw i64 %i.o, 2
-  %i.q = add i32 %.0.i.i, 1
+  %i.q = add i32 %.0.i.i, -1
   %i.r = getelementptr i8, ptr %i.e, i64 %i.p     ; 2 uses
-  %i.s = getelementptr i8, ptr %i.r, i64 16
-  %i.t = getelementptr i8, ptr %i.r, i64 12
+  %i.s = getelementptr i8, ptr %i.r, i64 8
+  %i.t = getelementptr i8, ptr %i.r, i64 4
   br label %.split.i.i
 
 .split.us.i.i:                                    ; preds = %bb.f, %bb.g
@@ -263,35 +263,35 @@ bb.g:                                             ; preds = %.split.us.i.i
   br label %.split99.i.i
 
 .split.i.i:                                       ; preds = %bb.i, %.split.i.preheader.i
-  %indvar.i = phi i64 [ 0, %.split.i.preheader.i ], [ %indvar.next.i, %bb.i ] ; 3 uses
-  %indvars.iv138.i.i = phi i64 [ %i.o, %.split.i.preheader.i ], [ %indvars.iv.next139.i.i, %bb.i ] ; 6 uses
+  %indvar.i = phi i64 [ %i.o, %.split.i.preheader.i ], [ %indvars.iv.next140.i.i, %bb.i ] ; 7 uses
+  %indvars.iv138.i.i = phi i64 [ 0, %.split.i.preheader.i ], [ %indvar.next.i, %bb.i ] ; 3 uses
   %.170.i.i = phi i32 [ %.069.i.i, %.split.i.preheader.i ], [ %i.af, %bb.i ] ; 4 uses
-  %i.z = shl i64 %indvar.i, 2                     ; 2 uses
+  %i.z = shl i64 %indvars.iv138.i.i, 2            ; 2 uses
   %scevgep.i = getelementptr i8, ptr %i.s, i64 %i.z
-  %i.aa = trunc i64 %indvar.i to i32
+  %i.aa = trunc i64 %indvars.iv138.i.i to i32
   %i.ab = add i32 %i.q, %i.aa
-  %i.ac = zext i32 %i.ab to i64                   ; 2 uses
+  %i.ac = zext i32 %i.ab to i64
   %i.ad = mul nsw i64 %i.ac, -4                   ; 2 uses
   %scevgep14.i = getelementptr i8, ptr %scevgep.i, i64 %i.ad
   %scevgep15.i = getelementptr i8, ptr %i.t, i64 %i.z
   %scevgep16.i = getelementptr i8, ptr %scevgep15.i, i64 %i.ad
-  %i.ae = shl nuw nsw i64 %i.ac, 2
-  %2 = add nsw i64 %i.ae, -4
-  %indvars.iv.next139.i.i = add i64 %indvars.iv138.i.i, 1 ; 2 uses
+  %i.ae = shl i64 %indvar.i, 2
+  %2 = and i64 %i.ae, 17179869180
   %i.af = sdiv i32 %.170.i.i, 2                   ; 2 uses
   %i.ag = shl nsw i32 %i.af, 1
   %.not.i.i = icmp eq i32 %.170.i.i, %i.ag
   br i1 %.not.i.i, label %bb.h, label %.loopexit91.i.i
 
 bb.h:                                             ; preds = %.split.i.i
-  %i.ah = getelementptr [4 x i8], ptr %i.e, i64 %indvars.iv138.i.i
+  %indvars.iv.next140.i.i = add i64 %indvar.i, 1  ; 2 uses
+  %i.ah = getelementptr [4 x i8], ptr %i.e, i64 %indvar.i
   %i.ai = getelementptr i8, ptr %i.ah, i64 8
   store i32 2, ptr %i.ai, align 4
-  %i.aj = icmp eq i64 %indvars.iv138.i.i, 0       ; 2 uses
+  %i.aj = icmp eq i64 %indvar.i, 0                ; 2 uses
   br i1 %i.aj, label %bb.i, label %.preheader90.i.i
 
 .preheader90.i.i:                                 ; preds = %bb.h
-  %.not8895.i.i = icmp slt i64 %indvars.iv138.i.i, 1
+  %.not8895.i.i = icmp slt i64 %indvar.i, 1
   br i1 %.not8895.i.i, label %._crit_edge.i.i, label %.lr.ph.preheader.i.i
 
 .lr.ph.preheader.i.i:                             ; preds = %.preheader90.i.i
@@ -305,13 +305,13 @@ bb.h:                                             ; preds = %.split.i.i
 bb.i:                                             ; preds = %._crit_edge.i.i, %bb.h
   %i.ak = and i32 %.170.i.i, -2
   %.not89.i.i = icmp eq i32 %i.ak, 2
-  %indvar.next.i = add i64 %indvar.i, 1
+  %indvar.next.i = add i64 %indvars.iv138.i.i, 1
   br i1 %.not89.i.i, label %.split99.i.i, label %.split.i.i
 
 .split99.i.i:                                     ; preds = %bb.i, %.split99.us.i.i
-  %.us-phi100.in.i.i = phi i64 [ %indvars.iv.next.i.i, %.split99.us.i.i ], [ %indvars.iv.next139.i.i, %bb.i ]
+  %.us-phi100.in.i.i = phi i64 [ %indvars.iv.next.i.i, %.split99.us.i.i ], [ %indvars.iv.next140.i.i, %bb.i ]
   %.us-phi101.i.i = phi i1 [ %i.y, %.split99.us.i.i ], [ %i.aj, %bb.i ]
-  %.us-phi102.in.i.i = phi i64 [ %indvars.iv.i.i, %.split99.us.i.i ], [ %indvars.iv138.i.i, %bb.i ] ; 2 uses
+  %.us-phi102.in.i.i = phi i64 [ %indvars.iv.i.i, %.split99.us.i.i ], [ %indvar.i, %bb.i ] ; 2 uses
   %.us-phi102.i.i = trunc i64 %.us-phi102.in.i.i to i32
   %.us-phi100.i.i = trunc i64 %.us-phi100.in.i.i to i32
   store i32 %1, ptr %i.e, align 4
