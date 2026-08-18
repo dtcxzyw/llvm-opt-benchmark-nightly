@@ -204,7 +204,7 @@ hqa_decode_slice.exit.us.6.i:                     ; preds = %hqa_decode_slice.ex
   br i1 %or.cond.us.7.i, label %.split.us.i, label %hqa_decode_frame.exit
 
 .preheader.split.i:                               ; preds = %.preheader63.i, %hqa_decode_slice.exit.loopexit.i
-  %indvars.iv.i53 = phi i64 [ %indvars.iv.next.i54, %hqa_decode_slice.exit.loopexit.i ], [ 0, %.preheader63.i ] ; 3 uses
+  %indvars.iv.i53 = phi i64 [ %indvars.iv.next.i54, %hqa_decode_slice.exit.loopexit.i ], [ 0, %.preheader63.i ] ; 4 uses
   %i.pq = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv.i53
   %i.pr = load i32, ptr %i.pq, align 4, !tbaa !39 ; 4 uses
   %i.ps = icmp ult i32 %i.pr, 27
@@ -233,13 +233,14 @@ bb.aj:                                            ; preds = %.preheader.split.i
   %or.cond.i.i57 = icmp ult i32 %i.qb, 2147483135
   %.013.i.i = select i1 %or.cond.i.i57, i32 %i.qb, i32 0 ; 2 uses
   %i.qc = add nuw nsw i32 %.013.i.i, 8            ; 6 uses
+  %4 = trunc i64 %indvars.iv.i53 to i3
   %indvars.iv.tr.i = trunc i64 %indvars.iv.i53 to i32
-  %i.qd = shl i32 %indvars.iv.tr.i, 4             ; 2 uses
+  %i.qd = shl i32 %indvars.iv.tr.i, 4
   br label %bb.ak
 
 bb.ak:                                            ; preds = %._crit_edge.i.i, %.lr.ph38.i.i
   %.sroa.4.0.i = phi i32 [ 0, %.lr.ph38.i.i ], [ %.sroa.4.1.i, %._crit_edge.i.i ] ; 2 uses
-  %indvars.iv.i.i58 = phi i32 [ %i.qd, %.lr.ph38.i.i ], [ %indvars.iv.next.i.i59, %._crit_edge.i.i ] ; 2 uses
+  %indvars.iv.i.i58 = phi i3 [ %4, %.lr.ph38.i.i ], [ %indvars.iv.next.i.i59, %._crit_edge.i.i ] ; 2 uses
   %.02036.i.i = phi i32 [ 0, %.lr.ph38.i.i ], [ %i.yb, %._crit_edge.i.i ] ; 10 uses
   %i.qe = mul nuw nsw i32 %.02036.i.i, 3
   %i.qf = add nuw nsw i32 %i.qe, %i.qd
@@ -248,13 +249,13 @@ bb.ak:                                            ; preds = %._crit_edge.i.i, %.
   br i1 %i.qh, label %.lr.ph.preheader.i.i, label %._crit_edge.i.i
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.ak
-  %4 = and i32 %indvars.iv.i.i58, 112
-  %5 = zext nneg i32 %4 to i64
+  %5 = zext i3 %indvars.iv.i.i58 to i64
+  %6 = shl nuw nsw i64 %5, 4
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.loopexit.i.i.i, %.lr.ph.preheader.i.i
   %.sroa.4.2.i = phi i32 [ %.sroa.4.0.i, %.lr.ph.preheader.i.i ], [ %.sroa.4.5.i, %.loopexit.i.i.i ] ; 4 uses
-  %indvars.iv46.i.i = phi i64 [ %5, %.lr.ph.preheader.i.i ], [ %indvars.iv.next47.i.i, %.loopexit.i.i.i ] ; 6 uses
+  %indvars.iv46.i.i = phi i64 [ %6, %.lr.ph.preheader.i.i ], [ %indvars.iv.next47.i.i, %.loopexit.i.i.i ] ; 6 uses
   %.not85.i.i.i = icmp sgt i32 %.013.i.i, %.sroa.4.2.i
   br i1 %.not85.i.i.i, label %bb.al, label %hqa_decode_slice.exit.thread.i
 
@@ -554,7 +555,7 @@ hqa_decode_slice.exit.thread.i:                   ; preds = %.lr.ph.i.i, %bb.ar
   %.sroa.4.1.i = phi i32 [ %.sroa.4.0.i, %bb.ak ], [ %.sroa.4.5.i, %.loopexit.i.i.i ]
   %i.yb = add nuw nsw i32 %.02036.i.i, 16         ; 2 uses
   %i.yc = icmp samesign ult i32 %i.yb, %i.lp
-  %indvars.iv.next.i.i59 = add nuw nsw i32 %indvars.iv.i.i58, 48
+  %indvars.iv.next.i.i59 = add i3 %indvars.iv.i.i58, 3
   br i1 %i.yc, label %bb.ak, label %hqa_decode_slice.exit.loopexit.i, !llvm.loop !61
 
 hqa_decode_slice.exit.loopexit.i:                 ; preds = %._crit_edge.i.i

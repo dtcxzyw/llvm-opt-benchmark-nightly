@@ -204,7 +204,7 @@ bb.ih:                                            ; preds = %"_ZSt25__unguarded_
   br i1 %.not.i25.i.i.i, label %"_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPN6duckdb20SortProjectionColumnESt6vectorIS3_SaIS3_EEEEZNS2_4SortC1ERNS2_13ClientContextERKNS2_6vectorINS2_16BoundOrderByNodeELb1ESaISD_EEERKNSC_INS2_11LogicalTypeELb1ESaISI_EEENSC_ImLb1ESaImEEEbE3$_1EvT_SQ_T0_.exit", label %.lr.ph.i13.i.i.i, !llvm.loop !1015
 
 .preheader.i34.i.i.i:                             ; preds = %bb.ib
-  %.sroa.0.016.i35.i.i.i = getelementptr inbounds nuw i8, ptr %i.ahb, i64 24 ; 2 uses
+  %.sroa.0.016.i35.i.i.i = getelementptr inbounds nuw i8, ptr %i.ahb, i64 24 ; 3 uses
   %.not17.i36.i.i.i = icmp eq ptr %.sroa.0.016.i35.i.i.i, %i.ahd
   br i1 %.not17.i36.i.i.i, label %"_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPN6duckdb20SortProjectionColumnESt6vectorIS3_SaIS3_EEEEZNS2_4SortC1ERNS2_13ClientContextERKNS2_6vectorINS2_16BoundOrderByNodeELb1ESaISD_EEERKNSC_INS2_11LogicalTypeELb1ESaISI_EEENSC_ImLb1ESaImEEEbE3$_1EvT_SQ_T0_.exit", label %.lr.ph.i37.i.i.i
 
@@ -214,7 +214,7 @@ bb.ih:                                            ; preds = %"_ZSt25__unguarded_
 
 bb.ii:                                            ; preds = %bb.io, %.lr.ph.i37.i.i.i
   %.sroa.0.019.i38.i.i.i = phi ptr [ %.sroa.0.016.i35.i.i.i, %.lr.ph.i37.i.i.i ], [ %.sroa.0.0.i56.i.i.i, %bb.io ] ; 7 uses
-  %.pn18.i39.i.i.i = phi ptr [ %i.ahb, %.lr.ph.i37.i.i.i ], [ %.sroa.0.019.i38.i.i.i, %bb.io ] ; 8 uses
+  %.pn18.i39.i.i.i = phi ptr [ %i.ahb, %.lr.ph.i37.i.i.i ], [ %.sroa.0.019.i38.i.i.i, %bb.io ] ; 7 uses
   %.val.i.i40.i.i.i = load i8, ptr %.sroa.0.019.i38.i.i.i, align 8, !tbaa !512, !range !68, !noundef !69 ; 7 uses
   %i.ain = getelementptr i8, ptr %.pn18.i39.i.i.i, i64 32
   %.val1.i.i41.i.i.i = load i64, ptr %i.ain, align 8 ; 4 uses
@@ -230,16 +230,12 @@ bb.ij:                                            ; preds = %bb.ii
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %6, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.019.i38.i.i.i, i64 24, i1 false), !tbaa.struct !1011
   %i.air = ptrtoint ptr %.sroa.0.019.i38.i.i.i to i64
-  %i.ais = sub i64 %i.air, %i.ahf                 ; 4 uses
+  %i.ais = sub i64 %i.air, %i.ahf                 ; 3 uses
   %i.ait = icmp sgt i64 %i.ais, 24
   br i1 %i.ait, label %bb.ik, label %bb.il, !prof !337
 
 bb.ik:                                            ; preds = %bb.ij
-  %65 = getelementptr inbounds nuw i8, ptr %.pn18.i39.i.i.i, i64 48
-  %.neg23.i66.i.i.i = udiv exact i64 %i.ais, 24
-  %.neg23.neg.i67.i.i.i = sub nsw i64 0, %.neg23.i66.i.i.i
-  %66 = getelementptr inbounds [24 x i8], ptr %65, i64 %.neg23.neg.i67.i.i.i
-  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %66, ptr noundef nonnull align 8 dereferenceable(1) %i.ahb, i64 %i.ais, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sroa.0.016.i35.i.i.i, ptr noundef nonnull align 8 dereferenceable(1) %i.ahb, i64 %i.ais, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN6duckdb20SortProjectionColumnESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.i65.i.i.i
 
 bb.il:                                            ; preds = %bb.ij

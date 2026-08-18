@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %bb.a
   br i1 %i.aa, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPN7CaDiCaL10vivify_refESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterINS2_26vivify_inversesize_smallerEEEEvT_SD_T0_.exit, label %.preheader.i25
 
 .preheader.i25:                                   ; preds = %bb.h
-  %.sroa.0.016.i26 = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
+  %.sroa.0.016.i26 = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
   %.not17.i27 = icmp eq ptr %.sroa.0.016.i26, %1
   br i1 %.not17.i27, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPN7CaDiCaL10vivify_refESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterINS2_26vivify_inversesize_smallerEEEEvT_SD_T0_.exit, label %.lr.ph.i28
 
@@ -214,7 +214,7 @@ bb.h:                                             ; preds = %bb.a
 
 bb.i:                                             ; preds = %bb.o, %.lr.ph.i28
   %.sroa.0.019.i29 = phi ptr [ %.sroa.0.016.i26, %.lr.ph.i28 ], [ %.sroa.0.0.i37, %bb.o ] ; 7 uses
-  %.pn18.i30 = phi ptr [ %0, %.lr.ph.i28 ], [ %.sroa.0.019.i29, %bb.o ] ; 5 uses
+  %.pn18.i30 = phi ptr [ %0, %.lr.ph.i28 ], [ %.sroa.0.019.i29, %bb.o ] ; 4 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %.pn18.i30, i64 48
   %i.ad = load i64, ptr %i.ac, align 8, !tbaa !303 ; 4 uses
   %i.ae = load i64, ptr %i.ab, align 8, !tbaa !303
@@ -225,16 +225,12 @@ bb.j:                                             ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %2, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.0.019.i29, i64 40, i1 false), !tbaa.struct !360
   %i.ag = ptrtoint ptr %.sroa.0.019.i29 to i64
-  %i.ah = sub i64 %i.ag, %i.b                     ; 4 uses
+  %i.ah = sub i64 %i.ag, %i.b                     ; 3 uses
   %i.ai = icmp sgt i64 %i.ah, 40
   br i1 %i.ai, label %bb.k, label %bb.l, !prof !315
 
 bb.k:                                             ; preds = %bb.j
-  %4 = getelementptr inbounds nuw i8, ptr %.pn18.i30, i64 80
-  %.neg24.i43 = udiv exact i64 %i.ah, 40
-  %.neg24.neg.i44 = sub nsw i64 0, %.neg24.i43
-  %5 = getelementptr inbounds [40 x i8], ptr %4, i64 %.neg24.neg.i44
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %5, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.ah, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sroa.0.016.i26, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.ah, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN7CaDiCaL10vivify_refESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.i42
 
 bb.l:                                             ; preds = %bb.j
@@ -637,7 +633,7 @@ bb.i:                                             ; preds = %bb.a
   br i1 %i.am, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPN7CaDiCaL10vivify_refESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterINS2_23vivify_refcount_smallerEEEEvT_SD_T0_.exit, label %.preheader.i19
 
 .preheader.i19:                                   ; preds = %bb.i
-  %.sroa.0.019.i20 = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
+  %.sroa.0.019.i20 = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
   %.not20.i21 = icmp eq ptr %.sroa.0.019.i20, %1
   br i1 %.not20.i21, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPN7CaDiCaL10vivify_refESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_comp_iterINS2_23vivify_refcount_smallerEEEEvT_SD_T0_.exit, label %.lr.ph.i22
 
@@ -651,7 +647,7 @@ bb.i:                                             ; preds = %bb.a
 
 bb.j:                                             ; preds = %bb.p, %.lr.ph.i22
   %.sroa.0.022.i23 = phi ptr [ %.sroa.0.019.i20, %.lr.ph.i22 ], [ %.sroa.0.0.i27, %bb.p ] ; 7 uses
-  %.pn21.i24 = phi ptr [ %0, %.lr.ph.i22 ], [ %.sroa.0.022.i23, %bb.p ] ; 4 uses
+  %.pn21.i24 = phi ptr [ %0, %.lr.ph.i22 ], [ %.sroa.0.022.i23, %bb.p ] ; 3 uses
   %i.as = getelementptr inbounds nuw i8, ptr %.pn21.i24, i64 56
   %i.at = getelementptr inbounds [8 x i8], ptr %i.as, i64 %i.an
   %i.au = load i64, ptr %i.at, align 8, !tbaa !199
@@ -663,16 +659,12 @@ bb.k:                                             ; preds = %bb.j
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %4, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.0.022.i23, i64 40, i1 false), !tbaa.struct !360
   %i.ax = ptrtoint ptr %.sroa.0.022.i23 to i64
-  %i.ay = sub i64 %i.ax, %i.b                     ; 4 uses
+  %i.ay = sub i64 %i.ax, %i.b                     ; 3 uses
   %i.az = icmp sgt i64 %i.ay, 40
   br i1 %i.az, label %bb.l, label %bb.m, !prof !315
 
 bb.l:                                             ; preds = %bb.k
-  %8 = getelementptr inbounds nuw i8, ptr %.pn21.i24, i64 80
-  %.neg27.i33 = udiv exact i64 %i.ay, 40
-  %.neg27.neg.i34 = sub nsw i64 0, %.neg27.i33
-  %9 = getelementptr inbounds [40 x i8], ptr %8, i64 %.neg27.neg.i34
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %9, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.ay, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sroa.0.019.i20, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.ay, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN7CaDiCaL10vivify_refESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.i32
 
 bb.m:                                             ; preds = %bb.k

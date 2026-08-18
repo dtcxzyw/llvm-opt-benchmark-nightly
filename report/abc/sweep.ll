@@ -204,13 +204,14 @@ bb.hd:                                            ; preds = %bb.hc
 
 .lr.ph58.i.i.i.preheader:                         ; preds = %.preheader.i167.i.i
   %i.apf = add i64 %i.aot, -8
-  %3 = add i64 %indvar, %indvar336
-  %4 = shl i64 %3, 2
-  %i.apg = add i64 %4, %i.aor
-  %5 = sub i64 %i.apf, %i.apg                     ; 2 uses
-  %6 = lshr i64 %5, 2
-  %i.aph = add nuw nsw i64 %6, 1                  ; 2 uses
-  %min.iters.check339 = icmp ult i64 %5, 76
+  %3 = sub i64 %i.apf, %i.aor
+  %4 = lshr i64 %3, 2
+  %i.apg = add nuw nsw i64 %4, 1
+  %5 = mul i64 %indvar, 4611686018427387903
+  %6 = add i64 %5, %i.apg
+  %7 = mul i64 %indvar336, 4611686018427387903
+  %i.aph = add i64 %7, %6                         ; 3 uses
+  %min.iters.check339 = icmp ult i64 %i.aph, 20
   br i1 %min.iters.check339, label %.lr.ph58.i.i.i.preheader393, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph58.i.i.i.preheader
@@ -224,7 +225,7 @@ vector.memcheck:                                  ; preds = %.lr.ph58.i.i.i.preh
   br i1 %diff.check, label %.lr.ph58.i.i.i.preheader393, label %vector.ph340
 
 vector.ph340:                                     ; preds = %vector.memcheck
-  %n.vec341 = and i64 %i.aph, 9223372036854775800 ; 3 uses
+  %n.vec341 = and i64 %i.aph, -8                  ; 3 uses
   %i.apn = shl i64 %n.vec341, 2                   ; 2 uses
   %i.apo = getelementptr i8, ptr %i.aoz, i64 %i.apn
   %i.app = getelementptr i8, ptr %.040.lcssa.i.i.i, i64 %i.apn ; 2 uses
@@ -361,13 +362,14 @@ bb.hj:                                            ; preds = %bb.hi
 
 .lr.ph58.i190.i.i.preheader:                      ; preds = %.preheader.i188.i.i
   %i.aqt = add i64 %i.aqh, -8
-  %7 = add i64 %indvar352, %indvar354
-  %8 = shl i64 %7, 2
-  %i.aqu = add i64 %8, %i.aqf
-  %9 = sub i64 %i.aqt, %i.aqu                     ; 2 uses
-  %10 = lshr i64 %9, 2
-  %i.aqv = add nuw nsw i64 %10, 1                 ; 2 uses
-  %min.iters.check358 = icmp ult i64 %9, 76
+  %8 = sub i64 %i.aqt, %i.aqf
+  %9 = lshr i64 %8, 2
+  %i.aqu = add nuw nsw i64 %9, 1
+  %10 = mul i64 %indvar352, 4611686018427387903
+  %11 = add i64 %10, %i.aqu
+  %12 = mul i64 %indvar354, 4611686018427387903
+  %i.aqv = add i64 %12, %11                       ; 3 uses
+  %min.iters.check358 = icmp ult i64 %i.aqv, 20
   br i1 %min.iters.check358, label %.lr.ph58.i190.i.i.preheader395, label %vector.memcheck351
 
 vector.memcheck351:                               ; preds = %.lr.ph58.i190.i.i.preheader
@@ -381,7 +383,7 @@ vector.memcheck351:                               ; preds = %.lr.ph58.i190.i.i.p
   br i1 %diff.check356, label %.lr.ph58.i190.i.i.preheader395, label %vector.ph359
 
 vector.ph359:                                     ; preds = %vector.memcheck351
-  %n.vec360 = and i64 %i.aqv, 9223372036854775800 ; 3 uses
+  %n.vec360 = and i64 %i.aqv, -8                  ; 3 uses
   %i.arb = shl i64 %n.vec360, 2                   ; 2 uses
   %i.arc = getelementptr i8, ptr %i.aqn, i64 %i.arb
   %i.ard = getelementptr i8, ptr %.040.lcssa.i175.i.i, i64 %i.arb ; 2 uses

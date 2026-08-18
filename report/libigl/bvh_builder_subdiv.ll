@@ -1,8 +1,8 @@
 inline.NumInlined: 2401
 inline.NumDeleted: 459
 loop-unroll.NumCompletelyUnrolled: 12
-loop-unroll.NumRuntimeUnrolled: 6
-loop-unroll.NumUnrolled: 34
+loop-unroll.NumRuntimeUnrolled: 7
+loop-unroll.NumUnrolled: 35
 begin_hunk_0_@_ZSt22__final_insertion_sortIPN6embree9PrimRefMBEN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S6_T0_:bb.a
   %i.cd = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.i, i64 -128
   %i.ce = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.i, i64 -128
@@ -204,8 +204,9 @@ bb.f:                                             ; preds = %bb.a
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.j, %.lr.ph.i17
-  %.020.i18 = phi ptr [ %.017.i16, %.lr.ph.i17 ], [ %.0.i25, %bb.j ] ; 7 uses
-  %.pn19.i19 = phi ptr [ %0, %.lr.ph.i17 ], [ %.020.i18, %bb.j ] ; 9 uses
+  %indvar = phi i64 [ %indvar.next, %bb.j ], [ 0, %.lr.ph.i17 ] ; 3 uses
+  %.020.i18 = phi ptr [ %.0.i25, %bb.j ], [ %.017.i16, %.lr.ph.i17 ] ; 13 uses
+  %.pn19.i19 = phi ptr [ %.020.i18, %bb.j ], [ %0, %.lr.ph.i17 ] ; 15 uses
   %i.gn = getelementptr inbounds nuw i8, ptr %.pn19.i19, i64 108
   %i.go = load i32, ptr %i.gn, align 4
   %i.gp = zext i32 %i.go to i64
@@ -236,46 +237,107 @@ bb.h:                                             ; preds = %bb.g
   %i.hl = ptrtoint ptr %.020.i18 to i64
   %i.hm = sub i64 %i.hl, %i.b                     ; 2 uses
   %i.hn = icmp sgt i64 %i.hm, 0
-  br i1 %i.hn, label %.lr.ph.preheader.i.i.i.i.i.i31.a, label %_ZSt13move_backwardIPN6embree9PrimRefMBES2_ET0_T_S4_S3_.exit.i30
+  br i1 %i.hn, label %.lr.ph.preheader.i.i.i.i.i.i31, label %_ZSt13move_backwardIPN6embree9PrimRefMBES2_ET0_T_S4_S3_.exit.i30
 
-.lr.ph.preheader.i.i.i.i.i.i31.a:                 ; preds = %bb.h
-  %i.ho = getelementptr inbounds nuw i8, ptr %.pn19.i19, i64 160
-  %2 = udiv exact i64 %i.hm, 80
-  br label %.lr.ph.i.i.i.i.i.i32
+.lr.ph.preheader.i.i.i.i.i.i31:                   ; preds = %bb.h
+  %2 = getelementptr inbounds nuw i8, ptr %.pn19.i19, i64 160
+  %3 = udiv exact i64 %i.hm, 80                   ; 2 uses
+  %4 = and i64 %indvar, 1
+  %lcmp.mod.not.not = icmp eq i64 %4, 0
+  br i1 %lcmp.mod.not.not, label %.lr.ph.preheader.i.i.i.i.i.i31.a, label %.lr.ph.i.i.i.i.i.i32.prol.loopexit
 
-.lr.ph.i.i.i.i.i.i32:                             ; preds = %.lr.ph.i.i.i.i.i.i32, %.lr.ph.preheader.i.i.i.i.i.i31.a
-  %.010.i.i.i.i.i.i33 = phi i64 [ %i.ih, %.lr.ph.i.i.i.i.i.i32 ], [ %2, %.lr.ph.preheader.i.i.i.i.i.i31.a ] ; 2 uses
-  %.069.i.i.i.i.i.i34 = phi ptr [ %i.hq, %.lr.ph.i.i.i.i.i.i32 ], [ %i.ho, %.lr.ph.preheader.i.i.i.i.i.i31.a ] ; 6 uses
-  %.078.i.i.i.i.i.i35 = phi ptr [ %i.hp, %.lr.ph.i.i.i.i.i.i32 ], [ %.020.i18, %.lr.ph.preheader.i.i.i.i.i.i31.a ] ; 6 uses
-  %i.hp = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.i35, i64 -80 ; 2 uses
-  %i.hq = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.i34, i64 -80 ; 2 uses
+.lr.ph.preheader.i.i.i.i.i.i31.a:                 ; preds = %.lr.ph.preheader.i.i.i.i.i.i31
+  %5 = getelementptr inbounds i8, ptr %.020.i18, i64 -80 ; 2 uses
+  %6 = getelementptr inbounds nuw i8, ptr %.pn19.i19, i64 80 ; 2 uses
+  %7 = load <4 x float>, ptr %5, align 16
+  store <4 x float> %7, ptr %6, align 16
+  %8 = getelementptr inbounds i8, ptr %.020.i18, i64 -64
+  %9 = getelementptr inbounds nuw i8, ptr %.pn19.i19, i64 96
+  %10 = load <4 x float>, ptr %8, align 16
+  store <4 x float> %10, ptr %9, align 16
+  %11 = getelementptr inbounds i8, ptr %.020.i18, i64 -48
+  %12 = getelementptr inbounds nuw i8, ptr %.pn19.i19, i64 112
+  %13 = load <4 x float>, ptr %11, align 16
+  store <4 x float> %13, ptr %12, align 16
+  %14 = getelementptr inbounds i8, ptr %.020.i18, i64 -32
+  %15 = getelementptr inbounds nuw i8, ptr %.pn19.i19, i64 128
+  %16 = load <4 x float>, ptr %14, align 16
+  store <4 x float> %16, ptr %15, align 16
+  %17 = getelementptr inbounds nuw i8, ptr %.pn19.i19, i64 144
+  %18 = getelementptr inbounds i8, ptr %.020.i18, i64 -16
+  %19 = load float, ptr %18, align 16
+  store float %19, ptr %17, align 16
+  %20 = getelementptr inbounds i8, ptr %.020.i18, i64 -12
+  %21 = load float, ptr %20, align 4
+  %i.ho = getelementptr inbounds nuw i8, ptr %.pn19.i19, i64 148
+  store float %21, ptr %i.ho, align 4
+  %22 = add nsw i64 %3, -1
+  br label %.lr.ph.i.i.i.i.i.i32.prol.loopexit
+
+.lr.ph.i.i.i.i.i.i32.prol.loopexit:               ; preds = %.lr.ph.preheader.i.i.i.i.i.i31.a, %.lr.ph.preheader.i.i.i.i.i.i31
+  %.010.i.i.i.i.i.i33.unr = phi i64 [ %3, %.lr.ph.preheader.i.i.i.i.i.i31 ], [ %22, %.lr.ph.preheader.i.i.i.i.i.i31.a ]
+  %.069.i.i.i.i.i.i34.unr = phi ptr [ %2, %.lr.ph.preheader.i.i.i.i.i.i31 ], [ %6, %.lr.ph.preheader.i.i.i.i.i.i31.a ]
+  %.078.i.i.i.i.i.i35.unr = phi ptr [ %.020.i18, %.lr.ph.preheader.i.i.i.i.i.i31 ], [ %5, %.lr.ph.preheader.i.i.i.i.i.i31.a ]
+  %23 = icmp eq i64 %indvar, 0
+  br i1 %23, label %_ZSt13move_backwardIPN6embree9PrimRefMBES2_ET0_T_S4_S3_.exit.i30, label %.lr.ph.i.i.i.i.i.i32
+
+.lr.ph.i.i.i.i.i.i32:                             ; preds = %.lr.ph.i.i.i.i.i.i32.prol.loopexit, %.lr.ph.i.i.i.i.i.i32
+  %.010.i.i.i.i.i.i33 = phi i64 [ %i.ih, %.lr.ph.i.i.i.i.i.i32 ], [ %.010.i.i.i.i.i.i33.unr, %.lr.ph.i.i.i.i.i.i32.prol.loopexit ] ; 2 uses
+  %.069.i.i.i.i.i.i34 = phi ptr [ %i.hq, %.lr.ph.i.i.i.i.i.i32 ], [ %.069.i.i.i.i.i.i34.unr, %.lr.ph.i.i.i.i.i.i32.prol.loopexit ] ; 12 uses
+  %.078.i.i.i.i.i.i35 = phi ptr [ %i.hp, %.lr.ph.i.i.i.i.i.i32 ], [ %.078.i.i.i.i.i.i35.unr, %.lr.ph.i.i.i.i.i.i32.prol.loopexit ] ; 12 uses
+  %24 = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.i35, i64 -80
+  %25 = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.i34, i64 -80
+  %26 = load <4 x float>, ptr %24, align 16
+  store <4 x float> %26, ptr %25, align 16
+  %27 = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.i35, i64 -64
+  %28 = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.i34, i64 -64
+  %29 = load <4 x float>, ptr %27, align 16
+  store <4 x float> %29, ptr %28, align 16
+  %30 = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.i35, i64 -48
+  %31 = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.i34, i64 -48
+  %32 = load <4 x float>, ptr %30, align 16
+  store <4 x float> %32, ptr %31, align 16
+  %33 = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.i35, i64 -32
+  %34 = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.i34, i64 -32
+  %35 = load <4 x float>, ptr %33, align 16
+  store <4 x float> %35, ptr %34, align 16
+  %36 = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.i34, i64 -16
+  %37 = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.i35, i64 -16
+  %38 = load float, ptr %37, align 16
+  store float %38, ptr %36, align 16
+  %39 = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.i35, i64 -12
+  %40 = load float, ptr %39, align 4
+  %41 = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.i34, i64 -12
+  store float %40, ptr %41, align 4
+  %i.hp = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.i35, i64 -160 ; 2 uses
+  %i.hq = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.i34, i64 -160 ; 2 uses
   %i.hr = load <4 x float>, ptr %i.hp, align 16
   store <4 x float> %i.hr, ptr %i.hq, align 16
-  %i.hs = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.i35, i64 -64
-  %i.ht = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.i34, i64 -64
+  %i.hs = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.i35, i64 -144
+  %i.ht = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.i34, i64 -144
   %i.hu = load <4 x float>, ptr %i.hs, align 16
   store <4 x float> %i.hu, ptr %i.ht, align 16
-  %i.hv = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.i35, i64 -48
-  %i.hw = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.i34, i64 -48
+  %i.hv = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.i35, i64 -128
+  %i.hw = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.i34, i64 -128
   %i.hx = load <4 x float>, ptr %i.hv, align 16
   store <4 x float> %i.hx, ptr %i.hw, align 16
-  %i.hy = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.i35, i64 -32
-  %i.hz = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.i34, i64 -32
+  %i.hy = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.i35, i64 -112
+  %i.hz = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.i34, i64 -112
   %i.ia = load <4 x float>, ptr %i.hy, align 16
   store <4 x float> %i.ia, ptr %i.hz, align 16
-  %i.ib = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.i34, i64 -16
-  %i.ic = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.i35, i64 -16
+  %i.ib = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.i34, i64 -96
+  %i.ic = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.i35, i64 -96
   %i.id = load float, ptr %i.ic, align 16
   store float %i.id, ptr %i.ib, align 16
-  %i.ie = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.i35, i64 -12
+  %i.ie = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.i35, i64 -92
   %i.if = load float, ptr %i.ie, align 4
-  %i.ig = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.i34, i64 -12
+  %i.ig = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.i34, i64 -92
   store float %i.if, ptr %i.ig, align 4
-  %i.ih = add nsw i64 %.010.i.i.i.i.i.i33, -1
-  %3 = icmp samesign ugt i64 %.010.i.i.i.i.i.i33, 1
-  br i1 %3, label %.lr.ph.i.i.i.i.i.i32, label %_ZSt13move_backwardIPN6embree9PrimRefMBES2_ET0_T_S4_S3_.exit.i30, !llvm.loop !1241
+  %i.ih = add nsw i64 %.010.i.i.i.i.i.i33, -2
+  %42 = icmp sgt i64 %.010.i.i.i.i.i.i33, 2
+  br i1 %42, label %.lr.ph.i.i.i.i.i.i32, label %_ZSt13move_backwardIPN6embree9PrimRefMBES2_ET0_T_S4_S3_.exit.i30, !llvm.loop !1241
 
-_ZSt13move_backwardIPN6embree9PrimRefMBES2_ET0_T_S4_S3_.exit.i30: ; preds = %.lr.ph.i.i.i.i.i.i32, %bb.h
+_ZSt13move_backwardIPN6embree9PrimRefMBES2_ET0_T_S4_S3_.exit.i30: ; preds = %.lr.ph.i.i.i.i.i.i32.prol.loopexit, %.lr.ph.i.i.i.i.i.i32, %bb.h
   store <4 x float> %i.hc, ptr %0, align 16
   store <4 x float> %i.he, ptr %i.gj, align 16
   store <4 x float> %i.hg, ptr %i.gk, align 16
@@ -351,6 +413,7 @@ _ZSt25__unguarded_linear_insertIPN6embree9PrimRefMBEN9__gnu_cxx5__ops14_Val_less
 bb.j:                                             ; preds = %_ZSt25__unguarded_linear_insertIPN6embree9PrimRefMBEN9__gnu_cxx5__ops14_Val_less_iterEEvT_T0_.exit.i23, %_ZSt13move_backwardIPN6embree9PrimRefMBES2_ET0_T_S4_S3_.exit.i30
   %.0.i25 = getelementptr inbounds nuw i8, ptr %.020.i18, i64 80 ; 2 uses
   %.not.i26 = icmp eq ptr %.0.i25, %1
+  %indvar.next = add i64 %indvar, 1
   br i1 %.not.i26, label %_ZSt26__unguarded_insertion_sortIPN6embree9PrimRefMBEN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S6_T0_.exit, label %bb.g, !llvm.loop !1243
 
 _ZSt26__unguarded_insertion_sortIPN6embree9PrimRefMBEN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S6_T0_.exit: ; preds = %bb.j, %_ZSt25__unguarded_linear_insertIPN6embree9PrimRefMBEN9__gnu_cxx5__ops14_Val_less_iterEEvT_T0_.exit.i10, %.preheader.i, %bb.f, %_ZSt16__insertion_sortIPN6embree9PrimRefMBEN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S6_T0_.exit

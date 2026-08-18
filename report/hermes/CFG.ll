@@ -204,13 +204,13 @@ _ZSt9__advanceIPKPN6hermes10BasicBlockElEvRT_T0_St26random_access_iterator_tag.e
 
 .lr.ph70:                                         ; preds = %_ZSt9__advanceIPKPN6hermes10BasicBlockElEvRT_T0_St26random_access_iterator_tag.exit
   %i.k = add i64 %i.g, -8
-  %3 = shl i64 %indvar, 3
-  %4 = add i64 %3, %i.a
-  %5 = sub i64 %i.k, %4                           ; 3 uses
-  %6 = lshr i64 %5, 3
-  %i.l = add nuw nsw i64 %6, 1                    ; 2 uses
-  %min.iters.check112 = icmp ult i64 %5, 24
-  %n.vec114 = and i64 %i.l, 4611686018427387900   ; 3 uses
+  %3 = sub i64 %i.k, %i.a
+  %4 = lshr i64 %3, 3
+  %5 = add nuw nsw i64 %4, 1
+  %6 = mul i64 %indvar, 2305843009213693951
+  %i.l = add i64 %6, %5                           ; 4 uses
+  %min.iters.check112 = icmp ult i64 %i.l, 4
+  %n.vec114 = and i64 %i.l, -4                    ; 3 uses
   %i.m = shl i64 %n.vec114, 3
   %i.n = getelementptr i8, ptr %.03258, i64 %i.m
   %cmp.n127 = icmp eq i64 %i.l, %n.vec114
@@ -219,10 +219,8 @@ _ZSt9__advanceIPKPN6hermes10BasicBlockElEvRT_T0_St26random_access_iterator_tag.e
 bb.c:                                             ; preds = %.lr.ph70, %.critedge
   %indvar107 = phi i64 [ 0, %.lr.ph70 ], [ %indvar.next108, %.critedge ] ; 2 uses
   %.03569 = phi ptr [ %.03159, %.lr.ph70 ], [ %i.ce, %.critedge ] ; 12 uses
-  %7 = shl i64 %indvar107, 3
-  %8 = sub i64 %5, %7                             ; 2 uses
-  %9 = lshr i64 %8, 3
-  %i.o = add nuw nsw i64 %9, 1                    ; 2 uses
+  %7 = mul i64 %indvar107, 2305843009213693951
+  %i.o = add i64 %i.l, %7                         ; 3 uses
   %i.p = ptrtoint ptr %.03569 to i64              ; 2 uses
   %i.q = sub i64 %i.p, %i.h                       ; 3 uses
   %i.r = ashr i64 %i.q, 5                         ; 2 uses
@@ -392,11 +390,11 @@ _ZSt10__count_ifIPKPN6hermes10BasicBlockEN9__gnu_cxx5__ops17_Iter_equals_iterIS4
   br i1 %i.bn, label %.critedge42, label %.lr.ph.i44.preheader
 
 .lr.ph.i44.preheader:                             ; preds = %_ZSt10__count_ifIPKPN6hermes10BasicBlockEN9__gnu_cxx5__ops17_Iter_equals_iterIS4_EEENSt15iterator_traitsIT_E15difference_typeESA_SA_T0_.exit
-  %min.iters.check = icmp ult i64 %8, 24
+  %min.iters.check = icmp ult i64 %i.o, 4
   br i1 %min.iters.check, label %.lr.ph.i44.preheader130, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i44.preheader
-  %n.vec = and i64 %i.o, 4611686018427387900      ; 3 uses
+  %n.vec = and i64 %i.o, -4                       ; 3 uses
   %i.bo = shl i64 %n.vec, 3
   %i.bp = getelementptr i8, ptr %.03569, i64 %i.bo
   %broadcast.splatinsert = insertelement <2 x ptr> poison, ptr %i.ay, i64 0
@@ -799,13 +797,13 @@ _ZSt9__advanceIPPN6hermes10BasicBlockElEvRT_T0_St26random_access_iterator_tag.ex
 
 .lr.ph69:                                         ; preds = %_ZSt9__advanceIPPN6hermes10BasicBlockElEvRT_T0_St26random_access_iterator_tag.exit
   %i.k = add i64 %i.g, -8
-  %3 = shl i64 %indvar, 3
-  %4 = add i64 %3, %i.a
-  %5 = sub i64 %i.k, %4                           ; 3 uses
-  %6 = lshr i64 %5, 3
-  %i.l = add nuw nsw i64 %6, 1                    ; 2 uses
-  %min.iters.check111 = icmp ult i64 %5, 24
-  %n.vec113 = and i64 %i.l, 4611686018427387900   ; 3 uses
+  %3 = sub i64 %i.k, %i.a
+  %4 = lshr i64 %3, 3
+  %5 = add nuw nsw i64 %4, 1
+  %6 = mul i64 %indvar, 2305843009213693951
+  %i.l = add i64 %6, %5                           ; 4 uses
+  %min.iters.check111 = icmp ult i64 %i.l, 4
+  %n.vec113 = and i64 %i.l, -4                    ; 3 uses
   %i.m = shl i64 %n.vec113, 3
   %i.n = getelementptr i8, ptr %.03257, i64 %i.m
   %cmp.n126 = icmp eq i64 %i.l, %n.vec113
@@ -814,10 +812,8 @@ _ZSt9__advanceIPPN6hermes10BasicBlockElEvRT_T0_St26random_access_iterator_tag.ex
 bb.c:                                             ; preds = %.lr.ph69, %.critedge
   %indvar106 = phi i64 [ 0, %.lr.ph69 ], [ %indvar.next107, %.critedge ] ; 2 uses
   %.03568 = phi ptr [ %.03158, %.lr.ph69 ], [ %i.ce, %.critedge ] ; 12 uses
-  %7 = shl i64 %indvar106, 3
-  %8 = sub i64 %5, %7                             ; 2 uses
-  %9 = lshr i64 %8, 3
-  %i.o = add nuw nsw i64 %9, 1                    ; 2 uses
+  %7 = mul i64 %indvar106, 2305843009213693951
+  %i.o = add i64 %i.l, %7                         ; 3 uses
   %i.p = ptrtoint ptr %.03568 to i64              ; 2 uses
   %i.q = sub i64 %i.p, %i.h                       ; 3 uses
   %i.r = ashr i64 %i.q, 5                         ; 2 uses
@@ -987,11 +983,11 @@ _ZSt10__count_ifIPPN6hermes10BasicBlockEN9__gnu_cxx5__ops17_Iter_equals_iterIPKS
   br i1 %i.bn, label %.critedge42, label %.lr.ph.i44.preheader
 
 .lr.ph.i44.preheader:                             ; preds = %_ZSt10__count_ifIPPN6hermes10BasicBlockEN9__gnu_cxx5__ops17_Iter_equals_iterIPKS2_EEENSt15iterator_traitsIT_E15difference_typeESB_SB_T0_.exit
-  %min.iters.check = icmp ult i64 %8, 24
+  %min.iters.check = icmp ult i64 %i.o, 4
   br i1 %min.iters.check, label %.lr.ph.i44.preheader129, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i44.preheader
-  %n.vec = and i64 %i.o, 4611686018427387900      ; 3 uses
+  %n.vec = and i64 %i.o, -4                       ; 3 uses
   %i.bo = shl i64 %n.vec, 3
   %i.bp = getelementptr i8, ptr %.03568, i64 %i.bo
   %broadcast.splatinsert = insertelement <2 x ptr> poison, ptr %i.ay, i64 0

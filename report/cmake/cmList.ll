@@ -204,11 +204,12 @@ _ZSt15__adjacent_findIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEENS0_5_
 
 .lr.ph.i.i.preheader:                             ; preds = %_ZSt15__adjacent_findIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEENS0_5__ops19_Iter_equal_to_iterEET_S9_S9_T0_.exit.i.i
   %i.cd = add nsw i64 %.0.i.i.i.i.i.idx, -16
-  %2 = shl i64 %indvar, 3
-  %3 = sub i64 %i.cd, %2                          ; 2 uses
-  %4 = lshr exact i64 %3, 3
-  %i.ce = add nuw nsw i64 %4, 1
-  %xtraiter104 = and i64 %i.ce, 3                 ; 2 uses
+  %2 = lshr exact i64 %i.cd, 3                    ; 2 uses
+  %3 = add nuw nsw i64 %2, 1
+  %4 = mul i64 %indvar, 2305843009213693951       ; 2 uses
+  %5 = add i64 %4, %3
+  %i.ce = add i64 %2, %4
+  %xtraiter104 = and i64 %5, 3                    ; 2 uses
   %lcmp.mod105.not = icmp eq i64 %xtraiter104, 0
   br i1 %lcmp.mod105.not, label %.lr.ph.i.i.prol.loopexit, label %.lr.ph.i.i.prol
 
@@ -238,7 +239,7 @@ bb.o:                                             ; preds = %bb.n, %.lr.ph.i.i.p
   %.unr = phi i64 [ %i.bz, %.lr.ph.i.i.preheader ], [ %i.ch, %bb.o ]
   %.unr106 = phi ptr [ %i.cc, %.lr.ph.i.i.preheader ], [ %i.ck, %bb.o ]
   %.sroa.0.019.i.i.unr = phi ptr [ %.sroa.09.0.i.i.i97, %.lr.ph.i.i.preheader ], [ %.sroa.0.1.i.i.prol, %bb.o ]
-  %i.cl = icmp ult i64 %3, 24
+  %i.cl = icmp ult i64 %i.ce, 3
   br i1 %i.cl, label %_ZSt6uniqueIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEEET_S7_S7_.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i.prol.loopexit, %bb.t

@@ -204,9 +204,7 @@ bb.b:                                             ; preds = %_ZN4absl12lts_20260
 
 bb.c:                                             ; preds = %bb.a, %_ZN4absl12lts_2026052610FixedArrayIiLm5ESaIiEED2Ev.exit422
   %indvar = phi i64 [ 0, %bb.a ], [ %indvar.next, %_ZN4absl12lts_2026052610FixedArrayIiLm5ESaIiEED2Ev.exit422 ] ; 8 uses
-  %63 = add nuw i64 %indvar, 4611686018427387903
-  %64 = and i64 %63, 4611686018427387903          ; 2 uses
-  %i.bm = add nuw nsw i64 %64, 1                  ; 2 uses
+  %i.bm = add nuw i64 %indvar, 4611686018427387904 ; 2 uses
   %i.bn = shl nuw nsw i64 %indvar, 2              ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #25
   store i64 %indvar, ptr %i.a, align 8, !tbaa !22
@@ -216,12 +214,12 @@ bb.c:                                             ; preds = %bb.a, %_ZN4absl12lt
 .thread:                                          ; preds = %bb.c
   %i.bp = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bn) #28 ; 2 uses
   store ptr %i.bp, ptr %i.b, align 8, !tbaa !343
-  br label %.lr.ph.i.preheader
+  br label %vector.ph
 
 bb.d:                                             ; preds = %bb.c
   store ptr %1, ptr %i.b, align 8, !tbaa !343
   %.not6.i = icmp eq i64 %indvar, 0
-  br i1 %.not6.i, label %.noexc127.thread, label %.lr.ph.i.preheader
+  br i1 %.not6.i, label %.noexc127.thread, label %vector.ph
 
 .noexc127.thread:                                 ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #25
@@ -230,14 +228,10 @@ bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #25
   br label %_ZN7testing8internal26AssertionResultExpectationD2Ev.exit
 
-.lr.ph.i.preheader:                               ; preds = %.thread, %bb.d
-  %.0.i.i.i895 = phi ptr [ %i.bp, %.thread ], [ %1, %bb.d ] ; 6 uses
-  %65 = getelementptr inbounds nuw i8, ptr %.0.i.i.i895, i64 %i.bn
-  %min.iters.check = icmp samesign ult i64 %64, 7
-  br i1 %min.iters.check, label %.lr.ph.i.preheader946, label %vector.ph
-
-vector.ph:                                        ; preds = %.lr.ph.i.preheader
-  %n.vec = and i64 %i.bm, 9223372036854775800     ; 4 uses
+vector.ph:                                        ; preds = %.thread, %bb.d
+  %.0.i.i.i895 = phi ptr [ %i.bp, %.thread ], [ %1, %bb.d ] ; 5 uses
+  %63 = getelementptr inbounds nuw i8, ptr %.0.i.i.i895, i64 %i.bn
+  %n.vec = and i64 %i.bm, -8                      ; 4 uses
   %i.bq = trunc i64 %n.vec to i32
   %i.br = shl i64 %n.vec, 2
   %i.bs = getelementptr i8, ptr %.0.i.i.i895, i64 %i.br
@@ -259,20 +253,15 @@ vector.body:                                      ; preds = %vector.body, %vecto
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.bm, %n.vec
-  br i1 %cmp.n, label %.loopexit, label %.lr.ph.i.preheader946
+  br i1 %cmp.n, label %.loopexit, label %.lr.ph.i
 
-.lr.ph.i.preheader946:                            ; preds = %.lr.ph.i.preheader, %middle.block
-  %.08.i.ph = phi i32 [ 0, %.lr.ph.i.preheader ], [ %i.bq, %middle.block ]
-  %.057.i.ph = phi ptr [ %.0.i.i.i895, %.lr.ph.i.preheader ], [ %i.bs, %middle.block ]
-  br label %.lr.ph.i
-
-.lr.ph.i:                                         ; preds = %.lr.ph.i.preheader946, %.lr.ph.i
-  %.08.i = phi i32 [ %i.bw, %.lr.ph.i ], [ %.08.i.ph, %.lr.ph.i.preheader946 ] ; 2 uses
-  %.057.i = phi ptr [ %i.bx, %.lr.ph.i ], [ %.057.i.ph, %.lr.ph.i.preheader946 ] ; 2 uses
+.lr.ph.i:                                         ; preds = %middle.block, %.lr.ph.i
+  %.08.i = phi i32 [ %i.bw, %.lr.ph.i ], [ %i.bq, %middle.block ] ; 2 uses
+  %.057.i = phi ptr [ %i.bx, %.lr.ph.i ], [ %i.bs, %middle.block ] ; 2 uses
   store i32 %.08.i, ptr %.057.i, align 4, !tbaa !30
   %i.bw = add nuw nsw i32 %.08.i, 1
   %i.bx = getelementptr inbounds nuw i8, ptr %.057.i, i64 4 ; 2 uses
-  %.not.i = icmp eq ptr %i.bx, %65
+  %.not.i = icmp eq ptr %i.bx, %63
   br i1 %.not.i, label %.loopexit, label %.lr.ph.i, !llvm.loop !349
 
 .loopexit:                                        ; preds = %.lr.ph.i, %middle.block
@@ -675,9 +664,7 @@ _ZNSt6vectorISt7variantIJPKN4absl12lts_2026052610FixedArrayIiLm18446744073709551
 
 bb.g:                                             ; preds = %bb.a, %_ZN4absl12lts_2026052610FixedArrayIiLm18446744073709551615ESaIiEED2Ev.exit
   %indvars.iv44 = phi i64 [ 0, %bb.a ], [ %indvars.iv.next45, %_ZN4absl12lts_2026052610FixedArrayIiLm18446744073709551615ESaIiEED2Ev.exit ] ; 10 uses
-  %9 = add nuw i64 %indvars.iv44, 4611686018427387903
-  %10 = and i64 %9, 4611686018427387903           ; 2 uses
-  %i.s = add nuw nsw i64 %10, 1                   ; 2 uses
+  %i.s = add nuw i64 %indvars.iv44, 4611686018427387904 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #25
   store i64 %indvars.iv44, ptr %i.b, align 8, !tbaa !22
   store ptr %3, ptr %i.c, align 8, !tbaa !287
@@ -741,14 +728,12 @@ bb.h:                                             ; preds = %._crit_edge
   store i64 %indvars.iv44, ptr %i.ae, align 8, !tbaa !22
   %i.af = getelementptr inbounds nuw i8, ptr %i.y, i64 264
   store ptr %i.y, ptr %i.af, align 8, !tbaa !287
-  %min.iters.check = icmp samesign ult i64 %10, 7
   %i.ag = sub i64 %i.a, %i.ac
   %diff.check = icmp ugt i64 %i.ag, -32
-  %or.cond = or i1 %min.iters.check, %diff.check
-  br i1 %or.cond, label %.lr.ph.i.i.i.i.i.preheader72, label %vector.ph
+  br i1 %diff.check, label %.lr.ph.i.i.i.i.i.preheader72, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.i.preheader
-  %n.vec = and i64 %i.s, 9223372036854775800      ; 3 uses
+  %n.vec = and i64 %i.s, -8                       ; 3 uses
   %i.ah = shl i64 %n.vec, 2                       ; 2 uses
   %i.ai = getelementptr i8, ptr %i.y, i64 %i.ah
   %i.aj = getelementptr i8, ptr %3, i64 %i.ah

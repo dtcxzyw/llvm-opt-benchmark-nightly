@@ -204,7 +204,7 @@ GC_push_all.exit46:                               ; preds = %bb.m, %bb.j, %bb.f
   br i1 %.not3658, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %GC_push_all.exit46, %GC_push_all.exit52
-  %i.as = phi i64 [ %i.bz, %GC_push_all.exit52 ], [ %i.ar, %GC_push_all.exit46 ] ; 2 uses
+  %i.as = phi i64 [ %i.bz, %GC_push_all.exit52 ], [ %i.ar, %GC_push_all.exit46 ]
   %i.at = phi ptr [ %i.by, %GC_push_all.exit52 ], [ %i.aq, %GC_push_all.exit46 ] ; 3 uses
   %.059 = phi ptr [ %i.at, %GC_push_all.exit52 ], [ %i.i, %GC_push_all.exit46 ] ; 2 uses
   %i.au = tail call i32 %2(ptr noundef nonnull %.059) #45, !callees !118
@@ -249,7 +249,8 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.n
   %i.bo = inttoptr i64 %i.bh to ptr
-  %.not.i50 = icmp ult i64 %i.bh, %i.as
+  %3 = and i64 %i.as, -8                          ; 2 uses
+  %.not.i50 = icmp ult i64 %i.bh, %3
   br i1 %.not.i50, label %bb.s, label %GC_push_all.exit52
 
 bb.s:                                             ; preds = %bb.r
@@ -268,7 +269,7 @@ bb.t:                                             ; preds = %bb.s
   unreachable
 
 bb.u:                                             ; preds = %bb.s
-  %i.bu = sub i64 %i.as, %i.bh
+  %i.bu = sub i64 %3, %i.bh
   %i.bv = load volatile ptr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 160), align 8
   store ptr %i.bo, ptr %i.bv, align 8
   %i.bw = load volatile ptr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 160), align 8

@@ -203,14 +203,14 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIP27PrioritySorted
 
 bb.h:                                             ; preds = %bb.a
   %i.v = icmp eq ptr %0, %1
-  %.sroa.0.015.i17 = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
+  %.sroa.0.015.i17 = getelementptr i8, ptr %0, i64 12 ; 3 uses
   %.not16.i18 = icmp eq ptr %.sroa.0.015.i17, %1
-  %or.cond = select i1 %i.v, i1 true, i1 %.not16.i18
+  %or.cond = or i1 %i.v, %.not16.i18
   br i1 %or.cond, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIP27PrioritySortedBlockTransferSt6vectorIS2_SaIS2_EEEENS0_5__ops15_Iter_less_iterEEvT_SA_T0_.exit, label %.lr.ph.i19
 
 .lr.ph.i19:                                       ; preds = %bb.h, %bb.n
   %.sroa.0.018.i20 = phi ptr [ %.sroa.0.0.i26, %bb.n ], [ %.sroa.0.015.i17, %bb.h ] ; 7 uses
-  %.pn17.i21 = phi ptr [ %.sroa.0.018.i20, %bb.n ], [ %0, %bb.h ] ; 5 uses
+  %.pn17.i21 = phi ptr [ %.sroa.0.018.i20, %bb.n ], [ %0, %bb.h ] ; 4 uses
   %i.w = load float, ptr %.sroa.0.018.i20, align 4, !tbaa !1856 ; 4 uses
   %i.x = load float, ptr %0, align 4, !tbaa !1856
   %i.y = fcmp nsz olt float %i.w, %i.x
@@ -220,16 +220,12 @@ bb.i:                                             ; preds = %.lr.ph.i19
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %2, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.0.018.i20, i64 12, i1 false), !tbaa.struct !1857
   %i.z = ptrtoint ptr %.sroa.0.018.i20 to i64
-  %i.aa = sub i64 %i.z, %i.b                      ; 4 uses
+  %i.aa = sub i64 %i.z, %i.b                      ; 3 uses
   %i.ab = icmp sgt i64 %i.aa, 12
   br i1 %i.ab, label %bb.j, label %bb.k, !prof !700
 
 bb.j:                                             ; preds = %bb.i
-  %4 = getelementptr inbounds nuw i8, ptr %.pn17.i21, i64 24
-  %.neg23.i33 = udiv exact i64 %i.aa, 12
-  %.neg23.neg.i34 = sub nsw i64 0, %.neg23.i33
-  %5 = getelementptr inbounds [12 x i8], ptr %4, i64 %.neg23.neg.i34
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %5, ptr noundef nonnull align 4 dereferenceable(1) %0, i64 %i.aa, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.sroa.0.015.i17, ptr noundef nonnull align 4 dereferenceable(1) %0, i64 %i.aa, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIP27PrioritySortedBlockTransferSt6vectorIS2_SaIS2_EEEES7_ET0_T_S9_S8_.exit.i32
 
 bb.k:                                             ; preds = %bb.i

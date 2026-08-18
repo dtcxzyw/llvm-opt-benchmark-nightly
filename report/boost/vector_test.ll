@@ -204,11 +204,12 @@ _ZN5boost9container4findINS0_12vec_iteratorIPiLb0EEEiEET_S5_S5_RKT0_.exit.i: ; p
 
 .lr.ph.i.preheader:                               ; preds = %_ZN5boost9container4findINS0_12vec_iteratorIPiLb0EEEiEET_S5_S5_RKT0_.exit.i
   %i.k = add i64 %.idx, -8
-  %2 = shl i64 %indvar, 2
-  %3 = sub i64 %i.k, %2                           ; 2 uses
-  %4 = lshr exact i64 %3, 2
-  %i.l = add nuw nsw i64 %4, 1
-  %xtraiter = and i64 %i.l, 3                     ; 2 uses
+  %2 = lshr exact i64 %i.k, 2                     ; 2 uses
+  %3 = add nuw nsw i64 %2, 1
+  %4 = mul i64 %indvar, 4611686018427387903       ; 2 uses
+  %5 = add i64 %4, %3
+  %i.l = add i64 %2, %4
+  %xtraiter = and i64 %5, 3                       ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
 
@@ -237,7 +238,7 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph.i.pro
   %.pre12.i.lcssa.unr = phi ptr [ poison, %.lr.ph.i.preheader ], [ %.pre12.i.prol, %bb.e ]
   %.unr = phi ptr [ %i.f, %.lr.ph.i.preheader ], [ %.pre12.i.prol, %bb.e ]
   %.unr34 = phi ptr [ %i.j, %.lr.ph.i.preheader ], [ %i.s, %bb.e ]
-  %i.t = icmp ult i64 %3, 12
+  %i.t = icmp ult i64 %i.l, 3
   br i1 %i.t, label %_ZN5boost9container6removeINS0_12vec_iteratorIPiLb0EEEiEET_S5_S5_RKT0_.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %bb.j
@@ -355,11 +356,12 @@ _ZN5boost9container7find_ifINS0_12vec_iteratorIPiLb0EEENS0_14equal_to_valueIiEEE
 
 .lr.ph.i.preheader:                               ; preds = %_ZN5boost9container7find_ifINS0_12vec_iteratorIPiLb0EEENS0_14equal_to_valueIiEEEET_S7_S7_T0_.exit.i
   %i.k = add i64 %.idx, -8
-  %2 = shl i64 %indvar, 2
-  %3 = sub i64 %i.k, %2                           ; 2 uses
-  %4 = lshr exact i64 %3, 2
-  %i.l = add nuw nsw i64 %4, 1
-  %xtraiter = and i64 %i.l, 3                     ; 2 uses
+  %2 = lshr exact i64 %i.k, 2                     ; 2 uses
+  %3 = add nuw nsw i64 %2, 1
+  %4 = mul i64 %indvar, 4611686018427387903       ; 2 uses
+  %5 = add i64 %4, %3
+  %i.l = add i64 %2, %4
+  %xtraiter = and i64 %5, 3                       ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
 
@@ -388,7 +390,7 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph.i.pro
   %.pre12.i.lcssa.unr = phi ptr [ poison, %.lr.ph.i.preheader ], [ %.pre12.i.prol, %bb.e ]
   %.unr = phi ptr [ %i.f, %.lr.ph.i.preheader ], [ %.pre12.i.prol, %bb.e ]
   %.unr34 = phi ptr [ %i.j, %.lr.ph.i.preheader ], [ %i.s, %bb.e ]
-  %i.t = icmp ult i64 %3, 12
+  %i.t = icmp ult i64 %i.l, 3
   br i1 %i.t, label %_ZN5boost9container9remove_ifINS0_12vec_iteratorIPiLb0EEENS0_14equal_to_valueIiEEEET_S7_S7_T0_.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %bb.j
@@ -791,7 +793,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !508  ; 6 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !494, !noalias !1925 ; 2 uses
-  %.idx = shl i64 %i.b, 2                         ; 3 uses
+  %.idx = shl i64 %i.b, 2                         ; 2 uses
   %i.d = getelementptr inbounds i8, ptr %i.c, i64 %.idx ; 6 uses
   %.not1.i.i = icmp eq i64 %i.b, 0
   br i1 %.not1.i.i, label %_ZN5boost9container6vectorINS0_4test11movable_intESaIS3_EvE5eraseENS0_12vec_iteratorIPS3_Lb1EEES8_.exit, label %.lr.ph.i.i
@@ -822,9 +824,10 @@ _ZN5boost9container4findINS0_12vec_iteratorIPNS0_4test11movable_intELb0EEEiEET_S
 
 .lr.ph.i.preheader:                               ; preds = %_ZN5boost9container4findINS0_12vec_iteratorIPNS0_4test11movable_intELb0EEEiEET_S7_S7_RKT0_.exit.i
   %i.k = add i64 %.idx, -8
-  %2 = shl i64 %indvar, 2                         ; 2 uses
-  %i.l = sub i64 %.idx, %2
-  %i.m = and i64 %i.l, 4
+  %2 = lshr exact i64 %i.k, 2                     ; 2 uses
+  %3 = mul i64 %indvar, 4611686018427387903       ; 2 uses
+  %i.l = sub i64 %2, %3
+  %i.m = and i64 %i.l, 1
   %lcmp.mod.not.not = icmp eq i64 %i.m, 0
   br i1 %lcmp.mod.not.not, label %.lr.ph.i.prol, label %.lr.ph.i.prol.loopexit
 
@@ -849,7 +852,8 @@ bb.d:                                             ; preds = %.lr.ph.i.prol
   %.pre12.i.lcssa.unr = phi ptr [ poison, %.lr.ph.i.preheader ], [ %.pre12.i.prol, %.lr.ph.i.prol.loopexit.unr-lcssa ]
   %.unr = phi ptr [ %i.f, %.lr.ph.i.preheader ], [ %.pre12.i.prol, %.lr.ph.i.prol.loopexit.unr-lcssa ]
   %.unr35 = phi ptr [ %i.j, %.lr.ph.i.preheader ], [ %i.r, %.lr.ph.i.prol.loopexit.unr-lcssa ]
-  %i.s = icmp eq i64 %i.k, %2
+  %4 = sub i64 0, %3
+  %i.s = icmp eq i64 %2, %4
   br i1 %i.s, label %_ZN5boost9container6removeINS0_12vec_iteratorIPNS0_4test11movable_intELb0EEEiEET_S7_S7_RKT0_.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %bb.g
@@ -961,7 +965,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !508  ; 6 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !494, !noalias !1940 ; 2 uses
-  %.idx = shl i64 %i.b, 2                         ; 3 uses
+  %.idx = shl i64 %i.b, 2                         ; 2 uses
   %i.d = getelementptr inbounds i8, ptr %i.c, i64 %.idx ; 6 uses
   %.not1.i.i = icmp eq i64 %i.b, 0
   br i1 %.not1.i.i, label %_ZN5boost9container6vectorINS0_4test11movable_intESaIS3_EvE5eraseENS0_12vec_iteratorIPS3_Lb1EEES8_.exit, label %.lr.ph.i.i
@@ -992,9 +996,10 @@ _ZN5boost9container7find_ifINS0_12vec_iteratorIPNS0_4test11movable_intELb0EEENS0
 
 .lr.ph.i.preheader:                               ; preds = %_ZN5boost9container7find_ifINS0_12vec_iteratorIPNS0_4test11movable_intELb0EEENS0_14equal_to_valueIiEEEET_S9_S9_T0_.exit.i
   %i.k = add i64 %.idx, -8
-  %2 = shl i64 %indvar, 2                         ; 2 uses
-  %i.l = sub i64 %.idx, %2
-  %i.m = and i64 %i.l, 4
+  %2 = lshr exact i64 %i.k, 2                     ; 2 uses
+  %3 = mul i64 %indvar, 4611686018427387903       ; 2 uses
+  %i.l = sub i64 %2, %3
+  %i.m = and i64 %i.l, 1
   %lcmp.mod.not.not = icmp eq i64 %i.m, 0
   br i1 %lcmp.mod.not.not, label %.lr.ph.i.prol, label %.lr.ph.i.prol.loopexit
 
@@ -1019,7 +1024,8 @@ bb.d:                                             ; preds = %.lr.ph.i.prol
   %.pre12.i.lcssa.unr = phi ptr [ poison, %.lr.ph.i.preheader ], [ %.pre12.i.prol, %.lr.ph.i.prol.loopexit.unr-lcssa ]
   %.unr = phi ptr [ %i.f, %.lr.ph.i.preheader ], [ %.pre12.i.prol, %.lr.ph.i.prol.loopexit.unr-lcssa ]
   %.unr35 = phi ptr [ %i.j, %.lr.ph.i.preheader ], [ %i.r, %.lr.ph.i.prol.loopexit.unr-lcssa ]
-  %i.s = icmp eq i64 %i.k, %2
+  %4 = sub i64 0, %3
+  %i.s = icmp eq i64 %2, %4
   br i1 %i.s, label %_ZN5boost9container9remove_ifINS0_12vec_iteratorIPNS0_4test11movable_intELb0EEENS0_14equal_to_valueIiEEEET_S9_S9_T0_.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %bb.g
@@ -1422,7 +1428,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !556  ; 6 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !542, !noalias !2508 ; 2 uses
-  %.idx = shl i64 %i.b, 2                         ; 3 uses
+  %.idx = shl i64 %i.b, 2                         ; 2 uses
   %i.d = getelementptr inbounds i8, ptr %i.c, i64 %.idx ; 6 uses
   %.not1.i.i = icmp eq i64 %i.b, 0
   br i1 %.not1.i.i, label %_ZN5boost9container6vectorINS0_4test24movable_and_copyable_intESaIS3_EvE5eraseENS0_12vec_iteratorIPS3_Lb1EEES8_.exit, label %.lr.ph.i.i
@@ -1453,9 +1459,10 @@ _ZN5boost9container4findINS0_12vec_iteratorIPNS0_4test24movable_and_copyable_int
 
 .lr.ph.i.preheader:                               ; preds = %_ZN5boost9container4findINS0_12vec_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEiEET_S7_S7_RKT0_.exit.i
   %i.k = add i64 %.idx, -8
-  %2 = shl i64 %indvar, 2                         ; 2 uses
-  %i.l = sub i64 %.idx, %2
-  %i.m = and i64 %i.l, 4
+  %2 = lshr exact i64 %i.k, 2                     ; 2 uses
+  %3 = mul i64 %indvar, 4611686018427387903       ; 2 uses
+  %i.l = sub i64 %2, %3
+  %i.m = and i64 %i.l, 1
   %lcmp.mod.not.not = icmp eq i64 %i.m, 0
   br i1 %lcmp.mod.not.not, label %.lr.ph.i.prol, label %.lr.ph.i.prol.loopexit
 
@@ -1480,7 +1487,8 @@ bb.d:                                             ; preds = %.lr.ph.i.prol
   %.pre12.i.lcssa.unr = phi ptr [ poison, %.lr.ph.i.preheader ], [ %.pre12.i.prol, %.lr.ph.i.prol.loopexit.unr-lcssa ]
   %.unr = phi ptr [ %i.f, %.lr.ph.i.preheader ], [ %.pre12.i.prol, %.lr.ph.i.prol.loopexit.unr-lcssa ]
   %.unr35 = phi ptr [ %i.j, %.lr.ph.i.preheader ], [ %i.r, %.lr.ph.i.prol.loopexit.unr-lcssa ]
-  %i.s = icmp eq i64 %i.k, %2
+  %4 = sub i64 0, %3
+  %i.s = icmp eq i64 %2, %4
   br i1 %i.s, label %_ZN5boost9container6removeINS0_12vec_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEiEET_S7_S7_RKT0_.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %bb.g
@@ -1592,7 +1600,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !556  ; 6 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !542, !noalias !2523 ; 2 uses
-  %.idx = shl i64 %i.b, 2                         ; 3 uses
+  %.idx = shl i64 %i.b, 2                         ; 2 uses
   %i.d = getelementptr inbounds i8, ptr %i.c, i64 %.idx ; 6 uses
   %.not1.i.i = icmp eq i64 %i.b, 0
   br i1 %.not1.i.i, label %_ZN5boost9container6vectorINS0_4test24movable_and_copyable_intESaIS3_EvE5eraseENS0_12vec_iteratorIPS3_Lb1EEES8_.exit, label %.lr.ph.i.i
@@ -1623,9 +1631,10 @@ _ZN5boost9container7find_ifINS0_12vec_iteratorIPNS0_4test24movable_and_copyable_
 
 .lr.ph.i.preheader:                               ; preds = %_ZN5boost9container7find_ifINS0_12vec_iteratorIPNS0_4test24movable_and_copyable_intELb0EEENS0_14equal_to_valueIiEEEET_S9_S9_T0_.exit.i
   %i.k = add i64 %.idx, -8
-  %2 = shl i64 %indvar, 2                         ; 2 uses
-  %i.l = sub i64 %.idx, %2
-  %i.m = and i64 %i.l, 4
+  %2 = lshr exact i64 %i.k, 2                     ; 2 uses
+  %3 = mul i64 %indvar, 4611686018427387903       ; 2 uses
+  %i.l = sub i64 %2, %3
+  %i.m = and i64 %i.l, 1
   %lcmp.mod.not.not = icmp eq i64 %i.m, 0
   br i1 %lcmp.mod.not.not, label %.lr.ph.i.prol, label %.lr.ph.i.prol.loopexit
 
@@ -1650,7 +1659,8 @@ bb.d:                                             ; preds = %.lr.ph.i.prol
   %.pre12.i.lcssa.unr = phi ptr [ poison, %.lr.ph.i.preheader ], [ %.pre12.i.prol, %.lr.ph.i.prol.loopexit.unr-lcssa ]
   %.unr = phi ptr [ %i.f, %.lr.ph.i.preheader ], [ %.pre12.i.prol, %.lr.ph.i.prol.loopexit.unr-lcssa ]
   %.unr35 = phi ptr [ %i.j, %.lr.ph.i.preheader ], [ %i.r, %.lr.ph.i.prol.loopexit.unr-lcssa ]
-  %i.s = icmp eq i64 %i.k, %2
+  %4 = sub i64 0, %3
+  %i.s = icmp eq i64 %2, %4
   br i1 %i.s, label %_ZN5boost9container9remove_ifINS0_12vec_iteratorIPNS0_4test24movable_and_copyable_intELb0EEENS0_14equal_to_valueIiEEEET_S9_S9_T0_.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %bb.g
@@ -2053,11 +2063,12 @@ _ZN5boost9container4findINS0_12vec_iteratorIPNS0_4test12copyable_intELb0EEEiEET_
 
 .lr.ph.i.preheader:                               ; preds = %_ZN5boost9container4findINS0_12vec_iteratorIPNS0_4test12copyable_intELb0EEEiEET_S7_S7_RKT0_.exit.i
   %i.k = add i64 %.idx, -8
-  %2 = shl i64 %indvar, 2
-  %3 = sub i64 %i.k, %2                           ; 2 uses
-  %4 = lshr exact i64 %3, 2
-  %i.l = add nuw nsw i64 %4, 1
-  %xtraiter = and i64 %i.l, 3                     ; 2 uses
+  %2 = lshr exact i64 %i.k, 2                     ; 2 uses
+  %3 = add nuw nsw i64 %2, 1
+  %4 = mul i64 %indvar, 4611686018427387903       ; 2 uses
+  %5 = add i64 %4, %3
+  %i.l = add i64 %2, %4
+  %xtraiter = and i64 %5, 3                       ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
 
@@ -2086,7 +2097,7 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph.i.pro
   %.pre12.i.lcssa.unr = phi ptr [ poison, %.lr.ph.i.preheader ], [ %.pre12.i.prol, %bb.e ]
   %.unr = phi ptr [ %i.f, %.lr.ph.i.preheader ], [ %.pre12.i.prol, %bb.e ]
   %.unr35 = phi ptr [ %i.j, %.lr.ph.i.preheader ], [ %i.s, %bb.e ]
-  %i.t = icmp ult i64 %3, 12
+  %i.t = icmp ult i64 %i.l, 3
   br i1 %i.t, label %_ZN5boost9container6removeINS0_12vec_iteratorIPNS0_4test12copyable_intELb0EEEiEET_S7_S7_RKT0_.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %bb.j
@@ -2253,11 +2264,12 @@ _ZN5boost9container7find_ifINS0_12vec_iteratorIPNS0_4test12copyable_intELb0EEENS
 
 .lr.ph.i.preheader:                               ; preds = %_ZN5boost9container7find_ifINS0_12vec_iteratorIPNS0_4test12copyable_intELb0EEENS0_14equal_to_valueIiEEEET_S9_S9_T0_.exit.i
   %i.k = add i64 %.idx, -8
-  %2 = shl i64 %indvar, 2
-  %3 = sub i64 %i.k, %2                           ; 2 uses
-  %4 = lshr exact i64 %3, 2
-  %i.l = add nuw nsw i64 %4, 1
-  %xtraiter = and i64 %i.l, 3                     ; 2 uses
+  %2 = lshr exact i64 %i.k, 2                     ; 2 uses
+  %3 = add nuw nsw i64 %2, 1
+  %4 = mul i64 %indvar, 4611686018427387903       ; 2 uses
+  %5 = add i64 %4, %3
+  %i.l = add i64 %2, %4
+  %xtraiter = and i64 %5, 3                       ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
 
@@ -2286,7 +2298,7 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph.i.pro
   %.pre12.i.lcssa.unr = phi ptr [ poison, %.lr.ph.i.preheader ], [ %.pre12.i.prol, %bb.e ]
   %.unr = phi ptr [ %i.f, %.lr.ph.i.preheader ], [ %.pre12.i.prol, %bb.e ]
   %.unr35 = phi ptr [ %i.j, %.lr.ph.i.preheader ], [ %i.s, %bb.e ]
-  %i.t = icmp ult i64 %3, 12
+  %i.t = icmp ult i64 %i.l, 3
   br i1 %i.t, label %_ZN5boost9container9remove_ifINS0_12vec_iteratorIPNS0_4test12copyable_intELb0EEENS0_14equal_to_valueIiEEEET_S9_S9_T0_.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %bb.j
@@ -2689,11 +2701,12 @@ _ZN5boost9container4findINS0_12vec_iteratorIPNS0_4test24overaligned_copyable_int
 
 .lr.ph.i.preheader:                               ; preds = %_ZN5boost9container4findINS0_12vec_iteratorIPNS0_4test24overaligned_copyable_intELb0EEEiEET_S7_S7_RKT0_.exit.i
   %i.k = add i64 %.idx, -128
-  %2 = shl i64 %indvar, 6
-  %3 = sub i64 %i.k, %2                           ; 2 uses
-  %4 = lshr exact i64 %3, 6
-  %i.l = add nuw nsw i64 %4, 1
-  %xtraiter = and i64 %i.l, 3                     ; 2 uses
+  %2 = lshr exact i64 %i.k, 6                     ; 2 uses
+  %3 = add nuw nsw i64 %2, 1
+  %4 = mul i64 %indvar, 288230376151711743        ; 2 uses
+  %5 = add i64 %4, %3
+  %i.l = add i64 %2, %4
+  %xtraiter = and i64 %5, 3                       ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
 
@@ -2722,7 +2735,7 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph.i.pro
   %.sroa.015.1.lcssa.unr = phi ptr [ poison, %.lr.ph.i.preheader ], [ %.sroa.015.1.prol, %bb.e ]
   %.sroa.015.0.unr = phi ptr [ %i.f, %.lr.ph.i.preheader ], [ %.sroa.015.1.prol, %bb.e ]
   %.unr = phi ptr [ %i.j, %.lr.ph.i.preheader ], [ %i.r, %bb.e ]
-  %i.s = icmp ult i64 %3, 192
+  %i.s = icmp ult i64 %i.l, 3
   br i1 %i.s, label %_ZN5boost9container6removeINS0_12vec_iteratorIPNS0_4test24overaligned_copyable_intELb0EEEiEET_S7_S7_RKT0_.exit.loopexit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %bb.j
@@ -2853,11 +2866,12 @@ _ZN5boost9container7find_ifINS0_12vec_iteratorIPNS0_4test24overaligned_copyable_
 
 .lr.ph.i.preheader:                               ; preds = %_ZN5boost9container7find_ifINS0_12vec_iteratorIPNS0_4test24overaligned_copyable_intELb0EEENS0_14equal_to_valueIiEEEET_S9_S9_T0_.exit.i
   %i.k = add i64 %.idx, -128
-  %2 = shl i64 %indvar, 6
-  %3 = sub i64 %i.k, %2                           ; 2 uses
-  %4 = lshr exact i64 %3, 6
-  %i.l = add nuw nsw i64 %4, 1
-  %xtraiter = and i64 %i.l, 3                     ; 2 uses
+  %2 = lshr exact i64 %i.k, 6                     ; 2 uses
+  %3 = add nuw nsw i64 %2, 1
+  %4 = mul i64 %indvar, 288230376151711743        ; 2 uses
+  %5 = add i64 %4, %3
+  %i.l = add i64 %2, %4
+  %xtraiter = and i64 %5, 3                       ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
 
@@ -2886,7 +2900,7 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph.i.pro
   %.sroa.015.1.lcssa.unr = phi ptr [ poison, %.lr.ph.i.preheader ], [ %.sroa.015.1.prol, %bb.e ]
   %.sroa.015.0.unr = phi ptr [ %i.f, %.lr.ph.i.preheader ], [ %.sroa.015.1.prol, %bb.e ]
   %.unr = phi ptr [ %i.j, %.lr.ph.i.preheader ], [ %i.r, %bb.e ]
-  %i.s = icmp ult i64 %3, 192
+  %i.s = icmp ult i64 %i.l, 3
   br i1 %i.s, label %_ZN5boost9container9remove_ifINS0_12vec_iteratorIPNS0_4test24overaligned_copyable_intELb0EEENS0_14equal_to_valueIiEEEET_S9_S9_T0_.exit.loopexit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %bb.j
@@ -3289,11 +3303,12 @@ _ZN5boost9container4findINS0_12vec_iteratorIPiLb0EEEiEET_S5_S5_RKT0_.exit.i: ; p
 
 .lr.ph.i.preheader:                               ; preds = %_ZN5boost9container4findINS0_12vec_iteratorIPiLb0EEEiEET_S5_S5_RKT0_.exit.i
   %i.k = add i64 %.idx, -8
-  %2 = shl i64 %indvar, 2
-  %3 = sub i64 %i.k, %2                           ; 2 uses
-  %4 = lshr exact i64 %3, 2
-  %i.l = add nuw nsw i64 %4, 1
-  %xtraiter = and i64 %i.l, 3                     ; 2 uses
+  %2 = lshr exact i64 %i.k, 2                     ; 2 uses
+  %3 = add nuw nsw i64 %2, 1
+  %4 = mul i64 %indvar, 4611686018427387903       ; 2 uses
+  %5 = add i64 %4, %3
+  %i.l = add i64 %2, %4
+  %xtraiter = and i64 %5, 3                       ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
 
@@ -3322,7 +3337,7 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph.i.pro
   %.pre12.i.lcssa.unr = phi ptr [ poison, %.lr.ph.i.preheader ], [ %.pre12.i.prol, %bb.e ]
   %.unr = phi ptr [ %i.f, %.lr.ph.i.preheader ], [ %.pre12.i.prol, %bb.e ]
   %.unr34 = phi ptr [ %i.j, %.lr.ph.i.preheader ], [ %i.s, %bb.e ]
-  %i.t = icmp ult i64 %3, 12
+  %i.t = icmp ult i64 %i.l, 3
   br i1 %i.t, label %_ZN5boost9container6removeINS0_12vec_iteratorIPiLb0EEEiEET_S5_S5_RKT0_.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %bb.j
@@ -3440,11 +3455,12 @@ _ZN5boost9container7find_ifINS0_12vec_iteratorIPiLb0EEENS0_14equal_to_valueIiEEE
 
 .lr.ph.i.preheader:                               ; preds = %_ZN5boost9container7find_ifINS0_12vec_iteratorIPiLb0EEENS0_14equal_to_valueIiEEEET_S7_S7_T0_.exit.i
   %i.k = add i64 %.idx, -8
-  %2 = shl i64 %indvar, 2
-  %3 = sub i64 %i.k, %2                           ; 2 uses
-  %4 = lshr exact i64 %3, 2
-  %i.l = add nuw nsw i64 %4, 1
-  %xtraiter = and i64 %i.l, 3                     ; 2 uses
+  %2 = lshr exact i64 %i.k, 2                     ; 2 uses
+  %3 = add nuw nsw i64 %2, 1
+  %4 = mul i64 %indvar, 4611686018427387903       ; 2 uses
+  %5 = add i64 %4, %3
+  %i.l = add i64 %2, %4
+  %xtraiter = and i64 %5, 3                       ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
 
@@ -3473,7 +3489,7 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph.i.pro
   %.pre12.i.lcssa.unr = phi ptr [ poison, %.lr.ph.i.preheader ], [ %.pre12.i.prol, %bb.e ]
   %.unr = phi ptr [ %i.f, %.lr.ph.i.preheader ], [ %.pre12.i.prol, %bb.e ]
   %.unr34 = phi ptr [ %i.j, %.lr.ph.i.preheader ], [ %i.s, %bb.e ]
-  %i.t = icmp ult i64 %3, 12
+  %i.t = icmp ult i64 %i.l, 3
   br i1 %i.t, label %_ZN5boost9container9remove_ifINS0_12vec_iteratorIPiLb0EEENS0_14equal_to_valueIiEEEET_S7_S7_T0_.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %bb.j
@@ -3876,7 +3892,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !4381 ; 6 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !4371, !noalias !5518 ; 2 uses
-  %.idx = shl i64 %i.b, 2                         ; 3 uses
+  %.idx = shl i64 %i.b, 2                         ; 2 uses
   %i.d = getelementptr inbounds i8, ptr %i.c, i64 %.idx ; 6 uses
   %.not1.i.i = icmp eq i64 %i.b, 0
   br i1 %.not1.i.i, label %_ZN5boost9container6vectorINS0_4test11movable_intENS0_9allocatorIS3_Lj2ELj0EEEvE5eraseENS0_12vec_iteratorIPS3_Lb1EEES9_.exit, label %.lr.ph.i.i
@@ -3907,9 +3923,10 @@ _ZN5boost9container4findINS0_12vec_iteratorIPNS0_4test11movable_intELb0EEEiEET_S
 
 .lr.ph.i.preheader:                               ; preds = %_ZN5boost9container4findINS0_12vec_iteratorIPNS0_4test11movable_intELb0EEEiEET_S7_S7_RKT0_.exit.i
   %i.k = add i64 %.idx, -8
-  %2 = shl i64 %indvar, 2                         ; 2 uses
-  %i.l = sub i64 %.idx, %2
-  %i.m = and i64 %i.l, 4
+  %2 = lshr exact i64 %i.k, 2                     ; 2 uses
+  %3 = mul i64 %indvar, 4611686018427387903       ; 2 uses
+  %i.l = sub i64 %2, %3
+  %i.m = and i64 %i.l, 1
   %lcmp.mod.not.not = icmp eq i64 %i.m, 0
   br i1 %lcmp.mod.not.not, label %.lr.ph.i.prol, label %.lr.ph.i.prol.loopexit
 
@@ -3934,7 +3951,8 @@ bb.d:                                             ; preds = %.lr.ph.i.prol
   %.pre12.i.lcssa.unr = phi ptr [ poison, %.lr.ph.i.preheader ], [ %.pre12.i.prol, %.lr.ph.i.prol.loopexit.unr-lcssa ]
   %.unr = phi ptr [ %i.f, %.lr.ph.i.preheader ], [ %.pre12.i.prol, %.lr.ph.i.prol.loopexit.unr-lcssa ]
   %.unr35 = phi ptr [ %i.j, %.lr.ph.i.preheader ], [ %i.r, %.lr.ph.i.prol.loopexit.unr-lcssa ]
-  %i.s = icmp eq i64 %i.k, %2
+  %4 = sub i64 0, %3
+  %i.s = icmp eq i64 %2, %4
   br i1 %i.s, label %_ZN5boost9container6removeINS0_12vec_iteratorIPNS0_4test11movable_intELb0EEEiEET_S7_S7_RKT0_.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %bb.g
@@ -4046,7 +4064,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !4381 ; 6 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !4371, !noalias !5531 ; 2 uses
-  %.idx = shl i64 %i.b, 2                         ; 3 uses
+  %.idx = shl i64 %i.b, 2                         ; 2 uses
   %i.d = getelementptr inbounds i8, ptr %i.c, i64 %.idx ; 6 uses
   %.not1.i.i = icmp eq i64 %i.b, 0
   br i1 %.not1.i.i, label %_ZN5boost9container6vectorINS0_4test11movable_intENS0_9allocatorIS3_Lj2ELj0EEEvE5eraseENS0_12vec_iteratorIPS3_Lb1EEES9_.exit, label %.lr.ph.i.i
@@ -4077,9 +4095,10 @@ _ZN5boost9container7find_ifINS0_12vec_iteratorIPNS0_4test11movable_intELb0EEENS0
 
 .lr.ph.i.preheader:                               ; preds = %_ZN5boost9container7find_ifINS0_12vec_iteratorIPNS0_4test11movable_intELb0EEENS0_14equal_to_valueIiEEEET_S9_S9_T0_.exit.i
   %i.k = add i64 %.idx, -8
-  %2 = shl i64 %indvar, 2                         ; 2 uses
-  %i.l = sub i64 %.idx, %2
-  %i.m = and i64 %i.l, 4
+  %2 = lshr exact i64 %i.k, 2                     ; 2 uses
+  %3 = mul i64 %indvar, 4611686018427387903       ; 2 uses
+  %i.l = sub i64 %2, %3
+  %i.m = and i64 %i.l, 1
   %lcmp.mod.not.not = icmp eq i64 %i.m, 0
   br i1 %lcmp.mod.not.not, label %.lr.ph.i.prol, label %.lr.ph.i.prol.loopexit
 
@@ -4104,7 +4123,8 @@ bb.d:                                             ; preds = %.lr.ph.i.prol
   %.pre12.i.lcssa.unr = phi ptr [ poison, %.lr.ph.i.preheader ], [ %.pre12.i.prol, %.lr.ph.i.prol.loopexit.unr-lcssa ]
   %.unr = phi ptr [ %i.f, %.lr.ph.i.preheader ], [ %.pre12.i.prol, %.lr.ph.i.prol.loopexit.unr-lcssa ]
   %.unr35 = phi ptr [ %i.j, %.lr.ph.i.preheader ], [ %i.r, %.lr.ph.i.prol.loopexit.unr-lcssa ]
-  %i.s = icmp eq i64 %i.k, %2
+  %4 = sub i64 0, %3
+  %i.s = icmp eq i64 %2, %4
   br i1 %i.s, label %_ZN5boost9container9remove_ifINS0_12vec_iteratorIPNS0_4test11movable_intELb0EEENS0_14equal_to_valueIiEEEET_S9_S9_T0_.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %bb.g
@@ -4507,7 +4527,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !4428 ; 6 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !4418, !noalias !6619 ; 2 uses
-  %.idx = shl i64 %i.b, 2                         ; 3 uses
+  %.idx = shl i64 %i.b, 2                         ; 2 uses
   %i.d = getelementptr inbounds i8, ptr %i.c, i64 %.idx ; 6 uses
   %.not1.i.i = icmp eq i64 %i.b, 0
   br i1 %.not1.i.i, label %_ZN5boost9container6vectorINS0_4test24movable_and_copyable_intENS0_9allocatorIS3_Lj2ELj0EEEvE5eraseENS0_12vec_iteratorIPS3_Lb1EEES9_.exit, label %.lr.ph.i.i
@@ -4538,9 +4558,10 @@ _ZN5boost9container4findINS0_12vec_iteratorIPNS0_4test24movable_and_copyable_int
 
 .lr.ph.i.preheader:                               ; preds = %_ZN5boost9container4findINS0_12vec_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEiEET_S7_S7_RKT0_.exit.i
   %i.k = add i64 %.idx, -8
-  %2 = shl i64 %indvar, 2                         ; 2 uses
-  %i.l = sub i64 %.idx, %2
-  %i.m = and i64 %i.l, 4
+  %2 = lshr exact i64 %i.k, 2                     ; 2 uses
+  %3 = mul i64 %indvar, 4611686018427387903       ; 2 uses
+  %i.l = sub i64 %2, %3
+  %i.m = and i64 %i.l, 1
   %lcmp.mod.not.not = icmp eq i64 %i.m, 0
   br i1 %lcmp.mod.not.not, label %.lr.ph.i.prol, label %.lr.ph.i.prol.loopexit
 
@@ -4565,7 +4586,8 @@ bb.d:                                             ; preds = %.lr.ph.i.prol
   %.pre12.i.lcssa.unr = phi ptr [ poison, %.lr.ph.i.preheader ], [ %.pre12.i.prol, %.lr.ph.i.prol.loopexit.unr-lcssa ]
   %.unr = phi ptr [ %i.f, %.lr.ph.i.preheader ], [ %.pre12.i.prol, %.lr.ph.i.prol.loopexit.unr-lcssa ]
   %.unr35 = phi ptr [ %i.j, %.lr.ph.i.preheader ], [ %i.r, %.lr.ph.i.prol.loopexit.unr-lcssa ]
-  %i.s = icmp eq i64 %i.k, %2
+  %4 = sub i64 0, %3
+  %i.s = icmp eq i64 %2, %4
   br i1 %i.s, label %_ZN5boost9container6removeINS0_12vec_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEiEET_S7_S7_RKT0_.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %bb.g
@@ -4677,7 +4699,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !4428 ; 6 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !4418, !noalias !6632 ; 2 uses
-  %.idx = shl i64 %i.b, 2                         ; 3 uses
+  %.idx = shl i64 %i.b, 2                         ; 2 uses
   %i.d = getelementptr inbounds i8, ptr %i.c, i64 %.idx ; 6 uses
   %.not1.i.i = icmp eq i64 %i.b, 0
   br i1 %.not1.i.i, label %_ZN5boost9container6vectorINS0_4test24movable_and_copyable_intENS0_9allocatorIS3_Lj2ELj0EEEvE5eraseENS0_12vec_iteratorIPS3_Lb1EEES9_.exit, label %.lr.ph.i.i
@@ -4708,9 +4730,10 @@ _ZN5boost9container7find_ifINS0_12vec_iteratorIPNS0_4test24movable_and_copyable_
 
 .lr.ph.i.preheader:                               ; preds = %_ZN5boost9container7find_ifINS0_12vec_iteratorIPNS0_4test24movable_and_copyable_intELb0EEENS0_14equal_to_valueIiEEEET_S9_S9_T0_.exit.i
   %i.k = add i64 %.idx, -8
-  %2 = shl i64 %indvar, 2                         ; 2 uses
-  %i.l = sub i64 %.idx, %2
-  %i.m = and i64 %i.l, 4
+  %2 = lshr exact i64 %i.k, 2                     ; 2 uses
+  %3 = mul i64 %indvar, 4611686018427387903       ; 2 uses
+  %i.l = sub i64 %2, %3
+  %i.m = and i64 %i.l, 1
   %lcmp.mod.not.not = icmp eq i64 %i.m, 0
   br i1 %lcmp.mod.not.not, label %.lr.ph.i.prol, label %.lr.ph.i.prol.loopexit
 
@@ -4735,7 +4758,8 @@ bb.d:                                             ; preds = %.lr.ph.i.prol
   %.pre12.i.lcssa.unr = phi ptr [ poison, %.lr.ph.i.preheader ], [ %.pre12.i.prol, %.lr.ph.i.prol.loopexit.unr-lcssa ]
   %.unr = phi ptr [ %i.f, %.lr.ph.i.preheader ], [ %.pre12.i.prol, %.lr.ph.i.prol.loopexit.unr-lcssa ]
   %.unr35 = phi ptr [ %i.j, %.lr.ph.i.preheader ], [ %i.r, %.lr.ph.i.prol.loopexit.unr-lcssa ]
-  %i.s = icmp eq i64 %i.k, %2
+  %4 = sub i64 0, %3
+  %i.s = icmp eq i64 %2, %4
   br i1 %i.s, label %_ZN5boost9container9remove_ifINS0_12vec_iteratorIPNS0_4test24movable_and_copyable_intELb0EEENS0_14equal_to_valueIiEEEET_S9_S9_T0_.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %bb.g
@@ -5138,11 +5162,12 @@ _ZN5boost9container4findINS0_12vec_iteratorIPNS0_4test12copyable_intELb0EEEiEET_
 
 .lr.ph.i.preheader:                               ; preds = %_ZN5boost9container4findINS0_12vec_iteratorIPNS0_4test12copyable_intELb0EEEiEET_S7_S7_RKT0_.exit.i
   %i.k = add i64 %.idx, -8
-  %2 = shl i64 %indvar, 2
-  %3 = sub i64 %i.k, %2                           ; 2 uses
-  %4 = lshr exact i64 %3, 2
-  %i.l = add nuw nsw i64 %4, 1
-  %xtraiter = and i64 %i.l, 3                     ; 2 uses
+  %2 = lshr exact i64 %i.k, 2                     ; 2 uses
+  %3 = add nuw nsw i64 %2, 1
+  %4 = mul i64 %indvar, 4611686018427387903       ; 2 uses
+  %5 = add i64 %4, %3
+  %i.l = add i64 %2, %4
+  %xtraiter = and i64 %5, 3                       ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
 
@@ -5171,7 +5196,7 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph.i.pro
   %.pre12.i.lcssa.unr = phi ptr [ poison, %.lr.ph.i.preheader ], [ %.pre12.i.prol, %bb.e ]
   %.unr = phi ptr [ %i.f, %.lr.ph.i.preheader ], [ %.pre12.i.prol, %bb.e ]
   %.unr35 = phi ptr [ %i.j, %.lr.ph.i.preheader ], [ %i.s, %bb.e ]
-  %i.t = icmp ult i64 %3, 12
+  %i.t = icmp ult i64 %i.l, 3
   br i1 %i.t, label %_ZN5boost9container6removeINS0_12vec_iteratorIPNS0_4test12copyable_intELb0EEEiEET_S7_S7_RKT0_.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %bb.j
@@ -5338,11 +5363,12 @@ _ZN5boost9container7find_ifINS0_12vec_iteratorIPNS0_4test12copyable_intELb0EEENS
 
 .lr.ph.i.preheader:                               ; preds = %_ZN5boost9container7find_ifINS0_12vec_iteratorIPNS0_4test12copyable_intELb0EEENS0_14equal_to_valueIiEEEET_S9_S9_T0_.exit.i
   %i.k = add i64 %.idx, -8
-  %2 = shl i64 %indvar, 2
-  %3 = sub i64 %i.k, %2                           ; 2 uses
-  %4 = lshr exact i64 %3, 2
-  %i.l = add nuw nsw i64 %4, 1
-  %xtraiter = and i64 %i.l, 3                     ; 2 uses
+  %2 = lshr exact i64 %i.k, 2                     ; 2 uses
+  %3 = add nuw nsw i64 %2, 1
+  %4 = mul i64 %indvar, 4611686018427387903       ; 2 uses
+  %5 = add i64 %4, %3
+  %i.l = add i64 %2, %4
+  %xtraiter = and i64 %5, 3                       ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
 
@@ -5371,7 +5397,7 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph.i.pro
   %.pre12.i.lcssa.unr = phi ptr [ poison, %.lr.ph.i.preheader ], [ %.pre12.i.prol, %bb.e ]
   %.unr = phi ptr [ %i.f, %.lr.ph.i.preheader ], [ %.pre12.i.prol, %bb.e ]
   %.unr35 = phi ptr [ %i.j, %.lr.ph.i.preheader ], [ %i.s, %bb.e ]
-  %i.t = icmp ult i64 %3, 12
+  %i.t = icmp ult i64 %i.l, 3
   br i1 %i.t, label %_ZN5boost9container9remove_ifINS0_12vec_iteratorIPNS0_4test12copyable_intELb0EEENS0_14equal_to_valueIiEEEET_S9_S9_T0_.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %bb.j
@@ -5774,11 +5800,12 @@ _ZN5boost9container4findINS0_12vec_iteratorIPNS0_4test24overaligned_copyable_int
 
 .lr.ph.i.preheader:                               ; preds = %_ZN5boost9container4findINS0_12vec_iteratorIPNS0_4test24overaligned_copyable_intELb0EEEiEET_S7_S7_RKT0_.exit.i
   %i.k = add i64 %.idx, -128
-  %2 = shl i64 %indvar, 6
-  %3 = sub i64 %i.k, %2                           ; 2 uses
-  %4 = lshr exact i64 %3, 6
-  %i.l = add nuw nsw i64 %4, 1
-  %xtraiter = and i64 %i.l, 3                     ; 2 uses
+  %2 = lshr exact i64 %i.k, 6                     ; 2 uses
+  %3 = add nuw nsw i64 %2, 1
+  %4 = mul i64 %indvar, 288230376151711743        ; 2 uses
+  %5 = add i64 %4, %3
+  %i.l = add i64 %2, %4
+  %xtraiter = and i64 %5, 3                       ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
 
@@ -5807,7 +5834,7 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph.i.pro
   %.sroa.015.1.lcssa.unr = phi ptr [ poison, %.lr.ph.i.preheader ], [ %.sroa.015.1.prol, %bb.e ]
   %.sroa.015.0.unr = phi ptr [ %i.f, %.lr.ph.i.preheader ], [ %.sroa.015.1.prol, %bb.e ]
   %.unr = phi ptr [ %i.j, %.lr.ph.i.preheader ], [ %i.r, %bb.e ]
-  %i.s = icmp ult i64 %3, 192
+  %i.s = icmp ult i64 %i.l, 3
   br i1 %i.s, label %_ZN5boost9container6removeINS0_12vec_iteratorIPNS0_4test24overaligned_copyable_intELb0EEEiEET_S7_S7_RKT0_.exit.loopexit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %bb.j
@@ -5938,11 +5965,12 @@ _ZN5boost9container7find_ifINS0_12vec_iteratorIPNS0_4test24overaligned_copyable_
 
 .lr.ph.i.preheader:                               ; preds = %_ZN5boost9container7find_ifINS0_12vec_iteratorIPNS0_4test24overaligned_copyable_intELb0EEENS0_14equal_to_valueIiEEEET_S9_S9_T0_.exit.i
   %i.k = add i64 %.idx, -128
-  %2 = shl i64 %indvar, 6
-  %3 = sub i64 %i.k, %2                           ; 2 uses
-  %4 = lshr exact i64 %3, 6
-  %i.l = add nuw nsw i64 %4, 1
-  %xtraiter = and i64 %i.l, 3                     ; 2 uses
+  %2 = lshr exact i64 %i.k, 6                     ; 2 uses
+  %3 = add nuw nsw i64 %2, 1
+  %4 = mul i64 %indvar, 288230376151711743        ; 2 uses
+  %5 = add i64 %4, %3
+  %i.l = add i64 %2, %4
+  %xtraiter = and i64 %5, 3                       ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
 
@@ -5971,7 +5999,7 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph.i.pro
   %.sroa.015.1.lcssa.unr = phi ptr [ poison, %.lr.ph.i.preheader ], [ %.sroa.015.1.prol, %bb.e ]
   %.sroa.015.0.unr = phi ptr [ %i.f, %.lr.ph.i.preheader ], [ %.sroa.015.1.prol, %bb.e ]
   %.unr = phi ptr [ %i.j, %.lr.ph.i.preheader ], [ %i.r, %bb.e ]
-  %i.s = icmp ult i64 %3, 192
+  %i.s = icmp ult i64 %i.l, 3
   br i1 %i.s, label %_ZN5boost9container9remove_ifINS0_12vec_iteratorIPNS0_4test24overaligned_copyable_intELb0EEENS0_14equal_to_valueIiEEEET_S9_S9_T0_.exit.loopexit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %bb.j
@@ -6374,11 +6402,12 @@ _ZN5boost9container4findINS0_12vec_iteratorIPiLb0EEEiEET_S5_S5_RKT0_.exit.i: ; p
 
 .lr.ph.i.preheader:                               ; preds = %_ZN5boost9container4findINS0_12vec_iteratorIPiLb0EEEiEET_S5_S5_RKT0_.exit.i
   %i.k = add i64 %.idx, -8
-  %2 = shl i64 %indvar, 2
-  %3 = sub i64 %i.k, %2                           ; 2 uses
-  %4 = lshr exact i64 %3, 2
-  %i.l = add nuw nsw i64 %4, 1
-  %xtraiter = and i64 %i.l, 3                     ; 2 uses
+  %2 = lshr exact i64 %i.k, 2                     ; 2 uses
+  %3 = add nuw nsw i64 %2, 1
+  %4 = mul i64 %indvar, 4611686018427387903       ; 2 uses
+  %5 = add i64 %4, %3
+  %i.l = add i64 %2, %4
+  %xtraiter = and i64 %5, 3                       ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
 
@@ -6407,7 +6436,7 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph.i.pro
   %.pre12.i.lcssa.unr = phi ptr [ poison, %.lr.ph.i.preheader ], [ %.pre12.i.prol, %bb.e ]
   %.unr = phi ptr [ %i.f, %.lr.ph.i.preheader ], [ %.pre12.i.prol, %bb.e ]
   %.unr34 = phi ptr [ %i.j, %.lr.ph.i.preheader ], [ %i.s, %bb.e ]
-  %i.t = icmp ult i64 %3, 12
+  %i.t = icmp ult i64 %i.l, 3
   br i1 %i.t, label %_ZN5boost9container6removeINS0_12vec_iteratorIPiLb0EEEiEET_S5_S5_RKT0_.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %bb.j
@@ -6525,11 +6554,12 @@ _ZN5boost9container7find_ifINS0_12vec_iteratorIPiLb0EEENS0_14equal_to_valueIiEEE
 
 .lr.ph.i.preheader:                               ; preds = %_ZN5boost9container7find_ifINS0_12vec_iteratorIPiLb0EEENS0_14equal_to_valueIiEEEET_S7_S7_T0_.exit.i
   %i.k = add i64 %.idx, -8
-  %2 = shl i64 %indvar, 2
-  %3 = sub i64 %i.k, %2                           ; 2 uses
-  %4 = lshr exact i64 %3, 2
-  %i.l = add nuw nsw i64 %4, 1
-  %xtraiter = and i64 %i.l, 3                     ; 2 uses
+  %2 = lshr exact i64 %i.k, 2                     ; 2 uses
+  %3 = add nuw nsw i64 %2, 1
+  %4 = mul i64 %indvar, 4611686018427387903       ; 2 uses
+  %5 = add i64 %4, %3
+  %i.l = add i64 %2, %4
+  %xtraiter = and i64 %5, 3                       ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
 
@@ -6558,7 +6588,7 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph.i.pro
   %.pre12.i.lcssa.unr = phi ptr [ poison, %.lr.ph.i.preheader ], [ %.pre12.i.prol, %bb.e ]
   %.unr = phi ptr [ %i.f, %.lr.ph.i.preheader ], [ %.pre12.i.prol, %bb.e ]
   %.unr34 = phi ptr [ %i.j, %.lr.ph.i.preheader ], [ %i.s, %bb.e ]
-  %i.t = icmp ult i64 %3, 12
+  %i.t = icmp ult i64 %i.l, 3
   br i1 %i.t, label %_ZN5boost9container9remove_ifINS0_12vec_iteratorIPiLb0EEENS0_14equal_to_valueIiEEEET_S7_S7_T0_.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %bb.j
@@ -6961,7 +6991,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !9326 ; 6 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !9316, !noalias !10372 ; 2 uses
-  %.idx = shl i64 %i.b, 2                         ; 3 uses
+  %.idx = shl i64 %i.b, 2                         ; 2 uses
   %i.d = getelementptr inbounds i8, ptr %i.c, i64 %.idx ; 6 uses
   %.not1.i.i = icmp eq i64 %i.b, 0
   br i1 %.not1.i.i, label %_ZN5boost9container6vectorINS0_4test11movable_intENS0_13new_allocatorIS3_EEvE5eraseENS0_12vec_iteratorIPS3_Lb1EEES9_.exit, label %.lr.ph.i.i
@@ -6992,9 +7022,10 @@ _ZN5boost9container4findINS0_12vec_iteratorIPNS0_4test11movable_intELb0EEEiEET_S
 
 .lr.ph.i.preheader:                               ; preds = %_ZN5boost9container4findINS0_12vec_iteratorIPNS0_4test11movable_intELb0EEEiEET_S7_S7_RKT0_.exit.i
   %i.k = add i64 %.idx, -8
-  %2 = shl i64 %indvar, 2                         ; 2 uses
-  %i.l = sub i64 %.idx, %2
-  %i.m = and i64 %i.l, 4
+  %2 = lshr exact i64 %i.k, 2                     ; 2 uses
+  %3 = mul i64 %indvar, 4611686018427387903       ; 2 uses
+  %i.l = sub i64 %2, %3
+  %i.m = and i64 %i.l, 1
   %lcmp.mod.not.not = icmp eq i64 %i.m, 0
   br i1 %lcmp.mod.not.not, label %.lr.ph.i.prol, label %.lr.ph.i.prol.loopexit
 
@@ -7019,7 +7050,8 @@ bb.d:                                             ; preds = %.lr.ph.i.prol
   %.pre12.i.lcssa.unr = phi ptr [ poison, %.lr.ph.i.preheader ], [ %.pre12.i.prol, %.lr.ph.i.prol.loopexit.unr-lcssa ]
   %.unr = phi ptr [ %i.f, %.lr.ph.i.preheader ], [ %.pre12.i.prol, %.lr.ph.i.prol.loopexit.unr-lcssa ]
   %.unr35 = phi ptr [ %i.j, %.lr.ph.i.preheader ], [ %i.r, %.lr.ph.i.prol.loopexit.unr-lcssa ]
-  %i.s = icmp eq i64 %i.k, %2
+  %4 = sub i64 0, %3
+  %i.s = icmp eq i64 %2, %4
   br i1 %i.s, label %_ZN5boost9container6removeINS0_12vec_iteratorIPNS0_4test11movable_intELb0EEEiEET_S7_S7_RKT0_.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %bb.g
@@ -7131,7 +7163,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !9326 ; 6 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !9316, !noalias !10385 ; 2 uses
-  %.idx = shl i64 %i.b, 2                         ; 3 uses
+  %.idx = shl i64 %i.b, 2                         ; 2 uses
   %i.d = getelementptr inbounds i8, ptr %i.c, i64 %.idx ; 6 uses
   %.not1.i.i = icmp eq i64 %i.b, 0
   br i1 %.not1.i.i, label %_ZN5boost9container6vectorINS0_4test11movable_intENS0_13new_allocatorIS3_EEvE5eraseENS0_12vec_iteratorIPS3_Lb1EEES9_.exit, label %.lr.ph.i.i
@@ -7162,9 +7194,10 @@ _ZN5boost9container7find_ifINS0_12vec_iteratorIPNS0_4test11movable_intELb0EEENS0
 
 .lr.ph.i.preheader:                               ; preds = %_ZN5boost9container7find_ifINS0_12vec_iteratorIPNS0_4test11movable_intELb0EEENS0_14equal_to_valueIiEEEET_S9_S9_T0_.exit.i
   %i.k = add i64 %.idx, -8
-  %2 = shl i64 %indvar, 2                         ; 2 uses
-  %i.l = sub i64 %.idx, %2
-  %i.m = and i64 %i.l, 4
+  %2 = lshr exact i64 %i.k, 2                     ; 2 uses
+  %3 = mul i64 %indvar, 4611686018427387903       ; 2 uses
+  %i.l = sub i64 %2, %3
+  %i.m = and i64 %i.l, 1
   %lcmp.mod.not.not = icmp eq i64 %i.m, 0
   br i1 %lcmp.mod.not.not, label %.lr.ph.i.prol, label %.lr.ph.i.prol.loopexit
 
@@ -7189,7 +7222,8 @@ bb.d:                                             ; preds = %.lr.ph.i.prol
   %.pre12.i.lcssa.unr = phi ptr [ poison, %.lr.ph.i.preheader ], [ %.pre12.i.prol, %.lr.ph.i.prol.loopexit.unr-lcssa ]
   %.unr = phi ptr [ %i.f, %.lr.ph.i.preheader ], [ %.pre12.i.prol, %.lr.ph.i.prol.loopexit.unr-lcssa ]
   %.unr35 = phi ptr [ %i.j, %.lr.ph.i.preheader ], [ %i.r, %.lr.ph.i.prol.loopexit.unr-lcssa ]
-  %i.s = icmp eq i64 %i.k, %2
+  %4 = sub i64 0, %3
+  %i.s = icmp eq i64 %2, %4
   br i1 %i.s, label %_ZN5boost9container9remove_ifINS0_12vec_iteratorIPNS0_4test11movable_intELb0EEENS0_14equal_to_valueIiEEEET_S9_S9_T0_.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %bb.g
@@ -7592,7 +7626,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !9375 ; 6 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !9365, !noalias !10944 ; 2 uses
-  %.idx = shl i64 %i.b, 2                         ; 3 uses
+  %.idx = shl i64 %i.b, 2                         ; 2 uses
   %i.d = getelementptr inbounds i8, ptr %i.c, i64 %.idx ; 6 uses
   %.not1.i.i = icmp eq i64 %i.b, 0
   br i1 %.not1.i.i, label %_ZN5boost9container6vectorINS0_4test24movable_and_copyable_intENS0_13new_allocatorIS3_EEvE5eraseENS0_12vec_iteratorIPS3_Lb1EEES9_.exit, label %.lr.ph.i.i
@@ -7623,9 +7657,10 @@ _ZN5boost9container4findINS0_12vec_iteratorIPNS0_4test24movable_and_copyable_int
 
 .lr.ph.i.preheader:                               ; preds = %_ZN5boost9container4findINS0_12vec_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEiEET_S7_S7_RKT0_.exit.i
   %i.k = add i64 %.idx, -8
-  %2 = shl i64 %indvar, 2                         ; 2 uses
-  %i.l = sub i64 %.idx, %2
-  %i.m = and i64 %i.l, 4
+  %2 = lshr exact i64 %i.k, 2                     ; 2 uses
+  %3 = mul i64 %indvar, 4611686018427387903       ; 2 uses
+  %i.l = sub i64 %2, %3
+  %i.m = and i64 %i.l, 1
   %lcmp.mod.not.not = icmp eq i64 %i.m, 0
   br i1 %lcmp.mod.not.not, label %.lr.ph.i.prol, label %.lr.ph.i.prol.loopexit
 
@@ -7650,7 +7685,8 @@ bb.d:                                             ; preds = %.lr.ph.i.prol
   %.pre12.i.lcssa.unr = phi ptr [ poison, %.lr.ph.i.preheader ], [ %.pre12.i.prol, %.lr.ph.i.prol.loopexit.unr-lcssa ]
   %.unr = phi ptr [ %i.f, %.lr.ph.i.preheader ], [ %.pre12.i.prol, %.lr.ph.i.prol.loopexit.unr-lcssa ]
   %.unr35 = phi ptr [ %i.j, %.lr.ph.i.preheader ], [ %i.r, %.lr.ph.i.prol.loopexit.unr-lcssa ]
-  %i.s = icmp eq i64 %i.k, %2
+  %4 = sub i64 0, %3
+  %i.s = icmp eq i64 %2, %4
   br i1 %i.s, label %_ZN5boost9container6removeINS0_12vec_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEiEET_S7_S7_RKT0_.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %bb.g
@@ -7762,7 +7798,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !9375 ; 6 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !9365, !noalias !10957 ; 2 uses
-  %.idx = shl i64 %i.b, 2                         ; 3 uses
+  %.idx = shl i64 %i.b, 2                         ; 2 uses
   %i.d = getelementptr inbounds i8, ptr %i.c, i64 %.idx ; 6 uses
   %.not1.i.i = icmp eq i64 %i.b, 0
   br i1 %.not1.i.i, label %_ZN5boost9container6vectorINS0_4test24movable_and_copyable_intENS0_13new_allocatorIS3_EEvE5eraseENS0_12vec_iteratorIPS3_Lb1EEES9_.exit, label %.lr.ph.i.i
@@ -7793,9 +7829,10 @@ _ZN5boost9container7find_ifINS0_12vec_iteratorIPNS0_4test24movable_and_copyable_
 
 .lr.ph.i.preheader:                               ; preds = %_ZN5boost9container7find_ifINS0_12vec_iteratorIPNS0_4test24movable_and_copyable_intELb0EEENS0_14equal_to_valueIiEEEET_S9_S9_T0_.exit.i
   %i.k = add i64 %.idx, -8
-  %2 = shl i64 %indvar, 2                         ; 2 uses
-  %i.l = sub i64 %.idx, %2
-  %i.m = and i64 %i.l, 4
+  %2 = lshr exact i64 %i.k, 2                     ; 2 uses
+  %3 = mul i64 %indvar, 4611686018427387903       ; 2 uses
+  %i.l = sub i64 %2, %3
+  %i.m = and i64 %i.l, 1
   %lcmp.mod.not.not = icmp eq i64 %i.m, 0
   br i1 %lcmp.mod.not.not, label %.lr.ph.i.prol, label %.lr.ph.i.prol.loopexit
 
@@ -7820,7 +7857,8 @@ bb.d:                                             ; preds = %.lr.ph.i.prol
   %.pre12.i.lcssa.unr = phi ptr [ poison, %.lr.ph.i.preheader ], [ %.pre12.i.prol, %.lr.ph.i.prol.loopexit.unr-lcssa ]
   %.unr = phi ptr [ %i.f, %.lr.ph.i.preheader ], [ %.pre12.i.prol, %.lr.ph.i.prol.loopexit.unr-lcssa ]
   %.unr35 = phi ptr [ %i.j, %.lr.ph.i.preheader ], [ %i.r, %.lr.ph.i.prol.loopexit.unr-lcssa ]
-  %i.s = icmp eq i64 %i.k, %2
+  %4 = sub i64 0, %3
+  %i.s = icmp eq i64 %2, %4
   br i1 %i.s, label %_ZN5boost9container9remove_ifINS0_12vec_iteratorIPNS0_4test24movable_and_copyable_intELb0EEENS0_14equal_to_valueIiEEEET_S9_S9_T0_.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %bb.g
@@ -8223,11 +8261,12 @@ _ZN5boost9container4findINS0_12vec_iteratorIPNS0_4test12copyable_intELb0EEEiEET_
 
 .lr.ph.i.preheader:                               ; preds = %_ZN5boost9container4findINS0_12vec_iteratorIPNS0_4test12copyable_intELb0EEEiEET_S7_S7_RKT0_.exit.i
   %i.k = add i64 %.idx, -8
-  %2 = shl i64 %indvar, 2
-  %3 = sub i64 %i.k, %2                           ; 2 uses
-  %4 = lshr exact i64 %3, 2
-  %i.l = add nuw nsw i64 %4, 1
-  %xtraiter = and i64 %i.l, 3                     ; 2 uses
+  %2 = lshr exact i64 %i.k, 2                     ; 2 uses
+  %3 = add nuw nsw i64 %2, 1
+  %4 = mul i64 %indvar, 4611686018427387903       ; 2 uses
+  %5 = add i64 %4, %3
+  %i.l = add i64 %2, %4
+  %xtraiter = and i64 %5, 3                       ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
 
@@ -8256,7 +8295,7 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph.i.pro
   %.pre12.i.lcssa.unr = phi ptr [ poison, %.lr.ph.i.preheader ], [ %.pre12.i.prol, %bb.e ]
   %.unr = phi ptr [ %i.f, %.lr.ph.i.preheader ], [ %.pre12.i.prol, %bb.e ]
   %.unr35 = phi ptr [ %i.j, %.lr.ph.i.preheader ], [ %i.s, %bb.e ]
-  %i.t = icmp ult i64 %3, 12
+  %i.t = icmp ult i64 %i.l, 3
   br i1 %i.t, label %_ZN5boost9container6removeINS0_12vec_iteratorIPNS0_4test12copyable_intELb0EEEiEET_S7_S7_RKT0_.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %bb.j
@@ -8423,11 +8462,12 @@ _ZN5boost9container7find_ifINS0_12vec_iteratorIPNS0_4test12copyable_intELb0EEENS
 
 .lr.ph.i.preheader:                               ; preds = %_ZN5boost9container7find_ifINS0_12vec_iteratorIPNS0_4test12copyable_intELb0EEENS0_14equal_to_valueIiEEEET_S9_S9_T0_.exit.i
   %i.k = add i64 %.idx, -8
-  %2 = shl i64 %indvar, 2
-  %3 = sub i64 %i.k, %2                           ; 2 uses
-  %4 = lshr exact i64 %3, 2
-  %i.l = add nuw nsw i64 %4, 1
-  %xtraiter = and i64 %i.l, 3                     ; 2 uses
+  %2 = lshr exact i64 %i.k, 2                     ; 2 uses
+  %3 = add nuw nsw i64 %2, 1
+  %4 = mul i64 %indvar, 4611686018427387903       ; 2 uses
+  %5 = add i64 %4, %3
+  %i.l = add i64 %2, %4
+  %xtraiter = and i64 %5, 3                       ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
 
@@ -8456,7 +8496,7 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph.i.pro
   %.pre12.i.lcssa.unr = phi ptr [ poison, %.lr.ph.i.preheader ], [ %.pre12.i.prol, %bb.e ]
   %.unr = phi ptr [ %i.f, %.lr.ph.i.preheader ], [ %.pre12.i.prol, %bb.e ]
   %.unr35 = phi ptr [ %i.j, %.lr.ph.i.preheader ], [ %i.s, %bb.e ]
-  %i.t = icmp ult i64 %3, 12
+  %i.t = icmp ult i64 %i.l, 3
   br i1 %i.t, label %_ZN5boost9container9remove_ifINS0_12vec_iteratorIPNS0_4test12copyable_intELb0EEENS0_14equal_to_valueIiEEEET_S9_S9_T0_.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %bb.j
@@ -8859,11 +8899,12 @@ _ZN5boost9container4findINS0_12vec_iteratorIPNS0_4test24overaligned_copyable_int
 
 .lr.ph.i.preheader:                               ; preds = %_ZN5boost9container4findINS0_12vec_iteratorIPNS0_4test24overaligned_copyable_intELb0EEEiEET_S7_S7_RKT0_.exit.i
   %i.k = add i64 %.idx, -128
-  %2 = shl i64 %indvar, 6
-  %3 = sub i64 %i.k, %2                           ; 2 uses
-  %4 = lshr exact i64 %3, 6
-  %i.l = add nuw nsw i64 %4, 1
-  %xtraiter = and i64 %i.l, 3                     ; 2 uses
+  %2 = lshr exact i64 %i.k, 6                     ; 2 uses
+  %3 = add nuw nsw i64 %2, 1
+  %4 = mul i64 %indvar, 288230376151711743        ; 2 uses
+  %5 = add i64 %4, %3
+  %i.l = add i64 %2, %4
+  %xtraiter = and i64 %5, 3                       ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
 
@@ -8892,7 +8933,7 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph.i.pro
   %.sroa.015.1.lcssa.unr = phi ptr [ poison, %.lr.ph.i.preheader ], [ %.sroa.015.1.prol, %bb.e ]
   %.sroa.015.0.unr = phi ptr [ %i.f, %.lr.ph.i.preheader ], [ %.sroa.015.1.prol, %bb.e ]
   %.unr = phi ptr [ %i.j, %.lr.ph.i.preheader ], [ %i.r, %bb.e ]
-  %i.s = icmp ult i64 %3, 192
+  %i.s = icmp ult i64 %i.l, 3
   br i1 %i.s, label %_ZN5boost9container6removeINS0_12vec_iteratorIPNS0_4test24overaligned_copyable_intELb0EEEiEET_S7_S7_RKT0_.exit.loopexit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %bb.j
@@ -9023,11 +9064,12 @@ _ZN5boost9container7find_ifINS0_12vec_iteratorIPNS0_4test24overaligned_copyable_
 
 .lr.ph.i.preheader:                               ; preds = %_ZN5boost9container7find_ifINS0_12vec_iteratorIPNS0_4test24overaligned_copyable_intELb0EEENS0_14equal_to_valueIiEEEET_S9_S9_T0_.exit.i
   %i.k = add i64 %.idx, -128
-  %2 = shl i64 %indvar, 6
-  %3 = sub i64 %i.k, %2                           ; 2 uses
-  %4 = lshr exact i64 %3, 6
-  %i.l = add nuw nsw i64 %4, 1
-  %xtraiter = and i64 %i.l, 3                     ; 2 uses
+  %2 = lshr exact i64 %i.k, 6                     ; 2 uses
+  %3 = add nuw nsw i64 %2, 1
+  %4 = mul i64 %indvar, 288230376151711743        ; 2 uses
+  %5 = add i64 %4, %3
+  %i.l = add i64 %2, %4
+  %xtraiter = and i64 %5, 3                       ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
 
@@ -9056,7 +9098,7 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph.i.pro
   %.sroa.015.1.lcssa.unr = phi ptr [ poison, %.lr.ph.i.preheader ], [ %.sroa.015.1.prol, %bb.e ]
   %.sroa.015.0.unr = phi ptr [ %i.f, %.lr.ph.i.preheader ], [ %.sroa.015.1.prol, %bb.e ]
   %.unr = phi ptr [ %i.j, %.lr.ph.i.preheader ], [ %i.r, %bb.e ]
-  %i.s = icmp ult i64 %3, 192
+  %i.s = icmp ult i64 %i.l, 3
   br i1 %i.s, label %_ZN5boost9container9remove_ifINS0_12vec_iteratorIPNS0_4test24overaligned_copyable_intELb0EEENS0_14equal_to_valueIiEEEET_S9_S9_T0_.exit.loopexit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %bb.j

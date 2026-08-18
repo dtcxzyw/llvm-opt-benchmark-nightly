@@ -204,9 +204,7 @@ bb.c:                                             ; preds = %_ZNSt14_Fwd_list_ba
   %i.n = shl i64 %.023437, 3
   %i.o = shl nuw nsw i64 %.023437, 3
   %i.p = shl nuw nsw i64 %.023437, 3
-  %11 = add nuw i64 %.023437, 2305843009213693951
-  %12 = and i64 %11, 2305843009213693951          ; 2 uses
-  %i.q = add nuw nsw i64 %12, 1                   ; 2 uses
+  %i.q = add nuw i64 %.023437, 2305843009213693952 ; 2 uses
   %i.r = shl i64 %.023437, 3
   %i.s = shl i64 %.023437, 3
   %i.t = call noalias noundef nonnull dereferenceable(16) ptr @_Znwm(i64 noundef 16) #41 ; 14 uses
@@ -609,14 +607,12 @@ _ZNSt12_Vector_baseISt4pairIiiESaIS1_EE11_M_allocateEm.exit.i: ; preds = %bb.u, 
 
 .lr.ph.i.i.i.i.i67.i.preheader.a:                 ; preds = %_ZNSt12_Vector_baseISt4pairIiiESaIS1_EE11_M_allocateEm.exit.i
   %i.kl = ptrtoaddr ptr %i.kk to i64
-  %min.iters.check1081 = icmp samesign ult i64 %12, 3
   %i.km = sub i64 %i.ac, %i.kl
   %diff.check1079 = icmp ugt i64 %i.km, -32
-  %or.cond1235 = or i1 %min.iters.check1081, %diff.check1079
-  br i1 %or.cond1235, label %.lr.ph.i.i.i.i.i67.i.preheader1244, label %vector.ph1082
+  br i1 %diff.check1079, label %.lr.ph.i.i.i.i.i67.i.preheader1244, label %vector.ph1082
 
 vector.ph1082:                                    ; preds = %.lr.ph.i.i.i.i.i67.i.preheader.a
-  %n.vec1083 = and i64 %i.q, 4611686018427387900  ; 3 uses
+  %n.vec1083 = and i64 %i.q, -4                   ; 3 uses
   %i.kn = shl i64 %n.vec1083, 3                   ; 2 uses
   %i.ko = getelementptr i8, ptr %i.kk, i64 %i.kn  ; 2 uses
   %i.kp = getelementptr i8, ptr %.sroa.0155.0.lcssa, i64 %i.kn

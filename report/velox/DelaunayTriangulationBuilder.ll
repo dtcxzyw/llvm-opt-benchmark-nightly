@@ -201,7 +201,7 @@ bb.q:                                             ; preds = %bb.a
   br i1 %i.ae, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPN4geos4geom10CoordinateESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterINS3_18CoordinateLessThenEEEEvT_SE_T0_.exit, label %.preheader.i21
 
 .preheader.i21:                                   ; preds = %bb.q
-  %.sroa.0.017.i22 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
+  %.sroa.0.017.i22 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %.not18.i23 = icmp eq ptr %.sroa.0.017.i22, %1
   br i1 %.not18.i23, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPN4geos4geom10CoordinateESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterINS3_18CoordinateLessThenEEEEvT_SE_T0_.exit, label %.lr.ph.i24
 
@@ -211,7 +211,7 @@ bb.q:                                             ; preds = %bb.a
 
 bb.r:                                             ; preds = %bb.ac, %.lr.ph.i24
   %.sroa.0.020.i25 = phi ptr [ %.sroa.0.017.i22, %.lr.ph.i24 ], [ %.sroa.0.0.i37, %bb.ac ] ; 6 uses
-  %.pn19.i26 = phi ptr [ %0, %.lr.ph.i24 ], [ %.sroa.0.020.i25, %bb.ac ] ; 4 uses
+  %.pn19.i26 = phi ptr [ %0, %.lr.ph.i24 ], [ %.sroa.0.020.i25, %bb.ac ] ; 3 uses
   %i.ag = load double, ptr %.sroa.0.020.i25, align 8, !tbaa !64 ; 5 uses
   %i.ah = load double, ptr %0, align 8, !tbaa !64 ; 2 uses
   %i.ai = fcmp olt double %i.ag, %i.ah
@@ -231,16 +231,12 @@ bb.t:                                             ; preds = %bb.s
 bb.u:                                             ; preds = %bb.t, %bb.r
   %.sroa.064.0.copyload = load <3 x double>, ptr %.sroa.0.020.i25, align 8
   %i.am = ptrtoint ptr %.sroa.0.020.i25 to i64
-  %i.an = sub i64 %i.am, %i.b                     ; 4 uses
+  %i.an = sub i64 %i.am, %i.b                     ; 3 uses
   %i.ao = icmp sgt i64 %i.an, 24
   br i1 %i.ao, label %bb.v, label %bb.w, !prof !69
 
 bb.v:                                             ; preds = %bb.u
-  %2 = getelementptr inbounds nuw i8, ptr %.pn19.i26, i64 48
-  %.neg28.i40 = udiv exact i64 %i.an, 24
-  %.neg28.neg.i41 = sub nsw i64 0, %.neg28.i40
-  %3 = getelementptr inbounds [24 x i8], ptr %2, i64 %.neg28.neg.i41
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %3, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.an, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sroa.0.017.i22, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.an, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN4geos4geom10CoordinateESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.i39
 
 bb.w:                                             ; preds = %bb.u
@@ -643,20 +639,17 @@ bb.a:
   br i1 %i.d, label %.lr.ph.i, label %bb.n
 
 .lr.ph.i:                                         ; preds = %bb.a
+  %.sroa.07.018.i.ptr = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.i, %.lr.ph.i
   %indvar.i = phi i64 [ 0, %.lr.ph.i ], [ %indvar.next.i, %bb.i ] ; 2 uses
   %.sroa.07.021.i.idx = phi i64 [ 24, %.lr.ph.i ], [ %.sroa.07.021.i.add, %bb.i ] ; 2 uses
-  %.pn20.i = phi ptr [ %0, %.lr.ph.i ], [ %.sroa.07.021.i.ptr, %bb.i ] ; 3 uses
-  %.sroa.07.021.i.ptr = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.07.021.i.idx ; 5 uses
-  %2 = add nuw i64 %indvar.i, 1                   ; 2 uses
-  %.neg.i = mul nsw i64 %2, -24
-  %i.f = add nsw i64 %.neg.i, 24                  ; 2 uses
-  %scevgep.i = getelementptr i8, ptr %.sroa.07.021.i.ptr, i64 %i.f
-  %scevgep22.i = getelementptr i8, ptr %.pn20.i, i64 %i.f
-  %3 = mul nuw nsw i64 %2, 24
+  %.pn20.i = phi ptr [ %0, %.lr.ph.i ], [ %.sroa.07.021.i.ptr, %bb.i ] ; 2 uses
+  %.sroa.07.021.i.ptr = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.07.021.i.idx ; 4 uses
+  %.neg.i = mul nuw nsw i64 %indvar.i, 24
+  %i.f = add nuw nsw i64 %.neg.i, 24
   %i.g = load double, ptr %.sroa.07.021.i.ptr, align 8, !tbaa !64 ; 5 uses
   %i.h = load double, ptr %0, align 8, !tbaa !64  ; 2 uses
   %i.i = fcmp olt double %i.g, %i.h
@@ -675,7 +668,7 @@ bb.d:                                             ; preds = %bb.c
 
 .loopexit.i:                                      ; preds = %bb.d, %bb.b
   %.sroa.0.i.sroa.0.0.copyload = load <3 x double>, ptr %.sroa.07.021.i.ptr, align 8
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.i, ptr noundef nonnull align 8 dereferenceable(1) %scevgep22.i, i64 %3, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sroa.07.018.i.ptr, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.f, i1 false)
   store <3 x double> %.sroa.0.i.sroa.0.0.copyload, ptr %0, align 8
   br label %bb.i
 
@@ -767,7 +760,7 @@ bb.n:                                             ; preds = %bb.a
   br i1 %i.ad, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPN4geos11triangulate8quadedge6VertexESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEEvT_SD_T0_.exit, label %.preheader.i16
 
 .preheader.i16:                                   ; preds = %bb.n
-  %.sroa.07.018.i17 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
+  %.sroa.07.018.i17 = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %.not19.i18 = icmp eq ptr %.sroa.07.018.i17, %1
   br i1 %.not19.i18, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPN4geos11triangulate8quadedge6VertexESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEEvT_SD_T0_.exit, label %.lr.ph.i19
 
@@ -776,21 +769,11 @@ bb.n:                                             ; preds = %bb.a
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.w, %.lr.ph.i19
-  %indvar.i20 = phi i64 [ 0, %.lr.ph.i19 ], [ %indvar.next.i39, %bb.w ] ; 3 uses
-  %.sroa.07.021.i21 = phi ptr [ %.sroa.07.018.i17, %.lr.ph.i19 ], [ %.sroa.07.0.i37, %bb.w ] ; 7 uses
-  %.pn20.i22 = phi ptr [ %0, %.lr.ph.i19 ], [ %.sroa.07.021.i21, %bb.w ] ; 3 uses
-  %4 = mul nuw i64 %indvar.i20, 24
-  %5 = add i64 %4, 24
-  %6 = udiv i64 %5, 24                            ; 2 uses
-  %7 = icmp samesign ugt i64 %indvar.i20, 768614336404564649 ; 2 uses
-  %8 = select i1 %7, i64 0, i64 24
-  %.neg.i24 = mul i64 %6, -24
-  %9 = add i64 %.neg.i24, %8                      ; 2 uses
-  %scevgep.i25 = getelementptr i8, ptr %.sroa.07.021.i21, i64 %9
-  %scevgep22.i26 = getelementptr i8, ptr %.pn20.i22, i64 %9
-  %10 = zext i1 %7 to i64
-  %i.af = add nuw nsw i64 %6, %10
-  %11 = mul nuw i64 %i.af, 24
+  %indvar.i20 = phi i64 [ 0, %.lr.ph.i19 ], [ %indvar.next.i39, %bb.w ] ; 2 uses
+  %.sroa.07.021.i21 = phi ptr [ %.sroa.07.018.i17, %.lr.ph.i19 ], [ %.sroa.07.0.i37, %bb.w ] ; 6 uses
+  %.pn20.i22 = phi ptr [ %0, %.lr.ph.i19 ], [ %.sroa.07.021.i21, %bb.w ] ; 2 uses
+  %.neg.i24 = mul nuw i64 %indvar.i20, 24
+  %i.af = add nuw i64 %.neg.i24, 24
   %i.ag = load double, ptr %.sroa.07.021.i21, align 8, !tbaa !64 ; 5 uses
   %i.ah = load double, ptr %0, align 8, !tbaa !64 ; 2 uses
   %i.ai = fcmp olt double %i.ag, %i.ah
@@ -815,7 +798,7 @@ bb.r:                                             ; preds = %bb.q, %bb.o
   br i1 %i.ao, label %.lr.ph.preheader.i.i.i.i.i.i41, label %.loopexit.i40
 
 .lr.ph.preheader.i.i.i.i.i.i41:                   ; preds = %bb.r
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %scevgep.i25, ptr align 8 %scevgep22.i26, i64 %11, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sroa.07.018.i17, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %i.af, i1 false)
   br label %.loopexit.i40
 
 .loopexit.i40:                                    ; preds = %.lr.ph.preheader.i.i.i.i.i.i41, %bb.r

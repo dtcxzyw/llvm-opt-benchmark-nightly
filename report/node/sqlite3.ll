@@ -205,7 +205,7 @@ bb.ha:                                            ; preds = %bb.gy, %bb.gz
   %.0644 = phi i8 [ %.16901103, %bb.gz ], [ %i.abs, %bb.gy ]
   %.7735.fr = freeze i32 %.7735                   ; 4 uses
   %i.abx = add nsw i32 %.pre1930, -1
-  %.0645 = select i1 %.1674, i32 0, i32 %i.abx    ; 6 uses
+  %.0645 = select i1 %.1674, i32 0, i32 %i.abx    ; 7 uses
   %i.aby = icmp sgt i32 %.0645, 0
   %i.abz = call i32 @llvm.smax.i32(i32 %.0645, i32 0)
   %i.aca = zext nneg i32 %i.abz to i64
@@ -372,7 +372,12 @@ bb.hv:                                            ; preds = %bb.hu
 bb.hw:                                            ; preds = %bb.hv, %bb.hu
   %.12751 = phi ptr [ %i.adx, %bb.hv ], [ %.11750.ph, %bb.hu ] ; 3 uses
   %i.ady = icmp slt i32 %.0645, 0
-  br i1 %i.ady, label %bb.hx, label %.preheader1227
+  br i1 %i.ady, label %bb.hx, label %.preheader1227.preheader
+
+.preheader1227.preheader:                         ; preds = %bb.hw
+  %4 = urem i32 %.0645, 3
+  %5 = icmp eq i32 %4, 0
+  br label %.preheader1227
 
 bb.hx:                                            ; preds = %bb.hw
   %i.adz = getelementptr inbounds nuw i8, ptr %.12751, i64 1
@@ -380,10 +385,10 @@ bb.hx:                                            ; preds = %bb.hw
   %i.aea = add nsw i32 %.0645, 1
   br label %.loopexit1228
 
-.preheader1227:                                   ; preds = %bb.hw, %bb.ib
-  %.06211386 = phi i32 [ %.1622, %bb.ib ], [ 0, %bb.hw ] ; 4 uses
-  %.16461385 = phi i32 [ %i.ael, %bb.ib ], [ %.0645, %bb.hw ] ; 4 uses
-  %.131384 = phi ptr [ %.14, %bb.ib ], [ %.12751, %bb.hw ] ; 3 uses
+.preheader1227:                                   ; preds = %.preheader1227.preheader, %bb.ib
+  %.06211386 = phi i32 [ %.1622, %bb.ib ], [ 0, %.preheader1227.preheader ] ; 4 uses
+  %.16461385 = phi i32 [ %i.ael, %bb.ib ], [ %.0645, %.preheader1227.preheader ] ; 3 uses
+  %.131384 = phi ptr [ %.14, %bb.ib ], [ %.12751, %.preheader1227.preheader ] ; 3 uses
   %i.aeb = load i32, ptr %3, align 8, !tbaa !329
   %i.aec = icmp slt i32 %.06211386, %i.aeb
   br i1 %i.aec, label %bb.hy, label %bb.hz
@@ -399,24 +404,20 @@ bb.hy:                                            ; preds = %.preheader1227
 bb.hz:                                            ; preds = %.preheader1227, %bb.hy
   %.1622 = phi i32 [ %i.aee, %bb.hy ], [ %.06211386, %.preheader1227 ] ; 2 uses
   %i.aei = phi i8 [ %i.aeh, %bb.hy ], [ 48, %.preheader1227 ]
-  %i.aej = getelementptr inbounds nuw i8, ptr %.131384, i64 1 ; 3 uses
+  %i.aej = getelementptr inbounds nuw i8, ptr %.131384, i64 1 ; 2 uses
   store i8 %i.aei, ptr %.131384, align 1, !tbaa !229
-  br i1 %i.acg, label %4, label %bb.ib
+  %6 = icmp samesign ugt i32 %.16461385, 1
+  %or.cond17 = and i1 %5, %6
+  %or.cond1717 = select i1 %i.acg, i1 %or.cond17, i1 false
+  br i1 %or.cond1717, label %bb.ia, label %bb.ib
 
-4:                                                ; preds = %bb.hz
-  %5 = urem i32 %.16461385, 3
-  %6 = icmp eq i32 %5, 0
-  %7 = icmp samesign ugt i32 %.16461385, 1
-  %or.cond17 = and i1 %7, %6
-  br i1 %or.cond17, label %bb.ia, label %bb.ib
-
-bb.ia:                                            ; preds = %4
+bb.ia:                                            ; preds = %bb.hz
   %i.aek = getelementptr inbounds nuw i8, ptr %.131384, i64 2
   store i8 44, ptr %i.aej, align 1, !tbaa !229
   br label %bb.ib
 
-bb.ib:                                            ; preds = %bb.hz, %4, %bb.ia
-  %.14 = phi ptr [ %i.aek, %bb.ia ], [ %i.aej, %4 ], [ %i.aej, %bb.hz ] ; 2 uses
+bb.ib:                                            ; preds = %bb.hz, %bb.ia
+  %.14 = phi ptr [ %i.aek, %bb.ia ], [ %i.aej, %bb.hz ] ; 2 uses
   %i.ael = add nsw i32 %.16461385, -1
   %i.aem = icmp sgt i32 %.16461385, 0
   br i1 %i.aem, label %.preheader1227, label %.loopexit1228, !llvm.loop !341

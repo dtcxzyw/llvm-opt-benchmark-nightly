@@ -204,7 +204,7 @@ bb.cp:                                            ; preds = %bb.cd, %bb.cd
   br label %.critedge14
 
 .lr.ph1107:                                       ; preds = %bb.cp, %bb.cq
-  %indvar = phi i64 [ %indvar.next, %bb.cq ], [ 0, %bb.cp ] ; 2 uses
+  %indvar = phi i64 [ %indvar.next, %bb.cq ], [ 0, %bb.cp ] ; 5 uses
   %storemerge279.ptr1105 = phi ptr [ %storemerge279.ptr, %bb.cq ], [ %.ptr996, %bb.cp ] ; 2 uses
   %storemerge279.idx1104 = phi i64 [ %storemerge279.add, %bb.cq ], [ 4, %bb.cp ] ; 2 uses
   %i.abf = load i32, ptr %storemerge279.ptr1105, align 4, !tbaa !808
@@ -275,20 +275,19 @@ bb.cs:                                            ; preds = %.lr.ph1107, %.lr.ph
   br i1 %.not9.i646, label %_ZN5boost13re_detail_60028hash_value_from_capture_nameIPKwEEiT_S4_.exit653, label %.lr.ph.i647.preheader
 
 .lr.ph.i647.preheader:                            ; preds = %bb.cs
-  %24 = add i64 %indvar, 4611686018427387903      ; 2 uses
-  %i.abw = and i64 %24, 4611686018427387903       ; 2 uses
-  %25 = add nuw nsw i64 %i.abw, 1                 ; 2 uses
-  %i.abx = icmp eq i64 %i.abw, 0
+  %i.abw = and i64 %indvar, 1
+  %i.abx = icmp eq i64 %indvar, -4611686018427387903
   br i1 %i.abx, label %.lr.ph.i647.epil.preheader, label %.lr.ph.i647.preheader.new
 
 .lr.ph.i647.preheader.new:                        ; preds = %.lr.ph.i647.preheader
-  %unroll_iter = and i64 %25, 9223372036854775806
+  %unroll_iter = and i64 %indvar, -2
+  %24 = add i64 %unroll_iter, 4611686018427387902
   br label %.lr.ph.i647
 
 .lr.ph.i647:                                      ; preds = %.lr.ph.i647, %.lr.ph.i647.preheader.new
   %.011.i648 = phi i64 [ 0, %.lr.ph.i647.preheader.new ], [ %i.aco, %.lr.ph.i647 ] ; 3 uses
   %.0810.i649 = phi ptr [ %.ptr996, %.lr.ph.i647.preheader.new ], [ %i.acp, %.lr.ph.i647 ] ; 3 uses
-  %niter = phi i64 [ 0, %.lr.ph.i647.preheader.new ], [ %niter.next.1, %.lr.ph.i647 ]
+  %niter = phi i64 [ 0, %.lr.ph.i647.preheader.new ], [ %niter.next.1, %.lr.ph.i647 ] ; 2 uses
   %i.aby = load i32, ptr %.0810.i649, align 4, !tbaa !808
   %i.abz = add i32 %i.aby, -1640531527
   %i.aca = zext i32 %i.abz to i64
@@ -307,19 +306,18 @@ bb.cs:                                            ; preds = %.lr.ph1107, %.lr.ph
   %i.acn = add i64 %i.acm, %i.acj
   %i.aco = xor i64 %i.acn, %i.acf                 ; 3 uses
   %i.acp = getelementptr inbounds nuw i8, ptr %.0810.i649, i64 8 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
-  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
+  %niter.next.1 = add i64 %niter, 2
+  %niter.ncmp.1 = icmp eq i64 %niter, %24
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.i651.unr-lcssa, label %.lr.ph.i647, !llvm.loop !1057
 
 ._crit_edge.loopexit.i651.unr-lcssa:              ; preds = %.lr.ph.i647
-  %26 = and i64 %24, 1
-  %lcmp.mod.not.not = icmp eq i64 %26, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph.i647.epil.preheader, label %._crit_edge.loopexit.i651
+  %lcmp.mod.not.not = icmp eq i64 %i.abw, 0
+  br i1 %lcmp.mod.not.not, label %._crit_edge.loopexit.i651, label %.lr.ph.i647.epil.preheader
 
 .lr.ph.i647.epil.preheader:                       ; preds = %._crit_edge.loopexit.i651.unr-lcssa, %.lr.ph.i647.preheader
   %.011.i648.epil.init = phi i64 [ 0, %.lr.ph.i647.preheader ], [ %i.aco, %._crit_edge.loopexit.i651.unr-lcssa ] ; 3 uses
   %.0810.i649.epil.init = phi ptr [ %.ptr996, %.lr.ph.i647.preheader ], [ %i.acp, %._crit_edge.loopexit.i651.unr-lcssa ]
-  %lcmp.mod1432 = trunc i64 %25 to i1
+  %lcmp.mod1432 = trunc i64 %indvar to i1
   tail call void @llvm.assume(i1 %lcmp.mod1432)
   %i.acq = load i32, ptr %.0810.i649.epil.init, align 4, !tbaa !808
   %i.acr = add i32 %i.acq, -1640531527
@@ -722,7 +720,7 @@ bb.eu:                                            ; preds = %_ZNK5boost16cpp_reg
   br label %.critedge20
 
 .lr.ph1171:                                       ; preds = %bb.eu, %_ZNK5boost16cpp_regex_traitsIwE11syntax_typeEw.exit749.thread
-  %indvar1442 = phi i64 [ %indvar.next1443, %_ZNK5boost16cpp_regex_traitsIwE11syntax_typeEw.exit749.thread ], [ 0, %bb.eu ] ; 2 uses
+  %indvar1442 = phi i64 [ %indvar.next1443, %_ZNK5boost16cpp_regex_traitsIwE11syntax_typeEw.exit749.thread ], [ 0, %bb.eu ] ; 5 uses
   %storemerge363.ptr1169 = phi ptr [ %storemerge363.ptr, %_ZNK5boost16cpp_regex_traitsIwE11syntax_typeEw.exit749.thread ], [ %.ptr998, %bb.eu ] ; 2 uses
   %storemerge363.idx1168 = phi i64 [ %storemerge363.add, %_ZNK5boost16cpp_regex_traitsIwE11syntax_typeEw.exit749.thread ], [ 4, %bb.eu ] ; 2 uses
   %i.asq = load i32, ptr %storemerge363.ptr1169, align 4, !tbaa !808 ; 2 uses
@@ -808,20 +806,19 @@ bb.ev:                                            ; preds = %_ZNK5boost16cpp_reg
   br i1 %.not9.i762, label %.thread982, label %.lr.ph.i763.preheader
 
 .lr.ph.i763.preheader:                            ; preds = %bb.ev
-  %27 = add i64 %indvar1442, 4611686018427387903  ; 2 uses
-  %i.atk = and i64 %27, 4611686018427387903       ; 2 uses
-  %28 = add nuw nsw i64 %i.atk, 1                 ; 2 uses
-  %i.atl = icmp eq i64 %i.atk, 0
+  %i.atk = and i64 %indvar1442, 1
+  %i.atl = icmp eq i64 %indvar1442, -4611686018427387903
   br i1 %i.atl, label %.lr.ph.i763.epil.preheader, label %.lr.ph.i763.preheader.new
 
 .lr.ph.i763.preheader.new:                        ; preds = %.lr.ph.i763.preheader
-  %unroll_iter1449 = and i64 %28, 9223372036854775806
+  %unroll_iter1449 = and i64 %indvar1442, -2
+  %25 = add i64 %unroll_iter1449, 4611686018427387902
   br label %.lr.ph.i763
 
 .lr.ph.i763:                                      ; preds = %.lr.ph.i763, %.lr.ph.i763.preheader.new
   %.011.i764 = phi i64 [ 0, %.lr.ph.i763.preheader.new ], [ %i.auc, %.lr.ph.i763 ] ; 3 uses
   %.0810.i765 = phi ptr [ %.ptr998, %.lr.ph.i763.preheader.new ], [ %i.aud, %.lr.ph.i763 ] ; 3 uses
-  %niter1450 = phi i64 [ 0, %.lr.ph.i763.preheader.new ], [ %niter1450.next.1, %.lr.ph.i763 ]
+  %niter1450 = phi i64 [ 0, %.lr.ph.i763.preheader.new ], [ %niter1450.next.1, %.lr.ph.i763 ] ; 2 uses
   %i.atm = load i32, ptr %.0810.i765, align 4, !tbaa !808
   %i.atn = add i32 %i.atm, -1640531527
   %i.ato = zext i32 %i.atn to i64
@@ -840,19 +837,18 @@ bb.ev:                                            ; preds = %_ZNK5boost16cpp_reg
   %i.aub = add i64 %i.aua, %i.atx
   %i.auc = xor i64 %i.aub, %i.att                 ; 3 uses
   %i.aud = getelementptr inbounds nuw i8, ptr %.0810.i765, i64 8 ; 2 uses
-  %niter1450.next.1 = add i64 %niter1450, 2       ; 2 uses
-  %niter1450.ncmp.1 = icmp eq i64 %niter1450.next.1, %unroll_iter1449
+  %niter1450.next.1 = add i64 %niter1450, 2
+  %niter1450.ncmp.1 = icmp eq i64 %niter1450, %25
   br i1 %niter1450.ncmp.1, label %._crit_edge.loopexit.i767.unr-lcssa, label %.lr.ph.i763, !llvm.loop !1057
 
 ._crit_edge.loopexit.i767.unr-lcssa:              ; preds = %.lr.ph.i763
-  %29 = and i64 %27, 1
-  %lcmp.mod1446.not.not = icmp eq i64 %29, 0
-  br i1 %lcmp.mod1446.not.not, label %.lr.ph.i763.epil.preheader, label %._crit_edge.loopexit.i767
+  %lcmp.mod1446.not.not = icmp eq i64 %i.atk, 0
+  br i1 %lcmp.mod1446.not.not, label %._crit_edge.loopexit.i767, label %.lr.ph.i763.epil.preheader
 
 .lr.ph.i763.epil.preheader:                       ; preds = %._crit_edge.loopexit.i767.unr-lcssa, %.lr.ph.i763.preheader
   %.011.i764.epil.init = phi i64 [ 0, %.lr.ph.i763.preheader ], [ %i.auc, %._crit_edge.loopexit.i767.unr-lcssa ] ; 3 uses
   %.0810.i765.epil.init = phi ptr [ %.ptr998, %.lr.ph.i763.preheader ], [ %i.aud, %._crit_edge.loopexit.i767.unr-lcssa ]
-  %lcmp.mod1448 = trunc i64 %28 to i1
+  %lcmp.mod1448 = trunc i64 %indvar1442 to i1
   tail call void @llvm.assume(i1 %lcmp.mod1448)
   %i.aue = load i32, ptr %.0810.i765.epil.init, align 4, !tbaa !808
   %i.auf = add i32 %i.aue, -1640531527
@@ -954,7 +950,7 @@ bb.fa:                                            ; preds = %bb.ez
   br label %.critedge22
 
 .lr.ph1159:                                       ; preds = %bb.fa, %_ZNK5boost16cpp_regex_traitsIwE11syntax_typeEw.exit793.thread
-  %indvar1433 = phi i64 [ %indvar.next1434, %_ZNK5boost16cpp_regex_traitsIwE11syntax_typeEw.exit793.thread ], [ 0, %bb.fa ] ; 2 uses
+  %indvar1433 = phi i64 [ %indvar.next1434, %_ZNK5boost16cpp_regex_traitsIwE11syntax_typeEw.exit793.thread ], [ 0, %bb.fa ] ; 5 uses
   %storemerge354.ptr1157 = phi ptr [ %storemerge354.ptr, %_ZNK5boost16cpp_regex_traitsIwE11syntax_typeEw.exit793.thread ], [ %.ptr997, %bb.fa ] ; 2 uses
   %storemerge354.idx1156 = phi i64 [ %storemerge354.add, %_ZNK5boost16cpp_regex_traitsIwE11syntax_typeEw.exit793.thread ], [ 8, %bb.fa ] ; 2 uses
   %i.avq = load i32, ptr %storemerge354.ptr1157, align 4, !tbaa !808 ; 2 uses
@@ -1040,20 +1036,19 @@ bb.fb:                                            ; preds = %_ZNK5boost16cpp_reg
   br i1 %.not9.i806, label %.thread982, label %.lr.ph.i807.preheader
 
 .lr.ph.i807.preheader:                            ; preds = %bb.fb
-  %30 = add i64 %indvar1433, 4611686018427387903  ; 2 uses
-  %i.awk = and i64 %30, 4611686018427387903       ; 2 uses
-  %31 = add nuw nsw i64 %i.awk, 1                 ; 2 uses
-  %i.awl = icmp eq i64 %i.awk, 0
+  %i.awk = and i64 %indvar1433, 1
+  %i.awl = icmp eq i64 %indvar1433, -4611686018427387903
   br i1 %i.awl, label %.lr.ph.i807.epil.preheader, label %.lr.ph.i807.preheader.new
 
 .lr.ph.i807.preheader.new:                        ; preds = %.lr.ph.i807.preheader
-  %unroll_iter1440 = and i64 %31, 9223372036854775806
+  %unroll_iter1440 = and i64 %indvar1433, -2
+  %26 = add i64 %unroll_iter1440, 4611686018427387902
   br label %.lr.ph.i807
 
 .lr.ph.i807:                                      ; preds = %.lr.ph.i807, %.lr.ph.i807.preheader.new
   %.011.i808 = phi i64 [ 0, %.lr.ph.i807.preheader.new ], [ %i.axc, %.lr.ph.i807 ] ; 3 uses
   %.0810.i809 = phi ptr [ %.ptr997, %.lr.ph.i807.preheader.new ], [ %i.axd, %.lr.ph.i807 ] ; 3 uses
-  %niter1441 = phi i64 [ 0, %.lr.ph.i807.preheader.new ], [ %niter1441.next.1, %.lr.ph.i807 ]
+  %niter1441 = phi i64 [ 0, %.lr.ph.i807.preheader.new ], [ %niter1441.next.1, %.lr.ph.i807 ] ; 2 uses
   %i.awm = load i32, ptr %.0810.i809, align 4, !tbaa !808
   %i.awn = add i32 %i.awm, -1640531527
   %i.awo = zext i32 %i.awn to i64
@@ -1072,19 +1067,18 @@ bb.fb:                                            ; preds = %_ZNK5boost16cpp_reg
   %i.axb = add i64 %i.axa, %i.awx
   %i.axc = xor i64 %i.axb, %i.awt                 ; 3 uses
   %i.axd = getelementptr inbounds nuw i8, ptr %.0810.i809, i64 8 ; 2 uses
-  %niter1441.next.1 = add i64 %niter1441, 2       ; 2 uses
-  %niter1441.ncmp.1 = icmp eq i64 %niter1441.next.1, %unroll_iter1440
+  %niter1441.next.1 = add i64 %niter1441, 2
+  %niter1441.ncmp.1 = icmp eq i64 %niter1441, %26
   br i1 %niter1441.ncmp.1, label %._crit_edge.loopexit.i811.unr-lcssa, label %.lr.ph.i807, !llvm.loop !1057
 
 ._crit_edge.loopexit.i811.unr-lcssa:              ; preds = %.lr.ph.i807
-  %32 = and i64 %30, 1
-  %lcmp.mod1437.not.not = icmp eq i64 %32, 0
-  br i1 %lcmp.mod1437.not.not, label %.lr.ph.i807.epil.preheader, label %._crit_edge.loopexit.i811
+  %lcmp.mod1437.not.not = icmp eq i64 %i.awk, 0
+  br i1 %lcmp.mod1437.not.not, label %._crit_edge.loopexit.i811, label %.lr.ph.i807.epil.preheader
 
 .lr.ph.i807.epil.preheader:                       ; preds = %._crit_edge.loopexit.i811.unr-lcssa, %.lr.ph.i807.preheader
   %.011.i808.epil.init = phi i64 [ 0, %.lr.ph.i807.preheader ], [ %i.axc, %._crit_edge.loopexit.i811.unr-lcssa ] ; 3 uses
   %.0810.i809.epil.init = phi ptr [ %.ptr997, %.lr.ph.i807.preheader ], [ %i.axd, %._crit_edge.loopexit.i811.unr-lcssa ]
-  %lcmp.mod1439 = trunc i64 %31 to i1
+  %lcmp.mod1439 = trunc i64 %indvar1433 to i1
   tail call void @llvm.assume(i1 %lcmp.mod1439)
   %i.axe = load i32, ptr %.0810.i809.epil.init, align 4, !tbaa !808
   %i.axf = add i32 %i.axe, -1640531527

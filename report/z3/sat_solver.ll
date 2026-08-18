@@ -204,11 +204,12 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph332.preheader:                              ; preds = %.preheader
   %i.as = add nsw i64 %i.y, -16
-  %4 = shl i64 %indvar, 4
-  %5 = sub i64 %i.as, %4                          ; 2 uses
-  %6 = lshr exact i64 %5, 4
-  %i.at = add nuw nsw i64 %6, 1
-  %xtraiter457 = and i64 %i.at, 3                 ; 2 uses
+  %4 = lshr exact i64 %i.as, 4                    ; 2 uses
+  %5 = add nuw nsw i64 %4, 1
+  %6 = mul i64 %indvar, 1152921504606846975       ; 2 uses
+  %7 = add i64 %6, %5
+  %i.at = add i64 %4, %6
+  %xtraiter457 = and i64 %7, 3                    ; 2 uses
   %lcmp.mod458.not = icmp eq i64 %xtraiter457, 0
   br i1 %lcmp.mod458.not, label %.lr.ph332.prol.loopexit, label %.lr.ph332.prol
 
@@ -227,7 +228,7 @@ bb.c:                                             ; preds = %bb.b
   %.lcssa.unr = phi ptr [ poison, %.lr.ph332.preheader ], [ %i.av, %.lr.ph332.prol ]
   %.1151331.unr = phi ptr [ %.0150308, %.lr.ph332.preheader ], [ %i.au, %.lr.ph332.prol ]
   %.1156330.unr = phi ptr [ %.0155307, %.lr.ph332.preheader ], [ %i.av, %.lr.ph332.prol ]
-  %i.aw = icmp ult i64 %5, 48
+  %i.aw = icmp ult i64 %i.at, 3
   br i1 %i.aw, label %._crit_edge333, label %.lr.ph332
 
 .lr.ph332:                                        ; preds = %.lr.ph332.prol.loopexit, %.lr.ph332
@@ -522,11 +523,12 @@ bb.aa:                                            ; preds = %bb.v
 
 .lr.ph326.preheader:                              ; preds = %bb.aa
   %i.fh = add nsw i64 %i.y, -16
-  %7 = shl i64 %indvar, 4
-  %8 = sub i64 %i.fh, %7                          ; 2 uses
-  %9 = lshr exact i64 %8, 4
-  %i.fi = add nuw nsw i64 %9, 1
-  %xtraiter = and i64 %i.fi, 3                    ; 2 uses
+  %8 = lshr exact i64 %i.fh, 4                    ; 2 uses
+  %9 = add nuw nsw i64 %8, 1
+  %10 = mul i64 %indvar, 1152921504606846975      ; 2 uses
+  %11 = add i64 %10, %9
+  %i.fi = add i64 %8, %10
+  %xtraiter = and i64 %11, 3                      ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph326.prol.loopexit, label %.lr.ph326.prol
 
@@ -545,7 +547,7 @@ bb.aa:                                            ; preds = %bb.v
   %.lcssa433.unr = phi ptr [ poison, %.lr.ph326.preheader ], [ %i.fk, %.lr.ph326.prol ]
   %.2152324.unr = phi ptr [ %.0150308, %.lr.ph326.preheader ], [ %i.fj, %.lr.ph326.prol ]
   %.5160323.unr = phi ptr [ %.0155307, %.lr.ph326.preheader ], [ %i.fk, %.lr.ph326.prol ]
-  %i.fl = icmp ult i64 %8, 48
+  %i.fl = icmp ult i64 %i.fi, 3
   br i1 %i.fl, label %._crit_edge327, label %.lr.ph326
 
 .lr.ph326:                                        ; preds = %.lr.ph326.prol.loopexit, %.lr.ph326

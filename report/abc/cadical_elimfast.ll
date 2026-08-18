@@ -146,12 +146,12 @@ select.unfold:                                    ; preds = %bb.c, %.lr.ph
 
 .lr.ph58.preheader:                               ; preds = %.preheader
   %i.ab = add i64 %i.o, -16
-  %2 = shl i64 %indvar, 3
-  %3 = add i64 %2, %.cast
-  %4 = sub i64 %i.ab, %3                          ; 2 uses
-  %5 = lshr i64 %4, 3
-  %i.ac = add nuw nsw i64 %5, 1                   ; 2 uses
-  %min.iters.check = icmp ult i64 %4, 184
+  %2 = sub i64 %i.ab, %.cast
+  %3 = lshr i64 %2, 3
+  %4 = add nuw nsw i64 %3, 1
+  %5 = mul i64 %indvar, 2305843009213693951
+  %i.ac = add i64 %5, %4                          ; 3 uses
+  %min.iters.check = icmp ult i64 %i.ac, 24
   br i1 %min.iters.check, label %.lr.ph58.preheader86, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph58.preheader
@@ -163,7 +163,7 @@ vector.memcheck:                                  ; preds = %.lr.ph58.preheader
   br i1 %diff.check, label %.lr.ph58.preheader86, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %i.ac, 4611686018427387900     ; 3 uses
+  %n.vec = and i64 %i.ac, -4                      ; 3 uses
   %i.ae = shl i64 %n.vec, 3                       ; 2 uses
   %i.af = getelementptr i8, ptr %.sroa.028.2, i64 %i.ae ; 2 uses
   %i.ag = getelementptr i8, ptr %i.q, i64 %i.ae

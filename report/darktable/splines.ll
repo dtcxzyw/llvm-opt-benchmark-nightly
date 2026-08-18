@@ -203,14 +203,14 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN8interpol10base
 
 bb.h:                                             ; preds = %bb.a
   %i.v = icmp eq ptr %0, %1
-  %.sroa.0.016.i23 = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
+  %.sroa.0.016.i23 = getelementptr i8, ptr %0, i64 12 ; 3 uses
   %.not17.i24 = icmp eq ptr %.sroa.0.016.i23, %1
-  %or.cond = select i1 %i.v, i1 true, i1 %.not17.i24
+  %or.cond = or i1 %i.v, %.not17.i24
   br i1 %or.cond, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPN8interpol10base_pointIfEESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS2_11spline_baseIfEC1IP16CurveAnchorPointEET_SH_EUlRKS4_SJ_E_EEEvSH_SH_T0_.exit, label %.lr.ph.i25
 
 .lr.ph.i25:                                       ; preds = %bb.h, %bb.n
   %.sroa.0.019.i26 = phi ptr [ %.sroa.0.0.i32, %bb.n ], [ %.sroa.0.016.i23, %bb.h ] ; 7 uses
-  %.pn18.i27 = phi ptr [ %.sroa.0.019.i26, %bb.n ], [ %0, %bb.h ] ; 5 uses
+  %.pn18.i27 = phi ptr [ %.sroa.0.019.i26, %bb.n ], [ %0, %bb.h ] ; 4 uses
   %i.w = load float, ptr %.sroa.0.019.i26, align 4, !tbaa !31 ; 4 uses
   %i.x = load float, ptr %0, align 4, !tbaa !31
   %i.y = fcmp reassoc nsz arcp contract afn olt float %i.w, %i.x
@@ -219,16 +219,12 @@ bb.h:                                             ; preds = %bb.a
 bb.i:                                             ; preds = %.lr.ph.i25
   %.sroa.058.0.copyload = load <3 x float>, ptr %.sroa.0.019.i26, align 4
   %i.z = ptrtoint ptr %.sroa.0.019.i26 to i64
-  %i.aa = sub i64 %i.z, %i.b                      ; 4 uses
+  %i.aa = sub i64 %i.z, %i.b                      ; 3 uses
   %i.ab = icmp sgt i64 %i.aa, 12
   br i1 %i.ab, label %bb.j, label %bb.k, !prof !162
 
 bb.j:                                             ; preds = %bb.i
-  %2 = getelementptr inbounds nuw i8, ptr %.pn18.i27, i64 24
-  %.neg24.i39 = udiv exact i64 %i.aa, 12
-  %.neg24.neg.i40 = sub nsw i64 0, %.neg24.i39
-  %3 = getelementptr inbounds [12 x i8], ptr %2, i64 %.neg24.neg.i40
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %3, ptr noundef nonnull align 4 dereferenceable(1) %0, i64 %i.aa, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.sroa.0.016.i23, ptr noundef nonnull align 4 dereferenceable(1) %0, i64 %i.aa, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN8interpol10base_pointIfEESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.i38
 
 bb.k:                                             ; preds = %bb.i
@@ -631,14 +627,14 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN8interpol10base
 
 bb.h:                                             ; preds = %bb.a
   %i.v = icmp eq ptr %0, %1
-  %.sroa.0.016.i23 = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
+  %.sroa.0.016.i23 = getelementptr i8, ptr %0, i64 12 ; 3 uses
   %.not17.i24 = icmp eq ptr %.sroa.0.016.i23, %1
-  %or.cond = select i1 %i.v, i1 true, i1 %.not17.i24
+  %or.cond = or i1 %i.v, %.not17.i24
   br i1 %or.cond, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPN8interpol10base_pointIfEESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS2_11spline_baseIfEC1IP16CurveAnchorPointEET_SH_RKNS2_6limitsIfEESL_bEUlRKS4_SN_E_EEEvSH_SH_T0_.exit, label %.lr.ph.i25
 
 .lr.ph.i25:                                       ; preds = %bb.h, %bb.n
   %.sroa.0.019.i26 = phi ptr [ %.sroa.0.0.i32, %bb.n ], [ %.sroa.0.016.i23, %bb.h ] ; 7 uses
-  %.pn18.i27 = phi ptr [ %.sroa.0.019.i26, %bb.n ], [ %0, %bb.h ] ; 5 uses
+  %.pn18.i27 = phi ptr [ %.sroa.0.019.i26, %bb.n ], [ %0, %bb.h ] ; 4 uses
   %i.w = load float, ptr %.sroa.0.019.i26, align 4, !tbaa !31 ; 4 uses
   %i.x = load float, ptr %0, align 4, !tbaa !31
   %i.y = fcmp reassoc nsz arcp contract afn olt float %i.w, %i.x
@@ -647,16 +643,12 @@ bb.h:                                             ; preds = %bb.a
 bb.i:                                             ; preds = %.lr.ph.i25
   %.sroa.058.0.copyload = load <3 x float>, ptr %.sroa.0.019.i26, align 4
   %i.z = ptrtoint ptr %.sroa.0.019.i26 to i64
-  %i.aa = sub i64 %i.z, %i.b                      ; 4 uses
+  %i.aa = sub i64 %i.z, %i.b                      ; 3 uses
   %i.ab = icmp sgt i64 %i.aa, 12
   br i1 %i.ab, label %bb.j, label %bb.k, !prof !162
 
 bb.j:                                             ; preds = %bb.i
-  %2 = getelementptr inbounds nuw i8, ptr %.pn18.i27, i64 24
-  %.neg24.i39 = udiv exact i64 %i.aa, 12
-  %.neg24.neg.i40 = sub nsw i64 0, %.neg24.i39
-  %3 = getelementptr inbounds [12 x i8], ptr %2, i64 %.neg24.neg.i40
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %3, ptr noundef nonnull align 4 dereferenceable(1) %0, i64 %i.aa, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.sroa.0.016.i23, ptr noundef nonnull align 4 dereferenceable(1) %0, i64 %i.aa, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN8interpol10base_pointIfEESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.i38
 
 bb.k:                                             ; preds = %bb.i
@@ -1059,14 +1051,14 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN8interpol10base
 
 bb.h:                                             ; preds = %bb.a
   %i.v = icmp eq ptr %0, %1
-  %.sroa.0.016.i23 = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
+  %.sroa.0.016.i23 = getelementptr i8, ptr %0, i64 12 ; 3 uses
   %.not17.i24 = icmp eq ptr %.sroa.0.016.i23, %1
-  %or.cond = select i1 %i.v, i1 true, i1 %.not17.i24
+  %or.cond = or i1 %i.v, %.not17.i24
   br i1 %or.cond, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPN8interpol10base_pointIfEESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS2_11spline_baseIfEC1INS1_IPNS2_5pointIfEES6_ISG_SaISG_EEEEEET_SL_RKNS2_6limitsIfEESP_bEUlRKS4_SR_E_EEEvSL_SL_T0_.exit, label %.lr.ph.i25
 
 .lr.ph.i25:                                       ; preds = %bb.h, %bb.n
   %.sroa.0.019.i26 = phi ptr [ %.sroa.0.0.i32, %bb.n ], [ %.sroa.0.016.i23, %bb.h ] ; 7 uses
-  %.pn18.i27 = phi ptr [ %.sroa.0.019.i26, %bb.n ], [ %0, %bb.h ] ; 5 uses
+  %.pn18.i27 = phi ptr [ %.sroa.0.019.i26, %bb.n ], [ %0, %bb.h ] ; 4 uses
   %i.w = load float, ptr %.sroa.0.019.i26, align 4, !tbaa !31 ; 4 uses
   %i.x = load float, ptr %0, align 4, !tbaa !31
   %i.y = fcmp reassoc nsz arcp contract afn olt float %i.w, %i.x
@@ -1075,16 +1067,12 @@ bb.h:                                             ; preds = %bb.a
 bb.i:                                             ; preds = %.lr.ph.i25
   %.sroa.058.0.copyload = load <3 x float>, ptr %.sroa.0.019.i26, align 4
   %i.z = ptrtoint ptr %.sroa.0.019.i26 to i64
-  %i.aa = sub i64 %i.z, %i.b                      ; 4 uses
+  %i.aa = sub i64 %i.z, %i.b                      ; 3 uses
   %i.ab = icmp sgt i64 %i.aa, 12
   br i1 %i.ab, label %bb.j, label %bb.k, !prof !162
 
 bb.j:                                             ; preds = %bb.i
-  %2 = getelementptr inbounds nuw i8, ptr %.pn18.i27, i64 24
-  %.neg24.i39 = udiv exact i64 %i.aa, 12
-  %.neg24.neg.i40 = sub nsw i64 0, %.neg24.i39
-  %3 = getelementptr inbounds [12 x i8], ptr %2, i64 %.neg24.neg.i40
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %3, ptr noundef nonnull align 4 dereferenceable(1) %0, i64 %i.aa, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.sroa.0.016.i23, ptr noundef nonnull align 4 dereferenceable(1) %0, i64 %i.aa, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN8interpol10base_pointIfEESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.i38
 
 bb.k:                                             ; preds = %bb.i

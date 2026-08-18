@@ -58,7 +58,9 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.s = shl i64 %indvar, 3
   %i.t = sub i64 %1, %i.s
   %smin = tail call i64 @llvm.smin.i64(i64 %i.t, i64 8)
-  %i.u = add i64 %smin, -2
+  %10 = add i64 %smin, -2
+  %11 = lshr i64 %10, 1                           ; 2 uses
+  %i.u = add nsw i64 %11, -1
   %i.v = sub nsw i64 %1, %.091101                 ; 8 uses
   %i.w = tail call i64 @llvm.smin.i64(i64 %i.v, i64 8) ; 21 uses
   %i.x = mul nsw i64 %.091101, %4                 ; 2 uses
@@ -306,8 +308,8 @@ bb.i:                                             ; preds = %._crit_edge.us.i.2
   %.096131.i = phi ptr [ %i.dm, %bb.m ], [ %9, %.lr.ph133.i ] ; 9 uses
   %.0101129.i = phi i64 [ %i.fn, %bb.m ], [ 0, %.lr.ph133.i ] ; 2 uses
   %.0103128.i = phi ptr [ %i.dl, %bb.m ], [ %i.z, %.lr.ph133.i ] ; 9 uses
-  %10 = shl i64 %indvar120, 1
-  %11 = sub i64 %i.u, %10                         ; 2 uses
+  %12 = mul i64 %indvar120, 9223372036854775807   ; 2 uses
+  %13 = add i64 %11, %12
   %i.dk = getelementptr i8, ptr %.0103128.i, i64 %.idx.i
   %i.dl = getelementptr i8, ptr %i.dk, i64 16
   %i.dm = getelementptr [8 x i8], ptr %.096131.i, i64 %i.ab
@@ -338,7 +340,7 @@ bb.j:                                             ; preds = %.lr.ph133.split.i
   br i1 %.not135.i, label %.thread.i, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %bb.j
-  %i.dz = and i64 %11, 2
+  %i.dz = and i64 %13, 1
   %lcmp.mod.not = icmp eq i64 %i.dz, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
 
@@ -387,8 +389,8 @@ bb.j:                                             ; preds = %.lr.ph133.split.i
   %.095.i.lcssa.unr = phi ptr [ poison, %.lr.ph.i.preheader ], [ %.095.i.prol, %.lr.ph.i.prol ]
   %.098.i.lcssa.unr = phi ptr [ poison, %.lr.ph.i.preheader ], [ %.098.i.prol, %.lr.ph.i.prol ]
   %.099.i.lcssa.unr = phi ptr [ poison, %.lr.ph.i.preheader ], [ %.099.i.prol, %.lr.ph.i.prol ]
-  %.mask = and i64 %11, -2
-  %i.el = icmp eq i64 %.mask, 2
+  %14 = sub i64 0, %12
+  %i.el = icmp eq i64 %i.u, %14
   br i1 %i.el, label %.thread.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i
