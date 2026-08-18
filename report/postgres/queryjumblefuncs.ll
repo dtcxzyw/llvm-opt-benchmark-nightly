@@ -160,7 +160,7 @@ bb.e:                                             ; preds = %bb.d, %.preheader.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.t, ptr noundef nonnull align 1 dereferenceable(1) %.0.i.i, i64 %i.s, i1 false)
   %i.u = add nuw nsw i64 %i.s, %.1.i.i            ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 %i.s
-  %i.w = sub i64 %.030.i.i, %i.s                  ; 2 uses
+  %i.w = sub nuw nsw i64 %.030.i.i, %i.s          ; 2 uses
   %.not34.i.i = icmp eq i64 %i.w, 0
   br i1 %.not34.i.i, label %AppendJumbleInternal.exit.i, label %.preheader.i, !llvm.loop !8
 
@@ -563,7 +563,7 @@ bb.e:                                             ; preds = %bb.d, %.preheader12
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.n, ptr noundef nonnull align 1 dereferenceable(1) %.0.i, i64 %i.m, i1 false)
   %i.o = add nuw nsw i64 %i.m, %.1.i              ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %.0.i, i64 %i.m
-  %i.q = sub i64 %.030.i, %i.m                    ; 2 uses
+  %i.q = sub nuw nsw i64 %.030.i, %i.m            ; 2 uses
   %.not34.i = icmp eq i64 %i.q, 0
   br i1 %.not34.i, label %AppendJumbleInternal.exit, label %.preheader12, !llvm.loop !8
 
@@ -609,7 +609,7 @@ bb.i:                                             ; preds = %bb.h, %.preheader
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ad, ptr noundef nonnull align 1 dereferenceable(1) %.0.i8, i64 %i.ac, i1 false)
   %i.ae = add nuw nsw i64 %i.ac, %.1.i9           ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %.0.i8, i64 %i.ac
-  %i.ag = sub i64 %.030.i6, %i.ac                 ; 2 uses
+  %i.ag = sub nuw nsw i64 %.030.i6, %i.ac         ; 2 uses
   %.not34.i10 = icmp eq i64 %i.ag, 0
   br i1 %.not34.i10, label %AppendJumbleInternal.exit11, label %.preheader, !llvm.loop !8
 
@@ -1012,7 +1012,7 @@ bb.e:                                             ; preds = %bb.d, %.preheader12
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.n, ptr noundef nonnull align 1 dereferenceable(1) %.0.i, i64 %i.m, i1 false)
   %i.o = add nuw nsw i64 %i.m, %.1.i              ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %.0.i, i64 %i.m
-  %i.q = sub i64 %.030.i, %i.m                    ; 2 uses
+  %i.q = sub nuw nsw i64 %.030.i, %i.m            ; 2 uses
   %.not34.i = icmp eq i64 %i.q, 0
   br i1 %.not34.i, label %AppendJumbleInternal.exit, label %.preheader12, !llvm.loop !8
 
@@ -1057,7 +1057,7 @@ bb.i:                                             ; preds = %bb.h, %.preheader
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ac, ptr noundef nonnull align 1 dereferenceable(1) %.0.i8, i64 %i.ab, i1 false)
   %i.ad = add nuw nsw i64 %i.ab, %.1.i9           ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %.0.i8, i64 %i.ab
-  %i.af = sub i64 %.030.i6, %i.ab                 ; 2 uses
+  %i.af = sub nuw i64 %.030.i6, %i.ab             ; 2 uses
   %.not34.i10 = icmp eq i64 %i.af, 0
   br i1 %.not34.i10, label %AppendJumbleInternal.exit11, label %.preheader, !llvm.loop !8
 
@@ -1115,7 +1115,7 @@ bb.e:                                             ; preds = %bb.d, %.preheader12
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.n, ptr noundef nonnull align 1 dereferenceable(1) %.0.i, i64 %i.m, i1 false)
   %i.o = add nuw nsw i64 %i.m, %.1.i              ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %.0.i, i64 %i.m
-  %i.q = sub i64 %.030.i, %i.m                    ; 2 uses
+  %i.q = sub nuw nsw i64 %.030.i, %i.m            ; 2 uses
   %.not34.i = icmp eq i64 %i.q, 0
   br i1 %.not34.i, label %AppendJumbleInternal.exit, label %.preheader12, !llvm.loop !8
 
@@ -1202,7 +1202,7 @@ bb.e:                                             ; preds = %bb.d, %.preheader12
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.n, ptr noundef nonnull align 1 dereferenceable(1) %.0.i, i64 %i.m, i1 false)
   %i.o = add nuw nsw i64 %i.m, %.1.i              ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %.0.i, i64 %i.m
-  %i.q = sub i64 %.030.i, %i.m                    ; 2 uses
+  %i.q = sub nuw nsw i64 %.030.i, %i.m            ; 2 uses
   %.not34.i = icmp eq i64 %i.q, 0
   br i1 %.not34.i, label %AppendJumbleInternal.exit, label %.preheader12, !llvm.loop !8
 
@@ -1213,47 +1213,60 @@ AppendJumbleInternal.exit:                        ; preds = %bb.e, %bb.c
   br label %bb.f
 
 bb.f:                                             ; preds = %._crit_edge, %AppendJumbleInternal.exit
-  %i.r = phi i64 [ %.pre, %._crit_edge ], [ %storemerge.i, %AppendJumbleInternal.exit ] ; 3 uses
-  %i.s = load ptr, ptr %0, align 8                ; 4 uses
+  %i.r = phi i64 [ %.pre, %._crit_edge ], [ %storemerge.i, %AppendJumbleInternal.exit ] ; 4 uses
+  %i.s = load ptr, ptr %0, align 8                ; 7 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.u = add i64 %i.r, -1023
   %.not.i4 = icmp ult i64 %i.u, 2
-  br i1 %.not.i4, label %.preheader, label %bb.g, !prof !7
+  br i1 %.not.i4, label %.preheader.peel, label %.preheader, !prof !7
 
-bb.g:                                             ; preds = %bb.f
-  %i.v = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.r
-  %2 = load i16, ptr %1, align 1
-  store i16 %2, ptr %i.v, align 1
-  %3 = load i64, ptr %i.t, align 8
-  %4 = add i64 %3, 2
+.preheader.peel:                                  ; preds = %bb.f
+  %2 = icmp ugt i64 %i.r, 1023
+  br i1 %2, label %3, label %bb.g, !prof !7
+
+3:                                                ; preds = %.preheader.peel
+  %4 = tail call i64 @hash_bytes_extended(ptr noundef %i.s, i32 noundef 1024, i64 noundef 0) #11
+  store i64 %4, ptr %i.s, align 1
+  br label %bb.g
+
+bb.g:                                             ; preds = %3, %.preheader.peel
+  %.1.i9.peel = phi i64 [ 8, %3 ], [ %i.r, %.preheader.peel ] ; 4 uses
+  %5 = sub nuw nsw i64 1024, %.1.i9.peel
+  %6 = tail call i64 @llvm.umin.i64(i64 %5, i64 2) ; 3 uses
+  %i.v = getelementptr inbounds nuw i8, ptr %i.s, i64 %.1.i9.peel
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.v, ptr noundef nonnull align 1 dereferenceable(1) %1, i64 %6, i1 false)
+  %7 = add nuw nsw i64 %6, %.1.i9.peel            ; 3 uses
+  %8 = getelementptr inbounds nuw i8, ptr %1, i64 %6
+  %.not34.i10.not.peel = icmp eq i64 %.1.i9.peel, 1023
+  br i1 %.not34.i10.not.peel, label %.preheader.preheader.peel.newph, label %AppendJumbleInternal.exit11
+
+.preheader.preheader.peel.newph:                  ; preds = %bb.g
+  %9 = icmp samesign ugt i64 %7, 1023
+  br i1 %9, label %bb.h, label %bb.i, !prof !7
+
+.preheader:                                       ; preds = %bb.f
+  %10 = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.r
+  %11 = load i16, ptr %1, align 1
+  store i16 %11, ptr %10, align 1
+  %12 = load i64, ptr %i.t, align 8
+  %13 = add i64 %12, 2
   br label %AppendJumbleInternal.exit11
 
-.preheader:                                       ; preds = %bb.f, %bb.i
-  %.030.i6 = phi i64 [ %10, %bb.i ], [ 2, %bb.f ] ; 2 uses
-  %.029.i7 = phi i64 [ %8, %bb.i ], [ %i.r, %bb.f ] ; 2 uses
-  %.0.i8 = phi ptr [ %9, %bb.i ], [ %1, %bb.f ]   ; 2 uses
-  %5 = icmp ugt i64 %.029.i7, 1023
-  br i1 %5, label %bb.h, label %bb.i, !prof !7
-
-bb.h:                                             ; preds = %.preheader
+bb.h:                                             ; preds = %.preheader.preheader.peel.newph
   %i.w = tail call i64 @hash_bytes_extended(ptr noundef %i.s, i32 noundef 1024, i64 noundef 0) #11
   store i64 %i.w, ptr %i.s, align 1
   br label %bb.i
 
-bb.i:                                             ; preds = %bb.h, %.preheader
-  %.1.i9 = phi i64 [ 8, %bb.h ], [ %.029.i7, %.preheader ] ; 3 uses
-  %6 = sub nuw nsw i64 1024, %.1.i9
-  %7 = tail call i64 @llvm.umin.i64(i64 %.030.i6, i64 %6) ; 4 uses
+bb.i:                                             ; preds = %bb.h, %.preheader.preheader.peel.newph
+  %.1.i9 = phi i64 [ 8, %bb.h ], [ %7, %.preheader.preheader.peel.newph ] ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.s, i64 %.1.i9
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.x, ptr noundef nonnull align 1 dereferenceable(1) %.0.i8, i64 %7, i1 false)
-  %8 = add nuw nsw i64 %7, %.1.i9                 ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %.0.i8, i64 %7
-  %10 = sub i64 %.030.i6, %7                      ; 2 uses
-  %.not34.i10 = icmp eq i64 %10, 0
-  br i1 %.not34.i10, label %AppendJumbleInternal.exit11, label %.preheader, !llvm.loop !8
+  %14 = load i8, ptr %8, align 1
+  store i8 %14, ptr %i.x, align 1
+  %15 = add nuw nsw i64 %.1.i9, 1
+  br label %AppendJumbleInternal.exit11
 
-AppendJumbleInternal.exit11:                      ; preds = %bb.i, %bb.g
-  %storemerge.i5 = phi i64 [ %4, %bb.g ], [ %8, %bb.i ]
+AppendJumbleInternal.exit11:                      ; preds = %bb.g, %bb.i, %.preheader
+  %storemerge.i5 = phi i64 [ %13, %.preheader ], [ %7, %bb.g ], [ %15, %bb.i ]
   store i64 %storemerge.i5, ptr %i.t, align 8
   ret void
 }
@@ -1545,7 +1558,7 @@ bb.e:                                             ; preds = %bb.d, %.preheader12
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.n, ptr noundef nonnull align 1 dereferenceable(1) %.0.i, i64 %i.m, i1 false)
   %i.o = add nuw nsw i64 %i.m, %.1.i              ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %.0.i, i64 %i.m
-  %i.q = sub i64 %.030.i, %i.m                    ; 2 uses
+  %i.q = sub nuw nsw i64 %.030.i, %i.m            ; 2 uses
   %.not34.i = icmp eq i64 %i.q, 0
   br i1 %.not34.i, label %AppendJumbleInternal.exit, label %.preheader12, !llvm.loop !8
 
@@ -1591,7 +1604,7 @@ bb.i:                                             ; preds = %bb.h, %.preheader
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ad, ptr noundef nonnull align 1 dereferenceable(1) %.0.i8, i64 %i.ac, i1 false)
   %i.ae = add nuw nsw i64 %i.ac, %.1.i9           ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %.0.i8, i64 %i.ac
-  %i.ag = sub i64 %.030.i6, %i.ac                 ; 2 uses
+  %i.ag = sub nuw nsw i64 %.030.i6, %i.ac         ; 2 uses
   %.not34.i10 = icmp eq i64 %i.ag, 0
   br i1 %.not34.i10, label %AppendJumbleInternal.exit11, label %.preheader, !llvm.loop !8
 

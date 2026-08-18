@@ -204,15 +204,15 @@ bb.bg:                                            ; preds = %bb.aw
   br i1 %.not.not21.i.i, label %.preheader.us.preheader.i.i, label %_ZN3gmxL21countTrailingZeroRowsERKNS_13MultiDimArrayISt6vectorIdSaIdEENS_7extentsIJLln1ELln1EEEENS_12layout_rightEEEii.exit.thread.i
 
 .preheader.us.preheader.i.i:                      ; preds = %bb.bg
-  %i.ei = and i64 %i.ch, 2147483647
+  %storemerge23.i.i = add i64 %i.ch, 4294967295
+  %i.ei = and i64 %storemerge23.i.i, 4294967295
   %wide.trip.count.i.i = and i64 %i.ce, 2147483647
   br label %.preheader.us.i.i
 
 .preheader.us.i.i:                                ; preds = %._crit_edge.us.i.i, %.preheader.us.preheader.i.i
-  %indvars.iv32.in.i.i = phi i64 [ %i.ei, %.preheader.us.preheader.i.i ], [ %indvars.iv32.i.i, %._crit_edge.us.i.i ]
+  %indvars.iv32.in.i.i = phi i64 [ %i.ei, %.preheader.us.preheader.i.i ], [ %indvars.iv.next33.i.i, %._crit_edge.us.i.i ] ; 2 uses
   %.01224.us.i.i = phi i32 [ 0, %.preheader.us.preheader.i.i ], [ %i.em, %._crit_edge.us.i.i ] ; 2 uses
-  %indvars.iv32.i.i = add nsw i64 %indvars.iv32.in.i.i, -1 ; 2 uses
-  %invariant.gep.us.i.i = getelementptr [8 x i8], ptr %i.eh, i64 %indvars.iv32.i.i
+  %invariant.gep.us.i.i = getelementptr [8 x i8], ptr %i.eh, i64 %indvars.iv32.in.i.i
   br label %bb.bi
 
 bb.bh:                                            ; preds = %bb.bi
@@ -230,6 +230,7 @@ bb.bi:                                            ; preds = %bb.bh, %.preheader.
 
 ._crit_edge.us.i.i:                               ; preds = %bb.bh
   %i.em = add nuw nsw i32 %.01224.us.i.i, 1       ; 2 uses
+  %indvars.iv.next33.i.i = add nsw i64 %indvars.iv32.in.i.i, -1
   %exitcond35.not.i.i = icmp eq i32 %i.em, %i.ci
   br i1 %exitcond35.not.i.i, label %_ZN3gmxL21countTrailingZeroRowsERKNS_13MultiDimArrayISt6vectorIdSaIdEENS_7extentsIJLln1ELln1EEEENS_12layout_rightEEEii.exit.i, label %.preheader.us.i.i, !llvm.loop !446
 

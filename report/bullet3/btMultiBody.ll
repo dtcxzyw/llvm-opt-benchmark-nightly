@@ -204,7 +204,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 638 ; 2 uses
   store i8 0, ptr %i.d, align 2, !tbaa !139
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 180
-  %i.f = load i32, ptr %i.e, align 4, !tbaa !39   ; 8 uses
+  %i.f = load i32, ptr %i.e, align 4, !tbaa !39   ; 9 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 604
   %i.h = load <2 x float>, ptr %i.g, align 4, !tbaa !9 ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 288 ; 5 uses
@@ -546,7 +546,7 @@ _ZN20btAlignedObjectArrayI11btMatrix3x3E6resizeEiRKS0_.exit: ; preds = %bb.j, %_
   %i.em = getelementptr inbounds [16 x i8], ptr %i.ek, i64 %i.el ; 12 uses
   %i.en = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.eo = load ptr, ptr %i.en, align 8, !tbaa !50 ; 7 uses
-  %i.ep = sext i32 %i.f to i64                    ; 2 uses
+  %i.ep = sext i32 %i.f to i64
   %i.eq = getelementptr [48 x i8], ptr %i.eo, i64 %i.ep ; 25 uses
   %i.er = getelementptr i8, ptr %i.eq, i64 48     ; 8 uses
   %i.es = getelementptr inbounds nuw i8, ptr %0, i64 352
@@ -949,6 +949,7 @@ bb.u:                                             ; preds = %bb.t, %_ZNK11btMult
   %i.qd = getelementptr inbounds nuw i8, ptr %10, i64 56
   %i.qe = getelementptr inbounds nuw i8, ptr %9, i64 48
   %.sroa.4.0..sroa_idx.i660 = getelementptr inbounds nuw i8, ptr %9, i64 56
+  %12 = zext nneg i32 %i.f to i64
   br label %.lr.ph.i624
 
 bb.v:                                             ; preds = %.lr.ph1430, %bb.af
@@ -1351,7 +1352,7 @@ _ZNK11btMultiBody23isBaseStaticOrKinematicEv.exit623: ; preds = %bb.ag
   br i1 %.not1402, label %_ZNK11btMultiBody23isBaseStaticOrKinematicEv.exit623.thread1399, label %_ZNK11btMultiBody23isBaseStaticOrKinematicEv.exit623.thread
 
 .lr.ph.i624:                                      ; preds = %.lr.ph.i624.lr.ph, %bb.av
-  %indvars.iv1628 = phi i64 [ %i.ep, %.lr.ph.i624.lr.ph ], [ %indvars.iv.next1629, %bb.av ] ; 7 uses
+  %indvars.iv1628 = phi i64 [ %12, %.lr.ph.i624.lr.ph ], [ %indvars.iv.next1629, %bb.av ] ; 7 uses
   %indvars.iv.next1629 = add nsw i64 %indvars.iv1628, -1 ; 9 uses
   %i.alf = load ptr, ptr %i.pd, align 8, !tbaa !38 ; 3 uses
   %i.alg = trunc nuw nsw i64 %indvars.iv.next1629 to i32
@@ -1392,7 +1393,7 @@ _ZNK11btMultiBody30isLinkAndAllAncestorsKinematicEi.exit633: ; preds = %._crit_e
   br i1 %.not1405, label %_ZNK11btMultiBody30isLinkAndAllAncestorsKinematicEi.exit633.thread, label %bb.av
 
 _ZNK11btMultiBody30isLinkAndAllAncestorsKinematicEi.exit633.thread: ; preds = %bb.ah, %_ZNK11btMultiBody15isLinkKinematicEi.exit.i627, %._crit_edge.i630, %_ZNK11btMultiBody30isLinkAndAllAncestorsKinematicEi.exit633
-  %i.alu = getelementptr inbounds [688 x i8], ptr %i.alf, i64 %indvars.iv.next1629 ; 5 uses
+  %i.alu = getelementptr inbounds nuw [688 x i8], ptr %i.alf, i64 %indvars.iv.next1629 ; 5 uses
   %i.alv = getelementptr inbounds nuw i8, ptr %i.alu, i64 20
   %i.alw = load i32, ptr %i.alv, align 4, !tbaa !84
   %i.alx = getelementptr inbounds nuw [48 x i8], ptr %i.et, i64 %indvars.iv1628 ; 3 uses
@@ -1472,7 +1473,7 @@ bb.aj:                                            ; preds = %.lr.ph1433, %bb.al
   %i.ans = phi i32 [ %.pre1686, %.lr.ph1433 ], [ %i.atk, %bb.al ]
   %indvars.iv1578 = phi i64 [ 0, %.lr.ph1433 ], [ %indvars.iv.next1579, %bb.al ] ; 5 uses
   %i.ant = phi ptr [ %i.alf, %.lr.ph1433 ], [ %.pre1660, %bb.al ]
-  %i.anu = getelementptr inbounds [688 x i8], ptr %i.ant, i64 %indvars.iv.next1629
+  %i.anu = getelementptr inbounds nuw [688 x i8], ptr %i.ant, i64 %indvars.iv.next1629
   %i.anv = trunc nuw nsw i64 %indvars.iv1578 to i32 ; 2 uses
   %i.anw = add nsw i32 %i.ans, %i.anv
   %i.anx = sext i32 %i.anw to i64
@@ -1581,7 +1582,7 @@ bb.aj:                                            ; preds = %.lr.ph1433, %bb.al
   br i1 %5, label %bb.al, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj
-  %i.arm = getelementptr inbounds [688 x i8], ptr %.pre1660, i64 %indvars.iv.next1629
+  %i.arm = getelementptr inbounds nuw [688 x i8], ptr %.pre1660, i64 %indvars.iv.next1629
   %i.arn = getelementptr inbounds nuw i8, ptr %i.arm, i64 520
   %i.aro = getelementptr inbounds nuw [4 x i8], ptr %i.arn, i64 %indvars.iv1578
   %i.arp = load float, ptr %i.aro, align 4, !tbaa !9
@@ -1589,7 +1590,7 @@ bb.ak:                                            ; preds = %bb.aj
 
 bb.al:                                            ; preds = %bb.aj, %bb.ak
   %.0417 = phi float [ %i.arp, %bb.ak ], [ 0.000000e+00, %bb.aj ]
-  %i.arq = getelementptr inbounds [688 x i8], ptr %.pre1660, i64 %indvars.iv.next1629 ; 7 uses
+  %i.arq = getelementptr inbounds nuw [688 x i8], ptr %.pre1660, i64 %indvars.iv.next1629 ; 7 uses
   %i.arr = getelementptr inbounds nuw i8, ptr %i.arq, i64 136
   %i.ars = getelementptr inbounds nuw [32 x i8], ptr %i.arr, i64 %indvars.iv1578 ; 4 uses
   %i.art = getelementptr inbounds nuw i8, ptr %i.ars, i64 16
@@ -1992,7 +1993,7 @@ bb.aq:                                            ; preds = %.lr.ph1448.us, %bb.
   %i.bcf = getelementptr inbounds [144 x i8], ptr %i.er, i64 %i.bce
   call void @_ZN29btSpatialTransformationMatrix16transformInverseERK22btSymmetricSpatialDyadRS0_NS_16eOutputOperationE(ptr noundef nonnull align 4 dereferenceable(64) %10, ptr noundef nonnull align 4 dereferenceable(144) %11, ptr noundef nonnull align 4 dereferenceable(144) %i.bcf, i32 noundef 1)
   %i.bcg = load ptr, ptr %i.pd, align 8, !tbaa !38
-  %i.bch = getelementptr inbounds [688 x i8], ptr %i.bcg, i64 %indvars.iv.next1629 ; 3 uses
+  %i.bch = getelementptr inbounds nuw [688 x i8], ptr %i.bcg, i64 %indvars.iv.next1629 ; 3 uses
   %i.bci = getelementptr inbounds nuw i8, ptr %i.bch, i64 556
   %i.bcj = load i32, ptr %i.bci, align 4, !tbaa !86 ; 5 uses
   %i.bck = icmp sgt i32 %i.bcj, 0                 ; 2 uses
@@ -2395,7 +2396,7 @@ _ZNK11btMultiBody30isLinkAndAllAncestorsKinematicEi.exit: ; preds = %._crit_edge
   br i1 %.not366, label %_ZNK11btMultiBody30isLinkAndAllAncestorsKinematicEi.exit.thread, label %bb.v
 
 _ZNK11btMultiBody30isLinkAndAllAncestorsKinematicEi.exit.thread: ; preds = %bb.q, %_ZNK11btMultiBody15isLinkKinematicEi.exit.i, %._crit_edge.i, %_ZNK11btMultiBody30isLinkAndAllAncestorsKinematicEi.exit
-  %i.gw = getelementptr inbounds [688 x i8], ptr %i.fx, i64 %indvars.iv.next440 ; 7 uses
+  %i.gw = getelementptr inbounds nuw [688 x i8], ptr %i.fx, i64 %indvars.iv.next440 ; 7 uses
   %i.gx = getelementptr inbounds nuw i8, ptr %i.gw, i64 20
   %i.gy = load i32, ptr %i.gx, align 4, !tbaa !84
   %i.gz = getelementptr inbounds nuw [48 x i8], ptr %i.dh, i64 %indvars.iv439 ; 6 uses
@@ -2798,9 +2799,7 @@ begin_hunk_5_@_ZNK11btMultiBody30fillConstraintJacobianMultiDofEiRK9btVector3S2_
 
 .lr.ph393:                                        ; preds = %.preheader384
   %i.kk = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 3 uses
-  %9 = sext i32 %.0188.lcssa to i64
   %wide.trip.count = zext i32 %.0188.lcssa to i64
-  %10 = getelementptr [4 x i8], ptr %i.dq, i64 %9
   br label %bb.w
 
 .preheader.lr.ph:                                 ; preds = %bb.ab, %.preheader384
@@ -2810,8 +2809,11 @@ begin_hunk_5_@_ZNK11btMultiBody30fillConstraintJacobianMultiDofEiRK9btVector3S2_
 
 bb.w:                                             ; preds = %.lr.ph393, %bb.ab
   %indvars.iv406 = phi i64 [ 0, %.lr.ph393 ], [ %indvars.iv.next407, %bb.ab ] ; 2 uses
-  %11 = xor i64 %indvars.iv406, -1
-  %i.kn = getelementptr [4 x i8], ptr %10, i64 %11
+  %9 = trunc nuw nsw i64 %indvars.iv406 to i32
+  %10 = xor i32 %9, -1
+  %11 = add nsw i32 %.0188.lcssa, %10
+  %12 = zext nneg i32 %11 to i64
+  %i.kn = getelementptr inbounds nuw [4 x i8], ptr %i.dq, i64 %12
   %i.ko = load float, ptr %i.kn, align 4, !tbaa !9
   %i.kp = fptosi float %i.ko to i32               ; 2 uses
   %i.kq = load ptr, ptr %i.kk, align 8, !tbaa !38
@@ -3214,7 +3216,7 @@ bb.c:                                             ; preds = %bb.a
   %i.au = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.at ; 3 uses
   %i.av = getelementptr inbounds nuw [4 x i8], ptr %i.au, i64 %i.at
   %i.aw = load float, ptr %i.av, align 4, !tbaa !9
-  %2 = sext i32 %i.aq to i64                      ; 5 uses
+  %2 = zext nneg i32 %i.aq to i64                 ; 5 uses
   %i.ax = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %2 ; 3 uses
   %i.ay = getelementptr inbounds nuw [4 x i8], ptr %i.ax, i64 %2
   %i.az = load float, ptr %i.ay, align 4, !tbaa !9

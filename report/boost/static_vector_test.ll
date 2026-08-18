@@ -204,7 +204,7 @@ bb.l:                                             ; preds = %bb.j, %bb.i
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_Z15test_emplace_2pI14counting_valueLm10EEvv() local_unnamed_addr #0 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %0 = alloca %"class.boost::container::static_vector.29", align 16 ; 15 uses
+  %0 = alloca %"class.boost::container::static_vector.29", align 16 ; 16 uses
   %_ZZN14counting_value1cEvE2co.promoted = load i64, ptr @_ZZN14counting_value1cEvE2co, align 8
   %i.a = add i64 %_ZZN14counting_value1cEvE2co.promoted, 10
   store i64 %i.a, ptr @_ZZN14counting_value1cEvE2co, align 8, !tbaa !69
@@ -399,17 +399,18 @@ _ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorI14co
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 36
   br label %_ZN5boost9container13static_vectorI14counting_valueLm10EvEC2ERKS3_.exit.thread
 
-_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit90: ; preds = %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit97
-  %i.be = add i64 %_ZZN14counting_value1cEvE2co.promoted.i.i96, -11
+_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit90: ; preds = %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit97, %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit97.thread
+  %_ZZN14counting_value1cEvE2co.promoted.i.i96257 = phi i64 [ %i.dx, %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit97.thread ], [ %i.er, %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit97 ]
+  %i.be = add i64 %_ZZN14counting_value1cEvE2co.promoted.i.i96257, -11
   store i64 %i.be, ptr @_ZZN14counting_value1cEvE2co, align 8, !tbaa !69
   ret void
 
 _ZN5boost9container13static_vectorI14counting_valueLm10EvEC2ERKS3_.exit.thread: ; preds = %_ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorI14counting_valueLm10ELm0ELb1EEEmNS_11move_detail17integral_constantIjLj0EEEEC2IRKS5_EENS0_27vector_uninitialized_size_tEOT_m.exit.i.i.preheader, %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit97
   %_ZZN14counting_value1cEvE2co.promoted.i.i.i = phi i64 [ %i.av, %_ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorI14counting_valueLm10ELm0ELb1EEEmNS_11move_detail17integral_constantIjLj0EEEEC2IRKS5_EENS0_27vector_uninitialized_size_tEOT_m.exit.i.i.preheader ], [ %i.dy, %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit97 ] ; 3 uses
-  %indvars.iv202 = phi i64 [ 0, %_ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorI14counting_valueLm10ELm0ELb1EEEmNS_11move_detail17integral_constantIjLj0EEEEC2IRKS5_EENS0_27vector_uninitialized_size_tEOT_m.exit.i.i.preheader ], [ %indvars.iv.next203, %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit97 ] ; 13 uses
+  %indvars.iv202 = phi i64 [ 0, %_ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorI14counting_valueLm10ELm0ELb1EEEmNS_11move_detail17integral_constantIjLj0EEEEC2IRKS5_EENS0_27vector_uninitialized_size_tEOT_m.exit.i.i.preheader ], [ %indvars.iv.next203, %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit97 ] ; 12 uses
   %indvars.iv198 = phi i32 [ 5, %_ZN5boost9container19vector_alloc_holderINS0_3dtl24static_storage_allocatorI14counting_valueLm10ELm0ELb1EEEmNS_11move_detail17integral_constantIjLj0EEEEC2IRKS5_EENS0_27vector_uninitialized_size_tEOT_m.exit.i.i.preheader ], [ %indvars.iv.next199, %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit97 ] ; 2 uses
   %i.bf = sub nsw i64 0, %indvars.iv202
-  %smax = tail call i32 @llvm.smax.i32(i32 %indvars.iv198, i32 1)
+  %smax = tail call i32 @llvm.umax.i32(i32 %indvars.iv198, i32 1)
   call void @llvm.lifetime.start.p0(ptr nonnull %0) #25
   store <4 x i32> <i32 0, i32 100, i32 1, i32 101>, ptr %0, align 16, !tbaa !18
   store <4 x i32> <i32 2, i32 102, i32 3, i32 103>, ptr %i.bb, align 16, !tbaa !18
@@ -421,7 +422,7 @@ _ZN5boost9container13static_vectorI14counting_valueLm10EvEC2ERKS3_.exit.thread: 
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 %.idx151 ; 4 uses
   %i.bi = add nuw nsw i64 %indvars.iv202, 100     ; 2 uses
   %i.bj = or disjoint i64 %indvars.iv202, 200     ; 2 uses
-  %.not.i.i.i92 = icmp samesign eq i64 %indvars.iv202, 5
+  %.not.i.i.i92 = icmp eq i64 %indvars.iv202, 5   ; 2 uses
   br i1 %.not.i.i.i92, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %_ZN5boost9container13static_vectorI14counting_valueLm10EvEC2ERKS3_.exit.thread
@@ -594,19 +595,23 @@ bb.u:                                             ; preds = %.lr.ph
   br label %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit105
 
 bb.v:                                             ; preds = %._crit_edge
-  %i.dw = load i64, ptr @_ZZN14counting_value1cEvE2co, align 8, !tbaa !69 ; 2 uses
+  %i.dw = load i64, ptr @_ZZN14counting_value1cEvE2co, align 8, !tbaa !69 ; 3 uses
   %i.dx = add i64 %i.dw, -1                       ; 2 uses
   store i64 %i.dx, ptr @_ZZN14counting_value1cEvE2co, align 8, !tbaa !69
-  %1 = icmp samesign ult i64 %indvars.iv202, 5
-  br i1 %1, label %.lr.ph178.preheader, label %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit97
+  br i1 %.not.i.i.i92, label %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit97.thread, label %.lr.ph178.preheader
+
+_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit97.thread: ; preds = %bb.v
+  %1 = add i64 %i.dw, -7
+  store i64 %1, ptr @_ZZN14counting_value1cEvE2co, align 8, !tbaa !69
+  call void @llvm.lifetime.end.p0(ptr nonnull %0) #25
+  br label %_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit90
 
 .lr.ph178.preheader:                              ; preds = %bb.v
-  %wide.trip.count200 = zext nneg i32 %smax to i64
+  %wide.trip.count200 = zext i32 %smax to i64
   br label %.lr.ph178
 
-_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit97: ; preds = %bb.x, %bb.v
-  %_ZZN14counting_value1cEvE2co.promoted.i.i96 = phi i64 [ %i.dx, %bb.v ], [ %i.er, %bb.x ] ; 2 uses
-  %i.dy = add i64 %_ZZN14counting_value1cEvE2co.promoted.i.i96, -6 ; 2 uses
+_ZN5boost9container6vectorI14counting_valueNS0_3dtl24static_storage_allocatorIS2_Lm10ELm0ELb1EEEvED2Ev.exit97: ; preds = %bb.x
+  %i.dy = add i64 %i.eq, -7                       ; 2 uses
   store i64 %i.dy, ptr @_ZZN14counting_value1cEvE2co, align 8, !tbaa !69
   call void @llvm.lifetime.end.p0(ptr nonnull %0) #25
   %indvars.iv.next203 = add nuw nsw i64 %indvars.iv202, 1 ; 2 uses
@@ -642,7 +647,7 @@ bb.w:                                             ; preds = %._crit_edge
           to label %bb.x unwind label %bb.y       ; 0 uses
 
 bb.x:                                             ; preds = %.lr.ph178
-  %i.eq = load i64, ptr @_ZZN14counting_value1cEvE2co, align 8, !tbaa !69 ; 2 uses
+  %i.eq = load i64, ptr @_ZZN14counting_value1cEvE2co, align 8, !tbaa !69 ; 3 uses
   %i.er = add i64 %i.eq, -1                       ; 2 uses
   store i64 %i.er, ptr @_ZZN14counting_value1cEvE2co, align 8, !tbaa !69
   %indvars.iv.next196 = add nuw nsw i64 %indvars.iv195, 1 ; 2 uses
@@ -1045,7 +1050,7 @@ _ZN5boost9container17deep_swap_alloc_nILm40ENS0_3dtl24static_storage_allocatorIi
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %.sroa.0.i, ptr nonnull align 1 %.464.i, i64 %i.w, i1 false)
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.464.i, ptr nonnull align 1 %.4.i, i64 %i.w, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.4.i, ptr nonnull align 4 %.sroa.0.i, i64 %i.w, i1 false)
-  %i.x = sub i64 %i.d, %i.b
+  %i.x = sub nuw i64 %i.d, %i.b
   %i.y = getelementptr inbounds [4 x i8], ptr %0, i64 %i.b
   %i.z = getelementptr inbounds [4 x i8], ptr %1, i64 %i.b
   %i.aa = shl i64 %i.x, 2
@@ -1127,7 +1132,7 @@ bb.l:                                             ; preds = %bb.k, %bb.g
   br i1 %.not.i.i.i26, label %_ZN5boost9container17deep_swap_alloc_nILm40ENS0_3dtl24static_storage_allocatorIiLm10ELm0ELb1EEEPiS5_EENS_11move_detail11enable_if_cIXaasr3dtl30is_memtransfer_copy_assignableIT1_T2_EE5valueLb1EEvE4typeERT0_S8_mS9_m.exit27, label %bb.m, !prof !24
 
 bb.m:                                             ; preds = %bb.l
-  %i.at = sub i64 %i.b, %i.d
+  %i.at = sub nuw i64 %i.b, %i.d
   %i.au = getelementptr inbounds [4 x i8], ptr %1, i64 %i.d
   %i.av = getelementptr inbounds [4 x i8], ptr %0, i64 %i.d
   %i.aw = shl i64 %i.at, 2
@@ -1228,7 +1233,7 @@ _ZN5boost9container17deep_swap_alloc_nILm20ENS0_3dtl24static_storage_allocatorIi
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %.sroa.0.i, ptr nonnull align 1 %.464.i, i64 %i.w, i1 false)
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.464.i, ptr nonnull align 1 %.4.i, i64 %i.w, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.4.i, ptr nonnull align 4 %.sroa.0.i, i64 %i.w, i1 false)
-  %i.x = sub i64 %i.d, %i.b
+  %i.x = sub nuw i64 %i.d, %i.b
   %i.y = getelementptr inbounds [4 x i8], ptr %0, i64 %i.b
   %i.z = getelementptr inbounds [4 x i8], ptr %1, i64 %i.b
   %i.aa = shl i64 %i.x, 2
@@ -1310,7 +1315,7 @@ bb.l:                                             ; preds = %bb.k, %bb.g
   br i1 %.not.i.i.i26, label %_ZN5boost9container17deep_swap_alloc_nILm20ENS0_3dtl24static_storage_allocatorIiLm5ELm0ELb1EEEPiS5_EENS_11move_detail11enable_if_cIXaasr3dtl30is_memtransfer_copy_assignableIT1_T2_EE5valueLb1EEvE4typeERT0_S8_mS9_m.exit27, label %bb.m, !prof !24
 
 bb.m:                                             ; preds = %bb.l
-  %i.at = sub i64 %i.b, %i.d
+  %i.at = sub nuw i64 %i.b, %i.d
   %i.au = getelementptr inbounds [4 x i8], ptr %1, i64 %i.d
   %i.av = getelementptr inbounds [4 x i8], ptr %0, i64 %i.d
   %i.aw = shl i64 %i.at, 2
@@ -1596,7 +1601,7 @@ bb.l:                                             ; preds = %bb.k, %bb.g
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %.sroa.0.i10, ptr nonnull align 1 %.464.i24, i64 %i.ch, i1 false)
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.464.i24, ptr nonnull align 1 %.4.i25, i64 %i.ch, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.4.i25, ptr nonnull align 4 %.sroa.0.i10, i64 %i.ch, i1 false)
-  %i.ci = sub i64 %i.d, %i.f                      ; 6 uses
+  %i.ci = sub nuw i64 %i.d, %i.f                  ; 6 uses
   %.not17.i.i26 = icmp eq i64 %i.ci, 0
   br i1 %.not17.i.i26, label %_ZN5boost9container17deep_swap_alloc_nILm40ENS0_3dtl24static_storage_allocatorI8value_ndLm10ELm0ELb1EEEPS4_S6_EENS_11move_detail11enable_if_cIXaasr3dtl30is_memtransfer_copy_assignableIT1_T2_EE5valueLb1EEvE4typeERT0_S9_mSA_m.exit33, label %.lr.ph.i.preheader.i27
 
@@ -1988,7 +1993,7 @@ bb.l:                                             ; preds = %bb.k, %bb.g
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %.sroa.0.i10, ptr nonnull align 1 %.464.i24, i64 %i.ch, i1 false)
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.464.i24, ptr nonnull align 1 %.4.i25, i64 %i.ch, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.4.i25, ptr nonnull align 4 %.sroa.0.i10, i64 %i.ch, i1 false)
-  %i.ci = sub i64 %i.d, %i.f                      ; 6 uses
+  %i.ci = sub nuw i64 %i.d, %i.f                  ; 6 uses
   %.not17.i.i26 = icmp eq i64 %i.ci, 0
   br i1 %.not17.i.i26, label %_ZN5boost9container17deep_swap_alloc_nILm20ENS0_3dtl24static_storage_allocatorI8value_ndLm5ELm0ELb1EEEPS4_S6_EENS_11move_detail11enable_if_cIXaasr3dtl30is_memtransfer_copy_assignableIT1_T2_EE5valueLb1EEvE4typeERT0_S9_mSA_m.exit33, label %.lr.ph.i.preheader.i27
 
@@ -2391,7 +2396,7 @@ declare i64 @llvm.umax.i64(i64, i64) #22
 declare i64 @llvm.umin.i64(i64, i64) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #22
+declare i32 @llvm.umax.i32(i32, i32) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #22
