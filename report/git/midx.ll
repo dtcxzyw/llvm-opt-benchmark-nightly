@@ -203,7 +203,7 @@ bb.d:                                             ; preds = %.critedge.i
   unreachable
 
 midx_for_pack.exit:                               ; preds = %.critedge.i
-  %i.p = sub i32 %1, %i.e
+  %i.p = sub nuw i32 %1, %i.e
   %i.q = getelementptr inbounds nuw i8, ptr %.023.i, i64 192 ; 3 uses
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !96
   %i.s = zext i32 %i.p to i64                     ; 4 uses
@@ -302,7 +302,7 @@ bb.c:                                             ; preds = %.critedge.i
   unreachable
 
 midx_for_pack.exit:                               ; preds = %.critedge.i
-  %i.m = sub i32 %1, %i.b
+  %i.m = sub nuw i32 %1, %i.b
   %i.n = getelementptr inbounds nuw i8, ptr %.023.i, i64 192
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !96
   %i.p = zext i32 %i.m to i64
@@ -353,7 +353,7 @@ bb.c:                                             ; preds = %.critedge.i
   unreachable
 
 midx_for_pack.exit:                               ; preds = %.critedge.i
-  %i.m = sub i32 %2, %i.b
+  %i.m = sub nuw i32 %2, %i.b
   %i.n = getelementptr inbounds nuw i8, ptr %.023.i, i64 88 ; 2 uses
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !112
   %.not = icmp eq ptr %i.o, null
@@ -652,7 +652,7 @@ bb.c:                                             ; preds = %.critedge.i
   unreachable
 
 midx_for_object.exit:                             ; preds = %.critedge.i
-  %i.n = sub i32 %2, %i.g
+  %i.n = sub nuw i32 %2, %i.g
   %i.o = getelementptr inbounds nuw i8, ptr %.019.i, i64 112
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !120
   %i.q = getelementptr inbounds nuw i8, ptr %.019.i, i64 53
@@ -740,7 +740,7 @@ bb.c:                                             ; preds = %.critedge.i
   unreachable
 
 midx_for_object.exit:                             ; preds = %.critedge.i
-  %i.i = sub i32 %1, %i.b
+  %i.i = sub nuw i32 %1, %i.b
   %i.j = getelementptr inbounds nuw i8, ptr %.019.i, i64 120
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !125
   %i.l = zext i32 %i.i to i64
@@ -846,7 +846,7 @@ bb.c:                                             ; preds = %.critedge.i
   unreachable
 
 midx_for_object.exit:                             ; preds = %.critedge.i
-  %i.i = sub i32 %1, %i.b
+  %i.i = sub nuw i32 %1, %i.b
   %i.j = getelementptr inbounds nuw i8, ptr %.019.i, i64 172
   %i.k = load i32, ptr %i.j, align 4, !tbaa !82
   %i.l = getelementptr inbounds nuw i8, ptr %.019.i, i64 120
@@ -956,7 +956,7 @@ bb.f:                                             ; preds = %.critedge.i.i
   unreachable
 
 nth_midxed_pack_int_id.exit:                      ; preds = %.critedge.i.i
-  %i.ak = sub i32 %i.r, %i.ad
+  %i.ak = sub nuw i32 %i.r, %i.ad
   %i.al = getelementptr inbounds nuw i8, ptr %.019.i.i, i64 172
   %i.am = load i32, ptr %i.al, align 4, !tbaa !82
   %i.an = getelementptr inbounds nuw i8, ptr %.019.i.i, i64 120
@@ -1359,7 +1359,7 @@ bb.e:                                             ; preds = %.critedge.i.i
   unreachable
 
 bb.f:                                             ; preds = %.critedge.i.i
-  %i.o = sub i32 %i.f, %i.h
+  %i.o = sub nuw i32 %i.f, %i.h
   %i.p = getelementptr inbounds nuw i8, ptr %.019.i.i, i64 172
   %i.q = load i32, ptr %i.p, align 4, !tbaa !82
   %i.r = getelementptr inbounds nuw i8, ptr %.019.i.i, i64 120
@@ -1762,7 +1762,7 @@ bb.w:                                             ; preds = %.critedge.i.i
   unreachable
 
 midx_for_object.exit.i:                           ; preds = %.critedge.i.i
-  %i.cc = sub i32 %i.bs, %i.bv
+  %i.cc = sub nuw i32 %i.bs, %i.bv
   %i.cd = getelementptr inbounds nuw i8, ptr %.019.i.i, i64 112
   %i.ce = load ptr, ptr %i.cd, align 8, !tbaa !120
   %i.cf = getelementptr inbounds nuw i8, ptr %.019.i.i, i64 53
@@ -1846,7 +1846,7 @@ bb.ac:                                            ; preds = %.critedge.i.i134
   unreachable
 
 midx_for_object.exit.i136:                        ; preds = %.critedge.i.i134
-  %i.di = sub i32 %i.cy, %i.db
+  %i.di = sub nuw i32 %i.cy, %i.db
   %i.dj = getelementptr inbounds nuw i8, ptr %.019.i.i133, i64 112
   %i.dk = load ptr, ptr %i.dj, align 8, !tbaa !120
   %i.dl = getelementptr inbounds nuw i8, ptr %.019.i.i133, i64 53
@@ -1970,17 +1970,17 @@ stop_progress.exit152:                            ; preds = %bb.am, %bb.an
   br label %.lr.ph245
 
 .lr.ph245:                                        ; preds = %.lr.ph245.preheader, %nth_midxed_pack_int_id.exit
-  %indvars.iv291 = phi i64 [ 0, %.lr.ph245.preheader ], [ %indvars.iv.next292, %nth_midxed_pack_int_id.exit ] ; 5 uses
+  %indvars.iv291 = phi i64 [ 0, %.lr.ph245.preheader ], [ %indvars.iv.next292, %nth_midxed_pack_int_id.exit ] ; 6 uses
   %i.fg = getelementptr inbounds nuw [8 x i8], ptr %i.fc, i64 %indvars.iv291 ; 2 uses
-  %i.fh = trunc nuw i64 %indvars.iv291 to i32     ; 3 uses
+  %i.fh = trunc nuw i64 %indvars.iv291 to i32     ; 2 uses
   store i32 %i.fh, ptr %i.fg, align 4, !tbaa !161
   br label %.lr.ph.i.i153
 
 .lr.ph.i.i153:                                    ; preds = %.lr.ph245, %bb.ao
   %.019.i.i154 = phi ptr [ %.0.i.i158, %bb.ao ], [ %i.e, %.lr.ph245 ] ; 5 uses
   %i.fi = getelementptr inbounds nuw i8, ptr %.019.i.i154, i64 168
-  %i.fj = load i32, ptr %i.fi, align 8, !tbaa !84 ; 3 uses
-  %i.fk = zext i32 %i.fj to i64
+  %i.fj = load i32, ptr %i.fi, align 8, !tbaa !84 ; 2 uses
+  %i.fk = zext i32 %i.fj to i64                   ; 2 uses
   %i.fl = icmp samesign ult i64 %indvars.iv291, %i.fk
   br i1 %i.fl, label %bb.ao, label %.critedge.i.i155
 
@@ -2008,13 +2008,12 @@ bb.ap:                                            ; preds = %.critedge.i.i155
   unreachable
 
 nth_midxed_pack_int_id.exit:                      ; preds = %.critedge.i.i155
-  %8 = sub i32 %i.fh, %i.fj
+  %8 = sub nuw nsw i64 %indvars.iv291, %i.fk
   %i.fs = getelementptr inbounds nuw i8, ptr %.019.i.i154, i64 172
   %i.ft = load i32, ptr %i.fs, align 4, !tbaa !82
   %i.fu = getelementptr inbounds nuw i8, ptr %.019.i.i154, i64 120
   %i.fv = load ptr, ptr %i.fu, align 8, !tbaa !125
-  %9 = zext i32 %8 to i64
-  %i.fw = shl nuw nsw i64 %9, 3
+  %i.fw = shl nuw nsw i64 %8, 3
   %i.fx = getelementptr inbounds nuw i8, ptr %i.fv, i64 %i.fw
   %i.fy = load i32, ptr %i.fx, align 1
   %i.fz = call i32 @llvm.bswap.i32(i32 %i.fy)
@@ -2170,7 +2169,7 @@ bb.bb:                                            ; preds = %.critedge.i.i175
   unreachable
 
 nth_midxed_pack.exit:                             ; preds = %.critedge.i.i175
-  %i.hu = sub i32 %i.hd, %i.hi
+  %i.hu = sub nuw i32 %i.hd, %i.hi
   %i.hv = getelementptr inbounds nuw i8, ptr %.023.i.i, i64 192
   %i.hw = load ptr, ptr %i.hv, align 8, !tbaa !96
   %i.hx = zext i32 %i.hu to i64
@@ -2216,7 +2215,7 @@ bb.bd:                                            ; preds = %.critedge.i.i181
   unreachable
 
 nth_midxed_pack.exit187:                          ; preds = %.critedge.i.i181
-  %i.in = sub i32 %i.hd, %i.ib
+  %i.in = sub nuw i32 %i.hd, %i.ib
   %i.io = getelementptr inbounds nuw i8, ptr %.023.i.i180, i64 192
   %i.ip = load ptr, ptr %i.io, align 8, !tbaa !96
   %i.iq = zext i32 %i.in to i64

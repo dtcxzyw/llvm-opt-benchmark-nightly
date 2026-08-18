@@ -204,7 +204,7 @@ _ZN11hb_vector_tIN22hb_serialize_context_t8object_t6link_tELb0EE5qsortEv.exit.i:
 
 bb.ad:                                            ; preds = %_ZNK5graph20LigatureSubstFormat123current_liga_set_boundsERNS_24gsubgpos_graph_context_tEjRKN22hb_serialize_context_t8object_tE.exit
   %.sroa.speculated266 = call i32 @llvm.umax.i32(i32 %4, i32 %.sroa.speculated248)
-  %i.hp = sub i32 %.sroa.speculated266, %.0135326 ; 2 uses
+  %i.hp = sub nuw i32 %.sroa.speculated266, %.0135326 ; 2 uses
   %.sroa.speculated257 = call i32 @llvm.umin.i32(i32 %5, i32 %.sroa.speculated)
   %i.hq = sub i32 %.sroa.speculated257, %.0135326 ; 2 uses
   %i.hr = sub i32 %i.hq, %i.hp                    ; 2 uses
@@ -607,7 +607,7 @@ _ZNK2OT18IndexSubtableArray10find_tableEjj.exit:  ; preds = %.lr.ph.i
   %i.be = zext i32 %i.bd to i64
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 %i.be
   %.0.i.i.i = select i1 %i.bc, ptr @_hb_NullPool, ptr %i.bf, !prof !21 ; 3 uses
-  %i.bg = sub nuw nsw i32 %i.aq, %i.av            ; 4 uses
+  %i.bg = sub nuw nsw i32 %i.aq, %i.av            ; 2 uses
   %i.bh = load i16, ptr %.0.i.i.i, align 1, !tbaa !231
   %i.bi = tail call noundef i16 @llvm.bswap.i16(i16 %i.bh)
   switch i16 %i.bi, label %_ZNK2OT18IndexSubtableArray10find_tableEjj.exit.thread [
@@ -617,32 +617,28 @@ _ZNK2OT18IndexSubtableArray10find_tableEjj.exit:  ; preds = %.lr.ph.i
 
 bb.g:                                             ; preds = %_ZNK2OT18IndexSubtableArray10find_tableEjj.exit
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #20, !srcloc !230
-  %i.bj = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 8 ; 2 uses
-  %4 = add nsw i32 %i.bg, 1
-  %i.bk = zext i32 %4 to i64
-  %i.bl = getelementptr inbounds nuw [4 x i8], ptr %i.bj, i64 %i.bk
-  %5 = load i32, ptr %i.bl, align 1, !tbaa !234
+  %i.bj = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 8
+  %i.bk = zext nneg i32 %i.bg to i64
+  %i.bl = getelementptr inbounds nuw [4 x i8], ptr %i.bj, i64 %i.bk ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %i.bl, i64 4
+  %5 = load i32, ptr %4, align 1, !tbaa !234
   %6 = tail call noundef i32 @llvm.bswap.i32(i32 %5)
-  %7 = zext i32 %i.bg to i64
-  %8 = getelementptr inbounds nuw [4 x i8], ptr %i.bj, i64 %7
-  %i.bm = load i32, ptr %8, align 1, !tbaa !234
+  %i.bm = load i32, ptr %i.bl, align 1, !tbaa !234
   %i.bn = tail call noundef i32 @llvm.bswap.i32(i32 %i.bm)
   %.not.i.i.i = icmp ugt i32 %6, %i.bn
   br i1 %.not.i.i.i, label %_ZNK2OT19IndexSubtableRecord14get_image_dataEjPKvPjS3_S3_.exit, label %_ZNK2OT18IndexSubtableArray10find_tableEjj.exit.thread, !prof !137
 
 bb.h:                                             ; preds = %_ZNK2OT18IndexSubtableArray10find_tableEjj.exit
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #20, !srcloc !230
-  %i.bo = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 8 ; 2 uses
-  %9 = add nsw i32 %i.bg, 1
-  %i.bp = zext i32 %9 to i64
-  %i.bq = getelementptr inbounds nuw [2 x i8], ptr %i.bo, i64 %i.bp
-  %10 = load i16, ptr %i.bq, align 1, !tbaa !231
-  %11 = tail call noundef i16 @llvm.bswap.i16(i16 %10)
-  %12 = zext i32 %i.bg to i64
-  %13 = getelementptr inbounds nuw [2 x i8], ptr %i.bo, i64 %12
-  %i.br = load i16, ptr %13, align 1, !tbaa !231
+  %i.bo = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 8
+  %i.bp = zext nneg i32 %i.bg to i64
+  %i.bq = getelementptr inbounds nuw [2 x i8], ptr %i.bo, i64 %i.bp ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %i.bq, i64 2
+  %8 = load i16, ptr %7, align 1, !tbaa !231
+  %9 = tail call noundef i16 @llvm.bswap.i16(i16 %8)
+  %i.br = load i16, ptr %i.bq, align 1, !tbaa !231
   %i.bs = tail call noundef i16 @llvm.bswap.i16(i16 %i.br)
-  %.not.i8.i.i = icmp ugt i16 %11, %i.bs
+  %.not.i8.i.i = icmp ugt i16 %9, %i.bs
   br i1 %.not.i8.i.i, label %_ZNK2OT19IndexSubtableRecord14get_image_dataEjPKvPjS3_S3_.exit, label %_ZNK2OT18IndexSubtableArray10find_tableEjj.exit.thread, !prof !137
 
 _ZNK2OT19IndexSubtableRecord14get_image_dataEjPKvPjS3_S3_.exit: ; preds = %bb.h, %bb.g

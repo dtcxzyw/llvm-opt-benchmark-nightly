@@ -145,23 +145,21 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.ao, label %.loopexit101, label %.lr.ph111.preheader
 
 .lr.ph111.preheader:                              ; preds = %bb.n
-  %4 = zext nneg i32 %i.v to i64
-  %5 = sext i32 %i.ad to i64
-  %6 = zext nneg i32 %i.z to i64
   %i.ap = trunc nuw nsw i64 %indvars.iv126 to i32
   br label %.lr.ph111
 
 .lr.ph111:                                        ; preds = %.lr.ph111.preheader, %bb.o
-  %indvars.iv = phi i64 [ %4, %.lr.ph111.preheader ], [ %indvars.iv.next, %bb.o ] ; 2 uses
-  %i.aq = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %indvars.iv ; 2 uses
+  %.1110 = phi i32 [ %5, %bb.o ], [ %i.v, %.lr.ph111.preheader ] ; 2 uses
+  %4 = zext nneg i32 %.1110 to i64
+  %i.aq = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %4 ; 2 uses
   %i.ar = load i32, ptr %i.aq, align 4, !tbaa !12
   %.not96 = icmp eq i32 %i.ar, -1
   br i1 %.not96, label %bb.o, label %.loopexit101
 
 bb.o:                                             ; preds = %.lr.ph111
   store i32 %i.ap, ptr %i.aq, align 4, !tbaa !12
-  %indvars.iv.next = add nsw i64 %indvars.iv, %5  ; 2 uses
-  %.not95 = icmp slt i64 %indvars.iv.next, %6
+  %5 = add nsw i32 %.1110, %i.ad                  ; 2 uses
+  %.not95 = icmp slt i32 %5, %i.z
   br i1 %.not95, label %.loopexit, label %.lr.ph111, !llvm.loop !25
 
 bb.p:                                             ; preds = %bb.m

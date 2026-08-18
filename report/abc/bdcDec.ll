@@ -203,18 +203,17 @@ bb.b:                                             ; preds = %.epil.preheader
   br label %.preheader
 
 .preheader:                                       ; preds = %.epil.preheader, %bb.b, %.preheader.unr-lcssa
-  %.1.lcssa = phi i32 [ %.1.1, %.preheader.unr-lcssa ], [ %i.j, %bb.b ], [ %.03140.epil.init, %.epil.preheader ] ; 4 uses
+  %.1.lcssa = phi i32 [ %.1.1, %.preheader.unr-lcssa ], [ %i.j, %bb.b ], [ %.03140.epil.init, %.epil.preheader ] ; 3 uses
   %i.m = icmp sgt i32 %.1.lcssa, 0
   br i1 %i.m, label %.lr.ph45, label %.loopexit
 
 .lr.ph45:                                         ; preds = %.preheader
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
-  %.041 = add nsw i32 %.1.lcssa, -1
+  %.041 = add nsw i32 %.1.lcssa, -1               ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.r = zext nneg i32 %.1.lcssa to i64
-  %4 = add nsw i64 %i.r, -1
+  %i.r = zext nneg i32 %.041 to i64
   %i.s = zext nneg i32 %.041 to i64
   %wide.trip.count = zext nneg i32 %.1.lcssa to i64
   br label %bb.h
@@ -279,9 +278,9 @@ bb.h:                                             ; preds = %.lr.ph45, %._crit_e
 .lr.ph43:                                         ; preds = %.lr.ph43.preheader, %Kit_TruthIsDisjoint3.exit
   %i.ao = phi i32 [ %.pre54, %.lr.ph43.preheader ], [ %i.ax, %Kit_TruthIsDisjoint3.exit ]
   %i.ap = phi ptr [ %.pre, %.lr.ph43.preheader ], [ %i.aw, %Kit_TruthIsDisjoint3.exit ]
-  %indvars.iv = phi i64 [ %4, %.lr.ph43.preheader ], [ %indvars.iv.next, %Kit_TruthIsDisjoint3.exit ] ; 2 uses
+  %indvars.iv = phi i64 [ %i.r, %.lr.ph43.preheader ], [ %indvars.iv.next, %Kit_TruthIsDisjoint3.exit ] ; 2 uses
   %i.aq = load ptr, ptr %i.o, align 8, !tbaa !28
-  %i.ar = getelementptr inbounds i8, ptr %i.a, i64 %indvars.iv
+  %i.ar = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv
   %i.as = load i8, ptr %i.ar, align 1, !tbaa !61  ; 2 uses
   %i.at = sext i8 %i.as to i32
   tail call void @Kit_TruthExistNew(ptr noundef %i.ap, ptr noundef %i.aq, i32 noundef %i.ao, i32 noundef %i.at) #7

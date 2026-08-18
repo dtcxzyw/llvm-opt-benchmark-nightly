@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
   %i.m = zext nneg i32 %spec.select to i64        ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 %i.l, ptr noundef nonnull align 1 %.07285, i64 noundef %i.m, i1 noundef false) #25
   %i.n = getelementptr inbounds nuw i8, ptr %.07285, i64 %i.m ; 3 uses
-  %i.o = sub nsw i32 %.07086, %spec.select        ; 3 uses
+  %i.o = sub nuw nsw i32 %.07086, %spec.select    ; 3 uses
   %i.p = add i32 %spec.select, %i.i               ; 2 uses
   store i32 %i.p, ptr %i.c, align 8
   %i.q = icmp eq i32 %i.p, 4
@@ -237,7 +237,7 @@ bb.g:                                             ; preds = %bb.b
   %i.z = zext nneg i32 %spec.select80 to i64      ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 %i.y, ptr noundef nonnull align 1 %.07285, i64 noundef %i.z, i1 noundef false) #25
   %i.aa = getelementptr inbounds nuw i8, ptr %.07285, i64 %i.z ; 2 uses
-  %i.ab = sub nsw i32 %.07086, %spec.select80     ; 2 uses
+  %i.ab = sub nuw nsw i32 %.07086, %spec.select80 ; 2 uses
   %i.ac = add i32 %spec.select80, %i.v            ; 2 uses
   store i32 %i.ac, ptr %i.c, align 8
   %i.ad = icmp eq i32 %i.ac, 4
@@ -267,7 +267,7 @@ bb.j:                                             ; preds = %bb.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 %i.am, ptr noundef nonnull align 1 %.07285, i64 noundef %i.an, i1 noundef false) #25
   store i32 %i.aj, ptr %i.c, align 8
   %i.ao = getelementptr inbounds nuw i8, ptr %.07285, i64 %i.an ; 2 uses
-  %i.ap = sub nsw i32 %.07086, %spec.select81     ; 2 uses
+  %i.ap = sub nuw nsw i32 %.07086, %spec.select81 ; 2 uses
   %.not = icmp ult i32 %i.aj, %i.ag
   br i1 %.not, label %bb.o, label %bb.l
 
@@ -295,21 +295,20 @@ bb.n:                                             ; preds = %bb.l
 
 bb.o:                                             ; preds = %bb.j, %bb.n, %bb.g, %bb.h, %bb.c, %bb.f, %bb.e, %bb.b
   %.173 = phi ptr [ %.07285, %bb.b ], [ %i.n, %bb.e ], [ %i.n, %bb.f ], [ %i.n, %bb.c ], [ %i.aa, %bb.h ], [ %i.aa, %bb.g ], [ %i.ao, %bb.n ], [ %i.ao, %bb.j ]
-  %.171 = phi i32 [ %.07086, %bb.b ], [ %i.o, %bb.e ], [ %i.o, %bb.f ], [ %i.o, %bb.c ], [ %i.ab, %bb.h ], [ %i.ab, %bb.g ], [ %i.ap, %bb.n ], [ %i.ap, %bb.j ] ; 3 uses
+  %.171 = phi i32 [ %.07086, %bb.b ], [ %i.o, %bb.e ], [ %i.o, %bb.f ], [ %i.o, %bb.c ], [ %i.ab, %bb.h ], [ %i.ab, %bb.g ], [ %i.ap, %bb.n ], [ %i.ap, %bb.j ] ; 2 uses
   %i.at = icmp sgt i32 %.171, 0
-  br i1 %i.at, label %bb.b, label %._crit_edge, !llvm.loop !53
+  br i1 %i.at, label %bb.b, label %bb.q, !llvm.loop !53
 
-._crit_edge:                                      ; preds = %bb.o, %bb.a
-  %.070.lcssa = phi i32 [ %2, %bb.a ], [ %.171, %bb.o ]
-  %i.au = icmp eq i32 %.070.lcssa, 0
+._crit_edge:                                      ; preds = %bb.a
+  %i.au = icmp eq i32 %2, 0
   br i1 %i.au, label %bb.q, label %bb.p
 
 bb.p:                                             ; preds = %._crit_edge
   tail call void @__assert_fail(ptr noundef nonnull @.str.53, ptr noundef nonnull @.str, i32 noundef 2175, ptr noundef nonnull @__PRETTY_FUNCTION__.net_fill_rstate) #27
   unreachable
 
-bb.q:                                             ; preds = %._crit_edge, %bb.k
-  %.074 = phi i32 [ -1, %bb.k ], [ 0, %._crit_edge ]
+bb.q:                                             ; preds = %bb.o, %._crit_edge, %bb.k
+  %.074 = phi i32 [ -1, %bb.k ], [ 0, %._crit_edge ], [ 0, %bb.o ]
   ret i32 %.074
 }
 

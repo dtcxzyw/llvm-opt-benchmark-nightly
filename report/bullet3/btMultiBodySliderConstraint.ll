@@ -204,13 +204,12 @@ bb.x:                                             ; preds = %bb.w
 
 bb.y:                                             ; preds = %bb.w
   %.cmp = icmp eq i64 %indvars.iv, 2
-  %14 = trunc i64 %indvars.iv to i32
-  %15 = add i32 %14, -3
-  %16 = select i1 %.cmp, i32 2, i32 %15           ; 2 uses
-  %17 = sext i32 %16 to i64                       ; 3 uses
-  %i.wn = getelementptr inbounds [4 x i8], ptr %5, i64 %17
-  %i.wo = getelementptr inbounds [4 x i8], ptr %i.d, i64 %17
-  %i.wp = getelementptr inbounds [4 x i8], ptr %i.f, i64 %17
+  %14 = add nuw i64 %indvars.iv, 4294967293
+  %15 = and i64 %14, 4294967295
+  %16 = select i1 %.cmp, i64 2, i64 %15           ; 4 uses
+  %i.wn = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %16
+  %i.wo = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %16
+  %i.wp = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %16
   %i.wq = load float, ptr %i.wn, align 4, !tbaa !30
   %.sroa.0.0.vec.insert.i106 = insertelement <2 x float> poison, float %i.wq, i64 0
   %i.wr = load float, ptr %i.wo, align 4, !tbaa !30
@@ -219,8 +218,7 @@ bb.y:                                             ; preds = %bb.w
   %.sroa.3.12.vec.insert.i108 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.ws, i64 0
   store <2 x float> %.sroa.0.4.vec.insert.i107, ptr %13, align 8
   store <2 x float> %.sroa.3.12.vec.insert.i108, ptr %i.ua, align 8, !tbaa !26
-  %18 = zext nneg i32 %16 to i64
-  %i.wt = getelementptr inbounds nuw [4 x i8], ptr %11, i64 %18
+  %i.wt = getelementptr inbounds nuw [4 x i8], ptr %11, i64 %16
   %i.wu = load float, ptr %i.wt, align 4, !tbaa !30
   %i.wv = load float, ptr %i.ub, align 4, !tbaa !112 ; 2 uses
   %i.ww = fneg float %i.wv

@@ -203,15 +203,13 @@ bb.bm:                                            ; preds = %bb.bk
   %i.iu = icmp sgt i32 %.062, %.061
   %i.iv = icmp slt i32 %.062, 0
   %or.cond3 = or i1 %i.iv, %i.iu
-  br i1 %or.cond3, label %bb.bn, label %21
+  %21 = zext nneg i32 %.061 to i64
+  %22 = load i64, ptr %i.r, align 8
+  %23 = icmp ult i64 %22, %21
+  %or.cond160 = select i1 %or.cond3, i1 true, i1 %23
+  br i1 %or.cond160, label %bb.bn, label %bb.bp
 
-21:                                               ; preds = %bb.bm
-  %22 = sext i32 %.061 to i64
-  %23 = load i64, ptr %i.r, align 8
-  %24 = icmp ult i64 %23, %22
-  br i1 %24, label %bb.bn, label %bb.bp
-
-bb.bn:                                            ; preds = %21, %bb.bm
+bb.bn:                                            ; preds = %bb.bm
   %i.iw = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   store ptr %i.iw, ptr %0, align 8
   %i.ix = load ptr, ptr %18, align 8              ; 2 uses
@@ -239,7 +237,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i93: 
   store i64 0, ptr %i.is, align 8
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit100
 
-bb.bp:                                            ; preds = %21
+bb.bp:                                            ; preds = %bb.bm
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #27
   %.not217 = icmp eq i32 %.062, 0
   br i1 %.not217, label %._crit_edge, label %.lr.ph

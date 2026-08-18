@@ -204,25 +204,21 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZL12decGetDigitsPhi.exit
 
 bb.c:                                             ; preds = %bb.a
-  %i.c = sub nsw i32 %i.a, %1                     ; 5 uses
+  %i.c = sub nsw i32 %i.a, %1                     ; 4 uses
   %i.d = icmp slt i32 %i.c, 50
-  br i1 %i.d, label %bb.d, label %2
-
-2:                                                ; preds = %bb.c
-  %3 = zext nneg i32 %i.c to i64
-  br label %bb.e
+  %2 = zext nneg i32 %i.c to i64                  ; 2 uses
+  br i1 %i.d, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %4 = sext i32 %i.c to i64
-  %i.e = getelementptr inbounds i8, ptr @_ZL8d2utable, i64 %4
+  %i.e = getelementptr inbounds nuw i8, ptr @_ZL8d2utable, i64 %2
   %i.f = load i8, ptr %i.e, align 1, !tbaa !12    ; 2 uses
   %i.g = zext i8 %i.f to i32
   %i.h = zext i8 %i.f to i64
   br label %bb.e
 
-bb.e:                                             ; preds = %2, %bb.d
-  %.pn34 = phi i64 [ %i.h, %bb.d ], [ %3, %2 ]
-  %i.i = phi i32 [ %i.g, %bb.d ], [ %i.c, %2 ]    ; 4 uses
+bb.e:                                             ; preds = %bb.c, %bb.d
+  %.pn34 = phi i64 [ %i.h, %bb.d ], [ %2, %bb.c ]
+  %i.i = phi i32 [ %i.g, %bb.d ], [ %i.c, %bb.c ] ; 4 uses
   %.neg35 = add i32 %i.c, 1
   %i.j = sub i32 %.neg35, %i.i                    ; 2 uses
   %.not33 = icmp eq i32 %i.j, 1

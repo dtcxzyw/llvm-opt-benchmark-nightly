@@ -203,8 +203,8 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 
 bb.g:                                             ; preds = %bb.e
   %i.n = xor i32 %i.f, -1                         ; 2 uses
-  %i.o = add nsw i32 %4, %i.n                     ; 11 uses
-  %9 = sext i32 %i.o to i64                       ; 4 uses
+  %i.o = add nsw i32 %4, %i.n                     ; 10 uses
+  %9 = zext i32 %i.o to i64                       ; 10 uses
   %i.p = tail call noalias ptr @CRYPTO_malloc(i64 noundef %9, ptr noundef nonnull @.str, i32 noundef 227) #6 ; 17 uses
   %i.q = icmp eq ptr %i.p, null
   %.pre229 = zext nneg i32 %4 to i64              ; 3 uses
@@ -372,7 +372,6 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %i.bl, label %iter.check278, label %._crit_edge185
 
 iter.check278:                                    ; preds = %.preheader174
-  %wide.trip.count215 = zext nneg i32 %i.o to i64 ; 6 uses
   %min.iters.check263 = icmp ult i32 %i.o, 4
   br i1 %min.iters.check263, label %.lr.ph184.preheader, label %vector.main.loop.iter.check264
 
@@ -381,8 +380,8 @@ vector.main.loop.iter.check264:                   ; preds = %iter.check278
   br i1 %min.iters.check265, label %vec.epilog.ph282, label %vector.ph266
 
 vector.ph266:                                     ; preds = %vector.main.loop.iter.check264
-  %i.bm = and i64 %wide.trip.count215, 28
-  %n.vec267 = and i64 %wide.trip.count215, 2147483616 ; 4 uses
+  %i.bm = and i64 %9, 28
+  %n.vec267 = and i64 %9, 2147483616              ; 4 uses
   br label %vector.body268
 
 vector.body268:                                   ; preds = %vector.body268, %vector.ph266
@@ -404,7 +403,7 @@ vector.body268:                                   ; preds = %vector.body268, %ve
   br i1 %i.bt, label %middle.block275, label %vector.body268, !llvm.loop !24
 
 middle.block275:                                  ; preds = %vector.body268
-  %cmp.n276 = icmp eq i64 %n.vec267, %wide.trip.count215
+  %cmp.n276 = icmp eq i64 %n.vec267, %9
   br i1 %cmp.n276, label %._crit_edge185, label %vec.epilog.iter.check280
 
 vec.epilog.iter.check280:                         ; preds = %middle.block275
@@ -413,7 +412,7 @@ vec.epilog.iter.check280:                         ; preds = %middle.block275
 
 vec.epilog.ph282:                                 ; preds = %vector.main.loop.iter.check264, %vec.epilog.iter.check280
   %vec.epilog.resume.val277 = phi i64 [ %n.vec267, %vec.epilog.iter.check280 ], [ 0, %vector.main.loop.iter.check264 ]
-  %n.vec283 = and i64 %wide.trip.count215, 2147483644 ; 3 uses
+  %n.vec283 = and i64 %9, 2147483644              ; 3 uses
   br label %vec.epilog.vector.body284
 
 vec.epilog.vector.body284:                        ; preds = %vec.epilog.vector.body284, %vec.epilog.ph282
@@ -429,7 +428,7 @@ vec.epilog.vector.body284:                        ; preds = %vec.epilog.vector.b
   br i1 %i.bx, label %vec.epilog.middle.block289, label %vec.epilog.vector.body284, !llvm.loop !25
 
 vec.epilog.middle.block289:                       ; preds = %vec.epilog.vector.body284
-  %cmp.n290 = icmp eq i64 %n.vec283, %wide.trip.count215
+  %cmp.n290 = icmp eq i64 %n.vec283, %9
   br i1 %cmp.n290, label %._crit_edge185, label %.lr.ph184.preheader
 
 .lr.ph184.preheader:                              ; preds = %iter.check278, %vec.epilog.iter.check280, %vec.epilog.middle.block289
@@ -445,7 +444,7 @@ vec.epilog.middle.block289:                       ; preds = %vec.epilog.vector.b
   %i.cc = xor i8 %i.cb, %i.bz
   store i8 %i.cc, ptr %i.ca, align 1, !tbaa !8
   %indvars.iv.next213 = add nuw nsw i64 %indvars.iv212, 1 ; 2 uses
-  %exitcond216.not = icmp eq i64 %indvars.iv.next213, %wide.trip.count215
+  %exitcond216.not = icmp eq i64 %indvars.iv.next213, %9
   br i1 %exitcond216.not, label %._crit_edge185, label %.lr.ph184, !llvm.loop !26
 
 ._crit_edge185:                                   ; preds = %.lr.ph184, %middle.block275, %vec.epilog.middle.block289, %.preheader174

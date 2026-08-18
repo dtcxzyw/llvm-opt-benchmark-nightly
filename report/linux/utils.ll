@@ -201,7 +201,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.p, label %pskb_may_pull_reason.exit, label %bb.f, !prof !14
 
 bb.f:                                             ; preds = %bb.e
-  %i.q = sub nsw i32 %i.o, %.pre-phi
+  %i.q = sub nuw nsw i32 %i.o, %.pre-phi
   %i.r = tail call ptr @__pskb_pull_tail(ptr noundef %0, i32 noundef %i.q) #5
   %.not9.i54 = icmp eq ptr %i.r, null
   br i1 %.not9.i54, label %pskb_may_pull_reason.exit, label %._crit_edge81, !prof !14
@@ -289,22 +289,17 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %.critedge, %bb.l
   %i.ax = add i32 %i.ag, %.04078
-  %i.ay = sub nsw i32 %.04277, %i.ag
+  %i.ay = sub nuw nsw i32 %.04277, %i.ag
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %bb.i
-  %.143 = phi i32 [ %i.z, %bb.i ], [ %i.ay, %bb.q ] ; 3 uses
+  %.143 = phi i32 [ %i.z, %bb.i ], [ %i.ay, %bb.q ] ; 2 uses
   %.141 = phi i32 [ %i.y, %bb.i ], [ %i.ax, %bb.q ]
   %i.az = icmp sgt i32 %.143, 0
-  br i1 %i.az, label %bb.h, label %2
+  br i1 %i.az, label %bb.h, label %pskb_may_pull_reason.exit
 
-2:                                                ; preds = %bb.r
-  %.not = icmp eq i32 %.143, 0
-  %3 = select i1 %.not, i32 0, i32 -74
-  br label %pskb_may_pull_reason.exit
-
-pskb_may_pull_reason.exit:                        ; preds = %bb.m, %bb.o, %bb.n, %bb.p, %bb.j, %bb.k, %bb.f, %bb.c, %bb.e, %bb.b, %2
-  %.4 = phi i32 [ -12, %bb.f ], [ %3, %2 ], [ -12, %bb.c ], [ -12, %bb.b ], [ -12, %bb.e ], [ -74, %bb.k ], [ -74, %bb.j ], [ -74, %bb.p ], [ -74, %bb.n ], [ -74, %bb.o ], [ -74, %bb.m ]
+pskb_may_pull_reason.exit:                        ; preds = %bb.m, %bb.o, %bb.n, %bb.p, %bb.j, %bb.k, %bb.r, %bb.f, %bb.c, %bb.e, %bb.b
+  %.4 = phi i32 [ -12, %bb.f ], [ -12, %bb.e ], [ -12, %bb.c ], [ -12, %bb.b ], [ -74, %bb.m ], [ -74, %bb.o ], [ -74, %bb.n ], [ -74, %bb.p ], [ -74, %bb.j ], [ -74, %bb.k ], [ 0, %bb.r ]
   ret i32 %.4
 }
 

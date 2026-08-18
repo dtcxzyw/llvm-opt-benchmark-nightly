@@ -204,54 +204,47 @@ bb.f:                                             ; preds = %bb.e
   %i.aa = getelementptr inbounds nuw i8, ptr %i.y, i64 %indvars.iv.i.i
   %i.ab = load i8, ptr %i.aa, align 1, !noalias !9
   %i.ac = icmp eq i8 %i.ab, 10
-  br i1 %i.ac, label %.split.loop.exit.i.i, label %.preheader152.i.1
+  br i1 %i.ac, label %GetLine.exit.i, label %.preheader152.i.1
 
 .preheader152.i.1:                                ; preds = %.preheader152.i
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.y, i64 %indvars.iv.next.i.i
   %i.ae = load i8, ptr %i.ad, align 1, !noalias !9
   %i.af = icmp eq i8 %i.ae, 10
-  br i1 %i.af, label %.split.loop.exit.i.i, label %.preheader152.i.2
+  br i1 %i.af, label %GetLine.exit.i, label %.preheader152.i.2
 
 .preheader152.i.2:                                ; preds = %.preheader152.i.1
   %indvars.iv.next.i.i.1 = add nuw nsw i64 %indvars.iv.i.i, 2 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.y, i64 %indvars.iv.next.i.i.1
   %i.ah = load i8, ptr %i.ag, align 1, !noalias !9
   %i.ai = icmp eq i8 %i.ah, 10
-  br i1 %i.ai, label %.split.loop.exit.i.i, label %.preheader152.i.3
+  br i1 %i.ai, label %GetLine.exit.i, label %.preheader152.i.3
 
 .preheader152.i.3:                                ; preds = %.preheader152.i.2
   %indvars.iv.next.i.i.2 = add nuw nsw i64 %indvars.iv.i.i, 3 ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.y, i64 %indvars.iv.next.i.i.2
   %i.ak = load i8, ptr %i.aj, align 1, !noalias !9
   %i.al = icmp eq i8 %i.ak, 10
-  br i1 %i.al, label %.split.loop.exit.i.i, label %.preheader152.i.4
+  br i1 %i.al, label %GetLine.exit.i, label %.preheader152.i.4
 
 .preheader152.i.4:                                ; preds = %.preheader152.i.3
   %indvars.iv.next.i.i.3 = add nuw nsw i64 %indvars.iv.i.i, 4 ; 2 uses
   %i.am = getelementptr inbounds nuw i8, ptr %i.y, i64 %indvars.iv.next.i.i.3
   %i.an = load i8, ptr %i.am, align 1, !noalias !9
   %i.ao = icmp eq i8 %i.an, 10
-  br i1 %i.ao, label %.split.loop.exit.i.i, label %bb.g
+  br i1 %i.ao, label %GetLine.exit.i, label %bb.g
 
 bb.g:                                             ; preds = %.preheader152.i.4
   %indvars.iv.next.i.i.4 = add nuw nsw i64 %indvars.iv.i.i, 5 ; 2 uses
   %exitcond.not.i.i.4 = icmp eq i64 %indvars.iv.next.i.i.4, 255
   br i1 %exitcond.not.i.i.4, label %GetLine.exit.i, label %.preheader152.i
 
-.split.loop.exit.i.i:                             ; preds = %.preheader152.i.4, %.preheader152.i.3, %.preheader152.i.2, %.preheader152.i.1, %.preheader152.i
-  %indvars.iv.i.i.lcssa = phi i64 [ %indvars.iv.i.i, %.preheader152.i ], [ %indvars.iv.next.i.i, %.preheader152.i.1 ], [ %indvars.iv.next.i.i.1, %.preheader152.i.2 ], [ %indvars.iv.next.i.i.2, %.preheader152.i.3 ], [ %indvars.iv.next.i.i.3, %.preheader152.i.4 ]
-  %11 = trunc nuw nsw i64 %indvars.iv.i.i.lcssa to i32
-  br label %GetLine.exit.i
-
-GetLine.exit.i:                                   ; preds = %bb.g, %.split.loop.exit.i.i
-  %.0.lcssa.i.i = phi i32 [ %11, %.split.loop.exit.i.i ], [ 255, %bb.g ] ; 2 uses
-  %12 = zext nneg i32 %.0.lcssa.i.i to i64        ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.a, ptr nonnull readonly align 1 %i.y, i64 %12, i1 false), !noalias !9
-  %i.ap = getelementptr inbounds nuw i8, ptr %i.a, i64 %12
+GetLine.exit.i:                                   ; preds = %bb.g, %.preheader152.i.4, %.preheader152.i.3, %.preheader152.i.2, %.preheader152.i.1, %.preheader152.i
+  %.0.lcssa.i.i = phi i64 [ %indvars.iv.i.i, %.preheader152.i ], [ 255, %bb.g ], [ %indvars.iv.next.i.i, %.preheader152.i.1 ], [ %indvars.iv.next.i.i.3, %.preheader152.i.4 ], [ %indvars.iv.next.i.i.1, %.preheader152.i.2 ], [ %indvars.iv.next.i.i.2, %.preheader152.i.3 ] ; 3 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.a, ptr nonnull readonly align 1 %i.y, i64 %.0.lcssa.i.i, i1 false), !noalias !9
+  %i.ap = getelementptr inbounds nuw i8, ptr %i.a, i64 %.0.lcssa.i.i
   store i8 0, ptr %i.ap, align 1, !noalias !9
-  %13 = sext i32 %.0.lcssa.i.i to i64
-  %i.aq = getelementptr i8, ptr %i.y, i64 %13
+  %i.aq = getelementptr i8, ptr %i.y, i64 %.0.lcssa.i.i
   %i.ar = getelementptr i8, ptr %i.aq, i64 1      ; 7 uses
   br label %bb.h
 
@@ -260,56 +253,49 @@ bb.h:                                             ; preds = %bb.m, %GetLine.exit
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 %indvars.iv.i123.i
   %i.at = load i8, ptr %i.as, align 1, !noalias !9
   %i.au = icmp eq i8 %i.at, 10
-  br i1 %i.au, label %.split.loop.exit.i127.i, label %bb.i
+  br i1 %i.au, label %GetLine.exit128.i, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %indvars.iv.next.i124.i = add nuw nsw i64 %indvars.iv.i123.i, 1 ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %i.ar, i64 %indvars.iv.next.i124.i
   %i.aw = load i8, ptr %i.av, align 1, !noalias !9
   %i.ax = icmp eq i8 %i.aw, 10
-  br i1 %i.ax, label %.split.loop.exit.i127.i, label %bb.j
+  br i1 %i.ax, label %GetLine.exit128.i, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   %indvars.iv.next.i124.i.1 = add nuw nsw i64 %indvars.iv.i123.i, 2 ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ar, i64 %indvars.iv.next.i124.i.1
   %i.az = load i8, ptr %i.ay, align 1, !noalias !9
   %i.ba = icmp eq i8 %i.az, 10
-  br i1 %i.ba, label %.split.loop.exit.i127.i, label %bb.k
+  br i1 %i.ba, label %GetLine.exit128.i, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %indvars.iv.next.i124.i.2 = add nuw nsw i64 %indvars.iv.i123.i, 3 ; 2 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ar, i64 %indvars.iv.next.i124.i.2
   %i.bc = load i8, ptr %i.bb, align 1, !noalias !9
   %i.bd = icmp eq i8 %i.bc, 10
-  br i1 %i.bd, label %.split.loop.exit.i127.i, label %bb.l
+  br i1 %i.bd, label %GetLine.exit128.i, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   %indvars.iv.next.i124.i.3 = add nuw nsw i64 %indvars.iv.i123.i, 4 ; 2 uses
   %i.be = getelementptr inbounds nuw i8, ptr %i.ar, i64 %indvars.iv.next.i124.i.3
   %i.bf = load i8, ptr %i.be, align 1, !noalias !9
   %i.bg = icmp eq i8 %i.bf, 10
-  br i1 %i.bg, label %.split.loop.exit.i127.i, label %bb.m
+  br i1 %i.bg, label %GetLine.exit128.i, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   %indvars.iv.next.i124.i.4 = add nuw nsw i64 %indvars.iv.i123.i, 5 ; 2 uses
   %exitcond.not.i125.i.4 = icmp eq i64 %indvars.iv.next.i124.i.4, 255
   br i1 %exitcond.not.i125.i.4, label %GetLine.exit128.i, label %bb.h
 
-.split.loop.exit.i127.i:                          ; preds = %bb.l, %bb.k, %bb.j, %bb.i, %bb.h
-  %indvars.iv.i123.i.lcssa = phi i64 [ %indvars.iv.i123.i, %bb.h ], [ %indvars.iv.next.i124.i, %bb.i ], [ %indvars.iv.next.i124.i.1, %bb.j ], [ %indvars.iv.next.i124.i.2, %bb.k ], [ %indvars.iv.next.i124.i.3, %bb.l ]
-  %14 = trunc nuw nsw i64 %indvars.iv.i123.i.lcssa to i32
-  br label %GetLine.exit128.i
-
-GetLine.exit128.i:                                ; preds = %bb.m, %.split.loop.exit.i127.i
-  %.0.lcssa.i126.i = phi i32 [ %14, %.split.loop.exit.i127.i ], [ 255, %bb.m ] ; 2 uses
-  %15 = zext nneg i32 %.0.lcssa.i126.i to i64     ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.a, ptr nonnull readonly align 1 %i.ar, i64 %15, i1 false), !noalias !9
-  %i.bh = getelementptr inbounds nuw i8, ptr %i.a, i64 %15
+GetLine.exit128.i:                                ; preds = %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h
+  %.0.lcssa.i126.i = phi i64 [ %indvars.iv.i123.i, %bb.h ], [ 255, %bb.m ], [ %indvars.iv.next.i124.i, %bb.i ], [ %indvars.iv.next.i124.i.3, %bb.l ], [ %indvars.iv.next.i124.i.1, %bb.j ], [ %indvars.iv.next.i124.i.2, %bb.k ] ; 3 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.a, ptr nonnull readonly align 1 %i.ar, i64 %.0.lcssa.i126.i, i1 false), !noalias !9
+  %i.bh = getelementptr inbounds nuw i8, ptr %i.a, i64 %.0.lcssa.i126.i
   store i8 0, ptr %i.bh, align 1, !noalias !9
   %i.bi = call ptr @strstr(ptr noundef nonnull dereferenceable(1) %i.a, ptr noundef nonnull dereferenceable(1) @.str.78) #41, !noalias !9
   %i.bj = call i32 (ptr, ptr, ...) @__isoc99_sscanf(ptr noundef %i.bi, ptr noundef nonnull @.str.79, ptr noundef nonnull %i.b, ptr noundef nonnull %i.h, ptr noundef nonnull %i.d, ptr noundef nonnull %i.e, ptr noundef nonnull %i.f) #39, !noalias !9
-  %16 = sext i32 %.0.lcssa.i126.i to i64
-  %i.bk = getelementptr i8, ptr %i.ar, i64 %16    ; 2 uses
+  %i.bk = getelementptr i8, ptr %i.ar, i64 %.0.lcssa.i126.i ; 2 uses
   %i.bl = icmp slt i32 %i.bj, 4
   br i1 %i.bl, label %bb.n, label %bb.o
 
@@ -351,51 +337,45 @@ bb.q:                                             ; preds = %bb.v, %.preheader.i
   %i.bo = getelementptr inbounds nuw i8, ptr %.0112163.i, i64 %indvars.iv.i129.i
   %i.bp = load i8, ptr %i.bo, align 1, !noalias !9
   %i.bq = icmp eq i8 %i.bp, 10
-  br i1 %i.bq, label %.split.loop.exit.i133.i, label %bb.r
+  br i1 %i.bq, label %GetLine.exit134.i, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
   %indvars.iv.next.i130.i = add nuw nsw i64 %indvars.iv.i129.i, 1 ; 2 uses
   %i.br = getelementptr inbounds nuw i8, ptr %.0112163.i, i64 %indvars.iv.next.i130.i
   %i.bs = load i8, ptr %i.br, align 1, !noalias !9
   %i.bt = icmp eq i8 %i.bs, 10
-  br i1 %i.bt, label %.split.loop.exit.i133.i, label %bb.s
+  br i1 %i.bt, label %GetLine.exit134.i, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
   %indvars.iv.next.i130.i.1 = add nuw nsw i64 %indvars.iv.i129.i, 2 ; 2 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %.0112163.i, i64 %indvars.iv.next.i130.i.1
   %i.bv = load i8, ptr %i.bu, align 1, !noalias !9
   %i.bw = icmp eq i8 %i.bv, 10
-  br i1 %i.bw, label %.split.loop.exit.i133.i, label %bb.t
+  br i1 %i.bw, label %GetLine.exit134.i, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
   %indvars.iv.next.i130.i.2 = add nuw nsw i64 %indvars.iv.i129.i, 3 ; 2 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %.0112163.i, i64 %indvars.iv.next.i130.i.2
   %i.by = load i8, ptr %i.bx, align 1, !noalias !9
   %i.bz = icmp eq i8 %i.by, 10
-  br i1 %i.bz, label %.split.loop.exit.i133.i, label %bb.u
+  br i1 %i.bz, label %GetLine.exit134.i, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
   %indvars.iv.next.i130.i.3 = add nuw nsw i64 %indvars.iv.i129.i, 4 ; 2 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %.0112163.i, i64 %indvars.iv.next.i130.i.3
   %i.cb = load i8, ptr %i.ca, align 1, !noalias !9
   %i.cc = icmp eq i8 %i.cb, 10
-  br i1 %i.cc, label %.split.loop.exit.i133.i, label %bb.v
+  br i1 %i.cc, label %GetLine.exit134.i, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
   %indvars.iv.next.i130.i.4 = add nuw nsw i64 %indvars.iv.i129.i, 5 ; 2 uses
   %exitcond.not.i131.i.4 = icmp eq i64 %indvars.iv.next.i130.i.4, 255
   br i1 %exitcond.not.i131.i.4, label %GetLine.exit134.i, label %bb.q
 
-.split.loop.exit.i133.i:                          ; preds = %bb.u, %bb.t, %bb.s, %bb.r, %bb.q
-  %indvars.iv.i129.i.lcssa = phi i64 [ %indvars.iv.i129.i, %bb.q ], [ %indvars.iv.next.i130.i, %bb.r ], [ %indvars.iv.next.i130.i.1, %bb.s ], [ %indvars.iv.next.i130.i.2, %bb.t ], [ %indvars.iv.next.i130.i.3, %bb.u ]
-  %17 = trunc nuw nsw i64 %indvars.iv.i129.i.lcssa to i32
-  br label %GetLine.exit134.i
-
-GetLine.exit134.i:                                ; preds = %bb.v, %.split.loop.exit.i133.i
-  %.0.lcssa.i132.i = phi i32 [ %17, %.split.loop.exit.i133.i ], [ 255, %bb.v ] ; 2 uses
-  %18 = zext nneg i32 %.0.lcssa.i132.i to i64     ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.a, ptr nonnull readonly align 1 %.0112163.i, i64 %18, i1 false), !noalias !9
-  %i.cd = getelementptr inbounds nuw i8, ptr %i.a, i64 %18
+GetLine.exit134.i:                                ; preds = %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q
+  %.0.lcssa.i132.i = phi i64 [ %indvars.iv.i129.i, %bb.q ], [ 255, %bb.v ], [ %indvars.iv.next.i130.i, %bb.r ], [ %indvars.iv.next.i130.i.3, %bb.u ], [ %indvars.iv.next.i130.i.1, %bb.s ], [ %indvars.iv.next.i130.i.2, %bb.t ] ; 3 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.a, ptr nonnull readonly align 1 %.0112163.i, i64 %.0.lcssa.i132.i, i1 false), !noalias !9
+  %i.cd = getelementptr inbounds nuw i8, ptr %i.a, i64 %.0.lcssa.i132.i
   store i8 0, ptr %i.cd, align 1, !noalias !9
   %i.ce = call ptr @strstr(ptr noundef nonnull dereferenceable(1) %i.a, ptr noundef nonnull dereferenceable(1) @.str.81) #41, !noalias !9
   %i.cf = getelementptr inbounds nuw [129 x i8], ptr %i.g, i64 %indvars.iv.i
@@ -404,8 +384,7 @@ GetLine.exit134.i:                                ; preds = %bb.v, %.split.loop.
   br i1 %i.ch, label %bb.x, label %bb.w
 
 bb.w:                                             ; preds = %GetLine.exit134.i
-  %19 = sext i32 %.0.lcssa.i132.i to i64
-  %i.ci = getelementptr i8, ptr %.0112163.i, i64 %19
+  %i.ci = getelementptr i8, ptr %.0112163.i, i64 %.0.lcssa.i132.i
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %.0112.i = getelementptr i8, ptr %i.ci, i64 1   ; 2 uses
   %i.cj = load i32, ptr %i.f, align 4, !noalias !9
@@ -422,56 +401,49 @@ bb.x:                                             ; preds = %GetLine.exit134.i
   %i.cl = getelementptr inbounds nuw i8, ptr %.0112.lcssa.i, i64 %indvars.iv.i135.i
   %i.cm = load i8, ptr %i.cl, align 1, !noalias !9
   %i.cn = icmp eq i8 %i.cm, 10
-  br i1 %i.cn, label %.split.loop.exit.i139.i, label %.thread.i.1
+  br i1 %i.cn, label %GetLine.exit140.i, label %.thread.i.1
 
 .thread.i.1:                                      ; preds = %.thread.i
   %indvars.iv.next.i136.i = add nuw nsw i64 %indvars.iv.i135.i, 1 ; 2 uses
   %i.co = getelementptr inbounds nuw i8, ptr %.0112.lcssa.i, i64 %indvars.iv.next.i136.i
   %i.cp = load i8, ptr %i.co, align 1, !noalias !9
   %i.cq = icmp eq i8 %i.cp, 10
-  br i1 %i.cq, label %.split.loop.exit.i139.i, label %.thread.i.2
+  br i1 %i.cq, label %GetLine.exit140.i, label %.thread.i.2
 
 .thread.i.2:                                      ; preds = %.thread.i.1
   %indvars.iv.next.i136.i.1 = add nuw nsw i64 %indvars.iv.i135.i, 2 ; 2 uses
   %i.cr = getelementptr inbounds nuw i8, ptr %.0112.lcssa.i, i64 %indvars.iv.next.i136.i.1
   %i.cs = load i8, ptr %i.cr, align 1, !noalias !9
   %i.ct = icmp eq i8 %i.cs, 10
-  br i1 %i.ct, label %.split.loop.exit.i139.i, label %.thread.i.3
+  br i1 %i.ct, label %GetLine.exit140.i, label %.thread.i.3
 
 .thread.i.3:                                      ; preds = %.thread.i.2
   %indvars.iv.next.i136.i.2 = add nuw nsw i64 %indvars.iv.i135.i, 3 ; 2 uses
   %i.cu = getelementptr inbounds nuw i8, ptr %.0112.lcssa.i, i64 %indvars.iv.next.i136.i.2
   %i.cv = load i8, ptr %i.cu, align 1, !noalias !9
   %i.cw = icmp eq i8 %i.cv, 10
-  br i1 %i.cw, label %.split.loop.exit.i139.i, label %.thread.i.4
+  br i1 %i.cw, label %GetLine.exit140.i, label %.thread.i.4
 
 .thread.i.4:                                      ; preds = %.thread.i.3
   %indvars.iv.next.i136.i.3 = add nuw nsw i64 %indvars.iv.i135.i, 4 ; 2 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %.0112.lcssa.i, i64 %indvars.iv.next.i136.i.3
   %i.cy = load i8, ptr %i.cx, align 1, !noalias !9
   %i.cz = icmp eq i8 %i.cy, 10
-  br i1 %i.cz, label %.split.loop.exit.i139.i, label %bb.y
+  br i1 %i.cz, label %GetLine.exit140.i, label %bb.y
 
 bb.y:                                             ; preds = %.thread.i.4
   %indvars.iv.next.i136.i.4 = add nuw nsw i64 %indvars.iv.i135.i, 5 ; 2 uses
   %exitcond.not.i137.i.4 = icmp eq i64 %indvars.iv.next.i136.i.4, 255
   br i1 %exitcond.not.i137.i.4, label %GetLine.exit140.i, label %.thread.i
 
-.split.loop.exit.i139.i:                          ; preds = %.thread.i.4, %.thread.i.3, %.thread.i.2, %.thread.i.1, %.thread.i
-  %indvars.iv.i135.i.lcssa = phi i64 [ %indvars.iv.i135.i, %.thread.i ], [ %indvars.iv.next.i136.i, %.thread.i.1 ], [ %indvars.iv.next.i136.i.1, %.thread.i.2 ], [ %indvars.iv.next.i136.i.2, %.thread.i.3 ], [ %indvars.iv.next.i136.i.3, %.thread.i.4 ]
-  %20 = trunc nuw nsw i64 %indvars.iv.i135.i.lcssa to i32
-  br label %GetLine.exit140.i
-
-GetLine.exit140.i:                                ; preds = %bb.y, %.split.loop.exit.i139.i
-  %.0.lcssa.i138.i = phi i32 [ %20, %.split.loop.exit.i139.i ], [ 255, %bb.y ] ; 2 uses
-  %21 = zext nneg i32 %.0.lcssa.i138.i to i64     ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.a, ptr nonnull readonly align 1 %.0112.lcssa.i, i64 %21, i1 false), !noalias !9
-  %i.da = getelementptr inbounds nuw i8, ptr %i.a, i64 %21
+GetLine.exit140.i:                                ; preds = %bb.y, %.thread.i.4, %.thread.i.3, %.thread.i.2, %.thread.i.1, %.thread.i
+  %.0.lcssa.i138.i = phi i64 [ %indvars.iv.i135.i, %.thread.i ], [ 255, %bb.y ], [ %indvars.iv.next.i136.i, %.thread.i.1 ], [ %indvars.iv.next.i136.i.3, %.thread.i.4 ], [ %indvars.iv.next.i136.i.1, %.thread.i.2 ], [ %indvars.iv.next.i136.i.2, %.thread.i.3 ] ; 3 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.a, ptr nonnull readonly align 1 %.0112.lcssa.i, i64 %.0.lcssa.i138.i, i1 false), !noalias !9
+  %i.da = getelementptr inbounds nuw i8, ptr %i.a, i64 %.0.lcssa.i138.i
   store i8 0, ptr %i.da, align 1, !noalias !9
   %i.db = call ptr @strstr(ptr noundef nonnull dereferenceable(1) %i.a, ptr noundef nonnull dereferenceable(1) @.str.83) #41, !noalias !9
   %i.dc = call i32 (ptr, ptr, ...) @__isoc99_sscanf(ptr noundef %i.db, ptr noundef nonnull @.str.84, ptr noundef nonnull %i.c) #39, !noalias !9
-  %22 = sext i32 %.0.lcssa.i138.i to i64
-  %i.dd = getelementptr i8, ptr %.0112.lcssa.i, i64 %22
+  %i.dd = getelementptr i8, ptr %.0112.lcssa.i, i64 %.0.lcssa.i138.i
   %i.de = icmp slt i32 %i.dc, 1
   br i1 %i.de, label %bb.z, label %bb.aa
 
@@ -787,55 +759,48 @@ bb.ae:                                            ; preds = %bb.aj, %.lr.ph182.i
   %i.hh = getelementptr inbounds nuw i8, ptr %.2.i, i64 %indvars.iv.i141.i
   %i.hi = load i8, ptr %i.hh, align 1, !noalias !9
   %i.hj = icmp eq i8 %i.hi, 10
-  br i1 %i.hj, label %.split.loop.exit.i145.i, label %bb.af
+  br i1 %i.hj, label %GetLine.exit146.i, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
   %indvars.iv.next.i142.i = add nuw nsw i64 %indvars.iv.i141.i, 1 ; 2 uses
   %i.hk = getelementptr inbounds nuw i8, ptr %.2.i, i64 %indvars.iv.next.i142.i
   %i.hl = load i8, ptr %i.hk, align 1, !noalias !9
   %i.hm = icmp eq i8 %i.hl, 10
-  br i1 %i.hm, label %.split.loop.exit.i145.i, label %bb.ag
+  br i1 %i.hm, label %GetLine.exit146.i, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
   %indvars.iv.next.i142.i.1 = add nuw nsw i64 %indvars.iv.i141.i, 2 ; 2 uses
   %i.hn = getelementptr inbounds nuw i8, ptr %.2.i, i64 %indvars.iv.next.i142.i.1
   %i.ho = load i8, ptr %i.hn, align 1, !noalias !9
   %i.hp = icmp eq i8 %i.ho, 10
-  br i1 %i.hp, label %.split.loop.exit.i145.i, label %bb.ah
+  br i1 %i.hp, label %GetLine.exit146.i, label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag
   %indvars.iv.next.i142.i.2 = add nuw nsw i64 %indvars.iv.i141.i, 3 ; 2 uses
   %i.hq = getelementptr inbounds nuw i8, ptr %.2.i, i64 %indvars.iv.next.i142.i.2
   %i.hr = load i8, ptr %i.hq, align 1, !noalias !9
   %i.hs = icmp eq i8 %i.hr, 10
-  br i1 %i.hs, label %.split.loop.exit.i145.i, label %bb.ai
+  br i1 %i.hs, label %GetLine.exit146.i, label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah
   %indvars.iv.next.i142.i.3 = add nuw nsw i64 %indvars.iv.i141.i, 4 ; 2 uses
   %i.ht = getelementptr inbounds nuw i8, ptr %.2.i, i64 %indvars.iv.next.i142.i.3
   %i.hu = load i8, ptr %i.ht, align 1, !noalias !9
   %i.hv = icmp eq i8 %i.hu, 10
-  br i1 %i.hv, label %.split.loop.exit.i145.i, label %bb.aj
+  br i1 %i.hv, label %GetLine.exit146.i, label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai
   %indvars.iv.next.i142.i.4 = add nuw nsw i64 %indvars.iv.i141.i, 5 ; 2 uses
   %exitcond.not.i143.i.4 = icmp eq i64 %indvars.iv.next.i142.i.4, 255
   br i1 %exitcond.not.i143.i.4, label %GetLine.exit146.i, label %bb.ae
 
-.split.loop.exit.i145.i:                          ; preds = %bb.ai, %bb.ah, %bb.ag, %bb.af, %bb.ae
-  %indvars.iv.i141.i.lcssa = phi i64 [ %indvars.iv.i141.i, %bb.ae ], [ %indvars.iv.next.i142.i, %bb.af ], [ %indvars.iv.next.i142.i.1, %bb.ag ], [ %indvars.iv.next.i142.i.2, %bb.ah ], [ %indvars.iv.next.i142.i.3, %bb.ai ]
-  %23 = trunc nuw nsw i64 %indvars.iv.i141.i.lcssa to i32
-  br label %GetLine.exit146.i
-
-GetLine.exit146.i:                                ; preds = %bb.aj, %.split.loop.exit.i145.i
-  %.0.lcssa.i144.i = phi i32 [ %23, %.split.loop.exit.i145.i ], [ 255, %bb.aj ] ; 2 uses
-  %24 = zext nneg i32 %.0.lcssa.i144.i to i64     ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.a, ptr nonnull readonly align 1 %.2.i, i64 %24, i1 false), !noalias !9
-  %i.hw = getelementptr inbounds nuw i8, ptr %i.a, i64 %24
+GetLine.exit146.i:                                ; preds = %bb.aj, %bb.ai, %bb.ah, %bb.ag, %bb.af, %bb.ae
+  %.0.lcssa.i144.i = phi i64 [ %indvars.iv.i141.i, %bb.ae ], [ 255, %bb.aj ], [ %indvars.iv.next.i142.i, %bb.af ], [ %indvars.iv.next.i142.i.3, %bb.ai ], [ %indvars.iv.next.i142.i.1, %bb.ag ], [ %indvars.iv.next.i142.i.2, %bb.ah ] ; 3 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.a, ptr nonnull readonly align 1 %.2.i, i64 %.0.lcssa.i144.i, i1 false), !noalias !9
+  %i.hw = getelementptr inbounds nuw i8, ptr %i.a, i64 %.0.lcssa.i144.i
   store i8 0, ptr %i.hw, align 1, !noalias !9
   %i.hx = call i32 (ptr, ptr, ...) @__isoc99_sscanf(ptr noundef nonnull %i.a, ptr noundef nonnull @.str.86, ptr noundef nonnull %i.i, ptr noundef nonnull %i.j, ptr noundef nonnull %i.k, ptr noundef nonnull %i.l, ptr noundef nonnull %i.m, ptr noundef nonnull %i.n, ptr noundef nonnull %i.o, ptr noundef nonnull %i.p, ptr noundef nonnull %i.q) #39, !noalias !9
-  %25 = sext i32 %.0.lcssa.i144.i to i64
-  %i.hy = getelementptr i8, ptr %.2.i, i64 %25
+  %i.hy = getelementptr i8, ptr %.2.i, i64 %.0.lcssa.i144.i
   %i.hz = icmp eq i32 %i.hx, 9
   br i1 %i.hz, label %bb.ak, label %bb.al
 
@@ -1238,9 +1203,9 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.ai = getelementptr inbounds nuw i8, ptr %i.b, i64 10
-  %i.aj = sub nsw i32 %0, %i.z
-  %i.ak = shl nsw i32 %i.aj, 1
-  %i.al = zext i32 %i.ak to i64
+  %i.aj = sub nuw nsw i32 %0, %i.z
+  %i.ak = shl nuw nsw i32 %i.aj, 1
+  %i.al = zext nneg i32 %i.ak to i64
   %i.am = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.al ; 2 uses
   %.val165 = load i8, ptr %i.am, align 1
   %i.an = getelementptr i8, ptr %i.am, i64 1
@@ -1456,8 +1421,8 @@ bb.k:                                             ; preds = %bb.i
   %i.fp = getelementptr inbounds nuw i8, ptr %.8.val, i64 %i.fo
   %i.fq = sub nsw i32 %0, %i.ej
   %i.fr = shl nsw i32 %i.fq, 1
-  %1 = sext i32 %i.fr to i64
-  %i.fs = getelementptr inbounds i8, ptr %i.fp, i64 %1
+  %1 = zext nneg i32 %i.fr to i64
+  %i.fs = getelementptr inbounds nuw i8, ptr %i.fp, i64 %1
   %i.ft = getelementptr inbounds nuw i8, ptr %i.fs, i64 %i.a
   %i.fu = getelementptr inbounds nuw i8, ptr %i.ft, i64 %i.et
   %i.fv = getelementptr inbounds nuw i8, ptr %i.fu, i64 16

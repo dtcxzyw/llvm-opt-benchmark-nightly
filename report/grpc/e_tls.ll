@@ -201,41 +201,40 @@ bb.t:                                             ; preds = %bb.s, %bb.r, %bb.q
   br i1 %.not86, label %bb.z, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %i.an = call i32 @EVP_CIPHER_CTX_block_size(ptr noundef nonnull %i.h) #5 ; 4 uses
-  %i.ao = zext i32 %i.an to i64                   ; 5 uses
+  %i.an = call i32 @EVP_CIPHER_CTX_block_size(ptr noundef nonnull %i.h) #5 ; 6 uses
+  %i.ao = zext i32 %i.an to i64                   ; 3 uses
   %i.ap = urem i32 %i.al, %i.an
-  %.zext = zext nneg i32 %i.ap to i64
-  %13 = sub nsw i64 %i.ao, %.zext
-  %14 = urem i64 %13, %i.ao                       ; 8 uses
-  %.not87 = icmp eq i64 %14, 0
+  %.lhs.trunc = sub i32 %i.an, %i.ap
+  %13 = urem i32 %.lhs.trunc, %i.an               ; 4 uses
+  %.zext96 = zext i32 %13 to i64                  ; 6 uses
+  %.not87 = icmp eq i32 %13, 0
   br i1 %.not87, label %._crit_edge, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #5
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #5
-  %15 = trunc nuw i64 %14 to i32                  ; 2 uses
-  %i.aq = call i32 @EVP_EncryptUpdate(ptr noundef nonnull %i.h, ptr noundef nonnull %i.e, ptr noundef nonnull %i.f, ptr noundef nonnull %i.b, i32 noundef %15) #5
+  %i.aq = call i32 @EVP_EncryptUpdate(ptr noundef nonnull %i.h, ptr noundef nonnull %i.e, ptr noundef nonnull %i.f, ptr noundef nonnull %i.b, i32 noundef %13) #5
   %.not88.not = icmp eq i32 %i.aq, 0
   br i1 %.not88.not, label %.critedge, label %_ZL14OPENSSL_memcpyPvPKvm.exit92
 
 _ZL14OPENSSL_memcpyPvPKvm.exit92:                 ; preds = %bb.v
-  %i.ar = sub nsw i64 %i.ao, %14
+  %i.ar = sub nuw nsw i64 %i.ao, %.zext96
   %i.as = load i32, ptr %i.d, align 4, !tbaa !25
   %i.at = sext i32 %i.as to i64
   %i.au = getelementptr inbounds i8, ptr %1, i64 %i.at
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.au, ptr nonnull readonly align 16 %i.e, i64 %i.ar, i1 false)
   %i.av = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.ao
-  %i.aw = sub nsw i64 0, %14
+  %i.aw = sub nsw i64 0, %.zext96
   %i.ax = getelementptr inbounds i8, ptr %i.av, i64 %i.aw
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %2, ptr nonnull readonly align 1 %i.ax, i64 %14, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %2, ptr nonnull readonly align 1 %i.ax, i64 %.zext96, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #5
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.u, %_ZL14OPENSSL_memcpyPvPKvm.exit92
-  %.pre-phi = phi i32 [ %15, %_ZL14OPENSSL_memcpyPvPKvm.exit92 ], [ 0, %bb.u ]
-  %i.ay = getelementptr inbounds nuw i8, ptr %2, i64 %14
-  %i.az = getelementptr inbounds nuw i8, ptr %i.b, i64 %14
+  %.pre-phi = phi i32 [ %13, %_ZL14OPENSSL_memcpyPvPKvm.exit92 ], [ 0, %bb.u ]
+  %i.ay = getelementptr inbounds nuw i8, ptr %2, i64 %.zext96
+  %i.az = getelementptr inbounds nuw i8, ptr %i.b, i64 %.zext96
   %i.ba = load i32, ptr %i.c, align 4, !tbaa !25
   %i.bb = sub i32 %i.ba, %.pre-phi
   %i.bc = call i32 @EVP_EncryptUpdate(ptr noundef nonnull %i.h, ptr noundef %i.ay, ptr noundef nonnull %i.d, ptr noundef nonnull %i.az, i32 noundef %i.bb) #5
@@ -245,7 +244,7 @@ _ZL14OPENSSL_memcpyPvPKvm.exit92:                 ; preds = %bb.v
 bb.w:                                             ; preds = %._crit_edge
   %i.bd = load i32, ptr %i.d, align 4, !tbaa !25
   %i.be = sext i32 %i.bd to i64
-  %i.bf = add nsw i64 %14, %i.be                  ; 3 uses
+  %i.bf = add nsw i64 %.zext96, %i.be             ; 3 uses
   %i.bg = icmp ugt i32 %i.an, 1
   br i1 %i.bg, label %_ZL14OPENSSL_memsetPvim.exit, label %bb.x
 
@@ -256,7 +255,7 @@ _ZL14OPENSSL_memsetPvim.exit:                     ; preds = %bb.w
   %i.bj = add nuw nsw i64 %8, %i.bi
   %i.bk = urem i64 %i.bj, %i.ao
   %i.bl = trunc nuw i64 %i.bk to i32
-  %i.bm = sub i32 %i.an, %i.bl                    ; 3 uses
+  %i.bm = sub nuw i32 %i.an, %i.bl                ; 3 uses
   %i.bn = zext i32 %i.bm to i64
   %i.bo = trunc i32 %i.bm to i8
   %i.bp = add i8 %i.bo, -1

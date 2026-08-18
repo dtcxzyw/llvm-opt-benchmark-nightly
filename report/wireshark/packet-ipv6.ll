@@ -203,13 +203,12 @@ bb.bs:                                            ; preds = %bb.br
 
 bb.bt:                                            ; preds = %bb.bs, %bb.br
   %.0130.i.i = phi i32 [ %i.km, %bb.bs ], [ %i.kf, %bb.br ] ; 2 uses
-  %i.kn = sub nsw i32 %i.jt, %i.js                ; 2 uses
-  %i.ko = trunc nsw i32 %i.kn to i16              ; 2 uses
+  %i.kn = sub nuw nsw i32 %i.jt, %i.js            ; 2 uses
+  %i.ko = trunc nuw nsw i32 %i.kn to i16          ; 2 uses
   %i.kp = zext i8 %i.jh to i32
   %i.kq = shl nuw nsw i32 %i.kp, 2                ; 5 uses
-  %5 = and i32 %i.kn, 65535
   %i.kr = icmp ne i32 %i.jt, %i.js
-  %i.ks = icmp samesign ule i32 %i.kq, %5
+  %i.ks = icmp samesign ule i32 %i.kq, %i.kn
   %i.kt = select i1 %i.kr, i1 %i.ks, i1 false
   br i1 %i.kt, label %.lr.ph.i.i, label %._crit_edge.i.i
 
@@ -499,7 +498,7 @@ bb.dm:                                            ; preds = %dissect_opt_ioam_tr
   br label %dissect_opt_ioam_trace.exit.i
 
 bb.dn:                                            ; preds = %dissect_opt_ioam_trace_node.exit.i.i
-  %i.pf = sub i16 %.0123167.i.i, %i.la            ; 3 uses
+  %i.pf = sub nuw nsw i16 %.0123167.i.i, %i.la    ; 3 uses
   br i1 %i.lc, label %.backedge.i.i, label %bb.do
 
 bb.do:                                            ; preds = %bb.dn
@@ -522,8 +521,8 @@ bb.dq:                                            ; preds = %bb.do
   %i.pq = add i32 %.21.i.i.i, 1
   %i.pr = call ptr @proto_tree_add_item_ret_uint(ptr noundef %i.pm, i32 noundef %i.pp, ptr noundef %0, i32 noundef %i.pq, i32 noundef 3, i32 noundef 0, ptr noundef nonnull %i.d) ; 0 uses
   %i.ps = add i32 %.21.i.i.i, 4                   ; 4 uses
-  %i.pt = add i16 %i.pf, -4                       ; 3 uses
-  %i.pu = zext i16 %i.pt to i32
+  %i.pt = add nsw i16 %i.pf, -4                   ; 3 uses
+  %i.pu = zext nneg i16 %i.pt to i32
   %.not149.i.i = icmp samesign ugt i32 %i.pk, %i.pu
   br i1 %.not149.i.i, label %.split.thread.i.i, label %bb.dr
 
@@ -539,14 +538,14 @@ bb.ds:                                            ; preds = %bb.dr
   %i.pw = load i32, ptr @hf_ipv6_opt_ioam_trace_node_oss_data, align 4
   %i.px = call ptr @proto_tree_add_item(ptr noundef %i.pm, i32 noundef %i.pw, ptr noundef %0, i32 noundef %i.ps, i32 noundef %i.pk, i32 noundef 0) ; 0 uses
   %i.py = trunc nuw nsw i32 %i.pk to i16
-  %i.pz = sub i16 %i.pt, %i.py
+  %i.pz = sub nuw nsw i16 %i.pt, %i.py
   %i.qa = add i32 %i.pk, %i.ps
   br label %.backedge.i.i
 
 .backedge.i.i:                                    ; preds = %bb.ds, %bb.dr, %bb.dn
   %.1131.be.i.i = phi i32 [ %.21.i.i.i, %bb.dn ], [ %i.ps, %bb.dr ], [ %i.qa, %bb.ds ] ; 2 uses
   %.0123.be.i.i = phi i16 [ %i.pf, %bb.dn ], [ %i.pt, %bb.dr ], [ %i.pz, %bb.ds ] ; 4 uses
-  %i.qb = zext i16 %.0123.be.i.i to i32
+  %i.qb = zext nneg i16 %.0123.be.i.i to i32
   %i.qc = icmp ne i16 %.0123.be.i.i, 0
   %i.qd = icmp samesign ule i32 %i.kq, %i.qb
   %i.qe = select i1 %i.qc, i1 %i.qd, i1 false

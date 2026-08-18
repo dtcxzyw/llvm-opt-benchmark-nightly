@@ -201,7 +201,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.cu, label %read_buf.exit, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.cv = sub i32 %i.cm, %spec.select.i
+  %i.cv = sub nuw i32 %i.cm, %spec.select.i
   store i32 %i.cv, ptr %i.cl, align 8, !tbaa !72
   %i.cw = load ptr, ptr %i.ck, align 8, !tbaa !73
   %i.cx = zext i32 %spec.select.i to i64          ; 3 uses
@@ -320,7 +320,7 @@ bb.o:                                             ; preds = %.loopexit
 
 .critedge:                                        ; preds = %.loopexit, %bb.f, %bb.o
   %i.fl = getelementptr inbounds nuw i8, ptr %0, i64 5944 ; 3 uses
-  %i.fm = load i64, ptr %i.fl, align 8, !tbaa !42 ; 6 uses
+  %i.fm = load i64, ptr %i.fl, align 8, !tbaa !42 ; 5 uses
   %i.fn = load i64, ptr %i.c, align 8, !tbaa !52  ; 3 uses
   %i.fo = icmp ult i64 %i.fm, %i.fn
   br i1 %i.fo, label %bb.p, label %bb.t
@@ -349,15 +349,14 @@ bb.r:                                             ; preds = %bb.p
   br i1 %i.ga, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %bb.r
-  %1 = sub nuw nsw i64 %i.fz, %i.fm
-  %i.gb = sub i64 %i.fn, %i.fm
-  %spec.select = tail call i64 @llvm.umin.i64(i64 %1, i64 %i.gb) ; 2 uses
+  %1 = tail call i64 @llvm.umin.i64(i64 %i.fz, i64 %i.fn)
+  %i.gb = sub nuw nsw i64 %1, %i.fm               ; 2 uses
   %i.gc = load ptr, ptr %i.g, align 8, !tbaa !39
   %i.gd = getelementptr inbounds nuw i8, ptr %i.gc, i64 %i.fm
-  %i.ge = and i64 %spec.select, 4294967295
+  %i.ge = and i64 %i.gb, 4294967295
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.gd, i8 0, i64 %i.ge, i1 false)
   %i.gf = load i64, ptr %i.fl, align 8, !tbaa !42
-  %i.gg = add i64 %i.gf, %spec.select
+  %i.gg = add i64 %i.gf, %i.gb
   br label %.sink.split
 
 .sink.split:                                      ; preds = %bb.s, %bb.q
@@ -760,7 +759,7 @@ bb.h:                                             ; preds = %flush_pending.exit
   %i.dh = load i64, ptr %i.n, align 8, !tbaa !64
   %i.di = add nsw i64 %i.dh, %i.cw
   store i64 %i.di, ptr %i.n, align 8, !tbaa !64
-  %i.dj = sub i32 %.1223, %spec.select264
+  %i.dj = sub nuw i32 %.1223, %spec.select264
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %flush_pending.exit
@@ -779,7 +778,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.dp, label %read_buf.exit, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.dq = sub i32 %i.do, %spec.select.i268
+  %i.dq = sub nuw i32 %i.do, %spec.select.i268
   store i32 %i.dq, ptr %i.dn, align 8, !tbaa !72
   %i.dr = load ptr, ptr %i.dk, align 8, !tbaa !73
   %i.ds = zext i32 %spec.select.i268 to i64       ; 3 uses
@@ -997,7 +996,7 @@ bb.af:                                            ; preds = %bb.ae
   br i1 %.not259, label %bb.ak, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
-  %i.hl = sub nsw i64 %i.hi, %i.hk
+  %i.hl = sub nuw nsw i64 %i.hi, %i.hk
   store i64 %i.hl, ptr %i.n, align 8, !tbaa !64
   %i.hm = sub i32 %i.gq, %i.hj                    ; 2 uses
   store i32 %i.hm, ptr %i.m, align 4, !tbaa !63
@@ -1042,7 +1041,7 @@ bb.al:                                            ; preds = %bb.ak
   %i.ie = load ptr, ptr %i.s, align 8, !tbaa !39
   %i.if = zext i32 %i.ia to i64
   %i.ig = getelementptr inbounds nuw i8, ptr %i.ie, i64 %i.if ; 3 uses
-  %i.ih = sub i32 %i.id, %spec.select265
+  %i.ih = sub nuw i32 %i.id, %spec.select265
   store i32 %i.ih, ptr %i.ic, align 8, !tbaa !72
   %i.ii = load ptr, ptr %i.ib, align 8, !tbaa !73
   %i.ij = zext i32 %spec.select265 to i64         ; 3 uses

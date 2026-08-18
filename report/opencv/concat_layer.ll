@@ -203,7 +203,7 @@ bb.n:                                             ; preds = %bb.m
   br label %_ZN2cv3dnn14dnn5_v20260605L14normalize_axisEii.exit
 
 bb.o:                                             ; preds = %bb.m
-  %i.v = sub nsw i32 %i.g, %i.j
+  %i.v = sub nuw nsw i32 %i.g, %i.j
   br label %_ZN2cv3dnn14dnn5_v20260605L14normalize_axisEii.exit
 
 _ZN2cv3dnn14dnn5_v20260605L14normalize_axisEii.exit: ; preds = %bb.o, %bb.n, %bb.l
@@ -606,11 +606,11 @@ bb.n:                                             ; preds = %bb.m
   br label %_ZN2cv3dnn14dnn5_v20260605L14normalize_axisEiRKNS_8MatShapeE.exit.split
 
 bb.o:                                             ; preds = %bb.m
-  %i.ac = sub nsw i32 %i.x, %narrow.i.i
+  %i.ac = sub nuw nsw i32 %i.x, %narrow.i.i
   br label %_ZN2cv3dnn14dnn5_v20260605L14normalize_axisEiRKNS_8MatShapeE.exit.split
 
 _ZN2cv3dnn14dnn5_v20260605L14normalize_axisEiRKNS_8MatShapeE.exit.split: ; preds = %bb.o, %bb.n, %bb.l
-  %i.ad = phi i32 [ %i.ac, %bb.o ], [ %i.ab, %bb.n ], [ %i.x, %bb.l ] ; 6 uses
+  %i.ad = phi i32 [ %i.ac, %bb.o ], [ %i.ab, %bb.n ], [ %i.x, %bb.l ] ; 5 uses
   %i.ae = load ptr, ptr %i.a, align 8, !tbaa !89
   %.not126 = icmp eq ptr %i.ae, %i.v
   br i1 %.not126, label %_ZN2cv3dnn14dnn5_v20260605L14normalize_axisEiRKNS_8MatShapeE.exit.split.._crit_edge_crit_edge, label %.lr.ph125
@@ -622,9 +622,8 @@ _ZN2cv3dnn14dnn5_v20260605L14normalize_axisEiRKNS_8MatShapeE.exit.split.._crit_e
 .lr.ph125:                                        ; preds = %_ZN2cv3dnn14dnn5_v20260605L14normalize_axisEiRKNS_8MatShapeE.exit.split
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.ag = getelementptr inbounds nuw i8, ptr %15, i64 12 ; 3 uses
-  %i.ah = zext nneg i32 %i.ad to i64
+  %i.ah = zext i32 %i.ad to i64                   ; 2 uses
   %i.ai = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %i.ah
-  %20 = zext i32 %i.ad to i64
   br label %bb.s
 
 ._crit_edge:                                      ; preds = %bb.aq, %_ZN2cv3dnn14dnn5_v20260605L14normalize_axisEiRKNS_8MatShapeE.exit.split.._crit_edge_crit_edge
@@ -806,7 +805,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit86: ; preds = %bb.
 
 bb.ac:                                            ; preds = %.lr.ph, %bb.al
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.al ] ; 5 uses
-  %.not51 = icmp eq i64 %indvars.iv, %20
+  %.not51 = icmp eq i64 %indvars.iv, %i.ah
   br i1 %.not51, label %bb.al, label %_ZN2cv8MatShapeixEm.exit94
 
 _ZN2cv8MatShapeixEm.exit94:                       ; preds = %bb.ac

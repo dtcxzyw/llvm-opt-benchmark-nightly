@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %.split.us
   br i1 %i.aa, label %.thread, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.ab = sub nsw i64 %i.n, %i.x
+  %i.ab = sub nuw nsw i64 %i.n, %i.x
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %.split.us
@@ -221,25 +221,18 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %i.ag = sub nuw i64 %i.ac, %i.x
-  %spec.select.i.us = tail call i64 @llvm.umin.i64(i64 range(i64 -2147483646, 2147483648) %.0.us, i64 %i.ag) ; 3 uses
+  %spec.select.i.us = tail call i64 @llvm.umin.i64(i64 range(i64 -2147483646, 2147483648) %.0.us, i64 %i.ag) ; 2 uses
   %i.ah = load ptr, ptr %i.t, align 8, !tbaa !43
   %i.ai = tail call ptr %i.ah(ptr noundef nonnull %i.c, i64 noundef %i.x, i64 noundef %spec.select.i.us, i32 noundef 0) #27, !inline_history !44
   %.not.i.us = icmp eq ptr %i.ai, null
-  br i1 %.not.i.us, label %.thread, label %4
+  br i1 %.not.i.us, label %.thread, label %fmap_readn.exit.us
 
-4:                                                ; preds = %bb.h
-  %5 = icmp ult i64 %spec.select.i.us, 2147483648
-  %6 = select i1 %5, i64 %spec.select.i.us, i64 -1
-  br label %fmap_readn.exit.us
-
-fmap_readn.exit.us:                               ; preds = %4, %bb.f
-  %.020.i.us = phi i64 [ 0, %bb.f ], [ %6, %4 ]   ; 3 uses
+fmap_readn.exit.us:                               ; preds = %bb.h, %bb.f
+  %.020.i.us = phi i64 [ 0, %bb.f ], [ %spec.select.i.us, %bb.h ] ; 2 uses
   %i.aj = icmp ult i64 %.020.i.us, %i.e
-  %7 = icmp eq i64 %.020.i.us, -1
-  %or.cond8.us = or i1 %i.aj, %7
   %i.ak = trunc nuw nsw i64 %.020.i.us to i32
   %i.al = add i32 %.044.us, %i.ak
-  br i1 %or.cond8.us, label %.thread, label %.split.us
+  br i1 %i.aj, label %.thread, label %.split.us
 
 .split:                                           ; preds = %bb.c
   %i.am = icmp eq i32 %2, 1
@@ -261,7 +254,7 @@ bb.i:                                             ; preds = %.split.split.us
   br i1 %i.aq, label %.thread, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.ar = sub nsw i64 %i.n, %i.an
+  %i.ar = sub nuw nsw i64 %i.n, %i.an
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %.split.split.us
@@ -278,7 +271,7 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.l
   %i.aw = sub nuw i64 %i.as, %i.an
-  %spec.select.i.us75 = call i64 @llvm.umin.i64(i64 range(i64 -2147483646, 2147483648) %.0.us73, i64 %i.aw) ; 4 uses
+  %spec.select.i.us75 = call i64 @llvm.umin.i64(i64 range(i64 -2147483646, 2147483648) %.0.us73, i64 %i.aw) ; 3 uses
   %i.ax = load ptr, ptr %i.t, align 8, !tbaa !43
   %i.ay = call ptr %i.ax(ptr noundef nonnull %i.c, i64 noundef %i.an, i64 noundef %spec.select.i.us75, i32 noundef 0) #27, !inline_history !44 ; 2 uses
   %.not.i.us76 = icmp eq ptr %i.ay, null
@@ -286,16 +279,12 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.a, ptr nonnull align 1 %i.ay, i64 %spec.select.i.us75, i1 false)
-  %8 = icmp ult i64 %spec.select.i.us75, 2147483648
-  %9 = select i1 %8, i64 %spec.select.i.us75, i64 -1
   br label %fmap_readn.exit.us77
 
 fmap_readn.exit.us77:                             ; preds = %bb.n, %bb.k
-  %.020.i.us78 = phi i64 [ 0, %bb.k ], [ %9, %bb.n ] ; 4 uses
+  %.020.i.us78 = phi i64 [ 0, %bb.k ], [ %spec.select.i.us75, %bb.n ] ; 3 uses
   %i.az = icmp ult i64 %.020.i.us78, %i.e
-  %10 = icmp eq i64 %.020.i.us78, -1
-  %or.cond8.us79 = or i1 %i.az, %10
-  br i1 %or.cond8.us79, label %.thread, label %cli_memmem.exit.us
+  br i1 %i.az, label %.thread, label %cli_memmem.exit.us
 
 cli_memmem.exit.us:                               ; preds = %fmap_readn.exit.us77
   %i.ba = trunc nuw nsw i64 %.020.i.us78 to i32
@@ -318,7 +307,7 @@ bb.o:                                             ; preds = %.split.split
   br i1 %i.bi, label %.thread, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.bj = sub nsw i64 %i.n, %i.bf
+  %i.bj = sub nuw nsw i64 %i.n, %i.bf
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %.split.split
@@ -335,7 +324,7 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.r
   %i.bo = sub nuw i64 %i.bk, %i.bf
-  %spec.select.i = call i64 @llvm.umin.i64(i64 range(i64 -2147483646, 2147483648) %.0, i64 %i.bo) ; 4 uses
+  %spec.select.i = call i64 @llvm.umin.i64(i64 range(i64 -2147483646, 2147483648) %.0, i64 %i.bo) ; 3 uses
   %i.bp = load ptr, ptr %i.t, align 8, !tbaa !43
   %i.bq = call ptr %i.bp(ptr noundef nonnull %i.c, i64 noundef %i.bf, i64 noundef %spec.select.i, i32 noundef 0) #27, !inline_history !44 ; 2 uses
   %.not.i = icmp eq ptr %i.bq, null
@@ -343,16 +332,12 @@ bb.s:                                             ; preds = %bb.r
 
 bb.t:                                             ; preds = %bb.s
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.a, ptr nonnull align 1 %i.bq, i64 %spec.select.i, i1 false)
-  %11 = icmp ult i64 %spec.select.i, 2147483648
-  %12 = select i1 %11, i64 %spec.select.i, i64 -1
   br label %fmap_readn.exit
 
 fmap_readn.exit:                                  ; preds = %bb.q, %bb.t
-  %.020.i = phi i64 [ 0, %bb.q ], [ %12, %bb.t ]  ; 3 uses
+  %.020.i = phi i64 [ 0, %bb.q ], [ %spec.select.i, %bb.t ] ; 2 uses
   %i.br = icmp ult i64 %.020.i, %i.e
-  %13 = icmp eq i64 %.020.i, -1
-  %or.cond8 = or i1 %i.br, %13
-  br i1 %or.cond8, label %.thread, label %.preheader.i
+  br i1 %i.br, label %.thread, label %.preheader.i
 
 .preheader.i:                                     ; preds = %fmap_readn.exit
   %i.bs = trunc nuw nsw i64 %.020.i to i32        ; 2 uses

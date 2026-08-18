@@ -81,8 +81,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.s, label %.lr.ph.preheader, label %.loopexit
 
 .lr.ph.preheader:                                 ; preds = %.preheader94
-  %7 = zext nneg i32 %2 to i64
-  %wide.trip.count = zext nneg i32 %2 to i64
+  %wide.trip.count = zext nneg i32 %2 to i64      ; 2 uses
   br label %.lr.ph
 
 .preheader:                                       ; preds = %bb.f
@@ -117,7 +116,7 @@ bb.g:                                             ; preds = %.lr.ph100
   %i.aa = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %indvars.iv ; 2 uses
   %i.ab = load double, ptr %i.aa, align 8, !tbaa !9 ; 2 uses
   %i.ac = fcmp une double %i.ab, 0.000000e+00
-  %i.ad = sub nsw i64 %7, %indvars.iv             ; 2 uses
+  %i.ad = sub nuw nsw i64 %wide.trip.count, %indvars.iv ; 2 uses
   br i1 %i.ac, label %bb.h, label %.lr.ph._crit_edge
 
 bb.h:                                             ; preds = %.lr.ph
@@ -126,7 +125,7 @@ bb.h:                                             ; preds = %.lr.ph
   br label %.lr.ph._crit_edge
 
 .lr.ph._crit_edge:                                ; preds = %.lr.ph, %bb.h
-  %i.ag = getelementptr inbounds [8 x i8], ptr %.18296, i64 %i.ad
+  %i.ag = getelementptr inbounds nuw [8 x i8], ptr %.18296, i64 %i.ad
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !13

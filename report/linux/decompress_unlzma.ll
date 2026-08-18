@@ -17,7 +17,7 @@ target triple = "x86_64-unknown-linux-gnu"
 ; Function Attrs: cold fn_ret_thunk_extern inlinehint noredzone nounwind null_pointer_is_valid optsize sspstrong
 define dso_local range(i32 -1, 1) i32 @unlzma(ptr noundef %0, i64 noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr nofree noundef writeonly captures(address_is_null) %5, ptr noundef %6) local_unnamed_addr #0 section ".init.text" align 16 prefalign(16) {
 bb.a:
-  %7 = alloca %struct.lzma_header, align 1        ; 9 uses
+  %7 = alloca %struct.lzma_header, align 1        ; 8 uses
   %8 = alloca %struct.rc, align 8                 ; 14 uses
   %9 = alloca %struct.writer, align 8             ; 15 uses
   %10 = alloca %struct.cstate, align 4            ; 10 uses
@@ -162,14 +162,14 @@ bb.j:                                             ; preds = %bb.h
   %.068.lcssa162 = phi i32 [ %i.an, %.preheader114 ], [ %i.an, %.lr.ph127.preheader ], [ %i.ag, %bb.j ] ; 2 uses
   %.071.lcssa = phi i32 [ %i.al, %.preheader114 ], [ %i.av, %.lr.ph127.preheader ], [ 0, %bb.j ] ; 2 uses
   %.070.lcssa = phi i32 [ 0, %.preheader114 ], [ %i.at, %.lr.ph127.preheader ], [ 0, %bb.j ]
-  %i.aw = getelementptr inbounds nuw i8, ptr %7, i64 5 ; 3 uses
+  %i.aw = getelementptr inbounds nuw i8, ptr %7, i64 1 ; 3 uses
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.k, %._crit_edge
   %indvars.iv.i = phi i64 [ 0, %._crit_edge ], [ %indvars.iv.next.i, %bb.k ] ; 2 uses
   %.010.i = phi i32 [ 0, %._crit_edge ], [ %i.bb, %bb.k ]
   %i.ax = shl i32 %.010.i, 8
-  %11 = xor i64 %indvars.iv.i, -1
+  %11 = sub nuw nsw i64 3, %indvars.iv.i
   %i.ay = getelementptr i8, ptr %i.aw, i64 %11
   %i.az = load i8, ptr %i.ay, align 1
   %i.ba = zext i8 %i.az to i32
@@ -179,17 +179,16 @@ bb.k:                                             ; preds = %bb.k, %._crit_edge
   br i1 %exitcond.not.i, label %read_int.exit, label %bb.k, !llvm.loop !14
 
 read_int.exit:                                    ; preds = %bb.k
-  %12 = getelementptr inbounds nuw i8, ptr %7, i64 1 ; 2 uses
-  store i32 %i.bb, ptr %12, align 1
-  %i.bc = getelementptr inbounds nuw i8, ptr %7, i64 13
+  store i32 %i.bb, ptr %i.aw, align 1
+  %i.bc = getelementptr inbounds nuw i8, ptr %7, i64 5 ; 3 uses
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.l, %read_int.exit
   %indvars.iv.i97 = phi i64 [ 0, %read_int.exit ], [ %indvars.iv.next.i99, %bb.l ] ; 2 uses
   %.010.i98 = phi i64 [ 0, %read_int.exit ], [ %i.bh, %bb.l ]
   %i.bd = shl i64 %.010.i98, 8
-  %13 = xor i64 %indvars.iv.i97, -1
-  %i.be = getelementptr i8, ptr %i.bc, i64 %13
+  %12 = sub nuw nsw i64 7, %indvars.iv.i97
+  %i.be = getelementptr i8, ptr %i.bc, i64 %12
   %i.bf = load i8, ptr %i.be, align 1
   %i.bg = zext i8 %i.bf to i64
   %i.bh = or disjoint i64 %i.bd, %i.bg            ; 3 uses
@@ -202,12 +201,12 @@ read_int.exit101:                                 ; preds = %bb.l
   %i.bi = xor i32 %notmask, -1
   %notmask86 = shl nsw i32 -1, %.071.lcssa
   %i.bj = xor i32 %notmask86, -1
-  store i64 %i.bh, ptr %i.aw, align 1
+  store i64 %i.bh, ptr %i.bc, align 1
   %i.bk = icmp eq i32 %i.bb, 0
   br i1 %i.bk, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %read_int.exit101
-  store i32 1, ptr %12, align 1
+  store i32 1, ptr %i.aw, align 1
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %read_int.exit101
@@ -295,7 +294,7 @@ rc_init_code.exit:                                ; preds = %bb.s, %bb.z
   %.val95 = load i64, ptr %i.l, align 8
   %.val96 = load i64, ptr %i.j, align 8
   %i.cp = add i64 %.val96, %.val95                ; 2 uses
-  %i.cq = load i64, ptr %i.aw, align 1
+  %i.cq = load i64, ptr %i.bc, align 1
   %i.cr = icmp ult i64 %i.cp, %i.cq
   br i1 %i.cr, label %bb.t, label %.thread112
 

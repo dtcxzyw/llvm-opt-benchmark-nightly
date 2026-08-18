@@ -201,7 +201,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6substrEmm.exit: ; preds =
   br label %.critedge2
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.d
-  %.248372 = phi i64 [ %i.al, %bb.d ], [ %.147.lcssa, %.lr.ph.preheader ] ; 7 uses
+  %.248372 = phi i64 [ %i.al, %bb.d ], [ %.147.lcssa, %.lr.ph.preheader ] ; 6 uses
   %i.al = add i64 %.248372, -1                    ; 4 uses
   %i.am = getelementptr inbounds nuw i8, ptr %i.aa, i64 %i.al
   %i.an = load i8, ptr %i.am, align 1, !tbaa !19
@@ -220,11 +220,10 @@ bb.g:                                             ; preds = %.split
   unreachable
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i: ; preds = %.split
-  %8 = sub i64 %.147.lcssa, %.248372
   store ptr %i.i, ptr %2, align 8, !tbaa !17, !alias.scope !175
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aa, i64 %.248372 ; 2 uses
-  %9 = sub nuw i64 %i.ap, %.248372
-  %spec.select.i.i.i69 = call noundef i64 @llvm.umin.i64(i64 %8, i64 %9) ; 4 uses
+  %8 = call i64 @llvm.umin.i64(i64 %.147.lcssa, i64 %i.ap)
+  %spec.select.i.i.i69 = sub nuw i64 %8, %.248372 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #26, !noalias !175
   store i64 %spec.select.i.i.i69, ptr %i.e, align 8, !tbaa !91, !noalias !175
   %i.as = icmp ugt i64 %spec.select.i.i.i69, 15
