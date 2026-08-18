@@ -203,7 +203,7 @@ bb.p:                                             ; preds = %.thread, %bb.o, %bb
 bb.q:                                             ; preds = %bb.p
   %i.ff = getelementptr inbounds nuw i8, ptr %i.b, i64 4
   %i.fg = load i32, ptr %i.ff, align 4, !tbaa !50 ; 3 uses
-  %i.fh = icmp eq i32 %i.fg, 0                    ; 3 uses
+  %i.fh = icmp eq i32 %i.fg, 0                    ; 2 uses
   br i1 %i.fh, label %bb.s, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
@@ -242,17 +242,17 @@ bb.u:                                             ; preds = %bb.t
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.s, %bb.u, %bb.t, %bb.r
-  %i.gc = phi <2 x double> [ %i.gb, %bb.u ], [ %i.fx, %bb.t ], [ %i.fd, %bb.s ], [ %i.fd, %bb.r ] ; 2 uses
-  %i.gd = extractelement <2 x double> %i.gc, i64 0 ; 5 uses
-  %i.ge = extractelement <2 x double> %i.gc, i64 1 ; 5 uses
+  %i.gc = phi <2 x double> [ %i.gb, %bb.u ], [ %i.fx, %bb.t ], [ %i.fd, %bb.s ], [ %i.fd, %bb.r ] ; 3 uses
+  %i.gd = extractelement <2 x double> %i.gc, i64 0 ; 4 uses
+  %i.ge = extractelement <2 x double> %i.gc, i64 1 ; 4 uses
   %i.gf = fsub double %i.ge, %i.gd
-  %7 = fmul double %i.gf, f0x3FE6A09E667F3BCD
-  %8 = fadd double %i.ge, %i.gd
-  %9 = fmul double %8, f0x3FE6A09E667F3BCD
-  %.sroa.0.3 = select i1 %i.fh, double %7, double %i.ge
-  %.sroa.28.3 = select i1 %i.fh, double %9, double %i.gd
-  %10 = insertelement <2 x double> poison, double %.sroa.28.3, i64 0
-  %11 = insertelement <2 x double> %10, double %.sroa.0.3, i64 1 ; 6 uses
+  %7 = fadd double %i.ge, %i.gd
+  %8 = insertelement <2 x double> poison, double %7, i64 0
+  %9 = insertelement <2 x double> %8, double %i.gf, i64 1
+  %10 = fmul <2 x double> %9, splat (double f0x3FE6A09E667F3BCD)
+  %11 = insertelement <2 x i1> poison, i1 %i.fh, i64 0
+  %12 = shufflevector <2 x i1> %11, <2 x i1> poison, <2 x i32> zeroinitializer
+  %13 = select <2 x i1> %12, <2 x double> %10, <2 x double> %i.gc ; 6 uses
   switch i32 %i.fg, label %.thread227 [
     i32 4, label %.thread216
     i32 5, label %bb.z
@@ -266,7 +266,7 @@ bb.v:                                             ; preds = %bb.s, %bb.u, %bb.t,
   %i.gj = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.gk = load double, ptr %i.gj, align 8, !tbaa !51 ; 2 uses
   %i.gl = fcmp oeq double %i.gk, 0.000000e+00
-  %i.gm = insertelement <2 x double> %11, double %i.gi, i64 1
+  %i.gm = insertelement <2 x double> %13, double %i.gi, i64 1
   br i1 %i.gl, label %.thread227, label %.thread222
 
 .thread222:                                       ; preds = %.thread216
@@ -276,17 +276,17 @@ bb.v:                                             ; preds = %bb.s, %bb.u, %bb.t,
 
 bb.w:                                             ; preds = %.thread222
   %i.gp = fadd double %i.gn, f0xC01DAA4A35759E4B
-  %i.gq = insertelement <2 x double> %11, double %i.gp, i64 1
+  %i.gq = insertelement <2 x double> %13, double %i.gp, i64 1
   br label %.thread227
 
 bb.x:                                             ; preds = %.thread222
   %i.gr = fcmp olt double %i.gn, f0xC00DAA4A35759E4B
-  %i.gs = insertelement <2 x double> %11, double %i.gn, i64 1
+  %i.gs = insertelement <2 x double> %13, double %i.gn, i64 1
   br i1 %i.gr, label %bb.y, label %.thread227
 
 bb.y:                                             ; preds = %bb.x
   %i.gt = fadd double %i.gn, f0x401DAA4A35759E4B
-  %i.gu = insertelement <2 x double> %11, double %i.gt, i64 1
+  %i.gu = insertelement <2 x double> %13, double %i.gt, i64 1
   br label %.thread227
 
 bb.z:                                             ; preds = %bb.v
@@ -297,7 +297,7 @@ bb.z:                                             ; preds = %bb.v
   %i.gy = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.gz = load double, ptr %i.gy, align 8, !tbaa !52 ; 2 uses
   %i.ha = fcmp une double %i.gz, 0.000000e+00
-  %i.hb = insertelement <2 x double> %11, double %i.gx, i64 0 ; 4 uses
+  %i.hb = insertelement <2 x double> %13, double %i.gx, i64 0 ; 4 uses
   br i1 %i.ha, label %bb.aa, label %.thread227
 
 bb.aa:                                            ; preds = %bb.z
@@ -332,7 +332,7 @@ bb.ae:                                            ; preds = %bb.p, %bb.p
   br label %.thread227
 
 .thread227:                                       ; preds = %bb.v, %bb.y, %bb.w, %.thread216, %bb.x, %bb.p, %bb.z, %bb.ab, %bb.ad, %bb.ac, %bb.m, %bb.ae, %bb.j, %bb.h, %bb.e, %bb.c
-  %i.hs = phi <2 x double> [ %i.ca, %bb.m ], [ %i.i, %bb.c ], [ %i.p, %bb.e ], [ %i.aq, %bb.h ], [ %i.av, %bb.j ], [ %i.hr, %bb.ae ], [ %i.fd, %bb.p ], [ %i.hb, %bb.z ], [ %i.hh, %bb.ab ], [ %i.hd, %bb.ac ], [ %i.hk, %bb.ad ], [ %11, %bb.v ], [ %i.gu, %bb.y ], [ %i.gq, %bb.w ], [ %i.gm, %.thread216 ], [ %i.gs, %bb.x ] ; 2 uses
+  %i.hs = phi <2 x double> [ %i.ca, %bb.m ], [ %i.i, %bb.c ], [ %i.p, %bb.e ], [ %i.aq, %bb.h ], [ %i.av, %bb.j ], [ %i.hr, %bb.ae ], [ %i.fd, %bb.p ], [ %i.hb, %bb.z ], [ %i.hh, %bb.ab ], [ %i.hd, %bb.ac ], [ %i.hk, %bb.ad ], [ %13, %bb.v ], [ %i.gu, %bb.y ], [ %i.gq, %bb.w ], [ %i.gm, %.thread216 ], [ %i.gs, %bb.x ] ; 2 uses
   %i.ht = extractelement <2 x double> %i.hs, i64 1
   %.fca.0.insert = insertvalue { double, double } poison, double %i.ht, 0
   %i.hu = extractelement <2 x double> %i.hs, i64 0

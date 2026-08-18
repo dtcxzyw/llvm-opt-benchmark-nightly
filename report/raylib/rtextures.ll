@@ -204,37 +204,37 @@ define void @ImageDrawRectangleLines(ptr nofree noundef readonly captures(none) 
 bb.a:
   %.sroa.016.0.vec.extract = extractelement <2 x float> %1, i64 0
   %i.a = fptosi float %.sroa.016.0.vec.extract to i32
-  %.sroa.016.4.vec.extract = extractelement <2 x float> %1, i64 1
-  %i.b = sitofp i32 %i.a to float                 ; 3 uses
-  %.sroa.0.0.vec.insert.i = insertelement <2 x float> poison, float %i.b, i64 0
+  %i.b = sitofp i32 %i.a to float                 ; 2 uses
+  %.sroa.0.0.vec.insert.i = insertelement <2 x float> poison, float %i.b, i64 0 ; 2 uses
   %i.c = shufflevector <2 x float> %1, <2 x float> %2, <2 x i32> <i32 1, i32 2>
   %i.d = fptosi <2 x float> %i.c to <2 x i32>
   %i.e = sitofp <2 x i32> %i.d to <2 x float>     ; 2 uses
   %i.f = shufflevector <2 x float> %.sroa.0.0.vec.insert.i, <2 x float> %i.e, <2 x i32> <i32 0, i32 2>
-  %5 = shufflevector <2 x float> %i.e, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %i.g = sitofp i32 %3 to float                   ; 3 uses
-  %.sroa.3.12.vec.insert.i = insertelement <2 x float> %5, float %i.g, i64 1 ; 2 uses
-  tail call void @ImageDrawRectangleRec(ptr noundef readonly %0, <2 x float> %i.f, <2 x float> %.sroa.3.12.vec.insert.i, i32 %4)
   %.sroa.9.12.vec.extract = extractelement <2 x float> %2, i64 1
-  %6 = shl nsw i32 %3, 1
-  %7 = sitofp i32 %6 to float
-  %8 = fsub float %.sroa.9.12.vec.extract, %7
-  %.sroa.3.8.vec.insert.i39 = insertelement <2 x float> poison, float %i.g, i64 0 ; 2 uses
-  %9 = fadd float %.sroa.016.4.vec.extract, %i.g
+  %5 = shl nsw i32 %3, 1
+  %i.g = sitofp i32 %5 to float
+  %6 = fsub float %.sroa.9.12.vec.extract, %i.g
+  %7 = fptosi float %6 to i32
+  %8 = insertelement <2 x i32> poison, i32 %3, i64 0
+  %9 = insertelement <2 x i32> %8, i32 %7, i64 1
+  %10 = sitofp <2 x i32> %9 to <2 x float>        ; 5 uses
+  %.sroa.3.12.vec.insert.i = shufflevector <2 x float> %i.e, <2 x float> %10, <2 x i32> <i32 1, i32 2> ; 2 uses
+  tail call void @ImageDrawRectangleRec(ptr noundef readonly %0, <2 x float> %i.f, <2 x float> %.sroa.3.12.vec.insert.i, i32 %4)
+  %shift = shufflevector <2 x float> %1, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = fadd <2 x float> %shift, %10
   %i.h = fadd <2 x float> %1, %2
-  %i.i = shufflevector <2 x float> %.sroa.3.8.vec.insert.i39, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.i = shufflevector <2 x float> %10, <2 x float> poison, <2 x i32> zeroinitializer
   %i.j = fsub <2 x float> %i.h, %i.i              ; 2 uses
-  %10 = insertelement <2 x float> %i.j, float %9, i64 1
-  %i.k = fptosi <2 x float> %10 to <2 x i32>
+  %11 = shufflevector <2 x float> %i.j, <2 x float> %foldExtExtBinop, <2 x i32> <i32 0, i32 2>
+  %i.k = fptosi <2 x float> %11 to <2 x i32>
   %i.l = sitofp <2 x i32> %i.k to <2 x float>     ; 2 uses
-  %11 = insertelement <2 x float> %i.l, float %i.b, i64 0
-  %i.m = insertelement <2 x float> %i.j, float %8, i64 0
-  %12 = fptosi <2 x float> %i.m to <2 x i32>
-  %13 = sitofp <2 x i32> %12 to <2 x float>       ; 2 uses
-  %14 = shufflevector <2 x float> %.sroa.3.8.vec.insert.i39, <2 x float> %13, <2 x i32> <i32 0, i32 2> ; 2 uses
-  tail call void @ImageDrawRectangleRec(ptr noundef readonly %0, <2 x float> %11, <2 x float> %14, i32 %4)
-  tail call void @ImageDrawRectangleRec(ptr noundef readonly %0, <2 x float> %i.l, <2 x float> %14, i32 %4)
-  %i.n = insertelement <2 x float> %13, float %i.b, i64 0
+  %i.m = insertelement <2 x float> %i.l, float %i.b, i64 0
+  tail call void @ImageDrawRectangleRec(ptr noundef readonly %0, <2 x float> %i.m, <2 x float> %10, i32 %4)
+  tail call void @ImageDrawRectangleRec(ptr noundef readonly %0, <2 x float> %i.l, <2 x float> %10, i32 %4)
+  %12 = extractelement <2 x float> %i.j, i64 1
+  %13 = fptosi float %12 to i32
+  %14 = sitofp i32 %13 to float
+  %i.n = insertelement <2 x float> %.sroa.0.0.vec.insert.i, float %14, i64 1
   tail call void @ImageDrawRectangleRec(ptr noundef readonly %0, <2 x float> %i.n, <2 x float> %.sroa.3.12.vec.insert.i, i32 %4)
   ret void
 }

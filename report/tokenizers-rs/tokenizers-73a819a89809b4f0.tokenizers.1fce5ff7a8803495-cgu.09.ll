@@ -204,11 +204,12 @@ bb.ad:                                            ; preds = %.lr.ph374
   %i.eb = load i64, ptr %i.ea, align 8, !noundef !3 ; 5 uses
   %i.ec = load ptr, ptr %.sroa.035.0373, align 8, !nonnull !3, !noundef !3 ; 4 uses
   %i.ed = getelementptr inbounds nuw i8, ptr %i.ec, i64 16 ; 11 uses
-  %i.ee = load i64, ptr %i.ed, align 8, !noalias !1538, !noundef !3 ; 4 uses
+  %i.ee = load i64, ptr %i.ed, align 8, !noalias !1538, !noundef !3 ; 3 uses
   %i.ef = icmp ult i64 %i.ee, 9223372036854775807
   br i1 %i.ef, label %bb.ae, label %.invoke, !prof !109
 
 bb.ae:                                            ; preds = %bb.ad
+  %4 = add nuw nsw i64 %i.ee, 1                   ; 2 uses
   %i.eg = getelementptr inbounds nuw i8, ptr %i.ec, i64 24
   %i.eh = getelementptr inbounds nuw i8, ptr %i.ec, i64 32
   %i.ei = load i64, ptr %i.eh, align 8, !noundef !3 ; 3 uses
@@ -217,7 +218,6 @@ bb.ae:                                            ; preds = %bb.ad
   br i1 %i.ek, label %bb.af, label %.invoke667
 
 bb.af:                                            ; preds = %bb.ae
-  %4 = add nuw nsw i64 %i.ee, 1
   %i.el = load ptr, ptr %i.ac, align 8, !nonnull !3, !noundef !3 ; 2 uses
   %i.em = getelementptr inbounds nuw [8 x i8], ptr %i.el, i64 %i.eb ; 2 uses
   %i.en = load double, ptr %i.em, align 8, !noundef !3 ; 3 uses
@@ -253,7 +253,7 @@ bb.ai:                                            ; preds = %bb.ag
   %i.ez = load ptr, ptr %i.dl, align 8, !nonnull !3, !noundef !3
   %i.fa = load ptr, ptr %i.ez, align 8, !nonnull !3, !noundef !3 ; 2 uses
   %i.fb = getelementptr inbounds nuw i8, ptr %i.fa, i64 16 ; 3 uses
-  %.not219 = icmp eq i64 %i.ee, 9223372036854775806
+  %.not219 = icmp eq i64 %4, 9223372036854775807
   br i1 %.not219, label %bb.aj, label %_RNvMst_NtCs4NRVxsYgnAr_4core4cellINtB5_7RefCellNtNtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7lattice4NodeE6borrowBR_.exit.i, !prof !75
 
 bb.aj:                                            ; preds = %bb.ai
@@ -418,7 +418,7 @@ bb.av:                                            ; preds = %bb.au
   %i.hn = load ptr, ptr %i.q, align 8, !nonnull !3, !noundef !3 ; 2 uses
   %i.ho = getelementptr inbounds nuw [8 x i8], ptr %i.hn, i64 %i.hk ; 2 uses
   %i.hp = load double, ptr %i.ho, align 8, !noundef !3 ; 3 uses
-  %i.hq = load i64, ptr %i.gz, align 8, !noalias !1557, !noundef !3 ; 4 uses
+  %i.hq = load i64, ptr %i.gz, align 8, !noalias !1557, !noundef !3 ; 3 uses
   %i.hr = icmp ult i64 %i.hq, 9223372036854775807
   br i1 %i.hr, label %bb.aw, label %.invoke, !prof !109
 
@@ -441,7 +441,7 @@ bb.av:                                            ; preds = %bb.au
   unreachable
 
 bb.aw:                                            ; preds = %bb.av
-  %i.hw = add nuw nsw i64 %i.hq, 1
+  %i.hw = add nuw nsw i64 %i.hq, 1                ; 2 uses
   store i64 %i.hw, ptr %i.gz, align 8, !noalias !1557
   %i.hx = load i64, ptr %i.r, align 8, !noundef !3 ; 2 uses
   %i.hy = icmp ult i64 %i.he, %i.hx
@@ -474,7 +474,7 @@ bb.az:                                            ; preds = %bb.ax
   %i.ii = load ptr, ptr %i.gn, align 8, !nonnull !3, !noundef !3
   %i.ij = load ptr, ptr %i.ii, align 8, !nonnull !3, !noundef !3 ; 2 uses
   %i.ik = getelementptr inbounds nuw i8, ptr %i.ij, i64 16 ; 3 uses
-  %.not217 = icmp eq i64 %i.hq, 9223372036854775806
+  %.not217 = icmp eq i64 %i.hw, 9223372036854775807
   br i1 %.not217, label %bb.ba, label %_RNvMst_NtCs4NRVxsYgnAr_4core4cellINtB5_7RefCellNtNtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7lattice4NodeE6borrowBR_.exit.i168, !prof !75
 
 bb.ba:                                            ; preds = %bb.az
@@ -877,7 +877,7 @@ bb.cm:                                            ; preds = %bb.cl
   %i.le = load ptr, ptr %i.ab, align 8, !nonnull !3, !noundef !3 ; 2 uses
   %i.lf = getelementptr inbounds nuw [8 x i8], ptr %i.le, i64 %i.lb ; 2 uses
   %i.lg = load double, ptr %i.lf, align 8, !noundef !3 ; 3 uses
-  %i.lh = load i64, ptr %i.kq, align 8, !noalias !1947, !noundef !3 ; 4 uses
+  %i.lh = load i64, ptr %i.kq, align 8, !noalias !1947, !noundef !3 ; 3 uses
   %i.li = icmp ult i64 %i.lh, 9223372036854775807
   br i1 %i.li, label %bb.cn, label %.invoke, !prof !109
 
@@ -900,7 +900,7 @@ bb.cm:                                            ; preds = %bb.cl
   unreachable
 
 bb.cn:                                            ; preds = %bb.cm
-  %i.ln = add nuw nsw i64 %i.lh, 1
+  %i.ln = add nuw nsw i64 %i.lh, 1                ; 2 uses
   store i64 %i.ln, ptr %i.kq, align 8, !noalias !1947
   %i.lo = load i64, ptr %i.ac, align 8, !noundef !3 ; 2 uses
   %i.lp = icmp ult i64 %i.kv, %i.lo
@@ -934,7 +934,7 @@ bb.cq:                                            ; preds = %bb.co
   %i.ma = load ptr, ptr %i.ke, align 8, !nonnull !3, !noundef !3
   %i.mb = load ptr, ptr %i.ma, align 8, !nonnull !3, !noundef !3 ; 2 uses
   %i.mc = getelementptr inbounds nuw i8, ptr %i.mb, i64 16 ; 3 uses
-  %.not188 = icmp eq i64 %i.lh, 9223372036854775806
+  %.not188 = icmp eq i64 %i.ln, 9223372036854775807
   br i1 %.not188, label %bb.cr, label %_RNvMst_NtCs4NRVxsYgnAr_4core4cellINtB5_7RefCellNtNtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7lattice4NodeE6borrowBR_.exit.i153, !prof !75
 
 bb.cr:                                            ; preds = %bb.cq
