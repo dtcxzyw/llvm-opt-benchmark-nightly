@@ -162,7 +162,7 @@ bb.d:                                             ; preds = %bb.b
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %i.l = sub i64 %i.b, %.021
+  %i.l = sub nuw i64 %i.b, %.021
   %i.m = select i1 %i.g, i64 4096, i64 %i.l
   %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 %.021
   %i.o = load ptr, ptr @stdout, align 8, !tbaa !40
