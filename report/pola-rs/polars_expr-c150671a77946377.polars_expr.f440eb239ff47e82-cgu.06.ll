@@ -203,13 +203,13 @@ bb.e:                                             ; preds = %bb.a
 define internal fastcc void @_RNvXs5_NtNtCse67t6KqNqGQ_5rayon4iter5unzipINtB5_11UnzipFolderNtB5_5UnzipINtNtNtB7_7collect8consumer13CollectResultmEIB19_INtNtCs2mZqlW55729_12polars_utils7idx_vec7UnitVecmEEEINtNtB7_8plumbing6FolderTmB1V_EE7consumeCskY9G75ZWc4U_11polars_expr(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(56) %0, ptr noalias noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(56) %1, ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(24) %2) unnamed_addr #2 personality ptr @rust_eh_personality !dbg !160283 {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 4 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8, !dbg !160284
-  %.sroa.02.0.copyload = load ptr, ptr %i.b, align 8, !dbg !160284
-  %3 = load <2 x ptr>, ptr %1, align 8, !dbg !160285
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 16, !dbg !160284
-  %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8, !dbg !160284 ; 2 uses
-  %.sroa.65.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 24, !dbg !160284
-  %.sroa.65.0.copyload = load i64, ptr %.sroa.65.0..sroa_idx, align 8, !dbg !160284 ; 3 uses
+  %3 = load ptr, ptr %1, align 8, !dbg !160284, !nonnull !14, !noundef !14
+  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8, !dbg !160285
+  %.sroa.02.0.copyload = load ptr, ptr %i.b, align 8, !dbg !160285 ; 2 uses
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 16, !dbg !160285
+  %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8, !dbg !160285 ; 2 uses
+  %.sroa.65.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 24, !dbg !160285
+  %.sroa.65.0.copyload = load i64, ptr %.sroa.65.0..sroa_idx, align 8, !dbg !160285 ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 32, !dbg !160286
   %.sroa.09.0.copyload = load ptr, ptr %i.c, align 8, !dbg !160286 ; 4 uses
   %.sroa.510.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 40, !dbg !160286
@@ -287,7 +287,9 @@ _RINvXNtNtCse67t6KqNqGQ_5rayon4iter5unzipNtB3_5UnzipINtB3_7UnzipOpTmINtNtCs2mZql
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.o, ptr noundef nonnull align 8 dereferenceable(16) %i.g, i64 16, i1 false), !dbg !160332, !noalias !160301
   %i.p = add nuw i64 %.sroa.611.0.copyload, 1, !dbg !160335
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !160336, !noalias !160296
-  store <2 x ptr> %3, ptr %0, align 8, !dbg !160337
+  store ptr %3, ptr %0, align 8, !dbg !160337
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !160337
+  store ptr %.sroa.02.0.copyload, ptr %4, align 8, !dbg !160337
   %.sroa.27.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !160337
   store i64 %.sroa.5.0.copyload, ptr %.sroa.27.0..sroa_idx, align 8, !dbg !160337
   %.sroa.38.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24, !dbg !160337
@@ -690,8 +692,8 @@ begin_hunk_1_@llvm.vector.reduce.add.v2i64
 !160281 = !DILocation(line: 383, column: 5, scope: !158301)
 !160282 = !DILocation(line: 385, column: 5, scope: !158301)
 !160283 = distinct !DISubprogram(name: "consume<(u32, polars_utils::idx_vec::UnitVec<u32>), rayon::iter::unzip::Unzip, rayon::iter::collect::consumer::CollectResult<u32>, rayon::iter::collect::consumer::CollectResult<polars_utils::idx_vec::UnitVec<u32>>>", linkageName: "_RNvXs5_NtNtCse67t6KqNqGQ_5rayon4iter5unzipINtB5_11UnzipFolderNtB5_5UnzipINtNtNtB7_7collect8consumer13CollectResultmEIB19_INtNtCs2mZqlW55729_12polars_utils7idx_vec7UnitVecmEEEINtNtB7_8plumbing6FolderTmB1V_EE7consumeCskY9G75ZWc4U_11polars_expr", scope: !86973, file: !84365, line: 374, type: !13, scopeLine: 374, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
-!160284 = !DILocation(line: 375, column: 51, scope: !160283)
-!160285 = !DILocation(line: 375, column: 29, scope: !160283)
+!160284 = !DILocation(line: 375, column: 29, scope: !160283)
+!160285 = !DILocation(line: 375, column: 51, scope: !160283)
 !160286 = !DILocation(line: 375, column: 62, scope: !160283)
 !160287 = !{!160288}
 !160288 = distinct !{!160288, !160289, !"_RINvXNtNtCse67t6KqNqGQ_5rayon4iter5unzipNtB3_5UnzipINtB3_7UnzipOpTmINtNtCs2mZqlW55729_12polars_utils7idx_vec7UnitVecmEEE7consumeINtNtNtB5_7collect8consumer13CollectResultmEIB23_B13_EECskY9G75ZWc4U_11polars_expr: argument 1"}

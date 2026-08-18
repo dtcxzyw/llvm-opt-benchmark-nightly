@@ -204,15 +204,17 @@ bb.a:
   %i.e = load i32, ptr %1, align 4
   %i.f = add i32 %i.e, 8
   %i.g = tail call i32 @tvb_get_uint32(ptr noundef %0, i32 noundef %i.f, i32 noundef %3)
-  %5 = sext i32 %i.d to i64
-  %6 = tail call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 range(i64 -2147483648, 2147483648) %5)
-  %7 = trunc nuw nsw i64 %6 to i32
-  %8 = shl nuw nsw i32 %7, 2
-  %9 = sext i32 %i.g to i64
-  %10 = tail call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 range(i64 -2147483648, 2147483648) %9)
-  %11 = trunc nuw nsw i64 %10 to i32
-  %i.h = mul nuw nsw i32 %11, 12
-  %i.i = add nuw nsw i32 %8, 20
+  %5 = insertelement <2 x i32> poison, i32 %i.d, i64 0
+  %6 = insertelement <2 x i32> %5, i32 %i.g, i64 1
+  %7 = sext <2 x i32> %6 to <2 x i64>
+  %8 = tail call range(i64 0, 65) <2 x i64> @llvm.ctpop.v2i64(<2 x i64> %7) ; 2 uses
+  %9 = bitcast <2 x i64> %8 to <4 x i32>
+  %10 = extractelement <4 x i32> %9, i64 0
+  %11 = shl nuw nsw i32 %10, 2
+  %12 = bitcast <2 x i64> %8 to <4 x i32>
+  %13 = extractelement <4 x i32> %12, i64 2
+  %i.h = mul nuw nsw i32 %13, 12
+  %i.i = add nuw nsw i32 %11, 20
   %i.j = add nuw nsw i32 %i.i, %i.h
   %i.k = tail call ptr @proto_tree_add_item(ptr noundef %2, i32 noundef %i.a, ptr noundef %0, i32 noundef %i.b, i32 noundef %i.j, i32 noundef 0)
   %i.l = load i32, ptr @ett_x11_rectangle, align 4
@@ -614,6 +616,9 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #11
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x i64> @llvm.ctpop.v2i64(<2 x i64>) #5
 
 attributes #0 = { null_pointer_is_valid "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { null_pointer_is_valid sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "probe-stack"="inline-asm" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

@@ -203,62 +203,65 @@ bb.a:
   %i.b = load double, ptr %i.a, align 8, !tbaa !28 ; 2 uses
   %i.c = load i32, ptr %0, align 8, !tbaa !19     ; 2 uses
   %i.d = ashr i32 %i.c, 1                         ; 3 uses
-  %4 = and i32 %i.c, -2                           ; 3 uses
-  %5 = sitofp nsz i32 %4 to double
-  %6 = fmul nnan nsz double %5, 4.000000e+00
-  %7 = fdiv nsz double f0x400921FB54442D18, %6    ; 2 uses
   %i.e = lshr i64 %3, 2
   %i.f = icmp sgt i32 %i.d, 0
   br i1 %i.f, label %.lr.ph.us.preheader, label %._crit_edge54
 
 .lr.ph.us.preheader:                              ; preds = %bb.a
+  %4 = and i32 %i.c, -2                           ; 3 uses
+  %5 = sitofp nsz i32 %4 to double
+  %6 = fmul nnan nsz double %5, 4.000000e+00
+  %7 = fdiv nnan nsz double f0x400921FB54442D18, %6
   %i.g = shl nuw nsw i32 %i.d, 2
   %i.h = mul nsw i32 %4, 3
   %invariant.op = or disjoint i32 %i.h, 1
   %i.i = zext nneg i32 %i.d to i64                ; 2 uses
   %wide.trip.count61 = zext nneg i32 %4 to i64
   %invariant.gep = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.i
+  %8 = insertelement <2 x double> poison, double %7, i64 0
+  %9 = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> zeroinitializer
   br label %.lr.ph.us
 
 .lr.ph.us:                                        ; preds = %.lr.ph.us.preheader, %._crit_edge.us
   %indvars.iv63 = phi i64 [ 0, %.lr.ph.us.preheader ], [ %indvars.iv.next64, %._crit_edge.us ] ; 4 uses
   %i.j = shl nuw nsw i64 %indvars.iv63, 1         ; 2 uses
-  %i.k = trunc nuw nsw i64 %i.j to i32
-  %8 = xor i32 %i.k, -1
-  %9 = add nsw i32 %i.g, %8
-  %10 = sitofp nsz i32 %9 to double
-  %11 = fmul nnan nsz double %7, %10
-  %12 = trunc i64 %i.j to i32
-  %13 = add i32 %invariant.op, %12
-  %14 = sitofp nsz i32 %13 to double
-  %15 = fmul nnan nsz double %7, %14
+  %i.k = trunc i64 %i.j to i32
+  %10 = trunc nuw nsw i64 %i.j to i32
+  %11 = xor i32 %10, -1
+  %12 = add i32 %invariant.op, %i.k
+  %13 = add nsw i32 %i.g, %11
+  %14 = insertelement <2 x i32> poison, i32 %13, i64 0
+  %15 = insertelement <2 x i32> %14, i32 %12, i64 1
+  %16 = sitofp <2 x i32> %15 to <2 x double>
+  %17 = fmul nnan nsz <2 x double> %9, %16
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph.us, %bb.b
   %indvars.iv58 = phi i64 [ 0, %.lr.ph.us ], [ %indvars.iv.next59, %bb.b ] ; 3 uses
-  %.04149.us = phi double [ 0.000000e+00, %.lr.ph.us ], [ %20, %bb.b ]
-  %.04347.us = phi double [ 0.000000e+00, %.lr.ph.us ], [ %21, %bb.b ]
+  %18 = phi <2 x double> [ zeroinitializer, %.lr.ph.us ], [ %25, %bb.b ]
   %indvars.iv58.tr = trunc i64 %indvars.iv58 to i32
   %i.l = shl i32 %indvars.iv58.tr, 1
   %i.m = or disjoint i32 %i.l, 1
-  %i.n = uitofp nneg i32 %i.m to double           ; 2 uses
-  %16 = fmul nnan nsz double %11, %i.n
-  %17 = tail call nsz double @llvm.cos.f64(double %16)
-  %18 = fmul nnan nsz double %15, %i.n
-  %19 = tail call nsz double @llvm.cos.f64(double %18)
+  %i.n = uitofp nneg i32 %i.m to double
+  %19 = insertelement <2 x double> poison, double %i.n, i64 0
+  %20 = shufflevector <2 x double> %19, <2 x double> poison, <2 x i32> zeroinitializer
+  %21 = fmul nnan nsz <2 x double> %17, %20
+  %22 = tail call nsz <2 x double> @llvm.cos.v2f64(<2 x double> %21)
   %i.o = mul nuw nsw i64 %i.e, %indvars.iv58
   %i.p = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.o
   %i.q = load i32, ptr %i.p, align 4, !tbaa !14
   %i.r = sitofp nsz i32 %i.q to double
-  %i.s = fmul nnan nsz double %i.r, f0x3E00000000000000 ; 2 uses
-  %20 = tail call nsz double @llvm.fmuladd.f64(double %17, double %i.s, double %.04149.us) ; 2 uses
-  %21 = tail call nsz double @llvm.fmuladd.f64(double %19, double %i.s, double %.04347.us) ; 2 uses
+  %i.s = fmul nnan nsz double %i.r, f0x3E00000000000000
+  %23 = insertelement <2 x double> poison, double %i.s, i64 0
+  %24 = shufflevector <2 x double> %23, <2 x double> poison, <2 x i32> zeroinitializer
+  %25 = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %22, <2 x double> %24, <2 x double> %18) ; 3 uses
   %indvars.iv.next59 = add nuw nsw i64 %indvars.iv58, 1 ; 2 uses
   %exitcond62.not = icmp eq i64 %indvars.iv.next59, %wide.trip.count61
   br i1 %exitcond62.not, label %._crit_edge.us, label %bb.b, !llvm.loop !121
 
 ._crit_edge.us:                                   ; preds = %bb.b
-  %i.t = fmul nsz double %i.b, %20
+  %26 = extractelement <2 x double> %25, i64 0
+  %i.t = fmul nsz double %i.b, %26
   %i.u = fmul nsz double %i.t, f0x41E0000000000000
   %i.v = fptrunc nsz double %i.u to float
   %i.w = tail call i64 @llvm.llrint.i64.f32(float %i.v)
@@ -267,7 +270,8 @@ bb.b:                                             ; preds = %.lr.ph.us, %bb.b
   %i.y = trunc nsw i64 %.0.i46.us to i32
   %i.z = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv63
   store i32 %i.y, ptr %i.z, align 4, !tbaa !14
-  %i.aa = fneg nsz double %21
+  %27 = extractelement <2 x double> %25, i64 1
+  %i.aa = fneg nsz double %27
   %i.ab = fmul nsz double %i.b, %i.aa
   %i.ac = fmul nsz double %i.ab, f0x41E0000000000000
   %i.ad = fptrunc nsz double %i.ac to float
@@ -669,6 +673,12 @@ declare i32 @llvm.cttz.i32(i32, i1 immarg) #14
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x double> @llvm.cos.v2f64(<2 x double>) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #4
 
 attributes #0 = { cold nounwind optsize uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

@@ -203,11 +203,13 @@ bb.l:                                             ; preds = %bb.j, %bb.k
   %.pre-phi = phi i64 [ 16, %bb.l ], [ %switch.select, %.split.us.4 ], [ %switch.select, %bb.h ], [ %switch.select, %bb.g ]
   %i.di = getelementptr [4 x i8], ptr %i.a, i64 %.pre-phi ; 2 uses
   %i.dj = getelementptr i8, ptr %i.di, i64 -8
+  %2 = load i32, ptr %i.dj, align 4, !tbaa !29
   %i.dk = getelementptr inbounds nuw i8, ptr %0, i64 4012
+  store i32 %2, ptr %i.dk, align 4, !tbaa !29
   %i.dl = getelementptr i8, ptr %i.di, i64 -4
-  %i.dm = load i32, ptr %i.dl, align 4, !tbaa !29
-  %2 = load <2 x i32>, ptr %i.dj, align 4, !tbaa !29
-  store <2 x i32> %2, ptr %i.dk, align 4, !tbaa !29
+  %i.dm = load i32, ptr %i.dl, align 4, !tbaa !29 ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 4016
+  store i32 %i.dm, ptr %3, align 8, !tbaa !29
   %i.dn = sext i32 %i.dm to i64
   %i.do = getelementptr inbounds [4 x i8], ptr @qcelp_g12ga, i64 %i.dn
   %i.dp = load float, ptr %i.do, align 4, !tbaa !34

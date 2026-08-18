@@ -204,9 +204,14 @@ bb.a:
   %i.do = insertelement <2 x i64> %i.dd, i64 %.val71.3, i64 0
   %i.dp = xor <2 x i64> %i.di, %i.do
   %i.dq = zext <2 x i64> %i.dp to <2 x i128>
-  %i.dr = mul nuw <2 x i128> %i.dn, %i.dq         ; 2 uses
-  %4 = lshr <2 x i128> %i.dr, splat (i128 64)
-  %i.ds = xor <2 x i128> %4, %i.dr
+  %i.dr = mul nuw <2 x i128> %i.dn, %i.dq         ; 3 uses
+  %4 = extractelement <2 x i128> %i.dr, i64 0
+  %5 = lshr i128 %4, 64
+  %6 = extractelement <2 x i128> %i.dr, i64 1
+  %7 = lshr i128 %6, 64
+  %8 = insertelement <2 x i128> poison, i128 %5, i64 0
+  %9 = insertelement <2 x i128> %8, i128 %7, i64 1
+  %i.ds = xor <2 x i128> %9, %i.dr
   %i.dt = trunc <2 x i128> %i.ds to <2 x i64>
   %i.du = add <2 x i64> %i.dc, %i.dt
   %i.dv = insertelement <2 x i64> poison, i64 %.val71.3, i64 0

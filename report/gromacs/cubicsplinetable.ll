@@ -204,7 +204,7 @@ bb.p:                                             ; preds = %bb.i
   %i.ab = fpext float %4 to double
   %i.ac = fmul double %i.ab, f0x405F2D4A4563563F
   %i.ad = fmul double %i.ac, %.0.lcssa
-  %i.ae = tail call double @cbrt(double noundef %i.ad) #24 ; 9 uses
+  %i.ae = tail call double @cbrt(double noundef %i.ad) #24 ; 8 uses
   %i.af = fdiv double 1.000000e+00, %i.ae
   %i.ag = fptrunc double %i.af to float           ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -221,6 +221,8 @@ bb.p:                                             ; preds = %bb.i
   %broadcast.splatinsert527 = insertelement <4 x double> poison, double %i.ae, i64 0 ; 2 uses
   %broadcast.splat528 = shufflevector <4 x double> %broadcast.splatinsert527, <4 x double> poison, <4 x i32> zeroinitializer
   %i.al = shufflevector <4 x double> %broadcast.splatinsert527, <4 x double> poison, <8 x i32> zeroinitializer
+  %27 = insertelement <2 x double> poison, double %i.ae, i64 0
+  %28 = shufflevector <2 x double> %27, <2 x double> poison, <2 x i32> zeroinitializer
   br label %bb.az
 
 bb.q:                                             ; preds = %.lr.ph, %bb.ar
@@ -623,17 +625,19 @@ bb.bp:                                            ; preds = %bb.bo, %scalar.ph
   %.idx.i = shl nuw nsw i64 %indvars.iv60.i, 4
   %i.hm = getelementptr inbounds nuw i8, ptr %i.dw, i64 %.idx.i
   %i.hn = load double, ptr %i.hg, align 8, !tbaa !41 ; 2 uses
-  %i.ho = fsub double %i.he, %i.hn                ; 2 uses
-  %i.hp = fmul double %i.ae, %i.hl
-  %27 = fmul double %i.ae, %i.hk
-  %28 = fmul double %i.ae, %i.hi
-  %29 = tail call double @llvm.fmuladd.f64(double %i.ho, double -2.000000e+00, double %i.hp)
-  %30 = tail call double @llvm.fmuladd.f64(double %i.ho, double 3.000000e+00, double %27)
+  %i.ho = fsub double %i.he, %i.hn
+  %i.hp = fmul double %i.ae, %i.hi
+  %29 = insertelement <2 x double> poison, double %i.hk, i64 0
+  %30 = insertelement <2 x double> %29, double %i.hl, i64 1
+  %31 = fmul <2 x double> %28, %30
+  %32 = insertelement <2 x double> poison, double %i.ho, i64 0
+  %33 = shufflevector <2 x double> %32, <2 x double> poison, <2 x i32> zeroinitializer
+  %34 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %33, <2 x double> <double 3.000000e+00, double -2.000000e+00>, <2 x double> %31)
   %i.hq = insertelement <4 x double> poison, double %i.hn, i64 0
-  %i.hr = insertelement <4 x double> %i.hq, double %28, i64 1
-  %31 = insertelement <4 x double> %i.hr, double %30, i64 2
-  %32 = insertelement <4 x double> %31, double %29, i64 3
-  %i.hs = fptrunc <4 x double> %32 to <4 x float>
+  %i.hr = insertelement <4 x double> %i.hq, double %i.hp, i64 1
+  %35 = shufflevector <2 x double> %34, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %36 = shufflevector <4 x double> %i.hr, <4 x double> %35, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  %i.hs = fptrunc <4 x double> %36 to <4 x float>
   store <4 x float> %i.hs, ptr %i.hm, align 4, !tbaa !39
   %exitcond.not.i = icmp eq i64 %indvars.iv.next61.i, %wide.trip.count.i
   br i1 %exitcond.not.i, label %_ZN3gmx12_GLOBAL__N_130fillSingleCubicSplineTableDataENS_8ArrayRefIKdEES3_dRKSt4pairIffEdPSt6vectorIfSaIfEE.exit, label %scalar.ph, !llvm.loop !95

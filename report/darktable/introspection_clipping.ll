@@ -203,7 +203,7 @@ bb.x:                                             ; preds = %bb.w
   %i.fy = fsub reassoc nsz arcp contract afn <2 x float> %i.fw, %i.fx
   %i.fz = fsub reassoc nsz arcp contract afn <2 x float> splat (float 5.000000e-01), %i.fx
   %i.ga = fmul reassoc nsz arcp contract afn <2 x float> %i.fv, %i.fz
-  %5 = shufflevector <2 x float> %i.fv, <2 x float> %i.bi, <4 x i32> <i32 2, i32 3, i32 0, i32 1> ; 2 uses
+  %5 = shufflevector <2 x float> %i.bi, <2 x float> %i.fv, <4 x i32> <i32 0, i32 1, i32 2, i32 3> ; 2 uses
   %i.gb = shufflevector <2 x float> %i.ga, <2 x float> %i.fy, <4 x i32> <i32 0, i32 1, i32 2, i32 3> ; 2 uses
   %i.gc = fsub reassoc nsz arcp contract afn <4 x float> %5, %i.gb
   %i.gd = fmul reassoc nsz arcp contract afn <4 x float> %5, %i.gb
@@ -312,16 +312,17 @@ bb.ao:                                            ; preds = %bb.an, %bb.am
   %i.hl = insertelement <2 x float> poison, float %.2.1.3.1, i64 0
   %i.hm = shufflevector <2 x float> %i.hl, <2 x float> poison, <2 x i32> zeroinitializer
   %i.hn = fmul reassoc nsz arcp contract afn <2 x float> %i.hm, %i.av ; 2 uses
-  %6 = fsub reassoc nsz arcp contract afn <2 x float> splat (float 5.000000e-01), %i.hj
-  %7 = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> <i32 1, i32 0>
-  %8 = fmul reassoc nsz arcp contract afn <2 x float> %i.hn, %7
-  %i.ho = fsub reassoc nsz arcp contract afn <2 x float> %i.bi, %8
-  %9 = shufflevector <2 x float> %i.ho, <2 x float> poison, <4 x i32> <i32 1, i32 0, i32 poison, i32 poison>
-  %10 = shufflevector <2 x float> %i.hn, <2 x float> poison, <4 x i32> <i32 1, i32 0, i32 poison, i32 poison>
-  %11 = shufflevector <2 x float> %i.hk, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %i.hp = fmul reassoc nsz arcp contract afn <4 x float> %10, %11
-  %12 = shufflevector <4 x float> %9, <4 x float> %i.hp, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
-  %i.hq = fptosi <4 x float> %12 to <4 x i32>
+  %6 = shufflevector <2 x float> %i.bi, <2 x float> %i.hn, <4 x i32> <i32 1, i32 0, i32 3, i32 2> ; 2 uses
+  %7 = shufflevector <2 x float> %i.hk, <2 x float> poison, <4 x i32> <i32 poison, i32 poison, i32 0, i32 1>
+  %8 = shufflevector <2 x float> %i.hn, <2 x float> poison, <4 x i32> <i32 1, i32 0, i32 poison, i32 poison>
+  %i.ho = fsub reassoc nsz arcp contract afn <2 x float> splat (float 5.000000e-01), %i.hj
+  %9 = shufflevector <2 x float> %i.ho, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %10 = fmul reassoc nsz arcp contract afn <4 x float> %8, %9
+  %11 = shufflevector <4 x float> %10, <4 x float> %7, <4 x i32> <i32 0, i32 1, i32 6, i32 7> ; 2 uses
+  %12 = fsub reassoc nsz arcp contract afn <4 x float> %6, %11
+  %i.hp = fmul reassoc nsz arcp contract afn <4 x float> %6, %11
+  %13 = shufflevector <4 x float> %12, <4 x float> %i.hp, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %i.hq = fptosi <4 x float> %13 to <4 x i32>
   store <4 x i32> %i.hq, ptr %2, align 4, !tbaa !27
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #25
   br label %.loopexit

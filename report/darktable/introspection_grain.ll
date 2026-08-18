@@ -204,10 +204,10 @@ _hash_string.exit:                                ; preds = %_hash_string.exit.l
   %i.dj = load i32, ptr %5, align 4, !tbaa !68
   %wide.trip.count = zext nneg i32 %i.cs to i64
   %i.dk = fdiv reassoc nsz arcp contract afn double 1.000000e+00, %i.cp
-  %6 = insertelement <2 x float> poison, float %i.dg, i64 0
   %i.dl = fdiv reassoc nsz arcp contract afn double 1.000000e+00, %i.cp
   %i.dm = insertelement <2 x double> poison, double %i.cq, i64 0
   %i.dn = shufflevector <2 x double> %i.dm, <2 x double> poison, <2 x i32> zeroinitializer
+  %6 = insertelement <2 x float> poison, float %i.dg, i64 1
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph90.split, %._crit_edge
@@ -276,41 +276,42 @@ bb.d:                                             ; preds = %bb.c
 .loopexit:                                        ; preds = %.preheader, %bb.d
   %.1 = phi nsz float [ %i.ex, %bb.d ], [ %i.eu, %.preheader ]
   %i.ey = load float, ptr %.07587, align 4, !tbaa !16 ; 2 uses
-  %i.ez = insertelement <2 x float> %6, float %i.ey, i64 1
-  %i.fa = insertelement <2 x float> <float poison, float 1.270000e+00>, float %.1, i64 0
+  %i.ez = insertelement <2 x float> %6, float %i.ey, i64 0
+  %i.fa = insertelement <2 x float> <float 1.270000e+00, float poison>, float %.1, i64 1
   %i.fb = fmul reassoc nsz arcp contract afn <2 x float> %i.ez, %i.fa
-  %i.fc = fadd reassoc nsz arcp contract afn <2 x float> %i.fb, <float 6.350000e+01, float -0.000000e+00> ; 3 uses
+  %i.fc = fadd reassoc nsz arcp contract afn <2 x float> %i.fb, <float -0.000000e+00, float 6.350000e+01> ; 3 uses
   %i.fd = fcmp reassoc nsz arcp contract afn ogt <2 x float> %i.fc, zeroinitializer
   %i.fe = fcmp reassoc nsz arcp contract afn olt <2 x float> %i.fc, splat (float 1.270000e+02)
   %i.ff = select <2 x i1> %i.fe, <2 x float> %i.fc, <2 x float> splat (float 1.270000e+02)
   %i.fg = select <2 x i1> %i.fd, <2 x float> %i.ff, <2 x float> zeroinitializer ; 4 uses
   %i.fh = fcmp reassoc nsz arcp contract afn olt <2 x float> %i.fg, splat (float 1.260000e+02)
   %i.fi = select <2 x i1> %i.fh, <2 x float> %i.fg, <2 x float> splat (float 1.260000e+02)
-  %i.fj = fptosi <2 x float> %i.fi to <2 x i32>   ; 3 uses
-  %7 = extractelement <2 x i32> %i.fj, i64 0      ; 3 uses
-  %8 = add nsw i32 %7, 1                          ; 2 uses
+  %i.fj = fptosi <2 x float> %i.fi to <2 x i32>   ; 4 uses
   %i.fk = sitofp <2 x i32> %i.fj to <2 x float>   ; 2 uses
   %foldExtExtBinop = fsub reassoc nnan nsz arcp contract afn <2 x float> %i.fg, %i.fk
-  %i.fl = extractelement <2 x float> %foldExtExtBinop, i64 0
+  %i.fl = extractelement <2 x float> %foldExtExtBinop, i64 1
   %foldExtExtBinop100 = fsub reassoc nsz arcp contract afn <2 x float> %i.fg, %i.fk
-  %i.fm = extractelement <2 x float> %foldExtExtBinop100, i64 1 ; 3 uses
-  %9 = extractelement <2 x i32> %i.fj, i64 1
-  %10 = shl nsw i32 %9, 7                         ; 3 uses
-  %11 = add nsw i32 %10, %7
-  %i.fn = sext i32 %11 to i64
+  %i.fm = extractelement <2 x float> %foldExtExtBinop100, i64 0 ; 3 uses
+  %7 = shl nsw <2 x i32> %i.fj, <i32 7, i32 0>    ; 3 uses
+  %shift = shufflevector <2 x i32> %i.fj, <2 x i32> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop102 = add nsw <2 x i32> %7, %shift
+  %8 = extractelement <2 x i32> %foldExtExtBinop102, i64 0
+  %i.fn = sext i32 %8 to i64
   %i.fo = getelementptr inbounds [4 x i8], ptr %i.df, i64 %i.fn
   %i.fp = load float, ptr %i.fo, align 4, !tbaa !16
-  %12 = add nsw i32 %10, %8
+  %9 = add <2 x i32> %7, <i32 128, i32 1>         ; 2 uses
+  %10 = shufflevector <2 x i32> %i.fj, <2 x i32> %7, <2 x i32> <i32 1, i32 2>
+  %11 = add nsw <2 x i32> %9, %10                 ; 2 uses
+  %12 = extractelement <2 x i32> %11, i64 1
   %i.fq = sext i32 %12 to i64
   %i.fr = getelementptr inbounds [4 x i8], ptr %i.df, i64 %i.fq
   %i.fs = load float, ptr %i.fr, align 4, !tbaa !16
-  %13 = add i32 %10, 128                          ; 2 uses
-  %14 = add nsw i32 %13, %7
-  %i.ft = sext i32 %14 to i64
+  %13 = extractelement <2 x i32> %11, i64 0
+  %i.ft = sext i32 %13 to i64
   %i.fu = getelementptr inbounds [4 x i8], ptr %i.df, i64 %i.ft
   %i.fv = load float, ptr %i.fu, align 4, !tbaa !16
-  %15 = add nsw i32 %13, %8
-  %i.fw = sext i32 %15 to i64
+  %14 = tail call i32 @llvm.vector.reduce.add.v2i32(<2 x i32> %9)
+  %i.fw = sext i32 %14 to i64
   %i.fx = getelementptr inbounds [4 x i8], ptr %i.df, i64 %i.fw
   %i.fy = load float, ptr %i.fx, align 4, !tbaa !16
   %i.fz = fsub reassoc nsz arcp contract afn float 1.000000e+00, %i.fm ; 2 uses
@@ -712,6 +713,9 @@ declare ptr @dt_alloc_aligned(i64 noundef) local_unnamed_addr #5
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #17
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.add.v2i32(<2 x i32>) #6
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #18

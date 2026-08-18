@@ -203,36 +203,41 @@ scalar.ph.preheader:                              ; preds = %.lr.ph, %middle.blo
 
 vector.ph29:                                      ; preds = %.lr.ph20
   %n.vec30 = and i64 %i.v, 2147483644             ; 3 uses
-  %5 = insertelement <4 x i32> poison, i32 %4, i64 0
-  %6 = shufflevector <4 x i32> %5, <4 x i32> poison, <4 x i32> zeroinitializer
+  %5 = insertelement <2 x i32> poison, i32 %4, i64 0
+  %6 = shufflevector <2 x i32> %5, <2 x i32> poison, <2 x i32> zeroinitializer ; 2 uses
   br label %vector.body31
 
 vector.body31:                                    ; preds = %pred.store.continue38, %vector.ph29
-  %index32 = phi i64 [ 0, %vector.ph29 ], [ %index.next39, %pred.store.continue38 ] ; 4 uses
+  %index32 = phi i64 [ 0, %vector.ph29 ], [ %index.next39, %pred.store.continue38 ] ; 5 uses
+  %7 = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %index32
   %i.w = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %index32
-  %7 = load <4 x i32>, ptr %i.w, align 4, !tbaa !55
-  %8 = sub nsw <4 x i32> %7, %6                   ; 5 uses
+  %8 = getelementptr inbounds nuw i8, ptr %i.w, i64 8
+  %9 = load <2 x i32>, ptr %7, align 4, !tbaa !55
+  %10 = sub nsw <2 x i32> %9, %6                  ; 3 uses
+  %11 = load <2 x i32>, ptr %8, align 4, !tbaa !55
+  %12 = sub nsw <2 x i32> %11, %6                 ; 3 uses
+  %13 = shufflevector <2 x i32> %10, <2 x i32> %12, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %index32
-  store <4 x i32> %8, ptr %i.x, align 4, !tbaa !55
+  store <4 x i32> %13, ptr %i.x, align 4, !tbaa !55
   br i1 %i.u, label %pred.store.if, label %pred.store.continue38
 
 pred.store.if:                                    ; preds = %vector.body31
   %i.y = trunc i64 %index32 to i32                ; 4 uses
-  %i.z = extractelement <4 x i32> %8, i64 0
+  %i.z = extractelement <2 x i32> %10, i64 0
   %i.aa = sext i32 %i.z to i64
   %i.ab = getelementptr inbounds [4 x i8], ptr %i.s, i64 %i.aa
   store i32 %i.y, ptr %i.ab, align 4, !tbaa !55
-  %i.ac = extractelement <4 x i32> %8, i64 1
+  %i.ac = extractelement <2 x i32> %10, i64 1
   %i.ad = sext i32 %i.ac to i64
   %i.ae = getelementptr inbounds [4 x i8], ptr %i.s, i64 %i.ad
   %i.af = or disjoint i32 %i.y, 1
   store i32 %i.af, ptr %i.ae, align 4, !tbaa !55
-  %i.ag = extractelement <4 x i32> %8, i64 2
+  %i.ag = extractelement <2 x i32> %12, i64 0
   %i.ah = sext i32 %i.ag to i64
   %i.ai = getelementptr inbounds [4 x i8], ptr %i.s, i64 %i.ah
   %i.aj = or disjoint i32 %i.y, 2
   store i32 %i.aj, ptr %i.ai, align 4, !tbaa !55
-  %i.ak = extractelement <4 x i32> %8, i64 3
+  %i.ak = extractelement <2 x i32> %12, i64 1
   %i.al = sext i32 %i.ak to i64
   %i.am = getelementptr inbounds [4 x i8], ptr %i.s, i64 %i.al
   %i.an = or disjoint i32 %i.y, 3

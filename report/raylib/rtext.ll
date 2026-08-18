@@ -204,23 +204,25 @@ stbtt__csctx_v.exit:                              ; preds = %stbtt__track_vertex
 define internal fastcc void @stbtt__csctx_rccurve_to(ptr nofree noundef nonnull captures(none) %0, float noundef %1, float noundef %2, float noundef %3, float noundef %4, float noundef %5, float noundef %6) unnamed_addr #35 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %7 = load float, ptr %i.a, align 8
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 2 uses
-  %9 = load float, ptr %8, align 4
-  %10 = fadd float %1, %7                         ; 2 uses
-  %i.b = fadd float %2, %9                        ; 2 uses
-  %11 = fadd float %3, %10                        ; 2 uses
-  %i.c = fadd float %4, %i.b                      ; 2 uses
-  %i.d = fadd float %5, %11                       ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 20
+  %8 = load <2 x float>, ptr %i.a, align 8
+  %9 = insertelement <2 x float> poison, float %1, i64 0
+  %10 = insertelement <2 x float> %9, float %2, i64 1
+  %11 = fadd <2 x float> %10, %8                  ; 3 uses
+  %12 = extractelement <2 x float> %11, i64 0
+  %i.b = fadd float %3, %12                       ; 2 uses
+  %13 = extractelement <2 x float> %11, i64 1
+  %i.c = fadd float %4, %13                       ; 2 uses
+  %i.d = fadd float %5, %i.b                      ; 2 uses
   store float %i.d, ptr %i.a, align 8
   %i.e = fadd float %6, %i.c                      ; 2 uses
-  store float %i.e, ptr %8, align 4
+  store float %i.e, ptr %7, align 4
   %i.f = insertelement <4 x float> poison, float %i.d, i64 0
   %i.g = insertelement <4 x float> %i.f, float %i.e, i64 1
-  %12 = insertelement <4 x float> %i.g, float %10, i64 2
-  %13 = insertelement <4 x float> %12, float %i.b, i64 3
-  %i.h = fptosi <4 x float> %13 to <4 x i32>      ; 5 uses
-  %i.i = fptosi float %11 to i32                  ; 5 uses
+  %14 = shufflevector <2 x float> %11, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %15 = shufflevector <4 x float> %i.g, <4 x float> %14, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  %i.h = fptosi <4 x float> %15 to <4 x i32>      ; 5 uses
+  %i.i = fptosi float %i.b to i32                 ; 5 uses
   %i.j = fptosi float %i.c to i32                 ; 5 uses
   %i.k = load i32, ptr %0, align 8
   %.not.i = icmp eq i32 %i.k, 0

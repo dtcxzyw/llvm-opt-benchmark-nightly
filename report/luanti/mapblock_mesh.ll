@@ -204,7 +204,7 @@ bb.k:                                             ; preds = %bb.j
 _ZN7irr_ptrIN5scene5SMeshEED2Ev.exit.1:           ; preds = %bb.k, %bb.j, %bb.i
   store ptr %i.bb, ptr %.091.ptr481.1, align 8, !tbaa !247
   %i.bq = getelementptr inbounds nuw i8, ptr %2, i64 56
-  %i.br = load i16, ptr %i.bq, align 8, !tbaa !27 ; 6 uses
+  %i.br = load i16, ptr %i.bq, align 8, !tbaa !27 ; 5 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %2, i64 48 ; 2 uses
   %.sroa.0314.0.copyload = load i16, ptr %i.bs, align 8, !tbaa !27 ; 2 uses
   %.sroa.6316.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 50
@@ -427,51 +427,52 @@ bb.ab:                                            ; preds = %bb.aa
   br i1 %i.fq, label %.preheader363, label %_ZNK8MeshGrid9isMeshPosERN4core8vector3dIsEE.exit.thread, !llvm.loop !259
 
 _ZNK8MeshGrid9isMeshPosERN4core8vector3dIsEE.exit.thread: ; preds = %bb.ab, %_ZN7irr_ptrIN5scene5SMeshEED2Ev.exit.1, %bb.d, %bb.m, %_ZNK8MeshGrid9isMeshPosERN4core8vector3dIsEE.exit
-  %.sroa.045.0.copyload = load i48, ptr %i.bs, align 8 ; 3 uses
-  %.sroa.0.0.extract.trunc.i139 = trunc i48 %.sroa.045.0.copyload to i16 ; 3 uses
-  %.sroa.2.0.extract.shift.i140.a = lshr i48 %.sroa.045.0.copyload, 16
-  %.sroa.2.0.extract.trunc.i141.a = trunc i48 %.sroa.2.0.extract.shift.i140.a to i16 ; 3 uses
-  %.sroa.3.0.extract.shift.i = lshr i48 %.sroa.045.0.copyload, 32
-  %.sroa.3.0.extract.trunc.i = trunc nuw i48 %.sroa.3.0.extract.shift.i to i16 ; 3 uses
-  %i.fr = sext i16 %.sroa.0.0.extract.trunc.i139 to i32
-  %.lobit.i.i.i.a = lshr i16 %.sroa.0.0.extract.trunc.i139, 15
-  %i.fs = zext nneg i16 %.lobit.i.i.i.a to i32
+  %.sroa.045.0.copyload = load i48, ptr %i.bs, align 8 ; 4 uses
+  %.sroa.2.0.extract.shift.i140 = lshr i48 %.sroa.045.0.copyload, 16 ; 2 uses
+  %.sroa.2.0.extract.shift.i140.a = lshr i48 %.sroa.045.0.copyload, 32
+  %.sroa.2.0.extract.trunc.i141.a = trunc nuw i48 %.sroa.2.0.extract.shift.i140.a to i16 ; 3 uses
   %11 = add nsw i32 %i.bu, -1                     ; 3 uses
+  %i.fr = sext i16 %.sroa.2.0.extract.trunc.i141.a to i32
+  %.lobit.i.i.i.a = lshr i16 %.sroa.2.0.extract.trunc.i141.a, 15
+  %i.fs = zext nneg i16 %.lobit.i.i.i.a to i32
   %i.ft = mul nuw nsw i32 %11, %i.fs
   %i.fu = sub nsw i32 %i.fr, %i.ft
   %i.fv = sdiv i32 %i.fu, %i.bu
   %i.fw = trunc i32 %i.fv to i16
   %i.fx = mul i16 %i.br, %i.fw
-  %12 = sext i16 %.sroa.2.0.extract.trunc.i141.a to i32
-  %.lobit.i.i1.i = lshr i16 %.sroa.2.0.extract.trunc.i141.a, 15
-  %13 = zext nneg i16 %.lobit.i.i1.i to i32
-  %14 = mul nuw nsw i32 %11, %13
-  %15 = sub nsw i32 %12, %14
-  %16 = sdiv i32 %15, %i.bu
-  %i.fy = trunc i32 %16 to i16
-  %17 = mul i16 %i.br, %i.fy
-  %i.fz = sext i16 %.sroa.3.0.extract.trunc.i to i32
-  %.lobit.i.i2.i = lshr i16 %.sroa.3.0.extract.trunc.i, 15
-  %i.ga = zext nneg i16 %.lobit.i.i2.i to i32
-  %18 = mul nuw nsw i32 %11, %i.ga
-  %19 = sub nsw i32 %i.fz, %18
-  %20 = sdiv i32 %19, %i.bu
-  %21 = trunc i32 %20 to i16
-  %22 = mul i16 %i.br, %21
-  %23 = sub i16 %.sroa.0.0.extract.trunc.i139, %i.fx
-  %24 = sub i16 %.sroa.2.0.extract.trunc.i141.a, %17
-  %25 = sub i16 %.sroa.3.0.extract.trunc.i, %22
-  %26 = shl i16 %23, 4
-  %27 = shl i16 %24, 4
-  %28 = shl i16 %25, 4
-  %29 = sitofp nsz i16 %26 to float
-  %30 = sitofp nsz i16 %27 to float
-  %31 = sitofp nsz i16 %28 to float
-  %32 = fmul nnan nsz float %29, 1.000000e+01
-  %33 = fmul nnan nsz float %30, 1.000000e+01
-  %34 = fmul nnan nsz float %31, 1.000000e+01
-  %.sroa.0.0.vec.insert.i9.i = insertelement <2 x float> poison, float %32, i64 0
-  %.sroa.0.4.vec.insert.i10.i = insertelement <2 x float> %.sroa.0.0.vec.insert.i9.i, float %33, i64 1
+  %12 = sub i16 %.sroa.2.0.extract.trunc.i141.a, %i.fx
+  %13 = shl i16 %12, 4
+  %14 = sitofp nsz i16 %13 to float
+  %.sroa.2.0.extract.trunc.i141 = trunc i48 %.sroa.2.0.extract.shift.i140 to i16 ; 2 uses
+  %15 = trunc i48 %.sroa.045.0.copyload to i16
+  %16 = insertelement <2 x i16> poison, i16 %15, i64 0
+  %17 = trunc i48 %.sroa.2.0.extract.shift.i140 to i16
+  %18 = insertelement <2 x i16> %16, i16 %17, i64 1
+  %i.fy = trunc i48 %.sroa.045.0.copyload to i16  ; 2 uses
+  %19 = sext i16 %.sroa.2.0.extract.trunc.i141 to i32
+  %i.fz = sext i16 %i.fy to i32
+  %.lobit.i.i1.i = lshr i16 %.sroa.2.0.extract.trunc.i141, 15
+  %.lobit.i.i2.i = lshr i16 %i.fy, 15
+  %i.ga = zext nneg i16 %.lobit.i.i1.i to i32
+  %20 = zext nneg i16 %.lobit.i.i2.i to i32
+  %21 = mul nuw nsw i32 %11, %i.ga
+  %22 = mul nuw nsw i32 %11, %20
+  %23 = sub nsw i32 %19, %21
+  %24 = sub nsw i32 %i.fz, %22
+  %25 = sdiv i32 %23, %i.bu
+  %26 = sdiv i32 %24, %i.bu
+  %27 = trunc i32 %25 to i16
+  %28 = trunc i32 %26 to i16
+  %29 = insertelement <2 x i16> poison, i16 %i.br, i64 0
+  %30 = shufflevector <2 x i16> %29, <2 x i16> poison, <2 x i32> zeroinitializer
+  %31 = insertelement <2 x i16> poison, i16 %28, i64 0
+  %32 = insertelement <2 x i16> %31, i16 %27, i64 1
+  %33 = mul <2 x i16> %30, %32
+  %34 = sub <2 x i16> %18, %33
+  %35 = shl <2 x i16> %34, splat (i16 4)
+  %36 = sitofp <2 x i16> %35 to <2 x float>
+  %37 = fmul nnan nsz <2 x float> %36, splat (float 1.000000e+01)
+  %38 = fmul nnan nsz float %14, 1.000000e+01
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #30
   %.sroa.038.0.copyload = load <2 x float>, ptr %i.k, align 4
   %.sroa.239.0.copyload = load float, ptr %i.r, align 4, !tbaa !73
@@ -481,9 +482,9 @@ _ZNK8MeshGrid9isMeshPosERN4core8vector3dIsEE.exit.thread: ; preds = %bb.ab, %_ZN
   %.sroa.26.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %7, i64 60
   store float %.sroa.239.0.copyload, ptr %.sroa.26.0..sroa_idx.i, align 4, !tbaa !73
   %i.gc = getelementptr inbounds nuw i8, ptr %7, i64 64
-  store <2 x float> %.sroa.0.4.vec.insert.i10.i, ptr %i.gc, align 8
+  store <2 x float> %37, ptr %i.gc, align 8
   %.sroa.22.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %7, i64 72
-  store float %34, ptr %.sroa.22.0..sroa_idx.i, align 8, !tbaa !73
+  store float %38, ptr %.sroa.22.0..sroa_idx.i, align 8, !tbaa !73
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #30
   invoke void @_ZN21MapblockMeshGeneratorC1EP12MeshMakeDataP13MeshCollector(ptr noundef nonnull align 8 dereferenceable(496) %8, ptr noundef nonnull %2, ptr noundef nonnull %7)
           to label %bb.ac unwind label %bb.af

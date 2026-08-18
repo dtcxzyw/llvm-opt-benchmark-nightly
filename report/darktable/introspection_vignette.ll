@@ -166,24 +166,25 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.a = tail call noalias dereferenceable_or_null(44) ptr @malloc(i64 noundef 44) #20 ; 7 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %i.c = load double, ptr %i.b, align 8, !tbaa !11 ; 4 uses
-  %6 = fcmp reassoc nsz arcp contract afn ogt double %i.c, 0.000000e+00
-  %7 = fadd reassoc nnan nsz arcp contract afn double %i.c, -1.000000e+00
-  %8 = select i1 %6, double %7, double -1.000000e+00
-  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %9 = load double, ptr %i.d, align 8, !tbaa !15
-  %10 = fmul reassoc nsz arcp contract afn double %9, 1.000000e-02 ; 2 uses
-  %11 = fmul reassoc nsz arcp contract afn double %10, %8
-  %12 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %13 = fcmp reassoc nsz arcp contract afn olt double %i.c, 0.000000e+00
-  %.neg = fsub reassoc nsz arcp contract afn double -1.000000e+00, %i.c
-  %14 = select reassoc nsz arcp contract afn i1 %13, double %.neg, double -1.000000e+00
-  %15 = fmul reassoc nsz arcp contract afn double %10, %14
+  %i.c = load double, ptr %i.b, align 8, !tbaa !11 ; 3 uses
+  %6 = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %7 = load double, ptr %6, align 8, !tbaa !15
+  %8 = fmul reassoc nsz arcp contract afn double %7, 1.000000e-02
+  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %9 = insertelement <2 x double> <double poison, double 0.000000e+00>, double %i.c, i64 0 ; 2 uses
+  %10 = insertelement <2 x double> <double 0.000000e+00, double poison>, double %i.c, i64 1
+  %11 = fcmp reassoc nsz arcp contract afn ogt <2 x double> %9, %10
+  %12 = insertelement <2 x double> %9, double -1.000000e+00, i64 1
+  %13 = insertelement <2 x double> <double 1.000000e+00, double poison>, double %i.c, i64 1
+  %14 = fsub reassoc nsz arcp contract afn <2 x double> %12, %13
+  %15 = select <2 x i1> %11, <2 x double> %14, <2 x double> splat (double -1.000000e+00)
+  %16 = insertelement <2 x double> poison, double %8, i64 0
   %i.e = load <2 x double>, ptr %1, align 8, !tbaa !16
-  %16 = insertelement <4 x double> poison, double %11, i64 2
-  %17 = insertelement <4 x double> %16, double %15, i64 3
+  %17 = shufflevector <2 x double> %16, <2 x double> poison, <4 x i32> <i32 poison, i32 poison, i32 0, i32 0>
+  %18 = shufflevector <2 x double> %15, <2 x double> poison, <4 x i32> <i32 poison, i32 poison, i32 0, i32 1>
+  %19 = fmul reassoc nsz arcp contract afn <4 x double> %17, %18
   %i.f = shufflevector <2 x double> %i.e, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %i.g = shufflevector <4 x double> %i.f, <4 x double> %17, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %i.g = shufflevector <4 x double> %i.f, <4 x double> %19, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   %i.h = fptrunc <4 x double> %i.g to <4 x float> ; 3 uses
   store <4 x float> %i.h, ptr %i.a, align 4, !tbaa !17
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 44
@@ -207,7 +208,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 bb.e:                                             ; preds = %bb.d
   %i.p = extractelement <4 x float> %i.h, i64 2
   %i.q = fneg reassoc nsz arcp contract afn float %i.p
-  store float %i.q, ptr %12, align 4, !tbaa !24
+  store float %i.q, ptr %i.d, align 4, !tbaa !24
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
