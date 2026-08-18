@@ -1,4 +1,4 @@
-inline.NumInlined: 403
+inline.NumInlined: 404
 inline.NumDeleted: 214
 begin_hunk_0_@_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtNtCs7ZUl82OSlxp_6rustls4msgs8deframer9handshake17HandshakeDeframerECsc044841uM34_23unbuffered_async_client:bb.a
   invoke void @_RNvXsp_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecNtNtNtNtCs7ZUl82OSlxp_6rustls4msgs8deframer9handshake12FragmentSpanENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropCsc044841uM34_23unbuffered_async_client(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %0)
@@ -201,7 +201,7 @@ bb.a:
   %i.ab = alloca [24 x i8], align 8               ; 8 uses
   %i.ac = alloca [8 x i8], align 8                ; 5 uses
   %i.ad = alloca [16 x i8], align 8               ; 6 uses
-  %i.ae = alloca [32 x i8], align 8               ; 12 uses
+  %i.ae = alloca [32 x i8], align 8               ; 15 uses
   %i.af = alloca [16 x i8], align 8               ; 6 uses
   %i.ag = alloca [16 x i8], align 8               ; 6 uses
   %i.ah = alloca [24 x i8], align 8               ; 7 uses
@@ -604,12 +604,12 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECsc0
   invoke void @_RNvXs1_NtCs4wP2HXfJTCR_5alloc7raw_vecINtB5_6RawVechENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropCsc044841uM34_23unbuffered_async_client(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.ae)
           to label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCs7ZUl82OSlxp_6rustls4conn10unbuffered13EncodeTlsDataNtNtNtBI_6client11client_conn20ClientConnectionDataEECsc044841uM34_23unbuffered_async_client.exit.i unwind label %bb.hz, !noalias !365
 
-.body203.i:                                       ; preds = %bb.hz, %bb.hx, %bb.ht
-  %.pn97.i = phi { ptr, i32 } [ %i.td, %bb.ht ], [ %i.tl, %bb.hz ], [ %i.tj, %bb.hx ]
+.body203.i:                                       ; preds = %6, %bb.hz, %bb.hx, %bb.ht
+  %.pn97.i = phi { ptr, i32 } [ %i.td, %bb.ht ], [ %i.tj, %bb.hx ], [ %i.tl, %bb.hz ], [ %7, %6 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ae), !noalias !361
   br label %bb.hs
 
-bb.hz:                                            ; preds = %bb.ia, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECsc044841uM34_23unbuffered_async_client.exit.i.i202.i
+bb.hz:                                            ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECsc044841uM34_23unbuffered_async_client.exit.i.i, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECsc044841uM34_23unbuffered_async_client.exit.i.i202.i
   %i.tl = landingpad { ptr, i32 }
           cleanup
   br label %.body203.i
@@ -621,10 +621,31 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCs7ZUl82OSlxp_6rustls4conn10unbuf
 bb.ia:                                            ; preds = %bb.hu
   %i.tm = icmp ne i64 %i.tg, 0
   call void @llvm.assume(i1 %i.tm)
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCs7ZUl82OSlxp_6rustls4conn10unbuffered13EncodeTlsDataNtNtNtBI_6client11client_conn20ClientConnectionDataEECsc044841uM34_23unbuffered_async_client(ptr noalias nofree noundef align 8 dereferenceable(32) %i.ae)
-          to label %bb.ib unwind label %bb.hz, !noalias !365
+  %3 = load i64, ptr %i.ae, align 8, !range !5, !alias.scope !536, !noalias !365, !noundef !6
+  %4 = icmp eq i64 %3, -1
+  br i1 %4, label %bb.ib, label %5
 
-bb.ib:                                            ; preds = %bb.ia
+5:                                                ; preds = %bb.ia
+  invoke void @_RNvXsp_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VechENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropCsc044841uM34_23unbuffered_async_client(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.ae)
+          to label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECsc044841uM34_23unbuffered_async_client.exit.i.i unwind label %6, !noalias !365
+
+6:                                                ; preds = %5
+  %7 = landingpad { ptr, i32 }
+          cleanup
+  invoke void @_RNvXs1_NtCs4wP2HXfJTCR_5alloc7raw_vecINtB5_6RawVechENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropCsc044841uM34_23unbuffered_async_client(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.ae)
+          to label %.body203.i unwind label %8, !noalias !365
+
+8:                                                ; preds = %6
+  %9 = landingpad { ptr, i32 }
+          filter [0 x ptr] zeroinitializer        ; 0 uses
+  call void @_RNvNtCsj6eKBz9Db1c_4core9panicking16panic_in_cleanup() #15, !noalias !365
+  unreachable
+
+_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECsc044841uM34_23unbuffered_async_client.exit.i.i: ; preds = %5
+  invoke void @_RNvXs1_NtCs4wP2HXfJTCR_5alloc7raw_vecINtB5_6RawVechENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropCsc044841uM34_23unbuffered_async_client(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.ae)
+          to label %bb.ib unwind label %bb.hz
+
+bb.ib:                                            ; preds = %bb.ia, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECsc044841uM34_23unbuffered_async_client.exit.i.i
   %i.tn = insertvalue { ptr, ptr } poison, ptr %i.te, 0
   %.sink1.i.i = inttoptr i64 %i.tg to ptr
   %i.to = insertvalue { ptr, ptr } %i.tn, ptr %.sink1.i.i, 1
@@ -722,7 +743,7 @@ bb.im:                                            ; preds = %bb.il
   %i.ut = getelementptr inbounds nuw i8, ptr %1, i64 1224
   %i.uu = load ptr, ptr %i.ut, align 8, !noalias !361, !nonnull !6, !align !204, !noundef !6
   %i.uv = getelementptr inbounds nuw i8, ptr %i.uu, i64 968
-  store i8 0, ptr %i.uv, align 8, !alias.scope !536, !noalias !365
+  store i8 0, ptr %i.uv, align 8, !alias.scope !541, !noalias !365
   br label %bb.ew
 
 bb.in:                                            ; preds = %bb.il
@@ -888,9 +909,9 @@ bb.ji:                                            ; preds = %bb.jh
   br label %bb.hs
 
 bb.jj:                                            ; preds = %bb.jh
-  %i.wv = load ptr, ptr %i.w, align 8, !alias.scope !539, !noalias !542, !noundef !6 ; 2 uses
+  %i.wv = load ptr, ptr %i.w, align 8, !alias.scope !544, !noalias !547, !noundef !6 ; 2 uses
   %i.ww = getelementptr inbounds nuw i8, ptr %i.w, i64 8
-  %i.wx = load i64, ptr %i.ww, align 8, !alias.scope !539, !noalias !542 ; 2 uses
+  %i.wx = load i64, ptr %i.ww, align 8, !alias.scope !544, !noalias !547 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.w), !noalias !361
   %.not55.i = icmp eq ptr %i.wv, null
   br i1 %.not55.i, label %bb.jk, label %bb.js
@@ -1171,7 +1192,7 @@ bb.kx:                                            ; preds = %bb.kw
   %i.zr = landingpad { ptr, i32 }
           cleanup
   %i.zs = getelementptr inbounds nuw i8, ptr %1, i64 80
-  %.val2.i.i.i = load i32, ptr %i.zs, align 8, !alias.scope !544, !noalias !361, !noundef !6 ; 2 uses
+  %.val2.i.i.i = load i32, ptr %i.zs, align 8, !alias.scope !549, !noalias !361, !noundef !6 ; 2 uses
   %i.zt = icmp eq i32 %.val2.i.i.i, -1
   br i1 %i.zt, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCsUoH6ltOcnV_3mio3net3tcp6stream9TcpStreamEECsc044841uM34_23unbuffered_async_client.exit.i.i.i, label %bb.ky
 
@@ -1181,7 +1202,7 @@ bb.ky:                                            ; preds = %bb.kx
 
 bb.kz:                                            ; preds = %bb.kw
   %i.zv = getelementptr inbounds nuw i8, ptr %1, i64 80
-  %.val.i.i.i = load i32, ptr %i.zv, align 8, !alias.scope !544, !noalias !361, !noundef !6 ; 2 uses
+  %.val.i.i.i = load i32, ptr %i.zv, align 8, !alias.scope !549, !noalias !361, !noundef !6 ; 2 uses
   %i.zw = icmp eq i32 %.val.i.i.i, -1
   br i1 %i.zw, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCskruEhpekJ3V_5tokio2io12poll_evented11PollEventedNtNtNtNtCsUoH6ltOcnV_3mio3net3tcp6stream9TcpStreamEECsc044841uM34_23unbuffered_async_client.exit.i.i, label %bb.la
 
@@ -1248,7 +1269,7 @@ bb.li:                                            ; preds = %bb.lh
   %i.aak = landingpad { ptr, i32 }
           cleanup
   %i.aal = getelementptr inbounds nuw i8, ptr %1, i64 80
-  %.val2.i.i222.i = load i32, ptr %i.aal, align 8, !alias.scope !549, !noalias !361, !noundef !6 ; 2 uses
+  %.val2.i.i222.i = load i32, ptr %i.aal, align 8, !alias.scope !554, !noalias !361, !noundef !6 ; 2 uses
   %i.aam = icmp eq i32 %.val2.i.i222.i, -1
   br i1 %i.aam, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCsUoH6ltOcnV_3mio3net3tcp6stream9TcpStreamEECsc044841uM34_23unbuffered_async_client.exit.i.i223.i, label %bb.lj
 
@@ -1258,7 +1279,7 @@ bb.lj:                                            ; preds = %bb.li
 
 bb.lk:                                            ; preds = %bb.lh
   %i.aao = getelementptr inbounds nuw i8, ptr %1, i64 80
-  %.val.i.i224.i = load i32, ptr %i.aao, align 8, !alias.scope !549, !noalias !361, !noundef !6 ; 2 uses
+  %.val.i.i224.i = load i32, ptr %i.aao, align 8, !alias.scope !554, !noalias !361, !noundef !6 ; 2 uses
   %i.aap = icmp eq i32 %.val.i.i224.i, -1
   br i1 %i.aap, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCskruEhpekJ3V_5tokio2io12poll_evented11PollEventedNtNtNtNtCsUoH6ltOcnV_3mio3net3tcp6stream9TcpStreamEECsc044841uM34_23unbuffered_async_client.exit.i225.i, label %bb.ll
 
@@ -1386,10 +1407,10 @@ bb.mb:                                            ; preds = %bb.lz
   unreachable
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECsc044841uM34_23unbuffered_async_client.exit31: ; preds = %bb.ma
-  call void @llvm.experimental.noalias.scope.decl(metadata !554)
-  call void @llvm.experimental.noalias.scope.decl(metadata !557)
-  %i.abd = load ptr, ptr %1, align 8, !alias.scope !560, !nonnull !6, !noundef !6
-  %i.abe = atomicrmw sub ptr %i.abd, i64 1 release, align 8, !noalias !560
+  call void @llvm.experimental.noalias.scope.decl(metadata !559)
+  call void @llvm.experimental.noalias.scope.decl(metadata !562)
+  %i.abd = load ptr, ptr %1, align 8, !alias.scope !565, !nonnull !6, !noundef !6
+  %i.abe = atomicrmw sub ptr %i.abd, i64 1 release, align 8, !noalias !565
   %i.abf = icmp eq i64 %i.abe, 1
   br i1 %i.abf, label %bb.mc, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc4sync3ArcNtNtNtCs7ZUl82OSlxp_6rustls6client11client_conn12ClientConfigEECsc044841uM34_23unbuffered_async_client.exit45
 
@@ -1455,10 +1476,10 @@ bb.mj:                                            ; preds = %bb.mh
   unreachable
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECsc044841uM34_23unbuffered_async_client.exit43: ; preds = %bb.mi
-  call void @llvm.experimental.noalias.scope.decl(metadata !561)
-  call void @llvm.experimental.noalias.scope.decl(metadata !564)
-  %i.abp = load ptr, ptr %1, align 8, !alias.scope !567, !nonnull !6, !noundef !6
-  %i.abq = atomicrmw sub ptr %i.abp, i64 1 release, align 8, !noalias !567
+  call void @llvm.experimental.noalias.scope.decl(metadata !566)
+  call void @llvm.experimental.noalias.scope.decl(metadata !569)
+  %i.abp = load ptr, ptr %1, align 8, !alias.scope !572, !nonnull !6, !noundef !6
+  %i.abq = atomicrmw sub ptr %i.abp, i64 1 release, align 8, !noalias !572
   %i.abr = icmp eq i64 %i.abq, 1
   br i1 %i.abr, label %bb.mk, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc4sync3ArcNtNtNtCs7ZUl82OSlxp_6rustls6client11client_conn12ClientConfigEECsc044841uM34_23unbuffered_async_client.exit45
 
@@ -1786,9 +1807,9 @@ bb.a:
 define hidden void @_RNvXs_NtNtCsj6eKBz9Db1c_4core6future6futureINtNtB8_3pin3PinQIBG_INtNtCs4wP2HXfJTCR_5alloc5boxed3BoxNCNvCsc044841uM34_23unbuffered_async_client4main0EEENtB4_6Future4pollB1D_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(8) %1, ptr noalias nofree noundef align 8 dereferenceable(32) %2) unnamed_addr #0 {
 bb.a:
   %.val = load ptr, ptr %1, align 8, !nonnull !6, !align !204, !noundef !6
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !568)
-  %.val.i = load ptr, ptr %.val, align 8, !alias.scope !568, !noalias !571, !nonnull !6, !noundef !6
-  tail call fastcc void @_RNCNvCsc044841uM34_23unbuffered_async_client4main0B3_(ptr noalias nofree noundef align 8 captures(none) dereferenceable(24) %0, ptr noundef nonnull align 8 %.val.i, ptr noalias nofree noundef align 8 dereferenceable(32) %2) #21, !noalias !568
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !573)
+  %.val.i = load ptr, ptr %.val, align 8, !alias.scope !573, !noalias !576, !nonnull !6, !noundef !6
+  tail call fastcc void @_RNCNvCsc044841uM34_23unbuffered_async_client4main0B3_(ptr noalias nofree noundef align 8 captures(none) dereferenceable(24) %0, ptr noundef nonnull align 8 %.val.i, ptr noalias nofree noundef align 8 dereferenceable(32) %2) #21, !noalias !573
   ret void
 }
 
@@ -2191,42 +2212,47 @@ begin_hunk_2_@llvm.experimental.noalias.scope.decl
 !533 = distinct !{!533, !"_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs4wP2HXfJTCR_5alloc3vec3VechEEECsc044841uM34_23unbuffered_async_client"}
 !534 = distinct !{!534, !535, !"_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCs7ZUl82OSlxp_6rustls4conn10unbuffered13EncodeTlsDataNtNtNtBI_6client11client_conn20ClientConnectionDataEECsc044841uM34_23unbuffered_async_client: argument 0"}
 !535 = distinct !{!535, !"_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCs7ZUl82OSlxp_6rustls4conn10unbuffered13EncodeTlsDataNtNtNtBI_6client11client_conn20ClientConnectionDataEECsc044841uM34_23unbuffered_async_client"}
-!536 = !{!537}
-!537 = distinct !{!537, !538, !"_RNvMsa_NtNtCs7ZUl82OSlxp_6rustls4conn10unbufferedINtB5_15TransmitTlsDataNtNtNtB9_6client11client_conn20ClientConnectionDataE4doneCsc044841uM34_23unbuffered_async_client: argument 0"}
-!538 = distinct !{!538, !"_RNvMsa_NtNtCs7ZUl82OSlxp_6rustls4conn10unbufferedINtB5_15TransmitTlsDataNtNtNtB9_6client11client_conn20ClientConnectionDataE4doneCsc044841uM34_23unbuffered_async_client"}
-!539 = !{!540}
-!540 = distinct !{!540, !541, !"_RNvXsp_NtCsj6eKBz9Db1c_4core6resultINtB5_6ResultjINtNtCs4wP2HXfJTCR_5alloc5boxed3BoxDNtNtB7_5error5ErrorEL_EENtNtNtB7_3ops9try_trait3Try6branchCsc044841uM34_23unbuffered_async_client: argument 1"}
-!541 = distinct !{!541, !"_RNvXsp_NtCsj6eKBz9Db1c_4core6resultINtB5_6ResultjINtNtCs4wP2HXfJTCR_5alloc5boxed3BoxDNtNtB7_5error5ErrorEL_EENtNtNtB7_3ops9try_trait3Try6branchCsc044841uM34_23unbuffered_async_client"}
-!542 = !{!543, !362, !364}
-!543 = distinct !{!543, !541, !"_RNvXsp_NtCsj6eKBz9Db1c_4core6resultINtB5_6ResultjINtNtCs4wP2HXfJTCR_5alloc5boxed3BoxDNtNtB7_5error5ErrorEL_EENtNtNtB7_3ops9try_trait3Try6branchCsc044841uM34_23unbuffered_async_client: argument 0"}
-!544 = !{!545, !547}
-!545 = distinct !{!545, !546, !"_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCskruEhpekJ3V_5tokio2io12poll_evented11PollEventedNtNtNtNtCsUoH6ltOcnV_3mio3net3tcp6stream9TcpStreamEECsc044841uM34_23unbuffered_async_client: argument 0"}
-!546 = distinct !{!546, !"_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCskruEhpekJ3V_5tokio2io12poll_evented11PollEventedNtNtNtNtCsUoH6ltOcnV_3mio3net3tcp6stream9TcpStreamEECsc044841uM34_23unbuffered_async_client"}
-!547 = distinct !{!547, !548, !"_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtNtCskruEhpekJ3V_5tokio3net3tcp6stream9TcpStreamECsc044841uM34_23unbuffered_async_client: argument 0"}
-!548 = distinct !{!548, !"_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtNtCskruEhpekJ3V_5tokio3net3tcp6stream9TcpStreamECsc044841uM34_23unbuffered_async_client"}
+!536 = !{!537, !539}
+!537 = distinct !{!537, !538, !"_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs4wP2HXfJTCR_5alloc3vec3VechEEECsc044841uM34_23unbuffered_async_client: argument 0"}
+!538 = distinct !{!538, !"_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs4wP2HXfJTCR_5alloc3vec3VechEEECsc044841uM34_23unbuffered_async_client"}
+!539 = distinct !{!539, !540, !"_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCs7ZUl82OSlxp_6rustls4conn10unbuffered13EncodeTlsDataNtNtNtBI_6client11client_conn20ClientConnectionDataEECsc044841uM34_23unbuffered_async_client: argument 0"}
+!540 = distinct !{!540, !"_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCs7ZUl82OSlxp_6rustls4conn10unbuffered13EncodeTlsDataNtNtNtBI_6client11client_conn20ClientConnectionDataEECsc044841uM34_23unbuffered_async_client"}
+!541 = !{!542}
+!542 = distinct !{!542, !543, !"_RNvMsa_NtNtCs7ZUl82OSlxp_6rustls4conn10unbufferedINtB5_15TransmitTlsDataNtNtNtB9_6client11client_conn20ClientConnectionDataE4doneCsc044841uM34_23unbuffered_async_client: argument 0"}
+!543 = distinct !{!543, !"_RNvMsa_NtNtCs7ZUl82OSlxp_6rustls4conn10unbufferedINtB5_15TransmitTlsDataNtNtNtB9_6client11client_conn20ClientConnectionDataE4doneCsc044841uM34_23unbuffered_async_client"}
+!544 = !{!545}
+!545 = distinct !{!545, !546, !"_RNvXsp_NtCsj6eKBz9Db1c_4core6resultINtB5_6ResultjINtNtCs4wP2HXfJTCR_5alloc5boxed3BoxDNtNtB7_5error5ErrorEL_EENtNtNtB7_3ops9try_trait3Try6branchCsc044841uM34_23unbuffered_async_client: argument 1"}
+!546 = distinct !{!546, !"_RNvXsp_NtCsj6eKBz9Db1c_4core6resultINtB5_6ResultjINtNtCs4wP2HXfJTCR_5alloc5boxed3BoxDNtNtB7_5error5ErrorEL_EENtNtNtB7_3ops9try_trait3Try6branchCsc044841uM34_23unbuffered_async_client"}
+!547 = !{!548, !362, !364}
+!548 = distinct !{!548, !546, !"_RNvXsp_NtCsj6eKBz9Db1c_4core6resultINtB5_6ResultjINtNtCs4wP2HXfJTCR_5alloc5boxed3BoxDNtNtB7_5error5ErrorEL_EENtNtNtB7_3ops9try_trait3Try6branchCsc044841uM34_23unbuffered_async_client: argument 0"}
 !549 = !{!550, !552}
 !550 = distinct !{!550, !551, !"_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCskruEhpekJ3V_5tokio2io12poll_evented11PollEventedNtNtNtNtCsUoH6ltOcnV_3mio3net3tcp6stream9TcpStreamEECsc044841uM34_23unbuffered_async_client: argument 0"}
 !551 = distinct !{!551, !"_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCskruEhpekJ3V_5tokio2io12poll_evented11PollEventedNtNtNtNtCsUoH6ltOcnV_3mio3net3tcp6stream9TcpStreamEECsc044841uM34_23unbuffered_async_client"}
 !552 = distinct !{!552, !553, !"_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtNtCskruEhpekJ3V_5tokio3net3tcp6stream9TcpStreamECsc044841uM34_23unbuffered_async_client: argument 0"}
 !553 = distinct !{!553, !"_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtNtCskruEhpekJ3V_5tokio3net3tcp6stream9TcpStreamECsc044841uM34_23unbuffered_async_client"}
-!554 = !{!555}
-!555 = distinct !{!555, !556, !"_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc4sync3ArcNtNtNtCs7ZUl82OSlxp_6rustls6client11client_conn12ClientConfigEECsc044841uM34_23unbuffered_async_client: argument 0"}
-!556 = distinct !{!556, !"_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc4sync3ArcNtNtNtCs7ZUl82OSlxp_6rustls6client11client_conn12ClientConfigEECsc044841uM34_23unbuffered_async_client"}
-!557 = !{!558}
-!558 = distinct !{!558, !559, !"_RNvXsE_NtCs4wP2HXfJTCR_5alloc4syncINtB5_3ArcNtNtNtCs7ZUl82OSlxp_6rustls6client11client_conn12ClientConfigENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropCsc044841uM34_23unbuffered_async_client: argument 0"}
-!559 = distinct !{!559, !"_RNvXsE_NtCs4wP2HXfJTCR_5alloc4syncINtB5_3ArcNtNtNtCs7ZUl82OSlxp_6rustls6client11client_conn12ClientConfigENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropCsc044841uM34_23unbuffered_async_client"}
-!560 = !{!558, !555}
-!561 = !{!562}
-!562 = distinct !{!562, !563, !"_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc4sync3ArcNtNtNtCs7ZUl82OSlxp_6rustls6client11client_conn12ClientConfigEECsc044841uM34_23unbuffered_async_client: argument 0"}
-!563 = distinct !{!563, !"_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc4sync3ArcNtNtNtCs7ZUl82OSlxp_6rustls6client11client_conn12ClientConfigEECsc044841uM34_23unbuffered_async_client"}
-!564 = !{!565}
-!565 = distinct !{!565, !566, !"_RNvXsE_NtCs4wP2HXfJTCR_5alloc4syncINtB5_3ArcNtNtNtCs7ZUl82OSlxp_6rustls6client11client_conn12ClientConfigENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropCsc044841uM34_23unbuffered_async_client: argument 0"}
-!566 = distinct !{!566, !"_RNvXsE_NtCs4wP2HXfJTCR_5alloc4syncINtB5_3ArcNtNtNtCs7ZUl82OSlxp_6rustls6client11client_conn12ClientConfigENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropCsc044841uM34_23unbuffered_async_client"}
-!567 = !{!565, !562}
-!568 = !{!569}
-!569 = distinct !{!569, !570, !"_RNvXs_NtNtCsj6eKBz9Db1c_4core6future6futureINtNtB8_3pin3PinINtNtCs4wP2HXfJTCR_5alloc5boxed3BoxNCNvCsc044841uM34_23unbuffered_async_client4main0EENtB4_6Future4pollB1y_: argument 1"}
-!570 = distinct !{!570, !"_RNvXs_NtNtCsj6eKBz9Db1c_4core6future6futureINtNtB8_3pin3PinINtNtCs4wP2HXfJTCR_5alloc5boxed3BoxNCNvCsc044841uM34_23unbuffered_async_client4main0EENtB4_6Future4pollB1y_"}
-!571 = !{!572, !573}
-!572 = distinct !{!572, !570, !"_RNvXs_NtNtCsj6eKBz9Db1c_4core6future6futureINtNtB8_3pin3PinINtNtCs4wP2HXfJTCR_5alloc5boxed3BoxNCNvCsc044841uM34_23unbuffered_async_client4main0EENtB4_6Future4pollB1y_: argument 0"}
-!573 = distinct !{!573, !570, !"_RNvXs_NtNtCsj6eKBz9Db1c_4core6future6futureINtNtB8_3pin3PinINtNtCs4wP2HXfJTCR_5alloc5boxed3BoxNCNvCsc044841uM34_23unbuffered_async_client4main0EENtB4_6Future4pollB1y_: argument 2"}
+!554 = !{!555, !557}
+!555 = distinct !{!555, !556, !"_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCskruEhpekJ3V_5tokio2io12poll_evented11PollEventedNtNtNtNtCsUoH6ltOcnV_3mio3net3tcp6stream9TcpStreamEECsc044841uM34_23unbuffered_async_client: argument 0"}
+!556 = distinct !{!556, !"_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCskruEhpekJ3V_5tokio2io12poll_evented11PollEventedNtNtNtNtCsUoH6ltOcnV_3mio3net3tcp6stream9TcpStreamEECsc044841uM34_23unbuffered_async_client"}
+!557 = distinct !{!557, !558, !"_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtNtCskruEhpekJ3V_5tokio3net3tcp6stream9TcpStreamECsc044841uM34_23unbuffered_async_client: argument 0"}
+!558 = distinct !{!558, !"_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtNtCskruEhpekJ3V_5tokio3net3tcp6stream9TcpStreamECsc044841uM34_23unbuffered_async_client"}
+!559 = !{!560}
+!560 = distinct !{!560, !561, !"_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc4sync3ArcNtNtNtCs7ZUl82OSlxp_6rustls6client11client_conn12ClientConfigEECsc044841uM34_23unbuffered_async_client: argument 0"}
+!561 = distinct !{!561, !"_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc4sync3ArcNtNtNtCs7ZUl82OSlxp_6rustls6client11client_conn12ClientConfigEECsc044841uM34_23unbuffered_async_client"}
+!562 = !{!563}
+!563 = distinct !{!563, !564, !"_RNvXsE_NtCs4wP2HXfJTCR_5alloc4syncINtB5_3ArcNtNtNtCs7ZUl82OSlxp_6rustls6client11client_conn12ClientConfigENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropCsc044841uM34_23unbuffered_async_client: argument 0"}
+!564 = distinct !{!564, !"_RNvXsE_NtCs4wP2HXfJTCR_5alloc4syncINtB5_3ArcNtNtNtCs7ZUl82OSlxp_6rustls6client11client_conn12ClientConfigENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropCsc044841uM34_23unbuffered_async_client"}
+!565 = !{!563, !560}
+!566 = !{!567}
+!567 = distinct !{!567, !568, !"_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc4sync3ArcNtNtNtCs7ZUl82OSlxp_6rustls6client11client_conn12ClientConfigEECsc044841uM34_23unbuffered_async_client: argument 0"}
+!568 = distinct !{!568, !"_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc4sync3ArcNtNtNtCs7ZUl82OSlxp_6rustls6client11client_conn12ClientConfigEECsc044841uM34_23unbuffered_async_client"}
+!569 = !{!570}
+!570 = distinct !{!570, !571, !"_RNvXsE_NtCs4wP2HXfJTCR_5alloc4syncINtB5_3ArcNtNtNtCs7ZUl82OSlxp_6rustls6client11client_conn12ClientConfigENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropCsc044841uM34_23unbuffered_async_client: argument 0"}
+!571 = distinct !{!571, !"_RNvXsE_NtCs4wP2HXfJTCR_5alloc4syncINtB5_3ArcNtNtNtCs7ZUl82OSlxp_6rustls6client11client_conn12ClientConfigENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropCsc044841uM34_23unbuffered_async_client"}
+!572 = !{!570, !567}
+!573 = !{!574}
+!574 = distinct !{!574, !575, !"_RNvXs_NtNtCsj6eKBz9Db1c_4core6future6futureINtNtB8_3pin3PinINtNtCs4wP2HXfJTCR_5alloc5boxed3BoxNCNvCsc044841uM34_23unbuffered_async_client4main0EENtB4_6Future4pollB1y_: argument 1"}
+!575 = distinct !{!575, !"_RNvXs_NtNtCsj6eKBz9Db1c_4core6future6futureINtNtB8_3pin3PinINtNtCs4wP2HXfJTCR_5alloc5boxed3BoxNCNvCsc044841uM34_23unbuffered_async_client4main0EENtB4_6Future4pollB1y_"}
+!576 = !{!577, !578}
+!577 = distinct !{!577, !575, !"_RNvXs_NtNtCsj6eKBz9Db1c_4core6future6futureINtNtB8_3pin3PinINtNtCs4wP2HXfJTCR_5alloc5boxed3BoxNCNvCsc044841uM34_23unbuffered_async_client4main0EENtB4_6Future4pollB1y_: argument 0"}
+!578 = distinct !{!578, !575, !"_RNvXs_NtNtCsj6eKBz9Db1c_4core6future6futureINtNtB8_3pin3PinINtNtCs4wP2HXfJTCR_5alloc5boxed3BoxNCNvCsc044841uM34_23unbuffered_async_client4main0EENtB4_6Future4pollB1y_: argument 2"}
 end_hunk_2

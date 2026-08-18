@@ -1,5 +1,5 @@
-inline.NumInlined: 1036
-inline.NumDeleted: 336
+inline.NumInlined: 1035
+inline.NumDeleted: 335
 loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumUnrolled: 1
 begin_hunk_0_@mapping_seek_hole_data:bb.a
@@ -203,9 +203,12 @@ define dso_local range(i32 1, 1032) i32 @filemap_fault(ptr noundef %0) #1 align 
 bb.a:
   %1 = alloca %struct.wait_page_key, align 8      ; 6 uses
   %2 = alloca %struct.readahead_control, align 8  ; 8 uses
+  %3 = alloca ptr, align 8                        ; 11 uses
   %i.a = load ptr, ptr %0, align 8
   %i.b = getelementptr i8, ptr %i.a, i64 88
   %i.c = load ptr, ptr %i.b, align 8              ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #15
+  store ptr null, ptr %3, align 8
   %i.d = getelementptr i8, ptr %i.c, i64 16
   %i.e = load ptr, ptr %i.d, align 8              ; 12 uses
   %i.f = load ptr, ptr %i.e, align 8
@@ -329,10 +332,10 @@ bb.m:                                             ; preds = %bb.l
 do_async_mmap_readahead.exit:                     ; preds = %bb.g, %bb.h, %bb.l, %bb.m
   %.0.i = phi ptr [ null, %bb.g ], [ null, %bb.h ], [ %i.bb, %bb.m ], [ null, %bb.l ]
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #15
+  store ptr %.0.i, ptr %3, align 8
   br label %bb.n
 
 bb.n:                                             ; preds = %do_async_mmap_readahead.exit, %bb.f
-  %.0 = phi ptr [ %.0.i, %do_async_mmap_readahead.exit ], [ null, %bb.f ] ; 2 uses
   %i.be = load volatile i64, ptr %i.x, align 8
   %i.bf = and i64 %i.be, 8
   %.not111 = icmp eq i64 %i.bf, 0
@@ -355,12 +358,12 @@ bb.o:                                             ; preds = %trace_mm_filemap_fa
 bb.p:                                             ; preds = %bb.o
   tail call void asm sideeffect "incq %gs:$0", "=*m,*m,~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i64) getelementptr inbounds nuw (i8, ptr @vm_event_states, i64 168), ptr nonnull elementtype(i64) getelementptr inbounds nuw (i8, ptr @vm_event_states, i64 168)) #15, !srcloc !147
   %i.bi = tail call fastcc ptr @do_sync_mmap_readahead(ptr noundef %0) #17, !srcloc !148
+  store ptr %i.bi, ptr %3, align 8
   br label %folio_put.exit
 
 folio_put.exit:                                   ; preds = %bb.z, %bb.y, %bb.w, %bb.v, %folio_put.exit95, %folio_put.exit95, %bb.p
-  %.1104 = phi ptr [ %i.bi, %bb.p ], [ null, %folio_put.exit95 ], [ null, %folio_put.exit95 ], [ %.4107, %bb.w ], [ %.4107, %bb.v ], [ %.4107, %bb.y ], [ %.4107, %bb.z ] ; 3 uses
-  %.065 = phi i32 [ 4, %bb.p ], [ %.166, %folio_put.exit95 ], [ %.166, %folio_put.exit95 ], [ %.166, %bb.w ], [ %.166, %bb.v ], [ %.166, %bb.y ], [ %.166, %bb.z ] ; 2 uses
-  %.1 = phi i8 [ 0, %bb.p ], [ 1, %folio_put.exit95 ], [ 1, %folio_put.exit95 ], [ %.3, %bb.w ], [ %.3, %bb.v ], [ 0, %bb.y ], [ 0, %bb.z ]
+  %.065 = phi i32 [ %.166, %folio_put.exit95 ], [ %.166, %folio_put.exit95 ], [ %.166, %bb.w ], [ 4, %bb.p ], [ %.166, %bb.v ], [ %.166, %bb.y ], [ %.166, %bb.z ] ; 2 uses
+  %.1 = phi i8 [ 1, %folio_put.exit95 ], [ 1, %folio_put.exit95 ], [ %.3, %bb.w ], [ 0, %bb.p ], [ %.3, %bb.v ], [ 0, %bb.y ], [ 0, %bb.z ]
   %i.bj = trunc nuw i8 %.1 to i1
   br i1 %i.bj, label %bb.r, label %bb.q
 
@@ -377,7 +380,8 @@ bb.r:                                             ; preds = %bb.q, %folio_put.ex
   br i1 %i.bo, label %bb.s, label %bb.u
 
 bb.s:                                             ; preds = %bb.r
-  %.not82 = icmp eq ptr %.1104, null
+  %4 = load ptr, ptr %3, align 8
+  %.not82 = icmp eq ptr %4, null
   br i1 %.not82, label %bb.t, label %folio_unlock.exit
 
 bb.t:                                             ; preds = %bb.s
@@ -386,98 +390,14 @@ bb.t:                                             ; preds = %bb.s
   br label %folio_put.exit92
 
 bb.u:                                             ; preds = %folio_test_uptodate.exit.thread, %folio_test_uptodate.exit, %bb.r
-  %.2105 = phi ptr [ %.1104, %bb.r ], [ %.0, %folio_test_uptodate.exit.thread ], [ %.0, %folio_test_uptodate.exit ] ; 3 uses
-  %.068 = phi ptr [ %i.bn, %bb.r ], [ %i.x, %folio_test_uptodate.exit.thread ], [ %i.x, %folio_test_uptodate.exit ] ; 37 uses
-  %.166 = phi i32 [ %.065, %bb.r ], [ 0, %folio_test_uptodate.exit.thread ], [ 0, %folio_test_uptodate.exit ] ; 17 uses
-  %.3 = phi i8 [ 1, %bb.r ], [ 0, %folio_test_uptodate.exit.thread ], [ 1, %folio_test_uptodate.exit ] ; 13 uses
-  %3 = call i8 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock  btsq  $2, $0", "=*m,={@ccc},Ir,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %.068, i64 0, ptr elementtype(i64) %.068) #15, !srcloc !92 ; 2 uses
-  %4 = icmp ult i8 %3, 2
-  call void @llvm.assume(i1 %4)
-  %5 = trunc nuw i8 %3 to i1
-  br i1 %5, label %6, label %lock_folio_maybe_drop_mmap.exit
+  %.068 = phi ptr [ %i.bn, %bb.r ], [ %i.x, %folio_test_uptodate.exit ], [ %i.x, %folio_test_uptodate.exit.thread ] ; 28 uses
+  %.166 = phi i32 [ %.065, %bb.r ], [ 0, %folio_test_uptodate.exit ], [ 0, %folio_test_uptodate.exit.thread ] ; 11 uses
+  %.3 = phi i8 [ 1, %bb.r ], [ 1, %folio_test_uptodate.exit ], [ 0, %folio_test_uptodate.exit.thread ] ; 7 uses
+  %5 = call fastcc i32 @lock_folio_maybe_drop_mmap(ptr noundef %0, ptr noundef %.068, ptr noundef nonnull %3) #17, !srcloc !149
+  %.not77 = icmp eq i32 %5, 0
+  br i1 %.not77, label %folio_unlock.exit, label %lock_folio_maybe_drop_mmap.exit
 
-6:                                                ; preds = %bb.u
-  %7 = getelementptr i8, ptr %0, i64 40           ; 3 uses
-  %8 = load i32, ptr %7, align 8
-  %9 = and i32 %8, 8
-  %.not.i85 = icmp eq i32 %9, 0
-  br i1 %.not.i85, label %10, label %folio_unlock.exit
-
-10:                                               ; preds = %6
-  %11 = call fastcc ptr @maybe_unlock_mmap_for_io(ptr noundef readonly %0, ptr noundef %.2105) #17, !srcloc !149 ; 4 uses
-  %12 = load i32, ptr %7, align 8
-  %13 = and i32 %12, 16
-  %.not10.i = icmp eq i32 %13, 0
-  br i1 %.not10.i, label %42, label %14
-
-14:                                               ; preds = %10
-  %15 = call fastcc range(i32 -4, 1) i32 @folio_wait_bit_common(ptr noundef %.068, i32 noundef 0, i32 noundef 258, i32 noundef 0) #17, !srcloc !107
-  %.not11.i = icmp eq i32 %15, 0
-  br i1 %.not11.i, label %lock_folio_maybe_drop_mmap.exit, label %16
-
-16:                                               ; preds = %14
-  %17 = icmp eq ptr %11, null
-  br i1 %17, label %18, label %folio_unlock.exit
-
-18:                                               ; preds = %16
-  %19 = load i32, ptr %7, align 8
-  %20 = and i32 %19, 4096
-  %.not.i.i86 = icmp eq i32 %20, 0
-  %21 = load ptr, ptr %0, align 8                 ; 2 uses
-  %22 = getelementptr i8, ptr %21, i64 16
-  %23 = load ptr, ptr %22, align 16               ; 3 uses
-  br i1 %.not.i.i86, label %39, label %24
-
-24:                                               ; preds = %18
-  %25 = getelementptr i8, ptr %21, i64 128        ; 3 uses
-  %26 = call i32 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %25, i32 -1, ptr elementtype(i32) %25) #15, !srcloc !108 ; 4 uses
-  %27 = icmp eq i32 %26, 1
-  br i1 %27, label %__vma_refcount_put_return.exit.i.i.i.i, label %28
-
-28:                                               ; preds = %24
-  %29 = icmp slt i32 %26, 1
-  br i1 %29, label %.thread.i.i.i.i, label %30, !prof !22
-
-.thread.i.i.i.i:                                  ; preds = %28
-  call void @refcount_warn_saturate(ptr noundef %25, i32 noundef 3) #14
-  br label %folio_unlock.exit
-
-__vma_refcount_put_return.exit.i.i.i.i:           ; preds = %24
-  call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #15, !srcloc !109
-  br label %folio_unlock.exit
-
-30:                                               ; preds = %28
-  %31 = add nuw i32 %26, 2147483647
-  %32 = and i32 %31, 1073741824
-  %33 = icmp ne i32 %32, 0
-  %34 = icmp samesign ult i32 %26, 1073741827
-  %35 = and i1 %34, %33
-  br i1 %35, label %36, label %folio_unlock.exit
-
-36:                                               ; preds = %30
-  %37 = getelementptr i8, ptr %23, i64 512
-  %38 = call i32 @rcuwait_wake_up(ptr noundef %37) #14 ; 0 uses
-  br label %folio_unlock.exit
-
-39:                                               ; preds = %18
-  callbr void asm sideeffect "1: jmp ${2:l} # objtool NOPs this \0A\09.pushsection __jump_table,  \22aw\22 \0A\09 .balign 8 \0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A.long 1b - . \0A\09.long ${2:l} - . \0A\09 .quad  ${0:c} + ${1:c} + 2 - . \0A\09.popsection \0A\09", "i,i,!i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull getelementptr inbounds nuw (i8, ptr @__tracepoint_mmap_lock_released, i64 8), i1 false) #15
-          to label %mmap_read_unlock.exit.i.i [label %40], !srcloc !32
-
-40:                                               ; preds = %39
-  call void @__mmap_lock_do_trace_released(ptr noundef %23, i1 noundef zeroext false) #14
-  br label %mmap_read_unlock.exit.i.i
-
-mmap_read_unlock.exit.i.i:                        ; preds = %40, %39
-  %41 = getelementptr i8, ptr %23, i64 464
-  call void @up_read(ptr noundef %41) #14
-  br label %folio_unlock.exit
-
-42:                                               ; preds = %10
-  %43 = call fastcc i32 @folio_wait_bit_common(ptr noundef %.068, i32 noundef 0, i32 noundef 2, i32 noundef 0) #17, !srcloc !106 ; 0 uses
-  br label %lock_folio_maybe_drop_mmap.exit
-
-lock_folio_maybe_drop_mmap.exit:                  ; preds = %42, %14, %bb.u
-  %.4107 = phi ptr [ %11, %42 ], [ %11, %14 ], [ %.2105, %bb.u ] ; 8 uses
+lock_folio_maybe_drop_mmap.exit:                  ; preds = %bb.u
   %i.bq = getelementptr i8, ptr %.068, i64 24
   %i.br = load ptr, ptr %i.bq, align 8
   %.not78 = icmp eq ptr %i.br, %i.e
@@ -521,7 +441,8 @@ bb.z:                                             ; preds = %bb.y
 
 bb.aa:                                            ; preds = %bb.x
   call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #15, !srcloc !90
-  %.not79 = icmp eq ptr %.4107, null
+  %6 = load ptr, ptr %3, align 8
+  %.not79 = icmp eq ptr %6, null
   br i1 %.not79, label %bb.ae, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
@@ -615,7 +536,9 @@ folio_file_page.exit:                             ; preds = %bb.aj, %bb.ak
   br label %folio_put.exit92
 
 bb.al:                                            ; preds = %folio_test_uptodate.exit88
-  %i.dh = call fastcc ptr @maybe_unlock_mmap_for_io(ptr noundef %0, ptr noundef %.4107) #17, !srcloc !150 ; 2 uses
+  %7 = load ptr, ptr %3, align 8
+  %i.dh = call fastcc ptr @maybe_unlock_mmap_for_io(ptr noundef %0, ptr noundef %7) #17, !srcloc !150 ; 2 uses
+  store ptr %i.dh, ptr %3, align 8
   %i.di = getelementptr i8, ptr %i.e, i64 96
   %i.dj = load ptr, ptr %i.di, align 8
   %i.dk = load ptr, ptr %i.dj, align 8
@@ -646,11 +569,10 @@ bb.ao:                                            ; preds = %folio_put.exit95
   call void @up_read(ptr noundef %i.dp) #14
   br label %folio_put.exit92
 
-folio_unlock.exit:                                ; preds = %mmap_read_unlock.exit.i.i, %36, %30, %__vma_refcount_put_return.exit.i.i.i.i, %.thread.i.i.i.i, %6, %16, %folio_wake_bit.exit.i, %bb.ab, %bb.al, %bb.s
-  %.3106 = phi ptr [ %.1104, %bb.s ], [ %.4107, %folio_wake_bit.exit.i ], [ %i.dh, %bb.al ], [ %.4107, %bb.ab ], [ %.2105, %6 ], [ %11, %16 ], [ null, %30 ], [ null, %36 ], [ null, %.thread.i.i.i.i ], [ null, %__vma_refcount_put_return.exit.i.i.i.i ], [ null, %mmap_read_unlock.exit.i.i ] ; 2 uses
-  %.169 = phi ptr [ %i.bn, %bb.s ], [ %.068, %folio_wake_bit.exit.i ], [ %.068, %bb.al ], [ %.068, %bb.ab ], [ %.068, %6 ], [ %.068, %16 ], [ %.068, %30 ], [ %.068, %36 ], [ %.068, %.thread.i.i.i.i ], [ %.068, %__vma_refcount_put_return.exit.i.i.i.i ], [ %.068, %mmap_read_unlock.exit.i.i ] ; 3 uses
-  %.267 = phi i32 [ %.065, %bb.s ], [ %.166, %folio_wake_bit.exit.i ], [ %.166, %bb.al ], [ %.166, %bb.ab ], [ %.166, %6 ], [ %.166, %16 ], [ %.166, %30 ], [ %.166, %36 ], [ %.166, %.thread.i.i.i.i ], [ %.166, %__vma_refcount_put_return.exit.i.i.i.i ], [ %.166, %mmap_read_unlock.exit.i.i ]
-  %.4 = phi i8 [ 1, %bb.s ], [ %.3, %folio_wake_bit.exit.i ], [ 1, %bb.al ], [ %.3, %bb.ab ], [ %.3, %6 ], [ %.3, %16 ], [ %.3, %30 ], [ %.3, %36 ], [ %.3, %.thread.i.i.i.i ], [ %.3, %__vma_refcount_put_return.exit.i.i.i.i ], [ %.3, %mmap_read_unlock.exit.i.i ]
+folio_unlock.exit:                                ; preds = %folio_wake_bit.exit.i, %bb.ab, %bb.al, %bb.u, %bb.s
+  %.169 = phi ptr [ %i.bn, %bb.s ], [ %.068, %bb.al ], [ %.068, %bb.u ], [ %.068, %bb.ab ], [ %.068, %folio_wake_bit.exit.i ] ; 3 uses
+  %.267 = phi i32 [ %.065, %bb.s ], [ %.166, %bb.al ], [ %.166, %bb.u ], [ %.166, %bb.ab ], [ %.166, %folio_wake_bit.exit.i ]
+  %.4 = phi i8 [ 1, %bb.s ], [ 1, %bb.al ], [ %.3, %bb.u ], [ %.3, %bb.ab ], [ %.3, %folio_wake_bit.exit.i ]
   %i.dq = icmp ugt ptr %.169, inttoptr (i64 -4096 to ptr)
   br i1 %i.dq, label %folio_put.exit97, label %bb.ap
 
@@ -676,11 +598,12 @@ bb.ar:                                            ; preds = %folio_put.exit97
   br label %bb.as
 
 bb.as:                                            ; preds = %bb.ar, %folio_put.exit97
-  %.not83 = icmp eq ptr %.3106, null
+  %8 = load ptr, ptr %3, align 8                  ; 2 uses
+  %.not83 = icmp eq ptr %8, null
   br i1 %.not83, label %bb.au, label %bb.at
 
 bb.at:                                            ; preds = %bb.as
-  call void @fput(ptr noundef nonnull %.3106) #14
+  call void @fput(ptr noundef nonnull %8) #14
   br label %bb.au
 
 bb.au:                                            ; preds = %bb.at, %bb.as
@@ -689,6 +612,7 @@ bb.au:                                            ; preds = %bb.at, %bb.as
 
 folio_put.exit92:                                 ; preds = %bb.ai, %bb.ah, %bb.o, %bb.a, %bb.au, %bb.ao, %folio_file_page.exit, %bb.t
   %.070 = phi i32 [ 2, %bb.a ], [ %i.dw, %bb.au ], [ 1, %bb.t ], [ 2, %bb.ao ], [ %i.bh, %bb.o ], [ %i.dg, %folio_file_page.exit ], [ 2, %bb.ah ], [ 2, %bb.ai ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #15
   ret i32 %.070
 }
 
@@ -879,6 +803,102 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   ret ptr %.0
 }
 
+; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
+define internal fastcc range(i32 0, 2) i32 @lock_folio_maybe_drop_mmap(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr nofree noundef captures(none) %2) unnamed_addr #1 align 16 prefalign(16) {
+  %4 = tail call i8 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock  btsq  $2, $0", "=*m,={@ccc},Ir,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %1, i64 0, ptr elementtype(i64) %1) #15, !srcloc !92 ; 2 uses
+  %5 = icmp ult i8 %4, 2
+  tail call void @llvm.assume(i1 %5)
+  %6 = trunc nuw i8 %4 to i1
+  br i1 %6, label %7, label %release_fault_lock.exit
+
+7:                                                ; preds = %3
+  %8 = getelementptr i8, ptr %0, i64 40           ; 3 uses
+  %9 = load i32, ptr %8, align 8
+  %10 = and i32 %9, 8
+  %.not = icmp eq i32 %10, 0
+  br i1 %.not, label %11, label %release_fault_lock.exit
+
+11:                                               ; preds = %7
+  %12 = load ptr, ptr %2, align 8
+  %13 = tail call fastcc ptr @maybe_unlock_mmap_for_io(ptr noundef %0, ptr noundef %12) #17, !srcloc !154
+  store ptr %13, ptr %2, align 8
+  %14 = load i32, ptr %8, align 8
+  %15 = and i32 %14, 16
+  %.not10 = icmp eq i32 %15, 0
+  br i1 %.not10, label %45, label %16
+
+16:                                               ; preds = %11
+  %17 = tail call fastcc range(i32 -4, 1) i32 @folio_wait_bit_common(ptr noundef %1, i32 noundef 0, i32 noundef 258, i32 noundef 0) #17, !srcloc !107
+  %.not11 = icmp eq i32 %17, 0
+  br i1 %.not11, label %release_fault_lock.exit, label %18
+
+18:                                               ; preds = %16
+  %19 = load ptr, ptr %2, align 8
+  %20 = icmp eq ptr %19, null
+  br i1 %20, label %21, label %release_fault_lock.exit
+
+21:                                               ; preds = %18
+  %22 = load i32, ptr %8, align 8
+  %23 = and i32 %22, 4096
+  %.not.i = icmp eq i32 %23, 0
+  %24 = load ptr, ptr %0, align 8                 ; 2 uses
+  %25 = getelementptr i8, ptr %24, i64 16
+  %26 = load ptr, ptr %25, align 16               ; 3 uses
+  br i1 %.not.i, label %42, label %27
+
+27:                                               ; preds = %21
+  %28 = getelementptr i8, ptr %24, i64 128        ; 3 uses
+  %29 = tail call i32 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %28, i32 -1, ptr elementtype(i32) %28) #15, !srcloc !108 ; 4 uses
+  %30 = icmp eq i32 %29, 1
+  br i1 %30, label %__vma_refcount_put_return.exit.i.i.i, label %31
+
+31:                                               ; preds = %27
+  %32 = icmp slt i32 %29, 1
+  br i1 %32, label %.thread.i.i.i, label %33, !prof !22
+
+.thread.i.i.i:                                    ; preds = %31
+  tail call void @refcount_warn_saturate(ptr noundef %28, i32 noundef 3) #14
+  br label %release_fault_lock.exit
+
+__vma_refcount_put_return.exit.i.i.i:             ; preds = %27
+  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #15, !srcloc !109
+  br label %release_fault_lock.exit
+
+33:                                               ; preds = %31
+  %34 = add nuw i32 %29, 2147483647
+  %35 = and i32 %34, 1073741824
+  %36 = icmp ne i32 %35, 0
+  %37 = icmp samesign ult i32 %29, 1073741827
+  %38 = and i1 %37, %36
+  br i1 %38, label %39, label %release_fault_lock.exit
+
+39:                                               ; preds = %33
+  %40 = getelementptr i8, ptr %26, i64 512
+  %41 = tail call i32 @rcuwait_wake_up(ptr noundef %40) #14 ; 0 uses
+  br label %release_fault_lock.exit
+
+42:                                               ; preds = %21
+  callbr void asm sideeffect "1: jmp ${2:l} # objtool NOPs this \0A\09.pushsection __jump_table,  \22aw\22 \0A\09 .balign 8 \0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A.long 1b - . \0A\09.long ${2:l} - . \0A\09 .quad  ${0:c} + ${1:c} + 2 - . \0A\09.popsection \0A\09", "i,i,!i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull getelementptr inbounds nuw (i8, ptr @__tracepoint_mmap_lock_released, i64 8), i1 false) #15
+          to label %mmap_read_unlock.exit.i [label %43], !srcloc !32
+
+43:                                               ; preds = %42
+  tail call void @__mmap_lock_do_trace_released(ptr noundef %26, i1 noundef zeroext false) #14
+  br label %mmap_read_unlock.exit.i
+
+mmap_read_unlock.exit.i:                          ; preds = %43, %42
+  %44 = getelementptr i8, ptr %26, i64 464
+  tail call void @up_read(ptr noundef %44) #14
+  br label %release_fault_lock.exit
+
+45:                                               ; preds = %11
+  %46 = tail call fastcc i32 @folio_wait_bit_common(ptr noundef %1, i32 noundef 0, i32 noundef 2, i32 noundef 0) #17, !srcloc !106 ; 0 uses
+  br label %release_fault_lock.exit
+
+release_fault_lock.exit:                          ; preds = %mmap_read_unlock.exit.i, %39, %33, %__vma_refcount_put_return.exit.i.i.i, %.thread.i.i.i, %45, %16, %18, %7, %3
+  %.0 = phi i32 [ 0, %18 ], [ 1, %3 ], [ 0, %7 ], [ 1, %45 ], [ 1, %16 ], [ 0, %.thread.i.i.i ], [ 0, %__vma_refcount_put_return.exit.i.i.i ], [ 0, %33 ], [ 0, %39 ], [ 0, %mmap_read_unlock.exit.i ]
+  ret i32 %.0
+}
+
 ; Function Attrs: fn_ret_thunk_extern inlinehint noredzone nounwind null_pointer_is_valid sspstrong
 define internal fastcc ptr @maybe_unlock_mmap_for_io(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readnone captures(address_is_null, ret: address, provenance) %1) unnamed_addr #7 align 16 prefalign(16) {
 bb.a:
@@ -897,14 +917,14 @@ bb.c:                                             ; preds = %bb.b
   %i.e = getelementptr i8, ptr %i.d, i64 88
   %i.f = load ptr, ptr %i.e, align 8              ; 6 uses
   %i.g = getelementptr i8, ptr %i.f, i64 168      ; 2 uses
-  %i.h = tail call i64 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddq ${0:q}, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.g, i64 1, ptr elementtype(i64) %i.g) #15, !srcloc !154
+  %i.h = tail call i64 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddq ${0:q}, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.g, i64 1, ptr elementtype(i64) %i.g) #15, !srcloc !155
   %i.i = icmp slt i64 %i.h, 0
   br i1 %i.i, label %bb.d, label %get_file.exit, !prof !22
 
 bb.d:                                             ; preds = %bb.c
-  %i.j = tail call ptr asm sideeffect "lea (2f)(%rip), $0\0A1:\0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${1:c} - .\09# bug_entry::format\0A\09.long ${2:c} - .\09# bug_entry::file\0A\09.word ${3:c}\09# bug_entry::line\0A\09.word ${4:c}\09# bug_entry::flags\0A\09.org 2b + ${5:c}\0A.popsection\0A", "=r,i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @.str.36, ptr nonnull @.str.37, i32 121, i32 2323, i64 16) #15, !srcloc !155
+  %i.j = tail call ptr asm sideeffect "lea (2f)(%rip), $0\0A1:\0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${1:c} - .\09# bug_entry::format\0A\09.long ${2:c} - .\09# bug_entry::file\0A\09.word ${3:c}\09# bug_entry::line\0A\09.word ${4:c}\09# bug_entry::flags\0A\09.org 2b + ${5:c}\0A.popsection\0A", "=r,i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @.str.36, ptr nonnull @.str.37, i32 121, i32 2323, i64 16) #15, !srcloc !156
   tail call void (ptr, ...) @__SCT__WARN_trap(ptr noundef %i.j) #14
-  tail call void asm sideeffect "", "~{dirflag},~{fpsr},~{flags}"() #15, !srcloc !156
+  tail call void asm sideeffect "", "~{dirflag},~{fpsr},~{flags}"() #15, !srcloc !157
   br label %get_file.exit
 
 get_file.exit:                                    ; preds = %bb.c, %bb.d
@@ -1046,7 +1066,7 @@ bb.a:
   %i.p = add nsw i64 %i.o, -1                     ; 3 uses
   %i.q = tail call i64 @llvm.umin.i64(i64 %2, i64 %i.p) ; 4 uses
   tail call void @__rcu_read_lock() #14
-  %i.r = call fastcc ptr @next_uptodate_folio(ptr noundef nonnull %5, ptr noundef %i.e, i64 noundef %i.q) #17, !srcloc !157 ; 14 uses
+  %i.r = call fastcc ptr @next_uptodate_folio(ptr noundef nonnull %5, ptr noundef %i.e, i64 noundef %i.q) #17, !srcloc !158 ; 14 uses
   %.not = icmp eq ptr %i.r, null
   br i1 %.not, label %folio_put.exit, label %bb.b
 
@@ -1225,7 +1245,7 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.o
   %i.cp = getelementptr i8, ptr %.080, i64 52     ; 2 uses
-  call void asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock decl $0", "=*m,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.cp, ptr elementtype(i32) %i.cp) #15, !srcloc !158
+  call void asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock decl $0", "=*m,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.cp, ptr elementtype(i32) %i.cp) #15, !srcloc !159
   br label %filemap_map_order0_folio.exit.thread
 
 bb.r:                                             ; preds = %folio_next_index.exit98
@@ -1397,7 +1417,7 @@ bb.ag:                                            ; preds = %bb.ad
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1
   %i.fg = add i32 %.166.i, -1                     ; 2 uses
   %.not82.i = icmp eq i32 %i.fg, 0
-  br i1 %.not82.i, label %bb.ah, label %bb.ad, !llvm.loop !159
+  br i1 %.not82.i, label %bb.ah, label %bb.ad, !llvm.loop !160
 
 .thread.i:                                        ; preds = %bb.af, %bb.ae
   %.4 = phi i64 [ %.3, %bb.ae ], [ %i.fa, %bb.af ] ; 2 uses
@@ -1413,7 +1433,7 @@ bb.ag:                                            ; preds = %bb.ad
   %i.fn = add i64 %i.fm, %.1.ph.i
   %i.fo = add i32 %.166.i, -1                     ; 2 uses
   %.not8297.i = icmp eq i32 %i.fo, 0
-  br i1 %.not8297.i, label %.thread103.i, label %.outer.i, !llvm.loop !159
+  br i1 %.not8297.i, label %.thread103.i, label %.outer.i, !llvm.loop !160
 
 bb.ah:                                            ; preds = %bb.ag
   %.not83.i = icmp eq i32 %.166.ph.i, 0
@@ -1441,7 +1461,7 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %.not84.i, label %filemap_map_order0_folio.exit, label %bb.ai
 
 bb.ai:                                            ; preds = %.thread103.i
-  call void asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock decl $0", "=*m,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.ev, ptr elementtype(i32) %i.ev) #15, !srcloc !158
+  call void asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock decl $0", "=*m,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.ev, ptr elementtype(i32) %i.ev) #15, !srcloc !159
   br label %filemap_map_order0_folio.exit
 
 filemap_map_order0_folio.exit.thread122:          ; preds = %bb.p, %.thread110.i
@@ -1524,9 +1544,9 @@ folio_wake_bit.exit.i107:                         ; preds = %bb.ap, %bb.ao
   br label %folio_unlock.exit108
 
 folio_unlock.exit108:                             ; preds = %filemap_map_order0_folio.exit.thread, %folio_wake_bit.exit.i107
-  %i.gv = call fastcc ptr @next_uptodate_folio(ptr noundef nonnull %5, ptr noundef %i.e, i64 noundef %i.q) #17, !srcloc !160 ; 2 uses
+  %i.gv = call fastcc ptr @next_uptodate_folio(ptr noundef nonnull %5, ptr noundef %i.e, i64 noundef %i.q) #17, !srcloc !161 ; 2 uses
   %.not92 = icmp eq ptr %i.gv, null
-  br i1 %.not92, label %bb.aq, label %bb.m, !llvm.loop !161
+  br i1 %.not92, label %bb.aq, label %bb.m, !llvm.loop !162
 
 bb.aq:                                            ; preds = %folio_unlock.exit108
   %i.gw = and i64 %i.bp, 131072
@@ -1546,7 +1566,7 @@ bb.aq:                                            ; preds = %folio_unlock.exit10
           to label %folio_put.exit [label %arch_test_bit.exit.i.i], !srcloc !32
 
 arch_test_bit.exit.i.i:                           ; preds = %bb.aq
-  %i.hd = call i32 asm sideeffect "movl %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i32) @cpu_number) #15, !srcloc !162
+  %i.hd = call i32 asm sideeffect "movl %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i32) @cpu_number) #15, !srcloc !163
   %i.he = zext i32 %i.hd to i64
   %i.hf = call i8 asm sideeffect " btq  $2,$1", "={@ccc},*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i64) @__cpu_online_mask, i64 range(i64 -2147483648, 4294967296) %i.he) #15, !srcloc !34 ; 2 uses
   %i.hg = icmp ult i8 %i.hf, 2
@@ -1891,7 +1911,7 @@ bb.z:                                             ; preds = %.lr.ph77
 xas_next_entry.exit49:                            ; preds = %bb.z, %.loopexit.sink.split.i41
   %.0.i42 = phi ptr [ %i.di, %.loopexit.sink.split.i41 ], [ %i.dc, %bb.z ] ; 2 uses
   %.not30 = icmp eq ptr %.0.i42, null
-  br i1 %.not30, label %bb.aa, label %bb.f, !llvm.loop !163
+  br i1 %.not30, label %bb.aa, label %bb.f, !llvm.loop !164
 
 bb.aa:                                            ; preds = %xas_next_entry.exit49, %bb.s, %bb.f
   %.024 = phi ptr [ %.0, %bb.s ], [ null, %bb.f ], [ null, %xas_next_entry.exit49 ]
@@ -1926,7 +1946,7 @@ bb.a:
   %i.s = getelementptr i8, ptr %i.r, i64 672      ; 2 uses
   %i.t = tail call i32 @__SCT__might_resched() #14 ; 0 uses
   tail call void asm "incl %gs:$0", "=*m,*m,~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i32) @__preempt_count, ptr nonnull elementtype(i32) @__preempt_count) #15, !srcloc !19
-  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #15, !srcloc !164
+  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #15, !srcloc !165
   %i.u = load volatile i32, ptr %i.s, align 8
   %.not.i.i.i.i.i = icmp eq i32 %i.u, 0
   br i1 %.not.i.i.i.i.i, label %bb.b, label %bb.c, !prof !21
@@ -1934,7 +1954,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.v = getelementptr i8, ptr %i.r, i64 720
   %i.w = load ptr, ptr %i.v, align 8              ; 2 uses
-  tail call void asm sideeffect "incl %gs:$0", "=*m,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.w, ptr elementtype(i32) %i.w) #15, !srcloc !165
+  tail call void asm sideeffect "incl %gs:$0", "=*m,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.w, ptr elementtype(i32) %i.w) #15, !srcloc !166
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
@@ -1942,7 +1962,7 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #15, !srcloc !166
+  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #15, !srcloc !167
   %i.y = tail call i8 asm sideeffect "decl %gs:$0", "=*m,={@cce},*m,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i32) @__preempt_count, ptr nonnull elementtype(i32) @__preempt_count) #15, !srcloc !25 ; 2 uses
   %i.z = icmp ult i8 %i.y, 2
   tail call void @llvm.assume(i1 %i.z)
@@ -1951,7 +1971,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %i.ab = tail call i64 @llvm.read_register.i64(metadata !0)
-  %i.ac = tail call i64 asm sideeffect "call __SCT__preempt_schedule", "={rsp},{rsp},~{dirflag},~{fpsr},~{flags}"(i64 %i.ab) #15, !srcloc !167
+  %i.ac = tail call i64 asm sideeffect "call __SCT__preempt_schedule", "={rsp},{rsp},~{dirflag},~{fpsr},~{flags}"(i64 %i.ab) #15, !srcloc !168
   tail call void @llvm.write_register.i64(metadata !0, i64 %i.ac)
   br label %sb_start_pagefault.exit
 
@@ -2025,7 +2045,7 @@ folio_unlock.exit:                                ; preds = %folio_wake_bit.exit
   %i.bf = load ptr, ptr %i.be, align 8            ; 2 uses
   %i.bg = getelementptr i8, ptr %i.bf, i64 672    ; 2 uses
   call void asm "incl %gs:$0", "=*m,*m,~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i32) @__preempt_count, ptr nonnull elementtype(i32) @__preempt_count) #15, !srcloc !19
-  call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #15, !srcloc !168
+  call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #15, !srcloc !169
   %i.bh = load volatile i32, ptr %i.bg, align 8
   %.not.i.i.i.i = icmp eq i32 %i.bh, 0
   br i1 %.not.i.i.i.i, label %bb.k, label %bb.l, !prof !21
@@ -2033,7 +2053,7 @@ folio_unlock.exit:                                ; preds = %folio_wake_bit.exit
 bb.k:                                             ; preds = %folio_unlock.exit
   %i.bi = getelementptr i8, ptr %i.bf, i64 720
   %i.bj = load ptr, ptr %i.bi, align 8            ; 2 uses
-  call void asm sideeffect "decl %gs:$0", "=*m,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.bj, ptr elementtype(i32) %i.bj) #15, !srcloc !169
+  call void asm sideeffect "decl %gs:$0", "=*m,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.bj, ptr elementtype(i32) %i.bj) #15, !srcloc !170
   br label %bb.m
 
 bb.l:                                             ; preds = %folio_unlock.exit
@@ -2041,7 +2061,7 @@ bb.l:                                             ; preds = %folio_unlock.exit
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k
-  call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #15, !srcloc !170
+  call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #15, !srcloc !171
   %i.bk = call i8 asm sideeffect "decl %gs:$0", "=*m,={@cce},*m,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i32) @__preempt_count, ptr nonnull elementtype(i32) @__preempt_count) #15, !srcloc !25 ; 2 uses
   %i.bl = icmp ult i8 %i.bk, 2
   call void @llvm.assume(i1 %i.bl)
@@ -2050,7 +2070,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
 
 bb.n:                                             ; preds = %bb.m
   %i.bn = call i64 @llvm.read_register.i64(metadata !0)
-  %i.bo = call i64 asm sideeffect "call __SCT__preempt_schedule", "={rsp},{rsp},~{dirflag},~{fpsr},~{flags}"(i64 %i.bn) #15, !srcloc !171
+  %i.bo = call i64 asm sideeffect "call __SCT__preempt_schedule", "={rsp},{rsp},~{dirflag},~{fpsr},~{flags}"(i64 %i.bn) #15, !srcloc !172
   call void @llvm.write_register.i64(metadata !0, i64 %i.bo)
   br label %sb_end_pagefault.exit
 
@@ -2219,7 +2239,7 @@ define dso_local ptr @read_cache_folio(ptr noundef %0, i64 noundef %1, ptr nofre
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 56
   %.val = load i32, ptr %i.a, align 8
-  %i.b = tail call fastcc ptr @do_read_cache_folio(ptr noundef %0, i64 noundef %1, ptr noundef %2, ptr noundef %3, i32 noundef %.val) #17, !srcloc !172
+  %i.b = tail call fastcc ptr @do_read_cache_folio(ptr noundef %0, i64 noundef %1, ptr noundef %2, ptr noundef %3, i32 noundef %.val) #17, !srcloc !173
   ret ptr %i.b
 }
 
@@ -2405,7 +2425,7 @@ folio_wake_bit.exit.i56:                          ; preds = %bb.s, %bb.r
 folio_test_uptodate.exit54:                       ; preds = %bb.p, %bb.e
   %.043 = phi ptr [ %i.i, %bb.e ], [ %i.g, %bb.p ] ; 8 uses
   %i.bf = load volatile i64, ptr %.043, align 8   ; 0 uses
-  %i.bg = call i32 %.042(ptr noundef %3, ptr noundef %.043) #14, !inline_history !173 ; 2 uses
+  %i.bg = call i32 %.042(ptr noundef %3, ptr noundef %.043) #14, !inline_history !174 ; 2 uses
   %.not.i58 = icmp eq i32 %i.bg, 0
   br i1 %.not.i58, label %bb.t, label %bb.v
 
@@ -2474,7 +2494,7 @@ folio_unlock.exit57:                              ; preds = %filemap_read_folio.
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
 define dso_local ptr @mapping_read_folio_gfp(ptr noundef %0, i64 noundef %1, i32 noundef %2) #1 align 16 prefalign(16) {
 bb.a:
-  %i.a = tail call fastcc ptr @do_read_cache_folio(ptr noundef %0, i64 noundef %1, ptr noundef null, ptr noundef null, i32 noundef %2) #17, !srcloc !174
+  %i.a = tail call fastcc ptr @do_read_cache_folio(ptr noundef %0, i64 noundef %1, ptr noundef null, ptr noundef null, i32 noundef %2) #17, !srcloc !175
   ret ptr %i.a
 }
 
@@ -2483,7 +2503,7 @@ define dso_local ptr @read_cache_page(ptr noundef %0, i64 noundef %1, ptr nofree
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 56
   %.val = load i32, ptr %i.a, align 8
-  %i.b = tail call fastcc ptr @do_read_cache_folio(ptr noundef %0, i64 noundef %1, ptr noundef readonly %2, ptr noundef %3, i32 noundef %.val) #17, !srcloc !175 ; 5 uses
+  %i.b = tail call fastcc ptr @do_read_cache_folio(ptr noundef %0, i64 noundef %1, ptr noundef readonly %2, ptr noundef %3, i32 noundef %.val) #17, !srcloc !176 ; 5 uses
   %i.c = icmp ugt ptr %i.b, inttoptr (i64 -4096 to ptr)
   br i1 %i.c, label %do_read_cache_page.exit, label %bb.b
 
@@ -2515,7 +2535,7 @@ do_read_cache_page.exit:                          ; preds = %bb.a, %folio_file_p
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
 define dso_local ptr @read_cache_page_gfp(ptr noundef %0, i64 noundef %1, i32 noundef %2) #1 align 16 prefalign(16) {
 bb.a:
-  %i.a = tail call fastcc ptr @do_read_cache_folio(ptr noundef %0, i64 noundef %1, ptr noundef null, ptr noundef null, i32 noundef %2) #17, !srcloc !175 ; 5 uses
+  %i.a = tail call fastcc ptr @do_read_cache_folio(ptr noundef %0, i64 noundef %1, ptr noundef null, ptr noundef null, i32 noundef %2) #17, !srcloc !176 ; 5 uses
   %i.b = icmp ugt ptr %i.a, inttoptr (i64 -4096 to ptr)
   br i1 %i.b, label %do_read_cache_page.exit, label %bb.b
 
@@ -2654,7 +2674,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.ad, label %.thread, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #15, !srcloc !176
+  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #15, !srcloc !177
   store volatile i64 %i.w, ptr %i.y, align 8
   tail call void @__mark_inode_dirty(ptr noundef %i.u, i32 noundef 112) #14
   br label %.thread
@@ -2847,7 +2867,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #15
   %.val = load i64, ptr %i.j, align 8             ; 2 uses
   %.not91 = icmp eq i64 %.val, 0
-  br i1 %.not91, label %.loopexit, label %bb.b, !llvm.loop !177
+  br i1 %.not91, label %.loopexit, label %bb.b, !llvm.loop !178
 
 .loopexit:                                        ; preds = %bb.o, %.thread
   %.075109 = phi i64 [ %.075.ph, %.thread ], [ %i.bd, %bb.o ]
@@ -3027,8 +3047,8 @@ bb.a:
   br i1 %.not14, label %bb.b, label %bb.c, !prof !22
 
 bb.b:                                             ; preds = %bb.a
-  tail call void asm sideeffect "940: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 940b - ., 3; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 940) #15, !srcloc !178
-  tail call void asm sideeffect "1:\09 ud2 \0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${0:c} - .\09# bug_entry::format\0A\09.long ${1:c} - .\09# bug_entry::file\0A\09.word ${2:c}\09# bug_entry::line\0A\09.word ${3:c}\09# bug_entry::flags\0A\09.org 2b + ${4:c}\0A.popsection\0A", "i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @.str, ptr nonnull @.str.1, i32 4531, i32 0, i64 16) #15, !srcloc !179
+  tail call void asm sideeffect "940: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 940b - ., 3; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 940) #15, !srcloc !179
+  tail call void asm sideeffect "1:\09 ud2 \0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${0:c} - .\09# bug_entry::format\0A\09.long ${1:c} - .\09# bug_entry::file\0A\09.word ${2:c}\09# bug_entry::line\0A\09.word ${3:c}\09# bug_entry::flags\0A\09.org 2b + ${4:c}\0A.popsection\0A", "i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @.str, ptr nonnull @.str.1, i32 4531, i32 0, i64 16) #15, !srcloc !180
   unreachable
 
 bb.c:                                             ; preds = %bb.a
@@ -3209,7 +3229,7 @@ bb.a:
   %i.f = load i64, ptr %i.e, align 8
   %i.g = getelementptr i8, ptr %0, i64 56
   %i.h = load i64, ptr %i.g, align 8
-  %i.i = tail call fastcc i64 @__se_sys_cachestat(i64 noundef %i.b, i64 noundef %i.d, i64 noundef %i.f, i64 noundef %i.h) #17, !srcloc !180
+  %i.i = tail call fastcc i64 @__se_sys_cachestat(i64 noundef %i.b, i64 noundef %i.d, i64 noundef %i.f, i64 noundef %i.h) #17, !srcloc !181
   ret i64 %i.i
 }
 
@@ -3484,7 +3504,7 @@ bb.v:                                             ; preds = %.lr.ph
 xas_next_entry.exit.i:                            ; preds = %bb.v, %.loopexit.sink.split.i.i
   %.0.i54.i = phi ptr [ %i.da, %.loopexit.sink.split.i.i ], [ %i.cu, %bb.v ] ; 2 uses
   %.not.i6 = icmp eq ptr %.0.i54.i, null
-  br i1 %.not.i6, label %filemap_cachestat.exit, label %bb.e, !llvm.loop !181
+  br i1 %.not.i6, label %filemap_cachestat.exit, label %bb.e, !llvm.loop !182
 
 filemap_cachestat.exit:                           ; preds = %xas_next_entry.exit.i, %copy_to_user.exit.i
   call void @__rcu_read_unlock() #14
@@ -3501,7 +3521,7 @@ bb.w:                                             ; preds = %filemap_cachestat.e
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #15
   %i.dc = and i64 %i.d, 1
   %.not.i16.i = icmp eq i64 %i.dc, 0
-  br i1 %.not.i16.i, label %__do_sys_cachestat.exit, label %bb.x, !prof !182
+  br i1 %.not.i16.i, label %__do_sys_cachestat.exit, label %bb.x, !prof !183
 
 bb.x:                                             ; preds = %bb.w
   %i.dd = and i64 %i.d, -4
@@ -3529,7 +3549,7 @@ bb.a:
   %i.j = getelementptr i8, ptr %0, i64 104
   %i.k = load i64, ptr %i.j, align 8
   %i.l = and i64 %i.k, 4294967295
-  %i.m = tail call fastcc i64 @__se_sys_cachestat(i64 noundef %i.c, i64 noundef %i.f, i64 noundef %i.i, i64 noundef %i.l) #17, !srcloc !183
+  %i.m = tail call fastcc i64 @__se_sys_cachestat(i64 noundef %i.c, i64 noundef %i.f, i64 noundef %i.i, i64 noundef %i.l) #17, !srcloc !184
   ret i64 %i.m
 }
 
@@ -3932,7 +3952,7 @@ bb.r:                                             ; preds = %bb.q
 xas_next.exit:                                    ; preds = %.critedge.i, %bb.r
   %.0.i23 = phi ptr [ %i.by, %.critedge.i ], [ %i.cf, %bb.r ] ; 2 uses
   %.not = icmp eq ptr %.0.i23, null
-  br i1 %.not, label %folio_test_uptodate.exit, label %.lr.ph, !llvm.loop !184
+  br i1 %.not, label %folio_test_uptodate.exit, label %.lr.ph, !llvm.loop !185
 
 folio_test_uptodate.exit:                         ; preds = %xas_next.exit, %xas_retry.exit, %bb.c, %bb.h, %bb.j, %bb.i, %bb.a
   call void @__rcu_read_unlock() #14
@@ -4225,40 +4245,41 @@ attributes #19 = { cold noredzone nounwind "no-builtin-wcslen" }
 !146 = !{i64 104974}
 !147 = !{i64 2155293451}
 !148 = !{i64 105205}
-!149 = !{i64 95980}
+!149 = !{i64 105672}
 !150 = !{i64 107625}
 !151 = !{i64 107671}
 !152 = !{i64 98151}
 !153 = !{i64 100239}
-!154 = !{i64 2149116486, i64 2149116525, i64 2149116546, i64 2149116583, i64 2149116606, i64 2149116615}
-!155 = !{i64 2154514241, i64 2154514268, i64 2154514674, i64 2154514707, i64 2154514742, i64 2154514758, i64 2154515599, i64 2154515657, i64 2154515706, i64 2154515516, i64 2154514817, i64 2154514849}
-!156 = !{i64 2154512592}
-!157 = !{i64 113464}
-!158 = !{i64 2149078967, i64 2149079006, i64 2149079027, i64 2149079064, i64 2149079087, i64 2149078958}
-!159 = distinct !{!159, !12}
-!160 = !{i64 115553}
-!161 = distinct !{!161, !12}
-!162 = !{i64 2159688578}
-!163 = distinct !{!163, !12}
-!164 = !{i64 2154000967}
-!165 = !{i64 2154008375}
-!166 = !{i64 2154013102}
-!167 = !{i64 2154013284}
-!168 = !{i64 2154030201}
-!169 = !{i64 2154039350}
-!170 = !{i64 2154044028}
-!171 = !{i64 2154044210}
-!172 = !{i64 120472}
-!173 = !{ptr @filemap_read_folio}
-!174 = !{i64 121418}
-!175 = !{i64 121683}
-!176 = !{i64 2154572661}
-!177 = distinct !{!177, !12}
-!178 = !{i64 2160907319, i64 2160907194}
-!179 = !{i64 2160907842, i64 2160908318, i64 2160908351, i64 2160908386, i64 2160908402, i64 2160909243, i64 2160909301, i64 2160909350, i64 2160909160, i64 2160908461, i64 2160908493}
-!180 = !{i64 2160921657}
-!181 = distinct !{!181, !12}
-!182 = !{!"branch_weights", !"expected", i32 2145766520, i32 1717128}
-!183 = !{i64 2160925572}
-!184 = distinct !{!184, !12}
+!154 = !{i64 95980}
+!155 = !{i64 2149116486, i64 2149116525, i64 2149116546, i64 2149116583, i64 2149116606, i64 2149116615}
+!156 = !{i64 2154514241, i64 2154514268, i64 2154514674, i64 2154514707, i64 2154514742, i64 2154514758, i64 2154515599, i64 2154515657, i64 2154515706, i64 2154515516, i64 2154514817, i64 2154514849}
+!157 = !{i64 2154512592}
+!158 = !{i64 113464}
+!159 = !{i64 2149078967, i64 2149079006, i64 2149079027, i64 2149079064, i64 2149079087, i64 2149078958}
+!160 = distinct !{!160, !12}
+!161 = !{i64 115553}
+!162 = distinct !{!162, !12}
+!163 = !{i64 2159688578}
+!164 = distinct !{!164, !12}
+!165 = !{i64 2154000967}
+!166 = !{i64 2154008375}
+!167 = !{i64 2154013102}
+!168 = !{i64 2154013284}
+!169 = !{i64 2154030201}
+!170 = !{i64 2154039350}
+!171 = !{i64 2154044028}
+!172 = !{i64 2154044210}
+!173 = !{i64 120472}
+!174 = !{ptr @filemap_read_folio}
+!175 = !{i64 121418}
+!176 = !{i64 121683}
+!177 = !{i64 2154572661}
+!178 = distinct !{!178, !12}
+!179 = !{i64 2160907319, i64 2160907194}
+!180 = !{i64 2160907842, i64 2160908318, i64 2160908351, i64 2160908386, i64 2160908402, i64 2160909243, i64 2160909301, i64 2160909350, i64 2160909160, i64 2160908461, i64 2160908493}
+!181 = !{i64 2160921657}
+!182 = distinct !{!182, !12}
+!183 = !{!"branch_weights", !"expected", i32 2145766520, i32 1717128}
+!184 = !{i64 2160925572}
+!185 = distinct !{!185, !12}
 end_hunk_1

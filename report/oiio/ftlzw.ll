@@ -1,5 +1,5 @@
-inline.NumInlined: 16
-inline.NumDeleted: 9
+inline.NumInlined: 18
+inline.NumDeleted: 10
 begin_hunk_0_@ft_lzw_stream_io:bb.a
   %.02437.i.i = phi i64 [ %i.aj, %.lr.ph.i.i ], [ %i.ap, %bb.g ] ; 2 uses
   %spec.select32.i.i = tail call i64 @llvm.umin.i64(i64 %.02437.i.i, i64 4096) ; 4 uses
@@ -201,6 +201,8 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 ; Function Attrs: nounwind uwtable
 define hidden i64 @ft_lzwstate_io(ptr noundef %0, ptr nofree noundef writeonly captures(address_is_null) %1, i64 noundef %2) local_unnamed_addr #0 {
 bb.a:
+  %3 = alloca i32, align 4                        ; 5 uses
+  %4 = alloca i32, align 4                        ; 5 uses
   %i.a = alloca i32, align 4                      ; 5 uses
   %i.b = alloca i32, align 4                      ; 5 uses
   %i.c = alloca i8, align 1                       ; 6 uses
@@ -365,17 +367,62 @@ bb.p:                                             ; preds = %bb.o
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 3 uses
   %i.bf = load i32, ptr %i.be, align 8, !tbaa !36 ; 2 uses
   %i.bg = zext i32 %i.bf to i64                   ; 2 uses
-  %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 128
-  %i.bi = load i64, ptr %i.bh, align 8, !tbaa !27
+  %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 2 uses
+  %i.bi = load i64, ptr %i.bh, align 8, !tbaa !27 ; 6 uses
   %.not143 = icmp ugt i64 %i.bi, %i.bg
-  br i1 %.not143, label %bb.r, label %bb.q
+  br i1 %.not143, label %bb.r, label %5
 
-bb.q:                                             ; preds = %bb.p
-  %3 = call fastcc i32 @ft_lzwstate_stack_grow(ptr noundef nonnull %0)
-  %4 = icmp slt i32 %3, 0
-  br i1 %4, label %.loopexit166, label %._crit_edge
+5:                                                ; preds = %bb.p
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 208
+  %7 = load ptr, ptr %6, align 8, !tbaa !25
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #7
+  %8 = lshr i64 %i.bi, 1
+  %9 = add nuw nsw i64 %8, %i.bi                  ; 2 uses
+  %10 = add nuw nsw i64 %9, 4                     ; 2 uses
+  %11 = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 3 uses
+  %12 = load ptr, ptr %11, align 8, !tbaa !26     ; 3 uses
+  %13 = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
+  %14 = icmp eq ptr %12, %13
+  br i1 %14, label %.thread.i, label %15
 
-._crit_edge:                                      ; preds = %bb.q
+15:                                               ; preds = %5
+  %16 = icmp samesign ugt i64 %9, 65532
+  br i1 %16, label %17, label %bb.q
+
+.thread.i:                                        ; preds = %5
+  store ptr null, ptr %11, align 8, !tbaa !26
+  %spec.select.i = call i64 @llvm.umin.i64(i64 %10, i64 65536)
+  br label %bb.q
+
+17:                                               ; preds = %15
+  %18 = icmp eq i64 %i.bi, 65536
+  br i1 %18, label %ft_lzwstate_stack_grow.exit.thread, label %bb.q
+
+bb.q:                                             ; preds = %17, %.thread.i, %15
+  %19 = phi ptr [ %12, %17 ], [ %12, %15 ], [ null, %.thread.i ]
+  %.02531.i = phi i64 [ %i.bi, %17 ], [ %i.bi, %15 ], [ 0, %.thread.i ] ; 2 uses
+  %.024.i = phi i64 [ 65536, %17 ], [ %10, %15 ], [ %spec.select.i, %.thread.i ] ; 2 uses
+  %20 = call ptr @ft_mem_qrealloc(ptr noundef %7, i64 noundef 1, i64 noundef %.02531.i, i64 noundef %.024.i, ptr noundef %19, ptr noundef nonnull %i.b) #7 ; 2 uses
+  store ptr %20, ptr %11, align 8, !tbaa !26
+  %21 = load i32, ptr %i.b, align 4, !tbaa !3
+  %.not28.i = icmp eq i32 %21, 0
+  br i1 %.not28.i, label %22, label %ft_lzwstate_stack_grow.exit.thread
+
+22:                                               ; preds = %bb.q
+  %23 = icmp eq i64 %.02531.i, 0
+  br i1 %23, label %24, label %._crit_edge
+
+24:                                               ; preds = %22
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %20, ptr noundef nonnull align 8 dereferenceable(64) %13, i64 64, i1 false)
+  br label %._crit_edge
+
+ft_lzwstate_stack_grow.exit.thread:               ; preds = %17, %bb.q
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #7
+  br label %.loopexit166
+
+._crit_edge:                                      ; preds = %22, %24
+  store i64 %.024.i, ptr %i.bh, align 8, !tbaa !27
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #7
   %.pre = load i32, ptr %i.be, align 8, !tbaa !36 ; 2 uses
   %.pre220 = zext i32 %.pre to i64
   br label %bb.r
@@ -421,7 +468,7 @@ bb.t:                                             ; preds = %bb.s
 
 bb.u:                                             ; preds = %bb.t
   %i.cb = load ptr, ptr %i.bt, align 8, !tbaa !25
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #7
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   %i.cc = lshr i64 %i.ca, 1
   %i.cd = add nuw nsw i64 %i.cc, %i.ca            ; 2 uses
   %i.ce = add nuw nsw i64 %i.cd, 4                ; 2 uses
@@ -445,9 +492,9 @@ bb.w:                                             ; preds = %bb.v
   %i.ci = phi ptr [ %.pre211, %bb.w ], [ %.pre211, %bb.v ], [ null, %.thread.i.a ]
   %.02531.i.a = phi i64 [ %i.ca, %bb.w ], [ %i.ca, %bb.v ], [ 0, %.thread.i.a ] ; 2 uses
   %.024.i.a = phi i64 [ 65536, %bb.w ], [ %i.ce, %bb.v ], [ %spec.select.i.a, %.thread.i.a ] ; 2 uses
-  %i.cj = call ptr @ft_mem_qrealloc(ptr noundef %i.cb, i64 noundef 1, i64 noundef %.02531.i.a, i64 noundef %.024.i.a, ptr noundef %i.ci, ptr noundef nonnull %i.b) #7 ; 3 uses
+  %i.cj = call ptr @ft_mem_qrealloc(ptr noundef %i.cb, i64 noundef 1, i64 noundef %.02531.i.a, i64 noundef %.024.i.a, ptr noundef %i.ci, ptr noundef nonnull %i.a) #7 ; 3 uses
   store ptr %i.cj, ptr %i.bu, align 8, !tbaa !26
-  %i.ck = load i32, ptr %i.b, align 4, !tbaa !3
+  %i.ck = load i32, ptr %i.a, align 4, !tbaa !3
   %.not28.i.a = icmp eq i32 %i.ck, 0
   br i1 %.not28.i.a, label %bb.x, label %ft_lzwstate_stack_grow.exit.thread.a
 
@@ -461,13 +508,13 @@ bb.y:                                             ; preds = %bb.x
   br label %ft_lzwstate_stack_grow.exit
 
 ft_lzwstate_stack_grow.exit.thread.a:             ; preds = %bb.w, %.thread32.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #7
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   br label %.loopexit166
 
 ft_lzwstate_stack_grow.exit:                      ; preds = %bb.x, %bb.y
   %.pre210 = phi ptr [ %i.cj, %bb.x ], [ %.pre210.pre, %bb.y ]
   store i64 %.024.i.a, ptr %i.bs, align 8, !tbaa !27
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #7
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   %.pre212 = load i32, ptr %i.br, align 8, !tbaa !36 ; 2 uses
   %.pre217 = zext i32 %.pre212 to i64
   br label %bb.z
@@ -499,17 +546,62 @@ bb.z:                                             ; preds = %ft_lzwstate_stack_g
   %i.db = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 3 uses
   %i.dc = load i32, ptr %i.db, align 8, !tbaa !36 ; 2 uses
   %i.dd = zext i32 %i.dc to i64                   ; 2 uses
-  %i.de = getelementptr inbounds nuw i8, ptr %0, i64 128
-  %i.df = load i64, ptr %i.de, align 8, !tbaa !27
+  %i.de = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 2 uses
+  %i.df = load i64, ptr %i.de, align 8, !tbaa !27 ; 6 uses
   %.not144 = icmp ugt i64 %i.df, %i.dd
-  br i1 %.not144, label %bb.ab, label %bb.aa
+  br i1 %.not144, label %bb.ab, label %25
 
-bb.aa:                                            ; preds = %.loopexit165
-  %5 = call fastcc i32 @ft_lzwstate_stack_grow(ptr noundef nonnull %0)
-  %6 = icmp slt i32 %5, 0
-  br i1 %6, label %.loopexit166, label %._crit_edge213
+25:                                               ; preds = %.loopexit165
+  %26 = getelementptr inbounds nuw i8, ptr %0, i64 208
+  %27 = load ptr, ptr %26, align 8, !tbaa !25
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #7
+  %28 = lshr i64 %i.df, 1
+  %29 = add nuw nsw i64 %28, %i.df                ; 2 uses
+  %30 = add nuw nsw i64 %29, 4                    ; 2 uses
+  %31 = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 3 uses
+  %32 = load ptr, ptr %31, align 8, !tbaa !26     ; 3 uses
+  %33 = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
+  %34 = icmp eq ptr %32, %33
+  br i1 %34, label %.thread.i169, label %35
 
-._crit_edge213:                                   ; preds = %bb.aa
+35:                                               ; preds = %25
+  %36 = icmp samesign ugt i64 %29, 65532
+  br i1 %36, label %37, label %bb.aa
+
+.thread.i169:                                     ; preds = %25
+  store ptr null, ptr %31, align 8, !tbaa !26
+  %spec.select.i170 = call i64 @llvm.umin.i64(i64 %30, i64 65536)
+  br label %bb.aa
+
+37:                                               ; preds = %35
+  %38 = icmp eq i64 %i.df, 65536
+  br i1 %38, label %ft_lzwstate_stack_grow.exit171.thread, label %bb.aa
+
+bb.aa:                                            ; preds = %37, %.thread.i169, %35
+  %39 = phi ptr [ %32, %37 ], [ %32, %35 ], [ null, %.thread.i169 ]
+  %.02531.i163 = phi i64 [ %i.df, %37 ], [ %i.df, %35 ], [ 0, %.thread.i169 ] ; 2 uses
+  %.024.i164 = phi i64 [ 65536, %37 ], [ %30, %35 ], [ %spec.select.i170, %.thread.i169 ] ; 2 uses
+  %40 = call ptr @ft_mem_qrealloc(ptr noundef %27, i64 noundef 1, i64 noundef %.02531.i163, i64 noundef %.024.i164, ptr noundef %39, ptr noundef nonnull %4) #7 ; 2 uses
+  store ptr %40, ptr %31, align 8, !tbaa !26
+  %41 = load i32, ptr %4, align 4, !tbaa !3
+  %.not28.i165 = icmp eq i32 %41, 0
+  br i1 %.not28.i165, label %42, label %ft_lzwstate_stack_grow.exit171.thread
+
+42:                                               ; preds = %bb.aa
+  %43 = icmp eq i64 %.02531.i163, 0
+  br i1 %43, label %44, label %._crit_edge213
+
+44:                                               ; preds = %42
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %40, ptr noundef nonnull align 8 dereferenceable(64) %33, i64 64, i1 false)
+  br label %._crit_edge213
+
+ft_lzwstate_stack_grow.exit171.thread:            ; preds = %37, %bb.aa
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #7
+  br label %.loopexit166
+
+._crit_edge213:                                   ; preds = %42, %44
+  store i64 %.024.i164, ptr %i.de, align 8, !tbaa !27
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #7
   %.pre214 = load i32, ptr %i.db, align 8, !tbaa !36 ; 2 uses
   %.pre218 = zext i32 %.pre214 to i64
   br label %bb.ab
@@ -626,7 +718,7 @@ bb.af:                                            ; preds = %.split188.us
 bb.ag:                                            ; preds = %bb.af
   %i.ex = getelementptr inbounds nuw i8, ptr %0, i64 208
   %i.ey = load ptr, ptr %i.ex, align 8, !tbaa !25
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #7
   %i.ez = icmp eq i32 %i.ew, 0
   %i.fa = lshr i32 %i.ew, 2
   %i.fb = add i32 %i.fa, %i.ew
@@ -635,14 +727,14 @@ bb.ag:                                            ; preds = %bb.af
   %i.fd = zext i32 %.020.i to i64                 ; 2 uses
   %i.fe = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
   %i.ff = load ptr, ptr %i.fe, align 8, !tbaa !38
-  %i.fg = call ptr @ft_mem_realloc(ptr noundef %i.ey, i64 noundef 3, i64 noundef %i.fc, i64 noundef %i.fd, ptr noundef %i.ff, ptr noundef nonnull %i.a) #7 ; 3 uses
+  %i.fg = call ptr @ft_mem_realloc(ptr noundef %i.ey, i64 noundef 3, i64 noundef %i.fc, i64 noundef %i.fd, ptr noundef %i.ff, ptr noundef nonnull %3) #7 ; 3 uses
   store ptr %i.fg, ptr %i.fe, align 8, !tbaa !38
-  %i.fh = load i32, ptr %i.a, align 4, !tbaa !3
+  %i.fh = load i32, ptr %3, align 4, !tbaa !3
   %.not.i150 = icmp eq i32 %i.fh, 0
   br i1 %.not.i150, label %ft_lzwstate_prefix_grow.exit, label %ft_lzwstate_prefix_grow.exit.thread
 
 ft_lzwstate_prefix_grow.exit.thread:              ; preds = %bb.ag
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #7
   br label %.loopexit166
 
 ft_lzwstate_prefix_grow.exit:                     ; preds = %bb.ag
@@ -652,7 +744,7 @@ ft_lzwstate_prefix_grow.exit:                     ; preds = %bb.ag
   %i.fk = getelementptr inbounds nuw [2 x i8], ptr %i.fg, i64 %i.fc
   call void @llvm.memmove.p0.p0.i64(ptr align 1 %i.fi, ptr align 2 %i.fk, i64 %i.fc, i1 false)
   store i32 %.020.i, ptr %i.ev, align 8, !tbaa !60
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #7
   %.pre215 = load i32, ptr %i.eq, align 8, !tbaa !45
   br label %bb.ah
 
@@ -688,11 +780,11 @@ bb.ai:                                            ; preds = %bb.ah, %.split188.u
   store i32 %.4112, ptr %i.h, align 8, !tbaa !41
   ret i64 %.5
 
-.loopexit166:                                     ; preds = %bb.n, %bb.s, %bb.l, %.preheader, %ft_lzwstate_prefix_grow.exit.thread, %ft_lzwstate_stack_grow.exit.thread.a, %.thread, %bb.aa, %bb.q, %bb.o
-  %.5125 = phi i32 [ 0, %bb.l ], [ %.2122181199, %bb.o ], [ %.2122181199, %bb.q ], [ %.2122181199, %ft_lzwstate_stack_grow.exit.thread.a ], [ %i.e, %.thread ], [ %.2, %bb.aa ], [ %.3123, %ft_lzwstate_prefix_grow.exit.thread ], [ %.2122.ph, %.preheader ], [ %.2122181199, %bb.s ], [ 0, %bb.n ]
-  %.5119 = phi i32 [ 0, %bb.l ], [ %.2116182202, %bb.o ], [ %.2116182202, %bb.q ], [ %.2116182202, %ft_lzwstate_stack_grow.exit.thread.a ], [ %i.g, %.thread ], [ %.2116182203, %bb.aa ], [ %.3117, %ft_lzwstate_prefix_grow.exit.thread ], [ %.2116.ph, %.preheader ], [ %.2116182202, %bb.s ], [ 0, %bb.n ]
-  %.5113 = phi i32 [ %.2110.ph, %bb.l ], [ %i.ba, %bb.o ], [ %i.ba, %bb.q ], [ %i.ba, %ft_lzwstate_stack_grow.exit.thread.a ], [ %.0108.ph, %.thread ], [ %i.da, %bb.aa ], [ %.3111, %ft_lzwstate_prefix_grow.exit.thread ], [ %.2110.ph, %.preheader ], [ %i.ba, %bb.s ], [ %.2110.ph, %bb.n ]
-  %.6 = phi i64 [ %i.ak, %bb.l ], [ %i.ak, %bb.o ], [ %i.ak, %bb.q ], [ %i.ak, %ft_lzwstate_stack_grow.exit.thread.a ], [ 0, %.thread ], [ %i.ak, %bb.aa ], [ %.us-phi, %ft_lzwstate_prefix_grow.exit.thread ], [ %i.ak, %.preheader ], [ %i.ak, %bb.s ], [ %i.ak, %bb.n ]
+.loopexit166:                                     ; preds = %bb.n, %bb.s, %bb.l, %.preheader, %ft_lzwstate_prefix_grow.exit.thread, %ft_lzwstate_stack_grow.exit171.thread, %ft_lzwstate_stack_grow.exit.thread.a, %ft_lzwstate_stack_grow.exit.thread, %.thread, %bb.o
+  %.5125 = phi i32 [ 0, %bb.l ], [ %.2122181199, %bb.o ], [ %.2122181199, %ft_lzwstate_stack_grow.exit.thread ], [ %.2122181199, %ft_lzwstate_stack_grow.exit.thread.a ], [ %i.e, %.thread ], [ %.2, %ft_lzwstate_stack_grow.exit171.thread ], [ %.3123, %ft_lzwstate_prefix_grow.exit.thread ], [ %.2122.ph, %.preheader ], [ %.2122181199, %bb.s ], [ 0, %bb.n ]
+  %.5119 = phi i32 [ 0, %bb.l ], [ %.2116182202, %bb.o ], [ %.2116182202, %ft_lzwstate_stack_grow.exit.thread ], [ %.2116182202, %ft_lzwstate_stack_grow.exit.thread.a ], [ %i.g, %.thread ], [ %.2116182203, %ft_lzwstate_stack_grow.exit171.thread ], [ %.3117, %ft_lzwstate_prefix_grow.exit.thread ], [ %.2116.ph, %.preheader ], [ %.2116182202, %bb.s ], [ 0, %bb.n ]
+  %.5113 = phi i32 [ %.2110.ph, %bb.l ], [ %i.ba, %bb.o ], [ %i.ba, %ft_lzwstate_stack_grow.exit.thread ], [ %i.ba, %ft_lzwstate_stack_grow.exit.thread.a ], [ %.0108.ph, %.thread ], [ %i.da, %ft_lzwstate_stack_grow.exit171.thread ], [ %.3111, %ft_lzwstate_prefix_grow.exit.thread ], [ %.2110.ph, %.preheader ], [ %i.ba, %bb.s ], [ %.2110.ph, %bb.n ]
+  %.6 = phi i64 [ %i.ak, %bb.l ], [ %i.ak, %bb.o ], [ %i.ak, %ft_lzwstate_stack_grow.exit.thread ], [ %i.ak, %ft_lzwstate_stack_grow.exit.thread.a ], [ 0, %.thread ], [ %i.ak, %ft_lzwstate_stack_grow.exit171.thread ], [ %.us-phi, %ft_lzwstate_prefix_grow.exit.thread ], [ %i.ak, %.preheader ], [ %i.ak, %bb.s ], [ %i.ak, %bb.n ]
   store i32 3, ptr %0, align 8, !tbaa !37
   br label %.loopexit
 }
@@ -862,75 +954,6 @@ bb.q:                                             ; preds = %bb.p
 ft_lzwstate_refill.exit.thread:                   ; preds = %bb.l, %bb.m, %bb.p, %bb.q, %ft_lzwstate_refill.exit, %bb.e
   %.051 = phi i32 [ -1, %ft_lzwstate_refill.exit ], [ -1, %bb.e ], [ %i.bx, %bb.q ], [ %.0, %bb.p ], [ -1, %bb.m ], [ -1, %bb.l ]
   ret i32 %.051
-}
-
-; Function Attrs: nounwind uwtable
-define internal fastcc range(i32 -1, 1) i32 @ft_lzwstate_stack_grow(ptr nofree noundef captures(address) %0) unnamed_addr #0 {
-  %2 = alloca i32, align 4                        ; 4 uses
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 120
-  %4 = load i32, ptr %3, align 8, !tbaa !36
-  %5 = zext i32 %4 to i64
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 2 uses
-  %7 = load i64, ptr %6, align 8, !tbaa !27       ; 6 uses
-  %.not = icmp ugt i64 %7, %5
-  br i1 %.not, label %29, label %8
-
-8:                                                ; preds = %1
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 208
-  %10 = load ptr, ptr %9, align 8, !tbaa !25
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #7
-  %11 = lshr i64 %7, 1
-  %12 = add nuw nsw i64 %11, %7                   ; 2 uses
-  %13 = add nuw nsw i64 %12, 4                    ; 2 uses
-  %14 = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 3 uses
-  %15 = load ptr, ptr %14, align 8, !tbaa !26     ; 3 uses
-  %16 = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
-  %17 = icmp eq ptr %15, %16
-  br i1 %17, label %.thread, label %18
-
-18:                                               ; preds = %8
-  %19 = icmp samesign ugt i64 %12, 65532
-  br i1 %19, label %20, label %.thread32
-
-.thread:                                          ; preds = %8
-  store ptr null, ptr %14, align 8, !tbaa !26
-  %spec.select = tail call i64 @llvm.umin.i64(i64 %13, i64 65536)
-  br label %.thread32
-
-20:                                               ; preds = %18
-  %21 = icmp eq i64 %7, 65536
-  br i1 %21, label %.sink.split, label %.thread32
-
-.thread32:                                        ; preds = %.thread, %20, %18
-  %22 = phi ptr [ %15, %20 ], [ %15, %18 ], [ null, %.thread ]
-  %.02531 = phi i64 [ %7, %20 ], [ %7, %18 ], [ 0, %.thread ] ; 2 uses
-  %.024 = phi i64 [ 65536, %20 ], [ %13, %18 ], [ %spec.select, %.thread ] ; 2 uses
-  %23 = call ptr @ft_mem_qrealloc(ptr noundef %10, i64 noundef 1, i64 noundef %.02531, i64 noundef %.024, ptr noundef %22, ptr noundef nonnull %2) #7 ; 2 uses
-  store ptr %23, ptr %14, align 8, !tbaa !26
-  %24 = load i32, ptr %2, align 4, !tbaa !3
-  %.not28 = icmp eq i32 %24, 0
-  br i1 %.not28, label %25, label %.sink.split
-
-25:                                               ; preds = %.thread32
-  %26 = icmp eq i64 %.02531, 0
-  br i1 %26, label %27, label %28
-
-27:                                               ; preds = %25
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %23, ptr noundef nonnull align 8 dereferenceable(64) %16, i64 64, i1 false)
-  br label %28
-
-28:                                               ; preds = %25, %27
-  store i64 %.024, ptr %6, align 8, !tbaa !27
-  br label %.sink.split
-
-.sink.split:                                      ; preds = %.thread32, %20, %28
-  %.1.ph = phi i32 [ 0, %28 ], [ -1, %20 ], [ -1, %.thread32 ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #7
-  br label %29
-
-29:                                               ; preds = %.sink.split, %1
-  %.1 = phi i32 [ 0, %1 ], [ %.1.ph, %.sink.split ]
-  ret i32 %.1
 }
 
 declare hidden i32 @FT_Stream_Read(ptr noundef, ptr noundef, i64 noundef) local_unnamed_addr #3
