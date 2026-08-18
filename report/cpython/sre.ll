@@ -1,4 +1,4 @@
-inline.NumInlined: 368
+inline.NumInlined: 358
 inline.NumDeleted: 87
 loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumRuntimeUnrolled: 3
@@ -204,7 +204,7 @@ bb.a:
   %i.d = load i32, ptr %i.c, align 8, !tbaa !119
   %i.e = getelementptr i8, ptr %0, i64 192        ; 108 uses
   %i.f = load i64, ptr %i.e, align 8, !tbaa !120  ; 7 uses
-  %i.g = getelementptr i8, ptr %0, i64 184        ; 40 uses
+  %i.g = getelementptr i8, ptr %0, i64 184        ; 32 uses
   %i.h = load i64, ptr %i.g, align 8, !tbaa !121  ; 2 uses
   %i.i = sub i64 %i.h, %i.f
   %i.j = icmp ult i64 %i.i, 56
@@ -247,7 +247,7 @@ bb.g:                                             ; preds = %bb.e, %bb.d
 
 data_stack_grow.exit.thread:                      ; preds = %bb.b, %bb.f, %bb.a
   %i.t = phi i64 [ %i.f, %bb.b ], [ %.pre, %bb.f ], [ %i.f, %bb.a ]
-  %i.u = getelementptr i8, ptr %0, i64 176        ; 71 uses
+  %i.u = getelementptr i8, ptr %0, i64 176        ; 57 uses
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !88
   %i.w = getelementptr i8, ptr %i.v, i64 %i.f     ; 4 uses
   %i.x = add i64 %i.t, 56
@@ -650,8 +650,8 @@ bb.fc:                                            ; preds = %bb.fb
   %i.sm = add nuw i32 %i.sj, 1
   %i.sn = sext i32 %i.sm to i64
   %i.so = shl nsw i64 %i.sn, 3                    ; 4 uses
-  %i.sp = load i64, ptr %i.g, align 8, !tbaa !121 ; 2 uses
-  %i.sq = load i64, ptr %i.e, align 8, !tbaa !120 ; 2 uses
+  %i.sp = load i64, ptr %i.g, align 8, !tbaa !121
+  %i.sq = load i64, ptr %i.e, align 8, !tbaa !120
   %i.sr = sub i64 %i.sp, %i.sq
   %i.ss = icmp ugt i64 %i.so, %i.sr
   br i1 %i.ss, label %bb.fd, label %._crit_edge2500
@@ -661,47 +661,23 @@ bb.fc:                                            ; preds = %bb.fb
   br label %bb.fg
 
 bb.fd:                                            ; preds = %bb.fc
-  %3 = add i64 %i.sq, %i.so                       ; 3 uses
-  %i.st = icmp slt i64 %i.sp, %3
-  %.pre2502.pre = load ptr, ptr %i.u, align 8, !tbaa !88 ; 2 uses
-  br i1 %i.st, label %4, label %bb.ff
+  %3 = tail call fastcc i32 @data_stack_grow(ptr noundef nonnull %0, i64 noundef %i.so) ; 2 uses
+  %i.st = icmp slt i32 %3, 0
+  br i1 %i.st, label %bb.fe, label %bb.ff
 
-4:                                                ; preds = %bb.fd
-  %5 = sdiv i64 %3, 4
-  %6 = add i64 %3, 1024
-  %7 = add i64 %6, %5                             ; 2 uses
-  %8 = tail call ptr @PyMem_Realloc(ptr noundef %.pre2502.pre, i64 noundef %7) #13 ; 3 uses
-  %.not.not.i1822 = icmp eq ptr %8, null
-  br i1 %.not.not.i1822, label %9, label %12
-
-9:                                                ; preds = %4
-  %10 = load ptr, ptr %i.u, align 8, !tbaa !88    ; 2 uses
-  %.not.i.i1823 = icmp eq ptr %10, null
-  br i1 %.not.i.i1823, label %bb.fe, label %11
-
-11:                                               ; preds = %9
-  tail call void @PyMem_Free(ptr noundef nonnull %10) #13
-  store ptr null, ptr %i.u, align 8, !tbaa !88
-  br label %bb.fe
-
-12:                                               ; preds = %4
-  store ptr %8, ptr %i.u, align 8, !tbaa !88
-  store i64 %7, ptr %i.g, align 8, !tbaa !121
-  br label %bb.ff
-
-bb.fe:                                            ; preds = %11, %9
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.g, i8 0, i64 16, i1 false)
+bb.fe:                                            ; preds = %bb.fd
+  %4 = sext i32 %3 to i64
   br label %.loopexit
 
-bb.ff:                                            ; preds = %12, %bb.fd
-  %.pre2502 = phi ptr [ %8, %12 ], [ %.pre2502.pre, %bb.fd ] ; 2 uses
+bb.ff:                                            ; preds = %bb.fd
   %.not1759 = icmp eq i64 %.111490.ph, -1
-  %i.su = getelementptr i8, ptr %.pre2502, i64 %.111490.ph
+  %.pre2485 = load ptr, ptr %i.u, align 8, !tbaa !88 ; 2 uses
+  %i.su = getelementptr i8, ptr %.pre2485, i64 %.111490.ph
   %spec.select = select i1 %.not1759, ptr %.40, ptr %i.su
   br label %bb.fg
 
 bb.fg:                                            ; preds = %bb.ff, %._crit_edge2500
-  %i.sv = phi ptr [ %.pre2501, %._crit_edge2500 ], [ %.pre2502, %bb.ff ]
+  %i.sv = phi ptr [ %.pre2501, %._crit_edge2500 ], [ %.pre2485, %bb.ff ]
   %.11506 = phi ptr [ %.40, %._crit_edge2500 ], [ %spec.select, %bb.ff ]
   %i.sw = load i64, ptr %i.e, align 8, !tbaa !120
   %i.sx = getelementptr i8, ptr %i.sv, i64 %i.sw
@@ -1104,8 +1080,8 @@ bb.ip:                                            ; preds = %bb.io
   %i.adz = add nuw i32 %i.adw, 1
   %i.aea = sext i32 %i.adz to i64
   %i.aeb = shl nsw i64 %i.aea, 3                  ; 4 uses
-  %i.aec = load i64, ptr %i.g, align 8, !tbaa !121 ; 2 uses
-  %i.aed = load i64, ptr %i.e, align 8, !tbaa !120 ; 2 uses
+  %i.aec = load i64, ptr %i.g, align 8, !tbaa !121
+  %i.aed = load i64, ptr %i.e, align 8, !tbaa !120
   %i.aee = sub i64 %i.aec, %i.aed
   %i.aef = icmp ugt i64 %i.aeb, %i.aee
   br i1 %i.aef, label %bb.iq, label %._crit_edge2460.a
@@ -1115,47 +1091,23 @@ bb.ip:                                            ; preds = %bb.io
   br label %bb.it
 
 bb.iq:                                            ; preds = %bb.ip
-  %13 = add i64 %i.aed, %i.aeb                    ; 3 uses
-  %i.aeg = icmp slt i64 %i.aec, %13
-  %.pre2462.pre = load ptr, ptr %i.u, align 8, !tbaa !88 ; 2 uses
-  br i1 %i.aeg, label %14, label %bb.is
+  %5 = tail call fastcc i32 @data_stack_grow(ptr noundef nonnull %0, i64 noundef %i.aeb) ; 2 uses
+  %i.aeg = icmp slt i32 %5, 0
+  br i1 %i.aeg, label %bb.ir, label %bb.is
 
-14:                                               ; preds = %bb.iq
-  %15 = sdiv i64 %13, 4
-  %16 = add i64 %13, 1024
-  %17 = add i64 %16, %15                          ; 2 uses
-  %18 = tail call ptr @PyMem_Realloc(ptr noundef %.pre2462.pre, i64 noundef %17) #13 ; 3 uses
-  %.not.not.i1832 = icmp eq ptr %18, null
-  br i1 %.not.not.i1832, label %19, label %22
-
-19:                                               ; preds = %14
-  %20 = load ptr, ptr %i.u, align 8, !tbaa !88    ; 2 uses
-  %.not.i.i1833 = icmp eq ptr %20, null
-  br i1 %.not.i.i1833, label %bb.ir, label %21
-
-21:                                               ; preds = %19
-  tail call void @PyMem_Free(ptr noundef nonnull %20) #13
-  store ptr null, ptr %i.u, align 8, !tbaa !88
-  br label %bb.ir
-
-22:                                               ; preds = %14
-  store ptr %18, ptr %i.u, align 8, !tbaa !88
-  store i64 %17, ptr %i.g, align 8, !tbaa !121
-  br label %bb.is
-
-bb.ir:                                            ; preds = %21, %19
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.g, i8 0, i64 16, i1 false)
+bb.ir:                                            ; preds = %bb.iq
+  %6 = sext i32 %5 to i64
   br label %.loopexit
 
-bb.is:                                            ; preds = %22, %bb.iq
-  %.pre2462 = phi ptr [ %18, %22 ], [ %.pre2462.pre, %bb.iq ] ; 2 uses
+bb.is:                                            ; preds = %bb.iq
   %.not1692 = icmp eq i64 %.111490.ph, -1
-  %i.aeh = getelementptr i8, ptr %.pre2462, i64 %.111490.ph
+  %.pre2445 = load ptr, ptr %i.u, align 8, !tbaa !88 ; 2 uses
+  %i.aeh = getelementptr i8, ptr %.pre2445, i64 %.111490.ph
   %spec.select2938 = select i1 %.not1692, ptr %.121517, ptr %i.aeh
   br label %bb.it
 
 bb.it:                                            ; preds = %bb.is, %._crit_edge2460.a
-  %i.aei = phi ptr [ %.pre2461.a, %._crit_edge2460.a ], [ %.pre2462, %bb.is ]
+  %i.aei = phi ptr [ %.pre2461.a, %._crit_edge2460.a ], [ %.pre2445, %bb.is ]
   %.131518 = phi ptr [ %.121517, %._crit_edge2460.a ], [ %spec.select2938, %bb.is ]
   %i.aej = load i64, ptr %i.e, align 8, !tbaa !120
   %i.aek = getelementptr i8, ptr %i.aei, i64 %i.aej
@@ -1558,7 +1510,7 @@ bb.li:                                            ; preds = %bb.lh, %bb.lg
   br label %bb.lj
 
 bb.lj:                                            ; preds = %._crit_edge2524, %bb.li, %bb.ko
-  %i.apq = phi i64 [ %i.apj, %bb.li ], [ %.pre2526, %bb.ko ], [ %.pre2525, %._crit_edge2524 ] ; 3 uses
+  %i.apq = phi i64 [ %i.apj, %bb.li ], [ %.pre2526, %bb.ko ], [ %.pre2525, %._crit_edge2524 ] ; 5 uses
   %i.apr = phi ptr [ %.pre2523, %bb.li ], [ %i.ajz, %bb.ko ], [ %i.ajz, %._crit_edge2524 ]
   %.71527 = phi ptr [ %i.boo, %bb.li ], [ %.151535, %bb.ko ], [ %.151535, %._crit_edge2524 ]
   %.23 = phi ptr [ %i.bok, %bb.li ], [ %.40, %bb.ko ], [ %.40, %._crit_edge2524 ] ; 4 uses
@@ -1572,7 +1524,7 @@ bb.lj:                                            ; preds = %._crit_edge2524, %b
   store ptr %.7, ptr %i.apu, align 8, !tbaa !133
   %i.apv = getelementptr i8, ptr %.23, i64 32
   store ptr %.71527, ptr %i.apv, align 8, !tbaa !134
-  %i.apw = load i64, ptr %i.g, align 8, !tbaa !121
+  %i.apw = load i64, ptr %i.g, align 8, !tbaa !121 ; 2 uses
   %i.apx = sub i64 %i.apw, %i.apq
   %i.apy = icmp ult i64 %i.apx, 56
   br i1 %i.apy, label %bb.lk, label %._crit_edge2527
@@ -1582,23 +1534,47 @@ bb.lj:                                            ; preds = %._crit_edge2524, %b
   br label %bb.ln
 
 bb.lk:                                            ; preds = %bb.lj
-  %23 = tail call fastcc i32 @data_stack_grow(ptr noundef nonnull %0, i64 noundef 56) ; 2 uses
-  %i.apz = icmp slt i32 %23, 0
-  br i1 %i.apz, label %bb.ll, label %bb.lm
+  %7 = add i64 %i.apq, 56                         ; 2 uses
+  %i.apz = icmp slt i64 %i.apw, %7
+  %.pre2511.pre = load ptr, ptr %i.u, align 8, !tbaa !88 ; 2 uses
+  br i1 %i.apz, label %8, label %bb.lm
 
-bb.ll:                                            ; preds = %bb.lk
-  %24 = sext i32 %23 to i64
+8:                                                ; preds = %bb.lk
+  %9 = sdiv i64 %7, 4
+  %10 = add i64 %i.apq, 1080
+  %11 = add i64 %10, %9                           ; 2 uses
+  %12 = tail call ptr @PyMem_Realloc(ptr noundef %.pre2511.pre, i64 noundef %11) #13 ; 3 uses
+  %.not.not.i1827 = icmp eq ptr %12, null
+  br i1 %.not.not.i1827, label %13, label %16
+
+13:                                               ; preds = %8
+  %14 = load ptr, ptr %i.u, align 8, !tbaa !88    ; 2 uses
+  %.not.i.i1828 = icmp eq ptr %14, null
+  br i1 %.not.i.i1828, label %bb.ll, label %15
+
+15:                                               ; preds = %13
+  tail call void @PyMem_Free(ptr noundef nonnull %14) #13
+  store ptr null, ptr %i.u, align 8, !tbaa !88
+  br label %bb.ll
+
+16:                                               ; preds = %8
+  store ptr %12, ptr %i.u, align 8, !tbaa !88
+  store i64 %11, ptr %i.g, align 8, !tbaa !121
+  br label %bb.lm
+
+bb.ll:                                            ; preds = %15, %13
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.g, i8 0, i64 16, i1 false)
   br label %.loopexit
 
-bb.lm:                                            ; preds = %bb.lk
+bb.lm:                                            ; preds = %16, %bb.lk
+  %.pre2511 = phi ptr [ %12, %16 ], [ %.pre2511.pre, %bb.lk ] ; 2 uses
   %.not1798 = icmp eq i64 %.61485, -1
-  %.pre2529 = load ptr, ptr %i.u, align 8, !tbaa !88 ; 2 uses
-  %i.aqa = getelementptr i8, ptr %.pre2529, i64 %.61485
+  %i.aqa = getelementptr i8, ptr %.pre2511, i64 %.61485
   %spec.select2945 = select i1 %.not1798, ptr %.23, ptr %i.aqa
   br label %bb.ln
 
 bb.ln:                                            ; preds = %bb.lm, %._crit_edge2527
-  %i.aqb = phi ptr [ %.pre2528, %._crit_edge2527 ], [ %.pre2529, %bb.lm ]
+  %i.aqb = phi ptr [ %.pre2528, %._crit_edge2527 ], [ %.pre2511, %bb.lm ]
   %.24 = phi ptr [ %.23, %._crit_edge2527 ], [ %spec.select2945, %bb.lm ]
   %i.aqc = getelementptr i8, ptr %i.aqb, i64 %i.apq ; 5 uses
   %i.aqd = load i64, ptr %i.e, align 8, !tbaa !120
@@ -2001,55 +1977,30 @@ bb.nh:                                            ; preds = %bb.ng
   store ptr %.8, ptr %i.axx, align 8, !tbaa !133
   %i.axy = getelementptr i8, ptr %.31, i64 32
   store ptr %.81528, ptr %i.axy, align 8, !tbaa !134
-  %i.axz = load i64, ptr %i.e, align 8, !tbaa !120 ; 7 uses
-  %i.aya = load i64, ptr %i.g, align 8, !tbaa !121 ; 2 uses
+  %i.axz = load i64, ptr %i.e, align 8, !tbaa !120 ; 4 uses
+  %i.aya = load i64, ptr %i.g, align 8, !tbaa !121
   %i.ayb = sub i64 %i.aya, %i.axz
   %i.ayc = icmp ult i64 %i.ayb, 56
-  br i1 %i.ayc, label %bb.ni, label %.data_stack_grow.exit1842.thread_crit_edge
-
-.data_stack_grow.exit1842.thread_crit_edge:       ; preds = %bb.nh
-  %.pre2511 = load ptr, ptr %i.u, align 8, !tbaa !88
-  br label %data_stack_grow.exit1842.thread
+  br i1 %i.ayc, label %bb.ni, label %data_stack_grow.exit1842.thread
 
 bb.ni:                                            ; preds = %bb.nh
-  %25 = add i64 %i.axz, 56                        ; 2 uses
-  %i.ayd = icmp slt i64 %i.aya, %25
-  %.pre2512 = load ptr, ptr %i.u, align 8, !tbaa !88 ; 2 uses
-  br i1 %i.ayd, label %26, label %data_stack_grow.exit1842.thread
+  %17 = tail call fastcc i32 @data_stack_grow(ptr noundef nonnull %0, i64 noundef 56) ; 2 uses
+  %i.ayd = icmp slt i32 %17, 0
+  br i1 %i.ayd, label %bb.nk, label %bb.nj
 
-26:                                               ; preds = %bb.ni
-  %27 = sdiv i64 %25, 4
-  %28 = add i64 %i.axz, 1080
-  %29 = add i64 %28, %27                          ; 2 uses
-  %30 = tail call ptr @PyMem_Realloc(ptr noundef %.pre2512, i64 noundef %29) #13 ; 3 uses
-  %.not.not.i1839 = icmp eq ptr %30, null
-  br i1 %.not.not.i1839, label %31, label %bb.nj
-
-31:                                               ; preds = %26
-  %32 = load ptr, ptr %i.u, align 8, !tbaa !88    ; 2 uses
-  %.not.i.i1840 = icmp eq ptr %32, null
-  br i1 %.not.i.i1840, label %bb.nk, label %33
-
-33:                                               ; preds = %31
-  tail call void @PyMem_Free(ptr noundef nonnull %32) #13
-  store ptr null, ptr %i.u, align 8, !tbaa !88
-  br label %bb.nk
-
-bb.nj:                                            ; preds = %26
-  store ptr %30, ptr %i.u, align 8, !tbaa !88
-  store i64 %29, ptr %i.g, align 8, !tbaa !121
+bb.nj:                                            ; preds = %bb.ni
   %.pre2513 = load i64, ptr %i.e, align 8, !tbaa !120
   br label %data_stack_grow.exit1842.thread
 
-bb.nk:                                            ; preds = %33, %31
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.g, i8 0, i64 16, i1 false)
+bb.nk:                                            ; preds = %bb.ni
+  %18 = sext i32 %17 to i64
   br label %.loopexit
 
-data_stack_grow.exit1842.thread:                  ; preds = %.data_stack_grow.exit1842.thread_crit_edge, %bb.ni, %bb.nj
-  %34 = phi i64 [ %i.axz, %.data_stack_grow.exit1842.thread_crit_edge ], [ %i.axz, %bb.ni ], [ %.pre2513, %bb.nj ]
-  %35 = phi ptr [ %.pre2511, %.data_stack_grow.exit1842.thread_crit_edge ], [ %.pre2512, %bb.ni ], [ %30, %bb.nj ]
-  %i.aye = getelementptr i8, ptr %35, i64 %i.axz  ; 5 uses
-  %i.ayf = add i64 %34, 56
+data_stack_grow.exit1842.thread:                  ; preds = %bb.nj, %bb.nh
+  %19 = phi i64 [ %.pre2513, %bb.nj ], [ %i.axz, %bb.nh ]
+  %20 = load ptr, ptr %i.u, align 8, !tbaa !88
+  %i.aye = getelementptr i8, ptr %20, i64 %i.axz  ; 5 uses
+  %i.ayf = add i64 %19, 56
   store i64 %i.ayf, ptr %i.e, align 8, !tbaa !120
   %i.ayg = getelementptr i8, ptr %.8, i64 12      ; 2 uses
   %i.ayh = getelementptr i8, ptr %i.aye, i64 24
@@ -2135,14 +2086,14 @@ bb.nt:                                            ; preds = %bb.ns
   %i.azk = load i32, ptr %i.ae, align 4, !tbaa !85 ; 2 uses
   store <2 x i32> %i.azj, ptr %i.azi, align 8, !tbaa !7
   %i.azl = icmp sgt i32 %i.azk, -1
-  %.pre2452 = load i64, ptr %i.e, align 8, !tbaa !120 ; 3 uses
+  %.pre2452 = load i64, ptr %i.e, align 8, !tbaa !120 ; 2 uses
   br i1 %i.azl, label %bb.nu, label %bb.nz
 
 bb.nu:                                            ; preds = %bb.nt
   %i.azm = add nuw i32 %i.azk, 1
   %i.azn = sext i32 %i.azm to i64
   %i.azo = shl nsw i64 %i.azn, 3                  ; 4 uses
-  %i.azp = load i64, ptr %i.g, align 8, !tbaa !121 ; 2 uses
+  %i.azp = load i64, ptr %i.g, align 8, !tbaa !121
   %i.azq = sub i64 %i.azp, %.pre2452
   %i.azr = icmp ugt i64 %i.azo, %i.azq
   br i1 %i.azr, label %bb.nv, label %._crit_edge2448
@@ -2152,47 +2103,23 @@ bb.nu:                                            ; preds = %bb.nt
   br label %bb.ny
 
 bb.nv:                                            ; preds = %bb.nu
-  %36 = add i64 %.pre2452, %i.azo                 ; 3 uses
-  %i.azs = icmp slt i64 %i.azp, %36
-  %.pre2450.pre = load ptr, ptr %i.u, align 8, !tbaa !88 ; 2 uses
-  br i1 %i.azs, label %37, label %bb.nx
+  %21 = tail call fastcc i32 @data_stack_grow(ptr noundef nonnull %0, i64 noundef %i.azo) ; 2 uses
+  %i.azs = icmp slt i32 %21, 0
+  br i1 %i.azs, label %bb.nw, label %bb.nx
 
-37:                                               ; preds = %bb.nv
-  %38 = sdiv i64 %36, 4
-  %39 = add i64 %36, 1024
-  %40 = add i64 %39, %38                          ; 2 uses
-  %41 = tail call ptr @PyMem_Realloc(ptr noundef %.pre2450.pre, i64 noundef %40) #13 ; 3 uses
-  %.not.not.i1845 = icmp eq ptr %41, null
-  br i1 %.not.not.i1845, label %42, label %45
-
-42:                                               ; preds = %37
-  %43 = load ptr, ptr %i.u, align 8, !tbaa !88    ; 2 uses
-  %.not.i.i1846 = icmp eq ptr %43, null
-  br i1 %.not.i.i1846, label %bb.nw, label %44
-
-44:                                               ; preds = %42
-  tail call void @PyMem_Free(ptr noundef nonnull %43) #13
-  store ptr null, ptr %i.u, align 8, !tbaa !88
-  br label %bb.nw
-
-45:                                               ; preds = %37
-  store ptr %41, ptr %i.u, align 8, !tbaa !88
-  store i64 %40, ptr %i.g, align 8, !tbaa !121
-  br label %bb.nx
-
-bb.nw:                                            ; preds = %44, %42
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.g, i8 0, i64 16, i1 false)
+bb.nw:                                            ; preds = %bb.nv
+  %22 = sext i32 %21 to i64
   br label %.loopexit
 
-bb.nx:                                            ; preds = %45, %bb.nv
-  %.pre2450 = phi ptr [ %41, %45 ], [ %.pre2450.pre, %bb.nv ] ; 2 uses
+bb.nx:                                            ; preds = %bb.nv
   %.not1776 = icmp eq i64 %.81487, -1
-  %i.azt = getelementptr i8, ptr %.pre2450, i64 %.81487
+  %.pre2434 = load ptr, ptr %i.u, align 8, !tbaa !88 ; 2 uses
+  %i.azt = getelementptr i8, ptr %.pre2434, i64 %.81487
   %spec.select2949 = select i1 %.not1776, ptr %.32, ptr %i.azt
   br label %bb.ny
 
 bb.ny:                                            ; preds = %bb.nx, %._crit_edge2448
-  %i.azu = phi ptr [ %.pre2449, %._crit_edge2448 ], [ %.pre2450, %bb.nx ]
+  %i.azu = phi ptr [ %.pre2449, %._crit_edge2448 ], [ %.pre2434, %bb.nx ]
   %.33 = phi ptr [ %.32, %._crit_edge2448 ], [ %spec.select2949, %bb.nx ]
   %i.azv = load i64, ptr %i.e, align 8, !tbaa !120
   %i.azw = getelementptr i8, ptr %i.azu, i64 %i.azv
@@ -2205,61 +2132,36 @@ bb.ny:                                            ; preds = %bb.nx, %._crit_edge
   br label %bb.nz
 
 bb.nz:                                            ; preds = %bb.nt, %bb.ny
-  %i.baa = phi i64 [ %i.azz, %bb.ny ], [ %.pre2452, %bb.nt ] ; 7 uses
+  %i.baa = phi i64 [ %i.azz, %bb.ny ], [ %.pre2452, %bb.nt ] ; 4 uses
   %i.bab = phi ptr [ %.pre2451, %bb.ny ], [ %i.azh, %bb.nt ]
   %.34 = phi ptr [ %.33, %bb.ny ], [ %.32, %bb.nt ] ; 2 uses
   %i.bac = getelementptr i8, ptr %.34, i64 24
   store ptr %.9, ptr %i.bac, align 8, !tbaa !133
   %i.bad = getelementptr i8, ptr %.34, i64 32
   store ptr %i.bab, ptr %i.bad, align 8, !tbaa !134
-  %i.bae = load i64, ptr %i.g, align 8, !tbaa !121 ; 2 uses
+  %i.bae = load i64, ptr %i.g, align 8, !tbaa !121
   %i.baf = sub i64 %i.bae, %i.baa
   %i.bag = icmp ult i64 %i.baf, 56
-  br i1 %i.bag, label %bb.oa, label %.data_stack_grow.exit1853.thread_crit_edge
-
-.data_stack_grow.exit1853.thread_crit_edge:       ; preds = %bb.nz
-  %.pre2453 = load ptr, ptr %i.u, align 8, !tbaa !88
-  br label %data_stack_grow.exit1853.thread
+  br i1 %i.bag, label %bb.oa, label %data_stack_grow.exit1853.thread
 
 bb.oa:                                            ; preds = %bb.nz
-  %46 = add i64 %i.baa, 56                        ; 2 uses
-  %i.bah = icmp slt i64 %i.bae, %46
-  %.pre2454 = load ptr, ptr %i.u, align 8, !tbaa !88 ; 2 uses
-  br i1 %i.bah, label %47, label %data_stack_grow.exit1853.thread
+  %23 = tail call fastcc i32 @data_stack_grow(ptr noundef nonnull %0, i64 noundef 56) ; 2 uses
+  %i.bah = icmp slt i32 %23, 0
+  br i1 %i.bah, label %bb.oc, label %bb.ob
 
-47:                                               ; preds = %bb.oa
-  %48 = sdiv i64 %46, 4
-  %49 = add i64 %i.baa, 1080
-  %50 = add i64 %49, %48                          ; 2 uses
-  %51 = tail call ptr @PyMem_Realloc(ptr noundef %.pre2454, i64 noundef %50) #13 ; 3 uses
-  %.not.not.i1850 = icmp eq ptr %51, null
-  br i1 %.not.not.i1850, label %52, label %bb.ob
-
-52:                                               ; preds = %47
-  %53 = load ptr, ptr %i.u, align 8, !tbaa !88    ; 2 uses
-  %.not.i.i1851 = icmp eq ptr %53, null
-  br i1 %.not.i.i1851, label %bb.oc, label %54
-
-54:                                               ; preds = %52
-  tail call void @PyMem_Free(ptr noundef nonnull %53) #13
-  store ptr null, ptr %i.u, align 8, !tbaa !88
-  br label %bb.oc
-
-bb.ob:                                            ; preds = %47
-  store ptr %51, ptr %i.u, align 8, !tbaa !88
-  store i64 %50, ptr %i.g, align 8, !tbaa !121
+bb.ob:                                            ; preds = %bb.oa
   %.pre2455 = load i64, ptr %i.e, align 8, !tbaa !120
   br label %data_stack_grow.exit1853.thread
 
-bb.oc:                                            ; preds = %54, %52
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.g, i8 0, i64 16, i1 false)
+bb.oc:                                            ; preds = %bb.oa
+  %24 = sext i32 %23 to i64
   br label %.loopexit
 
-data_stack_grow.exit1853.thread:                  ; preds = %.data_stack_grow.exit1853.thread_crit_edge, %bb.oa, %bb.ob
-  %55 = phi i64 [ %i.baa, %.data_stack_grow.exit1853.thread_crit_edge ], [ %i.baa, %bb.oa ], [ %.pre2455, %bb.ob ]
-  %56 = phi ptr [ %.pre2453, %.data_stack_grow.exit1853.thread_crit_edge ], [ %.pre2454, %bb.oa ], [ %51, %bb.ob ]
-  %i.bai = getelementptr i8, ptr %56, i64 %i.baa  ; 5 uses
-  %i.baj = add i64 %55, 56
+data_stack_grow.exit1853.thread:                  ; preds = %bb.ob, %bb.nz
+  %25 = phi i64 [ %.pre2455, %bb.ob ], [ %i.baa, %bb.nz ]
+  %26 = load ptr, ptr %i.u, align 8, !tbaa !88
+  %i.bai = getelementptr i8, ptr %26, i64 %i.baa  ; 5 uses
+  %i.baj = add i64 %25, 56
   store i64 %i.baj, ptr %i.e, align 8, !tbaa !120
   %i.bak = getelementptr i8, ptr %.9, i64 12      ; 2 uses
   %i.bal = getelementptr i8, ptr %i.bai, i64 24
@@ -2662,7 +2564,7 @@ bb.sc:                                            ; preds = %bb.ri
   br i1 %.not1641, label %bb.rb, label %bb.qy
 
 .loopexit:                                        ; preds = %bb.ri, %repeat_pool_malloc.exit.thread, %.backedge, %bb.rg, %bb.qm, %bb.qe, %bb.qb, %bb.px, %bb.pt, %bb.pn, %bb.ph, %bb.oz, %bb.ou, %bb.on, %bb.lp, %bb.kf, %bb.jy, %bb.jw, %bb.jn, %bb.jg, %bb.ie, %bb.gh, %bb.ez, %bb.ew, %bb.er, %bb.em, %bb.eg, %bb.ea, %bb.dv, %bb.dp, %bb.dk, %bb.df, %bb.cz, %bb.cu, %bb.cq, %bb.cl, %bb.cg, %bb.z, %bb.u, %bb.p, %bb.k, %bb.rh, %bb.qw, %bb.qr, %bb.qj, %bb.oq, %bb.oc, %bb.nw, %bb.nk, %bb.mw, %bb.ms, %bb.mf, %bb.ma, %bb.lt, %bb.ll, %bb.lb, %bb.kx, %bb.ks, %bb.kj, %bb.kb, %bb.ix, %bb.ir, %bb.hp, %bb.hb, %bb.gs, %bb.fs, %bb.fe, %bb.g
-  %.0 = phi i64 [ -9, %bb.g ], [ %.01491, %bb.rh ], [ -1, %.backedge ], [ %i.ada, %bb.ie ], [ %24, %bb.ll ], [ -10, %bb.pn ], [ -10, %bb.dp ], [ %i.avg, %bb.ms ], [ %i.awb, %bb.mw ], [ -10, %bb.on ], [ -10, %bb.cz ], [ -9, %bb.fs ], [ -10, %bb.er ], [ -10, %bb.qe ], [ -10, %bb.dk ], [ -9, %bb.nk ], [ -9, %bb.nw ], [ -9, %bb.oc ], [ -9, %repeat_pool_malloc.exit.thread ], [ -10, %bb.cl ], [ -10, %bb.cq ], [ %i.bkk, %bb.qj ], [ %i.blz, %bb.qr ], [ %i.bmp, %bb.qw ], [ -10, %bb.qm ], [ -10, %bb.z ], [ -9, %bb.fe ], [ -10, %bb.cg ], [ -10, %bb.rg ], [ -10, %bb.dv ], [ -10, %bb.ou ], [ -10, %bb.pt ], [ -10, %bb.px ], [ -10, %bb.qb ], [ -10, %bb.cu ], [ -10, %bb.ew ], [ -10, %bb.df ], [ -10, %bb.p ], [ -10, %bb.k ], [ %i.akq, %bb.kj ], [ %i.amk, %bb.ks ], [ %i.amy, %bb.kx ], [ %i.ant, %bb.lb ], [ -9, %bb.jy ], [ %i.are, %bb.lt ], [ %i.ast, %bb.ma ], [ %i.atj, %bb.mf ], [ -2, %bb.kf ], [ -10, %bb.u ], [ -10, %bb.em ], [ -10, %bb.ph ], [ %i.ajf, %bb.kb ], [ -10, %bb.jw ], [ -10, %bb.ez ], [ %i.xh, %bb.gs ], [ %i.yr, %bb.hb ], [ %i.aav, %bb.hp ], [ -10, %bb.ea ], [ -9, %bb.ir ], [ %i.afb, %bb.ix ], [ %i.vz, %bb.gh ], [ %i.bck, %bb.oq ], [ -2, %bb.lp ], [ %i.agn, %bb.jg ], [ %i.ahn, %bb.jn ], [ -10, %bb.oz ], [ -10, %bb.eg ], [ %.01491, %bb.ri ]
+  %.0 = phi i64 [ -9, %bb.g ], [ %.01491, %bb.rh ], [ -1, %.backedge ], [ %i.ada, %bb.ie ], [ -9, %bb.ll ], [ -10, %bb.pn ], [ -10, %bb.dp ], [ %i.avg, %bb.ms ], [ %i.awb, %bb.mw ], [ -10, %bb.on ], [ -10, %bb.cz ], [ -9, %bb.fs ], [ -10, %bb.er ], [ -10, %bb.qe ], [ -10, %bb.dk ], [ %18, %bb.nk ], [ %22, %bb.nw ], [ %24, %bb.oc ], [ -9, %repeat_pool_malloc.exit.thread ], [ -10, %bb.cl ], [ -10, %bb.cq ], [ %i.bkk, %bb.qj ], [ %i.blz, %bb.qr ], [ %i.bmp, %bb.qw ], [ -10, %bb.qm ], [ -10, %bb.z ], [ %4, %bb.fe ], [ -10, %bb.cg ], [ -10, %bb.rg ], [ -10, %bb.dv ], [ -10, %bb.ou ], [ -10, %bb.pt ], [ -10, %bb.px ], [ -10, %bb.qb ], [ -10, %bb.cu ], [ -10, %bb.ew ], [ -10, %bb.df ], [ -10, %bb.p ], [ -10, %bb.k ], [ %i.akq, %bb.kj ], [ %i.amk, %bb.ks ], [ %i.amy, %bb.kx ], [ %i.ant, %bb.lb ], [ -9, %bb.jy ], [ %i.are, %bb.lt ], [ %i.ast, %bb.ma ], [ %i.atj, %bb.mf ], [ -2, %bb.kf ], [ -10, %bb.u ], [ -10, %bb.em ], [ -10, %bb.ph ], [ %i.ajf, %bb.kb ], [ -10, %bb.jw ], [ -10, %bb.ez ], [ %i.xh, %bb.gs ], [ %i.yr, %bb.hb ], [ %i.aav, %bb.hp ], [ -10, %bb.ea ], [ %6, %bb.ir ], [ %i.afb, %bb.ix ], [ %i.vz, %bb.gh ], [ %i.bck, %bb.oq ], [ -2, %bb.lp ], [ %i.agn, %bb.jg ], [ %i.ahn, %bb.jn ], [ -10, %bb.oz ], [ -10, %bb.eg ], [ %.01491, %bb.ri ]
   ret i64 %.0
 
 .backedge:                                        ; preds = %.backedge.backedge, %.preheader1914
@@ -2686,7 +2588,7 @@ bb.a:
   %i.d = load i32, ptr %i.c, align 8, !tbaa !119
   %i.e = getelementptr i8, ptr %0, i64 192        ; 108 uses
   %i.f = load i64, ptr %i.e, align 8, !tbaa !120  ; 7 uses
-  %i.g = getelementptr i8, ptr %0, i64 184        ; 38 uses
+  %i.g = getelementptr i8, ptr %0, i64 184        ; 32 uses
   %i.h = load i64, ptr %i.g, align 8, !tbaa !121  ; 2 uses
   %i.i = sub i64 %i.h, %i.f
   %i.j = icmp ult i64 %i.i, 56
@@ -2729,7 +2631,7 @@ bb.g:                                             ; preds = %bb.e, %bb.d
 
 data_stack_grow.exit.thread:                      ; preds = %bb.b, %bb.f, %bb.a
   %i.t = phi i64 [ %i.f, %bb.b ], [ %.pre, %bb.f ], [ %i.f, %bb.a ]
-  %i.u = getelementptr i8, ptr %0, i64 176        ; 65 uses
+  %i.u = getelementptr i8, ptr %0, i64 176        ; 57 uses
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !88
   %i.w = getelementptr i8, ptr %i.v, i64 %i.f     ; 4 uses
   %i.x = add i64 %i.t, 56
@@ -3132,8 +3034,8 @@ bb.ff:                                            ; preds = %bb.fe
   %i.tb = add nuw i32 %i.sy, 1
   %i.tc = sext i32 %i.tb to i64
   %i.td = shl nsw i64 %i.tc, 3                    ; 4 uses
-  %i.te = load i64, ptr %i.g, align 8, !tbaa !121 ; 2 uses
-  %i.tf = load i64, ptr %i.e, align 8, !tbaa !120 ; 2 uses
+  %i.te = load i64, ptr %i.g, align 8, !tbaa !121
+  %i.tf = load i64, ptr %i.e, align 8, !tbaa !120
   %i.tg = sub i64 %i.te, %i.tf
   %i.th = icmp ugt i64 %i.td, %i.tg
   br i1 %i.th, label %bb.fg, label %._crit_edge2463
@@ -3143,47 +3045,23 @@ bb.ff:                                            ; preds = %bb.fe
   br label %bb.fj
 
 bb.fg:                                            ; preds = %bb.ff
-  %3 = add i64 %i.tf, %i.td                       ; 3 uses
-  %i.ti = icmp slt i64 %i.te, %3
-  %.pre2465.pre = load ptr, ptr %i.u, align 8, !tbaa !88 ; 2 uses
-  br i1 %i.ti, label %4, label %bb.fi
+  %3 = tail call fastcc i32 @data_stack_grow(ptr noundef nonnull %0, i64 noundef %i.td) ; 2 uses
+  %i.ti = icmp slt i32 %3, 0
+  br i1 %i.ti, label %bb.fh, label %bb.fi
 
-4:                                                ; preds = %bb.fg
-  %5 = sdiv i64 %3, 4
-  %6 = add i64 %3, 1024
-  %7 = add i64 %6, %5                             ; 2 uses
-  %8 = tail call ptr @PyMem_Realloc(ptr noundef %.pre2465.pre, i64 noundef %7) #13 ; 3 uses
-  %.not.not.i1819 = icmp eq ptr %8, null
-  br i1 %.not.not.i1819, label %9, label %12
-
-9:                                                ; preds = %4
-  %10 = load ptr, ptr %i.u, align 8, !tbaa !88    ; 2 uses
-  %.not.i.i1820 = icmp eq ptr %10, null
-  br i1 %.not.i.i1820, label %bb.fh, label %11
-
-11:                                               ; preds = %9
-  tail call void @PyMem_Free(ptr noundef nonnull %10) #13
-  store ptr null, ptr %i.u, align 8, !tbaa !88
-  br label %bb.fh
-
-12:                                               ; preds = %4
-  store ptr %8, ptr %i.u, align 8, !tbaa !88
-  store i64 %7, ptr %i.g, align 8, !tbaa !121
-  br label %bb.fi
-
-bb.fh:                                            ; preds = %11, %9
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.g, i8 0, i64 16, i1 false)
+bb.fh:                                            ; preds = %bb.fg
+  %4 = sext i32 %3 to i64
   br label %.loopexit
 
-bb.fi:                                            ; preds = %12, %bb.fg
-  %.pre2465 = phi ptr [ %8, %12 ], [ %.pre2465.pre, %bb.fg ] ; 2 uses
+bb.fi:                                            ; preds = %bb.fg
   %.not1759 = icmp eq i64 %.111490.ph, -1
-  %i.tj = getelementptr i8, ptr %.pre2465, i64 %.111490.ph
+  %.pre2454 = load ptr, ptr %i.u, align 8, !tbaa !88 ; 2 uses
+  %i.tj = getelementptr i8, ptr %.pre2454, i64 %.111490.ph
   %spec.select = select i1 %.not1759, ptr %.40, ptr %i.tj
   br label %bb.fj
 
 bb.fj:                                            ; preds = %bb.fi, %._crit_edge2463
-  %i.tk = phi ptr [ %.pre2464.a, %._crit_edge2463 ], [ %.pre2465, %bb.fi ]
+  %i.tk = phi ptr [ %.pre2464.a, %._crit_edge2463 ], [ %.pre2454, %bb.fi ]
   %.11506 = phi ptr [ %.40, %._crit_edge2463 ], [ %spec.select, %bb.fi ]
   %i.tl = load i64, ptr %i.e, align 8, !tbaa !120
   %i.tm = getelementptr i8, ptr %i.tk, i64 %i.tl
@@ -3413,7 +3291,7 @@ bb.gk:                                            ; preds = %bb.gj
   br i1 %i.wq, label %.loopexit, label %bb.gl
 
 bb.gl:                                            ; preds = %bb.gk
-  %i.wr = load ptr, ptr %i.u, align 8, !tbaa !88  ; 4 uses
+  %i.wr = load ptr, ptr %i.u, align 8, !tbaa !88  ; 2 uses
   %i.ws = getelementptr i8, ptr %i.wr, i64 %.111490.ph ; 8 uses
   store i64 %i.wp, ptr %i.ws, align 8, !tbaa !163
   %i.wt = getelementptr [2 x i8], ptr %.151535, i64 %i.wp ; 5 uses
@@ -3470,53 +3348,30 @@ bb.gt:                                            ; preds = %bb.gs
   %i.xo = add nuw i32 %i.xl, 1
   %i.xp = sext i32 %i.xo to i64
   %i.xq = shl nsw i64 %i.xp, 3                    ; 4 uses
-  %i.xr = load i64, ptr %i.g, align 8, !tbaa !121 ; 2 uses
-  %i.xs = load i64, ptr %i.e, align 8, !tbaa !120 ; 2 uses
+  %i.xr = load i64, ptr %i.g, align 8, !tbaa !121
+  %i.xs = load i64, ptr %i.e, align 8, !tbaa !120
   %i.xt = sub i64 %i.xr, %i.xs
   %i.xu = icmp ugt i64 %i.xq, %i.xt
   br i1 %i.xu, label %bb.gu, label %bb.gx
 
 bb.gu:                                            ; preds = %bb.gt
-  %13 = add i64 %i.xs, %i.xq                      ; 3 uses
-  %i.xv = icmp slt i64 %i.xr, %13
-  br i1 %i.xv, label %14, label %bb.gw
+  %5 = tail call fastcc i32 @data_stack_grow(ptr noundef nonnull %0, i64 noundef %i.xq) ; 2 uses
+  %i.xv = icmp slt i32 %5, 0
+  br i1 %i.xv, label %bb.gv, label %bb.gw
 
-14:                                               ; preds = %bb.gu
-  %15 = sdiv i64 %13, 4
-  %16 = add i64 %13, 1024
-  %17 = add i64 %16, %15                          ; 2 uses
-  %18 = tail call ptr @PyMem_Realloc(ptr noundef nonnull %i.wr, i64 noundef %17) #13 ; 3 uses
-  %.not.not.i1829 = icmp eq ptr %18, null
-  br i1 %.not.not.i1829, label %19, label %22
-
-19:                                               ; preds = %14
-  %20 = load ptr, ptr %i.u, align 8, !tbaa !88    ; 2 uses
-  %.not.i.i1830 = icmp eq ptr %20, null
-  br i1 %.not.i.i1830, label %bb.gv, label %21
-
-21:                                               ; preds = %19
-  tail call void @PyMem_Free(ptr noundef nonnull %20) #13
-  store ptr null, ptr %i.u, align 8, !tbaa !88
-  br label %bb.gv
-
-22:                                               ; preds = %14
-  store ptr %18, ptr %i.u, align 8, !tbaa !88
-  store i64 %17, ptr %i.g, align 8, !tbaa !121
-  br label %bb.gw
-
-bb.gv:                                            ; preds = %21, %19
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.g, i8 0, i64 16, i1 false)
+bb.gv:                                            ; preds = %bb.gu
+  %6 = sext i32 %5 to i64
   br label %.loopexit
 
-bb.gw:                                            ; preds = %22, %bb.gu
-  %23 = phi ptr [ %18, %22 ], [ %i.wr, %bb.gu ]   ; 2 uses
+bb.gw:                                            ; preds = %bb.gu
   %.not1702 = icmp eq i64 %.111490.ph, -1
-  %i.xw = getelementptr i8, ptr %23, i64 %.111490.ph
+  %.pre2425 = load ptr, ptr %i.u, align 8, !tbaa !88 ; 2 uses
+  %i.xw = getelementptr i8, ptr %.pre2425, i64 %.111490.ph
   %spec.select2919.a = select i1 %.not1702, ptr %i.ws, ptr %i.xw
   br label %bb.gx
 
 bb.gx:                                            ; preds = %bb.gw, %bb.gt
-  %i.xx = phi ptr [ %i.wr, %bb.gt ], [ %23, %bb.gw ]
+  %i.xx = phi ptr [ %i.wr, %bb.gt ], [ %.pre2425, %bb.gw ]
   %.51510 = phi ptr [ %i.ws, %bb.gt ], [ %spec.select2919.a, %bb.gw ]
   %i.xy = load i64, ptr %i.e, align 8, !tbaa !120
   %i.xz = getelementptr i8, ptr %i.xx, i64 %i.xy
@@ -3919,8 +3774,8 @@ bb.is:                                            ; preds = %bb.ir
   %i.aeo = add nuw i32 %i.ael, 1
   %i.aep = sext i32 %i.aeo to i64
   %i.aeq = shl nsw i64 %i.aep, 3                  ; 4 uses
-  %i.aer = load i64, ptr %i.g, align 8, !tbaa !121 ; 2 uses
-  %i.aes = load i64, ptr %i.e, align 8, !tbaa !120 ; 2 uses
+  %i.aer = load i64, ptr %i.g, align 8, !tbaa !121
+  %i.aes = load i64, ptr %i.e, align 8, !tbaa !120
   %i.aet = sub i64 %i.aer, %i.aes
   %i.aeu = icmp ugt i64 %i.aeq, %i.aet
   br i1 %i.aeu, label %bb.it, label %._crit_edge2434
@@ -3930,47 +3785,23 @@ bb.is:                                            ; preds = %bb.ir
   br label %bb.iw
 
 bb.it:                                            ; preds = %bb.is
-  %24 = add i64 %i.aes, %i.aeq                    ; 3 uses
-  %i.aev = icmp slt i64 %i.aer, %24
-  %.pre2436.pre = load ptr, ptr %i.u, align 8, !tbaa !88 ; 2 uses
-  br i1 %i.aev, label %25, label %bb.iv
+  %7 = tail call fastcc i32 @data_stack_grow(ptr noundef nonnull %0, i64 noundef %i.aeq) ; 2 uses
+  %i.aev = icmp slt i32 %7, 0
+  br i1 %i.aev, label %bb.iu, label %bb.iv
 
-25:                                               ; preds = %bb.it
-  %26 = sdiv i64 %24, 4
-  %27 = add i64 %24, 1024
-  %28 = add i64 %27, %26                          ; 2 uses
-  %29 = tail call ptr @PyMem_Realloc(ptr noundef %.pre2436.pre, i64 noundef %28) #13 ; 3 uses
-  %.not.not.i1834 = icmp eq ptr %29, null
-  br i1 %.not.not.i1834, label %30, label %33
-
-30:                                               ; preds = %25
-  %31 = load ptr, ptr %i.u, align 8, !tbaa !88    ; 2 uses
-  %.not.i.i1835 = icmp eq ptr %31, null
-  br i1 %.not.i.i1835, label %bb.iu, label %32
-
-32:                                               ; preds = %30
-  tail call void @PyMem_Free(ptr noundef nonnull %31) #13
-  store ptr null, ptr %i.u, align 8, !tbaa !88
-  br label %bb.iu
-
-33:                                               ; preds = %25
-  store ptr %29, ptr %i.u, align 8, !tbaa !88
-  store i64 %28, ptr %i.g, align 8, !tbaa !121
-  br label %bb.iv
-
-bb.iu:                                            ; preds = %32, %30
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.g, i8 0, i64 16, i1 false)
+bb.iu:                                            ; preds = %bb.it
+  %8 = sext i32 %7 to i64
   br label %.loopexit
 
-bb.iv:                                            ; preds = %33, %bb.it
-  %.pre2436 = phi ptr [ %29, %33 ], [ %.pre2436.pre, %bb.it ] ; 2 uses
+bb.iv:                                            ; preds = %bb.it
   %.not1692 = icmp eq i64 %.111490.ph, -1
-  %i.aew = getelementptr i8, ptr %.pre2436, i64 %.111490.ph
+  %.pre2424 = load ptr, ptr %i.u, align 8, !tbaa !88 ; 2 uses
+  %i.aew = getelementptr i8, ptr %.pre2424, i64 %.111490.ph
   %spec.select2925 = select i1 %.not1692, ptr %.121517, ptr %i.aew
   br label %bb.iw
 
 bb.iw:                                            ; preds = %bb.iv, %._crit_edge2434
-  %i.aex = phi ptr [ %.pre2435.a, %._crit_edge2434 ], [ %.pre2436, %bb.iv ]
+  %i.aex = phi ptr [ %.pre2435.a, %._crit_edge2434 ], [ %.pre2424, %bb.iv ]
   %.131518 = phi ptr [ %.121517, %._crit_edge2434 ], [ %spec.select2925, %bb.iv ]
   %i.aey = load i64, ptr %i.e, align 8, !tbaa !120
   %i.aez = getelementptr i8, ptr %i.aex, i64 %i.aey
@@ -4373,7 +4204,7 @@ bb.sl:                                            ; preds = %bb.rr
   br i1 %.not1641, label %bb.rk, label %bb.rh
 
 .loopexit:                                        ; preds = %bb.rr, %repeat_pool_malloc.exit.thread, %.backedge, %bb.rp, %bb.qv, %bb.qn, %bb.qk, %bb.qg, %bb.qc, %bb.pu, %bb.po, %bb.pg, %bb.pb, %bb.ou, %bb.lw, %bb.ki, %bb.kb, %bb.jz, %bb.jq, %bb.jj, %bb.ih, %bb.gk, %bb.fc, %bb.ez, %bb.ev, %bb.eq, %bb.ek, %bb.ef, %bb.ea, %bb.du, %bb.dp, %bb.dk, %bb.de, %bb.cz, %bb.cv, %bb.cq, %bb.cl, %bb.aa, %bb.v, %bb.q, %bb.l, %bb.rq, %bb.rf, %bb.ra, %bb.qs, %bb.ox, %bb.oi, %bb.od, %bb.nq, %bb.nd, %bb.mz, %bb.mm, %bb.mh, %bb.ma, %bb.ls, %bb.le, %bb.la, %bb.kv, %bb.km, %bb.ke, %bb.ja, %bb.iu, %bb.hs, %bb.he, %bb.gv, %bb.fv, %bb.fh, %bb.g
-  %.0 = phi i64 [ -9, %bb.g ], [ %.01491, %bb.rq ], [ -1, %.backedge ], [ %i.adp, %bb.ih ], [ -9, %bb.ls ], [ -10, %bb.pu ], [ -10, %bb.du ], [ %i.awb, %bb.mz ], [ %i.aww, %bb.nd ], [ -10, %bb.ou ], [ -10, %bb.de ], [ -9, %bb.fv ], [ -10, %bb.ev ], [ -10, %bb.qn ], [ -10, %bb.dp ], [ %i.aza, %bb.nq ], [ %i.bat, %bb.od ], [ %i.bbk, %bb.oi ], [ -9, %repeat_pool_malloc.exit.thread ], [ -10, %bb.cq ], [ -10, %bb.cv ], [ %i.blz, %bb.qs ], [ %i.bnp, %bb.ra ], [ %i.bof, %bb.rf ], [ -10, %bb.qv ], [ -10, %bb.aa ], [ -9, %bb.fh ], [ -10, %bb.cl ], [ -10, %bb.rp ], [ -10, %bb.ea ], [ -10, %bb.pb ], [ -10, %bb.qc ], [ -10, %bb.qg ], [ -10, %bb.qk ], [ -10, %bb.cz ], [ -10, %bb.ez ], [ -10, %bb.dk ], [ -10, %bb.q ], [ -10, %bb.l ], [ %i.alf, %bb.km ], [ %i.amz, %bb.kv ], [ %i.ann, %bb.la ], [ %i.aoi, %bb.le ], [ -9, %bb.kb ], [ %i.arz, %bb.ma ], [ %i.ato, %bb.mh ], [ %i.aue, %bb.mm ], [ -2, %bb.ki ], [ -10, %bb.v ], [ -10, %bb.eq ], [ -10, %bb.po ], [ %i.aju, %bb.ke ], [ -10, %bb.jz ], [ -10, %bb.fc ], [ -9, %bb.gv ], [ %i.zf, %bb.he ], [ %i.abj, %bb.hs ], [ -10, %bb.ef ], [ -9, %bb.iu ], [ %i.afq, %bb.ja ], [ %i.wp, %bb.gk ], [ %i.bdp, %bb.ox ], [ -2, %bb.lw ], [ %i.ahc, %bb.jj ], [ %i.aic, %bb.jq ], [ -10, %bb.pg ], [ -10, %bb.ek ], [ %.01491, %bb.rr ]
+  %.0 = phi i64 [ -9, %bb.g ], [ %.01491, %bb.rq ], [ -1, %.backedge ], [ %i.adp, %bb.ih ], [ -9, %bb.ls ], [ -10, %bb.pu ], [ -10, %bb.du ], [ %i.awb, %bb.mz ], [ %i.aww, %bb.nd ], [ -10, %bb.ou ], [ -10, %bb.de ], [ -9, %bb.fv ], [ -10, %bb.ev ], [ -10, %bb.qn ], [ -10, %bb.dp ], [ %i.aza, %bb.nq ], [ %i.bat, %bb.od ], [ %i.bbk, %bb.oi ], [ -9, %repeat_pool_malloc.exit.thread ], [ -10, %bb.cq ], [ -10, %bb.cv ], [ %i.blz, %bb.qs ], [ %i.bnp, %bb.ra ], [ %i.bof, %bb.rf ], [ -10, %bb.qv ], [ -10, %bb.aa ], [ %4, %bb.fh ], [ -10, %bb.cl ], [ -10, %bb.rp ], [ -10, %bb.ea ], [ -10, %bb.pb ], [ -10, %bb.qc ], [ -10, %bb.qg ], [ -10, %bb.qk ], [ -10, %bb.cz ], [ -10, %bb.ez ], [ -10, %bb.dk ], [ -10, %bb.q ], [ -10, %bb.l ], [ %i.alf, %bb.km ], [ %i.amz, %bb.kv ], [ %i.ann, %bb.la ], [ %i.aoi, %bb.le ], [ -9, %bb.kb ], [ %i.arz, %bb.ma ], [ %i.ato, %bb.mh ], [ %i.aue, %bb.mm ], [ -2, %bb.ki ], [ -10, %bb.v ], [ -10, %bb.eq ], [ -10, %bb.po ], [ %i.aju, %bb.ke ], [ -10, %bb.jz ], [ -10, %bb.fc ], [ %6, %bb.gv ], [ %i.zf, %bb.he ], [ %i.abj, %bb.hs ], [ -10, %bb.ef ], [ %8, %bb.iu ], [ %i.afq, %bb.ja ], [ %i.wp, %bb.gk ], [ %i.bdp, %bb.ox ], [ -2, %bb.lw ], [ %i.ahc, %bb.jj ], [ %i.aic, %bb.jq ], [ -10, %bb.pg ], [ -10, %bb.ek ], [ %.01491, %bb.rr ]
   ret i64 %.0
 
 .backedge:                                        ; preds = %.backedge.backedge, %.preheader1905
@@ -4397,7 +4228,7 @@ bb.a:
   %i.d = load i32, ptr %i.c, align 8, !tbaa !119
   %i.e = getelementptr i8, ptr %0, i64 192        ; 108 uses
   %i.f = load i64, ptr %i.e, align 8, !tbaa !120  ; 7 uses
-  %i.g = getelementptr i8, ptr %0, i64 184        ; 38 uses
+  %i.g = getelementptr i8, ptr %0, i64 184        ; 32 uses
   %i.h = load i64, ptr %i.g, align 8, !tbaa !121  ; 2 uses
   %i.i = sub i64 %i.h, %i.f
   %i.j = icmp ult i64 %i.i, 56
@@ -4440,7 +4271,7 @@ bb.g:                                             ; preds = %bb.e, %bb.d
 
 data_stack_grow.exit.thread:                      ; preds = %bb.b, %bb.f, %bb.a
   %i.t = phi i64 [ %i.f, %bb.b ], [ %.pre, %bb.f ], [ %i.f, %bb.a ]
-  %i.u = getelementptr i8, ptr %0, i64 176        ; 65 uses
+  %i.u = getelementptr i8, ptr %0, i64 176        ; 57 uses
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !88
   %i.w = getelementptr i8, ptr %i.v, i64 %i.f     ; 4 uses
   %i.x = add i64 %i.t, 56
@@ -4843,8 +4674,8 @@ bb.ff:                                            ; preds = %bb.fe
   %i.sk = add nuw i32 %i.sh, 1
   %i.sl = sext i32 %i.sk to i64
   %i.sm = shl nsw i64 %i.sl, 3                    ; 4 uses
-  %i.sn = load i64, ptr %i.g, align 8, !tbaa !121 ; 2 uses
-  %i.so = load i64, ptr %i.e, align 8, !tbaa !120 ; 2 uses
+  %i.sn = load i64, ptr %i.g, align 8, !tbaa !121
+  %i.so = load i64, ptr %i.e, align 8, !tbaa !120
   %i.sp = sub i64 %i.sn, %i.so
   %i.sq = icmp ugt i64 %i.sm, %i.sp
   br i1 %i.sq, label %bb.fg, label %._crit_edge2463
@@ -4854,47 +4685,23 @@ bb.ff:                                            ; preds = %bb.fe
   br label %bb.fj
 
 bb.fg:                                            ; preds = %bb.ff
-  %3 = add i64 %i.so, %i.sm                       ; 3 uses
-  %i.sr = icmp slt i64 %i.sn, %3
-  %.pre2465.pre = load ptr, ptr %i.u, align 8, !tbaa !88 ; 2 uses
-  br i1 %i.sr, label %4, label %bb.fi
+  %3 = tail call fastcc i32 @data_stack_grow(ptr noundef nonnull %0, i64 noundef %i.sm) ; 2 uses
+  %i.sr = icmp slt i32 %3, 0
+  br i1 %i.sr, label %bb.fh, label %bb.fi
 
-4:                                                ; preds = %bb.fg
-  %5 = sdiv i64 %3, 4
-  %6 = add i64 %3, 1024
-  %7 = add i64 %6, %5                             ; 2 uses
-  %8 = tail call ptr @PyMem_Realloc(ptr noundef %.pre2465.pre, i64 noundef %7) #13 ; 3 uses
-  %.not.not.i1819 = icmp eq ptr %8, null
-  br i1 %.not.not.i1819, label %9, label %12
-
-9:                                                ; preds = %4
-  %10 = load ptr, ptr %i.u, align 8, !tbaa !88    ; 2 uses
-  %.not.i.i1820 = icmp eq ptr %10, null
-  br i1 %.not.i.i1820, label %bb.fh, label %11
-
-11:                                               ; preds = %9
-  tail call void @PyMem_Free(ptr noundef nonnull %10) #13
-  store ptr null, ptr %i.u, align 8, !tbaa !88
-  br label %bb.fh
-
-12:                                               ; preds = %4
-  store ptr %8, ptr %i.u, align 8, !tbaa !88
-  store i64 %7, ptr %i.g, align 8, !tbaa !121
-  br label %bb.fi
-
-bb.fh:                                            ; preds = %11, %9
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.g, i8 0, i64 16, i1 false)
+bb.fh:                                            ; preds = %bb.fg
+  %4 = sext i32 %3 to i64
   br label %.loopexit
 
-bb.fi:                                            ; preds = %12, %bb.fg
-  %.pre2465 = phi ptr [ %8, %12 ], [ %.pre2465.pre, %bb.fg ] ; 2 uses
+bb.fi:                                            ; preds = %bb.fg
   %.not1759 = icmp eq i64 %.111490.ph, -1
-  %i.ss = getelementptr i8, ptr %.pre2465, i64 %.111490.ph
+  %.pre2454 = load ptr, ptr %i.u, align 8, !tbaa !88 ; 2 uses
+  %i.ss = getelementptr i8, ptr %.pre2454, i64 %.111490.ph
   %spec.select = select i1 %.not1759, ptr %.40, ptr %i.ss
   br label %bb.fj
 
 bb.fj:                                            ; preds = %bb.fi, %._crit_edge2463
-  %i.st = phi ptr [ %.pre2464.a, %._crit_edge2463 ], [ %.pre2465, %bb.fi ]
+  %i.st = phi ptr [ %.pre2464.a, %._crit_edge2463 ], [ %.pre2454, %bb.fi ]
   %.11506 = phi ptr [ %.40, %._crit_edge2463 ], [ %spec.select, %bb.fi ]
   %i.su = load i64, ptr %i.e, align 8, !tbaa !120
   %i.sv = getelementptr i8, ptr %i.st, i64 %i.su
@@ -5122,7 +4929,7 @@ bb.gk:                                            ; preds = %bb.gj
   br i1 %i.vx, label %.loopexit, label %bb.gl
 
 bb.gl:                                            ; preds = %bb.gk
-  %i.vy = load ptr, ptr %i.u, align 8, !tbaa !88  ; 4 uses
+  %i.vy = load ptr, ptr %i.u, align 8, !tbaa !88  ; 2 uses
   %i.vz = getelementptr i8, ptr %i.vy, i64 %.111490.ph ; 8 uses
   store i64 %i.vw, ptr %i.vz, align 8, !tbaa !184
   %i.wa = getelementptr [4 x i8], ptr %.151535, i64 %i.vw ; 5 uses
@@ -5179,53 +4986,30 @@ bb.gt:                                            ; preds = %bb.gs
   %i.wv = add nuw i32 %i.ws, 1
   %i.ww = sext i32 %i.wv to i64
   %i.wx = shl nsw i64 %i.ww, 3                    ; 4 uses
-  %i.wy = load i64, ptr %i.g, align 8, !tbaa !121 ; 2 uses
-  %i.wz = load i64, ptr %i.e, align 8, !tbaa !120 ; 2 uses
+  %i.wy = load i64, ptr %i.g, align 8, !tbaa !121
+  %i.wz = load i64, ptr %i.e, align 8, !tbaa !120
   %i.xa = sub i64 %i.wy, %i.wz
   %i.xb = icmp ugt i64 %i.wx, %i.xa
   br i1 %i.xb, label %bb.gu, label %bb.gx
 
 bb.gu:                                            ; preds = %bb.gt
-  %13 = add i64 %i.wz, %i.wx                      ; 3 uses
-  %i.xc = icmp slt i64 %i.wy, %13
-  br i1 %i.xc, label %14, label %bb.gw
+  %5 = tail call fastcc i32 @data_stack_grow(ptr noundef nonnull %0, i64 noundef %i.wx) ; 2 uses
+  %i.xc = icmp slt i32 %5, 0
+  br i1 %i.xc, label %bb.gv, label %bb.gw
 
-14:                                               ; preds = %bb.gu
-  %15 = sdiv i64 %13, 4
-  %16 = add i64 %13, 1024
-  %17 = add i64 %16, %15                          ; 2 uses
-  %18 = tail call ptr @PyMem_Realloc(ptr noundef nonnull %i.vy, i64 noundef %17) #13 ; 3 uses
-  %.not.not.i1829 = icmp eq ptr %18, null
-  br i1 %.not.not.i1829, label %19, label %22
-
-19:                                               ; preds = %14
-  %20 = load ptr, ptr %i.u, align 8, !tbaa !88    ; 2 uses
-  %.not.i.i1830 = icmp eq ptr %20, null
-  br i1 %.not.i.i1830, label %bb.gv, label %21
-
-21:                                               ; preds = %19
-  tail call void @PyMem_Free(ptr noundef nonnull %20) #13
-  store ptr null, ptr %i.u, align 8, !tbaa !88
-  br label %bb.gv
-
-22:                                               ; preds = %14
-  store ptr %18, ptr %i.u, align 8, !tbaa !88
-  store i64 %17, ptr %i.g, align 8, !tbaa !121
-  br label %bb.gw
-
-bb.gv:                                            ; preds = %21, %19
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.g, i8 0, i64 16, i1 false)
+bb.gv:                                            ; preds = %bb.gu
+  %6 = sext i32 %5 to i64
   br label %.loopexit
 
-bb.gw:                                            ; preds = %22, %bb.gu
-  %23 = phi ptr [ %18, %22 ], [ %i.vy, %bb.gu ]   ; 2 uses
+bb.gw:                                            ; preds = %bb.gu
   %.not1702 = icmp eq i64 %.111490.ph, -1
-  %i.xd = getelementptr i8, ptr %23, i64 %.111490.ph
+  %.pre2425 = load ptr, ptr %i.u, align 8, !tbaa !88 ; 2 uses
+  %i.xd = getelementptr i8, ptr %.pre2425, i64 %.111490.ph
   %spec.select2927.a = select i1 %.not1702, ptr %i.vz, ptr %i.xd
   br label %bb.gx
 
 bb.gx:                                            ; preds = %bb.gw, %bb.gt
-  %i.xe = phi ptr [ %i.vy, %bb.gt ], [ %23, %bb.gw ]
+  %i.xe = phi ptr [ %i.vy, %bb.gt ], [ %.pre2425, %bb.gw ]
   %.51510 = phi ptr [ %i.vz, %bb.gt ], [ %spec.select2927.a, %bb.gw ]
   %i.xf = load i64, ptr %i.e, align 8, !tbaa !120
   %i.xg = getelementptr i8, ptr %i.xe, i64 %i.xf
@@ -5628,8 +5412,8 @@ bb.is:                                            ; preds = %bb.ir
   %i.adu = add nuw i32 %i.adr, 1
   %i.adv = sext i32 %i.adu to i64
   %i.adw = shl nsw i64 %i.adv, 3                  ; 4 uses
-  %i.adx = load i64, ptr %i.g, align 8, !tbaa !121 ; 2 uses
-  %i.ady = load i64, ptr %i.e, align 8, !tbaa !120 ; 2 uses
+  %i.adx = load i64, ptr %i.g, align 8, !tbaa !121
+  %i.ady = load i64, ptr %i.e, align 8, !tbaa !120
   %i.adz = sub i64 %i.adx, %i.ady
   %i.aea = icmp ugt i64 %i.adw, %i.adz
   br i1 %i.aea, label %bb.it, label %._crit_edge2434
@@ -5639,47 +5423,23 @@ bb.is:                                            ; preds = %bb.ir
   br label %bb.iw
 
 bb.it:                                            ; preds = %bb.is
-  %24 = add i64 %i.ady, %i.adw                    ; 3 uses
-  %i.aeb = icmp slt i64 %i.adx, %24
-  %.pre2436.pre = load ptr, ptr %i.u, align 8, !tbaa !88 ; 2 uses
-  br i1 %i.aeb, label %25, label %bb.iv
+  %7 = tail call fastcc i32 @data_stack_grow(ptr noundef nonnull %0, i64 noundef %i.adw) ; 2 uses
+  %i.aeb = icmp slt i32 %7, 0
+  br i1 %i.aeb, label %bb.iu, label %bb.iv
 
-25:                                               ; preds = %bb.it
-  %26 = sdiv i64 %24, 4
-  %27 = add i64 %24, 1024
-  %28 = add i64 %27, %26                          ; 2 uses
-  %29 = tail call ptr @PyMem_Realloc(ptr noundef %.pre2436.pre, i64 noundef %28) #13 ; 3 uses
-  %.not.not.i1834 = icmp eq ptr %29, null
-  br i1 %.not.not.i1834, label %30, label %33
-
-30:                                               ; preds = %25
-  %31 = load ptr, ptr %i.u, align 8, !tbaa !88    ; 2 uses
-  %.not.i.i1835 = icmp eq ptr %31, null
-  br i1 %.not.i.i1835, label %bb.iu, label %32
-
-32:                                               ; preds = %30
-  tail call void @PyMem_Free(ptr noundef nonnull %31) #13
-  store ptr null, ptr %i.u, align 8, !tbaa !88
-  br label %bb.iu
-
-33:                                               ; preds = %25
-  store ptr %29, ptr %i.u, align 8, !tbaa !88
-  store i64 %28, ptr %i.g, align 8, !tbaa !121
-  br label %bb.iv
-
-bb.iu:                                            ; preds = %32, %30
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.g, i8 0, i64 16, i1 false)
+bb.iu:                                            ; preds = %bb.it
+  %8 = sext i32 %7 to i64
   br label %.loopexit
 
-bb.iv:                                            ; preds = %33, %bb.it
-  %.pre2436 = phi ptr [ %29, %33 ], [ %.pre2436.pre, %bb.it ] ; 2 uses
+bb.iv:                                            ; preds = %bb.it
   %.not1692 = icmp eq i64 %.111490.ph, -1
-  %i.aec = getelementptr i8, ptr %.pre2436, i64 %.111490.ph
+  %.pre2424 = load ptr, ptr %i.u, align 8, !tbaa !88 ; 2 uses
+  %i.aec = getelementptr i8, ptr %.pre2424, i64 %.111490.ph
   %spec.select2933 = select i1 %.not1692, ptr %.121517, ptr %i.aec
   br label %bb.iw
 
 bb.iw:                                            ; preds = %bb.iv, %._crit_edge2434
-  %i.aed = phi ptr [ %.pre2435.a, %._crit_edge2434 ], [ %.pre2436, %bb.iv ]
+  %i.aed = phi ptr [ %.pre2435.a, %._crit_edge2434 ], [ %.pre2424, %bb.iv ]
   %.131518 = phi ptr [ %.121517, %._crit_edge2434 ], [ %spec.select2933, %bb.iv ]
   %i.aee = load i64, ptr %i.e, align 8, !tbaa !120
   %i.aef = getelementptr i8, ptr %i.aed, i64 %i.aee
@@ -6082,7 +5842,7 @@ bb.sl:                                            ; preds = %bb.rr
   br i1 %.not1641, label %bb.rk, label %bb.rh
 
 .loopexit:                                        ; preds = %bb.rr, %repeat_pool_malloc.exit.thread, %.backedge, %bb.rp, %bb.qv, %bb.qn, %bb.qk, %bb.qg, %bb.qc, %bb.pu, %bb.po, %bb.pg, %bb.pb, %bb.ou, %bb.lw, %bb.ki, %bb.kb, %bb.jz, %bb.jq, %bb.jj, %bb.ih, %bb.gk, %bb.fc, %bb.ez, %bb.ev, %bb.eq, %bb.ek, %bb.ef, %bb.ea, %bb.du, %bb.dp, %bb.dk, %bb.de, %bb.cz, %bb.cv, %bb.cq, %bb.cl, %bb.aa, %bb.v, %bb.q, %bb.l, %bb.rq, %bb.rf, %bb.ra, %bb.qs, %bb.ox, %bb.oi, %bb.od, %bb.nq, %bb.nd, %bb.mz, %bb.mm, %bb.mh, %bb.ma, %bb.ls, %bb.le, %bb.la, %bb.kv, %bb.km, %bb.ke, %bb.ja, %bb.iu, %bb.hs, %bb.he, %bb.gv, %bb.fv, %bb.fh, %bb.g
-  %.0 = phi i64 [ -9, %bb.g ], [ %.01491, %bb.rq ], [ -1, %.backedge ], [ %i.acv, %bb.ih ], [ -9, %bb.ls ], [ -10, %bb.pu ], [ -10, %bb.du ], [ %i.avh, %bb.mz ], [ %i.awc, %bb.nd ], [ -10, %bb.ou ], [ -10, %bb.de ], [ -9, %bb.fv ], [ -10, %bb.ev ], [ -10, %bb.qn ], [ -10, %bb.dp ], [ %i.ayg, %bb.nq ], [ %i.azz, %bb.od ], [ %i.baq, %bb.oi ], [ -9, %repeat_pool_malloc.exit.thread ], [ -10, %bb.cq ], [ -10, %bb.cv ], [ %i.bkz, %bb.qs ], [ %i.bmp, %bb.ra ], [ %i.bnf, %bb.rf ], [ -10, %bb.qv ], [ -10, %bb.aa ], [ -9, %bb.fh ], [ -10, %bb.cl ], [ -10, %bb.rp ], [ -10, %bb.ea ], [ -10, %bb.pb ], [ -10, %bb.qc ], [ -10, %bb.qg ], [ -10, %bb.qk ], [ -10, %bb.cz ], [ -10, %bb.ez ], [ -10, %bb.dk ], [ -10, %bb.q ], [ -10, %bb.l ], [ %i.akl, %bb.km ], [ %i.amf, %bb.kv ], [ %i.amt, %bb.la ], [ %i.ano, %bb.le ], [ -9, %bb.kb ], [ %i.arf, %bb.ma ], [ %i.asu, %bb.mh ], [ %i.atk, %bb.mm ], [ -2, %bb.ki ], [ -10, %bb.v ], [ -10, %bb.eq ], [ -10, %bb.po ], [ %i.aja, %bb.ke ], [ -10, %bb.jz ], [ -10, %bb.fc ], [ -9, %bb.gv ], [ %i.yl, %bb.he ], [ %i.aap, %bb.hs ], [ -10, %bb.ef ], [ -9, %bb.iu ], [ %i.aew, %bb.ja ], [ %i.vw, %bb.gk ], [ %i.bcv, %bb.ox ], [ -2, %bb.lw ], [ %i.agi, %bb.jj ], [ %i.ahi, %bb.jq ], [ -10, %bb.pg ], [ -10, %bb.ek ], [ %.01491, %bb.rr ]
+  %.0 = phi i64 [ -9, %bb.g ], [ %.01491, %bb.rq ], [ -1, %.backedge ], [ %i.acv, %bb.ih ], [ -9, %bb.ls ], [ -10, %bb.pu ], [ -10, %bb.du ], [ %i.avh, %bb.mz ], [ %i.awc, %bb.nd ], [ -10, %bb.ou ], [ -10, %bb.de ], [ -9, %bb.fv ], [ -10, %bb.ev ], [ -10, %bb.qn ], [ -10, %bb.dp ], [ %i.ayg, %bb.nq ], [ %i.azz, %bb.od ], [ %i.baq, %bb.oi ], [ -9, %repeat_pool_malloc.exit.thread ], [ -10, %bb.cq ], [ -10, %bb.cv ], [ %i.bkz, %bb.qs ], [ %i.bmp, %bb.ra ], [ %i.bnf, %bb.rf ], [ -10, %bb.qv ], [ -10, %bb.aa ], [ %4, %bb.fh ], [ -10, %bb.cl ], [ -10, %bb.rp ], [ -10, %bb.ea ], [ -10, %bb.pb ], [ -10, %bb.qc ], [ -10, %bb.qg ], [ -10, %bb.qk ], [ -10, %bb.cz ], [ -10, %bb.ez ], [ -10, %bb.dk ], [ -10, %bb.q ], [ -10, %bb.l ], [ %i.akl, %bb.km ], [ %i.amf, %bb.kv ], [ %i.amt, %bb.la ], [ %i.ano, %bb.le ], [ -9, %bb.kb ], [ %i.arf, %bb.ma ], [ %i.asu, %bb.mh ], [ %i.atk, %bb.mm ], [ -2, %bb.ki ], [ -10, %bb.v ], [ -10, %bb.eq ], [ -10, %bb.po ], [ %i.aja, %bb.ke ], [ -10, %bb.jz ], [ -10, %bb.fc ], [ %6, %bb.gv ], [ %i.yl, %bb.he ], [ %i.aap, %bb.hs ], [ -10, %bb.ef ], [ %8, %bb.iu ], [ %i.aew, %bb.ja ], [ %i.vw, %bb.gk ], [ %i.bcv, %bb.ox ], [ -2, %bb.lw ], [ %i.agi, %bb.jj ], [ %i.ahi, %bb.jq ], [ -10, %bb.pg ], [ -10, %bb.ek ], [ %.01491, %bb.rr ]
   ret i64 %.0
 
 .backedge:                                        ; preds = %.backedge.backedge, %.preheader1905

@@ -1,4 +1,4 @@
-inline.NumInlined: 4837
+inline.NumInlined: 4835
 inline.NumDeleted: 1728
 loop-unroll.NumCompletelyUnrolled: 2
 loop-unroll.NumUnrolled: 2
@@ -203,11 +203,11 @@ bb.ag:                                            ; preds = %bb.ah
           to label %.body.i.i.i.a unwind label %bb.aw, !noalias !7491
 
 bb.ah:                                            ; preds = %bb.bx, %bb.v
-  %i.hk = phi ptr [ %i.cq, %bb.v ], [ %i.ft, %bb.bx ] ; 15 uses
-  %i.hl = phi ptr [ %i.cp, %bb.v ], [ %i.fu, %bb.bx ] ; 14 uses
-  %i.hm = phi ptr [ %.phi.trans.insert.i, %bb.v ], [ %i.fv, %bb.bx ] ; 15 uses
-  %i.hn = phi ptr [ %.phi.trans.insert.i.i, %bb.v ], [ %i.fw, %bb.bx ] ; 15 uses
-  %i.ho = phi ptr [ %i.er, %bb.v ], [ %i.fx, %bb.bx ] ; 14 uses
+  %i.hk = phi ptr [ %i.cq, %bb.v ], [ %i.ft, %bb.bx ] ; 14 uses
+  %i.hl = phi ptr [ %i.cp, %bb.v ], [ %i.fu, %bb.bx ] ; 13 uses
+  %i.hm = phi ptr [ %.phi.trans.insert.i, %bb.v ], [ %i.fv, %bb.bx ] ; 14 uses
+  %i.hn = phi ptr [ %.phi.trans.insert.i.i, %bb.v ], [ %i.fw, %bb.bx ] ; 14 uses
+  %i.ho = phi ptr [ %i.er, %bb.v ], [ %i.fx, %bb.bx ] ; 13 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bv), !noalias !7487
   %i.hp = getelementptr inbounds nuw i8, ptr %1, i64 2520 ; 3 uses
   invoke void @_RNvXs_NtNtCsbvkFyIu7lgC_4core6future6futureINtNtB8_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtB4_6Futurep6OutputINtNtB8_6result6ResultINtNtB8_6option6OptionINtNtB10_4sync3ArcDNtNtCsanCXJAiNsO_18datafusion_catalog5table13TableProviderEL_EENtNtCsjhHCjzi9uUI_17datafusion_common5error15DataFusionErrorENtNtB8_6marker4SendEL_EEB1v_4pollCs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull sret([40 x i8]) align 8 captures(address) dereferenceable(40) %i.bv, ptr noalias noundef nonnull align 8 dereferenceable(16) %i.hp, ptr noalias noundef nonnull align 8 dereferenceable(32) %2)
@@ -236,52 +236,19 @@ bb.aj:                                            ; preds = %bb.ai
   %.sroa.7.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.bv, i64 24
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.7.i.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.7.0..sroa_idx.i.i.i, i64 16, i1 false), !noalias !7487
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bv), !noalias !7487
-  %.val.i.i.i = load ptr, ptr %i.hp, align 8, !noalias !7487 ; 5 uses
+  %.val.i.i.i = load ptr, ptr %i.hp, align 8, !noalias !7487
   %i.hs = getelementptr i8, ptr %1, i64 2528
-  %.val37.i.i.i = load ptr, ptr %i.hs, align 16, !noalias !7487, !nonnull !4, !align !10, !noundef !4 ; 5 uses
-  %i.ht = load ptr, ptr %.val37.i.i.i, align 8, !invariant.load !4, !noalias !7491 ; 2 uses
-  %.not.i.i.i.i.i = icmp eq ptr %i.ht, null
-  br i1 %.not.i.i.i.i.i, label %4, label %3
+  %i.ht = load ptr, ptr %i.hs, align 16, !noalias !7487, !nonnull !4, !align !10, !noundef !4
+  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultINtNtB4_6option6OptionINtNtB11_4sync3ArcDNtNtCsanCXJAiNsO_18datafusion_catalog5table13TableProviderEL_EENtNtCsjhHCjzi9uUI_17datafusion_common5error15DataFusionErrorENtNtB4_6marker4SendEL_EEECs2VbMhdeEr66_16delta_benchmarks(ptr %.val.i.i.i, ptr nonnull %i.ht)
+          to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultINtNtB4_6option6OptionINtNtB11_4sync3ArcDNtNtCsanCXJAiNsO_18datafusion_catalog5table13TableProviderEL_EENtNtCsjhHCjzi9uUI_17datafusion_common5error15DataFusionErrorENtNtB4_6marker4SendEL_EEECs2VbMhdeEr66_16delta_benchmarks.exit.i.i.i unwind label %8, !noalias !7491
 
-3:                                                ; preds = %bb.aj
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i) ]
-  invoke void %i.ht(ptr noundef nonnull %.val.i.i.i)
-          to label %4 unwind label %11, !noalias !7491
-
-4:                                                ; preds = %3, %bb.aj
-  %5 = getelementptr inbounds nuw i8, ptr %.val37.i.i.i, i64 8
-  %6 = load i64, ptr %5, align 8, !range !463, !invariant.load !4, !noalias !7491 ; 2 uses
-  %7 = icmp eq i64 %6, 0
-  br i1 %7, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultINtNtB4_6option6OptionINtNtB11_4sync3ArcDNtNtCsanCXJAiNsO_18datafusion_catalog5table13TableProviderEL_EENtNtCsjhHCjzi9uUI_17datafusion_common5error15DataFusionErrorENtNtB4_6marker4SendEL_EEECs2VbMhdeEr66_16delta_benchmarks.exit.i.i.i, label %8
-
-8:                                                ; preds = %4
-  %9 = getelementptr inbounds nuw i8, ptr %.val37.i.i.i, i64 16
-  %10 = load i64, ptr %9, align 8, !range !302, !invariant.load !4, !noalias !7491
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i) ]
-  call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i.i, i64 noundef range(i64 1, 0) %6, i64 noundef range(i64 1, 536870913) %10) #35, !noalias !7491
-  br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultINtNtB4_6option6OptionINtNtB11_4sync3ArcDNtNtCsanCXJAiNsO_18datafusion_catalog5table13TableProviderEL_EENtNtCsjhHCjzi9uUI_17datafusion_common5error15DataFusionErrorENtNtB4_6marker4SendEL_EEECs2VbMhdeEr66_16delta_benchmarks.exit.i.i.i
-
-11:                                               ; preds = %3
-  %12 = landingpad { ptr, i32 }
-          cleanup                                 ; 2 uses
-  %13 = getelementptr inbounds nuw i8, ptr %.val37.i.i.i, i64 8
-  %14 = load i64, ptr %13, align 8, !range !463, !invariant.load !4, !noalias !7491 ; 2 uses
-  %15 = icmp eq i64 %14, 0
-  br i1 %15, label %.body.i.i.i.a, label %16
-
-16:                                               ; preds = %11
-  %17 = getelementptr inbounds nuw i8, ptr %.val37.i.i.i, i64 16
-  %18 = load i64, ptr %17, align 8, !range !302, !invariant.load !4, !noalias !7491
-  call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i.i, i64 noundef range(i64 1, 0) %14, i64 noundef range(i64 1, 536870913) %18) #35, !noalias !7491
-  br label %.body.i.i.i.a
-
-.body.i.i.i.a:                                    ; preds = %bb.bv, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map11VacantEntryNtNtCsjhHCjzi9uUI_17datafusion_common15table_reference22ResolvedTableReferenceINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtNtCs8VI8w5SIoU4_15datafusion_expr12table_source11TableSourceEL_EEECs2VbMhdeEr66_16delta_benchmarks.exit.i.i.i, %16, %11, %bb.ag
-  %19 = phi ptr [ %i.hk, %16 ], [ %i.hk, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map11VacantEntryNtNtCsjhHCjzi9uUI_17datafusion_common15table_reference22ResolvedTableReferenceINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtNtCs8VI8w5SIoU4_15datafusion_expr12table_source11TableSourceEL_EEECs2VbMhdeEr66_16delta_benchmarks.exit.i.i.i ], [ %i.hk, %bb.ag ], [ %i.ft, %bb.bv ], [ %i.hk, %11 ] ; 2 uses
-  %20 = phi ptr [ %i.hl, %16 ], [ %i.hl, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map11VacantEntryNtNtCsjhHCjzi9uUI_17datafusion_common15table_reference22ResolvedTableReferenceINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtNtCs8VI8w5SIoU4_15datafusion_expr12table_source11TableSourceEL_EEECs2VbMhdeEr66_16delta_benchmarks.exit.i.i.i ], [ %i.hl, %bb.ag ], [ %i.fu, %bb.bv ], [ %i.hl, %11 ] ; 2 uses
-  %21 = phi ptr [ %i.hm, %16 ], [ %i.hm, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map11VacantEntryNtNtCsjhHCjzi9uUI_17datafusion_common15table_reference22ResolvedTableReferenceINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtNtCs8VI8w5SIoU4_15datafusion_expr12table_source11TableSourceEL_EEECs2VbMhdeEr66_16delta_benchmarks.exit.i.i.i ], [ %i.hm, %bb.ag ], [ %i.fv, %bb.bv ], [ %i.hm, %11 ] ; 2 uses
-  %22 = phi ptr [ %i.hn, %16 ], [ %i.hn, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map11VacantEntryNtNtCsjhHCjzi9uUI_17datafusion_common15table_reference22ResolvedTableReferenceINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtNtCs8VI8w5SIoU4_15datafusion_expr12table_source11TableSourceEL_EEECs2VbMhdeEr66_16delta_benchmarks.exit.i.i.i ], [ %i.hn, %bb.ag ], [ %i.fw, %bb.bv ], [ %i.hn, %11 ] ; 2 uses
-  %23 = phi ptr [ %i.ho, %16 ], [ %i.ho, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map11VacantEntryNtNtCsjhHCjzi9uUI_17datafusion_common15table_reference22ResolvedTableReferenceINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtNtCs8VI8w5SIoU4_15datafusion_expr12table_source11TableSourceEL_EEECs2VbMhdeEr66_16delta_benchmarks.exit.i.i.i ], [ %i.ho, %bb.ag ], [ %i.fx, %bb.bv ], [ %i.ho, %11 ] ; 2 uses
-  %.pn18.i.i.i = phi { ptr, i32 } [ %12, %16 ], [ %i.ju, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map11VacantEntryNtNtCsjhHCjzi9uUI_17datafusion_common15table_reference22ResolvedTableReferenceINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtNtCs8VI8w5SIoU4_15datafusion_expr12table_source11TableSourceEL_EEECs2VbMhdeEr66_16delta_benchmarks.exit.i.i.i ], [ %i.hi, %bb.ag ], [ %i.nu, %bb.bv ], [ %12, %11 ] ; 2 uses
+.body.i.i.i.a:                                    ; preds = %bb.bv, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map11VacantEntryNtNtCsjhHCjzi9uUI_17datafusion_common15table_reference22ResolvedTableReferenceINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtNtCs8VI8w5SIoU4_15datafusion_expr12table_source11TableSourceEL_EEECs2VbMhdeEr66_16delta_benchmarks.exit.i.i.i, %8, %bb.ag
+  %3 = phi ptr [ %i.hk, %8 ], [ %i.hk, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map11VacantEntryNtNtCsjhHCjzi9uUI_17datafusion_common15table_reference22ResolvedTableReferenceINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtNtCs8VI8w5SIoU4_15datafusion_expr12table_source11TableSourceEL_EEECs2VbMhdeEr66_16delta_benchmarks.exit.i.i.i ], [ %i.hk, %bb.ag ], [ %i.ft, %bb.bv ] ; 2 uses
+  %4 = phi ptr [ %i.hl, %8 ], [ %i.hl, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map11VacantEntryNtNtCsjhHCjzi9uUI_17datafusion_common15table_reference22ResolvedTableReferenceINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtNtCs8VI8w5SIoU4_15datafusion_expr12table_source11TableSourceEL_EEECs2VbMhdeEr66_16delta_benchmarks.exit.i.i.i ], [ %i.hl, %bb.ag ], [ %i.fu, %bb.bv ] ; 2 uses
+  %5 = phi ptr [ %i.hm, %8 ], [ %i.hm, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map11VacantEntryNtNtCsjhHCjzi9uUI_17datafusion_common15table_reference22ResolvedTableReferenceINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtNtCs8VI8w5SIoU4_15datafusion_expr12table_source11TableSourceEL_EEECs2VbMhdeEr66_16delta_benchmarks.exit.i.i.i ], [ %i.hm, %bb.ag ], [ %i.fv, %bb.bv ] ; 2 uses
+  %6 = phi ptr [ %i.hn, %8 ], [ %i.hn, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map11VacantEntryNtNtCsjhHCjzi9uUI_17datafusion_common15table_reference22ResolvedTableReferenceINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtNtCs8VI8w5SIoU4_15datafusion_expr12table_source11TableSourceEL_EEECs2VbMhdeEr66_16delta_benchmarks.exit.i.i.i ], [ %i.hn, %bb.ag ], [ %i.fw, %bb.bv ] ; 2 uses
+  %7 = phi ptr [ %i.ho, %8 ], [ %i.ho, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map11VacantEntryNtNtCsjhHCjzi9uUI_17datafusion_common15table_reference22ResolvedTableReferenceINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtNtCs8VI8w5SIoU4_15datafusion_expr12table_source11TableSourceEL_EEECs2VbMhdeEr66_16delta_benchmarks.exit.i.i.i ], [ %i.ho, %bb.ag ], [ %i.fx, %bb.bv ] ; 2 uses
+  %.pn18.i.i.i = phi { ptr, i32 } [ %9, %8 ], [ %i.ju, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map11VacantEntryNtNtCsjhHCjzi9uUI_17datafusion_common15table_reference22ResolvedTableReferenceINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtNtCs8VI8w5SIoU4_15datafusion_expr12table_source11TableSourceEL_EEECs2VbMhdeEr66_16delta_benchmarks.exit.i.i.i ], [ %i.hi, %bb.ag ], [ %i.nu, %bb.bv ] ; 2 uses
   %i.hu = getelementptr inbounds nuw i8, ptr %1, i64 2504 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !7511)
   call void @llvm.experimental.noalias.scope.decl(metadata !7514)
@@ -295,7 +262,12 @@ bb.ak:                                            ; preds = %.body.i.i.i.a
   invoke void @_RNvMsn_NtCs6Po7BT7Nknu_5alloc4syncINtB5_3ArcDNtNtCsanCXJAiNsO_18datafusion_catalog6schema14SchemaProviderEL_E9drop_slowBL_(ptr noalias noundef nonnull align 8 dereferenceable(16) %i.hu) #36
           to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtNtCsanCXJAiNsO_18datafusion_catalog6schema14SchemaProviderEL_EECs2VbMhdeEr66_16delta_benchmarks.exit.i.i.i unwind label %bb.aw, !noalias !7491
 
-_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultINtNtB4_6option6OptionINtNtB11_4sync3ArcDNtNtCsanCXJAiNsO_18datafusion_catalog5table13TableProviderEL_EENtNtCsjhHCjzi9uUI_17datafusion_common5error15DataFusionErrorENtNtB4_6marker4SendEL_EEECs2VbMhdeEr66_16delta_benchmarks.exit.i.i.i: ; preds = %8, %4
+8:                                                ; preds = %bb.aj
+  %9 = landingpad { ptr, i32 }
+          cleanup
+  br label %.body.i.i.i.a
+
+_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultINtNtB4_6option6OptionINtNtB11_4sync3ArcDNtNtCsanCXJAiNsO_18datafusion_catalog5table13TableProviderEL_EENtNtCsjhHCjzi9uUI_17datafusion_common5error15DataFusionErrorENtNtB4_6marker4SendEL_EEECs2VbMhdeEr66_16delta_benchmarks.exit.i.i.i: ; preds = %bb.aj
   %.not.i47.i.i.i = icmp eq i64 %i.hq, 20
   br i1 %.not.i47.i.i.i, label %bb.al, label %bb.by
 
@@ -354,11 +326,11 @@ bb.ar:                                            ; preds = %_RNvMs1d_NtNtNtCs2p
           to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtNtCsanCXJAiNsO_18datafusion_catalog6schema14SchemaProviderEL_EECs2VbMhdeEr66_16delta_benchmarks.exit52.i.i.i unwind label %bb.as, !noalias !7491
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtNtCsanCXJAiNsO_18datafusion_catalog6schema14SchemaProviderEL_EECs2VbMhdeEr66_16delta_benchmarks.exit.i.i.i: ; preds = %bb.as, %bb.ak, %.body.i.i.i.a
-  %i.in = phi ptr [ %i.hk, %bb.as ], [ %19, %bb.ak ], [ %19, %.body.i.i.i.a ] ; 2 uses
-  %i.io = phi ptr [ %i.hl, %bb.as ], [ %20, %bb.ak ], [ %20, %.body.i.i.i.a ] ; 2 uses
-  %i.ip = phi ptr [ %i.hm, %bb.as ], [ %21, %bb.ak ], [ %21, %.body.i.i.i.a ] ; 2 uses
-  %i.iq = phi ptr [ %i.hn, %bb.as ], [ %22, %bb.ak ], [ %22, %.body.i.i.i.a ] ; 2 uses
-  %i.ir = phi ptr [ %i.ho, %bb.as ], [ %23, %bb.ak ], [ %23, %.body.i.i.i.a ] ; 2 uses
+  %i.in = phi ptr [ %i.hk, %bb.as ], [ %3, %bb.ak ], [ %3, %.body.i.i.i.a ] ; 2 uses
+  %i.io = phi ptr [ %i.hl, %bb.as ], [ %4, %bb.ak ], [ %4, %.body.i.i.i.a ] ; 2 uses
+  %i.ip = phi ptr [ %i.hm, %bb.as ], [ %5, %bb.ak ], [ %5, %.body.i.i.i.a ] ; 2 uses
+  %i.iq = phi ptr [ %i.hn, %bb.as ], [ %6, %bb.ak ], [ %6, %.body.i.i.i.a ] ; 2 uses
+  %i.ir = phi ptr [ %i.ho, %bb.as ], [ %7, %bb.ak ], [ %7, %.body.i.i.i.a ] ; 2 uses
   %.pn20.i.i.i = phi { ptr, i32 } [ %i.iv, %bb.as ], [ %.pn18.i.i.i, %bb.ak ], [ %.pn18.i.i.i, %.body.i.i.i.a ] ; 2 uses
   %i.is = getelementptr inbounds nuw i8, ptr %1, i64 2464 ; 2 uses
   %i.it = load i64, ptr %i.is, align 16, !range !129, !noalias !7487, !noundef !4
@@ -761,7 +733,7 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc4sync3ArcD
   br i1 %.not22.i.i.i, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6result6ResultINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtNtCsanCXJAiNsO_18datafusion_catalog6schema14SchemaProviderEL_ENtNtCsjhHCjzi9uUI_17datafusion_common5error15DataFusionErrorEECs2VbMhdeEr66_16delta_benchmarks.exit73.i.i.i, label %bb.ca
 
 bb.ca:                                            ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtNtCsanCXJAiNsO_18datafusion_catalog6schema14SchemaProviderEL_EECs2VbMhdeEr66_16delta_benchmarks.exit70.i.i.i
-  invoke void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsjhHCjzi9uUI_17datafusion_common5error15DataFusionErrorECs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef nonnull align 8 dereferenceable(40) %i.ou)
+  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6result6ResultINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtNtCsanCXJAiNsO_18datafusion_catalog6schema14SchemaProviderEL_ENtNtCsjhHCjzi9uUI_17datafusion_common5error15DataFusionErrorEECs2VbMhdeEr66_16delta_benchmarks(ptr noalias noundef align 8 dereferenceable(40) %i.ou)
           to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6result6ResultINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtNtCsanCXJAiNsO_18datafusion_catalog6schema14SchemaProviderEL_ENtNtCsjhHCjzi9uUI_17datafusion_common5error15DataFusionErrorEECs2VbMhdeEr66_16delta_benchmarks.exit73.i.i.i unwind label %bb.au, !noalias !7491
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6result6ResultINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtNtCsanCXJAiNsO_18datafusion_catalog6schema14SchemaProviderEL_ENtNtCsjhHCjzi9uUI_17datafusion_common5error15DataFusionErrorEECs2VbMhdeEr66_16delta_benchmarks.exit73.i.i.i: ; preds = %bb.ca, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtNtCsanCXJAiNsO_18datafusion_catalog6schema14SchemaProviderEL_EECs2VbMhdeEr66_16delta_benchmarks.exit70.i.i.i

@@ -1,5 +1,5 @@
-inline.NumInlined: 579
-inline.NumDeleted: 127
+inline.NumInlined: 580
+inline.NumDeleted: 128
 loop-unroll.NumCompletelyUnrolled: 13
 loop-unroll.NumUnrolled: 13
 begin_hunk_0_@datetime_datetime_astimezone:bb.a
@@ -203,14 +203,140 @@ bb.ah:                                            ; preds = %bb.ag
 
 Py_DECREF.exit76.i:                               ; preds = %bb.ah, %bb.ag, %_Py_NewRef.exit103.i, %Py_DECREF.exit78.i
   %.060.i = phi ptr [ %i.et, %Py_DECREF.exit78.i ], [ %i.cy, %_Py_NewRef.exit103.i ], [ %i.cy, %bb.ag ], [ %i.cy, %bb.ah ] ; 9 uses
-  br i1 %i.s, label %bb.ai, label %bb.am
+  br i1 %i.s, label %4, label %bb.am
 
-bb.ai:                                            ; preds = %Py_DECREF.exit76.i
-  %i.fg = call fastcc ptr @local_timezone(ptr noundef %.060.i), !inline_history !150 ; 2 uses
+4:                                                ; preds = %Py_DECREF.exit76.i
+  %5 = call ptr @PyInterpreterState_Get() #16, !inline_history !151
+  %6 = call fastcc ptr @get_current_module(ptr noundef %5), !inline_history !151 ; 2 uses
+  %7 = icmp eq ptr %6, null
+  br i1 %7, label %8, label %_get_current_state.exit.i.i
+
+8:                                                ; preds = %4
+  %9 = call ptr @PyErr_Occurred() #16, !inline_history !151 ; 0 uses
+  %10 = call ptr @PyImport_ImportModule(ptr noundef nonnull @.str.41) #16, !inline_history !151 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %10) ]
+  br label %_get_current_state.exit.i.i
+
+_get_current_state.exit.i.i:                      ; preds = %8, %4
+  %.08.i.i.i = phi ptr [ %10, %8 ], [ %6, %4 ]    ; 4 uses
+  %11 = getelementptr i8, ptr %.08.i.i.i, i64 24
+  %.08.val.i.i.i = load ptr, ptr %11, align 8, !tbaa !69
+  %12 = getelementptr i8, ptr %.08.val.i.i.i, i64 64
+  %13 = load ptr, ptr %12, align 8, !tbaa !146
+  %14 = call ptr @datetime_subtract(ptr noundef nonnull %.060.i, ptr noundef %13), !inline_history !151 ; 8 uses
+  %15 = load i32, ptr %.08.i.i.i, align 8, !tbaa !35 ; 2 uses
+  %.not.i25.i.i = icmp sgt i32 %15, -1
+  br i1 %.not.i25.i.i, label %16, label %Py_DECREF.exit26.i.i
+
+16:                                               ; preds = %_get_current_state.exit.i.i
+  %17 = add nsw i32 %15, -1                       ; 2 uses
+  store i32 %17, ptr %.08.i.i.i, align 8, !tbaa !35
+  %18 = icmp eq i32 %17, 0
+  br i1 %18, label %19, label %Py_DECREF.exit26.i.i
+
+19:                                               ; preds = %16
+  call void @_Py_Dealloc(ptr noundef nonnull %.08.i.i.i) #16, !inline_history !151
+  br label %Py_DECREF.exit26.i.i
+
+Py_DECREF.exit26.i.i:                             ; preds = %19, %16, %_get_current_state.exit.i.i
+  %20 = icmp eq ptr %14, null
+  br i1 %20, label %bb.aj, label %21
+
+21:                                               ; preds = %Py_DECREF.exit26.i.i
+  %22 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @PyDateTime_DeltaType, i64 304), align 8, !tbaa !11
+  %23 = call ptr %22(ptr noundef nonnull @PyDateTime_DeltaType, i64 noundef 0) #16, !inline_history !152 ; 9 uses
+  %.not15.i.i.i = icmp eq ptr %23, null
+  br i1 %.not15.i.i.i, label %24, label %30
+
+24:                                               ; preds = %21
+  %25 = load i32, ptr %14, align 8, !tbaa !35     ; 2 uses
+  %.not.i23.i.i = icmp sgt i32 %25, -1
+  br i1 %.not.i23.i.i, label %26, label %bb.aj
+
+26:                                               ; preds = %24
+  %27 = add nsw i32 %25, -1                       ; 2 uses
+  store i32 %27, ptr %14, align 8, !tbaa !35
+  %28 = icmp eq i32 %27, 0
+  br i1 %28, label %29, label %bb.aj
+
+29:                                               ; preds = %26
+  call void @_Py_Dealloc(ptr noundef nonnull %14) #16, !inline_history !151
+  br label %bb.aj
+
+30:                                               ; preds = %21
+  %31 = getelementptr i8, ptr %23, i64 16
+  store i64 -1, ptr %31, align 8, !tbaa !30
+  %32 = getelementptr i8, ptr %23, i64 24
+  store i32 0, ptr %32, align 8, !tbaa !32
+  %33 = getelementptr i8, ptr %23, i64 28
+  store i32 1, ptr %33, align 4, !tbaa !33
+  %34 = getelementptr i8, ptr %23, i64 32
+  store i32 0, ptr %34, align 8, !tbaa !34
+  %35 = call fastcc ptr @divide_timedelta_timedelta(ptr noundef nonnull %14, ptr noundef nonnull %23), !inline_history !151 ; 5 uses
+  %36 = load i32, ptr %23, align 8, !tbaa !35     ; 2 uses
+  %.not.i21.i.i = icmp sgt i32 %36, -1
+  br i1 %.not.i21.i.i, label %37, label %Py_DECREF.exit22.i.i
+
+37:                                               ; preds = %30
+  %38 = add nsw i32 %36, -1                       ; 2 uses
+  store i32 %38, ptr %23, align 8, !tbaa !35
+  %39 = icmp eq i32 %38, 0
+  br i1 %39, label %40, label %Py_DECREF.exit22.i.i
+
+40:                                               ; preds = %37
+  call void @_Py_Dealloc(ptr noundef nonnull %23) #16, !inline_history !151
+  br label %Py_DECREF.exit22.i.i
+
+Py_DECREF.exit22.i.i:                             ; preds = %40, %37, %30
+  %41 = load i32, ptr %14, align 8, !tbaa !35     ; 2 uses
+  %.not.i19.i.i = icmp sgt i32 %41, -1
+  br i1 %.not.i19.i.i, label %42, label %Py_DECREF.exit20.i.i
+
+42:                                               ; preds = %Py_DECREF.exit22.i.i
+  %43 = add nsw i32 %41, -1                       ; 2 uses
+  store i32 %43, ptr %14, align 8, !tbaa !35
+  %44 = icmp eq i32 %43, 0
+  br i1 %44, label %45, label %Py_DECREF.exit20.i.i
+
+45:                                               ; preds = %42
+  call void @_Py_Dealloc(ptr noundef nonnull %14) #16, !inline_history !151
+  br label %Py_DECREF.exit20.i.i
+
+Py_DECREF.exit20.i.i:                             ; preds = %45, %42, %Py_DECREF.exit22.i.i
+  %46 = icmp eq ptr %35, null
+  br i1 %46, label %bb.aj, label %47
+
+47:                                               ; preds = %Py_DECREF.exit20.i.i
+  %48 = call i64 @_PyLong_AsTime_t(ptr noundef nonnull %35) #16, !inline_history !151 ; 2 uses
+  %49 = load i32, ptr %35, align 8, !tbaa !35     ; 2 uses
+  %.not.i.i104.i = icmp sgt i32 %49, -1
+  br i1 %.not.i.i104.i, label %50, label %Py_DECREF.exit.i.i
+
+50:                                               ; preds = %47
+  %51 = add nsw i32 %49, -1                       ; 2 uses
+  store i32 %51, ptr %35, align 8, !tbaa !35
+  %52 = icmp eq i32 %51, 0
+  br i1 %52, label %53, label %Py_DECREF.exit.i.i
+
+53:                                               ; preds = %50
+  call void @_Py_Dealloc(ptr noundef nonnull %35) #16, !inline_history !151
+  br label %Py_DECREF.exit.i.i
+
+Py_DECREF.exit.i.i:                               ; preds = %53, %50, %47
+  %54 = icmp eq i64 %48, -1
+  br i1 %54, label %55, label %bb.ai
+
+55:                                               ; preds = %Py_DECREF.exit.i.i
+  %56 = call ptr @PyErr_Occurred() #16, !inline_history !151
+  %.not.i106.i = icmp eq ptr %56, null
+  br i1 %.not.i106.i, label %bb.ai, label %bb.aj
+
+bb.ai:                                            ; preds = %55, %Py_DECREF.exit.i.i
+  %i.fg = call fastcc ptr @local_timezone_from_timestamp(i64 noundef %48), !inline_history !150 ; 2 uses
   %i.fh = icmp eq ptr %i.fg, null
   br i1 %i.fh, label %bb.aj, label %Py_INCREF.exit.i
 
-bb.aj:                                            ; preds = %bb.ai
+bb.aj:                                            ; preds = %bb.ai, %55, %Py_DECREF.exit20.i.i, %29, %26, %24, %Py_DECREF.exit26.i.i
   %i.fi = load i32, ptr %.060.i, align 8, !tbaa !35 ; 2 uses
   %.not.i73.i = icmp sgt i32 %i.fi, -1
   br i1 %.not.i73.i, label %bb.ak, label %datetime_datetime_astimezone_impl.exit
@@ -541,11 +667,11 @@ bb.l:                                             ; preds = %bb.k, %bb.i, %bb.b
   br i1 %i.bi, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
-  %i.bj = call ptr @new_datetime_ex2(i32 noundef %i.d, i32 noundef %i.g, i32 noundef %i.i, i32 noundef %i.k, i32 noundef %i.m, i32 noundef %i.o, i32 noundef %3, ptr noundef %4, i32 noundef %.2, ptr noundef nonnull @PyDateTime_DateTimeType), !inline_history !151
+  %i.bj = call ptr @new_datetime_ex2(i32 noundef %i.d, i32 noundef %i.g, i32 noundef %i.i, i32 noundef %i.k, i32 noundef %i.m, i32 noundef %i.o, i32 noundef %3, ptr noundef %4, i32 noundef %.2, ptr noundef nonnull @PyDateTime_DateTimeType), !inline_history !153
   br label %.critedge
 
 bb.n:                                             ; preds = %bb.l
-  %i.bk = call ptr (ptr, i32, ptr, ...) @call_subclass_fold(ptr noundef %0, i32 noundef %.2, ptr noundef nonnull @.str.29, i32 noundef %i.d, i32 noundef %i.g, i32 noundef %i.i, i32 noundef %i.k, i32 noundef %i.m, i32 noundef %i.o, i32 noundef %3, ptr noundef %4), !inline_history !151
+  %i.bk = call ptr (ptr, i32, ptr, ...) @call_subclass_fold(ptr noundef %0, i32 noundef %.2, ptr noundef nonnull @.str.29, i32 noundef %i.d, i32 noundef %i.g, i32 noundef %i.i, i32 noundef %i.k, i32 noundef %i.m, i32 noundef %i.o, i32 noundef %3, ptr noundef %4), !inline_history !153
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.n, %bb.m, %bb.j, %bb.g, %bb.h, %bb.a
@@ -684,7 +810,7 @@ check_tzinfo_subclass.exit:                       ; preds = %PyObject_TypeCheck.
 bb.c:                                             ; preds = %PyObject_TypeCheck.exit.i, %bb.a, %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #16
-  %i.k = call i32 @_PyTime_ObjectToTimeval(ptr noundef %1, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c, i32 noundef 2) #16, !inline_history !152
+  %i.k = call i32 @_PyTime_ObjectToTimeval(ptr noundef %1, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c, i32 noundef 2) #16, !inline_history !154
   %i.l = icmp eq i32 %i.k, -1
   br i1 %i.l, label %datetime_from_timestamp.exit.thread, label %datetime_from_timestamp.exit
 
@@ -698,7 +824,7 @@ datetime_from_timestamp.exit:                     ; preds = %bb.c
   %i.n = load i64, ptr %i.b, align 8, !tbaa !94
   %i.o = load i64, ptr %i.c, align 8, !tbaa !94
   %i.p = trunc i64 %i.o to i32
-  %i.q = call fastcc ptr @datetime_from_timet_and_us(ptr noundef %0, ptr noundef nonnull readonly %i.m, i64 noundef %i.n, i32 noundef %i.p, ptr noundef %2), !inline_history !152 ; 6 uses
+  %i.q = call fastcc ptr @datetime_from_timet_and_us(ptr noundef %0, ptr noundef nonnull readonly %i.m, i64 noundef %i.n, i32 noundef %i.p, ptr noundef %2), !inline_history !154 ; 6 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #16
   %i.r = icmp ne ptr %i.q, null
@@ -875,146 +1001,6 @@ bb.p:                                             ; preds = %bb.l, %bb.n, %bb.o,
 declare ptr @PyFloat_FromDouble(double noundef) local_unnamed_addr #2
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc ptr @local_timezone(ptr noundef nonnull %0) unnamed_addr #0 {
-  %2 = tail call ptr @PyInterpreterState_Get() #16
-  %3 = tail call fastcc ptr @get_current_module(ptr noundef %2) ; 2 uses
-  %4 = icmp eq ptr %3, null
-  br i1 %4, label %5, label %_get_current_state.exit
-
-5:                                                ; preds = %1
-  %6 = tail call ptr @PyErr_Occurred() #16        ; 0 uses
-  %7 = tail call ptr @PyImport_ImportModule(ptr noundef nonnull @.str.41) #16 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %7) ]
-  br label %_get_current_state.exit
-
-_get_current_state.exit:                          ; preds = %5, %1
-  %.08.i = phi ptr [ %7, %5 ], [ %3, %1 ]         ; 4 uses
-  %8 = getelementptr i8, ptr %.08.i, i64 24
-  %.08.val.i = load ptr, ptr %8, align 8, !tbaa !69
-  %9 = getelementptr i8, ptr %.08.val.i, i64 64
-  %10 = load ptr, ptr %9, align 8, !tbaa !146
-  %11 = tail call ptr @datetime_subtract(ptr noundef nonnull %0, ptr noundef %10) ; 8 uses
-  %12 = load i32, ptr %.08.i, align 8, !tbaa !35  ; 2 uses
-  %.not.i25 = icmp sgt i32 %12, -1
-  br i1 %.not.i25, label %13, label %Py_DECREF.exit26
-
-13:                                               ; preds = %_get_current_state.exit
-  %14 = add nsw i32 %12, -1                       ; 2 uses
-  store i32 %14, ptr %.08.i, align 8, !tbaa !35
-  %15 = icmp eq i32 %14, 0
-  br i1 %15, label %16, label %Py_DECREF.exit26
-
-16:                                               ; preds = %13
-  tail call void @_Py_Dealloc(ptr noundef nonnull %.08.i) #16
-  br label %Py_DECREF.exit26
-
-Py_DECREF.exit26:                                 ; preds = %_get_current_state.exit, %13, %16
-  %17 = icmp eq ptr %11, null
-  br i1 %17, label %Py_DECREF.exit24, label %18
-
-18:                                               ; preds = %Py_DECREF.exit26
-  %19 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @PyDateTime_DeltaType, i64 304), align 8, !tbaa !11
-  %20 = tail call ptr %19(ptr noundef nonnull @PyDateTime_DeltaType, i64 noundef 0) #16, !inline_history !24 ; 9 uses
-  %.not15.i = icmp eq ptr %20, null
-  br i1 %.not15.i, label %21, label %27
-
-21:                                               ; preds = %18
-  %22 = load i32, ptr %11, align 8, !tbaa !35     ; 2 uses
-  %.not.i23 = icmp sgt i32 %22, -1
-  br i1 %.not.i23, label %23, label %Py_DECREF.exit24
-
-23:                                               ; preds = %21
-  %24 = add nsw i32 %22, -1                       ; 2 uses
-  store i32 %24, ptr %11, align 8, !tbaa !35
-  %25 = icmp eq i32 %24, 0
-  br i1 %25, label %26, label %Py_DECREF.exit24
-
-26:                                               ; preds = %23
-  tail call void @_Py_Dealloc(ptr noundef nonnull %11) #16
-  br label %Py_DECREF.exit24
-
-27:                                               ; preds = %18
-  %28 = getelementptr i8, ptr %20, i64 16
-  store i64 -1, ptr %28, align 8, !tbaa !30
-  %29 = getelementptr i8, ptr %20, i64 24
-  store i32 0, ptr %29, align 8, !tbaa !32
-  %30 = getelementptr i8, ptr %20, i64 28
-  store i32 1, ptr %30, align 4, !tbaa !33
-  %31 = getelementptr i8, ptr %20, i64 32
-  store i32 0, ptr %31, align 8, !tbaa !34
-  %32 = tail call fastcc ptr @divide_timedelta_timedelta(ptr noundef nonnull %11, ptr noundef nonnull %20) ; 5 uses
-  %33 = load i32, ptr %20, align 8, !tbaa !35     ; 2 uses
-  %.not.i21 = icmp sgt i32 %33, -1
-  br i1 %.not.i21, label %34, label %Py_DECREF.exit22
-
-34:                                               ; preds = %27
-  %35 = add nsw i32 %33, -1                       ; 2 uses
-  store i32 %35, ptr %20, align 8, !tbaa !35
-  %36 = icmp eq i32 %35, 0
-  br i1 %36, label %37, label %Py_DECREF.exit22
-
-37:                                               ; preds = %34
-  tail call void @_Py_Dealloc(ptr noundef nonnull %20) #16
-  br label %Py_DECREF.exit22
-
-Py_DECREF.exit22:                                 ; preds = %27, %34, %37
-  %38 = load i32, ptr %11, align 8, !tbaa !35     ; 2 uses
-  %.not.i19 = icmp sgt i32 %38, -1
-  br i1 %.not.i19, label %39, label %Py_DECREF.exit20
-
-39:                                               ; preds = %Py_DECREF.exit22
-  %40 = add nsw i32 %38, -1                       ; 2 uses
-  store i32 %40, ptr %11, align 8, !tbaa !35
-  %41 = icmp eq i32 %40, 0
-  br i1 %41, label %42, label %Py_DECREF.exit20
-
-42:                                               ; preds = %39
-  tail call void @_Py_Dealloc(ptr noundef nonnull %11) #16
-  br label %Py_DECREF.exit20
-
-Py_DECREF.exit20:                                 ; preds = %Py_DECREF.exit22, %39, %42
-  %43 = icmp eq ptr %32, null
-  br i1 %43, label %Py_DECREF.exit24, label %44
-
-44:                                               ; preds = %Py_DECREF.exit20
-  %45 = tail call i64 @_PyLong_AsTime_t(ptr noundef nonnull %32) #16 ; 2 uses
-  %46 = load i32, ptr %32, align 8, !tbaa !35     ; 2 uses
-  %.not.i = icmp sgt i32 %46, -1
-  br i1 %.not.i, label %47, label %Py_DECREF.exit
-
-47:                                               ; preds = %44
-  %48 = add nsw i32 %46, -1                       ; 2 uses
-  store i32 %48, ptr %32, align 8, !tbaa !35
-  %49 = icmp eq i32 %48, 0
-  br i1 %49, label %50, label %Py_DECREF.exit
-
-50:                                               ; preds = %47
-  tail call void @_Py_Dealloc(ptr noundef nonnull %32) #16
-  br label %Py_DECREF.exit
-
-Py_DECREF.exit:                                   ; preds = %44, %47, %50
-  %51 = icmp eq i64 %45, -1
-  br i1 %51, label %53, label %.split
-
-.split:                                           ; preds = %Py_DECREF.exit
-  %52 = tail call fastcc ptr @local_timezone_from_timestamp(i64 noundef %45)
-  br label %Py_DECREF.exit24
-
-53:                                               ; preds = %Py_DECREF.exit
-  %54 = tail call ptr @PyErr_Occurred() #16
-  %.not = icmp eq ptr %54, null
-  br i1 %.not, label %.split14, label %Py_DECREF.exit24
-
-.split14:                                         ; preds = %53
-  %55 = tail call fastcc ptr @local_timezone_from_timestamp(i64 noundef -1)
-  br label %Py_DECREF.exit24
-
-Py_DECREF.exit24:                                 ; preds = %26, %23, %21, %.split, %.split14, %53, %Py_DECREF.exit20, %Py_DECREF.exit26
-  %.0 = phi ptr [ null, %53 ], [ %55, %.split14 ], [ null, %Py_DECREF.exit26 ], [ null, %Py_DECREF.exit20 ], [ %52, %.split ], [ null, %21 ], [ null, %23 ], [ null, %26 ]
-  ret ptr %.0
-}
-
-; Function Attrs: nounwind uwtable
 define internal fastcc ptr @local_timezone_from_timestamp(i64 noundef %0) unnamed_addr #0 {
 bb.a:
   %1 = alloca %struct.tm, align 8                 ; 5 uses
@@ -1025,9 +1011,9 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 48
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !153  ; 2 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !155  ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %i.e = load i64, ptr %i.d, align 8, !tbaa !154
+  %i.e = load i64, ptr %i.d, align 8, !tbaa !156
   %i.f = trunc i64 %i.e to i32                    ; 4 uses
   %or.cond9.i.i = icmp ugt i32 %i.f, 86399
   br i1 %or.cond9.i.i, label %normalize_d_s_us.exit.i, label %check_delta_day_range.exit.i
@@ -1430,7 +1416,7 @@ PyObject_TypeCheck.exit.thread:                   ; preds = %bb.b, %PyObject_Typ
   br i1 %.not.i.i, label %PyObject_TypeCheck.exit.thread.i, label %PyObject_TypeCheck.exit.i
 
 PyObject_TypeCheck.exit.i:                        ; preds = %PyObject_TypeCheck.exit.thread
-  %i.i = tail call i32 @PyType_IsSubtype(ptr noundef %.val.i, ptr noundef nonnull @PyDateTime_DeltaType) #16, !inline_history !155
+  %i.i = tail call i32 @PyType_IsSubtype(ptr noundef %.val.i, ptr noundef nonnull @PyDateTime_DeltaType) #16, !inline_history !157
   %.not8.i = icmp eq i32 %i.i, 0
   br i1 %.not8.i, label %delta_richcompare.exit, label %PyObject_TypeCheck.exit.thread.i
 
@@ -1550,7 +1536,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e, %PyObject_TypeCheck.exit.thread
   %.0 = phi ptr [ null, %PyObject_TypeCheck.exit.thread ], [ %i.u, %bb.e ]
-  %i.y = call ptr @new_timezone(ptr noundef %i.s, ptr noundef %.0), !inline_history !156
+  %i.y = call ptr @new_timezone(ptr noundef %i.s, ptr noundef %.0), !inline_history !158
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.c, %bb.g, %bb.f, %bb.d
@@ -1572,7 +1558,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i.i, label %bb.c, label %PyObject_TypeCheck.exit.i
 
 PyObject_TypeCheck.exit.i:                        ; preds = %bb.b
-  %i.c = tail call i32 @PyType_IsSubtype(ptr noundef %.val5.i, ptr noundef nonnull @PyDateTime_DateTimeType) #16, !inline_history !157
+  %i.c = tail call i32 @PyType_IsSubtype(ptr noundef %.val5.i, ptr noundef nonnull @PyDateTime_DateTimeType) #16, !inline_history !159
   %.not7.i = icmp eq i32 %i.c, 0
   br i1 %.not7.i, label %_timezone_check_argument.exit, label %bb.c
 
@@ -1581,7 +1567,7 @@ _timezone_check_argument.exit:                    ; preds = %PyObject_TypeCheck.
   %.val.i = load ptr, ptr %i.b, align 8, !tbaa !44
   %i.e = getelementptr i8, ptr %.val.i, i64 24
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !46
-  %i.g = tail call ptr (ptr, ptr, ...) @PyErr_Format(ptr noundef %i.d, ptr noundef nonnull @.str.257, ptr noundef nonnull @.str.8, ptr noundef %i.f) #16, !inline_history !157 ; 0 uses
+  %i.g = tail call ptr (ptr, ptr, ...) @PyErr_Format(ptr noundef %i.d, ptr noundef nonnull @.str.257, ptr noundef nonnull @.str.8, ptr noundef %i.f) #16, !inline_history !159 ; 0 uses
   br label %bb.d
 
 bb.c:                                             ; preds = %PyObject_TypeCheck.exit.i, %bb.a, %bb.b
@@ -1606,7 +1592,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i.i, label %bb.c, label %PyObject_TypeCheck.exit.i
 
 PyObject_TypeCheck.exit.i:                        ; preds = %bb.b
-  %i.c = tail call i32 @PyType_IsSubtype(ptr noundef %.val5.i, ptr noundef nonnull @PyDateTime_DateTimeType) #16, !inline_history !157
+  %i.c = tail call i32 @PyType_IsSubtype(ptr noundef %.val5.i, ptr noundef nonnull @PyDateTime_DateTimeType) #16, !inline_history !159
   %.not7.i = icmp eq i32 %i.c, 0
   br i1 %.not7.i, label %_timezone_check_argument.exit, label %bb.c
 
@@ -1615,7 +1601,7 @@ _timezone_check_argument.exit:                    ; preds = %PyObject_TypeCheck.
   %.val.i = load ptr, ptr %i.b, align 8, !tbaa !44
   %i.e = getelementptr i8, ptr %.val.i, i64 24
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !46
-  %i.g = tail call ptr (ptr, ptr, ...) @PyErr_Format(ptr noundef %i.d, ptr noundef nonnull @.str.257, ptr noundef nonnull @.str.10, ptr noundef %i.f) #16, !inline_history !157 ; 0 uses
+  %i.g = tail call ptr (ptr, ptr, ...) @PyErr_Format(ptr noundef %i.d, ptr noundef nonnull @.str.257, ptr noundef nonnull @.str.10, ptr noundef %i.f) #16, !inline_history !159 ; 0 uses
   br label %_Py_NewRef.exit
 
 bb.c:                                             ; preds = %PyObject_TypeCheck.exit.i, %bb.a, %bb.b
@@ -1648,7 +1634,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i.i, label %_timezone_check_argument.exit.thread, label %PyObject_TypeCheck.exit.i
 
 PyObject_TypeCheck.exit.i:                        ; preds = %bb.b
-  %i.c = tail call i32 @PyType_IsSubtype(ptr noundef %.val5.i, ptr noundef nonnull @PyDateTime_DateTimeType) #16, !inline_history !157
+  %i.c = tail call i32 @PyType_IsSubtype(ptr noundef %.val5.i, ptr noundef nonnull @PyDateTime_DateTimeType) #16, !inline_history !159
   %.not7.i = icmp eq i32 %i.c, 0
   br i1 %.not7.i, label %bb.c, label %_timezone_check_argument.exit.thread
 
@@ -1657,7 +1643,7 @@ bb.c:                                             ; preds = %PyObject_TypeCheck.
   %.val.i = load ptr, ptr %i.b, align 8, !tbaa !44
   %i.e = getelementptr i8, ptr %.val.i, i64 24
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !46
-  %i.g = tail call ptr (ptr, ptr, ...) @PyErr_Format(ptr noundef %i.d, ptr noundef nonnull @.str.257, ptr noundef nonnull @.str.12, ptr noundef %i.f) #16, !inline_history !157 ; 0 uses
+  %i.g = tail call ptr (ptr, ptr, ...) @PyErr_Format(ptr noundef %i.d, ptr noundef nonnull @.str.257, ptr noundef nonnull @.str.12, ptr noundef %i.f) #16, !inline_history !159 ; 0 uses
   br label %_timezone_check_argument.exit.thread
 
 _timezone_check_argument.exit.thread:             ; preds = %bb.b, %bb.a, %PyObject_TypeCheck.exit.i, %bb.c
@@ -1744,7 +1730,7 @@ bb.a:
   br i1 %.not.i, label %traverse_state.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = tail call i32 %1(ptr noundef nonnull %.val4, ptr noundef %2) #16, !inline_history !158 ; 0 uses
+  %i.b = tail call i32 %1(ptr noundef nonnull %.val4, ptr noundef %2) #16, !inline_history !160 ; 0 uses
   br label %traverse_state.exit
 
 traverse_state.exit:                              ; preds = %bb.b, %bb.a
@@ -2024,7 +2010,7 @@ bb.k:                                             ; preds = %_Py_NewRef.exit40.i
   br label %init_state.exit.thread33
 
 init_state.exit.thread33:                         ; preds = %_Py_NewRef.exit40.i, %bb.k
-  store ptr %i.w, ptr %.val, align 8, !tbaa !159
+  store ptr %i.w, ptr %.val, align 8, !tbaa !161
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.val, i64 8
   store ptr %i.aa, ptr %.sroa.2.0..sroa_idx.i, align 8, !tbaa !43
   %.sroa.3.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.val, i64 16
@@ -2199,12 +2185,12 @@ Py_DECREF.exit:                                   ; preds = %bb.e, %bb.d, %bb.c,
 ; Function Attrs: nounwind uwtable
 define internal fastcc void @clear_state(ptr nofree noundef captures(none) %0) unnamed_addr #0 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !159    ; 4 uses
+  %i.a = load ptr, ptr %0, align 8, !tbaa !161    ; 4 uses
   %.not = icmp eq ptr %i.a, null
   br i1 %.not, label %Py_DECREF.exit76, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  store ptr null, ptr %0, align 8, !tbaa !159
+  store ptr null, ptr %0, align 8, !tbaa !161
   %i.b = load i32, ptr %i.a, align 8, !tbaa !35   ; 2 uses
   %.not.i75 = icmp sgt i32 %i.b, -1
   br i1 %.not.i75, label %bb.c, label %Py_DECREF.exit76
@@ -2503,7 +2489,7 @@ define internal void @iso_calendar_date_dealloc(ptr noundef %0) #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 8
   %.val = load ptr, ptr %i.a, align 8, !tbaa !44  ; 3 uses
-  %i.b = load ptr, ptr getelementptr inbounds nuw (i8, ptr @PyTuple_Type, i64 48), align 8, !tbaa !160
+  %i.b = load ptr, ptr getelementptr inbounds nuw (i8, ptr @PyTuple_Type, i64 48), align 8, !tbaa !162
   tail call void %i.b(ptr noundef %0) #16
   %i.c = load i32, ptr %.val, align 8, !tbaa !35  ; 2 uses
   %.not.i = icmp sgt i32 %i.c, -1
@@ -2537,7 +2523,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not11.not, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %i.c = load ptr, ptr getelementptr inbounds nuw (i8, ptr @PyTuple_Type, i64 184), align 8, !tbaa !161
+  %i.c = load ptr, ptr getelementptr inbounds nuw (i8, ptr @PyTuple_Type, i64 184), align 8, !tbaa !163
   %i.d = tail call i32 %i.c(ptr noundef nonnull %0, ptr noundef %1, ptr noundef %2) #16
   br label %bb.d
 
@@ -2894,15 +2880,17 @@ attributes #17 = { nounwind willreturn memory(read) }
 !148 = distinct !{null, null}
 !149 = distinct !{null, null}
 !150 = distinct !{null}
-!151 = distinct !{null}
-!152 = distinct !{null}
-!153 = !{!99, !18, i64 48}
-!154 = !{!99, !17, i64 40}
-!155 = !{ptr @delta_richcompare}
-!156 = distinct !{null}
-!157 = distinct !{null}
+!151 = distinct !{null, null}
+!152 = distinct !{null, null, ptr @new_delta_ex}
+!153 = distinct !{null}
+!154 = distinct !{null}
+!155 = !{!99, !18, i64 48}
+!156 = !{!99, !17, i64 40}
+!157 = !{ptr @delta_richcompare}
 !158 = distinct !{null}
-!159 = !{!15, !15, i64 0}
-!160 = !{!12, !16, i64 48}
-!161 = !{!12, !16, i64 184}
+!159 = distinct !{null}
+!160 = distinct !{null}
+!161 = !{!15, !15, i64 0}
+!162 = !{!12, !16, i64 48}
+!163 = !{!12, !16, i64 184}
 end_hunk_1

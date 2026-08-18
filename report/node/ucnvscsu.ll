@@ -1,4 +1,4 @@
-inline.NumInlined: 30
+inline.NumInlined: 26
 inline.NumDeleted: 3
 loop-unroll.NumCompletelyUnrolled: 2
 loop-unroll.NumUnrolled: 2
@@ -203,12 +203,12 @@ bb.bk:                                            ; preds = %.loopexit, %bb.bi, 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal void @_ZL16_SCSUFromUnicodeP25UConverterFromUnicodeArgsP10UErrorCode(ptr nofree noundef captures(none) %0, ptr nofree noundef writeonly captures(none) %1) #2 {
 bb.a:
-  %i.a = alloca i32, align 4                      ; 12 uses
+  %i.a = alloca i32, align 4                      ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load ptr, ptr %i.b, align 8              ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 16
-  %i.e = load ptr, ptr %i.d, align 8              ; 16 uses
+  %i.e = load ptr, ptr %i.d, align 8              ; 17 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.g = load ptr, ptr %i.f, align 8
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -238,8 +238,8 @@ bb.a:
   %i.af = getelementptr inbounds nuw i8, ptr %i.e, i64 52 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.e, i64 56 ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.e, i64 60 ; 2 uses
-  %i.ai = getelementptr inbounds nuw i8, ptr %i.e, i64 76 ; 20 uses
-  %i.aj = getelementptr inbounds nuw i8, ptr %i.e, i64 75 ; 16 uses
+  %i.ai = getelementptr inbounds nuw i8, ptr %i.e, i64 76 ; 16 uses
+  %i.aj = getelementptr inbounds nuw i8, ptr %i.e, i64 75 ; 14 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.cy, %bb.a
@@ -337,8 +337,8 @@ bb.p:                                             ; preds = %bb.o
 bb.q:                                             ; preds = %bb.p
   %i.bl = getelementptr inbounds nuw i8, ptr %.2290, i64 2 ; 4 uses
   %i.bm = shl i32 %.2263, 10
-  %i.bn = add nsw i32 %i.bm, %i.bi                ; 11 uses
-  %i.bo = add nsw i32 %i.bn, -56613888            ; 18 uses
+  %i.bn = add i32 %i.bm, -56613888
+  %i.bo = add i32 %i.bn, %i.bi                    ; 12 uses
   %i.bp = sub i32 %i.bo, %.0264                   ; 2 uses
   %i.bq = icmp ult i32 %i.bp, 128
   br i1 %i.bq, label %bb.av, label %bb.r
@@ -389,7 +389,7 @@ bb.y:                                             ; preds = %bb.x
   %i.cm = load i32, ptr %i.ah, align 4
   %i.cn = sub i32 %i.bo, %i.cm
   %i.co = icmp ult i32 %i.cn, 128
-  br i1 %i.co, label %select.unfold, label %_ZL9getWindowPKjj.exit
+  br i1 %i.co, label %select.unfold, label %bb.ab
 
 select.unfold:                                    ; preds = %bb.y, %bb.r, %bb.s, %bb.t, %bb.u, %bb.v, %bb.w, %bb.x
   %.06.i.ph = phi i8 [ 0, %bb.r ], [ 6, %bb.x ], [ 5, %bb.w ], [ 4, %bb.v ], [ 3, %bb.u ], [ 2, %bb.t ], [ 1, %bb.s ], [ 7, %bb.y ] ; 5 uses
@@ -447,149 +447,36 @@ _ZL16useDynamicWindowP8SCSUDataa.exit:            ; preds = %.lr.ph.i, %bb.aa
   %i.dp = or i32 %i.do, 128
   br label %bb.cv
 
-_ZL9getWindowPKjj.exit:                           ; preds = %bb.y
-  %2 = add i32 %i.bn, -56614080
-  %3 = icmp ult i32 %2, 128
-  br i1 %3, label %4, label %5
+bb.ab:                                            ; preds = %bb.y
+  %2 = call fastcc noundef i32 @_ZL16getDynamicOffsetjPj(i32 noundef %i.bo, ptr noundef %i.a) ; 2 uses
+  %3 = icmp sgt i32 %2, -1
+  br i1 %3, label %bb.ac, label %_ZL16getDynamicOffsetjPj.exit.a
 
-4:                                                ; preds = %20, %17, %14, %11, %8, %5, %_ZL9getWindowPKjj.exit
-  %.029.lcssa.wide.i = phi i32 [ 249, %_ZL9getWindowPKjj.exit ], [ 250, %5 ], [ 251, %8 ], [ 252, %11 ], [ 253, %14 ], [ 254, %17 ], [ 255, %20 ]
-  %.lcssa.i = phi i32 [ 192, %_ZL9getWindowPKjj.exit ], [ 592, %5 ], [ 880, %8 ], [ 1328, %11 ], [ 12352, %14 ], [ 12448, %17 ], [ 65376, %20 ] ; 2 uses
-  store i32 %.lcssa.i, ptr %i.a, align 4
-  br label %bb.ac
-
-5:                                                ; preds = %_ZL9getWindowPKjj.exit
-  %6 = add i32 %i.bn, -56614480
-  %7 = icmp ult i32 %6, 128
-  br i1 %7, label %4, label %8
-
-8:                                                ; preds = %5
-  %9 = add i32 %i.bn, -56614768
-  %10 = icmp ult i32 %9, 128
-  br i1 %10, label %4, label %11
-
-11:                                               ; preds = %8
-  %12 = add i32 %i.bn, -56615216
-  %13 = icmp ult i32 %12, 128
-  br i1 %13, label %4, label %14
-
-14:                                               ; preds = %11
-  %15 = add i32 %i.bn, -56626240
-  %16 = icmp ult i32 %15, 128
-  br i1 %16, label %4, label %17
-
-17:                                               ; preds = %14
-  %18 = add i32 %i.bn, -56626336
-  %19 = icmp ult i32 %18, 128
-  br i1 %19, label %4, label %20
-
-20:                                               ; preds = %17
-  %21 = add i32 %i.bn, -56679264
-  %22 = icmp ult i32 %21, 128
-  br i1 %22, label %4, label %23
-
-23:                                               ; preds = %20
-  %24 = icmp ult i32 %i.bo, 128
-  br i1 %24, label %_ZL16getDynamicOffsetjPj.exit.a, label %25
-
-25:                                               ; preds = %23
-  %26 = icmp ult i32 %i.bo, 13312
-  %27 = and i32 %i.bo, -16384
-  %28 = icmp eq i32 %27, 65536
-  %or.cond.i = or i1 %26, %28
-  %29 = add i32 %i.bn, -56732672
-  %30 = icmp ult i32 %29, 12288
-  %or.cond27.i = or i1 %30, %or.cond.i
-  br i1 %or.cond27.i, label %31, label %bb.ab
-
-31:                                               ; preds = %25
-  %32 = and i32 %i.bo, 130944                     ; 2 uses
-  store i32 %32, ptr %i.a, align 4
-  %33 = lshr i32 %i.bo, 7
-  br label %bb.ac
-
-bb.ab:                                            ; preds = %25
-  %34 = icmp ne i32 %i.bo, 65279
-  %35 = add i32 %i.bn, -56671232
-  %36 = icmp ult i32 %35, 8176
-  %or.cond3.i = and i1 %34, %36
-  br i1 %or.cond3.i, label %37, label %_ZL16getDynamicOffsetjPj.exit.a
-
-37:                                               ; preds = %bb.ab
-  %38 = and i32 %i.bo, 65408                      ; 2 uses
-  store i32 %38, ptr %i.a, align 4
-  %39 = add nsw i32 %i.bn, -56657920
-  %40 = lshr i32 %39, 7
-  br label %bb.ac
-
-bb.ac:                                            ; preds = %4, %31, %37
-  %41 = phi i32 [ %38, %37 ], [ %32, %31 ], [ %.lcssa.i, %4 ] ; 3 uses
-  %.023.i332.ph = phi i32 [ %40, %37 ], [ %33, %31 ], [ %.029.lcssa.wide.i, %4 ]
+bb.ac:                                            ; preds = %bb.ab
   %i.dq = load i8, ptr %i.aj, align 1             ; 2 uses
   %i.dr = sext i8 %i.dq to i64
   %i.ds = getelementptr inbounds i8, ptr %i.ai, i64 %i.dr
-  %i.dt = load i8, ptr %i.ds, align 1             ; 5 uses
+  %i.dt = load i8, ptr %i.ds, align 1             ; 4 uses
   %i.du = add i8 %i.dq, 1                         ; 2 uses
   %i.dv = icmp eq i8 %i.du, 8
   %spec.select.i333 = select i1 %i.dv, i8 0, i8 %i.du
   store i8 %spec.select.i333, ptr %i.aj, align 1
+  %4 = load i32, ptr %i.a, align 4                ; 3 uses
   %i.dw = zext i8 %i.dt to i64
   %i.dx = getelementptr inbounds nuw [4 x i8], ptr %i.v, i64 %i.dw
-  store i32 %41, ptr %i.dx, align 4
-  %42 = load i8, ptr %i.aj, align 1
-  %43 = sext i8 %42 to i32                        ; 2 uses
-  br label %44
-
-44:                                               ; preds = %44, %bb.ac
-  %.019.i334 = phi i32 [ %43, %bb.ac ], [ %spec.store.select.i335, %44 ] ; 2 uses
-  %45 = add nsw i32 %.019.i334, -1
-  %46 = icmp slt i32 %.019.i334, 1
-  %spec.store.select.i335 = select i1 %46, i32 7, i32 %45 ; 4 uses
-  %47 = sext i32 %spec.store.select.i335 to i64   ; 2 uses
-  %48 = getelementptr inbounds i8, ptr %i.ai, i64 %47
-  %49 = load i8, ptr %48, align 1
-  %.not.i336 = icmp eq i8 %49, %i.dt
-  br i1 %.not.i336, label %50, label %44, !llvm.loop !14
-
-50:                                               ; preds = %44
-  %51 = add nsw i32 %spec.store.select.i335, 1    ; 2 uses
-  %52 = icmp eq i32 %51, 8
-  %spec.store.select1.i337 = select i1 %52, i32 0, i32 %51 ; 2 uses
-  %.not2021.i338 = icmp eq i32 %spec.store.select1.i337, %43
-  br i1 %.not2021.i338, label %_ZL16useDynamicWindowP8SCSUDataa.exit345, label %.lr.ph.i339
-
-.lr.ph.i339:                                      ; preds = %50, %.lr.ph.i339
-  %.023.i340 = phi i32 [ %spec.store.select2.i342, %.lr.ph.i339 ], [ %spec.store.select1.i337, %50 ] ; 3 uses
-  %.122.i341 = phi i32 [ %.023.i340, %.lr.ph.i339 ], [ %spec.store.select.i335, %50 ]
-  %53 = sext i32 %.023.i340 to i64                ; 2 uses
-  %54 = getelementptr inbounds i8, ptr %i.ai, i64 %53
-  %55 = load i8, ptr %54, align 1
-  %56 = sext i32 %.122.i341 to i64
-  %57 = getelementptr inbounds i8, ptr %i.ai, i64 %56
-  store i8 %55, ptr %57, align 1
-  %58 = add nsw i32 %.023.i340, 1                 ; 2 uses
-  %59 = icmp eq i32 %58, 8
-  %spec.store.select2.i342 = select i1 %59, i32 0, i32 %58 ; 2 uses
-  %60 = load i8, ptr %i.aj, align 1
-  %61 = sext i8 %60 to i32
-  %.not20.i343 = icmp eq i32 %spec.store.select2.i342, %61
-  br i1 %.not20.i343, label %_ZL16useDynamicWindowP8SCSUDataa.exit345, label %.lr.ph.i339, !llvm.loop !15
-
-_ZL16useDynamicWindowP8SCSUDataa.exit345:         ; preds = %.lr.ph.i339, %50
-  %.pre-phi.i344 = phi i64 [ %47, %50 ], [ %53, %.lr.ph.i339 ]
-  %62 = getelementptr inbounds i8, ptr %i.ai, i64 %.pre-phi.i344
-  store i8 %i.dt, ptr %62, align 1
-  %63 = zext i8 %i.dt to i32
-  %64 = shl nuw nsw i32 %63, 21
-  %65 = shl nuw nsw i32 %.023.i332.ph, 8
-  %66 = add nsw i32 %65, -131072
-  %67 = sub i32 %i.bo, %41
-  %68 = or i32 %66, %64
-  %69 = or i32 %68, %67
-  %70 = or i32 %69, 184549504
+  store i32 %4, ptr %i.dx, align 4
+  tail call fastcc void @_ZL16useDynamicWindowP8SCSUDataa(ptr noundef nonnull %i.e, i8 noundef signext %i.dt)
+  %5 = zext i8 %i.dt to i32
+  %6 = shl nuw nsw i32 %5, 21
+  %7 = shl nuw nsw i32 %2, 8
+  %8 = add nsw i32 %7, -131072
+  %9 = sub i32 %i.bo, %4
+  %10 = or i32 %8, %6
+  %11 = or i32 %10, %9
+  %12 = or i32 %11, 184549504
   br label %bb.ct
 
-_ZL16getDynamicOffsetjPj.exit.a:                  ; preds = %bb.ab, %23
+_ZL16getDynamicOffsetjPj.exit.a:                  ; preds = %bb.ab
   %i.dy = getelementptr inbounds nuw i8, ptr %.2281, i64 1
   store i8 15, ptr %.2281, align 1
   %i.dz = add nsw i32 %.2274, -1
@@ -992,14 +879,14 @@ bb.cs:                                            ; preds = %bb.bl
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
   ret void
 
-bb.ct:                                            ; preds = %_ZL16getDynamicOffsetjPj.exit370, %_ZL16useDynamicWindowP8SCSUDataa.exit383, %_ZL16getDynamicOffsetjPj.exit.a, %_ZL16useDynamicWindowP8SCSUDataa.exit345
-  %.9297.jt4 = phi ptr [ %i.jq, %_ZL16useDynamicWindowP8SCSUDataa.exit383 ], [ %i.bl, %_ZL16getDynamicOffsetjPj.exit.a ], [ %i.bl, %_ZL16useDynamicWindowP8SCSUDataa.exit345 ], [ %i.jq, %_ZL16getDynamicOffsetjPj.exit370 ] ; 2 uses
-  %.9.jt4 = phi ptr [ %.7286, %_ZL16useDynamicWindowP8SCSUDataa.exit383 ], [ %i.dy, %_ZL16getDynamicOffsetjPj.exit.a ], [ %.2281, %_ZL16useDynamicWindowP8SCSUDataa.exit345 ], [ %.7286, %_ZL16getDynamicOffsetjPj.exit370 ] ; 3 uses
-  %.8.jt4 = phi i32 [ %.7, %_ZL16useDynamicWindowP8SCSUDataa.exit383 ], [ %i.dz, %_ZL16getDynamicOffsetjPj.exit.a ], [ %.2274, %_ZL16useDynamicWindowP8SCSUDataa.exit345 ], [ %.7, %_ZL16getDynamicOffsetjPj.exit370 ] ; 3 uses
-  %.2271.jt4 = phi i8 [ 1, %_ZL16useDynamicWindowP8SCSUDataa.exit383 ], [ 0, %_ZL16getDynamicOffsetjPj.exit.a ], [ %.0269, %_ZL16useDynamicWindowP8SCSUDataa.exit345 ], [ 0, %_ZL16getDynamicOffsetjPj.exit370 ] ; 2 uses
-  %.2268.jt4 = phi i8 [ %i.nh, %_ZL16useDynamicWindowP8SCSUDataa.exit383 ], [ %.0266, %_ZL16getDynamicOffsetjPj.exit.a ], [ %i.dt, %_ZL16useDynamicWindowP8SCSUDataa.exit345 ], [ %.0266, %_ZL16getDynamicOffsetjPj.exit370 ] ; 2 uses
-  %.1265.jt4 = phi i32 [ %i.nd, %_ZL16useDynamicWindowP8SCSUDataa.exit383 ], [ %.0264, %_ZL16getDynamicOffsetjPj.exit.a ], [ %41, %_ZL16useDynamicWindowP8SCSUDataa.exit345 ], [ %.0264, %_ZL16getDynamicOffsetjPj.exit370 ]
-  %.6.jt4 = phi i32 [ %i.om, %_ZL16useDynamicWindowP8SCSUDataa.exit383 ], [ %i.eb, %_ZL16getDynamicOffsetjPj.exit.a ], [ %70, %_ZL16useDynamicWindowP8SCSUDataa.exit345 ], [ %i.oo, %_ZL16getDynamicOffsetjPj.exit370 ] ; 3 uses
+bb.ct:                                            ; preds = %_ZL16getDynamicOffsetjPj.exit370, %_ZL16useDynamicWindowP8SCSUDataa.exit383, %_ZL16getDynamicOffsetjPj.exit.a, %bb.ac
+  %.9297.jt4 = phi ptr [ %i.jq, %_ZL16useDynamicWindowP8SCSUDataa.exit383 ], [ %i.bl, %_ZL16getDynamicOffsetjPj.exit.a ], [ %i.bl, %bb.ac ], [ %i.jq, %_ZL16getDynamicOffsetjPj.exit370 ] ; 2 uses
+  %.9.jt4 = phi ptr [ %.7286, %_ZL16useDynamicWindowP8SCSUDataa.exit383 ], [ %i.dy, %_ZL16getDynamicOffsetjPj.exit.a ], [ %.2281, %bb.ac ], [ %.7286, %_ZL16getDynamicOffsetjPj.exit370 ] ; 3 uses
+  %.8.jt4 = phi i32 [ %.7, %_ZL16useDynamicWindowP8SCSUDataa.exit383 ], [ %i.dz, %_ZL16getDynamicOffsetjPj.exit.a ], [ %.2274, %bb.ac ], [ %.7, %_ZL16getDynamicOffsetjPj.exit370 ] ; 3 uses
+  %.2271.jt4 = phi i8 [ 1, %_ZL16useDynamicWindowP8SCSUDataa.exit383 ], [ 0, %_ZL16getDynamicOffsetjPj.exit.a ], [ %.0269, %bb.ac ], [ 0, %_ZL16getDynamicOffsetjPj.exit370 ] ; 2 uses
+  %.2268.jt4 = phi i8 [ %i.nh, %_ZL16useDynamicWindowP8SCSUDataa.exit383 ], [ %.0266, %_ZL16getDynamicOffsetjPj.exit.a ], [ %i.dt, %bb.ac ], [ %.0266, %_ZL16getDynamicOffsetjPj.exit370 ] ; 2 uses
+  %.1265.jt4 = phi i32 [ %i.nd, %_ZL16useDynamicWindowP8SCSUDataa.exit383 ], [ %.0264, %_ZL16getDynamicOffsetjPj.exit.a ], [ %4, %bb.ac ], [ %.0264, %_ZL16getDynamicOffsetjPj.exit370 ]
+  %.6.jt4 = phi i32 [ %i.om, %_ZL16useDynamicWindowP8SCSUDataa.exit383 ], [ %i.eb, %_ZL16getDynamicOffsetjPj.exit.a ], [ %12, %bb.ac ], [ %i.oo, %_ZL16getDynamicOffsetjPj.exit370 ] ; 3 uses
   %.not327.jt4 = icmp samesign ult i32 %.8.jt4, 4
   br i1 %.not327.jt4, label %.thread, label %bb.cw
 
@@ -1156,12 +1043,12 @@ bb.dg:                                            ; preds = %bb.dd, %bb.df
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal void @_ZL27_SCSUFromUnicodeWithOffsetsP25UConverterFromUnicodeArgsP10UErrorCode(ptr nofree noundef captures(none) %0, ptr nofree noundef writeonly captures(none) %1) #2 {
 bb.a:
-  %i.a = alloca i32, align 4                      ; 12 uses
+  %i.a = alloca i32, align 4                      ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load ptr, ptr %i.b, align 8              ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 16
-  %i.e = load ptr, ptr %i.d, align 8              ; 16 uses
+  %i.e = load ptr, ptr %i.d, align 8              ; 17 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.g = load ptr, ptr %i.f, align 8
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -1195,8 +1082,8 @@ bb.a:
   %i.aj = getelementptr inbounds nuw i8, ptr %i.e, i64 52 ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %i.e, i64 56 ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.e, i64 60 ; 2 uses
-  %i.am = getelementptr inbounds nuw i8, ptr %i.e, i64 76 ; 20 uses
-  %i.an = getelementptr inbounds nuw i8, ptr %i.e, i64 75 ; 16 uses
+  %i.am = getelementptr inbounds nuw i8, ptr %i.e, i64 76 ; 16 uses
+  %i.an = getelementptr inbounds nuw i8, ptr %i.e, i64 75 ; 14 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.dn, %bb.a
@@ -1329,8 +1216,8 @@ bb.u:                                             ; preds = %bb.t
   %i.bv = getelementptr inbounds nuw i8, ptr %.2382, i64 2 ; 5 uses
   %i.bw = add nsw i32 %.2320, 1                   ; 5 uses
   %i.bx = shl i32 %.2329, 10
-  %i.by = add nsw i32 %i.bx, %i.bs                ; 11 uses
-  %i.bz = add nsw i32 %i.by, -56613888            ; 18 uses
+  %i.by = add i32 %i.bx, -56613888
+  %i.bz = add i32 %i.by, %i.bs                    ; 12 uses
   %i.ca = sub i32 %i.bz, %.0334                   ; 2 uses
   %i.cb = icmp ult i32 %i.ca, 128
   br i1 %i.cb, label %bb.v, label %bb.x
@@ -1393,7 +1280,7 @@ bb.ae:                                            ; preds = %bb.ad
   %i.da = load i32, ptr %i.al, align 4
   %i.db = sub i32 %i.bz, %i.da
   %i.dc = icmp ult i32 %i.db, 128
-  br i1 %i.dc, label %select.unfold, label %_ZL9getWindowPKjj.exit
+  br i1 %i.dc, label %select.unfold, label %bb.ah
 
 select.unfold:                                    ; preds = %bb.ae, %bb.x, %bb.y, %bb.z, %bb.aa, %bb.ab, %bb.ac, %bb.ad
   %.06.i.ph = phi i8 [ 0, %bb.x ], [ 6, %bb.ad ], [ 5, %bb.ac ], [ 4, %bb.ab ], [ 3, %bb.aa ], [ 2, %bb.z ], [ 1, %bb.y ], [ 7, %bb.ae ] ; 5 uses
@@ -1451,149 +1338,36 @@ _ZL16useDynamicWindowP8SCSUDataa.exit:            ; preds = %.lr.ph.i, %bb.ag
   %i.ed = or i32 %i.ec, 128
   br label %bb.dg
 
-_ZL9getWindowPKjj.exit:                           ; preds = %bb.ae
-  %2 = add i32 %i.by, -56614080
-  %3 = icmp ult i32 %2, 128
-  br i1 %3, label %4, label %5
+bb.ah:                                            ; preds = %bb.ae
+  %2 = call fastcc noundef i32 @_ZL16getDynamicOffsetjPj(i32 noundef %i.bz, ptr noundef %i.a) ; 2 uses
+  %3 = icmp sgt i32 %2, -1
+  br i1 %3, label %bb.ai, label %_ZL16getDynamicOffsetjPj.exit.a
 
-4:                                                ; preds = %20, %17, %14, %11, %8, %5, %_ZL9getWindowPKjj.exit
-  %.029.lcssa.wide.i = phi i32 [ 249, %_ZL9getWindowPKjj.exit ], [ 250, %5 ], [ 251, %8 ], [ 252, %11 ], [ 253, %14 ], [ 254, %17 ], [ 255, %20 ]
-  %.lcssa.i = phi i32 [ 192, %_ZL9getWindowPKjj.exit ], [ 592, %5 ], [ 880, %8 ], [ 1328, %11 ], [ 12352, %14 ], [ 12448, %17 ], [ 65376, %20 ] ; 2 uses
-  store i32 %.lcssa.i, ptr %i.a, align 4
-  br label %bb.ai
-
-5:                                                ; preds = %_ZL9getWindowPKjj.exit
-  %6 = add i32 %i.by, -56614480
-  %7 = icmp ult i32 %6, 128
-  br i1 %7, label %4, label %8
-
-8:                                                ; preds = %5
-  %9 = add i32 %i.by, -56614768
-  %10 = icmp ult i32 %9, 128
-  br i1 %10, label %4, label %11
-
-11:                                               ; preds = %8
-  %12 = add i32 %i.by, -56615216
-  %13 = icmp ult i32 %12, 128
-  br i1 %13, label %4, label %14
-
-14:                                               ; preds = %11
-  %15 = add i32 %i.by, -56626240
-  %16 = icmp ult i32 %15, 128
-  br i1 %16, label %4, label %17
-
-17:                                               ; preds = %14
-  %18 = add i32 %i.by, -56626336
-  %19 = icmp ult i32 %18, 128
-  br i1 %19, label %4, label %20
-
-20:                                               ; preds = %17
-  %21 = add i32 %i.by, -56679264
-  %22 = icmp ult i32 %21, 128
-  br i1 %22, label %4, label %23
-
-23:                                               ; preds = %20
-  %24 = icmp ult i32 %i.bz, 128
-  br i1 %24, label %_ZL16getDynamicOffsetjPj.exit.a, label %25
-
-25:                                               ; preds = %23
-  %26 = icmp ult i32 %i.bz, 13312
-  %27 = and i32 %i.bz, -16384
-  %28 = icmp eq i32 %27, 65536
-  %or.cond.i = or i1 %26, %28
-  %29 = add i32 %i.by, -56732672
-  %30 = icmp ult i32 %29, 12288
-  %or.cond27.i = or i1 %30, %or.cond.i
-  br i1 %or.cond27.i, label %31, label %bb.ah
-
-31:                                               ; preds = %25
-  %32 = and i32 %i.bz, 130944                     ; 2 uses
-  store i32 %32, ptr %i.a, align 4
-  %33 = lshr i32 %i.bz, 7
-  br label %bb.ai
-
-bb.ah:                                            ; preds = %25
-  %34 = icmp ne i32 %i.bz, 65279
-  %35 = add i32 %i.by, -56671232
-  %36 = icmp ult i32 %35, 8176
-  %or.cond3.i = and i1 %34, %36
-  br i1 %or.cond3.i, label %37, label %_ZL16getDynamicOffsetjPj.exit.a
-
-37:                                               ; preds = %bb.ah
-  %38 = and i32 %i.bz, 65408                      ; 2 uses
-  store i32 %38, ptr %i.a, align 4
-  %39 = add nsw i32 %i.by, -56657920
-  %40 = lshr i32 %39, 7
-  br label %bb.ai
-
-bb.ai:                                            ; preds = %4, %31, %37
-  %41 = phi i32 [ %38, %37 ], [ %32, %31 ], [ %.lcssa.i, %4 ] ; 3 uses
-  %.023.i433.ph = phi i32 [ %40, %37 ], [ %33, %31 ], [ %.029.lcssa.wide.i, %4 ]
+bb.ai:                                            ; preds = %bb.ah
   %i.ee = load i8, ptr %i.an, align 1             ; 2 uses
   %i.ef = sext i8 %i.ee to i64
   %i.eg = getelementptr inbounds i8, ptr %i.am, i64 %i.ef
-  %i.eh = load i8, ptr %i.eg, align 1             ; 5 uses
+  %i.eh = load i8, ptr %i.eg, align 1             ; 4 uses
   %i.ei = add i8 %i.ee, 1                         ; 2 uses
   %i.ej = icmp eq i8 %i.ei, 8
   %spec.select.i434 = select i1 %i.ej, i8 0, i8 %i.ei
   store i8 %spec.select.i434, ptr %i.an, align 1
+  %4 = load i32, ptr %i.a, align 4                ; 3 uses
   %i.ek = zext i8 %i.eh to i64
   %i.el = getelementptr inbounds nuw [4 x i8], ptr %i.x, i64 %i.ek
-  store i32 %41, ptr %i.el, align 4
-  %42 = load i8, ptr %i.an, align 1
-  %43 = sext i8 %42 to i32                        ; 2 uses
-  br label %44
-
-44:                                               ; preds = %44, %bb.ai
-  %.019.i435 = phi i32 [ %43, %bb.ai ], [ %spec.store.select.i436, %44 ] ; 2 uses
-  %45 = add nsw i32 %.019.i435, -1
-  %46 = icmp slt i32 %.019.i435, 1
-  %spec.store.select.i436 = select i1 %46, i32 7, i32 %45 ; 4 uses
-  %47 = sext i32 %spec.store.select.i436 to i64   ; 2 uses
-  %48 = getelementptr inbounds i8, ptr %i.am, i64 %47
-  %49 = load i8, ptr %48, align 1
-  %.not.i437 = icmp eq i8 %49, %i.eh
-  br i1 %.not.i437, label %50, label %44, !llvm.loop !14
-
-50:                                               ; preds = %44
-  %51 = add nsw i32 %spec.store.select.i436, 1    ; 2 uses
-  %52 = icmp eq i32 %51, 8
-  %spec.store.select1.i438 = select i1 %52, i32 0, i32 %51 ; 2 uses
-  %.not2021.i439 = icmp eq i32 %spec.store.select1.i438, %43
-  br i1 %.not2021.i439, label %_ZL16useDynamicWindowP8SCSUDataa.exit446, label %.lr.ph.i440
-
-.lr.ph.i440:                                      ; preds = %50, %.lr.ph.i440
-  %.023.i441 = phi i32 [ %spec.store.select2.i443, %.lr.ph.i440 ], [ %spec.store.select1.i438, %50 ] ; 3 uses
-  %.122.i442 = phi i32 [ %.023.i441, %.lr.ph.i440 ], [ %spec.store.select.i436, %50 ]
-  %53 = sext i32 %.023.i441 to i64                ; 2 uses
-  %54 = getelementptr inbounds i8, ptr %i.am, i64 %53
-  %55 = load i8, ptr %54, align 1
-  %56 = sext i32 %.122.i442 to i64
-  %57 = getelementptr inbounds i8, ptr %i.am, i64 %56
-  store i8 %55, ptr %57, align 1
-  %58 = add nsw i32 %.023.i441, 1                 ; 2 uses
-  %59 = icmp eq i32 %58, 8
-  %spec.store.select2.i443 = select i1 %59, i32 0, i32 %58 ; 2 uses
-  %60 = load i8, ptr %i.an, align 1
-  %61 = sext i8 %60 to i32
-  %.not20.i444 = icmp eq i32 %spec.store.select2.i443, %61
-  br i1 %.not20.i444, label %_ZL16useDynamicWindowP8SCSUDataa.exit446, label %.lr.ph.i440, !llvm.loop !15
-
-_ZL16useDynamicWindowP8SCSUDataa.exit446:         ; preds = %.lr.ph.i440, %50
-  %.pre-phi.i445 = phi i64 [ %47, %50 ], [ %53, %.lr.ph.i440 ]
-  %62 = getelementptr inbounds i8, ptr %i.am, i64 %.pre-phi.i445
-  store i8 %i.eh, ptr %62, align 1
-  %63 = zext i8 %i.eh to i32
-  %64 = shl nuw nsw i32 %63, 21
-  %65 = shl nuw nsw i32 %.023.i433.ph, 8
-  %66 = add nsw i32 %65, -131072
-  %67 = sub i32 %i.bz, %41
-  %68 = or i32 %66, %64
-  %69 = or i32 %68, %67
-  %70 = or i32 %69, 184549504
+  store i32 %4, ptr %i.el, align 4
+  tail call fastcc void @_ZL16useDynamicWindowP8SCSUDataa(ptr noundef nonnull %i.e, i8 noundef signext %i.eh)
+  %5 = zext i8 %i.eh to i32
+  %6 = shl nuw nsw i32 %5, 21
+  %7 = shl nuw nsw i32 %2, 8
+  %8 = add nsw i32 %7, -131072
+  %9 = sub i32 %i.bz, %4
+  %10 = or i32 %8, %6
+  %11 = or i32 %10, %9
+  %12 = or i32 %11, 184549504
   br label %bb.de
 
-_ZL16getDynamicOffsetjPj.exit.a:                  ; preds = %bb.ah, %23
+_ZL16getDynamicOffsetjPj.exit.a:                  ; preds = %bb.ah
   %i.em = getelementptr inbounds nuw i8, ptr %.2362, i64 1
   store i8 15, ptr %.2362, align 1
   %.not413 = icmp eq ptr %.5347, null
@@ -1996,17 +1770,17 @@ bb.dd:                                            ; preds = %bb.bw
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
   ret void
 
-bb.de:                                            ; preds = %_ZL16getDynamicOffsetjPj.exit471, %_ZL16useDynamicWindowP8SCSUDataa.exit484, %bb.ak, %_ZL16useDynamicWindowP8SCSUDataa.exit446
-  %.9389.jt4 = phi ptr [ %i.kj, %_ZL16useDynamicWindowP8SCSUDataa.exit484 ], [ %i.bv, %bb.ak ], [ %i.bv, %_ZL16useDynamicWindowP8SCSUDataa.exit446 ], [ %i.kj, %_ZL16getDynamicOffsetjPj.exit471 ] ; 3 uses
-  %.9369.jt4 = phi ptr [ %.7367, %_ZL16useDynamicWindowP8SCSUDataa.exit484 ], [ %i.em, %bb.ak ], [ %.2362, %_ZL16useDynamicWindowP8SCSUDataa.exit446 ], [ %.7367, %_ZL16getDynamicOffsetjPj.exit471 ] ; 3 uses
-  %.8359.jt4 = phi i32 [ %.7358, %_ZL16useDynamicWindowP8SCSUDataa.exit484 ], [ %i.eo, %bb.ak ], [ %.2353, %_ZL16useDynamicWindowP8SCSUDataa.exit446 ], [ %.7358, %_ZL16getDynamicOffsetjPj.exit471 ] ; 4 uses
-  %.15.jt4 = phi ptr [ %.13, %_ZL16useDynamicWindowP8SCSUDataa.exit484 ], [ %.7349, %bb.ak ], [ %.5347, %_ZL16useDynamicWindowP8SCSUDataa.exit446 ], [ %.13, %_ZL16getDynamicOffsetjPj.exit471 ] ; 4 uses
-  %.2341.jt4 = phi i8 [ 1, %_ZL16useDynamicWindowP8SCSUDataa.exit484 ], [ 0, %bb.ak ], [ %.0339, %_ZL16useDynamicWindowP8SCSUDataa.exit446 ], [ 0, %_ZL16getDynamicOffsetjPj.exit471 ] ; 3 uses
-  %.2338.jt4 = phi i8 [ %i.ob, %_ZL16useDynamicWindowP8SCSUDataa.exit484 ], [ %.0336, %bb.ak ], [ %i.eh, %_ZL16useDynamicWindowP8SCSUDataa.exit446 ], [ %.0336, %_ZL16getDynamicOffsetjPj.exit471 ] ; 3 uses
-  %.1335.jt4 = phi i32 [ %i.nx, %_ZL16useDynamicWindowP8SCSUDataa.exit484 ], [ %.0334, %bb.ak ], [ %41, %_ZL16useDynamicWindowP8SCSUDataa.exit446 ], [ %.0334, %_ZL16getDynamicOffsetjPj.exit471 ] ; 2 uses
-  %.6333.jt4 = phi i32 [ %i.pg, %_ZL16useDynamicWindowP8SCSUDataa.exit484 ], [ %i.eq, %bb.ak ], [ %70, %_ZL16useDynamicWindowP8SCSUDataa.exit446 ], [ %i.pi, %_ZL16getDynamicOffsetjPj.exit471 ] ; 4 uses
-  %.5326.jt4 = phi i32 [ %.4325, %_ZL16useDynamicWindowP8SCSUDataa.exit484 ], [ %.2323, %bb.ak ], [ %.2323, %_ZL16useDynamicWindowP8SCSUDataa.exit446 ], [ %.4325, %_ZL16getDynamicOffsetjPj.exit471 ] ; 3 uses
-  %.8.jt4 = phi i32 [ %i.kk, %_ZL16useDynamicWindowP8SCSUDataa.exit484 ], [ %i.bw, %bb.ak ], [ %i.bw, %_ZL16useDynamicWindowP8SCSUDataa.exit446 ], [ %i.kk, %_ZL16getDynamicOffsetjPj.exit471 ] ; 2 uses
+bb.de:                                            ; preds = %_ZL16getDynamicOffsetjPj.exit471, %_ZL16useDynamicWindowP8SCSUDataa.exit484, %bb.ak, %bb.ai
+  %.9389.jt4 = phi ptr [ %i.kj, %_ZL16useDynamicWindowP8SCSUDataa.exit484 ], [ %i.bv, %bb.ak ], [ %i.bv, %bb.ai ], [ %i.kj, %_ZL16getDynamicOffsetjPj.exit471 ] ; 3 uses
+  %.9369.jt4 = phi ptr [ %.7367, %_ZL16useDynamicWindowP8SCSUDataa.exit484 ], [ %i.em, %bb.ak ], [ %.2362, %bb.ai ], [ %.7367, %_ZL16getDynamicOffsetjPj.exit471 ] ; 3 uses
+  %.8359.jt4 = phi i32 [ %.7358, %_ZL16useDynamicWindowP8SCSUDataa.exit484 ], [ %i.eo, %bb.ak ], [ %.2353, %bb.ai ], [ %.7358, %_ZL16getDynamicOffsetjPj.exit471 ] ; 4 uses
+  %.15.jt4 = phi ptr [ %.13, %_ZL16useDynamicWindowP8SCSUDataa.exit484 ], [ %.7349, %bb.ak ], [ %.5347, %bb.ai ], [ %.13, %_ZL16getDynamicOffsetjPj.exit471 ] ; 4 uses
+  %.2341.jt4 = phi i8 [ 1, %_ZL16useDynamicWindowP8SCSUDataa.exit484 ], [ 0, %bb.ak ], [ %.0339, %bb.ai ], [ 0, %_ZL16getDynamicOffsetjPj.exit471 ] ; 3 uses
+  %.2338.jt4 = phi i8 [ %i.ob, %_ZL16useDynamicWindowP8SCSUDataa.exit484 ], [ %.0336, %bb.ak ], [ %i.eh, %bb.ai ], [ %.0336, %_ZL16getDynamicOffsetjPj.exit471 ] ; 3 uses
+  %.1335.jt4 = phi i32 [ %i.nx, %_ZL16useDynamicWindowP8SCSUDataa.exit484 ], [ %.0334, %bb.ak ], [ %4, %bb.ai ], [ %.0334, %_ZL16getDynamicOffsetjPj.exit471 ] ; 2 uses
+  %.6333.jt4 = phi i32 [ %i.pg, %_ZL16useDynamicWindowP8SCSUDataa.exit484 ], [ %i.eq, %bb.ak ], [ %12, %bb.ai ], [ %i.pi, %_ZL16getDynamicOffsetjPj.exit471 ] ; 4 uses
+  %.5326.jt4 = phi i32 [ %.4325, %_ZL16useDynamicWindowP8SCSUDataa.exit484 ], [ %.2323, %bb.ak ], [ %.2323, %bb.ai ], [ %.4325, %_ZL16getDynamicOffsetjPj.exit471 ] ; 3 uses
+  %.8.jt4 = phi i32 [ %i.kk, %_ZL16useDynamicWindowP8SCSUDataa.exit484 ], [ %i.bw, %bb.ak ], [ %i.bw, %bb.ai ], [ %i.kk, %_ZL16getDynamicOffsetjPj.exit471 ] ; 2 uses
   %.not423.jt4 = icmp samesign ult i32 %.8359.jt4, 4
   br i1 %.not423.jt4, label %.thread, label %bb.dh
 
