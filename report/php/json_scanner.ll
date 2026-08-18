@@ -1,7 +1,7 @@
-inline.NumInlined: 20
-inline.NumDeleted: 2
-loop-unroll.NumCompletelyUnrolled: 7
-loop-unroll.NumUnrolled: 7
+inline.NumInlined: 23
+inline.NumDeleted: 3
+loop-unroll.NumCompletelyUnrolled: 9
+loop-unroll.NumUnrolled: 9
 begin_hunk_0_@php_json_scan:bb.a
   %i.oc = icmp ult i8 %i.nz, 71
   %i.od = add i8 %i.nz, -97
@@ -203,7 +203,7 @@ bb.hi:                                            ; preds = %bb.hg, %bb.hh
   br label %.backedge1631.backedge
 
 .backedge:                                        ; preds = %.backedge.backedge, %.preheader
-  %i.qp = phi ptr [ %i.aff, %.preheader ], [ %.be1992, %.backedge.backedge ] ; 41 uses
+  %i.qp = phi ptr [ %i.aff, %.preheader ], [ %.be1992, %.backedge.backedge ] ; 46 uses
   %i.qq = load i8, ptr %i.qp, align 1, !tbaa !20  ; 11 uses
   %i.qr = icmp ult i8 %i.qq, -32
   br i1 %i.qr, label %bb.hj, label %bb.ho
@@ -606,7 +606,7 @@ bb.ko:                                            ; preds = %bb.km
   br i1 %or.cond1479, label %bb.li, label %.thread1607
 
 bb.kp:                                            ; preds = %bb.ke, %bb.kf
-  %i.ws = getelementptr inbounds nuw i8, ptr %i.qp, i64 5 ; 2 uses
+  %i.ws = getelementptr inbounds nuw i8, ptr %i.qp, i64 5 ; 3 uses
   store ptr %i.ws, ptr %0, align 8, !tbaa !12
   %i.wt = load i8, ptr %i.ws, align 1, !tbaa !20  ; 4 uses
   %i.wu = icmp ult i8 %i.wt, 65
@@ -1009,27 +1009,206 @@ bb.mi:                                            ; preds = %bb.mg, %bb.mh
 bb.mj:                                            ; preds = %bb.mi
   %i.acm = add nsw i8 %i.ack, -58
   %or.cond277 = icmp ult i8 %i.acm, -10
-  br i1 %or.cond277, label %.thread1607, label %bb.ml
+  br i1 %or.cond277, label %.thread1607, label %1
 
 bb.mk:                                            ; preds = %bb.mi
   %i.acn = icmp ugt i8 %i.ack, 70
   %i.aco = add i8 %i.ack, -103
   %or.cond280 = icmp ult i8 %i.aco, -6
   %or.cond1486 = and i1 %i.acn, %or.cond280
-  br i1 %or.cond1486, label %.thread1607, label %bb.ml
+  br i1 %or.cond1486, label %.thread1607, label %1
 
-bb.ml:                                            ; preds = %bb.mj, %bb.mk
-  %1 = getelementptr inbounds nuw i8, ptr %i.qp, i64 12 ; 4 uses
-  store ptr %1, ptr %0, align 8, !tbaa !12
-  %2 = tail call fastcc i32 @php_json_ucs2_to_int(ptr nonnull %1, i32 noundef 4) ; 2 uses
-  %3 = tail call fastcc i32 @php_json_ucs2_to_int_ex(ptr nonnull %1, i32 noundef 4, i32 noundef 7)
-  %4 = shl i32 %3, 10
-  %i.acp = and i32 %4, 1047552
-  %i.acq = and i32 %2, 1023
+1:                                                ; preds = %bb.mj, %bb.mk
+  %2 = getelementptr inbounds nuw i8, ptr %i.qp, i64 12 ; 2 uses
+  store ptr %2, ptr %0, align 8, !tbaa !12
+  %.03.i.i1543 = getelementptr inbounds nuw i8, ptr %i.qp, i64 11
+  %3 = load i8, ptr %.03.i.i1543, align 1, !tbaa !20 ; 4 uses
+  %4 = zext i8 %3 to i32                          ; 3 uses
+  %5 = add i8 %3, -48
+  %or.cond.i.i.i1544 = icmp ult i8 %5, 10
+  br i1 %or.cond.i.i.i1544, label %6, label %8
+
+6:                                                ; preds = %1
+  %7 = add nsw i32 %4, -48
+  br label %php_json_hex_to_int.exit.i.i1548
+
+8:                                                ; preds = %1
+  %9 = add i8 %3, -65
+  %or.cond5.i.i.i1545 = icmp ult i8 %9, 6
+  br i1 %or.cond5.i.i.i1545, label %10, label %12
+
+10:                                               ; preds = %8
+  %11 = add nsw i32 %4, -55
+  br label %php_json_hex_to_int.exit.i.i1548
+
+12:                                               ; preds = %8
+  %13 = add i8 %3, -97
+  %or.cond8.i.i.i1546 = icmp ult i8 %13, 6
+  %14 = add nsw i32 %4, -87
+  %spec.select.i.i.i1547 = select i1 %or.cond8.i.i.i1546, i32 %14, i32 -1
+  br label %php_json_hex_to_int.exit.i.i1548
+
+php_json_hex_to_int.exit.i.i1548:                 ; preds = %12, %10, %6
+  %.0.i.i.i1549 = phi i32 [ %7, %6 ], [ %11, %10 ], [ %spec.select.i.i.i1547, %12 ]
+  %.03.i.i1543.1 = getelementptr inbounds nuw i8, ptr %i.qp, i64 10
+  %15 = load i8, ptr %.03.i.i1543.1, align 1, !tbaa !20 ; 4 uses
+  %16 = zext i8 %15 to i32                        ; 3 uses
+  %17 = add i8 %15, -48
+  %or.cond.i.i.i1544.1 = icmp ult i8 %17, 10
+  br i1 %or.cond.i.i.i1544.1, label %25, label %18
+
+18:                                               ; preds = %php_json_hex_to_int.exit.i.i1548
+  %19 = add i8 %15, -65
+  %or.cond5.i.i.i1545.1 = icmp ult i8 %19, 6
+  br i1 %or.cond5.i.i.i1545.1, label %23, label %20
+
+20:                                               ; preds = %18
+  %21 = add i8 %15, -97
+  %or.cond8.i.i.i1546.1 = icmp ult i8 %21, 6
+  %22 = add nsw i32 %16, -87
+  %spec.select.i.i.i1547.1 = select i1 %or.cond8.i.i.i1546.1, i32 %22, i32 -1
+  br label %php_json_hex_to_int.exit.i.i1548.1
+
+23:                                               ; preds = %18
+  %24 = add nsw i32 %16, -55
+  br label %php_json_hex_to_int.exit.i.i1548.1
+
+25:                                               ; preds = %php_json_hex_to_int.exit.i.i1548
+  %26 = add nsw i32 %16, -48
+  br label %php_json_hex_to_int.exit.i.i1548.1
+
+php_json_hex_to_int.exit.i.i1548.1:               ; preds = %25, %23, %20
+  %.0.i.i.i1549.1 = phi i32 [ %26, %25 ], [ %24, %23 ], [ %spec.select.i.i.i1547.1, %20 ]
+  %27 = shl nsw i32 %.0.i.i.i1549.1, 4
+  %28 = or i32 %27, %.0.i.i.i1549                 ; 2 uses
+  %.03.i.i1543.2 = getelementptr inbounds nuw i8, ptr %i.qp, i64 9
+  %29 = load i8, ptr %.03.i.i1543.2, align 1, !tbaa !20 ; 4 uses
+  %30 = zext i8 %29 to i32                        ; 3 uses
+  %31 = add i8 %29, -48
+  %or.cond.i.i.i1544.2 = icmp ult i8 %31, 10
+  br i1 %or.cond.i.i.i1544.2, label %39, label %32
+
+32:                                               ; preds = %php_json_hex_to_int.exit.i.i1548.1
+  %33 = add i8 %29, -65
+  %or.cond5.i.i.i1545.2 = icmp ult i8 %33, 6
+  br i1 %or.cond5.i.i.i1545.2, label %37, label %34
+
+34:                                               ; preds = %32
+  %35 = add i8 %29, -97
+  %or.cond8.i.i.i1546.2 = icmp ult i8 %35, 6
+  %36 = add nsw i32 %30, -87
+  %spec.select.i.i.i1547.2 = select i1 %or.cond8.i.i.i1546.2, i32 %36, i32 -1
+  br label %php_json_hex_to_int.exit.i.i1548.2
+
+37:                                               ; preds = %32
+  %38 = add nsw i32 %30, -55
+  br label %php_json_hex_to_int.exit.i.i1548.2
+
+39:                                               ; preds = %php_json_hex_to_int.exit.i.i1548.1
+  %40 = add nsw i32 %30, -48
+  br label %php_json_hex_to_int.exit.i.i1548.2
+
+php_json_hex_to_int.exit.i.i1548.2:               ; preds = %39, %37, %34
+  %.0.i.i.i1549.2 = phi i32 [ %40, %39 ], [ %38, %37 ], [ %spec.select.i.i.i1547.2, %34 ]
+  %41 = shl nsw i32 %.0.i.i.i1549.2, 8
+  %42 = or i32 %41, %28
+  %43 = getelementptr inbounds nuw i8, ptr %i.qp, i64 4
+  %44 = load i8, ptr %i.ws, align 1, !tbaa !20    ; 4 uses
+  %45 = zext i8 %44 to i32                        ; 3 uses
+  %46 = add i8 %44, -48
+  %or.cond.i.i = icmp ult i8 %46, 10
+  br i1 %or.cond.i.i, label %47, label %49
+
+47:                                               ; preds = %php_json_hex_to_int.exit.i.i1548.2
+  %48 = add nsw i32 %45, -48
+  br label %php_json_hex_to_int.exit.i
+
+49:                                               ; preds = %php_json_hex_to_int.exit.i.i1548.2
+  %50 = add i8 %44, -65
+  %or.cond5.i.i = icmp ult i8 %50, 6
+  br i1 %or.cond5.i.i, label %51, label %53
+
+51:                                               ; preds = %49
+  %52 = add nsw i32 %45, -55
+  br label %php_json_hex_to_int.exit.i
+
+53:                                               ; preds = %49
+  %54 = add i8 %44, -97
+  %or.cond8.i.i = icmp ult i8 %54, 6
+  %55 = add nsw i32 %45, -87
+  %spec.select.i.i = select i1 %or.cond8.i.i, i32 %55, i32 -1
+  br label %php_json_hex_to_int.exit.i
+
+php_json_hex_to_int.exit.i:                       ; preds = %53, %51, %47
+  %.0.i.i = phi i32 [ %48, %47 ], [ %52, %51 ], [ %spec.select.i.i, %53 ]
+  %56 = getelementptr inbounds nuw i8, ptr %i.qp, i64 3
+  %57 = load i8, ptr %43, align 1, !tbaa !20      ; 4 uses
+  %58 = zext i8 %57 to i32                        ; 3 uses
+  %59 = add i8 %57, -48
+  %or.cond.i.i.1 = icmp ult i8 %59, 10
+  br i1 %or.cond.i.i.1, label %67, label %60
+
+60:                                               ; preds = %php_json_hex_to_int.exit.i
+  %61 = add i8 %57, -65
+  %or.cond5.i.i.1 = icmp ult i8 %61, 6
+  br i1 %or.cond5.i.i.1, label %65, label %62
+
+62:                                               ; preds = %60
+  %63 = add i8 %57, -97
+  %or.cond8.i.i.1 = icmp ult i8 %63, 6
+  %64 = add nsw i32 %58, -87
+  %spec.select.i.i.1 = select i1 %or.cond8.i.i.1, i32 %64, i32 -1
+  br label %php_json_hex_to_int.exit.i.1
+
+65:                                               ; preds = %60
+  %66 = add nsw i32 %58, -55
+  br label %php_json_hex_to_int.exit.i.1
+
+67:                                               ; preds = %php_json_hex_to_int.exit.i
+  %68 = add nsw i32 %58, -48
+  br label %php_json_hex_to_int.exit.i.1
+
+php_json_hex_to_int.exit.i.1:                     ; preds = %67, %65, %62
+  %.0.i.i.1 = phi i32 [ %68, %67 ], [ %66, %65 ], [ %spec.select.i.i.1, %62 ]
+  %69 = load i8, ptr %56, align 1, !tbaa !20      ; 4 uses
+  %70 = zext i8 %69 to i32                        ; 3 uses
+  %71 = add i8 %69, -48
+  %or.cond.i.i.2 = icmp ult i8 %71, 10
+  br i1 %or.cond.i.i.2, label %79, label %72
+
+72:                                               ; preds = %php_json_hex_to_int.exit.i.1
+  %73 = add i8 %69, -65
+  %or.cond5.i.i.2 = icmp ult i8 %73, 6
+  br i1 %or.cond5.i.i.2, label %77, label %74
+
+74:                                               ; preds = %72
+  %75 = add i8 %69, -97
+  %or.cond8.i.i.2 = icmp ult i8 %75, 6
+  %76 = add nsw i32 %70, -87
+  %spec.select.i.i.2 = select i1 %or.cond8.i.i.2, i32 %76, i32 -1
+  br label %bb.ml
+
+77:                                               ; preds = %72
+  %78 = add nsw i32 %70, -55
+  br label %bb.ml
+
+79:                                               ; preds = %php_json_hex_to_int.exit.i.1
+  %80 = add nsw i32 %70, -48
+  br label %bb.ml
+
+bb.ml:                                            ; preds = %74, %77, %79
+  %.0.i.i.2 = phi i32 [ %80, %79 ], [ %78, %77 ], [ %spec.select.i.i.2, %74 ]
+  %81 = shl nsw i32 %.0.i.i.2, 18
+  %82 = shl nsw i32 %.0.i.i.1, 14
+  %83 = shl nsw i32 %.0.i.i, 10
+  %84 = or i32 %82, %83
+  %85 = or i32 %81, %84
+  %i.acp = and i32 %85, 1047552
+  %i.acq = and i32 %42, 1023
   %i.acr = or disjoint i32 %i.acp, %i.acq         ; 2 uses
   %i.acs = add nuw nsw i32 %i.acr, 65536          ; 2 uses
   %i.act = load ptr, ptr %i.afi, align 8, !tbaa !23 ; 2 uses
-  %i.acu = ptrtoint ptr %1 to i64
+  %i.acu = ptrtoint ptr %2 to i64
   %i.acv = ptrtoint ptr %i.act to i64
   %reass.sub1622 = sub i64 %i.acu, %i.acv
   %i.acw = add i64 %reass.sub1622, -12            ; 3 uses
@@ -1067,7 +1246,7 @@ php_json_scanner_copy_string.exit1541:            ; preds = %bb.ml, %bb.mm
   %i.adp = getelementptr inbounds nuw i8, ptr %i.ado, i64 1
   store ptr %i.adp, ptr %i.afj, align 8, !tbaa !36
   store i8 %i.adn, ptr %i.ado, align 1, !tbaa !20
-  %i.adq = trunc i32 %2 to i8
+  %i.adq = trunc i32 %28 to i8
   %i.adr = and i8 %i.adq, 63
   %i.ads = or disjoint i8 %i.adr, -128
   %i.adt = load ptr, ptr %i.afj, align 8, !tbaa !36 ; 2 uses
@@ -1089,7 +1268,7 @@ php_json_scanner_copy_string.exit1541:            ; preds = %bb.ml, %bb.mm
   br label %.backedge1627
 
 .backedge1627:                                    ; preds = %.backedge1627.backedge, %.preheader1626
-  %i.aec = phi ptr [ %i.adx, %.preheader1626 ], [ %.be, %.backedge1627.backedge ] ; 33 uses
+  %i.aec = phi ptr [ %i.adx, %.preheader1626 ], [ %.be, %.backedge1627.backedge ] ; 36 uses
   %i.aed = load i8, ptr %i.aec, align 1, !tbaa !20
   %i.aee = getelementptr inbounds nuw i8, ptr %i.aec, i64 1 ; 8 uses
   store ptr %i.aee, ptr %0, align 8, !tbaa !12
@@ -1423,14 +1602,14 @@ bb.ol:                                            ; preds = %bb.nz
 bb.om:                                            ; preds = %bb.ol
   %i.ahw = add nsw i8 %i.ahu, -48
   %or.cond319 = icmp ult i8 %i.ahw, 10
-  br i1 %or.cond319, label %5, label %bb.nh
+  br i1 %or.cond319, label %php_json_hex_to_int.exit.i.i1554.1, label %bb.nh
 
 bb.on:                                            ; preds = %bb.ol
   %i.ahx = icmp ult i8 %i.ahu, 71
   %i.ahy = add i8 %i.ahu, -97
   %or.cond322 = icmp ult i8 %i.ahy, 6
   %or.cond1495 = or i1 %i.ahx, %or.cond322
-  br i1 %or.cond1495, label %5, label %bb.nh
+  br i1 %or.cond1495, label %php_json_hex_to_int.exit.i.i1554.1, label %bb.nh
 
 bb.oo:                                            ; preds = %bb.od, %bb.oe, %bb.ob, %bb.oa
   %i.ahz = getelementptr inbounds nuw i8, ptr %i.aec, i64 5 ; 2 uses
@@ -1471,7 +1650,7 @@ bb.ot:                                            ; preds = %bb.or
   br i1 %or.cond1497, label %bb.pm, label %bb.nh
 
 bb.ou:                                            ; preds = %bb.oj, %bb.ok
-  %i.ail = getelementptr inbounds nuw i8, ptr %i.aec, i64 5 ; 2 uses
+  %i.ail = getelementptr inbounds nuw i8, ptr %i.aec, i64 5 ; 3 uses
   store ptr %i.ail, ptr %0, align 8, !tbaa !12
   %i.aim = load i8, ptr %i.ail, align 1, !tbaa !20 ; 4 uses
   %i.ain = icmp ult i8 %i.aim, 65
@@ -1489,69 +1668,12 @@ bb.ow:                                            ; preds = %bb.ou
   %or.cond1498 = or i1 %i.aip, %or.cond340
   br i1 %or.cond1498, label %bb.qe, label %bb.nh
 
-5:                                                ; preds = %bb.om, %bb.on
-  %6 = getelementptr inbounds nuw i8, ptr %i.aec, i64 6 ; 2 uses
-  store ptr %6, ptr %0, align 8, !tbaa !12
-  %.03.i.i1549 = getelementptr inbounds nuw i8, ptr %i.aec, i64 5
-  %7 = load i8, ptr %.03.i.i1549, align 1, !tbaa !20 ; 6 uses
-  %8 = add i8 %7, -48
-  %or.cond.i.i.i1550 = icmp ult i8 %8, 10
-  br i1 %or.cond.i.i.i1550, label %9, label %11
-
-9:                                                ; preds = %5
-  %10 = add nsw i8 %7, -48
-  br label %php_json_hex_to_int.exit.i.i1554
-
-11:                                               ; preds = %5
-  %12 = add i8 %7, -65
-  %or.cond5.i.i.i1551 = icmp ult i8 %12, 6
-  br i1 %or.cond5.i.i.i1551, label %13, label %15
-
-13:                                               ; preds = %11
-  %14 = add nsw i8 %7, -55
-  br label %php_json_hex_to_int.exit.i.i1554
-
-15:                                               ; preds = %11
-  %16 = add i8 %7, -97
-  %or.cond8.i.i.i1552 = icmp ult i8 %16, 6
-  %17 = add i8 %7, -87
-  %spec.select.i.i.i1553 = select i1 %or.cond8.i.i.i1552, i8 %17, i8 -1
-  br label %php_json_hex_to_int.exit.i.i1554
-
-php_json_hex_to_int.exit.i.i1554:                 ; preds = %15, %13, %9
-  %.0.i.i.i1555 = phi i8 [ %10, %9 ], [ %14, %13 ], [ %spec.select.i.i.i1553, %15 ]
-  %.03.i.i1549.1 = getelementptr inbounds nuw i8, ptr %i.aec, i64 4
-  %18 = load i8, ptr %.03.i.i1549.1, align 1, !tbaa !20 ; 6 uses
-  %19 = add i8 %18, -48
-  %or.cond.i.i.i1550.1 = icmp ult i8 %19, 10
-  br i1 %or.cond.i.i.i1550.1, label %27, label %20
-
-20:                                               ; preds = %php_json_hex_to_int.exit.i.i1554
-  %21 = add i8 %18, -65
-  %or.cond5.i.i.i1551.1 = icmp ult i8 %21, 6
-  br i1 %or.cond5.i.i.i1551.1, label %25, label %22
-
-22:                                               ; preds = %20
-  %23 = add i8 %18, -97
-  %or.cond8.i.i.i1552.1 = icmp ult i8 %23, 6
-  %24 = add i8 %18, -87
-  %spec.select.i.i.i1553.1 = select i1 %or.cond8.i.i.i1552.1, i8 %24, i8 -1
-  br label %php_json_hex_to_int.exit.i.i1554.1
-
-25:                                               ; preds = %20
-  %26 = add nsw i8 %18, -55
-  br label %php_json_hex_to_int.exit.i.i1554.1
-
-27:                                               ; preds = %php_json_hex_to_int.exit.i.i1554
-  %28 = add nsw i8 %18, -48
-  br label %php_json_hex_to_int.exit.i.i1554.1
-
-php_json_hex_to_int.exit.i.i1554.1:               ; preds = %27, %25, %22
-  %.0.i.i.i1555.1 = phi i8 [ %28, %27 ], [ %26, %25 ], [ %spec.select.i.i.i1553.1, %22 ]
-  %29 = shl i8 %.0.i.i.i1555.1, 4
-  %30 = or i8 %29, %.0.i.i.i1555
+php_json_hex_to_int.exit.i.i1554.1:               ; preds = %bb.om, %bb.on
+  %86 = getelementptr inbounds nuw i8, ptr %i.aec, i64 6 ; 3 uses
+  store ptr %86, ptr %0, align 8, !tbaa !12
+  %87 = tail call fastcc i32 @php_json_ucs2_to_int(ptr nonnull %86, i32 noundef 2)
   %i.air = load ptr, ptr %i.adz, align 8, !tbaa !23 ; 2 uses
-  %i.ais = ptrtoint ptr %6 to i64
+  %i.ais = ptrtoint ptr %86 to i64
   %i.ait = ptrtoint ptr %i.air to i64
   %reass.sub1621 = sub i64 %i.ais, %i.ait
   %i.aiu = add i64 %reass.sub1621, -6             ; 3 uses
@@ -1567,9 +1689,10 @@ bb.ox:                                            ; preds = %php_json_hex_to_int
 
 php_json_scanner_copy_string.exit1559:            ; preds = %php_json_hex_to_int.exit.i.i1554.1, %bb.ox
   %i.aix = phi ptr [ %.pre1760, %php_json_hex_to_int.exit.i.i1554.1 ], [ %i.aiw, %bb.ox ] ; 2 uses
+  %88 = trunc i32 %87 to i8
   %i.aiy = getelementptr inbounds nuw i8, ptr %i.aix, i64 1
   store ptr %i.aiy, ptr %i.aea, align 8, !tbaa !36
-  store i8 %30, ptr %i.aix, align 1, !tbaa !20
+  store i8 %88, ptr %i.aix, align 1, !tbaa !20
   %i.aiz = load ptr, ptr %0, align 8, !tbaa !12   ; 3 uses
   store ptr %i.aiz, ptr %i.adz, align 8, !tbaa !23
   %i.aja = load i32, ptr %i.aeb, align 8, !tbaa !25
@@ -1940,27 +2063,206 @@ bb.qm:                                            ; preds = %bb.qk, %bb.ql
 bb.qn:                                            ; preds = %bb.qm
   %i.aoc = add nsw i8 %i.aoa, -58
   %or.cond355 = icmp ult i8 %i.aoc, -10
-  br i1 %or.cond355, label %bb.nh, label %bb.qp
+  br i1 %or.cond355, label %bb.nh, label %89
 
 bb.qo:                                            ; preds = %bb.qm
   %i.aod = icmp ugt i8 %i.aoa, 70
   %i.aoe = add i8 %i.aoa, -103
   %or.cond358 = icmp ult i8 %i.aoe, -6
   %or.cond1504 = and i1 %i.aod, %or.cond358
-  br i1 %or.cond1504, label %bb.nh, label %bb.qp
+  br i1 %or.cond1504, label %bb.nh, label %89
 
-bb.qp:                                            ; preds = %bb.qn, %bb.qo
-  %31 = getelementptr inbounds nuw i8, ptr %i.aec, i64 12 ; 4 uses
-  store ptr %31, ptr %0, align 8, !tbaa !12
-  %32 = tail call fastcc i32 @php_json_ucs2_to_int(ptr nonnull %31, i32 noundef 4) ; 2 uses
-  %33 = tail call fastcc i32 @php_json_ucs2_to_int_ex(ptr nonnull %31, i32 noundef 4, i32 noundef 7)
-  %34 = shl i32 %33, 10
-  %i.aof = and i32 %34, 1047552
-  %i.aog = and i32 %32, 1023
+89:                                               ; preds = %bb.qn, %bb.qo
+  %90 = getelementptr inbounds nuw i8, ptr %i.aec, i64 12 ; 2 uses
+  store ptr %90, ptr %0, align 8, !tbaa !12
+  %.03.i.i1591 = getelementptr inbounds nuw i8, ptr %i.aec, i64 11
+  %91 = load i8, ptr %.03.i.i1591, align 1, !tbaa !20 ; 4 uses
+  %92 = zext i8 %91 to i32                        ; 3 uses
+  %93 = add i8 %91, -48
+  %or.cond.i.i.i1592 = icmp ult i8 %93, 10
+  br i1 %or.cond.i.i.i1592, label %94, label %96
+
+94:                                               ; preds = %89
+  %95 = add nsw i32 %92, -48
+  br label %php_json_hex_to_int.exit.i.i1596
+
+96:                                               ; preds = %89
+  %97 = add i8 %91, -65
+  %or.cond5.i.i.i1593 = icmp ult i8 %97, 6
+  br i1 %or.cond5.i.i.i1593, label %98, label %100
+
+98:                                               ; preds = %96
+  %99 = add nsw i32 %92, -55
+  br label %php_json_hex_to_int.exit.i.i1596
+
+100:                                              ; preds = %96
+  %101 = add i8 %91, -97
+  %or.cond8.i.i.i1594 = icmp ult i8 %101, 6
+  %102 = add nsw i32 %92, -87
+  %spec.select.i.i.i1595 = select i1 %or.cond8.i.i.i1594, i32 %102, i32 -1
+  br label %php_json_hex_to_int.exit.i.i1596
+
+php_json_hex_to_int.exit.i.i1596:                 ; preds = %100, %98, %94
+  %.0.i.i.i1597 = phi i32 [ %95, %94 ], [ %99, %98 ], [ %spec.select.i.i.i1595, %100 ]
+  %.03.i.i1591.1 = getelementptr inbounds nuw i8, ptr %i.aec, i64 10
+  %103 = load i8, ptr %.03.i.i1591.1, align 1, !tbaa !20 ; 4 uses
+  %104 = zext i8 %103 to i32                      ; 3 uses
+  %105 = add i8 %103, -48
+  %or.cond.i.i.i1592.1 = icmp ult i8 %105, 10
+  br i1 %or.cond.i.i.i1592.1, label %113, label %106
+
+106:                                              ; preds = %php_json_hex_to_int.exit.i.i1596
+  %107 = add i8 %103, -65
+  %or.cond5.i.i.i1593.1 = icmp ult i8 %107, 6
+  br i1 %or.cond5.i.i.i1593.1, label %111, label %108
+
+108:                                              ; preds = %106
+  %109 = add i8 %103, -97
+  %or.cond8.i.i.i1594.1 = icmp ult i8 %109, 6
+  %110 = add nsw i32 %104, -87
+  %spec.select.i.i.i1595.1 = select i1 %or.cond8.i.i.i1594.1, i32 %110, i32 -1
+  br label %php_json_hex_to_int.exit.i.i1596.1
+
+111:                                              ; preds = %106
+  %112 = add nsw i32 %104, -55
+  br label %php_json_hex_to_int.exit.i.i1596.1
+
+113:                                              ; preds = %php_json_hex_to_int.exit.i.i1596
+  %114 = add nsw i32 %104, -48
+  br label %php_json_hex_to_int.exit.i.i1596.1
+
+php_json_hex_to_int.exit.i.i1596.1:               ; preds = %113, %111, %108
+  %.0.i.i.i1597.1 = phi i32 [ %114, %113 ], [ %112, %111 ], [ %spec.select.i.i.i1595.1, %108 ]
+  %115 = shl nsw i32 %.0.i.i.i1597.1, 4
+  %116 = or i32 %115, %.0.i.i.i1597               ; 2 uses
+  %.03.i.i1591.2 = getelementptr inbounds nuw i8, ptr %i.aec, i64 9
+  %117 = load i8, ptr %.03.i.i1591.2, align 1, !tbaa !20 ; 4 uses
+  %118 = zext i8 %117 to i32                      ; 3 uses
+  %119 = add i8 %117, -48
+  %or.cond.i.i.i1592.2 = icmp ult i8 %119, 10
+  br i1 %or.cond.i.i.i1592.2, label %127, label %120
+
+120:                                              ; preds = %php_json_hex_to_int.exit.i.i1596.1
+  %121 = add i8 %117, -65
+  %or.cond5.i.i.i1593.2 = icmp ult i8 %121, 6
+  br i1 %or.cond5.i.i.i1593.2, label %125, label %122
+
+122:                                              ; preds = %120
+  %123 = add i8 %117, -97
+  %or.cond8.i.i.i1594.2 = icmp ult i8 %123, 6
+  %124 = add nsw i32 %118, -87
+  %spec.select.i.i.i1595.2 = select i1 %or.cond8.i.i.i1594.2, i32 %124, i32 -1
+  br label %php_json_hex_to_int.exit.i.i1596.2
+
+125:                                              ; preds = %120
+  %126 = add nsw i32 %118, -55
+  br label %php_json_hex_to_int.exit.i.i1596.2
+
+127:                                              ; preds = %php_json_hex_to_int.exit.i.i1596.1
+  %128 = add nsw i32 %118, -48
+  br label %php_json_hex_to_int.exit.i.i1596.2
+
+php_json_hex_to_int.exit.i.i1596.2:               ; preds = %127, %125, %122
+  %.0.i.i.i1597.2 = phi i32 [ %128, %127 ], [ %126, %125 ], [ %spec.select.i.i.i1595.2, %122 ]
+  %129 = shl nsw i32 %.0.i.i.i1597.2, 8
+  %130 = or i32 %129, %116
+  %131 = getelementptr inbounds nuw i8, ptr %i.aec, i64 4
+  %132 = load i8, ptr %i.ail, align 1, !tbaa !20  ; 4 uses
+  %133 = zext i8 %132 to i32                      ; 3 uses
+  %134 = add i8 %132, -48
+  %or.cond.i.i1603 = icmp ult i8 %134, 10
+  br i1 %or.cond.i.i1603, label %135, label %137
+
+135:                                              ; preds = %php_json_hex_to_int.exit.i.i1596.2
+  %136 = add nsw i32 %133, -48
+  br label %php_json_hex_to_int.exit.i1607
+
+137:                                              ; preds = %php_json_hex_to_int.exit.i.i1596.2
+  %138 = add i8 %132, -65
+  %or.cond5.i.i1604 = icmp ult i8 %138, 6
+  br i1 %or.cond5.i.i1604, label %139, label %141
+
+139:                                              ; preds = %137
+  %140 = add nsw i32 %133, -55
+  br label %php_json_hex_to_int.exit.i1607
+
+141:                                              ; preds = %137
+  %142 = add i8 %132, -97
+  %or.cond8.i.i1605 = icmp ult i8 %142, 6
+  %143 = add nsw i32 %133, -87
+  %spec.select.i.i1606 = select i1 %or.cond8.i.i1605, i32 %143, i32 -1
+  br label %php_json_hex_to_int.exit.i1607
+
+php_json_hex_to_int.exit.i1607:                   ; preds = %141, %139, %135
+  %.0.i.i1608 = phi i32 [ %136, %135 ], [ %140, %139 ], [ %spec.select.i.i1606, %141 ]
+  %144 = getelementptr inbounds nuw i8, ptr %i.aec, i64 3
+  %145 = load i8, ptr %131, align 1, !tbaa !20    ; 4 uses
+  %146 = zext i8 %145 to i32                      ; 3 uses
+  %147 = add i8 %145, -48
+  %or.cond.i.i1603.1 = icmp ult i8 %147, 10
+  br i1 %or.cond.i.i1603.1, label %155, label %148
+
+148:                                              ; preds = %php_json_hex_to_int.exit.i1607
+  %149 = add i8 %145, -65
+  %or.cond5.i.i1604.1 = icmp ult i8 %149, 6
+  br i1 %or.cond5.i.i1604.1, label %153, label %150
+
+150:                                              ; preds = %148
+  %151 = add i8 %145, -97
+  %or.cond8.i.i1605.1 = icmp ult i8 %151, 6
+  %152 = add nsw i32 %146, -87
+  %spec.select.i.i1606.1 = select i1 %or.cond8.i.i1605.1, i32 %152, i32 -1
+  br label %php_json_hex_to_int.exit.i1607.1
+
+153:                                              ; preds = %148
+  %154 = add nsw i32 %146, -55
+  br label %php_json_hex_to_int.exit.i1607.1
+
+155:                                              ; preds = %php_json_hex_to_int.exit.i1607
+  %156 = add nsw i32 %146, -48
+  br label %php_json_hex_to_int.exit.i1607.1
+
+php_json_hex_to_int.exit.i1607.1:                 ; preds = %155, %153, %150
+  %.0.i.i1608.1 = phi i32 [ %156, %155 ], [ %154, %153 ], [ %spec.select.i.i1606.1, %150 ]
+  %157 = load i8, ptr %144, align 1, !tbaa !20    ; 4 uses
+  %158 = zext i8 %157 to i32                      ; 3 uses
+  %159 = add i8 %157, -48
+  %or.cond.i.i1603.2 = icmp ult i8 %159, 10
+  br i1 %or.cond.i.i1603.2, label %167, label %160
+
+160:                                              ; preds = %php_json_hex_to_int.exit.i1607.1
+  %161 = add i8 %157, -65
+  %or.cond5.i.i1604.2 = icmp ult i8 %161, 6
+  br i1 %or.cond5.i.i1604.2, label %165, label %162
+
+162:                                              ; preds = %160
+  %163 = add i8 %157, -97
+  %or.cond8.i.i1605.2 = icmp ult i8 %163, 6
+  %164 = add nsw i32 %158, -87
+  %spec.select.i.i1606.2 = select i1 %or.cond8.i.i1605.2, i32 %164, i32 -1
+  br label %bb.qp
+
+165:                                              ; preds = %160
+  %166 = add nsw i32 %158, -55
+  br label %bb.qp
+
+167:                                              ; preds = %php_json_hex_to_int.exit.i1607.1
+  %168 = add nsw i32 %158, -48
+  br label %bb.qp
+
+bb.qp:                                            ; preds = %162, %165, %167
+  %.0.i.i1608.2 = phi i32 [ %168, %167 ], [ %166, %165 ], [ %spec.select.i.i1606.2, %162 ]
+  %169 = shl nsw i32 %.0.i.i1608.2, 18
+  %170 = shl nsw i32 %.0.i.i1608.1, 14
+  %171 = shl nsw i32 %.0.i.i1608, 10
+  %172 = or i32 %170, %171
+  %173 = or i32 %169, %172
+  %i.aof = and i32 %173, 1047552
+  %i.aog = and i32 %130, 1023
   %i.aoh = or disjoint i32 %i.aof, %i.aog         ; 2 uses
   %i.aoi = add nuw nsw i32 %i.aoh, 65536          ; 2 uses
   %i.aoj = load ptr, ptr %i.adz, align 8, !tbaa !23 ; 2 uses
-  %i.aok = ptrtoint ptr %31 to i64
+  %i.aok = ptrtoint ptr %90 to i64
   %i.aol = ptrtoint ptr %i.aoj to i64
   %reass.sub = sub i64 %i.aok, %i.aol
   %i.aom = add i64 %reass.sub, -12                ; 3 uses
@@ -1998,7 +2300,7 @@ php_json_scanner_copy_string.exit1589:            ; preds = %bb.qp, %bb.qq
   %i.apf = getelementptr inbounds nuw i8, ptr %i.ape, i64 1
   store ptr %i.apf, ptr %i.aea, align 8, !tbaa !36
   store i8 %i.apd, ptr %i.ape, align 1, !tbaa !20
-  %i.apg = trunc i32 %32 to i8
+  %i.apg = trunc i32 %116 to i8
   %i.aph = and i8 %i.apg, 63
   %i.api = or disjoint i8 %i.aph, -128
   %i.apj = load ptr, ptr %i.aea, align 8, !tbaa !36 ; 2 uses
@@ -2171,147 +2473,6 @@ php_json_hex_to_int.exit.i.3:                     ; preds = %bb.s, %bb.r, %bb.q
 
 php_json_ucs2_to_int_ex.exit:                     ; preds = %php_json_hex_to_int.exit.i.3, %php_json_hex_to_int.exit.i.2, %php_json_hex_to_int.exit.i.1
   %.lcssa = phi i32 [ %i.al, %php_json_hex_to_int.exit.i.3 ], [ %i.r, %php_json_hex_to_int.exit.i.1 ], [ %i.ab, %php_json_hex_to_int.exit.i.2 ]
-  ret i32 %.lcssa
-}
-
-; Function Attrs: nofree norecurse nosync nounwind memory(argmem: read) uwtable
-define internal fastcc i32 @php_json_ucs2_to_int_ex(ptr nofree readonly captures(none) %.0.val, i32 noundef range(i32 2, 5) %0, i32 noundef range(i32 1, 8) %1) unnamed_addr #6 {
-  %3 = zext nneg i32 %1 to i64
-  %4 = sub nsw i64 0, %3
-  %5 = getelementptr inbounds i8, ptr %.0.val, i64 %4 ; 4 uses
-  %6 = getelementptr inbounds i8, ptr %5, i64 -1
-  %7 = load i8, ptr %5, align 1, !tbaa !20        ; 4 uses
-  %8 = zext i8 %7 to i32                          ; 3 uses
-  %9 = add i8 %7, -48
-  %or.cond.i = icmp ult i8 %9, 10
-  br i1 %or.cond.i, label %10, label %12
-
-10:                                               ; preds = %2
-  %11 = add nsw i32 %8, -48
-  br label %php_json_hex_to_int.exit
-
-12:                                               ; preds = %2
-  %13 = add i8 %7, -65
-  %or.cond5.i = icmp ult i8 %13, 6
-  br i1 %or.cond5.i, label %14, label %16
-
-14:                                               ; preds = %12
-  %15 = add nsw i32 %8, -55
-  br label %php_json_hex_to_int.exit
-
-16:                                               ; preds = %12
-  %17 = add i8 %7, -97
-  %or.cond8.i = icmp ult i8 %17, 6
-  %18 = add nsw i32 %8, -87
-  %spec.select.i = select i1 %or.cond8.i, i32 %18, i32 -1
-  br label %php_json_hex_to_int.exit
-
-php_json_hex_to_int.exit:                         ; preds = %16, %14, %10
-  %.0.i = phi i32 [ %11, %10 ], [ %15, %14 ], [ %spec.select.i, %16 ]
-  %19 = getelementptr inbounds i8, ptr %5, i64 -2
-  %20 = load i8, ptr %6, align 1, !tbaa !20       ; 4 uses
-  %21 = zext i8 %20 to i32                        ; 3 uses
-  %22 = add i8 %20, -48
-  %or.cond.i.1 = icmp ult i8 %22, 10
-  br i1 %or.cond.i.1, label %30, label %23
-
-23:                                               ; preds = %php_json_hex_to_int.exit
-  %24 = add i8 %20, -65
-  %or.cond5.i.1 = icmp ult i8 %24, 6
-  br i1 %or.cond5.i.1, label %28, label %25
-
-25:                                               ; preds = %23
-  %26 = add i8 %20, -97
-  %or.cond8.i.1 = icmp ult i8 %26, 6
-  %27 = add nsw i32 %21, -87
-  %spec.select.i.1 = select i1 %or.cond8.i.1, i32 %27, i32 -1
-  br label %php_json_hex_to_int.exit.1
-
-28:                                               ; preds = %23
-  %29 = add nsw i32 %21, -55
-  br label %php_json_hex_to_int.exit.1
-
-30:                                               ; preds = %php_json_hex_to_int.exit
-  %31 = add nsw i32 %21, -48
-  br label %php_json_hex_to_int.exit.1
-
-php_json_hex_to_int.exit.1:                       ; preds = %30, %28, %25
-  %.0.i.1 = phi i32 [ %31, %30 ], [ %29, %28 ], [ %spec.select.i.1, %25 ]
-  %32 = shl nsw i32 %.0.i.1, 4
-  %33 = or i32 %32, %.0.i                         ; 2 uses
-  %exitcond.not.1 = icmp eq i32 %0, 2
-  br i1 %exitcond.not.1, label %65, label %34
-
-34:                                               ; preds = %php_json_hex_to_int.exit.1
-  %35 = getelementptr inbounds i8, ptr %5, i64 -3
-  %36 = load i8, ptr %19, align 1, !tbaa !20      ; 4 uses
-  %37 = zext i8 %36 to i32                        ; 3 uses
-  %38 = add i8 %36, -48
-  %or.cond.i.2 = icmp ult i8 %38, 10
-  br i1 %or.cond.i.2, label %46, label %39
-
-39:                                               ; preds = %34
-  %40 = add i8 %36, -65
-  %or.cond5.i.2 = icmp ult i8 %40, 6
-  br i1 %or.cond5.i.2, label %44, label %41
-
-41:                                               ; preds = %39
-  %42 = add i8 %36, -97
-  %or.cond8.i.2 = icmp ult i8 %42, 6
-  %43 = add nsw i32 %37, -87
-  %spec.select.i.2 = select i1 %or.cond8.i.2, i32 %43, i32 -1
-  br label %php_json_hex_to_int.exit.2
-
-44:                                               ; preds = %39
-  %45 = add nsw i32 %37, -55
-  br label %php_json_hex_to_int.exit.2
-
-46:                                               ; preds = %34
-  %47 = add nsw i32 %37, -48
-  br label %php_json_hex_to_int.exit.2
-
-php_json_hex_to_int.exit.2:                       ; preds = %46, %44, %41
-  %.0.i.2 = phi i32 [ %47, %46 ], [ %45, %44 ], [ %spec.select.i.2, %41 ]
-  %48 = shl nsw i32 %.0.i.2, 8
-  %49 = or i32 %48, %33                           ; 2 uses
-  %exitcond.not.2 = icmp eq i32 %0, 3
-  br i1 %exitcond.not.2, label %65, label %50
-
-50:                                               ; preds = %php_json_hex_to_int.exit.2
-  %51 = load i8, ptr %35, align 1, !tbaa !20      ; 4 uses
-  %52 = zext i8 %51 to i32                        ; 3 uses
-  %53 = add i8 %51, -48
-  %or.cond.i.3 = icmp ult i8 %53, 10
-  br i1 %or.cond.i.3, label %61, label %54
-
-54:                                               ; preds = %50
-  %55 = add i8 %51, -65
-  %or.cond5.i.3 = icmp ult i8 %55, 6
-  br i1 %or.cond5.i.3, label %59, label %56
-
-56:                                               ; preds = %54
-  %57 = add i8 %51, -97
-  %or.cond8.i.3 = icmp ult i8 %57, 6
-  %58 = add nsw i32 %52, -87
-  %spec.select.i.3 = select i1 %or.cond8.i.3, i32 %58, i32 -1
-  br label %php_json_hex_to_int.exit.3
-
-59:                                               ; preds = %54
-  %60 = add nsw i32 %52, -55
-  br label %php_json_hex_to_int.exit.3
-
-61:                                               ; preds = %50
-  %62 = add nsw i32 %52, -48
-  br label %php_json_hex_to_int.exit.3
-
-php_json_hex_to_int.exit.3:                       ; preds = %61, %59, %56
-  %.0.i.3 = phi i32 [ %62, %61 ], [ %60, %59 ], [ %spec.select.i.3, %56 ]
-  %63 = shl nsw i32 %.0.i.3, 12
-  %64 = or i32 %63, %49
-  br label %65
-
-65:                                               ; preds = %php_json_hex_to_int.exit.3, %php_json_hex_to_int.exit.2, %php_json_hex_to_int.exit.1
-  %.lcssa = phi i32 [ %64, %php_json_hex_to_int.exit.3 ], [ %33, %php_json_hex_to_int.exit.1 ], [ %49, %php_json_hex_to_int.exit.2 ]
   ret i32 %.lcssa
 }
 
