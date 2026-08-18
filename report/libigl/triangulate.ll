@@ -1,0 +1,3829 @@
+inline.NumInlined: 14234
+inline.NumDeleted: 4674
+loop-unroll.NumCompletelyUnrolled: 52
+loop-unroll.NumRuntimeUnrolled: 53
+loop-unroll.NumUnrolled: 107
+begin_hunk_0_@_ZN5boost7movelib15detail_adaptive26op_merge_blocks_with_irregINS0_16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS4_17Compact_containerINS4_37Constrained_triangulation_face_base_2INS4_5EpeckENS4_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS9_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSG_IiLin1ELin1ELi0ELin1ELin1EEESH_SH_SI_EEvRKNSF_10MatrixBaseIT0_EERKNSJ_IT1_EERKNSJ_IT2_EEbRNSF_15PlainObjectBaseIT3_EERNSW_IT4_EEE9FaceInfo2S9_NS4_25Triangulation_face_base_2IS9_NS4_28Triangulation_ds_face_base_2INS4_30Triangulation_data_structure_2INS4_27Triangulation_vertex_base_2IS9_NS4_30Triangulation_ds_vertex_base_2IvEEEENS8_IS9_NSA_IS13_S9_NS14_IS9_NS15_IvEEEEEEEEEEEEEEEEEENS4_7DefaultES1K_S1K_EELb0EEEEENS0_7inverseINS_9container3dtl23flat_tree_value_compareISt4lessIS1M_ES1M_NS_11move_detail8identityIS1M_EEEEEES1O_S1O_S1O_S1Z_NS0_7move_opEEESX_T_S21_SK_SO_RSS_SS_SX_NS0_9iter_sizeISO_E4typeES25_S25_S25_S10_bT5_:bb.a
+  %wide.load320 = load <2 x ptr>, ptr %i.cr, align 8, !tbaa !89, !alias.scope !2262, !noalias !2265
+  %i.cs = getelementptr inbounds i8, ptr %next.gep, i64 -16
+  %i.ct = getelementptr inbounds i8, ptr %next.gep, i64 -32
+  %wide.load321 = load <2 x i64>, ptr %i.cs, align 8, !tbaa !89, !alias.scope !2269, !noalias !2270
+  %wide.load322 = load <2 x i64>, ptr %i.ct, align 8, !tbaa !89, !alias.scope !2269, !noalias !2270
+  %i.cu = getelementptr inbounds i8, ptr %next.gep319, i64 -16
+  %i.cv = getelementptr inbounds i8, ptr %next.gep319, i64 -32
+  store <2 x i64> %wide.load321, ptr %i.cu, align 8, !tbaa !89, !alias.scope !2262, !noalias !2265
+  store <2 x i64> %wide.load322, ptr %i.cv, align 8, !tbaa !89, !alias.scope !2262, !noalias !2265
+  %i.cw = getelementptr inbounds i8, ptr %next.gep, i64 -16
+  %i.cx = getelementptr inbounds i8, ptr %next.gep, i64 -32
+  store <2 x ptr> %wide.load, ptr %i.cw, align 8, !tbaa !89, !alias.scope !2269, !noalias !2270
+  store <2 x ptr> %wide.load320, ptr %i.cx, align 8, !tbaa !89, !alias.scope !2269, !noalias !2270
+  %index.next = add nuw i64 %index, 4             ; 2 uses
+  %i.cy = icmp eq i64 %index.next, %n.vec
+  br i1 %i.cy, label %middle.block, label %vector.body, !llvm.loop !2271
+
+middle.block:                                     ; preds = %vector.body
+  %cmp.n = icmp eq i64 %i.cf, %n.vec
+  br i1 %cmp.n, label %_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit, label %.lr.ph.i28.preheader329
+
+.lr.ph.i28.preheader329:                          ; preds = %vector.memcheck, %.lr.ph.i28.preheader, %middle.block
+  %.sroa.055.0.ph = phi ptr [ %i.by, %vector.memcheck ], [ %i.by, %.lr.ph.i28.preheader ], [ %i.cn, %middle.block ]
+  %.ph = phi ptr [ %.sroa.074.0, %vector.memcheck ], [ %.sroa.074.0, %.lr.ph.i28.preheader ], [ %i.co, %middle.block ]
+  br label %.lr.ph.i28
+
+.lr.ph.i28:                                       ; preds = %.lr.ph.i28.preheader329, %.lr.ph.i28
+  %.sroa.055.0 = phi ptr [ %i.db, %.lr.ph.i28 ], [ %.sroa.055.0.ph, %.lr.ph.i28.preheader329 ]
+  %i.cz = phi ptr [ %i.da, %.lr.ph.i28 ], [ %.ph, %.lr.ph.i28.preheader329 ]
+  %i.da = getelementptr inbounds i8, ptr %i.cz, i64 -8 ; 4 uses
+  %i.db = getelementptr inbounds i8, ptr %.sroa.055.0, i64 -8 ; 4 uses
+  %.sroa.0.0.copyload.i.i = load ptr, ptr %i.da, align 8, !tbaa !89, !noalias !2270
+  %i.dc = load i64, ptr %i.db, align 8, !tbaa !89, !noalias !2270
+  store i64 %i.dc, ptr %i.da, align 8, !tbaa !89, !noalias !2270
+  store ptr %.sroa.0.0.copyload.i.i, ptr %i.db, align 8, !tbaa !89, !noalias !2270
+  %.not.i = icmp eq ptr %i.da, %i.ae
+  br i1 %.not.i, label %_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit, label %.lr.ph.i28, !llvm.loop !2272
+
+bb.u:                                             ; preds = %_ZN5boost7movelib15detail_adaptive25op_partial_merge_and_swapINS0_16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS4_17Compact_containerINS4_37Constrained_triangulation_face_base_2INS4_5EpeckENS4_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS9_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSG_IiLin1ELin1ELi0ELin1ELin1EEESH_SH_SI_EEvRKNSF_10MatrixBaseIT0_EERKNSJ_IT1_EERKNSJ_IT2_EEbRNSF_15PlainObjectBaseIT3_EERNSW_IT4_EEE9FaceInfo2S9_NS4_25Triangulation_face_base_2IS9_NS4_28Triangulation_ds_face_base_2INS4_30Triangulation_data_structure_2INS4_27Triangulation_vertex_base_2IS9_NS4_30Triangulation_ds_vertex_base_2IvEEEENS8_IS9_NSA_IS13_S9_NS14_IS9_NS15_IvEEEEEEEEEEEEEEEEEENS4_7DefaultES1K_S1K_EELb0EEEEES1O_S1O_NS0_7inverseINS_9container3dtl23flat_tree_value_compareISt4lessIS1M_ES1M_NS_11move_detail8identityIS1M_EEEEEENS0_7move_opEEESO_RT_S21_RSK_SK_S23_SO_SS_SX_b.exit
+  %.not1.i31 = icmp eq ptr %i.by, %i.aa           ; 2 uses
+  br i1 %.not23, label %bb.w, label %bb.v
+
+bb.v:                                             ; preds = %bb.u
+  br i1 %.not1.i31, label %_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit, label %.lr.ph.i29
+
+.lr.ph.i29:                                       ; preds = %bb.v, %.lr.ph.i29
+  %.sroa.049.0 = phi ptr [ %i.df, %.lr.ph.i29 ], [ %.sroa.074.0, %bb.v ]
+  %.sroa.048.0 = phi ptr [ %i.dg, %.lr.ph.i29 ], [ %.sroa.067.0, %bb.v ]
+  %i.dd = phi ptr [ %i.de, %.lr.ph.i29 ], [ %i.by, %bb.v ]
+  %i.de = getelementptr inbounds i8, ptr %i.dd, i64 -8 ; 3 uses
+  %i.df = getelementptr inbounds i8, ptr %.sroa.049.0, i64 -8 ; 3 uses
+  %i.dg = getelementptr inbounds i8, ptr %.sroa.048.0, i64 -8 ; 3 uses
+  %i.dh = load i64, ptr %i.df, align 8, !tbaa !89, !noalias !2273
+  store i64 %i.dh, ptr %i.dg, align 8, !tbaa !89, !noalias !2273
+  %i.di = load i64, ptr %i.de, align 8, !tbaa !89, !noalias !2273
+  store i64 %i.di, ptr %i.df, align 8, !tbaa !89, !noalias !2273
+  %.not.i30 = icmp eq ptr %i.de, %i.aa
+  br i1 %.not.i30, label %_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit, label %.lr.ph.i29, !llvm.loop !2276
+
+bb.w:                                             ; preds = %bb.u
+  br i1 %.not1.i31, label %_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit, label %.lr.ph.i33
+
+.lr.ph.i33:                                       ; preds = %bb.w, %.lr.ph.i33
+  %.sroa.0101.0 = phi ptr [ %i.dl, %.lr.ph.i33 ], [ %.sroa.067.0, %bb.w ]
+  %i.dj = phi ptr [ %i.dk, %.lr.ph.i33 ], [ %i.by, %bb.w ]
+  %i.dk = getelementptr inbounds i8, ptr %i.dj, i64 -8 ; 3 uses
+  %i.dl = getelementptr inbounds i8, ptr %.sroa.0101.0, i64 -8 ; 3 uses
+  %i.dm = load i64, ptr %i.dk, align 8, !tbaa !89, !noalias !2277
+  store i64 %i.dm, ptr %i.dl, align 8, !tbaa !89, !noalias !2277
+  %.not.i34 = icmp eq ptr %i.dk, %i.aa
+  br i1 %.not.i34, label %_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit, label %.lr.ph.i33, !llvm.loop !2280
+
+_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit: ; preds = %.lr.ph.i29, %.lr.ph.i33, %.lr.ph.i28, %middle.block, %bb.v, %bb.w, %bb.t, %bb.s
+  %storemerge = phi ptr [ %i.aa, %bb.s ], [ %i.dl, %.lr.ph.i33 ], [ %i.by, %bb.t ], [ %i.db, %.lr.ph.i28 ], [ %.sroa.067.0, %bb.v ], [ %.sroa.067.0, %bb.w ], [ %i.cn, %middle.block ], [ %i.dg, %.lr.ph.i29 ]
+  store ptr %storemerge, ptr %6, align 8, !tbaa !2102
+  %i.dn = load ptr, ptr %1, align 8, !tbaa !2102  ; 4 uses
+  %.neg109 = mul i64 %.018.lcssa.i, -8            ; 2 uses
+  %i.do = getelementptr inbounds i8, ptr %i.dn, i64 %.neg109 ; 3 uses
+  %.not.i35 = icmp eq ptr %i.aa, %.sroa.074.0
+  br i1 %.not.i35, label %_ZN5boost7movelib15detail_adaptive19swap_and_update_keyINS0_16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS4_17Compact_containerINS4_37Constrained_triangulation_face_base_2INS4_5EpeckENS4_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS9_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSG_IiLin1ELin1ELi0ELin1ELin1EEESH_SH_SI_EEvRKNSF_10MatrixBaseIT0_EERKNSJ_IT1_EERKNSJ_IT2_EEbRNSF_15PlainObjectBaseIT3_EERNSW_IT4_EEE9FaceInfo2S9_NS4_25Triangulation_face_base_2IS9_NS4_28Triangulation_ds_face_base_2INS4_30Triangulation_data_structure_2INS4_27Triangulation_vertex_base_2IS9_NS4_30Triangulation_ds_vertex_base_2IvEEEENS8_IS9_NSA_IS13_S9_NS14_IS9_NS15_IvEEEEEEEEEEEEEEEEEENS4_7DefaultES1K_S1K_EELb0EEEEES1O_EEvT_S1P_RS1P_SK_SK_SK_.exit, label %_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit.i
+
+_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit.i: ; preds = %_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit
+  %.not9.i = icmp eq i64 %.neg109, 0
+  br i1 %.not9.i, label %bb.y, label %bb.x
+
+bb.x:                                             ; preds = %_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit.i
+  %i.dp = getelementptr inbounds i8, ptr %i.do, i64 -8 ; 2 uses
+  %i.dq = getelementptr inbounds i8, ptr %i.dn, i64 -8 ; 2 uses
+  %.sroa.0.0.copyload.i.i37 = load ptr, ptr %i.dp, align 8, !tbaa !89
+  %i.dr = load i64, ptr %i.dq, align 8, !tbaa !89
+  store i64 %i.dr, ptr %i.dp, align 8, !tbaa !89
+  store ptr %.sroa.0.0.copyload.i.i37, ptr %i.dq, align 8, !tbaa !89
+  br label %bb.y
+
+bb.y:                                             ; preds = %bb.x, %_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit.i
+  %i.ds = load ptr, ptr %2, align 8, !tbaa !2102  ; 2 uses
+  %i.dt = icmp eq ptr %i.do, %i.ds
+  br i1 %i.dt, label %.sink.split.i, label %bb.z
+
+bb.z:                                             ; preds = %bb.y
+  %i.du = icmp eq ptr %i.ds, %i.dn
+  br i1 %i.du, label %.sink.split.i, label %_ZN5boost7movelib15detail_adaptive19swap_and_update_keyINS0_16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS4_17Compact_containerINS4_37Constrained_triangulation_face_base_2INS4_5EpeckENS4_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS9_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSG_IiLin1ELin1ELi0ELin1ELin1EEESH_SH_SI_EEvRKNSF_10MatrixBaseIT0_EERKNSJ_IT1_EERKNSJ_IT2_EEbRNSF_15PlainObjectBaseIT3_EERNSW_IT4_EEE9FaceInfo2S9_NS4_25Triangulation_face_base_2IS9_NS4_28Triangulation_ds_face_base_2INS4_30Triangulation_data_structure_2INS4_27Triangulation_vertex_base_2IS9_NS4_30Triangulation_ds_vertex_base_2IvEEEENS8_IS9_NSA_IS13_S9_NS14_IS9_NS15_IvEEEEEEEEEEEEEEEEEENS4_7DefaultES1K_S1K_EELb0EEEEES1O_EEvT_S1P_RS1P_SK_SK_SK_.exit
+
+.sink.split.i:                                    ; preds = %bb.z, %bb.y
+  %.sink.i = phi ptr [ %i.dn, %bb.y ], [ %i.do, %bb.z ]
+  store ptr %.sink.i, ptr %2, align 8, !tbaa !2102
+  br label %_ZN5boost7movelib15detail_adaptive19swap_and_update_keyINS0_16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS4_17Compact_containerINS4_37Constrained_triangulation_face_base_2INS4_5EpeckENS4_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS9_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSG_IiLin1ELin1ELi0ELin1ELin1EEESH_SH_SI_EEvRKNSF_10MatrixBaseIT0_EERKNSJ_IT1_EERKNSJ_IT2_EEbRNSF_15PlainObjectBaseIT3_EERNSW_IT4_EEE9FaceInfo2S9_NS4_25Triangulation_face_base_2IS9_NS4_28Triangulation_ds_face_base_2INS4_30Triangulation_data_structure_2INS4_27Triangulation_vertex_base_2IS9_NS4_30Triangulation_ds_vertex_base_2IvEEEENS8_IS9_NSA_IS13_S9_NS14_IS9_NS15_IvEEEEEEEEEEEEEEEEEENS4_7DefaultES1K_S1K_EELb0EEEEES1O_EEvT_S1P_RS1P_SK_SK_SK_.exit
+
+_ZN5boost7movelib15detail_adaptive19swap_and_update_keyINS0_16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS4_17Compact_containerINS4_37Constrained_triangulation_face_base_2INS4_5EpeckENS4_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS9_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSG_IiLin1ELin1ELi0ELin1ELin1EEESH_SH_SI_EEvRKNSF_10MatrixBaseIT0_EERKNSJ_IT1_EERKNSJ_IT2_EEbRNSF_15PlainObjectBaseIT3_EERNSW_IT4_EEE9FaceInfo2S9_NS4_25Triangulation_face_base_2IS9_NS4_28Triangulation_ds_face_base_2INS4_30Triangulation_data_structure_2INS4_27Triangulation_vertex_base_2IS9_NS4_30Triangulation_ds_vertex_base_2IvEEEENS8_IS9_NSA_IS13_S9_NS14_IS9_NS15_IvEEEEEEEEEEEEEEEEEENS4_7DefaultES1K_S1K_EELb0EEEEES1O_EEvT_S1P_RS1P_SK_SK_SK_.exit: ; preds = %_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit, %bb.z, %.sink.split.i
+  store ptr %i.aa, ptr %3, align 8, !tbaa !2102
+  %i.dv = load ptr, ptr %1, align 8, !tbaa !2102
+  %i.dw = getelementptr inbounds i8, ptr %i.dv, i64 -8 ; 2 uses
+  store ptr %i.dw, ptr %1, align 8, !tbaa !2102
+  %i.dx = icmp ne i64 %.0151, 0
+  %.neg = sext i1 %i.dx to i64
+  %i.dy = add i64 %.0151, %.neg
+  %i.dz = icmp ne i64 %i.z, 0
+  %.neg24 = sext i1 %i.dz to i64
+  %i.ea = add i64 %.sroa.speculated, %.neg24
+  %i.eb = add i64 %.0106150, -1                   ; 2 uses
+  %.not = icmp eq i64 %i.eb, 0
+  br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !2281
+
+._crit_edge:                                      ; preds = %_ZN5boost7movelib15detail_adaptive19swap_and_update_keyINS0_16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS4_17Compact_containerINS4_37Constrained_triangulation_face_base_2INS4_5EpeckENS4_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS9_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSG_IiLin1ELin1ELi0ELin1ELin1EEESH_SH_SI_EEvRKNSF_10MatrixBaseIT0_EERKNSJ_IT1_EERKNSJ_IT2_EEbRNSF_15PlainObjectBaseIT3_EERNSW_IT4_EEE9FaceInfo2S9_NS4_25Triangulation_face_base_2IS9_NS4_28Triangulation_ds_face_base_2INS4_30Triangulation_data_structure_2INS4_27Triangulation_vertex_base_2IS9_NS4_30Triangulation_ds_vertex_base_2IvEEEENS8_IS9_NSA_IS13_S9_NS14_IS9_NS15_IvEEEEEEEEEEEEEEEEEENS4_7DefaultES1K_S1K_EELb0EEEEES1O_EEvT_S1P_RS1P_SK_SK_SK_.exit, %bb.a
+  %i.ec = load ptr, ptr %6, align 8, !tbaa !2102
+  store ptr %i.ec, ptr %0, align 8, !tbaa !2102
+  ret void
+}
+
+; Function Attrs: mustprogress uwtable
+define linkonce_odr dso_local noundef ptr @_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_save_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEET_S1X_S1X_RS1X_S1X_S1X_RSJ_S1Z_SN_SR_(ptr noundef %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef %3, ptr noundef %4, ptr noundef nonnull align 8 dereferenceable(8) %5, ptr noundef nonnull align 8 dereferenceable(8) %6) local_unnamed_addr #3 comdat {
+bb.a:
+  %i.a = ptrtoaddr ptr %1 to i64                  ; 2 uses
+  %i.b = load ptr, ptr %5, align 8, !tbaa !175    ; 3 uses
+  %i.c = load ptr, ptr %6, align 8, !tbaa !175    ; 2 uses
+  %i.d = load ptr, ptr %2, align 8, !tbaa !175    ; 9 uses
+  %.not = icmp eq ptr %i.d, %4                    ; 2 uses
+  %i.e = icmp eq ptr %i.b, %i.c
+  br i1 %i.e, label %bb.b, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit
+
+bb.b:                                             ; preds = %bb.a
+  %.not6.i = icmp eq ptr %0, %1
+  br i1 %.not6.i, label %_ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEET_S1W_S1W_RKNS0_15iterator_traitsIS1W_E10value_typeESJ_.exit, label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %bb.b
+  %i.f = load ptr, ptr %4, align 8, !tbaa !97
+  br label %bb.c
+
+bb.c:                                             ; preds = %bb.d, %.lr.ph.i
+  %.07.i = phi ptr [ %0, %.lr.ph.i ], [ %i.i, %bb.d ] ; 3 uses
+  %i.g = load ptr, ptr %.07.i, align 8, !tbaa !97
+  %i.h = icmp ult ptr %i.f, %i.g
+  br i1 %i.h, label %_ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEET_S1W_S1W_RKNS0_15iterator_traitsIS1W_E10value_typeESJ_.exit, label %bb.d
+
+bb.d:                                             ; preds = %bb.c
+  %i.i = getelementptr inbounds nuw i8, ptr %.07.i, i64 8 ; 3 uses
+  %.not.i = icmp eq ptr %i.i, %1
+  br i1 %.not.i, label %_ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEET_S1W_S1W_RKNS0_15iterator_traitsIS1W_E10value_typeESJ_.exit, label %bb.c, !llvm.loop !2282
+
+_ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEET_S1W_S1W_RKNS0_15iterator_traitsIS1W_E10value_typeESJ_.exit: ; preds = %bb.c, %bb.d, %bb.b
+  %.0.lcssa.i = phi ptr [ %0, %bb.b ], [ %.07.i, %bb.c ], [ %i.i, %bb.d ] ; 8 uses
+  %i.j = ptrtoint ptr %.0.lcssa.i to i64          ; 5 uses
+  %i.k = ptrtoint ptr %0 to i64
+  %i.l = sub i64 %i.j, %i.k
+  %i.m = getelementptr inbounds i8, ptr %i.b, i64 %i.l ; 12 uses
+  %.not.i32 = icmp eq ptr %.0.lcssa.i, %1         ; 2 uses
+  br i1 %.not, label %bb.k, label %bb.e
+
+bb.e:                                             ; preds = %_ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEET_S1W_S1W_RKNS0_15iterator_traitsIS1W_E10value_typeESJ_.exit
+  %.not47.i = icmp eq ptr %i.d, %3
+  %or.cond.i = select i1 %.not.i32, i1 true, i1 %.not47.i
+  br i1 %or.cond.i, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_RT_S1X_RSJ_SJ_S1Z_SN_SR_SW_.exit, label %bb.f
+
+bb.f:                                             ; preds = %bb.e
+  %i.n = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
+  %i.p = load i64, ptr %.0.lcssa.i, align 8, !tbaa !89
+  store i64 %i.p, ptr %i.m, align 8, !tbaa !89
+  %i.q = load i64, ptr %4, align 8, !tbaa !89
+  store i64 %i.q, ptr %.0.lcssa.i, align 8, !tbaa !89
+  %i.r = load i64, ptr %i.d, align 8, !tbaa !89
+  store i64 %i.r, ptr %4, align 8, !tbaa !89
+  %.03759.i = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 2 uses
+  %.04160.i = getelementptr inbounds nuw i8, ptr %.0.lcssa.i, i64 8 ; 2 uses
+  %.not4861.i = icmp eq ptr %.04160.i, %1
+  br i1 %.not4861.i, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread90, label %.lr.ph.i31
+
+.lr.ph.i31:                                       ; preds = %bb.f, %bb.j
+  %indvar = phi i64 [ %indvar.next, %bb.j ], [ 0, %bb.f ] ; 3 uses
+  %.04166.i = phi ptr [ %.041.i, %bb.j ], [ %.04160.i, %bb.f ] ; 8 uses
+  %.03765.i = phi ptr [ %.037.i, %bb.j ], [ %.03759.i, %bb.f ] ; 3 uses
+  %.064.i = phi ptr [ %.1.i, %bb.j ], [ %i.o, %bb.f ] ; 6 uses
+  %.03563.i = phi ptr [ %.136.i, %bb.j ], [ %i.n, %bb.f ] ; 6 uses
+  %.03962.i = phi ptr [ %.140.i, %bb.j ], [ %i.m, %bb.f ] ; 11 uses
+  %i.s = icmp eq ptr %.03563.i, %3
+  br i1 %i.s, label %.lr.ph.i.i.preheader, label %bb.g
+
+.lr.ph.i.i.preheader:                             ; preds = %.lr.ph.i31
+  %.03962.i234.le = ptrtoaddr ptr %.03962.i to i64
+  %i.t = add i64 %i.a, -16
+  %7 = shl i64 %indvar, 3
+  %8 = add i64 %7, %i.j
+  %9 = sub i64 %i.t, %8                           ; 2 uses
+  %10 = lshr i64 %9, 3
+  %i.u = add nuw nsw i64 %10, 1                   ; 2 uses
+  %min.iters.check = icmp ult i64 %9, 184
+  br i1 %min.iters.check, label %.lr.ph.i.i.preheader289, label %vector.memcheck
+
+vector.memcheck:                                  ; preds = %.lr.ph.i.i.preheader
+  %i.v = mul i64 %indvar, -8
+  %reass.sub = sub i64 %i.v, %i.j
+  %op.rdx260 = add i64 %.03962.i234.le, -9
+  %op.rdx261 = add i64 %op.rdx260, %reass.sub
+  %diff.check = icmp ult i64 %op.rdx261, 31
+  br i1 %diff.check, label %.lr.ph.i.i.preheader289, label %vector.ph
+
+vector.ph:                                        ; preds = %vector.memcheck
+  %n.vec = and i64 %i.u, 4611686018427387900      ; 3 uses
+  %i.w = shl i64 %n.vec, 3                        ; 2 uses
+  %i.x = getelementptr i8, ptr %.03962.i, i64 %i.w ; 2 uses
+  %i.y = getelementptr i8, ptr %.04166.i, i64 %i.w
+  br label %vector.body
+
+vector.body:                                      ; preds = %vector.body, %vector.ph
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
+  %i.z = shl i64 %index, 3                        ; 2 uses
+  %next.gep = getelementptr i8, ptr %.03962.i, i64 %i.z ; 2 uses
+  %next.gep235 = getelementptr i8, ptr %.04166.i, i64 %i.z ; 2 uses
+  %i.aa = getelementptr i8, ptr %next.gep235, i64 16
+  %wide.load = load <2 x i64>, ptr %next.gep235, align 8, !tbaa !89
+  %wide.load236 = load <2 x i64>, ptr %i.aa, align 8, !tbaa !89
+  %i.ab = getelementptr i8, ptr %next.gep, i64 16
+  store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !89
+  store <2 x i64> %wide.load236, ptr %i.ab, align 8, !tbaa !89
+  %index.next = add nuw i64 %index, 4             ; 2 uses
+  %i.ac = icmp eq i64 %index.next, %n.vec
+  br i1 %i.ac, label %middle.block, label %vector.body, !llvm.loop !2283
+
+middle.block:                                     ; preds = %vector.body
+  %cmp.n = icmp eq i64 %i.u, %n.vec
+  br i1 %cmp.n, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit, label %.lr.ph.i.i.preheader289
+
+.lr.ph.i.i.preheader289:                          ; preds = %vector.memcheck, %.lr.ph.i.i.preheader, %middle.block
+  %.010.i.i.ph = phi ptr [ %.03962.i, %vector.memcheck ], [ %.03962.i, %.lr.ph.i.i.preheader ], [ %i.x, %middle.block ]
+  %.079.i.i.ph = phi ptr [ %.04166.i, %vector.memcheck ], [ %.04166.i, %.lr.ph.i.i.preheader ], [ %i.y, %middle.block ]
+  br label %.lr.ph.i.i
+
+.lr.ph.i.i:                                       ; preds = %.lr.ph.i.i.preheader289, %.lr.ph.i.i
+  %.010.i.i = phi ptr [ %i.af, %.lr.ph.i.i ], [ %.010.i.i.ph, %.lr.ph.i.i.preheader289 ] ; 2 uses
+  %.079.i.i = phi ptr [ %i.ae, %.lr.ph.i.i ], [ %.079.i.i.ph, %.lr.ph.i.i.preheader289 ] ; 2 uses
+  %i.ad = load i64, ptr %.079.i.i, align 8, !tbaa !89
+  store i64 %i.ad, ptr %.010.i.i, align 8, !tbaa !89
+  %i.ae = getelementptr inbounds nuw i8, ptr %.079.i.i, i64 8 ; 2 uses
+  %i.af = getelementptr inbounds nuw i8, ptr %.010.i.i, i64 8 ; 2 uses
+  %.not.i.i = icmp eq ptr %i.ae, %1
+  br i1 %.not.i.i, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit, label %.lr.ph.i.i, !llvm.loop !2284
+
+bb.g:                                             ; preds = %.lr.ph.i31
+  %i.ag = load ptr, ptr %.064.i, align 8, !tbaa !97
+  %i.ah = load ptr, ptr %.03962.i, align 8, !tbaa !97
+  %i.ai = icmp ult ptr %i.ag, %i.ah
+  br i1 %i.ai, label %bb.h, label %bb.i
+
+bb.h:                                             ; preds = %bb.g
+  %i.aj = getelementptr inbounds nuw i8, ptr %.03563.i, i64 8
+  %i.ak = getelementptr inbounds nuw i8, ptr %.064.i, i64 8
+  %i.al = load i64, ptr %.04166.i, align 8, !tbaa !89
+  store i64 %i.al, ptr %.03765.i, align 8, !tbaa !89
+  br label %bb.j
+
+bb.i:                                             ; preds = %bb.g
+  %i.am = getelementptr inbounds nuw i8, ptr %.03962.i, i64 8
+  br label %bb.j
+
+bb.j:                                             ; preds = %bb.i, %bb.h
+  %.04166.sink85.i = phi ptr [ %.04166.i, %bb.i ], [ %.064.i, %bb.h ] ; 2 uses
+  %.03765.sink.i = phi ptr [ %.03765.i, %bb.i ], [ %.04166.i, %bb.h ]
+  %.03962.sink.i = phi ptr [ %.03962.i, %bb.i ], [ %.03563.i, %bb.h ]
+  %.140.i = phi ptr [ %i.am, %bb.i ], [ %.03962.i, %bb.h ] ; 2 uses
+  %.136.i = phi ptr [ %.03563.i, %bb.i ], [ %i.aj, %bb.h ] ; 2 uses
+  %.1.i = phi ptr [ %.064.i, %bb.i ], [ %i.ak, %bb.h ] ; 2 uses
+  %i.an = load i64, ptr %.04166.sink85.i, align 8, !tbaa !89
+  store i64 %i.an, ptr %.03765.sink.i, align 8, !tbaa !89
+  %i.ao = load i64, ptr %.03962.sink.i, align 8, !tbaa !89
+  store i64 %i.ao, ptr %.04166.sink85.i, align 8, !tbaa !89
+  %.037.i = getelementptr inbounds nuw i8, ptr %.03765.i, i64 8 ; 2 uses
+  %.041.i = getelementptr inbounds nuw i8, ptr %.04166.i, i64 8 ; 2 uses
+  %.not48.i = icmp eq ptr %.041.i, %1
+  %indvar.next = add i64 %indvar, 1
+  br i1 %.not48.i, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit, label %.lr.ph.i31, !llvm.loop !2285
+
+bb.k:                                             ; preds = %_ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEET_S1W_S1W_RKNS0_15iterator_traitsIS1W_E10value_typeESJ_.exit
+  %.not40.i = icmp eq ptr %4, %3
+  %or.cond.i33 = or i1 %.not.i32, %.not40.i
+  br i1 %or.cond.i33, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_RT_S1X_RSJ_SJ_S1Z_SN_SR_SW_.exit, label %bb.l
+
+bb.l:                                             ; preds = %bb.k
+  %i.ap = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
+  %i.aq = load i64, ptr %.0.lcssa.i, align 8, !tbaa !89
+  store i64 %i.aq, ptr %i.m, align 8, !tbaa !89
+  %i.ar = load i64, ptr %i.d, align 8, !tbaa !89
+  store i64 %i.ar, ptr %.0.lcssa.i, align 8, !tbaa !89
+  %.03050.i = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 2 uses
+  %.03451.i = getelementptr inbounds nuw i8, ptr %.0.lcssa.i, i64 8 ; 2 uses
+  %i.as = icmp eq ptr %.03451.i, %1
+  br i1 %i.as, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread, label %.lr.ph.i34
+
+.lr.ph.i34:                                       ; preds = %bb.l, %bb.m
+  %indvar240 = phi i64 [ %indvar.next241, %bb.m ], [ 0, %bb.l ] ; 3 uses
+  %.03455.i = phi ptr [ %.034.i, %bb.m ], [ %.03451.i, %bb.l ] ; 7 uses
+  %.03054.i = phi ptr [ %.030.i, %bb.m ], [ %.03050.i, %bb.l ] ; 2 uses
+  %.053.i = phi ptr [ %.1.i35, %bb.m ], [ %i.ap, %bb.l ] ; 6 uses
+  %.03252.i = phi ptr [ %.133.i, %bb.m ], [ %i.m, %bb.l ] ; 10 uses
+  %i.at = icmp eq ptr %.053.i, %3
+  br i1 %i.at, label %.lr.ph.i.i40.preheader, label %bb.m
+
+.lr.ph.i.i40.preheader:                           ; preds = %.lr.ph.i34
+  %.03252.i239.le = ptrtoaddr ptr %.03252.i to i64
+  %i.au = add i64 %i.a, -16
+  %11 = shl i64 %indvar240, 3
+  %12 = add i64 %11, %i.j
+  %13 = sub i64 %i.au, %12                        ; 2 uses
+  %14 = lshr i64 %13, 3
+  %i.av = add nuw nsw i64 %14, 1                  ; 2 uses
+  %min.iters.check244 = icmp ult i64 %13, 184
+  br i1 %min.iters.check244, label %.lr.ph.i.i40.preheader281, label %vector.memcheck238
+
+vector.memcheck238:                               ; preds = %.lr.ph.i.i40.preheader
+  %i.aw = mul i64 %indvar240, -8
+  %reass.sub258 = sub i64 %i.aw, %i.j
+  %op.rdx = add i64 %.03252.i239.le, -9
+  %op.rdx259 = add i64 %op.rdx, %reass.sub258
+  %diff.check242 = icmp ult i64 %op.rdx259, 31
+  br i1 %diff.check242, label %.lr.ph.i.i40.preheader281, label %vector.ph245
+
+vector.ph245:                                     ; preds = %vector.memcheck238
+  %n.vec246 = and i64 %i.av, 4611686018427387900  ; 3 uses
+  %i.ax = shl i64 %n.vec246, 3                    ; 2 uses
+  %i.ay = getelementptr i8, ptr %.03252.i, i64 %i.ax ; 2 uses
+  %i.az = getelementptr i8, ptr %.03455.i, i64 %i.ax
+  br label %vector.body247
+
+vector.body247:                                   ; preds = %vector.body247, %vector.ph245
+  %index248 = phi i64 [ 0, %vector.ph245 ], [ %index.next253, %vector.body247 ] ; 2 uses
+  %i.ba = shl i64 %index248, 3                    ; 2 uses
+  %next.gep249 = getelementptr i8, ptr %.03252.i, i64 %i.ba ; 2 uses
+  %next.gep250 = getelementptr i8, ptr %.03455.i, i64 %i.ba ; 2 uses
+  %i.bb = getelementptr i8, ptr %next.gep250, i64 16
+  %wide.load251 = load <2 x i64>, ptr %next.gep250, align 8, !tbaa !89
+  %wide.load252 = load <2 x i64>, ptr %i.bb, align 8, !tbaa !89
+  %i.bc = getelementptr i8, ptr %next.gep249, i64 16
+  store <2 x i64> %wide.load251, ptr %next.gep249, align 8, !tbaa !89
+  store <2 x i64> %wide.load252, ptr %i.bc, align 8, !tbaa !89
+  %index.next253 = add nuw i64 %index248, 4       ; 2 uses
+  %i.bd = icmp eq i64 %index.next253, %n.vec246
+  br i1 %i.bd, label %middle.block254, label %vector.body247, !llvm.loop !2286
+
+middle.block254:                                  ; preds = %vector.body247
+  %cmp.n255 = icmp eq i64 %i.av, %n.vec246
+  br i1 %cmp.n255, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit, label %.lr.ph.i.i40.preheader281
+
+.lr.ph.i.i40.preheader281:                        ; preds = %vector.memcheck238, %.lr.ph.i.i40.preheader, %middle.block254
+  %.010.i.i41.ph = phi ptr [ %.03252.i, %vector.memcheck238 ], [ %.03252.i, %.lr.ph.i.i40.preheader ], [ %i.ay, %middle.block254 ]
+  %.079.i.i42.ph = phi ptr [ %.03455.i, %vector.memcheck238 ], [ %.03455.i, %.lr.ph.i.i40.preheader ], [ %i.az, %middle.block254 ]
+  br label %.lr.ph.i.i40
+
+.lr.ph.i.i40:                                     ; preds = %.lr.ph.i.i40.preheader281, %.lr.ph.i.i40
+  %.010.i.i41 = phi ptr [ %i.bg, %.lr.ph.i.i40 ], [ %.010.i.i41.ph, %.lr.ph.i.i40.preheader281 ] ; 2 uses
+  %.079.i.i42 = phi ptr [ %i.bf, %.lr.ph.i.i40 ], [ %.079.i.i42.ph, %.lr.ph.i.i40.preheader281 ] ; 2 uses
+  %i.be = load i64, ptr %.079.i.i42, align 8, !tbaa !89
+  store i64 %i.be, ptr %.010.i.i41, align 8, !tbaa !89
+  %i.bf = getelementptr inbounds nuw i8, ptr %.079.i.i42, i64 8 ; 2 uses
+  %i.bg = getelementptr inbounds nuw i8, ptr %.010.i.i41, i64 8 ; 2 uses
+  %.not.i.i43 = icmp eq ptr %i.bf, %1
+  br i1 %.not.i.i43, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit, label %.lr.ph.i.i40, !llvm.loop !2287
+
+bb.m:                                             ; preds = %.lr.ph.i34
+  %i.bh = load ptr, ptr %.053.i, align 8, !tbaa !97
+  %i.bi = load ptr, ptr %.03252.i, align 8, !tbaa !97
+  %i.bj = icmp ult ptr %i.bh, %i.bi               ; 3 uses
+  %.133.idx.i = select i1 %i.bj, i64 0, i64 8
+  %.133.i = getelementptr inbounds nuw i8, ptr %.03252.i, i64 %.133.idx.i ; 2 uses
+  %.1.idx.i = select i1 %i.bj, i64 8, i64 0
+  %.1.i35 = getelementptr inbounds nuw i8, ptr %.053.i, i64 %.1.idx.i ; 2 uses
+  %storemerge42.i = load i64, ptr %.03455.i, align 8, !tbaa !89
+  store i64 %storemerge42.i, ptr %.03054.i, align 8, !tbaa !89
+  %.053.val.i = load i64, ptr %.053.i, align 8
+  %.03252.val.i = load i64, ptr %.03252.i, align 8
+  %storemerge.i = select i1 %i.bj, i64 %.053.val.i, i64 %.03252.val.i
+  store i64 %storemerge.i, ptr %.03455.i, align 8, !tbaa !89
+  %.030.i = getelementptr inbounds nuw i8, ptr %.03054.i, i64 8 ; 2 uses
+  %.034.i = getelementptr inbounds nuw i8, ptr %.03455.i, i64 8 ; 2 uses
+  %i.bk = icmp eq ptr %.034.i, %1
+  %indvar.next241 = add i64 %indvar240, 1
+  br i1 %i.bk, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit, label %.lr.ph.i34, !llvm.loop !2288
+
+_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit: ; preds = %bb.j, %.lr.ph.i.i, %bb.m, %.lr.ph.i.i40, %middle.block, %middle.block254, %bb.a
+  %.075 = phi ptr [ %.064.i, %.lr.ph.i.i ], [ %4, %bb.a ], [ %.064.i, %middle.block ], [ %4, %middle.block254 ], [ %4, %bb.m ], [ %4, %.lr.ph.i.i40 ], [ %.1.i, %bb.j ]
+  %.070 = phi ptr [ %.03962.i, %.lr.ph.i.i ], [ %i.b, %bb.a ], [ %.03962.i, %middle.block ], [ %.03252.i, %middle.block254 ], [ %.133.i, %bb.m ], [ %.03252.i, %.lr.ph.i.i40 ], [ %.140.i, %bb.j ] ; 2 uses
+  %.069 = phi ptr [ %.03563.i, %.lr.ph.i.i ], [ %i.d, %bb.a ], [ %.03563.i, %middle.block ], [ %.053.i, %middle.block254 ], [ %.1.i35, %bb.m ], [ %.053.i, %.lr.ph.i.i40 ], [ %.136.i, %bb.j ] ; 2 uses
+  %.028 = phi ptr [ %1, %.lr.ph.i.i ], [ %0, %bb.a ], [ %1, %middle.block ], [ %1, %middle.block254 ], [ %1, %bb.m ], [ %1, %.lr.ph.i.i40 ], [ %1, %bb.j ] ; 2 uses
+  %.0 = phi ptr [ %i.af, %.lr.ph.i.i ], [ %i.c, %bb.a ], [ %i.x, %middle.block ], [ %i.ay, %middle.block254 ], [ %.030.i, %bb.m ], [ %i.bg, %.lr.ph.i.i40 ], [ %.037.i, %bb.j ] ; 2 uses
+  br i1 %.not, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread90
+
+_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread90: ; preds = %bb.f, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit
+  %.0100 = phi ptr [ %.0, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit ], [ %.03759.i, %bb.f ] ; 5 uses
+  %.02899 = phi ptr [ %.028, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit ], [ %1, %bb.f ] ; 2 uses
+  %.06998 = phi ptr [ %.069, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit ], [ %i.n, %bb.f ] ; 3 uses
+  %.07097 = phi ptr [ %.070, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit ], [ %i.m, %bb.f ] ; 3 uses
+  %.07596 = phi ptr [ %.075, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit ], [ %i.o, %bb.f ]
+  %.not.i44 = icmp eq ptr %.06998, %3
+  %.not36.i = icmp eq ptr %.0100, %.07097
+  %or.cond.i45 = select i1 %.not.i44, i1 true, i1 %.not36.i
+  br i1 %or.cond.i45, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_RT_S1X_RSJ_SJ_S1Z_SN_SR_SW_.exit, label %.outer.i
+
+.outer.i:                                         ; preds = %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread90, %bb.o
+  %.030.ph.i = phi ptr [ %.131.i, %bb.o ], [ %.02899, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread90 ]
+  %.028.ph.i = phi ptr [ %i.bt, %bb.o ], [ %.07097, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread90 ] ; 3 uses
+  %.026.ph.i = phi ptr [ %.026.i, %bb.o ], [ %.06998, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread90 ]
+  %.025.ph.i = phi ptr [ %.025.i, %bb.o ], [ %.07596, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread90 ]
+  br label %bb.n
+
+bb.n:                                             ; preds = %.split.i, %.outer.i
+  %.030.i46 = phi ptr [ %.13137.i, %.split.i ], [ %.030.ph.i, %.outer.i ] ; 4 uses
+  %.026.i = phi ptr [ %i.bp, %.split.i ], [ %.026.ph.i, %.outer.i ] ; 4 uses
+  %.025.i = phi ptr [ %i.bq, %.split.i ], [ %.025.ph.i, %.outer.i ] ; 4 uses
+  %i.bl = load ptr, ptr %.025.i, align 8          ; 2 uses
+  %i.bm = load ptr, ptr %.028.ph.i, align 8       ; 2 uses
+  %i.bn = icmp ult ptr %i.bl, %i.bm
+  br i1 %i.bn, label %.split.i, label %bb.o
+
+.split.i:                                         ; preds = %bb.n
+  %i.bo = ptrtoint ptr %i.bl to i64
+  %i.bp = getelementptr inbounds nuw i8, ptr %.026.i, i64 8 ; 3 uses
+  %i.bq = getelementptr inbounds nuw i8, ptr %.025.i, i64 8
+  store i64 %i.bo, ptr %.030.i46, align 8, !tbaa !89
+  %i.br = load i64, ptr %.026.i, align 8, !tbaa !89
+  store i64 %i.br, ptr %.025.i, align 8, !tbaa !89
+  %.not43.i = icmp eq ptr %i.bp, %3
+  %.13137.i = getelementptr inbounds nuw i8, ptr %.030.i46, i64 8 ; 2 uses
+  br i1 %.not43.i, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_RT_S1X_RSJ_SJ_S1Z_SN_SR_SW_.exit, label %bb.n, !llvm.loop !2289
+
+bb.o:                                             ; preds = %bb.n
+  %i.bs = ptrtoint ptr %i.bm to i64
+  %i.bt = getelementptr inbounds nuw i8, ptr %.028.ph.i, i64 8 ; 3 uses
+  store i64 %i.bs, ptr %.030.i46, align 8, !tbaa !89
+  %.not42.i = icmp eq ptr %i.bt, %.0100
+  %.131.i = getelementptr inbounds nuw i8, ptr %.030.i46, i64 8 ; 2 uses
+  br i1 %.not42.i, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_RT_S1X_RSJ_SJ_S1Z_SN_SR_SW_.exit, label %.outer.i, !llvm.loop !2289
+
+_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread: ; preds = %bb.l, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit
+  %.086 = phi ptr [ %.0, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit ], [ %.03050.i, %bb.l ] ; 5 uses
+  %.02884 = phi ptr [ %.028, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit ], [ %1, %bb.l ] ; 2 uses
+  %.06983 = phi ptr [ %.069, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit ], [ %i.ap, %bb.l ] ; 3 uses
+  %.07082 = phi ptr [ %.070, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit ], [ %i.m, %bb.l ] ; 3 uses
+  %.not.i49 = icmp eq ptr %.06983, %3
+  %.not36.i50 = icmp eq ptr %.086, %.07082
+  %or.cond.i51 = select i1 %.not.i49, i1 true, i1 %.not36.i50
+  br i1 %or.cond.i51, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_RT_S1X_RSJ_SJ_S1Z_SN_SR_SW_.exit, label %.preheader.i.outer
+
+.preheader.i.outer:                               ; preds = %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread, %bb.q
+  %.024.i.ph = phi ptr [ %i.bx, %bb.q ], [ %.02884, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread ]
+  %.021.i.ph = phi ptr [ %i.cc, %bb.q ], [ %.07082, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread ] ; 3 uses
+  %.0.i.ph = phi ptr [ %.0.i, %bb.q ], [ %.06983, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread ]
+  br label %.preheader.i
+
+.preheader.i:                                     ; preds = %.preheader.i.outer, %bb.p
+  %.024.i = phi ptr [ %i.bx, %bb.p ], [ %.024.i.ph, %.preheader.i.outer ] ; 3 uses
+  %.0.i = phi ptr [ %i.bz, %bb.p ], [ %.0.i.ph, %.preheader.i.outer ] ; 4 uses
+  %i.bu = load ptr, ptr %.0.i, align 8            ; 2 uses
+  %i.bv = load ptr, ptr %.021.i.ph, align 8       ; 2 uses
+  %i.bw = icmp ult ptr %i.bu, %i.bv
+  %i.bx = getelementptr inbounds nuw i8, ptr %.024.i, i64 8 ; 4 uses
+  br i1 %i.bw, label %bb.p, label %bb.q
+
+bb.p:                                             ; preds = %.preheader.i
+  %i.by = ptrtoint ptr %i.bu to i64
+  %i.bz = getelementptr inbounds nuw i8, ptr %.0.i, i64 8 ; 3 uses
+  store i64 %i.by, ptr %.024.i, align 8, !tbaa !89
+  %i.ca = icmp eq ptr %i.bz, %3
+  br i1 %i.ca, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_RT_S1X_RSJ_SJ_S1Z_SN_SR_SW_.exit, label %.preheader.i, !llvm.loop !2290
+
+bb.q:                                             ; preds = %.preheader.i
+  %i.cb = ptrtoint ptr %i.bv to i64
+  %i.cc = getelementptr inbounds nuw i8, ptr %.021.i.ph, i64 8 ; 3 uses
+  store i64 %i.cb, ptr %.024.i, align 8, !tbaa !89
+  %i.cd = icmp eq ptr %i.cc, %.086
+  br i1 %i.cd, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_RT_S1X_RSJ_SJ_S1Z_SN_SR_SW_.exit, label %.preheader.i.outer, !llvm.loop !2290
+
+_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_RT_S1X_RSJ_SJ_S1Z_SN_SR_SW_.exit: ; preds = %bb.o, %.split.i, %bb.p, %bb.q, %bb.k, %bb.e, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread90
+  %.085 = phi ptr [ %.0100, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread90 ], [ %.0100, %.split.i ], [ %.086, %bb.p ], [ %.086, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread ], [ %i.m, %bb.e ], [ %i.m, %bb.k ], [ %.086, %bb.q ], [ %.0100, %bb.o ]
+  %.171 = phi ptr [ %.07097, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread90 ], [ %.028.ph.i, %.split.i ], [ %i.cc, %bb.q ], [ %.07082, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread ], [ %i.m, %bb.e ], [ %i.m, %bb.k ], [ %.021.i.ph, %bb.p ], [ %i.bt, %bb.o ]
+  %.1 = phi ptr [ %.06998, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread90 ], [ %i.bp, %.split.i ], [ %.0.i, %bb.q ], [ %.06983, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread ], [ %i.d, %bb.e ], [ %i.d, %bb.k ], [ %i.bz, %bb.p ], [ %.026.i, %bb.o ]
+  %i.ce = phi ptr [ %.02899, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread90 ], [ %.13137.i, %.split.i ], [ %i.bx, %bb.p ], [ %.02884, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread ], [ %1, %bb.e ], [ %1, %bb.k ], [ %i.bx, %bb.q ], [ %.131.i, %bb.o ]
+  store ptr %.171, ptr %5, align 8, !tbaa !175
+  store ptr %.085, ptr %6, align 8, !tbaa !175
+  store ptr %.1, ptr %2, align 8, !tbaa !175
+  ret ptr %i.ce
+}
+
+; Function Attrs: mustprogress uwtable
+define linkonce_odr dso_local noundef ptr @_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_save_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEET_S1Z_S1Z_RS1Z_S1Z_S1Z_RSJ_S21_SN_SR_(ptr noundef %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef %3, ptr noundef %4, ptr noundef nonnull align 8 dereferenceable(8) %5, ptr noundef nonnull align 8 dereferenceable(8) %6, ptr noundef align 8 dead_on_return %7) local_unnamed_addr #3 comdat {
+bb.a:
+  %i.a = ptrtoaddr ptr %1 to i64                  ; 2 uses
+  %i.b = load ptr, ptr %5, align 8, !tbaa !175    ; 3 uses
+  %i.c = load ptr, ptr %6, align 8, !tbaa !175    ; 2 uses
+  %i.d = load ptr, ptr %2, align 8, !tbaa !175    ; 9 uses
+  %.not = icmp eq ptr %i.d, %4                    ; 2 uses
+  %i.e = icmp eq ptr %i.b, %i.c
+  br i1 %i.e, label %bb.b, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit
+
+bb.b:                                             ; preds = %bb.a
+  %.not7.i = icmp eq ptr %0, %1
+  br i1 %.not7.i, label %_ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEEEET_S1Y_S1Y_RKNS0_15iterator_traitsIS1Y_E10value_typeESJ_.exit, label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %bb.b
+  %i.f = load ptr, ptr %4, align 8, !tbaa !97
+  br label %bb.c
+
+bb.c:                                             ; preds = %bb.d, %.lr.ph.i
+  %.08.i = phi ptr [ %0, %.lr.ph.i ], [ %i.h, %bb.d ] ; 3 uses
+  %i.g = load ptr, ptr %.08.i, align 8, !tbaa !97
+  %.not6.i = icmp ult ptr %i.g, %i.f
+  br i1 %.not6.i, label %bb.d, label %_ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEEEET_S1Y_S1Y_RKNS0_15iterator_traitsIS1Y_E10value_typeESJ_.exit
+
+bb.d:                                             ; preds = %bb.c
+  %i.h = getelementptr inbounds nuw i8, ptr %.08.i, i64 8 ; 3 uses
+  %.not.i = icmp eq ptr %i.h, %1
+  br i1 %.not.i, label %_ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEEEET_S1Y_S1Y_RKNS0_15iterator_traitsIS1Y_E10value_typeESJ_.exit, label %bb.c, !llvm.loop !2291
+
+_ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEEEET_S1Y_S1Y_RKNS0_15iterator_traitsIS1Y_E10value_typeESJ_.exit: ; preds = %bb.c, %bb.d, %bb.b
+  %.0.lcssa.i = phi ptr [ %0, %bb.b ], [ %.08.i, %bb.c ], [ %i.h, %bb.d ] ; 8 uses
+  %i.i = ptrtoint ptr %.0.lcssa.i to i64          ; 5 uses
+  %i.j = ptrtoint ptr %0 to i64
+  %i.k = sub i64 %i.i, %i.j
+  %i.l = getelementptr inbounds i8, ptr %i.b, i64 %i.k ; 12 uses
+  %.not.i32 = icmp eq ptr %.0.lcssa.i, %1         ; 2 uses
+  br i1 %.not, label %bb.k, label %bb.e
+
+bb.e:                                             ; preds = %_ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEEEET_S1Y_S1Y_RKNS0_15iterator_traitsIS1Y_E10value_typeESJ_.exit
+  %.not47.i = icmp eq ptr %i.d, %3
+  %or.cond.i = select i1 %.not.i32, i1 true, i1 %.not47.i
+  br i1 %or.cond.i, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_RT_S1Z_RSJ_SJ_S21_SN_SR_SW_.exit, label %bb.f
+
+bb.f:                                             ; preds = %bb.e
+  %i.m = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
+  %i.o = load i64, ptr %.0.lcssa.i, align 8, !tbaa !89
+  store i64 %i.o, ptr %i.l, align 8, !tbaa !89
+  %i.p = load i64, ptr %4, align 8, !tbaa !89
+  store i64 %i.p, ptr %.0.lcssa.i, align 8, !tbaa !89
+  %i.q = load i64, ptr %i.d, align 8, !tbaa !89
+  store i64 %i.q, ptr %4, align 8, !tbaa !89
+  %.03760.i = getelementptr inbounds nuw i8, ptr %i.l, i64 8 ; 2 uses
+  %.04161.i = getelementptr inbounds nuw i8, ptr %.0.lcssa.i, i64 8 ; 2 uses
+  %.not4862.i = icmp eq ptr %.04161.i, %1
+  br i1 %.not4862.i, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95, label %.lr.ph.i31
+
+.lr.ph.i31:                                       ; preds = %bb.f, %bb.j
+  %indvar = phi i64 [ %indvar.next, %bb.j ], [ 0, %bb.f ] ; 3 uses
+  %.04167.i = phi ptr [ %.041.i, %bb.j ], [ %.04161.i, %bb.f ] ; 8 uses
+  %.03766.i = phi ptr [ %.037.i, %bb.j ], [ %.03760.i, %bb.f ] ; 3 uses
+  %.065.i = phi ptr [ %.1.i, %bb.j ], [ %i.n, %bb.f ] ; 6 uses
+  %.03564.i = phi ptr [ %.136.i, %bb.j ], [ %i.m, %bb.f ] ; 6 uses
+  %.03963.i = phi ptr [ %.140.i, %bb.j ], [ %i.l, %bb.f ] ; 11 uses
+  %i.r = icmp eq ptr %.03564.i, %3
+  br i1 %i.r, label %.lr.ph.i.i.preheader, label %bb.g
+
+.lr.ph.i.i.preheader:                             ; preds = %.lr.ph.i31
+  %.03963.i238.le = ptrtoaddr ptr %.03963.i to i64
+  %i.s = add i64 %i.a, -16
+  %8 = shl i64 %indvar, 3
+  %9 = add i64 %8, %i.i
+  %10 = sub i64 %i.s, %9                          ; 2 uses
+  %11 = lshr i64 %10, 3
+  %i.t = add nuw nsw i64 %11, 1                   ; 2 uses
+  %min.iters.check = icmp ult i64 %10, 184
+  br i1 %min.iters.check, label %.lr.ph.i.i.preheader293, label %vector.memcheck
+
+vector.memcheck:                                  ; preds = %.lr.ph.i.i.preheader
+  %i.u = mul i64 %indvar, -8
+  %reass.sub = sub i64 %i.u, %i.i
+  %op.rdx264 = add i64 %.03963.i238.le, -9
+  %op.rdx265 = add i64 %op.rdx264, %reass.sub
+  %diff.check = icmp ult i64 %op.rdx265, 31
+  br i1 %diff.check, label %.lr.ph.i.i.preheader293, label %vector.ph
+
+vector.ph:                                        ; preds = %vector.memcheck
+  %n.vec = and i64 %i.t, 4611686018427387900      ; 3 uses
+  %i.v = shl i64 %n.vec, 3                        ; 2 uses
+  %i.w = getelementptr i8, ptr %.03963.i, i64 %i.v ; 2 uses
+  %i.x = getelementptr i8, ptr %.04167.i, i64 %i.v
+  br label %vector.body
+
+vector.body:                                      ; preds = %vector.body, %vector.ph
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
+  %i.y = shl i64 %index, 3                        ; 2 uses
+  %next.gep = getelementptr i8, ptr %.03963.i, i64 %i.y ; 2 uses
+  %next.gep239 = getelementptr i8, ptr %.04167.i, i64 %i.y ; 2 uses
+  %i.z = getelementptr i8, ptr %next.gep239, i64 16
+  %wide.load = load <2 x i64>, ptr %next.gep239, align 8, !tbaa !89
+  %wide.load240 = load <2 x i64>, ptr %i.z, align 8, !tbaa !89
+  %i.aa = getelementptr i8, ptr %next.gep, i64 16
+  store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !89
+  store <2 x i64> %wide.load240, ptr %i.aa, align 8, !tbaa !89
+  %index.next = add nuw i64 %index, 4             ; 2 uses
+  %i.ab = icmp eq i64 %index.next, %n.vec
+  br i1 %i.ab, label %middle.block, label %vector.body, !llvm.loop !2292
+
+middle.block:                                     ; preds = %vector.body
+  %cmp.n = icmp eq i64 %i.t, %n.vec
+  br i1 %cmp.n, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit, label %.lr.ph.i.i.preheader293
+
+.lr.ph.i.i.preheader293:                          ; preds = %vector.memcheck, %.lr.ph.i.i.preheader, %middle.block
+  %.010.i.i.ph = phi ptr [ %.03963.i, %vector.memcheck ], [ %.03963.i, %.lr.ph.i.i.preheader ], [ %i.w, %middle.block ]
+  %.079.i.i.ph = phi ptr [ %.04167.i, %vector.memcheck ], [ %.04167.i, %.lr.ph.i.i.preheader ], [ %i.x, %middle.block ]
+  br label %.lr.ph.i.i
+
+.lr.ph.i.i:                                       ; preds = %.lr.ph.i.i.preheader293, %.lr.ph.i.i
+  %.010.i.i = phi ptr [ %i.ae, %.lr.ph.i.i ], [ %.010.i.i.ph, %.lr.ph.i.i.preheader293 ] ; 2 uses
+  %.079.i.i = phi ptr [ %i.ad, %.lr.ph.i.i ], [ %.079.i.i.ph, %.lr.ph.i.i.preheader293 ] ; 2 uses
+  %i.ac = load i64, ptr %.079.i.i, align 8, !tbaa !89
+  store i64 %i.ac, ptr %.010.i.i, align 8, !tbaa !89
+  %i.ad = getelementptr inbounds nuw i8, ptr %.079.i.i, i64 8 ; 2 uses
+  %i.ae = getelementptr inbounds nuw i8, ptr %.010.i.i, i64 8 ; 2 uses
+  %.not.i.i = icmp eq ptr %i.ad, %1
+  br i1 %.not.i.i, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit, label %.lr.ph.i.i, !llvm.loop !2293
+
+bb.g:                                             ; preds = %.lr.ph.i31
+  %i.af = load ptr, ptr %.03963.i, align 8, !tbaa !97
+  %i.ag = load ptr, ptr %.065.i, align 8, !tbaa !97
+  %.not50.i = icmp ult ptr %i.af, %i.ag
+  br i1 %.not50.i, label %bb.i, label %bb.h
+
+bb.h:                                             ; preds = %bb.g
+  %i.ah = getelementptr inbounds nuw i8, ptr %.03564.i, i64 8
+  %i.ai = getelementptr inbounds nuw i8, ptr %.065.i, i64 8
+  %i.aj = load i64, ptr %.04167.i, align 8, !tbaa !89
+  store i64 %i.aj, ptr %.03766.i, align 8, !tbaa !89
+  br label %bb.j
+
+bb.i:                                             ; preds = %bb.g
+  %i.ak = getelementptr inbounds nuw i8, ptr %.03963.i, i64 8
+  br label %bb.j
+
+bb.j:                                             ; preds = %bb.i, %bb.h
+  %.04167.sink86.i = phi ptr [ %.04167.i, %bb.i ], [ %.065.i, %bb.h ] ; 2 uses
+  %.03766.sink.i = phi ptr [ %.03766.i, %bb.i ], [ %.04167.i, %bb.h ]
+  %.03963.sink.i = phi ptr [ %.03963.i, %bb.i ], [ %.03564.i, %bb.h ]
+  %.140.i = phi ptr [ %i.ak, %bb.i ], [ %.03963.i, %bb.h ] ; 2 uses
+  %.136.i = phi ptr [ %.03564.i, %bb.i ], [ %i.ah, %bb.h ] ; 2 uses
+  %.1.i = phi ptr [ %.065.i, %bb.i ], [ %i.ai, %bb.h ] ; 2 uses
+  %i.al = load i64, ptr %.04167.sink86.i, align 8, !tbaa !89
+  store i64 %i.al, ptr %.03766.sink.i, align 8, !tbaa !89
+  %i.am = load i64, ptr %.03963.sink.i, align 8, !tbaa !89
+  store i64 %i.am, ptr %.04167.sink86.i, align 8, !tbaa !89
+  %.037.i = getelementptr inbounds nuw i8, ptr %.03766.i, i64 8 ; 2 uses
+  %.041.i = getelementptr inbounds nuw i8, ptr %.04167.i, i64 8 ; 2 uses
+  %.not48.i = icmp eq ptr %.041.i, %1
+  %indvar.next = add i64 %indvar, 1
+  br i1 %.not48.i, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit, label %.lr.ph.i31, !llvm.loop !2294
+
+bb.k:                                             ; preds = %_ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEEEET_S1Y_S1Y_RKNS0_15iterator_traitsIS1Y_E10value_typeESJ_.exit
+  %.not40.i = icmp eq ptr %4, %3
+  %or.cond.i33 = or i1 %.not.i32, %.not40.i
+  br i1 %or.cond.i33, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_RT_S1Z_RSJ_SJ_S21_SN_SR_SW_.exit, label %bb.l
+
+bb.l:                                             ; preds = %bb.k
+  %i.an = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
+  %i.ao = load i64, ptr %.0.lcssa.i, align 8, !tbaa !89
+  store i64 %i.ao, ptr %i.l, align 8, !tbaa !89
+  %i.ap = load i64, ptr %i.d, align 8, !tbaa !89
+  store i64 %i.ap, ptr %.0.lcssa.i, align 8, !tbaa !89
+  %.03051.i = getelementptr inbounds nuw i8, ptr %i.l, i64 8 ; 2 uses
+  %.03452.i = getelementptr inbounds nuw i8, ptr %.0.lcssa.i, i64 8 ; 2 uses
+  %i.aq = icmp eq ptr %.03452.i, %1
+  br i1 %i.aq, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread, label %.lr.ph.i34
+
+.lr.ph.i34:                                       ; preds = %bb.l, %bb.m
+  %indvar244 = phi i64 [ %indvar.next245, %bb.m ], [ 0, %bb.l ] ; 3 uses
+  %.03456.i = phi ptr [ %.034.i, %bb.m ], [ %.03452.i, %bb.l ] ; 7 uses
+  %.03055.i = phi ptr [ %.030.i, %bb.m ], [ %.03051.i, %bb.l ] ; 2 uses
+  %.054.i = phi ptr [ %.1.i35, %bb.m ], [ %i.an, %bb.l ] ; 6 uses
+  %.03253.i = phi ptr [ %.133.i, %bb.m ], [ %i.l, %bb.l ] ; 10 uses
+  %i.ar = icmp eq ptr %.054.i, %3
+  br i1 %i.ar, label %.lr.ph.i.i40.preheader, label %bb.m
+
+.lr.ph.i.i40.preheader:                           ; preds = %.lr.ph.i34
+  %.03253.i243.le = ptrtoaddr ptr %.03253.i to i64
+  %i.as = add i64 %i.a, -16
+  %12 = shl i64 %indvar244, 3
+  %13 = add i64 %12, %i.i
+  %14 = sub i64 %i.as, %13                        ; 2 uses
+  %15 = lshr i64 %14, 3
+  %i.at = add nuw nsw i64 %15, 1                  ; 2 uses
+  %min.iters.check248 = icmp ult i64 %14, 184
+  br i1 %min.iters.check248, label %.lr.ph.i.i40.preheader285, label %vector.memcheck242
+
+vector.memcheck242:                               ; preds = %.lr.ph.i.i40.preheader
+  %i.au = mul i64 %indvar244, -8
+  %reass.sub262 = sub i64 %i.au, %i.i
+  %op.rdx = add i64 %.03253.i243.le, -9
+  %op.rdx263 = add i64 %op.rdx, %reass.sub262
+  %diff.check246 = icmp ult i64 %op.rdx263, 31
+  br i1 %diff.check246, label %.lr.ph.i.i40.preheader285, label %vector.ph249
+
+vector.ph249:                                     ; preds = %vector.memcheck242
+  %n.vec250 = and i64 %i.at, 4611686018427387900  ; 3 uses
+  %i.av = shl i64 %n.vec250, 3                    ; 2 uses
+  %i.aw = getelementptr i8, ptr %.03253.i, i64 %i.av ; 2 uses
+  %i.ax = getelementptr i8, ptr %.03456.i, i64 %i.av
+  br label %vector.body251
+
+vector.body251:                                   ; preds = %vector.body251, %vector.ph249
+  %index252 = phi i64 [ 0, %vector.ph249 ], [ %index.next257, %vector.body251 ] ; 2 uses
+  %i.ay = shl i64 %index252, 3                    ; 2 uses
+  %next.gep253 = getelementptr i8, ptr %.03253.i, i64 %i.ay ; 2 uses
+  %next.gep254 = getelementptr i8, ptr %.03456.i, i64 %i.ay ; 2 uses
+  %i.az = getelementptr i8, ptr %next.gep254, i64 16
+  %wide.load255 = load <2 x i64>, ptr %next.gep254, align 8, !tbaa !89
+  %wide.load256 = load <2 x i64>, ptr %i.az, align 8, !tbaa !89
+  %i.ba = getelementptr i8, ptr %next.gep253, i64 16
+  store <2 x i64> %wide.load255, ptr %next.gep253, align 8, !tbaa !89
+  store <2 x i64> %wide.load256, ptr %i.ba, align 8, !tbaa !89
+  %index.next257 = add nuw i64 %index252, 4       ; 2 uses
+  %i.bb = icmp eq i64 %index.next257, %n.vec250
+  br i1 %i.bb, label %middle.block258, label %vector.body251, !llvm.loop !2295
+
+middle.block258:                                  ; preds = %vector.body251
+  %cmp.n259 = icmp eq i64 %i.at, %n.vec250
+  br i1 %cmp.n259, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit, label %.lr.ph.i.i40.preheader285
+
+.lr.ph.i.i40.preheader285:                        ; preds = %vector.memcheck242, %.lr.ph.i.i40.preheader, %middle.block258
+  %.010.i.i41.ph = phi ptr [ %.03253.i, %vector.memcheck242 ], [ %.03253.i, %.lr.ph.i.i40.preheader ], [ %i.aw, %middle.block258 ]
+  %.079.i.i42.ph = phi ptr [ %.03456.i, %vector.memcheck242 ], [ %.03456.i, %.lr.ph.i.i40.preheader ], [ %i.ax, %middle.block258 ]
+  br label %.lr.ph.i.i40
+
+.lr.ph.i.i40:                                     ; preds = %.lr.ph.i.i40.preheader285, %.lr.ph.i.i40
+  %.010.i.i41 = phi ptr [ %i.be, %.lr.ph.i.i40 ], [ %.010.i.i41.ph, %.lr.ph.i.i40.preheader285 ] ; 2 uses
+  %.079.i.i42 = phi ptr [ %i.bd, %.lr.ph.i.i40 ], [ %.079.i.i42.ph, %.lr.ph.i.i40.preheader285 ] ; 2 uses
+  %i.bc = load i64, ptr %.079.i.i42, align 8, !tbaa !89
+  store i64 %i.bc, ptr %.010.i.i41, align 8, !tbaa !89
+  %i.bd = getelementptr inbounds nuw i8, ptr %.079.i.i42, i64 8 ; 2 uses
+  %i.be = getelementptr inbounds nuw i8, ptr %.010.i.i41, i64 8 ; 2 uses
+  %.not.i.i43 = icmp eq ptr %i.bd, %1
+  br i1 %.not.i.i43, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit, label %.lr.ph.i.i40, !llvm.loop !2296
+
+bb.m:                                             ; preds = %.lr.ph.i34
+  %i.bf = load ptr, ptr %.03253.i, align 8, !tbaa !97
+  %i.bg = load ptr, ptr %.054.i, align 8, !tbaa !97
+  %.not42.i = icmp ult ptr %i.bf, %i.bg           ; 3 uses
+  %.133.idx.i = select i1 %.not42.i, i64 8, i64 0
+  %.133.i = getelementptr inbounds nuw i8, ptr %.03253.i, i64 %.133.idx.i ; 2 uses
+  %.1.idx.i = select i1 %.not42.i, i64 0, i64 8
+  %.1.i35 = getelementptr inbounds nuw i8, ptr %.054.i, i64 %.1.idx.i ; 2 uses
+  %storemerge43.i = load i64, ptr %.03456.i, align 8, !tbaa !89
+  store i64 %storemerge43.i, ptr %.03055.i, align 8, !tbaa !89
+  %.03253.val.i = load i64, ptr %.03253.i, align 8
+  %.054.val.i = load i64, ptr %.054.i, align 8
+  %storemerge.i = select i1 %.not42.i, i64 %.03253.val.i, i64 %.054.val.i
+  store i64 %storemerge.i, ptr %.03456.i, align 8, !tbaa !89
+  %.030.i = getelementptr inbounds nuw i8, ptr %.03055.i, i64 8 ; 2 uses
+  %.034.i = getelementptr inbounds nuw i8, ptr %.03456.i, i64 8 ; 2 uses
+  %i.bh = icmp eq ptr %.034.i, %1
+  %indvar.next245 = add i64 %indvar244, 1
+  br i1 %i.bh, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit, label %.lr.ph.i34, !llvm.loop !2297
+
+_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit: ; preds = %bb.j, %.lr.ph.i.i, %bb.m, %.lr.ph.i.i40, %middle.block, %middle.block258, %bb.a
+  %.077 = phi ptr [ %.03564.i, %.lr.ph.i.i ], [ %i.d, %bb.a ], [ %.03564.i, %middle.block ], [ %.054.i, %middle.block258 ], [ %.1.i35, %bb.m ], [ %.054.i, %.lr.ph.i.i40 ], [ %.136.i, %bb.j ] ; 2 uses
+  %.075 = phi ptr [ %.03963.i, %.lr.ph.i.i ], [ %i.b, %bb.a ], [ %.03963.i, %middle.block ], [ %.03253.i, %middle.block258 ], [ %.133.i, %bb.m ], [ %.03253.i, %.lr.ph.i.i40 ], [ %.140.i, %bb.j ] ; 2 uses
+  %.074 = phi ptr [ %.065.i, %.lr.ph.i.i ], [ %4, %bb.a ], [ %.065.i, %middle.block ], [ %4, %middle.block258 ], [ %4, %bb.m ], [ %4, %.lr.ph.i.i40 ], [ %.1.i, %bb.j ]
+  %.028 = phi ptr [ %1, %.lr.ph.i.i ], [ %0, %bb.a ], [ %1, %middle.block ], [ %1, %middle.block258 ], [ %1, %bb.m ], [ %1, %.lr.ph.i.i40 ], [ %1, %bb.j ] ; 2 uses
+  %.0 = phi ptr [ %i.ae, %.lr.ph.i.i ], [ %i.c, %bb.a ], [ %i.w, %middle.block ], [ %i.aw, %middle.block258 ], [ %.030.i, %bb.m ], [ %i.be, %.lr.ph.i.i40 ], [ %.037.i, %bb.j ] ; 2 uses
+  br i1 %.not, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95
+
+_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95: ; preds = %bb.f, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit
+  %.0105 = phi ptr [ %.0, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit ], [ %.03760.i, %bb.f ] ; 5 uses
+  %.028104 = phi ptr [ %.028, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit ], [ %1, %bb.f ] ; 2 uses
+  %.074103 = phi ptr [ %.074, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit ], [ %i.n, %bb.f ]
+  %.075102 = phi ptr [ %.075, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit ], [ %i.l, %bb.f ] ; 3 uses
+  %.077101 = phi ptr [ %.077, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit ], [ %i.m, %bb.f ] ; 3 uses
+  %.not.i44 = icmp eq ptr %.077101, %3
+  %.not36.i = icmp eq ptr %.0105, %.075102
+  %or.cond.i45 = select i1 %.not.i44, i1 true, i1 %.not36.i
+  br i1 %or.cond.i45, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_RT_S1Z_RSJ_SJ_S21_SN_SR_SW_.exit, label %.outer.i
+
+.outer.i:                                         ; preds = %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95, %bb.o
+  %.030.ph.i = phi ptr [ %.131.i, %bb.o ], [ %.028104, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95 ]
+  %.028.ph.i = phi ptr [ %i.bp, %bb.o ], [ %.075102, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95 ] ; 3 uses
+  %.026.ph.i = phi ptr [ %.026.i, %bb.o ], [ %.077101, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95 ]
+  %.025.ph.i = phi ptr [ %.025.i, %bb.o ], [ %.074103, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95 ]
+  br label %bb.n
+
+bb.n:                                             ; preds = %.split.i, %.outer.i
+  %.030.i46 = phi ptr [ %.13137.i, %.split.i ], [ %.030.ph.i, %.outer.i ] ; 4 uses
+  %.026.i = phi ptr [ %i.bl, %.split.i ], [ %.026.ph.i, %.outer.i ] ; 4 uses
+  %.025.i = phi ptr [ %i.bm, %.split.i ], [ %.025.ph.i, %.outer.i ] ; 4 uses
+  %i.bi = load ptr, ptr %.028.ph.i, align 8       ; 2 uses
+  %i.bj = load ptr, ptr %.025.i, align 8          ; 2 uses
+  %.not42.i47 = icmp ult ptr %i.bi, %i.bj
+  br i1 %.not42.i47, label %bb.o, label %.split.i
+
+.split.i:                                         ; preds = %bb.n
+  %i.bk = ptrtoint ptr %i.bj to i64
+  %i.bl = getelementptr inbounds nuw i8, ptr %.026.i, i64 8 ; 3 uses
+  %i.bm = getelementptr inbounds nuw i8, ptr %.025.i, i64 8
+  store i64 %i.bk, ptr %.030.i46, align 8, !tbaa !89
+  %i.bn = load i64, ptr %.026.i, align 8, !tbaa !89
+  store i64 %i.bn, ptr %.025.i, align 8, !tbaa !89
+  %.not44.i = icmp eq ptr %i.bl, %3
+  %.13137.i = getelementptr inbounds nuw i8, ptr %.030.i46, i64 8 ; 2 uses
+  br i1 %.not44.i, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_RT_S1Z_RSJ_SJ_S21_SN_SR_SW_.exit, label %bb.n, !llvm.loop !2298
+
+bb.o:                                             ; preds = %bb.n
+  %i.bo = ptrtoint ptr %i.bi to i64
+  %i.bp = getelementptr inbounds nuw i8, ptr %.028.ph.i, i64 8 ; 3 uses
+  store i64 %i.bo, ptr %.030.i46, align 8, !tbaa !89
+  %.not43.i = icmp eq ptr %i.bp, %.0105
+  %.131.i = getelementptr inbounds nuw i8, ptr %.030.i46, i64 8 ; 2 uses
+  br i1 %.not43.i, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_RT_S1Z_RSJ_SJ_S21_SN_SR_SW_.exit, label %.outer.i, !llvm.loop !2298
+
+_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread: ; preds = %bb.l, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit
+  %.091 = phi ptr [ %.0, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit ], [ %.03051.i, %bb.l ] ; 5 uses
+  %.02889 = phi ptr [ %.028, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit ], [ %1, %bb.l ] ; 2 uses
+  %.07588 = phi ptr [ %.075, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit ], [ %i.l, %bb.l ] ; 3 uses
+  %.07787 = phi ptr [ %.077, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit ], [ %i.an, %bb.l ] ; 3 uses
+  %.not.i50 = icmp eq ptr %.07787, %3
+  %.not36.i51 = icmp eq ptr %.091, %.07588
+  %or.cond.i52 = select i1 %.not.i50, i1 true, i1 %.not36.i51
+  br i1 %or.cond.i52, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_RT_S1Z_RSJ_SJ_S21_SN_SR_SW_.exit, label %.preheader.i.outer
+
+.preheader.i.outer:                               ; preds = %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread, %bb.q
+  %.024.i.ph = phi ptr [ %i.bs, %bb.q ], [ %.02889, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread ]
+  %.021.i.ph = phi ptr [ %i.bx, %bb.q ], [ %.07588, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread ] ; 3 uses
+  %.0.i.ph = phi ptr [ %.0.i, %bb.q ], [ %.07787, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread ]
+  br label %.preheader.i
+
+.preheader.i:                                     ; preds = %.preheader.i.outer, %bb.p
+  %.024.i = phi ptr [ %i.bs, %bb.p ], [ %.024.i.ph, %.preheader.i.outer ] ; 3 uses
+  %.0.i = phi ptr [ %i.bu, %bb.p ], [ %.0.i.ph, %.preheader.i.outer ] ; 4 uses
+  %i.bq = load ptr, ptr %.021.i.ph, align 8       ; 2 uses
+  %i.br = load ptr, ptr %.0.i, align 8            ; 2 uses
+  %.not37.i = icmp ult ptr %i.bq, %i.br
+  %i.bs = getelementptr inbounds nuw i8, ptr %.024.i, i64 8 ; 4 uses
+  br i1 %.not37.i, label %bb.q, label %bb.p
+
+bb.p:                                             ; preds = %.preheader.i
+  %i.bt = ptrtoint ptr %i.br to i64
+  %i.bu = getelementptr inbounds nuw i8, ptr %.0.i, i64 8 ; 3 uses
+  store i64 %i.bt, ptr %.024.i, align 8, !tbaa !89
+  %i.bv = icmp eq ptr %i.bu, %3
+  br i1 %i.bv, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_RT_S1Z_RSJ_SJ_S21_SN_SR_SW_.exit, label %.preheader.i, !llvm.loop !2299
+
+bb.q:                                             ; preds = %.preheader.i
+  %i.bw = ptrtoint ptr %i.bq to i64
+  %i.bx = getelementptr inbounds nuw i8, ptr %.021.i.ph, i64 8 ; 3 uses
+  store i64 %i.bw, ptr %.024.i, align 8, !tbaa !89
+  %i.by = icmp eq ptr %i.bx, %.091
+  br i1 %i.by, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_RT_S1Z_RSJ_SJ_S21_SN_SR_SW_.exit, label %.preheader.i.outer, !llvm.loop !2299
+
+_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_RT_S1Z_RSJ_SJ_S21_SN_SR_SW_.exit: ; preds = %bb.o, %.split.i, %bb.p, %bb.q, %bb.k, %bb.e, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95
+  %.090 = phi ptr [ %.0105, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95 ], [ %.0105, %.split.i ], [ %.091, %bb.p ], [ %.091, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread ], [ %i.l, %bb.e ], [ %i.l, %bb.k ], [ %.091, %bb.q ], [ %.0105, %bb.o ]
+  %.178 = phi ptr [ %.077101, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95 ], [ %i.bl, %.split.i ], [ %.0.i, %bb.q ], [ %.07787, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread ], [ %i.d, %bb.e ], [ %i.d, %bb.k ], [ %i.bu, %bb.p ], [ %.026.i, %bb.o ]
+  %.176 = phi ptr [ %.075102, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95 ], [ %.028.ph.i, %.split.i ], [ %i.bx, %bb.q ], [ %.07588, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread ], [ %i.l, %bb.e ], [ %i.l, %bb.k ], [ %.021.i.ph, %bb.p ], [ %i.bp, %bb.o ]
+  %i.bz = phi ptr [ %.028104, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95 ], [ %.13137.i, %.split.i ], [ %i.bs, %bb.p ], [ %.02889, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread ], [ %1, %bb.e ], [ %1, %bb.k ], [ %i.bs, %bb.q ], [ %.131.i, %bb.o ]
+  store ptr %.176, ptr %5, align 8, !tbaa !175
+  store ptr %.090, ptr %6, align 8, !tbaa !175
+  store ptr %.178, ptr %2, align 8, !tbaa !175
+  ret ptr %i.bz
+}
+
+; Function Attrs: mustprogress uwtable
+define linkonce_odr dso_local void @_ZN5boost7movelib15detail_adaptive26op_merge_blocks_with_irregINS0_16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS4_17Compact_containerINS4_37Constrained_triangulation_face_base_2INS4_5EpeckENS4_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS9_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSG_IiLin1ELin1ELi0ELin1ELin1EEESH_SH_SI_EEvRKNSF_10MatrixBaseIT0_EERKNSJ_IT1_EERKNSJ_IT2_EEbRNSF_15PlainObjectBaseIT3_EERNSW_IT4_EEE9FaceInfo2S9_NS4_25Triangulation_face_base_2IS9_NS4_28Triangulation_ds_face_base_2INS4_30Triangulation_data_structure_2INS4_27Triangulation_vertex_base_2IS9_NS4_30Triangulation_ds_vertex_base_2IvEEEENS8_IS9_NSA_IS13_S9_NS14_IS9_NS15_IvEEEEEEEEEEEEEEEEEENS4_7DefaultES1K_S1K_EELb0EEEEENS0_7inverseINS_9container3dtl23flat_tree_value_compareISt4lessIS1M_ES1M_NS_11move_detail8identityIS1M_EEEEEES1O_S1O_S1O_S1Z_NS0_7swap_opEEESX_T_S21_SK_SO_RSS_SS_SX_NS0_9iter_sizeISO_E4typeES25_S25_S25_S10_bT5_(ptr dead_on_unwind noalias writable sret(%"class.boost::movelib::reverse_iterator") align 8 %0, ptr noundef align 8 dead_on_return %1, ptr noundef align 8 dead_on_return %2, ptr noundef align 8 dead_on_return %3, ptr noundef nonnull align 8 dereferenceable(8) %4, ptr noundef align 8 dead_on_return %5, ptr noundef align 8 dead_on_return %6, i64 noundef %7, i64 noundef %8, i64 noundef %9, i64 noundef %10, i1 noundef zeroext %11) local_unnamed_addr #3 comdat {
+bb.a:
+  %.not153 = icmp eq i64 %8, 0
+  br i1 %.not153, label %._crit_edge, label %.lr.ph
+
+.lr.ph:                                           ; preds = %bb.a
+  %i.a = sub i64 0, %7                            ; 2 uses
+  %.idx = shl nsw i64 %i.a, 3
+  %.not.i.i = icmp eq i64 %7, 0
+  %.pre = load ptr, ptr %1, align 8, !tbaa !2102
+  %i.b = shl i64 %7, 3                            ; 2 uses
+  %i.c = add i64 %i.b, -8
+  %i.d = add i64 %i.b, -8
+  %i.e = shl i64 %7, 3
+  %invariant.op = add i64 %i.e, -8
+  %i.f = shl i64 %7, 3
+  %invariant.op506 = add i64 %i.f, -8
+  br label %bb.b
+
+bb.b:                                             ; preds = %.lr.ph, %_ZN5boost7movelib15detail_adaptive19swap_and_update_keyINS0_16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS4_17Compact_containerINS4_37Constrained_triangulation_face_base_2INS4_5EpeckENS4_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS9_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSG_IiLin1ELin1ELi0ELin1ELin1EEESH_SH_SI_EEvRKNSF_10MatrixBaseIT0_EERKNSJ_IT1_EERKNSJ_IT2_EEbRNSF_15PlainObjectBaseIT3_EERNSW_IT4_EEE9FaceInfo2S9_NS4_25Triangulation_face_base_2IS9_NS4_28Triangulation_ds_face_base_2INS4_30Triangulation_data_structure_2INS4_27Triangulation_vertex_base_2IS9_NS4_30Triangulation_ds_vertex_base_2IvEEEENS8_IS9_NSA_IS13_S9_NS14_IS9_NS15_IvEEEEEEEEEEEEEEEEEENS4_7DefaultES1K_S1K_EELb0EEEEES1O_EEvT_S1P_RS1P_SK_SK_SK_.exit
+  %i.g = phi ptr [ %.pre, %.lr.ph ], [ %i.fp, %_ZN5boost7movelib15detail_adaptive19swap_and_update_keyINS0_16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS4_17Compact_containerINS4_37Constrained_triangulation_face_base_2INS4_5EpeckENS4_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS9_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSG_IiLin1ELin1ELi0ELin1ELin1EEESH_SH_SI_EEvRKNSF_10MatrixBaseIT0_EERKNSJ_IT1_EERKNSJ_IT2_EEbRNSF_15PlainObjectBaseIT3_EERNSW_IT4_EEE9FaceInfo2S9_NS4_25Triangulation_face_base_2IS9_NS4_28Triangulation_ds_face_base_2INS4_30Triangulation_data_structure_2INS4_27Triangulation_vertex_base_2IS9_NS4_30Triangulation_ds_vertex_base_2IvEEEENS8_IS9_NSA_IS13_S9_NS14_IS9_NS15_IvEEEEEEEEEEEEEEEEEENS4_7DefaultES1K_S1K_EELb0EEEEES1O_EEvT_S1P_RS1P_SK_SK_SK_.exit ] ; 2 uses
+  %.0 = phi i64 [ %10, %.lr.ph ], [ %i.ft, %_ZN5boost7movelib15detail_adaptive19swap_and_update_keyINS0_16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS4_17Compact_containerINS4_37Constrained_triangulation_face_base_2INS4_5EpeckENS4_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS9_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSG_IiLin1ELin1ELi0ELin1ELin1EEESH_SH_SI_EEvRKNSF_10MatrixBaseIT0_EERKNSJ_IT1_EERKNSJ_IT2_EEbRNSF_15PlainObjectBaseIT3_EERNSW_IT4_EEE9FaceInfo2S9_NS4_25Triangulation_face_base_2IS9_NS4_28Triangulation_ds_face_base_2INS4_30Triangulation_data_structure_2INS4_27Triangulation_vertex_base_2IS9_NS4_30Triangulation_ds_vertex_base_2IvEEEENS8_IS9_NSA_IS13_S9_NS14_IS9_NS15_IvEEEEEEEEEEEEEEEEEENS4_7DefaultES1K_S1K_EELb0EEEEES1O_EEvT_S1P_RS1P_SK_SK_SK_.exit ] ; 3 uses
+  %.0155 = phi i64 [ %9, %.lr.ph ], [ %i.fr, %_ZN5boost7movelib15detail_adaptive19swap_and_update_keyINS0_16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS4_17Compact_containerINS4_37Constrained_triangulation_face_base_2INS4_5EpeckENS4_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS9_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSG_IiLin1ELin1ELi0ELin1ELin1EEESH_SH_SI_EEvRKNSF_10MatrixBaseIT0_EERKNSJ_IT1_EERKNSJ_IT2_EEbRNSF_15PlainObjectBaseIT3_EERNSW_IT4_EEE9FaceInfo2S9_NS4_25Triangulation_face_base_2IS9_NS4_28Triangulation_ds_face_base_2INS4_30Triangulation_data_structure_2INS4_27Triangulation_vertex_base_2IS9_NS4_30Triangulation_ds_vertex_base_2IvEEEENS8_IS9_NSA_IS13_S9_NS14_IS9_NS15_IvEEEEEEEEEEEEEEEEEENS4_7DefaultES1K_S1K_EELb0EEEEES1O_EEvT_S1P_RS1P_SK_SK_SK_.exit ] ; 4 uses
+  %.0110154 = phi i64 [ %8, %.lr.ph ], [ %i.fu, %_ZN5boost7movelib15detail_adaptive19swap_and_update_keyINS0_16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS4_17Compact_containerINS4_37Constrained_triangulation_face_base_2INS4_5EpeckENS4_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS9_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSG_IiLin1ELin1ELi0ELin1ELin1EEESH_SH_SI_EEvRKNSF_10MatrixBaseIT0_EERKNSJ_IT1_EERKNSJ_IT2_EEbRNSF_15PlainObjectBaseIT3_EERNSW_IT4_EEE9FaceInfo2S9_NS4_25Triangulation_face_base_2IS9_NS4_28Triangulation_ds_face_base_2INS4_30Triangulation_data_structure_2INS4_27Triangulation_vertex_base_2IS9_NS4_30Triangulation_ds_vertex_base_2IvEEEENS8_IS9_NSA_IS13_S9_NS14_IS9_NS15_IvEEEEEEEEEEEEEEEEEENS4_7DefaultES1K_S1K_EELb0EEEEES1O_EEvT_S1P_RS1P_SK_SK_SK_.exit ] ; 2 uses
+  %i.h = load ptr, ptr %3, align 8, !tbaa !2102   ; 11 uses
+  %i.i = ptrtoaddr ptr %i.h to i64                ; 6 uses
+  %i.j = icmp ult i64 %.0155, %.0
+  br i1 %i.j, label %.lr.ph.i, label %_ZN5boost7movelib15detail_adaptive15find_next_blockINS0_16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS4_17Compact_containerINS4_37Constrained_triangulation_face_base_2INS4_5EpeckENS4_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS9_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSG_IiLin1ELin1ELi0ELin1ELin1EEESH_SH_SI_EEvRKNSF_10MatrixBaseIT0_EERKNSJ_IT1_EERKNSJ_IT2_EEbRNSF_15PlainObjectBaseIT3_EERNSW_IT4_EEE9FaceInfo2S9_NS4_25Triangulation_face_base_2IS9_NS4_28Triangulation_ds_face_base_2INS4_30Triangulation_data_structure_2INS4_27Triangulation_vertex_base_2IS9_NS4_30Triangulation_ds_vertex_base_2IvEEEENS8_IS9_NSA_IS13_S9_NS14_IS9_NS15_IvEEEEEEEEEEEEEEEEEENS4_7DefaultES1K_S1K_EELb0EEEEENS0_7inverseINS_9container3dtl23flat_tree_value_compareISt4lessIS1M_ES1M_NS_11move_detail8identityIS1M_EEEEEES1O_S1Z_EENS0_9iter_sizeISO_E4typeET_SK_SO_S22_S22_S22_SS_.exit
+
+.lr.ph.i:                                         ; preds = %bb.b, %.thread22.i
+  %.025.i = phi i64 [ %i.ac, %.thread22.i ], [ %.0155, %bb.b ] ; 4 uses
+  %.01824.i = phi i64 [ %i.ab, %.thread22.i ], [ 0, %bb.b ] ; 4 uses
+  %i.k = mul i64 %.01824.i, %7
+  %i.l = xor i64 %i.k, -1
+  %i.m = getelementptr inbounds [8 x i8], ptr %i.h, i64 %i.l
+  %i.n = mul i64 %.025.i, %7
+end_hunk_0
+begin_hunk_1_@_ZN5boost7movelib15detail_adaptive26op_merge_blocks_with_irregINS0_16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS4_17Compact_containerINS4_37Constrained_triangulation_face_base_2INS4_5EpeckENS4_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS9_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSG_IiLin1ELin1ELi0ELin1ELin1EEESH_SH_SI_EEvRKNSF_10MatrixBaseIT0_EERKNSJ_IT1_EERKNSJ_IT2_EEbRNSF_15PlainObjectBaseIT3_EERNSW_IT4_EEE9FaceInfo2S9_NS4_25Triangulation_face_base_2IS9_NS4_28Triangulation_ds_face_base_2INS4_30Triangulation_data_structure_2INS4_27Triangulation_vertex_base_2IS9_NS4_30Triangulation_ds_vertex_base_2IvEEEENS8_IS9_NSA_IS13_S9_NS14_IS9_NS15_IvEEEEEEEEEEEEEEEEEENS4_7DefaultES1K_S1K_EELb0EEEEENS0_7inverseINS_9container3dtl23flat_tree_value_compareISt4lessIS1M_ES1M_NS_11move_detail8identityIS1M_EEEEEES1O_S1O_S1O_S1Z_NS0_7swap_opEEESX_T_S21_SK_SO_RSS_SS_SX_NS0_9iter_sizeISO_E4typeES25_S25_S25_S10_bT5_:bb.a
+  store i64 %i.ef, ptr %i.ec, align 8, !tbaa !89, !noalias !2342
+  %.not.i31 = icmp eq ptr %i.ec, %i.af
+  br i1 %.not.i31, label %_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit, label %.lr.ph.i30, !llvm.loop !2344
+
+bb.w:                                             ; preds = %bb.u
+  br i1 %.not1.i32, label %_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit, label %.lr.ph.i34.preheader
+
+.lr.ph.i34.preheader:                             ; preds = %bb.w
+  %.reass507 = add i64 %i.cg, %invariant.op506
+  %i.ei = sub i64 %.reass507, %i.i                ; 2 uses
+  %i.ej = lshr i64 %i.ei, 3
+  %i.ek = add nuw nsw i64 %i.ej, 1                ; 2 uses
+  %min.iters.check337 = icmp ult i64 %i.ei, 72
+  br i1 %min.iters.check337, label %.lr.ph.i34.preheader394, label %vector.memcheck328
+
+vector.memcheck328:                               ; preds = %.lr.ph.i34.preheader
+  %scevgep329 = getelementptr i8, ptr %i.cf, i64 -8
+  %i.el = add i64 %i.c, %i.cg
+  %i.em = sub i64 %i.el, %i.i
+  %i.en = lshr i64 %i.em, 3
+  %i.eo = mul i64 %i.en, -8                       ; 2 uses
+  %scevgep330 = getelementptr i8, ptr %scevgep329, i64 %i.eo
+  %scevgep331 = getelementptr i8, ptr %.sroa.071.0, i64 -8
+  %scevgep332 = getelementptr i8, ptr %scevgep331, i64 %i.eo
+  %bound0333 = icmp ult ptr %scevgep330, %.sroa.071.0
+  %bound1334 = icmp ult ptr %scevgep332, %i.cf
+  %found.conflict335 = and i1 %bound0333, %bound1334
+  br i1 %found.conflict335, label %.lr.ph.i34.preheader394, label %vector.ph338
+
+vector.ph338:                                     ; preds = %vector.memcheck328
+  %n.vec339 = and i64 %i.ek, 4611686018427387900  ; 3 uses
+  %i.ep = mul i64 %n.vec339, -8                   ; 2 uses
+  %i.eq = getelementptr i8, ptr %.sroa.071.0, i64 %i.ep ; 2 uses
+  %i.er = getelementptr i8, ptr %i.cf, i64 %i.ep
+  br label %vector.body340
+
+vector.body340:                                   ; preds = %vector.body340, %vector.ph338
+  %index341 = phi i64 [ 0, %vector.ph338 ], [ %index.next348, %vector.body340 ] ; 2 uses
+  %i.es = mul i64 %index341, -8                   ; 2 uses
+  %next.gep342 = getelementptr i8, ptr %.sroa.071.0, i64 %i.es ; 4 uses
+  %next.gep343 = getelementptr i8, ptr %i.cf, i64 %i.es ; 4 uses
+  %i.et = getelementptr inbounds i8, ptr %next.gep343, i64 -16
+  %i.eu = getelementptr inbounds i8, ptr %next.gep343, i64 -32
+  %wide.load344 = load <2 x ptr>, ptr %i.et, align 8, !tbaa !89, !alias.scope !2345, !noalias !2348
+  %wide.load345 = load <2 x ptr>, ptr %i.eu, align 8, !tbaa !89, !alias.scope !2345, !noalias !2348
+  %i.ev = getelementptr inbounds i8, ptr %next.gep342, i64 -16
+  %i.ew = getelementptr inbounds i8, ptr %next.gep342, i64 -32
+  %wide.load346 = load <2 x i64>, ptr %i.ev, align 8, !tbaa !89, !alias.scope !2352, !noalias !2353
+  %wide.load347 = load <2 x i64>, ptr %i.ew, align 8, !tbaa !89, !alias.scope !2352, !noalias !2353
+  %i.ex = getelementptr inbounds i8, ptr %next.gep343, i64 -16
+  %i.ey = getelementptr inbounds i8, ptr %next.gep343, i64 -32
+  store <2 x i64> %wide.load346, ptr %i.ex, align 8, !tbaa !89, !alias.scope !2345, !noalias !2348
+  store <2 x i64> %wide.load347, ptr %i.ey, align 8, !tbaa !89, !alias.scope !2345, !noalias !2348
+  %i.ez = getelementptr inbounds i8, ptr %next.gep342, i64 -16
+  %i.fa = getelementptr inbounds i8, ptr %next.gep342, i64 -32
+  store <2 x ptr> %wide.load344, ptr %i.ez, align 8, !tbaa !89, !alias.scope !2352, !noalias !2353
+  store <2 x ptr> %wide.load345, ptr %i.fa, align 8, !tbaa !89, !alias.scope !2352, !noalias !2353
+  %index.next348 = add nuw i64 %index341, 4       ; 2 uses
+  %i.fb = icmp eq i64 %index.next348, %n.vec339
+  br i1 %i.fb, label %middle.block349, label %vector.body340, !llvm.loop !2354
+
+middle.block349:                                  ; preds = %vector.body340
+  %cmp.n350 = icmp eq i64 %i.ek, %n.vec339
+  br i1 %cmp.n350, label %_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit, label %.lr.ph.i34.preheader394
+
+.lr.ph.i34.preheader394:                          ; preds = %vector.memcheck328, %.lr.ph.i34.preheader, %middle.block349
+  %.sroa.0105.0.ph = phi ptr [ %.sroa.071.0, %vector.memcheck328 ], [ %.sroa.071.0, %.lr.ph.i34.preheader ], [ %i.eq, %middle.block349 ]
+  %.ph395 = phi ptr [ %i.cf, %vector.memcheck328 ], [ %i.cf, %.lr.ph.i34.preheader ], [ %i.er, %middle.block349 ]
+  br label %.lr.ph.i34
+
+.lr.ph.i34:                                       ; preds = %.lr.ph.i34.preheader394, %.lr.ph.i34
+  %.sroa.0105.0 = phi ptr [ %i.fe, %.lr.ph.i34 ], [ %.sroa.0105.0.ph, %.lr.ph.i34.preheader394 ]
+  %i.fc = phi ptr [ %i.fd, %.lr.ph.i34 ], [ %.ph395, %.lr.ph.i34.preheader394 ]
+  %i.fd = getelementptr inbounds i8, ptr %i.fc, i64 -8 ; 4 uses
+  %i.fe = getelementptr inbounds i8, ptr %.sroa.0105.0, i64 -8 ; 4 uses
+  %.sroa.0.0.copyload.i.i35 = load ptr, ptr %i.fd, align 8, !tbaa !89, !noalias !2353
+  %i.ff = load i64, ptr %i.fe, align 8, !tbaa !89, !noalias !2353
+  store i64 %i.ff, ptr %i.fd, align 8, !tbaa !89, !noalias !2353
+  store ptr %.sroa.0.0.copyload.i.i35, ptr %i.fe, align 8, !tbaa !89, !noalias !2353
+  %.not.i36 = icmp eq ptr %i.fd, %i.af
+  br i1 %.not.i36, label %_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit, label %.lr.ph.i34, !llvm.loop !2355
+
+_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit: ; preds = %.lr.ph.i30, %.lr.ph.i34, %.lr.ph.i29, %middle.block383, %middle.block349, %middle.block, %bb.v, %bb.w, %bb.t, %bb.s
+  %storemerge = phi ptr [ %i.af, %bb.s ], [ %i.fe, %.lr.ph.i34 ], [ %i.cf, %bb.t ], [ %i.dj, %.lr.ph.i29 ], [ %.sroa.071.0, %bb.v ], [ %.sroa.071.0, %bb.w ], [ %i.cv, %middle.block ], [ %i.eq, %middle.block349 ], [ %i.du, %middle.block383 ], [ %i.ee, %.lr.ph.i30 ]
+  store ptr %storemerge, ptr %6, align 8, !tbaa !2102
+  %i.fg = load ptr, ptr %1, align 8, !tbaa !2102  ; 4 uses
+  %.neg113 = mul i64 %.018.lcssa.i, -8            ; 2 uses
+  %i.fh = getelementptr inbounds i8, ptr %i.fg, i64 %.neg113 ; 3 uses
+  %.not.i38 = icmp eq ptr %i.af, %.sroa.078.0
+  br i1 %.not.i38, label %_ZN5boost7movelib15detail_adaptive19swap_and_update_keyINS0_16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS4_17Compact_containerINS4_37Constrained_triangulation_face_base_2INS4_5EpeckENS4_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS9_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSG_IiLin1ELin1ELi0ELin1ELin1EEESH_SH_SI_EEvRKNSF_10MatrixBaseIT0_EERKNSJ_IT1_EERKNSJ_IT2_EEbRNSF_15PlainObjectBaseIT3_EERNSW_IT4_EEE9FaceInfo2S9_NS4_25Triangulation_face_base_2IS9_NS4_28Triangulation_ds_face_base_2INS4_30Triangulation_data_structure_2INS4_27Triangulation_vertex_base_2IS9_NS4_30Triangulation_ds_vertex_base_2IvEEEENS8_IS9_NSA_IS13_S9_NS14_IS9_NS15_IvEEEEEEEEEEEEEEEEEENS4_7DefaultES1K_S1K_EELb0EEEEES1O_EEvT_S1P_RS1P_SK_SK_SK_.exit, label %_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit.i
+
+_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit.i: ; preds = %_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit
+  %.not9.i = icmp eq i64 %.neg113, 0
+  br i1 %.not9.i, label %bb.y, label %bb.x
+
+bb.x:                                             ; preds = %_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit.i
+  %i.fi = getelementptr inbounds i8, ptr %i.fh, i64 -8 ; 2 uses
+  %i.fj = getelementptr inbounds i8, ptr %i.fg, i64 -8 ; 2 uses
+  %.sroa.0.0.copyload.i.i41 = load ptr, ptr %i.fi, align 8, !tbaa !89
+  %i.fk = load i64, ptr %i.fj, align 8, !tbaa !89
+  store i64 %i.fk, ptr %i.fi, align 8, !tbaa !89
+  store ptr %.sroa.0.0.copyload.i.i41, ptr %i.fj, align 8, !tbaa !89
+  br label %bb.y
+
+bb.y:                                             ; preds = %bb.x, %_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit.i
+  %i.fl = load ptr, ptr %2, align 8, !tbaa !2102  ; 2 uses
+  %i.fm = icmp eq ptr %i.fh, %i.fl
+  br i1 %i.fm, label %.sink.split.i, label %bb.z
+
+bb.z:                                             ; preds = %bb.y
+  %i.fn = icmp eq ptr %i.fl, %i.fg
+  br i1 %i.fn, label %.sink.split.i, label %_ZN5boost7movelib15detail_adaptive19swap_and_update_keyINS0_16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS4_17Compact_containerINS4_37Constrained_triangulation_face_base_2INS4_5EpeckENS4_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS9_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSG_IiLin1ELin1ELi0ELin1ELin1EEESH_SH_SI_EEvRKNSF_10MatrixBaseIT0_EERKNSJ_IT1_EERKNSJ_IT2_EEbRNSF_15PlainObjectBaseIT3_EERNSW_IT4_EEE9FaceInfo2S9_NS4_25Triangulation_face_base_2IS9_NS4_28Triangulation_ds_face_base_2INS4_30Triangulation_data_structure_2INS4_27Triangulation_vertex_base_2IS9_NS4_30Triangulation_ds_vertex_base_2IvEEEENS8_IS9_NSA_IS13_S9_NS14_IS9_NS15_IvEEEEEEEEEEEEEEEEEENS4_7DefaultES1K_S1K_EELb0EEEEES1O_EEvT_S1P_RS1P_SK_SK_SK_.exit
+
+.sink.split.i:                                    ; preds = %bb.z, %bb.y
+  %.sink.i = phi ptr [ %i.fg, %bb.y ], [ %i.fh, %bb.z ]
+  store ptr %.sink.i, ptr %2, align 8, !tbaa !2102
+  br label %_ZN5boost7movelib15detail_adaptive19swap_and_update_keyINS0_16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS4_17Compact_containerINS4_37Constrained_triangulation_face_base_2INS4_5EpeckENS4_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS9_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSG_IiLin1ELin1ELi0ELin1ELin1EEESH_SH_SI_EEvRKNSF_10MatrixBaseIT0_EERKNSJ_IT1_EERKNSJ_IT2_EEbRNSF_15PlainObjectBaseIT3_EERNSW_IT4_EEE9FaceInfo2S9_NS4_25Triangulation_face_base_2IS9_NS4_28Triangulation_ds_face_base_2INS4_30Triangulation_data_structure_2INS4_27Triangulation_vertex_base_2IS9_NS4_30Triangulation_ds_vertex_base_2IvEEEENS8_IS9_NSA_IS13_S9_NS14_IS9_NS15_IvEEEEEEEEEEEEEEEEEENS4_7DefaultES1K_S1K_EELb0EEEEES1O_EEvT_S1P_RS1P_SK_SK_SK_.exit
+
+_ZN5boost7movelib15detail_adaptive19swap_and_update_keyINS0_16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS4_17Compact_containerINS4_37Constrained_triangulation_face_base_2INS4_5EpeckENS4_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS9_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSG_IiLin1ELin1ELi0ELin1ELin1EEESH_SH_SI_EEvRKNSF_10MatrixBaseIT0_EERKNSJ_IT1_EERKNSJ_IT2_EEbRNSF_15PlainObjectBaseIT3_EERNSW_IT4_EEE9FaceInfo2S9_NS4_25Triangulation_face_base_2IS9_NS4_28Triangulation_ds_face_base_2INS4_30Triangulation_data_structure_2INS4_27Triangulation_vertex_base_2IS9_NS4_30Triangulation_ds_vertex_base_2IvEEEENS8_IS9_NSA_IS13_S9_NS14_IS9_NS15_IvEEEEEEEEEEEEEEEEEENS4_7DefaultES1K_S1K_EELb0EEEEES1O_EEvT_S1P_RS1P_SK_SK_SK_.exit: ; preds = %_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit, %bb.z, %.sink.split.i
+  store ptr %i.af, ptr %3, align 8, !tbaa !2102
+  %i.fo = load ptr, ptr %1, align 8, !tbaa !2102
+  %i.fp = getelementptr inbounds i8, ptr %i.fo, i64 -8 ; 2 uses
+  store ptr %i.fp, ptr %1, align 8, !tbaa !2102
+  %i.fq = icmp ne i64 %.0155, 0
+  %.neg = sext i1 %i.fq to i64
+  %i.fr = add i64 %.0155, %.neg
+  %i.fs = icmp ne i64 %i.ae, 0
+  %.neg24 = sext i1 %i.fs to i64
+  %i.ft = add i64 %.sroa.speculated, %.neg24
+  %i.fu = add i64 %.0110154, -1                   ; 2 uses
+  %.not = icmp eq i64 %i.fu, 0
+  br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !2356
+
+._crit_edge:                                      ; preds = %_ZN5boost7movelib15detail_adaptive19swap_and_update_keyINS0_16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS4_17Compact_containerINS4_37Constrained_triangulation_face_base_2INS4_5EpeckENS4_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS9_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSG_IiLin1ELin1ELi0ELin1ELin1EEESH_SH_SI_EEvRKNSF_10MatrixBaseIT0_EERKNSJ_IT1_EERKNSJ_IT2_EEbRNSF_15PlainObjectBaseIT3_EERNSW_IT4_EEE9FaceInfo2S9_NS4_25Triangulation_face_base_2IS9_NS4_28Triangulation_ds_face_base_2INS4_30Triangulation_data_structure_2INS4_27Triangulation_vertex_base_2IS9_NS4_30Triangulation_ds_vertex_base_2IvEEEENS8_IS9_NSA_IS13_S9_NS14_IS9_NS15_IvEEEEEEEEEEEEEEEEEENS4_7DefaultES1K_S1K_EELb0EEEEES1O_EEvT_S1P_RS1P_SK_SK_SK_.exit, %bb.a
+  %i.fv = load ptr, ptr %6, align 8, !tbaa !2102
+  store ptr %i.fv, ptr %0, align 8, !tbaa !2102
+  ret void
+}
+
+; Function Attrs: mustprogress uwtable
+define linkonce_odr dso_local noundef ptr @_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_save_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEET_S1X_S1X_RS1X_S1X_S1X_RSJ_S1Z_SN_SR_(ptr noundef %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef %3, ptr noundef %4, ptr noundef nonnull align 8 dereferenceable(8) %5, ptr noundef nonnull align 8 dereferenceable(8) %6) local_unnamed_addr #3 comdat {
+bb.a:
+  %i.a = ptrtoaddr ptr %1 to i64                  ; 4 uses
+  %i.b = load ptr, ptr %5, align 8, !tbaa !175    ; 3 uses
+  %i.c = load ptr, ptr %6, align 8, !tbaa !175    ; 2 uses
+  %i.d = load ptr, ptr %2, align 8, !tbaa !175    ; 11 uses
+  %.not = icmp eq ptr %i.d, %4                    ; 2 uses
+  %i.e = icmp eq ptr %i.b, %i.c
+  br i1 %i.e, label %bb.b, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit
+
+bb.b:                                             ; preds = %bb.a
+  %.not6.i = icmp eq ptr %0, %1
+  br i1 %.not6.i, label %_ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEET_S1W_S1W_RKNS0_15iterator_traitsIS1W_E10value_typeESJ_.exit, label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %bb.b
+  %i.f = load ptr, ptr %4, align 8, !tbaa !97
+  br label %bb.c
+
+bb.c:                                             ; preds = %bb.d, %.lr.ph.i
+  %.07.i = phi ptr [ %0, %.lr.ph.i ], [ %i.i, %bb.d ] ; 3 uses
+  %i.g = load ptr, ptr %.07.i, align 8, !tbaa !97
+  %i.h = icmp ult ptr %i.f, %i.g
+  br i1 %i.h, label %_ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEET_S1W_S1W_RKNS0_15iterator_traitsIS1W_E10value_typeESJ_.exit, label %bb.d
+
+bb.d:                                             ; preds = %bb.c
+  %i.i = getelementptr inbounds nuw i8, ptr %.07.i, i64 8 ; 3 uses
+  %.not.i = icmp eq ptr %i.i, %1
+  br i1 %.not.i, label %_ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEET_S1W_S1W_RKNS0_15iterator_traitsIS1W_E10value_typeESJ_.exit, label %bb.c, !llvm.loop !2282
+
+_ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEET_S1W_S1W_RKNS0_15iterator_traitsIS1W_E10value_typeESJ_.exit: ; preds = %bb.c, %bb.d, %bb.b
+  %.0.lcssa.i = phi ptr [ %0, %bb.b ], [ %.07.i, %bb.c ], [ %i.i, %bb.d ] ; 10 uses
+  %i.j = ptrtoint ptr %.0.lcssa.i to i64          ; 5 uses
+  %i.k = ptrtoint ptr %0 to i64
+  %i.l = sub i64 %i.j, %i.k
+  %i.m = getelementptr inbounds i8, ptr %i.b, i64 %i.l ; 14 uses
+  %.not.i32 = icmp eq ptr %.0.lcssa.i, %1         ; 2 uses
+  br i1 %.not, label %bb.k, label %bb.e
+
+bb.e:                                             ; preds = %_ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEET_S1W_S1W_RKNS0_15iterator_traitsIS1W_E10value_typeESJ_.exit
+  %.not47.i = icmp eq ptr %i.d, %3
+  %or.cond.i = select i1 %.not.i32, i1 true, i1 %.not47.i
+  br i1 %or.cond.i, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_RT_S1X_RSJ_SJ_S1Z_SN_SR_SW_.exit, label %bb.f
+
+bb.f:                                             ; preds = %bb.e
+  %i.n = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
+  %i.p = load i64, ptr %i.m, align 8, !tbaa !89
+  %i.q = load i64, ptr %.0.lcssa.i, align 8, !tbaa !89
+  store i64 %i.q, ptr %i.m, align 8, !tbaa !89
+  %i.r = load i64, ptr %4, align 8, !tbaa !89
+  store i64 %i.r, ptr %.0.lcssa.i, align 8, !tbaa !89
+  %i.s = load i64, ptr %i.d, align 8, !tbaa !89
+  store i64 %i.s, ptr %4, align 8, !tbaa !89
+  store i64 %i.p, ptr %i.d, align 8, !tbaa !89
+  %.03762.i = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 2 uses
+  %.04163.i = getelementptr inbounds nuw i8, ptr %.0.lcssa.i, i64 8 ; 2 uses
+  %.not4864.i = icmp eq ptr %.04163.i, %1
+  br i1 %.not4864.i, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread91, label %.lr.ph.i31
+
+.lr.ph.i31:                                       ; preds = %bb.f, %bb.j
+  %indvar = phi i64 [ %indvar.next, %bb.j ], [ 0, %bb.f ] ; 4 uses
+  %.04169.i = phi ptr [ %.041.i, %bb.j ], [ %.04163.i, %bb.f ] ; 10 uses
+  %.03768.i = phi ptr [ %.037.i, %bb.j ], [ %.03762.i, %bb.f ] ; 5 uses
+  %.067.i = phi ptr [ %.1.i, %bb.j ], [ %i.o, %bb.f ] ; 7 uses
+  %.03566.i = phi ptr [ %.136.i, %bb.j ], [ %i.n, %bb.f ] ; 7 uses
+  %.03965.i = phi ptr [ %.140.i, %bb.j ], [ %i.m, %bb.f ] ; 13 uses
+  %i.t = icmp eq ptr %.03566.i, %3
+  br i1 %i.t, label %.lr.ph.i.i.preheader, label %bb.g
+
+.lr.ph.i.i.preheader:                             ; preds = %.lr.ph.i31
+  %i.u = add i64 %i.a, -16
+  %7 = shl i64 %indvar, 3
+  %8 = add i64 %7, %i.j
+  %9 = sub i64 %i.u, %8                           ; 2 uses
+  %10 = lshr i64 %9, 3
+  %i.v = add nuw nsw i64 %10, 1                   ; 2 uses
+  %min.iters.check = icmp ult i64 %9, 168
+  br i1 %min.iters.check, label %.lr.ph.i.i.preheader297, label %vector.memcheck
+
+vector.memcheck:                                  ; preds = %.lr.ph.i.i.preheader
+  %11 = shl i64 %indvar, 3
+  %i.w = getelementptr i8, ptr %.0.lcssa.i, i64 %11
+  %scevgep = getelementptr i8, ptr %i.w, i64 16
+  %i.x = add i64 %i.a, -16
+  %i.y = shl i64 %indvar, 3
+  %12 = add i64 %i.y, %i.j
+  %i.z = sub i64 %i.x, %12
+  %13 = and i64 %i.z, -8                          ; 2 uses
+  %scevgep235 = getelementptr i8, ptr %scevgep, i64 %13
+  %scevgep236 = getelementptr i8, ptr %.03965.i, i64 8
+  %scevgep237 = getelementptr i8, ptr %scevgep236, i64 %13
+  %bound0 = icmp ult ptr %.04169.i, %scevgep237
+  %bound1 = icmp ult ptr %.03965.i, %scevgep235
+  %found.conflict = and i1 %bound0, %bound1
+  br i1 %found.conflict, label %.lr.ph.i.i.preheader297, label %vector.ph
+
+vector.ph:                                        ; preds = %vector.memcheck
+  %n.vec = and i64 %i.v, 4611686018427387900      ; 3 uses
+  %i.aa = shl i64 %n.vec, 3                       ; 2 uses
+  %i.ab = getelementptr i8, ptr %.03965.i, i64 %i.aa ; 2 uses
+  %i.ac = getelementptr i8, ptr %.04169.i, i64 %i.aa
+  br label %vector.body
+
+vector.body:                                      ; preds = %vector.body, %vector.ph
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
+  %i.ad = shl i64 %index, 3                       ; 2 uses
+  %next.gep = getelementptr i8, ptr %.03965.i, i64 %i.ad ; 4 uses
+  %next.gep238 = getelementptr i8, ptr %.04169.i, i64 %i.ad ; 4 uses
+  %i.ae = getelementptr i8, ptr %next.gep238, i64 16
+  %wide.load = load <2 x ptr>, ptr %next.gep238, align 8, !tbaa !89, !alias.scope !2357, !noalias !2360
+  %wide.load239.a = load <2 x ptr>, ptr %i.ae, align 8, !tbaa !89, !alias.scope !2357, !noalias !2360
+  %i.af = getelementptr i8, ptr %next.gep, i64 16
+  %wide.load240 = load <2 x i64>, ptr %next.gep, align 8, !tbaa !89, !alias.scope !2360
+  %wide.load241 = load <2 x i64>, ptr %i.af, align 8, !tbaa !89, !alias.scope !2360
+  %i.ag = getelementptr i8, ptr %next.gep238, i64 16
+  store <2 x i64> %wide.load240, ptr %next.gep238, align 8, !tbaa !89, !alias.scope !2357, !noalias !2360
+  store <2 x i64> %wide.load241, ptr %i.ag, align 8, !tbaa !89, !alias.scope !2357, !noalias !2360
+  %i.ah = getelementptr i8, ptr %next.gep, i64 16
+  store <2 x ptr> %wide.load, ptr %next.gep, align 8, !tbaa !89, !alias.scope !2360
+  store <2 x ptr> %wide.load239.a, ptr %i.ah, align 8, !tbaa !89, !alias.scope !2360
+  %index.next = add nuw i64 %index, 4             ; 2 uses
+  %i.ai = icmp eq i64 %index.next, %n.vec
+  br i1 %i.ai, label %middle.block, label %vector.body, !llvm.loop !2362
+
+middle.block:                                     ; preds = %vector.body
+  %cmp.n = icmp eq i64 %i.v, %n.vec
+  br i1 %cmp.n, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit, label %.lr.ph.i.i.preheader297
+
+.lr.ph.i.i.preheader297:                          ; preds = %vector.memcheck, %.lr.ph.i.i.preheader, %middle.block
+  %.010.i.i.ph = phi ptr [ %.03965.i, %vector.memcheck ], [ %.03965.i, %.lr.ph.i.i.preheader ], [ %i.ab, %middle.block ]
+  %.079.i.i.ph = phi ptr [ %.04169.i, %vector.memcheck ], [ %.04169.i, %.lr.ph.i.i.preheader ], [ %i.ac, %middle.block ]
+  br label %.lr.ph.i.i
+
+.lr.ph.i.i:                                       ; preds = %.lr.ph.i.i.preheader297, %.lr.ph.i.i
+  %.010.i.i = phi ptr [ %i.al, %.lr.ph.i.i ], [ %.010.i.i.ph, %.lr.ph.i.i.preheader297 ] ; 3 uses
+  %.079.i.i = phi ptr [ %i.ak, %.lr.ph.i.i ], [ %.079.i.i.ph, %.lr.ph.i.i.preheader297 ] ; 3 uses
+  %.sroa.0.0.copyload.i.i.i = load ptr, ptr %.079.i.i, align 8, !tbaa !89
+  %i.aj = load i64, ptr %.010.i.i, align 8, !tbaa !89
+  store i64 %i.aj, ptr %.079.i.i, align 8, !tbaa !89
+  store ptr %.sroa.0.0.copyload.i.i.i, ptr %.010.i.i, align 8, !tbaa !89
+  %i.ak = getelementptr inbounds nuw i8, ptr %.079.i.i, i64 8 ; 2 uses
+  %i.al = getelementptr inbounds nuw i8, ptr %.010.i.i, i64 8 ; 2 uses
+  %.not.i.i = icmp eq ptr %i.ak, %1
+  br i1 %.not.i.i, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit, label %.lr.ph.i.i, !llvm.loop !2363
+
+bb.g:                                             ; preds = %.lr.ph.i31
+  %i.am = load ptr, ptr %.067.i, align 8, !tbaa !97
+  %i.an = load ptr, ptr %.03965.i, align 8, !tbaa !97
+  %i.ao = icmp ult ptr %i.am, %i.an
+  br i1 %i.ao, label %bb.h, label %bb.i
+
+bb.h:                                             ; preds = %bb.g
+  %i.ap = getelementptr inbounds nuw i8, ptr %.03566.i, i64 8
+  %i.aq = getelementptr inbounds nuw i8, ptr %.067.i, i64 8
+  %i.ar = load i64, ptr %.03768.i, align 8, !tbaa !89
+  %i.as = load i64, ptr %.04169.i, align 8, !tbaa !89
+  store i64 %i.as, ptr %.03768.i, align 8, !tbaa !89
+  %i.at = load i64, ptr %.067.i, align 8, !tbaa !89
+  store i64 %i.at, ptr %.04169.i, align 8, !tbaa !89
+  %i.au = load i64, ptr %.03566.i, align 8, !tbaa !89
+  store i64 %i.au, ptr %.067.i, align 8, !tbaa !89
+  store i64 %i.ar, ptr %.03566.i, align 8, !tbaa !89
+  br label %bb.j
+
+bb.i:                                             ; preds = %bb.g
+  %i.av = getelementptr inbounds nuw i8, ptr %.03965.i, i64 8
+  %i.aw = load i64, ptr %.03768.i, align 8, !tbaa !89
+  %i.ax = load i64, ptr %.04169.i, align 8, !tbaa !89
+  store i64 %i.ax, ptr %.03768.i, align 8, !tbaa !89
+  %i.ay = load i64, ptr %.03965.i, align 8, !tbaa !89
+  store i64 %i.ay, ptr %.04169.i, align 8, !tbaa !89
+  store i64 %i.aw, ptr %.03965.i, align 8, !tbaa !89
+  br label %bb.j
+
+bb.j:                                             ; preds = %bb.i, %bb.h
+  %.140.i = phi ptr [ %.03965.i, %bb.h ], [ %i.av, %bb.i ] ; 2 uses
+  %.136.i = phi ptr [ %i.ap, %bb.h ], [ %.03566.i, %bb.i ] ; 2 uses
+  %.1.i = phi ptr [ %i.aq, %bb.h ], [ %.067.i, %bb.i ] ; 2 uses
+  %.037.i = getelementptr inbounds nuw i8, ptr %.03768.i, i64 8 ; 2 uses
+  %.041.i = getelementptr inbounds nuw i8, ptr %.04169.i, i64 8 ; 2 uses
+  %.not48.i = icmp eq ptr %.041.i, %1
+  %indvar.next = add i64 %indvar, 1
+  br i1 %.not48.i, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit, label %.lr.ph.i31, !llvm.loop !2364
+
+bb.k:                                             ; preds = %_ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEET_S1W_S1W_RKNS0_15iterator_traitsIS1W_E10value_typeESJ_.exit
+  %.not40.i = icmp eq ptr %4, %3
+  %or.cond.i33 = or i1 %.not.i32, %.not40.i
+  br i1 %or.cond.i33, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_RT_S1X_RSJ_SJ_S1Z_SN_SR_SW_.exit, label %bb.l
+
+bb.l:                                             ; preds = %bb.k
+  %i.az = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
+  %i.ba = load i64, ptr %i.m, align 8, !tbaa !89
+  %i.bb = load i64, ptr %.0.lcssa.i, align 8, !tbaa !89
+  store i64 %i.bb, ptr %i.m, align 8, !tbaa !89
+  %i.bc = load i64, ptr %i.d, align 8, !tbaa !89
+  store i64 %i.bc, ptr %.0.lcssa.i, align 8, !tbaa !89
+  store i64 %i.ba, ptr %i.d, align 8, !tbaa !89
+  %.03052.i = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 2 uses
+  %.03453.i = getelementptr inbounds nuw i8, ptr %.0.lcssa.i, i64 8 ; 2 uses
+  %i.bd = icmp eq ptr %.03453.i, %1
+  br i1 %i.bd, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread, label %.lr.ph.i34
+
+.lr.ph.i34:                                       ; preds = %bb.l, %bb.m
+  %indvar244 = phi i64 [ %indvar.next245, %bb.m ], [ 0, %bb.l ] ; 4 uses
+  %.03457.i = phi ptr [ %.034.i, %bb.m ], [ %.03453.i, %bb.l ] ; 8 uses
+  %.03056.i = phi ptr [ %.030.i, %bb.m ], [ %.03052.i, %bb.l ] ; 3 uses
+  %.055.i = phi ptr [ %.1.i35, %bb.m ], [ %i.az, %bb.l ] ; 6 uses
+  %.03254.i = phi ptr [ %.133.i, %bb.m ], [ %i.m, %bb.l ] ; 11 uses
+  %i.be = icmp eq ptr %.055.i, %3
+  br i1 %i.be, label %.lr.ph.i.i40.preheader, label %bb.m
+
+.lr.ph.i.i40.preheader:                           ; preds = %.lr.ph.i34
+  %i.bf = add i64 %i.a, -16
+  %14 = shl i64 %indvar244, 3
+  %15 = add i64 %14, %i.j
+  %16 = sub i64 %i.bf, %15                        ; 2 uses
+  %17 = lshr i64 %16, 3
+  %i.bg = add nuw nsw i64 %17, 1                  ; 2 uses
+  %min.iters.check254 = icmp ult i64 %16, 168
+  br i1 %min.iters.check254, label %.lr.ph.i.i40.preheader290, label %vector.memcheck243
+
+vector.memcheck243:                               ; preds = %.lr.ph.i.i40.preheader
+  %18 = shl i64 %indvar244, 3
+  %i.bh = getelementptr i8, ptr %.0.lcssa.i, i64 %18
+  %scevgep246 = getelementptr i8, ptr %i.bh, i64 16
+  %i.bi = add i64 %i.a, -16
+  %i.bj = shl i64 %indvar244, 3
+  %19 = add i64 %i.bj, %i.j
+  %i.bk = sub i64 %i.bi, %19
+  %20 = and i64 %i.bk, -8                         ; 2 uses
+  %scevgep247 = getelementptr i8, ptr %scevgep246, i64 %20
+  %scevgep248 = getelementptr i8, ptr %.03254.i, i64 8
+  %scevgep249 = getelementptr i8, ptr %scevgep248, i64 %20
+  %bound0250 = icmp ult ptr %.03457.i, %scevgep249
+  %bound1251 = icmp ult ptr %.03254.i, %scevgep247
+  %found.conflict252 = and i1 %bound0250, %bound1251
+  br i1 %found.conflict252, label %.lr.ph.i.i40.preheader290, label %vector.ph255
+
+vector.ph255:                                     ; preds = %vector.memcheck243
+  %n.vec256 = and i64 %i.bg, 4611686018427387900  ; 3 uses
+  %i.bl = shl i64 %n.vec256, 3                    ; 2 uses
+  %i.bm = getelementptr i8, ptr %.03254.i, i64 %i.bl ; 2 uses
+  %i.bn = getelementptr i8, ptr %.03457.i, i64 %i.bl
+  br label %vector.body257
+
+vector.body257:                                   ; preds = %vector.body257, %vector.ph255
+  %index258 = phi i64 [ 0, %vector.ph255 ], [ %index.next265, %vector.body257 ] ; 2 uses
+  %i.bo = shl i64 %index258, 3                    ; 2 uses
+  %next.gep259 = getelementptr i8, ptr %.03254.i, i64 %i.bo ; 4 uses
+  %next.gep260 = getelementptr i8, ptr %.03457.i, i64 %i.bo ; 4 uses
+  %i.bp = getelementptr i8, ptr %next.gep260, i64 16
+  %wide.load261 = load <2 x ptr>, ptr %next.gep260, align 8, !tbaa !89, !alias.scope !2365, !noalias !2368
+  %wide.load262 = load <2 x ptr>, ptr %i.bp, align 8, !tbaa !89, !alias.scope !2365, !noalias !2368
+  %i.bq = getelementptr i8, ptr %next.gep259, i64 16
+  %wide.load263 = load <2 x i64>, ptr %next.gep259, align 8, !tbaa !89, !alias.scope !2368
+  %wide.load264 = load <2 x i64>, ptr %i.bq, align 8, !tbaa !89, !alias.scope !2368
+  %i.br = getelementptr i8, ptr %next.gep260, i64 16
+  store <2 x i64> %wide.load263, ptr %next.gep260, align 8, !tbaa !89, !alias.scope !2365, !noalias !2368
+  store <2 x i64> %wide.load264, ptr %i.br, align 8, !tbaa !89, !alias.scope !2365, !noalias !2368
+  %i.bs = getelementptr i8, ptr %next.gep259, i64 16
+  store <2 x ptr> %wide.load261, ptr %next.gep259, align 8, !tbaa !89, !alias.scope !2368
+  store <2 x ptr> %wide.load262, ptr %i.bs, align 8, !tbaa !89, !alias.scope !2368
+  %index.next265 = add nuw i64 %index258, 4       ; 2 uses
+  %i.bt = icmp eq i64 %index.next265, %n.vec256
+  br i1 %i.bt, label %middle.block266, label %vector.body257, !llvm.loop !2370
+
+middle.block266:                                  ; preds = %vector.body257
+  %cmp.n267 = icmp eq i64 %i.bg, %n.vec256
+  br i1 %cmp.n267, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit, label %.lr.ph.i.i40.preheader290
+
+.lr.ph.i.i40.preheader290:                        ; preds = %vector.memcheck243, %.lr.ph.i.i40.preheader, %middle.block266
+  %.010.i.i41.ph = phi ptr [ %.03254.i, %vector.memcheck243 ], [ %.03254.i, %.lr.ph.i.i40.preheader ], [ %i.bm, %middle.block266 ]
+  %.079.i.i42.ph = phi ptr [ %.03457.i, %vector.memcheck243 ], [ %.03457.i, %.lr.ph.i.i40.preheader ], [ %i.bn, %middle.block266 ]
+  br label %.lr.ph.i.i40
+
+.lr.ph.i.i40:                                     ; preds = %.lr.ph.i.i40.preheader290, %.lr.ph.i.i40
+  %.010.i.i41 = phi ptr [ %i.bw, %.lr.ph.i.i40 ], [ %.010.i.i41.ph, %.lr.ph.i.i40.preheader290 ] ; 3 uses
+  %.079.i.i42 = phi ptr [ %i.bv, %.lr.ph.i.i40 ], [ %.079.i.i42.ph, %.lr.ph.i.i40.preheader290 ] ; 3 uses
+  %.sroa.0.0.copyload.i.i.i43 = load ptr, ptr %.079.i.i42, align 8, !tbaa !89
+  %i.bu = load i64, ptr %.010.i.i41, align 8, !tbaa !89
+  store i64 %i.bu, ptr %.079.i.i42, align 8, !tbaa !89
+  store ptr %.sroa.0.0.copyload.i.i.i43, ptr %.010.i.i41, align 8, !tbaa !89
+  %i.bv = getelementptr inbounds nuw i8, ptr %.079.i.i42, i64 8 ; 2 uses
+  %i.bw = getelementptr inbounds nuw i8, ptr %.010.i.i41, i64 8 ; 2 uses
+  %.not.i.i44 = icmp eq ptr %i.bv, %1
+  br i1 %.not.i.i44, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit, label %.lr.ph.i.i40, !llvm.loop !2371
+
+bb.m:                                             ; preds = %.lr.ph.i34
+  %i.bx = load ptr, ptr %.055.i, align 8, !tbaa !97
+  %i.by = load ptr, ptr %.03254.i, align 8, !tbaa !97
+  %i.bz = icmp ult ptr %i.bx, %i.by               ; 3 uses
+  %i.ca = load i64, ptr %.03056.i, align 8, !tbaa !89
+  %i.cb = load i64, ptr %.03457.i, align 8, !tbaa !89
+  store i64 %i.cb, ptr %.03056.i, align 8, !tbaa !89
+  %.03254.sink73.i = select i1 %i.bz, ptr %.055.i, ptr %.03254.i ; 2 uses
+  %.133.idx.i = select i1 %i.bz, i64 0, i64 8
+  %.133.i = getelementptr inbounds nuw i8, ptr %.03254.i, i64 %.133.idx.i ; 2 uses
+  %.1.idx.i = select i1 %i.bz, i64 8, i64 0
+  %.1.i35 = getelementptr inbounds nuw i8, ptr %.055.i, i64 %.1.idx.i ; 2 uses
+  %i.cc = load i64, ptr %.03254.sink73.i, align 8, !tbaa !89
+  store i64 %i.cc, ptr %.03457.i, align 8, !tbaa !89
+  store i64 %i.ca, ptr %.03254.sink73.i, align 8, !tbaa !89
+  %.030.i = getelementptr inbounds nuw i8, ptr %.03056.i, i64 8 ; 2 uses
+  %.034.i = getelementptr inbounds nuw i8, ptr %.03457.i, i64 8 ; 2 uses
+  %i.cd = icmp eq ptr %.034.i, %1
+  %indvar.next245 = add i64 %indvar244, 1
+  br i1 %i.cd, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit, label %.lr.ph.i34, !llvm.loop !2372
+
+_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit: ; preds = %bb.j, %.lr.ph.i.i, %bb.m, %.lr.ph.i.i40, %middle.block, %middle.block266, %bb.a
+  %.076 = phi ptr [ %.067.i, %.lr.ph.i.i ], [ %4, %bb.a ], [ %.067.i, %middle.block ], [ %4, %middle.block266 ], [ %4, %bb.m ], [ %4, %.lr.ph.i.i40 ], [ %.1.i, %bb.j ]
+  %.071 = phi ptr [ %.03965.i, %.lr.ph.i.i ], [ %i.b, %bb.a ], [ %.03965.i, %middle.block ], [ %.03254.i, %middle.block266 ], [ %.133.i, %bb.m ], [ %.03254.i, %.lr.ph.i.i40 ], [ %.140.i, %bb.j ] ; 2 uses
+  %.070 = phi ptr [ %.03566.i, %.lr.ph.i.i ], [ %i.d, %bb.a ], [ %.03566.i, %middle.block ], [ %.055.i, %middle.block266 ], [ %.1.i35, %bb.m ], [ %.055.i, %.lr.ph.i.i40 ], [ %.136.i, %bb.j ] ; 2 uses
+  %.028 = phi ptr [ %1, %.lr.ph.i.i ], [ %0, %bb.a ], [ %1, %middle.block ], [ %1, %middle.block266 ], [ %1, %bb.m ], [ %1, %.lr.ph.i.i40 ], [ %1, %bb.j ] ; 2 uses
+  %.0 = phi ptr [ %i.al, %.lr.ph.i.i ], [ %i.c, %bb.a ], [ %i.ab, %middle.block ], [ %i.bm, %middle.block266 ], [ %.030.i, %bb.m ], [ %i.bw, %.lr.ph.i.i40 ], [ %.037.i, %bb.j ] ; 2 uses
+  br i1 %.not, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread91
+
+_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread91: ; preds = %bb.f, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit
+  %.0101 = phi ptr [ %.0, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit ], [ %.03762.i, %bb.f ] ; 5 uses
+  %.028100 = phi ptr [ %.028, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit ], [ %1, %bb.f ] ; 2 uses
+  %.07099 = phi ptr [ %.070, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit ], [ %i.n, %bb.f ] ; 3 uses
+  %.07198 = phi ptr [ %.071, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit ], [ %i.m, %bb.f ] ; 3 uses
+  %.07697 = phi ptr [ %.076, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit ], [ %i.o, %bb.f ]
+  %.not.i45 = icmp eq ptr %.07099, %3
+  %.not36.i = icmp eq ptr %.0101, %.07198
+  %or.cond.i46 = select i1 %.not.i45, i1 true, i1 %.not36.i
+  br i1 %or.cond.i46, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_RT_S1X_RSJ_SJ_S1Z_SN_SR_SW_.exit, label %.outer.i
+
+.outer.i:                                         ; preds = %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread91, %bb.o
+  %.030.ph.i = phi ptr [ %.131.i, %bb.o ], [ %.028100, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread91 ]
+  %.028.ph.i = phi ptr [ %i.cn, %bb.o ], [ %.07198, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread91 ] ; 4 uses
+  %.026.ph.i = phi ptr [ %.026.i, %bb.o ], [ %.07099, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread91 ]
+  %.025.ph.i = phi ptr [ %.025.i, %bb.o ], [ %.07697, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread91 ]
+  br label %bb.n
+
+bb.n:                                             ; preds = %.split.i, %.outer.i
+  %.030.i47 = phi ptr [ %.13138.i, %.split.i ], [ %.030.ph.i, %.outer.i ] ; 6 uses
+  %.026.i = phi ptr [ %i.ci, %.split.i ], [ %.026.ph.i, %.outer.i ] ; 5 uses
+  %.025.i = phi ptr [ %i.cj, %.split.i ], [ %.025.ph.i, %.outer.i ] ; 4 uses
+  %i.ce = load ptr, ptr %.025.i, align 8          ; 2 uses
+  %i.cf = load ptr, ptr %.028.ph.i, align 8       ; 2 uses
+  %i.cg = icmp ult ptr %i.ce, %i.cf
+  br i1 %i.cg, label %.split.i, label %bb.o
+
+.split.i:                                         ; preds = %bb.n
+  %i.ch = ptrtoint ptr %i.ce to i64
+  %i.ci = getelementptr inbounds nuw i8, ptr %.026.i, i64 8 ; 3 uses
+  %i.cj = getelementptr inbounds nuw i8, ptr %.025.i, i64 8
+  %i.ck = load i64, ptr %.030.i47, align 8, !tbaa !89
+  store i64 %i.ch, ptr %.030.i47, align 8, !tbaa !89
+  %i.cl = load i64, ptr %.026.i, align 8, !tbaa !89
+  store i64 %i.cl, ptr %.025.i, align 8, !tbaa !89
+  store i64 %i.ck, ptr %.026.i, align 8, !tbaa !89
+  %.not44.i = icmp eq ptr %i.ci, %3
+  %.13138.i = getelementptr inbounds nuw i8, ptr %.030.i47, i64 8 ; 2 uses
+  br i1 %.not44.i, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_RT_S1X_RSJ_SJ_S1Z_SN_SR_SW_.exit, label %bb.n, !llvm.loop !2373
+
+bb.o:                                             ; preds = %bb.n
+  %i.cm = ptrtoint ptr %i.cf to i64
+  %i.cn = getelementptr inbounds nuw i8, ptr %.028.ph.i, i64 8 ; 3 uses
+  %.sroa.0.0.copyload.i.i = load ptr, ptr %.030.i47, align 8, !tbaa !89
+  store i64 %i.cm, ptr %.030.i47, align 8, !tbaa !89
+  store ptr %.sroa.0.0.copyload.i.i, ptr %.028.ph.i, align 8, !tbaa !89
+  %.not43.i = icmp eq ptr %i.cn, %.0101
+  %.131.i = getelementptr inbounds nuw i8, ptr %.030.i47, i64 8 ; 2 uses
+  br i1 %.not43.i, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_RT_S1X_RSJ_SJ_S1Z_SN_SR_SW_.exit, label %.outer.i, !llvm.loop !2373
+
+_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread: ; preds = %bb.l, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit
+  %.087 = phi ptr [ %.0, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit ], [ %.03052.i, %bb.l ] ; 5 uses
+  %.02885 = phi ptr [ %.028, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit ], [ %1, %bb.l ] ; 2 uses
+  %.07084 = phi ptr [ %.070, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit ], [ %i.az, %bb.l ] ; 3 uses
+  %.07183 = phi ptr [ %.071, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit ], [ %i.m, %bb.l ] ; 3 uses
+  %.not.i49 = icmp eq ptr %.07084, %3
+  %.not36.i50 = icmp eq ptr %.087, %.07183
+  %or.cond.i51 = select i1 %.not.i49, i1 true, i1 %.not36.i50
+  br i1 %or.cond.i51, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_RT_S1X_RSJ_SJ_S1Z_SN_SR_SW_.exit, label %.preheader.i.outer
+
+.preheader.i.outer:                               ; preds = %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread, %bb.q
+  %.024.i.ph = phi ptr [ %i.cr, %bb.q ], [ %.02885, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread ]
+  %.021.i.ph = phi ptr [ %i.cw, %bb.q ], [ %.07183, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread ] ; 4 uses
+  %.0.i.ph = phi ptr [ %.0.i, %bb.q ], [ %.07084, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread ]
+  br label %.preheader.i
+
+.preheader.i:                                     ; preds = %.preheader.i.outer, %bb.p
+  %.024.i = phi ptr [ %i.cr, %bb.p ], [ %.024.i.ph, %.preheader.i.outer ] ; 4 uses
+  %.0.i = phi ptr [ %i.ct, %bb.p ], [ %.0.i.ph, %.preheader.i.outer ] ; 5 uses
+  %i.co = load ptr, ptr %.0.i, align 8            ; 2 uses
+  %i.cp = load ptr, ptr %.021.i.ph, align 8       ; 2 uses
+  %i.cq = icmp ult ptr %i.co, %i.cp
+  %i.cr = getelementptr inbounds nuw i8, ptr %.024.i, i64 8 ; 4 uses
+  %.sroa.0.0.copyload.i.i52 = load ptr, ptr %.024.i, align 8, !tbaa !89 ; 2 uses
+  br i1 %i.cq, label %bb.p, label %bb.q
+
+bb.p:                                             ; preds = %.preheader.i
+  %i.cs = ptrtoint ptr %i.co to i64
+  %i.ct = getelementptr inbounds nuw i8, ptr %.0.i, i64 8 ; 3 uses
+  store i64 %i.cs, ptr %.024.i, align 8, !tbaa !89
+  store ptr %.sroa.0.0.copyload.i.i52, ptr %.0.i, align 8, !tbaa !89
+  %i.cu = icmp eq ptr %i.ct, %3
+  br i1 %i.cu, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_RT_S1X_RSJ_SJ_S1Z_SN_SR_SW_.exit, label %.preheader.i, !llvm.loop !2374
+
+bb.q:                                             ; preds = %.preheader.i
+  %i.cv = ptrtoint ptr %i.cp to i64
+  %i.cw = getelementptr inbounds nuw i8, ptr %.021.i.ph, i64 8 ; 3 uses
+  store i64 %i.cv, ptr %.024.i, align 8, !tbaa !89
+  store ptr %.sroa.0.0.copyload.i.i52, ptr %.021.i.ph, align 8, !tbaa !89
+  %i.cx = icmp eq ptr %i.cw, %.087
+  br i1 %i.cx, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_RT_S1X_RSJ_SJ_S1Z_SN_SR_SW_.exit, label %.preheader.i.outer, !llvm.loop !2374
+
+_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_RT_S1X_RSJ_SJ_S1Z_SN_SR_SW_.exit: ; preds = %bb.o, %.split.i, %bb.p, %bb.q, %bb.k, %bb.e, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread91
+  %.086 = phi ptr [ %.0101, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread91 ], [ %.0101, %.split.i ], [ %.087, %bb.p ], [ %.087, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread ], [ %i.m, %bb.e ], [ %i.m, %bb.k ], [ %.087, %bb.q ], [ %.0101, %bb.o ]
+  %.172 = phi ptr [ %.07198, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread91 ], [ %.028.ph.i, %.split.i ], [ %i.cw, %bb.q ], [ %.07183, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread ], [ %i.m, %bb.e ], [ %i.m, %bb.k ], [ %.021.i.ph, %bb.p ], [ %i.cn, %bb.o ]
+  %.1 = phi ptr [ %.07099, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread91 ], [ %i.ci, %.split.i ], [ %.0.i, %bb.q ], [ %.07084, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread ], [ %i.d, %bb.e ], [ %i.d, %bb.k ], [ %i.ct, %bb.p ], [ %.026.i, %bb.o ]
+  %i.cy = phi ptr [ %.028100, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread91 ], [ %.13138.i, %.split.i ], [ %i.cr, %bb.p ], [ %.02885, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread ], [ %1, %bb.e ], [ %1, %bb.k ], [ %i.cr, %bb.q ], [ %.131.i, %bb.o ]
+  store ptr %.172, ptr %5, align 8, !tbaa !175
+  store ptr %.086, ptr %6, align 8, !tbaa !175
+  store ptr %.1, ptr %2, align 8, !tbaa !175
+  ret ptr %i.cy
+}
+
+; Function Attrs: mustprogress uwtable
+define linkonce_odr dso_local noundef ptr @_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_save_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEET_S1Z_S1Z_RS1Z_S1Z_S1Z_RSJ_S21_SN_SR_(ptr noundef %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef %3, ptr noundef %4, ptr noundef nonnull align 8 dereferenceable(8) %5, ptr noundef nonnull align 8 dereferenceable(8) %6, ptr noundef align 8 dead_on_return %7) local_unnamed_addr #3 comdat {
+bb.a:
+  %i.a = ptrtoaddr ptr %1 to i64                  ; 4 uses
+  %i.b = load ptr, ptr %5, align 8, !tbaa !175    ; 3 uses
+  %i.c = load ptr, ptr %6, align 8, !tbaa !175    ; 2 uses
+  %i.d = load ptr, ptr %2, align 8, !tbaa !175    ; 11 uses
+  %.not = icmp eq ptr %i.d, %4                    ; 2 uses
+  %i.e = icmp eq ptr %i.b, %i.c
+  br i1 %i.e, label %bb.b, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit
+
+bb.b:                                             ; preds = %bb.a
+  %.not7.i = icmp eq ptr %0, %1
+  br i1 %.not7.i, label %_ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEEEET_S1Y_S1Y_RKNS0_15iterator_traitsIS1Y_E10value_typeESJ_.exit, label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %bb.b
+  %i.f = load ptr, ptr %4, align 8, !tbaa !97
+  br label %bb.c
+
+bb.c:                                             ; preds = %bb.d, %.lr.ph.i
+  %.08.i = phi ptr [ %0, %.lr.ph.i ], [ %i.h, %bb.d ] ; 3 uses
+  %i.g = load ptr, ptr %.08.i, align 8, !tbaa !97
+  %.not6.i = icmp ult ptr %i.g, %i.f
+  br i1 %.not6.i, label %bb.d, label %_ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEEEET_S1Y_S1Y_RKNS0_15iterator_traitsIS1Y_E10value_typeESJ_.exit
+
+bb.d:                                             ; preds = %bb.c
+  %i.h = getelementptr inbounds nuw i8, ptr %.08.i, i64 8 ; 3 uses
+  %.not.i = icmp eq ptr %i.h, %1
+  br i1 %.not.i, label %_ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEEEET_S1Y_S1Y_RKNS0_15iterator_traitsIS1Y_E10value_typeESJ_.exit, label %bb.c, !llvm.loop !2291
+
+_ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEEEET_S1Y_S1Y_RKNS0_15iterator_traitsIS1Y_E10value_typeESJ_.exit: ; preds = %bb.c, %bb.d, %bb.b
+  %.0.lcssa.i = phi ptr [ %0, %bb.b ], [ %.08.i, %bb.c ], [ %i.h, %bb.d ] ; 10 uses
+  %i.i = ptrtoint ptr %.0.lcssa.i to i64          ; 5 uses
+  %i.j = ptrtoint ptr %0 to i64
+  %i.k = sub i64 %i.i, %i.j
+  %i.l = getelementptr inbounds i8, ptr %i.b, i64 %i.k ; 14 uses
+  %.not.i32 = icmp eq ptr %.0.lcssa.i, %1         ; 2 uses
+  br i1 %.not, label %bb.k, label %bb.e
+
+bb.e:                                             ; preds = %_ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEEEET_S1Y_S1Y_RKNS0_15iterator_traitsIS1Y_E10value_typeESJ_.exit
+  %.not47.i = icmp eq ptr %i.d, %3
+  %or.cond.i = select i1 %.not.i32, i1 true, i1 %.not47.i
+  br i1 %or.cond.i, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_RT_S1Z_RSJ_SJ_S21_SN_SR_SW_.exit, label %bb.f
+
+bb.f:                                             ; preds = %bb.e
+  %i.m = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
+  %i.o = load i64, ptr %i.l, align 8, !tbaa !89
+  %i.p = load i64, ptr %.0.lcssa.i, align 8, !tbaa !89
+  store i64 %i.p, ptr %i.l, align 8, !tbaa !89
+  %i.q = load i64, ptr %4, align 8, !tbaa !89
+  store i64 %i.q, ptr %.0.lcssa.i, align 8, !tbaa !89
+  %i.r = load i64, ptr %i.d, align 8, !tbaa !89
+  store i64 %i.r, ptr %4, align 8, !tbaa !89
+  store i64 %i.o, ptr %i.d, align 8, !tbaa !89
+  %.03763.i = getelementptr inbounds nuw i8, ptr %i.l, i64 8 ; 2 uses
+  %.04164.i = getelementptr inbounds nuw i8, ptr %.0.lcssa.i, i64 8 ; 2 uses
+  %.not4865.i = icmp eq ptr %.04164.i, %1
+  br i1 %.not4865.i, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95, label %.lr.ph.i31
+
+.lr.ph.i31:                                       ; preds = %bb.f, %bb.j
+  %indvar = phi i64 [ %indvar.next, %bb.j ], [ 0, %bb.f ] ; 4 uses
+  %.04170.i = phi ptr [ %.041.i, %bb.j ], [ %.04164.i, %bb.f ] ; 10 uses
+  %.03769.i = phi ptr [ %.037.i, %bb.j ], [ %.03763.i, %bb.f ] ; 5 uses
+  %.068.i = phi ptr [ %.1.i, %bb.j ], [ %i.n, %bb.f ] ; 7 uses
+  %.03567.i = phi ptr [ %.136.i, %bb.j ], [ %i.m, %bb.f ] ; 7 uses
+  %.03966.i = phi ptr [ %.140.i, %bb.j ], [ %i.l, %bb.f ] ; 13 uses
+  %i.s = icmp eq ptr %.03567.i, %3
+  br i1 %i.s, label %.lr.ph.i.i.preheader, label %bb.g
+
+.lr.ph.i.i.preheader:                             ; preds = %.lr.ph.i31
+  %i.t = add i64 %i.a, -16
+  %8 = shl i64 %indvar, 3
+  %9 = add i64 %8, %i.i
+  %10 = sub i64 %i.t, %9                          ; 2 uses
+  %11 = lshr i64 %10, 3
+  %i.u = add nuw nsw i64 %11, 1                   ; 2 uses
+  %min.iters.check = icmp ult i64 %10, 168
+  br i1 %min.iters.check, label %.lr.ph.i.i.preheader300, label %vector.memcheck
+
+vector.memcheck:                                  ; preds = %.lr.ph.i.i.preheader
+  %12 = shl i64 %indvar, 3
+  %i.v = getelementptr i8, ptr %.0.lcssa.i, i64 %12
+  %scevgep = getelementptr i8, ptr %i.v, i64 16
+  %i.w = add i64 %i.a, -16
+  %i.x = shl i64 %indvar, 3
+  %13 = add i64 %i.x, %i.i
+  %i.y = sub i64 %i.w, %13
+  %14 = and i64 %i.y, -8                          ; 2 uses
+  %scevgep238 = getelementptr i8, ptr %scevgep, i64 %14
+  %scevgep239 = getelementptr i8, ptr %.03966.i, i64 8
+  %scevgep240 = getelementptr i8, ptr %scevgep239, i64 %14
+  %bound0 = icmp ult ptr %.04170.i, %scevgep240
+  %bound1 = icmp ult ptr %.03966.i, %scevgep238
+  %found.conflict = and i1 %bound0, %bound1
+  br i1 %found.conflict, label %.lr.ph.i.i.preheader300, label %vector.ph
+
+vector.ph:                                        ; preds = %vector.memcheck
+  %n.vec = and i64 %i.u, 4611686018427387900      ; 3 uses
+  %i.z = shl i64 %n.vec, 3                        ; 2 uses
+  %i.aa = getelementptr i8, ptr %.03966.i, i64 %i.z ; 2 uses
+  %i.ab = getelementptr i8, ptr %.04170.i, i64 %i.z
+  br label %vector.body
+
+vector.body:                                      ; preds = %vector.body, %vector.ph
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
+  %i.ac = shl i64 %index, 3                       ; 2 uses
+  %next.gep = getelementptr i8, ptr %.03966.i, i64 %i.ac ; 4 uses
+  %next.gep241 = getelementptr i8, ptr %.04170.i, i64 %i.ac ; 4 uses
+  %i.ad = getelementptr i8, ptr %next.gep241, i64 16
+  %wide.load = load <2 x ptr>, ptr %next.gep241, align 8, !tbaa !89, !alias.scope !2375, !noalias !2378
+  %wide.load242.a = load <2 x ptr>, ptr %i.ad, align 8, !tbaa !89, !alias.scope !2375, !noalias !2378
+  %i.ae = getelementptr i8, ptr %next.gep, i64 16
+  %wide.load243 = load <2 x i64>, ptr %next.gep, align 8, !tbaa !89, !alias.scope !2378
+  %wide.load244 = load <2 x i64>, ptr %i.ae, align 8, !tbaa !89, !alias.scope !2378
+  %i.af = getelementptr i8, ptr %next.gep241, i64 16
+  store <2 x i64> %wide.load243, ptr %next.gep241, align 8, !tbaa !89, !alias.scope !2375, !noalias !2378
+  store <2 x i64> %wide.load244, ptr %i.af, align 8, !tbaa !89, !alias.scope !2375, !noalias !2378
+  %i.ag = getelementptr i8, ptr %next.gep, i64 16
+  store <2 x ptr> %wide.load, ptr %next.gep, align 8, !tbaa !89, !alias.scope !2378
+  store <2 x ptr> %wide.load242.a, ptr %i.ag, align 8, !tbaa !89, !alias.scope !2378
+  %index.next = add nuw i64 %index, 4             ; 2 uses
+  %i.ah = icmp eq i64 %index.next, %n.vec
+  br i1 %i.ah, label %middle.block, label %vector.body, !llvm.loop !2380
+
+middle.block:                                     ; preds = %vector.body
+  %cmp.n = icmp eq i64 %i.u, %n.vec
+  br i1 %cmp.n, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit, label %.lr.ph.i.i.preheader300
+
+.lr.ph.i.i.preheader300:                          ; preds = %vector.memcheck, %.lr.ph.i.i.preheader, %middle.block
+  %.010.i.i.ph = phi ptr [ %.03966.i, %vector.memcheck ], [ %.03966.i, %.lr.ph.i.i.preheader ], [ %i.aa, %middle.block ]
+  %.079.i.i.ph = phi ptr [ %.04170.i, %vector.memcheck ], [ %.04170.i, %.lr.ph.i.i.preheader ], [ %i.ab, %middle.block ]
+  br label %.lr.ph.i.i
+
+.lr.ph.i.i:                                       ; preds = %.lr.ph.i.i.preheader300, %.lr.ph.i.i
+  %.010.i.i = phi ptr [ %i.ak, %.lr.ph.i.i ], [ %.010.i.i.ph, %.lr.ph.i.i.preheader300 ] ; 3 uses
+  %.079.i.i = phi ptr [ %i.aj, %.lr.ph.i.i ], [ %.079.i.i.ph, %.lr.ph.i.i.preheader300 ] ; 3 uses
+  %.sroa.0.0.copyload.i.i.i = load ptr, ptr %.079.i.i, align 8, !tbaa !89
+  %i.ai = load i64, ptr %.010.i.i, align 8, !tbaa !89
+  store i64 %i.ai, ptr %.079.i.i, align 8, !tbaa !89
+  store ptr %.sroa.0.0.copyload.i.i.i, ptr %.010.i.i, align 8, !tbaa !89
+  %i.aj = getelementptr inbounds nuw i8, ptr %.079.i.i, i64 8 ; 2 uses
+  %i.ak = getelementptr inbounds nuw i8, ptr %.010.i.i, i64 8 ; 2 uses
+  %.not.i.i = icmp eq ptr %i.aj, %1
+  br i1 %.not.i.i, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit, label %.lr.ph.i.i, !llvm.loop !2381
+
+bb.g:                                             ; preds = %.lr.ph.i31
+  %i.al = load ptr, ptr %.03966.i, align 8, !tbaa !97
+  %i.am = load ptr, ptr %.068.i, align 8, !tbaa !97
+  %.not53.i = icmp ult ptr %i.al, %i.am
+  br i1 %.not53.i, label %bb.i, label %bb.h
+
+bb.h:                                             ; preds = %bb.g
+  %i.an = getelementptr inbounds nuw i8, ptr %.03567.i, i64 8
+  %i.ao = getelementptr inbounds nuw i8, ptr %.068.i, i64 8
+  %i.ap = load i64, ptr %.03769.i, align 8, !tbaa !89
+  %i.aq = load i64, ptr %.04170.i, align 8, !tbaa !89
+  store i64 %i.aq, ptr %.03769.i, align 8, !tbaa !89
+  %i.ar = load i64, ptr %.068.i, align 8, !tbaa !89
+  store i64 %i.ar, ptr %.04170.i, align 8, !tbaa !89
+  %i.as = load i64, ptr %.03567.i, align 8, !tbaa !89
+  store i64 %i.as, ptr %.068.i, align 8, !tbaa !89
+  store i64 %i.ap, ptr %.03567.i, align 8, !tbaa !89
+  br label %bb.j
+
+bb.i:                                             ; preds = %bb.g
+  %i.at = getelementptr inbounds nuw i8, ptr %.03966.i, i64 8
+  %i.au = load i64, ptr %.03769.i, align 8, !tbaa !89
+  %i.av = load i64, ptr %.04170.i, align 8, !tbaa !89
+  store i64 %i.av, ptr %.03769.i, align 8, !tbaa !89
+  %i.aw = load i64, ptr %.03966.i, align 8, !tbaa !89
+  store i64 %i.aw, ptr %.04170.i, align 8, !tbaa !89
+  store i64 %i.au, ptr %.03966.i, align 8, !tbaa !89
+  br label %bb.j
+
+bb.j:                                             ; preds = %bb.i, %bb.h
+  %.140.i = phi ptr [ %.03966.i, %bb.h ], [ %i.at, %bb.i ] ; 2 uses
+  %.136.i = phi ptr [ %i.an, %bb.h ], [ %.03567.i, %bb.i ] ; 2 uses
+  %.1.i = phi ptr [ %i.ao, %bb.h ], [ %.068.i, %bb.i ] ; 2 uses
+  %.037.i = getelementptr inbounds nuw i8, ptr %.03769.i, i64 8 ; 2 uses
+  %.041.i = getelementptr inbounds nuw i8, ptr %.04170.i, i64 8 ; 2 uses
+  %.not48.i = icmp eq ptr %.041.i, %1
+  %indvar.next = add i64 %indvar, 1
+  br i1 %.not48.i, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit, label %.lr.ph.i31, !llvm.loop !2382
+
+bb.k:                                             ; preds = %_ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEEEET_S1Y_S1Y_RKNS0_15iterator_traitsIS1Y_E10value_typeESJ_.exit
+  %.not40.i = icmp eq ptr %4, %3
+  %or.cond.i33 = or i1 %.not.i32, %.not40.i
+  br i1 %or.cond.i33, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_RT_S1Z_RSJ_SJ_S21_SN_SR_SW_.exit, label %bb.l
+
+bb.l:                                             ; preds = %bb.k
+  %i.ax = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
+  %i.ay = load i64, ptr %i.l, align 8, !tbaa !89
+  %i.az = load i64, ptr %.0.lcssa.i, align 8, !tbaa !89
+  store i64 %i.az, ptr %i.l, align 8, !tbaa !89
+  %i.ba = load i64, ptr %i.d, align 8, !tbaa !89
+  store i64 %i.ba, ptr %.0.lcssa.i, align 8, !tbaa !89
+  store i64 %i.ay, ptr %i.d, align 8, !tbaa !89
+  %.03053.i = getelementptr inbounds nuw i8, ptr %i.l, i64 8 ; 2 uses
+  %.03454.i = getelementptr inbounds nuw i8, ptr %.0.lcssa.i, i64 8 ; 2 uses
+  %i.bb = icmp eq ptr %.03454.i, %1
+  br i1 %i.bb, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread, label %.lr.ph.i34
+
+.lr.ph.i34:                                       ; preds = %bb.l, %bb.m
+  %indvar247 = phi i64 [ %indvar.next248, %bb.m ], [ 0, %bb.l ] ; 4 uses
+  %.03458.i = phi ptr [ %.034.i, %bb.m ], [ %.03454.i, %bb.l ] ; 8 uses
+  %.03057.i = phi ptr [ %.030.i, %bb.m ], [ %.03053.i, %bb.l ] ; 3 uses
+  %.056.i = phi ptr [ %.1.i35, %bb.m ], [ %i.ax, %bb.l ] ; 6 uses
+  %.03255.i = phi ptr [ %.133.i, %bb.m ], [ %i.l, %bb.l ] ; 11 uses
+  %i.bc = icmp eq ptr %.056.i, %3
+  br i1 %i.bc, label %.lr.ph.i.i40.preheader, label %bb.m
+
+.lr.ph.i.i40.preheader:                           ; preds = %.lr.ph.i34
+  %i.bd = add i64 %i.a, -16
+  %15 = shl i64 %indvar247, 3
+  %16 = add i64 %15, %i.i
+  %17 = sub i64 %i.bd, %16                        ; 2 uses
+  %18 = lshr i64 %17, 3
+  %i.be = add nuw nsw i64 %18, 1                  ; 2 uses
+  %min.iters.check257 = icmp ult i64 %17, 168
+  br i1 %min.iters.check257, label %.lr.ph.i.i40.preheader293, label %vector.memcheck246
+
+vector.memcheck246:                               ; preds = %.lr.ph.i.i40.preheader
+  %19 = shl i64 %indvar247, 3
+  %i.bf = getelementptr i8, ptr %.0.lcssa.i, i64 %19
+  %scevgep249 = getelementptr i8, ptr %i.bf, i64 16
+  %i.bg = add i64 %i.a, -16
+  %i.bh = shl i64 %indvar247, 3
+  %20 = add i64 %i.bh, %i.i
+  %i.bi = sub i64 %i.bg, %20
+  %21 = and i64 %i.bi, -8                         ; 2 uses
+  %scevgep250 = getelementptr i8, ptr %scevgep249, i64 %21
+  %scevgep251 = getelementptr i8, ptr %.03255.i, i64 8
+  %scevgep252 = getelementptr i8, ptr %scevgep251, i64 %21
+  %bound0253 = icmp ult ptr %.03458.i, %scevgep252
+  %bound1254 = icmp ult ptr %.03255.i, %scevgep250
+  %found.conflict255 = and i1 %bound0253, %bound1254
+  br i1 %found.conflict255, label %.lr.ph.i.i40.preheader293, label %vector.ph258
+
+vector.ph258:                                     ; preds = %vector.memcheck246
+  %n.vec259 = and i64 %i.be, 4611686018427387900  ; 3 uses
+  %i.bj = shl i64 %n.vec259, 3                    ; 2 uses
+  %i.bk = getelementptr i8, ptr %.03255.i, i64 %i.bj ; 2 uses
+  %i.bl = getelementptr i8, ptr %.03458.i, i64 %i.bj
+  br label %vector.body260
+
+vector.body260:                                   ; preds = %vector.body260, %vector.ph258
+  %index261 = phi i64 [ 0, %vector.ph258 ], [ %index.next268, %vector.body260 ] ; 2 uses
+  %i.bm = shl i64 %index261, 3                    ; 2 uses
+  %next.gep262 = getelementptr i8, ptr %.03255.i, i64 %i.bm ; 4 uses
+  %next.gep263 = getelementptr i8, ptr %.03458.i, i64 %i.bm ; 4 uses
+  %i.bn = getelementptr i8, ptr %next.gep263, i64 16
+  %wide.load264 = load <2 x ptr>, ptr %next.gep263, align 8, !tbaa !89, !alias.scope !2383, !noalias !2386
+  %wide.load265 = load <2 x ptr>, ptr %i.bn, align 8, !tbaa !89, !alias.scope !2383, !noalias !2386
+  %i.bo = getelementptr i8, ptr %next.gep262, i64 16
+  %wide.load266 = load <2 x i64>, ptr %next.gep262, align 8, !tbaa !89, !alias.scope !2386
+  %wide.load267 = load <2 x i64>, ptr %i.bo, align 8, !tbaa !89, !alias.scope !2386
+  %i.bp = getelementptr i8, ptr %next.gep263, i64 16
+  store <2 x i64> %wide.load266, ptr %next.gep263, align 8, !tbaa !89, !alias.scope !2383, !noalias !2386
+  store <2 x i64> %wide.load267, ptr %i.bp, align 8, !tbaa !89, !alias.scope !2383, !noalias !2386
+  %i.bq = getelementptr i8, ptr %next.gep262, i64 16
+  store <2 x ptr> %wide.load264, ptr %next.gep262, align 8, !tbaa !89, !alias.scope !2386
+  store <2 x ptr> %wide.load265, ptr %i.bq, align 8, !tbaa !89, !alias.scope !2386
+  %index.next268 = add nuw i64 %index261, 4       ; 2 uses
+  %i.br = icmp eq i64 %index.next268, %n.vec259
+  br i1 %i.br, label %middle.block269, label %vector.body260, !llvm.loop !2388
+
+middle.block269:                                  ; preds = %vector.body260
+  %cmp.n270 = icmp eq i64 %i.be, %n.vec259
+  br i1 %cmp.n270, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit, label %.lr.ph.i.i40.preheader293
+
+.lr.ph.i.i40.preheader293:                        ; preds = %vector.memcheck246, %.lr.ph.i.i40.preheader, %middle.block269
+  %.010.i.i41.ph = phi ptr [ %.03255.i, %vector.memcheck246 ], [ %.03255.i, %.lr.ph.i.i40.preheader ], [ %i.bk, %middle.block269 ]
+  %.079.i.i42.ph = phi ptr [ %.03458.i, %vector.memcheck246 ], [ %.03458.i, %.lr.ph.i.i40.preheader ], [ %i.bl, %middle.block269 ]
+  br label %.lr.ph.i.i40
+
+.lr.ph.i.i40:                                     ; preds = %.lr.ph.i.i40.preheader293, %.lr.ph.i.i40
+  %.010.i.i41 = phi ptr [ %i.bu, %.lr.ph.i.i40 ], [ %.010.i.i41.ph, %.lr.ph.i.i40.preheader293 ] ; 3 uses
+  %.079.i.i42 = phi ptr [ %i.bt, %.lr.ph.i.i40 ], [ %.079.i.i42.ph, %.lr.ph.i.i40.preheader293 ] ; 3 uses
+  %.sroa.0.0.copyload.i.i.i43 = load ptr, ptr %.079.i.i42, align 8, !tbaa !89
+  %i.bs = load i64, ptr %.010.i.i41, align 8, !tbaa !89
+  store i64 %i.bs, ptr %.079.i.i42, align 8, !tbaa !89
+  store ptr %.sroa.0.0.copyload.i.i.i43, ptr %.010.i.i41, align 8, !tbaa !89
+  %i.bt = getelementptr inbounds nuw i8, ptr %.079.i.i42, i64 8 ; 2 uses
+  %i.bu = getelementptr inbounds nuw i8, ptr %.010.i.i41, i64 8 ; 2 uses
+  %.not.i.i44 = icmp eq ptr %i.bt, %1
+  br i1 %.not.i.i44, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit, label %.lr.ph.i.i40, !llvm.loop !2389
+
+bb.m:                                             ; preds = %.lr.ph.i34
+  %i.bv = load ptr, ptr %.03255.i, align 8, !tbaa !97
+  %i.bw = load ptr, ptr %.056.i, align 8, !tbaa !97
+  %.not45.i = icmp ult ptr %i.bv, %i.bw           ; 3 uses
+  %i.bx = load i64, ptr %.03057.i, align 8, !tbaa !89
+  %i.by = load i64, ptr %.03458.i, align 8, !tbaa !89
+  store i64 %i.by, ptr %.03057.i, align 8, !tbaa !89
+  %.03255.sink74.i = select i1 %.not45.i, ptr %.03255.i, ptr %.056.i ; 2 uses
+  %.133.idx.i = select i1 %.not45.i, i64 8, i64 0
+  %.133.i = getelementptr inbounds nuw i8, ptr %.03255.i, i64 %.133.idx.i ; 2 uses
+  %.1.idx.i = select i1 %.not45.i, i64 0, i64 8
+  %.1.i35 = getelementptr inbounds nuw i8, ptr %.056.i, i64 %.1.idx.i ; 2 uses
+  %i.bz = load i64, ptr %.03255.sink74.i, align 8, !tbaa !89
+  store i64 %i.bz, ptr %.03458.i, align 8, !tbaa !89
+  store i64 %i.bx, ptr %.03255.sink74.i, align 8, !tbaa !89
+  %.030.i = getelementptr inbounds nuw i8, ptr %.03057.i, i64 8 ; 2 uses
+  %.034.i = getelementptr inbounds nuw i8, ptr %.03458.i, i64 8 ; 2 uses
+  %i.ca = icmp eq ptr %.034.i, %1
+  %indvar.next248 = add i64 %indvar247, 1
+  br i1 %i.ca, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit, label %.lr.ph.i34, !llvm.loop !2390
+
+_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit: ; preds = %bb.j, %.lr.ph.i.i, %bb.m, %.lr.ph.i.i40, %middle.block, %middle.block269, %bb.a
+  %.077 = phi ptr [ %.03567.i, %.lr.ph.i.i ], [ %i.d, %bb.a ], [ %.03567.i, %middle.block ], [ %.056.i, %middle.block269 ], [ %.1.i35, %bb.m ], [ %.056.i, %.lr.ph.i.i40 ], [ %.136.i, %bb.j ] ; 2 uses
+  %.075 = phi ptr [ %.03966.i, %.lr.ph.i.i ], [ %i.b, %bb.a ], [ %.03966.i, %middle.block ], [ %.03255.i, %middle.block269 ], [ %.133.i, %bb.m ], [ %.03255.i, %.lr.ph.i.i40 ], [ %.140.i, %bb.j ] ; 2 uses
+  %.074 = phi ptr [ %.068.i, %.lr.ph.i.i ], [ %4, %bb.a ], [ %.068.i, %middle.block ], [ %4, %middle.block269 ], [ %4, %bb.m ], [ %4, %.lr.ph.i.i40 ], [ %.1.i, %bb.j ]
+  %.028 = phi ptr [ %1, %.lr.ph.i.i ], [ %0, %bb.a ], [ %1, %middle.block ], [ %1, %middle.block269 ], [ %1, %bb.m ], [ %1, %.lr.ph.i.i40 ], [ %1, %bb.j ] ; 2 uses
+  %.0 = phi ptr [ %i.ak, %.lr.ph.i.i ], [ %i.c, %bb.a ], [ %i.aa, %middle.block ], [ %i.bk, %middle.block269 ], [ %.030.i, %bb.m ], [ %i.bu, %.lr.ph.i.i40 ], [ %.037.i, %bb.j ] ; 2 uses
+  br i1 %.not, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95
+
+_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95: ; preds = %bb.f, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit
+  %.0105 = phi ptr [ %.0, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit ], [ %.03763.i, %bb.f ] ; 5 uses
+  %.028104 = phi ptr [ %.028, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit ], [ %1, %bb.f ] ; 2 uses
+  %.074103 = phi ptr [ %.074, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit ], [ %i.n, %bb.f ]
+  %.075102 = phi ptr [ %.075, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit ], [ %i.l, %bb.f ] ; 3 uses
+  %.077101 = phi ptr [ %.077, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit ], [ %i.m, %bb.f ] ; 3 uses
+  %.not.i45 = icmp eq ptr %.077101, %3
+  %.not36.i = icmp eq ptr %.0105, %.075102
+  %or.cond.i46 = select i1 %.not.i45, i1 true, i1 %.not36.i
+  br i1 %or.cond.i46, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_RT_S1Z_RSJ_SJ_S21_SN_SR_SW_.exit, label %.outer.i
+
+.outer.i:                                         ; preds = %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95, %bb.o
+  %.030.ph.i = phi ptr [ %.131.i, %bb.o ], [ %.028104, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95 ]
+  %.028.ph.i = phi ptr [ %i.cj, %bb.o ], [ %.075102, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95 ] ; 4 uses
+  %.026.ph.i = phi ptr [ %.026.i, %bb.o ], [ %.077101, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95 ]
+  %.025.ph.i = phi ptr [ %.025.i, %bb.o ], [ %.074103, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95 ]
+  br label %bb.n
+
+bb.n:                                             ; preds = %.split.i, %.outer.i
+  %.030.i47 = phi ptr [ %.13138.i, %.split.i ], [ %.030.ph.i, %.outer.i ] ; 6 uses
+  %.026.i = phi ptr [ %i.ce, %.split.i ], [ %.026.ph.i, %.outer.i ] ; 5 uses
+  %.025.i = phi ptr [ %i.cf, %.split.i ], [ %.025.ph.i, %.outer.i ] ; 4 uses
+  %i.cb = load ptr, ptr %.028.ph.i, align 8       ; 2 uses
+  %i.cc = load ptr, ptr %.025.i, align 8          ; 2 uses
+  %.not43.i = icmp ult ptr %i.cb, %i.cc
+  br i1 %.not43.i, label %bb.o, label %.split.i
+
+.split.i:                                         ; preds = %bb.n
+  %i.cd = ptrtoint ptr %i.cc to i64
+  %i.ce = getelementptr inbounds nuw i8, ptr %.026.i, i64 8 ; 3 uses
+  %i.cf = getelementptr inbounds nuw i8, ptr %.025.i, i64 8
+  %i.cg = load i64, ptr %.030.i47, align 8, !tbaa !89
+  store i64 %i.cd, ptr %.030.i47, align 8, !tbaa !89
+  %i.ch = load i64, ptr %.026.i, align 8, !tbaa !89
+  store i64 %i.ch, ptr %.025.i, align 8, !tbaa !89
+  store i64 %i.cg, ptr %.026.i, align 8, !tbaa !89
+  %.not45.i48 = icmp eq ptr %i.ce, %3
+  %.13138.i = getelementptr inbounds nuw i8, ptr %.030.i47, i64 8 ; 2 uses
+  br i1 %.not45.i48, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_RT_S1Z_RSJ_SJ_S21_SN_SR_SW_.exit, label %bb.n, !llvm.loop !2391
+
+bb.o:                                             ; preds = %bb.n
+  %i.ci = ptrtoint ptr %i.cb to i64
+  %i.cj = getelementptr inbounds nuw i8, ptr %.028.ph.i, i64 8 ; 3 uses
+  %.sroa.0.0.copyload.i.i = load ptr, ptr %.030.i47, align 8, !tbaa !89
+  store i64 %i.ci, ptr %.030.i47, align 8, !tbaa !89
+  store ptr %.sroa.0.0.copyload.i.i, ptr %.028.ph.i, align 8, !tbaa !89
+  %.not44.i = icmp eq ptr %i.cj, %.0105
+  %.131.i = getelementptr inbounds nuw i8, ptr %.030.i47, i64 8 ; 2 uses
+  br i1 %.not44.i, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_RT_S1Z_RSJ_SJ_S21_SN_SR_SW_.exit, label %.outer.i, !llvm.loop !2391
+
+_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread: ; preds = %bb.l, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit
+  %.091 = phi ptr [ %.0, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit ], [ %.03053.i, %bb.l ] ; 5 uses
+  %.02889 = phi ptr [ %.028, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit ], [ %1, %bb.l ] ; 2 uses
+  %.07588 = phi ptr [ %.075, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit ], [ %i.l, %bb.l ] ; 3 uses
+  %.07787 = phi ptr [ %.077, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit ], [ %i.ax, %bb.l ] ; 3 uses
+  %.not.i50 = icmp eq ptr %.07787, %3
+  %.not36.i51 = icmp eq ptr %.091, %.07588
+  %or.cond.i52 = select i1 %.not.i50, i1 true, i1 %.not36.i51
+  br i1 %or.cond.i52, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_RT_S1Z_RSJ_SJ_S21_SN_SR_SW_.exit, label %.preheader.i.outer
+
+.preheader.i.outer:                               ; preds = %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread, %bb.q
+  %.024.i.ph = phi ptr [ %i.cm, %bb.q ], [ %.02889, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread ]
+  %.021.i.ph = phi ptr [ %i.cr, %bb.q ], [ %.07588, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread ] ; 4 uses
+  %.0.i.ph = phi ptr [ %.0.i, %bb.q ], [ %.07787, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread ]
+  br label %.preheader.i
+
+.preheader.i:                                     ; preds = %.preheader.i.outer, %bb.p
+  %.024.i = phi ptr [ %i.cm, %bb.p ], [ %.024.i.ph, %.preheader.i.outer ] ; 4 uses
+  %.0.i = phi ptr [ %i.co, %bb.p ], [ %.0.i.ph, %.preheader.i.outer ] ; 5 uses
+  %i.ck = load ptr, ptr %.021.i.ph, align 8       ; 2 uses
+  %i.cl = load ptr, ptr %.0.i, align 8            ; 2 uses
+  %.not38.i = icmp ult ptr %i.ck, %i.cl
+  %i.cm = getelementptr inbounds nuw i8, ptr %.024.i, i64 8 ; 4 uses
+  %.sroa.0.0.copyload.i37.i = load ptr, ptr %.024.i, align 8, !tbaa !89 ; 2 uses
+  br i1 %.not38.i, label %bb.q, label %bb.p
+
+bb.p:                                             ; preds = %.preheader.i
+  %i.cn = ptrtoint ptr %i.cl to i64
+  %i.co = getelementptr inbounds nuw i8, ptr %.0.i, i64 8 ; 3 uses
+  store i64 %i.cn, ptr %.024.i, align 8, !tbaa !89
+  store ptr %.sroa.0.0.copyload.i37.i, ptr %.0.i, align 8, !tbaa !89
+  %i.cp = icmp eq ptr %i.co, %3
+  br i1 %i.cp, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_RT_S1Z_RSJ_SJ_S21_SN_SR_SW_.exit, label %.preheader.i, !llvm.loop !2392
+
+bb.q:                                             ; preds = %.preheader.i
+  %i.cq = ptrtoint ptr %i.ck to i64
+  %i.cr = getelementptr inbounds nuw i8, ptr %.021.i.ph, i64 8 ; 3 uses
+  store i64 %i.cq, ptr %.024.i, align 8, !tbaa !89
+  store ptr %.sroa.0.0.copyload.i37.i, ptr %.021.i.ph, align 8, !tbaa !89
+  %i.cs = icmp eq ptr %i.cr, %.091
+  br i1 %i.cs, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_RT_S1Z_RSJ_SJ_S21_SN_SR_SW_.exit, label %.preheader.i.outer, !llvm.loop !2392
+
+_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_RT_S1Z_RSJ_SJ_S21_SN_SR_SW_.exit: ; preds = %bb.o, %.split.i, %bb.p, %bb.q, %bb.k, %bb.e, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95
+  %.090 = phi ptr [ %.0105, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95 ], [ %.0105, %.split.i ], [ %.091, %bb.p ], [ %.091, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread ], [ %i.l, %bb.e ], [ %i.l, %bb.k ], [ %.091, %bb.q ], [ %.0105, %bb.o ]
+  %.178 = phi ptr [ %.077101, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95 ], [ %i.ce, %.split.i ], [ %.0.i, %bb.q ], [ %.07787, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread ], [ %i.d, %bb.e ], [ %i.d, %bb.k ], [ %i.co, %bb.p ], [ %.026.i, %bb.o ]
+  %.176 = phi ptr [ %.075102, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95 ], [ %.028.ph.i, %.split.i ], [ %i.cr, %bb.q ], [ %.07588, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread ], [ %i.l, %bb.e ], [ %i.l, %bb.k ], [ %.021.i.ph, %bb.p ], [ %i.cj, %bb.o ]
+  %i.ct = phi ptr [ %.028104, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95 ], [ %.13138.i, %.split.i ], [ %i.cm, %bb.p ], [ %.02889, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread ], [ %1, %bb.e ], [ %1, %bb.k ], [ %i.cm, %bb.q ], [ %.131.i, %bb.o ]
+  store ptr %.176, ptr %5, align 8, !tbaa !175
+  store ptr %.090, ptr %6, align 8, !tbaa !175
+  store ptr %.178, ptr %2, align 8, !tbaa !175
+  ret ptr %i.ct
+}
+
+; Function Attrs: mustprogress uwtable
+define linkonce_odr dso_local noundef ptr @_ZN5boost7movelib15detail_adaptive24partial_merge_bufferlessIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEET_S1W_S1W_S1W_PbSJ_(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #3 comdat {
+bb.a:
+  %i.a = load i8, ptr %3, align 1, !tbaa !161, !range !13, !noundef !14
+  %i.b = trunc nuw i8 %i.a to i1
+  %i.c = icmp eq ptr %1, %2                       ; 2 uses
+  br i1 %i.b, label %bb.b, label %bb.g
+
+bb.b:                                             ; preds = %bb.a
+  br i1 %i.c, label %_ZN5boost7movelib15detail_adaptive29partial_merge_bufferless_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEET_S1W_S1W_S1W_PbSJ_.exit, label %bb.c
+
+bb.c:                                             ; preds = %bb.b
+  %.not.i = icmp eq ptr %0, %1
+  br i1 %.not.i, label %_ZN5boost7movelib15detail_adaptive29partial_merge_bufferless_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEET_S1W_S1W_S1W_PbSJ_.exit.sink.split, label %bb.d
+
+bb.d:                                             ; preds = %bb.c
+  %i.d = getelementptr inbounds i8, ptr %1, i64 -8
+  %i.e = load ptr, ptr %1, align 8, !tbaa !97
+  %i.f = load ptr, ptr %i.d, align 8, !tbaa !97
+  %i.g = icmp ult ptr %i.e, %i.f
+  br i1 %i.g, label %.lr.ph.i.preheader.i, label %_ZN5boost7movelib15detail_adaptive29partial_merge_bufferless_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpeckENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEET_S1W_S1W_S1W_PbSJ_.exit.sink.split
+end_hunk_1
+begin_hunk_2_@_ZN5boost7movelib15detail_adaptive26op_merge_blocks_with_irregINS0_16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS4_17Compact_containerINS4_37Constrained_triangulation_face_base_2INS4_5EpickENS4_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS9_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSG_IiLin1ELin1ELi0ELin1ELin1EEESH_SH_SI_EEvRKNSF_10MatrixBaseIT0_EERKNSJ_IT1_EERKNSJ_IT2_EEbRNSF_15PlainObjectBaseIT3_EERNSW_IT4_EEE9FaceInfo2S9_NS4_25Triangulation_face_base_2IS9_NS4_28Triangulation_ds_face_base_2INS4_30Triangulation_data_structure_2INS4_27Triangulation_vertex_base_2IS9_NS4_30Triangulation_ds_vertex_base_2IvEEEENS8_IS9_NSA_IS13_S9_NS14_IS9_NS15_IvEEEEEEEEEEEEEEEEEENS4_7DefaultES1K_S1K_EELb0EEEEENS0_7inverseINS_9container3dtl23flat_tree_value_compareISt4lessIS1M_ES1M_NS_11move_detail8identityIS1M_EEEEEES1O_S1O_S1O_S1Z_NS0_7move_opEEESX_T_S21_SK_SO_RSS_SS_SX_NS0_9iter_sizeISO_E4typeES25_S25_S25_S10_bT5_:bb.a
+  %wide.load320 = load <2 x ptr>, ptr %i.cr, align 8, !tbaa !223, !alias.scope !3265, !noalias !3268
+  %i.cs = getelementptr inbounds i8, ptr %next.gep, i64 -16
+  %i.ct = getelementptr inbounds i8, ptr %next.gep, i64 -32
+  %wide.load321 = load <2 x i64>, ptr %i.cs, align 8, !tbaa !223, !alias.scope !3272, !noalias !3273
+  %wide.load322 = load <2 x i64>, ptr %i.ct, align 8, !tbaa !223, !alias.scope !3272, !noalias !3273
+  %i.cu = getelementptr inbounds i8, ptr %next.gep319, i64 -16
+  %i.cv = getelementptr inbounds i8, ptr %next.gep319, i64 -32
+  store <2 x i64> %wide.load321, ptr %i.cu, align 8, !tbaa !223, !alias.scope !3265, !noalias !3268
+  store <2 x i64> %wide.load322, ptr %i.cv, align 8, !tbaa !223, !alias.scope !3265, !noalias !3268
+  %i.cw = getelementptr inbounds i8, ptr %next.gep, i64 -16
+  %i.cx = getelementptr inbounds i8, ptr %next.gep, i64 -32
+  store <2 x ptr> %wide.load, ptr %i.cw, align 8, !tbaa !223, !alias.scope !3272, !noalias !3273
+  store <2 x ptr> %wide.load320, ptr %i.cx, align 8, !tbaa !223, !alias.scope !3272, !noalias !3273
+  %index.next = add nuw i64 %index, 4             ; 2 uses
+  %i.cy = icmp eq i64 %index.next, %n.vec
+  br i1 %i.cy, label %middle.block, label %vector.body, !llvm.loop !3274
+
+middle.block:                                     ; preds = %vector.body
+  %cmp.n = icmp eq i64 %i.cf, %n.vec
+  br i1 %cmp.n, label %_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit, label %.lr.ph.i28.preheader329
+
+.lr.ph.i28.preheader329:                          ; preds = %vector.memcheck, %.lr.ph.i28.preheader, %middle.block
+  %.sroa.055.0.ph = phi ptr [ %i.by, %vector.memcheck ], [ %i.by, %.lr.ph.i28.preheader ], [ %i.cn, %middle.block ]
+  %.ph = phi ptr [ %.sroa.074.0, %vector.memcheck ], [ %.sroa.074.0, %.lr.ph.i28.preheader ], [ %i.co, %middle.block ]
+  br label %.lr.ph.i28
+
+.lr.ph.i28:                                       ; preds = %.lr.ph.i28.preheader329, %.lr.ph.i28
+  %.sroa.055.0 = phi ptr [ %i.db, %.lr.ph.i28 ], [ %.sroa.055.0.ph, %.lr.ph.i28.preheader329 ]
+  %i.cz = phi ptr [ %i.da, %.lr.ph.i28 ], [ %.ph, %.lr.ph.i28.preheader329 ]
+  %i.da = getelementptr inbounds i8, ptr %i.cz, i64 -8 ; 4 uses
+  %i.db = getelementptr inbounds i8, ptr %.sroa.055.0, i64 -8 ; 4 uses
+  %.sroa.0.0.copyload.i.i = load ptr, ptr %i.da, align 8, !tbaa !223, !noalias !3273
+  %i.dc = load i64, ptr %i.db, align 8, !tbaa !223, !noalias !3273
+  store i64 %i.dc, ptr %i.da, align 8, !tbaa !223, !noalias !3273
+  store ptr %.sroa.0.0.copyload.i.i, ptr %i.db, align 8, !tbaa !223, !noalias !3273
+  %.not.i = icmp eq ptr %i.da, %i.ae
+  br i1 %.not.i, label %_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit, label %.lr.ph.i28, !llvm.loop !3275
+
+bb.u:                                             ; preds = %_ZN5boost7movelib15detail_adaptive25op_partial_merge_and_swapINS0_16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS4_17Compact_containerINS4_37Constrained_triangulation_face_base_2INS4_5EpickENS4_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS9_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSG_IiLin1ELin1ELi0ELin1ELin1EEESH_SH_SI_EEvRKNSF_10MatrixBaseIT0_EERKNSJ_IT1_EERKNSJ_IT2_EEbRNSF_15PlainObjectBaseIT3_EERNSW_IT4_EEE9FaceInfo2S9_NS4_25Triangulation_face_base_2IS9_NS4_28Triangulation_ds_face_base_2INS4_30Triangulation_data_structure_2INS4_27Triangulation_vertex_base_2IS9_NS4_30Triangulation_ds_vertex_base_2IvEEEENS8_IS9_NSA_IS13_S9_NS14_IS9_NS15_IvEEEEEEEEEEEEEEEEEENS4_7DefaultES1K_S1K_EELb0EEEEES1O_S1O_NS0_7inverseINS_9container3dtl23flat_tree_value_compareISt4lessIS1M_ES1M_NS_11move_detail8identityIS1M_EEEEEENS0_7move_opEEESO_RT_S21_RSK_SK_S23_SO_SS_SX_b.exit
+  %.not1.i31 = icmp eq ptr %i.by, %i.aa           ; 2 uses
+  br i1 %.not23, label %bb.w, label %bb.v
+
+bb.v:                                             ; preds = %bb.u
+  br i1 %.not1.i31, label %_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit, label %.lr.ph.i29
+
+.lr.ph.i29:                                       ; preds = %bb.v, %.lr.ph.i29
+  %.sroa.049.0 = phi ptr [ %i.df, %.lr.ph.i29 ], [ %.sroa.074.0, %bb.v ]
+  %.sroa.048.0 = phi ptr [ %i.dg, %.lr.ph.i29 ], [ %.sroa.067.0, %bb.v ]
+  %i.dd = phi ptr [ %i.de, %.lr.ph.i29 ], [ %i.by, %bb.v ]
+  %i.de = getelementptr inbounds i8, ptr %i.dd, i64 -8 ; 3 uses
+  %i.df = getelementptr inbounds i8, ptr %.sroa.049.0, i64 -8 ; 3 uses
+  %i.dg = getelementptr inbounds i8, ptr %.sroa.048.0, i64 -8 ; 3 uses
+  %i.dh = load i64, ptr %i.df, align 8, !tbaa !223, !noalias !3276
+  store i64 %i.dh, ptr %i.dg, align 8, !tbaa !223, !noalias !3276
+  %i.di = load i64, ptr %i.de, align 8, !tbaa !223, !noalias !3276
+  store i64 %i.di, ptr %i.df, align 8, !tbaa !223, !noalias !3276
+  %.not.i30 = icmp eq ptr %i.de, %i.aa
+  br i1 %.not.i30, label %_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit, label %.lr.ph.i29, !llvm.loop !3279
+
+bb.w:                                             ; preds = %bb.u
+  br i1 %.not1.i31, label %_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit, label %.lr.ph.i33
+
+.lr.ph.i33:                                       ; preds = %bb.w, %.lr.ph.i33
+  %.sroa.0101.0 = phi ptr [ %i.dl, %.lr.ph.i33 ], [ %.sroa.067.0, %bb.w ]
+  %i.dj = phi ptr [ %i.dk, %.lr.ph.i33 ], [ %i.by, %bb.w ]
+  %i.dk = getelementptr inbounds i8, ptr %i.dj, i64 -8 ; 3 uses
+  %i.dl = getelementptr inbounds i8, ptr %.sroa.0101.0, i64 -8 ; 3 uses
+  %i.dm = load i64, ptr %i.dk, align 8, !tbaa !223, !noalias !3280
+  store i64 %i.dm, ptr %i.dl, align 8, !tbaa !223, !noalias !3280
+  %.not.i34 = icmp eq ptr %i.dk, %i.aa
+  br i1 %.not.i34, label %_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit, label %.lr.ph.i33, !llvm.loop !3283
+
+_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit: ; preds = %.lr.ph.i29, %.lr.ph.i33, %.lr.ph.i28, %middle.block, %bb.v, %bb.w, %bb.t, %bb.s
+  %storemerge = phi ptr [ %i.aa, %bb.s ], [ %i.dl, %.lr.ph.i33 ], [ %i.by, %bb.t ], [ %i.db, %.lr.ph.i28 ], [ %.sroa.067.0, %bb.v ], [ %.sroa.067.0, %bb.w ], [ %i.cn, %middle.block ], [ %i.dg, %.lr.ph.i29 ]
+  store ptr %storemerge, ptr %6, align 8, !tbaa !3107
+  %i.dn = load ptr, ptr %1, align 8, !tbaa !3107  ; 4 uses
+  %.neg109 = mul i64 %.018.lcssa.i, -8            ; 2 uses
+  %i.do = getelementptr inbounds i8, ptr %i.dn, i64 %.neg109 ; 3 uses
+  %.not.i35 = icmp eq ptr %i.aa, %.sroa.074.0
+  br i1 %.not.i35, label %_ZN5boost7movelib15detail_adaptive19swap_and_update_keyINS0_16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS4_17Compact_containerINS4_37Constrained_triangulation_face_base_2INS4_5EpickENS4_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS9_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSG_IiLin1ELin1ELi0ELin1ELin1EEESH_SH_SI_EEvRKNSF_10MatrixBaseIT0_EERKNSJ_IT1_EERKNSJ_IT2_EEbRNSF_15PlainObjectBaseIT3_EERNSW_IT4_EEE9FaceInfo2S9_NS4_25Triangulation_face_base_2IS9_NS4_28Triangulation_ds_face_base_2INS4_30Triangulation_data_structure_2INS4_27Triangulation_vertex_base_2IS9_NS4_30Triangulation_ds_vertex_base_2IvEEEENS8_IS9_NSA_IS13_S9_NS14_IS9_NS15_IvEEEEEEEEEEEEEEEEEENS4_7DefaultES1K_S1K_EELb0EEEEES1O_EEvT_S1P_RS1P_SK_SK_SK_.exit, label %_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit.i
+
+_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit.i: ; preds = %_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit
+  %.not9.i = icmp eq i64 %.neg109, 0
+  br i1 %.not9.i, label %bb.y, label %bb.x
+
+bb.x:                                             ; preds = %_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit.i
+  %i.dp = getelementptr inbounds i8, ptr %i.do, i64 -8 ; 2 uses
+  %i.dq = getelementptr inbounds i8, ptr %i.dn, i64 -8 ; 2 uses
+  %.sroa.0.0.copyload.i.i37 = load ptr, ptr %i.dp, align 8, !tbaa !223
+  %i.dr = load i64, ptr %i.dq, align 8, !tbaa !223
+  store i64 %i.dr, ptr %i.dp, align 8, !tbaa !223
+  store ptr %.sroa.0.0.copyload.i.i37, ptr %i.dq, align 8, !tbaa !223
+  br label %bb.y
+
+bb.y:                                             ; preds = %bb.x, %_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit.i
+  %i.ds = load ptr, ptr %2, align 8, !tbaa !3107  ; 2 uses
+  %i.dt = icmp eq ptr %i.do, %i.ds
+  br i1 %i.dt, label %.sink.split.i, label %bb.z
+
+bb.z:                                             ; preds = %bb.y
+  %i.du = icmp eq ptr %i.ds, %i.dn
+  br i1 %i.du, label %.sink.split.i, label %_ZN5boost7movelib15detail_adaptive19swap_and_update_keyINS0_16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS4_17Compact_containerINS4_37Constrained_triangulation_face_base_2INS4_5EpickENS4_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS9_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSG_IiLin1ELin1ELi0ELin1ELin1EEESH_SH_SI_EEvRKNSF_10MatrixBaseIT0_EERKNSJ_IT1_EERKNSJ_IT2_EEbRNSF_15PlainObjectBaseIT3_EERNSW_IT4_EEE9FaceInfo2S9_NS4_25Triangulation_face_base_2IS9_NS4_28Triangulation_ds_face_base_2INS4_30Triangulation_data_structure_2INS4_27Triangulation_vertex_base_2IS9_NS4_30Triangulation_ds_vertex_base_2IvEEEENS8_IS9_NSA_IS13_S9_NS14_IS9_NS15_IvEEEEEEEEEEEEEEEEEENS4_7DefaultES1K_S1K_EELb0EEEEES1O_EEvT_S1P_RS1P_SK_SK_SK_.exit
+
+.sink.split.i:                                    ; preds = %bb.z, %bb.y
+  %.sink.i = phi ptr [ %i.dn, %bb.y ], [ %i.do, %bb.z ]
+  store ptr %.sink.i, ptr %2, align 8, !tbaa !3107
+  br label %_ZN5boost7movelib15detail_adaptive19swap_and_update_keyINS0_16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS4_17Compact_containerINS4_37Constrained_triangulation_face_base_2INS4_5EpickENS4_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS9_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSG_IiLin1ELin1ELi0ELin1ELin1EEESH_SH_SI_EEvRKNSF_10MatrixBaseIT0_EERKNSJ_IT1_EERKNSJ_IT2_EEbRNSF_15PlainObjectBaseIT3_EERNSW_IT4_EEE9FaceInfo2S9_NS4_25Triangulation_face_base_2IS9_NS4_28Triangulation_ds_face_base_2INS4_30Triangulation_data_structure_2INS4_27Triangulation_vertex_base_2IS9_NS4_30Triangulation_ds_vertex_base_2IvEEEENS8_IS9_NSA_IS13_S9_NS14_IS9_NS15_IvEEEEEEEEEEEEEEEEEENS4_7DefaultES1K_S1K_EELb0EEEEES1O_EEvT_S1P_RS1P_SK_SK_SK_.exit
+
+_ZN5boost7movelib15detail_adaptive19swap_and_update_keyINS0_16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS4_17Compact_containerINS4_37Constrained_triangulation_face_base_2INS4_5EpickENS4_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS9_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSG_IiLin1ELin1ELi0ELin1ELin1EEESH_SH_SI_EEvRKNSF_10MatrixBaseIT0_EERKNSJ_IT1_EERKNSJ_IT2_EEbRNSF_15PlainObjectBaseIT3_EERNSW_IT4_EEE9FaceInfo2S9_NS4_25Triangulation_face_base_2IS9_NS4_28Triangulation_ds_face_base_2INS4_30Triangulation_data_structure_2INS4_27Triangulation_vertex_base_2IS9_NS4_30Triangulation_ds_vertex_base_2IvEEEENS8_IS9_NSA_IS13_S9_NS14_IS9_NS15_IvEEEEEEEEEEEEEEEEEENS4_7DefaultES1K_S1K_EELb0EEEEES1O_EEvT_S1P_RS1P_SK_SK_SK_.exit: ; preds = %_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit, %bb.z, %.sink.split.i
+  store ptr %i.aa, ptr %3, align 8, !tbaa !3107
+  %i.dv = load ptr, ptr %1, align 8, !tbaa !3107
+  %i.dw = getelementptr inbounds i8, ptr %i.dv, i64 -8 ; 2 uses
+  store ptr %i.dw, ptr %1, align 8, !tbaa !3107
+  %i.dx = icmp ne i64 %.0151, 0
+  %.neg = sext i1 %i.dx to i64
+  %i.dy = add i64 %.0151, %.neg
+  %i.dz = icmp ne i64 %i.z, 0
+  %.neg24 = sext i1 %i.dz to i64
+  %i.ea = add i64 %.sroa.speculated, %.neg24
+  %i.eb = add i64 %.0106150, -1                   ; 2 uses
+  %.not = icmp eq i64 %i.eb, 0
+  br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !3284
+
+._crit_edge:                                      ; preds = %_ZN5boost7movelib15detail_adaptive19swap_and_update_keyINS0_16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS4_17Compact_containerINS4_37Constrained_triangulation_face_base_2INS4_5EpickENS4_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS9_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSG_IiLin1ELin1ELi0ELin1ELin1EEESH_SH_SI_EEvRKNSF_10MatrixBaseIT0_EERKNSJ_IT1_EERKNSJ_IT2_EEbRNSF_15PlainObjectBaseIT3_EERNSW_IT4_EEE9FaceInfo2S9_NS4_25Triangulation_face_base_2IS9_NS4_28Triangulation_ds_face_base_2INS4_30Triangulation_data_structure_2INS4_27Triangulation_vertex_base_2IS9_NS4_30Triangulation_ds_vertex_base_2IvEEEENS8_IS9_NSA_IS13_S9_NS14_IS9_NS15_IvEEEEEEEEEEEEEEEEEENS4_7DefaultES1K_S1K_EELb0EEEEES1O_EEvT_S1P_RS1P_SK_SK_SK_.exit, %bb.a
+  %i.ec = load ptr, ptr %6, align 8, !tbaa !3107
+  store ptr %i.ec, ptr %0, align 8, !tbaa !3107
+  ret void
+}
+
+; Function Attrs: mustprogress uwtable
+define linkonce_odr dso_local noundef ptr @_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_save_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEET_S1X_S1X_RS1X_S1X_S1X_RSJ_S1Z_SN_SR_(ptr noundef %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef %3, ptr noundef %4, ptr noundef nonnull align 8 dereferenceable(8) %5, ptr noundef nonnull align 8 dereferenceable(8) %6) local_unnamed_addr #3 comdat {
+bb.a:
+  %i.a = ptrtoaddr ptr %1 to i64                  ; 2 uses
+  %i.b = load ptr, ptr %5, align 8, !tbaa !287    ; 3 uses
+  %i.c = load ptr, ptr %6, align 8, !tbaa !287    ; 2 uses
+  %i.d = load ptr, ptr %2, align 8, !tbaa !287    ; 9 uses
+  %.not = icmp eq ptr %i.d, %4                    ; 2 uses
+  %i.e = icmp eq ptr %i.b, %i.c
+  br i1 %i.e, label %bb.b, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit
+
+bb.b:                                             ; preds = %bb.a
+  %.not6.i = icmp eq ptr %0, %1
+  br i1 %.not6.i, label %_ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEET_S1W_S1W_RKNS0_15iterator_traitsIS1W_E10value_typeESJ_.exit, label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %bb.b
+  %i.f = load ptr, ptr %4, align 8, !tbaa !231
+  br label %bb.c
+
+bb.c:                                             ; preds = %bb.d, %.lr.ph.i
+  %.07.i = phi ptr [ %0, %.lr.ph.i ], [ %i.i, %bb.d ] ; 3 uses
+  %i.g = load ptr, ptr %.07.i, align 8, !tbaa !231
+  %i.h = icmp ult ptr %i.f, %i.g
+  br i1 %i.h, label %_ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEET_S1W_S1W_RKNS0_15iterator_traitsIS1W_E10value_typeESJ_.exit, label %bb.d
+
+bb.d:                                             ; preds = %bb.c
+  %i.i = getelementptr inbounds nuw i8, ptr %.07.i, i64 8 ; 3 uses
+  %.not.i = icmp eq ptr %i.i, %1
+  br i1 %.not.i, label %_ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEET_S1W_S1W_RKNS0_15iterator_traitsIS1W_E10value_typeESJ_.exit, label %bb.c, !llvm.loop !3285
+
+_ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEET_S1W_S1W_RKNS0_15iterator_traitsIS1W_E10value_typeESJ_.exit: ; preds = %bb.c, %bb.d, %bb.b
+  %.0.lcssa.i = phi ptr [ %0, %bb.b ], [ %.07.i, %bb.c ], [ %i.i, %bb.d ] ; 8 uses
+  %i.j = ptrtoint ptr %.0.lcssa.i to i64          ; 5 uses
+  %i.k = ptrtoint ptr %0 to i64
+  %i.l = sub i64 %i.j, %i.k
+  %i.m = getelementptr inbounds i8, ptr %i.b, i64 %i.l ; 12 uses
+  %.not.i32 = icmp eq ptr %.0.lcssa.i, %1         ; 2 uses
+  br i1 %.not, label %bb.k, label %bb.e
+
+bb.e:                                             ; preds = %_ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEET_S1W_S1W_RKNS0_15iterator_traitsIS1W_E10value_typeESJ_.exit
+  %.not47.i = icmp eq ptr %i.d, %3
+  %or.cond.i = select i1 %.not.i32, i1 true, i1 %.not47.i
+  br i1 %or.cond.i, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_RT_S1X_RSJ_SJ_S1Z_SN_SR_SW_.exit, label %bb.f
+
+bb.f:                                             ; preds = %bb.e
+  %i.n = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
+  %i.p = load i64, ptr %.0.lcssa.i, align 8, !tbaa !223
+  store i64 %i.p, ptr %i.m, align 8, !tbaa !223
+  %i.q = load i64, ptr %4, align 8, !tbaa !223
+  store i64 %i.q, ptr %.0.lcssa.i, align 8, !tbaa !223
+  %i.r = load i64, ptr %i.d, align 8, !tbaa !223
+  store i64 %i.r, ptr %4, align 8, !tbaa !223
+  %.03759.i = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 2 uses
+  %.04160.i = getelementptr inbounds nuw i8, ptr %.0.lcssa.i, i64 8 ; 2 uses
+  %.not4861.i = icmp eq ptr %.04160.i, %1
+  br i1 %.not4861.i, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread90, label %.lr.ph.i31
+
+.lr.ph.i31:                                       ; preds = %bb.f, %bb.j
+  %indvar = phi i64 [ %indvar.next, %bb.j ], [ 0, %bb.f ] ; 3 uses
+  %.04166.i = phi ptr [ %.041.i, %bb.j ], [ %.04160.i, %bb.f ] ; 8 uses
+  %.03765.i = phi ptr [ %.037.i, %bb.j ], [ %.03759.i, %bb.f ] ; 3 uses
+  %.064.i = phi ptr [ %.1.i, %bb.j ], [ %i.o, %bb.f ] ; 6 uses
+  %.03563.i = phi ptr [ %.136.i, %bb.j ], [ %i.n, %bb.f ] ; 6 uses
+  %.03962.i = phi ptr [ %.140.i, %bb.j ], [ %i.m, %bb.f ] ; 11 uses
+  %i.s = icmp eq ptr %.03563.i, %3
+  br i1 %i.s, label %.lr.ph.i.i.preheader, label %bb.g
+
+.lr.ph.i.i.preheader:                             ; preds = %.lr.ph.i31
+  %.03962.i234.le = ptrtoaddr ptr %.03962.i to i64
+  %i.t = add i64 %i.a, -16
+  %7 = shl i64 %indvar, 3
+  %8 = add i64 %7, %i.j
+  %9 = sub i64 %i.t, %8                           ; 2 uses
+  %10 = lshr i64 %9, 3
+  %i.u = add nuw nsw i64 %10, 1                   ; 2 uses
+  %min.iters.check = icmp ult i64 %9, 184
+  br i1 %min.iters.check, label %.lr.ph.i.i.preheader289, label %vector.memcheck
+
+vector.memcheck:                                  ; preds = %.lr.ph.i.i.preheader
+  %i.v = mul i64 %indvar, -8
+  %reass.sub = sub i64 %i.v, %i.j
+  %op.rdx260 = add i64 %.03962.i234.le, -9
+  %op.rdx261 = add i64 %op.rdx260, %reass.sub
+  %diff.check = icmp ult i64 %op.rdx261, 31
+  br i1 %diff.check, label %.lr.ph.i.i.preheader289, label %vector.ph
+
+vector.ph:                                        ; preds = %vector.memcheck
+  %n.vec = and i64 %i.u, 4611686018427387900      ; 3 uses
+  %i.w = shl i64 %n.vec, 3                        ; 2 uses
+  %i.x = getelementptr i8, ptr %.03962.i, i64 %i.w ; 2 uses
+  %i.y = getelementptr i8, ptr %.04166.i, i64 %i.w
+  br label %vector.body
+
+vector.body:                                      ; preds = %vector.body, %vector.ph
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
+  %i.z = shl i64 %index, 3                        ; 2 uses
+  %next.gep = getelementptr i8, ptr %.03962.i, i64 %i.z ; 2 uses
+  %next.gep235 = getelementptr i8, ptr %.04166.i, i64 %i.z ; 2 uses
+  %i.aa = getelementptr i8, ptr %next.gep235, i64 16
+  %wide.load = load <2 x i64>, ptr %next.gep235, align 8, !tbaa !223
+  %wide.load236 = load <2 x i64>, ptr %i.aa, align 8, !tbaa !223
+  %i.ab = getelementptr i8, ptr %next.gep, i64 16
+  store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !223
+  store <2 x i64> %wide.load236, ptr %i.ab, align 8, !tbaa !223
+  %index.next = add nuw i64 %index, 4             ; 2 uses
+  %i.ac = icmp eq i64 %index.next, %n.vec
+  br i1 %i.ac, label %middle.block, label %vector.body, !llvm.loop !3286
+
+middle.block:                                     ; preds = %vector.body
+  %cmp.n = icmp eq i64 %i.u, %n.vec
+  br i1 %cmp.n, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit, label %.lr.ph.i.i.preheader289
+
+.lr.ph.i.i.preheader289:                          ; preds = %vector.memcheck, %.lr.ph.i.i.preheader, %middle.block
+  %.010.i.i.ph = phi ptr [ %.03962.i, %vector.memcheck ], [ %.03962.i, %.lr.ph.i.i.preheader ], [ %i.x, %middle.block ]
+  %.079.i.i.ph = phi ptr [ %.04166.i, %vector.memcheck ], [ %.04166.i, %.lr.ph.i.i.preheader ], [ %i.y, %middle.block ]
+  br label %.lr.ph.i.i
+
+.lr.ph.i.i:                                       ; preds = %.lr.ph.i.i.preheader289, %.lr.ph.i.i
+  %.010.i.i = phi ptr [ %i.af, %.lr.ph.i.i ], [ %.010.i.i.ph, %.lr.ph.i.i.preheader289 ] ; 2 uses
+  %.079.i.i = phi ptr [ %i.ae, %.lr.ph.i.i ], [ %.079.i.i.ph, %.lr.ph.i.i.preheader289 ] ; 2 uses
+  %i.ad = load i64, ptr %.079.i.i, align 8, !tbaa !223
+  store i64 %i.ad, ptr %.010.i.i, align 8, !tbaa !223
+  %i.ae = getelementptr inbounds nuw i8, ptr %.079.i.i, i64 8 ; 2 uses
+  %i.af = getelementptr inbounds nuw i8, ptr %.010.i.i, i64 8 ; 2 uses
+  %.not.i.i = icmp eq ptr %i.ae, %1
+  br i1 %.not.i.i, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit, label %.lr.ph.i.i, !llvm.loop !3287
+
+bb.g:                                             ; preds = %.lr.ph.i31
+  %i.ag = load ptr, ptr %.064.i, align 8, !tbaa !231
+  %i.ah = load ptr, ptr %.03962.i, align 8, !tbaa !231
+  %i.ai = icmp ult ptr %i.ag, %i.ah
+  br i1 %i.ai, label %bb.h, label %bb.i
+
+bb.h:                                             ; preds = %bb.g
+  %i.aj = getelementptr inbounds nuw i8, ptr %.03563.i, i64 8
+  %i.ak = getelementptr inbounds nuw i8, ptr %.064.i, i64 8
+  %i.al = load i64, ptr %.04166.i, align 8, !tbaa !223
+  store i64 %i.al, ptr %.03765.i, align 8, !tbaa !223
+  br label %bb.j
+
+bb.i:                                             ; preds = %bb.g
+  %i.am = getelementptr inbounds nuw i8, ptr %.03962.i, i64 8
+  br label %bb.j
+
+bb.j:                                             ; preds = %bb.i, %bb.h
+  %.04166.sink85.i = phi ptr [ %.04166.i, %bb.i ], [ %.064.i, %bb.h ] ; 2 uses
+  %.03765.sink.i = phi ptr [ %.03765.i, %bb.i ], [ %.04166.i, %bb.h ]
+  %.03962.sink.i = phi ptr [ %.03962.i, %bb.i ], [ %.03563.i, %bb.h ]
+  %.140.i = phi ptr [ %i.am, %bb.i ], [ %.03962.i, %bb.h ] ; 2 uses
+  %.136.i = phi ptr [ %.03563.i, %bb.i ], [ %i.aj, %bb.h ] ; 2 uses
+  %.1.i = phi ptr [ %.064.i, %bb.i ], [ %i.ak, %bb.h ] ; 2 uses
+  %i.an = load i64, ptr %.04166.sink85.i, align 8, !tbaa !223
+  store i64 %i.an, ptr %.03765.sink.i, align 8, !tbaa !223
+  %i.ao = load i64, ptr %.03962.sink.i, align 8, !tbaa !223
+  store i64 %i.ao, ptr %.04166.sink85.i, align 8, !tbaa !223
+  %.037.i = getelementptr inbounds nuw i8, ptr %.03765.i, i64 8 ; 2 uses
+  %.041.i = getelementptr inbounds nuw i8, ptr %.04166.i, i64 8 ; 2 uses
+  %.not48.i = icmp eq ptr %.041.i, %1
+  %indvar.next = add i64 %indvar, 1
+  br i1 %.not48.i, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit, label %.lr.ph.i31, !llvm.loop !3288
+
+bb.k:                                             ; preds = %_ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEET_S1W_S1W_RKNS0_15iterator_traitsIS1W_E10value_typeESJ_.exit
+  %.not40.i = icmp eq ptr %4, %3
+  %or.cond.i33 = or i1 %.not.i32, %.not40.i
+  br i1 %or.cond.i33, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_RT_S1X_RSJ_SJ_S1Z_SN_SR_SW_.exit, label %bb.l
+
+bb.l:                                             ; preds = %bb.k
+  %i.ap = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
+  %i.aq = load i64, ptr %.0.lcssa.i, align 8, !tbaa !223
+  store i64 %i.aq, ptr %i.m, align 8, !tbaa !223
+  %i.ar = load i64, ptr %i.d, align 8, !tbaa !223
+  store i64 %i.ar, ptr %.0.lcssa.i, align 8, !tbaa !223
+  %.03050.i = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 2 uses
+  %.03451.i = getelementptr inbounds nuw i8, ptr %.0.lcssa.i, i64 8 ; 2 uses
+  %i.as = icmp eq ptr %.03451.i, %1
+  br i1 %i.as, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread, label %.lr.ph.i34
+
+.lr.ph.i34:                                       ; preds = %bb.l, %bb.m
+  %indvar240 = phi i64 [ %indvar.next241, %bb.m ], [ 0, %bb.l ] ; 3 uses
+  %.03455.i = phi ptr [ %.034.i, %bb.m ], [ %.03451.i, %bb.l ] ; 7 uses
+  %.03054.i = phi ptr [ %.030.i, %bb.m ], [ %.03050.i, %bb.l ] ; 2 uses
+  %.053.i = phi ptr [ %.1.i35, %bb.m ], [ %i.ap, %bb.l ] ; 6 uses
+  %.03252.i = phi ptr [ %.133.i, %bb.m ], [ %i.m, %bb.l ] ; 10 uses
+  %i.at = icmp eq ptr %.053.i, %3
+  br i1 %i.at, label %.lr.ph.i.i40.preheader, label %bb.m
+
+.lr.ph.i.i40.preheader:                           ; preds = %.lr.ph.i34
+  %.03252.i239.le = ptrtoaddr ptr %.03252.i to i64
+  %i.au = add i64 %i.a, -16
+  %11 = shl i64 %indvar240, 3
+  %12 = add i64 %11, %i.j
+  %13 = sub i64 %i.au, %12                        ; 2 uses
+  %14 = lshr i64 %13, 3
+  %i.av = add nuw nsw i64 %14, 1                  ; 2 uses
+  %min.iters.check244 = icmp ult i64 %13, 184
+  br i1 %min.iters.check244, label %.lr.ph.i.i40.preheader281, label %vector.memcheck238
+
+vector.memcheck238:                               ; preds = %.lr.ph.i.i40.preheader
+  %i.aw = mul i64 %indvar240, -8
+  %reass.sub258 = sub i64 %i.aw, %i.j
+  %op.rdx = add i64 %.03252.i239.le, -9
+  %op.rdx259 = add i64 %op.rdx, %reass.sub258
+  %diff.check242 = icmp ult i64 %op.rdx259, 31
+  br i1 %diff.check242, label %.lr.ph.i.i40.preheader281, label %vector.ph245
+
+vector.ph245:                                     ; preds = %vector.memcheck238
+  %n.vec246 = and i64 %i.av, 4611686018427387900  ; 3 uses
+  %i.ax = shl i64 %n.vec246, 3                    ; 2 uses
+  %i.ay = getelementptr i8, ptr %.03252.i, i64 %i.ax ; 2 uses
+  %i.az = getelementptr i8, ptr %.03455.i, i64 %i.ax
+  br label %vector.body247
+
+vector.body247:                                   ; preds = %vector.body247, %vector.ph245
+  %index248 = phi i64 [ 0, %vector.ph245 ], [ %index.next253, %vector.body247 ] ; 2 uses
+  %i.ba = shl i64 %index248, 3                    ; 2 uses
+  %next.gep249 = getelementptr i8, ptr %.03252.i, i64 %i.ba ; 2 uses
+  %next.gep250 = getelementptr i8, ptr %.03455.i, i64 %i.ba ; 2 uses
+  %i.bb = getelementptr i8, ptr %next.gep250, i64 16
+  %wide.load251 = load <2 x i64>, ptr %next.gep250, align 8, !tbaa !223
+  %wide.load252 = load <2 x i64>, ptr %i.bb, align 8, !tbaa !223
+  %i.bc = getelementptr i8, ptr %next.gep249, i64 16
+  store <2 x i64> %wide.load251, ptr %next.gep249, align 8, !tbaa !223
+  store <2 x i64> %wide.load252, ptr %i.bc, align 8, !tbaa !223
+  %index.next253 = add nuw i64 %index248, 4       ; 2 uses
+  %i.bd = icmp eq i64 %index.next253, %n.vec246
+  br i1 %i.bd, label %middle.block254, label %vector.body247, !llvm.loop !3289
+
+middle.block254:                                  ; preds = %vector.body247
+  %cmp.n255 = icmp eq i64 %i.av, %n.vec246
+  br i1 %cmp.n255, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit, label %.lr.ph.i.i40.preheader281
+
+.lr.ph.i.i40.preheader281:                        ; preds = %vector.memcheck238, %.lr.ph.i.i40.preheader, %middle.block254
+  %.010.i.i41.ph = phi ptr [ %.03252.i, %vector.memcheck238 ], [ %.03252.i, %.lr.ph.i.i40.preheader ], [ %i.ay, %middle.block254 ]
+  %.079.i.i42.ph = phi ptr [ %.03455.i, %vector.memcheck238 ], [ %.03455.i, %.lr.ph.i.i40.preheader ], [ %i.az, %middle.block254 ]
+  br label %.lr.ph.i.i40
+
+.lr.ph.i.i40:                                     ; preds = %.lr.ph.i.i40.preheader281, %.lr.ph.i.i40
+  %.010.i.i41 = phi ptr [ %i.bg, %.lr.ph.i.i40 ], [ %.010.i.i41.ph, %.lr.ph.i.i40.preheader281 ] ; 2 uses
+  %.079.i.i42 = phi ptr [ %i.bf, %.lr.ph.i.i40 ], [ %.079.i.i42.ph, %.lr.ph.i.i40.preheader281 ] ; 2 uses
+  %i.be = load i64, ptr %.079.i.i42, align 8, !tbaa !223
+  store i64 %i.be, ptr %.010.i.i41, align 8, !tbaa !223
+  %i.bf = getelementptr inbounds nuw i8, ptr %.079.i.i42, i64 8 ; 2 uses
+  %i.bg = getelementptr inbounds nuw i8, ptr %.010.i.i41, i64 8 ; 2 uses
+  %.not.i.i43 = icmp eq ptr %i.bf, %1
+  br i1 %.not.i.i43, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit, label %.lr.ph.i.i40, !llvm.loop !3290
+
+bb.m:                                             ; preds = %.lr.ph.i34
+  %i.bh = load ptr, ptr %.053.i, align 8, !tbaa !231
+  %i.bi = load ptr, ptr %.03252.i, align 8, !tbaa !231
+  %i.bj = icmp ult ptr %i.bh, %i.bi               ; 3 uses
+  %.133.idx.i = select i1 %i.bj, i64 0, i64 8
+  %.133.i = getelementptr inbounds nuw i8, ptr %.03252.i, i64 %.133.idx.i ; 2 uses
+  %.1.idx.i = select i1 %i.bj, i64 8, i64 0
+  %.1.i35 = getelementptr inbounds nuw i8, ptr %.053.i, i64 %.1.idx.i ; 2 uses
+  %storemerge42.i = load i64, ptr %.03455.i, align 8, !tbaa !223
+  store i64 %storemerge42.i, ptr %.03054.i, align 8, !tbaa !223
+  %.053.val.i = load i64, ptr %.053.i, align 8
+  %.03252.val.i = load i64, ptr %.03252.i, align 8
+  %storemerge.i = select i1 %i.bj, i64 %.053.val.i, i64 %.03252.val.i
+  store i64 %storemerge.i, ptr %.03455.i, align 8, !tbaa !223
+  %.030.i = getelementptr inbounds nuw i8, ptr %.03054.i, i64 8 ; 2 uses
+  %.034.i = getelementptr inbounds nuw i8, ptr %.03455.i, i64 8 ; 2 uses
+  %i.bk = icmp eq ptr %.034.i, %1
+  %indvar.next241 = add i64 %indvar240, 1
+  br i1 %i.bk, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit, label %.lr.ph.i34, !llvm.loop !3291
+
+_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit: ; preds = %bb.j, %.lr.ph.i.i, %bb.m, %.lr.ph.i.i40, %middle.block, %middle.block254, %bb.a
+  %.075 = phi ptr [ %.064.i, %.lr.ph.i.i ], [ %4, %bb.a ], [ %.064.i, %middle.block ], [ %4, %middle.block254 ], [ %4, %bb.m ], [ %4, %.lr.ph.i.i40 ], [ %.1.i, %bb.j ]
+  %.070 = phi ptr [ %.03962.i, %.lr.ph.i.i ], [ %i.b, %bb.a ], [ %.03962.i, %middle.block ], [ %.03252.i, %middle.block254 ], [ %.133.i, %bb.m ], [ %.03252.i, %.lr.ph.i.i40 ], [ %.140.i, %bb.j ] ; 2 uses
+  %.069 = phi ptr [ %.03563.i, %.lr.ph.i.i ], [ %i.d, %bb.a ], [ %.03563.i, %middle.block ], [ %.053.i, %middle.block254 ], [ %.1.i35, %bb.m ], [ %.053.i, %.lr.ph.i.i40 ], [ %.136.i, %bb.j ] ; 2 uses
+  %.028 = phi ptr [ %1, %.lr.ph.i.i ], [ %0, %bb.a ], [ %1, %middle.block ], [ %1, %middle.block254 ], [ %1, %bb.m ], [ %1, %.lr.ph.i.i40 ], [ %1, %bb.j ] ; 2 uses
+  %.0 = phi ptr [ %i.af, %.lr.ph.i.i ], [ %i.c, %bb.a ], [ %i.x, %middle.block ], [ %i.ay, %middle.block254 ], [ %.030.i, %bb.m ], [ %i.bg, %.lr.ph.i.i40 ], [ %.037.i, %bb.j ] ; 2 uses
+  br i1 %.not, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread90
+
+_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread90: ; preds = %bb.f, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit
+  %.0100 = phi ptr [ %.0, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit ], [ %.03759.i, %bb.f ] ; 5 uses
+  %.02899 = phi ptr [ %.028, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit ], [ %1, %bb.f ] ; 2 uses
+  %.06998 = phi ptr [ %.069, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit ], [ %i.n, %bb.f ] ; 3 uses
+  %.07097 = phi ptr [ %.070, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit ], [ %i.m, %bb.f ] ; 3 uses
+  %.07596 = phi ptr [ %.075, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit ], [ %i.o, %bb.f ]
+  %.not.i44 = icmp eq ptr %.06998, %3
+  %.not36.i = icmp eq ptr %.0100, %.07097
+  %or.cond.i45 = select i1 %.not.i44, i1 true, i1 %.not36.i
+  br i1 %or.cond.i45, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_RT_S1X_RSJ_SJ_S1Z_SN_SR_SW_.exit, label %.outer.i
+
+.outer.i:                                         ; preds = %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread90, %bb.o
+  %.030.ph.i = phi ptr [ %.131.i, %bb.o ], [ %.02899, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread90 ]
+  %.028.ph.i = phi ptr [ %i.bt, %bb.o ], [ %.07097, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread90 ] ; 3 uses
+  %.026.ph.i = phi ptr [ %.026.i, %bb.o ], [ %.06998, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread90 ]
+  %.025.ph.i = phi ptr [ %.025.i, %bb.o ], [ %.07596, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread90 ]
+  br label %bb.n
+
+bb.n:                                             ; preds = %.split.i, %.outer.i
+  %.030.i46 = phi ptr [ %.13137.i, %.split.i ], [ %.030.ph.i, %.outer.i ] ; 4 uses
+  %.026.i = phi ptr [ %i.bp, %.split.i ], [ %.026.ph.i, %.outer.i ] ; 4 uses
+  %.025.i = phi ptr [ %i.bq, %.split.i ], [ %.025.ph.i, %.outer.i ] ; 4 uses
+  %i.bl = load ptr, ptr %.025.i, align 8          ; 2 uses
+  %i.bm = load ptr, ptr %.028.ph.i, align 8       ; 2 uses
+  %i.bn = icmp ult ptr %i.bl, %i.bm
+  br i1 %i.bn, label %.split.i, label %bb.o
+
+.split.i:                                         ; preds = %bb.n
+  %i.bo = ptrtoint ptr %i.bl to i64
+  %i.bp = getelementptr inbounds nuw i8, ptr %.026.i, i64 8 ; 3 uses
+  %i.bq = getelementptr inbounds nuw i8, ptr %.025.i, i64 8
+  store i64 %i.bo, ptr %.030.i46, align 8, !tbaa !223
+  %i.br = load i64, ptr %.026.i, align 8, !tbaa !223
+  store i64 %i.br, ptr %.025.i, align 8, !tbaa !223
+  %.not43.i = icmp eq ptr %i.bp, %3
+  %.13137.i = getelementptr inbounds nuw i8, ptr %.030.i46, i64 8 ; 2 uses
+  br i1 %.not43.i, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_RT_S1X_RSJ_SJ_S1Z_SN_SR_SW_.exit, label %bb.n, !llvm.loop !3292
+
+bb.o:                                             ; preds = %bb.n
+  %i.bs = ptrtoint ptr %i.bm to i64
+  %i.bt = getelementptr inbounds nuw i8, ptr %.028.ph.i, i64 8 ; 3 uses
+  store i64 %i.bs, ptr %.030.i46, align 8, !tbaa !223
+  %.not42.i = icmp eq ptr %i.bt, %.0100
+  %.131.i = getelementptr inbounds nuw i8, ptr %.030.i46, i64 8 ; 2 uses
+  br i1 %.not42.i, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_RT_S1X_RSJ_SJ_S1Z_SN_SR_SW_.exit, label %.outer.i, !llvm.loop !3292
+
+_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread: ; preds = %bb.l, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit
+  %.086 = phi ptr [ %.0, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit ], [ %.03050.i, %bb.l ] ; 5 uses
+  %.02884 = phi ptr [ %.028, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit ], [ %1, %bb.l ] ; 2 uses
+  %.06983 = phi ptr [ %.069, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit ], [ %i.ap, %bb.l ] ; 3 uses
+  %.07082 = phi ptr [ %.070, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit ], [ %i.m, %bb.l ] ; 3 uses
+  %.not.i49 = icmp eq ptr %.06983, %3
+  %.not36.i50 = icmp eq ptr %.086, %.07082
+  %or.cond.i51 = select i1 %.not.i49, i1 true, i1 %.not36.i50
+  br i1 %or.cond.i51, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_RT_S1X_RSJ_SJ_S1Z_SN_SR_SW_.exit, label %.preheader.i.outer
+
+.preheader.i.outer:                               ; preds = %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread, %bb.q
+  %.024.i.ph = phi ptr [ %i.bx, %bb.q ], [ %.02884, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread ]
+  %.021.i.ph = phi ptr [ %i.cc, %bb.q ], [ %.07082, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread ] ; 3 uses
+  %.0.i.ph = phi ptr [ %.0.i, %bb.q ], [ %.06983, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread ]
+  br label %.preheader.i
+
+.preheader.i:                                     ; preds = %.preheader.i.outer, %bb.p
+  %.024.i = phi ptr [ %i.bx, %bb.p ], [ %.024.i.ph, %.preheader.i.outer ] ; 3 uses
+  %.0.i = phi ptr [ %i.bz, %bb.p ], [ %.0.i.ph, %.preheader.i.outer ] ; 4 uses
+  %i.bu = load ptr, ptr %.0.i, align 8            ; 2 uses
+  %i.bv = load ptr, ptr %.021.i.ph, align 8       ; 2 uses
+  %i.bw = icmp ult ptr %i.bu, %i.bv
+  %i.bx = getelementptr inbounds nuw i8, ptr %.024.i, i64 8 ; 4 uses
+  br i1 %i.bw, label %bb.p, label %bb.q
+
+bb.p:                                             ; preds = %.preheader.i
+  %i.by = ptrtoint ptr %i.bu to i64
+  %i.bz = getelementptr inbounds nuw i8, ptr %.0.i, i64 8 ; 3 uses
+  store i64 %i.by, ptr %.024.i, align 8, !tbaa !223
+  %i.ca = icmp eq ptr %i.bz, %3
+  br i1 %i.ca, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_RT_S1X_RSJ_SJ_S1Z_SN_SR_SW_.exit, label %.preheader.i, !llvm.loop !3293
+
+bb.q:                                             ; preds = %.preheader.i
+  %i.cb = ptrtoint ptr %i.bv to i64
+  %i.cc = getelementptr inbounds nuw i8, ptr %.021.i.ph, i64 8 ; 3 uses
+  store i64 %i.cb, ptr %.024.i, align 8, !tbaa !223
+  %i.cd = icmp eq ptr %i.cc, %.086
+  br i1 %i.cd, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_RT_S1X_RSJ_SJ_S1Z_SN_SR_SW_.exit, label %.preheader.i.outer, !llvm.loop !3293
+
+_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_RT_S1X_RSJ_SJ_S1Z_SN_SR_SW_.exit: ; preds = %bb.o, %.split.i, %bb.p, %bb.q, %bb.k, %bb.e, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread90
+  %.085 = phi ptr [ %.0100, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread90 ], [ %.0100, %.split.i ], [ %.086, %bb.p ], [ %.086, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread ], [ %i.m, %bb.e ], [ %i.m, %bb.k ], [ %.086, %bb.q ], [ %.0100, %bb.o ]
+  %.171 = phi ptr [ %.07097, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread90 ], [ %.028.ph.i, %.split.i ], [ %i.cc, %bb.q ], [ %.07082, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread ], [ %i.m, %bb.e ], [ %i.m, %bb.k ], [ %.021.i.ph, %bb.p ], [ %i.bt, %bb.o ]
+  %.1 = phi ptr [ %.06998, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread90 ], [ %i.bp, %.split.i ], [ %.0.i, %bb.q ], [ %.06983, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread ], [ %i.d, %bb.e ], [ %i.d, %bb.k ], [ %i.bz, %bb.p ], [ %.026.i, %bb.o ]
+  %i.ce = phi ptr [ %.02899, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread90 ], [ %.13137.i, %.split.i ], [ %i.bx, %bb.p ], [ %.02884, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7move_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread ], [ %1, %bb.e ], [ %1, %bb.k ], [ %i.bx, %bb.q ], [ %.131.i, %bb.o ]
+  store ptr %.171, ptr %5, align 8, !tbaa !287
+  store ptr %.085, ptr %6, align 8, !tbaa !287
+  store ptr %.1, ptr %2, align 8, !tbaa !287
+  ret ptr %i.ce
+}
+
+; Function Attrs: mustprogress uwtable
+define linkonce_odr dso_local noundef ptr @_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_save_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEET_S1Z_S1Z_RS1Z_S1Z_S1Z_RSJ_S21_SN_SR_(ptr noundef %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef %3, ptr noundef %4, ptr noundef nonnull align 8 dereferenceable(8) %5, ptr noundef nonnull align 8 dereferenceable(8) %6, ptr noundef align 8 dead_on_return %7) local_unnamed_addr #3 comdat {
+bb.a:
+  %i.a = ptrtoaddr ptr %1 to i64                  ; 2 uses
+  %i.b = load ptr, ptr %5, align 8, !tbaa !287    ; 3 uses
+  %i.c = load ptr, ptr %6, align 8, !tbaa !287    ; 2 uses
+  %i.d = load ptr, ptr %2, align 8, !tbaa !287    ; 9 uses
+  %.not = icmp eq ptr %i.d, %4                    ; 2 uses
+  %i.e = icmp eq ptr %i.b, %i.c
+  br i1 %i.e, label %bb.b, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit
+
+bb.b:                                             ; preds = %bb.a
+  %.not7.i = icmp eq ptr %0, %1
+  br i1 %.not7.i, label %_ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEEEET_S1Y_S1Y_RKNS0_15iterator_traitsIS1Y_E10value_typeESJ_.exit, label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %bb.b
+  %i.f = load ptr, ptr %4, align 8, !tbaa !231
+  br label %bb.c
+
+bb.c:                                             ; preds = %bb.d, %.lr.ph.i
+  %.08.i = phi ptr [ %0, %.lr.ph.i ], [ %i.h, %bb.d ] ; 3 uses
+  %i.g = load ptr, ptr %.08.i, align 8, !tbaa !231
+  %.not6.i = icmp ult ptr %i.g, %i.f
+  br i1 %.not6.i, label %bb.d, label %_ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEEEET_S1Y_S1Y_RKNS0_15iterator_traitsIS1Y_E10value_typeESJ_.exit
+
+bb.d:                                             ; preds = %bb.c
+  %i.h = getelementptr inbounds nuw i8, ptr %.08.i, i64 8 ; 3 uses
+  %.not.i = icmp eq ptr %i.h, %1
+  br i1 %.not.i, label %_ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEEEET_S1Y_S1Y_RKNS0_15iterator_traitsIS1Y_E10value_typeESJ_.exit, label %bb.c, !llvm.loop !3294
+
+_ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEEEET_S1Y_S1Y_RKNS0_15iterator_traitsIS1Y_E10value_typeESJ_.exit: ; preds = %bb.c, %bb.d, %bb.b
+  %.0.lcssa.i = phi ptr [ %0, %bb.b ], [ %.08.i, %bb.c ], [ %i.h, %bb.d ] ; 8 uses
+  %i.i = ptrtoint ptr %.0.lcssa.i to i64          ; 5 uses
+  %i.j = ptrtoint ptr %0 to i64
+  %i.k = sub i64 %i.i, %i.j
+  %i.l = getelementptr inbounds i8, ptr %i.b, i64 %i.k ; 12 uses
+  %.not.i32 = icmp eq ptr %.0.lcssa.i, %1         ; 2 uses
+  br i1 %.not, label %bb.k, label %bb.e
+
+bb.e:                                             ; preds = %_ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEEEET_S1Y_S1Y_RKNS0_15iterator_traitsIS1Y_E10value_typeESJ_.exit
+  %.not47.i = icmp eq ptr %i.d, %3
+  %or.cond.i = select i1 %.not.i32, i1 true, i1 %.not47.i
+  br i1 %or.cond.i, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_RT_S1Z_RSJ_SJ_S21_SN_SR_SW_.exit, label %bb.f
+
+bb.f:                                             ; preds = %bb.e
+  %i.m = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
+  %i.o = load i64, ptr %.0.lcssa.i, align 8, !tbaa !223
+  store i64 %i.o, ptr %i.l, align 8, !tbaa !223
+  %i.p = load i64, ptr %4, align 8, !tbaa !223
+  store i64 %i.p, ptr %.0.lcssa.i, align 8, !tbaa !223
+  %i.q = load i64, ptr %i.d, align 8, !tbaa !223
+  store i64 %i.q, ptr %4, align 8, !tbaa !223
+  %.03760.i = getelementptr inbounds nuw i8, ptr %i.l, i64 8 ; 2 uses
+  %.04161.i = getelementptr inbounds nuw i8, ptr %.0.lcssa.i, i64 8 ; 2 uses
+  %.not4862.i = icmp eq ptr %.04161.i, %1
+  br i1 %.not4862.i, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95, label %.lr.ph.i31
+
+.lr.ph.i31:                                       ; preds = %bb.f, %bb.j
+  %indvar = phi i64 [ %indvar.next, %bb.j ], [ 0, %bb.f ] ; 3 uses
+  %.04167.i = phi ptr [ %.041.i, %bb.j ], [ %.04161.i, %bb.f ] ; 8 uses
+  %.03766.i = phi ptr [ %.037.i, %bb.j ], [ %.03760.i, %bb.f ] ; 3 uses
+  %.065.i = phi ptr [ %.1.i, %bb.j ], [ %i.n, %bb.f ] ; 6 uses
+  %.03564.i = phi ptr [ %.136.i, %bb.j ], [ %i.m, %bb.f ] ; 6 uses
+  %.03963.i = phi ptr [ %.140.i, %bb.j ], [ %i.l, %bb.f ] ; 11 uses
+  %i.r = icmp eq ptr %.03564.i, %3
+  br i1 %i.r, label %.lr.ph.i.i.preheader, label %bb.g
+
+.lr.ph.i.i.preheader:                             ; preds = %.lr.ph.i31
+  %.03963.i238.le = ptrtoaddr ptr %.03963.i to i64
+  %i.s = add i64 %i.a, -16
+  %8 = shl i64 %indvar, 3
+  %9 = add i64 %8, %i.i
+  %10 = sub i64 %i.s, %9                          ; 2 uses
+  %11 = lshr i64 %10, 3
+  %i.t = add nuw nsw i64 %11, 1                   ; 2 uses
+  %min.iters.check = icmp ult i64 %10, 184
+  br i1 %min.iters.check, label %.lr.ph.i.i.preheader293, label %vector.memcheck
+
+vector.memcheck:                                  ; preds = %.lr.ph.i.i.preheader
+  %i.u = mul i64 %indvar, -8
+  %reass.sub = sub i64 %i.u, %i.i
+  %op.rdx264 = add i64 %.03963.i238.le, -9
+  %op.rdx265 = add i64 %op.rdx264, %reass.sub
+  %diff.check = icmp ult i64 %op.rdx265, 31
+  br i1 %diff.check, label %.lr.ph.i.i.preheader293, label %vector.ph
+
+vector.ph:                                        ; preds = %vector.memcheck
+  %n.vec = and i64 %i.t, 4611686018427387900      ; 3 uses
+  %i.v = shl i64 %n.vec, 3                        ; 2 uses
+  %i.w = getelementptr i8, ptr %.03963.i, i64 %i.v ; 2 uses
+  %i.x = getelementptr i8, ptr %.04167.i, i64 %i.v
+  br label %vector.body
+
+vector.body:                                      ; preds = %vector.body, %vector.ph
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
+  %i.y = shl i64 %index, 3                        ; 2 uses
+  %next.gep = getelementptr i8, ptr %.03963.i, i64 %i.y ; 2 uses
+  %next.gep239 = getelementptr i8, ptr %.04167.i, i64 %i.y ; 2 uses
+  %i.z = getelementptr i8, ptr %next.gep239, i64 16
+  %wide.load = load <2 x i64>, ptr %next.gep239, align 8, !tbaa !223
+  %wide.load240 = load <2 x i64>, ptr %i.z, align 8, !tbaa !223
+  %i.aa = getelementptr i8, ptr %next.gep, i64 16
+  store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !223
+  store <2 x i64> %wide.load240, ptr %i.aa, align 8, !tbaa !223
+  %index.next = add nuw i64 %index, 4             ; 2 uses
+  %i.ab = icmp eq i64 %index.next, %n.vec
+  br i1 %i.ab, label %middle.block, label %vector.body, !llvm.loop !3295
+
+middle.block:                                     ; preds = %vector.body
+  %cmp.n = icmp eq i64 %i.t, %n.vec
+  br i1 %cmp.n, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit, label %.lr.ph.i.i.preheader293
+
+.lr.ph.i.i.preheader293:                          ; preds = %vector.memcheck, %.lr.ph.i.i.preheader, %middle.block
+  %.010.i.i.ph = phi ptr [ %.03963.i, %vector.memcheck ], [ %.03963.i, %.lr.ph.i.i.preheader ], [ %i.w, %middle.block ]
+  %.079.i.i.ph = phi ptr [ %.04167.i, %vector.memcheck ], [ %.04167.i, %.lr.ph.i.i.preheader ], [ %i.x, %middle.block ]
+  br label %.lr.ph.i.i
+
+.lr.ph.i.i:                                       ; preds = %.lr.ph.i.i.preheader293, %.lr.ph.i.i
+  %.010.i.i = phi ptr [ %i.ae, %.lr.ph.i.i ], [ %.010.i.i.ph, %.lr.ph.i.i.preheader293 ] ; 2 uses
+  %.079.i.i = phi ptr [ %i.ad, %.lr.ph.i.i ], [ %.079.i.i.ph, %.lr.ph.i.i.preheader293 ] ; 2 uses
+  %i.ac = load i64, ptr %.079.i.i, align 8, !tbaa !223
+  store i64 %i.ac, ptr %.010.i.i, align 8, !tbaa !223
+  %i.ad = getelementptr inbounds nuw i8, ptr %.079.i.i, i64 8 ; 2 uses
+  %i.ae = getelementptr inbounds nuw i8, ptr %.010.i.i, i64 8 ; 2 uses
+  %.not.i.i = icmp eq ptr %i.ad, %1
+  br i1 %.not.i.i, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit, label %.lr.ph.i.i, !llvm.loop !3296
+
+bb.g:                                             ; preds = %.lr.ph.i31
+  %i.af = load ptr, ptr %.03963.i, align 8, !tbaa !231
+  %i.ag = load ptr, ptr %.065.i, align 8, !tbaa !231
+  %.not50.i = icmp ult ptr %i.af, %i.ag
+  br i1 %.not50.i, label %bb.i, label %bb.h
+
+bb.h:                                             ; preds = %bb.g
+  %i.ah = getelementptr inbounds nuw i8, ptr %.03564.i, i64 8
+  %i.ai = getelementptr inbounds nuw i8, ptr %.065.i, i64 8
+  %i.aj = load i64, ptr %.04167.i, align 8, !tbaa !223
+  store i64 %i.aj, ptr %.03766.i, align 8, !tbaa !223
+  br label %bb.j
+
+bb.i:                                             ; preds = %bb.g
+  %i.ak = getelementptr inbounds nuw i8, ptr %.03963.i, i64 8
+  br label %bb.j
+
+bb.j:                                             ; preds = %bb.i, %bb.h
+  %.04167.sink86.i = phi ptr [ %.04167.i, %bb.i ], [ %.065.i, %bb.h ] ; 2 uses
+  %.03766.sink.i = phi ptr [ %.03766.i, %bb.i ], [ %.04167.i, %bb.h ]
+  %.03963.sink.i = phi ptr [ %.03963.i, %bb.i ], [ %.03564.i, %bb.h ]
+  %.140.i = phi ptr [ %i.ak, %bb.i ], [ %.03963.i, %bb.h ] ; 2 uses
+  %.136.i = phi ptr [ %.03564.i, %bb.i ], [ %i.ah, %bb.h ] ; 2 uses
+  %.1.i = phi ptr [ %.065.i, %bb.i ], [ %i.ai, %bb.h ] ; 2 uses
+  %i.al = load i64, ptr %.04167.sink86.i, align 8, !tbaa !223
+  store i64 %i.al, ptr %.03766.sink.i, align 8, !tbaa !223
+  %i.am = load i64, ptr %.03963.sink.i, align 8, !tbaa !223
+  store i64 %i.am, ptr %.04167.sink86.i, align 8, !tbaa !223
+  %.037.i = getelementptr inbounds nuw i8, ptr %.03766.i, i64 8 ; 2 uses
+  %.041.i = getelementptr inbounds nuw i8, ptr %.04167.i, i64 8 ; 2 uses
+  %.not48.i = icmp eq ptr %.041.i, %1
+  %indvar.next = add i64 %indvar, 1
+  br i1 %.not48.i, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit, label %.lr.ph.i31, !llvm.loop !3297
+
+bb.k:                                             ; preds = %_ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEEEET_S1Y_S1Y_RKNS0_15iterator_traitsIS1Y_E10value_typeESJ_.exit
+  %.not40.i = icmp eq ptr %4, %3
+  %or.cond.i33 = or i1 %.not.i32, %.not40.i
+  br i1 %or.cond.i33, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_RT_S1Z_RSJ_SJ_S21_SN_SR_SW_.exit, label %bb.l
+
+bb.l:                                             ; preds = %bb.k
+  %i.an = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
+  %i.ao = load i64, ptr %.0.lcssa.i, align 8, !tbaa !223
+  store i64 %i.ao, ptr %i.l, align 8, !tbaa !223
+  %i.ap = load i64, ptr %i.d, align 8, !tbaa !223
+  store i64 %i.ap, ptr %.0.lcssa.i, align 8, !tbaa !223
+  %.03051.i = getelementptr inbounds nuw i8, ptr %i.l, i64 8 ; 2 uses
+  %.03452.i = getelementptr inbounds nuw i8, ptr %.0.lcssa.i, i64 8 ; 2 uses
+  %i.aq = icmp eq ptr %.03452.i, %1
+  br i1 %i.aq, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread, label %.lr.ph.i34
+
+.lr.ph.i34:                                       ; preds = %bb.l, %bb.m
+  %indvar244 = phi i64 [ %indvar.next245, %bb.m ], [ 0, %bb.l ] ; 3 uses
+  %.03456.i = phi ptr [ %.034.i, %bb.m ], [ %.03452.i, %bb.l ] ; 7 uses
+  %.03055.i = phi ptr [ %.030.i, %bb.m ], [ %.03051.i, %bb.l ] ; 2 uses
+  %.054.i = phi ptr [ %.1.i35, %bb.m ], [ %i.an, %bb.l ] ; 6 uses
+  %.03253.i = phi ptr [ %.133.i, %bb.m ], [ %i.l, %bb.l ] ; 10 uses
+  %i.ar = icmp eq ptr %.054.i, %3
+  br i1 %i.ar, label %.lr.ph.i.i40.preheader, label %bb.m
+
+.lr.ph.i.i40.preheader:                           ; preds = %.lr.ph.i34
+  %.03253.i243.le = ptrtoaddr ptr %.03253.i to i64
+  %i.as = add i64 %i.a, -16
+  %12 = shl i64 %indvar244, 3
+  %13 = add i64 %12, %i.i
+  %14 = sub i64 %i.as, %13                        ; 2 uses
+  %15 = lshr i64 %14, 3
+  %i.at = add nuw nsw i64 %15, 1                  ; 2 uses
+  %min.iters.check248 = icmp ult i64 %14, 184
+  br i1 %min.iters.check248, label %.lr.ph.i.i40.preheader285, label %vector.memcheck242
+
+vector.memcheck242:                               ; preds = %.lr.ph.i.i40.preheader
+  %i.au = mul i64 %indvar244, -8
+  %reass.sub262 = sub i64 %i.au, %i.i
+  %op.rdx = add i64 %.03253.i243.le, -9
+  %op.rdx263 = add i64 %op.rdx, %reass.sub262
+  %diff.check246 = icmp ult i64 %op.rdx263, 31
+  br i1 %diff.check246, label %.lr.ph.i.i40.preheader285, label %vector.ph249
+
+vector.ph249:                                     ; preds = %vector.memcheck242
+  %n.vec250 = and i64 %i.at, 4611686018427387900  ; 3 uses
+  %i.av = shl i64 %n.vec250, 3                    ; 2 uses
+  %i.aw = getelementptr i8, ptr %.03253.i, i64 %i.av ; 2 uses
+  %i.ax = getelementptr i8, ptr %.03456.i, i64 %i.av
+  br label %vector.body251
+
+vector.body251:                                   ; preds = %vector.body251, %vector.ph249
+  %index252 = phi i64 [ 0, %vector.ph249 ], [ %index.next257, %vector.body251 ] ; 2 uses
+  %i.ay = shl i64 %index252, 3                    ; 2 uses
+  %next.gep253 = getelementptr i8, ptr %.03253.i, i64 %i.ay ; 2 uses
+  %next.gep254 = getelementptr i8, ptr %.03456.i, i64 %i.ay ; 2 uses
+  %i.az = getelementptr i8, ptr %next.gep254, i64 16
+  %wide.load255 = load <2 x i64>, ptr %next.gep254, align 8, !tbaa !223
+  %wide.load256 = load <2 x i64>, ptr %i.az, align 8, !tbaa !223
+  %i.ba = getelementptr i8, ptr %next.gep253, i64 16
+  store <2 x i64> %wide.load255, ptr %next.gep253, align 8, !tbaa !223
+  store <2 x i64> %wide.load256, ptr %i.ba, align 8, !tbaa !223
+  %index.next257 = add nuw i64 %index252, 4       ; 2 uses
+  %i.bb = icmp eq i64 %index.next257, %n.vec250
+  br i1 %i.bb, label %middle.block258, label %vector.body251, !llvm.loop !3298
+
+middle.block258:                                  ; preds = %vector.body251
+  %cmp.n259 = icmp eq i64 %i.at, %n.vec250
+  br i1 %cmp.n259, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit, label %.lr.ph.i.i40.preheader285
+
+.lr.ph.i.i40.preheader285:                        ; preds = %vector.memcheck242, %.lr.ph.i.i40.preheader, %middle.block258
+  %.010.i.i41.ph = phi ptr [ %.03253.i, %vector.memcheck242 ], [ %.03253.i, %.lr.ph.i.i40.preheader ], [ %i.aw, %middle.block258 ]
+  %.079.i.i42.ph = phi ptr [ %.03456.i, %vector.memcheck242 ], [ %.03456.i, %.lr.ph.i.i40.preheader ], [ %i.ax, %middle.block258 ]
+  br label %.lr.ph.i.i40
+
+.lr.ph.i.i40:                                     ; preds = %.lr.ph.i.i40.preheader285, %.lr.ph.i.i40
+  %.010.i.i41 = phi ptr [ %i.be, %.lr.ph.i.i40 ], [ %.010.i.i41.ph, %.lr.ph.i.i40.preheader285 ] ; 2 uses
+  %.079.i.i42 = phi ptr [ %i.bd, %.lr.ph.i.i40 ], [ %.079.i.i42.ph, %.lr.ph.i.i40.preheader285 ] ; 2 uses
+  %i.bc = load i64, ptr %.079.i.i42, align 8, !tbaa !223
+  store i64 %i.bc, ptr %.010.i.i41, align 8, !tbaa !223
+  %i.bd = getelementptr inbounds nuw i8, ptr %.079.i.i42, i64 8 ; 2 uses
+  %i.be = getelementptr inbounds nuw i8, ptr %.010.i.i41, i64 8 ; 2 uses
+  %.not.i.i43 = icmp eq ptr %i.bd, %1
+  br i1 %.not.i.i43, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit, label %.lr.ph.i.i40, !llvm.loop !3299
+
+bb.m:                                             ; preds = %.lr.ph.i34
+  %i.bf = load ptr, ptr %.03253.i, align 8, !tbaa !231
+  %i.bg = load ptr, ptr %.054.i, align 8, !tbaa !231
+  %.not42.i = icmp ult ptr %i.bf, %i.bg           ; 3 uses
+  %.133.idx.i = select i1 %.not42.i, i64 8, i64 0
+  %.133.i = getelementptr inbounds nuw i8, ptr %.03253.i, i64 %.133.idx.i ; 2 uses
+  %.1.idx.i = select i1 %.not42.i, i64 0, i64 8
+  %.1.i35 = getelementptr inbounds nuw i8, ptr %.054.i, i64 %.1.idx.i ; 2 uses
+  %storemerge43.i = load i64, ptr %.03456.i, align 8, !tbaa !223
+  store i64 %storemerge43.i, ptr %.03055.i, align 8, !tbaa !223
+  %.03253.val.i = load i64, ptr %.03253.i, align 8
+  %.054.val.i = load i64, ptr %.054.i, align 8
+  %storemerge.i = select i1 %.not42.i, i64 %.03253.val.i, i64 %.054.val.i
+  store i64 %storemerge.i, ptr %.03456.i, align 8, !tbaa !223
+  %.030.i = getelementptr inbounds nuw i8, ptr %.03055.i, i64 8 ; 2 uses
+  %.034.i = getelementptr inbounds nuw i8, ptr %.03456.i, i64 8 ; 2 uses
+  %i.bh = icmp eq ptr %.034.i, %1
+  %indvar.next245 = add i64 %indvar244, 1
+  br i1 %i.bh, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit, label %.lr.ph.i34, !llvm.loop !3300
+
+_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit: ; preds = %bb.j, %.lr.ph.i.i, %bb.m, %.lr.ph.i.i40, %middle.block, %middle.block258, %bb.a
+  %.077 = phi ptr [ %.03564.i, %.lr.ph.i.i ], [ %i.d, %bb.a ], [ %.03564.i, %middle.block ], [ %.054.i, %middle.block258 ], [ %.1.i35, %bb.m ], [ %.054.i, %.lr.ph.i.i40 ], [ %.136.i, %bb.j ] ; 2 uses
+  %.075 = phi ptr [ %.03963.i, %.lr.ph.i.i ], [ %i.b, %bb.a ], [ %.03963.i, %middle.block ], [ %.03253.i, %middle.block258 ], [ %.133.i, %bb.m ], [ %.03253.i, %.lr.ph.i.i40 ], [ %.140.i, %bb.j ] ; 2 uses
+  %.074 = phi ptr [ %.065.i, %.lr.ph.i.i ], [ %4, %bb.a ], [ %.065.i, %middle.block ], [ %4, %middle.block258 ], [ %4, %bb.m ], [ %4, %.lr.ph.i.i40 ], [ %.1.i, %bb.j ]
+  %.028 = phi ptr [ %1, %.lr.ph.i.i ], [ %0, %bb.a ], [ %1, %middle.block ], [ %1, %middle.block258 ], [ %1, %bb.m ], [ %1, %.lr.ph.i.i40 ], [ %1, %bb.j ] ; 2 uses
+  %.0 = phi ptr [ %i.ae, %.lr.ph.i.i ], [ %i.c, %bb.a ], [ %i.w, %middle.block ], [ %i.aw, %middle.block258 ], [ %.030.i, %bb.m ], [ %i.be, %.lr.ph.i.i40 ], [ %.037.i, %bb.j ] ; 2 uses
+  br i1 %.not, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95
+
+_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95: ; preds = %bb.f, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit
+  %.0105 = phi ptr [ %.0, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit ], [ %.03760.i, %bb.f ] ; 5 uses
+  %.028104 = phi ptr [ %.028, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit ], [ %1, %bb.f ] ; 2 uses
+  %.074103 = phi ptr [ %.074, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit ], [ %i.n, %bb.f ]
+  %.075102 = phi ptr [ %.075, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit ], [ %i.l, %bb.f ] ; 3 uses
+  %.077101 = phi ptr [ %.077, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit ], [ %i.m, %bb.f ] ; 3 uses
+  %.not.i44 = icmp eq ptr %.077101, %3
+  %.not36.i = icmp eq ptr %.0105, %.075102
+  %or.cond.i45 = select i1 %.not.i44, i1 true, i1 %.not36.i
+  br i1 %or.cond.i45, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_RT_S1Z_RSJ_SJ_S21_SN_SR_SW_.exit, label %.outer.i
+
+.outer.i:                                         ; preds = %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95, %bb.o
+  %.030.ph.i = phi ptr [ %.131.i, %bb.o ], [ %.028104, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95 ]
+  %.028.ph.i = phi ptr [ %i.bp, %bb.o ], [ %.075102, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95 ] ; 3 uses
+  %.026.ph.i = phi ptr [ %.026.i, %bb.o ], [ %.077101, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95 ]
+  %.025.ph.i = phi ptr [ %.025.i, %bb.o ], [ %.074103, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95 ]
+  br label %bb.n
+
+bb.n:                                             ; preds = %.split.i, %.outer.i
+  %.030.i46 = phi ptr [ %.13137.i, %.split.i ], [ %.030.ph.i, %.outer.i ] ; 4 uses
+  %.026.i = phi ptr [ %i.bl, %.split.i ], [ %.026.ph.i, %.outer.i ] ; 4 uses
+  %.025.i = phi ptr [ %i.bm, %.split.i ], [ %.025.ph.i, %.outer.i ] ; 4 uses
+  %i.bi = load ptr, ptr %.028.ph.i, align 8       ; 2 uses
+  %i.bj = load ptr, ptr %.025.i, align 8          ; 2 uses
+  %.not42.i47 = icmp ult ptr %i.bi, %i.bj
+  br i1 %.not42.i47, label %bb.o, label %.split.i
+
+.split.i:                                         ; preds = %bb.n
+  %i.bk = ptrtoint ptr %i.bj to i64
+  %i.bl = getelementptr inbounds nuw i8, ptr %.026.i, i64 8 ; 3 uses
+  %i.bm = getelementptr inbounds nuw i8, ptr %.025.i, i64 8
+  store i64 %i.bk, ptr %.030.i46, align 8, !tbaa !223
+  %i.bn = load i64, ptr %.026.i, align 8, !tbaa !223
+  store i64 %i.bn, ptr %.025.i, align 8, !tbaa !223
+  %.not44.i = icmp eq ptr %i.bl, %3
+  %.13137.i = getelementptr inbounds nuw i8, ptr %.030.i46, i64 8 ; 2 uses
+  br i1 %.not44.i, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_RT_S1Z_RSJ_SJ_S21_SN_SR_SW_.exit, label %bb.n, !llvm.loop !3301
+
+bb.o:                                             ; preds = %bb.n
+  %i.bo = ptrtoint ptr %i.bi to i64
+  %i.bp = getelementptr inbounds nuw i8, ptr %.028.ph.i, i64 8 ; 3 uses
+  store i64 %i.bo, ptr %.030.i46, align 8, !tbaa !223
+  %.not43.i = icmp eq ptr %i.bp, %.0105
+  %.131.i = getelementptr inbounds nuw i8, ptr %.030.i46, i64 8 ; 2 uses
+  br i1 %.not43.i, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_RT_S1Z_RSJ_SJ_S21_SN_SR_SW_.exit, label %.outer.i, !llvm.loop !3301
+
+_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread: ; preds = %bb.l, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit
+  %.091 = phi ptr [ %.0, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit ], [ %.03051.i, %bb.l ] ; 5 uses
+  %.02889 = phi ptr [ %.028, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit ], [ %1, %bb.l ] ; 2 uses
+  %.07588 = phi ptr [ %.075, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit ], [ %i.l, %bb.l ] ; 3 uses
+  %.07787 = phi ptr [ %.077, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit ], [ %i.an, %bb.l ] ; 3 uses
+  %.not.i50 = icmp eq ptr %.07787, %3
+  %.not36.i51 = icmp eq ptr %.091, %.07588
+  %or.cond.i52 = select i1 %.not.i50, i1 true, i1 %.not36.i51
+  br i1 %or.cond.i52, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_RT_S1Z_RSJ_SJ_S21_SN_SR_SW_.exit, label %.preheader.i.outer
+
+.preheader.i.outer:                               ; preds = %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread, %bb.q
+  %.024.i.ph = phi ptr [ %i.bs, %bb.q ], [ %.02889, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread ]
+  %.021.i.ph = phi ptr [ %i.bx, %bb.q ], [ %.07588, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread ] ; 3 uses
+  %.0.i.ph = phi ptr [ %.0.i, %bb.q ], [ %.07787, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread ]
+  br label %.preheader.i
+
+.preheader.i:                                     ; preds = %.preheader.i.outer, %bb.p
+  %.024.i = phi ptr [ %i.bs, %bb.p ], [ %.024.i.ph, %.preheader.i.outer ] ; 3 uses
+  %.0.i = phi ptr [ %i.bu, %bb.p ], [ %.0.i.ph, %.preheader.i.outer ] ; 4 uses
+  %i.bq = load ptr, ptr %.021.i.ph, align 8       ; 2 uses
+  %i.br = load ptr, ptr %.0.i, align 8            ; 2 uses
+  %.not37.i = icmp ult ptr %i.bq, %i.br
+  %i.bs = getelementptr inbounds nuw i8, ptr %.024.i, i64 8 ; 4 uses
+  br i1 %.not37.i, label %bb.q, label %bb.p
+
+bb.p:                                             ; preds = %.preheader.i
+  %i.bt = ptrtoint ptr %i.br to i64
+  %i.bu = getelementptr inbounds nuw i8, ptr %.0.i, i64 8 ; 3 uses
+  store i64 %i.bt, ptr %.024.i, align 8, !tbaa !223
+  %i.bv = icmp eq ptr %i.bu, %3
+  br i1 %i.bv, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_RT_S1Z_RSJ_SJ_S21_SN_SR_SW_.exit, label %.preheader.i, !llvm.loop !3302
+
+bb.q:                                             ; preds = %.preheader.i
+  %i.bw = ptrtoint ptr %i.bq to i64
+  %i.bx = getelementptr inbounds nuw i8, ptr %.021.i.ph, i64 8 ; 3 uses
+  store i64 %i.bw, ptr %.024.i, align 8, !tbaa !223
+  %i.by = icmp eq ptr %i.bx, %.091
+  br i1 %i.by, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_RT_S1Z_RSJ_SJ_S21_SN_SR_SW_.exit, label %.preheader.i.outer, !llvm.loop !3302
+
+_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_RT_S1Z_RSJ_SJ_S21_SN_SR_SW_.exit: ; preds = %bb.o, %.split.i, %bb.p, %bb.q, %bb.k, %bb.e, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95
+  %.090 = phi ptr [ %.0105, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95 ], [ %.0105, %.split.i ], [ %.091, %bb.p ], [ %.091, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread ], [ %i.l, %bb.e ], [ %i.l, %bb.k ], [ %.091, %bb.q ], [ %.0105, %bb.o ]
+  %.178 = phi ptr [ %.077101, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95 ], [ %i.bl, %.split.i ], [ %.0.i, %bb.q ], [ %.07787, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread ], [ %i.d, %bb.e ], [ %i.d, %bb.k ], [ %i.bu, %bb.p ], [ %.026.i, %bb.o ]
+  %.176 = phi ptr [ %.075102, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95 ], [ %.028.ph.i, %.split.i ], [ %i.bx, %bb.q ], [ %.07588, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread ], [ %i.l, %bb.e ], [ %i.l, %bb.k ], [ %.021.i.ph, %bb.p ], [ %i.bp, %bb.o ]
+  %i.bz = phi ptr [ %.028104, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95 ], [ %.13137.i, %.split.i ], [ %i.bs, %bb.p ], [ %.02889, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7move_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread ], [ %1, %bb.e ], [ %1, %bb.k ], [ %i.bs, %bb.q ], [ %.131.i, %bb.o ]
+  store ptr %.176, ptr %5, align 8, !tbaa !287
+  store ptr %.090, ptr %6, align 8, !tbaa !287
+  store ptr %.178, ptr %2, align 8, !tbaa !287
+  ret ptr %i.bz
+}
+
+; Function Attrs: mustprogress uwtable
+define linkonce_odr dso_local void @_ZN5boost7movelib15detail_adaptive26op_merge_blocks_with_irregINS0_16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS4_17Compact_containerINS4_37Constrained_triangulation_face_base_2INS4_5EpickENS4_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS9_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSG_IiLin1ELin1ELi0ELin1ELin1EEESH_SH_SI_EEvRKNSF_10MatrixBaseIT0_EERKNSJ_IT1_EERKNSJ_IT2_EEbRNSF_15PlainObjectBaseIT3_EERNSW_IT4_EEE9FaceInfo2S9_NS4_25Triangulation_face_base_2IS9_NS4_28Triangulation_ds_face_base_2INS4_30Triangulation_data_structure_2INS4_27Triangulation_vertex_base_2IS9_NS4_30Triangulation_ds_vertex_base_2IvEEEENS8_IS9_NSA_IS13_S9_NS14_IS9_NS15_IvEEEEEEEEEEEEEEEEEENS4_7DefaultES1K_S1K_EELb0EEEEENS0_7inverseINS_9container3dtl23flat_tree_value_compareISt4lessIS1M_ES1M_NS_11move_detail8identityIS1M_EEEEEES1O_S1O_S1O_S1Z_NS0_7swap_opEEESX_T_S21_SK_SO_RSS_SS_SX_NS0_9iter_sizeISO_E4typeES25_S25_S25_S10_bT5_(ptr dead_on_unwind noalias writable sret(%"class.boost::movelib::reverse_iterator.953") align 8 %0, ptr noundef align 8 dead_on_return %1, ptr noundef align 8 dead_on_return %2, ptr noundef align 8 dead_on_return %3, ptr noundef nonnull align 8 dereferenceable(8) %4, ptr noundef align 8 dead_on_return %5, ptr noundef align 8 dead_on_return %6, i64 noundef %7, i64 noundef %8, i64 noundef %9, i64 noundef %10, i1 noundef zeroext %11) local_unnamed_addr #3 comdat {
+bb.a:
+  %.not153 = icmp eq i64 %8, 0
+  br i1 %.not153, label %._crit_edge, label %.lr.ph
+
+.lr.ph:                                           ; preds = %bb.a
+  %i.a = sub i64 0, %7                            ; 2 uses
+  %.idx = shl nsw i64 %i.a, 3
+  %.not.i.i = icmp eq i64 %7, 0
+  %.pre = load ptr, ptr %1, align 8, !tbaa !3107
+  %i.b = shl i64 %7, 3                            ; 2 uses
+  %i.c = add i64 %i.b, -8
+  %i.d = add i64 %i.b, -8
+  %i.e = shl i64 %7, 3
+  %invariant.op = add i64 %i.e, -8
+  %i.f = shl i64 %7, 3
+  %invariant.op506 = add i64 %i.f, -8
+  br label %bb.b
+
+bb.b:                                             ; preds = %.lr.ph, %_ZN5boost7movelib15detail_adaptive19swap_and_update_keyINS0_16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS4_17Compact_containerINS4_37Constrained_triangulation_face_base_2INS4_5EpickENS4_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS9_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSG_IiLin1ELin1ELi0ELin1ELin1EEESH_SH_SI_EEvRKNSF_10MatrixBaseIT0_EERKNSJ_IT1_EERKNSJ_IT2_EEbRNSF_15PlainObjectBaseIT3_EERNSW_IT4_EEE9FaceInfo2S9_NS4_25Triangulation_face_base_2IS9_NS4_28Triangulation_ds_face_base_2INS4_30Triangulation_data_structure_2INS4_27Triangulation_vertex_base_2IS9_NS4_30Triangulation_ds_vertex_base_2IvEEEENS8_IS9_NSA_IS13_S9_NS14_IS9_NS15_IvEEEEEEEEEEEEEEEEEENS4_7DefaultES1K_S1K_EELb0EEEEES1O_EEvT_S1P_RS1P_SK_SK_SK_.exit
+  %i.g = phi ptr [ %.pre, %.lr.ph ], [ %i.fp, %_ZN5boost7movelib15detail_adaptive19swap_and_update_keyINS0_16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS4_17Compact_containerINS4_37Constrained_triangulation_face_base_2INS4_5EpickENS4_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS9_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSG_IiLin1ELin1ELi0ELin1ELin1EEESH_SH_SI_EEvRKNSF_10MatrixBaseIT0_EERKNSJ_IT1_EERKNSJ_IT2_EEbRNSF_15PlainObjectBaseIT3_EERNSW_IT4_EEE9FaceInfo2S9_NS4_25Triangulation_face_base_2IS9_NS4_28Triangulation_ds_face_base_2INS4_30Triangulation_data_structure_2INS4_27Triangulation_vertex_base_2IS9_NS4_30Triangulation_ds_vertex_base_2IvEEEENS8_IS9_NSA_IS13_S9_NS14_IS9_NS15_IvEEEEEEEEEEEEEEEEEENS4_7DefaultES1K_S1K_EELb0EEEEES1O_EEvT_S1P_RS1P_SK_SK_SK_.exit ] ; 2 uses
+  %.0 = phi i64 [ %10, %.lr.ph ], [ %i.ft, %_ZN5boost7movelib15detail_adaptive19swap_and_update_keyINS0_16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS4_17Compact_containerINS4_37Constrained_triangulation_face_base_2INS4_5EpickENS4_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS9_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSG_IiLin1ELin1ELi0ELin1ELin1EEESH_SH_SI_EEvRKNSF_10MatrixBaseIT0_EERKNSJ_IT1_EERKNSJ_IT2_EEbRNSF_15PlainObjectBaseIT3_EERNSW_IT4_EEE9FaceInfo2S9_NS4_25Triangulation_face_base_2IS9_NS4_28Triangulation_ds_face_base_2INS4_30Triangulation_data_structure_2INS4_27Triangulation_vertex_base_2IS9_NS4_30Triangulation_ds_vertex_base_2IvEEEENS8_IS9_NSA_IS13_S9_NS14_IS9_NS15_IvEEEEEEEEEEEEEEEEEENS4_7DefaultES1K_S1K_EELb0EEEEES1O_EEvT_S1P_RS1P_SK_SK_SK_.exit ] ; 3 uses
+  %.0155 = phi i64 [ %9, %.lr.ph ], [ %i.fr, %_ZN5boost7movelib15detail_adaptive19swap_and_update_keyINS0_16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS4_17Compact_containerINS4_37Constrained_triangulation_face_base_2INS4_5EpickENS4_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS9_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSG_IiLin1ELin1ELi0ELin1ELin1EEESH_SH_SI_EEvRKNSF_10MatrixBaseIT0_EERKNSJ_IT1_EERKNSJ_IT2_EEbRNSF_15PlainObjectBaseIT3_EERNSW_IT4_EEE9FaceInfo2S9_NS4_25Triangulation_face_base_2IS9_NS4_28Triangulation_ds_face_base_2INS4_30Triangulation_data_structure_2INS4_27Triangulation_vertex_base_2IS9_NS4_30Triangulation_ds_vertex_base_2IvEEEENS8_IS9_NSA_IS13_S9_NS14_IS9_NS15_IvEEEEEEEEEEEEEEEEEENS4_7DefaultES1K_S1K_EELb0EEEEES1O_EEvT_S1P_RS1P_SK_SK_SK_.exit ] ; 4 uses
+  %.0110154 = phi i64 [ %8, %.lr.ph ], [ %i.fu, %_ZN5boost7movelib15detail_adaptive19swap_and_update_keyINS0_16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS4_17Compact_containerINS4_37Constrained_triangulation_face_base_2INS4_5EpickENS4_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS9_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSG_IiLin1ELin1ELi0ELin1ELin1EEESH_SH_SI_EEvRKNSF_10MatrixBaseIT0_EERKNSJ_IT1_EERKNSJ_IT2_EEbRNSF_15PlainObjectBaseIT3_EERNSW_IT4_EEE9FaceInfo2S9_NS4_25Triangulation_face_base_2IS9_NS4_28Triangulation_ds_face_base_2INS4_30Triangulation_data_structure_2INS4_27Triangulation_vertex_base_2IS9_NS4_30Triangulation_ds_vertex_base_2IvEEEENS8_IS9_NSA_IS13_S9_NS14_IS9_NS15_IvEEEEEEEEEEEEEEEEEENS4_7DefaultES1K_S1K_EELb0EEEEES1O_EEvT_S1P_RS1P_SK_SK_SK_.exit ] ; 2 uses
+  %i.h = load ptr, ptr %3, align 8, !tbaa !3107   ; 11 uses
+  %i.i = ptrtoaddr ptr %i.h to i64                ; 6 uses
+  %i.j = icmp ult i64 %.0155, %.0
+  br i1 %i.j, label %.lr.ph.i, label %_ZN5boost7movelib15detail_adaptive15find_next_blockINS0_16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS4_17Compact_containerINS4_37Constrained_triangulation_face_base_2INS4_5EpickENS4_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS9_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSG_IiLin1ELin1ELi0ELin1ELin1EEESH_SH_SI_EEvRKNSF_10MatrixBaseIT0_EERKNSJ_IT1_EERKNSJ_IT2_EEbRNSF_15PlainObjectBaseIT3_EERNSW_IT4_EEE9FaceInfo2S9_NS4_25Triangulation_face_base_2IS9_NS4_28Triangulation_ds_face_base_2INS4_30Triangulation_data_structure_2INS4_27Triangulation_vertex_base_2IS9_NS4_30Triangulation_ds_vertex_base_2IvEEEENS8_IS9_NSA_IS13_S9_NS14_IS9_NS15_IvEEEEEEEEEEEEEEEEEENS4_7DefaultES1K_S1K_EELb0EEEEENS0_7inverseINS_9container3dtl23flat_tree_value_compareISt4lessIS1M_ES1M_NS_11move_detail8identityIS1M_EEEEEES1O_S1Z_EENS0_9iter_sizeISO_E4typeET_SK_SO_S22_S22_S22_SS_.exit
+
+.lr.ph.i:                                         ; preds = %bb.b, %.thread22.i
+  %.025.i = phi i64 [ %i.ac, %.thread22.i ], [ %.0155, %bb.b ] ; 4 uses
+  %.01824.i = phi i64 [ %i.ab, %.thread22.i ], [ 0, %bb.b ] ; 4 uses
+  %i.k = mul i64 %.01824.i, %7
+  %i.l = xor i64 %i.k, -1
+  %i.m = getelementptr inbounds [8 x i8], ptr %i.h, i64 %i.l
+  %i.n = mul i64 %.025.i, %7
+end_hunk_2
+begin_hunk_3_@_ZN5boost7movelib15detail_adaptive26op_merge_blocks_with_irregINS0_16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS4_17Compact_containerINS4_37Constrained_triangulation_face_base_2INS4_5EpickENS4_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS9_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSG_IiLin1ELin1ELi0ELin1ELin1EEESH_SH_SI_EEvRKNSF_10MatrixBaseIT0_EERKNSJ_IT1_EERKNSJ_IT2_EEbRNSF_15PlainObjectBaseIT3_EERNSW_IT4_EEE9FaceInfo2S9_NS4_25Triangulation_face_base_2IS9_NS4_28Triangulation_ds_face_base_2INS4_30Triangulation_data_structure_2INS4_27Triangulation_vertex_base_2IS9_NS4_30Triangulation_ds_vertex_base_2IvEEEENS8_IS9_NSA_IS13_S9_NS14_IS9_NS15_IvEEEEEEEEEEEEEEEEEENS4_7DefaultES1K_S1K_EELb0EEEEENS0_7inverseINS_9container3dtl23flat_tree_value_compareISt4lessIS1M_ES1M_NS_11move_detail8identityIS1M_EEEEEES1O_S1O_S1O_S1Z_NS0_7swap_opEEESX_T_S21_SK_SO_RSS_SS_SX_NS0_9iter_sizeISO_E4typeES25_S25_S25_S10_bT5_:bb.a
+  store i64 %i.ef, ptr %i.ec, align 8, !tbaa !223, !noalias !3345
+  %.not.i31 = icmp eq ptr %i.ec, %i.af
+  br i1 %.not.i31, label %_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit, label %.lr.ph.i30, !llvm.loop !3347
+
+bb.w:                                             ; preds = %bb.u
+  br i1 %.not1.i32, label %_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit, label %.lr.ph.i34.preheader
+
+.lr.ph.i34.preheader:                             ; preds = %bb.w
+  %.reass507 = add i64 %i.cg, %invariant.op506
+  %i.ei = sub i64 %.reass507, %i.i                ; 2 uses
+  %i.ej = lshr i64 %i.ei, 3
+  %i.ek = add nuw nsw i64 %i.ej, 1                ; 2 uses
+  %min.iters.check337 = icmp ult i64 %i.ei, 72
+  br i1 %min.iters.check337, label %.lr.ph.i34.preheader394, label %vector.memcheck328
+
+vector.memcheck328:                               ; preds = %.lr.ph.i34.preheader
+  %scevgep329 = getelementptr i8, ptr %i.cf, i64 -8
+  %i.el = add i64 %i.c, %i.cg
+  %i.em = sub i64 %i.el, %i.i
+  %i.en = lshr i64 %i.em, 3
+  %i.eo = mul i64 %i.en, -8                       ; 2 uses
+  %scevgep330 = getelementptr i8, ptr %scevgep329, i64 %i.eo
+  %scevgep331 = getelementptr i8, ptr %.sroa.071.0, i64 -8
+  %scevgep332 = getelementptr i8, ptr %scevgep331, i64 %i.eo
+  %bound0333 = icmp ult ptr %scevgep330, %.sroa.071.0
+  %bound1334 = icmp ult ptr %scevgep332, %i.cf
+  %found.conflict335 = and i1 %bound0333, %bound1334
+  br i1 %found.conflict335, label %.lr.ph.i34.preheader394, label %vector.ph338
+
+vector.ph338:                                     ; preds = %vector.memcheck328
+  %n.vec339 = and i64 %i.ek, 4611686018427387900  ; 3 uses
+  %i.ep = mul i64 %n.vec339, -8                   ; 2 uses
+  %i.eq = getelementptr i8, ptr %.sroa.071.0, i64 %i.ep ; 2 uses
+  %i.er = getelementptr i8, ptr %i.cf, i64 %i.ep
+  br label %vector.body340
+
+vector.body340:                                   ; preds = %vector.body340, %vector.ph338
+  %index341 = phi i64 [ 0, %vector.ph338 ], [ %index.next348, %vector.body340 ] ; 2 uses
+  %i.es = mul i64 %index341, -8                   ; 2 uses
+  %next.gep342 = getelementptr i8, ptr %.sroa.071.0, i64 %i.es ; 4 uses
+  %next.gep343 = getelementptr i8, ptr %i.cf, i64 %i.es ; 4 uses
+  %i.et = getelementptr inbounds i8, ptr %next.gep343, i64 -16
+  %i.eu = getelementptr inbounds i8, ptr %next.gep343, i64 -32
+  %wide.load344 = load <2 x ptr>, ptr %i.et, align 8, !tbaa !223, !alias.scope !3348, !noalias !3351
+  %wide.load345 = load <2 x ptr>, ptr %i.eu, align 8, !tbaa !223, !alias.scope !3348, !noalias !3351
+  %i.ev = getelementptr inbounds i8, ptr %next.gep342, i64 -16
+  %i.ew = getelementptr inbounds i8, ptr %next.gep342, i64 -32
+  %wide.load346 = load <2 x i64>, ptr %i.ev, align 8, !tbaa !223, !alias.scope !3355, !noalias !3356
+  %wide.load347 = load <2 x i64>, ptr %i.ew, align 8, !tbaa !223, !alias.scope !3355, !noalias !3356
+  %i.ex = getelementptr inbounds i8, ptr %next.gep343, i64 -16
+  %i.ey = getelementptr inbounds i8, ptr %next.gep343, i64 -32
+  store <2 x i64> %wide.load346, ptr %i.ex, align 8, !tbaa !223, !alias.scope !3348, !noalias !3351
+  store <2 x i64> %wide.load347, ptr %i.ey, align 8, !tbaa !223, !alias.scope !3348, !noalias !3351
+  %i.ez = getelementptr inbounds i8, ptr %next.gep342, i64 -16
+  %i.fa = getelementptr inbounds i8, ptr %next.gep342, i64 -32
+  store <2 x ptr> %wide.load344, ptr %i.ez, align 8, !tbaa !223, !alias.scope !3355, !noalias !3356
+  store <2 x ptr> %wide.load345, ptr %i.fa, align 8, !tbaa !223, !alias.scope !3355, !noalias !3356
+  %index.next348 = add nuw i64 %index341, 4       ; 2 uses
+  %i.fb = icmp eq i64 %index.next348, %n.vec339
+  br i1 %i.fb, label %middle.block349, label %vector.body340, !llvm.loop !3357
+
+middle.block349:                                  ; preds = %vector.body340
+  %cmp.n350 = icmp eq i64 %i.ek, %n.vec339
+  br i1 %cmp.n350, label %_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit, label %.lr.ph.i34.preheader394
+
+.lr.ph.i34.preheader394:                          ; preds = %vector.memcheck328, %.lr.ph.i34.preheader, %middle.block349
+  %.sroa.0105.0.ph = phi ptr [ %.sroa.071.0, %vector.memcheck328 ], [ %.sroa.071.0, %.lr.ph.i34.preheader ], [ %i.eq, %middle.block349 ]
+  %.ph395 = phi ptr [ %i.cf, %vector.memcheck328 ], [ %i.cf, %.lr.ph.i34.preheader ], [ %i.er, %middle.block349 ]
+  br label %.lr.ph.i34
+
+.lr.ph.i34:                                       ; preds = %.lr.ph.i34.preheader394, %.lr.ph.i34
+  %.sroa.0105.0 = phi ptr [ %i.fe, %.lr.ph.i34 ], [ %.sroa.0105.0.ph, %.lr.ph.i34.preheader394 ]
+  %i.fc = phi ptr [ %i.fd, %.lr.ph.i34 ], [ %.ph395, %.lr.ph.i34.preheader394 ]
+  %i.fd = getelementptr inbounds i8, ptr %i.fc, i64 -8 ; 4 uses
+  %i.fe = getelementptr inbounds i8, ptr %.sroa.0105.0, i64 -8 ; 4 uses
+  %.sroa.0.0.copyload.i.i35 = load ptr, ptr %i.fd, align 8, !tbaa !223, !noalias !3356
+  %i.ff = load i64, ptr %i.fe, align 8, !tbaa !223, !noalias !3356
+  store i64 %i.ff, ptr %i.fd, align 8, !tbaa !223, !noalias !3356
+  store ptr %.sroa.0.0.copyload.i.i35, ptr %i.fe, align 8, !tbaa !223, !noalias !3356
+  %.not.i36 = icmp eq ptr %i.fd, %i.af
+  br i1 %.not.i36, label %_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit, label %.lr.ph.i34, !llvm.loop !3358
+
+_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit: ; preds = %.lr.ph.i30, %.lr.ph.i34, %.lr.ph.i29, %middle.block383, %middle.block349, %middle.block, %bb.v, %bb.w, %bb.t, %bb.s
+  %storemerge = phi ptr [ %i.af, %bb.s ], [ %i.fe, %.lr.ph.i34 ], [ %i.cf, %bb.t ], [ %i.dj, %.lr.ph.i29 ], [ %.sroa.071.0, %bb.v ], [ %.sroa.071.0, %bb.w ], [ %i.cv, %middle.block ], [ %i.eq, %middle.block349 ], [ %i.du, %middle.block383 ], [ %i.ee, %.lr.ph.i30 ]
+  store ptr %storemerge, ptr %6, align 8, !tbaa !3107
+  %i.fg = load ptr, ptr %1, align 8, !tbaa !3107  ; 4 uses
+  %.neg113 = mul i64 %.018.lcssa.i, -8            ; 2 uses
+  %i.fh = getelementptr inbounds i8, ptr %i.fg, i64 %.neg113 ; 3 uses
+  %.not.i38 = icmp eq ptr %i.af, %.sroa.078.0
+  br i1 %.not.i38, label %_ZN5boost7movelib15detail_adaptive19swap_and_update_keyINS0_16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS4_17Compact_containerINS4_37Constrained_triangulation_face_base_2INS4_5EpickENS4_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS9_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSG_IiLin1ELin1ELi0ELin1ELin1EEESH_SH_SI_EEvRKNSF_10MatrixBaseIT0_EERKNSJ_IT1_EERKNSJ_IT2_EEbRNSF_15PlainObjectBaseIT3_EERNSW_IT4_EEE9FaceInfo2S9_NS4_25Triangulation_face_base_2IS9_NS4_28Triangulation_ds_face_base_2INS4_30Triangulation_data_structure_2INS4_27Triangulation_vertex_base_2IS9_NS4_30Triangulation_ds_vertex_base_2IvEEEENS8_IS9_NSA_IS13_S9_NS14_IS9_NS15_IvEEEEEEEEEEEEEEEEEENS4_7DefaultES1K_S1K_EELb0EEEEES1O_EEvT_S1P_RS1P_SK_SK_SK_.exit, label %_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit.i
+
+_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit.i: ; preds = %_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit
+  %.not9.i = icmp eq i64 %.neg113, 0
+  br i1 %.not9.i, label %bb.y, label %bb.x
+
+bb.x:                                             ; preds = %_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit.i
+  %i.fi = getelementptr inbounds i8, ptr %i.fh, i64 -8 ; 2 uses
+  %i.fj = getelementptr inbounds i8, ptr %i.fg, i64 -8 ; 2 uses
+  %.sroa.0.0.copyload.i.i41 = load ptr, ptr %i.fi, align 8, !tbaa !223
+  %i.fk = load i64, ptr %i.fj, align 8, !tbaa !223
+  store i64 %i.fk, ptr %i.fi, align 8, !tbaa !223
+  store ptr %.sroa.0.0.copyload.i.i41, ptr %i.fj, align 8, !tbaa !223
+  br label %bb.y
+
+bb.y:                                             ; preds = %bb.x, %_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit.i
+  %i.fl = load ptr, ptr %2, align 8, !tbaa !3107  ; 2 uses
+  %i.fm = icmp eq ptr %i.fh, %i.fl
+  br i1 %i.fm, label %.sink.split.i, label %bb.z
+
+bb.z:                                             ; preds = %bb.y
+  %i.fn = icmp eq ptr %i.fl, %i.fg
+  br i1 %i.fn, label %.sink.split.i, label %_ZN5boost7movelib15detail_adaptive19swap_and_update_keyINS0_16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS4_17Compact_containerINS4_37Constrained_triangulation_face_base_2INS4_5EpickENS4_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS9_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSG_IiLin1ELin1ELi0ELin1ELin1EEESH_SH_SI_EEvRKNSF_10MatrixBaseIT0_EERKNSJ_IT1_EERKNSJ_IT2_EEbRNSF_15PlainObjectBaseIT3_EERNSW_IT4_EEE9FaceInfo2S9_NS4_25Triangulation_face_base_2IS9_NS4_28Triangulation_ds_face_base_2INS4_30Triangulation_data_structure_2INS4_27Triangulation_vertex_base_2IS9_NS4_30Triangulation_ds_vertex_base_2IvEEEENS8_IS9_NSA_IS13_S9_NS14_IS9_NS15_IvEEEEEEEEEEEEEEEEEENS4_7DefaultES1K_S1K_EELb0EEEEES1O_EEvT_S1P_RS1P_SK_SK_SK_.exit
+
+.sink.split.i:                                    ; preds = %bb.z, %bb.y
+  %.sink.i = phi ptr [ %i.fg, %bb.y ], [ %i.fh, %bb.z ]
+  store ptr %.sink.i, ptr %2, align 8, !tbaa !3107
+  br label %_ZN5boost7movelib15detail_adaptive19swap_and_update_keyINS0_16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS4_17Compact_containerINS4_37Constrained_triangulation_face_base_2INS4_5EpickENS4_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS9_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSG_IiLin1ELin1ELi0ELin1ELin1EEESH_SH_SI_EEvRKNSF_10MatrixBaseIT0_EERKNSJ_IT1_EERKNSJ_IT2_EEbRNSF_15PlainObjectBaseIT3_EERNSW_IT4_EEE9FaceInfo2S9_NS4_25Triangulation_face_base_2IS9_NS4_28Triangulation_ds_face_base_2INS4_30Triangulation_data_structure_2INS4_27Triangulation_vertex_base_2IS9_NS4_30Triangulation_ds_vertex_base_2IvEEEENS8_IS9_NSA_IS13_S9_NS14_IS9_NS15_IvEEEEEEEEEEEEEEEEEENS4_7DefaultES1K_S1K_EELb0EEEEES1O_EEvT_S1P_RS1P_SK_SK_SK_.exit
+
+_ZN5boost7movelib15detail_adaptive19swap_and_update_keyINS0_16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS4_17Compact_containerINS4_37Constrained_triangulation_face_base_2INS4_5EpickENS4_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS9_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSG_IiLin1ELin1ELi0ELin1ELin1EEESH_SH_SI_EEvRKNSF_10MatrixBaseIT0_EERKNSJ_IT1_EERKNSJ_IT2_EEbRNSF_15PlainObjectBaseIT3_EERNSW_IT4_EEE9FaceInfo2S9_NS4_25Triangulation_face_base_2IS9_NS4_28Triangulation_ds_face_base_2INS4_30Triangulation_data_structure_2INS4_27Triangulation_vertex_base_2IS9_NS4_30Triangulation_ds_vertex_base_2IvEEEENS8_IS9_NSA_IS13_S9_NS14_IS9_NS15_IvEEEEEEEEEEEEEEEEEENS4_7DefaultES1K_S1K_EELb0EEEEES1O_EEvT_S1P_RS1P_SK_SK_SK_.exit: ; preds = %_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEEEES1N_EESJ_T_S1O_SJ_.exit, %bb.z, %.sink.split.i
+  store ptr %i.af, ptr %3, align 8, !tbaa !3107
+  %i.fo = load ptr, ptr %1, align 8, !tbaa !3107
+  %i.fp = getelementptr inbounds i8, ptr %i.fo, i64 -8 ; 2 uses
+  store ptr %i.fp, ptr %1, align 8, !tbaa !3107
+  %i.fq = icmp ne i64 %.0155, 0
+  %.neg = sext i1 %i.fq to i64
+  %i.fr = add i64 %.0155, %.neg
+  %i.fs = icmp ne i64 %i.ae, 0
+  %.neg24 = sext i1 %i.fs to i64
+  %i.ft = add i64 %.sroa.speculated, %.neg24
+  %i.fu = add i64 %.0110154, -1                   ; 2 uses
+  %.not = icmp eq i64 %i.fu, 0
+  br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !3359
+
+._crit_edge:                                      ; preds = %_ZN5boost7movelib15detail_adaptive19swap_and_update_keyINS0_16reverse_iteratorIPN4CGAL8internal11CC_iteratorINS4_17Compact_containerINS4_37Constrained_triangulation_face_base_2INS4_5EpickENS4_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS9_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSG_IiLin1ELin1ELi0ELin1ELin1EEESH_SH_SI_EEvRKNSF_10MatrixBaseIT0_EERKNSJ_IT1_EERKNSJ_IT2_EEbRNSF_15PlainObjectBaseIT3_EERNSW_IT4_EEE9FaceInfo2S9_NS4_25Triangulation_face_base_2IS9_NS4_28Triangulation_ds_face_base_2INS4_30Triangulation_data_structure_2INS4_27Triangulation_vertex_base_2IS9_NS4_30Triangulation_ds_vertex_base_2IvEEEENS8_IS9_NSA_IS13_S9_NS14_IS9_NS15_IvEEEEEEEEEEEEEEEEEENS4_7DefaultES1K_S1K_EELb0EEEEES1O_EEvT_S1P_RS1P_SK_SK_SK_.exit, %bb.a
+  %i.fv = load ptr, ptr %6, align 8, !tbaa !3107
+  store ptr %i.fv, ptr %0, align 8, !tbaa !3107
+  ret void
+}
+
+; Function Attrs: mustprogress uwtable
+define linkonce_odr dso_local noundef ptr @_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_save_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEET_S1X_S1X_RS1X_S1X_S1X_RSJ_S1Z_SN_SR_(ptr noundef %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef %3, ptr noundef %4, ptr noundef nonnull align 8 dereferenceable(8) %5, ptr noundef nonnull align 8 dereferenceable(8) %6) local_unnamed_addr #3 comdat {
+bb.a:
+  %i.a = ptrtoaddr ptr %1 to i64                  ; 4 uses
+  %i.b = load ptr, ptr %5, align 8, !tbaa !287    ; 3 uses
+  %i.c = load ptr, ptr %6, align 8, !tbaa !287    ; 2 uses
+  %i.d = load ptr, ptr %2, align 8, !tbaa !287    ; 11 uses
+  %.not = icmp eq ptr %i.d, %4                    ; 2 uses
+  %i.e = icmp eq ptr %i.b, %i.c
+  br i1 %i.e, label %bb.b, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit
+
+bb.b:                                             ; preds = %bb.a
+  %.not6.i = icmp eq ptr %0, %1
+  br i1 %.not6.i, label %_ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEET_S1W_S1W_RKNS0_15iterator_traitsIS1W_E10value_typeESJ_.exit, label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %bb.b
+  %i.f = load ptr, ptr %4, align 8, !tbaa !231
+  br label %bb.c
+
+bb.c:                                             ; preds = %bb.d, %.lr.ph.i
+  %.07.i = phi ptr [ %0, %.lr.ph.i ], [ %i.i, %bb.d ] ; 3 uses
+  %i.g = load ptr, ptr %.07.i, align 8, !tbaa !231
+  %i.h = icmp ult ptr %i.f, %i.g
+  br i1 %i.h, label %_ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEET_S1W_S1W_RKNS0_15iterator_traitsIS1W_E10value_typeESJ_.exit, label %bb.d
+
+bb.d:                                             ; preds = %bb.c
+  %i.i = getelementptr inbounds nuw i8, ptr %.07.i, i64 8 ; 3 uses
+  %.not.i = icmp eq ptr %i.i, %1
+  br i1 %.not.i, label %_ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEET_S1W_S1W_RKNS0_15iterator_traitsIS1W_E10value_typeESJ_.exit, label %bb.c, !llvm.loop !3285
+
+_ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEET_S1W_S1W_RKNS0_15iterator_traitsIS1W_E10value_typeESJ_.exit: ; preds = %bb.c, %bb.d, %bb.b
+  %.0.lcssa.i = phi ptr [ %0, %bb.b ], [ %.07.i, %bb.c ], [ %i.i, %bb.d ] ; 10 uses
+  %i.j = ptrtoint ptr %.0.lcssa.i to i64          ; 5 uses
+  %i.k = ptrtoint ptr %0 to i64
+  %i.l = sub i64 %i.j, %i.k
+  %i.m = getelementptr inbounds i8, ptr %i.b, i64 %i.l ; 14 uses
+  %.not.i32 = icmp eq ptr %.0.lcssa.i, %1         ; 2 uses
+  br i1 %.not, label %bb.k, label %bb.e
+
+bb.e:                                             ; preds = %_ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEET_S1W_S1W_RKNS0_15iterator_traitsIS1W_E10value_typeESJ_.exit
+  %.not47.i = icmp eq ptr %i.d, %3
+  %or.cond.i = select i1 %.not.i32, i1 true, i1 %.not47.i
+  br i1 %or.cond.i, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_RT_S1X_RSJ_SJ_S1Z_SN_SR_SW_.exit, label %bb.f
+
+bb.f:                                             ; preds = %bb.e
+  %i.n = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
+  %i.p = load i64, ptr %i.m, align 8, !tbaa !223
+  %i.q = load i64, ptr %.0.lcssa.i, align 8, !tbaa !223
+  store i64 %i.q, ptr %i.m, align 8, !tbaa !223
+  %i.r = load i64, ptr %4, align 8, !tbaa !223
+  store i64 %i.r, ptr %.0.lcssa.i, align 8, !tbaa !223
+  %i.s = load i64, ptr %i.d, align 8, !tbaa !223
+  store i64 %i.s, ptr %4, align 8, !tbaa !223
+  store i64 %i.p, ptr %i.d, align 8, !tbaa !223
+  %.03762.i = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 2 uses
+  %.04163.i = getelementptr inbounds nuw i8, ptr %.0.lcssa.i, i64 8 ; 2 uses
+  %.not4864.i = icmp eq ptr %.04163.i, %1
+  br i1 %.not4864.i, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread91, label %.lr.ph.i31
+
+.lr.ph.i31:                                       ; preds = %bb.f, %bb.j
+  %indvar = phi i64 [ %indvar.next, %bb.j ], [ 0, %bb.f ] ; 4 uses
+  %.04169.i = phi ptr [ %.041.i, %bb.j ], [ %.04163.i, %bb.f ] ; 10 uses
+  %.03768.i = phi ptr [ %.037.i, %bb.j ], [ %.03762.i, %bb.f ] ; 5 uses
+  %.067.i = phi ptr [ %.1.i, %bb.j ], [ %i.o, %bb.f ] ; 7 uses
+  %.03566.i = phi ptr [ %.136.i, %bb.j ], [ %i.n, %bb.f ] ; 7 uses
+  %.03965.i = phi ptr [ %.140.i, %bb.j ], [ %i.m, %bb.f ] ; 13 uses
+  %i.t = icmp eq ptr %.03566.i, %3
+  br i1 %i.t, label %.lr.ph.i.i.preheader, label %bb.g
+
+.lr.ph.i.i.preheader:                             ; preds = %.lr.ph.i31
+  %i.u = add i64 %i.a, -16
+  %7 = shl i64 %indvar, 3
+  %8 = add i64 %7, %i.j
+  %9 = sub i64 %i.u, %8                           ; 2 uses
+  %10 = lshr i64 %9, 3
+  %i.v = add nuw nsw i64 %10, 1                   ; 2 uses
+  %min.iters.check = icmp ult i64 %9, 168
+  br i1 %min.iters.check, label %.lr.ph.i.i.preheader297, label %vector.memcheck
+
+vector.memcheck:                                  ; preds = %.lr.ph.i.i.preheader
+  %11 = shl i64 %indvar, 3
+  %i.w = getelementptr i8, ptr %.0.lcssa.i, i64 %11
+  %scevgep = getelementptr i8, ptr %i.w, i64 16
+  %i.x = add i64 %i.a, -16
+  %i.y = shl i64 %indvar, 3
+  %12 = add i64 %i.y, %i.j
+  %i.z = sub i64 %i.x, %12
+  %13 = and i64 %i.z, -8                          ; 2 uses
+  %scevgep235 = getelementptr i8, ptr %scevgep, i64 %13
+  %scevgep236 = getelementptr i8, ptr %.03965.i, i64 8
+  %scevgep237 = getelementptr i8, ptr %scevgep236, i64 %13
+  %bound0 = icmp ult ptr %.04169.i, %scevgep237
+  %bound1 = icmp ult ptr %.03965.i, %scevgep235
+  %found.conflict = and i1 %bound0, %bound1
+  br i1 %found.conflict, label %.lr.ph.i.i.preheader297, label %vector.ph
+
+vector.ph:                                        ; preds = %vector.memcheck
+  %n.vec = and i64 %i.v, 4611686018427387900      ; 3 uses
+  %i.aa = shl i64 %n.vec, 3                       ; 2 uses
+  %i.ab = getelementptr i8, ptr %.03965.i, i64 %i.aa ; 2 uses
+  %i.ac = getelementptr i8, ptr %.04169.i, i64 %i.aa
+  br label %vector.body
+
+vector.body:                                      ; preds = %vector.body, %vector.ph
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
+  %i.ad = shl i64 %index, 3                       ; 2 uses
+  %next.gep = getelementptr i8, ptr %.03965.i, i64 %i.ad ; 4 uses
+  %next.gep238 = getelementptr i8, ptr %.04169.i, i64 %i.ad ; 4 uses
+  %i.ae = getelementptr i8, ptr %next.gep238, i64 16
+  %wide.load = load <2 x ptr>, ptr %next.gep238, align 8, !tbaa !223, !alias.scope !3360, !noalias !3363
+  %wide.load239.a = load <2 x ptr>, ptr %i.ae, align 8, !tbaa !223, !alias.scope !3360, !noalias !3363
+  %i.af = getelementptr i8, ptr %next.gep, i64 16
+  %wide.load240 = load <2 x i64>, ptr %next.gep, align 8, !tbaa !223, !alias.scope !3363
+  %wide.load241 = load <2 x i64>, ptr %i.af, align 8, !tbaa !223, !alias.scope !3363
+  %i.ag = getelementptr i8, ptr %next.gep238, i64 16
+  store <2 x i64> %wide.load240, ptr %next.gep238, align 8, !tbaa !223, !alias.scope !3360, !noalias !3363
+  store <2 x i64> %wide.load241, ptr %i.ag, align 8, !tbaa !223, !alias.scope !3360, !noalias !3363
+  %i.ah = getelementptr i8, ptr %next.gep, i64 16
+  store <2 x ptr> %wide.load, ptr %next.gep, align 8, !tbaa !223, !alias.scope !3363
+  store <2 x ptr> %wide.load239.a, ptr %i.ah, align 8, !tbaa !223, !alias.scope !3363
+  %index.next = add nuw i64 %index, 4             ; 2 uses
+  %i.ai = icmp eq i64 %index.next, %n.vec
+  br i1 %i.ai, label %middle.block, label %vector.body, !llvm.loop !3365
+
+middle.block:                                     ; preds = %vector.body
+  %cmp.n = icmp eq i64 %i.v, %n.vec
+  br i1 %cmp.n, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit, label %.lr.ph.i.i.preheader297
+
+.lr.ph.i.i.preheader297:                          ; preds = %vector.memcheck, %.lr.ph.i.i.preheader, %middle.block
+  %.010.i.i.ph = phi ptr [ %.03965.i, %vector.memcheck ], [ %.03965.i, %.lr.ph.i.i.preheader ], [ %i.ab, %middle.block ]
+  %.079.i.i.ph = phi ptr [ %.04169.i, %vector.memcheck ], [ %.04169.i, %.lr.ph.i.i.preheader ], [ %i.ac, %middle.block ]
+  br label %.lr.ph.i.i
+
+.lr.ph.i.i:                                       ; preds = %.lr.ph.i.i.preheader297, %.lr.ph.i.i
+  %.010.i.i = phi ptr [ %i.al, %.lr.ph.i.i ], [ %.010.i.i.ph, %.lr.ph.i.i.preheader297 ] ; 3 uses
+  %.079.i.i = phi ptr [ %i.ak, %.lr.ph.i.i ], [ %.079.i.i.ph, %.lr.ph.i.i.preheader297 ] ; 3 uses
+  %.sroa.0.0.copyload.i.i.i = load ptr, ptr %.079.i.i, align 8, !tbaa !223
+  %i.aj = load i64, ptr %.010.i.i, align 8, !tbaa !223
+  store i64 %i.aj, ptr %.079.i.i, align 8, !tbaa !223
+  store ptr %.sroa.0.0.copyload.i.i.i, ptr %.010.i.i, align 8, !tbaa !223
+  %i.ak = getelementptr inbounds nuw i8, ptr %.079.i.i, i64 8 ; 2 uses
+  %i.al = getelementptr inbounds nuw i8, ptr %.010.i.i, i64 8 ; 2 uses
+  %.not.i.i = icmp eq ptr %i.ak, %1
+  br i1 %.not.i.i, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit, label %.lr.ph.i.i, !llvm.loop !3366
+
+bb.g:                                             ; preds = %.lr.ph.i31
+  %i.am = load ptr, ptr %.067.i, align 8, !tbaa !231
+  %i.an = load ptr, ptr %.03965.i, align 8, !tbaa !231
+  %i.ao = icmp ult ptr %i.am, %i.an
+  br i1 %i.ao, label %bb.h, label %bb.i
+
+bb.h:                                             ; preds = %bb.g
+  %i.ap = getelementptr inbounds nuw i8, ptr %.03566.i, i64 8
+  %i.aq = getelementptr inbounds nuw i8, ptr %.067.i, i64 8
+  %i.ar = load i64, ptr %.03768.i, align 8, !tbaa !223
+  %i.as = load i64, ptr %.04169.i, align 8, !tbaa !223
+  store i64 %i.as, ptr %.03768.i, align 8, !tbaa !223
+  %i.at = load i64, ptr %.067.i, align 8, !tbaa !223
+  store i64 %i.at, ptr %.04169.i, align 8, !tbaa !223
+  %i.au = load i64, ptr %.03566.i, align 8, !tbaa !223
+  store i64 %i.au, ptr %.067.i, align 8, !tbaa !223
+  store i64 %i.ar, ptr %.03566.i, align 8, !tbaa !223
+  br label %bb.j
+
+bb.i:                                             ; preds = %bb.g
+  %i.av = getelementptr inbounds nuw i8, ptr %.03965.i, i64 8
+  %i.aw = load i64, ptr %.03768.i, align 8, !tbaa !223
+  %i.ax = load i64, ptr %.04169.i, align 8, !tbaa !223
+  store i64 %i.ax, ptr %.03768.i, align 8, !tbaa !223
+  %i.ay = load i64, ptr %.03965.i, align 8, !tbaa !223
+  store i64 %i.ay, ptr %.04169.i, align 8, !tbaa !223
+  store i64 %i.aw, ptr %.03965.i, align 8, !tbaa !223
+  br label %bb.j
+
+bb.j:                                             ; preds = %bb.i, %bb.h
+  %.140.i = phi ptr [ %.03965.i, %bb.h ], [ %i.av, %bb.i ] ; 2 uses
+  %.136.i = phi ptr [ %i.ap, %bb.h ], [ %.03566.i, %bb.i ] ; 2 uses
+  %.1.i = phi ptr [ %i.aq, %bb.h ], [ %.067.i, %bb.i ] ; 2 uses
+  %.037.i = getelementptr inbounds nuw i8, ptr %.03768.i, i64 8 ; 2 uses
+  %.041.i = getelementptr inbounds nuw i8, ptr %.04169.i, i64 8 ; 2 uses
+  %.not48.i = icmp eq ptr %.041.i, %1
+  %indvar.next = add i64 %indvar, 1
+  br i1 %.not48.i, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit, label %.lr.ph.i31, !llvm.loop !3367
+
+bb.k:                                             ; preds = %_ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEET_S1W_S1W_RKNS0_15iterator_traitsIS1W_E10value_typeESJ_.exit
+  %.not40.i = icmp eq ptr %4, %3
+  %or.cond.i33 = or i1 %.not.i32, %.not40.i
+  br i1 %or.cond.i33, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_RT_S1X_RSJ_SJ_S1Z_SN_SR_SW_.exit, label %bb.l
+
+bb.l:                                             ; preds = %bb.k
+  %i.az = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
+  %i.ba = load i64, ptr %i.m, align 8, !tbaa !223
+  %i.bb = load i64, ptr %.0.lcssa.i, align 8, !tbaa !223
+  store i64 %i.bb, ptr %i.m, align 8, !tbaa !223
+  %i.bc = load i64, ptr %i.d, align 8, !tbaa !223
+  store i64 %i.bc, ptr %.0.lcssa.i, align 8, !tbaa !223
+  store i64 %i.ba, ptr %i.d, align 8, !tbaa !223
+  %.03052.i = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 2 uses
+  %.03453.i = getelementptr inbounds nuw i8, ptr %.0.lcssa.i, i64 8 ; 2 uses
+  %i.bd = icmp eq ptr %.03453.i, %1
+  br i1 %i.bd, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread, label %.lr.ph.i34
+
+.lr.ph.i34:                                       ; preds = %bb.l, %bb.m
+  %indvar244 = phi i64 [ %indvar.next245, %bb.m ], [ 0, %bb.l ] ; 4 uses
+  %.03457.i = phi ptr [ %.034.i, %bb.m ], [ %.03453.i, %bb.l ] ; 8 uses
+  %.03056.i = phi ptr [ %.030.i, %bb.m ], [ %.03052.i, %bb.l ] ; 3 uses
+  %.055.i = phi ptr [ %.1.i35, %bb.m ], [ %i.az, %bb.l ] ; 6 uses
+  %.03254.i = phi ptr [ %.133.i, %bb.m ], [ %i.m, %bb.l ] ; 11 uses
+  %i.be = icmp eq ptr %.055.i, %3
+  br i1 %i.be, label %.lr.ph.i.i40.preheader, label %bb.m
+
+.lr.ph.i.i40.preheader:                           ; preds = %.lr.ph.i34
+  %i.bf = add i64 %i.a, -16
+  %14 = shl i64 %indvar244, 3
+  %15 = add i64 %14, %i.j
+  %16 = sub i64 %i.bf, %15                        ; 2 uses
+  %17 = lshr i64 %16, 3
+  %i.bg = add nuw nsw i64 %17, 1                  ; 2 uses
+  %min.iters.check254 = icmp ult i64 %16, 168
+  br i1 %min.iters.check254, label %.lr.ph.i.i40.preheader290, label %vector.memcheck243
+
+vector.memcheck243:                               ; preds = %.lr.ph.i.i40.preheader
+  %18 = shl i64 %indvar244, 3
+  %i.bh = getelementptr i8, ptr %.0.lcssa.i, i64 %18
+  %scevgep246 = getelementptr i8, ptr %i.bh, i64 16
+  %i.bi = add i64 %i.a, -16
+  %i.bj = shl i64 %indvar244, 3
+  %19 = add i64 %i.bj, %i.j
+  %i.bk = sub i64 %i.bi, %19
+  %20 = and i64 %i.bk, -8                         ; 2 uses
+  %scevgep247 = getelementptr i8, ptr %scevgep246, i64 %20
+  %scevgep248 = getelementptr i8, ptr %.03254.i, i64 8
+  %scevgep249 = getelementptr i8, ptr %scevgep248, i64 %20
+  %bound0250 = icmp ult ptr %.03457.i, %scevgep249
+  %bound1251 = icmp ult ptr %.03254.i, %scevgep247
+  %found.conflict252 = and i1 %bound0250, %bound1251
+  br i1 %found.conflict252, label %.lr.ph.i.i40.preheader290, label %vector.ph255
+
+vector.ph255:                                     ; preds = %vector.memcheck243
+  %n.vec256 = and i64 %i.bg, 4611686018427387900  ; 3 uses
+  %i.bl = shl i64 %n.vec256, 3                    ; 2 uses
+  %i.bm = getelementptr i8, ptr %.03254.i, i64 %i.bl ; 2 uses
+  %i.bn = getelementptr i8, ptr %.03457.i, i64 %i.bl
+  br label %vector.body257
+
+vector.body257:                                   ; preds = %vector.body257, %vector.ph255
+  %index258 = phi i64 [ 0, %vector.ph255 ], [ %index.next265, %vector.body257 ] ; 2 uses
+  %i.bo = shl i64 %index258, 3                    ; 2 uses
+  %next.gep259 = getelementptr i8, ptr %.03254.i, i64 %i.bo ; 4 uses
+  %next.gep260 = getelementptr i8, ptr %.03457.i, i64 %i.bo ; 4 uses
+  %i.bp = getelementptr i8, ptr %next.gep260, i64 16
+  %wide.load261 = load <2 x ptr>, ptr %next.gep260, align 8, !tbaa !223, !alias.scope !3368, !noalias !3371
+  %wide.load262 = load <2 x ptr>, ptr %i.bp, align 8, !tbaa !223, !alias.scope !3368, !noalias !3371
+  %i.bq = getelementptr i8, ptr %next.gep259, i64 16
+  %wide.load263 = load <2 x i64>, ptr %next.gep259, align 8, !tbaa !223, !alias.scope !3371
+  %wide.load264 = load <2 x i64>, ptr %i.bq, align 8, !tbaa !223, !alias.scope !3371
+  %i.br = getelementptr i8, ptr %next.gep260, i64 16
+  store <2 x i64> %wide.load263, ptr %next.gep260, align 8, !tbaa !223, !alias.scope !3368, !noalias !3371
+  store <2 x i64> %wide.load264, ptr %i.br, align 8, !tbaa !223, !alias.scope !3368, !noalias !3371
+  %i.bs = getelementptr i8, ptr %next.gep259, i64 16
+  store <2 x ptr> %wide.load261, ptr %next.gep259, align 8, !tbaa !223, !alias.scope !3371
+  store <2 x ptr> %wide.load262, ptr %i.bs, align 8, !tbaa !223, !alias.scope !3371
+  %index.next265 = add nuw i64 %index258, 4       ; 2 uses
+  %i.bt = icmp eq i64 %index.next265, %n.vec256
+  br i1 %i.bt, label %middle.block266, label %vector.body257, !llvm.loop !3373
+
+middle.block266:                                  ; preds = %vector.body257
+  %cmp.n267 = icmp eq i64 %i.bg, %n.vec256
+  br i1 %cmp.n267, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit, label %.lr.ph.i.i40.preheader290
+
+.lr.ph.i.i40.preheader290:                        ; preds = %vector.memcheck243, %.lr.ph.i.i40.preheader, %middle.block266
+  %.010.i.i41.ph = phi ptr [ %.03254.i, %vector.memcheck243 ], [ %.03254.i, %.lr.ph.i.i40.preheader ], [ %i.bm, %middle.block266 ]
+  %.079.i.i42.ph = phi ptr [ %.03457.i, %vector.memcheck243 ], [ %.03457.i, %.lr.ph.i.i40.preheader ], [ %i.bn, %middle.block266 ]
+  br label %.lr.ph.i.i40
+
+.lr.ph.i.i40:                                     ; preds = %.lr.ph.i.i40.preheader290, %.lr.ph.i.i40
+  %.010.i.i41 = phi ptr [ %i.bw, %.lr.ph.i.i40 ], [ %.010.i.i41.ph, %.lr.ph.i.i40.preheader290 ] ; 3 uses
+  %.079.i.i42 = phi ptr [ %i.bv, %.lr.ph.i.i40 ], [ %.079.i.i42.ph, %.lr.ph.i.i40.preheader290 ] ; 3 uses
+  %.sroa.0.0.copyload.i.i.i43 = load ptr, ptr %.079.i.i42, align 8, !tbaa !223
+  %i.bu = load i64, ptr %.010.i.i41, align 8, !tbaa !223
+  store i64 %i.bu, ptr %.079.i.i42, align 8, !tbaa !223
+  store ptr %.sroa.0.0.copyload.i.i.i43, ptr %.010.i.i41, align 8, !tbaa !223
+  %i.bv = getelementptr inbounds nuw i8, ptr %.079.i.i42, i64 8 ; 2 uses
+  %i.bw = getelementptr inbounds nuw i8, ptr %.010.i.i41, i64 8 ; 2 uses
+  %.not.i.i44 = icmp eq ptr %i.bv, %1
+  br i1 %.not.i.i44, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit, label %.lr.ph.i.i40, !llvm.loop !3374
+
+bb.m:                                             ; preds = %.lr.ph.i34
+  %i.bx = load ptr, ptr %.055.i, align 8, !tbaa !231
+  %i.by = load ptr, ptr %.03254.i, align 8, !tbaa !231
+  %i.bz = icmp ult ptr %i.bx, %i.by               ; 3 uses
+  %i.ca = load i64, ptr %.03056.i, align 8, !tbaa !223
+  %i.cb = load i64, ptr %.03457.i, align 8, !tbaa !223
+  store i64 %i.cb, ptr %.03056.i, align 8, !tbaa !223
+  %.03254.sink73.i = select i1 %i.bz, ptr %.055.i, ptr %.03254.i ; 2 uses
+  %.133.idx.i = select i1 %i.bz, i64 0, i64 8
+  %.133.i = getelementptr inbounds nuw i8, ptr %.03254.i, i64 %.133.idx.i ; 2 uses
+  %.1.idx.i = select i1 %i.bz, i64 8, i64 0
+  %.1.i35 = getelementptr inbounds nuw i8, ptr %.055.i, i64 %.1.idx.i ; 2 uses
+  %i.cc = load i64, ptr %.03254.sink73.i, align 8, !tbaa !223
+  store i64 %i.cc, ptr %.03457.i, align 8, !tbaa !223
+  store i64 %i.ca, ptr %.03254.sink73.i, align 8, !tbaa !223
+  %.030.i = getelementptr inbounds nuw i8, ptr %.03056.i, i64 8 ; 2 uses
+  %.034.i = getelementptr inbounds nuw i8, ptr %.03457.i, i64 8 ; 2 uses
+  %i.cd = icmp eq ptr %.034.i, %1
+  %indvar.next245 = add i64 %indvar244, 1
+  br i1 %i.cd, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit, label %.lr.ph.i34, !llvm.loop !3375
+
+_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit: ; preds = %bb.j, %.lr.ph.i.i, %bb.m, %.lr.ph.i.i40, %middle.block, %middle.block266, %bb.a
+  %.076 = phi ptr [ %.067.i, %.lr.ph.i.i ], [ %4, %bb.a ], [ %.067.i, %middle.block ], [ %4, %middle.block266 ], [ %4, %bb.m ], [ %4, %.lr.ph.i.i40 ], [ %.1.i, %bb.j ]
+  %.071 = phi ptr [ %.03965.i, %.lr.ph.i.i ], [ %i.b, %bb.a ], [ %.03965.i, %middle.block ], [ %.03254.i, %middle.block266 ], [ %.133.i, %bb.m ], [ %.03254.i, %.lr.ph.i.i40 ], [ %.140.i, %bb.j ] ; 2 uses
+  %.070 = phi ptr [ %.03566.i, %.lr.ph.i.i ], [ %i.d, %bb.a ], [ %.03566.i, %middle.block ], [ %.055.i, %middle.block266 ], [ %.1.i35, %bb.m ], [ %.055.i, %.lr.ph.i.i40 ], [ %.136.i, %bb.j ] ; 2 uses
+  %.028 = phi ptr [ %1, %.lr.ph.i.i ], [ %0, %bb.a ], [ %1, %middle.block ], [ %1, %middle.block266 ], [ %1, %bb.m ], [ %1, %.lr.ph.i.i40 ], [ %1, %bb.j ] ; 2 uses
+  %.0 = phi ptr [ %i.al, %.lr.ph.i.i ], [ %i.c, %bb.a ], [ %i.ab, %middle.block ], [ %i.bm, %middle.block266 ], [ %.030.i, %bb.m ], [ %i.bw, %.lr.ph.i.i40 ], [ %.037.i, %bb.j ] ; 2 uses
+  br i1 %.not, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread91
+
+_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread91: ; preds = %bb.f, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit
+  %.0101 = phi ptr [ %.0, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit ], [ %.03762.i, %bb.f ] ; 5 uses
+  %.028100 = phi ptr [ %.028, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit ], [ %1, %bb.f ] ; 2 uses
+  %.07099 = phi ptr [ %.070, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit ], [ %i.n, %bb.f ] ; 3 uses
+  %.07198 = phi ptr [ %.071, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit ], [ %i.m, %bb.f ] ; 3 uses
+  %.07697 = phi ptr [ %.076, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit ], [ %i.o, %bb.f ]
+  %.not.i45 = icmp eq ptr %.07099, %3
+  %.not36.i = icmp eq ptr %.0101, %.07198
+  %or.cond.i46 = select i1 %.not.i45, i1 true, i1 %.not36.i
+  br i1 %or.cond.i46, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_RT_S1X_RSJ_SJ_S1Z_SN_SR_SW_.exit, label %.outer.i
+
+.outer.i:                                         ; preds = %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread91, %bb.o
+  %.030.ph.i = phi ptr [ %.131.i, %bb.o ], [ %.028100, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread91 ]
+  %.028.ph.i = phi ptr [ %i.cn, %bb.o ], [ %.07198, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread91 ] ; 4 uses
+  %.026.ph.i = phi ptr [ %.026.i, %bb.o ], [ %.07099, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread91 ]
+  %.025.ph.i = phi ptr [ %.025.i, %bb.o ], [ %.07697, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread91 ]
+  br label %bb.n
+
+bb.n:                                             ; preds = %.split.i, %.outer.i
+  %.030.i47 = phi ptr [ %.13138.i, %.split.i ], [ %.030.ph.i, %.outer.i ] ; 6 uses
+  %.026.i = phi ptr [ %i.ci, %.split.i ], [ %.026.ph.i, %.outer.i ] ; 5 uses
+  %.025.i = phi ptr [ %i.cj, %.split.i ], [ %.025.ph.i, %.outer.i ] ; 4 uses
+  %i.ce = load ptr, ptr %.025.i, align 8          ; 2 uses
+  %i.cf = load ptr, ptr %.028.ph.i, align 8       ; 2 uses
+  %i.cg = icmp ult ptr %i.ce, %i.cf
+  br i1 %i.cg, label %.split.i, label %bb.o
+
+.split.i:                                         ; preds = %bb.n
+  %i.ch = ptrtoint ptr %i.ce to i64
+  %i.ci = getelementptr inbounds nuw i8, ptr %.026.i, i64 8 ; 3 uses
+  %i.cj = getelementptr inbounds nuw i8, ptr %.025.i, i64 8
+  %i.ck = load i64, ptr %.030.i47, align 8, !tbaa !223
+  store i64 %i.ch, ptr %.030.i47, align 8, !tbaa !223
+  %i.cl = load i64, ptr %.026.i, align 8, !tbaa !223
+  store i64 %i.cl, ptr %.025.i, align 8, !tbaa !223
+  store i64 %i.ck, ptr %.026.i, align 8, !tbaa !223
+  %.not44.i = icmp eq ptr %i.ci, %3
+  %.13138.i = getelementptr inbounds nuw i8, ptr %.030.i47, i64 8 ; 2 uses
+  br i1 %.not44.i, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_RT_S1X_RSJ_SJ_S1Z_SN_SR_SW_.exit, label %bb.n, !llvm.loop !3376
+
+bb.o:                                             ; preds = %bb.n
+  %i.cm = ptrtoint ptr %i.cf to i64
+  %i.cn = getelementptr inbounds nuw i8, ptr %.028.ph.i, i64 8 ; 3 uses
+  %.sroa.0.0.copyload.i.i = load ptr, ptr %.030.i47, align 8, !tbaa !223
+  store i64 %i.cm, ptr %.030.i47, align 8, !tbaa !223
+  store ptr %.sroa.0.0.copyload.i.i, ptr %.028.ph.i, align 8, !tbaa !223
+  %.not43.i = icmp eq ptr %i.cn, %.0101
+  %.131.i = getelementptr inbounds nuw i8, ptr %.030.i47, i64 8 ; 2 uses
+  br i1 %.not43.i, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_RT_S1X_RSJ_SJ_S1Z_SN_SR_SW_.exit, label %.outer.i, !llvm.loop !3376
+
+_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread: ; preds = %bb.l, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit
+  %.087 = phi ptr [ %.0, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit ], [ %.03052.i, %bb.l ] ; 5 uses
+  %.02885 = phi ptr [ %.028, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit ], [ %1, %bb.l ] ; 2 uses
+  %.07084 = phi ptr [ %.070, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit ], [ %i.az, %bb.l ] ; 3 uses
+  %.07183 = phi ptr [ %.071, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit ], [ %i.m, %bb.l ] ; 3 uses
+  %.not.i49 = icmp eq ptr %.07084, %3
+  %.not36.i50 = icmp eq ptr %.087, %.07183
+  %or.cond.i51 = select i1 %.not.i49, i1 true, i1 %.not36.i50
+  br i1 %or.cond.i51, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_RT_S1X_RSJ_SJ_S1Z_SN_SR_SW_.exit, label %.preheader.i.outer
+
+.preheader.i.outer:                               ; preds = %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread, %bb.q
+  %.024.i.ph = phi ptr [ %i.cr, %bb.q ], [ %.02885, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread ]
+  %.021.i.ph = phi ptr [ %i.cw, %bb.q ], [ %.07183, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread ] ; 4 uses
+  %.0.i.ph = phi ptr [ %.0.i, %bb.q ], [ %.07084, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread ]
+  br label %.preheader.i
+
+.preheader.i:                                     ; preds = %.preheader.i.outer, %bb.p
+  %.024.i = phi ptr [ %i.cr, %bb.p ], [ %.024.i.ph, %.preheader.i.outer ] ; 4 uses
+  %.0.i = phi ptr [ %i.ct, %bb.p ], [ %.0.i.ph, %.preheader.i.outer ] ; 5 uses
+  %i.co = load ptr, ptr %.0.i, align 8            ; 2 uses
+  %i.cp = load ptr, ptr %.021.i.ph, align 8       ; 2 uses
+  %i.cq = icmp ult ptr %i.co, %i.cp
+  %i.cr = getelementptr inbounds nuw i8, ptr %.024.i, i64 8 ; 4 uses
+  %.sroa.0.0.copyload.i.i52 = load ptr, ptr %.024.i, align 8, !tbaa !223 ; 2 uses
+  br i1 %i.cq, label %bb.p, label %bb.q
+
+bb.p:                                             ; preds = %.preheader.i
+  %i.cs = ptrtoint ptr %i.co to i64
+  %i.ct = getelementptr inbounds nuw i8, ptr %.0.i, i64 8 ; 3 uses
+  store i64 %i.cs, ptr %.024.i, align 8, !tbaa !223
+  store ptr %.sroa.0.0.copyload.i.i52, ptr %.0.i, align 8, !tbaa !223
+  %i.cu = icmp eq ptr %i.ct, %3
+  br i1 %i.cu, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_RT_S1X_RSJ_SJ_S1Z_SN_SR_SW_.exit, label %.preheader.i, !llvm.loop !3377
+
+bb.q:                                             ; preds = %.preheader.i
+  %i.cv = ptrtoint ptr %i.cp to i64
+  %i.cw = getelementptr inbounds nuw i8, ptr %.021.i.ph, i64 8 ; 3 uses
+  store i64 %i.cv, ptr %.024.i, align 8, !tbaa !223
+  store ptr %.sroa.0.0.copyload.i.i52, ptr %.021.i.ph, align 8, !tbaa !223
+  %i.cx = icmp eq ptr %i.cw, %.087
+  br i1 %i.cx, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_RT_S1X_RSJ_SJ_S1Z_SN_SR_SW_.exit, label %.preheader.i.outer, !llvm.loop !3377
+
+_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_RT_S1X_RSJ_SJ_S1Z_SN_SR_SW_.exit: ; preds = %bb.o, %.split.i, %bb.p, %bb.q, %bb.k, %bb.e, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread91
+  %.086 = phi ptr [ %.0101, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread91 ], [ %.0101, %.split.i ], [ %.087, %bb.p ], [ %.087, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread ], [ %i.m, %bb.e ], [ %i.m, %bb.k ], [ %.087, %bb.q ], [ %.0101, %bb.o ]
+  %.172 = phi ptr [ %.07198, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread91 ], [ %.028.ph.i, %.split.i ], [ %i.cw, %bb.q ], [ %.07183, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread ], [ %i.m, %bb.e ], [ %i.m, %bb.k ], [ %.021.i.ph, %bb.p ], [ %i.cn, %bb.o ]
+  %.1 = phi ptr [ %.07099, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread91 ], [ %i.ci, %.split.i ], [ %.0.i, %bb.q ], [ %.07084, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread ], [ %i.d, %bb.e ], [ %i.d, %bb.k ], [ %i.ct, %bb.p ], [ %.026.i, %bb.o ]
+  %i.cy = phi ptr [ %.028100, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread91 ], [ %.13138.i, %.split.i ], [ %i.cr, %bb.p ], [ %.02885, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEENS0_7swap_opEEESN_T_S1X_RSJ_SJ_S1Y_RSN_SR_SW_.exit.thread ], [ %1, %bb.e ], [ %1, %bb.k ], [ %i.cr, %bb.q ], [ %.131.i, %bb.o ]
+  store ptr %.172, ptr %5, align 8, !tbaa !287
+  store ptr %.086, ptr %6, align 8, !tbaa !287
+  store ptr %.1, ptr %2, align 8, !tbaa !287
+  ret ptr %i.cy
+}
+
+; Function Attrs: mustprogress uwtable
+define linkonce_odr dso_local noundef ptr @_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_save_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEET_S1Z_S1Z_RS1Z_S1Z_S1Z_RSJ_S21_SN_SR_(ptr noundef %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef %3, ptr noundef %4, ptr noundef nonnull align 8 dereferenceable(8) %5, ptr noundef nonnull align 8 dereferenceable(8) %6, ptr noundef align 8 dead_on_return %7) local_unnamed_addr #3 comdat {
+bb.a:
+  %i.a = ptrtoaddr ptr %1 to i64                  ; 4 uses
+  %i.b = load ptr, ptr %5, align 8, !tbaa !287    ; 3 uses
+  %i.c = load ptr, ptr %6, align 8, !tbaa !287    ; 2 uses
+  %i.d = load ptr, ptr %2, align 8, !tbaa !287    ; 11 uses
+  %.not = icmp eq ptr %i.d, %4                    ; 2 uses
+  %i.e = icmp eq ptr %i.b, %i.c
+  br i1 %i.e, label %bb.b, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit
+
+bb.b:                                             ; preds = %bb.a
+  %.not7.i = icmp eq ptr %0, %1
+  br i1 %.not7.i, label %_ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEEEET_S1Y_S1Y_RKNS0_15iterator_traitsIS1Y_E10value_typeESJ_.exit, label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %bb.b
+  %i.f = load ptr, ptr %4, align 8, !tbaa !231
+  br label %bb.c
+
+bb.c:                                             ; preds = %bb.d, %.lr.ph.i
+  %.08.i = phi ptr [ %0, %.lr.ph.i ], [ %i.h, %bb.d ] ; 3 uses
+  %i.g = load ptr, ptr %.08.i, align 8, !tbaa !231
+  %.not6.i = icmp ult ptr %i.g, %i.f
+  br i1 %.not6.i, label %bb.d, label %_ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEEEET_S1Y_S1Y_RKNS0_15iterator_traitsIS1Y_E10value_typeESJ_.exit
+
+bb.d:                                             ; preds = %bb.c
+  %i.h = getelementptr inbounds nuw i8, ptr %.08.i, i64 8 ; 3 uses
+  %.not.i = icmp eq ptr %i.h, %1
+  br i1 %.not.i, label %_ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEEEET_S1Y_S1Y_RKNS0_15iterator_traitsIS1Y_E10value_typeESJ_.exit, label %bb.c, !llvm.loop !3294
+
+_ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEEEET_S1Y_S1Y_RKNS0_15iterator_traitsIS1Y_E10value_typeESJ_.exit: ; preds = %bb.c, %bb.d, %bb.b
+  %.0.lcssa.i = phi ptr [ %0, %bb.b ], [ %.08.i, %bb.c ], [ %i.h, %bb.d ] ; 10 uses
+  %i.i = ptrtoint ptr %.0.lcssa.i to i64          ; 5 uses
+  %i.j = ptrtoint ptr %0 to i64
+  %i.k = sub i64 %i.i, %i.j
+  %i.l = getelementptr inbounds i8, ptr %i.b, i64 %i.k ; 14 uses
+  %.not.i32 = icmp eq ptr %.0.lcssa.i, %1         ; 2 uses
+  br i1 %.not, label %bb.k, label %bb.e
+
+bb.e:                                             ; preds = %_ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEEEET_S1Y_S1Y_RKNS0_15iterator_traitsIS1Y_E10value_typeESJ_.exit
+  %.not47.i = icmp eq ptr %i.d, %3
+  %or.cond.i = select i1 %.not.i32, i1 true, i1 %.not47.i
+  br i1 %or.cond.i, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_RT_S1Z_RSJ_SJ_S21_SN_SR_SW_.exit, label %bb.f
+
+bb.f:                                             ; preds = %bb.e
+  %i.m = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
+  %i.o = load i64, ptr %i.l, align 8, !tbaa !223
+  %i.p = load i64, ptr %.0.lcssa.i, align 8, !tbaa !223
+  store i64 %i.p, ptr %i.l, align 8, !tbaa !223
+  %i.q = load i64, ptr %4, align 8, !tbaa !223
+  store i64 %i.q, ptr %.0.lcssa.i, align 8, !tbaa !223
+  %i.r = load i64, ptr %i.d, align 8, !tbaa !223
+  store i64 %i.r, ptr %4, align 8, !tbaa !223
+  store i64 %i.o, ptr %i.d, align 8, !tbaa !223
+  %.03763.i = getelementptr inbounds nuw i8, ptr %i.l, i64 8 ; 2 uses
+  %.04164.i = getelementptr inbounds nuw i8, ptr %.0.lcssa.i, i64 8 ; 2 uses
+  %.not4865.i = icmp eq ptr %.04164.i, %1
+  br i1 %.not4865.i, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95, label %.lr.ph.i31
+
+.lr.ph.i31:                                       ; preds = %bb.f, %bb.j
+  %indvar = phi i64 [ %indvar.next, %bb.j ], [ 0, %bb.f ] ; 4 uses
+  %.04170.i = phi ptr [ %.041.i, %bb.j ], [ %.04164.i, %bb.f ] ; 10 uses
+  %.03769.i = phi ptr [ %.037.i, %bb.j ], [ %.03763.i, %bb.f ] ; 5 uses
+  %.068.i = phi ptr [ %.1.i, %bb.j ], [ %i.n, %bb.f ] ; 7 uses
+  %.03567.i = phi ptr [ %.136.i, %bb.j ], [ %i.m, %bb.f ] ; 7 uses
+  %.03966.i = phi ptr [ %.140.i, %bb.j ], [ %i.l, %bb.f ] ; 13 uses
+  %i.s = icmp eq ptr %.03567.i, %3
+  br i1 %i.s, label %.lr.ph.i.i.preheader, label %bb.g
+
+.lr.ph.i.i.preheader:                             ; preds = %.lr.ph.i31
+  %i.t = add i64 %i.a, -16
+  %8 = shl i64 %indvar, 3
+  %9 = add i64 %8, %i.i
+  %10 = sub i64 %i.t, %9                          ; 2 uses
+  %11 = lshr i64 %10, 3
+  %i.u = add nuw nsw i64 %11, 1                   ; 2 uses
+  %min.iters.check = icmp ult i64 %10, 168
+  br i1 %min.iters.check, label %.lr.ph.i.i.preheader300, label %vector.memcheck
+
+vector.memcheck:                                  ; preds = %.lr.ph.i.i.preheader
+  %12 = shl i64 %indvar, 3
+  %i.v = getelementptr i8, ptr %.0.lcssa.i, i64 %12
+  %scevgep = getelementptr i8, ptr %i.v, i64 16
+  %i.w = add i64 %i.a, -16
+  %i.x = shl i64 %indvar, 3
+  %13 = add i64 %i.x, %i.i
+  %i.y = sub i64 %i.w, %13
+  %14 = and i64 %i.y, -8                          ; 2 uses
+  %scevgep238 = getelementptr i8, ptr %scevgep, i64 %14
+  %scevgep239 = getelementptr i8, ptr %.03966.i, i64 8
+  %scevgep240 = getelementptr i8, ptr %scevgep239, i64 %14
+  %bound0 = icmp ult ptr %.04170.i, %scevgep240
+  %bound1 = icmp ult ptr %.03966.i, %scevgep238
+  %found.conflict = and i1 %bound0, %bound1
+  br i1 %found.conflict, label %.lr.ph.i.i.preheader300, label %vector.ph
+
+vector.ph:                                        ; preds = %vector.memcheck
+  %n.vec = and i64 %i.u, 4611686018427387900      ; 3 uses
+  %i.z = shl i64 %n.vec, 3                        ; 2 uses
+  %i.aa = getelementptr i8, ptr %.03966.i, i64 %i.z ; 2 uses
+  %i.ab = getelementptr i8, ptr %.04170.i, i64 %i.z
+  br label %vector.body
+
+vector.body:                                      ; preds = %vector.body, %vector.ph
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
+  %i.ac = shl i64 %index, 3                       ; 2 uses
+  %next.gep = getelementptr i8, ptr %.03966.i, i64 %i.ac ; 4 uses
+  %next.gep241 = getelementptr i8, ptr %.04170.i, i64 %i.ac ; 4 uses
+  %i.ad = getelementptr i8, ptr %next.gep241, i64 16
+  %wide.load = load <2 x ptr>, ptr %next.gep241, align 8, !tbaa !223, !alias.scope !3378, !noalias !3381
+  %wide.load242.a = load <2 x ptr>, ptr %i.ad, align 8, !tbaa !223, !alias.scope !3378, !noalias !3381
+  %i.ae = getelementptr i8, ptr %next.gep, i64 16
+  %wide.load243 = load <2 x i64>, ptr %next.gep, align 8, !tbaa !223, !alias.scope !3381
+  %wide.load244 = load <2 x i64>, ptr %i.ae, align 8, !tbaa !223, !alias.scope !3381
+  %i.af = getelementptr i8, ptr %next.gep241, i64 16
+  store <2 x i64> %wide.load243, ptr %next.gep241, align 8, !tbaa !223, !alias.scope !3378, !noalias !3381
+  store <2 x i64> %wide.load244, ptr %i.af, align 8, !tbaa !223, !alias.scope !3378, !noalias !3381
+  %i.ag = getelementptr i8, ptr %next.gep, i64 16
+  store <2 x ptr> %wide.load, ptr %next.gep, align 8, !tbaa !223, !alias.scope !3381
+  store <2 x ptr> %wide.load242.a, ptr %i.ag, align 8, !tbaa !223, !alias.scope !3381
+  %index.next = add nuw i64 %index, 4             ; 2 uses
+  %i.ah = icmp eq i64 %index.next, %n.vec
+  br i1 %i.ah, label %middle.block, label %vector.body, !llvm.loop !3383
+
+middle.block:                                     ; preds = %vector.body
+  %cmp.n = icmp eq i64 %i.u, %n.vec
+  br i1 %cmp.n, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit, label %.lr.ph.i.i.preheader300
+
+.lr.ph.i.i.preheader300:                          ; preds = %vector.memcheck, %.lr.ph.i.i.preheader, %middle.block
+  %.010.i.i.ph = phi ptr [ %.03966.i, %vector.memcheck ], [ %.03966.i, %.lr.ph.i.i.preheader ], [ %i.aa, %middle.block ]
+  %.079.i.i.ph = phi ptr [ %.04170.i, %vector.memcheck ], [ %.04170.i, %.lr.ph.i.i.preheader ], [ %i.ab, %middle.block ]
+  br label %.lr.ph.i.i
+
+.lr.ph.i.i:                                       ; preds = %.lr.ph.i.i.preheader300, %.lr.ph.i.i
+  %.010.i.i = phi ptr [ %i.ak, %.lr.ph.i.i ], [ %.010.i.i.ph, %.lr.ph.i.i.preheader300 ] ; 3 uses
+  %.079.i.i = phi ptr [ %i.aj, %.lr.ph.i.i ], [ %.079.i.i.ph, %.lr.ph.i.i.preheader300 ] ; 3 uses
+  %.sroa.0.0.copyload.i.i.i = load ptr, ptr %.079.i.i, align 8, !tbaa !223
+  %i.ai = load i64, ptr %.010.i.i, align 8, !tbaa !223
+  store i64 %i.ai, ptr %.079.i.i, align 8, !tbaa !223
+  store ptr %.sroa.0.0.copyload.i.i.i, ptr %.010.i.i, align 8, !tbaa !223
+  %i.aj = getelementptr inbounds nuw i8, ptr %.079.i.i, i64 8 ; 2 uses
+  %i.ak = getelementptr inbounds nuw i8, ptr %.010.i.i, i64 8 ; 2 uses
+  %.not.i.i = icmp eq ptr %i.aj, %1
+  br i1 %.not.i.i, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit, label %.lr.ph.i.i, !llvm.loop !3384
+
+bb.g:                                             ; preds = %.lr.ph.i31
+  %i.al = load ptr, ptr %.03966.i, align 8, !tbaa !231
+  %i.am = load ptr, ptr %.068.i, align 8, !tbaa !231
+  %.not53.i = icmp ult ptr %i.al, %i.am
+  br i1 %.not53.i, label %bb.i, label %bb.h
+
+bb.h:                                             ; preds = %bb.g
+  %i.an = getelementptr inbounds nuw i8, ptr %.03567.i, i64 8
+  %i.ao = getelementptr inbounds nuw i8, ptr %.068.i, i64 8
+  %i.ap = load i64, ptr %.03769.i, align 8, !tbaa !223
+  %i.aq = load i64, ptr %.04170.i, align 8, !tbaa !223
+  store i64 %i.aq, ptr %.03769.i, align 8, !tbaa !223
+  %i.ar = load i64, ptr %.068.i, align 8, !tbaa !223
+  store i64 %i.ar, ptr %.04170.i, align 8, !tbaa !223
+  %i.as = load i64, ptr %.03567.i, align 8, !tbaa !223
+  store i64 %i.as, ptr %.068.i, align 8, !tbaa !223
+  store i64 %i.ap, ptr %.03567.i, align 8, !tbaa !223
+  br label %bb.j
+
+bb.i:                                             ; preds = %bb.g
+  %i.at = getelementptr inbounds nuw i8, ptr %.03966.i, i64 8
+  %i.au = load i64, ptr %.03769.i, align 8, !tbaa !223
+  %i.av = load i64, ptr %.04170.i, align 8, !tbaa !223
+  store i64 %i.av, ptr %.03769.i, align 8, !tbaa !223
+  %i.aw = load i64, ptr %.03966.i, align 8, !tbaa !223
+  store i64 %i.aw, ptr %.04170.i, align 8, !tbaa !223
+  store i64 %i.au, ptr %.03966.i, align 8, !tbaa !223
+  br label %bb.j
+
+bb.j:                                             ; preds = %bb.i, %bb.h
+  %.140.i = phi ptr [ %.03966.i, %bb.h ], [ %i.at, %bb.i ] ; 2 uses
+  %.136.i = phi ptr [ %i.an, %bb.h ], [ %.03567.i, %bb.i ] ; 2 uses
+  %.1.i = phi ptr [ %i.ao, %bb.h ], [ %.068.i, %bb.i ] ; 2 uses
+  %.037.i = getelementptr inbounds nuw i8, ptr %.03769.i, i64 8 ; 2 uses
+  %.041.i = getelementptr inbounds nuw i8, ptr %.04170.i, i64 8 ; 2 uses
+  %.not48.i = icmp eq ptr %.041.i, %1
+  %indvar.next = add i64 %indvar, 1
+  br i1 %.not48.i, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit, label %.lr.ph.i31, !llvm.loop !3385
+
+bb.k:                                             ; preds = %_ZN5boost7movelib15detail_adaptive16skip_until_mergeIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEEEET_S1Y_S1Y_RKNS0_15iterator_traitsIS1Y_E10value_typeESJ_.exit
+  %.not40.i = icmp eq ptr %4, %3
+  %or.cond.i33 = or i1 %.not.i32, %.not40.i
+  br i1 %or.cond.i33, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_RT_S1Z_RSJ_SJ_S21_SN_SR_SW_.exit, label %bb.l
+
+bb.l:                                             ; preds = %bb.k
+  %i.ax = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
+  %i.ay = load i64, ptr %i.l, align 8, !tbaa !223
+  %i.az = load i64, ptr %.0.lcssa.i, align 8, !tbaa !223
+  store i64 %i.az, ptr %i.l, align 8, !tbaa !223
+  %i.ba = load i64, ptr %i.d, align 8, !tbaa !223
+  store i64 %i.ba, ptr %.0.lcssa.i, align 8, !tbaa !223
+  store i64 %i.ay, ptr %i.d, align 8, !tbaa !223
+  %.03053.i = getelementptr inbounds nuw i8, ptr %i.l, i64 8 ; 2 uses
+  %.03454.i = getelementptr inbounds nuw i8, ptr %.0.lcssa.i, i64 8 ; 2 uses
+  %i.bb = icmp eq ptr %.03454.i, %1
+  br i1 %i.bb, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread, label %.lr.ph.i34
+
+.lr.ph.i34:                                       ; preds = %bb.l, %bb.m
+  %indvar247 = phi i64 [ %indvar.next248, %bb.m ], [ 0, %bb.l ] ; 4 uses
+  %.03458.i = phi ptr [ %.034.i, %bb.m ], [ %.03454.i, %bb.l ] ; 8 uses
+  %.03057.i = phi ptr [ %.030.i, %bb.m ], [ %.03053.i, %bb.l ] ; 3 uses
+  %.056.i = phi ptr [ %.1.i35, %bb.m ], [ %i.ax, %bb.l ] ; 6 uses
+  %.03255.i = phi ptr [ %.133.i, %bb.m ], [ %i.l, %bb.l ] ; 11 uses
+  %i.bc = icmp eq ptr %.056.i, %3
+  br i1 %i.bc, label %.lr.ph.i.i40.preheader, label %bb.m
+
+.lr.ph.i.i40.preheader:                           ; preds = %.lr.ph.i34
+  %i.bd = add i64 %i.a, -16
+  %15 = shl i64 %indvar247, 3
+  %16 = add i64 %15, %i.i
+  %17 = sub i64 %i.bd, %16                        ; 2 uses
+  %18 = lshr i64 %17, 3
+  %i.be = add nuw nsw i64 %18, 1                  ; 2 uses
+  %min.iters.check257 = icmp ult i64 %17, 168
+  br i1 %min.iters.check257, label %.lr.ph.i.i40.preheader293, label %vector.memcheck246
+
+vector.memcheck246:                               ; preds = %.lr.ph.i.i40.preheader
+  %19 = shl i64 %indvar247, 3
+  %i.bf = getelementptr i8, ptr %.0.lcssa.i, i64 %19
+  %scevgep249 = getelementptr i8, ptr %i.bf, i64 16
+  %i.bg = add i64 %i.a, -16
+  %i.bh = shl i64 %indvar247, 3
+  %20 = add i64 %i.bh, %i.i
+  %i.bi = sub i64 %i.bg, %20
+  %21 = and i64 %i.bi, -8                         ; 2 uses
+  %scevgep250 = getelementptr i8, ptr %scevgep249, i64 %21
+  %scevgep251 = getelementptr i8, ptr %.03255.i, i64 8
+  %scevgep252 = getelementptr i8, ptr %scevgep251, i64 %21
+  %bound0253 = icmp ult ptr %.03458.i, %scevgep252
+  %bound1254 = icmp ult ptr %.03255.i, %scevgep250
+  %found.conflict255 = and i1 %bound0253, %bound1254
+  br i1 %found.conflict255, label %.lr.ph.i.i40.preheader293, label %vector.ph258
+
+vector.ph258:                                     ; preds = %vector.memcheck246
+  %n.vec259 = and i64 %i.be, 4611686018427387900  ; 3 uses
+  %i.bj = shl i64 %n.vec259, 3                    ; 2 uses
+  %i.bk = getelementptr i8, ptr %.03255.i, i64 %i.bj ; 2 uses
+  %i.bl = getelementptr i8, ptr %.03458.i, i64 %i.bj
+  br label %vector.body260
+
+vector.body260:                                   ; preds = %vector.body260, %vector.ph258
+  %index261 = phi i64 [ 0, %vector.ph258 ], [ %index.next268, %vector.body260 ] ; 2 uses
+  %i.bm = shl i64 %index261, 3                    ; 2 uses
+  %next.gep262 = getelementptr i8, ptr %.03255.i, i64 %i.bm ; 4 uses
+  %next.gep263 = getelementptr i8, ptr %.03458.i, i64 %i.bm ; 4 uses
+  %i.bn = getelementptr i8, ptr %next.gep263, i64 16
+  %wide.load264 = load <2 x ptr>, ptr %next.gep263, align 8, !tbaa !223, !alias.scope !3386, !noalias !3389
+  %wide.load265 = load <2 x ptr>, ptr %i.bn, align 8, !tbaa !223, !alias.scope !3386, !noalias !3389
+  %i.bo = getelementptr i8, ptr %next.gep262, i64 16
+  %wide.load266 = load <2 x i64>, ptr %next.gep262, align 8, !tbaa !223, !alias.scope !3389
+  %wide.load267 = load <2 x i64>, ptr %i.bo, align 8, !tbaa !223, !alias.scope !3389
+  %i.bp = getelementptr i8, ptr %next.gep263, i64 16
+  store <2 x i64> %wide.load266, ptr %next.gep263, align 8, !tbaa !223, !alias.scope !3386, !noalias !3389
+  store <2 x i64> %wide.load267, ptr %i.bp, align 8, !tbaa !223, !alias.scope !3386, !noalias !3389
+  %i.bq = getelementptr i8, ptr %next.gep262, i64 16
+  store <2 x ptr> %wide.load264, ptr %next.gep262, align 8, !tbaa !223, !alias.scope !3389
+  store <2 x ptr> %wide.load265, ptr %i.bq, align 8, !tbaa !223, !alias.scope !3389
+  %index.next268 = add nuw i64 %index261, 4       ; 2 uses
+  %i.br = icmp eq i64 %index.next268, %n.vec259
+  br i1 %i.br, label %middle.block269, label %vector.body260, !llvm.loop !3391
+
+middle.block269:                                  ; preds = %vector.body260
+  %cmp.n270 = icmp eq i64 %i.be, %n.vec259
+  br i1 %cmp.n270, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit, label %.lr.ph.i.i40.preheader293
+
+.lr.ph.i.i40.preheader293:                        ; preds = %vector.memcheck246, %.lr.ph.i.i40.preheader, %middle.block269
+  %.010.i.i41.ph = phi ptr [ %.03255.i, %vector.memcheck246 ], [ %.03255.i, %.lr.ph.i.i40.preheader ], [ %i.bk, %middle.block269 ]
+  %.079.i.i42.ph = phi ptr [ %.03458.i, %vector.memcheck246 ], [ %.03458.i, %.lr.ph.i.i40.preheader ], [ %i.bl, %middle.block269 ]
+  br label %.lr.ph.i.i40
+
+.lr.ph.i.i40:                                     ; preds = %.lr.ph.i.i40.preheader293, %.lr.ph.i.i40
+  %.010.i.i41 = phi ptr [ %i.bu, %.lr.ph.i.i40 ], [ %.010.i.i41.ph, %.lr.ph.i.i40.preheader293 ] ; 3 uses
+  %.079.i.i42 = phi ptr [ %i.bt, %.lr.ph.i.i40 ], [ %.079.i.i42.ph, %.lr.ph.i.i40.preheader293 ] ; 3 uses
+  %.sroa.0.0.copyload.i.i.i43 = load ptr, ptr %.079.i.i42, align 8, !tbaa !223
+  %i.bs = load i64, ptr %.010.i.i41, align 8, !tbaa !223
+  store i64 %i.bs, ptr %.079.i.i42, align 8, !tbaa !223
+  store ptr %.sroa.0.0.copyload.i.i.i43, ptr %.010.i.i41, align 8, !tbaa !223
+  %i.bt = getelementptr inbounds nuw i8, ptr %.079.i.i42, i64 8 ; 2 uses
+  %i.bu = getelementptr inbounds nuw i8, ptr %.010.i.i41, i64 8 ; 2 uses
+  %.not.i.i44 = icmp eq ptr %i.bt, %1
+  br i1 %.not.i.i44, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit, label %.lr.ph.i.i40, !llvm.loop !3392
+
+bb.m:                                             ; preds = %.lr.ph.i34
+  %i.bv = load ptr, ptr %.03255.i, align 8, !tbaa !231
+  %i.bw = load ptr, ptr %.056.i, align 8, !tbaa !231
+  %.not45.i = icmp ult ptr %i.bv, %i.bw           ; 3 uses
+  %i.bx = load i64, ptr %.03057.i, align 8, !tbaa !223
+  %i.by = load i64, ptr %.03458.i, align 8, !tbaa !223
+  store i64 %i.by, ptr %.03057.i, align 8, !tbaa !223
+  %.03255.sink74.i = select i1 %.not45.i, ptr %.03255.i, ptr %.056.i ; 2 uses
+  %.133.idx.i = select i1 %.not45.i, i64 8, i64 0
+  %.133.i = getelementptr inbounds nuw i8, ptr %.03255.i, i64 %.133.idx.i ; 2 uses
+  %.1.idx.i = select i1 %.not45.i, i64 0, i64 8
+  %.1.i35 = getelementptr inbounds nuw i8, ptr %.056.i, i64 %.1.idx.i ; 2 uses
+  %i.bz = load i64, ptr %.03255.sink74.i, align 8, !tbaa !223
+  store i64 %i.bz, ptr %.03458.i, align 8, !tbaa !223
+  store i64 %i.bx, ptr %.03255.sink74.i, align 8, !tbaa !223
+  %.030.i = getelementptr inbounds nuw i8, ptr %.03057.i, i64 8 ; 2 uses
+  %.034.i = getelementptr inbounds nuw i8, ptr %.03458.i, i64 8 ; 2 uses
+  %i.ca = icmp eq ptr %.034.i, %1
+  %indvar.next248 = add i64 %indvar247, 1
+  br i1 %i.ca, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit, label %.lr.ph.i34, !llvm.loop !3393
+
+_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit: ; preds = %bb.j, %.lr.ph.i.i, %bb.m, %.lr.ph.i.i40, %middle.block, %middle.block269, %bb.a
+  %.077 = phi ptr [ %.03567.i, %.lr.ph.i.i ], [ %i.d, %bb.a ], [ %.03567.i, %middle.block ], [ %.056.i, %middle.block269 ], [ %.1.i35, %bb.m ], [ %.056.i, %.lr.ph.i.i40 ], [ %.136.i, %bb.j ] ; 2 uses
+  %.075 = phi ptr [ %.03966.i, %.lr.ph.i.i ], [ %i.b, %bb.a ], [ %.03966.i, %middle.block ], [ %.03255.i, %middle.block269 ], [ %.133.i, %bb.m ], [ %.03255.i, %.lr.ph.i.i40 ], [ %.140.i, %bb.j ] ; 2 uses
+  %.074 = phi ptr [ %.068.i, %.lr.ph.i.i ], [ %4, %bb.a ], [ %.068.i, %middle.block ], [ %4, %middle.block269 ], [ %4, %bb.m ], [ %4, %.lr.ph.i.i40 ], [ %.1.i, %bb.j ]
+  %.028 = phi ptr [ %1, %.lr.ph.i.i ], [ %0, %bb.a ], [ %1, %middle.block ], [ %1, %middle.block269 ], [ %1, %bb.m ], [ %1, %.lr.ph.i.i40 ], [ %1, %bb.j ] ; 2 uses
+  %.0 = phi ptr [ %i.ak, %.lr.ph.i.i ], [ %i.c, %bb.a ], [ %i.aa, %middle.block ], [ %i.bk, %middle.block269 ], [ %.030.i, %bb.m ], [ %i.bu, %.lr.ph.i.i40 ], [ %.037.i, %bb.j ] ; 2 uses
+  br i1 %.not, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread, label %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95
+
+_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95: ; preds = %bb.f, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit
+  %.0105 = phi ptr [ %.0, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit ], [ %.03763.i, %bb.f ] ; 5 uses
+  %.028104 = phi ptr [ %.028, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit ], [ %1, %bb.f ] ; 2 uses
+  %.074103 = phi ptr [ %.074, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit ], [ %i.n, %bb.f ]
+  %.075102 = phi ptr [ %.075, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit ], [ %i.l, %bb.f ] ; 3 uses
+  %.077101 = phi ptr [ %.077, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit ], [ %i.m, %bb.f ] ; 3 uses
+  %.not.i45 = icmp eq ptr %.077101, %3
+  %.not36.i = icmp eq ptr %.0105, %.075102
+  %or.cond.i46 = select i1 %.not.i45, i1 true, i1 %.not36.i
+  br i1 %or.cond.i46, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_RT_S1Z_RSJ_SJ_S21_SN_SR_SW_.exit, label %.outer.i
+
+.outer.i:                                         ; preds = %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95, %bb.o
+  %.030.ph.i = phi ptr [ %.131.i, %bb.o ], [ %.028104, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95 ]
+  %.028.ph.i = phi ptr [ %i.cj, %bb.o ], [ %.075102, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95 ] ; 4 uses
+  %.026.ph.i = phi ptr [ %.026.i, %bb.o ], [ %.077101, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95 ]
+  %.025.ph.i = phi ptr [ %.025.i, %bb.o ], [ %.074103, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95 ]
+  br label %bb.n
+
+bb.n:                                             ; preds = %.split.i, %.outer.i
+  %.030.i47 = phi ptr [ %.13138.i, %.split.i ], [ %.030.ph.i, %.outer.i ] ; 6 uses
+  %.026.i = phi ptr [ %i.ce, %.split.i ], [ %.026.ph.i, %.outer.i ] ; 5 uses
+  %.025.i = phi ptr [ %i.cf, %.split.i ], [ %.025.ph.i, %.outer.i ] ; 4 uses
+  %i.cb = load ptr, ptr %.028.ph.i, align 8       ; 2 uses
+  %i.cc = load ptr, ptr %.025.i, align 8          ; 2 uses
+  %.not43.i = icmp ult ptr %i.cb, %i.cc
+  br i1 %.not43.i, label %bb.o, label %.split.i
+
+.split.i:                                         ; preds = %bb.n
+  %i.cd = ptrtoint ptr %i.cc to i64
+  %i.ce = getelementptr inbounds nuw i8, ptr %.026.i, i64 8 ; 3 uses
+  %i.cf = getelementptr inbounds nuw i8, ptr %.025.i, i64 8
+  %i.cg = load i64, ptr %.030.i47, align 8, !tbaa !223
+  store i64 %i.cd, ptr %.030.i47, align 8, !tbaa !223
+  %i.ch = load i64, ptr %.026.i, align 8, !tbaa !223
+  store i64 %i.ch, ptr %.025.i, align 8, !tbaa !223
+  store i64 %i.cg, ptr %.026.i, align 8, !tbaa !223
+  %.not45.i48 = icmp eq ptr %i.ce, %3
+  %.13138.i = getelementptr inbounds nuw i8, ptr %.030.i47, i64 8 ; 2 uses
+  br i1 %.not45.i48, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_RT_S1Z_RSJ_SJ_S21_SN_SR_SW_.exit, label %bb.n, !llvm.loop !3394
+
+bb.o:                                             ; preds = %bb.n
+  %i.ci = ptrtoint ptr %i.cb to i64
+  %i.cj = getelementptr inbounds nuw i8, ptr %.028.ph.i, i64 8 ; 3 uses
+  %.sroa.0.0.copyload.i.i = load ptr, ptr %.030.i47, align 8, !tbaa !223
+  store i64 %i.ci, ptr %.030.i47, align 8, !tbaa !223
+  store ptr %.sroa.0.0.copyload.i.i, ptr %.028.ph.i, align 8, !tbaa !223
+  %.not44.i = icmp eq ptr %i.cj, %.0105
+  %.131.i = getelementptr inbounds nuw i8, ptr %.030.i47, i64 8 ; 2 uses
+  br i1 %.not44.i, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_RT_S1Z_RSJ_SJ_S21_SN_SR_SW_.exit, label %.outer.i, !llvm.loop !3394
+
+_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread: ; preds = %bb.l, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit
+  %.091 = phi ptr [ %.0, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit ], [ %.03053.i, %bb.l ] ; 5 uses
+  %.02889 = phi ptr [ %.028, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit ], [ %1, %bb.l ] ; 2 uses
+  %.07588 = phi ptr [ %.075, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit ], [ %i.l, %bb.l ] ; 3 uses
+  %.07787 = phi ptr [ %.077, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit ], [ %i.ax, %bb.l ] ; 3 uses
+  %.not.i50 = icmp eq ptr %.07787, %3
+  %.not36.i51 = icmp eq ptr %.091, %.07588
+  %or.cond.i52 = select i1 %.not.i50, i1 true, i1 %.not36.i51
+  br i1 %or.cond.i52, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_RT_S1Z_RSJ_SJ_S21_SN_SR_SW_.exit, label %.preheader.i.outer
+
+.preheader.i.outer:                               ; preds = %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread, %bb.q
+  %.024.i.ph = phi ptr [ %i.cm, %bb.q ], [ %.02889, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread ]
+  %.021.i.ph = phi ptr [ %i.cr, %bb.q ], [ %.07588, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread ] ; 4 uses
+  %.0.i.ph = phi ptr [ %.0.i, %bb.q ], [ %.07787, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread ]
+  br label %.preheader.i
+
+.preheader.i:                                     ; preds = %.preheader.i.outer, %bb.p
+  %.024.i = phi ptr [ %i.cm, %bb.p ], [ %.024.i.ph, %.preheader.i.outer ] ; 4 uses
+  %.0.i = phi ptr [ %i.co, %bb.p ], [ %.0.i.ph, %.preheader.i.outer ] ; 5 uses
+  %i.ck = load ptr, ptr %.021.i.ph, align 8       ; 2 uses
+  %i.cl = load ptr, ptr %.0.i, align 8            ; 2 uses
+  %.not38.i = icmp ult ptr %i.ck, %i.cl
+  %i.cm = getelementptr inbounds nuw i8, ptr %.024.i, i64 8 ; 4 uses
+  %.sroa.0.0.copyload.i37.i = load ptr, ptr %.024.i, align 8, !tbaa !223 ; 2 uses
+  br i1 %.not38.i, label %bb.q, label %bb.p
+
+bb.p:                                             ; preds = %.preheader.i
+  %i.cn = ptrtoint ptr %i.cl to i64
+  %i.co = getelementptr inbounds nuw i8, ptr %.0.i, i64 8 ; 3 uses
+  store i64 %i.cn, ptr %.024.i, align 8, !tbaa !223
+  store ptr %.sroa.0.0.copyload.i37.i, ptr %.0.i, align 8, !tbaa !223
+  %i.cp = icmp eq ptr %i.co, %3
+  br i1 %i.cp, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_RT_S1Z_RSJ_SJ_S21_SN_SR_SW_.exit, label %.preheader.i, !llvm.loop !3395
+
+bb.q:                                             ; preds = %.preheader.i
+  %i.cq = ptrtoint ptr %i.ck to i64
+  %i.cr = getelementptr inbounds nuw i8, ptr %.021.i.ph, i64 8 ; 3 uses
+  store i64 %i.cq, ptr %.024.i, align 8, !tbaa !223
+  store ptr %.sroa.0.0.copyload.i37.i, ptr %.021.i.ph, align 8, !tbaa !223
+  %i.cs = icmp eq ptr %i.cr, %.091
+  br i1 %i.cs, label %_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_RT_S1Z_RSJ_SJ_S21_SN_SR_SW_.exit, label %.preheader.i.outer, !llvm.loop !3395
+
+_ZN5boost7movelib15detail_adaptive30op_partial_merge_and_swap_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_RT_S1Z_RSJ_SJ_S21_SN_SR_SW_.exit: ; preds = %bb.o, %.split.i, %bb.p, %bb.q, %bb.k, %bb.e, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95
+  %.090 = phi ptr [ %.0105, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95 ], [ %.0105, %.split.i ], [ %.091, %bb.p ], [ %.091, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread ], [ %i.l, %bb.e ], [ %i.l, %bb.k ], [ %.091, %bb.q ], [ %.0105, %bb.o ]
+  %.178 = phi ptr [ %.077101, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95 ], [ %i.ce, %.split.i ], [ %.0.i, %bb.q ], [ %.07787, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread ], [ %i.d, %bb.e ], [ %i.d, %bb.k ], [ %i.co, %bb.p ], [ %.026.i, %bb.o ]
+  %.176 = phi ptr [ %.075102, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95 ], [ %.028.ph.i, %.split.i ], [ %i.cr, %bb.q ], [ %.07588, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread ], [ %i.l, %bb.e ], [ %i.l, %bb.k ], [ %.021.i.ph, %bb.p ], [ %i.cj, %bb.o ]
+  %i.ct = phi ptr [ %.028104, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread95 ], [ %.13138.i, %.split.i ], [ %i.cm, %bb.p ], [ %.02889, %_ZN5boost7movelib15detail_adaptive55op_buffered_partial_merge_and_swap_to_range1_and_bufferIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEES1M_S1M_NS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEENS0_7swap_opEEESN_T_S1Z_RSJ_SJ_S20_RSN_SR_SW_.exit.thread ], [ %1, %bb.e ], [ %1, %bb.k ], [ %i.cm, %bb.q ], [ %.131.i, %bb.o ]
+  store ptr %.176, ptr %5, align 8, !tbaa !287
+  store ptr %.090, ptr %6, align 8, !tbaa !287
+  store ptr %.178, ptr %2, align 8, !tbaa !287
+  ret ptr %i.ct
+}
+
+; Function Attrs: mustprogress uwtable
+define linkonce_odr dso_local noundef ptr @_ZN5boost7movelib15detail_adaptive24partial_merge_bufferlessIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEET_S1W_S1W_S1W_PbSJ_(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #3 comdat {
+bb.a:
+  %i.a = load i8, ptr %3, align 1, !tbaa !161, !range !13, !noundef !14
+  %i.b = trunc nuw i8 %i.a to i1
+  %i.c = icmp eq ptr %1, %2                       ; 2 uses
+  br i1 %i.b, label %bb.b, label %bb.g
+
+bb.b:                                             ; preds = %bb.a
+  br i1 %i.c, label %_ZN5boost7movelib15detail_adaptive29partial_merge_bufferless_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEET_S1W_S1W_S1W_PbSJ_.exit, label %bb.c
+
+bb.c:                                             ; preds = %bb.b
+  %.not.i = icmp eq ptr %0, %1
+  br i1 %.not.i, label %_ZN5boost7movelib15detail_adaptive29partial_merge_bufferless_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEET_S1W_S1W_S1W_PbSJ_.exit.sink.split, label %bb.d
+
+bb.d:                                             ; preds = %bb.c
+  %i.d = getelementptr inbounds i8, ptr %1, i64 -8
+  %i.e = load ptr, ptr %1, align 8, !tbaa !231
+  %i.f = load ptr, ptr %i.d, align 8, !tbaa !231
+  %i.g = icmp ult ptr %i.e, %i.f
+  br i1 %i.g, label %.lr.ph.i.preheader.i, label %_ZN5boost7movelib15detail_adaptive29partial_merge_bufferless_implIPN4CGAL8internal11CC_iteratorINS3_17Compact_containerINS3_37Constrained_triangulation_face_base_2INS3_5EpickENS3_35Triangulation_face_base_with_info_2IZN3igl8copyleft4cgal11triangulateIS8_N5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENSF_IiLin1ELin1ELi0ELin1ELin1EEESG_SG_SH_EEvRKNSE_10MatrixBaseIT0_EERKNSI_IT1_EERKNSI_IT2_EEbRNSE_15PlainObjectBaseIT3_EERNSV_IT4_EEE9FaceInfo2S8_NS3_25Triangulation_face_base_2IS8_NS3_28Triangulation_ds_face_base_2INS3_30Triangulation_data_structure_2INS3_27Triangulation_vertex_base_2IS8_NS3_30Triangulation_ds_vertex_base_2IvEEEENS7_IS8_NS9_IS12_S8_NS13_IS8_NS14_IvEEEEEEEEEEEEEEEEEENS3_7DefaultES1J_S1J_EELb0EEENS_9container3dtl23flat_tree_value_compareISt4lessIS1L_ES1L_NS_11move_detail8identityIS1L_EEEEEET_S1W_S1W_S1W_PbSJ_.exit.sink.split
+end_hunk_3
