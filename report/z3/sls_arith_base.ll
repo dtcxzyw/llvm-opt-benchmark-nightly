@@ -204,7 +204,7 @@ bb.bf:                                            ; preds = %bb.be
 
 _ZplILb1EE13checked_int64IXT_EERKS1_S3_.exit51:   ; preds = %.thread72, %bb.be
   %i.cw = add nuw nsw i64 %i.bn, 1
-  %4 = icmp samesign ugt i64 %i.bn, 9223372036854775806
+  %4 = icmp eq i64 %i.bn, 9223372036854775807
   br i1 %4, label %bb.bg, label %_ZplILb1EE13checked_int64IXT_EERKS1_RKl.exit
 
 bb.bg:                                            ; preds = %_ZplILb1EE13checked_int64IXT_EERKS1_S3_.exit51

@@ -203,10 +203,10 @@ bb.k:                                             ; preds = %.thread186, %bb.g, 
 .thread136:                                       ; preds = %bb.h
   %.not.i.i.i.i3133 = icmp eq i64 %i.ag, 0
   %.sink9.i.i.i.i134 = select i1 %.not.i.i.i.i3133, i64 0, i64 %i.af
-  %or.cond.i.i.i.i4138 = icmp samesign ugt i32 %3, -2147483648
+  %or.cond.i.i.i.i4138.not = icmp eq i32 %3, -2147483648
   %i.as = sub nsw i32 0, %3
   %i.at = zext nneg i32 %i.as to i64
-  br i1 %or.cond.i.i.i.i4138, label %.thread140, label %.thread144
+  br i1 %or.cond.i.i.i.i4138.not, label %.thread144, label %.thread140
 
 bb.l:                                             ; preds = %bb.k
   %.not.i.i.i.i3 = icmp eq i64 %i.ar, 0
@@ -281,11 +281,11 @@ bb.q:                                             ; preds = %bb.o
   %i.bm = select i1 %i.f, i1 %i.bk, i1 false
   br label %._crit_edge.i.i.i.thread
 
-._crit_edge.i.i.i.thread:                         ; preds = %.thread, %.thread144, %._crit_edge.i.i.i
-  %narrow.i.not.i.i.i10 = phi i1 [ %i.bm, %._crit_edge.i.i.i ], [ true, %.thread144 ], [ true, %.thread ] ; 2 uses
-  %i.bn = phi i64 [ %i.bi, %._crit_edge.i.i.i ], [ %i.ag, %.thread144 ], [ %i.ax, %.thread ] ; 4 uses
-  %i.bo = phi i64 [ %i.bj, %._crit_edge.i.i.i ], [ %i.af, %.thread144 ], [ %i.aw, %.thread ] ; 4 uses
-  %i.bp = phi i64 [ %spec.select, %._crit_edge.i.i.i ], [ undef, %.thread144 ], [ undef, %.thread ] ; 8 uses
+._crit_edge.i.i.i.thread:                         ; preds = %._crit_edge.i.i.i, %.thread, %.thread144
+  %narrow.i.not.i.i.i10 = phi i1 [ %i.bm, %._crit_edge.i.i.i ], [ true, %.thread ], [ true, %.thread144 ] ; 2 uses
+  %i.bn = phi i64 [ %i.bi, %._crit_edge.i.i.i ], [ %i.ax, %.thread ], [ %i.ag, %.thread144 ] ; 4 uses
+  %i.bo = phi i64 [ %i.bj, %._crit_edge.i.i.i ], [ %i.aw, %.thread ], [ %i.af, %.thread144 ] ; 4 uses
+  %i.bp = phi i64 [ %spec.select, %._crit_edge.i.i.i ], [ undef, %.thread ], [ undef, %.thread144 ] ; 8 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.br = load i64, ptr %i.bq, align 8, !alias.scope !26123, !noalias !26126 ; 15 uses
   %.not166.i.i.i = icmp ugt i64 %i.bp, %i.br      ; 3 uses
@@ -312,10 +312,10 @@ _RNvMse_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5tupleINtB5_19VariableLengthT
   br i1 %narrow.i.not.i.i.i10, label %_RNvMse_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5tupleINtB5_19VariableLengthTupleNtB7_4TypeNtB5_15VariableSegmentE18suffix_slice_index.exit203.thread.i.i.i, label %bb.v
 
 bb.t:                                             ; preds = %._crit_edge.i.i.i.thread
-  %or.cond.i.i.i.i.i = icmp samesign ugt i32 %5, -2147483648
+  %or.cond.i.not.i.i.i.i = icmp eq i32 %5, -2147483648
   %i.by = sub nsw i32 0, %5
   %i.bz = zext nneg i32 %i.by to i64              ; 2 uses
-  br i1 %or.cond.i.i.i.i.i, label %bb.u, label %_RNvMse_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5tupleINtB5_19VariableLengthTupleNtB7_4TypeNtB5_15VariableSegmentE18suffix_slice_index.exit.thread.i.i.i
+  br i1 %or.cond.i.not.i.i.i.i, label %_RNvMse_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5tupleINtB5_19VariableLengthTupleNtB7_4TypeNtB5_15VariableSegmentE18suffix_slice_index.exit.thread.i.i.i, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
   %.not.i.i.i.i.i = icmp eq i64 %i.bn, 0
@@ -374,10 +374,10 @@ _RNvMse_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5tupleINtB5_19VariableLengthT
   br label %bb.an
 
 bb.y:                                             ; preds = %bb.w
-  %or.cond.i.i197.i.i.i = icmp samesign ugt i32 %5, -2147483648
+  %or.cond.i.not.i197.i.i.i = icmp eq i32 %5, -2147483648
   %i.cr = sub nsw i32 0, %5
   %i.cs = zext nneg i32 %i.cr to i64              ; 2 uses
-  br i1 %or.cond.i.i197.i.i.i, label %bb.z, label %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5tuple22VariableTupleSlicePlanE7or_elseNCNvMse_BK_INtBK_19VariableLengthTupleNtBM_4TypeNtBK_15VariableSegmentE18forward_slice_plans0_0EBO_.exit.thread
+  br i1 %or.cond.i.not.i197.i.i.i, label %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5tuple22VariableTupleSlicePlanE7or_elseNCNvMse_BK_INtBK_19VariableLengthTupleNtBM_4TypeNtBK_15VariableSegmentE18forward_slice_plans0_0EBO_.exit.thread, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
   %.not.i.i198.i.i.i = icmp eq i64 %i.bn, 0
@@ -404,10 +404,10 @@ _RNvMse_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5tupleINtB5_19VariableLengthT
   br label %bb.an
 
 _RNvMse_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5tupleINtB5_19VariableLengthTupleNtB7_4TypeNtB5_15VariableSegmentE18suffix_slice_index.exit203.thread.i.i.i: ; preds = %_RNvMse_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5tupleINtB5_19VariableLengthTupleNtB7_4TypeNtB5_15VariableSegmentE18suffix_slice_index.exit.thread.i.i.i
-  %or.cond.i.i227.i.i.i = icmp samesign ugt i32 %3, -2147483648
+  %or.cond.i.not.i227.i.i.i = icmp eq i32 %3, -2147483648
   %i.db = sub nsw i32 0, %3
   %i.dc = zext nneg i32 %i.db to i64              ; 2 uses
-  br i1 %or.cond.i.i227.i.i.i, label %bb.aa, label %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5tuple22VariableTupleSlicePlanE7or_elseNCNvMse_BK_INtBK_19VariableLengthTupleNtBM_4TypeNtBK_15VariableSegmentE18forward_slice_plans0_0EBO_.exit.thread
+  br i1 %or.cond.i.not.i227.i.i.i, label %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5tuple22VariableTupleSlicePlanE7or_elseNCNvMse_BK_INtBK_19VariableLengthTupleNtBM_4TypeNtBK_15VariableSegmentE18forward_slice_plans0_0EBO_.exit.thread, label %bb.aa
 
 bb.aa:                                            ; preds = %_RNvMse_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5tupleINtB5_19VariableLengthTupleNtB7_4TypeNtB5_15VariableSegmentE18suffix_slice_index.exit203.thread.i.i.i
   %.not.i.i228.i.i.i = icmp eq i64 %i.bn, 0

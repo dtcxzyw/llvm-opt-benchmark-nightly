@@ -201,7 +201,7 @@ begin_hunk_0_@llvm.memset.p0.i64
 !278 = !{!279}
 !279 = distinct !{!279, !280, !"_RINvYINtNtNtCshzWfHUSfYae_4core5slice4iter4IterNtNtNtCsa5zhLZWy8nm_11toml_parser5lexer5token5TokenENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNvB1z_5rfind5checkRBJ_NCNvNtNtBP_6parser8document20on_inline_table_open0E0INtNtNtBa_3ops12control_flow11ControlFlowB33_EEBP_: argument 0"}
 !280 = distinct !{!280, !"_RINvYINtNtNtCshzWfHUSfYae_4core5slice4iter4IterNtNtNtCsa5zhLZWy8nm_11toml_parser5lexer5token5TokenENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNvB1z_5rfind5checkRBJ_NCNvNtNtBP_6parser8document20on_inline_table_open0E0INtNtNtBa_3ops12control_flow11ControlFlowB33_EEBP_"}
-!281 = !{!"branch_weights", i32 2, i32 0, i32 0, i32 2147483646, i32 0}
+!281 = !{!"branch_weights", i32 1, i32 0, i32 1115298152, i32 1032185495, i32 0}
 !282 = !{!283}
 !283 = distinct !{!283, !284, !"_RNvNtNtCsa5zhLZWy8nm_11toml_parser6parser8document4seek: argument 0"}
 !284 = distinct !{!284, !"_RNvNtNtCsa5zhLZWy8nm_11toml_parser6parser8document4seek"}
