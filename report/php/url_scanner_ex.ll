@@ -1,5 +1,5 @@
-inline.NumInlined: 24
-inline.NumDeleted: 11
+inline.NumInlined: 23
+inline.NumDeleted: 10
 begin_hunk_0_@php_url_scanner_ex_deactivate:bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 4
   %i.d = load i32, ptr %i.c, align 4, !tbaa !23
@@ -201,7 +201,7 @@ declare i32 @php_output_start_internal(ptr noundef, i64 noundef, ptr noundef, i6
 ; Function Attrs: inlinehint nounwind uwtable
 define internal fastcc void @php_url_scanner_session_handler_impl(ptr noundef %0, i64 noundef %1, ptr nofree noundef writeonly captures(none) %2, ptr nofree noundef writeonly captures(none) %3, i32 noundef %4, i1 noundef zeroext %5) unnamed_addr #5 {
 bb.a:
-  %. = select i1 %5, ptr getelementptr inbounds nuw (i8, ptr @basic_globals, i64 888), ptr getelementptr inbounds nuw (i8, ptr @basic_globals, i64 1112) ; 10 uses
+  %. = select i1 %5, ptr getelementptr inbounds nuw (i8, ptr @basic_globals, i64 888), ptr getelementptr inbounds nuw (i8, ptr @basic_globals, i64 1112) ; 11 uses
   %.val = load ptr, ptr getelementptr inbounds nuw (i8, ptr @basic_globals, i64 984), align 8
   %.val40 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @basic_globals, i64 1208), align 8
   %i.a = select i1 %5, ptr %.val, ptr %.val40
@@ -604,7 +604,7 @@ bb.cf:                                            ; preds = %bb.ce, %bb.cd
   br label %bb.cg
 
 bb.cg:                                            ; preds = %bb.cf, %smart_str_alloc.exit._crit_edge.i.i
-  %.pre-phi490.i.i = phi i64 [ %.pre489.i.i, %smart_str_alloc.exit._crit_edge.i.i ], [ %i.mv, %bb.cf ] ; 2 uses
+  %.pre-phi490.i.i = phi i64 [ %.pre489.i.i, %smart_str_alloc.exit._crit_edge.i.i ], [ %i.mv, %bb.cf ]
   %.pre-phi488.i.i = phi i64 [ %.pre487.i.i, %smart_str_alloc.exit._crit_edge.i.i ], [ %i.mj, %bb.cf ]
   %.21.i.i = phi ptr [ %i.q, %smart_str_alloc.exit._crit_edge.i.i ], [ %i.ms, %bb.cf ] ; 14 uses
   %i.nl = sub i64 %.pre-phi488.i.i, %.pre-phi490.i.i
@@ -627,7 +627,7 @@ bb.ch:                                            ; preds = %bb.cg
 
 bb.ci:                                            ; preds = %bb.ch
   %i.nt = icmp ult i8 %i.nn, 33
-  br i1 %i.nt, label %6, label %bb.cj
+  br i1 %i.nt, label %bb.cm, label %bb.cj
 
 bb.cj:                                            ; preds = %bb.ci
   %i.nu = icmp ult i8 %i.nn, 35
@@ -635,7 +635,7 @@ bb.cj:                                            ; preds = %bb.ci
 
 bb.ck:                                            ; preds = %bb.cj
   %i.nv = icmp ult i8 %i.nn, 40
-  br i1 %i.nv, label %bb.co, label %6
+  br i1 %i.nv, label %bb.co, label %bb.cm
 
 .preheader409.i.i:                                ; preds = %.lr.ph325
   %i.nw = getelementptr inbounds nuw i8, ptr %i.nx, i64 1 ; 2 uses
@@ -656,60 +656,26 @@ bb.cl:                                            ; preds = %.lr.ph325
   tail call fastcc void @handle_val(ptr noundef nonnull %., ptr noundef nonnull %.21.i.i, ptr noundef nonnull %i.nx, i8 noundef signext 0, i8 noundef signext 32)
   br label %.preheader419.sink.split.i.i
 
-6:                                                ; preds = %bb.ck, %bb.ci
-  %7 = getelementptr inbounds nuw i8, ptr %.21.i.i, i64 1
-  br label %8
-
-8:                                                ; preds = %bb.cv, %bb.cr, %bb.co, %bb.cn, %6
-  %.23.i.i = phi ptr [ %7, %6 ], [ %i.od, %bb.cn ], [ %i.og, %bb.co ], [ %i.od, %bb.cr ], [ %i.og, %bb.cv ] ; 2 uses
-  %9 = select i1 %5, ptr getelementptr inbounds nuw (i8, ptr @basic_globals, i64 952), ptr getelementptr inbounds nuw (i8, ptr @basic_globals, i64 1176) ; 4 uses
-  %10 = ptrtoint ptr %.23.i.i to i64
-  %11 = sub i64 %10, %.pre-phi490.i.i             ; 3 uses
-  %12 = load ptr, ptr %9, align 8, !tbaa !12      ; 3 uses
-  %.not.i.i365.i.i = icmp eq ptr %12, null
-  br i1 %.not.i.i365.i.i, label %bb.cm, label %13, !prof !20
-
-13:                                               ; preds = %8
-  %14 = getelementptr inbounds nuw i8, ptr %12, i64 16
-  %15 = load i64, ptr %14, align 8, !tbaa !17     ; 2 uses
-  %16 = add i64 %15, %11                          ; 3 uses
-  %.val60 = load i64, ptr getelementptr inbounds nuw (i8, ptr @basic_globals, i64 960), align 8
-  %.val61 = load i64, ptr getelementptr inbounds nuw (i8, ptr @basic_globals, i64 1184), align 8
-  %17 = select i1 %5, i64 %.val60, i64 %.val61
-  %.not12.i.i366.i.i = icmp ult i64 %16, %17
-  br i1 %.not12.i.i366.i.i, label %passthru.exit373.i.i, label %bb.cm, !prof !22
-
-bb.cm:                                            ; preds = %13, %8
-  %.0.i.i367.i.i = phi i64 [ %11, %8 ], [ %16, %13 ] ; 2 uses
-  tail call void @smart_str_erealloc(ptr noundef nonnull %9, i64 noundef %.0.i.i367.i.i) #18
-  %.pre.i368.i.i = load ptr, ptr %9, align 8, !tbaa !12 ; 2 uses
-  %.phi.trans.insert.i369.i.i = getelementptr inbounds nuw i8, ptr %.pre.i368.i.i, i64 16
-  %.pre4.i370.i.i = load i64, ptr %.phi.trans.insert.i369.i.i, align 8, !tbaa !17
+bb.cm:                                            ; preds = %bb.ck, %bb.ci
+  %.phi.trans.insert.i369.i.i = getelementptr inbounds nuw i8, ptr %.21.i.i, i64 1
   br label %passthru.exit373.i.i
 
-passthru.exit373.i.i:                             ; preds = %bb.cm, %13
-  %18 = phi i64 [ %15, %13 ], [ %.pre4.i370.i.i, %bb.cm ]
-  %19 = phi ptr [ %12, %13 ], [ %.pre.i368.i.i, %bb.cm ]
-  %.1.i.i372.i.i = phi i64 [ %16, %13 ], [ %.0.i.i367.i.i, %bb.cm ]
-  %20 = getelementptr inbounds nuw i8, ptr %19, i64 24
-  %21 = getelementptr inbounds nuw i8, ptr %20, i64 %18
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %21, ptr nonnull align 1 %.21.i.i, i64 %11, i1 false)
-  %22 = load ptr, ptr %9, align 8, !tbaa !12
-  %23 = getelementptr inbounds nuw i8, ptr %22, i64 16
-  store i64 %.1.i.i372.i.i, ptr %23, align 8, !tbaa !17
+passthru.exit373.i.i:                             ; preds = %bb.cv, %bb.cr, %bb.co, %bb.cn, %bb.cm
+  %.23.i.i = phi ptr [ %.phi.trans.insert.i369.i.i, %bb.cm ], [ %i.od, %bb.cn ], [ %i.og, %bb.co ], [ %i.od, %bb.cr ], [ %i.og, %bb.cv ] ; 2 uses
+  tail call fastcc void @passthru(ptr noundef nonnull %., ptr noundef nonnull %.21.i.i, ptr noundef nonnull %.23.i.i)
   br label %.preheader419.sink.split.i.i
 
 bb.cn:                                            ; preds = %bb.cj
   %i.od = getelementptr inbounds nuw i8, ptr %.21.i.i, i64 1 ; 4 uses
   %i.oe = load i8, ptr %i.od, align 1, !tbaa !23  ; 2 uses
   %i.of = icmp eq i8 %i.oe, 62
-  br i1 %i.of, label %8, label %.preheader.i.i
+  br i1 %i.of, label %passthru.exit373.i.i, label %.preheader.i.i
 
 bb.co:                                            ; preds = %bb.ck
   %i.og = getelementptr inbounds nuw i8, ptr %.21.i.i, i64 1 ; 4 uses
   %i.oh = load i8, ptr %i.og, align 1, !tbaa !23  ; 2 uses
   %i.oi = icmp eq i8 %i.oh, 62
-  br i1 %i.oi, label %8, label %.preheader407.i.i
+  br i1 %i.oi, label %passthru.exit373.i.i, label %.preheader407.i.i
 
 bb.cp:                                            ; preds = %bb.cq
   %i.oj = load i8, ptr %i.ok, align 1, !tbaa !23
@@ -730,7 +696,7 @@ bb.cq:                                            ; preds = %.preheader.i.i
 
 bb.cr:                                            ; preds = %.preheader.i.i, %.preheader.i.i
   %i.ol = icmp samesign ult i8 %.0.i40.i, 35
-  br i1 %i.ol, label %bb.cs, label %8
+  br i1 %i.ol, label %bb.cs, label %passthru.exit373.i.i
 
 bb.cs:                                            ; preds = %bb.cr
   %i.om = getelementptr inbounds nuw i8, ptr %.24.i.i, i64 1 ; 2 uses
@@ -756,7 +722,7 @@ bb.cu:                                            ; preds = %.preheader407.i.i
 
 bb.cv:                                            ; preds = %.preheader407.i.i, %.preheader407.i.i
   %i.op = icmp samesign ugt i8 %.1.i39.i, 39
-  br i1 %i.op, label %8, label %bb.cw
+  br i1 %i.op, label %passthru.exit373.i.i, label %bb.cw
 
 bb.cw:                                            ; preds = %bb.cv
   %i.oq = getelementptr inbounds nuw i8, ptr %.25.i.i, i64 1 ; 2 uses
@@ -1125,6 +1091,46 @@ bb.ec:                                            ; preds = %bb.dq, %bb.dp
   br label %bb.ed
 
 bb.ed:                                            ; preds = %smart_str_free_ex.exit35, %bb.ec, %url_adapt_ext.exit
+  ret void
+}
+
+; Function Attrs: inlinehint nounwind uwtable
+define internal fastcc void @passthru(ptr noundef %0, ptr noundef %1, ptr noundef %2) unnamed_addr #5 {
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 4 uses
+  %5 = ptrtoint ptr %2 to i64
+  %6 = ptrtoint ptr %1 to i64
+  %7 = sub i64 %5, %6                             ; 3 uses
+  %8 = load ptr, ptr %4, align 8, !tbaa !12       ; 3 uses
+  %.not.i = icmp eq ptr %8, null
+  br i1 %.not.i, label %15, label %9, !prof !20
+
+9:                                                ; preds = %3
+  %10 = getelementptr inbounds nuw i8, ptr %8, i64 16
+  %11 = load i64, ptr %10, align 8, !tbaa !17     ; 2 uses
+  %12 = add i64 %11, %7                           ; 3 uses
+  %13 = getelementptr inbounds nuw i8, ptr %0, i64 72
+  %14 = load i64, ptr %13, align 8, !tbaa !21
+  %.not12.i = icmp ult i64 %12, %14
+  br i1 %.not12.i, label %smart_str_alloc.exit, label %15, !prof !22
+
+15:                                               ; preds = %9, %3
+  %.0.i = phi i64 [ %7, %3 ], [ %12, %9 ]         ; 2 uses
+  tail call void @smart_str_erealloc(ptr noundef nonnull %4, i64 noundef %.0.i) #18
+  %.pre = load ptr, ptr %4, align 8, !tbaa !12    ; 2 uses
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre, i64 16
+  %.pre4 = load i64, ptr %.phi.trans.insert, align 8, !tbaa !17
+  br label %smart_str_alloc.exit
+
+smart_str_alloc.exit:                             ; preds = %9, %15
+  %16 = phi i64 [ %11, %9 ], [ %.pre4, %15 ]
+  %17 = phi ptr [ %8, %9 ], [ %.pre, %15 ]
+  %.1.i = phi i64 [ %12, %9 ], [ %.0.i, %15 ]
+  %18 = getelementptr inbounds nuw i8, ptr %17, i64 24
+  %19 = getelementptr inbounds nuw i8, ptr %18, i64 %16
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %19, ptr align 1 %1, i64 %7, i1 false)
+  %20 = load ptr, ptr %4, align 8, !tbaa !12
+  %21 = getelementptr inbounds nuw i8, ptr %20, i64 16
+  store i64 %.1.i, ptr %21, align 8, !tbaa !17
   ret void
 }
 
@@ -1531,7 +1537,7 @@ attributes #21 = { nounwind allocsize(0) }
 !90 = !{!78, !9, i64 1264}
 !91 = !{!78, !9, i64 1268}
 !92 = !{!51, !9, i64 128}
-!93 = !{!"branch_weights", !"expected", i32 1104739, i32 2146378909}
+!93 = !{!"branch_weights", !"expected", i32 1104031, i32 2146379617}
 !94 = !{!51, !14, i64 0}
 !95 = !{!96, !96, i64 0}
 !96 = !{!"p1 int", !15, i64 0}

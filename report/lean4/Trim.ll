@@ -203,9 +203,9 @@ bb.bv:                                            ; preds = %lean_inc.exit.i207,
   br i1 %.not.i209, label %l___private_Init_Data_Array_Basic_0__Array_foldlMUnsafe_fold___at___00__private_Lean_Meta_Tactic_BVDecide_LRAT_Trim_0__Lean_Meta_Tactic_BVDecide_LRAT_trim_M_run_spec__2.exit, label %bb.bm
 
 lean_inc.exit:                                    ; preds = %lean_nat_lt.exit, %l___private_Init_Data_Array_Basic_0__Array_foldlMUnsafe_fold___at___00__private_Lean_Meta_Tactic_BVDecide_LRAT_Trim_0__Lean_Meta_Tactic_BVDecide_LRAT_trim_M_run_spec__2.exit, %bb.cn, %bb.co, %bb.cp
-  %.1130 = phi ptr [ %i.fd, %l___private_Init_Data_Array_Basic_0__Array_foldlMUnsafe_fold___at___00__private_Lean_Meta_Tactic_BVDecide_LRAT_Trim_0__Lean_Meta_Tactic_BVDecide_LRAT_trim_M_run_spec__2.exit ], [ %i.fd, %bb.cp ], [ %i.fd, %bb.co ], [ %i.fd, %bb.cn ], [ inttoptr (i64 1 to ptr), %lean_nat_lt.exit ] ; 4 uses
-  %.1128 = phi ptr [ %.027.i208, %l___private_Init_Data_Array_Basic_0__Array_foldlMUnsafe_fold___at___00__private_Lean_Meta_Tactic_BVDecide_LRAT_Trim_0__Lean_Meta_Tactic_BVDecide_LRAT_trim_M_run_spec__2.exit ], [ %.027.i208, %bb.cp ], [ %.027.i208, %bb.co ], [ %.027.i208, %bb.cn ], [ %.0.i192, %lean_nat_lt.exit ]
-  %i.dd = ptrtoint ptr %.1130 to i64              ; 2 uses
+  %.1130 = phi ptr [ %.027.i208, %l___private_Init_Data_Array_Basic_0__Array_foldlMUnsafe_fold___at___00__private_Lean_Meta_Tactic_BVDecide_LRAT_Trim_0__Lean_Meta_Tactic_BVDecide_LRAT_trim_M_run_spec__2.exit ], [ %.027.i208, %bb.cp ], [ %.027.i208, %bb.co ], [ %.027.i208, %bb.cn ], [ %.0.i192, %lean_nat_lt.exit ]
+  %.1128 = phi ptr [ %i.fd, %l___private_Init_Data_Array_Basic_0__Array_foldlMUnsafe_fold___at___00__private_Lean_Meta_Tactic_BVDecide_LRAT_Trim_0__Lean_Meta_Tactic_BVDecide_LRAT_trim_M_run_spec__2.exit ], [ %i.fd, %bb.cp ], [ %i.fd, %bb.co ], [ %i.fd, %bb.cn ], [ inttoptr (i64 1 to ptr), %lean_nat_lt.exit ] ; 4 uses
+  %i.dd = ptrtoint ptr %.1128 to i64              ; 2 uses
   %i.de = and i64 %i.dd, 1
   %.not.i219 = icmp eq i64 %i.de, 0
   br i1 %.not.i219, label %bb.bw, label %lean_mk_empty_byte_array.exit
@@ -228,7 +228,7 @@ lean_mk_empty_byte_array.exit:                    ; preds = %lean_inc.exit
   store i64 0, ptr %i.dm, align 8, !tbaa !9
   %i.dn = getelementptr inbounds nuw i8, ptr %i.dh, i64 16
   store i64 %i.df, ptr %i.dn, align 8, !tbaa !9
-  %i.do = tail call ptr @l___private_Init_Data_Nat_Fold_0__Nat_foldTR_loop___at___00__private_Lean_Meta_Tactic_BVDecide_LRAT_Trim_0__Lean_Meta_Tactic_BVDecide_LRAT_trim_M_run_spec__1___redArg(ptr noundef %.1130, ptr noundef nonnull %i.dh)
+  %i.do = tail call ptr @l___private_Init_Data_Nat_Fold_0__Nat_foldTR_loop___at___00__private_Lean_Meta_Tactic_BVDecide_LRAT_Trim_0__Lean_Meta_Tactic_BVDecide_LRAT_trim_M_run_spec__1___redArg(ptr noundef %.1128, ptr noundef nonnull %i.dh)
   br i1 %.not.i148, label %.critedge.i, label %.thread, !prof !11
 
 .thread:                                          ; preds = %lean_mk_empty_byte_array.exit
@@ -248,7 +248,7 @@ bb.by:                                            ; preds = %.thread
   br label %lean_nat_add.exit
 
 .critedge.i:                                      ; preds = %lean_mk_empty_byte_array.exit
-  %i.dw = tail call ptr @lean_nat_big_add(ptr noundef %i.z, ptr noundef %.1130) #6
+  %i.dw = tail call ptr @lean_nat_big_add(ptr noundef %i.z, ptr noundef %.1128) #6
   br label %lean_nat_add.exit
 
 lean_nat_add.exit:                                ; preds = %bb.by, %bb.bx, %.critedge.i
@@ -268,7 +268,7 @@ bb.ca:                                            ; preds = %lean_nat_add.exit
 lean_obj_once.exit225:                            ; preds = %bb.bz, %bb.ca
   %.0.i224 = phi ptr [ %i.dz, %bb.bz ], [ %i.ea, %bb.ca ]
   %i.eb = tail call ptr @lean_mk_array(ptr noundef %.0.i, ptr noundef %.0.i224) #6
-  %i.ec = tail call ptr @lean_mk_array(ptr noundef %.1130, ptr noundef nonnull inttoptr (i64 1 to ptr)) #6
+  %i.ec = tail call ptr @lean_mk_array(ptr noundef %.1128, ptr noundef nonnull inttoptr (i64 1 to ptr)) #6
   tail call void @lean_inc_heartbeat() #6
   %i.ed = tail call noalias ptr @mi_malloc_small(i64 noundef 32) #6 ; 7 uses
   %i.ee = icmp eq ptr %i.ed, null
@@ -283,7 +283,7 @@ lean_alloc_ctor.exit226:                          ; preds = %lean_obj_once.exit2
   store i32 1, ptr %i.ed, align 4, !tbaa !12
   store i32 196640, ptr %i.ef, align 4
   %i.eg = getelementptr inbounds nuw i8, ptr %i.ed, i64 8
-  store ptr %.1128, ptr %i.eg, align 8, !tbaa !15
+  store ptr %.1130, ptr %i.eg, align 8, !tbaa !15
   %i.eh = getelementptr inbounds nuw i8, ptr %i.ed, i64 16
   store ptr %i.z, ptr %i.eh, align 8, !tbaa !15
   %i.ei = getelementptr inbounds nuw i8, ptr %i.ed, i64 24
@@ -686,7 +686,7 @@ bb.bn:                                            ; preds = %bb.bm
   br label %lean_dec_ref.exit492
 
 lean_dec_ref.exit492:                             ; preds = %bb.bl, %bb.bm, %bb.bn
-  %i.em = tail call ptr @l_WellFounded_opaqueFix_u2083___at___00__private_Lean_Meta_Tactic_BVDecide_LRAT_Trim_0__Lean_Meta_Tactic_BVDecide_LRAT_trim_mapping_spec__3___redArg___lam__0(ptr noundef nonnull %.4347632, ptr noundef %i.s, ptr noundef %i.u, i8 noundef zeroext 1, ptr nonnull poison, ptr noundef %i.dw, ptr noundef nonnull %4, ptr noundef %i.ed) ; 4 uses
+  %i.em = tail call ptr @l_WellFounded_opaqueFix_u2083___at___00__private_Lean_Meta_Tactic_BVDecide_LRAT_Trim_0__Lean_Meta_Tactic_BVDecide_LRAT_trim_mapping_spec__3___redArg___lam__0(ptr noundef nonnull %.4347632, ptr noundef %i.s, ptr noundef %i.u, i8 noundef zeroext %6, ptr nonnull poison, ptr noundef %i.dw, ptr noundef nonnull %4, ptr noundef %i.ed) ; 4 uses
   br i1 %.not.i416, label %bb.bo, label %lean_dec.exit390.thread
 
 bb.bo:                                            ; preds = %lean_dec_ref.exit492
@@ -879,7 +879,7 @@ bb.cs:                                            ; preds = %bb.cr
   br label %lean_dec_ref.exit488
 
 lean_dec_ref.exit488:                             ; preds = %bb.cq, %bb.cr, %bb.cs
-  %i.gj = tail call ptr @l_WellFounded_opaqueFix_u2083___at___00__private_Lean_Meta_Tactic_BVDecide_LRAT_Trim_0__Lean_Meta_Tactic_BVDecide_LRAT_trim_mapping_spec__3___redArg___lam__0(ptr noundef nonnull %.4347632, ptr noundef %i.s, ptr noundef %i.u, i8 noundef zeroext 1, ptr nonnull poison, ptr noundef %i.ft, ptr noundef nonnull %4, ptr noundef %i.ga) ; 4 uses
+  %i.gj = tail call ptr @l_WellFounded_opaqueFix_u2083___at___00__private_Lean_Meta_Tactic_BVDecide_LRAT_Trim_0__Lean_Meta_Tactic_BVDecide_LRAT_trim_mapping_spec__3___redArg___lam__0(ptr noundef nonnull %.4347632, ptr noundef %i.s, ptr noundef %i.u, i8 noundef zeroext %6, ptr nonnull poison, ptr noundef %i.ft, ptr noundef nonnull %4, ptr noundef %i.ga) ; 4 uses
   br i1 %.not.i416, label %bb.ct, label %lean_dec.exit390.thread
 
 bb.ct:                                            ; preds = %lean_dec_ref.exit488
@@ -901,7 +901,7 @@ bb.cw:                                            ; preds = %bb.cv
   br label %lean_dec.exit390.thread
 
 bb.cx:                                            ; preds = %lean_dec_ref.exit494
-  %i.gn = tail call ptr @l_WellFounded_opaqueFix_u2083___at___00__private_Lean_Meta_Tactic_BVDecide_LRAT_Trim_0__Lean_Meta_Tactic_BVDecide_LRAT_trim_mapping_spec__3___redArg___lam__0(ptr noundef nonnull %.4347632, ptr noundef %i.s, ptr noundef %i.u, i8 noundef zeroext 1, ptr nonnull poison, ptr noundef nonnull @l_WellFounded_opaqueFix_u2083___at___00__private_Lean_Meta_Tactic_BVDecide_LRAT_Trim_0__Lean_Meta_Tactic_BVDecide_LRAT_trim_mapping_spec__3___redArg___closed__0_value, ptr noundef nonnull %4, ptr noundef nonnull %.0350) ; 4 uses
+  %i.gn = tail call ptr @l_WellFounded_opaqueFix_u2083___at___00__private_Lean_Meta_Tactic_BVDecide_LRAT_Trim_0__Lean_Meta_Tactic_BVDecide_LRAT_trim_mapping_spec__3___redArg___lam__0(ptr noundef nonnull %.4347632, ptr noundef %i.s, ptr noundef %i.u, i8 noundef zeroext %6, ptr nonnull poison, ptr noundef nonnull @l_WellFounded_opaqueFix_u2083___at___00__private_Lean_Meta_Tactic_BVDecide_LRAT_Trim_0__Lean_Meta_Tactic_BVDecide_LRAT_trim_mapping_spec__3___redArg___closed__0_value, ptr noundef nonnull %4, ptr noundef nonnull %.0350) ; 4 uses
   br i1 %.not.i416, label %bb.cy, label %lean_dec.exit390.thread
 
 bb.cy:                                            ; preds = %bb.cx
@@ -984,7 +984,8 @@ bb.dn:                                            ; preds = %bb.dm
 
 lean_dec.exit396:                                 ; preds = %.thread624, %bb.ag, %bb.ah, %bb.ai, %lean_dec.exit398, %bb.ac, %bb.ad, %bb.ae
   %.0351 = phi i8 [ %i.bx, %lean_dec.exit398 ], [ %i.bx, %bb.ae ], [ %i.bx, %bb.ad ], [ %i.bx, %bb.ac ], [ %i.bl, %.thread624 ], [ %i.cf, %bb.ai ], [ %i.cf, %bb.ag ], [ %i.cf, %bb.ah ]
-  %i.ha = icmp eq i8 %.0351, 1
+  %i.ha = icmp eq i8 %.0351, 1                    ; 2 uses
+  %6 = zext i1 %i.ha to i8                        ; 3 uses
   br i1 %i.ha, label %bb.dr, label %bb.do
 
 bb.do:                                            ; preds = %lean_dec.exit396

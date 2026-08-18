@@ -201,11 +201,14 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   tail call void @_ZN6icu_7811Formattable7disposeEv(ptr noundef nonnull align 8 dereferenceable(112) %0)
   %i.c = tail call noundef ptr @_ZN6icu_787UMemorynwEm(i64 noundef 72) #14 ; 6 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.c) ]
+  %4 = icmp eq ptr %i.c, null
+  br i1 %4, label %bb.c, label %5
+
+5:                                                ; preds = %bb.b
   invoke void @_ZN6icu_786number4impl15DecimalQuantityC1Ev(ptr noundef nonnull align 8 dereferenceable(66) %i.c)
           to label %bb.c unwind label %bb.j
 
-bb.c:                                             ; preds = %bb.b
+bb.c:                                             ; preds = %5, %bb.b
   %i.d = tail call noundef nonnull align 8 dereferenceable(66) ptr @_ZN6icu_786number4impl15DecimalQuantity14setToDecNumberENS_11StringPieceER10UErrorCode(ptr noundef nonnull align 8 dereferenceable(66) %i.c, ptr %1, i32 %2, ptr noundef nonnull align 4 dereferenceable(4) %3) ; 0 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 4 uses
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !22   ; 3 uses
@@ -254,7 +257,7 @@ bb.i:                                             ; preds = %bb.e
 _ZN6icu_7811Formattable20adoptDecimalQuantityEPNS_6number4impl15DecimalQuantityE.exit: ; preds = %bb.i, %bb.h, %bb.g, %bb.a
   ret void
 
-bb.j:                                             ; preds = %bb.b
+bb.j:                                             ; preds = %5
   %i.u = landingpad { ptr, i32 }
           cleanup
   tail call void @_ZN6icu_787UMemorydlEPv(ptr noundef nonnull %i.c) #14
