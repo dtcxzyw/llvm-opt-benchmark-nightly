@@ -16,20 +16,16 @@ bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %6, i8 0, i64 48, i1 false)
   %i.a = getelementptr inbounds nuw i8, ptr %6, i64 20
   %i.b = getelementptr inbounds nuw i8, ptr %6, i64 40
-  %7 = insertelement <2 x float> poison, float %0, i64 0
-  %8 = insertelement <2 x float> %7, float %2, i64 1
-  %9 = insertelement <2 x float> poison, float %1, i64 0
-  %10 = insertelement <2 x float> %9, float %3, i64 1
-  %11 = fadd <2 x float> %8, %10
+  %7 = fadd float %0, %1
+  %8 = fneg float %7
   %i.c = getelementptr inbounds nuw i8, ptr %6, i64 48
-  %12 = fneg <2 x float> %11
-  %13 = fadd float %4, %5
-  %14 = fneg float %13
+  %9 = insertelement <2 x float> poison, float %2, i64 0
+  %10 = insertelement <2 x float> %9, float %4, i64 1 ; 2 uses
   %i.d = insertelement <2 x float> poison, float %3, i64 0
-  %i.e = insertelement <2 x float> %i.d, float %5, i64 1
-  %15 = insertelement <2 x float> poison, float %2, i64 0
-  %16 = insertelement <2 x float> %15, float %4, i64 1
-  %i.f = fsub <2 x float> %i.e, %16               ; 2 uses
+  %i.e = insertelement <2 x float> %i.d, float %5, i64 1 ; 2 uses
+  %11 = fadd <2 x float> %10, %i.e
+  %12 = fneg <2 x float> %11
+  %i.f = fsub <2 x float> %i.e, %10               ; 2 uses
   %i.g = fsub float %1, %0                        ; 2 uses
   %i.h = fdiv float 2.000000e+00, %i.g
   store float %i.h, ptr %6, align 16, !tbaa !9
@@ -38,13 +34,13 @@ bb.a:
   store float %i.j, ptr %i.a, align 4, !tbaa !9
   %i.k = extractelement <2 x float> %i.i, i64 1
   store float %i.k, ptr %i.b, align 8, !tbaa !9
-  %17 = shufflevector <2 x float> %12, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %18 = insertelement <4 x float> %17, float 1.000000e+00, i64 3
-  %19 = insertelement <4 x float> %18, float %14, i64 2
+  %13 = insertelement <4 x float> <float poison, float poison, float poison, float 1.000000e+00>, float %8, i64 0
+  %14 = shufflevector <2 x float> %12, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %15 = shufflevector <4 x float> %13, <4 x float> %14, <4 x i32> <i32 0, i32 4, i32 5, i32 3>
   %i.l = insertelement <4 x float> <float poison, float poison, float poison, float 1.000000e+00>, float %i.g, i64 0
   %i.m = shufflevector <2 x float> %i.f, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.n = shufflevector <4 x float> %i.l, <4 x float> %i.m, <4 x i32> <i32 0, i32 4, i32 5, i32 3>
-  %i.o = fdiv <4 x float> %19, %i.n
+  %i.o = fdiv <4 x float> %15, %i.n
   store <4 x float> %i.o, ptr %i.c, align 16, !tbaa !9
   ret void
 }

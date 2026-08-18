@@ -203,7 +203,7 @@ declare noundef i32 @_ZN24btInverseDynamicsBullet313MultiBodyTree13MultiBodyImpl
 ; Function Attrs: mustprogress uwtable
 define dso_local noundef range(i32 -1, 1) i32 @_ZN24btInverseDynamicsBullet313MultiBodyTree8finalizeEv(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(24) %0) local_unnamed_addr #8 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %1 = alloca %"struct.btInverseDynamicsBullet3::InertiaData", align 4 ; 13 uses
+  %1 = alloca %"struct.btInverseDynamicsBullet3::InertiaData", align 4 ; 12 uses
   %2 = alloca %"struct.btInverseDynamicsBullet3::JointData", align 4 ; 15 uses
   %i.a = alloca i32, align 4                      ; 6 uses
   %i.b = alloca ptr, align 8                      ; 5 uses
@@ -260,8 +260,7 @@ bb.g:                                             ; preds = %bb.d
   br i1 %.not78, label %.lr.ph, label %.critedge71
 
 .lr.ph:                                           ; preds = %bb.g
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %i.v = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %i.v = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 12
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 20
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 36
@@ -299,17 +298,15 @@ bb.j:                                             ; preds = %bb.i
   %i.ar = getelementptr inbounds nuw [816 x i8], ptr %i.aq, i64 %indvars.iv ; 29 uses
   %i.as = load float, ptr %1, align 4, !tbaa !79  ; 4 uses
   store float %i.as, ptr %i.ar, align 8, !tbaa !83
-  %4 = load float, ptr %3, align 4, !tbaa !73
-  %5 = fmul float %4, %i.as
-  %6 = load float, ptr %i.v, align 4, !tbaa !73
-  %7 = fmul float %i.as, %6
+  %3 = load <2 x float>, ptr %i.v, align 4, !tbaa !73 ; 2 uses
+  %4 = insertelement <2 x float> %3, float %i.as, i64 1
+  %5 = insertelement <2 x float> %3, float %i.as, i64 0
+  %6 = fmul <2 x float> %4, %5
   %i.at = load float, ptr %i.w, align 4, !tbaa !73
   %i.au = fmul float %i.as, %i.at
-  %.sroa.0.0.vec.insert.i.i = insertelement <2 x float> poison, float %5, i64 0
-  %.sroa.0.4.vec.insert.i.i = insertelement <2 x float> %.sroa.0.0.vec.insert.i.i, float %7, i64 1
   %.sroa.3.12.vec.insert.i.i = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.au, i64 0
   %i.av = getelementptr inbounds nuw i8, ptr %i.ar, i64 4
-  store <2 x float> %.sroa.0.4.vec.insert.i.i, ptr %i.av, align 4
+  store <2 x float> %6, ptr %i.av, align 4
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ar, i64 12
   store <2 x float> %.sroa.3.12.vec.insert.i.i, ptr %.sroa.4.0..sroa_idx, align 4, !tbaa !75
   %i.aw = getelementptr inbounds nuw i8, ptr %i.ar, i64 20

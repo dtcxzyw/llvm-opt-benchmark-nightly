@@ -201,9 +201,9 @@ bb.ay:                                            ; preds = %_RINvMNtCsj6eKBz9Db
   br label %bb.az
 
 bb.az:                                            ; preds = %bb.dl, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCsl0TPHHzpGH6_5bytes9bytes_mut8BytesMutECs5MfxasYgTEl_11hickory_net.exit, %bb.ay
-  %.sroa.15.0 = phi i8 [ 5, %bb.dl ], [ %.sroa.15.4, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCsl0TPHHzpGH6_5bytes9bytes_mut8BytesMutECs5MfxasYgTEl_11hickory_net.exit ], [ 5, %bb.ay ]
-  %.sroa.49.0 = phi i64 [ %.sroa.4.i235.sroa.6.7.copyload, %bb.dl ], [ %.sroa.49.4, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCsl0TPHHzpGH6_5bytes9bytes_mut8BytesMutECs5MfxasYgTEl_11hickory_net.exit ], [ %.sroa.4.i206.sroa.6.7.copyload, %bb.ay ]
   %.sroa.53.0 = phi ptr [ undef, %bb.dl ], [ %.sroa.53.4, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCsl0TPHHzpGH6_5bytes9bytes_mut8BytesMutECs5MfxasYgTEl_11hickory_net.exit ], [ undef, %bb.ay ]
+  %.sroa.49.0 = phi i64 [ %.sroa.4.i235.sroa.6.7.copyload, %bb.dl ], [ %.sroa.49.4, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCsl0TPHHzpGH6_5bytes9bytes_mut8BytesMutECs5MfxasYgTEl_11hickory_net.exit ], [ %.sroa.4.i206.sroa.6.7.copyload, %bb.ay ]
+  %.sroa.15.0 = phi i8 [ 5, %bb.dl ], [ %.sroa.15.4, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCsl0TPHHzpGH6_5bytes9bytes_mut8BytesMutECs5MfxasYgTEl_11hickory_net.exit ], [ 5, %bb.ay ]
   %i.fs = phi <2 x i64> [ %i.hy, %bb.dl ], [ %i.le, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCsl0TPHHzpGH6_5bytes9bytes_mut8BytesMutECs5MfxasYgTEl_11hickory_net.exit ], [ %i.ew, %bb.ay ]
   %i.ft = getelementptr inbounds nuw i8, ptr %1, i64 360
   invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4okMlIQ9Z13_2h25share10SendStreamNtNtCsl0TPHHzpGH6_5bytes5bytes5BytesEECs5MfxasYgTEl_11hickory_net(ptr noalias nofree noundef align 8 dereferenceable(24) %i.ft)
@@ -222,9 +222,9 @@ bb.ba:                                            ; preds = %_RINvMNtCsj6eKBz9Db
   br label %bb.bb
 
 bb.bb:                                            ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs4okMlIQ9Z13_2h26client14ResponseFutureECs5MfxasYgTEl_11hickory_net.exit350, %bb.bd, %bb.ba
-  %.sroa.15.1 = phi i8 [ 5, %bb.bd ], [ %.sroa.15.0, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs4okMlIQ9Z13_2h26client14ResponseFutureECs5MfxasYgTEl_11hickory_net.exit350 ], [ 5, %bb.ba ]
-  %.sroa.49.1 = phi i64 [ %.sroa.4.i.sroa.6.7.copyload, %bb.bd ], [ %.sroa.49.0, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs4okMlIQ9Z13_2h26client14ResponseFutureECs5MfxasYgTEl_11hickory_net.exit350 ], [ %.sroa.4.i197.sroa.6.7.copyload, %bb.ba ]
   %.sroa.53.1 = phi ptr [ undef, %bb.bd ], [ %.sroa.53.0, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs4okMlIQ9Z13_2h26client14ResponseFutureECs5MfxasYgTEl_11hickory_net.exit350 ], [ undef, %bb.ba ]
+  %.sroa.49.1 = phi i64 [ %.sroa.4.i.sroa.6.7.copyload, %bb.bd ], [ %.sroa.49.0, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs4okMlIQ9Z13_2h26client14ResponseFutureECs5MfxasYgTEl_11hickory_net.exit350 ], [ %.sroa.4.i197.sroa.6.7.copyload, %bb.ba ]
+  %.sroa.15.1 = phi i8 [ 5, %bb.bd ], [ %.sroa.15.0, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs4okMlIQ9Z13_2h26client14ResponseFutureECs5MfxasYgTEl_11hickory_net.exit350 ], [ 5, %bb.ba ]
   %i.fv = phi <2 x i64> [ %i.cv, %bb.bd ], [ %i.fs, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs4okMlIQ9Z13_2h26client14ResponseFutureECs5MfxasYgTEl_11hickory_net.exit350 ], [ %i.dt, %bb.ba ]
   %i.fw = getelementptr inbounds nuw i8, ptr %1, i64 394
   store i8 0, ptr %i.fw, align 2
@@ -355,9 +355,9 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs4okMlIQ9Z13_2h25error5ErrorECs5Mfx
   br label %bb.bo
 
 bb.bo:                                            ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs4okMlIQ9Z13_2h25error5ErrorECs5MfxasYgTEl_11hickory_net.exit, %bb.bb
-  %.sroa.15.2 = phi i8 [ %.sroa.15.1, %bb.bb ], [ 5, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs4okMlIQ9Z13_2h25error5ErrorECs5MfxasYgTEl_11hickory_net.exit ]
-  %.sroa.49.2 = phi i64 [ %.sroa.49.1, %bb.bb ], [ %.sroa.6701.0.copyload, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs4okMlIQ9Z13_2h25error5ErrorECs5MfxasYgTEl_11hickory_net.exit ]
   %.sroa.53.2 = phi ptr [ %.sroa.53.1, %bb.bb ], [ undef, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs4okMlIQ9Z13_2h25error5ErrorECs5MfxasYgTEl_11hickory_net.exit ]
+  %.sroa.49.2 = phi i64 [ %.sroa.49.1, %bb.bb ], [ %.sroa.6701.0.copyload, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs4okMlIQ9Z13_2h25error5ErrorECs5MfxasYgTEl_11hickory_net.exit ]
+  %.sroa.15.2 = phi i8 [ %.sroa.15.1, %bb.bb ], [ 5, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs4okMlIQ9Z13_2h25error5ErrorECs5MfxasYgTEl_11hickory_net.exit ]
   %i.gz = phi <2 x i64> [ %i.fv, %bb.bb ], [ %i.ge, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs4okMlIQ9Z13_2h25error5ErrorECs5MfxasYgTEl_11hickory_net.exit ]
   %i.ha = getelementptr inbounds nuw i8, ptr %1, i64 352 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !631)
@@ -760,8 +760,8 @@ bb.dh:                                            ; preds = %.loopexit
   br label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCsl0TPHHzpGH6_5bytes9bytes_mut8BytesMutECs5MfxasYgTEl_11hickory_net.exit305
 
 .loopexit964:                                     ; preds = %.preheader56.i.i.i.i, %bb.dg, %bb.cw, %.preheader.i.i.i.i
-  %.sroa.9452.0.ph = phi i64 [ %i.kp, %bb.dg ], [ undef, %bb.cw ], [ 0, %.preheader.i.i.i.i ], [ %i.kf, %.preheader56.i.i.i.i ] ; 2 uses
-  %.sroa.0451.0.ph = phi i64 [ 1, %bb.dg ], [ 0, %bb.cw ], [ 1, %.preheader.i.i.i.i ], [ 1, %.preheader56.i.i.i.i ] ; 2 uses
+  %.sroa.9452.0.ph = phi i64 [ %i.kp, %bb.dg ], [ 0, %.preheader.i.i.i.i ], [ undef, %bb.cw ], [ %i.kf, %.preheader56.i.i.i.i ] ; 2 uses
+  %.sroa.0451.0.ph = phi i64 [ 1, %bb.dg ], [ 1, %.preheader.i.i.i.i ], [ 0, %bb.cw ], [ 1, %.preheader56.i.i.i.i ] ; 2 uses
   %i.ks = getelementptr inbounds nuw i8, ptr %1, i64 424
   store i64 %.sroa.0451.0.ph, ptr %i.ks, align 8
   %i.kt = getelementptr inbounds nuw i8, ptr %1, i64 432
@@ -820,10 +820,10 @@ bb.dk:                                            ; preds = %bb.cz
   br label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCsl0TPHHzpGH6_5bytes9bytes_mut8BytesMutECs5MfxasYgTEl_11hickory_net.exit
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCsl0TPHHzpGH6_5bytes9bytes_mut8BytesMutECs5MfxasYgTEl_11hickory_net.exit: ; preds = %bb.dj, %bb.dk, %bb.et
-  %.sroa.15.4 = phi i8 [ %.sroa.15.5, %bb.et ], [ 5, %bb.dk ], [ 5, %bb.dj ]
-  %.sroa.49.4 = phi i64 [ %.sroa.49.5, %bb.et ], [ %.sroa.14474.sroa.0.0.copyload, %bb.dk ], [ %.sroa.16.sroa.0.0.copyload, %bb.dj ]
-  %.sroa.53.4 = phi ptr [ %.sroa.53.5, %bb.et ], [ %.sroa.14474.sroa.5.0.copyload, %bb.dk ], [ %.sroa.16.sroa.7.0.copyload, %bb.dj ]
-  %i.le = phi <2 x i64> [ %i.nk, %bb.et ], [ %i.ld, %bb.dk ], [ %i.la, %bb.dj ]
+  %.sroa.53.4 = phi ptr [ %.sroa.53.5, %bb.et ], [ %.sroa.16.sroa.7.0.copyload, %bb.dj ], [ %.sroa.14474.sroa.5.0.copyload, %bb.dk ]
+  %.sroa.49.4 = phi i64 [ %.sroa.49.5, %bb.et ], [ %.sroa.16.sroa.0.0.copyload, %bb.dj ], [ %.sroa.14474.sroa.0.0.copyload, %bb.dk ]
+  %.sroa.15.4 = phi i8 [ %.sroa.15.5, %bb.et ], [ 5, %bb.dj ], [ 5, %bb.dk ]
+  %i.le = phi <2 x i64> [ %i.nk, %bb.et ], [ %i.la, %bb.dj ], [ %i.ld, %bb.dk ]
   %i.lf = getelementptr inbounds nuw i8, ptr %1, i64 472
   invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCsjSDXC2TkEdJ_4http8response8ResponseNtNtCs4okMlIQ9Z13_2h25share10RecvStreamEECs5MfxasYgTEl_11hickory_net(ptr noalias nofree noundef align 8 dereferenceable(128) %i.lf)
           to label %bb.az unwind label %bb.go
@@ -848,8 +848,7 @@ bb.dm:                                            ; preds = %bb.a
   ]
 
 bb.dn:                                            ; preds = %.thread, %bb.dm
-  %3 = phi ptr [ %i.ng, %.thread ], [ %i.lg, %bb.dm ]
-  %.sroa.7521.sroa.12.1997 = phi ptr [ %.sroa.7521.sroa.12.0, %.thread ], [ undef, %bb.dm ]
+  %.sroa.7521.sroa.12.1997 = phi ptr [ %i.ng, %.thread ], [ %i.lg, %bb.dm ]
   %i.lh = getelementptr inbounds nuw i8, ptr %1, i64 400
   %i.li = load ptr, ptr %i.lh, align 8, !noalias !733, !nonnull !5, !align !141, !noundef !5
   %i.lj = getelementptr inbounds nuw i8, ptr %1, i64 408
@@ -871,8 +870,7 @@ bb.dp:                                            ; preds = %bb.dm
   unreachable
 
 bb.dq:                                            ; preds = %bb.dn, %bb.dm
-  %4 = phi ptr [ %3, %bb.dn ], [ %i.lg, %bb.dm ]  ; 2 uses
-  %.sroa.7521.sroa.12.1996 = phi ptr [ %.sroa.7521.sroa.12.1997, %bb.dn ], [ undef, %bb.dm ]
+  %.sroa.7521.sroa.12.1996 = phi ptr [ %.sroa.7521.sroa.12.1997, %bb.dn ], [ %i.lg, %bb.dm ] ; 2 uses
   %i.lk = getelementptr inbounds nuw i8, ptr %1, i64 408
   invoke void @_RNvXs_Cs4okMlIQ9Z13_2h2INtB4_6PollFnNCNCNvMs1_NtB4_5shareNtBI_10RecvStream4data00ENtNtNtCsj6eKBz9Db1c_4core6future6future6Future4pollCs5MfxasYgTEl_11hickory_net(ptr noalias nofree noundef nonnull sret([40 x i8]) align 8 captures(address) dereferenceable(40) %i.ax, ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.lk, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %2)
           to label %bb.dt unwind label %bb.dr
@@ -880,7 +878,7 @@ bb.dq:                                            ; preds = %bb.dn, %bb.dm
 bb.dr:                                            ; preds = %bb.dq
   %i.ll = landingpad { ptr, i32 }
           cleanup
-  store i8 2, ptr %4, align 8, !noalias !733
+  store i8 2, ptr %.sroa.7521.sroa.12.1996, align 8, !noalias !733
   br label %.body267
 
 bb.ds:                                            ; preds = %bb.dp, %bb.do
@@ -892,7 +890,7 @@ bb.dt:                                            ; preds = %bb.dq
   %i.ln = load i8, ptr %i.ax, align 8, !range !738, !alias.scope !737, !noalias !739, !noundef !5 ; 3 uses
   %i.lo = icmp eq i8 %i.ln, -3                    ; 2 uses
   %spec.select.i264 = select i1 %i.lo, i8 3, i8 1
-  store i8 %spec.select.i264, ptr %4, align 8, !noalias !733
+  store i8 %spec.select.i264, ptr %.sroa.7521.sroa.12.1996, align 8, !noalias !733
   br i1 %i.lo, label %bb.du, label %bb.dv
 
 bb.du:                                            ; preds = %bb.dt
@@ -911,7 +909,7 @@ bb.dv:                                            ; preds = %bb.dt
   %.sroa.37.sroa.4.0..sroa.37.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ax, i64 24
   %.sroa.37.sroa.4.0.copyload = load i64, ptr %.sroa.37.sroa.4.0..sroa.37.0..sroa_idx.sroa_idx, align 8 ; 4 uses
   %.sroa.37.sroa.5.0..sroa.37.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ax, i64 32
-  %.sroa.37.sroa.5.0.copyload = load ptr, ptr %.sroa.37.sroa.5.0..sroa.37.0..sroa_idx.sroa_idx, align 8 ; 5 uses
+  %.sroa.37.sroa.5.0.copyload = load ptr, ptr %.sroa.37.sroa.5.0..sroa.37.0..sroa_idx.sroa_idx, align 8 ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ax)
   switch i8 %i.ln, label %bb.dw [
     i8 -2, label %bb.ed
@@ -1142,7 +1140,6 @@ bb.eq:                                            ; preds = %bb.ep
   br i1 %.not60, label %.thread, label %.thread998
 
 .thread:                                          ; preds = %bb.ep, %bb.eq, %.loopexit964
-  %.sroa.7521.sroa.12.0 = phi ptr [ undef, %.loopexit964 ], [ %.sroa.37.sroa.5.0.copyload, %bb.eq ], [ %.sroa.37.sroa.5.0.copyload, %bb.ep ]
   %i.ne = getelementptr inbounds nuw i8, ptr %1, i64 584
   %i.nf = getelementptr inbounds nuw i8, ptr %1, i64 400
   store ptr %i.ne, ptr %i.nf, align 8
@@ -1167,9 +1164,9 @@ bb.es:                                            ; preds = %_RINvMNtCsj6eKBz9Db
   br label %bb.et
 
 bb.et:                                            ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc6borrow3CoweEECs5MfxasYgTEl_11hickory_net.exit, %bb.gk, %bb.ex, %bb.es
-  %.sroa.15.5 = phi i8 [ %.sroa.15.7, %bb.gk ], [ 5, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc6borrow3CoweEECs5MfxasYgTEl_11hickory_net.exit ], [ 5, %bb.ex ], [ 5, %bb.es ]
+  %.sroa.53.5 = phi ptr [ %.sroa.53.7, %bb.gk ], [ undef, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc6borrow3CoweEECs5MfxasYgTEl_11hickory_net.exit ], [ undef, %bb.ex ], [ undef, %bb.es ]
   %.sroa.49.5 = phi i64 [ %.sroa.49.7, %bb.gk ], [ %.sroa.6696.0.copyload, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc6borrow3CoweEECs5MfxasYgTEl_11hickory_net.exit ], [ %.sroa.6699.0.copyload, %bb.ex ], [ %.sroa.4.i269.sroa.6.7.copyload, %bb.es ]
-  %.sroa.53.5 = phi ptr [ %.sroa.53.7, %bb.gk ], [ undef, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc6borrow3CoweEECs5MfxasYgTEl_11hickory_net.exit ], [ undef, %bb.ex ], [ %.sroa.7521.sroa.12.1996, %bb.es ]
+  %.sroa.15.5 = phi i8 [ %.sroa.15.7, %bb.gk ], [ 5, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc6borrow3CoweEECs5MfxasYgTEl_11hickory_net.exit ], [ 5, %bb.ex ], [ 5, %bb.es ]
   %i.nk = phi <2 x i64> [ %i.qp, %bb.gk ], [ %i.ob, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc6borrow3CoweEECs5MfxasYgTEl_11hickory_net.exit ], [ %i.nr, %bb.ex ], [ %i.nj, %bb.es ]
   %i.nl = getelementptr inbounds nuw i8, ptr %1, i64 440
   invoke void @_RNvXs0_NtCsl0TPHHzpGH6_5bytes9bytes_mutNtB5_8BytesMutNtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.nl)
@@ -1497,9 +1494,9 @@ bb.fv:                                            ; preds = %bb.ft
   br label %_RINvMNtCsj6eKBz9Db1c_4core6resultINtB3_6ResultNtNtNtCsjXdHNeFfodD_13hickory_proto2op12dns_response11DnsResponseNtNtBO_5error10ProtoErrorE7map_errNtNtCs5MfxasYgTEl_11hickory_net5error8NetErrorNvYB2j_INtNtB5_7convert4FromB1L_E4fromEB2n_.exit
 
 _RINvMNtCsj6eKBz9Db1c_4core6resultINtB3_6ResultNtNtNtCsjXdHNeFfodD_13hickory_proto2op12dns_response11DnsResponseNtNtBO_5error10ProtoErrorE7map_errNtNtCs5MfxasYgTEl_11hickory_net5error8NetErrorNvYB2j_INtNtB5_7convert4FromB1L_E4fromEB2n_.exit: ; preds = %bb.fv, %bb.fu
-  %.sroa.15.8 = phi i8 [ 8, %bb.fu ], [ %.sroa.15.0.copyload607, %bb.fv ]
-  %.sroa.49.8 = phi i64 [ %.sroa.4.i336.sroa.6.7.copyload, %bb.fu ], [ %.sroa.49.0.copyload630, %bb.fv ]
   %.sroa.53.8 = phi ptr [ %.sroa.4.i336.sroa.7.7.copyload, %bb.fu ], [ %.sroa.53.0.copyload642, %bb.fv ]
+  %.sroa.49.8 = phi i64 [ %.sroa.4.i336.sroa.6.7.copyload, %bb.fu ], [ %.sroa.49.0.copyload630, %bb.fv ]
+  %.sroa.15.8 = phi i8 [ 8, %bb.fu ], [ %.sroa.15.0.copyload607, %bb.fv ]
   %i.pp = phi <2 x i64> [ %i.pn, %bb.fu ], [ %i.po, %bb.fv ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.af)
   invoke void @_RNvXs0_NtCsl0TPHHzpGH6_5bytes9bytes_mutNtB5_8BytesMutNtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.ph)
@@ -1598,12 +1595,12 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc4sync3ArcNtNtCs
   br label %bb.gh
 
 bb.gh:                                            ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCsl0TPHHzpGH6_5bytes5bytes5BytesECs5MfxasYgTEl_11hickory_net.exit352, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc4sync3ArcNtNtCs5MfxasYgTEl_11hickory_net4http14RequestContextEEB1d_.exit344
-  %.sroa.0604.6.a = phi i64 [ -1, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCsl0TPHHzpGH6_5bytes5bytes5BytesECs5MfxasYgTEl_11hickory_net.exit352 ], [ %i.pk, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc4sync3ArcNtNtCs5MfxasYgTEl_11hickory_net4http14RequestContextEEB1d_.exit344 ]
-  %.sroa.15.6 = phi i8 [ %.sroa.15.2, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCsl0TPHHzpGH6_5bytes5bytes5BytesECs5MfxasYgTEl_11hickory_net.exit352 ], [ %.sroa.15.8, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc4sync3ArcNtNtCs5MfxasYgTEl_11hickory_net4http14RequestContextEEB1d_.exit344 ]
-  %.sroa.49.6 = phi i64 [ %.sroa.49.2, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCsl0TPHHzpGH6_5bytes5bytes5BytesECs5MfxasYgTEl_11hickory_net.exit352 ], [ %.sroa.49.8, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc4sync3ArcNtNtCs5MfxasYgTEl_11hickory_net4http14RequestContextEEB1d_.exit344 ]
   %.sroa.53.6 = phi ptr [ %.sroa.53.2, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCsl0TPHHzpGH6_5bytes5bytes5BytesECs5MfxasYgTEl_11hickory_net.exit352 ], [ %.sroa.53.8, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc4sync3ArcNtNtCs5MfxasYgTEl_11hickory_net4http14RequestContextEEB1d_.exit344 ]
+  %.sroa.0604.6.a = phi i64 [ %.sroa.49.2, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCsl0TPHHzpGH6_5bytes5bytes5BytesECs5MfxasYgTEl_11hickory_net.exit352 ], [ %.sroa.49.8, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc4sync3ArcNtNtCs5MfxasYgTEl_11hickory_net4http14RequestContextEEB1d_.exit344 ]
+  %.sroa.15.6 = phi i8 [ %.sroa.15.2, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCsl0TPHHzpGH6_5bytes5bytes5BytesECs5MfxasYgTEl_11hickory_net.exit352 ], [ %.sroa.15.8, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc4sync3ArcNtNtCs5MfxasYgTEl_11hickory_net4http14RequestContextEEB1d_.exit344 ]
+  %.sroa.49.6 = phi i64 [ -1, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCsl0TPHHzpGH6_5bytes5bytes5BytesECs5MfxasYgTEl_11hickory_net.exit352 ], [ %i.pk, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc4sync3ArcNtNtCs5MfxasYgTEl_11hickory_net4http14RequestContextEEB1d_.exit344 ]
   %i.ql = phi <2 x i64> [ %i.gz, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCsl0TPHHzpGH6_5bytes5bytes5BytesECs5MfxasYgTEl_11hickory_net.exit352 ], [ %i.pp, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc4sync3ArcNtNtCs5MfxasYgTEl_11hickory_net4http14RequestContextEEB1d_.exit344 ]
-  store i64 %.sroa.0604.6.a, ptr %0, align 8
+  store i64 %.sroa.49.6, ptr %0, align 8
   %.sroa.15.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 %.sroa.15.6, ptr %.sroa.15.0..sroa_idx, align 8
   %.sroa.28.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 9
@@ -1611,7 +1608,7 @@ bb.gh:                                            ; preds = %_RINvNtCsj6eKBz9Db1
   %.sroa.41.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store <2 x i64> %i.ql, ptr %.sroa.41.0..sroa_idx, align 8
   %.sroa.49.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store i64 %.sroa.49.6, ptr %.sroa.49.0..sroa_idx, align 8
+  store i64 %.sroa.0604.6.a, ptr %.sroa.49.0..sroa_idx, align 8
   %.sroa.53.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40
   store ptr %.sroa.53.6, ptr %.sroa.53.0..sroa_idx, align 8
   %.sroa.60.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 48
@@ -1649,9 +1646,9 @@ bb.gj:                                            ; preds = %_RNvXs7_NtNtCsj6eKB
   br label %bb.gk
 
 bb.gk:                                            ; preds = %bb.gm, %bb.gj
-  %.sroa.15.7 = phi i8 [ 5, %bb.gj ], [ %.sroa.0.0.i328, %bb.gm ]
-  %.sroa.49.7 = phi i64 [ %.sroa.6.0.copyload, %bb.gj ], [ %.sroa.14591.sroa.0.0.copyload, %bb.gm ]
   %.sroa.53.7 = phi ptr [ undef, %bb.gj ], [ %.sroa.14591.sroa.6.0.copyload, %bb.gm ]
+  %.sroa.49.7 = phi i64 [ %.sroa.6.0.copyload, %bb.gj ], [ %.sroa.14591.sroa.0.0.copyload, %bb.gm ]
+  %.sroa.15.7 = phi i8 [ 5, %bb.gj ], [ %.sroa.0.0.i328, %bb.gm ]
   %i.qp = phi <2 x i64> [ %i.qo, %bb.gj ], [ %i.qs, %bb.gm ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ai)
   br label %bb.et

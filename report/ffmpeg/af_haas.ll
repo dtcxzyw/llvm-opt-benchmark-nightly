@@ -156,10 +156,9 @@ bb.e:                                             ; preds = %bb.a, %bb.d
 
 bb.f:                                             ; preds = %.lr.ph, %bb.k
   %i.at = phi i32 [ %.promoted, %.lr.ph ], [ %i.cq, %bb.k ] ; 3 uses
-  %.06375 = phi ptr [ %i.i, %.lr.ph ], [ %i.cs, %bb.k ] ; 7 uses
+  %.06374 = phi i32 [ 0, %.lr.ph ], [ %i.cr, %bb.k ]
   %.06574 = phi ptr [ %i.ab, %.lr.ph ], [ %i.ct, %bb.k ] ; 2 uses
-  %.06673 = phi i32 [ 0, %.lr.ph ], [ %i.cr, %bb.k ]
-  %.06772 = phi double [ undef, %.lr.ph ], [ %.2, %bb.k ]
+  %.06672 = phi ptr [ %i.i, %.lr.ph ], [ %i.cs, %bb.k ] ; 7 uses
   switch i32 %i.ad, label %bb.k [
     i32 0, label %bb.g
     i32 1, label %bb.h
@@ -168,32 +167,32 @@ bb.f:                                             ; preds = %.lr.ph, %bb.k
   ]
 
 bb.g:                                             ; preds = %bb.f
-  %i.au = load double, ptr %.06375, align 8, !tbaa !52
+  %i.au = load double, ptr %.06672, align 8, !tbaa !52
   br label %bb.k
 
 bb.h:                                             ; preds = %bb.f
-  %i.av = getelementptr inbounds nuw i8, ptr %.06375, i64 8
+  %i.av = getelementptr inbounds nuw i8, ptr %.06672, i64 8
   %i.aw = load double, ptr %i.av, align 8, !tbaa !52
   br label %bb.k
 
 bb.i:                                             ; preds = %bb.f
-  %i.ax = load double, ptr %.06375, align 8, !tbaa !52
-  %i.ay = getelementptr inbounds nuw i8, ptr %.06375, i64 8
+  %i.ax = load double, ptr %.06672, align 8, !tbaa !52
+  %i.ay = getelementptr inbounds nuw i8, ptr %.06672, i64 8
   %i.az = load double, ptr %i.ay, align 8, !tbaa !52
   %i.ba = fadd nsz double %i.ax, %i.az
   %i.bb = fmul nsz double %i.ba, 5.000000e-01
   br label %bb.k
 
 bb.j:                                             ; preds = %bb.f
-  %i.bc = load double, ptr %.06375, align 8, !tbaa !52
-  %i.bd = getelementptr inbounds nuw i8, ptr %.06375, i64 8
+  %i.bc = load double, ptr %.06672, align 8, !tbaa !52
+  %i.bd = getelementptr inbounds nuw i8, ptr %.06672, i64 8
   %i.be = load double, ptr %i.bd, align 8, !tbaa !52
   %i.bf = fsub nsz double %i.bc, %i.be
   %i.bg = fmul nsz double %i.bf, 5.000000e-01
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h, %bb.g, %bb.f
-  %.1.a = phi nsz double [ %.06772, %bb.f ], [ %i.au, %bb.g ], [ %i.aw, %bb.h ], [ %i.bb, %bb.i ], [ %i.bg, %bb.j ]
+  %.1.a = phi nsz double [ undef, %bb.f ], [ %i.au, %bb.g ], [ %i.aw, %bb.h ], [ %i.bb, %bb.i ], [ %i.bg, %bb.j ]
   %i.bh = fmul nsz double %i.k, %.1.a             ; 3 uses
   %i.bi = zext i32 %i.at to i64
   %i.bj = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %i.bi
@@ -204,7 +203,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h,
   %i.bn = sub i32 %i.bk, %i.aq
   %i.bo = and i32 %i.bn, %i.q
   %i.bp = fneg nsz double %i.bh
-  %.2 = select nsz i1 %.not71, double %i.bh, double %i.bp ; 2 uses
+  %.2 = select nsz i1 %.not71, double %i.bh, double %i.bp
   %i.bq = zext i32 %i.bm to i64
   %i.br = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %i.bq
   %i.bs = load double, ptr %i.br, align 8, !tbaa !52
@@ -233,8 +232,8 @@ bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h,
   store <2 x double> %i.co, ptr %.06574, align 8, !tbaa !52
   %i.cp = add i32 %i.at, 1
   %i.cq = and i32 %i.cp, %i.q                     ; 2 uses
-  %i.cr = add nuw nsw i32 %.06673, 1              ; 2 uses
-  %i.cs = getelementptr inbounds nuw i8, ptr %.06375, i64 16
+  %i.cr = add nuw nsw i32 %.06374, 1              ; 2 uses
+  %i.cs = getelementptr inbounds nuw i8, ptr %.06672, i64 16
   %i.ct = getelementptr inbounds nuw i8, ptr %.06574, i64 16
   %exitcond.not = icmp eq i32 %i.cr, %i.z
   br i1 %exitcond.not, label %._crit_edge, label %bb.f, !llvm.loop !54

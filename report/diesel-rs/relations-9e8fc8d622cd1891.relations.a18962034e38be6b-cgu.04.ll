@@ -201,24 +201,22 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.i, %.lr.ph.i.i.i
-  %2 = phi ptr [ %.val15.i.i.i.i, %.lr.ph.i.i.i ], [ %i.ae, %bb.i ]
-  %i.q = phi ptr [ %.val.i.i.i.i, %.lr.ph.i.i.i ], [ %i.z, %bb.i ]
-  %i.r = phi ptr [ %.val15.i.i.i.i, %.lr.ph.i.i.i ], [ %i.af, %bb.i ] ; 5 uses
-  %i.s = phi ptr [ %.val.i.i.i.i, %.lr.ph.i.i.i ], [ %i.aa, %bb.i ] ; 6 uses
-  %.sroa.613.sroa.0.0.i.i.i.a = phi ptr [ undef, %.lr.ph.i.i.i ], [ %.sroa.613.sroa.0.1.i.i.i, %bb.i ]
-  %.sroa.613.sroa.4.0.i.i.i = phi i64 [ undef, %.lr.ph.i.i.i ], [ %.sroa.613.sroa.4.1.i.i.i, %bb.i ]
+  %i.q = phi ptr [ %.val15.i.i.i.i, %.lr.ph.i.i.i ], [ %i.ae, %bb.i ]
+  %i.r = phi ptr [ %.val.i.i.i.i, %.lr.ph.i.i.i ], [ %i.z, %bb.i ]
+  %i.s = phi ptr [ %.val15.i.i.i.i, %.lr.ph.i.i.i ], [ %i.af, %bb.i ] ; 5 uses
+  %.sroa.613.sroa.0.0.i.i.i.a = phi ptr [ %.val.i.i.i.i, %.lr.ph.i.i.i ], [ %i.aa, %bb.i ] ; 6 uses
   %.val8.i.i.i = phi i64 [ %.sroa.5.0.copyload, %.lr.ph.i.i.i ], [ %i.an, %bb.i ] ; 3 uses
   %.sroa.01.032.i.i.i = phi i64 [ 0, %.lr.ph.i.i.i ], [ %i.t, %bb.i ]
   %i.t = add nuw nsw i64 %.sroa.01.032.i.i.i, 1   ; 2 uses
-  %i.u = icmp eq ptr %i.s, %.val14.i.i.i.i
+  %i.u = icmp eq ptr %.sroa.613.sroa.0.0.i.i.i.a, %.val14.i.i.i.i
   br i1 %i.u, label %_RNvXs4_NtNtCs40k4W9msRzi_5alloc3vec9into_iterINtB5_8IntoIterINtB7_3VecTNtNtCsdRR3INvU6UN_9relations5model10BookAuthorNtB19_4BookEEENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1b_.exit.i.i.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.v = getelementptr inbounds nuw i8, ptr %i.s, i64 24 ; 2 uses
-  %.sroa.011.0.copyload12.i.i.i = load i64, ptr %i.s, align 8, !noalias !58
-  %.sroa.613.0..sroa_idx14.i.i.i = getelementptr inbounds nuw i8, ptr %i.s, i64 8
+  %i.v = getelementptr inbounds nuw i8, ptr %.sroa.613.sroa.0.0.i.i.i.a, i64 24 ; 2 uses
+  %.sroa.011.0.copyload12.i.i.i = load i64, ptr %.sroa.613.sroa.0.0.i.i.i.a, align 8, !noalias !58
+  %.sroa.613.0..sroa_idx14.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.613.sroa.0.0.i.i.i.a, i64 8
   %.sroa.613.sroa.0.0.copyload.i.i.i = load ptr, ptr %.sroa.613.0..sroa_idx14.i.i.i, align 8, !noalias !58
-  %.sroa.613.sroa.4.0..sroa.613.0..sroa_idx14.sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.s, i64 16
+  %.sroa.613.sroa.4.0..sroa.613.0..sroa_idx14.sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.613.sroa.0.0.i.i.i.a, i64 16
   %.sroa.613.sroa.4.0.copyload.i.i.i = load i64, ptr %.sroa.613.sroa.4.0..sroa.613.0..sroa_idx14.sroa_idx.i.i.i, align 8, !noalias !58
   br label %_RNvXs4_NtNtCs40k4W9msRzi_5alloc3vec9into_iterINtB5_8IntoIterINtB7_3VecTNtNtCsdRR3INvU6UN_9relations5model10BookAuthorNtB19_4BookEEENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1b_.exit.i.i.i
 
@@ -252,46 +250,46 @@ common.resume.i.i.i:                              ; preds = %.body.i.i.i, %bb.d
   resume { ptr, i32 } %common.resume.op.i.i.i
 
 _RNvXs4_NtNtCs40k4W9msRzi_5alloc3vec9into_iterINtB5_8IntoIterINtB7_3VecTNtNtCsdRR3INvU6UN_9relations5model10BookAuthorNtB19_4BookEEENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1b_.exit.i.i.i: ; preds = %bb.c, %bb.b
-  %i.z = phi ptr [ %i.q, %bb.b ], [ %i.v, %bb.c ] ; 3 uses
-  %i.aa = phi ptr [ %i.s, %bb.b ], [ %i.v, %bb.c ]
-  %.sroa.613.sroa.0.1.i.i.i = phi ptr [ %.sroa.613.sroa.0.0.i.i.i.a, %bb.b ], [ %.sroa.613.sroa.0.0.copyload.i.i.i, %bb.c ] ; 5 uses
-  %.sroa.613.sroa.4.1.i.i.i = phi i64 [ %.sroa.613.sroa.4.0.i.i.i, %bb.b ], [ %.sroa.613.sroa.4.0.copyload.i.i.i, %bb.c ] ; 3 uses
+  %i.z = phi ptr [ %i.r, %bb.b ], [ %i.v, %bb.c ] ; 3 uses
+  %i.aa = phi ptr [ %.sroa.613.sroa.0.0.i.i.i.a, %bb.b ], [ %i.v, %bb.c ]
+  %.sroa.613.sroa.4.0.i.i.i = phi i64 [ undef, %bb.b ], [ %.sroa.613.sroa.4.0.copyload.i.i.i, %bb.c ] ; 2 uses
+  %.sroa.613.sroa.0.0.i.i.i = phi ptr [ undef, %bb.b ], [ %.sroa.613.sroa.0.0.copyload.i.i.i, %bb.c ] ; 4 uses
   %.sroa.011.0.i.i.i = phi i64 [ -1, %bb.b ], [ %.sroa.011.0.copyload12.i.i.i, %bb.c ] ; 3 uses
   %i.ab = icmp ne i64 %.sroa.011.0.i.i.i, -1
   call void @llvm.assume(i1 %i.ab)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.617.i.i.i)
-  %i.ac = icmp eq ptr %i.r, %.val16.i.i.i.i
+  %i.ac = icmp eq ptr %i.s, %.val16.i.i.i.i
   br i1 %i.ac, label %_RNvXs4_NtNtCs40k4W9msRzi_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsdRR3INvU6UN_9relations5model6AuthorENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB10_.exit.i.i.i, label %bb.f
 
 bb.f:                                             ; preds = %_RNvXs4_NtNtCs40k4W9msRzi_5alloc3vec9into_iterINtB5_8IntoIterINtB7_3VecTNtNtCsdRR3INvU6UN_9relations5model10BookAuthorNtB19_4BookEEENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1b_.exit.i.i.i
-  %i.ad = getelementptr inbounds nuw i8, ptr %i.r, i64 32 ; 2 uses
-  %.sroa.015.0.copyload16.i.i.i = load i64, ptr %i.r, align 8, !noalias !63
-  %.sroa.617.0..sroa_idx18.i.i.i = getelementptr inbounds nuw i8, ptr %i.r, i64 8
+  %i.ad = getelementptr inbounds nuw i8, ptr %i.s, i64 32 ; 2 uses
+  %.sroa.015.0.copyload16.i.i.i = load i64, ptr %i.s, align 8, !noalias !63
+  %.sroa.617.0..sroa_idx18.i.i.i = getelementptr inbounds nuw i8, ptr %i.s, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.617.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.617.0..sroa_idx18.i.i.i, i64 24, i1 false), !noalias !63
   br label %_RNvXs4_NtNtCs40k4W9msRzi_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsdRR3INvU6UN_9relations5model6AuthorENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB10_.exit.i.i.i
 
 _RNvXs4_NtNtCs40k4W9msRzi_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsdRR3INvU6UN_9relations5model6AuthorENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB10_.exit.i.i.i: ; preds = %bb.f, %_RNvXs4_NtNtCs40k4W9msRzi_5alloc3vec9into_iterINtB5_8IntoIterINtB7_3VecTNtNtCsdRR3INvU6UN_9relations5model10BookAuthorNtB19_4BookEEENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1b_.exit.i.i.i
-  %i.ae = phi ptr [ %i.ad, %bb.f ], [ %2, %_RNvXs4_NtNtCs40k4W9msRzi_5alloc3vec9into_iterINtB5_8IntoIterINtB7_3VecTNtNtCsdRR3INvU6UN_9relations5model10BookAuthorNtB19_4BookEEENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1b_.exit.i.i.i ] ; 3 uses
-  %i.af = phi ptr [ %i.ad, %bb.f ], [ %i.r, %_RNvXs4_NtNtCs40k4W9msRzi_5alloc3vec9into_iterINtB5_8IntoIterINtB7_3VecTNtNtCsdRR3INvU6UN_9relations5model10BookAuthorNtB19_4BookEEENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1b_.exit.i.i.i ]
+  %i.ae = phi ptr [ %i.ad, %bb.f ], [ %i.q, %_RNvXs4_NtNtCs40k4W9msRzi_5alloc3vec9into_iterINtB5_8IntoIterINtB7_3VecTNtNtCsdRR3INvU6UN_9relations5model10BookAuthorNtB19_4BookEEENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1b_.exit.i.i.i ] ; 3 uses
+  %i.af = phi ptr [ %i.ad, %bb.f ], [ %i.s, %_RNvXs4_NtNtCs40k4W9msRzi_5alloc3vec9into_iterINtB5_8IntoIterINtB7_3VecTNtNtCsdRR3INvU6UN_9relations5model10BookAuthorNtB19_4BookEEENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1b_.exit.i.i.i ]
   %.sroa.015.0.i.i.i = phi i64 [ %.sroa.015.0.copyload16.i.i.i, %bb.f ], [ -1, %_RNvXs4_NtNtCs40k4W9msRzi_5alloc3vec9into_iterINtB5_8IntoIterINtB7_3VecTNtNtCsdRR3INvU6UN_9relations5model10BookAuthorNtB19_4BookEEENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1b_.exit.i.i.i ] ; 3 uses
   %i.ag = icmp ne i64 %.sroa.015.0.i.i.i, -1
   call void @llvm.assume(i1 %i.ag)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.9.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.617.i.i.i, i64 24, i1 false), !noalias !61
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.617.i.i.i)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.613.sroa.0.1.i.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.613.sroa.0.0.i.i.i) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.531.i.i.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !66
   store i64 %.sroa.015.0.i.i.i, ptr %i.c, align 8, !noalias !73
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.9.24..sroa_idx.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.9.i.i.i, i64 24, i1 false), !noalias !61
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !66
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !66
-  %i.ah = icmp ult i64 %.sroa.613.sroa.4.1.i.i.i, 230584300921369396
+  %i.ah = icmp ult i64 %.sroa.613.sroa.4.0.i.i.i, 230584300921369396
   call void @llvm.assume(i1 %i.ah)
-  %i.ai = getelementptr inbounds nuw [40 x i8], ptr %.sroa.613.sroa.0.1.i.i.i, i64 %.sroa.613.sroa.4.1.i.i.i
+  %i.ai = getelementptr inbounds nuw [40 x i8], ptr %.sroa.613.sroa.0.0.i.i.i, i64 %.sroa.613.sroa.4.0.i.i.i
   %i.aj = icmp sgt i64 %.sroa.011.0.i.i.i, -1
   call void @llvm.assume(i1 %i.aj)
-  store ptr %.sroa.613.sroa.0.1.i.i.i, ptr %i.a, align 8, !noalias !66
-  store ptr %.sroa.613.sroa.0.1.i.i.i, ptr %.sroa.42.0..sroa_idx.i.i.i.i.i, align 8, !noalias !66
+  store ptr %.sroa.613.sroa.0.0.i.i.i, ptr %i.a, align 8, !noalias !66
+  store ptr %.sroa.613.sroa.0.0.i.i.i, ptr %.sroa.42.0..sroa_idx.i.i.i.i.i, align 8, !noalias !66
   store i64 %.sroa.011.0.i.i.i, ptr %.sroa.53.0..sroa_idx.i.i.i.i.i, align 8, !noalias !66
   store ptr %i.ai, ptr %.sroa.6.0..sroa_idx.i.i.i.i.i, align 8, !noalias !66
   invoke void @_RINvNtNtCs40k4W9msRzi_5alloc3vec16in_place_collect18from_iter_in_placeINtNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map3MapINtNtB4_9into_iter8IntoIterTNtNtCsdRR3INvU6UN_9relations5model10BookAuthorNtB2o_4BookEENCNCNvB2q_16m_to_n_relations00EB36_EB2q_(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.b, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(32) %i.a)

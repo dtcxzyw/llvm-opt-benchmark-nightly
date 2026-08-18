@@ -204,24 +204,16 @@ _ZNSt6vectorIN8facebook6hermes17sampling_profiler13ProfileSampleESaIS3_EED2Ev.ex
   br label %_ZN6hermes2vm12_GLOBAL__N_116ProfileGeneratorD2Ev.exit
 
 bb.c:                                             ; preds = %_ZNSt6vectorISt7variantIJN8facebook6hermes17sampling_profiler34ProfileSampleCallStackSuspendFrameENS3_41ProfileSampleCallStackNativeFunctionFrameENS3_39ProfileSampleCallStackHostFunctionFrameENS3_37ProfileSampleCallStackJSFunctionFrameEEESaIS8_EED2Ev.exit.i, %.lr.ph154.i
-  %.sroa.095.0153.i = phi ptr [ %i.ac, %.lr.ph154.i ], [ %i.ck, %_ZNSt6vectorISt7variantIJN8facebook6hermes17sampling_profiler34ProfileSampleCallStackSuspendFrameENS3_41ProfileSampleCallStackNativeFunctionFrameENS3_39ProfileSampleCallStackHostFunctionFrameENS3_37ProfileSampleCallStackJSFunctionFrameEEESaIS8_EED2Ev.exit.i ] ; 6 uses
-  %.sroa.855.0152.i = phi ptr [ undef, %.lr.ph154.i ], [ %.sroa.855.1.lcssa.i, %_ZNSt6vectorISt7variantIJN8facebook6hermes17sampling_profiler34ProfileSampleCallStackSuspendFrameENS3_41ProfileSampleCallStackNativeFunctionFrameENS3_39ProfileSampleCallStackHostFunctionFrameENS3_37ProfileSampleCallStackJSFunctionFrameEEESaIS8_EED2Ev.exit.i ] ; 2 uses
-  %.sroa.11.0151.i = phi i32 [ undef, %.lr.ph154.i ], [ %.sroa.11.1.lcssa.i, %_ZNSt6vectorISt7variantIJN8facebook6hermes17sampling_profiler34ProfileSampleCallStackSuspendFrameENS3_41ProfileSampleCallStackNativeFunctionFrameENS3_39ProfileSampleCallStackHostFunctionFrameENS3_37ProfileSampleCallStackJSFunctionFrameEEESaIS8_EED2Ev.exit.i ] ; 2 uses
-  %.sroa.1262.0150.i = phi i64 [ undef, %.lr.ph154.i ], [ %.sroa.1262.1.lcssa.i, %_ZNSt6vectorISt7variantIJN8facebook6hermes17sampling_profiler34ProfileSampleCallStackSuspendFrameENS3_41ProfileSampleCallStackNativeFunctionFrameENS3_39ProfileSampleCallStackHostFunctionFrameENS3_37ProfileSampleCallStackJSFunctionFrameEEESaIS8_EED2Ev.exit.i ] ; 2 uses
-  %.sroa.13.0149.i = phi ptr [ undef, %.lr.ph154.i ], [ %.sroa.13.1.lcssa.i, %_ZNSt6vectorISt7variantIJN8facebook6hermes17sampling_profiler34ProfileSampleCallStackSuspendFrameENS3_41ProfileSampleCallStackNativeFunctionFrameENS3_39ProfileSampleCallStackHostFunctionFrameENS3_37ProfileSampleCallStackJSFunctionFrameEEESaIS8_EED2Ev.exit.i ] ; 2 uses
-  %.sroa.14.0148.i = phi i8 [ undef, %.lr.ph154.i ], [ %.sroa.14.1.lcssa.i, %_ZNSt6vectorISt7variantIJN8facebook6hermes17sampling_profiler34ProfileSampleCallStackSuspendFrameENS3_41ProfileSampleCallStackNativeFunctionFrameENS3_39ProfileSampleCallStackHostFunctionFrameENS3_37ProfileSampleCallStackJSFunctionFrameEEESaIS8_EED2Ev.exit.i ] ; 2 uses
-  %.sroa.16.0147.i = phi i64 [ undef, %.lr.ph154.i ], [ %.sroa.16.1.lcssa.i, %_ZNSt6vectorISt7variantIJN8facebook6hermes17sampling_profiler34ProfileSampleCallStackSuspendFrameENS3_41ProfileSampleCallStackNativeFunctionFrameENS3_39ProfileSampleCallStackHostFunctionFrameENS3_37ProfileSampleCallStackJSFunctionFrameEEESaIS8_EED2Ev.exit.i ] ; 2 uses
-  %.sroa.17.0146.i = phi i64 [ undef, %.lr.ph154.i ], [ %.sroa.17.1.lcssa.i, %_ZNSt6vectorISt7variantIJN8facebook6hermes17sampling_profiler34ProfileSampleCallStackSuspendFrameENS3_41ProfileSampleCallStackNativeFunctionFrameENS3_39ProfileSampleCallStackHostFunctionFrameENS3_37ProfileSampleCallStackJSFunctionFrameEEESaIS8_EED2Ev.exit.i ] ; 2 uses
-  %.sroa.053.sroa.8.0145.i = phi i32 [ undef, %.lr.ph154.i ], [ %.sroa.053.sroa.8.1.lcssa.i, %_ZNSt6vectorISt7variantIJN8facebook6hermes17sampling_profiler34ProfileSampleCallStackSuspendFrameENS3_41ProfileSampleCallStackNativeFunctionFrameENS3_39ProfileSampleCallStackHostFunctionFrameENS3_37ProfileSampleCallStackJSFunctionFrameEEESaIS8_EED2Ev.exit.i ] ; 2 uses
+  %.sroa.13.0149.i = phi ptr [ %i.ac, %.lr.ph154.i ], [ %i.ck, %_ZNSt6vectorISt7variantIJN8facebook6hermes17sampling_profiler34ProfileSampleCallStackSuspendFrameENS3_41ProfileSampleCallStackNativeFunctionFrameENS3_39ProfileSampleCallStackHostFunctionFrameENS3_37ProfileSampleCallStackJSFunctionFrameEEESaIS8_EED2Ev.exit.i ] ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #12, !noalias !12
-  %i.bh = getelementptr inbounds nuw i8, ptr %.sroa.095.0153.i, i64 8
+  %i.bh = getelementptr inbounds nuw i8, ptr %.sroa.13.0149.i, i64 8
   %.sroa.0.0.copyload.i = load i64, ptr %i.bh, align 8, !tbaa !47, !noalias !12
   %i.bi = sdiv i64 %.sroa.0.0.copyload.i, 1000
   store i64 %i.bi, ptr %i.h, align 8, !tbaa !47, !noalias !12
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #12, !noalias !12
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %12, i8 0, i64 24, i1 false), !noalias !12
-  %i.bj = getelementptr inbounds nuw i8, ptr %.sroa.095.0153.i, i64 16
-  %i.bk = getelementptr inbounds nuw i8, ptr %.sroa.095.0153.i, i64 24
+  %i.bj = getelementptr inbounds nuw i8, ptr %.sroa.13.0149.i, i64 16
+  %i.bk = getelementptr inbounds nuw i8, ptr %.sroa.13.0149.i, i64 24
   %i.bl = load ptr, ptr %i.bk, align 8, !tbaa !48, !noalias !12 ; 3 uses
   %i.bm = load ptr, ptr %i.bj, align 8, !tbaa !51, !noalias !12 ; 3 uses
   %i.bn = ptrtoint ptr %i.bl to i64
@@ -249,15 +241,7 @@ bb.e:                                             ; preds = %bb.c
   br label %.lr.ph.i
 
 ._crit_edge.i:                                    ; preds = %_ZNSt6vectorISt7variantIJN8facebook6hermes17sampling_profiler34ProfileSampleCallStackSuspendFrameENS3_41ProfileSampleCallStackNativeFunctionFrameENS3_39ProfileSampleCallStackHostFunctionFrameENS3_37ProfileSampleCallStackJSFunctionFrameEEESaIS8_EE9push_backEOS8_.exit.i, %bb.e
-  %14 = phi ptr [ null, %bb.e ], [ %i.qu, %_ZNSt6vectorISt7variantIJN8facebook6hermes17sampling_profiler34ProfileSampleCallStackSuspendFrameENS3_41ProfileSampleCallStackNativeFunctionFrameENS3_39ProfileSampleCallStackHostFunctionFrameENS3_37ProfileSampleCallStackJSFunctionFrameEEESaIS8_EE9push_backEOS8_.exit.i ]
-  %.sroa.053.sroa.8.1.lcssa.i = phi i32 [ %.sroa.053.sroa.8.0145.i, %bb.e ], [ %.sroa.053.sroa.8.2.i, %_ZNSt6vectorISt7variantIJN8facebook6hermes17sampling_profiler34ProfileSampleCallStackSuspendFrameENS3_41ProfileSampleCallStackNativeFunctionFrameENS3_39ProfileSampleCallStackHostFunctionFrameENS3_37ProfileSampleCallStackJSFunctionFrameEEESaIS8_EE9push_backEOS8_.exit.i ]
-  %.sroa.17.1.lcssa.i = phi i64 [ %.sroa.17.0146.i, %bb.e ], [ %.sroa.17.2.i, %_ZNSt6vectorISt7variantIJN8facebook6hermes17sampling_profiler34ProfileSampleCallStackSuspendFrameENS3_41ProfileSampleCallStackNativeFunctionFrameENS3_39ProfileSampleCallStackHostFunctionFrameENS3_37ProfileSampleCallStackJSFunctionFrameEEESaIS8_EE9push_backEOS8_.exit.i ]
-  %.sroa.16.1.lcssa.i = phi i64 [ %.sroa.16.0147.i, %bb.e ], [ %.sroa.16.2.i, %_ZNSt6vectorISt7variantIJN8facebook6hermes17sampling_profiler34ProfileSampleCallStackSuspendFrameENS3_41ProfileSampleCallStackNativeFunctionFrameENS3_39ProfileSampleCallStackHostFunctionFrameENS3_37ProfileSampleCallStackJSFunctionFrameEEESaIS8_EE9push_backEOS8_.exit.i ]
-  %.sroa.14.1.lcssa.i = phi i8 [ %.sroa.14.0148.i, %bb.e ], [ %.sroa.14.2.i, %_ZNSt6vectorISt7variantIJN8facebook6hermes17sampling_profiler34ProfileSampleCallStackSuspendFrameENS3_41ProfileSampleCallStackNativeFunctionFrameENS3_39ProfileSampleCallStackHostFunctionFrameENS3_37ProfileSampleCallStackJSFunctionFrameEEESaIS8_EE9push_backEOS8_.exit.i ]
-  %.sroa.13.1.lcssa.i = phi ptr [ %.sroa.13.0149.i, %bb.e ], [ %.sroa.13.2.i, %_ZNSt6vectorISt7variantIJN8facebook6hermes17sampling_profiler34ProfileSampleCallStackSuspendFrameENS3_41ProfileSampleCallStackNativeFunctionFrameENS3_39ProfileSampleCallStackHostFunctionFrameENS3_37ProfileSampleCallStackJSFunctionFrameEEESaIS8_EE9push_backEOS8_.exit.i ]
-  %.sroa.1262.1.lcssa.i = phi i64 [ %.sroa.1262.0150.i, %bb.e ], [ %.sroa.1262.2.i, %_ZNSt6vectorISt7variantIJN8facebook6hermes17sampling_profiler34ProfileSampleCallStackSuspendFrameENS3_41ProfileSampleCallStackNativeFunctionFrameENS3_39ProfileSampleCallStackHostFunctionFrameENS3_37ProfileSampleCallStackJSFunctionFrameEEESaIS8_EE9push_backEOS8_.exit.i ]
-  %.sroa.11.1.lcssa.i = phi i32 [ %.sroa.11.0151.i, %bb.e ], [ %.sroa.11.2.i, %_ZNSt6vectorISt7variantIJN8facebook6hermes17sampling_profiler34ProfileSampleCallStackSuspendFrameENS3_41ProfileSampleCallStackNativeFunctionFrameENS3_39ProfileSampleCallStackHostFunctionFrameENS3_37ProfileSampleCallStackJSFunctionFrameEEESaIS8_EE9push_backEOS8_.exit.i ]
-  %.sroa.855.1.lcssa.i = phi ptr [ %.sroa.855.0152.i, %bb.e ], [ %.sroa.855.2.i, %_ZNSt6vectorISt7variantIJN8facebook6hermes17sampling_profiler34ProfileSampleCallStackSuspendFrameENS3_41ProfileSampleCallStackNativeFunctionFrameENS3_39ProfileSampleCallStackHostFunctionFrameENS3_37ProfileSampleCallStackJSFunctionFrameEEESaIS8_EE9push_backEOS8_.exit.i ]
+  %.sroa.855.1.lcssa.i = phi ptr [ null, %bb.e ], [ %i.qu, %_ZNSt6vectorISt7variantIJN8facebook6hermes17sampling_profiler34ProfileSampleCallStackSuspendFrameENS3_41ProfileSampleCallStackNativeFunctionFrameENS3_39ProfileSampleCallStackHostFunctionFrameENS3_37ProfileSampleCallStackJSFunctionFrameEEESaIS8_EE9push_backEOS8_.exit.i ]
   %i.bv = load ptr, ptr %i.bf, align 8, !tbaa !41, !noalias !12 ; 8 uses
   %i.bw = load ptr, ptr %i.aj, align 16, !tbaa !42, !noalias !12
   %.not.i30.i = icmp eq ptr %i.bv, %i.bw
@@ -265,7 +249,7 @@ bb.e:                                             ; preds = %bb.c
 
 _ZNSt6vectorIN8facebook6hermes17sampling_profiler13ProfileSampleESaIS3_EE12emplace_backIJRmRKmS_ISt7variantIJNS2_34ProfileSampleCallStackSuspendFrameENS2_41ProfileSampleCallStackNativeFunctionFrameENS2_39ProfileSampleCallStackHostFunctionFrameENS2_37ProfileSampleCallStackJSFunctionFrameEEESaISF_EEEEERS3_DpOT_.exit.thread.i: ; preds = %._crit_edge.i
   %i.bx = load i64, ptr %i.h, align 8, !tbaa !47, !noalias !12
-  %i.by = load i64, ptr %.sroa.095.0153.i, align 8, !tbaa !47, !noalias !12
+  %i.by = load i64, ptr %.sroa.13.0149.i, align 8, !tbaa !47, !noalias !12
   %i.bz = load ptr, ptr %12, align 8, !tbaa !52, !noalias !12
   %i.ca = load ptr, ptr %i.an, align 8, !tbaa !56, !noalias !12
   store i64 %i.bx, ptr %i.bv, align 8, !tbaa !57, !noalias !12
@@ -274,7 +258,7 @@ _ZNSt6vectorIN8facebook6hermes17sampling_profiler13ProfileSampleESaIS3_EE12empla
   %i.cc = getelementptr inbounds nuw i8, ptr %i.bv, i64 16
   store ptr %i.bz, ptr %i.cc, align 8, !tbaa !52, !noalias !12
   %i.cd = getelementptr inbounds nuw i8, ptr %i.bv, i64 24
-  store ptr %14, ptr %i.cd, align 8, !tbaa !55, !noalias !12
+  store ptr %.sroa.855.1.lcssa.i, ptr %i.cd, align 8, !tbaa !55, !noalias !12
   %i.ce = getelementptr inbounds nuw i8, ptr %i.bv, i64 32
   store ptr %i.ca, ptr %i.ce, align 8, !tbaa !56, !noalias !12
   %i.cf = getelementptr inbounds nuw i8, ptr %i.bv, i64 40
@@ -282,7 +266,7 @@ _ZNSt6vectorIN8facebook6hermes17sampling_profiler13ProfileSampleESaIS3_EE12empla
   br label %_ZNSt6vectorISt7variantIJN8facebook6hermes17sampling_profiler34ProfileSampleCallStackSuspendFrameENS3_41ProfileSampleCallStackNativeFunctionFrameENS3_39ProfileSampleCallStackHostFunctionFrameENS3_37ProfileSampleCallStackJSFunctionFrameEEESaIS8_EED2Ev.exit.i
 
 _ZNSt6vectorIN8facebook6hermes17sampling_profiler13ProfileSampleESaIS3_EE12emplace_backIJRmRKmS_ISt7variantIJNS2_34ProfileSampleCallStackSuspendFrameENS2_41ProfileSampleCallStackNativeFunctionFrameENS2_39ProfileSampleCallStackHostFunctionFrameENS2_37ProfileSampleCallStackJSFunctionFrameEEESaISF_EEEEERS3_DpOT_.exit.i: ; preds = %._crit_edge.i
-  call void @_ZNSt6vectorIN8facebook6hermes17sampling_profiler13ProfileSampleESaIS3_EE17_M_realloc_insertIJRmRKmS_ISt7variantIJNS2_34ProfileSampleCallStackSuspendFrameENS2_41ProfileSampleCallStackNativeFunctionFrameENS2_39ProfileSampleCallStackHostFunctionFrameENS2_37ProfileSampleCallStackJSFunctionFrameEEESaISF_EEEEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %11, ptr %i.bv, ptr noundef nonnull align 8 dereferenceable(8) %i.h, ptr noundef nonnull align 8 dereferenceable(8) %.sroa.095.0153.i, ptr noundef nonnull align 8 dereferenceable(24) %12), !noalias !12
+  call void @_ZNSt6vectorIN8facebook6hermes17sampling_profiler13ProfileSampleESaIS3_EE17_M_realloc_insertIJRmRKmS_ISt7variantIJNS2_34ProfileSampleCallStackSuspendFrameENS2_41ProfileSampleCallStackNativeFunctionFrameENS2_39ProfileSampleCallStackHostFunctionFrameENS2_37ProfileSampleCallStackJSFunctionFrameEEESaISF_EEEEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %11, ptr %i.bv, ptr noundef nonnull align 8 dereferenceable(8) %i.h, ptr noundef nonnull align 8 dereferenceable(8) %.sroa.13.0149.i, ptr noundef nonnull align 8 dereferenceable(24) %12), !noalias !12
   %.pre170.i = load ptr, ptr %12, align 8, !tbaa !52, !noalias !12 ; 3 uses
   %.not.i.i.i32.i = icmp eq ptr %.pre170.i, null
   br i1 %.not.i.i.i32.i, label %_ZNSt6vectorISt7variantIJN8facebook6hermes17sampling_profiler34ProfileSampleCallStackSuspendFrameENS3_41ProfileSampleCallStackNativeFunctionFrameENS3_39ProfileSampleCallStackHostFunctionFrameENS3_37ProfileSampleCallStackJSFunctionFrameEEESaIS8_EED2Ev.exit.i, label %bb.f
@@ -298,19 +282,11 @@ bb.f:                                             ; preds = %_ZNSt6vectorIN8face
 _ZNSt6vectorISt7variantIJN8facebook6hermes17sampling_profiler34ProfileSampleCallStackSuspendFrameENS3_41ProfileSampleCallStackNativeFunctionFrameENS3_39ProfileSampleCallStackHostFunctionFrameENS3_37ProfileSampleCallStackJSFunctionFrameEEESaIS8_EED2Ev.exit.i: ; preds = %bb.f, %_ZNSt6vectorIN8facebook6hermes17sampling_profiler13ProfileSampleESaIS3_EE12emplace_backIJRmRKmS_ISt7variantIJNS2_34ProfileSampleCallStackSuspendFrameENS2_41ProfileSampleCallStackNativeFunctionFrameENS2_39ProfileSampleCallStackHostFunctionFrameENS2_37ProfileSampleCallStackJSFunctionFrameEEESaISF_EEEEERS3_DpOT_.exit.i, %_ZNSt6vectorIN8facebook6hermes17sampling_profiler13ProfileSampleESaIS3_EE12emplace_backIJRmRKmS_ISt7variantIJNS2_34ProfileSampleCallStackSuspendFrameENS2_41ProfileSampleCallStackNativeFunctionFrameENS2_39ProfileSampleCallStackHostFunctionFrameENS2_37ProfileSampleCallStackJSFunctionFrameEEESaISF_EEEEERS3_DpOT_.exit.thread.i
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #12, !noalias !12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #12, !noalias !12
-  %i.ck = getelementptr inbounds nuw i8, ptr %.sroa.095.0153.i, i64 40 ; 2 uses
+  %i.ck = getelementptr inbounds nuw i8, ptr %.sroa.13.0149.i, i64 40 ; 2 uses
   %.not.i = icmp eq ptr %i.ck, %i.ab
   br i1 %.not.i, label %_ZNSt6vectorIN8facebook6hermes17sampling_profiler13ProfileSampleESaIS3_EED2Ev.exit.loopexit.i, label %bb.c
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %_ZNSt6vectorISt7variantIJN8facebook6hermes17sampling_profiler34ProfileSampleCallStackSuspendFrameENS3_41ProfileSampleCallStackNativeFunctionFrameENS3_39ProfileSampleCallStackHostFunctionFrameENS3_37ProfileSampleCallStackJSFunctionFrameEEESaIS8_EE9push_backEOS8_.exit.i
-  %.sroa.855.1136.i = phi ptr [ %.sroa.855.2.i, %_ZNSt6vectorISt7variantIJN8facebook6hermes17sampling_profiler34ProfileSampleCallStackSuspendFrameENS3_41ProfileSampleCallStackNativeFunctionFrameENS3_39ProfileSampleCallStackHostFunctionFrameENS3_37ProfileSampleCallStackJSFunctionFrameEEESaIS8_EE9push_backEOS8_.exit.i ], [ %.sroa.855.0152.i, %.lr.ph.i.preheader ]
-  %.sroa.11.1135.i = phi i32 [ %.sroa.11.2.i, %_ZNSt6vectorISt7variantIJN8facebook6hermes17sampling_profiler34ProfileSampleCallStackSuspendFrameENS3_41ProfileSampleCallStackNativeFunctionFrameENS3_39ProfileSampleCallStackHostFunctionFrameENS3_37ProfileSampleCallStackJSFunctionFrameEEESaIS8_EE9push_backEOS8_.exit.i ], [ %.sroa.11.0151.i, %.lr.ph.i.preheader ] ; 3 uses
-  %.sroa.1262.1134.i = phi i64 [ %.sroa.1262.2.i, %_ZNSt6vectorISt7variantIJN8facebook6hermes17sampling_profiler34ProfileSampleCallStackSuspendFrameENS3_41ProfileSampleCallStackNativeFunctionFrameENS3_39ProfileSampleCallStackHostFunctionFrameENS3_37ProfileSampleCallStackJSFunctionFrameEEESaIS8_EE9push_backEOS8_.exit.i ], [ %.sroa.1262.0150.i, %.lr.ph.i.preheader ] ; 3 uses
-  %.sroa.13.1133.i = phi ptr [ %.sroa.13.2.i, %_ZNSt6vectorISt7variantIJN8facebook6hermes17sampling_profiler34ProfileSampleCallStackSuspendFrameENS3_41ProfileSampleCallStackNativeFunctionFrameENS3_39ProfileSampleCallStackHostFunctionFrameENS3_37ProfileSampleCallStackJSFunctionFrameEEESaIS8_EE9push_backEOS8_.exit.i ], [ %.sroa.13.0149.i, %.lr.ph.i.preheader ] ; 3 uses
-  %.sroa.14.1132.i = phi i8 [ %.sroa.14.2.i, %_ZNSt6vectorISt7variantIJN8facebook6hermes17sampling_profiler34ProfileSampleCallStackSuspendFrameENS3_41ProfileSampleCallStackNativeFunctionFrameENS3_39ProfileSampleCallStackHostFunctionFrameENS3_37ProfileSampleCallStackJSFunctionFrameEEESaIS8_EE9push_backEOS8_.exit.i ], [ %.sroa.14.0148.i, %.lr.ph.i.preheader ] ; 3 uses
-  %.sroa.16.1131.i = phi i64 [ %.sroa.16.2.i, %_ZNSt6vectorISt7variantIJN8facebook6hermes17sampling_profiler34ProfileSampleCallStackSuspendFrameENS3_41ProfileSampleCallStackNativeFunctionFrameENS3_39ProfileSampleCallStackHostFunctionFrameENS3_37ProfileSampleCallStackJSFunctionFrameEEESaIS8_EE9push_backEOS8_.exit.i ], [ %.sroa.16.0147.i, %.lr.ph.i.preheader ] ; 3 uses
-  %.sroa.17.1130.i = phi i64 [ %.sroa.17.2.i, %_ZNSt6vectorISt7variantIJN8facebook6hermes17sampling_profiler34ProfileSampleCallStackSuspendFrameENS3_41ProfileSampleCallStackNativeFunctionFrameENS3_39ProfileSampleCallStackHostFunctionFrameENS3_37ProfileSampleCallStackJSFunctionFrameEEESaIS8_EE9push_backEOS8_.exit.i ], [ %.sroa.17.0146.i, %.lr.ph.i.preheader ] ; 3 uses
-  %.sroa.053.sroa.8.1129.i = phi i32 [ %.sroa.053.sroa.8.2.i, %_ZNSt6vectorISt7variantIJN8facebook6hermes17sampling_profiler34ProfileSampleCallStackSuspendFrameENS3_41ProfileSampleCallStackNativeFunctionFrameENS3_39ProfileSampleCallStackHostFunctionFrameENS3_37ProfileSampleCallStackJSFunctionFrameEEESaIS8_EE9push_backEOS8_.exit.i ], [ %.sroa.053.sroa.8.0145.i, %.lr.ph.i.preheader ]
   %.sroa.091.0128.i = phi ptr [ %i.qv, %_ZNSt6vectorISt7variantIJN8facebook6hermes17sampling_profiler34ProfileSampleCallStackSuspendFrameENS3_41ProfileSampleCallStackNativeFunctionFrameENS3_39ProfileSampleCallStackHostFunctionFrameENS3_37ProfileSampleCallStackJSFunctionFrameEEESaIS8_EE9push_backEOS8_.exit.i ], [ %i.bm, %.lr.ph.i.preheader ] ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.15.i)
   %i.cl = getelementptr inbounds nuw i8, ptr %.sroa.091.0128.i, i64 16
@@ -332,7 +308,6 @@ bb.h:                                             ; preds = %.lr.ph.i
   %i.cq = extractvalue { i64, ptr } %i.co, 1
   %.sroa.053.sroa.0.0.extract.trunc78.i = trunc i64 %i.cp to i32
   %.sroa.053.sroa.8.0.extract.shift84.i = lshr i64 %i.cp, 32
-  %.sroa.053.sroa.8.0.extract.trunc85.i = trunc nuw i64 %.sroa.053.sroa.8.0.extract.shift84.i to i32
   br label %_ZN6hermes2vm12_GLOBAL__N_116ProfileGenerator17processStackFrameERKNS0_16SamplingProfiler10StackFrameE.exit.i
 
 bb.i:                                             ; preds = %.lr.ph.i
@@ -341,7 +316,6 @@ bb.i:                                             ; preds = %.lr.ph.i
   %i.ct = extractvalue { i64, ptr } %i.cr, 1
   %.sroa.053.sroa.0.0.extract.trunc77.i = trunc i64 %i.cs to i32
   %.sroa.053.sroa.8.0.extract.shift82.i = lshr i64 %i.cs, 32
-  %.sroa.053.sroa.8.0.extract.trunc83.i = trunc nuw i64 %.sroa.053.sroa.8.0.extract.shift82.i to i32
   br label %_ZN6hermes2vm12_GLOBAL__N_116ProfileGenerator17processStackFrameERKNS0_16SamplingProfiler10StackFrameE.exit.i
 
 bb.j:                                             ; preds = %.lr.ph.i
@@ -744,9 +718,9 @@ _ZN4llvh12DenseMapBaseINS_8DenseMapINS_9StringRefESt17basic_string_viewIcSt11cha
   br label %.thread.i.i.i
 
 .thread.i.i.i:                                    ; preds = %_ZN4llvh12DenseMapBaseINS_8DenseMapINS_9StringRefESt17basic_string_viewIcSt11char_traitsIcEENS_12DenseMapInfoIS2_EENS_6detail12DenseMapPairIS2_S6_EEEES2_S6_S8_SB_E11try_emplaceIJRS6_EEESt4pairINS_16DenseMapIteratorIS2_S6_S8_SB_Lb0EEEbEOS2_DpOT_.exit.i.i.i, %bb.ao, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i22.i.i.i, %_ZN6hermes2vm12_GLOBAL__N_135getFunctionDefinitionSourceLocationEPNS_3hbc20BCProviderFromBufferEj.exit.i.i.i, %_ZN6hermes2vm12_GLOBAL__N_135getFunctionDefinitionSourceLocationEPNS_3hbc20BCProviderFromBufferEj.exit.thread.i.i.i
-  %.sroa.053.1.i.i.i = phi i64 [ undef, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i22.i.i.i ], [ %.sroa.053.0.copyload54.i.i.i, %bb.ao ], [ %i.lr, %_ZN4llvh12DenseMapBaseINS_8DenseMapINS_9StringRefESt17basic_string_viewIcSt11char_traitsIcEENS_12DenseMapInfoIS2_EENS_6detail12DenseMapPairIS2_S6_EEEES2_S6_S8_SB_E11try_emplaceIJRS6_EEESt4pairINS_16DenseMapIteratorIS2_S6_S8_SB_Lb0EEEbEOS2_DpOT_.exit.i.i.i ], [ undef, %_ZN6hermes2vm12_GLOBAL__N_135getFunctionDefinitionSourceLocationEPNS_3hbc20BCProviderFromBufferEj.exit.thread.i.i.i ], [ undef, %_ZN6hermes2vm12_GLOBAL__N_135getFunctionDefinitionSourceLocationEPNS_3hbc20BCProviderFromBufferEj.exit.i.i.i ] ; 2 uses
-  %.sroa.555.1.i.i.i = phi ptr [ undef, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i22.i.i.i ], [ %.sroa.555.0.copyload57.i.i.i, %bb.ao ], [ %i.lp, %_ZN4llvh12DenseMapBaseINS_8DenseMapINS_9StringRefESt17basic_string_viewIcSt11char_traitsIcEENS_12DenseMapInfoIS2_EENS_6detail12DenseMapPairIS2_S6_EEEES2_S6_S8_SB_E11try_emplaceIJRS6_EEESt4pairINS_16DenseMapIteratorIS2_S6_S8_SB_Lb0EEEbEOS2_DpOT_.exit.i.i.i ], [ undef, %_ZN6hermes2vm12_GLOBAL__N_135getFunctionDefinitionSourceLocationEPNS_3hbc20BCProviderFromBufferEj.exit.thread.i.i.i ], [ undef, %_ZN6hermes2vm12_GLOBAL__N_135getFunctionDefinitionSourceLocationEPNS_3hbc20BCProviderFromBufferEj.exit.i.i.i ] ; 2 uses
-  %.sroa.658.1.i.i.i = phi i8 [ 0, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i22.i.i.i ], [ 1, %bb.ao ], [ 1, %_ZN4llvh12DenseMapBaseINS_8DenseMapINS_9StringRefESt17basic_string_viewIcSt11char_traitsIcEENS_12DenseMapInfoIS2_EENS_6detail12DenseMapPairIS2_S6_EEEES2_S6_S8_SB_E11try_emplaceIJRS6_EEESt4pairINS_16DenseMapIteratorIS2_S6_S8_SB_Lb0EEEbEOS2_DpOT_.exit.i.i.i ], [ 0, %_ZN6hermes2vm12_GLOBAL__N_135getFunctionDefinitionSourceLocationEPNS_3hbc20BCProviderFromBufferEj.exit.thread.i.i.i ], [ 0, %_ZN6hermes2vm12_GLOBAL__N_135getFunctionDefinitionSourceLocationEPNS_3hbc20BCProviderFromBufferEj.exit.i.i.i ] ; 2 uses
+  %.sroa.658.1.i.i.i = phi i8 [ 0, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i22.i.i.i ], [ 1, %_ZN4llvh12DenseMapBaseINS_8DenseMapINS_9StringRefESt17basic_string_viewIcSt11char_traitsIcEENS_12DenseMapInfoIS2_EENS_6detail12DenseMapPairIS2_S6_EEEES2_S6_S8_SB_E11try_emplaceIJRS6_EEESt4pairINS_16DenseMapIteratorIS2_S6_S8_SB_Lb0EEEbEOS2_DpOT_.exit.i.i.i ], [ 1, %bb.ao ], [ 0, %_ZN6hermes2vm12_GLOBAL__N_135getFunctionDefinitionSourceLocationEPNS_3hbc20BCProviderFromBufferEj.exit.thread.i.i.i ], [ 0, %_ZN6hermes2vm12_GLOBAL__N_135getFunctionDefinitionSourceLocationEPNS_3hbc20BCProviderFromBufferEj.exit.i.i.i ] ; 2 uses
+  %.sroa.555.1.i.i.i = phi ptr [ undef, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i22.i.i.i ], [ %i.lp, %_ZN4llvh12DenseMapBaseINS_8DenseMapINS_9StringRefESt17basic_string_viewIcSt11char_traitsIcEENS_12DenseMapInfoIS2_EENS_6detail12DenseMapPairIS2_S6_EEEES2_S6_S8_SB_E11try_emplaceIJRS6_EEESt4pairINS_16DenseMapIteratorIS2_S6_S8_SB_Lb0EEEbEOS2_DpOT_.exit.i.i.i ], [ %.sroa.555.0.copyload57.i.i.i, %bb.ao ], [ undef, %_ZN6hermes2vm12_GLOBAL__N_135getFunctionDefinitionSourceLocationEPNS_3hbc20BCProviderFromBufferEj.exit.thread.i.i.i ], [ undef, %_ZN6hermes2vm12_GLOBAL__N_135getFunctionDefinitionSourceLocationEPNS_3hbc20BCProviderFromBufferEj.exit.i.i.i ] ; 2 uses
+  %.sroa.053.1.i.i.i = phi i64 [ undef, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i22.i.i.i ], [ %i.lr, %_ZN4llvh12DenseMapBaseINS_8DenseMapINS_9StringRefESt17basic_string_viewIcSt11char_traitsIcEENS_12DenseMapInfoIS2_EENS_6detail12DenseMapPairIS2_S6_EEEES2_S6_S8_SB_E11try_emplaceIJRS6_EEESt4pairINS_16DenseMapIteratorIS2_S6_S8_SB_Lb0EEEbEOS2_DpOT_.exit.i.i.i ], [ %.sroa.053.0.copyload54.i.i.i, %bb.ao ], [ undef, %_ZN6hermes2vm12_GLOBAL__N_135getFunctionDefinitionSourceLocationEPNS_3hbc20BCProviderFromBufferEj.exit.thread.i.i.i ], [ undef, %_ZN6hermes2vm12_GLOBAL__N_135getFunctionDefinitionSourceLocationEPNS_3hbc20BCProviderFromBufferEj.exit.i.i.i ] ; 2 uses
   %.sroa.036.i.i.sroa.0.0.copyload = load <3 x i32>, ptr %6, align 16, !noalias !66
   %.sroa.537.0.copyload41.i.i = load i32, ptr %.sroa.537.0..sroa_idx40.i.i, align 4, !tbaa !3, !noalias !66 ; 2 uses
   %.sroa.642.0.copyload46.i.i = load i32, ptr %.sroa.642.0..sroa_idx45.i.i, align 16, !tbaa !3, !noalias !66 ; 2 uses
@@ -1007,7 +981,6 @@ bb.bj:                                            ; preds = %bb.bi, %bb.bh, %.sp
   %.sroa.033.0.insert.insert.i.i = or disjoint i64 %i.py, %.sroa.033.0.insert.ext.i.i
   %.sroa.053.sroa.0.0.extract.trunc.i = trunc i64 %.sroa.1266.0.i.i to i32
   %.sroa.053.sroa.8.0.extract.shift.i = lshr i64 %.sroa.1266.0.i.i, 32
-  %.sroa.053.sroa.8.0.extract.trunc.i = trunc nuw i64 %.sroa.053.sroa.8.0.extract.shift.i to i32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.15.i, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.6.sroa.6.i.i, i64 7, i1 false), !noalias !12
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6.sroa.6.i.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.855.i.i)
@@ -1018,24 +991,23 @@ bb.bk:                                            ; preds = %.lr.ph.i
   unreachable
 
 _ZN6hermes2vm12_GLOBAL__N_116ProfileGenerator17processStackFrameERKNS0_16SamplingProfiler10StackFrameE.exit.i: ; preds = %bb.bj, %bb.i, %bb.h, %bb.g
-  %.sroa.053.sroa.8.2.i = phi i32 [ %.sroa.053.sroa.8.1129.i, %bb.g ], [ %.sroa.053.sroa.8.0.extract.trunc85.i, %bb.h ], [ %.sroa.053.sroa.8.0.extract.trunc83.i, %bb.i ], [ %.sroa.053.sroa.8.0.extract.trunc.i, %bb.bj ] ; 4 uses
+  %.sroa.053.sroa.8.0.i = phi i64 [ 0, %bb.g ], [ %.sroa.053.sroa.8.0.extract.shift84.i, %bb.h ], [ %.sroa.053.sroa.8.0.extract.shift82.i, %bb.i ], [ %.sroa.053.sroa.8.0.extract.shift.i, %bb.bj ] ; 2 uses
   %.sroa.053.sroa.0.0.i = phi i32 [ %i.cn, %bb.g ], [ %.sroa.053.sroa.0.0.extract.trunc78.i, %bb.h ], [ %.sroa.053.sroa.0.0.extract.trunc77.i, %bb.i ], [ %.sroa.053.sroa.0.0.extract.trunc.i, %bb.bj ] ; 2 uses
   %.sroa.18.0.i = phi i8 [ 0, %bb.g ], [ 1, %bb.h ], [ 2, %bb.i ], [ 3, %bb.bj ] ; 2 uses
-  %.sroa.17.2.i = phi i64 [ %.sroa.17.1130.i, %bb.g ], [ %.sroa.17.1130.i, %bb.h ], [ %.sroa.17.1130.i, %bb.i ], [ %.sroa.431.1105.i.i, %bb.bj ] ; 4 uses
-  %.sroa.16.2.i = phi i64 [ %.sroa.16.1131.i, %bb.g ], [ %.sroa.16.1131.i, %bb.h ], [ %.sroa.16.1131.i, %bb.i ], [ %.sroa.033.0.insert.insert.i.i, %bb.bj ] ; 4 uses
-  %.sroa.14.2.i = phi i8 [ %.sroa.14.1132.i, %bb.g ], [ %.sroa.14.1132.i, %bb.h ], [ %.sroa.14.1132.i, %bb.i ], [ %.sroa.11.0.i.i, %bb.bj ] ; 4 uses
-  %.sroa.13.2.i = phi ptr [ %.sroa.13.1133.i, %bb.g ], [ %.sroa.13.1133.i, %bb.h ], [ %.sroa.13.1133.i, %bb.i ], [ %.sroa.10.0.i.i, %bb.bj ] ; 4 uses
-  %.sroa.1262.2.i = phi i64 [ %.sroa.1262.1134.i, %bb.g ], [ %.sroa.1262.1134.i, %bb.h ], [ %.sroa.1262.1134.i, %bb.i ], [ %.sroa.858.0.i.i, %bb.bj ] ; 4 uses
-  %.sroa.11.2.i = phi i32 [ %.sroa.11.1135.i, %bb.g ], [ %.sroa.11.1135.i, %bb.h ], [ %.sroa.11.1135.i, %bb.i ], [ %i.pu, %bb.bj ] ; 4 uses
-  %.sroa.855.2.i = phi ptr [ %.sroa.855.1136.i, %bb.g ], [ %i.cq, %bb.h ], [ %i.ct, %bb.i ], [ %.sroa.14.0.i.i, %bb.bj ] ; 4 uses
+  %.sroa.17.2.i = phi i64 [ undef, %bb.g ], [ undef, %bb.h ], [ undef, %bb.i ], [ %.sroa.431.1105.i.i, %bb.bj ] ; 2 uses
+  %.sroa.16.2.i = phi i64 [ undef, %bb.g ], [ undef, %bb.h ], [ undef, %bb.i ], [ %.sroa.033.0.insert.insert.i.i, %bb.bj ] ; 2 uses
+  %.sroa.14.2.i = phi i8 [ undef, %bb.g ], [ undef, %bb.h ], [ undef, %bb.i ], [ %.sroa.11.0.i.i, %bb.bj ] ; 2 uses
+  %.sroa.13.2.i = phi ptr [ undef, %bb.g ], [ undef, %bb.h ], [ undef, %bb.i ], [ %.sroa.10.0.i.i, %bb.bj ] ; 2 uses
+  %.sroa.1262.2.i = phi i64 [ undef, %bb.g ], [ undef, %bb.h ], [ undef, %bb.i ], [ %.sroa.858.0.i.i, %bb.bj ] ; 2 uses
+  %.sroa.11.2.i = phi i32 [ undef, %bb.g ], [ undef, %bb.h ], [ undef, %bb.i ], [ %i.pu, %bb.bj ] ; 2 uses
+  %.sroa.855.2.i = phi ptr [ undef, %bb.g ], [ %i.cq, %bb.h ], [ %i.ct, %bb.i ], [ %.sroa.14.0.i.i, %bb.bj ] ; 2 uses
   %i.pz = load ptr, ptr %i.ao, align 8, !tbaa !55, !noalias !12 ; 14 uses
   %i.qa = load ptr, ptr %i.an, align 8, !tbaa !56, !noalias !12
   %.not.i.i.i = icmp eq ptr %i.pz, %i.qa
   br i1 %.not.i.i.i, label %bb.bm, label %bb.bl
 
 bb.bl:                                            ; preds = %_ZN6hermes2vm12_GLOBAL__N_116ProfileGenerator17processStackFrameERKNS0_16SamplingProfiler10StackFrameE.exit.i
-  %.sroa.053.sroa.8.0.insert.ext.i = zext i32 %.sroa.053.sroa.8.2.i to i64
-  %.sroa.053.sroa.8.0.insert.shift.i = shl nuw i64 %.sroa.053.sroa.8.0.insert.ext.i, 32
+  %.sroa.053.sroa.8.0.insert.shift.i = shl nuw i64 %.sroa.053.sroa.8.0.i, 32
   %.sroa.053.sroa.0.0.insert.ext.i = zext i32 %.sroa.053.sroa.0.0.i to i64
   %.sroa.053.sroa.0.0.insert.insert.i = or disjoint i64 %.sroa.053.sroa.8.0.insert.shift.i, %.sroa.053.sroa.0.0.insert.ext.i
   store i64 %.sroa.053.sroa.0.0.insert.insert.i, ptr %i.pz, align 8, !noalias !12
@@ -1086,8 +1058,7 @@ _ZNKSt6vectorISt7variantIJN8facebook6hermes17sampling_profiler34ProfileSampleCal
   %i.qn = mul nuw nsw i64 %i.qm, 72
   %i.qo = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.qn) #13, !noalias !12 ; 5 uses
   %i.qp = getelementptr inbounds nuw i8, ptr %i.qo, i64 %i.qg ; 10 uses
-  %.sroa.053.sroa.8.0.insert.ext86.i = zext i32 %.sroa.053.sroa.8.2.i to i64
-  %.sroa.053.sroa.8.0.insert.shift87.i = shl nuw i64 %.sroa.053.sroa.8.0.insert.ext86.i, 32
+  %.sroa.053.sroa.8.0.insert.shift87.i = shl nuw i64 %.sroa.053.sroa.8.0.i, 32
   %.sroa.053.sroa.0.0.insert.ext79.i = zext i32 %.sroa.053.sroa.0.0.i to i64
   %.sroa.053.sroa.0.0.insert.insert81.i = or disjoint i64 %.sroa.053.sroa.8.0.insert.shift87.i, %.sroa.053.sroa.0.0.insert.ext79.i
   store i64 %.sroa.053.sroa.0.0.insert.insert81.i, ptr %i.qp, align 8, !noalias !12

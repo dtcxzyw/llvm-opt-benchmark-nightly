@@ -203,7 +203,6 @@ bb.gl:                                            ; preds = %bb.gj
   br label %bb.gm
 
 bb.gm:                                            ; preds = %bb.hl, %bb.gl
-  %.sroa.6.0 = phi ptr [ undef, %bb.gl ], [ %.sroa.6.1, %bb.hl ] ; 4 uses
   %.sroa.021.0 = phi i1 [ false, %bb.gl ], [ %.sroa.021.1, %bb.hl ] ; 3 uses
   %i.ny = invoke noundef align 8 ptr @_RINvXs4_NtNtCs40k4W9msRzi_5alloc3vec9into_iterINtB6_8IntoIterRNtCsdfAJ7lwe7WW_14cargo_metadata7PackageENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB1D_4find5checkBX_QNCNvMNtCsyoCoCcM3Qh_5xtask5testsNtB3d_8TestArgs9run_testss_0E0INtNtNtB1L_3ops12control_flow11ControlFlowBX_EEB3f_(ptr noalias noundef nonnull align 8 dereferenceable(32) %i.ap, ptr noalias noundef nonnull align 8 dereferenceable(8) %.sroa.2.0..sroa_idx)
           to label %bb.gn unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit ; 7 uses
@@ -398,8 +397,7 @@ _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtCsknFUbXuePIn_6camino11Utf8PathBufECsy
   br label %bb.hl
 
 bb.hl:                                            ; preds = %bb.jp, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtCsknFUbXuePIn_6camino11Utf8PathBufECsyoCoCcM3Qh_5xtask.exit303
-  %.sroa.6.1 = phi ptr [ %.sroa.6.0, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtCsknFUbXuePIn_6camino11Utf8PathBufECsyoCoCcM3Qh_5xtask.exit303 ], [ %.sroa.6.2, %bb.jp ]
-  %.sroa.021.1 = phi i1 [ %.sroa.021.0, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtCsknFUbXuePIn_6camino11Utf8PathBufECsyoCoCcM3Qh_5xtask.exit303 ], [ %.sroa.021.2, %bb.jp ]
+  %.sroa.021.1 = phi i1 [ %.sroa.021.2, %bb.jp ], [ %.sroa.021.0, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtCsknFUbXuePIn_6camino11Utf8PathBufECsyoCoCcM3Qh_5xtask.exit303 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ao)
   br label %bb.gm
 
@@ -533,7 +531,6 @@ _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCsgczF5crJ4sT_3std4path7PathBufECsyo
   br label %bb.ib
 
 bb.ib:                                            ; preds = %bb.ik, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCsgczF5crJ4sT_3std4path7PathBufECsyoCoCcM3Qh_5xtask.exit
-  %.sroa.6.2 = phi ptr [ %.sroa.6.0, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCsgczF5crJ4sT_3std4path7PathBufECsyoCoCcM3Qh_5xtask.exit ], [ %.sroa.6.3494, %bb.ik ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.af)
   invoke void @_RINvMsk_NtCsgczF5crJ4sT_3std7processNtB6_7Command3newReECsyoCoCcM3Qh_5xtask(ptr noalias noundef nonnull sret([200 x i8]) align 8 captures(none) dereferenceable(200) %i.af, ptr noalias noundef nonnull readonly captures(address, read_provenance) @19, i64 noundef 5)
           to label %bb.ip unwind label %.split
@@ -611,8 +608,8 @@ _RINvMNtCscI6d9CVNmLh_4core3stre10split_oncecECsyoCoCcM3Qh_5xtask.exit: ; preds 
   br label %.loopexit498
 
 .loopexit498:                                     ; preds = %bb.ih, %_RNvNtNtCscI6d9CVNmLh_4core5slice6memchr6memchr.exit.i.i, %_RINvMNtCscI6d9CVNmLh_4core3stre10split_oncecECsyoCoCcM3Qh_5xtask.exit
-  %.sroa.6.3494 = phi ptr [ %i.qm, %_RINvMNtCscI6d9CVNmLh_4core3stre10split_oncecECsyoCoCcM3Qh_5xtask.exit ], [ %.sroa.6.0, %_RNvNtNtCscI6d9CVNmLh_4core5slice6memchr6memchr.exit.i.i ], [ %.sroa.6.0, %bb.ih ] ; 3 uses
   %.sroa.0402.0492 = phi i1 [ false, %_RINvMNtCscI6d9CVNmLh_4core3stre10split_oncecECsyoCoCcM3Qh_5xtask.exit ], [ true, %_RNvNtNtCscI6d9CVNmLh_4core5slice6memchr6memchr.exit.i.i ], [ true, %bb.ih ]
+  %.sroa.6.0490 = phi ptr [ %i.qm, %_RINvMNtCscI6d9CVNmLh_4core3stre10split_oncecECsyoCoCcM3Qh_5xtask.exit ], [ undef, %_RNvNtNtCscI6d9CVNmLh_4core5slice6memchr6memchr.exit.i.i ], [ undef, %bb.ih ] ; 2 uses
   %i.qn = phi i64 [ %i.ql, %_RINvMNtCscI6d9CVNmLh_4core3stre10split_oncecECsyoCoCcM3Qh_5xtask.exit ], [ undef, %_RNvNtNtCscI6d9CVNmLh_4core5slice6memchr6memchr.exit.i.i ], [ undef, %bb.ih ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ai)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ah)
@@ -628,7 +625,7 @@ _RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionReE11map_or_elseNtNtCs40k4W9msRzi
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ag)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ai, ptr noundef nonnull align 8 dereferenceable(24) %i.ah, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ah)
-  %.not165419 = icmp eq ptr %.sroa.6.3494, null
+  %.not165419 = icmp eq ptr %.sroa.6.0490, null
   %.not165 = select i1 %.sroa.0402.0492, i1 true, i1 %.not165419
   br i1 %.not165, label %bb.ik, label %bb.ij
 
@@ -670,7 +667,7 @@ bb.im:                                            ; preds = %bb.ij
 bb.in:                                            ; preds = %.noexc333
   %i.qw = load ptr, ptr %i.na, align 8, !alias.scope !399, !nonnull !5, !noundef !5
   %i.qx = getelementptr inbounds nuw i8, ptr %i.qw, i64 %i.qu
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.qx, ptr nonnull readonly align 1 %.sroa.6.3494, i64 %i.qn, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.qx, ptr nonnull readonly align 1 %.sroa.6.0490, i64 %i.qn, i1 false)
   %.pre.i = load i64, ptr %i.mz, align 8, !alias.scope !399
   br label %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VechE15append_elementsCsyoCoCcM3Qh_5xtask.exit
 

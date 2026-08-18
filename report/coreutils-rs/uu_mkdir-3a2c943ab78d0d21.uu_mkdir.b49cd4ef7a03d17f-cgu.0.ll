@@ -203,7 +203,6 @@ _RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCs2vKOLqTMYjT_3std4path7PathBufECsfv
   %.sroa.10.0 = phi ptr [ %.sroa.10.0.copyload, %bb.a ], [ %.sroa.10.181, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCs2vKOLqTMYjT_3std4path7PathBufECsfvoB946XvKl_8uu_mkdir.exit.backedge ] ; 3 uses
   %.sroa.7.0 = phi ptr [ %.sroa.7.0.copyload, %bb.a ], [ %.sroa.7.2, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCs2vKOLqTMYjT_3std4path7PathBufECsfvoB946XvKl_8uu_mkdir.exit.backedge ] ; 3 uses
   %.sroa.4.0 = phi ptr [ %.sroa.4.0.copyload, %bb.a ], [ %.sroa.4.178, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCs2vKOLqTMYjT_3std4path7PathBufECsfvoB946XvKl_8uu_mkdir.exit.backedge ] ; 2 uses
-  %.sroa.1037.0 = phi i64 [ undef, %bb.a ], [ %.sroa.1037.154, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCs2vKOLqTMYjT_3std4path7PathBufECsfvoB946XvKl_8uu_mkdir.exit.backedge ]
   %.not.i.i.i82 = icmp eq ptr %.sroa.7.0, null
   %i.o = icmp eq ptr %.sroa.7.0, %.sroa.10.0
   %or.cond83 = select i1 %.not.i.i.i82, i1 true, i1 %i.o
@@ -266,7 +265,7 @@ bb.e:                                             ; preds = %bb.d
 
 _RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i: ; preds = %bb.e
   call void @_RNvCsjSVV5GABoor_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #22, !noalias !239
-  %i.ae = call noundef ptr @_RNvCsjSVV5GABoor_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.ac, i64 noundef range(i64 1, 9) 1) #22, !noalias !239 ; 4 uses
+  %i.ae = call noundef ptr @_RNvCsjSVV5GABoor_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.ac, i64 noundef range(i64 1, 9) 1) #22, !noalias !239 ; 3 uses
   %i.af = icmp eq ptr %i.ae, null
   br i1 %i.af, label %bb.g, label %bb.h
 
@@ -275,20 +274,17 @@ bb.f:                                             ; preds = %bb.c, %.sink.split.
 
 bb.g:                                             ; preds = %bb.d, %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i
   %.sroa.435.0.ph = phi i64 [ 1, %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i ], [ 0, %bb.d ]
-  %.sroa.1037.1.ph = phi i64 [ %i.ac, %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i ], [ %.sroa.1037.0, %bb.d ]
-  call void @_RNvNtCs7tKScEop1B6_5alloc7raw_vec12handle_error(i64 noundef %.sroa.435.0.ph, i64 %.sroa.1037.1.ph) #25
+  call void @_RNvNtCs7tKScEop1B6_5alloc7raw_vec12handle_error(i64 noundef %.sroa.435.0.ph, i64 %i.ac) #25
   unreachable
 
 _RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsfvoB946XvKl_8uu_mkdir.exit.thread48: ; preds = %bb.e, %bb.h
   %i.ag = phi ptr [ %i.ae, %bb.h ], [ inttoptr (i64 1 to ptr), %bb.e ] ; 2 uses
-  %.sroa.1037.154 = phi i64 [ %2, %bb.h ], [ 1, %bb.e ]
   %i.ah = call { ptr, ptr } @_RNvCsfvoB946XvKl_8uu_mkdir5mkdir(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.ag, i64 noundef %i.ac, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %1) #22 ; 2 uses
   %i.ai = extractvalue { ptr, ptr } %i.ah, 0      ; 3 uses
   %.not21 = icmp eq ptr %i.ai, null
   br i1 %.not21, label %bb.w, label %bb.i
 
 bb.h:                                             ; preds = %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator8allocate.exit.i
-  %2 = ptrtoint ptr %i.ae to i64
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ae, ptr nonnull align 1 %i.aa, i64 %i.ac, i1 false)
   br label %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsfvoB946XvKl_8uu_mkdir.exit.thread48
 

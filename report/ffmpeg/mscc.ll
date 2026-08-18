@@ -203,9 +203,8 @@ bb.r:                                             ; preds = %bb.bc, %.lr.ph138.i
   %.sroa.0.0 = phi ptr [ %i.ji, %.lr.ph138.i ], [ %.sroa.0.3, %bb.bc ] ; 4 uses
   %i.jw = phi i64 [ %i.jf, %.lr.ph138.i ], [ %i.qn, %bb.bc ]
   %i.jx = phi ptr [ %i.iz, %.lr.ph138.i ], [ %.sroa.0131.1, %bb.bc ] ; 7 uses
-  %.070136.i = phi i32 [ 0, %.lr.ph138.i ], [ %.474.i, %bb.bc ] ; 3 uses
-  %.077135.i = phi i32 [ undef, %.lr.ph138.i ], [ %.380.i, %bb.bc ] ; 4 uses
-  %.081134.i = phi i32 [ 0, %.lr.ph138.i ], [ %.485.i, %bb.bc ] ; 4 uses
+  %.077135.i = phi i32 [ 0, %.lr.ph138.i ], [ %.474.i, %bb.bc ] ; 4 uses
+  %.081134.i = phi i32 [ 0, %.lr.ph138.i ], [ %.380.i, %bb.bc ] ; 3 uses
   %i.jy = icmp slt i64 %i.jw, 1
   br i1 %i.jy, label %bytestream2_get_byte.exit98.thread.i, label %bytestream2_get_byte.exit98.i
 
@@ -292,7 +291,7 @@ bb.ab:                                            ; preds = %bb.aa
 
 bytestream2_get_byte.exit96.i:                    ; preds = %bb.aa, %bb.y, %bb.w, %bb.u, %bb.ab, %bb.z, %bb.x, %bb.v, %bb.t
   %.sroa.0131.0 = phi ptr [ %i.jz, %bb.t ], [ %i.lj, %bb.ab ], [ %i.km, %bb.v ], [ %i.jg, %bb.u ], [ %i.ks, %bb.x ], [ %i.jg, %bb.w ], [ %i.ky, %bb.z ], [ %i.jg, %bb.y ], [ %i.jg, %bb.aa ]
-  %.178.i = phi i32 [ %.077135.i, %bb.t ], [ %i.lk, %bb.ab ], [ %i.ko, %bb.v ], [ 0, %bb.u ], [ %i.ku, %bb.x ], [ 0, %bb.w ], [ %i.lf, %bb.z ], [ 0, %bb.y ], [ 0, %bb.aa ] ; 6 uses
+  %.178.i = phi i32 [ undef, %bb.t ], [ %i.lk, %bb.ab ], [ %i.ko, %bb.v ], [ 0, %bb.u ], [ %i.ku, %bb.x ], [ 0, %bb.w ], [ %i.lf, %bb.z ], [ 0, %bb.y ], [ 0, %bb.aa ] ; 5 uses
   %i.ll = trunc i32 %.178.i to i8                 ; 2 uses
   %i.lm = lshr i32 %.178.i, 8
   %i.ln = trunc i32 %i.lm to i8
@@ -377,7 +376,7 @@ bytestream2_put_byte.exit109.i:                   ; preds = %bb.aj, %bb.ah, %bb.
   br i1 %exitcond.not.i, label %bb.al, label %bb.ac, !llvm.loop !57
 
 bb.al:                                            ; preds = %bytestream2_put_byte.exit109.i
-  %i.ml = add i32 %.070136.i, %i.kb
+  %i.ml = add i32 %.081134.i, %i.kb
   br label %bb.bc
 
 bytestream2_get_byte.exit98.thread.i:             ; preds = %bytestream2_get_byte.exit98.i.bytestream2_get_byte.exit98.thread.i_crit_edge, %bb.r
@@ -409,7 +408,7 @@ rle_uncompress.exit.preheader:                    ; preds = %bytestream2_get_byt
 
 bytestream2_seek_p.exit119.i:                     ; preds = %bytestream2_get_byte.exit98.thread.i, %bytestream2_get_byte.exit94.i
   %.sroa.0131.3 = phi ptr [ %i.mp, %bytestream2_get_byte.exit94.i ], [ %i.jg, %bytestream2_get_byte.exit98.thread.i ]
-  %i.mw = add i32 %.081134.i, 1                   ; 2 uses
+  %i.mw = add i32 %.077135.i, 1                   ; 2 uses
   %i.mx = load i32, ptr %i.ju, align 8, !tbaa !36
   %i.my = mul i32 %i.mx, %i.mw
   %i.mz = load i32, ptr %i.jn, align 8, !tbaa !31
@@ -440,7 +439,7 @@ bytestream2_get_byte.exit92.i:                    ; preds = %bb.an, %bb.am
   %.pre-phi = phi i64 [ %.pre, %bb.an ], [ %i.jo, %bb.am ]
   %i.nl = phi ptr [ %i.ni, %bb.an ], [ %i.jg, %bb.am ] ; 2 uses
   %.0.i91.i = phi i32 [ %i.nk, %bb.an ], [ 0, %bb.am ]
-  %i.nm = add i32 %.0.i91.i, %.070136.i           ; 2 uses
+  %i.nm = add i32 %.0.i91.i, %.081134.i           ; 2 uses
   %i.nn = sub i64 %i.jo, %.pre-phi
   %i.no = icmp slt i64 %i.nn, 1
   br i1 %i.no, label %bytestream2_get_byte.exit90.i, label %bb.ao
@@ -454,7 +453,7 @@ bb.ao:                                            ; preds = %bytestream2_get_byt
 bytestream2_get_byte.exit90.i:                    ; preds = %bytestream2_get_byte.exit92.i, %bb.ao
   %.sroa.0131.2 = phi ptr [ %i.np, %bb.ao ], [ %i.jg, %bytestream2_get_byte.exit92.i ]
   %.0.i89.i = phi i32 [ %i.nr, %bb.ao ], [ 0, %bytestream2_get_byte.exit92.i ]
-  %i.ns = add i32 %.0.i89.i, %.081134.i           ; 2 uses
+  %i.ns = add i32 %.0.i89.i, %.077135.i           ; 2 uses
   %i.nt = load i32, ptr %i.ju, align 8, !tbaa !36
   %i.nu = mul i32 %i.ns, %i.nt
   %i.nv = load i32, ptr %i.jn, align 8, !tbaa !31
@@ -479,8 +478,8 @@ bb.ap:                                            ; preds = %bytestream2_get_byt
   br i1 %i.oh, label %rle_uncompress.exit.thread, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.ap, %bytestream2_put_byte.exit.i
-  %.sroa.51.4 = phi i32 [ %.sroa.51.5, %bytestream2_put_byte.exit.i ], [ %.sroa.51.0, %bb.ap ] ; 5 uses
   %.sroa.0131.4 = phi ptr [ %.sroa.0131.6, %bytestream2_put_byte.exit.i ], [ %i.mp, %bb.ap ] ; 14 uses
+  %.sroa.51.4 = phi i32 [ %.sroa.51.5, %bytestream2_put_byte.exit.i ], [ %.sroa.51.0, %bb.ap ] ; 5 uses
   %.sroa.0.4 = phi ptr [ %.sroa.0.5, %bytestream2_put_byte.exit.i ], [ %.sroa.0.0, %bb.ap ] ; 19 uses
   %.176133.i = phi i32 [ %i.qg, %bytestream2_put_byte.exit.i ], [ 0, %bb.ap ]
   %i.oi = load i32, ptr %i.jt, align 8, !tbaa !29
@@ -611,8 +610,8 @@ bb.bb:                                            ; preds = %bytestream2_get_le3
   br label %bytestream2_put_byte.exit.i
 
 bytestream2_put_byte.exit.i:                      ; preds = %bytestream2_get_le32.exit.i, %bytestream2_get_le24.exit.i, %bytestream2_get_le16.exit.i, %bytestream2_get_byte.exit.i, %bb.bb, %bb.ay, %bb.av, %bb.as, %.lr.ph.i
-  %.sroa.51.5 = phi i32 [ %.sroa.51.4, %.lr.ph.i ], [ 0, %bb.as ], [ 1, %bytestream2_get_le24.exit.i ], [ 0, %bb.av ], [ 1, %bytestream2_get_byte.exit.i ], [ 0, %bb.ay ], [ 1, %bytestream2_get_le16.exit.i ], [ 0, %bb.bb ], [ 1, %bytestream2_get_le32.exit.i ] ; 2 uses
   %.sroa.0131.6 = phi ptr [ %.sroa.0131.4, %.lr.ph.i ], [ %.sroa.0131.10, %bb.as ], [ %.sroa.0131.8, %bytestream2_get_le24.exit.i ], [ %.sroa.0131.9, %bb.av ], [ %.sroa.0131.10, %bytestream2_get_byte.exit.i ], [ %.sroa.0131.8, %bb.ay ], [ %.sroa.0131.9, %bytestream2_get_le16.exit.i ], [ %.sroa.0131.5, %bb.bb ], [ %.sroa.0131.5, %bytestream2_get_le32.exit.i ] ; 3 uses
+  %.sroa.51.5 = phi i32 [ %.sroa.51.4, %.lr.ph.i ], [ 0, %bb.as ], [ 1, %bytestream2_get_le24.exit.i ], [ 0, %bb.av ], [ 1, %bytestream2_get_byte.exit.i ], [ 0, %bb.ay ], [ 1, %bytestream2_get_le16.exit.i ], [ 0, %bb.bb ], [ 1, %bytestream2_get_le32.exit.i ] ; 2 uses
   %.sroa.0.5 = phi ptr [ %.sroa.0.4, %.lr.ph.i ], [ %i.or, %bb.as ], [ %.sroa.0.4, %bytestream2_get_le24.exit.i ], [ %i.pa, %bb.av ], [ %.sroa.0.4, %bytestream2_get_byte.exit.i ], [ %i.pw, %bb.ay ], [ %.sroa.0.4, %bytestream2_get_le16.exit.i ], [ %i.qf, %bb.bb ], [ %.sroa.0.4, %bytestream2_get_le32.exit.i ] ; 2 uses
   %i.qg = add nuw nsw i32 %.176133.i, 1           ; 2 uses
   %exitcond146.not.i = icmp eq i32 %i.qg, %i.mr
@@ -629,16 +628,15 @@ bytestream2_put_byte.exit.i:                      ; preds = %bytestream2_get_le3
   %..i.i = call i64 @llvm.smin.i64(i64 %i.qk, i64 1)
   %.sroa.0131.7.idx = select i1 %or.cond.i90, i64 0, i64 %..i.i
   %.sroa.0131.7 = getelementptr inbounds i8, ptr %.sroa.0131.6, i64 %.sroa.0131.7.idx
-  %i.ql = add i32 %.070136.i, %i.mr
+  %i.ql = add i32 %.081134.i, %i.mr
   br label %bb.bc
 
 bb.bc:                                            ; preds = %._crit_edge.i, %bytestream2_get_byte.exit90.i, %bytestream2_seek_p.exit119.i, %bb.al
-  %.sroa.51.3 = phi i32 [ %spec.store.select.i, %bytestream2_seek_p.exit119.i ], [ %.sroa.51.5, %._crit_edge.i ], [ %spec.store.select144.i, %bytestream2_get_byte.exit90.i ], [ %.sroa.51.2, %bb.al ]
   %.sroa.0131.1 = phi ptr [ %.sroa.0131.3, %bytestream2_seek_p.exit119.i ], [ %.sroa.0131.7, %._crit_edge.i ], [ %.sroa.0131.2, %bytestream2_get_byte.exit90.i ], [ %.sroa.0131.0, %bb.al ] ; 2 uses
+  %.sroa.51.3 = phi i32 [ %spec.store.select.i, %bytestream2_seek_p.exit119.i ], [ %.sroa.51.5, %._crit_edge.i ], [ %spec.store.select144.i, %bytestream2_get_byte.exit90.i ], [ %.sroa.51.2, %bb.al ]
   %.sroa.0.3 = phi ptr [ %i.ne, %bytestream2_seek_p.exit119.i ], [ %.sroa.0.5, %._crit_edge.i ], [ %i.ob, %bytestream2_get_byte.exit90.i ], [ %.sroa.0.2, %bb.al ]
-  %.485.i = phi i32 [ %i.mw, %bytestream2_seek_p.exit119.i ], [ %.081134.i, %._crit_edge.i ], [ %i.ns, %bytestream2_get_byte.exit90.i ], [ %.081134.i, %bb.al ]
-  %.380.i = phi i32 [ %.077135.i, %bytestream2_seek_p.exit119.i ], [ %.077135.i, %._crit_edge.i ], [ %.077135.i, %bytestream2_get_byte.exit90.i ], [ %.178.i, %bb.al ]
-  %.474.i = phi i32 [ 0, %bytestream2_seek_p.exit119.i ], [ %i.ql, %._crit_edge.i ], [ %i.nm, %bytestream2_get_byte.exit90.i ], [ %i.ml, %bb.al ]
+  %.380.i = phi i32 [ 0, %bytestream2_seek_p.exit119.i ], [ %i.ql, %._crit_edge.i ], [ %i.nm, %bytestream2_get_byte.exit90.i ], [ %i.ml, %bb.al ]
+  %.474.i = phi i32 [ %i.mw, %bytestream2_seek_p.exit119.i ], [ %.077135.i, %._crit_edge.i ], [ %i.ns, %bytestream2_get_byte.exit90.i ], [ %.077135.i, %bb.al ]
   %i.qm = ptrtoint ptr %.sroa.0131.1 to i64
   %i.qn = sub i64 %i.jo, %i.qm                    ; 2 uses
   %i.qo = trunc i64 %i.qn to i32

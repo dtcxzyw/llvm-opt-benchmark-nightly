@@ -201,8 +201,7 @@ bb.az:                                            ; preds = %bb.ay
 
 bb.ba:                                            ; preds = %bb.bq, %.lr.ph.i
   %indvars.iv.i48 = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i49, %bb.bq ] ; 3 uses
-  %.160.i = phi ptr [ %.020.i, %.lr.ph.i ], [ %.2.i, %bb.bq ] ; 6 uses
-  %.03459.i = phi ptr [ undef, %.lr.ph.i ], [ %.135.i, %bb.bq ] ; 5 uses
+  %.03459.i = phi ptr [ %.020.i, %.lr.ph.i ], [ %.135.i, %bb.bq ] ; 6 uses
   %i.hg = load ptr, ptr %i.m, align 8             ; 2 uses
   br i1 %i.bn, label %bb.bb, label %.thread37.i
 
@@ -469,13 +468,13 @@ preserve_pci_rom_image.exit.i:                    ; preds = %.thread91.i.i, %.th
   br i1 %.0.ph.i.i, label %bb.bn, label %bb.bq
 
 bb.bn:                                            ; preds = %preserve_pci_rom_image.exit.i, %preserve_pci_rom_image.exit.thread54.i
-  %.23658.i = phi ptr [ %i.md, %preserve_pci_rom_image.exit.thread54.i ], [ %.03459.i, %preserve_pci_rom_image.exit.i ] ; 5 uses
-  %.not27.i = icmp eq ptr %.160.i, null
+  %.23658.i = phi ptr [ %i.md, %preserve_pci_rom_image.exit.thread54.i ], [ undef, %preserve_pci_rom_image.exit.i ] ; 3 uses
+  %.not27.i = icmp eq ptr %.03459.i, null
   %i.mu = ptrtoint ptr %.23658.i to i64           ; 2 uses
   br i1 %.not27.i, label %bb.bp, label %bb.bo
 
 bb.bo:                                            ; preds = %bb.bn
-  store i64 %i.mu, ptr %.160.i, align 8
+  store i64 %i.mu, ptr %.03459.i, align 8
   br label %bb.bq
 
 bb.bp:                                            ; preds = %bb.bn
@@ -483,8 +482,7 @@ bb.bp:                                            ; preds = %bb.bn
   br label %bb.bq
 
 bb.bq:                                            ; preds = %bb.bp, %bb.bo, %preserve_pci_rom_image.exit.i, %preserve_pci_rom_image.exit.thread.i, %.thread37.i, %bb.bb
-  %.135.i = phi ptr [ %.03459.i, %preserve_pci_rom_image.exit.thread.i ], [ %.03459.i, %preserve_pci_rom_image.exit.i ], [ %.03459.i, %bb.bb ], [ %.03459.i, %.thread37.i ], [ %.23658.i, %bb.bp ], [ %.23658.i, %bb.bo ]
-  %.2.i = phi ptr [ %.160.i, %preserve_pci_rom_image.exit.thread.i ], [ %.160.i, %preserve_pci_rom_image.exit.i ], [ %.160.i, %bb.bb ], [ %.160.i, %.thread37.i ], [ %.23658.i, %bb.bp ], [ %.23658.i, %bb.bo ]
+  %.135.i = phi ptr [ %.03459.i, %bb.bb ], [ %.03459.i, %preserve_pci_rom_image.exit.thread.i ], [ %.03459.i, %preserve_pci_rom_image.exit.i ], [ %.03459.i, %.thread37.i ], [ %.23658.i, %bb.bp ], [ %.23658.i, %bb.bo ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p) #5
   %indvars.iv.next.i49 = add nuw nsw i64 %indvars.iv.i48, 1 ; 2 uses
   %i.mv = load i64, ptr %i.n, align 8
@@ -887,10 +885,10 @@ bb.cp:                                            ; preds = %bb.co
   br label %bb.cq
 
 bb.cq:                                            ; preds = %bb.cy, %.lr.ph.i.i
-  %.04982.i.i = phi ptr [ %i.sz, %.lr.ph.i.i ], [ %.352.ph.i.i, %bb.cy ] ; 3 uses
-  %.05581.i.i = phi ptr [ null, %.lr.ph.i.i ], [ %.156.ph.i.i, %bb.cy ] ; 6 uses
-  %.05880.i.i = phi i32 [ 0, %.lr.ph.i.i ], [ %.159.ph.i.i, %bb.cy ] ; 4 uses
-  %.06179.i.i = phi i32 [ 0, %.lr.ph.i.i ], [ %i.us, %bb.cy ] ; 3 uses
+  %.05282.i.i = phi i32 [ 0, %.lr.ph.i.i ], [ %i.us, %bb.cy ] ; 3 uses
+  %.05381.i.i = phi i32 [ 0, %.lr.ph.i.i ], [ %.154.ph.i.i, %bb.cy ] ; 4 uses
+  %.05680.i.i = phi ptr [ null, %.lr.ph.i.i ], [ %.156.ph.i.i, %bb.cy ] ; 6 uses
+  %.05879.i.i = phi ptr [ %i.sz, %.lr.ph.i.i ], [ %.361.ph.i.i, %bb.cy ] ; 3 uses
   %i.td = load i32, ptr %i.ta, align 4
   %i.te = zext i32 %i.td to i64
   %i.tf = load i32, ptr %i.tb, align 4
@@ -899,7 +897,7 @@ bb.cq:                                            ; preds = %bb.cy, %.lr.ph.i.i
   %i.ti = or disjoint i64 %i.th, %i.te
   %i.tj = inttoptr i64 %i.ti to ptr
   %i.tk = load i32, ptr %i.sw, align 4
-  %i.tl = mul i32 %i.tk, %.06179.i.i
+  %i.tl = mul i32 %i.tk, %.05282.i.i
   %i.tm = zext i32 %i.tl to i64
   %i.tn = getelementptr inbounds nuw i8, ptr %i.tj, i64 %i.tm ; 5 uses
   %i.to = load i32, ptr %i.tn, align 8            ; 2 uses
@@ -911,18 +909,18 @@ switch.lookup:                                    ; preds = %bb.cq
   %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.efi_stub_entry, i64 %i.tq
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i32       ; 2 uses
-  %.not.i17.i = icmp eq ptr %.05581.i.i, null
+  %.not.i17.i = icmp eq ptr %.05680.i.i, null
   br i1 %.not.i17.i, label %bb.cu, label %bb.cr
 
 bb.cr:                                            ; preds = %switch.lookup
-  %i.tr = getelementptr inbounds nuw i8, ptr %.05581.i.i, i64 16
+  %i.tr = getelementptr inbounds nuw i8, ptr %.05680.i.i, i64 16
   %i.ts = load i32, ptr %i.tr, align 1
   %i.tt = icmp eq i32 %i.ts, %switch.ext
   br i1 %i.tt, label %bb.cs, label %bb.cu
 
 bb.cs:                                            ; preds = %bb.cr
-  %i.tu = load i64, ptr %.05581.i.i, align 1
-  %i.tv = getelementptr inbounds nuw i8, ptr %.05581.i.i, i64 8 ; 2 uses
+  %i.tu = load i64, ptr %.05680.i.i, align 1
+  %i.tv = getelementptr inbounds nuw i8, ptr %.05680.i.i, i64 8 ; 2 uses
   %i.tw = load i64, ptr %i.tv, align 1            ; 2 uses
   %i.tx = add i64 %i.tw, %i.tu
   %i.ty = getelementptr inbounds nuw i8, ptr %i.tn, i64 8
@@ -939,21 +937,21 @@ bb.ct:                                            ; preds = %bb.cs
   br label %bb.cy
 
 bb.cu:                                            ; preds = %bb.cs, %bb.cr, %switch.lookup
-  %i.uf = icmp eq i32 %.05880.i.i, 128
+  %i.uf = icmp eq i32 %.05381.i.i, 128
   br i1 %i.uf, label %bb.cv, label %bb.cx
 
 bb.cv:                                            ; preds = %bb.cu
   br i1 %.not65.i.i, label %.loopexit, label %bb.cw
 
 bb.cw:                                            ; preds = %bb.cv
-  %i.ug = sub i32 %i.sy, %.06179.i.i
+  %i.ug = sub i32 %i.sy, %.05282.i.i
   %i.uh = mul i32 %i.ug, 20
   %i.ui = add i32 %i.uh, 16
   %.not77.i.i = icmp ult i32 %.01936.i, %i.ui
   br i1 %.not77.i.i, label %.loopexit, label %bb.cx
 
 bb.cx:                                            ; preds = %bb.cw, %bb.cu
-  %.251.i.i = phi ptr [ %i.tc, %bb.cw ], [ %.04982.i.i, %bb.cu ] ; 5 uses
+  %.251.i.i = phi ptr [ %i.tc, %bb.cw ], [ %.05879.i.i, %bb.cu ] ; 5 uses
   %i.uj = getelementptr inbounds nuw i8, ptr %i.tn, i64 8
   %i.uk = load i64, ptr %i.uj, align 8
   store i64 %i.uk, ptr %.251.i.i, align 1
@@ -965,25 +963,25 @@ bb.cx:                                            ; preds = %bb.cw, %bb.cu
   %i.up = getelementptr inbounds nuw i8, ptr %.251.i.i, i64 16
   store i32 %switch.ext, ptr %i.up, align 1
   %i.uq = getelementptr inbounds nuw i8, ptr %.251.i.i, i64 20
-  %i.ur = add i32 %.05880.i.i, 1
+  %i.ur = add i32 %.05381.i.i, 1
   br label %bb.cy
 
 bb.cy:                                            ; preds = %bb.cq, %bb.cx, %bb.ct
-  %.159.ph.i.i = phi i32 [ %.05880.i.i, %bb.cq ], [ %i.ur, %bb.cx ], [ %.05880.i.i, %bb.ct ] ; 4 uses
-  %.156.ph.i.i = phi ptr [ %.05581.i.i, %bb.cq ], [ %.251.i.i, %bb.cx ], [ %.05581.i.i, %bb.ct ]
-  %.352.ph.i.i = phi ptr [ %.04982.i.i, %bb.cq ], [ %i.uq, %bb.cx ], [ %.04982.i.i, %bb.ct ]
-  %i.us = add nuw nsw i32 %.06179.i.i, 1          ; 2 uses
+  %.361.ph.i.i = phi ptr [ %.05879.i.i, %bb.cq ], [ %i.uq, %bb.cx ], [ %.05879.i.i, %bb.ct ]
+  %.156.ph.i.i = phi ptr [ %.05680.i.i, %bb.cq ], [ %.251.i.i, %bb.cx ], [ %.05680.i.i, %bb.ct ]
+  %.154.ph.i.i = phi i32 [ %.05381.i.i, %bb.cq ], [ %i.ur, %bb.cx ], [ %.05381.i.i, %bb.ct ] ; 4 uses
+  %i.us = add nuw nsw i32 %.05282.i.i, 1          ; 2 uses
   %i.ut = icmp ult i32 %i.us, %i.sy
   br i1 %i.ut, label %bb.cq, label %._crit_edge.i.i, !llvm.loop !21
 
 ._crit_edge.i.i:                                  ; preds = %bb.cy
-  %i.uu = icmp ugt i32 %.159.ph.i.i, 128
+  %i.uu = icmp ugt i32 %.154.ph.i.i, 128
   br i1 %i.uu, label %bb.cz, label %bb.dc
 
 bb.cz:                                            ; preds = %._crit_edge.i.i
   %i.uv = getelementptr inbounds nuw i8, ptr %i.st, i64 8
   store i32 1, ptr %i.uv, align 8
-  %i.uw = mul i32 %.159.ph.i.i, 20
+  %i.uw = mul i32 %.154.ph.i.i, 20
   %i.ux = add i32 %i.uw, -2560
   %i.uy = getelementptr inbounds nuw i8, ptr %i.st, i64 12
   store i32 %i.ux, ptr %i.uy, align 4
@@ -1020,7 +1018,7 @@ bb.db:                                            ; preds = %bb.da
   br label %.sink.split
 
 bb.dc:                                            ; preds = %.critedge14.i.i.i, %.critedge.i.i.i, %._crit_edge.i.i, %bb.cp
-  %.260.i.i = phi i32 [ %.159.ph.i.i, %._crit_edge.i.i ], [ 128, %.critedge.i.i.i ], [ 128, %.critedge14.i.i.i ], [ 0, %bb.cp ]
+  %.260.i.i = phi i32 [ %.154.ph.i.i, %._crit_edge.i.i ], [ 128, %.critedge.i.i.i ], [ 128, %.critedge14.i.i.i ], [ 0, %bb.cp ]
   %i.ve = add i64 %i.et, %i.er
   %i.vf = trunc nuw i32 %.260.i.i to i8
   %i.vg = getelementptr inbounds nuw i8, ptr %.071, i64 488

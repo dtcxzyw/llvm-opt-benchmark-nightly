@@ -201,8 +201,8 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 
 .lr.ph91:                                         ; preds = %bb.f, %.loopexit
   %i.f = phi ptr [ %i.bx, %.loopexit ], [ %i.e, %bb.f ] ; 6 uses
-  %.090 = phi i1 [ %.4, %.loopexit ], [ false, %bb.f ] ; 3 uses
-  %.06089 = phi i1 [ %.363, %.loopexit ], [ false, %bb.f ] ; 2 uses
+  %.090 = phi i1 [ %.4, %.loopexit ], [ false, %bb.f ] ; 2 uses
+  %.06089 = phi i1 [ %.363, %.loopexit ], [ false, %bb.f ] ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 16 ; 4 uses
   %i.h = load ptr, ptr %i.g, align 8              ; 2 uses
   store ptr %i.h, ptr getelementptr inbounds nuw (i8, ptr @_set_type_tres_cnt.tres_rec, i64 32), align 8
@@ -247,7 +247,7 @@ bb.k:                                             ; preds = %bb.j
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j
-  %.1.a = phi i1 [ false, %bb.k ], [ %.090, %bb.j ]
+  %.1.a = phi i1 [ false, %bb.k ], [ %.06089, %bb.j ]
   %i.w = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   %i.x = load ptr, ptr %i.w, align 8
   %.not80 = icmp eq ptr %i.x, null                ; 2 uses
@@ -266,15 +266,15 @@ bb.n:                                             ; preds = %.lr.ph91
   br label %.loopexit, !llvm.loop !50
 
 bb.o:                                             ; preds = %bb.m, %bb.l
-  %.165 = phi i64 [ %.064, %bb.l ], [ %i.ab, %bb.m ] ; 5 uses
-  %.262 = phi i1 [ %.not80, %bb.l ], [ %.06089, %bb.m ] ; 8 uses
-  %.3 = phi i1 [ %..1, %bb.l ], [ %.090, %bb.m ]  ; 8 uses
+  %.366 = phi i1 [ %..1, %bb.l ], [ %.06089, %bb.m ] ; 8 uses
+  %.262 = phi i1 [ %.not80, %bb.l ], [ %.090, %bb.m ] ; 8 uses
+  %.1 = phi i64 [ %.064, %bb.l ], [ %i.ab, %bb.m ] ; 5 uses
   %i.ad = call i32 @assoc_mgr_find_tres_pos(ptr noundef nonnull @_set_type_tres_cnt.tres_rec, i1 noundef zeroext true) #7 ; 4 uses
   %.not81.not = icmp eq i32 %i.ad, -1             ; 2 uses
   br i1 %.not81.not, label %bb.v, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.ae = icmp eq i64 %.165, -3
+  %i.ae = icmp eq i64 %.1, -3
   br i1 %i.ae, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %bb.p
@@ -284,13 +284,13 @@ bb.q:                                             ; preds = %bb.p
   br label %bb.v
 
 bb.r:                                             ; preds = %bb.p
-  br i1 %.3, label %bb.t, label %bb.s
+  br i1 %.366, label %bb.t, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
   %i.ah = sext i32 %i.ad to i64
   %i.ai = getelementptr inbounds [8 x i8], ptr %1, i64 %i.ah ; 2 uses
   %i.aj = load i64, ptr %i.ai, align 8
-  %i.ak = add i64 %i.aj, %.165
+  %i.ak = add i64 %i.aj, %.1
   store i64 %i.ak, ptr %i.ai, align 8
   br label %bb.v
 
@@ -300,7 +300,7 @@ bb.t:                                             ; preds = %bb.r
 bb.u:                                             ; preds = %bb.t
   %i.al = sext i32 %i.ad to i64
   %i.am = getelementptr inbounds [8 x i8], ptr %1, i64 %i.al
-  store i64 %.165, ptr %i.am, align 8
+  store i64 %.1, ptr %i.am, align 8
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.q, %bb.t, %bb.u, %bb.s, %bb.o
@@ -329,7 +329,7 @@ bb.x:                                             ; preds = %bb.w
 bb.y:                                             ; preds = %bb.x
   %i.av = sext i32 %i.au to i64
   %i.aw = getelementptr inbounds [8 x i8], ptr %1, i64 %i.av
-  store i64 %.165, ptr %i.aw, align 8
+  store i64 %.1, ptr %i.aw, align 8
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.y, %bb.x
@@ -349,7 +349,7 @@ bb.ab:                                            ; preds = %bb.aa
 bb.ac:                                            ; preds = %bb.ab
   %i.az = sext i32 %i.ay to i64
   %i.ba = getelementptr inbounds [8 x i8], ptr %1, i64 %i.az
-  store i64 %.165, ptr %i.ba, align 8
+  store i64 %.1, ptr %i.ba, align 8
   br label %.loopexit
 
 bb.ad:                                            ; preds = %bb.v
@@ -408,8 +408,8 @@ bb.aj:                                            ; preds = %bb.v
   br label %.loopexit, !llvm.loop !50
 
 .loopexit:                                        ; preds = %bb.ai, %bb.ad, %bb.aa, %bb.ac, %bb.ab, %bb.z, %bb.aj, %bb.n
-  %.363 = phi i1 [ %.06089, %bb.n ], [ %.262, %bb.aj ], [ %.262, %bb.aa ], [ %.262, %bb.z ], [ %.262, %bb.ab ], [ %.262, %bb.ac ], [ %.262, %bb.ad ], [ %.262, %bb.ai ]
-  %.4 = phi i1 [ %.090, %bb.n ], [ %.3, %bb.aj ], [ %.3, %bb.aa ], [ %.3, %bb.z ], [ %.3, %bb.ab ], [ %.3, %bb.ac ], [ %.3, %bb.ad ], [ %.3, %bb.ai ]
+  %.363 = phi i1 [ %.06089, %bb.n ], [ %.366, %bb.aj ], [ %.366, %bb.aa ], [ %.366, %bb.z ], [ %.366, %bb.ab ], [ %.366, %bb.ac ], [ %.366, %bb.ad ], [ %.366, %bb.ai ]
+  %.4 = phi i1 [ %.090, %bb.n ], [ %.262, %bb.aj ], [ %.262, %bb.aa ], [ %.262, %bb.z ], [ %.262, %bb.ab ], [ %.262, %bb.ac ], [ %.262, %bb.ad ], [ %.262, %bb.ai ]
   %i.bx = call ptr @list_next(ptr noundef %i.d) #7 ; 2 uses
   %.not = icmp eq ptr %i.bx, null
   br i1 %.not, label %._crit_edge, label %.lr.ph91
@@ -812,14 +812,14 @@ bb.g:                                             ; preds = %.lr.ph, %bb.e
   %i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.j = load ptr, ptr %i.i, align 8              ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 %.sink27
-  %.018 = load i64, ptr %i.k, align 8             ; 2 uses
-  %.019.in = getelementptr inbounds nuw i8, ptr %i.j, i64 8
-  %.019 = load ptr, ptr %.019.in, align 8
-  %i.l = icmp eq i64 %.018, -3
-  %spec.store.select = select i1 %i.l, i64 0, i64 %.018
+  %.018.in = getelementptr inbounds nuw i8, ptr %i.j, i64 8
+  %.018 = load ptr, ptr %.018.in, align 8
+  %.019 = load i64, ptr %i.k, align 8             ; 2 uses
+  %i.l = icmp eq i64 %.019, -3
+  %spec.store.select = select i1 %i.l, i64 0, i64 %.019
   %i.m = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %i.n = load ptr, ptr %i.m, align 8
-  call fastcc void @_gres_2_tres_str_internal(ptr noundef %i.a, ptr noundef %i.n, ptr noundef %.019, i64 noundef %spec.store.select)
+  call fastcc void @_gres_2_tres_str_internal(ptr noundef %i.a, ptr noundef %i.n, ptr noundef %.018, i64 noundef %spec.store.select)
   br label %.backedge
 
 ._crit_edge:                                      ; preds = %.backedge, %bb.d
@@ -886,7 +886,7 @@ bb.c:                                             ; preds = %bb.b
   %i.v = add i32 %i.u, 1                          ; 4 uses
   %.not51 = icmp slt i32 %i.s, %i.v
   %spec.store.select = select i1 %.not51, i32 %i.s, i32 0
-  %spec.store.select.fr = freeze i32 %spec.store.select ; 7 uses
+  %spec.store.select.fr = freeze i32 %spec.store.select ; 6 uses
   %i.w = getelementptr inbounds nuw i8, ptr %4, i64 24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, i8 0, i64 24, i1 false)
   store ptr %5, ptr %i.w, align 8
@@ -909,7 +909,6 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %.lr.ph314, %bb.ah
   %i.ag = phi ptr [ %i.y, %.lr.ph314 ], [ %i.ek, %bb.ah ] ; 3 uses
-  %.074312 = phi i32 [ undef, %.lr.ph314 ], [ %.377, %bb.ah ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #7
@@ -962,21 +961,19 @@ bb.g:                                             ; preds = %bb.e, %bb.f
   br i1 %.not28.i, label %.preheader.us297, label %.preheader
 
 .preheader.us297:                                 ; preds = %.preheader.lr.ph.split, %_gres_next_node_inx.exit.thread.us301
-  %.042294.us298 = phi i32 [ %.0.ph239.us.us, %_gres_next_node_inx.exit.thread.us301 ], [ %i.an, %.preheader.lr.ph.split ]
-  %.043293.us299 = phi i32 [ %.144.ph237.us.us, %_gres_next_node_inx.exit.thread.us301 ], [ %i.al, %.preheader.lr.ph.split ]
-  %.175292.us300 = phi i32 [ %.581.us302, %_gres_next_node_inx.exit.thread.us301 ], [ %.074312, %.preheader.lr.ph.split ]
+  %.043293.us299 = phi i32 [ %.0.ph239.us.us, %_gres_next_node_inx.exit.thread.us301 ], [ %i.an, %.preheader.lr.ph.split ]
+  %.175292.us300 = phi i32 [ %.144.ph237.us.us, %_gres_next_node_inx.exit.thread.us301 ], [ %i.al, %.preheader.lr.ph.split ]
   br label %.lr.ph89.us.us
 
 _gres_next_node_inx.exit.thread.us301:            ; preds = %bb.q, %bb.p, %bb.o
-  %.581.us302 = phi i32 [ 0, %bb.o ], [ %.4.us.us247.us, %bb.q ], [ %i.bz, %bb.p ] ; 2 uses
   %i.bb = icmp sgt i32 %.0.ph239.us.us, -1
   br i1 %i.bb, label %.preheader.us297, label %._crit_edge, !llvm.loop !61
 
 .lr.ph89.us.us:                                   ; preds = %.lr.ph89.us.us.backedge, %.preheader.us297
   %.0.ph239.us.us = phi i32 [ -1, %.preheader.us297 ], [ %.1.us.us, %.lr.ph89.us.us.backedge ] ; 4 uses
-  %.144.ph237.us.us = phi i32 [ %.043293.us299, %.preheader.us297 ], [ %.245.us.us, %.lr.ph89.us.us.backedge ] ; 3 uses
+  %.144.ph237.us.us = phi i32 [ %.175292.us300, %.preheader.us297 ], [ %.245.us.us, %.lr.ph89.us.us.backedge ] ; 3 uses
   %.070.ph236.us.us = phi i32 [ -1, %.preheader.us297 ], [ %i.ce, %.lr.ph89.us.us.backedge ]
-  %.276.ph235.us.us = phi i32 [ %.175292.us300, %.preheader.us297 ], [ %.4.us.us247.us, %.lr.ph89.us.us.backedge ]
+  %.276.ph235.us.us = phi i32 [ undef, %.preheader.us297 ], [ %.4.us.us247.us, %.lr.ph89.us.us.backedge ]
   br label %bb.n
 
 bb.h:                                             ; preds = %.split.us.us.us
@@ -996,7 +993,7 @@ bb.h:                                             ; preds = %.split.us.us.us
 
 bb.i:                                             ; preds = %.split.us.us.us, %bb.h
   %i.bi = phi i32 [ %i.cm, %.split.us.us.us ], [ %.pre333, %bb.h ] ; 2 uses
-  %.not58.us.us = icmp slt i32 %i.bi, %.042294.us298
+  %.not58.us.us = icmp slt i32 %i.bi, %.043293.us299
   br i1 %.not58.us.us, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
@@ -1046,7 +1043,7 @@ bb.p:                                             ; preds = %bb.o
   %i.bw = icmp sgt i32 %i.bu, 0
   %i.bx = sext i32 %i.bu to i64
   %i.by = call i64 @bit_ffs_from_bit(ptr noundef %i.f, i64 noundef %i.bx) #7
-  %i.bz = trunc i64 %i.by to i32                  ; 3 uses
+  %i.bz = trunc i64 %i.by to i32                  ; 2 uses
   %.not29.i.us.us244.us = icmp slt i32 %i.bz, 0
   %or.cond.i.us.us245.us = select i1 %i.bw, i1 true, i1 %.not29.i.us.us244.us
   br i1 %or.cond.i.us.us245.us, label %bb.q, label %_gres_next_node_inx.exit.thread.us301
@@ -1057,7 +1054,7 @@ bb.p:                                             ; preds = %bb.o
   br label %bb.q
 
 bb.q:                                             ; preds = %.critedge.i.us.us246.us, %bb.p
-  %.4.us.us247.us = phi i32 [ %i.cb, %.critedge.i.us.us246.us ], [ %i.bz, %bb.p ] ; 6 uses
+  %.4.us.us247.us = phi i32 [ %i.cb, %.critedge.i.us.us246.us ], [ %i.bz, %bb.p ] ; 4 uses
   %i.cc = icmp slt i32 %.4.us.us247.us, 0
   br i1 %i.cc, label %_gres_next_node_inx.exit.thread.us301, label %bb.r
 
@@ -1098,16 +1095,15 @@ bb.s:                                             ; preds = %bb.r
   br i1 %i.cs, label %.lr.ph, label %.preheader82, !llvm.loop !63
 
 .preheader:                                       ; preds = %.preheader.lr.ph.split, %_gres_next_node_inx.exit.thread
-  %.042294 = phi i32 [ %.0.ph239, %_gres_next_node_inx.exit.thread ], [ %i.an, %.preheader.lr.ph.split ]
-  %.043293 = phi i32 [ %.144.ph237, %_gres_next_node_inx.exit.thread ], [ %i.al, %.preheader.lr.ph.split ]
-  %.175292 = phi i32 [ %.581, %_gres_next_node_inx.exit.thread ], [ %.074312, %.preheader.lr.ph.split ]
+  %.043293 = phi i32 [ %.0.ph239, %_gres_next_node_inx.exit.thread ], [ %i.an, %.preheader.lr.ph.split ]
+  %.175292 = phi i32 [ %.144.ph237, %_gres_next_node_inx.exit.thread ], [ %i.al, %.preheader.lr.ph.split ]
   br label %.lr.ph89
 
 .lr.ph89:                                         ; preds = %.lr.ph89.backedge, %.preheader
   %.0.ph239 = phi i32 [ -1, %.preheader ], [ %.1, %.lr.ph89.backedge ] ; 4 uses
-  %.144.ph237 = phi i32 [ %.043293, %.preheader ], [ %.245, %.lr.ph89.backedge ] ; 3 uses
+  %.144.ph237 = phi i32 [ %.175292, %.preheader ], [ %.245, %.lr.ph89.backedge ] ; 3 uses
   %.070.ph236 = phi i32 [ -1, %.preheader ], [ %i.di, %.lr.ph89.backedge ]
-  %.276.ph235 = phi i32 [ %.175292, %.preheader ], [ %.4, %.lr.ph89.backedge ]
+  %.276.ph235 = phi i32 [ undef, %.preheader ], [ %.4, %.lr.ph89.backedge ]
   br label %bb.t
 
 bb.t:                                             ; preds = %.backedge372, %.lr.ph89
@@ -1136,13 +1132,13 @@ bb.v:                                             ; preds = %bb.u
   %i.dc = icmp sgt i32 %i.da, %spec.store.select.fr
   %i.dd = sext i32 %i.da to i64
   %i.de = call i64 @bit_ffs_from_bit(ptr noundef %i.f, i64 noundef %i.dd) #7
-  %i.df = trunc i64 %i.de to i32                  ; 3 uses
+  %i.df = trunc i64 %i.de to i32                  ; 2 uses
   %.not29.i = icmp sgt i32 %spec.store.select.fr, %i.df
   %or.cond.i = select i1 %i.dc, i1 true, i1 %.not29.i
   br i1 %or.cond.i, label %bb.w, label %_gres_next_node_inx.exit.thread
 
 bb.w:                                             ; preds = %bb.v, %.critedge.i
-  %.4 = phi i32 [ %i.cy, %.critedge.i ], [ %i.df, %bb.v ] ; 6 uses
+  %.4 = phi i32 [ %i.cy, %.critedge.i ], [ %i.df, %bb.v ] ; 4 uses
   %.171 = phi i32 [ %i.cw, %.critedge.i ], [ %.07088, %bb.v ]
   %i.dg = icmp slt i32 %.4, 0
   br i1 %i.dg, label %_gres_next_node_inx.exit.thread, label %bb.x
@@ -1189,7 +1185,7 @@ bb.z:                                             ; preds = %.split
 
 bb.aa:                                            ; preds = %bb.z, %.split
   %i.dy = phi i32 [ %.pre330, %bb.z ], [ %i.dq, %.split ] ; 2 uses
-  %.not58 = icmp slt i32 %i.dy, %.042294
+  %.not58 = icmp slt i32 %i.dy, %.043293
   br i1 %.not58, label %bb.ac, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
@@ -1221,18 +1217,15 @@ bb.ae:                                            ; preds = %bb.ad
   br label %.lr.ph89, !llvm.loop !62
 
 _gres_next_node_inx.exit.thread:                  ; preds = %bb.u, %bb.v, %bb.w
-  %.581 = phi i32 [ %spec.store.select.fr, %bb.u ], [ %.4, %bb.w ], [ %i.df, %bb.v ] ; 2 uses
   %i.eh = icmp sgt i32 %.0.ph239, -1
   br i1 %i.eh, label %.preheader, label %._crit_edge, !llvm.loop !61
 
 ._crit_edge.sink.split:                           ; preds = %bb.ae, %bb.m
-  %.175.lcssa.ph = phi i32 [ %.4.us.us247.us, %bb.m ], [ %.4, %bb.ae ]
   %i.ei = load ptr, ptr %i.b, align 8
   call void @bit_and(ptr noundef %2, ptr noundef %i.ei) #7
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %_gres_next_node_inx.exit.thread, %_gres_next_node_inx.exit.thread.us301, %._crit_edge.sink.split, %.preheader82
-  %.175.lcssa = phi i32 [ %.074312, %.preheader82 ], [ %.175.lcssa.ph, %._crit_edge.sink.split ], [ %.581.us302, %_gres_next_node_inx.exit.thread.us301 ], [ %.581, %_gres_next_node_inx.exit.thread ]
   %i.ej = load ptr, ptr %i.b, align 8
   %.not55 = icmp eq ptr %i.ej, null
   br i1 %.not55, label %bb.ag, label %bb.af
@@ -1247,7 +1240,6 @@ bb.ag:                                            ; preds = %bb.af, %._crit_edge
   br label %bb.ah
 
 bb.ah:                                            ; preds = %bb.d, %bb.ag
-  %.377 = phi i32 [ %.074312, %bb.d ], [ %.175.lcssa, %bb.ag ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #7

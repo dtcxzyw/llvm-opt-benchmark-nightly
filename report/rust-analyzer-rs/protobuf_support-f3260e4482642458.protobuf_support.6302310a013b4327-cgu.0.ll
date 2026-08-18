@@ -203,8 +203,8 @@ bb.bp:                                            ; preds = %bb.eb, %bb.bn
 bb.bq:                                            ; preds = %bb.bo, %.thread.i, %bb.bl
   %.sroa.7.i.sroa.0.0 = phi i64 [ undef, %bb.bl ], [ undef, %.thread.i ], [ %.sroa.7.i.sroa.0.0.copyload, %bb.bo ] ; 2 uses
   %.sroa.7.i.sroa.4.0 = phi i64 [ undef, %bb.bl ], [ undef, %.thread.i ], [ %.sroa.7.i.sroa.4.0.copyload, %bb.bo ]
-  %.sroa.033.0.i = phi i32 [ 3, %bb.bl ], [ 3, %.thread.i ], [ 0, %bb.bo ]
   %2 = phi i64 [ 9221120237041090560, %bb.bl ], [ 9218868437227405312, %.thread.i ], [ %.sroa.435.8.copyload.i197, %bb.bo ] ; 2 uses
+  %.sroa.033.0.i = phi i32 [ 3, %bb.bl ], [ 3, %.thread.i ], [ 0, %bb.bo ]
   invoke void @_RNvXsp_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VechENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropCs8v1fP8rbDwN_16protobuf_support(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.aq)
           to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsbSS6DM8SDEO_5alloc6string6StringECs8v1fP8rbDwN_16protobuf_support.exit.i unwind label %bb.br, !noalias !16
 
@@ -607,15 +607,14 @@ bb.t:                                             ; preds = %bb.ak
 
 bb.u:                                             ; preds = %bb.ah, %.preheader.3, %bb.ac, %.preheader.2, %bb.x, %.preheader.1, %.preheader.preheader, %bb.p
   %.sroa.075.0.ph = phi i64 [ -9223372036854775799, %bb.p ], [ -9223372036854775807, %.preheader.preheader ], [ -9223372036854775807, %.preheader.1 ], [ -9223372036854775799, %bb.x ], [ -9223372036854775807, %.preheader.2 ], [ -9223372036854775799, %bb.ac ], [ -9223372036854775807, %.preheader.3 ], [ -9223372036854775799, %bb.ah ]
-  %.sroa.877.1.ph = phi i32 [ undef, %bb.p ], [ -1, %.preheader.preheader ], [ -1, %.preheader.1 ], [ %.sroa.0.0.i, %bb.x ], [ -1, %.preheader.2 ], [ %.sroa.0.0.i.1, %bb.ac ], [ -1, %.preheader.3 ], [ %.sroa.0.0.i.2, %bb.ah ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   store i64 %.sroa.075.0.ph, ptr %0, align 8
   %.sroa.460.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 %.sroa.877.1.ph, ptr %.sroa.460.0..sroa_idx, align 8
+  store i32 -1, ptr %.sroa.460.0..sroa_idx, align 8
   br label %bb.al
 
 .preheader.1:                                     ; preds = %bb.r, %bb.q, %bb.n
-  %.sroa.0.0.i = phi i32 [ %i.s, %bb.r ], [ %i.r, %bb.q ], [ %i.o, %bb.n ] ; 2 uses
+  %.sroa.0.0.i = phi i32 [ %i.s, %bb.r ], [ %i.r, %bb.q ], [ %i.o, %bb.n ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %1, ptr noundef nonnull align 8 dereferenceable(40) %i.a, i64 40, i1 false), !noalias !476
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -648,7 +647,7 @@ bb.z:                                             ; preds = %bb.w
   br label %.preheader.2
 
 .preheader.2:                                     ; preds = %bb.z, %bb.y, %bb.v
-  %.sroa.0.0.i.1 = phi i32 [ %i.z, %bb.y ], [ %i.aa, %bb.z ], [ %i.w, %bb.v ] ; 2 uses
+  %.sroa.0.0.i.1 = phi i32 [ %i.z, %bb.y ], [ %i.aa, %bb.z ], [ %i.w, %bb.v ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %1, ptr noundef nonnull align 8 dereferenceable(40) %i.a, i64 40, i1 false), !noalias !476
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -681,7 +680,7 @@ bb.ae:                                            ; preds = %bb.ab
   br label %.preheader.3
 
 .preheader.3:                                     ; preds = %bb.ae, %bb.ad, %bb.aa
-  %.sroa.0.0.i.2 = phi i32 [ %i.af, %bb.ad ], [ %i.ag, %bb.ae ], [ %i.ac, %bb.aa ] ; 2 uses
+  %.sroa.0.0.i.2 = phi i32 [ %i.af, %bb.ad ], [ %i.ag, %bb.ae ], [ %i.ac, %bb.aa ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %1, ptr noundef nonnull align 8 dereferenceable(40) %i.a, i64 40, i1 false), !noalias !476
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.ah = shl nuw nsw i32 %.sroa.0.0.i, 8

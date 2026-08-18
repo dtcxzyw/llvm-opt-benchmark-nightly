@@ -203,30 +203,30 @@ _ZL10safeArcCosd.exit.thread1.i.i.i:              ; preds = %_ZL10safeArcCosd.ex
   br i1 %i.cl, label %.lr.ph.i14.i.i, label %.preheader.i13.i.i
 
 .preheader.i13.i.i:                               ; preds = %.lr.ph.i14.i.i, %_ZL10safeArcCosd.exit.thread1.i.i.i
-  %.070.lcssa.i.i.i = phi i32 [ 0, %_ZL10safeArcCosd.exit.thread1.i.i.i ], [ %i.co, %.lr.ph.i14.i.i ] ; 2 uses
-  %.169.lcssa.i.i.i = phi double [ %.068.i.i.i, %_ZL10safeArcCosd.exit.thread1.i.i.i ], [ %i.cn, %.lr.ph.i14.i.i ] ; 3 uses
-  %i.cm = fcmp ogt double %.169.lcssa.i.i.i, f0x4000C152382D7366
+  %.168.lcssa.i.i.i = phi double [ %.068.i.i.i, %_ZL10safeArcCosd.exit.thread1.i.i.i ], [ %i.cn, %.lr.ph.i14.i.i ] ; 3 uses
+  %.066.lcssa.i.i.i = phi i32 [ 0, %_ZL10safeArcCosd.exit.thread1.i.i.i ], [ %i.co, %.lr.ph.i14.i.i ] ; 2 uses
+  %i.cm = fcmp ogt double %.168.lcssa.i.i.i, f0x4000C152382D7366
   br i1 %i.cm, label %.lr.ph14.i.i.i, label %._crit_edge.i.i.i
 
 .lr.ph.i14.i.i:                                   ; preds = %_ZL10safeArcCosd.exit.thread1.i.i.i, %.lr.ph.i14.i.i
-  %.16910.i.i.i = phi double [ %i.cn, %.lr.ph.i14.i.i ], [ %.068.i.i.i, %_ZL10safeArcCosd.exit.thread1.i.i.i ]
-  %.0709.i.i.i = phi i32 [ %i.co, %.lr.ph.i14.i.i ], [ 0, %_ZL10safeArcCosd.exit.thread1.i.i.i ]
-  %i.cn = fadd double %.16910.i.i.i, f0x4000C152382D7366 ; 3 uses
-  %i.co = add nsw i32 %.0709.i.i.i, -1            ; 2 uses
+  %.06610.i.i.i = phi i32 [ %i.co, %.lr.ph.i14.i.i ], [ 0, %_ZL10safeArcCosd.exit.thread1.i.i.i ]
+  %.1689.i.i.i = phi double [ %i.cn, %.lr.ph.i14.i.i ], [ %.068.i.i.i, %_ZL10safeArcCosd.exit.thread1.i.i.i ]
+  %i.cn = fadd double %.1689.i.i.i, f0x4000C152382D7366 ; 3 uses
+  %i.co = add nsw i32 %.06610.i.i.i, -1           ; 2 uses
   %i.cp = fcmp olt double %i.cn, 0.000000e+00
   br i1 %i.cp, label %.lr.ph.i14.i.i, label %.preheader.i13.i.i, !llvm.loop !79
 
 .lr.ph14.i.i.i:                                   ; preds = %.preheader.i13.i.i, %.lr.ph14.i.i.i
-  %.213.i.i.i = phi double [ %i.cq, %.lr.ph14.i.i.i ], [ %.169.lcssa.i.i.i, %.preheader.i13.i.i ]
-  %.17112.i.i.i = phi i32 [ %i.cr, %.lr.ph14.i.i.i ], [ %.070.lcssa.i.i.i, %.preheader.i13.i.i ]
-  %i.cq = fadd double %.213.i.i.i, f0xC000C152382D7366 ; 3 uses
-  %i.cr = add nsw i32 %.17112.i.i.i, 1            ; 2 uses
+  %.113.i.i.i = phi i32 [ %i.cr, %.lr.ph14.i.i.i ], [ %.066.lcssa.i.i.i, %.preheader.i13.i.i ]
+  %.212.i.i.i = phi double [ %i.cq, %.lr.ph14.i.i.i ], [ %.168.lcssa.i.i.i, %.preheader.i13.i.i ]
+  %i.cq = fadd double %.212.i.i.i, f0xC000C152382D7366 ; 3 uses
+  %i.cr = add nsw i32 %.113.i.i.i, 1              ; 2 uses
   %i.cs = fcmp ogt double %i.cq, f0x4000C152382D7366
   br i1 %i.cs, label %.lr.ph14.i.i.i, label %._crit_edge.i.i.i, !llvm.loop !80
 
 ._crit_edge.i.i.i:                                ; preds = %.lr.ph14.i.i.i, %.preheader.i13.i.i
-  %.171.lcssa.i.i.i = phi i32 [ %.070.lcssa.i.i.i, %.preheader.i13.i.i ], [ %i.cr, %.lr.ph14.i.i.i ]
-  %.2.lcssa.i.i.i = phi double [ %.169.lcssa.i.i.i, %.preheader.i13.i.i ], [ %i.cq, %.lr.ph14.i.i.i ] ; 3 uses
+  %.2.lcssa.i.i.i = phi double [ %.168.lcssa.i.i.i, %.preheader.i13.i.i ], [ %i.cq, %.lr.ph14.i.i.i ] ; 3 uses
+  %.1.lcssa.i.i.i = phi i32 [ %.066.lcssa.i.i.i, %.preheader.i13.i.i ], [ %i.cr, %.lr.ph14.i.i.i ]
   %i.ct = tail call double @cos(double noundef %.2.lcssa.i.i.i) #17 ; 2 uses
   %i.cu = tail call double @sin(double noundef %.2.lcssa.i.i.i) #17 ; 2 uses
   %i.cv = tail call double @llvm.fmuladd.f64(double %i.cu, double f0x3FFBB67AE8584CAB, double %i.ct)
@@ -268,7 +268,7 @@ _ZL14isea_transformPN12_GLOBAL__N_112pj_isea_dataEPNS_8GeoPointEPNS_7isea_ptE.ex
   %i.dt = fmul double %i.ds, f0x3FFD21DC1E9D1240
   %i.du = fmul double %i.by, 5.000000e-01
   %i.dv = tail call double @sin(double noundef %i.du) #17
-  %i.dw = sitofp i32 %.171.lcssa.i.i.i to double
+  %i.dw = sitofp i32 %.1.lcssa.i.i.i to double
   %i.dx = insertelement <2 x double> poison, double %i.dq, i64 0
   %i.dy = insertelement <2 x double> %i.dx, double %i.dw, i64 1
   %i.dz = insertelement <2 x double> poison, double %i.dp, i64 0
@@ -671,40 +671,29 @@ bb.ae:                                            ; preds = %bb.ad
   br label %_ZN12_GLOBAL__N_120ISEAPlanarProjection15faceOrientationEi.exit.i.i
 
 _ZN12_GLOBAL__N_120ISEAPlanarProjection15faceOrientationEi.exit.i.i: ; preds = %bb.ae, %bb.ad
-  %i.dg = phi double [ 0.000000e+00, %bb.ad ], [ %i.df, %bb.ae ] ; 3 uses
+  %i.dg = phi double [ 0.000000e+00, %bb.ad ], [ %i.df, %bb.ae ] ; 2 uses
   %i.dh = fadd double %i.cz, %i.dg                ; 3 uses
   %i.di = fcmp olt double %i.dh, 0.000000e+00
-  br i1 %i.di, label %.lr.ph.i.i.preheader, label %.preheader.i.i
+  %3 = insertelement <2 x double> poison, double %i.dg, i64 0
+  %4 = insertelement <2 x double> %3, double %i.dh, i64 1 ; 2 uses
+  br i1 %i.di, label %.lr.ph.i.i, label %.preheader.i.i
 
-.lr.ph.i.i.preheader:                             ; preds = %_ZN12_GLOBAL__N_120ISEAPlanarProjection15faceOrientationEi.exit.i.i
-  %3 = insertelement <2 x double> poison, double %i.dh, i64 0
-  %4 = insertelement <2 x double> %3, double %i.dg, i64 1
-  br label %.lr.ph.i.i
+.preheader.i.i:                                   ; preds = %.lr.ph.i.i, %_ZN12_GLOBAL__N_120ISEAPlanarProjection15faceOrientationEi.exit.i.i
+  %.082.lcssa.i.i = phi double [ %i.dh, %_ZN12_GLOBAL__N_120ISEAPlanarProjection15faceOrientationEi.exit.i.i ], [ %i.dm, %.lr.ph.i.i ] ; 2 uses
+  %5 = phi <2 x double> [ %4, %_ZN12_GLOBAL__N_120ISEAPlanarProjection15faceOrientationEi.exit.i.i ], [ %i.dl, %.lr.ph.i.i ] ; 2 uses
+  %i.dj = fcmp ogt double %.082.lcssa.i.i, f0x4000C152382D7365
+  %6 = extractelement <2 x double> %5, i64 0
+  br i1 %i.dj, label %.lr.ph93.i.i, label %._crit_edge.i.i
 
-.preheader.i.i.loopexit:                          ; preds = %.lr.ph.i.i
-  %5 = extractelement <2 x double> %i.dl, i64 1
-  br label %.preheader.i.i
-
-.preheader.i.i:                                   ; preds = %.preheader.i.i.loopexit, %_ZN12_GLOBAL__N_120ISEAPlanarProjection15faceOrientationEi.exit.i.i
-  %.082.lcssa.i.i = phi double [ %i.dg, %_ZN12_GLOBAL__N_120ISEAPlanarProjection15faceOrientationEi.exit.i.i ], [ %5, %.preheader.i.i.loopexit ] ; 2 uses
-  %.081.lcssa.i.i = phi double [ %i.dh, %_ZN12_GLOBAL__N_120ISEAPlanarProjection15faceOrientationEi.exit.i.i ], [ %i.dm, %.preheader.i.i.loopexit ] ; 3 uses
-  %i.dj = fcmp ogt double %.081.lcssa.i.i, f0x4000C152382D7365
-  br i1 %i.dj, label %.lr.ph93.i.i.preheader, label %._crit_edge.i.i
-
-.lr.ph93.i.i.preheader:                           ; preds = %.preheader.i.i
-  %6 = insertelement <2 x double> poison, double %.082.lcssa.i.i, i64 0
-  %7 = insertelement <2 x double> %6, double %.081.lcssa.i.i, i64 1
-  br label %.lr.ph93.i.i
-
-.lr.ph.i.i:                                       ; preds = %.lr.ph.i.i.preheader, %.lr.ph.i.i
-  %i.dk = phi <2 x double> [ %i.dl, %.lr.ph.i.i ], [ %4, %.lr.ph.i.i.preheader ]
+.lr.ph.i.i:                                       ; preds = %_ZN12_GLOBAL__N_120ISEAPlanarProjection15faceOrientationEi.exit.i.i, %.lr.ph.i.i
+  %i.dk = phi <2 x double> [ %i.dl, %.lr.ph.i.i ], [ %4, %_ZN12_GLOBAL__N_120ISEAPlanarProjection15faceOrientationEi.exit.i.i ]
   %i.dl = fadd <2 x double> %i.dk, splat (double f0x4000C152382D7365) ; 3 uses
-  %i.dm = extractelement <2 x double> %i.dl, i64 0 ; 2 uses
+  %i.dm = extractelement <2 x double> %i.dl, i64 1 ; 2 uses
   %i.dn = fcmp olt double %i.dm, 0.000000e+00
-  br i1 %i.dn, label %.lr.ph.i.i, label %.preheader.i.i.loopexit, !llvm.loop !93
+  br i1 %i.dn, label %.lr.ph.i.i, label %.preheader.i.i, !llvm.loop !93
 
-.lr.ph93.i.i:                                     ; preds = %.lr.ph93.i.i.preheader, %.lr.ph93.i.i
-  %i.do = phi <2 x double> [ %i.dp, %.lr.ph93.i.i ], [ %7, %.lr.ph93.i.i.preheader ]
+.lr.ph93.i.i:                                     ; preds = %.preheader.i.i, %.lr.ph93.i.i
+  %i.do = phi <2 x double> [ %i.dp, %.lr.ph93.i.i ], [ %5, %.preheader.i.i ]
   %i.dp = fadd <2 x double> %i.do, splat (double f0xC000C152382D7365) ; 3 uses
   %i.dq = extractelement <2 x double> %i.dp, i64 1 ; 2 uses
   %i.dr = fcmp ogt double %i.dq, f0x4000C152382D7365
@@ -715,8 +704,8 @@ _ZN12_GLOBAL__N_120ISEAPlanarProjection15faceOrientationEi.exit.i.i: ; preds = %
   br label %._crit_edge.i.i
 
 ._crit_edge.i.i:                                  ; preds = %._crit_edge.i.i.loopexit, %.preheader.i.i
-  %.183.lcssa.i.i = phi double [ %.082.lcssa.i.i, %.preheader.i.i ], [ %i.ds, %._crit_edge.i.i.loopexit ]
-  %.1.lcssa.i.i = phi double [ %.081.lcssa.i.i, %.preheader.i.i ], [ %i.dq, %._crit_edge.i.i.loopexit ] ; 3 uses
+  %.183.lcssa.i.i = phi double [ %6, %.preheader.i.i ], [ %i.ds, %._crit_edge.i.i.loopexit ]
+  %.1.lcssa.i.i = phi double [ %.082.lcssa.i.i, %.preheader.i.i ], [ %i.dq, %._crit_edge.i.i.loopexit ] ; 3 uses
   %i.dt = tail call double @sin(double noundef %.1.lcssa.i.i) #17 ; 2 uses
   %i.du = tail call double @cos(double noundef %.1.lcssa.i.i) #17 ; 2 uses
   %i.dv = fdiv double %i.du, %i.dt
@@ -1026,8 +1015,8 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.f
   %i.bf = icmp eq i64 %i.ax, %i.am                ; 2 uses
   %i.bg = add nsw i32 %i.ab, 5
-  %spec.select.i.i = select i1 %i.bf, i64 0, i64 %i.ax
-  %spec.select46.i.i = select i1 %i.bf, i32 %i.bg, i32 %i.ab
+  %spec.select.i.i = select i1 %i.bf, i32 %i.bg, i32 %i.ab
+  %spec.select46.i.i = select i1 %i.bf, i64 0, i64 %i.ax
   br label %_ZL16isea_dddi_ap3oddPN12_GLOBAL__N_112pj_isea_dataEiPNS_7isea_ptES3_.exit.i
 
 bb.i:                                             ; preds = %_ZL7hex_isoPN12_GLOBAL__N_13hexE.exit.i.i
@@ -1056,16 +1045,16 @@ bb.m:                                             ; preds = %bb.l
   br label %_ZL16isea_dddi_ap3oddPN12_GLOBAL__N_112pj_isea_dataEiPNS_7isea_ptES3_.exit.i
 
 _ZL16isea_dddi_ap3oddPN12_GLOBAL__N_112pj_isea_dataEiPNS_7isea_ptES3_.exit.i: ; preds = %bb.m, %bb.l, %bb.k, %bb.i, %bb.h, %bb.g, %bb.e
-  %.038.i.i = phi i64 [ %i.ax, %bb.l ], [ 0, %bb.g ], [ 0, %bb.e ], [ 0, %bb.i ], [ %spec.select.i.i, %bb.h ], [ %i.bl, %bb.k ], [ %i.ax, %bb.m ]
-  %.037.i.i = phi i64 [ %i.ay, %bb.l ], [ %i.be, %bb.g ], [ 0, %bb.e ], [ 0, %bb.i ], [ %i.ay, %bb.h ], [ 0, %bb.k ], [ 0, %bb.m ]
-  %.0.i.i = phi i32 [ %i.ab, %bb.l ], [ %spec.store.select.i.i, %bb.g ], [ 0, %bb.e ], [ 11, %bb.i ], [ %spec.select46.i.i, %bb.h ], [ %spec.store.select1.i.i, %bb.k ], [ %i.bo, %bb.m ] ; 2 uses
-  %i.bp = sitofp i64 %.038.i.i to double
+  %.038.i.i = phi i32 [ %i.ab, %bb.l ], [ %spec.store.select.i.i, %bb.g ], [ 0, %bb.e ], [ 11, %bb.i ], [ %spec.select.i.i, %bb.h ], [ %spec.store.select1.i.i, %bb.k ], [ %i.bo, %bb.m ] ; 2 uses
+  %.037.i.i = phi i64 [ %i.ax, %bb.l ], [ 0, %bb.g ], [ 0, %bb.e ], [ 0, %bb.i ], [ %spec.select46.i.i, %bb.h ], [ %i.bl, %bb.k ], [ %i.ax, %bb.m ]
+  %.0.i.i = phi i64 [ %i.ay, %bb.l ], [ %i.be, %bb.g ], [ 0, %bb.e ], [ 0, %bb.i ], [ %i.ay, %bb.h ], [ 0, %bb.k ], [ 0, %bb.m ]
+  %i.bp = sitofp i64 %.037.i.i to double
   store double %i.bp, ptr %3, align 8, !tbaa !85
-  %i.bq = sitofp i64 %.037.i.i to double
+  %i.bq = sitofp i64 %.0.i.i to double
   %i.br = getelementptr inbounds nuw i8, ptr %3, i64 8
   store double %i.bq, ptr %i.br, align 8, !tbaa !87
   %i.bs = getelementptr inbounds nuw i8, ptr %0, i64 40
-  store i32 %.0.i.i, ptr %i.bs, align 8, !tbaa !88
+  store i32 %.038.i.i, ptr %i.bs, align 8, !tbaa !88
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #17
   br label %_ZL9isea_dddiPN12_GLOBAL__N_112pj_isea_dataEiPNS_7isea_ptES3_.exit
 
@@ -1210,7 +1199,7 @@ bb.ad:                                            ; preds = %bb.ac, %bb.ab, %bb.
   br label %_ZL9isea_dddiPN12_GLOBAL__N_112pj_isea_dataEiPNS_7isea_ptES3_.exit
 
 _ZL9isea_dddiPN12_GLOBAL__N_112pj_isea_dataEiPNS_7isea_ptES3_.exit: ; preds = %_ZL16isea_dddi_ap3oddPN12_GLOBAL__N_112pj_isea_dataEiPNS_7isea_ptES3_.exit.i, %bb.ad
-  %.0.i = phi i32 [ %.0.i.i, %_ZL16isea_dddi_ap3oddPN12_GLOBAL__N_112pj_isea_dataEiPNS_7isea_ptES3_.exit.i ], [ %.039.i, %bb.ad ]
+  %.0.i = phi i32 [ %.038.i.i, %_ZL16isea_dddi_ap3oddPN12_GLOBAL__N_112pj_isea_dataEiPNS_7isea_ptES3_.exit.i ], [ %.039.i, %bb.ad ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #17
   ret i32 %.0.i
 }

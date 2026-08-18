@@ -201,27 +201,26 @@ bb.a:
   %i.b = load float, ptr %i.a, align 8, !tbaa !19 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.d = load float, ptr %i.c, align 8, !tbaa !19 ; 4 uses
-  %2 = load float, ptr %1, align 4, !tbaa !19     ; 3 uses
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %4 = load float, ptr %3, align 4, !tbaa !19     ; 3 uses
-  %5 = fmul float %4, %4
-  %i.e = tail call float @llvm.fmuladd.f32(float %2, float %2, float %5) ; 2 uses
+  %2 = load <2 x float>, ptr %1, align 4, !tbaa !19 ; 4 uses
+  %foldExtExtBinop = fmul <2 x float> %2, %2
+  %3 = extractelement <2 x float> %foldExtExtBinop, i64 1
+  %4 = extractelement <2 x float> %2, i64 0       ; 2 uses
+  %i.e = tail call float @llvm.fmuladd.f32(float %4, float %4, float %3) ; 2 uses
   %i.f = fcmp une float %i.e, 0.000000e+00
   br i1 %i.f, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   %sqrt.i = tail call float @llvm.sqrt.f32(float %i.e)
-  %i.g = fdiv float %i.b, %sqrt.i                 ; 2 uses
-  %6 = fmul float %2, %i.g
-  %.sroa.0.0.vec.insert.i = insertelement <2 x float> poison, float %6, i64 0
+  %i.g = fdiv float %i.b, %sqrt.i
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.i = load float, ptr %i.h, align 4, !tbaa !19
   %i.j = fcmp olt float %i.i, 0.000000e+00
   %i.k = fneg float %i.d
   %i.l = select i1 %i.j, float %i.k, float %i.d
-  %.sroa.5.8.vec.insert.i.a = insertelement <2 x float> <float poison, float undef>, float %i.l, i64 0
-  %7 = fmul float %4, %i.g
-  %.sroa.0.4.vec.insert.i = insertelement <2 x float> %.sroa.0.0.vec.insert.i, float %7, i64 1
+  %.sroa.5.8.vec.insert.i = insertelement <2 x float> <float poison, float undef>, float %i.l, i64 0
+  %.sroa.5.8.vec.insert.i.a = insertelement <2 x float> poison, float %i.g, i64 0
+  %5 = shufflevector <2 x float> %.sroa.5.8.vec.insert.i.a, <2 x float> poison, <2 x i32> zeroinitializer
+  %6 = fmul <2 x float> %2, %5
   br label %_Z21CylinderLocalSupportZRK9btVector3S1_.exit
 
 bb.c:                                             ; preds = %bb.a
@@ -235,8 +234,8 @@ bb.c:                                             ; preds = %bb.a
   br label %_Z21CylinderLocalSupportZRK9btVector3S1_.exit
 
 _Z21CylinderLocalSupportZRK9btVector3S1_.exit:    ; preds = %bb.b, %bb.c
-  %.sroa.5.0.i = phi <2 x float> [ %.sroa.5.8.vec.insert.i.a, %bb.b ], [ %.sroa.5.8.vec.insert27.i, %bb.c ]
-  %.sroa.0.0.i = phi <2 x float> [ %.sroa.0.4.vec.insert.i, %bb.b ], [ %.sroa.0.4.vec.insert24.i, %bb.c ]
+  %.sroa.5.0.i = phi <2 x float> [ %.sroa.5.8.vec.insert.i, %bb.b ], [ %.sroa.5.8.vec.insert27.i, %bb.c ]
+  %.sroa.0.0.i = phi <2 x float> [ %6, %bb.b ], [ %.sroa.0.4.vec.insert24.i, %bb.c ]
   %.fca.0.insert.i = insertvalue { <2 x float>, <2 x float> } poison, <2 x float> %.sroa.0.0.i, 0
   %.fca.1.insert.i = insertvalue { <2 x float>, <2 x float> } %.fca.0.insert.i, <2 x float> %.sroa.5.0.i, 1
   ret { <2 x float>, <2 x float> } %.fca.1.insert.i
