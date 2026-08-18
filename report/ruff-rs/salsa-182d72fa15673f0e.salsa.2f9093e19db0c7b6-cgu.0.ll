@@ -1,5 +1,5 @@
-inline.NumInlined: 4218
-inline.NumDeleted: 1921
+inline.NumInlined: 4220
+inline.NumDeleted: 1923
 loop-unroll.NumCompletelyUnrolled: 17
 loop-unroll.NumRuntimeUnrolled: 21
 loop-unroll.NumUnrolled: 38
@@ -204,33 +204,25 @@ bb.b:                                             ; preds = %bb.a
 
 _RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i: ; preds = %bb.a
   %i.d = icmp samesign ugt i64 %i.b, 576460752303423487
-  br i1 %i.d, label %1, label %bb.c, !prof !4
+  br i1 %i.d, label %bb.d, label %bb.c, !prof !4
 
 bb.c:                                             ; preds = %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i
   %i.e = shl nuw nsw i64 %i.b, 4
   %i.f = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %i.e, i64 16) ; 2 uses
   %i.g = extractvalue { i64, i1 } %i.f, 1
-  br i1 %i.g, label %bb.d, label %2, !prof !4
+  br i1 %i.g, label %bb.e, label %_RINvCsaSrGj5dYoxL_8thin_vec6layoutNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadEBA_.exit, !prof !4
 
-1:                                                ; preds = %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i
+bb.d:                                             ; preds = %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i
   tail call void @_RNvCsaSrGj5dYoxL_8thin_vec17capacity_overflow() #62
   unreachable
 
-bb.d:                                             ; preds = %bb.c
+bb.e:                                             ; preds = %bb.c
   tail call void @_RNvCsaSrGj5dYoxL_8thin_vec17capacity_overflow() #62
   unreachable
 
-2:                                                ; preds = %bb.c
-  %3 = extractvalue { i64, i1 } %i.f, 0           ; 2 uses
-  %.not.i = icmp samesign ugt i64 %3, 9223372036854775800
-  br i1 %.not.i, label %bb.e, label %_RINvCsaSrGj5dYoxL_8thin_vec6layoutNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadEBA_.exit, !prof !4
-
-bb.e:                                             ; preds = %2
-  tail call void @_RNvCsaSrGj5dYoxL_8thin_vec17capacity_overflow() #62
-  unreachable
-
-_RINvCsaSrGj5dYoxL_8thin_vec6layoutNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadEBA_.exit: ; preds = %2
-  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef %3, i64 noundef 8) #63
+_RINvCsaSrGj5dYoxL_8thin_vec6layoutNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadEBA_.exit: ; preds = %bb.c
+  %1 = extractvalue { i64, i1 } %i.f, 0
+  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef %1, i64 noundef 8) #63
   ret void
 }
 
@@ -250,141 +242,26 @@ bb.b:                                             ; preds = %bb.a
 _RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i: ; preds = %bb.a
   %i.d = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %i.b, i64 24) ; 2 uses
   %i.e = extractvalue { i64, i1 } %i.d, 1
-  br i1 %i.e, label %1, label %bb.c, !prof !4
+  br i1 %i.e, label %bb.d, label %bb.c, !prof !4
 
 bb.c:                                             ; preds = %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i
   %i.f = extractvalue { i64, i1 } %i.d, 0
   %i.g = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %i.f, i64 16) ; 2 uses
   %i.h = extractvalue { i64, i1 } %i.g, 1
-  br i1 %i.h, label %bb.d, label %2, !prof !4
+  br i1 %i.h, label %bb.e, label %_RINvCsaSrGj5dYoxL_8thin_vec6layoutTNtNtCs45bxiIjzMqg_5salsa14tracked_struct8IdentityNtNtBB_2id2IdEEBB_.exit, !prof !4
 
-1:                                                ; preds = %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i
+bb.d:                                             ; preds = %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i
   tail call void @_RNvCsaSrGj5dYoxL_8thin_vec17capacity_overflow() #62
   unreachable
 
-bb.d:                                             ; preds = %bb.c
+bb.e:                                             ; preds = %bb.c
   tail call void @_RNvCsaSrGj5dYoxL_8thin_vec17capacity_overflow() #62
   unreachable
 
-2:                                                ; preds = %bb.c
-  %3 = extractvalue { i64, i1 } %i.g, 0           ; 2 uses
-  %.not.i = icmp samesign ugt i64 %3, 9223372036854775800
-  br i1 %.not.i, label %bb.e, label %_RINvCsaSrGj5dYoxL_8thin_vec6layoutTNtNtCs45bxiIjzMqg_5salsa14tracked_struct8IdentityNtNtBB_2id2IdEEBB_.exit, !prof !4
-
-bb.e:                                             ; preds = %2
-  tail call void @_RNvCsaSrGj5dYoxL_8thin_vec17capacity_overflow() #62
-  unreachable
-
-_RINvCsaSrGj5dYoxL_8thin_vec6layoutTNtNtCs45bxiIjzMqg_5salsa14tracked_struct8IdentityNtNtBB_2id2IdEEBB_.exit: ; preds = %2
-  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef %3, i64 noundef 8) #63
+_RINvCsaSrGj5dYoxL_8thin_vec6layoutTNtNtCs45bxiIjzMqg_5salsa14tracked_struct8IdentityNtNtBB_2id2IdEEBB_.exit: ; preds = %bb.c
+  %1 = extractvalue { i64, i1 } %i.g, 0
+  tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef %1, i64 noundef 8) #63
   ret void
-}
-
-; Function Attrs: nonlazybind uwtable
-define internal fastcc noundef nonnull ptr @_RINvCsaSrGj5dYoxL_8thin_vec20header_with_capacityNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadEBP_(i64 noundef %0) unnamed_addr #1 personality ptr @rust_eh_personality {
-  %2 = icmp slt i64 %0, 0
-  br i1 %2, label %3, label %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i
-
-3:                                                ; preds = %1
-  tail call void @_RNvCsaSrGj5dYoxL_8thin_vec17capacity_overflow() #62
-  unreachable
-
-_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i: ; preds = %1
-  %4 = icmp samesign ugt i64 %0, 576460752303423487
-  br i1 %4, label %9, label %5, !prof !4
-
-5:                                                ; preds = %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i
-  %6 = shl nuw nsw i64 %0, 4
-  %7 = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %6, i64 16) ; 2 uses
-  %8 = extractvalue { i64, i1 } %7, 1
-  br i1 %8, label %10, label %11, !prof !4
-
-9:                                                ; preds = %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i
-  tail call void @_RNvCsaSrGj5dYoxL_8thin_vec17capacity_overflow() #62
-  unreachable
-
-10:                                               ; preds = %5
-  tail call void @_RNvCsaSrGj5dYoxL_8thin_vec17capacity_overflow() #62
-  unreachable
-
-11:                                               ; preds = %5
-  %12 = extractvalue { i64, i1 } %7, 0            ; 3 uses
-  %.not.i = icmp samesign ugt i64 %12, 9223372036854775800
-  br i1 %.not.i, label %13, label %_RINvCsaSrGj5dYoxL_8thin_vec6layoutNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadEBA_.exit, !prof !4
-
-13:                                               ; preds = %11
-  tail call void @_RNvCsaSrGj5dYoxL_8thin_vec17capacity_overflow() #62
-  unreachable
-
-_RINvCsaSrGj5dYoxL_8thin_vec6layoutNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadEBA_.exit: ; preds = %11
-  tail call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #63
-  %14 = tail call noundef align 8 ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef %12, i64 noundef 8) #63 ; 4 uses
-  %15 = icmp eq ptr %14, null
-  br i1 %15, label %16, label %17, !prof !4
-
-16:                                               ; preds = %_RINvCsaSrGj5dYoxL_8thin_vec6layoutNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadEBA_.exit
-  tail call void @_RNvNtCscdodAO9FK5_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef %12) #62
-  unreachable
-
-17:                                               ; preds = %_RINvCsaSrGj5dYoxL_8thin_vec6layoutNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadEBA_.exit
-  store i64 0, ptr %14, align 8
-  %18 = getelementptr inbounds nuw i8, ptr %14, i64 8
-  store i64 %0, ptr %18, align 8
-  ret ptr %14
-}
-
-; Function Attrs: nonlazybind uwtable
-define internal fastcc noundef nonnull ptr @_RINvCsaSrGj5dYoxL_8thin_vec20header_with_capacityTNtNtCs45bxiIjzMqg_5salsa14tracked_struct8IdentityNtNtBQ_2id2IdEEBQ_(i64 noundef %0) unnamed_addr #1 personality ptr @rust_eh_personality {
-  %2 = icmp slt i64 %0, 0
-  br i1 %2, label %3, label %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i
-
-3:                                                ; preds = %1
-  tail call void @_RNvCsaSrGj5dYoxL_8thin_vec17capacity_overflow() #62
-  unreachable
-
-_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i: ; preds = %1
-  %4 = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %0, i64 24) ; 2 uses
-  %5 = extractvalue { i64, i1 } %4, 1
-  br i1 %5, label %10, label %6, !prof !4
-
-6:                                                ; preds = %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i
-  %7 = extractvalue { i64, i1 } %4, 0
-  %8 = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %7, i64 16) ; 2 uses
-  %9 = extractvalue { i64, i1 } %8, 1
-  br i1 %9, label %11, label %12, !prof !4
-
-10:                                               ; preds = %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i
-  tail call void @_RNvCsaSrGj5dYoxL_8thin_vec17capacity_overflow() #62
-  unreachable
-
-11:                                               ; preds = %6
-  tail call void @_RNvCsaSrGj5dYoxL_8thin_vec17capacity_overflow() #62
-  unreachable
-
-12:                                               ; preds = %6
-  %13 = extractvalue { i64, i1 } %8, 0            ; 3 uses
-  %.not.i = icmp samesign ugt i64 %13, 9223372036854775800
-  br i1 %.not.i, label %14, label %_RINvCsaSrGj5dYoxL_8thin_vec6layoutTNtNtCs45bxiIjzMqg_5salsa14tracked_struct8IdentityNtNtBB_2id2IdEEBB_.exit, !prof !4
-
-14:                                               ; preds = %12
-  tail call void @_RNvCsaSrGj5dYoxL_8thin_vec17capacity_overflow() #62
-  unreachable
-
-_RINvCsaSrGj5dYoxL_8thin_vec6layoutTNtNtCs45bxiIjzMqg_5salsa14tracked_struct8IdentityNtNtBB_2id2IdEEBB_.exit: ; preds = %12
-  tail call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #63
-  %15 = tail call noundef align 8 ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef %13, i64 noundef 8) #63 ; 4 uses
-  %16 = icmp eq ptr %15, null
-  br i1 %16, label %17, label %18, !prof !4
-
-17:                                               ; preds = %_RINvCsaSrGj5dYoxL_8thin_vec6layoutTNtNtCs45bxiIjzMqg_5salsa14tracked_struct8IdentityNtNtBB_2id2IdEEBB_.exit
-  tail call void @_RNvNtCscdodAO9FK5_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef %13) #62
-  unreachable
-
-18:                                               ; preds = %_RINvCsaSrGj5dYoxL_8thin_vec6layoutTNtNtCs45bxiIjzMqg_5salsa14tracked_struct8IdentityNtNtBB_2id2IdEEBB_.exit
-  store i64 0, ptr %15, align 8
-  %19 = getelementptr inbounds nuw i8, ptr %15, i64 8
-  store i64 %0, ptr %19, align 8
-  ret ptr %15
 }
 
 ; Function Attrs: nonlazybind uwtable
@@ -416,17 +293,9 @@ bb.e:                                             ; preds = %bb.c
   unreachable
 
 bb.f:                                             ; preds = %bb.c
-  %i.f = extractvalue { i64, i1 } %i.d, 0         ; 2 uses
-  %.not = icmp samesign ugt i64 %i.f, 9223372036854775800
-  br i1 %.not, label %1, label %2, !prof !4
-
-1:                                                ; preds = %bb.f
-  tail call void @_RNvCsaSrGj5dYoxL_8thin_vec17capacity_overflow() #62
-  unreachable
-
-2:                                                ; preds = %bb.f
-  %3 = insertvalue { i64, i64 } { i64 8, i64 poison }, i64 %i.f, 1
-  ret { i64, i64 } %3
+  %i.f = extractvalue { i64, i1 } %i.d, 0
+  %1 = insertvalue { i64, i64 } { i64 8, i64 poison }, i64 %i.f, 1
+  ret { i64, i64 } %1
 }
 
 ; Function Attrs: nonlazybind uwtable
@@ -459,17 +328,9 @@ bb.e:                                             ; preds = %bb.c
   unreachable
 
 bb.f:                                             ; preds = %bb.c
-  %i.g = extractvalue { i64, i1 } %i.e, 0         ; 2 uses
-  %.not = icmp samesign ugt i64 %i.g, 9223372036854775800
-  br i1 %.not, label %1, label %2, !prof !4
-
-1:                                                ; preds = %bb.f
-  tail call void @_RNvCsaSrGj5dYoxL_8thin_vec17capacity_overflow() #62
-  unreachable
-
-2:                                                ; preds = %bb.f
-  %3 = insertvalue { i64, i64 } { i64 8, i64 poison }, i64 %i.g, 1
-  ret { i64, i64 } %3
+  %i.g = extractvalue { i64, i1 } %i.e, 0
+  %1 = insertvalue { i64, i64 } { i64 8, i64 poison }, i64 %i.g, 1
+  ret { i64, i64 } %1
 }
 
 ; Function Attrs: cold minsize nonlazybind optsize uwtable
@@ -872,13 +733,52 @@ bb.e:                                             ; preds = %bb.c
 define noundef i64 @_RINvNvXsr_CsaSrGj5dYoxL_8thin_vecINtB8_7ThinVecpENtNtCs4NRVxsYgnAr_4core5clone5Clone5clone19clone_non_singletonNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadEB1P_(ptr noalias noundef readonly align 8 captures(none) dereferenceable(8) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !nonnull !3, !noundef !3 ; 6 uses
-  %i.b = load i64, ptr %i.a, align 8, !noundef !3 ; 3 uses
+  %i.b = load i64, ptr %i.a, align 8, !noundef !3 ; 6 uses
   %i.c = icmp eq i64 %i.b, 0
-  br i1 %i.c, label %._crit_edge.thread, label %bb.b
+  br i1 %i.c, label %._crit_edge.thread, label %1
 
-bb.b:                                             ; preds = %bb.a
-  %1 = tail call fastcc noundef nonnull ptr @_RINvCsaSrGj5dYoxL_8thin_vec20header_with_capacityNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadEBP_(i64 noundef %i.b) ; 7 uses
-  %i.d = ptrtoint ptr %1 to i64
+1:                                                ; preds = %bb.a
+  %2 = icmp slt i64 %i.b, 0
+  br i1 %2, label %3, label %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i.i.i
+
+3:                                                ; preds = %1
+  tail call void @_RNvCsaSrGj5dYoxL_8thin_vec17capacity_overflow() #62
+  unreachable
+
+_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i.i.i: ; preds = %1
+  %4 = icmp samesign ugt i64 %i.b, 576460752303423487
+  br i1 %4, label %9, label %5, !prof !4
+
+5:                                                ; preds = %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i.i.i
+  %6 = shl nuw nsw i64 %i.b, 4
+  %7 = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %6, i64 16) ; 2 uses
+  %8 = extractvalue { i64, i1 } %7, 1
+  br i1 %8, label %10, label %_RINvCsaSrGj5dYoxL_8thin_vec6layoutNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadEBA_.exit.i.i, !prof !4
+
+9:                                                ; preds = %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i.i.i
+  tail call void @_RNvCsaSrGj5dYoxL_8thin_vec17capacity_overflow() #62
+  unreachable
+
+10:                                               ; preds = %5
+  tail call void @_RNvCsaSrGj5dYoxL_8thin_vec17capacity_overflow() #62
+  unreachable
+
+_RINvCsaSrGj5dYoxL_8thin_vec6layoutNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadEBA_.exit.i.i: ; preds = %5
+  %11 = extractvalue { i64, i1 } %7, 0            ; 2 uses
+  tail call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #63
+  %12 = tail call noundef align 8 ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef %11, i64 noundef 8) #63 ; 10 uses
+  %13 = icmp eq ptr %12, null
+  br i1 %13, label %14, label %bb.b, !prof !4
+
+14:                                               ; preds = %_RINvCsaSrGj5dYoxL_8thin_vec6layoutNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadEBA_.exit.i.i
+  tail call void @_RNvNtCscdodAO9FK5_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef %11) #62
+  unreachable
+
+bb.b:                                             ; preds = %_RINvCsaSrGj5dYoxL_8thin_vec6layoutNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadEBA_.exit.i.i
+  store i64 0, ptr %12, align 8
+  %15 = getelementptr inbounds nuw i8, ptr %12, i64 8
+  store i64 %i.b, ptr %15, align 8
+  %i.d = ptrtoint ptr %12 to i64
   %.pre = load i64, ptr %i.a, align 8             ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 3 uses
   %.idx = shl i64 %.pre, 4                        ; 2 uses
@@ -893,7 +793,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %lcmp.mod.not.not, label %.lr.ph.prol, label %.lr.ph.prol.loopexit
 
 .lr.ph.prol:                                      ; preds = %.lr.ph.preheader
-  %.sroa.01.0.prol = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
+  %.sroa.01.0.prol = getelementptr inbounds nuw i8, ptr %12, i64 16 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 28
   %i.k = load atomic i16, ptr %i.j monotonic, align 4, !noalias !3809
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 30
@@ -901,16 +801,16 @@ bb.b:                                             ; preds = %bb.a
   %i.n = icmp ne i8 %i.m, 0
   %i.o = zext i1 %i.n to i8
   %i.p = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.01.0.prol, ptr noundef nonnull align 4 dereferenceable(12) %i.e, i64 12, i1 false)
-  %.sroa.4.0..sroa.01.0.sroa_idx.prol = getelementptr inbounds nuw i8, ptr %1, i64 28
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %.sroa.01.0.prol, ptr noundef nonnull align 4 dereferenceable(12) %i.e, i64 12, i1 false)
+  %.sroa.4.0..sroa.01.0.sroa_idx.prol = getelementptr inbounds nuw i8, ptr %12, i64 28
   store i16 %i.k, ptr %.sroa.4.0..sroa.01.0.sroa_idx.prol, align 4
-  %.sroa.5.0..sroa.01.0.sroa_idx.prol = getelementptr inbounds nuw i8, ptr %1, i64 30
+  %.sroa.5.0..sroa.01.0.sroa_idx.prol = getelementptr inbounds nuw i8, ptr %12, i64 30
   store i8 %i.o, ptr %.sroa.5.0..sroa.01.0.sroa_idx.prol, align 2
   br label %.lr.ph.prol.loopexit
 
 .lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol, %.lr.ph.preheader
   %.sroa.05.011.unr = phi ptr [ %i.e, %.lr.ph.preheader ], [ %i.p, %.lr.ph.prol ]
-  %.pn10.unr = phi ptr [ %1, %.lr.ph.preheader ], [ %.sroa.01.0.prol, %.lr.ph.prol ]
+  %.pn10.unr = phi ptr [ %12, %.lr.ph.preheader ], [ %.sroa.01.0.prol, %.lr.ph.prol ]
   %i.q = icmp eq i64 %i.h, 0
   br i1 %i.q, label %._crit_edge, label %.lr.ph
 
@@ -947,11 +847,11 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.af, label %._crit_edge, label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %bb.b
-  %i.ag = icmp eq ptr %1, @_RNvCsaSrGj5dYoxL_8thin_vec12EMPTY_HEADER
+  %i.ag = icmp eq ptr %12, @_RNvCsaSrGj5dYoxL_8thin_vec12EMPTY_HEADER
   br i1 %i.ag, label %._crit_edge.thread, label %bb.c
 
 bb.c:                                             ; preds = %._crit_edge
-  store i64 %i.b, ptr %1, align 8
+  store i64 %i.b, ptr %12, align 8
   br label %._crit_edge.thread
 
 ._crit_edge.thread:                               ; preds = %bb.a, %bb.c, %._crit_edge
@@ -1354,35 +1254,34 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5881)
   %.not.i = icmp eq ptr %i.a, @_RNvCsaSrGj5dYoxL_8thin_vec12EMPTY_HEADER
-  br i1 %.not.i, label %bb.g, label %bb.h
+  br i1 %.not.i, label %bb.h, label %6
 
 .thread16:                                        ; preds = %bb.e
   %i.i = shl nuw i64 %i.d, 1
   %.sroa.0.0.i18 = tail call noundef i64 @llvm.umax.i64(i64 %i.i, i64 %i.e) ; 2 uses
   %.not.i19 = icmp eq ptr %i.a, @_RNvCsaSrGj5dYoxL_8thin_vec12EMPTY_HEADER
-  br i1 %.not.i19, label %bb.g, label %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i.i.a
+  br i1 %.not.i19, label %bb.g, label %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i.i
 
 .thread:                                          ; preds = %bb.d
   %.sroa.0.0.i4 = tail call noundef i64 @llvm.umax.i64(i64 %i.e, i64 4) ; 2 uses
   %.not.i5 = icmp eq ptr %i.a, @_RNvCsaSrGj5dYoxL_8thin_vec12EMPTY_HEADER
-  br i1 %.not.i5, label %bb.g, label %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i.i.thread.a
+  br i1 %.not.i5, label %bb.g, label %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i.i.thread
 
-bb.g:                                             ; preds = %.thread16, %.thread, %bb.f
-  %.sroa.0.0.i7 = phi i64 [ %.sroa.0.0.i4, %.thread ], [ -1, %bb.f ], [ %.sroa.0.0.i18, %.thread16 ]
-  %2 = tail call fastcc noundef nonnull ptr @_RINvCsaSrGj5dYoxL_8thin_vec20header_with_capacityNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadEBP_(i64 noundef %.sroa.0.0.i7)
-  br label %_RNvMs3_CsaSrGj5dYoxL_8thin_vecINtB5_7ThinVecNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadE10reallocateBK_.exit
+bb.g:                                             ; preds = %.thread16, %.thread
+  %.sroa.0.0.i8 = phi i64 [ %.sroa.0.0.i4, %.thread ], [ %.sroa.0.0.i18, %.thread16 ] ; 4 uses
+  %2 = icmp slt i64 %.sroa.0.0.i8, 0
+  br i1 %2, label %bb.h, label %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i.i.a
 
-bb.h:                                             ; preds = %bb.f
+bb.h:                                             ; preds = %bb.f, %bb.g
   tail call void @_RNvCsaSrGj5dYoxL_8thin_vec17capacity_overflow() #62, !noalias !5881
   unreachable
 
-_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i.i.a: ; preds = %.thread16
-  %i.j = icmp samesign ugt i64 %i.d, 576460752303423487
-  br i1 %i.j, label %bb.i, label %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i.i.thread.a, !prof !5884
+_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i.i.a: ; preds = %bb.g
+  %i.j = icmp samesign ugt i64 %.sroa.0.0.i8, 576460752303423487
+  br i1 %i.j, label %bb.i, label %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i.i.thread.a, !prof !4
 
-_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i.i.thread.a: ; preds = %.thread, %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i.i.a
-  %.sroa.0.0.i61012 = phi i64 [ %.sroa.0.0.i18, %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i.i.a ], [ %.sroa.0.0.i4, %.thread ] ; 5 uses
-  %i.k = shl nuw nsw i64 %i.d, 4
+_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i.i.thread.a: ; preds = %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i.i.a
+  %i.k = shl nuw nsw i64 %.sroa.0.0.i8, 4
   %i.l = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %i.k, i64 16) ; 2 uses
   %i.m = extractvalue { i64, i1 } %i.l, 1
   br i1 %i.m, label %bb.j, label %bb.k, !prof !4
@@ -1397,15 +1296,45 @@ bb.j:                                             ; preds = %_RNvXs_CsaSrGj5dYox
 
 bb.k:                                             ; preds = %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i.i.thread.a
   %i.n = extractvalue { i64, i1 } %i.l, 0         ; 2 uses
-  %.not.i.i = icmp samesign ugt i64 %i.n, 9223372036854775800
-  br i1 %.not.i.i, label %bb.l, label %_RINvCsaSrGj5dYoxL_8thin_vec6layoutNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadEBA_.exit.i, !prof !4
+  tail call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #63, !noalias !5881
+  %3 = tail call noundef align 8 ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef %i.n, i64 noundef 8) #63, !noalias !5881 ; 3 uses
+  %4 = icmp eq ptr %3, null
+  br i1 %4, label %5, label %_RINvCsaSrGj5dYoxL_8thin_vec20header_with_capacityNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadEBP_.exit.i, !prof !4
 
-bb.l:                                             ; preds = %bb.k
+5:                                                ; preds = %bb.k
+  tail call void @_RNvNtCscdodAO9FK5_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef %i.n) #62, !noalias !5881
+  unreachable
+
+_RINvCsaSrGj5dYoxL_8thin_vec20header_with_capacityNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadEBP_.exit.i: ; preds = %bb.k
+  store i64 0, ptr %3, align 8, !noalias !5881
+  br label %_RNvMs3_CsaSrGj5dYoxL_8thin_vecINtB5_7ThinVecNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadE10reallocateBK_.exit
+
+6:                                                ; preds = %bb.f
   tail call void @_RNvCsaSrGj5dYoxL_8thin_vec17capacity_overflow() #62, !noalias !5881
   unreachable
 
-_RINvCsaSrGj5dYoxL_8thin_vec6layoutNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadEBA_.exit.i: ; preds = %bb.k
-  %i.o = icmp slt i64 %.sroa.0.0.i61012, 0
+_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i.i: ; preds = %.thread16
+  %7 = icmp samesign ugt i64 %i.d, 576460752303423487
+  br i1 %7, label %11, label %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i.i.thread, !prof !5884
+
+_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i.i.thread: ; preds = %.thread, %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i.i
+  %.sroa.0.0.i61113 = phi i64 [ %.sroa.0.0.i18, %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i.i ], [ %.sroa.0.0.i4, %.thread ] ; 5 uses
+  %8 = shl nuw nsw i64 %i.d, 4
+  %9 = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %8, i64 16) ; 2 uses
+  %10 = extractvalue { i64, i1 } %9, 1
+  br i1 %10, label %bb.l, label %_RINvCsaSrGj5dYoxL_8thin_vec6layoutNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadEBA_.exit.i, !prof !4
+
+11:                                               ; preds = %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i.i
+  tail call void @_RNvCsaSrGj5dYoxL_8thin_vec17capacity_overflow() #62, !noalias !5881
+  unreachable
+
+bb.l:                                             ; preds = %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i.i.thread
+  tail call void @_RNvCsaSrGj5dYoxL_8thin_vec17capacity_overflow() #62, !noalias !5881
+  unreachable
+
+_RINvCsaSrGj5dYoxL_8thin_vec6layoutNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadEBA_.exit.i: ; preds = %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i.i.thread
+  %12 = extractvalue { i64, i1 } %9, 0
+  %i.o = icmp slt i64 %.sroa.0.0.i61113, 0
   br i1 %i.o, label %bb.m, label %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i
 
 bb.m:                                             ; preds = %_RINvCsaSrGj5dYoxL_8thin_vec6layoutNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadEBA_.exit.i
@@ -1413,11 +1342,11 @@ bb.m:                                             ; preds = %_RINvCsaSrGj5dYoxL_
   unreachable
 
 _RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i: ; preds = %_RINvCsaSrGj5dYoxL_8thin_vec6layoutNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadEBA_.exit.i
-  %i.p = icmp samesign ugt i64 %.sroa.0.0.i61012, 576460752303423487
+  %i.p = icmp samesign ugt i64 %.sroa.0.0.i61113, 576460752303423487
   br i1 %i.p, label %bb.o, label %bb.n, !prof !4
 
 bb.n:                                             ; preds = %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i
-  %i.q = shl nuw nsw i64 %.sroa.0.0.i61012, 4
+  %i.q = shl nuw nsw i64 %.sroa.0.0.i61113, 4
   %i.r = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %i.q, i64 16) ; 2 uses
   %i.s = extractvalue { i64, i1 } %i.r, 1
   br i1 %i.s, label %bb.p, label %_RINvCsaSrGj5dYoxL_8thin_vec10alloc_sizeNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadEBF_.exit.i, !prof !4
@@ -1432,24 +1361,22 @@ bb.p:                                             ; preds = %bb.n
 
 _RINvCsaSrGj5dYoxL_8thin_vec10alloc_sizeNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadEBF_.exit.i: ; preds = %bb.n
   %i.t = extractvalue { i64, i1 } %i.r, 0
-  %i.u = tail call noundef align 8 ptr @_RNvCs9wFQrvczXsK_7___rustc14___rust_realloc(ptr noundef nonnull %i.a, i64 noundef %i.n, i64 noundef 8, i64 noundef %i.t) #63, !noalias !5881 ; 3 uses
+  %i.u = tail call noundef align 8 ptr @_RNvCs9wFQrvczXsK_7___rustc14___rust_realloc(ptr noundef nonnull %i.a, i64 noundef %12, i64 noundef 8, i64 noundef %i.t) #63, !noalias !5881 ; 2 uses
   %i.v = icmp eq ptr %i.u, null
-  br i1 %i.v, label %bb.q, label %3, !prof !4
+  br i1 %i.v, label %bb.q, label %_RNvMs3_CsaSrGj5dYoxL_8thin_vecINtB5_7ThinVecNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadE10reallocateBK_.exit, !prof !4
 
 bb.q:                                             ; preds = %_RINvCsaSrGj5dYoxL_8thin_vec10alloc_sizeNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadEBF_.exit.i
-  %i.w = tail call fastcc { i64, i64 } @_RINvCsaSrGj5dYoxL_8thin_vec6layoutNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadEBA_(i64 noundef %.sroa.0.0.i61012), !noalias !5881 ; 2 uses
+  %i.w = tail call fastcc { i64, i64 } @_RINvCsaSrGj5dYoxL_8thin_vec6layoutNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadEBA_(i64 noundef %.sroa.0.0.i61113), !noalias !5881 ; 2 uses
   %i.x = extractvalue { i64, i64 } %i.w, 0
   %i.y = extractvalue { i64, i64 } %i.w, 1
   tail call void @_RNvNtCscdodAO9FK5_5alloc5alloc18handle_alloc_error(i64 noundef %i.x, i64 noundef %i.y) #62, !noalias !5881
   unreachable
 
-3:                                                ; preds = %_RINvCsaSrGj5dYoxL_8thin_vec10alloc_sizeNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadEBF_.exit.i
-  %4 = getelementptr inbounds nuw i8, ptr %i.u, i64 8
-  store i64 %.sroa.0.0.i61012, ptr %4, align 8, !noalias !5881
-  br label %_RNvMs3_CsaSrGj5dYoxL_8thin_vecINtB5_7ThinVecNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadE10reallocateBK_.exit
-
-_RNvMs3_CsaSrGj5dYoxL_8thin_vecINtB5_7ThinVecNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadE10reallocateBK_.exit: ; preds = %bb.g, %3
-  %storemerge.i = phi ptr [ %2, %bb.g ], [ %i.u, %3 ]
+_RNvMs3_CsaSrGj5dYoxL_8thin_vecINtB5_7ThinVecNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadE10reallocateBK_.exit: ; preds = %_RINvCsaSrGj5dYoxL_8thin_vec20header_with_capacityNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadEBP_.exit.i, %_RINvCsaSrGj5dYoxL_8thin_vec10alloc_sizeNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadEBF_.exit.i
+  %.sroa.0.0.i7 = phi i64 [ %.sroa.0.0.i8, %_RINvCsaSrGj5dYoxL_8thin_vec20header_with_capacityNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadEBP_.exit.i ], [ %.sroa.0.0.i61113, %_RINvCsaSrGj5dYoxL_8thin_vec10alloc_sizeNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadEBF_.exit.i ]
+  %storemerge.i = phi ptr [ %3, %_RINvCsaSrGj5dYoxL_8thin_vec20header_with_capacityNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadEBP_.exit.i ], [ %i.u, %_RINvCsaSrGj5dYoxL_8thin_vec10alloc_sizeNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadEBF_.exit.i ] ; 2 uses
+  %13 = getelementptr inbounds nuw i8, ptr %storemerge.i, i64 8
+  store i64 %.sroa.0.0.i7, ptr %13, align 8, !noalias !5881
   store ptr %storemerge.i, ptr %0, align 8, !alias.scope !5881
   br label %bb.r
 
@@ -1462,16 +1389,10 @@ define internal fastcc void @_RNvMs3_CsaSrGj5dYoxL_8thin_vecINtB5_7ThinVecTNtNtC
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !nonnull !3, !noundef !3 ; 3 uses
   %.not = icmp eq ptr %i.a, @_RNvCsaSrGj5dYoxL_8thin_vec12EMPTY_HEADER
-  br i1 %.not, label %2, label %bb.b
-
-2:                                                ; preds = %bb.a
-  %3 = tail call fastcc noundef nonnull ptr @_RINvCsaSrGj5dYoxL_8thin_vec20header_with_capacityTNtNtCs45bxiIjzMqg_5salsa14tracked_struct8IdentityNtNtBQ_2id2IdEEBQ_(i64 noundef %1)
-  br label %bb.m
+  br i1 %.not, label %bb.b, label %7
 
 bb.b:                                             ; preds = %bb.a
-  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %5 = load i64, ptr %4, align 8, !noundef !3     ; 2 uses
-  %i.b = icmp slt i64 %5, 0
+  %i.b = icmp slt i64 %1, 0
   br i1 %i.b, label %bb.c, label %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i.a
 
 bb.c:                                             ; preds = %bb.b
@@ -1479,34 +1400,70 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 _RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i.a: ; preds = %bb.b
-  %i.c = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %5, i64 24) ; 2 uses
+  %i.c = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %1, i64 24) ; 2 uses
   %i.d = extractvalue { i64, i1 } %i.c, 1
-  br i1 %i.d, label %bb.e, label %bb.d, !prof !4
+  br i1 %i.d, label %2, label %bb.d, !prof !4
 
 bb.d:                                             ; preds = %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i.a
   %i.e = extractvalue { i64, i1 } %i.c, 0
   %i.f = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %i.e, i64 16) ; 2 uses
   %i.g = extractvalue { i64, i1 } %i.f, 1
-  br i1 %i.g, label %bb.f, label %bb.g, !prof !4
+  br i1 %i.g, label %bb.e, label %_RINvCsaSrGj5dYoxL_8thin_vec6layoutTNtNtCs45bxiIjzMqg_5salsa14tracked_struct8IdentityNtNtBB_2id2IdEEBB_.exit.i, !prof !4
 
-bb.e:                                             ; preds = %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i.a
+2:                                                ; preds = %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i.a
   tail call void @_RNvCsaSrGj5dYoxL_8thin_vec17capacity_overflow() #62
   unreachable
 
-bb.f:                                             ; preds = %bb.d
+bb.e:                                             ; preds = %bb.d
   tail call void @_RNvCsaSrGj5dYoxL_8thin_vec17capacity_overflow() #62
   unreachable
 
-bb.g:                                             ; preds = %bb.d
-  %i.h = extractvalue { i64, i1 } %i.f, 0         ; 2 uses
-  %.not.i = icmp samesign ugt i64 %i.h, 9223372036854775800
-  br i1 %.not.i, label %bb.h, label %_RINvCsaSrGj5dYoxL_8thin_vec6layoutTNtNtCs45bxiIjzMqg_5salsa14tracked_struct8IdentityNtNtBB_2id2IdEEBB_.exit, !prof !4
+_RINvCsaSrGj5dYoxL_8thin_vec6layoutTNtNtCs45bxiIjzMqg_5salsa14tracked_struct8IdentityNtNtBB_2id2IdEEBB_.exit.i: ; preds = %bb.d
+  %3 = extractvalue { i64, i1 } %i.f, 0           ; 2 uses
+  tail call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #63
+  %4 = tail call noundef align 8 ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef %3, i64 noundef 8) #63 ; 3 uses
+  %5 = icmp eq ptr %4, null
+  br i1 %5, label %6, label %_RINvCsaSrGj5dYoxL_8thin_vec20header_with_capacityTNtNtCs45bxiIjzMqg_5salsa14tracked_struct8IdentityNtNtBQ_2id2IdEEBQ_.exit, !prof !4
+
+6:                                                ; preds = %_RINvCsaSrGj5dYoxL_8thin_vec6layoutTNtNtCs45bxiIjzMqg_5salsa14tracked_struct8IdentityNtNtBB_2id2IdEEBB_.exit.i
+  tail call void @_RNvNtCscdodAO9FK5_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef %3) #62
+  unreachable
+
+_RINvCsaSrGj5dYoxL_8thin_vec20header_with_capacityTNtNtCs45bxiIjzMqg_5salsa14tracked_struct8IdentityNtNtBQ_2id2IdEEBQ_.exit: ; preds = %_RINvCsaSrGj5dYoxL_8thin_vec6layoutTNtNtCs45bxiIjzMqg_5salsa14tracked_struct8IdentityNtNtBB_2id2IdEEBB_.exit.i
+  store i64 0, ptr %4, align 8
+  br label %bb.m
+
+7:                                                ; preds = %bb.a
+  %8 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %9 = load i64, ptr %8, align 8, !noundef !3     ; 2 uses
+  %10 = icmp slt i64 %9, 0
+  br i1 %10, label %bb.f, label %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i
+
+bb.f:                                             ; preds = %7
+  tail call void @_RNvCsaSrGj5dYoxL_8thin_vec17capacity_overflow() #62
+  unreachable
+
+_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i: ; preds = %7
+  %11 = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %9, i64 24) ; 2 uses
+  %12 = extractvalue { i64, i1 } %11, 1
+  br i1 %12, label %15, label %bb.g, !prof !4
+
+bb.g:                                             ; preds = %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i
+  %i.h = extractvalue { i64, i1 } %11, 0
+  %13 = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %i.h, i64 16) ; 2 uses
+  %14 = extractvalue { i64, i1 } %13, 1
+  br i1 %14, label %bb.h, label %_RINvCsaSrGj5dYoxL_8thin_vec6layoutTNtNtCs45bxiIjzMqg_5salsa14tracked_struct8IdentityNtNtBB_2id2IdEEBB_.exit, !prof !4
+
+15:                                               ; preds = %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i
+  tail call void @_RNvCsaSrGj5dYoxL_8thin_vec17capacity_overflow() #62
+  unreachable
 
 bb.h:                                             ; preds = %bb.g
   tail call void @_RNvCsaSrGj5dYoxL_8thin_vec17capacity_overflow() #62
   unreachable
 
 _RINvCsaSrGj5dYoxL_8thin_vec6layoutTNtNtCs45bxiIjzMqg_5salsa14tracked_struct8IdentityNtNtBB_2id2IdEEBB_.exit: ; preds = %bb.g
+  %16 = extractvalue { i64, i1 } %13, 0
   %i.i = icmp slt i64 %1, 0
   br i1 %i.i, label %bb.i, label %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i
 
@@ -1535,12 +1492,14 @@ bb.l:                                             ; preds = %bb.j
 
 _RINvCsaSrGj5dYoxL_8thin_vec10alloc_sizeTNtNtCs45bxiIjzMqg_5salsa14tracked_struct8IdentityNtNtBG_2id2IdEEBG_.exit: ; preds = %bb.j
   %i.o = extractvalue { i64, i1 } %i.m, 0
-  %i.p = tail call noundef align 8 ptr @_RNvCs9wFQrvczXsK_7___rustc14___rust_realloc(ptr noundef nonnull %i.a, i64 noundef %i.h, i64 noundef 8, i64 noundef %i.o) #63 ; 3 uses
+  %i.p = tail call noundef align 8 ptr @_RNvCs9wFQrvczXsK_7___rustc14___rust_realloc(ptr noundef nonnull %i.a, i64 noundef %16, i64 noundef 8, i64 noundef %i.o) #63 ; 2 uses
   %i.q = icmp eq ptr %i.p, null
-  br i1 %i.q, label %bb.n, label %6, !prof !4
+  br i1 %i.q, label %bb.n, label %bb.m, !prof !4
 
-bb.m:                                             ; preds = %6, %2
-  %storemerge = phi ptr [ %3, %2 ], [ %i.p, %6 ]
+bb.m:                                             ; preds = %_RINvCsaSrGj5dYoxL_8thin_vec10alloc_sizeTNtNtCs45bxiIjzMqg_5salsa14tracked_struct8IdentityNtNtBG_2id2IdEEBG_.exit, %_RINvCsaSrGj5dYoxL_8thin_vec20header_with_capacityTNtNtCs45bxiIjzMqg_5salsa14tracked_struct8IdentityNtNtBQ_2id2IdEEBQ_.exit
+  %storemerge = phi ptr [ %4, %_RINvCsaSrGj5dYoxL_8thin_vec20header_with_capacityTNtNtCs45bxiIjzMqg_5salsa14tracked_struct8IdentityNtNtBQ_2id2IdEEBQ_.exit ], [ %i.p, %_RINvCsaSrGj5dYoxL_8thin_vec10alloc_sizeTNtNtCs45bxiIjzMqg_5salsa14tracked_struct8IdentityNtNtBG_2id2IdEEBG_.exit ] ; 2 uses
+  %17 = getelementptr inbounds nuw i8, ptr %storemerge, i64 8
+  store i64 %1, ptr %17, align 8
   store ptr %storemerge, ptr %0, align 8
   ret void
 
@@ -1550,11 +1509,6 @@ bb.n:                                             ; preds = %_RINvCsaSrGj5dYoxL_
   %i.t = extractvalue { i64, i64 } %i.r, 1
   tail call void @_RNvNtCscdodAO9FK5_5alloc5alloc18handle_alloc_error(i64 noundef %i.s, i64 noundef %i.t) #62
   unreachable
-
-6:                                                ; preds = %_RINvCsaSrGj5dYoxL_8thin_vec10alloc_sizeTNtNtCs45bxiIjzMqg_5salsa14tracked_struct8IdentityNtNtBG_2id2IdEEBG_.exit
-  %7 = getelementptr inbounds nuw i8, ptr %i.p, i64 8
-  store i64 %1, ptr %7, align 8
-  br label %bb.m
 }
 
 ; Function Attrs: nonlazybind uwtable
@@ -1957,7 +1911,7 @@ _RNvMs2_NtCs45bxiIjzMqg_5salsa14tracked_structNtB5_16DisambiguatorMap5clear.exit
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6552)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.636.i)
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 120 ; 3 uses
-  %i.ae = load i64, ptr %i.ad, align 8, !alias.scope !6552, !noalias !6555, !noundef !3 ; 3 uses
+  %i.ae = load i64, ptr %i.ad, align 8, !alias.scope !6552, !noalias !6555, !noundef !3 ; 5 uses
   %i.af = icmp eq i64 %i.ae, 0
   %i.ag = ptrtoint ptr %i.ab to i64
   br i1 %i.af, label %bb.ae, label %bb.d
@@ -1970,8 +1924,40 @@ bb.d:                                             ; preds = %_RNvMs2_NtCs45bxiIj
   %i.ai = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 2 uses
   store i64 0, ptr %i.ai, align 8, !noalias !6557
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !6557
-  %4 = invoke fastcc noundef nonnull ptr @_RINvCsaSrGj5dYoxL_8thin_vec20header_with_capacityTNtNtCs45bxiIjzMqg_5salsa14tracked_struct8IdentityNtNtBQ_2id2IdEEBQ_(i64 noundef %i.ae)
-          to label %bb.j unwind label %bb.f
+  %4 = icmp slt i64 %i.ae, 0
+  br i1 %4, label %.invoke.i, label %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i.i.i.i
+
+_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i.i.i.i: ; preds = %bb.d
+  %5 = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %i.ae, i64 24) ; 2 uses
+  %6 = extractvalue { i64, i1 } %5, 1
+  br i1 %6, label %.invoke.i, label %7, !prof !4
+
+7:                                                ; preds = %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i.i.i.i
+  %8 = extractvalue { i64, i1 } %5, 0
+  %9 = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %8, i64 16) ; 2 uses
+  %10 = extractvalue { i64, i1 } %9, 1
+  br i1 %10, label %.invoke.i, label %_RINvCsaSrGj5dYoxL_8thin_vec6layoutTNtNtCs45bxiIjzMqg_5salsa14tracked_struct8IdentityNtNtBB_2id2IdEEBB_.exit.i.i.i, !prof !4
+
+.invoke.i:                                        ; preds = %7, %_RNvXs_CsaSrGj5dYoxL_8thin_vecINtNtCs4NRVxsYgnAr_4core6result6ResultiNtNtNtBw_3num5error15TryFromIntErrorEINtB4_17UnwrapCapOverflowiE19unwrap_cap_overflowCs45bxiIjzMqg_5salsa.exit.i.i.i.i.i, %bb.d
+  invoke void @_RNvCsaSrGj5dYoxL_8thin_vec17capacity_overflow() #62
+          to label %.cont.i unwind label %bb.f, !noalias !6557
+
+.cont.i:                                          ; preds = %.invoke.i
+  unreachable
+
+_RINvCsaSrGj5dYoxL_8thin_vec6layoutTNtNtCs45bxiIjzMqg_5salsa14tracked_struct8IdentityNtNtBB_2id2IdEEBB_.exit.i.i.i: ; preds = %7
+  %11 = extractvalue { i64, i1 } %9, 0            ; 2 uses
+  tail call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #63, !noalias !6557
+  %12 = tail call noundef align 8 ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef %11, i64 noundef 8) #63, !noalias !6557 ; 4 uses
+  %13 = icmp eq ptr %12, null
+  br i1 %13, label %14, label %bb.j, !prof !4
+
+14:                                               ; preds = %_RINvCsaSrGj5dYoxL_8thin_vec6layoutTNtNtCs45bxiIjzMqg_5salsa14tracked_struct8IdentityNtNtBB_2id2IdEEBB_.exit.i.i.i
+  invoke void @_RNvNtCscdodAO9FK5_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef %11) #62
+          to label %.noexc16.i unwind label %bb.f, !noalias !6557
+
+.noexc16.i:                                       ; preds = %14
+  unreachable
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtCsaSrGj5dYoxL_8thin_vec7ThinVecTNtNtCs45bxiIjzMqg_5salsa14tracked_struct8IdentityNtNtB1e_2id2IdEEEB1e_.exit.i: ; preds = %bb.h, %bb.g, %bb.f
   %.pn.pn.i = phi { ptr, i32 } [ %i.ak, %bb.f ], [ %.pn.i, %bb.h ], [ %.pn.i, %bb.g ] ; 2 uses
@@ -1983,7 +1969,7 @@ bb.e:                                             ; preds = %_RINvNtCs4NRVxsYgnA
   %.val13.i = load ptr, ptr %i.ah, align 8, !noalias !6557, !nonnull !3, !noundef !3
   br label %common.resume.sink.split
 
-bb.f:                                             ; preds = %bb.d
+bb.f:                                             ; preds = %14, %.invoke.i
   %i.ak = landingpad { ptr, i32 }
           cleanup
   br label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtCsaSrGj5dYoxL_8thin_vec7ThinVecTNtNtCs45bxiIjzMqg_5salsa14tracked_struct8IdentityNtNtB1e_2id2IdEEEB1e_.exit.i
@@ -2003,8 +1989,11 @@ bb.i:                                             ; preds = %bb.q
           cleanup
   br label %bb.g
 
-bb.j:                                             ; preds = %bb.d
-  %i.ao = ptrtoint ptr %4 to i64
+bb.j:                                             ; preds = %_RINvCsaSrGj5dYoxL_8thin_vec6layoutTNtNtCs45bxiIjzMqg_5salsa14tracked_struct8IdentityNtNtBB_2id2IdEEBB_.exit.i.i.i
+  store i64 0, ptr %12, align 8, !noalias !6557
+  %15 = getelementptr inbounds nuw i8, ptr %12, i64 8
+  store i64 %i.ae, ptr %15, align 8, !noalias !6557
+  %i.ao = ptrtoint ptr %12 to i64
   store i64 %i.ao, ptr %i.b, align 8, !noalias !6557
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6563)
   %i.ap = load ptr, ptr %i.l, align 8, !alias.scope !6566, !noalias !6567, !nonnull !3, !noundef !3 ; 7 uses
@@ -2081,7 +2070,7 @@ _RNvXsZ_NtCs8bMtf1JxJvX_9hashbrown5tableINtB5_5DrainNtNtCs45bxiIjzMqg_5salsa14tr
   %i.bl = and i16 %i.bi, %.lcssa.i.i.i
   %i.bm = sub nsw i64 0, %i.bk
   %i.bn = getelementptr inbounds [32 x i8], ptr %.sroa.0.1.i, i64 %i.bm ; 4 uses
-  %i.bo = add i64 %.sroa.1023.063.i, -1           ; 2 uses
+  %i.bo = add nsw i64 %.sroa.1023.063.i, -1       ; 2 uses
   %i.bp = getelementptr inbounds i8, ptr %i.bn, i64 -32
   %.sroa.034.0.copyload.i = load i32, ptr %i.bp, align 8, !noalias !6583 ; 2 uses
   %.sroa.5.0..sroa_idx35.i = getelementptr inbounds i8, ptr %i.bn, i64 -28

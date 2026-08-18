@@ -205,37 +205,32 @@ bb.gg:                                            ; preds = %bb.gf
 bb.gh:                                            ; preds = %bb.gg
   %i.wi = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %..i.i.i, i64 216) ; 2 uses
   %i.wj = extractvalue { i64, i1 } %i.wi, 1
-  %i.wk = extractvalue { i64, i1 } %i.wi, 0       ; 5 uses
+  %i.wk = extractvalue { i64, i1 } %i.wi, 0       ; 4 uses
   %i.wl = icmp slt i64 %i.wk, 0
   %.sroa.02.0.i.i.i = or i1 %i.wj, %i.wl
   br i1 %.sroa.02.0.i.i.i, label %.thread241.i.i, label %bb.gi
 
 bb.gi:                                            ; preds = %bb.gh
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ey), !noalias !65695
-  %3 = icmp samesign ugt i64 %i.wk, 9223372036854775800
-  br i1 %3, label %bb.gk, label %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i, !prof !3688
+  %3 = icmp eq i64 %i.wk, 0
+  br i1 %3, label %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h577ab16f728a0a29E.exit.i.i.i", label %bb.gj
 
-_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i: ; preds = %bb.gi
-  %4 = icmp eq i64 %i.wk, 0
-  br i1 %4, label %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h577ab16f728a0a29E.exit.i.i.i", label %bb.gj
-
-bb.gj:                                            ; preds = %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i
+bb.gj:                                            ; preds = %bb.gi
   call void @_RNvCskdKJRKLKjqM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #101, !noalias !65698
   %i.wm = call noundef align 8 ptr @_RNvCskdKJRKLKjqM_7___rustc12___rust_alloc(i64 noundef %i.wk, i64 noundef range(i64 1, 129) 8) #101, !noalias !65698 ; 2 uses
   %i.wn = icmp eq ptr %i.wm, null
   br i1 %i.wn, label %bb.gk, label %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h577ab16f728a0a29E.exit.i.i.i"
 
-bb.gk:                                            ; preds = %bb.gj, %bb.gi
-  %.sroa.4.0.ph.i.i.i.i = phi i64 [ 8, %bb.gj ], [ 0, %bb.gi ]
-  invoke void @_ZN5alloc7raw_vec12handle_error17h5794e6eba25188a7E(i64 noundef %.sroa.4.0.ph.i.i.i.i, i64 %i.wk, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) @1859) #106
+bb.gk:                                            ; preds = %bb.gj
+  invoke void @_ZN5alloc7raw_vec12handle_error17h5794e6eba25188a7E(i64 noundef 8, i64 %i.wk, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) @1859) #106
           to label %.noexc55.i.i unwind label %.thread234.loopexit.split-lp.i.i, !noalias !65232
 
 .noexc55.i.i:                                     ; preds = %bb.gk
   unreachable
 
-"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h577ab16f728a0a29E.exit.i.i.i": ; preds = %bb.gj, %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i
-  %.sroa.4.0.i.i.i.i = phi i64 [ 0, %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i ], [ %..i.i.i, %bb.gj ] ; 2 uses
-  %.sroa.10.0.i.i.i.i = phi ptr [ inttoptr (i64 8 to ptr), %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i ], [ %i.wm, %bb.gj ]
+"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h577ab16f728a0a29E.exit.i.i.i": ; preds = %bb.gj, %bb.gi
+  %.sroa.4.0.i.i.i.i = phi i64 [ 0, %bb.gi ], [ %..i.i.i, %bb.gj ] ; 2 uses
+  %.sroa.10.0.i.i.i.i = phi ptr [ inttoptr (i64 8 to ptr), %bb.gi ], [ %i.wm, %bb.gj ]
   %i.wo = icmp samesign ule i64 %..i.i.i, %.sroa.4.0.i.i.i.i
   call void @llvm.assume(i1 %i.wo)
   store i64 %.sroa.4.0.i.i.i.i, ptr %i.ey, align 8, !noalias !65695

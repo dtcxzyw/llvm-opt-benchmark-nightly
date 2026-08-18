@@ -1,4 +1,4 @@
-inline.NumInlined: 824
+inline.NumInlined: 822
 inline.NumDeleted: 120
 loop-unroll.NumCompletelyUnrolled: 28
 loop-unroll.NumRuntimeUnrolled: 80
@@ -204,7 +204,7 @@ define internal fastcc noundef ptr @_ZL14stbi__hdr_loadP13stbi__contextPiS1_S1_i
 bb.a:
   %i.a = alloca [1024 x i8], align 16             ; 17 uses
   %i.b = alloca ptr, align 8                      ; 7 uses
-  %i.c = alloca [4 x i8], align 4                 ; 8 uses
+  %i.c = alloca [4 x i8], align 1                 ; 2 uses
   %i.d = alloca [4 x i8], align 1                 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #33
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #33
@@ -341,7 +341,7 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i, %bb.h
   %i.bn = icmp eq i32 %4, 0
-  %spec.store.select = select i1 %i.bn, i32 3, i32 %4 ; 12 uses
+  %spec.store.select = select i1 %i.bn, i32 3, i32 %4 ; 11 uses
   %i.bo = or i32 %i.bm, %i.ax
   %or.cond.not.i.i = icmp sgt i32 %i.bo, -1
   br i1 %or.cond.not.i.i, label %bb.k, label %_ZL21stbi__mad4sizes_validiiiii.exit.thread
@@ -425,163 +425,25 @@ bb.o:                                             ; preds = %bb.n, %bb.r
   %i.cp = icmp slt i32 %.0119, %i.ax
   br i1 %i.cp, label %bb.p, label %._crit_edge58.thread
 
-bb.p:                                             ; preds = %bb.o, %_ZL17stbi__hdr_convertPfPhi.exit
-  %.0123 = phi i32 [ %82, %_ZL17stbi__hdr_convertPfPhi.exit ], [ 0, %bb.o ] ; 2 uses
-  %.1120 = phi i32 [ %.2121, %_ZL17stbi__hdr_convertPfPhi.exit ], [ %.0119, %bb.o ] ; 2 uses
+bb.p:                                             ; preds = %bb.o, %bb.q
+  %.0123 = phi i32 [ %13, %bb.q ], [ 0, %bb.o ]   ; 2 uses
+  %.1120 = phi i32 [ %.2121, %bb.q ], [ %.0119, %bb.o ] ; 2 uses
   %i.cq = icmp slt i32 %.0123, %i.bm
-  br i1 %i.cq, label %5, label %bb.r
+  br i1 %i.cq, label %bb.q, label %bb.r
 
-5:                                                ; preds = %bb.p, %bb.ai
+bb.q:                                             ; preds = %bb.p, %bb.ai
   %.1124 = phi i32 [ %.0123, %bb.p ], [ 1, %bb.ai ] ; 2 uses
   %.2121 = phi i32 [ %.1120, %bb.p ], [ 0, %bb.ai ] ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %7 = load ptr, ptr %6, align 8, !tbaa !21       ; 2 uses
-  %.not.i147 = icmp eq ptr %7, null
-  br i1 %.not.i147, label %..thread_crit_edge.i, label %8
-
-..thread_crit_edge.i:                             ; preds = %5
-  %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %0, i64 184
-  %.pre.i = load ptr, ptr %.phi.trans.insert.i, align 8, !tbaa !24
-  %.phi.trans.insert34.i = getelementptr inbounds nuw i8, ptr %0, i64 192
-  %.pre35.i = load ptr, ptr %.phi.trans.insert34.i, align 8, !tbaa !25
-  br label %.thread.i
-
-8:                                                ; preds = %5
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 2 uses
-  %10 = load ptr, ptr %9, align 8, !tbaa !25      ; 2 uses
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 184 ; 2 uses
-  %12 = load ptr, ptr %11, align 8, !tbaa !24     ; 3 uses
-  %13 = ptrtoint ptr %10 to i64
-  %14 = ptrtoint ptr %12 to i64
-  %15 = sub i64 %13, %14                          ; 2 uses
-  %16 = trunc i64 %15 to i32                      ; 2 uses
-  %17 = icmp slt i32 %16, 4
-  br i1 %17, label %18, label %.thread.i
-
-18:                                               ; preds = %8
-  %sext.i = shl i64 %15, 32
-  %19 = ashr exact i64 %sext.i, 32                ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.c, ptr align 1 %12, i64 %19, i1 false)
-  %20 = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %21 = load ptr, ptr %20, align 8, !tbaa !15
-  %22 = getelementptr inbounds i8, ptr %i.c, i64 %19
-  %23 = sub nsw i32 4, %16
-  %24 = call noundef i32 %7(ptr noundef %21, ptr noundef nonnull %22, i32 noundef %23), !inline_history !373 ; 0 uses
-  %25 = load ptr, ptr %9, align 8, !tbaa !25
-  store ptr %25, ptr %11, align 8, !tbaa !24
-  br label %_ZL10stbi__getnP13stbi__contextPhi.exit
-
-.thread.i:                                        ; preds = %8, %..thread_crit_edge.i
-  %26 = phi ptr [ %.pre35.i, %..thread_crit_edge.i ], [ %10, %8 ]
-  %27 = phi ptr [ %.pre.i, %..thread_crit_edge.i ], [ %12, %8 ] ; 2 uses
-  %28 = getelementptr inbounds nuw i8, ptr %27, i64 4 ; 2 uses
-  %.not32.i = icmp ugt ptr %28, %26
-  br i1 %.not32.i, label %_ZL10stbi__getnP13stbi__contextPhi.exit, label %29
-
-29:                                               ; preds = %.thread.i
-  %30 = getelementptr inbounds nuw i8, ptr %0, i64 184
-  %31 = load i32, ptr %27, align 1
-  store i32 %31, ptr %i.c, align 4
-  store ptr %28, ptr %30, align 8, !tbaa !24
-  br label %_ZL10stbi__getnP13stbi__contextPhi.exit
-
-_ZL10stbi__getnP13stbi__contextPhi.exit:          ; preds = %18, %.thread.i, %29
-  %32 = mul i32 %spec.store.select, %i.bm
-  %33 = mul i32 %32, %.2121
-  %34 = sext i32 %33 to i64
-  %35 = getelementptr inbounds [4 x i8], ptr %i.bz, i64 %34
-  %36 = mul nsw i32 %.1124, %spec.store.select
-  %37 = sext i32 %36 to i64
-  %38 = getelementptr inbounds [4 x i8], ptr %35, i64 %37 ; 9 uses
-  %39 = getelementptr inbounds nuw i8, ptr %i.c, i64 3
-  %40 = load i8, ptr %39, align 1, !tbaa !23      ; 2 uses
-  %.not.i148 = icmp eq i8 %40, 0
-  br i1 %.not.i148, label %74, label %41
-
-41:                                               ; preds = %_ZL10stbi__getnP13stbi__contextPhi.exit
-  %42 = zext i8 %40 to i32
-  %43 = add nsw i32 %42, -136
-  %44 = call noundef float @ldexpf(float noundef 1.000000e+00, i32 noundef %43) #33 ; 3 uses
-  %45 = icmp slt i32 %spec.store.select, 3
-  %46 = load i8, ptr %i.c, align 4, !tbaa !23     ; 2 uses
-  br i1 %45, label %bb.q, label %59
-
-bb.q:                                             ; preds = %41
-  %47 = zext i8 %46 to i32
-  %48 = getelementptr inbounds nuw i8, ptr %i.c, i64 1
-  %49 = load i8, ptr %48, align 1, !tbaa !23
-  %50 = zext i8 %49 to i32
-  %51 = add nuw nsw i32 %50, %47
-  %52 = getelementptr inbounds nuw i8, ptr %i.c, i64 2
-  %53 = load i8, ptr %52, align 2, !tbaa !23
-  %54 = zext i8 %53 to i32
-  %55 = add nuw nsw i32 %51, %54
-  %56 = uitofp nneg i32 %55 to float
-  %57 = fmul float %44, %56
-  %58 = fdiv float %57, 3.000000e+00
-  br label %69
-
-59:                                               ; preds = %41
-  %60 = uitofp i8 %46 to float
-  %61 = fmul float %44, %60
-  %62 = getelementptr inbounds nuw i8, ptr %i.c, i64 1
-  %63 = getelementptr inbounds nuw i8, ptr %38, i64 4
-  %64 = load <2 x i8>, ptr %62, align 1, !tbaa !23
-  %65 = uitofp <2 x i8> %64 to <2 x float>
-  %66 = insertelement <2 x float> poison, float %44, i64 0
-  %67 = shufflevector <2 x float> %66, <2 x float> poison, <2 x i32> zeroinitializer
-  %68 = fmul <2 x float> %67, %65
-  store <2 x float> %68, ptr %63, align 4, !tbaa !58
-  br label %69
-
-69:                                               ; preds = %59, %bb.q
-  %.sink = phi float [ %58, %bb.q ], [ %61, %59 ]
-  store float %.sink, ptr %38, align 4, !tbaa !58
-  switch i32 %4, label %_ZL17stbi__hdr_convertPfPhi.exit [
-    i32 2, label %70
-    i32 4, label %72
-  ]
-
-70:                                               ; preds = %69
-  %71 = getelementptr inbounds nuw i8, ptr %38, i64 4
-  store float 1.000000e+00, ptr %71, align 4, !tbaa !58
-  br label %_ZL17stbi__hdr_convertPfPhi.exit
-
-72:                                               ; preds = %69
-  %73 = getelementptr inbounds nuw i8, ptr %38, i64 12
-  store float 1.000000e+00, ptr %73, align 4, !tbaa !58
-  br label %_ZL17stbi__hdr_convertPfPhi.exit
-
-74:                                               ; preds = %_ZL10stbi__getnP13stbi__contextPhi.exit
-  switch i32 %spec.store.select, label %_ZL17stbi__hdr_convertPfPhi.exit [
-    i32 4, label %75
-    i32 3, label %77
-    i32 2, label %79
-    i32 1, label %81
-  ]
-
-75:                                               ; preds = %74
-  %76 = getelementptr inbounds nuw i8, ptr %38, i64 12
-  store float 1.000000e+00, ptr %76, align 4, !tbaa !58
-  br label %77
-
-77:                                               ; preds = %75, %74
-  %78 = getelementptr inbounds nuw i8, ptr %38, i64 8
-  store float 0.000000e+00, ptr %78, align 4, !tbaa !58
-  store <2 x float> zeroinitializer, ptr %38, align 4, !tbaa !58
-  br label %_ZL17stbi__hdr_convertPfPhi.exit
-
-79:                                               ; preds = %74
-  %80 = getelementptr inbounds nuw i8, ptr %38, i64 4
-  store float 1.000000e+00, ptr %80, align 4, !tbaa !58
-  br label %81
-
-81:                                               ; preds = %79, %74
-  store float 0.000000e+00, ptr %38, align 4, !tbaa !58
-  br label %_ZL17stbi__hdr_convertPfPhi.exit
-
-_ZL17stbi__hdr_convertPfPhi.exit:                 ; preds = %69, %70, %72, %74, %77, %81
-  %82 = add nsw i32 %.1124, 1
+  %5 = call fastcc noundef i32 @_ZL10stbi__getnP13stbi__contextPhi(ptr noundef nonnull %0, ptr noundef nonnull %i.c, i32 noundef 4) ; 0 uses
+  %6 = mul i32 %spec.store.select, %i.bm
+  %7 = mul i32 %6, %.2121
+  %8 = sext i32 %7 to i64
+  %9 = getelementptr inbounds [4 x i8], ptr %i.bz, i64 %8
+  %10 = mul nsw i32 %.1124, %spec.store.select
+  %11 = sext i32 %10 to i64
+  %12 = getelementptr inbounds [4 x i8], ptr %9, i64 %11
+  call fastcc void @_ZL17stbi__hdr_convertPfPhi(ptr noundef %12, ptr noundef %i.c, i32 noundef %spec.store.select)
+  %13 = add nsw i32 %.1124, 1
   br label %bb.p, !llvm.loop !376
 
 bb.r:                                             ; preds = %bb.p
@@ -745,7 +607,7 @@ bb.ai:                                            ; preds = %_ZL10stbi__get8P13s
   call fastcc void @_ZL17stbi__hdr_convertPfPhi(ptr noundef %i.bz, ptr noundef %i.d, i32 noundef %spec.store.select)
   call void @free(ptr noundef %.011656) #33
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #33
-  br label %5
+  br label %bb.q
 
 bb.aj:                                            ; preds = %_ZL10stbi__get8P13stbi__context.exit163
   %i.eq = zext nneg i8 %.0.i162 to i32
