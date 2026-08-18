@@ -204,30 +204,23 @@ define void @_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable14driftsort_mainThc
 bb.a:
   %i.a = alloca [4096 x i8], align 4              ; 3 uses
   %i.b = lshr i64 %1, 1
-  %i.c = sub nsw i64 %1, %i.b                     ; 2 uses
+  %i.c = sub nuw nsw i64 %1, %i.b
   %.sroa.0.0.i = tail call noundef i64 @llvm.umin.i64(i64 %1, i64 1000000)
   %.sroa.0.0.i11 = tail call noundef i64 @llvm.umax.i64(i64 %.sroa.0.0.i, i64 %i.c) ; 2 uses
   %.sroa.0.0.i12 = tail call noundef i64 @llvm.umax.i64(i64 %.sroa.0.0.i11, i64 48) ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  %i.d = icmp ugt i64 %.sroa.0.0.i11, 512         ; 3 uses
-  br i1 %i.d, label %3, label %bb.c
+  %i.d = icmp samesign ugt i64 %.sroa.0.0.i11, 512 ; 3 uses
+  br i1 %i.d, label %_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator8allocate.exit.i.i.i, label %bb.c
 
-3:                                                ; preds = %bb.a
-  %4 = shl i64 %.sroa.0.0.i12, 3                  ; 3 uses
-  %5 = icmp ugt i64 %i.c, 2305843009213693951
-  %.not.i.i.i = icmp ugt i64 %4, 9223372036854775804
-  %or.cond.i.i.i = or i1 %5, %.not.i.i.i
-  br i1 %or.cond.i.i.i, label %.noexc, label %_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator8allocate.exit.i.i.i, !prof !859
-
-_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator8allocate.exit.i.i.i: ; preds = %3
+_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator8allocate.exit.i.i.i: ; preds = %bb.a
+  %3 = shl nuw nsw i64 %.sroa.0.0.i12, 3          ; 2 uses
   tail call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #42, !noalias !3419
-  %i.e = tail call noundef align 4 ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef %4, i64 noundef range(i64 1, 9) 4) #42, !noalias !3419 ; 3 uses
+  %i.e = tail call noundef align 4 ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef %3, i64 noundef range(i64 1, 9) 4) #42, !noalias !3419 ; 3 uses
   %i.f = icmp eq ptr %i.e, null
   br i1 %i.f, label %.noexc, label %bb.c
 
-.noexc:                                           ; preds = %_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator8allocate.exit.i.i.i, %3
-  %.sroa.4.0.ph.i.i = phi i64 [ 4, %_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator8allocate.exit.i.i.i ], [ 0, %3 ]
-  tail call void @_RNvNtCscdodAO9FK5_5alloc7raw_vec12handle_error(i64 noundef %.sroa.4.0.ph.i.i, i64 %4) #41
+.noexc:                                           ; preds = %_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator8allocate.exit.i.i.i
+  tail call void @_RNvNtCscdodAO9FK5_5alloc7raw_vec12handle_error(i64 noundef 4, i64 %3) #41
   unreachable
 
 bb.b:                                             ; preds = %bb.c
@@ -251,7 +244,7 @@ bb.e:                                             ; preds = %_RINvNtCs4NRVxsYgnA
   ret void
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecThcEEECsb6FLkjZuKG_18ruff_python_parser.exit: ; preds = %bb.d
-  %i.i = shl nuw i64 %.sroa.0.0.i12, 3
+  %i.i = shl nuw nsw i64 %.sroa.0.0.i12, 3
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.1) ]
   call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.6.1, i64 noundef %i.i, i64 noundef range(i64 1, -9223372036854775807) 4) #42
   br label %bb.e
@@ -260,7 +253,7 @@ bb.f:                                             ; preds = %_RINvNtCs4NRVxsYgnA
   resume { ptr, i32 } %i.g
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecThcEEECsb6FLkjZuKG_18ruff_python_parser.exit13: ; preds = %bb.b
-  %i.j = shl nuw i64 %.sroa.0.0.i12, 3
+  %i.j = shl nuw nsw i64 %.sroa.0.0.i12, 3
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.6.1) ]
   call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.6.1, i64 noundef %i.j, i64 noundef range(i64 1, -9223372036854775807) 4) #42
   br label %bb.f
@@ -588,7 +581,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b
   %i.i = lshr i64 %1, 1
-  %i.j = sub nsw i64 %1, %i.i
+  %i.j = sub nuw nsw i64 %1, %i.i
   %.sroa.0.0.i32 = tail call noundef i64 @llvm.umin.i64(i64 %i.j, i64 64)
   br label %bb.e
 
@@ -991,14 +984,14 @@ bb.i:                                             ; preds = %bb.f
 
 bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g
   %.sroa.0.0.i = phi i64 [ 8, %bb.g ], [ 4, %bb.h ], [ 1, %bb.i ] ; 4 uses
-  %i.ci = sub nsw i64 %.sroa.16.0.lcssa, %i.j     ; 2 uses
+  %i.ci = sub nuw nsw i64 %.sroa.16.0.lcssa, %i.j ; 2 uses
   %i.cj = icmp samesign ult i64 %.sroa.0.0.i, %i.j
   br i1 %i.cj, label %.lr.ph.i, label %.loopexit.i
 
 .loopexit.i:                                      ; preds = %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailThcENCINvMNtCscdodAO9FK5_5alloc5sliceSB18_11sort_by_keyhNCNvMs_NtCs7CqHJXwM7TD_21unicode_normalization9decomposeINtB29_14DecompositionsNtNtNtBa_3str4iter5CharsE12sort_pending0E0ECsb6FLkjZuKG_18ruff_python_parser.exit.i, %bb.j
   %i.ck = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.0.ph.lcssa119, i64 %i.j
   %i.cl = getelementptr [8 x i8], ptr %2, i64 %i.j ; 6 uses
-  %i.cm = icmp ult i64 %.sroa.0.0.i, %i.ci
+  %i.cm = icmp samesign ult i64 %.sroa.0.0.i, %i.ci
   br i1 %i.cm, label %.lr.ph.1.i, label %.loopexit.1.i
 
 .lr.ph.1.i:                                       ; preds = %.loopexit.i, %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailThcENCINvMNtCscdodAO9FK5_5alloc5sliceSB18_11sort_by_keyhNCNvMs_NtCs7CqHJXwM7TD_21unicode_normalization9decomposeINtB29_14DecompositionsNtNtNtBa_3str4iter5CharsE12sort_pending0E0ECsb6FLkjZuKG_18ruff_python_parser.exit.1.i
@@ -1040,7 +1033,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g
   br label %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailThcENCINvMNtCscdodAO9FK5_5alloc5sliceSB18_11sort_by_keyhNCNvMs_NtCs7CqHJXwM7TD_21unicode_normalization9decomposeINtB29_14DecompositionsNtNtNtBa_3str4iter5CharsE12sort_pending0E0ECsb6FLkjZuKG_18ruff_python_parser.exit.1.i
 
 _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailThcENCINvMNtCscdodAO9FK5_5alloc5sliceSB18_11sort_by_keyhNCNvMs_NtCs7CqHJXwM7TD_21unicode_normalization9decomposeINtB29_14DecompositionsNtNtNtBa_3str4iter5CharsE12sort_pending0E0ECsb6FLkjZuKG_18ruff_python_parser.exit.1.i: ; preds = %._crit_edge309, %.lr.ph.1.i
-  %i.cz = add nuw i64 %.sroa.05.08.1.i, 1         ; 2 uses
+  %i.cz = add nuw nsw i64 %.sroa.05.08.1.i, 1     ; 2 uses
   %exitcond.1.not.i = icmp eq i64 %i.cz, %i.ci
   br i1 %exitcond.1.not.i, label %.loopexit.1.i, label %.lr.ph.1.i
 
@@ -1168,7 +1161,7 @@ bb.n:                                             ; preds = %bb.m
   br label %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailThcENCINvMNtCscdodAO9FK5_5alloc5sliceSB18_11sort_by_keyhNCNvMs_NtCs7CqHJXwM7TD_21unicode_normalization9decomposeINtB29_14DecompositionsNtNtNtBa_3str4iter5CharsE12sort_pending0E0ECsb6FLkjZuKG_18ruff_python_parser.exit.i
 
 _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared9smallsort11insert_tailThcENCINvMNtCscdodAO9FK5_5alloc5sliceSB18_11sort_by_keyhNCNvMs_NtCs7CqHJXwM7TD_21unicode_normalization9decomposeINtB29_14DecompositionsNtNtNtBa_3str4iter5CharsE12sort_pending0E0ECsb6FLkjZuKG_18ruff_python_parser.exit.i: ; preds = %._crit_edge304, %.lr.ph.i
-  %i.eu = add nuw i64 %.sroa.05.08.i, 1           ; 2 uses
+  %i.eu = add nuw nsw i64 %.sroa.05.08.i, 1       ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.eu, %i.j
   br i1 %exitcond.not.i, label %.loopexit.i, label %.lr.ph.i
 
@@ -1571,9 +1564,9 @@ bb.r:                                             ; preds = %bb.f
   br label %bb.p
 
 bb.s:                                             ; preds = %bb.q
-  %i.bz = sub i64 %2, %.sroa.0.096134
-  %.tr = trunc i64 %i.bz to i32
-  %i.ca = shl i32 %.tr, 2
+  %i.bz = sub nuw i64 %2, %.sroa.0.096134
+  %.tr = trunc nuw nsw i64 %i.bz to i32
+  %i.ca = shl nuw nsw i32 %.tr, 2
   %i.cb = and i32 %i.ca, 28
   %i.cc = shl nuw i32 %.sroa.02.0.i, %i.cb
   %i.cd = add i32 %i.cc, %.sroa.0.0135            ; 4 uses

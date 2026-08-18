@@ -201,8 +201,8 @@ bb.f:                                             ; preds = %bb.d
   %i.y = load ptr, ptr %i.k, align 8, !tbaa !24
   %i.z = xor i32 %i.v, -1
   %i.aa = add nsw i32 %i.n, %i.z
-  %2 = sext i32 %i.aa to i64
-  %i.ab = getelementptr inbounds [8 x i8], ptr %i.c, i64 %2
+  %2 = zext nneg i32 %i.aa to i64
+  %i.ab = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %2
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !19
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.ae = load i64, ptr %i.ad, align 8, !tbaa !29
@@ -605,16 +605,12 @@ bb.f:                                             ; preds = %bb.d
   br i1 %i.j, label %.preheader, label %.critedge
 
 .preheader:                                       ; preds = %bb.f
-  %i.k = sub nsw i32 %.pre, %0                    ; 2 uses
-  %1 = icmp sgt i32 %i.k, 0
-  br i1 %1, label %.lr.ph.preheader, label %.critedge
-
-.lr.ph.preheader:                                 ; preds = %.preheader
+  %i.k = sub nuw nsw i32 %.pre, %0
   %wide.trip.count = zext nneg i32 %i.k to i64
   br label %.lr.ph
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 2 uses
+.lr.ph:                                           ; preds = %.preheader, %.lr.ph
+  %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 2 uses
   %i.l = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !19
   tail call void @free(ptr noundef %i.m) #24
@@ -622,8 +618,8 @@ bb.f:                                             ; preds = %bb.d
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.critedge, label %.lr.ph, !llvm.loop !65
 
-.critedge:                                        ; preds = %.lr.ph, %.preheader, %bb.f
-  %.028 = phi i32 [ %.pre, %bb.f ], [ %0, %.preheader ], [ %0, %.lr.ph ] ; 2 uses
+.critedge:                                        ; preds = %.lr.ph, %bb.f
+  %.028 = phi i32 [ %.pre, %bb.f ], [ %0, %.lr.ph ] ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.e, i8 0, i64 %i.d, i1 false)
   tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.h, i8 0, i64 %i.g, i1 false)
   %i.n = load i32, ptr @history_len, align 4, !tbaa !7 ; 2 uses

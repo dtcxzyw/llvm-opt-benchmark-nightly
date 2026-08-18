@@ -203,7 +203,7 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 76
   %i.i = load i32, ptr %i.h, align 4, !tbaa !43   ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 112
-  %i.k = load i32, ptr %i.j, align 8, !tbaa !49   ; 3 uses
+  %i.k = load i32, ptr %i.j, align 8, !tbaa !49   ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #12
   store ptr null, ptr %i.b, align 8, !tbaa !97
   %i.l = getelementptr inbounds nuw i8, ptr %i.d, i64 128 ; 4 uses
@@ -241,10 +241,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %.not91111, label %update_volume.exit.lr.ph.us.preheader, label %.lr.ph.split
 
 update_volume.exit.lr.ph.us.preheader:            ; preds = %.lr.ph
-  %i.af = zext nneg i32 %i.k to i64
+  %i.af = zext nneg i32 %i.k to i64               ; 2 uses
   %wide.trip.count141 = zext nneg i32 %i.i to i64
   %.pre.pre = load i32, ptr %i.x, align 8, !tbaa !55
-  %wide.trip.count = zext nneg i32 %i.k to i64
   br label %update_volume.exit.lr.ph.us
 
 update_volume.exit.lr.ph.us:                      ; preds = %update_volume.exit.lr.ph.us.preheader, %._crit_edge.us
@@ -296,8 +295,8 @@ bb.d:                                             ; preds = %update_volume.exit.
 bb.e:                                             ; preds = %bb.d
   %i.bd = load ptr, ptr %i.y, align 8, !tbaa !98
   %i.be = load ptr, ptr %i.bd, align 8, !tbaa !39
-  %i.bf = sub nsw i64 %i.af, %indvars.iv          ; 2 uses
-  %i.bg = trunc nsw i64 %i.bf to i32
+  %i.bf = sub nuw nsw i64 %i.af, %indvars.iv      ; 2 uses
+  %i.bg = trunc nuw nsw i64 %i.bf to i32
   %i.bh = tail call ptr @ff_get_audio_buffer(ptr noundef %i.be, i32 noundef %i.bg) #12 ; 5 uses
   %.not89.us = icmp eq ptr %i.bh, null
   br i1 %.not89.us, label %.split.us, label %bb.f
@@ -409,7 +408,7 @@ bb.n:                                             ; preds = %bb.m, %get_volume.e
   %i.df = select i1 %.not90.us, i32 0, i32 %i.db
   %i.dg = sub nsw i32 %i.de, %i.df                ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.af
   br i1 %exitcond.not, label %._crit_edge.us, label %update_volume.exit.us, !llvm.loop !101
 
 ._crit_edge.us:                                   ; preds = %bb.n

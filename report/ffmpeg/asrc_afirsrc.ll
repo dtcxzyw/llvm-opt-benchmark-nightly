@@ -201,7 +201,7 @@ bb.i:                                             ; preds = %.lr.ph400, %bb.i
   %i.rq = fmul nsz double %i.rp, %i.rn
   %i.rr = fmul nsz double %.0331396, %i.rq        ; 2 uses
   %i.rs = fadd nsz double %.0330397, %i.rr        ; 3 uses
-  %i.rt = sub nsw i32 %i.rj, %.0327398
+  %i.rt = sub nuw nsw i32 %i.rj, %.0327398
   %i.ru = sitofp nsz i32 %i.rt to double
   %i.rv = fmul nsz double %i.rp, %i.ru
   %i.rw = fmul nsz double %i.rv, %i.rr
@@ -604,14 +604,13 @@ bb.t:                                             ; preds = %bb.r
   br i1 %.not.i, label %._crit_edge166.i, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %1 = shl i64 %indvars.iv.i343, 32
-  %sext.i = add i64 %1, -4294967296
-  %2 = ashr exact i64 %sext.i, 32                 ; 2 uses
-  %i.ed = getelementptr inbounds [4 x i8], ptr %i.cg, i64 %2
+  %sext.i = add nuw i64 %indvars.iv.i343, 4294967295
+  %1 = and i64 %sext.i, 4294967295                ; 2 uses
+  %i.ed = getelementptr inbounds nuw [4 x i8], ptr %i.cg, i64 %1
   %i.ee = load float, ptr %i.ed, align 4, !tbaa !49
   %i.ef = fsub nsz float %.pre.i, %i.ee
   %i.eg = fmul nsz float %i.ec, %i.ef
-  %i.eh = getelementptr inbounds [4 x i8], ptr %i.cf, i64 %2
+  %i.eh = getelementptr inbounds nuw [4 x i8], ptr %i.cf, i64 %1
   %i.ei = load float, ptr %i.eh, align 4, !tbaa !49
   %i.ej = fsub nsz float %i.dy, %i.ei
   %i.ek = fdiv nsz float %i.eg, %i.ej
@@ -904,7 +903,7 @@ bb.af:                                            ; preds = %.lr.ph259, %bb.af
   %gep334 = getelementptr [8 x i8], ptr %invariant.gep333, i64 %indvars.iv294 ; 2 uses
   %i.jj = load float, ptr %gep334, align 4, !tbaa !68
   %i.jk = fdiv nsz float %i.jj, %i.bi
-  %i.jl = sub nsw i64 %i.jh, %indvars.iv294
+  %i.jl = sub nuw nsw i64 %i.jh, %indvars.iv294
   %i.jm = getelementptr inbounds nuw [4 x i8], ptr %i.jg, i64 %i.jl
   store float %i.jk, ptr %i.jm, align 4, !tbaa !49
   %i.jn = load float, ptr %gep334, align 4, !tbaa !68

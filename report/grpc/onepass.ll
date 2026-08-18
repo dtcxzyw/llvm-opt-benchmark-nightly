@@ -203,9 +203,8 @@ bb.f:                                             ; preds = %bb.e
   %i.ae = add nsw i32 %i.ad, %i.ab
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 76
   %i.ag = load i32, ptr %i.af, align 4, !tbaa !73
-  %5 = add nsw i32 %i.ae, %i.ag                   ; 2 uses
-  %i.ah = add nsw i32 %5, 1                       ; 3 uses
-  %i.ai = icmp slt i32 %5, -1
+  %i.ah = add nsw i32 %i.ae, %i.ag                ; 2 uses
+  %i.ai = icmp slt i32 %i.ah, -1
   br i1 %i.ai, label %.noexc.i, label %_ZN3re28PODArrayINS_8InstCondEEC2Ei.exit, !prof !88
 
 .noexc.i:                                         ; preds = %bb.f
@@ -213,8 +212,9 @@ bb.f:                                             ; preds = %bb.e
   unreachable
 
 _ZN3re28PODArrayINS_8InstCondEEC2Ei.exit:         ; preds = %bb.f
-  %i.aj = zext nneg i32 %i.ah to i64
-  %i.ak = shl nuw nsw i64 %i.aj, 3
+  %5 = add nsw i32 %i.ah, 1
+  %i.aj = zext nneg i32 %5 to i64
+  %i.ak = shl nuw nsw i64 %i.aj, 3                ; 3 uses
   %i.al = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ak) #21 ; 6 uses
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.an = load i32, ptr %i.am, align 8, !tbaa !89 ; 7 uses
@@ -617,9 +617,7 @@ bb.br:                                            ; preds = %_ZN3re210SparseSetT
 _ZN3re28PODArrayINS_8InstCondEED2Ev.exit:         ; preds = %_ZN3re210SparseSetTIvED2Ev.exit311, %bb.br
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #17
   call void @_ZdlPvm(ptr noundef nonnull %i.ar, i64 noundef %i.aq) #18
-  %6 = sext i32 %i.ah to i64
-  %7 = shl nsw i64 %6, 3
-  call void @_ZdlPvm(ptr noundef nonnull %i.al, i64 noundef %7) #18
+  call void @_ZdlPvm(ptr noundef nonnull %i.al, i64 noundef %i.ak) #18
   br label %bb.bu
 
 bb.bs:                                            ; preds = %bb.m, %bb.bq, %bb.aj, %bb.y
@@ -658,9 +656,7 @@ _ZN3re28PODArrayIiED2Ev.exit318:                  ; preds = %.body.thread, %.bod
 
 _ZN3re28PODArrayINS_8InstCondEED2Ev.exit320:      ; preds = %_ZN3re28PODArrayIiED2Ev.exit318, %bb.j
   %.pn224.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn224.pn.pn.pn546, %_ZN3re28PODArrayIiED2Ev.exit318 ], [ %i.bx, %bb.j ]
-  %8 = sext i32 %i.ah to i64
-  %9 = shl nsw i64 %8, 3
-  call void @_ZdlPvm(ptr noundef nonnull %i.al, i64 noundef %9) #18
+  call void @_ZdlPvm(ptr noundef nonnull %i.al, i64 noundef %i.ak) #18
   resume { ptr, i32 } %.pn224.pn.pn.pn.pn
 
 bb.bu:                                            ; preds = %_ZN3re28PODArrayINS_8InstCondEED2Ev.exit, %bb.e, %bb.d, %bb.c, %bb.b

@@ -204,18 +204,20 @@ bb.d:                                             ; preds = %.lr.ph.split
 
 bb.e:                                             ; preds = %bb.d
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 %i.q
-  %i.t = load i8, ptr %i.s, align 1, !tbaa !38    ; 2 uses
+  %i.t = load i8, ptr %i.s, align 1, !tbaa !38    ; 3 uses
   %.not = icmp eq i8 %i.t, 37
   br i1 %.not, label %.thread, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.u = sext i8 %i.t to i32
-  %i.v = add nsw i32 %i.u, -48                    ; 2 uses
+  %i.v = add nsw i32 %i.u, -48
   %i.w = icmp ult i32 %i.v, 10
   br i1 %i.w, label %bb.g, label %.thread27
 
 bb.g:                                             ; preds = %bb.f
-  %i.x = icmp samesign ugt i32 %i.v, %3
+  %4 = zext nneg i8 %i.t to i32
+  %5 = add nsw i32 %4, -48
+  %i.x = icmp samesign ugt i32 %5, %3
   br i1 %i.x, label %.thread27, label %.thread
 
 .thread:                                          ; preds = %bb.e, %.lr.ph.split, %bb.g

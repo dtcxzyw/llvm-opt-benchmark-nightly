@@ -204,7 +204,7 @@ _ZN5Eigen5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELi1ELb1EEaSINS_12Cwis
   %i.abj = add nuw i64 %.0280, 1
   %i.abk = shl i64 %.0280, 3                      ; 2 uses
   %i.abl = add i64 %i.abk, 8
-  %i.abm = sub nsw i64 %i.abd, %.0280             ; 2 uses
+  %i.abm = sub nuw nsw i64 %i.abd, %.0280         ; 2 uses
   %i.abn = load i64, ptr %i.xp, align 8, !tbaa !14, !noalias !352
   %i.abo = sub nsw i64 %i.abn, %i.abm
   %i.abp = load ptr, ptr %i.xo, align 8, !tbaa !16, !noalias !352 ; 3 uses
@@ -607,13 +607,13 @@ bb.b:                                             ; preds = %.lr.ph143, %bb.k
   %.052141 = phi i64 [ 0, %.lr.ph143 ], [ %i.cf, %bb.k ] ; 6 uses
   %i.d = call i64 @llvm.smax.i64(i64 %indvars.iv, i64 1)
   %i.e = call i64 @llvm.umin.i64(i64 %i.d, i64 8)
-  %i.f = sub nsw i64 %.sroa.speculated132, %.052141 ; 2 uses
+  %i.f = sub nuw nsw i64 %.sroa.speculated132, %.052141 ; 2 uses
   %.sroa.speculated = call i64 @llvm.smin.i64(i64 %i.f, i64 8) ; 4 uses
   %i.g = icmp sgt i64 %i.f, 0
   br i1 %i.g, label %.lr.ph, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.i, %bb.b
-  %i.h = add i64 %.sroa.speculated, %.052141      ; 3 uses
+  %i.h = add nuw i64 %.sroa.speculated, %.052141  ; 3 uses
   %i.i = sub i64 %1, %i.h                         ; 2 uses
   %i.j = icmp sgt i64 %i.i, 0
   br i1 %i.j, label %bb.j, label %bb.k
@@ -639,7 +639,7 @@ bb.c:                                             ; preds = %.lr.ph
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.o ; 7 uses
   %i.u = and i64 %i.m, 9223372036854775804        ; 4 uses
   %i.v = and i64 %i.m, 9223372036854775806        ; 3 uses
-  %.off.i.i.i = sub nsw i64 %.sroa.speculated, %.0140
+  %.off.i.i.i = sub nuw nsw i64 %.sroa.speculated, %.0140
   %.not.i.i.i = icmp ult i64 %.off.i.i.i, 3
   br i1 %.not.i.i.i, label %bb.h, label %bb.d
 
@@ -1042,7 +1042,7 @@ bb.a:
   %i.c = trunc i128 %1 to i64
   %i.d = and i64 %i.c, 63                         ; 9 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 5 uses
-  %i.f = load i64, ptr %i.e, align 16, !tbaa !1405 ; 9 uses
+  %i.f = load i64, ptr %i.e, align 16, !tbaa !1405 ; 8 uses
   %i.g = icmp eq i64 %i.f, 1
   br i1 %i.g, label %bb.b, label %bb.c
 
@@ -1138,7 +1138,7 @@ _ZN5boost14multiprecision8backends12cpp_int_baseILm512ELm18446744073709551615ELN
   %i.aq = phi i8 [ %.pre113, %bb.h ], [ %.pre, %bb.i ]
   %i.ar = trunc nuw i8 %i.aq to i1                ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.at = select i1 %i.ar, ptr %0, ptr %.pre117   ; 20 uses
+  %i.at = select i1 %i.ar, ptr %0, ptr %.pre117   ; 19 uses
   %i.au = icmp ult i64 %i.y, %i.b
   br i1 %i.au, label %bb.j, label %bb.p
 
@@ -1196,14 +1196,14 @@ _ZN5boost14multiprecision8backends15cpp_int_backendILm512ELm0ELNS0_16cpp_integer
 
 bb.p:                                             ; preds = %_ZN5boost14multiprecision8backends12cpp_int_baseILm512ELm18446744073709551615ELNS0_16cpp_integer_typeE1ELNS0_18cpp_int_check_typeE0ESaIyELb0EE6resizeEmm.exit
   %.not95 = icmp ult i64 %i.y, 288230376151711745
-  %i.bf = sub i64 %i.y, %spec.select.i            ; 3 uses
+  %i.bf = sub i64 %i.y, %spec.select.i            ; 2 uses
   br i1 %.not95, label %bb.q, label %bb.u
 
 bb.q:                                             ; preds = %bb.p
   %i.bg = add i64 %i.f, %i.b
   %i.bh = icmp ugt i64 %i.y, %i.bg
   %i.bi = xor i64 %i.bf, -1                       ; 3 uses
-  %i.bj = getelementptr [8 x i8], ptr %i.at, i64 %i.f
+  %i.bj = getelementptr [8 x i8], ptr %i.at, i64 %i.f ; 2 uses
   %i.bk = getelementptr [8 x i8], ptr %i.bj, i64 %i.bi
   %i.bl = load i64, ptr %i.bk, align 8, !tbaa !1414 ; 2 uses
   br i1 %i.bh, label %bb.r, label %bb.s
@@ -1226,10 +1226,8 @@ bb.s:                                             ; preds = %bb.q
   br i1 %i.bu, label %bb.t, label %bb.u
 
 bb.t:                                             ; preds = %bb.s
-  %2 = add i64 %i.f, -2
-  %3 = sub i64 %2, %i.bf
-  %4 = getelementptr inbounds nuw [8 x i8], ptr %i.at, i64 %3
-  %i.bv = load i64, ptr %4, align 8, !tbaa !1414
+  %2 = getelementptr i8, ptr %i.bj, i64 -16
+  %i.bv = load i64, ptr %2, align 8, !tbaa !1414
   %i.bw = sub nuw nsw i64 64, %i.d
   %i.bx = lshr i64 %i.bv, %i.bw
   %i.by = or disjoint i64 %i.bx, %i.br
@@ -1632,7 +1630,7 @@ _ZNSt11_Deque_baseISt4pairIN4CGAL8internal11CC_iteratorINS1_17Compact_containerI
   %i.e = shl nuw nsw i64 %.sroa.speculated, 3
   %i.f = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.e) #39 ; 2 uses
   store ptr %i.f, ptr %0, align 8, !tbaa !1593
-  %i.g = sub nsw i64 %.sroa.speculated, %i.b
+  %i.g = sub nuw nsw i64 %.sroa.speculated, %i.b
   %i.h = lshr i64 %i.g, 1
   %i.i = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %i.h ; 6 uses
   %.idx = shl nuw nsw i64 %i.b, 3

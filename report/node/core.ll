@@ -203,23 +203,21 @@ bb.i:                                             ; preds = %bb.g
   %i.h = or i32 %i.g, %2                          ; 2 uses
   store i32 %i.h, ptr %i.f, align 8
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 3 uses
-  %i.j = load i32, ptr %i.i, align 8              ; 3 uses
+  %i.j = load i32, ptr %i.i, align 8              ; 2 uses
   %.not.i.not = icmp ult i32 %i.d, %i.j
   br i1 %.not.i.not, label %bb.n, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 2 uses
-  %i.l = load ptr, ptr %i.k, align 8              ; 4 uses
+  %i.l = load ptr, ptr %i.k, align 8              ; 3 uses
   %.not35.i = icmp eq ptr %i.l, null
   br i1 %.not35.i, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %i.m = zext nneg i32 %i.j to i64
-  %i.n = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %i.m
+  %i.n = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %i.m ; 2 uses
   %i.o = load ptr, ptr %i.n, align 8
-  %3 = zext nneg i32 %i.j to i64
-  %4 = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %3
-  %i.p = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %i.p = getelementptr inbounds nuw i8, ptr %i.n, i64 8
   %i.q = load ptr, ptr %i.p, align 8
   br label %bb.l
 

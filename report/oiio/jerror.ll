@@ -199,8 +199,6 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 136
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !17
-  %2 = zext nneg i32 %i.c to i64
-  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %2
   br label %bb.h
 
 bb.d:                                             ; preds = %bb.b, %bb.a
@@ -223,13 +221,14 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f
   %i.o = sub nsw i32 %i.c, %i.l
-  %4 = sext i32 %i.o to i64
-  %5 = getelementptr inbounds [8 x i8], ptr %i.j, i64 %4
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.c
-  %.037.in = phi ptr [ %3, %bb.c ], [ %5, %bb.g ]
-  %.037 = load ptr, ptr %.037.in, align 8, !tbaa !32 ; 2 uses
+  %.sink55 = phi i32 [ %i.o, %bb.g ], [ %i.c, %bb.c ]
+  %.037.in = phi ptr [ %i.j, %bb.g ], [ %i.h, %bb.c ]
+  %2 = zext nneg i32 %.sink55 to i64
+  %3 = getelementptr inbounds nuw [8 x i8], ptr %.037.in, i64 %2
+  %.037 = load ptr, ptr %3, align 8, !tbaa !32    ; 2 uses
   %i.p = icmp eq ptr %.037, null
   br i1 %i.p, label %.thread, label %bb.i
 

@@ -203,9 +203,9 @@ bb.f:                                             ; preds = %bb.e
   %i.q = icmp eq i8 %i.p, 0
   %spec.select = select i1 %i.q, i8 32, i8 %i.p
   %i.r = trunc nuw nsw i64 %.pre76 to i32
-  %i.s = sub nsw i32 %i.c, %i.r                   ; 8 uses
-  %.sroa.speculated = tail call i32 @llvm.smin.i32(i32 %i.s, i32 128)
-  %4 = sext i32 %.sroa.speculated to i64
+  %i.s = sub nuw nsw i32 %i.c, %i.r               ; 8 uses
+  %.sroa.speculated = tail call i32 @llvm.umin.i32(i32 %i.s, i32 128)
+  %4 = zext nneg i32 %.sroa.speculated to i64
   call void @llvm.memset.p0.i64(ptr nonnull align 16 %i.a, i8 %spec.select, i64 %4, i1 false)
   %i.t = getelementptr inbounds nuw i8, ptr %2, i64 17
   %i.u = load i8, ptr %i.t, align 1, !tbaa !93
@@ -221,18 +221,17 @@ bb.f:                                             ; preds = %bb.e
   br label %.lr.ph.i25
 
 bb.g:                                             ; preds = %bb.f
-  %.off = add i32 %i.s, 1
-  %.not5.i = icmp ult i32 %.off, 3
+  %.not5.i = icmp samesign ult i32 %i.s, 2
   br i1 %.not5.i, label %_ZZN5folly12format_value12formatStringINS_6detail27BaseFormatterAppendToStringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvNS_5RangeIPKcEERNS_9FormatArgERT_ENKUliE_clEi.exit, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %bb.g
-  %5 = sdiv i32 %i.s, 2
+  %5 = lshr i32 %i.s, 1
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %_ZNK5folly6detail27BaseFormatterAppendToStringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclENS_5RangeIPKcEE.exit.i
   %storemerge6.i = phi i32 [ %i.al, %_ZNK5folly6detail27BaseFormatterAppendToStringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclENS_5RangeIPKcEE.exit.i ], [ %5, %.lr.ph.i.preheader ] ; 3 uses
   %.sroa.speculated.i = call i32 @llvm.smin.i32(i32 %storemerge6.i, i32 128) ; 2 uses
-  %6 = sext i32 %.sroa.speculated.i to i64        ; 4 uses
+  %6 = zext nneg i32 %.sroa.speculated.i to i64   ; 4 uses
   %i.v = load ptr, ptr %3, align 8, !tbaa !48, !nonnull !39, !align !40 ; 5 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 8 ; 2 uses
   %i.x = load i64, ptr %i.w, align 8, !tbaa !27   ; 5 uses
@@ -294,7 +293,7 @@ _ZNK5folly6detail27BaseFormatterAppendToStringINSt7__cxx1112basic_stringIcSt11ch
 
 _ZZN5folly12format_value12formatStringINS_6detail27BaseFormatterAppendToStringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvNS_5RangeIPKcEERNS_9FormatArgERT_ENKUliE_clEi.exit: ; preds = %_ZNK5folly6detail27BaseFormatterAppendToStringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclENS_5RangeIPKcEE.exit.i, %bb.g
   %.neg = sdiv i32 %i.s, -2
-  %i.am = add i32 %.neg, %i.s
+  %i.am = add nsw i32 %.neg, %i.s
   br label %_ZZN5folly12format_value12formatStringINS_6detail27BaseFormatterAppendToStringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvNS_5RangeIPKcEERNS_9FormatArgERT_ENKUliE_clEi.exit37
 
 .lr.ph.i25:                                       ; preds = %.lr.ph.i25.preheader, %_ZNK5folly6detail27BaseFormatterAppendToStringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclENS_5RangeIPKcEE.exit.i34
@@ -695,6 +694,9 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #21
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umin.i32(i32, i32) #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #21

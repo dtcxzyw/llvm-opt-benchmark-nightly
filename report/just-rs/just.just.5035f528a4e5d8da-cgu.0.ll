@@ -203,7 +203,7 @@ _RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VecNtNtNtCsaKJjC64KgbL_3std3ffi6os_str8O
   %i.fs = mul nuw nsw i64 %i.fm, 24
   %i.ft = add nsw i64 %i.fs, -24
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.fq, ptr nonnull align 8 %i.fr, i64 %i.ft, i1 false), !noalias !2616
-  %i.fu = add nsw i64 %i.fm, -1                   ; 7 uses
+  %i.fu = add nsw i64 %i.fm, -1                   ; 8 uses
   store i64 %i.fu, ptr %i.fl, align 8, !alias.scope !2611, !noalias !2612
   %.not.i59.i.i.i = icmp eq i64 %.sroa.0.0.copyload1.i.i.i.i, -1
   br i1 %.not.i59.i.i.i, label %_RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VecNtNtNtCsaKJjC64KgbL_3std3ffi6os_str8OsStringE10try_removeCs6SXwsBSuFuw_4just.exit.thread.i.i.i.i, label %_RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VecNtNtNtCsaKJjC64KgbL_3std3ffi6os_str8OsStringE6removeCs6SXwsBSuFuw_4just.exit.i.i.i, !prof !2617
@@ -254,7 +254,7 @@ _RNCNvMs_NtCsgYJ0xFPoqCG_13clap_complete3envINtB6_11CompleteEnvNvYNtNtCskXtk6F4W
   call void @llvm.assume(i1 %i.gj)
   %i.gk = add nuw nsw i64 %.sroa.02.09.i.i.i.i, 1 ; 2 uses
   store i64 0, ptr %i.fl, align 8, !alias.scope !2618, !noalias !2621
-  %i.gl = sub nsw i64 %i.fu, %i.gk
+  %i.gl = sub nuw nsw i64 %i.fu, %i.gk
   br label %bb.av
 
 .thread124.i.i.i:                                 ; preds = %_RNCNvMs_NtCsgYJ0xFPoqCG_13clap_complete3envINtB6_11CompleteEnvNvYNtNtCskXtk6F4WjxZ_4just9arguments9ArgumentsNtNtCs2FJGJNE9lTN_12clap_builder6derive14CommandFactory7commandE13try_complete_0Cs6SXwsBSuFuw_4just.exit.thread.i.i.i.i
@@ -262,8 +262,8 @@ _RNCNvMs_NtCsgYJ0xFPoqCG_13clap_complete3envINtB6_11CompleteEnvNvYNtNtCskXtk6F4W
   br label %bb.av
 
 bb.av:                                            ; preds = %.thread124.i.i.i, %.thread124.thread153.i.i.i
-  %i.gm = phi i64 [ %i.gl, %.thread124.thread153.i.i.i ], [ 0, %.thread124.i.i.i ] ; 4 uses
-  %.sroa.05.0126156.i.i.i = phi i64 [ %i.gk, %.thread124.thread153.i.i.i ], [ %i.fu, %.thread124.i.i.i ] ; 2 uses
+  %i.gm = phi i64 [ %i.gl, %.thread124.thread153.i.i.i ], [ 0, %.thread124.i.i.i ] ; 2 uses
+  %.sroa.05.0126156.i.i.i = phi i64 [ %i.gk, %.thread124.thread153.i.i.i ], [ %i.fu, %.thread124.i.i.i ] ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !2626)
   br label %.lr.ph.i.i.i.i.i.i
 
@@ -286,7 +286,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCsaKJjC64KgbL_3std3ffi6os_str8OsSt
   br i1 %i.gr, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueSNtNtNtCsaKJjC64KgbL_3std3ffi6os_str8OsStringECs6SXwsBSuFuw_4just.exit.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueSNtNtNtCsaKJjC64KgbL_3std3ffi6os_str8OsStringECs6SXwsBSuFuw_4just.exit.i.i.i.i.i: ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCsaKJjC64KgbL_3std3ffi6os_str8OsStringECs6SXwsBSuFuw_4just.exit.i.i.i.i2.i.i
-  %.not.i.i4.i.i.i.i.i = icmp eq i64 %i.gm, 0
+  %.not.i.i4.i.i.i.i.i = icmp eq i64 %i.fu, %.sroa.05.0126156.i.i.i
   br i1 %.not.i.i4.i.i.i.i.i, label %bb.ax, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCs4wP2HXfJTCR_5alloc3vec5drain5DrainNtNtNtCsaKJjC64KgbL_3std3ffi6os_str8OsStringEECs6SXwsBSuFuw_4just.exit.thread.i.i.i
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCs4wP2HXfJTCR_5alloc3vec5drain5DrainNtNtNtCsaKJjC64KgbL_3std3ffi6os_str8OsStringEECs6SXwsBSuFuw_4just.exit.thread.i.i.i: ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueSNtNtNtCsaKJjC64KgbL_3std3ffi6os_str8OsStringECs6SXwsBSuFuw_4just.exit.i.i.i.i.i
@@ -295,8 +295,6 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCs4wP2HXfJTCR_5alloc3vec5drain5Dr
   %i.gt = mul nuw nsw i64 %i.gm, 24
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.fq, ptr nonnull align 8 %i.gs, i64 %i.gt, i1 false), !noalias !2632
   store i64 %i.gm, ptr %i.fl, align 8, !alias.scope !2591, !noalias !2640
-  %0 = icmp ult i64 %i.gm, 384307168202282326
-  call void @llvm.assume(i1 %0)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.am), !noalias !2593
   store i64 0, ptr %i.am, align 8, !noalias !2593
   %i.gu = getelementptr inbounds nuw i8, ptr %i.am, i64 8 ; 5 uses

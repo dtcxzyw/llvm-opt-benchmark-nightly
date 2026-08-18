@@ -203,7 +203,8 @@ bb.e:                                             ; preds = %bb.d
   %i.s = tail call i64 asm "movq %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(ptr) %i.r) #18, !srcloc !98
   tail call void asm "movq $1, %gs:$0", "=*m,re,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(ptr) %i.q, i64 %i.s) #13, !srcloc !99
   %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1 ; 2 uses
-  %i.t = icmp eq i64 %indvars.iv.next.i, 0
+  %4 = and i64 %indvars.iv.next.i, 4294967295
+  %i.t = icmp eq i64 %4, 0
   br i1 %i.t, label %bb.f, label %.preheader.i, !llvm.loop !100
 
 bb.f:                                             ; preds = %.preheader.i
@@ -606,7 +607,7 @@ bb.p:                                             ; preds = %bb.o
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %bb.o
-  %i.ck = sub nsw i32 %i.k, %i.ce                 ; 5 uses
+  %i.ck = sub nuw nsw i32 %i.k, %i.ce             ; 5 uses
   %i.cl = getelementptr i8, ptr %i.h, i64 32
   %i.cm = load ptr, ptr %i.cl, align 8
   %i.cn = call i32 %i.cm(ptr noundef %0, ptr noundef %1, i64 noundef %.lcssa103.i, i32 noundef %i.ck, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #14, !inline_history !189 ; 2 uses
@@ -631,7 +632,7 @@ folio_size.exit82.i:                              ; preds = %bb.s, %bb.r
   %i.ct = shl i64 4096, %.0.i.i81.i
   %i.cu = add i64 %i.ct, -1
   %i.cv = and i64 %i.cu, %.lcssa103.i             ; 3 uses
-  %i.cw = zext i32 %i.ck to i64                   ; 2 uses
+  %i.cw = zext nneg i32 %i.ck to i64              ; 2 uses
   %i.cx = trunc i64 %i.cv to i32
   %i.cy = add i64 %i.cv, %i.cw                    ; 2 uses
   %i.cz = trunc i64 %i.cy to i32

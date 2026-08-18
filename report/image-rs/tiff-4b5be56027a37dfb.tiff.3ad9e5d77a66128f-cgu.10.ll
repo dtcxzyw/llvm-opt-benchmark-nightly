@@ -201,7 +201,7 @@ default.unreachable:                              ; preds = %bb.m
 
 bb.n:                                             ; preds = %bb.m
   %i.ac = lshr i64 %i.u, 1
-  %.sroa.01.0.i = sub i64 %i.u, %i.ac
+  %.sroa.01.0.i = sub nuw i64 %i.u, %i.ac
   br label %bb.y
 
 bb.o:                                             ; preds = %bb.m
@@ -222,7 +222,7 @@ bb.p:                                             ; preds = %bb.m
 
 bb.q:                                             ; preds = %bb.m
   %i.aj = lshr i64 %i.u, 1
-  %.sroa.07.0.i = sub i64 %i.u, %i.aj
+  %.sroa.07.0.i = sub nuw i64 %i.u, %i.aj
   br label %bb.y
 
 bb.r:                                             ; preds = %bb.m
@@ -246,7 +246,7 @@ bb.t:                                             ; preds = %bb.m
 
 bb.u:                                             ; preds = %bb.m
   %i.aq = lshr i64 %i.u, 1
-  %.sroa.04.0.i = sub i64 %i.u, %i.aq
+  %.sroa.04.0.i = sub nuw i64 %i.u, %i.aq
   br label %bb.y
 
 bb.v:                                             ; preds = %bb.m
@@ -649,13 +649,16 @@ bb.w:                                             ; preds = %bb.t
   unreachable
 
 bb.x:                                             ; preds = %bb.y, %bb.v
-  %.sroa.09.0.i = phi i64 [ %3, %bb.y ], [ 0, %bb.v ]
+  %.sroa.09.0.i = phi i64 [ %.zext, %bb.y ], [ 0, %bb.v ]
   %i.ax = icmp eq i64 %i.o, 0
   br i1 %i.ax, label %bb.aa, label %bb.z
 
 bb.y:                                             ; preds = %bb.v
-  %i.ay = sub nsw i64 %i.l, %i.ap
-  %3 = urem i64 %i.ay, %i.l
+  %i.ay = sub nuw nsw i64 %i.l, %i.ap
+  %.lhs.trunc = trunc nuw i64 %i.ay to i32
+  %.rhs.trunc = trunc nuw i64 %i.l to i32
+  %3 = urem i32 %.lhs.trunc, %.rhs.trunc
+  %.zext = zext i32 %3 to i64
   br label %bb.x
 
 bb.z:                                             ; preds = %bb.x
@@ -674,17 +677,21 @@ bb.aa:                                            ; preds = %bb.x
   unreachable
 
 bb.ab:                                            ; preds = %bb.z
-  %i.bf = sub nsw i64 %i.o, %i.bc
-  %4 = urem i64 %i.bf, %i.o
+  %i.bf = sub nuw nsw i64 %i.o, %i.bc
+  %.lhs.trunc112 = trunc nuw i64 %i.bf to i32
+  %.rhs.trunc113 = trunc nuw i64 %i.o to i32
+  %4 = urem i32 %.lhs.trunc112, %.rhs.trunc113
+  %.zext114 = zext i32 %4 to i64
   br label %_RNvMNtNtCs53gkmrwjETj_4tiff7decoder5imageNtB2_14TileAttributes11get_padding.exit
 
 _RNvMNtNtCs53gkmrwjETj_4tiff7decoder5imageNtB2_14TileAttributes11get_padding.exit: ; preds = %bb.z, %bb.ab
-  %.sroa.011.0.i = phi i64 [ %4, %bb.ab ], [ 0, %bb.z ]
+  %.sroa.011.0.i = phi i64 [ %.zext114, %bb.ab ], [ 0, %bb.z ]
   %i.bg = sub nsw i64 %i.l, %.sroa.09.0.i         ; 2 uses
   %i.bh = sub nsw i64 %i.o, %.sroa.011.0.i        ; 2 uses
-  %5 = or i64 %i.bh, %i.bg
-  %or.cond.not = icmp ult i64 %5, 4294967296
-  br i1 %or.cond.not, label %bb.ac, label %bb.ae
+  %5 = icmp ugt i64 %i.bg, 4294967295
+  %6 = icmp ugt i64 %i.bh, 4294967295
+  %or.cond = select i1 %5, i1 true, i1 %6
+  br i1 %or.cond, label %bb.ae, label %bb.ac
 
 bb.ac:                                            ; preds = %_RNvMNtNtCs53gkmrwjETj_4tiff7decoder5imageNtB2_14TileAttributes11get_padding.exit
   %i.bi = trunc nuw i64 %i.bg to i32

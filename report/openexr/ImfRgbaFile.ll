@@ -204,7 +204,6 @@ bb.v:                                             ; preds = %.thread
   %i.el = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %i.em = getelementptr inbounds nuw i8, ptr %0, i64 336 ; 2 uses
   %i.en = getelementptr inbounds nuw i8, ptr %0, i64 104
-  %3 = sext i32 %i.ej to i64
   br label %bb.ab
 
 bb.w:                                             ; preds = %.lr.ph, %_ZN7Imf_3_413RgbaInputFile7FromYca15readYCAScanLineEiPNS_4RgbaE.exit74
@@ -342,26 +341,26 @@ _ZN7Imf_3_413RgbaInputFile7FromYca15readYCAScanLineEiPNS_4RgbaE.exit74: ; preds 
   br i1 %i.gp, label %bb.w, label %.lr.ph109, !llvm.loop !172
 
 bb.ab:                                            ; preds = %.lr.ph109, %bb.ae
-  %indvars.iv118 = phi i64 [ 2, %.lr.ph109 ], [ %indvars.iv.next119, %bb.ae ] ; 6 uses
-  %4 = trunc i64 %indvars.iv118 to i32
-  %i.gq = add i32 %1, %4
+  %.048108 = phi i32 [ 2, %.lr.ph109 ], [ %4, %bb.ae ] ; 3 uses
+  %i.gq = add nsw i32 %.048108, %1
   %i.gr = and i32 %i.gq, 1
   %.not = icmp eq i32 %i.gr, 0
   %i.gs = load i32, ptr %i.el, align 8, !tbaa !131 ; 2 uses
+  %3 = zext nneg i32 %.048108 to i64              ; 4 uses
   br i1 %.not, label %bb.ad, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
-  %i.gt = getelementptr [8 x i8], ptr %0, i64 %indvars.iv118
+  %i.gt = getelementptr [8 x i8], ptr %0, i64 %3
   %i.gu = getelementptr i8, ptr %i.gt, i64 208
   %i.gv = load ptr, ptr %i.gu, align 8, !tbaa !40
-  %i.gw = getelementptr inbounds nuw [8 x i8], ptr %i.em, i64 %indvars.iv118
+  %i.gw = getelementptr inbounds nuw [8 x i8], ptr %i.em, i64 %3
   %i.gx = load ptr, ptr %i.gw, align 8, !tbaa !40
   tail call void @_ZN7Imf_3_47RgbaYca9YCAtoRGBAERKN9Imath_3_24Vec3IfEEiPKNS_4RgbaEPS6_(ptr noundef nonnull align 4 dereferenceable(12) %i.ek, i32 noundef %i.gs, ptr noundef %i.gv, ptr noundef %i.gx)
   br label %bb.ae
 
 bb.ad:                                            ; preds = %bb.ab
-  %i.gy = getelementptr inbounds nuw [8 x i8], ptr %i.en, i64 %indvars.iv118
-  %i.gz = getelementptr inbounds nuw [8 x i8], ptr %i.em, i64 %indvars.iv118 ; 2 uses
+  %i.gy = getelementptr inbounds nuw [8 x i8], ptr %i.en, i64 %3
+  %i.gz = getelementptr inbounds nuw [8 x i8], ptr %i.em, i64 %3 ; 2 uses
   %i.ha = load ptr, ptr %i.gz, align 8, !tbaa !40
   tail call void @_ZN7Imf_3_47RgbaYca21reconstructChromaVertEiPKPKNS_4RgbaEPS1_(i32 noundef %i.gs, ptr noundef nonnull %i.gy, ptr noundef %i.ha)
   %i.hb = load i32, ptr %i.el, align 8, !tbaa !131
@@ -370,8 +369,8 @@ bb.ad:                                            ; preds = %bb.ab
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ac, %bb.ad
-  %indvars.iv.next119 = add nsw i64 %indvars.iv118, -1 ; 2 uses
-  %i.hd = icmp sgt i64 %indvars.iv.next119, %3
+  %4 = add nsw i32 %.048108, -1                   ; 2 uses
+  %i.hd = icmp sgt i32 %4, %i.ej
   br i1 %i.hd, label %bb.ab, label %.loopexit, !llvm.loop !173
 
 .loopexit:                                        ; preds = %bb.ae, %bb.u, %bb.v

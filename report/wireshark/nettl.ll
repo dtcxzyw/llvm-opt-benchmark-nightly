@@ -201,7 +201,7 @@ bb.ai:                                            ; preds = %bb.ah
   br i1 %i.hh, label %bb.aj, label %bb.aq
 
 bb.aj:                                            ; preds = %bb.ai
-  %i.hi = sub nsw i32 %i.cu, %spec.select         ; 4 uses
+  %i.hi = sub nuw nsw i32 %i.cu, %spec.select     ; 4 uses
   %i.hj = icmp eq i32 %i.hi, 0
   br i1 %i.hj, label %bb.aq, label %bb.ak
 
@@ -216,7 +216,7 @@ bb.ak:                                            ; preds = %bb.aj
   br i1 %i.ho, label %bb.al, label %bb.an
 
 bb.al:                                            ; preds = %bb.ak
-  %spec.select185 = call i32 @llvm.smin.i32(i32 %i.hi, i32 3) ; 2 uses
+  %spec.select185 = call i32 @llvm.umin.i32(i32 %i.hi, i32 3) ; 2 uses
   %i.hp = call zeroext i1 @wtap_read_bytes(ptr noundef %1, ptr noundef null, i32 noundef %spec.select185, ptr noundef %3, ptr noundef %4)
   br i1 %i.hp, label %bb.am, label %bb.aq
 
@@ -510,9 +510,6 @@ declare i32 @llvm.bswap.i32(i32) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #5
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smin.i32(i32, i32) #5
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #6

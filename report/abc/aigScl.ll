@@ -201,6 +201,7 @@ bb.l:                                             ; preds = %.critedge6._crit_ed
   br i1 %.not, label %bb.r, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
+  %1 = sub nsw i32 %.val179, %.val161.lcssa       ; 2 uses
   %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.cd = load ptr, ptr %i.cc, align 8, !tbaa !47 ; 2 uses
   %i.ce = getelementptr i8, ptr %i.cd, i64 4      ; 2 uses
@@ -209,10 +210,9 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.cf, label %.lr.ph254, label %.critedge10
 
 .lr.ph254:                                        ; preds = %bb.m
-  %1 = sub nsw i32 %.val179, %.val161.lcssa
   %i.cg = getelementptr i8, ptr %i.cd, i64 8
   %i.ch = getelementptr i8, ptr %i.cb, i64 8
-  %i.ci = sext i32 %1 to i64                      ; 2 uses
+  %i.ci = sext i32 %1 to i64
   br label %bb.n
 
 bb.n:                                             ; preds = %.lr.ph254, %bb.q
@@ -233,9 +233,11 @@ bb.o:                                             ; preds = %bb.n
   br i1 %.not218, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
-  %2 = sub nsw i64 %indvars.iv275, %i.ci
+  %2 = trunc nuw nsw i64 %indvars.iv275 to i32
+  %3 = sub nsw i32 %2, %1
   %.val165 = load ptr, ptr %i.ch, align 8, !tbaa !34 ; 2 uses
-  %i.cm = getelementptr inbounds [4 x i8], ptr %.val165, i64 %2
+  %4 = zext nneg i32 %3 to i64
+  %i.cm = getelementptr inbounds nuw [4 x i8], ptr %.val165, i64 %4
   %i.cn = load i32, ptr %i.cm, align 4, !tbaa !28
   %i.co = add nsw i32 %.0253, 1
   %i.cp = sext i32 %.0253 to i64

@@ -97,12 +97,12 @@ bb.c:                                             ; preds = %bb.a
   %i.k = zext i16 %i.g to i32                     ; 2 uses
   %i.l = tail call i16 @llvm.umax.i16(i16 %i.e, i16 %i.g)
   %i.m = zext i16 %i.i to i32                     ; 2 uses
-  %spec.select = tail call i16 @llvm.umax.i16(i16 %i.i, i16 %i.l) ; 4 uses
+  %spec.select = tail call i16 @llvm.umax.i16(i16 %i.i, i16 %i.l) ; 5 uses
   %i.n = tail call i16 @llvm.umin.i16(i16 %i.e, i16 %i.g)
   %.042 = tail call i16 @llvm.umin.i16(i16 %i.i, i16 %i.n)
-  %i.o = zext i16 %spec.select to i64             ; 2 uses
+  %i.o = zext i16 %spec.select to i64
   %i.p = zext i16 %.042 to i64
-  %i.q = sub nsw i64 %i.o, %i.p                   ; 4 uses
+  %i.q = sub nuw nsw i64 %i.o, %i.p               ; 4 uses
   %i.r = icmp eq i16 %spec.select, %i.e
   br i1 %i.r, label %bb.d, label %bb.e
 
@@ -141,9 +141,11 @@ bb.h:                                             ; preds = %bb.f, %bb.g, %bb.d
   %i.aj = sdiv i64 %spec.select47, 6
   %i.ak = trunc i64 %i.aj to i16
   store i16 %i.ak, ptr %1, align 2, !tbaa !16
-  %2 = mul nsw i64 %i.q, 65535
-  %3 = sdiv i64 %2, %i.o
-  %i.al = trunc i64 %3 to i16
+  %2 = trunc nuw nsw i64 %i.q to i32
+  %.lhs.trunc = mul nuw i32 %2, 65535
+  %.rhs.trunc = zext i16 %spec.select to i32
+  %3 = udiv i32 %.lhs.trunc, %.rhs.trunc
+  %i.al = trunc i32 %3 to i16
   %i.am = getelementptr inbounds nuw i8, ptr %1, i64 2
   store i16 %i.al, ptr %i.am, align 2, !tbaa !16
   br label %bb.i

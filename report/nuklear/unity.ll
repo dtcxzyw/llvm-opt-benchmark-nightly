@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not, label %bb.c, label %nk_str_remove_chars.exit.sink.split
 
 bb.c:                                             ; preds = %bb.b
-  %i.g = sub nsw i32 %i.f, %1
+  %i.g = sub nuw nsw i32 %i.f, %1
   %i.h = call ptr @nk_str_at_rune(ptr noundef nonnull %0, i32 noundef %i.g, ptr noundef nonnull %i.b, ptr noundef nonnull %i.a)
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !98   ; 2 uses
@@ -607,9 +607,9 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.am = getelementptr inbounds nuw i8, ptr %i.f, i64 10
-  %i.an = sub nsw i32 %1, %i.ad
-  %i.ao = shl nsw i32 %i.an, 1
-  %i.ap = zext i32 %i.ao to i64
+  %i.an = sub nuw nsw i32 %1, %i.ad
+  %i.ao = shl nuw nsw i32 %i.an, 1
+  %i.ap = zext nneg i32 %i.ao to i64
   %i.aq = getelementptr inbounds nuw i8, ptr %i.am, i64 %i.ap ; 2 uses
   %.val165 = load i8, ptr %i.aq, align 1, !tbaa !11
   %i.ar = getelementptr i8, ptr %i.aq, i64 1
@@ -825,8 +825,8 @@ bb.k:                                             ; preds = %bb.i
   %i.ft = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.fs
   %i.fu = sub nsw i32 %1, %i.en
   %i.fv = shl nsw i32 %i.fu, 1
-  %2 = sext i32 %i.fv to i64
-  %i.fw = getelementptr inbounds i8, ptr %i.ft, i64 %2
+  %2 = zext nneg i32 %i.fv to i64
+  %i.fw = getelementptr inbounds nuw i8, ptr %i.ft, i64 %2
   %i.fx = getelementptr inbounds nuw i8, ptr %i.fw, i64 %i.e
   %i.fy = getelementptr inbounds nuw i8, ptr %i.fx, i64 %i.ex
   %i.fz = getelementptr inbounds nuw i8, ptr %i.fy, i64 16
@@ -1229,8 +1229,8 @@ bb.i:                                             ; preds = %bb.h
   %i.bd = getelementptr inbounds nuw i8, ptr %i.ba, i64 %i.bc
   %i.be = sub nsw i32 %1, %i.l
   %i.bf = shl nsw i32 %i.be, 1
-  %4 = sext i32 %i.bf to i64
-  %i.bg = getelementptr inbounds i8, ptr %i.bd, i64 %4 ; 2 uses
+  %4 = zext nneg i32 %i.bf to i64
+  %i.bg = getelementptr inbounds nuw i8, ptr %i.bd, i64 %4 ; 2 uses
   %i.bh = getelementptr i8, ptr %i.bg, i64 1
   br label %.sink.split
 
@@ -1633,8 +1633,8 @@ bb.i:                                             ; preds = %bb.h
   %i.be = getelementptr inbounds nuw i8, ptr %i.bb, i64 %i.bd
   %i.bf = sub nsw i32 %i.a, %i.m
   %i.bg = shl nsw i32 %i.bf, 1
-  %4 = sext i32 %i.bg to i64
-  %i.bh = getelementptr inbounds i8, ptr %i.be, i64 %4 ; 2 uses
+  %4 = zext nneg i32 %i.bg to i64
+  %i.bh = getelementptr inbounds nuw i8, ptr %i.be, i64 %4 ; 2 uses
   %i.bi = getelementptr i8, ptr %i.bh, i64 1
   br label %.sink.split.i
 
@@ -2037,7 +2037,7 @@ bb.t:                                             ; preds = %bb.s
   %i.ec = load i8, ptr %i.b, align 16, !tbaa !11  ; 3 uses
   %i.ed = icmp eq i8 %i.ec, 45                    ; 2 uses
   %.sroa.gep.i = getelementptr inbounds nuw i8, ptr %i.b, i64 1 ; 2 uses
-  %spec.select.idx.i.sroa.sel.i = select i1 %i.ed, ptr %.sroa.gep.i, ptr %i.b ; 5 uses
+  %spec.select.idx.i.sroa.sel.i = select i1 %i.ed, ptr %.sroa.gep.i, ptr %i.b ; 7 uses
   %i.ee = load i8, ptr %spec.select.idx.i.sroa.sel.i, align 1, !tbaa !11
   %.not4.i15.i.i.i = icmp eq i8 %i.ee, 0
   br i1 %.not4.i15.i.i.i, label %nk_itoa.exit.i, label %nk_strlen.exit.i.i.i
@@ -2045,17 +2045,15 @@ bb.t:                                             ; preds = %bb.s
 nk_strlen.exit.i.i.i:                             ; preds = %bb.t
   %.sroa.gep.sroa.gep.i = getelementptr inbounds nuw i8, ptr %i.b, i64 2
   %spec.select.idx.i.sroa.sel.sroa.sel.i = select i1 %i.ed, ptr %.sroa.gep.sroa.gep.i, ptr %.sroa.gep.i
-  %strlen.i.i.i = call i64 @strlen(ptr nonnull dereferenceable(1) %spec.select.idx.i.sroa.sel.sroa.sel.i)
+  %strlen.i.i.i = call i64 @strlen(ptr nonnull dereferenceable(1) %spec.select.idx.i.sroa.sel.sroa.sel.i) ; 4 uses
   %i.ef = trunc i64 %strlen.i.i.i to i32
-  %i.eg = add i32 %i.ef, 1                        ; 2 uses
+  %i.eg = add i32 %i.ef, 1
   %i.eh = lshr i32 %i.eg, 1                       ; 4 uses
   %.not.i.i.i = icmp eq i32 %i.eh, 0
   br i1 %.not.i.i.i, label %nk_itoa.exit.i, label %.lr.ph19.preheader.i.i.i
 
 .lr.ph19.preheader.i.i.i:                         ; preds = %nk_strlen.exit.i.i.i
-  %7 = sext i32 %i.eg to i64
   %wide.trip.count.i.i.i = zext nneg i32 %i.eh to i64 ; 2 uses
-  %8 = getelementptr i8, ptr %spec.select.idx.i.sroa.sel.i, i64 %7 ; 3 uses
   %xtraiter = and i64 %wide.trip.count.i.i.i, 1
   %i.ei = icmp eq i32 %i.eh, 1
   br i1 %i.ei, label %.lr.ph19.i.i.i.epil.preheader, label %.lr.ph19.preheader.i.i.i.new
@@ -2065,20 +2063,22 @@ nk_strlen.exit.i.i.i:                             ; preds = %bb.t
   br label %.lr.ph19.i.i.i
 
 .lr.ph19.i.i.i:                                   ; preds = %.lr.ph19.i.i.i, %.lr.ph19.preheader.i.i.i.new
-  %indvars.iv.i.i.i = phi i64 [ 0, %.lr.ph19.preheader.i.i.i.new ], [ %indvars.iv.next.i.i.i.1, %.lr.ph19.i.i.i ] ; 5 uses
+  %indvars.iv.i.i.i = phi i64 [ 0, %.lr.ph19.preheader.i.i.i.new ], [ %indvars.iv.next.i.i.i.1, %.lr.ph19.i.i.i ] ; 4 uses
   %niter = phi i64 [ 0, %.lr.ph19.preheader.i.i.i.new ], [ %niter.next.1, %.lr.ph19.i.i.i ]
   %i.ej = getelementptr inbounds nuw i8, ptr %spec.select.idx.i.sroa.sel.i, i64 %indvars.iv.i.i.i ; 2 uses
   %i.ek = load i8, ptr %i.ej, align 1, !tbaa !11
-  %9 = xor i64 %indvars.iv.i.i.i, -1
-  %i.el = getelementptr i8, ptr %8, i64 %9        ; 2 uses
+  %7 = sub i64 %strlen.i.i.i, %indvars.iv.i.i.i
+  %8 = and i64 %7, 4294967295
+  %i.el = getelementptr inbounds nuw i8, ptr %spec.select.idx.i.sroa.sel.i, i64 %8 ; 2 uses
   %i.em = load i8, ptr %i.el, align 1, !tbaa !11
   store i8 %i.em, ptr %i.ej, align 1, !tbaa !11
   store i8 %i.ek, ptr %i.el, align 1, !tbaa !11
-  %10 = getelementptr inbounds nuw i8, ptr %spec.select.idx.i.sroa.sel.i, i64 %indvars.iv.i.i.i
-  %i.en = getelementptr inbounds nuw i8, ptr %10, i64 1 ; 2 uses
+  %indvars.iv.next.i.i.i = or disjoint i64 %indvars.iv.i.i.i, 1 ; 2 uses
+  %i.en = getelementptr inbounds nuw i8, ptr %spec.select.idx.i.sroa.sel.i, i64 %indvars.iv.next.i.i.i ; 2 uses
   %i.eo = load i8, ptr %i.en, align 1, !tbaa !11
-  %11 = xor i64 %indvars.iv.i.i.i, -2
-  %i.ep = getelementptr i8, ptr %8, i64 %11       ; 2 uses
+  %9 = sub i64 %strlen.i.i.i, %indvars.iv.next.i.i.i
+  %10 = and i64 %9, 4294967295
+  %i.ep = getelementptr inbounds nuw i8, ptr %spec.select.idx.i.sroa.sel.i, i64 %10 ; 2 uses
   %i.eq = load i8, ptr %i.ep, align 1, !tbaa !11
   store i8 %i.eq, ptr %i.en, align 1, !tbaa !11
   store i8 %i.eo, ptr %i.ep, align 1, !tbaa !11
@@ -2097,8 +2097,9 @@ nk_itoa.exit.loopexit.i.unr-lcssa:                ; preds = %.lr.ph19.i.i.i
   tail call void @llvm.assume(i1 %lcmp.mod215)
   %i.er = getelementptr inbounds nuw i8, ptr %spec.select.idx.i.sroa.sel.i, i64 %indvars.iv.i.i.i.epil.init ; 2 uses
   %i.es = load i8, ptr %i.er, align 1, !tbaa !11
-  %12 = xor i64 %indvars.iv.i.i.i.epil.init, -1
-  %i.et = getelementptr i8, ptr %8, i64 %12       ; 2 uses
+  %11 = sub i64 %strlen.i.i.i, %indvars.iv.i.i.i.epil.init
+  %12 = and i64 %11, 4294967295
+  %i.et = getelementptr inbounds nuw i8, ptr %spec.select.idx.i.sroa.sel.i, i64 %12 ; 2 uses
   %i.eu = load i8, ptr %i.et, align 1, !tbaa !11
   store i8 %i.eu, ptr %i.er, align 1, !tbaa !11
   store i8 %i.es, ptr %i.et, align 1, !tbaa !11
@@ -2501,8 +2502,8 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.u = sub nsw i32 %1, %i.k
   %i.v = shl nsw i32 %i.u, 1
-  %2 = sext i32 %i.v to i64
-  %i.w = getelementptr inbounds i8, ptr %i.l, i64 %2 ; 2 uses
+  %2 = zext nneg i32 %i.v to i64
+  %i.w = getelementptr inbounds nuw i8, ptr %i.l, i64 %2 ; 2 uses
   %.val57 = load i8, ptr %i.w, align 1, !tbaa !11
   %i.x = getelementptr i8, ptr %i.w, i64 1
   %.val58 = load i8, ptr %i.x, align 1, !tbaa !11
@@ -2905,7 +2906,7 @@ bb.o:                                             ; preds = %bb.n
   %i.dn = add nuw nsw i32 %i.bo, 1                ; 2 uses
   %i.do = zext nneg i32 %i.dn to i64
   %i.dp = getelementptr inbounds nuw i8, ptr %2, i64 %i.do
-  %i.dq = sub nsw i32 %3, %i.dn                   ; 2 uses
+  %i.dq = sub nuw nsw i32 %3, %i.dn               ; 2 uses
   %i.dr = getelementptr inbounds nuw i8, ptr %i.r, i64 %i.de
   %i.ds = getelementptr inbounds nuw i8, ptr %i.dr, i64 %i.df
   %i.dt = tail call fastcc i32 @stbtt__CompareUTF8toUTF16_bigendian_prefix(ptr noundef nonnull readonly %i.dp, i32 noundef %i.dq, ptr noundef readonly %i.ds, i32 noundef %i.da)

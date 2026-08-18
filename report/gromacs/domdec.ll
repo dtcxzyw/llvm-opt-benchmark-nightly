@@ -204,7 +204,7 @@ bb.fi:                                            ; preds = %bb.fp, %.lr.ph.i
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.fp ] ; 3 uses
   %i.ama = getelementptr inbounds nuw [4 x i8], ptr %i.eo, i64 %indvars.iv.i
   %i.amb = load i32, ptr %i.ama, align 4, !tbaa !9 ; 2 uses
-  %19 = sext i32 %i.amb to i64                    ; 2 uses
+  %19 = zext nneg i32 %i.amb to i64               ; 2 uses
   %i.amc = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %19 ; 8 uses
   %i.amd = getelementptr inbounds nuw [4 x i8], ptr %i.ei, i64 %19 ; 4 uses
   %i.ame = getelementptr inbounds nuw [8 x i8], ptr %i.alx, i64 %indvars.iv.i ; 4 uses
@@ -607,7 +607,11 @@ bb.o:                                             ; preds = %_ZSt6fill_nIPfmfET_
   %.0.i.i.i.i.i.i = phi ptr [ %i.cm, %_ZSt6fill_nIPfmfET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i ], [ %i.cj, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i.i ]
   store float 0.000000e+00, ptr %i.ch, align 4, !tbaa !204, !noalias !831
   %i.cn = icmp samesign ugt i32 %i.cc, 1
-  br i1 %i.cn, label %.lr.ph.i, label %_ZL17set_slb_pme_dim_fP12gmx_domdec_ti.exit
+  br i1 %i.cn, label %.lr.ph.i, label %._ZL17set_slb_pme_dim_fP12gmx_domdec_ti.exit_crit_edge
+
+._ZL17set_slb_pme_dim_fP12gmx_domdec_ti.exit_crit_edge: ; preds = %bb.o
+  %.pre88 = zext nneg i32 %i.cc to i64
+  br label %_ZL17set_slb_pme_dim_fP12gmx_domdec_ti.exit
 
 .lr.ph.i:                                         ; preds = %bb.o
   %i.co = getelementptr inbounds nuw i8, ptr %i.by, i64 432
@@ -617,7 +621,7 @@ bb.o:                                             ; preds = %_ZSt6fill_nIPfmfET_
   %i.cs = load ptr, ptr %i.cr, align 8, !tbaa !703, !noalias !831
   %i.ct = icmp eq ptr %i.cq, %i.cs
   %i.cu = uitofp nneg i32 %i.cc to float          ; 3 uses
-  %wide.trip.count29.i = zext nneg i32 %i.cc to i64 ; 3 uses
+  %wide.trip.count29.i = zext nneg i32 %i.cc to i64 ; 8 uses
   br i1 %i.ct, label %iter.check, label %.lr.ph.split.i.preheader
 
 .lr.ph.split.i.preheader:                         ; preds = %.lr.ph.i
@@ -819,9 +823,9 @@ _ZL17set_slb_pme_dim_fP12gmx_domdec_ti.exit.loopexit122.unr-lcssa: ; preds = %.l
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %_ZL17set_slb_pme_dim_fP12gmx_domdec_ti.exit, label %.lr.ph.split.i.epil, !llvm.loop !838
 
-_ZL17set_slb_pme_dim_fP12gmx_domdec_ti.exit:      ; preds = %_ZL17set_slb_pme_dim_fP12gmx_domdec_ti.exit.loopexit122.unr-lcssa, %.lr.ph.split.i.epil, %.lr.ph.split.us.i, %middle.block, %vec.epilog.middle.block, %bb.o
-  %3 = sext i32 %i.cc to i64
-  %i.fv = getelementptr inbounds nuw [4 x i8], ptr %i.ch, i64 %3
+_ZL17set_slb_pme_dim_fP12gmx_domdec_ti.exit:      ; preds = %_ZL17set_slb_pme_dim_fP12gmx_domdec_ti.exit.loopexit122.unr-lcssa, %.lr.ph.split.i.epil, %.lr.ph.split.us.i, %middle.block, %vec.epilog.middle.block, %._ZL17set_slb_pme_dim_fP12gmx_domdec_ti.exit_crit_edge
+  %.pre-phi = phi i64 [ %.pre88, %._ZL17set_slb_pme_dim_fP12gmx_domdec_ti.exit_crit_edge ], [ %wide.trip.count29.i, %middle.block ], [ %wide.trip.count29.i, %.lr.ph.split.us.i ], [ %wide.trip.count29.i, %vec.epilog.middle.block ], [ %wide.trip.count29.i, %.lr.ph.split.i.epil ], [ %wide.trip.count29.i, %_ZL17set_slb_pme_dim_fP12gmx_domdec_ti.exit.loopexit122.unr-lcssa ]
+  %i.fv = getelementptr inbounds nuw [4 x i8], ptr %i.ch, i64 %.pre-phi
   store float 1.000000e+00, ptr %i.fv, align 4, !tbaa !204, !noalias !831
   %i.fw = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.fx = load ptr, ptr %i.fw, align 8, !tbaa !492 ; 3 uses
@@ -1224,7 +1228,7 @@ bb.c:                                             ; preds = %.lr.ph.split.us.spl
   %indvars.iv85.i = phi i64 [ %indvars.iv.next86.i, %bb.d ], [ 1, %bb.c ] ; 2 uses
   %i.ab = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %indvars.iv85.i
   %i.ac = load i32, ptr %i.ab, align 4, !tbaa !9
-  %7 = sext i32 %i.ac to i64                      ; 3 uses
+  %7 = zext nneg i32 %i.ac to i64                 ; 3 uses
   %i.ad = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %7
   %i.ae = load i32, ptr %i.ad, align 4, !tbaa !9
   %i.af = sitofp i32 %i.ae to double
@@ -1254,7 +1258,7 @@ bb.d:                                             ; preds = %.lr.ph.split.us.spl
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.e ], [ 1, %bb.b ] ; 2 uses
   %i.av = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %indvars.iv.i
   %i.aw = load i32, ptr %i.av, align 4, !tbaa !9
-  %8 = sext i32 %i.aw to i64                      ; 3 uses
+  %8 = zext nneg i32 %i.aw to i64                 ; 3 uses
   %i.ax = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %8
   %i.ay = load i32, ptr %i.ax, align 4, !tbaa !9
   %i.az = sitofp i32 %i.ay to double
@@ -1283,7 +1287,7 @@ bb.e:                                             ; preds = %.lr.ph.split.us.spl
 
 .lr.ph.split.split.us.preheader.i:                ; preds = %.lr.ph.split.i
   %i.bm = load i32, ptr %i.i, align 4, !tbaa !9   ; 2 uses
-  %9 = sext i32 %i.bm to i64                      ; 5 uses
+  %9 = zext nneg i32 %i.bm to i64                 ; 5 uses
   %i.bn = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %9
   %i.bo = load i32, ptr %i.bn, align 4, !tbaa !9
   %i.bp = sitofp i32 %i.bo to double
@@ -1345,7 +1349,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %bb.f,
   %indvars.iv101.i.us = phi i64 [ %indvars.iv.next102.i.us, %bb.o ], [ 1, %.lr.ph.split.split.us.i.preheader ] ; 3 uses
   %i.ct = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %indvars.iv101.i.us
   %i.cu = load i32, ptr %i.ct, align 4, !tbaa !9  ; 2 uses
-  %10 = sext i32 %i.cu to i64                     ; 5 uses
+  %10 = zext nneg i32 %i.cu to i64                ; 5 uses
   %i.cv = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %10
   %i.cw = load i32, ptr %i.cv, align 4, !tbaa !9
   %i.cx = sitofp i32 %i.cw to double
@@ -1402,7 +1406,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m, %bb.k,
   %indvars.iv101.i = phi i64 [ %indvars.iv.next102.i, %bb.u ], [ 1, %.lr.ph.split.split.us.i.preheader ] ; 3 uses
   %i.dz = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %indvars.iv101.i
   %i.ea = load i32, ptr %i.dz, align 4, !tbaa !9  ; 2 uses
-  %11 = sext i32 %i.ea to i64                     ; 5 uses
+  %11 = zext nneg i32 %i.ea to i64                ; 5 uses
   %i.eb = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %11
   %i.ec = load i32, ptr %i.eb, align 4, !tbaa !9
   %i.ed = sitofp i32 %i.ec to double
@@ -1466,7 +1470,7 @@ bb.u:                                             ; preds = %bb.t
   %indvars.iv96.i = phi i64 [ %indvars.iv.next97.i, %bb.z ], [ 0, %.lr.ph.split.split.i ] ; 3 uses
   %i.fg = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %indvars.iv96.i
   %i.fh = load i32, ptr %i.fg, align 4, !tbaa !9  ; 2 uses
-  %12 = sext i32 %i.fh to i64                     ; 5 uses
+  %12 = zext nneg i32 %i.fh to i64                ; 5 uses
   %i.fi = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %12
   %i.fj = load i32, ptr %i.fi, align 4, !tbaa !9
   %i.fk = sitofp i32 %i.fj to double
@@ -1522,7 +1526,7 @@ bb.z:                                             ; preds = %bb.y, %bb.x, %bb.v,
   %indvars.iv91.i = phi i64 [ %indvars.iv.next92.i, %bb.ae ], [ 0, %.lr.ph.split.split.i ] ; 3 uses
   %i.gm = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %indvars.iv91.i
   %i.gn = load i32, ptr %i.gm, align 4, !tbaa !9  ; 2 uses
-  %13 = sext i32 %i.gn to i64                     ; 5 uses
+  %13 = zext nneg i32 %i.gn to i64                ; 5 uses
   %i.go = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %13
   %i.gp = load i32, ptr %i.go, align 4, !tbaa !9
   %i.gq = sitofp i32 %i.gp to double

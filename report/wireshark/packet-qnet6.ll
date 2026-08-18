@@ -203,7 +203,7 @@ bb.g:                                             ; preds = %bb.f
   %i.dq = load i32, ptr %3, align 4
   %i.dr = add i32 %i.dq, %spec.select463
   store i32 %i.dr, ptr %3, align 4
-  %i.ds = sub nsw i32 %i.az, %spec.select463
+  %i.ds = sub nuw nsw i32 %i.az, %spec.select463
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
@@ -216,7 +216,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   call void @col_set_str(ptr noundef %i.du, i32 noundef 25, ptr noundef %i.dx)
   %i.dy = zext i16 %i.dh to i32
   %i.dz = icmp ne i16 %i.dh, 0
-  %6 = icmp sgt i32 %.0283, 0
+  %6 = icmp ne i32 %.0283, 0
   %or.cond = select i1 %i.dz, i1 %6, i1 false
   br i1 %or.cond, label %bb.i, label %bb.dz
 
@@ -234,22 +234,19 @@ bb.j:                                             ; preds = %bb.i
   %i.ef = load i32, ptr %3, align 4
   %i.eg = add i32 %i.ef, %spec.select299464
   store i32 %i.eg, ptr %3, align 4
-  %i.eh = sub nsw i32 %.0283, %spec.select299464
+  %i.eh = sub nuw nsw i32 %.0283, %spec.select299464
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i
-  %.1284 = phi i32 [ %i.eh, %bb.j ], [ %.0283, %bb.i ] ; 2 uses
-  %spec.select300465 = call i32 @llvm.smin.i32(i32 %.1284, i32 %i.dy) ; 2 uses
+  %.1284 = phi i32 [ %i.eh, %bb.j ], [ %.0283, %bb.i ]
+  %spec.select300465 = call i32 @llvm.umin.i32(i32 %.1284, i32 %i.dy) ; 3 uses
   %i.ei = load i16, ptr %i.x, align 2
   %switch = icmp ult i16 %i.ei, 2
   br i1 %switch, label %bb.l, label %bb.n
 
 bb.l:                                             ; preds = %bb.k
-  %7 = and i32 %spec.select300465, 65532
-  %8 = icmp ne i32 %7, 0
-  %9 = icmp sgt i32 %.1284, 3
-  %or.cond3 = and i1 %9, %8
-  br i1 %or.cond3, label %bb.m, label %bb.dz
+  %7 = icmp samesign ugt i32 %spec.select300465, 3
+  br i1 %7, label %bb.m, label %bb.dz
 
 bb.m:                                             ; preds = %bb.l
   %i.ej = call fastcc i32 @dissect_qnet6_kif_msgsend_msg(ptr noundef %0, ptr noundef %1, ptr noundef %i.ae, ptr noundef %3, i32 noundef %4)
@@ -257,7 +254,6 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.k
   %i.ek = load i32, ptr %3, align 4
-  %10 = and i32 %spec.select300465, 65535         ; 2 uses
   switch i8 %i.db, label %bb.r [
     i8 1, label %bb.s
     i8 2, label %bb.o
@@ -282,9 +278,9 @@ bb.s:                                             ; preds = %bb.n, %bb.o, %bb.p,
   %hf_qnet6_kif_msg_connect_extra_link_ocb.sink = phi ptr [ @hf_qnet6_kif_msg_connect_extra_data, %bb.r ], [ @hf_qnet6_kif_msg_connect_extra_symlink_path, %bb.o ], [ @hf_qnet6_kif_msg_connect_extra_rename_path, %bb.p ], [ @hf_qnet6_kif_msg_connect_extra_mount, %bb.q ], [ @hf_qnet6_kif_msg_connect_extra_link_ocb, %bb.n ]
   %.sink521 = phi i32 [ 0, %bb.r ], [ 0, %bb.o ], [ 0, %bb.p ], [ 0, %bb.q ], [ %4, %bb.n ]
   %i.el = load i32, ptr %hf_qnet6_kif_msg_connect_extra_link_ocb.sink, align 4
-  %i.em = call ptr @proto_tree_add_item(ptr noundef %i.ae, i32 noundef %i.el, ptr noundef %0, i32 noundef %i.ek, i32 noundef %10, i32 noundef %.sink521) ; 0 uses
+  %i.em = call ptr @proto_tree_add_item(ptr noundef %i.ae, i32 noundef %i.el, ptr noundef %0, i32 noundef %i.ek, i32 noundef %spec.select300465, i32 noundef %.sink521) ; 0 uses
   %i.en = load i32, ptr %3, align 4
-  %i.eo = add i32 %i.en, %10
+  %i.eo = add i32 %i.en, %spec.select300465
   store i32 %i.eo, ptr %3, align 4
   br label %bb.dz
 
@@ -687,7 +683,7 @@ bb.br:                                            ; preds = %bb.bq
   %i.st = load i32, ptr %3, align 4
   %i.su = add i32 %i.st, %i.sq
   store i32 %i.su, ptr %3, align 4
-  %i.sv = sub nsw i32 %i.sk, %i.sq
+  %i.sv = sub nuw nsw i32 %i.sk, %i.sq
   %.pre483 = load i16, ptr %i.n, align 2
   br label %dissect_qnet6_kif_msgsend_msg_extra.exit353
 
@@ -695,8 +691,8 @@ dissect_qnet6_kif_msgsend_msg_extra.exit353:      ; preds = %bb.bp, %bb.bq, %bb.
   %i.sw = phi i16 [ %.pre483, %bb.br ], [ %i.sl, %bb.bq ], [ %i.sl, %bb.bp ]
   %.0451 = phi i32 [ %i.sv, %bb.br ], [ %i.sk, %bb.bq ], [ %i.sk, %bb.bp ]
   %i.sx = icmp slt i16 %i.sw, 0
-  %11 = icmp sgt i32 %.0451, 0
-  %or.cond.i318 = select i1 %i.sx, i1 %11, i1 false
+  %8 = icmp ne i32 %.0451, 0
+  %or.cond.i318 = select i1 %i.sx, i1 %8, i1 false
   br i1 %or.cond.i318, label %bb.bs, label %dissect_qnet6_kif_msgsend_msg_fdinfo.exit
 
 bb.bs:                                            ; preds = %dissect_qnet6_kif_msgsend_msg_extra.exit353

@@ -203,11 +203,11 @@ bb.b:                                             ; preds = %.lr.ph, %.thread298
   %i.l = load ptr, ptr %i.f, align 8, !tbaa !46
   %i.m = getelementptr inbounds nuw [48 x i8], ptr %i.l, i64 %indvars.iv379.a ; 5 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 12
-  %i.o = load i32, ptr %i.n, align 4, !tbaa !25   ; 2 uses
+  %i.o = load i32, ptr %i.n, align 4, !tbaa !25   ; 5 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.m, i64 8
   %i.q = load i32, ptr %i.p, align 8, !tbaa !28   ; 3 uses
   %i.r = sext i32 %i.q to i64                     ; 4 uses
-  %i.s = sext i32 %i.o to i64                     ; 8 uses
+  %i.s = sext i32 %i.o to i64                     ; 5 uses
   %i.t = mul nsw i64 %i.r, %i.s
   %i.u = getelementptr inbounds nuw i8, ptr %i.m, i64 25
   %i.v = load i8, ptr %i.u, align 1, !tbaa !29
@@ -235,7 +235,6 @@ bb.c:                                             ; preds = %bb.b
   %invariant.op483.a = add nsw i64 %i.r, -3
   %invariant.op484 = add nsw i64 %i.r, -1
   %invariant.op485 = add nsw i64 %i.r, -2
-  %invariant.op = add nsw i64 %i.s, -3
   br label %.lr.ph.us
 
 .lr.ph.us:                                        ; preds = %.lr.ph.us.preheader, %._crit_edge.us
@@ -253,7 +252,7 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph.us, %bb.q
-  %indvars.iv = phi i64 [ 0, %.lr.ph.us ], [ %indvars.iv.next, %bb.q ] ; 3 uses
+  %.0147346.us = phi i32 [ 0, %.lr.ph.us ], [ %9, %bb.q ] ; 3 uses
   %.2153345.us = phi i64 [ %.1152349.us, %.lr.ph.us ], [ %.3154.us, %bb.q ] ; 2 uses
   %.0158344.us = phi ptr [ %i.ah, %.lr.ph.us ], [ %i.kp, %bb.q ] ; 2 uses
   %.0159343.us = phi ptr [ %i.ag, %.lr.ph.us ], [ %i.ko, %bb.q ] ; 3 uses
@@ -588,31 +587,33 @@ bb.j:                                             ; preds = %bb.i
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i
-  %i.kl = icmp slt i64 %indvars.iv, %invariant.op
-  %5 = sub nsw i64 %i.s, %indvars.iv
-  %6 = shl nsw i64 %5, 1
-  %7 = select i1 %i.kl, i64 8, i64 %6             ; 6 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr align 2 %.0161341.us, ptr nonnull align 16 %i.a, i64 %7, i1 false)
+  %5 = or disjoint i32 %.0147346.us, 3
+  %i.kl = icmp slt i32 %5, %i.o
+  %6 = sub nuw nsw i32 %i.o, %.0147346.us
+  %7 = shl nuw i32 %6, 1
+  %narrow = select i1 %i.kl, i32 8, i32 %7
+  %8 = zext i32 %narrow to i64                    ; 6 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr align 2 %.0161341.us, ptr nonnull align 16 %i.a, i64 %8, i1 false)
   br i1 %i.ai, label %bb.p, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   br i1 %i.aj, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
-  call void @llvm.memcpy.p0.p0.i64(ptr align 2 %.0160342.us, ptr nonnull align 8 %.8..8..8..sroa_idx, i64 %7, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 2 %.0160342.us, ptr nonnull align 8 %.8..8..8..sroa_idx, i64 %8, i1 false)
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l
   br i1 %i.ak, label %bb.o, label %bb.q
 
 bb.o:                                             ; preds = %bb.n
-  call void @llvm.memcpy.p0.p0.i64(ptr align 2 %.0159343.us, ptr nonnull align 16 %.16..16..16..sroa_idx, i64 %7, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 2 %.0159343.us, ptr nonnull align 16 %.16..16..16..sroa_idx, i64 %8, i1 false)
   br label %bb.q
 
 bb.p:                                             ; preds = %bb.k
-  call void @llvm.memcpy.p0.p0.i64(ptr align 2 %.0160342.us, ptr nonnull align 8 %.8..8..8..sroa_idx494, i64 %7, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr align 2 %.0159343.us, ptr nonnull align 16 %.16..16..16..sroa_idx500, i64 %7, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr align 2 %.0158344.us, ptr nonnull align 8 %.24..24..24..sroa_idx, i64 %7, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 2 %.0160342.us, ptr nonnull align 8 %.8..8..8..sroa_idx494, i64 %8, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 2 %.0159343.us, ptr nonnull align 16 %.16..16..16..sroa_idx500, i64 %8, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 2 %.0158344.us, ptr nonnull align 8 %.24..24..24..sroa_idx, i64 %8, i1 false)
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %bb.o, %bb.n
@@ -620,8 +621,8 @@ bb.q:                                             ; preds = %bb.p, %bb.o, %bb.n
   %i.kn = getelementptr inbounds nuw i8, ptr %.0160342.us, i64 8
   %i.ko = getelementptr inbounds nuw i8, ptr %.0159343.us, i64 8
   %i.kp = getelementptr inbounds nuw i8, ptr %.0158344.us, i64 8
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %.not198.us = icmp slt i64 %indvars.iv.next, %i.s
+  %9 = add nuw nsw i32 %.0147346.us, 4            ; 2 uses
+  %.not198.us = icmp slt i32 %9, %i.o
   br i1 %.not198.us, label %bb.d, label %._crit_edge.us, !llvm.loop !51
 
 ._crit_edge.us:                                   ; preds = %bb.q
