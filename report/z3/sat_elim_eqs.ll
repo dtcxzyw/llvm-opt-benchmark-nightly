@@ -201,11 +201,11 @@ _ZN3sat8elim_eqs18drat_delete_clauseEv.exit:      ; preds = %split, %bb.v
 
 .lr.ph203.preheader:                              ; preds = %._crit_edge190.thread
   %i.db = add nsw i64 %i.h, -8
-  %7 = shl i64 %indvar, 3
-  %8 = sub i64 %i.db, %7                          ; 2 uses
-  %9 = lshr exact i64 %8, 3
-  %i.dc = add nuw nsw i64 %9, 1                   ; 2 uses
-  %min.iters.check = icmp ult i64 %8, 184
+  %7 = lshr exact i64 %i.db, 3
+  %8 = add nuw nsw i64 %7, 1
+  %9 = mul i64 %indvar, 2305843009213693951
+  %i.dc = add i64 %9, %8                          ; 3 uses
+  %min.iters.check = icmp ult i64 %i.dc, 24
   br i1 %min.iters.check, label %.lr.ph203.preheader272, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph203.preheader
@@ -217,7 +217,7 @@ vector.memcheck:                                  ; preds = %.lr.ph203.preheader
   br i1 %diff.check, label %.lr.ph203.preheader272, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %i.dc, 4611686018427387900     ; 3 uses
+  %n.vec = and i64 %i.dc, -4                      ; 3 uses
   %i.dh = shl i64 %n.vec, 3                       ; 2 uses
   %i.di = getelementptr i8, ptr %.0194, i64 %i.dh
   %i.dj = getelementptr i8, ptr %.0107193, i64 %i.dh ; 2 uses

@@ -204,6 +204,9 @@ bb.e:                                             ; preds = %.lr.ph.i
   %i.af = ptrtoint ptr %.sroa.042.0.lcssa.i to i64 ; 4 uses
   %i.ag = sub i64 %i.o, %i.af
   %i.ah = getelementptr inbounds i8, ptr %.sroa.038.0.lcssa.i, i64 %i.ag
+  %65 = sub i64 %i.r, %i.af
+  %66 = lshr i64 %65, 2
+  %67 = add nuw nsw i64 %66, 1
   %i.ai = sub i64 %i.s, %i.af                     ; 2 uses
   %i.aj = lshr i64 %i.ai, 2
   %i.ak = add nuw nsw i64 %i.aj, 1                ; 2 uses
@@ -217,11 +220,8 @@ bb.e:                                             ; preds = %.lr.ph.i
 bb.f:                                             ; preds = %.critedge.i, %.lr.ph70.i
   %indvar = phi i64 [ %indvar.next, %.critedge.i ], [ 0, %.lr.ph70.i ] ; 2 uses
   %.sroa.033.068.i = phi ptr [ %i.dd, %.critedge.i ], [ %.sroa.042.0.lcssa.i, %.lr.ph70.i ] ; 13 uses
-  %65 = shl i64 %indvar, 2
-  %66 = add i64 %65, %i.af
-  %67 = sub i64 %i.r, %66                         ; 2 uses
-  %68 = lshr i64 %67, 2
-  %i.an = add nuw nsw i64 %68, 1                  ; 2 uses
+  %68 = mul i64 %indvar, 4611686018427387903
+  %i.an = add i64 %67, %68                        ; 3 uses
   %i.ao = ptrtoint ptr %.sroa.033.068.i to i64    ; 2 uses
   %i.ap = sub i64 %i.ao, %i.af                    ; 3 uses
   %i.aq = ashr i64 %i.ap, 4                       ; 2 uses
@@ -389,11 +389,11 @@ _ZSt10__count_ifIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEENS0_5__ops
   br i1 %i.cm, label %_ZSt5visitIN4absl12lts_2026052613hash_internal9EqVisitorINS2_13DefaultEqualsEEEJRKSt7variantIJPKN12_GLOBAL__N_117UnorderedSequenceIiEEEESE_EENSt13invoke_resultIT_JDpNSt13__conditionalIX21is_lvalue_reference_vIT0_EEE4typeIRNSt19variant_alternativeILm0ENSt16remove_referenceIDTclsr9__variantE4__asclsr3stdE7declvalISI_EEEEE4typeEE4typeEOSR_EEEE4typeEOSG_DpOSI_.exit, label %.lr.ph.i26.i.preheader
 
 .lr.ph.i26.i.preheader:                           ; preds = %_ZSt10__count_ifIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEENS0_5__ops17_Iter_equals_iterIS7_EEENSt15iterator_traitsIT_E15difference_typeESC_SC_T0_.exit.i
-  %min.iters.check = icmp ult i64 %67, 12
+  %min.iters.check = icmp ult i64 %i.an, 4
   br i1 %min.iters.check, label %.lr.ph.i26.i.preheader427, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i26.i.preheader
-  %n.vec = and i64 %i.an, 9223372036854775804     ; 3 uses
+  %n.vec = and i64 %i.an, -4                      ; 3 uses
   %i.cn = shl i64 %n.vec, 2
   %i.co = getelementptr i8, ptr %.sroa.033.068.i, i64 %i.cn
   %broadcast.splatinsert = insertelement <2 x i32> poison, i32 %i.bx, i64 0
@@ -796,7 +796,10 @@ bb.b:                                             ; preds = %.lr.ph
   %i.h = ptrtoint ptr %.sroa.042.0.lcssa to i64   ; 4 uses
   %i.i = sub i64 %i.g, %i.h
   %i.j = getelementptr inbounds i8, ptr %.sroa.038.0.lcssa, i64 %i.i
-  %i.k = add i64 %i.g, -4
+  %3 = add i64 %i.g, -4
+  %4 = sub i64 %3, %i.h
+  %5 = lshr i64 %4, 2
+  %i.k = add nuw nsw i64 %5, 1
   %i.l = add i64 %i.g, -4
   %i.m = sub i64 %i.l, %i.h                       ; 2 uses
   %i.n = lshr i64 %i.m, 2
@@ -811,11 +814,8 @@ bb.b:                                             ; preds = %.lr.ph
 bb.c:                                             ; preds = %.lr.ph70, %.critedge
   %indvar = phi i64 [ 0, %.lr.ph70 ], [ %indvar.next, %.critedge ] ; 2 uses
   %.sroa.033.068 = phi ptr [ %.sroa.042.0.lcssa, %.lr.ph70 ], [ %i.ch, %.critedge ] ; 13 uses
-  %3 = shl i64 %indvar, 2
-  %4 = add i64 %3, %i.h
-  %5 = sub i64 %i.k, %4                           ; 2 uses
-  %6 = lshr i64 %5, 2
-  %i.r = add nuw nsw i64 %6, 1                    ; 2 uses
+  %6 = mul i64 %indvar, 4611686018427387903
+  %i.r = add i64 %i.k, %6                         ; 3 uses
   %i.s = ptrtoint ptr %.sroa.033.068 to i64       ; 2 uses
   %i.t = sub i64 %i.s, %i.h                       ; 3 uses
   %i.u = ashr i64 %i.t, 4                         ; 2 uses
@@ -983,11 +983,11 @@ _ZSt10__count_ifIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEENS0_5__ops
   br i1 %i.bq, label %.critedge24, label %.lr.ph.i26.preheader
 
 .lr.ph.i26.preheader:                             ; preds = %_ZSt10__count_ifIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEENS0_5__ops17_Iter_equals_iterIS7_EEENSt15iterator_traitsIT_E15difference_typeESC_SC_T0_.exit
-  %min.iters.check = icmp ult i64 %5, 12
+  %min.iters.check = icmp ult i64 %i.r, 4
   br i1 %min.iters.check, label %.lr.ph.i26.preheader122, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i26.preheader
-  %n.vec = and i64 %i.r, 9223372036854775804      ; 3 uses
+  %n.vec = and i64 %i.r, -4                       ; 3 uses
   %i.br = shl i64 %n.vec, 2
   %i.bs = getelementptr i8, ptr %.sroa.033.068, i64 %i.br
   %broadcast.splatinsert = insertelement <2 x i32> poison, i32 %i.bb, i64 0
@@ -1390,6 +1390,9 @@ bb.e:                                             ; preds = %.lr.ph.i
   %i.af = ptrtoint ptr %.sroa.042.0.lcssa.i to i64 ; 4 uses
   %i.ag = sub i64 %i.o, %i.af
   %i.ah = getelementptr inbounds i8, ptr %.sroa.038.0.lcssa.i, i64 %i.ag
+  %65 = sub i64 %i.r, %i.af
+  %66 = lshr i64 %65, 2
+  %67 = add nuw nsw i64 %66, 1
   %i.ai = sub i64 %i.s, %i.af                     ; 2 uses
   %i.aj = lshr i64 %i.ai, 2
   %i.ak = add nuw nsw i64 %i.aj, 1                ; 2 uses
@@ -1403,11 +1406,8 @@ bb.e:                                             ; preds = %.lr.ph.i
 bb.f:                                             ; preds = %.critedge.i, %.lr.ph70.i
   %indvar = phi i64 [ %indvar.next, %.critedge.i ], [ 0, %.lr.ph70.i ] ; 2 uses
   %.sroa.033.068.i = phi ptr [ %i.dd, %.critedge.i ], [ %.sroa.042.0.lcssa.i, %.lr.ph70.i ] ; 13 uses
-  %65 = shl i64 %indvar, 2
-  %66 = add i64 %65, %i.af
-  %67 = sub i64 %i.r, %66                         ; 2 uses
-  %68 = lshr i64 %67, 2
-  %i.an = add nuw nsw i64 %68, 1                  ; 2 uses
+  %68 = mul i64 %indvar, 4611686018427387903
+  %i.an = add i64 %67, %68                        ; 3 uses
   %i.ao = ptrtoint ptr %.sroa.033.068.i to i64    ; 2 uses
   %i.ap = sub i64 %i.ao, %i.af                    ; 3 uses
   %i.aq = ashr i64 %i.ap, 4                       ; 2 uses
@@ -1575,11 +1575,11 @@ _ZSt10__count_ifIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEENS0_5__ops
   br i1 %i.cm, label %_ZSt5visitIN4absl12lts_2026052613hash_internal9EqVisitorINS2_13DefaultEqualsEEEJRKSt7variantIJPKNS1_18hash_test_internal19TypeErasedContainerIN12_GLOBAL__N_117UnorderedSequenceIiEEEEEESH_EENSt13invoke_resultIT_JDpNSt13__conditionalIX21is_lvalue_reference_vIT0_EEE4typeIRNSt19variant_alternativeILm0ENSt16remove_referenceIDTclsr9__variantE4__asclsr3stdE7declvalISL_EEEEE4typeEE4typeEOSU_EEEE4typeEOSJ_DpOSL_.exit, label %.lr.ph.i26.i.preheader
 
 .lr.ph.i26.i.preheader:                           ; preds = %_ZSt10__count_ifIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEENS0_5__ops17_Iter_equals_iterIS7_EEENSt15iterator_traitsIT_E15difference_typeESC_SC_T0_.exit.i
-  %min.iters.check = icmp ult i64 %67, 12
+  %min.iters.check = icmp ult i64 %i.an, 4
   br i1 %min.iters.check, label %.lr.ph.i26.i.preheader427, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i26.i.preheader
-  %n.vec = and i64 %i.an, 9223372036854775804     ; 3 uses
+  %n.vec = and i64 %i.an, -4                      ; 3 uses
   %i.cn = shl i64 %n.vec, 2
   %i.co = getelementptr i8, ptr %.sroa.033.068.i, i64 %i.cn
   %broadcast.splatinsert = insertelement <2 x i32> poison, i32 %i.bx, i64 0
@@ -1982,6 +1982,9 @@ bb.c:                                             ; preds = %.lr.ph.i
   %i.au = sub i64 %i.ag, %i.at
   %i.av = getelementptr inbounds i8, ptr %.sroa.038.0.lcssa.i, i64 %i.au
   %i.aw = add i64 %i.ag, -4
+  %65 = sub i64 %i.aw, %i.at
+  %66 = lshr i64 %65, 2
+  %67 = add nuw nsw i64 %66, 1
   %i.ax = add i64 %i.ag, -4
   %i.ay = sub i64 %i.ax, %i.at                    ; 2 uses
   %i.az = lshr i64 %i.ay, 2
@@ -1996,11 +1999,8 @@ bb.c:                                             ; preds = %.lr.ph.i
 bb.d:                                             ; preds = %.critedge.i, %.lr.ph70.i
   %indvar = phi i64 [ %indvar.next, %.critedge.i ], [ 0, %.lr.ph70.i ] ; 2 uses
   %.sroa.033.068.i = phi ptr [ %i.dt, %.critedge.i ], [ %.sroa.042.0.lcssa.i, %.lr.ph70.i ] ; 13 uses
-  %65 = shl i64 %indvar, 2
-  %66 = add i64 %65, %i.at
-  %67 = sub i64 %i.aw, %66                        ; 2 uses
-  %68 = lshr i64 %67, 2
-  %i.bd = add nuw nsw i64 %68, 1                  ; 2 uses
+  %68 = mul i64 %indvar, 4611686018427387903
+  %i.bd = add i64 %67, %68                        ; 3 uses
   %i.be = ptrtoint ptr %.sroa.033.068.i to i64    ; 2 uses
   %i.bf = sub i64 %i.be, %i.at                    ; 3 uses
   %i.bg = ashr i64 %i.bf, 4                       ; 2 uses
@@ -2168,11 +2168,11 @@ _ZSt10__count_ifIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEENS0_5__ops
   br i1 %i.dc, label %_ZSt5visitIN4absl12lts_2026052613hash_internal9EqVisitorINS2_13DefaultEqualsEEEJRKSt7variantIJPKSt6vectorIN12_GLOBAL__N_117UnorderedSequenceIiEESaISA_EEEESH_EENSt13invoke_resultIT_JDpNSt13__conditionalIX21is_lvalue_reference_vIT0_EEE4typeIRNSt19variant_alternativeILm0ENSt16remove_referenceIDTclsr9__variantE4__asclsr3stdE7declvalISL_EEEEE4typeEE4typeEOSU_EEEE4typeEOSJ_DpOSL_.exit, label %.lr.ph.i26.i.preheader
 
 .lr.ph.i26.i.preheader:                           ; preds = %_ZSt10__count_ifIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEENS0_5__ops17_Iter_equals_iterIS7_EEENSt15iterator_traitsIT_E15difference_typeESC_SC_T0_.exit.i
-  %min.iters.check = icmp ult i64 %67, 12
+  %min.iters.check = icmp ult i64 %i.bd, 4
   br i1 %min.iters.check, label %.lr.ph.i26.i.preheader439, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i26.i.preheader
-  %n.vec = and i64 %i.bd, 9223372036854775804     ; 3 uses
+  %n.vec = and i64 %i.bd, -4                      ; 3 uses
   %i.dd = shl i64 %n.vec, 2
   %i.de = getelementptr i8, ptr %.sroa.033.068.i, i64 %i.dd
   %broadcast.splatinsert = insertelement <2 x i32> poison, i32 %i.cn, i64 0
@@ -2575,6 +2575,9 @@ bb.c:                                             ; preds = %.lr.ph.i
   %i.au = sub i64 %i.ag, %i.at
   %i.av = getelementptr inbounds i8, ptr %.sroa.038.0.lcssa.i, i64 %i.au
   %i.aw = add i64 %i.ag, -4
+  %65 = sub i64 %i.aw, %i.at
+  %66 = lshr i64 %65, 2
+  %67 = add nuw nsw i64 %66, 1
   %i.ax = add i64 %i.ag, -4
   %i.ay = sub i64 %i.ax, %i.at                    ; 2 uses
   %i.az = lshr i64 %i.ay, 2
@@ -2589,11 +2592,8 @@ bb.c:                                             ; preds = %.lr.ph.i
 bb.d:                                             ; preds = %.critedge.i, %.lr.ph70.i
   %indvar = phi i64 [ %indvar.next, %.critedge.i ], [ 0, %.lr.ph70.i ] ; 2 uses
   %.sroa.033.068.i = phi ptr [ %i.dt, %.critedge.i ], [ %.sroa.042.0.lcssa.i, %.lr.ph70.i ] ; 13 uses
-  %65 = shl i64 %indvar, 2
-  %66 = add i64 %65, %i.at
-  %67 = sub i64 %i.aw, %66                        ; 2 uses
-  %68 = lshr i64 %67, 2
-  %i.bd = add nuw nsw i64 %68, 1                  ; 2 uses
+  %68 = mul i64 %indvar, 4611686018427387903
+  %i.bd = add i64 %67, %68                        ; 3 uses
   %i.be = ptrtoint ptr %.sroa.033.068.i to i64    ; 2 uses
   %i.bf = sub i64 %i.be, %i.at                    ; 3 uses
   %i.bg = ashr i64 %i.bf, 4                       ; 2 uses
@@ -2761,11 +2761,11 @@ _ZSt10__count_ifIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEENS0_5__ops
   br i1 %i.dc, label %_ZSt5visitIN4absl12lts_2026052613hash_internal9EqVisitorINS2_13DefaultEqualsEEEJRKSt7variantIJPKSt6vectorINS1_18hash_test_internal19TypeErasedContainerIN12_GLOBAL__N_117UnorderedSequenceIiEEEESaISD_EEEESK_EENSt13invoke_resultIT_JDpNSt13__conditionalIX21is_lvalue_reference_vIT0_EEE4typeIRNSt19variant_alternativeILm0ENSt16remove_referenceIDTclsr9__variantE4__asclsr3stdE7declvalISO_EEEEE4typeEE4typeEOSX_EEEE4typeEOSM_DpOSO_.exit, label %.lr.ph.i26.i.preheader
 
 .lr.ph.i26.i.preheader:                           ; preds = %_ZSt10__count_ifIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEENS0_5__ops17_Iter_equals_iterIS7_EEENSt15iterator_traitsIT_E15difference_typeESC_SC_T0_.exit.i
-  %min.iters.check = icmp ult i64 %67, 12
+  %min.iters.check = icmp ult i64 %i.bd, 4
   br i1 %min.iters.check, label %.lr.ph.i26.i.preheader439, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i26.i.preheader
-  %n.vec = and i64 %i.bd, 9223372036854775804     ; 3 uses
+  %n.vec = and i64 %i.bd, -4                      ; 3 uses
   %i.dd = shl i64 %n.vec, 2
   %i.de = getelementptr i8, ptr %.sroa.033.068.i, i64 %i.dd
   %broadcast.splatinsert = insertelement <2 x i32> poison, i32 %i.cn, i64 0

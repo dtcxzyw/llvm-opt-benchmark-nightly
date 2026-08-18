@@ -203,21 +203,21 @@ iter.check:                                       ; preds = %.lr.ph
   %i.bu = icmp ne ptr %i.m, %i.bp
   call void @llvm.assume(i1 %i.bu)
   %i.bv = add i64 %.promoted76, -4
-  %3 = shl i64 %indvar, 2
-  %4 = add i64 %3, %i.n
-  %5 = sub i64 %i.bv, %4                          ; 3 uses
-  %6 = lshr i64 %5, 2
-  %i.bw = add nuw nsw i64 %6, 1                   ; 5 uses
-  %min.iters.check = icmp ult i64 %5, 28
+  %3 = sub i64 %i.bv, %i.n
+  %4 = lshr i64 %3, 2
+  %5 = add nuw nsw i64 %4, 1
+  %6 = mul i64 %indvar, 4611686018427387903
+  %i.bw = add i64 %6, %5                          ; 7 uses
+  %min.iters.check = icmp ult i64 %i.bw, 8
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check78 = icmp ult i64 %5, 124
+  %min.iters.check78 = icmp ult i64 %i.bw, 32
   br i1 %min.iters.check78, label %vec.epilog.ph, label %vector.ph79
 
 vector.ph79:                                      ; preds = %vector.main.loop.iter.check
   %i.bx = and i64 %i.bw, 24
-  %n.vec = and i64 %i.bw, 9223372036854775776     ; 4 uses
+  %n.vec = and i64 %i.bw, -32                     ; 4 uses
   %i.by = shl i64 %n.vec, 2
   %i.bz = getelementptr i8, ptr %i.m, i64 %i.by
   br label %vector.body80
@@ -260,7 +260,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block88
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %bc.merge.rdx = phi i32 [ %i.cj, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec91 = and i64 %i.bw, 9223372036854775800   ; 3 uses
+  %n.vec91 = and i64 %i.bw, -8                    ; 3 uses
   %i.ck = shl i64 %n.vec91, 2
   %i.cl = getelementptr i8, ptr %i.m, i64 %i.ck
   %i.cm = insertelement <8 x i32> <i32 poison, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0>, i32 %bc.merge.rdx, i64 0

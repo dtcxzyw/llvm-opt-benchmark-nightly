@@ -204,7 +204,7 @@ _RNCNvNtNtCsiU5vK8fN4ZC_11ide_assists8handlers10flip_comma9flip_trees_0B7_.exit.
   br i1 %.not.i73, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %.noexc74
-  %i.bm = add nuw nsw i64 %.sroa.02.08.i, 1
+  %i.bm = add i64 %.sroa.02.08.i, 1
   %i.bn = icmp eq ptr %i.bh, %i.bc
   br i1 %i.bn, label %.invoke261, label %.lr.ph.i68
 
