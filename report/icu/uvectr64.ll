@@ -43,7 +43,7 @@ bb.a:
   store i32 0, ptr %i.c, align 8, !tbaa !16
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   store ptr null, ptr %i.d, align 8, !tbaa !17
-  %i.e = invoke noalias dereferenceable_or_null(64) ptr @uprv_malloc_78(i64 noundef 64) #14
+  %i.e = invoke noalias dereferenceable_or_null(64) ptr @uprv_malloc_78(i64 noundef 64) #15
           to label %.noexc unwind label %bb.d     ; 2 uses
 
 .noexc:                                           ; preds = %bb.a
@@ -65,7 +65,7 @@ _ZN6icu_789UVector645_initEiR10UErrorCode.exit:   ; preds = %bb.c, %bb.b
 bb.d:                                             ; preds = %bb.a
   %i.g = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZN6icu_787UObjectD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %0) #15
+  tail call void @_ZN6icu_787UObjectD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %0) #16
   resume { ptr, i32 } %i.g
 }
 
@@ -90,7 +90,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %.1 = phi i32 [ %i.g, %bb.b ], [ %.0, %bb.a ]   ; 2 uses
   %i.h = sext i32 %.1 to i64
   %i.i = shl nsw i64 %i.h, 3
-  %i.j = tail call noalias ptr @uprv_malloc_78(i64 noundef %i.i) #14 ; 2 uses
+  %i.j = tail call noalias ptr @uprv_malloc_78(i64 noundef %i.i) #15 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 24
   store ptr %i.j, ptr %i.k, align 8, !tbaa !17
   %i.l = icmp eq ptr %i.j, null
@@ -139,7 +139,7 @@ bb.b:                                             ; preds = %bb.a
   %.1.i = phi i32 [ %spec.store.select.i, %bb.a ], [ %i.g, %bb.b ] ; 2 uses
   %i.h = sext i32 %.1.i to i64
   %i.i = shl nsw i64 %i.h, 3
-  %i.j = invoke noalias ptr @uprv_malloc_78(i64 noundef %i.i) #14
+  %i.j = invoke noalias ptr @uprv_malloc_78(i64 noundef %i.i) #15
           to label %.noexc4 unwind label %bb.e    ; 2 uses
 
 .noexc4:                                          ; preds = %.noexc
@@ -161,7 +161,7 @@ _ZN6icu_789UVector645_initEiR10UErrorCode.exit:   ; preds = %bb.d, %bb.c
 bb.e:                                             ; preds = %.noexc, %bb.b
   %i.l = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZN6icu_787UObjectD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %0) #15
+  tail call void @_ZN6icu_787UObjectD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %0) #16
   resume { ptr, i32 } %i.l
 }
 
@@ -181,14 +181,14 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   store ptr null, ptr %i.a, align 8, !tbaa !17
-  tail call void @_ZN6icu_787UObjectD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %0) #15
+  tail call void @_ZN6icu_787UObjectD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %0) #16
   ret void
 
 bb.c:                                             ; preds = %bb.a
   %i.c = landingpad { ptr, i32 }
           catch ptr null
   %i.d = extractvalue { ptr, i32 } %i.c, 0
-  tail call void @__clang_call_terminate(ptr %i.d) #16
+  tail call void @__clang_call_terminate(ptr %i.d) #17
   unreachable
 }
 
@@ -197,8 +197,8 @@ declare void @uprv_free_78(ptr noundef) local_unnamed_addr #3
 ; Function Attrs: noinline noreturn nounwind uwtable
 define linkonce_odr hidden void @__clang_call_terminate(ptr noundef %0) local_unnamed_addr #6 comdat {
 bb.a:
-  %i.a = tail call ptr @__cxa_begin_catch(ptr %0) #15 ; 0 uses
-  tail call void @_ZSt9terminatev() #16
+  %i.a = tail call ptr @__cxa_begin_catch(ptr %0) #16 ; 0 uses
+  tail call void @_ZSt9terminatev() #17
   unreachable
 }
 
@@ -210,8 +210,8 @@ declare void @_ZSt9terminatev() local_unnamed_addr #7
 ; Function Attrs: mustprogress nounwind uwtable
 define void @_ZN6icu_789UVector64D0Ev(ptr noundef nonnull align 8 dereferenceable(32) %0) unnamed_addr #5 align 2 {
 bb.a:
-  tail call void @_ZN6icu_789UVector64D1Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %0) #15
-  tail call void @_ZN6icu_787UMemorydlEPv(ptr noundef nonnull %0) #15
+  tail call void @_ZN6icu_789UVector64D1Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %0) #16
+  tail call void @_ZN6icu_787UMemorydlEPv(ptr noundef nonnull %0) #16
   ret void
 }
 
@@ -266,7 +266,7 @@ bb.h:                                             ; preds = %bb.g
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !17
   %i.r = zext nneg i32 %.1.i.i to i64
   %i.s = shl nuw nsw i64 %i.r, 3
-  %i.t = tail call ptr @uprv_realloc_78(ptr noundef %i.q, i64 noundef %i.s) #17 ; 2 uses
+  %i.t = tail call ptr @uprv_realloc_78(ptr noundef %i.q, i64 noundef %i.s) #18 ; 2 uses
   %i.u = icmp eq ptr %i.t, null
   br i1 %i.u, label %_ZN6icu_789UVector6414ensureCapacityEiR10UErrorCode.exit.thread.sink.split, label %_ZN6icu_789UVector6414ensureCapacityEiR10UErrorCode.exit
 
@@ -312,7 +312,7 @@ bb.l:                                             ; preds = %bb.k
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !17
   %i.al = zext nneg i32 %.1.i.i.i to i64
   %i.am = shl nuw nsw i64 %i.al, 3
-  %i.an = tail call ptr @uprv_realloc_78(ptr noundef %i.ak, i64 noundef %i.am) #17 ; 2 uses
+  %i.an = tail call ptr @uprv_realloc_78(ptr noundef %i.ak, i64 noundef %i.am) #18 ; 2 uses
   %i.ao = icmp eq ptr %i.an, null
   br i1 %i.ao, label %_ZN6icu_789UVector647setSizeEi.exit, label %bb.m
 
@@ -485,7 +485,7 @@ bb.f:                                             ; preds = %bb.e
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !17
   %i.q = zext nneg i32 %.1.i.i to i64
   %i.r = shl nuw nsw i64 %i.q, 3
-  %i.s = tail call ptr @uprv_realloc_78(ptr noundef %i.p, i64 noundef %i.r) #17 ; 2 uses
+  %i.s = tail call ptr @uprv_realloc_78(ptr noundef %i.p, i64 noundef %i.r) #18 ; 2 uses
   %i.t = icmp eq ptr %i.s, null
   br i1 %i.t, label %.critedge, label %bb.g
 
@@ -644,7 +644,7 @@ bb.k:                                             ; preds = %bb.i
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !17
   %i.s = zext nneg i32 %.1.i.i to i64
   %i.t = shl nuw nsw i64 %i.s, 3
-  %i.u = tail call ptr @uprv_realloc_78(ptr noundef %i.r, i64 noundef %i.t) #17 ; 2 uses
+  %i.u = tail call ptr @uprv_realloc_78(ptr noundef %i.r, i64 noundef %i.t) #18 ; 2 uses
   %i.v = icmp eq ptr %i.u, null
   br i1 %i.v, label %bb.l, label %bb.m
 
@@ -659,67 +659,35 @@ bb.m:                                             ; preds = %bb.k
   br label %_ZN6icu_789UVector6414ensureCapacityEiR10UErrorCode.exit
 
 _ZN6icu_789UVector6414ensureCapacityEiR10UErrorCode.exit: ; preds = %bb.m, %bb.c
-  %i.w = phi i32 [ %.pre, %bb.m ], [ %i.c, %bb.c ] ; 3 uses
+  %i.w = phi i32 [ %.pre, %bb.m ], [ %i.c, %bb.c ] ; 4 uses
   %i.x = icmp sgt i32 %i.w, %2
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !17   ; 3 uses
-  br i1 %i.x, label %.lr.ph, label %._crit_edge
+  br i1 %i.x, label %vector.body, label %._crit_edge
 
-.lr.ph:                                           ; preds = %_ZN6icu_789UVector6414ensureCapacityEiR10UErrorCode.exit
-  %4 = zext i32 %i.w to i64                       ; 5 uses
-  %5 = zext nneg i32 %2 to i64                    ; 2 uses
-  %6 = add nsw i64 %4, -1
-  %7 = tail call i64 @llvm.umin.i64(i64 %6, i64 %5)
-  %8 = sub nsw i64 %4, %7                         ; 3 uses
-  %min.iters.check = icmp ult i64 %8, 4
-  br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
+vector.body:                                      ; preds = %_ZN6icu_789UVector6414ensureCapacityEiR10UErrorCode.exit
+  %4 = zext nneg i32 %i.w to i64
+  %5 = shl nuw nsw i64 %4, 3                      ; 2 uses
+  %6 = xor i32 %2, -1
+  %7 = add nsw i32 %i.w, %6
+  %8 = zext i32 %7 to i64
+  %9 = shl nuw nsw i64 %8, 3                      ; 3 uses
+  %10 = sub nsw i64 %5, %9
+  %i.aa = getelementptr i8, ptr %i.z, i64 %10
+  %11 = add nsw i64 %5, -8
+  %12 = sub nsw i64 %11, %9
+  %scevgep16 = getelementptr i8, ptr %i.z, i64 %12
+  %index.next = add nuw nsw i64 %9, 8
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.aa, ptr noundef nonnull align 8 dereferenceable(1) %scevgep16, i64 %index.next, i1 false), !tbaa !20
+  br label %._crit_edge
 
-vector.ph:                                        ; preds = %.lr.ph
-  %n.vec = and i64 %8, -4                         ; 3 uses
-  %9 = sub nsw i64 %4, %n.vec
-  br label %vector.body
-
-vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %10 = sub i64 %4, %index
-  %11 = getelementptr [8 x i8], ptr %i.z, i64 %10 ; 4 uses
-  %12 = getelementptr i8, ptr %11, i64 -16
-  %13 = getelementptr i8, ptr %11, i64 -32
-  %wide.load = load <2 x i64>, ptr %12, align 8, !tbaa !20
-  %wide.load22 = load <2 x i64>, ptr %13, align 8, !tbaa !20
-  %i.aa = getelementptr i8, ptr %11, i64 -8
-  %14 = getelementptr i8, ptr %11, i64 -24
-  store <2 x i64> %wide.load, ptr %i.aa, align 8, !tbaa !20
-  store <2 x i64> %wide.load22, ptr %14, align 8, !tbaa !20
-  %index.next = add nuw i64 %index, 4             ; 2 uses
-  %15 = icmp eq i64 %index.next, %n.vec
-  br i1 %15, label %middle.block, label %vector.body, !llvm.loop !30
-
-middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %8, %n.vec
-  br i1 %cmp.n, label %._crit_edge, label %scalar.ph.preheader
-
-scalar.ph.preheader:                              ; preds = %.lr.ph, %middle.block
-  %indvars.iv.ph = phi i64 [ %4, %.lr.ph ], [ %9, %middle.block ]
-  br label %scalar.ph
-
-._crit_edge:                                      ; preds = %scalar.ph, %middle.block, %_ZN6icu_789UVector6414ensureCapacityEiR10UErrorCode.exit
+._crit_edge:                                      ; preds = %_ZN6icu_789UVector6414ensureCapacityEiR10UErrorCode.exit, %vector.body
   %i.ab = zext nneg i32 %2 to i64
   %i.ac = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %i.ab
   store i64 %1, ptr %i.ac, align 8, !tbaa !20
   %i.ad = add nsw i32 %i.w, 1
   store i32 %i.ad, ptr %i.b, align 8, !tbaa !10
   br label %_ZN6icu_789UVector6414ensureCapacityEiR10UErrorCode.exit.thread
-
-scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %scalar.ph ], [ %indvars.iv.ph, %scalar.ph.preheader ] ; 2 uses
-  %16 = getelementptr [8 x i8], ptr %i.z, i64 %indvars.iv ; 2 uses
-  %17 = getelementptr i8, ptr %16, i64 -8
-  %18 = load i64, ptr %17, align 8, !tbaa !20
-  store i64 %18, ptr %16, align 8, !tbaa !20
-  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
-  %19 = icmp samesign ugt i64 %indvars.iv.next, %5
-  br i1 %19, label %scalar.ph, label %._crit_edge, !llvm.loop !31
 
 _ZN6icu_789UVector6414ensureCapacityEiR10UErrorCode.exit.thread: ; preds = %bb.l, %bb.j, %bb.h, %bb.f, %bb.d, %._crit_edge, %bb.b, %bb.a
   ret void
@@ -791,7 +759,7 @@ bb.k:                                             ; preds = %bb.i
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !17
   %i.p = zext nneg i32 %.1 to i64
   %i.q = shl nuw nsw i64 %i.p, 3
-  %i.r = tail call ptr @uprv_realloc_78(ptr noundef %i.o, i64 noundef %i.q) #17 ; 2 uses
+  %i.r = tail call ptr @uprv_realloc_78(ptr noundef %i.o, i64 noundef %i.q) #18 ; 2 uses
   %i.s = icmp eq ptr %i.r, null
   br i1 %i.s, label %bb.l, label %bb.m
 
@@ -834,7 +802,7 @@ bb.c:                                             ; preds = %bb.b
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !17
   %i.h = zext nneg i32 %spec.store.select to i64
   %i.i = shl nuw nsw i64 %i.h, 3
-  %i.j = tail call ptr @uprv_realloc_78(ptr noundef %i.g, i64 noundef %i.i) #17 ; 2 uses
+  %i.j = tail call ptr @uprv_realloc_78(ptr noundef %i.g, i64 noundef %i.i) #18 ; 2 uses
   %i.k = icmp eq ptr %i.j, null
   br i1 %i.k, label %bb.f, label %bb.d
 
@@ -864,8 +832,8 @@ declare i32 @llvm.smin.i32(i32, i32) #12
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #13
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #12
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
+declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly captures(none), i64, i1 immarg) #14
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -881,10 +849,11 @@ attributes #10 = { mustprogress nofree norecurse nosync nounwind willreturn memo
 attributes #11 = { allocsize(1) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #12 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #13 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #14 = { allocsize(0) }
-attributes #15 = { nounwind }
-attributes #16 = { noreturn nounwind }
-attributes #17 = { allocsize(1) }
+attributes #14 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
+attributes #15 = { allocsize(0) }
+attributes #16 = { nounwind }
+attributes #17 = { noreturn nounwind }
+attributes #18 = { allocsize(1) }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}
@@ -920,6 +889,4 @@ attributes #17 = { allocsize(1) }
 !27 = !{!"llvm.loop.unroll.disable"}
 !28 = distinct !{!28, !23, !24}
 !29 = distinct !{!29, !23}
-!30 = distinct !{!30, !23, !24, !25}
-!31 = distinct !{!31, !23, !25, !24}
 end_hunk_0
