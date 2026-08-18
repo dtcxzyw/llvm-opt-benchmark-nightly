@@ -1,7 +1,7 @@
 inline.NumInlined: 256
 inline.NumDeleted: 132
-loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 1
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@"_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPSt4pairISt17basic_string_viewIcSt11char_traitsIcEEPFbRKSt6vectorINSt7__cxx1112basic_stringIcS5_SaIcEEESaISB_EER17cmExecutionStatusEES7_ISK_SaISK_EEEElNS0_5__ops15_Iter_comp_iterIZN17cmSubcommandTableC1ESt16initializer_listIS2_IN2cm18static_string_viewESJ_EEE3$_0EEEvT_SZ_T0_T1_":bb.a
   %.val1.i13.i.i = load ptr, ptr %i.i, align 8, !tbaa !18
   %i.ch = tail call i32 @memcmp(ptr noundef readonly %.val1.i13.i.i, ptr noundef readonly %.val3.i12.i.i, i64 noundef %.sroa.speculated.i.i.i.i10.i.i) #17 ; 2 uses
@@ -203,8 +203,9 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.g
-  %.sroa.08.020 = phi ptr [ %.sroa.08.017, %.lr.ph ], [ %.sroa.08.0, %bb.g ] ; 7 uses
-  %.pn19 = phi ptr [ %0, %.lr.ph ], [ %.sroa.08.020, %bb.g ] ; 4 uses
+  %indvar = phi i64 [ 0, %.lr.ph ], [ %indvar.next, %bb.g ] ; 3 uses
+  %.sroa.08.020 = phi ptr [ %.sroa.08.017, %.lr.ph ], [ %.sroa.08.0, %bb.g ] ; 9 uses
+  %.pn19 = phi ptr [ %0, %.lr.ph ], [ %.sroa.08.020, %bb.g ] ; 6 uses
   %.val.i = load i64, ptr %.sroa.08.020, align 8, !tbaa !16 ; 5 uses
   %.val2.i = load i64, ptr %0, align 8, !tbaa !16 ; 2 uses
   %.sroa.speculated.i.i.i.i = tail call i64 @llvm.umin.i64(i64 %.val2.i, i64 %.val.i) ; 2 uses
@@ -239,29 +240,56 @@ bb.c:                                             ; preds = %"_ZN9__gnu_cxx5__op
   %i.k = ptrtoint ptr %.sroa.08.020 to i64
   %i.l = sub i64 %i.k, %i.c                       ; 2 uses
   %i.m = icmp sgt i64 %i.l, 0
-  br i1 %i.m, label %.lr.ph.preheader.i.i.i.i.i.a, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt4pairISt17basic_string_viewIcSt11char_traitsIcEEPFbRKSt6vectorINSt7__cxx1112basic_stringIcS5_SaIcEEESaISB_EER17cmExecutionStatusEES7_ISK_SaISK_EEEESO_ET0_T_SQ_SP_.exit
+  br i1 %i.m, label %.lr.ph.preheader.i.i.i.i.i, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt4pairISt17basic_string_viewIcSt11char_traitsIcEEPFbRKSt6vectorINSt7__cxx1112basic_stringIcS5_SaIcEEESaISB_EER17cmExecutionStatusEES7_ISK_SaISK_EEEESO_ET0_T_SQ_SP_.exit
 
-.lr.ph.preheader.i.i.i.i.i.a:                     ; preds = %bb.c
-  %i.n = getelementptr inbounds nuw i8, ptr %.pn19, i64 48
-  %2 = udiv exact i64 %i.l, 24
-  br label %.lr.ph.i.i.i.i.i
+.lr.ph.preheader.i.i.i.i.i:                       ; preds = %bb.c
+  %2 = getelementptr inbounds nuw i8, ptr %.pn19, i64 48
+  %3 = udiv exact i64 %i.l, 24                    ; 2 uses
+  %4 = and i64 %indvar, 1
+  %lcmp.mod.not.not = icmp eq i64 %4, 0
+  br i1 %lcmp.mod.not.not, label %.lr.ph.preheader.i.i.i.i.i.a, label %.lr.ph.i.i.i.i.i.prol.loopexit
 
-.lr.ph.i.i.i.i.i:                                 ; preds = %.lr.ph.i.i.i.i.i, %.lr.ph.preheader.i.i.i.i.i.a
-  %.010.i.i.i.i.i = phi i64 [ %i.t, %.lr.ph.i.i.i.i.i ], [ %2, %.lr.ph.preheader.i.i.i.i.i.a ] ; 2 uses
-  %.069.i.i.i.i.i = phi ptr [ %i.p, %.lr.ph.i.i.i.i.i ], [ %i.n, %.lr.ph.preheader.i.i.i.i.i.a ] ; 2 uses
-  %.078.i.i.i.i.i = phi ptr [ %i.o, %.lr.ph.i.i.i.i.i ], [ %.sroa.08.020, %.lr.ph.preheader.i.i.i.i.i.a ] ; 2 uses
-  %i.o = getelementptr inbounds i8, ptr %.078.i.i.i.i.i, i64 -24 ; 2 uses
-  %i.p = getelementptr inbounds i8, ptr %.069.i.i.i.i.i, i64 -24 ; 2 uses
+.lr.ph.preheader.i.i.i.i.i.a:                     ; preds = %.lr.ph.preheader.i.i.i.i.i
+  %5 = getelementptr inbounds i8, ptr %.sroa.08.020, i64 -24 ; 2 uses
+  %6 = getelementptr inbounds nuw i8, ptr %.pn19, i64 24 ; 2 uses
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %6, ptr noundef nonnull align 8 dereferenceable(24) %5, i64 16, i1 false), !tbaa.struct !15
+  %7 = getelementptr inbounds i8, ptr %.sroa.08.020, i64 -8
+  %8 = load ptr, ptr %7, align 8, !tbaa !28
+  %i.n = getelementptr inbounds nuw i8, ptr %.pn19, i64 40
+  store ptr %8, ptr %i.n, align 8, !tbaa !24
+  %9 = add nsw i64 %3, -1
+  br label %.lr.ph.i.i.i.i.i.prol.loopexit
+
+.lr.ph.i.i.i.i.i.prol.loopexit:                   ; preds = %.lr.ph.preheader.i.i.i.i.i.a, %.lr.ph.preheader.i.i.i.i.i
+  %.010.i.i.i.i.i.unr = phi i64 [ %3, %.lr.ph.preheader.i.i.i.i.i ], [ %9, %.lr.ph.preheader.i.i.i.i.i.a ]
+  %.069.i.i.i.i.i.unr = phi ptr [ %2, %.lr.ph.preheader.i.i.i.i.i ], [ %6, %.lr.ph.preheader.i.i.i.i.i.a ]
+  %.078.i.i.i.i.i.unr = phi ptr [ %.sroa.08.020, %.lr.ph.preheader.i.i.i.i.i ], [ %5, %.lr.ph.preheader.i.i.i.i.i.a ]
+  %10 = icmp eq i64 %indvar, 0
+  br i1 %10, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt4pairISt17basic_string_viewIcSt11char_traitsIcEEPFbRKSt6vectorINSt7__cxx1112basic_stringIcS5_SaIcEEESaISB_EER17cmExecutionStatusEES7_ISK_SaISK_EEEESO_ET0_T_SQ_SP_.exit, label %.lr.ph.i.i.i.i.i
+
+.lr.ph.i.i.i.i.i:                                 ; preds = %.lr.ph.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i
+  %.010.i.i.i.i.i = phi i64 [ %i.t, %.lr.ph.i.i.i.i.i ], [ %.010.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.prol.loopexit ] ; 2 uses
+  %.069.i.i.i.i.i = phi ptr [ %i.p, %.lr.ph.i.i.i.i.i ], [ %.069.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.prol.loopexit ] ; 4 uses
+  %.078.i.i.i.i.i = phi ptr [ %i.o, %.lr.ph.i.i.i.i.i ], [ %.078.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.prol.loopexit ] ; 4 uses
+  %11 = getelementptr inbounds i8, ptr %.078.i.i.i.i.i, i64 -24
+  %12 = getelementptr inbounds i8, ptr %.069.i.i.i.i.i, i64 -24
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %12, ptr noundef nonnull align 8 dereferenceable(24) %11, i64 16, i1 false), !tbaa.struct !15
+  %13 = getelementptr inbounds i8, ptr %.078.i.i.i.i.i, i64 -8
+  %14 = load ptr, ptr %13, align 8, !tbaa !28
+  %15 = getelementptr inbounds i8, ptr %.069.i.i.i.i.i, i64 -8
+  store ptr %14, ptr %15, align 8, !tbaa !24
+  %i.o = getelementptr inbounds i8, ptr %.078.i.i.i.i.i, i64 -48 ; 2 uses
+  %i.p = getelementptr inbounds i8, ptr %.069.i.i.i.i.i, i64 -48 ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.p, ptr noundef nonnull align 8 dereferenceable(24) %i.o, i64 16, i1 false), !tbaa.struct !15
-  %i.q = getelementptr inbounds i8, ptr %.078.i.i.i.i.i, i64 -8
+  %i.q = getelementptr inbounds i8, ptr %.078.i.i.i.i.i, i64 -32
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !28
-  %i.s = getelementptr inbounds i8, ptr %.069.i.i.i.i.i, i64 -8
+  %i.s = getelementptr inbounds i8, ptr %.069.i.i.i.i.i, i64 -32
   store ptr %i.r, ptr %i.s, align 8, !tbaa !24
-  %i.t = add nsw i64 %.010.i.i.i.i.i, -1
-  %3 = icmp samesign ugt i64 %.010.i.i.i.i.i, 1
-  br i1 %3, label %.lr.ph.i.i.i.i.i, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt4pairISt17basic_string_viewIcSt11char_traitsIcEEPFbRKSt6vectorINSt7__cxx1112basic_stringIcS5_SaIcEEESaISB_EER17cmExecutionStatusEES7_ISK_SaISK_EEEESO_ET0_T_SQ_SP_.exit, !llvm.loop !57
+  %i.t = add nsw i64 %.010.i.i.i.i.i, -2
+  %16 = icmp sgt i64 %.010.i.i.i.i.i, 2
+  br i1 %16, label %.lr.ph.i.i.i.i.i, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt4pairISt17basic_string_viewIcSt11char_traitsIcEEPFbRKSt6vectorINSt7__cxx1112basic_stringIcS5_SaIcEEESaISB_EER17cmExecutionStatusEES7_ISK_SaISK_EEEESO_ET0_T_SQ_SP_.exit, !llvm.loop !57
 
-_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt4pairISt17basic_string_viewIcSt11char_traitsIcEEPFbRKSt6vectorINSt7__cxx1112basic_stringIcS5_SaIcEEESaISB_EER17cmExecutionStatusEES7_ISK_SaISK_EEEESO_ET0_T_SQ_SP_.exit: ; preds = %.lr.ph.i.i.i.i.i, %bb.c
+_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt4pairISt17basic_string_viewIcSt11char_traitsIcEEPFbRKSt6vectorINSt7__cxx1112basic_stringIcS5_SaIcEEESaISB_EER17cmExecutionStatusEES7_ISK_SaISK_EEEESO_ET0_T_SQ_SP_.exit: ; preds = %.lr.ph.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i, %bb.c
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0, i64 16, i1 false), !tbaa.struct !15
   store ptr %.sroa.4.0.copyload, ptr %i.d, align 8, !tbaa !24
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
@@ -317,6 +345,7 @@ bb.f:                                             ; preds = %"_ZN9__gnu_cxx5__op
 bb.g:                                             ; preds = %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt4pairISt17basic_string_viewIcSt11char_traitsIcEEPFbRKSt6vectorINSt7__cxx1112basic_stringIcS5_SaIcEEESaISB_EER17cmExecutionStatusEES7_ISK_SaISK_EEEESO_ET0_T_SQ_SP_.exit, %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPSt4pairISt17basic_string_viewIcSt11char_traitsIcEEPFbRKSt6vectorINSt7__cxx1112basic_stringIcS5_SaIcEEESaISB_EER17cmExecutionStatusEES7_ISK_SaISK_EEEENS0_5__ops14_Val_comp_iterIZN17cmSubcommandTableC1ESt16initializer_listIS2_IN2cm18static_string_viewESJ_EEE3$_0EEEvT_T0_.exit"
   %.sroa.08.0 = getelementptr inbounds nuw i8, ptr %.sroa.08.020, i64 24 ; 2 uses
   %.not = icmp eq ptr %.sroa.08.0, %1
+  %indvar.next = add i64 %indvar, 1
   br i1 %.not, label %.loopexit, label %bb.b, !llvm.loop !58
 
 .loopexit:                                        ; preds = %bb.g, %.preheader, %bb.a

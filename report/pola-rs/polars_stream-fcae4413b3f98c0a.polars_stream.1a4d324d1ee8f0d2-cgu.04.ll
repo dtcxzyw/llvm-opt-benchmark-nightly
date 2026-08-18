@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.a
   unreachable, !dbg !18285
 
 bb.e:                                             ; preds = %bb.a
-  %.idx87 = shl nuw nsw i64 %2, 2, !dbg !18286
+  %.idx87 = shl nuw nsw i64 %2, 2, !dbg !18286    ; 2 uses
   %i.b = getelementptr i8, ptr %1, i64 %.idx87, !dbg !18286 ; 2 uses
   %i.c = getelementptr i8, ptr %i.b, i64 -4, !dbg !18286
   %.val26 = load i32, ptr %i.c, align 4, !dbg !18290, !noundef !13 ; 2 uses
@@ -403,15 +403,17 @@ bb.v:                                             ; preds = %.split, %_RNvNtNtCs
 
 bb.w:                                             ; preds = %bb.x
   %i.bl = icmp eq ptr %1, %i.bp, !dbg !18618
+  %indvar.next = add i64 %indvar, 1, !dbg !18600
   br i1 %i.bl, label %_RINvXs1_NtNtNtCscgRAwXFJnXP_4core4iter8adapters4skipINtB6_4SkipINtNtB8_9enumerate9EnumerateINtNtNtBc_5slice4iter4IterlEEENtNtNtBa_6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNvNtNtB1Z_8iterator8Iterator8find_map5checkTjRlEjNCINvNtNtCs8774dFTUdNv_12polars_arrow5array13specification14try_check_utf8lE0E0INtNtNtBc_3ops12control_flow11ControlFlowjEECs2g09Ig8GZd6_13polars_stream.exit.thread, label %bb.x, !dbg !18600
 
 bb.x:                                             ; preds = %.lr.ph85, %bb.w
+  %indvar = phi i64 [ 0, %.lr.ph85 ], [ %indvar.next, %bb.w ] ; 2 uses
   %i.bm = phi ptr [ %i.b, %.lr.ph85 ], [ %i.bp, %bb.w ]
   %i.bn = phi i64 [ %2, %.lr.ph85 ], [ %i.bq, %bb.w ]
   %i.bo = phi i64 [ %i.bk, %.lr.ph85 ], [ %i.br, %bb.w ]
   %i.bp = getelementptr inbounds i8, ptr %i.bm, i64 -4, !dbg !18622 ; 3 uses
   %.val.i.i.i31 = load i32, ptr %i.bp, align 4, !dbg !18633, !noalias !18634, !noundef !13
-  %i.bq = add nsw i64 %i.bn, -1, !dbg !18643      ; 3 uses
+  %i.bq = add nsw i64 %i.bn, -1, !dbg !18643      ; 2 uses
   %i.br = add nsw i64 %i.bo, -1, !dbg !18648      ; 2 uses
   %i.bs = sext i32 %.val.i.i.i31 to i64, !dbg !18653
   %i.bt = icmp ugt i64 %4, %i.bs, !dbg !18663     ; 2 uses
@@ -430,14 +432,18 @@ bb.y:                                             ; preds = %bb.x
   br i1 %i.bv, label %.critedge, label %.lr.ph.preheader, !dbg !18669
 
 .lr.ph.preheader:                                 ; preds = %bb.y
-  %5 = and i64 %i.bq, 4611686018427387903, !dbg !18669 ; 2 uses
-  %i.bw = add nuw nsw i64 %5, 1, !dbg !18669      ; 2 uses
-  %xtraiter = and i64 %i.bw, 3, !dbg !18669       ; 3 uses
-  %i.bx = icmp samesign ult i64 %5, 3, !dbg !18669
+  %5 = add nsw i64 %.idx87, -4, !dbg !18669
+  %6 = lshr exact i64 %5, 2, !dbg !18669          ; 2 uses
+  %7 = add nuw nsw i64 %6, 1, !dbg !18669
+  %8 = mul i64 %indvar, 4611686018427387903, !dbg !18669 ; 2 uses
+  %9 = add i64 %8, %7, !dbg !18669                ; 2 uses
+  %i.bw = add i64 %6, %8, !dbg !18669
+  %xtraiter = and i64 %9, 3, !dbg !18669          ; 3 uses
+  %i.bx = icmp ult i64 %i.bw, 3, !dbg !18669
   br i1 %i.bx, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new, !dbg !18669
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
-  %unroll_iter = and i64 %i.bw, 9223372036854775804, !dbg !18669
+  %unroll_iter = and i64 %9, -4, !dbg !18669
   br label %.lr.ph, !dbg !18669
 
 _RINvXs1_NtNtNtCscgRAwXFJnXP_4core4iter8adapters4skipINtB6_4SkipINtNtB8_9enumerate9EnumerateINtNtNtBc_5slice4iter4IterlEEENtNtNtBa_6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNvNtNtB1Z_8iterator8Iterator8find_map5checkTjRlEjNCINvNtNtCs8774dFTUdNv_12polars_arrow5array13specification14try_check_utf8lE0E0INtNtNtBc_3ops12control_flow11ControlFlowjEECs2g09Ig8GZd6_13polars_stream.exit.thread: ; preds = %bb.w, %bb.x, %bb.v
@@ -550,7 +556,7 @@ bb.d:                                             ; preds = %bb.a
   unreachable, !dbg !18714
 
 bb.e:                                             ; preds = %bb.a
-  %.idx86 = shl nuw nsw i64 %2, 3, !dbg !18715
+  %.idx86 = shl nuw nsw i64 %2, 3, !dbg !18715    ; 2 uses
   %i.b = getelementptr i8, ptr %1, i64 %.idx86, !dbg !18715 ; 2 uses
   %i.c = getelementptr i8, ptr %i.b, i64 -8, !dbg !18715
   %.val26 = load i64, ptr %i.c, align 8, !dbg !18719, !noundef !13 ; 4 uses
@@ -747,15 +753,17 @@ bb.v:                                             ; preds = %.split, %_RNvNtNtCs
 
 bb.w:                                             ; preds = %bb.x
   %i.bj = icmp eq ptr %1, %i.bn, !dbg !18928
+  %indvar.next = add i64 %indvar, 1, !dbg !18917
   br i1 %i.bj, label %_RINvXs1_NtNtNtCscgRAwXFJnXP_4core4iter8adapters4skipINtB6_4SkipINtNtB8_9enumerate9EnumerateINtNtNtBc_5slice4iter4IterxEEENtNtNtBa_6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNvNtNtB1Z_8iterator8Iterator8find_map5checkTjRxEjNCINvNtNtCs8774dFTUdNv_12polars_arrow5array13specification14try_check_utf8xE0E0INtNtNtBc_3ops12control_flow11ControlFlowjEECs2g09Ig8GZd6_13polars_stream.exit.thread, label %bb.x, !dbg !18917
 
 bb.x:                                             ; preds = %.lr.ph84, %bb.w
+  %indvar = phi i64 [ 0, %.lr.ph84 ], [ %indvar.next, %bb.w ] ; 2 uses
   %i.bk = phi ptr [ %i.b, %.lr.ph84 ], [ %i.bn, %bb.w ]
   %i.bl = phi i64 [ %2, %.lr.ph84 ], [ %i.bo, %bb.w ]
   %i.bm = phi i64 [ %i.bi, %.lr.ph84 ], [ %i.bp, %bb.w ]
   %i.bn = getelementptr inbounds i8, ptr %i.bk, i64 -8, !dbg !18932 ; 3 uses
   %.val.i.i.i31 = load i64, ptr %i.bn, align 8, !dbg !18943, !noalias !18944, !noundef !13
-  %i.bo = add nsw i64 %i.bl, -1, !dbg !18953      ; 3 uses
+  %i.bo = add nsw i64 %i.bl, -1, !dbg !18953      ; 2 uses
   %i.bp = add nsw i64 %i.bm, -1, !dbg !18956      ; 2 uses
   %i.bq = icmp ult i64 %.val.i.i.i31, %4, !dbg !18959 ; 2 uses
   %.sroa.0.0.i.i.i.i.i.i = zext i1 %i.bq to i64, !dbg !18965
@@ -773,14 +781,18 @@ bb.y:                                             ; preds = %bb.x
   br i1 %i.bs, label %.critedge, label %.lr.ph.preheader, !dbg !18970
 
 .lr.ph.preheader:                                 ; preds = %bb.y
-  %5 = and i64 %i.bo, 2305843009213693951, !dbg !18970 ; 2 uses
-  %i.bt = add nuw nsw i64 %5, 1, !dbg !18970      ; 2 uses
-  %xtraiter = and i64 %i.bt, 3, !dbg !18970       ; 3 uses
-  %i.bu = icmp samesign ult i64 %5, 3, !dbg !18970
+  %5 = add nsw i64 %.idx86, -8, !dbg !18970
+  %6 = lshr exact i64 %5, 3, !dbg !18970          ; 2 uses
+  %7 = add nuw nsw i64 %6, 1, !dbg !18970
+  %8 = mul i64 %indvar, 2305843009213693951, !dbg !18970 ; 2 uses
+  %9 = add i64 %8, %7, !dbg !18970                ; 2 uses
+  %i.bt = add i64 %6, %8, !dbg !18970
+  %xtraiter = and i64 %9, 3, !dbg !18970          ; 3 uses
+  %i.bu = icmp ult i64 %i.bt, 3, !dbg !18970
   br i1 %i.bu, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new, !dbg !18970
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
-  %unroll_iter = and i64 %i.bt, 4611686018427387900, !dbg !18970
+  %unroll_iter = and i64 %9, -4, !dbg !18970
   br label %.lr.ph, !dbg !18970
 
 _RINvXs1_NtNtNtCscgRAwXFJnXP_4core4iter8adapters4skipINtB6_4SkipINtNtB8_9enumerate9EnumerateINtNtNtBc_5slice4iter4IterxEEENtNtNtBa_6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNvNtNtB1Z_8iterator8Iterator8find_map5checkTjRxEjNCINvNtNtCs8774dFTUdNv_12polars_arrow5array13specification14try_check_utf8xE0E0INtNtNtBc_3ops12control_flow11ControlFlowjEECs2g09Ig8GZd6_13polars_stream.exit.thread: ; preds = %bb.w, %bb.x, %bb.v

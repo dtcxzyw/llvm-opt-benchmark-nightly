@@ -1,8 +1,8 @@
 inline.NumInlined: 4211
 inline.NumDeleted: 1666
 loop-unroll.NumCompletelyUnrolled: 22
-loop-unroll.NumRuntimeUnrolled: 4
-loop-unroll.NumUnrolled: 26
+loop-unroll.NumRuntimeUnrolled: 6
+loop-unroll.NumUnrolled: 28
 begin_hunk_0_@_ZN9ClientMap9renderMapEPN5video12IVideoDriverEi:.invoke
   %i.mc = load ptr, ptr %i.mb, align 8
   %i.md = invoke noundef ptr %i.mc(ptr noundef nonnull align 8 dereferenceable(8) %i.lz)
@@ -204,8 +204,9 @@ bb.as:                                            ; preds = %"_ZSt25__unguarded_
   br label %bb.at
 
 bb.at:                                            ; preds = %bb.aw, %.lr.ph.i27.i.i.i.i
-  %.sroa.08.020.i28.i.i.i.i = phi ptr [ %.sroa.08.017.i25.i.i.i.i, %.lr.ph.i27.i.i.i.i ], [ %.sroa.08.0.i35.i.i.i.i, %bb.aw ] ; 8 uses
-  %.pn19.i29.i.i.i.i = phi ptr [ %.sroa.0207.1.i, %.lr.ph.i27.i.i.i.i ], [ %.sroa.08.020.i28.i.i.i.i, %bb.aw ] ; 3 uses
+  %indvar = phi i64 [ %indvar.next, %bb.aw ], [ 0, %.lr.ph.i27.i.i.i.i ] ; 3 uses
+  %.sroa.08.020.i28.i.i.i.i = phi ptr [ %.sroa.08.0.i35.i.i.i.i, %bb.aw ], [ %.sroa.08.017.i25.i.i.i.i, %.lr.ph.i27.i.i.i.i ] ; 10 uses
+  %.pn19.i29.i.i.i.i = phi ptr [ %.sroa.08.020.i28.i.i.i.i, %bb.aw ], [ %.sroa.0207.1.i, %.lr.ph.i27.i.i.i.i ] ; 5 uses
   %i.oi = getelementptr i8, ptr %.pn19.i29.i.i.i.i, i64 40
   %.val.i.i30.i.i.i.i = load ptr, ptr %i.oi, align 8, !tbaa !531 ; 5 uses
   %.val1.i.i31.i.i.i.i = load ptr, ptr %i.oh, align 8, !tbaa !531
@@ -218,29 +219,56 @@ bb.au:                                            ; preds = %bb.at
   %i.ok = ptrtoint ptr %.sroa.08.020.i28.i.i.i.i to i64
   %i.ol = sub i64 %i.ok, %i.ml                    ; 2 uses
   %i.om = icmp sgt i64 %i.ol, 0
-  br i1 %i.om, label %.lr.ph.preheader.i.i.i.i.i.i42.i.i.i.i.a, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEESE_ET0_T_SG_SF_.exit.i41.i.i.i.i
+  br i1 %i.om, label %.lr.ph.preheader.i.i.i.i.i.i42.i.i.i.i, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEESE_ET0_T_SG_SF_.exit.i41.i.i.i.i
 
-.lr.ph.preheader.i.i.i.i.i.i42.i.i.i.i.a:         ; preds = %bb.au
-  %i.on = getelementptr inbounds nuw i8, ptr %.pn19.i29.i.i.i.i, i64 48
-  %24 = udiv exact i64 %i.ol, 24
-  br label %.lr.ph.i.i.i.i.i.i43.i.i.i.i
+.lr.ph.preheader.i.i.i.i.i.i42.i.i.i.i:           ; preds = %bb.au
+  %24 = getelementptr inbounds nuw i8, ptr %.pn19.i29.i.i.i.i, i64 48
+  %25 = udiv exact i64 %i.ol, 24                  ; 2 uses
+  %26 = and i64 %indvar, 1
+  %lcmp.mod.not.not = icmp eq i64 %26, 0
+  br i1 %lcmp.mod.not.not, label %.lr.ph.preheader.i.i.i.i.i.i42.i.i.i.i.a, label %.lr.ph.i.i.i.i.i.i43.i.i.i.i.prol.loopexit
 
-.lr.ph.i.i.i.i.i.i43.i.i.i.i:                     ; preds = %.lr.ph.i.i.i.i.i.i43.i.i.i.i, %.lr.ph.preheader.i.i.i.i.i.i42.i.i.i.i.a
-  %.010.i.i.i.i.i.i44.i.i.i.i = phi i64 [ %i.ot, %.lr.ph.i.i.i.i.i.i43.i.i.i.i ], [ %24, %.lr.ph.preheader.i.i.i.i.i.i42.i.i.i.i.a ] ; 2 uses
-  %.069.i.i.i.i.i.i45.i.i.i.i = phi ptr [ %i.op, %.lr.ph.i.i.i.i.i.i43.i.i.i.i ], [ %i.on, %.lr.ph.preheader.i.i.i.i.i.i42.i.i.i.i.a ] ; 2 uses
-  %.078.i.i.i.i.i.i46.i.i.i.i = phi ptr [ %i.oo, %.lr.ph.i.i.i.i.i.i43.i.i.i.i ], [ %.sroa.08.020.i28.i.i.i.i, %.lr.ph.preheader.i.i.i.i.i.i42.i.i.i.i.a ] ; 2 uses
-  %i.oo = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.i46.i.i.i.i, i64 -24 ; 2 uses
-  %i.op = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.i45.i.i.i.i, i64 -24 ; 2 uses
+.lr.ph.preheader.i.i.i.i.i.i42.i.i.i.i.a:         ; preds = %.lr.ph.preheader.i.i.i.i.i.i42.i.i.i.i
+  %27 = getelementptr inbounds i8, ptr %.sroa.08.020.i28.i.i.i.i, i64 -24 ; 2 uses
+  %28 = getelementptr inbounds nuw i8, ptr %.pn19.i29.i.i.i.i, i64 24 ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %28, ptr noundef nonnull align 8 dereferenceable(24) %27, i64 12, i1 false), !tbaa.struct !533
+  %29 = getelementptr inbounds i8, ptr %.sroa.08.020.i28.i.i.i.i, i64 -8
+  %30 = load ptr, ptr %29, align 8, !tbaa !30
+  %i.on = getelementptr inbounds nuw i8, ptr %.pn19.i29.i.i.i.i, i64 40
+  store ptr %30, ptr %i.on, align 8, !tbaa !531
+  %31 = add nsw i64 %25, -1
+  br label %.lr.ph.i.i.i.i.i.i43.i.i.i.i.prol.loopexit
+
+.lr.ph.i.i.i.i.i.i43.i.i.i.i.prol.loopexit:       ; preds = %.lr.ph.preheader.i.i.i.i.i.i42.i.i.i.i.a, %.lr.ph.preheader.i.i.i.i.i.i42.i.i.i.i
+  %.010.i.i.i.i.i.i44.i.i.i.i.unr = phi i64 [ %25, %.lr.ph.preheader.i.i.i.i.i.i42.i.i.i.i ], [ %31, %.lr.ph.preheader.i.i.i.i.i.i42.i.i.i.i.a ]
+  %.069.i.i.i.i.i.i45.i.i.i.i.unr = phi ptr [ %24, %.lr.ph.preheader.i.i.i.i.i.i42.i.i.i.i ], [ %28, %.lr.ph.preheader.i.i.i.i.i.i42.i.i.i.i.a ]
+  %.078.i.i.i.i.i.i46.i.i.i.i.unr = phi ptr [ %.sroa.08.020.i28.i.i.i.i, %.lr.ph.preheader.i.i.i.i.i.i42.i.i.i.i ], [ %27, %.lr.ph.preheader.i.i.i.i.i.i42.i.i.i.i.a ]
+  %32 = icmp eq i64 %indvar, 0
+  br i1 %32, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEESE_ET0_T_SG_SF_.exit.i41.i.i.i.i, label %.lr.ph.i.i.i.i.i.i43.i.i.i.i
+
+.lr.ph.i.i.i.i.i.i43.i.i.i.i:                     ; preds = %.lr.ph.i.i.i.i.i.i43.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i.i43.i.i.i.i
+  %.010.i.i.i.i.i.i44.i.i.i.i = phi i64 [ %i.ot, %.lr.ph.i.i.i.i.i.i43.i.i.i.i ], [ %.010.i.i.i.i.i.i44.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.i43.i.i.i.i.prol.loopexit ] ; 2 uses
+  %.069.i.i.i.i.i.i45.i.i.i.i = phi ptr [ %i.op, %.lr.ph.i.i.i.i.i.i43.i.i.i.i ], [ %.069.i.i.i.i.i.i45.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.i43.i.i.i.i.prol.loopexit ] ; 4 uses
+  %.078.i.i.i.i.i.i46.i.i.i.i = phi ptr [ %i.oo, %.lr.ph.i.i.i.i.i.i43.i.i.i.i ], [ %.078.i.i.i.i.i.i46.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.i43.i.i.i.i.prol.loopexit ] ; 4 uses
+  %33 = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.i46.i.i.i.i, i64 -24
+  %34 = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.i45.i.i.i.i, i64 -24
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %34, ptr noundef nonnull align 8 dereferenceable(24) %33, i64 12, i1 false), !tbaa.struct !533
+  %35 = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.i46.i.i.i.i, i64 -8
+  %36 = load ptr, ptr %35, align 8, !tbaa !30
+  %37 = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.i45.i.i.i.i, i64 -8
+  store ptr %36, ptr %37, align 8, !tbaa !531
+  %i.oo = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.i46.i.i.i.i, i64 -48 ; 2 uses
+  %i.op = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.i45.i.i.i.i, i64 -48 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.op, ptr noundef nonnull align 8 dereferenceable(24) %i.oo, i64 12, i1 false), !tbaa.struct !533
-  %i.oq = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.i46.i.i.i.i, i64 -8
+  %i.oq = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.i46.i.i.i.i, i64 -32
   %i.or = load ptr, ptr %i.oq, align 8, !tbaa !30
-  %i.os = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.i45.i.i.i.i, i64 -8
+  %i.os = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.i45.i.i.i.i, i64 -32
   store ptr %i.or, ptr %i.os, align 8, !tbaa !531
-  %i.ot = add nsw i64 %.010.i.i.i.i.i.i44.i.i.i.i, -1
-  %25 = icmp samesign ugt i64 %.010.i.i.i.i.i.i44.i.i.i.i, 1
-  br i1 %25, label %.lr.ph.i.i.i.i.i.i43.i.i.i.i, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEESE_ET0_T_SG_SF_.exit.i41.i.i.i.i, !llvm.loop !534
+  %i.ot = add nsw i64 %.010.i.i.i.i.i.i44.i.i.i.i, -2
+  %38 = icmp sgt i64 %.010.i.i.i.i.i.i44.i.i.i.i, 2
+  br i1 %38, label %.lr.ph.i.i.i.i.i.i43.i.i.i.i, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEESE_ET0_T_SG_SF_.exit.i41.i.i.i.i, !llvm.loop !534
 
-_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEESE_ET0_T_SG_SF_.exit.i41.i.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i43.i.i.i.i, %bb.au
+_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEESE_ET0_T_SG_SF_.exit.i41.i.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i43.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i.i43.i.i.i.i, %bb.au
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0207.1.i, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0.i23.i.i.i.i, i64 12, i1 false), !tbaa.struct !533
   store ptr %.val.i.i30.i.i.i.i, ptr %i.oh, align 8, !tbaa !531
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i23.i.i.i.i)
@@ -277,6 +305,7 @@ bb.av:                                            ; preds = %bb.at
 bb.aw:                                            ; preds = %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEENS0_5__ops14_Val_comp_iterIZL27transformBuffersToDrawOrderIZN9ClientMap9renderMapEPN5video12IVideoDriverEiE3$_0EjRKSB_IS2_INS4_IsEES8_ESaISO_EERSB_IN12_GLOBAL__N_114DrawDescriptorESaISU_EET_RSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE16CachedMeshBufferSt4hashIS15_ESt8equal_toIS15_ESaIS2_IKS15_S16_EEEEUlRKSY_RKT0_E_EEEvSY_S1I_.exit.i33.i.i.i.i", %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEESE_ET0_T_SG_SF_.exit.i41.i.i.i.i
   %.sroa.08.0.i35.i.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.08.020.i28.i.i.i.i, i64 24 ; 2 uses
   %.not.i36.i.i.i.i = icmp eq ptr %.sroa.08.0.i35.i.i.i.i, %.sroa.13.1.i
+  %indvar.next = add i64 %indvar, 1
   br i1 %.not.i36.i.i.i.i, label %"_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEEZL27transformBuffersToDrawOrderIZN9ClientMap9renderMapEPN5video12IVideoDriverEiE3$_0EjRKSB_IS2_INS4_IsEES8_ESaISM_EERSB_IN12_GLOBAL__N_114DrawDescriptorESaISS_EET_RSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE16CachedMeshBufferSt4hashIS13_ESt8equal_toIS13_ESaIS2_IKS13_S14_EEEEUlRKSW_RKT0_E_EvSW_SW_S1G_.exit.i", label %bb.at, !llvm.loop !536
 
 bb.ax:                                            ; preds = %_ZNSt6vectorISt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESaIS7_EE12emplace_backIJRS3_RS6_EEERS7_DpOT_.exit.i, %.lr.ph312.i
@@ -679,8 +708,9 @@ bb.ab:                                            ; preds = %"_ZSt25__unguarded_
   br label %bb.ac
 
 bb.ac:                                            ; preds = %bb.af, %.lr.ph.i27.i.i.i.i
-  %.sroa.08.020.i28.i.i.i.i = phi ptr [ %.sroa.08.017.i25.i.i.i.i, %.lr.ph.i27.i.i.i.i ], [ %.sroa.08.0.i35.i.i.i.i, %bb.af ] ; 8 uses
-  %.pn19.i29.i.i.i.i = phi ptr [ %.sroa.0198.1.i, %.lr.ph.i27.i.i.i.i ], [ %.sroa.08.020.i28.i.i.i.i, %bb.af ] ; 3 uses
+  %indvar = phi i64 [ %indvar.next, %bb.af ], [ 0, %.lr.ph.i27.i.i.i.i ] ; 3 uses
+  %.sroa.08.020.i28.i.i.i.i = phi ptr [ %.sroa.08.0.i35.i.i.i.i, %bb.af ], [ %.sroa.08.017.i25.i.i.i.i, %.lr.ph.i27.i.i.i.i ] ; 10 uses
+  %.pn19.i29.i.i.i.i = phi ptr [ %.sroa.08.020.i28.i.i.i.i, %bb.af ], [ %.sroa.0198.1.i, %.lr.ph.i27.i.i.i.i ] ; 5 uses
   %i.jz = getelementptr i8, ptr %.pn19.i29.i.i.i.i, i64 40
   %.val.i.i30.i.i.i.i = load ptr, ptr %i.jz, align 8, !tbaa !531 ; 5 uses
   %.val1.i.i31.i.i.i.i = load ptr, ptr %i.jy, align 8, !tbaa !531
@@ -693,29 +723,56 @@ bb.ad:                                            ; preds = %bb.ac
   %i.kb = ptrtoint ptr %.sroa.08.020.i28.i.i.i.i to i64
   %i.kc = sub i64 %i.kb, %i.ic                    ; 2 uses
   %i.kd = icmp sgt i64 %i.kc, 0
-  br i1 %i.kd, label %.lr.ph.preheader.i.i.i.i.i.i42.i.i.i.i.a, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEESE_ET0_T_SG_SF_.exit.i41.i.i.i.i
+  br i1 %i.kd, label %.lr.ph.preheader.i.i.i.i.i.i42.i.i.i.i, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEESE_ET0_T_SG_SF_.exit.i41.i.i.i.i
 
-.lr.ph.preheader.i.i.i.i.i.i42.i.i.i.i.a:         ; preds = %bb.ad
-  %i.ke = getelementptr inbounds nuw i8, ptr %.pn19.i29.i.i.i.i, i64 48
-  %23 = udiv exact i64 %i.kc, 24
-  br label %.lr.ph.i.i.i.i.i.i43.i.i.i.i
+.lr.ph.preheader.i.i.i.i.i.i42.i.i.i.i:           ; preds = %bb.ad
+  %23 = getelementptr inbounds nuw i8, ptr %.pn19.i29.i.i.i.i, i64 48
+  %24 = udiv exact i64 %i.kc, 24                  ; 2 uses
+  %25 = and i64 %indvar, 1
+  %lcmp.mod.not.not = icmp eq i64 %25, 0
+  br i1 %lcmp.mod.not.not, label %.lr.ph.preheader.i.i.i.i.i.i42.i.i.i.i.a, label %.lr.ph.i.i.i.i.i.i43.i.i.i.i.prol.loopexit
 
-.lr.ph.i.i.i.i.i.i43.i.i.i.i:                     ; preds = %.lr.ph.i.i.i.i.i.i43.i.i.i.i, %.lr.ph.preheader.i.i.i.i.i.i42.i.i.i.i.a
-  %.010.i.i.i.i.i.i44.i.i.i.i = phi i64 [ %i.kk, %.lr.ph.i.i.i.i.i.i43.i.i.i.i ], [ %23, %.lr.ph.preheader.i.i.i.i.i.i42.i.i.i.i.a ] ; 2 uses
-  %.069.i.i.i.i.i.i45.i.i.i.i = phi ptr [ %i.kg, %.lr.ph.i.i.i.i.i.i43.i.i.i.i ], [ %i.ke, %.lr.ph.preheader.i.i.i.i.i.i42.i.i.i.i.a ] ; 2 uses
-  %.078.i.i.i.i.i.i46.i.i.i.i = phi ptr [ %i.kf, %.lr.ph.i.i.i.i.i.i43.i.i.i.i ], [ %.sroa.08.020.i28.i.i.i.i, %.lr.ph.preheader.i.i.i.i.i.i42.i.i.i.i.a ] ; 2 uses
-  %i.kf = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.i46.i.i.i.i, i64 -24 ; 2 uses
-  %i.kg = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.i45.i.i.i.i, i64 -24 ; 2 uses
+.lr.ph.preheader.i.i.i.i.i.i42.i.i.i.i.a:         ; preds = %.lr.ph.preheader.i.i.i.i.i.i42.i.i.i.i
+  %26 = getelementptr inbounds i8, ptr %.sroa.08.020.i28.i.i.i.i, i64 -24 ; 2 uses
+  %27 = getelementptr inbounds nuw i8, ptr %.pn19.i29.i.i.i.i, i64 24 ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %27, ptr noundef nonnull align 8 dereferenceable(24) %26, i64 12, i1 false), !tbaa.struct !533
+  %28 = getelementptr inbounds i8, ptr %.sroa.08.020.i28.i.i.i.i, i64 -8
+  %29 = load ptr, ptr %28, align 8, !tbaa !30
+  %i.ke = getelementptr inbounds nuw i8, ptr %.pn19.i29.i.i.i.i, i64 40
+  store ptr %29, ptr %i.ke, align 8, !tbaa !531
+  %30 = add nsw i64 %24, -1
+  br label %.lr.ph.i.i.i.i.i.i43.i.i.i.i.prol.loopexit
+
+.lr.ph.i.i.i.i.i.i43.i.i.i.i.prol.loopexit:       ; preds = %.lr.ph.preheader.i.i.i.i.i.i42.i.i.i.i.a, %.lr.ph.preheader.i.i.i.i.i.i42.i.i.i.i
+  %.010.i.i.i.i.i.i44.i.i.i.i.unr = phi i64 [ %24, %.lr.ph.preheader.i.i.i.i.i.i42.i.i.i.i ], [ %30, %.lr.ph.preheader.i.i.i.i.i.i42.i.i.i.i.a ]
+  %.069.i.i.i.i.i.i45.i.i.i.i.unr = phi ptr [ %23, %.lr.ph.preheader.i.i.i.i.i.i42.i.i.i.i ], [ %27, %.lr.ph.preheader.i.i.i.i.i.i42.i.i.i.i.a ]
+  %.078.i.i.i.i.i.i46.i.i.i.i.unr = phi ptr [ %.sroa.08.020.i28.i.i.i.i, %.lr.ph.preheader.i.i.i.i.i.i42.i.i.i.i ], [ %26, %.lr.ph.preheader.i.i.i.i.i.i42.i.i.i.i.a ]
+  %31 = icmp eq i64 %indvar, 0
+  br i1 %31, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEESE_ET0_T_SG_SF_.exit.i41.i.i.i.i, label %.lr.ph.i.i.i.i.i.i43.i.i.i.i
+
+.lr.ph.i.i.i.i.i.i43.i.i.i.i:                     ; preds = %.lr.ph.i.i.i.i.i.i43.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i.i43.i.i.i.i
+  %.010.i.i.i.i.i.i44.i.i.i.i = phi i64 [ %i.kk, %.lr.ph.i.i.i.i.i.i43.i.i.i.i ], [ %.010.i.i.i.i.i.i44.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.i43.i.i.i.i.prol.loopexit ] ; 2 uses
+  %.069.i.i.i.i.i.i45.i.i.i.i = phi ptr [ %i.kg, %.lr.ph.i.i.i.i.i.i43.i.i.i.i ], [ %.069.i.i.i.i.i.i45.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.i43.i.i.i.i.prol.loopexit ] ; 4 uses
+  %.078.i.i.i.i.i.i46.i.i.i.i = phi ptr [ %i.kf, %.lr.ph.i.i.i.i.i.i43.i.i.i.i ], [ %.078.i.i.i.i.i.i46.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.i43.i.i.i.i.prol.loopexit ] ; 4 uses
+  %32 = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.i46.i.i.i.i, i64 -24
+  %33 = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.i45.i.i.i.i, i64 -24
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %33, ptr noundef nonnull align 8 dereferenceable(24) %32, i64 12, i1 false), !tbaa.struct !533
+  %34 = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.i46.i.i.i.i, i64 -8
+  %35 = load ptr, ptr %34, align 8, !tbaa !30
+  %36 = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.i45.i.i.i.i, i64 -8
+  store ptr %35, ptr %36, align 8, !tbaa !531
+  %i.kf = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.i46.i.i.i.i, i64 -48 ; 2 uses
+  %i.kg = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.i45.i.i.i.i, i64 -48 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.kg, ptr noundef nonnull align 8 dereferenceable(24) %i.kf, i64 12, i1 false), !tbaa.struct !533
-  %i.kh = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.i46.i.i.i.i, i64 -8
+  %i.kh = getelementptr inbounds i8, ptr %.078.i.i.i.i.i.i46.i.i.i.i, i64 -32
   %i.ki = load ptr, ptr %i.kh, align 8, !tbaa !30
-  %i.kj = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.i45.i.i.i.i, i64 -8
+  %i.kj = getelementptr inbounds i8, ptr %.069.i.i.i.i.i.i45.i.i.i.i, i64 -32
   store ptr %i.ki, ptr %i.kj, align 8, !tbaa !531
-  %i.kk = add nsw i64 %.010.i.i.i.i.i.i44.i.i.i.i, -1
-  %24 = icmp samesign ugt i64 %.010.i.i.i.i.i.i44.i.i.i.i, 1
-  br i1 %24, label %.lr.ph.i.i.i.i.i.i43.i.i.i.i, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEESE_ET0_T_SG_SF_.exit.i41.i.i.i.i, !llvm.loop !534
+  %i.kk = add nsw i64 %.010.i.i.i.i.i.i44.i.i.i.i, -2
+  %37 = icmp sgt i64 %.010.i.i.i.i.i.i44.i.i.i.i, 2
+  br i1 %37, label %.lr.ph.i.i.i.i.i.i43.i.i.i.i, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEESE_ET0_T_SG_SF_.exit.i41.i.i.i.i, !llvm.loop !534
 
-_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEESE_ET0_T_SG_SF_.exit.i41.i.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i43.i.i.i.i, %bb.ad
+_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEESE_ET0_T_SG_SF_.exit.i41.i.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i43.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i.i43.i.i.i.i, %bb.ad
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0198.1.i, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0.i23.i.i.i.i, i64 12, i1 false), !tbaa.struct !533
   store ptr %.val.i.i30.i.i.i.i, ptr %i.jy, align 8, !tbaa !531
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i23.i.i.i.i)
@@ -752,6 +809,7 @@ bb.ae:                                            ; preds = %bb.ac
 bb.af:                                            ; preds = %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEENS0_5__ops14_Val_comp_iterIZL27transformBuffersToDrawOrderIZN9ClientMap16renderMapShadowsEPN5video12IVideoDriverESt8functionIFvRNSJ_9SMaterialEbEEiiiE3$_0EjRKSB_IS2_INS4_IsEES8_ESaIST_EERSB_IN12_GLOBAL__N_114DrawDescriptorESaISZ_EET_RSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE16CachedMeshBufferSt4hashIS1A_ESt8equal_toIS1A_ESaIS2_IKS1A_S1B_EEEEUlRKS13_RKT0_E_EEEvS13_S1N_.exit.i33.i.i.i.i", %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEESE_ET0_T_SG_SF_.exit.i41.i.i.i.i
   %.sroa.08.0.i35.i.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.08.020.i28.i.i.i.i, i64 24 ; 2 uses
   %.not.i36.i.i.i.i = icmp eq ptr %.sroa.08.0.i35.i.i.i.i, %.sroa.13.1.i
+  %indvar.next = add i64 %indvar, 1
   br i1 %.not.i36.i.i.i.i, label %"_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4core8vector3dIfEEPN5scene11IMeshBufferEESt6vectorIS9_SaIS9_EEEEZL27transformBuffersToDrawOrderIZN9ClientMap16renderMapShadowsEPN5video12IVideoDriverESt8functionIFvRNSH_9SMaterialEbEEiiiE3$_0EjRKSB_IS2_INS4_IsEES8_ESaISR_EERSB_IN12_GLOBAL__N_114DrawDescriptorESaISX_EET_RSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE16CachedMeshBufferSt4hashIS18_ESt8equal_toIS18_ESaIS2_IKS18_S19_EEEEUlRKS11_RKT0_E_EvS11_S11_S1L_.exit.i", label %bb.ac, !llvm.loop !868
 
 bb.ag:                                            ; preds = %_ZNSt6vectorIN12_GLOBAL__N_114DrawDescriptorESaIS1_EE12emplace_backIJRN4core8vector3dIfEERPN5scene11IMeshBufferEEEERS1_DpOT_.exit.i, %.lr.ph274.i

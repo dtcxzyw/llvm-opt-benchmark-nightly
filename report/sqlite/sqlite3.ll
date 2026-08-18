@@ -205,7 +205,7 @@ bb.hh:                                            ; preds = %bb.hf, %bb.hg
   %.1744 = phi i1 [ %i.ado, %bb.hg ], [ %or.cond968, %bb.hf ] ; 2 uses
   %.0711 = phi i8 [ %.176011641948, %bb.hg ], [ %i.adk, %bb.hf ] ; 2 uses
   %i.adp = add nsw i32 %.pre2065, -1              ; 2 uses
-  %.0712 = select i1 %.1744, i32 0, i32 %i.adp    ; 8 uses
+  %.0712 = select i1 %.1744, i32 0, i32 %i.adp    ; 9 uses
   %i.adq = icmp sgt i32 %.0712, 0
   %i.adr = call i32 @llvm.smax.i32(i32 %.0712, i32 0)
   %i.ads = zext nneg i32 %i.adr to i64
@@ -339,12 +339,17 @@ bb.hw:                                            ; preds = %bb.hv
 
 bb.hx:                                            ; preds = %bb.hv
   %.not941 = icmp eq i8 %.174711701932, 0
-  br i1 %.not941, label %bb.ic, label %.lr.ph1448
+  br i1 %.not941, label %bb.ic, label %.lr.ph1448.preheader
 
-.lr.ph1448:                                       ; preds = %bb.hx, %bb.ib
-  %.06841447 = phi i32 [ %.1685, %bb.ib ], [ 0, %bb.hx ] ; 4 uses
-  %.17131446 = phi i32 [ %i.aga, %bb.ib ], [ %.0712, %bb.hx ] ; 4 uses
-  %.128231445 = phi ptr [ %.13, %bb.ib ], [ %.11822, %bb.hx ] ; 3 uses
+.lr.ph1448.preheader:                             ; preds = %bb.hx
+  %4 = urem i32 %.0712, 3
+  %5 = icmp eq i32 %4, 0
+  br label %.lr.ph1448
+
+.lr.ph1448:                                       ; preds = %.lr.ph1448.preheader, %bb.ib
+  %.06841447 = phi i32 [ %.1685, %bb.ib ], [ 0, %.lr.ph1448.preheader ] ; 4 uses
+  %.17131446 = phi i32 [ %i.aga, %bb.ib ], [ %.0712, %.lr.ph1448.preheader ] ; 3 uses
+  %.128231445 = phi ptr [ %.13, %bb.ib ], [ %.11822, %.lr.ph1448.preheader ] ; 3 uses
   %i.afp = load i32, ptr %3, align 8, !tbaa !335
   %i.afq = icmp slt i32 %.06841447, %i.afp
   br i1 %i.afq, label %bb.hy, label %bb.hz
@@ -362,10 +367,8 @@ bb.hz:                                            ; preds = %.lr.ph1448, %bb.hy
   %i.afw = phi i8 [ %i.afv, %bb.hy ], [ 48, %.lr.ph1448 ]
   %i.afx = getelementptr inbounds nuw i8, ptr %.128231445, i64 1 ; 2 uses
   store i8 %i.afw, ptr %.128231445, align 1, !tbaa !231
-  %4 = urem i32 %.17131446, 3
-  %5 = icmp eq i32 %4, 0
   %i.afy = icmp samesign ugt i32 %.17131446, 1
-  %or.cond15 = and i1 %i.afy, %5
+  %or.cond15 = and i1 %5, %i.afy
   br i1 %or.cond15, label %bb.ia, label %bb.ib
 
 bb.ia:                                            ; preds = %bb.hz

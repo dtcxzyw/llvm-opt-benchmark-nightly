@@ -204,16 +204,18 @@ _RNvMs4_NtCsfu0rQaTkGUu_12clap_builder7mkeymapNtB5_7MKeyMap6__build.exit: ; pred
   %i.qs = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.qt = load ptr, ptr %i.qs, align 8, !nonnull !13, !noundef !13 ; 2 uses
   %i.qu = load i64, ptr %i.qr, align 8, !noundef !13 ; 2 uses
-  %.idx260 = shl nuw nsw i64 %i.qu, 5
+  %.idx260 = shl i64 %i.qu, 5                     ; 2 uses
   %i.qv = getelementptr inbounds nuw i8, ptr %i.qt, i64 %.idx260 ; 3 uses
   %.not.not.not.not.i.not.not.not.i.not.i.not257 = icmp eq i64 %i.qu, 0
   br i1 %.not.not.not.not.i.not.not.not.i.not.i.not257, label %_RINvYINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters10filter_map9FilterMapINtNtB8_3map3MapINtNtNtBc_5slice4iter4IterNtNtCsfu0rQaTkGUu_12clap_builder7mkeymap3KeyENCNvMs4_B1N_NtB1N_7MKeyMap4keys0ENCNvMs3_NtNtB1P_7builder7commandNtB39_7Command11__build_selfs_0ENtNtNtBa_6traits8iterator8Iterator6reduceNvYjNtNtBc_3cmp3Ord3maxEB1P_.exit, label %.lr.ph258
 
 bb.bj:                                            ; preds = %.lr.ph258
   %.not.not.not.not.i.not.not.not.i.not.i.not = icmp eq ptr %i.qx, %i.qv
+  %indvar.next = add i64 %indvar, 1
   br i1 %.not.not.not.not.i.not.not.not.i.not.i.not, label %_RINvYINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters10filter_map9FilterMapINtNtB8_3map3MapINtNtNtBc_5slice4iter4IterNtNtCsfu0rQaTkGUu_12clap_builder7mkeymap3KeyENCNvMs4_B1N_NtB1N_7MKeyMap4keys0ENCNvMs3_NtNtB1P_7builder7commandNtB39_7Command11__build_selfs_0ENtNtNtBa_6traits8iterator8Iterator6reduceNvYjNtNtBc_3cmp3Ord3maxEB1P_.exit, label %.lr.ph258
 
 .lr.ph258:                                        ; preds = %_RNvMs4_NtCsfu0rQaTkGUu_12clap_builder7mkeymapNtB5_7MKeyMap6__build.exit, %bb.bj
+  %indvar = phi i64 [ %indvar.next, %bb.bj ], [ 0, %_RNvMs4_NtCsfu0rQaTkGUu_12clap_builder7mkeymapNtB5_7MKeyMap6__build.exit ] ; 2 uses
   %i.qw = phi ptr [ %i.qx, %bb.bj ], [ %i.qt, %_RNvMs4_NtCsfu0rQaTkGUu_12clap_builder7mkeymapNtB5_7MKeyMap6__build.exit ] ; 3 uses
   %i.qx = getelementptr inbounds nuw i8, ptr %i.qw, i64 32 ; 7 uses
   %.val.i.i.i.i.i134 = load i32, ptr %i.qw, align 8, !range !1176, !noalias !5678, !noundef !13
@@ -229,13 +231,17 @@ bb.bk:                                            ; preds = %.lr.ph258
 bb.bl:                                            ; preds = %bb.bk
   %i.rb = ptrtoint ptr %i.qv to i64
   %i.rc = ptrtoint ptr %i.qx to i64
-  %i.rd = sub nuw i64 %i.rb, %i.rc                ; 3 uses
-  %i.re = lshr exact i64 %i.rd, 5                 ; 2 uses
-  %i.rf = icmp eq i64 %i.rd, 32
+  %i.rd = sub nuw i64 %i.rb, %i.rc                ; 2 uses
+  %2 = lshr exact i64 %i.rd, 5                    ; 2 uses
+  %3 = add i64 %.idx260, -32
+  %i.re = lshr exact i64 %3, 5
+  %4 = mul i64 %indvar, 576460752303423487
+  %5 = sub nsw i64 1, %i.re
+  %i.rf = icmp eq i64 %4, %5
   br i1 %i.rf, label %.epil.preheader, label %.new
 
 .new:                                             ; preds = %bb.bl
-  %unroll_iter = and i64 %i.re, 576460752303423486
+  %unroll_iter = and i64 %2, 576460752303423486
   br label %bb.bm
 
 bb.bm:                                            ; preds = %bb.bm, %.new
@@ -270,7 +276,7 @@ _RINvYINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters10filter_map9FilterMapINtNtB8_3m
 .epil.preheader:                                  ; preds = %_RINvYINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters10filter_map9FilterMapINtNtB8_3map3MapINtNtNtBc_5slice4iter4IterNtNtCsfu0rQaTkGUu_12clap_builder7mkeymap3KeyENCNvMs4_B1N_NtB1N_7MKeyMap4keys0ENCNvMs3_NtNtB1P_7builder7commandNtB39_7Command11__build_selfs_0ENtNtNtBa_6traits8iterator8Iterator6reduceNvYjNtNtBc_3cmp3Ord3maxEB1P_.exit.loopexit.unr-lcssa, %bb.bl
   %.sroa.04.0.i.i.i.i.epil.init = phi i64 [ 0, %bb.bl ], [ %i.rn, %_RINvYINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters10filter_map9FilterMapINtNtB8_3map3MapINtNtNtBc_5slice4iter4IterNtNtCsfu0rQaTkGUu_12clap_builder7mkeymap3KeyENCNvMs4_B1N_NtB1N_7MKeyMap4keys0ENCNvMs3_NtNtB1P_7builder7commandNtB39_7Command11__build_selfs_0ENtNtNtBa_6traits8iterator8Iterator6reduceNvYjNtNtBc_3cmp3Ord3maxEB1P_.exit.loopexit.unr-lcssa ]
   %.sroa.02.0.i.i.i.i.epil.init = phi i64 [ %.val6.i.i.i.i.i, %bb.bl ], [ %.sroa.0.0.i.i.i.i.i.i135.1, %_RINvYINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters10filter_map9FilterMapINtNtB8_3map3MapINtNtNtBc_5slice4iter4IterNtNtCsfu0rQaTkGUu_12clap_builder7mkeymap3KeyENCNvMs4_B1N_NtB1N_7MKeyMap4keys0ENCNvMs3_NtNtB1P_7builder7commandNtB39_7Command11__build_selfs_0ENtNtNtBa_6traits8iterator8Iterator6reduceNvYjNtNtBc_3cmp3Ord3maxEB1P_.exit.loopexit.unr-lcssa ] ; 2 uses
-  %lcmp.mod269 = trunc i64 %i.re to i1
+  %lcmp.mod269 = trunc i64 %2 to i1
   call void @llvm.assume(i1 %lcmp.mod269)
   %i.rp = getelementptr inbounds nuw [32 x i8], ptr %i.qx, i64 %.sroa.04.0.i.i.i.i.epil.init ; 2 uses
   %.val.i.i.i.i.epil = load i32, ptr %i.rp, align 8, !range !1176, !noundef !13
