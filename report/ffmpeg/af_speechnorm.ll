@@ -203,7 +203,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph134, %._crit_edge
   %i.p = phi i32 [ %.pre, %.lr.ph134 ], [ %i.gr, %._crit_edge ] ; 2 uses
-  %.074132 = phi i32 [ 0, %.lr.ph134 ], [ %.pre-phi, %._crit_edge ] ; 7 uses
+  %.074132 = phi i32 [ 0, %.lr.ph134 ], [ %.pre-phi, %._crit_edge ] ; 6 uses
   %i.q = sub nsw i32 %3, %.074132                 ; 2 uses
   %i.r = load double, ptr %i.g, align 8, !tbaa !68
   %i.s = fptrunc nsz double %i.r to float         ; 2 uses
@@ -370,12 +370,10 @@ next_pi.exit:                                     ; preds = %.lr.ph, %next_gain.
   %n.vec = and i64 %i.cu, -4                      ; 3 uses
   %i.cv = add i64 %n.vec, %i.cq
   %broadcast.splatinsert172 = insertelement <4 x i32> poison, i32 %.074132, i64 0
-  %broadcast.splat173 = shufflevector <4 x i32> %broadcast.splatinsert172, <4 x i32> poison, <4 x i32> zeroinitializer
+  %broadcast.splat173 = shufflevector <4 x i32> %broadcast.splatinsert172, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert174 = insertelement <4 x float> poison, float %i.cp, i64 0
   %broadcast.splat175 = shufflevector <4 x float> %broadcast.splatinsert174, <4 x float> poison, <4 x i32> zeroinitializer
-  %broadcast.splatinsert176 = insertelement <4 x i32> poison, i32 %.074132, i64 0
-  %broadcast.splat177 = shufflevector <4 x i32> %broadcast.splatinsert176, <4 x i32> poison, <4 x i32> zeroinitializer
-  %induction = add <4 x i32> %broadcast.splat177, <i32 0, i32 1, i32 2, i32 3>
+  %induction = add <4 x i32> %broadcast.splat173, <i32 0, i32 1, i32 2, i32 3>
   %cmp.n = icmp eq i64 %i.cu, %n.vec
   br label %bb.ab
 
@@ -778,7 +776,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph134, %._crit_edge
   %i.p = phi i32 [ %.pre, %.lr.ph134 ], [ %i.gr, %._crit_edge ] ; 2 uses
-  %.074132 = phi i32 [ 0, %.lr.ph134 ], [ %.pre-phi, %._crit_edge ] ; 7 uses
+  %.074132 = phi i32 [ 0, %.lr.ph134 ], [ %.pre-phi, %._crit_edge ] ; 6 uses
   %i.q = sub nsw i32 %3, %.074132                 ; 2 uses
   %i.r = load double, ptr %i.g, align 8, !tbaa !68 ; 2 uses
   %i.s = icmp sgt i32 %i.p, 0
@@ -948,12 +946,10 @@ next_pi.exit:                                     ; preds = %.lr.ph, %next_gain.
   %n.vec = and i64 %i.cw, -2                      ; 3 uses
   %i.cx = add i64 %n.vec, %i.cp
   %broadcast.splatinsert = insertelement <2 x i32> poison, i32 %.074132, i64 0
-  %broadcast.splat = shufflevector <2 x i32> %broadcast.splatinsert, <2 x i32> poison, <2 x i32> zeroinitializer
+  %broadcast.splat = shufflevector <2 x i32> %broadcast.splatinsert, <2 x i32> poison, <2 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert177 = insertelement <2 x double> poison, double %i.co, i64 0
   %broadcast.splat178 = shufflevector <2 x double> %broadcast.splatinsert177, <2 x double> poison, <2 x i32> zeroinitializer
-  %broadcast.splatinsert179 = insertelement <2 x i32> poison, i32 %.074132, i64 0
-  %broadcast.splat180 = shufflevector <2 x i32> %broadcast.splatinsert179, <2 x i32> poison, <2 x i32> zeroinitializer
-  %induction = add <2 x i32> %broadcast.splat180, <i32 0, i32 1>
+  %induction = add <2 x i32> %broadcast.splat, <i32 0, i32 1>
   %cmp.n = icmp eq i64 %i.cw, %n.vec
   br label %bb.aa
 

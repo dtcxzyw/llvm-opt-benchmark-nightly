@@ -180,7 +180,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.e
   br label %longest_path_match.exit
 
 longest_path_match.exit:                          ; preds = %.lr.ph.i, %bb.g, %bb.h, %bb.i
-  %.234.i = phi i32 [ %.0.lcssa.i, %bb.i ], [ %.032.lcssa.i, %bb.h ], [ %.032.lcssa.i, %bb.g ], [ %.03242.i, %.lr.ph.i ] ; 11 uses
+  %.234.i = phi i32 [ %.0.lcssa.i, %bb.i ], [ %.032.lcssa.i, %bb.h ], [ %.032.lcssa.i, %bb.g ], [ %.03242.i, %.lr.ph.i ] ; 10 uses
   %i.aa = icmp slt i32 %.234.i, %1
   br i1 %i.aa, label %.lr.ph.preheader, label %._crit_edge
 
@@ -194,17 +194,15 @@ longest_path_match.exit:                          ; preds = %.lr.ph.i, %bb.g, %b
 vector.ph:                                        ; preds = %.lr.ph.preheader
   %n.vec = and i64 %i.ac, -4                      ; 3 uses
   %i.ad = add nsw i64 %n.vec, %i.ab
-  %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %.234.i, i64 0
-  %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer
   %broadcast.splatinsert34 = insertelement <4 x i32> poison, i32 %.234.i, i64 0
-  %broadcast.splat35 = shufflevector <4 x i32> %broadcast.splatinsert34, <4 x i32> poison, <4 x i32> zeroinitializer
+  %broadcast.splat35 = shufflevector <4 x i32> %broadcast.splatinsert34, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   %induction = add <4 x i32> %broadcast.splat35, <i32 0, i32 1, i32 2, i32 3>
   %invariant.gep = getelementptr i8, ptr %0, i64 %i.ab
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %vec.phi = phi <4 x i32> [ %broadcast.splat, %vector.ph ], [ %i.ai, %vector.body ]
+  %vec.phi = phi <4 x i32> [ %broadcast.splat35, %vector.ph ], [ %i.ai, %vector.body ]
   %i.ae = phi <4 x i1> [ zeroinitializer, %vector.ph ], [ %i.ah, %vector.body ]
   %vec.ind = phi <4 x i32> [ %induction, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
   %gep = getelementptr i8, ptr %invariant.gep, i64 %index

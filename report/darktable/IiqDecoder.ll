@@ -204,7 +204,7 @@ _ZN8rawspeed6SplineItEC2ERKSt6vectorINS_8iPoint2DESaIS3_EE.exit: ; preds = %._cr
   br i1 %exitcond40.not.i, label %_ZNK8rawspeed6SplineItE14calculateCurveEv.exit, label %bb.ai, !llvm.loop !333
 
 bb.ai:                                            ; preds = %.loopexit.i, %.lr.ph35.i
-  %i.ny = phi i32 [ %.pre.i110, %.lr.ph35.i ], [ %i.oa, %.loopexit.i ] ; 7 uses
+  %i.ny = phi i32 [ %.pre.i110, %.lr.ph35.i ], [ %i.oa, %.loopexit.i ] ; 6 uses
   %indvars.iv37.i = phi i64 [ 0, %.lr.ph35.i ], [ %indvars.iv.next38.i, %.loopexit.i ] ; 2 uses
   %indvars.iv.next38.i = add nuw nsw i64 %indvars.iv37.i, 1 ; 3 uses
   %i.nz = getelementptr inbounds nuw [4 x i8], ptr %i.nx, i64 %indvars.iv.next38.i
@@ -245,21 +245,19 @@ vector.ph523:                                     ; preds = %vector.main.loop.it
   %broadcast.splat528 = shufflevector <4 x double> %broadcast.splatinsert527, <4 x double> poison, <4 x i32> zeroinitializer ; 4 uses
   %broadcast.splatinsert529 = insertelement <4 x double> poison, double %i.oi, i64 0
   %broadcast.splat530 = shufflevector <4 x double> %broadcast.splatinsert529, <4 x double> poison, <4 x i32> zeroinitializer ; 4 uses
-  %broadcast.splatinsert531 = insertelement <4 x i32> poison, i32 %i.ny, i64 0
-  %broadcast.splat532 = shufflevector <4 x i32> %broadcast.splatinsert531, <4 x i32> poison, <4 x i32> zeroinitializer ; 4 uses
   %broadcast.splatinsert533 = insertelement <4 x i32> poison, i32 %i.ny, i64 0
-  %broadcast.splat534 = shufflevector <4 x i32> %broadcast.splatinsert533, <4 x i32> poison, <4 x i32> zeroinitializer
+  %broadcast.splat534 = shufflevector <4 x i32> %broadcast.splatinsert533, <4 x i32> poison, <4 x i32> zeroinitializer ; 5 uses
   %induction = add <4 x i32> %broadcast.splat534, <i32 0, i32 1, i32 2, i32 3>
-  %invariant.op = sub <4 x i32> splat (i32 4), %broadcast.splat532
-  %invariant.op636.a = sub <4 x i32> splat (i32 8), %broadcast.splat532
-  %invariant.op638 = sub <4 x i32> splat (i32 12), %broadcast.splat532
+  %invariant.op = sub <4 x i32> splat (i32 4), %broadcast.splat534
+  %invariant.op636.a = sub <4 x i32> splat (i32 8), %broadcast.splat534
+  %invariant.op638 = sub <4 x i32> splat (i32 12), %broadcast.splat534
   %invariant.gep = getelementptr [2 x i8], ptr %i.nt, i64 %i.oj
   br label %vector.body535
 
 vector.body535:                                   ; preds = %vector.body535, %vector.ph523
   %index536 = phi i64 [ 0, %vector.ph523 ], [ %index.next537, %vector.body535 ] ; 2 uses
   %vec.ind = phi <4 x i32> [ %induction, %vector.ph523 ], [ %vec.ind.next, %vector.body535 ] ; 5 uses
-  %i.oq = sub <4 x i32> %vec.ind, %broadcast.splat532
+  %i.oq = sub <4 x i32> %vec.ind, %broadcast.splat534
   %.reass = add <4 x i32> %vec.ind, %invariant.op
   %.reass637.a = add <4 x i32> %vec.ind, %invariant.op636.a
   %.reass639 = add <4 x i32> %vec.ind, %invariant.op638
