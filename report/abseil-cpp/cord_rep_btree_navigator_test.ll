@@ -203,7 +203,7 @@ bb.aj:                                            ; preds = %_ZN7testing7Message
 
 .preheader:                                       ; preds = %.preheader294, %.critedge136
   %.082298 = phi i64 [ %.080299, %.preheader294 ], [ %i.mu, %.critedge136 ] ; 3 uses
-  %i.ea = sub nuw i64 %.082298, %.080299
+  %i.ea = sub i64 %.082298, %.080299
   %i.eb = mul i64 %i.ea, 3
   br label %bb.ak
 

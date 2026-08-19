@@ -203,7 +203,7 @@ bb.al:                                            ; preds = %.loopexit308.i, %.l
   %.sroa.030.0441.i = phi ptr [ %i.dq, %.lr.ph444.i ], [ %.sroa.030.1.ph.i, %.loopexit308.i ]
   %.sroa.0.0440.i = phi ptr [ %i.bz, %.lr.ph444.i ], [ %.sroa.0.1.ph.i, %.loopexit308.i ]
   %.sroa.10.0439.i = phi i64 [ %i.bv, %.lr.ph444.i ], [ %.sroa.10.1.ph.i, %.loopexit308.i ]
-  %i.ea = add nsw i32 %.sroa.052.0443.i, 1        ; 2 uses
+  %i.ea = add i32 %.sroa.052.0443.i, 1            ; 2 uses
   %i.eb = invoke { ptr, ptr } @_RNvXsM_Cs8zlGlznUR0G_8smallvecRINtB5_8SmallVecANtNtNtCsdsTQD3x2eOp_3exr4meta9attribute18ChannelDescriptionj5_ENtNtNtNtCsj6eKBz9Db1c_4core4iter6traits7collect12IntoIterator9into_iterBP_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(352) %2)
           to label %bb.as unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i, !noalias !114 ; 2 uses
 
@@ -606,7 +606,7 @@ bb.ad:                                            ; preds = %.loopexit749.i, %.l
   %.sroa.010.0829.i = phi ptr [ %.sroa.4342.0.copyload.i, %.lr.ph830.i ], [ %.sroa.010.1.ph.i, %.loopexit749.i ]
   %.sroa.32.0828.i = phi i64 [ %.sroa.5343.0.copyload.i, %.lr.ph830.i ], [ %.sroa.32.1.ph.i, %.loopexit749.i ]
   %.sroa.0368.0827.i = phi i32 [ %i.cw, %.lr.ph830.i ], [ %i.db, %.loopexit749.i ] ; 5 uses
-  %i.db = add nsw i32 %.sroa.0368.0827.i, 1       ; 2 uses
+  %i.db = add i32 %.sroa.0368.0827.i, 1           ; 2 uses
   %i.dc = invoke { ptr, ptr } @_RNvXsM_Cs8zlGlznUR0G_8smallvecRINtB5_8SmallVecANtNtNtCsdsTQD3x2eOp_3exr4meta9attribute18ChannelDescriptionj5_ENtNtNtNtCsj6eKBz9Db1c_4core4iter6traits7collect12IntoIterator9into_iterBP_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(352) %2)
           to label %bb.al unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i, !noalias !229 ; 2 uses
 

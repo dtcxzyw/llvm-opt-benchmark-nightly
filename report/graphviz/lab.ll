@@ -203,7 +203,7 @@ bb.h:                                             ; preds = %.lr.ph49
 .loopexit:                                        ; preds = %bb.h, %..loopexit_crit_edge, %.lr.ph49
   %.promoted52 = phi i32 [ %.promoted, %.lr.ph49 ], [ %.lcssa, %..loopexit_crit_edge ], [ %.promoted, %bb.h ]
   %.2 = phi ptr [ %.03747, %.lr.ph49 ], [ %.lcssa60, %..loopexit_crit_edge ], [ %.03747, %bb.h ]
-  %i.bo = add nuw i64 %.03548, 4                  ; 2 uses
+  %i.bo = add i64 %.03548, 4                      ; 2 uses
   %i.bp = icmp ult i64 %i.bo, %i.x
   br i1 %i.bp, label %.lr.ph49, label %._crit_edge, !llvm.loop !51
 }
