@@ -204,7 +204,8 @@ vector.scevcheck:                                 ; preds = %.lr.ph.preheader
   br i1 %i.ba, label %.lr.ph.preheader110, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.scevcheck
-  %n.vec = and i64 %i.av, 8589934584              ; 3 uses
+  %n.vec = and i64 %i.av, 8589934584              ; 4 uses
+  %4 = trunc i64 %n.vec to i32
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -231,6 +232,7 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.preheader110:                              ; preds = %vector.scevcheck, %.lr.ph.preheader, %middle.block
   %indvars.iv.ph = phi i64 [ 0, %vector.scevcheck ], [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ]
+  %.05180.ph = phi i32 [ 0, %vector.scevcheck ], [ 0, %.lr.ph.preheader ], [ %4, %middle.block ]
   %.05279.ph = phi i32 [ 0, %vector.scevcheck ], [ 0, %.lr.ph.preheader ], [ %i.bi, %middle.block ]
   br label %.lr.ph
 
@@ -250,15 +252,16 @@ middle.block:                                     ; preds = %vector.body
   br i1 %i.br, label %.loopexit, label %bb.g
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader110, %.lr.ph
-  %indvars.iv.a = phi i64 [ %indvars.iv.next, %.lr.ph ], [ %indvars.iv.ph, %.lr.ph.preheader110 ] ; 2 uses
+  %indvars.iv.a = phi i64 [ %6, %.lr.ph ], [ %indvars.iv.ph, %.lr.ph.preheader110 ]
+  %.05180 = phi i32 [ %5, %.lr.ph ], [ %.05180.ph, %.lr.ph.preheader110 ]
   %.05279 = phi i32 [ %spec.select, %.lr.ph ], [ %.05279.ph, %.lr.ph.preheader110 ]
   %i.bs = getelementptr inbounds nuw [4 x i8], ptr %i.ar, i64 %indvars.iv.a
   %i.bt = load i32, ptr %i.bs, align 4
   %i.bu = lshr i32 %i.bt, 31
   %spec.select = add i32 %i.bu, %.05279           ; 2 uses
-  %indvars.iv.next = add i64 %indvars.iv.a, 1     ; 2 uses
-  %4 = and i64 %indvars.iv.next, 4294967295
-  %i.bv = icmp ugt i64 %i.av, %4
+  %5 = add i32 %.05180, 1                         ; 2 uses
+  %6 = zext i32 %5 to i64                         ; 2 uses
+  %i.bv = icmp ugt i64 %i.av, %6
   br i1 %i.bv, label %.lr.ph, label %._crit_edge, !llvm.loop !129
 
 bb.g:                                             ; preds = %._crit_edge

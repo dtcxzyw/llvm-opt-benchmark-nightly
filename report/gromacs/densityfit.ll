@@ -204,6 +204,8 @@ _ZNSt10unique_ptrIN3gmx28DensitySimilarityMeasureImplESt14default_deleteIS1_EEaS
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define void @_ZN3gmx33normalizeSumPositiveValuesToUnityENS_8ArrayRefIfEE(ptr nofree captures(address) %0, ptr nofree readnone captures(address) %1) local_unnamed_addr #21 {
 bb.a:
+  %2 = ptrtoaddr ptr %0 to i64                    ; 2 uses
+  %3 = ptrtoaddr ptr %1 to i64                    ; 2 uses
   %.not5.i = icmp eq ptr %0, %1
   br i1 %.not5.i, label %"_ZSt9transformIN3gmx12ArrayRefIterIfEES2_ZNS0_33normalizeSumPositiveValuesToUnityENS0_8ArrayRefIfEEE3$_1ET0_T_S7_S6_T1_.exit", label %.lr.ph.i
 
@@ -224,16 +226,20 @@ bb.a:
   br i1 %i.g, label %"_ZSt9transformIN3gmx12ArrayRefIterIfEES2_ZNS0_33normalizeSumPositiveValuesToUnityENS0_8ArrayRefIfEEE3$_1ET0_T_S7_S6_T1_.exit", label %.lr.ph.i12.preheader
 
 .lr.ph.i12.preheader:                             ; preds = %"_ZSt10accumulateIN3gmx12ArrayRefIterIfEEdZNS0_33normalizeSumPositiveValuesToUnityENS0_8ArrayRefIfEEE3$_0ET0_T_S7_S6_T1_.exit"
-  %2 = ptrtoaddr ptr %1 to i64
-  %3 = ptrtoaddr ptr %0 to i64
-  %i.h = add i64 %2, -4
-  %i.i = sub i64 %i.h, %3                         ; 2 uses
+  %i.h = add i64 %3, -4
+  %i.i = sub i64 %i.h, %2                         ; 2 uses
   %i.j = lshr i64 %i.i, 2
   %i.k = add nuw nsw i64 %i.j, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.i, 28
-  br i1 %min.iters.check, label %.lr.ph.i12.preheader17, label %vector.ph
+  br i1 %min.iters.check, label %.lr.ph.i12.preheader17, label %vector.scevcheck
 
-vector.ph:                                        ; preds = %.lr.ph.i12.preheader
+vector.scevcheck:                                 ; preds = %.lr.ph.i12.preheader
+  %4 = sub i64 %3, %2
+  %5 = and i64 %4, 3
+  %ident.check.not = icmp eq i64 %5, 0
+  br i1 %ident.check.not, label %vector.ph, label %.lr.ph.i12.preheader17
+
+vector.ph:                                        ; preds = %vector.scevcheck
   %n.vec = and i64 %i.k, 9223372036854775800      ; 3 uses
   %i.l = shl i64 %n.vec, 2
   %i.m = getelementptr i8, ptr %0, i64 %i.l
@@ -258,8 +264,8 @@ middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.k, %n.vec
   br i1 %cmp.n, label %"_ZSt9transformIN3gmx12ArrayRefIterIfEES2_ZNS0_33normalizeSumPositiveValuesToUnityENS0_8ArrayRefIfEEE3$_1ET0_T_S7_S6_T1_.exit", label %.lr.ph.i12.preheader17
 
-.lr.ph.i12.preheader17:                           ; preds = %.lr.ph.i12.preheader, %middle.block
-  %.sroa.07.011.i.ph = phi ptr [ %0, %.lr.ph.i12.preheader ], [ %i.m, %middle.block ]
+.lr.ph.i12.preheader17:                           ; preds = %vector.scevcheck, %.lr.ph.i12.preheader, %middle.block
+  %.sroa.07.011.i.ph = phi ptr [ %0, %vector.scevcheck ], [ %0, %.lr.ph.i12.preheader ], [ %i.m, %middle.block ]
   br label %.lr.ph.i12
 
 .lr.ph.i12:                                       ; preds = %.lr.ph.i12.preheader17, %.lr.ph.i12
@@ -469,5 +475,5 @@ attributes #28 = { noreturn }
 !134 = distinct !{null, null, null, null, null}
 !135 = distinct !{!135, !38}
 !136 = distinct !{!136, !38, !39, !40}
-!137 = distinct !{!137, !38, !40, !39}
+!137 = distinct !{!137, !38, !39}
 end_hunk_0

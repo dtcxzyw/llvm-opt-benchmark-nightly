@@ -201,17 +201,17 @@ define internal fastcc void @fourn(ptr nofree noundef nonnull captures(none) %0,
   %i.c = mul nuw nsw i32 %i.b, %i.a               ; 2 uses
   %i.d = sitofp i32 %1 to double
   %i.e = fmul nnan double %i.d, f0x401921FB54442D1C ; 2 uses
-  %i.f = shl nuw nsw i32 %i.b, 1                  ; 4 uses
-  %i.g = mul nuw nsw i32 %i.f, %i.a               ; 2 uses
+  %i.f = shl nuw nsw i32 %i.b, 1                  ; 5 uses
+  %i.g = mul nuw nsw i32 %i.f, %i.a               ; 4 uses
   br i1 %.b1, label %.lr.ph19, label %._crit_edge33
 
 .lr.ph19:                                         ; preds = %.preheader6
-  %i.h = zext nneg i32 %i.f to i64                ; 2 uses
-  %i.i = zext nneg i32 %i.g to i64                ; 2 uses
+  %i.h = zext nneg i32 %i.f to i64
+  %i.i = zext nneg i32 %i.g to i64
   br label %bb.a
 
 .lr.ph32.preheader:                               ; preds = %bb.b
-  %i.j = zext nneg i32 %i.g to i64                ; 2 uses
+  %i.j = zext nneg i32 %i.g to i64
   br label %.lr.ph32
 
 bb.a:                                             ; preds = %.lr.ph19, %bb.b
@@ -223,8 +223,9 @@ bb.a:                                             ; preds = %.lr.ph19, %bb.b
 
 .preheader2.lr.ph:                                ; preds = %bb.a
   %i.l = sub i32 %.014016, %indvars44
-  %2 = icmp samesign ugt i64 %indvars.iv, %i.i
-  br i1 %2, label %.loopexit4.preheader, label %.lr.ph
+  %indvars42 = trunc i64 %indvars.iv to i32
+  %.not1559 = icmp slt i32 %i.g, %indvars42
+  br i1 %.not1559, label %.loopexit4.preheader, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader2.lr.ph, %.lr.ph
   %indvars.iv39 = phi i64 [ %indvars.iv.next40, %.lr.ph ], [ %indvars.iv, %.preheader2.lr.ph ] ; 3 uses
@@ -263,8 +264,9 @@ bb.a:                                             ; preds = %.lr.ph19, %bb.b
 bb.b:                                             ; preds = %.loopexit4
   %i.ab = add nsw i32 %.0138, %.1141
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %3 = icmp samesign ugt i64 %indvars.iv.next, %i.h
-  br i1 %3, label %.lr.ph32.preheader, label %bb.a, !llvm.loop !22
+  %indvars43 = trunc i64 %indvars.iv.next to i32
+  %.not = icmp slt i32 %i.f, %indvars43
+  br i1 %.not, label %.lr.ph32.preheader, label %bb.a, !llvm.loop !22
 
 .loopexit:                                        ; preds = %._crit_edge26, %.lr.ph32
   %i.ac = icmp slt i32 %i.ad, %i.f
@@ -296,24 +298,28 @@ bb.b:                                             ; preds = %.loopexit4
   br label %.preheader1
 
 .preheader1:                                      ; preds = %.preheader1.lr.ph, %._crit_edge26
-  %indvars.iv45 = phi i64 [ 1, %.preheader1.lr.ph ], [ %indvars.iv.next46, %._crit_edge26 ] ; 4 uses
+  %indvars.iv45 = phi i64 [ 1, %.preheader1.lr.ph ], [ %indvars.iv.next46, %._crit_edge26 ] ; 3 uses
   %i.at = phi <2 x double> [ <double 0.000000e+00, double 1.000000e+00>, %.preheader1.lr.ph ], [ %i.bp, %._crit_edge26 ] ; 5 uses
   %indvars56 = trunc i64 %indvars.iv45 to i32
   %indvars.iv.next46 = add nuw nsw i64 %indvars.iv45, 2 ; 2 uses
   %indvars55 = trunc i64 %indvars.iv.next46 to i32 ; 2 uses
-  %i.au = add nsw i32 %indvars55, -2
+  %i.au = add nsw i32 %indvars55, -2              ; 2 uses
   %.not15224 = icmp slt i32 %i.au, %indvars56
-  %4 = icmp samesign ugt i64 %indvars.iv45, %i.j
-  %or.cond = select i1 %.not15224, i1 true, i1 %4
-  br i1 %or.cond, label %._crit_edge26, label %.lr.ph22.preheader
+  br i1 %.not15224, label %._crit_edge26, label %.lr.ph22.preheader
 
 .lr.ph22.preheader:                               ; preds = %.preheader1
   %i.av = shufflevector <2 x double> %i.at, <2 x double> poison, <2 x i32> zeroinitializer
   %i.aw = shufflevector <2 x double> %i.at, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  br label %.lr.ph22
+  br label %.preheader
 
-.lr.ph22:                                         ; preds = %.lr.ph22.preheader, %.lr.ph22
-  %indvars.iv49 = phi i64 [ %indvars.iv.next50, %.lr.ph22 ], [ %indvars.iv45, %.lr.ph22.preheader ] ; 3 uses
+.preheader:                                       ; preds = %.lr.ph22.preheader, %._crit_edge23
+  %indvars.iv47 = phi i64 [ %indvars.iv.next48, %._crit_edge23 ], [ %indvars.iv45, %.lr.ph22.preheader ] ; 3 uses
+  %indvars54 = trunc i64 %indvars.iv47 to i32
+  %.not15320 = icmp slt i32 %i.g, %indvars54
+  br i1 %.not15320, label %._crit_edge23, label %.lr.ph22
+
+.lr.ph22:                                         ; preds = %.preheader, %.lr.ph22
+  %indvars.iv49 = phi i64 [ %indvars.iv.next50, %.lr.ph22 ], [ %indvars.iv47, %.preheader ] ; 3 uses
   %gep = getelementptr [8 x i8], ptr %invariant.gep, i64 %indvars.iv49 ; 3 uses
   %i.ax = getelementptr i8, ptr %gep, i64 8       ; 2 uses
   %i.ay = getelementptr inbounds [8 x i8], ptr %0, i64 %indvars.iv49 ; 3 uses
@@ -335,15 +341,21 @@ bb.b:                                             ; preds = %.loopexit4
   store <2 x double> %i.bl, ptr %i.ay, align 8, !tbaa !11
   %indvars.iv.next50 = add nsw i64 %indvars.iv49, %i.an ; 2 uses
   %.not153 = icmp sgt i64 %indvars.iv.next50, %i.j
-  br i1 %.not153, label %._crit_edge26, label %.lr.ph22, !llvm.loop !24
+  br i1 %.not153, label %._crit_edge23, label %.lr.ph22, !llvm.loop !24
 
-._crit_edge26:                                    ; preds = %.lr.ph22, %.preheader1
+._crit_edge23:                                    ; preds = %.lr.ph22, %.preheader
+  %indvars.iv.next48 = add nuw nsw i64 %indvars.iv47, 2 ; 2 uses
+  %indvars53 = trunc i64 %indvars.iv.next48 to i32
+  %.not152 = icmp slt i32 %i.au, %indvars53
+  br i1 %.not152, label %._crit_edge26, label %.preheader, !llvm.loop !25
+
+._crit_edge26:                                    ; preds = %._crit_edge23, %.preheader1
   %i.bm = fmul <2 x double> %i.at, %i.as
   %i.bn = shufflevector <2 x double> %i.bm, <2 x double> poison, <2 x i32> <i32 1, i32 0>
   %i.bo = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.at, <2 x double> %i.aq, <2 x double> %i.bn)
   %i.bp = fadd <2 x double> %i.at, %i.bo
   %.not151 = icmp slt i32 %.013931, %indvars55
-  br i1 %.not151, label %.loopexit, label %.preheader1, !llvm.loop !25
+  br i1 %.not151, label %.loopexit, label %.preheader1, !llvm.loop !26
 
 ._crit_edge33.loopexit:                           ; preds = %.loopexit
   %.pre.b = load i1, ptr @main.nsize.0, align 4
@@ -415,7 +427,7 @@ bb.c:                                             ; preds = %bb.d, %.lr.ph19.1
   %indvars.iv.next38.1 = add nuw nsw i64 %indvars.iv37.1, 2 ; 2 uses
   %indvars.1 = trunc i64 %indvars.iv.next38.1 to i32
   %.not154.1 = icmp slt i32 %i.ca, %indvars.1
-  br i1 %.not154.1, label %.loopexit4.1.preheader, label %.preheader2.1, !llvm.loop !26
+  br i1 %.not154.1, label %.loopexit4.1.preheader, label %.preheader2.1, !llvm.loop !27
 
 .loopexit4.1.preheader:                           ; preds = %._crit_edge.1, %.preheader3.1, %bb.c
   br label %.loopexit4.1
@@ -521,7 +533,7 @@ bb.d:                                             ; preds = %.loopexit4.1
   %indvars.iv.next48.1 = add nuw nsw i64 %indvars.iv47.1, 2 ; 2 uses
   %indvars53.1 = trunc i64 %indvars.iv.next48.1 to i32
   %.not152.1 = icmp slt i32 %i.dm, %indvars53.1
-  br i1 %.not152.1, label %._crit_edge26.1, label %.preheader.1, !llvm.loop !27
+  br i1 %.not152.1, label %._crit_edge26.1, label %.preheader.1, !llvm.loop !25
 
 ._crit_edge26.1:                                  ; preds = %._crit_edge23.1, %.preheader1.1
   %i.ee = fmul <2 x double> %i.dl, %i.dk
@@ -529,7 +541,7 @@ bb.d:                                             ; preds = %.loopexit4.1
   %i.eg = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.dl, <2 x double> %i.di, <2 x double> %i.ef)
   %i.eh = fadd <2 x double> %i.dl, %i.eg
   %.not151.1 = icmp slt i32 %.013931.1, %indvars55.1
-  br i1 %.not151.1, label %.loopexit.1, label %.preheader1.1, !llvm.loop !25
+  br i1 %.not151.1, label %.loopexit.1, label %.preheader1.1, !llvm.loop !26
 
 .loopexit.1:                                      ; preds = %._crit_edge26.1, %.lr.ph32.1
   %i.ei = icmp slt i32 %i.cv, %i.bt

@@ -203,7 +203,7 @@ _ZNSt6vectorIjSaIjEE6resizeEm.exit:               ; preds = %bb.r, %bb.s, %bb.t,
 
 iter.check:                                       ; preds = %_ZNSt6vectorIjSaIjEE6resizeEm.exit
   %umax114 = tail call i64 @llvm.umax.i64(i64 %i.bf, i64 1) ; 3 uses
-  %min.iters.check = icmp ult i64 %i.bf, 4
+  %min.iters.check = icmp ult i64 %i.bf, 8
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %iter.check
@@ -219,8 +219,9 @@ vector.main.loop.iter.check:                      ; preds = %vector.scevcheck
   br i1 %min.iters.check115, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.bl = and i64 %umax114, 28
-  %n.vec = and i64 %umax114, 8589934560           ; 4 uses
+  %i.bl = and i64 %umax114, 24
+  %n.vec = and i64 %umax114, 8589934560           ; 5 uses
+  %5 = trunc i64 %n.vec to i32
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -247,14 +248,15 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec116 = and i64 %umax114, 8589934588        ; 3 uses
+  %n.vec116 = and i64 %umax114, 8589934584        ; 4 uses
+  %6 = trunc i64 %n.vec116 to i32
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index117 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next118, %vec.epilog.vector.body ] ; 2 uses
   %i.br = getelementptr inbounds nuw [4 x i8], ptr %i.ba, i64 %index117
-  store <4 x i32> zeroinitializer, ptr %i.br, align 4, !tbaa !72
-  %index.next118 = add nuw i64 %index117, 4       ; 2 uses
+  store <8 x i32> zeroinitializer, ptr %i.br, align 4, !tbaa !72
+  %index.next118 = add nuw i64 %index117, 8       ; 2 uses
   %i.bs = icmp eq i64 %index.next118, %n.vec116
   br i1 %i.bs, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !91
 
@@ -264,6 +266,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 .lr.ph.preheader:                                 ; preds = %vector.scevcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %indvars.iv.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.scevcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec116, %vec.epilog.middle.block ]
+  %.04056.ph = phi i32 [ 0, %iter.check ], [ 0, %vector.scevcheck ], [ %5, %vec.epilog.iter.check ], [ %6, %vec.epilog.middle.block ]
   br label %.lr.ph
 
 .preheader49.loopexit:                            ; preds = %.lr.ph, %vec.epilog.middle.block, %middle.block
@@ -280,12 +283,13 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br label %.preheader48
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %indvars.iv.a = phi i64 [ %indvars.iv.next, %.lr.ph ], [ %indvars.iv.ph, %.lr.ph.preheader ] ; 2 uses
+  %indvars.iv.a = phi i64 [ %8, %.lr.ph ], [ %indvars.iv.ph, %.lr.ph.preheader ]
+  %.04056 = phi i32 [ %7, %.lr.ph ], [ %.04056.ph, %.lr.ph.preheader ]
   %i.bv = getelementptr inbounds nuw [4 x i8], ptr %i.ba, i64 %indvars.iv.a
   store i32 0, ptr %i.bv, align 4, !tbaa !72
-  %indvars.iv.next = add i64 %indvars.iv.a, 1     ; 2 uses
-  %5 = and i64 %indvars.iv.next, 4294967295
-  %i.bw = icmp ugt i64 %i.bf, %5
+  %7 = add i32 %.04056, 1                         ; 2 uses
+  %8 = zext i32 %7 to i64                         ; 2 uses
+  %i.bw = icmp ugt i64 %i.bf, %8
   br i1 %i.bw, label %.lr.ph, label %.preheader49.loopexit, !llvm.loop !92
 
 .preheader48:                                     ; preds = %.preheader48.lr.ph, %._crit_edge64
@@ -688,7 +692,7 @@ attributes #20 = { noreturn nounwind }
 !87 = distinct !{!87, !19, !88, !89}
 !88 = !{!"llvm.loop.isvectorized", i32 1}
 !89 = !{!"llvm.loop.unroll.runtime.disable"}
-!90 = !{!"branch_weights", i32 4, i32 28}
+!90 = !{!"branch_weights", i32 8, i32 24}
 !91 = distinct !{!91, !19, !88, !89}
 !92 = distinct !{!92, !19, !88}
 !93 = !{!78, !28, i64 2117}

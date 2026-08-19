@@ -199,7 +199,7 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph:                                           ; preds = %.preheader
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 352
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !112  ; 5 uses
-  %min.iters.check = icmp ult i64 %i.k, 9
+  %min.iters.check = icmp ult i64 %i.k, 11
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph
@@ -214,7 +214,8 @@ vector.ph:                                        ; preds = %vector.scevcheck
   %i.s = and i64 %i.k, 3                          ; 2 uses
   %i.t = icmp eq i64 %i.s, 0
   %i.u = select i1 %i.t, i64 4, i64 %i.s
-  %n.vec = sub nsw i64 %i.k, %i.u                 ; 2 uses
+  %n.vec = sub nsw i64 %i.k, %i.u                 ; 3 uses
+  %4 = trunc i64 %n.vec to i32
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -253,6 +254,7 @@ middle.block:                                     ; preds = %vector.body
 
 scalar.ph.preheader:                              ; preds = %vector.scevcheck, %.lr.ph, %middle.block
   %indvars.iv.ph = phi i64 [ 0, %vector.scevcheck ], [ 0, %.lr.ph ], [ %n.vec, %middle.block ]
+  %.025.ph = phi i32 [ 0, %vector.scevcheck ], [ 0, %.lr.ph ], [ %4, %middle.block ]
   %.01724.ph = phi i64 [ 0, %vector.scevcheck ], [ 0, %.lr.ph ], [ %i.ar, %middle.block ]
   br label %scalar.ph
 
@@ -282,16 +284,17 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br label %bb.g
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %scalar.ph ], [ %indvars.iv.ph, %scalar.ph.preheader ] ; 2 uses
+  %indvars.iv = phi i64 [ %6, %scalar.ph ], [ %indvars.iv.ph, %scalar.ph.preheader ]
+  %.025 = phi i32 [ %5, %scalar.ph ], [ %.025.ph, %scalar.ph.preheader ]
   %.01724 = phi i64 [ %spec.select, %scalar.ph ], [ %.01724.ph, %scalar.ph.preheader ]
   %i.az = getelementptr inbounds nuw [48 x i8], ptr %i.m, i64 %indvars.iv
   %i.ba = load ptr, ptr %i.az, align 8, !tbaa !113
   %i.bb = icmp eq ptr %i.ba, @H5O_MSG_ATTR
   %i.bc = zext i1 %i.bb to i64
   %spec.select = add i64 %.01724, %i.bc           ; 2 uses
-  %indvars.iv.next = add i64 %indvars.iv, 1       ; 2 uses
-  %4 = and i64 %indvars.iv.next, 4294967295
-  %i.bd = icmp ugt i64 %i.k, %4
+  %5 = add i32 %.025, 1                           ; 2 uses
+  %6 = zext i32 %5 to i64                         ; 2 uses
+  %i.bd = icmp ugt i64 %i.k, %6
   br i1 %i.bd, label %scalar.ph, label %._crit_edge, !llvm.loop !117
 
 ._crit_edge:                                      ; preds = %scalar.ph, %.preheader

@@ -201,7 +201,7 @@ bb.g:                                             ; preds = %bb.e
 .lr.ph.i:                                         ; preds = %.preheader.i
   %i.ac = getelementptr inbounds nuw i8, ptr %i.p, i64 352
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !30 ; 5 uses
-  %min.iters.check = icmp ult i64 %i.ab, 9
+  %min.iters.check = icmp ult i64 %i.ab, 11
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph.i
@@ -216,7 +216,8 @@ vector.ph:                                        ; preds = %vector.scevcheck
   %i.aj = and i64 %i.ab, 3                        ; 2 uses
   %i.ak = icmp eq i64 %i.aj, 0
   %i.al = select i1 %i.ak, i64 4, i64 %i.aj
-  %n.vec = sub nsw i64 %i.ab, %i.al               ; 2 uses
+  %n.vec = sub nsw i64 %i.ab, %i.al               ; 3 uses
+  %2 = trunc i64 %n.vec to i32
   %broadcast.splatinsert = insertelement <2 x ptr> poison, ptr %i.o, i64 0
   %broadcast.splat = shufflevector <2 x ptr> %broadcast.splatinsert, <2 x ptr> poison, <2 x i32> zeroinitializer ; 2 uses
   br label %vector.body
@@ -258,19 +259,21 @@ middle.block:                                     ; preds = %vector.body
 scalar.ph.preheader:                              ; preds = %vector.scevcheck, %.lr.ph.i, %middle.block
   %indvars.iv.i.ph = phi i64 [ 0, %vector.scevcheck ], [ 0, %.lr.ph.i ], [ %n.vec, %middle.block ]
   %.010.i.ph = phi i32 [ 0, %vector.scevcheck ], [ 0, %.lr.ph.i ], [ %i.bi, %middle.block ]
+  %.079.i.ph = phi i32 [ 0, %vector.scevcheck ], [ 0, %.lr.ph.i ], [ %2, %middle.block ]
   br label %scalar.ph
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %scalar.ph ], [ %indvars.iv.i.ph, %scalar.ph.preheader ] ; 2 uses
-  %.010.i.a = phi i32 [ %spec.select.i, %scalar.ph ], [ %.010.i.ph, %scalar.ph.preheader ]
+  %indvars.iv.i = phi i64 [ %4, %scalar.ph ], [ %indvars.iv.i.ph, %scalar.ph.preheader ]
+  %.010.i = phi i32 [ %spec.select.i, %scalar.ph ], [ %.010.i.ph, %scalar.ph.preheader ]
+  %.010.i.a = phi i32 [ %3, %scalar.ph ], [ %.079.i.ph, %scalar.ph.preheader ]
   %i.bj = getelementptr inbounds nuw [48 x i8], ptr %i.ad, i64 %indvars.iv.i
   %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !46
   %i.bl = icmp eq ptr %i.bk, %i.o
   %i.bm = zext i1 %i.bl to i32
-  %spec.select.i = add i32 %.010.i.a, %i.bm       ; 2 uses
-  %indvars.iv.next.i = add i64 %indvars.iv.i, 1   ; 2 uses
-  %2 = and i64 %indvars.iv.next.i, 4294967295
-  %i.bn = icmp ugt i64 %i.ab, %2
+  %spec.select.i = add i32 %.010.i, %i.bm         ; 2 uses
+  %3 = add i32 %.010.i.a, 1                       ; 2 uses
+  %4 = zext i32 %3 to i64                         ; 2 uses
+  %i.bn = icmp ugt i64 %i.ab, %4
   br i1 %i.bn, label %scalar.ph, label %.loopexit, !llvm.loop !83
 
 .loopexit:                                        ; preds = %scalar.ph, %bb.g, %.preheader.i
@@ -310,7 +313,7 @@ bb.a:
 .lr.ph:                                           ; preds = %.preheader
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 352
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !30   ; 5 uses
-  %min.iters.check = icmp ult i64 %i.h, 9
+  %min.iters.check = icmp ult i64 %i.h, 11
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph
@@ -325,7 +328,8 @@ vector.ph:                                        ; preds = %vector.scevcheck
   %i.p = and i64 %i.h, 3                          ; 2 uses
   %i.q = icmp eq i64 %i.p, 0
   %i.r = select i1 %i.q, i64 4, i64 %i.p
-  %n.vec = sub nsw i64 %i.h, %i.r                 ; 2 uses
+  %n.vec = sub nsw i64 %i.h, %i.r                 ; 3 uses
+  %2 = trunc i64 %n.vec to i32
   %broadcast.splatinsert = insertelement <2 x ptr> poison, ptr %1, i64 0
   %broadcast.splat = shufflevector <2 x ptr> %broadcast.splatinsert, <2 x ptr> poison, <2 x i32> zeroinitializer ; 2 uses
   br label %vector.body
@@ -367,19 +371,21 @@ middle.block:                                     ; preds = %vector.body
 scalar.ph.preheader:                              ; preds = %vector.scevcheck, %.lr.ph, %middle.block
   %indvars.iv.ph = phi i64 [ 0, %vector.scevcheck ], [ 0, %.lr.ph ], [ %n.vec, %middle.block ]
   %.010.ph = phi i32 [ 0, %vector.scevcheck ], [ 0, %.lr.ph ], [ %i.ao, %middle.block ]
+  %.079.ph = phi i32 [ 0, %vector.scevcheck ], [ 0, %.lr.ph ], [ %2, %middle.block ]
   br label %scalar.ph
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %scalar.ph ], [ %indvars.iv.ph, %scalar.ph.preheader ] ; 2 uses
-  %.010.a = phi i32 [ %spec.select, %scalar.ph ], [ %.010.ph, %scalar.ph.preheader ]
+  %indvars.iv = phi i64 [ %4, %scalar.ph ], [ %indvars.iv.ph, %scalar.ph.preheader ]
+  %.010 = phi i32 [ %spec.select, %scalar.ph ], [ %.010.ph, %scalar.ph.preheader ]
+  %.010.a = phi i32 [ %3, %scalar.ph ], [ %.079.ph, %scalar.ph.preheader ]
   %i.ap = getelementptr inbounds nuw [48 x i8], ptr %i.j, i64 %indvars.iv
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !46
   %i.ar = icmp eq ptr %i.aq, %1
   %i.as = zext i1 %i.ar to i32
-  %spec.select = add i32 %.010.a, %i.as           ; 2 uses
-  %indvars.iv.next = add i64 %indvars.iv, 1       ; 2 uses
-  %2 = and i64 %indvars.iv.next, 4294967295
-  %i.at = icmp ugt i64 %i.h, %2
+  %spec.select = add i32 %.010, %i.as             ; 2 uses
+  %3 = add i32 %.010.a, 1                         ; 2 uses
+  %4 = zext i32 %3 to i64                         ; 2 uses
+  %i.at = icmp ugt i64 %i.h, %4
   br i1 %i.at, label %scalar.ph, label %.loopexit, !llvm.loop !85
 
 .loopexit:                                        ; preds = %scalar.ph, %.preheader, %bb.a

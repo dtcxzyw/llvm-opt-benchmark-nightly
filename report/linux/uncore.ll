@@ -204,16 +204,17 @@ uncore_put_event_constraint.exit:                 ; preds = %bb.c, %bb.d
   br i1 %i.v, label %.lr.ph31, label %._crit_edge
 
 .lr.ph31:                                         ; preds = %uncore_put_event_constraint.exit, %.lr.ph31
-  %indvars.iv38.a = phi i64 [ %indvars.iv.next39, %.lr.ph31 ], [ %indvars.iv35, %uncore_put_event_constraint.exit ] ; 3 uses
-  %.1.in29 = phi i64 [ %indvars.iv38.a, %.lr.ph31 ], [ %indvars.iv, %uncore_put_event_constraint.exit ]
-  %i.w = getelementptr [8 x i8], ptr %i.h, i64 %indvars.iv38.a
+  %indvars.iv38.a = phi i64 [ %indvars.iv.next42, %.lr.ph31 ], [ %indvars.iv, %uncore_put_event_constraint.exit ] ; 2 uses
+  %.1.in29 = phi i64 [ %indvars.iv.next39, %.lr.ph31 ], [ %indvars.iv35, %uncore_put_event_constraint.exit ] ; 2 uses
+  %i.w = getelementptr [8 x i8], ptr %i.h, i64 %.1.in29
   %i.x = load ptr, ptr %i.w, align 8
-  %i.y = getelementptr [8 x i8], ptr %i.h, i64 %.1.in29
+  %i.y = getelementptr [8 x i8], ptr %i.h, i64 %indvars.iv38.a
   store ptr %i.x, ptr %i.y, align 8
-  %indvars.iv.next39 = add nuw nsw i64 %indvars.iv38.a, 1 ; 2 uses
+  %indvars.iv.next39 = add nuw nsw i64 %.1.in29, 1 ; 2 uses
   %i.z = load i32, ptr %i.e, align 8              ; 2 uses
   %i.aa = sext i32 %i.z to i64
   %i.ab = icmp slt i64 %indvars.iv.next39, %i.aa
+  %indvars.iv.next42 = add nuw nsw i64 %indvars.iv38.a, 1
   br i1 %i.ab, label %.lr.ph31, label %._crit_edge, !llvm.loop !55
 
 ._crit_edge:                                      ; preds = %.lr.ph31, %uncore_put_event_constraint.exit

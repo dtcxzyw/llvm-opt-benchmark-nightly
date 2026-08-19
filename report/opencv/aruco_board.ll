@@ -203,9 +203,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit107: ; preds = %bb
   br label %.preheader173
 
 .preheader173:                                    ; preds = %.preheader173.preheader, %.preheader173
-  %indvars.iv = phi i64 [ 0, %.preheader173.preheader ], [ %indvars.iv.next, %.preheader173 ] ; 2 uses
-  %i.aw = phi <2 x float> [ %i.av, %.preheader173.preheader ], [ %i.bo, %.preheader173 ] ; 2 uses
-  %i.ax = phi <2 x float> [ %i.av, %.preheader173.preheader ], [ %i.bw, %.preheader173 ] ; 2 uses
+  %indvars.iv = phi i64 [ %29, %.preheader173 ], [ 0, %.preheader173.preheader ]
+  %.040183 = phi i32 [ %28, %.preheader173 ], [ 0, %.preheader173.preheader ]
+  %i.aw = phi <2 x float> [ %i.bo, %.preheader173 ], [ %i.av, %.preheader173.preheader ] ; 2 uses
+  %i.ax = phi <2 x float> [ %i.bw, %.preheader173 ], [ %i.av, %.preheader173.preheader ] ; 2 uses
   %i.ay = getelementptr inbounds nuw [24 x i8], ptr %i.ag, i64 %indvars.iv
   %i.az = load ptr, ptr %i.ay, align 8, !tbaa !49 ; 4 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 12
@@ -231,9 +232,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit107: ; preds = %bb
   %i.bu = select <2 x i1> %i.bt, <2 x float> %i.bj, <2 x float> %i.bs ; 2 uses
   %i.bv = fcmp olt <2 x float> %i.bu, %i.bm
   %i.bw = select <2 x i1> %i.bv, <2 x float> %i.bm, <2 x float> %i.bu ; 2 uses
-  %indvars.iv.next = add i64 %indvars.iv, 1       ; 2 uses
-  %28 = and i64 %indvars.iv.next, 4294967295
-  %i.bx = icmp ugt i64 %i.ak, %28
+  %28 = add i32 %.040183, 1                       ; 2 uses
+  %29 = zext i32 %28 to i64                       ; 2 uses
+  %i.bx = icmp ugt i64 %i.ak, %29
   br i1 %i.bx, label %.preheader173, label %._crit_edge, !llvm.loop !88
 
 ._crit_edge:                                      ; preds = %.preheader173

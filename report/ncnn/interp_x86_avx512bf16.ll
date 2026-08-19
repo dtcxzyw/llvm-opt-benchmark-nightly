@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.aw = mul i64 %i.au, %i.av
   %i.ax = getelementptr inbounds nuw i8, ptr %i.as, i64 %i.aw ; 12 uses
   %i.ay = sext i32 %i.ar to i64                   ; 4 uses
-  %i.az = load i32, ptr %i.o, align 4, !tbaa !39, !noalias !87 ; 36 uses
+  %i.az = load i32, ptr %i.o, align 4, !tbaa !39, !noalias !87 ; 38 uses
   %i.ba = load i32, ptr %i.p, align 8, !tbaa !90, !noalias !87 ; 8 uses
   %i.bb = load ptr, ptr %4, align 8, !tbaa !29, !noalias !87
   %i.bc = load i64, ptr %i.q, align 8, !tbaa !33, !noalias !87
@@ -212,7 +212,7 @@ bb.b:                                             ; preds = %bb.a
   %i.be = load i64, ptr %i.r, align 8, !tbaa !34, !noalias !87 ; 5 uses
   %i.bf = mul i64 %i.bd, %i.be
   %i.bg = getelementptr inbounds nuw i8, ptr %i.bb, i64 %i.bf ; 8 uses
-  %i.bh = sext i32 %i.az to i64                   ; 6 uses
+  %i.bh = sext i32 %i.az to i64                   ; 5 uses
   %i.bi = load i32, ptr %5, align 4, !tbaa !18    ; 2 uses
   %i.bj = icmp eq i32 %i.bi, 16
   br i1 %i.bj, label %bb.c, label %bb.aa
@@ -615,7 +615,6 @@ _ZN4ncnn3MatC2EimiPNS_9AllocatorE.exit.i78:       ; preds = %.noexc112
   %invariant.op.i.i80 = add nsw i64 %i.vq, -7
   %wide.trip.count682.i = zext nneg i32 %i.ba to i64
   %invariant.op.i = add nsw i64 %i.bh, -3         ; 2 uses
-  %invariant.op704.i = add nsw i64 %i.bh, -1      ; 2 uses
   %wide.trip.count.i81 = zext i32 %i.az to i64    ; 2 uses
   %i.vr = mul i64 %i.be, %i.bh
   %i.vs = mul i64 %i.av, %i.ay                    ; 3 uses
@@ -736,13 +735,13 @@ bb.bq:                                            ; preds = %bb.bp
 .preheader610.i:                                  ; preds = %.preheader610.loopexit.i, %bb.bq
   %.0328.lcssa.i = phi ptr [ %i.vh, %bb.bq ], [ %i.aao, %.preheader610.loopexit.i ] ; 2 uses
   %.0325.lcssa.i = phi i32 [ 0, %bb.bq ], [ %i.wy, %.preheader610.loopexit.i ] ; 3 uses
-  %i.wz = or disjoint i32 %.0325.lcssa.i, 1
+  %i.wz = or disjoint i32 %.0325.lcssa.i, 1       ; 2 uses
   %i.xa = icmp slt i32 %i.wz, %i.az
   br i1 %i.xa, label %.lr.ph632.preheader.i, label %.preheader.i
 
 .lr.ph632.preheader.i:                            ; preds = %.preheader610.i
-  %i.xb = zext nneg i32 %.0325.lcssa.i to i64     ; 2 uses
-  %18 = add nuw nsw i64 %i.xb, 1
+  %i.xb = zext nneg i32 %.0325.lcssa.i to i64
+  %18 = zext nneg i32 %i.wz to i64
   br label %.lr.ph632.i
 
 .lr.ph627.i:                                      ; preds = %bb.bq, %.lr.ph627.i
@@ -861,7 +860,7 @@ bb.bq:                                            ; preds = %bb.bp
 
 .lr.ph632.i:                                      ; preds = %.lr.ph632.i, %.lr.ph632.preheader.i
   %indvars.iv669.i = phi i64 [ %i.xb, %.lr.ph632.preheader.i ], [ %indvars.iv.next670.i, %.lr.ph632.i ] ; 3 uses
-  %indvars.iv667.i = phi i64 [ %18, %.lr.ph632.preheader.i ], [ %indvars.iv.next668.i, %.lr.ph632.i ] ; 2 uses
+  %indvars.iv667.i = phi i64 [ %18, %.lr.ph632.preheader.i ], [ %19, %.lr.ph632.i ]
   %.1329630.i = phi ptr [ %.0328.lcssa.i, %.lr.ph632.preheader.i ], [ %i.acp, %.lr.ph632.i ] ; 5 uses
   %i.aat = getelementptr inbounds nuw [4 x i8], ptr %i.vi, i64 %indvars.iv669.i
   %i.aau = load i32, ptr %i.aat, align 4, !tbaa !18
@@ -910,14 +909,15 @@ bb.bq:                                            ; preds = %bb.bp
   %i.acl = bitcast <16 x i16> %i.ack to <8 x float>
   %i.acm = fmul fast <8 x float> %i.abd, %i.abz
   %i.acn = call fast noundef nofpclass(nan inf) <8 x float> @llvm.fma.v8f32(<8 x float> nofpclass(nan inf) %i.acl, <8 x float> nofpclass(nan inf) %i.abk, <8 x float> nofpclass(nan inf) %i.acm)
-  %.idx697.i = shl nuw nsw i64 %indvars.iv669.i, 4
+  %.idx697.i = shl nsw i64 %indvars.iv669.i, 4
   %i.aco = getelementptr inbounds nuw i8, ptr %.0335638.i, i64 %.idx697.i
   store <8 x float> %i.acn, ptr %i.aco, align 1, !tbaa !53
   %i.acp = getelementptr inbounds nuw i8, ptr %.1329630.i, i64 16 ; 2 uses
   %indvars.iv.next670.i = add nuw nsw i64 %indvars.iv669.i, 2 ; 3 uses
-  %19 = icmp slt i64 %indvars.iv.next670.i, %invariant.op704.i
-  %indvars.iv.next668.i = add nuw nsw i64 %indvars.iv667.i, 2
-  br i1 %19, label %.lr.ph632.i, label %.preheader.loopexit.i, !llvm.loop !113
+  %19 = or disjoint i64 %indvars.iv.next670.i, 1  ; 2 uses
+  %20 = trunc nuw i64 %19 to i32
+  %21 = icmp sgt i32 %i.az, %20
+  br i1 %21, label %.lr.ph632.i, label %.preheader.loopexit.i, !llvm.loop !113
 
 .lr.ph637.i:                                      ; preds = %.lr.ph637.i, %.lr.ph637.preheader.i
   %indvars.iv674.i = phi i64 [ %i.aas, %.lr.ph637.preheader.i ], [ %indvars.iv.next675.i, %.lr.ph637.i ] ; 3 uses
@@ -972,13 +972,13 @@ bb.br:                                            ; preds = %bb.bp
 .preheader613.i:                                  ; preds = %.preheader613.loopexit.i, %bb.br
   %.0322.lcssa.i = phi ptr [ %i.vh, %bb.br ], [ %i.aju, %.preheader613.loopexit.i ] ; 2 uses
   %.0321.lcssa.i = phi i32 [ 0, %bb.br ], [ %i.ady, %.preheader613.loopexit.i ] ; 3 uses
-  %i.adz = or disjoint i32 %.0321.lcssa.i, 1
+  %i.adz = or disjoint i32 %.0321.lcssa.i, 1      ; 2 uses
   %i.aea = icmp slt i32 %i.adz, %i.az
   br i1 %i.aea, label %.lr.ph619.preheader.i, label %.preheader611.i
 
 .lr.ph619.preheader.i:                            ; preds = %.preheader613.i
-  %i.aeb = zext nneg i32 %.0321.lcssa.i to i64    ; 2 uses
-  %20 = add nuw nsw i64 %i.aeb, 1
+  %i.aeb = zext nneg i32 %.0321.lcssa.i to i64
+  %22 = zext nneg i32 %i.adz to i64
   br label %.lr.ph619.i
 
 .lr.ph.i108:                                      ; preds = %bb.br, %.lr.ph.i108
@@ -1155,7 +1155,7 @@ bb.br:                                            ; preds = %bb.bp
 
 .lr.ph619.i:                                      ; preds = %.lr.ph619.i, %.lr.ph619.preheader.i
   %indvars.iv656.i = phi i64 [ %i.aeb, %.lr.ph619.preheader.i ], [ %indvars.iv.next657.i, %.lr.ph619.i ] ; 3 uses
-  %indvars.iv654.i = phi i64 [ %20, %.lr.ph619.preheader.i ], [ %indvars.iv.next655.i, %.lr.ph619.i ] ; 2 uses
+  %indvars.iv654.i = phi i64 [ %22, %.lr.ph619.preheader.i ], [ %23, %.lr.ph619.i ]
   %.1323617.i = phi ptr [ %.0322.lcssa.i, %.lr.ph619.preheader.i ], [ %i.amx, %.lr.ph619.i ] ; 5 uses
   %i.ajz = getelementptr inbounds nuw [4 x i8], ptr %i.vi, i64 %indvars.iv656.i
   %i.aka = load i32, ptr %i.ajz, align 4, !tbaa !18
@@ -1237,9 +1237,10 @@ bb.br:                                            ; preds = %bb.bp
   store <8 x float> %i.amt, ptr %i.amw, align 1, !tbaa !53
   %i.amx = getelementptr inbounds nuw i8, ptr %.1323617.i, i64 16 ; 2 uses
   %indvars.iv.next657.i = add nuw nsw i64 %indvars.iv656.i, 2 ; 3 uses
-  %21 = icmp slt i64 %indvars.iv.next657.i, %invariant.op704.i
-  %indvars.iv.next655.i = add nuw nsw i64 %indvars.iv654.i, 2
-  br i1 %21, label %.lr.ph619.i, label %.preheader611.loopexit.i, !llvm.loop !116
+  %23 = or disjoint i64 %indvars.iv.next657.i, 1  ; 2 uses
+  %24 = trunc nuw i64 %23 to i32
+  %25 = icmp sgt i32 %i.az, %24
+  br i1 %25, label %.lr.ph619.i, label %.preheader611.loopexit.i, !llvm.loop !116
 
 .lr.ph624.i:                                      ; preds = %.lr.ph624.i, %.lr.ph624.preheader.i
   %indvars.iv661.i = phi i64 [ %i.ajy, %.lr.ph624.preheader.i ], [ %indvars.iv.next662.i, %.lr.ph624.i ] ; 3 uses

@@ -203,7 +203,8 @@ vector.main.loop.iter.check:                      ; preds = %vector.scevcheck
 
 vector.ph4441:                                    ; preds = %vector.main.loop.iter.check
   %i.zn = and i64 %i.yu, 28
-  %n.vec4442.a = and i64 %i.yu, 8589934560        ; 4 uses
+  %n.vec4442.a = and i64 %i.yu, 8589934560        ; 5 uses
+  %28 = trunc i64 %n.vec4442.a to i32
   br label %vector.body4443
 
 vector.body4443:                                  ; preds = %vector.body4443, %vector.ph4441
@@ -230,7 +231,8 @@ vec.epilog.iter.check:                            ; preds = %middle.block4448
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec4442.a, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec4450 = and i64 %i.yu, 8589934588          ; 3 uses
+  %n.vec4450 = and i64 %i.yu, 8589934588          ; 4 uses
+  %29 = trunc i64 %n.vec4450 to i32
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
@@ -249,17 +251,19 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 .preheader2286.preheader:                         ; preds = %vector.scevcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %indvars.iv3270.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.scevcheck ], [ %n.vec4442.a, %vec.epilog.iter.check ], [ %n.vec4450, %vec.epilog.middle.block ]
+  %storemerge14712665.ph = phi i32 [ 0, %iter.check ], [ 0, %vector.scevcheck ], [ %28, %vec.epilog.iter.check ], [ %29, %vec.epilog.middle.block ]
   br label %.preheader2286
 
 .preheader2286:                                   ; preds = %.preheader2286.preheader, %.preheader2286
-  %indvars.iv3270.a = phi i64 [ %indvars.iv.next3271, %.preheader2286 ], [ %indvars.iv3270.ph, %.preheader2286.preheader ] ; 2 uses
+  %indvars.iv3270.a = phi i64 [ %31, %.preheader2286 ], [ %indvars.iv3270.ph, %.preheader2286.preheader ]
+  %storemerge14712665 = phi i32 [ %30, %.preheader2286 ], [ %storemerge14712665.ph, %.preheader2286.preheader ]
   %i.zw = getelementptr inbounds nuw i8, ptr %i.o, i64 %indvars.iv3270.a ; 2 uses
   %i.zx = load i8, ptr %i.zw, align 1, !tbaa !27
   %i.zy = add i8 %i.zx, -1
   store i8 %i.zy, ptr %i.zw, align 1, !tbaa !27
-  %indvars.iv.next3271 = add i64 %indvars.iv3270.a, 1 ; 2 uses
-  %28 = and i64 %indvars.iv.next3271, 4294967295
-  %i.zz = icmp ugt i64 %i.yu, %28
+  %30 = add i32 %storemerge14712665, 1            ; 2 uses
+  %31 = zext i32 %30 to i64                       ; 2 uses
+  %i.zz = icmp ugt i64 %i.yu, %31
   br i1 %i.zz, label %.preheader2286, label %.loopexit2287, !llvm.loop !49
 
 .loopexit2287:                                    ; preds = %.preheader2286, %middle.block4448, %vec.epilog.middle.block, %get_max.exit, %bb.dn
@@ -336,7 +340,8 @@ vector.main.loop.iter.check4477:                  ; preds = %vector.scevcheck447
 
 vector.ph4479:                                    ; preds = %vector.main.loop.iter.check4477
   %i.aat = and i64 %i.aaa, 28
-  %n.vec4480 = and i64 %i.aaa, 8589934560         ; 4 uses
+  %n.vec4480 = and i64 %i.aaa, 8589934560         ; 5 uses
+  %32 = trunc i64 %n.vec4480 to i32
   br label %vector.body4481
 
 vector.body4481:                                  ; preds = %vector.body4481, %vector.ph4479
@@ -363,7 +368,8 @@ vec.epilog.iter.check4491:                        ; preds = %middle.block4486
 
 vec.epilog.ph4493:                                ; preds = %vector.main.loop.iter.check4477, %vec.epilog.iter.check4491
   %vec.epilog.resume.val4488 = phi i64 [ %n.vec4480, %vec.epilog.iter.check4491 ], [ 0, %vector.main.loop.iter.check4477 ]
-  %n.vec4494 = and i64 %i.aaa, 8589934588         ; 3 uses
+  %n.vec4494 = and i64 %i.aaa, 8589934588         ; 4 uses
+  %33 = trunc i64 %n.vec4494 to i32
   br label %vec.epilog.vector.body4495
 
 vec.epilog.vector.body4495:                       ; preds = %vec.epilog.vector.body4495, %vec.epilog.ph4493
@@ -382,17 +388,19 @@ vec.epilog.middle.block4499:                      ; preds = %vec.epilog.vector.b
 
 .preheader2283.preheader:                         ; preds = %vector.scevcheck4472, %iter.check4489, %vec.epilog.iter.check4491, %vec.epilog.middle.block4499
   %indvars.iv3273.ph = phi i64 [ 0, %iter.check4489 ], [ 0, %vector.scevcheck4472 ], [ %n.vec4480, %vec.epilog.iter.check4491 ], [ %n.vec4494, %vec.epilog.middle.block4499 ]
+  %storemerge14732666.ph = phi i32 [ 0, %iter.check4489 ], [ 0, %vector.scevcheck4472 ], [ %32, %vec.epilog.iter.check4491 ], [ %33, %vec.epilog.middle.block4499 ]
   br label %.preheader2283
 
 .preheader2283:                                   ; preds = %.preheader2283.preheader, %.preheader2283
-  %indvars.iv3273 = phi i64 [ %indvars.iv.next3274, %.preheader2283 ], [ %indvars.iv3273.ph, %.preheader2283.preheader ] ; 2 uses
+  %indvars.iv3273 = phi i64 [ %35, %.preheader2283 ], [ %indvars.iv3273.ph, %.preheader2283.preheader ]
+  %storemerge14732666 = phi i32 [ %34, %.preheader2283 ], [ %storemerge14732666.ph, %.preheader2283.preheader ]
   %i.abc = getelementptr inbounds nuw i8, ptr %i.p, i64 %indvars.iv3273 ; 2 uses
   %i.abd = load i8, ptr %i.abc, align 1, !tbaa !27
   %i.abe = add i8 %i.abd, -1
   store i8 %i.abe, ptr %i.abc, align 1, !tbaa !27
-  %indvars.iv.next3274 = add i64 %indvars.iv3273, 1 ; 2 uses
-  %29 = and i64 %indvars.iv.next3274, 4294967295
-  %i.abf = icmp ugt i64 %i.aaa, %29
+  %34 = add i32 %storemerge14732666, 1            ; 2 uses
+  %35 = zext i32 %34 to i64                       ; 2 uses
+  %i.abf = icmp ugt i64 %i.aaa, %35
   br i1 %i.abf, label %.preheader2283, label %.loopexit2284, !llvm.loop !54
 
 .loopexit2284:                                    ; preds = %.preheader2283, %middle.block4486, %vec.epilog.middle.block4499, %get_max.exit1768, %.loopexit2287

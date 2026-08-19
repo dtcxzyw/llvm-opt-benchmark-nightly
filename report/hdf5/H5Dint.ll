@@ -201,12 +201,13 @@ bb.bb:                                            ; preds = %bb.ba
   br i1 %.not126, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.bb, %.lr.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ 0, %bb.bb ] ; 2 uses
+  %indvars.iv = phi i64 [ %5, %.lr.ph ], [ 0, %bb.bb ]
+  %.0125 = phi i32 [ %4, %.lr.ph ], [ 0, %bb.bb ]
   %i.ev = getelementptr inbounds nuw [32 x i8], ptr %i.es, i64 %indvars.iv
   store i64 0, ptr %i.ev, align 8, !tbaa !191
-  %indvars.iv.next = add i64 %indvars.iv, 1       ; 2 uses
-  %4 = and i64 %indvars.iv.next, 4294967295
-  %i.ew = icmp ugt i64 %i.eu, %4
+  %4 = add i32 %.0125, 1                          ; 2 uses
+  %5 = zext i32 %4 to i64                         ; 2 uses
+  %i.ew = icmp ugt i64 %i.eu, %5
   br i1 %i.ew, label %.lr.ph, label %.loopexit, !llvm.loop !193
 
 .loopexit:                                        ; preds = %.lr.ph, %bb.bb, %bb.ba

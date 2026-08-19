@@ -202,7 +202,8 @@ vector.scevcheck:                                 ; preds = %.lr.ph.preheader
   br i1 %i.i, label %.lr.ph.preheader189, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.scevcheck
-  %n.vec = and i64 %i.d, 8589934588               ; 3 uses
+  %n.vec = and i64 %i.d, 8589934588               ; 4 uses
+  %4 = trunc i64 %n.vec to i32
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -237,23 +238,24 @@ middle.block:                                     ; preds = %vector.body
   %indvars.iv.ph = phi i64 [ 0, %vector.scevcheck ], [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ]
   %.0119150.ph = phi i32 [ -1, %vector.scevcheck ], [ -1, %.lr.ph.preheader ], [ %i.t, %middle.block ]
   %.0123149.ph = phi i32 [ 0, %vector.scevcheck ], [ 0, %.lr.ph.preheader ], [ %i.u, %middle.block ]
+  %.0129148.ph = phi i32 [ 0, %vector.scevcheck ], [ 0, %.lr.ph.preheader ], [ %4, %middle.block ]
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader189, %.lr.ph
-  %indvars.iv.a = phi i64 [ %indvars.iv.next, %.lr.ph ], [ %indvars.iv.ph, %.lr.ph.preheader189 ] ; 3 uses
-  %.0119150.a = phi i32 [ %spec.select, %.lr.ph ], [ %.0119150.ph, %.lr.ph.preheader189 ]
-  %.0123149 = phi i32 [ %.1124, %.lr.ph ], [ %.0123149.ph, %.lr.ph.preheader189 ]
+  %indvars.iv.a = phi i64 [ %6, %.lr.ph ], [ %indvars.iv.ph, %.lr.ph.preheader189 ]
+  %.0119150 = phi i32 [ %spec.select, %.lr.ph ], [ %.0119150.ph, %.lr.ph.preheader189 ]
+  %.0119150.a = phi i32 [ %.1124, %.lr.ph ], [ %.0123149.ph, %.lr.ph.preheader189 ]
+  %.0123149 = phi i32 [ %5, %.lr.ph ], [ %.0129148.ph, %.lr.ph.preheader189 ] ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv.a
   %i.w = load i8, ptr %i.v, align 1, !tbaa !10    ; 2 uses
   %i.x = icmp eq i8 %i.w, 58
-  %4 = trunc nuw i64 %indvars.iv.a to i32
-  %spec.select = select i1 %i.x, i32 %4, i32 %.0119150.a ; 2 uses
+  %spec.select = select i1 %i.x, i32 %.0123149, i32 %.0119150 ; 2 uses
   %i.y = icmp eq i8 %i.w, 44
   %i.z = zext i1 %i.y to i32
-  %.1124 = add i32 %.0123149, %i.z                ; 2 uses
-  %indvars.iv.next = add i64 %indvars.iv.a, 1     ; 2 uses
-  %5 = and i64 %indvars.iv.next, 4294967295
-  %i.aa = icmp ugt i64 %i.d, %5
+  %.1124 = add i32 %.0119150.a, %i.z              ; 2 uses
+  %5 = add i32 %.0123149, 1                       ; 2 uses
+  %6 = zext i32 %5 to i64                         ; 2 uses
+  %i.aa = icmp ugt i64 %i.d, %6
   br i1 %i.aa, label %.lr.ph, label %._crit_edge, !llvm.loop !37
 
 ._crit_edge:                                      ; preds = %.lr.ph, %middle.block

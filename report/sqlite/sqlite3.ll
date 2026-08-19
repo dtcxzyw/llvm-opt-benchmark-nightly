@@ -205,7 +205,12 @@ bb.g:                                             ; preds = %bb.e
 
 .preheader:                                       ; preds = %bb.g
   %i.u = icmp ult i32 %i.h, %2
-  br i1 %i.u, label %.lr.ph356, label %.loopexit
+  br i1 %i.u, label %.lr.ph356.preheader, label %.loopexit
+
+.lr.ph356.preheader:                              ; preds = %.preheader
+  %4 = zext i32 %i.h to i64
+  %wide.trip.count = zext i32 %2 to i64
+  br label %.lr.ph356
 
 bb.h:                                             ; preds = %bb.g, %bb.g, %bb.g
   %i.v = add i32 %i.i, %i.e
@@ -522,10 +527,9 @@ bb.bd:                                            ; preds = %bb.ba, %bb.az, %bb.
   %spec.select = select i1 %i.dt, i32 %i.du, i32 0
   br label %.loopexit
 
-.lr.ph356:                                        ; preds = %.preheader, %bb.be
-  %.9355 = phi i32 [ %5, %bb.be ], [ %i.h, %.preheader ] ; 2 uses
-  %4 = zext i32 %.9355 to i64
-  %i.dv = getelementptr inbounds nuw i8, ptr %i.l, i64 %4
+.lr.ph356:                                        ; preds = %.lr.ph356.preheader, %bb.be
+  %indvars.iv = phi i64 [ %4, %.lr.ph356.preheader ], [ %indvars.iv.next, %bb.be ] ; 3 uses
+  %i.dv = getelementptr inbounds nuw i8, ptr %i.l, i64 %indvars.iv
   %i.dw = load i8, ptr %i.dv, align 1, !tbaa !231 ; 2 uses
   %i.dx = zext i8 %i.dw to i64
   %i.dy = getelementptr inbounds nuw i8, ptr @jsonIsOk, i64 %i.dx
@@ -533,11 +537,16 @@ bb.bd:                                            ; preds = %bb.ba, %bb.az, %bb.
   %.not282 = icmp ne i8 %i.dz, 0
   %.not283 = icmp eq i8 %i.dw, 39
   %or.cond296 = or i1 %.not283, %.not282
-  %5 = add nuw i32 %.9355, 1                      ; 3 uses
-  br i1 %or.cond296, label %bb.be, label %.loopexit
+  br i1 %or.cond296, label %bb.be, label %5
+
+5:                                                ; preds = %.lr.ph356
+  %6 = trunc nuw i64 %indvars.iv to i32
+  %7 = add nuw i32 %6, 1
+  br label %.loopexit
 
 bb.be:                                            ; preds = %.lr.ph356
-  %exitcond.not = icmp eq i32 %5, %2
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph356, !llvm.loop !3148
 
 bb.bf:                                            ; preds = %bb.g, %bb.g
@@ -730,8 +739,8 @@ bb.ck:                                            ; preds = %bb.g
   %i.gj = add i32 %1, 1
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.ci, %bb.ca, %bb.bz, %bb.bt, %bb.bq, %bb.br, %bb.bs, %bb.bu, %bb.bn, %bb.be, %.lr.ph356, %bb.ay, %bb.au, %bb.av, %bb.aa, %bb.o, %bb.am, %bb.ai, %bb.y, %._crit_edge.thread, %._crit_edge, %.preheader302, %bb.bf, %.preheader, %bb.z, %bb.n, %._crit_edge361, %bb.cc, %bb.ce, %bb.ch, %bb.bw, %bb.by, %bb.g, %bb.ad, %bb.ag, %bb.as, %bb.ax, %bb.bb, %bb.bc, %bb.aj, %bb.an, %bb.ck, %bb.bm, %bb.bj, %bb.ab, %bb.x, %bb.u, %bb.r, %bb.p, %bb.m, %bb.j, %bb.h, %bb.f, %bb.d, %bb.b
-  %.6246 = phi i32 [ %i.d, %bb.b ], [ %i.g, %bb.d ], [ %i.k, %bb.f ], [ %i.gj, %bb.ck ], [ %i.y, %bb.h ], [ %i.aa, %bb.j ], [ %i.ah, %bb.m ], [ %i.aq, %bb.p ], [ %i.fl, %bb.by ], [ %i.as, %bb.r ], [ %i.ay, %bb.u ], [ %i.bb, %bb.x ], [ 0, %bb.o ], [ %i.bs, %bb.ab ], [ 0, %.preheader302 ], [ 0, %bb.bf ], [ %i.cp, %bb.am ], [ %spec.select, %._crit_edge361 ], [ %i.ej, %bb.bj ], [ %i.el, %bb.bm ], [ 0, %bb.aa ], [ 0, %bb.n ], [ 0, %.preheader ], [ %i.fq, %bb.cc ], [ %i.fv, %bb.ce ], [ %i.gd, %bb.ch ], [ 0, %bb.z ], [ 0, %bb.g ], [ %i.bu, %bb.ad ], [ %i.cb, %bb.ag ], [ %i.bg, %bb.y ], [ %i.da, %bb.as ], [ %i.em, %bb.bq ], [ %i.di, %bb.ax ], [ %i.fm, %bb.bz ], [ %i.dp, %bb.bb ], [ %i.dq, %bb.bc ], [ 0, %._crit_edge.thread ], [ %i.cp, %bb.an ], [ %i.cf, %bb.aj ], [ %i.cf, %bb.ai ], [ %i.fg, %bb.bw ], [ 0, %bb.be ], [ %i.gi, %._crit_edge ], [ %2, %bb.ay ], [ %2, %bb.au ], [ %i.dc, %bb.av ], [ %5, %.lr.ph356 ], [ %i.em, %bb.bt ], [ 0, %bb.bu ], [ %i.em, %bb.bs ], [ %i.em, %bb.bn ], [ %i.em, %bb.br ], [ 0, %bb.ca ], [ %i.ge, %bb.ci ]
+.loopexit:                                        ; preds = %bb.ci, %bb.ca, %bb.bz, %bb.bt, %bb.bq, %bb.br, %bb.bs, %bb.bu, %bb.bn, %bb.be, %bb.ay, %bb.au, %bb.av, %bb.aa, %bb.o, %bb.am, %bb.ai, %bb.y, %._crit_edge.thread, %._crit_edge, %.preheader302, %bb.bf, %.preheader, %bb.z, %bb.n, %._crit_edge361, %bb.cc, %bb.ce, %bb.ch, %bb.bw, %bb.by, %bb.g, %bb.ad, %bb.ag, %bb.as, %bb.ax, %bb.bb, %bb.bc, %bb.aj, %bb.an, %bb.ck, %bb.bm, %bb.bj, %5, %bb.ab, %bb.x, %bb.u, %bb.r, %bb.p, %bb.m, %bb.j, %bb.h, %bb.f, %bb.d, %bb.b
+  %.6246 = phi i32 [ %i.d, %bb.b ], [ %i.g, %bb.d ], [ %i.k, %bb.f ], [ %i.gj, %bb.ck ], [ %i.y, %bb.h ], [ %i.aa, %bb.j ], [ %i.ah, %bb.m ], [ %i.aq, %bb.p ], [ %i.fl, %bb.by ], [ %i.as, %bb.r ], [ %i.ay, %bb.u ], [ %i.bb, %bb.x ], [ 0, %bb.aa ], [ %i.bs, %bb.ab ], [ 0, %.preheader302 ], [ 0, %bb.bf ], [ %7, %5 ], [ %spec.select, %._crit_edge361 ], [ %i.ej, %bb.bj ], [ %i.el, %bb.bm ], [ 0, %bb.o ], [ 0, %bb.n ], [ 0, %.preheader ], [ %i.fq, %bb.cc ], [ %i.fv, %bb.ce ], [ %i.gd, %bb.ch ], [ 0, %bb.z ], [ 0, %bb.g ], [ %i.bu, %bb.ad ], [ %i.cb, %bb.ag ], [ %i.bg, %bb.y ], [ %i.da, %bb.as ], [ %i.em, %bb.br ], [ %i.di, %bb.ax ], [ %i.fm, %bb.bz ], [ %i.dp, %bb.bb ], [ %i.dq, %bb.bc ], [ 0, %._crit_edge.thread ], [ %i.cp, %bb.an ], [ %i.cf, %bb.aj ], [ %i.cf, %bb.ai ], [ %i.fg, %bb.bw ], [ 0, %bb.be ], [ %i.gi, %._crit_edge ], [ %2, %bb.ay ], [ %i.cp, %bb.am ], [ %2, %bb.au ], [ %i.dc, %bb.av ], [ %i.em, %bb.bq ], [ %i.em, %bb.bt ], [ 0, %bb.bu ], [ %i.em, %bb.bs ], [ %i.em, %bb.bn ], [ 0, %bb.ca ], [ %i.ge, %bb.ci ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #58
   ret i32 %.6246
 }

@@ -152,7 +152,8 @@ trace_pci_nvme_dif_pract_generate_dif_crc16.exit.i: ; preds = %bb.g, %bb.f, %bb.
   br i1 %.not.i38.us.i, label %crc16_t10dif.exit.us.i, label %.lr.ph.i.us.i
 
 .lr.ph.i.us.i:                                    ; preds = %.lr.ph.split.us.i, %.lr.ph.i.us.i
-  %indvars.iv.i.us.i = phi i64 [ %7, %.lr.ph.i.us.i ], [ 0, %.lr.ph.split.us.i ] ; 2 uses
+  %indvars.iv.i.us.i = phi i64 [ %8, %.lr.ph.i.us.i ], [ 0, %.lr.ph.split.us.i ]
+  %.010.i.us.i = phi i32 [ %7, %.lr.ph.i.us.i ], [ 0, %.lr.ph.split.us.i ]
   %.079.i.us.i = phi i16 [ %i.ah, %.lr.ph.i.us.i ], [ 0, %.lr.ph.split.us.i ] ; 2 uses
   %i.y = shl i16 %.079.i.us.i, 8
   %i.z = lshr i16 %.079.i.us.i, 8
@@ -164,8 +165,8 @@ trace_pci_nvme_dif_pract_generate_dif_crc16.exit.i: ; preds = %bb.g, %bb.f, %bb.
   %i.af = getelementptr inbounds nuw [2 x i8], ptr @crc16_t10dif_table, i64 %i.ae
   %i.ag = load i16, ptr %i.af, align 2
   %i.ah = xor i16 %i.ag, %i.y                     ; 2 uses
-  %7 = add i64 %indvars.iv.i.us.i, 1              ; 2 uses
-  %8 = and i64 %7, 4294967295
+  %7 = add i32 %.010.i.us.i, 1                    ; 2 uses
+  %8 = zext i32 %7 to i64                         ; 2 uses
   %i.ai = icmp ugt i64 %i.w, %8
   br i1 %i.ai, label %.lr.ph.i.us.i, label %crc16_t10dif.exit.us.loopexit.i, !llvm.loop !8
 
@@ -212,7 +213,8 @@ bb.i:                                             ; preds = %bb.h, %crc16_t10dif
   br i1 %.not.i38.i, label %.lr.ph.i40.i.preheader, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.split.i, %.lr.ph.i.i
-  %indvars.iv.i.i = phi i64 [ %9, %.lr.ph.i.i ], [ 0, %.lr.ph.split.i ] ; 2 uses
+  %indvars.iv.i.i = phi i64 [ %10, %.lr.ph.i.i ], [ 0, %.lr.ph.split.i ]
+  %.010.i.i = phi i32 [ %9, %.lr.ph.i.i ], [ 0, %.lr.ph.split.i ]
   %.079.i.i = phi i16 [ %i.bk, %.lr.ph.i.i ], [ 0, %.lr.ph.split.i ] ; 2 uses
   %i.bb = shl i16 %.079.i.i, 8
   %i.bc = lshr i16 %.079.i.i, 8
@@ -224,8 +226,8 @@ bb.i:                                             ; preds = %bb.h, %crc16_t10dif
   %i.bi = getelementptr inbounds nuw [2 x i8], ptr @crc16_t10dif_table, i64 %i.bh
   %i.bj = load i16, ptr %i.bi, align 2
   %i.bk = xor i16 %i.bj, %i.bb                    ; 2 uses
-  %9 = add i64 %indvars.iv.i.i, 1                 ; 2 uses
-  %10 = and i64 %9, 4294967295
+  %9 = add i32 %.010.i.i, 1                       ; 2 uses
+  %10 = zext i32 %9 to i64                        ; 2 uses
   %i.bl = icmp ugt i64 %i.az, %10
   br i1 %i.bl, label %.lr.ph.i.i, label %.lr.ph.i40.i.preheader, !llvm.loop !8
 
@@ -234,7 +236,8 @@ bb.i:                                             ; preds = %bb.h, %crc16_t10dif
   br label %.lr.ph.i40.i
 
 .lr.ph.i40.i:                                     ; preds = %.lr.ph.i40.i.preheader, %.lr.ph.i40.i
-  %indvars.iv.i41.i = phi i64 [ %11, %.lr.ph.i40.i ], [ 0, %.lr.ph.i40.i.preheader ] ; 2 uses
+  %indvars.iv.i41.i = phi i64 [ %12, %.lr.ph.i40.i ], [ 0, %.lr.ph.i40.i.preheader ]
+  %.010.i41.i = phi i32 [ %11, %.lr.ph.i40.i ], [ 0, %.lr.ph.i40.i.preheader ]
   %.079.i42.i = phi i16 [ %i.bv, %.lr.ph.i40.i ], [ %.079.i42.i.ph, %.lr.ph.i40.i.preheader ] ; 2 uses
   %i.bm = shl i16 %.079.i42.i, 8
   %i.bn = lshr i16 %.079.i42.i, 8
@@ -246,9 +249,9 @@ bb.i:                                             ; preds = %bb.h, %crc16_t10dif
   %i.bt = getelementptr inbounds nuw [2 x i8], ptr @crc16_t10dif_table, i64 %i.bs
   %i.bu = load i16, ptr %i.bt, align 2
   %i.bv = xor i16 %i.bu, %i.bm                    ; 2 uses
-  %11 = add i64 %indvars.iv.i41.i, 1              ; 2 uses
-  %12 = and i64 %11, 4294967295
-  %13 = icmp ult i64 %12, %i.l
+  %11 = add i32 %.010.i41.i, 1                    ; 2 uses
+  %12 = zext i32 %11 to i64                       ; 2 uses
+  %13 = icmp ugt i64 %i.l, %12
   br i1 %13, label %.lr.ph.i40.i, label %crc16_t10dif.exit45.loopexit.i, !llvm.loop !8
 
 crc16_t10dif.exit45.loopexit.i:                   ; preds = %.lr.ph.i40.i
@@ -651,7 +654,8 @@ bb.q:                                             ; preds = %bb.p
   br i1 %.not.i41.i.i, label %crc16_t10dif.exit.i.i, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.q, %.lr.ph.i.i.i
-  %indvars.iv.i.i.i = phi i64 [ %10, %.lr.ph.i.i.i ], [ 0, %bb.q ] ; 2 uses
+  %indvars.iv.i.i.i = phi i64 [ %11, %.lr.ph.i.i.i ], [ 0, %bb.q ]
+  %.010.i.i.i = phi i32 [ %10, %.lr.ph.i.i.i ], [ 0, %bb.q ]
   %.079.i.i.i = phi i16 [ %i.bn, %.lr.ph.i.i.i ], [ 0, %bb.q ] ; 2 uses
   %i.be = shl i16 %.079.i.i.i, 8
   %i.bf = lshr i16 %.079.i.i.i, 8
@@ -663,8 +667,8 @@ bb.q:                                             ; preds = %bb.p
   %i.bl = getelementptr inbounds nuw [2 x i8], ptr @crc16_t10dif_table, i64 %i.bk
   %i.bm = load i16, ptr %i.bl, align 2
   %i.bn = xor i16 %i.bm, %i.be                    ; 2 uses
-  %10 = add i64 %indvars.iv.i.i.i, 1              ; 2 uses
-  %11 = and i64 %10, 4294967295
+  %10 = add i32 %.010.i.i.i, 1                    ; 2 uses
+  %11 = zext i32 %10 to i64                       ; 2 uses
   %i.bo = icmp ugt i64 %i.bd, %11
   br i1 %i.bo, label %.lr.ph.i.i.i, label %crc16_t10dif.exit.i.i, !llvm.loop !8
 
@@ -673,7 +677,8 @@ crc16_t10dif.exit.i.i:                            ; preds = %.lr.ph.i.i.i, %bb.q
   br i1 %.not47.i.i, label %crc16_t10dif.exit48.i.i, label %.lr.ph.i43.i.i
 
 .lr.ph.i43.i.i:                                   ; preds = %crc16_t10dif.exit.i.i, %.lr.ph.i43.i.i
-  %indvars.iv.i44.i.i = phi i64 [ %12, %.lr.ph.i43.i.i ], [ 0, %crc16_t10dif.exit.i.i ] ; 2 uses
+  %indvars.iv.i44.i.i = phi i64 [ %13, %.lr.ph.i43.i.i ], [ 0, %crc16_t10dif.exit.i.i ]
+  %.010.i44.i.i = phi i32 [ %12, %.lr.ph.i43.i.i ], [ 0, %crc16_t10dif.exit.i.i ]
   %.079.i45.i.i = phi i16 [ %i.by, %.lr.ph.i43.i.i ], [ %.07.lcssa.i.i.i, %crc16_t10dif.exit.i.i ] ; 2 uses
   %i.bp = shl i16 %.079.i45.i.i, 8
   %i.bq = lshr i16 %.079.i45.i.i, 8
@@ -685,9 +690,9 @@ crc16_t10dif.exit.i.i:                            ; preds = %.lr.ph.i.i.i, %bb.q
   %i.bw = getelementptr inbounds nuw [2 x i8], ptr @crc16_t10dif_table, i64 %i.bv
   %i.bx = load i16, ptr %i.bw, align 2
   %i.by = xor i16 %i.bx, %i.bp                    ; 2 uses
-  %12 = add i64 %indvars.iv.i44.i.i, 1            ; 2 uses
-  %13 = and i64 %12, 4294967295
-  %14 = icmp ult i64 %13, %i.s
+  %12 = add i32 %.010.i44.i.i, 1                  ; 2 uses
+  %13 = zext i32 %12 to i64                       ; 2 uses
+  %14 = icmp ugt i64 %i.s, %13
   br i1 %14, label %.lr.ph.i43.i.i, label %crc16_t10dif.exit48.i.i, !llvm.loop !8
 
 crc16_t10dif.exit48.i.i:                          ; preds = %.lr.ph.i43.i.i, %crc16_t10dif.exit.i.i

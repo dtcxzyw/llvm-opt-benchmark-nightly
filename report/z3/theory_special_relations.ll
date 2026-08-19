@@ -204,20 +204,21 @@ _ZNK6vectorIiLb0EjE4sizeEv.exit.preheader:        ; preds = %bb.b
 _ZNK6vectorIiLb0EjE4sizeEv.exit38.lr.ph:          ; preds = %.lr.ph178
   %i.ab = load i32, ptr %i.x, align 8, !tbaa !108 ; 5 uses
   %i.ac = zext i32 %i.ab to i64                   ; 2 uses
+  %9 = trunc nuw i64 %indvars.iv177 to i32
   br label %_ZNK6vectorIiLb0EjE4sizeEv.exit38
 
 _ZNK6vectorIiLb0EjE4sizeEv.exit38:                ; preds = %_ZNK6vectorIiLb0EjE4sizeEv.exit38.lr.ph, %bb.as
-  %indvars.iv99 = phi i64 [ %indvars.iv177, %_ZNK6vectorIiLb0EjE4sizeEv.exit38.lr.ph ], [ %indvars.iv.next100, %bb.as ]
-  %9 = phi ptr [ %i.s, %_ZNK6vectorIiLb0EjE4sizeEv.exit38.lr.ph ], [ %i.ig, %bb.as ] ; 3 uses
-  %indvars.iv.next100 = add nuw nsw i64 %indvars.iv99, 1 ; 3 uses
-  %i.ad = getelementptr inbounds i8, ptr %9, i64 -4
+  %10 = phi ptr [ %i.s, %_ZNK6vectorIiLb0EjE4sizeEv.exit38.lr.ph ], [ %i.ig, %bb.as ] ; 3 uses
+  %.03587.in = phi i32 [ %9, %_ZNK6vectorIiLb0EjE4sizeEv.exit38.lr.ph ], [ %.03587, %bb.as ]
+  %.03587 = add nuw i32 %.03587.in, 1             ; 3 uses
+  %i.ad = getelementptr inbounds i8, ptr %10, i64 -4
   %i.ae = load i32, ptr %i.ad, align 4, !tbaa !77
-  %10 = zext i32 %i.ae to i64
-  %i.af = icmp samesign ult i64 %indvars.iv.next100, %10
+  %i.af = icmp ult i32 %.03587, %i.ae
   br i1 %i.af, label %bb.c, label %_ZNK6vectorIiLb0EjE4sizeEv.exit38.thread
 
 bb.c:                                             ; preds = %_ZNK6vectorIiLb0EjE4sizeEv.exit38
-  %i.ag = getelementptr inbounds nuw [4 x i8], ptr %9, i64 %indvars.iv.next100
+  %11 = zext i32 %.03587 to i64
+  %i.ag = getelementptr inbounds nuw [4 x i8], ptr %10, i64 %11
   %i.ah = load i32, ptr %i.ag, align 4, !tbaa !77
   %i.ai = load ptr, ptr %i.g, align 8, !tbaa !83
   %i.aj = zext i32 %i.ah to i64
@@ -620,7 +621,7 @@ bb.as:                                            ; preds = %.split, %bb.d, %_ZN
   br i1 %i.ih, label %.critedge, label %_ZNK6vectorIiLb0EjE4sizeEv.exit38, !llvm.loop !818
 
 _ZNK6vectorIiLb0EjE4sizeEv.exit38.thread:         ; preds = %_ZNK6vectorIiLb0EjE4sizeEv.exit38, %.lr.ph178
-  %i.ii = phi ptr [ %i.s, %.lr.ph178 ], [ %9, %_ZNK6vectorIiLb0EjE4sizeEv.exit38 ] ; 2 uses
+  %i.ii = phi ptr [ %i.s, %.lr.ph178 ], [ %10, %_ZNK6vectorIiLb0EjE4sizeEv.exit38 ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv177, 1 ; 2 uses
   %i.ij = getelementptr inbounds i8, ptr %i.ii, i64 -4
   %i.ik = load i32, ptr %i.ij, align 4, !tbaa !77

@@ -204,23 +204,29 @@ bb.j:                                             ; preds = %bb.i
 
 _ZNSt6vectorIfSaIfEEC2ERKS1_.exit.i:              ; preds = %bb.j, %bb.i, %bb.h, %.thread17.i
   %i.ae = phi ptr [ %i.aa, %bb.h ], [ %i.aa, %bb.i ], [ %i.aa, %bb.j ], [ %i.x, %.thread17.i ] ; 5 uses
-  %i.af = phi ptr [ %i.z, %bb.h ], [ %i.z, %bb.i ], [ %i.z, %bb.j ], [ null, %.thread17.i ] ; 12 uses
-  %i.ag = ptrtoaddr ptr %i.ae to i64              ; 2 uses
-  %i.ah = ptrtoaddr ptr %i.af to i64              ; 2 uses
+  %i.af = phi ptr [ %i.z, %bb.h ], [ %i.z, %bb.i ], [ %i.z, %bb.j ], [ null, %.thread17.i ] ; 13 uses
+  %i.ag = ptrtoaddr ptr %i.ae to i64              ; 3 uses
+  %i.ah = ptrtoaddr ptr %i.af to i64              ; 3 uses
   %.not8.i.i.i = icmp eq ptr %i.af, %i.ae
   br i1 %.not8.i.i.i, label %"_ZZN3gmx17NelderMeadSimplex32updateCentroidAndReflectionPointEvENK3$_0clESt6vectorIfSaIfEERKNS_29RealFunctionvalueAtCoordinateE.exit.i", label %iter.check
 
 iter.check:                                       ; preds = %_ZNSt6vectorIfSaIfEEC2ERKS1_.exit.i
   %i.ai = getelementptr inbounds nuw i8, ptr %.sroa.014.019.i, i64 16
-  %.val.i = load ptr, ptr %i.ai, align 8, !tbaa !50, !noalias !47 ; 8 uses
+  %.val.i = load ptr, ptr %i.ai, align 8, !tbaa !50, !noalias !47 ; 9 uses
   %i.aj = add i64 %i.ag, -4
   %i.ak = sub i64 %i.aj, %i.ah                    ; 3 uses
   %i.al = lshr i64 %i.ak, 2
   %i.am = add nuw nsw i64 %i.al, 1                ; 5 uses
   %min.iters.check = icmp ult i64 %i.ak, 28
-  br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader, label %vector.memcheck
+  br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader, label %vector.scevcheck
 
-vector.memcheck:                                  ; preds = %iter.check
+vector.scevcheck:                                 ; preds = %iter.check
+  %1 = sub i64 %i.ag, %i.ah
+  %2 = and i64 %1, 3
+  %ident.check.not = icmp eq i64 %2, 0
+  br i1 %ident.check.not, label %vector.memcheck, label %.lr.ph.i.i.i.preheader
+
+vector.memcheck:                                  ; preds = %vector.scevcheck
   %scevgep = getelementptr i8, ptr %i.af, i64 4
   %i.an = add i64 %i.ag, -4
   %i.ao = sub i64 %i.an, %i.ah
@@ -309,9 +315,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n122 = icmp eq i64 %i.am, %n.vec115
   br i1 %cmp.n122, label %"_ZZN3gmx17NelderMeadSimplex32updateCentroidAndReflectionPointEvENK3$_0clESt6vectorIfSaIfEERKNS_29RealFunctionvalueAtCoordinateE.exit.i", label %.lr.ph.i.i.i.preheader
 
-.lr.ph.i.i.i.preheader:                           ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %.sroa.0.011.i.i.i.ph = phi ptr [ %i.af, %iter.check ], [ %i.af, %vector.memcheck ], [ %i.as, %vec.epilog.iter.check ], [ %i.bh, %vec.epilog.middle.block ]
-  %.sroa.02.010.i.i.i.ph = phi ptr [ %.val.i, %iter.check ], [ %.val.i, %vector.memcheck ], [ %i.at, %vec.epilog.iter.check ], [ %i.bi, %vec.epilog.middle.block ]
+.lr.ph.i.i.i.preheader:                           ; preds = %vector.memcheck, %vector.scevcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+  %.sroa.0.011.i.i.i.ph = phi ptr [ %i.af, %iter.check ], [ %i.af, %vector.scevcheck ], [ %i.af, %vector.memcheck ], [ %i.as, %vec.epilog.iter.check ], [ %i.bh, %vec.epilog.middle.block ]
+  %.sroa.02.010.i.i.i.ph = phi ptr [ %.val.i, %iter.check ], [ %.val.i, %vector.scevcheck ], [ %.val.i, %vector.memcheck ], [ %i.at, %vec.epilog.iter.check ], [ %i.bi, %vec.epilog.middle.block ]
   br label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i.preheader, %.lr.ph.i.i.i
@@ -364,25 +370,31 @@ bb.l:                                             ; preds = %"_ZSt10accumulateIS
 
 _ZNSt6vectorIfSaIfEED2Ev.exit18:                  ; preds = %"_ZSt10accumulateISt14_List_iteratorIN3gmx29RealFunctionvalueAtCoordinateEESt6vectorIfSaIfEEZNS1_17NelderMeadSimplex32updateCentroidAndReflectionPointEvE3$_0ET0_T_SA_S9_T1_.exit", %bb.l
   %i.ca = phi ptr [ %.sroa.8.1, %"_ZSt10accumulateISt14_List_iteratorIN3gmx29RealFunctionvalueAtCoordinateEESt6vectorIfSaIfEEZNS1_17NelderMeadSimplex32updateCentroidAndReflectionPointEvE3$_0ET0_T_SA_S9_T1_.exit" ], [ %.pre72, %bb.l ] ; 6 uses
-  %i.cb = phi ptr [ %.sroa.033.1, %"_ZSt10accumulateISt14_List_iteratorIN3gmx29RealFunctionvalueAtCoordinateEESt6vectorIfSaIfEEZNS1_17NelderMeadSimplex32updateCentroidAndReflectionPointEvE3$_0ET0_T_SA_S9_T1_.exit" ], [ %.pre, %bb.l ] ; 15 uses
-  %i.cc = ptrtoaddr ptr %i.cb to i64              ; 2 uses
+  %i.cb = phi ptr [ %.sroa.033.1, %"_ZSt10accumulateISt14_List_iteratorIN3gmx29RealFunctionvalueAtCoordinateEESt6vectorIfSaIfEEZNS1_17NelderMeadSimplex32updateCentroidAndReflectionPointEvE3$_0ET0_T_SA_S9_T1_.exit" ], [ %.pre, %bb.l ] ; 16 uses
+  %3 = ptrtoaddr ptr %i.ca to i64                 ; 2 uses
+  %i.cc = ptrtoaddr ptr %i.cb to i64              ; 3 uses
   %.not8.i = icmp eq ptr %i.cb, %i.ca
   br i1 %.not8.i, label %"_ZSt9transformIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEEES6_ZN3gmx17NelderMeadSimplex32updateCentroidAndReflectionPointEvE3$_1ET0_T_SB_SA_T1_.exit", label %iter.check141
 
 iter.check141:                                    ; preds = %_ZNSt6vectorIfSaIfEED2Ev.exit18
-  %1 = ptrtoaddr ptr %i.ca to i64
   %i.cd = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.ce = load i64, ptr %i.cd, align 8, !tbaa !35
   %i.cf = add i64 %i.ce, -1
   %i.cg = uitofp i64 %i.cf to float               ; 3 uses
-  %i.ch = add i64 %1, -4
+  %i.ch = add i64 %3, -4
   %i.ci = sub i64 %i.ch, %i.cc                    ; 5 uses
   %i.cj = lshr i64 %i.ci, 2
   %i.ck = add nuw nsw i64 %i.cj, 1                ; 10 uses
   %min.iters.check125 = icmp ult i64 %i.ci, 12
-  br i1 %min.iters.check125, label %vec.epilog.scalar.ph142.preheader, label %vector.main.loop.iter.check126
+  br i1 %min.iters.check125, label %vec.epilog.scalar.ph142.preheader, label %vector.scevcheck125
 
-vector.main.loop.iter.check126:                   ; preds = %iter.check141
+vector.scevcheck125:                              ; preds = %iter.check141
+  %4 = sub i64 %3, %i.cc
+  %5 = and i64 %4, 3
+  %ident.check126.not = icmp eq i64 %5, 0
+  br i1 %ident.check126.not, label %vector.main.loop.iter.check126, label %vec.epilog.scalar.ph142.preheader
+
+vector.main.loop.iter.check126:                   ; preds = %vector.scevcheck125
   %min.iters.check127 = icmp ult i64 %i.ci, 124
   br i1 %min.iters.check127, label %vec.epilog.ph145, label %vector.ph128
 
@@ -450,8 +462,8 @@ vec.epilog.middle.block154:                       ; preds = %vec.epilog.vector.b
   %cmp.n155 = icmp eq i64 %i.ck, %n.vec146
   br i1 %cmp.n155, label %"_ZSt9transformIN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEEES6_ZN3gmx17NelderMeadSimplex32updateCentroidAndReflectionPointEvE3$_1ET0_T_SB_SA_T1_.exit.thread", label %vec.epilog.scalar.ph142.preheader
 
-vec.epilog.scalar.ph142.preheader:                ; preds = %iter.check141, %vec.epilog.iter.check143, %vec.epilog.middle.block154
-  %.sroa.05.010.i.ph = phi ptr [ %i.cb, %iter.check141 ], [ %i.cn, %vec.epilog.iter.check143 ], [ %i.cy, %vec.epilog.middle.block154 ]
+vec.epilog.scalar.ph142.preheader:                ; preds = %vector.scevcheck125, %iter.check141, %vec.epilog.iter.check143, %vec.epilog.middle.block154
+  %.sroa.05.010.i.ph = phi ptr [ %i.cb, %iter.check141 ], [ %i.cb, %vector.scevcheck125 ], [ %i.cn, %vec.epilog.iter.check143 ], [ %i.cy, %vec.epilog.middle.block154 ]
   br label %vec.epilog.scalar.ph142
 
 vec.epilog.scalar.ph142:                          ; preds = %vec.epilog.scalar.ph142.preheader, %vec.epilog.scalar.ph142
@@ -854,7 +866,7 @@ attributes #20 = { noreturn nounwind }
 !67 = distinct !{!67, !43, !61, !62}
 !68 = !{!"branch_weights", i32 4, i32 28}
 !69 = distinct !{!69, !43, !61, !62}
-!70 = distinct !{!70, !43, !62, !61}
+!70 = distinct !{!70, !43, !61}
 !71 = !{!72}
 !72 = distinct !{!72, !73, !"_ZN3gmx12_GLOBAL__N_117linearCombinationEfNS_8ArrayRefIKfEEfS3_: argument 0"}
 !73 = distinct !{!73, !"_ZN3gmx12_GLOBAL__N_117linearCombinationEfNS_8ArrayRefIKfEEfS3_"}

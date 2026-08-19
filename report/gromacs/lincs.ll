@@ -204,7 +204,7 @@ bb.bz:                                            ; preds = %.lr.ph306, %bb.ea
   %indvars.iv330 = phi i64 [ 0, %.lr.ph306 ], [ %indvars.iv.next331, %bb.ea ] ; 4 uses
   %i.nc = phi i32 [ %i.mh, %.lr.ph306 ], [ %i.ahn, %bb.ea ]
   %i.nd = phi ptr [ %i.lv, %.lr.ph306 ], [ %i.ahm, %bb.ea ] ; 2 uses
-  %.0115304 = phi i32 [ 0, %.lr.ph306 ], [ %.1.lcssa, %bb.ea ] ; 3 uses
+  %.0115304 = phi i32 [ 0, %.lr.ph306 ], [ %.1.lcssa, %bb.ea ] ; 4 uses
   %.0117303 = phi i32 [ %i.lz, %.lr.ph306 ], [ %.1118, %bb.ea ]
   %i.ne = getelementptr inbounds nuw i8, ptr %i.nb, i64 352
   %.val = load ptr, ptr %i.ne, align 8, !tbaa !134
@@ -248,6 +248,8 @@ bb.cb:                                            ; preds = %bb.ca, %bb.bz
   %i.oe = getelementptr inbounds nuw i8, ptr %i.nb, i64 8
   %.val156 = load ptr, ptr %i.mj, align 8         ; 4 uses
   %i.of = sext i32 %.0115304 to i64
+  %11 = add nsw i32 %.0115304, 1
+  %smax = call i32 @llvm.smax.i32(i32 %i.ce, i32 %11)
   br label %bb.cc
 
 bb.cc:                                            ; preds = %.lr.ph295, %_ZN3gmxL22check_assign_connectedEPNS_5LincsENS_8ArrayRefIKiEERK22InteractionDefinitionsbiiRKNS_11ListOfListsIiEE.exit.thread262
@@ -650,7 +652,7 @@ _ZN3gmxL22check_assign_connectedEPNS_5LincsENS_8ArrayRefIKiEERK22InteractionDefi
 
 .critedge:                                        ; preds = %bb.cc, %_ZN3gmxL22check_assign_connectedEPNS_5LincsENS_8ArrayRefIKiEERK22InteractionDefinitionsbiiRKNS_11ListOfListsIiEE.exit.thread262..critedge.loopexit_crit_edge, %bb.cb
   %i.afo = phi i32 [ %i.nt, %bb.cb ], [ %.pre355.pre, %_ZN3gmxL22check_assign_connectedEPNS_5LincsENS_8ArrayRefIKiEERK22InteractionDefinitionsbiiRKNS_11ListOfListsIiEE.exit.thread262..critedge.loopexit_crit_edge ], [ %i.og, %bb.cc ] ; 6 uses
-  %.1.lcssa = phi i32 [ %.0115304, %bb.cb ], [ %i.ce, %_ZN3gmxL22check_assign_connectedEPNS_5LincsENS_8ArrayRefIKiEERK22InteractionDefinitionsbiiRKNS_11ListOfListsIiEE.exit.thread262..critedge.loopexit_crit_edge ], [ %i.ok, %bb.cc ]
+  %.1.lcssa = phi i32 [ %.0115304, %bb.cb ], [ %smax, %_ZN3gmxL22check_assign_connectedEPNS_5LincsENS_8ArrayRefIKiEERK22InteractionDefinitionsbiiRKNS_11ListOfListsIiEE.exit.thread262..critedge.loopexit_crit_edge ], [ %i.ok, %bb.cc ]
   %i.afp = getelementptr inbounds nuw i8, ptr %i.nf, i64 4 ; 2 uses
   store i32 %i.afo, ptr %i.afp, align 4, !tbaa !168
   %i.afq = add i32 %i.afo, 15

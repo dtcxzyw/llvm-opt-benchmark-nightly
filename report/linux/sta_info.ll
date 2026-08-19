@@ -203,14 +203,14 @@ bb.cc:                                            ; preds = %bb.cb, %bb.ca
   br label %bb.cd
 
 bb.cd:                                            ; preds = %bb.cc, %sta_set_link_sinfo.exit
-  %indvars.iv = phi i64 [ 0, %bb.cc ], [ %indvars.iv.next, %sta_set_link_sinfo.exit ] ; 7 uses
+  %indvars.iv = phi i64 [ 0, %bb.cc ], [ %indvars.iv.next, %sta_set_link_sinfo.exit ] ; 6 uses
   %.not277359 = phi i1 [ %.not277357, %bb.cc ], [ %.not277, %sta_set_link_sinfo.exit ]
   %i.ty = phi i16 [ %i.tk, %bb.cc ], [ %.pr, %sta_set_link_sinfo.exit ] ; 2 uses
   br i1 %.not277359, label %bb.cf, label %bb.ce
 
 bb.ce:                                            ; preds = %bb.cd
   %i.tz = zext i16 %i.ty to i64
-  %i.ua = shl nuw nsw i64 1, %indvars.iv
+  %i.ua = shl nuw i64 1, %indvars.iv
   %i.ub = and i64 %i.ua, %i.tz
   %.not279 = icmp eq i64 %i.ub, 0
   br i1 %.not279, label %sta_set_link_sinfo.exit, label %bb.cf
@@ -232,8 +232,8 @@ bb.cg:                                            ; preds = %bb.cf
   br i1 %or.cond, label %bb.ci, label %bb.ch
 
 bb.ch:                                            ; preds = %bb.cg, %bb.cf
-  %i.uk = shl nuw nsw i64 1, %indvars.iv
-  %i.ul = trunc nuw nsw i64 %i.uk to i16
+  %i.uk = shl nuw i64 1, %indvars.iv
+  %i.ul = trunc i64 %i.uk to i16
   %i.um = xor i16 %i.ul, -1
   %i.un = and i16 %i.ty, %i.um
   store i16 %i.un, ptr %i.tl, align 8
@@ -636,12 +636,14 @@ bb.fb:                                            ; preds = %bb.fa
   br label %sta_set_link_sinfo.exit
 
 sta_set_link_sinfo.exit:                          ; preds = %bb.fb, %bb.fa, %bb.ez, %bb.ce, %bb.ch
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %indvars.iv.next = add nuw i64 %indvars.iv, 1   ; 2 uses
   %.pr = load i16, ptr %i.tl, align 8             ; 2 uses
+  %sext = shl i64 %indvars.iv.next, 32
+  %3 = ashr exact i64 %sext, 32
   %.not277 = icmp eq i16 %.pr, 0                  ; 2 uses
-  %3 = icmp samesign ugt i64 %indvars.iv, 13
-  %.not409 = select i1 %.not277, i1 true, i1 %3
-  br i1 %.not409, label %.loopexit, label %bb.cd, !llvm.loop !232
+  %4 = select i1 %.not277, i64 1, i64 15
+  %5 = icmp ugt i64 %4, %3
+  br i1 %5, label %bb.cd, label %.loopexit, !llvm.loop !232
 
 .loopexit:                                        ; preds = %sta_set_link_sinfo.exit, %bb.bz
   ret void

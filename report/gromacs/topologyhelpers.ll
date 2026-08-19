@@ -201,23 +201,29 @@ bb.a:
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %"_ZSt9transformIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ZN5nblib14offsetGmxBlockES3_IN3gmx14ExclusionBlockESaIS9_EEiE3$_0ET0_T_SE_SD_T1_.exit"
   %.sroa.09.013 = phi ptr [ %i.ai, %"_ZSt9transformIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ZN5nblib14offsetGmxBlockES3_IN3gmx14ExclusionBlockESaIS9_EEiE3$_0ET0_T_SE_SD_T1_.exit" ], [ %i.a, %.lr.ph.preheader ] ; 3 uses
-  %i.h = load ptr, ptr %.sroa.09.013, align 8, !tbaa !28 ; 7 uses
+  %i.h = load ptr, ptr %.sroa.09.013, align 8, !tbaa !28 ; 8 uses
+  %3 = ptrtoaddr ptr %i.h to i64                  ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %.sroa.09.013, i64 8
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !28   ; 3 uses
+  %4 = ptrtoaddr ptr %i.j to i64                  ; 2 uses
   %.not7.i = icmp eq ptr %i.h, %i.j
   br i1 %.not7.i, label %"_ZSt9transformIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ZN5nblib14offsetGmxBlockES3_IN3gmx14ExclusionBlockESaIS9_EEiE3$_0ET0_T_SE_SD_T1_.exit", label %iter.check
 
 iter.check:                                       ; preds = %.lr.ph
-  %3 = ptrtoaddr ptr %i.j to i64
-  %4 = ptrtoaddr ptr %i.h to i64
-  %i.k = add i64 %3, -4
-  %i.l = sub i64 %i.k, %4                         ; 3 uses
+  %i.k = add i64 %4, -4
+  %i.l = sub i64 %i.k, %3                         ; 3 uses
   %i.m = lshr i64 %i.l, 2
   %i.n = add nuw nsw i64 %i.m, 1                  ; 5 uses
   %min.iters.check = icmp ult i64 %i.l, 28
-  br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
+  br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.scevcheck
 
-vector.main.loop.iter.check:                      ; preds = %iter.check
+vector.scevcheck:                                 ; preds = %iter.check
+  %5 = sub i64 %4, %3
+  %6 = and i64 %5, 3
+  %ident.check.not = icmp eq i64 %6, 0
+  br i1 %ident.check.not, label %vector.main.loop.iter.check, label %.lr.ph.i.preheader
+
+vector.main.loop.iter.check:                      ; preds = %vector.scevcheck
   %min.iters.check18 = icmp ult i64 %i.l, 124
   br i1 %min.iters.check18, label %vec.epilog.ph, label %vector.ph
 
@@ -281,8 +287,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n29 = icmp eq i64 %i.n, %n.vec22
   br i1 %cmp.n29, label %"_ZSt9transformIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ZN5nblib14offsetGmxBlockES3_IN3gmx14ExclusionBlockESaIS9_EEiE3$_0ET0_T_SE_SD_T1_.exit", label %.lr.ph.i.preheader
 
-.lr.ph.i.preheader:                               ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %.sroa.04.09.i.ph = phi ptr [ %i.h, %iter.check ], [ %i.q, %vec.epilog.iter.check ], [ %i.ab, %vec.epilog.middle.block ]
+.lr.ph.i.preheader:                               ; preds = %vector.scevcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+  %.sroa.04.09.i.ph = phi ptr [ %i.h, %iter.check ], [ %i.h, %vector.scevcheck ], [ %i.q, %vec.epilog.iter.check ], [ %i.ab, %vec.epilog.middle.block ]
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %.lr.ph.i
@@ -389,5 +395,5 @@ attributes #17 = { noreturn nounwind }
 !48 = !{!"llvm.loop.unroll.runtime.disable"}
 !49 = !{!"branch_weights", i32 8, i32 24}
 !50 = distinct !{!50, !14, !47, !48}
-!51 = distinct !{!51, !14, !48, !47}
+!51 = distinct !{!51, !14, !47}
 end_hunk_0

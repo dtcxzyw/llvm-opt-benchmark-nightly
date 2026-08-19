@@ -203,7 +203,8 @@ vector.memcheck:                                  ; preds = %vector.scevcheck
   br i1 %found.conflict, label %vec.epilog.scalar.ph.preheader, label %vec.epilog.ph
 
 vec.epilog.ph:                                    ; preds = %vector.memcheck
-  %n.vec139 = and i64 %.084.lcssa, 12             ; 3 uses
+  %n.vec139 = and i64 %.084.lcssa, 12             ; 4 uses
+  %5 = trunc nuw nsw i64 %n.vec139 to i32
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
@@ -224,19 +225,21 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 vec.epilog.scalar.ph.preheader:                   ; preds = %vector.memcheck, %vector.scevcheck, %iter.check, %vec.epilog.middle.block
   %indvars.iv115.ph = phi i64 [ 0, %vector.scevcheck ], [ 0, %vector.memcheck ], [ 0, %iter.check ], [ %n.vec139, %vec.epilog.middle.block ]
+  %.1104.ph = phi i32 [ 0, %vector.scevcheck ], [ 0, %vector.memcheck ], [ 0, %iter.check ], [ %5, %vec.epilog.middle.block ]
   br label %vec.epilog.scalar.ph
 
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.preheader, %vec.epilog.scalar.ph
-  %indvars.iv115 = phi i64 [ %indvars.iv.next116, %vec.epilog.scalar.ph ], [ %indvars.iv115.ph, %vec.epilog.scalar.ph.preheader ] ; 3 uses
+  %indvars.iv115 = phi i64 [ %7, %vec.epilog.scalar.ph ], [ %indvars.iv115.ph, %vec.epilog.scalar.ph.preheader ] ; 2 uses
+  %.1104 = phi i32 [ %6, %vec.epilog.scalar.ph ], [ %.1104.ph, %vec.epilog.scalar.ph.preheader ]
   %i.cm = getelementptr inbounds nuw i8, ptr %.086.lcssa, i64 %indvars.iv115
   %i.cn = load i8, ptr %i.cm, align 1, !tbaa !8
   %i.co = getelementptr inbounds nuw i8, ptr %i.cb, i64 %indvars.iv115 ; 2 uses
   %i.cp = load i8, ptr %i.co, align 1, !tbaa !8
   %i.cq = xor i8 %i.cp, %i.cn
   store i8 %i.cq, ptr %i.co, align 1, !tbaa !8
-  %indvars.iv.next116 = add i64 %indvars.iv115, 1 ; 2 uses
-  %5 = and i64 %indvars.iv.next116, 4294967295
-  %i.cr = icmp samesign ugt i64 %.084.lcssa, %5
+  %6 = add i32 %.1104, 1                          ; 2 uses
+  %7 = zext i32 %6 to i64                         ; 2 uses
+  %i.cr = icmp samesign ugt i64 %.084.lcssa, %7
   br i1 %i.cr, label %vec.epilog.scalar.ph, label %iter.check167, !llvm.loop !36
 
 iter.check167:                                    ; preds = %vec.epilog.scalar.ph, %vec.epilog.middle.block
@@ -262,7 +265,8 @@ vector.memcheck147:                               ; preds = %vector.scevcheck145
   br i1 %conflict.rdx, label %vec.epilog.scalar.ph168.preheader, label %vec.epilog.ph171
 
 vec.epilog.ph171:                                 ; preds = %vector.memcheck147
-  %n.vec172 = and i64 %.084.lcssa, 12             ; 3 uses
+  %n.vec172 = and i64 %.084.lcssa, 12             ; 4 uses
+  %8 = trunc nuw nsw i64 %n.vec172 to i32
   br label %vec.epilog.vector.body173
 
 vec.epilog.vector.body173:                        ; preds = %vec.epilog.vector.body173, %vec.epilog.ph171
@@ -284,10 +288,12 @@ vec.epilog.middle.block178:                       ; preds = %vec.epilog.vector.b
 
 vec.epilog.scalar.ph168.preheader:                ; preds = %vector.memcheck147, %vector.scevcheck145, %iter.check167, %vec.epilog.middle.block178
   %indvars.iv118.ph = phi i64 [ 0, %vector.scevcheck145 ], [ 0, %vector.memcheck147 ], [ 0, %iter.check167 ], [ %n.vec172, %vec.epilog.middle.block178 ]
+  %.2105.ph = phi i32 [ 0, %vector.scevcheck145 ], [ 0, %vector.memcheck147 ], [ 0, %iter.check167 ], [ %8, %vec.epilog.middle.block178 ]
   br label %vec.epilog.scalar.ph168
 
 vec.epilog.scalar.ph168:                          ; preds = %vec.epilog.scalar.ph168.preheader, %vec.epilog.scalar.ph168
-  %indvars.iv118 = phi i64 [ %indvars.iv.next119, %vec.epilog.scalar.ph168 ], [ %indvars.iv118.ph, %vec.epilog.scalar.ph168.preheader ] ; 4 uses
+  %indvars.iv118 = phi i64 [ %10, %vec.epilog.scalar.ph168 ], [ %indvars.iv118.ph, %vec.epilog.scalar.ph168.preheader ] ; 3 uses
+  %.2105 = phi i32 [ %9, %vec.epilog.scalar.ph168 ], [ %.2105.ph, %vec.epilog.scalar.ph168.preheader ]
   %i.de = getelementptr inbounds nuw i8, ptr %4, i64 %indvars.iv118
   %i.df = load i8, ptr %i.de, align 1, !tbaa !8
   %i.dg = getelementptr inbounds nuw i8, ptr %.086.lcssa, i64 %indvars.iv118
@@ -295,9 +301,9 @@ vec.epilog.scalar.ph168:                          ; preds = %vec.epilog.scalar.p
   %i.di = xor i8 %i.dh, %i.df
   %i.dj = getelementptr inbounds nuw i8, ptr %.085.lcssa, i64 %indvars.iv118
   store i8 %i.di, ptr %i.dj, align 1, !tbaa !8
-  %indvars.iv.next119 = add i64 %indvars.iv118, 1 ; 2 uses
-  %6 = and i64 %indvars.iv.next119, 4294967295
-  %i.dk = icmp samesign ugt i64 %.084.lcssa, %6
+  %9 = add i32 %.2105, 1                          ; 2 uses
+  %10 = zext i32 %9 to i64                        ; 2 uses
+  %i.dk = icmp samesign ugt i64 %.084.lcssa, %10
   br i1 %i.dk, label %vec.epilog.scalar.ph168, label %._crit_edge109, !llvm.loop !38
 
 ._crit_edge109:                                   ; preds = %vec.epilog.scalar.ph168, %vec.epilog.middle.block178, %._crit_edge100
@@ -529,7 +535,8 @@ vector.memcheck:                                  ; preds = %vector.scevcheck
   br i1 %conflict.rdx133, label %vec.epilog.scalar.ph.preheader, label %vec.epilog.ph
 
 vec.epilog.ph:                                    ; preds = %vector.memcheck
-  %n.vec140 = and i64 %.073.lcssa, 12             ; 3 uses
+  %n.vec140 = and i64 %.073.lcssa, 12             ; 4 uses
+  %5 = trunc nuw nsw i64 %n.vec140 to i32
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
@@ -555,10 +562,12 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 vec.epilog.scalar.ph.preheader:                   ; preds = %vector.memcheck, %vector.scevcheck, %iter.check, %vec.epilog.middle.block
   %indvars.iv101.ph = phi i64 [ 0, %vector.scevcheck ], [ 0, %vector.memcheck ], [ 0, %iter.check ], [ %n.vec140, %vec.epilog.middle.block ]
+  %.191.ph = phi i32 [ 0, %vector.scevcheck ], [ 0, %vector.memcheck ], [ 0, %iter.check ], [ %5, %vec.epilog.middle.block ]
   br label %vec.epilog.scalar.ph
 
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.preheader, %vec.epilog.scalar.ph
-  %indvars.iv101 = phi i64 [ %indvars.iv.next102, %vec.epilog.scalar.ph ], [ %indvars.iv101.ph, %vec.epilog.scalar.ph.preheader ] ; 5 uses
+  %indvars.iv101 = phi i64 [ %7, %vec.epilog.scalar.ph ], [ %indvars.iv101.ph, %vec.epilog.scalar.ph.preheader ] ; 4 uses
+  %.191 = phi i32 [ %6, %vec.epilog.scalar.ph ], [ %.191.ph, %vec.epilog.scalar.ph.preheader ]
   %i.cc = getelementptr inbounds nuw i8, ptr %4, i64 %indvars.iv101
   %i.cd = load i8, ptr %i.cc, align 1, !tbaa !8
   %i.ce = getelementptr inbounds nuw i8, ptr %.075.lcssa, i64 %indvars.iv101
@@ -570,9 +579,9 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.cj = load i8, ptr %i.ci, align 1, !tbaa !8
   %i.ck = xor i8 %i.cj, %i.cg
   store i8 %i.ck, ptr %i.ci, align 1, !tbaa !8
-  %indvars.iv.next102 = add i64 %indvars.iv101, 1 ; 2 uses
-  %5 = and i64 %indvars.iv.next102, 4294967295
-  %i.cl = icmp samesign ugt i64 %.073.lcssa, %5
+  %6 = add i32 %.191, 1                           ; 2 uses
+  %7 = zext i32 %6 to i64                         ; 2 uses
+  %i.cl = icmp samesign ugt i64 %.073.lcssa, %7
   br i1 %i.cl, label %vec.epilog.scalar.ph, label %.loopexit, !llvm.loop !53
 
 .loopexit:                                        ; preds = %vec.epilog.scalar.ph, %vec.epilog.middle.block
@@ -745,7 +754,8 @@ vector.body:                                      ; preds = %vector.main.loop.it
   br label %vector.body, !llvm.loop !60
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check
-  %n.vec136 = and i64 %.083129, 12                ; 3 uses
+  %n.vec136 = and i64 %.083129, 12                ; 4 uses
+  %6 = trunc nuw nsw i64 %n.vec136 to i32
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
@@ -766,19 +776,21 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 vec.epilog.scalar.ph.preheader:                   ; preds = %vector.memcheck, %vector.scevcheck, %iter.check, %vec.epilog.middle.block
   %indvars.iv109.ph = phi i64 [ 0, %vector.scevcheck ], [ 0, %vector.memcheck ], [ 0, %iter.check ], [ %n.vec136, %vec.epilog.middle.block ]
+  %.1102.ph = phi i32 [ 0, %vector.scevcheck ], [ 0, %vector.memcheck ], [ 0, %iter.check ], [ %6, %vec.epilog.middle.block ]
   br label %vec.epilog.scalar.ph
 
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.preheader, %vec.epilog.scalar.ph
-  %indvars.iv109 = phi i64 [ %indvars.iv.next110, %vec.epilog.scalar.ph ], [ %indvars.iv109.ph, %vec.epilog.scalar.ph.preheader ] ; 3 uses
+  %indvars.iv109 = phi i64 [ %8, %vec.epilog.scalar.ph ], [ %indvars.iv109.ph, %vec.epilog.scalar.ph.preheader ] ; 2 uses
+  %.1102 = phi i32 [ %7, %vec.epilog.scalar.ph ], [ %.1102.ph, %vec.epilog.scalar.ph.preheader ]
   %i.bd = getelementptr inbounds nuw i8, ptr %.085127, i64 %indvars.iv109
   %i.be = load i8, ptr %i.bd, align 1, !tbaa !8
   %i.bf = getelementptr inbounds nuw i8, ptr %i.am, i64 %indvars.iv109 ; 2 uses
   %i.bg = load i8, ptr %i.bf, align 1, !tbaa !8
   %i.bh = xor i8 %i.bg, %i.be
   store i8 %i.bh, ptr %i.bf, align 1, !tbaa !8
-  %indvars.iv.next110 = add i64 %indvars.iv109, 1 ; 2 uses
-  %6 = and i64 %indvars.iv.next110, 4294967295
-  %i.bi = icmp ugt i64 %.083129, %6
+  %7 = add i32 %.1102, 1                          ; 2 uses
+  %8 = zext i32 %7 to i64                         ; 2 uses
+  %i.bi = icmp ugt i64 %.083129, %8
   br i1 %i.bi, label %vec.epilog.scalar.ph, label %iter.check163, !llvm.loop !62
 
 iter.check163:                                    ; preds = %vec.epilog.scalar.ph, %vec.epilog.middle.block
@@ -822,7 +834,8 @@ vector.body153:                                   ; preds = %vector.main.loop.it
   br label %vector.body153, !llvm.loop !63
 
 vec.epilog.ph167:                                 ; preds = %vector.main.loop.iter.check149
-  %n.vec168 = and i64 %.083129, 12                ; 3 uses
+  %n.vec168 = and i64 %.083129, 12                ; 4 uses
+  %9 = trunc nuw nsw i64 %n.vec168 to i32
   br label %vec.epilog.vector.body169
 
 vec.epilog.vector.body169:                        ; preds = %vec.epilog.vector.body169, %vec.epilog.ph167
@@ -844,10 +857,12 @@ vec.epilog.middle.block174:                       ; preds = %vec.epilog.vector.b
 
 vec.epilog.scalar.ph164.preheader:                ; preds = %vector.scevcheck142, %iter.check163, %vec.epilog.middle.block174
   %indvars.iv112.ph = phi i64 [ 0, %vector.scevcheck142 ], [ 0, %iter.check163 ], [ %n.vec168, %vec.epilog.middle.block174 ]
+  %.2103.ph = phi i32 [ 0, %vector.scevcheck142 ], [ 0, %iter.check163 ], [ %9, %vec.epilog.middle.block174 ]
   br label %vec.epilog.scalar.ph164
 
 vec.epilog.scalar.ph164:                          ; preds = %vec.epilog.scalar.ph164.preheader, %vec.epilog.scalar.ph164
-  %indvars.iv112 = phi i64 [ %indvars.iv.next113, %vec.epilog.scalar.ph164 ], [ %indvars.iv112.ph, %vec.epilog.scalar.ph164.preheader ] ; 4 uses
+  %indvars.iv112 = phi i64 [ %11, %vec.epilog.scalar.ph164 ], [ %indvars.iv112.ph, %vec.epilog.scalar.ph164.preheader ] ; 3 uses
+  %.2103 = phi i32 [ %10, %vec.epilog.scalar.ph164 ], [ %.2103.ph, %vec.epilog.scalar.ph164.preheader ]
   %i.cc = getelementptr inbounds nuw i8, ptr %5, i64 %indvars.iv112
   %i.cd = load i8, ptr %i.cc, align 1, !tbaa !8
   %i.ce = getelementptr inbounds nuw i8, ptr %.085127, i64 %indvars.iv112
@@ -855,9 +870,9 @@ vec.epilog.scalar.ph164:                          ; preds = %vec.epilog.scalar.p
   %i.cg = xor i8 %i.cf, %i.cd
   %i.ch = getelementptr inbounds nuw i8, ptr %.084128, i64 %indvars.iv112
   store i8 %i.cg, ptr %i.ch, align 1, !tbaa !8
-  %indvars.iv.next113 = add i64 %indvars.iv112, 1 ; 2 uses
-  %7 = and i64 %indvars.iv.next113, 4294967295
-  %i.ci = icmp samesign ugt i64 %.083129, %7
+  %10 = add i32 %.2103, 1                         ; 2 uses
+  %11 = zext i32 %10 to i64                       ; 2 uses
+  %i.ci = icmp samesign ugt i64 %.083129, %11
   br i1 %i.ci, label %vec.epilog.scalar.ph164, label %._crit_edge106, !llvm.loop !65
 
 ._crit_edge106:                                   ; preds = %vec.epilog.scalar.ph164, %vec.epilog.middle.block174, %bb.f, %bb.g
@@ -1155,7 +1170,8 @@ vector.body:                                      ; preds = %vector.main.loop.it
   br label %vector.body, !llvm.loop !75
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check
-  %n.vec131 = and i64 %.07497, 12                 ; 3 uses
+  %n.vec131 = and i64 %.07497, 12                 ; 4 uses
+  %6 = trunc nuw nsw i64 %n.vec131 to i32
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
@@ -1181,10 +1197,12 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 vec.epilog.scalar.ph.preheader:                   ; preds = %vector.memcheck, %vector.scevcheck, %iter.check, %vec.epilog.middle.block
   %indvars.iv106.ph = phi i64 [ 0, %vector.scevcheck ], [ 0, %vector.memcheck ], [ 0, %iter.check ], [ %n.vec131, %vec.epilog.middle.block ]
+  %.1100.ph = phi i32 [ 0, %vector.scevcheck ], [ 0, %vector.memcheck ], [ 0, %iter.check ], [ %6, %vec.epilog.middle.block ]
   br label %vec.epilog.scalar.ph
 
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.preheader, %vec.epilog.scalar.ph
-  %indvars.iv106 = phi i64 [ %indvars.iv.next107, %vec.epilog.scalar.ph ], [ %indvars.iv106.ph, %vec.epilog.scalar.ph.preheader ] ; 5 uses
+  %indvars.iv106 = phi i64 [ %8, %vec.epilog.scalar.ph ], [ %indvars.iv106.ph, %vec.epilog.scalar.ph.preheader ] ; 4 uses
+  %.1100 = phi i32 [ %7, %vec.epilog.scalar.ph ], [ %.1100.ph, %vec.epilog.scalar.ph.preheader ]
   %i.bc = getelementptr inbounds nuw i8, ptr %5, i64 %indvars.iv106
   %i.bd = load i8, ptr %i.bc, align 1, !tbaa !8
   %i.be = getelementptr inbounds nuw i8, ptr %.07695, i64 %indvars.iv106
@@ -1196,9 +1214,9 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.bj = load i8, ptr %i.bi, align 1, !tbaa !8
   %i.bk = xor i8 %i.bj, %i.bg
   store i8 %i.bk, ptr %i.bi, align 1, !tbaa !8
-  %indvars.iv.next107 = add i64 %indvars.iv106, 1 ; 2 uses
-  %6 = and i64 %indvars.iv.next107, 4294967295
-  %i.bl = icmp ugt i64 %.07497, %6
+  %7 = add i32 %.1100, 1                          ; 2 uses
+  %8 = zext i32 %7 to i64                         ; 2 uses
+  %i.bl = icmp ugt i64 %.07497, %8
   br i1 %i.bl, label %vec.epilog.scalar.ph, label %.loopexit, !llvm.loop !77
 
 .loopexit:                                        ; preds = %vec.epilog.scalar.ph, %vec.epilog.middle.block

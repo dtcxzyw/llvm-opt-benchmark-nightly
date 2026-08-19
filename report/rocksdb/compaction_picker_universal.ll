@@ -204,7 +204,8 @@ vector.ph508:                                     ; preds = %vector.main.loop.it
   %i.gj = and i64 %umax504, 15                    ; 2 uses
   %i.gk = icmp eq i64 %i.gj, 0
   %i.gl = select i1 %i.gk, i64 16, i64 %i.gj      ; 2 uses
-  %n.vec509 = sub nsw i64 %umax504, %i.gl         ; 3 uses
+  %n.vec509 = sub nsw i64 %umax504, %i.gl         ; 4 uses
+  %10 = trunc i64 %n.vec509 to i32
   br label %vector.body510
 
 vector.body510:                                   ; preds = %vector.body510, %vector.ph508
@@ -252,7 +253,8 @@ vec.epilog.ph542:                                 ; preds = %vector.main.loop.it
   %i.gs = and i64 %umax504, 3                     ; 2 uses
   %i.gt = icmp eq i64 %i.gs, 0
   %i.gu = select i1 %i.gt, i64 4, i64 %i.gs
-  %n.vec543 = sub nsw i64 %umax504, %i.gu         ; 2 uses
+  %n.vec543 = sub nsw i64 %umax504, %i.gu         ; 3 uses
+  %11 = trunc i64 %n.vec543 to i32
   %i.gv = insertelement <4 x i64> <i64 poison, i64 0, i64 0, i64 0>, i64 %bc.merge.rdx537, i64 0
   %broadcast.splatinsert = insertelement <4 x i64> poison, i64 %vec.epilog.resume.val536, i64 0
   %broadcast.splat = shufflevector <4 x i64> %broadcast.splatinsert, <4 x i64> poison, <4 x i32> zeroinitializer
@@ -278,6 +280,7 @@ vec.epilog.middle.block553:                       ; preds = %vec.epilog.vector.b
 
 vec.epilog.scalar.ph539.preheader:                ; preds = %vector.scevcheck, %iter.check538, %vec.epilog.iter.check540, %vec.epilog.middle.block553
   %indvars.iv.ph = phi i64 [ 0, %iter.check538 ], [ 0, %vector.scevcheck ], [ %n.vec509, %vec.epilog.iter.check540 ], [ %n.vec543, %vec.epilog.middle.block553 ]
+  %.0134368.ph = phi i32 [ 0, %iter.check538 ], [ 0, %vector.scevcheck ], [ %10, %vec.epilog.iter.check540 ], [ %11, %vec.epilog.middle.block553 ]
   %.0135367.ph = phi i64 [ 0, %iter.check538 ], [ 0, %vector.scevcheck ], [ %i.gr, %vec.epilog.iter.check540 ], [ %i.gy, %vec.epilog.middle.block553 ]
   br label %vec.epilog.scalar.ph539
 
@@ -347,15 +350,16 @@ _ZN7rocksdb12_GLOBAL__N_126UniversalCompactionBuilder9GetPathIdERKNS_18Immutable
   br i1 %i.ik, label %bb.ad, label %bb.ac
 
 vec.epilog.scalar.ph539:                          ; preds = %vec.epilog.scalar.ph539.preheader, %vec.epilog.scalar.ph539
-  %indvars.iv = phi i64 [ %indvars.iv.next, %vec.epilog.scalar.ph539 ], [ %indvars.iv.ph, %vec.epilog.scalar.ph539.preheader ] ; 2 uses
+  %indvars.iv = phi i64 [ %13, %vec.epilog.scalar.ph539 ], [ %indvars.iv.ph, %vec.epilog.scalar.ph539.preheader ]
+  %.0134368 = phi i32 [ %12, %vec.epilog.scalar.ph539 ], [ %.0134368.ph, %vec.epilog.scalar.ph539.preheader ]
   %.0135367 = phi i64 [ %i.io, %vec.epilog.scalar.ph539 ], [ %.0135367.ph, %vec.epilog.scalar.ph539.preheader ]
   %i.il = getelementptr inbounds nuw [40 x i8], ptr %.val215, i64 %indvars.iv
   %i.im = getelementptr inbounds nuw i8, ptr %i.il, i64 16
   %i.in = load i64, ptr %i.im, align 8, !tbaa !253
   %i.io = add i64 %i.in, %.0135367                ; 2 uses
-  %indvars.iv.next = add i64 %indvars.iv, 1       ; 2 uses
-  %10 = and i64 %indvars.iv.next, 4294967295
-  %i.ip = icmp ugt i64 %i.ek, %10
+  %12 = add i32 %.0134368, 1                      ; 2 uses
+  %13 = zext i32 %12 to i64                       ; 2 uses
+  %i.ip = icmp ugt i64 %i.ek, %13
   br i1 %i.ip, label %vec.epilog.scalar.ph539, label %._crit_edge371, !llvm.loop !589
 
 bb.ac:                                            ; preds = %_ZN7rocksdb12_GLOBAL__N_126UniversalCompactionBuilder9GetPathIdERKNS_18ImmutableCFOptionsERKNS_16MutableCFOptionsEm.exit

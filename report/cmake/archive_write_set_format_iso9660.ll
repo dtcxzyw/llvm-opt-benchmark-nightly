@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %._crit_edge
-  %.4 = phi i64 [ %spec.select, %bb.d ], [ %.2.lcssa, %._crit_edge ] ; 4 uses
+  %.4 = phi i64 [ %spec.select, %bb.d ], [ %.2.lcssa, %._crit_edge ] ; 5 uses
   %.not78 = icmp eq i64 %.4, 0
   br i1 %.not78, label %._crit_edge69, label %.lr.ph68.preheader
 
@@ -328,15 +328,18 @@ joliet_allowed_char.exit.epil:                    ; preds = %bb.k, %bb.j
   br i1 %.not5671, label %._crit_edge76, label %iter.check
 
 iter.check:                                       ; preds = %._crit_edge69
-  %i.bd = add i64 %i.c, -2
-  %i.be = sub i64 %i.bd, %.4                      ; 3 uses
-  %i.bf = lshr i64 %i.be, 1
+  %i.bd = add i64 %.4, 2
+  %i.be = sub i64 %i.bd, %i.c
+  %5 = mul i64 %i.be, 9223372036854775807         ; 3 uses
+  %i.bf = lshr i64 %5, 1
   %i.bg = add nuw i64 %i.bf, 1                    ; 5 uses
-  %min.iters.check = icmp ult i64 %i.be, 6
-  br i1 %min.iters.check, label %.lr.ph75.preheader, label %vector.main.loop.iter.check
+  %min.iters.check = icmp ult i64 %5, 6
+  %6 = trunc i64 %.4 to i1
+  %or.cond = or i1 %min.iters.check, %6
+  br i1 %or.cond, label %.lr.ph75.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check3 = icmp ult i64 %i.be, 30
+  %min.iters.check3 = icmp ult i64 %5, 30
   br i1 %min.iters.check3, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
@@ -739,6 +742,6 @@ begin_hunk_1_@llvm.assume
 !385 = distinct !{!385, !91, !218, !219}
 !386 = !{!"branch_weights", i32 4, i32 12}
 !387 = distinct !{!387, !91, !218, !219}
-!388 = distinct !{!388, !91, !219, !218}
+!388 = distinct !{!388, !91, !218}
 !389 = distinct !{!389, !91}
 end_hunk_1

@@ -203,13 +203,13 @@ bb.e:                                             ; preds = %bb.d, %bb.b
 
 .lr.ph95:                                         ; preds = %.thread64
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 72
+  %4 = zext i32 %.14892 to i64
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph95, %bb.j
-  %.14894 = phi i32 [ %.14892, %.lr.ph95 ], [ %.148, %bb.j ] ; 4 uses
+  %indvars.iv107 = phi i64 [ %4, %.lr.ph95 ], [ %indvars.iv.next108, %bb.j ] ; 4 uses
   %.04593 = phi i32 [ %i.a, %.lr.ph95 ], [ %.146.ph, %bb.j ] ; 4 uses
-  %4 = zext i32 %.14894 to i64
-  %i.u = getelementptr inbounds nuw [24 x i8], ptr %.pre, i64 %4 ; 2 uses
+  %i.u = getelementptr inbounds nuw [24 x i8], ptr %.pre, i64 %indvars.iv107 ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 16
   %i.w = load i32, ptr %i.v, align 8, !tbaa !198
   switch i32 %i.w, label %bb.j [
@@ -222,7 +222,7 @@ bb.g:                                             ; preds = %bb.f
   %i.x = getelementptr inbounds nuw i8, ptr %i.u, i64 20
   %i.y = load i32, ptr %i.x, align 4, !tbaa !203
   %.not58 = icmp eq i32 %i.y, 0
-  br i1 %.not58, label %._crit_edge, label %bb.j
+  br i1 %.not58, label %._crit_edge.loopexit.split.loop.exit, label %bb.j
 
 bb.h:                                             ; preds = %bb.f
   %i.z = add i32 %.04593, 1                       ; 3 uses
@@ -234,18 +234,24 @@ bb.i:                                             ; preds = %bb.h
   %i.ac = zext i32 %i.z to i64
   %i.ad = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.ac
   %i.ae = load i32, ptr %i.ad, align 4, !tbaa !20
-  %i.af = icmp eq i32 %.14894, %i.ae
+  %5 = zext i32 %i.ae to i64
+  %i.af = icmp eq i64 %indvars.iv107, %5
   br i1 %i.af, label %bb.j, label %.thread
 
 bb.j:                                             ; preds = %bb.f, %bb.g, %bb.i
   %.146.ph = phi i32 [ %i.z, %bb.i ], [ %.04593, %bb.g ], [ %.04593, %bb.f ] ; 2 uses
-  %.148 = add nuw i32 %.14894, 1                  ; 2 uses
-  %exitcond.not = icmp eq i32 %.148, %i.r
+  %indvars.iv.next108 = add nuw nsw i64 %indvars.iv107, 1 ; 2 uses
+  %lftr.wideiv = trunc i64 %indvars.iv.next108 to i32
+  %exitcond.not = icmp eq i32 %i.r, %lftr.wideiv
   br i1 %exitcond.not, label %._crit_edge, label %bb.f, !llvm.loop !206
 
-._crit_edge:                                      ; preds = %bb.j, %bb.g, %.thread64
-  %.045.lcssa = phi i32 [ %i.a, %.thread64 ], [ %.04593, %bb.g ], [ %.146.ph, %bb.j ]
-  %.148.lcssa = phi i32 [ %.14892, %.thread64 ], [ %.14894, %bb.g ], [ %i.r, %bb.j ] ; 2 uses
+._crit_edge.loopexit.split.loop.exit:             ; preds = %bb.g
+  %6 = trunc nuw i64 %indvars.iv107 to i32
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %bb.j, %._crit_edge.loopexit.split.loop.exit, %.thread64
+  %.045.lcssa = phi i32 [ %i.a, %.thread64 ], [ %.04593, %._crit_edge.loopexit.split.loop.exit ], [ %.146.ph, %bb.j ]
+  %.148.lcssa = phi i32 [ %.14892, %.thread64 ], [ %6, %._crit_edge.loopexit.split.loop.exit ], [ %i.r, %bb.j ] ; 2 uses
   store i32 %.045.lcssa, ptr %3, align 4, !tbaa !20
   store i64 %i.p, ptr %1, align 8, !tbaa !21
   %i.ag = load i32, ptr %i.q, align 8, !tbaa !193 ; 2 uses
