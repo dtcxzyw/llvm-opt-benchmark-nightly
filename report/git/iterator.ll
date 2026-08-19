@@ -157,23 +157,25 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define dso_local noundef ptr @overlay_ref_iterator_begin(ptr noundef %0, ptr noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !12
+  %i.a = load ptr, ptr %0, align 8, !tbaa !12     ; 2 uses
   %.not = icmp eq ptr %i.a, @empty_ref_iterator_vtable
   br i1 %.not, label %ref_iterator_free.exit, label %bb.b
 
 ref_iterator_free.exit:                           ; preds = %bb.a
-  %i.b = load ptr, ptr getelementptr inbounds nuw (i8, ptr @empty_ref_iterator_vtable, i64 16), align 8, !tbaa !22
+  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  %i.b = load ptr, ptr %2, align 8, !tbaa !22
   tail call void %i.b(ptr noundef nonnull %0) #12, !inline_history !35
   tail call void @free(ptr noundef nonnull %0) #12
   br label %bb.d
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = load ptr, ptr %1, align 8, !tbaa !12
+  %i.c = load ptr, ptr %1, align 8, !tbaa !12     ; 2 uses
   %.not12 = icmp eq ptr %i.c, @empty_ref_iterator_vtable
   br i1 %.not12, label %ref_iterator_free.exit11, label %bb.c
 
 ref_iterator_free.exit11:                         ; preds = %bb.b
-  %i.d = load ptr, ptr getelementptr inbounds nuw (i8, ptr @empty_ref_iterator_vtable, i64 16), align 8, !tbaa !22
+  %3 = getelementptr inbounds nuw i8, ptr %i.c, i64 16
+  %i.d = load ptr, ptr %3, align 8, !tbaa !22
   tail call void %i.d(ptr noundef nonnull %1) #12, !inline_history !35
   tail call void @free(ptr noundef nonnull %1) #12
   br label %bb.d

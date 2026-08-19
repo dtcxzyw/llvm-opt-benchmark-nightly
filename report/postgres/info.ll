@@ -201,7 +201,7 @@ free_db_and_rel_infos.exit:                       ; preds = %free_db_and_rel_inf
 
 bb.g:                                             ; preds = %free_db_and_rel_infos.exit, %bb.a
   %i.aq = tail call ptr @connectToServer(ptr noundef nonnull %0, ptr noundef nonnull @.str.5) #8 ; 2 uses
-  %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 188 ; 2 uses
+  %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 188 ; 3 uses
   %i.as = load i32, ptr %i.ar, align 4            ; 2 uses
   %i.at = icmp ugt i32 %i.as, 169999
   %i.au = icmp samesign ugt i32 %i.as, 149999
@@ -361,27 +361,29 @@ get_db_infos.exit:                                ; preds = %bb.s, %bb.o
   %i.dq = load ptr, ptr %1, align 8               ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #8
   call void @upgrade_task_add_step(ptr noundef %i.b, ptr noundef %i.dq, ptr noundef nonnull @process_rel_infos, i1 noundef zeroext true, ptr noundef null) #8
-  %i.dr = icmp eq ptr %0, @old_cluster            ; 2 uses
-  %2 = load i32, ptr getelementptr inbounds nuw (i8, ptr @old_cluster, i64 188), align 4 ; 2 uses
-  %3 = icmp ugt i32 %2, 160099
-  %or.cond = select i1 %i.dr, i1 %3, i1 false
-  br i1 %or.cond, label %bb.t, label %bb.u
+  %i.dr = icmp eq ptr %0, @old_cluster
+  br i1 %i.dr, label %2, label %bb.u
 
-bb.t:                                             ; preds = %get_db_infos.exit
+2:                                                ; preds = %get_db_infos.exit
+  %3 = load i32, ptr %i.ar, align 4               ; 2 uses
+  %4 = icmp ugt i32 %3, 160099
+  br i1 %4, label %bb.t, label %bb.u
+
+bb.t:                                             ; preds = %2
   %i.ds = load i8, ptr getelementptr inbounds nuw (i8, ptr @user_opts, i64 1), align 1, !range !8, !noundef !9
   %i.dt = trunc nuw i8 %i.ds to i1
-  %i.du = icmp ugt i32 %2, 189999
+  %i.du = icmp ugt i32 %3, 189999
   %.str.53..str.54.i = select i1 %i.du, ptr @.str.53, ptr @.str.54
   %.0.i = select i1 %i.dt, ptr @.str.52, ptr %.str.53..str.54.i
   call void @upgrade_task_add_step(ptr noundef %i.b, ptr noundef nonnull %.0.i, ptr noundef nonnull @process_old_cluster_logical_slot_infos, i1 noundef zeroext true, ptr noundef null) #8
   br label %bb.u
 
-bb.u:                                             ; preds = %bb.t, %get_db_infos.exit
+bb.u:                                             ; preds = %get_db_infos.exit, %bb.t, %2
+  %.str.4.sink = phi ptr [ @.str.3, %bb.t ], [ @.str.3, %2 ], [ @.str.4, %get_db_infos.exit ]
   call void @upgrade_task_run(ptr noundef %i.b, ptr noundef nonnull %0) #8
   call void @upgrade_task_free(ptr noundef %i.b) #8
   call void @pg_free(ptr noundef %i.dq) #8
-  %.str.3..str.4 = select i1 %i.dr, ptr @.str.3, ptr @.str.4
-  call void (i32, ptr, ...) @pg_log(i32 noundef 0, ptr noundef nonnull %.str.3..str.4) #8
+  call void (i32, ptr, ...) @pg_log(i32 noundef 0, ptr noundef nonnull %.str.4.sink) #8
   %i.dv = load i8, ptr getelementptr inbounds nuw (i8, ptr @log_opts, i64 8), align 8, !range !8, !noundef !9
   %i.dw = trunc nuw i8 %i.dv to i1
   br i1 %i.dw, label %bb.v, label %print_db_infos.exit

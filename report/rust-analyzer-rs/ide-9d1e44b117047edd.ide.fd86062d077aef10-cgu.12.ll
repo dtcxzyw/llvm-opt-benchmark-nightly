@@ -1,4 +1,4 @@
-inline.NumInlined: 3013
+inline.NumInlined: 3012
 inline.NumDeleted: 1056
 loop-unroll.NumRuntimeUnrolled: 13
 loop-unroll.NumUnrolled: 13
@@ -203,7 +203,7 @@ bb.dj:                                            ; preds = %bb.di
   invoke void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %.val116.i) #48
           to label %.body178.thread unwind label %bb.fb, !noalias !2388
 
-bb.dk:                                            ; preds = %bb.hf, %bb.hb, %bb.gz, %bb.gt, %bb.gs, %bb.gq, %bb.gm, %.noexc136.i, %bb.gg, %bb.gf, %bb.dz, %bb.dy, %bb.dw, %bb.dv, %bb.dt, %_RNvMs1z_Cs8Xq8PKFYOms_3hirNtB6_8Callable4kind.exit.i, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECslLuZgPVt6hg_3ide.exit130.i, %bb.dh
+bb.dk:                                            ; preds = %bb.hf, %bb.hb, %bb.gz, %bb.gt, %bb.gs, %5, %bb.gq, %bb.gm, %.noexc136.i, %bb.gg, %bb.gf, %bb.dz, %bb.dy, %bb.dw, %bb.dv, %bb.dt, %_RNvMs1z_Cs8Xq8PKFYOms_3hirNtB6_8Callable4kind.exit.i, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECslLuZgPVt6hg_3ide.exit130.i, %bb.dh
   %i.rx = landingpad { ptr, i32 }
           cleanup
   br label %bb.di
@@ -606,10 +606,10 @@ bb.gl:                                            ; preds = %bb.gk
   invoke void @_RNvNtCslLuZgPVt6hg_3ide15goto_definition10def_to_nav(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.bq, ptr noundef nonnull align 8 %i.ga, ptr noalias nofree noundef nonnull readonly align 8 captures(address) dereferenceable(40) %i.br)
           to label %bb.gm unwind label %bb.ec, !noalias !2388
 
-_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs33K2ylI4knu_10hir_expand4name4NameECslLuZgPVt6hg_3ide.exit.i: ; preds = %bb.gu, %bb.gp, %bb.gs, %bb.hd, %bb.gy, %.noexc137.i, %.thread49.i
-  %.sroa.32.0 = phi i64 [ undef, %.thread49.i ], [ undef, %.noexc137.i ], [ undef, %bb.gp ], [ undef, %bb.gy ], [ %.sroa.32.2, %bb.hd ], [ undef, %bb.gs ], [ undef, %bb.gu ]
-  %.sroa.31.0 = phi ptr [ undef, %.thread49.i ], [ undef, %.noexc137.i ], [ undef, %bb.gp ], [ undef, %bb.gy ], [ %.sroa.31.2, %bb.hd ], [ undef, %bb.gs ], [ undef, %bb.gu ]
-  %.sroa.0375.0 = phi i64 [ -1, %.thread49.i ], [ -1, %.noexc137.i ], [ -1, %bb.gp ], [ -1, %bb.gy ], [ %.sroa.0375.2, %bb.hd ], [ -1, %bb.gs ], [ -1, %bb.gu ]
+_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs33K2ylI4knu_10hir_expand4name4NameECslLuZgPVt6hg_3ide.exit.i: ; preds = %bb.gu, %bb.gp, %5, %bb.hd, %bb.gy, %.noexc137.i, %.thread49.i
+  %.sroa.32.0 = phi i64 [ undef, %.thread49.i ], [ undef, %.noexc137.i ], [ undef, %bb.gp ], [ undef, %bb.gy ], [ %.sroa.32.2, %bb.hd ], [ undef, %5 ], [ undef, %bb.gu ]
+  %.sroa.31.0 = phi ptr [ undef, %.thread49.i ], [ undef, %.noexc137.i ], [ undef, %bb.gp ], [ undef, %bb.gy ], [ %.sroa.31.2, %bb.hd ], [ undef, %5 ], [ undef, %bb.gu ]
+  %.sroa.0375.0 = phi i64 [ -1, %.thread49.i ], [ -1, %.noexc137.i ], [ -1, %bb.gp ], [ -1, %bb.gy ], [ %.sroa.0375.2, %bb.hd ], [ -1, %5 ], [ -1, %bb.gu ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.df), !noalias !2388
   call void @llvm.lifetime.end.p0(ptr nonnull %i.dg), !noalias !2388
   br label %bb.dq
@@ -649,17 +649,21 @@ bb.gp:                                            ; preds = %bb.dy
 bb.gq:                                            ; preds = %bb.gp
   %i.vr = load ptr, ptr %i.ga, align 8, !noalias !2388, !nonnull !4, !align !68, !noundef !4
   %i.vs = invoke noundef nonnull ptr @_RNvMsr_Cs8Xq8PKFYOms_3hirNtB5_8Function4name(ptr noalias nofree noundef nonnull readonly align 4 captures(none) dereferenceable(12) %i.bn, ptr noundef nonnull %i.vr, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(560) @28)
-          to label %bb.gr unwind label %bb.dk, !noalias !2388 ; 2 uses
+          to label %bb.gr unwind label %bb.dk, !noalias !2388 ; 3 uses
 
 bb.gr:                                            ; preds = %bb.gq
   %i.vt = icmp eq ptr %i.vs, @_RNvNvNtNtCs39E2wp1vf7X_6intern6symbol7symbols5parse10SYMBOL_STR
-  br i1 %i.vt, label %bb.gt, label %bb.gs
+  br i1 %i.vt, label %bb.gs, label %5
 
-bb.gs:                                            ; preds = %bb.gr
+5:                                                ; preds = %bb.gr
   invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs33K2ylI4knu_10hir_expand4name4NameECslLuZgPVt6hg_3ide(ptr nonnull %i.vs)
           to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs33K2ylI4knu_10hir_expand4name4NameECslLuZgPVt6hg_3ide.exit.i unwind label %bb.dk, !noalias !2388
 
-bb.gt:                                            ; preds = %bb.gr
+bb.gs:                                            ; preds = %bb.gr
+  invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs33K2ylI4knu_10hir_expand4name4NameECslLuZgPVt6hg_3ide(ptr nonnull %i.vs)
+          to label %bb.gt unwind label %bb.dk, !noalias !2388
+
+bb.gt:                                            ; preds = %bb.gs
   %i.vu = invoke { i32, i32 } @_RNvMNtCs6oosyzwIepl_6ide_db11famous_defsNtB2_10FamousDefs20core_convert_FromStr(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.df)
           to label %bb.gu unwind label %bb.dk, !noalias !2388 ; 2 uses
 

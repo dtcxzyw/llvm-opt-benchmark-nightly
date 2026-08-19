@@ -103,8 +103,9 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.f, label %bb.d, label %.thread19
 
 .thread:                                          ; preds = %bb.a
-  %i.g = tail call ptr @register_net_sysctl_sz(ptr noundef nonnull @init_net, ptr noundef nonnull @.str, ptr noundef nonnull @unix_table, i64 noundef 1) #4 ; 2 uses
-  store ptr %i.g, ptr getelementptr inbounds nuw (i8, ptr @init_net, i64 864), align 32
+  %i.g = tail call ptr @register_net_sysctl_sz(ptr noundef nonnull %0, ptr noundef nonnull @.str, ptr noundef nonnull @unix_table, i64 noundef 1) #4 ; 2 uses
+  %1 = getelementptr i8, ptr %0, i64 864
+  store ptr %i.g, ptr %1, align 8
   %i.h = icmp eq ptr %i.g, null
   %spec.select = select i1 %i.h, i32 -12, i32 0
   br label %.thread19

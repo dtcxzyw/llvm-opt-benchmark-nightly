@@ -201,7 +201,7 @@ bb.t:                                             ; preds = %bb.r, %bb.q
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !101
   %i.ap = getelementptr inbounds nuw i8, ptr %i.am, i64 24
   store ptr %i.ao, ptr %i.ap, align 8, !tbaa !77
-  %i.aq = load ptr, ptr %4, align 8, !tbaa !97    ; 2 uses
+  %i.aq = load ptr, ptr %4, align 8, !tbaa !97    ; 4 uses
   store ptr %i.aq, ptr %i.am, align 8, !tbaa !73
   %i.ar = getelementptr inbounds nuw i8, ptr %4, i64 24
   %i.as = load ptr, ptr %i.ar, align 8, !tbaa !102 ; 4 uses
@@ -239,8 +239,9 @@ autoload_func_info_from_fci.exit:                 ; preds = %bb.v, %bb.w
 
 bb.x:                                             ; preds = %autoload_func_info_from_fci.exit
   %i.bf = call noalias ptr @_emalloc_256() #9     ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(256) %i.bf, ptr noundef nonnull align 8 dereferenceable(256) getelementptr inbounds nuw (i8, ptr @executor_globals, i64 1384), i64 256, i1 false)
-  store ptr null, ptr getelementptr inbounds nuw (i8, ptr @executor_globals, i64 1392), align 8, !tbaa !14
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(256) %i.bf, ptr noundef nonnull align 8 dereferenceable(256) %i.aq, i64 256, i1 false)
+  %6 = getelementptr inbounds nuw i8, ptr %i.aq, i64 8
+  store ptr null, ptr %6, align 8, !tbaa !14
   store ptr %i.bf, ptr %i.am, align 8, !tbaa !73
   br label %bb.aa
 
