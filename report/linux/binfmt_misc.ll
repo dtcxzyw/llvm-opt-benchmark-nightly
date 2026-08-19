@@ -201,7 +201,7 @@ declare dso_local i32 @get_tree_keyed(ptr noundef, ptr noundef, ptr noundef) loc
 define internal i32 @bm_fill_super(ptr noundef %0, ptr nofree readnone captures(none) %1) #2 align 16 prefalign(16) {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 1088
-  %i.b = load ptr, ptr %i.a, align 64
+  %i.b = load ptr, ptr %i.a, align 64             ; 2 uses
   %.not = icmp eq ptr %i.b, @init_user_ns
   br i1 %.not, label %.critedge, label %bb.b, !prof !20
 
@@ -218,7 +218,8 @@ bb.b:                                             ; preds = %bb.a
   store i64 %i.e, ptr %i.c, align 8
   %i.f = getelementptr i8, ptr %0, i64 1184
   store i32 2, ptr %i.f, align 32
-  %i.g = load ptr, ptr getelementptr inbounds nuw (i8, ptr @init_user_ns, i64 848), align 16 ; 2 uses
+  %2 = getelementptr i8, ptr %i.b, i64 848        ; 2 uses
+  %i.g = load ptr, ptr %2, align 16               ; 2 uses
   %.not30 = icmp eq ptr %i.g, null
   br i1 %.not30, label %bb.c, label %bb.e
 
@@ -237,7 +238,7 @@ bb.d:                                             ; preds = %bb.c
   %.sroa.2.0..sroa_idx = getelementptr i8, ptr %i.i, i64 20
   store i32 0, ptr %.sroa.2.0..sroa_idx, align 4
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #15, !srcloc !29
-  store volatile ptr %i.i, ptr getelementptr inbounds nuw (i8, ptr @init_user_ns, i64 848), align 16
+  store volatile ptr %i.i, ptr %2, align 16
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %.critedge

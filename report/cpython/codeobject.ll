@@ -204,7 +204,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr i8, ptr %0, i64 8          ; 2 uses
-  %.val183 = load ptr, ptr %i.f, align 8, !tbaa !114 ; 11 uses
+  %.val183 = load ptr, ptr %i.f, align 8, !tbaa !114 ; 13 uses
   %.not = icmp eq ptr %.val183, @PyLong_Type
   %.not190 = icmp eq ptr %.val183, @PyUnicode_Type
   %or.cond199 = or i1 %.not, %.not190
@@ -246,11 +246,11 @@ bb.h:                                             ; preds = %bb.g
   br i1 %or.cond148, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
-  %i.o = tail call ptr (i64, ...) @PyTuple_Pack(i64 noundef 3, ptr noundef nonnull @PyFloat_Type, ptr noundef %0, ptr noundef nonnull @_Py_NoneStruct) #14
+  %i.o = tail call ptr (i64, ...) @PyTuple_Pack(i64 noundef 3, ptr noundef nonnull %.val183, ptr noundef %0, ptr noundef nonnull @_Py_NoneStruct) #14
   br label %Py_DECREF.exit158
 
 bb.j:                                             ; preds = %bb.h
-  %i.p = tail call ptr (i64, ...) @PyTuple_Pack(i64 noundef 2, ptr noundef nonnull @PyFloat_Type, ptr noundef %0) #14
+  %i.p = tail call ptr (i64, ...) @PyTuple_Pack(i64 noundef 2, ptr noundef nonnull %.val183, ptr noundef %0) #14
   br label %Py_DECREF.exit158
 
 bb.k:                                             ; preds = %bb.g

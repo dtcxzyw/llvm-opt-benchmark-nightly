@@ -203,7 +203,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   %.075 = phi i32 [ %.0, %bb.l ], [ 0, %bb.h ], [ 0, %bb.f ], [ 0, %bb.d ], [ 0, %bb.b ], [ 0, %.thread104 ]
   %.13673 = phi ptr [ %.035, %bb.l ], [ %i.j, %bb.h ], [ @_Py_NoneStruct, %bb.f ], [ @_Py_NoneStruct, %bb.d ], [ @_Py_NoneStruct, %bb.b ], [ @_Py_NoneStruct, %.thread104 ]
   %.13871 = phi ptr [ %.037, %bb.l ], [ %.037, %bb.h ], [ %i.g, %bb.f ], [ @_Py_NoneStruct, %bb.d ], [ @_Py_NoneStruct, %bb.b ], [ @_Py_NoneStruct, %.thread104 ]
-  %i.t = call ptr @PySys_GetAttr(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 100896)) #10 ; 3 uses
+  %i.t = call ptr @PySys_GetAttr(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 100896)) #10 ; 5 uses
   %i.u = icmp eq ptr %i.t, null
   br i1 %i.u, label %builtin_print_impl.exit, label %bb.m
 
@@ -212,13 +212,13 @@ bb.m:                                             ; preds = %.thread65
   br i1 %i.v, label %bb.n, label %Py_INCREF.exit.i
 
 bb.n:                                             ; preds = %bb.m
-  %i.w = load i32, ptr @_Py_NoneStruct, align 8, !tbaa !17 ; 2 uses
+  %i.w = load i32, ptr %i.t, align 8, !tbaa !17   ; 2 uses
   %.not.i70.i = icmp sgt i32 %i.w, -1
   br i1 %.not.i70.i, label %bb.o, label %builtin_print_impl.exit
 
 bb.o:                                             ; preds = %bb.n
   %i.x = add nsw i32 %i.w, -1                     ; 2 uses
-  store i32 %i.x, ptr @_Py_NoneStruct, align 8, !tbaa !17
+  store i32 %i.x, ptr %i.t, align 8, !tbaa !17
   %i.y = icmp eq i32 %i.x, 0
   br i1 %i.y, label %Py_DECREF.exit71.sink.split.i, label %builtin_print_impl.exit
 

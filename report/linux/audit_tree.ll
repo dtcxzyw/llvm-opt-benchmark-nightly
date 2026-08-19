@@ -203,7 +203,7 @@ put_tree.exit:                                    ; preds = %bb.i, %bb.j, %refco
   br label %._crit_edge43
 
 ._crit_edge43:                                    ; preds = %._crit_edge43.loopexit, %bb.a
-  %i.ap = phi ptr [ %.pre, %._crit_edge43.loopexit ], [ @tree_list, %bb.a ] ; 2 uses
+  %i.ap = phi ptr [ @tree_list, %bb.a ], [ %.pre, %._crit_edge43.loopexit ] ; 2 uses
   store ptr %i.ap, ptr getelementptr inbounds nuw (i8, ptr @tree_list, i64 8), align 8
   store volatile ptr @tree_list, ptr %i.ap, align 8
   store ptr inttoptr (i64 -2401263026318606080 to ptr), ptr %0, align 8

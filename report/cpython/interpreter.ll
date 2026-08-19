@@ -203,7 +203,7 @@ PyStackRef_AsPyObjectSteal.exit11248.thread11584: ; preds = %PyStackRef_AsPyObje
   br label %bb.bfe
 
 PyStackRef_AsPyObjectSteal.exit11245.thread:      ; preds = %bb.bez, %bb.bfa, %bb.bfb, %PyStackRef_AsPyObjectSteal.exit11245
-  %i.jer = phi ptr [ null, %PyStackRef_AsPyObjectSteal.exit11245 ], [ %i.jel, %bb.bfb ], [ %i.jel, %bb.bfa ], [ %i.jej, %bb.bez ] ; 20 uses
+  %i.jer = phi ptr [ null, %PyStackRef_AsPyObjectSteal.exit11245 ], [ %i.jel, %bb.bfb ], [ %i.jel, %bb.bfa ], [ %i.jej, %bb.bez ] ; 22 uses
   %i.jes = load i64, ptr %i.jee, align 8          ; 4 uses
   %i.jet = and i64 %i.jes, 1
   %.not.not.i11246 = icmp eq i64 %i.jet, 0
@@ -376,8 +376,8 @@ Py_INCREF.exit.i:                                 ; preds = %bb.bfq, %bb.bfp, %b
   br i1 %.not175.i, label %bb.bgr, label %bb.bfw
 
 bb.bfw:                                           ; preds = %Py_INCREF.exit.i
-  %i.jgw = getelementptr i8, ptr %i.jer, i64 8    ; 4 uses
-  %.val224.i = load ptr, ptr %i.jgw, align 8, !tbaa !58
+  %i.jgw = getelementptr i8, ptr %i.jer, i64 8    ; 3 uses
+  %.val224.i = load ptr, ptr %i.jgw, align 8, !tbaa !58 ; 2 uses
   %i.jgx = getelementptr i8, ptr %.val224.i, i64 168
   %.val224.val.i = load i64, ptr %i.jgx, align 8, !tbaa !145 ; 2 uses
   %i.jgy = and i64 %.val224.val.i, 2147483648
@@ -475,12 +475,7 @@ bb.bgh:                                           ; preds = %bb.bgg
 bb.bgi:                                           ; preds = %bb.bgh
   %i.jic = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 10568), align 8, !tbaa !54 ; 2 uses
   %.not185.i = icmp eq ptr %i.jic, null
-  br i1 %.not185.i, label %.sink.split.i, label %6
-
-6:                                                ; preds = %bb.bgi
-  %7 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 10576), align 8, !tbaa !56
-  %8 = call i32 %i.jic(ptr noundef nonnull %i.jer, i32 noundef 1, ptr noundef %7) #8, !inline_history !273 ; 0 uses
-  br label %.sink.split.i
+  br i1 %.not185.i, label %bb.bgp, label %bb.bgo
 
 bb.bgj:                                           ; preds = %bb.bfx, %bb.bfw
   %i.jid = and i64 %.val224.val.i, 1073741824
@@ -489,16 +484,16 @@ bb.bgj:                                           ; preds = %bb.bfx, %bb.bfw
 
 bb.bgk:                                           ; preds = %bb.bgj
   %i.jie = icmp eq ptr %i.jer, @_Py_NoneStruct
-  br i1 %i.jie, label %bb.bgl, label %bb.bgp
+  br i1 %i.jie, label %bb.bgl, label %6
 
 bb.bgl:                                           ; preds = %bb.bgk
-  %i.jif = load i32, ptr @_Py_NoneStruct, align 8, !tbaa !34 ; 2 uses
+  %i.jif = load i32, ptr %i.jer, align 8, !tbaa !34 ; 2 uses
   %.not179.i = icmp sgt i32 %i.jif, -1
   br i1 %.not179.i, label %bb.bgm, label %bb.bgq
 
 bb.bgm:                                           ; preds = %bb.bgl
   %i.jig = add nsw i32 %i.jif, -1                 ; 2 uses
-  store i32 %i.jig, ptr @_Py_NoneStruct, align 8, !tbaa !34
+  store i32 %i.jig, ptr %i.jer, align 8, !tbaa !34
   %i.jih = icmp eq i32 %i.jig, 0
   br i1 %i.jih, label %bb.bgn, label %bb.bgq
 
@@ -507,23 +502,30 @@ bb.bgn:                                           ; preds = %bb.bgm
   %.not180.i = icmp eq ptr %i.jii, null
   br i1 %.not180.i, label %.sink.split.i, label %bb.bgo
 
-bb.bgo:                                           ; preds = %bb.bgn
-  %i.jij = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 10576), align 8, !tbaa !56
-  %i.jik = call i32 %i.jii(ptr noundef nonnull @_Py_NoneStruct, i32 noundef 1, ptr noundef %i.jij) #8, !inline_history !273 ; 0 uses
-  br label %.sink.split.i
-
-bb.bgp:                                           ; preds = %bb.bgk
-  %9 = load ptr, ptr @PyExc_TypeError, align 8, !tbaa !78
-  call void @_PyErr_SetString(ptr noundef %0, ptr noundef %9, ptr noundef nonnull @.str.25) #8
+6:                                                ; preds = %bb.bgk
+  %7 = load ptr, ptr @PyExc_TypeError, align 8, !tbaa !78
+  call void @_PyErr_SetString(ptr noundef %0, ptr noundef %7, ptr noundef nonnull @.str.25) #8
   br label %.thread.i
 
-.sink.split.i:                                    ; preds = %bb.bgn, %bb.bgo, %bb.bgi, %6
-  %.val209.sink.in.i = phi ptr [ %i.jgw, %bb.bgi ], [ %i.jgw, %6 ], [ getelementptr inbounds nuw (i8, ptr @_Py_NoneStruct, i64 8), %bb.bgo ], [ getelementptr inbounds nuw (i8, ptr @_Py_NoneStruct, i64 8), %bb.bgn ]
-  %.0153.ph.i = phi ptr [ %.0.i.i231.i, %bb.bgi ], [ %.0.i.i231.i, %6 ], [ null, %bb.bgo ], [ null, %bb.bgn ]
-  %.val209.sink.i = load ptr, ptr %.val209.sink.in.i, align 8, !tbaa !58
-  %i.jil = getelementptr i8, ptr %.val209.sink.i, i64 48
+bb.bgo:                                           ; preds = %bb.bgn, %bb.bgi
+  %.sink277.i = phi ptr [ %i.jic, %bb.bgi ], [ %i.jii, %bb.bgn ]
+  %.0153.ph.ph.ph.i = phi ptr [ %.0.i.i231.i, %bb.bgi ], [ null, %bb.bgn ]
+  %i.jij = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 10576), align 8, !tbaa !56
+  %i.jik = call i32 %.sink277.i(ptr noundef nonnull %i.jer, i32 noundef 1, ptr noundef %i.jij) #8, !inline_history !273 ; 0 uses
+  br label %bb.bgp
+
+bb.bgp:                                           ; preds = %bb.bgo, %bb.bgi
+  %.0153.ph.ph.i = phi ptr [ %.0.i.i231.i, %bb.bgi ], [ %.0153.ph.ph.ph.i, %bb.bgo ]
+  %.val208.pre.i = load ptr, ptr %i.jgw, align 8, !tbaa !58
+  br label %.sink.split.i
+
+.sink.split.i:                                    ; preds = %bb.bgp, %bb.bgn
+  %8 = phi ptr [ @_Py_NoneStruct, %bb.bgn ], [ %i.jer, %bb.bgp ]
+  %.val210.sink.i = phi ptr [ %.val224.i, %bb.bgn ], [ %.val208.pre.i, %bb.bgp ]
+  %.0153.ph.i = phi ptr [ null, %bb.bgn ], [ %.0153.ph.ph.i, %bb.bgp ]
+  %i.jil = getelementptr i8, ptr %.val210.sink.i, i64 48
   %i.jim = load ptr, ptr %i.jil, align 8, !tbaa !59
-  call void %i.jim(ptr noundef nonnull %i.jer) #8, !inline_history !273
+  call void %i.jim(ptr noundef nonnull %8) #8, !inline_history !273
   br label %bb.bgq
 
 bb.bgq:                                           ; preds = %.sink.split.i, %bb.bgm, %bb.bgl, %bb.bgj, %bb.bgh, %bb.bgg
@@ -590,9 +592,9 @@ bb.bha:                                           ; preds = %bb.bgz, %bb.bgy
   call void %i.jje(ptr noundef nonnull %.0148.i) #8, !inline_history !273
   br label %do_raise.exit
 
-.thread.i:                                        ; preds = %bb.bgp, %bb.bgf, %bb.bgc, %bb.bgb, %_PyObject_CallNoArgs.exit233.i, %bb.bfn
-  %.1151.i = phi ptr [ %.0.i.i.i11250, %bb.bfn ], [ %.0150.i, %bb.bgp ], [ %.0150.i, %_PyObject_CallNoArgs.exit233.i ], [ %.0150.i, %bb.bgc ], [ %.0150.i, %bb.bgf ], [ %.0150.i, %bb.bgb ] ; 5 uses
-  %.1149.i = phi ptr [ %i.jfn, %bb.bfn ], [ %.0148.i, %bb.bgp ], [ %.0148.i, %_PyObject_CallNoArgs.exit233.i ], [ %.0148.i, %bb.bgc ], [ %.0148.i, %bb.bgf ], [ %.0148.i, %bb.bgb ] ; 3 uses
+.thread.i:                                        ; preds = %6, %bb.bgf, %bb.bgc, %bb.bgb, %_PyObject_CallNoArgs.exit233.i, %bb.bfn
+  %.1151.i = phi ptr [ %.0.i.i.i11250, %bb.bfn ], [ %.0150.i, %6 ], [ %.0150.i, %_PyObject_CallNoArgs.exit233.i ], [ %.0150.i, %bb.bgc ], [ %.0150.i, %bb.bgf ], [ %.0150.i, %bb.bgb ] ; 5 uses
+  %.1149.i = phi ptr [ %i.jfn, %bb.bfn ], [ %.0148.i, %6 ], [ %.0148.i, %_PyObject_CallNoArgs.exit233.i ], [ %.0148.i, %bb.bgc ], [ %.0148.i, %bb.bgf ], [ %.0148.i, %bb.bgb ] ; 3 uses
   %i.jjf = load i32, ptr %.1151.i, align 8, !tbaa !34 ; 2 uses
   %.not191.i = icmp sgt i32 %i.jjf, -1
   br i1 %.not191.i, label %bb.bhb, label %.thread242.i

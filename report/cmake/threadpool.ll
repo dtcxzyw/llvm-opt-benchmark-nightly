@@ -22,7 +22,7 @@ target triple = "x86_64-pc-linux-gnu"
 @cond = internal global %union.pthread_cond_t zeroinitializer, align 8
 @once = internal global i32 0, align 4
 @slow_io_pending_wq = internal global %struct.uv__queue zeroinitializer, align 8
-@run_slow_work_message = internal global %struct.uv__queue zeroinitializer, align 16
+@run_slow_work_message = internal global %struct.uv__queue zeroinitializer, align 8
 @wq = internal global %struct.uv__queue zeroinitializer, align 8
 @idle_threads = internal unnamed_addr global i32 0, align 4
 @.str = private unnamed_addr constant [19 x i8] c"UV_THREADPOOL_SIZE\00", align 1
@@ -425,7 +425,7 @@ bb.a:
   br label %.backedge
 
 .backedge:                                        ; preds = %.backedge.backedge, %bb.a
-  %i.b = load ptr, ptr @wq, align 8, !tbaa !10    ; 9 uses
+  %i.b = load ptr, ptr @wq, align 8, !tbaa !10    ; 22 uses
   %.not = icmp eq ptr %i.b, @wq
   br i1 %.not, label %.critedge, label %bb.b
 
@@ -434,7 +434,7 @@ bb.b:                                             ; preds = %.backedge
   br i1 %i.c, label %bb.c, label %.critedge2
 
 bb.c:                                             ; preds = %bb.b
-  %i.d = load ptr, ptr @run_slow_work_message, align 16, !tbaa !10 ; 5 uses
+  %i.d = load ptr, ptr @run_slow_work_message, align 8, !tbaa !10
   %i.e = icmp eq ptr %i.d, @wq
   %.pre = load i32, ptr @slow_io_work_running, align 4, !tbaa !9 ; 2 uses
   %.pre37 = load i32, ptr @nthreads, align 4, !tbaa !9
@@ -447,11 +447,14 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not21, label %split.thread, label %.critedge
 
 split.thread:                                     ; preds = %bb.d
-  %i.h = load ptr, ptr getelementptr inbounds nuw (i8, ptr @run_slow_work_message, i64 8), align 8, !tbaa !14 ; 2 uses
-  store ptr %i.d, ptr %i.h, align 8, !tbaa !10
-  %i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 8
+  %1 = load ptr, ptr %i.b, align 8, !tbaa !10     ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
+  %i.h = load ptr, ptr %2, align 8, !tbaa !14     ; 2 uses
+  store ptr %1, ptr %i.h, align 8, !tbaa !10
+  %i.i = getelementptr inbounds nuw i8, ptr %1, i64 8
   store ptr %i.h, ptr %i.i, align 8, !tbaa !14
-  store <2 x ptr> <ptr @run_slow_work_message, ptr @run_slow_work_message>, ptr @run_slow_work_message, align 16, !tbaa !61
+  store ptr %i.b, ptr %i.b, align 8, !tbaa !10
+  store ptr %i.b, ptr %2, align 8, !tbaa !14
   br label %bb.h
 
 .critedge:                                        ; preds = %.backedge, %bb.d
@@ -465,7 +468,7 @@ split.thread:                                     ; preds = %bb.d
   br label %.backedge.backedge
 
 .backedge.backedge:                               ; preds = %.critedge, %bb.l, %bb.m, %bb.g, %bb.h
-  br label %.backedge, !llvm.loop !62
+  br label %.backedge, !llvm.loop !61
 
 .critedge2:                                       ; preds = %bb.b
   %i.n = icmp eq ptr %i.b, @exit_message
@@ -488,19 +491,22 @@ bb.f:                                             ; preds = %.critedge2
   br label %bb.l
 
 split:                                            ; preds = %bb.c
-  %i.s = load ptr, ptr getelementptr inbounds nuw (i8, ptr @run_slow_work_message, i64 8), align 8, !tbaa !14 ; 2 uses
-  store ptr %i.d, ptr %i.s, align 8, !tbaa !10
-  %i.t = getelementptr inbounds nuw i8, ptr %i.d, i64 8
+  %3 = load ptr, ptr %i.b, align 8, !tbaa !10     ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 3 uses
+  %i.s = load ptr, ptr %4, align 8, !tbaa !14     ; 2 uses
+  store ptr %3, ptr %i.s, align 8, !tbaa !10
+  %i.t = getelementptr inbounds nuw i8, ptr %3, i64 8
   store ptr %i.s, ptr %i.t, align 8, !tbaa !14
-  store <2 x ptr> <ptr @run_slow_work_message, ptr @run_slow_work_message>, ptr @run_slow_work_message, align 16, !tbaa !61
+  store ptr %i.b, ptr %i.b, align 8, !tbaa !10
+  store ptr %i.b, ptr %4, align 8, !tbaa !14
   br i1 %.not21, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %split
-  store ptr @wq, ptr @run_slow_work_message, align 16, !tbaa !10
+  store ptr @wq, ptr %i.b, align 8, !tbaa !10
   %i.u = load ptr, ptr getelementptr inbounds nuw (i8, ptr @wq, i64 8), align 8, !tbaa !14 ; 2 uses
-  store ptr %i.u, ptr getelementptr inbounds nuw (i8, ptr @run_slow_work_message, i64 8), align 8, !tbaa !14
-  store ptr @run_slow_work_message, ptr %i.u, align 8, !tbaa !10
-  store ptr @run_slow_work_message, ptr getelementptr inbounds nuw (i8, ptr @wq, i64 8), align 8, !tbaa !14
+  store ptr %i.u, ptr %4, align 8, !tbaa !14
+  store ptr %i.b, ptr %i.u, align 8, !tbaa !10
+  store ptr %i.b, ptr getelementptr inbounds nuw (i8, ptr @wq, i64 8), align 8, !tbaa !14
   br label %.backedge.backedge
 
 bb.h:                                             ; preds = %split.thread, %split
@@ -524,7 +530,7 @@ bb.i:                                             ; preds = %bb.h
   br i1 %.not30, label %bb.l, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  store ptr @wq, ptr @run_slow_work_message, align 16, !tbaa !10
+  store ptr @wq, ptr @run_slow_work_message, align 8, !tbaa !10
   %i.ac = load ptr, ptr getelementptr inbounds nuw (i8, ptr @wq, i64 8), align 8, !tbaa !14 ; 2 uses
   store ptr %i.ac, ptr getelementptr inbounds nuw (i8, ptr @run_slow_work_message, i64 8), align 8, !tbaa !14
   store ptr @run_slow_work_message, ptr %i.ac, align 8, !tbaa !10
@@ -662,6 +668,5 @@ attributes #8 = { noreturn nounwind }
 !58 = !{!59, !6, i64 8}
 !59 = !{!"uv_req_s", !13, i64 0, !6, i64 8, !7, i64 16}
 !60 = !{!21, !21, i64 0}
-!61 = !{!12, !12, i64 0}
-!62 = distinct !{!62, !16}
+!61 = distinct !{!61, !16}
 end_hunk_1

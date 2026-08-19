@@ -22,7 +22,7 @@ target triple = "x86_64-pc-linux-gnu"
 @cond = internal global %union.pthread_cond_t zeroinitializer, align 8
 @once = internal global i32 0, align 4
 @slow_io_pending_wq = internal global %struct.uv__queue zeroinitializer, align 8
-@run_slow_work_message = internal global %struct.uv__queue zeroinitializer, align 16
+@run_slow_work_message = internal global %struct.uv__queue zeroinitializer, align 8
 @wq = internal global %struct.uv__queue zeroinitializer, align 8
 @idle_threads = internal unnamed_addr global i32 0, align 4
 @.str = private unnamed_addr constant [19 x i8] c"UV_THREADPOOL_SIZE\00", align 1
@@ -425,18 +425,18 @@ bb.a:
   br label %.backedge
 
 .backedge:                                        ; preds = %.backedge.backedge, %bb.a
-  %i.b = load ptr, ptr @wq, align 8               ; 9 uses
+  %i.b = load ptr, ptr @wq, align 8               ; 12 uses
   %.not = icmp eq ptr %i.b, @wq
   br i1 %.not, label %.critedge, label %bb.b
 
 bb.b:                                             ; preds = %.backedge
-  %i.c = icmp eq ptr %i.b, @run_slow_work_message ; 2 uses
+  %i.c = icmp eq ptr %i.b, @run_slow_work_message ; 3 uses
   br i1 %i.c, label %bb.c, label %.critedge2
 
 bb.c:                                             ; preds = %bb.b
-  %i.d = load ptr, ptr @run_slow_work_message, align 16 ; 3 uses
+  %i.d = load ptr, ptr @run_slow_work_message, align 8
   %i.e = icmp eq ptr %i.d, @wq
-  br i1 %i.e, label %bb.d, label %bb.f
+  br i1 %i.e, label %bb.d, label %.critedge2.thread
 
 bb.d:                                             ; preds = %bb.c
   %i.f = load i32, ptr @slow_io_work_running, align 4
@@ -444,7 +444,7 @@ bb.d:                                             ; preds = %bb.c
   %i.h = add i32 %i.g, 1
   %i.i = lshr i32 %i.h, 1
   %.not21 = icmp ult i32 %i.f, %i.i
-  br i1 %.not21, label %bb.f, label %.critedge
+  br i1 %.not21, label %.critedge2.thread, label %.critedge
 
 .critedge:                                        ; preds = %.backedge, %bb.d
   %i.j = load i32, ptr @idle_threads, align 4
@@ -468,9 +468,9 @@ bb.e:                                             ; preds = %.critedge2
   tail call void @uv_mutex_unlock(ptr noundef nonnull @mutex) #9
   ret void
 
-.critedge2.thread:                                ; preds = %.critedge2
+.critedge2.thread:                                ; preds = %bb.d, %bb.c, %.critedge2
   %.pre = load ptr, ptr %i.b, align 8             ; 2 uses
-  %i.o = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 3 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 4 uses
   %i.p = load ptr, ptr %i.o, align 8
   store ptr %.pre, ptr %i.p, align 8
   %i.q = load ptr, ptr %i.o, align 8
@@ -478,15 +478,9 @@ bb.e:                                             ; preds = %.critedge2
   store ptr %i.q, ptr %i.r, align 8
   store ptr %i.b, ptr %i.b, align 8
   store ptr %i.b, ptr %i.o, align 8
-  br label %bb.l
+  br i1 %i.c, label %bb.f, label %bb.l
 
-bb.f:                                             ; preds = %bb.d, %bb.c
-  %1 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @run_slow_work_message, i64 8), align 8
-  store ptr %i.d, ptr %1, align 8
-  %2 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @run_slow_work_message, i64 8), align 8
-  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  store ptr %2, ptr %3, align 8
-  store <2 x ptr> <ptr @run_slow_work_message, ptr @run_slow_work_message>, ptr @run_slow_work_message, align 16
+bb.f:                                             ; preds = %.critedge2.thread
   %i.s = load i32, ptr @slow_io_work_running, align 4 ; 2 uses
   %i.t = load i32, ptr @nthreads, align 4
   %i.u = add i32 %i.t, 1
@@ -495,11 +489,11 @@ bb.f:                                             ; preds = %bb.d, %bb.c
   br i1 %.not22, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  store ptr @wq, ptr @run_slow_work_message, align 16
+  store ptr @wq, ptr %i.b, align 8
   %i.w = load ptr, ptr getelementptr inbounds nuw (i8, ptr @wq, i64 8), align 8 ; 2 uses
-  store ptr %i.w, ptr getelementptr inbounds nuw (i8, ptr @run_slow_work_message, i64 8), align 8
-  store ptr @run_slow_work_message, ptr %i.w, align 8
-  store ptr @run_slow_work_message, ptr getelementptr inbounds nuw (i8, ptr @wq, i64 8), align 8
+  store ptr %i.w, ptr %i.o, align 8
+  store ptr %i.b, ptr %i.w, align 8
+  store ptr %i.b, ptr getelementptr inbounds nuw (i8, ptr @wq, i64 8), align 8
   br label %.backedge.backedge
 
 bb.h:                                             ; preds = %bb.f
@@ -524,7 +518,7 @@ bb.i:                                             ; preds = %bb.h
   br i1 %.not30, label %bb.l, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  store ptr @wq, ptr @run_slow_work_message, align 16
+  store ptr @wq, ptr @run_slow_work_message, align 8
   %i.af = load ptr, ptr getelementptr inbounds nuw (i8, ptr @wq, i64 8), align 8 ; 2 uses
   store ptr %i.af, ptr getelementptr inbounds nuw (i8, ptr @run_slow_work_message, i64 8), align 8
   store ptr @run_slow_work_message, ptr %i.af, align 8
@@ -537,7 +531,7 @@ bb.k:                                             ; preds = %bb.j
   tail call void @uv_cond_signal(ptr noundef nonnull @cond) #9
   br label %bb.l
 
-bb.l:                                             ; preds = %.critedge2.thread, %bb.i, %bb.k, %bb.j
+bb.l:                                             ; preds = %bb.i, %bb.k, %bb.j, %.critedge2.thread
   %.019 = phi ptr [ %i.x, %bb.i ], [ %i.x, %bb.k ], [ %i.x, %bb.j ], [ %i.b, %.critedge2.thread ] ; 6 uses
   tail call void @uv_mutex_unlock(ptr noundef nonnull @mutex) #9
   %i.ah = getelementptr inbounds i8, ptr %.019, i64 -24 ; 3 uses

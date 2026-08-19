@@ -203,7 +203,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.b = getelementptr i8, ptr %2, i64 8
-  %.val = load ptr, ptr %i.b, align 8, !tbaa !23
+  %.val = load ptr, ptr %i.b, align 8, !tbaa !23  ; 3 uses
   %.not16 = icmp eq ptr %.val, @PyDict_Type
   br i1 %.not16, label %bb.f, label %bb.e
 
@@ -212,13 +212,14 @@ bb.e:                                             ; preds = %bb.d
   unreachable
 
 bb.f:                                             ; preds = %bb.d
-  %.val5.i = load i64, ptr getelementptr inbounds nuw (i8, ptr @PyDict_Type, i64 168), align 8, !tbaa !38
+  %3 = getelementptr i8, ptr %.val, i64 168
+  %.val5.i = load i64, ptr %3, align 8, !tbaa !38
   %i.c = and i64 %.val5.i, 536870912
   %.not.i.not = icmp eq i64 %i.c, 0
   br i1 %.not.i.not, label %PyObject_TypeCheck.exit.i, label %PyDict_GET_SIZE.exit
 
 PyObject_TypeCheck.exit.i:                        ; preds = %bb.f
-  %i.d = tail call i32 @PyType_IsSubtype(ptr noundef nonnull @PyDict_Type, ptr noundef nonnull @PyFrozenDict_Type) #7
+  %i.d = tail call i32 @PyType_IsSubtype(ptr noundef nonnull %.val, ptr noundef nonnull @PyFrozenDict_Type) #7
   %.not8.i = icmp eq i32 %i.d, 0
   br i1 %.not8.i, label %bb.g, label %PyDict_GET_SIZE.exit
 

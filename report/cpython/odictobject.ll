@@ -201,22 +201,22 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %.val33.i = load ptr, ptr %i.c, align 8, !tbaa !43 ; 2 uses
   %.not.i36.i = icmp eq ptr %.val33.i, @PyODict_Type
-  br i1 %.not.i36.i, label %PyObject_TypeCheck.exit37.thread.i, label %PyObject_TypeCheck.exit37.i
+  br i1 %.not.i36.i, label %bb.e, label %PyObject_TypeCheck.exit37.i
 
 PyObject_TypeCheck.exit37.i:                      ; preds = %bb.d
   %i.l = tail call i32 @PyType_IsSubtype(ptr noundef %.val33.i, ptr noundef nonnull @PyODict_Type) #6, !inline_history !48
   %.not.i = icmp eq i32 %i.l, 0
-  br i1 %.not.i, label %odict_richcompare_lock_held.exit, label %PyObject_TypeCheck.exit37.thread.i
+  br label %bb.e
 
-PyObject_TypeCheck.exit37.thread.i:               ; preds = %PyObject_TypeCheck.exit37.i, %bb.d
+bb.e:                                             ; preds = %PyObject_TypeCheck.exit37.i, %bb.d
+  %.not31.i = phi i1 [ false, %bb.d ], [ %.not.i, %PyObject_TypeCheck.exit37.i ]
   %3 = icmp eq ptr %i.j, @_Py_FalseStruct
   %or.cond3.i = and i1 %i.f, %3
-  br i1 %or.cond3.i, label %odict_richcompare_lock_held.exit, label %bb.e
-
-bb.e:                                             ; preds = %PyObject_TypeCheck.exit37.thread.i
+  %or.cond32.i = or i1 %or.cond3.i, %.not31.i
   %i.m = icmp eq ptr %i.j, @_Py_TrueStruct
   %or.cond5.i = and i1 %i.g, %i.m
-  br i1 %or.cond5.i, label %odict_richcompare_lock_held.exit, label %bb.f
+  %or.cond33.i = or i1 %or.cond5.i, %or.cond32.i
+  br i1 %or.cond33.i, label %odict_richcompare_lock_held.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.n = load i32, ptr %i.j, align 8, !tbaa !24   ; 2 uses
@@ -278,7 +278,7 @@ bb.k:                                             ; preds = %_Py_NewRef.exit.i
   br label %_Py_NewRef.exit38.i
 
 _Py_NewRef.exit38.i:                              ; preds = %bb.k, %_Py_NewRef.exit.i
-  %i.ai = tail call i32 @PyObject_RichCompareBool(ptr noundef nonnull %i.aa, ptr noundef nonnull %i.ae, i32 noundef 2) #6 ; 2 uses
+  %i.ai = tail call i32 @PyObject_RichCompareBool(ptr noundef nonnull %i.aa, ptr noundef nonnull %i.ae, i32 noundef 2) #6, !inline_history !51 ; 2 uses
   %i.aj = load i32, ptr %i.aa, align 8, !tbaa !24 ; 2 uses
   %.not.i35.i4 = icmp sgt i32 %i.aj, -1
   br i1 %.not.i35.i4, label %bb.l, label %Py_DECREF.exit36.i
@@ -290,7 +290,7 @@ bb.l:                                             ; preds = %_Py_NewRef.exit38.i
   br i1 %i.al, label %bb.m, label %Py_DECREF.exit36.i
 
 bb.m:                                             ; preds = %bb.l
-  tail call void @_Py_Dealloc(ptr noundef nonnull %i.aa) #6
+  tail call void @_Py_Dealloc(ptr noundef nonnull %i.aa) #6, !inline_history !51
   br label %Py_DECREF.exit36.i
 
 Py_DECREF.exit36.i:                               ; preds = %bb.m, %bb.l, %_Py_NewRef.exit38.i
@@ -305,7 +305,7 @@ bb.n:                                             ; preds = %Py_DECREF.exit36.i
   br i1 %i.ao, label %bb.o, label %Py_DECREF.exit.i6
 
 bb.o:                                             ; preds = %bb.n
-  tail call void @_Py_Dealloc(ptr noundef nonnull %i.ae) #6
+  tail call void @_Py_Dealloc(ptr noundef nonnull %i.ae) #6, !inline_history !51
   br label %Py_DECREF.exit.i6
 
 Py_DECREF.exit.i6:                                ; preds = %bb.o, %bb.n, %Py_DECREF.exit36.i
@@ -324,7 +324,7 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.q, %bb.p
   %i.as = load ptr, ptr @PyExc_RuntimeError, align 8, !tbaa !47
-  tail call void @PyErr_SetString(ptr noundef %i.as, ptr noundef nonnull @.str.11) #6
+  tail call void @PyErr_SetString(ptr noundef %i.as, ptr noundef nonnull @.str.11) #6, !inline_history !51
   br label %odict_richcompare_lock_held.exit
 
 bb.s:                                             ; preds = %bb.q
@@ -341,8 +341,8 @@ bb.t:                                             ; preds = %bb.s
   %or.cond.i8 = select i1 %i.aw, i1 %i.ax, i1 false
   br i1 %or.cond.i8, label %.loopexit, label %.lr.ph.i
 
-.loopexit:                                        ; preds = %.lr.ph.i, %bb.t, %bb.s, %Py_DECREF.exit.i
-  %.2.i.ph = phi i32 [ 1, %Py_DECREF.exit.i ], [ 0, %.lr.ph.i ], [ 1, %bb.t ], [ 0, %bb.s ]
+.loopexit:                                        ; preds = %bb.t, %bb.s, %.lr.ph.i, %Py_DECREF.exit.i
+  %.2.i.ph = phi i32 [ 1, %Py_DECREF.exit.i ], [ 0, %bb.s ], [ 1, %bb.t ], [ 0, %.lr.ph.i ]
   %i.ay = zext i1 %i.f to i32
   %i.az = icmp eq i32 %.2.i.ph, %i.ay
   %i.ba = select i1 %i.az, ptr @_Py_TrueStruct, ptr @_Py_FalseStruct ; 4 uses
@@ -355,8 +355,8 @@ bb.u:                                             ; preds = %.loopexit
   store i32 %i.bd, ptr %i.ba, align 8, !tbaa !24
   br label %odict_richcompare_lock_held.exit
 
-odict_richcompare_lock_held.exit:                 ; preds = %Py_DECREF.exit.i6, %bb.r, %PyObject_TypeCheck.exit.i, %PyObject_TypeCheck.exit.thread.i, %bb.b, %bb.c, %PyObject_TypeCheck.exit37.i, %PyObject_TypeCheck.exit37.thread.i, %bb.e, %.loopexit, %bb.u
-  %.1.i = phi ptr [ @_Py_NotImplementedStruct, %PyObject_TypeCheck.exit.i ], [ %i.ba, %bb.u ], [ @_Py_NotImplementedStruct, %PyObject_TypeCheck.exit.thread.i ], [ null, %bb.c ], [ %i.j, %PyObject_TypeCheck.exit37.i ], [ @_Py_FalseStruct, %PyObject_TypeCheck.exit37.thread.i ], [ @_Py_TrueStruct, %bb.e ], [ @_Py_NotImplementedStruct, %bb.b ], [ %i.ba, %.loopexit ], [ null, %bb.r ], [ null, %Py_DECREF.exit.i6 ]
+odict_richcompare_lock_held.exit:                 ; preds = %Py_DECREF.exit.i6, %PyObject_TypeCheck.exit.i, %PyObject_TypeCheck.exit.thread.i, %bb.b, %bb.c, %bb.e, %bb.r, %.loopexit, %bb.u
+  %.1.i = phi ptr [ @_Py_NotImplementedStruct, %PyObject_TypeCheck.exit.i ], [ null, %bb.r ], [ @_Py_NotImplementedStruct, %PyObject_TypeCheck.exit.thread.i ], [ null, %bb.c ], [ %i.j, %bb.e ], [ @_Py_NotImplementedStruct, %bb.b ], [ %i.ba, %bb.u ], [ %i.ba, %.loopexit ], [ null, %Py_DECREF.exit.i6 ]
   ret ptr %.1.i
 }
 

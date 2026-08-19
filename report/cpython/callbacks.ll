@@ -201,7 +201,7 @@ Py_XDECREF.exit:                                  ; preds = %bb.y, %bb.z, %bb.aa
 
 bb.ac:                                            ; preds = %Py_XDECREF.exit
   %i.ca = load i64, ptr %2, align 8, !tbaa !78
-  %i.cb = call ptr %3(ptr noundef %1, ptr noundef nonnull %i.bo, i64 noundef %i.ca) #5 ; 2 uses
+  %i.cb = call ptr %3(ptr noundef %1, ptr noundef nonnull %i.bo, i64 noundef %i.ca) #5 ; 5 uses
   %i.cc = icmp eq ptr %i.cb, null
   br i1 %i.cc, label %bb.ad, label %bb.ae
 
@@ -221,18 +221,18 @@ bb.af:                                            ; preds = %bb.ae
   br i1 %i.cg, label %bb.ag, label %bb.aj
 
 bb.ag:                                            ; preds = %bb.af
-  %i.ch = load i32, ptr @_Py_NoneStruct, align 8, !tbaa !41 ; 2 uses
+  %i.ch = load i32, ptr %i.cb, align 8, !tbaa !41 ; 2 uses
   %.not.i95 = icmp sgt i32 %i.ch, -1
   br i1 %.not.i95, label %bb.ah, label %Py_DECREF.exit96.thread
 
 bb.ah:                                            ; preds = %bb.ag
   %i.ci = add nsw i32 %i.ch, -1                   ; 2 uses
-  store i32 %i.ci, ptr @_Py_NoneStruct, align 8, !tbaa !41
+  store i32 %i.ci, ptr %i.cb, align 8, !tbaa !41
   %i.cj = icmp eq i32 %i.ci, 0
   br i1 %i.cj, label %bb.ai, label %Py_DECREF.exit96.thread
 
 bb.ai:                                            ; preds = %bb.ah
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_NoneStruct) #5
+  call void @_Py_Dealloc(ptr noundef nonnull %i.cb) #5
   br label %Py_DECREF.exit96.thread
 
 bb.aj:                                            ; preds = %bb.af

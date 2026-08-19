@@ -204,7 +204,7 @@ bb.q:                                             ; preds = %bb.p
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %bb.p
-  %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 6 uses
+  %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 7 uses
   %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !34 ; 30 uses
   %.not154 = icmp eq ptr %i.bk, null
   br i1 %.not154, label %bb.s, label %bb.x
@@ -373,8 +373,9 @@ bb.v:                                             ; preds = %bb.u
   %i.en = and i64 %i.em, 15                       ; 2 uses
   %i.eo = getelementptr inbounds nuw i8, ptr %i.bc, i64 %i.en ; 2 uses
   %i.ep = sub i64 %i.ej, %i.en                    ; 2 uses
-  store ptr %i.eo, ptr getelementptr inbounds nuw (i8, ptr @_gm_, i64 40), align 8, !tbaa !34
-  store i64 %i.ep, ptr getelementptr inbounds nuw (i8, ptr @_gm_, i64 16), align 8, !tbaa !33
+  store ptr %i.eo, ptr %i.bj, align 8, !tbaa !34
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store i64 %i.ep, ptr %2, align 8, !tbaa !33
   %i.eq = or i64 %i.ep, 1
   %i.er = getelementptr inbounds nuw i8, ptr %i.eo, i64 8
   store i64 %i.eq, ptr %i.er, align 8, !tbaa !28
@@ -382,7 +383,8 @@ bb.v:                                             ; preds = %bb.u
   %i.et = getelementptr inbounds nuw i8, ptr %i.es, i64 8
   store i64 80, ptr %i.et, align 8, !tbaa !28
   %i.eu = load i64, ptr getelementptr inbounds nuw (i8, ptr @mparams, i64 32), align 8, !tbaa !38
-  store i64 %i.eu, ptr getelementptr inbounds nuw (i8, ptr @_gm_, i64 48), align 8, !tbaa !62
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 48
+  store i64 %i.eu, ptr %3, align 8, !tbaa !62
   br label %add_segment.exit.thread
 
 bb.w:                                             ; preds = %bb.u

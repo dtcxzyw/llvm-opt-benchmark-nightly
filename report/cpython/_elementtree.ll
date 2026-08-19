@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.b = load ptr, ptr %2, align 8, !tbaa !25
   %i.c = ptrtoint ptr %i.b to i64                 ; 2 uses
   %i.d = and i64 %i.c, -2                         ; 2 uses
-  %i.e = inttoptr i64 %i.d to ptr
+  %i.e = inttoptr i64 %i.d to ptr                 ; 4 uses
   %i.f = icmp eq i64 %i.d, ptrtoint (ptr @_Py_NoneStruct to i64)
   br i1 %i.f, label %bb.c, label %bb.e
 
@@ -220,13 +220,13 @@ bb.c:                                             ; preds = %bb.b
   %i.n = inttoptr i64 %i.m to ptr
   store ptr %i.n, ptr %2, align 8, !tbaa !25
   store ptr null, ptr %1, align 8, !tbaa !25
-  %i.o = load i32, ptr @_Py_NoneStruct, align 8, !tbaa !26 ; 2 uses
+  %i.o = load i32, ptr %i.e, align 8, !tbaa !26   ; 2 uses
   %.not.i73 = icmp sgt i32 %i.o, -1
   br i1 %.not.i73, label %bb.d, label %Py_DECREF.exit70
 
 bb.d:                                             ; preds = %bb.c
   %i.p = add nsw i32 %i.o, -1                     ; 2 uses
-  store i32 %i.p, ptr @_Py_NoneStruct, align 8, !tbaa !26
+  store i32 %i.p, ptr %i.e, align 8, !tbaa !26
   %i.q = icmp eq i32 %i.p, 0
   br i1 %i.q, label %Py_DECREF.exit70.sink.split, label %Py_DECREF.exit70
 
@@ -259,7 +259,7 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.y, label %Py_DECREF.exit70.sink.split, label %Py_DECREF.exit70
 
 Py_DECREF.exit74:                                 ; preds = %bb.e, %bb.a
-  %i.z = tail call ptr @PyObject_GetAttr(ptr noundef nonnull %0, ptr noundef %3) #11 ; 9 uses
+  %i.z = tail call ptr @PyObject_GetAttr(ptr noundef nonnull %0, ptr noundef %3) #11 ; 12 uses
   %.not56 = icmp eq ptr %i.z, null
   br i1 %.not56, label %Py_DECREF.exit70, label %bb.j
 
@@ -340,18 +340,18 @@ Py_DECREF.exit66:                                 ; preds = %Py_DECREF.exit68, %
   br i1 %.not59.not, label %Py_DECREF.exit70, label %Py_DECREF.exit64
 
 bb.u:                                             ; preds = %bb.o
-  %i.aq = load i32, ptr @_Py_NoneStruct, align 8, !tbaa !26 ; 2 uses
+  %i.aq = load i32, ptr %i.z, align 8, !tbaa !26  ; 2 uses
   %.not.i63 = icmp sgt i32 %i.aq, -1
   br i1 %.not.i63, label %bb.v, label %Py_DECREF.exit64
 
 bb.v:                                             ; preds = %bb.u
   %i.ar = add nsw i32 %i.aq, -1                   ; 2 uses
-  store i32 %i.ar, ptr @_Py_NoneStruct, align 8, !tbaa !26
+  store i32 %i.ar, ptr %i.z, align 8, !tbaa !26
   %i.as = icmp eq i32 %i.ar, 0
   br i1 %i.as, label %bb.w, label %Py_DECREF.exit64
 
 bb.w:                                             ; preds = %bb.v
-  tail call void @_Py_Dealloc(ptr noundef nonnull @_Py_NoneStruct) #11
+  tail call void @_Py_Dealloc(ptr noundef nonnull %i.z) #11
   br label %Py_DECREF.exit64
 
 Py_DECREF.exit64:                                 ; preds = %bb.w, %bb.v, %bb.u, %Py_DECREF.exit66
@@ -393,7 +393,7 @@ bb.ab:                                            ; preds = %bb.aa
   br i1 %i.bb, label %Py_DECREF.exit70.sink.split, label %Py_DECREF.exit70
 
 Py_DECREF.exit70.sink.split:                      ; preds = %bb.ab, %bb.n, %bb.i, %bb.d
-  %.sink = phi ptr [ @_Py_NoneStruct, %bb.d ], [ %i.v, %bb.i ], [ %i.z, %bb.n ], [ %i.ay, %bb.ab ]
+  %.sink = phi ptr [ %i.e, %bb.d ], [ %i.v, %bb.i ], [ %i.z, %bb.n ], [ %i.ay, %bb.ab ]
   %.4.ph = phi i32 [ 0, %bb.d ], [ 0, %bb.i ], [ -1, %bb.n ], [ 0, %bb.ab ]
   tail call void @_Py_Dealloc(ptr noundef nonnull %.sink) #11
   br label %Py_DECREF.exit70

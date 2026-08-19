@@ -201,7 +201,7 @@ bb.e:                                             ; preds = %bb.d
   br label %Py_DECREF.exit35
 
 .critedge29:                                      ; preds = %.split, %.split23
-  %phi.call.lcssa = phi ptr [ %i.k, %.split23 ], [ %i.p, %.split ] ; 5 uses
+  %phi.call.lcssa = phi ptr [ %i.k, %.split23 ], [ %i.p, %.split ] ; 8 uses
   %.lcssa = load i32, ptr %i.g, align 4, !tbaa !7
   %i.u = load i32, ptr %i.e, align 8, !tbaa !19   ; 2 uses
   %.not.i = icmp sgt i32 %i.u, -1
@@ -222,18 +222,18 @@ Py_DECREF.exit:                                   ; preds = %bb.g, %bb.f, %.crit
   br i1 %i.x, label %bb.h, label %bb.k
 
 bb.h:                                             ; preds = %Py_DECREF.exit
-  %i.y = load i32, ptr @_Py_NoneStruct, align 8, !tbaa !19 ; 2 uses
+  %i.y = load i32, ptr %phi.call.lcssa, align 8, !tbaa !19 ; 2 uses
   %.not.i32 = icmp sgt i32 %i.y, -1
   br i1 %.not.i32, label %bb.i, label %Py_DECREF.exit33
 
 bb.i:                                             ; preds = %bb.h
   %i.z = add nsw i32 %i.y, -1                     ; 2 uses
-  store i32 %i.z, ptr @_Py_NoneStruct, align 8, !tbaa !19
+  store i32 %i.z, ptr %phi.call.lcssa, align 8, !tbaa !19
   %i.aa = icmp eq i32 %i.z, 0
   br i1 %i.aa, label %bb.j, label %Py_DECREF.exit33
 
 bb.j:                                             ; preds = %bb.i
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_NoneStruct) #9
+  call void @_Py_Dealloc(ptr noundef nonnull %phi.call.lcssa) #9
   br label %Py_DECREF.exit33
 
 Py_DECREF.exit33:                                 ; preds = %bb.h, %bb.i, %bb.j
@@ -407,7 +407,7 @@ bb.e:                                             ; preds = %bb.d
   br label %Py_DECREF.exit36
 
 .critedge30:                                      ; preds = %.split, %.split23
-  %phi.call.lcssa = phi ptr [ %i.j, %.split23 ], [ %i.o, %.split ] ; 5 uses
+  %phi.call.lcssa = phi ptr [ %i.j, %.split23 ], [ %i.o, %.split ] ; 8 uses
   %i.t = load i32, ptr %i.e, align 8, !tbaa !19   ; 2 uses
   %.not.i = icmp sgt i32 %i.t, -1
   br i1 %.not.i, label %bb.f, label %Py_DECREF.exit
@@ -427,18 +427,18 @@ Py_DECREF.exit:                                   ; preds = %bb.g, %bb.f, %.crit
   br i1 %i.w, label %bb.h, label %bb.k
 
 bb.h:                                             ; preds = %Py_DECREF.exit
-  %i.x = load i32, ptr @_Py_NoneStruct, align 8, !tbaa !19 ; 2 uses
+  %i.x = load i32, ptr %phi.call.lcssa, align 8, !tbaa !19 ; 2 uses
   %.not.i33 = icmp sgt i32 %i.x, -1
   br i1 %.not.i33, label %bb.i, label %Py_DECREF.exit36
 
 bb.i:                                             ; preds = %bb.h
   %i.y = add nsw i32 %i.x, -1                     ; 2 uses
-  store i32 %i.y, ptr @_Py_NoneStruct, align 8, !tbaa !19
+  store i32 %i.y, ptr %phi.call.lcssa, align 8, !tbaa !19
   %i.z = icmp eq i32 %i.y, 0
   br i1 %i.z, label %bb.j, label %Py_DECREF.exit36
 
 bb.j:                                             ; preds = %bb.i
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_NoneStruct) #9
+  call void @_Py_Dealloc(ptr noundef nonnull %phi.call.lcssa) #9
   br label %Py_DECREF.exit36
 
 bb.k:                                             ; preds = %Py_DECREF.exit
@@ -841,7 +841,7 @@ bb.d:                                             ; preds = %bb.c
   br label %_forward_call.exit10
 
 bb.e:                                             ; preds = %bb.c
-  %i.h = tail call ptr @PyObject_CallObject(ptr noundef nonnull %i.e, ptr noundef null) #9 ; 2 uses
+  %i.h = tail call ptr @PyObject_CallObject(ptr noundef nonnull %i.e, ptr noundef null) #9 ; 5 uses
   %i.i = load i32, ptr %i.e, align 8, !tbaa !19   ; 2 uses
   %.not.i.i = icmp sgt i32 %i.i, -1
   br i1 %.not.i.i, label %bb.f, label %_forward_call.exit
@@ -861,18 +861,18 @@ _forward_call.exit:                               ; preds = %bb.e, %bb.f, %bb.g
   br i1 %.not, label %bb.h, label %_forward_call.exit10
 
 bb.h:                                             ; preds = %_forward_call.exit
-  %i.l = load i32, ptr @_Py_FalseStruct, align 8, !tbaa !19 ; 2 uses
+  %i.l = load i32, ptr %i.h, align 8, !tbaa !19   ; 2 uses
   %.not.i = icmp sgt i32 %i.l, -1
   br i1 %.not.i, label %bb.i, label %Py_DECREF.exit
 
 bb.i:                                             ; preds = %bb.h
   %i.m = add nsw i32 %i.l, -1                     ; 2 uses
-  store i32 %i.m, ptr @_Py_FalseStruct, align 8, !tbaa !19
+  store i32 %i.m, ptr %i.h, align 8, !tbaa !19
   %i.n = icmp eq i32 %i.m, 0
   br i1 %i.n, label %bb.j, label %Py_DECREF.exit
 
 bb.j:                                             ; preds = %bb.i
-  tail call void @_Py_Dealloc(ptr noundef nonnull @_Py_FalseStruct) #9
+  tail call void @_Py_Dealloc(ptr noundef nonnull %i.h) #9
   br label %Py_DECREF.exit
 
 Py_DECREF.exit:                                   ; preds = %bb.h, %bb.i, %bb.j

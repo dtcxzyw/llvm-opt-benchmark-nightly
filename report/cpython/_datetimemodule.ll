@@ -203,24 +203,24 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.j = call i32 @PyWeakref_GetRef(ptr noundef nonnull %i.g, ptr noundef nonnull %i.a) #16 ; 0 uses
-  %i.k = load ptr, ptr %i.a, align 8, !tbaa !43
+  %i.k = load ptr, ptr %i.a, align 8, !tbaa !43   ; 4 uses
   %i.l = icmp eq ptr %i.k, @_Py_NoneStruct
   br i1 %i.l, label %bb.e, label %Py_DECREF.exit13
 
 bb.e:                                             ; preds = %bb.d
   store ptr null, ptr %i.a, align 8, !tbaa !43
-  %i.m = load i32, ptr @_Py_NoneStruct, align 8, !tbaa !35 ; 2 uses
+  %i.m = load i32, ptr %i.k, align 8, !tbaa !35   ; 2 uses
   %.not.i12 = icmp sgt i32 %i.m, -1
   br i1 %.not.i12, label %bb.f, label %Py_DECREF.exit13
 
 bb.f:                                             ; preds = %bb.e
   %i.n = add nsw i32 %i.m, -1                     ; 2 uses
-  store i32 %i.n, ptr @_Py_NoneStruct, align 8, !tbaa !35
+  store i32 %i.n, ptr %i.k, align 8, !tbaa !35
   %i.o = icmp eq i32 %i.n, 0
   br i1 %i.o, label %bb.g, label %Py_DECREF.exit13
 
 bb.g:                                             ; preds = %bb.f
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_NoneStruct) #16
+  call void @_Py_Dealloc(ptr noundef nonnull %i.k) #16
   br label %Py_DECREF.exit13
 
 Py_DECREF.exit13:                                 ; preds = %bb.g, %bb.f, %bb.e, %bb.d
@@ -623,12 +623,12 @@ bb.b:                                             ; preds = %bb.a
   %i.x = load i32, ptr %i.b, align 4, !tbaa !7    ; 3 uses
   %i.y = load i32, ptr %i.c, align 4, !tbaa !7    ; 3 uses
   %i.z = getelementptr i8, ptr %0, i64 8
-  %.val = load ptr, ptr %i.z, align 8, !tbaa !44  ; 3 uses
+  %.val = load ptr, ptr %i.z, align 8, !tbaa !44  ; 5 uses
   %i.aa = icmp eq ptr %.val, @PyDateTime_DateType
   br i1 %i.aa, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.ab = tail call ptr @new_date_ex(i32 noundef %i.w, i32 noundef %i.x, i32 noundef %i.y, ptr noundef nonnull @PyDateTime_DateType), !inline_history !89
+  %i.ab = tail call ptr @new_date_ex(i32 noundef %i.w, i32 noundef %i.x, i32 noundef %i.y, ptr noundef nonnull %.val), !inline_history !89
   br label %new_date_subclass_ex.exit
 
 bb.d:                                             ; preds = %bb.b
@@ -636,7 +636,7 @@ bb.d:                                             ; preds = %bb.b
   br i1 %i.ac, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %i.ad = tail call ptr @new_datetime_ex2(i32 noundef %i.w, i32 noundef %i.x, i32 noundef %i.y, i32 noundef 0, i32 noundef 0, i32 noundef 0, i32 noundef 0, ptr noundef nonnull @_Py_NoneStruct, i32 noundef 0, ptr noundef nonnull @PyDateTime_DateTimeType), !inline_history !90
+  %i.ad = tail call ptr @new_datetime_ex2(i32 noundef %i.w, i32 noundef %i.x, i32 noundef %i.y, i32 noundef 0, i32 noundef 0, i32 noundef 0, i32 noundef 0, ptr noundef nonnull @_Py_NoneStruct, i32 noundef 0, ptr noundef nonnull %.val), !inline_history !90
   br label %new_date_subclass_ex.exit
 
 bb.f:                                             ; preds = %bb.d
@@ -747,7 +747,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.p, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  %i.q = call ptr @new_date_ex(i32 noundef %i.m, i32 noundef %i.n, i32 noundef %i.o, ptr noundef nonnull @PyDateTime_DateType), !inline_history !95
+  %i.q = call ptr @new_date_ex(i32 noundef %i.m, i32 noundef %i.n, i32 noundef %i.o, ptr noundef nonnull %0), !inline_history !95
   br label %datetime_date_fromisoformat_impl.exit
 
 bb.h:                                             ; preds = %bb.f
@@ -755,7 +755,7 @@ bb.h:                                             ; preds = %bb.f
   br i1 %i.r, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
-  %i.s = call ptr @new_datetime_ex2(i32 noundef %i.m, i32 noundef %i.n, i32 noundef %i.o, i32 noundef 0, i32 noundef 0, i32 noundef 0, i32 noundef 0, ptr noundef nonnull @_Py_NoneStruct, i32 noundef 0, ptr noundef nonnull @PyDateTime_DateTimeType), !inline_history !96
+  %i.s = call ptr @new_datetime_ex2(i32 noundef %i.m, i32 noundef %i.n, i32 noundef %i.o, i32 noundef 0, i32 noundef 0, i32 noundef 0, i32 noundef 0, ptr noundef nonnull @_Py_NoneStruct, i32 noundef 0, ptr noundef nonnull %0), !inline_history !96
   br label %datetime_date_fromisoformat_impl.exit
 
 bb.j:                                             ; preds = %bb.h
@@ -937,7 +937,7 @@ bb.c:                                             ; preds = %bb.b
   %i.l = add i32 %i.k, 1
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 12
   %i.n = load i32, ptr %i.m, align 4, !tbaa !101
-  %i.o = call ptr @new_date_ex(i32 noundef %i.i, i32 noundef %i.l, i32 noundef %i.n, ptr noundef nonnull @PyDateTime_DateType), !inline_history !97
+  %i.o = call ptr @new_date_ex(i32 noundef %i.i, i32 noundef %i.l, i32 noundef %i.n, ptr noundef nonnull %0), !inline_history !97
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
@@ -1340,12 +1340,12 @@ bb.o:                                             ; preds = %bb.m, %bb.n, %bb.l,
   %.1 = phi i32 [ %.036, %bb.n ], [ %.036, %bb.m ], [ %i.ae, %bb.l ], [ %i.o, %bb.h ], [ %i.o, %.thread ] ; 3 uses
   %.0 = phi i32 [ -1, %bb.n ], [ %i.ak, %bb.m ], [ %i.r, %bb.l ], [ %i.r, %bb.h ], [ %i.r, %.thread ] ; 3 uses
   %i.an = getelementptr i8, ptr %0, i64 8
-  %.val58 = load ptr, ptr %i.an, align 8, !tbaa !44 ; 3 uses
+  %.val58 = load ptr, ptr %i.an, align 8, !tbaa !44 ; 5 uses
   %i.ao = icmp eq ptr %.val58, @PyDateTime_DateType
   br i1 %i.ao, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
-  %i.ap = call ptr @new_date_ex(i32 noundef %.138, i32 noundef %.1, i32 noundef %.0, ptr noundef nonnull @PyDateTime_DateType), !inline_history !105
+  %i.ap = call ptr @new_date_ex(i32 noundef %.138, i32 noundef %.1, i32 noundef %.0, ptr noundef nonnull %.val58), !inline_history !105
   br label %datetime_date_replace_impl.exit
 
 bb.q:                                             ; preds = %bb.o
@@ -1353,7 +1353,7 @@ bb.q:                                             ; preds = %bb.o
   br i1 %i.aq, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %bb.q
-  %i.ar = call ptr @new_datetime_ex2(i32 noundef %.138, i32 noundef %.1, i32 noundef %.0, i32 noundef 0, i32 noundef 0, i32 noundef 0, i32 noundef 0, ptr noundef nonnull @_Py_NoneStruct, i32 noundef 0, ptr noundef nonnull @PyDateTime_DateTimeType), !inline_history !106
+  %i.ar = call ptr @new_datetime_ex2(i32 noundef %.138, i32 noundef %.1, i32 noundef %.0, i32 noundef 0, i32 noundef 0, i32 noundef 0, i32 noundef 0, ptr noundef nonnull @_Py_NoneStruct, i32 noundef 0, ptr noundef nonnull %.val58), !inline_history !106
   br label %datetime_date_replace_impl.exit
 
 bb.s:                                             ; preds = %bb.q
@@ -1408,7 +1408,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.n, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.o = call ptr @new_date_ex(i32 noundef %i.h, i32 noundef %i.k, i32 noundef %i.m, ptr noundef nonnull @PyDateTime_DateType), !inline_history !89
+  %i.o = call ptr @new_date_ex(i32 noundef %i.h, i32 noundef %i.k, i32 noundef %i.m, ptr noundef nonnull %0), !inline_history !89
   br label %new_date_subclass_ex.exit
 
 bb.e:                                             ; preds = %bb.c
@@ -1416,7 +1416,7 @@ bb.e:                                             ; preds = %bb.c
   br i1 %i.p, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %i.q = call ptr @new_datetime_ex2(i32 noundef %i.h, i32 noundef %i.k, i32 noundef %i.m, i32 noundef 0, i32 noundef 0, i32 noundef 0, i32 noundef 0, ptr noundef nonnull @_Py_NoneStruct, i32 noundef 0, ptr noundef nonnull @PyDateTime_DateTimeType), !inline_history !90
+  %i.q = call ptr @new_datetime_ex2(i32 noundef %i.h, i32 noundef %i.k, i32 noundef %i.m, i32 noundef 0, i32 noundef 0, i32 noundef 0, i32 noundef 0, ptr noundef nonnull @_Py_NoneStruct, i32 noundef 0, ptr noundef nonnull %0), !inline_history !90
   br label %new_date_subclass_ex.exit
 
 bb.g:                                             ; preds = %bb.e
@@ -1535,7 +1535,7 @@ ord_to_ymd.exit:                                  ; preds = %bb.d, %bb.h
   br i1 %i.ax, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %ord_to_ymd.exit
-  %i.ay = tail call ptr @new_date_ex(i32 noundef %.09, i32 noundef %.1, i32 noundef %storemerge.i, ptr noundef nonnull @PyDateTime_DateType), !inline_history !89
+  %i.ay = tail call ptr @new_date_ex(i32 noundef %.09, i32 noundef %.1, i32 noundef %storemerge.i, ptr noundef nonnull %0), !inline_history !89
   br label %new_date_subclass_ex.exit
 
 bb.j:                                             ; preds = %ord_to_ymd.exit
@@ -1543,7 +1543,7 @@ bb.j:                                             ; preds = %ord_to_ymd.exit
   br i1 %i.az, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
-  %i.ba = tail call ptr @new_datetime_ex2(i32 noundef %.09, i32 noundef %.1, i32 noundef %storemerge.i, i32 noundef 0, i32 noundef 0, i32 noundef 0, i32 noundef 0, ptr noundef nonnull @_Py_NoneStruct, i32 noundef 0, ptr noundef nonnull @PyDateTime_DateTimeType), !inline_history !90
+  %i.ba = tail call ptr @new_datetime_ex2(i32 noundef %.09, i32 noundef %.1, i32 noundef %storemerge.i, i32 noundef 0, i32 noundef 0, i32 noundef 0, i32 noundef 0, ptr noundef nonnull @_Py_NoneStruct, i32 noundef 0, ptr noundef nonnull %0), !inline_history !90
   br label %new_date_subclass_ex.exit
 
 bb.l:                                             ; preds = %bb.j
@@ -1872,7 +1872,7 @@ bb.e:                                             ; preds = %bb.a
   br i1 %i.p, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %i.q = tail call ptr @new_date_ex(i32 noundef %i.m, i32 noundef %i.n, i32 noundef %i.o, ptr noundef nonnull @PyDateTime_DateType), !inline_history !89
+  %i.q = tail call ptr @new_date_ex(i32 noundef %i.m, i32 noundef %i.n, i32 noundef %i.o, ptr noundef nonnull %0), !inline_history !89
   br label %new_date_subclass_ex.exit
 
 bb.g:                                             ; preds = %bb.e
@@ -1880,7 +1880,7 @@ bb.g:                                             ; preds = %bb.e
   br i1 %i.r, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  %i.s = tail call ptr @new_datetime_ex2(i32 noundef %i.m, i32 noundef %i.n, i32 noundef %i.o, i32 noundef 0, i32 noundef 0, i32 noundef 0, i32 noundef 0, ptr noundef nonnull @_Py_NoneStruct, i32 noundef 0, ptr noundef nonnull @PyDateTime_DateTimeType), !inline_history !90
+  %i.s = tail call ptr @new_datetime_ex2(i32 noundef %i.m, i32 noundef %i.n, i32 noundef %i.o, i32 noundef 0, i32 noundef 0, i32 noundef 0, i32 noundef 0, ptr noundef nonnull @_Py_NoneStruct, i32 noundef 0, ptr noundef nonnull %0), !inline_history !90
   br label %new_date_subclass_ex.exit
 
 bb.i:                                             ; preds = %bb.g
@@ -2208,7 +2208,7 @@ bb.ak:                                            ; preds = %bb.aj
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #16
   store ptr %.0.i.i206, ptr %i.c, align 16, !tbaa !43
   store ptr %3, ptr %i.n, align 8, !tbaa !43
-  %i.br = call ptr @PyObject_VectorcallMethod(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 103552), ptr noundef nonnull %i.c, i64 noundef -9223372036854775806, ptr noundef null) #16, !inline_history !108 ; 10 uses
+  %i.br = call ptr @PyObject_VectorcallMethod(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 103552), ptr noundef nonnull %i.c, i64 noundef -9223372036854775806, ptr noundef null) #16, !inline_history !108 ; 12 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #16
   %i.bs = icmp eq ptr %i.br, null                 ; 2 uses
   %i.bt = icmp eq ptr %i.br, @_Py_NoneStruct      ; 2 uses
@@ -2250,13 +2250,13 @@ call_tzname.exit.thread40.i:                      ; preds = %call_tzname.exit.i,
   br i1 %i.bt, label %bb.ap, label %bb.ar
 
 bb.ap:                                            ; preds = %call_tzname.exit.thread40.i
-  %i.ce = load i32, ptr @_Py_NoneStruct, align 8, !tbaa !35 ; 2 uses
+  %i.ce = load i32, ptr %i.br, align 8, !tbaa !35 ; 2 uses
   %.not.i29.i = icmp sgt i32 %i.ce, -1
   br i1 %.not.i29.i, label %bb.aq, label %make_Zreplacement.exit.thread229
 
 bb.aq:                                            ; preds = %bb.ap
   %i.cf = add nsw i32 %i.ce, -1                   ; 2 uses
-  store i32 %i.cf, ptr @_Py_NoneStruct, align 8, !tbaa !35
+  store i32 %i.cf, ptr %i.br, align 8, !tbaa !35
   %i.cg = icmp eq i32 %i.cf, 0
   br i1 %i.cg, label %make_Zreplacement.exit, label %make_Zreplacement.exit.thread229
 
@@ -2659,7 +2659,7 @@ declare ptr @PyUnicode_FromStringAndSize(ptr noundef, i64 noundef) local_unnamed
 ; Function Attrs: nounwind uwtable
 define internal fastcc range(i32 -1, 1) i32 @format_utcoffset(ptr noundef nonnull %0, ptr noundef %1, ptr noundef %2, ptr noundef %3) unnamed_addr #0 {
 bb.a:
-  %i.a = tail call fastcc ptr @call_tzinfo_method(ptr noundef %2, ptr noundef nonnull @.str.10, ptr noundef %3) ; 8 uses
+  %i.a = tail call fastcc ptr @call_tzinfo_method(ptr noundef %2, ptr noundef nonnull @.str.10, ptr noundef %3) ; 11 uses
   %i.b = icmp eq ptr %i.a, null
   br i1 %i.b, label %bb.q, label %bb.b
 
@@ -2668,18 +2668,18 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.c, label %bb.c, label %bb.f
 
 bb.c:                                             ; preds = %bb.b
-  %i.d = load i32, ptr @_Py_NoneStruct, align 8, !tbaa !35 ; 2 uses
+  %i.d = load i32, ptr %i.a, align 8, !tbaa !35   ; 2 uses
   %.not.i43 = icmp sgt i32 %i.d, -1
   br i1 %.not.i43, label %bb.d, label %Py_DECREF.exit44
 
 bb.d:                                             ; preds = %bb.c
   %i.e = add nsw i32 %i.d, -1                     ; 2 uses
-  store i32 %i.e, ptr @_Py_NoneStruct, align 8, !tbaa !35
+  store i32 %i.e, ptr %i.a, align 8, !tbaa !35
   %i.f = icmp eq i32 %i.e, 0
   br i1 %i.f, label %bb.e, label %Py_DECREF.exit44
 
 bb.e:                                             ; preds = %bb.d
-  tail call void @_Py_Dealloc(ptr noundef nonnull @_Py_NoneStruct) #16
+  tail call void @_Py_Dealloc(ptr noundef nonnull %i.a) #16
   br label %Py_DECREF.exit44
 
 Py_DECREF.exit44:                                 ; preds = %bb.c, %bb.d, %bb.e
@@ -3082,7 +3082,7 @@ bb.c:                                             ; preds = %.thread
   br label %_Py_NewRef.exit
 
 bb.d:                                             ; preds = %bb.b
-  %i.i = tail call fastcc ptr @call_tzinfo_method(ptr noundef %i.d, ptr noundef nonnull @.str.10, ptr noundef nonnull %0) ; 6 uses
+  %i.i = tail call fastcc ptr @call_tzinfo_method(ptr noundef %i.d, ptr noundef nonnull @.str.10, ptr noundef nonnull %0) ; 9 uses
   %i.j = icmp eq ptr %i.i, null
   br i1 %i.j, label %.critedge, label %bb.e
 
@@ -3091,18 +3091,18 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.k, label %bb.f, label %bb.j
 
 bb.f:                                             ; preds = %bb.e
-  %i.l = load i32, ptr @_Py_NoneStruct, align 8, !tbaa !35 ; 2 uses
+  %i.l = load i32, ptr %i.i, align 8, !tbaa !35   ; 2 uses
   %.not.i39 = icmp sgt i32 %i.l, -1
   br i1 %.not.i39, label %bb.g, label %Py_DECREF.exit40
 
 bb.g:                                             ; preds = %bb.f
   %i.m = add nsw i32 %i.l, -1                     ; 2 uses
-  store i32 %i.m, ptr @_Py_NoneStruct, align 8, !tbaa !35
+  store i32 %i.m, ptr %i.i, align 8, !tbaa !35
   %i.n = icmp eq i32 %i.m, 0
   br i1 %i.n, label %bb.h, label %Py_DECREF.exit40
 
 bb.h:                                             ; preds = %bb.g
-  tail call void @_Py_Dealloc(ptr noundef nonnull @_Py_NoneStruct) #16
+  tail call void @_Py_Dealloc(ptr noundef nonnull %i.i) #16
   br label %Py_DECREF.exit40
 
 Py_DECREF.exit40:                                 ; preds = %bb.f, %bb.g, %bb.h
@@ -3505,7 +3505,7 @@ bb.m:                                             ; preds = %Py_DECREF.exit88.i
   br label %datetime_datetime_astimezone_impl.exit
 
 bb.n:                                             ; preds = %_Py_NewRef.exit.i
-  %i.ci = call fastcc ptr @call_tzinfo_method(ptr noundef nonnull %.061.i, ptr noundef nonnull @.str.10, ptr noundef nonnull %0), !inline_history !150 ; 11 uses
+  %i.ci = call fastcc ptr @call_tzinfo_method(ptr noundef nonnull %.061.i, ptr noundef nonnull @.str.10, ptr noundef nonnull %0), !inline_history !150 ; 14 uses
   %i.cj = load i32, ptr %.061.i, align 8, !tbaa !35 ; 2 uses
   %.not.i85.i = icmp sgt i32 %i.cj, -1
   br i1 %.not.i85.i, label %bb.o, label %Py_DECREF.exit86.i
@@ -3529,18 +3529,18 @@ bb.q:                                             ; preds = %Py_DECREF.exit86.i
   br i1 %i.cn, label %bb.r, label %bb.u
 
 bb.r:                                             ; preds = %bb.q
-  %i.co = load i32, ptr @_Py_NoneStruct, align 8, !tbaa !35 ; 2 uses
+  %i.co = load i32, ptr %i.ci, align 8, !tbaa !35 ; 2 uses
   %.not.i83.i = icmp sgt i32 %i.co, -1
   br i1 %.not.i83.i, label %bb.s, label %Py_DECREF.exit84.i
 
 bb.s:                                             ; preds = %bb.r
   %i.cp = add nsw i32 %i.co, -1                   ; 2 uses
-  store i32 %i.cp, ptr @_Py_NoneStruct, align 8, !tbaa !35
+  store i32 %i.cp, ptr %i.ci, align 8, !tbaa !35
   %i.cq = icmp eq i32 %i.cp, 0
   br i1 %i.cq, label %bb.t, label %Py_DECREF.exit84.i
 
 bb.t:                                             ; preds = %bb.s
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_NoneStruct) #16, !inline_history !150
+  call void @_Py_Dealloc(ptr noundef nonnull %i.ci) #16, !inline_history !150
   br label %Py_DECREF.exit84.i
 
 bb.u:                                             ; preds = %bb.q

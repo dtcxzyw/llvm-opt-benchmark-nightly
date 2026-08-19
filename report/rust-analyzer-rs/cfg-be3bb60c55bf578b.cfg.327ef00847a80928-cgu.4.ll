@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %bb.b
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ac, i64 16 ; 3 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.ab, ptr noundef nonnull align 8 dereferenceable(32) %i.ai, i64 32, i1 false)
   %i.aj = invoke noundef nonnull ptr @_RNvXs4_NtCs39E2wp1vf7X_6intern6symbolNtB5_6SymbolNtNtCshzWfHUSfYae_4core5clone5Clone5clone(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.ab)
-          to label %bb.e unwind label %bb.d       ; 12 uses
+          to label %bb.e unwind label %bb.d       ; 15 uses
 
 bb.d:                                             ; preds = %bb.c
   %i.ak = landingpad { ptr, i32 }
@@ -604,7 +604,7 @@ bb.ax:                                            ; preds = %bb.av
 bb.ay:                                            ; preds = %bb.aw
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n)
-  store ptr @_RNvNvNtNtCs39E2wp1vf7X_6intern6symbol7symbols3not10SYMBOL_STR, ptr %i.n, align 8
+  store ptr %i.aj, ptr %i.n, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k)
   invoke void @_RNvNtCs4kMRW8zVVbM_3cfg8cfg_expr13next_cfg_expr(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.k, ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %i.s)
@@ -670,7 +670,7 @@ bb.bg:                                            ; preds = %bb.bf
 bb.bh:                                            ; preds = %bb.au
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p)
-  store ptr @_RNvNvNtNtCs39E2wp1vf7X_6intern6symbol7symbols3any10SYMBOL_STR, ptr %i.p, align 8
+  store ptr %i.aj, ptr %i.p, align 8
   %i.db = invoke { ptr, i64 } @_RINvXsb_NtNtCsbSS6DM8SDEO_5alloc5boxed4iterINtB8_3BoxSNtNtCs4kMRW8zVVbM_3cfg8cfg_expr7CfgExprEINtNtNtNtCshzWfHUSfYae_4core4iter6traits7collect12FromIteratorBQ_E9from_iterINtNtNtB1B_7sources7from_fn6FromFnNCNvBS_13next_cfg_exprs_0EEBU_(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %i.s)
           to label %bb.bj unwind label %bb.bi     ; 2 uses
 
@@ -697,7 +697,7 @@ bb.bk:                                            ; preds = %bb.bj
 
 bb.bl:                                            ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs4dcH4YgJDq_2tt4iter9TtElementEECs4kMRW8zVVbM_3cfg.exit127
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q)
-  store ptr @_RNvNvNtNtCs39E2wp1vf7X_6intern6symbol7symbols3all10SYMBOL_STR, ptr %i.q, align 8
+  store ptr %i.aj, ptr %i.q, align 8
   %i.dh = invoke { ptr, i64 } @_RINvXsb_NtNtCsbSS6DM8SDEO_5alloc5boxed4iterINtB8_3BoxSNtNtCs4kMRW8zVVbM_3cfg8cfg_expr7CfgExprEINtNtNtNtCshzWfHUSfYae_4core4iter6traits7collect12FromIteratorBQ_E9from_iterINtNtNtB1B_7sources7from_fn6FromFnNCNvBS_13next_cfg_exprs_0EEBU_(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %i.s)
           to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs39E2wp1vf7X_6intern6symbol6SymbolECs4kMRW8zVVbM_3cfg.exit158 unwind label %bb.bm ; 2 uses
 

@@ -204,18 +204,18 @@ bb.b:                                             ; preds = %bb.a
 
 .thread:                                          ; preds = %bb.a, %bb.b
   %i.f = phi ptr [ %i.e, %bb.b ], [ %2, %bb.a ]
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !32   ; 16 uses
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !32   ; 18 uses
   %i.h = icmp eq ptr %i.g, @_Py_NoneStruct
   br i1 %i.h, label %bb.c, label %bb.e
 
 bb.c:                                             ; preds = %.thread
-  %i.i = load i32, ptr @_Py_NoneStruct, align 8, !tbaa !28 ; 2 uses
+  %i.i = load i32, ptr %i.g, align 8, !tbaa !28   ; 2 uses
   %i.j = icmp ugt i32 %i.i, -1073741825
   br i1 %i.j, label %PyCPointerType_from_param_impl.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.k = add nuw i32 %i.i, 1
-  store i32 %i.k, ptr @_Py_NoneStruct, align 8, !tbaa !28
+  store i32 %i.k, ptr %i.g, align 8, !tbaa !28
   br label %PyCPointerType_from_param_impl.exit
 
 bb.e:                                             ; preds = %.thread

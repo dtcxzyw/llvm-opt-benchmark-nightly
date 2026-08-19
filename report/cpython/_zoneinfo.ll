@@ -204,7 +204,7 @@ define internal fastcc ptr @zoneinfo_new_instance(ptr nofree noundef readonly ca
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 16
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !44
-  %i.c = tail call ptr (ptr, ...) @PyObject_CallFunctionObjArgs(ptr noundef %i.b, ptr noundef %2, ptr noundef null) #9 ; 6 uses
+  %i.c = tail call ptr (ptr, ...) @PyObject_CallFunctionObjArgs(ptr noundef %i.b, ptr noundef %2, ptr noundef null) #9 ; 8 uses
   %i.d = icmp eq ptr %i.c, null
   br i1 %i.d, label %Py_DECREF.exit81, label %bb.b
 
@@ -220,13 +220,13 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not, label %bb.d, label %.critedge
 
 bb.d:                                             ; preds = %bb.c
-  %i.i = load i32, ptr @_Py_NoneStruct, align 8, !tbaa !23 ; 2 uses
+  %i.i = load i32, ptr %i.c, align 8, !tbaa !23   ; 2 uses
   %.not.i80 = icmp sgt i32 %i.i, -1
   br i1 %.not.i80, label %bb.e, label %Py_DECREF.exit81
 
 bb.e:                                             ; preds = %bb.d
   %i.j = add nsw i32 %i.i, -1                     ; 2 uses
-  store i32 %i.j, ptr @_Py_NoneStruct, align 8, !tbaa !23
+  store i32 %i.j, ptr %i.c, align 8, !tbaa !23
   %i.k = icmp eq i32 %i.j, 0
   br i1 %i.k, label %Py_DECREF.exit81.sink.split, label %Py_DECREF.exit81
 
@@ -376,9 +376,8 @@ bb.x:                                             ; preds = %Py_DECREF.exit71
   br i1 %i.av, label %Py_DECREF.exit81.sink.split, label %Py_DECREF.exit81
 
 Py_DECREF.exit81.sink.split:                      ; preds = %bb.x, %bb.e
-  %.sink = phi ptr [ @_Py_NoneStruct, %bb.e ], [ %i.c, %bb.x ]
   %.3.ph = phi ptr [ null, %bb.e ], [ %.4, %bb.x ]
-  tail call void @_Py_Dealloc(ptr noundef nonnull %.sink) #9
+  tail call void @_Py_Dealloc(ptr noundef nonnull %i.c) #9
   br label %Py_DECREF.exit81
 
 Py_DECREF.exit81:                                 ; preds = %Py_DECREF.exit81.sink.split, %bb.x, %Py_DECREF.exit71, %bb.e, %bb.d, %bb.a
@@ -781,7 +780,7 @@ bb.o:                                             ; preds = %bb.l
 
 get_weak_cache.exit:                              ; preds = %bb.m, %bb.n, %bb.o
   %.0.i = phi ptr [ %i.ad, %bb.o ], [ %i.z, %bb.m ], [ %.pre.i, %bb.n ] ; 17 uses
-  %i.ae = tail call ptr (ptr, ptr, ptr, ...) @PyObject_CallMethod(ptr noundef %.0.i, ptr noundef nonnull @.str.69, ptr noundef nonnull @.str.39, ptr noundef %1, ptr noundef nonnull @_Py_NoneStruct) #9 ; 3 uses
+  %i.ae = tail call ptr (ptr, ptr, ptr, ...) @PyObject_CallMethod(ptr noundef %.0.i, ptr noundef nonnull @.str.69, ptr noundef nonnull @.str.39, ptr noundef %1, ptr noundef nonnull @_Py_NoneStruct) #9 ; 6 uses
   %i.af = icmp eq ptr %i.ae, null
   br i1 %i.af, label %bb.p, label %bb.s
 
@@ -805,18 +804,18 @@ bb.s:                                             ; preds = %get_weak_cache.exit
   br i1 %i.aj, label %bb.t, label %bb.af
 
 bb.t:                                             ; preds = %bb.s
-  %i.ak = load i32, ptr @_Py_NoneStruct, align 8, !tbaa !23 ; 2 uses
+  %i.ak = load i32, ptr %i.ae, align 8, !tbaa !23 ; 2 uses
   %.not.i59 = icmp sgt i32 %i.ak, -1
   br i1 %.not.i59, label %bb.u, label %Py_DECREF.exit60
 
 bb.u:                                             ; preds = %bb.t
   %i.al = add nsw i32 %i.ak, -1                   ; 2 uses
-  store i32 %i.al, ptr @_Py_NoneStruct, align 8, !tbaa !23
+  store i32 %i.al, ptr %i.ae, align 8, !tbaa !23
   %i.am = icmp eq i32 %i.al, 0
   br i1 %i.am, label %bb.v, label %Py_DECREF.exit60
 
 bb.v:                                             ; preds = %bb.u
-  tail call void @_Py_Dealloc(ptr noundef nonnull @_Py_NoneStruct) #9
+  tail call void @_Py_Dealloc(ptr noundef nonnull %i.ae) #9
   br label %Py_DECREF.exit60
 
 Py_DECREF.exit60:                                 ; preds = %bb.t, %bb.u, %bb.v

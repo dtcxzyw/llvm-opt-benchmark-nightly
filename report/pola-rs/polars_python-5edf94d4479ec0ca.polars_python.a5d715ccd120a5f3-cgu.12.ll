@@ -204,7 +204,7 @@ bb.r:                                             ; preds = %bb.q
   br label %bb.cd, !dbg !183395
 
 bb.s:                                             ; preds = %bb.q
-  %i.ar = load ptr, ptr %i.an, align 8, !dbg !183396, !nonnull !11, !noundef !11 ; 3 uses
+  %i.ar = load ptr, ptr %i.an, align 8, !dbg !183396, !nonnull !11, !noundef !11 ; 4 uses
   %i.as = icmp eq ptr %i.ar, @_Py_NoneStruct, !dbg !183403
   br i1 %i.as, label %bb.cc, label %bb.t, !dbg !183406
 
@@ -607,7 +607,7 @@ bb.cb:                                            ; preds = %bb.i, %bb.cd, %_RIN
           to label %bb.ce unwind label %.thread, !dbg !183332
 
 bb.cc:                                            ; preds = %bb.s
-  call void @_Py_DecRef(ptr noundef nonnull @_Py_NoneStruct) #53, !dbg !183739
+  call void @_Py_DecRef(ptr noundef nonnull %i.ar) #53, !dbg !183739
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t), !dbg !183390
   br label %bb.p, !dbg !183432
 
@@ -1010,7 +1010,7 @@ bb.ar:                                            ; preds = %bb.ao, %bb.ap
   tail call void @llvm.assume(i1 %i.ez), !dbg !186556
   call void @llvm.lifetime.end.p0(ptr nonnull %i.an), !dbg !186557
   %cond = icmp eq i64 %i.ey, 0, !dbg !186558
-  %i.fa = load ptr, ptr %.sroa.3161.0..sroa_idx, align 8 ; 2 uses
+  %i.fa = load ptr, ptr %.sroa.3161.0..sroa_idx, align 8 ; 3 uses
   %i.fb = icmp eq ptr %i.fa, @_Py_NoneStruct
   %or.cond = select i1 %cond, i1 %i.fb, i1 false, !dbg !186558
   br i1 %or.cond, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtB4_6result6ResultINtNtCsbm5zPlkZccl_4pyo38instance5BoundNtNtNtB1t_5types3any5PyAnyENtNtB1t_3err5PyErrEEECseeLknQCOKOd_13polars_python.exit, label %bb.as, !dbg !186558
@@ -1018,7 +1018,7 @@ bb.ar:                                            ; preds = %bb.ao, %bb.ap
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtB4_6result6ResultINtNtCsbm5zPlkZccl_4pyo38instance5BoundNtNtNtB1t_5types3any5PyAnyENtNtB1t_3err5PyErrEEECseeLknQCOKOd_13polars_python.exit: ; preds = %bb.ar
   %i.fc = add i64 %.sroa.051.0, 1, !dbg !186561
   store i64 3, ptr %i.br, align 8, !dbg !186562
-  tail call void @_Py_DecRef(ptr noundef nonnull @_Py_NoneStruct) #53, !dbg !186571, !noalias !186577
+  tail call void @_Py_DecRef(ptr noundef nonnull %i.fa) #53, !dbg !186571, !noalias !186577
   br label %bb.an, !dbg !186272
 
 bb.as:                                            ; preds = %bb.ar

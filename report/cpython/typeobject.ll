@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.b
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c, %bb.a
-  %.1.i = phi ptr [ null, %bb.a ], [ %i.g, %bb.c ], [ %i.h, %bb.d ] ; 6 uses
+  %.1.i = phi ptr [ null, %bb.a ], [ %i.g, %bb.c ], [ %i.h, %bb.d ] ; 8 uses
   %i.i = and i64 %.val.pre.i, 1
   %.not.not.i.i.i = icmp eq i64 %i.i, 0
   br i1 %.not.not.i.i.i, label %bb.f, label %call_method.exit
@@ -248,20 +248,19 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.v, label %Py_DECREF.exit10.sink.split, label %Py_DECREF.exit10
 
 bb.k:                                             ; preds = %bb.h
-  %i.w = load i32, ptr @_Py_NoneStruct, align 8, !tbaa !112 ; 2 uses
+  %i.w = load i32, ptr %.1.i, align 8, !tbaa !112 ; 2 uses
   %.not.i = icmp sgt i32 %i.w, -1
   br i1 %.not.i, label %bb.l, label %Py_DECREF.exit10
 
 bb.l:                                             ; preds = %bb.k
   %i.x = add nsw i32 %i.w, -1                     ; 2 uses
-  store i32 %i.x, ptr @_Py_NoneStruct, align 8, !tbaa !112
+  store i32 %i.x, ptr %.1.i, align 8, !tbaa !112
   %i.y = icmp eq i32 %i.x, 0
   br i1 %i.y, label %Py_DECREF.exit10.sink.split, label %Py_DECREF.exit10
 
 Py_DECREF.exit10.sink.split:                      ; preds = %bb.l, %bb.j
-  %_Py_NoneStruct.sink = phi ptr [ %.1.i, %bb.j ], [ @_Py_NoneStruct, %bb.l ]
   %.0.ph = phi i32 [ -1, %bb.j ], [ 0, %bb.l ]
-  tail call void @_Py_Dealloc(ptr noundef nonnull %_Py_NoneStruct.sink) #21
+  tail call void @_Py_Dealloc(ptr noundef nonnull %.1.i) #21
   br label %Py_DECREF.exit10
 
 Py_DECREF.exit10:                                 ; preds = %Py_DECREF.exit10.sink.split, %bb.l, %bb.k, %bb.j, %bb.i, %call_method.exit
@@ -664,23 +663,23 @@ bb.l:                                             ; preds = %bb.k
   store ptr %1, ptr %i.a, align 16, !tbaa !115
   %i.ad = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %0, ptr %i.ad, align 8, !tbaa !115
-  %i.ae = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 68824), ptr noundef %i.a, i64 noundef 2) ; 2 uses
+  %i.ae = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 68824), ptr noundef %i.a, i64 noundef 2) ; 5 uses
   %.not48 = icmp eq ptr %i.ae, @_Py_NotImplementedStruct
   br i1 %.not48, label %bb.m, label %Py_DECREF.exit53.thread75
 
 bb.m:                                             ; preds = %bb.l
-  %i.af = load i32, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112 ; 2 uses
+  %i.af = load i32, ptr %i.ae, align 8, !tbaa !112 ; 2 uses
   %.not.i52 = icmp sgt i32 %i.af, -1
   br i1 %.not.i52, label %bb.n, label %PyType_IsSubtype.exit.thread
 
 bb.n:                                             ; preds = %bb.m
   %i.ag = add nsw i32 %i.af, -1                   ; 2 uses
-  store i32 %i.ag, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112
+  store i32 %i.ag, ptr %i.ae, align 8, !tbaa !112
   %i.ah = icmp eq i32 %i.ag, 0
   br i1 %i.ah, label %bb.o, label %PyType_IsSubtype.exit.thread
 
 bb.o:                                             ; preds = %bb.n
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_NotImplementedStruct) #21
+  call void @_Py_Dealloc(ptr noundef nonnull %i.ae) #21
   br label %PyType_IsSubtype.exit.thread
 
 PyType_IsSubtype.exit.thread:                     ; preds = %bb.i, %bb.o, %bb.n, %bb.m, %bb.k, %bb.h, %PyType_IsSubtype.exit, %bb.f
@@ -688,7 +687,7 @@ PyType_IsSubtype.exit.thread:                     ; preds = %bb.i, %bb.o, %bb.n,
   store ptr %0, ptr %i.a, align 16, !tbaa !115
   %i.ai = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %1, ptr %i.ai, align 8, !tbaa !115
-  %i.aj = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 62288), ptr noundef %i.a, i64 noundef 2) ; 2 uses
+  %i.aj = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 62288), ptr noundef %i.a, i64 noundef 2) ; 5 uses
   %.not49 = icmp eq ptr %i.aj, @_Py_NotImplementedStruct
   br i1 %.not49, label %bb.p, label %Py_DECREF.exit53.thread75
 
@@ -699,18 +698,18 @@ bb.p:                                             ; preds = %PyType_IsSubtype.ex
   br i1 %.not80, label %Py_DECREF.exit53.thread75, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.ak = load i32, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112 ; 2 uses
+  %i.ak = load i32, ptr %i.aj, align 8, !tbaa !112 ; 2 uses
   %.not.i = icmp sgt i32 %i.ak, -1
   br i1 %.not.i, label %bb.r, label %Py_DECREF.exit53
 
 bb.r:                                             ; preds = %bb.q
   %i.al = add nsw i32 %i.ak, -1                   ; 2 uses
-  store i32 %i.al, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112
+  store i32 %i.al, ptr %i.aj, align 8, !tbaa !112
   %i.am = icmp eq i32 %i.al, 0
   br i1 %i.am, label %bb.s, label %Py_DECREF.exit53
 
 bb.s:                                             ; preds = %bb.r
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_NotImplementedStruct) #21
+  call void @_Py_Dealloc(ptr noundef nonnull %i.aj) #21
   br label %Py_DECREF.exit53
 
 Py_DECREF.exit53:                                 ; preds = %bb.q, %bb.r, %bb.s, %bb.e, %bb.d
@@ -897,23 +896,23 @@ bb.l:                                             ; preds = %bb.k
   store ptr %1, ptr %i.a, align 16, !tbaa !115
   %i.af = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %0, ptr %i.af, align 8, !tbaa !115
-  %i.ag = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 69832), ptr noundef %i.a, i64 noundef 2) ; 2 uses
+  %i.ag = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 69832), ptr noundef %i.a, i64 noundef 2) ; 5 uses
   %.not48 = icmp eq ptr %i.ag, @_Py_NotImplementedStruct
   br i1 %.not48, label %bb.m, label %Py_DECREF.exit53.thread75
 
 bb.m:                                             ; preds = %bb.l
-  %i.ah = load i32, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112 ; 2 uses
+  %i.ah = load i32, ptr %i.ag, align 8, !tbaa !112 ; 2 uses
   %.not.i52 = icmp sgt i32 %i.ah, -1
   br i1 %.not.i52, label %bb.n, label %PyType_IsSubtype.exit.thread
 
 bb.n:                                             ; preds = %bb.m
   %i.ai = add nsw i32 %i.ah, -1                   ; 2 uses
-  store i32 %i.ai, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112
+  store i32 %i.ai, ptr %i.ag, align 8, !tbaa !112
   %i.aj = icmp eq i32 %i.ai, 0
   br i1 %i.aj, label %bb.o, label %PyType_IsSubtype.exit.thread
 
 bb.o:                                             ; preds = %bb.n
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_NotImplementedStruct) #21
+  call void @_Py_Dealloc(ptr noundef nonnull %i.ag) #21
   br label %PyType_IsSubtype.exit.thread
 
 PyType_IsSubtype.exit.thread:                     ; preds = %bb.i, %bb.o, %bb.n, %bb.m, %bb.k, %bb.h, %PyType_IsSubtype.exit, %bb.f
@@ -921,7 +920,7 @@ PyType_IsSubtype.exit.thread:                     ; preds = %bb.i, %bb.o, %bb.n,
   store ptr %0, ptr %i.a, align 16, !tbaa !115
   %i.ak = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %1, ptr %i.ak, align 8, !tbaa !115
-  %i.al = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 70608), ptr noundef %i.a, i64 noundef 2) ; 2 uses
+  %i.al = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 70608), ptr noundef %i.a, i64 noundef 2) ; 5 uses
   %.not49 = icmp eq ptr %i.al, @_Py_NotImplementedStruct
   br i1 %.not49, label %bb.p, label %Py_DECREF.exit53.thread75
 
@@ -932,18 +931,18 @@ bb.p:                                             ; preds = %PyType_IsSubtype.ex
   br i1 %.not80, label %Py_DECREF.exit53.thread75, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.am = load i32, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112 ; 2 uses
+  %i.am = load i32, ptr %i.al, align 8, !tbaa !112 ; 2 uses
   %.not.i = icmp sgt i32 %i.am, -1
   br i1 %.not.i, label %bb.r, label %Py_DECREF.exit53
 
 bb.r:                                             ; preds = %bb.q
   %i.an = add nsw i32 %i.am, -1                   ; 2 uses
-  store i32 %i.an, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112
+  store i32 %i.an, ptr %i.al, align 8, !tbaa !112
   %i.ao = icmp eq i32 %i.an, 0
   br i1 %i.ao, label %bb.s, label %Py_DECREF.exit53
 
 bb.s:                                             ; preds = %bb.r
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_NotImplementedStruct) #21
+  call void @_Py_Dealloc(ptr noundef nonnull %i.al) #21
   br label %Py_DECREF.exit53
 
 Py_DECREF.exit53:                                 ; preds = %bb.q, %bb.r, %bb.s, %bb.e, %bb.d
@@ -1060,23 +1059,23 @@ bb.l:                                             ; preds = %bb.k
   store ptr %1, ptr %i.a, align 16, !tbaa !115
   %i.af = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %0, ptr %i.af, align 8, !tbaa !115
-  %i.ag = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 69504), ptr noundef %i.a, i64 noundef 2) ; 2 uses
+  %i.ag = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 69504), ptr noundef %i.a, i64 noundef 2) ; 5 uses
   %.not48 = icmp eq ptr %i.ag, @_Py_NotImplementedStruct
   br i1 %.not48, label %bb.m, label %Py_DECREF.exit53.thread75
 
 bb.m:                                             ; preds = %bb.l
-  %i.ah = load i32, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112 ; 2 uses
+  %i.ah = load i32, ptr %i.ag, align 8, !tbaa !112 ; 2 uses
   %.not.i52 = icmp sgt i32 %i.ah, -1
   br i1 %.not.i52, label %bb.n, label %PyType_IsSubtype.exit.thread
 
 bb.n:                                             ; preds = %bb.m
   %i.ai = add nsw i32 %i.ah, -1                   ; 2 uses
-  store i32 %i.ai, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112
+  store i32 %i.ai, ptr %i.ag, align 8, !tbaa !112
   %i.aj = icmp eq i32 %i.ai, 0
   br i1 %i.aj, label %bb.o, label %PyType_IsSubtype.exit.thread
 
 bb.o:                                             ; preds = %bb.n
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_NotImplementedStruct) #21
+  call void @_Py_Dealloc(ptr noundef nonnull %i.ag) #21
   br label %PyType_IsSubtype.exit.thread
 
 PyType_IsSubtype.exit.thread:                     ; preds = %bb.i, %bb.o, %bb.n, %bb.m, %bb.k, %bb.h, %PyType_IsSubtype.exit, %bb.f
@@ -1084,7 +1083,7 @@ PyType_IsSubtype.exit.thread:                     ; preds = %bb.i, %bb.o, %bb.n,
   store ptr %0, ptr %i.a, align 16, !tbaa !115
   %i.ak = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %1, ptr %i.ak, align 8, !tbaa !115
-  %i.al = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 67816), ptr noundef %i.a, i64 noundef 2) ; 2 uses
+  %i.al = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 67816), ptr noundef %i.a, i64 noundef 2) ; 5 uses
   %.not49 = icmp eq ptr %i.al, @_Py_NotImplementedStruct
   br i1 %.not49, label %bb.p, label %Py_DECREF.exit53.thread75
 
@@ -1095,18 +1094,18 @@ bb.p:                                             ; preds = %PyType_IsSubtype.ex
   br i1 %.not80, label %Py_DECREF.exit53.thread75, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.am = load i32, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112 ; 2 uses
+  %i.am = load i32, ptr %i.al, align 8, !tbaa !112 ; 2 uses
   %.not.i = icmp sgt i32 %i.am, -1
   br i1 %.not.i, label %bb.r, label %Py_DECREF.exit53
 
 bb.r:                                             ; preds = %bb.q
   %i.an = add nsw i32 %i.am, -1                   ; 2 uses
-  store i32 %i.an, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112
+  store i32 %i.an, ptr %i.al, align 8, !tbaa !112
   %i.ao = icmp eq i32 %i.an, 0
   br i1 %i.ao, label %bb.s, label %Py_DECREF.exit53
 
 bb.s:                                             ; preds = %bb.r
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_NotImplementedStruct) #21
+  call void @_Py_Dealloc(ptr noundef nonnull %i.al) #21
   br label %Py_DECREF.exit53
 
 Py_DECREF.exit53:                                 ; preds = %bb.q, %bb.r, %bb.s, %bb.e, %bb.d
@@ -1223,23 +1222,23 @@ bb.l:                                             ; preds = %bb.k
   store ptr %1, ptr %i.a, align 16, !tbaa !115
   %i.af = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %0, ptr %i.af, align 8, !tbaa !115
-  %i.ag = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 69448), ptr noundef %i.a, i64 noundef 2) ; 2 uses
+  %i.ag = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 69448), ptr noundef %i.a, i64 noundef 2) ; 5 uses
   %.not48 = icmp eq ptr %i.ag, @_Py_NotImplementedStruct
   br i1 %.not48, label %bb.m, label %Py_DECREF.exit53.thread75
 
 bb.m:                                             ; preds = %bb.l
-  %i.ah = load i32, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112 ; 2 uses
+  %i.ah = load i32, ptr %i.ag, align 8, !tbaa !112 ; 2 uses
   %.not.i52 = icmp sgt i32 %i.ah, -1
   br i1 %.not.i52, label %bb.n, label %PyType_IsSubtype.exit.thread
 
 bb.n:                                             ; preds = %bb.m
   %i.ai = add nsw i32 %i.ah, -1                   ; 2 uses
-  store i32 %i.ai, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112
+  store i32 %i.ai, ptr %i.ag, align 8, !tbaa !112
   %i.aj = icmp eq i32 %i.ai, 0
   br i1 %i.aj, label %bb.o, label %PyType_IsSubtype.exit.thread
 
 bb.o:                                             ; preds = %bb.n
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_NotImplementedStruct) #21
+  call void @_Py_Dealloc(ptr noundef nonnull %i.ag) #21
   br label %PyType_IsSubtype.exit.thread
 
 PyType_IsSubtype.exit.thread:                     ; preds = %bb.i, %bb.o, %bb.n, %bb.m, %bb.k, %bb.h, %PyType_IsSubtype.exit, %bb.f
@@ -1247,7 +1246,7 @@ PyType_IsSubtype.exit.thread:                     ; preds = %bb.i, %bb.o, %bb.n,
   store ptr %0, ptr %i.a, align 16, !tbaa !115
   %i.ak = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %1, ptr %i.ak, align 8, !tbaa !115
-  %i.al = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 67656), ptr noundef %i.a, i64 noundef 2) ; 2 uses
+  %i.al = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 67656), ptr noundef %i.a, i64 noundef 2) ; 5 uses
   %.not49 = icmp eq ptr %i.al, @_Py_NotImplementedStruct
   br i1 %.not49, label %bb.p, label %Py_DECREF.exit53.thread75
 
@@ -1258,18 +1257,18 @@ bb.p:                                             ; preds = %PyType_IsSubtype.ex
   br i1 %.not80, label %Py_DECREF.exit53.thread75, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.am = load i32, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112 ; 2 uses
+  %i.am = load i32, ptr %i.al, align 8, !tbaa !112 ; 2 uses
   %.not.i = icmp sgt i32 %i.am, -1
   br i1 %.not.i, label %bb.r, label %Py_DECREF.exit53
 
 bb.r:                                             ; preds = %bb.q
   %i.an = add nsw i32 %i.am, -1                   ; 2 uses
-  store i32 %i.an, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112
+  store i32 %i.an, ptr %i.al, align 8, !tbaa !112
   %i.ao = icmp eq i32 %i.an, 0
   br i1 %i.ao, label %bb.s, label %Py_DECREF.exit53
 
 bb.s:                                             ; preds = %bb.r
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_NotImplementedStruct) #21
+  call void @_Py_Dealloc(ptr noundef nonnull %i.al) #21
   br label %Py_DECREF.exit53
 
 Py_DECREF.exit53:                                 ; preds = %bb.q, %bb.r, %bb.s, %bb.e, %bb.d
@@ -1386,23 +1385,23 @@ bb.l:                                             ; preds = %bb.k
   store ptr %1, ptr %i.a, align 16, !tbaa !115
   %i.af = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %0, ptr %i.af, align 8, !tbaa !115
-  %i.ag = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 68936), ptr noundef %i.a, i64 noundef 2) ; 2 uses
+  %i.ag = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 68936), ptr noundef %i.a, i64 noundef 2) ; 5 uses
   %.not48 = icmp eq ptr %i.ag, @_Py_NotImplementedStruct
   br i1 %.not48, label %bb.m, label %Py_DECREF.exit53.thread75
 
 bb.m:                                             ; preds = %bb.l
-  %i.ah = load i32, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112 ; 2 uses
+  %i.ah = load i32, ptr %i.ag, align 8, !tbaa !112 ; 2 uses
   %.not.i52 = icmp sgt i32 %i.ah, -1
   br i1 %.not.i52, label %bb.n, label %PyType_IsSubtype.exit.thread
 
 bb.n:                                             ; preds = %bb.m
   %i.ai = add nsw i32 %i.ah, -1                   ; 2 uses
-  store i32 %i.ai, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112
+  store i32 %i.ai, ptr %i.ag, align 8, !tbaa !112
   %i.aj = icmp eq i32 %i.ai, 0
   br i1 %i.aj, label %bb.o, label %PyType_IsSubtype.exit.thread
 
 bb.o:                                             ; preds = %bb.n
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_NotImplementedStruct) #21
+  call void @_Py_Dealloc(ptr noundef nonnull %i.ag) #21
   br label %PyType_IsSubtype.exit.thread
 
 PyType_IsSubtype.exit.thread:                     ; preds = %bb.i, %bb.o, %bb.n, %bb.m, %bb.k, %bb.h, %PyType_IsSubtype.exit, %bb.f
@@ -1410,7 +1409,7 @@ PyType_IsSubtype.exit.thread:                     ; preds = %bb.i, %bb.o, %bb.n,
   store ptr %0, ptr %i.a, align 16, !tbaa !115
   %i.ak = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %1, ptr %i.ak, align 8, !tbaa !115
-  %i.al = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 64440), ptr noundef %i.a, i64 noundef 2) ; 2 uses
+  %i.al = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 64440), ptr noundef %i.a, i64 noundef 2) ; 5 uses
   %.not49 = icmp eq ptr %i.al, @_Py_NotImplementedStruct
   br i1 %.not49, label %bb.p, label %Py_DECREF.exit53.thread75
 
@@ -1421,18 +1420,18 @@ bb.p:                                             ; preds = %PyType_IsSubtype.ex
   br i1 %.not80, label %Py_DECREF.exit53.thread75, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.am = load i32, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112 ; 2 uses
+  %i.am = load i32, ptr %i.al, align 8, !tbaa !112 ; 2 uses
   %.not.i = icmp sgt i32 %i.am, -1
   br i1 %.not.i, label %bb.r, label %Py_DECREF.exit53
 
 bb.r:                                             ; preds = %bb.q
   %i.an = add nsw i32 %i.am, -1                   ; 2 uses
-  store i32 %i.an, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112
+  store i32 %i.an, ptr %i.al, align 8, !tbaa !112
   %i.ao = icmp eq i32 %i.an, 0
   br i1 %i.ao, label %bb.s, label %Py_DECREF.exit53
 
 bb.s:                                             ; preds = %bb.r
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_NotImplementedStruct) #21
+  call void @_Py_Dealloc(ptr noundef nonnull %i.al) #21
   br label %Py_DECREF.exit53
 
 Py_DECREF.exit53:                                 ; preds = %bb.q, %bb.r, %bb.s, %bb.e, %bb.d
@@ -1554,23 +1553,23 @@ bb.m:                                             ; preds = %bb.l
   store ptr %1, ptr %i.a, align 16, !tbaa !115
   %i.ah = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %0, ptr %i.ah, align 8, !tbaa !115
-  %i.ai = call fastcc ptr @vectorcall_maybe(ptr noundef %i.g, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 69664), ptr noundef %i.a, i64 noundef 2), !inline_history !489 ; 2 uses
+  %i.ai = call fastcc ptr @vectorcall_maybe(ptr noundef %i.g, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 69664), ptr noundef %i.a, i64 noundef 2), !inline_history !489 ; 5 uses
   %.not48.i = icmp eq ptr %i.ai, @_Py_NotImplementedStruct
   br i1 %.not48.i, label %bb.n, label %slot_nb_power_binary.exit
 
 bb.n:                                             ; preds = %bb.m
-  %i.aj = load i32, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112 ; 2 uses
+  %i.aj = load i32, ptr %i.ai, align 8, !tbaa !112 ; 2 uses
   %.not.i52.i = icmp sgt i32 %i.aj, -1
   br i1 %.not.i52.i, label %bb.o, label %PyType_IsSubtype.exit.thread.i
 
 bb.o:                                             ; preds = %bb.n
   %i.ak = add nsw i32 %i.aj, -1                   ; 2 uses
-  store i32 %i.ak, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112
+  store i32 %i.ak, ptr %i.ai, align 8, !tbaa !112
   %i.al = icmp eq i32 %i.ak, 0
   br i1 %i.al, label %bb.p, label %PyType_IsSubtype.exit.thread.i
 
 bb.p:                                             ; preds = %bb.o
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_NotImplementedStruct) #21, !inline_history !489
+  call void @_Py_Dealloc(ptr noundef nonnull %i.ai) #21, !inline_history !489
   br label %PyType_IsSubtype.exit.thread.i
 
 PyType_IsSubtype.exit.thread.i:                   ; preds = %bb.j, %bb.p, %bb.o, %bb.n, %bb.l, %PyType_IsSubtype.exit.i, %bb.i, %bb.g
@@ -1578,7 +1577,7 @@ PyType_IsSubtype.exit.thread.i:                   ; preds = %bb.j, %bb.p, %bb.o,
   store ptr %0, ptr %i.a, align 16, !tbaa !115
   %i.am = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %1, ptr %i.am, align 8, !tbaa !115
-  %i.an = call fastcc ptr @vectorcall_maybe(ptr noundef %i.g, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 68664), ptr noundef %i.a, i64 noundef 2), !inline_history !489 ; 2 uses
+  %i.an = call fastcc ptr @vectorcall_maybe(ptr noundef %i.g, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 68664), ptr noundef %i.a, i64 noundef 2), !inline_history !489 ; 5 uses
   %.not49.i = icmp eq ptr %i.an, @_Py_NotImplementedStruct
   br i1 %.not49.i, label %bb.q, label %slot_nb_power_binary.exit
 
@@ -1589,18 +1588,18 @@ bb.q:                                             ; preds = %PyType_IsSubtype.ex
   br i1 %.not80.i, label %slot_nb_power_binary.exit, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  %i.ao = load i32, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112 ; 2 uses
+  %i.ao = load i32, ptr %i.an, align 8, !tbaa !112 ; 2 uses
   %.not.i.i = icmp sgt i32 %i.ao, -1
   br i1 %.not.i.i, label %bb.s, label %Py_DECREF.exit53.i
 
 bb.s:                                             ; preds = %bb.r
   %i.ap = add nsw i32 %i.ao, -1                   ; 2 uses
-  store i32 %i.ap, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112
+  store i32 %i.ap, ptr %i.an, align 8, !tbaa !112
   %i.aq = icmp eq i32 %i.ap, 0
   br i1 %i.aq, label %bb.t, label %Py_DECREF.exit53.i
 
 bb.t:                                             ; preds = %bb.s
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_NotImplementedStruct) #21, !inline_history !489
+  call void @_Py_Dealloc(ptr noundef nonnull %i.an) #21, !inline_history !489
   br label %Py_DECREF.exit53.i
 
 Py_DECREF.exit53.i:                               ; preds = %bb.t, %bb.s, %bb.r, %bb.f, %bb.e
@@ -1712,23 +1711,23 @@ bb.ag:                                            ; preds = %bb.af
   store ptr %0, ptr %i.bu, align 8, !tbaa !115
   %i.bv = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store ptr %2, ptr %i.bv, align 16, !tbaa !115
-  %i.bw = call fastcc ptr @vectorcall_maybe(ptr noundef %i.at, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 69664), ptr noundef %i.b, i64 noundef 3) ; 2 uses
+  %i.bw = call fastcc ptr @vectorcall_maybe(ptr noundef %i.at, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 69664), ptr noundef %i.b, i64 noundef 3) ; 5 uses
   %.not56 = icmp eq ptr %i.bw, @_Py_NotImplementedStruct
   br i1 %.not56, label %bb.ah, label %Py_DECREF.exit61.thread86
 
 bb.ah:                                            ; preds = %bb.ag
-  %i.bx = load i32, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112 ; 2 uses
+  %i.bx = load i32, ptr %i.bw, align 8, !tbaa !112 ; 2 uses
   %.not.i60 = icmp sgt i32 %i.bx, -1
   br i1 %.not.i60, label %bb.ai, label %PyType_IsSubtype.exit.thread
 
 bb.ai:                                            ; preds = %bb.ah
   %i.by = add nsw i32 %i.bx, -1                   ; 2 uses
-  store i32 %i.by, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112
+  store i32 %i.by, ptr %i.bw, align 8, !tbaa !112
   %i.bz = icmp eq i32 %i.by, 0
   br i1 %i.bz, label %bb.aj, label %PyType_IsSubtype.exit.thread
 
 bb.aj:                                            ; preds = %bb.ai
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_NotImplementedStruct) #21
+  call void @_Py_Dealloc(ptr noundef nonnull %i.bw) #21
   br label %PyType_IsSubtype.exit.thread
 
 PyType_IsSubtype.exit.thread:                     ; preds = %bb.ad, %bb.aj, %bb.ai, %bb.ah, %bb.af, %bb.ac, %PyType_IsSubtype.exit, %bb.aa
@@ -1738,7 +1737,7 @@ PyType_IsSubtype.exit.thread:                     ; preds = %bb.ad, %bb.aj, %bb.
   store ptr %1, ptr %i.ca, align 8, !tbaa !115
   %i.cb = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store ptr %2, ptr %i.cb, align 16, !tbaa !115
-  %i.cc = call fastcc ptr @vectorcall_maybe(ptr noundef %i.at, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 68664), ptr noundef %i.b, i64 noundef 3) ; 2 uses
+  %i.cc = call fastcc ptr @vectorcall_maybe(ptr noundef %i.at, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 68664), ptr noundef %i.b, i64 noundef 3) ; 5 uses
   %.not57 = icmp eq ptr %i.cc, @_Py_NotImplementedStruct
   br i1 %.not57, label %bb.ak, label %Py_DECREF.exit61.thread86
 
@@ -1749,18 +1748,18 @@ bb.ak:                                            ; preds = %PyType_IsSubtype.ex
   br i1 %.not91, label %Py_DECREF.exit61.thread86, label %bb.al
 
 bb.al:                                            ; preds = %bb.ak
-  %i.cd = load i32, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112 ; 2 uses
+  %i.cd = load i32, ptr %i.cc, align 8, !tbaa !112 ; 2 uses
   %.not.i = icmp sgt i32 %i.cd, -1
   br i1 %.not.i, label %bb.am, label %Py_DECREF.exit61
 
 bb.am:                                            ; preds = %bb.al
   %i.ce = add nsw i32 %i.cd, -1                   ; 2 uses
-  store i32 %i.ce, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112
+  store i32 %i.ce, ptr %i.cc, align 8, !tbaa !112
   %i.cf = icmp eq i32 %i.ce, 0
   br i1 %i.cf, label %bb.an, label %Py_DECREF.exit61
 
 bb.an:                                            ; preds = %bb.am
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_NotImplementedStruct) #21
+  call void @_Py_Dealloc(ptr noundef nonnull %i.cc) #21
   br label %Py_DECREF.exit61
 
 Py_DECREF.exit61:                                 ; preds = %bb.al, %bb.am, %bb.an, %bb.z, %bb.y
@@ -2147,23 +2146,23 @@ bb.l:                                             ; preds = %bb.k
   store ptr %1, ptr %i.a, align 16, !tbaa !115
   %i.af = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %0, ptr %i.af, align 8, !tbaa !115
-  %i.ag = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 69336), ptr noundef %i.a, i64 noundef 2) ; 2 uses
+  %i.ag = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 69336), ptr noundef %i.a, i64 noundef 2) ; 5 uses
   %.not48 = icmp eq ptr %i.ag, @_Py_NotImplementedStruct
   br i1 %.not48, label %bb.m, label %Py_DECREF.exit53.thread75
 
 bb.m:                                             ; preds = %bb.l
-  %i.ah = load i32, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112 ; 2 uses
+  %i.ah = load i32, ptr %i.ag, align 8, !tbaa !112 ; 2 uses
   %.not.i52 = icmp sgt i32 %i.ah, -1
   br i1 %.not.i52, label %bb.n, label %PyType_IsSubtype.exit.thread
 
 bb.n:                                             ; preds = %bb.m
   %i.ai = add nsw i32 %i.ah, -1                   ; 2 uses
-  store i32 %i.ai, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112
+  store i32 %i.ai, ptr %i.ag, align 8, !tbaa !112
   %i.aj = icmp eq i32 %i.ai, 0
   br i1 %i.aj, label %bb.o, label %PyType_IsSubtype.exit.thread
 
 bb.o:                                             ; preds = %bb.n
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_NotImplementedStruct) #21
+  call void @_Py_Dealloc(ptr noundef nonnull %i.ag) #21
   br label %PyType_IsSubtype.exit.thread
 
 PyType_IsSubtype.exit.thread:                     ; preds = %bb.i, %bb.o, %bb.n, %bb.m, %bb.k, %bb.h, %PyType_IsSubtype.exit, %bb.f
@@ -2171,7 +2170,7 @@ PyType_IsSubtype.exit.thread:                     ; preds = %bb.i, %bb.o, %bb.n,
   store ptr %0, ptr %i.a, align 16, !tbaa !115
   %i.ak = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %1, ptr %i.ak, align 8, !tbaa !115
-  %i.al = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 67328), ptr noundef %i.a, i64 noundef 2) ; 2 uses
+  %i.al = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 67328), ptr noundef %i.a, i64 noundef 2) ; 5 uses
   %.not49 = icmp eq ptr %i.al, @_Py_NotImplementedStruct
   br i1 %.not49, label %bb.p, label %Py_DECREF.exit53.thread75
 
@@ -2182,18 +2181,18 @@ bb.p:                                             ; preds = %PyType_IsSubtype.ex
   br i1 %.not80, label %Py_DECREF.exit53.thread75, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.am = load i32, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112 ; 2 uses
+  %i.am = load i32, ptr %i.al, align 8, !tbaa !112 ; 2 uses
   %.not.i = icmp sgt i32 %i.am, -1
   br i1 %.not.i, label %bb.r, label %Py_DECREF.exit53
 
 bb.r:                                             ; preds = %bb.q
   %i.an = add nsw i32 %i.am, -1                   ; 2 uses
-  store i32 %i.an, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112
+  store i32 %i.an, ptr %i.al, align 8, !tbaa !112
   %i.ao = icmp eq i32 %i.an, 0
   br i1 %i.ao, label %bb.s, label %Py_DECREF.exit53
 
 bb.s:                                             ; preds = %bb.r
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_NotImplementedStruct) #21
+  call void @_Py_Dealloc(ptr noundef nonnull %i.al) #21
   br label %Py_DECREF.exit53
 
 Py_DECREF.exit53:                                 ; preds = %bb.q, %bb.r, %bb.s, %bb.e, %bb.d
@@ -2310,23 +2309,23 @@ bb.l:                                             ; preds = %bb.k
   store ptr %1, ptr %i.a, align 16, !tbaa !115
   %i.af = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %0, ptr %i.af, align 8, !tbaa !115
-  %i.ag = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 69720), ptr noundef %i.a, i64 noundef 2) ; 2 uses
+  %i.ag = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 69720), ptr noundef %i.a, i64 noundef 2) ; 5 uses
   %.not48 = icmp eq ptr %i.ag, @_Py_NotImplementedStruct
   br i1 %.not48, label %bb.m, label %Py_DECREF.exit53.thread75
 
 bb.m:                                             ; preds = %bb.l
-  %i.ah = load i32, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112 ; 2 uses
+  %i.ah = load i32, ptr %i.ag, align 8, !tbaa !112 ; 2 uses
   %.not.i52 = icmp sgt i32 %i.ah, -1
   br i1 %.not.i52, label %bb.n, label %PyType_IsSubtype.exit.thread
 
 bb.n:                                             ; preds = %bb.m
   %i.ai = add nsw i32 %i.ah, -1                   ; 2 uses
-  store i32 %i.ai, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112
+  store i32 %i.ai, ptr %i.ag, align 8, !tbaa !112
   %i.aj = icmp eq i32 %i.ai, 0
   br i1 %i.aj, label %bb.o, label %PyType_IsSubtype.exit.thread
 
 bb.o:                                             ; preds = %bb.n
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_NotImplementedStruct) #21
+  call void @_Py_Dealloc(ptr noundef nonnull %i.ag) #21
   br label %PyType_IsSubtype.exit.thread
 
 PyType_IsSubtype.exit.thread:                     ; preds = %bb.i, %bb.o, %bb.n, %bb.m, %bb.k, %bb.h, %PyType_IsSubtype.exit, %bb.f
@@ -2334,7 +2333,7 @@ PyType_IsSubtype.exit.thread:                     ; preds = %bb.i, %bb.o, %bb.n,
   store ptr %0, ptr %i.a, align 16, !tbaa !115
   %i.ak = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %1, ptr %i.ak, align 8, !tbaa !115
-  %i.al = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 69776), ptr noundef %i.a, i64 noundef 2) ; 2 uses
+  %i.al = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 69776), ptr noundef %i.a, i64 noundef 2) ; 5 uses
   %.not49 = icmp eq ptr %i.al, @_Py_NotImplementedStruct
   br i1 %.not49, label %bb.p, label %Py_DECREF.exit53.thread75
 
@@ -2345,18 +2344,18 @@ bb.p:                                             ; preds = %PyType_IsSubtype.ex
   br i1 %.not80, label %Py_DECREF.exit53.thread75, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.am = load i32, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112 ; 2 uses
+  %i.am = load i32, ptr %i.al, align 8, !tbaa !112 ; 2 uses
   %.not.i = icmp sgt i32 %i.am, -1
   br i1 %.not.i, label %bb.r, label %Py_DECREF.exit53
 
 bb.r:                                             ; preds = %bb.q
   %i.an = add nsw i32 %i.am, -1                   ; 2 uses
-  store i32 %i.an, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112
+  store i32 %i.an, ptr %i.al, align 8, !tbaa !112
   %i.ao = icmp eq i32 %i.an, 0
   br i1 %i.ao, label %bb.s, label %Py_DECREF.exit53
 
 bb.s:                                             ; preds = %bb.r
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_NotImplementedStruct) #21
+  call void @_Py_Dealloc(ptr noundef nonnull %i.al) #21
   br label %Py_DECREF.exit53
 
 Py_DECREF.exit53:                                 ; preds = %bb.q, %bb.r, %bb.s, %bb.e, %bb.d
@@ -2473,23 +2472,23 @@ bb.l:                                             ; preds = %bb.k
   store ptr %1, ptr %i.a, align 16, !tbaa !115
   %i.af = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %0, ptr %i.af, align 8, !tbaa !115
-  %i.ag = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 68880), ptr noundef %i.a, i64 noundef 2) ; 2 uses
+  %i.ag = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 68880), ptr noundef %i.a, i64 noundef 2) ; 5 uses
   %.not48 = icmp eq ptr %i.ag, @_Py_NotImplementedStruct
   br i1 %.not48, label %bb.m, label %Py_DECREF.exit53.thread75
 
 bb.m:                                             ; preds = %bb.l
-  %i.ah = load i32, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112 ; 2 uses
+  %i.ah = load i32, ptr %i.ag, align 8, !tbaa !112 ; 2 uses
   %.not.i52 = icmp sgt i32 %i.ah, -1
   br i1 %.not.i52, label %bb.n, label %PyType_IsSubtype.exit.thread
 
 bb.n:                                             ; preds = %bb.m
   %i.ai = add nsw i32 %i.ah, -1                   ; 2 uses
-  store i32 %i.ai, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112
+  store i32 %i.ai, ptr %i.ag, align 8, !tbaa !112
   %i.aj = icmp eq i32 %i.ai, 0
   br i1 %i.aj, label %bb.o, label %PyType_IsSubtype.exit.thread
 
 bb.o:                                             ; preds = %bb.n
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_NotImplementedStruct) #21
+  call void @_Py_Dealloc(ptr noundef nonnull %i.ag) #21
   br label %PyType_IsSubtype.exit.thread
 
 PyType_IsSubtype.exit.thread:                     ; preds = %bb.i, %bb.o, %bb.n, %bb.m, %bb.k, %bb.h, %PyType_IsSubtype.exit, %bb.f
@@ -2497,7 +2496,7 @@ PyType_IsSubtype.exit.thread:                     ; preds = %bb.i, %bb.o, %bb.n,
   store ptr %0, ptr %i.a, align 16, !tbaa !115
   %i.ak = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %1, ptr %i.ak, align 8, !tbaa !115
-  %i.al = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 62552), ptr noundef %i.a, i64 noundef 2) ; 2 uses
+  %i.al = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 62552), ptr noundef %i.a, i64 noundef 2) ; 5 uses
   %.not49 = icmp eq ptr %i.al, @_Py_NotImplementedStruct
   br i1 %.not49, label %bb.p, label %Py_DECREF.exit53.thread75
 
@@ -2508,18 +2507,18 @@ bb.p:                                             ; preds = %PyType_IsSubtype.ex
   br i1 %.not80, label %Py_DECREF.exit53.thread75, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.am = load i32, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112 ; 2 uses
+  %i.am = load i32, ptr %i.al, align 8, !tbaa !112 ; 2 uses
   %.not.i = icmp sgt i32 %i.am, -1
   br i1 %.not.i, label %bb.r, label %Py_DECREF.exit53
 
 bb.r:                                             ; preds = %bb.q
   %i.an = add nsw i32 %i.am, -1                   ; 2 uses
-  store i32 %i.an, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112
+  store i32 %i.an, ptr %i.al, align 8, !tbaa !112
   %i.ao = icmp eq i32 %i.an, 0
   br i1 %i.ao, label %bb.s, label %Py_DECREF.exit53
 
 bb.s:                                             ; preds = %bb.r
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_NotImplementedStruct) #21
+  call void @_Py_Dealloc(ptr noundef nonnull %i.al) #21
   br label %Py_DECREF.exit53
 
 Py_DECREF.exit53:                                 ; preds = %bb.q, %bb.r, %bb.s, %bb.e, %bb.d
@@ -2636,23 +2635,23 @@ bb.l:                                             ; preds = %bb.k
   store ptr %1, ptr %i.a, align 16, !tbaa !115
   %i.af = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %0, ptr %i.af, align 8, !tbaa !115
-  %i.ag = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 69944), ptr noundef %i.a, i64 noundef 2) ; 2 uses
+  %i.ag = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 69944), ptr noundef %i.a, i64 noundef 2) ; 5 uses
   %.not48 = icmp eq ptr %i.ag, @_Py_NotImplementedStruct
   br i1 %.not48, label %bb.m, label %Py_DECREF.exit53.thread75
 
 bb.m:                                             ; preds = %bb.l
-  %i.ah = load i32, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112 ; 2 uses
+  %i.ah = load i32, ptr %i.ag, align 8, !tbaa !112 ; 2 uses
   %.not.i52 = icmp sgt i32 %i.ah, -1
   br i1 %.not.i52, label %bb.n, label %PyType_IsSubtype.exit.thread
 
 bb.n:                                             ; preds = %bb.m
   %i.ai = add nsw i32 %i.ah, -1                   ; 2 uses
-  store i32 %i.ai, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112
+  store i32 %i.ai, ptr %i.ag, align 8, !tbaa !112
   %i.aj = icmp eq i32 %i.ai, 0
   br i1 %i.aj, label %bb.o, label %PyType_IsSubtype.exit.thread
 
 bb.o:                                             ; preds = %bb.n
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_NotImplementedStruct) #21
+  call void @_Py_Dealloc(ptr noundef nonnull %i.ag) #21
   br label %PyType_IsSubtype.exit.thread
 
 PyType_IsSubtype.exit.thread:                     ; preds = %bb.i, %bb.o, %bb.n, %bb.m, %bb.k, %bb.h, %PyType_IsSubtype.exit, %bb.f
@@ -2660,7 +2659,7 @@ PyType_IsSubtype.exit.thread:                     ; preds = %bb.i, %bb.o, %bb.n,
   store ptr %0, ptr %i.a, align 16, !tbaa !115
   %i.ak = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %1, ptr %i.ak, align 8, !tbaa !115
-  %i.al = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 71424), ptr noundef %i.a, i64 noundef 2) ; 2 uses
+  %i.al = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 71424), ptr noundef %i.a, i64 noundef 2) ; 5 uses
   %.not49 = icmp eq ptr %i.al, @_Py_NotImplementedStruct
   br i1 %.not49, label %bb.p, label %Py_DECREF.exit53.thread75
 
@@ -2671,18 +2670,18 @@ bb.p:                                             ; preds = %PyType_IsSubtype.ex
   br i1 %.not80, label %Py_DECREF.exit53.thread75, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.am = load i32, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112 ; 2 uses
+  %i.am = load i32, ptr %i.al, align 8, !tbaa !112 ; 2 uses
   %.not.i = icmp sgt i32 %i.am, -1
   br i1 %.not.i, label %bb.r, label %Py_DECREF.exit53
 
 bb.r:                                             ; preds = %bb.q
   %i.an = add nsw i32 %i.am, -1                   ; 2 uses
-  store i32 %i.an, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112
+  store i32 %i.an, ptr %i.al, align 8, !tbaa !112
   %i.ao = icmp eq i32 %i.an, 0
   br i1 %i.ao, label %bb.s, label %Py_DECREF.exit53
 
 bb.s:                                             ; preds = %bb.r
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_NotImplementedStruct) #21
+  call void @_Py_Dealloc(ptr noundef nonnull %i.al) #21
   br label %Py_DECREF.exit53
 
 Py_DECREF.exit53:                                 ; preds = %bb.q, %bb.r, %bb.s, %bb.e, %bb.d
@@ -2799,23 +2798,23 @@ bb.l:                                             ; preds = %bb.k
   store ptr %1, ptr %i.a, align 16, !tbaa !115
   %i.af = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %0, ptr %i.af, align 8, !tbaa !115
-  %i.ag = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 69560), ptr noundef %i.a, i64 noundef 2) ; 2 uses
+  %i.ag = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 69560), ptr noundef %i.a, i64 noundef 2) ; 5 uses
   %.not48 = icmp eq ptr %i.ag, @_Py_NotImplementedStruct
   br i1 %.not48, label %bb.m, label %Py_DECREF.exit53.thread75
 
 bb.m:                                             ; preds = %bb.l
-  %i.ah = load i32, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112 ; 2 uses
+  %i.ah = load i32, ptr %i.ag, align 8, !tbaa !112 ; 2 uses
   %.not.i52 = icmp sgt i32 %i.ah, -1
   br i1 %.not.i52, label %bb.n, label %PyType_IsSubtype.exit.thread
 
 bb.n:                                             ; preds = %bb.m
   %i.ai = add nsw i32 %i.ah, -1                   ; 2 uses
-  store i32 %i.ai, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112
+  store i32 %i.ai, ptr %i.ag, align 8, !tbaa !112
   %i.aj = icmp eq i32 %i.ai, 0
   br i1 %i.aj, label %bb.o, label %PyType_IsSubtype.exit.thread
 
 bb.o:                                             ; preds = %bb.n
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_NotImplementedStruct) #21
+  call void @_Py_Dealloc(ptr noundef nonnull %i.ag) #21
   br label %PyType_IsSubtype.exit.thread
 
 PyType_IsSubtype.exit.thread:                     ; preds = %bb.i, %bb.o, %bb.n, %bb.m, %bb.k, %bb.h, %PyType_IsSubtype.exit, %bb.f
@@ -2823,7 +2822,7 @@ PyType_IsSubtype.exit.thread:                     ; preds = %bb.i, %bb.o, %bb.n,
   store ptr %0, ptr %i.a, align 16, !tbaa !115
   %i.ak = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %1, ptr %i.ak, align 8, !tbaa !115
-  %i.al = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 68288), ptr noundef %i.a, i64 noundef 2) ; 2 uses
+  %i.al = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 68288), ptr noundef %i.a, i64 noundef 2) ; 5 uses
   %.not49 = icmp eq ptr %i.al, @_Py_NotImplementedStruct
   br i1 %.not49, label %bb.p, label %Py_DECREF.exit53.thread75
 
@@ -2834,18 +2833,18 @@ bb.p:                                             ; preds = %PyType_IsSubtype.ex
   br i1 %.not80, label %Py_DECREF.exit53.thread75, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.am = load i32, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112 ; 2 uses
+  %i.am = load i32, ptr %i.al, align 8, !tbaa !112 ; 2 uses
   %.not.i = icmp sgt i32 %i.am, -1
   br i1 %.not.i, label %bb.r, label %Py_DECREF.exit53
 
 bb.r:                                             ; preds = %bb.q
   %i.an = add nsw i32 %i.am, -1                   ; 2 uses
-  store i32 %i.an, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112
+  store i32 %i.an, ptr %i.al, align 8, !tbaa !112
   %i.ao = icmp eq i32 %i.an, 0
   br i1 %i.ao, label %bb.s, label %Py_DECREF.exit53
 
 bb.s:                                             ; preds = %bb.r
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_NotImplementedStruct) #21
+  call void @_Py_Dealloc(ptr noundef nonnull %i.al) #21
   br label %Py_DECREF.exit53
 
 Py_DECREF.exit53:                                 ; preds = %bb.q, %bb.r, %bb.s, %bb.e, %bb.d
@@ -3114,23 +3113,23 @@ bb.l:                                             ; preds = %bb.k
   store ptr %1, ptr %i.a, align 16, !tbaa !115
   %i.af = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %0, ptr %i.af, align 8, !tbaa !115
-  %i.ag = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 69280), ptr noundef %i.a, i64 noundef 2) ; 2 uses
+  %i.ag = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 69280), ptr noundef %i.a, i64 noundef 2) ; 5 uses
   %.not48 = icmp eq ptr %i.ag, @_Py_NotImplementedStruct
   br i1 %.not48, label %bb.m, label %Py_DECREF.exit53.thread75
 
 bb.m:                                             ; preds = %bb.l
-  %i.ah = load i32, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112 ; 2 uses
+  %i.ah = load i32, ptr %i.ag, align 8, !tbaa !112 ; 2 uses
   %.not.i52 = icmp sgt i32 %i.ah, -1
   br i1 %.not.i52, label %bb.n, label %PyType_IsSubtype.exit.thread
 
 bb.n:                                             ; preds = %bb.m
   %i.ai = add nsw i32 %i.ah, -1                   ; 2 uses
-  store i32 %i.ai, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112
+  store i32 %i.ai, ptr %i.ag, align 8, !tbaa !112
   %i.aj = icmp eq i32 %i.ai, 0
   br i1 %i.aj, label %bb.o, label %PyType_IsSubtype.exit.thread
 
 bb.o:                                             ; preds = %bb.n
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_NotImplementedStruct) #21
+  call void @_Py_Dealloc(ptr noundef nonnull %i.ag) #21
   br label %PyType_IsSubtype.exit.thread
 
 PyType_IsSubtype.exit.thread:                     ; preds = %bb.i, %bb.o, %bb.n, %bb.m, %bb.k, %bb.h, %PyType_IsSubtype.exit, %bb.f
@@ -3138,7 +3137,7 @@ PyType_IsSubtype.exit.thread:                     ; preds = %bb.i, %bb.o, %bb.n,
   store ptr %0, ptr %i.a, align 16, !tbaa !115
   %i.ak = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %1, ptr %i.ak, align 8, !tbaa !115
-  %i.al = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 64928), ptr noundef %i.a, i64 noundef 2) ; 2 uses
+  %i.al = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 64928), ptr noundef %i.a, i64 noundef 2) ; 5 uses
   %.not49 = icmp eq ptr %i.al, @_Py_NotImplementedStruct
   br i1 %.not49, label %bb.p, label %Py_DECREF.exit53.thread75
 
@@ -3149,18 +3148,18 @@ bb.p:                                             ; preds = %PyType_IsSubtype.ex
   br i1 %.not80, label %Py_DECREF.exit53.thread75, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.am = load i32, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112 ; 2 uses
+  %i.am = load i32, ptr %i.al, align 8, !tbaa !112 ; 2 uses
   %.not.i = icmp sgt i32 %i.am, -1
   br i1 %.not.i, label %bb.r, label %Py_DECREF.exit53
 
 bb.r:                                             ; preds = %bb.q
   %i.an = add nsw i32 %i.am, -1                   ; 2 uses
-  store i32 %i.an, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112
+  store i32 %i.an, ptr %i.al, align 8, !tbaa !112
   %i.ao = icmp eq i32 %i.an, 0
   br i1 %i.ao, label %bb.s, label %Py_DECREF.exit53
 
 bb.s:                                             ; preds = %bb.r
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_NotImplementedStruct) #21
+  call void @_Py_Dealloc(ptr noundef nonnull %i.al) #21
   br label %Py_DECREF.exit53
 
 Py_DECREF.exit53:                                 ; preds = %bb.q, %bb.r, %bb.s, %bb.e, %bb.d
@@ -3277,23 +3276,23 @@ bb.l:                                             ; preds = %bb.k
   store ptr %1, ptr %i.a, align 16, !tbaa !115
   %i.af = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %0, ptr %i.af, align 8, !tbaa !115
-  %i.ag = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 69888), ptr noundef %i.a, i64 noundef 2) ; 2 uses
+  %i.ag = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 69888), ptr noundef %i.a, i64 noundef 2) ; 5 uses
   %.not48 = icmp eq ptr %i.ag, @_Py_NotImplementedStruct
   br i1 %.not48, label %bb.m, label %Py_DECREF.exit53.thread75
 
 bb.m:                                             ; preds = %bb.l
-  %i.ah = load i32, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112 ; 2 uses
+  %i.ah = load i32, ptr %i.ag, align 8, !tbaa !112 ; 2 uses
   %.not.i52 = icmp sgt i32 %i.ah, -1
   br i1 %.not.i52, label %bb.n, label %PyType_IsSubtype.exit.thread
 
 bb.n:                                             ; preds = %bb.m
   %i.ai = add nsw i32 %i.ah, -1                   ; 2 uses
-  store i32 %i.ai, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112
+  store i32 %i.ai, ptr %i.ag, align 8, !tbaa !112
   %i.aj = icmp eq i32 %i.ai, 0
   br i1 %i.aj, label %bb.o, label %PyType_IsSubtype.exit.thread
 
 bb.o:                                             ; preds = %bb.n
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_NotImplementedStruct) #21
+  call void @_Py_Dealloc(ptr noundef nonnull %i.ag) #21
   br label %PyType_IsSubtype.exit.thread
 
 PyType_IsSubtype.exit.thread:                     ; preds = %bb.i, %bb.o, %bb.n, %bb.m, %bb.k, %bb.h, %PyType_IsSubtype.exit, %bb.f
@@ -3301,7 +3300,7 @@ PyType_IsSubtype.exit.thread:                     ; preds = %bb.i, %bb.o, %bb.n,
   store ptr %0, ptr %i.a, align 16, !tbaa !115
   %i.ak = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %1, ptr %i.ak, align 8, !tbaa !115
-  %i.al = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 70784), ptr noundef %i.a, i64 noundef 2) ; 2 uses
+  %i.al = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 70784), ptr noundef %i.a, i64 noundef 2) ; 5 uses
   %.not49 = icmp eq ptr %i.al, @_Py_NotImplementedStruct
   br i1 %.not49, label %bb.p, label %Py_DECREF.exit53.thread75
 
@@ -3312,18 +3311,18 @@ bb.p:                                             ; preds = %PyType_IsSubtype.ex
   br i1 %.not80, label %Py_DECREF.exit53.thread75, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.am = load i32, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112 ; 2 uses
+  %i.am = load i32, ptr %i.al, align 8, !tbaa !112 ; 2 uses
   %.not.i = icmp sgt i32 %i.am, -1
   br i1 %.not.i, label %bb.r, label %Py_DECREF.exit53
 
 bb.r:                                             ; preds = %bb.q
   %i.an = add nsw i32 %i.am, -1                   ; 2 uses
-  store i32 %i.an, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112
+  store i32 %i.an, ptr %i.al, align 8, !tbaa !112
   %i.ao = icmp eq i32 %i.an, 0
   br i1 %i.ao, label %bb.s, label %Py_DECREF.exit53
 
 bb.s:                                             ; preds = %bb.r
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_NotImplementedStruct) #21
+  call void @_Py_Dealloc(ptr noundef nonnull %i.al) #21
   br label %Py_DECREF.exit53
 
 Py_DECREF.exit53:                                 ; preds = %bb.q, %bb.r, %bb.s, %bb.e, %bb.d
@@ -3477,23 +3476,23 @@ bb.l:                                             ; preds = %bb.k
   store ptr %1, ptr %i.a, align 16, !tbaa !115
   %i.af = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %0, ptr %i.af, align 8, !tbaa !115
-  %i.ag = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 69392), ptr noundef %i.a, i64 noundef 2) ; 2 uses
+  %i.ag = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 69392), ptr noundef %i.a, i64 noundef 2) ; 5 uses
   %.not48 = icmp eq ptr %i.ag, @_Py_NotImplementedStruct
   br i1 %.not48, label %bb.m, label %Py_DECREF.exit53.thread75
 
 bb.m:                                             ; preds = %bb.l
-  %i.ah = load i32, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112 ; 2 uses
+  %i.ah = load i32, ptr %i.ag, align 8, !tbaa !112 ; 2 uses
   %.not.i52 = icmp sgt i32 %i.ah, -1
   br i1 %.not.i52, label %bb.n, label %PyType_IsSubtype.exit.thread
 
 bb.n:                                             ; preds = %bb.m
   %i.ai = add nsw i32 %i.ah, -1                   ; 2 uses
-  store i32 %i.ai, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112
+  store i32 %i.ai, ptr %i.ag, align 8, !tbaa !112
   %i.aj = icmp eq i32 %i.ai, 0
   br i1 %i.aj, label %bb.o, label %PyType_IsSubtype.exit.thread
 
 bb.o:                                             ; preds = %bb.n
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_NotImplementedStruct) #21
+  call void @_Py_Dealloc(ptr noundef nonnull %i.ag) #21
   br label %PyType_IsSubtype.exit.thread
 
 PyType_IsSubtype.exit.thread:                     ; preds = %bb.i, %bb.o, %bb.n, %bb.m, %bb.k, %bb.h, %PyType_IsSubtype.exit, %bb.f
@@ -3501,7 +3500,7 @@ PyType_IsSubtype.exit.thread:                     ; preds = %bb.i, %bb.o, %bb.n,
   store ptr %0, ptr %i.a, align 16, !tbaa !115
   %i.ak = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %1, ptr %i.ak, align 8, !tbaa !115
-  %i.al = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 67544), ptr noundef %i.a, i64 noundef 2) ; 2 uses
+  %i.al = call fastcc ptr @vectorcall_maybe(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 67544), ptr noundef %i.a, i64 noundef 2) ; 5 uses
   %.not49 = icmp eq ptr %i.al, @_Py_NotImplementedStruct
   br i1 %.not49, label %bb.p, label %Py_DECREF.exit53.thread75
 
@@ -3512,18 +3511,18 @@ bb.p:                                             ; preds = %PyType_IsSubtype.ex
   br i1 %.not80, label %Py_DECREF.exit53.thread75, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.am = load i32, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112 ; 2 uses
+  %i.am = load i32, ptr %i.al, align 8, !tbaa !112 ; 2 uses
   %.not.i = icmp sgt i32 %i.am, -1
   br i1 %.not.i, label %bb.r, label %Py_DECREF.exit53
 
 bb.r:                                             ; preds = %bb.q
   %i.an = add nsw i32 %i.am, -1                   ; 2 uses
-  store i32 %i.an, ptr @_Py_NotImplementedStruct, align 8, !tbaa !112
+  store i32 %i.an, ptr %i.al, align 8, !tbaa !112
   %i.ao = icmp eq i32 %i.an, 0
   br i1 %i.ao, label %bb.s, label %Py_DECREF.exit53
 
 bb.s:                                             ; preds = %bb.r
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_NotImplementedStruct) #21
+  call void @_Py_Dealloc(ptr noundef nonnull %i.al) #21
   br label %Py_DECREF.exit53
 
 Py_DECREF.exit53:                                 ; preds = %bb.q, %bb.r, %bb.s, %bb.e, %bb.d
@@ -3926,23 +3925,23 @@ bb.ai:                                            ; preds = %bb.ah
 
 super_init_without_args.exit:                     ; preds = %bb.ai, %bb.ah, %bb.x
   %.053 = phi ptr [ %.val69.i, %bb.x ], [ %1, %bb.ai ], [ %1, %bb.ah ] ; 8 uses
-  %.0 = phi ptr [ %.037.i, %bb.x ], [ %2, %bb.ai ], [ %2, %bb.ah ] ; 6 uses
+  %.0 = phi ptr [ %.037.i, %bb.x ], [ %2, %bb.ai ], [ %2, %bb.ah ] ; 9 uses
   %i.da = icmp eq ptr %.0, @_Py_NoneStruct
   br i1 %i.da, label %bb.aj, label %Py_DECREF.exit30
 
 bb.aj:                                            ; preds = %super_init_without_args.exit
-  %i.db = load i32, ptr @_Py_NoneStruct, align 8, !tbaa !112 ; 2 uses
+  %i.db = load i32, ptr %.0, align 8, !tbaa !112  ; 2 uses
   %.not.i29 = icmp sgt i32 %i.db, -1
   br i1 %.not.i29, label %bb.ak, label %Py_DECREF.exit30.thread
 
 bb.ak:                                            ; preds = %bb.aj
   %i.dc = add nsw i32 %i.db, -1                   ; 2 uses
-  store i32 %i.dc, ptr @_Py_NoneStruct, align 8, !tbaa !112
+  store i32 %i.dc, ptr %.0, align 8, !tbaa !112
   %i.dd = icmp eq i32 %i.dc, 0
   br i1 %i.dd, label %bb.al, label %Py_DECREF.exit30.thread
 
 bb.al:                                            ; preds = %bb.ak
-  tail call void @_Py_Dealloc(ptr noundef nonnull @_Py_NoneStruct) #21
+  tail call void @_Py_Dealloc(ptr noundef nonnull %.0) #21
   br label %Py_DECREF.exit30.thread
 
 Py_DECREF.exit30:                                 ; preds = %super_init_without_args.exit

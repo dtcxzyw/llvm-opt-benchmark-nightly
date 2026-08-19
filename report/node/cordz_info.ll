@@ -203,7 +203,7 @@ _ZN4absl13cord_internal9CordzInfo5TrackEv.exit:   ; preds = %.split.i, %bb.n
 define dso_local void @_ZN4absl13cord_internal9CordzInfo7UntrackEv(ptr noundef nonnull align 8 dereferenceable(1344) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
-  %i.b = load ptr, ptr %i.a, align 8
+  %i.b = load ptr, ptr %i.a, align 8              ; 7 uses
   %.not.i = icmp eq ptr %i.b, @_ZN4absl13cord_internal9CordzInfo12global_list_E
   br i1 %.not.i, label %_ZNK4absl13cord_internal9CordzInfo8ODRCheckEv.exit, label %bb.b, !prof !7
 
@@ -213,21 +213,21 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZNK4absl13cord_internal9CordzInfo8ODRCheckEv.exit: ; preds = %bb.a
-  %i.c = load atomic i32, ptr @_ZN4absl13cord_internal9CordzInfo12global_list_E monotonic, align 8 ; 3 uses
+  %i.c = load atomic i32, ptr %i.b monotonic, align 4 ; 3 uses
   %i.d = and i32 %i.c, 1
   %.not.i.i.i.i = icmp eq i32 %i.d, 0
   br i1 %.not.i.i.i.i, label %_ZN4absl13base_internal8SpinLock11TryLockImplEv.exit.i.i, label %_ZN4absl13base_internal8SpinLock11TryLockImplEv.exit.thread.i.i
 
 _ZN4absl13base_internal8SpinLock11TryLockImplEv.exit.i.i: ; preds = %_ZNK4absl13cord_internal9CordzInfo8ODRCheckEv.exit
   %i.e = or disjoint i32 %i.c, 1
-  %i.f = cmpxchg ptr @_ZN4absl13cord_internal9CordzInfo12global_list_E, i32 %i.c, i32 %i.e acquire monotonic, align 4
+  %i.f = cmpxchg ptr %i.b, i32 %i.c, i32 %i.e acquire monotonic, align 4
   %i.g = extractvalue { i32, i1 } %i.f, 0
   %.pre.i.i.i = and i32 %i.g, 1
   %i.h = icmp eq i32 %.pre.i.i.i, 0
   br i1 %i.h, label %_ZN4absl13base_internal14SpinLockHolderC2ERNS0_8SpinLockE.exit, label %_ZN4absl13base_internal8SpinLock11TryLockImplEv.exit.thread.i.i
 
 _ZN4absl13base_internal8SpinLock11TryLockImplEv.exit.thread.i.i: ; preds = %_ZN4absl13base_internal8SpinLock11TryLockImplEv.exit.i.i, %_ZNK4absl13cord_internal9CordzInfo8ODRCheckEv.exit
-  tail call void @_ZN4absl13base_internal8SpinLock8SlowLockEv(ptr noundef nonnull align 4 dereferenceable(4) @_ZN4absl13cord_internal9CordzInfo12global_list_E) #15
+  tail call void @_ZN4absl13base_internal8SpinLock8SlowLockEv(ptr noundef nonnull align 4 dereferenceable(4) %i.b) #15
   br label %_ZN4absl13base_internal14SpinLockHolderC2ERNS0_8SpinLockE.exit
 
 _ZN4absl13base_internal14SpinLockHolderC2ERNS0_8SpinLockE.exit: ; preds = %_ZN4absl13base_internal8SpinLock11TryLockImplEv.exit.i.i, %_ZN4absl13base_internal8SpinLock11TryLockImplEv.exit.thread.i.i
@@ -295,14 +295,14 @@ bb.n:                                             ; preds = %bb.l
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.k
-  %i.y = load atomic i32, ptr @_ZN4absl13cord_internal9CordzInfo12global_list_E monotonic, align 8
+  %i.y = load atomic i32, ptr %i.b monotonic, align 4
   %i.z = and i32 %i.y, 2
-  %i.aa = atomicrmw xchg ptr @_ZN4absl13cord_internal9CordzInfo12global_list_E, i32 %i.z release, align 4 ; 2 uses
+  %i.aa = atomicrmw xchg ptr %i.b, i32 %i.z release, align 4 ; 2 uses
   %.not4.i.i = icmp ult i32 %i.aa, 8
   br i1 %.not4.i.i, label %_ZN4absl13base_internal14SpinLockHolderD2Ev.exit, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  tail call void @_ZN4absl13base_internal8SpinLock10SlowUnlockEj(ptr noundef nonnull align 4 dereferenceable(4) @_ZN4absl13cord_internal9CordzInfo12global_list_E, i32 noundef %i.aa) #15
+  tail call void @_ZN4absl13base_internal8SpinLock10SlowUnlockEj(ptr noundef nonnull align 4 dereferenceable(4) %i.b, i32 noundef %i.aa) #15
   br label %_ZN4absl13base_internal14SpinLockHolderD2Ev.exit
 
 _ZN4absl13base_internal14SpinLockHolderD2Ev.exit: ; preds = %bb.o, %bb.p

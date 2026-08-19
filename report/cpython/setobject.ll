@@ -203,8 +203,9 @@ bb.h:                                             ; preds = %bb.a
   br i1 %.not15, label %.split, label %bb.j
 
 .split:                                           ; preds = %bb.h
-  %i.p = load ptr, ptr getelementptr inbounds nuw (i8, ptr @PyFrozenSet_Type, i64 304), align 8, !tbaa !75
-  %i.q = tail call ptr %i.p(ptr noundef nonnull @PyFrozenSet_Type, i64 noundef 0) #12, !inline_history !76 ; 9 uses
+  %2 = getelementptr i8, ptr %0, i64 304
+  %i.p = load ptr, ptr %2, align 8, !tbaa !75
+  %i.q = tail call ptr %i.p(ptr noundef nonnull %0, i64 noundef 0) #12, !inline_history !76 ; 9 uses
   %i.r = icmp eq ptr %i.q, null
   br i1 %i.r, label %make_new_set.exit, label %bb.i
 
@@ -231,8 +232,9 @@ bb.j:                                             ; preds = %bb.h
   br i1 %.not27, label %bb.o, label %.split12
 
 .split12:                                         ; preds = %bb.j
-  %i.aa = load ptr, ptr getelementptr inbounds nuw (i8, ptr @PyFrozenSet_Type, i64 304), align 8, !tbaa !75
-  %i.ab = tail call ptr %i.aa(ptr noundef nonnull @PyFrozenSet_Type, i64 noundef 0) #12, !inline_history !76 ; 13 uses
+  %3 = getelementptr i8, ptr %0, i64 304
+  %i.aa = load ptr, ptr %3, align 8, !tbaa !75
+  %i.ab = tail call ptr %i.aa(ptr noundef nonnull %0, i64 noundef 0) #12, !inline_history !76 ; 13 uses
   %i.ac = icmp eq ptr %i.ab, null
   br i1 %i.ac, label %make_new_set.exit, label %bb.k
 

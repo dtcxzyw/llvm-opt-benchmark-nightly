@@ -201,19 +201,20 @@ declare dso_local void @devres_add(ptr noundef, ptr noundef) local_unnamed_addr 
 declare dso_local noalias ptr @__kmalloc_cache_noprof(ptr noundef, i32 noundef, i64 noundef) local_unnamed_addr #4
 
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
-define internal zeroext i16 @thermal_hwmon_attr_is_visible(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readnone captures(address) %1, i32 %2) #0 align 16 prefalign(16) {
+define internal zeroext i16 @thermal_hwmon_attr_is_visible(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(address) %1, i32 %2) #0 align 16 prefalign(16) {
 bb.a:
   %i.a = alloca i32, align 4                      ; 5 uses
   %i.b = icmp eq ptr %1, @dev_attr_temp1_input
   br i1 %i.b, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = load i16, ptr getelementptr inbounds nuw (i8, ptr @dev_attr_temp1_input, i64 8), align 8
+  %3 = getelementptr i8, ptr %1, i64 8
+  %i.c = load i16, ptr %3, align 8
   br label %bb.f
 
 bb.c:                                             ; preds = %bb.a
   %i.d = icmp eq ptr %1, @dev_attr_temp1_crit
-  br i1 %i.d, label %bb.d, label %4
+  br i1 %i.d, label %bb.d, label %bb.f
 
 bb.d:                                             ; preds = %bb.c
   %i.e = getelementptr i8, ptr %0, i64 120
@@ -225,24 +226,25 @@ bb.d:                                             ; preds = %bb.c
   %i.h = getelementptr i8, ptr %i.g, i64 1056
   %i.i = load ptr, ptr %i.h, align 8              ; 2 uses
   %.not = icmp eq ptr %i.i, null
-  br i1 %.not, label %.thread, label %bb.e
+  br i1 %.not, label %.thread, label %4
 
-.thread:                                          ; preds = %bb.d
+4:                                                ; preds = %bb.d
+  %5 = call i32 %i.i(ptr noundef %i.g, ptr noundef nonnull %i.a) #6
+  %.not16 = icmp eq i32 %5, 0
+  br i1 %.not16, label %bb.e, label %.thread
+
+.thread:                                          ; preds = %4, %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
-  br label %4
-
-bb.e:                                             ; preds = %bb.d
-  %3 = call i32 %i.i(ptr noundef %i.g, ptr noundef nonnull %i.a) #6
-  %.not16.not = icmp eq i32 %3, 0
-  %i.j = load i16, ptr getelementptr inbounds nuw (i8, ptr @dev_attr_temp1_crit, i64 8), align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
-  br i1 %.not16.not, label %bb.f, label %4
-
-4:                                                ; preds = %.thread, %bb.e, %bb.c
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.e, %4, %bb.b
-  %.1 = phi i16 [ %i.c, %bb.b ], [ 0, %4 ], [ %i.j, %bb.e ]
+bb.e:                                             ; preds = %4
+  %6 = getelementptr i8, ptr %1, i64 8
+  %i.j = load i16, ptr %6, align 8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
+  br label %bb.f
+
+bb.f:                                             ; preds = %bb.c, %.thread, %bb.e, %bb.b
+  %.1 = phi i16 [ %i.c, %bb.b ], [ %i.j, %bb.e ], [ 0, %.thread ], [ 0, %bb.c ]
   ret i16 %.1
 }
 
