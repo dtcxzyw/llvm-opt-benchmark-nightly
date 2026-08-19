@@ -203,10 +203,9 @@ cdce.call:                                        ; preds = %._crit_edge83.threa
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %._crit_edge87.i, %.preheader.preheader.i
-  %indvars.iv244 = phi i32 [ %indvars.iv.next245, %._crit_edge87.i ], [ %.2135, %.preheader.preheader.i ] ; 6 uses
+  %indvars.iv244 = phi i32 [ %indvars.iv.next245, %._crit_edge87.i ], [ %.2135, %.preheader.preheader.i ] ; 5 uses
   %indvars.iv105.i = phi i64 [ %indvars.iv.next106.i, %._crit_edge87.i ], [ 0, %.preheader.preheader.i ] ; 8 uses
   %.090.i = phi float [ %i.it, %._crit_edge87.i ], [ %i.gv, %.preheader.preheader.i ] ; 5 uses
-  %9 = zext i32 %indvars.iv244 to i64             ; 2 uses
   %i.gw = shl nuw nsw i64 %indvars.iv105.i, 2     ; 2 uses
   %scevgep = getelementptr i8, ptr %.062.lcssa.i160, i64 %i.gw
   %i.gx = getelementptr i8, ptr %.062.lcssa.i160, i64 %i.gw
@@ -217,7 +216,7 @@ cdce.call:                                        ; preds = %._crit_edge83.threa
   %scevgep16 = getelementptr i8, ptr %scevgep15, i64 %i.gz
   %i.ha = shl nuw nsw i64 %indvars.iv105.i, 2
   %i.hb = trunc i64 %i.ha to i34                  ; 2 uses
-  %i.hc = zext i32 %indvars.iv244 to i64          ; 2 uses
+  %i.hc = zext i32 %indvars.iv244 to i64          ; 4 uses
   %i.hd = trunc nuw nsw i64 %indvars.iv105.i to i32
   %i.he = sub i32 %.2135, %i.hd
   %.not6984.i = icmp slt i32 %i.he, 0
@@ -274,7 +273,7 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph86.i.preheader23:                           ; preds = %vector.memcheck, %vector.scevcheck, %.lr.ph86.i.preheader, %middle.block
   %indvars.iv102.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %vector.scevcheck ], [ 0, %.lr.ph86.i.preheader ], [ %n.vec, %middle.block ] ; 5 uses
-  %i.ht = and i64 %9, 1
+  %i.ht = and i64 %i.hc, 1
   %lcmp.mod45.not.not = icmp eq i64 %i.ht, 0
   br i1 %lcmp.mod45.not.not, label %.lr.ph86.i.prol, label %.lr.ph86.i.prol.loopexit
 
@@ -293,7 +292,7 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph86.i.prol.loopexit:                         ; preds = %.lr.ph86.i.prol, %.lr.ph86.i.preheader23
   %indvars.iv102.i.unr = phi i64 [ %indvars.iv102.i.ph, %.lr.ph86.i.preheader23 ], [ %indvars.iv.next103.i.prol, %.lr.ph86.i.prol ]
-  %i.ib = icmp eq i64 %indvars.iv102.i.ph, %9
+  %i.ib = icmp eq i64 %indvars.iv102.i.ph, %i.hc
   br i1 %i.ib, label %._crit_edge87.i, label %.lr.ph86.i
 
 .lr.ph86.i:                                       ; preds = %.lr.ph86.i.prol.loopexit, %.lr.ph86.i

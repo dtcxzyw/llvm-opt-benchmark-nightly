@@ -204,7 +204,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.d, %.lr.ph.i
-  %indvar = phi i64 [ %indvar.next, %bb.d ], [ 0, %.lr.ph.i ] ; 3 uses
+  %indvar = phi i64 [ %indvar.next, %bb.d ], [ 0, %.lr.ph.i ] ; 2 uses
   %.sroa.08.019.i.idx = phi i64 [ %.sroa.08.019.i.add, %bb.d ], [ 32, %.lr.ph.i ] ; 3 uses
   %.pn18.i = phi ptr [ %.sroa.08.019.i.ptr, %bb.d ], [ %0, %.lr.ph.i ] ; 4 uses
   %.sroa.08.019.i.ptr = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.08.019.i.idx ; 6 uses
@@ -216,10 +216,9 @@ bb.b:                                             ; preds = %bb.d, %.lr.ph.i
   br i1 %i.h, label %.lr.ph.i.i.i.i.i.preheader.i, label %bb.c
 
 .lr.ph.i.i.i.i.i.preheader.i:                     ; preds = %bb.b
-  %2 = add i64 %indvar, 1
-  %i.i = lshr exact i64 %.sroa.08.019.i.idx, 5    ; 2 uses
+  %i.i = lshr exact i64 %.sroa.08.019.i.idx, 5    ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %.pn18.i, i64 64 ; 2 uses
-  %xtraiter59 = and i64 %2, 3                     ; 2 uses
+  %xtraiter59 = and i64 %i.i, 3                   ; 2 uses
   %lcmp.mod60.not = icmp eq i64 %xtraiter59, 0
   br i1 %lcmp.mod60.not, label %.lr.ph.i.i.i.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.i.i.i.prol
 
@@ -622,7 +621,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.d, %.lr.ph.i
-  %indvar = phi i64 [ %indvar.next, %bb.d ], [ 0, %.lr.ph.i ] ; 3 uses
+  %indvar = phi i64 [ %indvar.next, %bb.d ], [ 0, %.lr.ph.i ] ; 2 uses
   %.sroa.08.019.i.idx = phi i64 [ %.sroa.08.019.i.add, %bb.d ], [ 32, %.lr.ph.i ] ; 3 uses
   %.pn18.i = phi ptr [ %.sroa.08.019.i.ptr, %bb.d ], [ %0, %.lr.ph.i ] ; 4 uses
   %.sroa.08.019.i.ptr = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.08.019.i.idx ; 6 uses
@@ -634,10 +633,9 @@ bb.b:                                             ; preds = %bb.d, %.lr.ph.i
   br i1 %i.h, label %.lr.ph.i.i.i.i.i.preheader.i, label %bb.c
 
 .lr.ph.i.i.i.i.i.preheader.i:                     ; preds = %bb.b
-  %2 = add i64 %indvar, 1
-  %i.i = lshr exact i64 %.sroa.08.019.i.idx, 5    ; 2 uses
+  %i.i = lshr exact i64 %.sroa.08.019.i.idx, 5    ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %.pn18.i, i64 64 ; 2 uses
-  %xtraiter59 = and i64 %2, 3                     ; 2 uses
+  %xtraiter59 = and i64 %i.i, 3                   ; 2 uses
   %lcmp.mod60.not = icmp eq i64 %xtraiter59, 0
   br i1 %lcmp.mod60.not, label %.lr.ph.i.i.i.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.i.i.i.prol
 

@@ -204,9 +204,7 @@ bb.ay:                                            ; preds = %_ZNSt7__cxx1112basi
 
 bb.az:                                            ; preds = %.lr.ph623, %._crit_edge620
   %i.mm = phi i64 [ %i.ls, %.lr.ph623 ], [ %i.ry, %._crit_edge620 ]
-  %.036621 = phi i64 [ 0, %.lr.ph623 ], [ %i.rx, %._crit_edge620 ] ; 4 uses
-  %31 = shl i64 %.036621, 9
-  %scevgep = getelementptr i8, ptr %.sroa.0528.0, i64 %31
+  %.036621 = phi i64 [ 0, %.lr.ph623 ], [ %i.rx, %._crit_edge620 ] ; 3 uses
   %i.mn = load i8, ptr %i.cp, align 8, !tbaa !209, !range !163, !noundef !164
   %i.mo = trunc nuw i8 %i.mn to i1
   br i1 %i.mo, label %bb.ba, label %bb.bq
@@ -480,7 +478,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit311: ; preds = %_Z
   br label %_ZN6casadi13GenericSharedINS_12SharedObjectENS_20SharedObjectInternalEED2Ev.exit
 
 bb.bq:                                            ; preds = %bb.ba, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit299, %bb.az
-  %i.pk = shl nsw i64 %.036621, 6                 ; 3 uses
+  %i.pk = shl nsw i64 %.036621, 6                 ; 4 uses
   %i.pl = sub i64 %i.cl, %i.pk
   %.fr626 = freeze i64 %i.pl                      ; 3 uses
   %.sroa.speculated = call i64 @llvm.smin.i64(i64 %.fr626, i64 64) ; 5 uses
@@ -714,8 +712,9 @@ _ZNSt6vectorIxSaIxEE9push_backEOx.exit.us:        ; preds = %_ZNSt6vectorIxSaIxE
   br i1 %i.pm, label %.lr.ph619, label %._crit_edge620
 
 .lr.ph619:                                        ; preds = %.preheader578
+  %31 = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0528.0, i64 %i.pk
   %i.rw = shl nuw nsw i64 %.sroa.speculated, 3
-  call void @llvm.memset.p0.i64(ptr align 8 %scevgep, i8 0, i64 %i.rw, i1 false), !tbaa !105
+  call void @llvm.memset.p0.i64(ptr align 8 %31, i8 0, i64 %i.rw, i1 false), !tbaa !105
   br label %._crit_edge620
 
 .loopexit585:                                     ; preds = %bb.bs
@@ -1118,9 +1117,7 @@ bb.ay:                                            ; preds = %_ZNSt7__cxx1112basi
 
 bb.az:                                            ; preds = %.lr.ph634, %._crit_edge631
   %i.mt = phi i64 [ %i.lq, %.lr.ph634 ], [ %i.sf, %._crit_edge631 ]
-  %.036632 = phi i64 [ 0, %.lr.ph634 ], [ %i.se, %._crit_edge631 ] ; 4 uses
-  %31 = shl i64 %.036632, 9
-  %scevgep = getelementptr i8, ptr %.sroa.0524.0, i64 %31
+  %.036632 = phi i64 [ 0, %.lr.ph634 ], [ %i.se, %._crit_edge631 ] ; 3 uses
   %i.mu = load i8, ptr %i.cn, align 8, !tbaa !209, !range !163, !noundef !164
   %i.mv = trunc nuw i8 %i.mu to i1
   br i1 %i.mv, label %bb.ba, label %bb.bq
@@ -1394,7 +1391,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit314: ; preds = %_Z
   br label %_ZN6casadi13GenericSharedINS_12SharedObjectENS_20SharedObjectInternalEED2Ev.exit
 
 bb.bq:                                            ; preds = %bb.ba, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit302, %bb.az
-  %i.pr = shl nsw i64 %.036632, 6                 ; 3 uses
+  %i.pr = shl nsw i64 %.036632, 6                 ; 4 uses
   %i.ps = sub i64 %i.cj, %i.pr
   %.fr637 = freeze i64 %i.ps                      ; 3 uses
   %.sroa.speculated = call i64 @llvm.smin.i64(i64 %.fr637, i64 64) ; 5 uses
@@ -1633,8 +1630,9 @@ _ZNSt6vectorIxSaIxEE9push_backEOx.exit.us:        ; preds = %_ZNSt6vectorIxSaIxE
   br i1 %i.pt, label %.lr.ph630, label %._crit_edge631
 
 .lr.ph630:                                        ; preds = %.preheader589
+  %31 = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0524.0, i64 %i.pr
   %i.sd = shl nuw nsw i64 %.sroa.speculated, 3
-  call void @llvm.memset.p0.i64(ptr align 8 %scevgep, i8 0, i64 %i.sd, i1 false), !tbaa !105
+  call void @llvm.memset.p0.i64(ptr align 8 %31, i8 0, i64 %i.sd, i1 false), !tbaa !105
   br label %._crit_edge631
 
 .loopexit596:                                     ; preds = %bb.bs

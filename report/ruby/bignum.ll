@@ -204,7 +204,7 @@ bb.a:
   br i1 %i.b, label %bb.g, label %.preheader
 
 .preheader:                                       ; preds = %._crit_edge
-  %i.c = add i64 %3, -1                           ; 7 uses
+  %i.c = add i64 %3, -1                           ; 6 uses
   %invariant.gep = getelementptr [4 x i8], ptr %0, i64 %3
   %.not107 = icmp eq i64 %i.c, 0
   br i1 %.not107, label %._crit_edge105, label %.lr.ph104.preheader
@@ -214,10 +214,9 @@ bb.a:
   br label %.lr.ph104
 
 .lr.ph104:                                        ; preds = %.lr.ph104.preheader, %bb.d
-  %indvar = phi i64 [ 0, %.lr.ph104.preheader ], [ %indvar.next, %bb.d ] ; 5 uses
+  %indvar = phi i64 [ 0, %.lr.ph104.preheader ], [ %indvar.next, %bb.d ] ; 4 uses
   %.080103 = phi i64 [ 0, %.lr.ph104.preheader ], [ %.pre-phi, %bb.d ] ; 8 uses
-  %4 = sub i64 %i.c, %indvar
-  %i.e = sub i64 %i.c, %indvar
+  %i.e = sub i64 %i.c, %indvar                    ; 2 uses
   %i.f = getelementptr [4 x i8], ptr %2, i64 %.080103
   %i.g = load i32, ptr %i.f, align 4, !tbaa !7
   %.fr = freeze i32 %i.g                          ; 4 uses
@@ -275,7 +274,7 @@ bb.a:
   br i1 %i.ad, label %._crit_edge102, label %.lr.ph101.split
 
 .lr.ph101.split.us.preheader:                     ; preds = %.lr.ph101
-  %xtraiter120 = and i64 %4, 1
+  %xtraiter120 = and i64 %i.e, 1
   %lcmp.mod121.not = icmp eq i64 %xtraiter120, 0
   br i1 %lcmp.mod121.not, label %.lr.ph101.split.us.prol.loopexit, label %.lr.ph101.split.us.prol
 
@@ -678,7 +677,7 @@ bb.l:                                             ; preds = %bb.j, %bb.k, %bb.i
   %.0110223 = phi i32 [ %i.iy, %bb.ac ], [ 0, %.preheader203 ]
   %.0118222 = phi ptr [ %.0119221, %bb.ac ], [ %i.k, %.preheader203 ] ; 8 uses
   %.0119221 = phi ptr [ %.0118222, %bb.ac ], [ %i.j, %.preheader203 ] ; 6 uses
-  %.0120220 = phi i64 [ %i.ay, %bb.ac ], [ 2, %.preheader203 ] ; 22 uses
+  %.0120220 = phi i64 [ %i.ay, %bb.ac ], [ 2, %.preheader203 ] ; 20 uses
   %.0121219 = phi i64 [ %i.iz, %bb.ac ], [ %.1.i, %.preheader203 ]
   %.0118222287 = ptrtoaddr ptr %.0118222 to i64   ; 2 uses
   %i.ay = shl i64 %.0120220, 1                    ; 13 uses
@@ -690,7 +689,6 @@ bb.l:                                             ; preds = %bb.j, %bb.k, %bb.i
   %i.bd = shl i64 %.0120220, 3
   %i.be = mul i64 %.0120220, -2
   %i.bf = shl i64 %.0120220, 3
-  %7 = mul i64 %.0120220, -2
   %i.bg = mul i64 %.0120220, -2
   br label %bb.m
 
@@ -700,14 +698,11 @@ bb.l:                                             ; preds = %bb.j, %bb.k, %bb.i
   br i1 %.not224, label %.critedge, label %.lr.ph226
 
 bb.m:                                             ; preds = %.preheader202, %bary_add.exit
-  %indvar = phi i64 [ 0, %.preheader202 ], [ %indvar.next, %bary_add.exit ] ; 6 uses
+  %indvar = phi i64 [ 0, %.preheader202 ], [ %indvar.next, %bary_add.exit ] ; 5 uses
   %.2217 = phi i64 [ 0, %.preheader202 ], [ %i.iw, %bary_add.exit ] ; 11 uses
-  %8 = mul i64 %i.bg, %indvar
-  %9 = add i64 %4, %8
-  %umax326 = call i64 @llvm.umax.i64(i64 %.0120220, i64 %9) ; 2 uses
-  %i.bh = mul i64 %7, %indvar
+  %i.bh = mul i64 %i.bg, %indvar
   %i.bi = add i64 %4, %i.bh
-  %umin321 = call i64 @llvm.umin.i64(i64 %.0120220, i64 %i.bi) ; 4 uses
+  %umin321 = call i64 @llvm.umin.i64(i64 %.0120220, i64 %i.bi)
   %i.bj = mul i64 %i.bf, %indvar
   %i.bk = add i64 %i.bj, %.0118222287
   %i.bl = mul i64 %i.be, %indvar
@@ -975,9 +970,9 @@ bb.x:                                             ; preds = %BIGNUM_LEN.exit149
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.x, %BIGNUM_LEN.exit149
-  %.064.i.i150 = phi i64 [ %.0120220, %bb.x ], [ %i.bp, %BIGNUM_LEN.exit149 ] ; 3 uses
+  %.064.i.i150 = phi i64 [ %.0120220, %bb.x ], [ %i.bp, %BIGNUM_LEN.exit149 ] ; 6 uses
   %.063.i.i151 = phi ptr [ %i.fa, %bb.x ], [ %i.fh, %BIGNUM_LEN.exit149 ] ; 12 uses
-  %.062.i.i152 = phi i64 [ %i.bp, %bb.x ], [ %.0120220, %BIGNUM_LEN.exit149 ] ; 5 uses
+  %.062.i.i152 = phi i64 [ %i.bp, %bb.x ], [ %.0120220, %BIGNUM_LEN.exit149 ] ; 7 uses
   %i.fm = phi ptr [ %.0119221, %bb.x ], [ %.0118222, %BIGNUM_LEN.exit149 ]
   %.063.i.i151288 = ptrtoaddr ptr %.063.i.i151 to i64
   %.not.i.i154 = icmp eq i64 %.064.i.i150, 0
@@ -985,12 +980,12 @@ bb.y:                                             ; preds = %bb.x, %BIGNUM_LEN.e
 
 .lr.ph.i.i155.preheader:                          ; preds = %bb.y
   %i.fn = getelementptr [4 x i8], ptr %i.fm, i64 %.2217 ; 3 uses
-  %xtraiter322 = and i64 %umin321, 1
+  %xtraiter322 = and i64 %.064.i.i150, 1
   %i.fo = icmp eq i64 %umin321, 1
   br i1 %i.fo, label %.lr.ph.i.i155.epil.preheader, label %.lr.ph.i.i155.preheader.new
 
 .lr.ph.i.i155.preheader.new:                      ; preds = %.lr.ph.i.i155.preheader
-  %unroll_iter = and i64 %umin321, -2
+  %unroll_iter = and i64 %.064.i.i150, -2
   br label %.lr.ph.i.i155
 
 .preheader72.i.i159.loopexit.unr-lcssa:           ; preds = %.lr.ph.i.i155
@@ -1000,7 +995,7 @@ bb.y:                                             ; preds = %bb.x, %BIGNUM_LEN.e
 .lr.ph.i.i155.epil.preheader:                     ; preds = %.preheader72.i.i159.loopexit.unr-lcssa, %.lr.ph.i.i155.preheader
   %.05779.i.i156.epil.init = phi i64 [ 0, %.lr.ph.i.i155.preheader ], [ %i.gy, %.preheader72.i.i159.loopexit.unr-lcssa ] ; 3 uses
   %.05878.i.i157.epil.init = phi i64 [ 0, %.lr.ph.i.i155.preheader ], [ %i.gx, %.preheader72.i.i159.loopexit.unr-lcssa ]
-  %lcmp.mod325 = trunc i64 %umin321 to i1
+  %lcmp.mod325 = trunc i64 %.064.i.i150 to i1
   call void @llvm.assume(i1 %lcmp.mod325)
   %i.fp = getelementptr [4 x i8], ptr %i.fn, i64 %.05779.i.i156.epil.init
   %i.fq = load i32, ptr %i.fp, align 4, !tbaa !7
@@ -1119,7 +1114,7 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph91.i.i177.preheader310:                     ; preds = %.lr.ph91.i.i177.preheader, %middle.block
   %.490.i.i178.ph = phi i64 [ %.182.i.i181, %.lr.ph91.i.i177.preheader ], [ %i.ho, %middle.block ] ; 4 uses
-  %i.hv = sub i64 %umax326, %.490.i.i178.ph
+  %i.hv = sub i64 %.062.i.i152, %.490.i.i178.ph
   %xtraiter327 = and i64 %i.hv, 3                 ; 2 uses
   %lcmp.mod328.not = icmp eq i64 %xtraiter327, 0
   br i1 %lcmp.mod328.not, label %.lr.ph91.i.i177.prol.loopexit, label %.lr.ph91.i.i177.prol
@@ -1138,7 +1133,7 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph91.i.i177.prol.loopexit:                    ; preds = %.lr.ph91.i.i177.prol, %.lr.ph91.i.i177.preheader310
   %.490.i.i178.unr = phi i64 [ %.490.i.i178.ph, %.lr.ph91.i.i177.preheader310 ], [ %i.hz, %.lr.ph91.i.i177.prol ]
-  %i.ia = sub i64 %.490.i.i178.ph, %umax326
+  %i.ia = sub i64 %.490.i.i178.ph, %.062.i.i152
   %i.ib = icmp ugt i64 %i.ia, -4
   br i1 %i.ib, label %bary_add.exit, label %.lr.ph91.i.i177
 

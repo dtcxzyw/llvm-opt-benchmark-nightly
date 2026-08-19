@@ -204,16 +204,15 @@ bb.d:                                             ; preds = %bb.c
 
 .lr.ph104.split.us.preheader:                     ; preds = %.lr.ph104
   %wide.trip.count147 = zext nneg i32 %0 to i64   ; 3 uses
-  %7 = add nsw i64 %i.r, -1                       ; 2 uses
   %i.s = add nsw i64 %i.r, -2                     ; 2 uses
   br label %.lr.ph104.split.us
 
 .lr.ph104.split.us:                               ; preds = %.lr.ph104.split.us.preheader, %.loopexit.us
-  %indvars.iv142 = phi i64 [ 0, %.lr.ph104.split.us.preheader ], [ %i.ax, %.loopexit.us ] ; 8 uses
+  %indvars.iv142 = phi i64 [ 0, %.lr.ph104.split.us.preheader ], [ %i.ax, %.loopexit.us ] ; 7 uses
   %indvars.iv130 = phi i64 [ 1, %.lr.ph104.split.us.preheader ], [ %indvars.iv.next131, %.loopexit.us ] ; 7 uses
   %.084101.us = phi float [ 0.000000e+00, %.lr.ph104.split.us.preheader ], [ %.387.us, %.loopexit.us ] ; 8 uses
-  %8 = sub i64 %7, %indvars.iv142
-  %9 = sub i64 %7, %indvars.iv142
+  %7 = xor i64 %indvars.iv142, -1
+  %8 = add nsw i64 %7, %i.r                       ; 2 uses
   br i1 %.not, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph104.split.us
@@ -395,7 +394,7 @@ bb.r:                                             ; preds = %bb.q, %bb.p
 .lr.ph.us:                                        ; preds = %.preheader88.us
   %i.cz = load <2 x float>, ptr %i.w, align 4, !tbaa !53 ; 3 uses
   %i.da = load float, ptr %i.z, align 4, !tbaa !53 ; 3 uses
-  %xtraiter = and i64 %9, 1
+  %xtraiter = and i64 %8, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
 

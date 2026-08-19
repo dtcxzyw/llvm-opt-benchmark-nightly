@@ -204,7 +204,7 @@ bb.bb:                                            ; preds = %.lr.ph440, %bb.bb
   br i1 %i.aed, label %.preheader377, label %.loopexit373, !llvm.loop !1223
 
 .loopexit373:                                     ; preds = %._crit_edge441, %._crit_edge459, %scalar.ph883, %middle.block923, %.preheader380, %.preheader378, %.preheader375, %.preheader372, %._crit_edge432
-  %.3 = phi i32 [ 0, %._crit_edge432 ], [ %i.aal, %scalar.ph883 ], [ 0, %.preheader380 ], [ 0, %.preheader372 ], [ 0, %.preheader375 ], [ 0, %.preheader378 ], [ %i.acg, %._crit_edge459 ], [ %n.vec886, %middle.block923 ], [ %i.aeb, %._crit_edge441 ] ; 3 uses
+  %.3 = phi i32 [ 0, %._crit_edge432 ], [ %i.aal, %scalar.ph883 ], [ 0, %.preheader380 ], [ 0, %.preheader372 ], [ 0, %.preheader375 ], [ 0, %.preheader378 ], [ %i.acg, %._crit_edge459 ], [ %n.vec886, %middle.block923 ], [ %i.aeb, %._crit_edge441 ] ; 2 uses
   %i.aee = zext i32 %.3 to i64
   %i.aef = icmp ugt i64 %6, %i.aee
   br i1 %i.aef, label %.preheader371.lr.ph, label %.loopexit
@@ -231,22 +231,19 @@ bb.bb:                                            ; preds = %.lr.ph440, %bb.bb
   br label %.preheader371
 
 .preheader371:                                    ; preds = %.preheader371.lr.ph, %._crit_edge479
-  %indvar = phi i32 [ 0, %.preheader371.lr.ph ], [ %indvar.next, %._crit_edge479 ] ; 2 uses
   %.4480 = phi i32 [ %.3, %.preheader371.lr.ph ], [ %i.ahi, %._crit_edge479 ] ; 3 uses
-  %9 = add i32 %.3, %indvar
-  %10 = mul i32 %9, %2
   br i1 %.not484, label %._crit_edge479, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %.preheader371
   %i.ael = mul i32 %.4480, %5                     ; 5 uses
-  %i.aem = mul i32 %.4480, %2                     ; 7 uses
+  %i.aem = mul i32 %.4480, %2                     ; 8 uses
   br i1 %.not492, label %.preheader.preheader, label %.preheader.us
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   br i1 %min.iters.check928, label %.preheader.preheader960, label %vector.scevcheck926
 
 vector.scevcheck926:                              ; preds = %.preheader.preheader
-  %i.aen = xor i32 %10, -1
+  %i.aen = xor i32 %i.aem, -1
   %i.aeo = icmp ult i32 %i.aen, %i.aej
   %i.aep = or i1 %i.aeo, %i.aek
   br i1 %i.aep, label %.preheader.preheader960, label %vector.body931
@@ -412,18 +409,15 @@ bb.bc:                                            ; preds = %bb.bc, %.epil.prehe
   %i.ahi = add i32 %.4480, 1                      ; 2 uses
   %i.ahj = zext i32 %i.ahi to i64
   %i.ahk = icmp ugt i64 %6, %i.ahj
-  %indvar.next = add i32 %indvar, 1
   br i1 %i.ahk, label %.preheader371, label %.loopexit, !llvm.loop !1230
 
 .preheader381:                                    ; preds = %.preheader381.lr.ph, %._crit_edge419
-  %.5428 = phi i32 [ 0, %.preheader381.lr.ph ], [ %i.apy, %._crit_edge419 ] ; 5 uses
-  %11 = mul i32 %2, %.5428
-  %12 = mul i32 %2, %.5428
+  %.5428 = phi i32 [ 0, %.preheader381.lr.ph ], [ %i.apy, %._crit_edge419 ] ; 3 uses
   br i1 %.not482, label %._crit_edge419, label %.lr.ph418
 
 .lr.ph418:                                        ; preds = %.preheader381
   %i.ahl = mul i32 %.5428, %5                     ; 7 uses
-  %i.ahm = mul i32 %.5428, %2                     ; 13 uses
+  %i.ahm = mul i32 %.5428, %2                     ; 15 uses
   br i1 %.not483, label %.lr.ph418.split, label %.lr.ph418.split.us.preheader
 
 .lr.ph418.split.us.preheader:                     ; preds = %.lr.ph418
@@ -741,7 +735,7 @@ ma_channel_map_get_channel.exit360.preheader:     ; preds = %.lr.ph418.split
   br i1 %min.iters.check860, label %ma_channel_map_get_channel.exit360.preheader976, label %vector.scevcheck869
 
 vector.scevcheck869:                              ; preds = %ma_channel_map_get_channel.exit360.preheader
-  %i.anu = xor i32 %11, -1
+  %i.anu = xor i32 %i.ahm, -1
   %i.anv = icmp ult i32 %i.anu, %i.tw
   %i.anw = or i1 %i.anv, %i.tx
   br i1 %i.anw, label %ma_channel_map_get_channel.exit360.preheader976, label %vector.body874
@@ -795,7 +789,7 @@ ma_channel_map_get_channel.exit360.us427.preheader: ; preds = %.lr.ph418.split
   br i1 %min.iters.check860, label %ma_channel_map_get_channel.exit360.us427.preheader975, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %ma_channel_map_get_channel.exit360.us427.preheader
-  %i.aoj = xor i32 %12, -1
+  %i.aoj = xor i32 %i.ahm, -1
   %i.aok = icmp ult i32 %i.aoj, %i.ty
   %i.aol = or i1 %i.aok, %i.tz
   br i1 %i.aol, label %ma_channel_map_get_channel.exit360.us427.preheader975, label %vector.body863

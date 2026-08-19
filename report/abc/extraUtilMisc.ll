@@ -204,7 +204,7 @@ bb.a:
 .preheader25.lr.ph.split:                         ; preds = %bb.a
   %i.d = getelementptr i8, ptr %0, i64 8
   %i.e = getelementptr i8, ptr %2, i64 8
-  %.val = load ptr, ptr %i.e, align 8, !tbaa !190 ; 3 uses
+  %.val = load ptr, ptr %i.e, align 8, !tbaa !190 ; 2 uses
   %.val23 = load ptr, ptr %i.d, align 8, !tbaa !190 ; 3 uses
   %i.f = zext nneg i32 %1 to i64                  ; 2 uses
   %i.g = zext nneg i32 %3 to i64                  ; 2 uses
@@ -222,16 +222,15 @@ bb.a:
 
 .preheader25:                                     ; preds = %.preheader25.lr.ph.split, %._crit_edge
   %indvars.iv41 = phi i64 [ 0, %.preheader25.lr.ph.split ], [ %indvars.iv.next42, %._crit_edge ] ; 5 uses
-  %i.n = shl nuw nsw i64 %indvars.iv41, 3         ; 2 uses
-  %scevgep = getelementptr i8, ptr %.val, i64 %i.n
+  %i.n = shl nuw nsw i64 %indvars.iv41, 3
   %scevgep50.a = getelementptr i8, ptr %i.j, i64 %i.n
   %i.o = shl nuw nsw i64 %indvars.iv41, 9         ; 2 uses
   %scevgep51.a = getelementptr i8, ptr %.val23, i64 %i.o
   %scevgep52 = getelementptr i8, ptr %i.l, i64 %i.o
   %i.p = shl nuw nsw i64 %indvars.iv41, 6
   %i.q = or disjoint i64 %i.p, 63                 ; 3 uses
-  %invariant.gep = getelementptr [8 x i8], ptr %.val, i64 %indvars.iv41 ; 6 uses
-  %bound0 = icmp ult ptr %scevgep, %scevgep52
+  %invariant.gep = getelementptr [8 x i8], ptr %.val, i64 %indvars.iv41 ; 7 uses
+  %bound0 = icmp ult ptr %invariant.gep, %scevgep52
   %bound1 = icmp ult ptr %scevgep51.a, %scevgep50.a
   %found.conflict = and i1 %bound0, %bound1
   br label %.preheader24

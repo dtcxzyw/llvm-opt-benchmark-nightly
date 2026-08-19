@@ -204,7 +204,7 @@ bb.a:
   %i.h = ptrtoaddr ptr %i.g to i64
   %i.i = alloca [16 x float], align 16            ; 7 uses
   %4 = alloca %struct.GetBitContext, align 8      ; 7 uses
-  %i.j = alloca [3 x [16 x double]], align 16     ; 52 uses
+  %i.j = alloca [3 x [16 x double]], align 16     ; 51 uses
   %i.k = alloca [908 x float], align 16           ; 5 uses
   %i.l = alloca [496 x float], align 16           ; 5 uses
   %i.m = alloca [16 x double], align 16           ; 17 uses
@@ -607,9 +607,7 @@ bb.aj:                                            ; preds = %bb.ai
   br label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj, %bb.eh
-  %indvars.iv260 = phi i64 [ 0, %bb.aj ], [ %indvars.iv.next261, %bb.eh ] ; 9 uses
-  %5 = shl nuw nsw i64 %indvars.iv260, 7
-  %scevgep462 = getelementptr nuw i8, ptr %i.j, i64 %5
+  %indvars.iv260 = phi i64 [ 0, %bb.aj ], [ %indvars.iv.next261, %bb.eh ] ; 8 uses
   %i.agd = load i32, ptr %i.ca, align 16, !tbaa !77
   %.not127 = icmp eq i32 %i.agd, 0
   %.pre268 = load i32, ptr %i.r, align 4, !tbaa !47 ; 2 uses
@@ -689,7 +687,7 @@ scalar.ph448:                                     ; preds = %scalar.ph448.prehea
   br i1 %exitcond259.not, label %._crit_edge209, label %scalar.ph448, !llvm.loop !107
 
 ._crit_edge209:                                   ; preds = %scalar.ph448, %middle.block459
-  %i.agy = getelementptr inbounds nuw [128 x i8], ptr %i.j, i64 %indvars.iv260 ; 19 uses
+  %i.agy = getelementptr inbounds nuw [128 x i8], ptr %i.j, i64 %indvars.iv260 ; 20 uses
   %i.agz = load double, ptr %i.agy, align 16, !tbaa !48 ; 2 uses
   %i.aha = fcmp nsz ogt double %i.agz, f0x3F734D4C48E89552
   %i.ahb = select nsz i1 %i.aha, double %i.agz, double f0x3F734D4C48E89552
@@ -699,7 +697,7 @@ scalar.ph448:                                     ; preds = %scalar.ph448.prehea
 
 .lr.ph.preheader.i133:                            ; preds = %._crit_edge209
   %wide.trip.count.i134 = zext nneg i32 %i.agg to i64 ; 2 uses
-  %load_initial = load double, ptr %scevgep462, align 16 ; 2 uses
+  %load_initial = load double, ptr %i.agy, align 16 ; 2 uses
   %i.ahc = add nsw i64 %wide.trip.count258, -1    ; 6 uses
   %i.ahd = add nsw i64 %wide.trip.count258, -2    ; 2 uses
   %xtraiter518 = and i64 %i.ahc, 1

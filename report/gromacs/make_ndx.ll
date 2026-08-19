@@ -204,10 +204,9 @@ bb.eo:                                            ; preds = %bb.en
   br label %.outer
 
 .outer:                                           ; preds = %.sink.split.i, %.preheader447.i
-  %.lcssa542545.i.ph = phi i32 [ %.lcssa542544.ph.i, %.sink.split.i ], [ %.promoted543.i, %.preheader447.i ] ; 14 uses
-  %18 = zext i32 %.lcssa542545.i.ph to i64        ; 2 uses
+  %.lcssa542545.i.ph = phi i32 [ %.lcssa542544.ph.i, %.sink.split.i ], [ %.promoted543.i, %.preheader447.i ] ; 13 uses
   %i.abc = icmp sgt i32 %.lcssa542545.i.ph, 0     ; 5 uses
-  %wide.trip.count642.i = zext nneg i32 %.lcssa542545.i.ph to i64 ; 6 uses
+  %wide.trip.count642.i = zext nneg i32 %.lcssa542545.i.ph to i64 ; 8 uses
   %min.iters.check587 = icmp ult i32 %.lcssa542545.i.ph, 4
   %or.cond615 = or i1 %min.iters.check587, %diff.check
   %min.iters.check589 = icmp ult i32 %.lcssa542545.i.ph, 32
@@ -294,7 +293,7 @@ vec.epilog.middle.block612:                       ; preds = %vec.epilog.vector.b
 
 .lr.ph535.i.preheader:                            ; preds = %iter.check602, %vec.epilog.iter.check604, %vec.epilog.middle.block612
   %indvars.iv639.i.ph = phi i64 [ 0, %iter.check602 ], [ %n.vec591, %vec.epilog.iter.check604 ], [ %n.vec607, %vec.epilog.middle.block612 ] ; 4 uses
-  %i.abu = sub nsw i64 %18, %indvars.iv639.i.ph
+  %i.abu = sub nsw i64 %wide.trip.count642.i, %indvars.iv639.i.ph
   %xtraiter = and i64 %i.abu, 7                   ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph535.i.prol.loopexit, label %.lr.ph535.i.prol
@@ -313,7 +312,7 @@ vec.epilog.middle.block612:                       ; preds = %vec.epilog.vector.b
 
 .lr.ph535.i.prol.loopexit:                        ; preds = %.lr.ph535.i.prol, %.lr.ph535.i.preheader
   %indvars.iv639.i.unr = phi i64 [ %indvars.iv639.i.ph, %.lr.ph535.i.preheader ], [ %indvars.iv.next640.i.prol, %.lr.ph535.i.prol ]
-  %i.aby = sub nsw i64 %indvars.iv639.i.ph, %18
+  %i.aby = sub nsw i64 %indvars.iv639.i.ph, %wide.trip.count642.i
   %i.abz = icmp ugt i64 %i.aby, -8
   br i1 %i.abz, label %._crit_edge536.i, label %.lr.ph535.i
 

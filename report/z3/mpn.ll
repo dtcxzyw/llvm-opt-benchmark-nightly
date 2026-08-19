@@ -203,9 +203,9 @@ bb.f:                                             ; preds = %bb.d, %bb.e
 define hidden noundef zeroext i1 @_ZNK11mpn_manager5div_nER7sbufferIjLj16EERKS1_PjS5_S2_S2_(ptr nofree nonnull readnone align 1 captures(none) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(80) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(80) %2, ptr nofree noundef writeonly captures(none) %3, ptr nofree readnone captures(none) %4, ptr nofree noundef nonnull align 8 captures(address) dereferenceable(80) %5, ptr nofree noundef nonnull align 8 captures(address) dereferenceable(80) %6) local_unnamed_addr #4 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !29   ; 3 uses
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !29   ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.d = load i32, ptr %i.c, align 8, !tbaa !29   ; 14 uses
+  %i.d = load i32, ptr %i.c, align 8, !tbaa !29   ; 13 uses
   %i.e = add i32 %i.d, 1                          ; 7 uses
   %i.f = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 6 uses
   %i.g = load i32, ptr %i.f, align 8, !tbaa !29   ; 4 uses
@@ -387,7 +387,6 @@ _ZN6bufferIjLb0ELj16EE6resizeEjRKj.exit:          ; preds = %_ZN6bufferIjLb0ELj1
   %lcmp.mod176 = trunc i32 %i.d to i1
   %min.iters.check145 = icmp ult i32 %i.e, 12
   %i.bm = trunc i64 %i.bk to i32
-  %7 = sub i32 %i.d, %i.b
   %i.bn = icmp ugt i64 %i.bk, 4294967295
   %n.vec147 = and i64 %i.be, 4294967288           ; 3 uses
   %cmp.n154 = icmp eq i64 %n.vec147, %i.be
@@ -399,12 +398,12 @@ _ZN6bufferIjLb0ELj16EE6resizeEjRKj.exit:          ; preds = %_ZN6bufferIjLb0ELj1
   ret i1 true
 
 bb.f:                                             ; preds = %.lr.ph112, %.loopexit
-  %indvar = phi i32 [ 0, %.lr.ph112 ], [ %indvar.next, %.loopexit ] ; 3 uses
+  %indvar = phi i32 [ 0, %.lr.ph112 ], [ %indvar.next, %.loopexit ] ; 2 uses
   %indvars.iv117 = phi i64 [ %i.bj, %.lr.ph112 ], [ %indvars.iv.next118, %.loopexit ] ; 13 uses
   %i.bo = sub i32 %i.az, %indvar
   %i.bp = zext i32 %i.bo to i64
   %i.bq = shl nuw nsw i64 %i.bp, 2
-  %i.br = trunc nuw i64 %indvars.iv117 to i32
+  %i.br = trunc nuw i64 %indvars.iv117 to i32     ; 2 uses
   %i.bs = add i32 %i.d, %i.br                     ; 3 uses
   %i.bt = load ptr, ptr %1, align 8, !tbaa !25    ; 4 uses
   %i.bu = zext i32 %i.bs to i64
@@ -757,8 +756,8 @@ _ZN6bufferIjLb0ELj16EE6resizeEjRKj.exit94:        ; preds = %_ZN6bufferIjLb0ELj1
   br i1 %min.iters.check145, label %.lr.ph.preheader172, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph.preheader
-  %8 = add i32 %7, %indvar
-  %i.hi = icmp ult i32 %8, %i.bm
+  %7 = xor i32 %i.br, -1
+  %i.hi = icmp ult i32 %7, %i.bm
   %i.hj = or i1 %i.hi, %i.bn
   br i1 %i.hj, label %.lr.ph.preheader172, label %vector.memcheck142
 

@@ -204,12 +204,11 @@ bb.h:                                             ; preds = %bb.g
   store i32 6, ptr %i.pl, align 4, !tbaa !29
   %i.pm = getelementptr inbounds nuw [128 x i8], ptr %i.pc, i64 %indvars.iv237
   %i.pn = getelementptr inbounds nuw [1024 x i8], ptr %i.pd, i64 %indvars.iv237
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(128) %i.pm, i8 -1, i64 128, i1 false), !tbaa !29
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.i
-  %indvars.iv233 = phi i64 [ 0, %bb.h ], [ %indvars.iv.next234, %bb.i ] ; 3 uses
-  %1 = getelementptr inbounds nuw [4 x i8], ptr %i.pm, i64 %indvars.iv233
-  store i32 -1, ptr %1, align 4, !tbaa !29
+  %indvars.iv233 = phi i64 [ 0, %bb.h ], [ %indvars.iv.next234, %bb.i ] ; 2 uses
   %i.po = getelementptr inbounds nuw [32 x i8], ptr %i.pn, i64 %indvars.iv233
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.po, i8 0, i64 16, i1 false)
   %indvars.iv.next234 = add nuw nsw i64 %indvars.iv233, 1 ; 2 uses
