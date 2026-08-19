@@ -203,41 +203,39 @@ slide.exit54:                                     ; preds = %.loopexit62.i32
   br label %bb.bi
 
 bb.bi:                                            ; preds = %bb.bm, %slide.exit54
-  %.061 = phi i32 [ 255, %slide.exit54 ], [ %12, %bb.bm ] ; 5 uses
-  %9 = zext nneg i32 %.061 to i64                 ; 2 uses
-  %i.hm = getelementptr inbounds nuw i8, ptr %i.a, i64 %9
+  %indvars.iv = phi i64 [ 255, %slide.exit54 ], [ %indvars.iv.next.1, %bb.bm ] ; 6 uses
+  %i.hm = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv
   %i.hn = load i8, ptr %i.hm, align 1, !tbaa !8
   %.not = icmp eq i8 %i.hn, 0
   br i1 %.not, label %bb.bj, label %bb.bn
 
 bb.bj:                                            ; preds = %bb.bi
-  %i.ho = getelementptr inbounds nuw i8, ptr %i.b, i64 %9
+  %i.ho = getelementptr inbounds nuw i8, ptr %i.b, i64 %indvars.iv
   %i.hp = load i8, ptr %i.ho, align 1, !tbaa !8
   %.not22 = icmp eq i8 %i.hp, 0
   br i1 %.not22, label %bb.bk, label %bb.bn
 
 bb.bk:                                            ; preds = %bb.bj
-  %10 = add nsw i32 %.061, -1                     ; 4 uses
-  %11 = zext nneg i32 %10 to i64                  ; 2 uses
-  %i.hq = getelementptr inbounds nuw i8, ptr %i.a, i64 %11
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 5 uses
+  %i.hq = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.next
   %i.hr = load i8, ptr %i.hq, align 1, !tbaa !8
   %.not.1 = icmp eq i8 %i.hr, 0
   br i1 %.not.1, label %bb.bl, label %bb.bn
 
 bb.bl:                                            ; preds = %bb.bk
-  %i.hs = getelementptr inbounds nuw i8, ptr %i.b, i64 %11
+  %i.hs = getelementptr inbounds nuw i8, ptr %i.b, i64 %indvars.iv.next
   %i.ht = load i8, ptr %i.hs, align 1, !tbaa !8
   %.not22.1 = icmp eq i8 %i.ht, 0
   br i1 %.not22.1, label %bb.bm, label %bb.bn
 
 bb.bm:                                            ; preds = %bb.bl
-  %12 = add nsw i32 %.061, -2
-  %.not75.1 = icmp eq i32 %10, 0
+  %indvars.iv.next.1 = add nsw i64 %indvars.iv, -2
+  %.not75.1 = icmp eq i64 %indvars.iv.next, 0
   br i1 %.not75.1, label %._crit_edge, label %bb.bi, !llvm.loop !20
 
 bb.bn:                                            ; preds = %bb.bl, %bb.bk, %bb.bi, %bb.bj
-  %.061.lcssa = phi i32 [ %.061, %bb.bi ], [ %.061, %bb.bj ], [ %10, %bb.bk ], [ %10, %bb.bl ] ; 2 uses
-  %i.hu = icmp sgt i32 %.061.lcssa, -1
+  %indvars.iv.lcssa = phi i64 [ %indvars.iv, %bb.bi ], [ %indvars.iv, %bb.bj ], [ %indvars.iv.next, %bb.bk ], [ %indvars.iv.next, %bb.bl ] ; 2 uses
+  %i.hu = icmp sgt i64 %indvars.iv.lcssa, -1
   br i1 %i.hu, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.bn
@@ -292,11 +290,10 @@ bb.bn:                                            ; preds = %bb.bl, %bb.bk, %bb.
   %i.jr = getelementptr inbounds nuw i8, ptr %6, i64 152 ; 4 uses
   %i.js = getelementptr inbounds nuw i8, ptr %7, i64 96
   %i.jt = getelementptr inbounds nuw i8, ptr %7, i64 112
-  %13 = zext nneg i32 %.061.lcssa to i64
   br label %bb.bo
 
 bb.bo:                                            ; preds = %.lr.ph, %bb.bw
-  %indvars.iv.a = phi i64 [ %13, %.lr.ph ], [ %indvars.iv.next.a, %bb.bw ] ; 4 uses
+  %indvars.iv.a = phi i64 [ %indvars.iv.lcssa, %.lr.ph ], [ %indvars.iv.next.a, %bb.bw ] ; 4 uses
   call fastcc void @ge_p2_dbl(ptr noundef %6, ptr noundef %0)
   %i.ju = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.a
   %i.jv = load i8, ptr %i.ju, align 1, !tbaa !8   ; 4 uses

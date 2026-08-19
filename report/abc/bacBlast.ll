@@ -203,7 +203,7 @@ bb.h:                                             ; preds = %bb.d
   %i.ax = getelementptr inbounds [4 x i8], ptr %.val166, i64 %i.c
   %i.ay = load i32, ptr %i.ax, align 4, !tbaa !32 ; 3 uses
   %i.az = xor i32 %i.ay, -1
-  %i.ba = add i32 %2, %i.az                       ; 5 uses
+  %i.ba = add i32 %2, %i.az                       ; 4 uses
   %i.bb = sext i32 %i.ba to i64                   ; 4 uses
   %i.bc = getelementptr inbounds i8, ptr %.val159, i64 %i.bb
   %i.bd = load i8, ptr %i.bc, align 1, !tbaa !55
@@ -272,15 +272,15 @@ bb.l:                                             ; preds = %bb.h
 
 .lr.ph:                                           ; preds = %bb.l
   %i.cn = getelementptr i8, ptr %1, i64 104
+  %6 = zext nneg i32 %i.cl to i64
   %i.co = zext i32 %i.ba to i64
   br label %bb.m
 
 bb.m:                                             ; preds = %.lr.ph, %bb.n
-  %indvars.iv.a = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next.a, %bb.n ] ; 4 uses
-  %6 = phi i32 [ %i.cl, %.lr.ph ], [ %10, %bb.n ]
+  %indvars.iv.a = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next.a, %bb.n ] ; 3 uses
+  %indvars.iv = phi i64 [ %6, %.lr.ph ], [ %indvars.iv.next, %bb.n ] ; 3 uses
   %.val158 = load ptr, ptr %i.g, align 8, !tbaa !53
-  %7 = zext nneg i32 %6 to i64                    ; 2 uses
-  %i.cp = getelementptr inbounds nuw i8, ptr %.val158, i64 %7
+  %i.cp = getelementptr inbounds nuw i8, ptr %.val158, i64 %indvars.iv
   %i.cq = load i8, ptr %i.cp, align 1, !tbaa !55
   %.mask.i176 = and i8 %i.cq, -2
   %.not187 = icmp eq i8 %.mask.i176, 6
@@ -288,15 +288,13 @@ bb.m:                                             ; preds = %.lr.ph, %bb.n
 
 bb.n:                                             ; preds = %bb.m
   %.val170 = load ptr, ptr %i.cn, align 8, !tbaa !31
-  %i.cr = getelementptr inbounds nuw [4 x i8], ptr %.val170, i64 %7
+  %i.cr = getelementptr inbounds nuw [4 x i8], ptr %.val170, i64 %indvars.iv
   %i.cs = load i32, ptr %i.cr, align 4, !tbaa !32
   %i.ct = tail call i32 @Bac_ManExtract_rec(ptr noundef %0, ptr noundef nonnull %1, i32 noundef %i.cs, i32 noundef %3, ptr noundef %4)
   %i.cu = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv.a
   store i32 %i.ct, ptr %i.cu, align 4, !tbaa !32
   %indvars.iv.next.a = add nuw nsw i64 %indvars.iv.a, 1 ; 2 uses
-  %8 = trunc i64 %indvars.iv.a to i32
-  %9 = sub i32 %i.ba, %8
-  %10 = add i32 %9, -2
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
   %exitcond.not = icmp eq i64 %indvars.iv.next.a, %i.co
   br i1 %exitcond.not, label %.critedge, label %bb.m, !llvm.loop !63
 

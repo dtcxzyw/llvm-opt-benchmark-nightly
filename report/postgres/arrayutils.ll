@@ -203,8 +203,8 @@ bb.a:
   br i1 %i.a, label %.critedge, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = add nsw i32 %0, -1                       ; 3 uses
-  %i.c = zext nneg i32 %i.b to i64                ; 2 uses
+  %i.b = add nsw i32 %0, -1                       ; 2 uses
+  %i.c = zext nneg i32 %i.b to i64                ; 3 uses
   %i.d = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.c ; 2 uses
   %i.e = load i32, ptr %i.d, align 4
   %i.f = add i32 %i.e, 1
@@ -217,21 +217,20 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph:                                           ; preds = %bb.b, %bb.c
   %i.j = phi i32 [ %i.q, %bb.c ], [ %i.i, %bb.b ]
-  %.027 = phi i32 [ %3, %bb.c ], [ %i.b, %bb.b ]  ; 2 uses
+  %indvars.iv = phi i64 [ %3, %bb.c ], [ %i.c, %bb.b ] ; 2 uses
   %i.k = icmp eq i32 %i.j, 0
-  br i1 %i.k, label %bb.c, label %.critedge
+  br i1 %i.k, label %bb.c, label %.critedge.loopexit
 
 bb.c:                                             ; preds = %.lr.ph
-  %3 = add nsw i32 %.027, -1                      ; 3 uses
-  %4 = zext nneg i32 %3 to i64                    ; 2 uses
-  %i.l = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %4 ; 2 uses
+  %3 = add nsw i64 %indvars.iv, -1                ; 4 uses
+  %i.l = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %3 ; 2 uses
   %i.m = load i32, ptr %i.l, align 4
   %i.n = add i32 %i.m, 1
-  %i.o = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %4
+  %i.o = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %3
   %i.p = load i32, ptr %i.o, align 4
   %i.q = srem i32 %i.n, %i.p                      ; 2 uses
   store i32 %i.q, ptr %i.l, align 4
-  %.not = icmp eq i32 %3, 0
+  %.not = icmp eq i64 %3, 0
   br i1 %.not, label %.critedge24, label %.lr.ph, !llvm.loop !16
 
 .critedge24:                                      ; preds = %bb.c, %bb.b
@@ -240,8 +239,12 @@ bb.c:                                             ; preds = %.lr.ph
   %. = sext i1 %.not23 to i32
   br label %.critedge
 
-.critedge:                                        ; preds = %.lr.ph, %.critedge24, %bb.a
-  %.021 = phi i32 [ %., %.critedge24 ], [ -1, %bb.a ], [ %.027, %.lr.ph ]
+.critedge.loopexit:                               ; preds = %.lr.ph
+  %4 = trunc nuw i64 %indvars.iv to i32
+  br label %.critedge
+
+.critedge:                                        ; preds = %.critedge.loopexit, %.critedge24, %bb.a
+  %.021 = phi i32 [ %., %.critedge24 ], [ -1, %bb.a ], [ %4, %.critedge.loopexit ]
   ret i32 %.021
 }
 

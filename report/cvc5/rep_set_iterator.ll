@@ -203,14 +203,14 @@ bb.a:
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !66
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !48
+  %2 = zext nneg i32 %1 to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.c
-  %.09396 = phi i32 [ %1, %.lr.ph ], [ %3, %bb.c ] ; 4 uses
-  %2 = zext nneg i32 %.09396 to i64               ; 2 uses
-  %i.h = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %2
-  %i.i = load i32, ptr %i.h, align 4, !tbaa !85
-  %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %2
+  %indvars.iv = phi i64 [ %2, %.lr.ph ], [ %indvars.iv.next, %bb.c ] ; 6 uses
+  %i.h = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv
+  %i.i = load i32, ptr %i.h, align 4, !tbaa !85   ; 2 uses
+  %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %indvars.iv
   %i.k = load i64, ptr %i.j, align 8, !tbaa !67
   %i.l = getelementptr inbounds nuw [24 x i8], ptr %i.g, i64 %i.k ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 8
@@ -223,11 +223,11 @@ bb.b:                                             ; preds = %.lr.ph, %bb.c
   %i.t = trunc i64 %i.s to i32
   %i.u = add i32 %i.t, -1
   %.not = icmp slt i32 %i.i, %i.u
-  br i1 %.not, label %.critedge.thread, label %bb.c
+  br i1 %.not, label %.critedge.thread.loopexit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %3 = add nsw i32 %.09396, -1
-  %i.v = icmp sgt i32 %.09396, 0
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %i.v = icmp sgt i64 %indvars.iv, 0
   br i1 %i.v, label %bb.b, label %.critedge.thread100, !llvm.loop !115
 
 .critedge:                                        ; preds = %bb.a
@@ -236,7 +236,10 @@ bb.c:                                             ; preds = %bb.b
 
 .critedge..critedge.thread_crit_edge:             ; preds = %.critedge
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !43
+  %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !43 ; 2 uses
+  %.phi.trans.insert99 = sext i32 %1 to i64       ; 2 uses
+  %.phi.trans.insert100 = getelementptr inbounds nuw [4 x i8], ptr %.pre, i64 %.phi.trans.insert99
+  %.pre101 = load i32, ptr %.phi.trans.insert100, align 4, !tbaa !85
   br label %.critedge.thread
 
 .critedge.thread100:                              ; preds = %bb.c, %.critedge
@@ -251,15 +254,19 @@ _ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i:        ; preds = %.critedge.thread100
   store ptr %i.y, ptr %i.z, align 8, !tbaa !84
   br label %_ZNSt6vectorIiSaIiEE5clearEv.exit
 
-.critedge.thread:                                 ; preds = %bb.b, %.critedge..critedge.thread_crit_edge
-  %4 = phi ptr [ %.pre, %.critedge..critedge.thread_crit_edge ], [ %i.c, %bb.b ]
-  %.09395.a = phi i32 [ %1, %.critedge..critedge.thread_crit_edge ], [ %.09396, %bb.b ] ; 2 uses
-  %5 = sext i32 %.09395.a to i64
-  %6 = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %5 ; 2 uses
-  %7 = load i32, ptr %6, align 4, !tbaa !85
-  %i.ab = add nsw i32 %7, 1
-  store i32 %i.ab, ptr %6, align 4, !tbaa !85
-  %i.ac = tail call noundef i32 @_ZN4cvc58internal6theory14RepSetIterator16doResetIncrementEib(ptr noundef nonnull align 8 dereferenceable(169) %0, i32 noundef %.09395.a, i1 noundef zeroext false)
+.critedge.thread.loopexit:                        ; preds = %bb.b
+  %3 = trunc nuw nsw i64 %indvars.iv to i32
+  br label %.critedge.thread
+
+.critedge.thread:                                 ; preds = %.critedge..critedge.thread_crit_edge, %.critedge.thread.loopexit
+  %.pre-phi = phi i64 [ %.phi.trans.insert99, %.critedge..critedge.thread_crit_edge ], [ %indvars.iv, %.critedge.thread.loopexit ]
+  %.09395.a = phi i32 [ %.pre101, %.critedge..critedge.thread_crit_edge ], [ %i.i, %.critedge.thread.loopexit ]
+  %4 = phi ptr [ %.pre, %.critedge..critedge.thread_crit_edge ], [ %i.c, %.critedge.thread.loopexit ]
+  %.09395 = phi i32 [ %1, %.critedge..critedge.thread_crit_edge ], [ %3, %.critedge.thread.loopexit ]
+  %5 = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %.pre-phi
+  %i.ab = add nsw i32 %.09395.a, 1
+  store i32 %i.ab, ptr %5, align 4, !tbaa !85
+  %i.ac = tail call noundef i32 @_ZN4cvc58internal6theory14RepSetIterator16doResetIncrementEib(ptr noundef nonnull align 8 dereferenceable(169) %0, i32 noundef %.09395, i1 noundef zeroext false)
   br label %_ZNSt6vectorIiSaIiEE5clearEv.exit
 
 _ZNSt6vectorIiSaIiEE5clearEv.exit:                ; preds = %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i, %.critedge.thread100, %.critedge.thread
@@ -271,7 +278,7 @@ _ZNSt6vectorIiSaIiEE5clearEv.exit:                ; preds = %_ZSt8_DestroyIPiiEv
 define hidden noundef i32 @_ZN4cvc58internal6theory14RepSetIterator9incrementEv(ptr noundef nonnull align 8 dereferenceable(169) %0) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !116  ; 5 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !116  ; 6 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !116  ; 2 uses
   %i.e = icmp eq ptr %i.b, %i.d
@@ -283,7 +290,7 @@ bb.b:                                             ; preds = %bb.a
   %i.h = sub i64 %i.f, %i.g
   %i.i = lshr exact i64 %i.h, 2
   %i.j = trunc i64 %i.i to i32                    ; 2 uses
-  %i.k = add i32 %i.j, -1                         ; 3 uses
+  %i.k = add i32 %i.j, -1                         ; 4 uses
   %i.l = icmp sgt i32 %i.k, -1
   br i1 %i.l, label %.lr.ph.i, label %.critedge.i
 
@@ -292,14 +299,14 @@ bb.b:                                             ; preds = %bb.a
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !66
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !48
+  %1 = zext nneg i32 %i.k to i64
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.d, %.lr.ph.i
-  %.09396.i = phi i32 [ %i.k, %.lr.ph.i ], [ %2, %bb.d ] ; 4 uses
-  %1 = zext nneg i32 %.09396.i to i64             ; 2 uses
-  %i.q = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %1
-  %i.r = load i32, ptr %i.q, align 4, !tbaa !85
-  %i.s = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %1
+  %indvars.iv.i = phi i64 [ %1, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.d ] ; 6 uses
+  %i.q = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv.i
+  %i.r = load i32, ptr %i.q, align 4, !tbaa !85   ; 2 uses
+  %i.s = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %indvars.iv.i
   %i.t = load i64, ptr %i.s, align 8, !tbaa !67
   %i.u = getelementptr inbounds nuw [24 x i8], ptr %i.p, i64 %i.t ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 8
@@ -312,27 +319,37 @@ bb.c:                                             ; preds = %bb.d, %.lr.ph.i
   %i.ac = trunc i64 %i.ab to i32
   %i.ad = add i32 %i.ac, -1
   %.not.i = icmp slt i32 %i.r, %i.ad
-  br i1 %.not.i, label %.critedge.thread.i, label %bb.d
+  br i1 %.not.i, label %.critedge.thread.loopexit.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %2 = add nsw i32 %.09396.i, -1
-  %i.ae = icmp sgt i32 %.09396.i, 0
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
+  %i.ae = icmp sgt i64 %indvars.iv.i, 0
   br i1 %i.ae, label %bb.c, label %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i.i, !llvm.loop !115
 
 .critedge.i:                                      ; preds = %bb.b
   %i.af = icmp eq i32 %i.j, 0
-  br i1 %i.af, label %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i.i, label %.critedge.thread.i
+  br i1 %i.af, label %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i.i, label %.critedge..critedge.thread_crit_edge.i
+
+.critedge..critedge.thread_crit_edge.i:           ; preds = %.critedge.i
+  %.phi.trans.insert99.i = sext i32 %i.k to i64   ; 2 uses
+  %.phi.trans.insert100.i = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.phi.trans.insert99.i
+  %.pre101.i = load i32, ptr %.phi.trans.insert100.i, align 4, !tbaa !85
+  br label %.critedge.thread.i
 
 _ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i.i:      ; preds = %bb.d, %.critedge.i
   store ptr %i.b, ptr %i.c, align 8, !tbaa !84
   br label %_ZN4cvc58internal6theory14RepSetIterator16incrementAtIndexEi.exit
 
-.critedge.thread.i:                               ; preds = %bb.c, %.critedge.i
-  %.09395.i = phi i32 [ %i.k, %.critedge.i ], [ %.09396.i, %bb.c ] ; 2 uses
-  %3 = sext i32 %.09395.i to i64
-  %4 = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %3 ; 2 uses
-  %5 = load i32, ptr %4, align 4, !tbaa !85
-  %i.ag = add nsw i32 %5, 1
+.critedge.thread.loopexit.i:                      ; preds = %bb.c
+  %2 = trunc nuw nsw i64 %indvars.iv.i to i32
+  br label %.critedge.thread.i
+
+.critedge.thread.i:                               ; preds = %.critedge.thread.loopexit.i, %.critedge..critedge.thread_crit_edge.i
+  %.pre-phi.i = phi i64 [ %.phi.trans.insert99.i, %.critedge..critedge.thread_crit_edge.i ], [ %indvars.iv.i, %.critedge.thread.loopexit.i ]
+  %3 = phi i32 [ %.pre101.i, %.critedge..critedge.thread_crit_edge.i ], [ %i.r, %.critedge.thread.loopexit.i ]
+  %.09395.i = phi i32 [ %i.k, %.critedge..critedge.thread_crit_edge.i ], [ %2, %.critedge.thread.loopexit.i ]
+  %4 = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.pre-phi.i
+  %i.ag = add nsw i32 %3, 1
   store i32 %i.ag, ptr %4, align 4, !tbaa !85
   %i.ah = tail call noundef i32 @_ZN4cvc58internal6theory14RepSetIterator16doResetIncrementEib(ptr noundef nonnull align 8 dereferenceable(169) %0, i32 noundef %.09395.i, i1 noundef zeroext false) #26, !inline_history !117
   br label %_ZN4cvc58internal6theory14RepSetIterator16incrementAtIndexEi.exit

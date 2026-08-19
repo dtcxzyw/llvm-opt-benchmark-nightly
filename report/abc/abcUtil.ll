@@ -204,18 +204,19 @@ bb.m:                                             ; preds = %._crit_edge.i, %Vec
   %i.aj = phi i32 [ %i.u, %.thread ], [ %i.af, %bb.m ]
   %i.ak = phi ptr [ %i.s, %.thread ], [ %i.ad, %bb.m ] ; 2 uses
   %i.al = phi i32 [ %i.b, %.thread ], [ %i.ac, %bb.m ]
+  %2 = zext nneg i32 %i.al to i64
   %i.am = zext i32 %i.aj to i64
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.n
   %indvars.iv.a = phi i64 [ %i.am, %.lr.ph.preheader ], [ %indvars.iv.next.a, %bb.n ] ; 2 uses
-  %.021 = phi i32 [ %i.al, %.lr.ph.preheader ], [ %.0, %bb.n ] ; 3 uses
+  %indvars.iv = phi i64 [ %2, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.n ] ; 3 uses
   %i.an = load ptr, ptr %i.ak, align 8, !tbaa !26 ; 2 uses
-  %2 = zext nneg i32 %.021 to i64
-  %i.ao = getelementptr inbounds nuw [8 x i8], ptr %i.an, i64 %2 ; 2 uses
+  %i.ao = getelementptr inbounds nuw [8 x i8], ptr %i.an, i64 %indvars.iv ; 2 uses
   %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !29 ; 2 uses
-  %i.aq = add nsw i64 %indvars.iv.a, -2           ; 2 uses
-  %i.ar = getelementptr inbounds nuw [8 x i8], ptr %i.an, i64 %i.aq
+  %i.aq = add i64 %indvars.iv.a, 4294967294
+  %3 = and i64 %i.aq, 4294967295                  ; 2 uses
+  %i.ar = getelementptr inbounds nuw [8 x i8], ptr %i.an, i64 %3
   %i.as = load ptr, ptr %i.ar, align 8, !tbaa !29 ; 2 uses
   %i.at = ptrtoint ptr %i.ap to i64
   %i.au = and i64 %i.at, -2
@@ -235,10 +236,10 @@ bb.m:                                             ; preds = %._crit_edge.i, %Vec
 bb.n:                                             ; preds = %.lr.ph
   store ptr %i.as, ptr %i.ao, align 8, !tbaa !29
   %i.bf = load ptr, ptr %i.ak, align 8, !tbaa !26
-  %i.bg = getelementptr inbounds nuw [8 x i8], ptr %i.bf, i64 %i.aq
+  %i.bg = getelementptr inbounds nuw [8 x i8], ptr %i.bf, i64 %3
   store ptr %i.ap, ptr %i.bg, align 8, !tbaa !29
-  %.0 = add nsw i32 %.021, -1
-  %i.bh = icmp sgt i32 %.021, 1
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %i.bh = icmp sgt i64 %indvars.iv, 1
   %indvars.iv.next.a = add nsw i64 %indvars.iv.a, -1
   br i1 %i.bh, label %.lr.ph, label %Vec_PtrPushUnique.exit, !llvm.loop !138
 

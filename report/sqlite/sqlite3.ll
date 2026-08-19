@@ -205,20 +205,23 @@ bb.a:
   %i.a = alloca [513 x i8], align 16              ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #58
   %i.b = call ptr (i32, ptr, ptr, ...) @sqlite3_snprintf(i32 noundef 512, ptr noundef nonnull %i.a, ptr noundef nonnull @.str.31, ptr noundef %0) ; 0 uses
-  %i.c = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.a) #59
-  %i.d = trunc i64 %i.c to i32                    ; 2 uses
+  %i.c = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.a) #59 ; 2 uses
+  %i.d = trunc i64 %i.c to i32
   %i.e = icmp sgt i32 %i.d, 0
-  br i1 %i.e, label %.lr.ph, label %.critedge12
+  br i1 %i.e, label %.lr.ph.preheader, label %.critedge12
+
+.lr.ph.preheader:                                 ; preds = %bb.a
+  %2 = and i64 %i.c, 2147483647
+  br label %.lr.ph
 
 bb.b:                                             ; preds = %.lr.ph
-  %2 = add nsw i32 %.017, -1
-  %i.f = icmp sgt i32 %.017, 1
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %i.f = icmp sgt i64 %indvars.iv, 1
   br i1 %i.f, label %.lr.ph, label %.critedge12, !llvm.loop !1487
 
-.lr.ph:                                           ; preds = %bb.a, %bb.b
-  %.017 = phi i32 [ %2, %bb.b ], [ %i.d, %bb.a ]  ; 3 uses
-  %3 = zext nneg i32 %.017 to i64                 ; 2 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 %3
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
+  %indvars.iv = phi i64 [ %2, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.b ] ; 4 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv
   %i.h = load i8, ptr %i.g, align 1, !tbaa !231
   %.not = icmp eq i8 %i.h, 47
   br i1 %.not, label %.critedge, label %bb.b
@@ -233,7 +236,7 @@ bb.c:                                             ; preds = %.critedge12
   br label %.critedge
 
 .critedge:                                        ; preds = %.lr.ph, %.critedge12, %bb.c
-  %.sink26 = phi i64 [ 1, %.critedge12 ], [ 1, %bb.c ], [ %3, %.lr.ph ]
+  %.sink26 = phi i64 [ 1, %.critedge12 ], [ 1, %bb.c ], [ %indvars.iv, %.lr.ph ]
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 %.sink26
   store i8 0, ptr %i.j, align 1, !tbaa !231
   br label %.split.i
@@ -636,34 +639,33 @@ bb.fh:                                            ; preds = %sqlite3ExprIsVector
   %.val1175 = load ptr, ptr %i.adn, align 8, !tbaa !976
   %i.ado = icmp sgt i32 %i.adm, 0
   %or.cond.i = and i1 %i.aau, %i.ado
-  br i1 %or.cond.i, label %.lr.ph.i1247.preheader, label %codeApplyAffinity.exit
+  br i1 %or.cond.i, label %.lr.ph.i1247, label %codeApplyAffinity.exit
 
-.lr.ph.i1247.preheader:                           ; preds = %bb.fh
-  %10 = zext nneg i32 %i.adm to i64
-  br label %.lr.ph.i1247
-
-.lr.ph.i1247:                                     ; preds = %.lr.ph.i1247.preheader, %bb.fi
-  %indvars.iv1571 = phi i64 [ %10, %.lr.ph.i1247.preheader ], [ %indvars.iv.next1572, %bb.fi ] ; 3 uses
-  %.05.i = phi ptr [ %i.aat, %.lr.ph.i1247.preheader ], [ %i.ads, %bb.fi ] ; 4 uses
-  %.0193.i.a = phi i32 [ %i.aas, %.lr.ph.i1247.preheader ], [ %i.adr, %bb.fi ] ; 2 uses
-  %indvars1760 = trunc i64 %indvars.iv1571 to i32 ; 2 uses
+.lr.ph.i1247:                                     ; preds = %bb.fh, %bb.fi
+  %.05.i = phi ptr [ %i.ads, %bb.fi ], [ %i.aat, %bb.fh ] ; 4 uses
+  %.0193.i.a = phi i32 [ %10, %bb.fi ], [ %i.adm, %bb.fh ] ; 4 uses
+  %.0193.i = phi i32 [ %i.adr, %bb.fi ], [ %i.aas, %bb.fh ] ; 2 uses
   %i.adp = load i8, ptr %.05.i, align 1, !tbaa !231
   %i.adq = icmp slt i8 %i.adp, 66
   br i1 %i.adq, label %bb.fi, label %.critedge.i
 
 bb.fi:                                            ; preds = %.lr.ph.i1247
-  %indvars.iv.next1572 = add nsw i64 %indvars.iv1571, -1
-  %i.adr = add nsw i32 %.0193.i.a, 1
+  %10 = add nsw i32 %.0193.i.a, -1
+  %i.adr = add nsw i32 %.0193.i, 1
   %i.ads = getelementptr inbounds nuw i8, ptr %.05.i, i64 1
-  %i.adt = icmp sgt i32 %indvars1760, 1
+  %i.adt = icmp sgt i32 %.0193.i.a, 1
   br i1 %i.adt, label %.lr.ph.i1247, label %codeApplyAffinity.exit, !llvm.loop !4493
 
 .critedge.i:                                      ; preds = %.lr.ph.i1247
-  %i.adu = icmp samesign ugt i32 %indvars1760, 1
-  br i1 %i.adu, label %.lr.ph13.i, label %.critedge2.thread.i
+  %i.adu = icmp samesign ugt i32 %.0193.i.a, 1
+  br i1 %i.adu, label %.lr.ph13.preheader.i, label %.critedge2.thread.i
 
-.lr.ph13.i:                                       ; preds = %.critedge.i, %bb.fj
-  %indvars.iv1574.a = phi i64 [ %indvars.iv.next1575.a, %bb.fj ], [ %indvars.iv1571, %.critedge.i ] ; 4 uses
+.lr.ph13.preheader.i:                             ; preds = %.critedge.i
+  %11 = zext nneg i32 %.0193.i.a to i64
+  br label %.lr.ph13.i
+
+.lr.ph13.i:                                       ; preds = %bb.fj, %.lr.ph13.preheader.i
+  %indvars.iv1574.a = phi i64 [ %11, %.lr.ph13.preheader.i ], [ %indvars.iv.next1575.a, %bb.fj ] ; 4 uses
   %i.adv = getelementptr i8, ptr %.05.i, i64 %indvars.iv1574.a
   %i.adw = getelementptr i8, ptr %i.adv, i64 -1
   %i.adx = load i8, ptr %i.adw, align 1, !tbaa !231
@@ -680,8 +682,8 @@ bb.fj:                                            ; preds = %.lr.ph13.i
   br label %.critedge2.thread.i
 
 .critedge2.thread.i:                              ; preds = %bb.fj, %.critedge2.thread.i.loopexit.split.loop.exit, %.critedge.i
-  %.12.i = phi i32 [ 1, %.critedge.i ], [ %i.aea, %.critedge2.thread.i.loopexit.split.loop.exit ], [ 1, %bb.fj ] ; 2 uses
-  %i.aeb = tail call fastcc i32 @sqlite3VdbeAddOp4(ptr noundef %.val1175, i32 noundef 98, i32 noundef %.0193.i.a, i32 noundef %.12.i, i32 noundef 0, ptr noundef nonnull %.05.i, i32 noundef %.12.i), !inline_history !4495 ; 0 uses
+  %.12.i = phi i32 [ %i.aea, %.critedge2.thread.i.loopexit.split.loop.exit ], [ 1, %.critedge.i ], [ 1, %bb.fj ] ; 2 uses
+  %i.aeb = tail call fastcc i32 @sqlite3VdbeAddOp4(ptr noundef %.val1175, i32 noundef 98, i32 noundef %.0193.i, i32 noundef %.12.i, i32 noundef 0, ptr noundef nonnull %.05.i, i32 noundef %.12.i), !inline_history !4495 ; 0 uses
   br label %codeApplyAffinity.exit
 
 codeApplyAffinity.exit:                           ; preds = %bb.fi, %bb.fh, %.critedge2.thread.i
@@ -1084,24 +1086,31 @@ bb.u:                                             ; preds = %.lr.ph.i
 
 .critedge.i:                                      ; preds = %.lr.ph.i
   %i.dn = icmp samesign ugt i32 %.0184.i, 1
-  br i1 %i.dn, label %.lr.ph13.i, label %.critedge2.thread.i
+  br i1 %i.dn, label %.lr.ph13.preheader.i, label %.critedge2.thread.i
 
-.lr.ph13.i:                                       ; preds = %.critedge.i, %bb.v
-  %.112.i = phi i32 [ %6, %bb.v ], [ %.0184.i, %.critedge.i ] ; 4 uses
-  %5 = zext nneg i32 %.112.i to i64
-  %i.do = getelementptr i8, ptr %.05.i, i64 %5
+.lr.ph13.preheader.i:                             ; preds = %.critedge.i
+  %5 = zext nneg i32 %.0184.i to i64
+  br label %.lr.ph13.i
+
+.lr.ph13.i:                                       ; preds = %bb.v, %.lr.ph13.preheader.i
+  %indvars.iv.i = phi i64 [ %5, %.lr.ph13.preheader.i ], [ %indvars.iv.next.i, %bb.v ] ; 4 uses
+  %i.do = getelementptr i8, ptr %.05.i, i64 %indvars.iv.i
   %i.dp = getelementptr i8, ptr %i.do, i64 -1
   %i.dq = load i8, ptr %i.dp, align 1, !tbaa !231
   %i.dr = icmp slt i8 %i.dq, 66
-  br i1 %i.dr, label %bb.v, label %.critedge2.thread.i
+  br i1 %i.dr, label %bb.v, label %.critedge2.thread.loopexit.i
 
 bb.v:                                             ; preds = %.lr.ph13.i
-  %6 = add nsw i32 %.112.i, -1
-  %i.ds = icmp sgt i32 %.112.i, 2
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
+  %i.ds = icmp sgt i64 %indvars.iv.i, 2
   br i1 %i.ds, label %.lr.ph13.i, label %.critedge2.thread.i, !llvm.loop !4494
 
-.critedge2.thread.i:                              ; preds = %bb.v, %.lr.ph13.i, %.critedge.i
-  %.12.i = phi i32 [ 1, %.critedge.i ], [ 1, %bb.v ], [ %.112.i, %.lr.ph13.i ] ; 2 uses
+.critedge2.thread.loopexit.i:                     ; preds = %.lr.ph13.i
+  %6 = trunc nuw nsw i64 %indvars.iv.i to i32
+  br label %.critedge2.thread.i
+
+.critedge2.thread.i:                              ; preds = %bb.v, %.critedge2.thread.loopexit.i, %.critedge.i
+  %.12.i = phi i32 [ %6, %.critedge2.thread.loopexit.i ], [ 1, %.critedge.i ], [ 1, %bb.v ] ; 2 uses
   %i.dt = tail call fastcc i32 @sqlite3VdbeAddOp4(ptr noundef %.val, i32 noundef 98, i32 noundef %.0193.i, i32 noundef %.12.i, i32 noundef 0, ptr noundef nonnull %.05.i, i32 noundef %.12.i), !inline_history !4495 ; 0 uses
   br label %codeApplyAffinity.exit
 
@@ -1504,24 +1513,31 @@ bb.b:                                             ; preds = %.lr.ph
 
 .critedge:                                        ; preds = %.lr.ph
   %i.i = icmp samesign ugt i32 %.0184, 1
-  br i1 %i.i, label %.lr.ph13, label %.critedge2.thread
+  br i1 %i.i, label %.lr.ph13.preheader, label %.critedge2.thread
 
-.lr.ph13:                                         ; preds = %.critedge, %bb.c
-  %.112 = phi i32 [ %4, %bb.c ], [ %.0184, %.critedge ] ; 4 uses
-  %3 = zext nneg i32 %.112 to i64
-  %i.j = getelementptr i8, ptr %.05, i64 %3
+.lr.ph13.preheader:                               ; preds = %.critedge
+  %3 = zext nneg i32 %.0184 to i64
+  br label %.lr.ph13
+
+.lr.ph13:                                         ; preds = %.lr.ph13.preheader, %bb.c
+  %indvars.iv = phi i64 [ %3, %.lr.ph13.preheader ], [ %indvars.iv.next, %bb.c ] ; 4 uses
+  %i.j = getelementptr i8, ptr %.05, i64 %indvars.iv
   %i.k = getelementptr i8, ptr %i.j, i64 -1
   %i.l = load i8, ptr %i.k, align 1, !tbaa !231
   %i.m = icmp slt i8 %i.l, 66
-  br i1 %i.m, label %bb.c, label %.critedge2.thread
+  br i1 %i.m, label %bb.c, label %.critedge2.thread.loopexit
 
 bb.c:                                             ; preds = %.lr.ph13
-  %4 = add nsw i32 %.112, -1
-  %i.n = icmp sgt i32 %.112, 2
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %i.n = icmp sgt i64 %indvars.iv, 2
   br i1 %i.n, label %.lr.ph13, label %.critedge2.thread, !llvm.loop !4494
 
-.critedge2.thread:                                ; preds = %bb.c, %.lr.ph13, %.critedge
-  %.12 = phi i32 [ 1, %.critedge ], [ 1, %bb.c ], [ %.112, %.lr.ph13 ] ; 2 uses
+.critedge2.thread.loopexit:                       ; preds = %.lr.ph13
+  %4 = trunc nuw nsw i64 %indvars.iv to i32
+  br label %.critedge2.thread
+
+.critedge2.thread:                                ; preds = %bb.c, %.critedge, %.critedge2.thread.loopexit
+  %.12 = phi i32 [ %4, %.critedge2.thread.loopexit ], [ 1, %.critedge ], [ 1, %bb.c ] ; 2 uses
   %i.o = tail call fastcc i32 @sqlite3VdbeAddOp4(ptr noundef %.16.val, i32 noundef 98, i32 noundef %.0193, i32 noundef %.12, i32 noundef 0, ptr noundef nonnull %.05, i32 noundef %.12) ; 0 uses
   br label %.critedge2
 
@@ -1924,52 +1940,60 @@ bb.t:                                             ; preds = %bb.s
 
 .preheader38.i:                                   ; preds = %bb.t
   %i.ec = icmp sgt i32 %i.dv, 1
-  br i1 %i.ec, label %.lr.ph.i, label %.critedge.i
+  br i1 %i.ec, label %.lr.ph.preheader.i, label %.critedge.i
 
-.lr.ph.i:                                         ; preds = %.preheader38.i, %bb.u
-  %.039.i = phi i32 [ %7, %bb.u ], [ %i.dx, %.preheader38.i ] ; 4 uses
-  %6 = zext nneg i32 %.039.i to i64
-  %i.ed = getelementptr i8, ptr %i.dy, i64 %6
+.lr.ph.preheader.i:                               ; preds = %.preheader38.i
+  %6 = zext nneg i32 %i.dx to i64
+  br label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %bb.u, %.lr.ph.preheader.i
+  %indvars.iv.i = phi i64 [ %6, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.u ] ; 4 uses
+  %i.ed = getelementptr i8, ptr %i.dy, i64 %indvars.iv.i
   %i.ee = getelementptr i8, ptr %i.ed, i64 -1
   %i.ef = load i8, ptr %i.ee, align 1, !tbaa !231
   %.not34.i = icmp sgt i8 %i.ef, -1
-  br i1 %.not34.i, label %.preheader.preheader.i, label %bb.u
+  br i1 %.not34.i, label %.preheader.preheader.loopexit.i, label %bb.u
 
 bb.u:                                             ; preds = %.lr.ph.i
-  %7 = add nsw i32 %.039.i, -1
-  %i.eg = icmp sgt i32 %.039.i, 1
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
+  %i.eg = icmp sgt i64 %indvars.iv.i, 1
   br i1 %i.eg, label %.lr.ph.i, label %fts3IncrmergeHintPop.exit, !llvm.loop !6049
 
 .critedge.i:                                      ; preds = %.preheader38.i
   %i.eh = icmp eq i32 %i.dx, 0
   br i1 %i.eh, label %fts3IncrmergeHintPop.exit, label %.preheader.preheader.i
 
-.preheader.preheader.i:                           ; preds = %.lr.ph.i, %.critedge.i
-  %.0.lcssa46.i = phi i32 [ %i.dx, %.critedge.i ], [ %.039.i, %.lr.ph.i ] ; 3 uses
+.preheader.preheader.loopexit.i:                  ; preds = %.lr.ph.i
+  %7 = trunc nuw nsw i64 %indvars.iv.i to i32
+  br label %.preheader.preheader.i
+
+.preheader.preheader.i:                           ; preds = %.preheader.preheader.loopexit.i, %.critedge.i
+  %.0.lcssa46.i = phi i32 [ %i.dx, %.critedge.i ], [ %7, %.preheader.preheader.loopexit.i ] ; 3 uses
   %smin.i = call i32 @llvm.smin.i32(i32 %.0.lcssa46.i, i32 1)
   %i.ei = add i32 %smin.i, -1                     ; 2 uses
   %i.ej = icmp sgt i32 %.0.lcssa46.i, 1
-  br i1 %i.ej, label %.lr.ph704, label %.critedge2.i
+  br i1 %i.ej, label %.lr.ph698, label %.critedge2.i
+
+.lr.ph698:                                        ; preds = %.preheader.preheader.i
+  %8 = zext nneg i32 %.0.lcssa46.i to i64
+  br label %.lr.ph704
 
 .preheader.i:                                     ; preds = %.lr.ph704
-  %i.ek = icmp sgt i32 %.1.in.i703, 2
+  %i.ek = icmp sgt i32 %indvars.le.i, 1
   br i1 %i.ek, label %.lr.ph704, label %.critedge2.i, !llvm.loop !6050
 
-.lr.ph704:                                        ; preds = %.preheader.preheader.i, %.preheader.i
-  %.1.in.i703 = phi i32 [ %.1.i129, %.preheader.i ], [ %.0.lcssa46.i, %.preheader.preheader.i ] ; 3 uses
-  %.1.i129 = add nsw i32 %.1.in.i703, -1          ; 2 uses
-  %8 = zext nneg i32 %.1.in.i703 to i64
-  %i.el = getelementptr i8, ptr %i.dy, i64 %8
+.lr.ph704:                                        ; preds = %.lr.ph698, %.preheader.i
+  %indvars.iv43.i697 = phi i64 [ %8, %.lr.ph698 ], [ %indvars.iv.next44.i, %.preheader.i ] ; 2 uses
+  %indvars.iv.next44.i = add nsw i64 %indvars.iv43.i697, -1 ; 2 uses
+  %i.el = getelementptr i8, ptr %i.dy, i64 %indvars.iv43.i697
   %i.em = getelementptr i8, ptr %i.el, i64 -2
   %i.en = load i8, ptr %i.em, align 1, !tbaa !231
   %.not35.i = icmp sgt i8 %i.en, -1
-  br i1 %.not35.i, label %..critedge2.i_crit_edge, label %.preheader.i, !llvm.loop !6050
+  %indvars.le.i = trunc i64 %indvars.iv.next44.i to i32 ; 2 uses
+  br i1 %.not35.i, label %.critedge2.i, label %.preheader.i, !llvm.loop !6050
 
-..critedge2.i_crit_edge:                          ; preds = %.lr.ph704
-  br label %.critedge2.i, !llvm.loop !6050
-
-.critedge2.i:                                     ; preds = %.preheader.i, %..critedge2.i_crit_edge, %.preheader.preheader.i
-  %.1.lcssa.i = phi i32 [ %i.ei, %.preheader.preheader.i ], [ %.1.i129, %..critedge2.i_crit_edge ], [ %i.ei, %.preheader.i ] ; 3 uses
+.critedge2.i:                                     ; preds = %.preheader.i, %.lr.ph704, %.preheader.preheader.i
+  %.1.lcssa.i = phi i32 [ %i.ei, %.preheader.preheader.i ], [ %i.ei, %.preheader.i ], [ %indvars.le.i, %.lr.ph704 ] ; 3 uses
   store i32 %.1.lcssa.i, ptr %i.v, align 8, !tbaa !6041
   %i.eo = sext i32 %.1.lcssa.i to i64
   %i.ep = getelementptr inbounds i8, ptr %i.dy, i64 %i.eo
@@ -2372,9 +2396,8 @@ bb.hd:                                            ; preds = %.thread264, %bb.hc
   br label %bb.he
 
 bb.he:                                            ; preds = %bb.hq, %.thread257
-  %.04486.i = phi i32 [ 15, %.thread257 ], [ %10, %bb.hq ] ; 5 uses
-  %9 = zext nneg i32 %.04486.i to i64             ; 2 uses
-  %i.ais = getelementptr inbounds nuw [40 x i8], ptr %i.bj, i64 %9 ; 5 uses
+  %indvars.iv.i193 = phi i64 [ 15, %.thread257 ], [ %indvars.iv.next.i199, %bb.hq ] ; 6 uses
+  %i.ais = getelementptr inbounds nuw [40 x i8], ptr %i.bj, i64 %indvars.iv.i193 ; 5 uses
   %i.ait = getelementptr inbounds nuw i8, ptr %i.ais, i64 32
   %i.aiu = load i32, ptr %i.ait, align 8, !tbaa !6103
   %i.aiv = icmp sgt i32 %i.aiu, 0
@@ -2475,12 +2498,12 @@ bb.hp:                                            ; preds = %bb.hl
   br label %bb.hq
 
 bb.hq:                                            ; preds = %bb.hp, %bb.ho, %sqlite3_mutex_enter.exit.i49.i, %sqlite3_free.exit.i196
-  %10 = add nsw i32 %.04486.i, -1
-  %.not.i197 = icmp eq i32 %.04486.i, 0
+  %indvars.iv.next.i199 = add nsw i64 %indvars.iv.i193, -1
+  %.not.i197 = icmp eq i64 %indvars.iv.i193, 0
   br i1 %.not.i197, label %fts3IncrmergeRelease.exit, label %bb.he, !llvm.loop !6124
 
 sqlite3_free.exit51.i:                            ; preds = %bb.he
-  %i.ake = icmp eq i32 %.04486.i, 0
+  %i.ake = icmp eq i64 %indvars.iv.i193, 0
   br i1 %i.ake, label %bb.hr, label %blobGrowBuffer.exit.thread.i
 
 bb.hr:                                            ; preds = %sqlite3_free.exit51.i
@@ -2538,12 +2561,12 @@ sqlite3Fts3PutVarint.exit.i:                      ; preds = %bb.hv
   br label %.lr.ph.preheader.i.a
 
 blobGrowBuffer.exit.thread.i:                     ; preds = %sqlite3_free.exit51.i
-  %i.akx = icmp sgt i32 %.04486.i, 0
+  %i.akx = icmp sgt i64 %indvars.iv.i193, 0
   br i1 %i.akx, label %.lr.ph.preheader.i.a, label %._crit_edge.i198
 
 .lr.ph.preheader.i.a:                             ; preds = %bb.hr, %bb.ht, %sqlite3_realloc64.exit.i.i208, %sqlite3Fts3PutVarint.exit.i, %blobGrowBuffer.exit.thread.i
   %i.aky = phi ptr [ %i.ais, %blobGrowBuffer.exit.thread.i ], [ %i.bk, %sqlite3Fts3PutVarint.exit.i ], [ %i.bk, %sqlite3_realloc64.exit.i.i208 ], [ %i.bk, %bb.ht ], [ %i.bk, %bb.hr ]
-  %i.akz = phi i64 [ %9, %blobGrowBuffer.exit.thread.i ], [ 1, %sqlite3Fts3PutVarint.exit.i ], [ 1, %sqlite3_realloc64.exit.i.i208 ], [ 1, %bb.ht ], [ 1, %bb.hr ]
+  %i.akz = phi i64 [ %indvars.iv.i193, %blobGrowBuffer.exit.thread.i ], [ 1, %sqlite3Fts3PutVarint.exit.i ], [ 1, %sqlite3_realloc64.exit.i.i208 ], [ 1, %bb.ht ], [ 1, %bb.hr ]
   %.079114.i = phi i32 [ %i.air, %blobGrowBuffer.exit.thread.i ], [ 0, %sqlite3Fts3PutVarint.exit.i ], [ 7, %sqlite3_realloc64.exit.i.i208 ], [ 7, %bb.ht ], [ %i.air, %bb.hr ]
   br label %.lr.ph.i201
 

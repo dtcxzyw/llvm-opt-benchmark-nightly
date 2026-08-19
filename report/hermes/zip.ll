@@ -204,33 +204,37 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   %.0113.i = phi i32 [ %i.jw, %._crit_edge108.i ], [ 0, %.preheader.i81.preheader ] ; 3 uses
   %.075112.i = phi i32 [ %i.jv, %._crit_edge108.i ], [ 1, %.preheader.i81.preheader ] ; 5 uses
   %.2111.i = phi i32 [ %.3.lcssa.i, %._crit_edge108.i ], [ %i.fz, %.preheader.i81.preheader ] ; 2 uses
-  %.385110.i = phi i32 [ %.4.lcssa.i, %._crit_edge108.i ], [ %.385110.i.ph, %.preheader.i81.preheader ] ; 5 uses
+  %.385110.i = phi i32 [ %.4.lcssa.i, %._crit_edge108.i ], [ %.385110.i.ph, %.preheader.i81.preheader ] ; 4 uses
   %i.iw = icmp sgt i32 %.385110.i, -1
   br i1 %i.iw, label %.lr.ph99.preheader.i, label %.critedge.i
 
 .lr.ph99.preheader.i:                             ; preds = %.preheader.i81
+  %7 = zext nneg i32 %.385110.i to i64
   %i.ix = add nuw i32 %.385110.i, 1
   br label %.lr.ph99.i
 
 .lr.ph99.i:                                       ; preds = %bb.t, %.lr.ph99.preheader.i
-  %.198.i = phi i32 [ %i.jc, %bb.t ], [ 0, %.lr.ph99.preheader.i ] ; 3 uses
-  %.497.i = phi i32 [ %8, %bb.t ], [ %.385110.i, %.lr.ph99.preheader.i ] ; 3 uses
-  %7 = zext nneg i32 %.497.i to i64
-  %i.iy = getelementptr inbounds nuw [4 x i8], ptr %.03953.us.i, i64 %7
+  %indvars.iv118.i = phi i64 [ %7, %.lr.ph99.preheader.i ], [ %indvars.iv.next119.i, %bb.t ] ; 4 uses
+  %.497.i = phi i32 [ 0, %.lr.ph99.preheader.i ], [ %i.jc, %bb.t ] ; 2 uses
+  %i.iy = getelementptr inbounds nuw [4 x i8], ptr %.03953.us.i, i64 %indvars.iv118.i
   %i.iz = load i16, ptr %i.iy, align 2, !tbaa !369
   %i.ja = zext i16 %i.iz to i32
   %i.jb = icmp eq i32 %.0113.i, %i.ja
-  br i1 %i.jb, label %bb.t, label %.critedge.i
+  br i1 %i.jb, label %bb.t, label %.critedge.loopexit.split.loop.exit140.i
 
 bb.t:                                             ; preds = %.lr.ph99.i
-  %i.jc = add nuw i32 %.198.i, 1
-  %8 = add nsw i32 %.497.i, -1
-  %exitcond118.not.i = icmp eq i32 %.198.i, %.385110.i
-  br i1 %exitcond118.not.i, label %.critedge.i, label %.lr.ph99.i, !llvm.loop !380
+  %i.jc = add nuw nsw i32 %.497.i, 1
+  %indvars.iv.next119.i = add nsw i64 %indvars.iv118.i, -1
+  %8 = icmp sgt i64 %indvars.iv118.i, 0
+  br i1 %8, label %.lr.ph99.i, label %.critedge.i, !llvm.loop !380
 
-.critedge.i:                                      ; preds = %bb.t, %.lr.ph99.i, %.preheader.i81
-  %.4.lcssa.i = phi i32 [ %.385110.i, %.preheader.i81 ], [ %.497.i, %.lr.ph99.i ], [ -1, %bb.t ]
-  %.1.lcssa.i = phi i32 [ 0, %.preheader.i81 ], [ %.198.i, %.lr.ph99.i ], [ %i.ix, %bb.t ] ; 6 uses
+.critedge.loopexit.split.loop.exit140.i:          ; preds = %.lr.ph99.i
+  %9 = trunc nuw nsw i64 %indvars.iv118.i to i32
+  br label %.critedge.i
+
+.critedge.i:                                      ; preds = %bb.t, %.critedge.loopexit.split.loop.exit140.i, %.preheader.i81
+  %.4.lcssa.i = phi i32 [ %.385110.i, %.preheader.i81 ], [ %9, %.critedge.loopexit.split.loop.exit140.i ], [ -1, %bb.t ]
+  %.1.lcssa.i = phi i32 [ 0, %.preheader.i81 ], [ %.497.i, %.critedge.loopexit.split.loop.exit140.i ], [ %i.ix, %bb.t ] ; 6 uses
   %i.jd = icmp sgt i32 %.075112.i, %.1.lcssa.i
   br i1 %i.jd, label %.lr.ph107.i, label %._crit_edge108.i
 

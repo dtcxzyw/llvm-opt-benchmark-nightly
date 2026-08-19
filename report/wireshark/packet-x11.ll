@@ -204,23 +204,27 @@ bb.aa:                                            ; preds = %bb.z
   %.3102.i = phi i32 [ %.099.lcssa.i, %.preheader137.i ], [ 0, %bb.aa ], [ %.099.lcssa.i, %bb.z ], [ %.099.lcssa.i, %bb.y ]
   %.3.i = phi i32 [ %.096.lcssa.i, %.preheader137.i ], [ %.096.lcssa.i, %bb.aa ], [ 0, %bb.z ], [ %.096.lcssa.i, %bb.y ]
   %i.ih = icmp sgt i32 %i.aa, 2
-  br i1 %i.ih, label %.lr.ph229.i, label %.critedge.thread.i
+  br i1 %i.ih, label %.lr.ph229.preheader.i, label %.critedge.thread.i
 
-.lr.ph229.i:                                      ; preds = %._crit_edge.i, %bb.ab
-  %.0117227.i = phi i32 [ %8, %bb.ab ], [ %i.aa, %._crit_edge.i ] ; 6 uses
-  %7 = zext nneg i32 %.0117227.i to i64
-  %i.ii = getelementptr [8 x i8], ptr %i.w, i64 %7
+.lr.ph229.preheader.i:                            ; preds = %._crit_edge.i
+  %7 = zext nneg i32 %i.aa to i64
+  br label %.lr.ph229.i
+
+.lr.ph229.i:                                      ; preds = %bb.ab, %.lr.ph229.preheader.i
+  %indvars.iv260.i = phi i64 [ %7, %.lr.ph229.preheader.i ], [ %indvars.iv.next261.i, %bb.ab ] ; 4 uses
+  %i.ii = getelementptr [8 x i8], ptr %i.w, i64 %indvars.iv260.i
   %i.ij = getelementptr i8, ptr %i.ii, i64 -8
   %i.ik = load ptr, ptr %i.ij, align 8
   %i.il = icmp eq ptr %i.ik, null
   br i1 %i.il, label %bb.ab, label %.critedge.i
 
 bb.ab:                                            ; preds = %.lr.ph229.i
-  %8 = add nsw i32 %.0117227.i, -1
-  %i.im = icmp sgt i32 %.0117227.i, 3
+  %indvars.iv.next261.i = add nsw i64 %indvars.iv260.i, -1
+  %i.im = icmp sgt i64 %indvars.iv260.i, 3
   br i1 %i.im, label %.lr.ph229.i, label %.critedge.thread.i, !llvm.loop !33
 
 .critedge.i:                                      ; preds = %.lr.ph229.i
+  %8 = trunc nuw nsw i64 %indvars.iv260.i to i32  ; 3 uses
   %i.in = icmp sgt i32 %.us-phi214276.i, -1
   br i1 %i.in, label %bb.ac, label %.critedge.thread.i
 
@@ -234,11 +238,11 @@ bb.ac:                                            ; preds = %.critedge.i
 
 bb.ad:                                            ; preds = %bb.ac
   %i.is = getelementptr i8, ptr %i.ag, i64 8
-  %i.it = add nsw i32 %.0117227.i, -2
+  %i.it = add nsw i32 %8, -2
   br label %.critedge.thread.i
 
 .critedge.thread.i:                               ; preds = %bb.ab, %bb.ad, %bb.ac, %.critedge.i, %._crit_edge.i
-  %.1118.i = phi i32 [ %i.it, %bb.ad ], [ %.0117227.i, %bb.ac ], [ %.0117227.i, %.critedge.i ], [ %i.aa, %._crit_edge.i ], [ 2, %bb.ab ] ; 6 uses
+  %.1118.i = phi i32 [ %i.it, %bb.ad ], [ %8, %bb.ac ], [ %8, %.critedge.i ], [ %i.aa, %._crit_edge.i ], [ 2, %bb.ab ] ; 6 uses
   %.0115.i = phi ptr [ %i.is, %bb.ad ], [ %i.ag, %bb.ac ], [ %i.ag, %.critedge.i ], [ %i.ag, %._crit_edge.i ], [ %i.ag, %bb.ab ] ; 10 uses
   %i.iu = icmp sgt i32 %.us-phi213275.i, -1
   br i1 %i.iu, label %bb.ae, label %bb.aj

@@ -203,80 +203,73 @@ bb.d:                                             ; preds = %.preheader.i.7
   br label %.loopexit17.i
 
 .loopexit17.i:                                    ; preds = %bb.f, %.loopexit17.i.preheader
-  %.021.i = phi i32 [ 1020, %.loopexit17.i.preheader ], [ %17, %bb.f ] ; 10 uses
-  %2 = zext nneg i32 %.021.i to i64
-  %i.am = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %2
+  %indvars.iv25.i = phi i64 [ 1020, %.loopexit17.i.preheader ], [ %indvars.iv.next26.i.7, %bb.f ] ; 10 uses
+  %i.am = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %indvars.iv25.i
   %i.an = load i32, ptr %i.am, align 4, !tbaa !18
   %i.ao = icmp ugt i32 %i.an, 1
   br i1 %i.ao, label %bb.e, label %.loopexit17.i.1
 
 bb.e:                                             ; preds = %.loopexit17.i.7, %.loopexit17.i.6, %.loopexit17.i.5, %.loopexit17.i.4, %.loopexit17.i.3, %.loopexit17.i.2, %.loopexit17.i.1, %.loopexit17.i
-  %.021.i.lcssa = phi i32 [ %.021.i, %.loopexit17.i ], [ %3, %.loopexit17.i.1 ], [ %5, %.loopexit17.i.2 ], [ %7, %.loopexit17.i.3 ], [ %9, %.loopexit17.i.4 ], [ %11, %.loopexit17.i.5 ], [ %13, %.loopexit17.i.6 ], [ %15, %.loopexit17.i.7 ]
-  %i.ap = uitofp nneg i32 %.021.i.lcssa to float
+  %indvars.iv25.i.lcssa = phi i64 [ %indvars.iv25.i, %.loopexit17.i ], [ %indvars.iv.next26.i, %.loopexit17.i.1 ], [ %indvars.iv.next26.i.1, %.loopexit17.i.2 ], [ %indvars.iv.next26.i.2, %.loopexit17.i.3 ], [ %indvars.iv.next26.i.3, %.loopexit17.i.4 ], [ %indvars.iv.next26.i.4, %.loopexit17.i.5 ], [ %indvars.iv.next26.i.5, %.loopexit17.i.6 ], [ %indvars.iv.next26.i.6, %.loopexit17.i.7 ]
+  %2 = trunc nuw nsw i64 %indvars.iv25.i.lcssa to i32
+  %i.ap = uitofp nneg i32 %2 to float
   %i.aq = fmul reassoc nnan nsz arcp contract afn float %i.ap, f0x3A800000 ; 2 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %i.e, i64 24
   store float %i.aq, ptr %i.ar, align 4, !tbaa !14
   br label %.loopexit.i
 
 .loopexit17.i.1:                                  ; preds = %.loopexit17.i
-  %3 = add nsw i32 %.021.i, -4                    ; 2 uses
-  %4 = zext nneg i32 %3 to i64
-  %i.as = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %4
+  %indvars.iv.next26.i = add nsw i64 %indvars.iv25.i, -4 ; 2 uses
+  %i.as = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %indvars.iv.next26.i
   %i.at = load i32, ptr %i.as, align 4, !tbaa !18
   %i.au = icmp ugt i32 %i.at, 1
   br i1 %i.au, label %bb.e, label %.loopexit17.i.2
 
 .loopexit17.i.2:                                  ; preds = %.loopexit17.i.1
-  %5 = add nsw i32 %.021.i, -8                    ; 2 uses
-  %6 = zext nneg i32 %5 to i64
-  %i.av = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %6
+  %indvars.iv.next26.i.1 = add nsw i64 %indvars.iv25.i, -8 ; 2 uses
+  %i.av = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %indvars.iv.next26.i.1
   %i.aw = load i32, ptr %i.av, align 4, !tbaa !18
   %i.ax = icmp ugt i32 %i.aw, 1
   br i1 %i.ax, label %bb.e, label %.loopexit17.i.3
 
 .loopexit17.i.3:                                  ; preds = %.loopexit17.i.2
-  %7 = add nsw i32 %.021.i, -12                   ; 2 uses
-  %8 = zext nneg i32 %7 to i64
-  %i.ay = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %8
+  %indvars.iv.next26.i.2 = add nsw i64 %indvars.iv25.i, -12 ; 2 uses
+  %i.ay = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %indvars.iv.next26.i.2
   %i.az = load i32, ptr %i.ay, align 4, !tbaa !18
   %i.ba = icmp ugt i32 %i.az, 1
   br i1 %i.ba, label %bb.e, label %.loopexit17.i.4
 
 .loopexit17.i.4:                                  ; preds = %.loopexit17.i.3
-  %9 = add nsw i32 %.021.i, -16                   ; 2 uses
-  %10 = zext nneg i32 %9 to i64
-  %i.bb = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %10
+  %indvars.iv.next26.i.3 = add nsw i64 %indvars.iv25.i, -16 ; 2 uses
+  %i.bb = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %indvars.iv.next26.i.3
   %i.bc = load i32, ptr %i.bb, align 4, !tbaa !18
   %i.bd = icmp ugt i32 %i.bc, 1
   br i1 %i.bd, label %bb.e, label %.loopexit17.i.5
 
 .loopexit17.i.5:                                  ; preds = %.loopexit17.i.4
-  %11 = add nsw i32 %.021.i, -20                  ; 2 uses
-  %12 = zext nneg i32 %11 to i64
-  %i.be = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %12
+  %indvars.iv.next26.i.4 = add nsw i64 %indvars.iv25.i, -20 ; 2 uses
+  %i.be = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %indvars.iv.next26.i.4
   %i.bf = load i32, ptr %i.be, align 4, !tbaa !18
   %i.bg = icmp ugt i32 %i.bf, 1
   br i1 %i.bg, label %bb.e, label %.loopexit17.i.6
 
 .loopexit17.i.6:                                  ; preds = %.loopexit17.i.5
-  %13 = add nsw i32 %.021.i, -24                  ; 2 uses
-  %14 = zext nneg i32 %13 to i64
-  %i.bh = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %14
+  %indvars.iv.next26.i.5 = add nsw i64 %indvars.iv25.i, -24 ; 2 uses
+  %i.bh = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %indvars.iv.next26.i.5
   %i.bi = load i32, ptr %i.bh, align 4, !tbaa !18
   %i.bj = icmp ugt i32 %i.bi, 1
   br i1 %i.bj, label %bb.e, label %.loopexit17.i.7
 
 .loopexit17.i.7:                                  ; preds = %.loopexit17.i.6
-  %15 = add nsw i32 %.021.i, -28                  ; 3 uses
-  %16 = zext nneg i32 %15 to i64
-  %i.bk = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %16
+  %indvars.iv.next26.i.6 = add nsw i64 %indvars.iv25.i, -28 ; 3 uses
+  %i.bk = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %indvars.iv.next26.i.6
   %i.bl = load i32, ptr %i.bk, align 4, !tbaa !18
   %i.bm = icmp ugt i32 %i.bl, 1
   br i1 %i.bm, label %bb.e, label %bb.f
 
 bb.f:                                             ; preds = %.loopexit17.i.7
-  %17 = add nsw i32 %.021.i, -32
-  %.not25.i.7 = icmp eq i32 %15, 0
+  %indvars.iv.next26.i.7 = add nsw i64 %indvars.iv25.i, -32
+  %.not25.i.7 = icmp eq i64 %indvars.iv.next26.i.6, 0
   br i1 %.not25.i.7, label %.loopexit.loopexit.i, label %.loopexit17.i
 
 .loopexit.loopexit.i:                             ; preds = %bb.f

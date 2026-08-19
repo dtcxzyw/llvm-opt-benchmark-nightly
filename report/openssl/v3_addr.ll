@@ -203,7 +203,7 @@ bb.l:                                             ; preds = %make_prefix_or_rang
 ; Function Attrs: nounwind uwtable
 define internal fastcc range(i32 0, 2) i32 @make_addressRange(ptr nofree noundef nonnull writeonly captures(none) %0, ptr noundef %1, ptr noundef %2, i32 noundef range(i32 0, 17) %3) unnamed_addr #1 {
 bb.a:
-  %i.a = zext nneg i32 %3 to i64
+  %i.a = zext nneg i32 %3 to i64                  ; 3 uses
   %i.b = tail call i32 @memcmp(ptr noundef %1, ptr noundef %2, i64 noundef %i.a) #14
   %i.c = icmp sgt i32 %i.b, 0
   br i1 %i.c, label %bb.x, label %bb.b
@@ -266,22 +266,26 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   br i1 %.not6566, label %.critedge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.j, %bb.k
-  %.05767 = phi i32 [ %5, %bb.k ], [ %3, %bb.j ]  ; 3 uses
-  %4 = zext nneg i32 %.05767 to i64
-  %i.y = getelementptr i8, ptr %1, i64 %4
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.k ], [ %i.a, %bb.j ] ; 3 uses
+  %i.y = getelementptr i8, ptr %1, i64 %indvars.iv
   %i.z = getelementptr i8, ptr %i.y, i64 -1
   %i.aa = load i8, ptr %i.z, align 1, !tbaa !18
-  %i.ab = icmp eq i8 %i.aa, 0                     ; 3 uses
-  br i1 %i.ab, label %bb.k, label %.critedge
+  %i.ab = icmp eq i8 %i.aa, 0
+  br i1 %i.ab, label %bb.k, label %.critedge.loopexit.split.loop.exit89
 
 bb.k:                                             ; preds = %.lr.ph
-  %5 = add nsw i32 %.05767, -1                    ; 2 uses
-  %.not65 = icmp eq i32 %5, 0
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
+  %4 = and i64 %indvars.iv.next, 4294967295
+  %.not65 = icmp eq i64 %4, 0
   br i1 %.not65, label %.critedge, label %.lr.ph, !llvm.loop !32
 
-.critedge:                                        ; preds = %.lr.ph, %bb.k, %bb.j
-  %.057.lcssa = phi i32 [ 0, %bb.j ], [ 0, %bb.k ], [ %.05767, %.lr.ph ] ; 2 uses
-  %.not65.lcssa = phi i1 [ true, %bb.j ], [ %i.ab, %bb.k ], [ %i.ab, %.lr.ph ]
+.critedge.loopexit.split.loop.exit89:             ; preds = %.lr.ph
+  %5 = trunc nuw i64 %indvars.iv to i32
+  br label %.critedge
+
+.critedge:                                        ; preds = %bb.k, %.critedge.loopexit.split.loop.exit89, %bb.j
+  %.057.lcssa = phi i32 [ 0, %bb.j ], [ %5, %.critedge.loopexit.split.loop.exit89 ], [ 0, %bb.k ] ; 2 uses
+  %.not65.lcssa = phi i1 [ true, %bb.j ], [ false, %.critedge.loopexit.split.loop.exit89 ], [ true, %bb.k ]
   %i.ac = load ptr, ptr %i.j, align 8, !tbaa !18
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !29
   %i.ae = tail call i32 @ASN1_BIT_STRING_set(ptr noundef %i.ad, ptr noundef %1, i32 noundef %.057.lcssa) #13
@@ -325,22 +329,25 @@ bb.p:                                             ; preds = %bb.o, %bb.l
   br i1 %.not6566, label %.critedge2, label %.lr.ph74
 
 .lr.ph74:                                         ; preds = %bb.p, %bb.q
-  %.173 = phi i32 [ %7, %bb.q ], [ %3, %bb.p ]    ; 4 uses
-  %6 = zext nneg i32 %.173 to i64
-  %i.aw = getelementptr i8, ptr %2, i64 %6
+  %indvars.iv82 = phi i64 [ %indvars.iv.next83, %bb.q ], [ %i.a, %bb.p ] ; 4 uses
+  %i.aw = getelementptr i8, ptr %2, i64 %indvars.iv82
   %i.ax = getelementptr i8, ptr %i.aw, i64 -1
   %i.ay = load i8, ptr %i.ax, align 1, !tbaa !18
-  %.not86.not = icmp ne i8 %i.ay, -1              ; 3 uses
-  br i1 %.not86.not, label %.critedge2, label %bb.q
+  %.not95 = icmp eq i8 %i.ay, -1
+  br i1 %.not95, label %bb.q, label %.critedge2.loopexit.split.loop.exit92
 
 bb.q:                                             ; preds = %.lr.ph74
-  %7 = add nsw i32 %.173, -1
-  %i.az = icmp sgt i32 %.173, 1
+  %indvars.iv.next83 = add nsw i64 %indvars.iv82, -1
+  %i.az = icmp sgt i64 %indvars.iv82, 1
   br i1 %i.az, label %.lr.ph74, label %.critedge2, !llvm.loop !35
 
-.critedge2:                                       ; preds = %.lr.ph74, %bb.q, %bb.p
-  %.1.lcssa = phi i32 [ 0, %bb.p ], [ 0, %bb.q ], [ %.173, %.lr.ph74 ] ; 2 uses
-  %.lcssa = phi i1 [ false, %bb.p ], [ %.not86.not, %bb.q ], [ %.not86.not, %.lr.ph74 ]
+.critedge2.loopexit.split.loop.exit92:            ; preds = %.lr.ph74
+  %6 = trunc nuw nsw i64 %indvars.iv82 to i32
+  br label %.critedge2
+
+.critedge2:                                       ; preds = %bb.q, %.critedge2.loopexit.split.loop.exit92, %bb.p
+  %.1.lcssa = phi i32 [ 0, %bb.p ], [ %6, %.critedge2.loopexit.split.loop.exit92 ], [ 0, %bb.q ] ; 2 uses
+  %.lcssa = phi i1 [ false, %bb.p ], [ true, %.critedge2.loopexit.split.loop.exit92 ], [ false, %bb.q ]
   %i.ba = load ptr, ptr %i.j, align 8, !tbaa !18
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 8
   %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !31

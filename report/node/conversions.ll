@@ -203,20 +203,21 @@ _ZN10fast_float8stackvecILt62EE10try_extendENS_4spanImEE.exit: ; preds = %.lr.ph
 
 .lr.ph.i49:                                       ; preds = %.critedge34
   %i.co = getelementptr i8, ptr %0, i64 -8
+  %5 = zext i16 %.promoted.i to i64
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.u, %.lr.ph.i49
-  %5 = phi i16 [ %.promoted.i, %.lr.ph.i49 ], [ %7, %bb.u ] ; 2 uses
-  %6 = zext i16 %5 to i64
-  %i.cp = getelementptr [8 x i8], ptr %i.co, i64 %6
+  %indvars.iv.i = phi i64 [ %5, %.lr.ph.i49 ], [ %indvars.iv.next.i, %bb.u ] ; 2 uses
+  %i.cp = getelementptr [8 x i8], ptr %i.co, i64 %indvars.iv.i
   %i.cq = load i64, ptr %i.cp, align 8
   %i.cr = icmp eq i64 %i.cq, 0
   br i1 %i.cr, label %bb.u, label %.critedge32
 
 bb.u:                                             ; preds = %bb.t
-  %7 = add i16 %5, -1                             ; 3 uses
-  store i16 %7, ptr %i.a, align 8
-  %.not.i50 = icmp eq i16 %7, 0
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1 ; 2 uses
+  %indvars.i = trunc i64 %indvars.iv.next.i to i16 ; 2 uses
+  store i16 %indvars.i, ptr %i.a, align 8
+  %.not.i50 = icmp eq i16 %indvars.i, 0
   br i1 %.not.i50, label %.critedge32, label %bb.t, !llvm.loop !188
 
 .critedge32:                                      ; preds = %bb.u, %bb.t, %.critedge34, %_ZN10fast_float8stackvecILt62EE10try_extendENS_4spanImEE.exit, %_ZN10fast_float9small_mulILt62EEEbRNS_8stackvecIXT_EEEm.exit

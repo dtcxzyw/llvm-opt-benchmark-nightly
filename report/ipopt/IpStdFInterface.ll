@@ -201,24 +201,31 @@ define range(i32 0, 2) i32 @ipaddstroption_(ptr nofree noundef readonly captures
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !25
   %i.b = icmp sgt i32 %3, 0
-  br i1 %i.b, label %.lr.ph.i, label %._crit_edge.i
+  br i1 %i.b, label %.lr.ph.preheader.i, label %._crit_edge.i
 
-.lr.ph.i:                                         ; preds = %bb.a, %bb.b
-  %.014.i = phi i32 [ %6, %bb.b ], [ %3, %bb.a ]  ; 4 uses
-  %5 = zext nneg i32 %.014.i to i64
-  %i.c = getelementptr i8, ptr %1, i64 %5
+.lr.ph.preheader.i:                               ; preds = %bb.a
+  %5 = zext nneg i32 %3 to i64
+  br label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %bb.b, %.lr.ph.preheader.i
+  %indvars.iv.i = phi i64 [ %5, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.b ] ; 4 uses
+  %i.c = getelementptr i8, ptr %1, i64 %indvars.iv.i
   %i.d = getelementptr i8, ptr %i.c, i64 -1
   %i.e = load i8, ptr %i.d, align 1, !tbaa !26
   %.not.i = icmp eq i8 %i.e, 32
-  br i1 %.not.i, label %bb.b, label %._crit_edge.i
+  br i1 %.not.i, label %bb.b, label %._crit_edge.loopexit.split.loop.exit.i
 
 bb.b:                                             ; preds = %.lr.ph.i
-  %6 = add nsw i32 %.014.i, -1
-  %i.f = icmp sgt i32 %.014.i, 1
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
+  %i.f = icmp sgt i64 %indvars.iv.i, 1
   br i1 %i.f, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !27
 
-._crit_edge.i:                                    ; preds = %bb.b, %.lr.ph.i, %bb.a
-  %.0.lcssa.i = phi i32 [ %3, %bb.a ], [ 0, %bb.b ], [ %.014.i, %.lr.ph.i ] ; 2 uses
+._crit_edge.loopexit.split.loop.exit.i:           ; preds = %.lr.ph.i
+  %6 = trunc nuw nsw i64 %indvars.iv.i to i32
+  br label %._crit_edge.i
+
+._crit_edge.i:                                    ; preds = %bb.b, %._crit_edge.loopexit.split.loop.exit.i, %bb.a
+  %.0.lcssa.i = phi i32 [ %3, %bb.a ], [ %6, %._crit_edge.loopexit.split.loop.exit.i ], [ 0, %bb.b ] ; 2 uses
   %i.g = add nsw i32 %.0.lcssa.i, 1
   %i.h = sext i32 %i.g to i64
   %i.i = tail call noalias ptr @malloc(i64 noundef %i.h) #6 ; 5 uses
@@ -234,24 +241,31 @@ bb.c:                                             ; preds = %._crit_edge.i
 
 f2cstr.exit:                                      ; preds = %._crit_edge.i, %bb.c
   %i.l = icmp sgt i32 %4, 0
-  br i1 %i.l, label %.lr.ph.i13, label %._crit_edge.i10
+  br i1 %i.l, label %.lr.ph.preheader.i13, label %._crit_edge.i10
 
-.lr.ph.i13:                                       ; preds = %f2cstr.exit, %bb.d
-  %.014.i14 = phi i32 [ %8, %bb.d ], [ %4, %f2cstr.exit ] ; 4 uses
-  %7 = zext nneg i32 %.014.i14 to i64
-  %i.m = getelementptr i8, ptr %2, i64 %7
+.lr.ph.preheader.i13:                             ; preds = %f2cstr.exit
+  %7 = zext nneg i32 %4 to i64
+  br label %.lr.ph.i13
+
+.lr.ph.i13:                                       ; preds = %bb.d, %.lr.ph.preheader.i13
+  %indvars.iv.i15 = phi i64 [ %7, %.lr.ph.preheader.i13 ], [ %indvars.iv.next.i18, %bb.d ] ; 4 uses
+  %i.m = getelementptr i8, ptr %2, i64 %indvars.iv.i15
   %i.n = getelementptr i8, ptr %i.m, i64 -1
   %i.o = load i8, ptr %i.n, align 1, !tbaa !26
   %.not.i15 = icmp eq i8 %i.o, 32
-  br i1 %.not.i15, label %bb.d, label %._crit_edge.i10
+  br i1 %.not.i15, label %bb.d, label %._crit_edge.loopexit.split.loop.exit.i17
 
 bb.d:                                             ; preds = %.lr.ph.i13
-  %8 = add nsw i32 %.014.i14, -1
-  %i.p = icmp sgt i32 %.014.i14, 1
+  %indvars.iv.next.i18 = add nsw i64 %indvars.iv.i15, -1
+  %i.p = icmp sgt i64 %indvars.iv.i15, 1
   br i1 %i.p, label %.lr.ph.i13, label %._crit_edge.i10, !llvm.loop !27
 
-._crit_edge.i10:                                  ; preds = %bb.d, %.lr.ph.i13, %f2cstr.exit
-  %.0.lcssa.i11 = phi i32 [ %4, %f2cstr.exit ], [ 0, %bb.d ], [ %.014.i14, %.lr.ph.i13 ] ; 2 uses
+._crit_edge.loopexit.split.loop.exit.i17:         ; preds = %.lr.ph.i13
+  %8 = trunc nuw nsw i64 %indvars.iv.i15 to i32
+  br label %._crit_edge.i10
+
+._crit_edge.i10:                                  ; preds = %bb.d, %._crit_edge.loopexit.split.loop.exit.i17, %f2cstr.exit
+  %.0.lcssa.i11 = phi i32 [ %4, %f2cstr.exit ], [ %8, %._crit_edge.loopexit.split.loop.exit.i17 ], [ 0, %bb.d ] ; 2 uses
   %i.q = add nsw i32 %.0.lcssa.i11, 1
   %i.r = sext i32 %i.q to i64
   %i.s = tail call noalias ptr @malloc(i64 noundef %i.r) #6 ; 5 uses
@@ -283,24 +297,31 @@ define range(i32 0, 2) i32 @ipaddnumoption_(ptr nofree noundef readonly captures
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !25
   %i.b = icmp sgt i32 %3, 0
-  br i1 %i.b, label %.lr.ph.i, label %._crit_edge.i
+  br i1 %i.b, label %.lr.ph.preheader.i, label %._crit_edge.i
 
-.lr.ph.i:                                         ; preds = %bb.a, %bb.b
-  %.014.i = phi i32 [ %5, %bb.b ], [ %3, %bb.a ]  ; 4 uses
-  %4 = zext nneg i32 %.014.i to i64
-  %i.c = getelementptr i8, ptr %1, i64 %4
+.lr.ph.preheader.i:                               ; preds = %bb.a
+  %4 = zext nneg i32 %3 to i64
+  br label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %bb.b, %.lr.ph.preheader.i
+  %indvars.iv.i = phi i64 [ %4, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.b ] ; 4 uses
+  %i.c = getelementptr i8, ptr %1, i64 %indvars.iv.i
   %i.d = getelementptr i8, ptr %i.c, i64 -1
   %i.e = load i8, ptr %i.d, align 1, !tbaa !26
   %.not.i = icmp eq i8 %i.e, 32
-  br i1 %.not.i, label %bb.b, label %._crit_edge.i
+  br i1 %.not.i, label %bb.b, label %._crit_edge.loopexit.split.loop.exit.i
 
 bb.b:                                             ; preds = %.lr.ph.i
-  %5 = add nsw i32 %.014.i, -1
-  %i.f = icmp sgt i32 %.014.i, 1
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
+  %i.f = icmp sgt i64 %indvars.iv.i, 1
   br i1 %i.f, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !27
 
-._crit_edge.i:                                    ; preds = %bb.b, %.lr.ph.i, %bb.a
-  %.0.lcssa.i = phi i32 [ %3, %bb.a ], [ 0, %bb.b ], [ %.014.i, %.lr.ph.i ] ; 2 uses
+._crit_edge.loopexit.split.loop.exit.i:           ; preds = %.lr.ph.i
+  %5 = trunc nuw nsw i64 %indvars.iv.i to i32
+  br label %._crit_edge.i
+
+._crit_edge.i:                                    ; preds = %bb.b, %._crit_edge.loopexit.split.loop.exit.i, %bb.a
+  %.0.lcssa.i = phi i32 [ %3, %bb.a ], [ %5, %._crit_edge.loopexit.split.loop.exit.i ], [ 0, %bb.b ] ; 2 uses
   %i.g = add nsw i32 %.0.lcssa.i, 1
   %i.h = sext i32 %i.g to i64
   %i.i = tail call noalias ptr @malloc(i64 noundef %i.h) #6 ; 5 uses
@@ -333,24 +354,31 @@ bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !25
   %i.b = load i32, ptr %2, align 4, !tbaa !8
   %i.c = icmp sgt i32 %3, 0
-  br i1 %i.c, label %.lr.ph.i, label %._crit_edge.i
+  br i1 %i.c, label %.lr.ph.preheader.i, label %._crit_edge.i
 
-.lr.ph.i:                                         ; preds = %bb.a, %bb.b
-  %.014.i = phi i32 [ %5, %bb.b ], [ %3, %bb.a ]  ; 4 uses
-  %4 = zext nneg i32 %.014.i to i64
-  %i.d = getelementptr i8, ptr %1, i64 %4
+.lr.ph.preheader.i:                               ; preds = %bb.a
+  %4 = zext nneg i32 %3 to i64
+  br label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %bb.b, %.lr.ph.preheader.i
+  %indvars.iv.i = phi i64 [ %4, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.b ] ; 4 uses
+  %i.d = getelementptr i8, ptr %1, i64 %indvars.iv.i
   %i.e = getelementptr i8, ptr %i.d, i64 -1
   %i.f = load i8, ptr %i.e, align 1, !tbaa !26
   %.not.i = icmp eq i8 %i.f, 32
-  br i1 %.not.i, label %bb.b, label %._crit_edge.i
+  br i1 %.not.i, label %bb.b, label %._crit_edge.loopexit.split.loop.exit.i
 
 bb.b:                                             ; preds = %.lr.ph.i
-  %5 = add nsw i32 %.014.i, -1
-  %i.g = icmp sgt i32 %.014.i, 1
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
+  %i.g = icmp sgt i64 %indvars.iv.i, 1
   br i1 %i.g, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !27
 
-._crit_edge.i:                                    ; preds = %bb.b, %.lr.ph.i, %bb.a
-  %.0.lcssa.i = phi i32 [ %3, %bb.a ], [ 0, %bb.b ], [ %.014.i, %.lr.ph.i ] ; 2 uses
+._crit_edge.loopexit.split.loop.exit.i:           ; preds = %.lr.ph.i
+  %5 = trunc nuw nsw i64 %indvars.iv.i to i32
+  br label %._crit_edge.i
+
+._crit_edge.i:                                    ; preds = %bb.b, %._crit_edge.loopexit.split.loop.exit.i, %bb.a
+  %.0.lcssa.i = phi i32 [ %3, %bb.a ], [ %5, %._crit_edge.loopexit.split.loop.exit.i ], [ 0, %bb.b ] ; 2 uses
   %i.h = add nsw i32 %.0.lcssa.i, 1
   %i.i = sext i32 %i.h to i64
   %i.j = tail call noalias ptr @malloc(i64 noundef %i.i) #6 ; 5 uses
@@ -382,24 +410,31 @@ bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !25
   %i.b = load i32, ptr %2, align 4, !tbaa !8
   %i.c = icmp sgt i32 %3, 0
-  br i1 %i.c, label %.lr.ph.i, label %._crit_edge.i
+  br i1 %i.c, label %.lr.ph.preheader.i, label %._crit_edge.i
 
-.lr.ph.i:                                         ; preds = %bb.a, %bb.b
-  %.014.i = phi i32 [ %5, %bb.b ], [ %3, %bb.a ]  ; 4 uses
-  %4 = zext nneg i32 %.014.i to i64
-  %i.d = getelementptr i8, ptr %1, i64 %4
+.lr.ph.preheader.i:                               ; preds = %bb.a
+  %4 = zext nneg i32 %3 to i64
+  br label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %bb.b, %.lr.ph.preheader.i
+  %indvars.iv.i = phi i64 [ %4, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.b ] ; 4 uses
+  %i.d = getelementptr i8, ptr %1, i64 %indvars.iv.i
   %i.e = getelementptr i8, ptr %i.d, i64 -1
   %i.f = load i8, ptr %i.e, align 1, !tbaa !26
   %.not.i = icmp eq i8 %i.f, 32
-  br i1 %.not.i, label %bb.b, label %._crit_edge.i
+  br i1 %.not.i, label %bb.b, label %._crit_edge.loopexit.split.loop.exit.i
 
 bb.b:                                             ; preds = %.lr.ph.i
-  %5 = add nsw i32 %.014.i, -1
-  %i.g = icmp sgt i32 %.014.i, 1
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
+  %i.g = icmp sgt i64 %indvars.iv.i, 1
   br i1 %i.g, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !27
 
-._crit_edge.i:                                    ; preds = %bb.b, %.lr.ph.i, %bb.a
-  %.0.lcssa.i = phi i32 [ %3, %bb.a ], [ 0, %bb.b ], [ %.014.i, %.lr.ph.i ] ; 2 uses
+._crit_edge.loopexit.split.loop.exit.i:           ; preds = %.lr.ph.i
+  %5 = trunc nuw nsw i64 %indvars.iv.i to i32
+  br label %._crit_edge.i
+
+._crit_edge.i:                                    ; preds = %bb.b, %._crit_edge.loopexit.split.loop.exit.i, %bb.a
+  %.0.lcssa.i = phi i32 [ %3, %bb.a ], [ %5, %._crit_edge.loopexit.split.loop.exit.i ], [ 0, %bb.b ] ; 2 uses
   %i.h = add nsw i32 %.0.lcssa.i, 1
   %i.i = sext i32 %i.h to i64
   %i.j = tail call noalias ptr @malloc(i64 noundef %i.i) #6 ; 5 uses

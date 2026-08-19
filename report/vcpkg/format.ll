@@ -204,23 +204,31 @@ bb.f:                                             ; preds = %bb.d, %bb.e, %bb.a
 
 _ZN3fmt3v126detail13format_base2eIcoEEPT_iS4_T0_ib.exit.preheader: ; preds = %.split.i.i
   %.not9192 = icmp eq i32 %.032, 0
-  br i1 %.not9192, label %.critedge, label %.lr.ph
+  br i1 %.not9192, label %.critedge, label %.lr.ph.preheader
 
-.lr.ph:                                           ; preds = %_ZN3fmt3v126detail13format_base2eIcoEEPT_iS4_T0_ib.exit.preheader, %_ZN3fmt3v126detail13format_base2eIcoEEPT_iS4_T0_ib.exit
-  %.193 = phi i32 [ %5, %_ZN3fmt3v126detail13format_base2eIcoEEPT_iS4_T0_ib.exit ], [ %.032, %_ZN3fmt3v126detail13format_base2eIcoEEPT_iS4_T0_ib.exit.preheader ] ; 3 uses
-  %4 = zext nneg i32 %.193 to i64
-  %i.ak = getelementptr inbounds nuw i8, ptr %i.a, i64 %4
+.lr.ph.preheader:                                 ; preds = %_ZN3fmt3v126detail13format_base2eIcoEEPT_iS4_T0_ib.exit.preheader
+  %4 = zext i32 %.032 to i64
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZN3fmt3v126detail13format_base2eIcoEEPT_iS4_T0_ib.exit
+  %indvars.iv = phi i64 [ %4, %.lr.ph.preheader ], [ %indvars.iv.next, %_ZN3fmt3v126detail13format_base2eIcoEEPT_iS4_T0_ib.exit ] ; 3 uses
+  %i.ak = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv
   %i.al = load i8, ptr %i.ak, align 1, !tbaa !16
   %i.am = icmp eq i8 %i.al, 48
-  br i1 %i.am, label %_ZN3fmt3v126detail13format_base2eIcoEEPT_iS4_T0_ib.exit, label %.critedge
+  br i1 %i.am, label %_ZN3fmt3v126detail13format_base2eIcoEEPT_iS4_T0_ib.exit, label %.critedge.loopexit.split.loop.exit117
 
 _ZN3fmt3v126detail13format_base2eIcoEEPT_iS4_T0_ib.exit: ; preds = %.lr.ph
-  %5 = add nsw i32 %.193, -1                      ; 2 uses
-  %.not91 = icmp eq i32 %5, 0
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
+  %5 = and i64 %indvars.iv.next, 4294967295
+  %.not91 = icmp eq i64 %5, 0
   br i1 %.not91, label %.critedge, label %.lr.ph, !llvm.loop !318
 
-.critedge:                                        ; preds = %.lr.ph, %_ZN3fmt3v126detail13format_base2eIcoEEPT_iS4_T0_ib.exit, %_ZN3fmt3v126detail13format_base2eIcoEEPT_iS4_T0_ib.exit.preheader
-  %.1.lcssa = phi i32 [ 0, %_ZN3fmt3v126detail13format_base2eIcoEEPT_iS4_T0_ib.exit.preheader ], [ 0, %_ZN3fmt3v126detail13format_base2eIcoEEPT_iS4_T0_ib.exit ], [ %.193, %.lr.ph ] ; 5 uses
+.critedge.loopexit.split.loop.exit117:            ; preds = %.lr.ph
+  %6 = trunc nuw i64 %indvars.iv to i32
+  br label %.critedge
+
+.critedge:                                        ; preds = %_ZN3fmt3v126detail13format_base2eIcoEEPT_iS4_T0_ib.exit, %.critedge.loopexit.split.loop.exit117, %_ZN3fmt3v126detail13format_base2eIcoEEPT_iS4_T0_ib.exit.preheader
+  %.1.lcssa = phi i32 [ 0, %_ZN3fmt3v126detail13format_base2eIcoEEPT_iS4_T0_ib.exit.preheader ], [ %6, %.critedge.loopexit.split.loop.exit117 ], [ 0, %_ZN3fmt3v126detail13format_base2eIcoEEPT_iS4_T0_ib.exit ] ; 5 uses
   %i.an = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 27 uses
   %i.ao = load i64, ptr %i.an, align 8, !tbaa !11 ; 2 uses
   %i.ap = add i64 %i.ao, 1                        ; 3 uses
@@ -623,23 +631,31 @@ bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
 
 _ZN3fmt3v126detail13format_base2eIcmEEPT_iS4_T0_ib.exit.preheader: ; preds = %.split.i.i
   %.not8990 = icmp eq i32 %.032, 0
-  br i1 %.not8990, label %.critedge, label %.lr.ph
+  br i1 %.not8990, label %.critedge, label %.lr.ph.preheader
 
-.lr.ph:                                           ; preds = %_ZN3fmt3v126detail13format_base2eIcmEEPT_iS4_T0_ib.exit.preheader, %_ZN3fmt3v126detail13format_base2eIcmEEPT_iS4_T0_ib.exit
-  %.191 = phi i32 [ %5, %_ZN3fmt3v126detail13format_base2eIcmEEPT_iS4_T0_ib.exit ], [ %.032, %_ZN3fmt3v126detail13format_base2eIcmEEPT_iS4_T0_ib.exit.preheader ] ; 3 uses
-  %4 = zext nneg i32 %.191 to i64
-  %i.ae = getelementptr inbounds nuw i8, ptr %i.a, i64 %4
+.lr.ph.preheader:                                 ; preds = %_ZN3fmt3v126detail13format_base2eIcmEEPT_iS4_T0_ib.exit.preheader
+  %4 = zext i32 %.032 to i64
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZN3fmt3v126detail13format_base2eIcmEEPT_iS4_T0_ib.exit
+  %indvars.iv = phi i64 [ %4, %.lr.ph.preheader ], [ %indvars.iv.next, %_ZN3fmt3v126detail13format_base2eIcmEEPT_iS4_T0_ib.exit ] ; 3 uses
+  %i.ae = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv
   %i.af = load i8, ptr %i.ae, align 1, !tbaa !16
   %i.ag = icmp eq i8 %i.af, 48
-  br i1 %i.ag, label %_ZN3fmt3v126detail13format_base2eIcmEEPT_iS4_T0_ib.exit, label %.critedge
+  br i1 %i.ag, label %_ZN3fmt3v126detail13format_base2eIcmEEPT_iS4_T0_ib.exit, label %.critedge.loopexit.split.loop.exit117
 
 _ZN3fmt3v126detail13format_base2eIcmEEPT_iS4_T0_ib.exit: ; preds = %.lr.ph
-  %5 = add nsw i32 %.191, -1                      ; 2 uses
-  %.not89 = icmp eq i32 %5, 0
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
+  %5 = and i64 %indvars.iv.next, 4294967295
+  %.not89 = icmp eq i64 %5, 0
   br i1 %.not89, label %.critedge, label %.lr.ph, !llvm.loop !533
 
-.critedge:                                        ; preds = %.lr.ph, %_ZN3fmt3v126detail13format_base2eIcmEEPT_iS4_T0_ib.exit, %_ZN3fmt3v126detail13format_base2eIcmEEPT_iS4_T0_ib.exit.preheader
-  %.1.lcssa = phi i32 [ 0, %_ZN3fmt3v126detail13format_base2eIcmEEPT_iS4_T0_ib.exit.preheader ], [ 0, %_ZN3fmt3v126detail13format_base2eIcmEEPT_iS4_T0_ib.exit ], [ %.191, %.lr.ph ] ; 5 uses
+.critedge.loopexit.split.loop.exit117:            ; preds = %.lr.ph
+  %6 = trunc nuw i64 %indvars.iv to i32
+  br label %.critedge
+
+.critedge:                                        ; preds = %_ZN3fmt3v126detail13format_base2eIcmEEPT_iS4_T0_ib.exit, %.critedge.loopexit.split.loop.exit117, %_ZN3fmt3v126detail13format_base2eIcmEEPT_iS4_T0_ib.exit.preheader
+  %.1.lcssa = phi i32 [ 0, %_ZN3fmt3v126detail13format_base2eIcmEEPT_iS4_T0_ib.exit.preheader ], [ %6, %.critedge.loopexit.split.loop.exit117 ], [ 0, %_ZN3fmt3v126detail13format_base2eIcmEEPT_iS4_T0_ib.exit ] ; 5 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 27 uses
   %i.ai = load i64, ptr %i.ah, align 8, !tbaa !11 ; 2 uses
   %i.aj = add i64 %i.ai, 1                        ; 3 uses

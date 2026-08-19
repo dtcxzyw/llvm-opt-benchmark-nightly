@@ -204,7 +204,7 @@ bb.al:                                            ; preds = %bb.ak
 
 .lr.ph149.2:                                      ; preds = %.lr.ph153.2, %bb.aq
   %indvars.iv162.2 = phi i64 [ %indvars.iv.next163.1.2, %bb.aq ], [ %indvars.iv.next161.1, %.lr.ph153.2 ] ; 3 uses
-  %indvars.iv.next163.2 = add nuw nsw i64 %indvars.iv162.2, 1 ; 2 uses
+  %indvars.iv.next163.2 = add nsw i64 %indvars.iv162.2, 1 ; 2 uses
   %i.gs = getelementptr inbounds nuw [8 x i8], ptr %i.gf, i64 %indvars.iv.next163.2 ; 2 uses
   %i.gt = load ptr, ptr %i.gs, align 8, !tbaa !137 ; 2 uses
   %.not91.2 = icmp eq ptr %i.gt, null
@@ -222,7 +222,7 @@ bb.an:                                            ; preds = %bb.am
   br label %.lr.ph149.1.2
 
 .lr.ph149.1.2:                                    ; preds = %bb.an, %bb.am, %.lr.ph149.2
-  %indvars.iv.next163.1.2 = add nuw nsw i64 %indvars.iv162.2, 2 ; 3 uses
+  %indvars.iv.next163.1.2 = add nsw i64 %indvars.iv162.2, 2 ; 3 uses
   %i.gx = getelementptr inbounds nuw [8 x i8], ptr %i.gf, i64 %indvars.iv.next163.1.2 ; 2 uses
   %i.gy = load ptr, ptr %i.gx, align 8, !tbaa !137 ; 2 uses
   %.not91.1.2 = icmp eq ptr %i.gy, null
@@ -272,7 +272,7 @@ bb.as:                                            ; preds = %bb.ar
 
 .lr.ph149.3:                                      ; preds = %bb.ax, %.lr.ph149.preheader.new.3
   %indvars.iv162.3 = phi i64 [ %indvars.iv.next163.prol.3, %.lr.ph149.preheader.new.3 ], [ %indvars.iv.next163.1.3, %bb.ax ] ; 3 uses
-  %indvars.iv.next163.3 = add nuw nsw i64 %indvars.iv162.3, 1 ; 2 uses
+  %indvars.iv.next163.3 = add nsw i64 %indvars.iv162.3, 1 ; 2 uses
   %i.hi = getelementptr inbounds nuw [8 x i8], ptr %i.gf, i64 %indvars.iv.next163.3 ; 2 uses
   %i.hj = load ptr, ptr %i.hi, align 8, !tbaa !137 ; 2 uses
   %.not91.3 = icmp eq ptr %i.hj, null
@@ -290,7 +290,7 @@ bb.au:                                            ; preds = %bb.at
   br label %.lr.ph149.1.3
 
 .lr.ph149.1.3:                                    ; preds = %bb.au, %bb.at, %.lr.ph149.3
-  %indvars.iv.next163.1.3 = add nuw nsw i64 %indvars.iv162.3, 2 ; 3 uses
+  %indvars.iv.next163.1.3 = add nsw i64 %indvars.iv162.3, 2 ; 3 uses
   %i.hn = getelementptr inbounds nuw [8 x i8], ptr %i.gf, i64 %indvars.iv.next163.1.3 ; 2 uses
   %i.ho = load ptr, ptr %i.hn, align 8, !tbaa !137 ; 2 uses
   %.not91.1.3 = icmp eq ptr %i.ho, null
