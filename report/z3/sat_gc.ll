@@ -203,16 +203,18 @@ _ZN6vectorIN3sat7literalELb0EjE5resetEv.exit:     ; preds = %_ZN3sat6solver12ini
 
 _ZNK3sat6solver8num_varsEv.exit.lr.ph:            ; preds = %_ZN6vectorIN3sat7literalELb0EjE5resetEv.exit
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 3264 ; 2 uses
+  %2 = zext i32 %1 to i64
   br label %_ZNK3sat6solver8num_varsEv.exit
 
 _ZNK3sat6solver8num_varsEv.exit:                  ; preds = %_ZNK3sat6solver8num_varsEv.exit.lr.ph, %"_ZZN3sat6solver7gc_varsEjENK3$_0clENS_7literalE.exit68"
   %i.ah = phi ptr [ %i.ac, %_ZNK3sat6solver8num_varsEv.exit.lr.ph ], [ %i.eo, %"_ZZN3sat6solver7gc_varsEjENK3$_0clENS_7literalE.exit68" ] ; 4 uses
   %i.ai = phi ptr [ %i.ac, %_ZNK3sat6solver8num_varsEv.exit.lr.ph ], [ %i.ep, %"_ZZN3sat6solver7gc_varsEjENK3$_0clENS_7literalE.exit68" ] ; 3 uses
-  %2 = phi ptr [ %i.ae, %_ZNK3sat6solver8num_varsEv.exit.lr.ph ], [ %i.eq, %"_ZZN3sat6solver7gc_varsEjENK3$_0clENS_7literalE.exit68" ]
-  %.035128 = phi i32 [ %1, %_ZNK3sat6solver8num_varsEv.exit.lr.ph ], [ %3, %"_ZZN3sat6solver7gc_varsEjENK3$_0clENS_7literalE.exit68" ] ; 3 uses
-  %i.aj = getelementptr inbounds i8, ptr %2, i64 -4
+  %indvars.iv = phi i64 [ %2, %_ZNK3sat6solver8num_varsEv.exit.lr.ph ], [ %indvars.iv.next, %"_ZZN3sat6solver7gc_varsEjENK3$_0clENS_7literalE.exit68" ] ; 3 uses
+  %3 = phi ptr [ %i.ae, %_ZNK3sat6solver8num_varsEv.exit.lr.ph ], [ %i.eq, %"_ZZN3sat6solver7gc_varsEjENK3$_0clENS_7literalE.exit68" ]
+  %i.aj = getelementptr inbounds i8, ptr %3, i64 -4
   %i.ak = load i32, ptr %i.aj, align 4, !tbaa !167
-  %i.al = icmp ult i32 %.035128, %i.ak
+  %4 = zext i32 %i.ak to i64
+  %i.al = icmp samesign ult i64 %indvars.iv, %4
   br i1 %i.al, label %bb.h, label %.critedge126
 
 .critedge126:                                     ; preds = %_ZNK3sat6solver8num_varsEv.exit, %"_ZZN3sat6solver7gc_varsEjENK3$_0clENS_7literalE.exit68", %_ZN6vectorIN3sat7literalELb0EjE5resetEv.exit
@@ -235,7 +237,8 @@ _ZN6vectorIN3sat7literalELb0EjE3endEv.exit:       ; preds = %.critedge126
   br label %bb.w
 
 bb.h:                                             ; preds = %_ZNK3sat6solver8num_varsEv.exit
-  %i.av = shl i32 %.035128, 1                     ; 2 uses
+  %5 = trunc nuw i64 %indvars.iv to i32
+  %i.av = shl i32 %5, 1                           ; 2 uses
   %i.aw = load ptr, ptr %i.ag, align 8, !tbaa !220
   %i.ax = zext i32 %i.av to i64
   %i.ay = getelementptr inbounds nuw [8 x i8], ptr %i.aw, i64 %i.ax ; 2 uses
@@ -440,7 +443,7 @@ _ZN6vectorIN3sat7literalELb0EjE9push_backEOS1_.exit.i63: ; preds = %bb.r, %bb.q
 "_ZZN3sat6solver7gc_varsEjENK3$_0clENS_7literalE.exit68": ; preds = %"_ZZN3sat6solver7gc_varsEjENK3$_0clENS_7literalE.exit", %._crit_edge.i58, %._crit_edge.thread16.i61
   %i.eo = phi ptr [ %i.cr, %"_ZZN3sat6solver7gc_varsEjENK3$_0clENS_7literalE.exit" ], [ %i.el, %._crit_edge.i58 ], [ %i.de, %._crit_edge.thread16.i61 ] ; 2 uses
   %i.ep = phi ptr [ %i.cs, %"_ZZN3sat6solver7gc_varsEjENK3$_0clENS_7literalE.exit" ], [ %i.em, %._crit_edge.i58 ], [ %i.df, %._crit_edge.thread16.i61 ]
-  %3 = add i32 %.035128, 1
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   %i.eq = load ptr, ptr %i.b, align 8, !tbaa !179 ; 2 uses
   %i.er = icmp eq ptr %i.eq, null
   br i1 %i.er, label %.critedge126, label %_ZNK3sat6solver8num_varsEv.exit, !llvm.loop !225

@@ -204,11 +204,9 @@ bb.c:                                             ; preds = %bb.h, %bb.e, %bb.d,
   %i.aj = phi i32 [ %i.aw, %bb.h ], [ 1, %bb.e ], [ %i.aw, %.lr.ph ], [ %i.aw, %bb.d ]
   %.0532.be.jt0.i = phi i32 [ %.0532954.i145, %bb.h ], [ %.0532954.i145, %bb.e ], [ 1, %.lr.ph ], [ %.0532954.i145, %bb.d ]
   %.not640.i = icmp eq i32 %i.ax, 0
-  %indvar.next = add i64 %indvar, 1
   br i1 %.not640.i, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %bb.c
-  %indvar = phi i64 [ %indvar.next, %bb.c ], [ 0, %bb.a ] ; 3 uses
   %i.ak = phi i32 [ %i.x, %bb.c ], [ 0, %bb.a ]   ; 4 uses
   %i.al = phi i32 [ %i.y, %bb.c ], [ 0, %bb.a ]   ; 5 uses
   %i.am = phi i32 [ %i.z, %bb.c ], [ 0, %bb.a ]   ; 8 uses
@@ -225,7 +223,7 @@ bb.c:                                             ; preds = %bb.h, %bb.e, %bb.d,
   %.0557942.i147 = phi ptr [ %i.az, %bb.c ], [ %0, %bb.a ] ; 7 uses
   %.0549947.i146 = phi i32 [ %i.ax, %bb.c ], [ %1, %bb.a ] ; 5 uses
   %.0532954.i145 = phi i32 [ %.0532.be.jt0.i, %bb.c ], [ 0, %bb.a ] ; 4 uses
-  %i.ax = add i32 %.0549947.i146, -1              ; 11 uses
+  %i.ax = add i32 %.0549947.i146, -1              ; 13 uses
   %i.ay = load i8, ptr %.0557942.i147, align 1, !tbaa !14 ; 4 uses
   %i.az = getelementptr inbounds nuw i8, ptr %.0557942.i147, i64 1 ; 13 uses
   %i.ba = zext nneg i32 %.0532954.i145 to i64
@@ -628,20 +626,18 @@ bb.aw:                                            ; preds = %bb.au
 
 .lr.ph809.preheader.i:                            ; preds = %bb.aw
   %wide.trip.count.i = zext i8 %i.ie to i64       ; 2 uses
-  %5 = add i32 %1, -1
-  %i.ih = zext i32 %5 to i64
-  %6 = sub i64 %i.ih, %indvar
-  %7 = add nsw i64 %wide.trip.count.i, -1
-  %umin550 = tail call i64 @llvm.umin.i64(i64 %6, i64 %7)
-  %8 = add nsw i64 %umin550, 1                    ; 3 uses
-  %min.iters.check552 = icmp ult i64 %8, 5
+  %5 = add nsw i64 %wide.trip.count.i, -1
+  %i.ih = zext i32 %i.ax to i64
+  %umin550 = tail call i64 @llvm.umin.i64(i64 %5, i64 %i.ih) ; 2 uses
+  %min.iters.check552 = icmp samesign ult i64 %umin550, 4
   br i1 %min.iters.check552, label %.lr.ph809.i.preheader, label %vector.ph553
 
 vector.ph553:                                     ; preds = %.lr.ph809.preheader.i
-  %i.ii = and i64 %8, 3                           ; 2 uses
+  %6 = add nuw nsw i64 %umin550, 1                ; 2 uses
+  %i.ii = and i64 %6, 3                           ; 2 uses
   %i.ij = icmp eq i64 %i.ii, 0
   %i.ik = select i1 %i.ij, i64 4, i64 %i.ii
-  %n.vec554 = sub i64 %8, %i.ik                   ; 4 uses
+  %n.vec554 = sub nsw i64 %6, %i.ik               ; 4 uses
   %i.il = trunc i64 %n.vec554 to i32
   %i.im = sub i32 %i.ax, %i.il
   %i.in = getelementptr i8, ptr %i.az, i64 %n.vec554
@@ -1044,17 +1040,14 @@ bb.cp:                                            ; preds = %bb.cn
   br i1 %.not829.i, label %._crit_edge781.i, label %.lr.ph780.i.preheader
 
 .lr.ph780.i.preheader:                            ; preds = %bb.cp
-  %9 = add i32 %1, -1
-  %10 = zext i32 %9 to i64
-  %11 = sub i64 %10, %indvar
   %i.rz = add nsw i32 %i.rr, -1
-  %12 = zext i32 %i.rz to i64
-  %umin528 = tail call i64 @llvm.umin.i64(i64 %11, i64 %12) ; 2 uses
-  %min.iters.check530 = icmp samesign ult i64 %umin528, 8
+  %7 = tail call i32 @llvm.umin.i32(i32 %i.ax, i32 %i.rz) ; 2 uses
+  %min.iters.check530 = icmp ult i32 %7, 8
   br i1 %min.iters.check530, label %.lr.ph780.i.preheader615, label %vector.ph531
 
 vector.ph531:                                     ; preds = %.lr.ph780.i.preheader
-  %i.sa = add nuw nsw i64 %umin528, 1             ; 2 uses
+  %8 = zext i32 %7 to i64
+  %i.sa = add nuw nsw i64 %8, 1                   ; 2 uses
   %i.sb = and i64 %i.sa, 7                        ; 2 uses
   %i.sc = icmp eq i64 %i.sb, 0
   %i.sd = select i1 %i.sc, i64 8, i64 %i.sb

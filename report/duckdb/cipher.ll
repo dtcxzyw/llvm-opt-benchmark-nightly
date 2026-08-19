@@ -201,7 +201,8 @@ vector.main.loop.iter.check:                      ; preds = %vector.scevcheck
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
   %i.j = and i64 %i.a, 28
-  %n.vec = and i64 %i.a, -32                      ; 4 uses
+  %n.vec = and i64 %i.a, -32                      ; 5 uses
+  %3 = trunc i64 %n.vec to i8
   %broadcast.splatinsert = insertelement <16 x i8> poison, i8 %i.b, i64 0
   %broadcast.splat = shufflevector <16 x i8> %broadcast.splatinsert, <16 x i8> poison, <16 x i32> zeroinitializer ; 2 uses
   br label %vector.body
@@ -226,7 +227,8 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec13 = and i64 %i.a, -4                     ; 3 uses
+  %n.vec13 = and i64 %i.a, -4                     ; 4 uses
+  %4 = trunc i64 %n.vec13 to i8
   %broadcast.splatinsert14 = insertelement <4 x i8> poison, i8 %i.b, i64 0
   %broadcast.splat15 = shufflevector <4 x i8> %broadcast.splatinsert14, <4 x i8> poison, <4 x i32> zeroinitializer
   br label %vec.epilog.vector.body
@@ -245,15 +247,17 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 vec.epilog.scalar.ph.preheader:                   ; preds = %vector.scevcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %indvars.iv.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.scevcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec13, %vec.epilog.middle.block ]
+  %.010.ph = phi i8 [ 0, %iter.check ], [ 0, %vector.scevcheck ], [ %3, %vec.epilog.iter.check ], [ %4, %vec.epilog.middle.block ]
   br label %vec.epilog.scalar.ph
 
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.preheader, %vec.epilog.scalar.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %vec.epilog.scalar.ph ], [ %indvars.iv.ph, %vec.epilog.scalar.ph.preheader ] ; 2 uses
+  %indvars.iv = phi i64 [ %6, %vec.epilog.scalar.ph ], [ %indvars.iv.ph, %vec.epilog.scalar.ph.preheader ]
+  %.010 = phi i8 [ %5, %vec.epilog.scalar.ph ], [ %.010.ph, %vec.epilog.scalar.ph.preheader ]
   %i.p = getelementptr i8, ptr %i.c, i64 %indvars.iv
   store i8 %i.b, ptr %i.p, align 1, !tbaa !44
-  %indvars.iv.next = add i64 %indvars.iv, 1       ; 2 uses
-  %3 = and i64 %indvars.iv.next, 255
-  %i.q = icmp ugt i64 %i.a, %3
+  %5 = add i8 %.010, 1                            ; 2 uses
+  %6 = zext i8 %5 to i64                          ; 2 uses
+  %i.q = icmp ugt i64 %i.a, %6
   br i1 %i.q, label %vec.epilog.scalar.ph, label %._crit_edge, !llvm.loop !50
 
 ._crit_edge:                                      ; preds = %vec.epilog.scalar.ph, %middle.block, %vec.epilog.middle.block, %bb.a

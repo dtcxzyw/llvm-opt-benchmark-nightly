@@ -203,16 +203,13 @@ add_sp_items_to_pathtarget.exit:                  ; preds = %add_sp_item_to_path
   %i.gn = getelementptr inbounds nuw i8, ptr %i.dd, i64 44 ; 2 uses
   %i.go = load i32, ptr %i.ga, align 4
   %i.gp = icmp slt i32 %i.gk, %i.go
-  br i1 %i.gp, label %.lr.ph337, label %.critedge153
+  br i1 %i.gp, label %bb.ap, label %.critedge153
 
-.lr.ph337:                                        ; preds = %.lr.ph263
-  %7 = sext i32 %i.gk to i64
-  br label %bb.ap
-
-bb.ap:                                            ; preds = %.lr.ph337, %add_sp_items_to_pathtarget.exit172
-  %indvars.iv274336 = phi i64 [ %7, %.lr.ph337 ], [ %indvars.iv.next275, %add_sp_items_to_pathtarget.exit172 ] ; 2 uses
+bb.ap:                                            ; preds = %.lr.ph263, %add_sp_items_to_pathtarget.exit172
+  %.sroa.622.0262330 = phi i32 [ %8, %add_sp_items_to_pathtarget.exit172 ], [ %i.gk, %.lr.ph263 ] ; 2 uses
   %i.gq = load ptr, ptr %i.gb, align 8
-  %i.gr = getelementptr inbounds [8 x i8], ptr %i.gq, i64 %indvars.iv274336
+  %7 = sext i32 %.sroa.622.0262330 to i64
+  %i.gr = getelementptr inbounds [8 x i8], ptr %i.gq, i64 %7
   %i.gs = load ptr, ptr %i.gr, align 8            ; 3 uses
   %i.gt = getelementptr inbounds nuw i8, ptr %i.gs, i64 4 ; 2 uses
   %.not.i167 = icmp eq ptr %i.gs, null
@@ -395,10 +392,9 @@ add_sp_item_to_pathtarget.exit234:                ; preds = %.split.i229, %bb.ax
   br i1 %i.jk, label %.lr.ph13.i169, label %add_sp_items_to_pathtarget.exit172
 
 add_sp_items_to_pathtarget.exit172:               ; preds = %add_sp_item_to_pathtarget.exit234, %bb.ap, %.lr.ph.i168
-  %indvars.iv.next275 = add nsw i64 %indvars.iv274336, 1 ; 2 uses
+  %8 = add i32 %.sroa.622.0262330, 1              ; 2 uses
   %i.jl = load i32, ptr %i.ga, align 4
-  %8 = sext i32 %i.jl to i64
-  %i.jm = icmp slt i64 %indvars.iv.next275, %8
+  %i.jm = icmp slt i32 %8, %i.jl
   br i1 %i.jm, label %bb.ap, label %.critedge153
 
 .critedge153:                                     ; preds = %add_sp_items_to_pathtarget.exit172, %.lr.ph263, %add_sp_items_to_pathtarget.exit
@@ -427,16 +423,13 @@ add_sp_items_to_pathtarget.exit172:               ; preds = %add_sp_item_to_path
   %i.kb = getelementptr inbounds nuw i8, ptr %i.dd, i64 44 ; 2 uses
   %i.kc = load i32, ptr %i.jo, align 4
   %i.kd = icmp slt i32 %i.jy, %i.kc
-  br i1 %i.kd, label %.lr.ph341, label %.critedge155
+  br i1 %i.kd, label %bb.bg, label %.critedge155
 
-.lr.ph341:                                        ; preds = %.lr.ph269
-  %9 = sext i32 %i.jy to i64
-  br label %bb.bg
-
-bb.bg:                                            ; preds = %.lr.ph341, %.critedge157
-  %indvars.iv280340 = phi i64 [ %9, %.lr.ph341 ], [ %indvars.iv.next281, %.critedge157 ] ; 2 uses
+bb.bg:                                            ; preds = %.lr.ph269, %.critedge157
+  %.sroa.614.0268334 = phi i32 [ %10, %.critedge157 ], [ %i.jy, %.lr.ph269 ] ; 2 uses
   %i.ke = load ptr, ptr %i.jp, align 8
-  %i.kf = getelementptr inbounds [8 x i8], ptr %i.ke, i64 %indvars.iv280340
+  %9 = sext i32 %.sroa.614.0268334 to i64
+  %i.kf = getelementptr inbounds [8 x i8], ptr %i.ke, i64 %9
   %i.kg = load ptr, ptr %i.kf, align 8            ; 3 uses
   %i.kh = getelementptr inbounds nuw i8, ptr %i.kg, i64 4 ; 2 uses
   %.not146 = icmp eq ptr %i.kg, null
@@ -462,10 +455,9 @@ bb.bg:                                            ; preds = %.lr.ph341, %.crited
   br i1 %i.kq, label %bb.bh, label %add_sp_item_to_pathtarget.exit
 
 .critedge157:                                     ; preds = %add_sp_item_to_pathtarget.exit, %.lr.ph266, %bb.bg
-  %indvars.iv.next281 = add nsw i64 %indvars.iv280340, 1 ; 2 uses
+  %10 = add i32 %.sroa.614.0268334, 1             ; 2 uses
   %i.kr = load i32, ptr %i.jo, align 4
-  %10 = sext i32 %i.kr to i64
-  %i.ks = icmp slt i64 %indvars.iv.next281, %10
+  %i.ks = icmp slt i32 %10, %i.kr
   br i1 %i.ks, label %bb.bg, label %.critedge155
 
 bb.bh:                                            ; preds = %.lr.ph339

@@ -28,24 +28,25 @@ vector.scevcheck:                                 ; preds = %.lr.ph.preheader
   br i1 %i.f, label %.lr.ph.preheader183, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.scevcheck
-  %n.vec = and i64 %1, 8589934588                 ; 3 uses
+  %n.vec = and i64 %1, 8589934588                 ; 4 uses
+  %4 = trunc i64 %n.vec to i32
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %vec.phi.a = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.k, %vector.body ]
-  %4 = phi <4 x i1> [ zeroinitializer, %vector.ph ], [ %i.j, %vector.body ]
-  %vec.ind = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
+  %vec.phi.a = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
+  %vec.phi = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %i.k, %vector.body ]
+  %5 = phi <4 x i1> [ zeroinitializer, %vector.ph ], [ %i.j, %vector.body ]
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 %index
   %wide.load = load <4 x i8>, ptr %i.g, align 1, !tbaa !11
   %wide.load.fr = freeze <4 x i8> %wide.load
   %i.h = icmp eq <4 x i8> %wide.load.fr, splat (i8 45) ; 2 uses
   %i.i = bitcast <4 x i1> %i.h to i4
   %.not176 = icmp eq i4 %i.i, 0                   ; 2 uses
-  %i.j = select i1 %.not176, <4 x i1> %4, <4 x i1> %i.h ; 2 uses
-  %i.k = select i1 %.not176, <4 x i32> %vec.phi.a, <4 x i32> %vec.ind ; 2 uses
+  %i.j = select i1 %.not176, <4 x i1> %5, <4 x i1> %i.h ; 2 uses
+  %i.k = select i1 %.not176, <4 x i32> %vec.phi, <4 x i32> %vec.phi.a ; 2 uses
   %index.next = add nuw i64 %index, 4             ; 2 uses
-  %vec.ind.next = add <4 x i32> %vec.ind, splat (i32 4)
+  %vec.ind.next = add <4 x i32> %vec.phi.a, splat (i32 4)
   %i.l = icmp eq i64 %index.next, %n.vec
   br i1 %i.l, label %middle.block, label %vector.body, !llvm.loop !12
 
@@ -56,20 +57,21 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.preheader183:                              ; preds = %vector.scevcheck, %.lr.ph.preheader, %middle.block
   %indvars.iv.ph = phi i64 [ 0, %vector.scevcheck ], [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ]
+  %.080125.ph = phi i32 [ 0, %vector.scevcheck ], [ 0, %.lr.ph.preheader ], [ %4, %middle.block ]
   %.081124.ph = phi i32 [ 0, %vector.scevcheck ], [ 0, %.lr.ph.preheader ], [ %i.m, %middle.block ]
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader183, %.lr.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ %indvars.iv.ph, %.lr.ph.preheader183 ] ; 3 uses
+  %indvars.iv = phi i64 [ %7, %.lr.ph ], [ %indvars.iv.ph, %.lr.ph.preheader183 ]
+  %.080125 = phi i32 [ %6, %.lr.ph ], [ %.080125.ph, %.lr.ph.preheader183 ] ; 2 uses
   %.081124 = phi i32 [ %spec.select, %.lr.ph ], [ %.081124.ph, %.lr.ph.preheader183 ]
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv
   %i.o = load i8, ptr %i.n, align 1, !tbaa !11
   %i.p = icmp eq i8 %i.o, 45
-  %5 = trunc nuw i64 %indvars.iv to i32
-  %spec.select = select i1 %i.p, i32 %5, i32 %.081124 ; 2 uses
-  %indvars.iv.next = add i64 %indvars.iv, 1       ; 2 uses
-  %6 = and i64 %indvars.iv.next, 4294967295
-  %i.q = icmp ugt i64 %1, %6
+  %spec.select = select i1 %i.p, i32 %.080125, i32 %.081124 ; 2 uses
+  %6 = add i32 %.080125, 1                        ; 2 uses
+  %7 = zext i32 %6 to i64                         ; 2 uses
+  %i.q = icmp ugt i64 %1, %7
   br i1 %i.q, label %.lr.ph, label %._crit_edge, !llvm.loop !16
 
 ._crit_edge:                                      ; preds = %.lr.ph, %middle.block

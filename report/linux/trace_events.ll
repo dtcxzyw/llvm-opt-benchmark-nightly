@@ -201,17 +201,13 @@ bb.a:
   tail call void @down_write(ptr noundef nonnull @trace_event_sem) #19
   %i.a = load ptr, ptr @ftrace_events, align 8    ; 2 uses
   %.not57 = icmp eq ptr %i.a, @ftrace_events
-  br i1 %.not57, label %._crit_edge65, label %.lr.ph64.preheader
+  br i1 %.not57, label %._crit_edge65, label %.lr.ph64
 
-.lr.ph64.preheader:                               ; preds = %bb.a
-  %2 = sext i32 %1 to i64
-  br label %.lr.ph64
-
-.lr.ph64:                                         ; preds = %.lr.ph64.preheader, %bb.t
-  %.061 = phi ptr [ %.03062, %bb.t ], [ %i.a, %.lr.ph64.preheader ] ; 6 uses
-  %.03160 = phi ptr [ %.1, %bb.t ], [ null, %.lr.ph64.preheader ] ; 3 uses
-  %.03259 = phi i1 [ %.2.lcssa82, %bb.t ], [ false, %.lr.ph64.preheader ]
-  %.03658 = phi i32 [ %.238.lcssa80, %bb.t ], [ 0, %.lr.ph64.preheader ]
+.lr.ph64:                                         ; preds = %bb.a, %bb.t
+  %.061 = phi ptr [ %.03062, %bb.t ], [ %i.a, %bb.a ] ; 6 uses
+  %.03160 = phi ptr [ %.1, %bb.t ], [ null, %bb.a ] ; 3 uses
+  %.03259 = phi i1 [ %.2.lcssa82, %bb.t ], [ false, %bb.a ]
+  %.03658 = phi i32 [ %.238.lcssa80, %bb.t ], [ 0, %bb.a ]
   %.03062 = load ptr, ptr %.061, align 8          ; 2 uses
   %.not42 = icmp eq ptr %.03160, null
   %.phi.trans.insert = getelementptr i8, ptr %.061, i64 16
@@ -236,25 +232,24 @@ bb.c:                                             ; preds = %bb.b
 .lr.ph:                                           ; preds = %.lr.ph64._crit_edge
   %i.c = getelementptr i8, ptr %.061, i64 16
   %i.d = getelementptr i8, ptr %.061, i64 64
-  %3 = sext i32 %.137 to i64
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %bb.s
-  %indvars.iv = phi i64 [ %3, %.lr.ph ], [ %indvars.iv.next, %bb.s ] ; 3 uses
-  %.253.a = phi i1 [ %.133, %.lr.ph ], [ %.4, %bb.s ] ; 2 uses
-  %.03452 = phi i1 [ false, %.lr.ph ], [ %.135, %bb.s ]
-  %.23851.a = phi i32 [ %.137, %.lr.ph ], [ %.440, %bb.s ] ; 2 uses
+  %.253 = phi i1 [ %.133, %.lr.ph ], [ %.4, %bb.s ] ; 2 uses
+  %.253.a = phi i1 [ false, %.lr.ph ], [ %.135, %bb.s ]
+  %.23851 = phi i32 [ %.137, %.lr.ph ], [ %.440, %bb.s ] ; 2 uses
+  %.23851.a = phi i32 [ %.137, %.lr.ph ], [ %3, %bb.s ] ; 3 uses
   %i.e = load ptr, ptr %i.c, align 8
   %i.f = load ptr, ptr %i.e, align 8
-  %i.g = getelementptr [8 x i8], ptr %0, i64 %indvars.iv ; 2 uses
+  %2 = sext i32 %.23851.a to i64
+  %i.g = getelementptr [8 x i8], ptr %0, i64 %2   ; 2 uses
   %i.h = load ptr, ptr %i.g, align 8              ; 3 uses
   %i.i = load ptr, ptr %i.h, align 8
   %i.j = icmp eq ptr %i.f, %i.i
   br i1 %i.j, label %bb.e, label %bb.s
 
 bb.e:                                             ; preds = %bb.d
-  %4 = trunc nsw i64 %indvars.iv to i32
-  %spec.select = select i1 %.253.a, i32 %4, i32 %.23851.a
+  %spec.select = select i1 %.253, i32 %.23851.a, i32 %.23851
   %.0.val = load ptr, ptr %i.d, align 8
   %i.k = getelementptr i8, ptr %i.h, i64 8        ; 2 uses
   %i.l = load ptr, ptr %i.k, align 8
@@ -421,11 +416,11 @@ update_event_printk.exit:                         ; preds = %bb.f, %bb.g, %bb.k,
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.d, %update_event_printk.exit
-  %.440 = phi i32 [ %spec.select, %update_event_printk.exit ], [ %.23851.a, %bb.d ] ; 3 uses
-  %.135 = phi i1 [ true, %update_event_printk.exit ], [ %.03452, %bb.d ] ; 2 uses
-  %.4 = phi i1 [ false, %update_event_printk.exit ], [ %.253.a, %bb.d ] ; 3 uses
-  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
-  %i.bv = icmp slt i64 %indvars.iv.next, %2
+  %.440 = phi i32 [ %spec.select, %update_event_printk.exit ], [ %.23851, %bb.d ] ; 3 uses
+  %.135 = phi i1 [ true, %update_event_printk.exit ], [ %.253.a, %bb.d ] ; 2 uses
+  %.4 = phi i1 [ false, %update_event_printk.exit ], [ %.253, %bb.d ] ; 3 uses
+  %3 = add nsw i32 %.23851.a, 1                   ; 2 uses
+  %i.bv = icmp slt i32 %3, %1
   br i1 %i.bv, label %bb.d, label %._crit_edge, !llvm.loop !76
 
 ._crit_edge:                                      ; preds = %bb.s

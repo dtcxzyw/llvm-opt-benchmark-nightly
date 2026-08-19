@@ -204,11 +204,7 @@ bb.a:
   %i.o = load i32, ptr %i.g, align 4, !tbaa !79
   %i.p = sub nsw i32 %i.n, %i.o
   %i.q = icmp slt i32 %.01529, %i.p
-  br i1 %i.q, label %.lr.ph32.preheader, label %._crit_edge33
-
-.lr.ph32.preheader:                               ; preds = %._crit_edge
-  %1 = sext i32 %.01529 to i64
-  br label %.lr.ph32
+  br i1 %i.q, label %.lr.ph32, label %._crit_edge33
 
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
   %.01423 = phi i32 [ %i.t, %.lr.ph ], [ 1, %bb.a ] ; 3 uses
@@ -237,16 +233,17 @@ bb.a:
   %i.ag = sext i32 %i.af to i64
   br label %.lr.ph36
 
-.lr.ph32:                                         ; preds = %.lr.ph32.preheader, %._crit_edge28
-  %indvars.iv = phi i64 [ %1, %.lr.ph32.preheader ], [ %indvars.iv.next, %._crit_edge28 ] ; 4 uses
-  %2 = phi ptr [ %i.i, %.lr.ph32.preheader ], [ %i.bc, %._crit_edge28 ]
-  %i.ah = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv
+.lr.ph32:                                         ; preds = %._crit_edge, %._crit_edge28
+  %1 = phi ptr [ %i.bc, %._crit_edge28 ], [ %i.i, %._crit_edge ]
+  %.01530 = phi i32 [ %.015, %._crit_edge28 ], [ %.01529, %._crit_edge ] ; 2 uses
+  %2 = sext i32 %.01530 to i64                    ; 3 uses
+  %i.ah = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %2
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !33
   %i.aj = load i32, ptr %i.ai, align 8, !tbaa !8
   %i.ak = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSolsEi(ptr noundef nonnull align 8 dereferenceable(8) @_ZSt4cout, i32 noundef %i.aj) #30
   %i.al = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.ak, ptr noundef nonnull @.str.16, i64 noundef 2) #30 ; 0 uses
   %i.am = load ptr, ptr %i.e, align 8, !tbaa !49
-  %i.an = getelementptr inbounds nuw [8 x i8], ptr %i.am, i64 %indvars.iv
+  %i.an = getelementptr inbounds nuw [8 x i8], ptr %i.am, i64 %2
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !33 ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 8
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !31 ; 2 uses
@@ -258,13 +255,13 @@ bb.a:
 ._crit_edge28:                                    ; preds = %.lr.ph27, %.lr.ph32
   %i.at = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) @_ZSt4cout, ptr noundef nonnull @.str.17, i64 noundef 3) #30 ; 0 uses
   %i.au = load ptr, ptr %i.e, align 8, !tbaa !49
-  %i.av = getelementptr inbounds nuw [8 x i8], ptr %i.au, i64 %indvars.iv
+  %i.av = getelementptr inbounds nuw [8 x i8], ptr %i.au, i64 %2
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !33
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 80
   %i.ay = load i64, ptr %i.ax, align 8, !tbaa !78
   %i.az = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertImEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) @_ZSt4cout, i64 noundef %i.ay) #30
   %i.ba = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.az, ptr noundef nonnull @.str.15, i64 noundef 1) #30 ; 0 uses
-  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
+  %.015 = add nsw i32 %.01530, 1                  ; 2 uses
   %i.bb = load ptr, ptr %i.f, align 8, !tbaa !50
   %i.bc = load ptr, ptr %i.e, align 8, !tbaa !49  ; 2 uses
   %i.bd = ptrtoint ptr %i.bb to i64
@@ -274,8 +271,7 @@ bb.a:
   %i.bh = trunc i64 %i.bg to i32
   %i.bi = load i32, ptr %i.g, align 4, !tbaa !79
   %i.bj = sub nsw i32 %i.bh, %i.bi
-  %3 = sext i32 %i.bj to i64
-  %i.bk = icmp slt i64 %indvars.iv.next, %3
+  %i.bk = icmp slt i32 %.015, %i.bj
   br i1 %i.bk, label %.lr.ph32, label %._crit_edge33, !llvm.loop !352
 
 .lr.ph27:                                         ; preds = %.lr.ph32, %.lr.ph27

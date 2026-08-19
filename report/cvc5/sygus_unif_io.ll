@@ -203,7 +203,8 @@ bb.a:
   br i1 %.1, label %bb.e, label %._crit_edge.thread
 
 bb.b:                                             ; preds = %.lr.ph, %bb.d
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.d ] ; 4 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %4, %bb.d ] ; 2 uses
+  %.014 = phi i32 [ 0, %.lr.ph ], [ %3, %bb.d ]
   %.01113 = phi i1 [ false, %.lr.ph ], [ %.1, %bb.d ]
   %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %indvars.iv
   %i.k = load i64, ptr %i.j, align 8, !tbaa !63   ; 2 uses
@@ -220,10 +221,9 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b, %bb.c
   %.1 = phi i1 [ true, %bb.c ], [ %.01113, %bb.b ] ; 2 uses
-  %3 = add i64 %indvars.iv, 1
-  %4 = and i64 %3, 4294967295
+  %3 = add i32 %.014, 1                           ; 2 uses
+  %4 = zext i32 %3 to i64                         ; 2 uses
   %i.p = icmp ugt i64 %i.g, %4
-  %indvars.iv.next = add i64 %indvars.iv, 1
   br i1 %i.p, label %bb.b, label %._crit_edge, !llvm.loop !65
 
 bb.e:                                             ; preds = %._crit_edge
@@ -626,7 +626,8 @@ bb.kz:                                            ; preds = %.noexc1114, %bb.ky
   br label %.outer
 
 .outer:                                           ; preds = %.thread, %.lr.ph.i1116
-  %indvars.iv.i.ph = phi i64 [ %89, %.thread ], [ 0, %.lr.ph.i1116 ]
+  %indvars.iv.i.ph = phi i64 [ %90, %.thread ], [ 0, %.lr.ph.i1116 ]
+  %.014.i.ph = phi i32 [ %89, %.thread ], [ 0, %.lr.ph.i1116 ]
   %.01113.i.ph = phi i1 [ true, %.thread ], [ false, %.lr.ph.i1116 ]
   br label %bb.la
 
@@ -634,15 +635,16 @@ bb.kz:                                            ; preds = %.noexc1114, %bb.ky
   br i1 %.01113.i.ph, label %._crit_edge.i.thread, label %_ZN4cvc58internal6theory11quantifiers13UnifContextIo20updateStringPositionERSt6vectorImSaImEENS2_8NodeRoleE.exit
 
 bb.la:                                            ; preds = %.outer, %bb.lb
-  %indvars.iv.i = phi i64 [ %87, %bb.lb ], [ %indvars.iv.i.ph, %.outer ] ; 4 uses
+  %indvars.iv.i = phi i64 [ %88, %bb.lb ], [ %indvars.iv.i.ph, %.outer ] ; 2 uses
+  %.014.i = phi i32 [ %87, %bb.lb ], [ %.014.i.ph, %.outer ] ; 2 uses
   %i.ame = getelementptr inbounds nuw [8 x i8], ptr %i.alx, i64 %indvars.iv.i
   %i.amf = load i64, ptr %i.ame, align 8, !tbaa !63 ; 2 uses
   %.not.i1117 = icmp eq i64 %i.amf, 0
   br i1 %.not.i1117, label %bb.lb, label %.thread
 
 bb.lb:                                            ; preds = %bb.la
-  %87 = add i64 %indvars.iv.i, 1                  ; 2 uses
-  %88 = and i64 %87, 4294967295
+  %87 = add i32 %.014.i, 1                        ; 2 uses
+  %88 = zext i32 %87 to i64                       ; 2 uses
   %i.amg = icmp ugt i64 %i.amb, %88
   br i1 %i.amg, label %bb.la, label %._crit_edge.i, !llvm.loop !65
 
@@ -652,8 +654,8 @@ bb.lb:                                            ; preds = %bb.la
   %i.amj = trunc i64 %i.amf to i32
   %i.amk = add i32 %i.ami, %i.amj
   store i32 %i.amk, ptr %i.amh, align 4, !tbaa !64
-  %89 = add i64 %indvars.iv.i, 1                  ; 2 uses
-  %90 = and i64 %89, 4294967295
+  %89 = add i32 %.014.i, 1                        ; 2 uses
+  %90 = zext i32 %89 to i64                       ; 2 uses
   %i.aml = icmp ugt i64 %i.amb, %90
   br i1 %i.aml, label %.outer, label %._crit_edge.i.thread, !llvm.loop !65
 

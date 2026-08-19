@@ -204,10 +204,7 @@ Vec_BitStart.exit.thread:                         ; preds = %bb.a
   %i.r = phi ptr [ null, %Vec_BitStart.exit.thread ], [ %calloc, %Vec_BitStart.exit ] ; 5 uses
   %i.s = getelementptr i8, ptr %1, i64 8
   %.val31 = load ptr, ptr %i.s, align 8, !tbaa !31
-  %2 = add nsw i32 %.val2654, -1
-  %3 = lshr i32 %2, 2
-  %4 = add nuw nsw i32 %3, 1
-  %wide.trip.count = zext nneg i32 %4 to i64
+  %wide.trip.count = zext nneg i32 %.val2654 to i64
   br label %bb.b
 
 .lr.ph36:                                         ; preds = %bb.b
@@ -216,8 +213,9 @@ Vec_BitStart.exit.thread:                         ; preds = %bb.a
 
 bb.b:                                             ; preds = %.lr.ph, %bb.b
   %indvars.iv37 = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next38, %bb.b ]
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.b ] ; 2 uses
-  %i.u = getelementptr inbounds nuw [4 x i8], ptr %.val31, i64 %indvars.iv ; 3 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %3, %bb.b ]
+  %2 = and i64 %indvars.iv, 4294967292
+  %i.u = getelementptr inbounds nuw [4 x i8], ptr %.val31, i64 %2 ; 3 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 4
   %i.w = load i32, ptr %i.v, align 4, !tbaa !33   ; 2 uses
   %i.x = and i32 %i.w, 31
@@ -249,9 +247,9 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.av = or i32 %i.aq, %i.au
   store i32 %i.av, ptr %i.at, align 4, !tbaa !33
   %indvars.iv.next38 = add nuw nsw i64 %indvars.iv37, 1 ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 4
-  %exitcond.not = icmp eq i64 %indvars.iv.next38, %wide.trip.count
-  br i1 %exitcond.not, label %.lr.ph36, label %bb.b, !llvm.loop !40
+  %3 = shl nsw i64 %indvars.iv.next38, 2          ; 2 uses
+  %4 = icmp samesign ult i64 %3, %wide.trip.count
+  br i1 %4, label %bb.b, label %.lr.ph36, !llvm.loop !40
 
 bb.c:                                             ; preds = %.lr.ph36, %bb.m
   %.val2545 = phi i32 [ %.val2654, %.lr.ph36 ], [ %.val25, %bb.m ]

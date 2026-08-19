@@ -204,8 +204,9 @@ bb.k:                                             ; preds = %_ZN6embree4sse221BV
   br i1 %i.ed, label %bb.ag, label %bb.p
 
 bb.l:                                             ; preds = %.lr.ph529, %bb.o
-  %indvars.iv = phi i64 [ 0, %.lr.ph529 ], [ %indvars.iv.next, %bb.o ] ; 4 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph529 ], [ %23, %bb.o ]
   %.277527 = phi i1 [ %.176, %.lr.ph529 ], [ false, %bb.o ]
+  %.081526 = phi i32 [ 0, %.lr.ph529 ], [ %22, %bb.o ] ; 2 uses
   %.082525 = phi i64 [ 0, %.lr.ph529 ], [ %.183, %bb.o ] ; 4 uses
   %.084524 = phi i32 [ -1, %.lr.ph529 ], [ %.185, %bb.o ] ; 2 uses
   %i.ee = getelementptr inbounds nuw [176 x i8], ptr %16, i64 %indvars.iv ; 3 uses
@@ -252,16 +253,14 @@ _ZNK6embree4sse221BVHBuilderHairMSMBlur11BuildRecord4sizeEv.exit115: ; preds = %
   br i1 %.old, label %_ZNK6embree4sse221BVHBuilderHairMSMBlur11BuildRecord4sizeEv.exit, label %bb.o
 
 _ZNK6embree4sse221BVHBuilderHairMSMBlur11BuildRecord4sizeEv.exit: ; preds = %_ZN6embree4sse221BVHBuilderHairMSMBlur8BuilderTINS_10NodeRefPtrILi4EEENS0_25VirtualRecalculatePrimRefENS_4BVHNILi4EE11CreateAllocENS_14AABBNodeMB4D_tIS4_Li4EE6CreateENSA_3SetENS_11OBBNodeMB_tIS4_Li4EE6CreateENSE_3SetEZNS0_23BVHNHairMBlurBuilderSAHILi4ENS_9CurveNiMBILi4EEENS_6LineMiILi4EEENS_7PointMiILi4EEEE5buildEvEUlRKNS_5SetMBERKNS_13FastAllocator15CachedAllocatorEE_NS_5Scene29BuildProgressMonitorInterfaceEE12sameGeometryESR_.exit, %_ZNK6embree4sse221BVHBuilderHairMSMBlur11BuildRecord4sizeEv.exit115
-  %22 = trunc nuw i64 %indvars.iv to i32
   br label %bb.o
 
 bb.o:                                             ; preds = %_ZNK6embree4sse221BVHBuilderHairMSMBlur11BuildRecord4sizeEv.exit, %_ZNK6embree4sse221BVHBuilderHairMSMBlur11BuildRecord4sizeEv.exit115, %_ZN6embree4sse221BVHBuilderHairMSMBlur8BuilderTINS_10NodeRefPtrILi4EEENS0_25VirtualRecalculatePrimRefENS_4BVHNILi4EE11CreateAllocENS_14AABBNodeMB4D_tIS4_Li4EE6CreateENSA_3SetENS_11OBBNodeMB_tIS4_Li4EE6CreateENSE_3SetEZNS0_23BVHNHairMBlurBuilderSAHILi4ENS_9CurveNiMBILi4EEENS_6LineMiILi4EEENS_7PointMiILi4EEEE5buildEvEUlRKNS_5SetMBERKNS_13FastAllocator15CachedAllocatorEE_NS_5Scene29BuildProgressMonitorInterfaceEE12sameGeometryESR_.exit
-  %.185 = phi i32 [ %.084524, %_ZN6embree4sse221BVHBuilderHairMSMBlur8BuilderTINS_10NodeRefPtrILi4EEENS0_25VirtualRecalculatePrimRefENS_4BVHNILi4EE11CreateAllocENS_14AABBNodeMB4D_tIS4_Li4EE6CreateENSA_3SetENS_11OBBNodeMB_tIS4_Li4EE6CreateENSE_3SetEZNS0_23BVHNHairMBlurBuilderSAHILi4ENS_9CurveNiMBILi4EEENS_6LineMiILi4EEENS_7PointMiILi4EEEE5buildEvEUlRKNS_5SetMBERKNS_13FastAllocator15CachedAllocatorEE_NS_5Scene29BuildProgressMonitorInterfaceEE12sameGeometryESR_.exit ], [ %.084524, %_ZNK6embree4sse221BVHBuilderHairMSMBlur11BuildRecord4sizeEv.exit115 ], [ %22, %_ZNK6embree4sse221BVHBuilderHairMSMBlur11BuildRecord4sizeEv.exit ] ; 3 uses
+  %.185 = phi i32 [ %.084524, %_ZN6embree4sse221BVHBuilderHairMSMBlur8BuilderTINS_10NodeRefPtrILi4EEENS0_25VirtualRecalculatePrimRefENS_4BVHNILi4EE11CreateAllocENS_14AABBNodeMB4D_tIS4_Li4EE6CreateENSA_3SetENS_11OBBNodeMB_tIS4_Li4EE6CreateENSE_3SetEZNS0_23BVHNHairMBlurBuilderSAHILi4ENS_9CurveNiMBILi4EEENS_6LineMiILi4EEENS_7PointMiILi4EEEE5buildEvEUlRKNS_5SetMBERKNS_13FastAllocator15CachedAllocatorEE_NS_5Scene29BuildProgressMonitorInterfaceEE12sameGeometryESR_.exit ], [ %.084524, %_ZNK6embree4sse221BVHBuilderHairMSMBlur11BuildRecord4sizeEv.exit115 ], [ %.081526, %_ZNK6embree4sse221BVHBuilderHairMSMBlur11BuildRecord4sizeEv.exit ] ; 3 uses
   %.183 = phi i64 [ %.082525, %_ZN6embree4sse221BVHBuilderHairMSMBlur8BuilderTINS_10NodeRefPtrILi4EEENS0_25VirtualRecalculatePrimRefENS_4BVHNILi4EE11CreateAllocENS_14AABBNodeMB4D_tIS4_Li4EE6CreateENSA_3SetENS_11OBBNodeMB_tIS4_Li4EE6CreateENSE_3SetEZNS0_23BVHNHairMBlurBuilderSAHILi4ENS_9CurveNiMBILi4EEENS_6LineMiILi4EEENS_7PointMiILi4EEEE5buildEvEUlRKNS_5SetMBERKNS_13FastAllocator15CachedAllocatorEE_NS_5Scene29BuildProgressMonitorInterfaceEE12sameGeometryESR_.exit ], [ %.082525, %_ZNK6embree4sse221BVHBuilderHairMSMBlur11BuildRecord4sizeEv.exit115 ], [ %i.ej, %_ZNK6embree4sse221BVHBuilderHairMSMBlur11BuildRecord4sizeEv.exit ]
-  %23 = add i64 %indvars.iv, 1
-  %24 = and i64 %23, 4294967295
-  %i.ev = icmp ugt i64 %i.eb, %24
-  %indvars.iv.next = add i64 %indvars.iv, 1
+  %22 = add i32 %.081526, 1                       ; 2 uses
+  %23 = zext i32 %22 to i64                       ; 2 uses
+  %i.ev = icmp ugt i64 %i.eb, %23
   br i1 %i.ev, label %bb.l, label %._crit_edge530, !llvm.loop !274
 
 bb.p:                                             ; preds = %._crit_edge530

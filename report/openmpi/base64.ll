@@ -80,47 +80,55 @@ iter.check:                                       ; preds = %._crit_edge
   br i1 %i.ao, label %.epil.preheader, label %iter.check.new
 
 iter.check.new:                                   ; preds = %iter.check, %iter.check.new
-  %indvars.iv = phi i64 [ %indvars.iv.next.3, %iter.check.new ], [ 0, %iter.check ] ; 5 uses
+  %indvars.iv = phi i64 [ %11, %iter.check.new ], [ 0, %iter.check ]
+  %.064 = phi i32 [ %10, %iter.check.new ], [ 0, %iter.check ] ; 4 uses
   %.14563 = phi ptr [ %i.ay, %iter.check.new ], [ %.044.lcssa, %iter.check ] ; 5 uses
   %niter = phi i64 [ %niter.next.3, %iter.check.new ], [ 0, %iter.check ]
   %i.ap = getelementptr inbounds nuw i8, ptr %.14563, i64 1
   %i.aq = load i8, ptr %.14563, align 1, !tbaa !11
   %i.ar = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv
   store i8 %i.aq, ptr %i.ar, align 1, !tbaa !11
+  %4 = or disjoint i32 %.064, 1
+  %5 = zext i32 %4 to i64
   %i.as = getelementptr inbounds nuw i8, ptr %.14563, i64 2
   %i.at = load i8, ptr %i.ap, align 1, !tbaa !11
-  %i.au = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv
-  %4 = getelementptr inbounds nuw i8, ptr %i.au, i64 1
-  store i8 %i.at, ptr %4, align 1, !tbaa !11
+  %i.au = getelementptr inbounds nuw i8, ptr %i.a, i64 %5
+  store i8 %i.at, ptr %i.au, align 1, !tbaa !11
+  %6 = or disjoint i32 %.064, 2
+  %7 = zext i32 %6 to i64
   %i.av = getelementptr inbounds nuw i8, ptr %.14563, i64 3
   %i.aw = load i8, ptr %i.as, align 1, !tbaa !11
-  %i.ax = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv
-  %5 = getelementptr inbounds nuw i8, ptr %i.ax, i64 2
-  store i8 %i.aw, ptr %5, align 1, !tbaa !11
+  %i.ax = getelementptr inbounds nuw i8, ptr %i.a, i64 %7
+  store i8 %i.aw, ptr %i.ax, align 1, !tbaa !11
+  %8 = or disjoint i32 %.064, 3
+  %9 = zext i32 %8 to i64
   %i.ay = getelementptr inbounds nuw i8, ptr %.14563, i64 4 ; 2 uses
   %i.az = load i8, ptr %i.av, align 1, !tbaa !11
-  %i.ba = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv
-  %6 = getelementptr inbounds nuw i8, ptr %i.ba, i64 3
-  store i8 %i.az, ptr %6, align 1, !tbaa !11
-  %indvars.iv.next.3 = add i64 %indvars.iv, 4     ; 2 uses
+  %i.ba = getelementptr inbounds nuw i8, ptr %i.a, i64 %9
+  store i8 %i.az, ptr %i.ba, align 1, !tbaa !11
+  %10 = add i32 %.064, 4                          ; 3 uses
+  %11 = zext i32 %10 to i64                       ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3.not = icmp eq i64 %niter.next.3, 0
   br i1 %niter.ncmp.3.not, label %.epil.preheader, label %iter.check.new, !llvm.loop !14
 
 .epil.preheader:                                  ; preds = %iter.check.new, %iter.check
-  %indvars.iv.epil.init = phi i64 [ 0, %iter.check ], [ %indvars.iv.next.3, %iter.check.new ]
+  %indvars.iv.epil.init = phi i64 [ 0, %iter.check ], [ %11, %iter.check.new ]
+  %.064.epil.init = phi i32 [ 0, %iter.check ], [ %10, %iter.check.new ]
   %.14563.epil.init = phi ptr [ %.044.lcssa, %iter.check ], [ %i.ay, %iter.check.new ]
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.c, %.epil.preheader
-  %indvars.iv.epil = phi i64 [ %indvars.iv.epil.init, %.epil.preheader ], [ %indvars.iv.next.epil, %bb.c ] ; 2 uses
+  %indvars.iv.epil = phi i64 [ %indvars.iv.epil.init, %.epil.preheader ], [ %13, %bb.c ]
+  %.064.epil = phi i32 [ %.064.epil.init, %.epil.preheader ], [ %12, %bb.c ]
   %.14563.epil = phi ptr [ %.14563.epil.init, %.epil.preheader ], [ %i.bb, %bb.c ] ; 2 uses
   %epil.iter = phi i64 [ 0, %.epil.preheader ], [ %epil.iter.next, %bb.c ]
   %i.bb = getelementptr inbounds nuw i8, ptr %.14563.epil, i64 1
   %i.bc = load i8, ptr %.14563.epil, align 1, !tbaa !11
   %i.bd = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.epil
   store i8 %i.bc, ptr %i.bd, align 1, !tbaa !11
-  %indvars.iv.next.epil = add i64 %indvars.iv.epil, 1
+  %12 = add i32 %.064.epil, 1                     ; 2 uses
+  %13 = zext i32 %12 to i64
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %.046.lcssa
   br i1 %epil.iter.cmp.not, label %.loopexit96, label %bb.c, !llvm.loop !16

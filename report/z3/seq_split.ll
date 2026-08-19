@@ -204,7 +204,7 @@ _ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE6shrinkEj.exit
 _ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE5emptyEv.exit: ; preds = %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE6shrinkEj.exit.thread641, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE6shrinkEj.exit
   %.pr647 = phi ptr [ %i.hl, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE6shrinkEj.exit.thread641 ], [ %.pr.pre, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE6shrinkEj.exit ]
   %i.hn = getelementptr inbounds i8, ptr %.pr647, i64 -4
-  %i.ho = load i32, ptr %i.hn, align 4, !tbaa !111 ; 6 uses
+  %i.ho = load i32, ptr %i.hn, align 4, !tbaa !111 ; 5 uses
   switch i32 %i.ho, label %.lr.ph.lr.ph [
     i32 0, label %_ZN7obj_refI4expr11ast_managerED2Ev.exit213
     i32 1, label %.outer._crit_edge.thread
@@ -228,7 +228,7 @@ _ZN7obj_refI4expr11ast_managerED2Ev.exit213:      ; preds = %_ZN7zstringD2Ev.exi
 
 .lr.ph.lr.ph:                                     ; preds = %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE5emptyEv.exit
   %i.hv = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.hw = zext i32 %i.ho to i64
+  %i.hw = zext i32 %i.ho to i64                   ; 2 uses
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.lr.ph, %.critedge4
@@ -240,7 +240,7 @@ _ZN7obj_refI4expr11ast_managerED2Ev.exit213:      ; preds = %_ZN7zstringD2Ev.exi
   br label %bb.bj
 
 bb.bj:                                            ; preds = %.lr.ph, %_ZNK8seq_util3str7is_unitEPK4exprRPS1_.exit219.thread
-  %indvars.iv518 = phi i64 [ %i.hx, %.lr.ph ], [ %indvars.iv.next519, %_ZNK8seq_util3str7is_unitEPK4exprRPS1_.exit219.thread ] ; 4 uses
+  %indvars.iv518 = phi i64 [ %i.hx, %.lr.ph ], [ %indvars.iv.next519, %_ZNK8seq_util3str7is_unitEPK4exprRPS1_.exit219.thread ] ; 6 uses
   %.5325433 = phi ptr [ %.5325.ph460, %.lr.ph ], [ %.10343, %_ZNK8seq_util3str7is_unitEPK4exprRPS1_.exit219.thread ] ; 4 uses
   %i.hy = load ptr, ptr %i.hv, align 8, !tbaa !47, !nonnull !29, !align !30 ; 2 uses
   %i.hz = load ptr, ptr %i.i, align 8, !tbaa !282
@@ -289,7 +289,7 @@ bb.bn:                                            ; preds = %bb.bm
   br i1 %i.ix, label %.preheader360, label %_ZNK8seq_util3str7is_unitEPK4exprRPS1_.exit219.thread
 
 .preheader360:                                    ; preds = %bb.bn
-  %i.iy = trunc nuw i64 %indvars.iv518 to i32     ; 8 uses
+  %i.iy = trunc nuw i64 %indvars.iv518 to i32     ; 6 uses
   %i.iz = icmp ugt i32 %i.ho, %i.iy
   br i1 %i.iz, label %.lr.ph443.preheader, label %.critedge4
 
@@ -301,7 +301,7 @@ bb.bn:                                            ; preds = %bb.bm
   %i.je = load i32, ptr %i.jd, align 4
   %i.jf = and i32 %i.je, 65535
   %i.jg = icmp eq i32 %i.jf, 0
-  br i1 %i.jg, label %.lr.ph777, label %.critedge4
+  br i1 %i.jg, label %.lr.ph777, label %.critedge4.loopexit
 
 _ZNK8seq_util3str7is_unitEPK4exprRPS1_.exit219.thread: ; preds = %bb.bk, %bb.bj, %_ZNK8seq_util3str7is_unitEPK4expr.exit.i218, %bb.bl, %bb.bn
   %.10343 = phi ptr [ %i.iw, %bb.bn ], [ %.5325433, %bb.bl ], [ %.5325433, %_ZNK8seq_util3str7is_unitEPK4expr.exit.i218 ], [ %.5325433, %bb.bj ], [ %.5325433, %bb.bk ] ; 2 uses
@@ -316,26 +316,25 @@ bb.bo:                                            ; preds = %bb.bm
 
 .lr.ph443:                                        ; preds = %bb.bs
   %i.jj = load ptr, ptr %i.i, align 8, !tbaa !282
-  %17 = zext i32 %18 to i64
-  %i.jk = getelementptr inbounds nuw [8 x i8], ptr %i.jj, i64 %17
+  %i.jk = getelementptr inbounds nuw [8 x i8], ptr %i.jj, i64 %indvars.iv.next524
   %i.jl = load ptr, ptr %i.jk, align 8, !tbaa !80 ; 2 uses
   %i.jm = getelementptr inbounds nuw i8, ptr %i.jl, i64 4
   %i.jn = load i32, ptr %i.jm, align 4
   %i.jo = and i32 %i.jn, 65535
   %i.jp = icmp eq i32 %i.jo, 0
-  br i1 %i.jp, label %.lr.ph777, label %.critedge4, !llvm.loop !321
+  br i1 %i.jp, label %.lr.ph777, label %.critedge4.loopexit, !llvm.loop !321
 
 .lr.ph777:                                        ; preds = %.lr.ph443.preheader, %.lr.ph443
   %i.jq = phi ptr [ %i.jl, %.lr.ph443 ], [ %i.jc, %.lr.ph443.preheader ] ; 3 uses
   %.6326441776 = phi ptr [ %i.kh, %.lr.ph443 ], [ %i.iw, %.lr.ph443.preheader ] ; 3 uses
-  %.095442775 = phi i32 [ %18, %.lr.ph443 ], [ %i.iy, %.lr.ph443.preheader ] ; 5 uses
+  %indvars.iv523779 = phi i64 [ %indvars.iv.next524, %.lr.ph443 ], [ %indvars.iv518, %.lr.ph443.preheader ] ; 5 uses
   %i.jr = load ptr, ptr %i.hv, align 8, !tbaa !47, !nonnull !29, !align !30 ; 2 uses
   %i.js = getelementptr inbounds nuw i8, ptr %i.jq, i64 16
   %i.jt = load ptr, ptr %i.js, align 8, !tbaa !64
   %i.ju = getelementptr inbounds nuw i8, ptr %i.jt, i64 24
   %i.jv = load ptr, ptr %i.ju, align 8, !tbaa !68 ; 3 uses
   %.not.i.i.i.i.i223 = icmp eq ptr %i.jv, null
-  br i1 %.not.i.i.i.i.i223, label %.critedge4, label %_ZNK8seq_util3str7is_unitEPK4expr.exit.i224
+  br i1 %.not.i.i.i.i.i223, label %.critedge4.loopexit, label %_ZNK8seq_util3str7is_unitEPK4expr.exit.i224
 
 _ZNK8seq_util3str7is_unitEPK4expr.exit.i224:      ; preds = %.lr.ph777
   %.in = getelementptr inbounds nuw i8, ptr %i.jr, i64 48
@@ -346,13 +345,13 @@ _ZNK8seq_util3str7is_unitEPK4expr.exit.i224:      ; preds = %.lr.ph777
   %i.ka = load i32, ptr %i.jz, align 4
   %i.kb = icmp eq i32 %i.ka, 0
   %i.kc = select i1 %i.jy, i1 %i.kb, i1 false
-  br i1 %i.kc, label %bb.bp, label %.critedge4
+  br i1 %i.kc, label %bb.bp, label %.critedge4.loopexit
 
 bb.bp:                                            ; preds = %_ZNK8seq_util3str7is_unitEPK4expr.exit.i224
   %i.kd = getelementptr inbounds nuw i8, ptr %i.jq, i64 24
   %i.ke = load i32, ptr %i.kd, align 8, !tbaa !126
   %i.kf = icmp eq i32 %i.ke, 1
-  br i1 %i.kf, label %bb.bq, label %.critedge4
+  br i1 %i.kf, label %bb.bq, label %.critedge4.loopexit
 
 bb.bq:                                            ; preds = %bb.bp
   %i.kg = getelementptr inbounds nuw i8, ptr %i.jq, i64 32
@@ -363,11 +362,11 @@ bb.bq:                                            ; preds = %bb.bp
 
 bb.br:                                            ; preds = %bb.bq
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #20
-  br i1 %i.ki, label %bb.bs, label %.critedge4
+  br i1 %i.ki, label %bb.bs, label %.critedge4.loopexit
 
 bb.bs:                                            ; preds = %bb.br
-  %18 = add nuw i32 %.095442775, 1                ; 4 uses
-  %exitcond.not = icmp eq i32 %18, %i.ho
+  %indvars.iv.next524 = add nuw nsw i64 %indvars.iv523779, 1 ; 4 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next524, %i.hw
   br i1 %exitcond.not, label %.critedge4.thread, label %.lr.ph443, !llvm.loop !321
 
 .critedge4.thread:                                ; preds = %bb.bs
@@ -382,9 +381,15 @@ bb.bt:                                            ; preds = %bb.bq
           cleanup
   br label %bb.em
 
-.critedge4:                                       ; preds = %.lr.ph777, %.lr.ph443, %_ZNK8seq_util3str7is_unitEPK4expr.exit.i224, %bb.bp, %bb.br, %.lr.ph443.preheader, %.preheader360
-  %.095.lcssa = phi i32 [ %i.iy, %.preheader360 ], [ %i.iy, %.lr.ph443.preheader ], [ %.095442775, %bb.br ], [ %.095442775, %bb.bp ], [ %.095442775, %_ZNK8seq_util3str7is_unitEPK4expr.exit.i224 ], [ %18, %.lr.ph443 ], [ %.095442775, %.lr.ph777 ] ; 3 uses
-  %.7327 = phi ptr [ %i.iw, %.preheader360 ], [ %i.iw, %.lr.ph443.preheader ], [ %i.kh, %bb.br ], [ %.6326441776, %bb.bp ], [ %.6326441776, %_ZNK8seq_util3str7is_unitEPK4expr.exit.i224 ], [ %i.kh, %.lr.ph443 ], [ %.6326441776, %.lr.ph777 ] ; 2 uses
+.critedge4.loopexit:                              ; preds = %bb.br, %bb.bp, %_ZNK8seq_util3str7is_unitEPK4expr.exit.i224, %.lr.ph443, %.lr.ph777, %.lr.ph443.preheader
+  %indvars.iv523.lcssa = phi i64 [ %indvars.iv518, %.lr.ph443.preheader ], [ %indvars.iv523779, %bb.br ], [ %indvars.iv523779, %bb.bp ], [ %indvars.iv523779, %_ZNK8seq_util3str7is_unitEPK4expr.exit.i224 ], [ %indvars.iv.next524, %.lr.ph443 ], [ %indvars.iv523779, %.lr.ph777 ]
+  %.7327.ph = phi ptr [ %i.iw, %.lr.ph443.preheader ], [ %i.kh, %bb.br ], [ %.6326441776, %bb.bp ], [ %.6326441776, %_ZNK8seq_util3str7is_unitEPK4expr.exit.i224 ], [ %i.kh, %.lr.ph443 ], [ %.6326441776, %.lr.ph777 ]
+  %17 = trunc nuw i64 %indvars.iv523.lcssa to i32
+  br label %.critedge4
+
+.critedge4:                                       ; preds = %.critedge4.loopexit, %.preheader360
+  %.095.lcssa = phi i32 [ %i.iy, %.preheader360 ], [ %17, %.critedge4.loopexit ] ; 3 uses
+  %.7327 = phi ptr [ %i.iw, %.preheader360 ], [ %.7327.ph, %.critedge4.loopexit ] ; 2 uses
   %i.km = sub i32 %.095.lcssa, %i.iy              ; 2 uses
   %i.kn = icmp ugt i32 %i.km, %.096.ph463
   %spec.select = select i1 %i.kn, i32 %i.iy, i32 %.098.ph462 ; 2 uses

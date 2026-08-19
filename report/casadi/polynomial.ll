@@ -203,7 +203,7 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZNSt6vectorIdSaIdEE6resizeEmRKd.exit
 
 _ZNSt6vectorIdSaIdEE6resizeEmRKd.exit:            ; preds = %bb.a, %bb.b
-  %.pre-phi19 = phi i64 [ %i.n, %bb.a ], [ %.pre18, %bb.b ] ; 3 uses
+  %.pre-phi19 = phi i64 [ %i.n, %bb.a ], [ %.pre18, %bb.b ] ; 5 uses
   %i.r = phi ptr [ %i.k, %bb.a ], [ %.pre14, %bb.b ] ; 7 uses
   %i.s = phi ptr [ %i.j, %bb.a ], [ %.pre13, %bb.b ]
   %i.t = phi ptr [ %i.d, %bb.a ], [ %.pre, %bb.b ] ; 11 uses
@@ -216,13 +216,15 @@ _ZNSt6vectorIdSaIdEE6resizeEmRKd.exit:            ; preds = %bb.a, %bb.b
   %i.v = add i64 %.pre-phi19, -8                  ; 2 uses
   %i.w = lshr i64 %i.v, 3
   %i.x = add nuw nsw i64 %i.w, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.v, 72
-  br i1 %min.iters.check, label %.lr.ph.i.preheader33, label %vector.memcheck
+  %min.iters.check = icmp ugt i64 %i.v, 103
+  %2 = and i64 %.pre-phi19, 7
+  %ident.check.not = icmp eq i64 %2, 0
+  %or.cond = and i1 %min.iters.check, %ident.check.not
+  br i1 %or.cond, label %vector.memcheck, label %.lr.ph.i.preheader33
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.preheader
-  %2 = and i64 %.pre-phi19, -8                    ; 2 uses
-  %scevgep = getelementptr i8, ptr %i.t, i64 %2
-  %scevgep27 = getelementptr i8, ptr %i.r, i64 %2
+  %scevgep = getelementptr i8, ptr %i.t, i64 %.pre-phi19
+  %scevgep27 = getelementptr i8, ptr %i.r, i64 %.pre-phi19
   %bound0 = icmp ult ptr %i.t, %scevgep27
   %bound1 = icmp ult ptr %i.r, %scevgep
   %found.conflict = and i1 %bound0, %bound1

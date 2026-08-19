@@ -203,19 +203,18 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.d
-  %indvars.iv = phi i64 [ 0, %bb.c ], [ %indvars.iv.next, %bb.d ] ; 3 uses
   %1 = phi i32 [ 0, %bb.c ], [ %4, %bb.d ]
+  %.0210368 = phi i16 [ 0, %bb.c ], [ %3, %bb.d ] ; 2 uses
   %i.ab = mul i32 %1, %i.m
   %i.ac = sext i32 %i.ab to i64
   %i.ad = getelementptr inbounds i8, ptr %i.aa, i64 %i.ac
-  %i.ae = getelementptr inbounds nuw [16 x i8], ptr %i.x, i64 %indvars.iv
+  %2 = zext i16 %.0210368 to i64
+  %i.ae = getelementptr inbounds nuw [16 x i8], ptr %i.x, i64 %2
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 8
   store ptr %i.ad, ptr %i.af, align 8
-  %2 = trunc nuw i64 %indvars.iv to i32
-  %3 = add i32 %2, 1
-  %4 = and i32 %3, 65535                          ; 2 uses
+  %3 = add i16 %.0210368, 1                       ; 2 uses
+  %4 = zext i16 %3 to i32                         ; 2 uses
   %i.ag = icmp samesign ugt i32 %i.q, %4
-  %indvars.iv.next = add i64 %indvars.iv, 1
   br i1 %i.ag, label %bb.d, label %bb.e, !llvm.loop !38
 
 bb.e:                                             ; preds = %bb.d

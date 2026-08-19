@@ -204,7 +204,7 @@ bb.gk:                                            ; preds = %.critedge.thread
 
 .critedge.thread502:                              ; preds = %.critedge.thread502.loopexit, %bb.gk, %.critedge
   %i.sl = phi i1 [ true, %bb.gk ], [ false, %.critedge ], [ false, %.critedge.thread502.loopexit ]
-  %.0171.lcssa500 = phi i32 [ 0, %bb.gk ], [ %i.ro, %.critedge ], [ %indvars.le, %.critedge.thread502.loopexit ] ; 14 uses
+  %.0171.lcssa500 = phi i32 [ 0, %bb.gk ], [ %i.ro, %.critedge ], [ %indvars.le, %.critedge.thread502.loopexit ] ; 13 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %18) #25
   %i.sm = ptrtoint ptr %0 to i64
   %i.sn = getelementptr inbounds nuw i8, ptr %18, i64 16 ; 3 uses
@@ -346,10 +346,10 @@ bb.hi:                                            ; preds = %bb.hh
 bb.hj:                                            ; preds = %bb.hi
   %i.tw = load ptr, ptr @_ZN8rational13g_mpq_managerE, align 8, !tbaa !234
   %i.tx = invoke noundef i64 @_ZNK11mpz_managerILb1EE10get_uint64ERK3mpz(ptr noundef nonnull align 8 dereferenceable(728) %i.tw, ptr noundef nonnull align 8 dereferenceable(32) %7)
-          to label %_ZNK8rational12get_unsignedEv.exit363 unwind label %bb.hm
+          to label %_ZNK8rational12get_unsignedEv.exit363 unwind label %bb.hm ; 2 uses
 
 _ZNK8rational12get_unsignedEv.exit363:            ; preds = %bb.hj
-  %i.ty = trunc i64 %i.tx to i32                  ; 5 uses
+  %i.ty = trunc i64 %i.tx to i32                  ; 4 uses
   %i.tz = load ptr, ptr %i.ix, align 8, !tbaa !93 ; 7 uses
   %i.ua = icmp eq ptr %i.tz, null
   br i1 %i.ua, label %.critedge21.thread509, label %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit365.lr.ph
@@ -363,18 +363,21 @@ _ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit3
 .lr.ph:                                           ; preds = %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit365.lr.ph
   %i.ue = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.uf = load i32, ptr %i.ue, align 8, !tbaa !90
+  %20 = zext i32 %.0171.lcssa500 to i64           ; 2 uses
+  %21 = and i64 %i.tx, 4294967295
+  %wide.trip.count = zext i32 %i.uc to i64
+  %invariant.op = add nuw nsw i64 %21, %20
   br label %bb.hk
 
 bb.hk:                                            ; preds = %.lr.ph, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit365
-  %.0424456 = phi i32 [ %.0171.lcssa500, %.lr.ph ], [ %22, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit365 ] ; 6 uses
-  %20 = zext i32 %.0424456 to i64
-  %i.ug = getelementptr inbounds nuw [8 x i8], ptr %i.tz, i64 %20
+  %indvars.iv461 = phi i64 [ %20, %.lr.ph ], [ %indvars.iv.next462, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit365 ] ; 6 uses
+  %i.ug = getelementptr inbounds nuw [8 x i8], ptr %i.tz, i64 %indvars.iv461
   %i.uh = load ptr, ptr %i.ug, align 8, !tbaa !8  ; 2 uses
   %i.ui = getelementptr inbounds nuw i8, ptr %i.uh, i64 4
   %i.uj = load i32, ptr %i.ui, align 4
   %i.uk = and i32 %i.uj, 65535
   %i.ul = icmp eq i32 %i.uk, 0
-  br i1 %i.ul, label %bb.hl, label %.critedge21
+  br i1 %i.ul, label %bb.hl, label %.critedge21.split.loop.exit521
 
 bb.hl:                                            ; preds = %bb.hk
   %i.um = getelementptr inbounds nuw i8, ptr %i.uh, i64 16
@@ -382,7 +385,7 @@ bb.hl:                                            ; preds = %bb.hk
   %i.uo = getelementptr inbounds nuw i8, ptr %i.un, i64 24
   %i.up = load ptr, ptr %i.uo, align 8, !tbaa !162 ; 3 uses
   %.not.i.i.i.i366 = icmp eq ptr %i.up, null
-  br i1 %.not.i.i.i.i366, label %.critedge21, label %_ZNK8seq_util3str7is_unitEPK4expr.exit367
+  br i1 %.not.i.i.i.i366, label %.critedge21.split.loop.exit523, label %_ZNK8seq_util3str7is_unitEPK4expr.exit367
 
 _ZNK8seq_util3str7is_unitEPK4expr.exit367:        ; preds = %bb.hl
   %i.uq = load i32, ptr %i.up, align 8, !tbaa !173
@@ -391,14 +394,13 @@ _ZNK8seq_util3str7is_unitEPK4expr.exit367:        ; preds = %bb.hl
   %i.ut = load i32, ptr %i.us, align 4
   %i.uu = icmp eq i32 %i.ut, 0
   %i.uv = select i1 %i.ur, i1 %i.uu, i1 false
-  %21 = sub i32 %.0424456, %.0171.lcssa500
-  %i.uw = icmp ult i32 %21, %i.ty
+  %i.uw = icmp samesign ult i64 %indvars.iv461, %invariant.op
   %or.cond252 = and i1 %i.uv, %i.uw
-  br i1 %or.cond252, label %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit365, label %.critedge21
+  br i1 %or.cond252, label %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit365, label %.critedge21.split.loop.exit519
 
 _ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit365: ; preds = %_ZNK8seq_util3str7is_unitEPK4expr.exit367
-  %22 = add nuw i32 %.0424456, 1                  ; 2 uses
-  %exitcond.not = icmp eq i32 %22, %i.uc
+  %indvars.iv.next462 = add nuw nsw i64 %indvars.iv461, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next462, %wide.trip.count
   br i1 %exitcond.not, label %.critedge21, label %bb.hk
 
 bb.hm:                                            ; preds = %bb.hj
@@ -411,8 +413,20 @@ bb.hn:                                            ; preds = %bb.hq, %bb.hp, %bb.
           cleanup
   br label %bb.il
 
-.critedge21:                                      ; preds = %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit365, %_ZNK8seq_util3str7is_unitEPK4expr.exit367, %bb.hk, %bb.hl
-  %.0.lcssa = phi i32 [ %.0424456, %bb.hl ], [ %.0424456, %_ZNK8seq_util3str7is_unitEPK4expr.exit367 ], [ %i.uc, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit365 ], [ %.0424456, %bb.hk ] ; 2 uses
+.critedge21.split.loop.exit519:                   ; preds = %_ZNK8seq_util3str7is_unitEPK4expr.exit367
+  %22 = trunc nuw i64 %indvars.iv461 to i32
+  br label %.critedge21
+
+.critedge21.split.loop.exit521:                   ; preds = %bb.hk
+  %23 = trunc nuw i64 %indvars.iv461 to i32
+  br label %.critedge21
+
+.critedge21.split.loop.exit523:                   ; preds = %bb.hl
+  %24 = trunc nuw i64 %indvars.iv461 to i32
+  br label %.critedge21
+
+.critedge21:                                      ; preds = %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit365, %.critedge21.split.loop.exit523, %.critedge21.split.loop.exit521, %.critedge21.split.loop.exit519
+  %.0.lcssa = phi i32 [ %23, %.critedge21.split.loop.exit521 ], [ %24, %.critedge21.split.loop.exit523 ], [ %22, %.critedge21.split.loop.exit519 ], [ %i.uc, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit365 ] ; 2 uses
   %i.uz = sub i32 %.0.lcssa, %.0171.lcssa500
   %i.va = icmp eq i32 %i.uz, %i.ty
   br i1 %i.va, label %bb.ho, label %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit369.thread

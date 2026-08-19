@@ -202,7 +202,8 @@ iter.check:                                       ; preds = %.preheader180
   br i1 %i.dd, label %bb.x, label %bb.y
 
 bb.u:                                             ; preds = %iter.check, %bb.w
-  %indvars.iv.a = phi i64 [ 0, %iter.check ], [ %indvars.iv.next, %bb.w ] ; 3 uses
+  %indvars.iv.a = phi i64 [ 0, %iter.check ], [ %4, %bb.w ]
+  %.0139184 = phi i32 [ 0, %iter.check ], [ %3, %bb.w ] ; 2 uses
   %i.de = getelementptr inbounds nuw [2 x i8], ptr %i.cz, i64 %indvars.iv.a ; 2 uses
   %i.df = load i16, ptr %i.de, align 2, !tbaa !108 ; 2 uses
   %.not165 = icmp eq i16 %i.df, 0
@@ -210,8 +211,9 @@ bb.u:                                             ; preds = %iter.check, %bb.w
 
 bb.v:                                             ; preds = %bb.u
   %i.dg = uitofp i16 %i.df to float
-  %1 = and i64 %indvars.iv.a, 3
-  %i.dh = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %1
+  %1 = and i32 %.0139184, 3
+  %2 = zext nneg i32 %1 to i64
+  %i.dh = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %2
   %i.di = load float, ptr %i.dh, align 4, !tbaa !106
   %i.dj = fmul reassoc nsz arcp contract afn float %i.di, %i.dg
   %i.dk = fptosi float %i.dj to i32
@@ -222,9 +224,9 @@ bb.v:                                             ; preds = %bb.u
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.u, %bb.v
-  %indvars.iv.next = add i64 %indvars.iv.a, 1     ; 2 uses
-  %2 = and i64 %indvars.iv.next, 4294967295
-  %i.do = icmp samesign ugt i64 %i.cy, %2
+  %3 = add i32 %.0139184, 1                       ; 2 uses
+  %4 = zext i32 %3 to i64                         ; 2 uses
+  %i.do = icmp samesign ugt i64 %i.cy, %4
   br i1 %i.do, label %bb.u, label %._crit_edge, !llvm.loop !109
 
 bb.x:                                             ; preds = %._crit_edge

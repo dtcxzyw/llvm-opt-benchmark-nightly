@@ -204,7 +204,6 @@ bb.aa:                                            ; preds = %.lr.ph238.split.us
   %.2149.lcssa379 = phi i32 [ %.2149.lcssa, %.preheader204 ], [ 0, %bb.z ]
   %.not167 = icmp eq ptr %0, null                 ; 4 uses
   %i.ei = ptrtoint ptr %0 to i64                  ; 2 uses
-  %5 = sext i32 %1 to i64
   br label %bb.ad
 
 .lr.ph238.split:                                  ; preds = %.lr.ph238, %.loopexit
@@ -287,20 +286,21 @@ GetNextKey.exit:                                  ; preds = %ReplicateValue.exit
   br i1 %exitcond329.not, label %.preheader204, label %.lr.ph238.split, !llvm.loop !25
 
 bb.ad:                                            ; preds = %.lr.ph280, %._crit_edge253
-  %indvars.iv335 = phi i64 [ %5, %.lr.ph280 ], [ %indvars.iv.next336, %._crit_edge253 ] ; 3 uses
   %.0120277 = phi ptr [ %0, %.lr.ph280 ], [ %.1121.lcssa, %._crit_edge253 ] ; 3 uses
-  %.0124276.a = phi i32 [ %i.c, %.lr.ph280 ], [ %.1125.lcssa, %._crit_edge253 ] ; 3 uses
-  %.0128275 = phi i32 [ %i.c, %.lr.ph280 ], [ %.1129.lcssa, %._crit_edge253 ] ; 3 uses
-  %.1132274 = phi i32 [ %.0131.lcssa382, %.lr.ph280 ], [ %i.fr, %._crit_edge253 ]
-  %.1134273 = phi i32 [ %.0133.lcssa381, %.lr.ph280 ], [ %i.fo, %._crit_edge253 ]
-  %.3138272 = phi i32 [ %.0135.lcssa380, %.lr.ph280 ], [ %.4.lcssa, %._crit_edge253 ] ; 3 uses
-  %.0139271 = phi i32 [ -1, %.lr.ph280 ], [ %.1140.lcssa, %._crit_edge253 ] ; 3 uses
-  %.1143269 = phi i32 [ 2, %.lr.ph280 ], [ %i.ip, %._crit_edge253 ] ; 3 uses
+  %.0124276 = phi i32 [ %i.c, %.lr.ph280 ], [ %.1125.lcssa, %._crit_edge253 ] ; 3 uses
+  %.0124276.a = phi i32 [ %i.c, %.lr.ph280 ], [ %.1129.lcssa, %._crit_edge253 ] ; 3 uses
+  %.0128275 = phi i32 [ %.0131.lcssa382, %.lr.ph280 ], [ %i.fr, %._crit_edge253 ]
+  %.1132274 = phi i32 [ %.0133.lcssa381, %.lr.ph280 ], [ %i.fo, %._crit_edge253 ]
+  %.1134273 = phi i32 [ %.0135.lcssa380, %.lr.ph280 ], [ %.4.lcssa, %._crit_edge253 ] ; 3 uses
+  %.3138272 = phi i32 [ -1, %.lr.ph280 ], [ %.1140.lcssa, %._crit_edge253 ] ; 3 uses
+  %.0139271 = phi i32 [ 2, %.lr.ph280 ], [ %i.ip, %._crit_edge253 ] ; 3 uses
+  %.1143269 = phi i32 [ %1, %.lr.ph280 ], [ %.2146278, %._crit_edge253 ] ; 3 uses
   %.5267 = phi i32 [ %.2149.lcssa379, %.lr.ph280 ], [ %.6.lcssa, %._crit_edge253 ] ; 3 uses
-  %indvars.iv.next336 = add nsw i64 %indvars.iv335, 1 ; 5 uses
-  %i.fn = shl nuw i32 %.1132274, 1                ; 2 uses
-  %i.fo = add nsw i32 %i.fn, %.1134273            ; 2 uses
-  %i.fp = getelementptr inbounds [4 x i8], ptr %i.a, i64 %indvars.iv.next336 ; 5 uses
+  %.2146278 = add nsw i32 %.1143269, 1            ; 4 uses
+  %i.fn = shl nuw i32 %.0128275, 1                ; 2 uses
+  %i.fo = add nsw i32 %i.fn, %.1132274            ; 2 uses
+  %5 = sext i32 %.2146278 to i64                  ; 2 uses
+  %i.fp = getelementptr inbounds [4 x i8], ptr %i.a, i64 %5 ; 5 uses
   %i.fq = load i32, ptr %i.fp, align 4, !tbaa !3  ; 2 uses
   %i.fr = sub nsw i32 %i.fn, %i.fq                ; 2 uses
   %i.fs = icmp slt i32 %i.fr, 0
@@ -311,21 +311,19 @@ bb.ad:                                            ; preds = %.lr.ph280, %._crit_
   br i1 %i.ft, label %.lr.ph252, label %._crit_edge253
 
 .lr.ph252:                                        ; preds = %.preheader
-  %6 = icmp eq i64 %indvars.iv335, 14
-  %7 = trunc i64 %indvars.iv.next336 to i32
-  %8 = sub i32 %7, %1                             ; 2 uses
-  %i.fu = shl nuw i32 1, %8                       ; 4 uses
-  %.sroa.0.0.insert.ext = and i32 %8, 255         ; 2 uses
-  %9 = trunc nsw i64 %indvars.iv335 to i32
-  %i.fv = shl nuw i32 1, %9                       ; 2 uses
-  br i1 %6, label %.lr.ph252.split.us, label %.lr.ph252.split
+  %6 = sub nsw i32 %.2146278, %1                  ; 2 uses
+  %.not203 = icmp eq i32 %.1143269, 14
+  %i.fu = shl nuw i32 1, %6                       ; 4 uses
+  %.sroa.0.0.insert.ext = and i32 %6, 255         ; 2 uses
+  %i.fv = shl nuw nsw i32 1, %.1143269            ; 2 uses
+  br i1 %.not203, label %.lr.ph252.split.us, label %.lr.ph252.split
 
 .lr.ph252.split.us:                               ; preds = %.lr.ph252, %GetNextKey.exit179.us
   %.1121251.us = phi ptr [ %.3123188.us, %GetNextKey.exit179.us ], [ %.0120277, %.lr.ph252 ] ; 4 uses
-  %.1125250.us = phi i32 [ %.2126187.us, %GetNextKey.exit179.us ], [ %.0124276.a, %.lr.ph252 ] ; 3 uses
-  %.1129249.us = phi i32 [ %.2130186.us, %GetNextKey.exit179.us ], [ %.0128275, %.lr.ph252 ] ; 3 uses
-  %.4248.us = phi i32 [ %i.gx, %GetNextKey.exit179.us ], [ %.3138272, %.lr.ph252 ] ; 4 uses
-  %.1140247.us = phi i32 [ %.2141185.us, %GetNextKey.exit179.us ], [ %.0139271, %.lr.ph252 ] ; 3 uses
+  %.1125250.us = phi i32 [ %.2126187.us, %GetNextKey.exit179.us ], [ %.0124276, %.lr.ph252 ] ; 3 uses
+  %.1129249.us = phi i32 [ %.2130186.us, %GetNextKey.exit179.us ], [ %.0124276.a, %.lr.ph252 ] ; 3 uses
+  %.4248.us = phi i32 [ %i.gx, %GetNextKey.exit179.us ], [ %.1134273, %.lr.ph252 ] ; 4 uses
+  %.1140247.us = phi i32 [ %.2141185.us, %GetNextKey.exit179.us ], [ %.3138272, %.lr.ph252 ] ; 3 uses
   %.6246.us = phi i32 [ %.7.us, %GetNextKey.exit179.us ], [ %.5267, %.lr.ph252 ] ; 4 uses
   %i.fw = and i32 %.4248.us, %i.dy                ; 4 uses
   %.not166.us = icmp eq i32 %i.fw, %.1140247.us
@@ -371,7 +369,7 @@ bb.af:                                            ; preds = %bb.ae, %.thread189.
 
 bb.ag:                                            ; preds = %bb.ag, %bb.af
   %.0.i175.us = phi i32 [ %.2130196.us, %bb.af ], [ %i.go, %bb.ag ]
-  %i.go = sub nsw i32 %.0.i175.us, %.1143269      ; 3 uses
+  %i.go = sub nsw i32 %.0.i175.us, %.0139271      ; 3 uses
   %i.gp = sext i32 %i.go to i64
   %i.gq = getelementptr inbounds [4 x i8], ptr %i.gn, i64 %i.gp
   store i32 %.sroa.0.0.insert.insert.us, ptr %i.gq, align 2
@@ -409,10 +407,10 @@ GetNextKey.exit179.us:                            ; preds = %bb.ah
 
 .lr.ph252.split:                                  ; preds = %.lr.ph252, %GetNextKey.exit179
   %.1121251 = phi ptr [ %.3123188, %GetNextKey.exit179 ], [ %.0120277, %.lr.ph252 ] ; 4 uses
-  %.1125250 = phi i32 [ %.2126187, %GetNextKey.exit179 ], [ %.0124276.a, %.lr.ph252 ] ; 3 uses
-  %.1129249 = phi i32 [ %.2130186, %GetNextKey.exit179 ], [ %.0128275, %.lr.ph252 ] ; 3 uses
-  %.4248 = phi i32 [ %i.il, %GetNextKey.exit179 ], [ %.3138272, %.lr.ph252 ] ; 4 uses
-  %.1140247 = phi i32 [ %.2141185, %GetNextKey.exit179 ], [ %.0139271, %.lr.ph252 ] ; 3 uses
+  %.1125250 = phi i32 [ %.2126187, %GetNextKey.exit179 ], [ %.0124276, %.lr.ph252 ] ; 3 uses
+  %.1129249 = phi i32 [ %.2130186, %GetNextKey.exit179 ], [ %.0124276.a, %.lr.ph252 ] ; 3 uses
+  %.4248 = phi i32 [ %i.il, %GetNextKey.exit179 ], [ %.1134273, %.lr.ph252 ] ; 4 uses
+  %.1140247 = phi i32 [ %.2141185, %GetNextKey.exit179 ], [ %.3138272, %.lr.ph252 ] ; 3 uses
   %.6246 = phi i32 [ %.7, %GetNextKey.exit179 ], [ %.5267, %.lr.ph252 ] ; 4 uses
   %i.hb = and i32 %.4248, %i.dy                   ; 4 uses
   %.not166 = icmp eq i32 %i.hb, %.1140247
@@ -424,7 +422,7 @@ GetNextKey.exit179.us:                            ; preds = %bb.ah
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.ai, %.lr.ph.preheader.i
-  %indvars.iv.i = phi i64 [ %indvars.iv.next336, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.ai ] ; 3 uses
+  %indvars.iv.i = phi i64 [ %5, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.ai ] ; 3 uses
   %.013.i = phi i32 [ %i.fu, %.lr.ph.preheader.i ], [ %i.hi, %bb.ai ]
   %i.he = getelementptr inbounds [4 x i8], ptr %i.a, i64 %indvars.iv.i
   %i.hf = load i32, ptr %i.he, align 4, !tbaa !3
@@ -485,7 +483,7 @@ bb.ak:                                            ; preds = %.thread189, %bb.aj
 
 bb.al:                                            ; preds = %bb.al, %bb.ak
   %.0.i175 = phi i32 [ %.2130196, %bb.ak ], [ %i.ic, %bb.al ]
-  %i.ic = sub nsw i32 %.0.i175, %.1143269         ; 3 uses
+  %i.ic = sub nsw i32 %.0.i175, %.0139271         ; 3 uses
   %i.id = sext i32 %i.ic to i64
   %i.ie = getelementptr inbounds [4 x i8], ptr %i.ib, i64 %i.id
   store i32 %.sroa.0.0.insert.insert, ptr %i.ie, align 2
@@ -512,7 +510,7 @@ bb.am:                                            ; preds = %bb.am, %ReplicateVa
   br i1 %.not.i178, label %GetNextKey.exit179, label %bb.am, !llvm.loop !27
 
 GetNextKey.exit179:                               ; preds = %bb.am
-  %i.ij = add i32 %.0.i177, -1
+  %i.ij = add nsw i32 %.0.i177, -1
   %i.ik = and i32 %i.ij, %.4248
   %i.il = add i32 %i.ik, %.0.i177                 ; 2 uses
   %i.im = load i32, ptr %i.fp, align 4, !tbaa !3  ; 2 uses
@@ -523,14 +521,13 @@ GetNextKey.exit179:                               ; preds = %bb.am
 
 ._crit_edge253:                                   ; preds = %GetNextKey.exit179, %GetNextKey.exit179.us, %.preheader
   %.6.lcssa = phi i32 [ %.5267, %.preheader ], [ %.7.us, %GetNextKey.exit179.us ], [ %.7, %GetNextKey.exit179 ]
-  %.1140.lcssa = phi i32 [ %.0139271, %.preheader ], [ %.2141185.us, %GetNextKey.exit179.us ], [ %.2141185, %GetNextKey.exit179 ]
-  %.4.lcssa = phi i32 [ %.3138272, %.preheader ], [ %i.gx, %GetNextKey.exit179.us ], [ %i.il, %GetNextKey.exit179 ]
-  %.1129.lcssa = phi i32 [ %.0128275, %.preheader ], [ %.2130186.us, %GetNextKey.exit179.us ], [ %.2130186, %GetNextKey.exit179 ]
-  %.1125.lcssa = phi i32 [ %.0124276.a, %.preheader ], [ %.2126187.us, %GetNextKey.exit179.us ], [ %.2126187, %GetNextKey.exit179 ] ; 2 uses
+  %.1140.lcssa = phi i32 [ %.3138272, %.preheader ], [ %.2141185.us, %GetNextKey.exit179.us ], [ %.2141185, %GetNextKey.exit179 ]
+  %.4.lcssa = phi i32 [ %.1134273, %.preheader ], [ %i.gx, %GetNextKey.exit179.us ], [ %i.il, %GetNextKey.exit179 ]
+  %.1129.lcssa = phi i32 [ %.0124276.a, %.preheader ], [ %.2130186.us, %GetNextKey.exit179.us ], [ %.2130186, %GetNextKey.exit179 ]
+  %.1125.lcssa = phi i32 [ %.0124276, %.preheader ], [ %.2126187.us, %GetNextKey.exit179.us ], [ %.2126187, %GetNextKey.exit179 ] ; 2 uses
   %.1121.lcssa = phi ptr [ %.0120277, %.preheader ], [ %.3123188.us, %GetNextKey.exit179.us ], [ %.3123188, %GetNextKey.exit179 ]
-  %i.ip = shl i32 %.1143269, 1
-  %10 = and i64 %indvars.iv.next336, 4294967295
-  %exitcond338.not = icmp eq i64 %10, 15
+  %i.ip = shl i32 %.0139271, 1
+  %exitcond338.not = icmp eq i32 %.2146278, 15
   br i1 %exitcond338.not, label %._crit_edge281.loopexit, label %bb.ad, !llvm.loop !34
 
 ._crit_edge281.loopexit:                          ; preds = %._crit_edge253

@@ -65,10 +65,11 @@ _ZNSt6vectorIhSaIhEEC2EmRKhRKS0_.exit:            ; preds = %.noexc47, %_ZNSt6ve
   br label %.preheader.us
 
 .preheader.us:                                    ; preds = %._crit_edge.us, %.preheader.lr.ph.split.us
-  %indvars.iv67 = phi i64 [ %indvars.iv.next68, %._crit_edge.us ], [ 0, %.preheader.lr.ph.split.us ] ; 6 uses
+  %indvars.iv67 = phi i64 [ 0, %.preheader.lr.ph.split.us ], [ %12, %._crit_edge.us ] ; 4 uses
+  %.03963.us = phi i32 [ 0, %.preheader.lr.ph.split.us ], [ %11, %._crit_edge.us ] ; 2 uses
   %i.y = getelementptr i8, ptr %i.r, i64 %indvars.iv67
-  %7 = shl i64 %indvars.iv67, 2
-  %8 = and i64 %7, 4294967292
+  %7 = shl i32 %.03963.us, 2
+  %8 = zext i32 %7 to i64
   %i.z = getelementptr i8, ptr %i.s, i64 %indvars.iv67
   %i.aa = getelementptr i8, ptr %i.u, i64 %indvars.iv67
   %i.ab = getelementptr i8, ptr %i.w, i64 %indvars.iv67
@@ -76,7 +77,8 @@ _ZNSt6vectorIhSaIhEEC2EmRKhRKS0_.exit:            ; preds = %.noexc47, %_ZNSt6ve
   br label %bb.b
 
 bb.b:                                             ; preds = %.preheader.us, %bb.b
-  %indvars.iv = phi i64 [ 0, %.preheader.us ], [ %indvars.iv.next, %bb.b ] ; 3 uses
+  %indvars.iv = phi i64 [ 0, %.preheader.us ], [ %10, %bb.b ] ; 2 uses
+  %.062.us = phi i32 [ 0, %.preheader.us ], [ %9, %bb.b ]
   %i.ac = xor i64 %indvars.iv, -1
   %i.ad = add nsw i64 %i.e, %i.ac                 ; 4 uses
   %i.ae = mul nsw i64 %i.ad, %i.c
@@ -100,15 +102,15 @@ bb.b:                                             ; preds = %.preheader.us, %bb.
   %i.as = load i8, ptr %i.ar, align 1, !tbaa !16
   %i.at = getelementptr inbounds nuw i8, ptr %gep, i64 3
   store i8 %i.as, ptr %i.at, align 1, !tbaa !16
-  %indvars.iv.next = add i64 %indvars.iv, 1       ; 2 uses
-  %9 = and i64 %indvars.iv.next, 4294967295
-  %i.au = icmp sgt i64 %i.e, %9
+  %9 = add i32 %.062.us, 1                        ; 2 uses
+  %10 = zext i32 %9 to i64                        ; 2 uses
+  %i.au = icmp sgt i64 %i.e, %10
   br i1 %i.au, label %bb.b, label %._crit_edge.us, !llvm.loop !17
 
 ._crit_edge.us:                                   ; preds = %bb.b
-  %indvars.iv.next68 = add i64 %indvars.iv67, 1   ; 2 uses
-  %10 = and i64 %indvars.iv.next68, 4294967295
-  %i.av = icmp sgt i64 %i.c, %10
+  %11 = add i32 %.03963.us, 1                     ; 2 uses
+  %12 = zext i32 %11 to i64                       ; 2 uses
+  %i.av = icmp sgt i64 %i.c, %12
   br i1 %i.av, label %.preheader.us, label %._crit_edge64, !llvm.loop !19
 
 ._crit_edge64:                                    ; preds = %._crit_edge.us, %.preheader.lr.ph, %_ZNSt6vectorIhSaIhEEC2EmRKhRKS0_.exit

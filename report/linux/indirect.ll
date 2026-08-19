@@ -203,8 +203,6 @@ declare dso_local i32 @__SCT__tp_func_ext4_ind_map_blocks_exit(ptr noundef, ptr 
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
 define internal fastcc range(i32 -2147483648, 2) i32 @ext4_clear_blocks(ptr noundef %0, ptr noundef %1, ptr noundef %2, i64 noundef range(i64 0, 4294967296) %3, i64 noundef range(i64 1, 0) %4, ptr nofree noundef writeonly captures(address) %5, ptr nofree noundef readnone captures(address) %6) unnamed_addr #0 align 16 prefalign(16) {
 bb.a:
-  %7 = ptrtoaddr ptr %5 to i64                    ; 2 uses
-  %8 = ptrtoaddr ptr %6 to i64
   %i.a = load i16, ptr %1, align 8
   %i.b = and i16 %i.a, -4096
   switch i16 %i.b, label %bb.b [
@@ -275,15 +273,12 @@ ext4_free_data_revoke_credits.exit:               ; preds = %bb.f, %bb.g, %bb.h
   %i.ab = icmp ult ptr %5, %6
   br i1 %i.ab, label %.lr.ph.preheader, label %._crit_edge
 
-.lr.ph.preheader:                                 ; preds = %.preheader
-  %9 = add i64 %7, 4
-  %umax = tail call i64 @llvm.umax.i64(i64 %8, i64 %9)
-  %10 = xor i64 %7, -1
-  %11 = add i64 %umax, %10
-  %12 = and i64 %11, -4
-  %13 = add i64 %12, 4
-  tail call void @llvm.memset.p0.i64(ptr align 4 %5, i8 0, i64 %13, i1 false)
-  br label %._crit_edge
+.lr.ph.preheader:                                 ; preds = %.preheader, %.lr.ph.preheader
+  %.03238 = phi ptr [ %7, %.lr.ph.preheader ], [ %5, %.preheader ] ; 2 uses
+  store i32 0, ptr %.03238, align 4
+  %7 = getelementptr i8, ptr %.03238, i64 4       ; 2 uses
+  %8 = icmp ult ptr %7, %6
+  br i1 %8, label %.lr.ph.preheader, label %._crit_edge, !llvm.loop !88
 
 ._crit_edge:                                      ; preds = %.lr.ph.preheader, %.preheader
   tail call void @ext4_free_blocks(ptr noundef %0, ptr noundef %1, ptr noundef null, i64 noundef %3, i64 noundef %4, i32 noundef %.0) #10
@@ -376,8 +371,8 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.ac, label %bb.f, label %ext4_ind_trunc_restart_fn.exit.thread, !prof !21
 
 bb.f:                                             ; preds = %bb.e
-  tail call void asm sideeffect "1465: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 1465b - ., 3; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 1465) #9, !srcloc !88
-  tail call void asm sideeffect "1:\09 ud2 \0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${0:c} - .\09# bug_entry::format\0A\09.long ${1:c} - .\09# bug_entry::file\0A\09.word ${2:c}\09# bug_entry::line\0A\09.word ${3:c}\09# bug_entry::flags\0A\09.org 2b + ${4:c}\0A.popsection\0A", "i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @.str.3, ptr nonnull @.str.1, i32 709, i32 0, i64 16) #9, !srcloc !89
+  tail call void asm sideeffect "1465: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 1465b - ., 3; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 1465) #9, !srcloc !89
+  tail call void asm sideeffect "1:\09 ud2 \0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${0:c} - .\09# bug_entry::format\0A\09.long ${1:c} - .\09# bug_entry::file\0A\09.word ${2:c}\09# bug_entry::line\0A\09.word ${3:c}\09# bug_entry::flags\0A\09.org 2b + ${4:c}\0A.popsection\0A", "i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @.str.3, ptr nonnull @.str.1, i32 709, i32 0, i64 16) #9, !srcloc !90
   unreachable
 
 ext4_ind_trunc_restart_fn.exit.thread:            ; preds = %bb.e
@@ -508,9 +503,6 @@ declare i32 @llvm.umax.i32(i32, i32) #8
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #8
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #8
-
 attributes #0 = { fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong "min-legal-vector-width"="0" "no-builtin-wcslen" "no-jump-tables"="true" "no-trapping-math"="true" "patchable-function-entry"="0" "patchable-function-prefix"="16" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+retpoline-external-thunk,+retpoline-indirect-branches,+retpoline-indirect-calls,-aes,-amx-avx512,-avx,-avx10.1,-avx10.2,-avx2,-avx512bf16,-avx512bitalg,-avx512bmm,-avx512bw,-avx512cd,-avx512dq,-avx512f,-avx512fp16,-avx512ifma,-avx512vbmi,-avx512vbmi2,-avx512vl,-avx512vnni,-avx512vp2intersect,-avx512vpopcntdq,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-f16c,-fma,-fma4,-gfni,-kl,-mmx,-pclmul,-sha,-sha512,-sm3,-sm4,-sse,-sse2,-sse3,-sse4.1,-sse4.2,-sse4a,-ssse3,-vaes,-vpclmulqdq,-widekl,-x87,-xop" "tune-cpu"="generic" "warn-stack-size"="2048" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
@@ -616,6 +608,7 @@ attributes #12 = { noredzone "no-builtin-wcslen" }
 !85 = !{i64 43652}
 !86 = !{i64 43856}
 !87 = !{i64 27187}
-!88 = !{i64 2161951960, i64 2161951830}
-!89 = !{i64 2161952491, i64 2161952967, i64 2161953000, i64 2161953035, i64 2161953051, i64 2161953892, i64 2161953950, i64 2161953999, i64 2161953809, i64 2161953110, i64 2161953142}
+!88 = distinct !{!88, !26}
+!89 = !{i64 2161951960, i64 2161951830}
+!90 = !{i64 2161952491, i64 2161952967, i64 2161953000, i64 2161953035, i64 2161953051, i64 2161953892, i64 2161953950, i64 2161953999, i64 2161953809, i64 2161953110, i64 2161953142}
 end_hunk_0

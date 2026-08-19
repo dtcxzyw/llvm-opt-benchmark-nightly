@@ -181,7 +181,7 @@ bb.a:
   br i1 %.not, label %.preheader38, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %min.iters.check = icmp ult i64 %1, 16
+  %min.iters.check = icmp ult i64 %1, 20
   br i1 %min.iters.check, label %.lr.ph.preheader78, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph.preheader
@@ -193,7 +193,8 @@ vector.scevcheck:                                 ; preds = %.lr.ph.preheader
   br i1 %i.e, label %.lr.ph.preheader78, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.scevcheck
-  %n.vec = and i64 %1, 8589934584                 ; 3 uses
+  %n.vec = and i64 %1, 8589934584                 ; 4 uses
+  %5 = trunc i64 %n.vec to i32
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -212,6 +213,7 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.preheader78:                               ; preds = %vector.scevcheck, %.lr.ph.preheader, %middle.block
   %indvars.iv.ph = phi i64 [ 0, %vector.scevcheck ], [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ]
+  %.03539.ph = phi i32 [ 0, %vector.scevcheck ], [ 0, %.lr.ph.preheader ], [ %5, %middle.block ]
   br label %.lr.ph
 
 .preheader38:                                     ; preds = %bb.a
@@ -344,12 +346,13 @@ bb.b:                                             ; preds = %.lr.ph48.split.us, 
   br label %bb.b
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader78, %.lr.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ %indvars.iv.ph, %.lr.ph.preheader78 ] ; 2 uses
+  %indvars.iv = phi i64 [ %7, %.lr.ph ], [ %indvars.iv.ph, %.lr.ph.preheader78 ]
+  %.03539 = phi i32 [ %6, %.lr.ph ], [ %.03539.ph, %.lr.ph.preheader78 ]
   %i.bd = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %indvars.iv
   store i32 0, ptr %i.bd, align 4, !tbaa !8
-  %indvars.iv.next = add i64 %indvars.iv, 1       ; 2 uses
-  %5 = and i64 %indvars.iv.next, 4294967295
-  %i.be = icmp ugt i64 %1, %5
+  %6 = add i32 %.03539, 1                         ; 2 uses
+  %7 = zext i32 %6 to i64                         ; 2 uses
+  %i.be = icmp ugt i64 %1, %7
   br i1 %i.be, label %.lr.ph, label %.preheader38.thread, !llvm.loop !22
 
 ._crit_edge49:                                    ; preds = %bb.b, %.lr.ph48.split, %middle.block73, %.preheader38.thread, %.preheader38
@@ -752,7 +755,7 @@ bb.p:                                             ; preds = %bb.k
   %i.bi = phi ptr [ %i.ad, %._crit_edge.i.i82.thread ], [ %i.aj, %._crit_edge.i.i82 ] ; 2 uses
   %i.bj = phi ptr [ %i.ae, %._crit_edge.i.i82.thread ], [ %i.ai, %._crit_edge.i.i82 ] ; 2 uses
   %i.bk = load ptr, ptr %4, align 8, !tbaa !29    ; 3 uses
-  %min.iters.check = icmp ult i64 %1, 20
+  %min.iters.check = icmp ult i64 %1, 24
   br i1 %min.iters.check, label %_ZN4lean10mpn_bufferC2EmRKj.exit88.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph
@@ -768,7 +771,8 @@ vector.scevcheck:                                 ; preds = %.lr.ph
   br i1 %or.cond, label %_ZN4lean10mpn_bufferC2EmRKj.exit88.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.scevcheck
-  %n.vec = and i64 %1, 8589934584                 ; 3 uses
+  %n.vec = and i64 %1, 8589934584                 ; 4 uses
+  %7 = trunc i64 %n.vec to i32
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -791,6 +795,7 @@ middle.block:                                     ; preds = %vector.body
 
 _ZN4lean10mpn_bufferC2EmRKj.exit88.preheader:     ; preds = %vector.scevcheck, %.lr.ph, %middle.block
   %indvars.iv.ph = phi i64 [ 0, %vector.scevcheck ], [ 0, %.lr.ph ], [ %n.vec, %middle.block ]
+  %.035117.ph = phi i32 [ 0, %vector.scevcheck ], [ 0, %.lr.ph ], [ %7, %middle.block ]
   br label %_ZN4lean10mpn_bufferC2EmRKj.exit88
 
 _ZN4lean10mpn_bufferC2EmRKj.exit88._crit_edge:    ; preds = %_ZN4lean10mpn_bufferC2EmRKj.exit88, %middle.block, %._crit_edge.i.i82
@@ -808,14 +813,15 @@ _ZN4lean10mpn_bufferC2EmRKj.exit88._crit_edge:    ; preds = %_ZN4lean10mpn_buffe
   br label %bb.q
 
 _ZN4lean10mpn_bufferC2EmRKj.exit88:               ; preds = %_ZN4lean10mpn_bufferC2EmRKj.exit88.preheader, %_ZN4lean10mpn_bufferC2EmRKj.exit88
-  %indvars.iv = phi i64 [ %indvars.iv.next, %_ZN4lean10mpn_bufferC2EmRKj.exit88 ], [ %indvars.iv.ph, %_ZN4lean10mpn_bufferC2EmRKj.exit88.preheader ] ; 3 uses
+  %indvars.iv = phi i64 [ %9, %_ZN4lean10mpn_bufferC2EmRKj.exit88 ], [ %indvars.iv.ph, %_ZN4lean10mpn_bufferC2EmRKj.exit88.preheader ] ; 2 uses
+  %.035117 = phi i32 [ %8, %_ZN4lean10mpn_bufferC2EmRKj.exit88 ], [ %.035117.ph, %_ZN4lean10mpn_bufferC2EmRKj.exit88.preheader ]
   %i.ce = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv
   %i.cf = load i32, ptr %i.ce, align 4, !tbaa !8
   %i.cg = getelementptr inbounds nuw [4 x i8], ptr %i.bk, i64 %indvars.iv
   store i32 %i.cf, ptr %i.cg, align 4, !tbaa !8
-  %indvars.iv.next = add i64 %indvars.iv, 1       ; 2 uses
-  %7 = and i64 %indvars.iv.next, 4294967295
-  %i.ch = icmp ugt i64 %1, %7
+  %8 = add i32 %.035117, 1                        ; 2 uses
+  %9 = zext i32 %8 to i64                         ; 2 uses
+  %i.ch = icmp ugt i64 %1, %9
   br i1 %i.ch, label %_ZN4lean10mpn_bufferC2EmRKj.exit88, label %_ZN4lean10mpn_bufferC2EmRKj.exit88._crit_edge, !llvm.loop !80
 
 bb.q:                                             ; preds = %.critedge4, %_ZN4lean10mpn_bufferC2EmRKj.exit88._crit_edge

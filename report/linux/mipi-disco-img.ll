@@ -203,20 +203,21 @@ bb.i:                                             ; preds = %.lr.ph69
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.j, %bb.i
-  %indvars.iv.i.a = phi i64 [ 0, %bb.i ], [ %indvars.iv.next.i, %bb.j ] ; 3 uses
+  %indvars.iv.i.a = phi i64 [ 0, %bb.i ], [ %2, %bb.j ] ; 2 uses
+  %.03642.i = phi i32 [ 0, %bb.i ], [ %1, %bb.j ]
   %i.ar = load ptr, ptr %i.al, align 8
   %i.as = getelementptr [24 x i8], ptr %i.ar, i64 %indvars.iv.i.a
   %i.at = load ptr, ptr %i.ap, align 8
   %i.au = getelementptr [8 x i8], ptr %i.at, i64 %indvars.iv.i.a
   store ptr %i.as, ptr %i.au, align 8
-  %indvars.iv.next.i = add i64 %indvars.iv.i.a, 1 ; 2 uses
-  %1 = and i64 %indvars.iv.next.i, 4294967295     ; 2 uses
-  %.not40.i = icmp samesign ult i64 %i.an, %1
+  %1 = add i32 %.03642.i, 1                       ; 2 uses
+  %2 = zext i32 %1 to i64                         ; 3 uses
+  %.not40.i = icmp samesign ult i64 %i.an, %2
   br i1 %.not40.i, label %bb.k, label %bb.j, !llvm.loop !15
 
 bb.k:                                             ; preds = %bb.j
   %i.av = load ptr, ptr %i.ap, align 8
-  %i.aw = getelementptr [8 x i8], ptr %i.av, i64 %1
+  %i.aw = getelementptr [8 x i8], ptr %i.av, i64 %2
   store ptr null, ptr %i.aw, align 8
   %.not44.i = icmp eq i32 %i.ad, 0
   br i1 %.not44.i, label %._crit_edge.i, label %.lr.ph.i.preheader

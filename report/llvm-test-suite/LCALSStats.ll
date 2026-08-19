@@ -203,7 +203,8 @@ bb.q:                                             ; preds = %bb.m
   br label %_ZNSt6vectorIeSaIeEED2Ev.exit
 
 .lr.ph263:                                        ; preds = %_ZNSt6vectorIeSaIeEEC2EmRKeRKS0_.exit175, %.loopexit
-  %indvars.iv286 = phi i64 [ %indvars.iv.next287, %.loopexit ], [ 0, %_ZNSt6vectorIeSaIeEEC2EmRKeRKS0_.exit175 ] ; 2 uses
+  %indvars.iv286 = phi i64 [ %6, %.loopexit ], [ 0, %_ZNSt6vectorIeSaIeEEC2EmRKeRKS0_.exit175 ]
+  %.0122262 = phi i32 [ %5, %.loopexit ], [ 0, %_ZNSt6vectorIeSaIeEEC2EmRKeRKS0_.exit175 ]
   %i.hh = getelementptr inbounds nuw [280 x i8], ptr %i.c, i64 %indvars.iv286 ; 7 uses
   %i.hi = load i8, ptr %i.hh, align 8, !tbaa !36, !range !58, !noundef !59
   %i.hj = trunc nuw i8 %i.hi to i1
@@ -230,7 +231,8 @@ bb.q:                                             ; preds = %bb.m
   br label %bb.r
 
 bb.r:                                             ; preds = %.lr.ph261, %bb.t
-  %indvars.iv283.a = phi i64 [ 0, %.lr.ph261 ], [ %indvars.iv.next284, %bb.t ] ; 10 uses
+  %indvars.iv283.a = phi i64 [ 0, %.lr.ph261 ], [ %4, %bb.t ] ; 9 uses
+  %.0121260 = phi i32 [ 0, %.lr.ph261 ], [ %3, %bb.t ]
   %i.hx = getelementptr inbounds nuw [8 x i8], ptr %i.ht, i64 %indvars.iv283.a
   %i.hy = load i64, ptr %i.hx, align 8, !tbaa !63
   %.not = icmp eq i64 %i.hy, 0
@@ -276,15 +278,15 @@ bb.s:                                             ; preds = %bb.r
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.r, %bb.s
-  %indvars.iv.next284 = add i64 %indvars.iv283.a, 1 ; 2 uses
-  %3 = and i64 %indvars.iv.next284, 4294967295
-  %i.je = icmp ugt i64 %i.hr, %3
+  %3 = add i32 %.0121260, 1                       ; 2 uses
+  %4 = zext i32 %3 to i64                         ; 2 uses
+  %i.je = icmp ugt i64 %i.hr, %4
   br i1 %i.je, label %bb.r, label %.loopexit, !llvm.loop !168
 
 .loopexit:                                        ; preds = %bb.t, %.preheader232, %.lr.ph263
-  %indvars.iv.next287 = add i64 %indvars.iv286, 1 ; 2 uses
-  %4 = and i64 %indvars.iv.next287, 4294967295
-  %i.jf = icmp ugt i64 %i.g, %4
+  %5 = add i32 %.0122262, 1                       ; 2 uses
+  %6 = zext i32 %5 to i64                         ; 2 uses
+  %i.jf = icmp ugt i64 %i.g, %6
   br i1 %i.jf, label %.lr.ph263, label %.preheader.loopexit, !llvm.loop !169
 
 ._crit_edge266:                                   ; preds = %bb.ab, %.preheader

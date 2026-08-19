@@ -204,10 +204,12 @@ bb.b:                                             ; preds = %._crit_edge.i, %bb.
   %i.ac = or i1 %i.aa, %i.ab
   %min.iters.check60 = icmp ult i64 %2, 32
   %i.ad = and i64 %2, 28
-  %n.vec = and i64 %2, 8589934560                 ; 4 uses
+  %n.vec = and i64 %2, 8589934560                 ; 5 uses
+  %3 = trunc i64 %n.vec to i32
   %cmp.n = icmp eq i64 %2, %n.vec
   %min.epilog.iters.check = icmp eq i64 %i.ad, 0
-  %n.vec62 = and i64 %2, 8589934588               ; 3 uses
+  %n.vec62 = and i64 %2, 8589934588               ; 4 uses
+  %4 = trunc i64 %n.vec62 to i32
   %cmp.n66 = icmp eq i64 %2, %n.vec62
   br label %iter.check
 
@@ -269,17 +271,19 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 vec.epilog.scalar.ph.preheader:                   ; preds = %vector.scevcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %indvars.iv.i.ph = phi i64 [ 0, %vector.scevcheck ], [ 0, %iter.check ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec62, %vec.epilog.middle.block ]
+  %.077.i.ph = phi i32 [ 0, %vector.scevcheck ], [ 0, %iter.check ], [ %3, %vec.epilog.iter.check ], [ %4, %vec.epilog.middle.block ]
   br label %vec.epilog.scalar.ph
 
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.preheader, %vec.epilog.scalar.ph
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %vec.epilog.scalar.ph ], [ %indvars.iv.i.ph, %vec.epilog.scalar.ph.preheader ] ; 3 uses
+  %indvars.iv.i = phi i64 [ %6, %vec.epilog.scalar.ph ], [ %indvars.iv.i.ph, %vec.epilog.scalar.ph.preheader ] ; 2 uses
+  %.077.i = phi i32 [ %5, %vec.epilog.scalar.ph ], [ %.077.i.ph, %vec.epilog.scalar.ph.preheader ]
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv.i
   %i.as = load i8, ptr %i.ar, align 1, !tbaa !32
   %i.at = getelementptr inbounds nuw i8, ptr %i.af, i64 %indvars.iv.i
   store i8 %i.as, ptr %i.at, align 1, !tbaa !32
-  %indvars.iv.next.i = add i64 %indvars.iv.i, 1   ; 2 uses
-  %3 = and i64 %indvars.iv.next.i, 4294967295
-  %i.au = icmp ugt i64 %2, %3
+  %5 = add i32 %.077.i, 1                         ; 2 uses
+  %6 = zext i32 %5 to i64                         ; 2 uses
+  %i.au = icmp ugt i64 %2, %6
   br i1 %i.au, label %vec.epilog.scalar.ph, label %._crit_edge80.i, !llvm.loop !38
 
 ._crit_edge80.i:                                  ; preds = %vec.epilog.scalar.ph, %vec.epilog.middle.block, %middle.block
@@ -349,12 +353,13 @@ bb.d:                                             ; preds = %bb.c, %._crit_edge8
 .lr.ph91.i.preheader.preheader:                   ; preds = %.preheader.i
   %i.bj = shl i64 %.028, 3
   %i.bk = add i64 %i.bj, 8
-  %min.iters.check72 = icmp ult i64 %indvars.iv, 10
+  %min.iters.check72 = icmp ult i64 %indvars.iv, 14
   %i.bl = and i64 %.028, 4294967295
   %i.bm = icmp eq i64 %i.bl, 4294967295
   %i.bn = icmp ugt i64 %.028, 4294967295
   %i.bo = or i1 %i.bm, %i.bn
-  %n.vec74 = and i64 %indvars.iv, -4              ; 3 uses
+  %n.vec74 = and i64 %indvars.iv, -4              ; 4 uses
+  %7 = trunc i64 %n.vec74 to i32
   %cmp.n81 = icmp eq i64 %indvars.iv, %n.vec74
   br label %.lr.ph91.i.preheader
 
@@ -432,17 +437,19 @@ middle.block80:                                   ; preds = %vector.body75
 
 .lr.ph91.i.preheader146:                          ; preds = %vector.scevcheck67, %.lr.ph91.i.preheader, %middle.block80
   %indvars.iv40.ph = phi i64 [ 0, %vector.scevcheck67 ], [ 0, %.lr.ph91.i.preheader ], [ %n.vec74, %middle.block80 ]
+  %.189.i.ph = phi i32 [ 0, %vector.scevcheck67 ], [ 0, %.lr.ph91.i.preheader ], [ %7, %middle.block80 ]
   br label %.lr.ph91.i
 
 .lr.ph91.i:                                       ; preds = %.lr.ph91.i.preheader146, %.lr.ph91.i
-  %indvars.iv40 = phi i64 [ %indvars.iv.next41, %.lr.ph91.i ], [ %indvars.iv40.ph, %.lr.ph91.i.preheader146 ] ; 3 uses
+  %indvars.iv40 = phi i64 [ %9, %.lr.ph91.i ], [ %indvars.iv40.ph, %.lr.ph91.i.preheader146 ] ; 2 uses
+  %.189.i = phi i32 [ %8, %.lr.ph91.i ], [ %.189.i.ph, %.lr.ph91.i.preheader146 ]
   %i.da = getelementptr inbounds nuw [8 x i8], ptr %i.az, i64 %indvars.iv40
   %i.db = load i64, ptr %i.da, align 8, !tbaa !15
   %i.dc = getelementptr inbounds nuw [8 x i8], ptr %i.cr, i64 %indvars.iv40
   store i64 %i.db, ptr %i.dc, align 8, !tbaa !15
-  %indvars.iv.next41 = add i64 %indvars.iv40, 1   ; 2 uses
-  %4 = and i64 %indvars.iv.next41, 4294967295
-  %i.dd = icmp ugt i64 %i.u, %4
+  %8 = add i32 %.189.i, 1                         ; 2 uses
+  %9 = zext i32 %8 to i64                         ; 2 uses
+  %i.dd = icmp ugt i64 %i.u, %9
   br i1 %i.dd, label %.lr.ph91.i, label %._crit_edge92.i, !llvm.loop !43
 
 ._crit_edge92.i:                                  ; preds = %.lr.ph91.i, %middle.block80
@@ -845,7 +852,7 @@ cipher_idea.exit100:                              ; preds = %bb.bl, %bb.bm, %bb.
   %.0.i69.i99 = phi i16 [ %i.nq, %bb.bl ], [ %i.nr, %bb.bm ], [ %i.ns, %bb.bn ]
   %i.nt = getelementptr inbounds nuw i8, ptr %i.mm, i64 6
   store i16 %.0.i69.i99, ptr %i.nt, align 2, !tbaa !91
-  %i.nu = add nuw i64 %.022.us.us.i, 8            ; 2 uses
+  %i.nu = add i64 %.022.us.us.i, 8                ; 2 uses
   %i.nv = icmp ult i64 %i.nu, %i.jh
   br i1 %i.nv, label %bb.an, label %..preheader_crit_edge.us.us.i, !llvm.loop !109
 
@@ -1073,7 +1080,7 @@ cipher_idea.exit:                                 ; preds = %mul.exit66.i, %bb.c
   %.0.i69.i68 = phi i16 [ %i.ru, %bb.ck ], [ %i.rv, %bb.cl ], [ %i.jg, %mul.exit66.i ]
   %i.rw = getelementptr inbounds nuw i8, ptr %i.qx, i64 6
   store i16 %.0.i69.i68, ptr %i.rw, align 2, !tbaa !91
-  %i.rx = add nuw i64 %.123.us.us.i, 8            ; 2 uses
+  %i.rx = add i64 %.123.us.us.i, 8                ; 2 uses
   %i.ry = icmp ult i64 %i.rx, %i.jh
   br i1 %i.ry, label %..preheader_crit_edge.us.us.i, label %._crit_edge.us.us.i, !llvm.loop !110
 
@@ -1368,7 +1375,7 @@ cipher_idea.exit164:                              ; preds = %bb.dm, %bb.dn, %bb.
   %.0.i69.i163 = phi i16 [ %i.xb, %bb.dm ], [ %i.xc, %bb.dn ], [ %i.xd, %bb.do ]
   %i.xe = getelementptr inbounds nuw i8, ptr %i.vx, i64 6
   store i16 %.0.i69.i163, ptr %i.xe, align 2, !tbaa !91
-  %i.xf = add nuw i64 %.022.us.us.i60, 8          ; 2 uses
+  %i.xf = add i64 %.022.us.us.i60, 8              ; 2 uses
   %i.xg = icmp ult i64 %i.xf, %i.ss
   br i1 %i.xg, label %bb.co, label %..preheader_crit_edge.us.us.i61, !llvm.loop !109
 
@@ -1596,7 +1603,7 @@ cipher_idea.exit132:                              ; preds = %mul.exit66.i127, %b
   %.0.i69.i131 = phi i16 [ %i.abf, %bb.el ], [ %i.abg, %bb.em ], [ %i.sq, %mul.exit66.i127 ]
   %i.abh = getelementptr inbounds nuw i8, ptr %i.aai, i64 6
   store i16 %.0.i69.i131, ptr %i.abh, align 2, !tbaa !91
-  %i.abi = add nuw i64 %.123.us.us.i62, 8         ; 2 uses
+  %i.abi = add i64 %.123.us.us.i62, 8             ; 2 uses
   %i.abj = icmp ult i64 %i.abi, %i.ss
   br i1 %i.abj, label %..preheader_crit_edge.us.us.i61, label %._crit_edge.us.us.i63, !llvm.loop !110
 

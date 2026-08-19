@@ -200,7 +200,8 @@ bb.a:
   br i1 %.not55, label %.thread, label %.lr.ph.split.us.split
 
 .lr.ph.split.us.split:                            ; preds = %.lr.ph.split.us, %bb.c
-  %indvars.iv81 = phi i64 [ %indvars.iv.next82, %bb.c ], [ 0, %.lr.ph.split.us ] ; 2 uses
+  %indvars.iv81 = phi i64 [ %6, %bb.c ], [ 0, %.lr.ph.split.us ]
+  %.058.us = phi i32 [ %5, %bb.c ], [ 0, %.lr.ph.split.us ]
   %.04157.us = phi i32 [ %.1.us, %bb.c ], [ 0, %.lr.ph.split.us ] ; 4 uses
   %i.b = zext i32 %.04157.us to i64               ; 2 uses
   %i.c = icmp ugt i64 %i.a, %i.b
@@ -231,16 +232,17 @@ bb.b:                                             ; preds = %.lr.ph.split.us.spl
 
 bb.c:                                             ; preds = %bb.b, %.lr.ph.split.us.split
   %.1.us = phi i32 [ %i.s, %bb.b ], [ %.04157.us, %.lr.ph.split.us.split ] ; 2 uses
-  %indvars.iv.next82 = add i64 %indvars.iv81, 1   ; 2 uses
-  %5 = and i64 %indvars.iv.next82, 4294967295
-  %i.v = icmp ugt i64 %1, %5
+  %5 = add i32 %.058.us, 1                        ; 2 uses
+  %6 = zext i32 %5 to i64                         ; 2 uses
+  %i.v = icmp ugt i64 %1, %6
   br i1 %i.v, label %.lr.ph.split.us.split, label %._crit_edge, !llvm.loop !17
 
 .lr.ph.split:                                     ; preds = %.lr.ph
   br i1 %.not55, label %.lr.ph.split.split.us, label %.lr.ph.split.split
 
 .lr.ph.split.split.us:                            ; preds = %.lr.ph.split, %bb.e
-  %indvars.iv77 = phi i64 [ %indvars.iv.next78, %bb.e ], [ 0, %.lr.ph.split ] ; 2 uses
+  %indvars.iv77 = phi i64 [ %8, %bb.e ], [ 0, %.lr.ph.split ]
+  %.058.us61 = phi i32 [ %7, %bb.e ], [ 0, %.lr.ph.split ]
   %.04256.us63 = phi i32 [ %.143.us64, %bb.e ], [ 0, %.lr.ph.split ] ; 4 uses
   %i.w = zext i32 %.04256.us63 to i64             ; 2 uses
   %i.x = icmp ugt i64 %i.a, %i.w
@@ -270,9 +272,9 @@ bb.d:                                             ; preds = %.lr.ph.split.split.
 
 bb.e:                                             ; preds = %bb.d, %.lr.ph.split.split.us
   %.143.us64 = phi i32 [ %i.am, %bb.d ], [ %.04256.us63, %.lr.ph.split.split.us ] ; 2 uses
-  %indvars.iv.next78 = add i64 %indvars.iv77, 1   ; 2 uses
-  %6 = and i64 %indvars.iv.next78, 4294967295
-  %i.ap = icmp ugt i64 %1, %6
+  %7 = add i32 %.058.us61, 1                      ; 2 uses
+  %8 = zext i32 %7 to i64                         ; 2 uses
+  %i.ap = icmp ugt i64 %1, %8
   br i1 %i.ap, label %.lr.ph.split.split.us, label %._crit_edge, !llvm.loop !17
 
 ._crit_edge:                                      ; preds = %bb.i, %bb.e, %bb.c, %bb.a
@@ -284,7 +286,8 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph.split
   br i1 %or.cond, label %bb.j, label %bb.k
 
 .lr.ph.split.split:                               ; preds = %.lr.ph.split, %bb.i
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.i ], [ 0, %.lr.ph.split ] ; 2 uses
+  %indvars.iv = phi i64 [ %10, %bb.i ], [ 0, %.lr.ph.split ]
+  %.058 = phi i32 [ %9, %bb.i ], [ 0, %.lr.ph.split ]
   %.04157 = phi i32 [ %.1, %bb.i ], [ 0, %.lr.ph.split ] ; 4 uses
   %.04256 = phi i32 [ %.143, %bb.i ], [ 0, %.lr.ph.split ] ; 4 uses
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv
@@ -334,9 +337,9 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   %.1 = phi i32 [ %i.bs, %bb.h ], [ %.04157, %bb.g ] ; 2 uses
-  %indvars.iv.next = add i64 %indvars.iv, 1       ; 2 uses
-  %7 = and i64 %indvars.iv.next, 4294967295
-  %i.bv = icmp ugt i64 %1, %7
+  %9 = add i32 %.058, 1                           ; 2 uses
+  %10 = zext i32 %9 to i64                        ; 2 uses
+  %i.bv = icmp ugt i64 %1, %10
   br i1 %i.bv, label %.lr.ph.split.split, label %._crit_edge, !llvm.loop !17
 
 bb.j:                                             ; preds = %._crit_edge

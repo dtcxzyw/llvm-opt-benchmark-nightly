@@ -204,7 +204,8 @@ vector.scevcheck:                                 ; preds = %.lr.ph
   br i1 %i.z, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.scevcheck
-  %n.vec = and i64 %i.s, 8589934588               ; 3 uses
+  %n.vec = and i64 %i.s, 8589934588               ; 4 uses
+  %2 = trunc i64 %n.vec to i32
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %i.u, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer
   br label %vector.body
@@ -283,6 +284,7 @@ middle.block:                                     ; preds = %pred.store.continue
 
 scalar.ph.preheader:                              ; preds = %vector.scevcheck, %.lr.ph, %middle.block
   %indvars.iv.ph = phi i64 [ 0, %vector.scevcheck ], [ 0, %.lr.ph ], [ %n.vec, %middle.block ]
+  %.014.ph = phi i32 [ 0, %vector.scevcheck ], [ 0, %.lr.ph ], [ %2, %middle.block ]
   br label %scalar.ph
 
 ._crit_edge16:                                    ; preds = %._crit_edge, %bb.a
@@ -304,7 +306,8 @@ scalar.ph.preheader:                              ; preds = %vector.scevcheck, %
   br i1 %i.bn, label %.preheader, label %._crit_edge16, !llvm.loop !210
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %_ZN5Ttopt10TruthTable9SwapIndexERii.exit
-  %indvars.iv = phi i64 [ %indvars.iv.next, %_ZN5Ttopt10TruthTable9SwapIndexERii.exit ], [ %indvars.iv.ph, %scalar.ph.preheader ] ; 2 uses
+  %indvars.iv = phi i64 [ %4, %_ZN5Ttopt10TruthTable9SwapIndexERii.exit ], [ %indvars.iv.ph, %scalar.ph.preheader ]
+  %.014 = phi i32 [ %3, %_ZN5Ttopt10TruthTable9SwapIndexERii.exit ], [ %.014.ph, %scalar.ph.preheader ]
   %i.bo = getelementptr inbounds nuw [4 x i8], ptr %i.o, i64 %indvars.iv ; 2 uses
   %i.bp = load i32, ptr %i.bo, align 4, !tbaa !69 ; 2 uses
   %i.bq = ashr i32 %i.bp, %i.u
@@ -325,9 +328,9 @@ bb.b:                                             ; preds = %scalar.ph
   br label %_ZN5Ttopt10TruthTable9SwapIndexERii.exit
 
 _ZN5Ttopt10TruthTable9SwapIndexERii.exit:         ; preds = %scalar.ph, %.sink.split.i
-  %indvars.iv.next = add i64 %indvars.iv, 1       ; 2 uses
-  %2 = and i64 %indvars.iv.next, 4294967295
-  %i.bt = icmp ugt i64 %i.s, %2
+  %3 = add i32 %.014, 1                           ; 2 uses
+  %4 = zext i32 %3 to i64                         ; 2 uses
+  %i.bt = icmp ugt i64 %i.s, %4
   br i1 %i.bt, label %scalar.ph, label %._crit_edge.loopexit, !llvm.loop !211
 }
 
@@ -730,7 +733,8 @@ bb.a:
   br label %.lr.ph.i.us
 
 .lr.ph.i.us:                                      ; preds = %.lr.ph.i.us.preheader, %_ZN5Ttopt14TruthTableCare9MergeCareEiii.exit.loopexit.us
-  %indvars.iv13 = phi i64 [ %indvars.iv.next14, %_ZN5Ttopt14TruthTableCare9MergeCareEiii.exit.loopexit.us ], [ 0, %.lr.ph.i.us.preheader ] ; 2 uses
+  %indvars.iv13 = phi i64 [ %3, %_ZN5Ttopt14TruthTableCare9MergeCareEiii.exit.loopexit.us ], [ 0, %.lr.ph.i.us.preheader ]
+  %.09.us = phi i32 [ %2, %_ZN5Ttopt14TruthTableCare9MergeCareEiii.exit.loopexit.us ], [ 0, %.lr.ph.i.us.preheader ]
   %i.x = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %indvars.iv13 ; 2 uses
   %i.y = load i32, ptr %i.x, align 4, !tbaa !281
   %i.z = ashr i32 %i.y, 1
@@ -833,9 +837,9 @@ scalar.ph.epil:                                   ; preds = %scalar.ph.epil, %sc
   br i1 %epil.iter.cmp.not, label %_ZN5Ttopt14TruthTableCare9MergeCareEiii.exit.loopexit.us, label %scalar.ph.epil, !llvm.loop !306
 
 _ZN5Ttopt14TruthTableCare9MergeCareEiii.exit.loopexit.us: ; preds = %vector.body, %_ZN5Ttopt14TruthTableCare9MergeCareEiii.exit.loopexit.us.loopexit.unr-lcssa, %scalar.ph.epil
-  %indvars.iv.next14 = add i64 %indvars.iv13, 1   ; 2 uses
-  %2 = and i64 %indvars.iv.next14, 4294967295
-  %i.be = icmp ugt i64 %i.k, %2
+  %2 = add i32 %.09.us, 1                         ; 2 uses
+  %3 = zext i32 %2 to i64                         ; 2 uses
+  %i.be = icmp ugt i64 %i.k, %3
   br i1 %i.be, label %.lr.ph.i.us, label %._crit_edge, !llvm.loop !307
 
 .lr.ph.split:                                     ; preds = %.lr.ph
@@ -848,7 +852,8 @@ _ZN5Ttopt14TruthTableCare9MergeCareEiii.exit.loopexit.us: ; preds = %vector.body
   ret void
 
 _ZN5Ttopt14TruthTableCare9MergeCareEiii.exit:     ; preds = %.lr.ph.split, %_ZN5Ttopt14TruthTableCare9MergeCareEiii.exit
-  %indvars.iv = phi i64 [ 0, %.lr.ph.split ], [ %indvars.iv.next, %_ZN5Ttopt14TruthTableCare9MergeCareEiii.exit ] ; 2 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph.split ], [ %5, %_ZN5Ttopt14TruthTableCare9MergeCareEiii.exit ]
+  %.09 = phi i32 [ 0, %.lr.ph.split ], [ %4, %_ZN5Ttopt14TruthTableCare9MergeCareEiii.exit ]
   %i.bi = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %indvars.iv ; 2 uses
   %i.bj = load i32, ptr %i.bi, align 4, !tbaa !281
   %i.bk = ashr i32 %i.bj, 1                       ; 2 uses
@@ -873,9 +878,9 @@ _ZN5Ttopt14TruthTableCare9MergeCareEiii.exit:     ; preds = %.lr.ph.split, %_ZN5
   %i.cd = load i64, ptr %i.cc, align 8, !tbaa !71
   %i.ce = or i64 %i.ca, %i.cd
   store i64 %i.ce, ptr %i.cc, align 8, !tbaa !71
-  %indvars.iv.next = add i64 %indvars.iv, 1       ; 2 uses
-  %3 = and i64 %indvars.iv.next, 4294967295
-  %i.cf = icmp ugt i64 %i.k, %3
+  %4 = add i32 %.09, 1                            ; 2 uses
+  %5 = zext i32 %4 to i64                         ; 2 uses
+  %i.cf = icmp ugt i64 %i.k, %5
   br i1 %i.cf, label %_ZN5Ttopt14TruthTableCare9MergeCareEiii.exit, label %._crit_edge, !llvm.loop !307
 }
 

@@ -204,14 +204,13 @@ bb.m:                                             ; preds = %.thread143, %bb.l
   %i.ct = getelementptr i8, ptr %0, i64 16
   %i.cu = getelementptr i8, ptr %0, i64 24        ; 2 uses
   %i.cv = icmp sgt i32 %i.ag, 0
-  %2 = sext i32 %i.cl to i64
-  %3 = sext i32 %i.co to i64
   %wide.trip.count208 = zext nneg i32 %i.ag to i64
   br label %bb.n
 
 bb.n:                                             ; preds = %.lr.ph181, %.thread145
-  %indvars.iv210 = phi i64 [ %2, %.lr.ph181 ], [ %indvars.iv.next211, %.thread145 ] ; 5 uses
-  %i.cw = getelementptr [8 x i8], ptr %i.cr, i64 %indvars.iv210
+  %.2126178 = phi i32 [ %i.cl, %.lr.ph181 ], [ %3, %.thread145 ] ; 6 uses
+  %2 = sext i32 %.2126178 to i64
+  %i.cw = getelementptr [8 x i8], ptr %i.cr, i64 %2
   %i.cx = load i32, ptr %i.cw, align 4
   %i.cy = icmp slt i32 %i.cx, 0
   br i1 %i.cy, label %.preheader146, label %.thread145
@@ -224,8 +223,7 @@ bb.n:                                             ; preds = %.lr.ph181, %.thread
 .lr.ph168:                                        ; preds = %.preheader146
   %i.db = load ptr, ptr %i.ct, align 8
   %i.dc = load i32, ptr %i.cu, align 8
-  %4 = trunc nsw i64 %indvars.iv210 to i32
-  %invariant.op169 = sub i32 %4, %i.dc
+  %invariant.op169 = sub i32 %.2126178, %i.dc
   %wide.trip.count203 = zext nneg i32 %i.cz to i64
   br label %bb.p
 
@@ -235,16 +233,11 @@ bb.o:                                             ; preds = %bb.q
   br i1 %exitcond204.not, label %.preheader, label %bb.p, !llvm.loop !16
 
 .preheader:                                       ; preds = %bb.o, %.preheader146
-  br i1 %i.cv, label %.lr.ph172, label %.preheader.._crit_edge173_crit_edge
-
-.preheader.._crit_edge173_crit_edge:              ; preds = %.preheader
-  %.pre = trunc nsw i64 %indvars.iv210 to i32
-  br label %._crit_edge173
+  br i1 %i.cv, label %.lr.ph172, label %._crit_edge173
 
 .lr.ph172:                                        ; preds = %.preheader
   %i.dd = load i32, ptr %i.cu, align 8
-  %5 = trunc nsw i64 %indvars.iv210 to i32        ; 3 uses
-  %invariant.op176 = sub i32 %i.dd, %5
+  %invariant.op176 = sub i32 %i.dd, %.2126178
   br label %bb.r
 
 bb.p:                                             ; preds = %.lr.ph168, %bb.o
@@ -276,19 +269,18 @@ bb.s:                                             ; preds = %bb.r
   %exitcond209.not = icmp eq i64 %indvars.iv.next206, %wide.trip.count208
   br i1 %exitcond209.not, label %.loopexit, label %bb.r, !llvm.loop !17
 
-._crit_edge173:                                   ; preds = %bb.r, %.preheader.._crit_edge173_crit_edge
-  %.pre-phi = phi i32 [ %.pre, %.preheader.._crit_edge173_crit_edge ], [ %5, %bb.r ]
-  %.3.lcssa = phi i32 [ 0, %.preheader.._crit_edge173_crit_edge ], [ %indvars207, %bb.r ]
+._crit_edge173:                                   ; preds = %bb.r, %.preheader
+  %.3.lcssa = phi i32 [ 0, %.preheader ], [ %indvars207, %bb.r ]
   %i.do = icmp eq i32 %.3.lcssa, %i.ag
   br i1 %i.do, label %.loopexit, label %.thread145
 
 .thread145:                                       ; preds = %bb.p, %bb.q, %bb.n, %._crit_edge173
-  %indvars.iv.next211 = add nsw i64 %indvars.iv210, 1 ; 2 uses
-  %i.dp = icmp slt i64 %indvars.iv.next211, %3
+  %3 = add nsw i32 %.2126178, 1                   ; 2 uses
+  %i.dp = icmp slt i32 %3, %i.co
   br i1 %i.dp, label %bb.n, label %.loopexit, !llvm.loop !18
 
 .loopexit:                                        ; preds = %._crit_edge, %._crit_edge173, %.thread145, %bb.s, %bb.m
-  %.3127 = phi i32 [ %5, %bb.s ], [ %i.cl, %bb.m ], [ %.pre-phi, %._crit_edge173 ], [ %i.co, %.thread145 ], [ %.1125164, %._crit_edge ] ; 3 uses
+  %.3127 = phi i32 [ %.2126178, %bb.s ], [ %i.cl, %bb.m ], [ %.2126178, %._crit_edge173 ], [ %i.co, %.thread145 ], [ %.1125164, %._crit_edge ] ; 3 uses
   %i.dq = getelementptr i8, ptr %0, i64 36        ; 3 uses
   %i.dr = load i32, ptr %i.dq, align 4
   %i.ds = icmp sgt i32 %i.dr, 0

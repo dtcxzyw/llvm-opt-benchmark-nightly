@@ -203,8 +203,8 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 4 uses
   %i.b = load i32, ptr %2, align 8, !tbaa !11     ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
-  %3 = shl i32 %i.b, 6                            ; 2 uses
   %wide.trip.count.i = zext i32 %i.b to i64       ; 4 uses
+  %3 = shl i32 %i.b, 6                            ; 2 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.p, %bb.c
@@ -240,7 +240,7 @@ bb.d:                                             ; preds = %bb.p, %bb.c
   %i.p = zext nneg i32 %i.n to i64
   br label %.preheader.split.i
 
-.preheader.split.us.i:                            ; preds = %.preheader.split.us.i.preheader, %bb.e
+.preheader.split.us.i:                            ; preds = %bb.e, %.preheader.split.us.i.preheader
   %indvars.iv = phi i64 [ %i.m, %.preheader.split.us.i.preheader ], [ %indvars.iv.next, %bb.e ] ; 3 uses
   %i.q = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %indvars.iv
   %i.r = load i64, ptr %i.q, align 8, !tbaa !17   ; 2 uses
@@ -257,7 +257,7 @@ bb.f:                                             ; preds = %bb.d
   %.not29.i = icmp eq i32 %i.s, 0
   br i1 %.not29.i, label %hwloc_bitmap_next.exit.thread, label %hwloc_bitmap_next.exit
 
-.preheader.split.i:                               ; preds = %.preheader.split.i.preheader, %bb.g
+.preheader.split.i:                               ; preds = %bb.g, %.preheader.split.i.preheader
   %indvars.iv124 = phi i64 [ %i.o, %.preheader.split.i.preheader ], [ %indvars.iv.next125, %bb.g ] ; 4 uses
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %indvars.iv124
   %i.u = load i64, ptr %i.t, align 8, !tbaa !17
@@ -319,7 +319,7 @@ hwloc_bitmap_next.exit.thread81:                  ; preds = %.split.us.i, %hwloc
   %i.ap = zext nneg i32 %i.an to i64
   br label %.preheader.split.i76
 
-.preheader.split.us.i66:                          ; preds = %.preheader.split.us.i66.preheader, %bb.h
+.preheader.split.us.i66:                          ; preds = %bb.h, %.preheader.split.us.i66.preheader
   %indvars.iv127 = phi i64 [ %i.am, %.preheader.split.us.i66.preheader ], [ %indvars.iv.next128, %bb.h ] ; 3 uses
   %i.aq = getelementptr inbounds nuw [8 x i8], ptr %i.af, i64 %indvars.iv127
   %i.ar = load i64, ptr %i.aq, align 8, !tbaa !17 ; 2 uses
@@ -434,25 +434,35 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !16   ; 2 uses
   %i.f = icmp sgt i32 %1, -1
-  %2 = lshr i32 %1, 6
   %i.g = and i32 %1, 63
   %i.h = xor i32 %i.g, 63
   %i.i = zext nneg i32 %i.h to i64
   %i.j = lshr i64 -1, %i.i
   %i.k = xor i64 %i.j, -1
-  br i1 %i.f, label %.preheader.split, label %.preheader.split.us
+  br i1 %i.f, label %.preheader.split.preheader, label %.preheader.split.us.preheader
 
-.preheader.split.us:                              ; preds = %.preheader, %bb.b
-  %.02233.us = phi i32 [ %4, %bb.b ], [ %i.b, %.preheader ] ; 3 uses
-  %3 = zext i32 %.02233.us to i64
-  %i.l = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %3
+.preheader.split.us.preheader:                    ; preds = %.preheader
+  %2 = zext i32 %i.b to i64
+  %wide.trip.count = zext i32 %i.c to i64
+  br label %.preheader.split.us
+
+.preheader.split.preheader:                       ; preds = %.preheader
+  %3 = lshr i32 %1, 6
+  %4 = zext nneg i32 %i.b to i64
+  %5 = zext nneg i32 %3 to i64
+  %wide.trip.count46 = zext i32 %i.c to i64
+  br label %.preheader.split
+
+.preheader.split.us:                              ; preds = %.preheader.split.us.preheader, %bb.b
+  %indvars.iv = phi i64 [ %2, %.preheader.split.us.preheader ], [ %indvars.iv.next, %bb.b ] ; 3 uses
+  %i.l = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %indvars.iv
   %i.m = load i64, ptr %i.l, align 8, !tbaa !17   ; 2 uses
   %.not28.us = icmp eq i64 %i.m, 0
   br i1 %.not28.us, label %bb.b, label %.loopexit
 
 bb.b:                                             ; preds = %.preheader.split.us
-  %4 = add nuw i32 %.02233.us, 1                  ; 2 uses
-  %exitcond.not = icmp eq i32 %4, %i.c
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.split.us, label %.preheader.split.us, !llvm.loop !32
 
 bb.c:                                             ; preds = %bb.a
@@ -462,20 +472,19 @@ bb.c:                                             ; preds = %bb.a
   %. = select i1 %.not29, i32 -1, i32 %i.a
   br label %bb.e
 
-.preheader.split:                                 ; preds = %.preheader, %bb.d
-  %.02233 = phi i32 [ %6, %bb.d ], [ %i.b, %.preheader ] ; 4 uses
-  %5 = zext i32 %.02233 to i64
-  %i.p = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %5
+.preheader.split:                                 ; preds = %.preheader.split.preheader, %bb.d
+  %indvars.iv43 = phi i64 [ %4, %.preheader.split.preheader ], [ %indvars.iv.next44, %bb.d ] ; 4 uses
+  %i.p = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %indvars.iv43
   %i.q = load i64, ptr %i.p, align 8, !tbaa !17
-  %i.r = icmp eq i32 %2, %.02233
+  %i.r = icmp eq i64 %indvars.iv43, %5
   %i.s = select i1 %i.r, i64 %i.k, i64 -1
   %spec.select35 = and i64 %i.q, %i.s             ; 2 uses
   %.not28 = icmp eq i64 %spec.select35, 0
   br i1 %.not28, label %bb.d, label %.loopexit
 
 bb.d:                                             ; preds = %.preheader.split
-  %6 = add nuw i32 %.02233, 1                     ; 2 uses
-  %exitcond42.not = icmp eq i32 %6, %i.c
+  %indvars.iv.next44 = add nuw nsw i64 %indvars.iv43, 1 ; 2 uses
+  %exitcond42.not = icmp eq i64 %indvars.iv.next44, %wide.trip.count46
   br i1 %exitcond42.not, label %.split.us, label %.preheader.split, !llvm.loop !32
 
 .split.us:                                        ; preds = %bb.b, %bb.d
@@ -488,7 +497,8 @@ bb.d:                                             ; preds = %.preheader.split
 
 .loopexit:                                        ; preds = %.preheader.split.us, %.preheader.split
   %.us-phi = phi i64 [ %spec.select35, %.preheader.split ], [ %i.m, %.preheader.split.us ]
-  %.us-phi34 = phi i32 [ %.02233, %.preheader.split ], [ %.02233.us, %.preheader.split.us ]
+  %.us-phi34.in = phi i64 [ %indvars.iv43, %.preheader.split ], [ %indvars.iv, %.preheader.split.us ]
+  %.us-phi34 = trunc i64 %.us-phi34.in to i32
   %i.w = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.us-phi, i1 true)
   %i.x = trunc nuw nsw i64 %i.w to i32
   %i.y = shl i32 %.us-phi34, 6
@@ -518,7 +528,12 @@ bb.a:
   %i.i = zext nneg i32 %i.h to i64
   %i.j = lshr i64 -1, %i.i
   %i.k = xor i64 %i.j, -1
-  br i1 %i.f, label %.preheader.split.preheader, label %.preheader.split.us
+  br i1 %i.f, label %.preheader.split.preheader, label %.preheader.split.us.preheader
+
+.preheader.split.us.preheader:                    ; preds = %.preheader
+  %2 = zext i32 %i.b to i64
+  %wide.trip.count = zext i32 %i.c to i64
+  br label %.preheader.split.us
 
 .preheader.split.preheader:                       ; preds = %.preheader
   %i.l = lshr i32 %1, 6
@@ -527,17 +542,16 @@ bb.a:
   %wide.trip.count.a = zext i32 %i.c to i64
   br label %.preheader.split
 
-.preheader.split.us:                              ; preds = %.preheader, %bb.b
-  %.02233.us = phi i32 [ %3, %bb.b ], [ %i.b, %.preheader ] ; 3 uses
-  %2 = zext i32 %.02233.us to i64
-  %i.o = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %2
+.preheader.split.us:                              ; preds = %.preheader.split.us.preheader, %bb.b
+  %indvars.iv = phi i64 [ %2, %.preheader.split.us.preheader ], [ %indvars.iv.next, %bb.b ] ; 3 uses
+  %i.o = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %indvars.iv
   %i.p = load i64, ptr %i.o, align 8, !tbaa !17   ; 2 uses
   %.not28.us = icmp eq i64 %i.p, -1
   br i1 %.not28.us, label %bb.b, label %.loopexit.loopexit36
 
 bb.b:                                             ; preds = %.preheader.split.us
-  %3 = add nuw i32 %.02233.us, 1                  ; 2 uses
-  %exitcond.not = icmp eq i32 %3, %i.c
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.split.us, label %.preheader.split.us, !llvm.loop !33
 
 bb.c:                                             ; preds = %bb.a
@@ -556,7 +570,7 @@ bb.c:                                             ; preds = %bb.a
   %i.w = select i1 %i.v, i64 %i.k, i64 -1
   %spec.select35 = and i64 %i.w, %i.u             ; 2 uses
   %.not28 = icmp eq i64 %spec.select35, 0
-  br i1 %.not28, label %bb.d, label %.loopexit.loopexit
+  br i1 %.not28, label %bb.d, label %.loopexit
 
 bb.d:                                             ; preds = %.preheader.split
   %indvars.iv.next.a = add nuw nsw i64 %indvars.iv.a, 1 ; 2 uses
@@ -571,18 +585,15 @@ bb.d:                                             ; preds = %.preheader.split
   %spec.select = select i1 %.not27, i32 %i.z, i32 -1
   br label %bb.e
 
-.loopexit.loopexit:                               ; preds = %.preheader.split
-  %4 = trunc nuw i64 %indvars.iv.a to i32
-  br label %.loopexit
-
 .loopexit.loopexit36:                             ; preds = %.preheader.split.us
   %i.aa = xor i64 %i.p, -1
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.loopexit.loopexit36, %.loopexit.loopexit
-  %.us-phi.a = phi i64 [ %spec.select35, %.loopexit.loopexit ], [ %i.aa, %.loopexit.loopexit36 ]
-  %.us-phi34 = phi i32 [ %4, %.loopexit.loopexit ], [ %.02233.us, %.loopexit.loopexit36 ]
-  %i.ab = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.us-phi.a, i1 true)
+.loopexit:                                        ; preds = %.preheader.split, %.loopexit.loopexit36
+  %.us-phi = phi i64 [ %i.aa, %.loopexit.loopexit36 ], [ %spec.select35, %.preheader.split ]
+  %.us-phi.a = phi i64 [ %indvars.iv, %.loopexit.loopexit36 ], [ %indvars.iv.a, %.preheader.split ]
+  %.us-phi34 = trunc i64 %.us-phi.a to i32
+  %i.ab = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.us-phi, i1 true)
   %i.ac = trunc nuw nsw i64 %i.ab to i32
   %i.ad = shl i32 %.us-phi34, 6
   %i.ae = or disjoint i32 %i.ad, %i.ac

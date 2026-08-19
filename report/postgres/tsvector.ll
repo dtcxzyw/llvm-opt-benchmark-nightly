@@ -203,15 +203,18 @@ bb.n:                                             ; preds = %bb.l, %bb.m
   %i.ci = zext nneg i32 %i.ch to i64
   %i.cj = getelementptr inbounds nuw i8, ptr %i.cb, i64 %i.ci
   %i.ck = getelementptr inbounds nuw i8, ptr %i.cj, i64 2 ; 2 uses
-  %wide.trip.count = zext nneg i32 %i.x to i64
   %i.cl = tail call i32 @pq_getmsgint(ptr noundef %i.c, i32 noundef 2) #8
   %i.cm = trunc i32 %i.cl to i16
   store i16 %i.cm, ptr %i.ck, align 2
   %exitcond.peel.not = icmp eq i32 %i.x, 1
-  br i1 %exitcond.peel.not, label %.loopexit150, label %.peel.next.a
+  br i1 %exitcond.peel.not, label %.loopexit150, label %.peel.next
 
-.peel.next.a:                                     ; preds = %bb.n, %bb.o
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.o ], [ 1, %bb.n ] ; 2 uses
+.peel.next:                                       ; preds = %bb.n
+  %zext = zext nneg i32 %i.x to i64
+  br label %.peel.next.a
+
+.peel.next.a:                                     ; preds = %bb.o, %.peel.next
+  %indvars.iv = phi i64 [ 1, %.peel.next ], [ %indvars.iv.next, %bb.o ] ; 2 uses
   %i.cn = tail call i32 @pq_getmsgint(ptr noundef %i.c, i32 noundef 2) #8 ; 2 uses
   %i.co = trunc i32 %i.cn to i16
   %i.cp = getelementptr inbounds nuw [2 x i8], ptr %i.ck, i64 %indvars.iv ; 2 uses
@@ -232,8 +235,8 @@ bb.n:                                             ; preds = %bb.l, %bb.m
 
 bb.o:                                             ; preds = %.peel.next.a
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.loopexit150, label %.peel.next.a, !llvm.loop !39
+  %1 = icmp samesign ult i64 %indvars.iv.next, %zext
+  br i1 %1, label %.peel.next.a, label %.loopexit150, !llvm.loop !39
 
 .loopexit150:                                     ; preds = %bb.o, %bb.n
   %i.cx = add nuw nsw i64 %i.ae, 2

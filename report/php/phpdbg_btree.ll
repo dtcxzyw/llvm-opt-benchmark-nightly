@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.c
 
 .thread:                                          ; preds = %bb.b, %bb.d
   %.176 = phi ptr [ %i.j, %bb.d ], [ %.062, %bb.b ] ; 3 uses
-  %.16475 = phi i32 [ -1, %bb.d ], [ %.063, %bb.b ] ; 3 uses
+  %.16475 = phi i32 [ -1, %bb.d ], [ %.063, %bb.b ] ; 6 uses
   %i.l = and i32 %3, 1
   %.not70 = icmp eq i32 %i.l, 0
   br i1 %.not70, label %bb.k, label %bb.e
@@ -227,13 +227,13 @@ bb.g:                                             ; preds = %bb.e
 bb.h:                                             ; preds = %bb.g, %bb.f
   %i.u = phi ptr [ %i.s, %bb.f ], [ %i.t, %bb.g ] ; 4 uses
   store ptr %i.u, ptr %.176, align 8, !tbaa !39
-  %4 = zext i32 %.16475 to i64                    ; 4 uses
-  %5 = and i64 %4, 1
-  %lcmp.mod.not.not = icmp eq i64 %5, 0
+  %4 = and i32 %.16475, 1
+  %lcmp.mod.not.not = icmp eq i32 %4, 0
   br i1 %lcmp.mod.not.not, label %.prol.loopexit.unr-lcssa, label %.prol.loopexit
 
 .prol.loopexit.unr-lcssa:                         ; preds = %bb.h
-  %i.v = lshr i64 %1, %4
+  %5 = zext nneg i32 %.16475 to i64
+  %i.v = lshr i64 %1, %5
   %i.w = and i64 %i.v, 1                          ; 2 uses
   %i.x = xor i64 %i.w, 1
   %i.y = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %i.x
@@ -242,23 +242,24 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %i.aa = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %i.w ; 3 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.u, i64 16 ; 3 uses
   store ptr %i.ab, ptr %i.aa, align 8, !tbaa !39
-  %indvars.iv.next.prol = add nsw i64 %4, -1
+  %6 = add nsw i32 %.16475, -1
   br label %.prol.loopexit
 
 .prol.loopexit:                                   ; preds = %.prol.loopexit.unr-lcssa, %bb.h
   %.lcssa93.unr = phi ptr [ poison, %bb.h ], [ %i.aa, %.prol.loopexit.unr-lcssa ]
   %.lcssa.unr = phi ptr [ poison, %bb.h ], [ %i.ab, %.prol.loopexit.unr-lcssa ]
-  %indvars.iv.unr = phi i64 [ %4, %bb.h ], [ %indvars.iv.next.prol, %.prol.loopexit.unr-lcssa ]
+  %.265.unr = phi i32 [ %.16475, %bb.h ], [ %6, %.prol.loopexit.unr-lcssa ]
   %.2.unr = phi ptr [ %.176, %bb.h ], [ %i.aa, %.prol.loopexit.unr-lcssa ]
   %.unr = phi ptr [ %i.u, %bb.h ], [ %i.ab, %.prol.loopexit.unr-lcssa ]
   %i.ac = icmp eq i32 %.16475, 0
   br i1 %i.ac, label %.unr-lcssa, label %.new
 
 .new:                                             ; preds = %.prol.loopexit, %.new
-  %indvars.iv = phi i64 [ %indvars.iv.next.1, %.new ], [ %indvars.iv.unr, %.prol.loopexit ] ; 3 uses
+  %.265 = phi i32 [ %10, %.new ], [ %.265.unr, %.prol.loopexit ] ; 3 uses
   %.2 = phi ptr [ %i.aq, %.new ], [ %.2.unr, %.prol.loopexit ]
   %i.ad = phi ptr [ %i.ar, %.new ], [ %.unr, %.prol.loopexit ] ; 3 uses
-  %i.ae = lshr i64 %1, %indvars.iv
+  %7 = zext nneg i32 %.265 to i64
+  %i.ae = lshr i64 %1, %7
   %i.af = and i64 %i.ae, 1                        ; 2 uses
   %i.ag = xor i64 %i.af, 1
   %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.ad, i64 %i.ag
@@ -267,8 +268,9 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %i.af ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ad, i64 16 ; 2 uses
   store ptr %i.ak, ptr %i.aj, align 8, !tbaa !39
-  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
-  %i.al = lshr i64 %1, %indvars.iv.next
+  %8 = add nsw i32 %.265, -1                      ; 2 uses
+  %9 = zext nneg i32 %8 to i64
+  %i.al = lshr i64 %1, %9
   %i.am = and i64 %i.al, 1                        ; 2 uses
   %i.an = xor i64 %i.am, 1
   %i.ao = getelementptr inbounds nuw [8 x i8], ptr %i.ak, i64 %i.an
@@ -277,8 +279,8 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %i.aq = getelementptr inbounds nuw [8 x i8], ptr %i.ap, i64 %i.am ; 3 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %i.ad, i64 32 ; 3 uses
   store ptr %i.ar, ptr %i.aq, align 8, !tbaa !39
-  %indvars.iv.next.1 = add nsw i64 %indvars.iv, -2
-  %.not72.1 = icmp eq i64 %indvars.iv.next, 0
+  %10 = add nsw i32 %.265, -2
+  %.not72.1 = icmp eq i32 %8, 0
   br i1 %.not72.1, label %.unr-lcssa, label %.new, !llvm.loop !43
 
 .unr-lcssa:                                       ; preds = %.new, %.prol.loopexit

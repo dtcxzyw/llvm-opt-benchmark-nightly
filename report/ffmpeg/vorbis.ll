@@ -204,11 +204,15 @@ bb.d:                                             ; preds = %.lr.ph82
 .critedge2:                                       ; preds = %.lr.ph82
   %i.ah = trunc nuw i64 %indvars.iv110 to i32
   %i.ai = icmp eq i32 %2, %i.ah
-  br i1 %i.ai, label %.loopexit, label %.lr.ph94
+  br i1 %i.ai, label %.loopexit, label %.lr.ph94.preheader
 
 .critedge2.thread135:                             ; preds = %._crit_edge
   %i.aj = icmp eq i32 %i.ab, %2
   br i1 %i.aj, label %.loopexit, label %.preheader
+
+.lr.ph94.preheader:                               ; preds = %.critedge2
+  %3 = zext i32 %i.ab to i64
+  br label %.lr.ph94
 
 .preheader:                                       ; preds = %bb.h, %.critedge2.thread135
   %i.ak = getelementptr inbounds nuw i8, ptr %i.a, i64 4
@@ -220,10 +224,9 @@ bb.d:                                             ; preds = %.lr.ph82
   %spec.select = select i1 %i.ao, i32 0, i32 -1094995529
   br label %.loopexit
 
-.lr.ph94:                                         ; preds = %.critedge2, %bb.h
-  %.193 = phi i32 [ %4, %bb.h ], [ %i.ab, %.critedge2 ] ; 2 uses
-  %3 = zext i32 %.193 to i64                      ; 2 uses
-  %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 %3
+.lr.ph94:                                         ; preds = %.lr.ph94.preheader, %bb.h
+  %indvars.iv121 = phi i64 [ %3, %.lr.ph94.preheader ], [ %indvars.iv.next122, %bb.h ] ; 3 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv121
   %i.aq = load i8, ptr %i.ap, align 1, !tbaa !15  ; 3 uses
   %i.ar = zext i8 %i.aq to i32                    ; 3 uses
   %i.as = icmp ugt i8 %i.aq, 32
@@ -309,13 +312,14 @@ bb.g:                                             ; preds = %.preheader68
   br i1 %exitcond120.not.3, label %._crit_edge92, label %.lr.ph91, !llvm.loop !24
 
 ._crit_edge92:                                    ; preds = %.lr.ph91.prol.loopexit, %.lr.ph91, %bb.g
-  %i.bv = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %3
+  %i.bv = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv121
   store i32 %i.aw, ptr %i.bv, align 4, !tbaa !17
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.e, %._crit_edge92
-  %4 = add nuw i32 %.193, 1                       ; 2 uses
-  %exitcond121.not = icmp eq i32 %4, %2
+  %indvars.iv.next122 = add nuw nsw i64 %indvars.iv121, 1 ; 2 uses
+  %lftr.wideiv124 = trunc i64 %indvars.iv.next122 to i32
+  %exitcond121.not = icmp eq i32 %2, %lftr.wideiv124
   br i1 %exitcond121.not, label %.preheader, label %.lr.ph94, !llvm.loop !25
 
 .loopexit:                                        ; preds = %bb.b, %bb.d, %.lr.ph94, %bb.f, %.preheader, %.critedge2.thread135, %.critedge2, %bb.c, %.critedge

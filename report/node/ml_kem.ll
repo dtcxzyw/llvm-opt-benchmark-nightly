@@ -203,7 +203,7 @@ scalar.ph80:                                      ; preds = %scalar.ph80.prehead
   br i1 %i.kc, label %.preheader36, label %vector.memcheck, !llvm.loop !103
 
 vector.memcheck:                                  ; preds = %.loopexit135
-  %scevgep = getelementptr i8, ptr %0, i64 512    ; 2 uses
+  %scevgep = getelementptr i8, ptr %0, i64 512    ; 3 uses
   %i.kd = getelementptr i8, ptr %.122.3, i64 4
   %i.ke = getelementptr i8, ptr %.122.3, i64 36
   %bound0 = icmp ult ptr %0, %i.ke
@@ -606,11 +606,10 @@ scalar.ph97:                                      ; preds = %vector.memcheck, %s
 
 vector.memcheck105:                               ; preds = %vector.body99, %scalar.ph97
   %.lcssa39 = phi ptr [ %i.anb, %scalar.ph97 ], [ %i.kf, %vector.body99 ] ; 5 uses
-  %scevgep106 = getelementptr i8, ptr %0, i64 512
   %scevgep107.a = getelementptr nuw i8, ptr %.lcssa39, i64 2
   %scevgep108 = getelementptr i8, ptr %.lcssa39, i64 66
   %bound0109 = icmp ult ptr %0, %scevgep108
-  %bound1110 = icmp ult ptr %scevgep107.a, %scevgep106
+  %bound1110 = icmp ult ptr %scevgep107.a, %scevgep
   %found.conflict111 = and i1 %bound0109, %bound1110
   br i1 %found.conflict111, label %scalar.ph112, label %vector.ph113
 

@@ -201,8 +201,9 @@ bb.es:                                            ; preds = %.noexc64
   br i1 %.not.i.i61, label %_ZN12_GLOBAL__N_17pearsonIfEEdPKT_S3_m.exit.i, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.es, %.lr.ph.i.i
-  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %.lr.ph.i.i ], [ 0, %bb.es ] ; 3 uses
+  %indvars.iv.i.i = phi i64 [ %47, %.lr.ph.i.i ], [ 0, %bb.es ] ; 2 uses
   %.049.i.i = phi double [ %i.afp, %.lr.ph.i.i ], [ 0.000000e+00, %bb.es ]
+  %.03847.i.i = phi i32 [ %46, %.lr.ph.i.i ], [ 0, %bb.es ]
   %i.afl = phi <4 x double> [ %i.afy, %.lr.ph.i.i ], [ zeroinitializer, %bb.es ]
   %i.afm = getelementptr inbounds nuw [4 x i8], ptr %i.afj, i64 %indvars.iv.i.i
   %i.afn = load float, ptr %i.afm, align 4, !tbaa !164 ; 2 uses
@@ -217,10 +218,10 @@ bb.es:                                            ; preds = %.noexc64
   %i.afw = fmul <4 x float> %i.afu, %i.afv
   %i.afx = fpext <4 x float> %i.afw to <4 x double>
   %i.afy = fadd <4 x double> %i.afl, %i.afx       ; 2 uses
-  %indvars.iv.next.i.i = add i64 %indvars.iv.i.i, 1 ; 2 uses
-  %46 = and i64 %indvars.iv.next.i.i, 4294967295
-  %47 = icmp ult i64 %46, %i.afi
-  br i1 %47, label %.lr.ph.i.i, label %_ZN12_GLOBAL__N_17pearsonIfEEdPKT_S3_m.exit.i, !llvm.loop !188
+  %46 = add i32 %.03847.i.i, 1                    ; 2 uses
+  %47 = zext i32 %46 to i64                       ; 2 uses
+  %48 = icmp ugt i64 %i.afi, %47
+  br i1 %48, label %.lr.ph.i.i, label %_ZN12_GLOBAL__N_17pearsonIfEEdPKT_S3_m.exit.i, !llvm.loop !188
 
 _ZN12_GLOBAL__N_17pearsonIfEEdPKT_S3_m.exit.i:    ; preds = %.lr.ph.i.i, %bb.es
   %.0.lcssa.i.i = phi double [ 0.000000e+00, %bb.es ], [ %i.afp, %.lr.ph.i.i ] ; 2 uses

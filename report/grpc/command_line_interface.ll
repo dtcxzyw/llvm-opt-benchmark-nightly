@@ -204,21 +204,23 @@ bb.d:                                             ; preds = %_ZN4absl12lts_20250
 
 .lr.ph:                                           ; preds = %bb.d
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 272 ; 2 uses
+  %6 = zext i8 %i.au to i64
   %i.bb = trunc nuw i32 %i.ay to i8
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph, %bb.e
-  %.021 = phi i8 [ %i.au, %.lr.ph ], [ %6, %bb.e ] ; 3 uses
-  %6 = add i8 %.021, -1                           ; 3 uses
-  %7 = zext i8 %6 to i64
+  %indvars.iv = phi i64 [ %6, %.lr.ph ], [ %indvars.iv.next, %bb.e ] ; 3 uses
+  %indvars.iv.next = add i64 %indvars.iv, -1      ; 3 uses
+  %indvars = trunc i64 %indvars.iv.next to i8
+  %7 = and i64 %indvars.iv.next, 255
   %8 = getelementptr inbounds nuw [8 x i8], ptr %i.ba, i64 %7
   %9 = load ptr, ptr %8, align 8, !tbaa !130      ; 2 uses
-  %10 = zext i8 %.021 to i64
-  %i.bc = getelementptr inbounds nuw [8 x i8], ptr %i.ba, i64 %10
+  %i.bc = getelementptr inbounds nuw [8 x i8], ptr %i.ba, i64 %indvars.iv
   store ptr %9, ptr %i.bc, align 8, !tbaa !130
   %i.bd = getelementptr inbounds nuw i8, ptr %9, i64 8
-  store i8 %.021, ptr %i.bd, align 1, !tbaa !35
-  %11 = icmp ugt i8 %6, %i.bb
+  %10 = trunc nuw i64 %indvars.iv to i8
+  store i8 %10, ptr %i.bd, align 1, !tbaa !35
+  %11 = icmp ult i8 %i.bb, %indvars
   br i1 %11, label %bb.e, label %.loopexit, !llvm.loop !963
 
 .loopexit:                                        ; preds = %bb.e, %bb.d, %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10map_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_St4lessIS9_ESaISt4pairIKS9_S9_EELi256ELb0EEEE19transfer_n_backwardEmmmPSH_PSF_.exit
@@ -621,21 +623,23 @@ bb.f:                                             ; preds = %_ZN4absl12lts_20250
 
 .lr.ph:                                           ; preds = %bb.f
   %i.cb = getelementptr inbounds nuw i8, ptr %0, i64 272 ; 2 uses
+  %4 = zext i8 %i.bv to i64
   %i.cc = trunc nuw i32 %i.bz to i8
   br label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph, %bb.g
-  %.019 = phi i8 [ %i.bv, %.lr.ph ], [ %4, %bb.g ] ; 3 uses
-  %4 = add i8 %.019, -1                           ; 3 uses
-  %5 = zext i8 %4 to i64
+  %indvars.iv = phi i64 [ %4, %.lr.ph ], [ %indvars.iv.next, %bb.g ] ; 3 uses
+  %indvars.iv.next = add i64 %indvars.iv, -1      ; 3 uses
+  %indvars = trunc i64 %indvars.iv.next to i8
+  %5 = and i64 %indvars.iv.next, 255
   %6 = getelementptr inbounds nuw [8 x i8], ptr %i.cb, i64 %5
   %7 = load ptr, ptr %6, align 8, !tbaa !130      ; 2 uses
-  %8 = zext i8 %.019 to i64
-  %i.cd = getelementptr inbounds nuw [8 x i8], ptr %i.cb, i64 %8
+  %i.cd = getelementptr inbounds nuw [8 x i8], ptr %i.cb, i64 %indvars.iv
   store ptr %7, ptr %i.cd, align 8, !tbaa !130
   %i.ce = getelementptr inbounds nuw i8, ptr %7, i64 8
-  store i8 %.019, ptr %i.ce, align 1, !tbaa !35
-  %9 = icmp ugt i8 %4, %i.cc
+  %8 = trunc nuw i64 %indvars.iv to i8
+  store i8 %8, ptr %i.ce, align 1, !tbaa !35
+  %9 = icmp ult i8 %i.cc, %indvars
   br i1 %9, label %bb.g, label %.loopexit, !llvm.loop !976
 
 .loopexit:                                        ; preds = %bb.g, %bb.f, %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10map_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_St4lessIS9_ESaISt4pairIKS9_S9_EELi256ELb0EEEE10value_initIJPNS1_13map_slot_typeIS9_S9_EEEEEvhPSF_DpOT_.exit
@@ -1038,21 +1042,23 @@ bb.g:                                             ; preds = %_ZN4absl12lts_20250
 
 .lr.ph:                                           ; preds = %bb.g
   %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 272 ; 2 uses
+  %4 = zext i8 %i.bw to i64
   %i.cd = trunc nuw i32 %i.ca to i8
   br label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph, %bb.h
-  %.019 = phi i8 [ %i.bw, %.lr.ph ], [ %4, %bb.h ] ; 3 uses
-  %4 = add i8 %.019, -1                           ; 3 uses
-  %5 = zext i8 %4 to i64
+  %indvars.iv = phi i64 [ %4, %.lr.ph ], [ %indvars.iv.next, %bb.h ] ; 3 uses
+  %indvars.iv.next = add i64 %indvars.iv, -1      ; 3 uses
+  %indvars = trunc i64 %indvars.iv.next to i8
+  %5 = and i64 %indvars.iv.next, 255
   %6 = getelementptr inbounds nuw [8 x i8], ptr %i.cc, i64 %5
   %7 = load ptr, ptr %6, align 8, !tbaa !130      ; 2 uses
-  %8 = zext i8 %.019 to i64
-  %i.ce = getelementptr inbounds nuw [8 x i8], ptr %i.cc, i64 %8
+  %i.ce = getelementptr inbounds nuw [8 x i8], ptr %i.cc, i64 %indvars.iv
   store ptr %7, ptr %i.ce, align 8, !tbaa !130
   %i.cf = getelementptr inbounds nuw i8, ptr %7, i64 8
-  store i8 %.019, ptr %i.cf, align 1, !tbaa !35
-  %9 = icmp ugt i8 %4, %i.cd
+  %8 = trunc nuw i64 %indvars.iv to i8
+  store i8 %8, ptr %i.cf, align 1, !tbaa !35
+  %9 = icmp ult i8 %i.cd, %indvars
   br i1 %9, label %bb.h, label %.loopexit, !llvm.loop !1208
 
 .loopexit:                                        ; preds = %bb.h, %bb.g, %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10map_paramsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_St4lessIS9_ESaISt4pairIKS9_S9_EELi256ELb0EEEE10value_initIJSE_EEEvhPSF_DpOT_.exit

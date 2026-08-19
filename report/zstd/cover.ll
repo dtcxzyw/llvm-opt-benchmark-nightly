@@ -203,7 +203,7 @@ bb.ab:                                            ; preds = %bb.aa, %.epilog-lcs
   br i1 %.not133, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.ab
-  %min.iters.check211 = icmp ult i64 %i.eh, 16
+  %min.iters.check211 = icmp ult i64 %i.eh, 20
   br i1 %min.iters.check211, label %.lr.ph.preheader224, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph.preheader
@@ -215,7 +215,8 @@ vector.scevcheck:                                 ; preds = %.lr.ph.preheader
   br i1 %i.em, label %.lr.ph.preheader224, label %vector.ph212
 
 vector.ph212:                                     ; preds = %vector.scevcheck
-  %n.vec213 = and i64 %i.eh, 8589934584           ; 3 uses
+  %n.vec213 = and i64 %i.eh, 8589934584           ; 4 uses
+  %7 = trunc i64 %n.vec213 to i32
   br label %vector.body214
 
 vector.body214:                                   ; preds = %vector.body214, %vector.ph212
@@ -237,16 +238,17 @@ middle.block217:                                  ; preds = %vector.body214
 
 .lr.ph.preheader224:                              ; preds = %vector.scevcheck, %.lr.ph.preheader, %middle.block217
   %indvars.iv137.ph = phi i64 [ 0, %vector.scevcheck ], [ 0, %.lr.ph.preheader ], [ %n.vec213, %middle.block217 ]
+  %.0132.ph = phi i32 [ 0, %vector.scevcheck ], [ 0, %.lr.ph.preheader ], [ %7, %middle.block217 ]
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader224, %.lr.ph
-  %indvars.iv137 = phi i64 [ %indvars.iv.next138, %.lr.ph ], [ %indvars.iv137.ph, %.lr.ph.preheader224 ] ; 3 uses
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %.pre140, i64 %indvars.iv137
-  %8 = trunc nuw i64 %indvars.iv137 to i32
-  store i32 %8, ptr %7, align 4, !tbaa !55
-  %indvars.iv.next138 = add i64 %indvars.iv137, 1 ; 2 uses
-  %9 = and i64 %indvars.iv.next138, 4294967295
-  %i.eq = icmp ugt i64 %i.eh, %9
+  %indvars.iv137 = phi i64 [ %10, %.lr.ph ], [ %indvars.iv137.ph, %.lr.ph.preheader224 ]
+  %.0132 = phi i32 [ %9, %.lr.ph ], [ %.0132.ph, %.lr.ph.preheader224 ] ; 2 uses
+  %8 = getelementptr inbounds nuw [4 x i8], ptr %.pre140, i64 %indvars.iv137
+  store i32 %.0132, ptr %8, align 4, !tbaa !55
+  %9 = add i32 %.0132, 1                          ; 2 uses
+  %10 = zext i32 %9 to i64                        ; 2 uses
+  %i.eq = icmp ugt i64 %i.eh, %10
   br i1 %i.eq, label %.lr.ph, label %._crit_edge, !llvm.loop !57
 
 ._crit_edge:                                      ; preds = %.lr.ph, %middle.block217, %bb.ab

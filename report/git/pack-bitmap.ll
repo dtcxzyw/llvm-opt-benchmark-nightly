@@ -201,8 +201,9 @@ bb.aj:                                            ; preds = %st_mult.exit141
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 2 uses
-  %.088155 = phi ptr [ %i.eb, %.lr.ph.preheader ], [ %i.el, %.lr.ph ] ; 3 uses
+  %indvars.iv = phi i64 [ %2, %.lr.ph ], [ 0, %.lr.ph.preheader ]
+  %.0156 = phi i32 [ %1, %.lr.ph ], [ 0, %.lr.ph.preheader ]
+  %.088155 = phi ptr [ %i.el, %.lr.ph ], [ %i.eb, %.lr.ph.preheader ] ; 3 uses
   %i.ec = load i32, ptr %.088155, align 1
   %i.ed = getelementptr inbounds nuw i8, ptr %.088155, i64 4
   %i.ee = load i32, ptr %i.ed, align 1
@@ -215,9 +216,9 @@ bb.aj:                                            ; preds = %st_mult.exit141
   %i.ek = getelementptr inbounds nuw i8, ptr %i.ej, i64 16
   store i64 %op.rdx, ptr %i.ek, align 8, !tbaa !319
   %i.el = getelementptr inbounds nuw i8, ptr %.088155, i64 8
-  %indvars.iv.next = add i64 %indvars.iv, 1       ; 2 uses
-  %1 = and i64 %indvars.iv.next, 4294967295
-  %i.em = icmp ugt i64 %i.ea, %1
+  %1 = add i32 %.0156, 1                          ; 2 uses
+  %2 = zext i32 %1 to i64                         ; 2 uses
+  %i.em = icmp ugt i64 %i.ea, %2
   br i1 %i.em, label %.lr.ph, label %.critedge, !llvm.loop !357
 
 .critedge:                                        ; preds = %.lr.ph, %bb.aj, %bb.ag, %bb.z

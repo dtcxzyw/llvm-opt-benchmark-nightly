@@ -203,10 +203,10 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.c = ptrtoint ptr %2 to i64                   ; 2 uses
-  %i.d = ptrtoint ptr %0 to i64                   ; 5 uses
+  %i.d = ptrtoint ptr %0 to i64                   ; 6 uses
   %i.e = sub i64 %i.c, %i.d
   %i.f = ashr exact i64 %i.e, 3                   ; 2 uses
-  %i.g = ptrtoint ptr %1 to i64                   ; 5 uses
+  %i.g = ptrtoint ptr %1 to i64                   ; 6 uses
   %i.h = sub i64 %i.g, %i.d
   %i.i = ashr exact i64 %i.h, 3                   ; 3 uses
   %i.j = sub nsw i64 %i.f, %i.i
@@ -218,10 +218,13 @@ bb.c:                                             ; preds = %bb.b
   %i.m = sub i64 %i.l, %i.d                       ; 2 uses
   %i.n = lshr i64 %i.m, 3
   %i.o = add nuw nsw i64 %i.n, 1                  ; 2 uses
-  %min.iters.check186 = icmp ult i64 %i.m, 360
+  %min.iters.check186 = icmp ult i64 %i.m, 424
   br i1 %min.iters.check186, label %.lr.ph.i.preheader202, label %vector.scevcheck175
 
 vector.scevcheck175:                              ; preds = %.lr.ph.i.preheader
+  %3 = sub i64 %i.g, %i.d
+  %4 = and i64 %3, 7
+  %ident.check = icmp ne i64 %4, 0
   %i.p = add i64 %i.g, -8
   %i.q = sub i64 %i.p, %i.d
   %mul176 = and i64 %i.q, -8                      ; 2 uses
@@ -229,7 +232,8 @@ vector.scevcheck175:                              ; preds = %.lr.ph.i.preheader
   %i.s = icmp ult ptr %i.r, %0
   %i.t = getelementptr i8, ptr %1, i64 %mul176
   %i.u = icmp ult ptr %i.t, %1
-  %i.v = or i1 %i.s, %i.u
+  %5 = or i1 %ident.check, %i.s
+  %i.v = or i1 %5, %i.u
   br i1 %i.v, label %.lr.ph.i.preheader202, label %vector.memcheck179
 
 vector.memcheck179:                               ; preds = %vector.scevcheck175

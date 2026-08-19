@@ -203,13 +203,18 @@ bb.ar:                                            ; preds = %bb.ac, %Vec_IntRemo
   %i.hn = phi ptr [ %i.dw, %.preheader ], [ %i.hj, %bb.ar ]
   %i.ho = phi ptr [ %i.dx, %.preheader ], [ %i.hj, %bb.ar ]
   %i.hp = add nsw i32 %.1146, 1                   ; 2 uses
-  %indvars.iv.next178 = add nsw i64 %indvars.iv177, -1
+  %indvars.iv.next178 = add nsw i64 %indvars.iv177, -1 ; 2 uses
   %i.hq = icmp sgt i64 %indvars.iv177, 2
-  br i1 %i.hq, label %.preheader, label %._crit_edge147, !llvm.loop !69
+  br i1 %i.hq, label %.preheader, label %._crit_edge147.loopexit, !llvm.loop !69
 
-._crit_edge147:                                   ; preds = %._crit_edge144, %.preheader.us.preheader
-  %.us-phi150 = phi i32 [ %i.du, %.preheader.us.preheader ], [ %i.hp, %._crit_edge144 ]
-  store i32 1, ptr %i.p, align 4, !tbaa !34
+._crit_edge147.loopexit:                          ; preds = %._crit_edge144
+  %6 = trunc nuw nsw i64 %indvars.iv.next178 to i32
+  br label %._crit_edge147
+
+._crit_edge147:                                   ; preds = %.preheader.us.preheader, %._crit_edge147.loopexit
+  %.us-phi = phi i32 [ %6, %._crit_edge147.loopexit ], [ 1, %.preheader.us.preheader ]
+  %.us-phi150 = phi i32 [ %i.hp, %._crit_edge147.loopexit ], [ %i.du, %.preheader.us.preheader ]
+  store i32 %.us-phi, ptr %i.p, align 4, !tbaa !34
   br label %thread-pre-split.thread
 
 thread-pre-split.thread:                          ; preds = %Vec_IntAlloc.exit93, %._crit_edge147, %thread-pre-split
@@ -612,13 +617,18 @@ bb.ap:                                            ; preds = %bb.aa, %Vec_IntRemo
   %i.hl = phi ptr [ %i.du, %.preheader ], [ %i.hh, %bb.ap ]
   %i.hm = phi ptr [ %i.dv, %.preheader ], [ %i.hh, %bb.ap ]
   %i.hn = add nsw i32 %.1145, 1                   ; 2 uses
-  %indvars.iv.next177 = add nsw i64 %indvars.iv176, -1
+  %indvars.iv.next177 = add nsw i64 %indvars.iv176, -1 ; 2 uses
   %i.ho = icmp sgt i64 %indvars.iv176, 2
-  br i1 %i.ho, label %.preheader, label %._crit_edge146, !llvm.loop !75
+  br i1 %i.ho, label %.preheader, label %._crit_edge146.loopexit, !llvm.loop !75
 
-._crit_edge146:                                   ; preds = %._crit_edge143, %.preheader.us.preheader
-  %.us-phi149 = phi i32 [ %i.ds, %.preheader.us.preheader ], [ %i.hn, %._crit_edge143 ]
-  store i32 1, ptr %i.p, align 4, !tbaa !34
+._crit_edge146.loopexit:                          ; preds = %._crit_edge143
+  %6 = trunc nuw nsw i64 %indvars.iv.next177 to i32
+  br label %._crit_edge146
+
+._crit_edge146:                                   ; preds = %.preheader.us.preheader, %._crit_edge146.loopexit
+  %.us-phi = phi i32 [ %6, %._crit_edge146.loopexit ], [ 1, %.preheader.us.preheader ]
+  %.us-phi149 = phi i32 [ %i.hn, %._crit_edge146.loopexit ], [ %i.ds, %.preheader.us.preheader ]
+  store i32 %.us-phi, ptr %i.p, align 4, !tbaa !34
   br label %thread-pre-split.thread
 
 thread-pre-split.thread:                          ; preds = %Vec_IntAlloc.exit92, %._crit_edge146, %thread-pre-split

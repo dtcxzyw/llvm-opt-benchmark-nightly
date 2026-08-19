@@ -203,19 +203,21 @@ _ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit44:          ; preds = %.noexc43, %_ZNSt6ve
   %i.as = getelementptr inbounds i8, ptr null, i64 %i.af ; 2 uses
   %i.at = call i64 @llvm.usub.sat.i64(i64 %i.ag, i64 1) ; 2 uses
   %i.au = call i64 @llvm.usub.sat.i64(i64 %i.ac, i64 1) ; 2 uses
-  %min.iters.check161 = icmp ult i64 %i.ac, 12
+  %min.iters.check161 = icmp ult i64 %i.ac, 16
   %i.av = and i64 %i.au, 4294967295
   %i.aw = icmp eq i64 %i.av, 4294967295
   %i.ax = icmp ugt i64 %i.au, 4294967295
   %i.ay = or i1 %i.aw, %i.ax
-  %n.vec163 = and i64 %i.ac, -8                   ; 3 uses
+  %n.vec163 = and i64 %i.ac, -8                   ; 4 uses
+  %11 = trunc i64 %n.vec163 to i32
   %cmp.n168 = icmp eq i64 %i.ac, %n.vec163
-  %min.iters.check = icmp ult i64 %i.ag, 12
+  %min.iters.check = icmp ult i64 %i.ag, 16
   %i.az = and i64 %i.at, 4294967295
   %i.ba = icmp eq i64 %i.az, 4294967295
   %i.bb = icmp ugt i64 %i.at, 4294967295
   %i.bc = or i1 %i.ba, %i.bb
-  %n.vec = and i64 %i.ag, -8                      ; 3 uses
+  %n.vec = and i64 %i.ag, -8                      ; 4 uses
+  %12 = trunc i64 %n.vec to i32
   %cmp.n = icmp eq i64 %i.ag, %n.vec
   br label %bb.g
 
@@ -295,6 +297,7 @@ middle.block167:                                  ; preds = %vector.body164
 
 .lr.ph.preheader171:                              ; preds = %.lr.ph.preheader, %middle.block167
   %indvars.iv.ph = phi i64 [ %n.vec163, %middle.block167 ], [ 0, %.lr.ph.preheader ]
+  %.012122.ph = phi i32 [ %11, %middle.block167 ], [ 0, %.lr.ph.preheader ]
   br label %.lr.ph
 
 .preheader:                                       ; preds = %.lr.ph, %middle.block167, %bb.i
@@ -319,6 +322,7 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph124.preheader170:                           ; preds = %.lr.ph124.preheader, %middle.block
   %indvars.iv136.ph = phi i64 [ %n.vec, %middle.block ], [ 0, %.lr.ph124.preheader ]
+  %.0123.ph = phi i32 [ %12, %middle.block ], [ 0, %.lr.ph124.preheader ]
   br label %.lr.ph124
 
 bb.j:                                             ; preds = %bb.h, %bb.g
@@ -329,12 +333,13 @@ bb.j:                                             ; preds = %bb.h, %bb.g
   br label %bb.af
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader171, %.lr.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ %indvars.iv.ph, %.lr.ph.preheader171 ] ; 2 uses
+  %indvars.iv = phi i64 [ %14, %.lr.ph ], [ %indvars.iv.ph, %.lr.ph.preheader171 ]
+  %.012122 = phi i32 [ %13, %.lr.ph ], [ %.012122.ph, %.lr.ph.preheader171 ]
   %i.bt = getelementptr inbounds nuw [4 x i8], ptr %.sroa.079.0101, i64 %indvars.iv
   store i32 0, ptr %i.bt, align 4, !tbaa !25
-  %indvars.iv.next = add i64 %indvars.iv, 1       ; 2 uses
-  %11 = and i64 %indvars.iv.next, 4294967295
-  %i.bu = icmp ugt i64 %i.ac, %11
+  %13 = add i32 %.012122, 1                       ; 2 uses
+  %14 = zext i32 %13 to i64                       ; 2 uses
+  %i.bu = icmp ugt i64 %i.ac, %14
   br i1 %i.bu, label %.lr.ph, label %.preheader, !llvm.loop !34
 
 ._crit_edge:                                      ; preds = %.lr.ph124, %middle.block, %.preheader
@@ -342,12 +347,13 @@ bb.j:                                             ; preds = %bb.h, %bb.g
           to label %bb.k unwind label %bb.z
 
 .lr.ph124:                                        ; preds = %.lr.ph124.preheader170, %.lr.ph124
-  %indvars.iv136 = phi i64 [ %indvars.iv.next137, %.lr.ph124 ], [ %indvars.iv136.ph, %.lr.ph124.preheader170 ] ; 2 uses
+  %indvars.iv136 = phi i64 [ %16, %.lr.ph124 ], [ %indvars.iv136.ph, %.lr.ph124.preheader170 ]
+  %.0123 = phi i32 [ %15, %.lr.ph124 ], [ %.0123.ph, %.lr.ph124.preheader170 ]
   %i.bv = getelementptr inbounds nuw [4 x i8], ptr %.sroa.068.0, i64 %indvars.iv136
   store i32 0, ptr %i.bv, align 4, !tbaa !25
-  %indvars.iv.next137 = add i64 %indvars.iv136, 1 ; 2 uses
-  %12 = and i64 %indvars.iv.next137, 4294967295
-  %i.bw = icmp ugt i64 %i.ag, %12
+  %15 = add i32 %.0123, 1                         ; 2 uses
+  %16 = zext i32 %15 to i64                       ; 2 uses
+  %i.bw = icmp ugt i64 %i.ag, %16
   br i1 %i.bw, label %.lr.ph124, label %._crit_edge, !llvm.loop !35
 
 bb.k:                                             ; preds = %._crit_edge

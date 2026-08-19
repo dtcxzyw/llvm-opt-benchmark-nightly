@@ -204,30 +204,35 @@ bb.v:                                             ; preds = %.loopexit62
   %i.cq = zext i32 %.val56 to i64
   %i.cr = sub nsw i64 %i.cp, %i.cq
   %i.cs = zext i32 %.val to i64
-  %i.ct = sdiv i64 %i.cr, %i.cs
-  %i.cu = trunc i64 %i.ct to i32                  ; 2 uses
-  %invariant.op = add i32 %i.cn, -1
+  %i.ct = sdiv i64 %i.cr, %i.cs                   ; 2 uses
+  %i.cu = trunc i64 %i.ct to i32
   %i.cv = icmp slt i32 %i.cn, %i.cu
   br i1 %i.cv, label %.lr.ph77, label %._crit_edge78
 
 .lr.ph77:                                         ; preds = %bb.v
+  %invariant.op = add i32 %i.cn, -1
   %i.cw = getelementptr inbounds nuw i8, ptr %0, i64 32824
   %i.cx = getelementptr inbounds nuw i8, ptr %0, i64 32948
+  %1 = sext i32 %i.cn to i64
+  %sext = sext i32 %invariant.op to i64
+  %sext107 = shl i64 %i.ct, 32
+  %wide.trip.count = ashr exact i64 %sext107, 32
   br label %bb.x
 
 bb.w:                                             ; preds = %bb.af
-  %1 = add nsw i32 %.272, 1                       ; 2 uses
-  %exitcond.not = icmp eq i32 %1, %i.cu
+  %indvars.iv.next82 = add nsw i64 %indvars.iv81, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next82, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge78, label %bb.x, !llvm.loop !27
 
 bb.x:                                             ; preds = %.lr.ph77, %bb.w
+  %indvars.iv81 = phi i64 [ %1, %.lr.ph77 ], [ %indvars.iv.next82, %bb.w ] ; 8 uses
   %.04775 = phi i32 [ %i.cn, %.lr.ph77 ], [ %.1, %bb.w ] ; 2 uses
-  %.272 = phi i32 [ %i.cn, %.lr.ph77 ], [ %1, %bb.w ] ; 9 uses
-  %2 = icmp ult i32 %.272, %i.cn
-  br i1 %2, label %bb.y, label %bb.aa
+  %2 = trunc nsw i64 %indvars.iv81 to i32         ; 2 uses
+  %3 = icmp ugt i32 %i.cn, %2
+  br i1 %3, label %bb.y, label %bb.aa
 
 bb.y:                                             ; preds = %bb.x
-  %i.cy = icmp eq i32 %.272, %invariant.op
+  %i.cy = icmp eq i64 %indvars.iv81, %sext
   br i1 %i.cy, label %bb.z, label %.modified_fat_get.exit.thread_crit_edge
 
 .modified_fat_get.exit.thread_crit_edge:          ; preds = %bb.y
@@ -247,26 +252,26 @@ bb.aa:                                            ; preds = %bb.x
   ]
 
 bb.ab:                                            ; preds = %bb.aa
-  %3 = zext i32 %.272 to i64
-  %i.dc = getelementptr inbounds nuw [4 x i8], ptr %i.db, i64 %3
+  %4 = and i64 %indvars.iv81, 4294967295
+  %i.dc = getelementptr inbounds nuw [4 x i8], ptr %i.db, i64 %4
   %i.dd = load i32, ptr %i.dc, align 4
   br label %modified_fat_get.exit
 
 bb.ac:                                            ; preds = %bb.aa
-  %4 = zext i32 %.272 to i64
-  %i.de = getelementptr inbounds nuw [2 x i8], ptr %i.db, i64 %4
+  %5 = and i64 %indvars.iv81, 4294967295
+  %i.de = getelementptr inbounds nuw [2 x i8], ptr %i.db, i64 %5
   %i.df = load i16, ptr %i.de, align 2
   %i.dg = zext i16 %i.df to i32
   br label %modified_fat_get.exit
 
 bb.ad:                                            ; preds = %bb.aa
-  %5 = mul i32 %.272, 3
-  %6 = lshr i32 %5, 1
-  %7 = zext nneg i32 %6 to i64
-  %i.dh = getelementptr inbounds nuw i8, ptr %i.db, i64 %7
+  %6 = mul i64 %indvars.iv81, 3
+  %7 = lshr i64 %6, 1
+  %8 = and i64 %7, 2147483647
+  %i.dh = getelementptr inbounds nuw i8, ptr %i.db, i64 %8
   %i.di = load i16, ptr %i.dh, align 1
   %i.dj = zext i16 %i.di to i32
-  %i.dk = shl i32 %.272, 2
+  %i.dk = shl i32 %2, 2
   %i.dl = and i32 %i.dk, 4
   %i.dm = lshr i32 %i.dj, %i.dl
   %i.dn = and i32 %i.dm, 4095
@@ -279,15 +284,13 @@ modified_fat_get.exit:                            ; preds = %bb.z, %bb.ab, %bb.a
   br i1 %.not54, label %modified_fat_get.exit._crit_edge, label %modified_fat_get.exit.thread
 
 modified_fat_get.exit._crit_edge:                 ; preds = %modified_fat_get.exit
-  %.pre82 = sext i32 %.272 to i64
-  %.phi.trans.insert = getelementptr inbounds i8, ptr %.pre84, i64 %.pre82
+  %.phi.trans.insert = getelementptr inbounds i8, ptr %.pre84, i64 %indvars.iv81
   %.pre85 = load i8, ptr %.phi.trans.insert, align 1
   br label %bb.af
 
 modified_fat_get.exit.thread:                     ; preds = %.modified_fat_get.exit.thread_crit_edge, %modified_fat_get.exit
   %i.do = phi ptr [ %.pre83, %.modified_fat_get.exit.thread_crit_edge ], [ %.pre84, %modified_fat_get.exit ]
-  %8 = sext i32 %.272 to i64
-  %i.dp = getelementptr inbounds i8, ptr %i.do, i64 %8
+  %i.dp = getelementptr inbounds i8, ptr %i.do, i64 %indvars.iv81
   %i.dq = load i8, ptr %i.dp, align 1             ; 2 uses
   %.not55 = icmp eq i8 %i.dq, 0
   br i1 %.not55, label %.loopexit, label %bb.ae
@@ -297,8 +300,8 @@ bb.ae:                                            ; preds = %modified_fat_get.ex
   br label %bb.af
 
 bb.af:                                            ; preds = %modified_fat_get.exit._crit_edge, %bb.ae
-  %i.ds = phi i8 [ %.pre85, %modified_fat_get.exit._crit_edge ], [ %i.dq, %bb.ae ]
-  %.1 = phi i32 [ %.04775, %modified_fat_get.exit._crit_edge ], [ %i.dr, %bb.ae ] ; 2 uses
+  %i.ds = phi i8 [ %i.dq, %bb.ae ], [ %.pre85, %modified_fat_get.exit._crit_edge ]
+  %.1 = phi i32 [ %i.dr, %bb.ae ], [ %.04775, %modified_fat_get.exit._crit_edge ] ; 2 uses
   %i.dt = icmp eq i8 %i.ds, 4
   br i1 %i.dt, label %.loopexit, label %bb.w
 

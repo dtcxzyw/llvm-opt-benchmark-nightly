@@ -204,7 +204,6 @@ _ZN4core5arrayItEixEj.exit:                       ; preds = %_ZN4core5arrayIjE8s
   %i.gm = ptrtoint ptr %i.gk to i64
   %i.gn = sub i64 %i.gl, %i.gm
   %i.go = ashr exact i64 %i.gn, 2                 ; 3 uses
-  %15 = add nsw i64 %i.gi, -1
   %wide.trip.count664 = zext i32 %i.fe to i64
   br label %_ZN4core5arrayIjEixEj.exit303
 
@@ -356,7 +355,7 @@ _ZN4core5arrayIjEixEj.exit:                       ; preds = %_ZN5scene16CXMeshFi
   br i1 %exitcond658.not, label %.lr.ph546, label %bb.at, !llvm.loop !263
 
 _ZN4core5arrayIjEixEj.exit303:                    ; preds = %.lr.ph546.split, %_ZN4core5arrayIjEixEj.exit308
-  %indvars.iv659 = phi i64 [ 0, %.lr.ph546.split ], [ %indvars.iv.next660, %_ZN4core5arrayIjEixEj.exit308 ] ; 3 uses
+  %indvars.iv659 = phi i64 [ 0, %.lr.ph546.split ], [ %indvars.iv.next660, %_ZN4core5arrayIjEixEj.exit308 ] ; 2 uses
   %.1195544 = phi i32 [ %.0194551, %.lr.ph546.split ], [ %i.is, %_ZN4core5arrayIjEixEj.exit308 ] ; 4 uses
   %i.id = add i32 %.1195544, 1
   %i.ie = zext i32 %.1195544 to i64               ; 2 uses
@@ -375,9 +374,9 @@ _ZN4core5arrayIjEixEj.exit304:                    ; preds = %_ZN4core5arrayIjEix
   %i.ig = load i32, ptr %.sroa.0.3, align 4, !tbaa !143
   %i.ih = getelementptr inbounds nuw [4 x i8], ptr %i.gk, i64 %i.ie
   store i32 %i.ig, ptr %i.ih, align 4, !tbaa !143
-  %indvars.iv.next660 = add nuw nsw i64 %indvars.iv659, 1 ; 3 uses
-  %exitcond663.not = icmp eq i64 %indvars.iv659, %15
-  br i1 %exitcond663.not, label %bb.bh, label %_ZN4core5arrayIjEixEj.exit305
+  %indvars.iv.next660 = add nuw nsw i64 %indvars.iv659, 1 ; 4 uses
+  %15 = icmp ugt i64 %i.gi, %indvars.iv.next660
+  br i1 %15, label %_ZN4core5arrayIjEixEj.exit305, label %bb.bh
 
 bb.bh:                                            ; preds = %_ZN4core5arrayIjEixEj.exit304
   call void @__assert_fail(ptr noundef nonnull @.str.131, ptr noundef nonnull @.str.132, i32 noundef 192, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN4core5arrayIjEixEj) #31
@@ -780,7 +779,6 @@ _ZN4core5arrayIjE8set_usedEj.exit102:             ; preds = %bb.bj, %bb.bf, %_ZS
   br i1 %.not254.fr, label %.lr.ph328.split.us, label %.lr.ph328.split.preheader
 
 .lr.ph328.split.preheader:                        ; preds = %.lr.ph328
-  %8 = call i64 @llvm.usub.sat.i64(i64 %i.lv, i64 1)
   %wide.trip.count523 = zext i32 %i.bz to i64
   br label %.lr.ph328.split
 
@@ -949,7 +947,7 @@ _ZN4core5arrayIjEixEj.exit123:                    ; preds = %_ZN5scene16CXMeshFi
   br i1 %exitcond518.not, label %.preheader256, label %bb.bk, !llvm.loop !295
 
 .lr.ph328.split:                                  ; preds = %.lr.ph328.split.preheader, %_ZN4core5arrayINS_8vector3dIfEEEixEj.exit135
-  %indvars.iv519 = phi i64 [ 0, %.lr.ph328.split.preheader ], [ %indvars.iv.next520, %_ZN4core5arrayINS_8vector3dIfEEEixEj.exit135 ] ; 3 uses
+  %indvars.iv519 = phi i64 [ 0, %.lr.ph328.split.preheader ], [ %indvars.iv.next520, %_ZN4core5arrayINS_8vector3dIfEEEixEj.exit135 ] ; 2 uses
   %.2326 = phi i32 [ %.050406, %.lr.ph328.split.preheader ], [ %i.pk, %_ZN4core5arrayINS_8vector3dIfEEEixEj.exit135 ] ; 4 uses
   %i.nv = add i32 %.2326, 1
   %i.nw = zext i32 %.2326 to i64                  ; 2 uses
@@ -1020,9 +1018,9 @@ bb.by:                                            ; preds = %_ZN4core5arrayIjEix
 _ZN4core5arrayIN5video9S3DVertexEEixEj.exit129:   ; preds = %_ZN4core5arrayIjEixEj.exit128
   %i.oz = getelementptr inbounds nuw [40 x i8], ptr %i.oc, i64 %i.ox ; 2 uses
   %i.pa = getelementptr inbounds nuw i8, ptr %i.oz, i64 12
-  %indvars.iv.next520 = add nuw nsw i64 %indvars.iv519, 1 ; 3 uses
-  %exitcond522.not = icmp eq i64 %indvars.iv519, %8
-  br i1 %exitcond522.not, label %bb.bz, label %_ZN4core5arrayIjEixEj.exit130
+  %indvars.iv.next520 = add nuw nsw i64 %indvars.iv519, 1 ; 4 uses
+  %8 = icmp ugt i64 %i.lv, %indvars.iv.next520
+  br i1 %8, label %_ZN4core5arrayIjEixEj.exit130, label %bb.bz
 
 bb.bz:                                            ; preds = %_ZN4core5arrayIN5video9S3DVertexEEixEj.exit129
   call void @__assert_fail(ptr noundef nonnull @.str.131, ptr noundef nonnull @.str.132, i32 noundef 192, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN4core5arrayIjEixEj) #31
@@ -1425,13 +1423,13 @@ declare i64 @llvm.umax.i64(i64, i64) #22
 declare i64 @llvm.umin.i64(i64, i64) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.usub.sat.i64(i64, i64) #22
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.sqrt.f64(double) #22
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.usub.sat.i64(i64, i64) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.floor.v4f32(<4 x float>) #22

@@ -204,7 +204,8 @@ define hidden void @_ZN5boost5beast4zlib6detail14inflate_stream13inflate_tableEN
   br label %bb.a
 
 .lr.ph:                                           ; preds = %.preheader255, %.lr.ph
-  %indvars.iv.a = phi i64 [ %indvars.iv.next, %.lr.ph ], [ 0, %.preheader255 ] ; 2 uses
+  %indvars.iv.a = phi i64 [ %12, %.lr.ph ], [ 0, %.preheader255 ]
+  %.0200263 = phi i32 [ %11, %.lr.ph ], [ 0, %.preheader255 ]
   %i.d = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %indvars.iv.a
   %i.e = load i16, ptr %i.d, align 2, !tbaa !321
   %i.f = zext i16 %i.e to i64
@@ -212,9 +213,9 @@ define hidden void @_ZN5boost5beast4zlib6detail14inflate_stream13inflate_tableEN
   %i.h = load i16, ptr %i.g, align 2, !tbaa !321
   %i.i = add i16 %i.h, 1
   store i16 %i.i, ptr %i.g, align 2, !tbaa !321
-  %indvars.iv.next = add i64 %indvars.iv.a, 1     ; 2 uses
-  %11 = and i64 %indvars.iv.next, 4294967295
-  %i.j = icmp ugt i64 %2, %11
+  %11 = add i32 %.0200263, 1                      ; 2 uses
+  %12 = zext i32 %11 to i64                       ; 2 uses
+  %i.j = icmp ugt i64 %2, %12
   br i1 %i.j, label %.lr.ph, label %._crit_edge, !llvm.loop !1210
 
 ._crit_edge:                                      ; preds = %.lr.ph
@@ -596,14 +597,15 @@ bb.ai:                                            ; preds = %_ZN5boost6system10e
   br i1 %.not285, label %._crit_edge276, label %.lr.ph275
 
 .lr.ph275:                                        ; preds = %.preheader254, %bb.ak
-  %indvars.iv311 = phi i64 [ %indvars.iv.next312, %bb.ak ], [ 0, %.preheader254 ] ; 3 uses
+  %indvars.iv311 = phi i64 [ %14, %bb.ak ], [ 0, %.preheader254 ]
+  %.1201274 = phi i32 [ %13, %bb.ak ], [ 0, %.preheader254 ] ; 2 uses
   %i.fz = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %indvars.iv311
   %i.ga = load i16, ptr %i.fz, align 2, !tbaa !321 ; 2 uses
   %.not223 = icmp eq i16 %i.ga, 0
   br i1 %.not223, label %bb.ak, label %bb.aj
 
 bb.aj:                                            ; preds = %.lr.ph275
-  %i.gb = trunc i64 %indvars.iv311 to i16
+  %i.gb = trunc i32 %.1201274 to i16
   %i.gc = zext i16 %i.ga to i64
   %i.gd = getelementptr inbounds nuw [2 x i8], ptr %i.b, i64 %i.gc ; 2 uses
   %i.ge = load i16, ptr %i.gd, align 2, !tbaa !321 ; 2 uses
@@ -615,9 +617,9 @@ bb.aj:                                            ; preds = %.lr.ph275
   br label %bb.ak
 
 bb.ak:                                            ; preds = %.lr.ph275, %bb.aj
-  %indvars.iv.next312 = add i64 %indvars.iv311, 1 ; 2 uses
-  %12 = and i64 %indvars.iv.next312, 4294967295
-  %i.gi = icmp ugt i64 %2, %12
+  %13 = add i32 %.1201274, 1                      ; 2 uses
+  %14 = zext i32 %13 to i64                       ; 2 uses
+  %i.gi = icmp ugt i64 %2, %14
   br i1 %i.gi, label %.lr.ph275, label %._crit_edge276, !llvm.loop !1218
 
 ._crit_edge276:                                   ; preds = %bb.ak, %.preheader254

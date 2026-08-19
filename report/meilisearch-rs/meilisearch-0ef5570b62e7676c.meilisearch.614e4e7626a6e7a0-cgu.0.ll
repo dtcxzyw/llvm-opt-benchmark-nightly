@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
 
 ._crit_edge144:                                   ; preds = %bb.b
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %4, i8 0, i64 %i.fp, i1 false)
-  %i.g = shl nuw nsw i64 %i.fp, 1                 ; 14 uses
+  %i.g = shl nuw nsw i64 %i.fp, 1                 ; 15 uses
   %i.h = or disjoint i64 %i.g, 1                  ; 21 uses
   %i.i = shl nuw nsw i64 %i.h, 3                  ; 3 uses
   tail call void @_RNvCskdKJRKLKjqM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #38, !noalias !36307
@@ -222,7 +222,7 @@ _ZN6brotli3enc14combined_alloc8alloc_if17hd23791371a41120eE.exit: ; preds = %._c
   %scevgep.i.i = getelementptr i8, ptr %i.j, i64 %i.l
   store i64 0, ptr %scevgep.i.i, align 4, !noalias !36315
   %.first_iter = icmp samesign ult i64 %.sroa.010.0137463, %1
-  %i.m = trunc nuw nsw i64 %i.g to i32            ; 2 uses
+  %i.m = trunc nuw nsw i64 %i.g to i32
   br label %.lr.ph148.preheader
 
 .lr.ph148.preheader:                              ; preds = %_ZN6brotli3enc14combined_alloc8alloc_if17hd23791371a41120eE.exit, %bb.p
@@ -354,7 +354,7 @@ bb.m:                                             ; preds = %bb.k
   br label %.invoke
 
 .invoke:                                          ; preds = %bb.n, %.loopexit42, %.invoke.loopexit481.split.loop.exit509, %.lr.ph148, %bb.l, %.lr.ph66.i, %bb.av, %bb.au, %bb.at, %bb.as, %bb.ar, %bb.aq, %bb.ap, %.lr.ph157, %._crit_edge.i.loopexit, %.lr.ph62.i, %.lr.ph.i
-  %i.an = phi i64 [ %i.n, %.lr.ph148 ], [ %i.aa, %.lr.ph.i ], [ %.sroa.015.0.lcssa.i.ph, %._crit_edge.i.loopexit ], [ %12, %bb.av ], [ %i.h, %.lr.ph66.i ], [ %umax.i, %.lr.ph62.i ], [ %i.en, %bb.au ], [ %i.el, %bb.at ], [ %i.ek, %bb.as ], [ %i.ed, %bb.ar ], [ %i.ec, %bb.aq ], [ %i.dv, %bb.ap ], [ %i.du, %.lr.ph157 ], [ %.sroa.01.0.i, %bb.l ], [ %i.fe, %.invoke.loopexit481.split.loop.exit509 ], [ %i.aq, %.loopexit42 ], [ %i.as, %bb.n ]
+  %i.an = phi i64 [ %i.n, %.lr.ph148 ], [ %i.aa, %.lr.ph.i ], [ %.sroa.015.0.lcssa.i.ph, %._crit_edge.i.loopexit ], [ %indvars.iv, %bb.av ], [ %i.h, %.lr.ph66.i ], [ %umax.i, %.lr.ph62.i ], [ %i.en, %bb.au ], [ %i.el, %bb.at ], [ %i.ek, %bb.as ], [ %i.ed, %bb.ar ], [ %i.ec, %bb.aq ], [ %i.dv, %bb.ap ], [ %i.du, %.lr.ph157 ], [ %.sroa.01.0.i, %bb.l ], [ %i.fe, %.invoke.loopexit481.split.loop.exit509 ], [ %i.aq, %.loopexit42 ], [ %i.as, %bb.n ]
   %i.ao = phi i64 [ %1, %.lr.ph148 ], [ %i.h, %.lr.ph.i ], [ %i.h, %._crit_edge.i.loopexit ], [ %i.h, %bb.av ], [ %i.h, %bb.l ], [ %i.h, %.lr.ph62.i ], [ %i.h, %.lr.ph157 ], [ %i.h, %bb.ap ], [ %i.h, %bb.aq ], [ %i.h, %bb.ar ], [ %i.h, %bb.as ], [ %i.h, %bb.at ], [ %i.h, %bb.au ], [ %i.h, %.lr.ph66.i ], [ %i.h, %.invoke.loopexit481.split.loop.exit509 ], [ %i.h, %.loopexit42 ], [ %i.h, %bb.n ]
   %i.ap = phi ptr [ @1664, %.lr.ph148 ], [ @1580, %.lr.ph.i ], [ @1581, %._crit_edge.i.loopexit ], [ @1663, %bb.av ], [ @1582, %.lr.ph66.i ], [ @1579, %.lr.ph62.i ], [ @1662, %bb.au ], [ @1661, %bb.at ], [ @1660, %bb.as ], [ @1659, %bb.ar ], [ @1658, %bb.aq ], [ @1657, %bb.ap ], [ @1656, %.lr.ph157 ], [ @1583, %bb.l ], [ %.433.le, %.invoke.loopexit481.split.loop.exit509 ], [ @1647, %.loopexit42 ], [ @1648, %bb.n ]
   invoke void @_ZN4core9panicking18panic_bounds_check17hbc09f5d79f1a5789E(i64 noundef %i.an, i64 noundef %i.ao, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.ap) #43
@@ -377,23 +377,19 @@ bb.n:                                             ; preds = %.loopexit42
 
 bb.o:                                             ; preds = %bb.n
   %i.at = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.as
-  %.sroa.060.0151 = add i32 %.sroa.027.2, -1
+  %.sroa.060.0151 = add i32 %.sroa.027.2, -1      ; 2 uses
   %i.au = icmp sgt i32 %.sroa.060.0151, 0
   store i64 -1, ptr %i.at, align 4
-  br i1 %i.au, label %.lr.ph157.preheader, label %.._crit_edge158_crit_edge
-
-.._crit_edge158_crit_edge:                        ; preds = %bb.o
-  %.pre274 = shl i32 %.sroa.027.2, 1
-  br label %._crit_edge158
+  br i1 %i.au, label %.lr.ph157.preheader, label %._crit_edge158
 
 .lr.ph157.preheader:                              ; preds = %bb.o
   %i.av = add nuw i32 %.sroa.027.2, 2
-  %11 = shl i32 %.sroa.027.2, 1                   ; 2 uses
+  %11 = zext i32 %i.av to i64
   br label %.lr.ph157
 
-._crit_edge158:                                   ; preds = %bb.aw, %.._crit_edge158_crit_edge
-  %.pre-phi275 = phi i32 [ %.pre274, %.._crit_edge158_crit_edge ], [ %11, %bb.aw ]
-  %i.aw = add i32 %.pre-phi275, -1
+._crit_edge158:                                   ; preds = %bb.aw, %bb.o
+  %12 = shl i32 %.sroa.027.2, 1
+  %i.aw = add i32 %12, -1
   %i.ax = invoke noundef zeroext i1 @_ZN6brotli3enc14entropy_encode14BrotliSetDepth17h5f5ba8abc19b5273E(i32 noundef %i.aw, ptr noalias noundef nonnull align 4 %i.j, i64 noundef %i.h, ptr noalias noundef nonnull align 1 %4, i64 noundef %5, i32 noundef 14)
           to label %bb.p unwind label %.loopexit44
 
@@ -650,9 +646,10 @@ bb.ao:                                            ; preds = %bb.al
   br label %bb.an
 
 .lr.ph157:                                        ; preds = %.lr.ph157.preheader, %bb.aw
-  %.sroa.027.1154 = phi i32 [ %i.ez, %bb.aw ], [ %i.av, %.lr.ph157.preheader ] ; 5 uses
-  %.sroa.048.0153 = phi i32 [ %.sroa.048.2, %bb.aw ], [ 0, %.lr.ph157.preheader ] ; 3 uses
-  %.sroa.054.0152 = phi i32 [ %.sroa.054.2, %bb.aw ], [ %i.o, %.lr.ph157.preheader ] ; 3 uses
+  %indvars.iv = phi i64 [ %11, %.lr.ph157.preheader ], [ %indvars.iv.next, %bb.aw ] ; 5 uses
+  %.sroa.027.1154 = phi i32 [ %.sroa.060.0151, %.lr.ph157.preheader ], [ %i.ez, %bb.aw ] ; 2 uses
+  %.sroa.048.0153 = phi i32 [ 0, %.lr.ph157.preheader ], [ %.sroa.048.2, %bb.aw ] ; 3 uses
+  %.sroa.054.0152 = phi i32 [ %i.o, %.lr.ph157.preheader ], [ %.sroa.054.2, %bb.aw ] ; 3 uses
   %i.du = sext i32 %.sroa.048.0153 to i64         ; 3 uses
   %.not31 = icmp ult i64 %i.g, %i.du
   br i1 %.not31, label %.invoke, label %bb.ap
@@ -705,7 +702,8 @@ bb.at:                                            ; preds = %bb.as
   br i1 %.not36, label %.invoke, label %bb.au
 
 bb.au:                                            ; preds = %bb.at
-  %i.em = add i32 %.sroa.027.1154, -1             ; 2 uses
+  %13 = trunc nuw i64 %indvars.iv to i32
+  %i.em = add i32 %13, -1                         ; 2 uses
   %i.en = zext i32 %i.em to i64                   ; 2 uses
   %.not37 = icmp ugt i32 %i.em, %i.m
   br i1 %.not37, label %.invoke, label %bb.av
@@ -724,16 +722,16 @@ bb.av:                                            ; preds = %bb.au
   %i.ew = getelementptr inbounds nuw i8, ptr %i.et, i64 6
   %i.ex = trunc i32 %.sroa.077.0 to i16
   store i16 %i.ex, ptr %i.ew, align 2
-  %12 = zext i32 %.sroa.027.1154 to i64           ; 2 uses
-  %.not38 = icmp ugt i32 %.sroa.027.1154, %i.m
+  %.not38 = icmp samesign ult i64 %i.g, %indvars.iv
   br i1 %.not38, label %.invoke, label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av
-  %i.ey = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %12
-  %i.ez = add nuw nsw i32 %.sroa.027.1154, 1
-  %exitcond271.not = icmp eq i32 %.sroa.027.1154, %11
+  %i.ey = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %indvars.iv
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %i.ez = add nsw i32 %.sroa.027.1154, -1
+  %14 = icmp sgt i32 %.sroa.027.1154, 1
   store i64 -1, ptr %i.ey, align 4
-  br i1 %exitcond271.not, label %._crit_edge158, label %.lr.ph157
+  br i1 %14, label %.lr.ph157, label %._crit_edge158
 
 bb.ax:                                            ; preds = %.lr.ph148
   %i.fa = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.n
@@ -742,7 +740,7 @@ bb.ax:                                            ; preds = %.lr.ph148
   br i1 %i.fc, label %bb.ay, label %bb.az
 
 bb.ay:                                            ; preds = %bb.ax, %bb.ba
-  %.sroa.027.2 = phi i32 [ %.sroa.027.0146, %bb.ax ], [ %i.fh, %bb.ba ] ; 11 uses
+  %.sroa.027.2 = phi i32 [ %.sroa.027.0146, %bb.ax ], [ %i.fh, %bb.ba ] ; 10 uses
   %i.fd = icmp eq i64 %i.n, 0
   br i1 %i.fd, label %._crit_edge149, label %.lr.ph148
 

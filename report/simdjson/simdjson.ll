@@ -203,7 +203,7 @@ begin_hunk_0_@_ZNK8simdjson7haswell14implementation6minifyEPKhmPhRm:bb.a
   %i.kl = xor i64 %i.gr, -1
   %i.km = tail call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %i.kl)
   %i.kn = getelementptr inbounds nuw i8, ptr %i.gp, i64 %i.km ; 2 uses
-  %i.ko = add nuw i64 %.sroa.11.0612.i, 128       ; 3 uses
+  %i.ko = add i64 %.sroa.11.0612.i, 128           ; 3 uses
   %i.kp = icmp ult i64 %i.ko, %spec.select.i.i
   br i1 %i.kp, label %.noexc47.i, label %._crit_edge.i, !llvm.loop !87
 
@@ -606,7 +606,7 @@ _ZN8simdjson7haswell12_GLOBAL__N_16stage123json_structural_indexer4stepILm128EEE
   %i.ya = and i64 %i.ej, %i.pd
   %i.yb = or i64 %i.ov, %.sroa.236.02266.i
   %i.yc = or i64 %i.yb, %i.ya                     ; 2 uses
-  %i.yd = add nuw i64 %.sroa.11.02261.i, 128      ; 4 uses
+  %i.yd = add i64 %.sroa.11.02261.i, 128          ; 4 uses
   %i.ye = icmp ult i64 %i.yd, %spec.select.i.i
   br i1 %i.ye, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !112
 
@@ -1009,7 +1009,7 @@ _ZN8simdjson7haswell12_GLOBAL__N_115utf8_validation12utf8_checker16check_next_in
   %.sroa.19.1.i.i = phi <4 x i64> [ %i.e, %bb.b ], [ %.sroa.19.0373.i.i, %.lr.ph.i.i ] ; 2 uses
   %.sroa.24.0372.i.pn.i = phi <4 x i64> [ %i.be, %bb.b ], [ %.sroa.24.0372.i.i, %.lr.ph.i.i ]
   %.sroa.046.2.i.i = or <4 x i64> %.sroa.24.0372.i.pn.i, %.sroa.046.0374.i.i ; 3 uses
-  %i.bh = add nuw i64 %.sroa.11.0375.i.i, 64      ; 3 uses
+  %i.bh = add i64 %.sroa.11.0375.i.i, 64          ; 3 uses
   %i.bi = icmp ult i64 %i.bh, %spec.select.i.i.i
   br i1 %i.bi, label %.lr.ph.i.i, label %._crit_edge.loopexit.i.i, !llvm.loop !116
 
@@ -1412,7 +1412,7 @@ _ZN8simdjson7icelake12_GLOBAL__N_16stage113json_minifier4stepILm128EEEvPKhRNS2_1
   store <64 x i8> %i.bh, ptr %i.be, align 1, !tbaa !9
   %i.bi = tail call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %i.bf)
   %i.bj = getelementptr inbounds nuw i8, ptr %i.be, i64 %i.bi ; 2 uses
-  %i.bk = add nuw i64 %.sroa.11.0360.i, 128       ; 3 uses
+  %i.bk = add i64 %.sroa.11.0360.i, 128           ; 3 uses
   %i.bl = icmp ult i64 %i.bk, %spec.select.i.i
   br i1 %i.bl, label %.noexc45.i, label %._crit_edge.i, !llvm.loop !137
 
@@ -1815,7 +1815,7 @@ _ZN8simdjson7icelake12_GLOBAL__N_16stage123json_structural_indexer4stepILm128EEE
   %i.ic = and i64 %i.cp, %i.fs
   %i.id = or i64 %i.fq, %.sroa.123.0885.i
   %i.ie = or i64 %i.id, %i.ic                     ; 2 uses
-  %i.if = add nuw i64 %.sroa.11.0882.i, 128       ; 4 uses
+  %i.if = add i64 %.sroa.11.0882.i, 128           ; 4 uses
   %i.ig = icmp ult i64 %i.if, %spec.select.i.i
   br i1 %i.ig, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !148
 
@@ -2218,7 +2218,7 @@ _ZN8simdjson7icelake12_GLOBAL__N_115utf8_validation12utf8_checker16check_next_in
   %.sroa.15.1.i.i = phi <8 x i64> [ %i.b, %bb.b ], [ %.sroa.15.0210.i.i, %.lr.ph.i.i ] ; 2 uses
   %.sroa.20.0.pn208.i.i = phi <8 x i64> [ %i.ac, %bb.b ], [ %.sroa.20.0209.i.i, %.lr.ph.i.i ]
   %.sroa.034.2.i.i = or <8 x i64> %.sroa.20.0.pn208.i.i, %.sroa.034.0211.i.i ; 2 uses
-  %i.af = add nuw i64 %.sroa.11.0212.i.i, 64      ; 3 uses
+  %i.af = add i64 %.sroa.11.0212.i.i, 64          ; 3 uses
   %i.ag = icmp ult i64 %i.af, %spec.select.i.i.i
   br i1 %i.ag, label %.lr.ph.i.i, label %._crit_edge.i.i, !llvm.loop !150
 
@@ -2621,7 +2621,7 @@ _ZN8simdjson8westmere12_GLOBAL__N_16stage113json_minifier4stepILm64EEEvPKhRNS2_1
   %i.fm = xor i64 %i.bw, -1
   %i.fn = tail call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %i.fm)
   %i.fo = getelementptr inbounds nuw i8, ptr %.sroa.23.0471.i, i64 %i.fn ; 2 uses
-  %i.fp = add nuw i64 %.sroa.11.0469.i, 64        ; 3 uses
+  %i.fp = add i64 %.sroa.11.0469.i, 64            ; 3 uses
   %i.fq = icmp ult i64 %i.fp, %spec.select.i.i
   br i1 %i.fq, label %.noexc28.i, label %._crit_edge.i, !llvm.loop !162
 
@@ -3024,7 +3024,7 @@ _ZN8simdjson8westmere12_GLOBAL__N_16stage123json_structural_indexer4stepILm64EEE
   %i.pl = and i64 %i.pi, %i.pk                    ; 2 uses
   %i.pm = and i64 %i.ck, %i.fa
   %i.pn = or i64 %i.pm, %.sroa.148.01673.i        ; 2 uses
-  %i.po = add nuw i64 %.sroa.11.01670.i, 64       ; 4 uses
+  %i.po = add i64 %.sroa.11.01670.i, 64           ; 4 uses
   %i.pp = icmp ult i64 %i.po, %spec.select.i.i
   br i1 %i.pp, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !174
 
@@ -3427,7 +3427,7 @@ _ZN8simdjson8westmere12_GLOBAL__N_115utf8_validation12utf8_checker16check_next_i
   %.sroa.27.1.i.i = phi <2 x i64> [ %i.i, %bb.b ], [ %.sroa.27.0682.i.i, %.lr.ph.i.i ] ; 2 uses
   %.sroa.32.0681.i.pn.i = phi <2 x i64> [ %i.cx, %bb.b ], [ %.sroa.32.0681.i.i, %.lr.ph.i.i ]
   %.sroa.073.2.i.i = or <2 x i64> %.sroa.32.0681.i.pn.i, %.sroa.073.0683.i.i ; 3 uses
-  %i.da = add nuw i64 %.sroa.11.0684.i.i, 64      ; 3 uses
+  %i.da = add i64 %.sroa.11.0684.i.i, 64          ; 3 uses
   %i.db = icmp ult i64 %i.da, %spec.select.i.i.i
   br i1 %i.db, label %.lr.ph.i.i, label %._crit_edge.loopexit.i.i, !llvm.loop !176
 

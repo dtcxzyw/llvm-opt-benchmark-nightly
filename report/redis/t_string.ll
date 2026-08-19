@@ -201,8 +201,8 @@ bb.ad:                                            ; preds = %sdslen.exit276.thre
   br label %sdslen.exit279
 
 sdslen.exit279:                                   ; preds = %sdslen.exit276.thread, %bb.z, %bb.aa, %bb.ab, %bb.ac, %bb.ad
-  %.0.i278 = phi i64 [ %i.cf, %bb.ad ], [ %i.bu, %bb.z ], [ %i.bx, %bb.aa ], [ %i.ca, %bb.ab ], [ %i.cd, %bb.ac ], [ 0, %sdslen.exit276.thread ] ; 2 uses
-  %i.cg = trunc i64 %.0.i278 to i32               ; 11 uses
+  %.0.i278 = phi i64 [ %i.cf, %bb.ad ], [ %i.bu, %bb.z ], [ %i.bx, %bb.aa ], [ %i.ca, %bb.ab ], [ %i.cd, %bb.ac ], [ 0, %sdslen.exit276.thread ] ; 3 uses
+  %i.cg = trunc i64 %.0.i278 to i32               ; 10 uses
   switch i8 %i.bm, label %sdslen.exit282 [
     i8 0, label %bb.ae
     i8 1, label %bb.af
@@ -270,9 +270,8 @@ bb.al:                                            ; preds = %bb.aj
   %umax = call i32 @llvm.umax.i32(i32 %i.cx, i32 1)
   %umax373 = call i64 @llvm.umax.i64(i64 %i.cy, i64 1)
   %i.dg = shl nuw nsw i64 %umax373, 2
-  %1 = add i32 %i.cg, 1
-  %umax380 = call i32 @llvm.umax.i32(i32 %1, i32 1)
-  %wide.trip.count381 = zext i32 %umax380 to i64
+  %1 = add i64 %.0.i278, 1
+  %wide.trip.count380 = and i64 %1, 4294967295
   %wide.trip.count = zext i32 %umax to i64
   %exitcond.peel = icmp ult i32 %i.cx, 2
   br label %.preheader
@@ -314,7 +313,7 @@ bb.an:                                            ; preds = %.split.us
 
 .split.us:                                        ; preds = %bb.aq, %bb.am, %.preheader.split.us.preheader
   %indvars.iv.next378 = add nuw nsw i64 %indvars.iv377, 1 ; 2 uses
-  %exitcond382 = icmp eq i64 %indvars.iv.next378, %wide.trip.count381
+  %exitcond382 = icmp eq i64 %indvars.iv.next378, %wide.trip.count380
   br i1 %exitcond382, label %bb.an, label %.preheader, !llvm.loop !119
 
 .preheader.split.peel.next:                       ; preds = %bb.am, %bb.aq

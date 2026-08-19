@@ -204,9 +204,11 @@ bb.a:
   %umin = tail call i64 @llvm.umin.i64(i64 %2, i64 %i.a) ; 3 uses
   %i.b = mul i64 %indvar, -8                      ; 2 uses
   %i.c = add i64 %umin, %i.b
-  %i.d = add nuw i64 %.02027, 8                   ; 2 uses
+  %i.d = add i64 %.02027, 8                       ; 3 uses
+  %.not = icmp ugt i64 %i.d, %2
   %.not3237 = icmp eq i64 %2, %.02027
-  br i1 %.not3237, label %._crit_edge, label %.lr.ph
+  %.not32 = and i1 %.not, %.not3237
+  br i1 %.not32, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph29
   %i.e = add i64 %i.b, -1
@@ -372,7 +374,7 @@ bb.b:                                             ; preds = %bb.a
   br label %.lr.ph.split
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %.lr.ph.splitthread-pre-split
-  %i.o = phi i64 [ %.pr, %.lr.ph.splitthread-pre-split ], [ %i.l, %.lr.ph ] ; 5 uses
+  %i.o = phi i64 [ %.pr, %.lr.ph.splitthread-pre-split ], [ %i.l, %.lr.ph ] ; 6 uses
   %i.p = phi i64 [ %i.bl, %.lr.ph.splitthread-pre-split ], [ %i.j, %.lr.ph ]
   %.017 = phi i64 [ %i.n, %.lr.ph.splitthread-pre-split ], [ %i.k, %.lr.ph ] ; 4 uses
   %i.q = load ptr, ptr %3, align 8, !tbaa !907
@@ -398,9 +400,11 @@ bb.b:                                             ; preds = %bb.a
   %umin = call i64 @llvm.umin.i64(i64 %i.o, i64 %i.x) ; 3 uses
   %i.y = mul i64 %indvar, -8                      ; 2 uses
   %i.z = add i64 %umin, %i.y
-  %i.aa = add nuw i64 %.02027.i, 8                ; 2 uses
+  %i.aa = add i64 %.02027.i, 8                    ; 3 uses
+  %.not.i = icmp ugt i64 %i.aa, %i.o
   %.not32.i27 = icmp eq i64 %i.o, %.02027.i
-  br i1 %.not32.i27, label %._crit_edge.i, label %.lr.ph.i
+  %.not32.i = and i1 %.not.i, %.not32.i27
+  br i1 %.not32.i, label %._crit_edge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph29.i
   %i.ab = add i64 %i.y, -1

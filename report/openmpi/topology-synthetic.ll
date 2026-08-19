@@ -203,17 +203,17 @@ bb.bf:                                            ; preds = %._crit_edge484, %bb
   br label %bb.bg
 
 bb.bg:                                            ; preds = %.lr.ph434, %bb.bg
-  %indvars.iv479 = phi i64 [ 0, %.lr.ph434 ], [ %indvars.iv.next480, %bb.bg ] ; 3 uses
-  %5 = trunc nuw i64 %indvars.iv479 to i32
-  %i.eu = udiv i32 %5, %i.er
+  %indvars.iv479 = phi i64 [ 0, %.lr.ph434 ], [ %6, %bb.bg ]
+  %.0221432 = phi i32 [ 0, %.lr.ph434 ], [ %5, %bb.bg ] ; 2 uses
+  %i.eu = udiv i32 %.0221432, %i.er
   %i.ev = urem i32 %i.eu, %i.et
   %i.ew = mul i32 %i.ev, %.0220437
   %i.ex = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %indvars.iv479 ; 2 uses
   %i.ey = load i32, ptr %i.ex, align 4, !tbaa !65
   %i.ez = add i32 %i.ey, %i.ew
   store i32 %i.ez, ptr %i.ex, align 4, !tbaa !65
-  %indvars.iv.next480 = add i64 %indvars.iv479, 1 ; 2 uses
-  %6 = and i64 %indvars.iv.next480, 4294967295
+  %5 = add i32 %.0221432, 1                       ; 2 uses
+  %6 = zext i32 %5 to i64                         ; 2 uses
   %i.fa = icmp ugt i64 %2, %6
   br i1 %i.fa, label %bb.bg, label %._crit_edge435, !llvm.loop !155
 

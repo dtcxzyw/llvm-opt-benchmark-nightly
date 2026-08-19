@@ -204,7 +204,7 @@ _RNvXs0_NtNtNtCs6JMX4GRUq9U_4core4iter8adapters3mapINtB5_3MapINtNtB7_3rev3RevINt
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1297)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !1300
-  %i.fl = sub nuw i64 %i.ff, %i.fd                ; 4 uses
+  %i.fl = sub nuw i64 %i.ff, %i.fd                ; 7 uses
   %.not.i.i = icmp eq i64 %i.fl, -1
   %i.fm = add nuw i64 %i.fl, 1                    ; 2 uses
   br i1 %.not.i.i, label %bb.ap, label %_RNvXs0_NtNtNtCs6JMX4GRUq9U_4core4iter8adapters3mapINtB5_3MapINtNtB7_3rev3RevINtNtNtBb_3ops5range14RangeInclusiveyEENCNvNtCs84qwSrTN5pO_7uu_shuf21nonrepeating_iterator14hashmap_to_vec0ENtNtNtB9_6traits8iterator8Iterator9size_hintB1V_.exit.thread.i.i, !prof !1306
@@ -243,7 +243,7 @@ _RNvXs0_NtNtNtCs6JMX4GRUq9U_4core4iter8adapters3mapINtB5_3MapINtNtB7_3rev3RevINt
   store i64 0, ptr %i.fu, align 8, !noalias !1300
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1310)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1313)
-  %i.fv = sub nuw i64 %i.ff, %i.fd                ; 6 uses
+  %i.fv = sub nuw i64 %i.ff, %i.fd                ; 3 uses
   %.not.i.i1.i.i = icmp eq i64 %i.fv, -1
   %i.fw = add nuw i64 %i.fv, 1
   br i1 %.not.i.i1.i.i, label %bb.ao, label %bb.ag, !prof !1072
@@ -272,11 +272,11 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %i.fz, label %_RNCINvMNtNtCs6JMX4GRUq9U_4core3ops9try_traitINtB5_17NeverShortCircuituE10wrap_mut_2uyNCINvNtNtNtB9_4iter8adapters3map8map_foldyyuNCNvNtCs84qwSrTN5pO_7uu_shuf21nonrepeating_iterator14hashmap_to_vec0NCINvNvNtNtNtB1u_6traits8iterator8Iterator8for_each4callyNCINvMsk_NtCs7tKScEop1B6_5alloc3vecINtB4d_3VecyE14extend_trustedINtB1q_3MapINtNtB1s_3rev3RevINtNtB7_5range14RangeInclusiveyEEB23_EE0E0E0E0B29_.exit.i.i.i.i.i.i.i.i.us.i.preheader, label %.lr.ph.i.i.i.i.i.i.i.i.split.i
 
 _RNCINvMNtNtCs6JMX4GRUq9U_4core3ops9try_traitINtB5_17NeverShortCircuituE10wrap_mut_2uyNCINvNtNtNtB9_4iter8adapters3map8map_foldyyuNCNvNtCs84qwSrTN5pO_7uu_shuf21nonrepeating_iterator14hashmap_to_vec0NCINvNvNtNtNtB1u_6traits8iterator8Iterator8for_each4callyNCINvMsk_NtCs7tKScEop1B6_5alloc3vecINtB4d_3VecyE14extend_trustedINtB1q_3MapINtNtB1s_3rev3RevINtNtB7_5range14RangeInclusiveyEEB23_EE0E0E0E0B29_.exit.i.i.i.i.i.i.i.i.us.i.preheader: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i
-  %min.iters.check = icmp ult i64 %i.fv, 4
+  %min.iters.check = icmp ult i64 %i.fl, 4
   br i1 %min.iters.check, label %_RNCINvMNtNtCs6JMX4GRUq9U_4core3ops9try_traitINtB5_17NeverShortCircuituE10wrap_mut_2uyNCINvNtNtNtB9_4iter8adapters3map8map_foldyyuNCNvNtCs84qwSrTN5pO_7uu_shuf21nonrepeating_iterator14hashmap_to_vec0NCINvNvNtNtNtB1u_6traits8iterator8Iterator8for_each4callyNCINvMsk_NtCs7tKScEop1B6_5alloc3vecINtB4d_3VecyE14extend_trustedINtB1q_3MapINtNtB1s_3rev3RevINtNtB7_5range14RangeInclusiveyEEB23_EE0E0E0E0B29_.exit.i.i.i.i.i.i.i.i.us.i.preheader93, label %vector.ph
 
 vector.ph:                                        ; preds = %_RNCINvMNtNtCs6JMX4GRUq9U_4core3ops9try_traitINtB5_17NeverShortCircuituE10wrap_mut_2uyNCINvNtNtNtB9_4iter8adapters3map8map_foldyyuNCNvNtCs84qwSrTN5pO_7uu_shuf21nonrepeating_iterator14hashmap_to_vec0NCINvNvNtNtNtB1u_6traits8iterator8Iterator8for_each4callyNCINvMsk_NtCs7tKScEop1B6_5alloc3vecINtB4d_3VecyE14extend_trustedINtB1q_3MapINtNtB1s_3rev3RevINtNtB7_5range14RangeInclusiveyEEB23_EE0E0E0E0B29_.exit.i.i.i.i.i.i.i.i.us.i.preheader
-  %n.vec = and i64 %i.fv, -4                      ; 4 uses
+  %n.vec = and i64 %i.fl, 2305843009213693948     ; 4 uses
   %i.gc = add i64 %.ph.i.i, %n.vec                ; 2 uses
   %i.gd = sub i64 %i.ff, %n.vec
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.ff, i64 0
@@ -299,7 +299,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.gi, label %middle.block, label %vector.body, !llvm.loop !1345
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %i.fv, %n.vec
+  %cmp.n = icmp eq i64 %i.fl, %n.vec
   br i1 %cmp.n, label %_RNvNtCs84qwSrTN5pO_7uu_shuf21nonrepeating_iterator14hashmap_to_vec.exit, label %_RNCINvMNtNtCs6JMX4GRUq9U_4core3ops9try_traitINtB5_17NeverShortCircuituE10wrap_mut_2uyNCINvNtNtNtB9_4iter8adapters3map8map_foldyyuNCNvNtCs84qwSrTN5pO_7uu_shuf21nonrepeating_iterator14hashmap_to_vec0NCINvNvNtNtNtB1u_6traits8iterator8Iterator8for_each4callyNCINvMsk_NtCs7tKScEop1B6_5alloc3vecINtB4d_3VecyE14extend_trustedINtB1q_3MapINtNtB1s_3rev3RevINtNtB7_5range14RangeInclusiveyEEB23_EE0E0E0E0B29_.exit.i.i.i.i.i.i.i.i.us.i.preheader93
 
 _RNCINvMNtNtCs6JMX4GRUq9U_4core3ops9try_traitINtB5_17NeverShortCircuituE10wrap_mut_2uyNCINvNtNtNtB9_4iter8adapters3map8map_foldyyuNCNvNtCs84qwSrTN5pO_7uu_shuf21nonrepeating_iterator14hashmap_to_vec0NCINvNvNtNtNtB1u_6traits8iterator8Iterator8for_each4callyNCINvMsk_NtCs7tKScEop1B6_5alloc3vecINtB4d_3VecyE14extend_trustedINtB1q_3MapINtNtB1s_3rev3RevINtNtB7_5range14RangeInclusiveyEEB23_EE0E0E0E0B29_.exit.i.i.i.i.i.i.i.i.us.i.preheader93: ; preds = %_RNCINvMNtNtCs6JMX4GRUq9U_4core3ops9try_traitINtB5_17NeverShortCircuituE10wrap_mut_2uyNCINvNtNtNtB9_4iter8adapters3map8map_foldyyuNCNvNtCs84qwSrTN5pO_7uu_shuf21nonrepeating_iterator14hashmap_to_vec0NCINvNvNtNtNtB1u_6traits8iterator8Iterator8for_each4callyNCINvMsk_NtCs7tKScEop1B6_5alloc3vecINtB4d_3VecyE14extend_trustedINtB1q_3MapINtNtB1s_3rev3RevINtNtB7_5range14RangeInclusiveyEEB23_EE0E0E0E0B29_.exit.i.i.i.i.i.i.i.i.us.i.preheader, %middle.block

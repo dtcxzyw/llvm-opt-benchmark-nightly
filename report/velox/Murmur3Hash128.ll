@@ -29,29 +29,26 @@ define noundef i64 @_ZN8facebook5velox6common3hll14Murmur3Hash1286hash64EPKvil(p
 bb.a:
   %i.a = add i32 %1, -15                          ; 2 uses
   %i.b = icmp sgt i32 %i.a, 0
-  br i1 %i.b, label %.lr.ph.preheader, label %._crit_edge
+  br i1 %i.b, label %.lr.ph, label %._crit_edge
 
-.lr.ph.preheader:                                 ; preds = %bb.a
-  %3 = zext nneg i32 %i.a to i64
-  br label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 2 uses
-  %.0102115 = phi i64 [ %2, %.lr.ph.preheader ], [ %i.n, %.lr.ph ]
-  %.0105113 = phi i64 [ %2, %.lr.ph.preheader ], [ %i.x, %.lr.ph ] ; 2 uses
-  %i.c = getelementptr i8, ptr %0, i64 %indvars.iv ; 2 uses
+.lr.ph:                                           ; preds = %bb.a, %.lr.ph
+  %indvars.iv = phi i64 [ %i.n, %.lr.ph ], [ %2, %bb.a ]
+  %.0104114 = phi i32 [ %4, %.lr.ph ], [ 0, %bb.a ] ; 2 uses
+  %.0102115 = phi i64 [ %i.x, %.lr.ph ], [ %2, %bb.a ] ; 2 uses
+  %3 = sext i32 %.0104114 to i64
+  %i.c = getelementptr i8, ptr %0, i64 %3         ; 2 uses
   %.0.copyload.i.i = load i64, ptr %i.c, align 1  ; 2 uses
   %i.d = getelementptr i8, ptr %i.c, i64 8
   %.0.copyload.i.i112 = load i64, ptr %i.d, align 1 ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 16 ; 2 uses
+  %4 = add i32 %.0104114, 16                      ; 3 uses
   %i.e = mul i64 %.0.copyload.i.i, -8663945395140668459
   %i.f = mul i64 %.0.copyload.i.i, -8601547726154366976
   %i.g = lshr i64 %i.e, 33
   %i.h = or disjoint i64 %i.g, %i.f
   %i.i = mul i64 %i.h, 5545529020109919103
-  %i.j = xor i64 %i.i, %.0102115                  ; 2 uses
+  %i.j = xor i64 %i.i, %indvars.iv                ; 2 uses
   %i.k = tail call i64 @llvm.fshl.i64(i64 %i.j, i64 %i.j, i64 27)
-  %i.l = add i64 %i.k, %.0105113
+  %i.l = add i64 %i.k, %.0102115
   %i.m = mul i64 %i.l, 5
   %i.n = add i64 %i.m, 1390208809                 ; 3 uses
   %i.o = mul i64 %.0.copyload.i.i112, 5545529020109919103
@@ -59,17 +56,16 @@ bb.a:
   %i.q = lshr i64 %i.o, 31
   %i.r = or disjoint i64 %i.q, %i.p
   %i.s = mul i64 %i.r, -8663945395140668459
-  %i.t = xor i64 %i.s, %.0105113                  ; 2 uses
+  %i.t = xor i64 %i.s, %.0102115                  ; 2 uses
   %i.u = tail call i64 @llvm.fshl.i64(i64 %i.t, i64 %i.t, i64 31)
   %i.v = add i64 %i.n, %i.u
   %i.w = mul i64 %i.v, 5
   %i.x = add i64 %i.w, 944331445                  ; 2 uses
-  %4 = icmp samesign ult i64 %indvars.iv.next, %3
-  br i1 %4, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !9
+  %5 = icmp slt i32 %4, %i.a
+  br i1 %5, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !9
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph
-  %5 = and i32 %1, -16
-  %6 = sext i32 %5 to i64
+  %6 = zext nneg i32 %4 to i64
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
@@ -247,7 +243,7 @@ bb.b:                                             ; preds = %._crit_edge
 ._crit_edge._crit_edge:                           ; preds = %._crit_edge, %._crit_edge._crit_edge121
   %.8 = phi i64 [ %.7, %._crit_edge._crit_edge121 ], [ %.0105.lcssa, %._crit_edge ]
   %.6 = phi i64 [ %i.dh, %._crit_edge._crit_edge121 ], [ 0, %._crit_edge ]
-  %i.di = getelementptr inbounds i8, ptr %0, i64 %.0104.lcssa
+  %i.di = getelementptr inbounds nuw i8, ptr %0, i64 %.0104.lcssa
   %i.dj = load i8, ptr %i.di, align 1, !tbaa !8
   %i.dk = sext i8 %i.dj to i64
   %i.dl = xor i64 %.6, %i.dk                      ; 2 uses

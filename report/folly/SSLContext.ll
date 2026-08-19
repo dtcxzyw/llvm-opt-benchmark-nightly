@@ -203,9 +203,9 @@ define linkonce_odr void @_ZNSt21discrete_distributionIiE10param_type13_M_initia
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !9415 ; 6 uses
-  %i.c = load ptr, ptr %0, align 8, !tbaa !9318   ; 9 uses
-  %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
-  %i.e = ptrtoint ptr %i.c to i64                 ; 2 uses
+  %i.c = load ptr, ptr %0, align 8, !tbaa !9318   ; 10 uses
+  %i.d = ptrtoint ptr %i.b to i64                 ; 3 uses
+  %i.e = ptrtoint ptr %i.c to i64                 ; 3 uses
   %i.f = sub i64 %i.d, %i.e                       ; 4 uses
   %i.g = ashr exact i64 %i.f, 3                   ; 2 uses
   %i.h = icmp ult i64 %i.g, 2
@@ -237,9 +237,15 @@ bb.c:                                             ; preds = %bb.a
   %i.o = lshr i64 %i.n, 3                         ; 2 uses
   %i.p = add nuw nsw i64 %i.o, 1                  ; 2 uses
   %min.iters.check = icmp eq i64 %i.o, 0
-  br i1 %min.iters.check, label %.lr.ph.i10.preheader21, label %vector.ph
+  br i1 %min.iters.check, label %.lr.ph.i10.preheader21, label %vector.scevcheck
 
-vector.ph:                                        ; preds = %.lr.ph.i10.preheader
+vector.scevcheck:                                 ; preds = %.lr.ph.i10.preheader
+  %1 = sub i64 %i.d, %i.e
+  %2 = and i64 %1, 7
+  %ident.check.not = icmp eq i64 %2, 0
+  br i1 %ident.check.not, label %vector.ph, label %.lr.ph.i10.preheader21
+
+vector.ph:                                        ; preds = %vector.scevcheck
   %n.vec = and i64 %i.p, 4611686018427387902      ; 3 uses
   %i.q = shl i64 %n.vec, 3
   %i.r = getelementptr i8, ptr %i.c, i64 %i.q
@@ -262,8 +268,8 @@ middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.p, %n.vec
   br i1 %cmp.n, label %_ZNSt8__detail11__normalizeIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEES7_dEET0_T_S9_S8_RKT1_.exit, label %.lr.ph.i10.preheader21
 
-.lr.ph.i10.preheader21:                           ; preds = %.lr.ph.i10.preheader, %middle.block
-  %.sroa.0.07.i.ph = phi ptr [ %i.c, %.lr.ph.i10.preheader ], [ %i.r, %middle.block ]
+.lr.ph.i10.preheader21:                           ; preds = %vector.scevcheck, %.lr.ph.i10.preheader, %middle.block
+  %.sroa.0.07.i.ph = phi ptr [ %i.c, %vector.scevcheck ], [ %i.c, %.lr.ph.i10.preheader ], [ %i.r, %middle.block ]
   br label %.lr.ph.i10
 
 .lr.ph.i10:                                       ; preds = %.lr.ph.i10.preheader21, %.lr.ph.i10
@@ -666,7 +672,7 @@ begin_hunk_1_@llvm.umin.i32
 !9415 = !{!9182, !9183, i64 8}
 !9416 = distinct !{!9416, !9226}
 !9417 = distinct !{!9417, !9226, !9413, !9414}
-!9418 = distinct !{!9418, !9226, !9414, !9413}
+!9418 = distinct !{!9418, !9226, !9413}
 !9419 = distinct !{!9419, !9226}
 !9420 = !{!9421}
 !9421 = distinct !{!9421, !9422, !"_ZN5folly10SSLContext9getErrorsB5cxx11Ev: argument 0"}

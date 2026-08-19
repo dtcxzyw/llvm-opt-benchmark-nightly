@@ -204,13 +204,14 @@ bb.cu:                                            ; preds = %bb.ct
   br i1 %niter733.ncmp.1, label %.preheader.i.i.i.i.unr-lcssa, label %.preheader109.i.i.i.i, !llvm.loop !32
 
 bb.cv:                                            ; preds = %._crit_edge194.i.i.i.i, %.preheader.i.i.i.i
-  %indvars.iv283.i.i.i.i = phi i64 [ 0, %.preheader.i.i.i.i ], [ %indvars.iv.next284.i.i.i.i, %._crit_edge194.i.i.i.i ] ; 3 uses
+  %indvars.iv283.i.i.i.i = phi i64 [ 0, %.preheader.i.i.i.i ], [ %8, %._crit_edge194.i.i.i.i ]
+  %.3196.i.i.i.i = phi i32 [ 0, %.preheader.i.i.i.i ], [ %7, %._crit_edge194.i.i.i.i ] ; 2 uses
   %i.zb = getelementptr inbounds nuw i8, ptr %i.o, i64 %indvars.iv283.i.i.i.i
   %i.zc = load i8, ptr %i.zb, align 1, !tbaa !8   ; 3 uses
   %i.zd = zext nneg i8 %i.zc to i32
   %i.ze = shl nuw i32 1, %i.zd
   %i.zf = ashr i32 %i.ze, 1
-  %i.zg = trunc i64 %indvars.iv283.i.i.i.i to i8  ; 3 uses
+  %i.zg = trunc i32 %.3196.i.i.i.i to i8          ; 3 uses
   %i.zh = sub i8 %i.yo, %i.zc                     ; 3 uses
   %i.zi = zext i8 %i.zc to i64
   %i.zj = getelementptr inbounds nuw [4 x i8], ptr %i.p, i64 %i.zi ; 2 uses
@@ -297,9 +298,9 @@ vec.epilog.middle.block559:                       ; preds = %vec.epilog.vector.b
 
 ._crit_edge194.i.i.i.i:                           ; preds = %.lr.ph193.i.i.i.i, %middle.block542, %vec.epilog.middle.block559, %bb.cv
   store i32 %i.zl, ptr %i.zj, align 4, !tbaa !9
-  %indvars.iv.next284.i.i.i.i = add i64 %indvars.iv283.i.i.i.i, 1 ; 2 uses
-  %7 = and i64 %indvars.iv.next284.i.i.i.i, 4294967295
-  %.not104.i.i.i.i = icmp ult i64 %.084337.i.i.i.i, %7
+  %7 = add i32 %.3196.i.i.i.i, 1                  ; 2 uses
+  %8 = zext i32 %7 to i64                         ; 2 uses
+  %.not104.i.i.i.i = icmp ult i64 %.084337.i.i.i.i, %8
   br i1 %.not104.i.i.i.i, label %HUF_readDTable.exit.i.i.i, label %bb.cv, !llvm.loop !36
 
 HUF_readDTable.exit.thread.i.i.i:                 ; preds = %.lr.ph188.i.i.i.i, %bb.cu, %bb.ct, %bb.cs, %._crit_edge.i.i.i.i, %.loopexit.i.i.i.i, %FSE_decompress.exit.i.i.i.i, %FSE_decompress.exit.thread.i.i.i.i, %bb.p, %bb.o

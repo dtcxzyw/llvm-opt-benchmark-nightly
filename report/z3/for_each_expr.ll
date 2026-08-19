@@ -203,20 +203,19 @@ _ZNK6vectorIP4exprLb0EjE4sizeEv.exit33.preheader: ; preds = %_ZNK6vectorIP4exprL
   store ptr %2, ptr %i.am, align 8, !tbaa !42
   %i.an = add i32 %i.ai, 1
   store i32 %i.an, ptr %i.ak, align 4, !tbaa !71
-  %5 = zext i32 %.0.i61 to i64
   br label %_ZNK6vectorIP4exprLb0EjE4sizeEv.exit33
 
 _ZNK6vectorIP4exprLb0EjE4sizeEv.exit33:           ; preds = %_ZNK6vectorIP4exprLb0EjE4sizeEv.exit33.preheader, %.loopexit
-  %i.ao = phi ptr [ %i.aj, %_ZNK6vectorIP4exprLb0EjE4sizeEv.exit33.preheader ], [ %i.eb, %.loopexit ] ; 4 uses
-  %indvars.iv = phi i64 [ %5, %_ZNK6vectorIP4exprLb0EjE4sizeEv.exit33.preheader ], [ %indvars.iv.next, %.loopexit ] ; 3 uses
+  %i.ao = phi ptr [ %i.eb, %.loopexit ], [ %i.aj, %_ZNK6vectorIP4exprLb0EjE4sizeEv.exit33.preheader ] ; 4 uses
+  %.02665 = phi i32 [ %6, %.loopexit ], [ %.0.i61, %_ZNK6vectorIP4exprLb0EjE4sizeEv.exit33.preheader ] ; 3 uses
   %i.ap = getelementptr inbounds i8, ptr %i.ao, i64 -4
   %i.aq = load i32, ptr %i.ap, align 4, !tbaa !71
-  %6 = zext i32 %i.aq to i64
-  %i.ar = icmp samesign ult i64 %indvars.iv, %6
+  %i.ar = icmp ult i32 %.02665, %i.aq
   br i1 %i.ar, label %bb.f, label %.critedge
 
 bb.f:                                             ; preds = %_ZNK6vectorIP4exprLb0EjE4sizeEv.exit33
-  %i.as = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %indvars.iv
+  %5 = zext i32 %.02665 to i64
+  %i.as = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %5
   %i.at = load ptr, ptr %i.as, align 8, !tbaa !42 ; 3 uses
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 4
   %i.av = load i32, ptr %i.au, align 4
@@ -460,7 +459,7 @@ bb.w:                                             ; preds = %_ZN6vectorIP4exprLb
 
 .loopexit:                                        ; preds = %.loopexit.loopexit, %bb.g, %bb.f
   %i.eb = phi ptr [ %.pre, %.loopexit.loopexit ], [ %i.ao, %bb.g ], [ %i.ao, %bb.f ] ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %6 = add i32 %.02665, 1
   %i.ec = icmp eq ptr %i.eb, null
   br i1 %i.ec, label %.critedge, label %_ZNK6vectorIP4exprLb0EjE4sizeEv.exit33, !llvm.loop !85
 

@@ -204,7 +204,12 @@ bb.h:                                             ; preds = %bb.g, %.critedge77
 
 .preheader:                                       ; preds = %bb.h
   %i.aa = icmp ult i32 %.069, %i.l
-  br i1 %i.aa, label %.lr.ph, label %._crit_edge
+  br i1 %i.aa, label %.lr.ph.preheader, label %._crit_edge
+
+.lr.ph.preheader:                                 ; preds = %.preheader
+  %2 = zext i32 %.069 to i64
+  %wide.trip.count = zext i32 %i.l to i64
+  br label %.lr.ph
 
 bb.i:                                             ; preds = %bb.h
   %i.ab = sub nuw i32 %1, %i.p
@@ -217,11 +222,10 @@ bb.i:                                             ; preds = %bb.h
   %i.ai = getelementptr [8 x i8], ptr %i.n, i64 %i.ah
   br label %.loopexit
 
-.lr.ph:                                           ; preds = %.preheader, %bb.j
-  %.06683 = phi i32 [ %3, %bb.j ], [ %.069, %.preheader ] ; 2 uses
-  %.06782 = phi i32 [ %i.ap, %bb.j ], [ %i.y, %.preheader ]
-  %2 = zext i32 %.06683 to i64                    ; 2 uses
-  %i.aj = getelementptr [8 x i8], ptr %i.n, i64 %2
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.j
+  %indvars.iv = phi i64 [ %2, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.j ] ; 3 uses
+  %.06782 = phi i32 [ %i.y, %.lr.ph.preheader ], [ %i.ap, %bb.j ]
+  %i.aj = getelementptr [8 x i8], ptr %i.n, i64 %indvars.iv
   %i.ak = load i64, ptr %i.aj, align 8
   %i.al = trunc i64 %i.ak to i32
   %i.am = lshr i32 %i.al, 6
@@ -232,8 +236,8 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.aq, label %.loopexit.loopexit, label %bb.j
 
 bb.j:                                             ; preds = %.lr.ph
-  %3 = add nuw i32 %.06683, 1                     ; 2 uses
-  %exitcond.not = icmp eq i32 %3, %i.l
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !67
 
 ._crit_edge:                                      ; preds = %bb.j, %.preheader
@@ -243,7 +247,7 @@ bb.j:                                             ; preds = %.lr.ph
   br label %.loopexit
 
 .loopexit.loopexit:                               ; preds = %.lr.ph
-  %i.ar = getelementptr [8 x i8], ptr %i.n, i64 %2
+  %i.ar = getelementptr [8 x i8], ptr %i.n, i64 %indvars.iv
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.loopexit.loopexit, %bb.f, %bb.b, %._crit_edge, %bb.i, %bb.d

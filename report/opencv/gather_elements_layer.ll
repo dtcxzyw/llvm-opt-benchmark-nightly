@@ -203,7 +203,7 @@ bb.a:
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !125  ; 3 uses
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !339, !nonnull !154, !align !157
-  %i.x = load i32, ptr %i.w, align 4, !tbaa !80   ; 11 uses
+  %i.x = load i32, ptr %i.w, align 4, !tbaa !80   ; 13 uses
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !340, !nonnull !154, !align !155
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !125 ; 3 uses
@@ -342,11 +342,12 @@ _ZN2cv3dnnL15calculateOffsetEiRKNS_8MatShapeEiRKNS_7MatStepE.exit.us: ; preds = 
   %i.cg = sext i32 %i.cf to i64                   ; 6 uses
   %i.ch = load ptr, ptr %i.ah, align 8, !tbaa !345, !nonnull !154, !align !155 ; 3 uses
   %i.ci = sext i32 %i.a to i64
-  %i.cj = zext nneg i32 %i.x to i64               ; 3 uses
+  %i.cj = zext nneg i32 %i.x to i64
   %wide.trip.count63 = sext i32 %i.c to i64
-  %xtraiter85 = and i64 %i.cj, 1
+  %wide.trip.count58 = zext nneg i32 %i.x to i64  ; 2 uses
+  %xtraiter85 = and i64 %wide.trip.count58, 1
   %i.ck = icmp eq i32 %i.x, 1
-  %unroll_iter88 = and i64 %i.cj, 2147483646
+  %unroll_iter88 = and i64 %wide.trip.count58, 2147483646
   %lcmp.mod86.not = icmp eq i64 %xtraiter85, 0
   %lcmp.mod87 = trunc i32 %i.x to i1
   br label %.lr.ph.i.us34.us
@@ -454,11 +455,12 @@ _ZN2cv3dnnL15calculateOffsetEiRKNS_8MatShapeEiRKNS_7MatStepE.exit.loopexit.us44.
   %i.ei = sext i32 %i.eh to i64                   ; 6 uses
   %i.ej = load ptr, ptr %i.ah, align 8, !tbaa !345, !nonnull !154, !align !155 ; 3 uses
   %i.ek = sext i32 %i.a to i64
-  %i.el = zext nneg i32 %i.x to i64               ; 3 uses
+  %i.el = zext nneg i32 %i.x to i64
   %wide.trip.count53 = sext i32 %i.c to i64
-  %xtraiter = and i64 %i.el, 1
+  %wide.trip.count = zext nneg i32 %i.x to i64    ; 2 uses
+  %xtraiter = and i64 %wide.trip.count, 1
   %i.em = icmp eq i32 %i.x, 1
-  %unroll_iter = and i64 %i.el, 2147483646
+  %unroll_iter = and i64 %wide.trip.count, 2147483646
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %lcmp.mod83 = trunc i32 %i.x to i1
   br label %_ZN2cv3dnnL15calculateOffsetEiRKNS_8MatShapeEiRKNS_7MatStepE.exit

@@ -203,20 +203,21 @@ bb.c:                                             ; preds = %bb.b, %manifest_fil
   br i1 %i.y, label %bb.b, label %.preheader, !llvm.loop !12
 
 .lr.ph78:                                         ; preds = %.preheader, %.lr.ph78
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph78 ], [ 0, %.preheader ] ; 2 uses
-  %.04977.a = phi i32 [ %.2, %.lr.ph78 ], [ 0, %.preheader ] ; 2 uses
-  %.05076 = phi i32 [ %.151, %.lr.ph78 ], [ 0, %.preheader ]
+  %indvars.iv = phi i64 [ %2, %.lr.ph78 ], [ 0, %.preheader ]
+  %.04977 = phi i32 [ %.2, %.lr.ph78 ], [ 0, %.preheader ] ; 2 uses
+  %.04977.a = phi i32 [ %.151, %.lr.ph78 ], [ 0, %.preheader ]
+  %.05076 = phi i32 [ %1, %.lr.ph78 ], [ 0, %.preheader ]
   %i.z = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv
   %i.aa = load i32, ptr %i.z, align 4             ; 3 uses
   %i.ab = icmp eq i32 %i.aa, 0
   %i.ac = add i32 %i.aa, -1
-  %spec.select68 = tail call i32 @llvm.umax.i32(i32 %i.ac, i32 %.04977.a)
+  %spec.select68 = tail call i32 @llvm.umax.i32(i32 %i.ac, i32 %.04977)
   %i.ad = tail call i32 @llvm.usub.sat.i32(i32 %i.aa, i32 1)
-  %.151 = add i32 %i.ad, %.05076                  ; 2 uses
-  %.2 = select i1 %i.ab, i32 %.04977.a, i32 %spec.select68 ; 2 uses
-  %indvars.iv.next = add i64 %indvars.iv, 1       ; 2 uses
-  %1 = and i64 %indvars.iv.next, 4294967295
-  %i.ae = icmp samesign ugt i64 %i.v, %1
+  %.151 = add i32 %i.ad, %.04977.a                ; 2 uses
+  %.2 = select i1 %i.ab, i32 %.04977, i32 %spec.select68 ; 2 uses
+  %1 = add i32 %.05076, 1                         ; 2 uses
+  %2 = zext i32 %1 to i64                         ; 2 uses
+  %i.ae = icmp samesign ugt i64 %i.v, %2
   br i1 %i.ae, label %.lr.ph78, label %._crit_edge, !llvm.loop !13
 
 ._crit_edge:                                      ; preds = %.lr.ph78, %bb.a, %.preheader

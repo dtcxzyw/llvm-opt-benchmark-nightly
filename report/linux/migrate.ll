@@ -204,9 +204,11 @@ bb.bk:                                            ; preds = %bb.bj
   %i.hs = inttoptr i64 %i.hr to ptr
   %i.ht = getelementptr [8 x i8], ptr %i.a, i64 %indvars.iv.i.i
   store ptr %i.hs, ptr %i.ht, align 8
-  %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
-  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i.i, %i.hg
-  br i1 %exitcond.not.i, label %get_compat_pages_array.exit.thread.i.i.i, label %bb.bj, !llvm.loop !111
+  %indvars.iv.next.i.i = add nuw i64 %indvars.iv.i.i, 1 ; 2 uses
+  %sext.i.i = shl i64 %indvars.iv.next.i.i, 32
+  %13 = ashr exact i64 %sext.i.i, 32
+  %14 = icmp ugt i64 %i.hg, %13
+  br i1 %14, label %bb.bj, label %get_compat_pages_array.exit.thread.i.i.i, !llvm.loop !111
 
 copy_from_user.exit.i.i.i:                        ; preds = %bb.bh
   %i.hu = shl nuw nsw i64 %i.hg, 3

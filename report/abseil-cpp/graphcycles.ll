@@ -203,7 +203,8 @@ bb.r:                                             ; preds = %bb.q
   %i.an = getelementptr inbounds nuw i8, ptr %i.o, i64 80
   %i.ao = getelementptr inbounds nuw i8, ptr %i.o, i64 120
   %.val10.i = load ptr, ptr %i.an, align 8
-  %.val.i35 = load i32, ptr %i.ao, align 8, !tbaa !35 ; 2 uses
+  %.val.i35 = load i32, ptr %i.ao, align 8, !tbaa !35
+  %2 = zext i32 %.val.i35 to i64                  ; 2 uses
   br label %bb.v
 
 bb.s:                                             ; preds = %bb.r
@@ -220,22 +221,17 @@ bb.u:                                             ; preds = %bb.s
   br label %bb.ac
 
 bb.v:                                             ; preds = %.preheader, %bb.y
-  %.0 = phi i32 [ %3, %bb.y ], [ 0, %.preheader ] ; 3 uses
-  %umax = call i32 @llvm.umax.i32(i32 %.0, i32 %.val.i35)
-  %wide.trip.count = zext i32 %umax to i64
-  %exitcond.not134.not = icmp ult i32 %.0, %.val.i35
-  br i1 %exitcond.not134.not, label %.lr.ph137, label %_ZN4absl12lts_2026052624synchronization_internal12_GLOBAL__N_17NodeSet4NextEPiS4_.exit
-
-.lr.ph137:                                        ; preds = %bb.v
-  %2 = zext i32 %.0 to i64
-  br label %bb.x
+  %.0 = phi i64 [ %indvars.iv.next, %bb.y ], [ 0, %.preheader ] ; 3 uses
+  %umax = call i64 @llvm.umax.i64(i64 %.0, i64 %2)
+  %exitcond.not134.not = icmp ult i64 %.0, %2
+  br i1 %exitcond.not134.not, label %bb.x, label %_ZN4absl12lts_2026052624synchronization_internal12_GLOBAL__N_17NodeSet4NextEPiS4_.exit
 
 bb.w:                                             ; preds = %bb.x
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %umax
   br i1 %exitcond.not, label %_ZN4absl12lts_2026052624synchronization_internal12_GLOBAL__N_17NodeSet4NextEPiS4_.exit, label %bb.x
 
-bb.x:                                             ; preds = %.lr.ph137, %bb.w
-  %indvars.iv135 = phi i64 [ %2, %.lr.ph137 ], [ %indvars.iv.next, %bb.w ] ; 2 uses
+bb.x:                                             ; preds = %bb.v, %bb.w
+  %indvars.iv135 = phi i64 [ %indvars.iv.next, %bb.w ], [ %.0, %bb.v ] ; 2 uses
   %i.ar = getelementptr inbounds nuw [4 x i8], ptr %.val10.i, i64 %indvars.iv135
   %i.as = load i32, ptr %i.ar, align 4, !tbaa !41 ; 3 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv135, 1 ; 3 uses
@@ -250,7 +246,6 @@ _ZN4absl12lts_2026052624synchronization_internal12_GLOBAL__N_17NodeSet4NextEPiS4
   br i1 %i.av, label %bb.e, label %._crit_edge, !llvm.loop !52
 
 bb.y:                                             ; preds = %bb.x
-  %3 = trunc nuw i64 %indvars.iv.next to i32
   %.val33 = load ptr, ptr %i.a, align 8, !tbaa !22
   %i.aw = zext nneg i32 %i.as to i64
   %i.ax = getelementptr inbounds nuw [8 x i8], ptr %.val33, i64 %i.aw
@@ -651,6 +646,9 @@ declare i64 @llvm.ctlz.i64(i64, i1 immarg) #12
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #13
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umax.i64(i64, i64) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #14

@@ -205,7 +205,7 @@ bb.p:                                             ; preds = %.lr.ph258
   br label %_ZN4core5slice4sort6shared9smallsort11insert_tail17h5d8becbd777a0632E.exit.i
 
 _ZN4core5slice4sort6shared9smallsort11insert_tail17h5d8becbd777a0632E.exit.i: ; preds = %._crit_edge259, %.lr.ph.i
-  %i.de = icmp ult i64 %.sroa.08.110.i, %i.n      ; 2 uses
+  %i.de = icmp samesign ult i64 %.sroa.08.110.i, %i.n ; 2 uses
   %i.df = zext i1 %i.de to i64
   %.sroa.08.1.i = add nuw i64 %.sroa.08.110.i, %i.df
   br i1 %i.de, label %.lr.ph.i, label %.loopexit.i

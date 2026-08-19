@@ -204,7 +204,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #12
   %i.c = getelementptr i8, ptr %2, i64 134        ; 12 uses
   %i.d = load ptr, ptr @g_ascii_table, align 8    ; 8 uses
-  %i.e = sext i32 %3 to i64                       ; 7 uses
+  %i.e = sext i32 %3 to i64                       ; 3 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %bb.a
@@ -307,9 +307,9 @@ bb.d:                                             ; preds = %.lr.ph
 
 .preheader177:                                    ; preds = %.preheader179, %._crit_edge215
   %.0135.lcssa323 = phi i32 [ %.lcssa378, %._crit_edge215 ], [ 0, %.preheader179 ]
-  %.1145.lcssa311318322 = phi i32 [ %i.y, %._crit_edge215 ], [ %i.n, %.preheader179 ] ; 2 uses
-  %.2217 = add i32 %.1145.lcssa311318322, 1       ; 2 uses
-  %i.am = sext i32 %.2217 to i64                  ; 6 uses
+  %.1145.lcssa311318322 = phi i32 [ %i.y, %._crit_edge215 ], [ %i.n, %.preheader179 ] ; 6 uses
+  %.2217 = add i32 %.1145.lcssa311318322, 1       ; 3 uses
+  %i.am = sext i32 %.2217 to i64
   %i.an = getelementptr i8, ptr %i.c, i64 %i.am
   %i.ao = load i8, ptr %i.an, align 1             ; 4 uses
   %i.ap = icmp ne i8 %i.ao, 32
@@ -368,11 +368,12 @@ bb.d:                                             ; preds = %.lr.ph
 
 bb.e:                                             ; preds = %.lr.ph220
   store i8 %i.ao, ptr %i.b, align 1
-  %indvars.iv.next275 = add nuw nsw i64 %i.am, 1  ; 3 uses
-  %i.cb = getelementptr i8, ptr %i.c, i64 %indvars.iv.next275
+  %.2 = add i32 %.1145.lcssa311318322, 2          ; 3 uses
+  %4 = sext i32 %.2 to i64
+  %i.cb = getelementptr i8, ptr %i.c, i64 %4
   %i.cc = load i8, ptr %i.cb, align 1             ; 4 uses
   %i.cd = icmp ne i8 %i.cc, 32
-  %i.ce = icmp slt i64 %indvars.iv.next275, %i.e  ; 2 uses
+  %i.ce = icmp slt i32 %.2, %3                    ; 2 uses
   %i.cf = and i1 %i.ce, %i.cd
   br i1 %i.cf, label %.lr.ph220.1, label %._crit_edge221.loopexit
 
@@ -387,11 +388,12 @@ bb.e:                                             ; preds = %.lr.ph220
 bb.f:                                             ; preds = %.lr.ph220.1
   %i.ck = getelementptr inbounds nuw i8, ptr %i.b, i64 1
   store i8 %i.cc, ptr %i.ck, align 1
-  %indvars.iv.next275.1 = add nuw nsw i64 %i.am, 2 ; 3 uses
-  %i.cl = getelementptr i8, ptr %i.c, i64 %indvars.iv.next275.1
+  %.2.1 = add i32 %.1145.lcssa311318322, 3        ; 3 uses
+  %5 = sext i32 %.2.1 to i64
+  %i.cl = getelementptr i8, ptr %i.c, i64 %5
   %i.cm = load i8, ptr %i.cl, align 1             ; 4 uses
   %i.cn = icmp ne i8 %i.cm, 32
-  %i.co = icmp slt i64 %indvars.iv.next275.1, %i.e ; 2 uses
+  %i.co = icmp slt i32 %.2.1, %3                  ; 2 uses
   %i.cp = and i1 %i.co, %i.cn
   br i1 %i.cp, label %.lr.ph220.2, label %._crit_edge221.loopexit
 
@@ -406,11 +408,12 @@ bb.f:                                             ; preds = %.lr.ph220.1
 bb.g:                                             ; preds = %.lr.ph220.2
   %i.cu = getelementptr inbounds nuw i8, ptr %i.b, i64 2
   store i8 %i.cm, ptr %i.cu, align 1
-  %indvars.iv.next275.2 = add nuw nsw i64 %i.am, 3 ; 3 uses
-  %i.cv = getelementptr i8, ptr %i.c, i64 %indvars.iv.next275.2
+  %.2.2 = add i32 %.1145.lcssa311318322, 4        ; 3 uses
+  %6 = sext i32 %.2.2 to i64
+  %i.cv = getelementptr i8, ptr %i.c, i64 %6
   %i.cw = load i8, ptr %i.cv, align 1             ; 4 uses
   %i.cx = icmp ne i8 %i.cw, 32
-  %i.cy = icmp slt i64 %indvars.iv.next275.2, %i.e ; 2 uses
+  %i.cy = icmp slt i32 %.2.2, %3                  ; 2 uses
   %i.cz = and i1 %i.cy, %i.cx
   br i1 %i.cz, label %.lr.ph220.3, label %._crit_edge221.loopexit
 
@@ -425,10 +428,11 @@ bb.g:                                             ; preds = %.lr.ph220.2
 bb.h:                                             ; preds = %.lr.ph220.3
   %i.de = getelementptr inbounds nuw i8, ptr %i.b, i64 3
   store i8 %i.cw, ptr %i.de, align 1
-  %indvars.iv.next275.3 = add nuw nsw i64 %i.am, 4 ; 2 uses
-  %i.df = getelementptr i8, ptr %i.c, i64 %indvars.iv.next275.3
+  %.2.3 = add i32 %.1145.lcssa311318322, 5        ; 2 uses
+  %7 = sext i32 %.2.3 to i64
+  %i.df = getelementptr i8, ptr %i.c, i64 %7
   %i.dg = load i8, ptr %i.df, align 1
-  %i.dh = icmp slt i64 %indvars.iv.next275.3, %i.e
+  %i.dh = icmp slt i32 %.2.3, %3
   br label %._crit_edge221.loopexit
 
 ._crit_edge221.loopexit:                          ; preds = %bb.h, %bb.g, %bb.f, %bb.e
@@ -436,18 +440,17 @@ bb.h:                                             ; preds = %.lr.ph220.3
   %.lcssa377 = phi i8 [ %i.cc, %bb.e ], [ %i.cm, %bb.f ], [ %i.cw, %bb.g ], [ %i.dg, %bb.h ] ; 2 uses
   %.lcssa376 = phi i1 [ %i.ce, %bb.e ], [ %i.co, %bb.f ], [ %i.cy, %bb.g ], [ %i.dh, %bb.h ]
   %i.di = phi i1 [ true, %bb.e ], [ true, %bb.f ], [ true, %bb.g ], [ false, %bb.h ]
-  %indvars.iv274.lcssa374 = phi i64 [ %i.am, %bb.e ], [ %indvars.iv.next275, %bb.f ], [ %indvars.iv.next275.1, %bb.g ], [ %indvars.iv.next275.2, %bb.h ]
+  %.2219.lcssa373 = phi i32 [ %.2217, %bb.e ], [ %.2, %bb.f ], [ %.2.1, %bb.g ], [ %.2.2, %bb.h ] ; 2 uses
   br i1 %.lcssa376, label %.preheader176, label %.loopexit
 
 ._crit_edge221:                                   ; preds = %.preheader177
   br i1 %i.aq, label %.lr.ph227.preheader, label %.loopexit
 
 .preheader176:                                    ; preds = %._crit_edge221.loopexit
-  %4 = trunc nsw i64 %indvars.iv274.lcssa374 to i32 ; 2 uses
   br i1 %i.di, label %.lr.ph227.preheader, label %._crit_edge228
 
 .lr.ph227.preheader:                              ; preds = %._crit_edge221, %.preheader176
-  %.2.in.lcssa324334 = phi i32 [ %4, %.preheader176 ], [ %.1145.lcssa311318322, %._crit_edge221 ]
+  %.2.in.lcssa324334 = phi i32 [ %.2219.lcssa373, %.preheader176 ], [ %.1145.lcssa311318322, %._crit_edge221 ]
   %.0139.lcssa325332 = phi i32 [ %indvars.iv.next277.lcssa, %.preheader176 ], [ 0, %._crit_edge221 ] ; 2 uses
   %.lcssa193326331 = phi i8 [ %.lcssa377, %.preheader176 ], [ %i.ao, %._crit_edge221 ]
   %i.dj = zext nneg i32 %.0139.lcssa325332 to i64
@@ -458,7 +461,7 @@ bb.h:                                             ; preds = %.lr.ph220.3
   br label %._crit_edge228
 
 ._crit_edge228:                                   ; preds = %.lr.ph227.preheader, %.preheader176
-  %.2.in.lcssa324333 = phi i32 [ %.2.in.lcssa324334, %.lr.ph227.preheader ], [ %4, %.preheader176 ]
+  %.2.in.lcssa324333 = phi i32 [ %.2.in.lcssa324334, %.lr.ph227.preheader ], [ %.2219.lcssa373, %.preheader176 ]
   %.lcssa193326330 = phi i8 [ %.lcssa193326331, %.lr.ph227.preheader ], [ %.lcssa377, %.preheader176 ]
   %i.dl = load i8, ptr %i.b, align 1
   %i.dm = sext i8 %i.dl to i32

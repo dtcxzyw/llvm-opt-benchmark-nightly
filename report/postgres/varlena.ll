@@ -204,8 +204,6 @@ bb.u:                                             ; preds = %bb.s, %bb.t
   %i.br = add i32 %i.bj, -1
   %i.bs = sext i32 %i.br to i64
   %i.bt = getelementptr inbounds i8, ptr %.0257366, i64 %i.bs
-  %9 = sext i32 %.0237 to i64
-  %wide.trip.count384 = sext i32 %.5 to i64
   %i.bu = zext i32 %i.bj to i64
   %or.cond481 = icmp slt i32 %i.bj, 2
   br label %bb.v
@@ -318,26 +316,26 @@ middle.block477:                                  ; preds = %vector.body469
   br label %.lr.ph351
 
 bb.v:                                             ; preds = %.lr.ph348, %bb.y
-  %indvars.iv381 = phi i64 [ %9, %.lr.ph348 ], [ %indvars.iv.next382, %bb.y ] ; 4 uses
+  %.1347 = phi i32 [ %.0237, %.lr.ph348 ], [ %14, %bb.y ] ; 3 uses
   %.0238345 = phi ptr [ %.0275362, %.lr.ph348 ], [ %i.ej, %bb.y ] ; 3 uses
-  %10 = shl i64 %indvars.iv381, 32
-  %sext = add i64 %10, -4294967296
-  %11 = ashr exact i64 %sext, 32                  ; 4 uses
-  %12 = getelementptr inbounds [4 x i8], ptr %.0259, i64 %11
-  %13 = load i32, ptr %12, align 4                ; 3 uses
-  %i.dh = getelementptr inbounds [4 x i8], ptr %.0261363, i64 %indvars.iv381
+  %9 = add i32 %.1347, -1
+  %10 = sext i32 %9 to i64                        ; 4 uses
+  %11 = getelementptr inbounds [4 x i8], ptr %.0259, i64 %10
+  %12 = load i32, ptr %11, align 4                ; 3 uses
+  %13 = sext i32 %.1347 to i64                    ; 2 uses
+  %i.dh = getelementptr inbounds [4 x i8], ptr %.0261363, i64 %13
   %i.di = load i32, ptr %i.dh, align 4
   %i.dj = add i32 %i.di, %4
-  %i.dk = getelementptr inbounds [4 x i8], ptr %.0260364, i64 %11
+  %i.dk = getelementptr inbounds [4 x i8], ptr %.0260364, i64 %10
   %i.dl = load i32, ptr %i.dk, align 4
   %i.dm = add i32 %i.dl, %5
-  %i.dn = add i32 %13, -1
+  %i.dn = add i32 %12, -1
   %i.do = sext i32 %i.dn to i64
   %i.dp = getelementptr inbounds i8, ptr %.0238345, i64 %i.do
   %i.dq = load i8, ptr %i.dp, align 1
   %i.dr = load i8, ptr %i.bt, align 1
   %i.ds = icmp eq i8 %i.dq, %i.dr
-  %i.dt = icmp eq i32 %13, %i.bj
+  %i.dt = icmp eq i32 %12, %i.bj
   %or.cond315 = select i1 %i.ds, i1 %i.dt, i1 false
   br i1 %or.cond315, label %bb.w, label %rest_of_char_same.exit
 
@@ -360,12 +358,12 @@ bb.x:                                             ; preds = %.lr.ph428
   br i1 %.not.i, label %bb.x, label %rest_of_char_same.exit, !llvm.loop !69
 
 rest_of_char_same.exit.thread:                    ; preds = %bb.x, %bb.w
-  %i.eb = getelementptr inbounds [4 x i8], ptr %.0261363, i64 %11
+  %i.eb = getelementptr inbounds [4 x i8], ptr %.0261363, i64 %10
   %i.ec = load i32, ptr %i.eb, align 4
   br label %bb.y
 
 rest_of_char_same.exit:                           ; preds = %.lr.ph428, %bb.v
-  %i.ed = getelementptr inbounds [4 x i8], ptr %.0261363, i64 %11
+  %i.ed = getelementptr inbounds [4 x i8], ptr %.0261363, i64 %10
   %i.ee = load i32, ptr %i.ed, align 4
   %i.ef = add i32 %i.ee, %.2274
   br label %bb.y
@@ -373,13 +371,13 @@ rest_of_char_same.exit:                           ; preds = %.lr.ph428, %bb.v
 bb.y:                                             ; preds = %rest_of_char_same.exit, %rest_of_char_same.exit.thread
   %.0 = phi i32 [ %i.ec, %rest_of_char_same.exit.thread ], [ %i.ef, %rest_of_char_same.exit ]
   %i.eg = tail call i32 @llvm.smin.i32(i32 %i.dj, i32 %i.dm)
-  %i.eh = getelementptr inbounds [4 x i8], ptr %.0260364, i64 %indvars.iv381
+  %i.eh = getelementptr inbounds [4 x i8], ptr %.0260364, i64 %13
   %..0 = tail call i32 @llvm.smin.i32(i32 %i.eg, i32 %.0)
   store i32 %..0, ptr %i.eh, align 4
-  %i.ei = sext i32 %13 to i64
+  %i.ei = sext i32 %12 to i64
   %i.ej = getelementptr inbounds i8, ptr %.0238345, i64 %i.ei
-  %indvars.iv.next382 = add nsw i64 %indvars.iv381, 1 ; 2 uses
-  %exitcond385.not = icmp eq i64 %indvars.iv.next382, %wide.trip.count384
+  %14 = add nsw i32 %.1347, 1                     ; 2 uses
+  %exitcond385.not = icmp eq i32 %14, %.5
   br i1 %exitcond385.not, label %.loopexit, label %bb.v, !llvm.loop !92
 
 .lr.ph351:                                        ; preds = %.lr.ph351.preheader482, %.lr.ph351

@@ -203,33 +203,34 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 define internal void @_ZN4ojph5localL16proc_vlc_encode1EPNS0_17vlc_struct_avx512EPjS3_j(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, i32 noundef %3) unnamed_addr #6 {
 bb.a:
   %i.a = lshr i32 %3, 1                           ; 2 uses
+  %4 = sub nsw i32 16, %i.a                       ; 2 uses
   %.not112 = icmp eq i32 %i.a, 16
   br i1 %.not112, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %4 = sub nsw i32 16, %i.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
-  %5 = zext i32 %4 to i64                         ; 2 uses
   br label %bb.b
 
 ._crit_edge:                                      ; preds = %_ZN4ojph5localL10vlc_encodeEPNS0_17vlc_struct_avx512Eji.exit, %bb.a
   ret void
 
 bb.b:                                             ; preds = %.lr.ph, %_ZN4ojph5localL10vlc_encodeEPNS0_17vlc_struct_avx512Eji.exit
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZN4ojph5localL10vlc_encodeEPNS0_17vlc_struct_avx512Eji.exit ] ; 4 uses
-  %i.f = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv
+  %.0104111 = phi i32 [ 0, %.lr.ph ], [ %9, %_ZN4ojph5localL10vlc_encodeEPNS0_17vlc_struct_avx512Eji.exit ] ; 3 uses
+  %5 = zext i32 %.0104111 to i64                  ; 2 uses
+  %i.f = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %5
   %i.g = load i32, ptr %i.f, align 4, !tbaa !8    ; 2 uses
   %i.h = lshr i32 %i.g, 4                         ; 2 uses
   %i.i = and i32 %i.g, 7                          ; 3 uses
-  %6 = or disjoint i64 %indvars.iv, 1             ; 3 uses
-  %i.j = icmp samesign ult i64 %6, %5
+  %6 = or disjoint i32 %.0104111, 1               ; 3 uses
+  %i.j = icmp ult i32 %6, %4
   br i1 %i.j, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.k = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %6
+  %7 = zext i32 %6 to i64
+  %i.k = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %7
   %i.l = load i32, ptr %i.k, align 4, !tbaa !8    ; 2 uses
   %i.m = lshr i32 %i.l, 4
   %i.n = shl i32 %i.m, %i.i
@@ -241,10 +242,11 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c, %bb.b
   %.0102 = phi i32 [ %i.o, %bb.c ], [ %i.h, %bb.b ]
   %.0 = phi i32 [ %i.q, %bb.c ], [ %i.i, %bb.b ]  ; 6 uses
-  %i.r = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv
+  %i.r = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %5
   %i.s = load i32, ptr %i.r, align 4, !tbaa !8    ; 4 uses
   %i.t = icmp ugt i32 %i.s, 2
-  %i.u = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %6
+  %8 = zext i32 %6 to i64
+  %i.u = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %8
   %i.v = load i32, ptr %i.u, align 4, !tbaa !8    ; 5 uses
   br i1 %i.t, label %bb.e, label %._crit_edge114
 
@@ -424,8 +426,8 @@ bb.p:                                             ; preds = %bb.o, %bb.n, %bb.m
   br i1 %i.ef, label %bb.k, label %_ZN4ojph5localL10vlc_encodeEPNS0_17vlc_struct_avx512Eji.exit, !llvm.loop !66
 
 _ZN4ojph5localL10vlc_encodeEPNS0_17vlc_struct_avx512Eji.exit: ; preds = %bb.p, %bb.j
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %i.eg = icmp samesign ult i64 %indvars.iv.next, %5
+  %9 = add i32 %.0104111, 2                       ; 2 uses
+  %i.eg = icmp ult i32 %9, %4
   br i1 %i.eg, label %bb.b, label %._crit_edge, !llvm.loop !67
 }
 
@@ -503,33 +505,34 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 define internal void @_ZN4ojph5localL16proc_vlc_encode2EPNS0_17vlc_struct_avx512EPjS3_j(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, i32 noundef %3) unnamed_addr #6 {
 bb.a:
   %i.a = lshr i32 %3, 1                           ; 2 uses
+  %4 = sub nsw i32 16, %i.a                       ; 2 uses
   %.not = icmp eq i32 %i.a, 16
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %4 = sub nsw i32 16, %i.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
-  %5 = zext i32 %4 to i64                         ; 2 uses
   br label %bb.b
 
 ._crit_edge:                                      ; preds = %_ZN4ojph5localL10vlc_encodeEPNS0_17vlc_struct_avx512Eji.exit, %bb.a
   ret void
 
 bb.b:                                             ; preds = %.lr.ph, %_ZN4ojph5localL10vlc_encodeEPNS0_17vlc_struct_avx512Eji.exit
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZN4ojph5localL10vlc_encodeEPNS0_17vlc_struct_avx512Eji.exit ] ; 4 uses
-  %i.f = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv
+  %.04851 = phi i32 [ 0, %.lr.ph ], [ %8, %_ZN4ojph5localL10vlc_encodeEPNS0_17vlc_struct_avx512Eji.exit ] ; 3 uses
+  %5 = zext i32 %.04851 to i64                    ; 2 uses
+  %i.f = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %5
   %i.g = load i32, ptr %i.f, align 4, !tbaa !8    ; 2 uses
   %i.h = lshr i32 %i.g, 4                         ; 2 uses
   %i.i = and i32 %i.g, 7                          ; 3 uses
-  %6 = or disjoint i64 %indvars.iv, 1             ; 3 uses
-  %i.j = icmp samesign ult i64 %6, %5
+  %6 = or disjoint i32 %.04851, 1                 ; 2 uses
+  %i.j = icmp ult i32 %6, %4
+  %7 = zext i32 %6 to i64                         ; 2 uses
   br i1 %i.j, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.k = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %6
+  %i.k = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %7
   %i.l = load i32, ptr %i.k, align 4, !tbaa !8    ; 2 uses
   %i.m = lshr i32 %i.l, 4
   %i.n = shl i32 %i.m, %i.i
@@ -538,10 +541,10 @@ bb.c:                                             ; preds = %bb.b
   %i.q = add nuw nsw i32 %i.p, %i.i
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.c, %bb.b
+bb.d:                                             ; preds = %bb.b, %bb.c
   %.047 = phi i32 [ %i.o, %bb.c ], [ %i.h, %bb.b ]
   %.0 = phi i32 [ %i.q, %bb.c ], [ %i.i, %bb.b ]  ; 2 uses
-  %i.r = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv
+  %i.r = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %5
   %i.s = load i32, ptr %i.r, align 4, !tbaa !8
   %i.t = zext i32 %i.s to i64                     ; 4 uses
   %i.u = getelementptr inbounds nuw [4 x i8], ptr @_ZN4ojph5localL12ulvc_cwd_preE, i64 %i.t
@@ -551,7 +554,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.y = getelementptr inbounds nuw [4 x i8], ptr @_ZN4ojph5localL16ulvc_cwd_pre_lenE, i64 %i.t
   %i.z = load i32, ptr %i.y, align 4, !tbaa !8
   %i.aa = add nsw i32 %i.z, %.0                   ; 2 uses
-  %i.ab = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %6
+  %i.ab = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %7
   %i.ac = load i32, ptr %i.ab, align 4, !tbaa !8
   %i.ad = zext i32 %i.ac to i64                   ; 4 uses
   %i.ae = getelementptr inbounds nuw [4 x i8], ptr @_ZN4ojph5localL12ulvc_cwd_preE, i64 %i.ad
@@ -648,8 +651,8 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g
   br i1 %i.cg, label %bb.e, label %_ZN4ojph5localL10vlc_encodeEPNS0_17vlc_struct_avx512Eji.exit, !llvm.loop !66
 
 _ZN4ojph5localL10vlc_encodeEPNS0_17vlc_struct_avx512Eji.exit: ; preds = %bb.j, %bb.d
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %i.ch = icmp samesign ult i64 %indvars.iv.next, %5
+  %8 = add i32 %.04851, 2                         ; 2 uses
+  %i.ch = icmp ult i32 %8, %4
   br i1 %i.ch, label %bb.b, label %._crit_edge, !llvm.loop !69
 }
 

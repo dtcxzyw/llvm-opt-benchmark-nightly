@@ -204,24 +204,23 @@ get_docrep.exit:                                  ; preds = %bb.v, %bb.r
   %i.fb = getelementptr inbounds nuw i8, ptr %.0.lcssa.i, i64 24
   %i.fc = ptrtoint ptr %i.fb to i64
   %i.fd = sub i64 %i.fc, %i.dz
-  %i.fe = sdiv exact i64 %i.fd, 24
+  %i.fe = sdiv exact i64 %i.fd, 24                ; 2 uses
+  %5 = trunc i64 %i.fe to i32
   %sext = shl i64 %i.fe, 32
-  %i.ff = ashr exact i64 %sext, 32                ; 2 uses
+  %i.ff = ashr exact i64 %sext, 32
   br label %bb.w
 
 bb.w:                                             ; preds = %get_docrep.exit, %bb.ap
-  %.promoted164 = phi i64 [ %6, %bb.ap ], [ 0, %get_docrep.exit ]
+  %.promoted164 = phi i32 [ %10, %bb.ap ], [ 0, %get_docrep.exit ] ; 2 uses
   %.086 = phi double [ %.1, %bb.ap ], [ 0.000000e+00, %get_docrep.exit ] ; 3 uses
   %.085 = phi double [ %i.lz, %bb.ap ], [ 0.000000e+00, %get_docrep.exit ] ; 2 uses
   %.084 = phi i32 [ %i.mj, %bb.ap ], [ 0, %get_docrep.exit ] ; 4 uses
   %i.fg = phi <2 x double> [ %i.mk, %bb.ap ], [ zeroinitializer, %get_docrep.exit ] ; 2 uses
-  %sext222 = shl i64 %.promoted164, 32
-  %5 = ashr exact i64 %sext222, 32                ; 2 uses
-  %smax = call i64 @llvm.smax.i64(i64 %5, i64 %i.ff)
+  %smax = call i32 @llvm.smax.i32(i32 %.promoted164, i32 %5)
   br label %tailrecurse.i
 
 tailrecurse.i:                                    ; preds = %.loopexit.i108.thread, %bb.w
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.loopexit.i108.thread ], [ %5, %bb.w ] ; 5 uses
+  %6 = phi i32 [ %8, %.loopexit.i108.thread ], [ %.promoted164, %bb.w ] ; 3 uses
   call void @check_stack_depth() #10, !inline_history !16
   %i.fh = load ptr, ptr %4, align 8
   %i.fi = getelementptr inbounds nuw i8, ptr %i.fh, i64 4
@@ -251,15 +250,16 @@ tailrecurse.i:                                    ; preds = %.loopexit.i108.thre
   br i1 %i.fx, label %.lr.ph.i.i, label %resetQueryRepresentation.exit.i, !llvm.loop !17
 
 resetQueryRepresentation.exit.i:                  ; preds = %.lr.ph.i.i, %tailrecurse.i
-  %exitcond.not = icmp eq i64 %indvars.iv, %smax
+  %exitcond.not = icmp eq i32 %6, %smax
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %resetQueryRepresentation.exit.i
-  %i.fy = getelementptr inbounds [24 x i8], ptr %.3.i, i64 %indvars.iv ; 2 uses
+  %7 = sext i32 %6 to i64                         ; 3 uses
+  %i.fy = getelementptr inbounds [24 x i8], ptr %.3.i, i64 %7 ; 2 uses
   br label %.lr.ph.i106
 
 .lr.ph.i106:                                      ; preds = %bb.af, %.lr.ph.preheader.i
-  %i.fz = phi i64 [ %i.iu, %bb.af ], [ %indvars.iv, %.lr.ph.preheader.i ]
+  %i.fz = phi i64 [ %i.iu, %bb.af ], [ %7, %.lr.ph.preheader.i ]
   %.05183.i = phi ptr [ %i.ir, %bb.af ], [ %i.fy, %.lr.ph.preheader.i ] ; 8 uses
   %i.ga = getelementptr inbounds nuw i8, ptr %.05183.i, i64 8 ; 2 uses
   %i.gb = load i16, ptr %i.ga, align 8
@@ -385,7 +385,7 @@ bb.ae:                                            ; preds = %bb.ad
 resetQueryRepresentation.exit62.i:                ; preds = %.lr.ph.i59.i, %bb.ae
   %sext.i = shl i64 %i.fz, 32
   %i.ip = ashr exact i64 %sext.i, 32              ; 2 uses
-  %.not84.i = icmp slt i64 %i.ip, %indvars.iv
+  %.not84.i = icmp slt i64 %i.ip, %7
   br i1 %.not84.i, label %.loopexit.i108.thread, label %.lr.ph86.i.preheader
 
 .lr.ph86.i.preheader:                             ; preds = %resetQueryRepresentation.exit62.i
@@ -501,7 +501,7 @@ bb.am:                                            ; preds = %fillQueryRepresenta
   br i1 %.not55.i, label %.loopexit.i108.thread, label %bb.an
 
 .loopexit.i108.thread:                            ; preds = %bb.am, %resetQueryRepresentation.exit62.i, %.loopexit.i108
-  %indvars.iv.next = add nsw i64 %indvars.iv, 1
+  %8 = add i32 %6, 1
   br label %tailrecurse.i
 
 bb.an:                                            ; preds = %.loopexit.i108
@@ -510,7 +510,8 @@ bb.an:                                            ; preds = %.loopexit.i108
   %i.kx = ptrtoint ptr %.185.i to i64
   %i.ky = sub i64 %i.kx, %i.dz
   %i.kz = sdiv exact i64 %i.ky, 24
-  %6 = add nsw i64 %i.kz, 1
+  %9 = trunc i64 %i.kz to i32
+  %10 = add i32 %9, 1
   %.not105159 = icmp ugt ptr %.185.i, %.05183.i
   br i1 %.not105159, label %._crit_edge, label %.lr.ph
 
@@ -913,7 +914,7 @@ declare float @sqrtf(float) local_unnamed_addr
 declare i16 @llvm.umax.i16(i16, i16) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smax.i64(i64, i64) #6
+declare i32 @llvm.smax.i32(i32, i32) #6
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

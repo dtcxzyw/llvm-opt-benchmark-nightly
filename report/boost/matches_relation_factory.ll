@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %.critedge.thread97
   br i1 %.not.i, label %_ZN5boost13re_detail_60011count_charsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEEjRKT_T0_.exit, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %bb.h
-  %min.iters.check = icmp ult i64 %i.n, 8
+  %min.iters.check = icmp ult i64 %i.n, 12
   br i1 %min.iters.check, label %.lr.ph.i.preheader168, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph.i.preheader
@@ -216,7 +216,8 @@ vector.scevcheck:                                 ; preds = %.lr.ph.i.preheader
   br i1 %i.as, label %.lr.ph.i.preheader168, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.scevcheck
-  %n.vec = and i64 %i.n, 8589934584               ; 3 uses
+  %n.vec = and i64 %i.n, 8589934584               ; 4 uses
+  %5 = trunc i64 %n.vec to i32
   %broadcast.splatinsert = insertelement <4 x i8> poison, i8 %i.an, i64 0
   %broadcast.splat = shufflevector <4 x i8> %broadcast.splatinsert, <4 x i8> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %vector.body
@@ -247,20 +248,22 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.i.preheader168:                            ; preds = %vector.scevcheck, %.lr.ph.i.preheader, %middle.block
   %indvars.iv.i.ph = phi i64 [ 0, %vector.scevcheck ], [ 0, %.lr.ph.i.preheader ], [ %n.vec, %middle.block ]
+  %.010.i.ph = phi i32 [ 0, %vector.scevcheck ], [ 0, %.lr.ph.i.preheader ], [ %5, %middle.block ]
   %.079.i.ph = phi i32 [ 0, %vector.scevcheck ], [ 0, %.lr.ph.i.preheader ], [ %i.bc, %middle.block ]
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader168, %.lr.ph.i
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.lr.ph.i ], [ %indvars.iv.i.ph, %.lr.ph.i.preheader168 ] ; 2 uses
+  %indvars.iv.i = phi i64 [ %7, %.lr.ph.i ], [ %indvars.iv.i.ph, %.lr.ph.i.preheader168 ]
+  %.010.i = phi i32 [ %6, %.lr.ph.i ], [ %.010.i.ph, %.lr.ph.i.preheader168 ]
   %.079.i = phi i32 [ %spec.select.i, %.lr.ph.i ], [ %.079.i.ph, %.lr.ph.i.preheader168 ]
   %i.bd = getelementptr inbounds nuw i8, ptr %i.al, i64 %indvars.iv.i
   %i.be = load i8, ptr %i.bd, align 1, !tbaa !16
   %i.bf = icmp eq i8 %i.be, %i.an
   %i.bg = zext i1 %i.bf to i32
   %spec.select.i = add i32 %.079.i, %i.bg         ; 2 uses
-  %indvars.iv.next.i = add i64 %indvars.iv.i, 1   ; 2 uses
-  %5 = and i64 %indvars.iv.next.i, 4294967295
-  %i.bh = icmp ugt i64 %i.n, %5
+  %6 = add i32 %.010.i, 1                         ; 2 uses
+  %7 = zext i32 %6 to i64                         ; 2 uses
+  %i.bh = icmp ugt i64 %i.n, %7
   br i1 %i.bh, label %.lr.ph.i, label %_ZN5boost13re_detail_60011count_charsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEEjRKT_T0_.exit, !llvm.loop !237
 
 _ZN5boost13re_detail_60011count_charsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEEjRKT_T0_.exit: ; preds = %.lr.ph.i, %middle.block, %bb.h
@@ -270,7 +273,7 @@ _ZN5boost13re_detail_60011count_charsINSt7__cxx1112basic_stringIcSt11char_traits
 
 .lr.ph.i33:                                       ; preds = %_ZN5boost13re_detail_60011count_charsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEEjRKT_T0_.exit
   %i.bi = load ptr, ptr %3, align 8, !tbaa !14    ; 2 uses
-  %min.iters.check107 = icmp ult i64 %.fr80, 8
+  %min.iters.check107 = icmp ult i64 %.fr80, 12
   br i1 %min.iters.check107, label %scalar.ph106.preheader, label %vector.scevcheck105
 
 vector.scevcheck105:                              ; preds = %.lr.ph.i33
@@ -282,7 +285,8 @@ vector.scevcheck105:                              ; preds = %.lr.ph.i33
   br i1 %i.bn, label %scalar.ph106.preheader, label %vector.ph108
 
 vector.ph108:                                     ; preds = %vector.scevcheck105
-  %n.vec109 = and i64 %.fr80, 8589934584          ; 3 uses
+  %n.vec109 = and i64 %.fr80, 8589934584          ; 4 uses
+  %8 = trunc i64 %n.vec109 to i32
   %broadcast.splatinsert110 = insertelement <4 x i8> poison, i8 %i.an, i64 0
   %broadcast.splat111 = shufflevector <4 x i8> %broadcast.splatinsert110, <4 x i8> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %vector.body112
@@ -313,20 +317,22 @@ middle.block119:                                  ; preds = %vector.body112
 
 scalar.ph106.preheader:                           ; preds = %vector.scevcheck105, %.lr.ph.i33, %middle.block119
   %indvars.iv.i34.ph = phi i64 [ 0, %vector.scevcheck105 ], [ 0, %.lr.ph.i33 ], [ %n.vec109, %middle.block119 ]
+  %.010.i34.ph = phi i32 [ 0, %vector.scevcheck105 ], [ 0, %.lr.ph.i33 ], [ %8, %middle.block119 ]
   %.079.i35.ph = phi i32 [ 0, %vector.scevcheck105 ], [ 0, %.lr.ph.i33 ], [ %i.bx, %middle.block119 ]
   br label %scalar.ph106
 
 scalar.ph106:                                     ; preds = %scalar.ph106.preheader, %scalar.ph106
-  %indvars.iv.i34 = phi i64 [ %indvars.iv.next.i37, %scalar.ph106 ], [ %indvars.iv.i34.ph, %scalar.ph106.preheader ] ; 2 uses
+  %indvars.iv.i34 = phi i64 [ %10, %scalar.ph106 ], [ %indvars.iv.i34.ph, %scalar.ph106.preheader ]
+  %.010.i34 = phi i32 [ %9, %scalar.ph106 ], [ %.010.i34.ph, %scalar.ph106.preheader ]
   %.079.i35 = phi i32 [ %spec.select.i36, %scalar.ph106 ], [ %.079.i35.ph, %scalar.ph106.preheader ]
   %i.by = getelementptr inbounds nuw i8, ptr %i.bi, i64 %indvars.iv.i34
   %i.bz = load i8, ptr %i.by, align 1, !tbaa !16
   %i.ca = icmp eq i8 %i.bz, %i.an
   %i.cb = zext i1 %i.ca to i32
   %spec.select.i36 = add i32 %.079.i35, %i.cb     ; 2 uses
-  %indvars.iv.next.i37 = add i64 %indvars.iv.i34, 1 ; 2 uses
-  %6 = and i64 %indvars.iv.next.i37, 4294967295
-  %i.cc = icmp ugt i64 %.fr80, %6
+  %9 = add i32 %.010.i34, 1                       ; 2 uses
+  %10 = zext i32 %9 to i64                        ; 2 uses
+  %i.cc = icmp ugt i64 %.fr80, %10
   br i1 %i.cc, label %scalar.ph106, label %_ZN5boost13re_detail_60011count_charsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEEjRKT_T0_.exit39, !llvm.loop !239
 
 _ZN5boost13re_detail_60011count_charsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEEjRKT_T0_.exit39: ; preds = %scalar.ph106, %middle.block119, %_ZN5boost13re_detail_60011count_charsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEEjRKT_T0_.exit
@@ -338,7 +344,7 @@ bb.i:                                             ; preds = %_ZN5boost13re_detai
   br i1 %.not.i, label %_ZN5boost13re_detail_60011count_charsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEEjRKT_T0_.exit47, label %.lr.ph.i41.preheader
 
 .lr.ph.i41.preheader:                             ; preds = %bb.i
-  %min.iters.check126 = icmp ult i64 %i.n, 8
+  %min.iters.check126 = icmp ult i64 %i.n, 12
   br i1 %min.iters.check126, label %.lr.ph.i41.preheader163, label %vector.scevcheck124
 
 vector.scevcheck124:                              ; preds = %.lr.ph.i41.preheader
@@ -350,7 +356,8 @@ vector.scevcheck124:                              ; preds = %.lr.ph.i41.preheade
   br i1 %i.ci, label %.lr.ph.i41.preheader163, label %vector.ph127
 
 vector.ph127:                                     ; preds = %vector.scevcheck124
-  %n.vec128 = and i64 %i.n, 8589934584            ; 3 uses
+  %n.vec128 = and i64 %i.n, 8589934584            ; 4 uses
+  %11 = trunc i64 %n.vec128 to i32
   %broadcast.splatinsert129 = insertelement <4 x i8> poison, i8 %i.an, i64 0
   %broadcast.splat130 = shufflevector <4 x i8> %broadcast.splatinsert129, <4 x i8> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %vector.body131
@@ -381,20 +388,22 @@ middle.block138:                                  ; preds = %vector.body131
 
 .lr.ph.i41.preheader163:                          ; preds = %vector.scevcheck124, %.lr.ph.i41.preheader, %middle.block138
   %indvars.iv.i42.ph = phi i64 [ 0, %vector.scevcheck124 ], [ 0, %.lr.ph.i41.preheader ], [ %n.vec128, %middle.block138 ]
+  %.010.i41.ph = phi i32 [ 0, %vector.scevcheck124 ], [ 0, %.lr.ph.i41.preheader ], [ %11, %middle.block138 ]
   %.079.i43.ph = phi i32 [ 0, %vector.scevcheck124 ], [ 0, %.lr.ph.i41.preheader ], [ %i.cs, %middle.block138 ]
   br label %.lr.ph.i41
 
 .lr.ph.i41:                                       ; preds = %.lr.ph.i41.preheader163, %.lr.ph.i41
-  %indvars.iv.i42 = phi i64 [ %indvars.iv.next.i45, %.lr.ph.i41 ], [ %indvars.iv.i42.ph, %.lr.ph.i41.preheader163 ] ; 2 uses
+  %indvars.iv.i42 = phi i64 [ %13, %.lr.ph.i41 ], [ %indvars.iv.i42.ph, %.lr.ph.i41.preheader163 ]
+  %.010.i41 = phi i32 [ %12, %.lr.ph.i41 ], [ %.010.i41.ph, %.lr.ph.i41.preheader163 ]
   %.079.i43 = phi i32 [ %spec.select.i44, %.lr.ph.i41 ], [ %.079.i43.ph, %.lr.ph.i41.preheader163 ]
   %i.ct = getelementptr inbounds nuw i8, ptr %i.al, i64 %indvars.iv.i42
   %i.cu = load i8, ptr %i.ct, align 1, !tbaa !16
   %i.cv = icmp eq i8 %i.cu, %i.an
   %i.cw = zext i1 %i.cv to i32
   %spec.select.i44 = add i32 %.079.i43, %i.cw     ; 2 uses
-  %indvars.iv.next.i45 = add i64 %indvars.iv.i42, 1 ; 2 uses
-  %7 = and i64 %indvars.iv.next.i45, 4294967295
-  %i.cx = icmp samesign ugt i64 %i.n, %7
+  %12 = add i32 %.010.i41, 1                      ; 2 uses
+  %13 = zext i32 %12 to i64                       ; 2 uses
+  %i.cx = icmp samesign ugt i64 %i.n, %13
   br i1 %i.cx, label %.lr.ph.i41, label %_ZN5boost13re_detail_60011count_charsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEEjRKT_T0_.exit47, !llvm.loop !241
 
 _ZN5boost13re_detail_60011count_charsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEEjRKT_T0_.exit47: ; preds = %.lr.ph.i41, %middle.block138, %bb.i
@@ -406,7 +415,7 @@ _ZN5boost13re_detail_60011count_charsINSt7__cxx1112basic_stringIcSt11char_traits
 
 .lr.ph.i49:                                       ; preds = %_ZN5boost13re_detail_60011count_charsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEEjRKT_T0_.exit47
   %i.da = load ptr, ptr %4, align 8, !tbaa !14    ; 2 uses
-  %min.iters.check145 = icmp ult i64 %i.cz, 8
+  %min.iters.check145 = icmp ult i64 %i.cz, 12
   br i1 %min.iters.check145, label %scalar.ph144.preheader, label %vector.scevcheck143
 
 vector.scevcheck143:                              ; preds = %.lr.ph.i49
@@ -418,7 +427,8 @@ vector.scevcheck143:                              ; preds = %.lr.ph.i49
   br i1 %i.df, label %scalar.ph144.preheader, label %vector.ph146
 
 vector.ph146:                                     ; preds = %vector.scevcheck143
-  %n.vec147 = and i64 %i.cz, 8589934584           ; 3 uses
+  %n.vec147 = and i64 %i.cz, 8589934584           ; 4 uses
+  %14 = trunc i64 %n.vec147 to i32
   %broadcast.splatinsert148 = insertelement <4 x i8> poison, i8 %i.an, i64 0
   %broadcast.splat149 = shufflevector <4 x i8> %broadcast.splatinsert148, <4 x i8> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %vector.body150
@@ -449,20 +459,22 @@ middle.block157:                                  ; preds = %vector.body150
 
 scalar.ph144.preheader:                           ; preds = %vector.scevcheck143, %.lr.ph.i49, %middle.block157
   %indvars.iv.i50.ph = phi i64 [ 0, %vector.scevcheck143 ], [ 0, %.lr.ph.i49 ], [ %n.vec147, %middle.block157 ]
+  %.010.i48.ph = phi i32 [ 0, %vector.scevcheck143 ], [ 0, %.lr.ph.i49 ], [ %14, %middle.block157 ]
   %.079.i51.ph = phi i32 [ 0, %vector.scevcheck143 ], [ 0, %.lr.ph.i49 ], [ %i.dp, %middle.block157 ]
   br label %scalar.ph144
 
 scalar.ph144:                                     ; preds = %scalar.ph144.preheader, %scalar.ph144
-  %indvars.iv.i50 = phi i64 [ %indvars.iv.next.i53, %scalar.ph144 ], [ %indvars.iv.i50.ph, %scalar.ph144.preheader ] ; 2 uses
+  %indvars.iv.i50 = phi i64 [ %16, %scalar.ph144 ], [ %indvars.iv.i50.ph, %scalar.ph144.preheader ]
+  %.010.i48 = phi i32 [ %15, %scalar.ph144 ], [ %.010.i48.ph, %scalar.ph144.preheader ]
   %.079.i51 = phi i32 [ %spec.select.i52, %scalar.ph144 ], [ %.079.i51.ph, %scalar.ph144.preheader ]
   %i.dq = getelementptr inbounds nuw i8, ptr %i.da, i64 %indvars.iv.i50
   %i.dr = load i8, ptr %i.dq, align 1, !tbaa !16
   %i.ds = icmp eq i8 %i.dr, %i.an
   %i.dt = zext i1 %i.ds to i32
   %spec.select.i52 = add i32 %.079.i51, %i.dt     ; 2 uses
-  %indvars.iv.next.i53 = add i64 %indvars.iv.i50, 1 ; 2 uses
-  %8 = and i64 %indvars.iv.next.i53, 4294967295
-  %i.du = icmp ugt i64 %i.cz, %8
+  %15 = add i32 %.010.i48, 1                      ; 2 uses
+  %16 = zext i32 %15 to i64                       ; 2 uses
+  %i.du = icmp ugt i64 %i.cz, %16
   br i1 %i.du, label %scalar.ph144, label %_ZN5boost13re_detail_60011count_charsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEEjRKT_T0_.exit55, !llvm.loop !243
 
 _ZN5boost13re_detail_60011count_charsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEEjRKT_T0_.exit55: ; preds = %scalar.ph144, %middle.block157, %_ZN5boost13re_detail_60011count_charsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEEjRKT_T0_.exit47
@@ -865,7 +877,7 @@ bb.h:                                             ; preds = %.critedge.thread99
   br i1 %.not.i, label %_ZN5boost13re_detail_60011count_charsINSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEEEwEEjRKT_T0_.exit, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %bb.h
-  %min.iters.check = icmp ult i64 %i.o, 8
+  %min.iters.check = icmp ult i64 %i.o, 12
   br i1 %min.iters.check, label %.lr.ph.i.preheader169, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph.i.preheader
@@ -877,7 +889,8 @@ vector.scevcheck:                                 ; preds = %.lr.ph.i.preheader
   br i1 %i.au, label %.lr.ph.i.preheader169, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.scevcheck
-  %n.vec = and i64 %i.o, 8589934584               ; 3 uses
+  %n.vec = and i64 %i.o, 8589934584               ; 4 uses
+  %5 = trunc i64 %n.vec to i32
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %i.ap, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %vector.body
@@ -908,20 +921,22 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.i.preheader169:                            ; preds = %vector.scevcheck, %.lr.ph.i.preheader, %middle.block
   %indvars.iv.i.ph = phi i64 [ 0, %vector.scevcheck ], [ 0, %.lr.ph.i.preheader ], [ %n.vec, %middle.block ]
+  %.010.i.ph = phi i32 [ 0, %vector.scevcheck ], [ 0, %.lr.ph.i.preheader ], [ %5, %middle.block ]
   %.079.i.ph = phi i32 [ 0, %vector.scevcheck ], [ 0, %.lr.ph.i.preheader ], [ %i.be, %middle.block ]
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader169, %.lr.ph.i
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.lr.ph.i ], [ %indvars.iv.i.ph, %.lr.ph.i.preheader169 ] ; 2 uses
+  %indvars.iv.i = phi i64 [ %7, %.lr.ph.i ], [ %indvars.iv.i.ph, %.lr.ph.i.preheader169 ]
+  %.010.i = phi i32 [ %6, %.lr.ph.i ], [ %.010.i.ph, %.lr.ph.i.preheader169 ]
   %.079.i = phi i32 [ %spec.select.i, %.lr.ph.i ], [ %.079.i.ph, %.lr.ph.i.preheader169 ]
   %i.bf = getelementptr inbounds nuw [4 x i8], ptr %i.an, i64 %indvars.iv.i
   %i.bg = load i32, ptr %i.bf, align 4, !tbaa !808
   %i.bh = icmp eq i32 %i.bg, %i.ap
   %i.bi = zext i1 %i.bh to i32
   %spec.select.i = add i32 %.079.i, %i.bi         ; 2 uses
-  %indvars.iv.next.i = add i64 %indvars.iv.i, 1   ; 2 uses
-  %5 = and i64 %indvars.iv.next.i, 4294967295
-  %i.bj = icmp ugt i64 %i.o, %5
+  %6 = add i32 %.010.i, 1                         ; 2 uses
+  %7 = zext i32 %6 to i64                         ; 2 uses
+  %i.bj = icmp ugt i64 %i.o, %7
   br i1 %i.bj, label %.lr.ph.i, label %_ZN5boost13re_detail_60011count_charsINSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEEEwEEjRKT_T0_.exit, !llvm.loop !929
 
 _ZN5boost13re_detail_60011count_charsINSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEEEwEEjRKT_T0_.exit: ; preds = %.lr.ph.i, %middle.block, %bb.h
@@ -931,7 +946,7 @@ _ZN5boost13re_detail_60011count_charsINSt7__cxx1112basic_stringIwSt11char_traits
 
 .lr.ph.i36:                                       ; preds = %_ZN5boost13re_detail_60011count_charsINSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEEEwEEjRKT_T0_.exit
   %i.bk = load ptr, ptr %3, align 8, !tbaa !810   ; 2 uses
-  %min.iters.check108 = icmp ult i64 %.fr83, 8
+  %min.iters.check108 = icmp ult i64 %.fr83, 12
   br i1 %min.iters.check108, label %scalar.ph107.preheader, label %vector.scevcheck106
 
 vector.scevcheck106:                              ; preds = %.lr.ph.i36
@@ -943,7 +958,8 @@ vector.scevcheck106:                              ; preds = %.lr.ph.i36
   br i1 %i.bp, label %scalar.ph107.preheader, label %vector.ph109
 
 vector.ph109:                                     ; preds = %vector.scevcheck106
-  %n.vec110 = and i64 %.fr83, 8589934584          ; 3 uses
+  %n.vec110 = and i64 %.fr83, 8589934584          ; 4 uses
+  %8 = trunc i64 %n.vec110 to i32
   %broadcast.splatinsert111 = insertelement <4 x i32> poison, i32 %i.ap, i64 0
   %broadcast.splat112 = shufflevector <4 x i32> %broadcast.splatinsert111, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %vector.body113
@@ -974,20 +990,22 @@ middle.block120:                                  ; preds = %vector.body113
 
 scalar.ph107.preheader:                           ; preds = %vector.scevcheck106, %.lr.ph.i36, %middle.block120
   %indvars.iv.i37.ph = phi i64 [ 0, %vector.scevcheck106 ], [ 0, %.lr.ph.i36 ], [ %n.vec110, %middle.block120 ]
+  %.010.i37.ph = phi i32 [ 0, %vector.scevcheck106 ], [ 0, %.lr.ph.i36 ], [ %8, %middle.block120 ]
   %.079.i38.ph = phi i32 [ 0, %vector.scevcheck106 ], [ 0, %.lr.ph.i36 ], [ %i.bz, %middle.block120 ]
   br label %scalar.ph107
 
 scalar.ph107:                                     ; preds = %scalar.ph107.preheader, %scalar.ph107
-  %indvars.iv.i37 = phi i64 [ %indvars.iv.next.i40, %scalar.ph107 ], [ %indvars.iv.i37.ph, %scalar.ph107.preheader ] ; 2 uses
+  %indvars.iv.i37 = phi i64 [ %10, %scalar.ph107 ], [ %indvars.iv.i37.ph, %scalar.ph107.preheader ]
+  %.010.i37 = phi i32 [ %9, %scalar.ph107 ], [ %.010.i37.ph, %scalar.ph107.preheader ]
   %.079.i38 = phi i32 [ %spec.select.i39, %scalar.ph107 ], [ %.079.i38.ph, %scalar.ph107.preheader ]
   %i.ca = getelementptr inbounds nuw [4 x i8], ptr %i.bk, i64 %indvars.iv.i37
   %i.cb = load i32, ptr %i.ca, align 4, !tbaa !808
   %i.cc = icmp eq i32 %i.cb, %i.ap
   %i.cd = zext i1 %i.cc to i32
   %spec.select.i39 = add i32 %.079.i38, %i.cd     ; 2 uses
-  %indvars.iv.next.i40 = add i64 %indvars.iv.i37, 1 ; 2 uses
-  %6 = and i64 %indvars.iv.next.i40, 4294967295
-  %i.ce = icmp ugt i64 %.fr83, %6
+  %9 = add i32 %.010.i37, 1                       ; 2 uses
+  %10 = zext i32 %9 to i64                        ; 2 uses
+  %i.ce = icmp ugt i64 %.fr83, %10
   br i1 %i.ce, label %scalar.ph107, label %_ZN5boost13re_detail_60011count_charsINSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEEEwEEjRKT_T0_.exit42, !llvm.loop !931
 
 _ZN5boost13re_detail_60011count_charsINSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEEEwEEjRKT_T0_.exit42: ; preds = %scalar.ph107, %middle.block120, %_ZN5boost13re_detail_60011count_charsINSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEEEwEEjRKT_T0_.exit
@@ -999,7 +1017,7 @@ bb.i:                                             ; preds = %_ZN5boost13re_detai
   br i1 %.not.i, label %_ZN5boost13re_detail_60011count_charsINSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEEEwEEjRKT_T0_.exit50, label %.lr.ph.i44.preheader
 
 .lr.ph.i44.preheader:                             ; preds = %bb.i
-  %min.iters.check127 = icmp ult i64 %i.o, 8
+  %min.iters.check127 = icmp ult i64 %i.o, 12
   br i1 %min.iters.check127, label %.lr.ph.i44.preheader164, label %vector.scevcheck125
 
 vector.scevcheck125:                              ; preds = %.lr.ph.i44.preheader
@@ -1011,7 +1029,8 @@ vector.scevcheck125:                              ; preds = %.lr.ph.i44.preheade
   br i1 %i.ck, label %.lr.ph.i44.preheader164, label %vector.ph128
 
 vector.ph128:                                     ; preds = %vector.scevcheck125
-  %n.vec129 = and i64 %i.o, 8589934584            ; 3 uses
+  %n.vec129 = and i64 %i.o, 8589934584            ; 4 uses
+  %11 = trunc i64 %n.vec129 to i32
   %broadcast.splatinsert130 = insertelement <4 x i32> poison, i32 %i.ap, i64 0
   %broadcast.splat131 = shufflevector <4 x i32> %broadcast.splatinsert130, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %vector.body132
@@ -1042,20 +1061,22 @@ middle.block139:                                  ; preds = %vector.body132
 
 .lr.ph.i44.preheader164:                          ; preds = %vector.scevcheck125, %.lr.ph.i44.preheader, %middle.block139
   %indvars.iv.i45.ph = phi i64 [ 0, %vector.scevcheck125 ], [ 0, %.lr.ph.i44.preheader ], [ %n.vec129, %middle.block139 ]
+  %.010.i44.ph = phi i32 [ 0, %vector.scevcheck125 ], [ 0, %.lr.ph.i44.preheader ], [ %11, %middle.block139 ]
   %.079.i46.ph = phi i32 [ 0, %vector.scevcheck125 ], [ 0, %.lr.ph.i44.preheader ], [ %i.cu, %middle.block139 ]
   br label %.lr.ph.i44
 
 .lr.ph.i44:                                       ; preds = %.lr.ph.i44.preheader164, %.lr.ph.i44
-  %indvars.iv.i45 = phi i64 [ %indvars.iv.next.i48, %.lr.ph.i44 ], [ %indvars.iv.i45.ph, %.lr.ph.i44.preheader164 ] ; 2 uses
+  %indvars.iv.i45 = phi i64 [ %13, %.lr.ph.i44 ], [ %indvars.iv.i45.ph, %.lr.ph.i44.preheader164 ]
+  %.010.i44 = phi i32 [ %12, %.lr.ph.i44 ], [ %.010.i44.ph, %.lr.ph.i44.preheader164 ]
   %.079.i46 = phi i32 [ %spec.select.i47, %.lr.ph.i44 ], [ %.079.i46.ph, %.lr.ph.i44.preheader164 ]
   %i.cv = getelementptr inbounds nuw [4 x i8], ptr %i.an, i64 %indvars.iv.i45
   %i.cw = load i32, ptr %i.cv, align 4, !tbaa !808
   %i.cx = icmp eq i32 %i.cw, %i.ap
   %i.cy = zext i1 %i.cx to i32
   %spec.select.i47 = add i32 %.079.i46, %i.cy     ; 2 uses
-  %indvars.iv.next.i48 = add i64 %indvars.iv.i45, 1 ; 2 uses
-  %7 = and i64 %indvars.iv.next.i48, 4294967295
-  %i.cz = icmp samesign ugt i64 %i.o, %7
+  %12 = add i32 %.010.i44, 1                      ; 2 uses
+  %13 = zext i32 %12 to i64                       ; 2 uses
+  %i.cz = icmp samesign ugt i64 %i.o, %13
   br i1 %i.cz, label %.lr.ph.i44, label %_ZN5boost13re_detail_60011count_charsINSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEEEwEEjRKT_T0_.exit50, !llvm.loop !933
 
 _ZN5boost13re_detail_60011count_charsINSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEEEwEEjRKT_T0_.exit50: ; preds = %.lr.ph.i44, %middle.block139, %bb.i
@@ -1067,7 +1088,7 @@ _ZN5boost13re_detail_60011count_charsINSt7__cxx1112basic_stringIwSt11char_traits
 
 .lr.ph.i52:                                       ; preds = %_ZN5boost13re_detail_60011count_charsINSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEEEwEEjRKT_T0_.exit50
   %i.dc = load ptr, ptr %4, align 8, !tbaa !810   ; 2 uses
-  %min.iters.check146 = icmp ult i64 %i.db, 8
+  %min.iters.check146 = icmp ult i64 %i.db, 12
   br i1 %min.iters.check146, label %scalar.ph145.preheader, label %vector.scevcheck144
 
 vector.scevcheck144:                              ; preds = %.lr.ph.i52
@@ -1079,7 +1100,8 @@ vector.scevcheck144:                              ; preds = %.lr.ph.i52
   br i1 %i.dh, label %scalar.ph145.preheader, label %vector.ph147
 
 vector.ph147:                                     ; preds = %vector.scevcheck144
-  %n.vec148 = and i64 %i.db, 8589934584           ; 3 uses
+  %n.vec148 = and i64 %i.db, 8589934584           ; 4 uses
+  %14 = trunc i64 %n.vec148 to i32
   %broadcast.splatinsert149 = insertelement <4 x i32> poison, i32 %i.ap, i64 0
   %broadcast.splat150 = shufflevector <4 x i32> %broadcast.splatinsert149, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %vector.body151
@@ -1110,20 +1132,22 @@ middle.block158:                                  ; preds = %vector.body151
 
 scalar.ph145.preheader:                           ; preds = %vector.scevcheck144, %.lr.ph.i52, %middle.block158
   %indvars.iv.i53.ph = phi i64 [ 0, %vector.scevcheck144 ], [ 0, %.lr.ph.i52 ], [ %n.vec148, %middle.block158 ]
+  %.010.i51.ph = phi i32 [ 0, %vector.scevcheck144 ], [ 0, %.lr.ph.i52 ], [ %14, %middle.block158 ]
   %.079.i54.ph = phi i32 [ 0, %vector.scevcheck144 ], [ 0, %.lr.ph.i52 ], [ %i.dr, %middle.block158 ]
   br label %scalar.ph145
 
 scalar.ph145:                                     ; preds = %scalar.ph145.preheader, %scalar.ph145
-  %indvars.iv.i53 = phi i64 [ %indvars.iv.next.i56, %scalar.ph145 ], [ %indvars.iv.i53.ph, %scalar.ph145.preheader ] ; 2 uses
+  %indvars.iv.i53 = phi i64 [ %16, %scalar.ph145 ], [ %indvars.iv.i53.ph, %scalar.ph145.preheader ]
+  %.010.i51 = phi i32 [ %15, %scalar.ph145 ], [ %.010.i51.ph, %scalar.ph145.preheader ]
   %.079.i54 = phi i32 [ %spec.select.i55, %scalar.ph145 ], [ %.079.i54.ph, %scalar.ph145.preheader ]
   %i.ds = getelementptr inbounds nuw [4 x i8], ptr %i.dc, i64 %indvars.iv.i53
   %i.dt = load i32, ptr %i.ds, align 4, !tbaa !808
   %i.du = icmp eq i32 %i.dt, %i.ap
   %i.dv = zext i1 %i.du to i32
   %spec.select.i55 = add i32 %.079.i54, %i.dv     ; 2 uses
-  %indvars.iv.next.i56 = add i64 %indvars.iv.i53, 1 ; 2 uses
-  %8 = and i64 %indvars.iv.next.i56, 4294967295
-  %i.dw = icmp ugt i64 %i.db, %8
+  %15 = add i32 %.010.i51, 1                      ; 2 uses
+  %16 = zext i32 %15 to i64                       ; 2 uses
+  %i.dw = icmp ugt i64 %i.db, %16
   br i1 %i.dw, label %scalar.ph145, label %_ZN5boost13re_detail_60011count_charsINSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEEEwEEjRKT_T0_.exit58, !llvm.loop !935
 
 _ZN5boost13re_detail_60011count_charsINSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEEEwEEjRKT_T0_.exit58: ; preds = %scalar.ph145, %middle.block158, %_ZN5boost13re_detail_60011count_charsINSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEEEwEEjRKT_T0_.exit50

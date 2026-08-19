@@ -204,21 +204,20 @@ bb.ad:                                            ; preds = %bb.w
   br i1 %i.dr, label %.lr.ph546, label %._crit_edge547
 
 bb.ae:                                            ; preds = %bb.aj
-  %i.ds = shl i32 %.2199307544, 6
+  %i.ds = shl i32 %indvars.iv543, 6
   %i.dt = zext i8 %i.dw to i32
   %i.du = add nsw i32 %i.ds, %i.dt                ; 2 uses
-  %indvars.iv.next388 = add nuw i8 %indvars.iv387542, 1 ; 2 uses
   %i.dv = icmp ult ptr %i.eo, %i.g
   br i1 %i.dv, label %.lr.ph546, label %._crit_edge547, !llvm.loop !60
 
 .lr.ph546:                                        ; preds = %.lr.ph308, %bb.ae
   %.2221305545 = phi ptr [ %i.eo, %bb.ae ], [ %.1220, %.lr.ph308 ] ; 3 uses
-  %.2199307544 = phi i32 [ %i.du, %bb.ae ], [ %.1198, %.lr.ph308 ] ; 3 uses
-  %indvars.iv543 = phi i32 [ %indvars.iv.next, %bb.ae ], [ %i.dn, %.lr.ph308 ] ; 4 uses
-  %indvars.iv387542 = phi i8 [ %indvars.iv.next388, %bb.ae ], [ %.1204, %.lr.ph308 ]
+  %.2205306538 = phi i8 [ %5, %bb.ae ], [ %.1204, %.lr.ph308 ] ; 3 uses
+  %indvars.iv543 = phi i32 [ %i.du, %bb.ae ], [ %.1198, %.lr.ph308 ] ; 3 uses
+  %3 = phi i32 [ %6, %bb.ae ], [ %i.dn, %.lr.ph308 ]
   %i.dw = load i8, ptr %.2221305545, align 1, !tbaa !27 ; 4 uses
-  %3 = icmp samesign ugt i32 %indvars.iv543, 1
-  %or.cond.i = or i1 %i.dp, %3
+  %4 = icmp sgt i8 %.2205306538, 1
+  %or.cond.i = or i1 %i.dp, %4
   br i1 %or.cond.i, label %bb.af, label %bb.ag
 
 bb.af:                                            ; preds = %.lr.ph546
@@ -230,7 +229,7 @@ bb.ag:                                            ; preds = %.lr.ph546
   br i1 %i.dq, label %bb.ah, label %bb.ai
 
 bb.ah:                                            ; preds = %bb.ag
-  %i.dz = and i32 %.2199307544, 15
+  %i.dz = and i32 %indvars.iv543, 15
   %i.ea = zext nneg i32 %i.dz to i64
   %i.eb = getelementptr inbounds nuw i8, ptr @.str, i64 %i.ea
   %i.ec = load i8, ptr %i.eb, align 1, !tbaa !27
@@ -244,7 +243,7 @@ bb.ai:                                            ; preds = %bb.ag
   %i.eh = zext nneg i8 %i.eg to i64
   %i.ei = getelementptr inbounds nuw i8, ptr @.str.1, i64 %i.eh
   %i.ej = load i8, ptr %i.ei, align 1, !tbaa !27
-  %i.ek = and i32 %.2199307544, 7
+  %i.ek = and i32 %indvars.iv543, 7
   %i.el = shl nuw nsw i32 1, %i.ek
   %i.em = trunc nuw i32 %i.el to i8
   %i.en = and i8 %i.ej, %i.em
@@ -253,40 +252,38 @@ bb.ai:                                            ; preds = %bb.ag
 _ZN6icu_784UTF812isValidTrailEihii.exit:          ; preds = %bb.af, %bb.ah, %bb.ai
   %.0.i = phi i8 [ %i.dy, %bb.af ], [ %i.ef, %bb.ah ], [ %i.en, %bb.ai ]
   %.not247 = icmp eq i8 %.0.i, 0
-  br i1 %.not247, label %_ZN6icu_784UTF812isValidTrailEihii.exit._crit_edge.loopexit, label %bb.aj
+  br i1 %.not247, label %_ZN6icu_784UTF812isValidTrailEihii.exit._crit_edge, label %bb.aj
 
 bb.aj:                                            ; preds = %_ZN6icu_784UTF812isValidTrailEihii.exit
   %i.eo = getelementptr inbounds nuw i8, ptr %.2221305545, i64 1 ; 4 uses
-  %indvars.iv.next = add nuw i32 %indvars.iv543, 1 ; 4 uses
-  %sext421 = shl i32 %indvars.iv.next, 24
-  %4 = ashr exact i32 %sext421, 24                ; 2 uses
-  %i.ep = icmp sgt i32 %.1202, %4
-  br i1 %i.ep, label %bb.ae, label %_ZN6icu_784UTF812isValidTrailEihii.exit._crit_edge.loopexit, !llvm.loop !60
+  %5 = add i8 %.2205306538, 1                     ; 4 uses
+  %6 = sext i8 %5 to i32                          ; 4 uses
+  %i.ep = icmp sgt i32 %.1202, %6
+  br i1 %i.ep, label %bb.ae, label %_ZN6icu_784UTF812isValidTrailEihii.exit._crit_edge, !llvm.loop !60
 
 ._crit_edge547:                                   ; preds = %bb.ae, %.lr.ph308
-  %indvars.iv387.lcssa = phi i8 [ %.1204, %.lr.ph308 ], [ %indvars.iv.next388, %bb.ae ]
-  %indvars.iv.lcssa = phi i32 [ %i.dn, %.lr.ph308 ], [ %indvars.iv.next, %bb.ae ] ; 3 uses
-  %.2199307.lcssa = phi i32 [ %.1198, %.lr.ph308 ], [ %i.du, %bb.ae ]
+  %.lcssa508 = phi i32 [ %i.dn, %.lr.ph308 ], [ %6, %bb.ae ] ; 2 uses
+  %indvars.iv.lcssa = phi i32 [ %.1198, %.lr.ph308 ], [ %i.du, %bb.ae ]
+  %.2205306.lcssa = phi i8 [ %.1204, %.lr.ph308 ], [ %5, %bb.ae ] ; 3 uses
   %.2221305.lcssa = phi ptr [ %.1220, %.lr.ph308 ], [ %i.eo, %bb.ae ] ; 2 uses
   %.2221305.lcssa551 = ptrtoaddr ptr %.2221305.lcssa to i64
-  %5 = trunc nuw nsw i32 %indvars.iv.lcssa to i8  ; 2 uses
   %i.eq = zext nneg i8 %.1208 to i32
-  %.neg = sub nsw i32 %i.eq, %indvars.iv.lcssa
+  %.neg = sub nsw i32 %i.eq, %.lcssa508
   %i.er = sext i32 %.neg to i64
   %i.es = getelementptr inbounds i8, ptr %.2221305.lcssa, i64 %i.er ; 7 uses
-  %i.et = icmp slt i8 %.1208, %5
+  %i.et = icmp slt i8 %.1208, %.2205306.lcssa
   br i1 %i.et, label %iter.check, label %._crit_edge320
 
 iter.check:                                       ; preds = %._crit_edge547
   %i.eu = getelementptr inbounds nuw i8, ptr %i.b, i64 65 ; 7 uses
   %i.ev = zext i8 %.1208 to i64                   ; 7 uses
-  %wide.trip.count = zext i8 %indvars.iv387.lcssa to i64 ; 4 uses
+  %wide.trip.count = zext nneg i8 %.2205306.lcssa to i64 ; 4 uses
   %i.ew = sub nsw i64 %wide.trip.count, %i.ev     ; 7 uses
   %min.iters.check = icmp ult i64 %i.ew, 8
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.ex = sext i32 %indvars.iv.lcssa to i64
+  %i.ex = sext i32 %.lcssa508 to i64
   %i.ey = add i64 %i.c, %i.ex
   %i.ez = sub i64 %i.ey, %.2221305.lcssa551
   %i.fa = add i64 %i.ez, 64
@@ -407,25 +404,18 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
 ._crit_edge320:                                   ; preds = %vec.epilog.scalar.ph.prol.loopexit, %vec.epilog.scalar.ph, %middle.block, %vec.epilog.middle.block, %._crit_edge547
   %.3222.lcssa = phi ptr [ %i.es, %._crit_edge547 ], [ %i.fi, %vec.epilog.middle.block ], [ %i.fd, %middle.block ], [ %.lcssa676.unr, %vec.epilog.scalar.ph.prol.loopexit ], [ %i.gb, %vec.epilog.scalar.ph ]
   %i.gf = getelementptr inbounds nuw i8, ptr %i.b, i64 72
-  store i32 %.2199307.lcssa, ptr %i.gf, align 8, !tbaa !46
-  store i8 %5, ptr %i.p, align 8, !tbaa !44
+  store i32 %indvars.iv.lcssa, ptr %i.gf, align 8, !tbaa !46
+  store i8 %.2205306.lcssa, ptr %i.p, align 8, !tbaa !44
   %i.gg = getelementptr inbounds nuw i8, ptr %i.b, i64 76
   store i32 %.1202, ptr %i.gg, align 4, !tbaa !45
   store ptr %.3222.lcssa, ptr %i.d, align 8, !tbaa !40
   store ptr %.1216, ptr %i.h, align 8, !tbaa !18
   br label %bb.bb
 
-_ZN6icu_784UTF812isValidTrailEihii.exit._crit_edge.loopexit: ; preds = %_ZN6icu_784UTF812isValidTrailEihii.exit, %bb.aj
-  %.2221.lcssa.ph = phi ptr [ %i.eo, %bb.aj ], [ %.2221305545, %_ZN6icu_784UTF812isValidTrailEihii.exit ]
-  %.2205.lcssa.ph.in = phi i32 [ %indvars.iv.next, %bb.aj ], [ %indvars.iv543, %_ZN6icu_784UTF812isValidTrailEihii.exit ]
-  %.lcssa.ph = phi i32 [ %4, %bb.aj ], [ %indvars.iv543, %_ZN6icu_784UTF812isValidTrailEihii.exit ]
-  %.2205.lcssa.ph = trunc i32 %.2205.lcssa.ph.in to i8
-  br label %_ZN6icu_784UTF812isValidTrailEihii.exit._crit_edge
-
-_ZN6icu_784UTF812isValidTrailEihii.exit._crit_edge: ; preds = %_ZN6icu_784UTF812isValidTrailEihii.exit._crit_edge.loopexit, %.thread260
-  %.2221.lcssa = phi ptr [ %.1220, %.thread260 ], [ %.2221.lcssa.ph, %_ZN6icu_784UTF812isValidTrailEihii.exit._crit_edge.loopexit ] ; 3 uses
-  %.2205.lcssa = phi i8 [ %.1204, %.thread260 ], [ %.2205.lcssa.ph, %_ZN6icu_784UTF812isValidTrailEihii.exit._crit_edge.loopexit ] ; 8 uses
-  %.lcssa = phi i32 [ %i.dn, %.thread260 ], [ %.lcssa.ph, %_ZN6icu_784UTF812isValidTrailEihii.exit._crit_edge.loopexit ] ; 2 uses
+_ZN6icu_784UTF812isValidTrailEihii.exit._crit_edge: ; preds = %bb.aj, %_ZN6icu_784UTF812isValidTrailEihii.exit, %.thread260
+  %.2221.lcssa = phi ptr [ %.1220, %.thread260 ], [ %i.eo, %bb.aj ], [ %.2221305545, %_ZN6icu_784UTF812isValidTrailEihii.exit ] ; 3 uses
+  %.2205.lcssa = phi i8 [ %.1204, %.thread260 ], [ %5, %bb.aj ], [ %.2205306538, %_ZN6icu_784UTF812isValidTrailEihii.exit ] ; 8 uses
+  %.lcssa = phi i32 [ %i.dn, %.thread260 ], [ %6, %bb.aj ], [ %3, %_ZN6icu_784UTF812isValidTrailEihii.exit ] ; 2 uses
   %.2221.lcssa629 = ptrtoaddr ptr %.2221.lcssa to i64
   %.not248 = icmp eq i32 %.1202, %.lcssa
   br i1 %.not248, label %.preheader, label %bb.ak

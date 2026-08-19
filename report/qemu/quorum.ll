@@ -201,7 +201,6 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.c
-  %indvars.iv101 = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next102, %bb.c ] ; 2 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.c ] ; 5 uses
   %i.l = getelementptr inbounds nuw [72 x i8], ptr %i.k, i64 %indvars.iv
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 56
@@ -211,14 +210,13 @@ bb.b:                                             ; preds = %.lr.ph, %bb.c
 
 .preheader72:                                     ; preds = %bb.b
   %i.o = trunc nuw nsw i64 %indvars.iv to i32
-  %.080 = add nuw i32 %i.o, 1
+  %.080 = add nuw i32 %i.o, 1                     ; 2 uses
   %.not7181 = icmp slt i32 %.080, %i.h
   br i1 %.not7181, label %.lr.ph83, label %.critedge
 
 bb.c:                                             ; preds = %bb.b
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  %indvars.iv.next102 = add nuw nsw i64 %indvars.iv101, 1
   br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !35
 
 ._crit_edge:                                      ; preds = %bb.c, %.preheader73
@@ -227,9 +225,10 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph83:                                         ; preds = %.preheader72, %quorum_compare.exit.thread
   %i.p = phi i32 [ %i.bc, %quorum_compare.exit.thread ], [ %i.h, %.preheader72 ] ; 5 uses
-  %indvars.iv104 = phi i64 [ %indvars.iv.next105, %quorum_compare.exit.thread ], [ %indvars.iv101, %.preheader72 ] ; 2 uses
+  %.082 = phi i32 [ %.0, %quorum_compare.exit.thread ], [ %.080, %.preheader72 ] ; 2 uses
   %i.q = load ptr, ptr %i.j, align 8              ; 2 uses
-  %i.r = getelementptr inbounds nuw [72 x i8], ptr %i.q, i64 %indvars.iv104 ; 3 uses
+  %2 = sext i32 %.082 to i64
+  %i.r = getelementptr inbounds [72 x i8], ptr %i.q, i64 %2 ; 3 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 56
   %i.t = load i32, ptr %i.s, align 8
   %.not55 = icmp eq i32 %i.t, 0
@@ -318,9 +317,8 @@ bb.l:                                             ; preds = %bb.j
 
 quorum_compare.exit.thread:                       ; preds = %bb.i, %.quorum_compare.exit.thread_crit_edge, %.preheader.i.i, %.lr.ph83
   %i.bc = phi i32 [ %.pre110, %.quorum_compare.exit.thread_crit_edge ], [ %i.p, %.lr.ph83 ], [ %i.p, %.preheader.i.i ], [ %i.p, %bb.i ] ; 2 uses
-  %indvars.iv.next105 = add nuw nsw i64 %indvars.iv104, 1 ; 2 uses
-  %2 = sext i32 %i.bc to i64
-  %.not71 = icmp slt i64 %indvars.iv.next105, %2
+  %.0 = add nsw i32 %.082, 1                      ; 2 uses
+  %.not71 = icmp slt i32 %.0, %i.bc
   br i1 %.not71, label %.lr.ph83, label %.critedge.loopexit, !llvm.loop !37
 
 .preheader:                                       ; preds = %bb.l

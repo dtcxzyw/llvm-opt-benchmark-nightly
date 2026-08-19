@@ -203,7 +203,8 @@ bb.g:                                             ; preds = %bb.d
   br label %_ZNSt3mapIPvP24malloc_plus_memory_entrySt4lessIS0_ESaISt4pairIKS0_S2_EEE4findERS6_.exit.thread
 
 .lr.ph:                                           ; preds = %bb.b, %.lr.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ 0, %bb.b ] ; 3 uses
+  %indvars.iv = phi i64 [ %4, %.lr.ph ], [ 0, %bb.b ] ; 2 uses
+  %.028 = phi i32 [ %3, %.lr.ph ], [ 0, %bb.b ]
   %i.av = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv
   %i.aw = load i32, ptr %i.av, align 4, !tbaa !4
   %i.ax = sext i32 %i.aw to i64
@@ -211,9 +212,9 @@ bb.g:                                             ; preds = %bb.d
   %i.az = load double, ptr %i.ay, align 8, !tbaa !57
   %i.ba = getelementptr inbounds nuw [8 x i8], ptr %i.x, i64 %indvars.iv
   store double %i.az, ptr %i.ba, align 8, !tbaa !57
-  %indvars.iv.next = add i64 %indvars.iv, 1       ; 2 uses
-  %3 = and i64 %indvars.iv.next, 4294967295
-  %i.bb = icmp ugt i64 %i.t, %3
+  %3 = add i32 %.028, 1                           ; 2 uses
+  %4 = zext i32 %3 to i64                         ; 2 uses
+  %i.bb = icmp ugt i64 %i.t, %4
   br i1 %i.bb, label %.lr.ph, label %._crit_edge, !llvm.loop !59
 
 _ZNSt3mapIPvP24malloc_plus_memory_entrySt4lessIS0_ESaISt4pairIKS0_S2_EEE4findERS6_.exit.thread: ; preds = %bb.c, %.thread.i, %bb.g, %_ZNSt8_Rb_treeIPvSt4pairIKS0_P24malloc_plus_memory_entryESt10_Select1stIS5_ESt4lessIS0_ESaIS5_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS5_EPSt18_Rb_tree_node_baseRS2_.exit.i.i, %bb.a, %_ZNSt3mapIPvP24malloc_plus_memory_entrySt4lessIS0_ESaISt4pairIKS0_S2_EEE4findERS6_.exit
@@ -354,7 +355,8 @@ bb.g:                                             ; preds = %bb.d
   br label %_ZNSt3mapIPvP24malloc_plus_memory_entrySt4lessIS0_ESaISt4pairIKS0_S2_EEE4findERS6_.exit.thread
 
 .lr.ph:                                           ; preds = %bb.b, %.lr.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ 0, %bb.b ] ; 3 uses
+  %indvars.iv = phi i64 [ %4, %.lr.ph ], [ 0, %bb.b ] ; 2 uses
+  %.028 = phi i32 [ %3, %.lr.ph ], [ 0, %bb.b ]
   %i.av = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv
   %i.aw = load i32, ptr %i.av, align 4, !tbaa !4
   %i.ax = sext i32 %i.aw to i64
@@ -362,9 +364,9 @@ bb.g:                                             ; preds = %bb.d
   %i.az = load float, ptr %i.ay, align 4, !tbaa !60
   %i.ba = getelementptr inbounds nuw [4 x i8], ptr %i.x, i64 %indvars.iv
   store float %i.az, ptr %i.ba, align 4, !tbaa !60
-  %indvars.iv.next = add i64 %indvars.iv, 1       ; 2 uses
-  %3 = and i64 %indvars.iv.next, 4294967295
-  %i.bb = icmp ugt i64 %i.t, %3
+  %3 = add i32 %.028, 1                           ; 2 uses
+  %4 = zext i32 %3 to i64                         ; 2 uses
+  %i.bb = icmp ugt i64 %i.t, %4
   br i1 %i.bb, label %.lr.ph, label %._crit_edge, !llvm.loop !62
 
 _ZNSt3mapIPvP24malloc_plus_memory_entrySt4lessIS0_ESaISt4pairIKS0_S2_EEE4findERS6_.exit.thread: ; preds = %bb.c, %.thread.i, %bb.g, %_ZNSt8_Rb_treeIPvSt4pairIKS0_P24malloc_plus_memory_entryESt10_Select1stIS5_ESt4lessIS0_ESaIS5_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS5_EPSt18_Rb_tree_node_baseRS2_.exit.i.i, %bb.a, %_ZNSt3mapIPvP24malloc_plus_memory_entrySt4lessIS0_ESaISt4pairIKS0_S2_EEE4findERS6_.exit
@@ -502,7 +504,8 @@ bb.g:                                             ; preds = %bb.d
   br label %_ZNSt3mapIPvP24malloc_plus_memory_entrySt4lessIS0_ESaISt4pairIKS0_S2_EEE4findERS6_.exit.thread
 
 .lr.ph:                                           ; preds = %bb.b, %.lr.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ 0, %bb.b ] ; 3 uses
+  %indvars.iv = phi i64 [ %4, %.lr.ph ], [ 0, %bb.b ] ; 2 uses
+  %.028 = phi i32 [ %3, %.lr.ph ], [ 0, %bb.b ]
   %i.av = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv
   %i.aw = load i32, ptr %i.av, align 4, !tbaa !4
   %i.ax = sext i32 %i.aw to i64
@@ -510,9 +513,9 @@ bb.g:                                             ; preds = %bb.d
   %i.az = load i32, ptr %i.ay, align 4, !tbaa !4
   %i.ba = getelementptr inbounds nuw [4 x i8], ptr %i.x, i64 %indvars.iv
   store i32 %i.az, ptr %i.ba, align 4, !tbaa !4
-  %indvars.iv.next = add i64 %indvars.iv, 1       ; 2 uses
-  %3 = and i64 %indvars.iv.next, 4294967295
-  %i.bb = icmp ugt i64 %i.t, %3
+  %3 = add i32 %.028, 1                           ; 2 uses
+  %4 = zext i32 %3 to i64                         ; 2 uses
+  %i.bb = icmp ugt i64 %i.t, %4
   br i1 %i.bb, label %.lr.ph, label %._crit_edge, !llvm.loop !63
 
 _ZNSt3mapIPvP24malloc_plus_memory_entrySt4lessIS0_ESaISt4pairIKS0_S2_EEE4findERS6_.exit.thread: ; preds = %bb.c, %.thread.i, %bb.g, %_ZNSt8_Rb_treeIPvSt4pairIKS0_P24malloc_plus_memory_entryESt10_Select1stIS5_ESt4lessIS0_ESaIS5_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS5_EPSt18_Rb_tree_node_baseRS2_.exit.i.i, %bb.a, %_ZNSt3mapIPvP24malloc_plus_memory_entrySt4lessIS0_ESaISt4pairIKS0_S2_EEE4findERS6_.exit
@@ -650,7 +653,8 @@ bb.g:                                             ; preds = %bb.d
   br label %_ZNSt3mapIPvP24malloc_plus_memory_entrySt4lessIS0_ESaISt4pairIKS0_S2_EEE4findERS6_.exit.thread
 
 .lr.ph:                                           ; preds = %bb.b, %.lr.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ 0, %bb.b ] ; 3 uses
+  %indvars.iv = phi i64 [ %5, %.lr.ph ], [ 0, %bb.b ] ; 2 uses
+  %.029 = phi i32 [ %4, %.lr.ph ], [ 0, %bb.b ]
   %i.av = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv
   %i.aw = load i32, ptr %i.av, align 4, !tbaa !4
   %i.ax = sext i32 %i.aw to i64
@@ -661,9 +665,9 @@ bb.g:                                             ; preds = %bb.d
   %i.bc = load i32, ptr %i.bb, align 4, !tbaa !4
   %i.bd = getelementptr inbounds nuw [4 x i8], ptr %i.x, i64 %indvars.iv
   store i32 %i.bc, ptr %i.bd, align 4, !tbaa !4
-  %indvars.iv.next = add i64 %indvars.iv, 1       ; 2 uses
-  %4 = and i64 %indvars.iv.next, 4294967295
-  %i.be = icmp ugt i64 %i.t, %4
+  %4 = add i32 %.029, 1                           ; 2 uses
+  %5 = zext i32 %4 to i64                         ; 2 uses
+  %i.be = icmp ugt i64 %i.t, %5
   br i1 %i.be, label %.lr.ph, label %._crit_edge, !llvm.loop !64
 
 _ZNSt3mapIPvP24malloc_plus_memory_entrySt4lessIS0_ESaISt4pairIKS0_S2_EEE4findERS6_.exit.thread: ; preds = %bb.c, %.thread.i, %bb.g, %_ZNSt8_Rb_treeIPvSt4pairIKS0_P24malloc_plus_memory_entryESt10_Select1stIS5_ESt4lessIS0_ESaIS5_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS5_EPSt18_Rb_tree_node_baseRS2_.exit.i.i, %bb.a, %_ZNSt3mapIPvP24malloc_plus_memory_entrySt4lessIS0_ESaISt4pairIKS0_S2_EEE4findERS6_.exit
@@ -984,7 +988,8 @@ _ZNSt6vectorIiSaIiEE6resizeEm.exit:               ; preds = %bb.j, %_ZSt6fill_nI
           to label %bb.o unwind label %bb.u       ; 0 uses
 
 .lr.ph223:                                        ; preds = %.loopexit, %.lr.ph223
-  %indvars.iv269 = phi i64 [ %indvars.iv.next270, %.lr.ph223 ], [ 0, %.loopexit ] ; 3 uses
+  %indvars.iv269 = phi i64 [ %5, %.lr.ph223 ], [ 0, %.loopexit ] ; 2 uses
+  %.070222 = phi i32 [ %4, %.lr.ph223 ], [ 0, %.loopexit ]
   %i.cz = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv269
   %i.da = load i32, ptr %i.cz, align 4, !tbaa !4
   %i.db = sext i32 %i.da to i64
@@ -995,9 +1000,9 @@ _ZNSt6vectorIiSaIiEE6resizeEm.exit:               ; preds = %bb.j, %_ZSt6fill_nI
   %i.dg = load i32, ptr %i.df, align 4, !tbaa !4
   %i.dh = getelementptr inbounds nuw [4 x i8], ptr %i.cx, i64 %indvars.iv269
   store i32 %i.dg, ptr %i.dh, align 4, !tbaa !4
-  %indvars.iv.next270 = add i64 %indvars.iv269, 1 ; 2 uses
-  %4 = and i64 %indvars.iv.next270, 4294967295
-  %i.di = icmp ugt i64 %i.cs, %4
+  %4 = add i32 %.070222, 1                        ; 2 uses
+  %5 = zext i32 %4 to i64                         ; 2 uses
+  %i.di = icmp ugt i64 %i.cs, %5
   br i1 %i.di, label %.lr.ph223, label %._crit_edge, !llvm.loop !68
 
 bb.o:                                             ; preds = %._crit_edge
@@ -1184,7 +1189,8 @@ bb.ac:                                            ; preds = %bb.z
   br label %bb.an
 
 .lr.ph230:                                        ; preds = %bb.x, %.lr.ph230
-  %indvars.iv276 = phi i64 [ %indvars.iv.next277, %.lr.ph230 ], [ 0, %bb.x ] ; 3 uses
+  %indvars.iv276 = phi i64 [ %7, %.lr.ph230 ], [ 0, %bb.x ] ; 2 uses
+  %.069228 = phi i32 [ %6, %.lr.ph230 ], [ 0, %bb.x ]
   %i.fl = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv276
   %i.fm = load i32, ptr %i.fl, align 4, !tbaa !4
   %i.fn = sext i32 %i.fm to i64
@@ -1192,9 +1198,9 @@ bb.ac:                                            ; preds = %bb.z
   %i.fp = load double, ptr %i.fo, align 8, !tbaa !57
   %i.fq = getelementptr inbounds nuw [8 x i8], ptr %i.en, i64 %indvars.iv276
   store double %i.fp, ptr %i.fq, align 8, !tbaa !57
-  %indvars.iv.next277 = add i64 %indvars.iv276, 1 ; 2 uses
-  %5 = and i64 %indvars.iv.next277, 4294967295
-  %i.fr = icmp ugt i64 %i.ak, %5
+  %6 = add i32 %.069228, 1                        ; 2 uses
+  %7 = zext i32 %6 to i64                         ; 2 uses
+  %i.fr = icmp ugt i64 %i.ak, %7
   br i1 %i.fr, label %.lr.ph230, label %._crit_edge231, !llvm.loop !69
 
 bb.ad:                                            ; preds = %.critedge.i96
@@ -1212,7 +1218,8 @@ bb.ae:                                            ; preds = %bb.w
           to label %bb.af unwind label %bb.al     ; 0 uses
 
 .lr.ph226:                                        ; preds = %bb.ae, %.lr.ph226
-  %indvars.iv272 = phi i64 [ %indvars.iv.next273, %.lr.ph226 ], [ 0, %bb.ae ] ; 3 uses
+  %indvars.iv272 = phi i64 [ %9, %.lr.ph226 ], [ 0, %bb.ae ] ; 2 uses
+  %.063224 = phi i32 [ %8, %.lr.ph226 ], [ 0, %bb.ae ]
   %i.fw = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv272
   %i.fx = load i32, ptr %i.fw, align 4, !tbaa !4
   %i.fy = sext i32 %i.fx to i64
@@ -1220,9 +1227,9 @@ bb.ae:                                            ; preds = %bb.w
   %i.ga = load float, ptr %i.fz, align 4, !tbaa !60
   %i.gb = getelementptr inbounds nuw [4 x i8], ptr %i.fu, i64 %indvars.iv272
   store float %i.ga, ptr %i.gb, align 4, !tbaa !60
-  %indvars.iv.next273 = add i64 %indvars.iv272, 1 ; 2 uses
-  %6 = and i64 %indvars.iv.next273, 4294967295
-  %i.gc = icmp ugt i64 %i.ak, %6
+  %8 = add i32 %.063224, 1                        ; 2 uses
+  %9 = zext i32 %8 to i64                         ; 2 uses
+  %i.gc = icmp ugt i64 %i.ak, %9
   br i1 %i.gc, label %.lr.ph226, label %._crit_edge227, !llvm.loop !70
 
 bb.af:                                            ; preds = %._crit_edge227

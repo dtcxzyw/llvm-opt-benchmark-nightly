@@ -203,15 +203,12 @@ bb.cq:                                            ; preds = %bb.cp, %.critedge30
 .lr.ph433.i.us:                                   ; preds = %.critedge2.i.us
   %i.kl = load ptr, ptr %i.i, align 8             ; 3 uses
   %i.km = sext i32 %.3428.i.us to i64             ; 2 uses
+  %2 = sext i32 %i.ki to i64
   %i.kn = getelementptr inbounds [24 x i8], ptr %i.kl, i64 %i.km
   %i.ko = load i32, ptr %i.kn, align 8            ; 2 uses
   %i.kp = and i32 %i.ko, 2
   %.not295.i163.us = icmp eq i32 %i.kp, 0
-  br i1 %.not295.i163.us, label %.lr.ph166.us.preheader, label %.critedge6.i.us
-
-.lr.ph166.us.preheader:                           ; preds = %.lr.ph433.i.us
-  %2 = sext i32 %i.ki to i64
-  br label %.lr.ph166.us
+  br i1 %.not295.i163.us, label %.lr.ph166.us, label %.critedge6.i.us
 
 bb.cr:                                            ; preds = %bb.ct
   %i.kq = getelementptr inbounds [24 x i8], ptr %i.kl, i64 %indvars.iv.next198
@@ -220,11 +217,11 @@ bb.cr:                                            ; preds = %bb.ct
   %.not295.i.us = icmp eq i32 %i.ks, 0
   br i1 %.not295.i.us, label %.lr.ph166.us, label %.critedge4.i.us, !llvm.loop !22
 
-.lr.ph166.us:                                     ; preds = %.lr.ph166.us.preheader, %bb.cr
-  %indvars.iv197 = phi i64 [ %i.km, %.lr.ph166.us.preheader ], [ %indvars.iv.next198, %bb.cr ] ; 3 uses
-  %i.kt = phi i32 [ %i.ko, %.lr.ph166.us.preheader ], [ %i.kr, %bb.cr ]
-  %.4359430.i165.us = phi i32 [ %.2357.lcssa.i.us, %.lr.ph166.us.preheader ], [ %.5360.i.us, %bb.cr ] ; 7 uses
-  %i.ku = lshr i32 %i.kt, 8
+.lr.ph166.us:                                     ; preds = %.lr.ph433.i.us, %bb.cr
+  %3 = phi i32 [ %i.kr, %bb.cr ], [ %i.ko, %.lr.ph433.i.us ]
+  %i.kt = phi i32 [ %.5360.i.us, %bb.cr ], [ %.2357.lcssa.i.us, %.lr.ph433.i.us ] ; 7 uses
+  %indvars.iv469.i164.us = phi i64 [ %indvars.iv.next198, %bb.cr ], [ %i.km, %.lr.ph433.i.us ] ; 3 uses
+  %i.ku = lshr i32 %3, 8
   %trunc379.i.us = trunc i32 %i.ku to i8
   switch i8 %trunc379.i.us, label %bb.cs [
     i8 12, label %bb.ct
@@ -236,19 +233,19 @@ bb.cr:                                            ; preds = %bb.ct
   ]
 
 bb.cs:                                            ; preds = %.lr.ph166.us
-  %i.kv = add nsw i32 %.4359430.i165.us, 1
+  %i.kv = add nsw i32 %i.kt, 1
   br label %bb.ct
 
 bb.ct:                                            ; preds = %bb.cs, %.lr.ph166.us, %.lr.ph166.us, %.lr.ph166.us, %.lr.ph166.us, %.lr.ph166.us, %.lr.ph166.us
-  %.5360.i.us = phi i32 [ %i.kv, %bb.cs ], [ %.4359430.i165.us, %.lr.ph166.us ], [ %.4359430.i165.us, %.lr.ph166.us ], [ %.4359430.i165.us, %.lr.ph166.us ], [ %.4359430.i165.us, %.lr.ph166.us ], [ %.4359430.i165.us, %.lr.ph166.us ], [ %.4359430.i165.us, %.lr.ph166.us ] ; 4 uses
-  %indvars.iv.next198 = add nsw i64 %indvars.iv197, 1 ; 3 uses
+  %.5360.i.us = phi i32 [ %i.kv, %bb.cs ], [ %i.kt, %.lr.ph166.us ], [ %i.kt, %.lr.ph166.us ], [ %i.kt, %.lr.ph166.us ], [ %i.kt, %.lr.ph166.us ], [ %i.kt, %.lr.ph166.us ], [ %i.kt, %.lr.ph166.us ] ; 4 uses
+  %indvars.iv.next198 = add nsw i64 %indvars.iv469.i164.us, 1 ; 3 uses
   %i.kw = icmp slt i64 %indvars.iv.next198, %2
   %i.kx = icmp slt i32 %.5360.i.us, %.087.lcssa236
   %or.cond372.i.us = select i1 %i.kw, i1 %i.kx, i1 false
   br i1 %or.cond372.i.us, label %bb.cr, label %..critedge4.i_crit_edge.us, !llvm.loop !22
 
 .critedge4.i.us:                                  ; preds = %bb.cr, %..critedge4.i_crit_edge.us
-  %i.ky = trunc nsw i64 %indvars.iv197 to i32     ; 2 uses
+  %i.ky = trunc nsw i64 %indvars.iv469.i164.us to i32 ; 2 uses
   %i.kz = icmp slt i32 %i.ja, %i.ky
   br i1 %i.kz, label %.lr.ph441.i.us, label %.critedge6.i.us
 
@@ -257,7 +254,7 @@ bb.ct:                                            ; preds = %bb.cs, %.lr.ph166.u
   br label %bb.cu
 
 bb.cu:                                            ; preds = %bb.cy, %.lr.ph441.i.us
-  %indvars.iv469.i.us = phi i64 [ %indvars.iv197, %.lr.ph441.i.us ], [ %indvars.iv.next470.i.us, %bb.cy ] ; 4 uses
+  %indvars.iv469.i.us = phi i64 [ %indvars.iv469.i164.us, %.lr.ph441.i.us ], [ %indvars.iv.next470.i.us, %bb.cy ] ; 4 uses
   %.6361439.i.us = phi i32 [ %.5360.i.us, %.lr.ph441.i.us ], [ %.7.i107.us, %bb.cy ] ; 9 uses
   %i.lb = getelementptr inbounds [24 x i8], ptr %i.kl, i64 %indvars.iv469.i.us ; 2 uses
   %i.lc = load i32, ptr %i.lb, align 8            ; 3 uses

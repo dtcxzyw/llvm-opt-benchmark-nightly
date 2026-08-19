@@ -198,10 +198,7 @@ bb.l:                                             ; preds = %bb.j, %bb.k, %.lr.p
   %i.bz = load i32, ptr %i.bn, align 8, !tbaa !43
   %i.ca = load i32, ptr %i.c, align 8, !tbaa !34  ; 3 uses
   %i.cb = icmp sgt i32 %i.ca, 0
-  %4 = add nsw i32 %i.ca, -1
-  %5 = lshr i32 %4, 4
-  %6 = add nuw nsw i32 %5, 1
-  %wide.trip.count120 = zext nneg i32 %6 to i64
+  %wide.trip.count120 = zext nneg i32 %i.ca to i64
   br label %bb.m
 
 bb.m:                                             ; preds = %.lr.ph107.split, %.loopexit
@@ -238,18 +235,18 @@ bb.o:                                             ; preds = %bb.n, %bb.m
 
 bb.p:                                             ; preds = %.lr.ph, %.critedge
   %indvars.iv115 = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next116, %.critedge ] ; 2 uses
-  %indvars.iv113 = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next114, %.critedge ] ; 2 uses
-  %indvars.iv110 = phi i32 [ %i.ca, %.lr.ph ], [ %indvars.iv.next111, %.critedge ] ; 2 uses
+  %indvars.iv113 = phi i64 [ 0, %.lr.ph ], [ %7, %.critedge ]
   %i.cs = mul nuw nsw i64 %indvars.iv115, 40
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cr, i64 %i.cs ; 2 uses
-  %wide.trip.count = zext i32 %indvars.iv110 to i64
+  %4 = and i64 %indvars.iv113, 4294967280
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %bb.u
-  %indvars.iv = phi i64 [ 0, %bb.p ], [ %indvars.iv.next, %bb.u ] ; 6 uses
-  %i.cu = or disjoint i64 %indvars.iv, %indvars.iv113 ; 3 uses
-  %exitcond.not = icmp eq i64 %indvars.iv, %wide.trip.count
-  br i1 %exitcond.not, label %.critedge, label %bb.r
+  %indvars.iv = phi i64 [ 0, %bb.p ], [ %indvars.iv.next, %bb.u ] ; 5 uses
+  %i.cu = or disjoint i64 %indvars.iv, %4         ; 4 uses
+  %5 = trunc nuw i64 %i.cu to i32
+  %6 = icmp sgt i32 %i.ca, %5
+  br i1 %6, label %bb.r, label %.critedge
 
 bb.r:                                             ; preds = %bb.q
   %i.cv = and i64 %indvars.iv, 1
@@ -313,10 +310,9 @@ bb.u:                                             ; preds = %bb.t, %bb.s
 
 .critedge:                                        ; preds = %bb.u, %bb.q
   %indvars.iv.next116 = add nuw nsw i64 %indvars.iv115, 1 ; 2 uses
-  %indvars.iv.next111 = add i32 %indvars.iv110, -16
-  %indvars.iv.next114 = add nuw nsw i64 %indvars.iv113, 16
-  %exitcond121.not = icmp eq i64 %indvars.iv.next116, %wide.trip.count120
-  br i1 %exitcond121.not, label %.loopexit, label %bb.p, !llvm.loop !49
+  %7 = shl nsw i64 %indvars.iv.next116, 4         ; 2 uses
+  %8 = icmp samesign ult i64 %7, %wide.trip.count120
+  br i1 %8, label %bb.p, label %.loopexit, !llvm.loop !49
 
 .loopexit:                                        ; preds = %.critedge, %bb.o
   %i.ek = add nuw nsw i32 %.093106, 1             ; 2 uses

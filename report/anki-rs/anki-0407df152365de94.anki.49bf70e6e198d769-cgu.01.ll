@@ -204,7 +204,7 @@ bb.q:                                             ; preds = %.loopexit22.i
   br label %.body.i
 
 _ZN4core5slice4sort6shared9smallsort11insert_tail17h3b085e403fa5d43fE.exit.i: ; preds = %._crit_edge552, %"_ZN5alloc5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$7sort_by28_$u7b$$u7b$closure$u7d$$u7d$17h7fb0c2317e557d81E.exit.i33.i"
-  %i.by = icmp ult i64 %.sroa.08.113.i, %i.j      ; 2 uses
+  %i.by = icmp samesign ult i64 %.sroa.08.113.i, %i.j ; 2 uses
   %i.bz = zext i1 %i.by to i64
   %.sroa.08.1.i = add nuw i64 %.sroa.08.113.i, %i.bz
   br i1 %i.by, label %.lr.ph.i, label %.loopexit.i
@@ -607,7 +607,7 @@ bb.n:                                             ; preds = %bb.m
   br label %_ZN4core5slice4sort6shared9smallsort11insert_tail17h0606b715514f7c40E.exit.i
 
 _ZN4core5slice4sort6shared9smallsort11insert_tail17h0606b715514f7c40E.exit.i: ; preds = %._crit_edge306, %.lr.ph.i
-  %i.ef = icmp ult i64 %.sroa.08.110.i, %i.j      ; 2 uses
+  %i.ef = icmp samesign ult i64 %.sroa.08.110.i, %i.j ; 2 uses
   %i.eg = zext i1 %i.ef to i64
   %.sroa.08.1.i = add nuw i64 %.sroa.08.110.i, %i.eg
   br i1 %i.ef, label %.lr.ph.i, label %.loopexit.i
@@ -1010,7 +1010,7 @@ bb.p:                                             ; preds = %.lr.ph266
   br label %_ZN4core5slice4sort6shared9smallsort11insert_tail17hcb8bd1d5ede62798E.exit.i
 
 _ZN4core5slice4sort6shared9smallsort11insert_tail17hcb8bd1d5ede62798E.exit.i: ; preds = %._crit_edge267, %.lr.ph.i
-  %i.de = icmp ult i64 %.sroa.08.110.i, %i.n      ; 2 uses
+  %i.de = icmp samesign ult i64 %.sroa.08.110.i, %i.n ; 2 uses
   %i.df = zext i1 %i.de to i64
   %.sroa.08.1.i = add nuw i64 %.sroa.08.110.i, %i.df
   br i1 %i.de, label %.lr.ph.i, label %.loopexit.i
@@ -1413,7 +1413,7 @@ default.unreachable:                              ; preds = %bb.u, %bb.q, %"_ZN5
   br label %_ZN4core5slice4sort6shared9smallsort11insert_tail17h5b6c1d22263faf70E.exit.i
 
 _ZN4core5slice4sort6shared9smallsort11insert_tail17h5b6c1d22263faf70E.exit.i: ; preds = %"_ZN5alloc5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$7sort_by28_$u7b$$u7b$closure$u7d$$u7d$17had3f9a9c6513ef21E.exit18.thread.i.i", %"_ZN5alloc5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$7sort_by28_$u7b$$u7b$closure$u7d$$u7d$17had3f9a9c6513ef21E.exit.i31.i", %.lr.ph.i
-  %i.cx = icmp ult i64 %.sroa.08.111.i, %i.l      ; 2 uses
+  %i.cx = icmp samesign ult i64 %.sroa.08.111.i, %i.l ; 2 uses
   %i.cy = zext i1 %i.cx to i64
   %.sroa.08.1.i = add nuw i64 %.sroa.08.111.i, %i.cy
   br i1 %i.cx, label %.lr.ph.i, label %.loopexit.i
@@ -1816,7 +1816,7 @@ bb.p:                                             ; preds = %.lr.ph259
   br label %_ZN4core5slice4sort6shared9smallsort11insert_tail17h9206b0d87023b412E.exit.i
 
 _ZN4core5slice4sort6shared9smallsort11insert_tail17h9206b0d87023b412E.exit.i: ; preds = %._crit_edge260, %.lr.ph.i
-  %i.er = icmp ult i64 %.sroa.08.110.i, %i.l      ; 2 uses
+  %i.er = icmp samesign ult i64 %.sroa.08.110.i, %i.l ; 2 uses
   %i.es = zext i1 %i.er to i64
   %.sroa.08.1.i = add nuw i64 %.sroa.08.110.i, %i.es
   br i1 %i.er, label %.lr.ph.i, label %.loopexit.i
@@ -2219,7 +2219,7 @@ bb.p:                                             ; preds = %.lr.ph257
   br label %_ZN4core5slice4sort6shared9smallsort11insert_tail17h7e65b665a7a55e16E.exit.i
 
 _ZN4core5slice4sort6shared9smallsort11insert_tail17h7e65b665a7a55e16E.exit.i: ; preds = %._crit_edge258, %.lr.ph.i
-  %i.dx = icmp ult i64 %.sroa.08.110.i, %i.j      ; 2 uses
+  %i.dx = icmp samesign ult i64 %.sroa.08.110.i, %i.j ; 2 uses
   %i.dy = zext i1 %i.dx to i64
   %.sroa.08.1.i = add nuw i64 %.sroa.08.110.i, %i.dy
   br i1 %i.dx, label %.lr.ph.i, label %.loopexit.i
@@ -2622,7 +2622,7 @@ bb.p:                                             ; preds = %.lr.ph259
   br label %_ZN4core5slice4sort6shared9smallsort11insert_tail17hb62c38ab57b94472E.exit.i
 
 _ZN4core5slice4sort6shared9smallsort11insert_tail17hb62c38ab57b94472E.exit.i: ; preds = %._crit_edge260, %.lr.ph.i
-  %i.er = icmp ult i64 %.sroa.08.110.i, %i.l      ; 2 uses
+  %i.er = icmp samesign ult i64 %.sroa.08.110.i, %i.l ; 2 uses
   %i.es = zext i1 %i.er to i64
   %.sroa.08.1.i = add nuw i64 %.sroa.08.110.i, %i.es
   br i1 %i.er, label %.lr.ph.i, label %.loopexit.i
@@ -3025,7 +3025,7 @@ bb.n:                                             ; preds = %bb.m
   br label %_ZN4core5slice4sort6shared9smallsort11insert_tail17h4555c6640cb17a13E.exit.i
 
 _ZN4core5slice4sort6shared9smallsort11insert_tail17h4555c6640cb17a13E.exit.i: ; preds = %._crit_edge305, %.lr.ph.i
-  %i.ew = icmp ult i64 %.sroa.08.110.i, %i.k      ; 2 uses
+  %i.ew = icmp samesign ult i64 %.sroa.08.110.i, %i.k ; 2 uses
   %i.ex = zext i1 %i.ew to i64
   %.sroa.08.1.i = add nuw i64 %.sroa.08.110.i, %i.ex
   br i1 %i.ew, label %.lr.ph.i, label %.loopexit.i
@@ -3428,7 +3428,7 @@ _ZN4core3ops8function5FnMut8call_mut17h0c26cafb83261247E.exit22.i.i: ; preds = %
   br label %_ZN4core5slice4sort6shared9smallsort11insert_tail17h5675a86bb3d9adc7E.exit.i
 
 _ZN4core5slice4sort6shared9smallsort11insert_tail17h5675a86bb3d9adc7E.exit.i: ; preds = %.loopexit.i.i.i.i.i.i.i21._crit_edge.i.i, %_ZN4core3ops8function5FnMut8call_mut17h0c26cafb83261247E.exit.i44.i, %.loopexit.i.i.i.i.i.i.i.i43.i, %.split.i.i
-  %i.dv = icmp ult i64 %.sroa.08.110.i, %i.n      ; 2 uses
+  %i.dv = icmp samesign ult i64 %.sroa.08.110.i, %i.n ; 2 uses
   %i.dw = zext i1 %i.dv to i64
   %.sroa.08.1.i = add nuw i64 %.sroa.08.110.i, %i.dw
   br i1 %i.dv, label %.lr.ph.i, label %.loopexit.i

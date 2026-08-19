@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %bb.l
 
 .lr.ph220:                                        ; preds = %.preheader
   %i.bx = load ptr, ptr %i.i, align 8, !tbaa !101 ; 2 uses
-  %min.iters.check = icmp ult i64 %i.bw, 6
+  %min.iters.check = icmp ult i64 %i.bw, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph220
@@ -216,7 +216,8 @@ vector.scevcheck:                                 ; preds = %.lr.ph220
   br i1 %i.cc, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.scevcheck
-  %n.vec = and i64 %i.bw, 8589934588              ; 3 uses
+  %n.vec = and i64 %i.bw, 8589934588              ; 4 uses
+  %2 = trunc i64 %n.vec to i32
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -249,6 +250,7 @@ middle.block:                                     ; preds = %vector.body
 
 scalar.ph.preheader:                              ; preds = %vector.scevcheck, %.lr.ph220, %middle.block
   %indvars.iv240.ph = phi i64 [ 0, %vector.scevcheck ], [ 0, %.lr.ph220 ], [ %n.vec, %middle.block ]
+  %.1168219.ph = phi i32 [ 0, %vector.scevcheck ], [ 0, %.lr.ph220 ], [ %2, %middle.block ]
   br label %scalar.ph
 
 bb.n:                                             ; preds = %.lr.ph218, %bb.ac
@@ -480,7 +482,8 @@ bb.ac:                                            ; preds = %.loopexit203, %bb.a
   br i1 %exitcond239.not, label %.preheader, label %bb.n, !llvm.loop !659
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
-  %indvars.iv240 = phi i64 [ %indvars.iv.next241, %scalar.ph ], [ %indvars.iv240.ph, %scalar.ph.preheader ] ; 3 uses
+  %indvars.iv240 = phi i64 [ %4, %scalar.ph ], [ %indvars.iv240.ph, %scalar.ph.preheader ] ; 2 uses
+  %.1168219 = phi i32 [ %3, %scalar.ph ], [ %.1168219.ph, %scalar.ph.preheader ]
   %i.gl = getelementptr inbounds nuw [8 x i8], ptr %i.bm, i64 %indvars.iv240
   %i.gm = load i64, ptr %i.gl, align 8, !tbaa !226
   %i.gn = add nsw i64 %i.gm, 512
@@ -490,9 +493,9 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.gr = trunc i64 %i.go to i32
   %i.gs = add i32 %i.gq, %i.gr
   store i32 %i.gs, ptr %i.gp, align 4, !tbaa !187
-  %indvars.iv.next241 = add i64 %indvars.iv240, 1 ; 2 uses
-  %2 = and i64 %indvars.iv.next241, 4294967295
-  %i.gt = icmp ugt i64 %i.bw, %2
+  %3 = add i32 %.1168219, 1                       ; 2 uses
+  %4 = zext i32 %3 to i64                         ; 2 uses
+  %i.gt = icmp ugt i64 %i.bw, %4
   br i1 %i.gt, label %scalar.ph, label %._crit_edge, !llvm.loop !660
 
 ._crit_edge:                                      ; preds = %scalar.ph, %middle.block, %.preheader

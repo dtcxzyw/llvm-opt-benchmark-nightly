@@ -201,7 +201,8 @@ bb.t:                                             ; preds = %_ZN4cvc58internal12
   br label %bb.ak
 
 bb.u:                                             ; preds = %.lr.ph, %bb.x
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.x ] ; 2 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %11, %bb.x ]
+  %.01756 = phi i32 [ 0, %.lr.ph ], [ %10, %bb.x ]
   %i.cc = getelementptr inbounds nuw [4 x i8], ptr %i.bi, i64 %indvars.iv
   %i.cd = load i32, ptr %i.cc, align 4, !tbaa !81
   %i.ce = sext i32 %i.cd to i64                   ; 2 uses
@@ -223,9 +224,9 @@ bb.w:                                             ; preds = %bb.v
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.u, %bb.w, %bb.v
-  %indvars.iv.next = add i64 %indvars.iv, 1       ; 2 uses
-  %10 = and i64 %indvars.iv.next, 4294967295
-  %i.cm = icmp ugt i64 %i.bm, %10
+  %10 = add i32 %.01756, 1                        ; 2 uses
+  %11 = zext i32 %10 to i64                       ; 2 uses
+  %i.cm = icmp ugt i64 %i.bm, %11
   br i1 %i.cm, label %bb.u, label %.preheader, !llvm.loop !110
 
 ._crit_edge:                                      ; preds = %bb.ag, %.preheader
@@ -300,7 +301,8 @@ _ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS
   br label %_ZNSt6vectorIiSaIiEE9push_backEOi.exit
 
 bb.ad:                                            ; preds = %.lr.ph58, %bb.ag
-  %indvars.iv62 = phi i64 [ 0, %.lr.ph58 ], [ %indvars.iv.next63, %bb.ag ] ; 2 uses
+  %indvars.iv62 = phi i64 [ 0, %.lr.ph58 ], [ %13, %bb.ag ]
+  %.057 = phi i32 [ 0, %.lr.ph58 ], [ %12, %bb.ag ]
   %i.dj = getelementptr inbounds nuw [4 x i8], ptr %i.bs, i64 %indvars.iv62
   %i.dk = load i32, ptr %i.dj, align 4, !tbaa !81
   %i.dl = sext i32 %i.dk to i64                   ; 2 uses
@@ -322,9 +324,9 @@ bb.af:                                            ; preds = %bb.ae
   br label %bb.ag
 
 bb.ag:                                            ; preds = %bb.ad, %bb.af, %bb.ae
-  %indvars.iv.next63 = add i64 %indvars.iv62, 1   ; 2 uses
-  %11 = and i64 %indvars.iv.next63, 4294967295
-  %i.du = icmp ugt i64 %i.bw, %11
+  %12 = add i32 %.057, 1                          ; 2 uses
+  %13 = zext i32 %12 to i64                       ; 2 uses
+  %i.du = icmp ugt i64 %i.bw, %13
   br i1 %i.du, label %bb.ad, label %._crit_edge, !llvm.loop !111
 
 _ZNSt6vectorIiSaIiEE9push_backEOi.exit:           ; preds = %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i, %bb.y

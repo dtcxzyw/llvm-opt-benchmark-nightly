@@ -110,21 +110,16 @@ bb.a:
   br i1 %i.f, label %.preheader.us.preheader, label %.preheader._crit_edge
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
-  %4 = sext i32 %3 to i64                         ; 2 uses
-  %5 = add nsw i32 %2, -1
-  %6 = zext nneg i32 %5 to i64
-  %7 = add nsw i64 %4, %6
   %wide.trip.count = zext nneg i32 %2 to i64
   br label %.preheader.us
 
 .preheader.us:                                    ; preds = %.preheader.us.preheader, %bb.d
-  %indvars.iv46.in = phi i64 [ %7, %.preheader.us.preheader ], [ %indvars.iv46, %bb.d ]
-  %indvars.iv42 = phi i64 [ %4, %.preheader.us.preheader ], [ %indvars.iv.next43, %bb.d ] ; 2 uses
-  %indvars.iv46 = add nsw i64 %indvars.iv46.in, 1 ; 2 uses
+  %indvars.iv42 = phi i32 [ %3, %.preheader.us.preheader ], [ %indvars.iv.next43, %bb.d ] ; 2 uses
+  %4 = sext i32 %indvars.iv42 to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %.preheader.us, %bb.c
-  %indvars.iv44 = phi i64 [ %indvars.iv42, %.preheader.us ], [ %indvars.iv.next45, %bb.c ] ; 3 uses
+  %indvars.iv44 = phi i64 [ %4, %.preheader.us ], [ %indvars.iv.next45, %bb.c ] ; 3 uses
   %indvars.iv = phi i64 [ 0, %.preheader.us ], [ %indvars.iv.next, %bb.c ] ; 3 uses
   %i.h = getelementptr inbounds i8, ptr %i.g, i64 %indvars.iv44
   %i.i = load i8, ptr %i.h, align 1, !tbaa !13
@@ -134,7 +129,7 @@ bb.b:                                             ; preds = %.preheader.us, %bb.
   br i1 %.not.us, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %indvars.iv.next45 = add nsw i64 %indvars.iv44, 1
+  %indvars.iv.next45 = add nsw i64 %indvars.iv44, 1 ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.preheader._crit_edge.loopexit, label %bb.b, !llvm.loop !14
@@ -145,11 +140,11 @@ bb.d:                                             ; preds = %bb.b
   %i.n = add i32 %i.l, 1
   %i.o = sub i32 %i.n, %i.m
   %i.p = icmp slt i32 %i.o, %i.b
-  %indvars.iv.next43 = add nsw i64 %indvars.iv42, 1
+  %indvars.iv.next43 = add nsw i32 %indvars.iv42, 1
   br i1 %i.p, label %.preheader.us, label %.loopexit, !llvm.loop !16
 
 .preheader._crit_edge.loopexit:                   ; preds = %bb.c
-  %i.q = trunc nsw i64 %indvars.iv46 to i32
+  %i.q = trunc nsw i64 %indvars.iv.next45 to i32
   br label %.preheader._crit_edge
 
 .preheader._crit_edge:                            ; preds = %.preheader._crit_edge.loopexit, %.preheader.lr.ph

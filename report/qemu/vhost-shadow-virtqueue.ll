@@ -204,7 +204,7 @@ bb.a:
   %i.b = load i16, ptr %i.a, align 2              ; 2 uses
   %spec.select = select i1 %6, i16 2, i16 0       ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.d = load ptr, ptr %i.c, align 8              ; 3 uses
+  %i.d = load ptr, ptr %i.c, align 8              ; 4 uses
   %i.e = icmp eq i64 %3, 0
   br i1 %i.e, label %vhost_svq_update_free_head.exit, label %bb.b
 
@@ -338,7 +338,8 @@ vhost_svq_translate_addr.exit:                    ; preds = %bb.h, %bb.d
   br i1 %5, label %vhost_svq_translate_addr.exit.split.us, label %vhost_svq_translate_addr.exit.split
 
 vhost_svq_translate_addr.exit.split.us:           ; preds = %vhost_svq_translate_addr.exit, %vhost_svq_next_desc.exit.us
-  %indvars.iv61 = phi i64 [ %indvars.iv.next62, %vhost_svq_next_desc.exit.us ], [ 0, %vhost_svq_translate_addr.exit ] ; 4 uses
+  %indvars.iv61 = phi i64 [ %9, %vhost_svq_next_desc.exit.us ], [ 0, %vhost_svq_translate_addr.exit ] ; 2 uses
+  %.056.us = phi i32 [ %8, %vhost_svq_next_desc.exit.us ], [ 0, %vhost_svq_translate_addr.exit ]
   %.04255.us = phi i16 [ %.0.i.us, %vhost_svq_next_desc.exit.us ], [ %i.b, %vhost_svq_translate_addr.exit ] ; 5 uses
   %i.bo = load ptr, ptr %i.bl, align 8
   %i.bp = getelementptr i8, ptr %i.bo, i64 184
@@ -367,7 +368,7 @@ bb.j:                                             ; preds = %vhost_svq_translate
 vhost_svq_next_desc.exit.us:                      ; preds = %bb.j, %bb.i
   %.pre-phi = phi i64 [ %i.bw, %bb.j ], [ %.pre, %bb.i ]
   %.0.i.us = phi i16 [ %i.bz, %bb.j ], [ %spec.select.i.us, %bb.i ] ; 2 uses
-  %8 = add i64 %indvars.iv61, 1
+  %8 = add i32 %.056.us, 1                        ; 2 uses
   %i.ca = getelementptr inbounds nuw [16 x i8], ptr %i.d, i64 %.pre-phi ; 4 uses
   %i.cb = getelementptr inbounds nuw i8, ptr %i.ca, i64 12
   store i16 %i.bn, ptr %i.cb, align 4
@@ -382,14 +383,14 @@ vhost_svq_next_desc.exit.us:                      ; preds = %bb.j, %bb.i
   %i.ci = trunc i64 %i.ch to i32
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ca, i64 8
   store i32 %i.ci, ptr %i.cj, align 8
-  %9 = and i64 %8, 4294967295
+  %9 = zext i32 %8 to i64                         ; 2 uses
   %i.ck = icmp ugt i64 %3, %9
-  %indvars.iv.next62 = add i64 %indvars.iv61, 1
   br i1 %i.ck, label %vhost_svq_translate_addr.exit.split.us, label %.split.us, !llvm.loop !24
 
-vhost_svq_translate_addr.exit.split:              ; preds = %vhost_svq_translate_addr.exit, %bb.n
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.n ], [ 0, %vhost_svq_translate_addr.exit ] ; 4 uses
-  %.04255 = phi i16 [ %.0.i, %bb.n ], [ %i.b, %vhost_svq_translate_addr.exit ] ; 5 uses
+vhost_svq_translate_addr.exit.split:              ; preds = %vhost_svq_translate_addr.exit, %bb.m
+  %indvars.iv = phi i64 [ %11, %bb.m ], [ 0, %vhost_svq_translate_addr.exit ] ; 4 uses
+  %.056 = phi i32 [ %10, %bb.m ], [ 0, %vhost_svq_translate_addr.exit ]
+  %.04255 = phi i16 [ %.0.i, %bb.m ], [ %i.b, %vhost_svq_translate_addr.exit ] ; 5 uses
   %i.cl = load ptr, ptr %i.bl, align 8
   %i.cm = getelementptr i8, ptr %i.cl, i64 184
   %.val.i = load i64, ptr %i.cm, align 8
@@ -415,25 +416,32 @@ bb.l:                                             ; preds = %vhost_svq_translate
 
 vhost_svq_next_desc.exit:                         ; preds = %bb.k, %bb.l
   %.0.i = phi i16 [ %spec.select.i, %bb.k ], [ %i.cw, %bb.l ] ; 2 uses
-  %10 = add i64 %indvars.iv, 1
-  %11 = and i64 %10, 4294967295
-  %i.cx = icmp ugt i64 %3, %11                    ; 2 uses
-  %i.cy = zext i16 %.04255 to i64                 ; 2 uses
+  %10 = add i32 %.056, 1                          ; 2 uses
+  %11 = zext i32 %10 to i64                       ; 2 uses
+  %i.cx = icmp ugt i64 %3, %11
+  %i.cy = zext i16 %.04255 to i64                 ; 3 uses
   %i.cz = getelementptr inbounds nuw [16 x i8], ptr %i.d, i64 %i.cy ; 2 uses
   %i.da = getelementptr inbounds nuw i8, ptr %i.cz, i64 12 ; 2 uses
-  br i1 %i.cx, label %bb.m, label %12
+  br i1 %i.cx, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %vhost_svq_next_desc.exit
   store i16 %i.bn, ptr %i.da, align 4
   %i.db = getelementptr inbounds nuw i8, ptr %i.cz, i64 14
   store i16 %.0.i, ptr %i.db, align 2
-  br label %bb.n
+  %12 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv
+  %13 = load i64, ptr %12, align 8
+  %14 = getelementptr inbounds nuw [16 x i8], ptr %i.d, i64 %i.cy ; 2 uses
+  store i64 %13, ptr %14, align 16
+  %15 = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %indvars.iv
+  %16 = getelementptr inbounds nuw i8, ptr %15, i64 8
+  %17 = load i64, ptr %16, align 8
+  %18 = trunc i64 %17 to i32
+  %19 = getelementptr inbounds nuw i8, ptr %14, i64 8
+  store i32 %18, ptr %19, align 8
+  br label %vhost_svq_translate_addr.exit.split
 
-12:                                               ; preds = %vhost_svq_next_desc.exit
+bb.n:                                             ; preds = %vhost_svq_next_desc.exit
   store i16 %spec.select, ptr %i.da, align 4
-  br label %bb.n
-
-bb.n:                                             ; preds = %12, %bb.m
   %i.dc = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv
   %i.dd = load i64, ptr %i.dc, align 8
   %i.de = getelementptr inbounds nuw [16 x i8], ptr %i.d, i64 %i.cy ; 2 uses
@@ -444,11 +452,10 @@ bb.n:                                             ; preds = %12, %bb.m
   %i.di = trunc i64 %i.dh to i32
   %i.dj = getelementptr inbounds nuw i8, ptr %i.de, i64 8
   store i32 %i.di, ptr %i.dj, align 8
-  %indvars.iv.next = add i64 %indvars.iv, 1
-  br i1 %i.cx, label %vhost_svq_translate_addr.exit.split, label %.split.us, !llvm.loop !24
+  br label %.split.us
 
-.split.us:                                        ; preds = %bb.n, %vhost_svq_next_desc.exit.us
-  %.us-phi = phi i16 [ %.04255.us, %vhost_svq_next_desc.exit.us ], [ %.04255, %bb.n ]
+.split.us:                                        ; preds = %vhost_svq_next_desc.exit.us, %bb.n
+  %.us-phi = phi i16 [ %.04255, %bb.n ], [ %.04255.us, %vhost_svq_next_desc.exit.us ]
   %i.dk = load ptr, ptr %i.bl, align 8
   %i.dl = getelementptr i8, ptr %i.dk, i64 184
   %.val.i49 = load i64, ptr %i.dl, align 8

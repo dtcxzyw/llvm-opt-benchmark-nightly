@@ -203,7 +203,7 @@ bb.ail:                                           ; preds = %.sink.split16869, %
   store i32 0, ptr %i.cew, align 4, !tbaa !182
   %i.cex = load ptr, ptr getelementptr inbounds nuw (i8, ptr @language_scanner_globals, i64 40), align 8, !tbaa !104 ; 3 uses
   %i.cey = load i32, ptr getelementptr inbounds nuw (i8, ptr @language_scanner_globals, i64 96), align 8, !tbaa !183 ; 3 uses
-  %i.cez = load i32, ptr getelementptr inbounds nuw (i8, ptr @language_scanner_globals, i64 100), align 4, !tbaa !184 ; 3 uses
+  %i.cez = load i32, ptr getelementptr inbounds nuw (i8, ptr @language_scanner_globals, i64 100), align 4, !tbaa !184 ; 4 uses
   %.not.i6388 = icmp slt i32 %i.cey, %i.cez
   br i1 %.not.i6388, label %.zend_ptr_stack_push.exit_crit_edge, label %.preheader6890
 
@@ -212,12 +212,11 @@ bb.ail:                                           ; preds = %.sink.split16869, %
   br label %zend_ptr_stack_push.exit
 
 .preheader6890:                                   ; preds = %bb.ail
-  %i.cfa = add i32 %i.cez, 64                     ; 2 uses
-  %i.cfb = add i32 %i.cey, 1
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.cfa, i32 %i.cfb)
-  %13 = xor i32 %i.cez, -1
-  %14 = add i32 %smax, %13
-  %i.cfc = and i32 %14, -64
+  %i.cfa = add i32 %i.cez, 64
+  %i.cfb = add nsw i32 %i.cez, 63
+  %smax = tail call i32 @llvm.smax.i32(i32 %i.cey, i32 %i.cfb)
+  %13 = sub i32 %smax, %i.cez
+  %i.cfc = and i32 %13, -64
   %i.cfd = add i32 %i.cfa, %i.cfc                 ; 2 uses
   store i32 %i.cfd, ptr getelementptr inbounds nuw (i8, ptr @language_scanner_globals, i64 100), align 4, !tbaa !184
   %i.cfe = load i8, ptr getelementptr inbounds nuw (i8, ptr @language_scanner_globals, i64 120), align 8, !tbaa !186, !range !87, !noundef !88
