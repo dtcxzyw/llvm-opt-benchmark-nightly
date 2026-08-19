@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %_ZN4absl19str_forma
 
 _ZN4absl19str_format_internal14FormatSinkImpl6AppendEmc.exit35: ; preds = %bb.i, %.lr.ph.i29
   %.lcssa.i28 = phi ptr [ %i.an, %bb.i ], [ %i.ap, %.lr.ph.i29 ]
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.lcssa.i28, i8 %0, i64 1, i1 false)
+  store i8 %0, ptr %.lcssa.i28, align 1
   %i.at = load ptr, ptr %i.am, align 8
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 1
   store ptr %i.au, ptr %i.am, align 8
@@ -595,7 +595,7 @@ bb.h:                                             ; preds = %_ZN4absl19str_forma
 
 _ZN4absl19str_format_internal14FormatSinkImpl6AppendEmc.exit33: ; preds = %bb.h, %.lr.ph.i27
   %.lcssa.i26 = phi ptr [ %i.bh, %bb.h ], [ %i.bj, %.lr.ph.i27 ]
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.lcssa.i26, i8 %i.ay, i64 1, i1 false)
+  store i8 %i.ay, ptr %.lcssa.i26, align 1
   %i.bn = load ptr, ptr %i.bg, align 8
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bn, i64 1
   store ptr %i.bo, ptr %i.bg, align 8
@@ -998,7 +998,7 @@ bb.h:                                             ; preds = %_ZN4absl19str_forma
 
 _ZN4absl19str_format_internal14FormatSinkImpl6AppendEmc.exit16.i.i.i.i: ; preds = %.lr.ph.i10.i.i.i.i, %bb.h
   %.lcssa.i9.i.i.i.i = phi ptr [ %i.bo, %bb.h ], [ %i.bq, %.lr.ph.i10.i.i.i.i ]
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.lcssa.i9.i.i.i.i, i8 %i.bf, i64 1, i1 false)
+  store i8 %i.bf, ptr %.lcssa.i9.i.i.i.i, align 1
   %i.bu = load ptr, ptr %i.bn, align 8
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 1
   store ptr %i.bv, ptr %i.bn, align 8
@@ -1401,7 +1401,7 @@ bb.e:                                             ; preds = %_ZN4absl19str_forma
 
 _ZN4absl19str_format_internal14FormatSinkImpl6AppendEmc.exit.i.i.i.i: ; preds = %.lr.ph.i23.i.i.i.i, %bb.e
   %.lcssa.i.i.i.i.i = phi ptr [ %i.ci, %bb.e ], [ %i.ck, %.lr.ph.i23.i.i.i.i ]
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.lcssa.i.i.i.i.i, i8 %i.cc, i64 1, i1 false)
+  store i8 %i.cc, ptr %.lcssa.i.i.i.i.i, align 1
   %i.co = load ptr, ptr %i.ch, align 8
   %i.cp = getelementptr inbounds nuw i8, ptr %i.co, i64 1
   store ptr %i.cp, ptr %i.ch, align 8
@@ -1522,7 +1522,7 @@ bb.k:                                             ; preds = %bb.j
 
 _ZN4absl19str_format_internal14FormatSinkImpl6AppendEmc.exit41.i.i.i.i: ; preds = %.lr.ph.i35.i.i.i.i, %.critedge17.i.i.i.i
   %.lcssa.i34.i.i.i.i = phi ptr [ %i.el, %.critedge17.i.i.i.i ], [ %i.en, %.lr.ph.i35.i.i.i.i ]
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.lcssa.i34.i.i.i.i, i8 %i.ef, i64 1, i1 false)
+  store i8 %i.ef, ptr %.lcssa.i34.i.i.i.i, align 1
   %i.er = load ptr, ptr %i.ek, align 8
   %i.es = getelementptr inbounds nuw i8, ptr %i.er, i64 1
   store ptr %i.es, ptr %i.ek, align 8
@@ -1558,7 +1558,7 @@ _ZN4absl19str_format_internal14FormatSinkImpl6AppendEmc.exit41.i.i.i.i: ; preds 
 
 _ZN4absl19str_format_internal14FormatSinkImpl6AppendEmc.exit51.i.i.i.i: ; preds = %.lr.ph.i45.i.i.i.i, %.critedge15.i.i.i.i
   %.lcssa.i44.i.i.i.i = phi ptr [ %i.ff, %.critedge15.i.i.i.i ], [ %i.fh, %.lr.ph.i45.i.i.i.i ]
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.lcssa.i44.i.i.i.i, i8 %i.ez, i64 1, i1 false)
+  store i8 %i.ez, ptr %.lcssa.i44.i.i.i.i, align 1
   %i.fl = load ptr, ptr %i.fe, align 8
   %i.fm = getelementptr inbounds nuw i8, ptr %i.fl, i64 1
   store ptr %i.fm, ptr %i.fe, align 8
@@ -1828,7 +1828,7 @@ bb.c:                                             ; preds = %bb.b
 
 _ZN4absl19str_format_internal14FormatSinkImpl6AppendEmc.exit: ; preds = %bb.c, %.lr.ph.i
   %.lcssa.i = phi ptr [ %i.n, %bb.c ], [ %i.p, %.lr.ph.i ]
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.lcssa.i, i8 %i.f, i64 1, i1 false)
+  store i8 %i.f, ptr %.lcssa.i, align 1
   %i.t = load ptr, ptr %i.m, align 8
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 1
   store ptr %i.u, ptr %i.m, align 8
@@ -2105,7 +2105,7 @@ bb.s:                                             ; preds = %_ZN4absl19str_forma
 
 _ZN4absl19str_format_internal14FormatSinkImpl6AppendEmc.exit62: ; preds = %bb.s, %.lr.ph.i56
   %.lcssa.i55 = phi ptr [ %i.ej, %bb.s ], [ %i.el, %.lr.ph.i56 ]
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.lcssa.i55, i8 %i.eb, i64 1, i1 false)
+  store i8 %i.eb, ptr %.lcssa.i55, align 1
   %i.ep = load ptr, ptr %i.ei, align 8
   %i.eq = getelementptr inbounds nuw i8, ptr %i.ep, i64 1
   store ptr %i.eq, ptr %i.ei, align 8
