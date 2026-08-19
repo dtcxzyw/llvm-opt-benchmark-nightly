@@ -204,7 +204,7 @@ bb.a:
   store i8 %i.an, ptr %.sroa.12.0..sroa_idx, align 1
   store i8 %i.ar, ptr %.sroa.14.0..sroa_idx, align 1
   %i.at = load i8, ptr %i.j, align 1, !tbaa !11
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.l, i8 %i.at, i64 1, i1 false)
+  store i8 %i.at, ptr %i.l, align 1
   store <4 x i8> %i.af, ptr %i.m, align 1
   %.sroa.12.1..sroa_idx = getelementptr inbounds nuw i8, ptr %i.m, i64 4
   store i8 %i.an, ptr %.sroa.12.1..sroa_idx, align 1
@@ -607,13 +607,13 @@ bb.a:
   %i.bq = extractelement <4 x i8> %i.bp, i64 1
   store <4 x i8> %i.bp, ptr %.sroa.450.0..sroa_idx, align 1
   %i.br = load i8, ptr %i.k, align 1, !tbaa !11
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.m, i8 %i.br, i64 1, i1 false)
+  store i8 %i.br, ptr %i.m, align 1
   store i8 %i.ai, ptr %i.n, align 1
   store <4 x i8> %i.aq, ptr %.sroa.4.0..sroa_idx, align 1
   store i8 %i.bb, ptr %.sroa.11.0..sroa_idx, align 1
   store i8 %i.bj, ptr %.sroa.12.0..sroa_idx, align 1
   %i.bs = load i8, ptr %i.k, align 1, !tbaa !11
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.o, i8 %i.bs, i64 1, i1 false)
+  store i8 %i.bs, ptr %i.o, align 1
   store <4 x i8> %i.bp, ptr %i.q, align 1
   store i8 %i.av, ptr %.sroa.1154.1..sroa_idx, align 1
   store i8 %i.bf, ptr %.sroa.1255.1..sroa_idx, align 1
@@ -1016,7 +1016,7 @@ bb.a:
   store i8 %i.an, ptr %.sroa.28.0..sroa_idx, align 1
   store i8 %i.at, ptr %.sroa.30.0..sroa_idx, align 1
   %i.cd = load i8, ptr %i.ao, align 1, !tbaa !11
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.au, i8 %i.cd, i64 1, i1 false)
+  store i8 %i.cd, ptr %i.au, align 1
   store <8 x i8> %i.bo, ptr %i.av, align 1
   %.sroa.20.1..sroa_idx = getelementptr inbounds nuw i8, ptr %i.av, i64 8
   store i8 %i.bw, ptr %.sroa.20.1..sroa_idx, align 1
@@ -1419,7 +1419,7 @@ bb.a:
   %i.dq = extractelement <8 x i8> %i.dp, i64 3
   store <8 x i8> %i.dp, ptr %.sroa.450.0..sroa_idx, align 1
   %i.dr = load i8, ptr %i.bb, align 1, !tbaa !11
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.bl, i8 %i.dr, i64 1, i1 false)
+  store i8 %i.dr, ptr %i.bl, align 1
   store i8 %i.ch, ptr %i.bm, align 1
   store <8 x i8> %i.cp, ptr %.sroa.4.0..sroa_idx, align 1
   store i8 %i.da, ptr %.sroa.19.0..sroa_idx, align 1
@@ -1429,7 +1429,7 @@ bb.a:
   store i8 %i.ba, ptr %.sroa.23.0..sroa_idx, align 1
   store i8 %i.bk, ptr %.sroa.24.0..sroa_idx, align 1
   %i.ds = load i8, ptr %i.bb, align 1, !tbaa !11
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.bn, i8 %i.ds, i64 1, i1 false)
+  store i8 %i.ds, ptr %i.bn, align 1
   store <8 x i8> %i.dp, ptr %i.bp, align 1
   store i8 %i.cu, ptr %.sroa.1958.1..sroa_idx, align 1
   store i8 %i.de, ptr %.sroa.2059.1..sroa_idx, align 1

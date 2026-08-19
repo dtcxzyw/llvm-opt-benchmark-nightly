@@ -51,7 +51,7 @@ define internal range(i32 -12, 1) i32 @init(ptr nofree noundef readonly captures
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !9
-  %i.c = tail call ptr @av_fifo_alloc2(i64 noundef 32, i64 noundef 8, i32 noundef 1) #6 ; 2 uses
+  %i.c = tail call ptr @av_fifo_alloc2(i64 noundef 32, i64 noundef 8, i32 noundef 1) #5 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 80
   store ptr %i.c, ptr %i.d, align 8, !tbaa !20
   %.not = icmp eq ptr %i.c, null
@@ -71,26 +71,26 @@ bb.a:
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
-  %i.f = call i32 @av_fifo_read(ptr noundef nonnull %i.e, ptr noundef nonnull %i.a, i64 noundef 1) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
+  %i.f = call i32 @av_fifo_read(ptr noundef nonnull %i.e, ptr noundef nonnull %i.a, i64 noundef 1) #5
   %i.g = icmp sgt i32 %i.f, -1
   br i1 %i.g, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.b, %.lr.ph
-  call void @av_frame_free(ptr noundef nonnull %i.a) #6
+  call void @av_frame_free(ptr noundef nonnull %i.a) #5
   %i.h = load ptr, ptr %i.d, align 8, !tbaa !20
-  %i.i = call i32 @av_fifo_read(ptr noundef %i.h, ptr noundef nonnull %i.a, i64 noundef 1) #6
+  %i.i = call i32 @av_fifo_read(ptr noundef %i.h, ptr noundef nonnull %i.a, i64 noundef 1) #5
   %i.j = icmp sgt i32 %i.i, -1
   br i1 %i.j, label %.lr.ph, label %._crit_edge, !llvm.loop !25
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.b
-  call void @av_fifo_freep2(ptr noundef nonnull %i.d) #6
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
+  call void @av_fifo_freep2(ptr noundef nonnull %i.d) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
   br label %bb.c
 
 bb.c:                                             ; preds = %._crit_edge, %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %i.c, i64 32
-  call void @av_freep(ptr noundef nonnull %i.k) #6
+  call void @av_freep(ptr noundef nonnull %i.k) #5
   ret void
 }
 
@@ -109,12 +109,12 @@ bb.a:
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !9    ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 80 ; 3 uses
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !20
-  %i.l = call i32 @av_fifo_write(ptr noundef %i.k, ptr noundef nonnull %i.a, i64 noundef 1) #6 ; 2 uses
+  %i.l = call i32 @av_fifo_write(ptr noundef %i.k, ptr noundef nonnull %i.a, i64 noundef 1) #5 ; 2 uses
   %i.m = icmp slt i32 %i.l, 0
   br i1 %i.m, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  call void @av_frame_free(ptr noundef nonnull %i.a) #6
+  call void @av_frame_free(ptr noundef nonnull %i.a) #5
   br label %bb.g
 
 bb.c:                                             ; preds = %bb.a
@@ -125,7 +125,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.p = load ptr, ptr %i.j, align 8, !tbaa !20
-  %i.q = call i64 @av_fifo_can_read(ptr noundef %i.p) #6
+  %i.q = call i64 @av_fifo_can_read(ptr noundef %i.p) #5
   %i.r = getelementptr inbounds nuw i8, ptr %i.f, i64 40 ; 2 uses
   %i.s = load i32, ptr %i.r, align 8, !tbaa !42
   %i.t = getelementptr inbounds nuw i8, ptr %i.i, i64 28 ; 2 uses
@@ -137,11 +137,11 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.y = load ptr, ptr %i.j, align 8, !tbaa !20
-  %i.z = call i64 @av_fifo_can_read(ptr noundef %i.y) #6
+  %i.z = call i64 @av_fifo_can_read(ptr noundef %i.y) #5
   %i.aa = load i32, ptr %i.r, align 8, !tbaa !42
   %i.ab = load i32, ptr %i.t, align 4, !tbaa !43
   %i.ac = sub nsw i32 %i.aa, %i.ab
-  call void (ptr, i32, ptr, ...) @av_log(ptr noundef %i.g, i32 noundef 48, ptr noundef nonnull @.str.3, i64 noundef %i.z, i32 noundef %i.ac) #6
+  call void (ptr, i32, ptr, ...) @av_log(ptr noundef %i.g, i32 noundef 48, ptr noundef nonnull @.str.3, i64 noundef %i.z, i32 noundef %i.ac) #5
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.d, %bb.c
@@ -181,13 +181,13 @@ bb.a:
   %i.l = load ptr, ptr %0, align 8, !tbaa !40
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 72
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !9    ; 15 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #6
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.j) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.j) #5
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
   %i.p = load i32, ptr %i.o, align 8, !tbaa !42
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 5 uses
   %i.r = load i32, ptr %i.q, align 4, !tbaa !44
-  %i.s = tail call ptr @ff_get_video_buffer(ptr noundef nonnull %0, i32 noundef %i.p, i32 noundef %i.r) #6 ; 20 uses
+  %i.s = tail call ptr @ff_get_video_buffer(ptr noundef nonnull %0, i32 noundef %i.p, i32 noundef %i.r) #5 ; 20 uses
   store ptr %i.s, ptr %i.j, align 8, !tbaa !27
   %.not = icmp eq ptr %i.s, null
   br i1 %.not, label %bb.j, label %bb.b
@@ -222,8 +222,8 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   %i.aj = load ptr, ptr %0, align 8, !tbaa !40
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 72
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !9
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #6
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #5
   %i.am = load ptr, ptr %i.s, align 8, !tbaa !47
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 %indvars.iv
   store ptr %i.an, ptr %i.g, align 16, !tbaa !47
@@ -247,9 +247,9 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   store ptr %i.bb, ptr %i.ae, align 16, !tbaa !47
   %i.bc = load i32, ptr %i.af, align 4, !tbaa !52
   %i.bd = load i32, ptr %i.q, align 4, !tbaa !44
-  call void @av_image_copy(ptr noundef nonnull %i.g, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.h, ptr noundef nonnull %i.aa, i32 noundef %i.bc, i32 noundef 1, i32 noundef %i.bd) #6
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #6
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #6
+  call void @av_image_copy(ptr noundef nonnull %i.g, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.h, ptr noundef nonnull %i.aa, i32 noundef %i.bc, i32 noundef 1, i32 noundef %i.bd) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #5
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
   %i.be = load i32, ptr %i.w, align 8, !tbaa !46
   %i.bf = sext i32 %i.be to i64
@@ -264,7 +264,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   %.147 = phi i32 [ 0, %bb.b ], [ 0, %.preheader58 ], [ %i.bh, %.loopexit59.loopexit ] ; 3 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %i.n, i64 80 ; 3 uses
   %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !20
-  %i.bk = call i64 @av_fifo_can_read(ptr noundef %i.bj) #6
+  %i.bk = call i64 @av_fifo_can_read(ptr noundef %i.bj) #5
   %i.bl = trunc i64 %i.bk to i32                  ; 3 uses
   %.not51 = icmp eq i32 %i.bl, 0
   br i1 %.not51, label %bb.d, label %.preheader57
@@ -289,8 +289,8 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   br label %bb.e
 
 bb.d:                                             ; preds = %.loopexit59
-  call void (ptr, i32, ptr, ...) @av_log(ptr noundef null, i32 noundef 0, ptr noundef nonnull @.str.4, ptr noundef nonnull @.str.5, ptr noundef nonnull @.str.6, i32 noundef 207) #6
-  call void @abort() #7
+  call void (ptr, i32, ptr, ...) @av_log(ptr noundef null, i32 noundef 0, ptr noundef nonnull @.str.4, ptr noundef nonnull @.str.5, ptr noundef nonnull @.str.6, i32 noundef 207) #5
+  call void @abort() #6
   unreachable
 
 ._crit_edge:                                      ; preds = %bb.e, %.preheader57
@@ -338,18 +338,18 @@ bb.d:                                             ; preds = %.loopexit59
 bb.e:                                             ; preds = %.lr.ph63, %bb.e
   %indvars.iv72 = phi i64 [ %i.bv, %.lr.ph63 ], [ %indvars.iv.next73, %bb.e ] ; 3 uses
   %.062 = phi i32 [ 0, %.lr.ph63 ], [ %spec.select, %bb.e ] ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.k) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.k) #5
   %i.cz = load ptr, ptr %i.bi, align 8, !tbaa !20
   %i.da = zext nneg i32 %.062 to i64
-  %i.db = call i32 @av_fifo_peek(ptr noundef %i.cz, ptr noundef nonnull %i.k, i64 noundef 1, i64 noundef %i.da) #6 ; 0 uses
+  %i.db = call i32 @av_fifo_peek(ptr noundef %i.cz, ptr noundef nonnull %i.k, i64 noundef 1, i64 noundef %i.da) #5 ; 0 uses
   %i.dc = load ptr, ptr %i.k, align 8, !tbaa !27  ; 4 uses
   %i.dd = getelementptr inbounds nuw i8, ptr %i.dc, i64 64
   %i.de = load i32, ptr %i.bn, align 4, !tbaa !55
   %i.df = load ptr, ptr %0, align 8, !tbaa !40
   %i.dg = getelementptr inbounds nuw i8, ptr %i.df, i64 72
   %i.dh = load ptr, ptr %i.dg, align 8, !tbaa !9
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #6
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #5
   %i.di = load ptr, ptr %i.s, align 8, !tbaa !47
   %i.dj = getelementptr inbounds nuw i8, ptr %i.di, i64 %indvars.iv72
   store ptr %i.dj, ptr %i.e, align 16, !tbaa !47
@@ -385,16 +385,16 @@ bb.e:                                             ; preds = %.lr.ph63, %bb.e
   store ptr %i.eg, ptr %i.br, align 16, !tbaa !47
   %i.eh = load i32, ptr %i.bs, align 4, !tbaa !52
   %i.ei = load i32, ptr %i.q, align 4, !tbaa !44
-  call void @av_image_copy(ptr noundef nonnull %i.e, ptr noundef nonnull %i.bw, ptr noundef nonnull %i.f, ptr noundef nonnull %i.dd, i32 noundef %i.eh, i32 noundef 1, i32 noundef %i.ei) #6
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #6
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #6
+  call void @av_image_copy(ptr noundef nonnull %i.e, ptr noundef nonnull %i.bw, ptr noundef nonnull %i.f, ptr noundef nonnull %i.dd, i32 noundef %i.eh, i32 noundef 1, i32 noundef %i.ei) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #5
   %i.ej = load ptr, ptr %i.k, align 8, !tbaa !27
   store ptr %i.ej, ptr %i.bt, align 8, !tbaa !56
   %i.ek = load i32, ptr %i.bu, align 8, !tbaa !46
   %.not52 = icmp sle i32 %i.ek, %i.dq
   %i.el = zext i1 %.not52 to i32
   %spec.select = add nuw nsw i32 %.062, %i.el
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.k) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.k) #5
   %indvars.iv.next73 = add nuw nsw i64 %indvars.iv72, 1 ; 2 uses
   %i.em = trunc nuw i64 %indvars.iv.next73 to i32 ; 2 uses
   %i.en = icmp slt i32 %i.em, %i.bl
@@ -407,8 +407,8 @@ bb.f:                                             ; preds = %.lr.ph68, %bb.f
   %i.eq = load ptr, ptr %0, align 8, !tbaa !40
   %i.er = getelementptr inbounds nuw i8, ptr %i.eq, i64 72
   %i.es = load ptr, ptr %i.er, align 8, !tbaa !9
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #6
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #5
   %i.et = load ptr, ptr %i.s, align 8, !tbaa !47
   %i.eu = getelementptr inbounds nuw i8, ptr %i.et, i64 %indvars.iv78
   store ptr %i.eu, ptr %i.c, align 16, !tbaa !47
@@ -439,9 +439,9 @@ bb.f:                                             ; preds = %.lr.ph68, %bb.f
   store ptr %i.fo, ptr %i.ct, align 16, !tbaa !47
   %i.fp = load i32, ptr %i.cu, align 4, !tbaa !52
   %i.fq = load i32, ptr %i.q, align 4, !tbaa !44
-  call void @av_image_copy(ptr noundef nonnull %i.c, ptr noundef nonnull %i.cw, ptr noundef nonnull %i.d, ptr noundef nonnull %i.ep, i32 noundef %i.fp, i32 noundef 1, i32 noundef %i.fq) #6
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #6
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #6
+  call void @av_image_copy(ptr noundef nonnull %i.c, ptr noundef nonnull %i.cw, ptr noundef nonnull %i.d, ptr noundef nonnull %i.ep, i32 noundef %i.fp, i32 noundef 1, i32 noundef %i.fq) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #5
   %indvars.iv.next79 = add nuw nsw i64 %indvars.iv78, 1 ; 2 uses
   %i.fr = load i32, ptr %i.o, align 8, !tbaa !42
   %i.fs = trunc nuw i64 %indvars.iv.next79 to i32
@@ -453,8 +453,8 @@ bb.g:                                             ; preds = %.lr.ph66, %bb.g
   %i.fu = load ptr, ptr %0, align 8, !tbaa !40
   %i.fv = getelementptr inbounds nuw i8, ptr %i.fu, i64 72
   %i.fw = load ptr, ptr %i.fv, align 8, !tbaa !9
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #5
   %i.fx = load ptr, ptr %i.s, align 8, !tbaa !47
   %i.fy = getelementptr inbounds nuw i8, ptr %i.fx, i64 %indvars.iv75
   store ptr %i.fy, ptr %i.a, align 16, !tbaa !47
@@ -478,9 +478,9 @@ bb.g:                                             ; preds = %.lr.ph66, %bb.g
   store ptr %i.gm, ptr %i.cj, align 16, !tbaa !47
   %i.gn = load i32, ptr %i.ck, align 4, !tbaa !52
   %i.go = load i32, ptr %i.q, align 4, !tbaa !44
-  call void @av_image_copy(ptr noundef nonnull %i.a, ptr noundef nonnull %i.cm, ptr noundef nonnull %i.b, ptr noundef nonnull %i.cf, i32 noundef %i.gn, i32 noundef 1, i32 noundef %i.go) #6
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
+  call void @av_image_copy(ptr noundef nonnull %i.a, ptr noundef nonnull %i.cm, ptr noundef nonnull %i.b, ptr noundef nonnull %i.cf, i32 noundef %i.gn, i32 noundef 1, i32 noundef %i.go) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
   %indvars.iv.next76 = add nuw nsw i64 %indvars.iv75, 1 ; 2 uses
   %i.gp = load i32, ptr %i.o, align 8, !tbaa !42
   %i.gq = trunc nuw i64 %indvars.iv.next76 to i32
@@ -489,15 +489,15 @@ bb.g:                                             ; preds = %.lr.ph66, %bb.g
 
 .loopexit:                                        ; preds = %bb.g, %bb.f, %.preheader55, %.preheader
   %i.gs = load ptr, ptr %i.bi, align 8, !tbaa !20
-  %i.gt = call i32 @av_fifo_read(ptr noundef %i.gs, ptr noundef nonnull %i.i, i64 noundef 1) #6 ; 0 uses
+  %i.gt = call i32 @av_fifo_read(ptr noundef %i.gs, ptr noundef nonnull %i.i, i64 noundef 1) #5 ; 0 uses
   %i.gu = load ptr, ptr %i.i, align 8, !tbaa !27
-  %i.gv = call i32 @av_frame_copy_props(ptr noundef nonnull %i.s, ptr noundef %i.gu) #6 ; 2 uses
-  call void @av_frame_free(ptr noundef nonnull %i.i) #6
+  %i.gv = call i32 @av_frame_copy_props(ptr noundef nonnull %i.s, ptr noundef %i.gu) #5 ; 2 uses
+  call void @av_frame_free(ptr noundef nonnull %i.i) #5
   %i.gw = icmp slt i32 %i.gv, 0
   br i1 %i.gw, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %.loopexit
-  call void @av_frame_free(ptr noundef nonnull %i.j) #6
+  call void @av_frame_free(ptr noundef nonnull %i.j) #5
   br label %bb.j
 
 bb.i:                                             ; preds = %.loopexit
@@ -505,13 +505,13 @@ bb.i:                                             ; preds = %.loopexit
   %i.gy = load i32, ptr %i.gx, align 8, !tbaa !46
   %i.gz = add nsw i32 %i.gy, -1
   store i32 %i.gz, ptr %i.gx, align 8, !tbaa !46
-  %i.ha = call i32 @ff_filter_frame(ptr noundef nonnull %0, ptr noundef nonnull %i.s) #6
+  %i.ha = call i32 @ff_filter_frame(ptr noundef nonnull %0, ptr noundef nonnull %i.s) #5
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.a, %bb.i, %bb.h
   %.048 = phi i32 [ %i.gv, %bb.h ], [ %i.ha, %bb.i ], [ -12, %bb.a ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.j) #6
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.j) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #5
   ret i32 %.048
 }
 
@@ -541,7 +541,7 @@ bb.a:
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !9    ; 7 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 80 ; 3 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !20
-  %i.f = tail call i64 @av_fifo_can_read(ptr noundef %i.e) #6 ; 2 uses
+  %i.f = tail call i64 @av_fifo_can_read(ptr noundef %i.e) #5 ; 2 uses
   %i.g = icmp eq i64 %i.f, 0
   br i1 %i.g, label %bb.d, label %bb.b
 
@@ -571,7 +571,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.t = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !60
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !38
-  %i.w = tail call i32 @ff_request_frame(ptr noundef %i.v) #6 ; 3 uses
+  %i.w = tail call i32 @ff_request_frame(ptr noundef %i.v) #5 ; 3 uses
   %i.x = icmp eq i32 %i.w, -541478725
   br i1 %i.x, label %.thread, label %bb.f
 
@@ -597,17 +597,17 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %.preheader, %bb.i
   %i.ad = load ptr, ptr %i.d, align 8, !tbaa !20
-  %i.ae = tail call i64 @av_fifo_can_read(ptr noundef %i.ad) #6
+  %i.ae = tail call i64 @av_fifo_can_read(ptr noundef %i.ad) #5
   %.not27 = icmp eq i64 %i.ae, 0
   br i1 %.not27, label %.loopexit, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %i.af = load ptr, ptr %i.d, align 8, !tbaa !20
-  %i.ag = tail call i64 @av_fifo_can_read(ptr noundef %i.af) #6
+  %i.ag = tail call i64 @av_fifo_can_read(ptr noundef %i.af) #5
   %i.ah = load i32, ptr %i.ab, align 8, !tbaa !42
   %i.ai = load i32, ptr %i.ac, align 4, !tbaa !43
   %i.aj = sub nsw i32 %i.ah, %i.ai
-  tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef %i.a, i32 noundef 48, ptr noundef nonnull @.str.8, i64 noundef %i.ag, i32 noundef %i.aj) #6
+  tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef %i.a, i32 noundef 48, ptr noundef nonnull @.str.8, i64 noundef %i.ag, i32 noundef %i.aj) #5
   %i.ak = tail call fastcc i32 @output_frame(ptr noundef nonnull %0) ; 2 uses
   %i.al = icmp slt i32 %i.ak, 0
   br i1 %i.al, label %.loopexit, label %bb.h, !llvm.loop !61
@@ -662,7 +662,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br i1 %.not56, label %bb.j, label %bb.e
 
 bb.e:                                             ; preds = %.thread, %bb.d
-  %i.v = tail call ptr @av_pix_fmt_desc_get(i32 noundef %i.m) #6 ; 3 uses
+  %i.v = tail call ptr @av_pix_fmt_desc_get(i32 noundef %i.m) #5 ; 3 uses
   %.not57 = icmp eq ptr %i.v, null
   br i1 %.not57, label %.thread60, label %bb.f
 
@@ -689,7 +689,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.aa = getelementptr inbounds nuw i8, ptr %i.c, i64 32 ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.c, i64 64 ; 2 uses
   %i.ac = load i32, ptr %i.i, align 4, !tbaa !44
-  %i.ad = tail call i32 @av_image_alloc(ptr noundef nonnull %i.aa, ptr noundef nonnull %i.ab, i32 noundef 1, i32 noundef %i.ac, i32 noundef %i.w, i32 noundef 1) #6 ; 2 uses
+  %i.ad = tail call i32 @av_image_alloc(ptr noundef nonnull %i.aa, ptr noundef nonnull %i.ab, i32 noundef 1, i32 noundef %i.ac, i32 noundef %i.w, i32 noundef 1) #5 ; 2 uses
   %i.ae = icmp slt i32 %i.ad, 0
   br i1 %i.ae, label %.thread60, label %.preheader63
 
@@ -712,7 +712,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.am = mul nsw i32 %i.al, %.048.us65
   %i.an = sext i32 %i.am to i64
   %i.ao = getelementptr inbounds i8, ptr %i.ak, i64 %i.an
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ao, i8 %.sroa.0.0, i64 1, i1 false)
+  store i8 %.sroa.0.0, ptr %i.ao, align 1
   %i.ap = add nuw nsw i32 %.048.us65, 1           ; 2 uses
   %i.aq = load i32, ptr %i.i, align 4, !tbaa !44
   %i.ar = icmp slt i32 %i.ap, %i.aq
@@ -797,7 +797,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.cm = mul nsw i32 %i.cl, %.04864.3
   %i.cn = sext i32 %i.cm to i64
   %i.co = getelementptr inbounds i8, ptr %i.ck, i64 %i.cn
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.co, i8 %.sroa.0.0, i64 1, i1 false)
+  store i8 %.sroa.0.0, ptr %i.co, align 1
   %i.cp = add nuw nsw i32 %.04864.3, 1            ; 2 uses
   %i.cq = load i32, ptr %i.i, align 4, !tbaa !44
   %i.cr = sub nsw i32 0, %i.cq
@@ -809,13 +809,13 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   br i1 %i.cw, label %.lr.ph.3, label %._crit_edge, !llvm.loop !65
 
 ._crit_edge:                                      ; preds = %.split.us, %.split.us.1, %.split.us.2, %.lr.ph.3, %.preheader.3, %.preheader63
-  tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef %i.a, i32 noundef 40, ptr noundef nonnull @.str.9) #6
+  tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef %i.a, i32 noundef 40, ptr noundef nonnull @.str.9) #5
   %.pre = load i32, ptr %i.n, align 4, !tbaa !52
   br label %bb.j
 
 bb.j:                                             ; preds = %._crit_edge, %.thread
   %i.cx = phi i32 [ %.pre, %._crit_edge ], [ %i.m, %.thread ]
-  %i.cy = tail call ptr @av_pix_fmt_desc_get(i32 noundef %i.cx) #6 ; 2 uses
+  %i.cy = tail call ptr @av_pix_fmt_desc_get(i32 noundef %i.cx) #5 ; 2 uses
   %i.cz = getelementptr inbounds nuw i8, ptr %i.c, i64 96
   store ptr %i.cy, ptr %i.cz, align 8, !tbaa !48
   %.not59 = icmp eq ptr %i.cy, null
@@ -833,9 +833,6 @@ declare ptr @av_pix_fmt_desc_get(i32 noundef) local_unnamed_addr #3
 
 declare i32 @av_image_alloc(ptr noundef, ptr noundef, i32 noundef, i32 noundef, i32 noundef, i32 noundef) local_unnamed_addr #3
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #5
-
 declare ptr @av_default_item_name(ptr noundef) #3
 
 declare ptr @av_fifo_alloc2(i64 noundef, i64 noundef, i32 noundef) local_unnamed_addr #3
@@ -849,9 +846,8 @@ attributes #1 = { nounwind uwtable "min-legal-vector-width"="0" "no-signed-zeros
 attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #3 = { "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #4 = { cold nofree noreturn nounwind "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #5 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #6 = { nounwind }
-attributes #7 = { noreturn nounwind }
+attributes #5 = { nounwind }
+attributes #6 = { noreturn nounwind }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

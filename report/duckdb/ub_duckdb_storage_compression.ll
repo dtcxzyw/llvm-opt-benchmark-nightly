@@ -204,7 +204,7 @@ _ZN6duckdb20ConstantFillFunctionIaEEvRNS_13ColumnSegmentERNS_6VectorEmm.exit: ; 
   call void @_ZN6duckdb5ValueD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %5) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #30
   %i.f = getelementptr i8, ptr %i.c, i64 %4
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.f, i8 %i.d, i64 1, i1 false), !tbaa !239
+  store i8 %i.d, ptr %i.f, align 1
   ret void
 }
 
@@ -607,7 +607,7 @@ _ZN6duckdb20ConstantFillFunctionIhEEvRNS_13ColumnSegmentERNS_6VectorEmm.exit: ; 
   call void @_ZN6duckdb5ValueD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %5) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #30
   %i.f = getelementptr i8, ptr %i.c, i64 %4
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.f, i8 %i.d, i64 1, i1 false), !tbaa !239
+  store i8 %i.d, ptr %i.f, align 1
   ret void
 }
 
