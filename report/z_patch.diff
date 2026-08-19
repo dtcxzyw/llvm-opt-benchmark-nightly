@@ -1,0 +1,549 @@
+diff --git a/llvm/include/llvm/Transforms/Utils/ScalarEvolutionExpander.h b/llvm/include/llvm/Transforms/Utils/ScalarEvolutionExpander.h
+index 9f8fd66c0c6f4..9938b87e38a84 100644
+--- a/llvm/include/llvm/Transforms/Utils/ScalarEvolutionExpander.h
++++ b/llvm/include/llvm/Transforms/Utils/ScalarEvolutionExpander.h
+@@ -565,6 +565,7 @@ class SCEVExpander : public SCEVUseVisitor<SCEVExpander, Value *> {
+ 
+   void fixupInsertPoints(Instruction *I);
+ 
++
+   /// Create LCSSA PHIs for \p V, if it is required for uses at the Builder's
+   /// current insertion point.
+   Value *fixupLCSSAFormFor(Value *V);
+diff --git a/llvm/lib/Transforms/Utils/ScalarEvolutionExpander.cpp b/llvm/lib/Transforms/Utils/ScalarEvolutionExpander.cpp
+index a7ca2104e59c3..6a176cf7d64fb 100644
+--- a/llvm/lib/Transforms/Utils/ScalarEvolutionExpander.cpp
++++ b/llvm/lib/Transforms/Utils/ScalarEvolutionExpander.cpp
+@@ -1663,7 +1663,8 @@ Value *SCEVExpander::FindValueInExprValueMap(
+ Value *SCEVExpander::expand(SCEVUse S) {
+   // Compute an insertion point for this SCEV object. Hoist the instructions
+   // as far out in the loop nest as possible.
+-  BasicBlock::iterator InsertPt = Builder.GetInsertPoint();
++  BasicBlock::iterator OrigInsertPt = Builder.GetInsertPoint();
++  BasicBlock::iterator InsertPt = OrigInsertPt;
+ 
+   // We can move insertion point only if there is no div or rem operations
+   // otherwise we are risky to move it over the check for zero denominator.
+@@ -1722,14 +1723,26 @@ Value *SCEVExpander::expand(SCEVUse S) {
+   // Expand the expression into instructions.
+   SmallVector<Instruction *> DropPoisonGeneratingInsts;
+   Value *V = FindValueInExprValueMap(S, &*InsertPt, DropPoisonGeneratingInsts);
+-  if (!V) {
+-    V = visit(S);
+-    V = fixupLCSSAFormFor(V);
+-  } else {
++  // The location V is available at, and hence the location the result may be
++  // cached for. Caching a value for a point it does not dominate would hand it
++  // to a later expansion there.
++  BasicBlock::iterator CacheAt = InsertPt;
++  if (!V && InsertPt != OrigInsertPt && PostIncLoops.empty()) {
++    // Hoisting the insertion point can move it above a value that already
++    // computes S. Such a value is still usable: it only has to dominate the
++    // point we were asked to expand at, which is where the result is used.
++    V = FindValueInExprValueMap(S, &*OrigInsertPt, DropPoisonGeneratingInsts);
++    if (V)
++      CacheAt = OrigInsertPt;
++  }
++  if (V) {
+     for (Instruction *I : DropPoisonGeneratingInsts) {
+       rememberFlags(I);
+       dropPoisonGeneratingAnnotationsAndReinfer(SE, I);
+     }
++  } else {
++    V = visit(S);
++    V = fixupLCSSAFormFor(V);
+   }
+   // Remember the expanded value for this SCEV at this location.
+   //
+@@ -1737,7 +1750,7 @@ Value *SCEVExpander::expand(SCEVUse S) {
+   // the expression at this insertion point. If the mapped value happened to be
+   // a postinc expansion, it could be reused by a non-postinc user, but only if
+   // its insertion point was already at the head of the loop.
+-  InsertedExpressions[std::make_pair(S, &*InsertPt)] = V;
++  InsertedExpressions[std::make_pair(S, &*CacheAt)] = V;
+   return V;
+ }
+ 
+diff --git a/llvm/test/CodeGen/Thumb2/LowOverheadLoops/tail-pred-reduce.ll b/llvm/test/CodeGen/Thumb2/LowOverheadLoops/tail-pred-reduce.ll
+index 3271e98c9b744..156fd75385d54 100644
+--- a/llvm/test/CodeGen/Thumb2/LowOverheadLoops/tail-pred-reduce.ll
++++ b/llvm/test/CodeGen/Thumb2/LowOverheadLoops/tail-pred-reduce.ll
+@@ -289,8 +289,6 @@ define dso_local void @Correlation(ptr nocapture readonly %Input, ptr nocapture
+ ; CHECK-NEXT:    [[LSR_IV51:%.*]] = phi i32 [ [[LSR_IV_NEXT:%.*]], %[[FOR_END:.*]] ], [ [[TMP0]], %[[FOR_BODY_LR_PH]] ]
+ ; CHECK-NEXT:    [[LSR_IV46:%.*]] = phi ptr [ [[SCEVGEP47:%.*]], %[[FOR_END]] ], [ [[INPUT]], %[[FOR_BODY_LR_PH]] ]
+ ; CHECK-NEXT:    [[I_037:%.*]] = phi i32 [ 0, %[[FOR_BODY_LR_PH]] ], [ [[INC16:%.*]], %[[FOR_END]] ]
+-; CHECK-NEXT:    [[TMP1:%.*]] = mul nsw i32 [[I_037]], -1
+-; CHECK-NEXT:    [[TMP2:%.*]] = add i32 [[CONV2]], [[TMP1]]
+ ; CHECK-NEXT:    [[TMP3:%.*]] = mul nsw i32 [[I_037]], -1
+ ; CHECK-NEXT:    [[TMP4:%.*]] = add i32 [[TMP0]], [[TMP3]]
+ ; CHECK-NEXT:    [[TMP5:%.*]] = lshr i32 [[TMP4]], 2
+@@ -298,6 +296,7 @@ define dso_local void @Correlation(ptr nocapture readonly %Input, ptr nocapture
+ ; CHECK-NEXT:    [[TMP7:%.*]] = add i32 [[TMP6]], -4
+ ; CHECK-NEXT:    [[TMP8:%.*]] = lshr i32 [[TMP7]], 2
+ ; CHECK-NEXT:    [[TMP9:%.*]] = add nuw nsw i32 [[TMP8]], 1
++; CHECK-NEXT:    [[TMP26:%.*]] = sub i32 [[CONV2]], [[I_037]]
+ ; CHECK-NEXT:    [[CMP433:%.*]] = icmp slt i32 [[I_037]], [[CONV2]]
+ ; CHECK-NEXT:    br i1 [[CMP433]], label %[[VECTOR_PH:.*]], label %[[FOR_END]]
+ ; CHECK:       [[VECTOR_PH]]:
+@@ -308,7 +307,7 @@ define dso_local void @Correlation(ptr nocapture readonly %Input, ptr nocapture
+ ; CHECK-NEXT:    [[LSR_IV:%.*]] = phi ptr [ [[SCEVGEP:%.*]], %[[VECTOR_BODY]] ], [ [[INPUT]], %[[VECTOR_PH]] ]
+ ; CHECK-NEXT:    [[VEC_PHI:%.*]] = phi <4 x i32> [ zeroinitializer, %[[VECTOR_PH]] ], [ [[TMP20:%.*]], %[[VECTOR_BODY]] ]
+ ; CHECK-NEXT:    [[TMP10:%.*]] = phi i32 [ [[START]], %[[VECTOR_PH]] ], [ [[TMP21:%.*]], %[[VECTOR_BODY]] ]
+-; CHECK-NEXT:    [[TMP11:%.*]] = phi i32 [ [[TMP2]], %[[VECTOR_PH]] ], [ [[TMP13:%.*]], %[[VECTOR_BODY]] ]
++; CHECK-NEXT:    [[TMP11:%.*]] = phi i32 [ [[TMP26]], %[[VECTOR_PH]] ], [ [[TMP13:%.*]], %[[VECTOR_BODY]] ]
+ ; CHECK-NEXT:    [[TMP12:%.*]] = call <4 x i1> @llvm.arm.mve.vctp32(i32 [[TMP11]])
+ ; CHECK-NEXT:    [[TMP13]] = sub i32 [[TMP11]], 4
+ ; CHECK-NEXT:    [[WIDE_MASKED_LOAD:%.*]] = call <4 x i16> @llvm.masked.load.v4i16.p0(ptr align 2 [[LSR_IV]], <4 x i1> [[TMP12]], <4 x i16> undef)
+diff --git a/llvm/test/CodeGen/Thumb2/mve-gather-scatter-optimisation.ll b/llvm/test/CodeGen/Thumb2/mve-gather-scatter-optimisation.ll
+index eedca2cd4a5d3..18df14afe8fc8 100644
+--- a/llvm/test/CodeGen/Thumb2/mve-gather-scatter-optimisation.ll
++++ b/llvm/test/CodeGen/Thumb2/mve-gather-scatter-optimisation.ll
+@@ -863,13 +863,12 @@ define hidden arm_aapcs_vfpcc i32 @arm_depthwise_conv_s8(ptr nocapture readonly
+ ; CHECK-NEXT:    vpush {d8, d9, d10, d11, d12, d13, d14, d15}
+ ; CHECK-NEXT:    .pad #24
+ ; CHECK-NEXT:    sub sp, #24
+-; CHECK-NEXT:    ldrd r2, r7, [sp, #136]
+-; CHECK-NEXT:    add.w r8, r7, #10
++; CHECK-NEXT:    ldr r1, [sp, #136]
+ ; CHECK-NEXT:    adr r7, .LCPI11_0
+-; CHECK-NEXT:    ldr r1, [sp, #128]
+-; CHECK-NEXT:    vdup.32 q0, r2
++; CHECK-NEXT:    ldr r4, [sp, #128]
+ ; CHECK-NEXT:    vldrw.u32 q1, [r7]
+-; CHECK-NEXT:    movs r4, #0
++; CHECK-NEXT:    vdup.32 q0, r1
++; CHECK-NEXT:    movs r2, #0
+ ; CHECK-NEXT:    mov.w r10, #6
+ ; CHECK-NEXT:    movs r6, #11
+ ; CHECK-NEXT:    vshl.i32 q0, q0, #2
+@@ -880,15 +879,17 @@ define hidden arm_aapcs_vfpcc i32 @arm_depthwise_conv_s8(ptr nocapture readonly
+ ; CHECK-NEXT:    @ Child Loop BB11_3 Depth 3
+ ; CHECK-NEXT:    @ Child Loop BB11_4 Depth 4
+ ; CHECK-NEXT:    @ Child Loop BB11_5 Depth 5
++; CHECK-NEXT:    ldr r7, [sp, #140]
+ ; CHECK-NEXT:    mov.w r9, #0
+ ; CHECK-NEXT:    str r5, [sp, #4] @ 4-byte Spill
++; CHECK-NEXT:    add.w r8, r7, #10
+ ; CHECK-NEXT:  .LBB11_2: @ %for.cond22.preheader.i
+ ; CHECK-NEXT:    @ Parent Loop BB11_1 Depth=1
+ ; CHECK-NEXT:    @ => This Loop Header: Depth=2
+ ; CHECK-NEXT:    @ Child Loop BB11_3 Depth 3
+ ; CHECK-NEXT:    @ Child Loop BB11_4 Depth 4
+ ; CHECK-NEXT:    @ Child Loop BB11_5 Depth 5
+-; CHECK-NEXT:    movs r7, #0
++; CHECK-NEXT:    movs r5, #0
+ ; CHECK-NEXT:    vdup.32 q2, r9
+ ; CHECK-NEXT:    vstrw.32 q2, [sp, #8] @ 16-byte Spill
+ ; CHECK-NEXT:  .LBB11_3: @ %for.body27.i
+@@ -900,22 +901,22 @@ define hidden arm_aapcs_vfpcc i32 @arm_depthwise_conv_s8(ptr nocapture readonly
+ ; CHECK-NEXT:    dls lr, r10
+ ; CHECK-NEXT:    mov.w r12, #0
+ ; CHECK-NEXT:    mov.w r11, #4
+-; CHECK-NEXT:    vdup.32 q3, r7
++; CHECK-NEXT:    vdup.32 q3, r5
+ ; CHECK-NEXT:  .LBB11_4: @ %for.body78.us.i
+ ; CHECK-NEXT:    @ Parent Loop BB11_1 Depth=1
+ ; CHECK-NEXT:    @ Parent Loop BB11_2 Depth=2
+ ; CHECK-NEXT:    @ Parent Loop BB11_3 Depth=3
+ ; CHECK-NEXT:    @ => This Loop Header: Depth=4
+ ; CHECK-NEXT:    @ Child Loop BB11_5 Depth 5
+-; CHECK-NEXT:    mul r5, r11, r6
++; CHECK-NEXT:    mul r7, r11, r6
+ ; CHECK-NEXT:    vmov q4, q3
+-; CHECK-NEXT:    vadd.i32 q5, q1, r5
+-; CHECK-NEXT:    vmla.i32 q4, q5, r2
++; CHECK-NEXT:    vadd.i32 q5, q1, r7
++; CHECK-NEXT:    vmla.i32 q4, q5, r1
+ ; CHECK-NEXT:    vldrw.u32 q5, [sp, #8] @ 16-byte Reload
+-; CHECK-NEXT:    adds r5, #113
+-; CHECK-NEXT:    vadd.i32 q6, q1, r5
+-; CHECK-NEXT:    mov r5, r8
+-; CHECK-NEXT:    vmla.i32 q5, q6, r2
++; CHECK-NEXT:    adds r7, #113
++; CHECK-NEXT:    vadd.i32 q6, q1, r7
++; CHECK-NEXT:    mov r7, r8
++; CHECK-NEXT:    vmla.i32 q5, q6, r1
+ ; CHECK-NEXT:  .LBB11_5: @ %vector.body
+ ; CHECK-NEXT:    @ Parent Loop BB11_1 Depth=1
+ ; CHECK-NEXT:    @ Parent Loop BB11_2 Depth=2
+@@ -924,10 +925,10 @@ define hidden arm_aapcs_vfpcc i32 @arm_depthwise_conv_s8(ptr nocapture readonly
+ ; CHECK-NEXT:    @ => This Inner Loop Header: Depth=5
+ ; CHECK-NEXT:    vldrb.s32 q2, [r0, q5]
+ ; CHECK-NEXT:    vadd.i32 q7, q5, q0
+-; CHECK-NEXT:    vldrb.s32 q5, [r1, q4]
++; CHECK-NEXT:    vldrb.s32 q5, [r4, q4]
+ ; CHECK-NEXT:    vadd.i32 q6, q4, q0
+-; CHECK-NEXT:    vadd.i32 q2, q2, r2
+-; CHECK-NEXT:    subs r5, #4
++; CHECK-NEXT:    vadd.i32 q2, q2, r1
++; CHECK-NEXT:    subs r7, #4
+ ; CHECK-NEXT:    vmlava.u32 r12, q2, q5
+ ; CHECK-NEXT:    vmov q5, q7
+ ; CHECK-NEXT:    vmov q4, q6
+@@ -938,9 +939,9 @@ define hidden arm_aapcs_vfpcc i32 @arm_depthwise_conv_s8(ptr nocapture readonly
+ ; CHECK-NEXT:    le lr, .LBB11_4
+ ; CHECK-NEXT:  @ %bb.7: @ %for.cond.cleanup77.i
+ ; CHECK-NEXT:    @ in Loop: Header=BB11_3 Depth=3
+-; CHECK-NEXT:    adds r7, #1
+-; CHECK-NEXT:    adds r4, #1
+-; CHECK-NEXT:    cmp r7, r2
++; CHECK-NEXT:    adds r5, #1
++; CHECK-NEXT:    adds r2, #1
++; CHECK-NEXT:    cmp r5, r1
+ ; CHECK-NEXT:    bne .LBB11_3
+ ; CHECK-NEXT:  @ %bb.8: @ %for.cond.cleanup26.i
+ ; CHECK-NEXT:    @ in Loop: Header=BB11_2 Depth=2
+diff --git a/llvm/test/Transforms/LoopIdiom/memset-runtime-32bit.ll b/llvm/test/Transforms/LoopIdiom/memset-runtime-32bit.ll
+index c87397aabec7d..f8de0a4baaae9 100644
+--- a/llvm/test/Transforms/LoopIdiom/memset-runtime-32bit.ll
++++ b/llvm/test/Transforms/LoopIdiom/memset-runtime-32bit.ll
+@@ -286,9 +286,6 @@ define dso_local void @NestedFor64(ptr %ar, i64 %n, i64 %m, i64 %o) #0 {
+ ; CHECK-NEXT:    [[OR_COND:%.*]] = select i1 [[CMP3]], i1 [[CMP41]], i1 false
+ ; CHECK-NEXT:    br i1 [[OR_COND]], label [[FOR_BODY_US_PREHEADER:%.*]], label [[FOR_END17:%.*]]
+ ; CHECK:       for.body.us.preheader:
+-; CHECK-NEXT:    [[TMP0:%.*]] = mul i64 [[O]], [[M]]
+-; CHECK-NEXT:    [[TMP1:%.*]] = trunc i64 [[TMP0]] to i32
+-; CHECK-NEXT:    [[TMP2:%.*]] = shl i32 [[TMP1]], 2
+ ; CHECK-NEXT:    [[TMP3:%.*]] = trunc i64 [[O]] to i32
+ ; CHECK-NEXT:    [[TMP4:%.*]] = trunc i64 [[M]] to i32
+ ; CHECK-NEXT:    [[TMP5:%.*]] = mul i32 [[TMP3]], [[TMP4]]
+@@ -296,13 +293,11 @@ define dso_local void @NestedFor64(ptr %ar, i64 %n, i64 %m, i64 %o) #0 {
+ ; CHECK-NEXT:    br label [[FOR_BODY_US:%.*]]
+ ; CHECK:       for.body.us:
+ ; CHECK-NEXT:    [[I_04_US:%.*]] = phi i32 [ [[INC16_US:%.*]], [[FOR_BODY_US]] ], [ 0, [[FOR_BODY_US_PREHEADER]] ]
+-; CHECK-NEXT:    [[TMP7:%.*]] = mul i32 [[TMP2]], [[I_04_US]]
+-; CHECK-NEXT:    [[UGLYGEP:%.*]] = getelementptr i8, ptr [[AR:%.*]], i32 [[TMP7]]
+ ; CHECK-NEXT:    [[CONV7_US:%.*]] = sext i32 [[I_04_US]] to i64
+-; CHECK-NEXT:    [[MUL_US:%.*]] = mul nsw i64 [[CONV7_US]], [[M]]
+-; CHECK-NEXT:    [[MUL8_US:%.*]] = mul nsw i64 [[MUL_US]], [[O]]
++; CHECK-NEXT:    [[MUL_US:%.*]] = mul i64 [[CONV7_US]], [[M]]
++; CHECK-NEXT:    [[MUL8_US:%.*]] = mul i64 [[MUL_US]], [[O]]
+ ; CHECK-NEXT:    [[IDX_EXT_US:%.*]] = trunc i64 [[MUL8_US]] to i32
+-; CHECK-NEXT:    [[ADD_PTR_US:%.*]] = getelementptr inbounds i32, ptr [[AR]], i32 [[IDX_EXT_US]]
++; CHECK-NEXT:    [[UGLYGEP:%.*]] = getelementptr i32, ptr [[AR:%.*]], i32 [[IDX_EXT_US]]
+ ; CHECK-NEXT:    call void @llvm.memset.p0.i32(ptr align 4 [[UGLYGEP]], i8 0, i32 [[TMP6]], i1 false)
+ ; CHECK-NEXT:    [[INC16_US]] = add nuw nsw i32 [[I_04_US]], 1
+ ; CHECK-NEXT:    [[CONV_US:%.*]] = sext i32 [[INC16_US]] to i64
+diff --git a/llvm/test/Transforms/LoopIdiom/memset-runtime-64bit.ll b/llvm/test/Transforms/LoopIdiom/memset-runtime-64bit.ll
+index 6ce935044e951..7d7307b1969b7 100644
+--- a/llvm/test/Transforms/LoopIdiom/memset-runtime-64bit.ll
++++ b/llvm/test/Transforms/LoopIdiom/memset-runtime-64bit.ll
+@@ -287,9 +287,8 @@ define void @NestedFor32(ptr %ar, i32 %n, i32 %m, i32 %o) {
+ ; CHECK:       for.body.us.preheader:
+ ; CHECK-NEXT:    [[TMP0:%.*]] = sext i32 [[O]] to i64
+ ; CHECK-NEXT:    [[TMP1:%.*]] = sext i32 [[M]] to i64
++; CHECK-NEXT:    [[TMP2:%.*]] = sext i32 [[O]] to i64
+ ; CHECK-NEXT:    [[WIDE_TRIP_COUNT10:%.*]] = zext i32 [[N]] to i64
+-; CHECK-NEXT:    [[TMP2:%.*]] = mul i64 [[TMP0]], [[TMP1]]
+-; CHECK-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP2]], 2
+ ; CHECK-NEXT:    [[TMP4:%.*]] = zext i32 [[M]] to i64
+ ; CHECK-NEXT:    [[TMP5:%.*]] = mul i64 [[TMP0]], [[TMP4]]
+ ; CHECK-NEXT:    [[TMP6:%.*]] = shl i64 [[TMP5]], 2
+diff --git a/llvm/test/Transforms/LoopUnroll/runtime-loop-multiple-exits.ll b/llvm/test/Transforms/LoopUnroll/runtime-loop-multiple-exits.ll
+index c9d96dfd4179d..8746df07621f0 100644
+--- a/llvm/test/Transforms/LoopUnroll/runtime-loop-multiple-exits.ll
++++ b/llvm/test/Transforms/LoopUnroll/runtime-loop-multiple-exits.ll
+@@ -4755,7 +4755,6 @@ declare ptr addrspace(1) @foo(i32)
+ define ptr addrspace(1) @test9(ptr nocapture readonly %arg, i32 %n) {
+ ; EPILOG-LABEL: @test9(
+ ; EPILOG-NEXT:  bb:
+-; EPILOG-NEXT:    %0 = add i32 %n, -1
+ ; EPILOG-NEXT:    br label %outerloopHdr
+ ; EPILOG:       outerloopHdr:
+ ; EPILOG-NEXT:    %trip = add i32 %n, -1
+@@ -4763,13 +4762,13 @@ define ptr addrspace(1) @test9(ptr nocapture readonly %arg, i32 %n) {
+ ; EPILOG-NEXT:    br i1 %outercnd, label %preheader, label %outerLatch
+ ; EPILOG:       preheader:
+ ; EPILOG-NEXT:    %i4 = zext i32 0 to i64
+-; EPILOG-NEXT:    %1 = freeze i32 %0
+-; EPILOG-NEXT:    %2 = add i32 %1, -1
+-; EPILOG-NEXT:    %xtraiter = and i32 %1, 7
+-; EPILOG-NEXT:    %3 = icmp ult i32 %2, 7
+-; EPILOG-NEXT:    br i1 %3, label %header.epil.preheader, label %preheader.new
++; EPILOG-NEXT:    %0 = freeze i32 %trip
++; EPILOG-NEXT:    %1 = add i32 %0, -1
++; EPILOG-NEXT:    %xtraiter = and i32 %0, 7
++; EPILOG-NEXT:    %2 = icmp ult i32 %1, 7
++; EPILOG-NEXT:    br i1 %2, label %header.epil.preheader, label %preheader.new
+ ; EPILOG:       preheader.new:
+-; EPILOG-NEXT:    %unroll_iter = sub i32 %1, %xtraiter
++; EPILOG-NEXT:    %unroll_iter = sub i32 %0, %xtraiter
+ ; EPILOG-NEXT:    br label %header
+ ; EPILOG:       header:
+ ; EPILOG-NEXT:    %phi = phi i64 [ %i4, %preheader.new ], [ %iv.next.7, %latch.7 ]
+@@ -4834,20 +4833,19 @@ define ptr addrspace(1) @test9(ptr nocapture readonly %arg, i32 %n) {
+ ;
+ ; EPILOG-BLOCK-LABEL: @test9(
+ ; EPILOG-BLOCK-NEXT:  bb:
+-; EPILOG-BLOCK-NEXT:    %0 = add i32 %n, -1
+ ; EPILOG-BLOCK-NEXT:    br label %outerloopHdr
+ ; EPILOG-BLOCK:       outerloopHdr:
+ ; EPILOG-BLOCK-NEXT:    %trip = add i32 %n, -1
+ ; EPILOG-BLOCK-NEXT:    %outercnd = icmp slt i32 0, %trip
+ ; EPILOG-BLOCK-NEXT:    br i1 %outercnd, label %preheader, label %outerLatch
+ ; EPILOG-BLOCK:       preheader:
+-; EPILOG-BLOCK-NEXT:    %1 = freeze i32 %0
+-; EPILOG-BLOCK-NEXT:    %2 = add i32 %1, -1
+-; EPILOG-BLOCK-NEXT:    %xtraiter = and i32 %1, 1
+-; EPILOG-BLOCK-NEXT:    %3 = icmp ult i32 %2, 1
+-; EPILOG-BLOCK-NEXT:    br i1 %3, label %header.epil.preheader, label %preheader.new
++; EPILOG-BLOCK-NEXT:    %0 = freeze i32 %trip
++; EPILOG-BLOCK-NEXT:    %1 = add i32 %0, -1
++; EPILOG-BLOCK-NEXT:    %xtraiter = and i32 %0, 1
++; EPILOG-BLOCK-NEXT:    %2 = icmp ult i32 %1, 1
++; EPILOG-BLOCK-NEXT:    br i1 %2, label %header.epil.preheader, label %preheader.new
+ ; EPILOG-BLOCK:       preheader.new:
+-; EPILOG-BLOCK-NEXT:    %unroll_iter = sub i32 %1, %xtraiter
++; EPILOG-BLOCK-NEXT:    %unroll_iter = sub i32 %0, %xtraiter
+ ; EPILOG-BLOCK-NEXT:    br label %header
+ ; EPILOG-BLOCK:       header:
+ ; EPILOG-BLOCK-NEXT:    %phi = phi i64 [ 0, %preheader.new ], [ %iv.next.1, %latch.1 ]
+@@ -4894,13 +4892,13 @@ define ptr addrspace(1) @test9(ptr nocapture readonly %arg, i32 %n) {
+ ; EPILOG-BLOCK-NEXT:    %outercnd.1 = icmp slt i32 0, %trip.1
+ ; EPILOG-BLOCK-NEXT:    br i1 %outercnd.1, label %preheader.1, label %outerLatch.1
+ ; EPILOG-BLOCK:       preheader.1:
+-; EPILOG-BLOCK-NEXT:    %4 = freeze i32 %0
+-; EPILOG-BLOCK-NEXT:    %5 = add i32 %4, -1
+-; EPILOG-BLOCK-NEXT:    %xtraiter.1 = and i32 %4, 1
+-; EPILOG-BLOCK-NEXT:    %6 = icmp ult i32 %5, 1
+-; EPILOG-BLOCK-NEXT:    br i1 %6, label %header.epil.preheader.1, label %preheader.new.1
++; EPILOG-BLOCK-NEXT:    %3 = freeze i32 %trip.1
++; EPILOG-BLOCK-NEXT:    %4 = add i32 %3, -1
++; EPILOG-BLOCK-NEXT:    %xtraiter.1 = and i32 %3, 1
++; EPILOG-BLOCK-NEXT:    %5 = icmp ult i32 %4, 1
++; EPILOG-BLOCK-NEXT:    br i1 %5, label %header.epil.preheader.1, label %preheader.new.1
+ ; EPILOG-BLOCK:       preheader.new.1:
+-; EPILOG-BLOCK-NEXT:    %unroll_iter.1 = sub i32 %4, %xtraiter.1
++; EPILOG-BLOCK-NEXT:    %unroll_iter.1 = sub i32 %3, %xtraiter.1
+ ; EPILOG-BLOCK-NEXT:    br label %header.1
+ ; EPILOG-BLOCK:       header.1:
+ ; EPILOG-BLOCK-NEXT:    %phi.1 = phi i64 [ 0, %preheader.new.1 ], [ %iv.next.1.1, %latch.1.1 ]
+@@ -4931,7 +4929,6 @@ define ptr addrspace(1) @test9(ptr nocapture readonly %arg, i32 %n) {
+ ;
+ ; PROLOG-LABEL: @test9(
+ ; PROLOG-NEXT:  bb:
+-; PROLOG-NEXT:    %0 = add i32 %n, -1
+ ; PROLOG-NEXT:    br label %outerloopHdr
+ ; PROLOG:       outerloopHdr:
+ ; PROLOG-NEXT:    %trip = add i32 %n, -1
+@@ -4939,9 +4936,9 @@ define ptr addrspace(1) @test9(ptr nocapture readonly %arg, i32 %n) {
+ ; PROLOG-NEXT:    br i1 %outercnd, label %preheader, label %outerLatch
+ ; PROLOG:       preheader:
+ ; PROLOG-NEXT:    %i4 = zext i32 0 to i64
+-; PROLOG-NEXT:    %1 = freeze i32 %0
+-; PROLOG-NEXT:    %2 = add i32 %1, -1
+-; PROLOG-NEXT:    %xtraiter = and i32 %1, 7
++; PROLOG-NEXT:    %0 = freeze i32 %trip
++; PROLOG-NEXT:    %1 = add i32 %0, -1
++; PROLOG-NEXT:    %xtraiter = and i32 %0, 7
+ ; PROLOG-NEXT:    %lcmp.mod = icmp ne i32 %xtraiter, 0
+ ; PROLOG-NEXT:    br i1 %lcmp.mod, label %header.prol.preheader, label %header.prol.loopexit
+ ; PROLOG:       header.prol.preheader:
+@@ -4963,8 +4960,8 @@ define ptr addrspace(1) @test9(ptr nocapture readonly %arg, i32 %n) {
+ ; PROLOG-NEXT:    br label %header.prol.loopexit
+ ; PROLOG:       header.prol.loopexit:
+ ; PROLOG-NEXT:    %phi.unr = phi i64 [ %i4, %preheader ], [ %phi.unr.ph, %header.prol.loopexit.unr-lcssa ]
+-; PROLOG-NEXT:    %3 = icmp ult i32 %2, 7
+-; PROLOG-NEXT:    br i1 %3, label %outerLatch.loopexit, label %preheader.new
++; PROLOG-NEXT:    %2 = icmp ult i32 %1, 7
++; PROLOG-NEXT:    br i1 %2, label %outerLatch.loopexit, label %preheader.new
+ ; PROLOG:       preheader.new:
+ ; PROLOG-NEXT:    br label %header
+ ; PROLOG:       header:
+@@ -5010,16 +5007,15 @@ define ptr addrspace(1) @test9(ptr nocapture readonly %arg, i32 %n) {
+ ;
+ ; PROLOG-BLOCK-LABEL: @test9(
+ ; PROLOG-BLOCK-NEXT:  bb:
+-; PROLOG-BLOCK-NEXT:    %0 = add i32 %n, -1
+ ; PROLOG-BLOCK-NEXT:    br label %outerloopHdr
+ ; PROLOG-BLOCK:       outerloopHdr:
+ ; PROLOG-BLOCK-NEXT:    %trip = add i32 %n, -1
+ ; PROLOG-BLOCK-NEXT:    %outercnd = icmp slt i32 0, %trip
+ ; PROLOG-BLOCK-NEXT:    br i1 %outercnd, label %preheader, label %outerLatch
+ ; PROLOG-BLOCK:       preheader:
+-; PROLOG-BLOCK-NEXT:    %1 = freeze i32 %0
+-; PROLOG-BLOCK-NEXT:    %2 = add i32 %1, -1
+-; PROLOG-BLOCK-NEXT:    %xtraiter = and i32 %1, 1
++; PROLOG-BLOCK-NEXT:    %0 = freeze i32 %trip
++; PROLOG-BLOCK-NEXT:    %1 = add i32 %0, -1
++; PROLOG-BLOCK-NEXT:    %xtraiter = and i32 %0, 1
+ ; PROLOG-BLOCK-NEXT:    %lcmp.mod = icmp ne i32 %xtraiter, 0
+ ; PROLOG-BLOCK-NEXT:    br i1 %lcmp.mod, label %header.prol.preheader, label %header.prol.loopexit
+ ; PROLOG-BLOCK:       header.prol.preheader:
+@@ -5030,8 +5026,8 @@ define ptr addrspace(1) @test9(ptr nocapture readonly %arg, i32 %n) {
+ ; PROLOG-BLOCK-NEXT:    br label %header.prol.loopexit
+ ; PROLOG-BLOCK:       header.prol.loopexit:
+ ; PROLOG-BLOCK-NEXT:    %phi.unr = phi i64 [ 0, %preheader ], [ 1, %latch.prol ]
+-; PROLOG-BLOCK-NEXT:    %3 = icmp ult i32 %2, 1
+-; PROLOG-BLOCK-NEXT:    br i1 %3, label %outerLatch.loopexit, label %preheader.new
++; PROLOG-BLOCK-NEXT:    %2 = icmp ult i32 %1, 1
++; PROLOG-BLOCK-NEXT:    br i1 %2, label %outerLatch.loopexit, label %preheader.new
+ ; PROLOG-BLOCK:       preheader.new:
+ ; PROLOG-BLOCK-NEXT:    br label %header
+ ; PROLOG-BLOCK:       header:
+@@ -5071,9 +5067,9 @@ define ptr addrspace(1) @test9(ptr nocapture readonly %arg, i32 %n) {
+ ; PROLOG-BLOCK-NEXT:    %outercnd.1 = icmp slt i32 0, %trip.1
+ ; PROLOG-BLOCK-NEXT:    br i1 %outercnd.1, label %preheader.1, label %outerLatch.1
+ ; PROLOG-BLOCK:       preheader.1:
+-; PROLOG-BLOCK-NEXT:    %4 = freeze i32 %0
+-; PROLOG-BLOCK-NEXT:    %5 = add i32 %4, -1
+-; PROLOG-BLOCK-NEXT:    %xtraiter.1 = and i32 %4, 1
++; PROLOG-BLOCK-NEXT:    %3 = freeze i32 %trip.1
++; PROLOG-BLOCK-NEXT:    %4 = add i32 %3, -1
++; PROLOG-BLOCK-NEXT:    %xtraiter.1 = and i32 %3, 1
+ ; PROLOG-BLOCK-NEXT:    %lcmp.mod.1 = icmp ne i32 %xtraiter.1, 0
+ ; PROLOG-BLOCK-NEXT:    br i1 %lcmp.mod.1, label %header.prol.preheader.1, label %header.prol.loopexit.1
+ ; PROLOG-BLOCK:       header.prol.preheader.1:
+@@ -5084,8 +5080,8 @@ define ptr addrspace(1) @test9(ptr nocapture readonly %arg, i32 %n) {
+ ; PROLOG-BLOCK-NEXT:    br label %header.prol.loopexit.1
+ ; PROLOG-BLOCK:       header.prol.loopexit.1:
+ ; PROLOG-BLOCK-NEXT:    %phi.unr.1 = phi i64 [ 0, %preheader.1 ], [ 1, %latch.prol.1 ]
+-; PROLOG-BLOCK-NEXT:    %6 = icmp ult i32 %5, 1
+-; PROLOG-BLOCK-NEXT:    br i1 %6, label %outerLatch.loopexit.1, label %preheader.new.1
++; PROLOG-BLOCK-NEXT:    %5 = icmp ult i32 %4, 1
++; PROLOG-BLOCK-NEXT:    br i1 %5, label %outerLatch.loopexit.1, label %preheader.new.1
+ ; PROLOG-BLOCK:       preheader.new.1:
+ ; PROLOG-BLOCK-NEXT:    br label %header.1
+ ; PROLOG-BLOCK:       header.1:
+diff --git a/llvm/test/Transforms/LoopVectorize/X86/illegal-parallel-loop-uniform-write.ll b/llvm/test/Transforms/LoopVectorize/X86/illegal-parallel-loop-uniform-write.ll
+index d58f9f52c5fce..0c65df4e44936 100644
+--- a/llvm/test/Transforms/LoopVectorize/X86/illegal-parallel-loop-uniform-write.ll
++++ b/llvm/test/Transforms/LoopVectorize/X86/illegal-parallel-loop-uniform-write.ll
+@@ -25,7 +25,6 @@ define void @foo(ptr nocapture %a, ptr nocapture %b, i32 %k, i32 %m) #0 {
+ ; CHECK-NEXT:    br i1 [[CMP27]], label [[FOR_BODY3_LR_PH_US_PREHEADER:%.*]], label [[FOR_END15:%.*]]
+ ; CHECK:       for.body3.lr.ph.us.preheader:
+ ; CHECK-NEXT:    [[TMP0:%.*]] = add i32 [[M]], -1
+-; CHECK-NEXT:    [[TMP1:%.*]] = zext i32 [[K:%.*]] to i64
+ ; CHECK-NEXT:    br label [[FOR_BODY3_LR_PH_US:%.*]]
+ ; CHECK:       for.end.us:
+ ; CHECK-NEXT:    [[ARRAYIDX9_US:%.*]] = getelementptr inbounds i32, ptr [[B:%.*]], i64 [[INDVARS_IV33:%.*]]
+@@ -51,17 +50,15 @@ define void @foo(ptr nocapture %a, ptr nocapture %b, i32 %k, i32 %m) #0 {
+ ; CHECK-NEXT:    br i1 [[EXITCOND32]], label [[FOR_END_US:%.*]], label [[FOR_BODY3_US]], !llvm.loop [[LOOP3:![0-9]+]]
+ ; CHECK:       for.body3.lr.ph.us:
+ ; CHECK-NEXT:    [[INDVARS_IV33]] = phi i64 [ [[INDVARS_IV_NEXT34]], [[FOR_END_US]] ], [ 0, [[FOR_BODY3_LR_PH_US_PREHEADER]] ]
+-; CHECK-NEXT:    [[TMP6:%.*]] = add i64 [[TMP1]], [[INDVARS_IV33]]
+-; CHECK-NEXT:    [[TMP7:%.*]] = trunc i64 [[TMP6]] to i32
+ ; CHECK-NEXT:    [[TMP8:%.*]] = trunc i64 [[INDVARS_IV33]] to i32
+-; CHECK-NEXT:    [[ADD_US]] = add i32 [[TMP8]], [[K]]
++; CHECK-NEXT:    [[ADD_US]] = add i32 [[TMP8]], [[K:%.*]]
+ ; CHECK-NEXT:    [[ARRAYIDX7_US]] = getelementptr inbounds i32, ptr [[A]], i64 [[INDVARS_IV33]]
+ ; CHECK-NEXT:    [[TMP2:%.*]] = zext i32 [[M]] to i64
+ ; CHECK-NEXT:    [[MIN_ITERS_CHECK:%.*]] = icmp ult i64 [[TMP2]], 4
+ ; CHECK-NEXT:    br i1 [[MIN_ITERS_CHECK]], label [[SCALAR_PH]], label [[VECTOR_SCEVCHECK:%.*]]
+ ; CHECK:       vector.scevcheck:
+-; CHECK-NEXT:    [[TMP9:%.*]] = add i32 [[TMP7]], [[TMP0]]
+-; CHECK-NEXT:    [[TMP10:%.*]] = icmp slt i32 [[TMP9]], [[TMP7]]
++; CHECK-NEXT:    [[TMP6:%.*]] = add i32 [[ADD_US]], [[TMP0]]
++; CHECK-NEXT:    [[TMP10:%.*]] = icmp slt i32 [[TMP6]], [[ADD_US]]
+ ; CHECK-NEXT:    br i1 [[TMP10]], label [[SCALAR_PH]], label [[VECTOR_PH:%.*]]
+ ; CHECK:       vector.ph:
+ ; CHECK-NEXT:    [[N_MOD_VF:%.*]] = and i64 [[TMP2]], 3
+diff --git a/llvm/test/Transforms/LoopVectorize/multiple-strides-vectorization.ll b/llvm/test/Transforms/LoopVectorize/multiple-strides-vectorization.ll
+index 6a4aef855f0f9..7687357aa8199 100644
+--- a/llvm/test/Transforms/LoopVectorize/multiple-strides-vectorization.ll
++++ b/llvm/test/Transforms/LoopVectorize/multiple-strides-vectorization.ll
+@@ -42,8 +42,6 @@ define void @Test(ptr nocapture %obj, i64 %z) #0 {
+ ; CHECK-NEXT:    [[TMP5:%.*]] = add i64 [[TMP2]], [[TMP3]]
+ ; CHECK-NEXT:    [[SCEVGEP1:%.*]] = getelementptr i8, ptr [[OBJ]], i64 [[TMP5]]
+ ; CHECK-NEXT:    [[TMP6:%.*]] = shl nuw nsw i64 [[I]], 2
+-; CHECK-NEXT:    [[TMP7:%.*]] = add i64 [[TMP6]], 128
+-; CHECK-NEXT:    [[SCEVGEP3:%.*]] = getelementptr nuw i8, ptr [[OBJ]], i64 [[TMP7]]
+ ; CHECK-NEXT:    [[TMP8:%.*]] = add i64 [[TMP6]], 132
+ ; CHECK-NEXT:    [[SCEVGEP4:%.*]] = getelementptr i8, ptr [[OBJ]], i64 [[TMP8]]
+ ; CHECK-NEXT:    [[TMP9:%.*]] = getelementptr inbounds [[STRUCT_S:%.*]], ptr [[OBJ]], i64 0, i32 1, i64 [[I]]
+@@ -54,7 +52,7 @@ define void @Test(ptr nocapture %obj, i64 %z) #0 {
+ ; CHECK-NEXT:    [[BOUND1:%.*]] = icmp ult ptr [[OBJ]], [[SCEVGEP1]]
+ ; CHECK-NEXT:    [[FOUND_CONFLICT:%.*]] = and i1 [[BOUND0]], [[BOUND1]]
+ ; CHECK-NEXT:    [[BOUND05:%.*]] = icmp ult ptr [[SCEVGEP]], [[SCEVGEP4]]
+-; CHECK-NEXT:    [[BOUND16:%.*]] = icmp ult ptr [[SCEVGEP3]], [[SCEVGEP1]]
++; CHECK-NEXT:    [[BOUND16:%.*]] = icmp ult ptr [[TMP9]], [[SCEVGEP1]]
+ ; CHECK-NEXT:    [[FOUND_CONFLICT7:%.*]] = and i1 [[BOUND05]], [[BOUND16]]
+ ; CHECK-NEXT:    [[CONFLICT_RDX:%.*]] = or i1 [[FOUND_CONFLICT]], [[FOUND_CONFLICT7]]
+ ; CHECK-NEXT:    br i1 [[CONFLICT_RDX]], label [[SCALAR_PH]], label [[VECTOR_PH:%.*]]
+diff --git a/llvm/test/Transforms/LoopVectorize/runtime-checks-difference.ll b/llvm/test/Transforms/LoopVectorize/runtime-checks-difference.ll
+index f91cfbc686ac0..337d3187a274b 100644
+--- a/llvm/test/Transforms/LoopVectorize/runtime-checks-difference.ll
++++ b/llvm/test/Transforms/LoopVectorize/runtime-checks-difference.ll
+@@ -250,14 +250,13 @@ define void @nested_loop_outer_iv_addrec_invariant_in_inner1(ptr %a, ptr %b, i64
+ ; CHECK:       [[OUTER_HEADER]]:
+ ; CHECK-NEXT:    [[OUTER_IV:%.*]] = phi i64 [ [[OUTER_IV_NEXT:%.*]], [[OUTER_LATCH:%.*]] ], [ 0, %[[ENTRY]] ]
+ ; CHECK-NEXT:    [[TMP1:%.*]] = shl i64 [[OUTER_IV]], 2
+-; CHECK-NEXT:    [[SCEVGEP:%.*]] = getelementptr nuw i8, ptr [[A]], i64 [[TMP1]]
+ ; CHECK-NEXT:    [[TMP2:%.*]] = add i64 [[TMP1]], 4
+ ; CHECK-NEXT:    [[SCEVGEP1:%.*]] = getelementptr i8, ptr [[A]], i64 [[TMP2]]
+ ; CHECK-NEXT:    [[GEP_A:%.*]] = getelementptr inbounds i32, ptr [[A]], i64 [[OUTER_IV]]
+ ; CHECK-NEXT:    [[MIN_ITERS_CHECK:%.*]] = icmp ult i64 [[N]], 4
+ ; CHECK-NEXT:    br i1 [[MIN_ITERS_CHECK]], [[SCALAR_PH:label %.*]], label %[[VECTOR_MEMCHECK:.*]]
+ ; CHECK:       [[VECTOR_MEMCHECK]]:
+-; CHECK-NEXT:    [[BOUND0:%.*]] = icmp ult ptr [[SCEVGEP]], [[SCEVGEP2]]
++; CHECK-NEXT:    [[BOUND0:%.*]] = icmp ult ptr [[GEP_A]], [[SCEVGEP2]]
+ ; CHECK-NEXT:    [[BOUND1:%.*]] = icmp ult ptr [[B]], [[SCEVGEP1]]
+ ; CHECK-NEXT:    [[FOUND_CONFLICT:%.*]] = and i1 [[BOUND0]], [[BOUND1]]
+ ; CHECK-NEXT:    br i1 [[FOUND_CONFLICT]], [[SCALAR_PH]], [[VECTOR_PH:label %.*]]
+@@ -303,7 +302,6 @@ define void @nested_loop_outer_iv_addrec_invariant_in_inner2(ptr %a, ptr %b, i64
+ ; CHECK:       [[OUTER_HEADER]]:
+ ; CHECK-NEXT:    [[OUTER_IV:%.*]] = phi i64 [ [[OUTER_IV_NEXT:%.*]], [[OUTER_LATCH:%.*]] ], [ 0, %[[ENTRY]] ]
+ ; CHECK-NEXT:    [[TMP1:%.*]] = shl i64 [[OUTER_IV]], 2
+-; CHECK-NEXT:    [[SCEVGEP1:%.*]] = getelementptr nuw i8, ptr [[A]], i64 [[TMP1]]
+ ; CHECK-NEXT:    [[TMP2:%.*]] = add i64 [[TMP1]], 4
+ ; CHECK-NEXT:    [[SCEVGEP2:%.*]] = getelementptr i8, ptr [[A]], i64 [[TMP2]]
+ ; CHECK-NEXT:    [[GEP_A:%.*]] = getelementptr inbounds i32, ptr [[A]], i64 [[OUTER_IV]]
+@@ -311,7 +309,7 @@ define void @nested_loop_outer_iv_addrec_invariant_in_inner2(ptr %a, ptr %b, i64
+ ; CHECK-NEXT:    br i1 [[MIN_ITERS_CHECK]], [[SCALAR_PH:label %.*]], label %[[VECTOR_MEMCHECK:.*]]
+ ; CHECK:       [[VECTOR_MEMCHECK]]:
+ ; CHECK-NEXT:    [[BOUND0:%.*]] = icmp ult ptr [[B]], [[SCEVGEP2]]
+-; CHECK-NEXT:    [[BOUND1:%.*]] = icmp ult ptr [[SCEVGEP1]], [[SCEVGEP]]
++; CHECK-NEXT:    [[BOUND1:%.*]] = icmp ult ptr [[GEP_A]], [[SCEVGEP]]
+ ; CHECK-NEXT:    [[FOUND_CONFLICT:%.*]] = and i1 [[BOUND0]], [[BOUND1]]
+ ; CHECK-NEXT:    br i1 [[FOUND_CONFLICT]], [[SCALAR_PH]], [[VECTOR_PH:label %.*]]
+ ;
+diff --git a/llvm/test/Transforms/LoopVersioningLICM/loopversioningLICM1.ll b/llvm/test/Transforms/LoopVersioningLICM/loopversioningLICM1.ll
+index 81b207d7ebd08..1f27894109de0 100644
+--- a/llvm/test/Transforms/LoopVersioningLICM/loopversioningLICM1.ll
++++ b/llvm/test/Transforms/LoopVersioningLICM/loopversioningLICM1.ll
+@@ -22,9 +22,8 @@ define i32 @foo(ptr nocapture %var1, ptr nocapture readnone %var2, ptr nocapture
+ ; CHECK-NEXT:    [[J_016:%.*]] = phi i32 [ [[J_1_LCSSA:%.*]], [[FOR_INC11]] ], [ 0, [[FOR_COND1_PREHEADER_PREHEADER]] ]
+ ; CHECK-NEXT:    [[I_015:%.*]] = phi i32 [ [[INC12:%.*]], [[FOR_INC11]] ], [ 0, [[FOR_COND1_PREHEADER_PREHEADER]] ]
+ ; CHECK-NEXT:    [[TMP1:%.*]] = shl nuw nsw i64 [[INDVAR]], 2
+-; CHECK-NEXT:    [[SCEVGEP3:%.*]] = getelementptr i8, ptr [[VAR3:%.*]], i64 [[TMP1]]
+ ; CHECK-NEXT:    [[TMP2:%.*]] = add i64 [[TMP1]], 4
+-; CHECK-NEXT:    [[SCEVGEP4:%.*]] = getelementptr i8, ptr [[VAR3]], i64 [[TMP2]]
++; CHECK-NEXT:    [[SCEVGEP4:%.*]] = getelementptr i8, ptr [[VAR3:%.*]], i64 [[TMP2]]
+ ; CHECK-NEXT:    [[CMP212:%.*]] = icmp ult i32 [[J_016]], [[ITR]]
+ ; CHECK-NEXT:    br i1 [[CMP212]], label [[FOR_BODY3_LVER_CHECK:%.*]], label [[FOR_INC11]]
+ ; CHECK:       for.body3.lver.check:
+@@ -40,7 +39,7 @@ define i32 @foo(ptr nocapture %var1, ptr nocapture readnone %var2, ptr nocapture
+ ; CHECK-NEXT:    [[TMP8:%.*]] = add i64 [[TMP4]], [[TMP7]]
+ ; CHECK-NEXT:    [[SCEVGEP2:%.*]] = getelementptr i8, ptr [[SCEVGEP1]], i64 [[TMP8]]
+ ; CHECK-NEXT:    [[BOUND0:%.*]] = icmp ult ptr [[SCEVGEP]], [[SCEVGEP4]]
+-; CHECK-NEXT:    [[BOUND1:%.*]] = icmp ult ptr [[SCEVGEP3]], [[SCEVGEP2]]
++; CHECK-NEXT:    [[BOUND1:%.*]] = icmp ult ptr [[ARRAYIDX7]], [[SCEVGEP2]]
+ ; CHECK-NEXT:    [[FOUND_CONFLICT:%.*]] = and i1 [[BOUND0]], [[BOUND1]]
+ ; CHECK-NEXT:    br i1 [[FOUND_CONFLICT]], label [[FOR_BODY3_PH_LVER_ORIG:%.*]], label [[FOR_BODY3_PH:%.*]]
+ ; CHECK:       for.body3.ph.lver.orig:
+@@ -68,10 +67,10 @@ define i32 @foo(ptr nocapture %var1, ptr nocapture readnone %var2, ptr nocapture
+ ; CHECK-NEXT:    [[ADD8]] = add nsw i32 [[ADD86]], [[ADD]]
+ ; CHECK-NEXT:    [[INC]] = add nuw i32 [[J_113]], 1
+ ; CHECK-NEXT:    [[CMP2:%.*]] = icmp ult i32 [[INC]], [[ITR]]
+-; CHECK-NEXT:    br i1 [[CMP2]], label [[FOR_BODY3]], label [[FOR_INC11_LOOPEXIT_LOOPEXIT5:%.*]], !llvm.loop [[LOOP7:![0-9]+]]
++; CHECK-NEXT:    br i1 [[CMP2]], label [[FOR_BODY3]], label [[FOR_INC11_LOOPEXIT_LOOPEXIT4:%.*]], !llvm.loop [[LOOP7:![0-9]+]]
+ ; CHECK:       for.inc11.loopexit.loopexit:
+ ; CHECK-NEXT:    br label [[FOR_INC11_LOOPEXIT:%.*]]
+-; CHECK:       for.inc11.loopexit.loopexit5:
++; CHECK:       for.inc11.loopexit.loopexit4:
+ ; CHECK-NEXT:    [[ADD8_LCSSA:%.*]] = phi i32 [ [[ADD8]], [[FOR_BODY3]] ]
+ ; CHECK-NEXT:    store i32 [[ADD8_LCSSA]], ptr [[ARRAYIDX7]], align 4, !alias.scope [[META2]]
+ ; CHECK-NEXT:    br label [[FOR_INC11_LOOPEXIT]]
+diff --git a/llvm/test/Transforms/LoopVersioningLICM/loopversioningLICM2.ll b/llvm/test/Transforms/LoopVersioningLICM/loopversioningLICM2.ll
+index a31da2a212ea5..2c6207c1212f2 100644
+--- a/llvm/test/Transforms/LoopVersioningLICM/loopversioningLICM2.ll
++++ b/llvm/test/Transforms/LoopVersioningLICM/loopversioningLICM2.ll
+@@ -7,7 +7,7 @@
+ ; CHECK: Loop: Loop at depth 2 containing: %for.body3.us<header><latch><exiting>
+ ; CHECK-NEXT:     Loop Versioning found to be beneficial
+ ;
+-; CHECK: for.cond1.for.inc17_crit_edge.us.loopexit5:       ; preds = %for.body3.us
++; CHECK: for.cond1.for.inc17_crit_edge.us.loopexit4:       ; preds = %for.body3.us
+ ; CHECK-NEXT: %add14.us.lcssa = phi float [ %add14.us, %for.body3.us ]
+ ; CHECK-NEXT: store float %add14.us.lcssa, ptr %arrayidx.us, align 4, !alias.scope !3
+ ; CHECK-NEXT: br label %for.cond1.for.inc17_crit_edge.us
