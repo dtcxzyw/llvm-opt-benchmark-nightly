@@ -1,0 +1,68 @@
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index 1707c6c17fe23..39131ee39b635 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -3538,11 +3538,13 @@ const SCEV *ScalarEvolution::getUDivExpr(SCEVUse LHS, SCEVUse RHS) {
+           // {X,+,N}/C --> {X/C,+,N/C} if safe and N/C can be folded.
+           const APInt &StepInt = Step->getAPInt();
+           const APInt &DivInt = RHSC->getAPInt();
+-          if (!StepInt.urem(DivInt) &&
++          bool NoWrap =
++              !StepInt.urem(DivInt) &&
+               getZeroExtendExpr(AR, ExtTy) ==
+-              getAddRecExpr(getZeroExtendExpr(AR->getStart(), ExtTy),
+-                            getZeroExtendExpr(Step, ExtTy),
+-                            AR->getLoop(), SCEV::FlagAnyWrap)) {
++                  getAddRecExpr(getZeroExtendExpr(AR->getStart(), ExtTy),
++                                getZeroExtendExpr(Step, ExtTy), AR->getLoop(),
++                                SCEV::FlagAnyWrap);
++          if (!StepInt.urem(DivInt) && NoWrap) {
+             SmallVector<SCEVUse, 4> Operands;
+             for (const SCEV *Op : AR->operands())
+               Operands.push_back(getUDivExpr(Op, RHS));
+@@ -3553,12 +3555,6 @@ const SCEV *ScalarEvolution::getUDivExpr(SCEVUse LHS, SCEVUse RHS) {
+           const APInt *StartRem;
+           if (!DivInt.urem(StepInt) && match(getURemExpr(AR->getStart(), Step),
+                                              m_scev_APInt(StartRem))) {
+-            bool NoWrap =
+-                getZeroExtendExpr(AR, ExtTy) ==
+-                getAddRecExpr(getZeroExtendExpr(AR->getStart(), ExtTy),
+-                              getZeroExtendExpr(Step, ExtTy), AR->getLoop(),
+-                              SCEV::FlagAnyWrap);
+-
+             // With N <= C and both N, C as powers-of-2, the transformation
+             // {X,+,N}/C => {(X - X%N),+,N}/C preserves division results even
+             // if wrapping occurs, as the division results remain equivalent for
+@@ -3581,16 +3577,13 @@ const SCEV *ScalarEvolution::getUDivExpr(SCEVUse LHS, SCEVUse RHS) {
+         }
+       // (A*B)/C --> A*(B/C) if safe and B/C can be folded.
+       if (const SCEVMulExpr *M = dyn_cast<SCEVMulExpr>(LHS)) {
+-        SmallVector<SCEVUse, 4> Operands;
+-        for (const SCEV *Op : M->operands())
+-          Operands.push_back(getZeroExtendExpr(Op, ExtTy));
+-        if (getZeroExtendExpr(M, ExtTy) == getMulExpr(Operands)) {
++        if (M->hasNoUnsignedWrap()) {
+           // Find an operand that's safely divisible.
+           for (unsigned i = 0, e = M->getNumOperands(); i != e; ++i) {
+             const SCEV *Op = M->getOperand(i);
+             const SCEV *Div = getUDivExpr(Op, RHSC);
+             if (!isa<SCEVUDivExpr>(Div) && getMulExpr(Div, RHSC) == Op) {
+-              Operands = SmallVector<SCEVUse, 4>(M->operands());
++              SmallVector<SCEVUse, 4> Operands(M->operands());
+               Operands[i] = Div;
+               return getMulExpr(Operands);
+             }
+@@ -3628,11 +3621,8 @@ const SCEV *ScalarEvolution::getUDivExpr(SCEVUse LHS, SCEVUse RHS) {
+ 
+       // (A+B)/C --> (A/C + B/C) if safe and A/C and B/C can be folded.
+       if (const SCEVAddExpr *A = dyn_cast<SCEVAddExpr>(LHS)) {
+-        SmallVector<SCEVUse, 4> Operands;
+-        for (const SCEV *Op : A->operands())
+-          Operands.push_back(getZeroExtendExpr(Op, ExtTy));
+-        if (getZeroExtendExpr(A, ExtTy) == getAddExpr(Operands)) {
+-          Operands.clear();
++        if (A->hasNoUnsignedWrap()) {
++          SmallVector<SCEVUse, 4> Operands;
+           for (unsigned i = 0, e = A->getNumOperands(); i != e; ++i) {
+             const SCEV *Op = getUDivExpr(A->getOperand(i), RHS);
+             if (isa<SCEVUDivExpr>(Op) ||
