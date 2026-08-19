@@ -204,10 +204,10 @@ bb.pa:                                            ; preds = %bb.oz
   %i.jgy = ptrtoaddr ptr %i.jgx to i64            ; 3 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.jgx, i64 64) ]
   %i.jgz = tail call ptr @dt_alloc_aligned(i64 noundef 25088) #27, !noalias !277 ; 13 uses
-  %6 = ptrtoaddr ptr %i.jgz to i64
   call void @llvm.assume(i1 true) [ "align"(ptr %i.jgz, i64 64) ]
   %i.jha = tail call ptr @dt_alloc_aligned(i64 noundef 25088) #27, !noalias !277 ; 13 uses
-  %7 = ptrtoaddr ptr %i.jha to i64
+  %6 = insertelement <2 x ptr> poison, ptr %i.jgz, i64 0
+  %7 = insertelement <2 x ptr> %6, ptr %i.jha, i64 1
   call void @llvm.assume(i1 true) [ "align"(ptr %i.jha, i64 64) ]
   %i.jhb = tail call ptr @dt_alloc_aligned(i64 noundef 150528) #27, !noalias !277 ; 61 uses
   %i.jhc = ptrtoaddr ptr %i.jhb to i64            ; 4 uses
@@ -286,9 +286,8 @@ bb.pa:                                            ; preds = %bb.oz
   %scevgep3593 = getelementptr i8, ptr %i.jgx, i64 1344
   %invariant.op4940 = sub i64 %i.jhc, %i.jgy
   %invariant.op4942 = sub i64 %i.jhc, %i.jgy
-  %8 = insertelement <4 x i64> poison, i64 %6, i64 0
-  %9 = insertelement <4 x i64> %8, i64 %7, i64 1
-  %10 = shufflevector <4 x i64> %9, <4 x i64> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %8 = shufflevector <2 x ptr> %7, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %9 = ptrtoaddr <4 x ptr> %8 to <4 x i64>
   br label %.preheader833.i
 
 .preheader833.i:                                  ; preds = %._crit_edge939.i, %.preheader833.preheader.i
@@ -691,7 +690,7 @@ vector.memcheck3289:                              ; preds = %.lr.ph903.preheader
   %i.ktv = insertelement <4 x i64> poison, i64 %i.ksx, i64 0
   %i.ktw = shufflevector <4 x i64> %i.ktv, <4 x i64> poison, <4 x i32> zeroinitializer
   %i.ktx = add <4 x i64> %i.jhh, %i.ktw
-  %i.kty = add <4 x i64> %i.ktu, %10
+  %i.kty = add <4 x i64> %i.ktu, %9
   %i.ktz = sub <4 x i64> %i.kty, %i.ktx
   %i.kua = icmp ugt <4 x i64> %i.ktz, splat (i64 -32)
   %i.kub = bitcast <4 x i1> %i.kua to i4

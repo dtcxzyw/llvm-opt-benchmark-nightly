@@ -204,16 +204,18 @@ bb.a:
   %i.az = ptrtoaddr ptr %i.ay to i64              ; 2 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %i.ax, i64 24
   %i.bb = load ptr, ptr %i.ba, align 8, !tbaa !13 ; 6 uses
-  %6 = ptrtoaddr ptr %i.bb to i64                 ; 2 uses
-  %i.bc = getelementptr inbounds nuw i8, ptr %i.ax, i64 48
-  %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !13 ; 6 uses
-  %i.be = ptrtoaddr ptr %i.bd to i64              ; 2 uses
-  %i.bf = getelementptr inbounds nuw i8, ptr %i.ax, i64 72
-  %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !13 ; 9 uses
-  %7 = ptrtoaddr ptr %i.bg to i64                 ; 9 uses
-  %8 = getelementptr inbounds nuw i8, ptr %i.ax, i64 96
-  %9 = load ptr, ptr %8, align 8, !tbaa !16       ; 15 uses
-  %i.bh = ptrtoaddr ptr %9 to i64                 ; 9 uses
+  %6 = getelementptr inbounds nuw i8, ptr %i.ax, i64 48
+  %7 = load ptr, ptr %6, align 8, !tbaa !13       ; 6 uses
+  %i.bc = getelementptr inbounds nuw i8, ptr %i.ax, i64 72
+  %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !13 ; 10 uses
+  %i.be = ptrtoaddr ptr %i.bd to i64              ; 5 uses
+  %i.bf = getelementptr inbounds nuw i8, ptr %i.ax, i64 96
+  %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !16 ; 16 uses
+  %8 = insertelement <4 x ptr> poison, ptr %i.bb, i64 0
+  %9 = insertelement <4 x ptr> %8, ptr %7, i64 1
+  %10 = insertelement <4 x ptr> %9, ptr %i.bd, i64 2
+  %11 = insertelement <4 x ptr> %10, ptr %i.bg, i64 3 ; 3 uses
+  %i.bh = ptrtoaddr ptr %i.bg to i64              ; 7 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %i.ax, i64 128
   %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !16 ; 20 uses
   %i.bk = ptrtoaddr ptr %i.bj to i64              ; 11 uses
@@ -276,15 +278,11 @@ bb.a:
 .lr.ph482.split.us.preheader:                     ; preds = %.lr.ph482
   %invariant.op1006 = add i64 %i.dd, 1
   %i.di = insertelement <16 x i64> poison, i64 %i.az, i64 0
-  %10 = insertelement <16 x i64> %i.di, i64 %6, i64 1
-  %11 = insertelement <16 x i64> %10, i64 %i.be, i64 2 ; 2 uses
-  %12 = insertelement <16 x i64> %11, i64 %7, i64 3
-  %13 = shufflevector <16 x i64> %12, <16 x i64> poison, <16 x i32> <i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 1, i32 1, i32 2, i32 2, i32 2, i32 2, i32 3>
-  %14 = shufflevector <16 x i64> %11, <16 x i64> poison, <6 x i32> <i32 1, i32 2, i32 poison, i32 poison, i32 poison, i32 poison>
-  %15 = insertelement <6 x i64> %14, i64 %7, i64 2
-  %16 = insertelement <6 x i64> %15, i64 %i.bh, i64 3
-  %17 = insertelement <6 x i64> %16, i64 %i.bk, i64 4
-  %i.dj = sub i64 %7, %i.bk
+  %12 = shufflevector <4 x ptr> %11, <4 x ptr> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %13 = ptrtoaddr <16 x ptr> %12 to <16 x i64>    ; 2 uses
+  %14 = shufflevector <16 x i64> %i.di, <16 x i64> %13, <16 x i32> <i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 16, i32 16, i32 16, i32 16, i32 16, i32 17, i32 17, i32 17, i32 17, i32 18>
+  %15 = insertelement <16 x i64> %13, i64 %i.bk, i64 4
+  %i.dj = sub i64 %i.be, %i.bk
   %diff.check931 = icmp ugt i64 %i.dj, -32
   %i.dk = sub i64 %i.bh, %i.bk
   %diff.check935 = icmp ugt i64 %i.dk, -32
@@ -301,15 +299,14 @@ bb.a:
   %i.dl = sub nsw i64 %i.df, %i.de                ; 3 uses
   %min.iters.check862 = icmp ult i64 %i.dl, 16
   %i.dm = insertelement <16 x i64> poison, i64 %i.az, i64 0
-  %18 = insertelement <16 x i64> %i.dm, i64 %6, i64 1
-  %19 = insertelement <16 x i64> %18, i64 %i.be, i64 2 ; 2 uses
-  %20 = insertelement <16 x i64> %19, i64 %7, i64 3
-  %21 = shufflevector <16 x i64> %20, <16 x i64> poison, <16 x i32> <i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 1, i32 1, i32 2, i32 2, i32 2, i32 2, i32 3>
-  %22 = shufflevector <16 x i64> %19, <16 x i64> poison, <6 x i32> <i32 1, i32 2, i32 poison, i32 poison, i32 poison, i32 poison>
-  %23 = insertelement <6 x i64> %22, i64 %7, i64 2
-  %24 = insertelement <6 x i64> %23, i64 %i.bh, i64 3
-  %25 = insertelement <6 x i64> %24, i64 %i.bk, i64 4
-  %i.dn = sub i64 %7, %i.bk
+  %16 = shufflevector <4 x ptr> %11, <4 x ptr> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %17 = ptrtoaddr <16 x ptr> %16 to <16 x i64>    ; 2 uses
+  %18 = shufflevector <16 x i64> %i.dm, <16 x i64> %17, <16 x i32> <i32 0, i32 16, i32 17, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %19 = shufflevector <4 x ptr> %11, <4 x ptr> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %20 = ptrtoaddr <16 x ptr> %19 to <16 x i64>
+  %21 = shufflevector <16 x i64> %18, <16 x i64> %20, <16 x i32> <i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 1, i32 1, i32 2, i32 2, i32 2, i32 2, i32 18>
+  %22 = insertelement <16 x i64> %17, i64 %i.bk, i64 4
+  %i.dn = sub i64 %i.be, %i.bk
   %diff.check851 = icmp ugt i64 %i.dn, -32
   %i.do = sub i64 %i.bh, %i.bk
   %diff.check855 = icmp ugt i64 %i.do, -32
@@ -331,7 +328,7 @@ bb.a:
   %broadcast.splat888 = shufflevector <8 x i32> %broadcast.splatinsert887, <8 x i32> poison, <8 x i32> zeroinitializer
   %induction889 = add <8 x i32> %broadcast.splat888, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %cmp.n897 = icmp eq i64 %i.dl, %n.vec864
-  %i.dq = sub i64 %7, %i.bp
+  %i.dq = sub i64 %i.be, %i.bp
   %diff.check787 = icmp ugt i64 %i.dq, -128
   %invariant.op1008 = add i64 %i.dd, 1
   br label %.lr.ph482.split.us
@@ -473,16 +470,16 @@ scalar.ph941:                                     ; preds = %scalar.ph941.prehea
   store float %i.fg, ptr %i.fn, align 4, !tbaa !18
   %i.fo = getelementptr inbounds [4 x i8], ptr %i.bb, i64 %indvars.iv516
   store float %i.fh, ptr %i.fo, align 4, !tbaa !18
-  %i.fp = getelementptr inbounds [4 x i8], ptr %i.bd, i64 %indvars.iv516
+  %i.fp = getelementptr inbounds [4 x i8], ptr %7, i64 %indvars.iv516
   store float %i.fj, ptr %i.fp, align 4, !tbaa !18
-  %i.fq = getelementptr inbounds [4 x i8], ptr %i.bg, i64 %indvars.iv516
+  %i.fq = getelementptr inbounds [4 x i8], ptr %i.bd, i64 %indvars.iv516
   store float %i.fm, ptr %i.fq, align 4, !tbaa !18
   %i.fr = fmul float %i.er, %i.fm
   %i.fs = fmul float %i.fr, %i.el
   %i.ft = getelementptr inbounds nuw [4 x i8], ptr %i.mt, i64 %indvars.iv516
   %i.fu = load float, ptr %i.ft, align 4, !tbaa !18
   %i.fv = fmul float %i.fs, %i.fu
-  %i.fw = getelementptr inbounds [4 x i8], ptr %9, i64 %indvars.iv516
+  %i.fw = getelementptr inbounds [4 x i8], ptr %i.bg, i64 %indvars.iv516
   store float %i.fv, ptr %i.fw, align 4, !tbaa !18
   %i.fx = fmul float %i.fm, %i.cw
   %i.fy = getelementptr inbounds [4 x i8], ptr %i.bj, i64 %indvars.iv516
@@ -507,16 +504,16 @@ scalar.ph861:                                     ; preds = %scalar.ph861.prehea
   store float %i.gd, ptr %i.gk, align 4, !tbaa !18
   %i.gl = getelementptr inbounds [4 x i8], ptr %i.bb, i64 %indvars.iv518
   store float %i.ge, ptr %i.gl, align 4, !tbaa !18
-  %i.gm = getelementptr inbounds [4 x i8], ptr %i.bd, i64 %indvars.iv518
+  %i.gm = getelementptr inbounds [4 x i8], ptr %7, i64 %indvars.iv518
   store float %i.gg, ptr %i.gm, align 4, !tbaa !18
-  %i.gn = getelementptr inbounds [4 x i8], ptr %i.bg, i64 %indvars.iv518
+  %i.gn = getelementptr inbounds [4 x i8], ptr %i.bd, i64 %indvars.iv518
   store float %i.gj, ptr %i.gn, align 4, !tbaa !18
   %i.go = fmul float %i.er, %i.gj
   %i.gp = fmul float %i.go, %i.el
   %i.gq = getelementptr inbounds nuw [4 x i8], ptr %i.oi, i64 %indvars.iv518
   %i.gr = load float, ptr %i.gq, align 4, !tbaa !18
   %i.gs = fmul float %i.gp, %i.gr
-  %i.gt = getelementptr inbounds [4 x i8], ptr %9, i64 %indvars.iv518
+  %i.gt = getelementptr inbounds [4 x i8], ptr %i.bg, i64 %indvars.iv518
   store float %i.gs, ptr %i.gt, align 4, !tbaa !18
   %i.gu = fmul float %i.gj, %i.cw
   %i.gv = getelementptr inbounds [4 x i8], ptr %i.bj, i64 %indvars.iv518
@@ -527,7 +524,7 @@ scalar.ph861:                                     ; preds = %scalar.ph861.prehea
 
 .lr.ph453.us:                                     ; preds = %.lr.ph453.us.preheader, %.lr.ph453.us
   %indvars.iv525 = phi i64 [ %indvars.iv.next526, %.lr.ph453.us ], [ %indvars.iv525.ph, %.lr.ph453.us.preheader ] ; 3 uses
-  %i.gw = getelementptr inbounds [4 x i8], ptr %i.bg, i64 %indvars.iv525
+  %i.gw = getelementptr inbounds [4 x i8], ptr %i.bd, i64 %indvars.iv525
   %i.gx = load float, ptr %i.gw, align 4, !tbaa !18
   %i.gy = fdiv float 1.000000e+00, %i.gx
   %i.gz = getelementptr inbounds [4 x i8], ptr %i.bo, i64 %indvars.iv525
@@ -550,7 +547,7 @@ scalar.ph861:                                     ; preds = %scalar.ph861.prehea
 bb.b:                                             ; preds = %bb.b, %.lr.ph.i.us
   %.011.i.us = phi i64 [ 0, %.lr.ph.i.us ], [ %i.ig, %bb.b ] ; 2 uses
   %.idx.i.i.us = shl nuw nsw i64 %.011.i.us, 6    ; 3 uses
-  %i.hg = getelementptr inbounds nuw i8, ptr %9, i64 %.idx.i.i.us
+  %i.hg = getelementptr inbounds nuw i8, ptr %i.bg, i64 %.idx.i.i.us
   %.val.i.i.us = load <16 x float>, ptr %i.hg, align 64, !tbaa !218 ; 2 uses
   %i.hh = getelementptr inbounds nuw i8, ptr %i.bj, i64 %.idx.i.i.us
   %.val.i17.i.us = load <16 x float>, ptr %i.hh, align 64, !tbaa !218
@@ -705,7 +702,7 @@ middle.block782:                                  ; preds = %vector.body771
   %i.ka = getelementptr inbounds [4 x i8], ptr %i.bj, i64 %indvars.iv533
   %i.kb = load float, ptr %i.ka, align 4, !tbaa !18
   %i.kc = fmul float %.0.us, %i.kb                ; 3 uses
-  %i.kd = getelementptr inbounds [4 x i8], ptr %i.bg, i64 %indvars.iv533
+  %i.kd = getelementptr inbounds [4 x i8], ptr %i.bd, i64 %indvars.iv533
   %i.ke = load float, ptr %i.kd, align 4, !tbaa !18
   %i.kf = fmul float %i.ke, %i.j
   %i.kg = fpext float %i.kf to double
@@ -725,7 +722,7 @@ middle.block782:                                  ; preds = %vector.body771
   %i.ku = call float @llvm.fmuladd.f32(float %i.ks, float %i.kr, float %i.kt)
   %i.kv = getelementptr inbounds [4 x i8], ptr %i.bb, i64 %indvars.iv533
   %i.kw = load float, ptr %i.kv, align 4, !tbaa !18 ; 3 uses
-  %i.kx = getelementptr inbounds [4 x i8], ptr %i.bd, i64 %indvars.iv533
+  %i.kx = getelementptr inbounds [4 x i8], ptr %7, i64 %indvars.iv533
   %i.ky = load float, ptr %i.kx, align 4, !tbaa !18 ; 4 uses
   %i.kz = fmul float %i.kw, %i.kp                 ; 2 uses
   %i.la = call float @llvm.fmuladd.f32(float %i.kz, float %i.kw, float %i.kt)
@@ -790,7 +787,7 @@ vector.ph793:                                     ; preds = %vector.main.loop.it
 vector.body795:                                   ; preds = %vector.body795, %vector.ph793
   %index796 = phi i64 [ 0, %vector.ph793 ], [ %index.next801, %vector.body795 ] ; 2 uses
   %i.lx = add i64 %i.lr, %index796                ; 2 uses
-  %i.ly = getelementptr inbounds [4 x i8], ptr %i.bg, i64 %i.lx ; 4 uses
+  %i.ly = getelementptr inbounds [4 x i8], ptr %i.bd, i64 %i.lx ; 4 uses
   %i.lz = getelementptr inbounds nuw i8, ptr %i.ly, i64 32
   %i.ma = getelementptr inbounds nuw i8, ptr %i.ly, i64 64
   %i.mb = getelementptr inbounds nuw i8, ptr %i.ly, i64 96
@@ -831,7 +828,7 @@ vec.epilog.ph810:                                 ; preds = %vector.main.loop.it
 vec.epilog.vector.body812:                        ; preds = %vec.epilog.vector.body812, %vec.epilog.ph810
   %index813 = phi i64 [ %vec.epilog.resume.val804, %vec.epilog.ph810 ], [ %index.next815, %vec.epilog.vector.body812 ] ; 2 uses
   %i.mm = add i64 %i.lr, %index813                ; 2 uses
-  %i.mn = getelementptr inbounds [4 x i8], ptr %i.bg, i64 %i.mm
+  %i.mn = getelementptr inbounds [4 x i8], ptr %i.bd, i64 %i.mm
   %wide.load814 = load <4 x float>, ptr %i.mn, align 4, !tbaa !18
   %i.mo = fdiv <4 x float> splat (float 1.000000e+00), %wide.load814
   %i.mp = getelementptr inbounds [4 x i8], ptr %i.bo, i64 %i.mm
@@ -868,11 +865,11 @@ vec.epilog.middle.block816:                       ; preds = %vec.epilog.vector.b
 
 vector.memcheck899:                               ; preds = %.lr.ph449.us
   %i.na = ptrtoaddr ptr %i.mt to i64              ; 4 uses
-  %26 = insertelement <6 x i64> %17, i64 %i.na, i64 5
-  %i.nb = shufflevector <6 x i64> %26, <6 x i64> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 1, i32 2, i32 3, i32 4, i32 5, i32 2, i32 3, i32 4, i32 5, i32 3>
-  %i.nc = sub <16 x i64> %13, %i.nb
+  %23 = insertelement <16 x i64> %15, i64 %i.na, i64 5
+  %i.nb = shufflevector <16 x i64> %23, <16 x i64> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 1, i32 2, i32 3, i32 4, i32 5, i32 2, i32 3, i32 4, i32 5, i32 3>
+  %i.nc = sub <16 x i64> %14, %i.nb
   %i.nd = icmp ugt <16 x i64> %i.nc, splat (i64 -32)
-  %i.ne = sub i64 %7, %i.na
+  %i.ne = sub i64 %i.be, %i.na
   %diff.check933 = icmp ugt i64 %i.ne, -32
   %i.nf = sub i64 %i.na, %i.bh
   %diff.check937 = icmp ugt i64 %i.nf, -32
@@ -922,16 +919,16 @@ vector.body968:                                   ; preds = %vector.body968, %ve
   store <8 x float> %i.nn, ptr %i.nu, align 4, !tbaa !18
   %i.nv = getelementptr inbounds [4 x i8], ptr %i.bb, i64 %i.nl
   store <8 x float> %i.no, ptr %i.nv, align 4, !tbaa !18
-  %i.nw = getelementptr inbounds [4 x i8], ptr %i.bd, i64 %i.nl
+  %i.nw = getelementptr inbounds [4 x i8], ptr %7, i64 %i.nl
   store <8 x float> %i.nq, ptr %i.nw, align 4, !tbaa !18
-  %i.nx = getelementptr inbounds [4 x i8], ptr %i.bg, i64 %i.nl
+  %i.nx = getelementptr inbounds [4 x i8], ptr %i.bd, i64 %i.nl
   store <8 x float> %i.nt, ptr %i.nx, align 4, !tbaa !18
   %i.ny = fmul <8 x float> %broadcast.splat960, %i.nt
   %i.nz = fmul <8 x float> %i.ny, %broadcast.splat962
   %i.oa = getelementptr inbounds nuw [4 x i8], ptr %i.mt, i64 %i.nl
   %wide.load971 = load <8 x float>, ptr %i.oa, align 4, !tbaa !18
   %i.ob = fmul <8 x float> %i.nz, %wide.load971
-  %i.oc = getelementptr inbounds [4 x i8], ptr %9, i64 %i.nl
+  %i.oc = getelementptr inbounds [4 x i8], ptr %i.bg, i64 %i.nl
   store <8 x float> %i.ob, ptr %i.oc, align 4, !tbaa !18
   %i.od = fmul <8 x float> %i.nt, %broadcast.splat964
   %i.oe = getelementptr inbounds [4 x i8], ptr %i.bj, i64 %i.nl
@@ -957,11 +954,11 @@ scalar.ph941.preheader:                           ; preds = %vector.memcheck899,
 
 vector.memcheck819:                               ; preds = %.lr.ph451.us
   %i.oj = ptrtoaddr ptr %i.oi to i64              ; 4 uses
-  %27 = insertelement <6 x i64> %25, i64 %i.oj, i64 5
-  %i.ok = shufflevector <6 x i64> %27, <6 x i64> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 1, i32 2, i32 3, i32 4, i32 5, i32 2, i32 3, i32 4, i32 5, i32 3>
+  %24 = insertelement <16 x i64> %22, i64 %i.oj, i64 5
+  %i.ok = shufflevector <16 x i64> %24, <16 x i64> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 1, i32 2, i32 3, i32 4, i32 5, i32 2, i32 3, i32 4, i32 5, i32 3>
   %i.ol = sub <16 x i64> %21, %i.ok
   %i.om = icmp ugt <16 x i64> %i.ol, splat (i64 -32)
-  %i.on = sub i64 %7, %i.oj
+  %i.on = sub i64 %i.be, %i.oj
   %diff.check853 = icmp ugt i64 %i.on, -32
   %i.oo = sub i64 %i.oj, %i.bh
   %diff.check857 = icmp ugt i64 %i.oo, -32
@@ -1006,16 +1003,16 @@ vector.body890:                                   ; preds = %vector.body890, %ve
   store <8 x float> %i.ov, ptr %i.pc, align 4, !tbaa !18
   %i.pd = getelementptr inbounds [4 x i8], ptr %i.bb, i64 %i.os
   store <8 x float> %i.ow, ptr %i.pd, align 4, !tbaa !18
-  %i.pe = getelementptr inbounds [4 x i8], ptr %i.bd, i64 %i.os
+  %i.pe = getelementptr inbounds [4 x i8], ptr %7, i64 %i.os
   store <8 x float> %i.oy, ptr %i.pe, align 4, !tbaa !18
-  %i.pf = getelementptr inbounds [4 x i8], ptr %i.bg, i64 %i.os
+  %i.pf = getelementptr inbounds [4 x i8], ptr %i.bd, i64 %i.os
   store <8 x float> %i.pb, ptr %i.pf, align 4, !tbaa !18
   %i.pg = fmul <8 x float> %broadcast.splat882, %i.pb
   %i.ph = fmul <8 x float> %i.pg, %broadcast.splat884
   %i.pi = getelementptr inbounds nuw [4 x i8], ptr %i.oi, i64 %i.os
   %wide.load893 = load <8 x float>, ptr %i.pi, align 4, !tbaa !18
   %i.pj = fmul <8 x float> %i.ph, %wide.load893
-  %i.pk = getelementptr inbounds [4 x i8], ptr %9, i64 %i.os
+  %i.pk = getelementptr inbounds [4 x i8], ptr %i.bg, i64 %i.os
   store <8 x float> %i.pj, ptr %i.pk, align 4, !tbaa !18
   %i.pl = fmul <8 x float> %i.pb, %broadcast.splat886
   %i.pm = getelementptr inbounds [4 x i8], ptr %i.bj, i64 %i.os
@@ -1180,7 +1177,7 @@ vector.body696:                                   ; preds = %vector.body696, %ve
   %i.sz = fmul <8 x float> %i.sr, %wide.load703
   %i.ta = fmul <8 x float> %i.ss, %wide.load704
   %i.tb = fmul <8 x float> %i.st, %wide.load705
-  %i.tc = getelementptr inbounds [4 x i8], ptr %9, i64 %i.rf ; 4 uses
+  %i.tc = getelementptr inbounds [4 x i8], ptr %i.bg, i64 %i.rf ; 4 uses
   %i.td = getelementptr inbounds nuw i8, ptr %i.tc, i64 32
   %i.te = getelementptr inbounds nuw i8, ptr %i.tc, i64 64
   %i.tf = getelementptr inbounds nuw i8, ptr %i.tc, i64 96
@@ -1251,7 +1248,7 @@ vec.epilog.vector.body741:                        ; preds = %vec.epilog.vector.b
   %i.uc = getelementptr inbounds nuw [4 x i8], ptr %i.qs, i64 %i.tr
   %wide.load744 = load <8 x float>, ptr %i.uc, align 4, !tbaa !18
   %i.ud = fmul <8 x float> %i.ub, %wide.load744
-  %i.ue = getelementptr inbounds [4 x i8], ptr %9, i64 %i.tr
+  %i.ue = getelementptr inbounds [4 x i8], ptr %i.bg, i64 %i.tr
   store <8 x float> %i.ud, ptr %i.ue, align 4, !tbaa !18
   %i.uf = fmul <8 x float> %i.tz, %broadcast.splat737
   %i.ug = getelementptr inbounds [4 x i8], ptr %i.bj, i64 %i.tr
@@ -1364,7 +1361,7 @@ vector.body611:                                   ; preds = %vector.body611, %ve
   %i.wj = fmul <8 x float> %i.wb, %wide.load614
   %i.wk = fmul <8 x float> %i.wc, %wide.load615
   %i.wl = fmul <8 x float> %i.wd, %wide.load616
-  %i.wm = getelementptr inbounds [4 x i8], ptr %9, i64 %i.uo ; 4 uses
+  %i.wm = getelementptr inbounds [4 x i8], ptr %i.bg, i64 %i.uo ; 4 uses
   %i.wn = getelementptr inbounds nuw i8, ptr %i.wm, i64 32
   %i.wo = getelementptr inbounds nuw i8, ptr %i.wm, i64 64
   %i.wp = getelementptr inbounds nuw i8, ptr %i.wm, i64 96
@@ -1432,7 +1429,7 @@ vec.epilog.vector.body652:                        ; preds = %vec.epilog.vector.b
   %i.xm = getelementptr inbounds nuw [4 x i8], ptr %i.uk, i64 %i.xa
   %wide.load655 = load <8 x float>, ptr %i.xm, align 4, !tbaa !18
   %i.xn = fmul <8 x float> %i.xl, %wide.load655
-  %i.xo = getelementptr inbounds [4 x i8], ptr %9, i64 %i.xa
+  %i.xo = getelementptr inbounds [4 x i8], ptr %i.bg, i64 %i.xa
   store <8 x float> %i.xn, ptr %i.xo, align 4, !tbaa !18
   %i.xp = fmul <8 x float> %i.xj, %broadcast.splat648
   %i.xq = getelementptr inbounds [4 x i8], ptr %i.bj, i64 %i.xa
@@ -1468,7 +1465,7 @@ vec.epilog.scalar.ph622.prol:                     ; preds = %vec.epilog.scalar.p
   %i.yf = getelementptr inbounds nuw [4 x i8], ptr %i.uk, i64 %indvars.iv506.ph
   %i.yg = load float, ptr %i.yf, align 4, !tbaa !18
   %i.yh = fmul float %i.ye, %i.yg
-  %i.yi = getelementptr inbounds [4 x i8], ptr %9, i64 %indvars.iv506.ph
+  %i.yi = getelementptr inbounds [4 x i8], ptr %i.bg, i64 %indvars.iv506.ph
   store float %i.yh, ptr %i.yi, align 4, !tbaa !18
   %i.yj = fmul float %i.yc, %i.cw
   %i.yk = getelementptr inbounds [4 x i8], ptr %i.bj, i64 %indvars.iv506.ph
@@ -1497,7 +1494,7 @@ vec.epilog.scalar.ph713:                          ; preds = %vec.epilog.scalar.p
   %i.yx = getelementptr inbounds nuw [4 x i8], ptr %i.qs, i64 %indvars.iv
   %i.yy = load float, ptr %i.yx, align 4, !tbaa !18
   %i.yz = fmul float %i.yw, %i.yy
-  %i.za = getelementptr inbounds [4 x i8], ptr %9, i64 %indvars.iv
+  %i.za = getelementptr inbounds [4 x i8], ptr %i.bg, i64 %indvars.iv
   store float %i.yz, ptr %i.za, align 4, !tbaa !18
   %i.zb = fmul float %i.yu, %i.cw
   %i.zc = getelementptr inbounds [4 x i8], ptr %i.bj, i64 %indvars.iv
@@ -1523,7 +1520,7 @@ vec.epilog.scalar.ph622:                          ; preds = %vec.epilog.scalar.p
   %i.zq = getelementptr inbounds nuw [4 x i8], ptr %i.uk, i64 %indvars.iv506
   %i.zr = load float, ptr %i.zq, align 4, !tbaa !18
   %i.zs = fmul float %i.zp, %i.zr
-  %i.zt = getelementptr inbounds [4 x i8], ptr %9, i64 %indvars.iv506
+  %i.zt = getelementptr inbounds [4 x i8], ptr %i.bg, i64 %indvars.iv506
   store float %i.zs, ptr %i.zt, align 4, !tbaa !18
   %i.zu = fmul float %i.zn, %i.cw
   %i.zv = getelementptr inbounds [4 x i8], ptr %i.bj, i64 %indvars.iv506
@@ -1544,7 +1541,7 @@ vec.epilog.scalar.ph622:                          ; preds = %vec.epilog.scalar.p
   %i.aai = getelementptr inbounds nuw [4 x i8], ptr %i.uk, i64 %indvars.iv.next507
   %i.aaj = load float, ptr %i.aai, align 4, !tbaa !18
   %i.aak = fmul float %i.aah, %i.aaj
-  %i.aal = getelementptr inbounds [4 x i8], ptr %9, i64 %indvars.iv.next507
+  %i.aal = getelementptr inbounds [4 x i8], ptr %i.bg, i64 %indvars.iv.next507
   store float %i.aak, ptr %i.aal, align 4, !tbaa !18
   %i.aam = fmul float %i.aaf, %i.cw
   %i.aan = getelementptr inbounds [4 x i8], ptr %i.bj, i64 %indvars.iv.next507
@@ -1567,7 +1564,7 @@ vec.epilog.scalar.ph622:                          ; preds = %vec.epilog.scalar.p
 bb.c:                                             ; preds = %bb.c, %.lr.ph.i407
   %.011.i408 = phi i64 [ 0, %.lr.ph.i407 ], [ %i.abt, %bb.c ] ; 2 uses
   %.idx.i.i409 = shl nuw nsw i64 %.011.i408, 6    ; 3 uses
-  %i.aat = getelementptr inbounds nuw i8, ptr %9, i64 %.idx.i.i409
+  %i.aat = getelementptr inbounds nuw i8, ptr %i.bg, i64 %.idx.i.i409
   %.val.i.i410 = load <16 x float>, ptr %i.aat, align 64, !tbaa !218 ; 2 uses
   %i.aau = getelementptr inbounds nuw i8, ptr %i.bj, i64 %.idx.i.i409
   %.val.i17.i411 = load <16 x float>, ptr %i.aau, align 64, !tbaa !218
