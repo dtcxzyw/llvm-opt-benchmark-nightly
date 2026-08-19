@@ -204,11 +204,11 @@ bb.h:                                             ; preds = %bb.f
   br i1 %i.af, label %.lr.ph.preheader, label %._crit_edge, !dbg !240130
 
 .lr.ph.preheader:                                 ; preds = %bb.h
-  %umax = tail call i64 @llvm.umax.i64(i64 %i.m, i64 %i.z)
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.m, i64 %i.z), !dbg !240137 ; 2 uses
   br label %.lr.ph, !dbg !240137
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.o
-  %.sroa.026.095 = phi i64 [ %i.ah, %bb.o ], [ %i.z, %.lr.ph.preheader ] ; 4 uses
+  %.sroa.026.095 = phi i64 [ %i.ah, %bb.o ], [ %i.z, %.lr.ph.preheader ] ; 3 uses
   %i.ag = phi i64 [ %i.ao, %bb.o ], [ %.sroa.0.0.i88, %.lr.ph.preheader ] ; 5 uses
   %i.ah = add i64 %.sroa.026.095, 1, !dbg !240139 ; 2 uses
   %exitcond.not = icmp eq i64 %.sroa.026.095, %umax, !dbg !240137
@@ -248,7 +248,7 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %or.cond84, label %bb.n, label %bb.o, !dbg !240165, !prof !240104
 
 bb.m:                                             ; preds = %.lr.ph
-  tail call void @_RNvNtCscgRAwXFJnXP_4core9panicking18panic_bounds_check(i64 noundef %.sroa.026.095, i64 noundef %i.m, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1482) #55, !dbg !240137
+  tail call void @_RNvNtCscgRAwXFJnXP_4core9panicking18panic_bounds_check(i64 noundef %umax, i64 noundef %i.m, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1482) #55, !dbg !240137
   unreachable, !dbg !240137
 
 bb.n:                                             ; preds = %bb.l
