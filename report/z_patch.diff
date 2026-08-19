@@ -1,0 +1,820 @@
+diff --git a/llvm/lib/Transforms/Vectorize/LoopVectorize.cpp b/llvm/lib/Transforms/Vectorize/LoopVectorize.cpp
+index bb8e560b4ef20..1a669f4d8af07 100644
+--- a/llvm/lib/Transforms/Vectorize/LoopVectorize.cpp
++++ b/llvm/lib/Transforms/Vectorize/LoopVectorize.cpp
+@@ -6010,7 +6010,6 @@ DenseMap<const SCEV *, Value *> LoopVectorizationPlanner::executePlan(
+   if (EpilogueVecKind == EpilogueVectorizationKind::None)
+     VPlanTransforms::expandSCEVsToVPInstructions(BestVPlan, *PSE.getSE());
+   VPlanTransforms::cse(BestVPlan);
+-  VPlanTransforms::simplifyRecipes(BestVPlan);
+   // Removing branches and incoming values may expose additional simplification
+   // opportunities.
+   if (VPlanTransforms::removeBranchOnConst(BestVPlan,
+diff --git a/llvm/lib/Transforms/Vectorize/VPlanTransforms.cpp b/llvm/lib/Transforms/Vectorize/VPlanTransforms.cpp
+index 3abfbf5cfb444..013800e18c0de 100644
+--- a/llvm/lib/Transforms/Vectorize/VPlanTransforms.cpp
++++ b/llvm/lib/Transforms/Vectorize/VPlanTransforms.cpp
+@@ -1121,8 +1121,9 @@ static void removeRedundantExpandSCEVRecipes(VPlan &Plan) {
+ }
+ 
+ /// Try to simplify logical and bitwise recipes in \p Def.
+-static bool simplifyLogicalRecipe(VPSingleDefRecipe *Def, VPBuilder &Builder,
+-                                  bool CanCreateNewRecipe) {
++static VPValue *simplifyLogicalRecipe(VPSingleDefRecipe *Def,
++                                      VPBuilder &Builder,
++                                      bool CanCreateNewRecipe) {
+   VPlan *Plan = Def->getParent()->getPlan();
+ 
+   // Simplify (X && Y) | (X && !Y) -> X.
+@@ -1132,53 +1133,36 @@ static bool simplifyLogicalRecipe(VPSingleDefRecipe *Def, VPBuilder &Builder,
+   VPValue *X, *Y, *Z;
+   if (match(Def,
+             m_c_BinaryOr(m_LogicalAnd(m_VPValue(X), m_VPValue(Y)),
+-                         m_LogicalAnd(m_Deferred(X), m_Not(m_Deferred(Y)))))) {
+-    Def->replaceAllUsesWith(X);
+-    Def->eraseFromParent();
+-    return true;
+-  }
++                         m_LogicalAnd(m_Deferred(X), m_Not(m_Deferred(Y))))))
++    return X;
+ 
+   // x | AllOnes -> AllOnes
+-  if (match(Def, m_c_BinaryOr(m_VPValue(X), m_AllOnes()))) {
+-    Def->replaceAllUsesWith(Plan->getAllOnesValue(Def->getScalarType()));
+-    return true;
+-  }
++  if (match(Def, m_c_BinaryOr(m_VPValue(X), m_AllOnes())))
++    return Plan->getAllOnesValue(Def->getScalarType());
+ 
+   // x | 0 -> x
+-  if (match(Def, m_c_BinaryOr(m_VPValue(X), m_ZeroInt()))) {
+-    Def->replaceAllUsesWith(X);
+-    return true;
+-  }
++  if (match(Def, m_c_BinaryOr(m_VPValue(X), m_ZeroInt())))
++    return X;
+ 
+   // x | !x -> AllOnes
+-  if (match(Def, m_c_BinaryOr(m_VPValue(X), m_Not(m_Deferred(X))))) {
+-    Def->replaceAllUsesWith(Plan->getAllOnesValue(Def->getScalarType()));
+-    return true;
+-  }
++  if (match(Def, m_c_BinaryOr(m_VPValue(X), m_Not(m_Deferred(X)))))
++    return Plan->getAllOnesValue(Def->getScalarType());
+ 
+   // x & 0 -> 0
+-  if (match(Def, m_c_BinaryAnd(m_VPValue(X), m_ZeroInt()))) {
+-    Def->replaceAllUsesWith(Plan->getZero(Def->getScalarType()));
+-    return true;
+-  }
++  if (match(Def, m_c_BinaryAnd(m_VPValue(X), m_ZeroInt())))
++    return Plan->getZero(Def->getScalarType());
+ 
+   // x & AllOnes -> x
+-  if (match(Def, m_c_BinaryAnd(m_VPValue(X), m_AllOnes()))) {
+-    Def->replaceAllUsesWith(X);
+-    return true;
+-  }
++  if (match(Def, m_c_BinaryAnd(m_VPValue(X), m_AllOnes())))
++    return X;
+ 
+   // x && false -> false
+-  if (match(Def, m_c_LogicalAnd(m_VPValue(X), m_False()))) {
+-    Def->replaceAllUsesWith(Plan->getFalse());
+-    return true;
+-  }
++  if (match(Def, m_c_LogicalAnd(m_VPValue(X), m_False())))
++    return Plan->getFalse();
+ 
+   // x && true -> x
+-  if (match(Def, m_c_LogicalAnd(m_VPValue(X), m_True()))) {
+-    Def->replaceAllUsesWith(X);
+-    return true;
+-  }
++  if (match(Def, m_c_LogicalAnd(m_VPValue(X), m_True())))
++    return X;
+ 
+   // (x && y) | (x && z) -> x && (y | z)
+   if (CanCreateNewRecipe &&
+@@ -1187,51 +1171,38 @@ static bool simplifyLogicalRecipe(VPSingleDefRecipe *Def, VPBuilder &Builder,
+       // Simplify only if one of the operands has one use to avoid creating an
+       // extra recipe.
+       (!Def->getOperand(0)->hasMoreThanOneUniqueUser() ||
+-       !Def->getOperand(1)->hasMoreThanOneUniqueUser())) {
+-    Def->replaceAllUsesWith(
+-        Builder.createLogicalAnd(X, Builder.createOr(Y, Z)));
+-    return true;
+-  }
++       !Def->getOperand(1)->hasMoreThanOneUniqueUser()))
++    return Builder.createLogicalAnd(X, Builder.createOr(Y, Z));
+ 
+   // x && (x && y) -> x && y
+   if (match(Def, m_LogicalAnd(m_VPValue(X),
+-                              m_LogicalAnd(m_Deferred(X), m_VPValue())))) {
+-    Def->replaceAllUsesWith(Def->getOperand(1));
+-    return true;
+-  }
++                              m_LogicalAnd(m_Deferred(X), m_VPValue()))))
++    return Def->getOperand(1);
+ 
+   // x && (y && x) -> x && y
+   if (match(Def, m_LogicalAnd(m_VPValue(X),
+-                              m_LogicalAnd(m_VPValue(Y), m_Deferred(X))))) {
+-    Def->replaceAllUsesWith(Builder.createLogicalAnd(X, Y));
+-    return true;
+-  }
++                              m_LogicalAnd(m_VPValue(Y), m_Deferred(X)))))
++    return Builder.createLogicalAnd(X, Y);
+ 
+   // x && !x -> 0
+-  if (match(Def, m_LogicalAnd(m_VPValue(X), m_Not(m_Deferred(X))))) {
+-    Def->replaceAllUsesWith(Plan->getFalse());
+-    return true;
+-  }
++  if (match(Def, m_LogicalAnd(m_VPValue(X), m_Not(m_Deferred(X)))))
++    return Plan->getFalse();
+ 
+-  if (match(Def, m_Select(m_VPValue(), m_VPValue(X), m_Deferred(X)))) {
+-    Def->replaceAllUsesWith(X);
+-    return true;
+-  }
++  if (match(Def, m_Select(m_VPValue(), m_VPValue(X), m_Deferred(X))))
++    return X;
+ 
+   // select c, false, true -> not c
+   VPValue *C;
+   if (CanCreateNewRecipe &&
+-      match(Def, m_Select(m_VPValue(C), m_False(), m_True()))) {
+-    Def->replaceAllUsesWith(Builder.createNot(C));
+-    return true;
+-  }
++      match(Def, m_Select(m_VPValue(C), m_False(), m_True())))
++    return Builder.createNot(C);
+ 
+   // select !c, x, y -> select c, y, x
+   if (match(Def, m_Select(m_Not(m_VPValue(C)), m_VPValue(X), m_VPValue(Y)))) {
+     Def->setOperand(0, C);
+     Def->setOperand(1, Y);
+     Def->setOperand(2, X);
+-    return true;
++    return Def;
+   }
+ 
+   // select x, (i1 y | z), y -> y | (x && z)
+@@ -1239,11 +1210,8 @@ static bool simplifyLogicalRecipe(VPSingleDefRecipe *Def, VPBuilder &Builder,
+       match(Def, m_Select(m_VPValue(X),
+                           m_OneUse(m_c_BinaryOr(m_VPValue(Y), m_VPValue(Z))),
+                           m_Deferred(Y))) &&
+-      Y->getScalarType()->isIntegerTy(1)) {
+-    Def->replaceAllUsesWith(
+-        Builder.createOr(Y, Builder.createLogicalAnd(X, Z)));
+-    return true;
+-  }
++      Y->getScalarType()->isIntegerTy(1))
++    return Builder.createOr(Y, Builder.createLogicalAnd(X, Z));
+ 
+   // select %M0, (select %M1, %X, %Y), %Y -> select (%M0 && %M1), %X, %Y
+   VPValue *Mask0, *Mask1;
+@@ -1252,31 +1220,30 @@ static bool simplifyLogicalRecipe(VPSingleDefRecipe *Def, VPBuilder &Builder,
+             m_SelectLike(m_VPValue(Mask0),
+                          m_OneUse(m_SelectLike(m_VPValue(Mask1), m_VPValue(X),
+                                                m_VPValue(Y))),
+-                         m_Deferred(Y)))) {
+-    auto *Select = Builder.createSelect(Builder.createLogicalAnd(Mask0, Mask1),
+-                                        X, Y, Def->getDebugLoc());
+-    Def->replaceAllUsesWith(Select);
+-    return true;
+-  }
++                         m_Deferred(Y))))
++    return Builder.createSelect(Builder.createLogicalAnd(Mask0, Mask1), X, Y,
++                                Def->getDebugLoc());
+ 
+-  return false;
++  return nullptr;
+ }
+ 
+-/// Try to simplify VPSingleDefRecipe \p Def.
+-static void simplifyRecipe(VPSingleDefRecipe *Def) {
++/// Try to simplify VPSingleDefRecipe \p Def. Returns a new recipe if it should
++/// be replaced, or the existing recipe if it was modified. Returns nullptr if
++/// nothing was simplified.
++static VPValue *simplifyRecipe(VPSingleDefRecipe *Def) {
+   VPlan *Plan = Def->getParent()->getPlan();
+ 
+   // Simplification of live-in IR values for SingleDef recipes using
+   // InstSimplifyFolder.
+   const DataLayout &DL = Plan->getDataLayout();
+   if (VPValue *V = vputils::tryToFoldLiveIns(*Def, Def->operands(), DL))
+-    return Def->replaceAllUsesWith(V);
++    return V;
+ 
+   // Fold PredPHI LiveIn -> LiveIn.
+   if (auto *PredPHI = dyn_cast<VPPredInstPHIRecipe>(Def)) {
+     VPValue *Op = PredPHI->getOperand(0);
+     if (isa<VPIRValue>(Op))
+-      PredPHI->replaceAllUsesWith(Op);
++      return Op;
+   }
+ 
+   // Drop the mask of a predicated store masked by the header mask (which is
+@@ -1292,9 +1259,7 @@ static void simplifyRecipe(VPSingleDefRecipe *Def) {
+         RepR->isSingleScalar(), /*Mask=*/nullptr, *RepR, *RepR,
+         RepR->getDebugLoc());
+     Unmasked->insertBefore(RepR);
+-    RepR->replaceAllUsesWith(Unmasked);
+-    RepR->eraseFromParent();
+-    return;
++    return Unmasked;
+   }
+ 
+   VPBuilder Builder(Def);
+@@ -1315,11 +1280,11 @@ static void simplifyRecipe(VPSingleDefRecipe *Def) {
+     Type *TruncTy = Def->getScalarType();
+     Type *ATy = A->getScalarType();
+     if (TruncTy == ATy) {
+-      Def->replaceAllUsesWith(A);
++      return A;
+     } else {
+       // Don't replace a non-widened cast recipe with a widened cast.
+       if (!isa<VPWidenCastRecipe>(Def))
+-        return;
++        return nullptr;
+       if (ATy->getScalarSizeInBits() < TruncTy->getScalarSizeInBits()) {
+ 
+         unsigned ExtOpcode = match(Z, m_SExt(m_VPValue())) ? Instruction::SExt
+@@ -1330,33 +1295,33 @@ static void simplifyRecipe(VPSingleDefRecipe *Def) {
+           // UnderlyingExt has distinct return type, used to retain legacy cost.
+           Ext->setUnderlyingValue(UnderlyingExt);
+         }
+-        Def->replaceAllUsesWith(Ext);
++        return Ext;
+       } else if (ATy->getScalarSizeInBits() > TruncTy->getScalarSizeInBits()) {
+         auto *Trunc = Builder.createWidenCast(Instruction::Trunc, A, TruncTy);
+-        Def->replaceAllUsesWith(Trunc);
++        return Trunc;
+       }
+     }
+   }
+ 
+-  if (simplifyLogicalRecipe(Def, Builder, CanCreateNewRecipe))
+-    return;
++  if (VPValue *V = simplifyLogicalRecipe(Def, Builder, CanCreateNewRecipe))
++    return V;
+ 
+   VPValue *X, *Y;
+   if (match(Def, m_c_Add(m_VPValue(A), m_ZeroInt())))
+-    return Def->replaceAllUsesWith(A);
++    return A;
+ 
+   if (match(Def, m_c_Mul(m_VPValue(A), m_One())))
+-    return Def->replaceAllUsesWith(A);
++    return A;
+ 
+   if (match(Def, m_c_Mul(m_VPValue(A), m_ZeroInt())))
+-    return Def->replaceAllUsesWith(Plan->getZero(Def->getScalarType()));
++    return Plan->getZero(Def->getScalarType());
+ 
+   if (CanCreateNewRecipe && match(Def, m_c_Mul(m_VPValue(A), m_AllOnes()))) {
+     // Preserve nsw from the Mul on the new Sub.
+     VPIRFlags::WrapFlagsTy NW = {
+         false, cast<VPRecipeWithIRFlags>(Def)->hasNoSignedWrap()};
+-    return Def->replaceAllUsesWith(Builder.createSub(
+-        Plan->getZero(A->getScalarType()), A, Def->getDebugLoc(), "", NW));
++    return Builder.createSub(Plan->getZero(A->getScalarType()), A,
++                             Def->getDebugLoc(), "", NW);
+   }
+ 
+   if (CanCreateNewRecipe &&
+@@ -1367,16 +1332,14 @@ static void simplifyRecipe(VPSingleDefRecipe *Def) {
+     VPIRFlags::WrapFlagsTy NW = {
+         false, cast<VPRecipeWithIRFlags>(Def)->hasNoSignedWrap() &&
+                    cast<VPRecipeWithIRFlags>(Z)->hasNoSignedWrap()};
+-    return Def->replaceAllUsesWith(
+-        Builder.createSub(X, Y, Def->getDebugLoc(), "", NW));
++    return Builder.createSub(X, Y, Def->getDebugLoc(), "", NW);
+   }
+ 
+   const APInt *APC;
+   if (CanCreateNewRecipe && match(Def, m_URem(m_VPValue(X), m_APInt(APC))) &&
+-      APC->isPowerOf2()) {
+-    return Def->replaceAllUsesWith(Builder.createAnd(
+-        X, Plan->getConstantInt(*APC - 1), Def->getDebugLoc()));
+-  }
++      APC->isPowerOf2())
++    return Builder.createAnd(X, Plan->getConstantInt(*APC - 1),
++                             Def->getDebugLoc());
+ 
+   if (CanCreateNewRecipe && match(Def, m_c_Mul(m_VPValue(A), m_APInt(APC))) &&
+       APC->isPowerOf2()) {
+@@ -1385,22 +1348,22 @@ static void simplifyRecipe(VPSingleDefRecipe *Def) {
+     VPIRFlags::WrapFlagsTy NW(MulR->hasNoUnsignedWrap(),
+                               MulR->hasNoSignedWrap() &&
+                                   ShiftAmt != APC->getBitWidth() - 1);
+-    return Def->replaceAllUsesWith(Builder.createNaryOp(
++    return Builder.createNaryOp(
+         Instruction::Shl,
+         {A, Plan->getConstantInt(APC->getBitWidth(), ShiftAmt)}, NW,
+-        Def->getDebugLoc()));
++        Def->getDebugLoc());
+   }
+ 
+   if (CanCreateNewRecipe && match(Def, m_UDiv(m_VPValue(A), m_APInt(APC))) &&
+       APC->isPowerOf2())
+-    return Def->replaceAllUsesWith(Builder.createNaryOp(
++    return Builder.createNaryOp(
+         Instruction::LShr,
+         {A, Plan->getConstantInt(APC->getBitWidth(), APC->exactLogBase2())},
+-        *cast<VPRecipeWithIRFlags>(Def), Def->getDebugLoc()));
++        *cast<VPRecipeWithIRFlags>(Def), Def->getDebugLoc());
+ 
+   if (match(Def, m_Not(m_VPValue(A)))) {
+     if (match(A, m_Not(m_VPValue(A))))
+-      return Def->replaceAllUsesWith(A);
++      return A;
+ 
+     // Try to fold Not into compares by adjusting the predicate in-place.
+     CmpPredicate Pred;
+@@ -1427,6 +1390,7 @@ static void simplifyRecipe(VPSingleDefRecipe *Def) {
+         // to preserve the location.
+         if (!Cmp->getDebugLoc() && Def->getDebugLoc())
+           Cmp->setDebugLoc(Def->getDebugLoc());
++        return Def;
+       }
+     }
+   }
+@@ -1456,7 +1420,7 @@ static void simplifyRecipe(VPSingleDefRecipe *Def) {
+ 
+     if (NewOps.size() < Def->getNumOperands()) {
+       VPValue *NewAnyOf = Builder.createNaryOp(VPInstruction::AnyOf, NewOps);
+-      return Def->replaceAllUsesWith(NewAnyOf);
++      return NewAnyOf;
+     }
+   }
+ 
+@@ -1464,28 +1428,25 @@ static void simplifyRecipe(VPSingleDefRecipe *Def) {
+   // This is useful for fmax/fmin without fast-math flags, where we need to
+   // check if any operand is NaN.
+   if (CanCreateNewRecipe &&
+-      match(Def, m_BinaryOr(m_SpecificCmp(CmpInst::FCMP_UNO, m_VPValue(X),
+-                                          m_Deferred(X)),
+-                            m_SpecificCmp(CmpInst::FCMP_UNO, m_VPValue(Y),
+-                                          m_Deferred(Y))))) {
+-    VPValue *NewCmp = Builder.createFCmp(CmpInst::FCMP_UNO, X, Y);
+-    return Def->replaceAllUsesWith(NewCmp);
+-  }
++      match(Def,
++            m_BinaryOr(
++                m_SpecificCmp(CmpInst::FCMP_UNO, m_VPValue(X), m_Deferred(X)),
++                m_SpecificCmp(CmpInst::FCMP_UNO, m_VPValue(Y), m_Deferred(Y)))))
++    return Builder.createFCmp(CmpInst::FCMP_UNO, X, Y);
+ 
+   // Remove redundant DerviedIVs, that is 0 + A * 1 -> A and 0 + 0 * x -> 0.
+   if ((match(Def, m_DerivedIV(m_ZeroInt(), m_VPValue(A), m_One())) ||
+        match(Def, m_DerivedIV(m_ZeroInt(), m_VPValue(A, m_ZeroInt()),
+                               m_VPValue()))) &&
+       A->getScalarType() == Def->getScalarType())
+-    return Def->replaceAllUsesWith(A);
++    return A;
+ 
+   if (match(Def, m_VPInstruction<VPInstruction::WideIVStep>(m_VPValue(X),
+                                                             m_One()))) {
+     Type *WideStepTy = Def->getScalarType();
+     if (X->getScalarType() != WideStepTy)
+       X = Builder.createWidenCast(Instruction::Trunc, X, WideStepTy);
+-    Def->replaceAllUsesWith(X);
+-    return;
++    return X;
+   }
+ 
+   // For i1 vp.merges produced by AnyOf reductions:
+@@ -1496,53 +1457,45 @@ static void simplifyRecipe(VPSingleDefRecipe *Def) {
+       Def->getScalarType()->isIntegerTy(1)) {
+     Def->setOperand(1, Plan->getTrue());
+     Def->setOperand(0, Y);
+-    return;
++    return Def;
+   }
+ 
+   // Simplify MaskedCond with no block mask to its single operand.
+   if (match(Def, m_VPInstruction<VPInstruction::MaskedCond>()) &&
+       !cast<VPInstruction>(Def)->isMasked())
+-    return Def->replaceAllUsesWith(Def->getOperand(0));
++    return Def->getOperand(0);
+ 
+   // Look through ExtractLastLane.
+   if (match(Def, m_ExtractLastLane(m_VPValue(A)))) {
+     if (match(A, m_BuildVector())) {
+       auto *BuildVector = cast<VPInstruction>(A);
+-      Def->replaceAllUsesWith(
+-          BuildVector->getOperand(BuildVector->getNumOperands() - 1));
+-      return;
++      return BuildVector->getOperand(BuildVector->getNumOperands() - 1);
+     }
+ 
+     if (match(A, m_Broadcast(m_VPValue(X))))
+-      return Def->replaceAllUsesWith(X);
++      return X;
+ 
+     if (isa<VPInstruction, VPReplicateRecipe>(A) && vputils::isSingleScalar(A))
+-      return Def->replaceAllUsesWith(A);
++      return A;
+ 
+     if (Plan->hasScalarVFOnly())
+-      return Def->replaceAllUsesWith(A);
++      return A;
+   }
+ 
+   // Look through ExtractPenultimateElement (BuildVector ....).
+   if (match(Def, m_ExtractPenultimateElement(m_BuildVector()))) {
+     auto *BuildVector = cast<VPInstruction>(Def->getOperand(0));
+-    Def->replaceAllUsesWith(
+-        BuildVector->getOperand(BuildVector->getNumOperands() - 2));
+-    return;
++    return BuildVector->getOperand(BuildVector->getNumOperands() - 2);
+   }
+ 
+   uint64_t Idx;
+   if (match(Def, m_ExtractElement(m_BuildVector(), m_ConstantInt(Idx)))) {
+     auto *BuildVector = cast<VPInstruction>(Def->getOperand(0));
+-    Def->replaceAllUsesWith(BuildVector->getOperand(Idx));
+-    return;
++    return BuildVector->getOperand(Idx);
+   }
+ 
+-  if (match(Def, m_BuildVector()) && all_equal(Def->operands())) {
+-    Def->replaceAllUsesWith(
+-        Builder.createNaryOp(VPInstruction::Broadcast, Def->getOperand(0)));
+-    return;
+-  }
++  if (match(Def, m_BuildVector()) && all_equal(Def->operands()))
++    return Builder.createNaryOp(VPInstruction::Broadcast, Def->getOperand(0));
+ 
+   // Replace uses of a BuildVector by users that only use its first lane with
+   // its first operand directly.
+@@ -1550,6 +1503,7 @@ static void simplifyRecipe(VPSingleDefRecipe *Def) {
+     Def->replaceUsesWithIf(Def->getOperand(0), [Def](VPUser &U, unsigned) {
+       return U.usesFirstLaneOnly(Def);
+     });
++    return Def;
+   }
+ 
+   // Look through broadcast of single-scalar when used as select conditions; in
+@@ -1559,34 +1513,35 @@ static void simplifyRecipe(VPSingleDefRecipe *Def) {
+     assert(vputils::isSingleScalar(Z) &&
+            "broadcast operand must be single-scalar");
+     Def->setOperand(0, Z);
+-    return;
++    return Def;
+   }
+ 
+-  if (match(Def, m_Broadcast(m_VPValue(X))))
+-    return Def->replaceUsesWithIf(
++  if (match(Def, m_Broadcast(m_VPValue(X)))) {
++    Def->replaceUsesWithIf(
+         X, [Def](const VPUser &U, unsigned) { return U.usesScalars(Def); });
++    return Def;
++  }
+ 
+   if (isa<VPPhi, VPWidenPHIRecipe, VPHeaderPHIRecipe>(Def)) {
+     if (Def->getNumOperands() == 1) {
+-      Def->replaceAllUsesWith(Def->getOperand(0));
+-      return;
++      return Def->getOperand(0);
+     }
+     if (auto *Phi = dyn_cast<VPFirstOrderRecurrencePHIRecipe>(Def)) {
+       if (all_equal(Phi->incoming_values()))
+-        Phi->replaceAllUsesWith(Phi->getOperand(0));
++        return Phi->getOperand(0);
+     }
+-    return;
++    return nullptr;
+   }
+ 
+   VPIRValue *IRV;
+   if (Def->getNumOperands() == 1 &&
+       match(Def, m_ComputeReductionResult(m_VPIRValue(IRV))))
+-    return Def->replaceAllUsesWith(IRV);
++    return IRV;
+ 
+   // Some simplifications can only be applied after unrolling. Perform them
+   // below.
+   if (!Plan->isUnrolled())
+-    return;
++    return nullptr;
+ 
+   // After unrolling, extract-lane may be used to extract values from multiple
+   // scalar sources. Only simplify when extracting from a single scalar source.
+@@ -1594,19 +1549,18 @@ static void simplifyRecipe(VPSingleDefRecipe *Def) {
+   if (match(Def, m_ExtractLane(m_VPValue(LaneToExtract), m_VPValue(A)))) {
+     // Simplify extract-lane(%lane_num, %scalar_val) -> %scalar_val.
+     if (vputils::isSingleScalar(A))
+-      return Def->replaceAllUsesWith(A);
++      return A;
+ 
+     // Replace extract-lane(0, canonical-WIDEN-INDUCTION) with the region's
+     // scalar canonical IV.
+     VPWidenIntOrFpInductionRecipe *WidenIV;
+     if (match(LaneToExtract, m_ZeroInt()) &&
+         match(A, m_CanonicalWidenIV(WidenIV)))
+-      return Def->replaceAllUsesWith(WidenIV->getRegion()->getCanonicalIV());
++      return WidenIV->getRegion()->getCanonicalIV();
+ 
+     // Simplify extract-lane with single source to extract-element.
+-    Def->replaceAllUsesWith(Builder.createNaryOp(
+-        Instruction::ExtractElement, {A, LaneToExtract}, Def->getDebugLoc()));
+-    return;
++    return Builder.createNaryOp(Instruction::ExtractElement, {A, LaneToExtract},
++                                Def->getDebugLoc());
+   }
+ 
+   // Look for cycles where Def is of the form:
+@@ -1630,7 +1584,7 @@ static void simplifyRecipe(VPSingleDefRecipe *Def) {
+         if (Inc)
+           Inc->replaceAllUsesWith(Phi);
+         Phi->setOperand(0, Y);
+-        return;
++        return Def;
+       }
+     }
+   }
+@@ -1639,16 +1593,14 @@ static void simplifyRecipe(VPSingleDefRecipe *Def) {
+   // just the pointer operand.
+   if (auto *VPR = dyn_cast<VPVectorPointerRecipe>(Def))
+     if (!VPR->getVFxPart() || match(VPR->getVFxPart(), m_ZeroInt()))
+-      return VPR->replaceAllUsesWith(VPR->getOperand(0));
++      return VPR->getOperand(0);
+ 
+   // VPScalarIVSteps after unrolling can be replaced by their start value, if
+   // the start index is zero and only the first lane 0 is demanded.
+-  if (auto *Steps = dyn_cast<VPScalarIVStepsRecipe>(Def)) {
+-    if (!Steps->getStartIndex() && vputils::onlyFirstLaneUsed(Steps)) {
+-      Steps->replaceAllUsesWith(Steps->getOperand(0));
+-      return;
+-    }
+-  }
++  if (auto *Steps = dyn_cast<VPScalarIVStepsRecipe>(Def))
++    if (!Steps->getStartIndex() && vputils::onlyFirstLaneUsed(Steps))
++      return Steps->getOperand(0);
++
+   // Simplify redundant ReductionStartVector recipes after unrolling.
+   VPValue *StartV;
+   if (match(Def, m_VPInstruction<VPInstruction::ReductionStartVector>(
+@@ -1657,11 +1609,13 @@ static void simplifyRecipe(VPSingleDefRecipe *Def) {
+       auto *PhiR = dyn_cast<VPReductionPHIRecipe>(&U);
+       return PhiR && PhiR->isInLoop();
+     });
+-    return;
++    return Def;
+   }
+ 
+   if (Plan->getConcreteUF() == 1 && match(Def, m_ExtractLastPart(m_VPValue(A))))
+-    return Def->replaceAllUsesWith(A);
++    return A;
++
++  return nullptr;
+ }
+ 
+ void VPlanTransforms::simplifyRecipes(VPlan &Plan) {
+@@ -1670,7 +1624,16 @@ void VPlanTransforms::simplifyRecipes(VPlan &Plan) {
+   for (VPBasicBlock *VPBB : VPBlockUtils::blocksOnly<VPBasicBlock>(RPOT)) {
+     for (VPRecipeBase &R : make_early_inc_range(*VPBB))
+       if (auto *Def = dyn_cast<VPSingleDefRecipe>(&R))
+-        simplifyRecipe(Def);
++        if (VPValue *New = simplifyRecipe(Def)) {
++          if (New != Def) {
++            // Replace the recipe with a new one.
++            Def->replaceAllUsesWith(New);
++            Def->eraseFromParent();
++          } else if (vputils::isDeadRecipe(R)) {
++            // Recipe was modified - it may be dead now.
++            Def->eraseFromParent();
++          }
++        }
+   }
+ }
+ 
+@@ -2269,9 +2232,37 @@ void VPlanTransforms::cse(VPlan &Plan) {
+   ReversePostOrderTraversal<VPBlockDeepTraversalWrapper<VPBlockBase *>> RPOT(
+       Plan.getEntry());
+   for (VPBasicBlock *VPBB : VPBlockUtils::blocksOnly<VPBasicBlock>(RPOT)) {
+-    for (VPRecipeBase &R : *VPBB) {
+-      auto *Def = dyn_cast<VPSingleDefRecipe>(&R);
+-      if (!Def || !VPCSEDenseMapInfo::canHandle(Def))
++    for (auto I = VPBB->begin(); I != VPBB->end();) {
++      auto *Def = dyn_cast<VPSingleDefRecipe>(&*I);
++      if (!Def) {
++        ++I;
++        continue;
++      }
++      // Simplify Def before looking it up, so that recipes are compared in
++      // canonical form, as in EarlyCSE and GVN. Conversely, definitions are
++      // visited before their users, so Def is simplified only once its operands
++      // have been CSE'd.
++      VPRecipeBase *Prev = Def->getPrevNode();
++      if (VPValue *New = simplifyRecipe(Def)) {
++        if (New != Def) {
++          Def->replaceAllUsesWith(New);
++          // New recipes are inserted directly before Def. Continue with the
++          // first of them, so folds and CSE opportunities they expose are
++          // applied as well.
++          auto NewIt = Prev ? std::next(Prev->getIterator()) : VPBB->begin();
++          I = NewIt == I ? std::next(I) : NewIt;
++          Def->eraseFromParent();
++          continue;
++        }
++        // Recipe was modified in place - it may be dead now.
++        if (vputils::isDeadRecipe(*Def)) {
++          ++I;
++          Def->eraseFromParent();
++          continue;
++        }
++      }
++      ++I;
++      if (!VPCSEDenseMapInfo::canHandle(Def))
+         continue;
+       if (VPSingleDefRecipe *V = CSEMap.lookup(Def)) {
+         // V must dominate Def for a valid replacement.
+diff --git a/llvm/test/Transforms/LoopVectorize/AArch64/induction-costs-sve.ll b/llvm/test/Transforms/LoopVectorize/AArch64/induction-costs-sve.ll
+index 483d82dbb6531..7f4895bfbfa6a 100644
+--- a/llvm/test/Transforms/LoopVectorize/AArch64/induction-costs-sve.ll
++++ b/llvm/test/Transforms/LoopVectorize/AArch64/induction-costs-sve.ll
+@@ -340,9 +340,6 @@ define void @trunc_ivs_and_store(i32 %x, ptr %dst, i64 %N) #0 {
+ ; DEFAULT:       [[VECTOR_BODY]]:
+ ; DEFAULT-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], %[[VECTOR_BODY]] ]
+ ; DEFAULT-NEXT:    [[TMP16:%.*]] = trunc i64 [[INDEX]] to i32
+-; DEFAULT-NEXT:    [[TMP17:%.*]] = add i32 [[TMP16]], 1
+-; DEFAULT-NEXT:    [[TMP18:%.*]] = add i32 [[TMP16]], 2
+-; DEFAULT-NEXT:    [[TMP19:%.*]] = add i32 [[TMP16]], 3
+ ; DEFAULT-NEXT:    [[TMP20:%.*]] = add i32 [[TMP16]], 1
+ ; DEFAULT-NEXT:    [[TMP21:%.*]] = add i32 [[TMP16]], 2
+ ; DEFAULT-NEXT:    [[TMP22:%.*]] = add i32 [[TMP16]], 3
+@@ -359,9 +356,9 @@ define void @trunc_ivs_and_store(i32 %x, ptr %dst, i64 %N) #0 {
+ ; DEFAULT-NEXT:    [[TMP33:%.*]] = getelementptr i32, ptr [[DST]], i64 [[TMP29]]
+ ; DEFAULT-NEXT:    [[TMP34:%.*]] = getelementptr i32, ptr [[DST]], i64 [[TMP30]]
+ ; DEFAULT-NEXT:    store i32 [[TMP16]], ptr [[TMP31]], align 4
+-; DEFAULT-NEXT:    store i32 [[TMP17]], ptr [[TMP32]], align 4
+-; DEFAULT-NEXT:    store i32 [[TMP18]], ptr [[TMP33]], align 4
+-; DEFAULT-NEXT:    store i32 [[TMP19]], ptr [[TMP34]], align 4
++; DEFAULT-NEXT:    store i32 [[TMP20]], ptr [[TMP32]], align 4
++; DEFAULT-NEXT:    store i32 [[TMP21]], ptr [[TMP33]], align 4
++; DEFAULT-NEXT:    store i32 [[TMP22]], ptr [[TMP34]], align 4
+ ; DEFAULT-NEXT:    [[INDEX_NEXT]] = add nuw i64 [[INDEX]], 4
+ ; DEFAULT-NEXT:    [[TMP35:%.*]] = icmp eq i64 [[INDEX_NEXT]], [[N_VEC]]
+ ; DEFAULT-NEXT:    br i1 [[TMP35]], label %[[MIDDLE_BLOCK:.*]], label %[[VECTOR_BODY]], !llvm.loop [[LOOP8:![0-9]+]]
+@@ -461,9 +458,6 @@ define void @ivs_trunc_and_ext(i32 %x, ptr %dst, i64 %N) #0 {
+ ; DEFAULT:       [[VECTOR_BODY]]:
+ ; DEFAULT-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], %[[VECTOR_BODY]] ]
+ ; DEFAULT-NEXT:    [[TMP15:%.*]] = trunc i64 [[INDEX]] to i32
+-; DEFAULT-NEXT:    [[TMP16:%.*]] = add i32 [[TMP15]], 1
+-; DEFAULT-NEXT:    [[TMP17:%.*]] = add i32 [[TMP15]], 2
+-; DEFAULT-NEXT:    [[TMP18:%.*]] = add i32 [[TMP15]], 3
+ ; DEFAULT-NEXT:    [[TMP19:%.*]] = add i32 [[TMP15]], 1
+ ; DEFAULT-NEXT:    [[TMP20:%.*]] = add i32 [[TMP15]], 2
+ ; DEFAULT-NEXT:    [[TMP21:%.*]] = add i32 [[TMP15]], 3
+@@ -480,9 +474,9 @@ define void @ivs_trunc_and_ext(i32 %x, ptr %dst, i64 %N) #0 {
+ ; DEFAULT-NEXT:    [[TMP32:%.*]] = getelementptr i32, ptr [[DST]], i64 [[TMP28]]
+ ; DEFAULT-NEXT:    [[TMP33:%.*]] = getelementptr i32, ptr [[DST]], i64 [[TMP29]]
+ ; DEFAULT-NEXT:    store i32 [[TMP15]], ptr [[TMP30]], align 4
+-; DEFAULT-NEXT:    store i32 [[TMP16]], ptr [[TMP31]], align 4
+-; DEFAULT-NEXT:    store i32 [[TMP17]], ptr [[TMP32]], align 4
+-; DEFAULT-NEXT:    store i32 [[TMP18]], ptr [[TMP33]], align 4
++; DEFAULT-NEXT:    store i32 [[TMP19]], ptr [[TMP31]], align 4
++; DEFAULT-NEXT:    store i32 [[TMP20]], ptr [[TMP32]], align 4
++; DEFAULT-NEXT:    store i32 [[TMP21]], ptr [[TMP33]], align 4
+ ; DEFAULT-NEXT:    [[INDEX_NEXT]] = add nuw i64 [[INDEX]], 4
+ ; DEFAULT-NEXT:    [[TMP34:%.*]] = icmp eq i64 [[INDEX_NEXT]], [[N_VEC]]
+ ; DEFAULT-NEXT:    br i1 [[TMP34]], label %[[MIDDLE_BLOCK:.*]], label %[[VECTOR_BODY]], !llvm.loop [[LOOP10:![0-9]+]]
+diff --git a/llvm/test/Transforms/LoopVectorize/RISCV/strided-accesses.ll b/llvm/test/Transforms/LoopVectorize/RISCV/strided-accesses.ll
+index 300d28be48054..300d49cce98b8 100644
+--- a/llvm/test/Transforms/LoopVectorize/RISCV/strided-accesses.ll
++++ b/llvm/test/Transforms/LoopVectorize/RISCV/strided-accesses.ll
+@@ -252,11 +252,9 @@ define void @single_constant_stride_ptr_iv(ptr %p) {
+ ; CHECK-UF2-NEXT:    [[TMP15:%.*]] = extractvalue { <vscale x 4 x i32>, <vscale x 4 x i32> } [[STRIDED_VEC2]], 0
+ ; CHECK-UF2-NEXT:    [[TMP16:%.*]] = add <vscale x 4 x i32> [[TMP13]], splat (i32 1)
+ ; CHECK-UF2-NEXT:    [[TMP17:%.*]] = add <vscale x 4 x i32> [[TMP15]], splat (i32 1)
+-; CHECK-UF2-NEXT:    [[TMP23:%.*]] = shl nuw i64 [[INDEX]], 3
+-; CHECK-UF2-NEXT:    [[TMP18:%.*]] = getelementptr nuw i8, ptr [[P]], i64 [[TMP23]]
+ ; CHECK-UF2-NEXT:    [[TMP24:%.*]] = mul i64 [[TMP3]], 8
+-; CHECK-UF2-NEXT:    [[TMP20:%.*]] = getelementptr nuw i8, ptr [[TMP18]], i64 [[TMP24]]
+-; CHECK-UF2-NEXT:    call void @llvm.experimental.vp.strided.store.nxv4i32.p0.i64(<vscale x 4 x i32> [[TMP16]], ptr align 4 [[TMP18]], i64 8, <vscale x 4 x i1> splat (i1 true), i32 [[TMP21]])
++; CHECK-UF2-NEXT:    [[TMP20:%.*]] = getelementptr nuw i8, ptr [[TMP12]], i64 [[TMP24]]
++; CHECK-UF2-NEXT:    call void @llvm.experimental.vp.strided.store.nxv4i32.p0.i64(<vscale x 4 x i32> [[TMP16]], ptr align 4 [[TMP12]], i64 8, <vscale x 4 x i1> splat (i1 true), i32 [[TMP21]])
+ ; CHECK-UF2-NEXT:    call void @llvm.experimental.vp.strided.store.nxv4i32.p0.i64(<vscale x 4 x i32> [[TMP17]], ptr align 4 [[TMP20]], i64 8, <vscale x 4 x i1> splat (i1 true), i32 [[TMP21]])
+ ; CHECK-UF2-NEXT:    [[INDEX_NEXT]] = add nuw i64 [[INDEX]], [[TMP1]]
+ ; CHECK-UF2-NEXT:    [[TMP19:%.*]] = icmp eq i64 [[INDEX_NEXT]], [[N_VEC]]
+diff --git a/llvm/test/Transforms/LoopVectorize/VPlan/constant-fold.ll b/llvm/test/Transforms/LoopVectorize/VPlan/constant-fold.ll
+index 78c625a7cddbb..8c905cf63dce8 100644
+--- a/llvm/test/Transforms/LoopVectorize/VPlan/constant-fold.ll
++++ b/llvm/test/Transforms/LoopVectorize/VPlan/constant-fold.ll
+@@ -25,14 +25,11 @@ define void @f1() {
+ ; CHECK-EMPTY:
+ ; CHECK-NEXT:  bb2:
+ ; CHECK-NEXT:    EMIT-SCALAR ir<%c.1.0> = phi [ ir<0>, vector.ph ], [ ir<%_tmp9>, bb2 ]
+-; CHECK-NEXT:    EMIT-SCALAR ir<%_tmp1> = zext ir<0> to i64
+-; CHECK-NEXT:    EMIT ir<%_tmp2> = getelementptr ir<@a>, ir<0>, ir<0>
+ ; CHECK-NEXT:    EMIT-SCALAR ir<%_tmp6> = sext ir<%c.1.0> to i64
+ ; CHECK-NEXT:    EMIT ir<%_tmp7> = getelementptr ir<@b>, ir<0>, ir<%_tmp6>
+ ; CHECK-NEXT:    EMIT store ir<@a>, ir<%_tmp7>
+ ; CHECK-NEXT:    EMIT ir<%_tmp9> = add nsw ir<%c.1.0>, ir<1>
+ ; CHECK-NEXT:    EMIT ir<%_tmp11> = icmp sge ir<%_tmp9>, ir<2>
+-; CHECK-NEXT:    EMIT vp<[[VP1:%[0-9]+]]> = not ir<%_tmp11>
+ ; CHECK-NEXT:    EMIT branch-on-cond ir<%_tmp11>
+ ; CHECK-NEXT:  Successor(s): middle.block, bb2
+ ;
+@@ -75,8 +72,6 @@ define void @redundant_or_1(ptr %dst, i1 %c.0, i1 %c.1) {
+ ; CHECK-EMPTY:
+ ; CHECK-NEXT:  then.1:
+ ; CHECK-NEXT:    EMIT ir<%cmp> = icmp eq ir<%iv>, ir<2>
+-; CHECK-NEXT:    EMIT ir<%or> = or ir<%cmp>, ir<true>
+-; CHECK-NEXT:    EMIT ir<%cond> = select ir<true>, ir<%c.1>, ir<false>
+ ; CHECK-NEXT:    EMIT branch-on-cond ir<%c.1>
+ ; CHECK-NEXT:  Successor(s): then.2, loop.latch
+ ; CHECK-EMPTY:
+@@ -137,8 +132,6 @@ define void @redundant_or_2(ptr %dst, i1 %c.0, i1 %c.1) {
+ ; CHECK-EMPTY:
+ ; CHECK-NEXT:  then.1:
+ ; CHECK-NEXT:    EMIT ir<%cmp> = icmp eq ir<%iv>, ir<2>
+-; CHECK-NEXT:    EMIT ir<%or> = or ir<true>, ir<%cmp>
+-; CHECK-NEXT:    EMIT ir<%cond> = select ir<true>, ir<%c.1>, ir<false>
+ ; CHECK-NEXT:    EMIT branch-on-cond ir<%c.1>
+ ; CHECK-NEXT:  Successor(s): then.2, loop.latch
+ ; CHECK-EMPTY:
+@@ -199,7 +192,6 @@ define void @redundant_and_1(ptr %dst, i1 %c.0, i1 %c.1) {
+ ; CHECK-EMPTY:
+ ; CHECK-NEXT:  then.1:
+ ; CHECK-NEXT:    EMIT ir<%cmp> = icmp eq ir<%iv>, ir<2>
+-; CHECK-NEXT:    EMIT ir<%or> = or ir<%cmp>, ir<false>
+ ; CHECK-NEXT:    EMIT ir<%cond> = select ir<%cmp>, ir<%c.1>, ir<false>
+ ; CHECK-NEXT:    EMIT branch-on-cond ir<%cond>
+ ; CHECK-NEXT:  Successor(s): then.2, loop.latch
+@@ -262,8 +254,6 @@ define void @redundant_and_2(ptr %dst, i1 %c.0, i1 %c.1) {
+ ; CHECK-EMPTY:
+ ; CHECK-NEXT:  then.1:
+ ; CHECK-NEXT:    EMIT ir<%cmp> = icmp eq ir<%iv>, ir<2>
+-; CHECK-NEXT:    EMIT ir<%or> = and ir<false>, ir<%cmp>
+-; CHECK-NEXT:    EMIT ir<%cond> = select ir<false>, ir<%c.1>, ir<false>
+ ; CHECK-NEXT:    EMIT branch-on-cond ir<false>
+ ; CHECK-NEXT:  Successor(s): then.2, loop.latch
+ ; CHECK-EMPTY:
+@@ -325,7 +315,6 @@ define void @fold_replicating_umax_equal_live_ins(ptr noalias %dst, ptr %cond, i
+ ; CHECK-NEXT:  Successor(s): then, latch
+ ; CHECK-EMPTY:
+ ; CHECK-NEXT:  then:
+-; CHECK-NEXT:    EMIT ir<%m> = call ir<%x>, ir<%x>, ir<@llvm.umax.i32>
+ ; CHECK-NEXT:    EMIT ir<%gep> = getelementptr ir<%dst>, ir<%iv>
+ ; CHECK-NEXT:    EMIT store ir<%x>, ir<%gep>
+ ; CHECK-NEXT:  Successor(s): latch
+diff --git a/llvm/test/Transforms/LoopVectorize/dont-fold-tail-for-divisible-TC.ll b/llvm/test/Transforms/LoopVectorize/dont-fold-tail-for-divisible-TC.ll
+index 7998205e0638c..6455a488bfdd6 100644
+--- a/llvm/test/Transforms/LoopVectorize/dont-fold-tail-for-divisible-TC.ll
++++ b/llvm/test/Transforms/LoopVectorize/dont-fold-tail-for-divisible-TC.ll
+@@ -13,24 +13,20 @@ define void @alignTC(ptr noalias nocapture %A, i32 %n) optsize {
+ ; CHECK-NEXT:    [[MIN_ITERS_CHECK:%.*]] = icmp ult i32 [[ALIGNEDTC]], 4
+ ; CHECK-NEXT:    br i1 [[MIN_ITERS_CHECK]], label [[SCALAR_PH:%.*]], label [[VECTOR_PH:%.*]]
+ ; CHECK:       vector.ph:
+-; CHECK-NEXT:    [[N_MOD_VF:%.*]] = and i32 [[ALIGNEDTC]], 3
+-; CHECK-NEXT:    [[N_VEC:%.*]] = sub i32 [[ALIGNEDTC]], [[N_MOD_VF]]
+ ; CHECK-NEXT:    br label [[VECTOR_BODY:%.*]]
+ ; CHECK:       vector.body:
+ ; CHECK-NEXT:    [[INDEX:%.*]] = phi i32 [ 0, [[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], [[VECTOR_BODY]] ]
+ ; CHECK-NEXT:    [[TMP1:%.*]] = getelementptr inbounds i32, ptr [[A:%.*]], i32 [[INDEX]]
+ ; CHECK-NEXT:    store <4 x i32> splat (i32 13), ptr [[TMP1]], align 1
+ ; CHECK-NEXT:    [[INDEX_NEXT]] = add nuw i32 [[INDEX]], 4
+-; CHECK-NEXT:    [[TMP3:%.*]] = icmp eq i32 [[INDEX_NEXT]], [[N_VEC]]
+-; CHECK-NEXT:    br i1 [[TMP3]], label [[MIDDLE_BLOCK:%.*]], label [[VECTOR_BODY]], !llvm.loop [[LOOP0:![0-9]+]]
++; CHECK-NEXT:    [[TMP2:%.*]] = icmp eq i32 [[INDEX_NEXT]], [[ALIGNEDTC]]
++; CHECK-NEXT:    br i1 [[TMP2]], label [[MIDDLE_BLOCK:%.*]], label [[VECTOR_BODY]], !llvm.loop [[LOOP0:![0-9]+]]
+ ; CHECK:       middle.block:
+-; CHECK-NEXT:    [[CMP_N:%.*]] = icmp eq i32 [[ALIGNEDTC]], [[N_VEC]]
+-; CHECK-NEXT:    br i1 [[CMP_N]], label [[EXIT:%.*]], label [[SCALAR_PH]]
++; CHECK-NEXT:    br label [[EXIT:%.*]]
+ ; CHECK:       scalar.ph:
+-; CHECK-NEXT:    [[BC_RESUME_VAL:%.*]] = phi i32 [ [[N_VEC]], [[MIDDLE_BLOCK]] ], [ 0, [[ENTRY:%.*]] ]
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+-; CHECK-NEXT:    [[RIV:%.*]] = phi i32 [ [[BC_RESUME_VAL]], [[SCALAR_PH]] ], [ [[RIVPLUS1:%.*]], [[LOOP]] ]
++; CHECK-NEXT:    [[RIV:%.*]] = phi i32 [ 0, [[SCALAR_PH]] ], [ [[RIVPLUS1:%.*]], [[LOOP]] ]
+ ; CHECK-NEXT:    [[ARRAYIDX:%.*]] = getelementptr inbounds i32, ptr [[A]], i32 [[RIV]]
+ ; CHECK-NEXT:    store i32 13, ptr [[ARRAYIDX]], align 1
+ ; CHECK-NEXT:    [[RIVPLUS1]] = add nuw nsw i32 [[RIV]], 1
+diff --git a/llvm/test/Transforms/LoopVectorize/iv-select-cmp-trunc.ll b/llvm/test/Transforms/LoopVectorize/iv-select-cmp-trunc.ll
+index 8e132d62a436f..4c5bd7896092d 100644
+--- a/llvm/test/Transforms/LoopVectorize/iv-select-cmp-trunc.ll
++++ b/llvm/test/Transforms/LoopVectorize/iv-select-cmp-trunc.ll
+@@ -2341,7 +2341,6 @@ define i1 @select_with_trunc_i1_iv(i64 %n, i64 %start) {
+ ; CHECK-VF1IC4-NEXT:    [[TMP10:%.*]] = add i1 [[TMP9]], false
+ ; CHECK-VF1IC4-NEXT:    [[TMP11:%.*]] = add i1 [[TMP9]], true
+ ; CHECK-VF1IC4-NEXT:    [[TMP12:%.*]] = add i1 [[TMP9]], false
+-; CHECK-VF1IC4-NEXT:    [[TMP13:%.*]] = add i1 [[TMP9]], true
+ ; CHECK-VF1IC4-NEXT:    [[TMP14:%.*]] = icmp ne i64 [[OFFSET_IDX]], 0
+ ; CHECK-VF1IC4-NEXT:    [[TMP15:%.*]] = icmp ne i64 [[TMP6]], 0
+ ; CHECK-VF1IC4-NEXT:    [[TMP16:%.*]] = icmp ne i64 [[TMP7]], 0
+@@ -2360,7 +2359,7 @@ define i1 @select_with_trunc_i1_iv(i64 %n, i64 %start) {
+ ; CHECK-VF1IC4-NEXT:    [[TMP29]] = select i1 [[TMP24]], i1 [[TMP10]], i1 [[VEC_PHI]]
+ ; CHECK-VF1IC4-NEXT:    [[TMP30]] = select i1 [[TMP24]], i1 [[TMP11]], i1 [[VEC_PHI1]]
+ ; CHECK-VF1IC4-NEXT:    [[TMP31]] = select i1 [[TMP24]], i1 [[TMP12]], i1 [[VEC_PHI2]]
+-; CHECK-VF1IC4-NEXT:    [[TMP32]] = select i1 [[TMP24]], i1 [[TMP13]], i1 [[VEC_PHI3]]
++; CHECK-VF1IC4-NEXT:    [[TMP32]] = select i1 [[TMP24]], i1 [[TMP11]], i1 [[VEC_PHI3]]
+ ; CHECK-VF1IC4-NEXT:    [[INDEX_NEXT]] = add nuw i64 [[INDEX]], 4
+ ; CHECK-VF1IC4-NEXT:    [[TMP33:%.*]] = icmp eq i64 [[INDEX_NEXT]], [[N_VEC]]
+ ; CHECK-VF1IC4-NEXT:    br i1 [[TMP33]], label %[[MIDDLE_BLOCK:.*]], label %[[LOOP]], !llvm.loop [[LOOP18:![0-9]+]]
