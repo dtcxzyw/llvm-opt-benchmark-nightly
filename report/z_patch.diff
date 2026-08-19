@@ -1,0 +1,156 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
+index c41af564d29de..4c75203cf3ee5 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
+@@ -221,6 +221,24 @@ Instruction *InstCombinerImpl::SimplifyAnyMemTransfer(AnyMemTransferInst *MI) {
+ }
+ 
+ Instruction *InstCombinerImpl::SimplifyAnyMemSet(AnyMemSetInst *MI) {
++  ConstantInt *LenC = dyn_cast<ConstantInt>(MI->getLength());
++  Value *Fill = MI->getValue();
++
++  // Keep volatile memset scalarization limited to the single-byte case
++  // where the replacement is exactly one volatile byte store.
++  if (MI->isVolatile()) {
++    if (!LenC || !LenC->isOne() || !Fill->getType()->isIntegerTy(8))
++      return nullptr;
++
++    StoreInst *S = Builder.CreateStore(Fill, MI->getDest(), true);
++    S->copyMetadata(*MI, LLVMContext::MD_DIAssignID);
++    S->setAlignment(MI->getDestAlign().valueOrOne());
++
++    // Set the size of the copy to 0 and will be deleted on the next iteration.
++    MI->setLength((uint64_t)0);
++    return MI;
++  }
++
+   const Align KnownAlignment =
+       getKnownAlignment(MI->getDest(), DL, MI, &AC, &DT);
+   MaybeAlign MemSetAlign = MI->getDestAlign();
+@@ -247,10 +265,8 @@ Instruction *InstCombinerImpl::SimplifyAnyMemSet(AnyMemSetInst *MI) {
+     return MI;
+   }
+ 
+-  // Extract the length and alignment and fill if they are constant.
+-  ConstantInt *LenC = dyn_cast<ConstantInt>(MI->getLength());
+-  ConstantInt *FillC = dyn_cast<ConstantInt>(MI->getValue());
+-  if (!LenC || !FillC || !FillC->getType()->isIntegerTy(8))
++  // Extract the length and validate the fill type.
++  if (!LenC || !Fill->getType()->isIntegerTy(8))
+     return nullptr;
+   const uint64_t Len = LenC->getLimitedValue();
+   assert(Len && "0-sized memory setting should be removed already.");
+@@ -267,14 +283,22 @@ Instruction *InstCombinerImpl::SimplifyAnyMemSet(AnyMemSetInst *MI) {
+   if (Len <= 8 && isPowerOf2_32((uint32_t)Len)) {
+     Value *Dest = MI->getDest();
+ 
+-    // Extract the fill value and store.
+-    Constant *FillVal = ConstantInt::get(
+-        MI->getContext(), APInt::getSplat(Len * 8, FillC->getValue()));
++    // Extract the fill value and store.  A one-byte memset does not need
++    // replication so a nonconstant i8 fill can be stored directly.
++    Value *FillVal;
++    if (auto *FillC = dyn_cast<ConstantInt>(Fill))
++      FillVal = ConstantInt::get(MI->getContext(),
++                                 APInt::getSplat(Len * 8, FillC->getValue()));
++    else if (Len == 1)
++      FillVal = Fill;
++    else
++      return nullptr;
++
+     StoreInst *S = Builder.CreateStore(FillVal, Dest, MI->isVolatile());
+     S->copyMetadata(*MI, LLVMContext::MD_DIAssignID);
+     for (DbgVariableRecord *DbgAssign : at::getDVRAssignmentMarkers(S)) {
+-      if (llvm::is_contained(DbgAssign->location_ops(), FillC))
+-        DbgAssign->replaceVariableLocationOp(FillC, FillVal);
++      if (llvm::is_contained(DbgAssign->location_ops(), Fill))
++        DbgAssign->replaceVariableLocationOp(Fill, FillVal);
+     }
+ 
+     S->setAlignment(Alignment);
+@@ -2029,8 +2053,9 @@ Instruction *InstCombinerImpl::visitCallInst(CallInst &CI) {
+       }
+     }
+ 
+-    // No other transformations apply to volatile transfers.
+-    if (MI->isVolatile())
++    // Apart from memset-to-store scalarization below no other transformations
++    // apply to volatile transfers.
++    if (MI->isVolatile() && !isa<AnyMemSetInst>(MI))
+       return nullptr;
+ 
+     if (AnyMemTransferInst *MTI = dyn_cast<AnyMemTransferInst>(MI)) {
+@@ -2055,6 +2080,8 @@ Instruction *InstCombinerImpl::visitCallInst(CallInst &CI) {
+     } else if (auto *MSI = dyn_cast<AnyMemSetInst>(MI)) {
+       if (Instruction *I = SimplifyAnyMemSet(MSI))
+         return I;
++      if (MI->isVolatile())
++        return nullptr;
+     }
+ 
+     // If src/dest is null, this memory intrinsic must be a noop.
+diff --git a/llvm/test/Transforms/InstCombine/memset-variable-fill.ll b/llvm/test/Transforms/InstCombine/memset-variable-fill.ll
+new file mode 100644
+index 0000000000000..b5547071a05d5
+--- /dev/null
++++ b/llvm/test/Transforms/InstCombine/memset-variable-fill.ll
+@@ -0,0 +1,59 @@
++; RUN: opt -passes=instcombine -S < %s | FileCheck %s
++
++declare void @llvm.memset.p0.i64(ptr nocapture writeonly, i8, i64, i1 immarg)
++declare void @llvm.memset.p1.i64(ptr addrspace(1) nocapture writeonly, i8, i64, i1 immarg)
++declare void @llvm.memset.element.unordered.atomic.p0.i64(ptr nocapture writeonly, i8, i64, i32 immarg)
++
++define void @variable_fill_len1(ptr %dst, i8 %value) {
++; CHECK-LABEL: define void @variable_fill_len1(
++; CHECK-SAME: ptr [[DST:%.*]], i8 [[VALUE:%.*]]) {
++; CHECK-NEXT:    store i8 [[VALUE]], ptr [[DST]], align 1
++; CHECK-NEXT:    ret void
++  call void @llvm.memset.p0.i64(ptr align 1 %dst, i8 %value, i64 1, i1 false)
++  ret void
++}
++
++define void @variable_fill_len1_volatile(ptr %dst, i8 %value) {
++; CHECK-LABEL: define void @variable_fill_len1_volatile(
++; CHECK-SAME: ptr [[DST:%.*]], i8 [[VALUE:%.*]]) {
++; CHECK-NEXT:    store volatile i8 [[VALUE]], ptr [[DST]], align 1
++; CHECK-NEXT:    ret void
++  call void @llvm.memset.p0.i64(ptr align 1 %dst, i8 %value, i64 1, i1 true)
++  ret void
++}
++
++define void @variable_fill_len1_align8(ptr %dst, i8 %value) {
++; CHECK-LABEL: define void @variable_fill_len1_align8(
++; CHECK-SAME: ptr [[DST:%.*]], i8 [[VALUE:%.*]]) {
++; CHECK-NEXT:    store i8 [[VALUE]], ptr [[DST]], align 8
++; CHECK-NEXT:    ret void
++  call void @llvm.memset.p0.i64(ptr align 8 %dst, i8 %value, i64 1, i1 false)
++  ret void
++}
++
++define void @variable_fill_len1_addrspace(ptr addrspace(1) %dst, i8 %value) {
++; CHECK-LABEL: define void @variable_fill_len1_addrspace(
++; CHECK-SAME: ptr addrspace(1) [[DST:%.*]], i8 [[VALUE:%.*]]) {
++; CHECK-NEXT:    store i8 [[VALUE]], ptr addrspace(1) [[DST]], align 1
++; CHECK-NEXT:    ret void
++  call void @llvm.memset.p1.i64(ptr addrspace(1) align 1 %dst, i8 %value, i64 1, i1 false)
++  ret void
++}
++
++define void @variable_fill_len1_atomic(ptr %dst, i8 %value) {
++; CHECK-LABEL: define void @variable_fill_len1_atomic(
++; CHECK-SAME: ptr [[DST:%.*]], i8 [[VALUE:%.*]]) {
++; CHECK-NEXT:    store atomic i8 [[VALUE]], ptr [[DST]] unordered, align 1
++; CHECK-NEXT:    ret void
++  call void @llvm.memset.element.unordered.atomic.p0.i64(ptr align 1 %dst, i8 %value, i64 1, i32 1)
++  ret void
++}
++
++define void @variable_fill_len2(ptr %dst, i8 %value) {
++; CHECK-LABEL: define void @variable_fill_len2(
++; CHECK-SAME: ptr [[DST:%.*]], i8 [[VALUE:%.*]]) {
++; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr {{.*}}[[DST]], i8 [[VALUE]], i64 2, i1 false)
++; CHECK-NEXT:    ret void
++  call void @llvm.memset.p0.i64(ptr align 1 %dst, i8 %value, i64 2, i1 false)
++  ret void
++}

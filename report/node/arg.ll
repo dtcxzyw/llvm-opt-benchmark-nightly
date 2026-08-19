@@ -201,7 +201,7 @@ _ZN4absl19str_format_internal14FormatSinkImpl6AppendEmc.exit: ; preds = %._ZN4ab
 
 _ZN4absl19str_format_internal14FormatSinkImpl6AppendEmc.exit12: ; preds = %_ZN4absl19str_format_internal14FormatSinkImpl6AppendEmc.exit, %.lr.ph.i6
   %.lcssa.i5 = phi ptr [ %i.af, %_ZN4absl19str_format_internal14FormatSinkImpl6AppendEmc.exit ], [ %i.an, %.lr.ph.i6 ]
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.lcssa.i5, i8 %0, i64 1, i1 false)
+  store i8 %0, ptr %.lcssa.i5, align 1
   %i.ar = load ptr, ptr %i.ak, align 8
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 1 ; 5 uses
   store ptr %i.as, ptr %i.ak, align 8
