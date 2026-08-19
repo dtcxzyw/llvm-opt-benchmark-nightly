@@ -204,9 +204,8 @@ bb.ha:                                            ; preds = %.loopexit.i, %.loop
   br label %get_block_rate.exit217.i
 
 bb.hb:                                            ; preds = %bb.he, %bb.ha
-  %.4232.i = phi i32 [ 63, %bb.ha ], [ %9, %bb.he ] ; 6 uses
-  %4 = zext nneg i32 %.4232.i to i64              ; 2 uses
-  %i.bzs = getelementptr inbounds nuw i8, ptr %.sink271.i, i64 %4
+  %indvars.iv.i = phi i64 [ 63, %bb.ha ], [ %indvars.iv.next.i.2, %bb.he ] ; 6 uses
+  %i.bzs = getelementptr inbounds nuw i8, ptr %.sink271.i, i64 %indvars.iv.i
   %i.bzt = load i8, ptr %i.bzs, align 1, !tbaa !50
   %i.bzu = zext i8 %i.bzt to i64
   %i.bzv = getelementptr inbounds nuw [2 x i8], ptr %i.bfd, i64 %i.bzu
@@ -215,9 +214,8 @@ bb.hb:                                            ; preds = %bb.he, %bb.ha
   br i1 %.not200.i, label %bb.hc, label %.lr.ph.i202.i
 
 bb.hc:                                            ; preds = %bb.hb
-  %5 = add nsw i32 %.4232.i, -1                   ; 2 uses
-  %6 = zext nneg i32 %5 to i64                    ; 2 uses
-  %i.bzx = getelementptr inbounds nuw i8, ptr %.sink271.i, i64 %6
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1 ; 2 uses
+  %i.bzx = getelementptr inbounds nuw i8, ptr %.sink271.i, i64 %indvars.iv.next.i
   %i.bzy = load i8, ptr %i.bzx, align 1, !tbaa !50
   %i.bzz = zext i8 %i.bzy to i64
   %i.caa = getelementptr inbounds nuw [2 x i8], ptr %i.bfd, i64 %i.bzz
@@ -226,9 +224,8 @@ bb.hc:                                            ; preds = %bb.hb
   br i1 %.not200.i.1, label %bb.hd, label %.lr.ph.i202.i
 
 bb.hd:                                            ; preds = %bb.hc
-  %7 = add nsw i32 %.4232.i, -2                   ; 2 uses
-  %8 = zext nneg i32 %7 to i64                    ; 2 uses
-  %i.cac = getelementptr inbounds nuw i8, ptr %.sink271.i, i64 %8
+  %indvars.iv.next.i.1 = add nsw i64 %indvars.iv.i, -2 ; 2 uses
+  %i.cac = getelementptr inbounds nuw i8, ptr %.sink271.i, i64 %indvars.iv.next.i.1
   %i.cad = load i8, ptr %i.cac, align 1, !tbaa !50
   %i.cae = zext i8 %i.cad to i64
   %i.caf = getelementptr inbounds nuw [2 x i8], ptr %i.bfd, i64 %i.cae
@@ -237,16 +234,16 @@ bb.hd:                                            ; preds = %bb.hc
   br i1 %.not200.i.2, label %bb.he, label %.lr.ph.i202.i
 
 bb.he:                                            ; preds = %bb.hd
-  %9 = add nsw i32 %.4232.i, -3
-  %i.cah = icmp sgt i32 %.4232.i, 3
+  %indvars.iv.next.i.2 = add nsw i64 %indvars.iv.i, -3
+  %i.cah = icmp sgt i64 %indvars.iv.i, 3
   br i1 %i.cah, label %bb.hb, label %.thread.i, !llvm.loop !180
 
 .lr.ph.i202.i:                                    ; preds = %bb.hd, %bb.hc, %bb.hb
-  %.4232.i.lcssa = phi i32 [ %.4232.i, %bb.hb ], [ %5, %bb.hc ], [ %7, %bb.hd ] ; 2 uses
-  %.lcssa876 = phi i64 [ %4, %bb.hb ], [ %6, %bb.hc ], [ %8, %bb.hd ]
-  store i32 %.4232.i.lcssa, ptr %i.bfe, align 4, !tbaa !49
-  %10 = add nuw i32 %.4232.i.lcssa, 1
-  %wide.trip.count.i203.i = zext i32 %10 to i64
+  %indvars.iv.i.lcssa = phi i64 [ %indvars.iv.i, %bb.hb ], [ %indvars.iv.next.i, %bb.hc ], [ %indvars.iv.next.i.1, %bb.hd ] ; 3 uses
+  %4 = trunc nuw nsw i64 %indvars.iv.i.lcssa to i32
+  store i32 %4, ptr %i.bfe, align 4, !tbaa !49
+  %5 = add nuw i64 %indvars.iv.i.lcssa, 1
+  %wide.trip.count.i203.i = and i64 %5, 4294967295
   br label %bb.hf
 
 bb.hf:                                            ; preds = %bb.hm, %.lr.ph.i202.i
@@ -268,7 +265,7 @@ bb.hg:                                            ; preds = %bb.hf
   br i1 %i.cap, label %bb.hh, label %bb.hk
 
 bb.hh:                                            ; preds = %bb.hg
-  %i.caq = icmp samesign ult i64 %indvars.iv.i204.i, %.lcssa876
+  %i.caq = icmp samesign ult i64 %indvars.iv.i204.i, %indvars.iv.i.lcssa
   %i.car = xor i32 %.02632.i206.i, -1
   %i.cas = trunc nuw nsw i64 %indvars.iv.i204.i to i32 ; 3 uses
   %i.cat = add nsw i32 %i.car, %i.cas

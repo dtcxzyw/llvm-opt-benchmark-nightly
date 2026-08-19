@@ -204,16 +204,11 @@ bb.s:                                             ; preds = %.lr.ph
   %i.bq = add i32 %i.bp, 1
   store i32 %i.bq, ptr %i.bo, align 8
   %.not334 = icmp eq i64 %indvars.iv, 0
-  br i1 %.not334, label %.critedge, label %.lr.ph270.preheader
+  br i1 %.not334, label %.critedge, label %.lr.ph270
 
-.lr.ph270.preheader:                              ; preds = %bb.s
-  %5 = trunc nuw nsw i64 %indvars.iv to i32
-  br label %.lr.ph270
-
-.lr.ph270:                                        ; preds = %.lr.ph270.preheader, %bb.t
-  %.1222268 = phi i32 [ %7, %bb.t ], [ %5, %.lr.ph270.preheader ] ; 3 uses
-  %6 = zext nneg i32 %.1222268 to i64
-  %i.br = getelementptr inbounds nuw [16 x i8], ptr %i.s, i64 %6 ; 5 uses
+.lr.ph270:                                        ; preds = %bb.s, %bb.t
+  %indvars.iv303 = phi i64 [ %indvars.iv.next304, %bb.t ], [ %indvars.iv, %bb.s ] ; 3 uses
+  %i.br = getelementptr inbounds nuw [16 x i8], ptr %i.s, i64 %indvars.iv303 ; 5 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %i.br, i64 8 ; 2 uses
   %i.bt = load i32, ptr %i.bs, align 8            ; 2 uses
   %i.bu = getelementptr i8, ptr %i.br, i64 -8     ; 2 uses
@@ -229,8 +224,8 @@ bb.t:                                             ; preds = %.lr.ph270
   store i64 %i.by, ptr %i.bx, align 8
   store i32 %i.bv, ptr %i.bs, align 8
   store i32 %i.bt, ptr %i.bu, align 8
-  %7 = add nsw i32 %.1222268, -1
-  %i.ca = icmp sgt i32 %.1222268, 1
+  %indvars.iv.next304 = add nsw i64 %indvars.iv303, -1
+  %i.ca = icmp sgt i64 %indvars.iv303, 1
   br i1 %i.ca, label %.lr.ph270, label %.critedge, !llvm.loop !58
 
 .critedge249:                                     ; preds = %bb.r, %bb.o
