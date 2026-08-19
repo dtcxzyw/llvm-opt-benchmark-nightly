@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %bb.h
 .preheader120.us.us.preheader.i:                  ; preds = %.preheader120.lr.ph.i
   %i.ew = shl i32 2, %i.eq                        ; 3 uses
   %smax.i = tail call i32 @llvm.smax.i32(i32 %i.er, i32 1) ; 2 uses
-  %i.ex = sext i32 %i.ew to i64                   ; 5 uses
+  %i.ex = sext i32 %i.ew to i64                   ; 6 uses
   %i.ey = sext i32 %i.er to i64                   ; 2 uses
   %i.ez = sext i32 %i.et to i64                   ; 4 uses
   %wide.trip.count.i = zext nneg i32 %smax.i to i64 ; 4 uses
@@ -212,25 +212,24 @@ bb.j:                                             ; preds = %bb.h
   %i.fb = shl nsw i64 %i.ev, 3
   %smax = tail call i64 @llvm.smax.i64(i64 %i.ex, i64 %i.ez)
   %i.fc = icmp slt i32 %i.ew, %i.et
-  %umin = zext i1 %i.fc to i64                    ; 2 uses
+  %umin = zext i1 %i.fc to i64                    ; 3 uses
   %i.fd = or disjoint i64 %umin, %i.ex
-  %i.fe = sub i64 %smax, %i.fd
-  %umax = tail call i64 @llvm.umax.i64(i64 %i.ex, i64 1)
-  %6 = udiv i64 %i.fe, %umax
-  %7 = add i64 %6, %umin
-  %i.ff = shl i64 %7, 3
-  %8 = mul i64 %i.ff, %i.ex                       ; 2 uses
-  %9 = shl nuw nsw i64 %wide.trip.count.i, 3      ; 2 uses
-  %i.fg = shl nsw i64 %i.ez, 3                    ; 2 uses
-  %10 = getelementptr i8, ptr %0, i64 %i.fa
-  %i.fh = getelementptr i8, ptr %0, i64 %i.fg
-  %i.fi = getelementptr i8, ptr %0, i64 %8
-  %i.fj = getelementptr i8, ptr %i.fi, i64 %i.fa
-  %i.fk = getelementptr i8, ptr %i.fj, i64 %9
-  %i.fl = getelementptr i8, ptr %0, i64 %8
-  %11 = getelementptr i8, ptr %i.fl, i64 %i.fg
-  %i.fm = getelementptr i8, ptr %11, i64 %9
-  %min.iters.check84 = icmp slt i32 %i.er, 6
+  %i.fe = sub i64 %smax, %i.fd                    ; 2 uses
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.ex, i64 1) ; 2 uses
+  %6 = shl nuw nsw i64 %wide.trip.count.i, 3      ; 2 uses
+  %i.ff = shl nsw i64 %i.ez, 3                    ; 2 uses
+  %7 = udiv i64 %i.fe, %umax
+  %8 = add i64 %7, %umin
+  %i.fg = shl i64 %8, 3
+  %9 = mul i64 %i.fg, %i.ex
+  %i.fh = getelementptr i8, ptr %0, i64 %i.fa
+  %i.fi = getelementptr i8, ptr %0, i64 %i.ff
+  %i.fj = getelementptr i8, ptr %0, i64 %9
+  %i.fk = getelementptr i8, ptr %i.fj, i64 %i.ff
+  %i.fl = getelementptr i8, ptr %i.fk, i64 %6
+  %min.iters.check84 = icmp slt i32 %i.er, 12
+  %i.fm = getelementptr i8, ptr %0, i64 %i.fa
+  %invariant.gep = getelementptr i8, ptr %i.fm, i64 %6
   %stride.check = icmp slt i32 %i.ew, 0
   %n.vec86 = and i64 %wide.trip.count.i, 2147483644
   %xtraiter = and i64 %wide.trip.count.i, 1
@@ -244,21 +243,18 @@ bb.j:                                             ; preds = %bb.h
   %indvar73 = phi i64 [ %indvar.next74, %._crit_edge124.us.us.i ], [ 0, %.preheader120.us.us.preheader.i ] ; 2 uses
   %.1125.us.us.i = phi ptr [ %i.gh, %._crit_edge124.us.us.i ], [ %0, %.preheader120.us.us.preheader.i ] ; 3 uses
   %i.fo = mul i64 %i.fb, %indvar73                ; 4 uses
-  %scevgep75 = getelementptr i8, ptr %10, i64 %i.fo
-  %scevgep77 = getelementptr i8, ptr %i.fh, i64 %i.fo
-  %invariant.gep.i = getelementptr [8 x i8], ptr %.1125.us.us.i, i64 %i.ey
-  %invariant.gep167.i.a = getelementptr [8 x i8], ptr %.1125.us.us.i, i64 %i.ez
-  %scevgep76 = getelementptr i8, ptr %i.fk, i64 %i.fo
-  %scevgep78.a = getelementptr i8, ptr %i.fm, i64 %i.fo
-  %bound079 = icmp ult ptr %scevgep75, %scevgep78.a
-  %bound180.a = icmp ult ptr %scevgep77, %scevgep76
-  %found.conflict81 = and i1 %bound079, %bound180.a
-  %12 = or i1 %found.conflict81, %stride.check
+  %scevgep75 = getelementptr i8, ptr %i.fh, i64 %i.fo
+  %scevgep77 = getelementptr i8, ptr %i.fi, i64 %i.fo
+  %scevgep78 = getelementptr i8, ptr %i.fl, i64 %i.fo
+  %invariant.gep167.i.a = getelementptr [8 x i8], ptr %.1125.us.us.i, i64 %i.ey
+  %invariant.gep167.i = getelementptr [8 x i8], ptr %.1125.us.us.i, i64 %i.ez
+  %scevgep78.a = getelementptr i8, ptr %invariant.gep, i64 %i.fo
+  %bound180.a = icmp ult ptr %scevgep75, %scevgep78
   br label %.preheader119.us.us.i
 
-scalar.ph83:                                      ; preds = %scalar.ph83.preheader.a, %scalar.ph83
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i.1, %scalar.ph83 ], [ 0, %scalar.ph83.preheader.a ] ; 4 uses
-  %niter = phi i64 [ %niter.next.1, %scalar.ph83 ], [ 0, %scalar.ph83.preheader.a ]
+scalar.ph83:                                      ; preds = %scalar.ph83.preheader, %scalar.ph83
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i.1, %scalar.ph83 ], [ 0, %scalar.ph83.preheader ] ; 4 uses
+  %niter = phi i64 [ %niter.next.1, %scalar.ph83 ], [ 0, %scalar.ph83.preheader ]
   %i.fp = getelementptr [8 x i8], ptr %gep.i, i64 %indvars.iv.i ; 2 uses
   %i.fq = load i64, ptr %i.fp, align 8, !tbaa !72
   %i.fr = getelementptr [8 x i8], ptr %gep168.i, i64 %indvars.iv.i ; 2 uses
@@ -279,16 +275,26 @@ scalar.ph83:                                      ; preds = %scalar.ph83.prehead
 
 .preheader119.us.us.i:                            ; preds = %._crit_edge.us.us.i, %.preheader120.us.us.i
   %indvars.iv146.i = phi i64 [ 0, %.preheader120.us.us.i ], [ %indvars.iv.next147.i, %._crit_edge.us.us.i ] ; 3 uses
-  %gep.i = getelementptr [8 x i8], ptr %invariant.gep.i, i64 %indvars.iv146.i ; 4 uses
-  %gep168.i = getelementptr [8 x i8], ptr %invariant.gep167.i.a, i64 %indvars.iv146.i ; 4 uses
-  %brmerge = select i1 %min.iters.check84, i1 true, i1 %12
-  br i1 %brmerge, label %scalar.ph83.preheader.a, label %vector.body87
+  %gep.i = getelementptr [8 x i8], ptr %invariant.gep167.i.a, i64 %indvars.iv146.i ; 4 uses
+  %gep168.i = getelementptr [8 x i8], ptr %invariant.gep167.i, i64 %indvars.iv146.i ; 4 uses
+  br i1 %min.iters.check84, label %scalar.ph83.preheader, label %scalar.ph83.preheader.a
 
-scalar.ph83.preheader.a:                          ; preds = %.preheader119.us.us.i
+scalar.ph83.preheader:                            ; preds = %scalar.ph83.preheader.a, %.preheader119.us.us.i
   br i1 %i.fn, label %scalar.ph83.epil.preheader, label %scalar.ph83
 
-vector.body87:                                    ; preds = %.preheader119.us.us.i, %vector.body87
-  %index88 = phi i64 [ %index.next93, %vector.body87 ], [ 0, %.preheader119.us.us.i ] ; 3 uses
+scalar.ph83.preheader.a:                          ; preds = %.preheader119.us.us.i
+  %10 = udiv i64 %i.fe, %umax
+  %11 = add i64 %10, %umin
+  %12 = shl i64 %11, 3
+  %13 = mul i64 %12, %i.ex
+  %gep105 = getelementptr i8, ptr %scevgep78.a, i64 %13
+  %bound180 = icmp ult ptr %scevgep77, %gep105
+  %found.conflict81 = and i1 %bound180.a, %bound180
+  %14 = or i1 %found.conflict81, %stride.check
+  br i1 %14, label %scalar.ph83.preheader, label %vector.body87
+
+vector.body87:                                    ; preds = %scalar.ph83.preheader.a, %vector.body87
+  %index88 = phi i64 [ %index.next93, %vector.body87 ], [ 0, %scalar.ph83.preheader.a ] ; 3 uses
   %i.fx = getelementptr [8 x i8], ptr %gep.i, i64 %index88 ; 3 uses
   %i.fy = getelementptr i8, ptr %i.fx, i64 16     ; 2 uses
   %wide.load89 = load <2 x i64>, ptr %i.fx, align 8, !tbaa !72, !alias.scope !163, !noalias !166
@@ -308,8 +314,8 @@ vector.body87:                                    ; preds = %.preheader119.us.us
 ._crit_edge.us.us.i.loopexit.unr-lcssa:           ; preds = %scalar.ph83
   br i1 %lcmp.mod.not, label %._crit_edge.us.us.i, label %scalar.ph83.epil.preheader
 
-scalar.ph83.epil.preheader:                       ; preds = %._crit_edge.us.us.i.loopexit.unr-lcssa, %scalar.ph83.preheader.a
-  %indvars.iv.i.epil.init = phi i64 [ 0, %scalar.ph83.preheader.a ], [ %indvars.iv.next.i.1, %._crit_edge.us.us.i.loopexit.unr-lcssa ] ; 2 uses
+scalar.ph83.epil.preheader:                       ; preds = %._crit_edge.us.us.i.loopexit.unr-lcssa, %scalar.ph83.preheader
+  %indvars.iv.i.epil.init = phi i64 [ 0, %scalar.ph83.preheader ], [ %indvars.iv.next.i.1, %._crit_edge.us.us.i.loopexit.unr-lcssa ] ; 2 uses
   tail call void @llvm.assume(i1 %lcmp.mod103)
   %i.gc = getelementptr [8 x i8], ptr %gep.i, i64 %indvars.iv.i.epil.init ; 2 uses
   %i.gd = load i64, ptr %i.gc, align 8, !tbaa !72
