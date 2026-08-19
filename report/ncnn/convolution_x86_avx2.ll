@@ -204,8 +204,8 @@ _ZN4ncnn3MatD2Ev.exit650.lr.ph.i:                 ; preds = %bb.f, %bb.e, %bb.c
   br label %.preheader747.i
 
 .preheader747.i:                                  ; preds = %.preheader747.loopexit.i, %bb.w, %bb.v, %bb.t, %bb.r, %bb.q, %bb.o, %bb.l, %bb.k, %bb.i
-  %.0539.lcssa.i = phi i32 [ %i.da, %.preheader747.loopexit.i ], [ 0, %bb.k ], [ 0, %bb.l ], [ 0, %bb.i ], [ 0, %bb.t ], [ 0, %bb.w ], [ 0, %bb.v ], [ 0, %bb.o ], [ 0, %bb.r ], [ 0, %bb.q ] ; 4 uses
-  %i.db = or disjoint i32 %.0539.lcssa.i, 3
+  %.0539.lcssa.i = phi i32 [ %i.da, %.preheader747.loopexit.i ], [ 0, %bb.k ], [ 0, %bb.l ], [ 0, %bb.i ], [ 0, %bb.t ], [ 0, %bb.w ], [ 0, %bb.v ], [ 0, %bb.o ], [ 0, %bb.r ], [ 0, %bb.q ] ; 3 uses
+  %i.db = or disjoint i32 %.0539.lcssa.i, 3       ; 2 uses
   %i.dc = icmp slt i32 %i.db, %3
   br i1 %i.dc, label %_ZN4ncnn3MatD2Ev.exit649.lr.ph.i, label %.preheader743.i
 
@@ -235,10 +235,8 @@ _ZN4ncnn3MatD2Ev.exit649.lr.ph.i:                 ; preds = %.preheader747.i
   %i.dz = icmp slt i32 %i.a, 1
   %i.ea = and i32 %2, -8
   %i.eb = zext nneg i32 %.0539.lcssa.i to i64
-  %6 = add i32 %.0539.lcssa.i, 3
   %i.ec = sext i32 %3 to i64
   %wide.trip.count1042.i = zext i32 %i.a to i64   ; 6 uses
-  %invariant.op.i = add nsw i64 %i.ec, -3
   %i.ed = add nsw i64 %wide.trip.count1042.i, -1  ; 2 uses
   %xtraiter250 = and i64 %wide.trip.count1042.i, 1
   %i.ee = icmp eq i64 %i.ed, 0
@@ -641,14 +639,14 @@ _ZN4ncnn3MatD2Ev.exit648.lr.ph.i:                 ; preds = %.preheader743.i
 
 _ZN4ncnn3MatD2Ev.exit649.i:                       ; preds = %._crit_edge851.split.i, %_ZN4ncnn3MatD2Ev.exit649.lr.ph.i
   %indvars.iv1058.i = phi i64 [ %i.eb, %_ZN4ncnn3MatD2Ev.exit649.lr.ph.i ], [ %indvars.iv.next1059.i, %._crit_edge851.split.i ] ; 2 uses
-  %indvars.iv1056.i = phi i32 [ %6, %_ZN4ncnn3MatD2Ev.exit649.lr.ph.i ], [ %indvars.iv.next1057.i, %._crit_edge851.split.i ] ; 2 uses
+  %indvars.iv1056.i = phi i32 [ %i.db, %_ZN4ncnn3MatD2Ev.exit649.lr.ph.i ], [ %7, %._crit_edge851.split.i ]
   %i.ra = load ptr, ptr %0, align 8, !tbaa !9     ; 4 uses
-  %i.rb = trunc nuw i64 %indvars.iv1058.i to i32  ; 5 uses
+  %i.rb = trunc i64 %indvars.iv1058.i to i32      ; 5 uses
   %i.rc = mul i32 %i.dd, %i.rb
   %i.rd = sext i32 %i.rc to i64
   %i.re = getelementptr inbounds i8, ptr %i.ra, i64 %i.rd ; 2 uses
   %i.rf = lshr i32 %i.rb, 3
-  %i.rg = lshr i32 %i.rb, 2
+  %i.rg = lshr exact i32 %i.rb, 2
   %i.rh = and i32 %i.rg, 1
   %i.ri = add nuw nsw i32 %i.rh, %i.rf
   %i.rj = load ptr, ptr %1, align 8, !tbaa !9, !noalias !29
@@ -999,8 +997,9 @@ bb.aa:                                            ; preds = %bb.aa, %.epil.prehe
 
 ._crit_edge851.split.i:                           ; preds = %._crit_edge846.i, %.preheader745.i, %.lr.ph835.i, %.preheader744.lr.ph.i
   %indvars.iv.next1059.i = add nuw nsw i64 %indvars.iv1058.i, 4 ; 3 uses
-  %i.yz = icmp slt i64 %indvars.iv.next1059.i, %invariant.op.i
-  %indvars.iv.next1057.i = add i32 %indvars.iv1056.i, 4
+  %6 = or disjoint i64 %indvars.iv.next1059.i, 3  ; 2 uses
+  %i.yz = icmp slt i64 %6, %i.ec
+  %7 = trunc nsw i64 %6 to i32
   br i1 %i.yz, label %_ZN4ncnn3MatD2Ev.exit649.i, label %.preheader743.loopexit.i, !llvm.loop !40
 
 .preheader739.loopexit.i:                         ; preds = %._crit_edge899.split.i
@@ -1067,7 +1066,7 @@ _ZN4ncnn3MatD2Ev.exit648.i:                       ; preds = %._crit_edge899.spli
   %indvars.iv1088.i = phi i64 [ %i.qs, %_ZN4ncnn3MatD2Ev.exit648.lr.ph.i ], [ %indvars.iv.next1089.i, %._crit_edge899.split.i ] ; 2 uses
   %i.zz = phi i32 [ %i.py, %_ZN4ncnn3MatD2Ev.exit648.lr.ph.i ], [ %i.afg, %._crit_edge899.split.i ]
   %i.aaa = load ptr, ptr %0, align 8, !tbaa !9    ; 2 uses
-  %i.aab = trunc i64 %indvars.iv1088.i to i32     ; 4 uses
+  %i.aab = trunc nuw nsw i64 %indvars.iv1088.i to i32 ; 4 uses
   %i.aac = mul i32 %i.qa, %i.aab
   %i.aad = sext i32 %i.aac to i64
   %i.aae = getelementptr inbounds i8, ptr %i.aaa, i64 %i.aad ; 2 uses
@@ -1078,7 +1077,7 @@ _ZN4ncnn3MatD2Ev.exit648.i:                       ; preds = %._crit_edge899.spli
   %i.aaj = lshr i32 %i.aab, 2
   %i.aak = and i32 %i.aaj, 1
   %i.aal = add nuw nsw i32 %i.aak, %i.aai
-  %i.aam = lshr i32 %i.aab, 1
+  %i.aam = lshr exact i32 %i.aab, 1
   %i.aan = and i32 %i.aam, 1
   %i.aao = add nuw nsw i32 %i.aal, %i.aan
   %i.aap = load ptr, ptr %1, align 8, !tbaa !9, !noalias !41

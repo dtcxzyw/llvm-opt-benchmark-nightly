@@ -203,11 +203,10 @@ _ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit:     ; preds = %bb.a, %bb.b
 bb.c:                                             ; preds = %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit
   %i.j = getelementptr inbounds i8, ptr %i.h, i64 -4
   %i.k = load i32, ptr %i.j, align 4, !tbaa !12
-  %8 = zext i32 %i.k to i64
   br label %_ZNK6vectorIPN3sat6clauseELb0EjE4sizeEv.exit
 
 _ZNK6vectorIPN3sat6clauseELb0EjE4sizeEv.exit:     ; preds = %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit, %bb.c
-  %.0.i24 = phi i64 [ %8, %bb.c ], [ 0, %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit ]
+  %.0.i24 = phi i32 [ %i.k, %bb.c ], [ 0, %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit ]
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 3612
   %i.m = load i32, ptr %i.l, align 4, !tbaa !326  ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5)
@@ -525,16 +524,16 @@ bb.aa:                                            ; preds = %bb.z, %_ZN3sat15cla
 
 _ZNK6vectorIPN3sat6clauseELb0EjE4sizeEv.exit32:   ; preds = %.preheader, %_ZN3sat8use_list6insertERNS_6clauseE.exit
   %i.dr = phi ptr [ %i.gk, %_ZN3sat8use_list6insertERNS_6clauseE.exit ], [ %i.bv, %.preheader ]
-  %indvars.iv39 = phi i64 [ %indvars.iv.next40, %_ZN3sat8use_list6insertERNS_6clauseE.exit ], [ %.0.i24, %.preheader ] ; 3 uses
-  %9 = phi ptr [ %i.gm, %_ZN3sat8use_list6insertERNS_6clauseE.exit ], [ %i.bx, %.preheader ] ; 2 uses
-  %i.ds = getelementptr inbounds i8, ptr %9, i64 -4
+  %8 = phi ptr [ %i.gm, %_ZN3sat8use_list6insertERNS_6clauseE.exit ], [ %i.bx, %.preheader ] ; 2 uses
+  %.037 = phi i32 [ %10, %_ZN3sat8use_list6insertERNS_6clauseE.exit ], [ %.0.i24, %.preheader ] ; 3 uses
+  %i.ds = getelementptr inbounds i8, ptr %8, i64 -4
   %i.dt = load i32, ptr %i.ds, align 4, !tbaa !12
-  %10 = zext i32 %i.dt to i64
-  %i.du = icmp samesign ult i64 %indvars.iv39, %10
+  %i.du = icmp ult i32 %.037, %i.dt
   br i1 %i.du, label %bb.ab, label %.critedge
 
 bb.ab:                                            ; preds = %_ZNK6vectorIPN3sat6clauseELb0EjE4sizeEv.exit32
-  %i.dv = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %indvars.iv39
+  %9 = zext i32 %.037 to i64
+  %i.dv = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %9
   %i.dw = load ptr, ptr %i.dv, align 8, !tbaa !23 ; 4 uses
   %i.dx = getelementptr inbounds nuw i8, ptr %i.dw, i64 20 ; 2 uses
   %i.dy = getelementptr inbounds nuw i8, ptr %i.dw, i64 4
@@ -715,7 +714,7 @@ _ZN3sat8use_list6insertERNS_6clauseE.exit.loopexit: ; preds = %_ZN3sat15clause_u
 
 _ZN3sat8use_list6insertERNS_6clauseE.exit:        ; preds = %_ZN3sat8use_list6insertERNS_6clauseE.exit.loopexit, %bb.ab
   %i.gk = phi ptr [ %.pre43, %_ZN3sat8use_list6insertERNS_6clauseE.exit.loopexit ], [ %i.dr, %bb.ab ] ; 2 uses
-  %indvars.iv.next40 = add nuw nsw i64 %indvars.iv39, 1
+  %10 = add i32 %.037, 1
   %i.gl = getelementptr inbounds nuw i8, ptr %i.gk, i64 3208
   %i.gm = load ptr, ptr %i.gl, align 8, !tbaa !13 ; 2 uses
   %i.gn = icmp eq ptr %i.gm, null

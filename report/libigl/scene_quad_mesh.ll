@@ -203,20 +203,19 @@ bb.a:
   %i.bi = fsub <4 x float> %i.ay, %i.bh
   %.not67 = icmp eq ptr %i.h, null
   %.not68 = icmp eq ptr %i.l, null
-  %2 = zext i32 %i.r to i64
   br label %bb.b
 
 ._crit_edge:                                      ; preds = %bb.h, %bb.a
   ret void
 
 bb.b:                                             ; preds = %.lr.ph, %bb.h
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.h ] ; 9 uses
-  %3 = trunc nuw i64 %indvars.iv to i32
-  %i.bj = insertelement <4 x i32> poison, i32 %3, i64 0
+  %.0161 = phi i32 [ 0, %.lr.ph ], [ %3, %bb.h ]  ; 3 uses
+  %i.bj = insertelement <4 x i32> poison, i32 %.0161, i64 0
   %i.bk = shufflevector <4 x i32> %i.bj, <4 x i32> poison, <4 x i32> zeroinitializer
   %i.bl = or disjoint <4 x i32> %i.bk, <i32 0, i32 1, i32 2, i32 3>
   %.not160 = icmp sgt <4 x i32> %i.af, %i.bl      ; 10 uses
-  %i.bm = shl nuw nsw i64 %indvars.iv, 2          ; 4 uses
+  %2 = zext i32 %.0161 to i64                     ; 7 uses
+  %i.bm = shl nuw nsw i64 %2, 2                   ; 4 uses
   %i.bn = load ptr, ptr %i.ah, align 8
   %i.bo = load i64, ptr %i.ai, align 8
   %i.bp = mul i64 %i.bo, %i.ag
@@ -267,7 +266,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.h
   br i1 %.not, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.di = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %indvars.iv ; 2 uses
+  %i.di = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %2 ; 2 uses
   %i.dj = fmul <4 x float> %i.bh, %i.dh
   %i.dk = fmul <4 x float> %i.ax, %i.dd
   %i.dl = fadd <4 x float> %i.dk, %i.dj
@@ -282,7 +281,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br i1 %.not67, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.dq = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %indvars.iv ; 2 uses
+  %i.dq = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %2 ; 2 uses
   %i.dr = fsub <4 x float> %i.dd, %i.cz
   %i.ds = fsub <4 x float> %i.cz, %i.dd
   %i.dt = bitcast <4 x float> %i.dr to <4 x i32>
@@ -293,7 +292,7 @@ bb.e:                                             ; preds = %bb.d
   %i.dy = load <4 x i32>, ptr %i.dq, align 1, !noalias !49
   %i.dz = select <4 x i1> %.not160, <4 x i32> %i.dx, <4 x i32> %i.dy
   store <4 x i32> %i.dz, ptr %i.dq, align 1
-  %i.ea = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %indvars.iv ; 2 uses
+  %i.ea = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %2 ; 2 uses
   %i.eb = fsub <4 x float> %i.dh, %i.cz
   %i.ec = fsub <4 x float> %i.cz, %i.dh
   %i.ed = bitcast <4 x float> %i.eb to <4 x i32>
@@ -310,23 +309,23 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br i1 %.not68, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.ek = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %indvars.iv ; 2 uses
+  %i.ek = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %2 ; 2 uses
   %i.el = load <4 x float>, ptr %i.ek, align 1, !noalias !55
   %i.em = select <4 x i1> %.not160, <4 x float> zeroinitializer, <4 x float> %i.el
   store <4 x float> %i.em, ptr %i.ek, align 1
-  %i.en = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %indvars.iv ; 2 uses
+  %i.en = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %2 ; 2 uses
   %i.eo = load <4 x float>, ptr %i.en, align 1, !noalias !58
   %i.ep = select <4 x i1> %.not160, <4 x float> zeroinitializer, <4 x float> %i.eo
   store <4 x float> %i.ep, ptr %i.en, align 1
-  %i.eq = getelementptr inbounds nuw [4 x i8], ptr %i.p, i64 %indvars.iv ; 2 uses
+  %i.eq = getelementptr inbounds nuw [4 x i8], ptr %i.p, i64 %2 ; 2 uses
   %i.er = load <4 x float>, ptr %i.eq, align 1, !noalias !61
   %i.es = select <4 x i1> %.not160, <4 x float> zeroinitializer, <4 x float> %i.er
   store <4 x float> %i.es, ptr %i.eq, align 1
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %i.et = icmp samesign ult i64 %indvars.iv.next, %2
+  %3 = add i32 %.0161, 4                          ; 2 uses
+  %i.et = icmp ult i32 %3, %i.r
   br i1 %i.et, label %bb.b, label %._crit_edge, !llvm.loop !64
 }
 

@@ -8,27 +8,29 @@ target triple = "x86_64-pc-linux-gnu"
 
 @llvm.global_ctors = appending global [0 x { i32, ptr, ptr }] zeroinitializer
 
-; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: write) uwtable
 define hidden void @_ZN4ojph5local13gen_mem_clearEPvm(ptr nofree noundef writeonly captures(none) %0, i64 noundef %1) local_unnamed_addr #0 {
 bb.a:
   %.not = icmp eq i64 %1, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
-.lr.ph.preheader:                                 ; preds = %bb.a
-  %2 = add i64 %1, -1
-  %3 = and i64 %2, -8
-  %i.a = add i64 %3, 8
-  tail call void @llvm.memset.p0.i64(ptr align 8 %0, i8 0, i64 %i.a, i1 false), !tbaa !8
-  br label %._crit_edge
-
 ._crit_edge:                                      ; preds = %.lr.ph.preheader, %bb.a
   ret void
+
+.lr.ph.preheader:                                 ; preds = %bb.a, %.lr.ph.preheader
+  %.06 = phi i64 [ %i.a, %.lr.ph.preheader ], [ 0, %bb.a ]
+  %.045 = phi ptr [ %2, %.lr.ph.preheader ], [ %0, %bb.a ] ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %.045, i64 8
+  store i64 0, ptr %.045, align 8, !tbaa !8
+  %i.a = add i64 %.06, 8                          ; 2 uses
+  %3 = icmp ult i64 %i.a, %1
+  br i1 %3, label %.lr.ph.preheader, label %._crit_edge, !llvm.loop !10
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define hidden noundef i32 @_ZN4ojph5local18gen_find_max_val32EPj(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #1 {
 bb.a:
-  %i.a = load i32, ptr %0, align 4, !tbaa !10
+  %i.a = load i32, ptr %0, align 4, !tbaa !12
   ret i32 %i.a
 }
 
@@ -43,7 +45,7 @@ bb.a:
 define hidden void @_ZN4ojph5local18gen_rev_tx_to_cb32EPKvPjjfjS3_(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef writeonly captures(none) %1, i32 noundef %2, float noundef %3, i32 noundef %4, ptr nofree noundef captures(none) %5) local_unnamed_addr #2 {
 bb.a:
   %i.a = sub i32 31, %2                           ; 4 uses
-  %i.b = load i32, ptr %5, align 4, !tbaa !10     ; 3 uses
+  %i.b = load i32, ptr %5, align 4, !tbaa !12     ; 3 uses
   %.not22 = icmp eq i32 %4, 0
   br i1 %.not22, label %._crit_edge, label %.lr.ph.preheader
 
@@ -77,8 +79,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %next.gep = getelementptr i8, ptr %1, i64 %i.m  ; 2 uses
   %next.gep28 = getelementptr i8, ptr %0, i64 %i.m ; 2 uses
   %i.n = getelementptr i8, ptr %next.gep28, i64 16
-  %wide.load = load <4 x i32>, ptr %next.gep28, align 4, !tbaa !10 ; 2 uses
-  %wide.load29 = load <4 x i32>, ptr %i.n, align 4, !tbaa !10 ; 2 uses
+  %wide.load = load <4 x i32>, ptr %next.gep28, align 4, !tbaa !12 ; 2 uses
+  %wide.load29 = load <4 x i32>, ptr %i.n, align 4, !tbaa !12 ; 2 uses
   %i.o = and <4 x i32> %wide.load, splat (i32 -2147483648)
   %i.p = and <4 x i32> %wide.load29, splat (i32 -2147483648)
   %i.q = tail call <4 x i32> @llvm.abs.v4i32(<4 x i32> %wide.load, i1 true)
@@ -88,13 +90,13 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.u = or <4 x i32> %i.s, %i.o
   %i.v = or <4 x i32> %i.t, %i.p
   %i.w = getelementptr i8, ptr %next.gep, i64 16
-  store <4 x i32> %i.u, ptr %next.gep, align 4, !tbaa !10
-  store <4 x i32> %i.v, ptr %i.w, align 4, !tbaa !10
+  store <4 x i32> %i.u, ptr %next.gep, align 4, !tbaa !12
+  store <4 x i32> %i.v, ptr %i.w, align 4, !tbaa !12
   %i.x = or <4 x i32> %i.s, %vec.phi              ; 2 uses
   %i.y = or <4 x i32> %i.t, %vec.phi27            ; 2 uses
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.z = icmp eq i64 %index.next, %n.vec
-  br i1 %i.z, label %middle.block, label %vector.body, !llvm.loop !11
+  br i1 %i.z, label %middle.block, label %vector.body, !llvm.loop !13
 
 middle.block:                                     ; preds = %vector.body
   %bin.rdx = or <4 x i32> %i.y, %i.x
@@ -113,13 +115,13 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.prol:                                      ; preds = %.lr.ph.preheader32
   %i.ab = getelementptr inbounds nuw i8, ptr %.02123.ph, i64 4
-  %i.ac = load i32, ptr %.02123.ph, align 4, !tbaa !10 ; 2 uses
+  %i.ac = load i32, ptr %.02123.ph, align 4, !tbaa !12 ; 2 uses
   %i.ad = and i32 %i.ac, -2147483648
   %i.ae = tail call i32 @llvm.abs.i32(i32 %i.ac, i1 true)
   %i.af = shl i32 %i.ae, %i.a                     ; 2 uses
   %i.ag = or i32 %i.af, %i.ad
   %i.ah = getelementptr inbounds nuw i8, ptr %.026.ph, i64 4
-  store i32 %i.ag, ptr %.026.ph, align 4, !tbaa !10
+  store i32 %i.ag, ptr %.026.ph, align 4, !tbaa !12
   %i.ai = or i32 %i.af, %.01925.ph                ; 2 uses
   %i.aj = add nsw i32 %.02024.ph, -1
   br label %.lr.ph.prol.loopexit
@@ -135,7 +137,7 @@ middle.block:                                     ; preds = %vector.body
 
 ._crit_edge:                                      ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %middle.block, %bb.a
   %.019.lcssa = phi i32 [ %i.b, %bb.a ], [ %i.aa, %middle.block ], [ %.lcssa.unr, %.lr.ph.prol.loopexit ], [ %i.ba, %.lr.ph ]
-  store i32 %.019.lcssa, ptr %5, align 4, !tbaa !10
+  store i32 %.019.lcssa, ptr %5, align 4, !tbaa !12
   ret void
 
 .lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
@@ -144,26 +146,26 @@ middle.block:                                     ; preds = %vector.body
   %.02024 = phi i32 [ %i.bb, %.lr.ph ], [ %.02024.unr, %.lr.ph.prol.loopexit ]
   %.02123 = phi ptr [ %i.at, %.lr.ph ], [ %.02123.unr, %.lr.ph.prol.loopexit ] ; 3 uses
   %i.al = getelementptr inbounds nuw i8, ptr %.02123, i64 4
-  %i.am = load i32, ptr %.02123, align 4, !tbaa !10 ; 2 uses
+  %i.am = load i32, ptr %.02123, align 4, !tbaa !12 ; 2 uses
   %i.an = and i32 %i.am, -2147483648
   %i.ao = tail call i32 @llvm.abs.i32(i32 %i.am, i1 true)
   %i.ap = shl i32 %i.ao, %i.a                     ; 2 uses
   %i.aq = or i32 %i.ap, %i.an
   %i.ar = getelementptr inbounds nuw i8, ptr %.026, i64 4
-  store i32 %i.aq, ptr %.026, align 4, !tbaa !10
+  store i32 %i.aq, ptr %.026, align 4, !tbaa !12
   %i.as = or i32 %i.ap, %.01925
   %i.at = getelementptr inbounds nuw i8, ptr %.02123, i64 8
-  %i.au = load i32, ptr %i.al, align 4, !tbaa !10 ; 2 uses
+  %i.au = load i32, ptr %i.al, align 4, !tbaa !12 ; 2 uses
   %i.av = and i32 %i.au, -2147483648
   %i.aw = tail call i32 @llvm.abs.i32(i32 %i.au, i1 true)
   %i.ax = shl i32 %i.aw, %i.a                     ; 2 uses
   %i.ay = or i32 %i.ax, %i.av
   %i.az = getelementptr inbounds nuw i8, ptr %.026, i64 8
-  store i32 %i.ay, ptr %i.ar, align 4, !tbaa !10
+  store i32 %i.ay, ptr %i.ar, align 4, !tbaa !12
   %i.ba = or i32 %i.ax, %i.as                     ; 2 uses
   %i.bb = add i32 %.02024, -2                     ; 2 uses
   %.not.1 = icmp eq i32 %i.bb, 0
-  br i1 %.not.1, label %._crit_edge, label %.lr.ph, !llvm.loop !15
+  br i1 %.not.1, label %._crit_edge, label %.lr.ph, !llvm.loop !16
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
@@ -222,7 +224,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.z = or <2 x i64> %i.u, %vec.phi27            ; 2 uses
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.aa = icmp eq i64 %index.next, %n.vec
-  br i1 %i.aa, label %middle.block, label %vector.body, !llvm.loop !16
+  br i1 %i.aa, label %middle.block, label %vector.body, !llvm.loop !17
 
 middle.block:                                     ; preds = %vector.body
   %bin.rdx = or <2 x i64> %i.z, %i.y
@@ -291,13 +293,13 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %i.bb = or i64 %i.ay, %i.at                     ; 2 uses
   %i.bc = add i32 %.02024, -2                     ; 2 uses
   %.not.1 = icmp eq i32 %i.bc, 0
-  br i1 %.not.1, label %._crit_edge, label %scalar.ph, !llvm.loop !17
+  br i1 %.not.1, label %._crit_edge, label %scalar.ph, !llvm.loop !18
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define hidden void @_ZN4ojph5local18gen_irv_tx_to_cb32EPKvPjjfjS3_(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef writeonly captures(none) %1, i32 noundef %2, float noundef %3, i32 noundef %4, ptr nofree noundef captures(none) %5) local_unnamed_addr #2 {
 bb.a:
-  %i.a = load i32, ptr %5, align 4, !tbaa !10     ; 3 uses
+  %i.a = load i32, ptr %5, align 4, !tbaa !12     ; 3 uses
   %.not21 = icmp eq i32 %4, 0
   br i1 %.not21, label %._crit_edge, label %.lr.ph.preheader
 
@@ -326,8 +328,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %next.gep = getelementptr i8, ptr %1, i64 %i.i  ; 2 uses
   %next.gep27 = getelementptr i8, ptr %0, i64 %i.i ; 2 uses
   %i.j = getelementptr i8, ptr %next.gep27, i64 16
-  %wide.load = load <4 x float>, ptr %next.gep27, align 4, !tbaa !18
-  %wide.load28 = load <4 x float>, ptr %i.j, align 4, !tbaa !18
+  %wide.load = load <4 x float>, ptr %next.gep27, align 4, !tbaa !19
+  %wide.load28 = load <4 x float>, ptr %i.j, align 4, !tbaa !19
   %i.k = fmul <4 x float> %broadcast.splat, %wide.load
   %i.l = fmul <4 x float> %broadcast.splat, %wide.load28
   %i.m = fptosi <4 x float> %i.k to <4 x i32>     ; 2 uses
@@ -339,13 +341,13 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.s = or disjoint <4 x i32> %i.o, %i.q
   %i.t = or disjoint <4 x i32> %i.p, %i.r
   %i.u = getelementptr i8, ptr %next.gep, i64 16
-  store <4 x i32> %i.s, ptr %next.gep, align 4, !tbaa !10
-  store <4 x i32> %i.t, ptr %i.u, align 4, !tbaa !10
+  store <4 x i32> %i.s, ptr %next.gep, align 4, !tbaa !12
+  store <4 x i32> %i.t, ptr %i.u, align 4, !tbaa !12
   %i.v = or <4 x i32> %i.q, %vec.phi              ; 2 uses
   %i.w = or <4 x i32> %i.r, %vec.phi26            ; 2 uses
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.x = icmp eq i64 %index.next, %n.vec
-  br i1 %i.x, label %middle.block, label %vector.body, !llvm.loop !20
+  br i1 %i.x, label %middle.block, label %vector.body, !llvm.loop !21
 
 middle.block:                                     ; preds = %vector.body
   %bin.rdx = or <4 x i32> %i.w, %i.v
@@ -362,7 +364,7 @@ middle.block:                                     ; preds = %vector.body
 
 ._crit_edge:                                      ; preds = %.lr.ph, %middle.block, %bb.a
   %.018.lcssa = phi i32 [ %i.a, %bb.a ], [ %i.y, %middle.block ], [ %i.ah, %.lr.ph ]
-  store i32 %.018.lcssa, ptr %5, align 4, !tbaa !10
+  store i32 %.018.lcssa, ptr %5, align 4, !tbaa !12
   ret void
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader31, %.lr.ph
@@ -371,18 +373,18 @@ middle.block:                                     ; preds = %vector.body
   %.01923 = phi ptr [ %i.z, %.lr.ph ], [ %.01923.ph, %.lr.ph.preheader31 ] ; 2 uses
   %.02022 = phi i32 [ %i.ai, %.lr.ph ], [ %.02022.ph, %.lr.ph.preheader31 ]
   %i.z = getelementptr inbounds nuw i8, ptr %.01923, i64 4
-  %i.aa = load float, ptr %.01923, align 4, !tbaa !18
+  %i.aa = load float, ptr %.01923, align 4, !tbaa !19
   %i.ab = fmul float %3, %i.aa
   %i.ac = fptosi float %i.ab to i32               ; 2 uses
   %i.ad = and i32 %i.ac, -2147483648
   %i.ae = tail call i32 @llvm.abs.i32(i32 %i.ac, i1 true) ; 2 uses
   %i.af = or disjoint i32 %i.ad, %i.ae
   %i.ag = getelementptr inbounds nuw i8, ptr %.025, i64 4
-  store i32 %i.af, ptr %.025, align 4, !tbaa !10
+  store i32 %i.af, ptr %.025, align 4, !tbaa !12
   %i.ah = or i32 %i.ae, %.01824                   ; 2 uses
   %i.ai = add i32 %.02022, -1                     ; 2 uses
   %.not = icmp eq i32 %i.ai, 0
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !21
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !22
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
@@ -419,8 +421,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %next.gep = getelementptr i8, ptr %0, i64 %i.k  ; 2 uses
   %next.gep19 = getelementptr i8, ptr %1, i64 %i.k ; 2 uses
   %i.l = getelementptr i8, ptr %next.gep, i64 16
-  %wide.load = load <4 x i32>, ptr %next.gep, align 4, !tbaa !10 ; 2 uses
-  %wide.load20 = load <4 x i32>, ptr %i.l, align 4, !tbaa !10 ; 2 uses
+  %wide.load = load <4 x i32>, ptr %next.gep, align 4, !tbaa !12 ; 2 uses
+  %wide.load20 = load <4 x i32>, ptr %i.l, align 4, !tbaa !12 ; 2 uses
   %i.m = and <4 x i32> %wide.load, splat (i32 2147483647)
   %i.n = and <4 x i32> %wide.load20, splat (i32 2147483647)
   %i.o = lshr <4 x i32> %i.m, %broadcast.splat    ; 2 uses
@@ -432,11 +434,11 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.u = select <4 x i1> %i.s, <4 x i32> %i.q, <4 x i32> %i.o
   %i.v = select <4 x i1> %i.t, <4 x i32> %i.r, <4 x i32> %i.p
   %i.w = getelementptr i8, ptr %next.gep19, i64 16
-  store <4 x i32> %i.u, ptr %next.gep19, align 4, !tbaa !10
-  store <4 x i32> %i.v, ptr %i.w, align 4, !tbaa !10
+  store <4 x i32> %i.u, ptr %next.gep19, align 4, !tbaa !12
+  store <4 x i32> %i.v, ptr %i.w, align 4, !tbaa !12
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.x = icmp eq i64 %index.next, %n.vec
-  br i1 %i.x, label %middle.block, label %vector.body, !llvm.loop !22
+  br i1 %i.x, label %middle.block, label %vector.body, !llvm.loop !23
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %n.vec, %i.d
@@ -452,14 +454,14 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.prol:                                      ; preds = %.lr.ph.preheader23
   %i.y = getelementptr inbounds nuw i8, ptr %.018.ph, i64 4
-  %i.z = load i32, ptr %.018.ph, align 4, !tbaa !10 ; 2 uses
+  %i.z = load i32, ptr %.018.ph, align 4, !tbaa !12 ; 2 uses
   %i.aa = and i32 %i.z, 2147483647
   %i.ab = lshr i32 %i.aa, %i.a                    ; 2 uses
   %i.ac = sub nsw i32 0, %i.ab
   %.not1314.prol = icmp slt i32 %i.z, 0
   %i.ad = select i1 %.not1314.prol, i32 %i.ac, i32 %i.ab
   %i.ae = getelementptr inbounds nuw i8, ptr %.01216.ph, i64 4
-  store i32 %i.ad, ptr %.01216.ph, align 4, !tbaa !10
+  store i32 %i.ad, ptr %.01216.ph, align 4, !tbaa !12
   %i.af = add nsw i32 %.01117.ph, -1
   br label %.lr.ph.prol.loopexit
 
@@ -478,26 +480,26 @@ middle.block:                                     ; preds = %vector.body
   %.01117 = phi i32 [ %i.av, %.lr.ph ], [ %.01117.unr, %.lr.ph.prol.loopexit ]
   %.01216 = phi ptr [ %i.au, %.lr.ph ], [ %.01216.unr, %.lr.ph.prol.loopexit ] ; 3 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %.018, i64 4
-  %i.ai = load i32, ptr %.018, align 4, !tbaa !10 ; 2 uses
+  %i.ai = load i32, ptr %.018, align 4, !tbaa !12 ; 2 uses
   %i.aj = and i32 %i.ai, 2147483647
   %i.ak = lshr i32 %i.aj, %i.a                    ; 2 uses
   %i.al = sub nsw i32 0, %i.ak
   %.not1314 = icmp slt i32 %i.ai, 0
   %i.am = select i1 %.not1314, i32 %i.al, i32 %i.ak
   %i.an = getelementptr inbounds nuw i8, ptr %.01216, i64 4
-  store i32 %i.am, ptr %.01216, align 4, !tbaa !10
+  store i32 %i.am, ptr %.01216, align 4, !tbaa !12
   %i.ao = getelementptr inbounds nuw i8, ptr %.018, i64 8
-  %i.ap = load i32, ptr %i.ah, align 4, !tbaa !10 ; 2 uses
+  %i.ap = load i32, ptr %i.ah, align 4, !tbaa !12 ; 2 uses
   %i.aq = and i32 %i.ap, 2147483647
   %i.ar = lshr i32 %i.aq, %i.a                    ; 2 uses
   %i.as = sub nsw i32 0, %i.ar
   %.not1314.1 = icmp slt i32 %i.ap, 0
   %i.at = select i1 %.not1314.1, i32 %i.as, i32 %i.ar
   %i.au = getelementptr inbounds nuw i8, ptr %.01216, i64 8
-  store i32 %i.at, ptr %i.an, align 4, !tbaa !10
+  store i32 %i.at, ptr %i.an, align 4, !tbaa !12
   %i.av = add i32 %.01117, -2                     ; 2 uses
   %.not.1 = icmp eq i32 %i.av, 0
-  br i1 %.not.1, label %._crit_edge, label %.lr.ph, !llvm.loop !23
+  br i1 %.not.1, label %._crit_edge, label %.lr.ph, !llvm.loop !24
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
@@ -552,7 +554,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <2 x i64> %i.w, ptr %i.x, align 8, !tbaa !8
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.y = icmp eq i64 %index.next, %n.vec
-  br i1 %i.y, label %middle.block, label %vector.body, !llvm.loop !24
+  br i1 %i.y, label %middle.block, label %vector.body, !llvm.loop !25
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %n.vec, %i.e
@@ -613,7 +615,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   store i64 %i.au, ptr %i.ao, align 8, !tbaa !8
   %i.aw = add i32 %.01117, -2                     ; 2 uses
   %.not.1 = icmp eq i32 %i.aw, 0
-  br i1 %.not.1, label %._crit_edge, label %scalar.ph, !llvm.loop !25
+  br i1 %.not.1, label %._crit_edge, label %scalar.ph, !llvm.loop !26
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
@@ -644,8 +646,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %next.gep = getelementptr i8, ptr %0, i64 %i.g  ; 2 uses
   %next.gep18 = getelementptr i8, ptr %1, i64 %i.g ; 2 uses
   %i.h = getelementptr i8, ptr %next.gep, i64 16
-  %wide.load = load <4 x i32>, ptr %next.gep, align 4, !tbaa !10 ; 2 uses
-  %wide.load19 = load <4 x i32>, ptr %i.h, align 4, !tbaa !10 ; 2 uses
+  %wide.load = load <4 x i32>, ptr %next.gep, align 4, !tbaa !12 ; 2 uses
+  %wide.load19 = load <4 x i32>, ptr %i.h, align 4, !tbaa !12 ; 2 uses
   %i.i = and <4 x i32> %wide.load, splat (i32 2147483647)
   %i.j = and <4 x i32> %wide.load19, splat (i32 2147483647)
   %i.k = uitofp nneg <4 x i32> %i.i to <4 x float>
@@ -659,11 +661,11 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.s = select <4 x i1> %i.q, <4 x float> %i.o, <4 x float> %i.m
   %i.t = select <4 x i1> %i.r, <4 x float> %i.p, <4 x float> %i.n
   %i.u = getelementptr i8, ptr %next.gep18, i64 16
-  store <4 x float> %i.s, ptr %next.gep18, align 4, !tbaa !18
-  store <4 x float> %i.t, ptr %i.u, align 4, !tbaa !18
+  store <4 x float> %i.s, ptr %next.gep18, align 4, !tbaa !19
+  store <4 x float> %i.t, ptr %i.u, align 4, !tbaa !19
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.v = icmp eq i64 %index.next, %n.vec
-  br i1 %i.v, label %middle.block, label %vector.body, !llvm.loop !26
+  br i1 %i.v, label %middle.block, label %vector.body, !llvm.loop !27
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %n.vec, %i.a
@@ -683,7 +685,7 @@ middle.block:                                     ; preds = %vector.body
   %.01016 = phi ptr [ %i.ad, %.lr.ph ], [ %.01016.ph, %.lr.ph.preheader22 ] ; 2 uses
   %.01115 = phi i32 [ %i.ae, %.lr.ph ], [ %.01115.ph, %.lr.ph.preheader22 ]
   %i.w = getelementptr inbounds nuw i8, ptr %.017, i64 4
-  %i.x = load i32, ptr %.017, align 4, !tbaa !10  ; 2 uses
+  %i.x = load i32, ptr %.017, align 4, !tbaa !12  ; 2 uses
   %i.y = and i32 %i.x, 2147483647
   %i.z = uitofp nneg i32 %i.y to float
   %i.aa = fmul float %3, %i.z                     ; 2 uses
@@ -691,10 +693,10 @@ middle.block:                                     ; preds = %vector.body
   %.not1213 = icmp slt i32 %i.x, 0
   %i.ac = select i1 %.not1213, float %i.ab, float %i.aa
   %i.ad = getelementptr inbounds nuw i8, ptr %.01016, i64 4
-  store float %i.ac, ptr %.01016, align 4, !tbaa !18
+  store float %i.ac, ptr %.01016, align 4, !tbaa !19
   %i.ae = add i32 %.01115, -1                     ; 2 uses
   %.not = icmp eq i32 %i.ae, 0
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !27
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !28
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
@@ -703,27 +705,23 @@ declare i32 @llvm.abs.i32(i32, i1 immarg) #3
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.abs.i64(i64, i1 immarg) #3
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #4
-
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i32> @llvm.abs.v4i32(<4 x i32>, i1 immarg) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #5
+declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #4
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i64> @llvm.abs.v2i64(<2 x i64>, i1 immarg) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.vector.reduce.or.v2i64(<2 x i64>) #5
+declare i64 @llvm.vector.reduce.or.v2i64(<2 x i64>) #4
 
-attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #0 = { mustprogress nofree norecurse nosync nounwind memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #4 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #5 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #4 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}
@@ -739,22 +737,23 @@ attributes #5 = { nocallback nocreateundeforpoison nofree nosync nounwind specul
 !7 = !{!"Simple C++ TBAA"}
 !8 = !{!9, !9, i64 0}
 !9 = !{!"long", !6, i64 0}
-!10 = !{!5, !5, i64 0}
-!11 = distinct !{!11, !12, !13, !14}
-!12 = !{!"llvm.loop.mustprogress"}
-!13 = !{!"llvm.loop.isvectorized", i32 1}
-!14 = !{!"llvm.loop.unroll.runtime.disable"}
-!15 = distinct !{!15, !12, !13}
-!16 = distinct !{!16, !12, !13, !14}
-!17 = distinct !{!17, !12, !13}
-!18 = !{!19, !19, i64 0}
-!19 = !{!"float", !6, i64 0}
-!20 = distinct !{!20, !12, !13, !14}
-!21 = distinct !{!21, !12, !14, !13}
-!22 = distinct !{!22, !12, !13, !14}
-!23 = distinct !{!23, !12, !13}
-!24 = distinct !{!24, !12, !13, !14}
-!25 = distinct !{!25, !12, !13}
-!26 = distinct !{!26, !12, !13, !14}
-!27 = distinct !{!27, !12, !14, !13}
+!10 = distinct !{!10, !11}
+!11 = !{!"llvm.loop.mustprogress"}
+!12 = !{!5, !5, i64 0}
+!13 = distinct !{!13, !11, !14, !15}
+!14 = !{!"llvm.loop.isvectorized", i32 1}
+!15 = !{!"llvm.loop.unroll.runtime.disable"}
+!16 = distinct !{!16, !11, !14}
+!17 = distinct !{!17, !11, !14, !15}
+!18 = distinct !{!18, !11, !14}
+!19 = !{!20, !20, i64 0}
+!20 = !{!"float", !6, i64 0}
+!21 = distinct !{!21, !11, !14, !15}
+!22 = distinct !{!22, !11, !15, !14}
+!23 = distinct !{!23, !11, !14, !15}
+!24 = distinct !{!24, !11, !14}
+!25 = distinct !{!25, !11, !14, !15}
+!26 = distinct !{!26, !11, !14}
+!27 = distinct !{!27, !11, !14, !15}
+!28 = distinct !{!28, !11, !15, !14}
 end_hunk_0

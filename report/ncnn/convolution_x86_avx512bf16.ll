@@ -204,8 +204,8 @@ _ZN4ncnn3MatD2Ev.exit1304.lr.ph.i:                ; preds = %bb.j, %bb.i, %bb.g,
   br label %.preheader1584.i
 
 .preheader1584.i:                                 ; preds = %.preheader1584.loopexit.i, %bb.aw, %bb.av, %bb.at, %bb.ar, %bb.ap, %bb.an, %bb.am, %bb.ak, %bb.ai, %bb.ag, %bb.ad, %bb.ac, %bb.aa, %bb.y, %bb.w, %bb.t, %bb.s, %bb.q, %bb.o, %bb.m
-  %.01092.lcssa.i = phi i32 [ %i.je, %.preheader1584.loopexit.i ], [ 0, %bb.o ], [ 0, %bb.s ], [ 0, %bb.t ], [ 0, %bb.q ], [ 0, %bb.m ], [ 0, %bb.ai ], [ 0, %bb.am ], [ 0, %bb.an ], [ 0, %bb.ak ], [ 0, %bb.ag ], [ 0, %bb.ar ], [ 0, %bb.av ], [ 0, %bb.aw ], [ 0, %bb.at ], [ 0, %bb.ap ], [ 0, %bb.w ], [ 0, %bb.aa ], [ 0, %bb.ad ], [ 0, %bb.ac ], [ 0, %bb.y ] ; 5 uses
-  %i.jf = or disjoint i32 %.01092.lcssa.i, 7
+  %.01092.lcssa.i = phi i32 [ %i.je, %.preheader1584.loopexit.i ], [ 0, %bb.o ], [ 0, %bb.s ], [ 0, %bb.t ], [ 0, %bb.q ], [ 0, %bb.m ], [ 0, %bb.ai ], [ 0, %bb.am ], [ 0, %bb.an ], [ 0, %bb.ak ], [ 0, %bb.ag ], [ 0, %bb.ar ], [ 0, %bb.av ], [ 0, %bb.aw ], [ 0, %bb.at ], [ 0, %bb.ap ], [ 0, %bb.w ], [ 0, %bb.aa ], [ 0, %bb.ad ], [ 0, %bb.ac ], [ 0, %bb.y ] ; 4 uses
+  %i.jf = or disjoint i32 %.01092.lcssa.i, 7      ; 2 uses
   %i.jg = icmp slt i32 %i.jf, %3
   br i1 %i.jg, label %_ZN4ncnn3MatD2Ev.exit1303.lr.ph.i, label %.preheader1575.i
 
@@ -246,12 +246,10 @@ _ZN4ncnn3MatD2Ev.exit1303.lr.ph.i:                ; preds = %.preheader1584.i
   %i.kn = add i32 %i.km, 16                       ; 4 uses
   %i.ko = add i32 %2, -8
   %i.kp = zext nneg i32 %.01092.lcssa.i to i64
-  %6 = add i32 %.01092.lcssa.i, 7
   %i.kq = sext i32 %3 to i64
   %i.kr = or disjoint i32 %i.kn, 7
   %i.ks = icmp slt i32 %i.kr, %2
   %wide.trip.count2235.i = zext i32 %i.a to i64   ; 9 uses
-  %invariant.op.i = add nsw i64 %i.kq, -7
   %i.kt = add nsw i64 %wide.trip.count2235.i, -1  ; 3 uses
   %xtraiter540 = and i64 %wide.trip.count2235.i, 1
   %i.ku = icmp eq i64 %i.kt, 0
@@ -654,12 +652,12 @@ _ZN4ncnn3MatD2Ev.exit1302.lr.ph.i:                ; preds = %.preheader1575.i
 
 _ZN4ncnn3MatD2Ev.exit1303.i:                      ; preds = %._crit_edge1767.split.i, %_ZN4ncnn3MatD2Ev.exit1303.lr.ph.i
   %indvars.iv2266.i = phi i64 [ %i.kp, %_ZN4ncnn3MatD2Ev.exit1303.lr.ph.i ], [ %indvars.iv.next2267.i, %._crit_edge1767.split.i ] ; 2 uses
-  %indvars.iv2264.i = phi i32 [ %6, %_ZN4ncnn3MatD2Ev.exit1303.lr.ph.i ], [ %indvars.iv.next2265.i, %._crit_edge1767.split.i ] ; 2 uses
-  %indvars.iv2207.i = phi i32 [ %i.kk, %_ZN4ncnn3MatD2Ev.exit1303.lr.ph.i ], [ %indvars.iv.next2208.i, %._crit_edge1767.split.i ] ; 2 uses
-  %i.abq = sext i32 %indvars.iv2207.i to i64
+  %indvars.iv2264.i = phi i32 [ %i.kk, %_ZN4ncnn3MatD2Ev.exit1303.lr.ph.i ], [ %indvars.iv.next2208.i, %._crit_edge1767.split.i ] ; 2 uses
+  %indvars.iv2207.i = phi i32 [ %i.jf, %_ZN4ncnn3MatD2Ev.exit1303.lr.ph.i ], [ %7, %._crit_edge1767.split.i ]
+  %i.abq = sext i32 %indvars.iv2264.i to i64
   %i.abr = shl nsw i64 %i.abq, 2
   %i.abs = load ptr, ptr %0, align 8, !tbaa !9    ; 9 uses
-  %i.abt = trunc nuw i64 %indvars.iv2266.i to i32 ; 9 uses
+  %i.abt = trunc i64 %indvars.iv2266.i to i32     ; 9 uses
   %i.abu = mul i32 %i.jh, %i.abt
   %i.abv = sext i32 %i.abu to i64
   %i.abw = getelementptr inbounds [4 x i8], ptr %i.abs, i64 %i.abv ; 2 uses
@@ -687,11 +685,11 @@ _ZN4ncnn3MatD2Ev.exit1303.i:                      ; preds = %._crit_edge1767.spl
   %i.acs = mul i32 %i.acr, %i.jh
   %i.act = sext i32 %i.acs to i64
   %i.acu = getelementptr inbounds [4 x i8], ptr %i.abs, i64 %i.act ; 2 uses
-  %i.acv = mul i32 %indvars.iv2264.i, %i.jh
+  %i.acv = mul i32 %indvars.iv2207.i, %i.jh
   %i.acw = sext i32 %i.acv to i64
   %i.acx = getelementptr inbounds [4 x i8], ptr %i.abs, i64 %i.acw ; 2 uses
   %i.acy = lshr i32 %i.abt, 4
-  %i.acz = lshr i32 %i.abt, 3
+  %i.acz = lshr exact i32 %i.abt, 3
   %i.ada = and i32 %i.acz, 1
   %i.adb = add nuw nsw i32 %i.ada, %i.acy
   %i.adc = load ptr, ptr %1, align 8, !tbaa !9, !noalias !35
@@ -1094,9 +1092,10 @@ bb.bc:                                            ; preds = %bb.bc, %.epil.prehe
 
 ._crit_edge1767.split.i:                          ; preds = %._crit_edge1763.i, %.preheader1581.i, %.preheader1577.lr.ph.i, %.preheader1578.lr.ph.i
   %indvars.iv.next2267.i = add nuw nsw i64 %indvars.iv2266.i, 8 ; 3 uses
-  %i.anm = icmp slt i64 %indvars.iv.next2267.i, %invariant.op.i
-  %indvars.iv.next2208.i = add i32 %indvars.iv2207.i, %i.kl
-  %indvars.iv.next2265.i = add i32 %indvars.iv2264.i, 8
+  %6 = or disjoint i64 %indvars.iv.next2267.i, 7  ; 2 uses
+  %i.anm = icmp slt i64 %6, %i.kq
+  %indvars.iv.next2208.i = add i32 %indvars.iv2264.i, %i.kl
+  %7 = trunc nsw i64 %6 to i32
   br i1 %i.anm, label %_ZN4ncnn3MatD2Ev.exit1303.i, label %.preheader1575.loopexit.i, !llvm.loop !49
 
 .preheader1566.loopexit.i:                        ; preds = %._crit_edge1853.split.i
@@ -1215,7 +1214,7 @@ _ZN4ncnn3MatD2Ev.exit1302.i:                      ; preds = %._crit_edge1853.spl
   %i.aqi = lshr i32 %i.aps, 3
   %i.aqj = and i32 %i.aqi, 1
   %i.aqk = add nuw nsw i32 %i.aqj, %i.aqh
-  %i.aql = lshr i32 %i.aps, 2
+  %i.aql = lshr exact i32 %i.aps, 2
   %i.aqm = and i32 %i.aql, 1
   %i.aqn = add nuw nsw i32 %i.aqk, %i.aqm
   %i.aqo = load ptr, ptr %1, align 8, !tbaa !9, !noalias !50

@@ -201,13 +201,13 @@ bb.y:                                             ; preds = %bytestream2_get_be3
 
 bytestream2_get_be32.exit89:                      ; preds = %bytestream2_get_be32.exit91, %bb.y
   %.pre-phi142 = phi i64 [ %.pre141, %bb.y ], [ %i.cx, %bytestream2_get_be32.exit91 ]
-  %.sink129 = phi ptr [ %i.dg, %bb.y ], [ %i.cv, %bytestream2_get_be32.exit91 ] ; 2 uses
+  %.sink129 = phi ptr [ %i.dg, %bb.y ], [ %i.cv, %bytestream2_get_be32.exit91 ]
   %.0.i88 = phi i1 [ %i.di, %bb.y ], [ true, %bytestream2_get_be32.exit91 ]
   %i.dj = sub i64 %i.cx, %.pre-phi142
-  %..i105 = tail call i64 @llvm.smin.i64(i64 %i.dj, i64 8) ; 2 uses
-  %i.dk = getelementptr inbounds i8, ptr %.sink129, i64 %..i105 ; 4 uses
+  %..i105 = tail call i64 @llvm.smin.i64(i64 %i.dj, i64 8)
+  %i.dk = getelementptr i8, ptr %.sink129, i64 %..i105 ; 4 uses
   %or.cond14 = select i1 %.0.i90, i1 true, i1 %.0.i88
-  %i.dl = ptrtoint ptr %i.dk to i64
+  %i.dl = ptrtoint ptr %i.dk to i64               ; 2 uses
   %i.dm = sub i64 %i.cx, %i.dl
   %i.dn = trunc i64 %i.dm to i32
   %i.do = icmp slt i32 %i.dn, 1032
@@ -215,9 +215,7 @@ bytestream2_get_be32.exit89:                      ; preds = %bytestream2_get_be3
   br i1 %or.cond120, label %bytestream2_get_be32.exit87, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %bytestream2_get_be32.exit89
-  %.sink129154 = ptrtoaddr ptr %.sink129 to i64
-  %6 = add i64 %..i105, %.sink129154
-  %i.dp = sub i64 %6, %i.cq
+  %i.dp = sub i64 %i.dl, %i.cq
   %diff.check = icmp ugt i64 %i.dp, -32
   br i1 %diff.check, label %.preheader, label %vector.ph
 

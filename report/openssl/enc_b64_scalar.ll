@@ -18,7 +18,7 @@ bb.a:
   %.in = sdiv i32 %.in.in, 4
   %i.a = mul nsw i32 %.in, 3                      ; 2 uses
   %i.b = icmp sgt i32 %3, 2
-  br i1 %i.b, label %.lr.ph.split.us.preheader, label %._crit_edge
+  br i1 %i.b, label %.lr.ph.split.us, label %._crit_edge
 
 .thread170.thread:                                ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 88
@@ -38,17 +38,13 @@ bb.a:
 .lr.ph.split.preheader:                           ; preds = %.thread170.thread
   %i.h = add nsw i32 %i.f, 3
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 88
-  %5 = zext nneg i32 %3 to i64
   br label %.lr.ph.split
 
-.lr.ph.split.us.preheader:                        ; preds = %.thread170
-  %6 = zext nneg i32 %3 to i64
-  br label %.lr.ph.split.us
-
-.lr.ph.split.us:                                  ; preds = %.lr.ph.split.us.preheader, %.lr.ph.split.us
-  %indvars.iv196.a = phi i64 [ 0, %.lr.ph.split.us.preheader ], [ %indvars.iv.next197.a, %.lr.ph.split.us ] ; 3 uses
-  %.4151179.us = phi ptr [ %1, %.lr.ph.split.us.preheader ], [ %i.ap, %.lr.ph.split.us ] ; 5 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %2, i64 %indvars.iv196.a ; 3 uses
+.lr.ph.split.us:                                  ; preds = %.thread170, %.lr.ph.split.us
+  %indvars.iv196 = phi i64 [ %i.aq, %.lr.ph.split.us ], [ 0, %.thread170 ] ; 3 uses
+  %indvars.iv196.a = phi i64 [ %indvars.iv.next197.a, %.lr.ph.split.us ], [ 0, %.thread170 ]
+  %.4151179.us = phi ptr [ %i.ap, %.lr.ph.split.us ], [ %1, %.thread170 ] ; 5 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %2, i64 %indvars.iv196 ; 3 uses
   %i.k = load i8, ptr %i.j, align 1, !tbaa !11    ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.j, i64 1
   %i.m = load i8, ptr %i.l, align 1, !tbaa !11
@@ -85,9 +81,11 @@ bb.a:
   %i.ao = load i8, ptr %i.an, align 1, !tbaa !11
   %i.ap = getelementptr inbounds nuw i8, ptr %.4151179.us, i64 4 ; 2 uses
   store i8 %i.ao, ptr %i.al, align 1, !tbaa !11
-  %indvars.iv.next197.a = add nuw nsw i64 %indvars.iv196.a, 3 ; 2 uses
-  %i.aq = add nuw nsw i64 %indvars.iv196.a, 5     ; 2 uses
-  %7 = icmp samesign ult i64 %i.aq, %6
+  %indvars.iv.next197.a = add i64 %indvars.iv196.a, 4 ; 2 uses
+  %i.aq = add nuw nsw i64 %indvars.iv196, 3       ; 2 uses
+  %5 = trunc i64 %indvars.iv196 to i32
+  %6 = add i32 %5, 5                              ; 2 uses
+  %7 = icmp slt i32 %6, %3
   br i1 %7, label %.lr.ph.split.us, label %._crit_edge.loopexit, !llvm.loop !12
 
 .lr.ph.split:                                     ; preds = %.lr.ph.split.preheader, %bb.d
@@ -154,23 +152,17 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %.lr.p
   %.5152 = phi ptr [ %i.cg, %bb.c ], [ %i.bx, %bb.b ], [ %i.bx, %.lr.ph.split ] ; 2 uses
   %.5 = phi i64 [ %i.ch, %bb.c ], [ %i.by, %bb.b ], [ %i.by, %.lr.ph.split ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 3 ; 2 uses
-  %8 = add nuw nsw i64 %indvars.iv, 5             ; 2 uses
-  %9 = icmp samesign ult i64 %8, %5
-  br i1 %9, label %.lr.ph.split, label %._crit_edge.loopexit188, !llvm.loop !12
+  %8 = trunc i64 %indvars.iv to i32
+  %9 = add i32 %8, 5                              ; 2 uses
+  %10 = icmp slt i32 %9, %3
+  br i1 %10, label %.lr.ph.split, label %._crit_edge.loopexit188, !llvm.loop !12
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph.split.us
-  %10 = add nsw i32 %3, -3
-  %11 = udiv i32 %10, 3
-  %12 = zext nneg i32 %11 to i64
-  %13 = shl nuw nsw i64 %12, 2
-  %14 = add nuw nsw i64 %13, 4
-  %i.ci = trunc nuw nsw i64 %i.aq to i32
-  %15 = trunc nuw nsw i64 %indvars.iv.next197.a to i32
+  %i.ci = trunc nuw i64 %i.aq to i32
   br label %._crit_edge
 
 ._crit_edge.loopexit188:                          ; preds = %bb.d
-  %16 = trunc nuw nsw i64 %8 to i32
-  %i.cj = trunc nuw nsw i64 %indvars.iv.next to i32
+  %i.cj = trunc nuw i64 %indvars.iv.next to i32
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.thread170.thread, %._crit_edge.loopexit188, %._crit_edge.loopexit, %.thread170
@@ -179,9 +171,9 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %.lr.p
   %i.cm = phi ptr [ @base64_std_bin2ascii_0, %.thread170 ], [ @base64_std_bin2ascii_0, %._crit_edge.loopexit ], [ %base64_std_bin2ascii_0.base64_srp_bin2ascii_0, %._crit_edge.loopexit188 ], [ %base64_std_bin2ascii_0.base64_srp_bin2ascii_0, %.thread170.thread ] ; 2 uses
   %i.cn = phi ptr [ @base64_std_bin2ascii_2, %.thread170 ], [ @base64_std_bin2ascii_2, %._crit_edge.loopexit ], [ %base64_std_bin2ascii_1.base64_srp_bin2ascii_1, %._crit_edge.loopexit188 ], [ %base64_std_bin2ascii_1.base64_srp_bin2ascii_1, %.thread170.thread ] ; 2 uses
   %.4151.lcssa = phi ptr [ %1, %.thread170 ], [ %i.ap, %._crit_edge.loopexit ], [ %.5152, %._crit_edge.loopexit188 ], [ %1, %.thread170.thread ] ; 13 uses
-  %.3144.lcssa = phi i32 [ 0, %.thread170 ], [ %15, %._crit_edge.loopexit ], [ %i.cj, %._crit_edge.loopexit188 ], [ 0, %.thread170.thread ] ; 4 uses
-  %.4.lcssa = phi i64 [ 0, %.thread170 ], [ %14, %._crit_edge.loopexit ], [ %.5, %._crit_edge.loopexit188 ], [ 0, %.thread170.thread ] ; 5 uses
-  %.lcssa = phi i32 [ 2, %.thread170 ], [ %i.ci, %._crit_edge.loopexit ], [ %16, %._crit_edge.loopexit188 ], [ 2, %.thread170.thread ]
+  %.3144.lcssa = phi i32 [ 0, %.thread170 ], [ %i.ci, %._crit_edge.loopexit ], [ %i.cj, %._crit_edge.loopexit188 ], [ 0, %.thread170.thread ] ; 4 uses
+  %.4.lcssa = phi i64 [ 0, %.thread170 ], [ %indvars.iv.next197.a, %._crit_edge.loopexit ], [ %.5, %._crit_edge.loopexit188 ], [ 0, %.thread170.thread ] ; 5 uses
+  %.lcssa = phi i32 [ 2, %.thread170 ], [ %6, %._crit_edge.loopexit ], [ %9, %._crit_edge.loopexit188 ], [ 2, %.thread170.thread ]
   %i.co = sub nsw i32 %3, %.3144.lcssa
   switch i32 %i.co, label %bb.m [
     i32 2, label %bb.i

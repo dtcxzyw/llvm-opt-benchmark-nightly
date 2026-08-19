@@ -204,8 +204,8 @@ bb.d:                                             ; preds = %_ZN4cvc58internal11
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.r, %bb.d
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.r ], [ 0, %bb.d ] ; 4 uses
-  %.027 = phi i1 [ %spec.select, %bb.r ], [ false, %bb.d ] ; 2 uses
+  %.027 = phi i1 [ false, %bb.d ], [ %spec.select, %bb.r ] ; 2 uses
+  %.026 = phi i32 [ 0, %bb.d ], [ %30, %bb.r ]    ; 4 uses
   %i.af = load ptr, ptr %12, align 8, !tbaa !578
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 8 ; 2 uses
   %i.ah = load i64, ptr %i.ag, align 8
@@ -224,7 +224,8 @@ bb.f:                                             ; preds = %bb.e
   %i.ar = sext i1 %i.an to i64
   %i.as = add nsw i64 %i.aq, %i.ar
   %i.at = and i64 %i.as, 4294967295
-  %i.au = icmp samesign ugt i64 %i.at, %indvars.iv
+  %23 = zext i32 %.026 to i64
+  %i.au = icmp samesign ugt i64 %i.at, %23
   br i1 %i.au, label %bb.j, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
@@ -256,13 +257,12 @@ bb.j:                                             ; preds = %bb.f
 
 bb.k:                                             ; preds = %bb.j
   %i.bg = icmp eq i32 %i.bf, 2
-  %23 = zext i1 %i.bg to i64
-  %spec.select.i.i = add nuw nsw i64 %indvars.iv, %23
+  %24 = zext i1 %i.bg to i32
+  %spec.select.i.i = add nsw i32 %.026, %24
   %i.bh = getelementptr inbounds nuw i8, ptr %i.ay, i64 24
-  %sext = shl nuw i64 %spec.select.i.i, 32
-  %24 = ashr exact i64 %sext, 29
-  %25 = getelementptr inbounds i8, ptr %i.bh, i64 %24
-  %i.bi = load ptr, ptr %25, align 8, !tbaa !20, !noalias !827
+  %25 = sext i32 %spec.select.i.i to i64
+  %26 = getelementptr inbounds [8 x i8], ptr %i.bh, i64 %25
+  %i.bi = load ptr, ptr %26, align 8, !tbaa !20, !noalias !827
   store ptr %i.bi, ptr %16, align 8, !tbaa !578, !alias.scope !827
   invoke void @_ZNK4cvc58internal6theory2eq14EqualityEngine17getRepresentativeENS0_12NodeTemplateILb0EEE(ptr dead_on_unwind nonnull writable sret(%"class.cvc5::internal::NodeTemplate.814") align 8 %15, ptr noundef nonnull align 8 dereferenceable(1784) %i.ax, ptr noundef nonnull align 8 %16)
           to label %bb.l unwind label %bb.t
@@ -401,20 +401,19 @@ _ZNSt6vectorIN4cvc58internal12NodeTemplateILb0EEESaIS3_EE9push_backEOS3_.exit: ;
 
 bb.q:                                             ; preds = %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb0EEESaIS3_EE9push_backEOS3_.exit
   %i.dc = icmp eq i32 %i.db, 2
-  %26 = zext i1 %i.dc to i64
-  %spec.select.i.i77 = add nuw nsw i64 %indvars.iv, %26
+  %27 = zext i1 %i.dc to i32
+  %spec.select.i.i77 = add nsw i32 %.026, %27
   %i.dd = getelementptr inbounds nuw i8, ptr %i.cu, i64 24
-  %sext220 = shl nuw i64 %spec.select.i.i77, 32
-  %27 = ashr exact i64 %sext220, 29
-  %28 = getelementptr inbounds i8, ptr %i.dd, i64 %27
-  %i.de = load ptr, ptr %28, align 8, !tbaa !20, !noalias !834
+  %28 = sext i32 %spec.select.i.i77 to i64
+  %29 = getelementptr inbounds [8 x i8], ptr %i.dd, i64 %28
+  %i.de = load ptr, ptr %29, align 8, !tbaa !20, !noalias !834
   store ptr %i.de, ptr %17, align 8, !tbaa !578, !alias.scope !834
   %i.df = invoke noundef zeroext i1 @_ZNK4cvc58internal6theory2eq14EqualityEngine13isTriggerTermENS0_12NodeTemplateILb0EEENS1_8TheoryIdE(ptr noundef nonnull align 8 dereferenceable(1784) %i.ct, ptr noundef nonnull align 8 %17, i32 noundef 12)
           to label %bb.r unwind label %bb.v
 
 bb.r:                                             ; preds = %bb.q
   %spec.select = select i1 %i.df, i1 true, i1 %.027
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %30 = add i32 %.026, 1
   br label %bb.e, !llvm.loop !837
 
 bb.s:                                             ; preds = %bb.j

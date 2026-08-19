@@ -204,33 +204,30 @@ bb.f:                                             ; preds = %bb.e
   %i.aj = icmp sgt i32 %i.ai, 0                   ; 2 uses
   %i.ak = icmp sgt i32 %i.ad, 0                   ; 2 uses
   %or.cond.i.i = select i1 %i.aj, i1 %i.ak, i1 false
-  br i1 %or.cond.i.i, label %.preheader116.i.preheader.i, label %._crit_edge119.split.i.i
+  br i1 %or.cond.i.i, label %.preheader116.i.i, label %._crit_edge119.split.i.i
 
-.preheader116.i.preheader.i:                      ; preds = %bb.f
-  %2 = zext nneg i32 %i.ad to i64
-  %3 = zext nneg i32 %i.ai to i64
-  br label %.preheader116.i.i
-
-.preheader116.i.i:                                ; preds = %._crit_edge.i.i.a, %.preheader116.i.preheader.i
-  %indvars.iv140.i = phi i64 [ 0, %.preheader116.i.preheader.i ], [ %indvars.iv.next141.i, %._crit_edge.i.i.a ] ; 2 uses
-  %4 = lshr exact i64 %indvars.iv140.i, 6
-  %i.al = getelementptr [14720 x i8], ptr %i.a, i64 %4
+.preheader116.i.i:                                ; preds = %bb.f, %._crit_edge.i.i.a
+  %.0101118.us.i.i = phi i32 [ %8, %._crit_edge.i.i.a ], [ 0, %bb.f ] ; 2 uses
+  %2 = ashr exact i32 %.0101118.us.i.i, 6
+  %3 = sext i32 %2 to i64
+  %i.al = getelementptr [14720 x i8], ptr %i.a, i64 %3
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.g, %.preheader116.i.i
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.g ], [ 0, %.preheader116.i.i ] ; 2 uses
-  %5 = lshr exact i64 %indvars.iv.i, 6
+  %.0103117.us.i.i = phi i32 [ 0, %.preheader116.i.i ], [ %6, %bb.g ] ; 2 uses
+  %4 = ashr exact i32 %.0103117.us.i.i, 6
+  %5 = sext i32 %4 to i64
   %i.am = getelementptr [184 x i8], ptr %i.al, i64 %5
   %i.an = getelementptr i8, ptr %i.am, i64 86832
   store i8 0, ptr %i.an, align 8
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 64 ; 2 uses
-  %6 = icmp samesign ult i64 %indvars.iv.next.i, %2
-  br i1 %6, label %bb.g, label %._crit_edge.i.i.a, !llvm.loop !60
+  %6 = add i32 %.0103117.us.i.i, 64               ; 2 uses
+  %7 = icmp slt i32 %6, %i.ad
+  br i1 %7, label %bb.g, label %._crit_edge.i.i.a, !llvm.loop !60
 
 ._crit_edge.i.i.a:                                ; preds = %bb.g
-  %indvars.iv.next141.i = add nuw nsw i64 %indvars.iv140.i, 64 ; 2 uses
-  %7 = icmp samesign ult i64 %indvars.iv.next141.i, %3
-  br i1 %7, label %.preheader116.i.i, label %._crit_edge119.split.i.i, !llvm.loop !61
+  %8 = add i32 %.0101118.us.i.i, 64               ; 2 uses
+  %9 = icmp slt i32 %8, %i.ai
+  br i1 %9, label %.preheader116.i.i, label %._crit_edge119.split.i.i, !llvm.loop !61
 
 ._crit_edge119.split.i.i:                         ; preds = %._crit_edge.i.i.a, %bb.f
   %i.ao = load i64, ptr %1, align 8               ; 2 uses

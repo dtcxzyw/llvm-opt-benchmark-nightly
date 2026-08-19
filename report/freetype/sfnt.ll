@@ -204,15 +204,12 @@ bb.b:                                             ; preds = %bb.a
   %i.d = trunc i64 %i.b to i32
   %i.e = add i32 %i.d, -15                        ; 2 uses
   %.not77 = icmp eq i32 %i.e, 0
-  br i1 %.not77, label %.loopexit, label %.lr.ph.preheader
+  br i1 %.not77, label %.loopexit, label %.lr.ph
 
-.lr.ph.preheader:                                 ; preds = %bb.b
-  %3 = zext i32 %i.e to i64
-  br label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 2 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %2, i64 %indvars.iv ; 2 uses
+.lr.ph:                                           ; preds = %bb.b, %.lr.ph
+  %.07174 = phi i32 [ %4, %.lr.ph ], [ 0, %bb.b ] ; 2 uses
+  %3 = zext i32 %.07174 to i64
+  %i.f = getelementptr inbounds nuw i8, ptr %2, i64 %3 ; 2 uses
   %.0.copyload = load <8 x i16>, ptr %i.f, align 1 ; 2 uses
   %i.g = and <8 x i16> %.0.copyload, splat (i16 255)
   %i.h = lshr <8 x i16> %.0.copyload, splat (i16 8) ; 2 uses
@@ -231,12 +228,11 @@ bb.b:                                             ; preds = %bb.a
   %i.u = and <8 x i16> %i.t, splat (i16 -256)
   %i.v = or disjoint <8 x i16> %i.r, %i.u
   store <8 x i16> %i.v, ptr %i.f, align 1
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 16 ; 3 uses
-  %i.w = icmp samesign ult i64 %indvars.iv.next, %3
+  %4 = add i32 %.07174, 16                        ; 3 uses
+  %i.w = icmp ult i32 %4, %i.e
   br i1 %i.w, label %.lr.ph, label %.loopexit.loopexit, !llvm.loop !740
 
 .loopexit.loopexit:                               ; preds = %.lr.ph
-  %4 = trunc nuw i64 %indvars.iv.next to i32
   %.pre = load i64, ptr %i.a, align 8, !tbaa !738
   br label %.loopexit
 

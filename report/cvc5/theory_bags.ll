@@ -201,8 +201,8 @@ bb.ay:                                            ; preds = %_ZN4cvc58internal8T
   br label %bb.az
 
 bb.az:                                            ; preds = %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit, %bb.ay
-  %indvars.iv = phi i64 [ %indvars.iv.next, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit ], [ 0, %bb.ay ] ; 4 uses
-  %.021 = phi i1 [ %spec.select, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit ], [ false, %bb.ay ] ; 2 uses
+  %.021 = phi i1 [ false, %bb.ay ], [ %spec.select, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit ] ; 2 uses
+  %.0 = phi i32 [ 0, %bb.ay ], [ %21, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit ] ; 4 uses
   %i.ea = load ptr, ptr %6, align 8, !tbaa !268
   %i.eb = getelementptr inbounds nuw i8, ptr %i.ea, i64 8 ; 2 uses
   %i.ec = load i64, ptr %i.eb, align 8
@@ -221,7 +221,8 @@ bb.ba:                                            ; preds = %bb.az
   %i.em = sext i1 %i.ei to i64
   %i.en = add nsw i64 %i.el, %i.em
   %i.eo = and i64 %i.en, 4294967295
-  %i.ep = icmp samesign ugt i64 %i.eo, %indvars.iv
+  %17 = zext i32 %.0 to i64
+  %i.ep = icmp samesign ugt i64 %i.eo, %17
   br i1 %i.ep, label %bb.bd, label %bb.bb
 
 bb.bb:                                            ; preds = %bb.ba
@@ -252,13 +253,11 @@ bb.bd:                                            ; preds = %bb.ba
 
 bb.be:                                            ; preds = %bb.bd
   %i.fa = icmp eq i32 %i.ez, 2
-  %17 = zext i1 %i.fa to i64
-  %18 = trunc nuw i64 %indvars.iv to i32
-  %spec.select.i.i113 = add nuw nsw i64 %indvars.iv, %17
+  %18 = zext i1 %i.fa to i32
+  %spec.select.i.i113 = add nsw i32 %.0, %18
   %i.fb = getelementptr inbounds nuw i8, ptr %i.es, i64 24
-  %sext = shl nuw i64 %spec.select.i.i113, 32
-  %19 = ashr exact i64 %sext, 29
-  %20 = getelementptr inbounds i8, ptr %i.fb, i64 %19
+  %19 = sext i32 %spec.select.i.i113 to i64
+  %20 = getelementptr inbounds [8 x i8], ptr %i.fb, i64 %19
   %i.fc = load ptr, ptr %20, align 8, !tbaa !291, !noalias !383
   store ptr %i.fc, ptr %15, align 8, !tbaa !268, !alias.scope !383
   invoke void @_ZNK4cvc58internal6theory2eq14EqualityEngine17getRepresentativeENS0_12NodeTemplateILb0EEE(ptr dead_on_unwind nonnull writable sret(%"class.cvc5::internal::NodeTemplate.549") align 8 %14, ptr noundef nonnull align 8 dereferenceable(1784) %i.er, ptr noundef nonnull align 8 %15)
@@ -413,7 +412,7 @@ bb.bm:                                            ; preds = %bb.bl
           to label %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKNS1_ILb0EEE.exit unwind label %bb.bc
 
 _ZN4cvc58internal12NodeTemplateILb1EEC2ERKNS1_ILb0EEE.exit: ; preds = %bb.bl, %bb.bk, %bb.bm
-  %i.ha = invoke noundef zeroext i1 @_ZN4cvc58internal6theory4bags10TheoryBags9isCareArgENS0_12NodeTemplateILb1EEEj(ptr noundef nonnull align 8 dereferenceable(2032) %0, ptr noundef nonnull align 8 %16, i32 noundef %18)
+  %i.ha = invoke noundef zeroext i1 @_ZN4cvc58internal6theory4bags10TheoryBags9isCareArgENS0_12NodeTemplateILb1EEEj(ptr noundef nonnull align 8 dereferenceable(2032) %0, ptr noundef nonnull align 8 %16, i32 noundef %.0)
           to label %bb.bn unwind label %bb.bu
 
 bb.bn:                                            ; preds = %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKNS1_ILb0EEE.exit
@@ -444,7 +443,7 @@ bb.bq:                                            ; preds = %bb.bp
 
 _ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit:   ; preds = %bb.bn, %bb.bo, %bb.bp
   %spec.select = select i1 %i.ha, i1 true, i1 %.021
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %21 = add i32 %.0, 1
   br label %bb.az, !llvm.loop !392
 
 bb.br:                                            ; preds = %bb.bd

@@ -203,24 +203,21 @@ begin_hunk_0_@eras_dec_rs:bb.a
   store i32 %i.ya, ptr %i.yb, align 16
   %i.yc = add i32 %2, 1                           ; 2 uses
   %i.yd = icmp slt i32 %i.yc, 49
-  br i1 %i.yd, label %.preheader309.lr.ph, label %.preheader304.preheader
+  br i1 %i.yd, label %.preheader309, label %.preheader309.lr.ph
 
-.preheader304.preheader:                          ; preds = %.loopexit306, %.loopexit312
+.preheader309.lr.ph:                              ; preds = %.loopexit306, %.loopexit312
   br label %.preheader304
 
-.preheader309.lr.ph:                              ; preds = %.loopexit312
-  %3 = sext i32 %i.yc to i64
-  br label %.preheader309
-
-.preheader309:                                    ; preds = %.preheader309.lr.ph, %.loopexit306
-  %indvars.iv439 = phi i64 [ %3, %.preheader309.lr.ph ], [ %indvars.iv.next440, %.loopexit306 ] ; 6 uses
-  %.0196348 = phi i32 [ %2, %.preheader309.lr.ph ], [ %5, %.loopexit306 ]
-  %.0208347 = phi i32 [ %2, %.preheader309.lr.ph ], [ %.2210, %.loopexit306 ] ; 4 uses
-  %i.ye = icmp sgt i64 %indvars.iv439, 0
+.preheader309:                                    ; preds = %.loopexit312, %.loopexit306
+  %3 = phi i32 [ %5, %.loopexit306 ], [ %i.yc, %.loopexit312 ] ; 6 uses
+  %.0196348 = phi i32 [ %3, %.loopexit306 ], [ %2, %.loopexit312 ]
+  %.0208347 = phi i32 [ %.2210, %.loopexit306 ], [ %2, %.loopexit312 ] ; 4 uses
+  %i.ye = icmp sgt i32 %3, 0
   br i1 %i.ye, label %.lr.ph341.preheader, label %._crit_edge
 
 .lr.ph341.preheader:                              ; preds = %.preheader309
-  %wide.trip.count420 = and i64 %indvars.iv439, 4294967295
+  %4 = zext nneg i32 %3 to i64
+  %wide.trip.count420 = zext nneg i32 %3 to i64
   br label %.lr.ph341
 
 .lr.ph341:                                        ; preds = %.lr.ph341.preheader, %bb.k
@@ -232,7 +229,7 @@ begin_hunk_0_@eras_dec_rs:bb.a
   br i1 %.not242, label %bb.k, label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph341
-  %i.yh = sub nsw i64 %indvars.iv439, %indvars.iv417
+  %i.yh = sub nsw i64 %4, %indvars.iv417
   %i.yi = getelementptr [4 x i8], ptr %i.b, i64 %i.yh
   %i.yj = load i32, ptr %i.yi, align 4            ; 2 uses
   %.not243 = icmp eq i32 %i.yj, 255
@@ -375,8 +372,7 @@ modnn.exit269:                                    ; preds = %.lr.ph.i267, %bb.q,
 
 .loopexit308.loopexit:                            ; preds = %modnn.exit269
   %i.aam = sub i32 %2, %.0208347
-  %4 = trunc nsw i64 %indvars.iv439 to i32
-  %i.aan = add i32 %i.aam, %4
+  %i.aan = add i32 %i.aam, %3
   br label %.loopexit308
 
 .loopexit308:                                     ; preds = %.loopexit308.loopexit, %.preheader307.preheader
@@ -386,11 +382,9 @@ modnn.exit269:                                    ; preds = %.lr.ph.i267, %bb.q,
 
 .loopexit306:                                     ; preds = %.loopexit308, %.preheader305.preheader
   %.2210 = phi i32 [ %.0208347, %.preheader305.preheader ], [ %.1209, %.loopexit308 ]
-  %indvars.iv.next440 = add nsw i64 %indvars.iv439, 1 ; 2 uses
-  %5 = trunc nsw i64 %indvars.iv439 to i32
-  %6 = and i64 %indvars.iv.next440, 4294967295
-  %exitcond442.not = icmp eq i64 %6, 49
-  br i1 %exitcond442.not, label %.preheader304.preheader, label %.preheader309, !llvm.loop !20
+  %5 = add nsw i32 %3, 1                          ; 2 uses
+  %exitcond442.not = icmp eq i32 %5, 49
+  br i1 %exitcond442.not, label %.preheader309.lr.ph, label %.preheader309, !llvm.loop !20
 
 .preheader303:                                    ; preds = %.preheader304
   %i.aao = getelementptr inbounds nuw i8, ptr %i.g, i64 4
@@ -399,9 +393,9 @@ modnn.exit269:                                    ; preds = %.lr.ph.i267, %bb.q,
   %i.aap = zext i32 %spec.select to i64           ; 5 uses
   br label %.preheader301
 
-.preheader304:                                    ; preds = %.preheader304.1, %.preheader304.preheader
-  %indvars.iv443 = phi i64 [ 0, %.preheader304.preheader ], [ %indvars.iv.next444.1, %.preheader304.1 ] ; 5 uses
-  %.0211349 = phi i32 [ 0, %.preheader304.preheader ], [ %spec.select.1, %.preheader304.1 ]
+.preheader304:                                    ; preds = %.preheader304.1, %.preheader309.lr.ph
+  %indvars.iv443 = phi i64 [ 0, %.preheader309.lr.ph ], [ %indvars.iv.next444.1, %.preheader304.1 ] ; 5 uses
+  %.0211349 = phi i32 [ 0, %.preheader309.lr.ph ], [ %spec.select.1, %.preheader304.1 ]
   %i.aaq = getelementptr [4 x i8], ptr %i.a, i64 %indvars.iv443 ; 2 uses
   %i.aar = load i32, ptr %i.aaq, align 8
   %i.aas = sext i32 %i.aar to i64

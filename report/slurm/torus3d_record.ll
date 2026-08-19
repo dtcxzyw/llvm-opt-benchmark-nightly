@@ -201,13 +201,14 @@ bb.r:                                             ; preds = %bb.s
   br i1 %.not110.i, label %bb.an, label %bb.t
 
 bb.s:                                             ; preds = %bb.s, %bb.q
-  %indvars.iv.i.a = phi i64 [ 0, %bb.q ], [ %indvars.iv.next.i, %bb.s ] ; 2 uses
+  %indvars.iv.i.a = phi i64 [ 0, %bb.q ], [ %2, %bb.s ]
+  %.081134.i = phi i32 [ 0, %bb.q ], [ %1, %bb.s ]
   %i.bu = load ptr, ptr %i.bn, align 8
   %i.bv = getelementptr inbounds nuw [4 x i8], ptr %i.bu, i64 %indvars.iv.i.a
   store i32 -2, ptr %i.bv, align 4
-  %indvars.iv.next.i = add i64 %indvars.iv.i.a, 1 ; 2 uses
-  %1 = and i64 %indvars.iv.next.i, 4294967295
-  %i.bw = icmp samesign ugt i64 %i.ax, %1
+  %1 = add i32 %.081134.i, 1                      ; 2 uses
+  %2 = zext i32 %1 to i64                         ; 2 uses
+  %i.bw = icmp samesign ugt i64 %i.ax, %2
   br i1 %i.bw, label %bb.s, label %bb.r, !llvm.loop !8
 
 bb.t:                                             ; preds = %bb.r
@@ -610,15 +611,15 @@ bb.c:                                             ; preds = %._crit_edge, %bb.b
   br i1 %.not66.i.a, label %._crit_edge62.i, label %.preheader35.i
 
 .preheader35.i:                                   ; preds = %.preheader35.lr.ph.i, %._crit_edge54.i
-  %indvars.iv39 = phi i64 [ %indvars.iv.next40, %._crit_edge54.i ], [ 1, %.preheader35.lr.ph.i ] ; 2 uses
-  %i.am = phi i16 [ %i.aw, %._crit_edge54.i ], [ %i.ah, %.preheader35.lr.ph.i ] ; 2 uses
-  %i.an = phi i16 [ %i.ax, %._crit_edge54.i ], [ %i.al, %.preheader35.lr.ph.i ] ; 3 uses
-  %2 = phi i16 [ %i.ay, %._crit_edge54.i ], [ %i.al, %.preheader35.lr.ph.i ] ; 2 uses
-  %indvars.iv102.i = phi i64 [ %.pre109.i, %._crit_edge54.i ], [ 0, %.preheader35.lr.ph.i ] ; 8 uses
+  %2 = phi i16 [ %i.aw, %._crit_edge54.i ], [ %i.ah, %.preheader35.lr.ph.i ] ; 2 uses
+  %i.am = phi i16 [ %i.ax, %._crit_edge54.i ], [ %i.al, %.preheader35.lr.ph.i ] ; 3 uses
+  %i.an = phi i16 [ %i.ay, %._crit_edge54.i ], [ %i.al, %.preheader35.lr.ph.i ] ; 2 uses
+  %indvars.iv108.i = phi i64 [ %.pre109.i, %._crit_edge54.i ], [ 0, %.preheader35.lr.ph.i ] ; 8 uses
+  %indvars.iv102.i = phi i64 [ %indvars.iv.next40, %._crit_edge54.i ], [ 1, %.preheader35.lr.ph.i ] ; 2 uses
   %.02859.i = phi i32 [ %.1.lcssa.i, %._crit_edge54.i ], [ 8, %.preheader35.lr.ph.i ] ; 3 uses
   %.02958.i = phi i32 [ %.130.lcssa.i, %._crit_edge54.i ], [ 0, %.preheader35.lr.ph.i ] ; 3 uses
-  %.not67.i.a = icmp eq i16 %2, 0
-  %.pre109.i = add nuw nsw i64 %indvars.iv102.i, 1 ; 4 uses
+  %.not67.i.a = icmp eq i16 %i.an, 0
+  %.pre109.i = add nuw nsw i64 %indvars.iv108.i, 1 ; 4 uses
   br i1 %.not67.i.a, label %._crit_edge54.i, label %.preheader.lr.ph.i
 
 .preheader.lr.ph.i:                               ; preds = %.preheader35.i
@@ -628,7 +629,7 @@ bb.c:                                             ; preds = %._crit_edge, %bb.b
 
 .preheader.preheader.i:                           ; preds = %.preheader.lr.ph.i
   %i.ap = trunc nuw i64 %.pre109.i to i16         ; 3 uses
-  %i.aq = trunc nuw i64 %indvars.iv102.i to i16   ; 2 uses
+  %i.aq = trunc nuw i64 %indvars.iv108.i to i16   ; 2 uses
   br label %.preheader.i
 
 ._crit_edge62.i:                                  ; preds = %._crit_edge54.i, %.preheader35.lr.ph.i, %bb.c
@@ -637,18 +638,17 @@ bb.c:                                             ; preds = %._crit_edge, %bb.b
   br i1 %.not.i, label %_rebuild_regions.exit, label %bb.s
 
 .preheader.i:                                     ; preds = %._crit_edge.i, %.preheader.preheader.i
-  %i.ar = phi i16 [ %i.an, %.preheader.preheader.i ], [ %i.bb, %._crit_edge.i ]
+  %i.ar = phi i16 [ %i.am, %.preheader.preheader.i ], [ %i.bb, %._crit_edge.i ]
   %i.as = phi i16 [ %i.ao, %.preheader.preheader.i ], [ %i.bc, %._crit_edge.i ] ; 2 uses
-  %indvars.iv97.i = phi i64 [ 0, %.preheader.preheader.i ], [ %.pre110.i, %._crit_edge.i ] ; 10 uses
-  %indvars.iv86.i.a = phi i64 [ 1, %.preheader.preheader.i ], [ %indvars.iv.next87.i, %._crit_edge.i ] ; 2 uses
+  %indvars.iv86.i.a = phi i64 [ 0, %.preheader.preheader.i ], [ %.pre110.i, %._crit_edge.i ] ; 10 uses
   %.152.i = phi i32 [ %.02859.i, %.preheader.preheader.i ], [ %.2.lcssa.i, %._crit_edge.i ] ; 2 uses
   %.13051.i = phi i32 [ %.02958.i, %.preheader.preheader.i ], [ %.231.lcssa.i, %._crit_edge.i ] ; 2 uses
   %.not69.i = icmp eq i16 %i.as, 0
-  %.pre110.i = add nuw nsw i64 %indvars.iv97.i, 1 ; 4 uses
+  %.pre110.i = add nuw nsw i64 %indvars.iv86.i.a, 1 ; 5 uses
   br i1 %.not69.i, label %._crit_edge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.preheader.i
-  %i.at = trunc nuw i64 %indvars.iv97.i to i16    ; 3 uses
+  %i.at = trunc nuw i64 %indvars.iv86.i.a to i16  ; 3 uses
   %i.au = add i16 %i.at, 2
   %i.av = trunc nuw i64 %.pre110.i to i16
   br label %bb.d
@@ -658,14 +658,14 @@ bb.c:                                             ; preds = %._crit_edge, %bb.b
   br label %._crit_edge54.i
 
 ._crit_edge54.i:                                  ; preds = %._crit_edge54.loopexit72.i, %.preheader.lr.ph.i, %.preheader35.i
-  %i.aw = phi i16 [ %i.am, %.preheader.lr.ph.i ], [ %.pre108.i, %._crit_edge54.loopexit72.i ], [ %i.am, %.preheader35.i ] ; 2 uses
-  %i.ax = phi i16 [ %i.an, %.preheader.lr.ph.i ], [ %i.bb, %._crit_edge54.loopexit72.i ], [ %i.an, %.preheader35.i ]
-  %i.ay = phi i16 [ %2, %.preheader.lr.ph.i ], [ %i.bb, %._crit_edge54.loopexit72.i ], [ 0, %.preheader35.i ]
+  %i.aw = phi i16 [ %2, %.preheader.lr.ph.i ], [ %.pre108.i, %._crit_edge54.loopexit72.i ], [ %2, %.preheader35.i ] ; 2 uses
+  %i.ax = phi i16 [ %i.am, %.preheader.lr.ph.i ], [ %i.bb, %._crit_edge54.loopexit72.i ], [ %i.am, %.preheader35.i ]
+  %i.ay = phi i16 [ %i.an, %.preheader.lr.ph.i ], [ %i.bb, %._crit_edge54.loopexit72.i ], [ 0, %.preheader35.i ]
   %.130.lcssa.i = phi i32 [ %.02958.i, %.preheader.lr.ph.i ], [ %.231.lcssa.i, %._crit_edge54.loopexit72.i ], [ %.02958.i, %.preheader35.i ] ; 2 uses
   %.1.lcssa.i = phi i32 [ %.02859.i, %.preheader.lr.ph.i ], [ %.2.lcssa.i, %._crit_edge54.loopexit72.i ], [ %.02859.i, %.preheader35.i ]
   %i.az = zext i16 %i.aw to i64
   %i.ba = icmp samesign ult i64 %.pre109.i, %i.az
-  %indvars.iv.next40 = add nuw nsw i64 %indvars.iv39, 1
+  %indvars.iv.next40 = add nuw nsw i64 %indvars.iv102.i, 1
   br i1 %i.ba, label %.preheader35.i, label %._crit_edge62.i, !llvm.loop !36
 
 ._crit_edge.loopexit.i:                           ; preds = %bb.r
@@ -679,7 +679,6 @@ bb.c:                                             ; preds = %._crit_edge, %bb.b
   %.2.lcssa.i = phi i32 [ %.3.i, %._crit_edge.loopexit.i ], [ %.152.i, %.preheader.i ] ; 2 uses
   %i.bd = zext i16 %i.bb to i64
   %i.be = icmp samesign ult i64 %.pre110.i, %i.bd
-  %indvars.iv.next87.i = add nuw nsw i64 %indvars.iv86.i.a, 1
   br i1 %i.be, label %.preheader.i, label %._crit_edge54.loopexit72.i, !llvm.loop !37
 
 bb.d:                                             ; preds = %bb.r, %.lr.ph.i
@@ -690,8 +689,8 @@ bb.d:                                             ; preds = %bb.r, %.lr.ph.i
   %i.bg = zext i16 %i.bf to i64
   %i.bh = load i16, ptr %i.ai, align 2
   %i.bi = zext i16 %i.bh to i64
-  %i.bj = mul nuw nsw i64 %indvars.iv102.i, %i.bi
-  %reass.add.i.i = add nuw nsw i64 %i.bj, %indvars.iv97.i
+  %i.bj = mul nuw nsw i64 %indvars.iv108.i, %i.bi
+  %reass.add.i.i = add nuw nsw i64 %i.bj, %indvars.iv86.i.a
   %reass.mul.i.i = mul nuw nsw i64 %reass.add.i.i, %i.bg
   %i.bk = add nuw nsw i64 %reass.mul.i.i, %indvars.iv.i
   %i.bl = load ptr, ptr %i.ak, align 8
@@ -717,8 +716,8 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %.preheader
   %i.bu = zext i16 %.pre284.i.i to i64
-  %i.bv = mul nuw nsw i64 %indvars.iv102.i, %i.bu
-  %reass.add.i.i.i = add nuw nsw i64 %i.bv, %indvars.iv97.i
+  %i.bv = mul nuw nsw i64 %indvars.iv108.i, %i.bu
+  %reass.add.i.i.i = add nuw nsw i64 %i.bv, %indvars.iv86.i.a
   %reass.mul.i.i.i = mul nuw nsw i64 %reass.add.i.i.i, %i.bs
   %i.bw = add nuw nsw i64 %reass.mul.i.i.i, %indvars.iv.next82.i
   %i.bx = load ptr, ptr %i.ak, align 8
@@ -749,7 +748,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not173186.i.i.not, label %.preheader179.lr.ph.split.i.i, label %.preheader179.us.i.i
 
 .preheader179.us.i.i:                             ; preds = %.preheader179.lr.ph.i.i, %..critedge.loopexit_crit_edge.us.i.i
-  %indvars.iv88.i = phi i64 [ %indvars.iv.next89.i, %..critedge.loopexit_crit_edge.us.i.i ], [ %indvars.iv86.i.a, %.preheader179.lr.ph.i.i ] ; 3 uses
+  %indvars.iv88.i = phi i64 [ %indvars.iv.next89.i, %..critedge.loopexit_crit_edge.us.i.i ], [ %.pre110.i, %.preheader179.lr.ph.i.i ] ; 3 uses
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.j
@@ -763,7 +762,7 @@ bb.i:                                             ; preds = %bb.h, %.preheader17
   %i.ch = zext i16 %i.cg to i64
   %i.ci = load i16, ptr %i.ai, align 2
   %i.cj = zext i16 %i.ci to i64
-  %i.ck = mul nuw nsw i64 %indvars.iv102.i, %i.cj
+  %i.ck = mul nuw nsw i64 %indvars.iv108.i, %i.cj
   %reass.add.i154.us.i.i = add nuw nsw i64 %i.ck, %indvars.iv88.i
   %reass.mul.i155.us.i.i = mul nuw nsw i64 %reass.add.i154.us.i.i, %i.ch
   %i.cl = add nuw nsw i64 %reass.mul.i155.us.i.i, %indvars.iv.i.i
@@ -802,7 +801,7 @@ bb.j:                                             ; preds = %bb.i
   %.0119184.i.i = phi i16 [ %umax.i.i, %.preheader179.lr.ph.split.i.i ], [ %i.av, %.thread.i.i ], [ %i.cv, %.thread167.i.loopexit71.i ], [ %i.cw, %.thread167.i.loopexit.i ]
   %.0119184.fr.i.i = freeze i16 %.0119184.i.i     ; 2 uses
   %i.cx = zext i16 %.0119184.fr.i.i to i64        ; 6 uses
-  %i.cy = icmp samesign ult i64 %indvars.iv97.i, %i.cx
+  %i.cy = icmp samesign ult i64 %indvars.iv86.i.a, %i.cx
   br i1 %i.cy, label %.thread167.split.us.i.i, label %.thread167.split.i.i
 
 .thread167.split.us.i.i:                          ; preds = %.thread167.i.i
@@ -860,11 +859,11 @@ bb.m:                                             ; preds = %bb.l
   br i1 %exitcond.not.i, label %.thread167.split.us.split.i.loopexit.i, label %.preheader177.us206.i.i, !llvm.loop !39
 
 .preheader177.us206.i.i:                          ; preds = %.preheader178.us.i.i, %.thread170.us.i.i
-  %indvars.iv250.i.i = phi i64 [ %indvars.iv97.i, %.preheader178.us.i.i ], [ %indvars.iv.next251.i.i, %.thread170.us.i.i ] ; 2 uses
+  %indvars.iv250.i.i = phi i64 [ %indvars.iv86.i.a, %.preheader178.us.i.i ], [ %indvars.iv.next251.i.i, %.thread170.us.i.i ] ; 2 uses
   br label %bb.l
 
 .preheader178.us.i.i:                             ; preds = %.thread167.split.us.split.preheader.i.i, %.thread167.split.us.split.i.loopexit.i
-  %indvars.iv41 = phi i64 [ %indvars.iv.next42, %.thread167.split.us.split.i.loopexit.i ], [ %indvars.iv39, %.thread167.split.us.split.preheader.i.i ] ; 3 uses
+  %indvars.iv41 = phi i64 [ %indvars.iv.next42, %.thread167.split.us.split.i.loopexit.i ], [ %indvars.iv102.i, %.thread167.split.us.split.preheader.i.i ] ; 3 uses
   br label %.preheader177.us206.i.i
 
 .thread167.split.i.i:                             ; preds = %.thread167.i.i
@@ -876,25 +875,25 @@ bb.m:                                             ; preds = %bb.l
   %i.dt = trunc nuw i64 %indvars.iv.next42 to i16
   br label %.split.us.i.i
 
-.split.us.i.i.loopexit:                           ; preds = %bb.l, %bb.m
+.split.us.i.i.loopexit:                           ; preds = %bb.m, %bb.l
   %i.du = trunc nuw i64 %indvars.iv41 to i16
   br label %.split.us.i.i
 
 .split.us.i.i:                                    ; preds = %.split.us.i.i.loopexit, %.split.us.i.i.loopexit29, %.thread167.split.i.i, %.thread167.split.us.split.us.i.i, %.thread167.split.us.split.preheader.i.i
   %.us-phi210.i.i = phi i16 [ %spec.select.i.i, %.thread167.split.us.split.us.i.i ], [ %umax243.i.i, %.thread167.split.i.i ], [ %i.ap, %.thread167.split.us.split.preheader.i.i ], [ %i.dt, %.split.us.i.i.loopexit29 ], [ %i.du, %.split.us.i.i.loopexit ] ; 2 uses
   %i.dv = zext i16 %.us-phi210.i.i to i64         ; 3 uses
-  %i.dw = icmp samesign ult i64 %indvars.iv102.i, %i.dv ; 2 uses
+  %i.dw = icmp samesign ult i64 %indvars.iv108.i, %i.dv ; 2 uses
   br i1 %i.dw, label %.preheader176.lr.ph.i.i, label %._crit_edge219.split.i.i
 
 .preheader176.lr.ph.i.i:                          ; preds = %.split.us.i.i
-  %i.dx = icmp samesign uge i64 %indvars.iv97.i, %i.cx
+  %i.dx = icmp samesign uge i64 %indvars.iv86.i.a, %i.cx
   %i.dy = and i64 %indvars.iv.next82.i, 65535
   %i.dz = icmp samesign uge i64 %indvars.iv.i, %i.dy
   %brmerge.i.i = or i1 %i.dz, %i.dx
   br i1 %brmerge.i.i, label %._crit_edge219.split.i.i, label %.preheader176.i.i
 
 .preheader176.i.i:                                ; preds = %.preheader176.lr.ph.i.i, %._crit_edge217.i.i
-  %indvars.iv263.i.i = phi i64 [ %indvars.iv.next264.i.i, %._crit_edge217.i.i ], [ %indvars.iv102.i, %.preheader176.lr.ph.i.i ] ; 2 uses
+  %indvars.iv263.i.i = phi i64 [ %indvars.iv.next264.i.i, %._crit_edge217.i.i ], [ %indvars.iv108.i, %.preheader176.lr.ph.i.i ] ; 2 uses
   br label %.preheader175.i.i
 
 ._crit_edge219.split.i.i:                         ; preds = %._crit_edge217.i.i, %.preheader176.lr.ph.i.i, %.split.us.i.i
@@ -902,7 +901,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %.not147.i.i, label %bb.p, label %bb.o
 
 .preheader175.i.i:                                ; preds = %._crit_edge.i.i, %.preheader176.i.i
-  %indvars.iv258.i.i = phi i64 [ %indvars.iv97.i, %.preheader176.i.i ], [ %indvars.iv.next259.i.i, %._crit_edge.i.i ] ; 2 uses
+  %indvars.iv258.i.i = phi i64 [ %indvars.iv.next259.i.i, %._crit_edge.i.i ], [ %indvars.iv86.i.a, %.preheader176.i.i ] ; 2 uses
   br label %bb.n
 
 ._crit_edge217.i.i:                               ; preds = %._crit_edge.i.i
@@ -963,18 +962,18 @@ bb.p:                                             ; preds = %bb.o, %._crit_edge2
   br i1 %i.dw, label %.preheader174.lr.ph.i.i, label %_build_region.exit.i
 
 .preheader174.lr.ph.i.i:                          ; preds = %bb.p
-  %i.ey = icmp samesign uge i64 %indvars.iv97.i, %i.cx
+  %i.ey = icmp samesign uge i64 %indvars.iv86.i.a, %i.cx
   %i.ez = and i64 %indvars.iv.next82.i, 65535
   %i.fa = icmp samesign uge i64 %indvars.iv.i, %i.ez
   %brmerge232.i.i = or i1 %i.fa, %i.ey
   br i1 %brmerge232.i.i, label %_build_region.exit.i, label %.preheader174.i.i
 
 .preheader174.i.i:                                ; preds = %.preheader174.lr.ph.i.i, %._crit_edge224.i.i
-  %indvars.iv279.i.i = phi i64 [ %indvars.iv.next280.i.i, %._crit_edge224.i.i ], [ %indvars.iv102.i, %.preheader174.lr.ph.i.i ] ; 2 uses
+  %indvars.iv279.i.i = phi i64 [ %indvars.iv.next280.i.i, %._crit_edge224.i.i ], [ %indvars.iv108.i, %.preheader174.lr.ph.i.i ] ; 2 uses
   br label %.preheader.i.i
 
 .preheader.i.i:                                   ; preds = %._crit_edge222.i.i, %.preheader174.i.i
-  %indvars.iv274.i.i = phi i64 [ %indvars.iv97.i, %.preheader174.i.i ], [ %indvars.iv.next275.i.i, %._crit_edge222.i.i ] ; 2 uses
+  %indvars.iv274.i.i = phi i64 [ %indvars.iv.next275.i.i, %._crit_edge222.i.i ], [ %indvars.iv86.i.a, %.preheader174.i.i ] ; 2 uses
   br label %bb.q
 
 ._crit_edge224.i.i:                               ; preds = %._crit_edge222.i.i

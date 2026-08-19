@@ -203,18 +203,17 @@ bb.a:
   %i.aq = shufflevector <4 x float> %i.ap, <4 x float> poison, <4 x i32> zeroinitializer
   %.not62.i = icmp eq ptr %i.h, null
   %.not63.i = icmp eq ptr %i.l, null
-  %2 = zext i32 %i.r to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.h, %.lr.ph.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.h ] ; 9 uses
-  %i.ar = shl nuw nsw i64 %indvars.iv.i, 2        ; 3 uses
+  %.0115.i = phi i32 [ 0, %.lr.ph.i ], [ %3, %bb.h ] ; 3 uses
+  %2 = zext i32 %.0115.i to i64                   ; 7 uses
+  %i.ar = shl nuw nsw i64 %2, 2                   ; 3 uses
   %i.as = load ptr, ptr %i.af, align 8
   %i.at = load i64, ptr %i.ag, align 8
   %i.au = mul i64 %i.at, %i.ae
   %i.av = getelementptr inbounds nuw i8, ptr %i.as, i64 %i.au ; 3 uses
-  %3 = trunc nuw i64 %indvars.iv.i to i32
-  %i.aw = insertelement <4 x i32> poison, i32 %3, i64 0
+  %i.aw = insertelement <4 x i32> poison, i32 %.0115.i, i64 0
   %i.ax = shufflevector <4 x i32> %i.aw, <4 x i32> poison, <4 x i32> zeroinitializer
   %i.ay = or disjoint <4 x i32> %i.ax, <i32 0, i32 1, i32 2, i32 3>
   %.not114.i = icmp sgt <4 x i32> %i.ai, %i.ay    ; 9 uses
@@ -244,7 +243,7 @@ bb.c:                                             ; preds = %bb.b
   %i.bt = select <4 x i1> %.not114.i, <4 x float> %i.be, <4 x float> zeroinitializer
   %i.bu = select <4 x i1> %.not114.i, <4 x float> %i.bs, <4 x float> zeroinitializer
   %i.bv = select <4 x i1> %.not114.i, <4 x float> %i.bl, <4 x float> zeroinitializer
-  %i.bw = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %indvars.iv.i ; 2 uses
+  %i.bw = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %2 ; 2 uses
   %i.bx = fmul <4 x float> %i.aq, %i.bu
   %i.by = fmul <4 x float> %i.ao, %i.bv
   %i.bz = fadd <4 x float> %i.by, %i.bx
@@ -259,12 +258,12 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br i1 %.not62.i, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.ce = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %indvars.iv.i ; 2 uses
+  %i.ce = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %2 ; 2 uses
   %i.cf = fsub <4 x float> %i.bl, %i.be
   %i.cg = load <4 x float>, ptr %i.ce, align 1, !noalias !46
   %i.ch = select <4 x i1> %.not114.i, <4 x float> %i.cf, <4 x float> %i.cg
   store <4 x float> %i.ch, ptr %i.ce, align 1
-  %i.ci = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %indvars.iv.i ; 2 uses
+  %i.ci = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %2 ; 2 uses
   %i.cj = fsub <4 x float> %i.bs, %i.be
   %i.ck = load <4 x float>, ptr %i.ci, align 1, !noalias !49
   %i.cl = select <4 x i1> %.not114.i, <4 x float> %i.cj, <4 x float> %i.ck
@@ -275,23 +274,23 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br i1 %.not63.i, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.cm = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %indvars.iv.i ; 2 uses
+  %i.cm = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %2 ; 2 uses
   %i.cn = load <4 x float>, ptr %i.cm, align 1, !noalias !52
   %i.co = select <4 x i1> %.not114.i, <4 x float> zeroinitializer, <4 x float> %i.cn
   store <4 x float> %i.co, ptr %i.cm, align 1
-  %i.cp = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %indvars.iv.i ; 2 uses
+  %i.cp = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %2 ; 2 uses
   %i.cq = load <4 x float>, ptr %i.cp, align 1, !noalias !55
   %i.cr = select <4 x i1> %.not114.i, <4 x float> zeroinitializer, <4 x float> %i.cq
   store <4 x float> %i.cr, ptr %i.cp, align 1
-  %i.cs = getelementptr inbounds nuw [4 x i8], ptr %i.p, i64 %indvars.iv.i ; 2 uses
+  %i.cs = getelementptr inbounds nuw [4 x i8], ptr %i.p, i64 %2 ; 2 uses
   %i.ct = load <4 x float>, ptr %i.cs, align 1, !noalias !58
   %i.cu = select <4 x i1> %.not114.i, <4 x float> zeroinitializer, <4 x float> %i.ct
   store <4 x float> %i.cu, ptr %i.cs, align 1
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 4 ; 2 uses
-  %i.cv = icmp samesign ult i64 %indvars.iv.next.i, %2
+  %3 = add i32 %.0115.i, 4                        ; 2 uses
+  %i.cv = icmp ult i32 %3, %i.r
   br i1 %i.cv, label %bb.b, label %_ZN6embree12TriangleMesh16interpolate_implILi4EEEvPK23RTCInterpolateArguments.exit, !llvm.loop !61
 
 _ZN6embree12TriangleMesh16interpolate_implILi4EEEvPK23RTCInterpolateArguments.exit: ; preds = %bb.h, %bb.a

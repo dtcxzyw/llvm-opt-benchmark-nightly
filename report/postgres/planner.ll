@@ -201,20 +201,20 @@ select.unfold.i:                                  ; preds = %.lr.ph.i622
   %.val.i.i623 = load ptr, ptr %i.gn, align 8
   %i.hf = ptrtoint ptr %.val.i.i623 to i64
   %i.hg = sub i64 %i.he, %i.hf
-  %10 = shl i64 %i.hg, 29
-  %11 = ashr i64 %10, 32                          ; 2 uses
+  %10 = lshr exact i64 %i.hg, 3
+  %11 = trunc i64 %10 to i32                      ; 2 uses
   %i.hh = load i32, ptr %i.gl, align 4
-  %12 = sext i32 %i.hh to i64
-  %13 = icmp slt i64 %11, %12
-  br i1 %13, label %.lr.ph, label %.critedge189.i
+  %12 = icmp sgt i32 %i.hh, %11
+  br i1 %12, label %.lr.ph, label %.critedge189.i
 
 .lr.ph:                                           ; preds = %.lr.ph242.i, %bb.az
   %.0166238.i726 = phi i32 [ %.1167.i, %bb.az ], [ 1, %.lr.ph242.i ] ; 6 uses
   %.0164239.i725 = phi i32 [ %.1165207.i, %bb.az ], [ 0, %.lr.ph242.i ] ; 8 uses
   %.0162240.i724 = phi i32 [ %.1163209.i, %bb.az ], [ 0, %.lr.ph242.i ] ; 9 uses
-  %indvars.iv285.i723 = phi i64 [ %indvars.iv.next286.i, %bb.az ], [ %11, %.lr.ph242.i ] ; 2 uses
+  %.sroa.643.0241.i723 = phi i32 [ %14, %bb.az ], [ %11, %.lr.ph242.i ] ; 2 uses
   %i.hi = load ptr, ptr %i.gn, align 8
-  %i.hj = getelementptr inbounds [8 x i8], ptr %i.hi, i64 %indvars.iv285.i723
+  %13 = sext i32 %.sroa.643.0241.i723 to i64
+  %i.hj = getelementptr inbounds [8 x i8], ptr %i.hi, i64 %13
   %i.hk = load ptr, ptr %i.hj, align 8            ; 5 uses
   %.not185.i = icmp eq ptr %i.hk, null
   br i1 %.not185.i, label %list_length.exit197.i, label %.lr.ph226.i
@@ -380,10 +380,9 @@ bb.az:                                            ; preds = %bb.ay, %bb.au
   %.1163209.i = phi i32 [ %.0162240.i724, %bb.au ], [ %.1163210.i, %bb.ay ]
   %.1165207.i = phi i32 [ %.0164239.i725, %bb.au ], [ %.1165208.i, %bb.ay ]
   %.1167.i = phi i32 [ %.0166238.i726, %bb.au ], [ %i.jn, %bb.ay ] ; 2 uses
-  %indvars.iv.next286.i = add nsw i64 %indvars.iv285.i723, 1 ; 2 uses
+  %14 = add nsw i32 %.sroa.643.0241.i723, 1       ; 2 uses
   %i.jo = load i32, ptr %i.gl, align 4
-  %14 = sext i32 %i.jo to i64
-  %i.jp = icmp slt i64 %indvars.iv.next286.i, %14
+  %i.jp = icmp slt i32 %14, %i.jo
   br i1 %i.jp, label %.lr.ph, label %.critedge189.i
 
 bb.ba:                                            ; preds = %bb.bf, %.lr.ph249.i

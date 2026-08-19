@@ -203,7 +203,7 @@ list_new_prealloc.exit._crit_edge.i:              ; preds = %list_new_prealloc.e
   br label %bb.k
 
 bb.k:                                             ; preds = %list_new_prealloc.exit._crit_edge.i, %list_new_prealloc.exit.thread45.i
-  %i.w = phi ptr [ %i.n, %list_new_prealloc.exit.thread45.i ], [ %.pre.i, %list_new_prealloc.exit._crit_edge.i ] ; 8 uses
+  %i.w = phi ptr [ %i.n, %list_new_prealloc.exit.thread45.i ], [ %.pre.i, %list_new_prealloc.exit._crit_edge.i ] ; 5 uses
   %.0.i47.i = phi ptr [ %i.i, %list_new_prealloc.exit.thread45.i ], [ %i.u, %list_new_prealloc.exit._crit_edge.i ] ; 3 uses
   %i.x = getelementptr i8, ptr %.0.i47.i, i64 24
   %i.y = icmp eq i64 %.val.i, 1
@@ -212,7 +212,7 @@ bb.k:                                             ; preds = %list_new_prealloc.e
   br i1 %i.y, label %bb.l, label %bb.n
 
 bb.l:                                             ; preds = %bb.k
-  %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !50 ; 4 uses
+  %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !50 ; 3 uses
   %i.ac = load i32, ptr %i.ab, align 8, !tbaa !28 ; 2 uses
   %.not.i.i = icmp sgt i32 %i.ac, -1
   br i1 %.not.i.i, label %bb.m, label %_Py_RefcntAdd.exit.i
@@ -229,54 +229,14 @@ bb.m:                                             ; preds = %bb.l
 _Py_RefcntAdd.exit.i:                             ; preds = %bb.m, %bb.l
   %i.ai = getelementptr [8 x i8], ptr %i.w, i64 %i.h ; 2 uses
   %i.aj = icmp ult ptr %i.w, %i.ai
-  br i1 %i.aj, label %.lr.ph52.i.preheader, label %_Py_memory_repeat.exit.i
+  br i1 %i.aj, label %.lr.ph52.i, label %_Py_memory_repeat.exit.i
 
-.lr.ph52.i.preheader:                             ; preds = %_Py_RefcntAdd.exit.i
-  %2 = ptrtoaddr ptr %i.w to i64                  ; 3 uses
-  %3 = shl i64 %1, 3
-  %4 = add i64 %3, %2
-  %5 = add i64 %2, 8
-  %6 = tail call i64 @llvm.umax.i64(i64 %4, i64 %5)
-  %7 = xor i64 %2, -1
-  %8 = add i64 %6, %7                             ; 2 uses
-  %9 = lshr i64 %8, 3
-  %10 = add nuw nsw i64 %9, 1                     ; 2 uses
-  %min.iters.check = icmp ult i64 %8, 24
-  br i1 %min.iters.check, label %.lr.ph52.i.preheader21, label %vector.ph
-
-vector.ph:                                        ; preds = %.lr.ph52.i.preheader
-  %n.vec = and i64 %10, 4611686018427387900       ; 3 uses
-  %11 = shl i64 %n.vec, 3
-  %12 = getelementptr i8, ptr %i.w, i64 %11
-  %broadcast.splatinsert = insertelement <2 x ptr> poison, ptr %i.ab, i64 0
-  %broadcast.splat = shufflevector <2 x ptr> %broadcast.splatinsert, <2 x ptr> poison, <2 x i32> zeroinitializer ; 2 uses
-  br label %vector.body
-
-vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %13 = shl i64 %index, 3
-  %next.gep = getelementptr i8, ptr %i.w, i64 %13 ; 2 uses
-  %14 = getelementptr i8, ptr %next.gep, i64 16
-  store <2 x ptr> %broadcast.splat, ptr %next.gep, align 8, !tbaa !50
-  store <2 x ptr> %broadcast.splat, ptr %14, align 8, !tbaa !50
-  %index.next = add nuw i64 %index, 4             ; 2 uses
-  %15 = icmp eq i64 %index.next, %n.vec
-  br i1 %15, label %middle.block, label %vector.body, !llvm.loop !160
-
-middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %10, %n.vec
-  br i1 %cmp.n, label %_Py_memory_repeat.exit.i, label %.lr.ph52.i.preheader21
-
-.lr.ph52.i.preheader21:                           ; preds = %.lr.ph52.i.preheader, %middle.block
-  %.03651.i.ph = phi ptr [ %i.w, %.lr.ph52.i.preheader ], [ %12, %middle.block ]
-  br label %.lr.ph52.i
-
-.lr.ph52.i:                                       ; preds = %.lr.ph52.i.preheader21, %.lr.ph52.i
-  %.03651.i = phi ptr [ %i.ak, %.lr.ph52.i ], [ %.03651.i.ph, %.lr.ph52.i.preheader21 ] ; 2 uses
+.lr.ph52.i:                                       ; preds = %_Py_RefcntAdd.exit.i, %.lr.ph52.i
+  %.03651.i = phi ptr [ %i.ak, %.lr.ph52.i ], [ %i.w, %_Py_RefcntAdd.exit.i ] ; 2 uses
   %i.ak = getelementptr i8, ptr %.03651.i, i64 8  ; 2 uses
   store ptr %i.ab, ptr %.03651.i, align 8, !tbaa !50
   %i.al = icmp ult ptr %i.ak, %i.ai
-  br i1 %i.al, label %.lr.ph52.i, label %_Py_memory_repeat.exit.i, !llvm.loop !163
+  br i1 %i.al, label %.lr.ph52.i, label %_Py_memory_repeat.exit.i, !llvm.loop !160
 
 bb.n:                                             ; preds = %bb.k
   %i.am = getelementptr [8 x i8], ptr %i.aa, i64 %.val.i ; 2 uses
@@ -307,7 +267,7 @@ _Py_RefcntAdd.exit43.i:                           ; preds = %bb.o, %.lr.ph.i
   %i.ax = getelementptr i8, ptr %.149.i, i64 8
   store ptr %i.av, ptr %.149.i, align 8, !tbaa !50
   %i.ay = icmp ult ptr %i.aw, %i.am
-  br i1 %i.ay, label %.lr.ph.i, label %._crit_edge.loopexit.i, !llvm.loop !164
+  br i1 %i.ay, label %.lr.ph.i, label %._crit_edge.loopexit.i, !llvm.loop !161
 
 ._crit_edge.loopexit.i:                           ; preds = %_Py_RefcntAdd.exit43.i
   %.pre55.i = load ptr, ptr %i.x, align 8, !tbaa !21
@@ -330,7 +290,7 @@ _Py_RefcntAdd.exit43.i:                           ; preds = %bb.o, %.lr.ph.i
   %i.bh = icmp slt i64 %i.bg, %i.ba
   br i1 %i.bh, label %.lr.ph.i.i, label %_Py_memory_repeat.exit.i, !llvm.loop !120
 
-_Py_memory_repeat.exit.i:                         ; preds = %.lr.ph.i.i, %.lr.ph52.i, %middle.block, %._crit_edge.i, %_Py_RefcntAdd.exit.i
+_Py_memory_repeat.exit.i:                         ; preds = %.lr.ph.i.i, %.lr.ph52.i, %._crit_edge.i, %_Py_RefcntAdd.exit.i
   %i.bi = getelementptr i8, ptr %.0.i47.i, i64 16
   store i64 %i.h, ptr %i.bi, align 8, !tbaa !29
   br label %list_repeat_lock_held.exit
@@ -557,13 +517,13 @@ bb.a:
   %i.a = getelementptr i8, ptr %1, i64 8
   %.val20 = load ptr, ptr %i.a, align 8, !tbaa !42 ; 3 uses
   %i.b = getelementptr i8, ptr %.val20, i64 96
-  %.val20.val = load ptr, ptr %i.b, align 8, !tbaa !165 ; 2 uses
+  %.val20.val = load ptr, ptr %i.b, align 8, !tbaa !162 ; 2 uses
   %.not.i = icmp eq ptr %.val20.val, null
   br i1 %.not.i, label %_PyIndex_Check.exit.thread, label %_PyIndex_Check.exit
 
 _PyIndex_Check.exit:                              ; preds = %bb.a
   %i.c = getelementptr i8, ptr %.val20.val, i64 264
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !166
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !163
   %.not23 = icmp eq ptr %i.d, null
   br i1 %.not23, label %_PyIndex_Check.exit.thread, label %bb.b
 
@@ -647,24 +607,24 @@ bb.a:
   %i.d = getelementptr i8, ptr %1, i64 8
   %.val176.i = load ptr, ptr %i.d, align 8, !tbaa !42 ; 3 uses
   %i.e = getelementptr i8, ptr %.val176.i, i64 96
-  %.val176.val.i = load ptr, ptr %i.e, align 8, !tbaa !165 ; 2 uses
+  %.val176.val.i = load ptr, ptr %i.e, align 8, !tbaa !162 ; 2 uses
   %.not.i179.i = icmp eq ptr %.val176.val.i, null
   br i1 %.not.i179.i, label %_PyIndex_Check.exit.thread.i, label %_PyIndex_Check.exit.i
 
 _PyIndex_Check.exit.i:                            ; preds = %bb.a
   %i.f = getelementptr i8, ptr %.val176.val.i, i64 264
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !166
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !163
   %.not188.i = icmp eq ptr %i.g, null
   br i1 %.not188.i, label %_PyIndex_Check.exit.thread.i, label %bb.b
 
 bb.b:                                             ; preds = %_PyIndex_Check.exit.i
   %i.h = load ptr, ptr @PyExc_IndexError, align 8, !tbaa !50
-  %i.i = tail call i64 @PyNumber_AsSsize_t(ptr noundef nonnull %1, ptr noundef %i.h) #13, !inline_history !168 ; 4 uses
+  %i.i = tail call i64 @PyNumber_AsSsize_t(ptr noundef nonnull %1, ptr noundef %i.h) #13, !inline_history !165 ; 4 uses
   %i.j = icmp eq i64 %i.i, -1
   br i1 %i.j, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.k = tail call ptr @PyErr_Occurred() #13, !inline_history !168
+  %i.k = tail call ptr @PyErr_Occurred() #13, !inline_history !165
   %.not139.i = icmp eq ptr %i.k, null
   br i1 %.not139.i, label %.thread.i, label %list_ass_subscript_lock_held.exit
 
@@ -692,7 +652,7 @@ bb.e:                                             ; preds = %.thread.i, %._crit_
 
 bb.f:                                             ; preds = %bb.e
   %i.p = load ptr, ptr @PyExc_IndexError, align 8, !tbaa !50
-  tail call void @PyErr_SetString(ptr noundef %i.p, ptr noundef nonnull @.str.3) #13, !inline_history !168
+  tail call void @PyErr_SetString(ptr noundef %i.p, ptr noundef nonnull @.str.3) #13, !inline_history !165
   br label %list_ass_subscript_lock_held.exit
 
 bb.g:                                             ; preds = %bb.e
@@ -750,7 +710,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.ah, label %bb.l, label %list_ass_subscript_lock_held.exit
 
 bb.l:                                             ; preds = %bb.k
-  tail call void @_Py_Dealloc(ptr noundef nonnull %i.t) #13, !inline_history !168
+  tail call void @_Py_Dealloc(ptr noundef nonnull %i.t) #13, !inline_history !165
   br label %list_ass_subscript_lock_held.exit
 
 _PyIndex_Check.exit.thread.i:                     ; preds = %_PyIndex_Check.exit.i, %bb.a
@@ -761,7 +721,7 @@ bb.m:                                             ; preds = %_PyIndex_Check.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #13
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #13
-  %i.ai = call i32 @PySlice_Unpack(ptr noundef nonnull %1, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c) #13, !inline_history !168
+  %i.ai = call i32 @PySlice_Unpack(ptr noundef nonnull %1, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c) #13, !inline_history !165
   %i.aj = icmp slt i32 %i.ai, 0
   br i1 %i.aj, label %Py_DECREF.exit149.i, label %bb.n
 
@@ -773,7 +733,7 @@ bb.o:                                             ; preds = %bb.n
   %i.al = load i64, ptr %i.c, align 8, !tbaa !51  ; 3 uses
   %i.am = getelementptr i8, ptr %0, i64 16        ; 5 uses
   %.val178.i = load i64, ptr %i.am, align 8, !tbaa !29
-  %i.an = call i64 @PySlice_AdjustIndices(i64 noundef %.val178.i, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, i64 noundef %i.al) #13, !inline_history !168 ; 7 uses
+  %i.an = call i64 @PySlice_AdjustIndices(i64 noundef %.val178.i, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, i64 noundef %i.al) #13, !inline_history !165 ; 7 uses
   %i.ao = icmp slt i64 %i.al, 0
   br i1 %i.ao, label %bb.p, label %bb.q
 
@@ -806,7 +766,7 @@ adjust_slice_indexes.exit.i:                      ; preds = %bb.s, %bb.r, %bb.q,
 bb.t:                                             ; preds = %adjust_slice_indexes.exit.i
   %i.ay = load i64, ptr %i.a, align 8, !tbaa !51
   %i.az = load i64, ptr %i.b, align 8, !tbaa !51
-  %i.ba = call fastcc i32 @list_ass_slice_lock_held(ptr noundef nonnull %0, i64 noundef %i.ay, i64 noundef %i.az, ptr noundef null), !inline_history !168
+  %i.ba = call fastcc i32 @list_ass_slice_lock_held(ptr noundef nonnull %0, i64 noundef %i.ay, i64 noundef %i.az, ptr noundef null), !inline_history !165
   br label %Py_DECREF.exit149.i
 
 bb.u:                                             ; preds = %adjust_slice_indexes.exit.i
@@ -831,12 +791,12 @@ bb.w:                                             ; preds = %bb.v
 
 bb.x:                                             ; preds = %bb.w, %bb.v
   %i.bj = shl i64 %i.an, 3
-  %i.bk = call ptr @PyMem_Malloc(i64 noundef %i.bj) #13, !inline_history !168 ; 4 uses
+  %i.bk = call ptr @PyMem_Malloc(i64 noundef %i.bj) #13, !inline_history !165 ; 4 uses
   %.not137.i = icmp eq ptr %i.bk, null
   br i1 %.not137.i, label %bb.y, label %bb.z
 
 bb.y:                                             ; preds = %bb.x
-  %i.bl = call ptr @PyErr_NoMemory() #13, !inline_history !168 ; 0 uses
+  %i.bl = call ptr @PyErr_NoMemory() #13, !inline_history !165 ; 0 uses
   br label %Py_DECREF.exit149.i
 
 bb.z:                                             ; preds = %bb.x
@@ -876,7 +836,7 @@ bb.aa:                                            ; preds = %bb.aa, %.lr.ph196.i
   %i.cf = add i64 %.0114194.i, 1
   %i.cg = load i64, ptr %i.b, align 8, !tbaa !51
   %i.ch = icmp ult i64 %i.ce, %i.cg
-  br i1 %i.ch, label %bb.aa, label %._crit_edge197.loopexit.i, !llvm.loop !169
+  br i1 %i.ch, label %bb.aa, label %._crit_edge197.loopexit.i, !llvm.loop !166
 
 ._crit_edge197.loopexit.i:                        ; preds = %bb.aa
   %.pre206.i = load i64, ptr %i.a, align 8, !tbaa !51
@@ -907,7 +867,7 @@ bb.ab:                                            ; preds = %._crit_edge197.i
   %.val159.i = phi i64 [ %.val159.pre.i, %bb.ab ], [ %.val161.i, %._crit_edge197.i ]
   %i.cu = sub i64 %.val159.i, %i.an               ; 2 uses
   store i64 %i.cu, ptr %i.am, align 8, !tbaa !29
-  %i.cv = call fastcc i32 @list_resize(ptr noundef nonnull %0, i64 noundef %i.cu), !inline_history !168
+  %i.cv = call fastcc i32 @list_resize(ptr noundef nonnull %0, i64 noundef %i.cu), !inline_history !165
   br label %.lr.ph200.i
 
 .lr.ph200.i:                                      ; preds = %Py_DECREF.exit151.i, %.lr.ph200.preheader.i
@@ -925,16 +885,16 @@ bb.ac:                                            ; preds = %.lr.ph200.i
   br i1 %i.da, label %bb.ad, label %Py_DECREF.exit151.i
 
 bb.ad:                                            ; preds = %bb.ac
-  call void @_Py_Dealloc(ptr noundef nonnull %i.cx) #13, !inline_history !168
+  call void @_Py_Dealloc(ptr noundef nonnull %i.cx) #13, !inline_history !165
   br label %Py_DECREF.exit151.i
 
 Py_DECREF.exit151.i:                              ; preds = %bb.ad, %bb.ac, %.lr.ph200.i
   %i.db = add nuw nsw i64 %.1115198.i, 1          ; 2 uses
   %exitcond203.not.i = icmp eq i64 %i.db, %i.an
-  br i1 %exitcond203.not.i, label %._crit_edge201.i, label %.lr.ph200.i, !llvm.loop !170
+  br i1 %exitcond203.not.i, label %._crit_edge201.i, label %.lr.ph200.i, !llvm.loop !167
 
 ._crit_edge201.i:                                 ; preds = %Py_DECREF.exit151.i
-  call void @PyMem_Free(ptr noundef nonnull %i.bk) #13, !inline_history !168
+  call void @PyMem_Free(ptr noundef nonnull %i.bk) #13, !inline_history !165
   br label %Py_DECREF.exit149.i
 
 bb.ae:                                            ; preds = %bb.n
@@ -944,11 +904,11 @@ bb.ae:                                            ; preds = %bb.n
 bb.af:                                            ; preds = %bb.ae
   %i.dd = getelementptr i8, ptr %2, i64 16
   %.val.i = load i64, ptr %i.dd, align 8, !tbaa !29
-  %i.de = call fastcc ptr @list_slice_lock_held(ptr noundef nonnull %2, i64 noundef 0, i64 noundef %.val.i), !inline_history !168
+  %i.de = call fastcc ptr @list_slice_lock_held(ptr noundef nonnull %2, i64 noundef 0, i64 noundef %.val.i), !inline_history !165
   br label %bb.ah
 
 bb.ag:                                            ; preds = %bb.ae
-  %i.df = call ptr @PySequence_Fast(ptr noundef nonnull %2, ptr noundef nonnull @.str.15) #13, !inline_history !168
+  %i.df = call ptr @PySequence_Fast(ptr noundef nonnull %2, ptr noundef nonnull @.str.15) #13, !inline_history !165
   br label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag, %bb.af
@@ -960,7 +920,7 @@ bb.ai:                                            ; preds = %bb.ah
   %i.dg = load i64, ptr %i.c, align 8, !tbaa !51  ; 3 uses
   %i.dh = getelementptr i8, ptr %0, i64 16
   %.val177.i = load i64, ptr %i.dh, align 8, !tbaa !29
-  %i.di = call i64 @PySlice_AdjustIndices(i64 noundef %.val177.i, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, i64 noundef %i.dg) #13, !inline_history !168 ; 7 uses
+  %i.di = call i64 @PySlice_AdjustIndices(i64 noundef %.val177.i, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, i64 noundef %i.dg) #13, !inline_history !165 ; 7 uses
   %i.dj = icmp slt i64 %i.dg, 0
   br i1 %i.dj, label %bb.aj, label %bb.ak
 
@@ -993,7 +953,7 @@ adjust_slice_indexes.exit183.i:                   ; preds = %bb.am, %bb.al, %bb.
 bb.an:                                            ; preds = %adjust_slice_indexes.exit183.i
   %i.dt = load i64, ptr %i.a, align 8, !tbaa !51
   %i.du = load i64, ptr %i.b, align 8, !tbaa !51
-  %i.dv = call fastcc i32 @list_ass_slice_lock_held(ptr noundef nonnull %0, i64 noundef %i.dt, i64 noundef %i.du, ptr noundef nonnull %.0112.i), !inline_history !168 ; 3 uses
+  %i.dv = call fastcc i32 @list_ass_slice_lock_held(ptr noundef nonnull %0, i64 noundef %i.dt, i64 noundef %i.du, ptr noundef nonnull %.0112.i), !inline_history !165 ; 3 uses
   %i.dw = load i32, ptr %.0112.i, align 8, !tbaa !28 ; 2 uses
   %.not.i148.i = icmp sgt i32 %i.dw, -1
   br i1 %.not.i148.i, label %bb.ao, label %Py_DECREF.exit149.i
@@ -1005,7 +965,7 @@ bb.ao:                                            ; preds = %bb.an
   br i1 %i.dy, label %bb.ap, label %Py_DECREF.exit149.i
 
 bb.ap:                                            ; preds = %bb.ao
-  call void @_Py_Dealloc(ptr noundef nonnull %.0112.i) #13, !inline_history !168
+  call void @_Py_Dealloc(ptr noundef nonnull %.0112.i) #13, !inline_history !165
   br label %Py_DECREF.exit149.i
 
 bb.aq:                                            ; preds = %adjust_slice_indexes.exit183.i
@@ -1017,7 +977,7 @@ bb.aq:                                            ; preds = %adjust_slice_indexe
 
 bb.ar:                                            ; preds = %bb.aq
   %i.eb = load ptr, ptr @PyExc_ValueError, align 8, !tbaa !50
-  %i.ec = call ptr (ptr, ptr, ...) @PyErr_Format(ptr noundef %i.eb, ptr noundef nonnull @.str.16, i64 noundef %.0112.val175.i, i64 noundef %i.di) #13, !inline_history !168 ; 0 uses
+  %i.ec = call ptr (ptr, ptr, ...) @PyErr_Format(ptr noundef %i.eb, ptr noundef nonnull @.str.16, i64 noundef %.0112.val175.i, i64 noundef %i.di) #13, !inline_history !165 ; 0 uses
   %i.ed = load i32, ptr %.0112.i, align 8, !tbaa !28 ; 2 uses
   %.not.i146.i = icmp sgt i32 %i.ed, -1
   br i1 %.not.i146.i, label %bb.as, label %Py_DECREF.exit149.i
@@ -1029,7 +989,7 @@ bb.as:                                            ; preds = %bb.ar
   br i1 %i.ef, label %bb.at, label %Py_DECREF.exit149.i
 
 bb.at:                                            ; preds = %bb.as
-  call void @_Py_Dealloc(ptr noundef nonnull %.0112.i) #13, !inline_history !168
+  call void @_Py_Dealloc(ptr noundef nonnull %.0112.i) #13, !inline_history !165
   br label %Py_DECREF.exit149.i
 
 bb.au:                                            ; preds = %bb.aq
@@ -1048,12 +1008,12 @@ bb.aw:                                            ; preds = %bb.av
   br i1 %i.ei, label %bb.ax, label %Py_DECREF.exit149.i
 
 bb.ax:                                            ; preds = %bb.aw
-  call void @_Py_Dealloc(ptr noundef nonnull %.0112.i) #13, !inline_history !168
+  call void @_Py_Dealloc(ptr noundef nonnull %.0112.i) #13, !inline_history !165
   br label %Py_DECREF.exit149.i
 
 bb.ay:                                            ; preds = %bb.au
   %i.ej = shl i64 %i.di, 3
-  %i.ek = call ptr @PyMem_Malloc(i64 noundef %i.ej) #13, !inline_history !168 ; 4 uses
+  %i.ek = call ptr @PyMem_Malloc(i64 noundef %i.ej) #13, !inline_history !165 ; 4 uses
   %.not134.i = icmp eq ptr %i.ek, null
   br i1 %.not134.i, label %bb.az, label %bb.bc
 
@@ -1069,11 +1029,11 @@ bb.ba:                                            ; preds = %bb.az
   br i1 %i.en, label %bb.bb, label %Py_DECREF.exit143.i
 
 bb.bb:                                            ; preds = %bb.ba
-  call void @_Py_Dealloc(ptr noundef nonnull %.0112.i) #13, !inline_history !168
+  call void @_Py_Dealloc(ptr noundef nonnull %.0112.i) #13, !inline_history !165
   br label %Py_DECREF.exit143.i
 
 Py_DECREF.exit143.i:                              ; preds = %bb.bb, %bb.ba, %bb.az
-  %i.eo = call ptr @PyErr_NoMemory() #13, !inline_history !168 ; 0 uses
+  %i.eo = call ptr @PyErr_NoMemory() #13, !inline_history !165 ; 0 uses
   br label %Py_DECREF.exit149.i
 
 bb.bc:                                            ; preds = %bb.ay
@@ -1128,7 +1088,7 @@ _Py_NewRef.exit.i:                                ; preds = %bb.bg, %.lr.ph.i
   %i.fi = add i64 %i.fh, %.0109190.i
   %i.fj = add nuw nsw i64 %.0110189.i, 1          ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.fj, %i.di
-  br i1 %exitcond.not.i, label %.lr.ph192.i, label %.lr.ph.i, !llvm.loop !171
+  br i1 %exitcond.not.i, label %.lr.ph192.i, label %.lr.ph.i, !llvm.loop !168
 
 .lr.ph192.i:                                      ; preds = %_Py_NewRef.exit.i, %Py_DECREF.exit141.i
   %.1111191.i = phi i64 [ %i.fp, %Py_DECREF.exit141.i ], [ 0, %_Py_NewRef.exit.i ] ; 2 uses
@@ -1145,16 +1105,16 @@ bb.bh:                                            ; preds = %.lr.ph192.i
   br i1 %i.fo, label %bb.bi, label %Py_DECREF.exit141.i
 
 bb.bi:                                            ; preds = %bb.bh
-  call void @_Py_Dealloc(ptr noundef nonnull %i.fl) #13, !inline_history !168
+  call void @_Py_Dealloc(ptr noundef nonnull %i.fl) #13, !inline_history !165
   br label %Py_DECREF.exit141.i
 
 Py_DECREF.exit141.i:                              ; preds = %bb.bi, %bb.bh, %.lr.ph192.i
   %i.fp = add nuw nsw i64 %.1111191.i, 1          ; 2 uses
   %exitcond202.not.i = icmp eq i64 %i.fp, %i.di
-  br i1 %exitcond202.not.i, label %._crit_edge.i, label %.lr.ph192.i, !llvm.loop !172
+  br i1 %exitcond202.not.i, label %._crit_edge.i, label %.lr.ph192.i, !llvm.loop !169
 
 ._crit_edge.i:                                    ; preds = %Py_DECREF.exit141.i, %bb.bf
-  call void @PyMem_Free(ptr noundef nonnull %i.ek) #13, !inline_history !168
+  call void @PyMem_Free(ptr noundef nonnull %i.ek) #13, !inline_history !165
   %i.fq = load i32, ptr %.0112.i, align 8, !tbaa !28 ; 2 uses
   %.not.i.i = icmp sgt i32 %i.fq, -1
   br i1 %.not.i.i, label %bb.bj, label %Py_DECREF.exit149.i
@@ -1166,7 +1126,7 @@ bb.bj:                                            ; preds = %._crit_edge.i
   br i1 %i.fs, label %bb.bk, label %Py_DECREF.exit149.i
 
 bb.bk:                                            ; preds = %bb.bj
-  call void @_Py_Dealloc(ptr noundef nonnull %.0112.i) #13, !inline_history !168
+  call void @_Py_Dealloc(ptr noundef nonnull %.0112.i) #13, !inline_history !165
   br label %Py_DECREF.exit149.i
 
 Py_DECREF.exit149.i:                              ; preds = %bb.bk, %bb.bj, %._crit_edge.i, %Py_DECREF.exit143.i, %bb.ax, %bb.aw, %bb.av, %bb.at, %bb.as, %bb.ar, %bb.ap, %bb.ao, %bb.an, %bb.ah, %._crit_edge201.i, %bb.y, %bb.u, %bb.t, %bb.m
@@ -1180,7 +1140,7 @@ bb.bl:                                            ; preds = %_PyIndex_Check.exit
   %i.ft = load ptr, ptr @PyExc_TypeError, align 8, !tbaa !50
   %i.fu = getelementptr i8, ptr %.val176.i, i64 24
   %i.fv = load ptr, ptr %i.fu, align 8, !tbaa !153
-  %i.fw = tail call ptr (ptr, ptr, ...) @PyErr_Format(ptr noundef %i.ft, ptr noundef nonnull @.str.14, ptr noundef %i.fv) #13, !inline_history !168 ; 0 uses
+  %i.fw = tail call ptr (ptr, ptr, ...) @PyErr_Format(ptr noundef %i.ft, ptr noundef nonnull @.str.14, ptr noundef %i.fv) #13, !inline_history !165 ; 0 uses
   br label %list_ass_subscript_lock_held.exit
 
 list_ass_subscript_lock_held.exit:                ; preds = %bb.c, %bb.f, %bb.j, %bb.k, %bb.l, %Py_DECREF.exit149.i, %bb.bl
@@ -1195,7 +1155,7 @@ declare ptr @PyObject_RichCompare(ptr noundef, ptr noundef, i32 noundef) local_u
 ; Function Attrs: nounwind uwtable
 define internal ptr @list___reversed__(ptr noundef %0, ptr nofree readnone captures(none) %1) #0 {
 bb.a:
-  %i.a = tail call ptr @_PyObject_GC_New(ptr noundef nonnull @PyListRevIter_Type) #13, !inline_history !173 ; 5 uses
+  %i.a = tail call ptr @_PyObject_GC_New(ptr noundef nonnull @PyListRevIter_Type) #13, !inline_history !170 ; 5 uses
   %i.b = icmp eq ptr %i.a, null
   br i1 %i.b, label %list___reversed___impl.exit, label %bb.b
 
@@ -1217,7 +1177,7 @@ bb.c:                                             ; preds = %bb.b
 _Py_NewRef.exit.i:                                ; preds = %bb.c, %bb.b
   %i.i = getelementptr i8, ptr %i.a, i64 24
   store ptr %0, ptr %i.i, align 8, !tbaa !115
-  tail call void @PyObject_GC_Track(ptr noundef nonnull %i.a) #13, !inline_history !173
+  tail call void @PyObject_GC_Track(ptr noundef nonnull %i.a) #13, !inline_history !170
   br label %list___reversed___impl.exit
 
 list___reversed___impl.exit:                      ; preds = %bb.a, %_Py_NewRef.exit.i
@@ -1232,7 +1192,7 @@ bb.a:
   %i.b = getelementptr i8, ptr %0, i64 32
   %.val1 = load i64, ptr %i.b, align 8, !tbaa !30
   %i.c = getelementptr i8, ptr %.val, i64 32
-  %.val.val = load i64, ptr %i.c, align 8, !tbaa !174
+  %.val.val = load i64, ptr %i.c, align 8, !tbaa !171
   %i.d = shl i64 %.val1, 3
   %i.e = add i64 %i.d, %.val.val
   %i.f = tail call ptr @PyLong_FromSize_t(i64 noundef %i.e) #13
@@ -1295,7 +1255,7 @@ define internal ptr @list_copy(ptr nofree noundef readonly captures(none) %0, pt
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 16
   %.val.i = load i64, ptr %i.a, align 8, !tbaa !29
-  %i.b = tail call fastcc ptr @list_slice_lock_held(ptr noundef readonly %0, i64 noundef 0, i64 noundef %.val.i), !inline_history !175
+  %i.b = tail call fastcc ptr @list_slice_lock_held(ptr noundef readonly %0, i64 noundef 0, i64 noundef %.val.i), !inline_history !172
   ret ptr %i.b
 }
 
@@ -1665,7 +1625,7 @@ bb.g:                                             ; preds = %bb.f
   %i.r = add nuw nsw i64 %.01524.i, 1             ; 2 uses
   %.val.i = load i64, ptr %i.a, align 8, !tbaa !29
   %i.s = icmp slt i64 %i.r, %.val.i
-  br i1 %i.s, label %bb.b, label %._crit_edge.i, !llvm.loop !176
+  br i1 %i.s, label %bb.b, label %._crit_edge.i, !llvm.loop !173
 
 ._crit_edge.i:                                    ; preds = %bb.g, %bb.a
   %i.t = load ptr, ptr @PyExc_ValueError, align 8, !tbaa !50
@@ -1807,7 +1767,7 @@ bb.s:                                             ; preds = %Py_DECREF.exit.i
 list_get_item_ref.exit.i:                         ; preds = %bb.s
   %i.al = add nuw nsw i64 %.02452.i, 1            ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.al, %.025.i
-  br i1 %exitcond.not.i, label %.thread.i, label %bb.l, !llvm.loop !177
+  br i1 %exitcond.not.i, label %.thread.i, label %bb.l, !llvm.loop !174
 
 .thread.i:                                        ; preds = %list_get_item_ref.exit.i, %bb.l, %bb.k
   %i.am = load ptr, ptr @PyExc_ValueError, align 8, !tbaa !50
@@ -2060,7 +2020,7 @@ bb.d:                                             ; preds = %bb.c, %.thread
 define internal ptr @listiter_reduce(ptr nofree noundef readonly captures(none) %0, ptr nofree readnone captures(none) %1) #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 16
-  %i.b = tail call ptr @_PyEval_GetBuiltin(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 88752)) #13, !inline_history !178 ; 5 uses
+  %i.b = tail call ptr @_PyEval_GetBuiltin(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 88752)) #13, !inline_history !175 ; 5 uses
   %i.c = load i64, ptr %i.a, align 8, !tbaa !113  ; 2 uses
   %i.d = icmp slt i64 %i.c, 0
   br i1 %i.d, label %.thread.i, label %bb.b
@@ -2068,11 +2028,11 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr i8, ptr %0, i64 24
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !115
-  %i.g = tail call ptr (ptr, ...) @Py_BuildValue(ptr noundef nonnull @.str.44, ptr noundef %i.b, ptr noundef %i.f, i64 noundef %i.c) #13, !inline_history !178
+  %i.g = tail call ptr (ptr, ...) @Py_BuildValue(ptr noundef nonnull @.str.44, ptr noundef %i.b, ptr noundef %i.f, i64 noundef %i.c) #13, !inline_history !175
   br label %listiter_reduce_general.exit
 
 .thread.i:                                        ; preds = %bb.a
-  %i.h = tail call ptr @PyList_New(i64 noundef 0), !inline_history !178 ; 2 uses
+  %i.h = tail call ptr @PyList_New(i64 noundef 0), !inline_history !175 ; 2 uses
   %i.i = icmp eq ptr %i.h, null
   br i1 %i.i, label %bb.c, label %bb.f
 
@@ -2088,11 +2048,11 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.l, label %bb.e, label %listiter_reduce_general.exit
 
 bb.e:                                             ; preds = %bb.d
-  tail call void @_Py_Dealloc(ptr noundef nonnull %i.b) #13, !inline_history !178
+  tail call void @_Py_Dealloc(ptr noundef nonnull %i.b) #13, !inline_history !175
   br label %listiter_reduce_general.exit
 
 bb.f:                                             ; preds = %.thread.i
-  %i.m = tail call ptr (ptr, ...) @Py_BuildValue(ptr noundef nonnull @.str.45, ptr noundef %i.b, ptr noundef nonnull %i.h) #13, !inline_history !178
+  %i.m = tail call ptr (ptr, ...) @Py_BuildValue(ptr noundef nonnull @.str.45, ptr noundef %i.b, ptr noundef nonnull %i.h) #13, !inline_history !175
   br label %listiter_reduce_general.exit
 
 listiter_reduce_general.exit:                     ; preds = %bb.b, %bb.c, %bb.d, %bb.e, %bb.f
@@ -2182,7 +2142,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 define internal ptr @listreviter_reduce(ptr nofree noundef readonly captures(none) %0, ptr nofree readnone captures(none) %1) #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 16
-  %i.b = tail call ptr @_PyEval_GetBuiltin(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 98152)) #13, !inline_history !178 ; 5 uses
+  %i.b = tail call ptr @_PyEval_GetBuiltin(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 98152)) #13, !inline_history !175 ; 5 uses
   %i.c = load i64, ptr %i.a, align 8, !tbaa !113  ; 2 uses
   %i.d = icmp slt i64 %i.c, 0
   br i1 %i.d, label %.thread.i, label %bb.b
@@ -2190,11 +2150,11 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr i8, ptr %0, i64 24
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !115
-  %i.g = tail call ptr (ptr, ...) @Py_BuildValue(ptr noundef nonnull @.str.44, ptr noundef %i.b, ptr noundef %i.f, i64 noundef %i.c) #13, !inline_history !178
+  %i.g = tail call ptr (ptr, ...) @Py_BuildValue(ptr noundef nonnull @.str.44, ptr noundef %i.b, ptr noundef %i.f, i64 noundef %i.c) #13, !inline_history !175
   br label %listiter_reduce_general.exit
 
 .thread.i:                                        ; preds = %bb.a
-  %i.h = tail call ptr @PyList_New(i64 noundef 0), !inline_history !178 ; 2 uses
+  %i.h = tail call ptr @PyList_New(i64 noundef 0), !inline_history !175 ; 2 uses
   %i.i = icmp eq ptr %i.h, null
   br i1 %i.i, label %bb.c, label %bb.f
 
@@ -2210,11 +2170,11 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.l, label %bb.e, label %listiter_reduce_general.exit
 
 bb.e:                                             ; preds = %bb.d
-  tail call void @_Py_Dealloc(ptr noundef nonnull %i.b) #13, !inline_history !178
+  tail call void @_Py_Dealloc(ptr noundef nonnull %i.b) #13, !inline_history !175
   br label %listiter_reduce_general.exit
 
 bb.f:                                             ; preds = %.thread.i
-  %i.m = tail call ptr (ptr, ...) @Py_BuildValue(ptr noundef nonnull @.str.45, ptr noundef %i.b, ptr noundef nonnull %i.h) #13, !inline_history !178
+  %i.m = tail call ptr (ptr, ...) @Py_BuildValue(ptr noundef nonnull @.str.45, ptr noundef %i.b, ptr noundef nonnull %i.h) #13, !inline_history !175
   br label %listiter_reduce_general.exit
 
 listiter_reduce_general.exit:                     ; preds = %bb.b, %bb.c, %bb.d, %bb.e, %bb.f
@@ -2464,23 +2424,20 @@ attributes #14 = { nounwind willreturn memory(read) }
 !157 = distinct !{!157, !54}
 !158 = distinct !{null}
 !159 = distinct !{null, null}
-!160 = distinct !{!160, !54, !161, !162}
-!161 = !{!"llvm.loop.isvectorized", i32 1}
-!162 = !{!"llvm.loop.unroll.runtime.disable"}
-!163 = distinct !{!163, !54, !162, !161}
-!164 = distinct !{!164, !54}
-!165 = !{!44, !13, i64 96}
-!166 = !{!167, !13, i64 264}
-!167 = !{!"", !13, i64 0, !13, i64 8, !13, i64 16, !13, i64 24, !13, i64 32, !13, i64 40, !13, i64 48, !13, i64 56, !13, i64 64, !13, i64 72, !13, i64 80, !13, i64 88, !13, i64 96, !13, i64 104, !13, i64 112, !13, i64 120, !13, i64 128, !13, i64 136, !13, i64 144, !13, i64 152, !13, i64 160, !13, i64 168, !13, i64 176, !13, i64 184, !13, i64 192, !13, i64 200, !13, i64 208, !13, i64 216, !13, i64 224, !13, i64 232, !13, i64 240, !13, i64 248, !13, i64 256, !13, i64 264, !13, i64 272, !13, i64 280}
-!168 = distinct !{null}
+!160 = distinct !{!160, !54}
+!161 = distinct !{!161, !54}
+!162 = !{!44, !13, i64 96}
+!163 = !{!164, !13, i64 264}
+!164 = !{!"", !13, i64 0, !13, i64 8, !13, i64 16, !13, i64 24, !13, i64 32, !13, i64 40, !13, i64 48, !13, i64 56, !13, i64 64, !13, i64 72, !13, i64 80, !13, i64 88, !13, i64 96, !13, i64 104, !13, i64 112, !13, i64 120, !13, i64 128, !13, i64 136, !13, i64 144, !13, i64 152, !13, i64 160, !13, i64 168, !13, i64 176, !13, i64 184, !13, i64 192, !13, i64 200, !13, i64 208, !13, i64 216, !13, i64 224, !13, i64 232, !13, i64 240, !13, i64 248, !13, i64 256, !13, i64 264, !13, i64 272, !13, i64 280}
+!165 = distinct !{null}
+!166 = distinct !{!166, !54}
+!167 = distinct !{!167, !54}
+!168 = distinct !{!168, !54}
 !169 = distinct !{!169, !54}
-!170 = distinct !{!170, !54}
-!171 = distinct !{!171, !54}
-!172 = distinct !{!172, !54}
-!173 = distinct !{null}
-!174 = !{!44, !17, i64 32}
+!170 = distinct !{null}
+!171 = !{!44, !17, i64 32}
+!172 = distinct !{null}
+!173 = distinct !{!173, !54}
+!174 = distinct !{!174, !54}
 !175 = distinct !{null}
-!176 = distinct !{!176, !54}
-!177 = distinct !{!177, !54}
-!178 = distinct !{null}
 end_hunk_0
