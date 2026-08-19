@@ -204,7 +204,7 @@ bb.as:                                            ; preds = %bb.at
   %i.hs = extractelement <8 x i16> %i.hr, i64 0
   %i.ht = zext i16 %i.hs to i32
   %i.hu = add nuw nsw i32 %.048.i.i, %i.ht        ; 2 uses
-  %i.hv = getelementptr i8, ptr %.06845.i.i, i64 8160
+  %i.hv = getelementptr nuw i8, ptr %.06845.i.i, i64 8160
   %.not.i.i = icmp ugt ptr %i.hv, %i.hb
   br i1 %.not.i.i, label %.preheader.i.i, label %.preheader38.i.i, !llvm.loop !195
 
@@ -488,7 +488,7 @@ bb.bb:                                            ; preds = %bb.bc
   %i.md = add nuw nsw <4 x i32> %i.mc, %i.ma
   %i.me = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.md)
   %i.mf = add i32 %i.me, %.026.i.i                ; 2 uses
-  %i.mg = getelementptr i8, ptr %.06823.i.i, i64 2097120
+  %i.mg = getelementptr nuw i8, ptr %.06823.i.i, i64 2097120
   %.not.i89.i = icmp ugt ptr %i.mg, %i.lw
   br i1 %.not.i89.i, label %.preheader.i90.i, label %.preheader16.i.i, !llvm.loop !200
 
@@ -891,7 +891,7 @@ bb.cc:                                            ; preds = %bb.cd
   %i.ub = add nuw nsw <4 x i32> %i.ua, %i.ty
   %i.uc = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.ub)
   %i.ud = add i32 %i.uc, %.026.i142.i             ; 2 uses
-  %i.ue = getelementptr i8, ptr %.06823.i145.i, i64 2097120
+  %i.ue = getelementptr nuw i8, ptr %.06823.i145.i, i64 2097120
   %.not.i154.i = icmp ugt ptr %i.ue, %i.tu
   br i1 %.not.i154.i, label %.preheader.i155.i, label %.preheader16.i141.i, !llvm.loop !214
 

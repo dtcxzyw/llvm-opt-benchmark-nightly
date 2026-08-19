@@ -203,7 +203,7 @@ bb.l:                                             ; preds = %.lr.ph23.i50, %.lr.
   br i1 %.not13.i52, label %_RNvNtNtCscuBBDlOF0VN_8schemars8__private7rustdoc10trim_ascii.exit53, label %.lr.ph23.i50
 
 _RNvNtNtCscuBBDlOF0VN_8schemars8__private7rustdoc10trim_ascii.exit53.loopexit86: ; preds = %.preheader.preheader.i
-  %scevgep.i37 = getelementptr i8, ptr %.sroa.0.016.i, i64 %.sroa.10.122.i
+  %scevgep.i37 = getelementptr nuw i8, ptr %.sroa.0.016.i, i64 %.sroa.10.122.i
   br label %_RNvNtNtCscuBBDlOF0VN_8schemars8__private7rustdoc10trim_ascii.exit53
 
 _RNvNtNtCscuBBDlOF0VN_8schemars8__private7rustdoc10trim_ascii.exit53: ; preds = %bb.k, %.lr.ph23.i50, %bb.l, %_RNvNtNtCscuBBDlOF0VN_8schemars8__private7rustdoc10trim_ascii.exit53.loopexit86, %_RNvNtNtCscuBBDlOF0VN_8schemars8__private7rustdoc8subslice.exit39
