@@ -1,8 +1,8 @@
 inline.NumInlined: 146
 inline.NumDeleted: 41
 loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumRuntimeUnrolled: 3
-loop-unroll.NumUnrolled: 4
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@xhci_ring_device:bb.a
   %i.g = getelementptr [160 x i8], ptr %i.f, i64 %indvars.iv ; 3 uses
   %i.h = getelementptr i8, ptr %i.g, i64 44
@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
 define dso_local i32 @xhci_hub_control(ptr noundef %0, i16 noundef zeroext %1, i16 noundef zeroext %2, i16 noundef zeroext %3, ptr nofree noundef captures(none) %4, i16 noundef zeroext %5) #1 align 16 prefalign(16) {
 bb.a:
-  %i.a = alloca [4 x i8], align 4                 ; 13 uses
+  %i.a = alloca [4 x i8], align 4                 ; 5 uses
   %i.b = alloca i64, align 8                      ; 14 uses
   %i.c = tail call i32 @usb_hcd_is_primary_hcd(ptr noundef %0) #9
   %.not.i = icmp eq i32 %i.c, 0
@@ -353,7 +353,7 @@ bb.h:                                             ; preds = %bb.e
   br i1 %.not6.i.i, label %._crit_edge.thread.i.i, label %.lr.ph.preheader.i9.i
 
 ._crit_edge.thread.i.i:                           ; preds = %bb.h
-  %i.bi = getelementptr i8, ptr %4, i64 7
+  %i.bi = getelementptr i8, ptr %4, i64 7         ; 2 uses
   store i32 -1, ptr %i.bi, align 1
   %i.bj = getelementptr i8, ptr %4, i64 11
   store i32 -1, ptr %i.bj, align 1
@@ -391,7 +391,7 @@ bb.i:                                             ; preds = %.lr.ph.i11.i
   br i1 %exitcond.not.i14.i, label %._crit_edge.i.i, label %.lr.ph.i11.i, !llvm.loop !16
 
 ._crit_edge.i.i:                                  ; preds = %.lr.ph._crit_edge.i.i
-  %i.bx = getelementptr i8, ptr %4, i64 7
+  %i.bx = getelementptr i8, ptr %4, i64 7         ; 2 uses
   store i32 -1, ptr %i.bx, align 1
   %i.by = getelementptr i8, ptr %4, i64 11
   store i32 -1, ptr %i.by, align 1
@@ -399,89 +399,15 @@ bb.i:                                             ; preds = %.lr.ph.i11.i
   br i1 %.not7.i.i, label %xhci_usb2_hub_descriptor.exit.i, label %.lr.ph4.preheader.i.i
 
 .lr.ph4.preheader.i.i:                            ; preds = %._crit_edge.i.i, %._crit_edge.thread.i.i
+  %6 = phi ptr [ %i.bi, %._crit_edge.thread.i.i ], [ %i.bx, %._crit_edge.i.i ]
   %i.bz = add nuw i32 %i.av, 8
-  %i.ca = sdiv i32 %i.bz, 8                       ; 2 uses
+  %i.ca = sdiv i32 %i.bz, 8
   %umax.i.i.a = tail call i32 @llvm.umax.i32(i32 %i.ca, i32 1)
-  %wide.trip.count12.i.i = zext i32 %umax.i.i.a to i64 ; 2 uses
-  %6 = getelementptr i8, ptr %4, i64 7            ; 9 uses
-  %xtraiter332 = and i64 %wide.trip.count12.i.i, 7 ; 3 uses
-  %7 = icmp ult i32 %i.ca, 8
-  br i1 %7, label %.lr.ph4.i.i.epil.preheader, label %.lr.ph4.preheader.i.i.new
+  %wide.trip.count12.i.i = zext i32 %umax.i.i.a to i64
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef align 1 %6, ptr noundef nonnull align 4 dereferenceable(1) %i.a, i64 %wide.trip.count12.i.i, i1 false)
+  br label %xhci_usb2_hub_descriptor.exit.i
 
-.lr.ph4.preheader.i.i.new:                        ; preds = %.lr.ph4.preheader.i.i
-  %unroll_iter336 = and i64 %wide.trip.count12.i.i, 4294967288
-  br label %.lr.ph4.i.i
-
-.lr.ph4.i.i:                                      ; preds = %.lr.ph4.i.i, %.lr.ph4.preheader.i.i.new
-  %indvars.iv9.i.i = phi i64 [ 0, %.lr.ph4.preheader.i.i.new ], [ %indvars.iv.next10.i.i.7, %.lr.ph4.i.i ] ; 10 uses
-  %niter337 = phi i64 [ 0, %.lr.ph4.preheader.i.i.new ], [ %niter337.next.7, %.lr.ph4.i.i ]
-  %8 = getelementptr i8, ptr %6, i64 %indvars.iv9.i.i
-  %9 = getelementptr i8, ptr %i.a, i64 %indvars.iv9.i.i
-  %10 = load i8, ptr %9, align 4
-  tail call void @llvm.memset.p0.i64(ptr noundef align 1 dereferenceable(1) %8, i8 %10, i64 1, i1 false)
-  %indvars.iv.next10.i.i = or disjoint i64 %indvars.iv9.i.i, 1 ; 2 uses
-  %11 = getelementptr i8, ptr %6, i64 %indvars.iv.next10.i.i
-  %12 = getelementptr i8, ptr %i.a, i64 %indvars.iv.next10.i.i
-  %13 = load i8, ptr %12, align 1
-  tail call void @llvm.memset.p0.i64(ptr noundef align 1 dereferenceable(1) %11, i8 %13, i64 1, i1 false)
-  %indvars.iv.next10.i.i.1 = or disjoint i64 %indvars.iv9.i.i, 2 ; 2 uses
-  %14 = getelementptr i8, ptr %6, i64 %indvars.iv.next10.i.i.1
-  %15 = getelementptr i8, ptr %i.a, i64 %indvars.iv.next10.i.i.1
-  %16 = load i8, ptr %15, align 2
-  tail call void @llvm.memset.p0.i64(ptr noundef align 1 dereferenceable(1) %14, i8 %16, i64 1, i1 false)
-  %indvars.iv.next10.i.i.2 = or disjoint i64 %indvars.iv9.i.i, 3 ; 2 uses
-  %17 = getelementptr i8, ptr %6, i64 %indvars.iv.next10.i.i.2
-  %18 = getelementptr i8, ptr %i.a, i64 %indvars.iv.next10.i.i.2
-  %19 = load i8, ptr %18, align 1
-  tail call void @llvm.memset.p0.i64(ptr noundef align 1 dereferenceable(1) %17, i8 %19, i64 1, i1 false)
-  %indvars.iv.next10.i.i.3 = or disjoint i64 %indvars.iv9.i.i, 4 ; 2 uses
-  %20 = getelementptr i8, ptr %6, i64 %indvars.iv.next10.i.i.3
-  %21 = getelementptr i8, ptr %i.a, i64 %indvars.iv.next10.i.i.3
-  %22 = load i8, ptr %21, align 4
-  tail call void @llvm.memset.p0.i64(ptr noundef align 1 dereferenceable(1) %20, i8 %22, i64 1, i1 false)
-  %indvars.iv.next10.i.i.4 = or disjoint i64 %indvars.iv9.i.i, 5 ; 2 uses
-  %23 = getelementptr i8, ptr %6, i64 %indvars.iv.next10.i.i.4
-  %24 = getelementptr i8, ptr %i.a, i64 %indvars.iv.next10.i.i.4
-  %25 = load i8, ptr %24, align 1
-  tail call void @llvm.memset.p0.i64(ptr noundef align 1 dereferenceable(1) %23, i8 %25, i64 1, i1 false)
-  %indvars.iv.next10.i.i.5 = or disjoint i64 %indvars.iv9.i.i, 6 ; 2 uses
-  %26 = getelementptr i8, ptr %6, i64 %indvars.iv.next10.i.i.5
-  %27 = getelementptr i8, ptr %i.a, i64 %indvars.iv.next10.i.i.5
-  %28 = load i8, ptr %27, align 2
-  tail call void @llvm.memset.p0.i64(ptr noundef align 1 dereferenceable(1) %26, i8 %28, i64 1, i1 false)
-  %indvars.iv.next10.i.i.6 = or disjoint i64 %indvars.iv9.i.i, 7 ; 2 uses
-  %29 = getelementptr i8, ptr %6, i64 %indvars.iv.next10.i.i.6
-  %30 = getelementptr i8, ptr %i.a, i64 %indvars.iv.next10.i.i.6
-  %31 = load i8, ptr %30, align 1
-  tail call void @llvm.memset.p0.i64(ptr noundef align 1 dereferenceable(1) %29, i8 %31, i64 1, i1 false)
-  %indvars.iv.next10.i.i.7 = add nuw nsw i64 %indvars.iv9.i.i, 8 ; 2 uses
-  %niter337.next.7 = add i64 %niter337, 8         ; 2 uses
-  %niter337.ncmp.7 = icmp eq i64 %niter337.next.7, %unroll_iter336
-  br i1 %niter337.ncmp.7, label %xhci_usb2_hub_descriptor.exit.i.loopexit.unr-lcssa, label %.lr.ph4.i.i, !llvm.loop !17
-
-xhci_usb2_hub_descriptor.exit.i.loopexit.unr-lcssa: ; preds = %.lr.ph4.i.i
-  %lcmp.mod334.not = icmp eq i64 %xtraiter332, 0
-  br i1 %lcmp.mod334.not, label %xhci_usb2_hub_descriptor.exit.i, label %.lr.ph4.i.i.epil.preheader
-
-.lr.ph4.i.i.epil.preheader:                       ; preds = %xhci_usb2_hub_descriptor.exit.i.loopexit.unr-lcssa, %.lr.ph4.preheader.i.i
-  %indvars.iv9.i.i.epil.init = phi i64 [ 0, %.lr.ph4.preheader.i.i ], [ %indvars.iv.next10.i.i.7, %xhci_usb2_hub_descriptor.exit.i.loopexit.unr-lcssa ]
-  %lcmp.mod335 = icmp ne i64 %xtraiter332, 0
-  tail call void @llvm.assume(i1 %lcmp.mod335)
-  br label %.lr.ph4.i.i.epil
-
-.lr.ph4.i.i.epil:                                 ; preds = %.lr.ph4.i.i.epil, %.lr.ph4.i.i.epil.preheader
-  %indvars.iv9.i.i.epil = phi i64 [ %indvars.iv9.i.i.epil.init, %.lr.ph4.i.i.epil.preheader ], [ %indvars.iv.next10.i.i.epil, %.lr.ph4.i.i.epil ] ; 3 uses
-  %epil.iter333 = phi i64 [ 0, %.lr.ph4.i.i.epil.preheader ], [ %epil.iter333.next, %.lr.ph4.i.i.epil ]
-  %32 = getelementptr i8, ptr %6, i64 %indvars.iv9.i.i.epil
-  %33 = getelementptr i8, ptr %i.a, i64 %indvars.iv9.i.i.epil
-  %34 = load i8, ptr %33, align 1
-  tail call void @llvm.memset.p0.i64(ptr noundef align 1 dereferenceable(1) %32, i8 %34, i64 1, i1 false)
-  %indvars.iv.next10.i.i.epil = add nuw nsw i64 %indvars.iv9.i.i.epil, 1
-  %epil.iter333.next = add i64 %epil.iter333, 1   ; 2 uses
-  %epil.iter333.cmp.not = icmp eq i64 %epil.iter333.next, %xtraiter332
-  br i1 %epil.iter333.cmp.not, label %xhci_usb2_hub_descriptor.exit.i, label %.lr.ph4.i.i.epil, !llvm.loop !18
-
-xhci_usb2_hub_descriptor.exit.i:                  ; preds = %xhci_usb2_hub_descriptor.exit.i.loopexit.unr-lcssa, %.lr.ph4.i.i.epil, %._crit_edge.i.i
+xhci_usb2_hub_descriptor.exit.i:                  ; preds = %.lr.ph4.preheader.i.i, %._crit_edge.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
   br label %xhci_hub_descriptor.exit
 
@@ -567,7 +493,7 @@ bb.l:                                             ; preds = %bb.k
   %i.dr = add nuw i32 %.0203256.i, 2              ; 2 uses
   %niter.next.1 = add nuw i32 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i32 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %._crit_edge.i.loopexit.unr-lcssa, label %.peel.next.i, !llvm.loop !20
+  br i1 %niter.ncmp.1, label %._crit_edge.i.loopexit.unr-lcssa, label %.peel.next.i, !llvm.loop !17
 
 ._crit_edge.i.loopexit.unr-lcssa:                 ; preds = %.peel.next.i
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
@@ -651,7 +577,7 @@ bb.n:                                             ; preds = %bb.n, %.preheader25
   %indvars.iv.next.i.3 = add nuw nsw i64 %indvars.iv.i, 4 ; 2 uses
   %niter330.next.3 = add i64 %niter330, 4         ; 2 uses
   %niter330.ncmp.3 = icmp eq i64 %niter330.next.3, %unroll_iter329
-  br i1 %niter330.ncmp.3, label %.unr-lcssa, label %bb.n, !llvm.loop !22
+  br i1 %niter330.ncmp.3, label %.unr-lcssa, label %bb.n, !llvm.loop !19
 
 .unr-lcssa:                                       ; preds = %bb.n
   %lcmp.mod326.not = icmp eq i64 %xtraiter325, 0
@@ -677,7 +603,7 @@ bb.o:                                             ; preds = %bb.o, %.epil.prehea
   %indvars.iv.next.i.epil = add nuw nsw i64 %indvars.iv.i.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter325
-  br i1 %epil.iter.cmp.not, label %.epilog-lcssa, label %bb.o, !llvm.loop !23
+  br i1 %epil.iter.cmp.not, label %.epilog-lcssa, label %bb.o, !llvm.loop !20
 
 .epilog-lcssa:                                    ; preds = %bb.o, %.unr-lcssa
   %spec.select.i.lcssa = phi i8 [ %spec.select.i.3, %.unr-lcssa ], [ %spec.select.i.epil, %bb.o ]
@@ -998,7 +924,7 @@ bb.ah:                                            ; preds = %.sink.split.i, %bb.
   %indvars.iv.next285.i = add nuw nsw i64 %indvars.iv284.i, 1 ; 2 uses
   %i.kn = zext i8 %i.km to i64
   %i.ko = icmp samesign ult i64 %indvars.iv.next285.i, %i.kn
-  br i1 %i.ko, label %.lr.ph272.i.peel.newph, label %.loopexit.loopexit278.i, !llvm.loop !24
+  br i1 %i.ko, label %.lr.ph272.i.peel.newph, label %.loopexit.loopexit278.i, !llvm.loop !22
 
 .loopexit.loopexit278.i:                          ; preds = %bb.ah, %bb.aa
   %.1195.i.lcssa321 = phi i8 [ %i.hp, %bb.aa ], [ %.1195.i, %bb.ah ]
@@ -1040,12 +966,12 @@ bb.ak:                                            ; preds = %bb.aj
 
 bb.al:                                            ; preds = %bb.aj
   callbr void asm sideeffect "1: jmp ${2:l} # objtool NOPs this \0A\09.pushsection __jump_table,  \22aw\22 \0A\09 .balign 8 \0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A.long 1b - . \0A\09.long ${2:l} - . \0A\09 .quad  ${0:c} + ${1:c} + 2 - . \0A\09.popsection \0A\09", "i,i,!i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull getelementptr inbounds nuw (i8, ptr @__tracepoint_xhci_get_port_status, i64 8), i1 false) #10
-          to label %trace_xhci_get_port_status.exit [label %arch_test_bit.exit.i.i], !srcloc !25
+          to label %trace_xhci_get_port_status.exit [label %arch_test_bit.exit.i.i], !srcloc !23
 
 arch_test_bit.exit.i.i:                           ; preds = %bb.al
-  %i.lc = tail call i32 asm sideeffect "movl %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i32) @cpu_number) #10, !srcloc !26
+  %i.lc = tail call i32 asm sideeffect "movl %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i32) @cpu_number) #10, !srcloc !24
   %i.ld = zext i32 %i.lc to i64
-  %i.le = tail call i8 asm sideeffect " btq  $2,$1", "={@ccc},*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i64) @__cpu_online_mask, i64 range(i64 -2147483648, 4294967296) %i.ld) #10, !srcloc !27 ; 2 uses
+  %i.le = tail call i8 asm sideeffect " btq  $2,$1", "={@ccc},*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i64) @__cpu_online_mask, i64 range(i64 -2147483648, 4294967296) %i.ld) #10, !srcloc !25 ; 2 uses
   %i.lf = icmp ult i8 %i.le, 2
   tail call void @llvm.assume(i1 %i.lf)
   %i.lg = trunc nuw i8 %i.le to i1
@@ -1053,8 +979,8 @@ arch_test_bit.exit.i.i:                           ; preds = %bb.al
 
 bb.am:                                            ; preds = %arch_test_bit.exit.i.i
   %i.lh = load volatile ptr, ptr @tracepoint_srcu, align 8 ; 3 uses
-  tail call void asm sideeffect "incq %gs:$0", "=*m,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.lh, ptr elementtype(i64) %i.lh) #10, !srcloc !28
-  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #10, !srcloc !29
+  tail call void asm sideeffect "incq %gs:$0", "=*m,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.lh, ptr elementtype(i64) %i.lh) #10, !srcloc !26
+  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #10, !srcloc !27
   %i.li = load volatile ptr, ptr getelementptr inbounds nuw (i8, ptr @__tracepoint_xhci_get_port_status, i64 56), align 8 ; 2 uses
   %.not.i.i275 = icmp eq ptr %i.li, null
   br i1 %.not.i.i275, label %bb.ao, label %bb.an
@@ -1066,9 +992,9 @@ bb.an:                                            ; preds = %bb.am
   br label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an, %bb.am
-  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #10, !srcloc !30
+  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #10, !srcloc !28
   %i.lm = getelementptr i8, ptr %i.lh, i64 8      ; 2 uses
-  tail call void asm sideeffect "incq %gs:$0", "=*m,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.lm, ptr elementtype(i64) %i.lm) #10, !srcloc !31
+  tail call void asm sideeffect "incq %gs:$0", "=*m,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.lm, ptr elementtype(i64) %i.lm) #10, !srcloc !29
   br label %trace_xhci_get_port_status.exit
 
 trace_xhci_get_port_status.exit:                  ; preds = %bb.al, %arch_test_bit.exit.i.i, %bb.ao
@@ -1308,7 +1234,7 @@ bb.bj:                                            ; preds = %hcd_to_xhci.exit.i.
 arch_test_bit.exit.i.i.i:                         ; preds = %bb.bj
   %i.pb = sext i32 %i.ox to i64                   ; 2 uses
   %i.pc = getelementptr i8, ptr %i.md, i64 56
-  %i.pd = tail call i8 asm sideeffect " btq  $2,$1", "={@ccc},*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.pc, i64 range(i64 -2147483648, 4294967296) %i.pb) #10, !srcloc !27 ; 2 uses
+  %i.pd = tail call i8 asm sideeffect " btq  $2,$1", "={@ccc},*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.pc, i64 range(i64 -2147483648, 4294967296) %i.pb) #10, !srcloc !25 ; 2 uses
   %i.pe = icmp ult i8 %i.pd, 2
   tail call void @llvm.assume(i1 %i.pe)
   %i.pf = trunc nuw i8 %i.pd to i1
@@ -1318,7 +1244,7 @@ arch_set_bit.exit.i.i.i:                          ; preds = %arch_test_bit.exit.
   %i.pg = load volatile i64, ptr @jiffies, align 64
   %i.ph = add i64 %i.pg, 40                       ; 2 uses
   %i.pi = getelementptr i8, ptr %i.md, i64 56
-  tail call void asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock  btsq  $1,$0", "*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.pi, i64 range(i64 -2147483648, 2147483648) %i.pb) #10, !srcloc !32
+  tail call void asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock  btsq  $1,$0", "*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.pi, i64 range(i64 -2147483648, 2147483648) %i.pb) #10, !srcloc !30
   store i64 %i.ph, ptr %i.oz, align 8
   %i.pj = getelementptr i8, ptr %i.os, i64 184
   %i.pk = tail call i32 @mod_timer(ptr noundef %i.pj, i64 noundef %i.ph) #9 ; 0 uses
@@ -1335,7 +1261,7 @@ arch_clear_bit.exit.i.i.i:                        ; preds = %bb.bk
   store i64 0, ptr %i.oz, align 8
   %i.po = getelementptr i8, ptr %i.md, i64 56
   %i.pp = sext i32 %i.ox to i64
-  tail call void asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock  btrq  $1,$0", "*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.po, i64 range(i64 -2147483648, 4294967296) %i.pp) #10, !srcloc !33
+  tail call void asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock  btrq  $1,$0", "*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.po, i64 range(i64 -2147483648, 4294967296) %i.pp) #10, !srcloc !31
   %i.pq = getelementptr i8, ptr %i.lu, i64 56     ; 2 uses
   store i32 0, ptr %i.pq, align 8
   %i.pr = getelementptr i8, ptr %i.lu, i64 48
@@ -1463,7 +1389,7 @@ bb.bt:                                            ; preds = %.critedge.i.i.i, %b
 
 bb.bu:                                            ; preds = %bb.bt
   %i.rs = getelementptr i8, ptr %i.lu, i64 48
-  %i.rt = load i8, ptr %i.rs, align 8, !range !34, !noundef !35
+  %i.rt = load i8, ptr %i.rs, align 8, !range !32, !noundef !33
   %i.ru = trunc nuw i8 %i.rt to i1
   br i1 %i.ru, label %bb.bv, label %bb.bw
 
@@ -1492,7 +1418,7 @@ bb.bx:                                            ; preds = %bb.bw, %bb.bg, %bb.
 arch_test_bit.exit.i.i278:                        ; preds = %bb.bx
   %i.ry = getelementptr i8, ptr %i.md, i64 56
   %i.rz = zext i32 %i.oe to i64                   ; 2 uses
-  %i.sa = tail call i8 asm sideeffect " btq  $2,$1", "={@ccc},*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.ry, i64 range(i64 -2147483648, 4294967296) %i.rz) #10, !srcloc !27 ; 2 uses
+  %i.sa = tail call i8 asm sideeffect " btq  $2,$1", "={@ccc},*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.ry, i64 range(i64 -2147483648, 4294967296) %i.rz) #10, !srcloc !25 ; 2 uses
   %i.sb = icmp ult i8 %i.sa, 2
   tail call void @llvm.assume(i1 %i.sb)
   %i.sc = trunc nuw i8 %i.sa to i1
@@ -1502,7 +1428,7 @@ arch_clear_bit.exit.i.i:                          ; preds = %arch_test_bit.exit.
   %.pre-phi.i.i = phi i64 [ %.pre.i31.i, %._crit_edge.i30.i ], [ %i.rz, %arch_test_bit.exit.i.i278 ]
   store i64 0, ptr %i.rw, align 8
   %i.sd = getelementptr i8, ptr %i.md, i64 56
-  tail call void asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock  btrq  $1,$0", "*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.sd, i64 range(i64 -2147483648, 4294967296) %.pre-phi.i.i) #10, !srcloc !33
+  tail call void asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock  btrq  $1,$0", "*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.sd, i64 range(i64 -2147483648, 4294967296) %.pre-phi.i.i) #10, !srcloc !31
   %i.se = load ptr, ptr %i.mc, align 8
   %i.sf = getelementptr i8, ptr %i.se, i64 16
   %i.sg = load ptr, ptr %i.sf, align 8
@@ -1905,7 +1831,7 @@ bb.dy:                                            ; preds = %bb.dx, %bb.dw, %bb.
   br label %.thread283
 
 bb.dz:                                            ; preds = %bb.cg
-  call fastcc void @xhci_set_port_power(ptr noundef %i.f, ptr noundef %i.tp, i1 noundef zeroext true, ptr noundef nonnull %i.b) #12, !srcloc !36
+  call fastcc void @xhci_set_port_power(ptr noundef %i.f, ptr noundef %i.tp, i1 noundef zeroext true, ptr noundef nonnull %i.b) #12, !srcloc !34
   br label %.thread283
 
 bb.ea:                                            ; preds = %bb.cg
@@ -1941,7 +1867,7 @@ bb.ee:                                            ; preds = %bb.ed
   %i.yp = or disjoint i32 %i.yo, %i.yk
   %i.yq = load ptr, ptr %i.tp, align 8
   %i.yr = getelementptr i8, ptr %i.yq, i64 4
-  tail call void asm sideeffect "movl $0,$1", "r,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(i32 %i.yp, ptr elementtype(i32) %i.yr) #10, !srcloc !37
+  tail call void asm sideeffect "movl $0,$1", "r,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(i32 %i.yp, ptr elementtype(i32) %i.yr) #10, !srcloc !35
   br label %.thread283
 
 bb.ef:                                            ; preds = %bb.cg
@@ -1959,7 +1885,7 @@ bb.eg:                                            ; preds = %bb.ef
   %i.za = or disjoint i32 %i.yy, %i.yz
   %i.zb = load ptr, ptr %i.tp, align 8
   %i.zc = getelementptr i8, ptr %i.zb, i64 4
-  tail call void asm sideeffect "movl $0,$1", "r,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(i32 %i.za, ptr elementtype(i32) %i.zc) #10, !srcloc !37
+  tail call void asm sideeffect "movl $0,$1", "r,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(i32 %i.za, ptr elementtype(i32) %i.zc) #10, !srcloc !35
   br label %.thread283
 
 bb.eh:                                            ; preds = %bb.cg
@@ -1975,7 +1901,7 @@ bb.ei:                                            ; preds = %bb.eh
   br i1 %or.cond12, label %xhci_hub_descriptor.exit, label %bb.ej
 
 bb.ej:                                            ; preds = %bb.ei
-  %i.zh = call fastcc i32 @xhci_enter_test_mode(ptr noundef %i.f, i16 noundef zeroext %i.ze, i32 noundef %i.tl, ptr noundef nonnull %i.b) #12, !srcloc !38
+  %i.zh = call fastcc i32 @xhci_enter_test_mode(ptr noundef %i.f, i16 noundef zeroext %i.ze, i32 noundef %i.tl, ptr noundef nonnull %i.b) #12, !srcloc !36
   br label %.thread283
 
 .thread283:                                       ; preds = %bb.de, %bb.df, %bb.cz, %bb.cy, %bb.cv, %bb.dy, %bb.cr, %bb.ej, %bb.eg, %bb.ee, %bb.ec, %bb.eb, %bb.ea, %bb.dz, %bb.cu, %bb.cq, %bb.cp, %bb.cn
@@ -2037,7 +1963,7 @@ bb.eq:                                            ; preds = %bb.ep
 
 arch_set_bit.exit:                                ; preds = %bb.eq
   %i.zz = getelementptr i8, ptr %.0.i271, i64 56  ; 2 uses
-  tail call void asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock  btsq  $1,$0", "*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.zz, i64 range(i64 -2147483648, 2147483648) %i.zn) #10, !srcloc !32
+  tail call void asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock  btsq  $1,$0", "*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.zz, i64 range(i64 -2147483648, 2147483648) %i.zn) #10, !srcloc !30
   tail call void @usb_hcd_start_port_resume(ptr noundef %0, i32 noundef %i.zl) #9
   tail call void @xhci_set_link_state(ptr poison, ptr noundef %i.zp, i32 noundef 480) #12
   tail call void @_raw_spin_unlock_irqrestore(ptr noundef %i.p, i64 noundef %i.q) #9
@@ -2048,7 +1974,7 @@ arch_set_bit.exit:                                ; preds = %bb.eq
   %i.aac = and i32 %i.aab, 1308687881
   %i.aad = or disjoint i32 %i.aac, 65536
   tail call void @xhci_portsc_writel(ptr noundef %i.zp, i32 noundef %i.aad) #9
-  tail call void asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock  btrq  $1,$0", "*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.zz, i64 range(i64 -2147483648, 4294967296) %i.zn) #10, !srcloc !33
+  tail call void asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock  btrq  $1,$0", "*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.zz, i64 range(i64 -2147483648, 4294967296) %i.zn) #10, !srcloc !31
   tail call void @usb_hcd_end_port_resume(ptr noundef %0, i32 noundef %i.zl) #9
   br label %bb.er
 
@@ -2102,15 +2028,15 @@ bb.ez:                                            ; preds = %bb.en, %bb.ey, %bb.
   br label %xhci_hub_descriptor.exit
 
 bb.fa:                                            ; preds = %bb.en
-  tail call fastcc void @xhci_disable_port(ptr noundef %i.f, ptr noundef %i.zp) #12, !srcloc !39
+  tail call fastcc void @xhci_disable_port(ptr noundef %i.f, ptr noundef %i.zp) #12, !srcloc !37
   br label %xhci_hub_descriptor.exit
 
 bb.fb:                                            ; preds = %bb.en
-  call fastcc void @xhci_set_port_power(ptr noundef %i.f, ptr noundef %i.zp, i1 noundef zeroext false, ptr noundef nonnull %i.b) #12, !srcloc !40
+  call fastcc void @xhci_set_port_power(ptr noundef %i.f, ptr noundef %i.zp, i1 noundef zeroext false, ptr noundef nonnull %i.b) #12, !srcloc !38
   br label %xhci_hub_descriptor.exit
 
 bb.fc:                                            ; preds = %bb.en
-  %i.aar = tail call fastcc i32 @xhci_exit_test_mode(ptr noundef %i.f) #12, !srcloc !41
+  %i.aar = tail call fastcc i32 @xhci_exit_test_mode(ptr noundef %i.f) #12, !srcloc !39
   br label %xhci_hub_descriptor.exit
 
 xhci_hub_descriptor.exit:                         ; preds = %bb.en, %bb.ez, %bb.de, %xhci_usb2_hub_descriptor.exit.i, %xhci_usb3_hub_descriptor.exit.i, %bb.ck, %bb.cm, %bb.ct, %bb.cx, %bb.f, %bb.j, %bb.k, %bb.ai, %xhci_get_port_status.exit, %bb.cd, %bb.ed, %bb.ef, %bb.eh, %bb.ei, %bb.cg, %bb.ek, %bb.eo, %bb.eq, %bb.er, %xhci_get_rhub.exit, %bb.cb, %bb.cc, %bb.es, %bb.fa, %bb.fb, %bb.fc, %bb.bz, %bb.em, %.thread283, %bb.cf, %bb.ak, %bb.d
@@ -2157,12 +2083,12 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   callbr void asm sideeffect "1: jmp ${2:l} # objtool NOPs this \0A\09.pushsection __jump_table,  \22aw\22 \0A\09 .balign 8 \0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A.long 1b - . \0A\09.long ${2:l} - . \0A\09 .quad  ${0:c} + ${1:c} + 2 - . \0A\09.popsection \0A\09", "i,i,!i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull getelementptr inbounds nuw (i8, ptr @__tracepoint_xhci_stop_device, i64 8), i1 false) #10
-          to label %trace_xhci_stop_device.exit [label %arch_test_bit.exit.i.i], !srcloc !25
+          to label %trace_xhci_stop_device.exit [label %arch_test_bit.exit.i.i], !srcloc !23
 
 arch_test_bit.exit.i.i:                           ; preds = %bb.b
-  %i.f = tail call i32 asm sideeffect "movl %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i32) @cpu_number) #10, !srcloc !42
+  %i.f = tail call i32 asm sideeffect "movl %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i32) @cpu_number) #10, !srcloc !40
   %i.g = zext i32 %i.f to i64
-  %i.h = tail call i8 asm sideeffect " btq  $2,$1", "={@ccc},*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i64) @__cpu_online_mask, i64 range(i64 -2147483648, 4294967296) %i.g) #10, !srcloc !27 ; 2 uses
+  %i.h = tail call i8 asm sideeffect " btq  $2,$1", "={@ccc},*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i64) @__cpu_online_mask, i64 range(i64 -2147483648, 4294967296) %i.g) #10, !srcloc !25 ; 2 uses
   %i.i = icmp ult i8 %i.h, 2
   tail call void @llvm.assume(i1 %i.i)
   %i.j = trunc nuw i8 %i.h to i1
@@ -2170,8 +2096,8 @@ arch_test_bit.exit.i.i:                           ; preds = %bb.b
 
 bb.c:                                             ; preds = %arch_test_bit.exit.i.i
   %i.k = load volatile ptr, ptr @tracepoint_srcu, align 8 ; 3 uses
-  tail call void asm sideeffect "incq %gs:$0", "=*m,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.k, ptr elementtype(i64) %i.k) #10, !srcloc !28
-  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #10, !srcloc !29
+  tail call void asm sideeffect "incq %gs:$0", "=*m,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.k, ptr elementtype(i64) %i.k) #10, !srcloc !26
+  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #10, !srcloc !27
   %i.l = load volatile ptr, ptr getelementptr inbounds nuw (i8, ptr @__tracepoint_xhci_stop_device, i64 56), align 8 ; 2 uses
   %.not.i.i = icmp eq ptr %i.l, null
   br i1 %.not.i.i, label %bb.e, label %bb.d
@@ -2183,9 +2109,9 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #10, !srcloc !30
+  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #10, !srcloc !28
   %i.p = getelementptr i8, ptr %i.k, i64 8        ; 2 uses
-  tail call void asm sideeffect "incq %gs:$0", "=*m,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.p, ptr elementtype(i64) %i.p) #10, !srcloc !31
+  tail call void asm sideeffect "incq %gs:$0", "=*m,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.p, ptr elementtype(i64) %i.p) #10, !srcloc !29
   br label %trace_xhci_stop_device.exit
 
 trace_xhci_stop_device.exit:                      ; preds = %bb.b, %arch_test_bit.exit.i.i, %bb.e
@@ -2244,7 +2170,7 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.i, %bb.l, %bb.g, %bb.h
   %indvars.iv.next = add nsw i64 %indvars.iv, -1
   %i.ag = icmp samesign ugt i64 %indvars.iv, 1
-  br i1 %i.ag, label %bb.g, label %bb.o, !llvm.loop !43
+  br i1 %i.ag, label %bb.g, label %bb.o, !llvm.loop !41
 
 bb.o:                                             ; preds = %bb.n
   %i.ah = tail call i32 @xhci_queue_stop_endpoint(ptr noundef %0, ptr noundef nonnull %i.q, i32 noundef %1, i32 noundef 0, i32 noundef 1) #9
@@ -2391,7 +2317,7 @@ bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b
   %i.l = load i8, ptr %i.c, align 8
   %i.m = zext i8 %i.l to i64
   %.not.not = icmp samesign ult i64 %indvars.iv, %i.m
-  br i1 %.not.not, label %bb.b, label %._crit_edge, !llvm.loop !44
+  br i1 %.not.not, label %bb.b, label %._crit_edge, !llvm.loop !42
 
 ._crit_edge:                                      ; preds = %bb.e, %bb.a
   %i.n = tail call i64 @_raw_spin_lock_irqsave(ptr noundef %i.a) #9
@@ -2449,7 +2375,7 @@ xhci_set_port_power.exit:                         ; preds = %bb.f, %bb.g
   %i.ao = add nuw i32 %.145, 1                    ; 2 uses
   %i.ap = load i32, ptr %i.o, align 8
   %i.aq = icmp ult i32 %i.ao, %i.ap
-  br i1 %i.aq, label %bb.f, label %.preheader, !llvm.loop !45
+  br i1 %i.aq, label %bb.f, label %.preheader, !llvm.loop !43
 
 bb.h:                                             ; preds = %.lr.ph49, %xhci_set_port_power.exit42
   %.248 = phi i32 [ 0, %.lr.ph49 ], [ %i.bl, %xhci_set_port_power.exit42 ] ; 2 uses
@@ -2485,7 +2411,7 @@ xhci_set_port_power.exit42:                       ; preds = %bb.h, %bb.i
   %i.bl = add nuw i32 %.248, 1                    ; 2 uses
   %i.bm = load i32, ptr %i.r, align 8
   %i.bn = icmp ult i32 %i.bl, %i.bm
-  br i1 %i.bn, label %bb.h, label %._crit_edge50, !llvm.loop !46
+  br i1 %i.bn, label %bb.h, label %._crit_edge50, !llvm.loop !44
 
 ._crit_edge50:                                    ; preds = %xhci_set_port_power.exit42, %.preheader
   %i.bo = tail call i32 @xhci_halt(ptr noundef %0) #9 ; 2 uses
@@ -2509,7 +2435,7 @@ bb.j:                                             ; preds = %._crit_edge50
   %i.ca = or i32 %i.bx, %i.bz
   %i.cb = load ptr, ptr %i.bu, align 8
   %i.cc = getelementptr i8, ptr %i.cb, i64 4
-  tail call void asm sideeffect "movl $0,$1", "r,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(i32 %i.ca, ptr elementtype(i32) %i.cc) #10, !srcloc !37
+  tail call void asm sideeffect "movl $0,$1", "r,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(i32 %i.ca, ptr elementtype(i32) %i.cc) #10, !srcloc !35
   %i.cd = getelementptr i8, ptr %0, i64 676
   store i16 %1, ptr %i.cd, align 4
   %i.ce = icmp eq i16 %1, 5
@@ -2691,12 +2617,12 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.h
   %i.ai = load ptr, ptr %i.ae, align 8
   callbr void asm sideeffect "1: jmp ${2:l} # objtool NOPs this \0A\09.pushsection __jump_table,  \22aw\22 \0A\09 .balign 8 \0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A.long 1b - . \0A\09.long ${2:l} - . \0A\09 .quad  ${0:c} + ${1:c} + 2 - . \0A\09.popsection \0A\09", "i,i,!i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull getelementptr inbounds nuw (i8, ptr @__tracepoint_xhci_hub_status_data, i64 8), i1 false) #10
-          to label %trace_xhci_hub_status_data.exit [label %arch_test_bit.exit.i.i], !srcloc !25
+          to label %trace_xhci_hub_status_data.exit [label %arch_test_bit.exit.i.i], !srcloc !23
 
 arch_test_bit.exit.i.i:                           ; preds = %bb.j
-  %i.aj = tail call i32 asm sideeffect "movl %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i32) @cpu_number) #10, !srcloc !47
+  %i.aj = tail call i32 asm sideeffect "movl %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i32) @cpu_number) #10, !srcloc !45
   %i.ak = zext i32 %i.aj to i64
-  %i.al = tail call i8 asm sideeffect " btq  $2,$1", "={@ccc},*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i64) @__cpu_online_mask, i64 range(i64 -2147483648, 4294967296) %i.ak) #10, !srcloc !27 ; 2 uses
+  %i.al = tail call i8 asm sideeffect " btq  $2,$1", "={@ccc},*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i64) @__cpu_online_mask, i64 range(i64 -2147483648, 4294967296) %i.ak) #10, !srcloc !25 ; 2 uses
   %i.am = icmp ult i8 %i.al, 2
   tail call void @llvm.assume(i1 %i.am)
   %i.an = trunc nuw i8 %i.al to i1
@@ -2704,8 +2630,8 @@ arch_test_bit.exit.i.i:                           ; preds = %bb.j
 
 bb.k:                                             ; preds = %arch_test_bit.exit.i.i
   %i.ao = load volatile ptr, ptr @tracepoint_srcu, align 8 ; 3 uses
-  tail call void asm sideeffect "incq %gs:$0", "=*m,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.ao, ptr elementtype(i64) %i.ao) #10, !srcloc !28
-  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #10, !srcloc !29
+  tail call void asm sideeffect "incq %gs:$0", "=*m,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.ao, ptr elementtype(i64) %i.ao) #10, !srcloc !26
+  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #10, !srcloc !27
   %i.ap = load volatile ptr, ptr getelementptr inbounds nuw (i8, ptr @__tracepoint_xhci_hub_status_data, i64 56), align 8 ; 2 uses
   %.not.i.i55 = icmp eq ptr %i.ap, null
   br i1 %.not.i.i55, label %bb.m, label %bb.l
@@ -2717,9 +2643,9 @@ bb.l:                                             ; preds = %bb.k
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k
-  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #10, !srcloc !30
+  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #10, !srcloc !28
   %i.at = getelementptr i8, ptr %i.ao, i64 8      ; 2 uses
-  tail call void asm sideeffect "incq %gs:$0", "=*m,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.at, ptr elementtype(i64) %i.at) #10, !srcloc !31
+  tail call void asm sideeffect "incq %gs:$0", "=*m,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.at, ptr elementtype(i64) %i.at) #10, !srcloc !29
   br label %trace_xhci_hub_status_data.exit
 
 trace_xhci_hub_status_data.exit:                  ; preds = %bb.j, %arch_test_bit.exit.i.i, %bb.m
@@ -2772,7 +2698,7 @@ bb.r:                                             ; preds = %bb.q, %bb.p, %bb.o
   %.3 = select i1 %.not53, i32 %.2, i32 1         ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.loopexit, label %bb.h, !llvm.loop !48
+  br i1 %exitcond.not, label %.loopexit, label %bb.h, !llvm.loop !46
 
 .loopexit:                                        ; preds = %bb.r, %bb.g, %bb.i
   %.04459 = phi i1 [ %.04461, %bb.i ], [ false, %bb.g ], [ %spec.select, %bb.r ]
@@ -2784,7 +2710,7 @@ bb.r:                                             ; preds = %bb.q, %bb.p, %bb.o
 
 bb.s:                                             ; preds = %.loopexit
   %i.bs = getelementptr i8, ptr %0, i64 320       ; 2 uses
-  tail call void asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock andb ${1:b},$0", "=*m,iq,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i8) %i.bs, i32 -5, ptr elementtype(i8) %i.bs) #10, !srcloc !49
+  tail call void asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock andb ${1:b},$0", "=*m,iq,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i8) %i.bs, i32 -5, ptr elementtype(i8) %i.bs) #10, !srcloc !47
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.s, %.loopexit
@@ -2810,7 +2736,7 @@ hcd_to_xhci.exit:                                 ; preds = %bb.a, %bb.b
   %.0.i = phi ptr [ %i.d, %bb.b ], [ %0, %bb.a ]  ; 3 uses
   %i.e = getelementptr i8, ptr %.0.i, i64 584
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(124) %i.a, i8 0, i64 124, i1 false), !annotation !50
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(124) %i.a, i8 0, i64 124, i1 false), !annotation !48
   %i.f = tail call i32 @usb_hcd_is_primary_hcd(ptr noundef %0) #9
   %.not.i.i = icmp eq i32 %i.f, 0
   br i1 %.not.i.i, label %bb.c, label %xhci_get_rhub.exit
@@ -2933,7 +2859,7 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %bb.k
   %i.ax = and i32 %.lcssa, 1308687873
   %i.ay = or disjoint i32 %i.ax, 65632
-  tail call void asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock  btsq  $1,$0", "*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.o, i64 range(i64 -2147483648, 2147483648) %i.ac) #10, !srcloc !32
+  tail call void asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock  btsq  $1,$0", "*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.o, i64 range(i64 -2147483648, 2147483648) %i.ac) #10, !srcloc !30
   br label %arch_set_bit.exit
 
 arch_set_bit.exit:                                ; preds = %bb.m, %bb.j
@@ -2977,7 +2903,7 @@ bb.s:                                             ; preds = %bb.r
 
 bb.t:                                             ; preds = %bb.r, %bb.s
   %.not102 = icmp eq i32 %i.ab, 0
-  br i1 %.not102, label %.lr.ph145, label %.preheader120, !llvm.loop !51
+  br i1 %.not102, label %.lr.ph145, label %.preheader120, !llvm.loop !49
 
 .lr.ph145:                                        ; preds = %bb.t, %.backedge
   %.in148 = phi i32 [ %i.bi, %.backedge ], [ %i.n, %bb.t ]
@@ -2990,7 +2916,7 @@ bb.t:                                             ; preds = %bb.r, %bb.s
   br i1 %.not105, label %.backedge, label %arch_test_bit.exit
 
 arch_test_bit.exit:                               ; preds = %.lr.ph145
-  %i.bm = tail call i8 asm sideeffect " btq  $2,$1", "={@ccc},*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.o, i64 range(i64 -2147483648, 4294967296) %i.bj) #10, !srcloc !27 ; 2 uses
+  %i.bm = tail call i8 asm sideeffect " btq  $2,$1", "={@ccc},*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.o, i64 range(i64 -2147483648, 4294967296) %i.bj) #10, !srcloc !25 ; 2 uses
   %i.bn = icmp ult i8 %i.bm, 2
   tail call void @llvm.assume(i1 %i.bn)
   %i.bo = trunc nuw i8 %i.bm to i1
@@ -3020,7 +2946,7 @@ bb.w:                                             ; preds = %bb.u, %bb.v, %arch_
 .backedge:                                        ; preds = %bb.w, %.lr.ph145
   %.294.be = phi i64 [ %.294144, %.lr.ph145 ], [ %.4, %bb.w ] ; 2 uses
   %.not103 = icmp eq i32 %i.bi, 0
-  br i1 %.not103, label %._crit_edge146, label %.lr.ph145, !llvm.loop !52
+  br i1 %.not103, label %._crit_edge146, label %.lr.ph145, !llvm.loop !50
 
 ._crit_edge146:                                   ; preds = %.backedge, %bb.g
   %.294.lcssa = phi i64 [ %i.v, %bb.g ], [ %.294.be, %.backedge ]
@@ -3166,15 +3092,15 @@ bb.n:                                             ; preds = %bb.m, %bb.m
   %i.au = or disjoint i32 %i.at, -2147483648
   tail call void @xhci_portsc_writel(ptr noundef %i.ap, i32 noundef %i.au) #9
   %i.av = tail call i32 @xhci_portsc_readl(ptr noundef %i.ap) #9 ; 0 uses
-  tail call void asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock  btrq  $1,$0", "*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.n, i64 range(i64 -2147483648, 4294967296) %i.ah) #10, !srcloc !33
+  tail call void asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock  btrq  $1,$0", "*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.n, i64 range(i64 -2147483648, 4294967296) %i.ah) #10, !srcloc !31
   br label %.backedge
 
 .backedge:                                        ; preds = %bb.n, %arch_clear_bit.exit106
   %.not95 = icmp eq i32 %i.ag, 0
-  br i1 %.not95, label %._crit_edge, label %bb.j, !llvm.loop !53
+  br i1 %.not95, label %._crit_edge, label %bb.j, !llvm.loop !51
 
 arch_test_bit.exit:                               ; preds = %bb.m, %bb.l, %bb.k, %bb.j
-  %i.aw = tail call i8 asm sideeffect " btq  $2,$1", "={@ccc},*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.n, i64 range(i64 -2147483648, 4294967296) %i.ah) #10, !srcloc !27 ; 2 uses
+  %i.aw = tail call i8 asm sideeffect " btq  $2,$1", "={@ccc},*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.n, i64 range(i64 -2147483648, 4294967296) %i.ah) #10, !srcloc !25 ; 2 uses
   %i.ax = icmp ult i8 %i.aw, 2
   tail call void @llvm.assume(i1 %i.ax)
   %i.ay = trunc nuw i8 %i.aw to i1
@@ -3193,7 +3119,7 @@ bb.p:                                             ; preds = %bb.o
   br label %arch_clear_bit.exit106
 
 bb.q:                                             ; preds = %bb.o
-  tail call void asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock  btrq  $1,$0", "*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.n, i64 range(i64 -2147483648, 4294967296) %i.ah) #10, !srcloc !33
+  tail call void asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock  btrq  $1,$0", "*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.n, i64 range(i64 -2147483648, 4294967296) %i.ah) #10, !srcloc !31
   br label %arch_clear_bit.exit106
 
 arch_clear_bit.exit106:                           ; preds = %bb.q, %bb.o, %bb.p, %arch_test_bit.exit
@@ -3232,7 +3158,7 @@ bb.u:                                             ; preds = %bb.t, %xhci_test_an
   br i1 %.not.i103, label %find_next_bit.exit105.thread, label %find_next_bit.exit105
 
 find_next_bit.exit105:                            ; preds = %bb.u
-  %i.bm = tail call i64 asm "tzcnt $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 1, 0) %i.bl) #13, !srcloc !54 ; 2 uses
+  %i.bm = tail call i64 asm "tzcnt $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 1, 0) %i.bl) #13, !srcloc !52 ; 2 uses
   %i.bn = trunc i64 %i.bm to i32
   %i.bo = icmp slt i32 %i.bn, 64
   br i1 %i.bo, label %bb.v, label %find_next_bit.exit105.thread
@@ -3261,7 +3187,7 @@ xhci_test_and_clear_bit.exit:                     ; preds = %bb.v, %bb.w
   %sext = add i64 %sext101, 4294967296
   %i.bz = ashr exact i64 %sext, 32                ; 2 uses
   %i.ca = icmp ugt i64 %i.bz, 63
-  br i1 %i.ca, label %find_next_bit.exit105.thread, label %bb.u, !prof !55, !llvm.loop !56
+  br i1 %i.ca, label %find_next_bit.exit105.thread, label %bb.u, !prof !53, !llvm.loop !54
 
 find_next_bit.exit105.thread:                     ; preds = %bb.u, %xhci_test_and_clear_bit.exit, %find_next_bit.exit105, %._crit_edge
   %.1 = phi i64 [ %i.u, %._crit_edge ], [ %.085, %find_next_bit.exit105 ], [ %.085, %xhci_test_and_clear_bit.exit ], [ %.085, %bb.u ] ; 2 uses
@@ -3278,7 +3204,7 @@ bb.x:                                             ; preds = %find_next_bit.exit1
   br i1 %.not.i, label %find_next_bit.exit.thread, label %find_next_bit.exit
 
 find_next_bit.exit:                               ; preds = %bb.x
-  %i.ch = tail call i64 asm "tzcnt $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 1, 0) %i.cg) #13, !srcloc !54 ; 2 uses
+  %i.ch = tail call i64 asm "tzcnt $1,$0", "=r,r,~{dirflag},~{fpsr},~{flags}"(i64 range(i64 1, 0) %i.cg) #13, !srcloc !52 ; 2 uses
   %i.ci = trunc i64 %i.ch to i32                  ; 2 uses
   %i.cj = icmp slt i32 %i.ci, 64
   br i1 %i.cj, label %bb.y, label %find_next_bit.exit.thread
@@ -3385,7 +3311,7 @@ xhci_ring_device.exit:                            ; preds = %.loopexit.i, %xhci_
   %sext97 = add i64 %sext98, 4294967296
   %i.dy = ashr exact i64 %sext97, 32              ; 2 uses
   %i.dz = icmp ugt i64 %i.dy, 63
-  br i1 %i.dz, label %find_next_bit.exit.thread, label %bb.x, !prof !55, !llvm.loop !57
+  br i1 %i.dz, label %find_next_bit.exit.thread, label %bb.x, !prof !53, !llvm.loop !55
 
 find_next_bit.exit.thread:                        ; preds = %bb.x, %xhci_ring_device.exit, %find_next_bit.exit
   %i.ea = getelementptr i8, ptr %.0.i108, i64 608
@@ -3461,12 +3387,12 @@ declare dso_local void @xhci_dbg_trace(ptr noundef, ptr noundef, ptr noundef, ..
 define internal void @trace_xhci_dbg_quirks(ptr noundef %0) #6 align 16 prefalign(16) {
 bb.a:
   callbr void asm sideeffect "1: jmp ${2:l} # objtool NOPs this \0A\09.pushsection __jump_table,  \22aw\22 \0A\09 .balign 8 \0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A.long 1b - . \0A\09.long ${2:l} - . \0A\09 .quad  ${0:c} + ${1:c} + 2 - . \0A\09.popsection \0A\09", "i,i,!i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull getelementptr inbounds nuw (i8, ptr @__tracepoint_xhci_dbg_quirks, i64 8), i1 false) #10
-          to label %arch_static_branch.exit [label %arch_test_bit.exit.i], !srcloc !25
+          to label %arch_static_branch.exit [label %arch_test_bit.exit.i], !srcloc !23
 
 arch_test_bit.exit.i:                             ; preds = %bb.a
-  %i.a = tail call i32 asm sideeffect "movl %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i32) @cpu_number) #10, !srcloc !58
+  %i.a = tail call i32 asm sideeffect "movl %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i32) @cpu_number) #10, !srcloc !56
   %i.b = zext i32 %i.a to i64
-  %i.c = tail call i8 asm sideeffect " btq  $2,$1", "={@ccc},*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i64) @__cpu_online_mask, i64 range(i64 -2147483648, 4294967296) %i.b) #10, !srcloc !27 ; 2 uses
+  %i.c = tail call i8 asm sideeffect " btq  $2,$1", "={@ccc},*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i64) @__cpu_online_mask, i64 range(i64 -2147483648, 4294967296) %i.b) #10, !srcloc !25 ; 2 uses
   %i.d = icmp ult i8 %i.c, 2
   tail call void @llvm.assume(i1 %i.d)
   %i.e = trunc nuw i8 %i.c to i1
@@ -3474,8 +3400,8 @@ arch_test_bit.exit.i:                             ; preds = %bb.a
 
 bb.b:                                             ; preds = %arch_test_bit.exit.i
   %i.f = load volatile ptr, ptr @tracepoint_srcu, align 8 ; 3 uses
-  tail call void asm sideeffect "incq %gs:$0", "=*m,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.f, ptr elementtype(i64) %i.f) #10, !srcloc !28
-  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #10, !srcloc !29
+  tail call void asm sideeffect "incq %gs:$0", "=*m,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.f, ptr elementtype(i64) %i.f) #10, !srcloc !26
+  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #10, !srcloc !27
   %i.g = load volatile ptr, ptr getelementptr inbounds nuw (i8, ptr @__tracepoint_xhci_dbg_quirks, i64 56), align 8 ; 2 uses
   %.not.i = icmp eq ptr %i.g, null
   br i1 %.not.i, label %bb.d, label %bb.c
@@ -3487,9 +3413,9 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #10, !srcloc !30
+  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #10, !srcloc !28
   %i.k = getelementptr i8, ptr %i.f, i64 8        ; 2 uses
-  tail call void asm sideeffect "incq %gs:$0", "=*m,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.k, ptr elementtype(i64) %i.k) #10, !srcloc !31
+  tail call void asm sideeffect "incq %gs:$0", "=*m,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.k, ptr elementtype(i64) %i.k) #10, !srcloc !29
   br label %arch_static_branch.exit
 
 arch_static_branch.exit:                          ; preds = %bb.d, %arch_test_bit.exit.i, %bb.a
@@ -3556,11 +3482,11 @@ declare dso_local i32 @__SCT__tp_func_xhci_hub_status_data(ptr noundef, ptr noun
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #7
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #8
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #2
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umax.i32(i32, i32) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.umax.i16(i16, i16) #8
@@ -3600,46 +3526,44 @@ attributes #13 = { nounwind memory(none) }
 !14 = distinct !{!14, !11}
 !15 = distinct !{!15, !11}
 !16 = distinct !{!16, !11}
-!17 = distinct !{!17, !11}
-!18 = distinct !{!18, !19}
-!19 = !{!"llvm.loop.unroll.disable"}
-!20 = distinct !{!20, !11, !21}
-!21 = !{!"llvm.loop.peeled.count", i32 1}
-!22 = distinct !{!22, !11}
-!23 = distinct !{!23, !19}
-!24 = distinct !{!24, !11, !21}
-!25 = !{i64 2148380980, i64 2148381020, i64 2148381137, i64 2148381158, i64 2148381201, i64 2148381216, i64 2148381249, i64 2148381283, i64 2148381307}
-!26 = !{i64 2159138759}
-!27 = !{i64 2149284905}
-!28 = !{i64 2151603720}
-!29 = !{i64 2151607022}
-!30 = !{i64 2151607444}
-!31 = !{i64 2151619226}
-!32 = !{i64 2149267897, i64 2149267936, i64 2149267957, i64 2149267994, i64 2149268017, i64 2149267888}
-!33 = !{i64 2149273270, i64 2149273309, i64 2149273330, i64 2149273367, i64 2149273390, i64 2149273261}
-!34 = !{i8 0, i8 2}
-!35 = !{}
-!36 = !{i64 42856}
-!37 = !{i64 2155726761}
-!38 = !{i64 44479}
-!39 = !{i64 46410}
-!40 = !{i64 46482}
-!41 = !{i64 46579}
-!42 = !{i64 2158172278}
+!17 = distinct !{!17, !11, !18}
+!18 = !{!"llvm.loop.peeled.count", i32 1}
+!19 = distinct !{!19, !11}
+!20 = distinct !{!20, !21}
+!21 = !{!"llvm.loop.unroll.disable"}
+!22 = distinct !{!22, !11, !18}
+!23 = !{i64 2148380980, i64 2148381020, i64 2148381137, i64 2148381158, i64 2148381201, i64 2148381216, i64 2148381249, i64 2148381283, i64 2148381307}
+!24 = !{i64 2159138759}
+!25 = !{i64 2149284905}
+!26 = !{i64 2151603720}
+!27 = !{i64 2151607022}
+!28 = !{i64 2151607444}
+!29 = !{i64 2151619226}
+!30 = !{i64 2149267897, i64 2149267936, i64 2149267957, i64 2149267994, i64 2149268017, i64 2149267888}
+!31 = !{i64 2149273270, i64 2149273309, i64 2149273330, i64 2149273367, i64 2149273390, i64 2149273261}
+!32 = !{i8 0, i8 2}
+!33 = !{}
+!34 = !{i64 42856}
+!35 = !{i64 2155726761}
+!36 = !{i64 44479}
+!37 = !{i64 46410}
+!38 = !{i64 46482}
+!39 = !{i64 46579}
+!40 = !{i64 2158172278}
+!41 = distinct !{!41, !11}
+!42 = distinct !{!42, !11}
 !43 = distinct !{!43, !11}
 !44 = distinct !{!44, !11}
-!45 = distinct !{!45, !11}
+!45 = !{i64 2159170339}
 !46 = distinct !{!46, !11}
-!47 = !{i64 2159170339}
-!48 = distinct !{!48, !11}
-!49 = !{i64 2149272973, i64 2149273012, i64 2149273033, i64 2149273070, i64 2149273093, i64 2149272964}
-!50 = !{!"auto-init"}
+!47 = !{i64 2149272973, i64 2149273012, i64 2149273033, i64 2149273070, i64 2149273093, i64 2149272964}
+!48 = !{!"auto-init"}
+!49 = distinct !{!49, !11}
+!50 = distinct !{!50, !11}
 !51 = distinct !{!51, !11}
-!52 = distinct !{!52, !11}
-!53 = distinct !{!53, !11}
-!54 = !{i64 1778796}
-!55 = !{!"branch_weights", i32 1, i32 1999}
-!56 = distinct !{!56, !11}
-!57 = distinct !{!57, !11}
-!58 = !{i64 2157584417}
+!52 = !{i64 1778796}
+!53 = !{!"branch_weights", i32 1, i32 1999}
+!54 = distinct !{!54, !11}
+!55 = distinct !{!55, !11}
+!56 = !{i64 2157584417}
 end_hunk_1
