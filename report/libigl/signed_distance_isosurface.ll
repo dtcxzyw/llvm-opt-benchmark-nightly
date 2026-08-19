@@ -204,7 +204,7 @@ bb.t:                                             ; preds = %bb.s
 
 bb.u:                                             ; preds = %bb.s, %bb.t, %bb.r, %bb.p
   %.187 = phi i64 [ %i.y, %bb.p ], [ %i.bq, %bb.r ], [ %i.y, %bb.t ], [ %i.y, %bb.s ] ; 12 uses
-  %.0 = phi i64 [ %i.bf, %bb.p ], [ 0, %bb.r ], [ 1, %bb.t ], [ 1, %bb.s ] ; 12 uses
+  %.0 = phi i64 [ %i.bf, %bb.p ], [ 0, %bb.r ], [ 1, %bb.t ], [ 1, %bb.s ] ; 11 uses
   %i.cc = add nsw i64 %i.b, 2                     ; 2 uses
   %i.cd = sub nsw i64 %.187, %.0                  ; 2 uses
   %.not96107 = icmp slt i64 %i.cd, %i.cc
@@ -213,8 +213,8 @@ bb.u:                                             ; preds = %bb.s, %bb.t, %bb.r,
 .lr.ph:                                           ; preds = %bb.u
   %invariant.op = add i64 %.187, -2               ; 2 uses
   %i.ce = sub nuw nsw i64 64, %i.d                ; 2 uses
-  %2 = add i64 %.187, -1                          ; 2 uses
-  %3 = sub i64 %2, %.0
+  %2 = xor i64 %.0, -1
+  %3 = add i64 %.187, %2                          ; 2 uses
   %i.cf = add i64 %i.b, 1
   %i.cg = tail call i64 @llvm.smin.i64(i64 %3, i64 %i.cf)
   %i.ch = add i64 %.0, %i.cg
@@ -291,8 +291,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
 
 middle.block:                                     ; preds = %vector.body
   %i.dq = add i64 %n.vec, -1
-  %4 = add i64 %.0, %i.dq
-  %i.dr = sub i64 %2, %4
+  %i.dr = sub i64 %3, %i.dq
   %cmp.n = icmp eq i64 %i.ci, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %scalar.ph.preheader
 
@@ -695,7 +694,7 @@ bb.t:                                             ; preds = %bb.s
 
 bb.u:                                             ; preds = %bb.s, %bb.t, %bb.r, %bb.p
   %.187 = phi i64 [ %i.y, %bb.p ], [ %i.bq, %bb.r ], [ %i.y, %bb.t ], [ %i.y, %bb.s ] ; 12 uses
-  %.0 = phi i64 [ %i.bf, %bb.p ], [ 0, %bb.r ], [ 1, %bb.t ], [ 1, %bb.s ] ; 12 uses
+  %.0 = phi i64 [ %i.bf, %bb.p ], [ 0, %bb.r ], [ 1, %bb.t ], [ 1, %bb.s ] ; 11 uses
   %i.cc = add nsw i64 %i.b, 2                     ; 2 uses
   %i.cd = sub nsw i64 %.187, %.0                  ; 2 uses
   %.not96107 = icmp slt i64 %i.cd, %i.cc
@@ -704,8 +703,8 @@ bb.u:                                             ; preds = %bb.s, %bb.t, %bb.r,
 .lr.ph:                                           ; preds = %bb.u
   %invariant.op = add i64 %.187, -2               ; 2 uses
   %i.ce = sub nuw nsw i64 64, %i.d                ; 2 uses
-  %2 = add i64 %.187, -1                          ; 2 uses
-  %3 = sub i64 %2, %.0
+  %2 = xor i64 %.0, -1
+  %3 = add i64 %.187, %2                          ; 2 uses
   %i.cf = add i64 %i.b, 1
   %i.cg = tail call i64 @llvm.smin.i64(i64 %3, i64 %i.cf)
   %i.ch = add i64 %.0, %i.cg
@@ -782,8 +781,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
 
 middle.block:                                     ; preds = %vector.body
   %i.dq = add i64 %n.vec, -1
-  %4 = add i64 %.0, %i.dq
-  %i.dr = sub i64 %2, %4
+  %i.dr = sub i64 %3, %i.dq
   %cmp.n = icmp eq i64 %i.ci, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %scalar.ph.preheader
 
