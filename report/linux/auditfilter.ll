@@ -203,24 +203,31 @@ parent_len.exit:                                  ; preds = %bb.f, %bb.c, %bb.b
   %i.z = getelementptr i8, ptr %1, i64 %i.y       ; 2 uses
   %i.aa = sub i32 %i.d, %.019                     ; 3 uses
   %i.ab = icmp sgt i32 %i.aa, 0
-  br i1 %i.ab, label %.lr.ph, label %.critedge
+  br i1 %i.ab, label %.lr.ph.preheader, label %.critedge
 
-.lr.ph:                                           ; preds = %parent_len.exit, %bb.g
-  %.024 = phi i32 [ %4, %bb.g ], [ %i.aa, %parent_len.exit ] ; 4 uses
-  %3 = zext nneg i32 %.024 to i64
-  %i.ac = getelementptr i8, ptr %i.z, i64 %3
+.lr.ph.preheader:                                 ; preds = %parent_len.exit
+  %3 = zext nneg i32 %i.aa to i64
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.g
+  %indvars.iv = phi i64 [ %3, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.g ] ; 4 uses
+  %i.ac = getelementptr i8, ptr %i.z, i64 %indvars.iv
   %i.ad = getelementptr i8, ptr %i.ac, i64 -1
   %i.ae = load i8, ptr %i.ad, align 1
   %i.af = icmp eq i8 %i.ae, 47
-  br i1 %i.af, label %bb.g, label %.critedge
+  br i1 %i.af, label %bb.g, label %.critedge.loopexit.split.loop.exit31
 
 bb.g:                                             ; preds = %.lr.ph
-  %4 = add nsw i32 %.024, -1
-  %i.ag = icmp sgt i32 %.024, 1
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %i.ag = icmp sgt i64 %indvars.iv, 1
   br i1 %i.ag, label %.lr.ph, label %.critedge, !llvm.loop !46
 
-.critedge:                                        ; preds = %.lr.ph, %bb.g, %parent_len.exit
-  %.0.lcssa = phi i32 [ %i.aa, %parent_len.exit ], [ 0, %bb.g ], [ %.024, %.lr.ph ]
+.critedge.loopexit.split.loop.exit31:             ; preds = %.lr.ph
+  %4 = trunc nuw nsw i64 %indvars.iv to i32
+  br label %.critedge
+
+.critedge:                                        ; preds = %bb.g, %.critedge.loopexit.split.loop.exit31, %parent_len.exit
+  %.0.lcssa = phi i32 [ %i.aa, %parent_len.exit ], [ %4, %.critedge.loopexit.split.loop.exit31 ], [ 0, %bb.g ]
   %.not = icmp eq i32 %.0.lcssa, %i.b
   br i1 %.not, label %bb.h, label %bb.i
 

@@ -204,26 +204,29 @@ GetFileName.exit.i:                               ; preds = %.lr.ph.i.i.i
   %i.s = getelementptr inbounds nuw i8, ptr %.03.i.i.i, i64 1
   %.06.i.i = select i1 %i.r, ptr %2, ptr %i.s
   %i.t = tail call ptr @strncpy(ptr noundef nonnull dereferenceable(1) @GetFileNameWithoutExt.fileName, ptr noundef nonnull dereferenceable(1) %.06.i.i, i64 noundef 255) #56 ; 0 uses
-  %i.u = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) @GetFileNameWithoutExt.fileName) #57
-  %i.v = trunc i64 %i.u to i32                    ; 2 uses
+  %i.u = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) @GetFileNameWithoutExt.fileName) #57 ; 2 uses
+  %i.v = trunc i64 %i.u to i32
   %i.w = icmp sgt i32 %i.v, 0
-  br i1 %i.w, label %.lr.ph.i, label %GetFileNameWithoutExt.exit
+  br i1 %i.w, label %.lr.ph.preheader.i, label %GetFileNameWithoutExt.exit
+
+.lr.ph.preheader.i:                               ; preds = %GetFileName.exit.i
+  %3 = and i64 %i.u, 2147483647
+  br label %.lr.ph.i
 
 bb.b:                                             ; preds = %.lr.ph.i
-  %3 = add nsw i32 %.08.i, -1
-  %i.x = icmp sgt i32 %.08.i, 1
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
+  %i.x = icmp sgt i64 %indvars.iv.i, 1
   br i1 %i.x, label %.lr.ph.i, label %GetFileNameWithoutExt.exit
 
-.lr.ph.i:                                         ; preds = %GetFileName.exit.i, %bb.b
-  %.08.i = phi i32 [ %3, %bb.b ], [ %i.v, %GetFileName.exit.i ] ; 3 uses
-  %4 = zext nneg i32 %.08.i to i64                ; 2 uses
-  %i.y = getelementptr inbounds nuw i8, ptr @GetFileNameWithoutExt.fileName, i64 %4
+.lr.ph.i:                                         ; preds = %bb.b, %.lr.ph.preheader.i
+  %indvars.iv.i = phi i64 [ %3, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.b ] ; 4 uses
+  %i.y = getelementptr inbounds nuw i8, ptr @GetFileNameWithoutExt.fileName, i64 %indvars.iv.i
   %i.z = load i8, ptr %i.y, align 1
   %i.aa = icmp eq i8 %i.z, 46
   br i1 %i.aa, label %bb.c, label %bb.b
 
 bb.c:                                             ; preds = %.lr.ph.i
-  %i.ab = getelementptr inbounds nuw i8, ptr @GetFileNameWithoutExt.fileName, i64 %4
+  %i.ab = getelementptr inbounds nuw i8, ptr @GetFileNameWithoutExt.fileName, i64 %indvars.iv.i
   store i8 0, ptr %i.ab, align 1
   br label %GetFileNameWithoutExt.exit
 
@@ -348,26 +351,29 @@ GetFileName.exit:                                 ; preds = %.lr.ph.i.i
   %i.d = getelementptr inbounds nuw i8, ptr %.03.i.i, i64 1
   %.06.i = select i1 %i.c, ptr %0, ptr %i.d
   %i.e = tail call ptr @strncpy(ptr noundef nonnull dereferenceable(1) @GetFileNameWithoutExt.fileName, ptr noundef nonnull dereferenceable(1) %.06.i, i64 noundef 255) #56 ; 0 uses
-  %i.f = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) @GetFileNameWithoutExt.fileName) #57
-  %i.g = trunc i64 %i.f to i32                    ; 2 uses
+  %i.f = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) @GetFileNameWithoutExt.fileName) #57 ; 2 uses
+  %i.g = trunc i64 %i.f to i32
   %i.h = icmp sgt i32 %i.g, 0
-  br i1 %i.h, label %.lr.ph, label %.loopexit
+  br i1 %i.h, label %.lr.ph.preheader, label %.loopexit
+
+.lr.ph.preheader:                                 ; preds = %GetFileName.exit
+  %1 = and i64 %i.f, 2147483647
+  br label %.lr.ph
 
 bb.b:                                             ; preds = %.lr.ph
-  %1 = add nsw i32 %.08, -1
-  %i.i = icmp sgt i32 %.08, 1
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %i.i = icmp sgt i64 %indvars.iv, 1
   br i1 %i.i, label %.lr.ph, label %.loopexit
 
-.lr.ph:                                           ; preds = %GetFileName.exit, %bb.b
-  %.08 = phi i32 [ %1, %bb.b ], [ %i.g, %GetFileName.exit ] ; 3 uses
-  %2 = zext nneg i32 %.08 to i64                  ; 2 uses
-  %i.j = getelementptr inbounds nuw i8, ptr @GetFileNameWithoutExt.fileName, i64 %2
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
+  %indvars.iv = phi i64 [ %1, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.b ] ; 4 uses
+  %i.j = getelementptr inbounds nuw i8, ptr @GetFileNameWithoutExt.fileName, i64 %indvars.iv
   %i.k = load i8, ptr %i.j, align 1
   %i.l = icmp eq i8 %i.k, 46
   br i1 %i.l, label %bb.c, label %bb.b
 
 bb.c:                                             ; preds = %.lr.ph
-  %i.m = getelementptr inbounds nuw i8, ptr @GetFileNameWithoutExt.fileName, i64 %2
+  %i.m = getelementptr inbounds nuw i8, ptr @GetFileNameWithoutExt.fileName, i64 %indvars.iv
   store i8 0, ptr %i.m, align 1
   br label %.loopexit
 
@@ -770,30 +776,33 @@ declare ptr @getcwd(ptr noundef, i64 noundef) local_unnamed_addr #42
 define noundef nonnull ptr @GetApplicationDirectory() local_unnamed_addr #45 {
 bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(4096) @GetApplicationDirectory.appDir, i8 0, i64 4096, i1 false)
-  %i.a = tail call i64 @readlink(ptr noundef nonnull @.str.239, ptr noundef nonnull @GetApplicationDirectory.appDir, i64 noundef 4096) #56 ; 2 uses
+  %i.a = tail call i64 @readlink(ptr noundef nonnull @.str.239, ptr noundef nonnull @GetApplicationDirectory.appDir, i64 noundef 4096) #56 ; 3 uses
   %i.b = icmp sgt i64 %i.a, 0
   br i1 %i.b, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
-  %0 = trunc i64 %i.a to i32                      ; 2 uses
-  %1 = icmp sgt i32 %0, -1
-  br i1 %1, label %.lr.ph, label %.loopexit
+  %0 = and i64 %i.a, 2147483648
+  %1 = icmp eq i64 %0, 0
+  br i1 %1, label %.lr.ph.preheader, label %.loopexit
+
+.lr.ph.preheader:                                 ; preds = %bb.b
+  %2 = and i64 %i.a, 2147483647
+  br label %.lr.ph
 
 bb.c:                                             ; preds = %.lr.ph
-  %2 = add nsw i32 %.09, -1
-  %i.c = icmp sgt i32 %.09, 0
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %i.c = icmp sgt i64 %indvars.iv, 0
   br i1 %i.c, label %.lr.ph, label %.loopexit
 
-.lr.ph:                                           ; preds = %bb.b, %bb.c
-  %.09 = phi i32 [ %2, %bb.c ], [ %0, %bb.b ]     ; 3 uses
-  %3 = zext nneg i32 %.09 to i64                  ; 2 uses
-  %i.d = getelementptr inbounds nuw i8, ptr @GetApplicationDirectory.appDir, i64 %3
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.c
+  %indvars.iv = phi i64 [ %2, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.c ] ; 4 uses
+  %i.d = getelementptr inbounds nuw i8, ptr @GetApplicationDirectory.appDir, i64 %indvars.iv
   %i.e = load i8, ptr %i.d, align 1
   %i.f = icmp eq i8 %i.e, 47
   br i1 %i.f, label %bb.d, label %bb.c
 
 bb.d:                                             ; preds = %.lr.ph
-  %i.g = getelementptr inbounds nuw i8, ptr @GetApplicationDirectory.appDir, i64 %3
+  %i.g = getelementptr inbounds nuw i8, ptr @GetApplicationDirectory.appDir, i64 %indvars.iv
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 1
   store i8 0, ptr %i.h, align 1
   br label %.loopexit

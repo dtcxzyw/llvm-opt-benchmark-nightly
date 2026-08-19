@@ -54,28 +54,35 @@ bb.d:                                             ; preds = %bb.c
 
 .preheader:                                       ; preds = %bb.d
   %.not = icmp eq i32 %2, 0
-  br i1 %.not, label %.critedge, label %.lr.ph
+  br i1 %.not, label %.critedge, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %.preheader
+  %5 = zext nneg i32 %2 to i64
+  br label %.lr.ph
 
 bb.e:                                             ; preds = %bb.d, %bb.c
   store i32 1, ptr %4, align 4, !tbaa !12
   br label %bb.i
 
-.lr.ph:                                           ; preds = %.preheader, %bb.f
-  %.047 = phi i32 [ %6, %bb.f ], [ %2, %.preheader ] ; 4 uses
-  %5 = zext nneg i32 %.047 to i64
-  %i.i = getelementptr i8, ptr %1, i64 %5
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.f
+  %indvars.iv = phi i64 [ %5, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.f ] ; 4 uses
+  %i.i = getelementptr i8, ptr %1, i64 %indvars.iv
   %i.j = getelementptr i8, ptr %i.i, i64 -1
   %i.k = load i8, ptr %i.j, align 1, !tbaa !14
   %.not43 = icmp eq i8 %i.k, 0
-  br i1 %.not43, label %.critedge, label %bb.f
+  br i1 %.not43, label %.critedge.loopexit.split.loop.exit55, label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph
-  %6 = add nsw i32 %.047, -1
-  %i.l = icmp sgt i32 %.047, 1
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %i.l = icmp sgt i64 %indvars.iv, 1
   br i1 %i.l, label %.lr.ph, label %.critedge, !llvm.loop !15
 
-.critedge:                                        ; preds = %.lr.ph, %bb.f, %.preheader
-  %.0.lcssa = phi i32 [ 0, %.preheader ], [ 0, %bb.f ], [ %.047, %.lr.ph ] ; 4 uses
+.critedge.loopexit.split.loop.exit55:             ; preds = %.lr.ph
+  %6 = trunc nuw nsw i64 %indvars.iv to i32
+  br label %.critedge
+
+.critedge:                                        ; preds = %bb.f, %.critedge.loopexit.split.loop.exit55, %.preheader
+  %.0.lcssa = phi i32 [ 0, %.preheader ], [ %6, %.critedge.loopexit.split.loop.exit55 ], [ 0, %bb.f ] ; 4 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !17
   %i.o = tail call noundef i32 %i.n(ptr noundef %0, ptr noundef nonnull %1, i32 noundef %.0.lcssa, ptr noundef %3, ptr noundef nonnull %4) ; 0 uses

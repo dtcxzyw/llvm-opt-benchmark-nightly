@@ -203,20 +203,20 @@ bytestream2_peek_be32.exit.thread:                ; preds = %bytestream2_peek_be
 
 .lr.ph.i147:                                      ; preds = %bytestream2_peek_be32.exit.thread
   %i.fm = load ptr, ptr %i.er, align 8, !tbaa !19
+  %7 = zext nneg i32 %i.fk to i64
   br label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ar, %.lr.ph.i147
-  %.02136.i = phi i32 [ %i.fk, %.lr.ph.i147 ], [ %8, %bb.ar ] ; 4 uses
-  %7 = zext nneg i32 %.02136.i to i64
-  %i.fn = getelementptr i8, ptr %i.fm, i64 %7
+  %indvars.iv.i148 = phi i64 [ %7, %.lr.ph.i147 ], [ %indvars.iv.next.i149, %bb.ar ] ; 4 uses
+  %i.fn = getelementptr i8, ptr %i.fm, i64 %indvars.iv.i148
   %i.fo = getelementptr i8, ptr %i.fn, i64 -1
   %i.fp = load i8, ptr %i.fo, align 1, !tbaa !15
   %i.fq = icmp eq i8 %i.fp, 0
-  br i1 %i.fq, label %bb.ar, label %.critedge.thread.i
+  br i1 %i.fq, label %bb.ar, label %.critedge.thread.loopexit.i
 
 bb.ar:                                            ; preds = %bb.aq
-  %8 = add nsw i32 %.02136.i, -1
-  %i.fr = icmp sgt i32 %.02136.i, 1
+  %indvars.iv.next.i149 = add nsw i64 %indvars.iv.i148, -1
+  %i.fr = icmp sgt i64 %indvars.iv.i148, 1
   br i1 %i.fr, label %bb.aq, label %get_bit_length.exit.thread, !llvm.loop !51
 
 .critedge.i:                                      ; preds = %.thread223, %bytestream2_peek_be32.exit.thread
@@ -224,9 +224,13 @@ bb.ar:                                            ; preds = %bb.aq
   %.not.i146 = icmp eq i32 %i.fs, 0
   br i1 %.not.i146, label %get_bit_length.exit.thread, label %.critedge.thread.i
 
-.critedge.thread.i:                               ; preds = %bb.aq, %.critedge.i
-  %i.ft = phi i32 [ %i.fs, %.critedge.i ], [ %i.fk, %bb.aq ] ; 2 uses
-  %.02134.i = phi i32 [ %i.fs, %.critedge.i ], [ %.02136.i, %bb.aq ] ; 4 uses
+.critedge.thread.loopexit.i:                      ; preds = %bb.aq
+  %8 = trunc nuw nsw i64 %indvars.iv.i148 to i32
+  br label %.critedge.thread.i
+
+.critedge.thread.i:                               ; preds = %.critedge.thread.loopexit.i, %.critedge.i
+  %i.ft = phi i32 [ %i.fs, %.critedge.i ], [ %i.fk, %.critedge.thread.loopexit.i ] ; 2 uses
+  %.02134.i = phi i32 [ %i.fs, %.critedge.i ], [ %8, %.critedge.thread.loopexit.i ] ; 4 uses
   %.not26.i = icmp sgt i32 %.02134.i, %i.at
   br i1 %.not26.i, label %bb.at, label %bb.as
 

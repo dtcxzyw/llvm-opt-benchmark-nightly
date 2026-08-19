@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.h
 }
 
 ; Function Attrs: nounwind uwtable
-define range(i32 2147483647, 2147483617) i32 @Fra_ClausSelectClauses(ptr nofree noundef captures(none) %0) local_unnamed_addr #0 {
+define i32 @Fra_ClausSelectClauses(ptr nofree noundef captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 44
   %i.b = load i32, ptr %i.a, align 4, !tbaa !87   ; 2 uses
@@ -260,6 +260,7 @@ bb.b:                                             ; preds = %.epil.preheader
 .lr.ph60:                                         ; preds = %.critedge.preheader
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.v = load i32, ptr %i.u, align 8, !tbaa !92
+  %1 = zext nneg i32 %i.c to i64
   br label %bb.h
 
 bb.c:                                             ; preds = %bb.g, %.lr.ph.new
@@ -300,22 +301,22 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br i1 %niter.ncmp.1, label %.critedge.preheader.loopexit.unr-lcssa, label %bb.c, !llvm.loop !93
 
 bb.h:                                             ; preds = %.lr.ph60, %.critedge
-  %.059 = phi i32 [ %i.c, %.lr.ph60 ], [ %2, %.critedge ] ; 4 uses
+  %indvars.iv70 = phi i64 [ %1, %.lr.ph60 ], [ %indvars.iv.next71, %.critedge ] ; 3 uses
   %.04358 = phi i32 [ 0, %.lr.ph60 ], [ %i.an, %.critedge ]
-  %1 = zext nneg i32 %.059 to i64
-  %i.al = getelementptr inbounds nuw [4 x i8], ptr %calloc, i64 %1
+  %i.al = getelementptr inbounds nuw [4 x i8], ptr %calloc, i64 %indvars.iv70
   %i.am = load i32, ptr %i.al, align 4, !tbaa !41
   %i.an = add nsw i32 %i.am, %.04358              ; 2 uses
   %.not = icmp slt i32 %i.an, %i.v
+  %2 = trunc nuw i64 %indvars.iv70 to i32         ; 2 uses
   br i1 %.not, label %.critedge, label %._crit_edge
 
 .critedge:                                        ; preds = %bb.h
-  %2 = add nsw i32 %.059, -1
-  %i.ao = icmp sgt i32 %.059, 1
+  %indvars.iv.next71 = add nsw i64 %indvars.iv70, -1
+  %i.ao = icmp sgt i32 %2, 1
   br i1 %i.ao, label %bb.h, label %._crit_edge, !llvm.loop !94
 
 ._crit_edge:                                      ; preds = %.critedge, %bb.h, %.critedge.preheader
-  %.0.lcssa = phi i32 [ %i.c, %.critedge.preheader ], [ %.059, %bb.h ], [ 0, %.critedge ] ; 3 uses
+  %.0.lcssa = phi i32 [ %i.c, %.critedge.preheader ], [ %2, %bb.h ], [ 0, %.critedge ] ; 3 uses
   br i1 %i.j, label %.lr.ph67, label %.critedge2
 
 .lr.ph67:                                         ; preds = %._crit_edge

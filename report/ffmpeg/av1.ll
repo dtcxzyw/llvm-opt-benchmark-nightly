@@ -203,20 +203,23 @@ bb.q:                                             ; preds = %bb.p, %get_leb128.e
 define internal fastcc range(i32 -2147483648, 1) i32 @parse_sequence_header(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(address_is_null) %1, i32 noundef %2) unnamed_addr #4 {
 bb.a:
   %i.a = icmp sgt i32 %2, 0
-  br i1 %i.a, label %.lr.ph.i, label %.critedge.i
+  br i1 %i.a, label %.lr.ph.preheader.i, label %.critedge.i
 
-.lr.ph.i:                                         ; preds = %bb.a, %bb.b
-  %.02129.i = phi i32 [ %4, %bb.b ], [ %2, %bb.a ] ; 5 uses
-  %3 = zext nneg i32 %.02129.i to i64
-  %i.b = getelementptr i8, ptr %1, i64 %3
+.lr.ph.preheader.i:                               ; preds = %bb.a
+  %3 = zext nneg i32 %2 to i64
+  br label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %bb.b, %.lr.ph.preheader.i
+  %indvars.iv.i = phi i64 [ %3, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.b ] ; 5 uses
+  %i.b = getelementptr i8, ptr %1, i64 %indvars.iv.i
   %i.c = getelementptr i8, ptr %i.b, i64 -1
   %i.d = load i8, ptr %i.c, align 1, !tbaa !15    ; 2 uses
   %i.e = icmp eq i8 %i.d, 0
   br i1 %i.e, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %.lr.ph.i
-  %4 = add nsw i32 %.02129.i, -1
-  %i.f = icmp sgt i32 %.02129.i, 1
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
+  %i.f = icmp sgt i64 %indvars.iv.i, 1
   br i1 %i.f, label %.lr.ph.i, label %get_obu_bit_length.exit.thread195, !llvm.loop !31
 
 .critedge.i:                                      ; preds = %bb.a
@@ -224,11 +227,12 @@ bb.b:                                             ; preds = %.lr.ph.i
   br i1 %.not.i, label %get_obu_bit_length.exit.thread195, label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph.i
-  %i.g = icmp samesign ugt i32 %.02129.i, 268435455
+  %i.g = icmp samesign ugt i64 %indvars.iv.i, 268435455
   br i1 %i.g, label %get_obu_bit_length.exit.thread, label %.thread36.i
 
 .thread36.i:                                      ; preds = %bb.c
-  %i.h = shl nuw nsw i32 %.02129.i, 3
+  %4 = trunc nuw nsw i64 %indvars.iv.i to i32
+  %i.h = shl nuw nsw i32 %4, 3
   br label %get_obu_bit_length.exit
 
 bb.d:                                             ; preds = %.critedge.i

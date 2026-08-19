@@ -204,10 +204,10 @@ bytestream2_put_byte.exit1225.i:                  ; preds = %bb.if, %bb.ig, %byt
   br label %.preheader1308.us.i
 
 .preheader1308.us.i:                              ; preds = %._crit_edge1476.us.i, %.preheader1308.us.preheader.i
-  %indvars.iv = phi i64 [ %indvars.iv.next, %._crit_edge1476.us.i ], [ 45, %.preheader1308.us.preheader.i ] ; 5 uses
-  %indvars.iv1713.i = phi i64 [ %indvars.iv.next1714.i, %._crit_edge1476.us.i ], [ 0, %.preheader1308.us.preheader.i ] ; 2 uses
-  %.09311479.us.i = phi i64 [ %.lcssa520, %._crit_edge1476.us.i ], [ 0, %.preheader1308.us.preheader.i ]
-  %i.aip = mul nsw i64 %indvars.iv1713.i, %i.ao
+  %indvars.iv = phi i64 [ 0, %.preheader1308.us.preheader.i ], [ %indvars.iv.next1714.i, %._crit_edge1476.us.i ] ; 2 uses
+  %.09301480.us.i = phi i32 [ 45, %.preheader1308.us.preheader.i ], [ %.reass.i, %._crit_edge1476.us.i ] ; 5 uses
+  %.09311479.us.i = phi i64 [ 0, %.preheader1308.us.preheader.i ], [ %.lcssa520, %._crit_edge1476.us.i ]
+  %i.aip = mul nsw i64 %indvars.iv, %i.ao
   %i.aiq = getelementptr i8, ptr %.2111071495.i, i64 %i.aip ; 4 uses
   %i.air = load i8, ptr %i.aiq, align 1, !tbaa !42 ; 8 uses
   %i.ais = icmp eq i8 %.sroa.0.0.copyload.i, %i.air
@@ -244,9 +244,10 @@ bb.iy:                                            ; preds = %bb.ix
 
 bb.iz:                                            ; preds = %bb.iy, %bb.ix, %bb.iw, %bb.iv, %bb.iu, %bb.it, %bb.is, %.preheader1308.us.i
   %.0926.us.i = phi i64 [ 4, %bb.iv ], [ 0, %.preheader1308.us.i ], [ 1, %bb.is ], [ %spec.select1854.i, %bb.iy ], [ 2, %bb.it ], [ 5, %bb.iw ], [ 3, %bb.iu ], [ 6, %bb.ix ]
-  %i.aja = shl i64 %.0926.us.i, %indvars.iv
+  %4 = zext nneg i32 %.09301480.us.i to i64
+  %i.aja = shl i64 %.0926.us.i, %4
   %i.ajb = or i64 %i.aja, %.09311479.us.i         ; 2 uses
-  %indvars.iv.next408 = add nsw i64 %indvars.iv, -3
+  %5 = add nsw i32 %.09301480.us.i, -3
   br i1 %exitcond1712.not.i, label %._crit_edge1476.us.i, label %bb.ja
 
 bb.ja:                                            ; preds = %bb.iz
@@ -286,9 +287,10 @@ bb.jh:                                            ; preds = %bb.jg
 
 bb.ji:                                            ; preds = %bb.jh, %bb.jg, %bb.jf, %bb.je, %bb.jd, %bb.jc, %bb.jb, %bb.ja
   %.0926.us.i.1 = phi i64 [ 4, %bb.je ], [ 0, %bb.ja ], [ 1, %bb.jb ], [ %spec.select1854.i.1, %bb.jh ], [ 2, %bb.jc ], [ 5, %bb.jf ], [ 3, %bb.jd ], [ 6, %bb.jg ]
-  %i.ajm = shl i64 %.0926.us.i.1, %indvars.iv.next408
+  %6 = zext nneg i32 %5 to i64
+  %i.ajm = shl i64 %.0926.us.i.1, %6
   %i.ajn = or i64 %i.ajm, %i.ajb                  ; 2 uses
-  %indvars.iv.next408.1 = add nsw i64 %indvars.iv, -6
+  %7 = add nsw i32 %.09301480.us.i, -6
   br i1 %exitcond1712.not.i.1, label %._crit_edge1476.us.i, label %bb.jj
 
 bb.jj:                                            ; preds = %bb.ji
@@ -328,9 +330,10 @@ bb.jq:                                            ; preds = %bb.jp
 
 bb.jr:                                            ; preds = %bb.jq, %bb.jp, %bb.jo, %bb.jn, %bb.jm, %bb.jl, %bb.jk, %bb.jj
   %.0926.us.i.2 = phi i64 [ 4, %bb.jn ], [ 0, %bb.jj ], [ 1, %bb.jk ], [ %spec.select1854.i.2, %bb.jq ], [ 2, %bb.jl ], [ 5, %bb.jo ], [ 3, %bb.jm ], [ 6, %bb.jp ]
-  %i.ajy = shl i64 %.0926.us.i.2, %indvars.iv.next408.1
+  %8 = zext nneg i32 %7 to i64
+  %i.ajy = shl i64 %.0926.us.i.2, %8
   %i.ajz = or i64 %i.ajy, %i.ajn                  ; 2 uses
-  %indvars.iv.next408.2 = add nsw i64 %indvars.iv, -9
+  %9 = add nsw i32 %.09301480.us.i, -9
   br i1 %exitcond1712.not.i.2, label %._crit_edge1476.us.i, label %bb.js
 
 bb.js:                                            ; preds = %bb.jr
@@ -370,14 +373,15 @@ bb.jz:                                            ; preds = %bb.jy
 
 bb.ka:                                            ; preds = %bb.jz, %bb.jy, %bb.jx, %bb.jw, %bb.jv, %bb.ju, %bb.jt, %bb.js
   %.0926.us.i.3 = phi i64 [ 4, %bb.jw ], [ 0, %bb.js ], [ 1, %bb.jt ], [ %spec.select1854.i.3, %bb.jz ], [ 2, %bb.ju ], [ 5, %bb.jx ], [ 3, %bb.jv ], [ 6, %bb.jy ]
-  %i.akk = shl i64 %.0926.us.i.3, %indvars.iv.next408.2
+  %10 = zext nneg i32 %9 to i64
+  %i.akk = shl i64 %.0926.us.i.3, %10
   %i.akl = or i64 %i.akk, %i.ajz
   br label %._crit_edge1476.us.i
 
 ._crit_edge1476.us.i:                             ; preds = %bb.ka, %bb.jr, %bb.ji, %bb.iz
   %.lcssa520 = phi i64 [ %i.ajb, %bb.iz ], [ %i.ajn, %bb.ji ], [ %i.ajz, %bb.jr ], [ %i.akl, %bb.ka ] ; 2 uses
-  %indvars.iv.next = add nsw i64 %indvars.iv, -12
-  %indvars.iv.next1714.i = add nuw nsw i64 %indvars.iv1713.i, 1 ; 2 uses
+  %.reass.i = add nsw i32 %.09301480.us.i, -12
+  %indvars.iv.next1714.i = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond1717.not.i = icmp eq i64 %indvars.iv.next1714.i, %wide.trip.count1716.i
   br i1 %exitcond1717.not.i, label %._crit_edge1482.i, label %.preheader1308.us.i, !llvm.loop !63
 

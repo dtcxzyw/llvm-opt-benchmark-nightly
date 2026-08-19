@@ -203,32 +203,37 @@ define internal fastcc ptr @hash_dir_entry(ptr noundef %0, ptr noundef %1, i32 n
 bb.a:
   %3 = alloca %struct.dir_entry, align 8          ; 6 uses
   %i.a = icmp sgt i32 %2, 0
-  br i1 %i.a, label %.lr.ph, label %.critedge.thread
+  br i1 %i.a, label %.lr.ph.preheader, label %.critedge.thread
 
-.lr.ph:                                           ; preds = %bb.a, %bb.b
-  %.02833 = phi i32 [ %5, %bb.b ], [ %2, %bb.a ]  ; 3 uses
-  %4 = zext nneg i32 %.02833 to i64
-  %i.b = getelementptr i8, ptr %1, i64 %4
+.lr.ph.preheader:                                 ; preds = %bb.a
+  %4 = zext nneg i32 %2 to i64
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
+  %indvars.iv = phi i64 [ %4, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.b ] ; 4 uses
+  %i.b = getelementptr i8, ptr %1, i64 %indvars.iv
   %i.c = getelementptr i8, ptr %i.b, i64 107
   %i.d = load i8, ptr %i.c, align 1, !tbaa !72
   %.not = icmp eq i8 %i.d, 47
-  %5 = add nsw i32 %.02833, -1                    ; 5 uses
   br i1 %.not, label %.critedge, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
-  %i.e = icmp sgt i32 %.02833, 1
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %i.e = icmp sgt i64 %indvars.iv, 1
   br i1 %i.e, label %.lr.ph, label %.critedge.thread, !llvm.loop !83
 
 .critedge:                                        ; preds = %.lr.ph
+  %5 = trunc nuw nsw i64 %indvars.iv to i32
+  %6 = add nsw i32 %5, -1                         ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 108 ; 4 uses
-  %i.g = zext nneg i32 %5 to i64                  ; 4 uses
+  %i.g = zext nneg i32 %6 to i64                  ; 4 uses
   %i.h = tail call i32 @memihash(ptr noundef nonnull %i.f, i64 noundef %i.g) #14
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #14
   %i.i = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i32 %i.h, ptr %i.i, align 8, !tbaa !59
   store ptr null, ptr %3, align 8, !tbaa !62
   %i.j = getelementptr inbounds nuw i8, ptr %3, i64 28
-  store i32 %5, ptr %i.j, align 4, !tbaa !12
+  store i32 %6, ptr %i.j, align 4, !tbaa !12
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
   %i.l = call ptr @hashmap_get(ptr noundef nonnull %i.k, ptr noundef nonnull %3, ptr noundef nonnull %i.f) #14 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #14
@@ -245,9 +250,9 @@ st_add.exit31:                                    ; preds = %.critedge
   store i32 %i.p, ptr %i.q, align 8, !tbaa !59
   store ptr null, ptr %i.n, align 8, !tbaa !62
   %i.r = getelementptr inbounds nuw i8, ptr %i.n, i64 28
-  store i32 %5, ptr %i.r, align 4, !tbaa !12
+  store i32 %6, ptr %i.r, align 4, !tbaa !12
   call void @hashmap_add(ptr noundef nonnull %i.k, ptr noundef nonnull %i.n) #14
-  %i.s = call fastcc ptr @hash_dir_entry(ptr noundef nonnull %0, ptr noundef nonnull %1, i32 noundef %5)
+  %i.s = call fastcc ptr @hash_dir_entry(ptr noundef nonnull %0, ptr noundef nonnull %1, i32 noundef %6)
   %i.t = getelementptr inbounds nuw i8, ptr %i.n, i64 16
   store ptr %i.s, ptr %i.t, align 8, !tbaa !63
   br label %.critedge.thread

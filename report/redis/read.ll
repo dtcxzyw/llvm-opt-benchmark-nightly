@@ -201,6 +201,7 @@ bb.dc:                                            ; preds = %.thread194.i.i
 
 .lr.ph215.i.i:                                    ; preds = %bb.dc
   %i.hn = load ptr, ptr %i.x, align 8, !tbaa !22
+  %2 = zext nneg i32 %i.hk to i64
   br label %bb.dd
 
 ._crit_edge.i.i:                                  ; preds = %bb.dg, %.lr.ph.i155.thread.i.i
@@ -208,9 +209,8 @@ bb.dc:                                            ; preds = %.thread194.i.i
   br label %processItem.exit.thread
 
 bb.dd:                                            ; preds = %bb.dg, %.lr.ph215.i.i
-  %2 = phi i32 [ %i.hk, %.lr.ph215.i.i ], [ %4, %bb.dg ] ; 2 uses
-  %3 = zext nneg i32 %2 to i64
-  %i.ho = getelementptr inbounds nuw [8 x i8], ptr %i.hn, i64 %3 ; 2 uses
+  %indvars.iv234.i.i = phi i64 [ %2, %.lr.ph215.i.i ], [ %indvars.iv.next235.i.i, %bb.dg ] ; 2 uses
+  %i.ho = getelementptr inbounds nuw [8 x i8], ptr %i.hn, i64 %indvars.iv234.i.i ; 2 uses
   %i.hp = getelementptr i8, ptr %i.ho, i64 -8
   %i.hq = load ptr, ptr %i.hp, align 8, !tbaa !24 ; 2 uses
   %i.hr = load i32, ptr %i.hq, align 8, !tbaa !47
@@ -237,9 +237,10 @@ bb.df:                                            ; preds = %bb.dd, %bb.dd, %bb.
   br i1 %i.hz, label %bb.dg, label %bb.dh
 
 bb.dg:                                            ; preds = %bb.df
-  %4 = add nsw i32 %2, -1                         ; 3 uses
-  store i32 %4, ptr %i.i, align 4, !tbaa !29
-  %i.ia = icmp eq i32 %4, 0
+  %indvars.iv.next235.i.i = add nsw i64 %indvars.iv234.i.i, -1 ; 2 uses
+  %indvars.i.i = trunc i64 %indvars.iv.next235.i.i to i32 ; 2 uses
+  store i32 %indvars.i.i, ptr %i.i, align 4, !tbaa !29
+  %i.ia = icmp eq i32 %indvars.i.i, 0
   br i1 %i.ia, label %._crit_edge.i.i, label %bb.dd
 
 bb.dh:                                            ; preds = %bb.df
@@ -624,6 +625,7 @@ bb.ew:                                            ; preds = %.thread83.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.ew
   %i.lx = load ptr, ptr %i.x, align 8, !tbaa !22
+  %3 = zext nneg i32 %i.ls to i64
   br label %bb.ex
 
 ._crit_edge.i42.i:                                ; preds = %bb.fa, %.lr.ph.i71.thread.i.i
@@ -631,9 +633,8 @@ bb.ew:                                            ; preds = %.thread83.i.i
   br label %processItem.exit.thread
 
 bb.ex:                                            ; preds = %bb.fa, %.lr.ph.i.i
-  %5 = phi i32 [ %i.ls, %.lr.ph.i.i ], [ %7, %bb.fa ] ; 2 uses
-  %6 = zext nneg i32 %5 to i64
-  %i.ly = getelementptr inbounds nuw [8 x i8], ptr %i.lx, i64 %6 ; 2 uses
+  %indvars.iv.i42.i = phi i64 [ %3, %.lr.ph.i.i ], [ %indvars.iv.next.i43.i, %bb.fa ] ; 2 uses
+  %i.ly = getelementptr inbounds nuw [8 x i8], ptr %i.lx, i64 %indvars.iv.i42.i ; 2 uses
   %i.lz = getelementptr i8, ptr %i.ly, i64 -8
   %i.ma = load ptr, ptr %i.lz, align 8, !tbaa !24 ; 2 uses
   %i.mb = load i32, ptr %i.ma, align 8, !tbaa !47
@@ -660,9 +661,10 @@ bb.ez:                                            ; preds = %bb.ex, %bb.ex, %bb.
   br i1 %i.mj, label %bb.fa, label %bb.fb
 
 bb.fa:                                            ; preds = %bb.ez
-  %7 = add nsw i32 %5, -1                         ; 3 uses
-  store i32 %7, ptr %i.i, align 4, !tbaa !29
-  %i.mk = icmp eq i32 %7, 0
+  %indvars.iv.next.i43.i = add nsw i64 %indvars.iv.i42.i, -1 ; 2 uses
+  %indvars.i44.i = trunc i64 %indvars.iv.next.i43.i to i32 ; 2 uses
+  store i32 %indvars.i44.i, ptr %i.i, align 4, !tbaa !29
+  %i.mk = icmp eq i32 %indvars.i44.i, 0
   br i1 %i.mk, label %._crit_edge.i42.i, label %bb.ex
 
 bb.fb:                                            ; preds = %bb.ez

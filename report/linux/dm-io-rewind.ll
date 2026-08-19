@@ -72,13 +72,16 @@ bb.d:                                             ; preds = %bio_no_advance_iter
   %i.ae = load i32, ptr %i.ad, align 4
   %.03951.i.i.i = add i32 %i.ae, -1               ; 2 uses
   %i.af = icmp sgt i32 %.03951.i.i.i, -1
-  br i1 %i.af, label %.lr.ph.i.i.i, label %.critedge.i.i.i
+  br i1 %i.af, label %.lr.ph.preheader.i.i.i, label %.critedge.i.i.i
 
-.lr.ph.i.i.i:                                     ; preds = %bb.d, %bb.e
-  %.03954.i.i.i = phi i32 [ %.039.i.i.i, %bb.e ], [ %.03951.i.i.i, %bb.d ] ; 4 uses
-  %.03853.i.i.i = phi i32 [ %i.ak, %bb.e ], [ %i.ac, %bb.d ] ; 3 uses
-  %2 = zext nneg i32 %.03954.i.i.i to i64
-  %i.ag = getelementptr [16 x i8], ptr %i.v, i64 %2 ; 2 uses
+.lr.ph.preheader.i.i.i:                           ; preds = %bb.d
+  %2 = zext nneg i32 %.03951.i.i.i to i64
+  br label %.lr.ph.i.i.i
+
+.lr.ph.i.i.i:                                     ; preds = %bb.e, %.lr.ph.preheader.i.i.i
+  %indvars.iv.i.i.i = phi i64 [ %2, %.lr.ph.preheader.i.i.i ], [ %indvars.iv.next.i.i.i, %bb.e ] ; 4 uses
+  %.03853.i.i.i = phi i32 [ %i.ac, %.lr.ph.preheader.i.i.i ], [ %i.ak, %bb.e ] ; 3 uses
+  %i.ag = getelementptr [16 x i8], ptr %i.v, i64 %indvars.iv.i.i.i ; 2 uses
   %i.ah = getelementptr i8, ptr %i.ag, i64 8
   %i.ai = load i32, ptr %i.ah, align 8            ; 2 uses
   %i.aj = icmp ugt i32 %.03853.i.i.i, %i.ai
@@ -86,8 +89,8 @@ bb.d:                                             ; preds = %bio_no_advance_iter
 
 bb.e:                                             ; preds = %.lr.ph.i.i.i
   %i.ak = sub nuw i32 %.03853.i.i.i, %i.ai        ; 2 uses
-  %.039.i.i.i = add nsw i32 %.03954.i.i.i, -1
-  %i.al = icmp sgt i32 %.03954.i.i.i, 0
+  %indvars.iv.next.i.i.i = add nsw i64 %indvars.iv.i.i.i, -1
+  %i.al = icmp sgt i64 %indvars.iv.i.i.i, 0
   br i1 %i.al, label %.lr.ph.i.i.i, label %.critedge.i.i.i, !llvm.loop !10
 
 .critedge.i.i.i:                                  ; preds = %bb.e, %bb.d
@@ -104,7 +107,8 @@ bb.e:                                             ; preds = %.lr.ph.i.i.i
 
 .critedge45.i.i.i:                                ; preds = %.lr.ph.i.i.i
   %i.ap = getelementptr i8, ptr %i.ag, i64 8
-  store i32 %.03954.i.i.i, ptr %i.ad, align 4
+  %3 = trunc nuw nsw i64 %indvars.iv.i.i.i to i32
+  store i32 %3, ptr %i.ad, align 4
   %i.aq = load i32, ptr %i.ap, align 8
   %i.ar = sub i32 %i.aq, %.03853.i.i.i
   store i32 %i.ar, ptr %i.z, align 8

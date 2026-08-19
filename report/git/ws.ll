@@ -203,7 +203,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %.0111 = phi i32 [ 0, %bb.a ], [ %spec.select, %bb.b ] ; 8 uses
+  %.0111 = phi i32 [ 0, %bb.a ], [ %spec.select, %bb.b ] ; 7 uses
   %i.h = and i32 %3, 64
   %.not138 = icmp eq i32 %i.h, 0
   br i1 %.not138, label %.critedge, label %bb.d
@@ -240,8 +240,8 @@ bb.h:                                             ; preds = %bb.g
 .thread:                                          ; preds = %bb.e, %bb.g, %bb.h
   %.0114219 = phi i32 [ %.lobit, %bb.h ], [ 0, %bb.g ], [ 0, %bb.e ] ; 3 uses
   %.1117218 = phi i32 [ 1, %bb.h ], [ 1, %bb.g ], [ %.0111, %bb.e ] ; 3 uses
-  %.0123217 = phi i32 [ %i.s, %bb.h ], [ %i.n, %bb.g ], [ %2, %bb.e ] ; 3 uses
-  %i.t = zext nneg i32 %.0123217 to i64
+  %.0123217 = phi i32 [ %i.s, %bb.h ], [ %i.n, %bb.g ], [ %2, %bb.e ] ; 2 uses
+  %i.t = zext nneg i32 %.0123217 to i64           ; 2 uses
   %i.u = getelementptr i8, ptr %1, i64 %i.t
   %i.v = getelementptr i8, ptr %i.u, i64 -1
   %i.w = load i8, ptr %i.v, align 1, !tbaa !12
@@ -253,9 +253,8 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not140, label %.lr.ph246, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.thread, %bb.i
-  %.1124239 = phi i32 [ %6, %bb.i ], [ %.0123217, %.thread ] ; 4 uses
-  %5 = zext nneg i32 %.1124239 to i64
-  %i.ab = getelementptr i8, ptr %1, i64 %5
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.i ], [ %i.t, %.thread ] ; 4 uses
+  %i.ab = getelementptr i8, ptr %1, i64 %indvars.iv
   %i.ac = getelementptr i8, ptr %i.ab, i64 -1
   %i.ad = load i8, ptr %i.ac, align 1, !tbaa !12
   %i.ae = zext i8 %i.ad to i64
@@ -263,22 +262,30 @@ bb.h:                                             ; preds = %bb.g
   %i.ag = load i8, ptr %i.af, align 1, !tbaa !12
   %i.ah = and i8 %i.ag, 1
   %.not141 = icmp eq i8 %i.ah, 0
-  br i1 %.not141, label %.lr.ph246, label %bb.i
+  br i1 %.not141, label %.critedge.loopexit, label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph
-  %6 = add nsw i32 %.1124239, -1
-  %i.ai = icmp sgt i32 %.1124239, 1
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %i.ai = icmp sgt i64 %indvars.iv, 1
   br i1 %i.ai, label %.lr.ph, label %._crit_edge.thread.thread, !llvm.loop !38
 
-.critedge:                                        ; preds = %bb.c
-  %i.aj = icmp sgt i32 %2, 0
-  br i1 %i.aj, label %.lr.ph246, label %._crit_edge.thread.thread.thread
+.critedge.loopexit:                               ; preds = %.lr.ph
+  %5 = trunc nuw nsw i64 %indvars.iv to i32
+  br label %.critedge
 
-.lr.ph246:                                        ; preds = %.lr.ph, %.thread, %.critedge
-  %.1112369 = phi i32 [ %.0111, %.critedge ], [ %.0111, %.thread ], [ 1, %.lr.ph ]
-  %.1115368 = phi i32 [ 0, %.critedge ], [ %.0114219, %.thread ], [ %.0114219, %.lr.ph ] ; 3 uses
-  %.2118367 = phi i32 [ %.0111, %.critedge ], [ %.1117218, %.thread ], [ %.1117218, %.lr.ph ] ; 3 uses
-  %.2125366 = phi i32 [ %2, %.critedge ], [ %.0123217, %.thread ], [ %.1124239, %.lr.ph ] ; 4 uses
+.critedge:                                        ; preds = %.critedge.loopexit, %bb.c
+  %.2125 = phi i32 [ %2, %bb.c ], [ %5, %.critedge.loopexit ] ; 3 uses
+  %.2118 = phi i32 [ %.0111, %bb.c ], [ %.1117218, %.critedge.loopexit ] ; 2 uses
+  %.1115 = phi i32 [ 0, %bb.c ], [ %.0114219, %.critedge.loopexit ] ; 2 uses
+  %.1112 = phi i32 [ %.0111, %bb.c ], [ 1, %.critedge.loopexit ] ; 2 uses
+  %i.aj = icmp sgt i32 %.2125, 0
+  br i1 %i.aj, label %.lr.ph246, label %._crit_edge.thread.thread
+
+.lr.ph246:                                        ; preds = %.thread, %.critedge
+  %.1112369 = phi i32 [ %.1112, %.critedge ], [ %.0111, %.thread ]
+  %.1115368 = phi i32 [ %.1115, %.critedge ], [ %.0114219, %.thread ] ; 3 uses
+  %.2118367 = phi i32 [ %.2118, %.critedge ], [ %.1117218, %.thread ] ; 3 uses
+  %.2125366 = phi i32 [ %.2125, %.critedge ], [ %.0123217, %.thread ] ; 4 uses
   %i.ak = and i32 %3, 256
   %.not142 = icmp eq i32 %i.ak, 0
   %i.al = and i32 %3, 63                          ; 2 uses
@@ -632,22 +639,22 @@ bb.ac:                                            ; preds = %.loopexit
   %i.dp = getelementptr inbounds nuw i8, ptr %1, i64 %wide.trip.count334
   br label %._crit_edge.thread.thread
 
-._crit_edge.thread.thread.thread:                 ; preds = %bb.f, %bb.d, %.critedge
-  %.2118355381.ph = phi i32 [ %.0111, %.critedge ], [ %.0111, %bb.d ], [ 1, %bb.f ]
-  %.3126.ph = phi i32 [ %2, %.critedge ], [ %2, %bb.d ], [ 0, %bb.f ]
+._crit_edge.thread.thread.thread:                 ; preds = %bb.f, %bb.d
+  %.2118358381.ph = phi i32 [ %.0111, %bb.d ], [ 1, %bb.f ]
+  %.3126.ph = phi i32 [ %2, %bb.d ], [ 0, %bb.f ]
   %i.dq = sext i32 %.3126.ph to i64
   tail call void @strbuf_add(ptr noundef %0, ptr noundef %1, i64 noundef %i.dq) #12
   br label %bb.ae
 
-._crit_edge.thread.thread:                        ; preds = %bb.i, %bb.h, %._crit_edge.thread, %bb.ac, %._crit_edge294
-  %.2118355381 = phi i32 [ %.2118367, %._crit_edge294 ], [ %.2118367, %bb.ac ], [ %.2118367, %._crit_edge.thread ], [ 1, %bb.h ], [ %.1117218, %bb.i ] ; 2 uses
-  %.1115356379 = phi i32 [ %.1115368, %._crit_edge294 ], [ %.1115368, %bb.ac ], [ %.1115368, %._crit_edge.thread ], [ %.lobit, %bb.h ], [ %.0114219, %bb.i ]
-  %.3126 = phi i32 [ %i.cf, %._crit_edge294 ], [ %i.do, %bb.ac ], [ %.2125366, %._crit_edge.thread ], [ 0, %bb.h ], [ 0, %bb.i ]
-  %.0122 = phi ptr [ %i.ch, %._crit_edge294 ], [ %i.dp, %bb.ac ], [ %1, %._crit_edge.thread ], [ %1, %bb.h ], [ %1, %bb.i ]
-  %.2113 = phi i32 [ 1, %._crit_edge294 ], [ 1, %bb.ac ], [ %.1112369, %._crit_edge.thread ], [ %.0111, %bb.h ], [ 1, %bb.i ] ; 2 uses
+._crit_edge.thread.thread:                        ; preds = %bb.i, %bb.h, %.critedge, %._crit_edge.thread, %bb.ac, %._crit_edge294
+  %.2118358381 = phi i32 [ %.2118367, %._crit_edge294 ], [ %.2118367, %bb.ac ], [ %.2118367, %._crit_edge.thread ], [ 1, %bb.h ], [ %.2118, %.critedge ], [ %.1117218, %bb.i ] ; 2 uses
+  %.1115359379 = phi i32 [ %.1115368, %._crit_edge294 ], [ %.1115368, %bb.ac ], [ %.1115368, %._crit_edge.thread ], [ %.lobit, %bb.h ], [ %.1115, %.critedge ], [ %.0114219, %bb.i ]
+  %.3126 = phi i32 [ %i.cf, %._crit_edge294 ], [ %i.do, %bb.ac ], [ %.2125366, %._crit_edge.thread ], [ 0, %bb.h ], [ %.2125, %.critedge ], [ 0, %bb.i ]
+  %.0122 = phi ptr [ %i.ch, %._crit_edge294 ], [ %i.dp, %bb.ac ], [ %1, %._crit_edge.thread ], [ %1, %bb.h ], [ %1, %.critedge ], [ %1, %bb.i ]
+  %.2113 = phi i32 [ 1, %._crit_edge294 ], [ 1, %bb.ac ], [ %.1112369, %._crit_edge.thread ], [ %.0111, %bb.h ], [ %.1112, %.critedge ], [ 1, %bb.i ] ; 2 uses
   %i.dr = sext i32 %.3126 to i64
   tail call void @strbuf_add(ptr noundef %0, ptr noundef %.0122, i64 noundef %i.dr) #12
-  %.not149 = icmp eq i32 %.1115356379, 0
+  %.not149 = icmp eq i32 %.1115359379, 0
   br i1 %.not149, label %bb.ae, label %bb.ad
 
 bb.ad:                                            ; preds = %._crit_edge.thread.thread
@@ -686,7 +693,7 @@ strbuf_addch.exit203:                             ; preds = %strbuf_avail.exit.i
 
 bb.ae:                                            ; preds = %._crit_edge.thread.thread.thread, %strbuf_addch.exit203, %._crit_edge.thread.thread
   %.2113399 = phi i32 [ %.0111, %._crit_edge.thread.thread.thread ], [ %.2113, %strbuf_addch.exit203 ], [ %.2113, %._crit_edge.thread.thread ]
-  %.2118355381398 = phi i32 [ %.2118355381.ph, %._crit_edge.thread.thread.thread ], [ %.2118355381, %strbuf_addch.exit203 ], [ %.2118355381, %._crit_edge.thread.thread ]
+  %.2118355381398 = phi i32 [ %.2118358381.ph, %._crit_edge.thread.thread.thread ], [ %.2118358381, %strbuf_addch.exit203 ], [ %.2118358381, %._crit_edge.thread.thread ]
   %.not150 = icmp eq i32 %.2118355381398, 0
   br i1 %.not150, label %bb.ag, label %bb.af
 
