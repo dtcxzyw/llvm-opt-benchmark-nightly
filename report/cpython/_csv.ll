@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %Py_DECREF.exit85.i
   br i1 %.not.i, label %._crit_edge.i, label %bb.f, !llvm.loop !75
 
 bb.f:                                             ; preds = %bb.e, %.lr.ph.i
-  %i.r = phi ptr [ %i.o, %.lr.ph.i ], [ %i.q, %bb.e ] ; 13 uses
+  %i.r = phi ptr [ %i.o, %.lr.ph.i ], [ %i.q, %bb.e ] ; 15 uses
   %i.s = load i32, ptr %i.p, align 4, !tbaa !35   ; 2 uses
   switch i32 %i.s, label %bb.j [
     i32 2, label %bb.g
@@ -265,13 +265,13 @@ bb.n:                                             ; preds = %bb.k
 
 bb.o:                                             ; preds = %bb.n
   %i.ak = tail call fastcc i32 @join_append(ptr noundef %0, ptr noundef null, i32 noundef %.0.i) ; 3 uses
-  %i.al = load i32, ptr @_Py_NoneStruct, align 8, !tbaa !29 ; 2 uses
+  %i.al = load i32, ptr %i.r, align 8, !tbaa !29  ; 2 uses
   %.not.i82.i = icmp sgt i32 %i.al, -1
   br i1 %.not.i82.i, label %bb.p, label %Py_DECREF.exit85.i
 
 bb.p:                                             ; preds = %bb.o
   %i.am = add nsw i32 %i.al, -1                   ; 2 uses
-  store i32 %i.am, ptr @_Py_NoneStruct, align 8, !tbaa !29
+  store i32 %i.am, ptr %i.r, align 8, !tbaa !29
   %i.an = icmp eq i32 %i.am, 0
   br i1 %i.an, label %Py_DECREF.exit85.sink.split.i, label %Py_DECREF.exit85.i
 

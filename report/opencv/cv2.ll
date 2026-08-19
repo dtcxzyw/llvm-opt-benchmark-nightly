@@ -204,7 +204,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = tail call i32 @PyGILState_Ensure()       ; 6 uses
   %i.d = tail call ptr @PyUnicode_FromString(ptr noundef nonnull @__func__._ZN2cv4gapi3wip14GCaptureSource4pullERNS1_4DataE)
-  %i.e = tail call ptr (ptr, ptr, ...) @PyObject_CallMethodObjArgs(ptr noundef nonnull %i.b, ptr noundef %i.d, i64 noundef 0) ; 16 uses
+  %i.e = tail call ptr (ptr, ptr, ...) @PyObject_CallMethodObjArgs(ptr noundef nonnull %i.b, ptr noundef %i.d, i64 noundef 0) ; 19 uses
   %i.f = tail call ptr @PyErr_Occurred()
   %.not32 = icmp eq ptr %i.f, null
   %.not33 = icmp eq ptr %i.e, null
@@ -255,19 +255,19 @@ bb.h:                                             ; preds = %bb.b
   br i1 %i.n, label %bb.i, label %bb.l
 
 bb.i:                                             ; preds = %bb.h
-  %i.o = load i64, ptr @_Py_NoneStruct, align 8, !tbaa !21 ; 2 uses
+  %i.o = load i64, ptr %i.e, align 8, !tbaa !21   ; 2 uses
   %i.p = and i64 %i.o, 2147483648
   %.not71 = icmp eq i64 %i.p, 0
   br i1 %.not71, label %bb.j, label %_ZL9Py_DECREFP7_object.exit54
 
 bb.j:                                             ; preds = %bb.i
   %i.q = add nsw i64 %i.o, -1                     ; 2 uses
-  store i64 %i.q, ptr @_Py_NoneStruct, align 8, !tbaa !21
+  store i64 %i.q, ptr %i.e, align 8, !tbaa !21
   %i.r = icmp eq i64 %i.q, 0
   br i1 %i.r, label %bb.k, label %_ZL9Py_DECREFP7_object.exit54
 
 bb.k:                                             ; preds = %bb.j
-  tail call void @_Py_Dealloc(ptr noundef nonnull @_Py_NoneStruct)
+  tail call void @_Py_Dealloc(ptr noundef nonnull %i.e)
   br label %_ZL9Py_DECREFP7_object.exit54
 
 _ZL9Py_DECREFP7_object.exit54:                    ; preds = %bb.i, %bb.j, %bb.k

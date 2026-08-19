@@ -203,7 +203,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  store ptr @emergency, ptr @emergency_ptr, align 8
+  store ptr %0, ptr @emergency_ptr, align 8
   %i.f = tail call i64 asm "lea 0(%rip), $0", "=r,~{dirflag},~{fpsr},~{flags}"() #19, !srcloc !31
   tail call void @__local_bh_enable_ip(i64 noundef %i.f, i32 noundef 512) #14
   br label %bb.d
@@ -323,7 +323,7 @@ bb.b:                                             ; preds = %bb.a
   store i16 420, ptr getelementptr inbounds nuw (i8, ptr @nf_log_sysctl_table, i64 580), align 4
   store ptr @nf_log_proc_dostring, ptr getelementptr inbounds nuw (i8, ptr @nf_log_sysctl_table, i64 584), align 8
   store ptr inttoptr (i64 10 to ptr), ptr getelementptr inbounds nuw (i8, ptr @nf_log_sysctl_table, i64 600), align 8
-  %i.o = tail call ptr @register_net_sysctl_sz(ptr noundef nonnull @init_net, ptr noundef nonnull @.str.11, ptr noundef nonnull @nf_log_sysctl_ftable, i64 noundef 1) #14 ; 2 uses
+  %i.o = tail call ptr @register_net_sysctl_sz(ptr noundef nonnull %0, ptr noundef nonnull @.str.11, ptr noundef nonnull @nf_log_sysctl_ftable, i64 noundef 1) #14 ; 2 uses
   store ptr %i.o, ptr @nf_log_sysctl_fhdr, align 8
   %.not32.i = icmp eq ptr %i.o, null
   br i1 %.not32.i, label %bb.h, label %bb.d

@@ -200,13 +200,13 @@ bb.av:                                            ; preds = %bb.at, %bb.au
 
 ._crit_edge257.thread:                            ; preds = %bb.h, %bb.av, %._crit_edge257
   %.0177.lcssa292 = phi ptr [ %i.hi, %._crit_edge257 ], [ %i.hi, %bb.av ], [ %i.bt, %bb.h ] ; 2 uses
-  %i.hr = load ptr, ptr @stroke_path, align 8, !tbaa !8
+  %i.hr = load ptr, ptr @stroke_path, align 8, !tbaa !8 ; 2 uses
   %i.hs = icmp eq ptr %i.hr, @stroke_path_body
   br i1 %i.hs, label %bb.aw, label %bb.ax
 
 bb.aw:                                            ; preds = %._crit_edge257.thread
   %i.ht = load ptr, ptr %i.bp, align 8, !tbaa !11
-  %i.hu = call i32 (ptr, ptr, ptr, i32, i64, ...) @gx_fill_path(ptr noundef nonnull @stroke_path_body, ptr noundef %i.ht, ptr noundef %2, i32 noundef -1, i64 noundef 0) #7 ; 0 uses
+  %i.hu = call i32 (ptr, ptr, ptr, i32, i64, ...) @gx_fill_path(ptr noundef nonnull %i.hr, ptr noundef %i.ht, ptr noundef %2, i32 noundef -1, i64 noundef 0) #7 ; 0 uses
   %i.hv = load ptr, ptr @stroke_path, align 8, !tbaa !8
   call void @gx_path_release(ptr noundef %i.hv) #7
   store ptr null, ptr @stroke_path, align 8, !tbaa !8
@@ -309,14 +309,14 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   %i.am = tail call i32 @stroke_add(i32 noundef %0, ptr noundef nonnull %1, ptr noundef %2, ptr noundef %3) ; 0 uses
-  %i.an = load ptr, ptr @stroke_path, align 8, !tbaa !8
+  %i.an = load ptr, ptr @stroke_path, align 8, !tbaa !8 ; 2 uses
   %i.ao = icmp eq ptr %i.an, @stroke_path_body
   br i1 %i.ao, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
   %i.ap = getelementptr inbounds nuw i8, ptr %3, i64 312
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !11
-  %i.ar = tail call i32 (ptr, ptr, ptr, i32, i64, ...) @gx_fill_path(ptr noundef nonnull @stroke_path_body, ptr noundef %i.aq, ptr noundef %3, i32 noundef -1, i64 noundef 0) #7 ; 0 uses
+  %i.ar = tail call i32 (ptr, ptr, ptr, i32, i64, ...) @gx_fill_path(ptr noundef nonnull %i.an, ptr noundef %i.aq, ptr noundef %3, i32 noundef -1, i64 noundef 0) #7 ; 0 uses
   %i.as = load ptr, ptr @stroke_path, align 8, !tbaa !8
   tail call void @gx_path_release(ptr noundef %i.as) #7
   store ptr null, ptr @stroke_path, align 8, !tbaa !8

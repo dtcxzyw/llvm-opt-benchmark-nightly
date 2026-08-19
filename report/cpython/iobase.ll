@@ -201,7 +201,7 @@ bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %1, ptr %i.a, align 8, !tbaa !11
-  %i.b = call ptr @PyObject_VectorcallMethod(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 98744), ptr noundef nonnull %i.a, i64 noundef -9223372036854775807, ptr noundef null) #6 ; 5 uses
+  %i.b = call ptr @PyObject_VectorcallMethod(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 98744), ptr noundef nonnull %i.a, i64 noundef -9223372036854775807, ptr noundef null) #6 ; 8 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.c = icmp eq ptr %i.b, null
   br i1 %i.c, label %Py_DECREF.exit, label %bb.b
@@ -236,18 +236,18 @@ bb.f:                                             ; preds = %bb.b
   br i1 %i.h, label %bb.g, label %Py_DECREF.exit
 
 bb.g:                                             ; preds = %bb.f
-  %i.i = load i32, ptr @_Py_TrueStruct, align 8, !tbaa !14 ; 2 uses
+  %i.i = load i32, ptr %i.b, align 8, !tbaa !14   ; 2 uses
   %.not.i = icmp sgt i32 %i.i, -1
   br i1 %.not.i, label %bb.h, label %Py_DECREF.exit
 
 bb.h:                                             ; preds = %bb.g
   %i.j = add nsw i32 %i.i, -1                     ; 2 uses
-  store i32 %i.j, ptr @_Py_TrueStruct, align 8, !tbaa !14
+  store i32 %i.j, ptr %i.b, align 8, !tbaa !14
   %i.k = icmp eq i32 %i.j, 0
   br i1 %i.k, label %bb.i, label %Py_DECREF.exit
 
 bb.i:                                             ; preds = %bb.h
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_TrueStruct) #6
+  call void @_Py_Dealloc(ptr noundef nonnull %i.b) #6
   br label %Py_DECREF.exit
 
 Py_DECREF.exit:                                   ; preds = %bb.i, %bb.h, %bb.g, %bb.f, %bb.a, %Py_DECREF.exit14
@@ -261,7 +261,7 @@ bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %1, ptr %i.a, align 8, !tbaa !11
-  %i.b = call ptr @PyObject_VectorcallMethod(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 96896), ptr noundef nonnull %i.a, i64 noundef -9223372036854775807, ptr noundef null) #6 ; 5 uses
+  %i.b = call ptr @PyObject_VectorcallMethod(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 96896), ptr noundef nonnull %i.a, i64 noundef -9223372036854775807, ptr noundef null) #6 ; 8 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.c = icmp eq ptr %i.b, null
   br i1 %i.c, label %Py_DECREF.exit, label %bb.b
@@ -296,18 +296,18 @@ bb.f:                                             ; preds = %bb.b
   br i1 %i.h, label %bb.g, label %Py_DECREF.exit
 
 bb.g:                                             ; preds = %bb.f
-  %i.i = load i32, ptr @_Py_TrueStruct, align 8, !tbaa !14 ; 2 uses
+  %i.i = load i32, ptr %i.b, align 8, !tbaa !14   ; 2 uses
   %.not.i = icmp sgt i32 %i.i, -1
   br i1 %.not.i, label %bb.h, label %Py_DECREF.exit
 
 bb.h:                                             ; preds = %bb.g
   %i.j = add nsw i32 %i.i, -1                     ; 2 uses
-  store i32 %i.j, ptr @_Py_TrueStruct, align 8, !tbaa !14
+  store i32 %i.j, ptr %i.b, align 8, !tbaa !14
   %i.k = icmp eq i32 %i.j, 0
   br i1 %i.k, label %bb.i, label %Py_DECREF.exit
 
 bb.i:                                             ; preds = %bb.h
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_TrueStruct) #6
+  call void @_Py_Dealloc(ptr noundef nonnull %i.b) #6
   br label %Py_DECREF.exit
 
 Py_DECREF.exit:                                   ; preds = %bb.i, %bb.h, %bb.g, %bb.f, %bb.a, %Py_DECREF.exit14
@@ -321,7 +321,7 @@ bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %1, ptr %i.a, align 8, !tbaa !11
-  %i.b = call ptr @PyObject_VectorcallMethod(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 104776), ptr noundef nonnull %i.a, i64 noundef -9223372036854775807, ptr noundef null) #6 ; 5 uses
+  %i.b = call ptr @PyObject_VectorcallMethod(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 104776), ptr noundef nonnull %i.a, i64 noundef -9223372036854775807, ptr noundef null) #6 ; 8 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.c = icmp eq ptr %i.b, null
   br i1 %i.c, label %Py_DECREF.exit, label %bb.b
@@ -356,18 +356,18 @@ bb.f:                                             ; preds = %bb.b
   br i1 %i.h, label %bb.g, label %Py_DECREF.exit
 
 bb.g:                                             ; preds = %bb.f
-  %i.i = load i32, ptr @_Py_TrueStruct, align 8, !tbaa !14 ; 2 uses
+  %i.i = load i32, ptr %i.b, align 8, !tbaa !14   ; 2 uses
   %.not.i = icmp sgt i32 %i.i, -1
   br i1 %.not.i, label %bb.h, label %Py_DECREF.exit
 
 bb.h:                                             ; preds = %bb.g
   %i.j = add nsw i32 %i.i, -1                     ; 2 uses
-  store i32 %i.j, ptr @_Py_TrueStruct, align 8, !tbaa !14
+  store i32 %i.j, ptr %i.b, align 8, !tbaa !14
   %i.k = icmp eq i32 %i.j, 0
   br i1 %i.k, label %bb.i, label %Py_DECREF.exit
 
 bb.i:                                             ; preds = %bb.h
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_TrueStruct) #6
+  call void @_Py_Dealloc(ptr noundef nonnull %i.b) #6
   br label %Py_DECREF.exit
 
 Py_DECREF.exit:                                   ; preds = %bb.i, %bb.h, %bb.g, %bb.f, %bb.a, %Py_DECREF.exit14
@@ -770,7 +770,7 @@ bb.a:
   %.val.i = load ptr, ptr %i.d, align 8, !tbaa !52
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %0, ptr %i.a, align 8, !tbaa !11
-  %i.e = call ptr @PyObject_VectorcallMethod(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 98744), ptr noundef nonnull %i.a, i64 noundef -9223372036854775807, ptr noundef null) #6 ; 5 uses
+  %i.e = call ptr @PyObject_VectorcallMethod(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 98744), ptr noundef nonnull %i.a, i64 noundef -9223372036854775807, ptr noundef null) #6 ; 8 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.f = icmp eq ptr %i.e, null
   br i1 %i.f, label %_PyIOBase_check_seekable.exit, label %bb.b
@@ -805,18 +805,18 @@ bb.f:                                             ; preds = %bb.b
   br i1 %i.k, label %bb.g, label %_PyIOBase_check_seekable.exit
 
 bb.g:                                             ; preds = %bb.f
-  %i.l = load i32, ptr @_Py_TrueStruct, align 8, !tbaa !14 ; 2 uses
+  %i.l = load i32, ptr %i.e, align 8, !tbaa !14   ; 2 uses
   %.not.i.i = icmp sgt i32 %i.l, -1
   br i1 %.not.i.i, label %bb.h, label %_PyIOBase_check_seekable.exit
 
 bb.h:                                             ; preds = %bb.g
   %i.m = add nsw i32 %i.l, -1                     ; 2 uses
-  store i32 %i.m, ptr @_Py_TrueStruct, align 8, !tbaa !14
+  store i32 %i.m, ptr %i.e, align 8, !tbaa !14
   %i.n = icmp eq i32 %i.m, 0
   br i1 %i.n, label %bb.i, label %_PyIOBase_check_seekable.exit
 
 bb.i:                                             ; preds = %bb.h
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_TrueStruct) #6
+  call void @_Py_Dealloc(ptr noundef nonnull %i.e) #6
   br label %_PyIOBase_check_seekable.exit
 
 _PyIOBase_check_seekable.exit:                    ; preds = %bb.a, %Py_DECREF.exit14.i, %bb.f, %bb.g, %bb.h, %bb.i
@@ -835,7 +835,7 @@ bb.a:
   %.val.i = load ptr, ptr %i.d, align 8, !tbaa !52
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %0, ptr %i.a, align 8, !tbaa !11
-  %i.e = call ptr @PyObject_VectorcallMethod(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 96896), ptr noundef nonnull %i.a, i64 noundef -9223372036854775807, ptr noundef null) #6 ; 5 uses
+  %i.e = call ptr @PyObject_VectorcallMethod(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 96896), ptr noundef nonnull %i.a, i64 noundef -9223372036854775807, ptr noundef null) #6 ; 8 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.f = icmp eq ptr %i.e, null
   br i1 %i.f, label %_PyIOBase_check_readable.exit, label %bb.b
@@ -870,18 +870,18 @@ bb.f:                                             ; preds = %bb.b
   br i1 %i.k, label %bb.g, label %_PyIOBase_check_readable.exit
 
 bb.g:                                             ; preds = %bb.f
-  %i.l = load i32, ptr @_Py_TrueStruct, align 8, !tbaa !14 ; 2 uses
+  %i.l = load i32, ptr %i.e, align 8, !tbaa !14   ; 2 uses
   %.not.i.i = icmp sgt i32 %i.l, -1
   br i1 %.not.i.i, label %bb.h, label %_PyIOBase_check_readable.exit
 
 bb.h:                                             ; preds = %bb.g
   %i.m = add nsw i32 %i.l, -1                     ; 2 uses
-  store i32 %i.m, ptr @_Py_TrueStruct, align 8, !tbaa !14
+  store i32 %i.m, ptr %i.e, align 8, !tbaa !14
   %i.n = icmp eq i32 %i.m, 0
   br i1 %i.n, label %bb.i, label %_PyIOBase_check_readable.exit
 
 bb.i:                                             ; preds = %bb.h
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_TrueStruct) #6
+  call void @_Py_Dealloc(ptr noundef nonnull %i.e) #6
   br label %_PyIOBase_check_readable.exit
 
 _PyIOBase_check_readable.exit:                    ; preds = %bb.a, %Py_DECREF.exit14.i, %bb.f, %bb.g, %bb.h, %bb.i
@@ -900,7 +900,7 @@ bb.a:
   %.val.i = load ptr, ptr %i.d, align 8, !tbaa !52
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %0, ptr %i.a, align 8, !tbaa !11
-  %i.e = call ptr @PyObject_VectorcallMethod(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 104776), ptr noundef nonnull %i.a, i64 noundef -9223372036854775807, ptr noundef null) #6 ; 5 uses
+  %i.e = call ptr @PyObject_VectorcallMethod(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 104776), ptr noundef nonnull %i.a, i64 noundef -9223372036854775807, ptr noundef null) #6 ; 8 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.f = icmp eq ptr %i.e, null
   br i1 %i.f, label %_PyIOBase_check_writable.exit, label %bb.b
@@ -935,18 +935,18 @@ bb.f:                                             ; preds = %bb.b
   br i1 %i.k, label %bb.g, label %_PyIOBase_check_writable.exit
 
 bb.g:                                             ; preds = %bb.f
-  %i.l = load i32, ptr @_Py_TrueStruct, align 8, !tbaa !14 ; 2 uses
+  %i.l = load i32, ptr %i.e, align 8, !tbaa !14   ; 2 uses
   %.not.i.i = icmp sgt i32 %i.l, -1
   br i1 %.not.i.i, label %bb.h, label %_PyIOBase_check_writable.exit
 
 bb.h:                                             ; preds = %bb.g
   %i.m = add nsw i32 %i.l, -1                     ; 2 uses
-  store i32 %i.m, ptr @_Py_TrueStruct, align 8, !tbaa !14
+  store i32 %i.m, ptr %i.e, align 8, !tbaa !14
   %i.n = icmp eq i32 %i.m, 0
   br i1 %i.n, label %bb.i, label %_PyIOBase_check_writable.exit
 
 bb.i:                                             ; preds = %bb.h
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_TrueStruct) #6
+  call void @_Py_Dealloc(ptr noundef nonnull %i.e) #6
   br label %_PyIOBase_check_writable.exit
 
 _PyIOBase_check_writable.exit:                    ; preds = %bb.a, %Py_DECREF.exit14.i, %bb.f, %bb.g, %bb.h, %bb.i
@@ -1349,7 +1349,7 @@ bb.a:
   br i1 %i.b, label %_io__RawIOBase_readall_impl.exit, label %.preheader.i
 
 .preheader.i:                                     ; preds = %bb.a, %.preheader.i.backedge
-  %i.c = tail call ptr (ptr, ptr, ptr, ...) @_PyObject_CallMethod(ptr noundef %0, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 96800), ptr noundef nonnull @.str.47, i32 noundef 131072) #6 ; 16 uses
+  %i.c = tail call ptr (ptr, ptr, ptr, ...) @_PyObject_CallMethod(ptr noundef %0, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 96800), ptr noundef nonnull @.str.47, i32 noundef 131072) #6 ; 18 uses
   %.not.i = icmp eq ptr %i.c, null
   br i1 %.not.i, label %bb.b, label %bb.d
 
@@ -1376,13 +1376,13 @@ bb.f:                                             ; preds = %bb.e
   br label %_io__RawIOBase_readall_impl.exit
 
 bb.g:                                             ; preds = %bb.e
-  %i.h = load i32, ptr @_Py_NoneStruct, align 8, !tbaa !14 ; 2 uses
+  %i.h = load i32, ptr %i.c, align 8, !tbaa !14   ; 2 uses
   %.not.i32.i = icmp sgt i32 %i.h, -1
   br i1 %.not.i32.i, label %bb.h, label %bb.w
 
 bb.h:                                             ; preds = %bb.g
   %i.i = add nsw i32 %i.h, -1                     ; 2 uses
-  store i32 %i.i, ptr @_Py_NoneStruct, align 8, !tbaa !14
+  store i32 %i.i, ptr %i.c, align 8, !tbaa !14
   %i.j = icmp eq i32 %i.i, 0
   br i1 %i.j, label %.sink.split.i, label %bb.w
 

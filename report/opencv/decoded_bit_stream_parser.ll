@@ -201,7 +201,7 @@ bb.i:                                             ; preds = %bb.f
 
 bb.j:                                             ; preds = %bb.i
   %i.au = invoke noundef nonnull align 8 dereferenceable(48) ptr @_ZN5zxing6qrcode4Mode7forBitsEiRNS_12ErrorHandlerE(i32 noundef %i.at, ptr noundef nonnull align 8 dereferenceable(48) %5)
-          to label %bb.k unwind label %.loopexit  ; 11 uses
+          to label %bb.k unwind label %.loopexit  ; 17 uses
 
 bb.k:                                             ; preds = %bb.j
   %i.av = load ptr, ptr %5, align 8, !tbaa !15
@@ -524,7 +524,7 @@ bb.au:                                            ; preds = %bb.at
           to label %bb.av unwind label %bb.az
 
 bb.av:                                            ; preds = %bb.au
-  %i.ek = invoke noundef i32 @_ZNK5zxing6qrcode4Mode21getCharacterCountBitsEPNS0_7VersionE(ptr noundef nonnull align 8 dereferenceable(48) @_ZN5zxing6qrcode4Mode5HANZIE, ptr noundef %3)
+  %i.ek = invoke noundef i32 @_ZNK5zxing6qrcode4Mode21getCharacterCountBitsEPNS0_7VersionE(ptr noundef nonnull align 8 dereferenceable(48) %i.au, ptr noundef %3)
           to label %bb.aw unwind label %bb.ba
 
 bb.aw:                                            ; preds = %bb.av
@@ -610,7 +610,7 @@ _ZN5zxing3RefINS_13DecoderResultEED2Ev.exit165:   ; preds = %_ZN5zxing3RefINS_9B
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit169: ; preds = %_ZN5zxing3RefINS_13DecoderResultEED2Ev.exit165
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #15
-  invoke void @_ZNK5zxing6qrcode4Mode7getNameB5cxx11Ev(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %14, ptr noundef nonnull align 8 dereferenceable(48) @_ZN5zxing6qrcode4Mode5HANZIE)
+  invoke void @_ZNK5zxing6qrcode4Mode7getNameB5cxx11Ev(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %14, ptr noundef nonnull align 8 dereferenceable(48) %i.au)
           to label %bb.bg unwind label %bb.bm
 
 bb.bg:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit169
@@ -851,7 +851,7 @@ _ZN5zxing12ErrorHandlerD2Ev.exit185:              ; preds = %bb.ce, %_ZNKSt7__cx
 
 bb.cf:                                            ; preds = %bb.bx
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #15
-  invoke void @_ZNK5zxing6qrcode4Mode7getNameB5cxx11Ev(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %17, ptr noundef nonnull align 8 dereferenceable(48) @_ZN5zxing6qrcode4Mode7NUMERICE)
+  invoke void @_ZNK5zxing6qrcode4Mode7getNameB5cxx11Ev(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %17, ptr noundef nonnull align 8 dereferenceable(48) %i.au)
           to label %bb.cg unwind label %bb.cm
 
 bb.cg:                                            ; preds = %bb.cf
@@ -994,7 +994,7 @@ bb.cr:                                            ; preds = %bb.cq
 
 _ZN5zxing3RefINS_13DecoderResultEED2Ev.exit203:   ; preds = %_ZN5zxing3RefINS_9BitSourceEED2Ev.exit201
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #15
-  invoke void @_ZNK5zxing6qrcode4Mode7getNameB5cxx11Ev(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %19, ptr noundef nonnull align 8 dereferenceable(48) @_ZN5zxing6qrcode4Mode12ALPHANUMERICE)
+  invoke void @_ZNK5zxing6qrcode4Mode7getNameB5cxx11Ev(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %19, ptr noundef nonnull align 8 dereferenceable(48) %i.au)
           to label %bb.cs unwind label %bb.cy
 
 bb.cs:                                            ; preds = %_ZN5zxing3RefINS_13DecoderResultEED2Ev.exit203
@@ -1198,7 +1198,7 @@ _ZN5zxing12ErrorHandlerD2Ev.exit231:              ; preds = %bb.dj, %_ZNKSt7__cx
 
 bb.dk:                                            ; preds = %bb.dc
   call void @llvm.lifetime.start.p0(ptr nonnull %22) #15
-  invoke void @_ZNK5zxing6qrcode4Mode7getNameB5cxx11Ev(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %22, ptr noundef nonnull align 8 dereferenceable(48) @_ZN5zxing6qrcode4Mode4BYTEE)
+  invoke void @_ZNK5zxing6qrcode4Mode7getNameB5cxx11Ev(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %22, ptr noundef nonnull align 8 dereferenceable(48) %i.au)
           to label %bb.dl unwind label %bb.dr
 
 bb.dl:                                            ; preds = %bb.dk
@@ -1341,7 +1341,7 @@ bb.dw:                                            ; preds = %bb.dv
 
 _ZN5zxing3RefINS_13DecoderResultEED2Ev.exit249:   ; preds = %_ZN5zxing3RefINS_9BitSourceEED2Ev.exit247
   call void @llvm.lifetime.start.p0(ptr nonnull %24) #15
-  invoke void @_ZNK5zxing6qrcode4Mode7getNameB5cxx11Ev(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %24, ptr noundef nonnull align 8 dereferenceable(48) @_ZN5zxing6qrcode4Mode5KANJIE)
+  invoke void @_ZNK5zxing6qrcode4Mode7getNameB5cxx11Ev(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %24, ptr noundef nonnull align 8 dereferenceable(48) %i.au)
           to label %bb.dx unwind label %bb.ed
 
 bb.dx:                                            ; preds = %_ZN5zxing3RefINS_13DecoderResultEED2Ev.exit249

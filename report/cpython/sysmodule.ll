@@ -201,7 +201,7 @@ bb.l:                                             ; preds = %bb.k
   br label %PySys_GetAttr.exit
 
 PySys_GetAttr.exit:                               ; preds = %bb.k, %bb.l
-  %i.af = load ptr, ptr %i.c, align 8, !tbaa !25  ; 18 uses
+  %i.af = load ptr, ptr %i.c, align 8, !tbaa !25  ; 21 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #16
   %i.ag = icmp eq ptr %i.af, null
   br i1 %i.ag, label %Py_DECREF.exit42, label %bb.m
@@ -213,18 +213,18 @@ bb.m:                                             ; preds = %PySys_GetAttr.exit
 bb.n:                                             ; preds = %bb.m
   %i.ai = load ptr, ptr @PyExc_RuntimeError, align 8, !tbaa !25
   call void @_PyErr_SetString(ptr noundef %i.e, ptr noundef %i.ai, ptr noundef nonnull @.str.122) #16
-  %i.aj = load i32, ptr @_Py_NoneStruct, align 8, !tbaa !114 ; 2 uses
+  %i.aj = load i32, ptr %i.af, align 8, !tbaa !114 ; 2 uses
   %.not.i41 = icmp sgt i32 %i.aj, -1
   br i1 %.not.i41, label %bb.o, label %Py_DECREF.exit42
 
 bb.o:                                             ; preds = %bb.n
   %i.ak = add nsw i32 %i.aj, -1                   ; 2 uses
-  store i32 %i.ak, ptr @_Py_NoneStruct, align 8, !tbaa !114
+  store i32 %i.ak, ptr %i.af, align 8, !tbaa !114
   %i.al = icmp eq i32 %i.ak, 0
   br i1 %i.al, label %bb.p, label %Py_DECREF.exit42
 
 bb.p:                                             ; preds = %bb.o
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_NoneStruct) #16
+  call void @_Py_Dealloc(ptr noundef nonnull %i.af) #16
   br label %Py_DECREF.exit42
 
 bb.q:                                             ; preds = %bb.m
@@ -627,7 +627,7 @@ bb.e:                                             ; preds = %_PyVectorcall_Funct
   br label %call_trampoline.exit
 
 call_trampoline.exit:                             ; preds = %_PyVectorcall_FunctionInline.exit.thread.i.i, %bb.e
-  %.0.i.i = phi ptr [ %i.u, %_PyVectorcall_FunctionInline.exit.thread.i.i ], [ %i.w, %bb.e ] ; 3 uses
+  %.0.i.i = phi ptr [ %i.u, %_PyVectorcall_FunctionInline.exit.thread.i.i ], [ %i.w, %bb.e ] ; 6 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #16
   %i.x = icmp eq ptr %.0.i.i, null
   br i1 %i.x, label %bb.f, label %bb.i
@@ -674,18 +674,18 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.ai, label %Py_DECREF.exit28.sink.split, label %Py_DECREF.exit28
 
 bb.m:                                             ; preds = %bb.i
-  %i.aj = load i32, ptr @_Py_NoneStruct, align 8, !tbaa !114 ; 2 uses
+  %i.aj = load i32, ptr %.0.i.i, align 8, !tbaa !114 ; 2 uses
   %.not.i = icmp sgt i32 %i.aj, -1
   br i1 %.not.i, label %bb.n, label %Py_DECREF.exit28
 
 bb.n:                                             ; preds = %bb.m
   %i.ak = add nsw i32 %i.aj, -1                   ; 2 uses
-  store i32 %i.ak, ptr @_Py_NoneStruct, align 8, !tbaa !114
+  store i32 %i.ak, ptr %.0.i.i, align 8, !tbaa !114
   %i.al = icmp eq i32 %i.ak, 0
   br i1 %i.al, label %Py_DECREF.exit28.sink.split, label %Py_DECREF.exit28
 
 Py_DECREF.exit28.sink.split:                      ; preds = %bb.n, %bb.l, %bb.h
-  %_Py_NoneStruct.sink = phi ptr [ %i.af, %bb.l ], [ %i.aa, %bb.h ], [ @_Py_NoneStruct, %bb.n ]
+  %_Py_NoneStruct.sink = phi ptr [ %i.af, %bb.l ], [ %i.aa, %bb.h ], [ %.0.i.i, %bb.n ]
   %.1.ph = phi i32 [ 0, %bb.l ], [ -1, %bb.h ], [ 0, %bb.n ]
   call void @_Py_Dealloc(ptr noundef nonnull %_Py_NoneStruct.sink) #16
   br label %Py_DECREF.exit28

@@ -203,7 +203,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.d = getelementptr i8, ptr %0, i64 120        ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !105  ; 4 uses
-  store ptr @_Py_NoneStruct, ptr %i.d, align 8, !tbaa !105
+  store ptr %1, ptr %i.d, align 8, !tbaa !105
   %.not.i21.i = icmp eq ptr %i.e, null
   br i1 %.not.i21.i, label %function___annotate___set_impl.exit, label %bb.e
 

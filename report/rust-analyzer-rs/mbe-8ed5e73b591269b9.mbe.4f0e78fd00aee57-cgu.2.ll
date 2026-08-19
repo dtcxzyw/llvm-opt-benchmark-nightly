@@ -203,14 +203,14 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtCs4dcH4YgJDq_2tt5IdentECsqiF3OZxLbD_3m
 
 bb.c:                                             ; preds = %bb.b
   %i.p = getelementptr inbounds nuw i8, ptr %i.k, i64 16 ; 2 uses
-  %.sroa.0.0.copyload = load ptr, ptr %i.p, align 8, !nonnull !22, !noundef !22 ; 3 uses
+  %.sroa.0.0.copyload = load ptr, ptr %i.p, align 8, !nonnull !22, !noundef !22 ; 4 uses
   %i.q = icmp eq ptr %.sroa.0.0.copyload, @_RNvNvNtNtCs39E2wp1vf7X_6intern6symbol7symbols7unsafe_10SYMBOL_STR
   br i1 %i.q, label %bb.i, label %bb.e
 
 bb.d:                                             ; preds = %bb.l, %bb.m, %bb.i
   %i.r = landingpad { ptr, i32 }
           cleanup
-  invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtCs4dcH4YgJDq_2tt5IdentECsqiF3OZxLbD_3mbe(ptr nonnull @_RNvNvNtNtCs39E2wp1vf7X_6intern6symbol7symbols7unsafe_10SYMBOL_STR) #22
+  invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtCs4dcH4YgJDq_2tt5IdentECsqiF3OZxLbD_3mbe(ptr nonnull %.sroa.0.0.copyload) #22
           to label %.thread401 unwind label %bb.o
 
 bb.e:                                             ; preds = %bb.c
@@ -340,7 +340,7 @@ bb.t:                                             ; preds = %bb.s
 
 bb.u:                                             ; preds = %bb.s
   %i.aq = getelementptr inbounds nuw i8, ptr %i.i, i64 16
-  %i.ar = load ptr, ptr %i.aq, align 8, !nonnull !22, !noundef !22 ; 2 uses
+  %i.ar = load ptr, ptr %i.aq, align 8, !nonnull !22, !noundef !22 ; 4 uses
   %i.as = icmp eq ptr %i.ar, @_RNvNvNtNtCs39E2wp1vf7X_6intern6symbol7symbols4attr10SYMBOL_STR
   br i1 %i.as, label %bb.ah, label %bb.v
 
@@ -356,7 +356,7 @@ bb.w:                                             ; preds = %bb.v
 bb.x:                                             ; preds = %bb.ae, %bb.aa, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs4dcH4YgJDq_2tt4iter9TtElementECsqiF3OZxLbD_3mbe.exit323, %bb.ab, %bb.w
   %i.au = landingpad { ptr, i32 }
           cleanup
-  invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtCs4dcH4YgJDq_2tt5IdentECsqiF3OZxLbD_3mbe(ptr nonnull @_RNvNvNtNtCs39E2wp1vf7X_6intern6symbol7symbols6derive10SYMBOL_STR) #22
+  invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtCs4dcH4YgJDq_2tt5IdentECsqiF3OZxLbD_3mbe(ptr nonnull %i.ar) #22
           to label %bb.p unwind label %bb.o
 
 bb.y:                                             ; preds = %bb.w
@@ -422,7 +422,7 @@ bb.ah:                                            ; preds = %bb.u
 bb.ai:                                            ; preds = %bb.ap, %bb.al, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs4dcH4YgJDq_2tt4iter9TtElementECsqiF3OZxLbD_3mbe.exit338, %bb.am, %bb.ah
   %i.bc = landingpad { ptr, i32 }
           cleanup
-  invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtCs4dcH4YgJDq_2tt5IdentECsqiF3OZxLbD_3mbe(ptr nonnull @_RNvNvNtNtCs39E2wp1vf7X_6intern6symbol7symbols4attr10SYMBOL_STR) #22
+  invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtCs4dcH4YgJDq_2tt5IdentECsqiF3OZxLbD_3mbe(ptr nonnull %i.ar) #22
           to label %bb.p unwind label %bb.o
 
 bb.aj:                                            ; preds = %bb.ah

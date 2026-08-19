@@ -204,7 +204,7 @@ bb.gh:                                            ; preds = %bb.gf
   br i1 %.not134, label %Py_DECREF.exit, label %bb.gi
 
 bb.gi:                                            ; preds = %bb.gh
-  %i.abk = tail call ptr @PyObject_CallOneArg(ptr noundef nonnull %i.abj, ptr noundef %2) #14 ; 3 uses
+  %i.abk = tail call ptr @PyObject_CallOneArg(ptr noundef nonnull %i.abj, ptr noundef %2) #14 ; 6 uses
   %i.abl = icmp eq ptr %i.abk, null
   br i1 %i.abl, label %.thread, label %bb.gj
 
@@ -213,18 +213,18 @@ bb.gj:                                            ; preds = %bb.gi
   br i1 %.not135, label %bb.gk, label %bb.hh
 
 bb.gk:                                            ; preds = %bb.gj
-  %i.abm = load i32, ptr @_Py_NotImplementedStruct, align 8, !tbaa !46 ; 2 uses
+  %i.abm = load i32, ptr %i.abk, align 8, !tbaa !46 ; 2 uses
   %.not.i = icmp sgt i32 %i.abm, -1
   br i1 %.not.i, label %bb.gl, label %Py_DECREF.exit
 
 bb.gl:                                            ; preds = %bb.gk
   %i.abn = add nsw i32 %i.abm, -1                 ; 2 uses
-  store i32 %i.abn, ptr @_Py_NotImplementedStruct, align 8, !tbaa !46
+  store i32 %i.abn, ptr %i.abk, align 8, !tbaa !46
   %i.abo = icmp eq i32 %i.abn, 0
   br i1 %i.abo, label %bb.gm, label %Py_DECREF.exit
 
 bb.gm:                                            ; preds = %bb.gl
-  tail call void @_Py_Dealloc(ptr noundef nonnull @_Py_NotImplementedStruct) #14
+  tail call void @_Py_Dealloc(ptr noundef nonnull %i.abk) #14
   br label %Py_DECREF.exit
 
 Py_DECREF.exit:                                   ; preds = %bb.gm, %bb.gl, %bb.gk, %bb.gh
@@ -627,7 +627,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.c, label %save_singleton_type.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.d = tail call fastcc i32 @save_reduce(ptr noundef %0, ptr noundef %1, ptr noundef nonnull %i.b, ptr noundef nonnull @_PyNone_Type), !inline_history !147 ; 3 uses
+  %i.d = tail call fastcc i32 @save_reduce(ptr noundef %0, ptr noundef %1, ptr noundef nonnull %i.b, ptr noundef nonnull %2), !inline_history !147 ; 3 uses
   %i.e = load i32, ptr %i.b, align 8, !tbaa !46   ; 2 uses
   %.not.i.i = icmp sgt i32 %i.e, -1
   br i1 %.not.i.i, label %bb.d, label %save_singleton_type.exit
@@ -652,7 +652,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.j, label %save_singleton_type.exit, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.k = tail call fastcc i32 @save_reduce(ptr noundef %0, ptr noundef %1, ptr noundef nonnull %i.i, ptr noundef nonnull @PyEllipsis_Type), !inline_history !147 ; 3 uses
+  %i.k = tail call fastcc i32 @save_reduce(ptr noundef %0, ptr noundef %1, ptr noundef nonnull %i.i, ptr noundef nonnull %2), !inline_history !147 ; 3 uses
   %i.l = load i32, ptr %i.i, align 8, !tbaa !46   ; 2 uses
   %.not.i.i17 = icmp sgt i32 %i.l, -1
   br i1 %.not.i.i17, label %bb.i, label %save_singleton_type.exit
@@ -677,7 +677,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.q, label %save_singleton_type.exit, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.r = tail call fastcc i32 @save_reduce(ptr noundef %0, ptr noundef %1, ptr noundef nonnull %i.p, ptr noundef nonnull @_PyNotImplemented_Type), !inline_history !147 ; 3 uses
+  %i.r = tail call fastcc i32 @save_reduce(ptr noundef %0, ptr noundef %1, ptr noundef nonnull %i.p, ptr noundef nonnull %2), !inline_history !147 ; 3 uses
   %i.s = load i32, ptr %i.p, align 8, !tbaa !46   ; 2 uses
   %.not.i.i22 = icmp sgt i32 %i.s, -1
   br i1 %.not.i.i22, label %bb.n, label %save_singleton_type.exit

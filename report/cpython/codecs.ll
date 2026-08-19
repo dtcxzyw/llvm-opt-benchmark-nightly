@@ -204,7 +204,7 @@ Py_DECREF.exit40thread-pre-split:                 ; preds = %bb.t, %bb.s
   br label %Py_DECREF.exit40
 
 Py_DECREF.exit40:                                 ; preds = %Py_DECREF.exit40thread-pre-split, %bb.r
-  %i.bn = phi ptr [ %.pr, %Py_DECREF.exit40thread-pre-split ], [ %i.bj, %bb.r ] ; 4 uses
+  %i.bn = phi ptr [ %.pr, %Py_DECREF.exit40thread-pre-split ], [ %i.bj, %bb.r ] ; 7 uses
   %i.bo = icmp eq ptr %i.bn, null
   br i1 %i.bo, label %Py_DECREF.exit34, label %bb.u
 
@@ -214,18 +214,18 @@ bb.u:                                             ; preds = %Py_DECREF.exit40
 
 bb.v:                                             ; preds = %bb.u
   store ptr null, ptr %i.b, align 8, !tbaa !14
-  %i.bq = load i32, ptr @_Py_NoneStruct, align 8, !tbaa !110 ; 2 uses
+  %i.bq = load i32, ptr %i.bn, align 8, !tbaa !110 ; 2 uses
   %.not.i37 = icmp sgt i32 %i.bq, -1
   br i1 %.not.i37, label %bb.w, label %bb.ad
 
 bb.w:                                             ; preds = %bb.v
   %i.br = add nsw i32 %i.bq, -1                   ; 2 uses
-  store i32 %i.br, ptr @_Py_NoneStruct, align 8, !tbaa !110
+  store i32 %i.br, ptr %i.bn, align 8, !tbaa !110
   %i.bs = icmp eq i32 %i.br, 0
   br i1 %i.bs, label %bb.x, label %bb.ad
 
 bb.x:                                             ; preds = %bb.w
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_NoneStruct) #10
+  call void @_Py_Dealloc(ptr noundef nonnull %i.bn) #10
   br label %bb.ad
 
 bb.y:                                             ; preds = %bb.u
