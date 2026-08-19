@@ -204,7 +204,7 @@ _ZNK2cv11_InputArray6getMatEi.exit450:            ; preds = %bb.l, %bb.m
   %i.y = and i32 %i.x, 31                         ; 12 uses
   %i.z = lshr i32 %i.x, 5                         ; 3 uses
   %i.aa = and i32 %i.z, 127                       ; 14 uses
-  %i.ab = add nuw nsw i32 %i.aa, 1                ; 25 uses
+  %i.ab = add nuw nsw i32 %i.aa, 1                ; 26 uses
   %i.ac = shl nuw nsw i32 %i.y, 2
   %i.ad = zext nneg i32 %i.ac to i64
   %i.ae = lshr i64 1275511473185297, %i.ad        ; 2 uses
@@ -607,7 +607,7 @@ bb.fj:                                            ; preds = %bb.fi
   %i.vq = getelementptr inbounds nuw i8, ptr %42, i64 40
   %i.vr = load i64, ptr %i.vq, align 8, !tbaa !87
   %.fr = freeze i64 %i.vr
-  %i.vs = trunc i64 %.fr to i32                   ; 7 uses
+  %i.vs = trunc i64 %.fr to i32                   ; 8 uses
   %i.vt = or disjoint i32 %i.aa, 1024
   %i.vu = udiv i32 %i.vt, %i.ab
   %.sroa.speculated556 = call i32 @llvm.smin.i32(i32 %i.vu, i32 %i.vs) ; 2 uses
@@ -622,10 +622,7 @@ bb.fj:                                            ; preds = %bb.fi
   br i1 %i.wb, label %.split693.us, label %.split693
 
 .split693.us:                                     ; preds = %bb.fj
-  %i.wc = or disjoint i32 %i.aa, 1024
-  %43 = udiv i32 %i.wc, %i.ab
-  %smin753 = call i32 @llvm.smin.i32(i32 %43, i32 %i.vs)
-  %44 = zext nneg i32 %smin753 to i64             ; 2 uses
+  %i.wc = or disjoint i32 %i.aa, 1024             ; 2 uses
   br i1 %i.do, label %.split693.us.split.us, label %.split693.us.split
 
 .split693.us.split.us:                            ; preds = %.split693.us, %._crit_edge690.split.us.us.us
@@ -646,6 +643,9 @@ bb.fj:                                            ; preds = %bb.fi
           to label %bb.fk unwind label %.split692.us.split.us.split.us
 
 bb.fk:                                            ; preds = %.preheader.us.us
+  %43 = udiv i32 %i.wc, %i.ab
+  %smin753 = call i32 @llvm.smin.i32(i32 %43, i32 %i.vs)
+  %44 = zext nneg i32 %smin753 to i64
   %indvars.iv.next755 = add nuw nsw i64 %indvars.iv754, %44 ; 2 uses
   %i.wk = trunc nuw i64 %indvars.iv.next755 to i32
   %i.wl = icmp slt i32 %i.wk, %i.vs
@@ -686,7 +686,10 @@ bb.fk:                                            ; preds = %.preheader.us.us
           to label %bb.fl unwind label %.split692.split.us
 
 bb.fl:                                            ; preds = %.preheader.us
-  %indvars.iv.next752 = add nuw nsw i64 %indvars.iv751, %44 ; 2 uses
+  %45 = udiv i32 %i.wc, %i.ab
+  %smin = call i32 @llvm.smin.i32(i32 %45, i32 %i.vs)
+  %46 = zext nneg i32 %smin to i64
+  %indvars.iv.next752 = add nuw nsw i64 %indvars.iv751, %46 ; 2 uses
   %i.wy = trunc nuw i64 %indvars.iv.next752 to i32
   %i.wz = icmp slt i32 %i.wy, %i.vs
   br i1 %i.wz, label %.preheader.us, label %._crit_edge690.split.us696, !llvm.loop !93
