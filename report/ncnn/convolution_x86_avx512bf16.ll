@@ -204,7 +204,7 @@ vec.epilog.scalar.ph387:                          ; preds = %vec.epilog.scalar.p
   br i1 %exitcond2398.not.i, label %._crit_edge1990.i, label %vec.epilog.scalar.ph387, !llvm.loop !111
 
 ._crit_edge1994.split.i:                          ; preds = %._crit_edge1990.i, %.preheader1552.i, %.preheader1548.lr.ph.i, %.preheader1549.lr.ph.i
-  %indvars.iv.next2401.i = add nsw i64 %indvars.iv2400.i, 1 ; 2 uses
+  %indvars.iv.next2401.i = add nuw nsw i64 %indvars.iv2400.i, 1 ; 2 uses
   %indvars.iv.next2367.i = add i32 %indvars.iv2366.i, %i.ayp
   %exitcond2404.not.i = icmp eq i64 %indvars.iv.next2401.i, %wide.trip.count2403.i
   br i1 %exitcond2404.not.i, label %_ZN4ncnnL41convolution_transform_kernel_packed_bf16sERKNS_3MatERS0_iiii.exit, label %_ZN4ncnn3MatD2Ev.exit.i, !llvm.loop !112
@@ -607,7 +607,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 ._crit_edge250.i:                                 ; preds = %.lr.ph249.i, %middle.block, %vec.epilog.middle.block, %.preheader.i
   %.14.lcssa.i = phi ptr [ %.13.lcssa.i, %.preheader.i ], [ %i.zj, %vec.epilog.middle.block ], [ %i.ym, %middle.block ], [ %i.aaa, %.lr.ph249.i ]
-  %indvars.iv.next330.i = add nsw i64 %indvars.iv329.i, 1 ; 2 uses
+  %indvars.iv.next330.i = add nuw nsw i64 %indvars.iv329.i, 1 ; 2 uses
   %exitcond332.not.i = icmp eq i64 %indvars.iv.next330.i, %i.aw
   br i1 %exitcond332.not.i, label %_ZN4ncnn3MatD2Ev.exit, label %bb.f, !llvm.loop !395
 
@@ -1010,7 +1010,7 @@ bb.d:                                             ; preds = %bb.d, %.epil.prehea
 
 .loopexit.i.i:                                    ; preds = %.loopexit.i.i.loopexit236.unr-lcssa, %bb.d, %.loopexit.i.i.loopexit235.unr-lcssa, %.lr.ph709.i.i.epil, %.loopexit.i.i.loopexit234.unr-lcssa, %.lr.ph704.i.i.epil, %.loopexit.i.i.loopexit.unr-lcssa, %.lr.ph699.i.i.epil, %_ZN4ncnn3MatD2Ev.exit.i.i, %_ZN4ncnn3MatD2Ev.exit763.i.i, %_ZN4ncnn3MatD2Ev.exit764.i.i, %_ZN4ncnn3MatD2Ev.exit765.i.i, %.split839.i.i
   %.38.i.i = phi ptr [ %.30717.i.i, %.split839.i.i ], [ %.30717.i.i, %_ZN4ncnn3MatD2Ev.exit.i.i ], [ %i.bgm, %.lr.ph709.i.i.epil ], [ %i.bge, %.lr.ph699.i.i.epil ], [ %.30717.i.i, %_ZN4ncnn3MatD2Ev.exit763.i.i ], [ %i.bgi, %.lr.ph704.i.i.epil ], [ %.30717.i.i, %_ZN4ncnn3MatD2Ev.exit764.i.i ], [ %.30717.i.i, %_ZN4ncnn3MatD2Ev.exit765.i.i ], [ %i.bcy, %.loopexit.i.i.loopexit.unr-lcssa ], [ %i.bdw, %.loopexit.i.i.loopexit234.unr-lcssa ], [ %i.beu, %.loopexit.i.i.loopexit235.unr-lcssa ], [ %i.bgb, %.loopexit.i.i.loopexit236.unr-lcssa ], [ %i.bgq, %bb.d ]
-  %indvars.iv.next769.i.i = add nsw i64 %indvars.iv768.i.i, 1 ; 2 uses
+  %indvars.iv.next769.i.i = add nuw nsw i64 %indvars.iv768.i.i, 1 ; 2 uses
   %exitcond771.not.i.i = icmp eq i64 %indvars.iv.next769.i.i, %wide.trip.count.i.i
   br i1 %exitcond771.not.i.i, label %_ZN4ncnn3MatD2Ev.exit, label %.split839.i.i, !llvm.loop !478
 
@@ -1413,7 +1413,7 @@ bb.hv:                                            ; preds = %bb.hu, %_ZL13activa
 ._crit_edge9705:                                  ; preds = %bb.hv, %.preheader8884
   %.24.lcssa = phi ptr [ %.23.lcssa, %.preheader8884 ], [ %i.sww, %bb.hv ]
   %i.swy = getelementptr inbounds [2 x i8], ptr %.49710, i64 %i.otj
-  %indvars.iv.next10040 = add nsw i64 %indvars.iv10039, 1 ; 2 uses
+  %indvars.iv.next10040 = add nuw nsw i64 %indvars.iv10039, 1 ; 2 uses
   %exitcond10042.not = icmp eq i64 %indvars.iv.next10040, %wide.trip.count
   br i1 %exitcond10042.not, label %._crit_edge9712, label %bb.fr, !llvm.loop !570
 
@@ -1816,7 +1816,7 @@ bb.cm:                                            ; preds = %_ZL13activation_ssf
   br i1 %exitcond1015.not, label %._crit_edge925, label %_ZN4ncnn3MatD2Ev.exit, !llvm.loop !672
 
 ._crit_edge925:                                   ; preds = %bb.cm, %bb.bt
-  %indvars.iv.next1017 = add nsw i64 %indvars.iv1016, 1 ; 2 uses
+  %indvars.iv.next1017 = add nuw nsw i64 %indvars.iv1016, 1 ; 2 uses
   %exitcond1020.not = icmp eq i64 %indvars.iv.next1017, %wide.trip.count1019
   br i1 %exitcond1020.not, label %._crit_edge932, label %bb.br, !llvm.loop !673
 
@@ -2219,7 +2219,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br label %bb.av
 
 bb.au:                                            ; preds = %._crit_edge1167
-  %indvars.iv.next1494 = add nsw i64 %indvars.iv1493, 1 ; 2 uses
+  %indvars.iv.next1494 = add nuw nsw i64 %indvars.iv1493, 1 ; 2 uses
   %exitcond1497.not = icmp eq i64 %indvars.iv.next1494, %wide.trip.count1496
   br i1 %exitcond1497.not, label %._crit_edge1173, label %.preheader499, !llvm.loop !764
 
@@ -2622,7 +2622,7 @@ bb.fx:                                            ; preds = %bb.fv, %bb.fw, %bb.
 
 ._crit_edge2213:                                  ; preds = %bb.fx, %bb.de
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
-  %indvars.iv.next2310 = add nsw i64 %indvars.iv2309, 1 ; 2 uses
+  %indvars.iv.next2310 = add nuw nsw i64 %indvars.iv2309, 1 ; 2 uses
   %exitcond2313.not = icmp eq i64 %indvars.iv.next2310, %wide.trip.count2312
   br i1 %exitcond2313.not, label %._crit_edge2220, label %bb.dc, !llvm.loop !860
 
@@ -3025,7 +3025,7 @@ bb.gg:                                            ; preds = %bb.fg, %bb.gf
 
 ._crit_edge3915:                                  ; preds = %bb.ff, %bb.fc
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #10
-  %indvars.iv.next4012 = add nsw i64 %indvars.iv4011, 1 ; 2 uses
+  %indvars.iv.next4012 = add nuw nsw i64 %indvars.iv4011, 1 ; 2 uses
   %exitcond4015.not = icmp eq i64 %indvars.iv.next4012, %wide.trip.count4014
   br i1 %exitcond4015.not, label %._crit_edge3922, label %bb.fa, !llvm.loop !951
 

@@ -204,7 +204,7 @@ vec.epilog.middle.block290:                       ; preds = %vec.epilog.vector.b
 
 ._crit_edge375.i.us:                              ; preds = %.lr.ph374.i.us.prol.loopexit, %.lr.ph374.i.us, %middle.block272, %vec.epilog.middle.block290, %._crit_edge365.i.us
   %.18.lcssa.i.us = phi ptr [ %i.mw, %._crit_edge365.i.us ], [ %i.nn, %vec.epilog.middle.block290 ], [ %i.ne, %middle.block272 ], [ %.lcssa371.unr, %.lr.ph374.i.us.prol.loopexit ], [ %i.os, %.lr.ph374.i.us ]
-  %indvars.iv.next426.i.us = add nsw i64 %indvars.iv425.i.us, 1 ; 2 uses
+  %indvars.iv.next426.i.us = add nuw nsw i64 %indvars.iv425.i.us, 1 ; 2 uses
   %exitcond428.not.i.us = icmp eq i64 %indvars.iv.next426.i.us, %wide.trip.count.i
   %indvar.next = add i64 %indvar, 1
   br i1 %exitcond428.not.i.us, label %_ZN4ncnnL16pack_A_tile_int8ERKNS_3MatERS0_iiii.exit, label %iter.check337, !llvm.loop !49
@@ -607,7 +607,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 ._crit_edge375.i.loopexit:                        ; preds = %.lr.ph374.i.2, %.lr.ph374.i.1, %._crit_edge365.i
   %.lcssa373 = phi ptr [ %i.xb, %._crit_edge365.i ], [ %i.xe, %.lr.ph374.i.1 ], [ %i.xh, %.lr.ph374.i.2 ]
-  %indvars.iv.next426.i = add nsw i64 %indvars.iv425.i, 1 ; 2 uses
+  %indvars.iv.next426.i = add nuw nsw i64 %indvars.iv425.i, 1 ; 2 uses
   %exitcond428.not.i = icmp eq i64 %indvars.iv.next426.i, %wide.trip.count.i
   br i1 %exitcond428.not.i, label %_ZN4ncnnL16pack_A_tile_int8ERKNS_3MatERS0_iiii.exit, label %._crit_edge365.i, !llvm.loop !49
 
@@ -1010,7 +1010,7 @@ begin_hunk_2_@_ZN4ncnn34transpose_pack_A_tile_int8_avxvnniERKNS_3MatERS0_iiii:bb
 
 ._crit_edge403.i.us:                              ; preds = %.lr.ph402.i.us.prol.loopexit, %.lr.ph402.i.us, %._crit_edge393.i.us
   %.18.lcssa.i.us = phi ptr [ %i.kv, %._crit_edge393.i.us ], [ %.lcssa118.unr, %.lr.ph402.i.us.prol.loopexit ], [ %i.lw, %.lr.ph402.i.us ]
-  %indvars.iv.next452.i.us = add nsw i64 %indvars.iv451.i.us, 1 ; 2 uses
+  %indvars.iv.next452.i.us = add nuw nsw i64 %indvars.iv451.i.us, 1 ; 2 uses
   %exitcond454.not.i.us = icmp eq i64 %indvars.iv.next452.i.us, %wide.trip.count.i
   br i1 %exitcond454.not.i.us, label %_ZN4ncnnL26transpose_pack_A_tile_int8ERKNS_3MatERS0_iiii.exit, label %.lr.ph392.i.preheader.us, !llvm.loop !98
 
@@ -1257,7 +1257,7 @@ bb.h:                                             ; preds = %.lr.ph361.i
 
 ._crit_edge403.i.loopexit:                        ; preds = %.lr.ph402.i.2, %.lr.ph402.i.1, %._crit_edge393.i
   %.lcssa120 = phi ptr [ %i.qq, %._crit_edge393.i ], [ %i.qt, %.lr.ph402.i.1 ], [ %i.qw, %.lr.ph402.i.2 ]
-  %indvars.iv.next452.i = add nsw i64 %indvars.iv451.i, 1 ; 2 uses
+  %indvars.iv.next452.i = add nuw nsw i64 %indvars.iv451.i, 1 ; 2 uses
   %exitcond454.not.i = icmp eq i64 %indvars.iv.next452.i, %wide.trip.count.i
   br i1 %exitcond454.not.i, label %_ZN4ncnnL26transpose_pack_A_tile_int8ERKNS_3MatERS0_iiii.exit, label %._crit_edge393.i, !llvm.loop !98
 
@@ -1660,7 +1660,7 @@ vec.epilog.scalar.ph334:                          ; preds = %vec.epilog.scalar.p
 
 ._crit_edge307.us.i:                              ; preds = %.lr.ph306.us.i, %middle.block283, %vec.epilog.middle.block300, %..preheader_crit_edge.us.i
   %.14.lcssa.us.i = phi ptr [ %.lcssa83, %..preheader_crit_edge.us.i ], [ %i.mh, %vec.epilog.middle.block300 ], [ %i.ly, %middle.block283 ], [ %i.lo, %.lr.ph306.us.i ]
-  %indvars.iv.next358.i = add nsw i64 %indvars.iv357.i, 1 ; 2 uses
+  %indvars.iv.next358.i = add nuw nsw i64 %indvars.iv357.i, 1 ; 2 uses
   %exitcond361.not.i = icmp eq i64 %indvars.iv.next358.i, %wide.trip.count360.i
   %indvar.next = add i64 %indvar, 1
   br i1 %exitcond361.not.i, label %_ZN4ncnnL16pack_B_tile_int8ERKNS_3MatERS0_iiii.exit, label %iter.check333, !llvm.loop !126
@@ -2063,7 +2063,7 @@ bb.h:                                             ; preds = %bb.g
 
 ._crit_edge307.i:                                 ; preds = %bb.h, %bb.g, %.preheader.i
   %.lcssa361 = phi ptr [ %i.tp, %.preheader.i ], [ %i.ts, %bb.g ], [ %i.tv, %bb.h ]
-  %indvars.iv.next354.i = add nsw i64 %indvars.iv353.i, 1 ; 2 uses
+  %indvars.iv.next354.i = add nuw nsw i64 %indvars.iv353.i, 1 ; 2 uses
   %exitcond356.not.i = icmp eq i64 %indvars.iv.next354.i, %wide.trip.count.i
   br i1 %exitcond356.not.i, label %_ZN4ncnnL16pack_B_tile_int8ERKNS_3MatERS0_iiii.exit, label %.preheader.i, !llvm.loop !126
 
@@ -2466,7 +2466,7 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph328.us
 
 ._crit_edge336.us.i:                              ; preds = %.lr.ph335.us.i, %..preheader_crit_edge.us.i
   %.14.lcssa.us.i = phi ptr [ %i.kc, %..preheader_crit_edge.us.i ], [ %i.ki, %.lr.ph335.us.i ]
-  %indvars.iv.next385.i = add nsw i64 %indvars.iv384.i, 1 ; 2 uses
+  %indvars.iv.next385.i = add nuw nsw i64 %indvars.iv384.i, 1 ; 2 uses
   %exitcond388.not.i = icmp eq i64 %indvars.iv.next385.i, %wide.trip.count387.i
   br i1 %exitcond388.not.i, label %_ZN4ncnnL26transpose_pack_B_tile_int8ERKNS_3MatERS0_iiii.exit, label %.lr.ph328.us.i, !llvm.loop !176
 
@@ -2700,7 +2700,7 @@ bb.i:                                             ; preds = %bb.h
 
 ._crit_edge336.i:                                 ; preds = %bb.i, %bb.h, %.preheader.i
   %.lcssa101 = phi ptr [ %i.ot, %.preheader.i ], [ %i.ow, %bb.h ], [ %i.oz, %bb.i ]
-  %indvars.iv.next381.i = add nsw i64 %indvars.iv380.i, 1 ; 2 uses
+  %indvars.iv.next381.i = add nuw nsw i64 %indvars.iv380.i, 1 ; 2 uses
   %exitcond383.not.i = icmp eq i64 %indvars.iv.next381.i, %wide.trip.count.i
   br i1 %exitcond383.not.i, label %_ZN4ncnnL26transpose_pack_B_tile_int8ERKNS_3MatERS0_iiii.exit, label %.preheader.i, !llvm.loop !176
 
@@ -3103,7 +3103,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 ._crit_edge884.i:                                 ; preds = %.lr.ph883.i.prol.loopexit, %.lr.ph883.i, %middle.block257, %vec.epilog.middle.block, %._crit_edge874.i
   %.35.lcssa.i = phi ptr [ %.34.i, %._crit_edge874.i ], [ %i.agc, %vec.epilog.middle.block ], [ %i.aer, %middle.block257 ], [ %.lcssa276.unr, %.lr.ph883.i.prol.loopexit ], [ %i.ahe, %.lr.ph883.i ]
-  %indvars.iv.next963.i = add nsw i64 %indvars.iv962.i, 1 ; 2 uses
+  %indvars.iv.next963.i = add nuw nsw i64 %indvars.iv962.i, 1 ; 2 uses
   %exitcond965.not.i = icmp eq i64 %indvars.iv.next963.i, %wide.trip.count.i
   br i1 %exitcond965.not.i, label %_ZN4ncnnL24pack_A_tile_fp32_to_int8ERKNS_3MatERS0_iiiiS2_.exit, label %bb.o, !llvm.loop !227
 
@@ -3506,7 +3506,7 @@ bb.z:                                             ; preds = %.lr.ph1026.i
 
 .loopexit.i:                                      ; preds = %.lr.ph1036.i.prol.loopexit, %.lr.ph1036.i, %._crit_edge1027.i, %bb.x, %bb.w, %bb.v, %._crit_edge1007.i, %bb.t
   %.46.i = phi ptr [ %.361039.i, %bb.t ], [ %.44.i, %._crit_edge1027.i ], [ %i.agi, %bb.v ], [ %.361039.i, %bb.w ], [ %i.ahn, %bb.x ], [ %.361039.i, %._crit_edge1007.i ], [ %.lcssa212.unr, %.lr.ph1036.i.prol.loopexit ], [ %i.ajm, %.lr.ph1036.i ]
-  %indvars.iv.next1110.i = add nsw i64 %indvars.iv1109.i, 1 ; 2 uses
+  %indvars.iv.next1110.i = add nuw nsw i64 %indvars.iv1109.i, 1 ; 2 uses
   %exitcond1112.not.i = icmp eq i64 %indvars.iv.next1110.i, %wide.trip.count.i
   br i1 %exitcond1112.not.i, label %_ZN4ncnnL34transpose_pack_A_tile_fp32_to_int8ERKNS_3MatERS0_iiiiS2_.exit, label %bb.t, !llvm.loop !250
 
@@ -3909,7 +3909,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 ._crit_edge723.i:                                 ; preds = %.lr.ph722.i.prol.loopexit, %.lr.ph722.i, %middle.block223, %vec.epilog.middle.block, %.preheader.i
   %.28.lcssa.i = phi ptr [ %.27.lcssa.i, %.preheader.i ], [ %i.abv, %vec.epilog.middle.block ], [ %i.aak, %middle.block223 ], [ %.lcssa241.unr, %.lr.ph722.i.prol.loopexit ], [ %i.adn, %.lr.ph722.i ]
-  %indvars.iv.next793.i = add nsw i64 %indvars.iv792.i, 1 ; 2 uses
+  %indvars.iv.next793.i = add nuw nsw i64 %indvars.iv792.i, 1 ; 2 uses
   %exitcond795.not.i = icmp eq i64 %indvars.iv.next793.i, %wide.trip.count.i
   br i1 %exitcond795.not.i, label %_ZN4ncnnL24pack_B_tile_fp32_to_int8ERKNS_3MatERS0_iiiif.exit, label %bb.i, !llvm.loop !290
 
@@ -4312,7 +4312,7 @@ bb.g:                                             ; preds = %.loopexit643.i.us
 
 .loopexit.i.us:                                   ; preds = %.lr.ph779.i.us, %.lr.ph792.i.us.prol.loopexit, %.lr.ph792.i.us, %.preheader.i.us, %.loopexit643.i.us
   %.34.i.us = phi ptr [ %.27795.i.us, %.loopexit643.i.us ], [ %.32.lcssa.i.us, %.preheader.i.us ], [ %i.aby, %.lr.ph792.i.us ], [ %.lcssa178.unr, %.lr.ph792.i.us.prol.loopexit ], [ %i.aak, %.lr.ph779.i.us ]
-  %indvars.iv.next874.i.us = add nsw i64 %indvars.iv873.i.us, 1 ; 2 uses
+  %indvars.iv.next874.i.us = add nuw nsw i64 %indvars.iv873.i.us, 1 ; 2 uses
   %exitcond876.not.i.us = icmp eq i64 %indvars.iv.next874.i.us, %wide.trip.count.i
   br i1 %exitcond876.not.i.us, label %_ZN4ncnnL34transpose_pack_B_tile_fp32_to_int8ERKNS_3MatERS0_iiiif.exit, label %.loopexit644.i.us, !llvm.loop !311
 
@@ -4402,7 +4402,7 @@ bb.g:                                             ; preds = %.loopexit643.i.us
   br i1 %i.aef, label %.lr.ph773.i, label %.loopexit.i.loopexit7, !llvm.loop !313
 
 .loopexit.i.loopexit7:                            ; preds = %.lr.ph773.i
-  %indvars.iv.next874.i = add nsw i64 %indvars.iv873.i, 1 ; 2 uses
+  %indvars.iv.next874.i = add nuw nsw i64 %indvars.iv873.i, 1 ; 2 uses
   %exitcond876.not.i = icmp eq i64 %indvars.iv.next874.i, %wide.trip.count.i
   br i1 %exitcond876.not.i, label %_ZN4ncnnL34transpose_pack_B_tile_fp32_to_int8ERKNS_3MatERS0_iiiif.exit, label %.lr.ph773.i.preheader, !llvm.loop !311
 

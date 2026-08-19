@@ -203,7 +203,7 @@ bb.b:                                             ; preds = %.lr.ph163, %._crit_
   %i.cr = mul nsw i64 %i.ci, %i.e
   %i.cs = getelementptr inbounds i8, ptr %.0111159, i64 %i.cr
   store i8 %i.cq, ptr %i.cs, align 1, !tbaa !14
-  %indvars.iv.next200.prol = add nsw i64 %i.ci, 1
+  %indvars.iv.next200.prol = add nuw nsw i64 %i.ci, 1
   br label %.lr.ph158.prol.loopexit
 
 .lr.ph158.prol.loopexit:                          ; preds = %.lr.ph158.prol, %.lr.ph158.preheader
@@ -225,7 +225,7 @@ bb.b:                                             ; preds = %.lr.ph163, %._crit_
   %i.db = mul nsw i64 %indvars.iv199, %i.e
   %i.dc = getelementptr inbounds i8, ptr %.0111159, i64 %i.db
   store i8 %i.da, ptr %i.dc, align 1, !tbaa !14
-  %indvars.iv.next200 = add nsw i64 %indvars.iv199, 1 ; 2 uses
+  %indvars.iv.next200 = add nuw nsw i64 %indvars.iv199, 1 ; 2 uses
   %i.dd = and i64 %indvars.iv.next200, 7
   %i.de = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.dd
   %i.df = load i8, ptr %i.de, align 1, !tbaa !14
@@ -236,7 +236,7 @@ bb.b:                                             ; preds = %.lr.ph163, %._crit_
   %i.dk = mul nsw i64 %indvars.iv.next200, %i.e
   %i.dl = getelementptr inbounds i8, ptr %.0111159, i64 %i.dk
   store i8 %i.dj, ptr %i.dl, align 1, !tbaa !14
-  %indvars.iv.next200.1 = add nsw i64 %indvars.iv199, 2 ; 2 uses
+  %indvars.iv.next200.1 = add nuw nsw i64 %indvars.iv199, 2 ; 2 uses
   %exitcond203.not.1 = icmp eq i64 %indvars.iv.next200.1, %wide.trip.count202
   br i1 %exitcond203.not.1, label %._crit_edge, label %.lr.ph158, !llvm.loop !202
 
@@ -639,7 +639,7 @@ begin_hunk_1_@stbtt_PackFontRangesRenderIntoRects:bb.a
   %i.ty = mul nsw i64 %i.tp, %i.pk
   %i.tz = getelementptr inbounds i8, ptr %.0111159.i, i64 %i.ty
   store i8 %i.tx, ptr %i.tz, align 1, !tbaa !14
-  %indvars.iv.next200.i.prol = add nsw i64 %i.tp, 1
+  %indvars.iv.next200.i.prol = add nuw nsw i64 %i.tp, 1
   br label %.lr.ph158.i.prol.loopexit
 
 .lr.ph158.i.prol.loopexit:                        ; preds = %.lr.ph158.i.prol, %.lr.ph158.preheader.i
@@ -661,7 +661,7 @@ begin_hunk_1_@stbtt_PackFontRangesRenderIntoRects:bb.a
   %i.ui = mul nsw i64 %indvars.iv199.i, %i.pk
   %i.uj = getelementptr inbounds i8, ptr %.0111159.i, i64 %i.ui
   store i8 %i.uh, ptr %i.uj, align 1, !tbaa !14
-  %indvars.iv.next200.i = add nsw i64 %indvars.iv199.i, 1 ; 2 uses
+  %indvars.iv.next200.i = add nuw nsw i64 %indvars.iv199.i, 1 ; 2 uses
   %i.uk = and i64 %indvars.iv.next200.i, 7
   %i.ul = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.uk
   %i.um = load i8, ptr %i.ul, align 1, !tbaa !14
@@ -672,7 +672,7 @@ begin_hunk_1_@stbtt_PackFontRangesRenderIntoRects:bb.a
   %i.ur = mul nsw i64 %indvars.iv.next200.i, %i.pk
   %i.us = getelementptr inbounds i8, ptr %.0111159.i, i64 %i.ur
   store i8 %i.uq, ptr %i.us, align 1, !tbaa !14
-  %indvars.iv.next200.i.1 = add nsw i64 %indvars.iv199.i, 2 ; 2 uses
+  %indvars.iv.next200.i.1 = add nuw nsw i64 %indvars.iv199.i, 2 ; 2 uses
   %exitcond203.not.i.1 = icmp eq i64 %indvars.iv.next200.i.1, %wide.trip.count202.i
   br i1 %exitcond203.not.i.1, label %._crit_edge.i166, label %.lr.ph158.i, !llvm.loop !202
 

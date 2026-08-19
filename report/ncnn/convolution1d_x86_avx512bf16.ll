@@ -204,7 +204,7 @@ vec.epilog.scalar.ph386:                          ; preds = %vec.epilog.scalar.p
   br i1 %exitcond2405.not.i, label %._crit_edge1997.i, label %vec.epilog.scalar.ph386, !llvm.loop !230
 
 ._crit_edge2001.split.i:                          ; preds = %._crit_edge1997.i, %.preheader1559.i, %.preheader1555.lr.ph.i, %.preheader1556.lr.ph.i
-  %indvars.iv.next2408.i = add nsw i64 %indvars.iv2407.i, 1 ; 2 uses
+  %indvars.iv.next2408.i = add nuw nsw i64 %indvars.iv2407.i, 1 ; 2 uses
   %indvars.iv.next2374.i = add i32 %indvars.iv2373.i, %i.ayz
   %exitcond2411.not.i = icmp eq i64 %indvars.iv.next2408.i, %wide.trip.count2410.i
   br i1 %exitcond2411.not.i, label %_ZN4ncnnL43convolution1d_transform_kernel_packed_bf16sERKNS_3MatERS0_iii.exit, label %_ZN4ncnn3MatD2Ev.exit.i, !llvm.loop !231

@@ -204,7 +204,7 @@ begin_hunk_0_@_ZL40ImGui_ImplStbTrueType_FontBakedLoadGlyphP11ImFontAtlasP12ImFo
   %i.bin = mul nsw i64 %i.bie, %i.bea
   %i.bio = getelementptr inbounds i8, ptr %.0111159.i.i, i64 %i.bin
   store i8 %i.bim, ptr %i.bio, align 1, !tbaa !31
-  %indvars.iv.next200.i.i.prol = add nsw i64 %i.bie, 1
+  %indvars.iv.next200.i.i.prol = add nuw nsw i64 %i.bie, 1
   br label %.lr.ph158.i.i.prol.loopexit
 
 .lr.ph158.i.i.prol.loopexit:                      ; preds = %.lr.ph158.i.i.prol, %.lr.ph158.preheader.i.i
@@ -226,7 +226,7 @@ begin_hunk_0_@_ZL40ImGui_ImplStbTrueType_FontBakedLoadGlyphP11ImFontAtlasP12ImFo
   %i.bix = mul nsw i64 %indvars.iv199.i.i, %i.bea
   %i.biy = getelementptr inbounds i8, ptr %.0111159.i.i, i64 %i.bix
   store i8 %i.biw, ptr %i.biy, align 1, !tbaa !31
-  %indvars.iv.next200.i.i = add nsw i64 %indvars.iv199.i.i, 1 ; 2 uses
+  %indvars.iv.next200.i.i = add nuw nsw i64 %indvars.iv199.i.i, 1 ; 2 uses
   %i.biz = and i64 %indvars.iv.next200.i.i, 7
   %i.bja = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.biz
   %i.bjb = load i8, ptr %i.bja, align 1, !tbaa !31
@@ -237,7 +237,7 @@ begin_hunk_0_@_ZL40ImGui_ImplStbTrueType_FontBakedLoadGlyphP11ImFontAtlasP12ImFo
   %i.bjg = mul nsw i64 %indvars.iv.next200.i.i, %i.bea
   %i.bjh = getelementptr inbounds i8, ptr %.0111159.i.i, i64 %i.bjg
   store i8 %i.bjf, ptr %i.bjh, align 1, !tbaa !31
-  %indvars.iv.next200.i.i.1 = add nsw i64 %indvars.iv199.i.i, 2 ; 2 uses
+  %indvars.iv.next200.i.i.1 = add nuw nsw i64 %indvars.iv199.i.i, 2 ; 2 uses
   %exitcond203.not.i.i.1 = icmp eq i64 %indvars.iv.next200.i.i.1, %wide.trip.count202.i.i
   br i1 %exitcond203.not.i.i.1, label %._crit_edge.i37.i, label %.lr.ph158.i.i, !llvm.loop !784
 
