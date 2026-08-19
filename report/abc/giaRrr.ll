@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.c
 .lr.ph.us.i.split:                                ; preds = %bb.c, %bb.d, %.lr.ph.us.i.peel.begin
   %.lcssa711.us.i.lcssa119 = phi i32 [ %.promoted8.i, %.lr.ph.us.i.peel.begin ], [ 0, %bb.d ], [ 0, %bb.c ] ; 2 uses
   %.lcssa118 = phi ptr [ %.promoted.i, %.lr.ph.us.i.peel.begin ], [ %i.k, %bb.d ], [ %i.k, %bb.c ] ; 2 uses
-  %i.q = add i32 %.lcssa711.us.i.lcssa119, 1      ; 3 uses
+  %i.q = add nuw i32 %.lcssa711.us.i.lcssa119, 1  ; 3 uses
   %i.r = add i32 %.lcssa711.us.i.lcssa119, 2
   store i32 %i.r, ptr %i.i, align 4, !tbaa !53
   %i.s = load i32, ptr %0, align 8, !tbaa !88
@@ -453,7 +453,7 @@ bb.c:                                             ; preds = %bb.b
 .lr.ph.us.i.split:                                ; preds = %bb.b, %bb.c, %.lr.ph.us.i.peel.begin
   %.lcssa711.us.i.lcssa122 = phi i32 [ %.promoted8.i, %.lr.ph.us.i.peel.begin ], [ 0, %bb.c ], [ 0, %bb.b ] ; 2 uses
   %.lcssa121 = phi ptr [ %.promoted.i, %.lr.ph.us.i.peel.begin ], [ %i.k, %bb.c ], [ %i.k, %bb.b ] ; 2 uses
-  %i.q = add i32 %.lcssa711.us.i.lcssa122, 1      ; 3 uses
+  %i.q = add nuw i32 %.lcssa711.us.i.lcssa122, 1  ; 3 uses
   %i.r = add i32 %.lcssa711.us.i.lcssa122, 2
   store i32 %i.r, ptr %i.i, align 4, !tbaa !53
   %i.s = load i32, ptr %0, align 8, !tbaa !88
@@ -856,7 +856,7 @@ bb.c:                                             ; preds = %bb.b
 .lr.ph.us.i.split:                                ; preds = %bb.b, %bb.c, %.lr.ph.us.i.peel.begin
   %.lcssa711.us.i.lcssa122 = phi i32 [ %.promoted8.i, %.lr.ph.us.i.peel.begin ], [ 0, %bb.c ], [ 0, %bb.b ] ; 2 uses
   %.lcssa121 = phi ptr [ %.promoted.i, %.lr.ph.us.i.peel.begin ], [ %i.j, %bb.c ], [ %i.j, %bb.b ] ; 2 uses
-  %i.p = add i32 %.lcssa711.us.i.lcssa122, 1      ; 3 uses
+  %i.p = add nuw i32 %.lcssa711.us.i.lcssa122, 1  ; 3 uses
   %i.q = add i32 %.lcssa711.us.i.lcssa122, 2
   store i32 %i.q, ptr %i.h, align 4, !tbaa !53
   %i.r = load i32, ptr %0, align 8, !tbaa !88

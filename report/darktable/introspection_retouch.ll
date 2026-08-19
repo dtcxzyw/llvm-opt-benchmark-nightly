@@ -204,14 +204,14 @@ dt_XYZ_to_Lab.exit.us:                            ; preds = %bb.c, %bb.b
   %i.ak = add i64 %i.e, 17179869180
   %i.al = lshr exact i64 %i.ak, 2
   %i.am = trunc i64 %i.al to i32
-  %i.an = add i32 %i.am, 1
+  %i.an = add nuw i32 %i.am, 1
   br label %._crit_edge
 
 ._crit_edge.loopexit13:                           ; preds = %bb.d
   %i.ao = add i64 %i.e, 17179869180
   %i.ap = lshr exact i64 %i.ao, 2
   %i.aq = trunc i64 %i.ap to i32
-  %i.ar = add i32 %i.aq, 1
+  %i.ar = add nuw i32 %i.aq, 1
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit13, %._crit_edge.loopexit, %bb.a
