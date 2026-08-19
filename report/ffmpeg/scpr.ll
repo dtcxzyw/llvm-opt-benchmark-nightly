@@ -204,22 +204,26 @@ bb.n:                                             ; preds = %renew_table3.exit10
   %i.fb = getelementptr inbounds nuw [2 x i8], ptr %i.jg, i64 %indvar.i.i.i
   store i16 8, ptr %i.fb, align 2, !tbaa !68
   %i.fc = add nuw nsw i32 %.02932.i.i.i, 112
-  %i.fd = lshr i32 %i.fc, 7                       ; 2 uses
+  %i.fd = lshr i32 %i.fc, 7
   %i.fe = add nuw nsw i32 %.02932.i.i.i, 16
-  %i.ff = lshr i32 %.02932.i.i.i, 7               ; 2 uses
+  %i.ff = lshr i32 %.02932.i.i.i, 7
   %.not30.i.i.i = icmp samesign ugt i32 %i.fd, %i.ff
   br i1 %.not30.i.i.i, label %._crit_edge.i.i.i, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.n
-  %4 = trunc i64 %indvar.i.i.i to i8
-  %5 = shl nuw nsw i64 %indvar.i.i.i, 4
-  %6 = add nuw nsw i64 %5, 112
-  %7 = lshr i64 %6, 7
-  %scevgep.i.i.i = getelementptr i8, ptr %i.jh, i64 %7
-  %8 = add nuw nsw i32 %i.ff, 1
-  %narrow.i.i.i = sub nuw nsw i32 %8, %i.fd
-  %i.fg = zext nneg i32 %narrow.i.i.i to i64
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.i.i.i, i8 %4, i64 %i.fg, i1 false), !tbaa !52
+  %4 = shl nuw nsw i64 %indvar.i.i.i, 4           ; 2 uses
+  %5 = trunc i64 %4 to i32
+  %6 = lshr i32 %5, 7
+  %7 = add nuw nsw i64 %4, 127                    ; 2 uses
+  %8 = trunc i64 %7 to i32
+  %9 = lshr i32 %8, 7
+  %narrow.i.i.i = sub nsw i32 %6, %9
+  %i.fg = zext i32 %narrow.i.i.i to i64
+  %10 = add nuw nsw i64 %i.fg, 1
+  %11 = lshr i64 %7, 7
+  %scevgep.i.i.i = getelementptr i8, ptr %i.jh, i64 %11
+  %12 = trunc i64 %indvar.i.i.i to i8
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.i.i.i, i8 %12, i64 %10, i1 false), !tbaa !52
   br label %._crit_edge.i.i.i
 
 ._crit_edge.i.i.i:                                ; preds = %.lr.ph.i.i.i, %bb.n
@@ -269,22 +273,26 @@ bb.o:                                             ; preds = %._crit_edge.i91.i.i
   %i.fw = getelementptr inbounds nuw [2 x i8], ptr %i.fr, i64 %indvar.i85.i.i
   store i16 8, ptr %i.fw, align 2, !tbaa !68
   %i.fx = add nuw nsw i32 %.02932.i86.i.i, 112
-  %i.fy = lshr i32 %i.fx, 7                       ; 2 uses
+  %i.fy = lshr i32 %i.fx, 7
   %i.fz = add nuw nsw i32 %.02932.i86.i.i, 16
-  %i.ga = lshr i32 %.02932.i86.i.i, 7             ; 2 uses
+  %i.ga = lshr i32 %.02932.i86.i.i, 7
   %.not30.i87.i.i = icmp samesign ugt i32 %i.fy, %i.ga
   br i1 %.not30.i87.i.i, label %._crit_edge.i91.i.i, label %.lr.ph.i88.i.i
 
 .lr.ph.i88.i.i:                                   ; preds = %bb.o
-  %9 = trunc i64 %indvar.i85.i.i to i8
-  %10 = shl nuw nsw i64 %indvar.i85.i.i, 4
-  %11 = add nuw nsw i64 %10, 112
-  %12 = lshr i64 %11, 7
-  %scevgep.i89.i.i = getelementptr i8, ptr %i.fs, i64 %12
-  %13 = add nuw nsw i32 %i.ga, 1
-  %narrow.i90.i.i = sub nuw nsw i32 %13, %i.fy
-  %i.gb = zext nneg i32 %narrow.i90.i.i to i64
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.i89.i.i, i8 %9, i64 %i.gb, i1 false), !tbaa !52
+  %13 = shl nuw nsw i64 %indvar.i85.i.i, 4        ; 2 uses
+  %14 = trunc i64 %13 to i32
+  %15 = lshr i32 %14, 7
+  %16 = add nuw nsw i64 %13, 127                  ; 2 uses
+  %17 = trunc i64 %16 to i32
+  %18 = lshr i32 %17, 7
+  %narrow.i90.i.i = sub nsw i32 %15, %18
+  %i.gb = zext i32 %narrow.i90.i.i to i64
+  %19 = add nuw nsw i64 %i.gb, 1
+  %20 = lshr i64 %16, 7
+  %scevgep.i88.i.i = getelementptr i8, ptr %i.fs, i64 %20
+  %21 = trunc i64 %indvar.i85.i.i to i8
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.i88.i.i, i8 %21, i64 %19, i1 false), !tbaa !52
   br label %._crit_edge.i91.i.i
 
 ._crit_edge.i91.i.i:                              ; preds = %.lr.ph.i88.i.i, %bb.o
@@ -303,22 +311,26 @@ bb.p:                                             ; preds = %._crit_edge.i101.i.
   %i.gf = getelementptr inbounds nuw [2 x i8], ptr %i.ep, i64 %indvar.i95.i.i
   store i16 8, ptr %i.gf, align 2, !tbaa !68
   %i.gg = add nuw nsw i32 %.02932.i96.i.i, 112
-  %i.gh = lshr i32 %i.gg, 7                       ; 2 uses
+  %i.gh = lshr i32 %i.gg, 7
   %i.gi = add nuw nsw i32 %.02932.i96.i.i, 16
-  %i.gj = lshr i32 %.02932.i96.i.i, 7             ; 2 uses
+  %i.gj = lshr i32 %.02932.i96.i.i, 7
   %.not30.i97.i.i = icmp samesign ugt i32 %i.gh, %i.gj
   br i1 %.not30.i97.i.i, label %._crit_edge.i101.i.i, label %.lr.ph.i98.i.i
 
 .lr.ph.i98.i.i:                                   ; preds = %bb.p
-  %14 = trunc i64 %indvar.i95.i.i to i8
-  %15 = shl nuw nsw i64 %indvar.i95.i.i, 4
-  %16 = add nuw nsw i64 %15, 112
-  %17 = lshr i64 %16, 7
-  %scevgep.i99.i.i = getelementptr i8, ptr %i.eq, i64 %17
-  %18 = add nuw nsw i32 %i.gj, 1
-  %narrow.i100.i.i = sub nuw nsw i32 %18, %i.gh
-  %i.gk = zext nneg i32 %narrow.i100.i.i to i64
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.i99.i.i, i8 %14, i64 %i.gk, i1 false), !tbaa !52
+  %22 = shl nuw nsw i64 %indvar.i95.i.i, 4        ; 2 uses
+  %23 = trunc i64 %22 to i32
+  %24 = lshr i32 %23, 7
+  %25 = add nuw nsw i64 %22, 127                  ; 2 uses
+  %26 = trunc i64 %25 to i32
+  %27 = lshr i32 %26, 7
+  %narrow.i100.i.i = sub nsw i32 %24, %27
+  %i.gk = zext i32 %narrow.i100.i.i to i64
+  %28 = add nuw nsw i64 %i.gk, 1
+  %29 = lshr i64 %25, 7
+  %scevgep.i97.i.i = getelementptr i8, ptr %i.eq, i64 %29
+  %30 = trunc i64 %indvar.i95.i.i to i8
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.i97.i.i, i8 %30, i64 %28, i1 false), !tbaa !52
   br label %._crit_edge.i101.i.i
 
 ._crit_edge.i101.i.i:                             ; preds = %.lr.ph.i98.i.i, %bb.p
@@ -346,22 +358,26 @@ bb.q:                                             ; preds = %._crit_edge.i101.1.
   %i.gt = getelementptr inbounds nuw [2 x i8], ptr %i.go, i64 %indvar.i95.1.i.i
   store i16 8, ptr %i.gt, align 2, !tbaa !68
   %i.gu = add nuw nsw i32 %.02932.i96.1.i.i, 112
-  %i.gv = lshr i32 %i.gu, 7                       ; 2 uses
+  %i.gv = lshr i32 %i.gu, 7
   %i.gw = add nuw nsw i32 %.02932.i96.1.i.i, 16
-  %i.gx = lshr i32 %.02932.i96.1.i.i, 7           ; 2 uses
+  %i.gx = lshr i32 %.02932.i96.1.i.i, 7
   %.not30.i97.1.i.i = icmp samesign ugt i32 %i.gv, %i.gx
   br i1 %.not30.i97.1.i.i, label %._crit_edge.i101.1.i.i, label %.lr.ph.i98.1.i.i
 
 .lr.ph.i98.1.i.i:                                 ; preds = %bb.q
-  %19 = trunc i64 %indvar.i95.1.i.i to i8
-  %20 = shl nuw nsw i64 %indvar.i95.1.i.i, 4
-  %21 = add nuw nsw i64 %20, 112
-  %22 = lshr i64 %21, 7
-  %scevgep.i99.1.i.i = getelementptr i8, ptr %i.gp, i64 %22
-  %23 = add nuw nsw i32 %i.gx, 1
-  %narrow.i100.1.i.i = sub nuw nsw i32 %23, %i.gv
-  %i.gy = zext nneg i32 %narrow.i100.1.i.i to i64
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.i99.1.i.i, i8 %19, i64 %i.gy, i1 false), !tbaa !52
+  %31 = shl nuw nsw i64 %indvar.i95.1.i.i, 4      ; 2 uses
+  %32 = trunc i64 %31 to i32
+  %33 = lshr i32 %32, 7
+  %34 = add nuw nsw i64 %31, 127                  ; 2 uses
+  %35 = trunc i64 %34 to i32
+  %36 = lshr i32 %35, 7
+  %narrow.i100.1.i.i = sub nsw i32 %33, %36
+  %i.gy = zext i32 %narrow.i100.1.i.i to i64
+  %37 = add nuw nsw i64 %i.gy, 1
+  %38 = lshr i64 %34, 7
+  %scevgep.i97.1.i.i = getelementptr i8, ptr %i.gp, i64 %38
+  %39 = trunc i64 %indvar.i95.1.i.i to i8
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.i97.1.i.i, i8 %39, i64 %37, i1 false), !tbaa !52
   br label %._crit_edge.i101.1.i.i
 
 ._crit_edge.i101.1.i.i:                           ; preds = %.lr.ph.i98.1.i.i, %bb.q
@@ -389,22 +405,26 @@ bb.r:                                             ; preds = %._crit_edge.i101.2.
   %i.hh = getelementptr inbounds nuw [2 x i8], ptr %i.hc, i64 %indvar.i95.2.i.i
   store i16 8, ptr %i.hh, align 2, !tbaa !68
   %i.hi = add nuw nsw i32 %.02932.i96.2.i.i, 112
-  %i.hj = lshr i32 %i.hi, 7                       ; 2 uses
+  %i.hj = lshr i32 %i.hi, 7
   %i.hk = add nuw nsw i32 %.02932.i96.2.i.i, 16
-  %i.hl = lshr i32 %.02932.i96.2.i.i, 7           ; 2 uses
+  %i.hl = lshr i32 %.02932.i96.2.i.i, 7
   %.not30.i97.2.i.i = icmp samesign ugt i32 %i.hj, %i.hl
   br i1 %.not30.i97.2.i.i, label %._crit_edge.i101.2.i.i, label %.lr.ph.i98.2.i.i
 
 .lr.ph.i98.2.i.i:                                 ; preds = %bb.r
-  %24 = trunc i64 %indvar.i95.2.i.i to i8
-  %25 = shl nuw nsw i64 %indvar.i95.2.i.i, 4
-  %26 = add nuw nsw i64 %25, 112
-  %27 = lshr i64 %26, 7
-  %scevgep.i99.2.i.i = getelementptr i8, ptr %i.hd, i64 %27
-  %28 = add nuw nsw i32 %i.hl, 1
-  %narrow.i100.2.i.i = sub nuw nsw i32 %28, %i.hj
-  %i.hm = zext nneg i32 %narrow.i100.2.i.i to i64
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.i99.2.i.i, i8 %24, i64 %i.hm, i1 false), !tbaa !52
+  %40 = shl nuw nsw i64 %indvar.i95.2.i.i, 4      ; 2 uses
+  %41 = trunc i64 %40 to i32
+  %42 = lshr i32 %41, 7
+  %43 = add nuw nsw i64 %40, 127                  ; 2 uses
+  %44 = trunc i64 %43 to i32
+  %45 = lshr i32 %44, 7
+  %narrow.i100.2.i.i = sub nsw i32 %42, %45
+  %i.hm = zext i32 %narrow.i100.2.i.i to i64
+  %46 = add nuw nsw i64 %i.hm, 1
+  %47 = lshr i64 %43, 7
+  %scevgep.i97.2.i.i = getelementptr i8, ptr %i.hd, i64 %47
+  %48 = trunc i64 %indvar.i95.2.i.i to i8
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.i97.2.i.i, i8 %48, i64 %46, i1 false), !tbaa !52
   br label %._crit_edge.i101.2.i.i
 
 ._crit_edge.i101.2.i.i:                           ; preds = %.lr.ph.i98.2.i.i, %bb.r
@@ -432,22 +452,26 @@ bb.s:                                             ; preds = %._crit_edge.i101.3.
   %i.hv = getelementptr inbounds nuw [2 x i8], ptr %i.hq, i64 %indvar.i95.3.i.i
   store i16 8, ptr %i.hv, align 2, !tbaa !68
   %i.hw = add nuw nsw i32 %.02932.i96.3.i.i, 112
-  %i.hx = lshr i32 %i.hw, 7                       ; 2 uses
+  %i.hx = lshr i32 %i.hw, 7
   %i.hy = add nuw nsw i32 %.02932.i96.3.i.i, 16
-  %i.hz = lshr i32 %.02932.i96.3.i.i, 7           ; 2 uses
+  %i.hz = lshr i32 %.02932.i96.3.i.i, 7
   %.not30.i97.3.i.i = icmp samesign ugt i32 %i.hx, %i.hz
   br i1 %.not30.i97.3.i.i, label %._crit_edge.i101.3.i.i, label %.lr.ph.i98.3.i.i
 
 .lr.ph.i98.3.i.i:                                 ; preds = %bb.s
-  %29 = trunc i64 %indvar.i95.3.i.i to i8
-  %30 = shl nuw nsw i64 %indvar.i95.3.i.i, 4
-  %31 = add nuw nsw i64 %30, 112
-  %32 = lshr i64 %31, 7
-  %scevgep.i99.3.i.i = getelementptr i8, ptr %i.hr, i64 %32
-  %33 = add nuw nsw i32 %i.hz, 1
-  %narrow.i100.3.i.i = sub nuw nsw i32 %33, %i.hx
-  %i.ia = zext nneg i32 %narrow.i100.3.i.i to i64
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.i99.3.i.i, i8 %29, i64 %i.ia, i1 false), !tbaa !52
+  %49 = shl nuw nsw i64 %indvar.i95.3.i.i, 4      ; 2 uses
+  %50 = trunc i64 %49 to i32
+  %51 = lshr i32 %50, 7
+  %52 = add nuw nsw i64 %49, 127                  ; 2 uses
+  %53 = trunc i64 %52 to i32
+  %54 = lshr i32 %53, 7
+  %narrow.i100.3.i.i = sub nsw i32 %51, %54
+  %i.ia = zext i32 %narrow.i100.3.i.i to i64
+  %55 = add nuw nsw i64 %i.ia, 1
+  %56 = lshr i64 %52, 7
+  %scevgep.i97.3.i.i = getelementptr i8, ptr %i.hr, i64 %56
+  %57 = trunc i64 %indvar.i95.3.i.i to i8
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.i97.3.i.i, i8 %57, i64 %55, i1 false), !tbaa !52
   br label %._crit_edge.i101.3.i.i
 
 ._crit_edge.i101.3.i.i:                           ; preds = %.lr.ph.i98.3.i.i, %bb.s
@@ -475,22 +499,26 @@ bb.t:                                             ; preds = %._crit_edge.i101.4.
   %i.ij = getelementptr inbounds nuw [2 x i8], ptr %i.ie, i64 %indvar.i95.4.i.i
   store i16 8, ptr %i.ij, align 2, !tbaa !68
   %i.ik = add nuw nsw i32 %.02932.i96.4.i.i, 112
-  %i.il = lshr i32 %i.ik, 7                       ; 2 uses
+  %i.il = lshr i32 %i.ik, 7
   %i.im = add nuw nsw i32 %.02932.i96.4.i.i, 16
-  %i.in = lshr i32 %.02932.i96.4.i.i, 7           ; 2 uses
+  %i.in = lshr i32 %.02932.i96.4.i.i, 7
   %.not30.i97.4.i.i = icmp samesign ugt i32 %i.il, %i.in
   br i1 %.not30.i97.4.i.i, label %._crit_edge.i101.4.i.i, label %.lr.ph.i98.4.i.i
 
 .lr.ph.i98.4.i.i:                                 ; preds = %bb.t
-  %34 = trunc i64 %indvar.i95.4.i.i to i8
-  %35 = shl nuw nsw i64 %indvar.i95.4.i.i, 4
-  %36 = add nuw nsw i64 %35, 112
-  %37 = lshr i64 %36, 7
-  %scevgep.i99.4.i.i = getelementptr i8, ptr %i.if, i64 %37
-  %38 = add nuw nsw i32 %i.in, 1
-  %narrow.i100.4.i.i = sub nuw nsw i32 %38, %i.il
-  %i.io = zext nneg i32 %narrow.i100.4.i.i to i64
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.i99.4.i.i, i8 %34, i64 %i.io, i1 false), !tbaa !52
+  %58 = shl nuw nsw i64 %indvar.i95.4.i.i, 4      ; 2 uses
+  %59 = trunc i64 %58 to i32
+  %60 = lshr i32 %59, 7
+  %61 = add nuw nsw i64 %58, 127                  ; 2 uses
+  %62 = trunc i64 %61 to i32
+  %63 = lshr i32 %62, 7
+  %narrow.i100.4.i.i = sub nsw i32 %60, %63
+  %i.io = zext i32 %narrow.i100.4.i.i to i64
+  %64 = add nuw nsw i64 %i.io, 1
+  %65 = lshr i64 %61, 7
+  %scevgep.i97.4.i.i = getelementptr i8, ptr %i.if, i64 %65
+  %66 = trunc i64 %indvar.i95.4.i.i to i8
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.i97.4.i.i, i8 %66, i64 %64, i1 false), !tbaa !52
   br label %._crit_edge.i101.4.i.i
 
 ._crit_edge.i101.4.i.i:                           ; preds = %.lr.ph.i98.4.i.i, %bb.t
@@ -518,22 +546,26 @@ bb.u:                                             ; preds = %._crit_edge.i101.5.
   %i.ix = getelementptr inbounds nuw [2 x i8], ptr %i.is, i64 %indvar.i95.5.i.i
   store i16 8, ptr %i.ix, align 2, !tbaa !68
   %i.iy = add nuw nsw i32 %.02932.i96.5.i.i, 112
-  %i.iz = lshr i32 %i.iy, 7                       ; 2 uses
+  %i.iz = lshr i32 %i.iy, 7
   %i.ja = add nuw nsw i32 %.02932.i96.5.i.i, 16
-  %i.jb = lshr i32 %.02932.i96.5.i.i, 7           ; 2 uses
+  %i.jb = lshr i32 %.02932.i96.5.i.i, 7
   %.not30.i97.5.i.i = icmp samesign ugt i32 %i.iz, %i.jb
   br i1 %.not30.i97.5.i.i, label %._crit_edge.i101.5.i.i, label %.lr.ph.i98.5.i.i
 
 .lr.ph.i98.5.i.i:                                 ; preds = %bb.u
-  %39 = trunc i64 %indvar.i95.5.i.i to i8
-  %40 = shl nuw nsw i64 %indvar.i95.5.i.i, 4
-  %41 = add nuw nsw i64 %40, 112
-  %42 = lshr i64 %41, 7
-  %scevgep.i99.5.i.i = getelementptr i8, ptr %i.it, i64 %42
-  %43 = add nuw nsw i32 %i.jb, 1
-  %narrow.i100.5.i.i = sub nuw nsw i32 %43, %i.iz
-  %i.jc = zext nneg i32 %narrow.i100.5.i.i to i64
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.i99.5.i.i, i8 %39, i64 %i.jc, i1 false), !tbaa !52
+  %67 = shl nuw nsw i64 %indvar.i95.5.i.i, 4      ; 2 uses
+  %68 = trunc i64 %67 to i32
+  %69 = lshr i32 %68, 7
+  %70 = add nuw nsw i64 %67, 127                  ; 2 uses
+  %71 = trunc i64 %70 to i32
+  %72 = lshr i32 %71, 7
+  %narrow.i100.5.i.i = sub nsw i32 %69, %72
+  %i.jc = zext i32 %narrow.i100.5.i.i to i64
+  %73 = add nuw nsw i64 %i.jc, 1
+  %74 = lshr i64 %70, 7
+  %scevgep.i97.5.i.i = getelementptr i8, ptr %i.it, i64 %74
+  %75 = trunc i64 %indvar.i95.5.i.i to i8
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.i97.5.i.i, i8 %75, i64 %73, i1 false), !tbaa !52
   br label %._crit_edge.i101.5.i.i
 
 ._crit_edge.i101.5.i.i:                           ; preds = %.lr.ph.i98.5.i.i, %bb.u
@@ -642,22 +674,26 @@ bb.v:                                             ; preds = %._crit_edge.i121.i.
   %i.kw = getelementptr inbounds nuw [2 x i8], ptr %i.kr, i64 %indvar.i115.i.i
   store i16 4, ptr %i.kw, align 2, !tbaa !68
   %i.kx = add nuw nsw i32 %.02932.i116.i.i, 120
-  %i.ky = lshr i32 %i.kx, 7                       ; 2 uses
+  %i.ky = lshr i32 %i.kx, 7
   %i.kz = add nuw nsw i32 %.02932.i116.i.i, 8
-  %i.la = lshr i32 %.02932.i116.i.i, 7            ; 2 uses
+  %i.la = lshr i32 %.02932.i116.i.i, 7
   %.not30.i117.i.i = icmp samesign ugt i32 %i.ky, %i.la
   br i1 %.not30.i117.i.i, label %._crit_edge.i121.i.i, label %.lr.ph.i118.i.i
 
 .lr.ph.i118.i.i:                                  ; preds = %bb.v
-  %44 = trunc i64 %indvar.i115.i.i to i8
-  %45 = shl nuw nsw i64 %indvar.i115.i.i, 3
-  %46 = add nuw nsw i64 %45, 120
-  %47 = lshr i64 %46, 7
-  %scevgep.i119.i.i = getelementptr i8, ptr %i.ks, i64 %47
-  %48 = add nuw nsw i32 %i.la, 1
-  %narrow.i120.i.i = sub nuw nsw i32 %48, %i.ky
-  %i.lb = zext nneg i32 %narrow.i120.i.i to i64
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.i119.i.i, i8 %44, i64 %i.lb, i1 false), !tbaa !52
+  %76 = shl nuw nsw i64 %indvar.i115.i.i, 3       ; 2 uses
+  %77 = trunc i64 %76 to i32
+  %78 = lshr i32 %77, 7
+  %79 = add nuw nsw i64 %76, 127                  ; 2 uses
+  %80 = trunc i64 %79 to i32
+  %81 = lshr i32 %80, 7
+  %narrow.i120.i.i = sub nsw i32 %78, %81
+  %i.lb = zext i32 %narrow.i120.i.i to i64
+  %82 = add nuw nsw i64 %i.lb, 1
+  %83 = lshr i64 %79, 7
+  %scevgep.i115.i.i = getelementptr i8, ptr %i.ks, i64 %83
+  %84 = trunc i64 %indvar.i115.i.i to i8
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.i115.i.i, i8 %84, i64 %82, i1 false), !tbaa !52
   br label %._crit_edge.i121.i.i
 
 ._crit_edge.i121.i.i:                             ; preds = %.lr.ph.i118.i.i, %bb.v
@@ -685,22 +721,26 @@ bb.w:                                             ; preds = %._crit_edge.i121.1.
   %i.lk = getelementptr inbounds nuw [2 x i8], ptr %i.lf, i64 %indvar.i115.1.i.i
   store i16 4, ptr %i.lk, align 2, !tbaa !68
   %i.ll = add nuw nsw i32 %.02932.i116.1.i.i, 120
-  %i.lm = lshr i32 %i.ll, 7                       ; 2 uses
+  %i.lm = lshr i32 %i.ll, 7
   %i.ln = add nuw nsw i32 %.02932.i116.1.i.i, 8
-  %i.lo = lshr i32 %.02932.i116.1.i.i, 7          ; 2 uses
+  %i.lo = lshr i32 %.02932.i116.1.i.i, 7
   %.not30.i117.1.i.i = icmp samesign ugt i32 %i.lm, %i.lo
   br i1 %.not30.i117.1.i.i, label %._crit_edge.i121.1.i.i, label %.lr.ph.i118.1.i.i
 
 .lr.ph.i118.1.i.i:                                ; preds = %bb.w
-  %49 = trunc i64 %indvar.i115.1.i.i to i8
-  %50 = shl nuw nsw i64 %indvar.i115.1.i.i, 3
-  %51 = add nuw nsw i64 %50, 120
-  %52 = lshr i64 %51, 7
-  %scevgep.i119.1.i.i = getelementptr i8, ptr %i.lg, i64 %52
-  %53 = add nuw nsw i32 %i.lo, 1
-  %narrow.i120.1.i.i = sub nuw nsw i32 %53, %i.lm
-  %i.lp = zext nneg i32 %narrow.i120.1.i.i to i64
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.i119.1.i.i, i8 %49, i64 %i.lp, i1 false), !tbaa !52
+  %85 = shl nuw nsw i64 %indvar.i115.1.i.i, 3     ; 2 uses
+  %86 = trunc i64 %85 to i32
+  %87 = lshr i32 %86, 7
+  %88 = add nuw nsw i64 %85, 127                  ; 2 uses
+  %89 = trunc i64 %88 to i32
+  %90 = lshr i32 %89, 7
+  %narrow.i120.1.i.i = sub nsw i32 %87, %90
+  %i.lp = zext i32 %narrow.i120.1.i.i to i64
+  %91 = add nuw nsw i64 %i.lp, 1
+  %92 = lshr i64 %88, 7
+  %scevgep.i115.1.i.i = getelementptr i8, ptr %i.lg, i64 %92
+  %93 = trunc i64 %indvar.i115.1.i.i to i8
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.i115.1.i.i, i8 %93, i64 %91, i1 false), !tbaa !52
   br label %._crit_edge.i121.1.i.i
 
 ._crit_edge.i121.1.i.i:                           ; preds = %.lr.ph.i118.1.i.i, %bb.w
