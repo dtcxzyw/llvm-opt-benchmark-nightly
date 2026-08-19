@@ -77,13 +77,13 @@ bb.i:                                             ; preds = %bb.g
   %.901 = select i1 %.not379, i32 %i.n, i32 %i.m  ; 17 uses
   %i.o = and i32 %i.h, 1
   %i.p = icmp eq i32 %i.o, 0                      ; 2 uses
-  %i.q = lshr i32 %i.h, 1                         ; 15 uses
+  %i.q = lshr i32 %i.h, 1                         ; 16 uses
   %.0328 = or i32 %i.h, 1                         ; 8 uses
   br i1 %.not, label %bb.j, label %.thread416
 
 bb.j:                                             ; preds = %bb.i
   %i.r = add nuw i32 %i.h, 1
-  %i.s = lshr i32 %i.r, 1                         ; 25 uses
+  %i.s = lshr i32 %i.r, 1                         ; 26 uses
   br i1 %i.p, label %bb.v, label %bb.m
 
 .thread416:                                       ; preds = %bb.i
@@ -486,11 +486,11 @@ bb.n:                                             ; preds = %bb.m
   br i1 %.not403530, label %.loopexit, label %.lr.ph534
 
 .lr.ph534:                                        ; preds = %bb.n
-  %i.iz = mul nuw nsw i32 %i.s, %i.h              ; 2 uses
+  %i.iz = mul i32 %i.s, %i.h                      ; 2 uses
   %i.ja = add nuw nsw i32 %i.s, 1
   %i.jb = zext nneg i32 %i.s to i64               ; 16 uses
   %i.jc = add nuw nsw i64 %i.jb, 1
-  %i.jd = zext nneg i32 %i.iz to i64              ; 3 uses
+  %i.jd = zext i32 %i.iz to i64                   ; 3 uses
   %scevgep1162 = getelementptr i8, ptr %4, i64 8
   %i.je = xor i64 %i.jb, -1                       ; 2 uses
   %i.jf = shl nuw nsw i64 %i.jb, 3
@@ -516,6 +516,17 @@ bb.o:                                             ; preds = %.lr.ph534, %._crit_
   %indvars.iv768 = phi i64 [ 0, %.lr.ph534 ], [ %indvars.iv.next769, %._crit_edge528 ] ; 9 uses
   %.8532 = phi i32 [ 0, %.lr.ph534 ], [ %.9.lcssa, %._crit_edge528 ] ; 2 uses
   %.3369531 = phi i32 [ 0, %.lr.ph534 ], [ %i.kq, %._crit_edge528 ] ; 3 uses
+  %6 = add nuw i64 %indvars.iv768, %i.jb
+  %umax1173 = tail call i64 @llvm.umax.i64(i64 %6, i64 %i.jd)
+  %7 = mul i64 %indvar1164, %i.je
+  %8 = sub i64 %7, %i.jb
+  %9 = add i64 %umax1173, %8                      ; 2 uses
+  %10 = icmp ne i64 %9, 0                         ; 2 uses
+  %umin1174.neg = sext i1 %10 to i64
+  %11 = select i1 %10, i64 2, i64 1
+  %12 = add i64 %9, %umin1174.neg
+  %13 = udiv i64 %12, %i.jb
+  %14 = add i64 %11, %13                          ; 7 uses
   %i.jm = add nuw i64 %indvars.iv768, %i.jb
   %umax1163 = tail call i64 @llvm.umax.i64(i64 %i.jm, i64 %i.jd)
   %i.jn = mul i64 %indvar1164, %i.je
@@ -524,45 +535,34 @@ bb.o:                                             ; preds = %.lr.ph534, %._crit_
   %i.jq = icmp ne i64 %i.jp, 0
   %umin = zext i1 %i.jq to i64                    ; 2 uses
   %i.jr = sub i64 %i.jp, %umin
-  %i.js = mul i64 %i.jg, %indvar1164
-  %scevgep1168.a = getelementptr i8, ptr %3, i64 %i.js ; 5 uses
+  %15 = udiv i64 %i.jr, %i.jb
+  %16 = add i64 %15, %umin                        ; 2 uses
+  %17 = mul i64 %i.jg, %indvar1164
+  %scevgep1168 = getelementptr i8, ptr %3, i64 %17 ; 5 uses
+  %i.js = mul i64 %i.jh, %16
+  %scevgep1169 = getelementptr i8, ptr %scevgep1168, i64 %i.js ; 4 uses
+  %18 = icmp ult ptr %scevgep1168, %scevgep1169
+  %umin1170 = select i1 %18, ptr %scevgep1168, ptr %scevgep1169
+  %19 = icmp ugt ptr %scevgep1168, %scevgep1169
+  %umax1171 = select i1 %19, ptr %scevgep1168, ptr %scevgep1169
+  %scevgep1168.a = getelementptr i8, ptr %umax1171, i64 8
   %i.jt = mul nsw i32 %.3369531, %i.ja
   %i.ju = icmp slt i32 %i.jt, %i.iz
   br i1 %i.ju, label %iter.check1196, label %._crit_edge528
 
 iter.check1196:                                   ; preds = %bb.o
-  %6 = add nuw i64 %indvars.iv768, %i.jb
-  %umax1173 = tail call i64 @llvm.umax.i64(i64 %6, i64 %i.jd)
-  %7 = mul i64 %indvar1164, %i.je
-  %8 = sub i64 %7, %i.jb
-  %9 = add i64 %umax1173, %8                      ; 2 uses
-  %10 = icmp ne i64 %9, 0                         ; 2 uses
-  %umin1174.neg = sext i1 %10 to i64
-  %11 = add i64 %9, %umin1174.neg
   %i.jv = sext i32 %.8532 to i64                  ; 8 uses
-  %12 = select i1 %10, i64 2, i64 1
-  %13 = udiv i64 %11, %i.jb
-  %14 = add i64 %12, %13                          ; 7 uses
   %min.iters.check1176 = icmp ult i64 %14, 4
   br i1 %min.iters.check1176, label %.lr.ph527.preheader, label %vector.memcheck1161
 
 vector.memcheck1161:                              ; preds = %iter.check1196
   %i.jw = shl nsw i64 %i.jv, 3
   %scevgep = getelementptr i8, ptr %4, i64 %i.jw
-  %15 = udiv i64 %i.jr, %i.jb
-  %16 = add i64 %15, %umin                        ; 2 uses
   %i.jx = add i64 %16, %i.jv
   %i.jy = shl i64 %i.jx, 3
-  %scevgep1167 = getelementptr i8, ptr %scevgep1162, i64 %i.jy
-  %17 = mul i64 %i.jh, %16
-  %scevgep1169 = getelementptr i8, ptr %scevgep1168.a, i64 %17 ; 4 uses
-  %18 = icmp ult ptr %scevgep1168.a, %scevgep1169
-  %umin1170 = select i1 %18, ptr %scevgep1168.a, ptr %scevgep1169
-  %19 = icmp ugt ptr %scevgep1168.a, %scevgep1169
-  %umax1171 = select i1 %19, ptr %scevgep1168.a, ptr %scevgep1169
-  %scevgep1172 = getelementptr i8, ptr %umax1171, i64 8
-  %bound0 = icmp ult ptr %scevgep, %scevgep1172
-  %bound1 = icmp ult ptr %umin1170, %scevgep1167
+  %scevgep1172 = getelementptr i8, ptr %scevgep1162, i64 %i.jy
+  %bound0 = icmp ult ptr %scevgep, %scevgep1168.a
+  %bound1 = icmp ult ptr %umin1170, %scevgep1172
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph527.preheader, label %vector.main.loop.iter.check1177
 
@@ -965,10 +965,13 @@ iter.check1336:                                   ; preds = %._crit_edge565, %.l
   %i.pw = add i64 %i.pr, %i.pv                    ; 2 uses
   %smax1302 = tail call i64 @llvm.smax.i64(i64 %i.pq, i64 %i.pw)
   %i.px = add nuw i64 %indvars.iv810, %i.pj
+  %20 = sub i64 %smax1302, %i.px
   %i.py = icmp slt i64 %i.pq, %i.pw               ; 2 uses
-  %umin1303 = zext i1 %i.py to i64
-  %i.pz = add i64 %i.px, %umin1303
-  %20 = sub i64 %smax1302, %i.pz
+  %umin1303.neg = sext i1 %i.py to i64
+  %21 = select i1 %i.py, i64 2, i64 1
+  %i.pz = add i64 %20, %umin1303.neg
+  %22 = udiv i64 %i.pz, %i.pj
+  %23 = add i64 %21, %22                          ; 7 uses
   %indvars817 = trunc i64 %indvars.iv810 to i32
   %i.qa = add nuw nsw i32 %., %indvars817
   %i.qb = mul nsw i32 %i.qa, %i.s
@@ -976,9 +979,6 @@ iter.check1336:                                   ; preds = %._crit_edge565, %.l
   %i.qd = add nsw i64 %indvars.iv810, %i.qc
   %sext = shl i64 %.14569, 32                     ; 2 uses
   %i.qe = ashr exact i64 %sext, 32                ; 6 uses
-  %21 = select i1 %i.py, i64 2, i64 1
-  %22 = udiv i64 %20, %i.pj
-  %23 = add i64 %21, %22                          ; 7 uses
   %min.iters.check1305 = icmp ult i64 %23, 4
   br i1 %min.iters.check1305, label %.lr.ph564.preheader, label %vector.memcheck1287
 
@@ -992,28 +992,28 @@ vector.memcheck1287:                              ; preds = %iter.check1336
   %i.qk = mul i32 %i.s, %i.qj
   %i.ql = sext i32 %i.qk to i64
   %i.qm = add i64 %i.qh, %i.ql                    ; 2 uses
+  %smax1290 = tail call i64 @llvm.smax.i64(i64 %i.qg, i64 %i.qm)
+  %i.qn = add nuw i64 %indvars.iv810, %i.pj
   %24 = icmp slt i64 %i.qg, %i.qm
   %umin1291 = zext i1 %24 to i64                  ; 2 uses
-  %i.qn = add nuw i64 %indvars.iv810, %i.pj
-  %smax1290 = tail call i64 @llvm.smax.i64(i64 %i.qg, i64 %i.qm)
   %25 = add i64 %i.qn, %umin1291
   %26 = sub i64 %smax1290, %25
-  %27 = ashr exact i64 %sext, 29                  ; 2 uses
-  %scevgep1288 = getelementptr i8, ptr %4, i64 %27
   %i.qo = udiv i64 %26, %i.pj
   %i.qp = add i64 %i.qo, %umin1291                ; 2 uses
-  %28 = shl i64 %i.qp, 3
-  %i.qq = getelementptr i8, ptr %scevgep1289, i64 %28
-  %scevgep1293 = getelementptr i8, ptr %i.qq, i64 %27
-  %29 = mul i64 %i.pl, %i.qp
-  %scevgep1295 = getelementptr i8, ptr %scevgep1294, i64 %29 ; 4 uses
-  %i.qr = icmp ult ptr %scevgep1294, %scevgep1295
-  %umin1296 = select i1 %i.qr, ptr %scevgep1294, ptr %scevgep1295
-  %30 = icmp ugt ptr %scevgep1294, %scevgep1295
-  %umax1297 = select i1 %30, ptr %scevgep1294, ptr %scevgep1295
-  %scevgep1298 = getelementptr i8, ptr %umax1297, i64 8
-  %bound01299 = icmp ult ptr %scevgep1288, %scevgep1298
-  %bound11300 = icmp ult ptr %umin1296, %scevgep1293
+  %27 = mul i64 %i.pl, %i.qp
+  %i.qq = getelementptr i8, ptr %scevgep1294, i64 %27 ; 4 uses
+  %28 = icmp ugt ptr %scevgep1294, %i.qq
+  %umax1297 = select i1 %28, ptr %scevgep1294, ptr %i.qq
+  %scevgep1295 = getelementptr i8, ptr %umax1297, i64 8
+  %i.qr = icmp ult ptr %scevgep1294, %i.qq
+  %umin1296 = select i1 %i.qr, ptr %scevgep1294, ptr %i.qq
+  %29 = shl i64 %i.qp, 3
+  %30 = ashr exact i64 %sext, 29                  ; 2 uses
+  %scevgep1288 = getelementptr i8, ptr %4, i64 %30
+  %31 = getelementptr i8, ptr %scevgep1289, i64 %29
+  %scevgep1298 = getelementptr i8, ptr %31, i64 %30
+  %bound01299 = icmp ult ptr %scevgep1288, %scevgep1295
+  %bound11300 = icmp ult ptr %umin1296, %scevgep1298
   %found.conflict1301 = and i1 %bound01299, %bound11300
   br i1 %found.conflict1301, label %.lr.ph564.preheader, label %vector.main.loop.iter.check1306
 
@@ -1416,7 +1416,7 @@ vec.epilog.middle.block1460:                      ; preds = %vec.epilog.vector.b
   %i.ady = add nuw nsw i32 %i.q, 1
   %i.adz = mul i32 %i.ady, %i.s
   %i.aea = sext i32 %i.adz to i64                 ; 4 uses
-  %i.aeb = zext nneg i32 %i.s to i64              ; 13 uses
+  %i.aeb = zext nneg i32 %i.s to i64              ; 16 uses
   %wide.trip.count860 = zext nneg i32 %i.q to i64
   %i.aec = shl nsw i64 %i.aea, 3
   %i.aed = add i64 %i.aec, %i.a
@@ -1546,12 +1546,6 @@ vec.epilog.scalar.ph1485:                         ; preds = %vec.epilog.scalar.p
   %umax1503 = tail call i64 @llvm.umax.i64(i64 %i.aeb, i64 1)
   %i.afr = shl nuw nsw i64 %i.aeb, 3
   %umax1515 = tail call i64 @llvm.umax.i64(i64 %i.aeb, i64 1)
-  %31 = insertelement <2 x i64> poison, i64 %i.aeb, i64 0
-  %32 = shufflevector <2 x i64> %31, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
-  %33 = insertelement <2 x i32> poison, i32 %i.s, i64 0
-  %34 = shufflevector <2 x i32> %33, <2 x i32> poison, <2 x i32> zeroinitializer
-  %35 = insertelement <2 x i32> poison, i32 %i.q, i64 0
-  %36 = shufflevector <2 x i32> %35, <2 x i32> poison, <2 x i32> zeroinitializer
   %broadcast.splatinsert1521 = insertelement <4 x i64> poison, i64 %i.aeb, i64 0
   %broadcast.splat1522 = shufflevector <4 x i64> %broadcast.splatinsert1521, <4 x i64> poison, <4 x i32> zeroinitializer ; 2 uses
   %i.afs = shl nuw nsw <4 x i64> %broadcast.splat1522, splat (i64 2) ; 5 uses
@@ -1568,76 +1562,83 @@ vec.epilog.scalar.ph1485:                         ; preds = %vec.epilog.scalar.p
   br label %iter.check1547
 
 iter.check1547:                                   ; preds = %.lr.ph619, %._crit_edge613
-  %indvars.iv864 = phi i64 [ 0, %.lr.ph619 ], [ %indvars.iv.next865, %._crit_edge613 ] ; 11 uses
+  %indvars.iv864 = phi i64 [ 0, %.lr.ph619 ], [ %indvars.iv.next865, %._crit_edge613 ] ; 18 uses
   %.30617 = phi i64 [ %indvars.iv.next847.lcssa, %.lr.ph619 ], [ %indvars.iv.next863.lcssa, %._crit_edge613 ]
-  %37 = insertelement <2 x i64> poison, i64 %indvars.iv864, i64 0
-  %38 = shufflevector <2 x i64> %37, <2 x i64> poison, <2 x i32> zeroinitializer ; 4 uses
-  %39 = add nuw <2 x i64> %38, %32                ; 2 uses
-  %40 = add nuw <2 x i64> %38, splat (i64 1)
-  %41 = trunc <2 x i64> %38 to <2 x i32>
-  %42 = add nuw <2 x i64> %38, %32
+  %32 = add nuw i64 %indvars.iv864, %i.aeb        ; 2 uses
+  %33 = add nuw i64 %indvars.iv864, 1
   %indvars871.a = trunc i64 %indvars.iv864 to i32
-  %i.afw = add nsw i32 %i.q, %indvars871.a
-  %i.afx = mul nsw i32 %i.afw, %i.s
+  %i.afw = add i32 %i.q, %indvars871.a
+  %i.afx = mul i32 %i.s, %i.afw
   %i.afy = sext i32 %i.afx to i64
-  %i.afz = add nsw i64 %indvars.iv864, %i.afy
-  %43 = add <2 x i32> %36, %41
-  %44 = mul <2 x i32> %34, %43
-  %45 = sext <2 x i32> %44 to <2 x i64>
-  %46 = add <2 x i64> %40, %45                    ; 2 uses
-  %47 = icmp slt <2 x i64> %39, %46               ; 2 uses
-  %48 = zext <2 x i1> %47 to <2 x i64>            ; 2 uses
-  %49 = tail call <2 x i64> @llvm.smax.v2i64(<2 x i64> %39, <2 x i64> %46)
-  %50 = add <2 x i64> %42, %48
-  %51 = sub <2 x i64> %49, %50                    ; 2 uses
+  %i.afz = add i64 %33, %i.afy                    ; 2 uses
+  %smax1513 = tail call i64 @llvm.smax.i64(i64 %32, i64 %i.afz)
+  %34 = add nuw i64 %indvars.iv864, %i.aeb
+  %35 = sub i64 %smax1513, %34
+  %36 = icmp slt i64 %32, %i.afz                  ; 2 uses
+  %umin1514.neg = sext i1 %36 to i64
+  %37 = select i1 %36, i64 2, i64 1
+  %38 = add i64 %35, %umin1514.neg
+  %39 = udiv i64 %38, %umax1515
+  %40 = add i64 %37, %39                          ; 7 uses
+  %indvars871 = trunc i64 %indvars.iv864 to i32
+  %41 = add nsw i32 %i.q, %indvars871
+  %42 = mul nsw i32 %41, %i.s
+  %43 = sext i32 %42 to i64
+  %44 = add nsw i64 %indvars.iv864, %43
   %sext1579 = shl i64 %.30617, 32                 ; 2 uses
-  %52 = ashr exact i64 %sext1579, 32              ; 6 uses
-  %53 = extractelement <2 x i1> %47, i64 1
-  %54 = select i1 %53, i64 2, i64 1
-  %55 = extractelement <2 x i64> %51, i64 1
-  %56 = udiv i64 %55, %umax1515
-  %57 = add i64 %54, %56                          ; 7 uses
-  %min.iters.check1516 = icmp ult i64 %57, 4
+  %45 = ashr exact i64 %sext1579, 32              ; 6 uses
+  %min.iters.check1516 = icmp ult i64 %40, 4
   br i1 %min.iters.check1516, label %.lr.ph612.preheader, label %vector.memcheck1498
 
 vector.memcheck1498:                              ; preds = %iter.check1547
   %i.aga = shl i64 %indvars.iv864, 3
   %scevgep1505 = getelementptr i8, ptr %3, i64 %i.aga ; 5 uses
-  %58 = ashr exact i64 %sext1579, 29              ; 2 uses
-  %scevgep1499 = getelementptr i8, ptr %4, i64 %58
-  %59 = extractelement <2 x i64> %51, i64 0
-  %60 = udiv i64 %59, %umax1503
-  %61 = extractelement <2 x i64> %48, i64 0
-  %i.agb = add i64 %60, %61                       ; 2 uses
-  %62 = shl i64 %i.agb, 3
-  %i.agc = getelementptr i8, ptr %scevgep1500, i64 %62
-  %scevgep1504 = getelementptr i8, ptr %i.agc, i64 %58
-  %63 = mul i64 %i.afr, %i.agb
-  %scevgep1506 = getelementptr i8, ptr %scevgep1505, i64 %63 ; 4 uses
-  %i.agd = icmp ult ptr %scevgep1505, %scevgep1506
-  %umin1507 = select i1 %i.agd, ptr %scevgep1505, ptr %scevgep1506
-  %64 = icmp ugt ptr %scevgep1505, %scevgep1506
-  %umax1508 = select i1 %64, ptr %scevgep1505, ptr %scevgep1506
-  %scevgep1509 = getelementptr i8, ptr %umax1508, i64 8
-  %bound01510 = icmp ult ptr %scevgep1499, %scevgep1509
-  %bound11511 = icmp ult ptr %umin1507, %scevgep1504
+  %46 = add nuw i64 %indvars.iv864, %i.aeb        ; 2 uses
+  %47 = add nuw i64 %indvars.iv864, 1
+  %48 = trunc i64 %indvars.iv864 to i32
+  %49 = add i32 %i.q, %48
+  %50 = mul i32 %i.s, %49
+  %51 = sext i32 %50 to i64
+  %52 = add i64 %47, %51                          ; 2 uses
+  %smax1501 = tail call i64 @llvm.smax.i64(i64 %46, i64 %52)
+  %53 = add nuw i64 %indvars.iv864, %i.aeb
+  %54 = icmp slt i64 %46, %52
+  %umin1502 = zext i1 %54 to i64                  ; 2 uses
+  %55 = add i64 %53, %umin1502
+  %56 = sub i64 %smax1501, %55
+  %57 = udiv i64 %56, %umax1503
+  %i.agb = add i64 %57, %umin1502                 ; 2 uses
+  %58 = mul i64 %i.afr, %i.agb
+  %i.agc = getelementptr i8, ptr %scevgep1505, i64 %58 ; 4 uses
+  %59 = icmp ugt ptr %scevgep1505, %i.agc
+  %umax1508 = select i1 %59, ptr %scevgep1505, ptr %i.agc
+  %scevgep1506 = getelementptr i8, ptr %umax1508, i64 8
+  %i.agd = icmp ult ptr %scevgep1505, %i.agc
+  %umin1507 = select i1 %i.agd, ptr %scevgep1505, ptr %i.agc
+  %60 = shl i64 %i.agb, 3
+  %61 = ashr exact i64 %sext1579, 29              ; 2 uses
+  %scevgep1499 = getelementptr i8, ptr %4, i64 %61
+  %62 = getelementptr i8, ptr %scevgep1500, i64 %60
+  %scevgep1509 = getelementptr i8, ptr %62, i64 %61
+  %bound01510 = icmp ult ptr %scevgep1499, %scevgep1506
+  %bound11511 = icmp ult ptr %umin1507, %scevgep1509
   %found.conflict1512 = and i1 %bound01510, %bound11511
   br i1 %found.conflict1512, label %.lr.ph612.preheader, label %vector.main.loop.iter.check1517
 
 vector.main.loop.iter.check1517:                  ; preds = %vector.memcheck1498
-  %min.iters.check1518 = icmp ult i64 %57, 16
+  %min.iters.check1518 = icmp ult i64 %40, 16
   br i1 %min.iters.check1518, label %vec.epilog.ph1551, label %vector.ph1519
 
 vector.ph1519:                                    ; preds = %vector.main.loop.iter.check1517
-  %i.age = and i64 %57, 12
-  %n.vec1520 = and i64 %57, -16                   ; 5 uses
+  %i.age = and i64 %40, 12
+  %n.vec1520 = and i64 %40, -16                   ; 5 uses
   %i.agf = mul i64 %n.vec1520, %i.aeb
   %i.agg = add i64 %indvars.iv864, %i.agf         ; 2 uses
-  %i.agh = add i64 %52, %n.vec1520                ; 2 uses
+  %i.agh = add i64 %45, %n.vec1520                ; 2 uses
   %broadcast.splatinsert1523 = insertelement <4 x i64> poison, i64 %indvars.iv864, i64 0
   %broadcast.splat1524 = shufflevector <4 x i64> %broadcast.splatinsert1523, <4 x i64> poison, <4 x i32> zeroinitializer
   %induction1525 = add nuw nsw <4 x i64> %broadcast.splat1524, %i.aft
-  %i.agi = getelementptr [8 x i8], ptr %4, i64 %52
+  %i.agi = getelementptr [8 x i8], ptr %4, i64 %45
   br label %vector.body1526
 
 vector.body1526:                                  ; preds = %vector.body1526, %vector.ph1519
@@ -1668,7 +1669,7 @@ vector.body1526:                                  ; preds = %vector.body1526, %v
   br i1 %i.agn, label %middle.block1542, label %vector.body1526, !llvm.loop !101
 
 middle.block1542:                                 ; preds = %vector.body1526
-  %cmp.n1543 = icmp eq i64 %57, %n.vec1520
+  %cmp.n1543 = icmp eq i64 %40, %n.vec1520
   br i1 %cmp.n1543, label %._crit_edge613, label %vec.epilog.iter.check1549
 
 vec.epilog.iter.check1549:                        ; preds = %middle.block1542
@@ -1678,14 +1679,14 @@ vec.epilog.iter.check1549:                        ; preds = %middle.block1542
 vec.epilog.ph1551:                                ; preds = %vector.main.loop.iter.check1517, %vec.epilog.iter.check1549
   %vec.epilog.resume.val1544 = phi i64 [ %n.vec1520, %vec.epilog.iter.check1549 ], [ 0, %vector.main.loop.iter.check1517 ]
   %bc.resume.val1545 = phi i64 [ %i.agg, %vec.epilog.iter.check1549 ], [ %indvars.iv864, %vector.main.loop.iter.check1517 ]
-  %n.vec1552 = and i64 %57, -4                    ; 4 uses
+  %n.vec1552 = and i64 %40, -4                    ; 4 uses
   %i.ago = mul i64 %n.vec1552, %i.aeb
   %i.agp = add i64 %indvars.iv864, %i.ago
-  %i.agq = add i64 %52, %n.vec1552                ; 2 uses
+  %i.agq = add i64 %45, %n.vec1552                ; 2 uses
   %broadcast.splatinsert1553 = insertelement <4 x i64> poison, i64 %bc.resume.val1545, i64 0
   %broadcast.splat1554 = shufflevector <4 x i64> %broadcast.splatinsert1553, <4 x i64> poison, <4 x i32> zeroinitializer
   %induction1557 = add nuw nsw <4 x i64> %broadcast.splat1554, %i.afu
-  %i.agr = getelementptr [8 x i8], ptr %4, i64 %52
+  %i.agr = getelementptr [8 x i8], ptr %4, i64 %45
   br label %vec.epilog.vector.body1560
 
 vec.epilog.vector.body1560:                       ; preds = %vec.epilog.vector.body1560, %vec.epilog.ph1551
@@ -1701,12 +1702,12 @@ vec.epilog.vector.body1560:                       ; preds = %vec.epilog.vector.b
   br i1 %i.agt, label %vec.epilog.middle.block1567, label %vec.epilog.vector.body1560, !llvm.loop !102
 
 vec.epilog.middle.block1567:                      ; preds = %vec.epilog.vector.body1560
-  %cmp.n1568 = icmp eq i64 %57, %n.vec1552
+  %cmp.n1568 = icmp eq i64 %40, %n.vec1552
   br i1 %cmp.n1568, label %._crit_edge613, label %.lr.ph612.preheader
 
 .lr.ph612.preheader:                              ; preds = %vector.memcheck1498, %iter.check1547, %vec.epilog.iter.check1549, %vec.epilog.middle.block1567
   %indvars.iv866.ph = phi i64 [ %indvars.iv864, %iter.check1547 ], [ %indvars.iv864, %vector.memcheck1498 ], [ %i.agg, %vec.epilog.iter.check1549 ], [ %i.agp, %vec.epilog.middle.block1567 ]
-  %indvars.iv862.ph = phi i64 [ %52, %iter.check1547 ], [ %52, %vector.memcheck1498 ], [ %i.agh, %vec.epilog.iter.check1549 ], [ %i.agq, %vec.epilog.middle.block1567 ]
+  %indvars.iv862.ph = phi i64 [ %45, %iter.check1547 ], [ %45, %vector.memcheck1498 ], [ %i.agh, %vec.epilog.iter.check1549 ], [ %i.agq, %vec.epilog.middle.block1567 ]
   br label %.lr.ph612
 
 .lr.ph612:                                        ; preds = %.lr.ph612.preheader, %.lr.ph612
@@ -1718,7 +1719,7 @@ vec.epilog.middle.block1567:                      ; preds = %vec.epilog.vector.b
   store double %i.agv, ptr %i.agw, align 8, !tbaa !9
   %indvars.iv.next863 = add nsw i64 %indvars.iv862, 1 ; 2 uses
   %indvars.iv.next867 = add nuw nsw i64 %indvars.iv866, %i.afq ; 2 uses
-  %.not882 = icmp sgt i64 %indvars.iv.next867, %i.afz
+  %.not882 = icmp sgt i64 %indvars.iv.next867, %44
   br i1 %.not882, label %._crit_edge613, label %.lr.ph612, !llvm.loop !103
 
 ._crit_edge613:                                   ; preds = %.lr.ph612, %middle.block1542, %vec.epilog.middle.block1567
@@ -1787,9 +1788,6 @@ declare i64 @llvm.umax.i64(i64, i64) #3
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(read)
 declare <4 x double> @llvm.masked.gather.v4f64.v4p0(<4 x ptr>, <4 x i1>, <4 x double>) #4
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x i64> @llvm.smax.v2i64(<2 x i64>, <2 x i64>) #3
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #5
