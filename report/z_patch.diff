@@ -1,0 +1,835 @@
+diff --git a/llvm/include/llvm/Analysis/ConstraintSystem.h b/llvm/include/llvm/Analysis/ConstraintSystem.h
+index a2bb1df191a62..11f40de9968c5 100644
+--- a/llvm/include/llvm/Analysis/ConstraintSystem.h
++++ b/llvm/include/llvm/Analysis/ConstraintSystem.h
+@@ -21,6 +21,7 @@ namespace llvm {
+ 
+ class Value;
+ class ConstraintSystem {
++public:
+   struct Entry {
+     int64_t Coefficient;
+     uint16_t Id;
+@@ -29,26 +30,41 @@ class ConstraintSystem {
+         : Coefficient(Coefficient), Id(Id) {}
+   };
+ 
+-  static int64_t getConstPart(const Entry &E) {
+-    if (E.Id == 0)
+-      return E.Coefficient;
+-    return 0;
+-  }
++  /// A single constraint of the form 'c >= v1 * c1 + ... + vn * cn'.
++  using RowTy = SmallVector<Entry, 8>;
+ 
+-  static int64_t getLastCoefficient(ArrayRef<Entry> Row, uint16_t Id) {
+-    if (Row.empty())
++private:
++  static int64_t getLastCoefficient(ArrayRef<Entry> R, uint16_t Id) {
++    if (R.empty() || R.back().Id != Id)
+       return 0;
+-    if (Row.back().Id == Id)
+-      return Row.back().Coefficient;
+-    return 0;
++    return R.back().Coefficient;
++  }
++
++  /// Returns true if \p R has an entry for the constant part.
++  static bool hasConstantEntry(ArrayRef<Entry> R) {
++    return !R.empty() && R.front().Id == 0;
++  }
++
++  /// Returns true if \p R does not have an entry for any variable, i.e. it is
++  /// of the form 'c >= 0'.
++  static bool isConstantOnly(ArrayRef<Entry> R) {
++    return R.empty() || (R.size() == 1 && R.front().Id == 0);
++  }
++
++  /// Returns the constant part of \p R, which is 0 if \p R does not have an
++  /// entry for it.
++  static int64_t getConstant(ArrayRef<Entry> R) {
++    return hasConstantEntry(R) ? R.front().Coefficient : 0;
+   }
+ 
++  /// Number of variables in the system, not counting the constant part. The
++  /// variables use the indices 1 to NumVariables.
+   size_t NumVariables = 0;
+ 
+   /// Current linear constraints in the system.
+-  /// An entry of the form c0, c1, ... cn represents the following constraint:
++  /// Each entry represents a constraint like
+   ///   c0 >= v0 * c1 + .... + v{n-1} * cn
+-  SmallVector<SmallVector<Entry, 8>, 4> Constraints;
++  SmallVector<RowTy, 4> Constraints;
+ 
+   /// A map of variables (IR values) to their corresponding index in the
+   /// constraint system.
+@@ -74,22 +90,20 @@ class ConstraintSystem {
+   ConstraintSystem(const DenseMap<Value *, unsigned> &Value2Index)
+       : NumVariables(Value2Index.size()), Value2Index(Value2Index) {}
+ 
+-  bool addVariableRow(ArrayRef<int64_t> R) {
+-    assert(Constraints.empty() || R.size() == NumVariables);
++  bool addRow(ArrayRef<Entry> R, size_t NumVars) {
+     // If all variable coefficients are 0, the constraint does not provide any
+     // usable information.
+-    if (all_of(ArrayRef(R).drop_front(1), [](int64_t C) { return C == 0; }))
++    if (isConstantOnly(R))
+       return false;
+ 
+-    SmallVector<Entry, 4> NewRow;
+-    for (const auto &[Idx, C] : enumerate(R)) {
+-      if (C == 0)
+-        continue;
+-      NewRow.emplace_back(C, Idx);
+-    }
+-    if (Constraints.empty())
+-      NumVariables = R.size();
+-    Constraints.push_back(std::move(NewRow));
++    assert(NumVars >= R.back().Id && "NumVars must cover all variables in R");
++    NumVariables = std::max(NumVars, NumVariables);
++    // Only keep non-zero coefficients; in particular drop the entry for the
++    // constant part if it is 0.
++    RowTy &NewRow = Constraints.emplace_back();
++    for (const Entry &E : R)
++      if (E.Coefficient != 0)
++        NewRow.push_back(E);
+     return true;
+   }
+ 
+@@ -98,72 +112,60 @@ class ConstraintSystem {
+     return Value2Index;
+   }
+ 
+-  bool addVariableRowFill(ArrayRef<int64_t> R) {
+-    // If all variable coefficients are 0, the constraint does not provide any
+-    // usable information.
+-    if (all_of(ArrayRef(R).drop_front(1), [](int64_t C) { return C == 0; }))
+-      return false;
+-
+-    NumVariables = std::max(R.size(), NumVariables);
+-    return addVariableRow(R);
+-  }
+-
+   /// Returns true if there may be a solution for the constraints in the system.
+   LLVM_ABI bool mayHaveSolution();
+ 
+-  static SmallVector<int64_t, 8> negate(SmallVector<int64_t, 8> R) {
++  static RowTy negate(RowTy R) {
++    assert(hasConstantEntry(R) && "row must have a constant entry");
+     // The negated constraint R is obtained by multiplying by -1 and adding 1 to
+     // the constant.
+-    if (AddOverflow(R[0], int64_t(1), R[0]))
++    if (AddOverflow(R[0].Coefficient, int64_t(1), R[0].Coefficient))
+       return {};
+ 
+-    return negateOrEqual(R);
++    return negateOrEqual(std::move(R));
+   }
+ 
+-  /// Multiplies each coefficient in the given vector by -1. Does not modify the
+-  /// original vector.
++  /// Multiplies each coefficient in the given row by -1. Returns an empty row
++  /// on overflow. Does not modify the original row.
+   ///
+-  /// \param R The vector of coefficients to be negated.
+-  static SmallVector<int64_t, 8> negateOrEqual(SmallVector<int64_t, 8> R) {
++  /// \param R The row of coefficients to be negated.
++  static RowTy negateOrEqual(RowTy R) {
+     // The negated constraint R is obtained by multiplying by -1.
+-    for (auto &C : R)
+-      if (MulOverflow(C, int64_t(-1), C))
++    for (Entry &E : R)
++      if (MulOverflow(E.Coefficient, int64_t(-1), E.Coefficient))
+         return {};
+     return R;
+   }
+ 
+-  /// Converts the given vector to form a strict less than inequality. Does not
+-  /// modify the original vector.
++  /// Converts the given row to form a strict less than inequality. Returns an
++  /// empty row on overflow. Does not modify the original row.
+   ///
+-  /// \param R The vector of coefficients to be converted.
+-  static SmallVector<int64_t, 8> toStrictLessThan(SmallVector<int64_t, 8> R) {
++  /// \param R The row of coefficients to be converted.
++  static RowTy toStrictLessThan(RowTy R) {
++    assert(hasConstantEntry(R) && "row must have a constant entry");
+     // The strict less than is obtained by subtracting 1 from the constant.
+-    if (SubOverflow(R[0], int64_t(1), R[0])) {
++    if (SubOverflow(R[0].Coefficient, int64_t(1), R[0].Coefficient))
+       return {};
+-    }
+     return R;
+   }
+ 
+   /// Build and return a sub-system of constraints connected (transitively) to
+   /// query \p R, with variables compacted to a dense index range. Also
+   /// translate \p R's entries to the sub-system.
+-  LLVM_ABI std::pair<ConstraintSystem, SmallVector<int64_t, 8>>
+-  getSubSystem(ArrayRef<int64_t> R) const;
++  LLVM_ABI std::pair<ConstraintSystem, RowTy>
++  getSubSystem(ArrayRef<Entry> R) const;
+ 
+-  LLVM_ABI bool isConditionImplied(SmallVector<int64_t, 8> R) const;
+-  LLVM_ABI bool isConditionImpliedInSubSystem(SmallVector<int64_t, 8> R) const;
++  LLVM_ABI bool isConditionImplied(RowTy R) const;
++  LLVM_ABI bool isConditionImpliedInSubSystem(ArrayRef<Entry> R) const;
+ 
+-  SmallVector<int64_t> getLastConstraint() const {
++  const RowTy &getLastConstraint() const {
+     assert(!Constraints.empty() && "Constraint system is empty");
+-    SmallVector<int64_t> Result(NumVariables, 0);
+-    for (auto &Entry : Constraints.back())
+-      Result[Entry.Id] = Entry.Coefficient;
+-    return Result;
++    return Constraints.back();
+   }
+ 
+   void popLastConstraint() { Constraints.pop_back(); }
+   void popLastNVariables(unsigned N) {
+-    assert(NumVariables > N);
++    assert(NumVariables >= N);
+     NumVariables -= N;
+   }
+ 
+diff --git a/llvm/lib/Analysis/ConstraintSystem.cpp b/llvm/lib/Analysis/ConstraintSystem.cpp
+index 609d33ac1b3f7..56cb646093f83 100644
+--- a/llvm/lib/Analysis/ConstraintSystem.cpp
++++ b/llvm/lib/Analysis/ConstraintSystem.cpp
+@@ -30,13 +30,13 @@ bool ConstraintSystem::eliminateUsingFM() {
+   assert(!Constraints.empty() &&
+          "should only be called for non-empty constraint systems");
+ 
+-  unsigned LastIdx = NumVariables - 1;
++  unsigned LastIdx = NumVariables;
+ 
+   // First, either remove the variable in place if it is 0 or add the row to
+   // RemainingRows and remove it from the system.
+-  SmallVector<SmallVector<Entry, 8>, 4> RemainingRows;
++  SmallVector<RowTy, 4> RemainingRows;
+   for (unsigned R1 = 0; R1 < Constraints.size();) {
+-    SmallVector<Entry, 8> &Row1 = Constraints[R1];
++    RowTy &Row1 = Constraints[R1];
+     if (getLastCoefficient(Row1, LastIdx) == 0) {
+       if (Row1.size() > 0 && Row1.back().Id == LastIdx)
+         Row1.pop_back();
+@@ -75,7 +75,7 @@ bool ConstraintSystem::eliminateUsingFM() {
+         std::swap(LowerLast, UpperLast);
+       }
+ 
+-      SmallVector<Entry, 8> NR;
++      RowTy NR;
+       unsigned IdxUpper = 0;
+       unsigned IdxLower = 0;
+       auto &LowerRow = RemainingRows[LowerR];
+@@ -155,21 +155,15 @@ bool ConstraintSystem::eliminateUsingFM() {
+ }
+ 
+ bool ConstraintSystem::mayHaveSolutionImpl() {
+-  while (!Constraints.empty() && NumVariables > 1) {
++  while (!Constraints.empty() && NumVariables > 0) {
+     if (!eliminateUsingFM())
+       return true;
+   }
+ 
+-  if (Constraints.empty() || NumVariables > 1)
+-    return true;
+-
+-  return all_of(Constraints, [](auto &R) {
+-    if (R.empty())
+-      return true;
+-    if (R[0].Id == 0)
+-      return R[0].Coefficient >= 0;
+-    return true;
+-  });
++  assert((Constraints.empty() || NumVariables == 0) &&
++         "non-empty system must have all variables eliminated");
++  return all_of(Constraints,
++                [](ArrayRef<Entry> R) { return getConstant(R) >= 0; });
+ }
+ 
+ SmallVector<std::string> ConstraintSystem::getVarNamesList() const {
+@@ -195,7 +189,7 @@ void ConstraintSystem::dump() const {
+   for (const auto &Row : Constraints) {
+     SmallVector<std::string, 16> Parts;
+     for (const Entry &E : Row) {
+-      if (E.Id >= NumVariables)
++      if (E.Id > NumVariables)
+         break;
+       if (E.Id == 0)
+         continue;
+@@ -209,12 +203,8 @@ void ConstraintSystem::dump() const {
+         Coefficient = std::to_string(E.Coefficient) + " * ";
+       Parts.push_back(Coefficient + Name);
+     }
+-    // assert(!Parts.empty() && "need to have at least some parts");
+-    int64_t ConstPart = 0;
+-    if (Row[0].Id == 0)
+-      ConstPart = Row[0].Coefficient;
+-    LLVM_DEBUG(dbgs() << join(Parts, std::string(" + "))
+-                      << " <= " << std::to_string(ConstPart) << "\n");
++    LLVM_DEBUG(dbgs() << join(Parts, " + ") << " <= " << getConstant(Row)
++                      << "\n");
+   }
+ #endif
+ }
+@@ -227,8 +217,8 @@ bool ConstraintSystem::mayHaveSolution() {
+   return HasSolution;
+ }
+ 
+-std::pair<ConstraintSystem, SmallVector<int64_t, 8>>
+-ConstraintSystem::getSubSystem(ArrayRef<int64_t> R) const {
++std::pair<ConstraintSystem, ConstraintSystem::RowTy>
++ConstraintSystem::getSubSystem(ArrayRef<Entry> R) const {
+   // Only constraints that share a variable (transitively) with a query R can
+   // affect whether system + !R has a solution.
+   //
+@@ -236,16 +226,20 @@ ConstraintSystem::getSubSystem(ArrayRef<int64_t> R) const {
+   // variables that co-occur in a constraint row.
+   ConstraintSystem SubSystem;
+   SmallBitVector InSystem(NumVariables + 1, false);
+-  for (unsigned Id = 1, E = R.size(); Id < E; ++Id)
+-    if (R[Id] != 0)
+-      InSystem[Id] = true;
++  for (const Entry &E : R)
++    if (E.Id != 0)
++      InSystem[E.Id] = true;
++  auto SharesVariable = [&InSystem](ArrayRef<Entry> Row) {
++    return any_of(Row, [&InSystem](const Entry &E) {
++      return E.Id != 0 && InSystem[E.Id];
++    });
++  };
+   bool Changed = true;
+   while (Changed) {
+     Changed = false;
+-    for (const auto &Row : Constraints) {
++    for (const RowTy &Row : Constraints) {
+       // No common variables, skip.
+-      if (none_of(Row,
+-                  [&](const Entry &E) { return E.Id != 0 && InSystem[E.Id]; }))
++      if (!SharesVariable(Row))
+         continue;
+       for (const Entry &E : Row)
+         if (E.Id != 0 && !InSystem[E.Id]) {
+@@ -256,63 +250,58 @@ ConstraintSystem::getSubSystem(ArrayRef<int64_t> R) const {
+   }
+ 
+   // Assign compact indices to the variables of the sub-system.
+-  SmallVector<unsigned, 16> OldToNew;
+-  OldToNew.assign(NumVariables + 1, 0);
++  SmallVector<unsigned, 16> OldToNew(NumVariables + 1, 0);
+   unsigned NextIdx = 1;
+   for (unsigned Id : InSystem.set_bits())
+     OldToNew[Id] = NextIdx++;
+ 
+   // Build new compact set of rows.
+-  SubSystem.NumVariables = NextIdx;
+-  for (const auto &Row : Constraints) {
+-    if (none_of(Row,
+-                [&](const Entry &E) { return E.Id != 0 && InSystem[E.Id]; }))
++  SubSystem.NumVariables = NextIdx - 1;
++  for (const RowTy &Row : Constraints) {
++    if (!SharesVariable(Row))
+       continue;
+-    SmallVector<Entry, 8> NewRow;
++    RowTy NewRow;
+     for (const Entry &E : Row) {
+-      if (!E.Id)
+-        NewRow.emplace_back(E.Coefficient, E.Id);
+-      else if (unsigned New = OldToNew[E.Id])
+-        NewRow.emplace_back(E.Coefficient, New);
++      unsigned New = OldToNew[E.Id];
++      assert((E.Id == 0) == (New == 0) && "constant entry must be preserved");
++      NewRow.emplace_back(E.Coefficient, New);
+     }
+     SubSystem.Constraints.push_back(std::move(NewRow));
+   }
+ 
+   // Remap the query row into the component's compact index space.
+-  SmallVector<int64_t, 8> NewR(SubSystem.NumVariables, 0);
+-  NewR[0] = R[0];
+-  for (unsigned Id = 1, E = R.size(); Id < E; ++Id)
+-    if (R[Id] != 0)
+-      NewR[OldToNew[Id]] = R[Id];
++  RowTy NewR(1, Entry(getConstant(R), 0));
++  for (const Entry &E : R)
++    if (E.Id != 0)
++      NewR.emplace_back(E.Coefficient, OldToNew[E.Id]);
+   return {std::move(SubSystem), std::move(NewR)};
+ }
+ 
+-bool ConstraintSystem::isConditionImplied(SmallVector<int64_t, 8> R) const {
++bool ConstraintSystem::isConditionImplied(RowTy R) const {
+   // If all variable coefficients are 0, we have 'C >= 0'. If the constant is >=
+   // 0, R is always true, regardless of the system.
+-  if (all_of(ArrayRef(R).drop_front(1), equal_to(0)))
+-    return R[0] >= 0;
++  if (isConstantOnly(R))
++    return getConstant(R) >= 0;
+ 
+   // If there is no solution with the negation of R added to the system, the
+   // condition must hold based on the existing constraints.
+-  R = ConstraintSystem::negate(R);
++  R = ConstraintSystem::negate(std::move(R));
+   if (R.empty())
+     return false;
+ 
+   auto Copy = *this;
+-  Copy.addVariableRow(R);
++  Copy.addRow(R, NumVariables);
+   return !Copy.mayHaveSolution();
+ }
+ 
+-bool ConstraintSystem::isConditionImpliedInSubSystem(
+-    SmallVector<int64_t, 8> R) const {
++bool ConstraintSystem::isConditionImpliedInSubSystem(ArrayRef<Entry> R) const {
+   if (R.empty())
+     return false;
+ 
+   // Queries with no variables are trivially decided without building any
+   // component.
+-  if (all_of(ArrayRef(R).drop_front(1), equal_to(0)))
+-    return R[0] >= 0;
++  if (isConstantOnly(R))
++    return getConstant(R) >= 0;
+ 
+   // A single query: build the component and solve it in place.
+   const auto &[SubCS, NewR] = getSubSystem(R);
+diff --git a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+index 638c7e276d311..1b88009dbc8ed 100644
+--- a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
++++ b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+@@ -76,6 +76,9 @@ static Instruction *getContextInstForUse(Use &U) {
+ }
+ 
+ namespace {
++using Entry = ConstraintSystem::Entry;
++using RowTy = ConstraintSystem::RowTy;
++
+ /// Struct to express a condition of the form %Op0 Pred %Op1.
+ struct ConditionTy {
+   CmpPredicate Pred;
+@@ -212,21 +215,26 @@ struct StackEntry {
+ };
+ 
+ struct ConstraintTy {
+-  SmallVector<int64_t, 8> Coefficients;
++  RowTy Coefficients;
++
++  /// Number of variables the constraint is defined over.
++  unsigned NumVars = 0;
+ 
+   bool IsSigned = false;
+ 
+   ConstraintTy() = default;
+ 
+-  ConstraintTy(SmallVector<int64_t, 8> Coefficients, bool IsSigned, bool IsEq,
++  ConstraintTy(RowTy Coefficients, unsigned NumVars, bool IsSigned, bool IsEq,
+                bool IsNe)
+-      : Coefficients(std::move(Coefficients)), IsSigned(IsSigned), IsEq(IsEq),
+-        IsNe(IsNe) {}
+-
+-  unsigned size() const { return Coefficients.size(); }
++      : Coefficients(std::move(Coefficients)), NumVars(NumVars),
++        IsSigned(IsSigned), IsEq(IsEq), IsNe(IsNe) {}
+ 
+   bool empty() const { return Coefficients.empty(); }
+ 
++  /// Returns true if the constraint does not reference any variable, i.e. it is
++  /// of the form 'c >= 0'.
++  bool isConstantOnly() const { return Coefficients.size() < 2; }
++
+   bool isEq() const { return IsEq; }
+ 
+   bool isNe() const { return IsNe; }
+@@ -261,12 +269,9 @@ class ConstraintInfo {
+       : UnsignedCS(FunctionArgs), SignedCS(FunctionArgs), DL(DL) {
+     auto &Value2Index = getValue2Index(false);
+     // Add Arg > -1 constraints to unsigned system for all function arguments.
+-    for (Value *Arg : FunctionArgs) {
+-      ConstraintTy VarPos(SmallVector<int64_t, 8>(Value2Index.size() + 1, 0),
+-                          false, false, false);
+-      VarPos.Coefficients[Value2Index[Arg]] = -1;
+-      UnsignedCS.addVariableRow(VarPos.Coefficients);
+-    }
++    for (Value *Arg : FunctionArgs)
++      UnsignedCS.addRow({Entry(0, 0), Entry(-1, Value2Index.at(Arg))},
++                        Value2Index.size());
+   }
+ 
+   DenseMap<Value *, unsigned> &getValue2Index(bool Signed) {
+@@ -759,34 +764,33 @@ ConstraintInfo::getConstraint(CmpInst::Predicate Pred, Value *Op0, Value *Op1,
+ 
+   // First try to look up \p V in Value2Index and NewVariables. Otherwise add a
+   // new entry to NewVariables.
+-  SmallDenseMap<Value *, unsigned> NewIndexMap;
+-  auto GetOrAddIndex = [&Value2Index, &NewVariables,
+-                        &NewIndexMap](Value *V) -> unsigned {
++  auto GetOrAddIndex = [&Value2Index, &NewVariables](Value *V) -> unsigned {
+     auto V2I = Value2Index.find(V);
+     if (V2I != Value2Index.end())
+       return V2I->second;
+-    auto [It, Inserted] = NewIndexMap.try_emplace(
+-        V, Value2Index.size() + NewVariables.size() + 1);
+-    if (Inserted)
++    unsigned Idx = find(NewVariables, V) - NewVariables.begin();
++    if (Idx == NewVariables.size())
+       NewVariables.push_back(V);
+-    return It->second;
++    return Value2Index.size() + Idx + 1;
+   };
+ 
+-  // Make sure all variables have entries in Value2Index or NewVariables.
+-  for (const auto &KV : concat<DecompEntry>(VariablesA, VariablesB))
+-    GetOrAddIndex(KV.Variable);
+-
+   // Build result constraint, by first adding all coefficients from A and then
+   // subtracting all coefficients from B.
+-  ConstraintTy Res(
+-      SmallVector<int64_t, 8>(Value2Index.size() + NewVariables.size() + 1, 0),
+-      IsSigned, IsEq, IsNe);
+-  auto &R = Res.Coefficients;
++  RowTy R(1, Entry(0, 0));
++  auto GetCoefficient = [&R](unsigned Idx) -> int64_t & {
++    // The entry for Idx, or the place to insert it at, is the first entry with
++    // an index >= Idx.
++    Entry *I =
++        find_if(drop_begin(R), [Idx](const Entry &E) { return E.Id >= Idx; });
++    if (I == R.end() || I->Id != Idx)
++      I = R.insert(I, Entry(0, Idx));
++    return I->Coefficient;
++  };
+   for (const auto &KV : VariablesA)
+-    R[GetOrAddIndex(KV.Variable)] += KV.Coefficient;
++    GetCoefficient(GetOrAddIndex(KV.Variable)) += KV.Coefficient;
+ 
+   for (const auto &KV : VariablesB) {
+-    auto &Coeff = R[GetOrAddIndex(KV.Variable)];
++    auto &Coeff = GetCoefficient(GetOrAddIndex(KV.Variable));
+     if (SubOverflow(Coeff, KV.Coefficient, Coeff))
+       return {};
+   }
+@@ -797,20 +801,17 @@ ConstraintInfo::getConstraint(CmpInst::Predicate Pred, Value *Op0, Value *Op1,
+   if (Pred == CmpInst::ICMP_SLT || Pred == CmpInst::ICMP_ULT)
+     if (AddOverflow(OffsetSum, int64_t(-1), OffsetSum))
+       return {};
+-  R[0] = OffsetSum;
++  R[0].Coefficient = OffsetSum;
+ 
+-  // Remove any (Coefficient, Variable) entry where the Coefficient is 0 for new
+-  // variables.
+-  while (!NewVariables.empty()) {
+-    int64_t Last = R.back();
+-    if (Last != 0)
+-      break;
+-    R.pop_back();
+-    Value *RemovedV = NewVariables.pop_back_val();
+-    NewIndexMap.erase(RemovedV);
+-  }
++  // Drop coefficients that cancelled out.
++  erase_if(R, [](const Entry &E) { return E.Id != 0 && E.Coefficient == 0; });
++
++  // Remove any new variable without a coefficient in the row.
++  unsigned NumV2I = Value2Index.size();
++  NewVariables.truncate(R.back().Id > NumV2I ? R.back().Id - NumV2I : 0);
+ 
+-  return Res;
++  return ConstraintTy(std::move(R), Value2Index.size() + NewVariables.size(),
++                      IsSigned, IsEq, IsNe);
+ }
+ 
+ ConstraintTy ConstraintInfo::getConstraintForSolving(CmpInst::Predicate Pred,
+@@ -821,10 +822,9 @@ ConstraintTy ConstraintInfo::getConstraintForSolving(CmpInst::Predicate Pred,
+   // for all variables in the unsigned system.
+   if ((Pred == CmpInst::ICMP_ULE && Op0 == NullC) ||
+       (Pred == CmpInst::ICMP_UGE && Op1 == NullC)) {
+-    auto &Value2Index = getValue2Index(false);
+     // Return constraint that's trivially true.
+-    return ConstraintTy(SmallVector<int64_t, 8>(Value2Index.size() + 1, 0),
+-                        false, false, false);
++    return ConstraintTy(RowTy(1, Entry(0, 0)), /*NumVars=*/0,
++                        /*IsSigned=*/false, /*IsEq=*/false, /*IsNe=*/false);
+   }
+ 
+   // If both operands are known to be non-negative, change signed predicates to
+@@ -957,10 +957,10 @@ void ConstraintInfo::transferToOtherSystem(
+ 
+ #ifndef NDEBUG
+ 
+-static void dumpConstraint(ArrayRef<int64_t> C,
++static void dumpConstraint(ArrayRef<Entry> C,
+                            const DenseMap<Value *, unsigned> &Value2Index) {
+   ConstraintSystem CS(Value2Index);
+-  CS.addVariableRowFill(C);
++  CS.addRow(C, Value2Index.size());
+   CS.dump();
+ }
+ #endif
+@@ -1876,10 +1876,7 @@ void ConstraintInfo::addFactImpl(CmpInst::Predicate Pred, Value *A, Value *B,
+   LLVM_DEBUG(dbgs() << "Adding '"; dumpUnpackedICmp(dbgs(), Pred, A, B);
+              dbgs() << "'\n");
+   auto &CSToUse = getCS(R.IsSigned);
+-  if (R.Coefficients.empty())
+-    return;
+-
+-  bool Added = CSToUse.addVariableRowFill(R.Coefficients);
++  bool Added = CSToUse.addRow(R.Coefficients, R.NumVars);
+   if (!Added)
+     return;
+ 
+@@ -1903,10 +1900,9 @@ void ConstraintInfo::addFactImpl(CmpInst::Predicate Pred, Value *A, Value *B,
+ 
+   if (!R.IsSigned) {
+     for (Value *V : NewVariables) {
+-      ConstraintTy VarPos(SmallVector<int64_t, 8>(Value2Index.size() + 1, 0),
+-                          false, false, false);
+-      VarPos.Coefficients[Value2Index[V]] = -1;
+-      CSToUse.addVariableRow(VarPos.Coefficients);
++      // Add V > -1 constraints for all new variables.
++      CSToUse.addRow({Entry(0, 0), Entry(-1, Value2Index.at(V))},
++                     Value2Index.size());
+       DFSInStack.emplace_back(NumIn, NumOut, R.IsSigned,
+                               SmallVector<Value *, 2>());
+     }
+@@ -1914,10 +1910,10 @@ void ConstraintInfo::addFactImpl(CmpInst::Predicate Pred, Value *A, Value *B,
+ 
+   if (R.isEq()) {
+     // Also add the inverted constraint for equality constraints.
+-    for (auto &Coeff : R.Coefficients)
+-      if (MulOverflow(Coeff, int64_t(-1), Coeff))
++    for (Entry &E : R.Coefficients)
++      if (MulOverflow(E.Coefficient, int64_t(-1), E.Coefficient))
+         return;
+-    CSToUse.addVariableRowFill(R.Coefficients);
++    CSToUse.addRow(R.Coefficients, R.NumVars);
+ 
+     DFSInStack.emplace_back(NumIn, NumOut, R.IsSigned,
+                             SmallVector<Value *, 2>());
+@@ -1965,7 +1961,9 @@ tryToSimplifyOverflowMath(IntrinsicInst *II, ConstraintInfo &Info,
+   auto DoesConditionHold = [](CmpInst::Predicate Pred, Value *A, Value *B,
+                               ConstraintInfo &Info) {
+     auto R = Info.getConstraintForSolving(Pred, A, B);
+-    if (R.size() < 2)
++    // Nothing can be proven if the constraint has no variables. This also
++    // covers rows that could not be decomposed, which are empty.
++    if (R.isConstantOnly())
+       return false;
+ 
+     auto &CSToUse = Info.getCS(R.IsSigned);
+diff --git a/llvm/unittests/Analysis/ConstraintSystemTest.cpp b/llvm/unittests/Analysis/ConstraintSystemTest.cpp
+index febeb982c87af..a40131d4d2809 100644
+--- a/llvm/unittests/Analysis/ConstraintSystemTest.cpp
++++ b/llvm/unittests/Analysis/ConstraintSystemTest.cpp
+@@ -7,21 +7,47 @@
+ //===----------------------------------------------------------------------===//
+ 
+ #include "llvm/Analysis/ConstraintSystem.h"
++#include "llvm/ADT/STLExtras.h"
+ #include "gtest/gtest.h"
+ 
+ using namespace llvm;
+ 
+ namespace {
+ 
++using RowTy = ConstraintSystem::RowTy;
++
++/// Convert the dense coefficient vector \p R, indexed by variable with the
++/// constant part at index 0, to a row.
++static RowTy toRow(ArrayRef<int64_t> R) {
++  RowTy Row;
++  Row.emplace_back(R[0], 0);
++  for (auto [Idx, C] : enumerate(R.drop_front()))
++    if (C != 0)
++      Row.emplace_back(C, Idx + 1);
++  return Row;
++}
++
++/// Add the dense coefficient vector \p R to \p CS.
++static void addVariableRow(ConstraintSystem &CS, ArrayRef<int64_t> R) {
++  CS.addRow(toRow(R), R.size() - 1);
++}
++
++/// Returns true if the condition described by the dense coefficient vector \p R
++/// is implied by \p CS.
++static bool isConditionImplied(const ConstraintSystem &CS,
++                               ArrayRef<int64_t> R) {
++  return CS.isConditionImplied(toRow(R));
++}
++
+ TEST(ConstraintSolverTest, TestSolutionChecks) {
+   {
+     ConstraintSystem CS;
+     // x + y <= 10, x >= 5, y >= 6, x <= 10, y <= 10
+-    CS.addVariableRow({10, 1, 1});
+-    CS.addVariableRow({-5, -1, 0});
+-    CS.addVariableRow({-6, 0, -1});
+-    CS.addVariableRow({10, 1, 0});
+-    CS.addVariableRow({10, 0, 1});
++    addVariableRow(CS, {10, 1, 1});
++    addVariableRow(CS, {-5, -1, 0});
++    addVariableRow(CS, {-6, 0, -1});
++    addVariableRow(CS, {10, 1, 0});
++    addVariableRow(CS, {10, 0, 1});
+ 
+     EXPECT_FALSE(CS.mayHaveSolution());
+   }
+@@ -29,11 +55,11 @@ TEST(ConstraintSolverTest, TestSolutionChecks) {
+   {
+     ConstraintSystem CS;
+     // x + y <= 10, x >= 2, y >= 3, x <= 10, y <= 10
+-    CS.addVariableRow({10, 1, 1});
+-    CS.addVariableRow({-2, -1, 0});
+-    CS.addVariableRow({-3, 0, -1});
+-    CS.addVariableRow({10, 1, 0});
+-    CS.addVariableRow({10, 0, 1});
++    addVariableRow(CS, {10, 1, 1});
++    addVariableRow(CS, {-2, -1, 0});
++    addVariableRow(CS, {-3, 0, -1});
++    addVariableRow(CS, {10, 1, 0});
++    addVariableRow(CS, {10, 0, 1});
+ 
+     EXPECT_TRUE(CS.mayHaveSolution());
+   }
+@@ -41,9 +67,9 @@ TEST(ConstraintSolverTest, TestSolutionChecks) {
+   {
+     ConstraintSystem CS;
+     // x + y <= 10, x >= 10, y >= 10; does not have a solution.
+-    CS.addVariableRow({10, 1, 1});
+-    CS.addVariableRow({-10, -1, 0});
+-    CS.addVariableRow({-10, 0, -1});
++    addVariableRow(CS, {10, 1, 1});
++    addVariableRow(CS, {-10, -1, 0});
++    addVariableRow(CS, {-10, 0, -1});
+ 
+     EXPECT_FALSE(CS.mayHaveSolution());
+   }
+@@ -51,9 +77,9 @@ TEST(ConstraintSolverTest, TestSolutionChecks) {
+   {
+     ConstraintSystem CS;
+     // x + y >= 20, 10 >= x, 10 >= y; does HAVE a solution.
+-    CS.addVariableRow({-20, -1, -1});
+-    CS.addVariableRow({-10, -1, 0});
+-    CS.addVariableRow({-10, 0, -1});
++    addVariableRow(CS, {-20, -1, -1});
++    addVariableRow(CS, {-10, -1, 0});
++    addVariableRow(CS, {-10, 0, -1});
+ 
+     EXPECT_TRUE(CS.mayHaveSolution());
+   }
+@@ -62,9 +88,9 @@ TEST(ConstraintSolverTest, TestSolutionChecks) {
+     ConstraintSystem CS;
+ 
+     // 2x + y + 3z <= 10,  2x + y >= 10, y >= 1
+-    CS.addVariableRow({10, 2, 1, 3});
+-    CS.addVariableRow({-10, -2, -1, 0});
+-    CS.addVariableRow({-1, 0, 0, -1});
++    addVariableRow(CS, {10, 2, 1, 3});
++    addVariableRow(CS, {-10, -2, -1, 0});
++    addVariableRow(CS, {-1, 0, 0, -1});
+ 
+     EXPECT_FALSE(CS.mayHaveSolution());
+   }
+@@ -73,8 +99,8 @@ TEST(ConstraintSolverTest, TestSolutionChecks) {
+     ConstraintSystem CS;
+ 
+     // 2x + y + 3z <= 10,  2x + y >= 10
+-    CS.addVariableRow({10, 2, 1, 3});
+-    CS.addVariableRow({-10, -2, -1, 0});
++    addVariableRow(CS, {10, 2, 1, 3});
++    addVariableRow(CS, {-10, -2, -1, 0});
+ 
+     EXPECT_TRUE(CS.mayHaveSolution());
+   }
+@@ -85,47 +111,47 @@ TEST(ConstraintSolverTest, IsConditionImplied) {
+     // For the test below, we assume we know
+     // x <= 5 && y <= 3
+     ConstraintSystem CS;
+-    CS.addVariableRow({5, 1, 0});
+-    CS.addVariableRow({3, 0, 1});
++    addVariableRow(CS, {5, 1, 0});
++    addVariableRow(CS, {3, 0, 1});
+ 
+     // x + y <= 6 does not hold.
+-    EXPECT_FALSE(CS.isConditionImplied({6, 1, 1}));
++    EXPECT_FALSE(isConditionImplied(CS, {6, 1, 1}));
+     // x + y <= 7 does not hold.
+-    EXPECT_FALSE(CS.isConditionImplied({7, 1, 1}));
++    EXPECT_FALSE(isConditionImplied(CS, {7, 1, 1}));
+     // x + y <= 8 does hold.
+-    EXPECT_TRUE(CS.isConditionImplied({8, 1, 1}));
++    EXPECT_TRUE(isConditionImplied(CS, {8, 1, 1}));
+ 
+     // 2 * x + y <= 12 does hold.
+-    EXPECT_FALSE(CS.isConditionImplied({12, 2, 1}));
++    EXPECT_FALSE(isConditionImplied(CS, {12, 2, 1}));
+     // 2 * x + y <= 13 does hold.
+-    EXPECT_TRUE(CS.isConditionImplied({13, 2, 1}));
++    EXPECT_TRUE(isConditionImplied(CS, {13, 2, 1}));
+ 
+     //  x + y <= 12 does hold.
+-    EXPECT_FALSE(CS.isConditionImplied({12, 2, 1}));
++    EXPECT_FALSE(isConditionImplied(CS, {12, 2, 1}));
+     // 2 * x + y <= 13 does hold.
+-    EXPECT_TRUE(CS.isConditionImplied({13, 2, 1}));
++    EXPECT_TRUE(isConditionImplied(CS, {13, 2, 1}));
+ 
+     // x <= y == x - y <= 0 does not hold.
+-    EXPECT_FALSE(CS.isConditionImplied({0, 1, -1}));
++    EXPECT_FALSE(isConditionImplied(CS, {0, 1, -1}));
+     // y <= x == -x + y <= 0 does not hold.
+-    EXPECT_FALSE(CS.isConditionImplied({0, -1, 1}));
++    EXPECT_FALSE(isConditionImplied(CS, {0, -1, 1}));
+   }
+ 
+   {
+     // For the test below, we assume we know
+     // x + 1 <= y + 1 == x - y <= 0
+     ConstraintSystem CS;
+-    CS.addVariableRow({0, 1, -1});
++    addVariableRow(CS, {0, 1, -1});
+ 
+     // x <= y == x - y <= 0 does hold.
+-    EXPECT_TRUE(CS.isConditionImplied({0, 1, -1}));
++    EXPECT_TRUE(isConditionImplied(CS, {0, 1, -1}));
+     // y <= x == -x + y <= 0 does not hold.
+-    EXPECT_FALSE(CS.isConditionImplied({0, -1, 1}));
++    EXPECT_FALSE(isConditionImplied(CS, {0, -1, 1}));
+ 
+     // x <= y + 10 == x - y <= 10 does hold.
+-    EXPECT_TRUE(CS.isConditionImplied({10, 1, -1}));
++    EXPECT_TRUE(isConditionImplied(CS, {10, 1, -1}));
+     // x + 10 <= y == x - y <= -10 does NOT hold.
+-    EXPECT_FALSE(CS.isConditionImplied({-10, 1, -1}));
++    EXPECT_FALSE(isConditionImplied(CS, {-10, 1, -1}));
+   }
+ 
+   {
+@@ -133,13 +159,13 @@ TEST(ConstraintSolverTest, IsConditionImplied) {
+     // x <= y == x - y <= 0
+     // y <= z == y - x <= 0
+     ConstraintSystem CS;
+-    CS.addVariableRow({0, 1, -1, 0});
+-    CS.addVariableRow({0, 0, 1, -1});
++    addVariableRow(CS, {0, 1, -1, 0});
++    addVariableRow(CS, {0, 0, 1, -1});
+ 
+     // z <= y == -y + z <= 0 does not hold.
+-    EXPECT_FALSE(CS.isConditionImplied({0, 0, -1, 1}));
++    EXPECT_FALSE(isConditionImplied(CS, {0, 0, -1, 1}));
+     // x <= z == x - z <= 0 does hold.
+-    EXPECT_TRUE(CS.isConditionImplied({0, 1, 0, -1}));
++    EXPECT_TRUE(isConditionImplied(CS, {0, 1, 0, -1}));
+   }
+ }
+ 
+@@ -147,7 +173,7 @@ TEST(ConstraintSolverTest, IsConditionImpliedOverflow) {
+   ConstraintSystem CS;
+   // Make sure isConditionImplied returns false when there is an overflow.
+   int64_t Limit = std::numeric_limits<int64_t>::max();
+-  CS.addVariableRow({Limit - 1, Limit - 2, Limit - 3});
+-  EXPECT_FALSE(CS.isConditionImplied({Limit - 1, Limit - 2, Limit - 3}));
++  addVariableRow(CS, {Limit - 1, Limit - 2, Limit - 3});
++  EXPECT_FALSE(isConditionImplied(CS, {Limit - 1, Limit - 2, Limit - 3}));
+ }
+ } // namespace
