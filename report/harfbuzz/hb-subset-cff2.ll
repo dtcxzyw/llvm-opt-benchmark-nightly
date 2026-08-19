@@ -204,15 +204,15 @@ bb.j:                                             ; preds = %._crit_edge
   %i.ax = mul i32 %i.b, %i.aw
   %i.ay = add i32 %i.ax, %i.ak
   %i.az = tail call i32 @llvm.usub.sat.i32(i32 513, i32 %i.ay)
-  %i.ba = tail call i32 @llvm.umin.i32(i32 %i.b, i32 %i.az) ; 2 uses
-  %umin62 = zext nneg i32 %i.ba to i64            ; 2 uses
+  %i.ba = tail call i32 @llvm.umin.i32(i32 %i.b, i32 %i.az)
   %i.bb = trunc nuw i64 %indvars.iv to i32        ; 2 uses
   %i.bc = mul i32 %i.b, %i.bb
   %i.bd = add i32 %i.ab, %i.bc                    ; 2 uses
   %storemerge.i.i.i = tail call i32 @llvm.usub.sat.i32(i32 513, i32 %i.bd)
-  %.sroa.speculated.i.i.i = tail call i32 @llvm.umin.i32(i32 %storemerge.i.i.i, i32 %i.b)
+  %.sroa.speculated.i.i.i = tail call i32 @llvm.umin.i32(i32 %storemerge.i.i.i, i32 %i.b) ; 2 uses
   %i.be = zext i32 %i.bd to i64
   %i.bf = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %i.be ; 5 uses
+  %.sroa.3.8.insert.ext.i.i.i = zext nneg i32 %.sroa.speculated.i.i.i to i64 ; 2 uses
   %i.bg = add i32 %i.r, %i.bb                     ; 2 uses
   %.not.i39 = icmp ult i32 %i.bg, %i.l
   br i1 %.not.i39, label %bb.l, label %bb.k, !prof !54
@@ -236,13 +236,13 @@ _ZN3CFF11cff_stack_tINS_8number_tELi513EEixEj.exit: ; preds = %bb.k, %bb.l
 
 .lr.ph.i.i:                                       ; preds = %_ZN3CFF11cff_stack_tINS_8number_tELi513EEixEj.exit
   %i.bl = load ptr, ptr %i.ag, align 8, !tbaa !1531 ; 5 uses
-  %xtraiter = and i64 %umin62, 3                  ; 3 uses
+  %xtraiter = and i64 %.sroa.3.8.insert.ext.i.i.i, 3 ; 3 uses
   %i.bm = add nsw i32 %i.ba, -1
   %i.bn = icmp ult i32 %i.bm, 3
   br i1 %i.bn, label %.epil.preheader, label %.lr.ph.i.i.new
 
 .lr.ph.i.i.new:                                   ; preds = %.lr.ph.i.i
-  %unroll_iter = and i64 %umin62, 1020
+  %unroll_iter = and i64 %.sroa.3.8.insert.ext.i.i.i, 1020
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.m, %.lr.ph.i.i.new
@@ -645,15 +645,15 @@ bb.h:                                             ; preds = %.lr.ph159, %_ZN31cf
   %i.bd = mul i32 %4, %i.bc
   %i.be = add i32 %i.bd, %i.bb
   %i.bf = call i32 @llvm.usub.sat.i32(i32 513, i32 %i.be)
-  %i.bg = call i32 @llvm.umin.i32(i32 %4, i32 %i.bf) ; 2 uses
-  %umin220 = zext nneg i32 %i.bg to i64           ; 2 uses
+  %i.bg = call i32 @llvm.umin.i32(i32 %4, i32 %i.bf)
   %i.bh = trunc nuw i64 %indvars.iv177 to i32     ; 2 uses
   %i.bi = mul i32 %4, %i.bh
   %i.bj = add i32 %i.ar, %i.bi                    ; 2 uses
   %storemerge.i.i.i = call i32 @llvm.usub.sat.i32(i32 513, i32 %i.bj)
-  %.sroa.speculated.i.i.i = call i32 @llvm.umin.i32(i32 %storemerge.i.i.i, i32 %4)
+  %.sroa.speculated.i.i.i = call i32 @llvm.umin.i32(i32 %storemerge.i.i.i, i32 %4) ; 2 uses
   %i.bk = zext i32 %i.bj to i64
   %i.bl = getelementptr inbounds nuw [8 x i8], ptr %i.as, i64 %i.bk ; 5 uses
+  %.sroa.3.8.insert.ext.i.i.i = zext nneg i32 %.sroa.speculated.i.i.i to i64 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #16
   %i.bm = add i32 %2, %i.bh                       ; 2 uses
   %i.bn = load i32, ptr %i.at, align 4, !tbaa !850
@@ -681,13 +681,13 @@ _ZN3CFF11cff_stack_tINS_8number_tELi513EEixEj.exit107: ; preds = %bb.i, %bb.j
 
 .lr.ph.i.i:                                       ; preds = %_ZN3CFF11cff_stack_tINS_8number_tELi513EEixEj.exit107
   %i.bu = load ptr, ptr %i.ax, align 8, !tbaa !1531 ; 5 uses
-  %xtraiter221 = and i64 %umin220, 3              ; 3 uses
+  %xtraiter221 = and i64 %.sroa.3.8.insert.ext.i.i.i, 3 ; 3 uses
   %i.bv = add nsw i32 %i.bg, -1
   %i.bw = icmp ult i32 %i.bv, 3
   br i1 %i.bw, label %.epil.preheader218, label %.lr.ph.i.i.new
 
 .lr.ph.i.i.new:                                   ; preds = %.lr.ph.i.i
-  %unroll_iter226 = and i64 %umin220, 1020
+  %unroll_iter226 = and i64 %.sroa.3.8.insert.ext.i.i.i, 1020
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.k, %.lr.ph.i.i.new
@@ -809,15 +809,15 @@ bb.m:                                             ; preds = %.lr.ph157, %bb.x
   %i.dx = mul i32 %4, %indvar
   %i.dy = add i32 %i.dr, %i.dx
   %i.dz = call i32 @llvm.usub.sat.i32(i32 513, i32 %i.dy)
-  %i.ea = call i32 @llvm.umin.i32(i32 %4, i32 %i.dz) ; 2 uses
-  %umin207 = zext nneg i32 %i.ea to i64           ; 2 uses
+  %i.ea = call i32 @llvm.umin.i32(i32 %4, i32 %i.dz)
   %i.eb = trunc nuw i64 %indvars.iv166 to i32     ; 2 uses
   %i.ec = mul i32 %4, %i.eb
   %i.ed = add i32 %i.af, %i.ec                    ; 2 uses
   %storemerge.i.i.i109 = call i32 @llvm.usub.sat.i32(i32 513, i32 %i.ed)
-  %.sroa.speculated.i.i.i110 = call i32 @llvm.umin.i32(i32 %storemerge.i.i.i109, i32 %4)
+  %.sroa.speculated.i.i.i110 = call i32 @llvm.umin.i32(i32 %storemerge.i.i.i109, i32 %4) ; 2 uses
   %i.ee = zext i32 %i.ed to i64
   %i.ef = getelementptr inbounds nuw [8 x i8], ptr %i.ag, i64 %i.ee ; 5 uses
+  %.sroa.3.8.insert.ext.i.i.i111 = zext nneg i32 %.sroa.speculated.i.i.i110 to i64 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #16
   %i.eg = add i32 %2, %i.eb                       ; 2 uses
   %i.eh = load i32, ptr %i.ah, align 4, !tbaa !850
@@ -845,13 +845,13 @@ _ZN3CFF11cff_stack_tINS_8number_tELi513EEixEj.exit116: ; preds = %bb.n, %bb.o
 
 .lr.ph.i.i120:                                    ; preds = %_ZN3CFF11cff_stack_tINS_8number_tELi513EEixEj.exit116
   %i.eo = load ptr, ptr %i.al, align 8, !tbaa !1531 ; 5 uses
-  %xtraiter = and i64 %umin207, 3                 ; 3 uses
+  %xtraiter = and i64 %.sroa.3.8.insert.ext.i.i.i111, 3 ; 3 uses
   %i.ep = add nsw i32 %i.ea, -1
   %i.eq = icmp ult i32 %i.ep, 3
   br i1 %i.eq, label %.epil.preheader, label %.lr.ph.i.i120.new
 
 .lr.ph.i.i120.new:                                ; preds = %.lr.ph.i.i120
-  %unroll_iter = and i64 %umin207, 1020
+  %unroll_iter = and i64 %.sroa.3.8.insert.ext.i.i.i111, 1020
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.p, %.lr.ph.i.i120.new

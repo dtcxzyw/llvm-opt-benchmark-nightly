@@ -203,7 +203,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 2 uses
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !35   ; 4 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !35   ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 124
   %i.f = load i32, ptr %i.e, align 4, !tbaa !40   ; 5 uses
   %i.g = zext i32 %i.f to i64
@@ -218,10 +218,10 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph:                                           ; preds = %bb.b
   %i.m = add i32 %i.f, -1
   %wide.trip.count = zext i32 %i.k to i64
-  %scevgep.a = getelementptr inbounds nuw i8, ptr %2, i64 1024
+  %scevgep = getelementptr inbounds nuw i8, ptr %2, i64 1024
+  %scevgep.a = getelementptr i8, ptr %i.d, i64 1024
   %i.n = shl i32 %i.f, 1
   %i.o = add i32 %i.n, -1
-  %scevgep27 = getelementptr i8, ptr %i.d, i64 1024
   br label %vector.memcheck
 
 .preheader:                                       ; preds = %xor_block.exit, %bb.b
@@ -251,15 +251,14 @@ vector.memcheck:                                  ; preds = %.lr.ph, %xor_block.
   %i.ac = mul i32 %i.f, %i.ab
   %i.ad = add i32 %i.m, %i.ac
   %i.ae = zext i32 %i.ad to i64
-  %i.af = getelementptr inbounds nuw [1024 x i8], ptr %i.d, i64 %i.ae ; 6 uses
+  %i.af = getelementptr inbounds nuw [1024 x i8], ptr %i.d, i64 %i.ae ; 7 uses
   %i.ag = mul i32 %i.f, %indvar
   %i.ah = add i32 %i.o, %i.ag
   %i.ai = zext i32 %i.ah to i64
-  %i.aj = shl nuw nsw i64 %i.ai, 10               ; 2 uses
-  %scevgep28 = getelementptr i8, ptr %scevgep27, i64 %i.aj
-  %scevgep26 = getelementptr nuw i8, ptr %i.d, i64 %i.aj
-  %bound0 = icmp ult ptr %2, %scevgep28
-  %bound1 = icmp ult ptr %scevgep26, %scevgep.a
+  %i.aj = shl nuw nsw i64 %i.ai, 10
+  %scevgep26 = getelementptr i8, ptr %scevgep.a, i64 %i.aj
+  %bound0 = icmp ult ptr %2, %scevgep26
+  %bound1 = icmp ult ptr %i.af, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph, label %vector.body
 

@@ -204,22 +204,22 @@ bb.ao:                                            ; preds = %bb.an, %generateMTF
   %i.od = load i32, ptr %i.js, align 4, !tbaa !34 ; 4 uses
   %i.oe = add i32 %i.od, 2                        ; 7 uses
   %i.of = icmp sgt i32 %i.od, -2                  ; 6 uses
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 37708 ; 9 uses
   br i1 %i.of, label %.preheader1980.preheader.i, label %.split2109.i
 
 .preheader1980.preheader.i:                       ; preds = %bb.ao
   %smax.i = call i32 @llvm.smax.i32(i32 %i.oe, i32 1)
   %i.og = zext nneg i32 %smax.i to i64            ; 6 uses
-  %scevgep.i = getelementptr i8, ptr %0, i64 37708
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.i, i8 15, i64 %i.og, i1 false), !tbaa !26
-  %scevgep.1.i = getelementptr i8, ptr %0, i64 37966
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %2, i8 15, i64 %i.og, i1 false), !tbaa !26
+  %scevgep.1.i = getelementptr inbounds nuw i8, ptr %0, i64 37966
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.1.i, i8 15, i64 %i.og, i1 false), !tbaa !26
-  %scevgep.2.i = getelementptr i8, ptr %0, i64 38224
+  %scevgep.2.i = getelementptr inbounds nuw i8, ptr %0, i64 38224
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.2.i, i8 15, i64 %i.og, i1 false), !tbaa !26
-  %scevgep.3.i = getelementptr i8, ptr %0, i64 38482
+  %scevgep.3.i = getelementptr inbounds nuw i8, ptr %0, i64 38482
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.3.i, i8 15, i64 %i.og, i1 false), !tbaa !26
-  %scevgep.4.i = getelementptr i8, ptr %0, i64 38740
+  %scevgep.4.i = getelementptr inbounds nuw i8, ptr %0, i64 38740
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.4.i, i8 15, i64 %i.og, i1 false), !tbaa !26
-  %scevgep.5.i = getelementptr i8, ptr %0, i64 38998
+  %scevgep.5.i = getelementptr inbounds nuw i8, ptr %0, i64 38998
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.5.i, i8 15, i64 %i.og, i1 false), !tbaa !26
   br label %.split2109.i
 
@@ -269,7 +269,7 @@ bb.au:                                            ; preds = %bb.at, %bb.as, %bb.
   br label %bb.av
 
 .preheader1979.i:                                 ; preds = %._crit_edge2118.i
-  %i.os = getelementptr inbounds nuw i8, ptr %0, i64 37708 ; 8 uses
+  %i.os = getelementptr inbounds nuw i8, ptr %0, i64 45448 ; 4 uses
   %i.ot = getelementptr inbounds nuw i8, ptr %0, i64 37966
   %i.ou = getelementptr inbounds nuw i8, ptr %0, i64 51640 ; 51 uses
   %i.ov = getelementptr inbounds nuw i8, ptr %0, i64 38482
@@ -278,7 +278,6 @@ bb.au:                                            ; preds = %bb.at, %bb.as, %bb.
   %i.oy = getelementptr inbounds nuw i8, ptr %0, i64 38740
   %i.oz = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.pa = getelementptr inbounds nuw i8, ptr %0, i64 1704 ; 3 uses
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 45448 ; 3 uses
   %i.pb = shl nuw nsw i64 %i.oq, 2
   %i.pc = shl nuw nsw i64 %wide.trip.count.i122, 2
   %i.pd = shl nuw nsw i64 %i.oq, 1
@@ -459,10 +458,8 @@ vec.epilog.scalar.ph1108:                         ; preds = %vec.epilog.scalar.p
 .preheader1974.i.epil:                            ; preds = %.preheader1978.i, %.preheader1974.i.epil
   %indvar.i.epil = phi i64 [ %indvar.next.i.epil, %.preheader1974.i.epil ], [ 0, %.preheader1978.i ] ; 2 uses
   %epil.iter = phi i64 [ %epil.iter.next, %.preheader1974.i.epil ], [ 0, %.preheader1978.i ]
-  %3 = mul nuw nsw i64 %indvar.i.epil, 1032
-  %4 = getelementptr i8, ptr %0, i64 %3
-  %scevgep2360.i.epil = getelementptr i8, ptr %4, i64 45448
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep2360.i.epil, i8 0, i64 %i.pc, i1 false), !tbaa !36
+  %3 = getelementptr inbounds nuw [1032 x i8], ptr %i.os, i64 %indvar.i.epil
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %3, i8 0, i64 %i.pc, i1 false), !tbaa !36
   %indvar.next.i.epil = add nuw nsw i64 %indvar.i.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %i.oq
@@ -477,7 +474,7 @@ vec.epilog.scalar.ph1108:                         ; preds = %vec.epilog.scalar.p
   %i.rg = load i8, ptr %i.rf, align 1, !tbaa !26
   %i.rh = zext i8 %i.rg to i32
   %i.ri = shl nuw nsw i32 %i.rh, 16
-  %i.rj = getelementptr inbounds nuw i8, ptr %i.os, i64 %indvars.iv2367.i
+  %i.rj = getelementptr inbounds nuw i8, ptr %2, i64 %indvars.iv2367.i
   %i.rk = load i8, ptr %i.rj, align 1, !tbaa !26
   %i.rl = zext i8 %i.rk to i32
   %i.rm = or disjoint i32 %i.ri, %i.rl
@@ -880,7 +877,7 @@ begin_hunk_1_@BZ2_compressBlock:bb.a
   %i.aol = getelementptr inbounds [2 x i8], ptr %i.jr, i64 %indvars.iv2380.i
   %i.aom = load i16, ptr %i.aol, align 2, !tbaa !43
   %i.aon = zext i16 %i.aom to i64
-  %invariant.gep.i = getelementptr inbounds nuw i8, ptr %i.os, i64 %i.aon ; 5 uses
+  %invariant.gep.i = getelementptr inbounds nuw i8, ptr %2, i64 %i.aon ; 5 uses
   br i1 %min.iters.check1128, label %scalar.ph.preheader, label %vector.body1131
 
 vector.body1131:                                  ; preds = %.lr.ph2134.i
@@ -1015,7 +1012,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br i1 %.not15132138.not.i, label %.lr.ph2140.i, label %.loopexit1971.i
 
 .lr.ph2140.i:                                     ; preds = %.preheader1970.i
-  %i.aqm = getelementptr inbounds [1032 x i8], ptr %2, i64 %i.aqg ; 5 uses
+  %i.aqm = getelementptr inbounds [1032 x i8], ptr %i.os, i64 %i.aqg ; 5 uses
   %i.aqn = sext i32 %.114702144.i to i64          ; 2 uses
   %smax2393.i = call i32 @llvm.smax.i32(i32 %.114702144.i, i32 %spec.select.i127) ; 3 uses
   %i.aqo = add nsw i32 %smax2393.i, 1
@@ -1047,7 +1044,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br i1 %i.aqy, label %.loopexit1971.i, label %.lr.ph2140.i.new
 
 bb.bb:                                            ; preds = %.epilog-lcssa
-  %i.aqz = getelementptr inbounds [1032 x i8], ptr %2, i64 %i.aqg ; 50 uses
+  %i.aqz = getelementptr inbounds [1032 x i8], ptr %i.os, i64 %i.aqg ; 50 uses
   %i.ara = sext i32 %.114702144.i to i64
   %i.arb = getelementptr inbounds [2 x i8], ptr %i.jr, i64 %i.ara ; 50 uses
   %i.arc = load i16, ptr %i.arb, align 2, !tbaa !43
@@ -1450,8 +1447,8 @@ bb.be:                                            ; preds = %bb.bd
 
 bb.bf:                                            ; preds = %.preheader, %bb.bf
   %indvars.iv2404.i = phi i64 [ %indvars.iv.next2405.i, %bb.bf ], [ 0, %.preheader ] ; 3 uses
-  %i.bee = getelementptr inbounds nuw [258 x i8], ptr %i.os, i64 %indvars.iv2404.i
-  %i.bef = getelementptr inbounds nuw [1032 x i8], ptr %2, i64 %indvars.iv2404.i
+  %i.bee = getelementptr inbounds nuw [258 x i8], ptr %2, i64 %indvars.iv2404.i
+  %i.bef = getelementptr inbounds nuw [1032 x i8], ptr %i.os, i64 %indvars.iv2404.i
   call void @BZ2_hbMakeCodeLengths(ptr noundef nonnull %i.bee, ptr noundef nonnull %i.bef, i32 noundef %i.oe, i32 noundef 17) #11
   %indvars.iv.next2405.i = add nuw nsw i64 %indvars.iv2404.i, 1 ; 2 uses
   %exitcond2408.not.i = icmp eq i64 %indvars.iv.next2405.i, %i.oq
@@ -1548,7 +1545,7 @@ bb.bk:                                            ; preds = %._crit_edge2159.i, 
   br i1 %i.of, label %.lr.ph2171.i, label %.thread.i
 
 .lr.ph2171.i:                                     ; preds = %.preheader1968.i
-  %i.bet = getelementptr inbounds nuw [258 x i8], ptr %i.os, i64 %indvars.iv2427.i ; 2 uses
+  %i.bet = getelementptr inbounds nuw [258 x i8], ptr %2, i64 %indvars.iv2427.i ; 2 uses
   br i1 %min.iters.check1150, label %scalar.ph1149.preheader, label %vector.body1153
 
 vector.body1153:                                  ; preds = %.lr.ph2171.i, %vector.body1153
@@ -1619,7 +1616,7 @@ bb.bn:                                            ; preds = %bb.bm
   %.01485.lcssa26162621.i = phi i32 [ %.11486.i.lcssa, %bb.bm ], [ 0, %bb.bn ], [ 32, %.preheader1968.i ]
   %.01483.lcssa26172620.i = phi i32 [ %spec.select1524.i.lcssa, %bb.bm ], [ %spec.select1524.i.lcssa, %bb.bn ], [ 0, %.preheader1968.i ]
   %i.bfk = getelementptr inbounds nuw [1032 x i8], ptr %i.bes, i64 %indvars.iv2427.i
-  %i.bfl = getelementptr inbounds nuw [258 x i8], ptr %i.os, i64 %indvars.iv2427.i
+  %i.bfl = getelementptr inbounds nuw [258 x i8], ptr %2, i64 %indvars.iv2427.i
   call void @BZ2_hbAssignCodes(ptr noundef nonnull %i.bfk, ptr noundef nonnull %i.bfl, i32 noundef %.01485.lcssa26162621.i, i32 noundef %.01483.lcssa26172620.i, i32 noundef %i.oe) #11
   %indvars.iv.next2428.i = add nuw nsw i64 %indvars.iv2427.i, 1 ; 2 uses
   %exitcond2431.not.i = icmp eq i64 %indvars.iv.next2428.i, %i.oq
@@ -2022,7 +2019,7 @@ bb.bz:                                            ; preds = %._crit_edge2197.i, 
   %.pre15.i1582.i = phi i32 [ %i.crc, %bb.by ], [ %i.cvb, %._crit_edge2197.i ] ; 2 uses
   %i.crd = phi i32 [ %.pre2505.i, %bb.by ], [ %i.cvc, %._crit_edge2197.i ] ; 2 uses
   %indvars.iv2463.i = phi i64 [ 0, %bb.by ], [ %indvars.iv.next2464.i, %._crit_edge2197.i ] ; 2 uses
-  %i.cre = getelementptr inbounds nuw [258 x i8], ptr %i.os, i64 %indvars.iv2463.i ; 2 uses
+  %i.cre = getelementptr inbounds nuw [258 x i8], ptr %2, i64 %indvars.iv2463.i ; 2 uses
   %i.crf = load i8, ptr %i.cre, align 2, !tbaa !26
   %i.crg = zext i8 %i.crf to i32                  ; 2 uses
   %i.crh = icmp sgt i32 %i.crd, 7
@@ -2287,7 +2284,7 @@ bb.ce:                                            ; preds = %bb.cd, %.lr.ph2206.
 bb.cf:                                            ; preds = %bb.ce
   %i.cvv = load i8, ptr %i.cvn, align 1, !tbaa !26
   %i.cvw = zext i8 %i.cvv to i64                  ; 2 uses
-  %i.cvx = getelementptr inbounds nuw [258 x i8], ptr %i.os, i64 %i.cvw ; 50 uses
+  %i.cvx = getelementptr inbounds nuw [258 x i8], ptr %2, i64 %i.cvw ; 50 uses
   %i.cvy = getelementptr inbounds nuw [1032 x i8], ptr %i.bes, i64 %i.cvw ; 50 uses
   %i.cvz = sext i32 %.214712204.i to i64
   %i.cwa = getelementptr inbounds [2 x i8], ptr %i.jr, i64 %i.cvz ; 50 uses
@@ -2690,7 +2687,7 @@ bsW.exit1954.i:                                   ; preds = %bb.ed, %bsW.exit194
   %indvars.iv2468.i = phi i64 [ %i.cvt, %.lr.ph2201.preheader.i ], [ %indvars.iv.next2469.i, %bsW.exit1961.i ] ; 2 uses
   %i.exy = load i8, ptr %i.cvn, align 1, !tbaa !26
   %i.exz = zext i8 %i.exy to i64                  ; 2 uses
-  %i.eya = getelementptr inbounds nuw [258 x i8], ptr %i.os, i64 %i.exz
+  %i.eya = getelementptr inbounds nuw [258 x i8], ptr %2, i64 %i.exz
   %i.eyb = getelementptr inbounds [2 x i8], ptr %i.jr, i64 %indvars.iv2468.i
   %i.eyc = load i16, ptr %i.eyb, align 2, !tbaa !43
   %i.eyd = zext i16 %i.eyc to i64                 ; 2 uses

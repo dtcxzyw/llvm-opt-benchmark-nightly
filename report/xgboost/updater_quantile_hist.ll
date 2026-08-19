@@ -204,7 +204,7 @@ bb.a:
           to label %.noexc unwind label %bb.e
 
 .noexc:                                           ; preds = %bb.a
-  %i.i = load ptr, ptr %i.h, align 8, !tbaa !378, !noalias !2933 ; 6 uses
+  %i.i = load ptr, ptr %i.h, align 8, !tbaa !378, !noalias !2933 ; 5 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.k = load i8, ptr %i.j, align 8, !tbaa !616, !noalias !2933
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -225,7 +225,7 @@ bb.c:                                             ; preds = %.noexc
 
 bb.d:                                             ; preds = %bb.b, %.noexc
   %.sroa.6.0 = phi i64 [ %i.o, %bb.b ], [ 1, %.noexc ] ; 4 uses
-  %.sroa.0.0 = phi i64 [ 1, %bb.b ], [ %i.m, %.noexc ] ; 4 uses
+  %.sroa.0.0 = phi i64 [ 1, %bb.b ], [ %i.m, %.noexc ] ; 3 uses
   %i.p = load i64, ptr %i.c, align 8, !tbaa !36   ; 2 uses
   %.not = icmp eq i64 %i.p, 0
   br i1 %.not, label %._crit_edge26.split, label %.preheader21.lr.ph
@@ -239,38 +239,36 @@ bb.d:                                             ; preds = %bb.b, %.noexc
   br i1 %.not28, label %._crit_edge26.split, label %.preheader21.lr.ph.split
 
 .preheader21.lr.ph.split:                         ; preds = %.preheader21.lr.ph
-  %i.u = load i64, ptr %i.f, align 8, !tbaa !36   ; 10 uses
+  %i.u = load i64, ptr %i.f, align 8, !tbaa !36   ; 9 uses
   %.not29 = icmp eq i64 %i.u, 0
   br i1 %.not29, label %._crit_edge26.split, label %.preheader21.lr.ph.split.split
 
 .preheader21.lr.ph.split.split:                   ; preds = %.preheader21.lr.ph.split
-  %i.v = load i64, ptr %2, align 8, !tbaa !36     ; 3 uses
-  %i.w = load i64, ptr %i.r, align 8, !tbaa !36   ; 4 uses
+  %i.v = load i64, ptr %2, align 8, !tbaa !36     ; 2 uses
+  %i.w = load i64, ptr %i.r, align 8, !tbaa !36   ; 3 uses
   %i.x = load i64, ptr %i.s, align 8, !tbaa !36   ; 4 uses
-  %i.y = load ptr, ptr %i.t, align 8, !tbaa !595  ; 6 uses
+  %i.y = load ptr, ptr %i.t, align 8, !tbaa !595  ; 4 uses
   %i.z = add i64 %i.u, -1                         ; 2 uses
-  %3 = shl i64 %.sroa.0.0, 4
-  %4 = shl i64 %i.v, 4
-  %5 = shl i64 %i.w, 4
   %i.aa = add i64 %i.q, -1                        ; 2 uses
   %i.ab = mul i64 %.sroa.0.0, %i.aa
   %i.ac = shl i64 %i.ab, 4                        ; 2 uses
-  %i.ad = shl i64 %i.u, 4                         ; 2 uses
+  %i.ad = shl i64 %i.u, 4                         ; 4 uses
   %i.ae = getelementptr i8, ptr %i.i, i64 %i.ac
   %i.af = getelementptr i8, ptr %i.ae, i64 %i.ad
   %scevgep38.a = getelementptr i8, ptr %i.af, i64 -8
   %i.ag = shl i64 %.sroa.0.0, 4                   ; 2 uses
-  %6 = shl i64 %i.v, 4
   %i.ah = mul i64 %i.w, %i.aa
-  %7 = add i64 %i.ah, %i.u
-  %i.ai = shl i64 %7, 4                           ; 2 uses
+  %3 = shl i64 %i.ah, 4                           ; 2 uses
+  %i.ai = shl i64 %i.v, 4
   %i.aj = shl i64 %i.w, 4                         ; 2 uses
   %scevgep41.a = getelementptr i8, ptr %i.i, i64 8
-  %i.ak = getelementptr i8, ptr %i.i, i64 %i.ac
+  %4 = getelementptr i8, ptr %i.i, i64 %i.ac
+  %scevgep39 = getelementptr i8, ptr %4, i64 %i.ad
+  %i.ak = getelementptr i8, ptr %i.y, i64 %3
   %scevgep42 = getelementptr i8, ptr %i.ak, i64 %i.ad
-  %i.al = getelementptr i8, ptr %i.y, i64 %i.ai
-  %i.am = getelementptr i8, ptr %i.al, i64 -8
-  %i.an = getelementptr i8, ptr %i.y, i64 %i.ai
+  %i.al = getelementptr i8, ptr %scevgep42, i64 -8
+  %i.am = getelementptr i8, ptr %i.y, i64 %3
+  %i.an = getelementptr i8, ptr %i.am, i64 %i.ad
   %min.iters.check = icmp ult i64 %i.u, 20
   %ident.check = icmp ne i64 %.sroa.6.0, 1
   %ident.check36 = icmp ne i64 %i.x, 1
@@ -289,23 +287,20 @@ bb.d:                                             ; preds = %bb.b, %.noexc
   br label %.preheader21
 
 .preheader21:                                     ; preds = %.preheader21.lr.ph.split.split, %._crit_edge24
-  %storemerge25 = phi i64 [ 0, %.preheader21.lr.ph.split.split ], [ %i.ca, %._crit_edge24 ] ; 4 uses
-  %i.at = mul i64 %6, %storemerge25               ; 4 uses
-  %scevgep39 = getelementptr i8, ptr %i.y, i64 %i.at
-  %scevgep40.a = getelementptr i8, ptr %i.am, i64 %i.at
+  %storemerge25 = phi i64 [ 0, %.preheader21.lr.ph.split.split ], [ %i.ca, %._crit_edge24 ] ; 3 uses
+  %i.at = mul i64 %i.ai, %storemerge25            ; 3 uses
+  %scevgep40.a = getelementptr i8, ptr %i.al, i64 %i.at
   %i.au = getelementptr i8, ptr %i.y, i64 %i.at
   %scevgep43 = getelementptr i8, ptr %i.au, i64 8
   %scevgep44 = getelementptr i8, ptr %i.an, i64 %i.at
-  %8 = mul i64 %4, %storemerge25
   %i.av = mul i64 %i.v, %storemerge25
-  %i.aw = getelementptr [16 x i8], ptr %i.y, i64 %i.av
-  %9 = getelementptr i8, ptr %i.y, i64 %8
+  %i.aw = getelementptr [16 x i8], ptr %i.y, i64 %i.av ; 2 uses
   %bound0 = icmp ult ptr %i.i, %scevgep40.a
-  %bound1 = icmp ult ptr %scevgep39, %scevgep38.a
+  %bound1 = icmp ult ptr %i.aw, %scevgep38.a
   %found.conflict = and i1 %bound0, %bound1
   %i.ax = or i1 %found.conflict, %i.aq
   %bound046 = icmp ult ptr %scevgep41.a, %scevgep44
-  %bound147 = icmp ult ptr %scevgep43, %scevgep42
+  %bound147 = icmp ult ptr %scevgep43, %scevgep39
   %found.conflict48 = and i1 %bound046, %bound147
   %i.ay = or i1 %found.conflict48, %i.as
   %conflict.rdx = or i1 %i.ax, %i.ay
@@ -321,22 +316,18 @@ bb.e:                                             ; preds = %bb.a
   resume { ptr, i32 } %i.az
 
 .preheader:                                       ; preds = %.preheader21, %._crit_edge
-  %storemerge1023 = phi i64 [ 0, %.preheader21 ], [ %i.cb, %._crit_edge ] ; 5 uses
+  %storemerge1023 = phi i64 [ 0, %.preheader21 ], [ %i.cb, %._crit_edge ] ; 3 uses
   %i.ba = mul i64 %i.w, %storemerge1023
-  %i.bb = getelementptr [16 x i8], ptr %i.aw, i64 %i.ba ; 5 uses
+  %i.bb = getelementptr [16 x i8], ptr %i.aw, i64 %i.ba ; 7 uses
   %i.bc = mul i64 %storemerge1023, %.sroa.0.0
-  %i.bd = getelementptr [16 x i8], ptr %i.i, i64 %i.bc ; 5 uses
+  %i.bd = getelementptr [16 x i8], ptr %i.i, i64 %i.bc ; 7 uses
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.preheader
-  %10 = mul i64 %5, %storemerge1023
-  %scevgep37 = getelementptr i8, ptr %9, i64 %10  ; 2 uses
-  %11 = mul i64 %3, %storemerge1023
-  %scevgep = getelementptr i8, ptr %i.i, i64 %11  ; 2 uses
-  %i.be = getelementptr i8, ptr %scevgep, i64 %mul.result
-  %i.bf = icmp ult ptr %i.be, %scevgep
-  %i.bg = getelementptr i8, ptr %scevgep37, i64 %mul.result
-  %i.bh = icmp ult ptr %i.bg, %scevgep37
+  %i.be = getelementptr i8, ptr %i.bd, i64 %mul.result
+  %i.bf = icmp ult ptr %i.be, %i.bd
+  %i.bg = getelementptr i8, ptr %i.bb, i64 %mul.result
+  %i.bh = icmp ult ptr %i.bg, %i.bb
   %.reass = or i1 %i.bf, %invariant.op
   %i.bi = or i1 %i.bh, %.reass
   %brmerge = select i1 %i.bi, i1 true, i1 %conflict.rdx

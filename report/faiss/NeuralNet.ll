@@ -203,27 +203,27 @@ _ZN5faiss2nn16Tensor2DTemplateIfED2Ev.exit:       ; preds = %bb.o, %bb.p
 
 .lr.ph140:                                        ; preds = %.preheader126
   %i.cz = getelementptr inbounds nuw i8, ptr %6, i64 16
-  %i.da = load ptr, ptr %i.cz, align 8, !tbaa !45 ; 3 uses
+  %i.da = load ptr, ptr %i.cz, align 8, !tbaa !45 ; 2 uses
   %i.db = load i32, ptr %i.ab, align 4, !tbaa !118 ; 2 uses
   %i.dc = sext i32 %i.db to i64                   ; 4 uses
   %i.dd = load i32, ptr %1, align 8, !tbaa !111   ; 5 uses
   %i.de = sext i32 %i.dd to i64                   ; 12 uses
   %factor.op.mul = mul nsw i64 %i.de, %i.dc
   %i.df = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %i.dg = load ptr, ptr %i.df, align 8, !tbaa !45 ; 3 uses
+  %i.dg = load ptr, ptr %i.df, align 8, !tbaa !45 ; 2 uses
   %.not148 = icmp eq i32 %i.db, 0
   %.not149 = icmp eq i32 %i.dd, 0
   %brmerge = select i1 %.not148, i1 true, i1 %.not149
   br i1 %brmerge, label %._crit_edge141.split, label %.preheader.lr.ph.preheader
 
 .preheader.lr.ph.preheader:                       ; preds = %.lr.ph140
-  %i.dh = mul nsw i64 %i.de, %i.dc
+  %i.dh = mul nsw i64 %i.dc, %i.de
   %i.di = shl i64 %i.dh, 2
-  %i.dj = mul nsw i64 %i.dc, %i.de
+  %i.dj = mul nsw i64 %i.de, %i.dc
   %i.dk = shl i64 %i.dj, 2
   %i.dl = shl nsw i64 %i.de, 2
   %i.dm = shl nsw i64 %i.de, 2
-  %i.dn = getelementptr i8, ptr %i.da, i64 %i.dk
+  %i.dn = getelementptr i8, ptr %i.da, i64 %i.di
   %i.do = getelementptr i8, ptr %i.dg, i64 %i.dl
   %min.iters.check = icmp ult i32 %i.dd, 8
   %stride.check = icmp slt i32 %i.dd, 0
@@ -325,18 +325,16 @@ _ZN5faiss2nn16Tensor2DTemplateIfED2Ev.exit100:    ; preds = %bb.z, %bb.y, %bb.x
 
 .preheader.lr.ph:                                 ; preds = %.preheader.lr.ph.preheader, %._crit_edge138
   %.053139 = phi i64 [ %i.fm, %._crit_edge138 ], [ 0, %.preheader.lr.ph.preheader ] ; 5 uses
-  %i.er = mul i64 %i.di, %.053139                 ; 2 uses
-  %scevgep = getelementptr i8, ptr %i.da, i64 %i.er
+  %i.er = mul i64 %i.dk, %.053139
   %scevgep179.a = getelementptr i8, ptr %i.dn, i64 %i.er
-  %i.es = mul i64 %i.dm, %.053139                 ; 2 uses
-  %scevgep180 = getelementptr i8, ptr %i.dg, i64 %i.es
+  %i.es = mul i64 %i.dm, %.053139
   %scevgep181 = getelementptr i8, ptr %i.do, i64 %i.es
   %.reass = mul i64 %factor.op.mul, %.053139
-  %i.et = getelementptr inbounds nuw [4 x i8], ptr %i.da, i64 %.reass
+  %i.et = getelementptr [4 x i8], ptr %i.da, i64 %.reass ; 2 uses
   %i.eu = mul i64 %.053139, %i.de
-  %i.ev = getelementptr inbounds nuw [4 x i8], ptr %i.dg, i64 %i.eu ; 6 uses
-  %bound0 = icmp ult ptr %scevgep, %scevgep181
-  %bound1 = icmp ult ptr %scevgep180, %scevgep179.a
+  %i.ev = getelementptr inbounds nuw [4 x i8], ptr %i.dg, i64 %i.eu ; 7 uses
+  %bound0 = icmp ult ptr %i.et, %scevgep181
+  %bound1 = icmp ult ptr %i.ev, %scevgep179.a
   %found.conflict = and i1 %bound0, %bound1
   %i.ew = or i1 %found.conflict, %stride.check
   br label %.preheader

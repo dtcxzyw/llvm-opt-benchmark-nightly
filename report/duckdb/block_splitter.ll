@@ -204,7 +204,7 @@ bb.bk:                                            ; preds = %bb.bk, %.new925
   br i1 %niter933.ncmp.1, label %.preheader408.peel.begin.i.i.unr-lcssa, label %bb.bk, !llvm.loop !84
 
 .lr.ph416.i.i:                                    ; preds = %.preheader408.peel.begin.i.i, %._crit_edge428.i.i
-  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %._crit_edge428.i.i ], [ %.0108.i.i, %.preheader408.peel.begin.i.i ] ; 4 uses
+  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %._crit_edge428.i.i ], [ %.0108.i.i, %.preheader408.peel.begin.i.i ] ; 3 uses
   %.1343437.i.i = phi i64 [ %i.xw, %._crit_edge428.i.i ], [ 0, %.preheader408.peel.begin.i.i ] ; 4 uses
   %.0345436.i.i = phi i64 [ %.2347.lcssa.i.i, %._crit_edge428.i.i ], [ 0, %.preheader408.peel.begin.i.i ]
   %.0351435.i.i = phi i64 [ %i.xv, %._crit_edge428.i.i ], [ 0, %.preheader408.peel.begin.i.i ] ; 2 uses
@@ -214,10 +214,8 @@ bb.bk:                                            ; preds = %bb.bk, %.new925
   %.0358431.i.i = phi ptr [ %.1359.i.i, %._crit_edge428.i.i ], [ %i.rj, %.preheader408.peel.begin.i.i ] ; 3 uses
   %.0360430.i.i = phi i64 [ %.1361.i.i, %._crit_edge428.i.i ], [ %i.rn, %.preheader408.peel.begin.i.i ] ; 5 uses
   %.0362429.i.i = phi i64 [ %.1363.lcssa.i.i, %._crit_edge428.i.i ], [ 0, %.preheader408.peel.begin.i.i ] ; 3 uses
-  %umax = tail call i64 @llvm.umax.i64(i64 %indvars.iv.i.i, i64 1)
-  %umin = tail call i64 @llvm.umin.i64(i64 %umax, i64 64) ; 2 uses
   %i.te = tail call i64 @llvm.umax.i64(i64 %indvars.iv.i.i, i64 1)
-  %umax497.i.i = tail call i64 @llvm.umin.i64(i64 %i.te, i64 64)
+  %umax497.i.i = tail call i64 @llvm.umin.i64(i64 %i.te, i64 64) ; 3 uses
   %i.tf = getelementptr [4 x i8], ptr %i.ru, i64 %.1343437.i.i
   br label %bb.bl
 
@@ -384,12 +382,12 @@ bb.bx:                                            ; preds = %bb.bw, %bb.br
   %.1357.lcssa.i.i = phi i64 [ %.0356432.i.i, %bb.bx ], [ %i.wa, %.lr.ph423.i.i ]
   %i.vn = trunc i64 %.0351435.i.i to i32          ; 5 uses
   %i.vo = getelementptr [4 x i8], ptr %i.rl, i64 %.1343437.i.i ; 5 uses
-  %xtraiter942 = and i64 %umin, 3                 ; 3 uses
+  %xtraiter942 = and i64 %umax497.i.i, 3          ; 3 uses
   %i.vp = icmp ult i64 %indvars.iv.i.i, 4
   br i1 %i.vp, label %.epil.preheader941, label %.lr.ph427.i.i.new
 
 .lr.ph427.i.i.new:                                ; preds = %.lr.ph427.i.i
-  %unroll_iter946 = and i64 %umin, 124
+  %unroll_iter946 = and i64 %umax497.i.i, 124
   br label %bb.by
 
 .lr.ph423.i.i:                                    ; preds = %bb.bx, %.lr.ph423.i.i
@@ -792,7 +790,7 @@ bb.et:                                            ; preds = %bb.et, %.new995
   br i1 %niter1003.ncmp.1, label %.preheader408.peel.begin.i.i153.unr-lcssa, label %bb.et, !llvm.loop !145
 
 .lr.ph416.i.i154:                                 ; preds = %.preheader408.peel.begin.i.i153, %._crit_edge428.i.i187
-  %indvars.iv.i.i155 = phi i64 [ %indvars.iv.next.i.i188, %._crit_edge428.i.i187 ], [ %.0108.i.i121, %.preheader408.peel.begin.i.i153 ] ; 4 uses
+  %indvars.iv.i.i155 = phi i64 [ %indvars.iv.next.i.i188, %._crit_edge428.i.i187 ], [ %.0108.i.i121, %.preheader408.peel.begin.i.i153 ] ; 3 uses
   %.1343437.i.i156 = phi i64 [ %i.btr, %._crit_edge428.i.i187 ], [ 0, %.preheader408.peel.begin.i.i153 ] ; 4 uses
   %.0345436.i.i157 = phi i64 [ %.2347.lcssa.i.i171, %._crit_edge428.i.i187 ], [ 0, %.preheader408.peel.begin.i.i153 ]
   %.0351435.i.i158 = phi i64 [ %i.btq, %._crit_edge428.i.i187 ], [ 0, %.preheader408.peel.begin.i.i153 ] ; 2 uses
@@ -802,10 +800,8 @@ bb.et:                                            ; preds = %bb.et, %.new995
   %.0358431.i.i162 = phi ptr [ %.1359.i.i174, %._crit_edge428.i.i187 ], [ %i.bni, %.preheader408.peel.begin.i.i153 ] ; 3 uses
   %.0360430.i.i163 = phi i64 [ %.1361.i.i173, %._crit_edge428.i.i187 ], [ %i.bnm, %.preheader408.peel.begin.i.i153 ] ; 5 uses
   %.0362429.i.i164 = phi i64 [ %.1363.lcssa.i.i183, %._crit_edge428.i.i187 ], [ 0, %.preheader408.peel.begin.i.i153 ] ; 3 uses
-  %umax1012 = tail call i64 @llvm.umax.i64(i64 %indvars.iv.i.i155, i64 1)
-  %umin1013 = tail call i64 @llvm.umin.i64(i64 %umax1012, i64 64) ; 2 uses
   %i.bpd = tail call i64 @llvm.umax.i64(i64 %indvars.iv.i.i155, i64 1)
-  %umax500.i.i = tail call i64 @llvm.umin.i64(i64 %i.bpd, i64 64)
+  %umax500.i.i = tail call i64 @llvm.umin.i64(i64 %i.bpd, i64 64) ; 3 uses
   %i.bpe = getelementptr [4 x i8], ptr %i.bnt, i64 %.1343437.i.i156
   br label %bb.eu
 
@@ -969,12 +965,12 @@ bb.fh:                                            ; preds = %bb.fg, %bb.fb
   %.1357.lcssa.i.i184 = phi i64 [ %.0356432.i.i161, %bb.fh ], [ %i.brv, %.lr.ph423.i.i177 ]
   %i.bri = trunc i64 %.0351435.i.i158 to i32      ; 5 uses
   %i.brj = getelementptr [4 x i8], ptr %i.bnk, i64 %.1343437.i.i156 ; 5 uses
-  %xtraiter1014 = and i64 %umin1013, 3            ; 3 uses
+  %xtraiter1014 = and i64 %umax500.i.i, 3         ; 3 uses
   %i.brk = icmp ult i64 %indvars.iv.i.i155, 4
   br i1 %i.brk, label %.epil.preheader1011, label %.lr.ph427.i.i182.new
 
 .lr.ph427.i.i182.new:                             ; preds = %.lr.ph427.i.i182
-  %unroll_iter1018 = and i64 %umin1013, 124
+  %unroll_iter1018 = and i64 %umax500.i.i, 124
   br label %bb.fi
 
 .lr.ph423.i.i177:                                 ; preds = %bb.fh, %.lr.ph423.i.i177
@@ -1377,7 +1373,7 @@ bb.ik:                                            ; preds = %bb.ik, %.new1067
   br i1 %niter1075.ncmp.1, label %.preheader408.peel.begin.i.i329.unr-lcssa, label %bb.ik, !llvm.loop !197
 
 .lr.ph416.i.i330:                                 ; preds = %.preheader408.peel.begin.i.i329, %._crit_edge428.i.i368
-  %indvars.iv.i.i331 = phi i64 [ %indvars.iv.next.i.i369, %._crit_edge428.i.i368 ], [ %.0108.i.i296, %.preheader408.peel.begin.i.i329 ] ; 4 uses
+  %indvars.iv.i.i331 = phi i64 [ %indvars.iv.next.i.i369, %._crit_edge428.i.i368 ], [ %.0108.i.i296, %.preheader408.peel.begin.i.i329 ] ; 3 uses
   %.1343437.i.i332 = phi i64 [ %i.dni, %._crit_edge428.i.i368 ], [ 0, %.preheader408.peel.begin.i.i329 ] ; 4 uses
   %.0345436.i.i333 = phi i64 [ %.2347.lcssa.i.i350, %._crit_edge428.i.i368 ], [ 0, %.preheader408.peel.begin.i.i329 ]
   %.0351435.i.i334 = phi i64 [ %i.dnh, %._crit_edge428.i.i368 ], [ 0, %.preheader408.peel.begin.i.i329 ] ; 2 uses
@@ -1387,10 +1383,8 @@ bb.ik:                                            ; preds = %bb.ik, %.new1067
   %.0358431.i.i338 = phi ptr [ %.1359.i.i354, %._crit_edge428.i.i368 ], [ %i.dgz, %.preheader408.peel.begin.i.i329 ] ; 3 uses
   %.0360430.i.i339 = phi i64 [ %.1361.i.i353, %._crit_edge428.i.i368 ], [ %i.dhd, %.preheader408.peel.begin.i.i329 ] ; 5 uses
   %.0362429.i.i340 = phi i64 [ %.1363.lcssa.i.i364, %._crit_edge428.i.i368 ], [ 0, %.preheader408.peel.begin.i.i329 ] ; 3 uses
-  %umax1084 = tail call i64 @llvm.umax.i64(i64 %indvars.iv.i.i331, i64 1)
-  %umin1085 = tail call i64 @llvm.umin.i64(i64 %umax1084, i64 64) ; 2 uses
   %i.diu = tail call i64 @llvm.umax.i64(i64 %indvars.iv.i.i331, i64 1)
-  %umax500.i.i341 = tail call i64 @llvm.umin.i64(i64 %i.diu, i64 64)
+  %umax500.i.i341 = tail call i64 @llvm.umin.i64(i64 %i.diu, i64 64) ; 3 uses
   %i.div = getelementptr [4 x i8], ptr %i.dhk, i64 %.1343437.i.i332
   br label %bb.il
 
@@ -1554,12 +1548,12 @@ bb.iy:                                            ; preds = %bb.ix, %bb.is
   %.1357.lcssa.i.i365 = phi i64 [ %.0356432.i.i337, %bb.iy ], [ %i.dlm, %.lr.ph423.i.i358 ]
   %i.dkz = trunc i64 %.0351435.i.i334 to i32      ; 5 uses
   %i.dla = getelementptr [4 x i8], ptr %i.dhb, i64 %.1343437.i.i332 ; 5 uses
-  %xtraiter1086 = and i64 %umin1085, 3            ; 3 uses
+  %xtraiter1086 = and i64 %umax500.i.i341, 3      ; 3 uses
   %i.dlb = icmp ult i64 %indvars.iv.i.i331, 4
   br i1 %i.dlb, label %.epil.preheader1083, label %.lr.ph427.i.i363.new
 
 .lr.ph427.i.i363.new:                             ; preds = %.lr.ph427.i.i363
-  %unroll_iter1090 = and i64 %umin1085, 124
+  %unroll_iter1090 = and i64 %umax500.i.i341, 124
   br label %bb.iz
 
 .lr.ph423.i.i358:                                 ; preds = %bb.iy, %.lr.ph423.i.i358

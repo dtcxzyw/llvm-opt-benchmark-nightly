@@ -204,14 +204,14 @@ bb.c:                                             ; preds = %bb.a, %_ZN4absl12lt
   %i.bm = add nuw i64 %indvar, 4611686018427387903
   %i.bn = and i64 %i.bm, 4611686018427387903      ; 2 uses
   %i.bo = add nuw nsw i64 %i.bn, 1                ; 2 uses
-  %63 = shl nuw nsw i64 %indvar, 2                ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #25
   store i64 %indvar, ptr %i.a, align 8, !tbaa !22
   %i.bp = icmp samesign ult i64 %indvar, 6        ; 2 uses
+  %.pre = shl nuw nsw i64 %indvar, 2              ; 5 uses
   br i1 %i.bp, label %bb.d, label %.thread
 
 .thread:                                          ; preds = %bb.c
-  %i.bq = call noalias noundef nonnull ptr @_Znwm(i64 noundef %63) #28 ; 2 uses
+  %i.bq = call noalias noundef nonnull ptr @_Znwm(i64 noundef %.pre) #28 ; 2 uses
   store ptr %i.bq, ptr %i.b, align 8, !tbaa !343
   br label %.lr.ph.i.preheader
 
@@ -229,7 +229,7 @@ bb.d:                                             ; preds = %bb.c
 
 .lr.ph.i.preheader:                               ; preds = %.thread, %bb.d
   %.0.i.i.i895 = phi ptr [ %i.bq, %.thread ], [ %1, %bb.d ] ; 6 uses
-  %i.br = getelementptr inbounds nuw i8, ptr %.0.i.i.i895, i64 %63
+  %i.br = getelementptr inbounds nuw i8, ptr %.0.i.i.i895, i64 %.pre
   %min.iters.check = icmp samesign ult i64 %i.bn, 7
   br i1 %min.iters.check, label %.lr.ph.i.preheader946, label %vector.ph
 
@@ -278,15 +278,15 @@ middle.block:                                     ; preds = %vector.body
   br i1 %i.bp, label %.noexc127, label %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i
 
 _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i: ; preds = %.loopexit
-  %i.ca = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %63) #28
+  %i.ca = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %.pre) #28
           to label %.noexc127 unwind label %bb.e
 
 .noexc127:                                        ; preds = %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i, %.loopexit
   %.0.i.i.i125 = phi ptr [ %2, %.loopexit ], [ %i.ca, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i ] ; 3 uses
   store ptr %.0.i.i.i125, ptr %i.d, align 8, !tbaa !343
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %.0.i.i.i125, ptr nonnull align 4 %.0.i.i.i895, i64 %63, i1 false), !tbaa !30
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %.0.i.i.i125, ptr nonnull align 4 %.0.i.i.i895, i64 %.pre, i1 false), !tbaa !30
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #25
-  %bcmp.i.i.i.i.i.i.i = call i32 @bcmp(ptr nonnull %.0.i.i.i895, ptr nonnull %.0.i.i.i125, i64 %63)
+  %bcmp.i.i.i.i.i.i.i = call i32 @bcmp(ptr nonnull %.0.i.i.i895, ptr nonnull %.0.i.i.i125, i64 %.pre)
   %.not9.i.i.i.i.i.i.i = icmp eq i32 %bcmp.i.i.i.i.i.i.i, 0 ; 2 uses
   %i.cb = zext i1 %.not9.i.i.i.i.i.i.i to i8
   store i8 %i.cb, ptr %3, align 8, !tbaa !42
@@ -689,15 +689,13 @@ bb.b:                                             ; preds = %_ZN4absl12lts_20260
   ret void
 
 bb.c:                                             ; preds = %bb.a, %_ZN4absl12lts_2026052610FixedArrayIiLm5ESaIiEED2Ev.exit422
-  %indvars.iv.a = phi i64 [ 1, %bb.a ], [ %indvars.iv.next, %_ZN4absl12lts_2026052610FixedArrayIiLm5ESaIiEED2Ev.exit422 ] ; 6 uses
-  %indvar = phi i64 [ 0, %bb.a ], [ %indvar.next, %_ZN4absl12lts_2026052610FixedArrayIiLm5ESaIiEED2Ev.exit422 ] ; 4 uses
-  %63 = add nuw i64 %indvar, 1                    ; 2 uses
-  %64 = shl nuw nsw i64 %indvar, 2
-  %i.bm = add nuw nsw i64 %64, 4
+  %indvars.iv.a = phi i64 [ 0, %bb.a ], [ %indvar.next, %_ZN4absl12lts_2026052610FixedArrayIiLm5ESaIiEED2Ev.exit422 ] ; 3 uses
+  %indvar = phi i64 [ 1, %bb.a ], [ %indvars.iv.next, %_ZN4absl12lts_2026052610FixedArrayIiLm5ESaIiEED2Ev.exit422 ] ; 6 uses
+  %i.bm = add i64 %indvars.iv.a, 1                ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #25
-  store i64 %indvars.iv.a, ptr %i.a, align 8, !tbaa !22
-  %i.bn = icmp samesign ult i64 %indvars.iv.a, 6  ; 2 uses
-  %.pre = shl nuw nsw i64 %indvars.iv.a, 2        ; 3 uses
+  store i64 %indvar, ptr %i.a, align 8, !tbaa !22
+  %i.bn = icmp samesign ult i64 %indvar, 6        ; 2 uses
+  %.pre = shl nuw nsw i64 %indvar, 2              ; 4 uses
   br i1 %i.bn, label %._crit_edge, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -707,12 +705,12 @@ bb.d:                                             ; preds = %bb.c
 ._crit_edge:                                      ; preds = %bb.c, %bb.d
   %.0.i.i.i = phi ptr [ %i.bo, %bb.d ], [ %1, %bb.c ] ; 5 uses
   store ptr %.0.i.i.i, ptr %i.b, align 8, !tbaa !343
-  %xtraiter = and i64 %63, 7                      ; 3 uses
-  %i.bp = icmp samesign ult i64 %indvar, 7
+  %xtraiter = and i64 %i.bm, 7                    ; 3 uses
+  %i.bp = icmp ult i64 %indvars.iv.a, 7
   br i1 %i.bp, label %.lr.ph.i.epil.preheader, label %._crit_edge.new
 
 ._crit_edge.new:                                  ; preds = %._crit_edge
-  %unroll_iter = and i64 %63, -8
+  %unroll_iter = and i64 %i.bm, -8
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i, %._crit_edge.new
@@ -771,7 +769,7 @@ bb.d:                                             ; preds = %bb.c
 
 .epilog-lcssa:                                    ; preds = %.lr.ph.i.epil, %.unr-lcssa
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #25
-  store i64 %indvars.iv.a, ptr %i.c, align 8, !tbaa !22
+  store i64 %indvar, ptr %i.c, align 8, !tbaa !22
   br i1 %i.bn, label %.noexc127, label %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i
 
 _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i: ; preds = %.epilog-lcssa
@@ -781,8 +779,8 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i: ; preds = %.epilog-lcssa
 .noexc127:                                        ; preds = %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i, %.epilog-lcssa
   %.0.i.i.i125 = phi ptr [ %2, %.epilog-lcssa ], [ %i.ci, %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i ] ; 4 uses
   store ptr %.0.i.i.i125, ptr %i.d, align 8, !tbaa !343
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.0.i.i.i125, ptr noundef nonnull align 4 dereferenceable(1) %.0.i.i.i, i64 %i.bm, i1 false), !tbaa !30
-  %i.cj = lshr i64 %indvars.iv.a, 1
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.0.i.i.i125, ptr noundef nonnull align 4 dereferenceable(1) %.0.i.i.i, i64 %.pre, i1 false), !tbaa !30
+  %i.cj = lshr i64 %indvar, 1
   %i.ck = and i64 %i.cj, 2147483647
   %i.cl = getelementptr inbounds nuw [4 x i8], ptr %.0.i.i.i125, i64 %i.ck ; 2 uses
   %i.cm = load i32, ptr %i.cl, align 4, !tbaa !30
@@ -1185,9 +1183,9 @@ bb.fn:                                            ; preds = %_ZN4absl12lts_20260
 
 _ZN4absl12lts_2026052610FixedArrayIiLm5ESaIiEED2Ev.exit422: ; preds = %_ZN4absl12lts_2026052610FixedArrayIiLm5ESaIiEED2Ev.exit, %bb.fn
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #25
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv.a, 1
-  %indvar.next = add nuw nsw i64 %indvar, 1       ; 2 uses
-  %exitcond.not = icmp eq i64 %indvar.next, 9
+  %indvars.iv.next = add nuw nsw i64 %indvar, 1   ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, 10
+  %indvar.next = add i64 %indvars.iv.a, 1
   br i1 %exitcond.not, label %bb.b, label %bb.c, !llvm.loop !354
 
 bb.fo:                                            ; preds = %_ZN7testing7MessageD2Ev.exit416, %_ZN7testing7MessageD2Ev.exit386, %_ZN7testing7MessageD2Ev.exit356, %_ZN7testing7MessageD2Ev.exit327, %_ZN7testing7MessageD2Ev.exit298, %_ZN7testing7MessageD2Ev.exit269, %_ZN7testing7MessageD2Ev.exit240, %_ZN7testing7MessageD2Ev.exit221, %_ZN7testing7MessageD2Ev.exit202, %_ZN7testing7MessageD2Ev.exit176, %_ZN7testing7MessageD2Ev.exit150, %_ZN7testing7MessageD2Ev.exit135

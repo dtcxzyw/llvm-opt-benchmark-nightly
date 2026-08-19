@@ -204,7 +204,7 @@ _ZNSt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14defaul
 .noexc26:                                         ; preds = %_ZNSt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS5_EED2Ev.exit
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !27, !noalias !29
-  %i.ag = load ptr, ptr %i.ad, align 8, !tbaa !34, !noalias !29 ; 25 uses
+  %i.ag = load ptr, ptr %i.ad, align 8, !tbaa !34, !noalias !29 ; 24 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %7, i64 24
   %i.ai = load i8, ptr %i.ah, align 8, !tbaa !35, !noalias !29
   %i.aj = getelementptr inbounds nuw i8, ptr %7, i64 16
@@ -225,7 +225,7 @@ bb.i:                                             ; preds = %.noexc26
 
 bb.j:                                             ; preds = %bb.h, %.noexc26
   %.sroa.7.0 = phi i64 [ %i.am, %bb.h ], [ 1, %.noexc26 ] ; 9 uses
-  %.sroa.0.0 = phi i64 [ 1, %bb.h ], [ %i.ak, %.noexc26 ] ; 4 uses
+  %.sroa.0.0 = phi i64 [ 1, %bb.h ], [ %i.ak, %.noexc26 ] ; 3 uses
   %i.an = load i64, ptr %i.h, align 8, !tbaa !17  ; 4 uses
   %i.ao = invoke noundef i32 @_ZNK7xgboost7Context7ThreadsEv(ptr noundef nonnull align 8 dereferenceable(5084) %0)
           to label %bb.k unwind label %bb.v       ; 3 uses
@@ -546,26 +546,24 @@ _ZNK7xgboost6linalg10TensorViewINS_6detail20GradientPairInternalIdEELi2EE5SliceI
 .preheader54.preheader:                           ; preds = %.preheader54.lr.ph
   %wide.trip.count = zext nneg i32 %i.eg to i64   ; 2 uses
   %i.ei = add i64 %.pre, -1                       ; 3 uses
-  %8 = shl i64 %.sroa.0.0, 4
-  %i.ej = shl i64 %.sroa.0.0, 4                   ; 4 uses
-  %9 = shl i64 %.pre, 4                           ; 4 uses
-  %i.ek = getelementptr i8, ptr %i.ag, i64 %9
-  %scevgep117 = getelementptr i8, ptr %i.ek, i64 -8
-  %scevgep118.a = getelementptr i8, ptr %i.ag, i64 %i.ej
+  %i.ej = shl i64 %.pre, 4                        ; 4 uses
+  %8 = getelementptr i8, ptr %i.ag, i64 %i.ej
+  %i.ek = getelementptr i8, ptr %8, i64 -8
+  %9 = shl i64 %.sroa.0.0, 4                      ; 3 uses
+  %scevgep118.a = getelementptr i8, ptr %i.ag, i64 %9
   %i.el = shl nuw nsw i64 %wide.trip.count, 4
   %i.em = add nsw i64 %i.el, -16
   %i.en = mul i64 %.sroa.0.0, %i.em               ; 2 uses
   %i.eo = getelementptr i8, ptr %i.ag, i64 %i.en
-  %i.ep = getelementptr i8, ptr %i.eo, i64 %9
+  %i.ep = getelementptr i8, ptr %i.eo, i64 %i.ej
   %scevgep119.a = getelementptr i8, ptr %i.ep, i64 -8
   %scevgep120.a = getelementptr i8, ptr %i.ag, i64 8
-  %scevgep121.a = getelementptr i8, ptr %i.ag, i64 %9
-  %i.eq = getelementptr i8, ptr %i.ag, i64 %i.ej
+  %scevgep121.a = getelementptr i8, ptr %i.ag, i64 %i.ej
+  %i.eq = getelementptr i8, ptr %i.ag, i64 %9
   %scevgep122.a = getelementptr i8, ptr %i.eq, i64 8
   %i.er = getelementptr i8, ptr %i.ag, i64 %i.en
-  %scevgep123 = getelementptr i8, ptr %i.er, i64 %9
+  %scevgep123 = getelementptr i8, ptr %i.er, i64 %i.ej
   %min.iters.check129 = icmp ult i64 %.pre, 18
-  %10 = getelementptr i8, ptr %i.ag, i64 %8
   %i.es = and i64 %i.ei, 4294967295
   %i.et = icmp eq i64 %i.es, 4294967295
   %i.eu = icmp ugt i64 %i.ei, 4294967295
@@ -574,39 +572,34 @@ _ZNK7xgboost6linalg10TensorViewINS_6detail20GradientPairInternalIdEELi2EE5SliceI
   %mul.result115 = shl i64 %i.ei, 4
   %i.ew = or i1 %i.ev, %ident.check113
   %bound0 = icmp ult ptr %i.ag, %scevgep119.a
-  %bound1 = icmp ult ptr %scevgep118.a, %scevgep117
+  %bound1 = icmp ult ptr %scevgep118.a, %i.ek
   %found.conflict = and i1 %bound0, %bound1
   %bound0124 = icmp ult ptr %scevgep120.a, %scevgep123
   %bound1125 = icmp ult ptr %scevgep122.a, %scevgep121.a
   %found.conflict126 = and i1 %bound0124, %bound1125
-  %stride.check127 = icmp slt i64 %i.ej, 0
+  %stride.check127 = icmp slt i64 %9, 0
   %i.ex = or i1 %found.conflict126, %stride.check127
   %conflict.rdx = or i1 %found.conflict, %i.ex
   %n.vec131 = and i64 %.pre, 8589934590           ; 3 uses
   %cmp.n139 = icmp eq i64 %.pre, %n.vec131
-  br label %.preheader54
+  br label %vector.scevcheck112
 
-.preheader54:                                     ; preds = %.preheader54.preheader, %._crit_edge
-  %indvar = phi i64 [ 0, %.preheader54.preheader ], [ %indvar.next, %._crit_edge ] ; 2 uses
+vector.scevcheck112:                              ; preds = %.preheader54.preheader, %._crit_edge
   %indvars.iv65 = phi i64 [ 1, %.preheader54.preheader ], [ %indvars.iv.next66, %._crit_edge ] ; 2 uses
-  %11 = mul i64 %.sroa.0.0, %indvars.iv65
-  %12 = getelementptr [16 x i8], ptr %i.ag, i64 %11 ; 3 uses
-  br i1 %min.iters.check129, label %scalar.ph128.preheader, label %vector.scevcheck112
-
-vector.scevcheck112:                              ; preds = %.preheader54
-  %i.ey = mul i64 %i.ej, %indvar
-  %scevgep = getelementptr i8, ptr %10, i64 %i.ey ; 2 uses
-  %i.ez = getelementptr i8, ptr %scevgep, i64 %mul.result115
-  %i.fa = icmp ult ptr %i.ez, %scevgep
+  %i.ey = mul i64 %.sroa.0.0, %indvars.iv65
+  %10 = getelementptr [16 x i8], ptr %i.ag, i64 %i.ey ; 5 uses
+  %i.ez = getelementptr i8, ptr %10, i64 %mul.result115
+  %i.fa = icmp ult ptr %i.ez, %10
   %i.fb = or i1 %i.fa, %i.ew
-  %brmerge144 = select i1 %i.fb, i1 true, i1 %conflict.rdx
+  %or.cond = select i1 %min.iters.check129, i1 true, i1 %i.fb
+  %brmerge144 = select i1 %or.cond, i1 true, i1 %conflict.rdx
   br i1 %brmerge144, label %scalar.ph128.preheader, label %vector.body132
 
 vector.body132:                                   ; preds = %vector.scevcheck112, %vector.body132
   %index133 = phi i64 [ %index.next137, %vector.body132 ], [ 0, %vector.scevcheck112 ] ; 4 uses
   %i.fc = or disjoint i64 %index133, 1            ; 2 uses
-  %i.fd = getelementptr [16 x i8], ptr %12, i64 %index133
-  %i.fe = getelementptr [16 x i8], ptr %12, i64 %i.fc
+  %i.fd = getelementptr [16 x i8], ptr %10, i64 %index133
+  %i.fe = getelementptr [16 x i8], ptr %10, i64 %i.fc
   %i.ff = getelementptr inbounds nuw [16 x i8], ptr %i.ag, i64 %index133 ; 2 uses
   %i.fg = getelementptr inbounds nuw [16 x i8], ptr %i.ag, i64 %i.fc ; 2 uses
   %wide.load = load <2 x double>, ptr %i.fd, align 8
@@ -624,8 +617,8 @@ vector.body132:                                   ; preds = %vector.scevcheck112
 middle.block138:                                  ; preds = %vector.body132
   br i1 %cmp.n139, label %._crit_edge, label %scalar.ph128.preheader
 
-scalar.ph128.preheader:                           ; preds = %vector.scevcheck112, %.preheader54, %middle.block138
-  %indvars.iv.ph = phi i64 [ %n.vec131, %middle.block138 ], [ 0, %vector.scevcheck112 ], [ 0, %.preheader54 ]
+scalar.ph128.preheader:                           ; preds = %vector.scevcheck112, %middle.block138
+  %indvars.iv.ph = phi i64 [ 0, %vector.scevcheck112 ], [ %n.vec131, %middle.block138 ]
   br label %scalar.ph128
 
 .preheader:                                       ; preds = %._crit_edge, %.preheader55
@@ -662,13 +655,12 @@ bb.x:                                             ; preds = %_ZNK7xgboost6linalg
 ._crit_edge:                                      ; preds = %scalar.ph128, %middle.block138
   %indvars.iv.next66 = add nuw nsw i64 %indvars.iv65, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next66, %wide.trip.count
-  %indvar.next = add i64 %indvar, 1
-  br i1 %exitcond.not, label %.preheader, label %.preheader54, !llvm.loop !66
+  br i1 %exitcond.not, label %.preheader, label %vector.scevcheck112, !llvm.loop !66
 
 scalar.ph128:                                     ; preds = %scalar.ph128.preheader, %scalar.ph128
   %indvars.iv = phi i64 [ %indvars.iv.next, %scalar.ph128 ], [ %indvars.iv.ph, %scalar.ph128.preheader ] ; 2 uses
   %i.fr = mul i64 %indvars.iv, %.sroa.7.0         ; 2 uses
-  %i.fs = getelementptr [16 x i8], ptr %12, i64 %i.fr
+  %i.fs = getelementptr [16 x i8], ptr %10, i64 %i.fr
   %i.ft = getelementptr inbounds nuw [16 x i8], ptr %i.ag, i64 %i.fr ; 2 uses
   %i.fu = load <2 x double>, ptr %i.fs, align 8, !tbaa !46
   %i.fv = load <2 x double>, ptr %i.ft, align 8, !tbaa !46

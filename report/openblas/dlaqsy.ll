@@ -201,10 +201,10 @@ bb.f:                                             ; preds = %bb.d
   br label %iter.check151
 
 iter.check151:                                    ; preds = %.lr.ph73.preheader, %.loopexit167
-  %indvar121 = phi i64 [ 0, %.lr.ph73.preheader ], [ %indvar.next122, %.loopexit167 ] ; 5 uses
+  %indvar121 = phi i64 [ 0, %.lr.ph73.preheader ], [ %indvar.next122, %.loopexit167 ] ; 4 uses
   %indvars.iv87 = phi i64 [ 1, %.lr.ph73.preheader ], [ %indvars.iv.next88, %.loopexit167 ] ; 9 uses
   %i.dc = sub i64 %i.cw, %indvar121               ; 7 uses
-  %i.dd = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %indvars.iv87
+  %i.dd = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %indvars.iv87 ; 2 uses
   %i.de = load double, ptr %i.dd, align 8, !tbaa !9 ; 7 uses
   %i.df = mul nsw i64 %indvars.iv87, %i.co
   %invariant.gep98 = getelementptr [8 x i8], ptr %i.c, i64 %i.df ; 7 uses
@@ -212,14 +212,12 @@ iter.check151:                                    ; preds = %.lr.ph73.preheader,
   br i1 %min.iters.check130, label %vec.epilog.scalar.ph152.preheader, label %vector.memcheck120
 
 vector.memcheck120:                               ; preds = %iter.check151
-  %8 = shl nuw nsw i64 %indvar121, 3
-  %scevgep125 = getelementptr i8, ptr %4, i64 %8
   %i.dg = mul i64 %i.cu, %indvar121
   %scevgep124 = getelementptr i8, ptr %i.cz, i64 %i.dg
   %i.dh = mul i64 %i.cs, %indvar121
   %scevgep123 = getelementptr i8, ptr %i.db, i64 %i.dh
   %bound0127 = icmp ult ptr %scevgep123, %scevgep126
-  %bound1128 = icmp ult ptr %scevgep125, %scevgep124
+  %bound1128 = icmp ult ptr %i.dd, %scevgep124
   %found.conflict129 = and i1 %bound0127, %bound1128
   br i1 %found.conflict129, label %vec.epilog.scalar.ph152.preheader, label %vector.main.loop.iter.check131
 

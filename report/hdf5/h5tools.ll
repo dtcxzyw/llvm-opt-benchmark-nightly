@@ -203,12 +203,9 @@ bb.ad:                                            ; preds = %bb.y
   br i1 %i.er, label %bb.ae, label %.preheader148
 
 .preheader148:                                    ; preds = %bb.ad
+  %factor.op.mul155 = shl nuw nsw i64 %i.p, 4
   %.not157 = icmp eq i64 %5, 0
-  br i1 %.not157, label %.loopexit, label %.preheader.lr.ph
-
-.preheader.lr.ph:                                 ; preds = %.preheader148
-  %7 = shl nuw nsw i64 %i.p, 4
-  br label %.preheader
+  br i1 %.not157, label %.loopexit, label %.preheader
 
 bb.ae:                                            ; preds = %bb.ad
   %i.es = load i32, ptr @enable_error_stack, align 4, !tbaa !8
@@ -236,12 +233,12 @@ bb.ah:                                            ; preds = %bb.af
   %fputc133 = tail call i32 @fputc(i32 10, ptr %i.fd) ; 0 uses
   br label %.loopexit
 
-.preheader:                                       ; preds = %.preheader.lr.ph, %bb.ba
-  %.090156 = phi i64 [ 0, %.preheader.lr.ph ], [ %i.hj, %bb.ba ] ; 2 uses
+.preheader:                                       ; preds = %.preheader148, %bb.ba
+  %.090156 = phi i64 [ %i.hj, %bb.ba ], [ 0, %.preheader148 ] ; 2 uses
   br i1 %.not, label %._crit_edge154, label %.lr.ph153
 
 .lr.ph153:                                        ; preds = %.preheader
-  %i.fe = mul i64 %7, %.090156
+  %i.fe = mul i64 %factor.op.mul155, %.090156
   %scevgep = getelementptr i8, ptr %6, i64 %i.fe
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ec, ptr align 8 %scevgep, i64 %i.q, i1 false), !tbaa !9
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.eq, ptr nonnull align 8 %i.r, i64 %i.q, i1 false), !tbaa !9

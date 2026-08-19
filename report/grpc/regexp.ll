@@ -203,7 +203,7 @@ bb.q:                                             ; preds = %._crit_edge
 
 .lr.ph142:                                        ; preds = %.lr.ph142.preheader, %_ZN3re28PODArrayIPNS_6RegexpEED2Ev.exit92
   %indvar = phi i64 [ 0, %.lr.ph142.preheader ], [ %indvar.next, %_ZN3re28PODArrayIPNS_6RegexpEED2Ev.exit92 ] ; 3 uses
-  %i.ah = mul nuw nsw i64 %indvar, 524280
+  %i.ah = mul i64 %indvar, 524280
   %scevgep = getelementptr i8, ptr %.067, i64 %i.ah
   %i.ai = invoke noalias noundef nonnull dereferenceable(40) ptr @_Znwm(i64 noundef 40) #30
           to label %bb.r unwind label %bb.t, !inline_history !69 ; 5 uses
