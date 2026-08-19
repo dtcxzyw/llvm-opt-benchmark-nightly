@@ -1,0 +1,46 @@
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index 1707c6c17fe23..74a7354c9d669 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -3538,11 +3538,9 @@ const SCEV *ScalarEvolution::getUDivExpr(SCEVUse LHS, SCEVUse RHS) {
+           // {X,+,N}/C --> {X/C,+,N/C} if safe and N/C can be folded.
+           const APInt &StepInt = Step->getAPInt();
+           const APInt &DivInt = RHSC->getAPInt();
+-          if (!StepInt.urem(DivInt) &&
+-              getZeroExtendExpr(AR, ExtTy) ==
+-              getAddRecExpr(getZeroExtendExpr(AR->getStart(), ExtTy),
+-                            getZeroExtendExpr(Step, ExtTy),
+-                            AR->getLoop(), SCEV::FlagAnyWrap)) {
++          bool HasNUW = hasFlags(proveNoUnsignedWrapViaInduction(AR),
++                                 SCEVNoWrapFlags::FlagNUW);
++          if (!StepInt.urem(DivInt) && HasNUW) {
+             SmallVector<SCEVUse, 4> Operands;
+             for (const SCEV *Op : AR->operands())
+               Operands.push_back(getUDivExpr(Op, RHS));
+@@ -3553,12 +3551,6 @@ const SCEV *ScalarEvolution::getUDivExpr(SCEVUse LHS, SCEVUse RHS) {
+           const APInt *StartRem;
+           if (!DivInt.urem(StepInt) && match(getURemExpr(AR->getStart(), Step),
+                                              m_scev_APInt(StartRem))) {
+-            bool NoWrap =
+-                getZeroExtendExpr(AR, ExtTy) ==
+-                getAddRecExpr(getZeroExtendExpr(AR->getStart(), ExtTy),
+-                              getZeroExtendExpr(Step, ExtTy), AR->getLoop(),
+-                              SCEV::FlagAnyWrap);
+-
+             // With N <= C and both N, C as powers-of-2, the transformation
+             // {X,+,N}/C => {(X - X%N),+,N}/C preserves division results even
+             // if wrapping occurs, as the division results remain equivalent for
+@@ -3569,11 +3561,11 @@ const SCEV *ScalarEvolution::getUDivExpr(SCEVUse LHS, SCEVUse RHS) {
+             // expression.
+             const SCEV *NewStart =
+                 getMinusSCEV(AR->getStart(), getConstant(*StartRem));
+-            if (*StartRem != 0 && (NoWrap || CanFoldWithWrap) &&
++            if (*StartRem != 0 && (HasNUW || CanFoldWithWrap) &&
+                 !isa<SCEVAddExpr>(NewStart)) {
+               const SCEV *NewLHS =
+                   getAddRecExpr(NewStart, Step, AR->getLoop(),
+-                                NoWrap ? SCEV::FlagNW : SCEV::FlagAnyWrap);
++                                HasNUW ? SCEV::FlagNW : SCEV::FlagAnyWrap);
+               if (LHS != NewLHS)
+                 return getUDivExpr(NewLHS, RHS);
+             }
