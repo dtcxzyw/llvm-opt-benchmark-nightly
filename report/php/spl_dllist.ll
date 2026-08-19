@@ -201,7 +201,11 @@ bb.o:                                             ; preds = %bb.n
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !12 ; 2 uses
   %.not76.peel = icmp eq ptr %i.bo, null
-  br i1 %.not76.peel, label %._crit_edge.thread121.a, label %.peel.next
+  br i1 %.not76.peel, label %._crit_edge.thread121, label %.peel.next
+
+._crit_edge.thread121:                            ; preds = %bb.o
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr null) ]
+  br label %._crit_edge.thread121.a
 
 .peel.next:                                       ; preds = %bb.o, %bb.r
   %.06795 = phi ptr [ %i.bv, %bb.r ], [ %i.bo, %bb.o ] ; 5 uses
@@ -221,17 +225,21 @@ bb.p:                                             ; preds = %.peel.next
 
 bb.q:                                             ; preds = %.sink.split126, %bb.p
   %i.bt = icmp eq ptr %.06795, %i.bh
-  br i1 %i.bt, label %._crit_edge.thread121.a, label %bb.r
+  br i1 %i.bt, label %._crit_edge, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
   %i.bu = getelementptr inbounds nuw i8, ptr %.06795, i64 16
   %i.bv = load ptr, ptr %i.bu, align 8, !tbaa !12 ; 2 uses
   %.not76 = icmp eq ptr %i.bv, null
-  br i1 %.not76, label %._crit_edge.thread121.a, label %.peel.next, !llvm.loop !123
+  br i1 %.not76, label %._crit_edge, label %.peel.next, !llvm.loop !123
 
-._crit_edge.thread121.a:                          ; preds = %bb.q, %bb.r, %bb.o
-  %.067.lcssa.sink = phi ptr [ null, %bb.o ], [ %.06795, %bb.q ], [ null, %bb.r ] ; 6 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.067.lcssa.sink) ]
+._crit_edge:                                      ; preds = %bb.r, %bb.q
+  %.067.lcssa = phi ptr [ null, %bb.r ], [ %.06795, %bb.q ] ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.067.lcssa) ]
+  br label %._crit_edge.thread121.a
+
+._crit_edge.thread121.a:                          ; preds = %._crit_edge, %._crit_edge.thread121
+  %.067.lcssa123 = phi ptr [ null, %._crit_edge.thread121 ], [ %.067.lcssa, %._crit_edge ] ; 5 uses
   %i.bw = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 5 uses
   %i.bx = tail call ptr @zend_hash_str_find(ptr noundef nonnull %i.bw, ptr noundef nonnull @.str.66, i64 noundef 9) #12 ; 2 uses
   %.not.i88 = icmp eq ptr %i.bx, null
@@ -247,7 +255,7 @@ zend_hash_str_find_ptr.exit90:                    ; preds = %._crit_edge.thread1
   store ptr %.0.i89, ptr %i.bz, align 8, !tbaa !125
   %i.ca = getelementptr inbounds nuw i8, ptr %.0.i89, i64 16
   %i.cb = load ptr, ptr %i.ca, align 8, !tbaa !12
-  %i.cc = icmp eq ptr %i.cb, %.067.lcssa.sink
+  %i.cc = icmp eq ptr %i.cb, %.067.lcssa123
   %spec.store.select = select i1 %i.cc, ptr null, ptr %.0.i89
   store ptr %spec.store.select, ptr %i.bz, align 8
   %i.cd = tail call ptr @zend_hash_str_find(ptr noundef nonnull %i.bw, ptr noundef nonnull @.str.67, i64 noundef 9) #12 ; 2 uses
@@ -264,7 +272,7 @@ zend_hash_str_find_ptr.exit87:                    ; preds = %zend_hash_str_find_
   store ptr %.0.i86, ptr %i.cf, align 8, !tbaa !126
   %i.cg = getelementptr inbounds nuw i8, ptr %.0.i86, i64 16
   %i.ch = load ptr, ptr %i.cg, align 8, !tbaa !12
-  %i.ci = icmp eq ptr %i.ch, %.067.lcssa.sink
+  %i.ci = icmp eq ptr %i.ch, %.067.lcssa123
   %spec.store.select80 = select i1 %i.ci, ptr null, ptr %.0.i86
   store ptr %spec.store.select80, ptr %i.cf, align 8
   %i.cj = tail call ptr @zend_hash_str_find(ptr noundef nonnull %i.bw, ptr noundef nonnull @.str.68, i64 noundef 12) #12 ; 2 uses
@@ -281,7 +289,7 @@ zend_hash_str_find_ptr.exit84:                    ; preds = %zend_hash_str_find_
   store ptr %.0.i83, ptr %i.cl, align 8, !tbaa !127
   %i.cm = getelementptr inbounds nuw i8, ptr %.0.i83, i64 16
   %i.cn = load ptr, ptr %i.cm, align 8, !tbaa !12
-  %i.co = icmp eq ptr %i.cn, %.067.lcssa.sink
+  %i.co = icmp eq ptr %i.cn, %.067.lcssa123
   %spec.store.select78 = select i1 %i.co, ptr null, ptr %.0.i83
   store ptr %spec.store.select78, ptr %i.cl, align 8
   %i.cp = tail call ptr @zend_hash_str_find(ptr noundef nonnull %i.bw, ptr noundef nonnull @.str.69, i64 noundef 11) #12 ; 2 uses
@@ -298,7 +306,7 @@ zend_hash_str_find_ptr.exit:                      ; preds = %zend_hash_str_find_
   store ptr %.0.i, ptr %i.cr, align 8, !tbaa !128
   %i.cs = getelementptr inbounds nuw i8, ptr %.0.i, i64 16
   %i.ct = load ptr, ptr %i.cs, align 8, !tbaa !12
-  %i.cu = icmp eq ptr %i.ct, %.067.lcssa.sink
+  %i.cu = icmp eq ptr %i.ct, %.067.lcssa123
   %spec.store.select81 = select i1 %i.cu, ptr null, ptr %.0.i
   store ptr %spec.store.select81, ptr %i.cr, align 8
   %i.cv = load ptr, ptr @zend_known_strings, align 8, !tbaa !129
@@ -318,7 +326,7 @@ zend_hash_find_ptr.exit:                          ; preds = %zend_hash_str_find_
   store ptr %.0.i92, ptr %i.da, align 8, !tbaa !38
   %i.db = getelementptr inbounds nuw i8, ptr %.0.i92, i64 16
   %i.dc = load ptr, ptr %i.db, align 8, !tbaa !12
-  %i.dd = icmp eq ptr %i.dc, %.067.lcssa.sink
+  %i.dd = icmp eq ptr %i.dc, %.067.lcssa123
   %spec.store.select79 = select i1 %i.dd, ptr null, ptr %.0.i92
   store ptr %spec.store.select79, ptr %i.da, align 8
   br label %.critedge
