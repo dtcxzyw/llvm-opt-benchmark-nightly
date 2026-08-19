@@ -199,7 +199,7 @@ middle.block1426:                                 ; preds = %vector.body1398
   %lsr.iv410 = phi i32 [ %i.azd, %"for f78.s0.v4.preheader1020" ], [ %lsr.iv.next411, %"end for f78.s0.v3.loopexit" ] ; 5 uses
   %lsr.iv406 = phi i64 [ %i.ayk, %"for f78.s0.v4.preheader1020" ], [ %lsr.iv.next407, %"end for f78.s0.v3.loopexit" ] ; 2 uses
   %i.azz = sub nsw i64 %lsr.iv406, %i.ayk
-  %i.baa = mul i64 %i.azz, %i.ayj
+  %i.baa = mul nsw i64 %i.azz, %i.ayj
   %i.bab = sub i64 %i.baa, %i.ayo
   %invariant.gep = getelementptr [4 x i8], ptr %i.ayg, i64 %i.bab ; 2 uses
   br i1 %min.iters.check1441, label %"for f78.s0.v3.preheader", label %vector.scevcheck1434
@@ -434,7 +434,7 @@ middle.block1471:                                 ; preds = %vector.body1444
   %i.bey = mul i32 %i.bex, %i.bev
   %i.bez = sub i32 %i.bey, %i.aj
   %i.bfa = sub nsw i64 %lsr.iv395, %i.ayk
-  %i.bfb = mul i64 %i.bfa, %i.ayj
+  %i.bfb = mul nsw i64 %i.bfa, %i.ayj
   %i.bfc = sub i64 %i.bfb, %i.ayo
   %invariant.gep977 = getelementptr [4 x i8], ptr %i.bes, i64 %i.bfc
   br label %"for f132.s0.v3"
@@ -568,7 +568,7 @@ if.then.i298:                                     ; preds = %"end for f132.s0.v3
   %i.bht = sext i32 %t2200 to i64                 ; 2 uses
   %i.bhu = sext i32 %t2196 to i64                 ; 2 uses
   %i.bhv = sub nsw i64 %lsr.iv374, %i.bgt
-  %i.bhw = mul i64 %i.bhv, %i.bgs
+  %i.bhw = mul nsw i64 %i.bhv, %i.bgs
   %i.bhx = sub i64 %i.bhw, %i.bgz
   %invariant.gep979 = getelementptr [4 x i8], ptr %i.bgp, i64 %i.bhx
   br label %"for f131.s0.v3"

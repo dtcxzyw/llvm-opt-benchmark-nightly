@@ -197,12 +197,12 @@ vector.memcheck:                                  ; preds = %.preheader421
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.ax, -8                      ; 3 uses
   %i.bf = add nsw i64 %n.vec, %i.av
-  %invariant.op755 = add i64 %i.av, 1
+  %invariant.op755 = add nuw i64 %i.av, 1
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %.reass756 = add i64 %index, %invariant.op755   ; 2 uses
+  %.reass756 = add nuw i64 %index, %invariant.op755 ; 2 uses
   %i.bg = getelementptr [8 x i8], ptr %invariant.gep482, i64 %.reass756 ; 3 uses
   %i.bh = getelementptr i8, ptr %i.bg, i64 32     ; 2 uses
   %wide.load = load <4 x double>, ptr %i.bg, align 8, !tbaa !9, !alias.scope !13, !noalias !16
@@ -233,7 +233,7 @@ scalar.ph.preheader:                              ; preds = %vector.memcheck, %.
 scalar.ph.prol:                                   ; preds = %scalar.ph.preheader, %scalar.ph.prol
   %indvars.iv427.prol = phi i64 [ %indvars.iv.next428.prol, %scalar.ph.prol ], [ %indvars.iv427.ph, %scalar.ph.preheader ]
   %prol.iter736 = phi i64 [ %prol.iter736.next, %scalar.ph.prol ], [ 0, %scalar.ph.preheader ]
-  %indvars.iv.next428.prol = add nsw i64 %indvars.iv427.prol, 1 ; 3 uses
+  %indvars.iv.next428.prol = add nuw nsw i64 %indvars.iv427.prol, 1 ; 3 uses
   %i.bm = mul nsw i64 %indvars.iv.next428.prol, %i.x ; 2 uses
   %gep483.prol = getelementptr [8 x i8], ptr %invariant.gep482, i64 %i.bm ; 2 uses
   %i.bn = load double, ptr %gep483.prol, align 8, !tbaa !9
@@ -253,7 +253,7 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
 
 scalar.ph:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph
   %indvars.iv427 = phi i64 [ %indvars.iv.next428.3, %scalar.ph ], [ %indvars.iv427.unr, %scalar.ph.prol.loopexit ] ; 4 uses
-  %indvars.iv.next428 = add nsw i64 %indvars.iv427, 1
+  %indvars.iv.next428 = add nuw nsw i64 %indvars.iv427, 1
   %i.br = mul nsw i64 %indvars.iv.next428, %i.x   ; 2 uses
   %gep483 = getelementptr [8 x i8], ptr %invariant.gep482, i64 %i.br ; 2 uses
   %i.bs = load double, ptr %gep483, align 8, !tbaa !9
@@ -261,7 +261,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %i.bt = load double, ptr %gep485, align 8, !tbaa !9
   store double %i.bt, ptr %gep483, align 8, !tbaa !9
   store double %i.bs, ptr %gep485, align 8, !tbaa !9
-  %indvars.iv.next428.1 = add nsw i64 %indvars.iv427, 2
+  %indvars.iv.next428.1 = add nuw nsw i64 %indvars.iv427, 2
   %i.bu = mul nsw i64 %indvars.iv.next428.1, %i.x ; 2 uses
   %gep483.1 = getelementptr [8 x i8], ptr %invariant.gep482, i64 %i.bu ; 2 uses
   %i.bv = load double, ptr %gep483.1, align 8, !tbaa !9
@@ -269,7 +269,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %i.bw = load double, ptr %gep485.1, align 8, !tbaa !9
   store double %i.bw, ptr %gep483.1, align 8, !tbaa !9
   store double %i.bv, ptr %gep485.1, align 8, !tbaa !9
-  %indvars.iv.next428.2 = add nsw i64 %indvars.iv427, 3
+  %indvars.iv.next428.2 = add nuw nsw i64 %indvars.iv427, 3
   %i.bx = mul nsw i64 %indvars.iv.next428.2, %i.x ; 2 uses
   %gep483.2 = getelementptr [8 x i8], ptr %invariant.gep482, i64 %i.bx ; 2 uses
   %i.by = load double, ptr %gep483.2, align 8, !tbaa !9
@@ -277,7 +277,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %i.bz = load double, ptr %gep485.2, align 8, !tbaa !9
   store double %i.bz, ptr %gep483.2, align 8, !tbaa !9
   store double %i.by, ptr %gep485.2, align 8, !tbaa !9
-  %indvars.iv.next428.3 = add nsw i64 %indvars.iv427, 4 ; 3 uses
+  %indvars.iv.next428.3 = add nuw nsw i64 %indvars.iv427, 4 ; 3 uses
   %i.ca = mul nsw i64 %indvars.iv.next428.3, %i.x ; 2 uses
   %gep483.3 = getelementptr [8 x i8], ptr %invariant.gep482, i64 %i.ca ; 2 uses
   %i.cb = load double, ptr %gep483.3, align 8, !tbaa !9
@@ -322,12 +322,12 @@ vector.memcheck523:                               ; preds = %bb.q
 vector.ph537:                                     ; preds = %vector.memcheck523
   %n.vec538 = and i64 %i.ch, -8                   ; 3 uses
   %i.cp = add nsw i64 %n.vec538, %i.ce
-  %invariant.op = add i64 %i.ce, 1
+  %invariant.op = add nuw i64 %i.ce, 1
   br label %vector.body539
 
 vector.body539:                                   ; preds = %vector.body539, %vector.ph537
   %index540 = phi i64 [ 0, %vector.ph537 ], [ %index.next545, %vector.body539 ] ; 2 uses
-  %.reass = add i64 %index540, %invariant.op      ; 2 uses
+  %.reass = add nuw i64 %index540, %invariant.op  ; 2 uses
   %i.cq = sub nsw i64 %.reass, %i.cg
   %i.cr = getelementptr inbounds [8 x i8], ptr %i.d, i64 %i.cq ; 3 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cr, i64 32 ; 2 uses
@@ -359,7 +359,7 @@ scalar.ph535.preheader:                           ; preds = %vector.memcheck523,
 scalar.ph535.prol:                                ; preds = %scalar.ph535.preheader, %scalar.ph535.prol
   %indvars.iv.prol = phi i64 [ %indvars.iv.next.prol, %scalar.ph535.prol ], [ %indvars.iv.ph, %scalar.ph535.preheader ]
   %prol.iter = phi i64 [ %prol.iter.next, %scalar.ph535.prol ], [ 0, %scalar.ph535.preheader ]
-  %indvars.iv.next.prol = add nsw i64 %indvars.iv.prol, 1 ; 3 uses
+  %indvars.iv.next.prol = add nuw nsw i64 %indvars.iv.prol, 1 ; 3 uses
   %i.cx = mul nsw i64 %indvars.iv.next.prol, %i.x ; 2 uses
   %i.cy = sub nsw i64 %i.cx, %i.cg
   %i.cz = getelementptr inbounds [8 x i8], ptr %i.d, i64 %i.cy ; 2 uses
@@ -380,7 +380,7 @@ scalar.ph535.prol.loopexit:                       ; preds = %scalar.ph535.prol, 
 
 scalar.ph535:                                     ; preds = %scalar.ph535.prol.loopexit, %scalar.ph535
   %indvars.iv = phi i64 [ %indvars.iv.next.3, %scalar.ph535 ], [ %indvars.iv.unr, %scalar.ph535.prol.loopexit ] ; 4 uses
-  %indvars.iv.next = add nsw i64 %indvars.iv, 1
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   %i.de = mul nsw i64 %indvars.iv.next, %i.x      ; 2 uses
   %i.df = sub nsw i64 %i.de, %i.cg
   %i.dg = getelementptr inbounds [8 x i8], ptr %i.d, i64 %i.df ; 2 uses
@@ -389,7 +389,7 @@ scalar.ph535:                                     ; preds = %scalar.ph535.prol.l
   %i.di = load double, ptr %gep, align 8, !tbaa !9
   store double %i.di, ptr %i.dg, align 8, !tbaa !9
   store double %i.dh, ptr %gep, align 8, !tbaa !9
-  %indvars.iv.next.1 = add nsw i64 %indvars.iv, 2
+  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2
   %i.dj = mul nsw i64 %indvars.iv.next.1, %i.x    ; 2 uses
   %i.dk = sub nsw i64 %i.dj, %i.cg
   %i.dl = getelementptr inbounds [8 x i8], ptr %i.d, i64 %i.dk ; 2 uses
@@ -398,7 +398,7 @@ scalar.ph535:                                     ; preds = %scalar.ph535.prol.l
   %i.dn = load double, ptr %gep.1, align 8, !tbaa !9
   store double %i.dn, ptr %i.dl, align 8, !tbaa !9
   store double %i.dm, ptr %gep.1, align 8, !tbaa !9
-  %indvars.iv.next.2 = add nsw i64 %indvars.iv, 3
+  %indvars.iv.next.2 = add nuw nsw i64 %indvars.iv, 3
   %i.do = mul nsw i64 %indvars.iv.next.2, %i.x    ; 2 uses
   %i.dp = sub nsw i64 %i.do, %i.cg
   %i.dq = getelementptr inbounds [8 x i8], ptr %i.d, i64 %i.dp ; 2 uses
@@ -407,7 +407,7 @@ scalar.ph535:                                     ; preds = %scalar.ph535.prol.l
   %i.ds = load double, ptr %gep.2, align 8, !tbaa !9
   store double %i.ds, ptr %i.dq, align 8, !tbaa !9
   store double %i.dr, ptr %gep.2, align 8, !tbaa !9
-  %indvars.iv.next.3 = add nsw i64 %indvars.iv, 4 ; 3 uses
+  %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 3 uses
   %i.dt = mul nsw i64 %indvars.iv.next.3, %i.x    ; 2 uses
   %i.du = sub nsw i64 %i.dt, %i.cg
   %i.dv = getelementptr inbounds [8 x i8], ptr %i.d, i64 %i.du ; 2 uses
