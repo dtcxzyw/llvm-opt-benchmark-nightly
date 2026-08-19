@@ -204,8 +204,8 @@ bb.u:                                             ; preds = %.lr.ph302, %._crit_
 
 .lr.ph297.preheader:                              ; preds = %bb.u
   %i.cn = udiv i32 %i.cm, %2
-  %.pre = load i32, ptr %i.ax, align 4
   %umax336 = tail call i32 @llvm.umax.i32(i32 %i.cn, i32 1)
+  %.pre = load i32, ptr %i.ax, align 4
   br label %.lr.ph297
 
 bb.v:                                             ; preds = %bb.x
@@ -280,8 +280,8 @@ bb.z:                                             ; preds = %bb.y
   br i1 %.not287.not, label %.critedge264, label %.lr.ph289.preheader
 
 .lr.ph289.preheader:                              ; preds = %.lr.ph291
-  %wide.trip.count328 = zext i32 %i.dk to i64
   %umax322 = tail call i32 @llvm.umax.i32(i32 %i.di, i32 1)
+  %wide.trip.count328 = zext i32 %i.dk to i64
   %wide.trip.count323 = zext i32 %umax322 to i64
   br label %.lr.ph289
 
