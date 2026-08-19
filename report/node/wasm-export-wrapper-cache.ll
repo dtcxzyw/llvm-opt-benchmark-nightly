@@ -201,10 +201,8 @@ bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h
   %i.cm = phi i64 [ %i.bz, %bb.h ], [ %.pre, %bb.j ], [ %i.bz, %bb.i ] ; 2 uses
   %.2 = phi i32 [ %.054, %bb.h ], [ %i.cl, %bb.j ], [ %.054, %bb.i ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %1 = lshr i64 %i.cm, 32
-  %2 = trunc nuw i64 %1 to i32
-  %3 = trunc nuw i64 %indvars.iv.next to i32
-  %i.cn = icmp slt i32 %3, %2
+  %1 = ashr i64 %i.cm, 32
+  %i.cn = icmp slt i64 %indvars.iv.next, %1
   br i1 %i.cn, label %bb.h, label %._crit_edge.loopexit, !llvm.loop !8
 
 .sink.split:                                      ; preds = %_ZN2v88internal4wasm22WasmExportWrapperCache3NewEPNS0_7IsolateEi.exit, %._crit_edge
