@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph:                                           ; preds = %bb.b, %bb.aa
   %i.i = phi ptr [ %i.bv, %bb.aa ], [ %i.h, %bb.b ] ; 10 uses
-  %i.j = load ptr, ptr %i.i, align 8, !tbaa !136
+  %i.j = load ptr, ptr %i.i, align 8, !tbaa !136  ; 2 uses
   %i.k = icmp eq ptr %i.j, @Curl_cft_ssl
   br i1 %i.k, label %bb.c, label %bb.aa
 
@@ -226,19 +226,17 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 8
-  %3 = load i32, ptr %i.q, align 8, !tbaa !134
-  %4 = icmp sgt i32 %3, 0
-  %i.r = load i32, ptr getelementptr inbounds nuw (i8, ptr @Curl_cft_ssl, i64 12), align 4
+  %i.r = load i32, ptr %i.q, align 8, !tbaa !134
   %i.s = icmp sgt i32 %i.r, 0
-  %or.cond = select i1 %4, i1 %i.s, i1 false
-  br i1 %or.cond, label %bb.h, label %bb.i
+  br i1 %i.s, label %bb.g, label %bb.i
 
-bb.g:                                             ; preds = %bb.e
-  %.old = load i32, ptr getelementptr inbounds nuw (i8, ptr @Curl_cft_ssl, i64 12), align 4, !tbaa !137
+bb.g:                                             ; preds = %bb.e, %bb.f
+  %3 = getelementptr inbounds nuw i8, ptr %i.j, i64 12
+  %.old = load i32, ptr %3, align 4, !tbaa !137
   %.old60 = icmp sgt i32 %.old, 0
   br i1 %.old60, label %bb.h, label %bb.i
 
-bb.h:                                             ; preds = %bb.f, %bb.g
+bb.h:                                             ; preds = %bb.g
   tail call void (ptr, ptr, ptr, ...) @Curl_trc_cf_infof(ptr noundef nonnull %0, ptr noundef nonnull %i.i, ptr noundef nonnull @.str.8) #15
   br label %bb.i
 

@@ -201,7 +201,7 @@ bb.ad:                                            ; preds = %bb.ac
   store ptr %i.d, ptr %i.a, align 16, !tbaa !30
   %i.ay = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %i.f, ptr %i.ay, align 8, !tbaa !30
-  %i.az = call ptr @PyObject_VectorcallMethod(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 70720), ptr noundef nonnull %i.a, i64 noundef -9223372036854775806, ptr noundef null) #4 ; 7 uses
+  %i.az = call ptr @PyObject_VectorcallMethod(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 70720), ptr noundef nonnull %i.a, i64 noundef -9223372036854775806, ptr noundef null) #4 ; 15 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
   %i.ba = icmp eq ptr %i.az, null
   br i1 %i.ba, label %_in_weak_set.exit.thread130.i, label %bb.ae
@@ -211,18 +211,18 @@ bb.ae:                                            ; preds = %.thread140.i
   br i1 %i.bb, label %bb.af, label %bb.aj
 
 bb.af:                                            ; preds = %bb.ae
-  %i.bc = load i32, ptr @_Py_TrueStruct, align 8, !tbaa !22 ; 2 uses
+  %i.bc = load i32, ptr %i.az, align 8, !tbaa !22 ; 2 uses
   %.not.i100.i = icmp sgt i32 %i.bc, -1
   br i1 %.not.i100.i, label %bb.ag, label %Py_DECREF.exit101.i
 
 bb.ag:                                            ; preds = %bb.af
   %i.bd = add nsw i32 %i.bc, -1                   ; 2 uses
-  store i32 %i.bd, ptr @_Py_TrueStruct, align 8, !tbaa !22
+  store i32 %i.bd, ptr %i.az, align 8, !tbaa !22
   %i.be = icmp eq i32 %i.bd, 0
   br i1 %i.be, label %bb.ah, label %Py_DECREF.exit101.i
 
 bb.ah:                                            ; preds = %bb.ag
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_TrueStruct) #4
+  call void @_Py_Dealloc(ptr noundef nonnull %i.az) #4
   br label %Py_DECREF.exit101.i
 
 Py_DECREF.exit101.i:                              ; preds = %bb.ah, %bb.ag, %bb.af
@@ -239,18 +239,18 @@ bb.aj:                                            ; preds = %bb.ae
   br i1 %i.bh, label %bb.ak, label %bb.ao
 
 bb.ak:                                            ; preds = %bb.aj
-  %i.bi = load i32, ptr @_Py_FalseStruct, align 8, !tbaa !22 ; 2 uses
+  %i.bi = load i32, ptr %i.az, align 8, !tbaa !22 ; 2 uses
   %.not.i98.i = icmp sgt i32 %i.bi, -1
   br i1 %.not.i98.i, label %bb.al, label %Py_DECREF.exit99.i
 
 bb.al:                                            ; preds = %bb.ak
   %i.bj = add nsw i32 %i.bi, -1                   ; 2 uses
-  store i32 %i.bj, ptr @_Py_FalseStruct, align 8, !tbaa !22
+  store i32 %i.bj, ptr %i.az, align 8, !tbaa !22
   %i.bk = icmp eq i32 %i.bj, 0
   br i1 %i.bk, label %bb.am, label %Py_DECREF.exit99.i
 
 bb.am:                                            ; preds = %bb.al
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_FalseStruct) #4
+  call void @_Py_Dealloc(ptr noundef nonnull %i.az) #4
   br label %Py_DECREF.exit99.i
 
 Py_DECREF.exit99.i:                               ; preds = %bb.am, %bb.al, %bb.ak
@@ -264,12 +264,12 @@ bb.an:                                            ; preds = %Py_DECREF.exit99.i
 
 bb.ao:                                            ; preds = %bb.aj
   %.not87.i = icmp eq ptr %i.az, @_Py_NotImplementedStruct
+  %3 = load i32, ptr %i.az, align 8, !tbaa !22    ; 3 uses
+  %.not.i94.i = icmp sgt i32 %3, -1               ; 2 uses
   br i1 %.not87.i, label %bb.as, label %bb.ap
 
 bb.ap:                                            ; preds = %bb.ao
-  %3 = load i32, ptr %i.az, align 8, !tbaa !22    ; 2 uses
-  %.not.i96.i = icmp sgt i32 %3, -1
-  br i1 %.not.i96.i, label %bb.aq, label %Py_DECREF.exit97.i
+  br i1 %.not.i94.i, label %bb.aq, label %Py_DECREF.exit97.i
 
 bb.aq:                                            ; preds = %bb.ap
   %i.bn = add nsw i32 %3, -1                      ; 2 uses
@@ -287,18 +287,16 @@ Py_DECREF.exit97.i:                               ; preds = %bb.ar, %bb.aq, %bb.
   br label %_in_weak_set.exit.thread130.i
 
 bb.as:                                            ; preds = %bb.ao
-  %4 = load i32, ptr @_Py_NotImplementedStruct, align 8, !tbaa !22 ; 2 uses
-  %.not.i94.i = icmp sgt i32 %4, -1
   br i1 %.not.i94.i, label %bb.at, label %Py_DECREF.exit95.i
 
 bb.at:                                            ; preds = %bb.as
-  %i.bq = add nsw i32 %4, -1                      ; 2 uses
-  store i32 %i.bq, ptr @_Py_NotImplementedStruct, align 8, !tbaa !22
+  %i.bq = add nsw i32 %3, -1                      ; 2 uses
+  store i32 %i.bq, ptr %i.az, align 8, !tbaa !22
   %i.br = icmp eq i32 %i.bq, 0
   br i1 %i.br, label %bb.au, label %Py_DECREF.exit95.i
 
 bb.au:                                            ; preds = %bb.at
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_NotImplementedStruct) #4
+  call void @_Py_Dealloc(ptr noundef nonnull %i.az) #4
   br label %Py_DECREF.exit95.i
 
 Py_DECREF.exit95.i:                               ; preds = %bb.au, %bb.at, %bb.as

@@ -203,18 +203,18 @@ bb.s:                                             ; preds = %bb.r, %bb.q, %bb.p,
 ; Function Attrs: nounwind uwtable
 define internal noundef ptr @test_buildvalue_p(ptr noundef %0, ptr nofree readnone captures(none) %1) #0 {
 bb.a:
-  %i.a = tail call ptr (ptr, ...) @Py_BuildValue(ptr noundef nonnull @.str.144, i32 noundef 3) #17 ; 5 uses
+  %i.a = tail call ptr (ptr, ...) @Py_BuildValue(ptr noundef nonnull @.str.144, i32 noundef 3) #17 ; 7 uses
   %i.b = icmp eq ptr %i.a, null
   br i1 %i.b, label %Py_DECREF.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = icmp eq ptr %i.a, @_Py_TrueStruct
+  %2 = load i32, ptr %i.a, align 8, !tbaa !32     ; 3 uses
+  %.not.i15 = icmp sgt i32 %2, -1                 ; 2 uses
   br i1 %i.c, label %bb.g, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %2 = load i32, ptr %i.a, align 8, !tbaa !32     ; 2 uses
-  %.not.i17 = icmp sgt i32 %2, -1
-  br i1 %.not.i17, label %bb.d, label %Py_DECREF.exit18
+  br i1 %.not.i15, label %bb.d, label %Py_DECREF.exit18
 
 bb.d:                                             ; preds = %bb.c
   %i.d = add nsw i32 %2, -1                       ; 2 uses
@@ -241,36 +241,34 @@ raiseTestError.exit:                              ; preds = %Py_DECREF.exit18
   br label %Py_DECREF.exit
 
 bb.g:                                             ; preds = %bb.b
-  %3 = load i32, ptr @_Py_TrueStruct, align 8, !tbaa !32 ; 2 uses
-  %.not.i15 = icmp sgt i32 %3, -1
   br i1 %.not.i15, label %bb.h, label %Py_DECREF.exit16
 
 bb.h:                                             ; preds = %bb.g
-  %i.i = add nsw i32 %3, -1                       ; 2 uses
-  store i32 %i.i, ptr @_Py_TrueStruct, align 8, !tbaa !32
+  %i.i = add nsw i32 %2, -1                       ; 2 uses
+  store i32 %i.i, ptr %i.a, align 8, !tbaa !32
   %i.j = icmp eq i32 %i.i, 0
   br i1 %i.j, label %bb.i, label %Py_DECREF.exit16
 
 bb.i:                                             ; preds = %bb.h
-  tail call void @_Py_Dealloc(ptr noundef nonnull @_Py_TrueStruct) #17
+  tail call void @_Py_Dealloc(ptr noundef nonnull %i.a) #17
   br label %Py_DECREF.exit16
 
 Py_DECREF.exit16:                                 ; preds = %bb.g, %bb.h, %bb.i
-  %i.k = tail call ptr (ptr, ...) @Py_BuildValue(ptr noundef nonnull @.str.144, i32 noundef 0) #17 ; 5 uses
+  %i.k = tail call ptr (ptr, ...) @Py_BuildValue(ptr noundef nonnull @.str.144, i32 noundef 0) #17 ; 7 uses
   %i.l = icmp eq ptr %i.k, null
   br i1 %i.l, label %Py_DECREF.exit, label %bb.j
 
 bb.j:                                             ; preds = %Py_DECREF.exit16
   %i.m = icmp eq ptr %i.k, @_Py_FalseStruct
+  %3 = load i32, ptr %i.k, align 8, !tbaa !32     ; 3 uses
+  %.not.i = icmp sgt i32 %3, -1                   ; 2 uses
   br i1 %i.m, label %bb.o, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %4 = load i32, ptr %i.k, align 8, !tbaa !32     ; 2 uses
-  %.not.i13 = icmp sgt i32 %4, -1
-  br i1 %.not.i13, label %bb.l, label %Py_DECREF.exit14
+  br i1 %.not.i, label %bb.l, label %Py_DECREF.exit14
 
 bb.l:                                             ; preds = %bb.k
-  %i.n = add nsw i32 %4, -1                       ; 2 uses
+  %i.n = add nsw i32 %3, -1                       ; 2 uses
   store i32 %i.n, ptr %i.k, align 8, !tbaa !32
   %i.o = icmp eq i32 %i.n, 0
   br i1 %i.o, label %bb.m, label %Py_DECREF.exit14
@@ -294,18 +292,16 @@ raiseTestError.exit23:                            ; preds = %Py_DECREF.exit14
   br label %Py_DECREF.exit
 
 bb.o:                                             ; preds = %bb.j
-  %5 = load i32, ptr @_Py_FalseStruct, align 8, !tbaa !32 ; 2 uses
-  %.not.i = icmp sgt i32 %5, -1
   br i1 %.not.i, label %bb.p, label %Py_DECREF.exit
 
 bb.p:                                             ; preds = %bb.o
-  %i.s = add nsw i32 %5, -1                       ; 2 uses
-  store i32 %i.s, ptr @_Py_FalseStruct, align 8, !tbaa !32
+  %i.s = add nsw i32 %3, -1                       ; 2 uses
+  store i32 %i.s, ptr %i.k, align 8, !tbaa !32
   %i.t = icmp eq i32 %i.s, 0
   br i1 %i.t, label %bb.q, label %Py_DECREF.exit
 
 bb.q:                                             ; preds = %bb.p
-  tail call void @_Py_Dealloc(ptr noundef nonnull @_Py_FalseStruct) #17
+  tail call void @_Py_Dealloc(ptr noundef nonnull %i.k) #17
   br label %Py_DECREF.exit
 
 Py_DECREF.exit:                                   ; preds = %bb.q, %bb.p, %bb.o, %Py_DECREF.exit16, %bb.a, %raiseTestError.exit23, %raiseTestError.exit
@@ -708,7 +704,7 @@ Py_DECREF.exit72:                                 ; preds = %bb.h, %bb.i, %bb.j
 
 bb.k:                                             ; preds = %Py_DECREF.exit72
   %i.q = getelementptr i8, ptr %i.o, i64 8
-  %.val86 = load ptr, ptr %i.q, align 8, !tbaa !28
+  %.val86 = load ptr, ptr %i.q, align 8, !tbaa !28 ; 2 uses
   %.not99 = icmp eq ptr %.val86, @PyTuple_Type
   br i1 %.not99, label %bb.n, label %bb.l
 
@@ -726,7 +722,8 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.u, label %Py_DECREF.exit72.thread.sink.split, label %Py_DECREF.exit72.thread
 
 bb.n:                                             ; preds = %bb.k
-  %.val3.i = load i64, ptr getelementptr inbounds nuw (i8, ptr @PyTuple_Type, i64 168), align 8, !tbaa !41
+  %2 = getelementptr i8, ptr %.val86, i64 168
+  %.val3.i = load i64, ptr %2, align 8, !tbaa !41
   %i.v = and i64 %.val3.i, 67108864
   %.not.i88 = icmp eq i64 %i.v, 0
   br i1 %.not.i88, label %bb.o, label %PyTuple_GET_SIZE.exit
@@ -776,7 +773,7 @@ Py_DECREF.exit68:                                 ; preds = %bb.r, %bb.s, %bb.t
 
 bb.u:                                             ; preds = %Py_DECREF.exit68
   %i.ah = getelementptr i8, ptr %i.af, i64 8
-  %.val85 = load ptr, ptr %i.ah, align 8, !tbaa !28
+  %.val85 = load ptr, ptr %i.ah, align 8, !tbaa !28 ; 2 uses
   %.not100 = icmp eq ptr %.val85, @PyTuple_Type
   br i1 %.not100, label %bb.x, label %bb.v
 
@@ -794,7 +791,8 @@ bb.w:                                             ; preds = %bb.v
   br i1 %i.al, label %Py_DECREF.exit72.thread.sink.split, label %Py_DECREF.exit72.thread
 
 bb.x:                                             ; preds = %bb.u
-  %.val3.i90 = load i64, ptr getelementptr inbounds nuw (i8, ptr @PyTuple_Type, i64 168), align 8, !tbaa !41
+  %3 = getelementptr i8, ptr %.val85, i64 168
+  %.val3.i90 = load i64, ptr %3, align 8, !tbaa !41
   %i.am = and i64 %.val3.i90, 67108864
   %.not.i91 = icmp eq i64 %i.am, 0
   br i1 %.not.i91, label %bb.y, label %PyTuple_GET_SIZE.exit94
