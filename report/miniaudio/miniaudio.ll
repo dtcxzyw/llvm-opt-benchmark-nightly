@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.e, %bb.d
   %i.qw = mul nuw nsw i64 %i.qv, 18               ; 3 uses
   %i.qx = getelementptr inbounds nuw [4 x i8], ptr %i.pm, i64 %i.qw
   %i.qy = load float, ptr %i.qx, align 4, !tbaa !336
-  %.idx.i = shl nuw nsw i64 %indvars.iv.i31, 4
+  %.idx.i = shl nsw i64 %indvars.iv.i31, 4
   %i.qz = getelementptr inbounds nuw i8, ptr %i.ps, i64 %.idx.i ; 24 uses
   store float %i.qy, ptr %i.qz, align 4, !tbaa !336
   %i.ra = getelementptr inbounds nuw [4 x i8], ptr %i.pq, i64 %i.qw
@@ -220,7 +220,7 @@ bb.e:                                             ; preds = %bb.e, %bb.d
   %i.ri = load float, ptr %i.rh, align 4, !tbaa !336
   %i.rj = getelementptr inbounds nuw i8, ptr %i.qz, i64 12
   store float %i.ri, ptr %i.rj, align 4, !tbaa !336
-  %i.rk = mul nuw nsw i64 %indvars.iv.i31, 18     ; 2 uses
+  %i.rk = mul nsw i64 %indvars.iv.i31, 18         ; 2 uses
   %i.rl = add nuw nsw i64 %i.rk, 18               ; 2 uses
   %i.rm = add nuw nsw i64 %i.rk, 19               ; 2 uses
   %i.rn = getelementptr inbounds nuw [4 x i8], ptr %i.pm, i64 %i.rm

@@ -201,20 +201,20 @@ bb.z:                                             ; preds = %bb.y
   br label %.lr.ph.i.i.i24
 
 .lr.ph.i.i.i24:                                   ; preds = %bb.aa, %.lr.ph.preheader.i.i.i
-  %indvars.iv116.i.i = phi i64 [ %indvars.iv.next117.i.i, %bb.aa ], [ %.phi.trans.insert.i.i.i.a, %.lr.ph.preheader.i.i.i ] ; 3 uses
-  %9 = phi i8 [ %i.ls, %bb.aa ], [ %.pre.i.i.i, %.lr.ph.preheader.i.i.i ]
+  %9 = phi i8 [ %.pre.i.i.i, %.lr.ph.preheader.i.i.i ], [ %i.ls, %bb.aa ]
+  %indvars.iv.i.i.i = phi i64 [ %.phi.trans.insert.i.i.i.a, %.lr.ph.preheader.i.i.i ], [ %indvars.iv.next117.i.i, %bb.aa ] ; 3 uses
   %.not33.i.i.i = icmp eq i8 %9, 58
   br i1 %.not33.i.i.i, label %bb.aa, label %._crit_edge.i.i.i
 
 bb.aa:                                            ; preds = %.lr.ph.i.i.i24
-  %i.lp = getelementptr inbounds nuw i8, ptr %3, i64 %indvars.iv116.i.i
+  %i.lp = getelementptr inbounds nuw i8, ptr %3, i64 %indvars.iv.i.i.i
   store i8 48, ptr %i.lp, align 1, !tbaa !16
-  %indvars.iv.next117.i.i = add nsw i64 %indvars.iv116.i.i, -1 ; 2 uses
+  %indvars.iv.next117.i.i = add nsw i64 %indvars.iv.i.i.i, -1 ; 2 uses
   %i.lq = getelementptr inbounds nuw i8, ptr %3, i64 %indvars.iv.next117.i.i ; 2 uses
   %i.lr = load i8, ptr %i.lq, align 1, !tbaa !16
   %i.ls = add i8 %i.lr, 1                         ; 2 uses
   store i8 %i.ls, ptr %i.lq, align 1, !tbaa !16
-  %i.lt = icmp sgt i64 %indvars.iv116.i.i, 1
+  %i.lt = icmp sgt i64 %indvars.iv.i.i.i, 1
   br i1 %i.lt, label %.lr.ph.i.i.i24, label %._crit_edge.i.i.i, !llvm.loop !19
 
 ._crit_edge.i.i.i:                                ; preds = %bb.aa, %.lr.ph.i.i.i24, %bb.z
@@ -294,20 +294,20 @@ bb.ag:                                            ; preds = %bb.af
   br label %.lr.ph.i56.i.i
 
 .lr.ph.i56.i.i:                                   ; preds = %bb.ah, %.lr.ph.preheader.i52.i.i
-  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %bb.ah ], [ %.phi.trans.insert.i53.i.i, %.lr.ph.preheader.i52.i.i ] ; 3 uses
-  %10 = phi i8 [ %i.nd, %bb.ah ], [ %i.my, %.lr.ph.preheader.i52.i.i ]
+  %10 = phi i8 [ %i.my, %.lr.ph.preheader.i52.i.i ], [ %i.nd, %bb.ah ]
+  %indvars.iv.i56.i.i = phi i64 [ %.phi.trans.insert.i53.i.i, %.lr.ph.preheader.i52.i.i ], [ %indvars.iv.next.i.i, %bb.ah ] ; 3 uses
   %.not33.i58.i.i = icmp eq i8 %10, 58
   br i1 %.not33.i58.i.i, label %bb.ah, label %._crit_edge.i51.i.i
 
 bb.ah:                                            ; preds = %.lr.ph.i56.i.i
-  %i.na = getelementptr inbounds nuw i8, ptr %3, i64 %indvars.iv.i.i
+  %i.na = getelementptr inbounds nuw i8, ptr %3, i64 %indvars.iv.i56.i.i
   store i8 48, ptr %i.na, align 1, !tbaa !16
-  %indvars.iv.next.i.i = add nsw i64 %indvars.iv.i.i, -1 ; 2 uses
+  %indvars.iv.next.i.i = add nsw i64 %indvars.iv.i56.i.i, -1 ; 2 uses
   %i.nb = getelementptr inbounds nuw i8, ptr %3, i64 %indvars.iv.next.i.i ; 2 uses
   %i.nc = load i8, ptr %i.nb, align 1, !tbaa !16
   %i.nd = add i8 %i.nc, 1                         ; 2 uses
   store i8 %i.nd, ptr %i.nb, align 1, !tbaa !16
-  %i.ne = icmp sgt i64 %indvars.iv.i.i, 1
+  %i.ne = icmp sgt i64 %indvars.iv.i56.i.i, 1
   br i1 %i.ne, label %.lr.ph.i56.i.i, label %._crit_edge.i51.i.i, !llvm.loop !19
 
 ._crit_edge.i51.i.i:                              ; preds = %bb.ah, %.lr.ph.i56.i.i, %bb.ag
