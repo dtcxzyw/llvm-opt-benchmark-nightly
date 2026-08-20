@@ -204,7 +204,7 @@ bb.o:                                             ; preds = %_ZN6LibRaw11ph1_bit
   br i1 %i.gr, label %.preheader119, label %.preheader123, !llvm.loop !190
 
 bb.p:                                             ; preds = %.preheader123, %._crit_edge
-  %indvars.iv198 = phi i64 [ %indvars.iv196, %.preheader123 ], [ %indvars.iv.next199, %._crit_edge ] ; 7 uses
+  %indvars.iv198 = phi i64 [ %indvars.iv196, %.preheader123 ], [ %indvars.iv.next199, %._crit_edge ] ; 12 uses
   br i1 %.not118, label %.thread, label %bb.q
 
 .thread:                                          ; preds = %bb.p
@@ -242,10 +242,9 @@ bb.s:                                             ; preds = %.thread, %bb.r, %bb
 .lr.ph:                                           ; preds = %bb.s
   %i.hi = and i64 %indvars.iv198, 1
   %i.hj = xor i64 %i.hi, %i.av
-  %2 = trunc nuw nsw i64 %indvars.iv198 to i32    ; 10 uses
   %i.hk = trunc i64 %indvars.iv198 to i1
   %i.hl = load ptr, ptr %i.aj, align 8, !tbaa !76
-  %.fr = freeze ptr %i.hl                         ; 11 uses
+  %.fr = freeze ptr %i.hl                         ; 7 uses
   %.not101 = icmp ne ptr %.fr, null               ; 6 uses
   %i.hm = load ptr, ptr %i.h, align 8, !tbaa !192 ; 2 uses
   %.not102 = icmp eq ptr %i.hm, null
@@ -254,7 +253,7 @@ bb.s:                                             ; preds = %.thread, %bb.r, %bb
   %i.ho = select i1 %i.hk, i64 %i.hn, i64 0       ; 5 uses
   %wide.trip.count194 = zext nneg i32 %i.hg to i64 ; 9 uses
   %invariant.gep253 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.ho ; 9 uses
-  br i1 %.not102, label %.lr.ph.split.us, label %.lr.ph.split.preheader
+  br i1 %.not102, label %.lr.ph.split.us.split.preheader.a, label %.lr.ph.split.preheader
 
 .lr.ph.split.preheader:                           ; preds = %.lr.ph
   %i.hp = load i32, ptr %invariant.gep253, align 4, !tbaa !11
@@ -268,9 +267,9 @@ bb.t:                                             ; preds = %.lr.ph.split.prehea
   %i.ht = load i16, ptr %i.j, align 2, !tbaa !75
   %i.hu = zext i16 %i.ht to i32
   %i.hv = mul nuw nsw i32 %.087143, %i.hu
-  %3 = add i32 %i.hv, %2
-  %4 = zext i32 %3 to i64
-  %i.hw = getelementptr inbounds nuw [2 x i8], ptr %.fr, i64 %4
+  %2 = zext nneg i32 %i.hv to i64
+  %3 = getelementptr inbounds nuw [2 x i8], ptr %.fr, i64 %indvars.iv198
+  %i.hw = getelementptr inbounds nuw [2 x i8], ptr %3, i64 %2
   store i16 %i.hs, ptr %i.hw, align 2, !tbaa !77
   br label %bb.u
 
@@ -317,9 +316,9 @@ bb.x:                                             ; preds = %.lr.ph.split.peel.n
   %i.it = load i16, ptr %i.j, align 2, !tbaa !75
   %i.iu = zext i16 %i.it to i32
   %i.iv = mul nuw nsw i32 %.087143, %i.iu
-  %5 = add i32 %i.iv, %2
-  %6 = zext i32 %5 to i64
-  %i.iw = getelementptr inbounds nuw [2 x i8], ptr %.fr, i64 %6
+  %4 = zext nneg i32 %i.iv to i64
+  %5 = getelementptr inbounds nuw [2 x i8], ptr %.fr, i64 %indvars.iv198
+  %i.iw = getelementptr inbounds nuw [2 x i8], ptr %5, i64 %4
   store i16 %i.is, ptr %i.iw, align 2, !tbaa !77
   br label %bb.y
 
@@ -367,9 +366,9 @@ bb.ab:                                            ; preds = %.lr.ph.split.peel.n
   %i.ju = load i16, ptr %i.j, align 2, !tbaa !75
   %i.jv = zext i16 %i.ju to i32
   %i.jw = mul nuw nsw i32 %.087143, %i.jv
-  %7 = add i32 %i.jw, %2
-  %8 = zext i32 %7 to i64
-  %i.jx = getelementptr inbounds nuw [2 x i8], ptr %.fr, i64 %8
+  %6 = zext nneg i32 %i.jw to i64
+  %7 = getelementptr inbounds nuw [2 x i8], ptr %.fr, i64 %indvars.iv198
+  %i.jx = getelementptr inbounds nuw [2 x i8], ptr %7, i64 %6
   store i16 %i.jt, ptr %i.jx, align 2, !tbaa !77
   br label %bb.ac
 
@@ -417,9 +416,9 @@ bb.af:                                            ; preds = %.lr.ph.split.peel.n
   %i.kv = load i16, ptr %i.j, align 2, !tbaa !75
   %i.kw = zext i16 %i.kv to i32
   %i.kx = mul nuw nsw i32 %.087143, %i.kw
-  %9 = add i32 %i.kx, %2
-  %10 = zext i32 %9 to i64
-  %i.ky = getelementptr inbounds nuw [2 x i8], ptr %.fr, i64 %10
+  %8 = zext nneg i32 %i.kx to i64
+  %9 = getelementptr inbounds nuw [2 x i8], ptr %.fr, i64 %indvars.iv198
+  %i.ky = getelementptr inbounds nuw [2 x i8], ptr %9, i64 %8
   store i16 %i.ku, ptr %i.ky, align 2, !tbaa !77
   br label %bb.ag
 
@@ -456,21 +455,13 @@ bb.ai:                                            ; preds = %bb.ah, %bb.ag
 
 .lr.ph.split.peel.next178:                        ; preds = %bb.ai
   %invariant.gep249 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.ho
+  %10 = getelementptr inbounds nuw [2 x i8], ptr %.fr, i64 %indvars.iv198
   br label %.lr.ph.split
 
-.lr.ph.split.us:                                  ; preds = %.lr.ph
-  br i1 %.not101, label %.lr.ph.split.us.split.preheader.a, label %iter.check
+.lr.ph.split.us.split.preheader.a:                ; preds = %.lr.ph
+  br i1 %.not101, label %.lr.ph.split.us.split.preheader, label %iter.check
 
-.lr.ph.split.us.split.preheader.a:                ; preds = %.lr.ph.split.us
-  %xtraiter = and i64 %wide.trip.count194, 3      ; 3 uses
-  %11 = icmp ult i32 %i.hg, 4
-  br i1 %11, label %.lr.ph.split.us.split.epil.preheader, label %.lr.ph.split.us.split.preheader.new
-
-.lr.ph.split.us.split.preheader.new:              ; preds = %.lr.ph.split.us.split.preheader.a
-  %unroll_iter = and i64 %wide.trip.count194, 2147483644
-  br label %.lr.ph.split.us.split
-
-iter.check:                                       ; preds = %.lr.ph.split.us
+iter.check:                                       ; preds = %.lr.ph.split.us.split.preheader.a
   %min.iters.check = icmp ult i32 %i.hg, 4
   br i1 %min.iters.check, label %.lr.ph.split.us.split.us.preheader, label %vector.main.loop.iter.check
 
@@ -545,6 +536,16 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %.285135.us.us.ph = phi i32 [ %.184, %iter.check ], [ %i.mc, %vec.epilog.iter.check ], [ %i.mh, %vec.epilog.middle.block ]
   br label %.lr.ph.split.us.split.us
 
+.lr.ph.split.us.split.preheader:                  ; preds = %.lr.ph.split.us.split.preheader.a
+  %11 = getelementptr inbounds nuw [2 x i8], ptr %.fr, i64 %indvars.iv198 ; 5 uses
+  %xtraiter = and i64 %wide.trip.count194, 3      ; 3 uses
+  %12 = icmp ult i32 %i.hg, 4
+  br i1 %12, label %.lr.ph.split.us.split.epil.preheader, label %.lr.ph.split.us.split.preheader.new
+
+.lr.ph.split.us.split.preheader.new:              ; preds = %.lr.ph.split.us.split.preheader
+  %unroll_iter = and i64 %wide.trip.count194, 2147483644
+  br label %.lr.ph.split.us.split
+
 .lr.ph.split.us.split.us:                         ; preds = %.lr.ph.split.us.split.us.preheader, %.lr.ph.split.us.split.us
   %indvars.iv186 = phi i64 [ %indvars.iv.next187, %.lr.ph.split.us.split.us ], [ %indvars.iv186.ph, %.lr.ph.split.us.split.us.preheader ] ; 2 uses
   %.285135.us.us = phi i32 [ %i.mj, %.lr.ph.split.us.split.us ], [ %.285135.us.us.ph, %.lr.ph.split.us.split.us.preheader ]
@@ -571,9 +572,8 @@ bb.aj:                                            ; preds = %.lr.ph.split.us.spl
   %i.mp = load i16, ptr %i.j, align 2, !tbaa !75
   %i.mq = zext i16 %i.mp to i32
   %i.mr = mul nuw nsw i32 %.087143, %i.mq
-  %12 = add i32 %i.mr, %2
-  %i.ms = zext i32 %12 to i64
-  %i.mt = getelementptr inbounds nuw [2 x i8], ptr %.fr, i64 %i.ms
+  %i.ms = zext nneg i32 %i.mr to i64
+  %i.mt = getelementptr inbounds nuw [2 x i8], ptr %11, i64 %i.ms
   store i16 %i.mo, ptr %i.mt, align 2, !tbaa !77
   br label %.lr.ph.split.us.split.1
 
@@ -591,9 +591,8 @@ bb.ak:                                            ; preds = %.lr.ph.split.us.spl
   %i.mz = load i16, ptr %i.j, align 2, !tbaa !75
   %i.na = zext i16 %i.mz to i32
   %i.nb = mul nuw nsw i32 %.087143, %i.na
-  %13 = add i32 %i.nb, %2
-  %i.nc = zext i32 %13 to i64
-  %i.nd = getelementptr inbounds nuw [2 x i8], ptr %.fr, i64 %i.nc
+  %i.nc = zext nneg i32 %i.nb to i64
+  %i.nd = getelementptr inbounds nuw [2 x i8], ptr %11, i64 %i.nc
   store i16 %i.my, ptr %i.nd, align 2, !tbaa !77
   br label %.lr.ph.split.us.split.2
 
@@ -611,9 +610,8 @@ bb.al:                                            ; preds = %.lr.ph.split.us.spl
   %i.nj = load i16, ptr %i.j, align 2, !tbaa !75
   %i.nk = zext i16 %i.nj to i32
   %i.nl = mul nuw nsw i32 %.087143, %i.nk
-  %14 = add i32 %i.nl, %2
-  %i.nm = zext i32 %14 to i64
-  %i.nn = getelementptr inbounds nuw [2 x i8], ptr %.fr, i64 %i.nm
+  %i.nm = zext nneg i32 %i.nl to i64
+  %i.nn = getelementptr inbounds nuw [2 x i8], ptr %11, i64 %i.nm
   store i16 %i.ni, ptr %i.nn, align 2, !tbaa !77
   br label %.lr.ph.split.us.split.3
 
@@ -631,9 +629,8 @@ bb.am:                                            ; preds = %.lr.ph.split.us.spl
   %i.nt = load i16, ptr %i.j, align 2, !tbaa !75
   %i.nu = zext i16 %i.nt to i32
   %i.nv = mul nuw nsw i32 %.087143, %i.nu
-  %15 = add i32 %i.nv, %2
-  %i.nw = zext i32 %15 to i64
-  %i.nx = getelementptr inbounds nuw [2 x i8], ptr %.fr, i64 %i.nw
+  %i.nw = zext nneg i32 %i.nv to i64
+  %i.nx = getelementptr inbounds nuw [2 x i8], ptr %11, i64 %i.nw
   store i16 %i.ns, ptr %i.nx, align 2, !tbaa !77
   br label %bb.an
 
@@ -660,9 +657,8 @@ bb.ao:                                            ; preds = %.lr.ph.split
   %i.oe = load i16, ptr %i.j, align 2, !tbaa !75
   %i.of = zext i16 %i.oe to i32
   %i.og = mul nuw nsw i32 %.087143, %i.of
-  %16 = add i32 %i.og, %2
-  %i.oh = zext i32 %16 to i64
-  %i.oi = getelementptr inbounds nuw [2 x i8], ptr %.fr, i64 %i.oh
+  %i.oh = zext nneg i32 %i.og to i64
+  %i.oi = getelementptr inbounds nuw [2 x i8], ptr %10, i64 %i.oh
   store i16 %i.od, ptr %i.oi, align 2, !tbaa !77
   br label %bb.ap
 
@@ -710,17 +706,17 @@ bb.ar:                                            ; preds = %bb.aq, %bb.ap
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %._crit_edge, label %.lr.ph.split.us.split.epil.preheader
 
-.lr.ph.split.us.split.epil.preheader:             ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.split.us.split.preheader.a
-  %indvars.iv191.epil.init = phi i64 [ 0, %.lr.ph.split.us.split.preheader.a ], [ %indvars.iv.next192.3, %._crit_edge.loopexit.unr-lcssa ]
-  %.285135.us.epil.init = phi i32 [ %.184, %.lr.ph.split.us.split.preheader.a ], [ %i.np, %._crit_edge.loopexit.unr-lcssa ]
+.lr.ph.split.us.split.epil.preheader:             ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.split.us.split.preheader
+  %indvars.iv191.epil.init = phi i64 [ 0, %.lr.ph.split.us.split.preheader ], [ %indvars.iv.next192.3, %._crit_edge.loopexit.unr-lcssa ]
+  %.285135.us.epil.init = phi i32 [ %.184, %.lr.ph.split.us.split.preheader ], [ %i.np, %._crit_edge.loopexit.unr-lcssa ]
   %lcmp.mod289 = icmp ne i64 %xtraiter, 0
   call void @llvm.assume(i1 %lcmp.mod289)
   br label %.lr.ph.split.us.split.epil
 
 .lr.ph.split.us.split.epil:                       ; preds = %bb.at, %.lr.ph.split.us.split.epil.preheader
-  %indvars.iv191.epil = phi i64 [ %indvars.iv.next192.epil, %bb.at ], [ %indvars.iv191.epil.init, %.lr.ph.split.us.split.epil.preheader ] ; 3 uses
-  %.285135.us.epil = phi i32 [ %i.pk, %bb.at ], [ %.285135.us.epil.init, %.lr.ph.split.us.split.epil.preheader ]
-  %epil.iter = phi i64 [ %epil.iter.next, %bb.at ], [ 0, %.lr.ph.split.us.split.epil.preheader ]
+  %indvars.iv191.epil = phi i64 [ %indvars.iv191.epil.init, %.lr.ph.split.us.split.epil.preheader ], [ %indvars.iv.next192.epil, %bb.at ] ; 3 uses
+  %.285135.us.epil = phi i32 [ %.285135.us.epil.init, %.lr.ph.split.us.split.epil.preheader ], [ %i.pk, %bb.at ]
+  %epil.iter = phi i64 [ 0, %.lr.ph.split.us.split.epil.preheader ], [ %epil.iter.next, %bb.at ]
   %gep254.epil = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep253, i64 %indvars.iv191.epil
   %i.pj = load i32, ptr %gep254.epil, align 4, !tbaa !11
   %i.pk = add nsw i32 %i.pj, %.285135.us.epil     ; 3 uses
@@ -733,9 +729,8 @@ bb.as:                                            ; preds = %.lr.ph.split.us.spl
   %i.po = load i16, ptr %i.j, align 2, !tbaa !75
   %i.pp = zext i16 %i.po to i32
   %i.pq = mul nuw nsw i32 %.087143, %i.pp
-  %17 = add i32 %i.pq, %2
-  %i.pr = zext i32 %17 to i64
-  %i.ps = getelementptr inbounds nuw [2 x i8], ptr %.fr, i64 %i.pr
+  %i.pr = zext nneg i32 %i.pq to i64
+  %i.ps = getelementptr inbounds nuw [2 x i8], ptr %11, i64 %i.pr
   store i16 %i.pn, ptr %i.ps, align 2, !tbaa !77
   br label %bb.at
 

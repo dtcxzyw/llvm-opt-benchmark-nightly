@@ -203,7 +203,7 @@ stbi__mad3sizes_valid.exit.thread:                ; preds = %stbi__mul2sizes_val
 stbi__mad3sizes_valid.exit._crit_edge:            ; preds = %bb.g, %stbi__mul2sizes_valid.exit12.i
   %.pre-phi = phi i32 [ %i.ad, %stbi__mul2sizes_valid.exit12.i ], [ 0, %bb.g ]
   %i.ag = add i32 %.pre-phi, 7
-  %i.ah = lshr i32 %i.ag, 3                       ; 13 uses
+  %i.ah = lshr i32 %i.ag, 3                       ; 8 uses
   br i1 %i.k, label %stbi__mad2sizes_valid.exit, label %stbi__mul2sizes_valid.exit.i299
 
 stbi__mul2sizes_valid.exit.i299:                  ; preds = %stbi__mad3sizes_valid.exit._crit_edge
@@ -252,7 +252,7 @@ bb.l:                                             ; preds = %bb.j
 .lr.ph400:                                        ; preds = %bb.l
   %spec.select = select i1 %i.au, i32 1, i32 %i.i ; 10 uses
   %spec.select297 = select i1 %i.au, i32 %i.ah, i32 %4
-  %i.av = zext nneg i32 %i.ah to i64
+  %i.av = zext nneg i32 %i.ah to i64              ; 6 uses
   %i.aw = mul i32 %spec.select297, %spec.select   ; 6 uses
   %i.ax = sext i32 %spec.select to i64            ; 40 uses
   %i.ay = icmp slt i32 %spec.select, %i.aw        ; 4 uses
@@ -411,27 +411,21 @@ bb.l:                                             ; preds = %bb.j
 bb.m:                                             ; preds = %.lr.ph400, %.loopexit
   %indvars.iv457 = phi i64 [ 0, %.lr.ph400 ], [ %indvars.iv.next458, %.loopexit ] ; 9 uses
   %.0272398 = phi ptr [ %1, %.lr.ph400 ], [ %i.qk, %.loopexit ] ; 2 uses
-  %8 = trunc i64 %indvars.iv457 to i32
-  %9 = and i32 %8, 1
-  %10 = xor i32 %9, 1
-  %11 = mul nuw nsw i32 %i.ah, %10
-  %12 = trunc i64 %indvars.iv457 to i32
-  %13 = and i32 %12, 1
-  %14 = xor i32 %13, 1
-  %15 = mul nuw nsw i32 %i.ah, %14
-  %16 = zext nneg i32 %15 to i64                  ; 2 uses
-  %17 = trunc i64 %indvars.iv457 to i32
-  %18 = and i32 %17, 1
-  %19 = xor i32 %18, 1
-  %20 = mul nuw nsw i32 %i.ah, %19
-  %21 = trunc i64 %indvars.iv457 to i32
-  %22 = and i32 %21, 1
-  %23 = xor i32 %22, 1
-  %24 = mul nuw nsw i32 %i.ah, %23
-  %25 = trunc i64 %indvars.iv457 to i32
-  %26 = and i32 %25, 1
-  %27 = xor i32 %26, 1
-  %28 = mul nuw nsw i32 %i.ah, %27
+  %8 = and i64 %indvars.iv457, 1
+  %9 = xor i64 %8, 1
+  %10 = mul nuw nsw i64 %9, %i.av
+  %11 = and i64 %indvars.iv457, 1
+  %12 = xor i64 %11, 1
+  %13 = mul nuw nsw i64 %12, %i.av                ; 2 uses
+  %14 = and i64 %indvars.iv457, 1
+  %15 = xor i64 %14, 1
+  %16 = mul nuw nsw i64 %15, %i.av
+  %17 = and i64 %indvars.iv457, 1
+  %18 = xor i64 %17, 1
+  %19 = mul nuw nsw i64 %18, %i.av
+  %20 = and i64 %indvars.iv457, 1
+  %21 = xor i64 %20, 1
+  %22 = mul nuw nsw i64 %21, %i.av
   %i.db = trunc nuw i64 %indvars.iv457 to i32     ; 2 uses
   %i.dc = trunc i64 %indvars.iv457 to i1
   %i.dd = select i1 %i.dc, i64 %i.av, i64 0       ; 7 uses
@@ -475,8 +469,7 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   br i1 %i.az, label %iter.check682, label %.preheader354
 
 iter.check682:                                    ; preds = %.preheader356
-  %29 = zext nneg i32 %11 to i64
-  %i.dv = sub nsw i64 %29, %i.dd
+  %i.dv = sub nsw i64 %10, %i.dd
   %diff.check665 = icmp ugt i64 %i.dv, -32
   %or.cond730.a = select i1 %min.iters.check667, i1 true, i1 %diff.check665
   br i1 %or.cond730.a, label %.lr.ph360.preheader, label %vector.main.loop.iter.check668
@@ -559,8 +552,7 @@ vec.epilog.middle.block693:                       ; preds = %vec.epilog.vector.b
   br i1 %i.az, label %iter.check611, label %.preheader351
 
 iter.check611:                                    ; preds = %.preheader353
-  %30 = zext nneg i32 %20 to i64
-  %i.er = sub nsw i64 %30, %i.dd
+  %i.er = sub nsw i64 %16, %i.dd
   %diff.check594 = icmp ugt i64 %i.er, -32
   %or.cond732 = select i1 %min.iters.check596, i1 true, i1 %diff.check594
   br i1 %or.cond732, label %.lr.ph364.preheader, label %vector.main.loop.iter.check597
@@ -642,8 +634,7 @@ vec.epilog.middle.block622:                       ; preds = %vec.epilog.vector.b
   br i1 %i.ba, label %iter.check545, label %.loopexit348
 
 iter.check545:                                    ; preds = %.preheader349
-  %31 = zext nneg i32 %28 to i64
-  %i.fq = sub nsw i64 %31, %i.dd
+  %i.fq = sub nsw i64 %22, %i.dd
   %diff.check528 = icmp ugt i64 %i.fq, -32
   %or.cond734 = select i1 %min.iters.check530, i1 true, i1 %diff.check528
   br i1 %or.cond734, label %.lr.ph368.preheader, label %vector.main.loop.iter.check531
@@ -875,8 +866,7 @@ iter.check578:                                    ; preds = %.preheader351
   br i1 %min.iters.check563, label %.lr.ph366.preheader, label %vector.memcheck559
 
 vector.memcheck559:                               ; preds = %iter.check578
-  %32 = zext nneg i32 %24 to i64
-  %i.iq = sub nsw i64 %32, %i.dd
+  %i.iq = sub nsw i64 %19, %i.dd
   %diff.check560 = icmp ugt i64 %i.iq, -16
   %conflict.rdx = or i1 %diff.check560, %diff.check561
   br i1 %conflict.rdx, label %.lr.ph366.preheader, label %vector.main.loop.iter.check564
@@ -1037,11 +1027,11 @@ iter.check648:                                    ; preds = %.preheader354
   br i1 %min.iters.check632, label %.lr.ph362.preheader, label %vector.memcheck625
 
 vector.memcheck625:                               ; preds = %iter.check648
-  %i.ln = sub nsw i64 %16, %i.dd
+  %i.ln = sub nsw i64 %13, %i.dd
   %diff.check627 = icmp ugt i64 %i.ln, -16
   %conflict.rdx628 = or i1 %diff.check626, %diff.check627
   %i.lo = add nsw i64 %i.dd, %i.ax
-  %i.lp = sub nsw i64 %16, %i.lo
+  %i.lp = sub nsw i64 %13, %i.lo
   %diff.check629 = icmp ugt i64 %i.lp, -16
   %conflict.rdx630 = or i1 %conflict.rdx628, %diff.check629
   br i1 %conflict.rdx630, label %.lr.ph362.preheader, label %vector.main.loop.iter.check633

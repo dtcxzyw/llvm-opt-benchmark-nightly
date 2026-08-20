@@ -204,7 +204,7 @@ read_bits32.exit186:                              ; preds = %.preheader50, %byte
   %notmask.i = shl nsw i32 -2, %.0135
   %i.dl = xor i32 %notmask.i, -1
   %i.dm = and i32 %.sroa.0.3, %i.dl               ; 2 uses
-  %i.dn = add i32 %i.dm, %.0136                   ; 2 uses
+  %i.dn = add nuw i32 %i.dm, %.0136               ; 2 uses
   %i.do = shl nuw i32 2, %.0135
   %i.dp = add nsw i32 %i.do, -1
   %.not144 = icmp eq i32 %i.dm, %i.dp
@@ -213,16 +213,12 @@ read_bits32.exit186:                              ; preds = %.preheader50, %byte
   %.0128 = select i1 %.not144, i32 %., i32 5
   switch i32 %.0128, label %bytestream2_put_byte.exit179 [
     i32 0, label %.preheader50
-    i32 5, label %.preheader
+    i32 5, label %bb.y
   ]
 
-.preheader:                                       ; preds = %read_bits32.exit186
-  %umax = tail call i32 @llvm.umax.i32(i32 %i.dn, i32 1)
-  br label %bb.y
-
-bb.y:                                             ; preds = %.preheader, %bytestream2_put_byte.exit177
-  %i.dr = phi ptr [ %i.av, %.preheader ], [ %i.ei, %bytestream2_put_byte.exit177 ] ; 3 uses
-  %.013759 = phi i32 [ 0, %.preheader ], [ %i.ej, %bytestream2_put_byte.exit177 ]
+bb.y:                                             ; preds = %read_bits32.exit186, %bytestream2_put_byte.exit177
+  %i.dr = phi ptr [ %i.ei, %bytestream2_put_byte.exit177 ], [ %i.av, %read_bits32.exit186 ] ; 3 uses
+  %.013759 = phi i32 [ %i.ej, %bytestream2_put_byte.exit177 ], [ 0, %read_bits32.exit186 ]
   %i.ds = load ptr, ptr %i.ab, align 8, !tbaa !48 ; 2 uses
   %i.dt = load ptr, ptr %i.a, align 8, !tbaa !46  ; 3 uses
   %i.du = ptrtoint ptr %i.ds to i64
@@ -269,7 +265,7 @@ bb.ad:                                            ; preds = %bb.ab, %bytestream2
 bytestream2_put_byte.exit177:                     ; preds = %bb.ac, %bb.ad
   %i.ei = phi ptr [ %i.eh, %bb.ac ], [ %i.dr, %bb.ad ]
   %i.ej = add nuw nsw i32 %.013759, 1             ; 2 uses
-  %exitcond75.not = icmp eq i32 %i.ej, %umax
+  %exitcond75.not = icmp eq i32 %i.ej, %i.dn
   br i1 %exitcond75.not, label %bytestream2_put_byte.exit179.thread21, label %bb.y, !llvm.loop !75
 
 bytestream2_put_byte.exit179:                     ; preds = %read_bits32.exit186
@@ -671,9 +667,6 @@ declare i32 @llvm.smin.i32(i32, i32) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #7
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #7
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #8

@@ -204,7 +204,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.d = lshr i32 %i.b, 1
-  %i.e = add nuw i32 %i.d, %2                     ; 3 uses
+  %i.e = add nuw i32 %i.d, %2                     ; 2 uses
   %i.f = add nuw nsw i32 %i.b, 1
   %i.g = lshr i32 %i.f, 1
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 3 uses
@@ -212,7 +212,7 @@ bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 12
   %i.k = zext nneg i32 %2 to i64
   %i.l = zext nneg i32 %i.g to i64
-  %i.m = add nuw i32 %i.e, 1
+  %i.m = add nuw i32 %i.e, 1                      ; 2 uses
   %wide.trip.count = zext i32 %i.m to i64
   %invariant.gep = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.l
   br label %bb.c
@@ -253,8 +253,7 @@ bb.c:                                             ; preds = %bb.b, %bb.c
 
 bb.d:                                             ; preds = %bb.c
   call fastcc void @Tn_AddCardinConstrRange(ptr noundef %0, ptr noundef nonnull %1, i32 noundef %2, i32 noundef %i.e, ptr noundef %4)
-  %5 = add nuw nsw i32 %i.e, 1
-  call fastcc void @Tn_AddCardinConstrRange(ptr noundef %0, ptr noundef nonnull %1, i32 noundef %5, i32 noundef %3, ptr noundef %4)
+  call fastcc void @Tn_AddCardinConstrRange(ptr noundef %0, ptr noundef nonnull %1, i32 noundef %i.m, i32 noundef %3, ptr noundef %4)
   call fastcc void @Tn_AddCardinConstrMerge(ptr noundef %0, ptr noundef nonnull %1, i32 noundef %2, i32 noundef %3, i32 noundef 1, ptr noundef %4)
   br label %bb.e
 

@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %.critedge
   br label %.critedge.thread
 
 .critedge.thread:                                 ; preds = %bb.a, %bb.e, %.critedge
-  %i.u = tail call i32 @Abc_NtkGetFaninMax(ptr noundef nonnull %0) #18 ; 10 uses
+  %i.u = tail call i32 @Abc_NtkGetFaninMax(ptr noundef nonnull %0) #18 ; 9 uses
   %i.v = icmp eq i32 %i.u, 0
   br i1 %i.v, label %.thread, label %bb.f
 
@@ -248,11 +248,10 @@ bb.g:                                             ; preds = %.thread, %Vec_IntAl
   %i.am = getelementptr inbounds nuw i8, ptr %.0, i64 4 ; 4 uses
   %i.an = icmp sgt i32 %i.u, 0
   %i.ao = getelementptr inbounds nuw i8, ptr %.084, i64 336 ; 2 uses
-  %wide.trip.count = zext i32 %i.u to i64         ; 2 uses
-  %wide.trip.count155 = zext nneg i32 %i.u to i64
-  %xtraiter = and i64 %wide.trip.count, 1
+  %wide.trip.count155 = zext i32 %i.u to i64      ; 3 uses
+  %xtraiter = and i64 %wide.trip.count155, 1
   %i.ap = icmp eq i32 %i.u, 1
-  %unroll_iter = and i64 %wide.trip.count, 2147483646
+  %unroll_iter = and i64 %wide.trip.count155, 2147483646
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %lcmp.mod180 = trunc i32 %i.u to i1
   br label %bb.h
@@ -655,7 +654,7 @@ bb.f:                                             ; preds = %bb.d, %bb.a, %bb.e,
 ; Function Attrs: nounwind uwtable
 define range(i32 0, 2) i32 @Abc_NtkAigToBdd(ptr noundef %0) local_unnamed_addr #2 {
 bb.a:
-  %i.a = tail call i32 @Abc_NtkGetFaninMax(ptr noundef %0) #18 ; 11 uses
+  %i.a = tail call i32 @Abc_NtkGetFaninMax(ptr noundef %0) #18 ; 10 uses
   %i.b = icmp eq i32 %i.a, 0
   br i1 %i.b, label %bb.b, label %bb.c
 
@@ -700,11 +699,10 @@ Vec_IntAlloc.exit:                                ; preds = %bb.c, %bb.d
 
 .lr.ph114:                                        ; preds = %.preheader101
   %i.q = getelementptr inbounds nuw i8, ptr %i.d, i64 336 ; 2 uses
-  %wide.trip.count120 = zext i32 %i.a to i64      ; 2 uses
-  %wide.trip.count125 = zext nneg i32 %i.a to i64
-  %xtraiter = and i64 %wide.trip.count120, 1
+  %wide.trip.count125 = zext i32 %i.a to i64      ; 3 uses
+  %xtraiter = and i64 %wide.trip.count125, 1
   %i.r = icmp eq i32 %i.a, 1
-  %unroll_iter = and i64 %wide.trip.count120, 2147483646
+  %unroll_iter = and i64 %wide.trip.count125, 2147483646
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %lcmp.mod166 = trunc i32 %i.a to i1
   br label %bb.e

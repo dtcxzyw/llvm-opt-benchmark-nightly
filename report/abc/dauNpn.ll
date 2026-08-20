@@ -204,7 +204,7 @@ bb.a:
   %i.c = add nsw i32 %0, -5                       ; 3 uses
   %i.d = shl nuw i32 1, %i.c
   %i.e = select i1 %i.b, i32 1, i32 %i.d
-  %i.f = add nsw i32 %0, -1                       ; 3 uses
+  %i.f = add i32 %0, -1                           ; 6 uses
   %i.g = shl nuw i32 1, %i.f                      ; 3 uses
   %i.h = tail call fastcc ptr @Vec_MemAllocForTTSimple(i32 noundef %i.a) ; 3 uses
   %i.i = shl i32 %i.e, %i.f
@@ -222,12 +222,11 @@ bb.a:
   br i1 %i.m, label %.lr.ph.us.preheader, label %.lr.ph57.split
 
 .lr.ph.us.preheader:                              ; preds = %.lr.ph57
-  %1 = add nsw i32 %0, -1                         ; 3 uses
-  %xtraiter = and i32 %1, 1
+  %xtraiter = and i32 %i.f, 1
   %i.p = icmp eq i32 %0, 2
-  %unroll_iter = and i32 %1, -2
+  %unroll_iter = and i32 %i.f, -2
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  %lcmp.mod83 = trunc i32 %1 to i1
+  %lcmp.mod83 = trunc i32 %i.f to i1
   br label %.lr.ph.us
 
 .lr.ph.us:                                        ; preds = %.lr.ph.us.preheader, %bb.c

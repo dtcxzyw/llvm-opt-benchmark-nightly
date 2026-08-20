@@ -204,6 +204,7 @@ bb.f:                                             ; preds = %bb.e
   %i.ab = sext i32 %i.aa to i64                   ; 4 uses
   %i.ac = and i64 %i.u, 2147483647
   %i.ad = icmp sgt i32 %i.z, 0
+  %9 = call i64 @llvm.smax.i64(i64 %i.ab, i64 2)
   br label %.preheader
 
 .loopexit88:                                      ; preds = %.lr.ph, %middle.block231, %vec.epilog.middle.block250, %.preheader
@@ -216,16 +217,14 @@ bb.f:                                             ; preds = %bb.e
 
 .preheader:                                       ; preds = %.preheader.preheader, %.loopexit88
   %indvar = phi i64 [ 0, %.preheader.preheader ], [ %indvar.next, %.loopexit88 ] ; 2 uses
-  %indvars.iv138 = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next139, %.loopexit88 ] ; 3 uses
+  %indvars.iv138 = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next139, %.loopexit88 ] ; 2 uses
   %indvars.iv = phi i64 [ 1, %.preheader.preheader ], [ %indvars.iv.next, %.loopexit88 ] ; 6 uses
   %.promoted100110 = phi i32 [ %.promoted100112116, %.preheader.preheader ], [ %.promoted100109, %.loopexit88 ]
   %.promoted9596 = phi i32 [ %.promoted100112116, %.preheader.preheader ], [ %.promoted94, %.loopexit88 ] ; 4 uses
-  %9 = add i64 %indvars.iv138, %i.ab
-  %i.af = add i64 %indvars.iv138, 2
-  %smax213 = call i64 @llvm.smax.i64(i64 %9, i64 %i.af)
+  %i.af = add nsw i64 %indvars.iv138, %9
   %i.ag = mul i64 %indvar, %i.ab
   %i.ah = xor i64 %i.ag, -1
-  %i.ai = add i64 %smax213, %i.ah                 ; 7 uses
+  %i.ai = add i64 %i.af, %i.ah                    ; 7 uses
   %indvars.iv.next139 = add nsw i64 %indvars.iv138, %i.ab ; 3 uses
   br i1 %i.ad, label %iter.check237, label %.loopexit88
 

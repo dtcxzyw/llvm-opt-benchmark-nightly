@@ -204,17 +204,15 @@ _ZN4ncnn3Mat4fillEf.exit.preheader.i:             ; preds = %.lr.ph.preheader.i,
   %factor.op.mul.i = mul i64 %i.ak, %i.aj
   %invariant.op.i = add nuw nsw i32 %6, 1
   %i.al = zext nneg i32 %invariant.op.i to i64    ; 2 uses
-  %i.am = zext nneg i32 %i.y to i64               ; 3 uses
-  %wide.trip.count31.i = zext nneg i32 %5 to i64
-  %20 = xor i32 %6, -1
-  %21 = sext i32 %20 to i64
-  %22 = add nsw i64 %21, %i.am
+  %i.am = zext nneg i32 %i.y to i64               ; 2 uses
+  %wide.trip.count31.i = zext nneg i32 %5 to i64  ; 2 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %_ZN4ncnn3Mat4fillEf.exit.i, %_ZN4ncnn3Mat4fillEf.exit.preheader.i
   %indvars.iv27.i = phi i64 [ 0, %_ZN4ncnn3Mat4fillEf.exit.preheader.i ], [ %indvars.iv.next28.i, %_ZN4ncnn3Mat4fillEf.exit.i ] ; 4 uses
   %indvars.iv.i = phi i64 [ %i.al, %_ZN4ncnn3Mat4fillEf.exit.preheader.i ], [ %indvars.iv.next.i, %_ZN4ncnn3Mat4fillEf.exit.i ] ; 4 uses
-  %23 = sub i64 %22, %indvars.iv27.i              ; 3 uses
+  %20 = xor i64 %indvars.iv27.i, -1
+  %21 = add nsw i64 %20, %wide.trip.count31.i     ; 3 uses
   %.reass.i = mul i64 %factor.op.mul.i, %indvars.iv27.i
   %i.an = getelementptr inbounds nuw i8, ptr %i.ae, i64 %.reass.i ; 2 uses
   %i.ao = add nuw nsw i64 %indvars.iv27.i, %i.al
@@ -222,11 +220,11 @@ bb.b:                                             ; preds = %_ZN4ncnn3Mat4fillEf
   br i1 %i.ap, label %.lr.ph22.i.preheader, label %_ZN4ncnn3Mat4fillEf.exit.i
 
 .lr.ph22.i.preheader:                             ; preds = %bb.b
-  %min.iters.check3 = icmp ult i64 %23, 8
+  %min.iters.check3 = icmp ult i64 %21, 8
   br i1 %min.iters.check3, label %.lr.ph22.i.preheader24, label %vector.ph4
 
 vector.ph4:                                       ; preds = %.lr.ph22.i.preheader
-  %n.vec5 = and i64 %23, -8                       ; 3 uses
+  %n.vec5 = and i64 %21, -8                       ; 3 uses
   %i.aq = add i64 %indvars.iv.i, %n.vec5
   %i.ar = getelementptr inbounds nuw [4 x i8], ptr %i.an, i64 %indvars.iv.i
   br label %vector.body6
@@ -242,7 +240,7 @@ vector.body6:                                     ; preds = %vector.body6, %vect
   br i1 %i.au, label %middle.block9, label %vector.body6, !llvm.loop !94
 
 middle.block9:                                    ; preds = %vector.body6
-  %cmp.n10 = icmp eq i64 %23, %n.vec5
+  %cmp.n10 = icmp eq i64 %21, %n.vec5
   br i1 %cmp.n10, label %_ZN4ncnn3Mat4fillEf.exit.i, label %.lr.ph22.i.preheader24
 
 .lr.ph22.i.preheader24:                           ; preds = %.lr.ph22.i.preheader, %middle.block9

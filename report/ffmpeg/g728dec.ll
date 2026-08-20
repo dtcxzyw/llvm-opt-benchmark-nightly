@@ -204,40 +204,32 @@ bb.i:                                             ; preds = %bb.h
   %i.ky = call nsz float @llvm.fmuladd.f32(float %i.kx, float %.168.i.i, float 1.000000e+00)
   %i.kz = fmul nsz float %.17487.i.i, %i.ky       ; 2 uses
   %exitcond107.not.i.i = icmp eq i64 %indvars.iv.next104.i.i, 50
-  %indvar.next = add i64 %indvar, 1
   br i1 %exitcond107.not.i.i, label %compute_lpc_coefs.exit.i, label %.lr.ph89.i.i, !llvm.loop !56
 
 .lr.ph89.i.i:                                     ; preds = %.loopexit.i.i, %bb.i
-  %indvar = phi i64 [ %indvar.next, %.loopexit.i.i ], [ 0, %bb.i ] ; 2 uses
   %indvars.iv103.i.i = phi i64 [ %indvars.iv.next104.i.i, %.loopexit.i.i ], [ 10, %bb.i ] ; 6 uses
   %.17487.i.i = phi float [ %i.kz, %.loopexit.i.i ], [ %.073.i.i, %bb.i ] ; 3 uses
   %i.la = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %indvars.iv103.i.i ; 4 uses
+  %xtraiter = and i64 %indvars.iv103.i.i, 1
   %i.lb = load float, ptr %i.la, align 4, !tbaa !33
-  %i.lc = fneg nsz float %i.lb                    ; 2 uses
-  %xtraiter.a = and i64 %indvars.iv103.i.i, 1
-  %4 = icmp eq i64 %indvar, -9
-  br i1 %4, label %.lr.ph.i.i.epil.preheader, label %.lr.ph89.i.i.new
-
-.lr.ph89.i.i.new:                                 ; preds = %.lr.ph89.i.i
-  %unroll_iter = and i64 %indvars.iv103.i.i, 9223372036854775806
+  %i.lc = fneg nsz float %i.lb
+  %xtraiter.a = and i64 %indvars.iv103.i.i, 9223372036854775806
   br label %.lr.ph.i.i
 
 ._crit_edge.i.i.unr-lcssa:                        ; preds = %.lr.ph.i.i
-  %lcmp.mod.not = icmp eq i64 %xtraiter.a, 0
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %._crit_edge.i.i, label %.lr.ph.i.i.epil.preheader
 
-.lr.ph.i.i.epil.preheader:                        ; preds = %._crit_edge.i.i.unr-lcssa, %.lr.ph89.i.i
-  %indvars.iv.i.i.epil.init = phi i64 [ 0, %.lr.ph89.i.i ], [ %indvars.iv.next.i.i.1, %._crit_edge.i.i.unr-lcssa ] ; 2 uses
-  %.06780.i.i.epil.init = phi float [ %i.lc, %.lr.ph89.i.i ], [ %i.me, %._crit_edge.i.i.unr-lcssa ]
+.lr.ph.i.i.epil.preheader:                        ; preds = %._crit_edge.i.i.unr-lcssa
   %lcmp.mod61 = trunc i64 %indvars.iv103.i.i to i1
   call void @llvm.assume(i1 %lcmp.mod61)
-  %i.ld = getelementptr inbounds nuw [4 x i8], ptr %i.ad, i64 %indvars.iv.i.i.epil.init
+  %i.ld = getelementptr inbounds nuw [4 x i8], ptr %i.ad, i64 %indvars.iv.next.i.i.1
   %i.le = load float, ptr %i.ld, align 4, !tbaa !33
-  %i.lf = xor i64 %indvars.iv.i.i.epil.init, -1
+  %i.lf = xor i64 %indvars.iv.next.i.i.1, -1
   %i.lg = getelementptr [4 x i8], ptr %i.la, i64 %i.lf
   %i.lh = load float, ptr %i.lg, align 4, !tbaa !33
   %i.li = fneg nsz float %i.le
-  %i.lj = call nsz float @llvm.fmuladd.f32(float %i.li, float %i.lh, float %.06780.i.i.epil.init)
+  %i.lj = call nsz float @llvm.fmuladd.f32(float %i.li, float %i.lh, float %i.me)
   br label %._crit_edge.i.i
 
 ._crit_edge.i.i:                                  ; preds = %._crit_edge.i.i.unr-lcssa, %.lr.ph.i.i.epil.preheader
@@ -254,10 +246,10 @@ bb.i:                                             ; preds = %bb.h
   %i.lp = shufflevector <2 x float> %i.lo, <2 x float> poison, <2 x i32> zeroinitializer
   br label %.lr.ph84.i.i
 
-.lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.lr.ph89.i.i.new
-  %indvars.iv.i.i = phi i64 [ 0, %.lr.ph89.i.i.new ], [ %indvars.iv.next.i.i.1, %.lr.ph.i.i ] ; 5 uses
-  %.06780.i.i = phi float [ %i.lc, %.lr.ph89.i.i.new ], [ %i.me, %.lr.ph.i.i ]
-  %niter = phi i64 [ 0, %.lr.ph89.i.i.new ], [ %niter.next.1, %.lr.ph.i.i ]
+.lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.lr.ph89.i.i
+  %indvars.iv.i.i = phi i64 [ 0, %.lr.ph89.i.i ], [ %indvars.iv.next.i.i.1, %.lr.ph.i.i ] ; 5 uses
+  %.06780.i.i = phi float [ %i.lc, %.lr.ph89.i.i ], [ %i.me, %.lr.ph.i.i ]
+  %niter = phi i64 [ 0, %.lr.ph89.i.i ], [ %niter.next.1, %.lr.ph.i.i ]
   %i.lq = getelementptr inbounds nuw [4 x i8], ptr %i.ad, i64 %indvars.iv.i.i
   %i.lr = load float, ptr %i.lq, align 4, !tbaa !33
   %i.ls = xor i64 %indvars.iv.i.i, -1
@@ -273,9 +265,9 @@ bb.i:                                             ; preds = %bb.h
   %i.mc = load float, ptr %i.mb, align 4, !tbaa !33
   %i.md = fneg nsz float %i.lz
   %i.me = call nsz float @llvm.fmuladd.f32(float %i.md, float %i.mc, float %i.lw) ; 3 uses
-  %indvars.iv.next.i.i.1 = add nuw nsw i64 %indvars.iv.i.i, 2 ; 2 uses
+  %indvars.iv.next.i.i.1 = add nuw nsw i64 %indvars.iv.i.i, 2 ; 3 uses
   %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
-  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
+  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %xtraiter.a
   br i1 %niter.ncmp.1, label %._crit_edge.i.i.unr-lcssa, label %.lr.ph.i.i, !llvm.loop !57
 
 .lr.ph84.i.i:                                     ; preds = %.lr.ph84.i.i, %._crit_edge.i.i
