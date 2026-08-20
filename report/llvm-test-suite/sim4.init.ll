@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.h
   %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.ae, i64 %i.ai
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !86 ; 4 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 12
-  %i.am = load i32, ptr %i.al, align 4, !tbaa !88 ; 7 uses
+  %i.am = load i32, ptr %i.al, align 4, !tbaa !88 ; 6 uses
   %i.an = getelementptr inbounds nuw i8, ptr %3, i64 4148
   %i.ao = load i32, ptr %i.an, align 4, !tbaa !40 ; 5 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
@@ -311,24 +311,25 @@ bb.s:                                             ; preds = %bb.r
 
 .lr.ph.i:                                         ; preds = %.critedge.i
   %i.cj = load ptr, ptr %i.ap, align 8, !tbaa !39
+  %4 = zext i32 %i.ch to i64
   %i.ck = sub i32 %i.ao, %i.am
+  %zext = zext i32 %i.ao to i64
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.u, %.lr.ph.i
-  %4 = phi i32 [ %i.ch, %.lr.ph.i ], [ %6, %bb.u ]
+  %indvars.iv.i = phi i64 [ %4, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.u ] ; 2 uses
   %.1117149.i = phi i32 [ %.0116.lcssa.i, %.lr.ph.i ], [ %i.co, %bb.u ] ; 2 uses
   %.2122148.i = phi i32 [ %.0120.lcssa.i, %.lr.ph.i ], [ %i.cp, %bb.u ] ; 2 uses
-  %5 = zext i32 %4 to i64
-  %i.cl = getelementptr inbounds nuw i8, ptr %i.cj, i64 %5
+  %i.cl = getelementptr inbounds nuw i8, ptr %i.cj, i64 %indvars.iv.i
   %i.cm = load i8, ptr %i.cl, align 1, !tbaa !29
   %i.cn = icmp eq i8 %i.cm, 65
   br i1 %i.cn, label %bb.u, label %.critedge2.i
 
 bb.u:                                             ; preds = %bb.t
-  %i.co = add i32 %.1117149.i, 1                  ; 2 uses
+  %i.co = add i32 %.1117149.i, 1
   %i.cp = add i32 %.2122148.i, 1                  ; 2 uses
-  %6 = add i32 %i.co, %i.am                       ; 2 uses
-  %i.cq = icmp ult i32 %6, %i.ao
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
+  %i.cq = icmp samesign ult i64 %indvars.iv.next.i, %zext
   br i1 %i.cq, label %bb.t, label %.critedge2.i, !llvm.loop !90
 
 .critedge2.i:                                     ; preds = %bb.u, %bb.t, %.critedge.i

@@ -204,12 +204,15 @@ bb.b:                                             ; preds = %bb.a
   %.1 = phi i32 [ 0, %bb.a ], [ 0, %bb.b ], [ %i.y, %.loopexit.loopexit ] ; 2 uses
   %i.aa = trunc i64 %i.z to i32                   ; 2 uses
   %i.ab = icmp ult i32 %.1, %i.aa
-  br i1 %i.ab, label %.lr.ph76, label %._crit_edge
+  br i1 %i.ab, label %.lr.ph76.preheader, label %._crit_edge
 
-.lr.ph76:                                         ; preds = %.loopexit, %bb.g
-  %.275 = phi i32 [ %4, %bb.g ], [ %.1, %.loopexit ] ; 2 uses
-  %3 = zext i32 %.275 to i64
-  %i.ac = getelementptr inbounds nuw i8, ptr %2, i64 %3 ; 6 uses
+.lr.ph76.preheader:                               ; preds = %.loopexit
+  %3 = zext i32 %.1 to i64
+  br label %.lr.ph76
+
+.lr.ph76:                                         ; preds = %.lr.ph76.preheader, %bb.g
+  %indvars.iv79 = phi i64 [ %3, %.lr.ph76.preheader ], [ %indvars.iv.next80, %bb.g ] ; 2 uses
+  %i.ac = getelementptr inbounds nuw i8, ptr %2, i64 %indvars.iv79 ; 6 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 3
   %i.ae = load i8, ptr %i.ad, align 1, !tbaa !16  ; 3 uses
   %i.af = zext i8 %i.ae to i32                    ; 3 uses
@@ -263,8 +266,9 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.c
-  %4 = add i32 %.275, 4                           ; 2 uses
-  %i.bh = icmp ult i32 %4, %i.aa
+  %indvars.iv.next80 = add nuw nsw i64 %indvars.iv79, 4 ; 2 uses
+  %indvars = trunc i64 %indvars.iv.next80 to i32
+  %i.bh = icmp ult i32 %indvars, %i.aa
   br i1 %i.bh, label %.lr.ph76, label %._crit_edge, !llvm.loop !647
 
 ._crit_edge:                                      ; preds = %bb.g, %.loopexit

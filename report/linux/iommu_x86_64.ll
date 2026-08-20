@@ -201,13 +201,13 @@ _pt_iter_first.exit:                              ; preds = %bb.b, %bb.c, %.thre
   %i.au = add nsw i32 %i.c, -1                    ; 2 uses
   %i.av = add nuw nsw i32 %i.d, 21
   %i.aw = getelementptr i8, ptr %0, i64 33
+  %4 = zext i16 %.0.i.i75 to i64
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.x, %_pt_iter_first.exit
-  %.sroa.20.0 = phi ptr [ null, %_pt_iter_first.exit ], [ %.sroa.20.1, %bb.x ]
-  %.sroa.37.0 = phi i16 [ %.0.i.i75, %_pt_iter_first.exit ], [ %5, %bb.x ] ; 2 uses
-  %4 = zext i16 %.sroa.37.0 to i64                ; 3 uses
-  %i.ax = getelementptr [8 x i8], ptr %3, i64 %4  ; 7 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.x ], [ %4, %_pt_iter_first.exit ] ; 4 uses
+  %.sroa.20.0 = phi ptr [ %.sroa.20.1, %bb.x ], [ null, %_pt_iter_first.exit ]
+  %i.ax = getelementptr [8 x i8], ptr %3, i64 %indvars.iv ; 7 uses
   %i.ay = load volatile i64, ptr %i.ax, align 8   ; 5 uses
   %i.az = and i64 %i.ay, 1
   %.not.i30 = icmp eq i64 %i.az, 0
@@ -286,7 +286,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %.not.i32, label %flush_writes_item.exit, label %flush_writes_item.exit.i
 
 flush_writes_item.exit.i:                         ; preds = %bb.l
-  %i.cg = shl nuw nsw i64 %4, 3
+  %i.cg = shl nuw nsw i64 %indvars.iv, 3
   %i.ch = getelementptr i8, ptr %3, i64 %i.cg
   tail call void @clflush_cache_range(ptr noundef %i.ch, i32 noundef 8) #15
   %i.ci = or disjoint i64 %i.bw, 551
@@ -342,7 +342,7 @@ bb.o:                                             ; preds = %bb.n
   br i1 %.not.i33, label %flush_writes_item.exit, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.di = shl nuw nsw i64 %4, 3
+  %i.di = shl nuw nsw i64 %indvars.iv, 3
   %i.dj = getelementptr i8, ptr %3, i64 %i.di
   tail call void @clflush_cache_range(ptr noundef %i.dj, i32 noundef 8) #15
   br label %flush_writes_item.exit
@@ -372,7 +372,8 @@ bb.t:                                             ; preds = %bb.r, %bb.s
   ]
 
 bb.u:                                             ; preds = %bb.t
-  %5 = add i16 %.sroa.37.0, 1                     ; 3 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
+  %indvars = trunc i64 %indvars.iv.next to i16
   %i.do = load i64, ptr %i.i, align 8
   %i.dp = load i8, ptr %i.f, align 8
   %i.dq = icmp eq i8 %i.dp, %i.a
@@ -393,14 +394,14 @@ bb.w:                                             ; preds = %bb.u
 
 pt_index_to_va.exit:                              ; preds = %bb.v, %bb.w
   %.0.i.i35 = phi i32 [ %i.ds, %bb.v ], [ %i.dx, %bb.w ]
-  %6 = zext i16 %5 to i64
-  %i.dy = shl i64 %6, %.pre-phi
+  %5 = and i64 %indvars.iv.next, 65535
+  %i.dy = shl i64 %5, %.pre-phi
   %i.dz = zext nneg i32 %.0.i.i35 to i64
   %notmask.i.i = shl nsw i64 -1, %i.dz
   %i.ea = and i64 %notmask.i.i, %i.do
   %i.eb = or i64 %i.ea, %i.dy
   store i64 %i.eb, ptr %i.i, align 8
-  %.not24 = icmp ult i16 %5, %.0.i7.i
+  %.not24 = icmp ugt i16 %.0.i7.i, %indvars
   br i1 %.not24, label %bb.x, label %x86_64_pt_load_entry_raw.exit.thread
 
 bb.x:                                             ; preds = %pt_index_to_va.exit

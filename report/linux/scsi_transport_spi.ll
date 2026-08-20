@@ -204,7 +204,7 @@ bb.a:
 
 .loopexit125:                                     ; preds = %.lr.ph139, %.preheader124
   %.1115.lcssa = phi i32 [ %.0114142, %.preheader124 ], [ %i.bu, %.lr.ph139 ]
-  %.4.lcssa = phi i32 [ %.3.lcssa, %.preheader124 ], [ %19, %.lr.ph139 ] ; 2 uses
+  %.4.lcssa = phi i32 [ %.3.lcssa, %.preheader124 ], [ %indvars166, %.lr.ph139 ] ; 2 uses
   %i.v = icmp slt i32 %.4.lcssa, %i.f
   br i1 %i.v, label %.preheader128, label %.preheader, !llvm.loop !32
 
@@ -265,7 +265,11 @@ bb.a:
   %i.ar = add nuw i32 %.1.lcssa, 32
   %i.as = tail call i32 @llvm.smin.i32(i32 %i.ar, i32 %i.f) ; 3 uses
   %i.at = icmp slt i32 %.1.lcssa, %i.as
-  br i1 %i.at, label %.lr.ph132, label %.preheader126
+  br i1 %i.at, label %.lr.ph132.preheader, label %.preheader126
+
+.lr.ph132.preheader:                              ; preds = %.preheader127
+  %11 = zext nneg i32 %.1.lcssa to i64
+  br label %.lr.ph132
 
 .lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
   %indvars.iv = phi i64 [ %indvars.iv.next.7, %.lr.ph ], [ %indvars.iv.unr, %.lr.ph.prol.loopexit ] ; 10 uses
@@ -305,62 +309,70 @@ bb.a:
   br i1 %exitcond.not.7, label %.preheader127, label %.lr.ph, !llvm.loop !35
 
 .preheader126.loopexit:                           ; preds = %.lr.ph132
-  %.pre = add i32 %.2131, 34
+  %.pre = add nuw i32 %indvars, 32
   %.pre158 = tail call i32 @llvm.smin.i32(i32 %.pre, i32 %i.f)
   br label %.preheader126
 
 .preheader126:                                    ; preds = %.preheader126.loopexit, %.preheader127
   %.pre-phi159 = phi i32 [ %.pre158, %.preheader126.loopexit ], [ %i.as, %.preheader127 ] ; 3 uses
-  %.2.lcssa = phi i32 [ %12, %.preheader126.loopexit ], [ %.1.lcssa, %.preheader127 ] ; 3 uses
+  %.2.lcssa = phi i32 [ %indvars, %.preheader126.loopexit ], [ %.1.lcssa, %.preheader127 ] ; 3 uses
   %i.bk = icmp slt i32 %.2.lcssa, %.pre-phi159
-  br i1 %i.bk, label %.lr.ph135, label %.preheader124
+  br i1 %i.bk, label %.lr.ph135.preheader, label %.preheader124
 
-.lr.ph132:                                        ; preds = %.preheader127, %.lr.ph132
-  %.2131 = phi i32 [ %12, %.lr.ph132 ], [ %.1.lcssa, %.preheader127 ] ; 4 uses
-  %11 = sext i32 %.2131 to i64
-  %i.bl = getelementptr i8, ptr %1, i64 %11
-  %i.bm = trunc i32 %.2131 to i16
+.lr.ph135.preheader:                              ; preds = %.preheader126
+  %12 = zext nneg i32 %.2.lcssa to i64
+  br label %.lr.ph135
+
+.lr.ph132:                                        ; preds = %.lr.ph132.preheader, %.lr.ph132
+  %indvars.iv157 = phi i64 [ %11, %.lr.ph132.preheader ], [ %indvars.iv.next158, %.lr.ph132 ] ; 3 uses
+  %i.bl = getelementptr i8, ptr %1, i64 %indvars.iv157
+  %i.bm = trunc i64 %indvars.iv157 to i16
   %i.bn = lshr i16 %i.bm, 1
   %i.bo = and i16 %i.bn, 1
   %i.bp = add nsw i16 %i.bo, -1
   store i16 %i.bp, ptr %i.bl, align 2
-  %12 = add i32 %.2131, 2                         ; 3 uses
-  %13 = icmp slt i32 %12, %i.as
+  %indvars.iv.next158 = add nuw nsw i64 %indvars.iv157, 2 ; 2 uses
+  %indvars = trunc i64 %indvars.iv.next158 to i32 ; 3 uses
+  %13 = icmp sgt i32 %i.as, %indvars
   br i1 %13, label %.lr.ph132, label %.preheader126.loopexit, !llvm.loop !36
 
 .preheader124.loopexit:                           ; preds = %.lr.ph135
-  %.pre160 = add i32 %.3134, 34
+  %.pre160 = add nuw i32 %indvars162, 32
   %.pre162 = tail call i32 @llvm.smin.i32(i32 %.pre160, i32 %i.f)
   br label %.preheader124
 
 .preheader124:                                    ; preds = %.preheader124.loopexit, %.preheader126
   %.pre-phi163 = phi i32 [ %.pre162, %.preheader124.loopexit ], [ %.pre-phi159, %.preheader126 ] ; 2 uses
-  %.3.lcssa = phi i32 [ %16, %.preheader124.loopexit ], [ %.2.lcssa, %.preheader126 ] ; 3 uses
+  %.3.lcssa = phi i32 [ %indvars162, %.preheader124.loopexit ], [ %.2.lcssa, %.preheader126 ] ; 3 uses
   %i.bq = icmp slt i32 %.3.lcssa, %.pre-phi163
-  br i1 %i.bq, label %.lr.ph139, label %.loopexit125
+  br i1 %i.bq, label %.lr.ph139.preheader, label %.loopexit125
 
-.lr.ph135:                                        ; preds = %.preheader126, %.lr.ph135
-  %.3134 = phi i32 [ %16, %.lr.ph135 ], [ %.2.lcssa, %.preheader126 ] ; 4 uses
-  %14 = sext i32 %.3134 to i64
-  %i.br = getelementptr i8, ptr %1, i64 %14
-  %15 = and i32 %.3134, 2
-  %.not120 = icmp eq i32 %15, 0
+.lr.ph139.preheader:                              ; preds = %.preheader124
+  %14 = zext nneg i32 %.3.lcssa to i64
+  br label %.lr.ph139
+
+.lr.ph135:                                        ; preds = %.lr.ph135.preheader, %.lr.ph135
+  %indvars.iv160 = phi i64 [ %12, %.lr.ph135.preheader ], [ %indvars.iv.next161, %.lr.ph135 ] ; 3 uses
+  %i.br = getelementptr i8, ptr %1, i64 %indvars.iv160
+  %15 = and i64 %indvars.iv160, 2
+  %.not120 = icmp eq i64 %15, 0
   %i.bs = select i1 %.not120, i16 -21846, i16 21845
   store i16 %i.bs, ptr %i.br, align 2
-  %16 = add i32 %.3134, 2                         ; 3 uses
-  %17 = icmp slt i32 %16, %.pre-phi159
-  br i1 %17, label %.lr.ph135, label %.preheader124.loopexit, !llvm.loop !37
+  %indvars.iv.next161 = add nuw nsw i64 %indvars.iv160, 2 ; 2 uses
+  %indvars162 = trunc i64 %indvars.iv.next161 to i32 ; 3 uses
+  %16 = icmp sgt i32 %.pre-phi159, %indvars162
+  br i1 %16, label %.lr.ph135, label %.preheader124.loopexit, !llvm.loop !37
 
-.lr.ph139:                                        ; preds = %.preheader124, %.lr.ph139
-  %.4138 = phi i32 [ %19, %.lr.ph139 ], [ %.3.lcssa, %.preheader124 ] ; 2 uses
-  %.1115137 = phi i32 [ %i.bu, %.lr.ph139 ], [ %.0114142, %.preheader124 ] ; 3 uses
-  %18 = sext i32 %.4138 to i64
-  %i.bt = getelementptr i8, ptr %1, i64 %18
+.lr.ph139:                                        ; preds = %.lr.ph139.preheader, %.lr.ph139
+  %indvars.iv164 = phi i64 [ %14, %.lr.ph139.preheader ], [ %indvars.iv.next165, %.lr.ph139 ] ; 2 uses
+  %.1115137 = phi i32 [ %.0114142, %.lr.ph139.preheader ], [ %i.bu, %.lr.ph139 ] ; 3 uses
+  %i.bt = getelementptr i8, ptr %1, i64 %indvars.iv164
   store i32 %.1115137, ptr %i.bt, align 4
   %i.bu = tail call i32 @llvm.fshl.i32(i32 %.1115137, i32 %.1115137, i32 1) ; 2 uses
-  %19 = add i32 %.4138, 4                         ; 3 uses
-  %20 = icmp slt i32 %19, %.pre-phi163
-  br i1 %20, label %.lr.ph139, label %.loopexit125, !llvm.loop !38
+  %indvars.iv.next165 = add nuw nsw i64 %indvars.iv164, 4 ; 2 uses
+  %indvars166 = trunc i64 %indvars.iv.next165 to i32 ; 2 uses
+  %17 = icmp sgt i32 %.pre-phi163, %indvars166
+  br i1 %17, label %.lr.ph139, label %.loopexit125, !llvm.loop !38
 
 bb.b:                                             ; preds = %bb.h
   %i.bv = add nuw nsw i32 %.0113144, 1            ; 2 uses

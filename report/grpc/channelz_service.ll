@@ -201,7 +201,6 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not.i.i, label %._crit_edge, label %bb.c, !llvm.loop !221
 
 .lr.ph:                                           ; preds = %bb.c
-  %17 = trunc nuw i64 %indvars.iv.i.i to i32
   %i.p = getelementptr inbounds nuw i8, ptr %3, i64 64
   br label %_ZN6google8protobuf3MapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN4grpc8channelz2v231QueryTraceRequest_QueryArgValueEE14const_iteratorppEv.exit.outer
 
@@ -211,7 +210,7 @@ bb.e:                                             ; preds = %bb.a
   br label %bb.bs
 
 _ZN6google8protobuf3MapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN4grpc8channelz2v231QueryTraceRequest_QueryArgValueEE14const_iteratorppEv.exit.outer: ; preds = %.lr.ph193, %.lr.ph
-  %.sroa.13.0126.ph = phi i32 [ %17, %.lr.ph ], [ %.08.i.i191, %.lr.ph193 ]
+  %.sroa.13.0126.ph = phi i64 [ %indvars.iv.i.i, %.lr.ph ], [ %indvars.iv.next193, %.lr.ph193 ]
   %.sroa.0114.0125.ph = phi ptr [ %i.n, %.lr.ph ], [ %i.cx, %.lr.ph193 ]
   br label %_ZN6google8protobuf3MapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN4grpc8channelz2v231QueryTraceRequest_QueryArgValueEE14const_iteratorppEv.exit
 
@@ -476,8 +475,10 @@ _ZNSt7variantIJlNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEbEEaSIlEENSt
 
 bb.v:                                             ; preds = %_ZNSt7variantIJlNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEbEEaSIlEENSt9enable_ifIXaaaa14__exactly_onceINSt9_Nth_typeIX16__accepted_indexIOT_EEJlS5_bEE4typeEE18is_constructible_vISD_SA_E15is_assignable_vIRSD_SA_EERS6_E4typeESB_.exit
   %i.cu = load i32, ptr %i.h, align 4, !tbaa !207 ; 2 uses
-  %.08.i.i190 = add i32 %.sroa.13.0126.ph, 1      ; 2 uses
-  %18 = icmp ult i32 %.08.i.i190, %i.cu
+  %17 = and i64 %.sroa.13.0126.ph, 4294967295
+  %indvars.iv.next191 = add nuw nsw i64 %17, 1    ; 2 uses
+  %indvars192 = trunc i64 %indvars.iv.next191 to i32
+  %18 = icmp ugt i32 %i.cu, %indvars192
   br i1 %18, label %.lr.ph193.preheader, label %._crit_edge
 
 .lr.ph193.preheader:                              ; preds = %bb.v
@@ -485,13 +486,14 @@ bb.v:                                             ; preds = %_ZNSt7variantIJlNSt
   br label %.lr.ph193
 
 bb.w:                                             ; preds = %.lr.ph193
-  %.08.i.i = add i32 %.08.i.i191, 1               ; 2 uses
-  %19 = icmp ult i32 %.08.i.i, %i.cu
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv.next193, 1 ; 2 uses
+  %indvars = trunc i64 %indvars.iv.next to i32
+  %19 = icmp ugt i32 %i.cu, %indvars
   br i1 %19, label %.lr.ph193, label %._crit_edge, !llvm.loop !230
 
 .lr.ph193:                                        ; preds = %.lr.ph193.preheader, %bb.w
-  %.08.i.i191 = phi i32 [ %.08.i.i, %bb.w ], [ %.08.i.i190, %.lr.ph193.preheader ] ; 3 uses
-  %20 = zext i32 %.08.i.i191 to i64
+  %indvars.iv.next193 = phi i64 [ %indvars.iv.next, %bb.w ], [ %indvars.iv.next191, %.lr.ph193.preheader ] ; 3 uses
+  %20 = and i64 %indvars.iv.next193, 4294967295
   %i.cw = getelementptr inbounds nuw [8 x i8], ptr %i.cv, i64 %20
   %i.cx = load ptr, ptr %i.cw, align 8, !tbaa !219 ; 2 uses
   %i.cy = icmp eq ptr %i.cx, null

@@ -204,8 +204,8 @@ _ZN6vectorIN3opt4softELb1EjE3endEv.exit82:        ; preds = %bb.y
 
 .outer:                                           ; preds = %_ZN8rationalD2Ev.exit102, %.preheader
   %.059.ph = phi i32 [ %spec.select, %_ZN8rationalD2Ev.exit102 ], [ 1, %.preheader ]
-  %.3.ph = phi i32 [ %.4, %_ZN8rationalD2Ev.exit102 ], [ %.042.lcssa, %.preheader ] ; 3 uses
-  %i.fe = zext i32 %.3.ph to i64
+  %.3.ph = phi i32 [ %indvars, %_ZN8rationalD2Ev.exit102 ], [ %.042.lcssa, %.preheader ] ; 2 uses
+  %i.fe = zext i32 %.3.ph to i64                  ; 2 uses
   br label %bb.ad
 
 bb.z:                                             ; preds = %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit
@@ -459,8 +459,9 @@ _ZN3opt7sortmax17update_assignmentEv.exit.preheader: ; preds = %.noexc93, %_ZN16
   br label %_ZN3opt7sortmax17update_assignmentEv.exit
 
 _ZN3opt7sortmax17update_assignmentEv.exit:        ; preds = %_ZN3opt7sortmax17update_assignmentEv.exit.preheader, %bb.ax
-  %.4.in = phi i32 [ %.4, %bb.ax ], [ %.3.ph, %_ZN3opt7sortmax17update_assignmentEv.exit.preheader ]
-  %.4 = add i32 %.4.in, 1                         ; 5 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.ax ], [ %i.fe, %_ZN3opt7sortmax17update_assignmentEv.exit.preheader ]
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
+  %indvars = trunc i64 %indvars.iv.next to i32    ; 3 uses
   %i.ig = load ptr, ptr %5, align 8, !tbaa !43    ; 4 uses
   %i.ih = icmp eq ptr %i.ig, null
   br i1 %i.ih, label %.critedge2.thread, label %_ZNK6vectorIP4exprLb0EjE4sizeEv.exit95
@@ -473,7 +474,7 @@ _ZN3opt7sortmax17update_assignmentEv.exit:        ; preds = %_ZN3opt7sortmax17up
 _ZNK6vectorIP4exprLb0EjE4sizeEv.exit95:           ; preds = %_ZN3opt7sortmax17update_assignmentEv.exit
   %i.ii = getelementptr inbounds i8, ptr %i.ig, i64 -4
   %i.ij = load i32, ptr %i.ii, align 4, !tbaa !44
-  %10 = icmp ult i32 %.4, %i.ij
+  %10 = icmp ugt i32 %i.ij, %indvars
   br i1 %10, label %bb.av, label %.critedge2.thread199
 
 .critedge2.thread199:                             ; preds = %_ZNK6vectorIP4exprLb0EjE4sizeEv.exit95
@@ -482,7 +483,7 @@ _ZNK6vectorIP4exprLb0EjE4sizeEv.exit95:           ; preds = %_ZN3opt7sortmax17up
   br label %bb.ay
 
 bb.av:                                            ; preds = %_ZNK6vectorIP4exprLb0EjE4sizeEv.exit95
-  %11 = zext i32 %.4 to i64                       ; 2 uses
+  %11 = and i64 %indvars.iv.next, 4294967295      ; 2 uses
   %i.ik = getelementptr inbounds nuw [8 x i8], ptr %i.ig, i64 %11
   %i.il = load ptr, ptr %i.ik, align 8, !tbaa !45
   %i.im = load ptr, ptr %i.er, align 8, !tbaa !53
@@ -518,7 +519,7 @@ bb.ay:                                            ; preds = %.critedge2.thread19
 
 _ZNK6vectorIP4exprLb0EjE4sizeEv.exit98:           ; preds = %.critedge2.thread, %.critedge2, %bb.ay
   %.0.i97 = phi i32 [ %i.iu, %bb.ay ], [ 0, %.critedge2 ], [ 0, %.critedge2.thread ]
-  %i.iv = sub i32 %.0.i97, %.4                    ; 3 uses
+  %i.iv = sub i32 %.0.i97, %indvars               ; 3 uses
   store i32 0, ptr %9, align 8, !tbaa !108
   %i.iw = load i8, ptr %i.es, align 4
   %i.ix = and i8 %i.iw, -4                        ; 2 uses

@@ -204,7 +204,7 @@ bb.a:
   %i.b = load i32, ptr %i.a, align 4, !tbaa !131
   %i.c = add i32 %i.b, 1                          ; 2 uses
   store i32 %i.c, ptr %i.a, align 4, !tbaa !131
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 516 ; 8 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 516 ; 9 uses
   %i.e = load i32, ptr %i.d, align 4, !tbaa !132
   %i.f = icmp ult i32 %i.c, %i.e
   br i1 %i.f, label %png_read_finish_IDAT.exit, label %bb.b
@@ -224,28 +224,74 @@ bb.c:                                             ; preds = %bb.b
   %i.m = add i64 %i.l, 1
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.j, i8 0, i64 %i.m, i1 false)
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 621 ; 3 uses
-  %.promoted = load i8, ptr %i.n, align 1, !tbaa !57 ; 9 uses
-  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 508 ; 7 uses
-  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 536 ; 7 uses
-  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 308 ; 7 uses
-  %i.r = getelementptr inbounds nuw i8, ptr %0, i64 512 ; 7 uses
-  %1 = add i8 %.promoted, 1                       ; 6 uses
-  %i.s = icmp ugt i8 %1, 6
+  %.promoted = load i8, ptr %i.n, align 1, !tbaa !57 ; 3 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 508 ; 8 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 536 ; 8 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 308 ; 8 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %0, i64 512 ; 8 uses
+  %1 = zext i8 %.promoted to i64                  ; 8 uses
+  %indvars.iv.next29 = add nuw nsw i64 %1, 1      ; 2 uses
+  %indvars30 = trunc i64 %indvars.iv.next29 to i8 ; 4 uses
+  %i.s = icmp ugt i8 %indvars30, 6
   br i1 %i.s, label %.loopexit, label %.lr.ph
 
-.critedge.a:                                      ; preds = %bb.j
-  %2 = add i8 %.promoted, 2                       ; 5 uses
-  %i.t = icmp eq i8 %1, 6
-  br i1 %i.t, label %.loopexit, label %.lr.ph.1
+.critedge:                                        ; preds = %bb.j
+  %indvars.iv.next = add nuw nsw i64 %1, 2        ; 2 uses
+  %indvars = trunc i64 %indvars.iv.next to i8     ; 4 uses
+  %2 = icmp ugt i8 %indvars, 6
+  br i1 %2, label %.loopexit, label %.critedge.a
 
-.lr.ph.1:                                         ; preds = %.critedge.a
+.critedge.a:                                      ; preds = %.critedge
+  %3 = load i32, ptr %i.o, align 4, !tbaa !56
+  %4 = and i64 %indvars.iv.next, 7                ; 4 uses
+  %5 = getelementptr inbounds nuw i8, ptr @png_pass_inc, i64 %4
+  %6 = load i8, ptr %5, align 1, !tbaa !7
+  %7 = zext i8 %6 to i32                          ; 3 uses
+  %8 = add i32 %3, %7
+  %9 = getelementptr inbounds nuw i8, ptr @png_pass_start, i64 %4
+  %10 = load i8, ptr %9, align 1, !tbaa !7
+  %11 = zext i8 %10 to i32
+  %12 = xor i32 %11, -1
+  %13 = add i32 %8, %12                           ; 2 uses
+  %14 = udiv i32 %13, %7
+  store i32 %14, ptr %i.p, align 8, !tbaa !135
+  %15 = load i32, ptr %i.q, align 4, !tbaa !59
+  %16 = and i32 %15, 2
+  %i.t = icmp eq i32 %16, 0
+  br i1 %i.t, label %17, label %png_read_finish_IDAT.exit.loopexit
+
+17:                                               ; preds = %.critedge.a
+  %18 = load i32, ptr %i.r, align 8, !tbaa !136
+  %19 = getelementptr inbounds nuw i8, ptr @png_pass_yinc, i64 %4
+  %20 = load i8, ptr %19, align 1, !tbaa !7
+  %21 = zext i8 %20 to i32                        ; 3 uses
+  %22 = add i32 %18, %21
+  %23 = getelementptr inbounds nuw i8, ptr @png_pass_ystart, i64 %4
+  %24 = load i8, ptr %23, align 1, !tbaa !7
+  %25 = zext i8 %24 to i32
+  %26 = xor i32 %25, -1
+  %27 = add i32 %22, %26                          ; 2 uses
+  %28 = udiv i32 %27, %21
+  store i32 %28, ptr %i.d, align 4, !tbaa !132
+  %29 = icmp ult i32 %27, %21
+  %30 = icmp ult i32 %13, %7
+  %or.cond.1 = select i1 %29, i1 true, i1 %30
+  br i1 %or.cond.1, label %.critedge.1, label %png_read_finish_IDAT.exit.loopexit, !llvm.loop !137
+
+.critedge.1:                                      ; preds = %17
+  %indvars.iv.next.1 = add nuw nsw i64 %1, 3      ; 2 uses
+  %indvars.1 = trunc i64 %indvars.iv.next.1 to i8 ; 4 uses
+  %31 = icmp ugt i8 %indvars.1, 6
+  br i1 %31, label %.loopexit, label %.lr.ph.1
+
+.lr.ph.1:                                         ; preds = %.critedge.1
   %i.u = load i32, ptr %i.o, align 4, !tbaa !56
-  %3 = zext nneg i8 %2 to i64                     ; 4 uses
-  %i.v = getelementptr inbounds nuw i8, ptr @png_pass_inc, i64 %3
+  %32 = and i64 %indvars.iv.next.1, 7             ; 4 uses
+  %i.v = getelementptr inbounds nuw i8, ptr @png_pass_inc, i64 %32
   %i.w = load i8, ptr %i.v, align 1, !tbaa !7
   %i.x = zext i8 %i.w to i32                      ; 3 uses
   %i.y = add i32 %i.u, %i.x
-  %i.z = getelementptr inbounds nuw i8, ptr @png_pass_start, i64 %3
+  %i.z = getelementptr inbounds nuw i8, ptr @png_pass_start, i64 %32
   %i.aa = load i8, ptr %i.z, align 1, !tbaa !7
   %i.ab = zext i8 %i.aa to i32
   %i.ac = xor i32 %i.ab, -1
@@ -259,11 +305,11 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %.lr.ph.1
   %i.ai = load i32, ptr %i.r, align 8, !tbaa !136
-  %i.aj = getelementptr inbounds nuw i8, ptr @png_pass_yinc, i64 %3
+  %i.aj = getelementptr inbounds nuw i8, ptr @png_pass_yinc, i64 %32
   %i.ak = load i8, ptr %i.aj, align 1, !tbaa !7
   %i.al = zext i8 %i.ak to i32                    ; 3 uses
   %i.am = add i32 %i.ai, %i.al
-  %i.an = getelementptr inbounds nuw i8, ptr @png_pass_ystart, i64 %3
+  %i.an = getelementptr inbounds nuw i8, ptr @png_pass_ystart, i64 %32
   %i.ao = load i8, ptr %i.an, align 1, !tbaa !7
   %i.ap = zext i8 %i.ao to i32
   %i.aq = xor i32 %i.ap, -1
@@ -276,18 +322,19 @@ bb.d:                                             ; preds = %.lr.ph.1
   br i1 %or.cond.1.a, label %.critedge.1.a, label %png_read_finish_IDAT.exit.loopexit, !llvm.loop !137
 
 .critedge.1.a:                                    ; preds = %bb.d
-  %4 = add i8 %.promoted, 3                       ; 5 uses
-  %i.av = icmp ugt i8 %2, 5
+  %indvars.iv.next.2 = add nuw nsw i64 %1, 4      ; 2 uses
+  %indvars.2 = trunc i64 %indvars.iv.next.2 to i8 ; 4 uses
+  %i.av = icmp ugt i8 %indvars.2, 6
   br i1 %i.av, label %.loopexit, label %.lr.ph.2
 
 .lr.ph.2:                                         ; preds = %.critedge.1.a
   %i.aw = load i32, ptr %i.o, align 4, !tbaa !56
-  %5 = zext nneg i8 %4 to i64                     ; 4 uses
-  %i.ax = getelementptr inbounds nuw i8, ptr @png_pass_inc, i64 %5
+  %33 = and i64 %indvars.iv.next.2, 7             ; 4 uses
+  %i.ax = getelementptr inbounds nuw i8, ptr @png_pass_inc, i64 %33
   %i.ay = load i8, ptr %i.ax, align 1, !tbaa !7
   %i.az = zext i8 %i.ay to i32                    ; 3 uses
   %i.ba = add i32 %i.aw, %i.az
-  %i.bb = getelementptr inbounds nuw i8, ptr @png_pass_start, i64 %5
+  %i.bb = getelementptr inbounds nuw i8, ptr @png_pass_start, i64 %33
   %i.bc = load i8, ptr %i.bb, align 1, !tbaa !7
   %i.bd = zext i8 %i.bc to i32
   %i.be = xor i32 %i.bd, -1
@@ -301,11 +348,11 @@ bb.d:                                             ; preds = %.lr.ph.1
 
 bb.e:                                             ; preds = %.lr.ph.2
   %i.bk = load i32, ptr %i.r, align 8, !tbaa !136
-  %i.bl = getelementptr inbounds nuw i8, ptr @png_pass_yinc, i64 %5
+  %i.bl = getelementptr inbounds nuw i8, ptr @png_pass_yinc, i64 %33
   %i.bm = load i8, ptr %i.bl, align 1, !tbaa !7
   %i.bn = zext i8 %i.bm to i32                    ; 3 uses
   %i.bo = add i32 %i.bk, %i.bn
-  %i.bp = getelementptr inbounds nuw i8, ptr @png_pass_ystart, i64 %5
+  %i.bp = getelementptr inbounds nuw i8, ptr @png_pass_ystart, i64 %33
   %i.bq = load i8, ptr %i.bp, align 1, !tbaa !7
   %i.br = zext i8 %i.bq to i32
   %i.bs = xor i32 %i.br, -1
@@ -318,18 +365,19 @@ bb.e:                                             ; preds = %.lr.ph.2
   br i1 %or.cond.2, label %.critedge.2, label %png_read_finish_IDAT.exit.loopexit, !llvm.loop !137
 
 .critedge.2:                                      ; preds = %bb.e
-  %6 = add i8 %.promoted, 4                       ; 5 uses
-  %i.bx = icmp ugt i8 %4, 5
+  %indvars.iv.next.3 = add nuw nsw i64 %1, 5      ; 2 uses
+  %indvars.3 = trunc i64 %indvars.iv.next.3 to i8 ; 4 uses
+  %i.bx = icmp ugt i8 %indvars.3, 6
   br i1 %i.bx, label %.loopexit, label %.lr.ph.3
 
 .lr.ph.3:                                         ; preds = %.critedge.2
   %i.by = load i32, ptr %i.o, align 4, !tbaa !56
-  %7 = zext nneg i8 %6 to i64                     ; 4 uses
-  %i.bz = getelementptr inbounds nuw i8, ptr @png_pass_inc, i64 %7
+  %34 = and i64 %indvars.iv.next.3, 7             ; 4 uses
+  %i.bz = getelementptr inbounds nuw i8, ptr @png_pass_inc, i64 %34
   %i.ca = load i8, ptr %i.bz, align 1, !tbaa !7
   %i.cb = zext i8 %i.ca to i32                    ; 3 uses
   %i.cc = add i32 %i.by, %i.cb
-  %i.cd = getelementptr inbounds nuw i8, ptr @png_pass_start, i64 %7
+  %i.cd = getelementptr inbounds nuw i8, ptr @png_pass_start, i64 %34
   %i.ce = load i8, ptr %i.cd, align 1, !tbaa !7
   %i.cf = zext i8 %i.ce to i32
   %i.cg = xor i32 %i.cf, -1
@@ -343,11 +391,11 @@ bb.e:                                             ; preds = %.lr.ph.2
 
 bb.f:                                             ; preds = %.lr.ph.3
   %i.cm = load i32, ptr %i.r, align 8, !tbaa !136
-  %i.cn = getelementptr inbounds nuw i8, ptr @png_pass_yinc, i64 %7
+  %i.cn = getelementptr inbounds nuw i8, ptr @png_pass_yinc, i64 %34
   %i.co = load i8, ptr %i.cn, align 1, !tbaa !7
   %i.cp = zext i8 %i.co to i32                    ; 3 uses
   %i.cq = add i32 %i.cm, %i.cp
-  %i.cr = getelementptr inbounds nuw i8, ptr @png_pass_ystart, i64 %7
+  %i.cr = getelementptr inbounds nuw i8, ptr @png_pass_ystart, i64 %34
   %i.cs = load i8, ptr %i.cr, align 1, !tbaa !7
   %i.ct = zext i8 %i.cs to i32
   %i.cu = xor i32 %i.ct, -1
@@ -360,18 +408,19 @@ bb.f:                                             ; preds = %.lr.ph.3
   br i1 %or.cond.3, label %.critedge.3, label %png_read_finish_IDAT.exit.loopexit, !llvm.loop !137
 
 .critedge.3:                                      ; preds = %bb.f
-  %8 = add i8 %.promoted, 5                       ; 5 uses
-  %i.cz = icmp ugt i8 %6, 5
+  %indvars.iv.next.4 = add nuw nsw i64 %1, 6      ; 2 uses
+  %indvars.4 = trunc i64 %indvars.iv.next.4 to i8 ; 4 uses
+  %i.cz = icmp ugt i8 %indvars.4, 6
   br i1 %i.cz, label %.loopexit, label %.lr.ph.4
 
 .lr.ph.4:                                         ; preds = %.critedge.3
   %i.da = load i32, ptr %i.o, align 4, !tbaa !56
-  %9 = zext nneg i8 %8 to i64                     ; 4 uses
-  %i.db = getelementptr inbounds nuw i8, ptr @png_pass_inc, i64 %9
+  %35 = and i64 %indvars.iv.next.4, 7             ; 4 uses
+  %i.db = getelementptr inbounds nuw i8, ptr @png_pass_inc, i64 %35
   %i.dc = load i8, ptr %i.db, align 1, !tbaa !7
   %i.dd = zext i8 %i.dc to i32                    ; 3 uses
   %i.de = add i32 %i.da, %i.dd
-  %i.df = getelementptr inbounds nuw i8, ptr @png_pass_start, i64 %9
+  %i.df = getelementptr inbounds nuw i8, ptr @png_pass_start, i64 %35
   %i.dg = load i8, ptr %i.df, align 1, !tbaa !7
   %i.dh = zext i8 %i.dg to i32
   %i.di = xor i32 %i.dh, -1
@@ -385,11 +434,11 @@ bb.f:                                             ; preds = %.lr.ph.3
 
 bb.g:                                             ; preds = %.lr.ph.4
   %i.do = load i32, ptr %i.r, align 8, !tbaa !136
-  %i.dp = getelementptr inbounds nuw i8, ptr @png_pass_yinc, i64 %9
+  %i.dp = getelementptr inbounds nuw i8, ptr @png_pass_yinc, i64 %35
   %i.dq = load i8, ptr %i.dp, align 1, !tbaa !7
   %i.dr = zext i8 %i.dq to i32                    ; 3 uses
   %i.ds = add i32 %i.do, %i.dr
-  %i.dt = getelementptr inbounds nuw i8, ptr @png_pass_ystart, i64 %9
+  %i.dt = getelementptr inbounds nuw i8, ptr @png_pass_ystart, i64 %35
   %i.du = load i8, ptr %i.dt, align 1, !tbaa !7
   %i.dv = zext i8 %i.du to i32
   %i.dw = xor i32 %i.dv, -1
@@ -402,18 +451,19 @@ bb.g:                                             ; preds = %.lr.ph.4
   br i1 %or.cond.4, label %.critedge.4, label %png_read_finish_IDAT.exit.loopexit, !llvm.loop !137
 
 .critedge.4:                                      ; preds = %bb.g
-  %10 = add i8 %.promoted, 6                      ; 4 uses
-  %i.eb = icmp ugt i8 %8, 5
+  %indvars.iv.next.5 = add nuw nsw i64 %1, 7      ; 2 uses
+  %indvars.5 = trunc i64 %indvars.iv.next.5 to i8 ; 4 uses
+  %i.eb = icmp ugt i8 %indvars.5, 6
   br i1 %i.eb, label %.loopexit, label %.lr.ph.5
 
 .lr.ph.5:                                         ; preds = %.critedge.4
   %i.ec = load i32, ptr %i.o, align 4, !tbaa !56
-  %11 = zext nneg i8 %10 to i64                   ; 4 uses
-  %i.ed = getelementptr inbounds nuw i8, ptr @png_pass_inc, i64 %11
+  %36 = and i64 %indvars.iv.next.5, 7             ; 4 uses
+  %i.ed = getelementptr inbounds nuw i8, ptr @png_pass_inc, i64 %36
   %i.ee = load i8, ptr %i.ed, align 1, !tbaa !7
   %i.ef = zext i8 %i.ee to i32                    ; 3 uses
   %i.eg = add i32 %i.ec, %i.ef
-  %i.eh = getelementptr inbounds nuw i8, ptr @png_pass_start, i64 %11
+  %i.eh = getelementptr inbounds nuw i8, ptr @png_pass_start, i64 %36
   %i.ei = load i8, ptr %i.eh, align 1, !tbaa !7
   %i.ej = zext i8 %i.ei to i32
   %i.ek = xor i32 %i.ej, -1
@@ -427,11 +477,11 @@ bb.g:                                             ; preds = %.lr.ph.4
 
 bb.h:                                             ; preds = %.lr.ph.5
   %i.eq = load i32, ptr %i.r, align 8, !tbaa !136
-  %i.er = getelementptr inbounds nuw i8, ptr @png_pass_yinc, i64 %11
+  %i.er = getelementptr inbounds nuw i8, ptr @png_pass_yinc, i64 %36
   %i.es = load i8, ptr %i.er, align 1, !tbaa !7
   %i.et = zext i8 %i.es to i32                    ; 3 uses
   %i.eu = add i32 %i.eq, %i.et
-  %i.ev = getelementptr inbounds nuw i8, ptr @png_pass_ystart, i64 %11
+  %i.ev = getelementptr inbounds nuw i8, ptr @png_pass_ystart, i64 %36
   %i.ew = load i8, ptr %i.ev, align 1, !tbaa !7
   %i.ex = zext i8 %i.ew to i32
   %i.ey = xor i32 %i.ex, -1
@@ -444,18 +494,18 @@ bb.h:                                             ; preds = %.lr.ph.5
   br i1 %or.cond.5, label %.critedge.5, label %png_read_finish_IDAT.exit.loopexit, !llvm.loop !137
 
 .critedge.5:                                      ; preds = %bb.h
-  %i.fd = add i8 %.promoted, 7                    ; 4 uses
-  %12 = icmp ult i8 %.promoted, -6
-  br i1 %12, label %.loopexit, label %.lr.ph.6
+  %i.fd = add i8 %.promoted, 8                    ; 4 uses
+  %37 = icmp ugt i8 %i.fd, 6
+  br i1 %37, label %.loopexit, label %.lr.ph.6
 
 .lr.ph.6:                                         ; preds = %.critedge.5
   %i.fe = load i32, ptr %i.o, align 4, !tbaa !56
-  %13 = zext nneg i8 %i.fd to i64                 ; 4 uses
-  %i.ff = getelementptr inbounds nuw i8, ptr @png_pass_inc, i64 %13
+  %38 = and i64 %1, 7                             ; 4 uses
+  %i.ff = getelementptr inbounds nuw i8, ptr @png_pass_inc, i64 %38
   %i.fg = load i8, ptr %i.ff, align 1, !tbaa !7
   %i.fh = zext i8 %i.fg to i32                    ; 3 uses
   %i.fi = add i32 %i.fe, %i.fh
-  %i.fj = getelementptr inbounds nuw i8, ptr @png_pass_start, i64 %13
+  %i.fj = getelementptr inbounds nuw i8, ptr @png_pass_start, i64 %38
   %i.fk = load i8, ptr %i.fj, align 1, !tbaa !7
   %i.fl = zext i8 %i.fk to i32
   %i.fm = xor i32 %i.fl, -1
@@ -469,11 +519,11 @@ bb.h:                                             ; preds = %.lr.ph.5
 
 bb.i:                                             ; preds = %.lr.ph.6
   %i.fs = load i32, ptr %i.r, align 8, !tbaa !136
-  %i.ft = getelementptr inbounds nuw i8, ptr @png_pass_yinc, i64 %13
+  %i.ft = getelementptr inbounds nuw i8, ptr @png_pass_yinc, i64 %38
   %i.fu = load i8, ptr %i.ft, align 1, !tbaa !7
   %i.fv = zext i8 %i.fu to i32                    ; 3 uses
   %i.fw = add i32 %i.fs, %i.fv
-  %i.fx = getelementptr inbounds nuw i8, ptr @png_pass_ystart, i64 %13
+  %i.fx = getelementptr inbounds nuw i8, ptr @png_pass_ystart, i64 %38
   %i.fy = load i8, ptr %i.fx, align 1, !tbaa !7
   %i.fz = zext i8 %i.fy to i32
   %i.ga = xor i32 %i.fz, -1
@@ -486,17 +536,17 @@ bb.i:                                             ; preds = %.lr.ph.6
   br i1 %or.cond.6, label %.critedge.6, label %png_read_finish_IDAT.exit.loopexit, !llvm.loop !137
 
 .critedge.6:                                      ; preds = %bb.i
-  %i.gf = add nsw i8 %.promoted, 8
+  %i.gf = add i8 %.promoted, 9
   br label %.loopexit
 
 .lr.ph:                                           ; preds = %bb.c
   %i.gg = load i32, ptr %i.o, align 4, !tbaa !56
-  %14 = zext nneg i8 %1 to i64                    ; 4 uses
-  %i.gh = getelementptr inbounds nuw i8, ptr @png_pass_inc, i64 %14
+  %39 = and i64 %indvars.iv.next29, 7             ; 4 uses
+  %i.gh = getelementptr inbounds nuw i8, ptr @png_pass_inc, i64 %39
   %i.gi = load i8, ptr %i.gh, align 1, !tbaa !7
   %i.gj = zext i8 %i.gi to i32                    ; 3 uses
   %i.gk = add i32 %i.gg, %i.gj
-  %i.gl = getelementptr inbounds nuw i8, ptr @png_pass_start, i64 %14
+  %i.gl = getelementptr inbounds nuw i8, ptr @png_pass_start, i64 %39
   %i.gm = load i8, ptr %i.gl, align 1, !tbaa !7
   %i.gn = zext i8 %i.gm to i32
   %i.go = xor i32 %i.gn, -1
@@ -510,11 +560,11 @@ bb.i:                                             ; preds = %.lr.ph.6
 
 bb.j:                                             ; preds = %.lr.ph
   %i.gu = load i32, ptr %i.r, align 8, !tbaa !136
-  %i.gv = getelementptr inbounds nuw i8, ptr @png_pass_yinc, i64 %14
+  %i.gv = getelementptr inbounds nuw i8, ptr @png_pass_yinc, i64 %39
   %i.gw = load i8, ptr %i.gv, align 1, !tbaa !7
   %i.gx = zext i8 %i.gw to i32                    ; 3 uses
   %i.gy = add i32 %i.gu, %i.gx
-  %i.gz = getelementptr inbounds nuw i8, ptr @png_pass_ystart, i64 %14
+  %i.gz = getelementptr inbounds nuw i8, ptr @png_pass_ystart, i64 %39
   %i.ha = load i8, ptr %i.gz, align 1, !tbaa !7
   %i.hb = zext i8 %i.ha to i32
   %i.hc = xor i32 %i.hb, -1
@@ -524,11 +574,11 @@ bb.j:                                             ; preds = %.lr.ph
   %i.hf = icmp ult i32 %i.hd, %i.gx
   %i.hg = icmp ult i32 %i.gp, %i.gj
   %or.cond = select i1 %i.hf, i1 true, i1 %i.hg
-  br i1 %or.cond, label %.critedge.a, label %png_read_finish_IDAT.exit.loopexit, !llvm.loop !137
+  br i1 %or.cond, label %.critedge, label %png_read_finish_IDAT.exit.loopexit, !llvm.loop !137
 
-.loopexit:                                        ; preds = %.critedge.a, %.critedge.1.a, %.critedge.2, %.critedge.3, %.critedge.4, %.critedge.5, %.critedge.6, %bb.c
-  %.lcssa = phi i8 [ %1, %bb.c ], [ %2, %.critedge.a ], [ %4, %.critedge.1.a ], [ %6, %.critedge.2 ], [ %8, %.critedge.3 ], [ %10, %.critedge.4 ], [ %i.fd, %.critedge.5 ], [ %i.gf, %.critedge.6 ]
-  store i8 %.lcssa, ptr %i.n, align 1, !tbaa !57
+.loopexit:                                        ; preds = %.critedge, %.critedge.1, %.critedge.1.a, %.critedge.2, %.critedge.3, %.critedge.4, %.critedge.5, %.critedge.6, %bb.c
+  %indvars.lcssa = phi i8 [ %indvars30, %bb.c ], [ %indvars, %.critedge ], [ %indvars.1, %.critedge.1 ], [ %indvars.2, %.critedge.1.a ], [ %indvars.3, %.critedge.2 ], [ %indvars.4, %.critedge.3 ], [ %indvars.5, %.critedge.4 ], [ %i.fd, %.critedge.5 ], [ %i.gf, %.critedge.6 ]
+  store i8 %indvars.lcssa, ptr %i.n, align 1, !tbaa !57
   br label %bb.k
 
 bb.k:                                             ; preds = %.loopexit, %bb.b
@@ -573,9 +623,9 @@ bb.o:                                             ; preds = %bb.n
   %i.ia = tail call fastcc range(i32 0, 2) i32 @png_crc_finish_critical(ptr noundef nonnull %0, i32 noundef %i.hz, i32 noundef 0) ; 0 uses
   br label %png_read_finish_IDAT.exit
 
-png_read_finish_IDAT.exit.loopexit:               ; preds = %bb.i, %.lr.ph.6, %bb.h, %.lr.ph.5, %bb.g, %.lr.ph.4, %bb.f, %.lr.ph.3, %bb.e, %.lr.ph.2, %bb.d, %.lr.ph.1, %.lr.ph, %bb.j
-  %.lcssa28 = phi i8 [ %1, %.lr.ph ], [ %1, %bb.j ], [ %2, %.lr.ph.1 ], [ %2, %bb.d ], [ %4, %.lr.ph.2 ], [ %4, %bb.e ], [ %6, %.lr.ph.3 ], [ %6, %bb.f ], [ %8, %.lr.ph.4 ], [ %8, %bb.g ], [ %10, %.lr.ph.5 ], [ %10, %bb.h ], [ %i.fd, %.lr.ph.6 ], [ %i.fd, %bb.i ]
-  store i8 %.lcssa28, ptr %i.n, align 1, !tbaa !57
+png_read_finish_IDAT.exit.loopexit:               ; preds = %bb.i, %.lr.ph.6, %bb.h, %.lr.ph.5, %bb.g, %.lr.ph.4, %bb.f, %.lr.ph.3, %bb.e, %.lr.ph.2, %bb.d, %.lr.ph.1, %17, %.critedge.a, %.lr.ph, %bb.j
+  %indvars32.lcssa = phi i8 [ %indvars30, %.lr.ph ], [ %indvars30, %bb.j ], [ %indvars, %.critedge.a ], [ %indvars, %17 ], [ %indvars.1, %.lr.ph.1 ], [ %indvars.1, %bb.d ], [ %indvars.2, %.lr.ph.2 ], [ %indvars.2, %bb.e ], [ %indvars.3, %.lr.ph.3 ], [ %indvars.3, %bb.f ], [ %indvars.4, %.lr.ph.4 ], [ %indvars.4, %bb.g ], [ %indvars.5, %.lr.ph.5 ], [ %indvars.5, %bb.h ], [ %i.fd, %.lr.ph.6 ], [ %i.fd, %bb.i ]
+  store i8 %indvars32.lcssa, ptr %i.n, align 1, !tbaa !57
   br label %png_read_finish_IDAT.exit
 
 png_read_finish_IDAT.exit:                        ; preds = %png_read_finish_IDAT.exit.loopexit, %bb.o, %bb.n, %bb.a

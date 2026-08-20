@@ -203,12 +203,13 @@ proto_item_set_generated.exit106:                 ; preds = %proto_item_set_gene
   %.093114 = phi i32 [ %i.aw, %split ], [ %i.v, %proto_item_set_generated.exit106 ] ; 2 uses
   %i.av = call i32 @tvb_get_uint32(ptr noundef %2, i32 noundef %.093114, i32 noundef %4)
   %i.aw = add i32 %.093114, 4                     ; 2 uses
+  %7 = zext i32 %.088116 to i64
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.l, %.lr.ph
-  %.1113 = phi i1 [ %.0117, %.lr.ph ], [ %.2, %bb.l ] ; 2 uses
-  %.189112 = phi i32 [ %.088116, %.lr.ph ], [ %i.bc, %bb.l ] ; 2 uses
-  %.091111 = phi i32 [ 0, %.lr.ph ], [ %i.bg, %bb.l ] ; 3 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.l ], [ %7, %.lr.ph ] ; 3 uses
+  %.1113 = phi i1 [ %.2, %bb.l ], [ %.0117, %.lr.ph ] ; 2 uses
+  %.091111 = phi i32 [ %i.bg, %bb.l ], [ 0, %.lr.ph ] ; 3 uses
   %i.ax = lshr exact i32 -2147483648, %.091111
   %i.ay = and i32 %i.ax, %i.av
   %.not99 = icmp eq i32 %i.ay, 0                  ; 2 uses
@@ -218,14 +219,14 @@ bb.i:                                             ; preds = %bb.l, %.lr.ph
 
 bb.j:                                             ; preds = %bb.i
   %i.ba = select i1 %.1113, ptr @.str.1706, ptr @.str.1707
-  %7 = zext i32 %.189112 to i64
-  %i.bb = add i64 %i.q, %7
+  %i.bb = add i64 %i.q, %indvars.iv
   call void (ptr, ptr, ...) @proto_item_append_text(ptr noundef %.287, ptr noundef nonnull %i.ba, i64 noundef %i.bb)
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i
   %.2 = phi i1 [ false, %bb.j ], [ %.1113, %bb.i ] ; 2 uses
-  %i.bc = add i32 %.189112, 1                     ; 3 uses
+  %8 = trunc nuw i64 %indvars.iv to i32
+  %i.bc = add i32 %8, 1                           ; 2 uses
   %i.bd = load i32, ptr %i.a, align 4             ; 2 uses
   %.not100 = icmp ult i32 %i.bc, %i.bd
   br i1 %.not100, label %bb.l, label %split
@@ -236,6 +237,7 @@ bb.l:                                             ; preds = %bb.k
   %i.bg = add nuw nsw i32 %.091111, 1
   %i.bh = icmp samesign ult i32 %.091111, 31
   %or.cond118 = select i1 %i.bf, i1 %i.bh, i1 false
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   br i1 %or.cond118, label %bb.i, label %._crit_edge121, !llvm.loop !82
 
 ._crit_edge121:                                   ; preds = %bb.l

@@ -203,38 +203,41 @@ CopyVar.exit:                                     ; preds = %.lr.ph.split.i, %bb
 
 .lr.ph241.lr.ph:                                  ; preds = %CopyVar.exit
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %i.ag = add nsw i32 %4, -1                      ; 2 uses
+  %i.ag = add nsw i32 %4, -1
   %i.ah = getelementptr inbounds nuw i8, ptr %i.h, i64 4 ; 5 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %i.h, i64 8 ; 7 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %7 = sext i32 %6 to i64
+  %sext = sext i32 %i.ag to i64                   ; 2 uses
   br label %.lr.ph241
 
 .lr.ph241:                                        ; preds = %.lr.ph241.lr.ph, %AddStem.exit185
   %.0134.ph246 = phi i32 [ %i.d, %.lr.ph241.lr.ph ], [ %i.fb, %AddStem.exit185 ]
   %.0135.ph245 = phi ptr [ %i.e, %.lr.ph241.lr.ph ], [ %i.gh, %AddStem.exit185 ]
-  %.0144.ph244 = phi i32 [ %5, %.lr.ph241.lr.ph ], [ %i.fb, %AddStem.exit185 ] ; 10 uses
-  %i.ak = sext i32 %.0144.ph244 to i64
+  %.0144.ph244 = phi i32 [ %5, %.lr.ph241.lr.ph ], [ %i.fb, %AddStem.exit185 ] ; 9 uses
+  %i.ak = sext i32 %.0144.ph244 to i64            ; 2 uses
   %i.al = getelementptr inbounds i8, ptr %3, i64 %i.ak ; 3 uses
   %i.am = icmp eq i32 %.0144.ph244, 0
+  %8 = sext i32 %.0134.ph246 to i64
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph241, %.loopexit
-  %.0134239 = phi i32 [ %.0134.ph246, %.lr.ph241 ], [ %9, %.loopexit ] ; 14 uses
+  %indvars.iv = phi i64 [ %8, %.lr.ph241 ], [ %indvars.iv.next, %.loopexit ] ; 10 uses
   %.0135238 = phi ptr [ %.0135.ph245, %.lr.ph241 ], [ %.1136, %.loopexit ] ; 5 uses
-  %i.an = icmp sgt i32 %.0134239, %.0144.ph244
+  %indvars273 = trunc i64 %indvars.iv to i32      ; 6 uses
+  %i.an = icmp sgt i64 %indvars.iv, %i.ak
   br i1 %i.an, label %.lr.ph233, label %.critedge
 
 .lr.ph233:                                        ; preds = %bb.f
   %i.ao = load ptr, ptr %i.af, align 8            ; 2 uses
-  %7 = sext i32 %.0134239 to i64
-  %i.ap = getelementptr inbounds i8, ptr %3, i64 %7 ; 3 uses
-  %i.aq = sub i32 %4, %.0134239                   ; 2 uses
+  %i.ap = getelementptr inbounds i8, ptr %3, i64 %indvars.iv ; 3 uses
+  %i.aq = sub i32 %4, %indvars273                 ; 2 uses
   %.not207 = icmp eq ptr %.0135238, null
   %i.ar = ptrtoint ptr %i.ap to i64
-  %i.as = sub i32 %.0134239, %.0144.ph244
-  %i.at = add nsw i32 %.0134239, -1
-  %i.au = icmp eq i32 %.0134239, 0
-  %i.av = icmp eq i32 %.0134239, %i.ag
+  %i.as = sub i32 %indvars273, %.0144.ph244
+  %i.at = add nsw i32 %indvars273, -1
+  %i.au = icmp eq i64 %indvars.iv, 0
+  %i.av = icmp eq i64 %indvars.iv, %sext
   %. = select i1 %i.av, i32 8, i32 4
   %.0133 = select i1 %i.au, i32 2, i32 %.
   %i.aw = icmp eq ptr %i.ao, null
@@ -315,7 +318,7 @@ CheckCompoundAffixes.exit.thread196:              ; preds = %.thread.sink.split.
   %.1.i200 = phi i32 [ %.sink73.i, %CheckCompoundAffixes.exit ], [ 0, %.thread.sink.split.i ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
   %i.bz = add i32 %.1.i200, %i.as                 ; 5 uses
-  %i.ca = add i32 %.1.i200, %.0134239             ; 3 uses
+  %i.ca = add i32 %.1.i200, %indvars273           ; 3 uses
   %i.cb = add i32 %i.ca, -1
   %i.cc = sext i32 %i.cb to i64
   %i.cd = getelementptr inbounds i8, ptr %i.g, i64 %i.cc ; 2 uses
@@ -465,8 +468,7 @@ bb.u:                                             ; preds = %bb.o, %bb.t, %bb.l,
   %.idx = shl nuw nsw i64 %i.ed, 4
   %i.ee = getelementptr inbounds nuw i8, ptr %.0135238, i64 8 ; 2 uses
   %i.ef = getelementptr inbounds nuw i8, ptr %i.ee, i64 %.idx
-  %8 = sext i32 %.0134239 to i64                  ; 2 uses
-  %i.eg = getelementptr inbounds i8, ptr %3, i64 %8
+  %i.eg = getelementptr inbounds i8, ptr %3, i64 %indvars.iv
   %i.eh = load i8, ptr %i.eg, align 1
   %i.ei = zext i8 %i.eh to i32                    ; 2 uses
   br label %bb.v
@@ -498,7 +500,7 @@ bb.x:                                             ; preds = %bb.v
   br i1 %.not157, label %bb.af, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
-  %i.ev = icmp eq i32 %.0134239, %i.ag
+  %i.ev = icmp eq i64 %indvars.iv, %sext
   %.166 = select i1 %i.ev, i32 8, i32 4
   %.1 = select i1 %i.am, i32 2, i32 %.166
   %i.ew = lshr i32 %i.eo, 9
@@ -507,15 +509,15 @@ bb.y:                                             ; preds = %bb.x
   br i1 %.not158, label %bb.af, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
-  %i.ey = getelementptr inbounds i8, ptr %i.g, i64 %8
+  %i.ey = getelementptr inbounds i8, ptr %i.g, i64 %indvars.iv
   %i.ez = load i8, ptr %i.ey, align 1
   %.not159 = icmp ne i8 %i.ez, 0
-  %i.fa = icmp sgt i32 %.0134239, %6
+  %i.fa = icmp sgt i64 %indvars.iv, %7
   %or.cond = and i1 %i.fa, %.not159
   br i1 %or.cond, label %bb.aa, label %bb.af
 
 bb.aa:                                            ; preds = %bb.z
-  %i.fb = add i32 %.0134239, 1                    ; 6 uses
+  %i.fb = add i32 %indvars273, 1                  ; 6 uses
   %i.fc = icmp eq i32 %4, %i.fb
   br i1 %i.fc, label %bb.ab, label %.preheader
 
@@ -552,7 +554,7 @@ bb.ac:                                            ; preds = %bb.ab
 
 bb.ad:                                            ; preds = %.preheader
   %i.fp = getelementptr inbounds nuw i8, ptr %.0, i64 16
-  %i.fq = call fastcc ptr @SplitToVariants(ptr noundef %0, ptr noundef nonnull %.0135238, ptr noundef %i.h, ptr noundef nonnull %3, i32 noundef %4, i32 noundef %.0144.ph244, i32 noundef %.0134239)
+  %i.fq = call fastcc ptr @SplitToVariants(ptr noundef %0, ptr noundef nonnull %.0135238, ptr noundef %i.h, ptr noundef nonnull %3, i32 noundef %4, i32 noundef %.0144.ph244, i32 noundef %indvars273)
   store ptr %i.fq, ptr %i.fp, align 8
   %i.fr = sub i32 %i.fb, %.0144.ph244
   %i.fs = sext i32 %i.fr to i64
@@ -597,9 +599,10 @@ bb.af:                                            ; preds = %bb.z, %bb.y, %bb.x
 
 .loopexit:                                        ; preds = %bb.w, %.critedge.thread205, %bb.af
   %.1136 = phi ptr [ %i.gk, %bb.af ], [ null, %.critedge.thread205 ], [ null, %bb.w ]
-  %9 = add i32 %.0134239, 1                       ; 2 uses
-  %10 = icmp slt i32 %9, %4
-  br i1 %10, label %bb.f, label %.critedge.thread, !llvm.loop !69
+  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
+  %indvars = trunc i64 %indvars.iv.next to i32
+  %9 = icmp sgt i32 %4, %indvars
+  br i1 %9, label %bb.f, label %.critedge.thread, !llvm.loop !69
 
 .critedge.thread:                                 ; preds = %AddStem.exit185, %.loopexit, %.critedge, %.preheader37.i, %CopyVar.exit
   %.0144.ph228 = phi i32 [ %5, %CopyVar.exit ], [ %.0144.ph244, %.preheader37.i ], [ %.0144.ph244, %.loopexit ], [ %.0144.ph244, %.critedge ], [ %i.fb, %AddStem.exit185 ] ; 2 uses

@@ -39,8 +39,8 @@ module asm(target_features: "+cmov,+cx8,+fxsr,+retpoline-external-thunk,+retpoli
 ; Function Attrs: fn_ret_thunk_extern nofree norecurse noredzone nosync nounwind null_pointer_is_valid sspstrong memory(argmem: readwrite)
 define dso_local void @topology_set_dom(ptr nofree noundef captures(none) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #0 align 16 prefalign(16) {
 bb.a:
-  %i.a = getelementptr i8, ptr %0, i64 8          ; 2 uses
-  %i.b = zext i32 %1 to i64                       ; 2 uses
+  %i.a = getelementptr i8, ptr %0, i64 8          ; 3 uses
+  %i.b = zext i32 %1 to i64                       ; 3 uses
   %i.c = getelementptr [4 x i8], ptr %i.a, i64 %i.b
   store i32 %2, ptr %i.c, align 4
   %i.d = getelementptr i8, ptr %0, i64 36         ; 3 uses
@@ -52,20 +52,22 @@ bb.a:
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %i.g = zext nneg i32 %.014 to i64
-  %4 = zext i32 %1 to i64
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %indvars.iv.a = phi i64 [ %i.g, %.lr.ph.preheader ], [ %indvars.iv.next.a, %.lr.ph ] ; 4 uses
-  %.0.in15 = phi i64 [ %4, %.lr.ph.preheader ], [ %indvars.iv.a, %.lr.ph ]
-  %i.h = getelementptr [4 x i8], ptr %i.a, i64 %indvars.iv.a
-  store i32 %2, ptr %i.h, align 4
-  %i.i = getelementptr [4 x i8], ptr %i.d, i64 %.0.in15
+  %indvars.iv.a = phi i64 [ %i.b, %.lr.ph.preheader ], [ %indvars.iv.next.a, %.lr.ph ] ; 3 uses
+  %.0.in15 = phi i64 [ %i.g, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 3 uses
+  %4 = getelementptr [4 x i8], ptr %i.a, i64 %indvars.iv.a
+  %5 = load i32, ptr %4, align 4
+  %i.h = getelementptr [4 x i8], ptr %i.a, i64 %.0.in15
+  store i32 %5, ptr %i.h, align 4
+  %i.i = getelementptr [4 x i8], ptr %i.d, i64 %indvars.iv.a
   %i.j = load i32, ptr %i.i, align 4
-  %i.k = getelementptr [4 x i8], ptr %i.d, i64 %indvars.iv.a
+  %i.k = getelementptr [4 x i8], ptr %i.d, i64 %.0.in15
   store i32 %i.j, ptr %i.k, align 4
-  %indvars.iv.next.a = add nuw nsw i64 %indvars.iv.a, 1 ; 2 uses
-  %i.l = and i64 %indvars.iv.next.a, 4294967295
+  %indvars.iv.next = add nuw nsw i64 %.0.in15, 1  ; 2 uses
+  %indvars.iv.next.a = add nuw nsw i64 %indvars.iv.a, 1
+  %i.l = and i64 %indvars.iv.next, 4294967295
   %exitcond.not = icmp eq i64 %i.l, 7
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !10
 

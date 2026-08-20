@@ -201,22 +201,23 @@ bb.v:                                             ; preds = %H5VM_log2_gen.exit.
 .thread.i:                                        ; preds = %bb.v, %H5VM_log2_gen.exit.i
   %i.bm = getelementptr inbounds nuw i8, ptr %1, i64 360 ; 3 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %1, i64 408
-  %.pre138.i = load ptr, ptr %i.bm, align 8, !tbaa !41
   %4 = zext nneg i32 %.0.i.i to i64
+  %.pre143.i = load ptr, ptr %i.bm, align 8, !tbaa !41
   br label %.split.us.i
 
 bb.w:                                             ; preds = %bb.v
   %i.bo = getelementptr inbounds nuw i8, ptr %1, i64 360 ; 3 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %1, i64 408
+  %5 = zext nneg i32 %.0.i.i to i64
   %.pre.i = load ptr, ptr %i.bo, align 8, !tbaa !41
   br label %.split.i
 
 .split.us.i:                                      ; preds = %bb.y, %.thread.i
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.y ], [ %4, %.thread.i ] ; 3 uses
-  %5 = phi ptr [ %i.bw, %bb.y ], [ %.pre138.i, %.thread.i ] ; 2 uses
-  %i.bq = getelementptr inbounds nuw i8, ptr %5, i64 248
+  %6 = phi ptr [ %.pre143.i, %.thread.i ], [ %i.bw, %bb.y ] ; 2 uses
+  %indvars.iv139.i = phi i64 [ %4, %.thread.i ], [ %indvars.iv.next, %bb.y ] ; 3 uses
+  %i.bq = getelementptr inbounds nuw i8, ptr %6, i64 248
   %i.br = load ptr, ptr %i.bq, align 8, !tbaa !39
-  %i.bs = getelementptr inbounds nuw [32 x i8], ptr %i.br, i64 %indvars.iv
+  %i.bs = getelementptr inbounds nuw [32 x i8], ptr %i.br, i64 %indvars.iv139.i
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bs, i64 24
   %i.bu = load ptr, ptr %i.bt, align 8, !tbaa !98 ; 2 uses
   %.not82.us.i = icmp eq ptr %i.bu, null
@@ -232,21 +233,20 @@ bb.x:                                             ; preds = %.split.us.i
   br label %bb.y
 
 bb.y:                                             ; preds = %._crit_edge139.i, %.split.us.i
-  %i.bw = phi ptr [ %.pre140.i, %._crit_edge139.i ], [ %5, %.split.us.i ] ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %i.bw, i64 260
-  %7 = load i32, ptr %6, align 4, !tbaa !30
-  %8 = zext i32 %7 to i64
-  %9 = icmp samesign ult i64 %indvars.iv.next, %8
+  %i.bw = phi ptr [ %.pre140.i, %._crit_edge139.i ], [ %6, %.split.us.i ] ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv139.i, 1 ; 2 uses
+  %indvars141.i = trunc i64 %indvars.iv.next to i32
+  %7 = getelementptr inbounds nuw i8, ptr %i.bw, i64 260
+  %8 = load i32, ptr %7, align 4, !tbaa !30
+  %9 = icmp ugt i32 %8, %indvars141.i
   br i1 %9, label %.split.us.i, label %.loopexit, !llvm.loop !120
 
 .split.i:                                         ; preds = %.loopexit.i, %bb.w
-  %i.bx = phi ptr [ %i.gx, %.loopexit.i ], [ %.pre.i, %bb.w ]
-  %.074.i = phi i32 [ %11, %.loopexit.i ], [ %.0.i.i, %bb.w ] ; 2 uses
+  %i.bx = phi ptr [ %.pre.i, %bb.w ], [ %i.gx, %.loopexit.i ]
+  %indvars.iv.i = phi i64 [ %5, %bb.w ], [ %indvars.iv.next.i, %.loopexit.i ] ; 4 uses
   %i.by = getelementptr inbounds nuw i8, ptr %i.bx, i64 248
   %i.bz = load ptr, ptr %i.by, align 8, !tbaa !39
-  %10 = zext i32 %.074.i to i64                   ; 3 uses
-  %i.ca = getelementptr inbounds nuw [32 x i8], ptr %i.bz, i64 %10
+  %i.ca = getelementptr inbounds nuw [32 x i8], ptr %i.bz, i64 %indvars.iv.i
   %i.cb = getelementptr inbounds nuw i8, ptr %i.ca, i64 24
   %i.cc = load ptr, ptr %i.cb, align 8, !tbaa !98 ; 2 uses
   %.not82.i = icmp eq ptr %i.cc, null
@@ -272,7 +272,7 @@ bb.aa:                                            ; preds = %.split123.us.i
   br label %bb.ay
 
 bb.ab:                                            ; preds = %.split123.us.i
-  %i.cl = trunc nuw i64 %indvars.iv to i32
+  %i.cl = trunc nuw i64 %indvars.iv139.i to i32
   %i.cm = load ptr, ptr %i.bn, align 8, !tbaa !50
   %i.cn = getelementptr inbounds nuw i8, ptr %i.cg, i64 16
   %i.co = load i32, ptr %i.cn, align 8, !tbaa !51
@@ -363,7 +363,7 @@ bb.ai:                                            ; preds = %bb.ag
 bb.aj:                                            ; preds = %bb.ai
   %i.ek = getelementptr inbounds nuw i8, ptr %i.ed, i64 248 ; 2 uses
   %i.el = load ptr, ptr %i.ek, align 8, !tbaa !39
-  %i.em = getelementptr inbounds nuw [32 x i8], ptr %i.el, i64 %10 ; 4 uses
+  %i.em = getelementptr inbounds nuw [32 x i8], ptr %i.el, i64 %indvars.iv.i ; 4 uses
   %i.en = load i64, ptr %i.em, align 8, !tbaa !104
   %i.eo = add i64 %i.en, -1
   store i64 %i.eo, ptr %i.em, align 8, !tbaa !104
@@ -413,7 +413,7 @@ bb.am:                                            ; preds = %.sink.split.i.i, %b
 
 bb.an:                                            ; preds = %bb.am
   %i.fm = load ptr, ptr %i.ek, align 8, !tbaa !39
-  %i.fn = getelementptr inbounds nuw [32 x i8], ptr %i.fm, i64 %10
+  %i.fn = getelementptr inbounds nuw [32 x i8], ptr %i.fm, i64 %indvars.iv.i
   %i.fo = getelementptr inbounds nuw i8, ptr %i.fn, i64 24
   %i.fp = load ptr, ptr %i.fo, align 8, !tbaa !98
   %i.fq = tail call ptr @H5SL_remove(ptr noundef %i.fp, ptr noundef nonnull %i.dd) #5
@@ -492,12 +492,13 @@ bb.ax:                                            ; preds = %bb.af, %.lr.ph.i
   br i1 %.not85.i, label %.loopexit.i, label %.lr.ph121.i
 
 .loopexit.i:                                      ; preds = %._crit_edge.i, %bb.z, %.split.i
-  %11 = add i32 %.074.i, 1                        ; 2 uses
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
+  %indvars.i = trunc i64 %indvars.iv.next.i to i32
   %i.gx = load ptr, ptr %i.bo, align 8, !tbaa !41 ; 2 uses
   %i.gy = getelementptr inbounds nuw i8, ptr %i.gx, i64 260
   %i.gz = load i32, ptr %i.gy, align 4, !tbaa !30
-  %12 = icmp ult i32 %11, %i.gz
-  br i1 %12, label %.split.i, label %.loopexit, !llvm.loop !120
+  %10 = icmp ugt i32 %i.gz, %indvars.i
+  br i1 %10, label %.split.i, label %.loopexit, !llvm.loop !120
 
 bb.ay:                                            ; preds = %bb.ah, %bb.aa, %bb.ac, %bb.ae, %bb.aw, %bb.at, %H5FS__size_node_decr.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)

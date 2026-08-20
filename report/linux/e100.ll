@@ -204,7 +204,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not38.i, label %.preheader.i, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %.preheader31.i
-  %3 = trunc i32 %i.n to i16
+  %3 = and i32 %i.n, 65535
+  %4 = zext nneg i32 %3 to i64
   %i.ac = trunc nuw i32 %i.aa to i16
   br label %.lr.ph.i
 
@@ -231,13 +232,14 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %.lr.ph.i
-  %.02732.i = phi i16 [ %7, %.lr.ph.i ], [ %3, %.lr.ph.i.preheader ] ; 3 uses
-  %4 = zext i16 %.02732.i to i64
-  %5 = getelementptr [2 x i8], ptr %i.e, i64 %4
+  %indvars.iv = phi i64 [ %4, %.lr.ph.i.preheader ], [ %indvars.iv.next, %.lr.ph.i ] ; 3 uses
+  %5 = getelementptr [2 x i8], ptr %i.e, i64 %indvars.iv
   %6 = load i16, ptr %5, align 2
-  tail call fastcc void @e100_eeprom_write(ptr noundef %i.b, i16 noundef zeroext %i.t, i16 noundef zeroext %.02732.i, i16 noundef zeroext %6) #20, !srcloc !82
-  %7 = add i16 %.02732.i, 1                       ; 2 uses
-  %8 = icmp ult i16 %7, %i.ac
+  %7 = trunc nuw i64 %indvars.iv to i16
+  tail call fastcc void @e100_eeprom_write(ptr noundef %i.b, i16 noundef zeroext %i.t, i16 noundef zeroext %7, i16 noundef zeroext %6) #20, !srcloc !82
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %indvars = trunc i64 %indvars.iv.next to i16
+  %8 = icmp ugt i16 %i.ac, %indvars
   br i1 %8, label %.lr.ph.i, label %.preheader.loopexit.i, !llvm.loop !83
 
 bb.c:                                             ; preds = %bb.c, %.lr.ph35.i.new

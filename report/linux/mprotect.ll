@@ -204,7 +204,7 @@ pte_needs_flush.exit91.thread.i.i.i.i:            ; preds = %pte_needs_flush.exi
 bb.bh:                                            ; preds = %prot_commit_flush_ptes.exit.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i
   %.0.i418.i.i.i.i.i = phi i32 [ 0, %.lr.ph.i.i.i.i.i ], [ %.0.i136.i.i.i.i.i.lcssa, %prot_commit_flush_ptes.exit.i.i.i.i.i.i ] ; 5 uses
   %.018.i417.i.i.i.i.i = phi i32 [ %i.gs, %.lr.ph.i.i.i.i.i ], [ %i.rx, %prot_commit_flush_ptes.exit.i.i.i.i.i.i ] ; 2 uses
-  %i.pb = sext i32 %.0.i418.i.i.i.i.i to i64      ; 4 uses
+  %i.pb = sext i32 %.0.i418.i.i.i.i.i to i64      ; 5 uses
   %i.pc = getelementptr [64 x i8], ptr %i.ei, i64 %i.pb ; 3 uses
   %i.pd = getelementptr i8, ptr %i.pc, i64 8      ; 2 uses
   %i.pe = load volatile i64, ptr %i.pd, align 8   ; 2 uses
@@ -234,22 +234,28 @@ PageAnonExclusive.exit.i.i.i.i.i.i:               ; preds = %bb.bh, %bb.bi
   %i.pu = load volatile i64, ptr %.0.i.i.i.i.i.i.i, align 8
   %.in.i.i.in.i.i.i.i.i = and i64 %i.pu, 2048     ; 2 uses
   %.in.i.i.not.i.i.i.i.i = icmp eq i64 %.in.i.i.in.i.i.i.i.i, 0
-  %i.pv = add i32 %.018.i417.i.i.i.i.i, %.0.i418.i.i.i.i.i ; 2 uses
+  %i.pv = add i32 %.018.i417.i.i.i.i.i, %.0.i418.i.i.i.i.i ; 3 uses
   %.in.i.i.in.lobit.i.i.i.i.i = lshr exact i64 %.in.i.i.in.i.i.i.i.i, 11
   %i.pw = trunc nuw nsw i64 %.in.i.i.in.lobit.i.i.i.i.i to i32
-  %.0.i136.i.i.i.i.i69 = add i32 %.0.i418.i.i.i.i.i, 1 ; 3 uses
-  %6 = icmp slt i32 %.0.i136.i.i.i.i.i69, %i.pv
+  %.0.i136.i.i.i.i.i69 = add i32 %.0.i418.i.i.i.i.i, 1
+  %smax.i.i.i.i = call i32 @llvm.smax.i32(i32 %i.pv, i32 %.0.i136.i.i.i.i.i69) ; 2 uses
+  %indvars.iv.next.i.i.i.i.i69 = add nsw i64 %i.pb, 1 ; 2 uses
+  %indvars.i.i.i.i.i70 = trunc i64 %indvars.iv.next.i.i.i.i.i69 to i32 ; 2 uses
+  %6 = icmp sgt i32 %i.pv, %indvars.i.i.i.i.i70
   br i1 %6, label %.lr.ph, label %page_anon_exclusive_sub_batch.exit144.i.i.i.i.i
 
 bb.bj:                                            ; preds = %PageAnonExclusive.exit.i141.i.i.i.i.i
-  %.0.i136.i.i.i.i.i = add i32 %.0.i136.i.i.i.i.i70, 1 ; 3 uses
-  %7 = icmp slt i32 %.0.i136.i.i.i.i.i, %i.pv
+  %indvars.iv.next.i.i.i.i.i = add nsw i64 %indvars.iv.next.i.i.i.i.i71, 1 ; 2 uses
+  %indvars.i.i.i.i.i = trunc i64 %indvars.iv.next.i.i.i.i.i to i32 ; 2 uses
+  %7 = icmp sgt i32 %i.pv, %indvars.i.i.i.i.i
   br i1 %7, label %.lr.ph, label %page_anon_exclusive_sub_batch.exit144.i.i.i.i.i, !llvm.loop !33
 
 .lr.ph:                                           ; preds = %PageAnonExclusive.exit.i.i.i.i.i.i, %bb.bj
-  %.0.i136.i.i.i.i.i70 = phi i32 [ %.0.i136.i.i.i.i.i, %bb.bj ], [ %.0.i136.i.i.i.i.i69, %PageAnonExclusive.exit.i.i.i.i.i.i ] ; 3 uses
-  %8 = sext i32 %.0.i136.i.i.i.i.i70 to i64
-  %9 = getelementptr [64 x i8], ptr %i.ei, i64 %8 ; 3 uses
+  %.0.i136.i.i.i.i.i70 = phi i32 [ %indvars.i.i.i.i.i, %bb.bj ], [ %indvars.i.i.i.i.i70, %PageAnonExclusive.exit.i.i.i.i.i.i ]
+  %indvars.iv.next.i.i.i.i.i71 = phi i64 [ %indvars.iv.next.i.i.i.i.i, %bb.bj ], [ %indvars.iv.next.i.i.i.i.i69, %PageAnonExclusive.exit.i.i.i.i.i.i ] ; 2 uses
+  %sext.i.i.i.i.i = shl i64 %indvars.iv.next.i.i.i.i.i71, 32
+  %8 = ashr exact i64 %sext.i.i.i.i.i, 26
+  %9 = getelementptr i8, ptr %i.ei, i64 %8        ; 3 uses
   %i.px = getelementptr i8, ptr %9, i64 8         ; 2 uses
   %i.py = load volatile i64, ptr %i.px, align 8   ; 2 uses
   %i.pz = ptrtoint ptr %9 to i64                  ; 2 uses
@@ -286,7 +292,7 @@ PageAnonExclusive.exit.i141.i.i.i.i.i.page_anon_exclusive_sub_batch.exit144.i.i.
   br label %page_anon_exclusive_sub_batch.exit144.i.i.i.i.i, !llvm.loop !33
 
 page_anon_exclusive_sub_batch.exit144.i.i.i.i.i:  ; preds = %bb.bj, %PageAnonExclusive.exit.i141.i.i.i.i.i.page_anon_exclusive_sub_batch.exit144.i.i.i.i.i_crit_edge, %PageAnonExclusive.exit.i.i.i.i.i.i
-  %.0.i136.i.i.i.i.i.lcssa = phi i32 [ %.0.i136.i.i.i.i.i70, %PageAnonExclusive.exit.i141.i.i.i.i.i.page_anon_exclusive_sub_batch.exit144.i.i.i.i.i_crit_edge ], [ %.0.i136.i.i.i.i.i69, %PageAnonExclusive.exit.i.i.i.i.i.i ], [ %.0.i136.i.i.i.i.i, %bb.bj ] ; 3 uses
+  %.0.i136.i.i.i.i.i.lcssa = phi i32 [ %.0.i136.i.i.i.i.i70, %PageAnonExclusive.exit.i141.i.i.i.i.i.page_anon_exclusive_sub_batch.exit144.i.i.i.i.i_crit_edge ], [ %smax.i.i.i.i, %PageAnonExclusive.exit.i.i.i.i.i.i ], [ %smax.i.i.i.i, %bb.bj ] ; 3 uses
   %i.qs = sub i32 %.0.i136.i.i.i.i.i.lcssa, %.0.i418.i.i.i.i.i
   %i.qt = freeze i32 %i.qs                        ; 6 uses
   %i.qu = shl nsw i64 %i.pb, 12                   ; 3 uses
@@ -305,7 +311,7 @@ bb.bl:                                            ; preds = %page_anon_exclusive
 
 bb.bm:                                            ; preds = %bb.bl, %page_anon_exclusive_sub_batch.exit144.i.i.i.i.i
   %.sroa.016.0.i.i.i.i.i.i.i = phi i64 [ %i.qx, %bb.bl ], [ %.sroa.04.0.i322.i.i.i.i.i, %page_anon_exclusive_sub_batch.exit144.i.i.i.i.i ] ; 6 uses
-  %.not.i324.i.i.i.i.i = icmp eq i32 %.0.i136.i.i.i.i.i.lcssa, %.0.i418.i.i.i.i.i
+  %.not.i324.i.i.i.i.i = icmp eq i32 %.0.i418.i.i.i.i.i, %.0.i136.i.i.i.i.i.lcssa
   br i1 %.not.i324.i.i.i.i.i, label %modify_prot_commit_ptes.exit335.i.i.i.i.i, label %.lr.ph.i325.i.i.i.i.i.preheader
 
 .lr.ph.i325.i.i.i.i.i.preheader:                  ; preds = %bb.bm
@@ -707,6 +713,9 @@ declare i32 @llvm.umin.i32(i32, i32) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #6
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #7

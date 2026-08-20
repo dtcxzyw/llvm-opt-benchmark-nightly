@@ -201,17 +201,18 @@ bb.cd:                                            ; preds = %bb.cc
   br label %bb.ce
 
 .lr.ph449.i:                                      ; preds = %bb.cd, %.lr.ph449.i
-  %indvars.iv497.i.a = phi i64 [ %indvars.iv.next498.i, %.lr.ph449.i ], [ %i.g, %bb.cd ] ; 3 uses
-  %.0312.in447.i = phi i64 [ %indvars.iv497.i.a, %.lr.ph449.i ], [ %i.f, %bb.cd ]
+  %indvars.iv497.i.a = phi i64 [ %indvars.iv.next500.i, %.lr.ph449.i ], [ %i.f, %bb.cd ] ; 2 uses
+  %.0312.in447.i = phi i64 [ %indvars.iv.next498.i, %.lr.ph449.i ], [ %i.g, %bb.cd ] ; 2 uses
   %i.jg = load ptr, ptr %i.iv, align 8            ; 2 uses
-  %i.jh = getelementptr inbounds [8 x i8], ptr %i.jg, i64 %indvars.iv497.i.a
+  %i.jh = getelementptr inbounds [8 x i8], ptr %i.jg, i64 %.0312.in447.i
   %i.ji = load i64, ptr %i.jh, align 8
-  %i.jj = getelementptr inbounds [8 x i8], ptr %i.jg, i64 %.0312.in447.i
+  %i.jj = getelementptr inbounds [8 x i8], ptr %i.jg, i64 %indvars.iv497.i.a
   store i64 %i.ji, ptr %i.jj, align 8
-  %indvars.iv.next498.i = add nuw nsw i64 %indvars.iv497.i.a, 1 ; 2 uses
+  %indvars.iv.next498.i = add nuw nsw i64 %.0312.in447.i, 1 ; 2 uses
   %i.jk = load i32, ptr %i.aa, align 8
   %i.jl = trunc nsw i64 %indvars.iv.next498.i to i32
   %i.jm = icmp ugt i32 %i.jk, %i.jl
+  %indvars.iv.next500.i = add nsw i64 %indvars.iv497.i.a, 1
   br i1 %i.jm, label %.lr.ph449.i, label %._crit_edge.loopexit.i, !llvm.loop !38
 
 bb.ce:                                            ; preds = %._crit_edge.i, %bb.cb
@@ -246,17 +247,18 @@ bb.ch:                                            ; preds = %bb.cg, %bb.cf
   br label %bb.ci
 
 .lr.ph454.i:                                      ; preds = %bb.ch, %.lr.ph454.i
-  %indvars.iv500.i = phi i64 [ %indvars.iv.next501.i, %.lr.ph454.i ], [ %i.g, %bb.ch ] ; 3 uses
-  %.0311.in451.i = phi i64 [ %indvars.iv500.i, %.lr.ph454.i ], [ %i.f, %bb.ch ]
+  %indvars.iv500.i = phi i64 [ %indvars.iv.next507.i, %.lr.ph454.i ], [ %i.f, %bb.ch ] ; 2 uses
+  %.0311.in451.i = phi i64 [ %indvars.iv.next501.i, %.lr.ph454.i ], [ %i.g, %bb.ch ] ; 2 uses
   %i.jx = load ptr, ptr %i.cb, align 8            ; 2 uses
-  %i.jy = getelementptr inbounds [8 x i8], ptr %i.jx, i64 %indvars.iv500.i
+  %i.jy = getelementptr inbounds [8 x i8], ptr %i.jx, i64 %.0311.in451.i
   %i.jz = load ptr, ptr %i.jy, align 8
-  %i.ka = getelementptr inbounds [8 x i8], ptr %i.jx, i64 %.0311.in451.i
+  %i.ka = getelementptr inbounds [8 x i8], ptr %i.jx, i64 %indvars.iv500.i
   store ptr %i.jz, ptr %i.ka, align 8
-  %indvars.iv.next501.i = add nuw nsw i64 %indvars.iv500.i, 1 ; 2 uses
+  %indvars.iv.next501.i = add nuw nsw i64 %.0311.in451.i, 1 ; 2 uses
   %i.kb = load i32, ptr %i.aa, align 8
   %i.kc = trunc nsw i64 %indvars.iv.next501.i to i32
   %i.kd = icmp ugt i32 %i.kb, %i.kc
+  %indvars.iv.next507.i = add nsw i64 %indvars.iv500.i, 1
   br i1 %i.kd, label %.lr.ph454.i, label %._crit_edge455.i, !llvm.loop !39
 
 bb.ci:                                            ; preds = %._crit_edge455.i, %bb.ce
@@ -292,17 +294,18 @@ bb.cl:                                            ; preds = %bb.ck, %bb.cj
   br label %bb.cm
 
 .lr.ph460.i:                                      ; preds = %bb.cl, %.lr.ph460.i
-  %indvars.iv503.i = phi i64 [ %indvars.iv.next504.i, %.lr.ph460.i ], [ %i.g, %bb.cl ] ; 3 uses
-  %.0310.in457.i = phi i64 [ %indvars.iv503.i, %.lr.ph460.i ], [ %i.f, %bb.cl ]
+  %indvars.iv503.i = phi i64 [ %indvars.iv.next514.i, %.lr.ph460.i ], [ %i.f, %bb.cl ] ; 2 uses
+  %.0310.in457.i = phi i64 [ %indvars.iv.next504.i, %.lr.ph460.i ], [ %i.g, %bb.cl ] ; 2 uses
   %i.kp = load ptr, ptr %i.ke, align 8            ; 2 uses
-  %i.kq = getelementptr inbounds [8 x i8], ptr %i.kp, i64 %indvars.iv503.i
+  %i.kq = getelementptr inbounds [8 x i8], ptr %i.kp, i64 %.0310.in457.i
   %i.kr = load ptr, ptr %i.kq, align 8
-  %i.ks = getelementptr inbounds [8 x i8], ptr %i.kp, i64 %.0310.in457.i
+  %i.ks = getelementptr inbounds [8 x i8], ptr %i.kp, i64 %indvars.iv503.i
   store ptr %i.kr, ptr %i.ks, align 8
-  %indvars.iv.next504.i = add nuw nsw i64 %indvars.iv503.i, 1 ; 2 uses
+  %indvars.iv.next504.i = add nuw nsw i64 %.0310.in457.i, 1 ; 2 uses
   %i.kt = load i32, ptr %i.aa, align 8
   %i.ku = trunc nsw i64 %indvars.iv.next504.i to i32
   %i.kv = icmp ugt i32 %i.kt, %i.ku
+  %indvars.iv.next514.i = add nsw i64 %indvars.iv503.i, 1
   br i1 %i.kv, label %.lr.ph460.i, label %._crit_edge461.i, !llvm.loop !40
 
 bb.cm:                                            ; preds = %._crit_edge461.i, %bb.ci
@@ -329,17 +332,18 @@ bb.cm:                                            ; preds = %._crit_edge461.i, %
   br label %bb.cn
 
 .lr.ph465.i:                                      ; preds = %.preheader.i, %.lr.ph465.i
-  %indvars.iv506.i = phi i64 [ %indvars.iv.next507.i.a, %.lr.ph465.i ], [ %i.g, %.preheader.i ] ; 3 uses
-  %.0.in463.i = phi i64 [ %indvars.iv506.i, %.lr.ph465.i ], [ %i.f, %.preheader.i ]
+  %indvars.iv506.i = phi i64 [ %indvars.iv.next521.i, %.lr.ph465.i ], [ %i.f, %.preheader.i ] ; 2 uses
+  %.0.in463.i = phi i64 [ %indvars.iv.next507.i.a, %.lr.ph465.i ], [ %i.g, %.preheader.i ] ; 2 uses
   %i.lc = load ptr, ptr %i.kw, align 8            ; 2 uses
-  %i.ld = getelementptr inbounds [8 x i8], ptr %i.lc, i64 %indvars.iv506.i
+  %i.ld = getelementptr inbounds [8 x i8], ptr %i.lc, i64 %.0.in463.i
   %i.le = load i64, ptr %i.ld, align 8
-  %i.lf = getelementptr inbounds [8 x i8], ptr %i.lc, i64 %.0.in463.i
+  %i.lf = getelementptr inbounds [8 x i8], ptr %i.lc, i64 %indvars.iv506.i
   store i64 %i.le, ptr %i.lf, align 8
-  %indvars.iv.next507.i.a = add nuw nsw i64 %indvars.iv506.i, 1 ; 2 uses
+  %indvars.iv.next507.i.a = add nuw nsw i64 %.0.in463.i, 1 ; 2 uses
   %i.lg = load i32, ptr %i.aa, align 8
   %i.lh = trunc nsw i64 %indvars.iv.next507.i.a to i32
   %i.li = icmp ugt i32 %i.lg, %i.lh
+  %indvars.iv.next521.i = add nsw i64 %indvars.iv506.i, 1
   br i1 %i.li, label %.lr.ph465.i, label %._crit_edge466.loopexit.i, !llvm.loop !41
 
 bb.cn:                                            ; preds = %._crit_edge466.i, %bb.cm

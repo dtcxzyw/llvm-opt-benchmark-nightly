@@ -201,14 +201,14 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %.56.val, i64 32
   %i.i = icmp eq i32 %0, 1
   %i.j = icmp eq i32 %0, -1
+  %7 = sext i32 %5 to i64
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph14, %bb.v
   %i.k = phi i32 [ %i.d, %.lr.ph14 ], [ %i.bj, %bb.v ]
-  %.05312 = phi i32 [ %5, %.lr.ph14 ], [ %8, %bb.v ] ; 3 uses
+  %indvars.iv18 = phi i64 [ %7, %.lr.ph14 ], [ %indvars.iv.next19, %bb.v ] ; 4 uses
   %i.l = load ptr, ptr %i.e, align 8
-  %7 = sext i32 %.05312 to i64                    ; 2 uses
-  %i.m = getelementptr inbounds [72 x i8], ptr %i.l, i64 %7 ; 8 uses
+  %i.m = getelementptr inbounds [72 x i8], ptr %i.l, i64 %indvars.iv18 ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #7
   %i.n = load i32, ptr %i.m, align 8
@@ -254,11 +254,12 @@ bb.j:                                             ; preds = %bb.h
 .lr.ph:                                           ; preds = %.preheader
   %i.ab = load ptr, ptr %i.f, align 8
   %i.ac = zext nneg i32 %i.z to i64
+  %8 = trunc nsw i64 %indvars.iv18 to i32
   br label %bb.t
 
 bb.k:                                             ; preds = %bb.j
   %i.ad = load ptr, ptr %i.h, align 8
-  %i.ae = getelementptr inbounds [48 x i8], ptr %i.ad, i64 %7
+  %i.ae = getelementptr inbounds [48 x i8], ptr %i.ad, i64 %indvars.iv18
   %i.af = load i8, ptr %i.a, align 1, !range !4, !noundef !5
   %i.ag = trunc nuw i8 %i.af to i1
   %i.ah = getelementptr inbounds nuw i8, ptr %i.m, i64 64
@@ -324,7 +325,7 @@ bb.t:                                             ; preds = %bb.t, %.lr.ph
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.t ], [ 0, %.lr.ph ] ; 2 uses
   %i.ay = getelementptr inbounds nuw [48 x i8], ptr %i.ab, i64 %indvars.iv ; 2 uses
   %i.az = load i32, ptr %i.ay, align 8
-  %i.ba = icmp ne i32 %i.az, %.05312
+  %i.ba = icmp ne i32 %i.az, %8
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.bb = icmp samesign ult i64 %indvars.iv.next, %i.ac
   %or.cond16 = select i1 %i.ba, i1 %i.bb, i1 false
@@ -367,8 +368,9 @@ bb.v:                                             ; preds = %._crit_edge18, %bb.
   %i.bj = phi i32 [ %.pre, %._crit_edge18 ], [ %i.k, %bb.i ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
-  %8 = add nsw i32 %.05312, 1                     ; 2 uses
-  %.not65 = icmp slt i32 %8, %i.bj
+  %indvars.iv.next19 = add nsw i64 %indvars.iv18, 1 ; 2 uses
+  %9 = sext i32 %i.bj to i64
+  %.not65 = icmp slt i64 %indvars.iv.next19, %9
   br i1 %.not65, label %bb.d, label %.loopexit, !llvm.loop !18
 
 .loopexit:                                        ; preds = %bb.v, %bb.c, %.thread

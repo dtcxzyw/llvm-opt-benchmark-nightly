@@ -182,36 +182,39 @@ bb.c:                                             ; preds = %._crit_edge
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %bb.f, %.preheader.preheader.i
-  %.01826.i = phi i32 [ %.2.i, %bb.f ], [ 0, %.preheader.preheader.i ] ; 4 uses
+  %.01826.i = phi i32 [ %.2.i, %bb.f ], [ 0, %.preheader.preheader.i ] ; 3 uses
   %.02125.i = phi i64 [ %.lcssa.i, %bb.f ], [ %i.w, %.preheader.preheader.i ] ; 4 uses
+  %5 = sext i32 %.01826.i to i64                  ; 2 uses
   %i.x = add nsw i32 %.01826.i, 1
   %smax.i = tail call i32 @llvm.smax.i32(i32 %i.q, i32 %i.x) ; 2 uses
   %i.y = sub i32 %smax.i, %.01826.i               ; 2 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.e, %.preheader.i
-  %.119.i = phi i32 [ %6, %bb.e ], [ %.01826.i, %.preheader.i ] ; 3 uses
-  %.0.i = phi i32 [ %i.ad, %bb.e ], [ 0, %.preheader.i ] ; 2 uses
-  %5 = sext i32 %.119.i to i64
-  %i.z = getelementptr inbounds [4 x i8], ptr %i.s, i64 %5
+  %indvars.iv.i = phi i64 [ %5, %.preheader.i ], [ %indvars.iv.next.i, %bb.e ] ; 3 uses
+  %.0.i = phi i32 [ 0, %.preheader.i ], [ %i.ad, %bb.e ] ; 2 uses
+  %i.z = getelementptr inbounds [4 x i8], ptr %i.s, i64 %indvars.iv.i
   %i.aa = load i32, ptr %i.z, align 4
   %i.ab = lshr i32 %i.aa, 15
   %i.ac = zext nneg i32 %i.ab to i64              ; 2 uses
   %.not.i = icmp eq i64 %.02125.i, %i.ac
-  br i1 %.not.i, label %bb.e, label %bb.f
+  br i1 %.not.i, label %bb.e, label %.split.loop.exit.i
 
 bb.e:                                             ; preds = %bb.d
   %i.ad = add i32 %.0.i, 1                        ; 2 uses
-  %6 = add i32 %.119.i, 1
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, 1
   %exitcond.not.i = icmp eq i32 %i.ad, %i.y
   br i1 %exitcond.not.i, label %bb.f, label %bb.d, !llvm.loop !6
 
-bb.f:                                             ; preds = %bb.e, %bb.d
-  %.lcssa.i = phi i64 [ %i.ac, %bb.d ], [ %.02125.i, %bb.e ]
-  %.2.i = phi i32 [ %.119.i, %bb.d ], [ %smax.i, %bb.e ] ; 2 uses
-  %.1.i = phi i32 [ %.0.i, %bb.d ], [ %i.y, %bb.e ]
-  %7 = sext i32 %.01826.i to i64
-  %i.ae = getelementptr inbounds [4 x i8], ptr %i.s, i64 %7
+.split.loop.exit.i:                               ; preds = %bb.d
+  %6 = trunc nsw i64 %indvars.iv.i to i32
+  br label %bb.f
+
+bb.f:                                             ; preds = %bb.e, %.split.loop.exit.i
+  %.lcssa.i = phi i64 [ %i.ac, %.split.loop.exit.i ], [ %.02125.i, %bb.e ]
+  %.2.i = phi i32 [ %6, %.split.loop.exit.i ], [ %smax.i, %bb.e ] ; 2 uses
+  %.1.i = phi i32 [ %.0.i, %.split.loop.exit.i ], [ %i.y, %bb.e ]
+  %i.ae = getelementptr inbounds [4 x i8], ptr %i.s, i64 %5
   %i.af = load i16, ptr getelementptr inbounds nuw (i8, ptr @XactSlruDesc, i64 112), align 8
   %.lhs.trunc.i.i = trunc nuw nsw i64 %.02125.i to i32
   %.rhs.trunc.i.i = zext i16 %i.af to i32
@@ -241,36 +244,39 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br label %.preheader.i39
 
 .preheader.i39:                                   ; preds = %bb.i, %.preheader.preheader.i38
-  %.01826.i40 = phi i32 [ %.2.i47, %bb.i ], [ 0, %.preheader.preheader.i38 ] ; 4 uses
+  %.01826.i40 = phi i32 [ %.2.i47, %bb.i ], [ 0, %.preheader.preheader.i38 ] ; 3 uses
   %.02125.i41 = phi i64 [ %.lcssa.i46, %bb.i ], [ %i.at, %.preheader.preheader.i38 ] ; 4 uses
+  %7 = sext i32 %.01826.i40 to i64                ; 2 uses
   %i.au = add nsw i32 %.01826.i40, 1
   %smax.i42 = tail call i32 @llvm.smax.i32(i32 %i.an, i32 %i.au) ; 2 uses
   %i.av = sub i32 %smax.i42, %.01826.i40          ; 2 uses
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.h, %.preheader.i39
-  %.119.i43 = phi i32 [ %9, %bb.h ], [ %.01826.i40, %.preheader.i39 ] ; 3 uses
-  %.0.i44 = phi i32 [ %i.ba, %bb.h ], [ 0, %.preheader.i39 ] ; 2 uses
-  %8 = sext i32 %.119.i43 to i64
-  %i.aw = getelementptr inbounds [4 x i8], ptr %i.ap, i64 %8
+  %indvars.iv.i43 = phi i64 [ %7, %.preheader.i39 ], [ %indvars.iv.next.i54, %bb.h ] ; 3 uses
+  %.0.i44 = phi i32 [ 0, %.preheader.i39 ], [ %i.ba, %bb.h ] ; 2 uses
+  %i.aw = getelementptr inbounds [4 x i8], ptr %i.ap, i64 %indvars.iv.i43
   %i.ax = load i32, ptr %i.aw, align 4
   %i.ay = lshr i32 %i.ax, 15
   %i.az = zext nneg i32 %i.ay to i64              ; 2 uses
   %.not.i45 = icmp eq i64 %.02125.i41, %i.az
-  br i1 %.not.i45, label %bb.h, label %bb.i
+  br i1 %.not.i45, label %bb.h, label %.split.loop.exit.i46
 
 bb.h:                                             ; preds = %bb.g
   %i.ba = add i32 %.0.i44, 1                      ; 2 uses
-  %9 = add i32 %.119.i43, 1
+  %indvars.iv.next.i54 = add nsw i64 %indvars.iv.i43, 1
   %exitcond.not.i52 = icmp eq i32 %i.ba, %i.av
   br i1 %exitcond.not.i52, label %bb.i, label %bb.g, !llvm.loop !6
 
-bb.i:                                             ; preds = %bb.h, %bb.g
-  %.lcssa.i46 = phi i64 [ %i.az, %bb.g ], [ %.02125.i41, %bb.h ]
-  %.2.i47 = phi i32 [ %.119.i43, %bb.g ], [ %smax.i42, %bb.h ] ; 2 uses
-  %.1.i48 = phi i32 [ %.0.i44, %bb.g ], [ %i.av, %bb.h ]
-  %10 = sext i32 %.01826.i40 to i64
-  %i.bb = getelementptr inbounds [4 x i8], ptr %i.ap, i64 %10
+.split.loop.exit.i46:                             ; preds = %bb.g
+  %8 = trunc nsw i64 %indvars.iv.i43 to i32
+  br label %bb.i
+
+bb.i:                                             ; preds = %bb.h, %.split.loop.exit.i46
+  %.lcssa.i46 = phi i64 [ %i.az, %.split.loop.exit.i46 ], [ %.02125.i41, %bb.h ]
+  %.2.i47 = phi i32 [ %8, %.split.loop.exit.i46 ], [ %smax.i42, %bb.h ] ; 2 uses
+  %.1.i48 = phi i32 [ %.0.i44, %.split.loop.exit.i46 ], [ %i.av, %bb.h ]
+  %i.bb = getelementptr inbounds [4 x i8], ptr %i.ap, i64 %7
   %i.bc = load i16, ptr getelementptr inbounds nuw (i8, ptr @XactSlruDesc, i64 112), align 8
   %.lhs.trunc.i.i49 = trunc nuw nsw i64 %.02125.i41 to i32
   %.rhs.trunc.i.i50 = zext i16 %i.bc to i32
@@ -307,36 +313,39 @@ set_status_by_pages.exit53:                       ; preds = %bb.i, %.split35
   br label %.preheader.i57
 
 .preheader.i57:                                   ; preds = %bb.l, %.preheader.preheader.i56
-  %.01826.i58 = phi i32 [ %.2.i65, %bb.l ], [ 0, %.preheader.preheader.i56 ] ; 4 uses
+  %.01826.i58 = phi i32 [ %.2.i65, %bb.l ], [ 0, %.preheader.preheader.i56 ] ; 3 uses
   %.02125.i59 = phi i64 [ %.lcssa.i64, %bb.l ], [ %i.bt, %.preheader.preheader.i56 ] ; 4 uses
+  %9 = sext i32 %.01826.i58 to i64                ; 2 uses
   %i.bu = add nsw i32 %.01826.i58, 1
   %smax.i60 = tail call i32 @llvm.smax.i32(i32 %i.an, i32 %i.bu) ; 2 uses
   %i.bv = sub i32 %smax.i60, %.01826.i58          ; 2 uses
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.k, %.preheader.i57
-  %.119.i61 = phi i32 [ %12, %bb.k ], [ %.01826.i58, %.preheader.i57 ] ; 3 uses
-  %.0.i62 = phi i32 [ %i.ca, %bb.k ], [ 0, %.preheader.i57 ] ; 2 uses
-  %11 = sext i32 %.119.i61 to i64
-  %i.bw = getelementptr inbounds [4 x i8], ptr %i.ap, i64 %11
+  %indvars.iv.i64 = phi i64 [ %9, %.preheader.i57 ], [ %indvars.iv.next.i75, %bb.k ] ; 3 uses
+  %.0.i62 = phi i32 [ 0, %.preheader.i57 ], [ %i.ca, %bb.k ] ; 2 uses
+  %i.bw = getelementptr inbounds [4 x i8], ptr %i.ap, i64 %indvars.iv.i64
   %i.bx = load i32, ptr %i.bw, align 4
   %i.by = lshr i32 %i.bx, 15
   %i.bz = zext nneg i32 %i.by to i64              ; 2 uses
   %.not.i63 = icmp eq i64 %.02125.i59, %i.bz
-  br i1 %.not.i63, label %bb.k, label %bb.l
+  br i1 %.not.i63, label %bb.k, label %.split.loop.exit.i67
 
 bb.k:                                             ; preds = %bb.j
   %i.ca = add i32 %.0.i62, 1                      ; 2 uses
-  %12 = add i32 %.119.i61, 1
+  %indvars.iv.next.i75 = add nsw i64 %indvars.iv.i64, 1
   %exitcond.not.i70 = icmp eq i32 %i.ca, %i.bv
   br i1 %exitcond.not.i70, label %bb.l, label %bb.j, !llvm.loop !6
 
-bb.l:                                             ; preds = %bb.k, %bb.j
-  %.lcssa.i64 = phi i64 [ %i.bz, %bb.j ], [ %.02125.i59, %bb.k ]
-  %.2.i65 = phi i32 [ %.119.i61, %bb.j ], [ %smax.i60, %bb.k ] ; 2 uses
-  %.1.i66 = phi i32 [ %.0.i62, %bb.j ], [ %i.bv, %bb.k ]
-  %13 = sext i32 %.01826.i58 to i64
-  %i.cb = getelementptr inbounds [4 x i8], ptr %i.ap, i64 %13
+.split.loop.exit.i67:                             ; preds = %bb.j
+  %10 = trunc nsw i64 %indvars.iv.i64 to i32
+  br label %bb.l
+
+bb.l:                                             ; preds = %bb.k, %.split.loop.exit.i67
+  %.lcssa.i64 = phi i64 [ %i.bz, %.split.loop.exit.i67 ], [ %.02125.i59, %bb.k ]
+  %.2.i65 = phi i32 [ %10, %.split.loop.exit.i67 ], [ %smax.i60, %bb.k ] ; 2 uses
+  %.1.i66 = phi i32 [ %.0.i62, %.split.loop.exit.i67 ], [ %i.bv, %bb.k ]
+  %i.cb = getelementptr inbounds [4 x i8], ptr %i.ap, i64 %9
   %i.cc = load i16, ptr getelementptr inbounds nuw (i8, ptr @XactSlruDesc, i64 112), align 8
   %.lhs.trunc.i.i67 = trunc nuw nsw i64 %.02125.i59 to i32
   %.rhs.trunc.i.i68 = zext i16 %i.cc to i32

@@ -204,29 +204,30 @@ bb.fa:                                            ; preds = %_ZN3gmx14LogEntryWr
   br label %.critedge142.thread.i
 
 .lr.ph.i:                                         ; preds = %bb.fa, %.lr.ph.i
-  %indvars.iv.i.a = phi i64 [ %indvars.iv.next.i, %.lr.ph.i ], [ %i.dg, %bb.fa ] ; 5 uses
-  %.0.in621.i = phi i64 [ %indvars.iv.i.a, %.lr.ph.i ], [ %i.bb, %bb.fa ] ; 3 uses
+  %indvars.iv.i.a = phi i64 [ %indvars.iv.next698.i, %.lr.ph.i ], [ %i.bb, %bb.fa ] ; 4 uses
+  %.0.in621.i = phi i64 [ %indvars.iv.next.i, %.lr.ph.i ], [ %i.dg, %bb.fa ] ; 4 uses
   %i.va = load ptr, ptr %i.p, align 8, !tbaa !251 ; 2 uses
-  %i.vb = getelementptr inbounds [36 x i8], ptr %i.va, i64 %indvars.iv.i.a
-  %i.vc = getelementptr inbounds [36 x i8], ptr %i.va, i64 %.0.in621.i
+  %i.vb = getelementptr inbounds [36 x i8], ptr %i.va, i64 %.0.in621.i
+  %i.vc = getelementptr inbounds [36 x i8], ptr %i.va, i64 %indvars.iv.i.a
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(36) %i.vc, ptr noundef nonnull align 4 dereferenceable(36) %i.vb, i64 36, i1 false), !tbaa.struct !310
   %i.vd = load ptr, ptr %i.o, align 8, !tbaa !347 ; 2 uses
-  %i.ve = getelementptr inbounds [8 x i8], ptr %i.vd, i64 %indvars.iv.i.a
+  %i.ve = getelementptr inbounds [8 x i8], ptr %i.vd, i64 %.0.in621.i
   %i.vf = load ptr, ptr %i.ve, align 8, !tbaa !306
-  %i.vg = getelementptr inbounds [8 x i8], ptr %i.vd, i64 %.0.in621.i
+  %i.vg = getelementptr inbounds [8 x i8], ptr %i.vd, i64 %indvars.iv.i.a
   store ptr %i.vf, ptr %i.vg, align 8, !tbaa !306
-  %i.vh = getelementptr inbounds [12 x i8], ptr %i.cm, i64 %indvars.iv.i.a ; 2 uses
-  %i.vi = getelementptr inbounds [12 x i8], ptr %i.cm, i64 %.0.in621.i ; 2 uses
+  %i.vh = getelementptr inbounds [12 x i8], ptr %i.cm, i64 %.0.in621.i ; 2 uses
+  %i.vi = getelementptr inbounds [12 x i8], ptr %i.cm, i64 %indvars.iv.i.a ; 2 uses
   %i.vj = load <2 x float>, ptr %i.vh, align 4, !tbaa !252
   store <2 x float> %i.vj, ptr %i.vi, align 4, !tbaa !252
   %i.vk = getelementptr inbounds nuw i8, ptr %i.vh, i64 8
   %i.vl = load float, ptr %i.vk, align 4, !tbaa !252
   %i.vm = getelementptr inbounds nuw i8, ptr %i.vi, i64 8
   store float %i.vl, ptr %i.vm, align 4, !tbaa !252
-  %indvars.iv.next.i = add nsw i64 %indvars.iv.i.a, 1 ; 2 uses
+  %indvars.iv.next.i = add nsw i64 %.0.in621.i, 1 ; 2 uses
   %i.vn = load i32, ptr %4, align 8, !tbaa !240   ; 2 uses
   %i.vo = sext i32 %i.vn to i64
   %i.vp = icmp slt i64 %indvars.iv.next.i, %i.vo
+  %indvars.iv.next698.i = add nsw i64 %indvars.iv.i.a, 1
   br i1 %i.vp, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !361
 
 .critedge142.thread.i:                            ; preds = %._crit_edge.i, %"_ZSt7find_ifIN9__gnu_cxx17__normal_iteratorIPPPcSt6vectorIS3_SaIS3_EEEEZL29match_atomnames_with_rtp_atomP7t_atomsN3gmx8ArrayRefINSB_11BasicVectorIfEEEEP8t_symtabiP17PreprocessResidueRK21MoleculePatchDatabasebRKNSB_8MDLoggerEE3$_2ET_SR_SR_T0_.exit.i", %.critedge142.i, %.critedge138.thread.thread.i, %.critedge138.thread.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit197.i, %._crit_edge628.i

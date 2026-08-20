@@ -202,7 +202,7 @@ bb.av:                                            ; preds = %bb.au
 
 bb.aw:                                            ; preds = %bb.av
   %i.jn = icmp eq i32 %.0190.ph, 0
-  %spec.select223 = select i1 %i.jn, i32 %spec.select326, i32 %.0190.ph ; 4 uses
+  %spec.select223 = select i1 %i.jn, i32 %spec.select326, i32 %.0190.ph ; 3 uses
   %i.jo = zext i32 %i.hv to i64
   %i.jp = getelementptr inbounds nuw [4 x i8], ptr %.0179.ph, i64 %i.jo ; 2 uses
   %i.jq = sub i32 %.4, %spec.select223            ; 3 uses
@@ -211,15 +211,15 @@ bb.aw:                                            ; preds = %bb.av
   br i1 %i.js, label %.lr.ph262.preheader, label %._crit_edge263
 
 .lr.ph262.preheader:                              ; preds = %bb.aw
+  %6 = zext nneg i32 %.4 to i64
   %i.jt = sub i32 %.0197246.lcssa324, %spec.select223
   br label %.lr.ph262
 
 .lr.ph262:                                        ; preds = %.lr.ph262.preheader, %bb.ax
-  %6 = phi i32 [ %8, %bb.ax ], [ %.4, %.lr.ph262.preheader ]
-  %.1189260 = phi i32 [ %i.ka, %bb.ax ], [ %i.jr, %.lr.ph262.preheader ]
-  %.1193259 = phi i32 [ %i.jz, %bb.ax ], [ %i.jq, %.lr.ph262.preheader ] ; 2 uses
-  %7 = zext nneg i32 %6 to i64
-  %i.ju = getelementptr inbounds nuw [2 x i8], ptr %i.a, i64 %7
+  %indvars.iv298 = phi i64 [ %6, %.lr.ph262.preheader ], [ %indvars.iv.next299, %bb.ax ] ; 2 uses
+  %.1189260 = phi i32 [ %i.jr, %.lr.ph262.preheader ], [ %i.ka, %bb.ax ]
+  %.1193259 = phi i32 [ %i.jq, %.lr.ph262.preheader ], [ %i.jz, %bb.ax ] ; 2 uses
+  %i.ju = getelementptr inbounds nuw [2 x i8], ptr %i.a, i64 %indvars.iv298
   %i.jv = load i16, ptr %i.ju, align 2, !tbaa !10
   %i.jw = zext i16 %i.jv to i32
   %i.jx = sub nsw i32 %.1189260, %i.jw            ; 2 uses
@@ -227,11 +227,12 @@ bb.aw:                                            ; preds = %bb.av
   br i1 %i.jy, label %._crit_edge263.loopexit, label %bb.ax
 
 bb.ax:                                            ; preds = %.lr.ph262
-  %i.jz = add i32 %.1193259, 1                    ; 2 uses
+  %i.jz = add i32 %.1193259, 1
   %i.ka = shl nuw i32 %i.jx, 1
-  %8 = add i32 %i.jz, %spec.select223             ; 2 uses
-  %9 = icmp ult i32 %8, %.0197246.lcssa324
-  br i1 %9, label %.lr.ph262, label %._crit_edge263.loopexit, !llvm.loop !24
+  %indvars.iv.next299 = add nuw nsw i64 %indvars.iv298, 1 ; 2 uses
+  %indvars = trunc i64 %indvars.iv.next299 to i32
+  %7 = icmp ugt i32 %.0197246.lcssa324, %indvars
+  br i1 %7, label %.lr.ph262, label %._crit_edge263.loopexit, !llvm.loop !24
 
 ._crit_edge263.loopexit:                          ; preds = %.lr.ph262, %bb.ax
   %.1193.lcssa.ph = phi i32 [ %i.jt, %bb.ax ], [ %.1193259, %.lr.ph262 ] ; 2 uses

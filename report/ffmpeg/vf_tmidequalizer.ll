@@ -203,8 +203,8 @@ bb.u:                                             ; preds = %bb.s
   %.0117.i = add i32 %i.hk, 1                     ; 2 uses
   %i.ht = icmp slt i32 %.0117.i, %i.hj
   %i.hu = sext i32 %.0117.i to i64
-  %wide.trip.count151.i = zext nneg i32 %i.hl to i64 ; 5 uses
-  %wide.trip.count.i = zext nneg i32 %i.hk to i64 ; 2 uses
+  %wide.trip.count151.i = zext i32 %i.hk to i64   ; 2 uses
+  %wide.trip.count.i = zext nneg i32 %i.hl to i64 ; 5 uses
   %i.hv = add nsw i32 %i.hl, -1                   ; 3 uses
   br i1 %i.ht, label %.lr.ph127.i.split.us, label %.lr.ph127.i.split
 
@@ -275,7 +275,7 @@ bb.y:                                             ; preds = %.critedge.thread.i.
   %i.iu = sitofp nsz i32 %storemerge.i.us to float
   %i.iv = tail call nsz float @llvm.fmuladd.f32(float %i.is, float %i.iu, float %.076102.i.us) ; 2 uses
   %indvars.iv.next135.i.us = add nuw nsw i64 %indvars.iv134.i.us, 1 ; 2 uses
-  %exitcond137.not.i.us = icmp eq i64 %indvars.iv.next135.i.us, %wide.trip.count.i
+  %exitcond137.not.i.us = icmp eq i64 %indvars.iv.next135.i.us, %wide.trip.count151.i
   br i1 %exitcond137.not.i.us, label %.preheader.i.us, label %bb.v, !llvm.loop !66
 
 .preheader.i.us:                                  ; preds = %bb.y, %.lr.ph127.i.split.us
@@ -285,11 +285,11 @@ bb.y:                                             ; preds = %.critedge.thread.i.
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.ac, %.preheader.i.us
+  %indvars.iv145.i.us = phi i32 [ %i.hk, %.preheader.i.us ], [ %indvars.iv.next146.i.us, %bb.ac ] ; 2 uses
   %indvars.iv143.i.us = phi i64 [ %i.hu, %.preheader.i.us ], [ %indvars.iv.next144.i.us, %bb.ac ] ; 3 uses
-  %.0.in120.i.us = phi i32 [ %i.hk, %.preheader.i.us ], [ %i.ix, %bb.ac ]
   %.1119.i.us = phi float [ %.076.lcssa.i.us, %.preheader.i.us ], [ %i.jv, %bb.ac ]
   %.178118.i.us = phi float [ %.077.lcssa.i.us, %.preheader.i.us ], [ %i.jt, %bb.ac ]
-  %i.ix = trunc i64 %indvars.iv143.i.us to i32    ; 2 uses
+  %i.ix = trunc i64 %indvars.iv143.i.us to i32
   %i.iy = add i32 %i.hs, %i.ix
   %i.iz = srem i32 %i.iy, %i.hj                   ; 2 uses
   %i.ja = icmp slt i32 %i.iz, 0
@@ -336,7 +336,7 @@ bb.ab:                                            ; preds = %bb.aa
 bb.ac:                                            ; preds = %.critedge2.thread.i.us, %.critedge2.i.us
   %storemerge129.i.us = phi i32 [ %i.hv, %.critedge2.thread.i.us ], [ %.lcssa108.i.us, %.critedge2.i.us ] ; 2 uses
   store i32 %storemerge129.i.us, ptr %i.jg, align 4
-  %i.jp = sub i32 %.0.in120.i.us, %i.hk
+  %i.jp = sub i32 %indvars.iv145.i.us, %i.hk
   %i.jq = sext i32 %i.jp to i64
   %i.jr = getelementptr inbounds [4 x i8], ptr %i.ge, i64 %i.jq
   %i.js = load float, ptr %i.jr, align 4, !tbaa !64 ; 2 uses
@@ -344,6 +344,7 @@ bb.ac:                                            ; preds = %.critedge2.thread.i
   %i.ju = sitofp nsz i32 %storemerge129.i.us to float
   %i.jv = tail call nsz float @llvm.fmuladd.f32(float %i.js, float %i.ju, float %.1119.i.us) ; 2 uses
   %indvars.iv.next144.i.us = add nsw i64 %indvars.iv143.i.us, 1 ; 2 uses
+  %indvars.iv.next146.i.us = add i32 %indvars.iv145.i.us, 1
   %lftr.wideiv146.i.us = trunc i64 %indvars.iv.next144.i.us to i32
   %exitcond147.not.i.us = icmp eq i32 %i.hj, %lftr.wideiv146.i.us
   br i1 %exitcond147.not.i.us, label %._crit_edge.i.loopexit.us, label %bb.z, !llvm.loop !68
@@ -353,7 +354,7 @@ bb.ac:                                            ; preds = %.critedge2.thread.i
   %i.jx = getelementptr inbounds nuw [4 x i8], ptr %i.hn, i64 %indvars.iv148.i.us
   store float %i.jw, ptr %i.jx, align 4, !tbaa !64
   %indvars.iv.next149.i.us = add nuw nsw i64 %indvars.iv148.i.us, 1 ; 2 uses
-  %exitcond152.not.i.us = icmp eq i64 %indvars.iv.next149.i.us, %wide.trip.count151.i
+  %exitcond152.not.i.us = icmp eq i64 %indvars.iv.next149.i.us, %wide.trip.count.i
   br i1 %exitcond152.not.i.us, label %compute_contrast_function.exit, label %.lr.ph127.i.split.us, !llvm.loop !69
 
 .lr.ph127.i.split:                                ; preds = %.lr.ph127.i
@@ -364,7 +365,7 @@ bb.ac:                                            ; preds = %.critedge2.thread.i
   br i1 %min.iters.check, label %.preheader.i.preheader357, label %vector.ph
 
 vector.ph:                                        ; preds = %.preheader.i.preheader
-  %n.vec = and i64 %wide.trip.count151.i, 2147483640 ; 3 uses
+  %n.vec = and i64 %wide.trip.count.i, 2147483640 ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -383,7 +384,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.kc, label %middle.block, label %vector.body, !llvm.loop !70
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count151.i
+  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count.i
   br i1 %cmp.n, label %compute_contrast_function.exit, label %.preheader.i.preheader357
 
 .preheader.i.preheader357:                        ; preds = %.preheader.i.preheader, %middle.block
@@ -454,7 +455,7 @@ bb.ag:                                            ; preds = %.critedge.thread.i.
   %i.lb = sitofp nsz i32 %storemerge.i.us275 to float
   %i.lc = tail call nsz float @llvm.fmuladd.f32(float %i.kz, float %i.lb, float %.076102.i.us262) ; 2 uses
   %indvars.iv.next135.i.us276 = add nuw nsw i64 %indvars.iv134.i.us261, 1 ; 2 uses
-  %exitcond137.not.i.us277 = icmp eq i64 %indvars.iv.next135.i.us276, %wide.trip.count.i
+  %exitcond137.not.i.us277 = icmp eq i64 %indvars.iv.next135.i.us276, %wide.trip.count151.i
   br i1 %exitcond137.not.i.us277, label %.preheader.i.loopexit.us284, label %bb.ad, !llvm.loop !66
 
 .preheader.i.loopexit.us284:                      ; preds = %bb.ag
@@ -462,7 +463,7 @@ bb.ag:                                            ; preds = %.critedge.thread.i.
   %i.le = getelementptr inbounds nuw [4 x i8], ptr %i.hn, i64 %indvars.iv148.i.us259
   store float %i.ld, ptr %i.le, align 4, !tbaa !64
   %indvars.iv.next149.i.us281 = add nuw nsw i64 %indvars.iv148.i.us259, 1 ; 2 uses
-  %exitcond152.not.i.us282 = icmp eq i64 %indvars.iv.next149.i.us281, %wide.trip.count151.i
+  %exitcond152.not.i.us282 = icmp eq i64 %indvars.iv.next149.i.us281, %wide.trip.count.i
   br i1 %exitcond152.not.i.us282, label %compute_contrast_function.exit, label %.lr.ph104.i.us260, !llvm.loop !69
 
 .preheader.i:                                     ; preds = %.preheader.i.preheader357, %.preheader.i
@@ -472,7 +473,7 @@ bb.ag:                                            ; preds = %.critedge.thread.i.
   %i.lh = getelementptr inbounds nuw [4 x i8], ptr %i.hn, i64 %indvars.iv148.i
   store float %i.lg, ptr %i.lh, align 4, !tbaa !64
   %indvars.iv.next149.i = add nuw nsw i64 %indvars.iv148.i, 1 ; 2 uses
-  %exitcond152.not.i = icmp eq i64 %indvars.iv.next149.i, %wide.trip.count151.i
+  %exitcond152.not.i = icmp eq i64 %indvars.iv.next149.i, %wide.trip.count.i
   br i1 %exitcond152.not.i, label %compute_contrast_function.exit, label %.preheader.i, !llvm.loop !73
 
 compute_contrast_function.exit:                   ; preds = %.preheader.i, %.preheader.i.loopexit.us284, %._crit_edge.i.loopexit.us, %middle.block, %bb.u

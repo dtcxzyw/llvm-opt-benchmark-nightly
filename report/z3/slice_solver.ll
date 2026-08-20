@@ -204,20 +204,25 @@ _ZN12slice_solver11assert_exprERKNS_5fml_tE.exit: ; preds = %.lr.ph57, %bb.f, %.
   %.038.lcssa = phi i32 [ %i.g, %_ZN6vectorIjLb0EjE3endEv.exit ], [ %i.g, %bb.c ], [ %i.g, %.lr.ph57.preheader ], [ %i.bi, %bb.f ], [ %i.bi, %.lr.ph57 ]
   %i.bo = load ptr, ptr %i.h, align 8, !tbaa !69  ; 2 uses
   %i.bp = icmp eq ptr %i.bo, null
-  br i1 %i.bp, label %_ZNK6vectorIjLb0EjE5emptyEv.exit.thread, label %_ZNK6vectorIN12slice_solver5fml_tELb1EjE4sizeEv.exit
+  br i1 %i.bp, label %_ZNK6vectorIjLb0EjE5emptyEv.exit.thread, label %_ZNK6vectorIN12slice_solver5fml_tELb1EjE4sizeEv.exit.preheader
 
-_ZNK6vectorIN12slice_solver5fml_tELb1EjE4sizeEv.exit: ; preds = %_ZN12slice_solver11assert_exprERKNS_5fml_tE.exit, %_ZN12slice_solver11assert_exprERKNS_5fml_tE.exit42
-  %i.bq = phi ptr [ %i.cw, %_ZN12slice_solver11assert_exprERKNS_5fml_tE.exit42 ], [ %i.bo, %_ZN12slice_solver11assert_exprERKNS_5fml_tE.exit ] ; 2 uses
-  %.03563.in = phi i32 [ %.03563, %_ZN12slice_solver11assert_exprERKNS_5fml_tE.exit42 ], [ %.038.lcssa, %_ZN12slice_solver11assert_exprERKNS_5fml_tE.exit ]
-  %.03563 = add i32 %.03563.in, 1                 ; 3 uses
+_ZNK6vectorIN12slice_solver5fml_tELb1EjE4sizeEv.exit.preheader: ; preds = %_ZN12slice_solver11assert_exprERKNS_5fml_tE.exit
+  %1 = zext i32 %.038.lcssa to i64
+  br label %_ZNK6vectorIN12slice_solver5fml_tELb1EjE4sizeEv.exit
+
+_ZNK6vectorIN12slice_solver5fml_tELb1EjE4sizeEv.exit: ; preds = %_ZNK6vectorIN12slice_solver5fml_tELb1EjE4sizeEv.exit.preheader, %_ZN12slice_solver11assert_exprERKNS_5fml_tE.exit42
+  %indvars.iv = phi i64 [ %1, %_ZNK6vectorIN12slice_solver5fml_tELb1EjE4sizeEv.exit.preheader ], [ %indvars.iv.next, %_ZN12slice_solver11assert_exprERKNS_5fml_tE.exit42 ]
+  %i.bq = phi ptr [ %i.bo, %_ZNK6vectorIN12slice_solver5fml_tELb1EjE4sizeEv.exit.preheader ], [ %i.cw, %_ZN12slice_solver11assert_exprERKNS_5fml_tE.exit42 ] ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
+  %indvars = trunc i64 %indvars.iv.next to i32
   %i.br = getelementptr inbounds i8, ptr %i.bq, i64 -4
   %i.bs = load i32, ptr %i.br, align 4, !tbaa !77
-  %1 = icmp ult i32 %.03563, %i.bs
-  br i1 %1, label %bb.g, label %_ZNK6vectorIjLb0EjE5emptyEv.exit.thread
+  %2 = icmp ugt i32 %i.bs, %indvars
+  br i1 %2, label %bb.g, label %_ZNK6vectorIjLb0EjE5emptyEv.exit.thread
 
 bb.g:                                             ; preds = %_ZNK6vectorIN12slice_solver5fml_tELb1EjE4sizeEv.exit
-  %2 = zext i32 %.03563 to i64
-  %i.bt = getelementptr inbounds nuw [40 x i8], ptr %i.bq, i64 %2 ; 4 uses
+  %3 = and i64 %indvars.iv.next, 4294967295
+  %i.bt = getelementptr inbounds nuw [40 x i8], ptr %i.bq, i64 %3 ; 4 uses
   %i.bu = load i32, ptr %i.l, align 4, !tbaa !78
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bt, i64 36 ; 2 uses
   %i.bw = load i32, ptr %i.bv, align 4, !tbaa !78 ; 2 uses

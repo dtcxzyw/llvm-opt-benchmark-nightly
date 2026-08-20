@@ -204,7 +204,7 @@ _ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit.i:   ; preds = %bb.ag
   br label %bb.ah
 
 bb.ah:                                            ; preds = %_ZN3sat6solver26extract_fixed_consequencesENS_7literalERKNS_11literal_setER16tracked_uint_setR6vectorI7svectorIS1_jELb1EjE.exit.i, %.lr.ph.i
-  %indvars.iv = phi i64 [ %indvars.iv.next, %_ZN3sat6solver26extract_fixed_consequencesENS_7literalERKNS_11literal_setER16tracked_uint_setR6vectorI7svectorIS1_jELb1EjE.exit.i ], [ 0, %.lr.ph.i ] ; 2 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next, %_ZN3sat6solver26extract_fixed_consequencesENS_7literalERKNS_11literal_setER16tracked_uint_setR6vectorI7svectorIS1_jELb1EjE.exit.i ] ; 2 uses
   %i.li = load ptr, ptr %i.la, align 8, !tbaa !197
   %i.lj = getelementptr inbounds nuw [4 x i8], ptr %i.li, i64 %indvars.iv
   %.sroa.01.0.copyload.i = load i32, ptr %i.lj, align 4, !tbaa !175 ; 2 uses
@@ -518,7 +518,7 @@ _ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit.i82: ; preds = %bb.bd
   %i.ow = zext i32 %i.ot to i64
   br label %.lr.ph.i84
 
-.lr.ph.i84:                                       ; preds = %.lr.ph.i84.preheader, %_ZN3sat6solver26extract_fixed_consequencesENS_7literalERKNS_11literal_setER16tracked_uint_setR6vectorI7svectorIS1_jELb1EjE.exit.i92
+.lr.ph.i84:                                       ; preds = %_ZN3sat6solver26extract_fixed_consequencesENS_7literalERKNS_11literal_setER16tracked_uint_setR6vectorI7svectorIS1_jELb1EjE.exit.i92, %.lr.ph.i84.preheader
   %indvars.iv252 = phi i64 [ %i.ov, %.lr.ph.i84.preheader ], [ %indvars.iv.next253, %_ZN3sat6solver26extract_fixed_consequencesENS_7literalERKNS_11literal_setER16tracked_uint_setR6vectorI7svectorIS1_jELb1EjE.exit.i92 ] ; 2 uses
   %i.ox = load ptr, ptr %i.la, align 8, !tbaa !197
   %i.oy = getelementptr inbounds nuw [4 x i8], ptr %i.ox, i64 %indvars.iv252
@@ -921,13 +921,14 @@ _ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit:     ; preds = %bb.a
 .lr.ph:                                           ; preds = %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 3280
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 4256 ; 4 uses
+  %5 = zext i32 %i.f to i64
+  %wide.trip.count = zext i32 %i.e to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZN3sat6solver26extract_fixed_consequencesENS_7literalERKNS_11literal_setER16tracked_uint_setR6vectorI7svectorIS1_jELb1EjE.exit
-  %.012 = phi i32 [ %i.f, %.lr.ph ], [ %6, %_ZN3sat6solver26extract_fixed_consequencesENS_7literalERKNS_11literal_setER16tracked_uint_setR6vectorI7svectorIS1_jELb1EjE.exit ] ; 2 uses
+  %indvars.iv = phi i64 [ %5, %.lr.ph ], [ %indvars.iv.next, %_ZN3sat6solver26extract_fixed_consequencesENS_7literalERKNS_11literal_setER16tracked_uint_setR6vectorI7svectorIS1_jELb1EjE.exit ] ; 2 uses
   %i.j = load ptr, ptr %i.a, align 8, !tbaa !197
-  %5 = zext i32 %.012 to i64
-  %i.k = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %5
+  %i.k = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %indvars.iv
   %.sroa.01.0.copyload = load i32, ptr %i.k, align 4, !tbaa !175 ; 2 uses
   %i.l = lshr i32 %.sroa.01.0.copyload, 1
   %i.m = load ptr, ptr %i.h, align 8, !tbaa !224
@@ -1001,8 +1002,8 @@ bb.g:                                             ; preds = %bb.f, %_ZN6vectorIN
   br i1 %i.ap, label %_ZN3sat6solver26extract_fixed_consequencesENS_7literalERKNS_11literal_setER16tracked_uint_setR6vectorI7svectorIS1_jELb1EjE.exit, label %_ZNK6vectorIN3sat7literalELb0EjE5emptyEv.exit.i, !llvm.loop !931
 
 _ZN3sat6solver26extract_fixed_consequencesENS_7literalERKNS_11literal_setER16tracked_uint_setR6vectorI7svectorIS1_jELb1EjE.exit: ; preds = %_ZNK6vectorIN3sat7literalELb0EjE5emptyEv.exit.i, %bb.g
-  %6 = add nuw i32 %.012, 1                       ; 2 uses
-  %exitcond.not = icmp eq i32 %6, %i.e
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.critedge, label %bb.b, !llvm.loop !932
 }
 

@@ -203,7 +203,7 @@ bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef align 8 dereferenceable(24) dereferenceable_or_null(24) %0, i8 0, i64 24, i1 false)
   %i.a = getelementptr i8, ptr %2, i64 16
   %i.b = load i64, ptr %i.a, align 8              ; 3 uses
-  %i.c = trunc i64 %i.b to i32                    ; 9 uses
+  %i.c = trunc i64 %i.b to i32                    ; 13 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #51
   invoke void @_ZN12QCPDataRangeC1Eii(ptr noundef nonnull align 4 dereferenceable_or_null(8) %4, i32 noundef -1, i32 noundef -1)
           to label %bb.b unwind label %bb.e
@@ -264,28 +264,35 @@ bb.e:                                             ; preds = %bb.a
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.d, %.critedge.split.loop.exit82
-  %.1.lcssa = phi i32 [ %i.w, %.critedge.split.loop.exit82 ], [ %smax68, %bb.d ] ; 5 uses
+  %.1.lcssa = phi i32 [ %i.w, %.critedge.split.loop.exit82 ], [ %smax68, %bb.d ] ; 4 uses
   %i.x = icmp eq i32 %.1.lcssa, %i.c
   br i1 %i.x, label %.loopexit, label %bb.f
 
 bb.f:                                             ; preds = %.critedge
   store i32 %.1.lcssa, ptr %4, align 4
+  %5 = zext i32 %.1.lcssa to i64                  ; 2 uses
   %i.y = add i32 %.1.lcssa, 1
   %smax70 = call i32 @llvm.smax.i32(i32 %i.y, i32 %i.c) ; 3 uses
-  %i.z = add nsw i32 %smax70, -1                  ; 4 uses
-  %exitcond71.not93 = icmp eq i32 %.1.lcssa, %i.z
-  br i1 %exitcond71.not93, label %.critedge2, label %.lr.ph95
+  %i.z = add nsw i32 %smax70, -1                  ; 2 uses
+  %indvars.iv.next75107 = add nuw nsw i64 %5, 1   ; 2 uses
+  %indvars77108 = trunc i64 %indvars.iv.next75107 to i32 ; 2 uses
+  %6 = icmp slt i32 %indvars77108, %i.c
+  br i1 %6, label %.lr.ph95, label %.critedge2
 
 bb.g:                                             ; preds = %.lr.ph95
-  %exitcond71.not = icmp eq i32 %.2, %i.z
-  br i1 %exitcond71.not, label %.critedge2, label %.lr.ph95, !llvm.loop !1019
+  %indvars.iv.next75 = add i64 %indvars.iv.next75110, 1 ; 2 uses
+  %indvars77 = trunc i64 %indvars.iv.next75 to i32 ; 2 uses
+  %7 = icmp slt i32 %indvars77, %i.c
+  br i1 %7, label %.lr.ph95, label %.critedge2, !llvm.loop !1019
 
 .lr.ph95:                                         ; preds = %bb.f, %bb.g
-  %.2.in94 = phi i32 [ %.2, %bb.g ], [ %.1.lcssa, %bb.f ] ; 2 uses
-  %.2 = add i32 %.2.in94, 1                       ; 4 uses
-  %5 = sext i32 %.2 to i64
-  %6 = getelementptr [16 x i8], ptr %i.n, i64 %5
-  %i.aa = getelementptr i8, ptr %6, i64 8
+  %.2.in94 = phi i32 [ %indvars77, %bb.g ], [ %indvars77108, %bb.f ]
+  %indvars.iv.next75110 = phi i64 [ %indvars.iv.next75, %bb.g ], [ %indvars.iv.next75107, %bb.f ] ; 3 uses
+  %indvars.iv74109 = phi i64 [ %indvars.iv.next75110, %bb.g ], [ %5, %bb.f ]
+  %sext83 = shl i64 %indvars.iv.next75110, 32
+  %8 = ashr exact i64 %sext83, 28
+  %9 = getelementptr i8, ptr %i.n, i64 %8
+  %i.aa = getelementptr i8, ptr %9, i64 8
   %i.ab = load double, ptr %i.aa, align 8
   %i.ac = call noundef zeroext i1 @_Z6qIsNaNd(double noundef %i.ab) #56
   br i1 %i.ac, label %..critedge2_crit_edge98, label %bb.g, !llvm.loop !1019
@@ -301,11 +308,12 @@ bb.g:                                             ; preds = %.lr.ph95
   br label %bb.l
 
 ..critedge2_crit_edge98:                          ; preds = %.lr.ph95
-  br label %.critedge2, !llvm.loop !1019
+  %10 = trunc i64 %indvars.iv74109 to i32
+  br label %.critedge2
 
-.critedge2:                                       ; preds = %bb.g, %..critedge2_crit_edge98, %bb.f
-  %.2.in.lcssa = phi i32 [ %i.z, %bb.f ], [ %.2.in94, %..critedge2_crit_edge98 ], [ %i.z, %bb.g ]
-  %.2.lcssa = phi i32 [ %smax70, %bb.f ], [ %.2, %..critedge2_crit_edge98 ], [ %smax70, %bb.g ]
+.critedge2:                                       ; preds = %bb.g, %bb.f, %..critedge2_crit_edge98
+  %.2.in.lcssa = phi i32 [ %10, %..critedge2_crit_edge98 ], [ %i.z, %bb.f ], [ %i.z, %bb.g ]
+  %.2.lcssa = phi i32 [ %.2.in94, %..critedge2_crit_edge98 ], [ %smax70, %bb.f ], [ %smax70, %bb.g ]
   %i.ad = add i32 %.2.in.lcssa, 2                 ; 2 uses
   store i32 %.2.lcssa, ptr %i.k, align 4
   %i.ae = load i64, ptr %i.l, align 8
@@ -355,37 +363,45 @@ bb.i:                                             ; preds = %bb.h
   br label %.critedge4
 
 .critedge4:                                       ; preds = %bb.i, %.critedge4.split.loop.exit80
-  %.4.lcssa = phi i32 [ %i.aq, %.critedge4.split.loop.exit80 ], [ %smax, %bb.i ] ; 5 uses
+  %.4.lcssa = phi i32 [ %i.aq, %.critedge4.split.loop.exit80 ], [ %smax, %bb.i ] ; 4 uses
   %i.ar = icmp eq i32 %.4.lcssa, %i.c
   br i1 %i.ar, label %.loopexit, label %bb.j
 
 bb.j:                                             ; preds = %.critedge4
   store i32 %.4.lcssa, ptr %4, align 4
+  %11 = zext i32 %.4.lcssa to i64                 ; 2 uses
   %i.as = add i32 %.4.lcssa, 1
   %smax65 = call i32 @llvm.smax.i32(i32 %i.as, i32 %i.c) ; 3 uses
-  %i.at = add nsw i32 %smax65, -1                 ; 4 uses
-  %exitcond.not87 = icmp eq i32 %.4.lcssa, %i.at
-  br i1 %exitcond.not87, label %.critedge6, label %.lr.ph
+  %i.at = add nsw i32 %smax65, -1                 ; 2 uses
+  %indvars.iv.next66102 = add nuw nsw i64 %11, 1  ; 2 uses
+  %indvars103 = trunc i64 %indvars.iv.next66102 to i32 ; 2 uses
+  %12 = icmp slt i32 %indvars103, %i.c
+  br i1 %12, label %.lr.ph, label %.critedge6
 
 bb.k:                                             ; preds = %.lr.ph
-  %exitcond.not = icmp eq i32 %.5, %i.at
-  br i1 %exitcond.not, label %.critedge6, label %.lr.ph, !llvm.loop !1021
+  %indvars.iv.next66 = add i64 %indvars.iv.next66105, 1 ; 2 uses
+  %indvars = trunc i64 %indvars.iv.next66 to i32  ; 2 uses
+  %13 = icmp slt i32 %indvars, %i.c
+  br i1 %13, label %.lr.ph, label %.critedge6, !llvm.loop !1021
 
 .lr.ph:                                           ; preds = %bb.j, %bb.k
-  %.5.in88 = phi i32 [ %.5, %bb.k ], [ %.4.lcssa, %bb.j ] ; 2 uses
-  %.5 = add i32 %.5.in88, 1                       ; 4 uses
-  %7 = sext i32 %.5 to i64
-  %8 = getelementptr [16 x i8], ptr %i.aj, i64 %7
-  %i.au = load double, ptr %8, align 8
+  %.5.in88 = phi i32 [ %indvars, %bb.k ], [ %indvars103, %bb.j ]
+  %indvars.iv.next66105 = phi i64 [ %indvars.iv.next66, %bb.k ], [ %indvars.iv.next66102, %bb.j ] ; 3 uses
+  %indvars.iv65104 = phi i64 [ %indvars.iv.next66105, %bb.k ], [ %11, %bb.j ]
+  %sext = shl i64 %indvars.iv.next66105, 32
+  %14 = ashr exact i64 %sext, 28
+  %15 = getelementptr i8, ptr %i.aj, i64 %14
+  %i.au = load double, ptr %15, align 8
   %i.av = call noundef zeroext i1 @_Z6qIsNaNd(double noundef %i.au) #56
   br i1 %i.av, label %..critedge6_crit_edge90, label %bb.k, !llvm.loop !1021
 
 ..critedge6_crit_edge90:                          ; preds = %.lr.ph
-  br label %.critedge6, !llvm.loop !1021
+  %16 = trunc i64 %indvars.iv65104 to i32
+  br label %.critedge6
 
-.critedge6:                                       ; preds = %bb.k, %..critedge6_crit_edge90, %bb.j
-  %.5.in.lcssa = phi i32 [ %i.at, %bb.j ], [ %.5.in88, %..critedge6_crit_edge90 ], [ %i.at, %bb.k ]
-  %.5.lcssa = phi i32 [ %smax65, %bb.j ], [ %.5, %..critedge6_crit_edge90 ], [ %smax65, %bb.k ]
+.critedge6:                                       ; preds = %bb.k, %bb.j, %..critedge6_crit_edge90
+  %.5.in.lcssa = phi i32 [ %16, %..critedge6_crit_edge90 ], [ %i.at, %bb.j ], [ %i.at, %bb.k ]
+  %.5.lcssa = phi i32 [ %.5.in88, %..critedge6_crit_edge90 ], [ %smax65, %bb.j ], [ %smax65, %bb.k ]
   %i.aw = add i32 %.5.in.lcssa, 2                 ; 2 uses
   store i32 %.5.lcssa, ptr %i.g, align 4
   %i.ax = load i64, ptr %i.h, align 8
@@ -788,11 +804,11 @@ bb.k:                                             ; preds = %bb.j
   br label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph80, %bb.r
-  %indvars.iv86.a = phi i64 [ %i.ar, %.lr.ph80 ], [ %indvars.iv.next87.a, %bb.r ] ; 3 uses
+  %indvars.iv86.a = phi i64 [ %i.as, %.lr.ph80 ], [ %indvars.iv.next87.a, %bb.r ] ; 2 uses
+  %indvars.iv86 = phi i64 [ %i.ar, %.lr.ph80 ], [ %indvars.iv.next87, %bb.r ] ; 2 uses
   %.05978 = phi i1 [ false, %.lr.ph80 ], [ %.160, %bb.r ]
-  %.162.in77 = phi i64 [ %i.as, %.lr.ph80 ], [ %indvars.iv86.a, %bb.r ]
   %i.at = load ptr, ptr %i.ao, align 8            ; 2 uses
-  %i.au = getelementptr [16 x i8], ptr %i.at, i64 %indvars.iv86.a ; 3 uses
+  %i.au = getelementptr [16 x i8], ptr %i.at, i64 %indvars.iv86 ; 3 uses
   %i.av = getelementptr i8, ptr %i.au, i64 8
   %i.aw = load double, ptr %i.av, align 8
   %i.ax = call noundef zeroext i1 @_Z6qIsNaNd(double noundef %i.aw) #56
@@ -805,7 +821,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %brmerge, label %bb.r, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %i.ba = getelementptr [16 x i8], ptr %i.at, i64 %.162.in77
+  %i.ba = getelementptr [16 x i8], ptr %i.at, i64 %indvars.iv86.a
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #51
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %4, ptr noundef align 8 dereferenceable(16) %i.ba, i64 16, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ap, ptr noundef align 8 dereferenceable(16) %i.au, i64 16, i1 false)
@@ -849,8 +865,9 @@ _ZN10QCPPainter8drawLineERK7QPointFS2_.exit:      ; preds = %bb.p, %bb.q
 
 bb.r:                                             ; preds = %bb.m, %bb.l, %_ZN10QCPPainter8drawLineERK7QPointFS2_.exit
   %.160 = phi i1 [ true, %bb.l ], [ false, %_ZN10QCPPainter8drawLineERK7QPointFS2_.exit ], [ %i.az, %bb.m ]
-  %indvars.iv.next87.a = add nsw i64 %indvars.iv86.a, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next87.a to i32
+  %indvars.iv.next87 = add nsw i64 %indvars.iv86, 1 ; 2 uses
+  %indvars.iv.next87.a = add nsw i64 %indvars.iv86.a, 1
+  %lftr.wideiv = trunc i64 %indvars.iv.next87 to i32
   %exitcond88.not = icmp eq i32 %lftr.wideiv, %i.ac
   br i1 %exitcond88.not, label %.loopexit, label %bb.l, !llvm.loop !1036
 
@@ -1253,11 +1270,11 @@ bb.k:                                             ; preds = %bb.j
   br label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph80, %bb.r
-  %indvars.iv86.a = phi i64 [ %i.ar, %.lr.ph80 ], [ %indvars.iv.next87.a, %bb.r ] ; 3 uses
+  %indvars.iv86.a = phi i64 [ %i.as, %.lr.ph80 ], [ %indvars.iv.next87.a, %bb.r ] ; 2 uses
+  %indvars.iv86 = phi i64 [ %i.ar, %.lr.ph80 ], [ %indvars.iv.next87, %bb.r ] ; 2 uses
   %.05978 = phi i1 [ false, %.lr.ph80 ], [ %.160, %bb.r ]
-  %.162.in77 = phi i64 [ %i.as, %.lr.ph80 ], [ %indvars.iv86.a, %bb.r ]
   %i.at = load ptr, ptr %i.ao, align 8            ; 2 uses
-  %i.au = getelementptr [16 x i8], ptr %i.at, i64 %indvars.iv86.a ; 3 uses
+  %i.au = getelementptr [16 x i8], ptr %i.at, i64 %indvars.iv86 ; 3 uses
   %i.av = getelementptr i8, ptr %i.au, i64 8
   %i.aw = load double, ptr %i.av, align 8
   %i.ax = call noundef zeroext i1 @_Z6qIsNaNd(double noundef %i.aw) #56
@@ -1270,7 +1287,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %brmerge, label %bb.r, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %i.ba = getelementptr [16 x i8], ptr %i.at, i64 %.162.in77
+  %i.ba = getelementptr [16 x i8], ptr %i.at, i64 %indvars.iv86.a
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #51
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %4, ptr noundef align 8 dereferenceable(16) %i.ba, i64 16, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ap, ptr noundef align 8 dereferenceable(16) %i.au, i64 16, i1 false)
@@ -1314,8 +1331,9 @@ _ZN10QCPPainter8drawLineERK7QPointFS2_.exit:      ; preds = %bb.p, %bb.q
 
 bb.r:                                             ; preds = %bb.m, %bb.l, %_ZN10QCPPainter8drawLineERK7QPointFS2_.exit
   %.160 = phi i1 [ true, %bb.l ], [ false, %_ZN10QCPPainter8drawLineERK7QPointFS2_.exit ], [ %i.az, %bb.m ]
-  %indvars.iv.next87.a = add nsw i64 %indvars.iv86.a, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next87.a to i32
+  %indvars.iv.next87 = add nsw i64 %indvars.iv86, 1 ; 2 uses
+  %indvars.iv.next87.a = add nsw i64 %indvars.iv86.a, 1
+  %lftr.wideiv = trunc i64 %indvars.iv.next87 to i32
   %exitcond88.not = icmp eq i32 %lftr.wideiv, %i.ac
   br i1 %exitcond88.not, label %.loopexit, label %bb.l, !llvm.loop !1082
 
@@ -1718,11 +1736,11 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph68, %bb.m
-  %indvars.iv74.a = phi i64 [ %i.aa, %.lr.ph68 ], [ %indvars.iv.next75.a, %bb.m ] ; 3 uses
+  %indvars.iv74.a = phi i64 [ %i.ab, %.lr.ph68 ], [ %indvars.iv.next75.a, %bb.m ] ; 2 uses
+  %indvars.iv74 = phi i64 [ %i.aa, %.lr.ph68 ], [ %indvars.iv.next75, %bb.m ] ; 2 uses
   %.05166 = phi i1 [ false, %.lr.ph68 ], [ %.152, %bb.m ]
-  %.154.in65 = phi i64 [ %i.ab, %.lr.ph68 ], [ %indvars.iv74.a, %bb.m ]
   %i.ac = load ptr, ptr %i.x, align 8             ; 2 uses
-  %i.ad = getelementptr [16 x i8], ptr %i.ac, i64 %indvars.iv74.a ; 3 uses
+  %i.ad = getelementptr [16 x i8], ptr %i.ac, i64 %indvars.iv74 ; 3 uses
   %i.ae = getelementptr i8, ptr %i.ad, i64 8
   %i.af = load double, ptr %i.ae, align 8
   %i.ag = call noundef zeroext i1 @_Z6qIsNaNd(double noundef %i.af) #56
@@ -1735,7 +1753,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %brmerge, label %bb.m, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.aj = getelementptr [16 x i8], ptr %i.ac, i64 %.154.in65
+  %i.aj = getelementptr [16 x i8], ptr %i.ac, i64 %indvars.iv74.a
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #51
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %4, ptr noundef align 8 dereferenceable(16) %i.aj, i64 16, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.y, ptr noundef align 8 dereferenceable(16) %i.ad, i64 16, i1 false)
@@ -1779,8 +1797,9 @@ _ZN10QCPPainter8drawLineERK7QPointFS2_.exit:      ; preds = %bb.k, %bb.l
 
 bb.m:                                             ; preds = %bb.h, %bb.g, %_ZN10QCPPainter8drawLineERK7QPointFS2_.exit
   %.152 = phi i1 [ true, %bb.g ], [ false, %_ZN10QCPPainter8drawLineERK7QPointFS2_.exit ], [ %i.ai, %bb.h ]
-  %indvars.iv.next75.a = add nsw i64 %indvars.iv74.a, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next75.a to i32
+  %indvars.iv.next75 = add nsw i64 %indvars.iv74, 1 ; 2 uses
+  %indvars.iv.next75.a = add nsw i64 %indvars.iv74.a, 1
+  %lftr.wideiv = trunc i64 %indvars.iv.next75 to i32
   %exitcond76.not = icmp eq i32 %lftr.wideiv, %i.l
   br i1 %exitcond76.not, label %.loopexit, label %bb.g, !llvm.loop !1554
 

@@ -204,6 +204,7 @@ bb.a:
 
 .lr.ph244.split.us:                               ; preds = %.lr.ph244
   %i.s = zext nneg i32 %.1129235 to i64
+  %6 = zext i32 %i.q to i64
   %i.t = zext nneg i32 %i.d to i64
   br label %.lr.ph244.split.us.split.split.us
 
@@ -247,9 +248,9 @@ pcmp_val.exit143.us.us:                           ; preds = %bb.e, %bb.d, %bb.c,
   br label %bb.f
 
 bb.f:                                             ; preds = %pcmp_val.exit143.us.us, %bb.p
-  %indvars.iv339.a = phi i64 [ %i.s, %pcmp_val.exit143.us.us ], [ %indvars.iv.next340, %bb.p ] ; 7 uses
-  %.3237.us.us = phi i32 [ %i.u, %pcmp_val.exit143.us.us ], [ %i.bi, %bb.p ] ; 2 uses
-  %.1129.in236.us.us = phi i32 [ %i.q, %pcmp_val.exit143.us.us ], [ %8, %bb.p ]
+  %indvars.iv339.a = phi i64 [ %6, %pcmp_val.exit143.us.us ], [ %indvars.iv.next342, %bb.p ] ; 2 uses
+  %indvars.iv339 = phi i64 [ %i.s, %pcmp_val.exit143.us.us ], [ %indvars.iv.next340, %bb.p ] ; 6 uses
+  %.1129.in236.us.us = phi i32 [ %i.u, %pcmp_val.exit143.us.us ], [ %i.bi, %bb.p ] ; 2 uses
   switch i8 %i.p, label %.unreachabledefault [
     i8 0, label %bb.j
     i8 1, label %bb.i
@@ -258,25 +259,25 @@ bb.f:                                             ; preds = %pcmp_val.exit143.us
   ]
 
 bb.g:                                             ; preds = %bb.f
-  %i.ah = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %indvars.iv339.a
+  %i.ah = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %indvars.iv339
   %i.ai = load i16, ptr %i.ah, align 2
   %i.aj = sext i16 %i.ai to i32
   br label %pcmp_val.exit146.us.us
 
 bb.h:                                             ; preds = %bb.f
-  %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv339.a
+  %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv339
   %i.al = load i8, ptr %i.ak, align 1
   %i.am = sext i8 %i.al to i32
   br label %pcmp_val.exit146.us.us
 
 bb.i:                                             ; preds = %bb.f
-  %i.an = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %indvars.iv339.a
+  %i.an = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %indvars.iv339
   %i.ao = load i16, ptr %i.an, align 2
   %i.ap = zext i16 %i.ao to i32
   br label %pcmp_val.exit146.us.us
 
 bb.j:                                             ; preds = %bb.f
-  %i.aq = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv339.a
+  %i.aq = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv339
   %i.ar = load i8, ptr %i.aq, align 1
   %i.as = zext i8 %i.ar to i32
   br label %pcmp_val.exit146.us.us
@@ -287,8 +288,9 @@ pcmp_val.exit146.us.us:                           ; preds = %bb.j, %bb.i, %bb.h,
   br i1 %.not134.us.us, label %bb.p, label %bb.k
 
 bb.k:                                             ; preds = %pcmp_val.exit146.us.us
-  %6 = add i32 %.1129.in236.us.us, -3
-  %7 = sext i32 %6 to i64                         ; 4 uses
+  %7 = shl i64 %indvars.iv339.a, 32
+  %sext371 = add i64 %7, -12884901888
+  %8 = ashr exact i64 %sext371, 32                ; 4 uses
   switch i8 %i.p, label %.unreachabledefault390 [
     i8 0, label %bb.o
     i8 1, label %bb.n
@@ -297,25 +299,25 @@ bb.k:                                             ; preds = %pcmp_val.exit146.us
   ]
 
 bb.l:                                             ; preds = %bb.k
-  %i.at = getelementptr inbounds [2 x i8], ptr %1, i64 %7
+  %i.at = getelementptr inbounds [2 x i8], ptr %1, i64 %8
   %i.au = load i16, ptr %i.at, align 2
   %i.av = sext i16 %i.au to i32
   br label %pcmp_val.exit149.us.us
 
 bb.m:                                             ; preds = %bb.k
-  %i.aw = getelementptr inbounds i8, ptr %1, i64 %7
+  %i.aw = getelementptr inbounds i8, ptr %1, i64 %8
   %i.ax = load i8, ptr %i.aw, align 1
   %i.ay = sext i8 %i.ax to i32
   br label %pcmp_val.exit149.us.us
 
 bb.n:                                             ; preds = %bb.k
-  %i.az = getelementptr inbounds [2 x i8], ptr %1, i64 %7
+  %i.az = getelementptr inbounds [2 x i8], ptr %1, i64 %8
   %i.ba = load i16, ptr %i.az, align 2
   %i.bb = zext i16 %i.ba to i32
   br label %pcmp_val.exit149.us.us
 
 bb.o:                                             ; preds = %bb.k
-  %i.bc = getelementptr inbounds i8, ptr %1, i64 %7
+  %i.bc = getelementptr inbounds i8, ptr %1, i64 %8
   %i.bd = load i8, ptr %i.bc, align 1
   %i.be = zext i8 %i.bd to i32
   br label %pcmp_val.exit149.us.us
@@ -324,14 +326,14 @@ pcmp_val.exit149.us.us:                           ; preds = %bb.o, %bb.n, %bb.m,
   %.0.i147.us.us = phi i32 [ %i.be, %bb.o ], [ %i.bb, %bb.n ], [ %i.ay, %bb.m ], [ %i.av, %bb.l ]
   %i.bf = icmp sle i32 %.0.i147.us.us, %.0.i141.us.us
   %i.bg = zext i1 %i.bf to i32
-  %i.bh = or i32 %.3237.us.us, %i.bg
+  %i.bh = or i32 %.1129.in236.us.us, %i.bg
   br label %bb.p
 
 bb.p:                                             ; preds = %pcmp_val.exit149.us.us, %pcmp_val.exit146.us.us
-  %i.bi = phi i32 [ %.3237.us.us, %pcmp_val.exit146.us.us ], [ %i.bh, %pcmp_val.exit149.us.us ] ; 3 uses
-  %indvars.iv.next340 = add nsw i64 %indvars.iv339.a, -2
-  %i.bj = icmp sgt i64 %indvars.iv339.a, 1
-  %8 = trunc nuw nsw i64 %indvars.iv339.a to i32
+  %i.bi = phi i32 [ %.1129.in236.us.us, %pcmp_val.exit146.us.us ], [ %i.bh, %pcmp_val.exit149.us.us ] ; 3 uses
+  %indvars.iv.next340 = add nsw i64 %indvars.iv339, -2
+  %i.bj = icmp sgt i64 %indvars.iv339, 1
+  %indvars.iv.next342 = add i64 %indvars.iv339.a, -2
   br i1 %i.bj, label %bb.f, label %._crit_edge240.us.us, !llvm.loop !39
 
 ._crit_edge240.us.us:                             ; preds = %bb.p

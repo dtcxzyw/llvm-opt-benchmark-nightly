@@ -204,10 +204,10 @@ define hidden void @_ZN13hilbert_basis17select_inequalityEv(ptr nofree noundef n
 bb.a:
   %1 = alloca %"class.hilbert_basis::values", align 8 ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 2 uses
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !96   ; 6 uses
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !96   ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !94
-  %i.e = zext i32 %i.b to i64
+  %i.e = zext i32 %i.b to i64                     ; 2 uses
   %i.f = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.e ; 2 uses
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !92   ; 4 uses
   %i.h = icmp eq ptr %i.g, null
@@ -345,16 +345,18 @@ _ZN13hilbert_basis16get_ineq_productERK6vectorI13checked_int64ILb1EELb1EjE.exit:
   %i.bb = add i32 %i.az, -1
   %i.bc = zext i32 %i.bb to i64
   %i.bd = getelementptr inbounds nuw [8 x i8], ptr %i.av, i64 %i.bc
-  %.02599149 = add i32 %i.b, 1                    ; 2 uses
-  %2 = icmp ult i32 %.02599149, %i.az
+  %indvars.iv.next150 = add nuw nsw i64 %i.e, 1   ; 2 uses
+  %indvars151 = trunc i64 %indvars.iv.next150 to i32 ; 2 uses
+  %2 = icmp ugt i32 %i.az, %indvars151
   br i1 %2, label %.lr.ph154, label %.critedge
 
 .lr.ph154:                                        ; preds = %.lr.ph.split, %_ZNK6vectorIS_I13checked_int64ILb1EELb1EjELb1EjE4sizeEv.exit
-  %.02599153 = phi i32 [ %.02599, %_ZNK6vectorIS_I13checked_int64ILb1EELb1EjELb1EjE4sizeEv.exit ], [ %.02599149, %.lr.ph.split ] ; 4 uses
+  %.02599153 = phi i32 [ %indvars, %_ZNK6vectorIS_I13checked_int64ILb1EELb1EjELb1EjE4sizeEv.exit ], [ %indvars151, %.lr.ph.split ] ; 2 uses
+  %indvars.iv.next155 = phi i64 [ %indvars.iv.next, %_ZNK6vectorIS_I13checked_int64ILb1EELb1EjELb1EjE4sizeEv.exit ], [ %indvars.iv.next150, %.lr.ph.split ] ; 2 uses
   %.03096152 = phi i32 [ %.232, %_ZNK6vectorIS_I13checked_int64ILb1EELb1EjELb1EjE4sizeEv.exit ], [ %i.b, %.lr.ph.split ]
   %.02797151 = phi i32 [ %.229, %_ZNK6vectorIS_I13checked_int64ILb1EELb1EjELb1EjE4sizeEv.exit ], [ %.06.lcssa.i, %.lr.ph.split ] ; 3 uses
   %.02698150 = phi i32 [ %.2, %_ZNK6vectorIS_I13checked_int64ILb1EELb1EjELb1EjE4sizeEv.exit ], [ %i.au, %.lr.ph.split ] ; 2 uses
-  %3 = zext i32 %.02599153 to i64
+  %3 = and i64 %indvars.iv.next155, 4294967295
   %i.be = getelementptr inbounds nuw [8 x i8], ptr %i.av, i64 %3
   %i.bf = load ptr, ptr %i.be, align 8, !tbaa !92 ; 5 uses
   %i.bg = icmp eq ptr %i.bf, null
@@ -611,8 +613,9 @@ _ZNK6vectorIS_I13checked_int64ILb1EELb1EjELb1EjE4sizeEv.exit: ; preds = %bb.y, %
   %.232 = phi i32 [ %.03096152, %bb.y ], [ %.02599153, %bb.z ] ; 2 uses
   %.229 = phi i32 [ %.02797151, %bb.y ], [ %.06.lcssa.i52, %bb.z ]
   %.2 = phi i32 [ %.02698150, %bb.y ], [ %i.dr, %bb.z ]
-  %.02599 = add i32 %.02599153, 1                 ; 2 uses
-  %4 = icmp ult i32 %.02599, %i.az
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv.next155, 1 ; 2 uses
+  %indvars = trunc i64 %indvars.iv.next to i32    ; 2 uses
+  %4 = icmp ugt i32 %i.az, %indvars
   br i1 %4, label %.lr.ph154, label %.critedge, !llvm.loop !175
 
 .critedge:                                        ; preds = %_ZN13hilbert_basis16get_ineq_productERK6vectorI13checked_int64ILb1EELb1EjE.exit67, %_ZNK6vectorIS_I13checked_int64ILb1EELb1EjELb1EjE4sizeEv.exit, %.lr.ph.split, %.lr.ph, %_ZN13hilbert_basis16get_ineq_productERK6vectorI13checked_int64ILb1EELb1EjE.exit

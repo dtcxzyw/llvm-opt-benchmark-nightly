@@ -204,9 +204,9 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %.sroa.04.0.i.i = phi i64 [ %i.i, %bb.b ], [ %i.j, %bb.c ]
+  %.sroa.04.0.i.i = phi i64 [ %i.i, %bb.b ], [ %i.j, %bb.c ] ; 2 uses
   %.sroa.5.0.i.i = phi i32 [ 2, %bb.b ], [ %i.o, %bb.c ]
-  %.sroa.03.0.extract.trunc.i = trunc i64 %.sroa.04.0.i.i to i32 ; 3 uses
+  %.sroa.03.0.extract.trunc.i = trunc i64 %.sroa.04.0.i.i to i32
   %i.p = getelementptr i8, ptr %0, i64 1504       ; 4 uses
   %.val8 = load ptr, ptr %i.p, align 8
   %i.q = getelementptr i8, ptr %0, i64 1512       ; 5 uses
@@ -218,33 +218,38 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.v = trunc i64 %i.u to i32
   %i.w = add i32 %i.v, -1                         ; 3 uses
   %i.x = getelementptr inbounds i8, ptr %.val9, i64 -472
+  %5 = and i64 %.sroa.04.0.i.i, 4294967295        ; 2 uses
   %i.y = add i32 %.sroa.03.0.extract.trunc.i, 1
   %umax = tail call i32 @llvm.umax.i32(i32 %i.w, i32 %i.y) ; 3 uses
   %i.z = add i32 %umax, -1                        ; 2 uses
-  %.0.i24 = add i32 %.sroa.03.0.extract.trunc.i, 1 ; 2 uses
-  %5 = icmp ult i32 %.0.i24, %i.w
-  br i1 %5, label %.lr.ph, label %.critedge.i
+  %indvars.iv.next30 = add nuw nsw i64 %5, 1      ; 2 uses
+  %indvars31 = trunc i64 %indvars.iv.next30 to i32 ; 2 uses
+  %6 = icmp ugt i32 %i.w, %indvars31
+  br i1 %6, label %.lr.ph, label %.critedge.i
 
 .critedge2.i:                                     ; preds = %.lr.ph
-  %.0.i = add i32 %.0.i26, 1                      ; 2 uses
-  %6 = icmp ult i32 %.0.i, %i.w
-  br i1 %6, label %.lr.ph, label %.critedge.i, !llvm.loop !256
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv.next33, 1 ; 2 uses
+  %indvars = trunc i64 %indvars.iv.next to i32    ; 2 uses
+  %7 = icmp ugt i32 %i.w, %indvars
+  br i1 %7, label %.lr.ph, label %.critedge.i, !llvm.loop !256
 
 .lr.ph:                                           ; preds = %bb.d, %.critedge2.i
-  %.0.i26 = phi i32 [ %.0.i, %.critedge2.i ], [ %.0.i24, %bb.d ] ; 4 uses
-  %.0.in.i25 = phi i32 [ %.0.i26, %.critedge2.i ], [ %.sroa.03.0.extract.trunc.i, %bb.d ]
-  %7 = zext i32 %.0.i26 to i64
-  %i.aa = sub nsw i64 0, %7
+  %.0.i26 = phi i32 [ %indvars, %.critedge2.i ], [ %indvars31, %bb.d ]
+  %indvars.iv.next33 = phi i64 [ %indvars.iv.next, %.critedge2.i ], [ %indvars.iv.next30, %bb.d ] ; 3 uses
+  %indvars.iv32 = phi i64 [ %indvars.iv.next33, %.critedge2.i ], [ %5, %bb.d ]
+  %8 = and i64 %indvars.iv.next33, 4294967295
+  %i.aa = sub nsw i64 0, %8
   %i.ab = getelementptr inbounds [472 x i8], ptr %i.x, i64 %i.aa
   %i.ac = load i8, ptr %i.ab, align 8
   %cond = icmp eq i8 %i.ac, 4
   br i1 %cond, label %..critedge.i_crit_edge, label %.critedge2.i, !llvm.loop !256
 
 ..critedge.i_crit_edge:                           ; preds = %.lr.ph
-  br label %.critedge.i, !llvm.loop !256
+  %9 = trunc nuw i64 %indvars.iv32 to i32
+  br label %.critedge.i
 
-.critedge.i:                                      ; preds = %.critedge2.i, %..critedge.i_crit_edge, %bb.d
-  %.0.in.i.lcssa = phi i32 [ %.0.in.i25, %..critedge.i_crit_edge ], [ %i.z, %bb.d ], [ %i.z, %.critedge2.i ] ; 2 uses
+.critedge.i:                                      ; preds = %.critedge2.i, %bb.d, %..critedge.i_crit_edge
+  %.0.in.i.lcssa = phi i32 [ %9, %..critedge.i_crit_edge ], [ %i.z, %bb.d ], [ %i.z, %.critedge2.i ] ; 2 uses
   %.0.i.lcssa = phi i32 [ %.0.i26, %..critedge.i_crit_edge ], [ %umax, %bb.d ], [ %umax, %.critedge2.i ] ; 2 uses
   tail call fastcc void @_ZN2v88internal4wasm15WasmFullDecoderINS1_7Decoder15NoValidationTagENS1_12_GLOBAL__N_115LiftoffCompilerELNS1_12DecodingModeE0EE11FallThroughEv(ptr noundef nonnull align 8 dereferenceable(1536) %0)
   %i.ad = getelementptr inbounds i8, ptr %.val9, i64 -384
