@@ -204,7 +204,7 @@ bb.r:                                             ; preds = %._crit_edge, %bb.m
   br label %bb.s
 
 bb.s:                                             ; preds = %.lr.ph127, %bb.ac
-  %.062.val80157 = phi i32 [ %.062.val80124, %.lr.ph127 ], [ %.062.val80, %bb.ac ] ; 2 uses
+  %.062.val80157 = phi i32 [ %.062.val80124, %.lr.ph127 ], [ %.062.val80, %bb.ac ]
   %i.cs = phi i32 [ %i.bm, %.lr.ph127 ], [ %i.du, %bb.ac ] ; 8 uses
   %i.ct = phi i32 [ %i.bn, %.lr.ph127 ], [ %i.dv, %bb.ac ]
   %indvars.iv145 = phi i64 [ 0, %.lr.ph127 ], [ %indvars.iv.next146, %bb.ac ] ; 2 uses
@@ -223,11 +223,9 @@ bb.s:                                             ; preds = %.lr.ph127, %bb.ac
   %i.db = load ptr, ptr %i.da, align 8, !tbaa !77 ; 2 uses
   %i.dc = getelementptr i8, ptr %i.db, i64 20     ; 2 uses
   %.val77 = load i32, ptr %i.dc, align 4          ; 2 uses
-  %1 = icmp sgt i32 %.062.val80157, 0
   %i.dd = and i32 %.val77, 47
   %i.de = icmp eq i32 %i.dd, 7
-  %or.cond116 = and i1 %1, %i.de
-  br i1 %or.cond116, label %bb.t, label %bb.ac
+  br i1 %i.de, label %bb.t, label %bb.ac
 
 bb.t:                                             ; preds = %bb.s
   %i.df = or disjoint i32 %.val77, 32

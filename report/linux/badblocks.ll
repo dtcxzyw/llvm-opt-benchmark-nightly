@@ -203,12 +203,12 @@ bb.g:                                             ; preds = %.lr.ph, %bb.f
   br i1 %i.y, label %.lr.ph, label %.preheader28, !llvm.loop !35
 
 .lr.ph30.a:                                       ; preds = %.preheader28, %._crit_edge
-  %i.z = phi i32 [ %1, %._crit_edge ], [ %i.w, %.preheader28 ] ; 4 uses
+  %i.z = phi i32 [ %1, %._crit_edge ], [ %i.w, %.preheader28 ] ; 3 uses
   %indvars.iv38 = phi i64 [ %indvars.iv.next39, %._crit_edge ], [ 0, %.preheader28 ] ; 4 uses
   %indvars.iv.next39 = add nuw nsw i64 %indvars.iv38, 1 ; 6 uses
   %i.aa = sext i32 %i.z to i64
   %i.ab = icmp slt i64 %indvars.iv.next39, %i.aa
-  br i1 %i.ab, label %.lr.ph34.preheader, label %._crit_edge
+  br i1 %i.ab, label %.lr.ph34.preheader, label %._crit_edge36
 
 .lr.ph34.preheader:                               ; preds = %.lr.ph30.a
   %i.ac = trunc i64 %indvars.iv38 to i32
@@ -242,7 +242,7 @@ bb.g:                                             ; preds = %.lr.ph, %bb.f
   %i.bb = lshr i64 %i.ba, 9
   %i.bc = and i64 %i.bb, 18014398509481983
   %i.bd = icmp eq i64 %i.ay, %i.bc
-  br i1 %i.bd, label %.lr.ph46, label %._crit_edge
+  br i1 %i.bd, label %.lr.ph46, label %._crit_edge, !llvm.loop !36
 
 .lr.ph46:                                         ; preds = %.lr.ph34.preheader, %.lr.ph34
   %i.be = phi i64 [ %i.ba, %.lr.ph34 ], [ %i.an, %.lr.ph34.preheader ] ; 2 uses
@@ -281,21 +281,24 @@ bb.i:                                             ; preds = %bb.h
   %.pre.i.us = load i32, ptr %i.o, align 8
   br label %try_adjacent_combine.exit.us
 
-try_adjacent_combine.exit.us:                     ; preds = %bb.i, %bb.h
+try_adjacent_combine.exit.us:                     ; preds = %bb.h, %bb.i
   %i.cb = phi i32 [ %.pre.i.us, %bb.i ], [ %i.bu, %bb.h ]
   %i.cc = add i32 %i.cb, -1                       ; 5 uses
   store i32 %i.cc, ptr %i.o, align 8
   %i.cd = sext i32 %i.cc to i64
   %i.ce = icmp slt i64 %indvars.iv.next39, %i.cd
-  br i1 %i.ce, label %.lr.ph34, label %._crit_edge
+  br i1 %i.ce, label %.lr.ph34, label %try_adjacent_combine.exit.._crit_edge_crit_edge, !llvm.loop !36
 
-._crit_edge:                                      ; preds = %.lr.ph46, %.lr.ph34, %try_adjacent_combine.exit.us, %.lr.ph34.preheader, %.lr.ph30.a
-  %1 = phi i32 [ %i.z, %.lr.ph30.a ], [ %i.z, %.lr.ph34.preheader ], [ %i.cc, %try_adjacent_combine.exit.us ], [ %i.cc, %.lr.ph34 ], [ %i.bj, %.lr.ph46 ] ; 2 uses
+try_adjacent_combine.exit.._crit_edge_crit_edge:  ; preds = %try_adjacent_combine.exit.us
+  br label %._crit_edge, !llvm.loop !36
+
+._crit_edge:                                      ; preds = %.lr.ph46, %.lr.ph34, %try_adjacent_combine.exit.._crit_edge_crit_edge, %.lr.ph34.preheader
+  %1 = phi i32 [ %i.cc, %try_adjacent_combine.exit.._crit_edge_crit_edge ], [ %i.z, %.lr.ph34.preheader ], [ %i.bj, %.lr.ph46 ], [ %i.cc, %.lr.ph34 ] ; 2 uses
   %i.cf = sext i32 %1 to i64
   %i.cg = icmp slt i64 %indvars.iv.next39, %i.cf
-  br i1 %i.cg, label %.lr.ph30.a, label %._crit_edge36, !llvm.loop !36
+  br i1 %i.cg, label %.lr.ph30.a, label %._crit_edge36, !llvm.loop !37
 
-._crit_edge36:                                    ; preds = %._crit_edge, %bb.e, %.preheader28
+._crit_edge36:                                    ; preds = %.lr.ph30.a, %._crit_edge, %bb.e, %.preheader28
   store i32 0, ptr %i.l, align 4
   br label %bb.j
 
@@ -415,7 +418,7 @@ bb.e:                                             ; preds = %bb.d
   %i.ap = load i64, ptr %i.ao, align 8            ; 3 uses
   %i.aq = icmp slt i64 %i.ap, 0
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
-  br i1 %i.aq, label %bb.g, label %bb.f, !llvm.loop !37
+  br i1 %i.aq, label %bb.g, label %bb.f, !llvm.loop !38
 
 bb.f:                                             ; preds = %bb.e
   %i.ar = trunc i64 %i.ap to i32
@@ -468,11 +471,11 @@ bb.a:
   %i.b = alloca i32, align 4                      ; 5 uses
   %i.c = alloca i8, align 1                       ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
-  store i64 0, ptr %i.a, align 8, !annotation !38
+  store i64 0, ptr %i.a, align 8, !annotation !39
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
-  store i32 0, ptr %i.b, align 4, !annotation !38
+  store i32 0, ptr %i.b, align 4, !annotation !39
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #8
-  store i8 0, ptr %i.c, align 1, !annotation !38
+  store i8 0, ptr %i.c, align 1, !annotation !39
   %i.d = call i32 (ptr, ptr, ...) @sscanf(ptr noundef %1, ptr noundef nonnull @.str.3, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c) #10
   switch i32 %i.d, label %bb.e [
     i32 3, label %bb.b
@@ -859,5 +862,6 @@ attributes #12 = { noredzone nounwind allocsize(1) "no-builtin-wcslen" }
 !35 = distinct !{!35, !19}
 !36 = distinct !{!36, !19}
 !37 = distinct !{!37, !19}
-!38 = !{!"auto-init"}
+!38 = distinct !{!38, !19}
+!39 = !{!"auto-init"}
 end_hunk_0

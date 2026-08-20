@@ -204,7 +204,7 @@ bb.aw:                                            ; preds = %bb.ap, %bb.av, %bb.
 
 .lr.ph506:                                        ; preds = %bb.aw, %bb.bx
   %.7505 = phi ptr [ %.9, %bb.bx ], [ %.4.lcssa, %bb.aw ] ; 8 uses
-  %.2355503 = phi ptr [ %i.md, %bb.bx ], [ %i.e, %bb.aw ] ; 27 uses
+  %.2355503 = phi ptr [ %i.md, %bb.bx ], [ %i.e, %bb.aw ] ; 26 uses
   %i.in = getelementptr inbounds nuw i8, ptr %.2355503, i64 24 ; 3 uses
   %i.io = load i8, ptr %i.in, align 8, !tbaa !202 ; 5 uses
   %i.ip = and i8 %i.io, 4
@@ -267,7 +267,7 @@ bb.bb:                                            ; preds = %.preheader
 
 bb.bc:                                            ; preds = %.preheader573, %bb.bd
   %.2355.pn408 = phi ptr [ %.0, %bb.bd ], [ %.2355503, %.preheader573 ] ; 4 uses
-  %.0 = getelementptr inbounds nuw i8, ptr %.2355.pn408, i64 88 ; 3 uses
+  %.0 = getelementptr inbounds nuw i8, ptr %.2355.pn408, i64 88 ; 2 uses
   %.not511.not.not = icmp ult ptr %.0, %i.j
   br i1 %.not511.not.not, label %bb.bd, label %.thread562
 
@@ -280,9 +280,7 @@ bb.bd:                                            ; preds = %bb.bc
 
 bb.be:                                            ; preds = %bb.bd
   %i.jo = icmp uge ptr %.0328, %.2355503
-  %2 = icmp ule ptr %.0, %.2355503
-  %3 = or i1 %i.jo, %2
-  %i.jp = or i1 %.not405, %3
+  %i.jp = or i1 %.not405, %i.jo
   br i1 %i.jp, label %.thread562, label %bb.bf
 
 bb.bf:                                            ; preds = %bb.be

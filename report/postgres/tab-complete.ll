@@ -203,7 +203,7 @@ bb.e:                                             ; preds = %.lr.ph.i41
 
 .loopexit:                                        ; preds = %bb.e, %.preheader.i38
   %i.ae = xor i32 %i.s, -1
-  %i.af = add nsw i32 %3, %i.ae                   ; 4 uses
+  %i.af = add i32 %3, %i.ae                       ; 4 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.r, i64 8
   %i.ah = icmp slt i32 %1, %i.af
   br i1 %i.ah, label %HeadMatchesArray.exit, label %.preheader.i47

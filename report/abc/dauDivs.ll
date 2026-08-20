@@ -20,7 +20,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nofree nounwind uwtable
 define noalias noundef ptr @Dau_DsdDivisors(ptr nofree noundef readonly captures(none) %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [64 x i64], align 16              ; 21 uses
+  %i.a = alloca [64 x i64], align 16              ; 20 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   %i.b = icmp slt i32 %1, 7                       ; 3 uses
   %i.c = icmp slt i32 %1, 3
@@ -106,7 +106,7 @@ bb.b:                                             ; preds = %.lr.ph94, %.loopexi
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph91, %._crit_edge
-  %indvars.iv106 = phi i64 [ %indvars.iv, %.lr.ph91 ], [ %indvars.iv.next107, %._crit_edge ] ; 10 uses
+  %indvars.iv106 = phi i64 [ %indvars.iv, %.lr.ph91 ], [ %indvars.iv.next107, %._crit_edge ] ; 9 uses
   br i1 %i.q, label %.lr.ph.i.preheader, label %Abc_TtCopy.exit
 
 .lr.ph.i.preheader:                               ; preds = %bb.c
@@ -270,10 +270,8 @@ Abc_TtSwapVars.exit.thread:                       ; preds = %bb.d
   %i.dq = load i64, ptr %i.ap, align 8, !tbaa !10
   %i.dr = and i64 %i.dq, %i.dj
   %i.ds = lshr i64 %i.dr, %i.ao
-  %i.dt = or i64 %i.dp, %i.ds                     ; 2 uses
-  store i64 %i.dt, ptr %i.a, align 16, !tbaa !10
-  %2 = icmp eq i64 %indvars.iv106, 1
-  br i1 %2, label %Abc_TtSwapVars.exit73, label %.thread
+  %i.dt = or i64 %i.dp, %i.ds
+  br label %.thread
 
 bb.h:                                             ; preds = %Abc_TtSwapVars.exit
   br i1 %i.b, label %..thread_crit_edge, label %bb.i
@@ -465,7 +463,7 @@ scalar.ph145:                                     ; preds = %.preheader.us.i58, 
   %i.hq = icmp ult ptr %i.hp, %i.s
   br i1 %i.hq, label %.preheader.us.i58, label %Abc_TtSwapVars.exit73, !llvm.loop !17
 
-Abc_TtSwapVars.exit73:                            ; preds = %._crit_edge.us.i65, %vector.body, %scalar.ph, %scalar.ph.1, %scalar.ph.2, %Abc_TtSwapVars.exit.thread, %Abc_TtSwapVars.exit, %.thread, %bb.j, %bb.k, %.preheader.lr.ph.i56
+Abc_TtSwapVars.exit73:                            ; preds = %._crit_edge.us.i65, %vector.body, %scalar.ph, %scalar.ph.1, %scalar.ph.2, %Abc_TtSwapVars.exit, %.thread, %bb.j, %bb.k, %.preheader.lr.ph.i56
   br i1 %i.t, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %Abc_TtSwapVars.exit73, %bb.s

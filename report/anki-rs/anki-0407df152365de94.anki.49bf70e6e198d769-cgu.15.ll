@@ -204,7 +204,7 @@ bb.a:
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %"_ZN58_$LT$alloc..string..String$u20$as$u20$core..fmt..Write$GT$10write_char17h5a9d960cd3ba5c32E.exit.i", %.lr.ph.lr.ph.i
-  %.sroa.01.0.ph94.i = phi i64 [ 0, %.lr.ph.lr.ph.i ], [ %i.bm, %"_ZN58_$LT$alloc..string..String$u20$as$u20$core..fmt..Write$GT$10write_char17h5a9d960cd3ba5c32E.exit.i" ] ; 13 uses
+  %.sroa.01.0.ph94.i = phi i64 [ 0, %.lr.ph.lr.ph.i ], [ %i.bm, %"_ZN58_$LT$alloc..string..String$u20$as$u20$core..fmt..Write$GT$10write_char17h5a9d960cd3ba5c32E.exit.i" ] ; 12 uses
   br label %bb.b
 
 .outer._crit_edge.i:                              ; preds = %bb.f
@@ -212,7 +212,7 @@ bb.a:
   br i1 %i.c, label %_ZN13fluent_syntax7unicode8unescape17hcb73cf0008a35ae3E.exit.thread.sink.split, label %bb.c
 
 bb.b:                                             ; preds = %bb.f, %.lr.ph.i
-  %.sroa.01.089.i = phi i64 [ %.sroa.01.0.ph94.i, %.lr.ph.i ], [ %i.l, %bb.f ] ; 7 uses
+  %.sroa.01.089.i = phi i64 [ %.sroa.01.0.ph94.i, %.lr.ph.i ], [ %i.l, %bb.f ] ; 6 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 %.sroa.01.089.i
   %i.e = load i8, ptr %i.d, align 1, !alias.scope !677, !noalias !674, !noundef !4
   %i.f = icmp eq i8 %i.e, 92
@@ -237,18 +237,14 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 %.sroa.01.089.i
   %.not38.i = icmp eq i64 %.sroa.01.0.ph94.i, %.sroa.01.089.i
-  br i1 %.not38.i, label %bb.i, label %3
+  br i1 %.not38.i, label %bb.i, label %bb.g
 
 bb.f:                                             ; preds = %bb.b
   %i.l = add nuw i64 %.sroa.01.089.i, 1           ; 2 uses
   %i.m = icmp ult i64 %i.l, %2
   br i1 %i.m, label %bb.b, label %.outer._crit_edge.i
 
-3:                                                ; preds = %bb.e
-  %.not.i40.i = icmp ugt i64 %.sroa.01.0.ph94.i, %.sroa.01.089.i
-  br i1 %.not.i40.i, label %bb.k, label %bb.g
-
-bb.g:                                             ; preds = %3
+bb.g:                                             ; preds = %bb.e
   %i.n = icmp eq i64 %.sroa.01.0.ph94.i, 0
   br i1 %i.n, label %bb.j, label %bb.h
 
@@ -269,7 +265,7 @@ bb.j:                                             ; preds = %bb.h, %bb.g
   tail call void @"_ZN132_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$alloc..vec..spec_extend..SpecExtend$LT$$RF$T$C$core..slice..iter..Iter$LT$T$GT$$GT$$GT$11spec_extend17h705086954de2a2beE"(ptr noalias noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull readonly align 1 %i.t, ptr noundef nonnull readonly %i.k)
   br label %bb.i
 
-bb.k:                                             ; preds = %bb.h, %3
+bb.k:                                             ; preds = %bb.h
   tail call void @_ZN4core3str16slice_error_fail17h9e3908d5d4865c14E(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %1, i64 noundef %2, i64 noundef %.sroa.01.0.ph94.i, i64 noundef %.sroa.01.089.i, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @18) #50
   unreachable
 

@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %_ZN7testing15Assert
   ret void
 
 _Z11utf8_encodePcj.exit:                          ; preds = %bb.a, %_ZN7testing15AssertionResultD2Ev.exit
-  %.0622 = phi i32 [ 55296, %bb.a ], [ %i.bf, %_ZN7testing15AssertionResultD2Ev.exit ] ; 4 uses
+  %.0622 = phi i32 [ 55296, %bb.a ], [ %i.bf, %_ZN7testing15AssertionResultD2Ev.exit ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #30
   %i.d = lshr i32 %.0622, 12
   %i.e = and i32 %i.d, 31
@@ -217,13 +217,10 @@ _Z11utf8_encodePcj.exit:                          ; preds = %bb.a, %_ZN7testing1
   %i.l = getelementptr inbounds [4 x i8], ptr @__const._ZN3fmt3v126detail11utf8_decodeEPKcPjPi.masks, i64 %i.k
   %i.m = load i32, ptr %i.l, align 4, !tbaa !59
   %i.n = and i32 %i.m, %i.f
-  %4 = shl nuw nsw i32 %i.n, 18
-  %i.o = shl i32 %.0622, 6
-  %5 = and i32 %i.o, 258048
-  %6 = or disjoint i32 %4, %5
-  %i.p = shl i32 %.0622, 6
-  %i.q = and i32 %i.p, 4032
-  %i.r = or disjoint i32 %6, %i.q
+  %i.o = shl nuw nsw i32 %i.n, 18
+  %i.p = shl nuw nsw i32 %.0622, 6
+  %i.q = and i32 %i.p, 262080
+  %i.r = or disjoint i32 %i.o, %i.q
   %i.s = getelementptr inbounds [4 x i8], ptr @__const._ZN3fmt3v126detail11utf8_decodeEPKcPjPi.shiftc, i64 %i.k
   %i.t = load i32, ptr %i.s, align 4, !tbaa !59
   %i.u = lshr i32 %i.r, %i.t                      ; 3 uses

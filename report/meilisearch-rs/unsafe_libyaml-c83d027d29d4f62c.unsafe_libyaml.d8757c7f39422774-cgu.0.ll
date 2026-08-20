@@ -204,7 +204,7 @@ bb.fj:                                            ; preds = %bb.fh
   %i.sy = add nsw i8 %i.mf, -87
   br label %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit207.i"
 
-"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit207.i": ; preds = %"_ZN53_$LT$u64$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h91c4fbb6759473dcE.exit208.preheader.i", %bb.fi, %bb.fj
+"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit207.i": ; preds = %bb.fj, %bb.fi, %"_ZN53_$LT$u64$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h91c4fbb6759473dcE.exit208.preheader.i"
   %.sroa.056.0.i = phi i8 [ %i.sx, %bb.fi ], [ %i.sy, %bb.fj ], [ %i.mg, %"_ZN53_$LT$u64$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h91c4fbb6759473dcE.exit208.preheader.i" ]
   %i.sz = zext nneg i8 %.sroa.056.0.i to i32
   %i.ta = getelementptr i8, ptr %i.me, i64 1

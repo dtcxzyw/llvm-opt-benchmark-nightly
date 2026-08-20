@@ -203,7 +203,7 @@ bb.n:                                             ; preds = %.lr.ph409.split
   br i1 %.not263397, label %.critedge7, label %.lr.ph399
 
 .lr.ph399:                                        ; preds = %.preheader380, %.critedge9
-  %.1206398 = phi ptr [ %i.bt, %.critedge9 ], [ %i.bo, %.preheader380 ] ; 6 uses
+  %.1206398 = phi ptr [ %i.bt, %.critedge9 ], [ %i.bo, %.preheader380 ] ; 5 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %.1206398, i64 2
   %.not264.not = icmp ugt ptr %i.bp, %i.bn
   br i1 %.not264.not, label %.critedge7, label %bb.o
@@ -211,19 +211,13 @@ bb.n:                                             ; preds = %.lr.ph409.split
 bb.o:                                             ; preds = %.lr.ph399
   %i.bq = load i8, ptr %.1206398, align 1, !tbaa !8
   %.not265 = icmp eq i8 %i.bq, 0
-  br i1 %.not265, label %.critedge7, label %.preheader.preheader
+  br i1 %.not265, label %.critedge7, label %.preheader
 
-.preheader.preheader:                             ; preds = %bb.o
-  %scevgep = getelementptr nuw i8, ptr %.1206398, i64 1
-  %.not268 = icmp uge ptr %scevgep, %2
-  br label %.preheader
-
-.preheader:                                       ; preds = %.preheader.preheader, %bb.p
-  %.1206.pn = phi ptr [ %.2, %bb.p ], [ %.1206398, %.preheader.preheader ] ; 3 uses
+.preheader:                                       ; preds = %bb.o, %bb.p
+  %.1206.pn = phi ptr [ %.2, %bb.p ], [ %.1206398, %bb.o ] ; 3 uses
   %i.br = getelementptr inbounds nuw i8, ptr %.1206.pn, i64 3
-  %.not269 = icmp ule ptr %i.br, %i.bn
-  %or.cond451 = select i1 %.not268, i1 %.not269, i1 false
-  br i1 %or.cond451, label %bb.p, label %.critedge9
+  %.not269.not = icmp ugt ptr %i.br, %i.bn
+  br i1 %.not269.not, label %.critedge9, label %bb.p
 
 bb.p:                                             ; preds = %.preheader
   %.2 = getelementptr inbounds nuw i8, ptr %.1206.pn, i64 1 ; 2 uses

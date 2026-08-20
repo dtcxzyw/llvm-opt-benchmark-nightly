@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %_ZSt10__distanceISt
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !25   ; 5 uses
   %i.x = ptrtoint ptr %i.w to i64
   %i.y = sub i64 %i.x, %i.j
-  %i.z = ashr exact i64 %i.y, 3                   ; 4 uses
+  %i.z = ashr exact i64 %i.y, 3                   ; 3 uses
   %.not.not = icmp ugt i64 %i.z, %.06.i
   br i1 %.not.not, label %.lr.ph.i.i.i.i.i, label %bb.f
 
@@ -232,31 +232,23 @@ _ZSt8_DestroyIPPKN4geos4geom10CoordinateES4_EvT_S6_RSaIT0_E.exit.i: ; preds = %_
 
 bb.f:                                             ; preds = %bb.e
   %i.ag = icmp sgt i64 %i.z, 0
-  br i1 %i.ag, label %.preheader.i.a, label %.preheader7.i
+  br i1 %i.ag, label %.lr.ph.i20, label %.preheader.i.a
 
-.preheader7.i:                                    ; preds = %bb.f
+.preheader.i.a:                                   ; preds = %bb.f
   %.not9.i = icmp eq ptr %i.w, %i.h
-  br i1 %.not9.i, label %_ZSt4copyISt23_Rb_tree_const_iteratorIPKN4geos4geom10CoordinateEEPS5_ET0_T_S9_S8_.exit28, label %.lr.ph.i20
+  tail call void @llvm.assume(i1 %.not9.i)
+  br label %_ZSt4copyISt23_Rb_tree_const_iteratorIPKN4geos4geom10CoordinateEEPS5_ET0_T_S9_S8_.exit28
 
-.preheader.i.a:                                   ; preds = %bb.f, %.preheader.i.a
-  %.012.i = phi i64 [ %4, %.preheader.i.a ], [ %i.z, %bb.f ]
-  %3 = phi ptr [ %5, %.preheader.i.a ], [ %1, %bb.f ]
-  %4 = add nsw i64 %.012.i, -1                    ; 2 uses
-  %5 = tail call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef %3) #19 ; 2 uses
-  %.not6.i = icmp eq i64 %4, 0
-  br i1 %.not6.i, label %_ZSt9__advanceISt23_Rb_tree_const_iteratorIPKN4geos4geom10CoordinateEElEvRT_T0_St26bidirectional_iterator_tag.exit, label %.preheader.i.a, !llvm.loop !91
-
-.lr.ph.i20:                                       ; preds = %.preheader7.i, %.lr.ph.i20
-  %.110.i = phi i64 [ %i.ai, %.lr.ph.i20 ], [ %i.z, %.preheader7.i ]
-  %i.ah = phi ptr [ %i.aj, %.lr.ph.i20 ], [ %1, %.preheader7.i ]
-  %i.ai = add nsw i64 %.110.i, 1                  ; 2 uses
-  %i.aj = tail call noundef ptr @_ZSt18_Rb_tree_decrementPKSt18_Rb_tree_node_base(ptr noundef %i.ah) #19 ; 2 uses
+.lr.ph.i20:                                       ; preds = %bb.f, %.lr.ph.i20
+  %.110.i = phi i64 [ %i.ai, %.lr.ph.i20 ], [ %i.z, %bb.f ]
+  %i.ah = phi ptr [ %i.aj, %.lr.ph.i20 ], [ %1, %bb.f ]
+  %i.ai = add nsw i64 %.110.i, -1                 ; 2 uses
+  %i.aj = tail call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef %i.ah) #19 ; 5 uses
   %.not.i21 = icmp eq i64 %i.ai, 0
-  br i1 %.not.i21, label %_ZSt9__advanceISt23_Rb_tree_const_iteratorIPKN4geos4geom10CoordinateEElEvRT_T0_St26bidirectional_iterator_tag.exit, label %.lr.ph.i20, !llvm.loop !92
+  br i1 %.not.i21, label %_ZSt9__advanceISt23_Rb_tree_const_iteratorIPKN4geos4geom10CoordinateEElEvRT_T0_St26bidirectional_iterator_tag.exit, label %.lr.ph.i20, !llvm.loop !91
 
-_ZSt9__advanceISt23_Rb_tree_const_iteratorIPKN4geos4geom10CoordinateEElEvRT_T0_St26bidirectional_iterator_tag.exit: ; preds = %.lr.ph.i20, %.preheader.i.a
-  %.sroa.0.0 = phi ptr [ %5, %.preheader.i.a ], [ %i.aj, %.lr.ph.i20 ] ; 4 uses
-  %.not6.i.i.i.i.i22 = icmp eq ptr %1, %.sroa.0.0
+_ZSt9__advanceISt23_Rb_tree_const_iteratorIPKN4geos4geom10CoordinateEElEvRT_T0_St26bidirectional_iterator_tag.exit: ; preds = %.lr.ph.i20
+  %.not6.i.i.i.i.i22 = icmp eq ptr %1, %i.aj
   br i1 %.not6.i.i.i.i.i22, label %_ZSt4copyISt23_Rb_tree_const_iteratorIPKN4geos4geom10CoordinateEEPS5_ET0_T_S9_S8_.exit28, label %.lr.ph.i.i.i.i.i23
 
 .lr.ph.i.i.i.i.i23:                               ; preds = %_ZSt9__advanceISt23_Rb_tree_const_iteratorIPKN4geos4geom10CoordinateEElEvRT_T0_St26bidirectional_iterator_tag.exit, %.lr.ph.i.i.i.i.i23
@@ -267,11 +259,11 @@ _ZSt9__advanceISt23_Rb_tree_const_iteratorIPKN4geos4geom10CoordinateEElEvRT_T0_S
   store ptr %i.al, ptr %.08.i.i.i.i.i24, align 8, !tbaa !38
   %i.am = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i24, i64 8
   %i.an = tail call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef %.sroa.03.07.i.i.i.i.i25) #19 ; 2 uses
-  %.not.i.i.i.i.i26 = icmp eq ptr %i.an, %.sroa.0.0
+  %.not.i.i.i.i.i26 = icmp eq ptr %i.an, %i.aj
   br i1 %.not.i.i.i.i.i26, label %_ZSt4copyISt23_Rb_tree_const_iteratorIPKN4geos4geom10CoordinateEEPS5_ET0_T_S9_S8_.exit28, label %.lr.ph.i.i.i.i.i23, !llvm.loop !90
 
-_ZSt4copyISt23_Rb_tree_const_iteratorIPKN4geos4geom10CoordinateEEPS5_ET0_T_S9_S8_.exit28: ; preds = %.lr.ph.i.i.i.i.i23, %.preheader7.i, %_ZSt9__advanceISt23_Rb_tree_const_iteratorIPKN4geos4geom10CoordinateEElEvRT_T0_St26bidirectional_iterator_tag.exit
-  %.sroa.0.037 = phi ptr [ %1, %.preheader7.i ], [ %.sroa.0.0, %_ZSt9__advanceISt23_Rb_tree_const_iteratorIPKN4geos4geom10CoordinateEElEvRT_T0_St26bidirectional_iterator_tag.exit ], [ %.sroa.0.0, %.lr.ph.i.i.i.i.i23 ] ; 2 uses
+_ZSt4copyISt23_Rb_tree_const_iteratorIPKN4geos4geom10CoordinateEEPS5_ET0_T_S9_S8_.exit28: ; preds = %.lr.ph.i.i.i.i.i23, %.preheader.i.a, %_ZSt9__advanceISt23_Rb_tree_const_iteratorIPKN4geos4geom10CoordinateEElEvRT_T0_St26bidirectional_iterator_tag.exit
+  %.sroa.0.037 = phi ptr [ %1, %.preheader.i.a ], [ %i.aj, %_ZSt9__advanceISt23_Rb_tree_const_iteratorIPKN4geos4geom10CoordinateEElEvRT_T0_St26bidirectional_iterator_tag.exit ], [ %i.aj, %.lr.ph.i.i.i.i.i23 ] ; 2 uses
   %.not6.i.i.i.i.i.i.i.i = icmp eq ptr %.sroa.0.037, %2
   br i1 %.not6.i.i.i.i.i.i.i.i, label %_ZSt22__uninitialized_copy_aISt23_Rb_tree_const_iteratorIPKN4geos4geom10CoordinateEEPS5_S5_ET0_T_S9_S8_RSaIT1_E.exit, label %.lr.ph.i.i.i.i.i.i.i.i
 
@@ -298,9 +290,6 @@ _ZNSt6vectorIPKN4geos4geom10CoordinateESaIS4_EE15_M_erase_at_endEPS4_.exit: ; pr
 ; Function Attrs: mustprogress nofree nounwind willreturn memory(read)
 declare noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef) local_unnamed_addr #7
 
-; Function Attrs: mustprogress nofree nounwind willreturn memory(read)
-declare noundef ptr @_ZSt18_Rb_tree_decrementPKSt18_Rb_tree_node_base(ptr noundef) local_unnamed_addr #7
-
 ; Function Attrs: mustprogress uwtable
 define internal fastcc void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPPKN4geos4geom10CoordinateESt6vectorIS6_SaIS6_EEEElNS0_5__ops15_Iter_comp_iterINS2_9algorithm12_GLOBAL__N_116RadiallyLessThenEEEEvT_SI_T0_T1_(ptr %0, ptr %1, i64 noundef %2, ptr %3) unnamed_addr #0 {
 bb.a:
@@ -318,7 +307,7 @@ bb.a:
 
 bb.b:                                             ; preds = %_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPPKN4geos4geom10CoordinateESt6vectorIS6_SaIS6_EEEENS0_5__ops15_Iter_comp_iterINS2_9algorithm12_GLOBAL__N_116RadiallyLessThenEEEET_SI_SI_T0_.exit
   %i.h = icmp eq i64 %i.v, 0
-  br i1 %i.h, label %._crit_edge, label %.lr.ph48, !llvm.loop !93
+  br i1 %i.h, label %._crit_edge, label %.lr.ph48, !llvm.loop !92
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph
   %.lcssa = phi i64 [ %i.d, %.lr.ph ], [ %i.do, %bb.b ] ; 2 uses
@@ -334,7 +323,7 @@ bb.c:                                             ; preds = %bb.c, %._crit_edge
   tail call fastcc void @_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPPKN4geos4geom10CoordinateESt6vectorIS6_SaIS6_EEEElS6_NS0_5__ops15_Iter_comp_iterINS2_9algorithm12_GLOBAL__N_116RadiallyLessThenEEEEvT_T0_SJ_T1_T2_(ptr %0, i64 noundef %.09.i.i.i, i64 noundef %.lcssa, ptr noundef %i.l, ptr %3)
   %.not.i.i.i = icmp eq i64 %.09.i.i.i, 0
   %i.m = add nsw i64 %.09.i.i.i, -1
-  br i1 %.not.i.i.i, label %.lr.ph.i9.i, label %bb.c, !llvm.loop !94
+  br i1 %.not.i.i.i, label %.lr.ph.i9.i, label %bb.c, !llvm.loop !93
 
 .lr.ph.i9.i:                                      ; preds = %bb.c, %.lr.ph.i9.i
   %.sroa.0.03.i.i = phi ptr [ %i.n, %.lr.ph.i9.i ], [ %storemerge20.lcssa, %bb.c ]
@@ -347,7 +336,7 @@ bb.c:                                             ; preds = %bb.c, %._crit_edge
   %i.s = ashr exact i64 %i.r, 3
   tail call fastcc void @_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPPKN4geos4geom10CoordinateESt6vectorIS6_SaIS6_EEEElS6_NS0_5__ops15_Iter_comp_iterINS2_9algorithm12_GLOBAL__N_116RadiallyLessThenEEEEvT_T0_SJ_T1_T2_(ptr nonnull %0, i64 noundef 0, i64 noundef %i.s, ptr noundef %i.o, ptr %3)
   %i.t = icmp sgt i64 %i.r, 8
-  br i1 %i.t, label %.lr.ph.i9.i, label %_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPPKN4geos4geom10CoordinateESt6vectorIS6_SaIS6_EEEENS0_5__ops15_Iter_comp_iterINS2_9algorithm12_GLOBAL__N_116RadiallyLessThenEEEEvT_SI_SI_T0_.exit, !llvm.loop !95
+  br i1 %i.t, label %.lr.ph.i9.i, label %_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPPKN4geos4geom10CoordinateESt6vectorIS6_SaIS6_EEEENS0_5__ops15_Iter_comp_iterINS2_9algorithm12_GLOBAL__N_116RadiallyLessThenEEEEvT_SI_SI_T0_.exit, !llvm.loop !94
 
 .lr.ph48:                                         ; preds = %.lr.ph, %bb.b
   %storemerge2047 = phi ptr [ %.sroa.014.1.i.i, %bb.b ], [ %1, %.lr.ph ] ; 3 uses
@@ -543,7 +532,7 @@ bb.w:                                             ; preds = %bb.v
 
 _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4geos9algorithm12_GLOBAL__N_116RadiallyLessThenEEclINS_17__normal_iteratorIPPKNS2_4geom10CoordinateESt6vectorISC_SaISC_EEEESH_EEbT_T0_.exit.thread19.i.i: ; preds = %bb.w, %bb.v, %bb.t
   %i.cv = getelementptr inbounds nuw i8, ptr %.sroa.014.1.i.i, i64 8
-  br label %bb.t, !llvm.loop !96
+  br label %bb.t, !llvm.loop !95
 
 _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4geos9algorithm12_GLOBAL__N_116RadiallyLessThenEEclINS_17__normal_iteratorIPPKNS2_4geom10CoordinateESt6vectorISC_SaISC_EEEESH_EEbT_T0_.exit.thread.i12.i: ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4geos9algorithm12_GLOBAL__N_116RadiallyLessThenEEclINS_17__normal_iteratorIPPKNS2_4geom10CoordinateESt6vectorISC_SaISC_EEEESH_EEbT_T0_.exit.thread.i12.i.backedge, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4geos9algorithm12_GLOBAL__N_116RadiallyLessThenEEclINS_17__normal_iteratorIPPKNS2_4geom10CoordinateESt6vectorISC_SaISC_EEEESH_EEbT_T0_.exit.thread.i12.i.preheader
   %.sroa.011.0.pn.i.i = phi ptr [ %.sroa.011.0.i.i, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4geos9algorithm12_GLOBAL__N_116RadiallyLessThenEEclINS_17__normal_iteratorIPPKNS2_4geom10CoordinateESt6vectorISC_SaISC_EEEESH_EEbT_T0_.exit.thread.i12.i.preheader ], [ %.sroa.011.1.i.i, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4geos9algorithm12_GLOBAL__N_116RadiallyLessThenEEclINS_17__normal_iteratorIPPKNS2_4geom10CoordinateESt6vectorISC_SaISC_EEEESH_EEbT_T0_.exit.thread.i12.i.backedge ]
@@ -575,7 +564,7 @@ bb.z:                                             ; preds = %bb.y
   br i1 %i.dh, label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4geos9algorithm12_GLOBAL__N_116RadiallyLessThenEEclINS_17__normal_iteratorIPPKNS2_4geom10CoordinateESt6vectorISC_SaISC_EEEESH_EEbT_T0_.exit.thread.i12.i.backedge, label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4geos9algorithm12_GLOBAL__N_116RadiallyLessThenEEclINS_17__normal_iteratorIPPKNS2_4geom10CoordinateESt6vectorISC_SaISC_EEEESH_EEbT_T0_.exit10.thread.i.i
 
 _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4geos9algorithm12_GLOBAL__N_116RadiallyLessThenEEclINS_17__normal_iteratorIPPKNS2_4geom10CoordinateESt6vectorISC_SaISC_EEEESH_EEbT_T0_.exit.thread.i12.i.backedge: ; preds = %bb.z, %bb.y, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4geos9algorithm12_GLOBAL__N_116RadiallyLessThenEEclINS_17__normal_iteratorIPPKNS2_4geom10CoordinateESt6vectorISC_SaISC_EEEESH_EEbT_T0_.exit.thread.i12.i
-  br label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4geos9algorithm12_GLOBAL__N_116RadiallyLessThenEEclINS_17__normal_iteratorIPPKNS2_4geom10CoordinateESt6vectorISC_SaISC_EEEESH_EEbT_T0_.exit.thread.i12.i, !llvm.loop !97
+  br label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4geos9algorithm12_GLOBAL__N_116RadiallyLessThenEEclINS_17__normal_iteratorIPPKNS2_4geom10CoordinateESt6vectorISC_SaISC_EEEESH_EEbT_T0_.exit.thread.i12.i, !llvm.loop !96
 
 _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4geos9algorithm12_GLOBAL__N_116RadiallyLessThenEEclINS_17__normal_iteratorIPPKNS2_4geom10CoordinateESt6vectorISC_SaISC_EEEESH_EEbT_T0_.exit10.thread.i.i: ; preds = %bb.z, %bb.x, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4geos9algorithm12_GLOBAL__N_116RadiallyLessThenEEclINS_17__normal_iteratorIPPKNS2_4geom10CoordinateESt6vectorISC_SaISC_EEEESH_EEbT_T0_.exit.thread.i12.i
   %i.di = icmp ult ptr %.sroa.014.1.i.i, %.sroa.011.1.i.i
@@ -587,7 +576,7 @@ bb.aa:                                            ; preds = %_ZN9__gnu_cxx5__ops
   store ptr %i.dk, ptr %.sroa.014.1.i.i, align 8, !tbaa !38
   store ptr %i.dj, ptr %.sroa.011.1.i.i, align 8, !tbaa !38
   %i.dl = getelementptr inbounds nuw i8, ptr %.sroa.014.1.i.i, i64 8
-  br label %bb.s, !llvm.loop !98
+  br label %bb.s, !llvm.loop !97
 
 _ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPPKN4geos4geom10CoordinateESt6vectorIS6_SaIS6_EEEENS0_5__ops15_Iter_comp_iterINS2_9algorithm12_GLOBAL__N_116RadiallyLessThenEEEET_SI_SI_T0_.exit: ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4geos9algorithm12_GLOBAL__N_116RadiallyLessThenEEclINS_17__normal_iteratorIPPKNS2_4geom10CoordinateESt6vectorISC_SaISC_EEEESH_EEbT_T0_.exit10.thread.i.i
   tail call fastcc void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPPKN4geos4geom10CoordinateESt6vectorIS6_SaIS6_EEEElNS0_5__ops15_Iter_comp_iterINS2_9algorithm12_GLOBAL__N_116RadiallyLessThenEEEEvT_SI_T0_T1_(ptr nonnull %.sroa.014.1.i.i, ptr %storemerge2047, i64 noundef %i.v, ptr nonnull %3)
@@ -595,7 +584,7 @@ _ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPPKN4geos4geom1
   %i.dn = sub i64 %i.dm, %i.a
   %i.do = ashr exact i64 %i.dn, 3                 ; 3 uses
   %i.dp = icmp sgt i64 %i.do, 16
-  br i1 %i.dp, label %bb.b, label %_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPPKN4geos4geom10CoordinateESt6vectorIS6_SaIS6_EEEENS0_5__ops15_Iter_comp_iterINS2_9algorithm12_GLOBAL__N_116RadiallyLessThenEEEEvT_SI_SI_T0_.exit, !llvm.loop !93
+  br i1 %i.dp, label %bb.b, label %_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPPKN4geos4geom10CoordinateESt6vectorIS6_SaIS6_EEEENS0_5__ops15_Iter_comp_iterINS2_9algorithm12_GLOBAL__N_116RadiallyLessThenEEEEvT_SI_SI_T0_.exit, !llvm.loop !92
 
 _ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPPKN4geos4geom10CoordinateESt6vectorIS6_SaIS6_EEEENS0_5__ops15_Iter_comp_iterINS2_9algorithm12_GLOBAL__N_116RadiallyLessThenEEEEvT_SI_SI_T0_.exit: ; preds = %_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPPKN4geos4geom10CoordinateESt6vectorIS6_SaIS6_EEEENS0_5__ops15_Iter_comp_iterINS2_9algorithm12_GLOBAL__N_116RadiallyLessThenEEEET_SI_SI_T0_.exit, %.lr.ph.i9.i, %bb.a
   ret void
@@ -657,7 +646,7 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4geos9algorithm12_GLOBAL__N_116RadiallyLes
   %i.y = getelementptr inbounds [8 x i8], ptr %0, i64 %.043
   store ptr %i.x, ptr %i.y, align 8, !tbaa !38
   %i.z = icmp slt i64 %i.v, %i.b
-  br i1 %i.z, label %.lr.ph, label %._crit_edge, !llvm.loop !99
+  br i1 %i.z, label %.lr.ph, label %._crit_edge, !llvm.loop !98
 
 ._crit_edge:                                      ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4geos9algorithm12_GLOBAL__N_116RadiallyLessThenEEclINS_17__normal_iteratorIPPKNS2_4geom10CoordinateESt6vectorISC_SaISC_EEEESH_EEbT_T0_.exit.thread, %bb.a
   %.0.lcssa = phi i64 [ %1, %bb.a ], [ %i.v, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4geos9algorithm12_GLOBAL__N_116RadiallyLessThenEEclINS_17__normal_iteratorIPPKNS2_4geom10CoordinateESt6vectorISC_SaISC_EEEESH_EEbT_T0_.exit.thread ] ; 5 uses
@@ -723,7 +712,7 @@ _ZN9__gnu_cxx5__ops14_Iter_comp_valIN4geos9algorithm12_GLOBAL__N_116RadiallyLess
   %i.ay = getelementptr inbounds [8 x i8], ptr %0, i64 %.013.i
   store ptr %i.ax, ptr %i.ay, align 8, !tbaa !38
   %i.az = icmp sgt i64 %.0914.i, %1
-  br i1 %i.az, label %bb.h, label %_ZSt11__push_heapIN9__gnu_cxx17__normal_iteratorIPPKN4geos4geom10CoordinateESt6vectorIS6_SaIS6_EEEElS6_NS0_5__ops14_Iter_comp_valINS2_9algorithm12_GLOBAL__N_116RadiallyLessThenEEEEvT_T0_SJ_T1_RT2_.exit, !llvm.loop !100
+  br i1 %i.az, label %bb.h, label %_ZSt11__push_heapIN9__gnu_cxx17__normal_iteratorIPPKN4geos4geom10CoordinateESt6vectorIS6_SaIS6_EEEElS6_NS0_5__ops14_Iter_comp_valINS2_9algorithm12_GLOBAL__N_116RadiallyLessThenEEEEvT_T0_SJ_T1_RT2_.exit, !llvm.loop !99
 
 _ZSt11__push_heapIN9__gnu_cxx17__normal_iteratorIPPKN4geos4geom10CoordinateESt6vectorIS6_SaIS6_EEEElS6_NS0_5__ops14_Iter_comp_valINS2_9algorithm12_GLOBAL__N_116RadiallyLessThenEEEEvT_T0_SJ_T1_RT2_.exit: ; preds = %bb.h, %bb.i, %bb.k, %_ZN9__gnu_cxx5__ops14_Iter_comp_valIN4geos9algorithm12_GLOBAL__N_116RadiallyLessThenEEclINS_17__normal_iteratorIPPKNS2_4geom10CoordinateESt6vectorISC_SaISC_EEEESC_EEbT_RT0_.exit.thread9.i, %bb.g
   %.0.lcssa.i = phi i64 [ %.1, %bb.g ], [ %.0914.i, %_ZN9__gnu_cxx5__ops14_Iter_comp_valIN4geos9algorithm12_GLOBAL__N_116RadiallyLessThenEEclINS_17__normal_iteratorIPPKNS2_4geom10CoordinateESt6vectorISC_SaISC_EEEESC_EEbT_RT0_.exit.thread9.i ], [ %.013.i, %bb.k ], [ %.013.i, %bb.h ], [ %.013.i, %bb.i ]
@@ -785,7 +774,7 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4geos9algorithm12_GLOBAL__N_116RadiallyLes
   %i.q = sub i64 %i.p, %i.b                       ; 3 uses
   %i.r = ashr exact i64 %i.q, 3                   ; 2 uses
   %i.s = icmp sgt i64 %i.r, 1
-  br i1 %i.s, label %bb.f, label %bb.g, !prof !101
+  br i1 %i.s, label %bb.f, label %bb.g, !prof !100
 
 bb.f:                                             ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4geos9algorithm12_GLOBAL__N_116RadiallyLessThenEEclINS_17__normal_iteratorIPPKNS2_4geom10CoordinateESt6vectorISC_SaISC_EEEESH_EEbT_T0_.exit.thread20
   %i.t = getelementptr inbounds nuw i8, ptr %.pn24, i64 16
@@ -852,7 +841,7 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPPKN4geos4geom10C
 bb.m:                                             ; preds = %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPKN4geos4geom10CoordinateESt6vectorIS6_SaIS6_EEEESB_ET0_T_SD_SC_.exit, %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPPKN4geos4geom10CoordinateESt6vectorIS6_SaIS6_EEEENS0_5__ops14_Val_comp_iterINS2_9algorithm12_GLOBAL__N_116RadiallyLessThenEEEEvT_T0_.exit
   %.sroa.0.0 = getelementptr inbounds nuw i8, ptr %.sroa.0.025, i64 8 ; 2 uses
   %.not = icmp eq ptr %.sroa.0.0, %1
-  br i1 %.not, label %.loopexit, label %bb.b, !llvm.loop !102
+  br i1 %.not, label %.loopexit, label %bb.b, !llvm.loop !101
 
 .loopexit:                                        ; preds = %bb.m, %.preheader, %bb.a
   ret void
@@ -996,7 +985,6 @@ attributes #20 = { noreturn nounwind }
 !97 = distinct !{!97, !36}
 !98 = distinct !{!98, !36}
 !99 = distinct !{!99, !36}
-!100 = distinct !{!100, !36}
-!101 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!102 = distinct !{!102, !36}
+!100 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!101 = distinct !{!101, !36}
 end_hunk_0

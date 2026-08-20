@@ -204,8 +204,8 @@ bb.s:                                             ; preds = %.lr.ph.a, %.loopexi
   br i1 %i.ch, label %.lr.ph.i61, label %_ZN17basic_decl_plugin4joinEjPKP4sort.exit65, !llvm.loop !319
 
 _ZN17basic_decl_plugin4joinEjPKP4sort.exit65:     ; preds = %.noexc
-  %.pre103.pre = load i32, ptr %i.bw, align 4, !tbaa !231
-  %.pre.pre = load i32, ptr %i.bv, align 8, !tbaa !230
+  %.pre103.pre = load i32, ptr %i.bv, align 8, !tbaa !230
+  %.pre.pre = load i32, ptr %i.bw, align 4, !tbaa !231
   br label %bb.u
 
 bb.t:                                             ; preds = %.lr.ph.i61
@@ -214,8 +214,8 @@ bb.t:                                             ; preds = %.lr.ph.i61
   br label %bb.ag
 
 bb.u:                                             ; preds = %_ZN17basic_decl_plugin4joinEjPKP4sort.exit65, %bb.x
-  %i.cj = phi i32 [ %.pre103.pre, %_ZN17basic_decl_plugin4joinEjPKP4sort.exit65 ], [ %i.dp, %bb.x ] ; 3 uses
-  %i.ck = phi i32 [ %.pre.pre, %_ZN17basic_decl_plugin4joinEjPKP4sort.exit65 ], [ %i.du, %bb.x ] ; 2 uses
+  %i.cj = phi i32 [ %.pre.pre, %_ZN17basic_decl_plugin4joinEjPKP4sort.exit65 ], [ %i.dp, %bb.x ] ; 3 uses
+  %i.ck = phi i32 [ %.pre103.pre, %_ZN17basic_decl_plugin4joinEjPKP4sort.exit65 ], [ %i.du, %bb.x ] ; 2 uses
   %.096 = phi i32 [ 0, %_ZN17basic_decl_plugin4joinEjPKP4sort.exit65 ], [ %i.dv, %bb.x ]
   %.not.i = icmp ult i32 %i.ck, %i.cj
   br i1 %.not.i, label %._crit_edge.i, label %bb.v

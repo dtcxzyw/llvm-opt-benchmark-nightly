@@ -204,12 +204,13 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.ae = call noundef i32 @_ZN2v88internal8JSObject20GetFastElementsUsageEv(ptr noundef nonnull align 8 dereferenceable(8) %2) ; 2 uses
   %i.af = lshr i32 %i.ae, 1
   %i.ag = add i32 %i.af, %i.ae
-  %spec.select.i.i.i.i = tail call i32 @llvm.usub.sat.i32(i32 %i.ag, i32 1)
+  %spec.select.i.i.i.i = tail call i32 @llvm.usub.sat.i32(i32 %i.ag, i32 1) ; 2 uses
   %i.ah = tail call noundef range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %spec.select.i.i.i.i, i1 false)
   %i.ai = sub nuw nsw i32 32, %i.ah
-  %3 = tail call i32 @llvm.umax.i32(i32 %i.ai, i32 2)
-  %i.aj = shl i32 9, %3
-  %i.ak = icmp ule i32 %i.aj, %.0.i.i
+  %3 = icmp ult i32 %spec.select.i.i.i.i, 2
+  %i.aj = shl i32 9, %i.ai
+  %4 = select i1 %3, i32 36, i32 %i.aj
+  %i.ak = icmp ule i32 %4, %.0.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #21
   br label %_ZN2v88internalL27ShouldConvertToSlowElementsENS0_6TaggedINS0_8JSObjectEEEjjPj.exit
 
@@ -581,13 +582,14 @@ _ZN2v88internalL27ShouldConvertToSlowElementsENS0_6TaggedINS0_8JSObjectEEEjjPj.e
   %i.gh = call noundef i32 @_ZN2v88internal8JSObject20GetFastElementsUsageEv(ptr noundef nonnull align 8 dereferenceable(8) %5) ; 2 uses
   %i.gi = lshr i32 %i.gh, 1
   %i.gj = add i32 %i.gi, %i.gh
-  %spec.select.i.i.i.i = tail call i32 @llvm.usub.sat.i32(i32 %i.gj, i32 1)
+  %spec.select.i.i.i.i = tail call i32 @llvm.usub.sat.i32(i32 %i.gj, i32 1) ; 2 uses
   %i.gk = tail call noundef range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %spec.select.i.i.i.i, i1 false)
   %i.gl = sub nuw nsw i32 32, %i.gk
-  %6 = tail call i32 @llvm.umax.i32(i32 %i.gl, i32 2)
-  %i.gm = shl i32 9, %6
+  %6 = icmp ult i32 %spec.select.i.i.i.i, 2
+  %i.gm = shl i32 9, %i.gl
   %.fr = freeze i32 %i.gm
-  %.not186 = icmp ugt i32 %.fr, %.0.i.i65
+  %7 = select i1 %6, i32 36, i32 %.fr
+  %.not186 = icmp ugt i32 %7, %.0.i.i65
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #21
   %spec.select185 = select i1 %.not186, i8 %i.ai, i8 %.052
   br label %_ZN2v88internalL27BestFittingFastElementsKindENS0_6TaggedINS0_8JSObjectEEE.exit

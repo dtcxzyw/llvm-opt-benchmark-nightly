@@ -203,7 +203,7 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   br i1 %i.dr, label %.lr.ph.i, label %.critedge56.i
 
 .lr.ph.i:                                         ; preds = %bb.s, %find_install_path.exit.thread.i
-  %i.ds = phi i32 [ %i.jv, %find_install_path.exit.thread.i ], [ %i.dq, %bb.s ] ; 3 uses
+  %i.ds = phi i32 [ %i.jv, %find_install_path.exit.thread.i ], [ %i.dq, %bb.s ] ; 2 uses
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %find_install_path.exit.thread.i ], [ 0, %bb.s ] ; 2 uses
   %i.dt = load ptr, ptr %i.bg, align 8
   %i.du = getelementptr inbounds nuw [8 x i8], ptr %i.dt, i64 %indvars.iv.i
@@ -211,9 +211,7 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   %i.dw = getelementptr inbounds nuw i8, ptr %i.dv, i64 16
   %i.dx = load i8, ptr %i.dw, align 8, !range !6, !noundef !7
   %i.dy = trunc nuw i8 %i.dx to i1
-  %1 = icmp slt i32 %i.ds, 1
-  %or.cond.not.i = or i1 %1, %i.dy
-  br i1 %or.cond.not.i, label %find_install_path.exit.thread.i, label %.lr.ph44.i.preheader.i
+  br i1 %i.dy, label %find_install_path.exit.thread.i, label %.lr.ph44.i.preheader.i
 
 .lr.ph44.i.preheader.i:                           ; preds = %.lr.ph.i
   %i.dz = getelementptr inbounds nuw i8, ptr %i.dv, i64 17

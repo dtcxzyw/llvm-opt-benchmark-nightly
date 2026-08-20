@@ -204,14 +204,13 @@ intel_dp_mode_clock.exit.i.i.i:                   ; preds = %bb.ad, %has_seamles
 .lr.ph12.i.i.i:                                   ; preds = %intel_dp_mode_clock.exit.i.i.i
   %i.dh = getelementptr i8, ptr %.0.i.i.i.i20, i64 660 ; 3 uses
   %i.di = getelementptr i8, ptr %.0.i.i.i.i20, i64 664
-  %i.dj = load i32, ptr %i.dh, align 4            ; 3 uses
+  %i.dj = load i32, ptr %i.dh, align 4            ; 2 uses
   %i.dk = icmp sgt i32 %i.dj, 0
   br i1 %i.dk, label %.lr.ph12.split.i.i.i, label %.thread103.i.i
 
 .lr.ph12.split.i.i.i:                             ; preds = %.lr.ph12.i.i.i, %.critedge51.i.i.i
-  %6 = phi i32 [ %7, %.critedge51.i.i.i ], [ %i.dj, %.lr.ph12.i.i.i ] ; 2 uses
   %i.dl = phi i32 [ %i.fo, %.critedge51.i.i.i ], [ %i.df, %.lr.ph12.i.i.i ]
-  %i.dm = phi i32 [ %i.fp, %.critedge51.i.i.i ], [ %i.dj, %.lr.ph12.i.i.i ] ; 2 uses
+  %i.dm = phi i32 [ %i.fp, %.critedge51.i.i.i ], [ %i.dj, %.lr.ph12.i.i.i ] ; 3 uses
   %i.dn = phi i32 [ %i.fq, %.critedge51.i.i.i ], [ %i.de, %.lr.ph12.i.i.i ] ; 5 uses
   %i.do = load i32, ptr %i.ab, align 8
   %i.dp = icmp eq i32 %i.do, 1
@@ -227,7 +226,7 @@ intel_dp_mode_clock.exit.i.i.i:                   ; preds = %bb.ad, %has_seamles
   br label %bb.ae
 
 bb.ae:                                            ; preds = %.loopexit.i.i.i, %.lr.ph9.i.i.i
-  %i.du = phi i32 [ %6, %.lr.ph9.i.i.i ], [ %i.fm, %.loopexit.i.i.i ]
+  %i.du = phi i32 [ %i.dm, %.lr.ph9.i.i.i ], [ %i.fm, %.loopexit.i.i.i ]
   %indvars.iv.i.i.i = phi i64 [ 0, %.lr.ph9.i.i.i ], [ %indvars.iv.next.i.i.i, %.loopexit.i.i.i ] ; 3 uses
   %i.dv = load ptr, ptr %.0.i.i.i.i20, align 8    ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %i.dv, null
@@ -345,7 +344,7 @@ bb.am:                                            ; preds = %.critedge.i.i.i, %.
 
 .loopexit.i.i.i:                                  ; preds = %.critedge.i.i.i, %bb.al, %intel_dp_common_rate.exit.i.i.i
   %indvars.iv.next.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i, 1 ; 2 uses
-  %i.fm = load i32, ptr %i.dh, align 4            ; 4 uses
+  %i.fm = load i32, ptr %i.dh, align 4            ; 3 uses
   %i.fn = sext i32 %i.fm to i64
   %.not49.i.i.i = icmp slt i64 %indvars.iv.next.i.i.i, %i.fn
   br i1 %.not49.i.i.i, label %bb.ae, label %.critedge51.loopexit.i.i.i, !llvm.loop !177
@@ -355,7 +354,6 @@ bb.am:                                            ; preds = %.critedge.i.i.i, %.
   br label %.critedge51.i.i.i
 
 .critedge51.i.i.i:                                ; preds = %.critedge51.loopexit.i.i.i, %.lr.ph12.split.i.i.i
-  %7 = phi i32 [ %i.fm, %.critedge51.loopexit.i.i.i ], [ %6, %.lr.ph12.split.i.i.i ]
   %i.fo = phi i32 [ %.pre.i.i.i, %.critedge51.loopexit.i.i.i ], [ %i.dl, %.lr.ph12.split.i.i.i ] ; 2 uses
   %i.fp = phi i32 [ %i.fm, %.critedge51.loopexit.i.i.i ], [ %i.dm, %.lr.ph12.split.i.i.i ]
   %i.fq = add nsw i32 %i.dn, -6                   ; 2 uses

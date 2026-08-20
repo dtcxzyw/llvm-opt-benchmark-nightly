@@ -203,7 +203,7 @@ bb.e:                                             ; preds = %virtio_bus_get_devi
   %.not18.i = icmp eq i8 %i.r, 0
   br i1 %.not18.i, label %bb.f, label %virtio_pci_get_notifier.exit.thread
 
-bb.f:                                             ; preds = %virtio_bus_get_device.exit.i, %bb.e
+bb.f:                                             ; preds = %bb.e, %virtio_bus_get_device.exit.i
   %i.s = tail call i32 @virtio_queue_get_num(ptr noundef %i.n, i32 noundef %.064) #13
   %.not19.i = icmp eq i32 %i.s, 0
   br i1 %.not19.i, label %virtio_pci_get_notifier.exit.thread, label %virtio_pci_get_notifier.exit

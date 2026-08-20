@@ -201,7 +201,7 @@ bb.z:                                             ; preds = %.lr.ph340, %bb.bg
   %i.gy = phi i32 [ %spec.store.select.i267, %.lr.ph340 ], [ %i.kh, %bb.bg ] ; 7 uses
   %i.gz = phi i32 [ 0, %.lr.ph340 ], [ %i.ki, %bb.bg ] ; 5 uses
   %indvars.iv371 = phi i64 [ 0, %.lr.ph340 ], [ %indvars.iv.next372, %bb.bg ] ; 2 uses
-  %.val228339 = phi i32 [ %.val230, %.lr.ph340 ], [ %.val228, %bb.bg ] ; 2 uses
+  %.val228339 = phi i32 [ %.val230, %.lr.ph340 ], [ %.val228, %bb.bg ]
   %.val234 = load ptr, ptr %i.gq, align 8, !tbaa !31 ; 2 uses
   %i.ha = getelementptr inbounds nuw [4 x i8], ptr %.val234, i64 %indvars.iv371
   %i.hb = load i32, ptr %i.ha, align 4, !tbaa !34 ; 3 uses
@@ -235,12 +235,12 @@ bb.ab:                                            ; preds = %bb.z
 
 bb.ac:                                            ; preds = %bb.ab, %bb.aa
   %i.hs = phi ptr [ %i.hk, %bb.aa ], [ %i.hr, %bb.ab ] ; 3 uses
-  br i1 %.not212, label %Vec_IntFind.exit.thread, label %bb.ad
+  br i1 %.not212, label %.lr.ph.i283, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac
   %i.ht = load i32, ptr %i.gr, align 4, !tbaa !33 ; 2 uses
   %i.hu = icmp sgt i32 %i.ht, 0
-  br i1 %i.hu, label %.lr.ph.i, label %Vec_IntFind.exit.thread
+  br i1 %i.hu, label %.lr.ph.i, label %.lr.ph.i283
 
 .lr.ph.i:                                         ; preds = %bb.ad
   %i.hv = load ptr, ptr %i.gs, align 8, !tbaa !31
@@ -257,7 +257,7 @@ bb.ae:                                            ; preds = %bb.af, %.lr.ph.i
 bb.af:                                            ; preds = %bb.ae
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %Vec_IntFind.exit.thread, label %bb.ae, !llvm.loop !73
+  br i1 %exitcond.not.i, label %.lr.ph.i283, label %bb.ae, !llvm.loop !73
 
 Vec_IntFind.exit:                                 ; preds = %bb.ae
   %i.hz = icmp eq i32 %i.gz, %i.gy
@@ -310,11 +310,7 @@ Vec_PtrPush.exit281:                              ; preds = %bb.aj, %bb.ai, %bb.
   store ptr %i.hs, ptr %i.io, align 8, !tbaa !30
   br label %bb.bg
 
-Vec_IntFind.exit.thread:                          ; preds = %bb.af, %bb.ad, %bb.ac
-  %4 = icmp sgt i32 %.val228339, 0
-  br i1 %4, label %.lr.ph.i283, label %Vec_IntFind.exit289
-
-.lr.ph.i283:                                      ; preds = %Vec_IntFind.exit.thread
+.lr.ph.i283:                                      ; preds = %bb.af, %bb.ad, %bb.ac
   %wide.trip.count.i284 = zext nneg i32 %.val228339 to i64
   br label %bb.ao
 
@@ -330,10 +326,10 @@ bb.ap:                                            ; preds = %bb.ao
   %exitcond.not.i287 = icmp eq i64 %indvars.iv.next.i286, %wide.trip.count.i284
   br i1 %exitcond.not.i287, label %Vec_IntFind.exit289, label %bb.ao, !llvm.loop !73
 
-Vec_IntFind.exit289:                              ; preds = %bb.ao, %bb.ap, %Vec_IntFind.exit.thread
-  %.07.i282 = phi i64 [ -1, %Vec_IntFind.exit.thread ], [ %indvars.iv.i285, %bb.ao ], [ -1, %bb.ap ]
+Vec_IntFind.exit289:                              ; preds = %bb.ap, %bb.ao
+  %.07.i282.ph = phi i64 [ %indvars.iv.i285, %bb.ao ], [ -1, %bb.ap ]
   %.val223 = load ptr, ptr %i.ba, align 8, !tbaa !29
-  %i.is = getelementptr inbounds [8 x i8], ptr %.val223, i64 %.07.i282
+  %i.is = getelementptr inbounds [8 x i8], ptr %.val223, i64 %.07.i282.ph
   %i.it = load ptr, ptr %i.is, align 8, !tbaa !30
   %i.iu = tail call ptr @Aig_And(ptr noundef nonnull %i.i, ptr noundef %.0200, ptr noundef %i.it) #17
   %i.iv = ptrtoint ptr %i.iu to i64

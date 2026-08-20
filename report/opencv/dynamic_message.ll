@@ -203,7 +203,7 @@ _ZNK6google8protobuf15OneofDescriptor12is_syntheticEv.exit.thread.1: ; preds = %
   br i1 %i.dd, label %bb.q, label %._crit_edge210.thread
 
 bb.m:                                             ; preds = %.lr.ph209, %_ZN6google8protobuf12_GLOBAL__N_19HasHasbitEPKNS0_15FieldDescriptorE.exit.thread
-  %i.de = phi i32 [ %i.by, %.lr.ph209 ], [ %i.em, %_ZN6google8protobuf12_GLOBAL__N_19HasHasbitEPKNS0_15FieldDescriptorE.exit.thread ] ; 7 uses
+  %i.de = phi i32 [ %i.by, %.lr.ph209 ], [ %i.em, %_ZN6google8protobuf12_GLOBAL__N_19HasHasbitEPKNS0_15FieldDescriptorE.exit.thread ] ; 6 uses
   %i.df = phi ptr [ null, %.lr.ph209 ], [ %i.en, %_ZN6google8protobuf12_GLOBAL__N_19HasHasbitEPKNS0_15FieldDescriptorE.exit.thread ] ; 4 uses
   %i.dg = phi ptr [ null, %.lr.ph209 ], [ %i.eo, %_ZN6google8protobuf12_GLOBAL__N_19HasHasbitEPKNS0_15FieldDescriptorE.exit.thread ] ; 5 uses
   %indvars.iv241 = phi i64 [ 0, %.lr.ph209 ], [ %indvars.iv.next242, %_ZN6google8protobuf12_GLOBAL__N_19HasHasbitEPKNS0_15FieldDescriptorE.exit.thread ] ; 3 uses
@@ -256,10 +256,8 @@ bb.o:                                             ; preds = %_ZN6google8protobuf
 bb.p:                                             ; preds = %bb.o
   store i32 32, ptr %i.cf, align 4, !tbaa !177
   %i.ed = sext i32 %i.de to i64
-  %8 = icmp slt i32 %i.de, 0
   %i.ee = shl nsw i64 %i.ed, 2
-  %9 = select i1 %8, i64 -1, i64 %i.ee
-  %i.ef = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %9) #21 ; 3 uses
+  %i.ef = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.ee) #21 ; 3 uses
   %i.eg = icmp sgt i32 %i.de, 0
   br i1 %i.eg, label %.lr.ph206.preheader, label %._crit_edge
 

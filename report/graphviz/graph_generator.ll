@@ -94,10 +94,13 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = load ptr, ptr @stderr, align 8, !tbaa !13
   %i.c = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.b, ptr noundef nonnull @.str, i32 noundef %0) #16 ; 0 uses
-  switch i32 %0, label %makePath.exit.loopexit [
+  switch i32 %0, label %.lr.ph.i [
     i32 1, label %makePath.exit.sink.split
     i32 0, label %makePath.exit
   ]
+
+.lr.ph.i:                                         ; preds = %bb.b
+  br label %makePath.exit.sink.split
 
 .preheader:                                       ; preds = %bb.a, %.preheader
   %.012 = phi i32 [ %i.d, %.preheader ], [ 1, %bb.a ] ; 2 uses
@@ -106,11 +109,8 @@ bb.b:                                             ; preds = %bb.a
   %exitcond.not = icmp eq i32 %i.d, %0
   br i1 %exitcond.not, label %makePath.exit.sink.split, label %.preheader, !llvm.loop !16
 
-makePath.exit.loopexit:                           ; preds = %bb.b
-  br label %makePath.exit.sink.split
-
-makePath.exit.sink.split:                         ; preds = %.preheader, %bb.b, %makePath.exit.loopexit
-  %.sink = phi i32 [ 2, %makePath.exit.loopexit ], [ 0, %bb.b ], [ %0, %.preheader ]
+makePath.exit.sink.split:                         ; preds = %.preheader, %bb.b, %.lr.ph.i
+  %.sink = phi i32 [ 2, %.lr.ph.i ], [ 0, %bb.b ], [ %0, %.preheader ]
   tail call void %1(i32 noundef 1, i32 noundef %.sink) #15
   br label %makePath.exit
 
@@ -130,10 +130,13 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = load ptr, ptr @stderr, align 8, !tbaa !13
   %i.c = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.b, ptr noundef nonnull @.str.1, i32 noundef %0) #16 ; 0 uses
-  switch i32 %0, label %makePath.exit.loopexit [
+  switch i32 %0, label %.lr.ph.i [
     i32 1, label %makePath.exit.sink.split
     i32 0, label %makePath.exit
   ]
+
+.lr.ph.i:                                         ; preds = %bb.b
+  br label %makePath.exit.sink.split
 
 .preheader:                                       ; preds = %bb.a, %.preheader
   %.010 = phi i32 [ %i.d, %.preheader ], [ 2, %bb.a ] ; 2 uses
@@ -142,11 +145,8 @@ bb.b:                                             ; preds = %bb.a
   %.not = icmp ugt i32 %i.d, %0
   br i1 %.not, label %makePath.exit, label %.preheader, !llvm.loop !17
 
-makePath.exit.loopexit:                           ; preds = %bb.b
-  br label %makePath.exit.sink.split
-
-makePath.exit.sink.split:                         ; preds = %bb.b, %makePath.exit.loopexit
-  %.sink = phi i32 [ 2, %makePath.exit.loopexit ], [ 0, %bb.b ]
+makePath.exit.sink.split:                         ; preds = %bb.b, %.lr.ph.i
+  %.sink = phi i32 [ 2, %.lr.ph.i ], [ 0, %bb.b ]
   tail call void %1(i32 noundef 1, i32 noundef %.sink) #15
   br label %makePath.exit
 

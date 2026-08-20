@@ -1,8 +1,8 @@
 inline.NumInlined: 472
 inline.NumDeleted: 184
-loop-unroll.NumCompletelyUnrolled: 13
+loop-unroll.NumCompletelyUnrolled: 14
 loop-unroll.NumRuntimeUnrolled: 3
-loop-unroll.NumUnrolled: 16
+loop-unroll.NumUnrolled: 17
 begin_hunk_0_@_ZL13comm_cost_estffPA3_KfRK11gmx_ddbox_tlRK10t_inputrecfiRKN3gmx11BasicVectorIiEE:bb.a
   %i.bb = icmp eq i32 %i.ba, 1
   br i1 %i.bb, label %.thread227, label %bb.r
@@ -204,15 +204,16 @@ bb.am:                                            ; preds = %bb.al
 bb.an:                                            ; preds = %bb.am
   %i.em = srem i32 %7, %i.bh
   %i.en = icmp eq i32 %i.em, 0
-  %spec.select = select i1 %i.en, i32 %i.bh, i32 %7 ; 3 uses
-  %i.eo = sdiv i32 %7, %spec.select               ; 2 uses
+  %spec.select = select i1 %i.en, i32 %i.bh, i32 %7
+  %spec.select.fr = freeze i32 %spec.select       ; 3 uses
+  %i.eo = sdiv i32 %7, %spec.select.fr            ; 2 uses
   br label %bb.ao
 
 bb.ao:                                            ; preds = %bb.al, %bb.am, %bb.an, %.thread223.2
   %spec.select348 = phi i32 [ %i.dm, %.thread223.2 ], [ %7, %bb.al ], [ %i.eo, %bb.an ], [ 1, %bb.am ]
-  %spec.select347 = phi i32 [ %i.bh, %.thread223.2 ], [ 1, %bb.al ], [ %spec.select, %bb.an ], [ %7, %bb.am ]
+  %spec.select347 = phi i32 [ %i.bh, %.thread223.2 ], [ 1, %bb.al ], [ %spec.select.fr, %bb.an ], [ %7, %bb.am ]
   %.sroa.7.0 = phi i32 [ 1, %.thread223.2 ], [ %7, %bb.al ], [ %i.eo, %bb.an ], [ 1, %bb.am ] ; 16 uses
-  %.sroa.0.0 = phi i32 [ 1, %.thread223.2 ], [ 1, %bb.al ], [ %spec.select, %bb.an ], [ %7, %bb.am ] ; 14 uses
+  %.sroa.0.0 = phi i32 [ 1, %.thread223.2 ], [ 1, %bb.al ], [ %spec.select.fr, %bb.an ], [ %7, %bb.am ] ; 14 uses
   switch i32 %.val.i, label %_ZL8usingPmeRK22CoulombInteractionType.exit [
     i32 3, label %_ZL8usingPmeRK22CoulombInteractionType.exit.thread
     i32 14, label %_ZL8usingPmeRK22CoulombInteractionType.exit.thread
@@ -290,7 +291,10 @@ bb.at:                                            ; preds = %bb.as
   %i.gd = icmp sgt i32 %i.gb, %i.gc
   br i1 %i.gd, label %.thread227, label %.lr.ph254.us.1
 
-.lr.ph254.split.split.us.preheader.1:             ; preds = %.lr.ph254.split.split.1293, %bb.aw
+.lr.ph254.1:                                      ; preds = %bb.aw, %.lr.ph254.split.split.1293
+  br i1 %i.fb, label %.critedge221, label %.lr.ph254.split.split.us.preheader.1
+
+.lr.ph254.split.split.us.preheader.1:             ; preds = %.lr.ph254.1
   %i.ge = fpext float %i.dl to double
   %i.gf = fmul double %i.ge, 1.000000e-02
   %i.gg = fsub float %i.dr, %i.dl
@@ -303,9 +307,8 @@ bb.au:                                            ; preds = %.lr.ph254.split.spl
   %i.gk = getelementptr inbounds nuw i8, ptr %8, i64 8
   %i.gl = load i32, ptr %i.gk, align 4, !tbaa !11
   %i.gm = load i32, ptr %i.fc, align 4, !tbaa !11
-  %9 = icmp sle i32 %i.gl, %i.gm
-  %or.cond.1 = or i1 %9, %i.fb
-  br i1 %or.cond.1, label %.critedge221, label %.thread227
+  %9 = icmp sgt i32 %i.gl, %i.gm
+  br i1 %9, label %.thread227, label %.critedge221
 
 .lr.ph254.split.split.preheader:                  ; preds = %bb.ap
   br i1 %i.fi, label %bb.av, label %.lr.ph254.split.split.1293
@@ -323,16 +326,16 @@ bb.av:                                            ; preds = %.lr.ph254.split.spl
   %i.gr = tail call noundef float @llvm.fabs.f32(float %i.gq)
   %i.gs = fpext float %i.gr to double
   %i.gt = fcmp ogt double %i.fe, %i.gs
-  br i1 %i.gt, label %bb.aw, label %.lr.ph254.split.split.us.preheader.1
+  br i1 %i.gt, label %bb.aw, label %.lr.ph254.1
 
 bb.aw:                                            ; preds = %.lr.ph254.split.split.1293
   %i.gu = getelementptr inbounds nuw i8, ptr %8, i64 8
   %i.gv = load i32, ptr %i.gu, align 4, !tbaa !11
   %i.gw = load i32, ptr %8, align 4, !tbaa !11
   %i.gx = icmp sgt i32 %i.gv, %i.gw
-  br i1 %i.gx, label %.thread227, label %.lr.ph254.split.split.us.preheader.1
+  br i1 %i.gx, label %.thread227, label %.lr.ph254.1
 
-.critedge221:                                     ; preds = %.lr.ph254.split.split.us.preheader.1, %bb.au, %.lr.ph254.us.1, %bb.aq
+.critedge221:                                     ; preds = %.lr.ph254.1, %.lr.ph254.split.split.us.preheader.1, %bb.au, %.lr.ph254.us.1, %bb.aq
   %i.gy = tail call noundef float @_Z13comm_box_fracRKN3gmx11BasicVectorIiEEfRK11gmx_ddbox_t(ptr noundef nonnull align 4 dereferenceable(12) %8, float noundef %1, ptr noundef nonnull align 4 dereferenceable(200) %3) ; 3 uses
   %i.gz = mul nsw i64 %4, 3
   %i.ha = sitofp i64 %i.gz to float               ; 4 uses
@@ -633,8 +636,8 @@ bb.bu:                                            ; preds = %._crit_edge313, %bb
   %i.mt = tail call float @llvm.fmuladd.f32(float %i.ha, float %.pre-phi315, float %i.ls)
   br label %.thread227
 
-.thread227:                                       ; preds = %bb.x, %bb.j, %bb.q, %bb.av, %bb.aa, %bb.ac, %.thread224, %.thread224.1, %bb.ae, %bb.ag, %.thread224.2, %bb.ai, %bb.ak, %bb.au, %bb.aw, %bb.at, %bb.ar, %bb.aq, %bb.b, %bb.d, %bb.c, %_ZL8usingPmeRK22CoulombInteractionType.exit.thread, %bb.bu
-  %.9 = phi float [ -1.000000e+00, %bb.d ], [ -1.000000e+00, %bb.b ], [ %i.mt, %bb.bu ], [ -1.000000e+00, %bb.aa ], [ -1.000000e+00, %_ZL8usingPmeRK22CoulombInteractionType.exit.thread ], [ -1.000000e+00, %bb.au ], [ -1.000000e+00, %bb.c ], [ -1.000000e+00, %bb.at ], [ -1.000000e+00, %bb.aw ], [ -1.000000e+00, %bb.aq ], [ -1.000000e+00, %bb.ar ], [ -1.000000e+00, %bb.av ], [ -1.000000e+00, %bb.ak ], [ -1.000000e+00, %bb.ai ], [ -1.000000e+00, %.thread224.2 ], [ -1.000000e+00, %bb.ag ], [ -1.000000e+00, %bb.ae ], [ -1.000000e+00, %.thread224.1 ], [ -1.000000e+00, %.thread224 ], [ -1.000000e+00, %bb.ac ], [ -1.000000e+00, %bb.q ], [ -1.000000e+00, %bb.j ], [ -1.000000e+00, %bb.x ]
+.thread227:                                       ; preds = %bb.x, %bb.j, %bb.q, %bb.av, %bb.aa, %bb.ac, %.thread224, %.thread224.1, %bb.ae, %bb.ag, %.thread224.2, %bb.ai, %bb.ak, %bb.aw, %bb.au, %bb.at, %bb.ar, %bb.aq, %bb.b, %bb.d, %bb.c, %_ZL8usingPmeRK22CoulombInteractionType.exit.thread, %bb.bu
+  %.9 = phi float [ -1.000000e+00, %bb.d ], [ -1.000000e+00, %bb.b ], [ %i.mt, %bb.bu ], [ -1.000000e+00, %bb.aa ], [ -1.000000e+00, %_ZL8usingPmeRK22CoulombInteractionType.exit.thread ], [ -1.000000e+00, %bb.aw ], [ -1.000000e+00, %bb.c ], [ -1.000000e+00, %bb.at ], [ -1.000000e+00, %bb.aq ], [ -1.000000e+00, %bb.ar ], [ -1.000000e+00, %bb.au ], [ -1.000000e+00, %bb.av ], [ -1.000000e+00, %bb.ak ], [ -1.000000e+00, %bb.ai ], [ -1.000000e+00, %.thread224.2 ], [ -1.000000e+00, %bb.ag ], [ -1.000000e+00, %bb.ae ], [ -1.000000e+00, %.thread224.1 ], [ -1.000000e+00, %.thread224 ], [ -1.000000e+00, %bb.ac ], [ -1.000000e+00, %bb.q ], [ -1.000000e+00, %bb.j ], [ -1.000000e+00, %bb.x ]
   ret float %.9
 }
 

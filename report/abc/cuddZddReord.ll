@@ -203,14 +203,14 @@ bb.x:                                             ; preds = %bb.p
 .lr.ph.i154.i:                                    ; preds = %bb.x, %bb.z
   %.052.i155.i = phi i32 [ %spec.select.i159.i, %bb.z ], [ %i.bj, %bb.x ] ; 2 uses
   %.03951.i156.i = phi ptr [ %i.ep, %bb.z ], [ null, %bb.x ] ; 3 uses
-  %.04250.i157.i = phi i32 [ %.03853.i158.i, %bb.z ], [ %i.bg, %bb.x ] ; 4 uses
+  %.04250.i157.i = phi i32 [ %.03853.i158.i, %bb.z ], [ %i.bg, %bb.x ] ; 3 uses
   %.03853.i158.i = add nsw i32 %.04250.i157.i, 1  ; 5 uses
   %i.en = tail call i32 @cuddZddSwapInPlace(ptr noundef nonnull %0, i32 noundef %.04250.i157.i, i32 noundef %.03853.i158.i) ; 4 uses
   %i.eo = icmp eq i32 %i.en, 0
   br i1 %i.eo, label %bb.aa, label %bb.y
 
 bb.y:                                             ; preds = %.lr.ph.i154.i
-  %i.ep = tail call ptr @cuddDynamicAllocNode(ptr noundef nonnull %0) #14 ; 15 uses
+  %i.ep = tail call ptr @cuddDynamicAllocNode(ptr noundef nonnull %0) #14 ; 14 uses
   %i.eq = icmp eq ptr %i.ep, null
   br i1 %i.eq, label %bb.aa, label %bb.z
 
@@ -230,7 +230,7 @@ bb.z:                                             ; preds = %bb.y
   %spec.select.i159.i = tail call i32 @llvm.smin.i32(i32 %i.en, i32 %.052.i155.i)
   %exitcond.not.i160.i = icmp eq i32 %.03853.i158.i, %2
   %or.cond.i161.i = or i1 %exitcond.not.i160.i, %i.ey
-  br i1 %or.cond.i161.i, label %cuddZddSiftingDown.exit168.i, label %.lr.ph.i154.i, !llvm.loop !118
+  br i1 %or.cond.i161.i, label %.lr.ph.i171.i, label %.lr.ph.i154.i, !llvm.loop !118
 
 bb.aa:                                            ; preds = %bb.y, %.lr.ph.i154.i
   %.not4556.i162.i = icmp eq ptr %.03951.i156.i, null
@@ -256,14 +256,10 @@ bb.ab:                                            ; preds = %bb.ab, %.lr.ph58.i1
   store ptr %.257.i165.i, ptr %i.ay, align 8, !tbaa !94
   br label %cuddZddSiftingAux.exit.thread
 
-cuddZddSiftingDown.exit168.i:                     ; preds = %bb.z
-  %.not.not49.i169.not.i = icmp slt i32 %.04250.i157.i, %1
-  br i1 %.not.not49.i169.not.i, label %.lr.ph311.i, label %.lr.ph.i171.i
-
-.lr.ph.i171.i:                                    ; preds = %cuddZddSiftingDown.exit168.i, %bb.ad
-  %.052.i172.i = phi i32 [ %spec.select.i176.i, %bb.ad ], [ %i.bj, %cuddZddSiftingDown.exit168.i ] ; 2 uses
-  %.03951.i173.i = phi ptr [ %i.fg, %bb.ad ], [ null, %cuddZddSiftingDown.exit168.i ] ; 3 uses
-  %.04250.i174.i = phi i32 [ %.03853.i175.i, %bb.ad ], [ %.03853.i158.i, %cuddZddSiftingDown.exit168.i ] ; 3 uses
+.lr.ph.i171.i:                                    ; preds = %bb.z, %bb.ad
+  %.052.i172.i = phi i32 [ %spec.select.i176.i, %bb.ad ], [ %i.bj, %bb.z ] ; 2 uses
+  %.03951.i173.i = phi ptr [ %i.fg, %bb.ad ], [ null, %bb.z ] ; 3 uses
+  %.04250.i174.i = phi i32 [ %.03853.i175.i, %bb.ad ], [ %.03853.i158.i, %bb.z ] ; 3 uses
   %.03853.i175.i = add nsw i32 %.04250.i174.i, -1 ; 4 uses
   %i.fe = tail call i32 @cuddZddSwapInPlace(ptr noundef nonnull %0, i32 noundef %.03853.i175.i, i32 noundef %.04250.i174.i) ; 4 uses
   %i.ff = icmp eq i32 %i.fe, 0
@@ -594,9 +590,9 @@ bb.av:                                            ; preds = %bb.av, %.lr.ph307.i
   %.not112.i = icmp eq ptr %i.ja, null
   br i1 %.not112.i, label %..loopexit277_crit_edge.i, label %bb.av, !llvm.loop !123
 
-.lr.ph311.i:                                      ; preds = %cuddZddSiftingDown.exit168.i, %.lr.ph.split.i250.i, %.lr.ph.split.us.i255.i, %.lr.ph.split.i195.i, %.lr.ph.split.us.i200.i, %.lr.ph.split.i.i, %.lr.ph.split.us.i.i, %bb.ae, %..loopexit_crit_edge.i184.i
-  %.2395.i = phi ptr [ %i.ep, %.lr.ph.split.us.i200.i ], [ %i.ep, %..loopexit_crit_edge.i184.i ], [ %i.bn, %.lr.ph.split.us.i.i ], [ %i.ep, %.lr.ph.split.i195.i ], [ %i.bn, %.lr.ph.split.i.i ], [ %i.ep, %bb.ae ], [ %i.hj, %.lr.ph.split.i250.i ], [ %i.hj, %.lr.ph.split.us.i255.i ], [ %i.ep, %cuddZddSiftingDown.exit168.i ]
-  %.289394.i = phi ptr [ %i.fg, %.lr.ph.split.us.i200.i ], [ null, %..loopexit_crit_edge.i184.i ], [ null, %.lr.ph.split.us.i.i ], [ %i.fg, %.lr.ph.split.i195.i ], [ null, %.lr.ph.split.i.i ], [ null, %bb.ae ], [ %i.gs, %.lr.ph.split.i250.i ], [ %i.gs, %.lr.ph.split.us.i255.i ], [ null, %cuddZddSiftingDown.exit168.i ]
+.lr.ph311.i:                                      ; preds = %.lr.ph.split.i250.i, %.lr.ph.split.us.i255.i, %.lr.ph.split.i195.i, %.lr.ph.split.us.i200.i, %.lr.ph.split.i.i, %.lr.ph.split.us.i.i, %bb.ae, %..loopexit_crit_edge.i184.i
+  %.2395.i = phi ptr [ %i.bn, %.lr.ph.split.i.i ], [ %i.ep, %..loopexit_crit_edge.i184.i ], [ %i.hj, %.lr.ph.split.us.i255.i ], [ %i.ep, %.lr.ph.split.us.i200.i ], [ %i.bn, %.lr.ph.split.us.i.i ], [ %i.ep, %bb.ae ], [ %i.ep, %.lr.ph.split.i195.i ], [ %i.hj, %.lr.ph.split.i250.i ]
+  %.289394.i = phi ptr [ null, %.lr.ph.split.i.i ], [ null, %..loopexit_crit_edge.i184.i ], [ %i.gs, %.lr.ph.split.us.i255.i ], [ %i.fg, %.lr.ph.split.us.i200.i ], [ null, %.lr.ph.split.us.i.i ], [ null, %bb.ae ], [ %i.fg, %.lr.ph.split.i195.i ], [ %i.gs, %.lr.ph.split.i250.i ]
   %.promoted312.i = load ptr, ptr %i.ay, align 8, !tbaa !94
   br label %bb.aw
 

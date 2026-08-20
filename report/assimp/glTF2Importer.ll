@@ -204,12 +204,10 @@ _ZL18SetFaceAndAdvance2RP6aiFacejjj.exit712:      ; preds = %bb.hz
 .lr.ph2157:                                       ; preds = %_ZL18SetFaceAndAdvance2RP6aiFacejjj.exit712, %_ZL18SetFaceAndAdvance2RP6aiFacejjj.exit717
   %.04042156 = phi i32 [ %i.blz, %_ZL18SetFaceAndAdvance2RP6aiFacejjj.exit717 ], [ 2, %_ZL18SetFaceAndAdvance2RP6aiFacejjj.exit712 ] ; 4 uses
   %.92155 = phi ptr [ %.28, %_ZL18SetFaceAndAdvance2RP6aiFacejjj.exit717 ], [ %i.blp, %_ZL18SetFaceAndAdvance2RP6aiFacejjj.exit712 ] ; 4 uses
-  %i.bls = load i32, ptr %i.pm, align 4           ; 2 uses
-  %i.blt = add i32 %.04042156, -1                 ; 2 uses
-  %.not.i713 = icmp ult i32 %i.blt, %i.bls
+  %i.bls = load i32, ptr %i.pm, align 4
+  %i.blt = add i32 %.04042156, -1
   %.not12.i714 = icmp ult i32 %.04042156, %i.bls
-  %or.cond.i715 = and i1 %.not.i713, %.not12.i714
-  br i1 %or.cond.i715, label %bb.ia, label %_ZL18SetFaceAndAdvance2RP6aiFacejjj.exit717
+  br i1 %.not12.i714, label %bb.ia, label %_ZL18SetFaceAndAdvance2RP6aiFacejjj.exit717
 
 bb.ia:                                            ; preds = %.lr.ph2157
   store i32 2, ptr %.92155, align 8

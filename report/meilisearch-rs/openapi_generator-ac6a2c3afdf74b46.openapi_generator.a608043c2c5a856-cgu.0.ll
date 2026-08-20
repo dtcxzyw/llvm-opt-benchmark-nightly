@@ -204,7 +204,7 @@ _ZN4core5slice6memchr6memchr17h42eb1bd28cc17905E.exit.thread24.i.i.i.i.i: ; pred
   %i.dar = add i64 %i.daf, 1
   %i.das = add i64 %i.dar, %.sroa.4.0.i27.i.i.i.i.i ; 2 uses
   %.not21.i.i.i.i.i = icmp ugt i64 %i.das, %i.dad ; 2 uses
-  %i.dat = add i64 %.sroa.4.0.i27.i.i.i.i.i, %i.daf ; 4 uses
+  %i.dat = add i64 %.sroa.4.0.i27.i.i.i.i.i, %i.daf ; 3 uses
   %or.cond.i.not.i.i.i.i = icmp ult i64 %i.dat, %i.dad
   br i1 %or.cond.i.not.i.i.i.i, label %bb.aby, label %bb.abx
 
@@ -232,9 +232,7 @@ bb.abz:                                           ; preds = %"_ZN4core3str21_$LT
 ._crit_edge.i.i.i362:                             ; preds = %bb.acc
   %i.day = icmp eq i32 %.sroa.011.1.i.i.i, 0
   %i.daz = icmp sgt i8 %i.dbf, -65
-  %.not.i19.not.i.i.i = icmp ult i64 %i.dat, %.sroa.015.033.i.i.i
-  %or.cond53.i.i.i = and i1 %.not.i19.not.i.i.i, %i.day
-  br i1 %or.cond53.i.i.i, label %bb.aca, label %.backedge.i.i
+  br i1 %i.day, label %bb.aca, label %.backedge.i.i
 
 bb.aca:                                           ; preds = %._crit_edge.i.i.i362
   %i.dba = getelementptr inbounds nuw i8, ptr %i.dae, i64 %i.daw ; 3 uses
@@ -255,7 +253,7 @@ bb.acb:                                           ; preds = %.split.i20.i.i.i
 
 .lr.ph.i.i.i361:                                  ; preds = %bb.abz, %bb.acc
   %.sroa.011.034.i.i.i = phi i32 [ %.sroa.011.1.i.i.i, %bb.acc ], [ 1, %bb.abz ] ; 3 uses
-  %.sroa.015.033.i.i.i = phi i64 [ %i.dbg, %bb.acc ], [ %i.daw, %bb.abz ] ; 6 uses
+  %.sroa.015.033.i.i.i = phi i64 [ %i.dbg, %bb.acc ], [ %i.daw, %bb.abz ] ; 5 uses
   %i.dbe = getelementptr inbounds nuw i8, ptr %i.dae, i64 %.sroa.015.033.i.i.i
   %i.dbf = load i8, ptr %i.dbe, align 1, !alias.scope !7914, !noalias !7890, !noundef !27 ; 2 uses
   switch i8 %i.dbf, label %bb.acc [

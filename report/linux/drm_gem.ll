@@ -201,7 +201,7 @@ bb.a:
 
 .split.us:                                        ; preds = %.split.us.preheader, %bb.g
   %.038.us = phi i32 [ %i.ai, %bb.g ], [ -1, %.split.us.preheader ] ; 5 uses
-  %.not.us = icmp eq i32 %.038.us, -1             ; 2 uses
+  %.not.us = icmp eq i32 %.038.us, -1
   br i1 %.not.us, label %.thread.us, label %bb.b
 
 bb.b:                                             ; preds = %.split.us
@@ -252,8 +252,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 
 ._crit_edge.us:                                   ; preds = %.lr.ph55.us, %.preheader.us
   %.not46.us = icmp slt i32 %.038.us, %i.ai
-  %or.cond.us = or i1 %.not.us, %.not46.us
-  br i1 %or.cond.us, label %bb.g, label %bb.f
+  br i1 %.not46.us, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %._crit_edge.us
   %i.ac = sext i32 %.038.us to i64

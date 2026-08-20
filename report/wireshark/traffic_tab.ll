@@ -201,7 +201,7 @@ bb.a:
 ._crit_edge:                                      ; preds = %_ZN7QStringD2Ev.exit, %bb.a
   ret void
 
-_ZN10TrafficTab20dataModelForTabIndexEi.exit:     ; preds = %_ZN7QStringD2Ev.exit, %.lr.ph
+_ZN10TrafficTab20dataModelForTabIndexEi.exit:     ; preds = %.lr.ph, %_ZN7QStringD2Ev.exit
   %.013 = phi i32 [ 0, %.lr.ph ], [ %i.n, %_ZN7QStringD2Ev.exit ] ; 2 uses
   %i.e = call noundef ptr @_ZNK10QTabWidget6widgetEi(ptr noundef align 8 dereferenceable_or_null(134) %0, i32 noundef %.013)
   %i.f = call noundef ptr @_ZN10TrafficTab18dataModelForWidgetEP7QWidget(ptr align 8 poison, ptr noundef %i.e) ; 2 uses

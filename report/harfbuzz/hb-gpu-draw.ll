@@ -204,7 +204,7 @@ bb.bt:                                            ; preds = %.lr.ph889, %bb.bt
   %storemerge.i.i = tail call i32 @llvm.usub.sat.i32(i32 %i.ul, i32 %i.ug)
   %.sroa.speculated.i.i586 = tail call i32 @llvm.umin.i32(i32 %storemerge.i.i, i32 %i.uj) ; 3 uses
   %i.um = zext i32 %i.ug to i64                   ; 2 uses
-  %i.un = getelementptr inbounds nuw [4 x i8], ptr %i.uk, i64 %i.um ; 5 uses
+  %i.un = getelementptr inbounds nuw [4 x i8], ptr %i.uk, i64 %i.um ; 4 uses
   %.not.i589 = icmp eq i32 %.sroa.speculated.i.i586, 0
   br i1 %.not.i589, label %"_ZN10hb_array_tIjE5qsortIZ18hb_gpu_draw_encodeE3$_1EE17hb_sorted_array_tIjET_.exit", label %bb.bu, !prof !36
 
@@ -218,14 +218,10 @@ bb.bu:                                            ; preds = %.preheader
 
 .preheader.preheader.i.i:                         ; preds = %bb.bu
   %.01519.i.i = getelementptr inbounds nuw i8, ptr %i.un, i64 4
-  br label %.preheader.i.i
+  br label %.lr.ph.preheader.i.i
 
-.preheader.i.i:                                   ; preds = %.critedge.i.i, %.preheader.preheader.i.i
-  %.01520.i.i = phi ptr [ %.015.i.i, %.critedge.i.i ], [ %.01519.i.i, %.preheader.preheader.i.i ] ; 4 uses
-  %2 = icmp ugt ptr %.01520.i.i, %i.un
-  br i1 %2, label %.lr.ph.preheader.i.i, label %.critedge.i.i
-
-.lr.ph.preheader.i.i:                             ; preds = %.preheader.i.i
+.lr.ph.preheader.i.i:                             ; preds = %.critedge.i.i, %.preheader.preheader.i.i
+  %.01520.i.i = phi ptr [ %.015.i.i, %.critedge.i.i ], [ %.01519.i.i, %.preheader.preheader.i.i ] ; 3 uses
   %.0.val.pre.i.i = load i32, ptr %.01520.i.i, align 4, !tbaa !51 ; 2 uses
   %.phi.trans.insert.i.i = zext i32 %.0.val.pre.i.i to i64
   %.phi.trans.insert22.i.i = getelementptr inbounds nuw [56 x i8], ptr %i.sg, i64 %.phi.trans.insert.i.i
@@ -244,10 +240,10 @@ bb.bu:                                            ; preds = %.preheader
   %i.uu = fcmp olt double %i.ut, %.pre.i.i
   br i1 %i.uu, label %bb.bv, label %.critedge.i.i
 
-.critedge.i.i:                                    ; preds = %bb.bv, %.lr.ph.i.i, %.preheader.i.i
+.critedge.i.i:                                    ; preds = %bb.bv, %.lr.ph.i.i
   %.015.i.i = getelementptr inbounds nuw i8, ptr %.01520.i.i, i64 4 ; 2 uses
   %i.uv = icmp ult ptr %.015.i.i, %i.uo
-  br i1 %i.uv, label %.preheader.i.i, label %"_ZN10hb_array_tIjE5qsortIZ18hb_gpu_draw_encodeE3$_1EE17hb_sorted_array_tIjET_.exit", !llvm.loop !99
+  br i1 %i.uv, label %.lr.ph.preheader.i.i, label %"_ZN10hb_array_tIjE5qsortIZ18hb_gpu_draw_encodeE3$_1EE17hb_sorted_array_tIjET_.exit", !llvm.loop !99
 
 bb.bv:                                            ; preds = %.lr.ph.i.i
   store i32 %.0.val.pre.i.i, ptr %i.up, align 4, !tbaa !51
@@ -260,7 +256,7 @@ bb.bv:                                            ; preds = %.lr.ph.i.i
   %i.uy = load i32, ptr %i.nx, align 4, !tbaa !57
   %storemerge.i.i593 = tail call i32 @llvm.usub.sat.i32(i32 %i.uy, i32 %i.ug)
   %.sroa.speculated.i.i594 = tail call i32 @llvm.umin.i32(i32 %storemerge.i.i593, i32 %i.uj) ; 3 uses
-  %i.uz = getelementptr inbounds nuw [4 x i8], ptr %i.ux, i64 %i.um ; 5 uses
+  %i.uz = getelementptr inbounds nuw [4 x i8], ptr %i.ux, i64 %i.um ; 4 uses
   %.not.i598 = icmp eq i32 %.sroa.speculated.i.i594, 0
   br i1 %.not.i598, label %"_ZN10hb_array_tIjE5qsortIZ18hb_gpu_draw_encodeE3$_2EE17hb_sorted_array_tIjET_.exit", label %bb.bw, !prof !36
 
@@ -274,14 +270,10 @@ bb.bw:                                            ; preds = %"_ZN10hb_array_tIjE
 
 .preheader.preheader.i.i601:                      ; preds = %bb.bw
   %.01519.i.i602 = getelementptr inbounds nuw i8, ptr %i.uz, i64 4
-  br label %.preheader.i.i603
+  br label %.lr.ph.preheader.i.i611
 
-.preheader.i.i603:                                ; preds = %.critedge.i.i605, %.preheader.preheader.i.i601
-  %.01520.i.i604 = phi ptr [ %.015.i.i606, %.critedge.i.i605 ], [ %.01519.i.i602, %.preheader.preheader.i.i601 ] ; 4 uses
-  %3 = icmp ugt ptr %.01520.i.i604, %i.uz
-  br i1 %3, label %.lr.ph.preheader.i.i611, label %.critedge.i.i605
-
-.lr.ph.preheader.i.i611:                          ; preds = %.preheader.i.i603
+.lr.ph.preheader.i.i611:                          ; preds = %.critedge.i.i605, %.preheader.preheader.i.i601
+  %.01520.i.i604 = phi ptr [ %.015.i.i606, %.critedge.i.i605 ], [ %.01519.i.i602, %.preheader.preheader.i.i601 ] ; 3 uses
   %.0.val.pre.i.i612 = load i32, ptr %.01520.i.i604, align 4, !tbaa !51 ; 2 uses
   %.phi.trans.insert.i.i613 = zext i32 %.0.val.pre.i.i612 to i64
   %.phi.trans.insert22.i.i614 = getelementptr inbounds nuw [56 x i8], ptr %i.sg, i64 %.phi.trans.insert.i.i613
@@ -298,10 +290,10 @@ bb.bw:                                            ; preds = %"_ZN10hb_array_tIjE
   %i.vf = fcmp ogt double %i.ve, %.pre.i.i615
   br i1 %i.vf, label %bb.bx, label %.critedge.i.i605
 
-.critedge.i.i605:                                 ; preds = %bb.bx, %.lr.ph.i.i616, %.preheader.i.i603
+.critedge.i.i605:                                 ; preds = %bb.bx, %.lr.ph.i.i616
   %.015.i.i606 = getelementptr inbounds nuw i8, ptr %.01520.i.i604, i64 4 ; 2 uses
   %i.vg = icmp ult ptr %.015.i.i606, %i.va
-  br i1 %i.vg, label %.preheader.i.i603, label %"_ZN10hb_array_tIjE5qsortIZ18hb_gpu_draw_encodeE3$_2EE17hb_sorted_array_tIjET_.exit", !llvm.loop !102
+  br i1 %i.vg, label %.lr.ph.preheader.i.i611, label %"_ZN10hb_array_tIjE5qsortIZ18hb_gpu_draw_encodeE3$_2EE17hb_sorted_array_tIjET_.exit", !llvm.loop !102
 
 bb.bx:                                            ; preds = %.lr.ph.i.i616
   store i32 %.0.val.pre.i.i612, ptr %i.vb, align 4, !tbaa !51
@@ -327,7 +319,7 @@ bb.bx:                                            ; preds = %.lr.ph.i.i616
   %storemerge.i.i622 = tail call i32 @llvm.usub.sat.i32(i32 %i.vp, i32 %i.vk)
   %.sroa.speculated.i.i623 = tail call i32 @llvm.umin.i32(i32 %storemerge.i.i622, i32 %i.vn) ; 3 uses
   %i.vq = zext i32 %i.vk to i64                   ; 2 uses
-  %i.vr = getelementptr inbounds nuw [4 x i8], ptr %i.vo, i64 %i.vq ; 5 uses
+  %i.vr = getelementptr inbounds nuw [4 x i8], ptr %i.vo, i64 %i.vq ; 4 uses
   %.not.i627 = icmp eq i32 %.sroa.speculated.i.i623, 0
   br i1 %.not.i627, label %"_ZN10hb_array_tIjE5qsortIZ18hb_gpu_draw_encodeE3$_3EE17hb_sorted_array_tIjET_.exit", label %bb.by, !prof !36
 
@@ -341,15 +333,11 @@ bb.by:                                            ; preds = %.preheader859
 
 .preheader.preheader.i.i630:                      ; preds = %bb.by
   %.01519.i.i631 = getelementptr inbounds nuw i8, ptr %i.vr, i64 4
-  br label %.preheader.i.i632
+  br label %.lr.ph.preheader.i.i640
 
-.preheader.i.i632:                                ; preds = %.critedge.i.i634, %.preheader.preheader.i.i630
-  %.01520.i.i633 = phi ptr [ %.015.i.i635, %.critedge.i.i634 ], [ %.01519.i.i631, %.preheader.preheader.i.i630 ] ; 4 uses
-  %4 = icmp ugt ptr %.01520.i.i633, %i.vr
-  br i1 %4, label %.lr.ph.preheader.i.i640, label %.critedge.i.i634
-
-.lr.ph.preheader.i.i640:                          ; preds = %.preheader.i.i632
-  %.0.val.pre.i.i641 = load i32, ptr %.01520.i.i633, align 4, !tbaa !51 ; 2 uses
+.lr.ph.preheader.i.i640:                          ; preds = %.critedge.i.i634, %.preheader.preheader.i.i630
+  %.01520.i.i632 = phi ptr [ %.015.i.i635, %.critedge.i.i634 ], [ %.01519.i.i631, %.preheader.preheader.i.i630 ] ; 3 uses
+  %.0.val.pre.i.i641 = load i32, ptr %.01520.i.i632, align 4, !tbaa !51 ; 2 uses
   %.phi.trans.insert.i.i642 = zext i32 %.0.val.pre.i.i641 to i64
   %.phi.trans.insert22.i.i643 = getelementptr inbounds nuw [56 x i8], ptr %i.sg, i64 %.phi.trans.insert.i.i642
   %.phi.trans.insert23.i.i644 = getelementptr inbounds nuw i8, ptr %.phi.trans.insert22.i.i643, i64 24
@@ -357,7 +345,7 @@ bb.by:                                            ; preds = %.preheader859
   br label %.lr.ph.i.i646
 
 .lr.ph.i.i646:                                    ; preds = %bb.bz, %.lr.ph.preheader.i.i640
-  %.017.i.i647 = phi ptr [ %i.vt, %bb.bz ], [ %.01520.i.i633, %.lr.ph.preheader.i.i640 ] ; 2 uses
+  %.017.i.i647 = phi ptr [ %i.vt, %bb.bz ], [ %.01520.i.i632, %.lr.ph.preheader.i.i640 ] ; 2 uses
   %i.vt = getelementptr inbounds i8, ptr %.017.i.i647, i64 -4 ; 4 uses
   %.val16.i.i648 = load i32, ptr %i.vt, align 4, !tbaa !51 ; 2 uses
   %i.vu = zext i32 %.val16.i.i648 to i64
@@ -367,10 +355,10 @@ bb.by:                                            ; preds = %.preheader859
   %i.vy = fcmp olt double %i.vx, %.pre.i.i645
   br i1 %i.vy, label %bb.bz, label %.critedge.i.i634
 
-.critedge.i.i634:                                 ; preds = %bb.bz, %.lr.ph.i.i646, %.preheader.i.i632
-  %.015.i.i635 = getelementptr inbounds nuw i8, ptr %.01520.i.i633, i64 4 ; 2 uses
+.critedge.i.i634:                                 ; preds = %bb.bz, %.lr.ph.i.i646
+  %.015.i.i635 = getelementptr inbounds nuw i8, ptr %.01520.i.i632, i64 4 ; 2 uses
   %i.vz = icmp ult ptr %.015.i.i635, %i.vs
-  br i1 %i.vz, label %.preheader.i.i632, label %"_ZN10hb_array_tIjE5qsortIZ18hb_gpu_draw_encodeE3$_3EE17hb_sorted_array_tIjET_.exit", !llvm.loop !106
+  br i1 %i.vz, label %.lr.ph.preheader.i.i640, label %"_ZN10hb_array_tIjE5qsortIZ18hb_gpu_draw_encodeE3$_3EE17hb_sorted_array_tIjET_.exit", !llvm.loop !106
 
 bb.bz:                                            ; preds = %.lr.ph.i.i646
   store i32 %.0.val.pre.i.i641, ptr %i.vt, align 4, !tbaa !51
@@ -383,7 +371,7 @@ bb.bz:                                            ; preds = %.lr.ph.i.i646
   %i.wc = load i32, ptr %i.ou, align 4, !tbaa !57
   %storemerge.i.i652 = tail call i32 @llvm.usub.sat.i32(i32 %i.wc, i32 %i.vk)
   %.sroa.speculated.i.i653 = tail call i32 @llvm.umin.i32(i32 %storemerge.i.i652, i32 %i.vn) ; 3 uses
-  %i.wd = getelementptr inbounds nuw [4 x i8], ptr %i.wb, i64 %i.vq ; 5 uses
+  %i.wd = getelementptr inbounds nuw [4 x i8], ptr %i.wb, i64 %i.vq ; 4 uses
   %.not.i657 = icmp eq i32 %.sroa.speculated.i.i653, 0
   br i1 %.not.i657, label %"_ZN10hb_array_tIjE5qsortIZ18hb_gpu_draw_encodeE3$_4EE17hb_sorted_array_tIjET_.exit", label %bb.ca, !prof !36
 
@@ -397,15 +385,11 @@ bb.ca:                                            ; preds = %"_ZN10hb_array_tIjE
 
 .preheader.preheader.i.i660:                      ; preds = %bb.ca
   %.01519.i.i661 = getelementptr inbounds nuw i8, ptr %i.wd, i64 4
-  br label %.preheader.i.i662
+  br label %.lr.ph.preheader.i.i670
 
-.preheader.i.i662:                                ; preds = %.critedge.i.i664, %.preheader.preheader.i.i660
-  %.01520.i.i663 = phi ptr [ %.015.i.i665, %.critedge.i.i664 ], [ %.01519.i.i661, %.preheader.preheader.i.i660 ] ; 4 uses
-  %5 = icmp ugt ptr %.01520.i.i663, %i.wd
-  br i1 %5, label %.lr.ph.preheader.i.i670, label %.critedge.i.i664
-
-.lr.ph.preheader.i.i670:                          ; preds = %.preheader.i.i662
-  %.0.val.pre.i.i671 = load i32, ptr %.01520.i.i663, align 4, !tbaa !51 ; 2 uses
+.lr.ph.preheader.i.i670:                          ; preds = %.critedge.i.i664, %.preheader.preheader.i.i660
+  %.01520.i.i661 = phi ptr [ %.015.i.i665, %.critedge.i.i664 ], [ %.01519.i.i661, %.preheader.preheader.i.i660 ] ; 3 uses
+  %.0.val.pre.i.i671 = load i32, ptr %.01520.i.i661, align 4, !tbaa !51 ; 2 uses
   %.phi.trans.insert.i.i672 = zext i32 %.0.val.pre.i.i671 to i64
   %.phi.trans.insert22.i.i673 = getelementptr inbounds nuw [56 x i8], ptr %i.sg, i64 %.phi.trans.insert.i.i672
   %.phi.trans.insert23.i.i674 = getelementptr inbounds nuw i8, ptr %.phi.trans.insert22.i.i673, i64 16
@@ -413,7 +397,7 @@ bb.ca:                                            ; preds = %"_ZN10hb_array_tIjE
   br label %.lr.ph.i.i676
 
 .lr.ph.i.i676:                                    ; preds = %bb.cb, %.lr.ph.preheader.i.i670
-  %.017.i.i677 = phi ptr [ %i.wf, %bb.cb ], [ %.01520.i.i663, %.lr.ph.preheader.i.i670 ] ; 2 uses
+  %.017.i.i677 = phi ptr [ %i.wf, %bb.cb ], [ %.01520.i.i661, %.lr.ph.preheader.i.i670 ] ; 2 uses
   %i.wf = getelementptr inbounds i8, ptr %.017.i.i677, i64 -4 ; 4 uses
   %.val16.i.i678 = load i32, ptr %i.wf, align 4, !tbaa !51 ; 2 uses
   %i.wg = zext i32 %.val16.i.i678 to i64
@@ -423,10 +407,10 @@ bb.ca:                                            ; preds = %"_ZN10hb_array_tIjE
   %i.wk = fcmp ogt double %i.wj, %.pre.i.i675
   br i1 %i.wk, label %bb.cb, label %.critedge.i.i664
 
-.critedge.i.i664:                                 ; preds = %bb.cb, %.lr.ph.i.i676, %.preheader.i.i662
-  %.015.i.i665 = getelementptr inbounds nuw i8, ptr %.01520.i.i663, i64 4 ; 2 uses
+.critedge.i.i664:                                 ; preds = %bb.cb, %.lr.ph.i.i676
+  %.015.i.i665 = getelementptr inbounds nuw i8, ptr %.01520.i.i661, i64 4 ; 2 uses
   %i.wl = icmp ult ptr %.015.i.i665, %i.we
-  br i1 %i.wl, label %.preheader.i.i662, label %"_ZN10hb_array_tIjE5qsortIZ18hb_gpu_draw_encodeE3$_4EE17hb_sorted_array_tIjET_.exit", !llvm.loop !109
+  br i1 %i.wl, label %.lr.ph.preheader.i.i670, label %"_ZN10hb_array_tIjE5qsortIZ18hb_gpu_draw_encodeE3$_4EE17hb_sorted_array_tIjET_.exit", !llvm.loop !109
 
 bb.cb:                                            ; preds = %.lr.ph.i.i676
   store i32 %.0.val.pre.i.i671, ptr %i.wf, align 4, !tbaa !51

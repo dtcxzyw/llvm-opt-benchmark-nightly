@@ -204,7 +204,7 @@ _ZZN5boost5beast23test_dynamic_buffer_refINS0_10buffer_refINS0_18basic_multi_buf
   %i.aji = load i64, ptr %i.z, align 8, !tbaa !50 ; 5 uses
   br label %.lr.ph.i.i545
 
-.lr.ph.i.i545:                                    ; preds = %_ZN5boost5beast10buffer_refINS0_18basic_multi_bufferISaIcEEEE6commitEm.exit587, %_ZZN5boost5beast23test_dynamic_buffer_refINS0_10buffer_refINS0_18basic_multi_bufferISaIcEEEEEEEvT_ENKUlvE_clEv.exit541
+.lr.ph.i.i545:                                    ; preds = %_ZZN5boost5beast23test_dynamic_buffer_refINS0_10buffer_refINS0_18basic_multi_bufferISaIcEEEEEEEvT_ENKUlvE_clEv.exit541, %_ZN5boost5beast10buffer_refINS0_18basic_multi_bufferISaIcEEEE6commitEm.exit587
   %.sroa.0815.01260 = phi ptr [ %i.s, %_ZZN5boost5beast23test_dynamic_buffer_refINS0_10buffer_refINS0_18basic_multi_bufferISaIcEEEEEEEvT_ENKUlvE_clEv.exit541 ], [ %i.ali, %_ZN5boost5beast10buffer_refINS0_18basic_multi_bufferISaIcEEEE6commitEm.exit587 ] ; 2 uses
   %.sroa.7817.01259 = phi i64 [ %.0391274, %_ZZN5boost5beast23test_dynamic_buffer_refINS0_10buffer_refINS0_18basic_multi_bufferISaIcEEEEEEEvT_ENKUlvE_clEv.exit541 ], [ %i.alj, %_ZN5boost5beast10buffer_refINS0_18basic_multi_bufferISaIcEEEE6commitEm.exit587 ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %41) #31
@@ -269,8 +269,8 @@ _ZN5boost4asio6detail13buffer_copy_1ERKNS0_14mutable_bufferERKNS0_12const_buffer
   %.not.i.i560 = icmp eq i64 %i.akb, 0
   br i1 %.not.i.i560, label %_ZN5boost4asio11buffer_copyINS_5beast18basic_multi_bufferISaIcEE8subrangeILb1EEENS0_12const_bufferEEEmRKT_RKT0_.exit563, label %bb.ff, !llvm.loop !873
 
-_ZN5boost4asio11buffer_copyINS_5beast18basic_multi_bufferISaIcEE8subrangeILb1EEENS0_12const_bufferEEEmRKT_RKT0_.exit563: ; preds = %bb.ff, %_ZN5boost4asio6detail13buffer_copy_1ERKNS0_14mutable_bufferERKNS0_12const_bufferE.exit.i.i559
-  %.0.lcssa.i.i561.ph = phi i64 [ %.019.i.i547, %bb.ff ], [ %i.ajz, %_ZN5boost4asio6detail13buffer_copy_1ERKNS0_14mutable_bufferERKNS0_12const_bufferE.exit.i.i559 ] ; 5 uses
+_ZN5boost4asio11buffer_copyINS_5beast18basic_multi_bufferISaIcEE8subrangeILb1EEENS0_12const_bufferEEEmRKT_RKT0_.exit563: ; preds = %_ZN5boost4asio6detail13buffer_copy_1ERKNS0_14mutable_bufferERKNS0_12const_bufferE.exit.i.i559, %bb.ff
+  %.0.lcssa.i.i561.ph = phi i64 [ %i.ajz, %_ZN5boost4asio6detail13buffer_copy_1ERKNS0_14mutable_bufferERKNS0_12const_bufferE.exit.i.i559 ], [ %.019.i.i547, %bb.ff ] ; 5 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.25.i543)
   %i.akc = load ptr, ptr %i.ai, align 8, !tbaa !68 ; 2 uses
   %.not.i.i.i.i564 = icmp eq ptr %i.akc, null
@@ -673,7 +673,7 @@ bb.ap:                                            ; preds = %_ZN5boost5beast9uni
   %i.of = load i64, ptr %i.y, align 8, !tbaa !114 ; 5 uses
   br label %.lr.ph.i.i187.preheader
 
-.lr.ph.i.i187.preheader:                          ; preds = %_ZN5boost4asio11buffer_copyINS_5beast6detail12buffers_pairILb1EEENS0_12const_bufferEEEmRKT_RKT0_.exit198, %.lr.ph.i177
+.lr.ph.i.i187.preheader:                          ; preds = %.lr.ph.i177, %_ZN5boost4asio11buffer_copyINS_5beast6detail12buffers_pairILb1EEENS0_12const_bufferEEEmRKT_RKT0_.exit198
   %.sroa.0331.0616 = phi ptr [ %i.r, %.lr.ph.i177 ], [ %i.or, %_ZN5boost4asio11buffer_copyINS_5beast6detail12buffers_pairILb1EEENS0_12const_bufferEEEmRKT_RKT0_.exit198 ] ; 2 uses
   %.sroa.7.0615 = phi i64 [ %.039630, %.lr.ph.i177 ], [ %i.os, %_ZN5boost4asio11buffer_copyINS_5beast6detail12buffers_pairILb1EEENS0_12const_bufferEEEmRKT_RKT0_.exit198 ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %62) #31
@@ -681,11 +681,11 @@ bb.ap:                                            ; preds = %_ZN5boost5beast9uni
   %i.oh = sub i64 1024, %i.og
   %.sroa.speculated326 = call i64 @llvm.umin.i64(i64 %i.oh, i64 %storemerge628)
   call void @_ZN5boost5beast18static_buffer_base7prepareEm(ptr dead_on_unwind nonnull writable sret(%"class.boost::beast::detail::buffers_pair.6") align 8 %62, ptr noundef nonnull align 8 dereferenceable(40) %0, i64 noundef %.sroa.speculated326)
+  %.sroa.speculated = call i64 @llvm.umin.i64(i64 %.sroa.7.0615, i64 %storemerge52625)
   %i.oi = load i64, ptr %i.na, align 8, !tbaa !118
   %.not.i.i.i182 = icmp eq i64 %i.oi, 0
   %.0.v.i.i.i183.sroa.sel.v.sroa.sel.v.sroa.sel.v = select i1 %.not.i.i.i182, i64 16, i64 32
   %.0.v.i.i.i183.sroa.sel.v.sroa.sel.v.sroa.sel = getelementptr inbounds nuw i8, ptr %62, i64 %.0.v.i.i.i183.sroa.sel.v.sroa.sel.v.sroa.sel.v
-  %.sroa.speculated = call i64 @llvm.umin.i64(i64 %.sroa.7.0615, i64 %storemerge52625)
   br label %.lr.ph.i.i187
 
 .lr.ph.i.i187:                                    ; preds = %.lr.ph.i.i187.preheader, %_ZN5boost4asio6detail13buffer_copy_1ERKNS0_14mutable_bufferERKNS0_12const_bufferE.exit.i.i196

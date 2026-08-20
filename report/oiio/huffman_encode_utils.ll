@@ -23,8 +23,8 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph55, %CodeRepeatedZeros.exit
   %.02854 = phi i32 [ 0, %.lr.ph55 ], [ %.0.lcssa, %CodeRepeatedZeros.exit ] ; 3 uses
-  %.02953 = phi i32 [ 8, %.lr.ph55 ], [ %.1, %CodeRepeatedZeros.exit ] ; 5 uses
-  %.03052 = phi ptr [ %1, %.lr.ph55 ], [ %.131, %CodeRepeatedZeros.exit ] ; 7 uses
+  %.02953 = phi i32 [ 8, %.lr.ph55 ], [ %.1, %CodeRepeatedZeros.exit ] ; 4 uses
+  %.03052 = phi ptr [ %1, %.lr.ph55 ], [ %.131, %CodeRepeatedZeros.exit ] ; 6 uses
   %i.e = load ptr, ptr %i.c, align 8, !tbaa !12   ; 2 uses
   %i.f = zext nneg i32 %.02854 to i64             ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.f
@@ -54,15 +54,11 @@ bb.c:                                             ; preds = %.lr.ph93
 
 .critedge:                                        ; preds = %bb.c, %bb.b, %.critedge.split.loop.exit78
   %.0.lcssa = phi i32 [ %i.p, %.critedge.split.loop.exit78 ], [ %smax, %bb.b ], [ %smax, %bb.c ] ; 3 uses
-  %i.q = sub nsw i32 %.0.lcssa, %.02854           ; 7 uses
+  %i.q = sub nsw i32 %.0.lcssa, %.02854           ; 6 uses
   %i.r = icmp eq i8 %i.h, 0
-  br i1 %i.r, label %3, label %bb.g
+  br i1 %i.r, label %.lr.ph.preheader.i, label %bb.g
 
-3:                                                ; preds = %.critedge
-  %4 = icmp sgt i32 %i.q, 0
-  br i1 %4, label %.lr.ph.preheader.i, label %CodeRepeatedZeros.exit
-
-.lr.ph.preheader.i:                               ; preds = %3
+.lr.ph.preheader.i:                               ; preds = %.critedge
   %i.s = add nsw i32 %i.q, -1
   %i.t = urem i32 %i.s, 138
   %i.u = icmp samesign ult i32 %i.q, 3
@@ -71,7 +67,8 @@ bb.c:                                             ; preds = %.lr.ph93
 .lr.ph35.preheader.i:                             ; preds = %.lr.ph.i, %.lr.ph.preheader.i
   %.02232.i.lcssa = phi ptr [ %.03052, %.lr.ph.preheader.i ], [ %i.ai, %.lr.ph.i ] ; 2 uses
   %.02331.i.lcssa = phi i32 [ %i.q, %.lr.ph.preheader.i ], [ %i.aj, %.lr.ph.i ]
-  %i.v = shl nuw nsw i32 %.02331.i.lcssa, 1
+  %3 = tail call i32 @llvm.umax.i32(i32 %.02331.i.lcssa, i32 1)
+  %i.v = shl nuw nsw i32 %3, 1
   %i.w = zext nneg i32 %i.v to i64                ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.02232.i.lcssa, i8 0, i64 %i.w, i1 false), !tbaa !13
   %scevgep.i = getelementptr i8, ptr %.02232.i.lcssa, i64 %i.w
@@ -110,8 +107,8 @@ bb.f:                                             ; preds = %bb.e
   store i8 127, ptr %i.ah, align 1, !tbaa !18
   %i.ai = getelementptr i8, ptr %.02232.i47, i64 2 ; 2 uses
   %i.aj = add nsw i32 %.02331.i48, -138           ; 2 uses
-  %5 = icmp samesign ult i32 %.02331.i48, 141
-  br i1 %5, label %.lr.ph35.preheader.i, label %.lr.ph49
+  %4 = icmp slt i32 %.02331.i48, 141
+  br i1 %4, label %.lr.ph35.preheader.i, label %.lr.ph49
 
 bb.g:                                             ; preds = %.critedge
   %.not.i = icmp eq i32 %.02953, %i.i
@@ -283,9 +280,9 @@ bb.j:                                             ; preds = %.lr.ph
   %i.cj = icmp samesign ult i32 %.135.i44, 9
   br i1 %i.cj, label %iter.check, label %.lr.ph, !llvm.loop !26
 
-CodeRepeatedZeros.exit:                           ; preds = %vec.epilog.scalar.ph, %middle.block, %vec.epilog.middle.block, %bb.j, %bb.i, %bb.f, %bb.d, %.lr.ph35.preheader.i, %3
-  %.131 = phi ptr [ %.03052, %3 ], [ %scevgep.i, %.lr.ph35.preheader.i ], [ %i.ab, %bb.d ], [ %i.ag, %bb.f ], [ %.026.i, %bb.i ], [ %i.cf, %bb.j ], [ %i.bv, %vec.epilog.middle.block ], [ %i.bp, %middle.block ], [ %i.bz, %vec.epilog.scalar.ph ] ; 2 uses
-  %.1 = phi i32 [ %.02953, %3 ], [ %.02953, %.lr.ph35.preheader.i ], [ %.02953, %bb.d ], [ %.02953, %bb.f ], [ %i.i, %bb.i ], [ %i.i, %bb.j ], [ %i.i, %vec.epilog.middle.block ], [ %i.i, %middle.block ], [ %i.i, %vec.epilog.scalar.ph ]
+CodeRepeatedZeros.exit:                           ; preds = %vec.epilog.scalar.ph, %middle.block, %vec.epilog.middle.block, %bb.j, %bb.i, %bb.f, %bb.d, %.lr.ph35.preheader.i
+  %.131 = phi ptr [ %i.cf, %bb.j ], [ %scevgep.i, %.lr.ph35.preheader.i ], [ %i.ab, %bb.d ], [ %i.ag, %bb.f ], [ %.026.i, %bb.i ], [ %i.bv, %vec.epilog.middle.block ], [ %i.bp, %middle.block ], [ %i.bz, %vec.epilog.scalar.ph ] ; 2 uses
+  %.1 = phi i32 [ %i.i, %bb.j ], [ %.02953, %.lr.ph35.preheader.i ], [ %.02953, %bb.d ], [ %.02953, %bb.f ], [ %i.i, %bb.i ], [ %i.i, %vec.epilog.middle.block ], [ %i.i, %middle.block ], [ %i.i, %vec.epilog.scalar.ph ]
   %i.ck = icmp slt i32 %.0.lcssa, %i.a
   br i1 %i.ck, label %bb.b, label %._crit_edge, !llvm.loop !27
 

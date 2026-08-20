@@ -204,13 +204,11 @@ bb.bw:                                            ; preds = %bb.bv, %bb.bv
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph514
 
 .lr.ph579.split:                                  ; preds = %bb.bo, %bb.ca
-  %.4246.idx577 = phi i64 [ %.4246.add305, %bb.ca ], [ %.3245.add306, %bb.bo ] ; 4 uses
+  %.4246.idx577 = phi i64 [ %.4246.add305, %bb.ca ], [ %.3245.add306, %bb.bo ] ; 3 uses
   %.4246.ptr578 = getelementptr inbounds nuw i8, ptr %i.a, i64 %.4246.idx577 ; 3 uses
   %i.dm = load i8, ptr %.4246.ptr578, align 1, !tbaa !16
-  %5 = icmp ne i8 %i.dm, 62
-  %.not332 = icmp samesign ult i64 %.4246.idx577, 2
-  %or.cond351 = select i1 %5, i1 true, i1 %.not332
-  br i1 %or.cond351, label %bb.ca, label %bb.bx
+  %.not612 = icmp eq i8 %i.dm, 62
+  br i1 %.not612, label %bb.bx, label %bb.ca
 
 bb.bx:                                            ; preds = %.lr.ph579.split
   %i.dn = getelementptr inbounds i8, ptr %.4246.ptr578, i64 -1

@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %bb.b
   call void @appendBinaryStringInfo(ptr noundef %1, ptr noundef nonnull %i.d, i32 noundef %i.e) #10
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.b, %bb.c
+bb.d:                                             ; preds = %bb.c, %bb.b
   %i.x = getelementptr inbounds nuw i8, ptr %i.t, i64 4
   call void @escape_json(ptr noundef %1, ptr noundef nonnull %i.x)
   call void @appendStringInfoChar(ptr noundef %1, i8 noundef signext 58) #10

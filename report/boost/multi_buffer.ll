@@ -203,8 +203,8 @@ _ZN5boost4asio6detail13buffer_copy_1ERKNS0_14mutable_bufferERKNS0_12const_buffer
   %.not.i.i654 = icmp eq i64 %i.cnc, 0
   br i1 %.not.i.i654, label %_ZN5boost4asio11buffer_copyINS_5beast18basic_multi_bufferISaIcEE8subrangeILb1EEENS0_12const_bufferEEEmRKT_RKT0_.exit657, label %bb.xy, !llvm.loop !1428
 
-_ZN5boost4asio11buffer_copyINS_5beast18basic_multi_bufferISaIcEE8subrangeILb1EEENS0_12const_bufferEEEmRKT_RKT0_.exit657: ; preds = %bb.xy, %_ZN5boost4asio6detail13buffer_copy_1ERKNS0_14mutable_bufferERKNS0_12const_bufferE.exit.i.i653
-  %.0.lcssa.i.i655.ph = phi i64 [ %.019.i.i641, %bb.xy ], [ %i.cna, %_ZN5boost4asio6detail13buffer_copy_1ERKNS0_14mutable_bufferERKNS0_12const_bufferE.exit.i.i653 ] ; 5 uses
+_ZN5boost4asio11buffer_copyINS_5beast18basic_multi_bufferISaIcEE8subrangeILb1EEENS0_12const_bufferEEEmRKT_RKT0_.exit657: ; preds = %_ZN5boost4asio6detail13buffer_copy_1ERKNS0_14mutable_bufferERKNS0_12const_bufferE.exit.i.i653, %bb.xy
+  %.0.lcssa.i.i655.ph = phi i64 [ %i.cna, %_ZN5boost4asio6detail13buffer_copy_1ERKNS0_14mutable_bufferERKNS0_12const_bufferE.exit.i.i653 ], [ %.019.i.i641, %bb.xy ] ; 5 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.25.i637)
   %i.cnd = load ptr, ptr %i.ckt, align 8, !tbaa !109 ; 2 uses
   %.not.i.i.i658 = icmp eq ptr %i.cnd, null

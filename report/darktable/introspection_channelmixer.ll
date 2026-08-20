@@ -203,13 +203,13 @@ bb.i:                                             ; preds = %bb.h
   %i.bw = load float, ptr %i.bv, align 4, !tbaa !11 ; 2 uses
   %i.bx = getelementptr i8, ptr %i.b, i64 68
   store float %i.bw, ptr %i.bx, align 4, !tbaa !11
+  %4 = or i32 %i.aw, %i.ag
   %i.by = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.bz = load float, ptr %i.by, align 4, !tbaa !11 ; 4 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %1, i64 52
   %i.cb = load float, ptr %i.ca, align 4, !tbaa !11 ; 4 uses
   %i.cc = getelementptr inbounds nuw i8, ptr %1, i64 80
   %i.cd = load float, ptr %i.cc, align 4, !tbaa !11 ; 4 uses
-  %4 = or i32 %i.aw, %i.ag
   %i.ce = fcmp reassoc nsz arcp contract afn une float %i.bz, 0.000000e+00
   %i.cf = fcmp reassoc nsz arcp contract afn une float %i.cb, 0.000000e+00
   %or.cond = select i1 %i.ce, i1 true, i1 %i.cf
