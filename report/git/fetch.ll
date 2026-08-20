@@ -203,11 +203,11 @@ bb.a:
 
 .lr.ph44:                                         ; preds = %.preheader, %bb.k
   %i.e = phi i32 [ %i.bb, %bb.k ], [ %i.c, %.preheader ]
-  %.03143 = phi i32 [ %i.bc, %bb.k ], [ 0, %.preheader ] ; 6 uses
+  %.03143 = phi i32 [ %i.bc, %bb.k ], [ 0, %.preheader ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #18
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) @__const.report_set_head.buf_prefix, i64 24, i1 false)
   %i.f = load ptr, ptr %0, align 8, !tbaa !131    ; 2 uses
-  %i.g = sext i32 %.03143 to i64                  ; 4 uses
+  %i.g = sext i32 %.03143 to i64                  ; 5 uses
   %i.h = getelementptr inbounds [32 x i8], ptr %i.f, i64 %i.g ; 3 uses
   %i.i = load i8, ptr %i.h, align 8
   %i.j = and i8 %i.i, 16
@@ -249,20 +249,20 @@ bb.e:                                             ; preds = %bb.d, %bb.b
 
 .lr.ph.preheader:                                 ; preds = %bb.e
   %i.u = sext i32 %.040 to i64
-  %2 = sext i32 %.03143 to i64
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %indvars.iv.a = phi i64 [ %i.u, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 3 uses
-  %.0.in41 = phi i64 [ %2, %.lr.ph.preheader ], [ %indvars.iv.a, %.lr.ph ]
+  %indvars.iv.a = phi i64 [ %i.g, %.lr.ph.preheader ], [ %indvars.iv.next47, %.lr.ph ] ; 2 uses
+  %.0.in41 = phi i64 [ %i.u, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 2 uses
   %i.v = load ptr, ptr %0, align 8, !tbaa !131    ; 2 uses
-  %i.w = getelementptr inbounds [32 x i8], ptr %i.v, i64 %.0.in41
-  %i.x = getelementptr inbounds [32 x i8], ptr %i.v, i64 %indvars.iv.a
+  %i.w = getelementptr inbounds [32 x i8], ptr %i.v, i64 %indvars.iv.a
+  %i.x = getelementptr inbounds [32 x i8], ptr %i.v, i64 %.0.in41
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.w, ptr noundef nonnull align 8 dereferenceable(32) %i.x, i64 32, i1 false), !tbaa.struct !250
-  %indvars.iv.next = add nsw i64 %indvars.iv.a, 1 ; 2 uses
+  %indvars.iv.next = add nsw i64 %.0.in41, 1      ; 2 uses
   %i.y = load i32, ptr %i.b, align 4, !tbaa !114  ; 2 uses
   %i.z = sext i32 %i.y to i64
   %i.aa = icmp slt i64 %indvars.iv.next, %i.z
+  %indvars.iv.next47 = add nsw i64 %indvars.iv.a, 1
   br i1 %i.aa, label %.lr.ph, label %._crit_edge, !llvm.loop !251
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.e

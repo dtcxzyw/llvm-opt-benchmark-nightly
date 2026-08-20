@@ -147,7 +147,7 @@ bb.a:
   %.old.i = icmp sgt i32 %2, 0                    ; 28 uses
   %i.b = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 22 uses
   %i.c = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 11 uses
-  %i.d = sext i32 %1 to i64                       ; 37 uses
+  %i.d = sext i32 %1 to i64                       ; 38 uses
   %i.e = add i32 %2, -1                           ; 3 uses
   %i.f = zext i32 %i.e to i64
   %i.g = add nuw nsw i64 %i.f, 1                  ; 5 uses
@@ -550,20 +550,20 @@ bb.gr:                                            ; preds = %bb.gq, %.lr.ph.i316
   %.3649 = phi i64 [ %.3651.a, %_ZL12outputStringPKcPcPiii.exit232.thread ], [ %.3, %bb.gp ], [ %.3651.a, %bb.go ], [ %.0141.ph, %_ZL12outputStringPKcPcPiii.exit232.thread652 ], [ %.3650, %middle.block1129 ], [ %.3650, %vec.epilog.middle.block1157 ], [ %.3650, %bb.gr ]
   %i.ckf = phi i32 [ %.promoted479648, %_ZL12outputStringPKcPcPiii.exit232.thread ], [ 0, %bb.gp ], [ %.promoted479648, %bb.go ], [ 0, %_ZL12outputStringPKcPcPiii.exit232.thread652 ], [ %i.cgs, %middle.block1129 ], [ %i.cjh, %vec.epilog.middle.block1157 ], [ %i.ckd, %bb.gr ] ; 3 uses
   %i.ckg = icmp slt i32 %i.ckf, %1
+  %5 = sext i32 %i.ckf to i64                     ; 10 uses
   br i1 %i.ckg, label %bb.gs, label %_ZL10outputCharcPcPiii.exit321
 
 bb.gs:                                            ; preds = %.loopexit.i314
-  %5 = sext i32 %i.ckf to i64
   %i.ckh = getelementptr inbounds i8, ptr %0, i64 %5
   store i8 91, ptr %i.ckh, align 1, !tbaa !10
   br label %_ZL10outputCharcPcPiii.exit321
 
 _ZL10outputCharcPcPiii.exit321:                   ; preds = %.loopexit.i314, %bb.gs
-  %i.cki = add i32 %i.ckf, 1                      ; 3 uses
+  %i.cki = add nsw i32 %i.ckf, 1
   store i32 %i.cki, ptr %i.a, align 4, !tbaa !19
   %i.ckj = zext i32 %i.acb to i64                 ; 8 uses
-  %6 = sext i32 %i.cki to i64                     ; 9 uses
-  %i.ckk = icmp slt i32 %i.cki, %1
+  %6 = add nsw i64 %5, 1                          ; 2 uses
+  %i.ckk = icmp slt i64 %6, %i.d
   br i1 %i.ckk, label %bb.gt, label %_ZL10outputCharcPcPiii.exit.i326
 
 bb.gt:                                            ; preds = %_ZL10outputCharcPcPiii.exit321
@@ -575,7 +575,7 @@ bb.gt:                                            ; preds = %_ZL10outputCharcPcP
   br label %_ZL10outputCharcPcPiii.exit.i326
 
 _ZL10outputCharcPcPiii.exit.i326:                 ; preds = %bb.gt, %_ZL10outputCharcPcPiii.exit321
-  %indvars.iv.next555 = add nsw i64 %6, 1         ; 2 uses
+  %indvars.iv.next555 = add nsw i64 %5, 2         ; 2 uses
   %i.ckp = icmp slt i64 %indvars.iv.next555, %i.d
   br i1 %i.ckp, label %bb.gu, label %_ZL10outputCharcPcPiii.exit.i326.1
 
@@ -589,7 +589,7 @@ bb.gu:                                            ; preds = %_ZL10outputCharcPcP
   br label %_ZL10outputCharcPcPiii.exit.i326.1
 
 _ZL10outputCharcPcPiii.exit.i326.1:               ; preds = %bb.gu, %_ZL10outputCharcPcPiii.exit.i326
-  %indvars.iv.next555.1 = add nsw i64 %6, 2       ; 2 uses
+  %indvars.iv.next555.1 = add nsw i64 %5, 3       ; 2 uses
   %i.ckv = icmp slt i64 %indvars.iv.next555.1, %i.d
   br i1 %i.ckv, label %bb.gv, label %_ZL10outputCharcPcPiii.exit.i326.2
 
@@ -603,7 +603,7 @@ bb.gv:                                            ; preds = %_ZL10outputCharcPcP
   br label %_ZL10outputCharcPcPiii.exit.i326.2
 
 _ZL10outputCharcPcPiii.exit.i326.2:               ; preds = %bb.gv, %_ZL10outputCharcPcPiii.exit.i326.1
-  %indvars.iv.next555.2 = add nsw i64 %6, 3       ; 2 uses
+  %indvars.iv.next555.2 = add nsw i64 %5, 4       ; 2 uses
   %i.clb = icmp slt i64 %indvars.iv.next555.2, %i.d
   br i1 %i.clb, label %bb.gw, label %_ZL10outputCharcPcPiii.exit.i326.3
 
@@ -617,7 +617,7 @@ bb.gw:                                            ; preds = %_ZL10outputCharcPcP
   br label %_ZL10outputCharcPcPiii.exit.i326.3
 
 _ZL10outputCharcPcPiii.exit.i326.3:               ; preds = %bb.gw, %_ZL10outputCharcPcPiii.exit.i326.2
-  %indvars.iv.next555.3 = add nsw i64 %6, 4       ; 2 uses
+  %indvars.iv.next555.3 = add nsw i64 %5, 5       ; 2 uses
   %i.clh = icmp slt i64 %indvars.iv.next555.3, %i.d
   br i1 %i.clh, label %bb.gx, label %_ZL10outputCharcPcPiii.exit.i326.4
 
@@ -631,7 +631,7 @@ bb.gx:                                            ; preds = %_ZL10outputCharcPcP
   br label %_ZL10outputCharcPcPiii.exit.i326.4
 
 _ZL10outputCharcPcPiii.exit.i326.4:               ; preds = %bb.gx, %_ZL10outputCharcPcPiii.exit.i326.3
-  %indvars.iv.next555.4 = add nsw i64 %6, 5       ; 2 uses
+  %indvars.iv.next555.4 = add nsw i64 %5, 6       ; 2 uses
   %i.cln = icmp slt i64 %indvars.iv.next555.4, %i.d
   br i1 %i.cln, label %bb.gy, label %_ZL10outputCharcPcPiii.exit.i326.5
 
@@ -645,7 +645,7 @@ bb.gy:                                            ; preds = %_ZL10outputCharcPcP
   br label %_ZL10outputCharcPcPiii.exit.i326.5
 
 _ZL10outputCharcPcPiii.exit.i326.5:               ; preds = %bb.gy, %_ZL10outputCharcPcPiii.exit.i326.4
-  %indvars.iv.next555.5 = add nsw i64 %6, 6       ; 2 uses
+  %indvars.iv.next555.5 = add nsw i64 %5, 7       ; 2 uses
   %i.clt = icmp slt i64 %indvars.iv.next555.5, %i.d
   br i1 %i.clt, label %bb.gz, label %_ZL10outputCharcPcPiii.exit.i326.6
 
@@ -659,7 +659,7 @@ bb.gz:                                            ; preds = %_ZL10outputCharcPcP
   br label %_ZL10outputCharcPcPiii.exit.i326.6
 
 _ZL10outputCharcPcPiii.exit.i326.6:               ; preds = %bb.gz, %_ZL10outputCharcPcPiii.exit.i326.5
-  %indvars.iv.next555.6 = add nsw i64 %6, 7       ; 2 uses
+  %indvars.iv.next555.6 = add nsw i64 %5, 8       ; 2 uses
   %i.clz = icmp slt i64 %indvars.iv.next555.6, %i.d
   br i1 %i.clz, label %bb.ha, label %_ZL10outputCharcPcPiii.exit.i326.7
 
@@ -672,7 +672,7 @@ bb.ha:                                            ; preds = %_ZL10outputCharcPcP
   br label %_ZL10outputCharcPcPiii.exit.i326.7
 
 _ZL10outputCharcPcPiii.exit.i326.7:               ; preds = %bb.ha, %_ZL10outputCharcPcPiii.exit.i326.6
-  %indvars.iv.next555.7 = add nsw i64 %6, 8       ; 3 uses
+  %indvars.iv.next555.7 = add nsw i64 %5, 9       ; 3 uses
   %i.cme = trunc nsw i64 %indvars.iv.next555.7 to i32 ; 10 uses
   %i.cmf = icmp eq i64 %indvars.iv.next555.7, 0
   br i1 %i.cmf, label %bb.hd, label %bb.hb

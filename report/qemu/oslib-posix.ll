@@ -203,7 +203,7 @@ bb.d:                                             ; preds = %bb.c
   %i.h = zext i32 %1 to i64
   br label %.lr.ph53.i
 
-.lr.ph53.i:                                       ; preds = %.lr.ph53.i.preheader, %bb.i
+.lr.ph53.i:                                       ; preds = %bb.i, %.lr.ph53.i.preheader
   %.03151.i = phi i32 [ %.334.i, %bb.i ], [ 0, %.lr.ph53.i.preheader ] ; 7 uses
   %.03550.i = phi ptr [ %i.y, %bb.i ], [ %i.g, %.lr.ph53.i.preheader ]
   %i.i = getelementptr inbounds nuw i8, ptr %.03550.i, i64 19 ; 2 uses
@@ -225,7 +225,7 @@ bb.e:                                             ; preds = %.lr.ph53.i
   %i.p = zext i32 %.03151.i to i64
   br label %.lr.ph.i
 
-.lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %bb.h
+.lr.ph.i:                                         ; preds = %bb.h, %.lr.ph.i.preheader
   %indvars.iv = phi i64 [ %i.p, %.lr.ph.i.preheader ], [ %indvars.iv.next, %bb.h ] ; 3 uses
   %i.q = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv
   %i.r = load i32, ptr %i.q, align 4              ; 2 uses

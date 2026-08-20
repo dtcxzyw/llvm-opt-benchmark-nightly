@@ -205,7 +205,7 @@ vector.ph:                                        ; preds = %.preheader.i.i
 vector.body:                                      ; preds = %vector.body.interim, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body.interim ] ; 2 uses
   %vec.ind = phi <16 x i64> [ <i64 0, i64 1, i64 2, i64 3, i64 4, i64 5, i64 6, i64 7, i64 8, i64 9, i64 10, i64 11, i64 12, i64 13, i64 14, i64 15>, %vector.ph ], [ %vec.ind.next, %vector.body.interim ] ; 2 uses
-  %i.cd = add <16 x i64> %vec.ind, %broadcast.splat
+  %i.cd = add nuw <16 x i64> %vec.ind, %broadcast.splat
   %i.ce = shl nuw <16 x i64> splat (i64 1), %i.cd
   %i.cf = and <16 x i64> %i.ce, %broadcast.splat109
   %.fr = freeze <16 x i64> %i.cf
@@ -235,7 +235,7 @@ vector.early.exit:                                ; preds = %vector.body
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %bb.r
   %.027.i.i = phi i64 [ %i.co, %bb.r ], [ %.027.i.i.ph, %scalar.ph.preheader ] ; 3 uses
-  %i.cl = add i64 %.027.i.i, %.02328.i.i
+  %i.cl = add nuw i64 %.027.i.i, %.02328.i.i
   %i.cm = shl nuw i64 1, %i.cl
   %i.cn = and i64 %i.cm, %i.bx
   %.not.i64.i = icmp eq i64 %i.cn, 0

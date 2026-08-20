@@ -203,7 +203,7 @@ _ZN2cv8ximgproc18EstimateCovariance20complexConjMulAndAddERSt7complexIfES4_S4_.e
 
 bb.v:                                             ; preds = %.lr.ph599, %._crit_edge595
   %indvars.iv679 = phi i64 [ 1, %.lr.ph599 ], [ %indvars.iv.next680, %._crit_edge595 ] ; 4 uses
-  %.2222597 = phi i32 [ %.1221.lcssa, %.lr.ph599 ], [ %.3223.lcssa, %._crit_edge595 ] ; 4 uses
+  %.2222597 = phi i32 [ %.1221.lcssa, %.lr.ph599 ], [ %.3223.lcssa, %._crit_edge595 ] ; 3 uses
   %i.lw = add nsw i64 %indvars.iv679, -1          ; 8 uses
   %i.lx = trunc nuw nsw i64 %indvars.iv679 to i32
   %i.ly = add i32 %i.ab, %i.lx                    ; 4 uses
@@ -467,7 +467,7 @@ _ZN2cv8ximgproc18EstimateCovariance20complexConjMulAndAddERSt7complexIfES4_S4_.e
   %i.rr = load i32, ptr %i.rq, align 4, !tbaa !25
   %i.rs = load i32, ptr %i.r, align 8, !tbaa !8
   %i.rt = add nsw i32 %i.rs, %i.rr
-  %i.ru = sext i32 %.2222597 to i64               ; 2 uses
+  %i.ru = sext i32 %.2222597 to i64               ; 3 uses
   %i.rv = getelementptr inbounds nuw [4 x i8], ptr %i.rp, i64 %i.ru
   store i32 %i.rt, ptr %i.rv, align 4, !tbaa !25
   %i.rw = load ptr, ptr %6, align 8, !tbaa !40    ; 2 uses
@@ -484,15 +484,14 @@ _ZN2cv8ximgproc18EstimateCovariance20complexConjMulAndAddERSt7complexIfES4_S4_.e
   %i.sc = sext i32 %i.ly to i64                   ; 4 uses
   %i.sd = sext i32 %i.ma to i64                   ; 4 uses
   %i.se = sext i32 %.3223589 to i64
-  %7 = sext i32 %.2222597 to i64
   br label %bb.ag
 
 bb.ag:                                            ; preds = %.lr.ph594, %_ZN2cv8ximgproc18EstimateCovariance14complexConjMulERSt7complexIfES4_S4_.exit370
-  %indvars.iv672.a = phi i64 [ 1, %.lr.ph594 ], [ %indvars.iv.next673.a, %_ZN2cv8ximgproc18EstimateCovariance14complexConjMulERSt7complexIfES4_S4_.exit370 ] ; 5 uses
-  %indvars.iv670.a = phi i64 [ %i.se, %.lr.ph594 ], [ %indvars.iv.next671, %_ZN2cv8ximgproc18EstimateCovariance14complexConjMulERSt7complexIfES4_S4_.exit370 ] ; 4 uses
-  %.3223.in590 = phi i64 [ %7, %.lr.ph594 ], [ %indvars.iv670.a, %_ZN2cv8ximgproc18EstimateCovariance14complexConjMulERSt7complexIfES4_S4_.exit370 ] ; 2 uses
-  %i.sf = add nsw i64 %indvars.iv672.a, -1        ; 7 uses
-  %i.sg = trunc nuw nsw i64 %indvars.iv672.a to i32
+  %indvars.iv672.a = phi i64 [ %i.ru, %.lr.ph594 ], [ %indvars.iv.next671, %_ZN2cv8ximgproc18EstimateCovariance14complexConjMulERSt7complexIfES4_S4_.exit370 ] ; 3 uses
+  %indvars.iv670.a = phi i64 [ 1, %.lr.ph594 ], [ %indvars.iv.next673, %_ZN2cv8ximgproc18EstimateCovariance14complexConjMulERSt7complexIfES4_S4_.exit370 ] ; 5 uses
+  %.3223.in590 = phi i64 [ %i.se, %.lr.ph594 ], [ %indvars.iv.next673.a, %_ZN2cv8ximgproc18EstimateCovariance14complexConjMulERSt7complexIfES4_S4_.exit370 ] ; 3 uses
+  %i.sf = add nsw i64 %indvars.iv670.a, -1        ; 7 uses
+  %i.sg = trunc nuw nsw i64 %indvars.iv670.a to i32
   %i.sh = add nsw i32 %i.y, %i.sg                 ; 3 uses
   %i.si = add nsw i64 %i.sf, %i.ff                ; 4 uses
   %i.sj = add nsw i32 %i.sh, %i.k                 ; 2 uses
@@ -881,7 +880,7 @@ _ZN2cv8ximgproc18EstimateCovariance14complexConjMulERSt7complexIfES4_S4_.exit370
   %.sroa.0450.0 = phi <2 x float> [ %.sroa.0.4.vec.insert.i.i345, %bb.ap ], [ %.sroa.0.4.vec.insert.i.i345, %_ZN2cv8ximgproc18EstimateCovariance14complexConjMulERSt7complexIfES4_S4_.exit359 ], [ %.sroa.0.4.vec.insert.i.i345, %bb.ao ], [ %.sroa.0.4.vec.insert.i.i389, %_ZN2cv8ximgproc18EstimateCovariance14complexConjMulERSt7complexIfES4_S4_.exit403 ], [ %.sroa.0.4.vec.insert.i.i389, %bb.ax ], [ %.sroa.0.4.vec.insert.i.i389, %bb.ay ]
   %.sroa.0447.0 = phi <2 x float> [ %.sroa.0.4.vec.insert.i.i356, %bb.ap ], [ %.sroa.0.4.vec.insert.i.i356, %_ZN2cv8ximgproc18EstimateCovariance14complexConjMulERSt7complexIfES4_S4_.exit359 ], [ %.sroa.0.4.vec.insert.i.i356, %bb.ao ], [ %.sroa.0.4.vec.insert.i.i400, %_ZN2cv8ximgproc18EstimateCovariance14complexConjMulERSt7complexIfES4_S4_.exit403 ], [ %.sroa.0.4.vec.insert.i.i400, %bb.ax ], [ %.sroa.0.4.vec.insert.i.i400, %bb.ay ]
   %i.zk = phi <2 x float> [ %i.vy, %bb.ap ], [ %i.vt, %_ZN2cv8ximgproc18EstimateCovariance14complexConjMulERSt7complexIfES4_S4_.exit359 ], [ %i.vt, %bb.ao ], [ %i.ze, %_ZN2cv8ximgproc18EstimateCovariance14complexConjMulERSt7complexIfES4_S4_.exit403 ], [ %i.ze, %bb.ax ], [ %i.zj, %bb.ay ]
-  %i.zl = add nsw i64 %indvars.iv672.a, %i.qu
+  %i.zl = add nsw i64 %indvars.iv670.a, %i.qu
   %i.zm = load i32, ptr %i.ek, align 4, !tbaa !52
   %i.zn = icmp slt i32 %i.zm, 2                   ; 4 uses
   %i.zo = load ptr, ptr %i.ej, align 8, !tbaa !60 ; 4 uses
@@ -897,7 +896,7 @@ _ZN2cv8ximgproc18EstimateCovariance14complexConjMulERSt7complexIfES4_S4_.exit370
   %i.zu = mul i64 %i.zp, %i.zt
   %.sink.idx.i419 = select i1 %i.zn, i64 0, i64 %i.zu
   %.sink.i420 = getelementptr inbounds nuw i8, ptr %i.zo, i64 %.sink.idx.i419
-  %i.zv = add nuw nsw i64 %indvars.iv672.a, %i.ra
+  %i.zv = add nuw nsw i64 %indvars.iv670.a, %i.ra
   %i.zw = mul i64 %i.zp, %i.zv
   %.sink.idx.i421 = select i1 %i.zn, i64 0, i64 %i.zw
   %.sink.i422 = getelementptr inbounds nuw i8, ptr %i.zo, i64 %.sink.idx.i421 ; 2 uses
@@ -916,24 +915,25 @@ _ZN2cv8ximgproc18EstimateCovariance14complexConjMulERSt7complexIfES4_S4_.exit370
   %i.aaj = fadd <2 x float> %i.aah, %i.aai
   store <2 x float> %i.aaj, ptr %.sink.i422, align 4
   %i.aak = load ptr, ptr %5, align 8, !tbaa !40   ; 2 uses
-  %i.aal = getelementptr inbounds nuw [4 x i8], ptr %i.aak, i64 %.3223.in590
+  %i.aal = getelementptr inbounds nuw [4 x i8], ptr %i.aak, i64 %indvars.iv672.a
   %i.aam = load i32, ptr %i.aal, align 4, !tbaa !25
   %i.aan = add nsw i32 %i.aam, 1
-  %i.aao = getelementptr inbounds nuw [4 x i8], ptr %i.aak, i64 %indvars.iv670.a
+  %i.aao = getelementptr inbounds nuw [4 x i8], ptr %i.aak, i64 %.3223.in590
   store i32 %i.aan, ptr %i.aao, align 4, !tbaa !25
   %i.aap = load ptr, ptr %6, align 8, !tbaa !40   ; 2 uses
-  %i.aaq = getelementptr inbounds nuw [4 x i8], ptr %i.aap, i64 %.3223.in590
+  %i.aaq = getelementptr inbounds nuw [4 x i8], ptr %i.aap, i64 %indvars.iv672.a
   %i.aar = load i32, ptr %i.aaq, align 4, !tbaa !25
   %i.aas = add nsw i32 %i.aar, 1
-  %i.aat = getelementptr inbounds nuw [4 x i8], ptr %i.aap, i64 %indvars.iv670.a
+  %i.aat = getelementptr inbounds nuw [4 x i8], ptr %i.aap, i64 %.3223.in590
   store i32 %i.aas, ptr %i.aat, align 4, !tbaa !25
-  %indvars.iv.next673.a = add nuw nsw i64 %indvars.iv672.a, 1 ; 2 uses
-  %indvars.iv.next671 = add nsw i64 %indvars.iv670.a, 1 ; 2 uses
-  %exitcond678.not = icmp eq i64 %indvars.iv.next673.a, %wide.trip.count677
+  %indvars.iv.next673 = add nuw nsw i64 %indvars.iv670.a, 1 ; 2 uses
+  %indvars.iv.next673.a = add nsw i64 %.3223.in590, 1 ; 2 uses
+  %indvars.iv.next671 = add nsw i64 %indvars.iv672.a, 1
+  %exitcond678.not = icmp eq i64 %indvars.iv.next673, %wide.trip.count677
   br i1 %exitcond678.not, label %._crit_edge595.loopexit, label %bb.ag, !llvm.loop !72
 
 ._crit_edge595.loopexit:                          ; preds = %_ZN2cv8ximgproc18EstimateCovariance14complexConjMulERSt7complexIfES4_S4_.exit370
-  %i.aau = trunc nsw i64 %indvars.iv.next671 to i32
+  %i.aau = trunc nsw i64 %indvars.iv.next673.a to i32
   br label %._crit_edge595
 
 ._crit_edge595:                                   ; preds = %._crit_edge595.loopexit, %.loopexit

@@ -201,10 +201,10 @@ bb.g:                                             ; preds = %._crit_edge91
 
 .lr.ph99:                                         ; preds = %bb.g, %bb.j
   %i.aj = phi ptr [ %.pre122, %bb.j ], [ %i.ad, %bb.g ]
-  %.05097 = phi i32 [ %i.be, %bb.j ], [ 0, %bb.g ] ; 5 uses
+  %.05097 = phi i32 [ %i.be, %bb.j ], [ 0, %bb.g ] ; 4 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 8
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !65
-  %i.am = sext i32 %.05097 to i64
+  %i.am = sext i32 %.05097 to i64                 ; 2 uses
   %i.an = getelementptr inbounds [4 x i8], ptr %i.al, i64 %i.am
   %i.ao = load i32, ptr %i.an, align 4, !tbaa !46
   %i.ap = call i32 @sws_test_colorspace(i32 noundef %i.ao, i32 noundef 0) #12
@@ -223,7 +223,6 @@ bb.h:                                             ; preds = %.lr.ph99
   %i.at = getelementptr inbounds nuw i8, ptr %.pre122, i64 8
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !65 ; 2 uses
   %i.av = sext i32 %i.ar to i64
-  %3 = sext i32 %.05097 to i64
   br label %bb.i
 
 ._crit_edge95:                                    ; preds = %bb.i, %bb.h
@@ -233,16 +232,17 @@ bb.h:                                             ; preds = %.lr.ph99
   br label %bb.j
 
 bb.i:                                             ; preds = %.lr.ph94, %bb.i
-  %indvars.iv.a = phi i64 [ %i.av, %.lr.ph94 ], [ %indvars.iv.next, %bb.i ] ; 3 uses
-  %.04992 = phi i64 [ %3, %.lr.ph94 ], [ %indvars.iv.a, %bb.i ]
-  %i.ax = getelementptr inbounds [4 x i8], ptr %i.au, i64 %indvars.iv.a
+  %indvars.iv.a = phi i64 [ %i.am, %.lr.ph94 ], [ %indvars.iv.next119, %bb.i ] ; 2 uses
+  %.04992 = phi i64 [ %i.av, %.lr.ph94 ], [ %indvars.iv.next, %bb.i ] ; 2 uses
+  %i.ax = getelementptr inbounds [4 x i8], ptr %i.au, i64 %.04992
   %i.ay = load i32, ptr %i.ax, align 4, !tbaa !46
-  %i.az = getelementptr inbounds [4 x i8], ptr %i.au, i64 %.04992
+  %i.az = getelementptr inbounds [4 x i8], ptr %i.au, i64 %indvars.iv.a
   store i32 %i.ay, ptr %i.az, align 4, !tbaa !46
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv.a, 1 ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %.04992, 1   ; 2 uses
   %i.ba = load i32, ptr %.pre122, align 8, !tbaa !60 ; 2 uses
   %i.bb = trunc nsw i64 %indvars.iv.next to i32
   %i.bc = icmp ugt i32 %i.ba, %i.bb
+  %indvars.iv.next119 = add nsw i64 %indvars.iv.a, 1
   br i1 %i.bc, label %bb.i, label %._crit_edge95, !llvm.loop !66
 
 bb.j:                                             ; preds = %.lr.ph99, %._crit_edge95
@@ -280,10 +280,10 @@ bb.n:                                             ; preds = %bb.l
 
 .lr.ph109:                                        ; preds = %bb.n, %bb.q
   %i.bq = phi ptr [ %.pre124, %bb.q ], [ %i.bo, %bb.n ]
-  %.048107 = phi i32 [ %i.cl, %bb.q ], [ 0, %bb.n ] ; 5 uses
+  %.048107 = phi i32 [ %i.cl, %bb.q ], [ 0, %bb.n ] ; 4 uses
   %i.br = getelementptr inbounds nuw i8, ptr %i.bq, i64 8
   %i.bs = load ptr, ptr %i.br, align 8, !tbaa !65
-  %i.bt = sext i32 %.048107 to i64
+  %i.bt = sext i32 %.048107 to i64                ; 2 uses
   %i.bu = getelementptr inbounds [4 x i8], ptr %i.bs, i64 %i.bt
   %i.bv = load i32, ptr %i.bu, align 4, !tbaa !46
   %i.bw = call i32 @sws_test_colorspace(i32 noundef %i.bv, i32 noundef 1) #12
@@ -302,7 +302,6 @@ bb.o:                                             ; preds = %.lr.ph109
   %i.ca = getelementptr inbounds nuw i8, ptr %.pre124, i64 8
   %i.cb = load ptr, ptr %i.ca, align 8, !tbaa !65 ; 2 uses
   %i.cc = sext i32 %i.by to i64
-  %4 = sext i32 %.048107 to i64
   br label %bb.p
 
 ._crit_edge104:                                   ; preds = %bb.p, %bb.o
@@ -312,16 +311,17 @@ bb.o:                                             ; preds = %.lr.ph109
   br label %bb.q
 
 bb.p:                                             ; preds = %.lr.ph103, %bb.p
-  %indvars.iv119 = phi i64 [ %i.cc, %.lr.ph103 ], [ %indvars.iv.next120, %bb.p ] ; 3 uses
-  %.0101 = phi i64 [ %4, %.lr.ph103 ], [ %indvars.iv119, %bb.p ]
-  %i.ce = getelementptr inbounds [4 x i8], ptr %i.cb, i64 %indvars.iv119
+  %indvars.iv119 = phi i64 [ %i.bt, %.lr.ph103 ], [ %indvars.iv.next126, %bb.p ] ; 2 uses
+  %.0101 = phi i64 [ %i.cc, %.lr.ph103 ], [ %indvars.iv.next120, %bb.p ] ; 2 uses
+  %i.ce = getelementptr inbounds [4 x i8], ptr %i.cb, i64 %.0101
   %i.cf = load i32, ptr %i.ce, align 4, !tbaa !46
-  %i.cg = getelementptr inbounds [4 x i8], ptr %i.cb, i64 %.0101
+  %i.cg = getelementptr inbounds [4 x i8], ptr %i.cb, i64 %indvars.iv119
   store i32 %i.cf, ptr %i.cg, align 4, !tbaa !46
-  %indvars.iv.next120 = add nuw nsw i64 %indvars.iv119, 1 ; 2 uses
+  %indvars.iv.next120 = add nuw nsw i64 %.0101, 1 ; 2 uses
   %i.ch = load i32, ptr %.pre124, align 8, !tbaa !60 ; 2 uses
   %i.ci = trunc nsw i64 %indvars.iv.next120 to i32
   %i.cj = icmp ugt i32 %i.ch, %i.ci
+  %indvars.iv.next126 = add nsw i64 %indvars.iv119, 1
   br i1 %i.cj, label %bb.p, label %._crit_edge104, !llvm.loop !68
 
 bb.q:                                             ; preds = %.lr.ph109, %._crit_edge104
