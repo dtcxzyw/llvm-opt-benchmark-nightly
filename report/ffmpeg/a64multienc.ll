@@ -204,10 +204,11 @@ bb.ar:                                            ; preds = %.loopexit.i
   %i.rm = icmp slt i32 %i.w, 1
   %i.rn = sext i32 %i.x to i64
   %i.ro = sext i32 %i.p to i64
-  %i.rp = zext i32 %i.w to i64                    ; 7 uses
+  %i.rp = zext i32 %i.w to i64                    ; 8 uses
   %brmerge = select i1 %i.rl, i1 true, i1 %i.rm
-  %wide.trip.count158 = zext i32 %spec.select to i64 ; 2 uses
-  %i.rq = mul nuw i64 %wide.trip.count158, %i.rp  ; 2 uses
+  %wide.trip.count158 = zext i32 %spec.select to i64 ; 3 uses
+  %4 = mul nuw i64 %wide.trip.count158, %i.rp
+  %i.rq = mul nuw i64 %wide.trip.count158, %i.rp
   %i.rr = shl i64 %i.rq, 2
   %i.rs = getelementptr i8, ptr %i.g, i64 %i.rr
   %min.iters.check = icmp ult i32 %i.w, 8
@@ -228,7 +229,7 @@ bb.ar:                                            ; preds = %.loopexit.i
   br i1 %brmerge, label %._crit_edge146.split, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %.preheader143
-  %scevgep = getelementptr i8, ptr %.2149, i64 %i.rq
+  %scevgep = getelementptr i8, ptr %.2149, i64 %4
   %bound0 = icmp ult ptr %.2149, %scevgep186
   %bound1 = icmp ult ptr %.0102150, %scevgep
   %found.conflict = and i1 %bound0, %bound1

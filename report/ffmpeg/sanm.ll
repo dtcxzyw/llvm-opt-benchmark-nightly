@@ -204,7 +204,7 @@ bb.n:                                             ; preds = %bb.m
   br label %interp_point.exit
 
 interp_point.exit:                                ; preds = %bb.m, %bb.n
-  %.sink20.in.i = phi i8 [ %i.ba, %bb.n ], [ %i.f, %bb.m ] ; 6 uses
+  %.sink20.in.i = phi i8 [ %i.ba, %bb.n ], [ %i.f, %bb.m ] ; 8 uses
   %.sink.in.i = phi i8 [ %i.az, %bb.n ], [ %i.i, %bb.m ] ; 7 uses
   switch i32 %.0.i102, label %.loopexit [
     i32 1, label %bb.o
@@ -320,30 +320,31 @@ bb.q:                                             ; preds = %interp_point.exit
   br i1 %i.bx, label %.lr.ph124, label %.loopexit
 
 .lr.ph124:                                        ; preds = %bb.q
-  %4 = zext nneg i8 %.sink20.in.i to i32          ; 2 uses
   %i.by = sext i8 %.sink.in.i to i32
   %i.bz = mul nsw i32 %3, %i.by
-  %5 = add nsw i32 %i.bz, %4
-  %i.ca = sext i32 %5 to i64
+  %4 = zext nneg i8 %.sink20.in.i to i64
+  %i.ca = sext i32 %i.bz to i64
+  %5 = add nsw i64 %4, %i.ca
   %i.cb = zext nneg i8 %.sink20.in.i to i64
-  %i.cc = sub nsw i64 %i.ca, %i.cb
+  %i.cc = sub nsw i64 %5, %i.cb
   %scevgep138 = getelementptr i8, ptr %.186130, i64 %i.cc
-  %6 = add nuw nsw i32 %4, 1
-  %i.cd = zext nneg i32 %6 to i64
+  %narrow = add nuw i8 %.sink20.in.i, 1
+  %i.cd = zext i8 %narrow to i64
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep138, i8 1, i64 %i.cd, i1 false), !tbaa !49
   br label %.loopexit
 
 bb.r:                                             ; preds = %interp_point.exit
-  %i.ce = sext i8 %.sink20.in.i to i32            ; 3 uses
+  %i.ce = sext i8 %.sink20.in.i to i32            ; 2 uses
   %i.cf = icmp sgt i32 %3, %i.ce
   br i1 %i.cf, label %.lr.ph, label %.loopexit
 
 .lr.ph:                                           ; preds = %bb.r
   %i.cg = sext i8 %.sink.in.i to i32
   %i.ch = mul nsw i32 %3, %i.cg
-  %7 = add nsw i32 %i.ch, %i.ce
-  %i.ci = sext i32 %7 to i64
-  %scevgep = getelementptr i8, ptr %.186130, i64 %i.ci
+  %6 = sext i8 %.sink20.in.i to i64
+  %i.ci = sext i32 %i.ch to i64
+  %7 = getelementptr i8, ptr %.186130, i64 %6
+  %scevgep = getelementptr i8, ptr %7, i64 %i.ci
   %i.cj = sub nsw i32 %i.b, %i.ce
   %i.ck = zext i32 %i.cj to i64
   %i.cl = add nuw nsw i64 %i.ck, 1

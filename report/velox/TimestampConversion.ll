@@ -203,14 +203,18 @@ _ZN8facebook5velox4util11isValidDateEiii.exit:    ; preds = %_ZN8facebook5velox4
   %i.q = icmp slt i32 %1, 1570
   %umin = zext i1 %i.q to i32                     ; 2 uses
   %i.r = add nsw i32 %1, %umin
-  %i.s = sub nsw i32 %i.p, %i.r
+  %i.s = sub nsw i32 %i.p, %i.r                   ; 2 uses
   %i.t = udiv i32 %i.s, 400
-  %i.u = add nuw nsw i32 %i.t, %umin              ; 2 uses
+  %i.u = add nuw nsw i32 %i.t, %umin
   %i.v = mul i32 %i.u, 400
   %i.w = add i32 %1, %i.v
   %i.x = add i32 %i.w, 400
-  %i.y = zext nneg i32 %i.u to i64
-  %.neg = mul nsw i64 %i.y, -146097
+  %8 = icmp slt i32 %1, 1570
+  %umin59 = zext i1 %8 to i64
+  %9 = udiv i32 %i.s, 400
+  %i.y = zext nneg i32 %9 to i64
+  %10 = add nuw nsw i64 %umin59, %i.y
+  %.neg = mul nsw i64 %10, -146097
   %i.z = add nsw i64 %.neg, -146097
   br label %.preheader
 

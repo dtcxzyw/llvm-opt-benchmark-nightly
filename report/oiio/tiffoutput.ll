@@ -204,13 +204,14 @@ bb.a:
   br i1 %brmerge, label %._crit_edge32.split, label %.preheader26.preheader
 
 .preheader26.preheader:                           ; preds = %.preheader26.lr.ph
-  %i.n = zext nneg i32 %i.j to i64                ; 13 uses
+  %i.n = zext nneg i32 %i.j to i64                ; 14 uses
   %i.o = zext nneg i32 %1 to i64                  ; 3 uses
-  %i.p = zext nneg i32 %2 to i64                  ; 4 uses
+  %i.p = zext nneg i32 %2 to i64                  ; 5 uses
   %i.q = add nsw i64 %i.p, -1
   %i.r = mul nsw i64 %i.q, %i.o
   %i.s = add i64 %i.r, 1
-  %i.t = mul nuw nsw i64 %i.p, %i.n               ; 2 uses
+  %5 = mul nuw nsw i64 %i.p, %i.n
+  %i.t = mul nuw nsw i64 %i.p, %i.n
   %i.u = getelementptr i8, ptr %3, i64 %i.t
   %min.iters.check = icmp ult i32 %i.j, 4
   %min.iters.check54 = icmp ult i32 %i.j, 32
@@ -226,12 +227,12 @@ bb.a:
 
 .preheader26:                                     ; preds = %.preheader26.preheader, %._crit_edge29
   %indvars.iv42 = phi i64 [ 0, %.preheader26.preheader ], [ %indvars.iv.next43, %._crit_edge29 ] ; 6 uses
-  %i.w = mul i64 %indvars.iv42, %i.n
-  %scevgep = getelementptr i8, ptr %4, i64 %i.w
+  %i.w = mul nuw nsw i64 %indvars.iv42, %i.n
+  %scevgep = getelementptr nuw i8, ptr %4, i64 %i.w
   %i.x = add i64 %i.s, %indvars.iv42
   %i.y = mul i64 %i.x, %i.n
   %scevgep51 = getelementptr i8, ptr %4, i64 %i.y
-  %i.z = mul i64 %i.t, %indvars.iv42              ; 2 uses
+  %i.z = mul i64 %5, %indvars.iv42                ; 2 uses
   %scevgep52 = getelementptr i8, ptr %3, i64 %i.z
   %scevgep53 = getelementptr i8, ptr %i.u, i64 %i.z
   %i.aa = mul nuw nsw i64 %indvars.iv42, %i.p
@@ -634,13 +635,14 @@ _ZNSt10unique_ptrIA_cSt14default_deleteIS0_EE5resetIPcvEEvT_.exit: ; preds = %bb
   br i1 %brmerge.i, label %_ZN11OpenImageIO4v3_110TIFFOutput18contig_to_separateEiiPKcPc.exit, label %.preheader26.preheader.i
 
 .preheader26.preheader.i:                         ; preds = %.preheader26.lr.ph.i
-  %i.cz = zext nneg i32 %i.cv to i64              ; 13 uses
+  %i.cz = zext nneg i32 %i.cv to i64              ; 14 uses
   %i.da = zext nneg i32 %i.co to i64              ; 3 uses
-  %i.db = zext nneg i32 %i.ch to i64              ; 4 uses
+  %i.db = zext nneg i32 %i.ch to i64              ; 5 uses
   %i.dc = add nsw i64 %i.db, -1
   %i.dd = mul nsw i64 %i.dc, %i.da
   %i.de = add i64 %i.dd, 1
-  %i.df = mul nuw nsw i64 %i.db, %i.cz            ; 2 uses
+  %12 = mul nuw nsw i64 %i.db, %i.cz
+  %i.df = mul nuw nsw i64 %i.db, %i.cz
   %i.dg = getelementptr i8, ptr %.142, i64 %i.df
   %min.iters.check = icmp ult i32 %i.cv, 4
   %min.iters.check121 = icmp ult i32 %i.cv, 32
@@ -656,12 +658,12 @@ _ZNSt10unique_ptrIA_cSt14default_deleteIS0_EE5resetIPcvEEvT_.exit: ; preds = %bb
 
 .preheader26.i:                                   ; preds = %._crit_edge29.i, %.preheader26.preheader.i
   %indvars.iv42.i = phi i64 [ 0, %.preheader26.preheader.i ], [ %indvars.iv.next43.i, %._crit_edge29.i ] ; 6 uses
-  %i.di = mul i64 %indvars.iv42.i, %i.cz
-  %scevgep = getelementptr i8, ptr %.031, i64 %i.di
+  %i.di = mul nuw nsw i64 %indvars.iv42.i, %i.cz
+  %scevgep = getelementptr nuw i8, ptr %.031, i64 %i.di
   %i.dj = add i64 %i.de, %indvars.iv42.i
   %i.dk = mul i64 %i.dj, %i.cz
   %scevgep118 = getelementptr i8, ptr %.031, i64 %i.dk
-  %i.dl = mul i64 %i.df, %indvars.iv42.i          ; 2 uses
+  %i.dl = mul i64 %12, %indvars.iv42.i            ; 2 uses
   %scevgep119 = getelementptr i8, ptr %.142, i64 %i.dl
   %scevgep120 = getelementptr i8, ptr %i.dg, i64 %i.dl
   %i.dm = mul nuw nsw i64 %indvars.iv42.i, %i.db
@@ -1064,13 +1066,14 @@ _ZNSt10unique_ptrIA_cSt14default_deleteIS0_EE5resetIPcvEEvT_.exit: ; preds = %bb
   br i1 %brmerge.i, label %_ZN11OpenImageIO4v3_110TIFFOutput18contig_to_separateEiiPKcPc.exit, label %.preheader26.preheader.i
 
 .preheader26.preheader.i:                         ; preds = %.preheader26.lr.ph.i
-  %i.ea = zext nneg i32 %i.dw to i64              ; 13 uses
+  %i.ea = zext nneg i32 %i.dw to i64              ; 14 uses
   %i.eb = and i64 %i.da, 2147483647               ; 3 uses
-  %i.ec = zext nneg i32 %i.di to i64              ; 4 uses
+  %i.ec = zext nneg i32 %i.di to i64              ; 5 uses
   %i.ed = add nsw i64 %i.ec, -1
   %i.ee = mul nsw i64 %i.ed, %i.eb
   %i.ef = add nsw i64 %i.ee, 1
-  %i.eg = mul nuw nsw i64 %i.ec, %i.ea            ; 2 uses
+  %15 = mul nuw nsw i64 %i.ec, %i.ea
+  %i.eg = mul nuw nsw i64 %i.ec, %i.ea
   %i.eh = getelementptr i8, ptr %.168, i64 %i.eg
   %min.iters.check = icmp ult i32 %i.dw, 4
   %min.iters.check153 = icmp ult i32 %i.dw, 32
@@ -1091,7 +1094,7 @@ _ZNSt10unique_ptrIA_cSt14default_deleteIS0_EE5resetIPcvEEvT_.exit: ; preds = %bb
   %i.ek = add i64 %i.ef, %indvars.iv42.i
   %i.el = mul i64 %i.ek, %i.ea
   %scevgep150 = getelementptr i8, ptr %.057, i64 %i.el
-  %i.em = mul i64 %i.eg, %indvars.iv42.i          ; 2 uses
+  %i.em = mul i64 %15, %indvars.iv42.i            ; 2 uses
   %scevgep151 = getelementptr i8, ptr %.168, i64 %i.em
   %scevgep152 = getelementptr i8, ptr %i.eh, i64 %i.em
   %i.en = mul nuw nsw i64 %indvars.iv42.i, %i.ec

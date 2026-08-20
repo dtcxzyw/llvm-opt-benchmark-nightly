@@ -203,12 +203,12 @@ bb.d:                                             ; preds = %bb.b
   %i.ce = getelementptr inbounds nuw i8, ptr %i.g, i64 248
   store i32 %i.cd, ptr %i.ce, align 8, !tbaa !36
   store i32 %i.cd, ptr %i.bz, align 4, !tbaa !36
-  %i.cf = load i32, ptr %i.m, align 4, !tbaa !40  ; 5 uses
+  %i.cf = load i32, ptr %i.m, align 4, !tbaa !40  ; 6 uses
   %i.cg = icmp sgt i32 %i.cf, 0
   br i1 %i.cg, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.d
-  %wide.trip.count = zext nneg i32 %i.cf to i64   ; 5 uses
+  %wide.trip.count = zext nneg i32 %i.cf to i64   ; 3 uses
   %min.iters.check = icmp ult i32 %i.cf, 8
   br i1 %min.iters.check, label %.lr.ph.preheader139, label %vector.ph
 
@@ -251,12 +251,13 @@ middle.block:                                     ; preds = %vector.body
   %.lcssa134 = phi i32 [ %i.cq, %middle.block ], [ %i.cz, %.lr.ph ]
   %i.cr = uitofp nsz i32 %.lcssa134 to double     ; 3 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %i.g, i64 272 ; 3 uses
-  %xtraiter = and i64 %wide.trip.count, 1
+  %wide.trip.count126 = zext nneg i32 %i.cf to i64 ; 2 uses
+  %xtraiter = and i64 %wide.trip.count126, 1
   %i.ct = icmp eq i32 %i.cf, 1
   br i1 %i.ct, label %.epil.preheader, label %.lr.ph111.new
 
 .lr.ph111.new:                                    ; preds = %.lr.ph111
-  %unroll_iter = and i64 %wide.trip.count, 2147483646
+  %unroll_iter = and i64 %wide.trip.count126, 2147483646
   br label %bb.e
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader139, %.lr.ph

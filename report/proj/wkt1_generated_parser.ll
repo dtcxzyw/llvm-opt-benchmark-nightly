@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %bb.a
   %i.c = sext i16 %i.b to i64
   %i.d = getelementptr inbounds [2 x i8], ptr @yypact, i64 %i.c
   %i.e = load i16, ptr %i.d, align 2, !tbaa !11   ; 4 uses
-  %i.f = sext i16 %i.e to i32                     ; 2 uses
+  %i.f = sext i16 %i.e to i32                     ; 3 uses
   %i.g = sext i32 %2 to i64
   %i.h = getelementptr inbounds [8 x i8], ptr @yytname, i64 %i.g
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !14   ; 4 uses
@@ -244,22 +244,25 @@ yytnamerr.exit:                                   ; preds = %.preheader31.split.
 
 bb.e:                                             ; preds = %yytnamerr.exit
   %i.r = icmp slt i16 %i.e, 0
-  %i.s = sub nsw i32 0, %i.f
-  %i.t = select i1 %i.r, i32 %i.s, i32 0          ; 2 uses
+  %i.s = sub nsw i32 0, %i.f                      ; 2 uses
+  %i.t = select i1 %i.r, i32 %i.s, i32 0
   %i.u = sub nsw i32 256, %i.f
   %i.v = tail call i32 @llvm.smin.i32(i32 %i.u, i32 37) ; 2 uses
   %i.w = icmp slt i32 %i.t, %i.v
   br i1 %i.w, label %.lr.ph.preheader, label %.thread10
 
 .lr.ph.preheader:                                 ; preds = %bb.e
-  %i.x = sext i32 %i.t to i64
+  %i.x = sext i32 %i.s to i64
+  %smax = tail call i32 @llvm.smax.i32(i32 %i.f, i32 0)
+  %3 = zext nneg i32 %smax to i64
+  %4 = add nsw i64 %i.x, %3
   %i.y = sext i16 %i.e to i64
   %i.z = sext i32 %i.v to i64
   %invariant.gep = getelementptr [2 x i8], ptr @yycheck, i64 %i.y
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.j
-  %indvars.iv = phi i64 [ %i.x, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.j ] ; 5 uses
+  %indvars.iv = phi i64 [ %4, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.j ] ; 5 uses
   %.07623 = phi i64 [ %.122.i, %.lr.ph.preheader ], [ %.278, %bb.j ] ; 3 uses
   %.08022 = phi i32 [ 1, %.lr.ph.preheader ], [ %.181, %bb.j ] ; 4 uses
   %gep = getelementptr [2 x i8], ptr %invariant.gep, i64 %indvars.iv
@@ -322,8 +325,8 @@ bb.j:                                             ; preds = %yytnamerr.exit120.t
   %.181 = phi i32 [ %i.ah, %yytnamerr.exit120 ], [ %.08022, %.lr.ph ], [ %i.ah, %yytnamerr.exit120.thread ] ; 8 uses
   %.278 = phi i64 [ %i.as, %yytnamerr.exit120 ], [ %.07623, %.lr.ph ], [ %i.ao, %yytnamerr.exit120.thread ] ; 7 uses
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
-  %3 = icmp slt i64 %indvars.iv.next, %i.z
-  br i1 %3, label %.lr.ph, label %._crit_edge
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.z
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph
 
 ._crit_edge:                                      ; preds = %bb.j
   switch i32 %.181, label %.thread10 [
@@ -475,6 +478,9 @@ declare i32 @llvm.smin.i32(i32, i32) #6
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i64 @strlen(ptr captures(none)) local_unnamed_addr #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #6
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

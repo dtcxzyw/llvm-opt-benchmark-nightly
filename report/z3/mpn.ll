@@ -203,7 +203,7 @@ _ZN7sbufferIjLj16EEC2EjRKj.exit89:                ; preds = %_ZN7sbufferIjLj16EE
 bb.i:                                             ; preds = %.critedge4, %_ZN7sbufferIjLj16EEC2EjRKj.exit89._crit_edge
   %i.ee = phi i32 [ %.pre, %_ZN7sbufferIjLj16EEC2EjRKj.exit89._crit_edge ], [ %i.gu, %.critedge4 ] ; 2 uses
   %.0 = phi i32 [ undef, %_ZN7sbufferIjLj16EEC2EjRKj.exit89._crit_edge ], [ %.1, %.critedge4 ]
-  %.035 = phi i32 [ 0, %_ZN7sbufferIjLj16EEC2EjRKj.exit89._crit_edge ], [ %i.gf, %.critedge4 ] ; 4 uses
+  %.035 = phi i32 [ 0, %_ZN7sbufferIjLj16EEC2EjRKj.exit89._crit_edge ], [ %i.gf, %.critedge4 ] ; 5 uses
   switch i32 %i.ee, label %..critedge2_crit_edge [
     i32 0, label %.critedge
     i32 1, label %bb.j
@@ -385,17 +385,24 @@ bb.q:                                             ; preds = %.lr.ph159
   %i.gv = zext i32 %.035 to i64
   %i.gw = getelementptr inbounds nuw i8, ptr %3, i64 %i.gv
   store i8 0, ptr %i.gw, align 1, !tbaa !86
-  %i.gx = add i32 %.035, -1                       ; 5 uses
+  %i.gx = add i32 %.035, -1                       ; 6 uses
   %i.gy = lshr i32 %i.gx, 1
   %i.gz = and i32 %i.gx, 1
-  %i.ha = add nuw i32 %i.gy, %i.gz                ; 4 uses
+  %i.ha = add nuw i32 %i.gy, %i.gz                ; 3 uses
   %.not124 = icmp eq i32 %i.ha, 0
   br i1 %.not124, label %._crit_edge, label %.lr.ph122.preheader
 
 .lr.ph122.preheader:                              ; preds = %.critedge
   %i.hb = zext i32 %i.ha to i64                   ; 2 uses
+  %8 = lshr i32 %i.gx, 1
+  %9 = zext nneg i32 %8 to i64
+  %10 = add nsw i64 %9, -1
+  %11 = and i32 %.035, 1
+  %12 = xor i32 %11, 1
+  %13 = zext nneg i32 %12 to i64
   %xtraiter205 = and i64 %i.hb, 1
-  %i.hc = icmp eq i32 %i.ha, 1
+  %14 = sub nsw i64 0, %13
+  %i.hc = icmp eq i64 %10, %14
   br i1 %i.hc, label %.lr.ph122.epil.preheader, label %.lr.ph122.preheader.new
 
 .lr.ph122.preheader.new:                          ; preds = %.lr.ph122.preheader

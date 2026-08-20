@@ -204,7 +204,7 @@ Py_DECREF.exit150:                                ; preds = %bb.g, %bb.f, %.thre
 ; Function Attrs: nounwind uwtable
 define internal ptr @nfd_nfkd(ptr nofree noundef readonly captures(address_is_null) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2) unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [20 x i32], align 16              ; 8 uses
+  %i.a = alloca [20 x i32], align 16              ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   %i.b = getelementptr i8, ptr %1, i64 16
   %.val183 = load i64, ptr %i.b, align 8, !tbaa !32 ; 7 uses
@@ -414,21 +414,20 @@ PyObject_TypeCheck.exit.thread.i:                 ; preds = %.thread230, %bb.t, 
   %i.bv = zext nneg i32 %i.bu to i64
   %i.bw = getelementptr [2 x i8], ptr @decomp_index2, i64 %i.bv
   %i.bx = load i16, ptr %i.bw, align 2, !tbaa !35 ; 2 uses
-  %3 = zext i16 %i.bx to i32
+  %3 = zext i16 %i.bx to i64
   %i.by = zext i16 %i.bx to i64
   br label %get_decomp_record.exit
 
 get_decomp_record.exit:                           ; preds = %bb.t, %.thread230, %PyObject_TypeCheck.exit.thread, %PyObject_TypeCheck.exit.thread.i
-  %.0222 = phi i32 [ 0, %.thread230 ], [ %3, %PyObject_TypeCheck.exit.thread.i ], [ 0, %PyObject_TypeCheck.exit.thread ], [ 0, %bb.t ] ; 5 uses
-  %i.bz = phi i64 [ 0, %.thread230 ], [ %i.by, %PyObject_TypeCheck.exit.thread.i ], [ 0, %PyObject_TypeCheck.exit.thread ], [ 0, %bb.t ]
+  %.0222 = phi i64 [ 0, %.thread230 ], [ %i.by, %PyObject_TypeCheck.exit.thread.i ], [ 0, %PyObject_TypeCheck.exit.thread ], [ 0, %bb.t ] ; 2 uses
+  %i.bz = phi i64 [ 0, %.thread230 ], [ %3, %PyObject_TypeCheck.exit.thread.i ], [ 0, %PyObject_TypeCheck.exit.thread ], [ 0, %bb.t ]
   %i.ca = getelementptr [4 x i8], ptr @decomp_data, i64 %i.bz
   %i.cb = load i32, ptr %i.ca, align 4, !tbaa !6  ; 3 uses
   %.not176 = icmp ult i32 %i.cb, 256
   br i1 %.not176, label %bb.v, label %bb.u
 
 bb.u:                                             ; preds = %get_decomp_record.exit
-  %4 = zext nneg i32 %.0222 to i64
-  %i.cc = getelementptr [4 x i8], ptr @decomp_data, i64 %4
+  %i.cc = getelementptr [4 x i8], ptr @decomp_data, i64 %.0222
   %i.cd = load i32, ptr %i.cc, align 4, !tbaa !6
   %i.ce = and i32 %i.cd, 255
   %i.cf = icmp eq i32 %i.ce, 0
@@ -436,9 +435,10 @@ bb.u:                                             ; preds = %get_decomp_record.e
   br i1 %or.cond4, label %.preheader.preheader, label %bb.v
 
 .preheader.preheader:                             ; preds = %bb.u
-  %i.cg = lshr i32 %i.cb, 8                       ; 2 uses
-  %i.ch = zext nneg i32 %i.cg to i64              ; 6 uses
-  %min.iters.check = icmp ult i32 %i.cb, 2048
+  %i.cg = lshr i32 %i.cb, 8
+  %i.ch = zext nneg i32 %i.cg to i64              ; 7 uses
+  %invariant.gep = getelementptr [4 x i8], ptr @decomp_data, i64 %.0222 ; 6 uses
+  %min.iters.check = icmp ult i32 %i.cb, 3072
   br i1 %min.iters.check, label %.preheader.preheader329, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.preheader.preheader
@@ -459,20 +459,17 @@ vector.ph:                                        ; preds = %vector.scevcheck
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %5 = trunc i64 %index to i32
-  %6 = add i32 %i.ae, %5
+  %4 = sub i64 %i.ch, %index
   %i.cr = trunc i64 %index to i32
-  %7 = sub i32 %i.cg, %i.cr
-  %i.cs = add i32 %.0222, %7
-  %8 = sext i32 %i.cs to i64
-  %i.ct = getelementptr [4 x i8], ptr @decomp_data, i64 %8 ; 2 uses
+  %i.cs = add i32 %i.ae, %i.cr
+  %i.ct = getelementptr [4 x i8], ptr %invariant.gep, i64 %4 ; 2 uses
   %i.cu = getelementptr i8, ptr %i.ct, i64 -12
   %i.cv = getelementptr i8, ptr %i.ct, i64 -28
   %wide.load = load <4 x i32>, ptr %i.cu, align 4, !tbaa !6
   %wide.load326 = load <4 x i32>, ptr %i.cv, align 4, !tbaa !6
   %reverse = shufflevector <4 x i32> %wide.load, <4 x i32> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
   %reverse327 = shufflevector <4 x i32> %wide.load326, <4 x i32> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
-  %i.cw = sext i32 %6 to i64
+  %i.cw = sext i32 %i.cs to i64
   %i.cx = getelementptr [4 x i8], ptr %i.a, i64 %i.cw ; 2 uses
   %i.cy = getelementptr i8, ptr %i.cx, i64 16
   store <4 x i32> %reverse, ptr %i.cx, align 4, !tbaa !6
@@ -486,67 +483,75 @@ middle.block:                                     ; preds = %vector.body
   br i1 %cmp.n, label %.loopexit281, label %.preheader.preheader329
 
 .preheader.preheader329:                          ; preds = %vector.scevcheck, %.preheader.preheader, %middle.block
-  %indvars.iv.ph = phi i64 [ %i.ch, %vector.scevcheck ], [ %i.ch, %.preheader.preheader ], [ %i.co, %middle.block ] ; 5 uses
-  %.4290.ph = phi i32 [ %i.ae, %vector.scevcheck ], [ %i.ae, %.preheader.preheader ], [ %i.cq, %middle.block ] ; 3 uses
-  %xtraiter = and i64 %indvars.iv.ph, 1
+  %indvars.iv.ph = phi i64 [ %i.ch, %vector.scevcheck ], [ %i.ch, %.preheader.preheader ], [ %i.co, %middle.block ] ; 4 uses
+  %.4290.ph = phi i32 [ %i.ae, %vector.scevcheck ], [ %i.ae, %.preheader.preheader ], [ %i.cq, %middle.block ] ; 2 uses
+  %5 = add nsw i64 %indvars.iv.ph, -1
+  %xtraiter = and i64 %indvars.iv.ph, 3           ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.preheader.prol.loopexit, label %.preheader.prol
 
-.preheader.prol:                                  ; preds = %.preheader.preheader329
-  %indvars.iv.next.prol = add nsw i64 %indvars.iv.ph, -1
-  %9 = trunc nuw nsw i64 %indvars.iv.ph to i32
-  %10 = add nuw nsw i32 %.0222, %9
-  %11 = zext nneg i32 %10 to i64
-  %i.da = getelementptr [4 x i8], ptr @decomp_data, i64 %11
+.preheader.prol:                                  ; preds = %.preheader.preheader329, %.preheader.prol
+  %indvars.iv.prol = phi i64 [ %indvars.iv.next.prol, %.preheader.prol ], [ %indvars.iv.ph, %.preheader.preheader329 ] ; 2 uses
+  %.4290.prol = phi i32 [ %i.dc, %.preheader.prol ], [ %.4290.ph, %.preheader.preheader329 ] ; 2 uses
+  %prol.iter = phi i64 [ %prol.iter.next, %.preheader.prol ], [ 0, %.preheader.preheader329 ]
+  %indvars.iv.next.prol = add nsw i64 %indvars.iv.prol, -1 ; 2 uses
+  %i.da = getelementptr [4 x i8], ptr %invariant.gep, i64 %indvars.iv.prol
   %i.db = load i32, ptr %i.da, align 4, !tbaa !6
-  %i.dc = add i32 %.4290.ph, 1                    ; 2 uses
-  %i.dd = sext i32 %.4290.ph to i64
+  %i.dc = add i32 %.4290.prol, 1                  ; 3 uses
+  %i.dd = sext i32 %.4290.prol to i64
   %i.de = getelementptr [4 x i8], ptr %i.a, i64 %i.dd
   store i32 %i.db, ptr %i.de, align 4, !tbaa !6
-  br label %.preheader.prol.loopexit
+  %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
+  %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
+  br i1 %prol.iter.cmp.not, label %.preheader.prol.loopexit, label %.preheader.prol, !llvm.loop !108
 
 .preheader.prol.loopexit:                         ; preds = %.preheader.prol, %.preheader.preheader329
   %.lcssa.unr = phi i32 [ poison, %.preheader.preheader329 ], [ %i.dc, %.preheader.prol ]
   %indvars.iv.unr = phi i64 [ %indvars.iv.ph, %.preheader.preheader329 ], [ %indvars.iv.next.prol, %.preheader.prol ]
   %.4290.unr = phi i32 [ %.4290.ph, %.preheader.preheader329 ], [ %i.dc, %.preheader.prol ]
-  %12 = icmp eq i64 %indvars.iv.ph, 1
-  br i1 %12, label %.loopexit281, label %.preheader.preheader329.new
-
-.preheader.preheader329.new:                      ; preds = %.preheader.prol.loopexit
-  %invariant.op = add i32 -1, %.0222
-  br label %.preheader
+  %6 = icmp ult i64 %5, 3
+  br i1 %6, label %.loopexit281, label %.preheader
 
 bb.v:                                             ; preds = %bb.u, %get_decomp_record.exit
   %i.df = add i64 %.1137292, 1
   %i.dg = getelementptr [4 x i8], ptr %.3146, i64 %.1137292
   store i32 %i.ah, ptr %i.dg, align 4, !tbaa !6
   %i.dh = add nsw i64 %.3129, -1
-  br label %.loopexit281, !llvm.loop !108
+  br label %.loopexit281, !llvm.loop !109
 
-.preheader:                                       ; preds = %.preheader, %.preheader.preheader329.new
-  %indvars.iv = phi i64 [ %indvars.iv.unr, %.preheader.preheader329.new ], [ %indvars.iv.next.1, %.preheader ] ; 3 uses
-  %.4290 = phi i32 [ %.4290.unr, %.preheader.preheader329.new ], [ %i.ds, %.preheader ] ; 3 uses
-  %13 = trunc nsw i64 %indvars.iv to i32
-  %i.di = add i32 %.0222, %13
-  %i.dj = sext i32 %i.di to i64
-  %i.dk = getelementptr [4 x i8], ptr @decomp_data, i64 %i.dj
-  %i.dl = load i32, ptr %i.dk, align 4, !tbaa !6
-  %i.dm = add i32 %.4290, 1
-  %i.dn = sext i32 %.4290 to i64
+.preheader:                                       ; preds = %.preheader.prol.loopexit, %.preheader
+  %indvars.iv = phi i64 [ %indvars.iv.next.3, %.preheader ], [ %indvars.iv.unr, %.preheader.prol.loopexit ] ; 5 uses
+  %.4290 = phi i32 [ %i.ds, %.preheader ], [ %.4290.unr, %.preheader.prol.loopexit ] ; 5 uses
+  %gep = getelementptr [4 x i8], ptr %invariant.gep, i64 %indvars.iv
+  %7 = load i32, ptr %gep, align 4, !tbaa !6
+  %i.di = add i32 %.4290, 1
+  %i.dj = sext i32 %.4290 to i64
+  %8 = getelementptr [4 x i8], ptr %i.a, i64 %i.dj
+  store i32 %7, ptr %8, align 4, !tbaa !6
+  %i.dk = getelementptr [4 x i8], ptr %invariant.gep, i64 %indvars.iv
+  %gep.1 = getelementptr i8, ptr %i.dk, i64 -4
+  %i.dl = load i32, ptr %gep.1, align 4, !tbaa !6
+  %i.dm = add i32 %.4290, 2
+  %i.dn = sext i32 %i.di to i64
   %i.do = getelementptr [4 x i8], ptr %i.a, i64 %i.dn
   store i32 %i.dl, ptr %i.do, align 4, !tbaa !6
-  %indvars.iv.next.1 = add nsw i64 %indvars.iv, -2 ; 2 uses
-  %14 = trunc i64 %indvars.iv to i32
-  %.reass = add i32 %14, %invariant.op
-  %i.dp = sext i32 %.reass to i64
-  %i.dq = getelementptr [4 x i8], ptr @decomp_data, i64 %i.dp
-  %i.dr = load i32, ptr %i.dq, align 4, !tbaa !6
-  %i.ds = add i32 %.4290, 2                       ; 2 uses
-  %i.dt = sext i32 %i.dm to i64
+  %9 = getelementptr [4 x i8], ptr %invariant.gep, i64 %indvars.iv
+  %gep.2 = getelementptr i8, ptr %9, i64 -8
+  %10 = load i32, ptr %gep.2, align 4, !tbaa !6
+  %.reass = add i32 %.4290, 3
+  %i.dp = sext i32 %i.dm to i64
+  %11 = getelementptr [4 x i8], ptr %i.a, i64 %i.dp
+  store i32 %10, ptr %11, align 4, !tbaa !6
+  %indvars.iv.next.3 = add nsw i64 %indvars.iv, -4 ; 2 uses
+  %i.dq = getelementptr [4 x i8], ptr %invariant.gep, i64 %indvars.iv
+  %gep.3 = getelementptr i8, ptr %i.dq, i64 -12
+  %i.dr = load i32, ptr %gep.3, align 4, !tbaa !6
+  %i.ds = add i32 %.4290, 4                       ; 2 uses
+  %i.dt = sext i32 %.reass to i64
   %i.du = getelementptr [4 x i8], ptr %i.a, i64 %i.dt
   store i32 %i.dr, ptr %i.du, align 4, !tbaa !6
-  %i.dv = icmp eq i64 %indvars.iv.next.1, 0
-  br i1 %i.dv, label %.loopexit281, label %.preheader, !llvm.loop !109
+  %i.dv = icmp eq i64 %indvars.iv.next.3, 0
+  br i1 %i.dv, label %.loopexit281, label %.preheader, !llvm.loop !110
 
 .loopexit281:                                     ; preds = %.preheader.prol.loopexit, %.preheader, %middle.block, %bb.r, %bb.m, %bb.n, %bb.v
   %.3139 = phi i64 [ %i.az, %bb.n ], [ %i.ar, %bb.m ], [ %i.df, %bb.v ], [ %.1137292, %bb.r ], [ %.1137292, %middle.block ], [ %.1137292, %.preheader ], [ %.1137292, %.preheader.prol.loopexit ] ; 3 uses
@@ -833,7 +838,7 @@ bb.al:                                            ; preds = %_getrecord_ex.exit2
   %.1121 = phi i8 [ %i.il, %_getrecord_ex.exit216 ], [ %i.fy, %_getrecord_ex.exit203 ]
   %i.im = add nuw nsw i64 %.1142303, 1            ; 2 uses
   %i.in = icmp slt i64 %i.im, %.val182
-  br i1 %i.in, label %.lr.ph306, label %.loopexit, !llvm.loop !110
+  br i1 %i.in, label %.lr.ph306, label %.loopexit, !llvm.loop !111
 
 .loopexit.sink.split:                             ; preds = %bb.b, %bb.a, %.thread232
   %i.io = tail call ptr @PyErr_NoMemory() #10     ; 0 uses
@@ -911,7 +916,7 @@ bb.i:                                             ; preds = %bb.e
 
 bb.j:                                             ; preds = %bb.i
   %i.r = getelementptr i8, ptr %i.p, i64 16
-  store ptr @.str.555, ptr %i.r, align 8, !tbaa !111
+  store ptr @.str.555, ptr %i.r, align 8, !tbaa !112
   %i.s = getelementptr i8, ptr %i.p, i64 24
   store ptr @get_change_3_2_0, ptr %i.s, align 8, !tbaa !52
   %i.t = getelementptr i8, ptr %i.p, i64 32
@@ -949,9 +954,9 @@ bb.n:                                             ; preds = %bb.m
   br label %unicodedata_create_capi.exit
 
 bb.o:                                             ; preds = %bb.m
-  store ptr @capi_getucname, ptr %i.z, align 8, !tbaa !112
+  store ptr @capi_getucname, ptr %i.z, align 8, !tbaa !113
   %i.ac = getelementptr i8, ptr %i.z, i64 8
-  store ptr @capi_getcode, ptr %i.ac, align 8, !tbaa !114
+  store ptr @capi_getcode, ptr %i.ac, align 8, !tbaa !115
   %i.ad = tail call ptr @PyCapsule_New(ptr noundef nonnull %i.z, ptr noundef nonnull @.str.576, ptr noundef nonnull @unicodedata_destroy_capi) #10 ; 2 uses
   %i.ae = icmp eq ptr %i.ad, null
   br i1 %i.ae, label %bb.p, label %unicodedata_create_capi.exit
@@ -1046,7 +1051,7 @@ bb.a:
   %.val = load ptr, ptr %i.a, align 8, !tbaa !23  ; 4 uses
   tail call void @PyObject_GC_UnTrack(ptr noundef %0) #10
   %i.b = getelementptr i8, ptr %0, i64 16
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !115  ; 3 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !116  ; 3 uses
   %i.d = load i32, ptr %i.c, align 8, !tbaa !22   ; 2 uses
   %.not.i6 = icmp sgt i32 %i.d, -1
   br i1 %.not.i6, label %bb.b, label %Py_DECREF.exit7
@@ -1063,7 +1068,7 @@ bb.c:                                             ; preds = %bb.b
 
 Py_DECREF.exit7:                                  ; preds = %bb.a, %bb.b, %bb.c
   %i.g = getelementptr i8, ptr %.val, i64 320
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !117
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !118
   tail call void %i.h(ptr noundef nonnull %0) #10
   %i.i = load i32, ptr %.val, align 8, !tbaa !22  ; 2 uses
   %.not.i = icmp sgt i32 %i.i, -1
@@ -1087,7 +1092,7 @@ Py_DECREF.exit:                                   ; preds = %Py_DECREF.exit7, %b
 define internal i32 @Segment_traverse(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2) #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 16
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !115  ; 2 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !116  ; 2 uses
   %.not = icmp eq ptr %i.b, null
   br i1 %.not, label %bb.c, label %bb.b
 
@@ -1108,11 +1113,11 @@ bb.d:                                             ; preds = %bb.b, %bb.c
 define internal ptr @Segment_str(ptr nofree noundef readonly captures(none) %0) #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 16
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !115
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !116
   %i.c = getelementptr i8, ptr %0, i64 24
-  %i.d = load i64, ptr %i.c, align 8, !tbaa !118
+  %i.d = load i64, ptr %i.c, align 8, !tbaa !119
   %i.e = getelementptr i8, ptr %0, i64 32
-  %i.f = load i64, ptr %i.e, align 8, !tbaa !119
+  %i.f = load i64, ptr %i.e, align 8, !tbaa !120
   %i.g = tail call ptr @PyUnicode_Substring(ptr noundef %i.b, i64 noundef %i.d, i64 noundef %i.f) #10
   ret ptr %i.g
 }
@@ -1121,9 +1126,9 @@ bb.a:
 define internal ptr @Segment_repr(ptr nofree noundef readonly captures(none) %0) #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 24
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !118
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !119
   %i.c = getelementptr i8, ptr %0, i64 32
-  %i.d = load i64, ptr %i.c, align 8, !tbaa !119
+  %i.d = load i64, ptr %i.c, align 8, !tbaa !120
   %i.e = tail call ptr (ptr, ...) @PyUnicode_FromFormat(ptr noundef nonnull @.str.561, i64 noundef %i.b, i64 noundef %i.d) #10
   ret ptr %i.e
 }
@@ -1141,7 +1146,7 @@ bb.a:
   %.val = load ptr, ptr %i.a, align 8, !tbaa !23  ; 4 uses
   tail call void @PyObject_GC_UnTrack(ptr noundef %0) #10
   %i.b = getelementptr i8, ptr %0, i64 16
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !120  ; 3 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !121  ; 3 uses
   %i.d = load i32, ptr %i.c, align 8, !tbaa !22   ; 2 uses
   %.not.i6 = icmp sgt i32 %i.d, -1
   br i1 %.not.i6, label %bb.b, label %Py_DECREF.exit7
@@ -1158,7 +1163,7 @@ bb.c:                                             ; preds = %bb.b
 
 Py_DECREF.exit7:                                  ; preds = %bb.a, %bb.b, %bb.c
   %i.g = getelementptr i8, ptr %.val, i64 320
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !117
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !118
   tail call void %i.h(ptr noundef nonnull %0) #10
   %i.i = load i32, ptr %.val, align 8, !tbaa !22  ; 2 uses
   %.not.i = icmp sgt i32 %i.i, -1
@@ -1185,7 +1190,7 @@ define internal ptr @GBI_iternext(ptr nofree noundef captures(none) %0) #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 16         ; 2 uses
   %i.b = getelementptr i8, ptr %0, i64 24         ; 3 uses
-  %i.c = load i64, ptr %i.b, align 8, !tbaa !122  ; 3 uses
+  %i.c = load i64, ptr %i.b, align 8, !tbaa !123  ; 3 uses
   %i.d = getelementptr i8, ptr %0, i64 40
   %i.e = load i64, ptr %i.d, align 8, !tbaa !51   ; 4 uses
   %.not.i = icmp slt i64 %i.c, %i.e
@@ -1225,10 +1230,10 @@ _PyUnicode_DATA.exit.i:                           ; preds = %bb.d, %bb.c
   %i.q = getelementptr i8, ptr %0, i64 60         ; 2 uses
   %i.r = getelementptr i8, ptr %0, i64 56         ; 2 uses
   %i.s = getelementptr i8, ptr %0, i64 48         ; 2 uses
-  %.promoted70.i = load i32, ptr %i.p, align 4, !tbaa !123
-  %.promoted71.i = load i8, ptr %i.q, align 4, !tbaa !124
-  %.promoted72.i = load i32, ptr %i.r, align 8, !tbaa !125
-  %.promoted73.i = load i32, ptr %i.s, align 8, !tbaa !126
+  %.promoted70.i = load i32, ptr %i.p, align 4, !tbaa !124
+  %.promoted71.i = load i8, ptr %i.q, align 4, !tbaa !125
+  %.promoted72.i = load i32, ptr %i.r, align 8, !tbaa !126
+  %.promoted73.i = load i32, ptr %i.s, align 8, !tbaa !127
   %i.t = trunc nuw i8 %.promoted71.i to i1
   br label %bb.e
 
@@ -1307,12 +1312,12 @@ bb.j:                                             ; preds = %bb.i
 
 update_ext_pict_state.exit.i:                     ; preds = %bb.j, %bb.i, %bb.h
   %.0.i45.i = phi i32 [ %i.ba, %bb.h ], [ %switch.select10.i.i, %bb.j ], [ 0, %bb.i ] ; 3 uses
-  store i32 %.0.i45.i, ptr %i.p, align 4, !tbaa !123
+  store i32 %.0.i45.i, ptr %i.p, align 4, !tbaa !124
   %i.bc = icmp eq i64 %.0.i44.i, 392              ; 2 uses
   %i.bd = xor i1 %i.w, true
   %.0.i46.i = and i1 %i.bc, %i.bd                 ; 2 uses
   %i.be = zext i1 %.0.i46.i to i8
-  store i8 %i.be, ptr %i.q, align 4, !tbaa !124
+  store i8 %i.be, ptr %i.q, align 4, !tbaa !125
   %i.bf = getelementptr i8, ptr %i.at, i64 7
   %i.bg = load i8, ptr %i.bf, align 1, !tbaa !45  ; 2 uses
   %i.bh = icmp eq i8 %i.bg, 2
@@ -1343,8 +1348,8 @@ bb.o:                                             ; preds = %bb.m, %bb.l
 
 update_incb_state.exit.i:                         ; preds = %bb.o, %bb.n, %bb.m, %bb.k
   %.0.i48.i = phi i32 [ %i.bj, %bb.k ], [ %i.bl, %bb.n ], [ 0, %bb.o ], [ 2, %bb.m ] ; 3 uses
-  store i32 %.0.i48.i, ptr %i.r, align 8, !tbaa !125
-  store i32 %i.aw, ptr %i.s, align 8, !tbaa !126
+  store i32 %.0.i48.i, ptr %i.r, align 8, !tbaa !126
+  store i32 %i.aw, ptr %i.s, align 8, !tbaa !127
   %.not42.i = icmp eq i64 %storemerge6869.i, %i.c
   br i1 %.not42.i, label %grapheme_break.exit.thread.i, label %bb.p
 
@@ -1421,7 +1426,7 @@ grapheme_break.exit.thread.i:                     ; preds = %grapheme_break.exit
   %storemerge.i = add i64 %storemerge6869.i, 1    ; 3 uses
   store i64 %storemerge.i, ptr %i.n, align 8, !tbaa !49
   %exitcond.not.i = icmp eq i64 %storemerge.i, %i.e
-  br i1 %exitcond.not.i, label %._crit_edge.i, label %bb.e, !llvm.loop !127
+  br i1 %exitcond.not.i, label %._crit_edge.i, label %bb.e, !llvm.loop !128
 
 ._crit_edge.i:                                    ; preds = %grapheme_break.exit.thread.i, %_PyUnicode_DATA.exit.i
   %.lcssa.i = phi i64 [ %.promoted.i, %_PyUnicode_DATA.exit.i ], [ %i.e, %grapheme_break.exit.thread.i ] ; 2 uses
@@ -1445,7 +1450,7 @@ bb.v:                                             ; preds = %_Py_NextGraphemeBre
   br i1 %.not, label %_Py_NextGraphemeBreak.exit.thread, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
-  %i.cm = load ptr, ptr %i.a, align 8, !tbaa !120 ; 3 uses
+  %i.cm = load ptr, ptr %i.a, align 8, !tbaa !121 ; 3 uses
   %i.cn = load i32, ptr %i.cm, align 8, !tbaa !22 ; 2 uses
   %i.co = icmp ugt i32 %i.cn, -1073741825
   br i1 %i.co, label %_Py_NewRef.exit, label %bb.x
@@ -1457,11 +1462,11 @@ bb.x:                                             ; preds = %bb.w
 
 _Py_NewRef.exit:                                  ; preds = %bb.w, %bb.x
   %i.cq = getelementptr i8, ptr %i.cl, i64 16
-  store ptr %i.cm, ptr %i.cq, align 8, !tbaa !115
+  store ptr %i.cm, ptr %i.cq, align 8, !tbaa !116
   %i.cr = getelementptr i8, ptr %i.cl, i64 24
-  store i64 %i.c, ptr %i.cr, align 8, !tbaa !118
+  store i64 %i.c, ptr %i.cr, align 8, !tbaa !119
   %i.cs = getelementptr i8, ptr %i.cl, i64 32
-  store i64 %.3.i, ptr %i.cs, align 8, !tbaa !119
+  store i64 %.3.i, ptr %i.cs, align 8, !tbaa !120
   tail call void @PyObject_GC_Track(ptr noundef nonnull %i.cl) #10
   br label %_Py_NextGraphemeBreak.exit.thread
 
@@ -1474,7 +1479,7 @@ _Py_NextGraphemeBreak.exit.thread:                ; preds = %bb.a, %_Py_NewRef.e
 define internal i32 @GBI_traverse(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2) #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 16
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !120  ; 2 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !121  ; 2 uses
   %.not = icmp eq ptr %i.b, null
   br i1 %.not, label %bb.c, label %bb.b
 
@@ -1707,24 +1712,25 @@ attributes #11 = { nounwind willreturn memory(read) }
 !105 = !{!53, !14, i64 32}
 !106 = distinct !{null}
 !107 = distinct !{!107, !42, !85, !86}
-!108 = distinct !{!108, !42}
-!109 = distinct !{!109, !42, !85}
-!110 = distinct !{!110, !42}
-!111 = !{!53, !27, i64 16}
-!112 = !{!113, !14, i64 0}
-!113 = !{!"", !14, i64 0, !14, i64 8}
-!114 = !{!113, !14, i64 8}
-!115 = !{!116, !15, i64 16}
-!116 = !{!"", !12, i64 0, !15, i64 16, !17, i64 24, !17, i64 32}
-!117 = !{!25, !14, i64 320}
-!118 = !{!116, !17, i64 24}
-!119 = !{!116, !17, i64 32}
-!120 = !{!121, !15, i64 16}
-!121 = !{!"", !12, i64 0, !48, i64 16}
-!122 = !{!121, !17, i64 24}
-!123 = !{!48, !7, i64 36}
-!124 = !{!48, !16, i64 44}
-!125 = !{!48, !7, i64 40}
-!126 = !{!48, !7, i64 32}
-!127 = distinct !{!127, !42}
+!108 = distinct !{!108, !88}
+!109 = distinct !{!109, !42}
+!110 = distinct !{!110, !42, !85}
+!111 = distinct !{!111, !42}
+!112 = !{!53, !27, i64 16}
+!113 = !{!114, !14, i64 0}
+!114 = !{!"", !14, i64 0, !14, i64 8}
+!115 = !{!114, !14, i64 8}
+!116 = !{!117, !15, i64 16}
+!117 = !{!"", !12, i64 0, !15, i64 16, !17, i64 24, !17, i64 32}
+!118 = !{!25, !14, i64 320}
+!119 = !{!117, !17, i64 24}
+!120 = !{!117, !17, i64 32}
+!121 = !{!122, !15, i64 16}
+!122 = !{!"", !12, i64 0, !48, i64 16}
+!123 = !{!122, !17, i64 24}
+!124 = !{!48, !7, i64 36}
+!125 = !{!48, !16, i64 44}
+!126 = !{!48, !7, i64 40}
+!127 = !{!48, !7, i64 32}
+!128 = distinct !{!128, !42}
 end_hunk_0

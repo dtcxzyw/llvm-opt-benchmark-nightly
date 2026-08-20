@@ -203,7 +203,7 @@ bb.an:                                            ; preds = %bb.al
   %i.is = load i32, ptr %i.ir, align 4, !tbaa !20 ; 2 uses
   %i.it = getelementptr inbounds nuw i8, ptr %i.h, i64 64 ; 13 uses
   %i.iu = load i32, ptr %i.it, align 8, !tbaa !20 ; 4 uses
-  %i.iv = sub i32 %i.is, %i.iu                    ; 9 uses
+  %i.iv = sub i32 %i.is, %i.iu                    ; 10 uses
   %i.iw = icmp slt i32 %i.iu, 1
   %.not224328 = icmp sgt i32 %i.iu, %i.is
   %or.cond403 = select i1 %i.iw, i1 true, i1 %.not224328
@@ -366,7 +366,7 @@ bb.aq:                                            ; preds = %.loopexit
   br i1 %i.lk, label %.lr.ph335.preheader, label %._crit_edge342
 
 .lr.ph335.preheader:                              ; preds = %bb.aq
-  %wide.trip.count357 = zext nneg i32 %i.iv to i64 ; 9 uses
+  %wide.trip.count357 = zext nneg i32 %i.iv to i64 ; 5 uses
   %i.ll = add nsw i64 %wide.trip.count357, -1     ; 4 uses
   %xtraiter474 = and i64 %wide.trip.count357, 1
   %i.lm = icmp eq i64 %i.ll, 0
@@ -450,12 +450,13 @@ bb.aq:                                            ; preds = %.loopexit
   br label %.lr.ph339.preheader
 
 .lr.ph339.preheader:                              ; preds = %.lr.ph339.preheader.unr-lcssa, %.lr.ph337.epil.preheader
-  %xtraiter484 = and i64 %wide.trip.count357, 1
+  %wide.trip.count367 = zext nneg i32 %i.iv to i64 ; 4 uses
+  %xtraiter484 = and i64 %wide.trip.count367, 1
   %i.mt = icmp eq i64 %i.ll, 0
   br i1 %i.mt, label %.lr.ph339.epil.preheader, label %.lr.ph339.preheader.new
 
 .lr.ph339.preheader.new:                          ; preds = %.lr.ph339.preheader
-  %unroll_iter487 = and i64 %wide.trip.count357, 2147483646
+  %unroll_iter487 = and i64 %wide.trip.count367, 2147483646
   br label %.lr.ph339
 
 .lr.ph337:                                        ; preds = %.lr.ph337, %.lr.ph337.preheader.new
@@ -503,12 +504,12 @@ bb.aq:                                            ; preds = %.loopexit
   br label %.lr.ph341.preheader
 
 .lr.ph341.preheader:                              ; preds = %.lr.ph341.preheader.unr-lcssa, %.lr.ph339.epil.preheader
-  %xtraiter489 = and i64 %wide.trip.count357, 1
+  %xtraiter489 = and i64 %wide.trip.count367, 1
   %i.nq = icmp eq i64 %i.ll, 0
   br i1 %i.nq, label %.lr.ph341.epil.preheader, label %.lr.ph341.preheader.new
 
 .lr.ph341.preheader.new:                          ; preds = %.lr.ph341.preheader
-  %unroll_iter492 = and i64 %wide.trip.count357, 2147483646
+  %unroll_iter492 = and i64 %wide.trip.count367, 2147483646
   br label %.lr.ph341
 
 .lr.ph339:                                        ; preds = %.lr.ph339, %.lr.ph339.preheader.new

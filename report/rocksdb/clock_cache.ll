@@ -204,7 +204,7 @@ bb.a:
 define linkonce_odr void @_ZN7rocksdb11clock_cache19AutoHyperClockTable9PurgeImplIKSt5arrayImLm2EEEEvPT_mPNS0_14BaseClockTable12EvictionDataE(ptr noundef nonnull align 64 dereferenceable(208) %0, ptr noundef %1, i64 noundef %2, ptr noundef %3) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 176
-  %i.b = load atomic i64, ptr %i.a acquire, align 16 ; 3 uses
+  %i.b = load atomic i64, ptr %i.a acquire, align 16 ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.d = load i64, ptr %i.c, align 8, !tbaa !12   ; 2 uses
   %i.e = trunc i64 %i.b to i32
@@ -212,10 +212,10 @@ bb.a:
   %i.g = lshr i64 %i.b, 8
   %i.h = and i64 %i.b, 255
   %i.i = tail call noundef i64 @llvm.x86.bmi.bzhi.64(i64 %i.d, i64 range(i64 -2147483648, 2147483648) %i.h)
-  %i.j = icmp ult i64 %i.i, %i.g
+  %i.j = icmp ult i64 %i.i, %i.g                  ; 2 uses
   %i.k = zext i1 %i.j to i32
   %i.l = add nuw nsw i32 %i.f, %i.k               ; 2 uses
-  %i.m = zext nneg i32 %i.l to i64                ; 2 uses
+  %i.m = zext nneg i32 %i.l to i64
   %i.n = tail call noundef i64 @llvm.x86.bmi.bzhi.64(i64 %i.d, i64 range(i64 -2147483648, 2147483648) %i.m)
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 2 uses
   %i.p = load ptr, ptr %i.o, align 32, !tbaa !144 ; 2 uses
@@ -240,12 +240,18 @@ _ZN7rocksdb11clock_cache19AutoHyperClockTable16ChainRewriteLockC2EPNS1_10HandleI
   %i.ab = trunc i64 %.sroa.13.3.in to i32
   %i.ac = and i32 %i.ab, 63
   %i.ad = icmp samesign ult i32 %i.l, %i.ac
-  br i1 %i.ad, label %.lr.ph, label %._crit_edge
+  br i1 %i.ad, label %.lr.ph.preheader, label %._crit_edge
 
-.lr.ph:                                           ; preds = %_ZN7rocksdb11clock_cache19AutoHyperClockTable16ChainRewriteLockC2EPNS1_10HandleImplERNS_13RelaxedAtomicImEE.exit, %_ZN7rocksdb11clock_cache19AutoHyperClockTable16ChainRewriteLock5ResetEPNS1_10HandleImplERNS_13RelaxedAtomicImEE.exit
-  %indvars.iv = phi i64 [ %indvars.iv.next, %_ZN7rocksdb11clock_cache19AutoHyperClockTable16ChainRewriteLock5ResetEPNS1_10HandleImplERNS_13RelaxedAtomicImEE.exit ], [ %i.m, %_ZN7rocksdb11clock_cache19AutoHyperClockTable16ChainRewriteLockC2EPNS1_10HandleImplERNS_13RelaxedAtomicImEE.exit ]
-  %.sroa.022.055 = phi ptr [ %i.aj, %_ZN7rocksdb11clock_cache19AutoHyperClockTable16ChainRewriteLock5ResetEPNS1_10HandleImplERNS_13RelaxedAtomicImEE.exit ], [ %i.s, %_ZN7rocksdb11clock_cache19AutoHyperClockTable16ChainRewriteLockC2EPNS1_10HandleImplERNS_13RelaxedAtomicImEE.exit ]
-  %.sroa.13.0.in54 = phi i64 [ %.sroa.13.1.in, %_ZN7rocksdb11clock_cache19AutoHyperClockTable16ChainRewriteLock5ResetEPNS1_10HandleImplERNS_13RelaxedAtomicImEE.exit ], [ %.sroa.13.3.in, %_ZN7rocksdb11clock_cache19AutoHyperClockTable16ChainRewriteLockC2EPNS1_10HandleImplERNS_13RelaxedAtomicImEE.exit ]
+.lr.ph.preheader:                                 ; preds = %_ZN7rocksdb11clock_cache19AutoHyperClockTable16ChainRewriteLockC2EPNS1_10HandleImplERNS_13RelaxedAtomicImEE.exit
+  %4 = zext i1 %i.j to i64
+  %5 = and i64 %i.b, 255
+  %6 = add nuw nsw i64 %5, %4
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZN7rocksdb11clock_cache19AutoHyperClockTable16ChainRewriteLock5ResetEPNS1_10HandleImplERNS_13RelaxedAtomicImEE.exit
+  %indvars.iv = phi i64 [ %6, %.lr.ph.preheader ], [ %indvars.iv.next, %_ZN7rocksdb11clock_cache19AutoHyperClockTable16ChainRewriteLock5ResetEPNS1_10HandleImplERNS_13RelaxedAtomicImEE.exit ]
+  %.sroa.022.055 = phi ptr [ %i.s, %.lr.ph.preheader ], [ %i.aj, %_ZN7rocksdb11clock_cache19AutoHyperClockTable16ChainRewriteLock5ResetEPNS1_10HandleImplERNS_13RelaxedAtomicImEE.exit ]
+  %.sroa.13.0.in54 = phi i64 [ %.sroa.13.3.in, %.lr.ph.preheader ], [ %.sroa.13.1.in, %_ZN7rocksdb11clock_cache19AutoHyperClockTable16ChainRewriteLock5ResetEPNS1_10HandleImplERNS_13RelaxedAtomicImEE.exit ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
   %i.ae = load i64, ptr %i.c, align 8, !tbaa !12
   %i.af = tail call noundef i64 @llvm.x86.bmi.bzhi.64(i64 %i.ae, i64 range(i64 -2147483648, 2147483648) %indvars.iv.next)

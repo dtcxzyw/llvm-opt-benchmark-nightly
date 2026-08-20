@@ -203,14 +203,15 @@ bb.k:                                             ; preds = %bb.b
   br i1 %.not6.i, label %._crit_edge.thread.i, label %.lr.ph.i16, !dbg !478
 
 .lr.ph.i16:                                       ; preds = %bb.k
-  %i.cs = lshr i64 %i.l, 4, !dbg !495
+  %i.cs = lshr i64 %i.l, 4, !dbg !495             ; 2 uses
   %i.ct = and i64 %i.l, 15, !dbg !511
   %.not10.i.i.i = icmp ne i64 %i.ct, 0, !dbg !513
-  %i.cu = zext i1 %.not10.i.i.i to i64, !dbg !513
-  %.sroa.05.0.i.i.i = add nuw nsw i64 %i.cs, %i.cu, !dbg !513 ; 4 uses
+  %i.cu = zext i1 %.not10.i.i.i to i64, !dbg !513 ; 2 uses
+  %.sroa.05.0.i.i.i = add nuw nsw i64 %i.cs, %i.cu, !dbg !513 ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val11) ]
+  %4 = add nuw nsw i64 %i.cs, %i.cu, !dbg !478
   %xtraiter = and i64 %.sroa.05.0.i.i.i, 1, !dbg !478
-  %i.cv = icmp eq i64 %.sroa.05.0.i.i.i, 1, !dbg !478
+  %i.cv = icmp eq i64 %4, 1, !dbg !478
   br i1 %i.cv, label %.epil.preheader, label %.lr.ph.i16.new, !dbg !478
 
 .lr.ph.i16.new:                                   ; preds = %.lr.ph.i16
@@ -613,14 +614,15 @@ bb.j:                                             ; preds = %bb.b
   br i1 %.not6.i, label %._crit_edge.thread.i, label %.lr.ph.i15, !dbg !1072
 
 .lr.ph.i15:                                       ; preds = %bb.j
-  %i.cq = lshr i64 %i.l, 4, !dbg !1076
+  %i.cq = lshr i64 %i.l, 4, !dbg !1076            ; 2 uses
   %i.cr = and i64 %i.l, 15, !dbg !1081
   %.not10.i.i.i = icmp ne i64 %i.cr, 0, !dbg !1082
-  %i.cs = zext i1 %.not10.i.i.i to i64, !dbg !1082
-  %.sroa.05.0.i.i.i = add nuw nsw i64 %i.cq, %i.cs, !dbg !1082 ; 4 uses
+  %i.cs = zext i1 %.not10.i.i.i to i64, !dbg !1082 ; 2 uses
+  %.sroa.05.0.i.i.i = add nuw nsw i64 %i.cq, %i.cs, !dbg !1082 ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val11) ]
+  %3 = add nuw nsw i64 %i.cq, %i.cs, !dbg !1072
   %xtraiter = and i64 %.sroa.05.0.i.i.i, 1, !dbg !1072
-  %i.ct = icmp eq i64 %.sroa.05.0.i.i.i, 1, !dbg !1072
+  %i.ct = icmp eq i64 %3, 1, !dbg !1072
   br i1 %i.ct, label %.epil.preheader, label %.lr.ph.i15.new, !dbg !1072
 
 .lr.ph.i15.new:                                   ; preds = %.lr.ph.i15

@@ -29,7 +29,7 @@ bb.a:
   %i.c = alloca [32 x float], align 16            ; 7 uses
   %i.d = alloca [480 x float], align 16           ; 4 uses
   %i.e = alloca [20 x float], align 16            ; 38 uses
-  %i.f = ptrtoaddr ptr %i.e to i64
+  %i.f = ptrtoaddr ptr %i.e to i64                ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !9
   %i.i = getelementptr inbounds nuw i8, ptr %3, i64 32
@@ -432,10 +432,10 @@ bb.k:                                             ; preds = %._crit_edge.i
 
 bb.l:                                             ; preds = %bb.k, %._crit_edge.i
   %i.jh = getelementptr inbounds nuw i8, ptr %i.hx, i64 %indvars.iv135.i
-  %i.ji = load i8, ptr %i.jh, align 1, !tbaa !62
+  %i.ji = load i8, ptr %i.jh, align 1, !tbaa !62  ; 2 uses
   %i.jj = getelementptr inbounds nuw [4 x i8], ptr %i.hy, i64 %indvars.iv135.i
   %i.jk = getelementptr inbounds nuw i8, ptr %i.hz, i64 %indvars.iv135.i
-  %i.jl = load i8, ptr %i.jk, align 1, !tbaa !62
+  %i.jl = load i8, ptr %i.jk, align 1, !tbaa !62  ; 2 uses
   %i.jm = zext i8 %i.jl to i32
   %i.jn = getelementptr inbounds nuw [80 x i8], ptr %i.au, i64 %indvars.iv135.i ; 4 uses
   %.val.i = load ptr, ptr %i.m, align 8, !tbaa !32 ; 5 uses
@@ -470,16 +470,19 @@ bb.l:                                             ; preds = %bb.k, %._crit_edge.
   br i1 %.not.i98.i, label %._crit_edge.i99.i, label %.lr.ph4.i.i
 
 .lr.ph4.i.i:                                      ; preds = %bb.l
-  %i.kk = ptrtoaddr ptr %i.jp to i64
+  %i.kk = ptrtoaddr ptr %i.jp to i64              ; 2 uses
   %i.kl = zext i8 %i.ji to i32
   %i.km = mul nuw nsw i32 %i.jv, %i.kl
-  %i.kn = zext nneg i32 %i.km to i64              ; 2 uses
-  %i.ko = zext i8 %i.ju to i64
+  %i.kn = zext nneg i32 %i.km to i64
+  %i.ko = zext i8 %i.ju to i64                    ; 2 uses
   %wide.trip.count13.i.i = zext i8 %i.kg to i64
   %invariant.gep.i.i = getelementptr [4 x i8], ptr %i.jp, i64 %i.kn ; 6 uses
-  %4 = sub i64 %i.f, %i.kk                        ; 2 uses
-  %5 = shl nuw nsw i64 %i.kn, 2
-  %i.kp = sub i64 %5, %4
+  %4 = shl nuw nsw i64 %i.ko, 2
+  %5 = zext i8 %i.ji to i64
+  %6 = mul nuw nsw i64 %4, %5
+  %7 = add i64 %6, %i.kk
+  %invariant.op = sub i64 %i.kk, %i.f
+  %i.kp = sub i64 %7, %i.f
   %diff.check133 = icmp ugt i64 %i.kp, -32
   br label %bb.m
 
@@ -518,8 +521,8 @@ bb.m:                                             ; preds = %.loopexit.i.i, %.lr
 vector.memcheck132:                               ; preds = %.lr.ph.i100.i
   %i.lf = add nsw i64 %i.jx, %i.ld
   %i.lg = shl nsw i64 %i.lf, 2
-  %6 = sub i64 %i.lg, %4
-  %diff.check = icmp ugt i64 %6, -32
+  %.reass = add i64 %i.lg, %invariant.op
+  %diff.check = icmp ugt i64 %.reass, -32
   %conflict.rdx134 = or i1 %diff.check, %diff.check133
   br i1 %conflict.rdx134, label %scalar.ph135.preheader, label %vector.ph137
 
@@ -708,7 +711,7 @@ rearrange_lsp.exit.i.i:                           ; preds = %rearrange_lsp.exit.
 
 .lr.ph6.i.i:                                      ; preds = %rearrange_lsp.exit.i.i
   %i.nz = mul nuw nsw i32 %i.jv, %i.jm
-  %i.oa = zext nneg i32 %i.nz to i64              ; 2 uses
+  %i.oa = zext nneg i32 %i.nz to i64
   %wide.trip.count18.i.i = zext i8 %i.ju to i64   ; 9 uses
   %invariant.gep21.i.i = getelementptr inbounds nuw [4 x i8], ptr %i.ke, i64 %i.oa ; 6 uses
   %min.iters.check120 = icmp ult i8 %i.ju, 8
@@ -718,11 +721,14 @@ vector.memcheck:                                  ; preds = %.lr.ph6.i.i
   %i.ob = shl nuw nsw i64 %wide.trip.count18.i.i, 2 ; 2 uses
   %scevgep109 = getelementptr i8, ptr %scevgep, i64 %i.ob ; 2 uses
   %scevgep110 = getelementptr i8, ptr %i.e, i64 %i.ob ; 2 uses
-  %i.oc = add nsw i64 %i.kd, %i.jx
-  %7 = add nsw i64 %i.oc, %wide.trip.count18.i.i
-  %i.od = add nsw i64 %7, %i.oa
+  %8 = zext i8 %i.jl to i64
+  %9 = shl nuw nsw i64 %8, 2
+  %i.oc = add nuw nsw i64 %9, 4
+  %10 = mul nuw nsw i64 %i.oc, %wide.trip.count18.i.i
+  %i.od = add nsw i64 %i.kd, %i.jx
   %i.oe = shl nsw i64 %i.od, 2
-  %scevgep111 = getelementptr i8, ptr %i.jp, i64 %i.oe ; 2 uses
+  %11 = getelementptr i8, ptr %i.jp, i64 %i.oe
+  %scevgep111 = getelementptr i8, ptr %11, i64 %10 ; 2 uses
   %bound0 = icmp ult ptr %scevgep, %scevgep110
   %bound1 = icmp ult ptr %i.e, %scevgep109
   %found.conflict = and i1 %bound0, %bound1

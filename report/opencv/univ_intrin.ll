@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %.noexc
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #14
   %i.ab = getelementptr inbounds nuw i8, ptr %32, i64 12
   %i.ac = load i32, ptr %i.ab, align 4, !tbaa !19 ; 2 uses
-  %i.ad = sdiv i32 %i.ac, 2                       ; 7 uses
+  %i.ad = sdiv i32 %i.ac, 2                       ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #14
   %i.ae = getelementptr inbounds nuw i8, ptr %14, i64 16
   store i32 0, ptr %i.ae, align 8, !tbaa !27
@@ -242,14 +242,15 @@ bb.h:                                             ; preds = %.noexc
   %i.an = sub nsw i32 0, %i.ad
   %i.ao = sext i32 %i.an to i64                   ; 3 uses
   %i.ap = sext i32 %i.ad to i64
-  %smax.i = call i32 @llvm.abs.i32(i32 %i.ad, i1 true) ; 2 uses
+  %smax.i = call i32 @llvm.abs.i32(i32 %i.ad, i1 true) ; 3 uses
   %i.aq = add nuw nsw i32 %smax.i, 1
   %wide.trip.count.i = zext nneg i32 %i.z to i64
-  %i.ar = add i32 %i.ad, %smax.i                  ; 2 uses
+  %i.ar = add i32 %i.ad, %smax.i
   %i.as = and i32 %i.ar, 1
   %lcmp.mod.not.not = icmp eq i32 %i.as, 0
   %indvars.iv.next.i.prol = add nsw i64 %i.ao, 1
-  %i.at = icmp eq i32 %i.ar, 0
+  %54 = sub nsw i32 0, %smax.i
+  %i.at = icmp eq i32 %i.ad, %54
   br label %.lr.ph.i
 
 .lr.ph34.split.us.preheader.i:                    ; preds = %.lr.ph34.i
@@ -652,7 +653,7 @@ bb.bo:                                            ; preds = %.noexc166
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #14
   %i.ks = getelementptr inbounds nuw i8, ptr %47, i64 8
   %i.kt = load i32, ptr %i.ks, align 8, !tbaa !74 ; 2 uses
-  %i.ku = sdiv i32 %i.kt, 2                       ; 8 uses
+  %i.ku = sdiv i32 %i.kt, 2                       ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #14
   %i.kv = getelementptr inbounds nuw i8, ptr %10, i64 16
   store i32 0, ptr %i.kv, align 8, !tbaa !27
@@ -697,15 +698,16 @@ bb.bo:                                            ; preds = %.noexc166
 .lr.ph63.preheader.i:                             ; preds = %.lr.ph67.split.i
   %i.lj = sext i32 %i.le to i64                   ; 3 uses
   %i.lk = sext i32 %i.ku to i64                   ; 4 uses
-  %smax.i156 = call i32 @llvm.abs.i32(i32 %i.ku, i1 false) ; 2 uses
+  %smax.i156 = call i32 @llvm.abs.i32(i32 %i.ku, i1 false) ; 3 uses
   %i.ll = add nuw nsw i32 %smax.i156, 1           ; 2 uses
   %wide.trip.count85.i = zext nneg i32 %i.ko to i64
   %wide.trip.count.i157 = zext nneg i32 %i.kq to i64
-  %i.lm = add i32 %i.ku, %smax.i156               ; 2 uses
-  %i.ln = add i32 %i.lm, 1
-  %xtraiter392 = and i32 %i.ln, 3                 ; 2 uses
+  %55 = add i32 %i.ku, %smax.i156
+  %i.lm = add i32 %55, 1
+  %i.ln = add nsw i32 %i.ku, %smax.i156
+  %xtraiter392 = and i32 %i.lm, 3                 ; 2 uses
   %lcmp.mod393.not = icmp eq i32 %xtraiter392, 0
-  %i.lo = icmp ult i32 %i.lm, 3
+  %i.lo = icmp ult i32 %i.ln, 3
   br label %.lr.ph63.i
 
 .lr.ph63.us.preheader.i:                          ; preds = %.lr.ph67.split.i

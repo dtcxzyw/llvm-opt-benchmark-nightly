@@ -201,16 +201,18 @@ vector.memcheck:                                  ; preds = %vector.scevcheck
   %i.im = getelementptr i8, ptr %11, i64 %i.ik
   %i.in = getelementptr i8, ptr %i.im, i64 %i.il
   %scevgep408 = getelementptr i8, ptr %i.in, i64 -8
+  %15 = shl nsw i64 %i.h, 3                       ; 2 uses
   %i.io = add i32 %.pre388, 3
   %i.ip = sext i32 %i.io to i64
-  %15 = add nsw i64 %i.h, %i.ip
-  %16 = shl nsw i64 %15, 3                        ; 2 uses
-  %scevgep409.a = getelementptr i8, ptr %9, i64 %16
-  %i.iq = getelementptr i8, ptr %9, i64 %16
+  %16 = shl nsw i64 %i.ip, 3                      ; 2 uses
+  %17 = getelementptr i8, ptr %9, i64 %15
+  %scevgep409 = getelementptr i8, ptr %17, i64 %16
+  %scevgep409.a = getelementptr i8, ptr %9, i64 %15
+  %i.iq = getelementptr i8, ptr %scevgep409.a, i64 %16
   %i.ir = getelementptr i8, ptr %i.iq, i64 %i.il
   %scevgep410 = getelementptr i8, ptr %i.ir, i64 -8
   %bound0 = icmp ult ptr %scevgep, %scevgep410
-  %bound1 = icmp ult ptr %scevgep409.a, %scevgep408
+  %bound1 = icmp ult ptr %scevgep409, %scevgep408
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
@@ -497,14 +499,16 @@ vector.memcheck422:                               ; preds = %vector.scevcheck421
   %i.nq = add i32 %.pre385, %i.nc
   %i.nr = add i32 %i.nq, 2
   %i.ns = sext i32 %i.nr to i64
-  %17 = add nsw i64 %i.ns, %i.h
-  %i.nt = shl nsw i64 %17, 3                      ; 2 uses
-  %scevgep425.a = getelementptr i8, ptr %9, i64 %i.nt
-  %i.nu = getelementptr i8, ptr %9, i64 %i.nt
+  %18 = shl nsw i64 %i.ns, 3                      ; 2 uses
+  %i.nt = shl nsw i64 %i.h, 3                     ; 2 uses
+  %19 = getelementptr i8, ptr %9, i64 %18
+  %scevgep425 = getelementptr i8, ptr %19, i64 %i.nt
+  %scevgep425.a = getelementptr i8, ptr %9, i64 %18
+  %i.nu = getelementptr i8, ptr %scevgep425.a, i64 %i.nt
   %i.nv = getelementptr i8, ptr %i.nu, i64 %i.nn
   %scevgep426 = getelementptr i8, ptr %i.nv, i64 -8
   %bound0427 = icmp ult ptr %scevgep423, %scevgep426
-  %bound1428 = icmp ult ptr %scevgep425.a, %scevgep424
+  %bound1428 = icmp ult ptr %scevgep425, %scevgep424
   %found.conflict429 = and i1 %bound0427, %bound1428
   br i1 %found.conflict429, label %vec.epilog.scalar.ph446.preheader, label %vector.main.loop.iter.check431
 

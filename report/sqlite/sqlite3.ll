@@ -205,12 +205,12 @@ bb.u:                                             ; preds = %bb.s
   %i.cm = and i32 %i.cl, 65535                    ; 4 uses
   %i.cn = add nuw nsw i32 %i.cm, 1
   %i.co = getelementptr inbounds nuw i8, ptr %i.cc, i64 3
-  %i.cp = load i8, ptr %i.co, align 1, !tbaa !231
+  %i.cp = load i8, ptr %i.co, align 1, !tbaa !231 ; 2 uses
   %i.cq = zext i8 %i.cp to i32
-  %i.cr = shl nuw nsw i32 %i.cq, 8                ; 2 uses
+  %i.cr = shl nuw nsw i32 %i.cq, 8
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cc, i64 4
-  %i.ct = load i8, ptr %i.cs, align 1, !tbaa !231
-  %i.cu = zext i8 %i.ct to i32                    ; 2 uses
+  %i.ct = load i8, ptr %i.cs, align 1, !tbaa !231 ; 2 uses
+  %i.cu = zext i8 %i.ct to i32
   %i.cv = or disjoint i32 %i.cr, %i.cu            ; 3 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %.val13.i.i, i64 8 ; 3 uses
   %i.cx = load i8, ptr %i.cw, align 8, !tbaa !858 ; 2 uses
@@ -539,14 +539,16 @@ bb.bb:                                            ; preds = %bb.ba
 
 .lr.ph294:                                        ; preds = %bb.bb
   %i.ir = getelementptr inbounds nuw i8, ptr %.val13.i.i, i64 120
-  %5 = or disjoint i32 %i.cr, %i.cu
-  %i.is = zext nneg i32 %5 to i64
+  %5 = zext i8 %i.cp to i64
+  %6 = shl nuw nsw i64 %5, 8
+  %i.is = zext i8 %i.ct to i64
+  %7 = or disjoint i64 %6, %i.is
   %i.it = sext i32 %i.di to i64
   %invariant.gep = getelementptr i8, ptr %i.bx, i64 %i.it
   br label %bb.bc
 
 bb.bc:                                            ; preds = %.lr.ph294, %btreeHeapInsert.exit226
-  %indvars.iv.in = phi i64 [ %i.is, %.lr.ph294 ], [ %indvars.iv, %btreeHeapInsert.exit226 ] ; 2 uses
+  %indvars.iv.in = phi i64 [ %7, %.lr.ph294 ], [ %indvars.iv, %btreeHeapInsert.exit226 ] ; 2 uses
   %indvars.iv = add nsw i64 %indvars.iv.in, -1    ; 2 uses
   %i.iu = shl nuw nsw i64 %indvars.iv, 1
   %gep = getelementptr i8, ptr %invariant.gep, i64 %i.iu ; 2 uses

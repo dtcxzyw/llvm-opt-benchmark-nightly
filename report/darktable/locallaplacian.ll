@@ -181,18 +181,19 @@ bb.e:                                             ; preds = %bb.c, %bb.b
   %i.bk = add i32 %i.bj, 1
   %i.bl = sub nsw i32 30, %i.l
   %i.bm = shl i32 %i.bk, %i.bl
-  %i.bn = shl nuw nsw i64 %i.aj, 2                ; 2 uses
+  %i.bn = shl nuw nsw i64 %i.aj, 2                ; 3 uses
   %scevgep1197 = getelementptr i8, ptr %i.ac, i64 %i.bn
   %i.bo = sub nsw i32 30, %i.l
   %i.bp = zext nneg i32 %i.bo to i64
   %i.bq = shl i64 %i.y, %i.bp
   %i.br = shl i64 %i.bq, 2
   %scevgep1231 = getelementptr i8, ptr %i.ac, i64 %i.br
-  %i.bs = shl nuw nsw i64 %i.ai, 3
-  %i.bt = add nuw nsw i64 %i.bs, %i.bn            ; 2 uses
+  %i.bs = shl nuw nsw i64 %i.ai, 3                ; 2 uses
+  %i.bt = add nuw nsw i64 %i.bs, %i.bn
   %i.bu = add nsw i64 %wide.trip.count529.i, -1   ; 2 uses
   %i.bv = mul i64 %i.bt, %i.bu
-  %i.bw = add nuw nsw i64 %i.bt, 4
+  %9 = add nuw nsw i64 %i.bs, %i.bn
+  %i.bw = add nuw nsw i64 %9, 4
   %i.bx = sub nsw i32 30, %i.l
   %i.by = zext nneg i32 %i.bx to i64
   %i.bz = shl i64 %i.bw, %i.by
@@ -595,14 +596,14 @@ dl.exit672:                                       ; preds = %._crit_edge871.thre
   %indvar1463 = phi i64 [ %indvar.next1464, %dl.exit688 ], [ 0, %.preheader845 ] ; 7 uses
   %i.pj = phi ptr [ %i.pm, %dl.exit688 ], [ %storemerge, %.preheader845 ]
   %indvars.iv943 = phi i64 [ %indvars.iv.next944, %dl.exit688 ], [ 1, %.preheader845 ] ; 3 uses
-  %i.pk = add i64 %indvar1463, -1
+  %i.pk = add nsw i64 %indvar1463, -1
   %i.pl = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %indvars.iv943
   %i.pm = load ptr, ptr %i.pl, align 8, !tbaa !17 ; 2 uses
   %i.pn = icmp samesign ugt i64 %indvars.iv943, 1
   br i1 %i.pn, label %.lr.ph.i675.preheader, label %dl.exit688
 
 .lr.ph.i675.preheader:                            ; preds = %.lr.ph870
-  %i.po = add i64 %indvar1463, -1
+  %i.po = add nsw i64 %indvar1463, -1
   %xtraiter1465 = and i64 %indvar1463, 7          ; 3 uses
   %i.pp = icmp ult i64 %i.po, 7
   br i1 %i.pp, label %.lr.ph.i675.epil.preheader, label %.lr.ph.i675.preheader.new
@@ -1005,14 +1006,14 @@ bb.z:                                             ; preds = %._crit_edge879
   %indvar1607 = phi i64 [ %indvar.next1608, %dl.exit720 ], [ 0, %.thread801.5 ] ; 7 uses
   %i.vs = phi ptr [ %i.vv, %dl.exit720 ], [ %i.vp, %.thread801.5 ]
   %indvars.iv1002 = phi i64 [ %indvars.iv.next1003, %dl.exit720 ], [ 1, %.thread801.5 ] ; 3 uses
-  %i.vt = add i64 %indvar1607, -1
+  %i.vt = add nsw i64 %indvar1607, -1
   %i.vu = getelementptr inbounds nuw [8 x i8], ptr %i.vo, i64 %indvars.iv1002
   %i.vv = load ptr, ptr %i.vu, align 8, !tbaa !17 ; 2 uses
   %i.vw = icmp samesign ugt i64 %indvars.iv1002, 1
   br i1 %i.vw, label %.lr.ph.i707.preheader, label %dl.exit720
 
 .lr.ph.i707.preheader:                            ; preds = %.lr.ph878
-  %i.vx = add i64 %indvar1607, -1
+  %i.vx = add nsw i64 %indvar1607, -1
   %xtraiter1609 = and i64 %indvar1607, 7          ; 3 uses
   %i.vy = icmp ult i64 %i.vx, 7
   br i1 %i.vy, label %.lr.ph.i707.epil.preheader, label %.lr.ph.i707.preheader.new
@@ -1415,7 +1416,7 @@ bb.az:                                            ; preds = %bb.b, %bb.a
   %i.qj = shl i64 %i.qi, 2
   %i.qk = shl nsw i64 %i.pk, 2
   %i.ql = add nsw i64 %i.qk, 4
-  %i.qm = mul i64 %i.ql, %wide.trip.count516
+  %i.qm = mul nsw i64 %i.ql, %wide.trip.count516
   %i.qn = getelementptr i8, ptr %i.i, i64 %i.qj
   %scevgep685 = getelementptr i8, ptr %i.qn, i64 %i.qm
   %i.qo = mul nsw i64 %i.qh, %i.pl

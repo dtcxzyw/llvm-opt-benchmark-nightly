@@ -197,7 +197,7 @@ bb.i:                                             ; preds = %bb.h
 bytestream2_get_byte.exit63.i:                    ; preds = %bb.i, %bb.h
   %.pre-phi.i = phi i64 [ %.pre.i, %bb.i ], [ %i.ax, %bb.h ]
   %i.be = phi ptr [ %i.bb, %bb.i ], [ %i.av, %bb.h ] ; 2 uses
-  %.0.i62.i = phi i32 [ %i.bd, %bb.i ], [ 0, %bb.h ] ; 3 uses
+  %.0.i62.i = phi i32 [ %i.bd, %bb.i ], [ 0, %bb.h ] ; 4 uses
   %i.bf = sub i64 %i.ax, %.pre-phi.i
   %i.bg = icmp slt i64 %i.bf, 1
   br i1 %i.bg, label %bb.j, label %bb.k
@@ -216,7 +216,7 @@ bb.k:                                             ; preds = %bytestream2_get_byt
 bytestream2_get_byte.exit61.i:                    ; preds = %bb.k, %bb.j
   %.0.i60.i = phi i32 [ 0, %bb.j ], [ %i.bj, %bb.k ] ; 2 uses
   %i.bk = shl nuw nsw i32 %.0.i62.i, 4
-  %i.bl = and i32 %i.bk, 3840                     ; 2 uses
+  %i.bl = and i32 %i.bk, 3840
   %i.bm = or disjoint i32 %.0.i60.i, %i.bl        ; 2 uses
   %i.bn = and i32 %.0.i62.i, 15                   ; 3 uses
   %i.bo = add nuw nsw i32 %i.bn, 3
@@ -239,7 +239,9 @@ iter.check:                                       ; preds = %bb.l
   br i1 %min.iters.check, label %.preheader.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.bw = or disjoint i32 %.0.i60.i, %i.bl
+  %4 = shl nuw nsw i32 %.0.i62.i, 4
+  %5 = and i32 %4, 3840
+  %i.bw = or disjoint i32 %5, %.0.i60.i
   %i.bx = add nsw i32 %i.bw, -1
   %diff.check = icmp ult i32 %i.bx, 15
   br i1 %diff.check, label %.preheader.i.preheader, label %vector.main.loop.iter.check

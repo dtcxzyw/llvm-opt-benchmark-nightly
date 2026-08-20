@@ -204,7 +204,7 @@ _ZL19stbi__refill_bufferP13stbi__context.exit.i.i285: ; preds = %bb.bx, %bb.bw
 _ZL10stbi__get8P13stbi__context.exit.i287:        ; preds = %_ZL19stbi__refill_bufferP13stbi__context.exit.i.i285, %bb.bu, %bb.bt
   %i.lm = phi ptr [ %i.kn, %bb.bt ], [ %.sink.i.i.i286, %_ZL19stbi__refill_bufferP13stbi__context.exit.i.i285 ], [ %i.kn, %bb.bu ] ; 3 uses
   %i.ln = phi ptr [ %i.ku, %bb.bt ], [ %i.ll, %_ZL19stbi__refill_bufferP13stbi__context.exit.i.i285 ], [ %i.ko, %bb.bu ] ; 4 uses
-  %.0.i.i288 = phi i8 [ %i.kv, %bb.bt ], [ %i.lk, %_ZL19stbi__refill_bufferP13stbi__context.exit.i.i285 ], [ 0, %bb.bu ] ; 3 uses
+  %.0.i.i288 = phi i8 [ %i.kv, %bb.bt ], [ %i.lk, %_ZL19stbi__refill_bufferP13stbi__context.exit.i.i285 ], [ 0, %bb.bu ] ; 5 uses
   %i.lo = icmp ult ptr %i.ln, %i.lm
   br i1 %i.lo, label %bb.by, label %bb.bz
 
@@ -255,10 +255,10 @@ _ZL19stbi__refill_bufferP13stbi__context.exit.i4.i291: ; preds = %bb.cc, %bb.cb
 _ZL13stbi__get16leP13stbi__context.exit294:       ; preds = %bb.by, %bb.bz, %_ZL19stbi__refill_bufferP13stbi__context.exit.i4.i291
   %i.mh = phi ptr [ %i.lm, %bb.by ], [ %.sink.i.i5.i292, %_ZL19stbi__refill_bufferP13stbi__context.exit.i4.i291 ], [ %i.lm, %bb.bz ] ; 3 uses
   %i.mi = phi ptr [ %i.lp, %bb.by ], [ %i.mg, %_ZL19stbi__refill_bufferP13stbi__context.exit.i4.i291 ], [ %i.ln, %bb.bz ] ; 4 uses
-  %.0.i6.i293 = phi i8 [ %i.lq, %bb.by ], [ %i.mf, %_ZL19stbi__refill_bufferP13stbi__context.exit.i4.i291 ], [ 0, %bb.bz ]
-  %i.mj = zext i8 %.0.i.i288 to i32               ; 6 uses
+  %.0.i6.i293 = phi i8 [ %i.lq, %bb.by ], [ %i.mf, %_ZL19stbi__refill_bufferP13stbi__context.exit.i4.i291 ], [ 0, %bb.bz ] ; 3 uses
+  %i.mj = zext i8 %.0.i.i288 to i32               ; 4 uses
   %i.mk = zext i8 %.0.i6.i293 to i32
-  %i.ml = shl nuw nsw i32 %i.mk, 8                ; 6 uses
+  %i.ml = shl nuw nsw i32 %i.mk, 8                ; 4 uses
   %i.mm = or disjoint i32 %i.ml, %i.mj            ; 12 uses
   %i.mn = icmp ult ptr %i.mi, %i.mh
   br i1 %i.mn, label %bb.cd, label %bb.ce
@@ -414,7 +414,7 @@ bb.ct:                                            ; preds = %bb.co, %bb.cp, %bb.
   %i.ok = phi i1 [ false, %bb.cs ], [ false, %bb.cp ], [ false, %bb.cr ], [ false, %bb.cq ], [ true, %bb.co ], [ false, %bb.cn ] ; 2 uses
   %.not204 = phi i1 [ true, %bb.cs ], [ true, %bb.cp ], [ true, %bb.cr ], [ true, %bb.cq ], [ false, %bb.co ], [ true, %bb.cn ] ; 2 uses
   %.0189.ph.shrunk = phi i8 [ %i.oj, %bb.cs ], [ %i.og, %bb.cp ], [ 2, %bb.cr ], [ 1, %bb.cq ], [ 3, %bb.co ], [ 1, %bb.cn ] ; 6 uses
-  %.0189.ph = zext nneg i8 %.0189.ph.shrunk to i32 ; 16 uses
+  %.0189.ph = zext nneg i8 %.0189.ph.shrunk to i32 ; 17 uses
   store i32 %i.ks, ptr %1, align 4, !tbaa !12
   store i32 %i.mm, ptr %2, align 4, !tbaa !12
   %.not199 = icmp eq ptr %3, null
@@ -523,25 +523,31 @@ _ZL10stbi__skipP13stbi__contexti.exit:            ; preds = %bb.cz, %.thread.i
   br i1 %.not202.not, label %..thread_crit_edge.i319.us.us.preheader, label %..thread_crit_edge.i319.us.preheader
 
 ..thread_crit_edge.i319.us.preheader:             ; preds = %.lr.ph.split.us
-  %5 = or disjoint i32 %i.ml, %i.mj               ; 2 uses
-  %i.pq = zext nneg i32 %5 to i64                 ; 2 uses
-  %xtraiter = and i64 %i.pq, 1
-  %i.pr = icmp eq i32 %5, 1
+  %5 = zext i8 %.0.i6.i293 to i64
+  %6 = shl nuw nsw i64 %5, 8                      ; 2 uses
+  %i.pq = zext i8 %.0.i.i288 to i64               ; 3 uses
+  %7 = or disjoint i64 %6, %i.pq
+  %xtraiter = and i64 %i.pq, 1                    ; 2 uses
+  %i.pr = icmp eq i64 %7, 1
   br i1 %i.pr, label %..thread_crit_edge.i319.us.epil.preheader, label %..thread_crit_edge.i319.us.preheader.new
 
 ..thread_crit_edge.i319.us.preheader.new:         ; preds = %..thread_crit_edge.i319.us.preheader
-  %unroll_iter = and i64 %i.pq, 65534
+  %8 = or disjoint i64 %6, %i.pq
+  %unroll_iter = sub nsw i64 %8, %xtraiter
   br label %..thread_crit_edge.i319.us
 
 ..thread_crit_edge.i319.us.us.preheader:          ; preds = %.lr.ph.split.us
-  %6 = or disjoint i32 %i.ml, %i.mj               ; 2 uses
-  %i.ps = zext nneg i32 %6 to i64                 ; 2 uses
-  %xtraiter277 = and i64 %i.ps, 1
-  %i.pt = icmp eq i32 %6, 1
+  %9 = zext i8 %.0.i6.i293 to i64
+  %10 = shl nuw nsw i64 %9, 8                     ; 2 uses
+  %i.ps = zext i8 %.0.i.i288 to i64               ; 3 uses
+  %11 = or disjoint i64 %10, %i.ps
+  %xtraiter277 = and i64 %i.ps, 1                 ; 2 uses
+  %i.pt = icmp eq i64 %11, 1
   br i1 %i.pt, label %..thread_crit_edge.i319.us.us.epil.preheader, label %..thread_crit_edge.i319.us.us.preheader.new
 
 ..thread_crit_edge.i319.us.us.preheader.new:      ; preds = %..thread_crit_edge.i319.us.us.preheader
-  %unroll_iter282 = and i64 %i.ps, 65534
+  %12 = or disjoint i64 %10, %i.ps
+  %unroll_iter282 = sub nsw i64 %12, %xtraiter277
   br label %..thread_crit_edge.i319.us.us
 
 ..thread_crit_edge.i319.us.us:                    ; preds = %_ZL10stbi__getnP13stbi__contextPhi.exit.us.us.1, %..thread_crit_edge.i319.us.us.preheader.new
@@ -944,8 +950,9 @@ _ZL10stbi__get8P13stbi__context.exit359:          ; preds = %bb.es, %bb.et, %_ZL
   %i.wr = mul i32 %i.wq, %.0189.ph
   %i.ws = mul nuw nsw i32 %i.wp, %.0189.ph        ; 2 uses
   %i.wt = lshr i32 %i.wo, 1
-  %i.wu = or disjoint i32 %i.kr, %i.kp            ; 3 uses
-  %i.wv = mul nuw nsw i32 %i.wu, %.0189.ph        ; 3 uses
+  %i.wu = or disjoint i32 %i.kr, %i.kp            ; 4 uses
+  %13 = mul nuw nsw i32 %i.wu, %.0189.ph
+  %i.wv = mul nuw nsw i32 %i.wu, %.0189.ph        ; 2 uses
   %smin = tail call i32 @llvm.smin.i32(i32 %i.wv, i32 1)
   %i.ww = sub nsw i32 %i.wv, %smin
   %narrow = add nuw nsw i32 %i.ww, 1
@@ -991,7 +998,7 @@ vector.memcheck:                                  ; preds = %iter.check
   %i.xq = sext i32 %i.xp to i64                   ; 2 uses
   %scevgep255 = getelementptr i8, ptr %scevgep254, i64 %i.xq
   %scevgep253 = getelementptr i8, ptr %i.ov, i64 %i.xq
-  %i.xr = mul i32 %i.wv, %.351
+  %i.xr = mul i32 %13, %.351
   %i.xs = zext i32 %i.xr to i64                   ; 2 uses
   %scevgep252 = getelementptr i8, ptr %scevgep251, i64 %i.xs
   %scevgep250 = getelementptr nuw i8, ptr %i.ov, i64 %i.xs
@@ -1394,7 +1401,7 @@ _ZL10stbi__get8P13stbi__context.exit207:          ; preds = %bb.bz, %bb.ca, %_ZL
   %i.nh = zext i8 %.0.i206 to i32                 ; 2 uses
   %i.ni = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv
   store i32 %i.nh, ptr %i.ni, align 4, !tbaa !12
-  %i.nj = add i32 %.0111256, %i.nh                ; 4 uses
+  %i.nj = add nuw i32 %.0111256, %i.nh            ; 4 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 16
   br i1 %exitcond.not, label %bb.ce, label %.preheader250, !llvm.loop !424
@@ -1797,7 +1804,7 @@ _ZL21stbi__mad3sizes_validiiii.exit._crit_edge:   ; preds = %bb.f, %_ZL21stbi__m
   %i.aw = mul nsw i64 %i.ao, %i.av
   %i.ax = sub nsw i64 0, %i.ao
   %i.ay = add nsw i64 %i.av, -1
-  %i.az = mul i64 %i.ay, %i.ao
+  %i.az = mul nsw i64 %i.ay, %i.ao
   %i.ba = add i32 %4, -2                          ; 2 uses
   %i.bb = zext i32 %i.ba to i64                   ; 2 uses
   %i.bc = mul nsw i64 %i.ao, %i.bb                ; 2 uses
@@ -1809,12 +1816,12 @@ _ZL21stbi__mad3sizes_validiiii.exit._crit_edge:   ; preds = %bb.f, %_ZL21stbi__m
   %i.bi = sub i64 %i.bh, %i.al
   %i.bj = sub nsw i64 0, %i.ao                    ; 2 uses
   %i.bk = add nsw i64 %i.bf, -1
-  %i.bl = mul i64 %i.bk, %i.ao
+  %i.bl = mul nsw i64 %i.bk, %i.ao
   %i.bm = add i32 %4, -2
   %i.bn = zext i32 %i.bm to i64                   ; 3 uses
   %i.bo = mul nsw i64 %i.ao, %i.bn                ; 2 uses
   %i.bp = add nsw i64 %i.bn, -1
-  %i.bq = mul i64 %i.bp, %i.ao                    ; 2 uses
+  %i.bq = mul nsw i64 %i.bp, %i.ao                ; 2 uses
   %i.br = add i64 %i.bo, %.0529.idx
   %i.bs = sub i64 %i.br, %i.al
   %i.bt = add nsw i64 %i.ao, %i.al
@@ -1826,11 +1833,11 @@ _ZL21stbi__mad3sizes_validiiii.exit._crit_edge:   ; preds = %bb.f, %_ZL21stbi__m
   %i.bz = mul nsw i64 %i.ao, %i.by
   %i.ca = sub nsw i64 0, %i.ao                    ; 2 uses
   %i.cb = add nsw i64 %i.by, -1
-  %i.cc = mul i64 %i.cb, %i.ao
+  %i.cc = mul nsw i64 %i.cb, %i.ao
   %i.cd = zext i32 %i.bx to i64                   ; 3 uses
   %i.ce = mul nsw i64 %i.ao, %i.cd
   %i.cf = add nsw i64 %i.cd, -1
-  %i.cg = mul i64 %i.cf, %i.ao
+  %i.cg = mul nsw i64 %i.cf, %i.ao
   %stride.check1566 = icmp slt i32 %i.h, 0
   %stride.check1519 = icmp slt i32 %i.h, 0
   %stride.check1458 = icmp slt i32 %i.h, 0

@@ -204,7 +204,7 @@ bb.di:                                            ; preds = %._crit_edge.i.i
   store i32 1, ptr %i.wo, align 4, !noalias !34382
   %i.wp = icmp samesign ult i64 %.sroa.0127.1556.i.i, %.sroa.0.0.i447.i.i ; 2 uses
   %i.wq = zext i1 %i.wp to i64
-  %.sroa.0127.1.i.i = add nuw i64 %.sroa.0127.1556.i.i, %i.wq
+  %.sroa.0127.1.i.i = add nuw nsw i64 %.sroa.0127.1556.i.i, %i.wq
   br i1 %i.wp, label %.lr.ph557.i.i, label %._crit_edge558.i.i
 
 .lr.ph.i169.i:                                    ; preds = %bb.dj, %.lr.ph.preheader.i.i
@@ -607,7 +607,7 @@ bb.kz:                                            ; preds = %._crit_edge.i.i276
   store i32 1, ptr %i.bpf, align 4, !noalias !34822
   %i.bpg = icmp samesign ult i64 %.sroa.0127.1570.i.i, %.sroa.0.0.i447.i.i273 ; 2 uses
   %i.bph = zext i1 %i.bpg to i64
-  %.sroa.0127.1.i.i280 = add nuw i64 %.sroa.0127.1570.i.i, %i.bph
+  %.sroa.0127.1.i.i280 = add nuw nsw i64 %.sroa.0127.1570.i.i, %i.bph
   br i1 %i.bpg, label %.lr.ph571.i.i, label %._crit_edge572.i.i
 
 .lr.ph.i171.i:                                    ; preds = %bb.lb, %.lr.ph.preheader.i.i274
@@ -1010,7 +1010,7 @@ bb.sv:                                            ; preds = %._crit_edge.i.i747
   store i32 1, ptr %i.dge, align 4, !noalias !35264
   %i.dgf = icmp samesign ult i64 %.sroa.0127.1570.i.i736, %.sroa.0.0.i447.i.i733 ; 2 uses
   %i.dgg = zext i1 %i.dgf to i64
-  %.sroa.0127.1.i.i751 = add nuw i64 %.sroa.0127.1570.i.i736, %i.dgg
+  %.sroa.0127.1.i.i751 = add nuw nsw i64 %.sroa.0127.1570.i.i736, %i.dgg
   br i1 %i.dgf, label %.lr.ph571.i.i735, label %._crit_edge572.i.i752
 
 .lr.ph.i171.i742:                                 ; preds = %bb.sx, %.lr.ph.preheader.i.i740
@@ -1413,7 +1413,7 @@ bb.q:                                             ; preds = %_ZN6brotli3enc7comm
   %.sroa.07.0.be = phi i64 [ %.sroa.07.1.ph.lcssa187, %.outer._crit_edge ], [ %.sroa.07.5.lcssa, %.loopexit ] ; 2 uses
   %i.dv = icmp samesign ult i64 %.sroa.050.1307, %.sroa.0.0.i120 ; 2 uses
   %i.dw = zext i1 %i.dv to i64
-  %.sroa.050.1 = add nuw i64 %.sroa.050.1307, %i.dw
+  %.sroa.050.1 = add nuw nsw i64 %.sroa.050.1307, %i.dw
   br i1 %i.dv, label %bb.j, label %._crit_edge309
 
 .lr.ph303:                                        ; preds = %.outer._crit_edge
@@ -1816,14 +1816,15 @@ _ZN9hashbrown3raw13RawTableInner15rehash_in_place17h6243273e76fbd181E.exit.threa
   br label %_ZN9hashbrown3raw13RawTableInner15rehash_in_place17h6243273e76fbd181E.exit
 
 .lr.ph.i.i13:                                     ; preds = %bb.n
-  %i.dj = lshr i64 %i.h, 4
+  %i.dj = lshr i64 %i.h, 4                        ; 2 uses
   %i.dk = and i64 %i.h, 15
   %.not9.i.i.i.i = icmp ne i64 %i.dk, 0
-  %i.dl = zext i1 %.not9.i.i.i.i to i64
-  %.sroa.05.0.i.i.i.i = add nuw nsw i64 %i.dj, %i.dl ; 4 uses
+  %i.dl = zext i1 %.not9.i.i.i.i to i64           ; 2 uses
+  %.sroa.05.0.i.i.i.i = add nuw nsw i64 %i.dj, %i.dl ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val10.i) ]
+  %3 = add nuw nsw i64 %i.dj, %i.dl
   %xtraiter = and i64 %.sroa.05.0.i.i.i.i, 1
-  %i.dm = icmp eq i64 %.sroa.05.0.i.i.i.i, 1
+  %i.dm = icmp eq i64 %3, 1
   br i1 %i.dm, label %.epil.preheader, label %.lr.ph.i.i13.new
 
 .lr.ph.i.i13.new:                                 ; preds = %.lr.ph.i.i13

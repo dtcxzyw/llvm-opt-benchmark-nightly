@@ -203,12 +203,13 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph.i
   br i1 %min.iters.check, label %.lr.ph22.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph22.preheader.i
-  %i.eo = shl nsw i64 %i.ce, 2
-  %i.ep = ashr exact i64 %sext.i, 30              ; 2 uses
-  %i.eq = add nsw i64 %i.eo, %i.ep                ; 3 uses
+  %i.eo = shl nsw i64 %i.ce, 2                    ; 2 uses
+  %i.ep = ashr exact i64 %sext.i, 30              ; 3 uses
+  %i.eq = add nsw i64 %i.eo, %i.ep                ; 2 uses
   %scevgep = getelementptr i8, ptr %i.ax, i64 %i.eq ; 2 uses
+  %4 = add nsw i64 %i.eo, %i.ep
   %i.er = shl nuw nsw i64 %wide.trip.count52.i, 2 ; 2 uses
-  %i.es = add nsw i64 %i.eq, %i.er                ; 2 uses
+  %i.es = add nsw i64 %4, %i.er                   ; 2 uses
   %scevgep89 = getelementptr i8, ptr %i.ax, i64 %i.es ; 2 uses
   %i.et = getelementptr i8, ptr %i.bm, i64 %i.ep
   %scevgep90 = getelementptr i8, ptr %i.et, i64 %i.er
@@ -611,12 +612,13 @@ bb.h:                                             ; preds = %bb.h, %.lr.ph.i61
   br i1 %min.iters.check132, label %.lr.ph22.i55.preheader, label %vector.memcheck118
 
 vector.memcheck118:                               ; preds = %.lr.ph22.preheader.i53
-  %i.mn = shl nsw i64 %i.kd, 2
-  %i.mo = ashr exact i64 %sext.i21, 30            ; 2 uses
-  %i.mp = add nsw i64 %i.mn, %i.mo                ; 3 uses
+  %i.mn = shl nsw i64 %i.kd, 2                    ; 2 uses
+  %i.mo = ashr exact i64 %sext.i21, 30            ; 3 uses
+  %i.mp = add nsw i64 %i.mn, %i.mo                ; 2 uses
   %scevgep119 = getelementptr i8, ptr %i.iw, i64 %i.mp ; 2 uses
+  %5 = add nsw i64 %i.mn, %i.mo
   %i.mq = shl nuw nsw i64 %wide.trip.count52.i46, 2 ; 2 uses
-  %i.mr = add nsw i64 %i.mp, %i.mq                ; 2 uses
+  %i.mr = add nsw i64 %5, %i.mq                   ; 2 uses
   %scevgep120 = getelementptr i8, ptr %i.iw, i64 %i.mr ; 2 uses
   %i.ms = getelementptr i8, ptr %i.jl, i64 %i.mo
   %scevgep121 = getelementptr i8, ptr %i.ms, i64 %i.mq

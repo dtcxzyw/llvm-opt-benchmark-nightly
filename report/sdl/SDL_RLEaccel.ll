@@ -203,14 +203,16 @@ bb.bf:                                            ; preds = %bb.be
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %bb.bf
-  %4 = add nsw i64 %i.mg, %wide.trip.count.i      ; 2 uses
-  %i.ml = shl nsw i64 %4, 2
-  %scevgep = getelementptr i8, ptr %.4306.i, i64 %i.ml
+  %4 = shl nsw i64 %i.mg, 2                       ; 2 uses
+  %i.ml = shl nuw nsw i64 %wide.trip.count.i, 2   ; 2 uses
+  %5 = getelementptr i8, ptr %.4306.i, i64 %4
+  %scevgep = getelementptr i8, ptr %5, i64 %i.ml
   %scevgep533 = getelementptr i8, ptr %.18.i, i64 4
+  %6 = add nsw i64 %4, %i.ml
   %i.mm = sext i32 %i.lw to i64
-  %5 = sub nsw i64 %4, %i.mm
-  %6 = shl nsw i64 %5, 2
-  %scevgep534 = getelementptr i8, ptr %scevgep533, i64 %6
+  %7 = shl nsw i64 %i.mm, 2
+  %8 = sub nsw i64 %6, %7
+  %scevgep534 = getelementptr i8, ptr %scevgep533, i64 %8
   %bound0 = icmp ult ptr %i.mh, %scevgep534
   %bound1 = icmp ult ptr %i.mk, %scevgep
   %found.conflict = and i1 %bound0, %bound1
