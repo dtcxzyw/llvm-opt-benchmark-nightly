@@ -204,12 +204,9 @@ bb.jn:                                            ; preds = %bb.jm
   %i.das = shufflevector <2 x double> %i.cze, <2 x double> poison, <2 x i32> zeroinitializer
   %i.dat = shufflevector <2 x double> %i.czd, <2 x double> poison, <2 x i32> zeroinitializer
   %i.dau = extractelement <2 x double> %i.czg, i64 0
-  %1 = extractelement <2 x double> %i.czg, i64 1
   %i.dav = extractelement <2 x double> %i.czf, i64 0
-  %2 = extractelement <2 x double> %i.czf, i64 1
   %i.daw = extractelement <2 x double> %i.cze, i64 0
   %i.dax = extractelement <2 x double> %i.cze, i64 1
-  %3 = extractelement <2 x double> %i.czd, i64 0
   %i.day = extractelement <2 x double> %i.czd, i64 1
   %i.daz = shufflevector <2 x double> %i.czg, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.dba = shufflevector <2 x double> %i.czf, <2 x double> poison, <2 x i32> <i32 1, i32 1>
@@ -228,6 +225,7 @@ bb.jn:                                            ; preds = %bb.jm
   %i.dbn = insertelement <2 x double> poison, double %i.cxx, i64 0
   %i.dbo = insertelement <2 x double> %i.dbn, double %i.cyk, i64 1
   %i.dbp = shufflevector <2 x double> %i.dbl, <2 x double> poison, <2 x i32> zeroinitializer
+  %1 = shufflevector <2 x double> %i.czd, <2 x double> %i.czf, <2 x i32> <i32 0, i32 3>
   %i.dbq = insertelement <2 x double> poison, double %i.cxx, i64 1
   br label %.preheader335.i.i
 
@@ -287,7 +285,7 @@ bb.jn:                                            ; preds = %bb.jm
   %i.ddl = fdiv <2 x double> %i.ddj, %i.ddk       ; 2 uses
   %i.ddm = extractelement <2 x double> %i.ddl, i64 0
   %.sroa.8.0.i.i = select i1 %i.ddf, double %i.ddm, double 0.000000e+00
-  %i.ddn = fadd double %.0298376.i.i, %.sroa.8.0.i.i ; 9 uses
+  %i.ddn = fadd double %.0298376.i.i, %.sroa.8.0.i.i ; 8 uses
   store double %i.ddn, ptr %i.dan, align 8, !tbaa !49
   %i.ddo = extractelement <2 x double> %i.dda, i64 1
   %i.ddp = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.dcp, <2 x double> %i.dbe, <2 x double> %i.dbg)
@@ -318,11 +316,15 @@ bb.jn:                                            ; preds = %bb.jm
   %i.dei = fmul double %i.ddn, %i.ddn             ; 3 uses
   %i.dej = tail call double @llvm.fmuladd.f64(double %i.ddn, double %i.dau, double %i.dav)
   %i.dek = tail call double @llvm.fmuladd.f64(double %i.dei, double %i.dej, double %i.daw)
-  %4 = tail call double @llvm.fmuladd.f64(double %i.ddn, double %i.dek, double %3) ; 2 uses
-  store double %4, ptr %gep364.2422.i.i, align 8, !tbaa !49
-  %i.del = tail call double @SUNRabs(double noundef %4) #12
-  %5 = tail call double @llvm.fmuladd.f64(double %i.ddn, double %1, double %2)
-  %i.dem = tail call double @llvm.fmuladd.f64(double %i.dei, double %5, double %i.dax)
+  %2 = insertelement <2 x double> poison, double %i.ddn, i64 0
+  %3 = shufflevector <2 x double> %2, <2 x double> poison, <2 x i32> zeroinitializer
+  %4 = insertelement <2 x double> %i.czg, double %i.dek, i64 0
+  %5 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %3, <2 x double> %4, <2 x double> %1) ; 2 uses
+  %6 = extractelement <2 x double> %5, i64 0      ; 2 uses
+  store double %6, ptr %gep364.2422.i.i, align 8, !tbaa !49
+  %i.del = tail call double @SUNRabs(double noundef %6) #12
+  %7 = extractelement <2 x double> %5, i64 1
+  %i.dem = tail call double @llvm.fmuladd.f64(double %i.dei, double %7, double %i.dax)
   %i.den = tail call double @llvm.fmuladd.f64(double %i.ddn, double %i.dem, double %i.day) ; 2 uses
   store double %i.den, ptr %gep364.1.2.i.i, align 8, !tbaa !49
   %i.deo = tail call double @SUNRabs(double noundef %i.den) #12

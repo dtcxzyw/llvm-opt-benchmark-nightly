@@ -204,7 +204,7 @@ bb.w:                                             ; preds = %_RNvMs3_NtNtNtCs877
   br i1 %.not.i.i, label %bb.az, label %bb.x, !dbg !187923
 
 bb.x:                                             ; preds = %bb.w
-  %.sroa.212.0.copyload.i.i = load ptr, ptr %.sroa.212.0..sroa_idx.i.i, align 8, !dbg !187932, !noalias !187816 ; 6 uses
+  %.sroa.212.0.copyload.i.i = load ptr, ptr %.sroa.212.0..sroa_idx.i.i, align 8, !dbg !187932, !noalias !187816 ; 8 uses
   %i.bt = trunc nuw i64 %i.bs to i1, !dbg !187933
   br i1 %i.bt, label %bb.y, label %bb.z, !dbg !187933
 
@@ -474,7 +474,7 @@ _RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutableNtB5_13MutableBitmap4push
   br label %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArraynE4pushCseeLknQCOKOd_13polars_python.exit.i.i.backedge, !dbg !188273
 
 _RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArraynE4pushCseeLknQCOKOd_13polars_python.exit.i: ; preds = %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArraynE13init_validityCseeLknQCOKOd_13polars_python.exit.i.i, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutableNtB5_13MutableBitmap4push.exit.i.i
-  call void @_Py_DecRef(ptr noundef nonnull @_Py_NoneStruct) #50, !dbg !188274, !noalias !187822
+  call void @_Py_DecRef(ptr noundef nonnull %.sroa.212.0.copyload.i.i) #50, !dbg !188274, !noalias !187822
   br label %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArraynE4pushCseeLknQCOKOd_13polars_python.exit.i.i.backedge, !dbg !188278
 
 _RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArraynE4pushCseeLknQCOKOd_13polars_python.exit.i.i.backedge: ; preds = %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArraynE4pushCseeLknQCOKOd_13polars_python.exit.i, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutableNtB5_13MutableBitmap4push.exit6.i.i.i, %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecnE8push_mutCseeLknQCOKOd_13polars_python.exit.i.i.i
@@ -492,7 +492,7 @@ _RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21Mutabl
 
 .body.i:                                          ; preds = %.loopexit.split-lp.i, %.loopexit.i, %bb.al
   %eh.lpad-body.i = phi { ptr, i32 } [ %lpad.phi9.i, %bb.al ], [ %lpad.loopexit.i, %.loopexit.i ], [ %lpad.loopexit.split-lp.i, %.loopexit.split-lp.i ]
-  call void @_Py_DecRef(ptr noundef nonnull @_Py_NoneStruct) #50, !dbg !188279, !noalias !187822
+  call void @_Py_DecRef(ptr noundef nonnull %.sroa.212.0.copyload.i.i) #50, !dbg !188279, !noalias !187822
   br label %.thread.i.i, !dbg !188283
 
 bb.au:                                            ; preds = %bb.ax
@@ -895,7 +895,7 @@ bb.w:                                             ; preds = %_RNvMs3_NtNtNtCs877
   br i1 %.not.i.i, label %bb.az, label %bb.x, !dbg !188892
 
 bb.x:                                             ; preds = %bb.w
-  %.sroa.212.0.copyload.i.i = load ptr, ptr %.sroa.212.0..sroa_idx.i.i, align 8, !dbg !188898, !noalias !188785 ; 6 uses
+  %.sroa.212.0.copyload.i.i = load ptr, ptr %.sroa.212.0..sroa_idx.i.i, align 8, !dbg !188898, !noalias !188785 ; 8 uses
   %i.bt = trunc nuw i64 %i.bs to i1, !dbg !188899
   br i1 %i.bt, label %bb.y, label %bb.z, !dbg !188899
 
@@ -1166,7 +1166,7 @@ _RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutableNtB5_13MutableBitmap4push
   br label %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArrayfE4pushCseeLknQCOKOd_13polars_python.exit.i.i.backedge, !dbg !189208
 
 _RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArrayfE4pushCseeLknQCOKOd_13polars_python.exit.i: ; preds = %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArrayfE13init_validityCseeLknQCOKOd_13polars_python.exit.i.i, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutableNtB5_13MutableBitmap4push.exit.i.i
-  call void @_Py_DecRef(ptr noundef nonnull @_Py_NoneStruct) #50, !dbg !189209, !noalias !188791
+  call void @_Py_DecRef(ptr noundef nonnull %.sroa.212.0.copyload.i.i) #50, !dbg !189209, !noalias !188791
   br label %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArrayfE4pushCseeLknQCOKOd_13polars_python.exit.i.i.backedge, !dbg !189213
 
 _RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArrayfE4pushCseeLknQCOKOd_13polars_python.exit.i.i.backedge: ; preds = %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArrayfE4pushCseeLknQCOKOd_13polars_python.exit.i, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutableNtB5_13MutableBitmap4push.exit6.i.i.i, %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecfE8push_mutCseeLknQCOKOd_13polars_python.exit.i.i.i
@@ -1184,7 +1184,7 @@ _RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21Mutabl
 
 .body.i:                                          ; preds = %.loopexit.split-lp.i, %.loopexit.i, %bb.al
   %eh.lpad-body.i = phi { ptr, i32 } [ %lpad.phi9.i, %bb.al ], [ %lpad.loopexit.i, %.loopexit.i ], [ %lpad.loopexit.split-lp.i, %.loopexit.split-lp.i ]
-  call void @_Py_DecRef(ptr noundef nonnull @_Py_NoneStruct) #50, !dbg !189214, !noalias !188791
+  call void @_Py_DecRef(ptr noundef nonnull %.sroa.212.0.copyload.i.i) #50, !dbg !189214, !noalias !188791
   br label %.thread.i.i, !dbg !189218
 
 bb.au:                                            ; preds = %bb.ax
@@ -1587,7 +1587,7 @@ bb.w:                                             ; preds = %_RNvMs3_NtNtNtCs877
   br i1 %.not.i.i, label %bb.az, label %bb.x, !dbg !189825
 
 bb.x:                                             ; preds = %bb.w
-  %.sroa.212.0.copyload.i.i = load ptr, ptr %.sroa.212.0..sroa_idx.i.i, align 8, !dbg !189831, !noalias !189718 ; 6 uses
+  %.sroa.212.0.copyload.i.i = load ptr, ptr %.sroa.212.0..sroa_idx.i.i, align 8, !dbg !189831, !noalias !189718 ; 8 uses
   %i.bt = trunc nuw i64 %i.bs to i1, !dbg !189832
   br i1 %i.bt, label %bb.y, label %bb.z, !dbg !189832
 
@@ -1857,7 +1857,7 @@ _RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutableNtB5_13MutableBitmap4push
   br label %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArraydE4pushCseeLknQCOKOd_13polars_python.exit.i.i.backedge, !dbg !190147
 
 _RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArraydE4pushCseeLknQCOKOd_13polars_python.exit.i: ; preds = %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArraydE13init_validityCseeLknQCOKOd_13polars_python.exit.i.i, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutableNtB5_13MutableBitmap4push.exit.i.i
-  call void @_Py_DecRef(ptr noundef nonnull @_Py_NoneStruct) #50, !dbg !190148, !noalias !189724
+  call void @_Py_DecRef(ptr noundef nonnull %.sroa.212.0.copyload.i.i) #50, !dbg !190148, !noalias !189724
   br label %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArraydE4pushCseeLknQCOKOd_13polars_python.exit.i.i.backedge, !dbg !190152
 
 _RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArraydE4pushCseeLknQCOKOd_13polars_python.exit.i.i.backedge: ; preds = %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArraydE4pushCseeLknQCOKOd_13polars_python.exit.i, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutableNtB5_13MutableBitmap4push.exit6.i.i.i, %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecdE8push_mutCseeLknQCOKOd_13polars_python.exit.i.i.i
@@ -1875,7 +1875,7 @@ _RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21Mutabl
 
 .body.i:                                          ; preds = %.loopexit.split-lp.i, %.loopexit.i, %bb.al
   %eh.lpad-body.i = phi { ptr, i32 } [ %lpad.phi9.i, %bb.al ], [ %lpad.loopexit.i, %.loopexit.i ], [ %lpad.loopexit.split-lp.i, %.loopexit.split-lp.i ]
-  call void @_Py_DecRef(ptr noundef nonnull @_Py_NoneStruct) #50, !dbg !190153, !noalias !189724
+  call void @_Py_DecRef(ptr noundef nonnull %.sroa.212.0.copyload.i.i) #50, !dbg !190153, !noalias !189724
   br label %.thread.i.i, !dbg !190157
 
 bb.au:                                            ; preds = %bb.ax
@@ -2278,7 +2278,7 @@ bb.w:                                             ; preds = %_RNvMs3_NtNtNtCs877
   br i1 %.not.i.i, label %bb.bn, label %bb.x, !dbg !190761
 
 bb.x:                                             ; preds = %bb.w
-  %.sroa.212.0.copyload.i.i = load ptr, ptr %.sroa.212.0..sroa_idx.i.i, align 8, !dbg !190767, !noalias !190654 ; 7 uses
+  %.sroa.212.0.copyload.i.i = load ptr, ptr %.sroa.212.0..sroa_idx.i.i, align 8, !dbg !190767, !noalias !190654 ; 9 uses
   %i.bt = trunc nuw i64 %i.bs to i1, !dbg !190768
   br i1 %i.bt, label %bb.y, label %bb.z, !dbg !190768
 
@@ -2663,7 +2663,7 @@ _RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutableNtB5_13MutableBitmap4push
   br label %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArrayNtNtCs2mZqlW55729_12polars_utils7float164pf16E4pushCseeLknQCOKOd_13polars_python.exit.i.i.backedge, !dbg !191193
 
 _RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArrayNtNtCs2mZqlW55729_12polars_utils7float164pf16E4pushCseeLknQCOKOd_13polars_python.exit.i: ; preds = %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArrayNtNtCs2mZqlW55729_12polars_utils7float164pf16E13init_validityCseeLknQCOKOd_13polars_python.exit.i.i, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutableNtB5_13MutableBitmap4push.exit.i.i
-  call void @_Py_DecRef(ptr noundef nonnull @_Py_NoneStruct) #50, !dbg !191194, !noalias !190660
+  call void @_Py_DecRef(ptr noundef nonnull %.sroa.212.0.copyload.i.i) #50, !dbg !191194, !noalias !190660
   br label %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArrayNtNtCs2mZqlW55729_12polars_utils7float164pf16E4pushCseeLknQCOKOd_13polars_python.exit.i.i.backedge, !dbg !191198
 
 _RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArrayNtNtCs2mZqlW55729_12polars_utils7float164pf16E4pushCseeLknQCOKOd_13polars_python.exit.i.i.backedge: ; preds = %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArrayNtNtCs2mZqlW55729_12polars_utils7float164pf16E4pushCseeLknQCOKOd_13polars_python.exit.i, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutableNtB5_13MutableBitmap4push.exit6.i.i.i, %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecNtNtCs2mZqlW55729_12polars_utils7float164pf16E8push_mutCseeLknQCOKOd_13polars_python.exit.i.i.i
@@ -2681,7 +2681,7 @@ _RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21Mutabl
 
 .body.i:                                          ; preds = %.loopexit.split-lp.i, %.loopexit.i, %bb.ba
   %eh.lpad-body.i = phi { ptr, i32 } [ %lpad.phi10.i, %bb.ba ], [ %lpad.loopexit.i, %.loopexit.i ], [ %lpad.loopexit.split-lp.i, %.loopexit.split-lp.i ]
-  call void @_Py_DecRef(ptr noundef nonnull @_Py_NoneStruct) #50, !dbg !191199, !noalias !190660
+  call void @_Py_DecRef(ptr noundef nonnull %.sroa.212.0.copyload.i.i) #50, !dbg !191199, !noalias !190660
   br label %.thread.i.i, !dbg !191203
 
 bb.bi:                                            ; preds = %bb.bl
@@ -3084,7 +3084,7 @@ bb.w:                                             ; preds = %_RNvMs3_NtNtNtCs877
   br i1 %.not.i.i, label %bb.az, label %bb.x, !dbg !227631
 
 bb.x:                                             ; preds = %bb.w
-  %.sroa.212.0.copyload.i.i = load ptr, ptr %.sroa.212.0..sroa_idx.i.i, align 8, !dbg !227637, !noalias !227524 ; 6 uses
+  %.sroa.212.0.copyload.i.i = load ptr, ptr %.sroa.212.0..sroa_idx.i.i, align 8, !dbg !227637, !noalias !227524 ; 8 uses
   %i.bt = trunc nuw i64 %i.bs to i1, !dbg !227638
   br i1 %i.bt, label %bb.y, label %bb.z, !dbg !227638
 
@@ -3352,7 +3352,7 @@ _RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutableNtB5_13MutableBitmap4push
   br label %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArrayhE4pushCseeLknQCOKOd_13polars_python.exit.i.i.backedge, !dbg !227937
 
 _RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArrayhE4pushCseeLknQCOKOd_13polars_python.exit.i: ; preds = %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArrayhE13init_validityCseeLknQCOKOd_13polars_python.exit.i.i, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutableNtB5_13MutableBitmap4push.exit.i.i
-  call void @_Py_DecRef(ptr noundef nonnull @_Py_NoneStruct) #50, !dbg !227938, !noalias !227530
+  call void @_Py_DecRef(ptr noundef nonnull %.sroa.212.0.copyload.i.i) #50, !dbg !227938, !noalias !227530
   br label %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArrayhE4pushCseeLknQCOKOd_13polars_python.exit.i.i.backedge, !dbg !227942
 
 _RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArrayhE4pushCseeLknQCOKOd_13polars_python.exit.i.i.backedge: ; preds = %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArrayhE4pushCseeLknQCOKOd_13polars_python.exit.i, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutableNtB5_13MutableBitmap4push.exit6.i.i.i, %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VechE8push_mutCseeLknQCOKOd_13polars_python.exit.i.i.i
@@ -3370,7 +3370,7 @@ _RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21Mutabl
 
 .body.i:                                          ; preds = %.loopexit.split-lp.i, %.loopexit.i, %bb.al
   %eh.lpad-body.i = phi { ptr, i32 } [ %lpad.phi10.i, %bb.al ], [ %lpad.loopexit.i, %.loopexit.i ], [ %lpad.loopexit.split-lp.i, %.loopexit.split-lp.i ]
-  call void @_Py_DecRef(ptr noundef nonnull @_Py_NoneStruct) #50, !dbg !227943, !noalias !227530
+  call void @_Py_DecRef(ptr noundef nonnull %.sroa.212.0.copyload.i.i) #50, !dbg !227943, !noalias !227530
   br label %.thread.i.i, !dbg !227947
 
 bb.au:                                            ; preds = %bb.ax
@@ -3773,7 +3773,7 @@ bb.w:                                             ; preds = %_RNvMs3_NtNtNtCs877
   br i1 %.not.i.i, label %bb.az, label %bb.x, !dbg !228771
 
 bb.x:                                             ; preds = %bb.w
-  %.sroa.212.0.copyload.i.i = load ptr, ptr %.sroa.212.0..sroa_idx.i.i, align 8, !dbg !228777, !noalias !228664 ; 6 uses
+  %.sroa.212.0.copyload.i.i = load ptr, ptr %.sroa.212.0..sroa_idx.i.i, align 8, !dbg !228777, !noalias !228664 ; 8 uses
   %i.bt = trunc nuw i64 %i.bs to i1, !dbg !228778
   br i1 %i.bt, label %bb.y, label %bb.z, !dbg !228778
 
@@ -4041,7 +4041,7 @@ _RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutableNtB5_13MutableBitmap4push
   br label %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArraytE4pushCseeLknQCOKOd_13polars_python.exit.i.i.backedge, !dbg !229086
 
 _RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArraytE4pushCseeLknQCOKOd_13polars_python.exit.i: ; preds = %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArraytE13init_validityCseeLknQCOKOd_13polars_python.exit.i.i, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutableNtB5_13MutableBitmap4push.exit.i.i
-  call void @_Py_DecRef(ptr noundef nonnull @_Py_NoneStruct) #50, !dbg !229087, !noalias !228670
+  call void @_Py_DecRef(ptr noundef nonnull %.sroa.212.0.copyload.i.i) #50, !dbg !229087, !noalias !228670
   br label %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArraytE4pushCseeLknQCOKOd_13polars_python.exit.i.i.backedge, !dbg !229091
 
 _RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArraytE4pushCseeLknQCOKOd_13polars_python.exit.i.i.backedge: ; preds = %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArraytE4pushCseeLknQCOKOd_13polars_python.exit.i, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutableNtB5_13MutableBitmap4push.exit6.i.i.i, %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VectE8push_mutCseeLknQCOKOd_13polars_python.exit.i.i.i
@@ -4059,7 +4059,7 @@ _RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21Mutabl
 
 .body.i:                                          ; preds = %.loopexit.split-lp.i, %.loopexit.i, %bb.al
   %eh.lpad-body.i = phi { ptr, i32 } [ %lpad.phi9.i, %bb.al ], [ %lpad.loopexit.i, %.loopexit.i ], [ %lpad.loopexit.split-lp.i, %.loopexit.split-lp.i ]
-  call void @_Py_DecRef(ptr noundef nonnull @_Py_NoneStruct) #50, !dbg !229092, !noalias !228670
+  call void @_Py_DecRef(ptr noundef nonnull %.sroa.212.0.copyload.i.i) #50, !dbg !229092, !noalias !228670
   br label %.thread.i.i, !dbg !229096
 
 bb.au:                                            ; preds = %bb.ax
@@ -4462,7 +4462,7 @@ bb.w:                                             ; preds = %_RNvMs3_NtNtNtCs877
   br i1 %.not.i.i, label %bb.az, label %bb.x, !dbg !230184
 
 bb.x:                                             ; preds = %bb.w
-  %.sroa.212.0.copyload.i.i = load ptr, ptr %.sroa.212.0..sroa_idx.i.i, align 8, !dbg !230190, !noalias !230077 ; 6 uses
+  %.sroa.212.0.copyload.i.i = load ptr, ptr %.sroa.212.0..sroa_idx.i.i, align 8, !dbg !230190, !noalias !230077 ; 8 uses
   %i.bt = trunc nuw i64 %i.bs to i1, !dbg !230191
   br i1 %i.bt, label %bb.y, label %bb.z, !dbg !230191
 
@@ -4733,7 +4733,7 @@ _RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutableNtB5_13MutableBitmap4push
   br label %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArraymE4pushCseeLknQCOKOd_13polars_python.exit.i.i.backedge, !dbg !230491
 
 _RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArraymE4pushCseeLknQCOKOd_13polars_python.exit.i: ; preds = %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArraymE13init_validityCseeLknQCOKOd_13polars_python.exit.i.i, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutableNtB5_13MutableBitmap4push.exit.i.i
-  call void @_Py_DecRef(ptr noundef nonnull @_Py_NoneStruct) #50, !dbg !230492, !noalias !230083
+  call void @_Py_DecRef(ptr noundef nonnull %.sroa.212.0.copyload.i.i) #50, !dbg !230492, !noalias !230083
   br label %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArraymE4pushCseeLknQCOKOd_13polars_python.exit.i.i.backedge, !dbg !230496
 
 _RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArraymE4pushCseeLknQCOKOd_13polars_python.exit.i.i.backedge: ; preds = %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArraymE4pushCseeLknQCOKOd_13polars_python.exit.i, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutableNtB5_13MutableBitmap4push.exit6.i.i.i, %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecmE8push_mutCseeLknQCOKOd_13polars_python.exit.i.i.i
@@ -4751,7 +4751,7 @@ _RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21Mutabl
 
 .body.i:                                          ; preds = %.loopexit.split-lp.i, %.loopexit.i, %bb.al
   %eh.lpad-body.i = phi { ptr, i32 } [ %lpad.phi9.i, %bb.al ], [ %lpad.loopexit.i, %.loopexit.i ], [ %lpad.loopexit.split-lp.i, %.loopexit.split-lp.i ]
-  call void @_Py_DecRef(ptr noundef nonnull @_Py_NoneStruct) #50, !dbg !230497, !noalias !230083
+  call void @_Py_DecRef(ptr noundef nonnull %.sroa.212.0.copyload.i.i) #50, !dbg !230497, !noalias !230083
   br label %.thread.i.i, !dbg !230501
 
 bb.au:                                            ; preds = %bb.ax
@@ -5154,7 +5154,7 @@ bb.w:                                             ; preds = %_RNvMs3_NtNtNtCs877
   br i1 %.not.i.i, label %bb.az, label %bb.x, !dbg !231333
 
 bb.x:                                             ; preds = %bb.w
-  %.sroa.212.0.copyload.i.i = load ptr, ptr %.sroa.212.0..sroa_idx.i.i, align 8, !dbg !231339, !noalias !231226 ; 6 uses
+  %.sroa.212.0.copyload.i.i = load ptr, ptr %.sroa.212.0..sroa_idx.i.i, align 8, !dbg !231339, !noalias !231226 ; 8 uses
   %i.bt = trunc nuw i64 %i.bs to i1, !dbg !231340
   br i1 %i.bt, label %bb.y, label %bb.z, !dbg !231340
 
@@ -5423,7 +5423,7 @@ _RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutableNtB5_13MutableBitmap4push
   br label %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArrayyE4pushCseeLknQCOKOd_13polars_python.exit.i.i.backedge, !dbg !231649
 
 _RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArrayyE4pushCseeLknQCOKOd_13polars_python.exit.i: ; preds = %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArrayyE13init_validityCseeLknQCOKOd_13polars_python.exit.i.i, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutableNtB5_13MutableBitmap4push.exit.i.i
-  call void @_Py_DecRef(ptr noundef nonnull @_Py_NoneStruct) #50, !dbg !231650, !noalias !231232
+  call void @_Py_DecRef(ptr noundef nonnull %.sroa.212.0.copyload.i.i) #50, !dbg !231650, !noalias !231232
   br label %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArrayyE4pushCseeLknQCOKOd_13polars_python.exit.i.i.backedge, !dbg !231654
 
 _RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArrayyE4pushCseeLknQCOKOd_13polars_python.exit.i.i.backedge: ; preds = %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArrayyE4pushCseeLknQCOKOd_13polars_python.exit.i, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutableNtB5_13MutableBitmap4push.exit6.i.i.i, %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecyE8push_mutCseeLknQCOKOd_13polars_python.exit.i.i.i
@@ -5441,7 +5441,7 @@ _RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21Mutabl
 
 .body.i:                                          ; preds = %.loopexit.split-lp.i, %.loopexit.i, %bb.al
   %eh.lpad-body.i = phi { ptr, i32 } [ %lpad.phi9.i, %bb.al ], [ %lpad.loopexit.i, %.loopexit.i ], [ %lpad.loopexit.split-lp.i, %.loopexit.split-lp.i ]
-  call void @_Py_DecRef(ptr noundef nonnull @_Py_NoneStruct) #50, !dbg !231655, !noalias !231232
+  call void @_Py_DecRef(ptr noundef nonnull %.sroa.212.0.copyload.i.i) #50, !dbg !231655, !noalias !231232
   br label %.thread.i.i, !dbg !231659
 
 bb.au:                                            ; preds = %bb.ax
@@ -5844,7 +5844,7 @@ bb.w:                                             ; preds = %_RNvMs3_NtNtNtCs877
   br i1 %.not.i.i, label %bb.az, label %bb.x, !dbg !232489
 
 bb.x:                                             ; preds = %bb.w
-  %.sroa.212.0.copyload.i.i = load ptr, ptr %.sroa.212.0..sroa_idx.i.i, align 8, !dbg !232495, !noalias !232382 ; 6 uses
+  %.sroa.212.0.copyload.i.i = load ptr, ptr %.sroa.212.0..sroa_idx.i.i, align 8, !dbg !232495, !noalias !232382 ; 8 uses
   %i.bt = trunc nuw i64 %i.bs to i1, !dbg !232496
   br i1 %i.bt, label %bb.y, label %bb.z, !dbg !232496
 
@@ -6114,7 +6114,7 @@ _RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutableNtB5_13MutableBitmap4push
   br label %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArrayoE4pushCseeLknQCOKOd_13polars_python.exit.i.i.backedge, !dbg !232805
 
 _RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArrayoE4pushCseeLknQCOKOd_13polars_python.exit.i: ; preds = %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArrayoE13init_validityCseeLknQCOKOd_13polars_python.exit.i.i, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutableNtB5_13MutableBitmap4push.exit.i.i
-  call void @_Py_DecRef(ptr noundef nonnull @_Py_NoneStruct) #50, !dbg !232806, !noalias !232388
+  call void @_Py_DecRef(ptr noundef nonnull %.sroa.212.0.copyload.i.i) #50, !dbg !232806, !noalias !232388
   br label %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArrayoE4pushCseeLknQCOKOd_13polars_python.exit.i.i.backedge, !dbg !232810
 
 _RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArrayoE4pushCseeLknQCOKOd_13polars_python.exit.i.i.backedge: ; preds = %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArrayoE4pushCseeLknQCOKOd_13polars_python.exit.i, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutableNtB5_13MutableBitmap4push.exit6.i.i.i, %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecoE8push_mutCseeLknQCOKOd_13polars_python.exit.i.i.i
@@ -6132,7 +6132,7 @@ _RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21Mutabl
 
 .body.i:                                          ; preds = %.loopexit.split-lp.i, %.loopexit.i, %bb.al
   %eh.lpad-body.i = phi { ptr, i32 } [ %lpad.phi9.i, %bb.al ], [ %lpad.loopexit.i, %.loopexit.i ], [ %lpad.loopexit.split-lp.i, %.loopexit.split-lp.i ]
-  call void @_Py_DecRef(ptr noundef nonnull @_Py_NoneStruct) #50, !dbg !232811, !noalias !232388
+  call void @_Py_DecRef(ptr noundef nonnull %.sroa.212.0.copyload.i.i) #50, !dbg !232811, !noalias !232388
   br label %.thread.i.i, !dbg !232815
 
 bb.au:                                            ; preds = %bb.ax
@@ -6535,7 +6535,7 @@ bb.w:                                             ; preds = %_RNvMs3_NtNtNtCs877
   br i1 %.not.i.i, label %bb.az, label %bb.x, !dbg !233647
 
 bb.x:                                             ; preds = %bb.w
-  %.sroa.212.0.copyload.i.i = load ptr, ptr %.sroa.212.0..sroa_idx.i.i, align 8, !dbg !233653, !noalias !233540 ; 6 uses
+  %.sroa.212.0.copyload.i.i = load ptr, ptr %.sroa.212.0..sroa_idx.i.i, align 8, !dbg !233653, !noalias !233540 ; 8 uses
   %i.bt = trunc nuw i64 %i.bs to i1, !dbg !233654
   br i1 %i.bt, label %bb.y, label %bb.z, !dbg !233654
 
@@ -6803,7 +6803,7 @@ _RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutableNtB5_13MutableBitmap4push
   br label %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArrayaE4pushCseeLknQCOKOd_13polars_python.exit.i.i.backedge, !dbg !233962
 
 _RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArrayaE4pushCseeLknQCOKOd_13polars_python.exit.i: ; preds = %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArrayaE13init_validityCseeLknQCOKOd_13polars_python.exit.i.i, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutableNtB5_13MutableBitmap4push.exit.i.i
-  call void @_Py_DecRef(ptr noundef nonnull @_Py_NoneStruct) #50, !dbg !233963, !noalias !233546
+  call void @_Py_DecRef(ptr noundef nonnull %.sroa.212.0.copyload.i.i) #50, !dbg !233963, !noalias !233546
   br label %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArrayaE4pushCseeLknQCOKOd_13polars_python.exit.i.i.backedge, !dbg !233967
 
 _RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArrayaE4pushCseeLknQCOKOd_13polars_python.exit.i.i.backedge: ; preds = %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArrayaE4pushCseeLknQCOKOd_13polars_python.exit.i, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutableNtB5_13MutableBitmap4push.exit6.i.i.i, %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecaE8push_mutCseeLknQCOKOd_13polars_python.exit.i.i.i
@@ -6821,7 +6821,7 @@ _RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21Mutabl
 
 .body.i:                                          ; preds = %.loopexit.split-lp.i, %.loopexit.i, %bb.al
   %eh.lpad-body.i = phi { ptr, i32 } [ %lpad.phi9.i, %bb.al ], [ %lpad.loopexit.i, %.loopexit.i ], [ %lpad.loopexit.split-lp.i, %.loopexit.split-lp.i ]
-  call void @_Py_DecRef(ptr noundef nonnull @_Py_NoneStruct) #50, !dbg !233968, !noalias !233546
+  call void @_Py_DecRef(ptr noundef nonnull %.sroa.212.0.copyload.i.i) #50, !dbg !233968, !noalias !233546
   br label %.thread.i.i, !dbg !233972
 
 bb.au:                                            ; preds = %bb.ax
@@ -7224,7 +7224,7 @@ bb.w:                                             ; preds = %_RNvMs3_NtNtNtCs877
   br i1 %.not.i.i, label %bb.az, label %bb.x, !dbg !234579
 
 bb.x:                                             ; preds = %bb.w
-  %.sroa.212.0.copyload.i.i = load ptr, ptr %.sroa.212.0..sroa_idx.i.i, align 8, !dbg !234585, !noalias !234472 ; 6 uses
+  %.sroa.212.0.copyload.i.i = load ptr, ptr %.sroa.212.0..sroa_idx.i.i, align 8, !dbg !234585, !noalias !234472 ; 8 uses
   %i.bt = trunc nuw i64 %i.bs to i1, !dbg !234586
   br i1 %i.bt, label %bb.y, label %bb.z, !dbg !234586
 
@@ -7492,7 +7492,7 @@ _RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutableNtB5_13MutableBitmap4push
   br label %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArraysE4pushCseeLknQCOKOd_13polars_python.exit.i.i.backedge, !dbg !234894
 
 _RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArraysE4pushCseeLknQCOKOd_13polars_python.exit.i: ; preds = %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArraysE13init_validityCseeLknQCOKOd_13polars_python.exit.i.i, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutableNtB5_13MutableBitmap4push.exit.i.i
-  call void @_Py_DecRef(ptr noundef nonnull @_Py_NoneStruct) #50, !dbg !234895, !noalias !234478
+  call void @_Py_DecRef(ptr noundef nonnull %.sroa.212.0.copyload.i.i) #50, !dbg !234895, !noalias !234478
   br label %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArraysE4pushCseeLknQCOKOd_13polars_python.exit.i.i.backedge, !dbg !234899
 
 _RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArraysE4pushCseeLknQCOKOd_13polars_python.exit.i.i.backedge: ; preds = %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArraysE4pushCseeLknQCOKOd_13polars_python.exit.i, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutableNtB5_13MutableBitmap4push.exit6.i.i.i, %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecsE8push_mutCseeLknQCOKOd_13polars_python.exit.i.i.i
@@ -7510,7 +7510,7 @@ _RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21Mutabl
 
 .body.i:                                          ; preds = %.loopexit.split-lp.i, %.loopexit.i, %bb.al
   %eh.lpad-body.i = phi { ptr, i32 } [ %lpad.phi9.i, %bb.al ], [ %lpad.loopexit.i, %.loopexit.i ], [ %lpad.loopexit.split-lp.i, %.loopexit.split-lp.i ]
-  call void @_Py_DecRef(ptr noundef nonnull @_Py_NoneStruct) #50, !dbg !234900, !noalias !234478
+  call void @_Py_DecRef(ptr noundef nonnull %.sroa.212.0.copyload.i.i) #50, !dbg !234900, !noalias !234478
   br label %.thread.i.i, !dbg !234904
 
 bb.au:                                            ; preds = %bb.ax
@@ -7913,7 +7913,7 @@ bb.w:                                             ; preds = %_RNvMs3_NtNtNtCs877
   br i1 %.not.i.i, label %bb.az, label %bb.x, !dbg !235511
 
 bb.x:                                             ; preds = %bb.w
-  %.sroa.212.0.copyload.i.i = load ptr, ptr %.sroa.212.0..sroa_idx.i.i, align 8, !dbg !235517, !noalias !235404 ; 6 uses
+  %.sroa.212.0.copyload.i.i = load ptr, ptr %.sroa.212.0..sroa_idx.i.i, align 8, !dbg !235517, !noalias !235404 ; 8 uses
   %i.bt = trunc nuw i64 %i.bs to i1, !dbg !235518
   br i1 %i.bt, label %bb.y, label %bb.z, !dbg !235518
 
@@ -8184,7 +8184,7 @@ _RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutableNtB5_13MutableBitmap4push
   br label %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArraylE4pushCseeLknQCOKOd_13polars_python.exit.i.i.backedge, !dbg !235818
 
 _RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArraylE4pushCseeLknQCOKOd_13polars_python.exit.i: ; preds = %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArraylE13init_validityCseeLknQCOKOd_13polars_python.exit.i.i, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutableNtB5_13MutableBitmap4push.exit.i.i
-  call void @_Py_DecRef(ptr noundef nonnull @_Py_NoneStruct) #50, !dbg !235819, !noalias !235410
+  call void @_Py_DecRef(ptr noundef nonnull %.sroa.212.0.copyload.i.i) #50, !dbg !235819, !noalias !235410
   br label %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArraylE4pushCseeLknQCOKOd_13polars_python.exit.i.i.backedge, !dbg !235823
 
 _RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArraylE4pushCseeLknQCOKOd_13polars_python.exit.i.i.backedge: ; preds = %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArraylE4pushCseeLknQCOKOd_13polars_python.exit.i, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutableNtB5_13MutableBitmap4push.exit6.i.i.i, %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VeclE8push_mutCseeLknQCOKOd_13polars_python.exit.i.i.i
@@ -8202,7 +8202,7 @@ _RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21Mutabl
 
 .body.i:                                          ; preds = %.loopexit.split-lp.i, %.loopexit.i, %bb.al
   %eh.lpad-body.i = phi { ptr, i32 } [ %lpad.phi9.i, %bb.al ], [ %lpad.loopexit.i, %.loopexit.i ], [ %lpad.loopexit.split-lp.i, %.loopexit.split-lp.i ]
-  call void @_Py_DecRef(ptr noundef nonnull @_Py_NoneStruct) #50, !dbg !235824, !noalias !235410
+  call void @_Py_DecRef(ptr noundef nonnull %.sroa.212.0.copyload.i.i) #50, !dbg !235824, !noalias !235410
   br label %.thread.i.i, !dbg !235828
 
 bb.au:                                            ; preds = %bb.ax
@@ -8605,7 +8605,7 @@ bb.w:                                             ; preds = %_RNvMs3_NtNtNtCs877
   br i1 %.not.i.i, label %bb.az, label %bb.x, !dbg !236435
 
 bb.x:                                             ; preds = %bb.w
-  %.sroa.212.0.copyload.i.i = load ptr, ptr %.sroa.212.0..sroa_idx.i.i, align 8, !dbg !236441, !noalias !236328 ; 6 uses
+  %.sroa.212.0.copyload.i.i = load ptr, ptr %.sroa.212.0..sroa_idx.i.i, align 8, !dbg !236441, !noalias !236328 ; 8 uses
   %i.bt = trunc nuw i64 %i.bs to i1, !dbg !236442
   br i1 %i.bt, label %bb.y, label %bb.z, !dbg !236442
 
@@ -8874,7 +8874,7 @@ _RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutableNtB5_13MutableBitmap4push
   br label %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArrayxE4pushCseeLknQCOKOd_13polars_python.exit.i.i.backedge, !dbg !236742
 
 _RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArrayxE4pushCseeLknQCOKOd_13polars_python.exit.i: ; preds = %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArrayxE13init_validityCseeLknQCOKOd_13polars_python.exit.i.i, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutableNtB5_13MutableBitmap4push.exit.i.i
-  call void @_Py_DecRef(ptr noundef nonnull @_Py_NoneStruct) #50, !dbg !236743, !noalias !236334
+  call void @_Py_DecRef(ptr noundef nonnull %.sroa.212.0.copyload.i.i) #50, !dbg !236743, !noalias !236334
   br label %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArrayxE4pushCseeLknQCOKOd_13polars_python.exit.i.i.backedge, !dbg !236747
 
 _RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArrayxE4pushCseeLknQCOKOd_13polars_python.exit.i.i.backedge: ; preds = %_RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21MutablePrimitiveArrayxE4pushCseeLknQCOKOd_13polars_python.exit.i, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutableNtB5_13MutableBitmap4push.exit6.i.i.i, %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecxE8push_mutCseeLknQCOKOd_13polars_python.exit.i.i.i
@@ -8892,7 +8892,7 @@ _RNvMs3_NtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive7mutableINtB5_21Mutabl
 
 .body.i:                                          ; preds = %.loopexit.split-lp.i, %.loopexit.i, %bb.al
   %eh.lpad-body.i = phi { ptr, i32 } [ %lpad.phi9.i, %bb.al ], [ %lpad.loopexit.i, %.loopexit.i ], [ %lpad.loopexit.split-lp.i, %.loopexit.split-lp.i ]
-  call void @_Py_DecRef(ptr noundef nonnull @_Py_NoneStruct) #50, !dbg !236748, !noalias !236334
+  call void @_Py_DecRef(ptr noundef nonnull %.sroa.212.0.copyload.i.i) #50, !dbg !236748, !noalias !236334
   br label %.thread.i.i, !dbg !236752
 
 bb.au:                                            ; preds = %bb.ax
@@ -9295,7 +9295,7 @@ bb.r:                                             ; preds = %bb.o
   br i1 %.not, label %bb.t, label %bb.s, !dbg !244374
 
 bb.s:                                             ; preds = %bb.r
-  %.sroa.212.0.copyload = load ptr, ptr %.sroa.212.0..sroa_idx, align 8, !dbg !244381 ; 11 uses
+  %.sroa.212.0.copyload = load ptr, ptr %.sroa.212.0..sroa_idx, align 8, !dbg !244381 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n), !dbg !244382
   %i.bg = trunc nuw i64 %i.bf to i1, !dbg !244384
   br i1 %i.bg, label %bb.w, label %bb.x, !dbg !244384
@@ -9346,9 +9346,8 @@ bb.z:                                             ; preds = %bb.x
           to label %bb.bh unwind label %.loopexit, !dbg !244416
 
 .body84:                                          ; preds = %.loopexit, %.loopexit.split-lp, %bb.bj, %bb.ax, %bb.ah, %bb.be
-  %.sroa.212.0.copyload94 = phi ptr [ %.sroa.212.0.copyload, %bb.ah ], [ %.sroa.212.0.copyload, %bb.be ], [ @_Py_NoneStruct, %bb.bj ], [ %.sroa.212.0.copyload, %bb.ax ], [ %.sroa.212.0.copyload, %.loopexit ], [ %.sroa.212.0.copyload, %.loopexit.split-lp ]
   %.pn64 = phi { ptr, i32 } [ %i.bz, %bb.ah ], [ %.pn107, %bb.be ], [ %i.dd, %bb.bj ], [ %i.cq, %bb.ax ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
-  call void @_Py_DecRef(ptr noundef nonnull %.sroa.212.0.copyload94) #50, !dbg !244419
+  call void @_Py_DecRef(ptr noundef nonnull %.sroa.212.0.copyload) #50, !dbg !244419
   br label %bb.p, !dbg !244423
 
 .loopexit:                                        ; preds = %bb.y, %bb.z, %bb.ac

@@ -135,26 +135,22 @@ _ZN5Eigen10MatrixBaseINS_6MatrixIdLi3ELi1ELi0ELi3ELi1EEEE9normalizeEv.exit: ; pr
   %i.cc = fdiv <2 x double> %i.br, %i.cb
   %i.cd = fdiv double %i.bu, %.scalar.i52
   %.sroa.8.0 = select i1 %i.bz, double %i.cd, double %i.bu ; 6 uses
-  %.sroa.053.0 = select i1 %i.bz, <2 x double> %i.cc, <2 x double> %i.br ; 8 uses
-  %.sroa.053.8.vec.extract = extractelement <2 x double> %.sroa.053.0, i64 1 ; 3 uses
+  %.sroa.053.0 = select i1 %i.bz, <2 x double> %i.cc, <2 x double> %i.br ; 9 uses
+  %.sroa.053.8.vec.extract = extractelement <2 x double> %.sroa.053.0, i64 1
   %i.ce = tail call double @acos(double noundef %i.aj) #4 ; 2 uses
   %i.cf = tail call double @cos(double noundef %i.ce) #4 ; 4 uses
   %i.cg = tail call double @sin(double noundef %i.ce) #4 ; 2 uses
-  %foldExtExtBinop78 = fmul <2 x double> %.sroa.053.0, %.sroa.053.0
   %i.ch = fsub double 1.000000e+00, %i.cf         ; 3 uses
-  %3 = insertelement <2 x double> %foldExtExtBinop78, double %.sroa.8.0, i64 1
   %i.ci = insertelement <2 x double> poison, double %i.ch, i64 0 ; 2 uses
   %i.cj = insertelement <2 x double> %i.ci, double %i.cg, i64 1 ; 2 uses
   %i.ck = insertelement <2 x double> poison, double %i.cf, i64 0
   %i.cl = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.cm = insertelement <2 x double> %.sroa.053.0, double %.sroa.8.0, i64 0
-  %i.cn = shufflevector <2 x double> %.sroa.053.0, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.cn = shufflevector <2 x double> %.sroa.053.0, <2 x double> poison, <2 x i32> zeroinitializer
   %i.co = fmul <2 x double> %i.cm, %i.cn
   %i.cp = shufflevector <2 x double> %i.ci, <2 x double> poison, <2 x i32> zeroinitializer
   %i.cq = fmul <2 x double> %i.cp, %i.co          ; 3 uses
   %i.cr = insertelement <2 x double> %i.cq, double %i.cf, i64 0
-  %4 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %3, <2 x double> %i.cj, <2 x double> %i.cr)
-  store <2 x double> %4, ptr %0, align 8, !tbaa !12
   %i.cs = shufflevector <2 x double> %.sroa.053.0, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %i.ct = insertelement <2 x double> %i.cs, double %.sroa.8.0, i64 1
   %i.cu = fneg <2 x double> %i.ct
@@ -162,11 +158,14 @@ _ZN5Eigen10MatrixBaseINS_6MatrixIdLi3ELi1ELi0ELi3ELi1EEEE9normalizeEv.exit: ; pr
   %i.cw = shufflevector <2 x double> %i.cv, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.cx = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.cu, <2 x double> %i.cw, <2 x double> %i.cq)
   store <2 x double> %i.cx, ptr %i.cl, align 8, !tbaa !12
-  %5 = fmul double %.sroa.053.8.vec.extract, %.sroa.053.8.vec.extract
+  %3 = fmul <2 x double> %.sroa.053.0, %.sroa.053.0 ; 2 uses
+  %4 = insertelement <2 x double> %3, double %.sroa.8.0, i64 1
+  %5 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %4, <2 x double> %i.cj, <2 x double> %i.cr)
+  store <2 x double> %5, ptr %0, align 8, !tbaa !12
   %i.cy = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.cz = fmul double %.sroa.8.0, %.sroa.053.8.vec.extract
   %i.da = fmul double %i.ch, %i.cz                ; 2 uses
-  %6 = insertelement <2 x double> %i.cn, double %5, i64 0
+  %6 = shufflevector <2 x double> %3, <2 x double> %.sroa.053.0, <2 x i32> <i32 1, i32 2>
   %i.db = insertelement <2 x double> %i.ck, double %i.da, i64 1
   %i.dc = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %6, <2 x double> %i.cj, <2 x double> %i.db)
   store <2 x double> %i.dc, ptr %i.cy, align 8, !tbaa !12

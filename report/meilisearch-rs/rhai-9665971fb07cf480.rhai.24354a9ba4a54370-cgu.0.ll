@@ -204,7 +204,7 @@ bb.nt:                                            ; preds = %"_ZN4rhai9optimizer
   %.sroa.9.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.co, i64 22
   %.sroa.9.0.copyload.i.i = load i16, ptr %.sroa.9.0..sroa_idx.i.i, align 2, !alias.scope !50559, !noalias !50560 ; 2 uses
   %.sroa.911.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.co, i64 24
-  %.sroa.911.0.copyload.i.i = load ptr, ptr %.sroa.911.0..sroa_idx.i.i, align 8, !alias.scope !50559, !noalias !50560 ; 6 uses
+  %.sroa.911.0.copyload.i.i = load ptr, ptr %.sroa.911.0..sroa_idx.i.i, align 8, !alias.scope !50559, !noalias !50560 ; 4 uses
   %i.asb = load <2 x i16>, ptr %i.aql, align 2, !noalias !50563 ; 2 uses
   %i.asc = icmp eq i8 %.sroa.6.0.copyload5.i, 14
   br i1 %i.asc, label %bb.nu, label %_ZN4rhai3ast4expr4Expr12set_position17ha3d3338d0a6f6f81E.exit.i.i
@@ -214,11 +214,9 @@ bb.nu:                                            ; preds = %bb.nt
   %i.asd = load <2 x i16>, ptr %.sroa.54.0..sroa_idx.i.i, align 2, !alias.scope !50559, !noalias !50560
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.911.0.copyload.i.i) ]
   %i.ase = getelementptr inbounds nuw i8, ptr %.sroa.911.0.copyload.i.i, i64 136
-  store <2 x i16> %i.asb, ptr %i.ase, align 8, !noalias !50564
-  %.sroa.5.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.911.0.copyload.i.i, i64 140
-  store i16 0, ptr %.sroa.5.0..sroa_idx.i.i.i, align 4, !noalias !50564
-  %.sroa.6.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.911.0.copyload.i.i, i64 142
-  store i16 0, ptr %.sroa.6.0..sroa_idx.i.i.i, align 2, !noalias !50564
+  %3 = shufflevector <2 x i16> %i.asb, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %4 = shufflevector <4 x i16> %3, <4 x i16> <i16 poison, i16 poison, i16 0, i16 0>, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  store <4 x i16> %4, ptr %i.ase, align 8, !noalias !50564
   br label %_ZN4rhai3ast4expr4Expr12set_position17ha3d3338d0a6f6f81E.exit.i.i
 
 _ZN4rhai3ast4expr4Expr12set_position17ha3d3338d0a6f6f81E.exit.i.i: ; preds = %bb.nu, %bb.nt
@@ -621,7 +619,7 @@ bb.tt:                                            ; preds = %._crit_edge7593
   %.sroa.92991.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bja, i64 6
   %.sroa.92991.0.copyload = load i16, ptr %.sroa.92991.0..sroa_idx, align 2 ; 2 uses
   %.sroa.92994.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bja, i64 8
-  %.sroa.92994.0.copyload = load ptr, ptr %.sroa.92994.0..sroa_idx, align 8 ; 6 uses
+  %.sroa.92994.0.copyload = load ptr, ptr %.sroa.92994.0..sroa_idx, align 8 ; 4 uses
   store i8 9, ptr %i.bja, align 8
   %i.bjb = load <2 x i16>, ptr %.sroa.52985.0..sroa_idx, align 2
   store i16 0, ptr %.sroa.52985.0..sroa_idx, align 2
@@ -633,11 +631,9 @@ bb.tt:                                            ; preds = %._crit_edge7593
 bb.tu:                                            ; preds = %bb.tt
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.92994.0.copyload) ]
   %i.bje = getelementptr inbounds nuw i8, ptr %.sroa.92994.0.copyload, i64 136
-  store <2 x i16> %i.bjc, ptr %i.bje, align 8, !noalias !50657
-  %.sroa.5.0..sroa_idx.i1411 = getelementptr inbounds nuw i8, ptr %.sroa.92994.0.copyload, i64 140
-  store i16 0, ptr %.sroa.5.0..sroa_idx.i1411, align 4, !noalias !50657
-  %.sroa.6.0..sroa_idx.i1412 = getelementptr inbounds nuw i8, ptr %.sroa.92994.0.copyload, i64 142
-  store i16 0, ptr %.sroa.6.0..sroa_idx.i1412, align 2, !noalias !50657
+  %5 = shufflevector <2 x i16> %i.bjc, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %6 = shufflevector <4 x i16> %5, <4 x i16> <i16 poison, i16 poison, i16 0, i16 0>, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  store <4 x i16> %6, ptr %i.bje, align 8, !noalias !50657
   br label %_ZN4rhai3ast4expr4Expr12set_position17ha3d3338d0a6f6f81E.exit
 
 bb.tv:                                            ; preds = %._crit_edge7593
@@ -690,7 +686,7 @@ bb.ty:                                            ; preds = %.split695
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bjk, i64 6
   %.sroa.9.0.copyload = load i16, ptr %.sroa.9.0..sroa_idx, align 2 ; 2 uses
   %.sroa.92962.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bjk, i64 8
-  %.sroa.92962.0.copyload = load ptr, ptr %.sroa.92962.0..sroa_idx, align 8 ; 6 uses
+  %.sroa.92962.0.copyload = load ptr, ptr %.sroa.92962.0..sroa_idx, align 8 ; 4 uses
   store i8 9, ptr %i.bjk, align 8
   %i.bjl = load <2 x i16>, ptr %.sroa.52955.0..sroa_idx, align 2
   store i16 0, ptr %.sroa.52955.0..sroa_idx, align 2
@@ -702,11 +698,9 @@ bb.ty:                                            ; preds = %.split695
 bb.tz:                                            ; preds = %bb.ty
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.92962.0.copyload) ]
   %i.bjo = getelementptr inbounds nuw i8, ptr %.sroa.92962.0.copyload, i64 136
-  store <2 x i16> %i.bjm, ptr %i.bjo, align 8, !noalias !50660
-  %.sroa.5.0..sroa_idx.i1416 = getelementptr inbounds nuw i8, ptr %.sroa.92962.0.copyload, i64 140
-  store i16 0, ptr %.sroa.5.0..sroa_idx.i1416, align 4, !noalias !50660
-  %.sroa.6.0..sroa_idx.i1417 = getelementptr inbounds nuw i8, ptr %.sroa.92962.0.copyload, i64 142
-  store i16 0, ptr %.sroa.6.0..sroa_idx.i1417, align 2, !noalias !50660
+  %7 = shufflevector <2 x i16> %i.bjm, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %8 = shufflevector <4 x i16> %7, <4 x i16> <i16 poison, i16 poison, i16 0, i16 0>, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  store <4 x i16> %8, ptr %i.bjo, align 8, !noalias !50660
   br label %_ZN4rhai3ast4expr4Expr12set_position17ha3d3338d0a6f6f81E.exit1419
 
 bb.ua:                                            ; preds = %.split695
@@ -959,7 +953,7 @@ bb.uq:                                            ; preds = %"_ZN4rhai9optimizer
   %.sroa.9.0..sroa_idx.i.i3879 = getelementptr inbounds nuw i8, ptr %i.cc, i64 22
   %.sroa.9.0.copyload.i.i3880 = load i16, ptr %.sroa.9.0..sroa_idx.i.i3879, align 2, !alias.scope !50727, !noalias !50728 ; 2 uses
   %.sroa.911.0..sroa_idx.i.i3881 = getelementptr inbounds nuw i8, ptr %i.cc, i64 24
-  %.sroa.911.0.copyload.i.i3882 = load ptr, ptr %.sroa.911.0..sroa_idx.i.i3881, align 8, !alias.scope !50727, !noalias !50728 ; 6 uses
+  %.sroa.911.0.copyload.i.i3882 = load ptr, ptr %.sroa.911.0..sroa_idx.i.i3881, align 8, !alias.scope !50727, !noalias !50728 ; 4 uses
   %i.bma = load <2 x i16>, ptr %i.bkm, align 2, !noalias !50731 ; 2 uses
   %i.bmb = icmp eq i8 %.sroa.6.0.copyload5.i3853, 14
   br i1 %i.bmb, label %bb.ur, label %_ZN4rhai3ast4expr4Expr12set_position17ha3d3338d0a6f6f81E.exit.i.i3883
@@ -969,11 +963,9 @@ bb.ur:                                            ; preds = %bb.uq
   %i.bmc = load <2 x i16>, ptr %.sroa.54.0..sroa_idx.i.i3893, align 2, !alias.scope !50727, !noalias !50728
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.911.0.copyload.i.i3882) ]
   %i.bmd = getelementptr inbounds nuw i8, ptr %.sroa.911.0.copyload.i.i3882, i64 136
-  store <2 x i16> %i.bma, ptr %i.bmd, align 8, !noalias !50732
-  %.sroa.5.0..sroa_idx.i.i.i3896 = getelementptr inbounds nuw i8, ptr %.sroa.911.0.copyload.i.i3882, i64 140
-  store i16 0, ptr %.sroa.5.0..sroa_idx.i.i.i3896, align 4, !noalias !50732
-  %.sroa.6.0..sroa_idx.i.i.i3897 = getelementptr inbounds nuw i8, ptr %.sroa.911.0.copyload.i.i3882, i64 142
-  store i16 0, ptr %.sroa.6.0..sroa_idx.i.i.i3897, align 2, !noalias !50732
+  %9 = shufflevector <2 x i16> %i.bma, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %10 = shufflevector <4 x i16> %9, <4 x i16> <i16 poison, i16 poison, i16 0, i16 0>, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  store <4 x i16> %10, ptr %i.bmd, align 8, !noalias !50732
   br label %_ZN4rhai3ast4expr4Expr12set_position17ha3d3338d0a6f6f81E.exit.i.i3883
 
 _ZN4rhai3ast4expr4Expr12set_position17ha3d3338d0a6f6f81E.exit.i.i3883: ; preds = %bb.ur, %bb.uq

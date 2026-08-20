@@ -203,7 +203,7 @@ bb.u:                                             ; preds = %bb.t
   br label %qobject_unref_impl.exit96
 
 qobject_unref_impl.exit96:                        ; preds = %bb.t, %bb.u
-  %i.aa = tail call ptr @qobject_from_json(ptr noundef nonnull @.str.226, ptr noundef nonnull @error_abort) #9 ; 3 uses
+  %i.aa = tail call ptr @qobject_from_json(ptr noundef nonnull @.str.226, ptr noundef nonnull @error_abort) #9 ; 5 uses
   %.not81 = icmp eq ptr %i.aa, null
   br i1 %.not81, label %bb.v, label %bb.w, !prof !15
 
@@ -239,7 +239,8 @@ bb.aa:                                            ; preds = %bb.z
   unreachable
 
 bb.ab:                                            ; preds = %bb.z
-  %i.ad = load i64, ptr getelementptr inbounds nuw (i8, ptr @qnull_, i64 8), align 8
+  %0 = getelementptr inbounds nuw i8, ptr %i.aa, i64 8 ; 2 uses
+  %i.ad = load i64, ptr %0, align 8
   %.not6.i98 = icmp eq i64 %i.ad, 0
   br i1 %.not6.i98, label %bb.ac, label %bb.ad
 
@@ -248,12 +249,12 @@ bb.ac:                                            ; preds = %bb.ab
   unreachable
 
 bb.ad:                                            ; preds = %bb.ab
-  %i.ae = atomicrmw sub ptr getelementptr inbounds nuw (i8, ptr @qnull_, i64 8), i64 1 seq_cst, align 8
+  %i.ae = atomicrmw sub ptr %0, i64 1 seq_cst, align 8
   %i.af = icmp eq i64 %i.ae, 1
   br i1 %i.af, label %bb.ae, label %qobject_unref_impl.exit99
 
 bb.ae:                                            ; preds = %bb.ad
-  tail call void @qobject_destroy(ptr noundef nonnull @qnull_) #9
+  tail call void @qobject_destroy(ptr noundef nonnull %i.aa) #9
   br label %qobject_unref_impl.exit99
 
 qobject_unref_impl.exit99:                        ; preds = %bb.ad, %bb.ae

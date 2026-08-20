@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f
 _Z27_mi_heap_set_default_directP9mi_heap_s.exit.i: ; preds = %bb.g, %bb.f
   %i.x = load ptr, ptr %.0, align 8, !tbaa !204
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 16
-  %i.z = load ptr, ptr %i.y, align 8, !tbaa !215  ; 41 uses
+  %i.z = load ptr, ptr %i.y, align 8, !tbaa !215  ; 42 uses
   %i.aa = icmp ne ptr %i.z, null
   %i.ab = icmp ne ptr %i.z, @_mi_heap_empty
   %i.ac = and i1 %i.aa, %i.ab
@@ -567,7 +567,7 @@ bb.aq:                                            ; preds = %.critedge.30.i.i
   br label %_ZL20_mi_thread_heap_doneP9mi_heap_s.exit
 
 .critedge.i:                                      ; preds = %._crit_edge.i
-  %i.fj = load ptr, ptr @_mi_heap_main, align 64, !tbaa !204
+  %i.fj = load ptr, ptr %i.z, align 8, !tbaa !204
   %i.fk = getelementptr inbounds nuw i8, ptr %i.fj, i64 952
   tail call fastcc void @_ZL19mi_stats_merge_fromP10mi_stats_s(ptr noundef nonnull %i.fk), !inline_history !261
   br label %_ZL20_mi_thread_heap_doneP9mi_heap_s.exit

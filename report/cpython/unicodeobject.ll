@@ -204,7 +204,7 @@ _PyUnicode_DATA.exit25.i197:                      ; preds = %bb.y, %bb.x
 
 PyUnicode_READ_CHAR.exit200:                      ; preds = %_PyUnicode_DATA.exit.i191, %_PyUnicode_DATA.exit17.i184, %_PyUnicode_DATA.exit25.i197
   %.0.i186 = phi i32 [ %i.be, %_PyUnicode_DATA.exit.i191 ], [ %i.bi, %_PyUnicode_DATA.exit17.i184 ], [ %i.bl, %_PyUnicode_DATA.exit25.i197 ]
-  %i.bm = call fastcc ptr @charmapencode_lookup(i32 noundef %.0.i186, ptr noundef %2, ptr noundef %i.b) ; 5 uses
+  %i.bm = call fastcc ptr @charmapencode_lookup(i32 noundef %.0.i186, ptr noundef %2, ptr noundef %i.b) ; 7 uses
   %i.bn = icmp eq ptr %i.bm, null
   br i1 %i.bn, label %Py_DECREF.exit168.thread236, label %bb.z
 
@@ -214,12 +214,12 @@ Py_DECREF.exit168.thread236:                      ; preds = %PyUnicode_READ_CHAR
 
 bb.z:                                             ; preds = %PyUnicode_READ_CHAR.exit200
   %.not147 = icmp eq ptr %i.bm, @_Py_NoneStruct
+  %9 = load i32, ptr %i.bm, align 8, !tbaa !205   ; 3 uses
+  %.not.i165 = icmp sgt i32 %9, -1                ; 2 uses
   br i1 %.not147, label %bb.ad, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
-  %9 = load i32, ptr %i.bm, align 8, !tbaa !205   ; 2 uses
-  %.not.i167 = icmp sgt i32 %9, -1
-  br i1 %.not.i167, label %bb.ab, label %Py_DECREF.exit168.thread
+  br i1 %.not.i165, label %bb.ab, label %Py_DECREF.exit168.thread
 
 bb.ab:                                            ; preds = %bb.aa
   %i.bo = add nsw i32 %9, -1                      ; 2 uses
@@ -232,18 +232,16 @@ bb.ac:                                            ; preds = %bb.ab
   br label %Py_DECREF.exit168.thread
 
 bb.ad:                                            ; preds = %bb.z
-  %10 = load i32, ptr @_Py_NoneStruct, align 8, !tbaa !205 ; 2 uses
-  %.not.i165 = icmp sgt i32 %10, -1
   br i1 %.not.i165, label %bb.ae, label %Py_DECREF.exit168
 
 bb.ae:                                            ; preds = %bb.ad
-  %i.bq = add nsw i32 %10, -1                     ; 2 uses
-  store i32 %i.bq, ptr @_Py_NoneStruct, align 8, !tbaa !205
+  %i.bq = add nsw i32 %9, -1                      ; 2 uses
+  store i32 %i.bq, ptr %i.bm, align 8, !tbaa !205
   %i.br = icmp eq i32 %i.bq, 0
   br i1 %i.br, label %bb.af, label %Py_DECREF.exit168
 
 bb.af:                                            ; preds = %bb.ae
-  tail call void @_Py_Dealloc(ptr noundef nonnull @_Py_NoneStruct) #33
+  tail call void @_Py_Dealloc(ptr noundef nonnull %i.bm) #33
   br label %Py_DECREF.exit168
 
 Py_DECREF.exit168.thread:                         ; preds = %PyUnicode_READ_CHAR.exit.thread, %bb.o, %bb.aa, %bb.ab, %bb.ac
@@ -646,7 +644,7 @@ _PyBytesWriter_GetData.exit:                      ; preds = %bb.i, %bb.k, %bb.l
   br label %Py_DECREF.exit70
 
 bb.m:                                             ; preds = %bb.a
-  %i.ax = call fastcc ptr @charmapencode_lookup(i32 noundef %0, ptr noundef %1, ptr noundef %i.a) ; 14 uses
+  %i.ax = call fastcc ptr @charmapencode_lookup(i32 noundef %0, ptr noundef %1, ptr noundef %i.a) ; 17 uses
   %i.ay = icmp eq ptr %i.ax, null
   br i1 %i.ay, label %Py_DECREF.exit70, label %bb.n
 
@@ -655,18 +653,18 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.az, label %bb.o, label %bb.r
 
 bb.o:                                             ; preds = %bb.n
-  %i.ba = load i32, ptr @_Py_NoneStruct, align 8, !tbaa !205 ; 2 uses
+  %i.ba = load i32, ptr %i.ax, align 8, !tbaa !205 ; 2 uses
   %.not.i69 = icmp sgt i32 %i.ba, -1
   br i1 %.not.i69, label %bb.p, label %Py_DECREF.exit70
 
 bb.p:                                             ; preds = %bb.o
   %i.bb = add nsw i32 %i.ba, -1                   ; 2 uses
-  store i32 %i.bb, ptr @_Py_NoneStruct, align 8, !tbaa !205
+  store i32 %i.bb, ptr %i.ax, align 8, !tbaa !205
   %i.bc = icmp eq i32 %i.bb, 0
   br i1 %i.bc, label %bb.q, label %Py_DECREF.exit70
 
 bb.q:                                             ; preds = %bb.p
-  tail call void @_Py_Dealloc(ptr noundef nonnull @_Py_NoneStruct) #33
+  tail call void @_Py_Dealloc(ptr noundef nonnull %i.ax) #33
   br label %Py_DECREF.exit70
 
 bb.r:                                             ; preds = %bb.n
@@ -1069,7 +1067,7 @@ PyUnicode_READ.exit:                              ; preds = %bb.az, %bb.ba, %bb.
   br i1 %.not.i72, label %bb.bc, label %charmaptranslate_output.exit.thread
 
 bb.bc:                                            ; preds = %PyUnicode_READ.exit
-  %i.dn = load ptr, ptr %i.c, align 8, !tbaa !194 ; 16 uses
+  %i.dn = load ptr, ptr %i.c, align 8, !tbaa !194 ; 19 uses
   %i.do = icmp eq ptr %i.dn, null
   br i1 %i.do, label %bb.bd, label %bb.bj
 
@@ -1132,18 +1130,18 @@ bb.bj:                                            ; preds = %bb.bc
   br i1 %i.eg, label %bb.bk, label %bb.bn
 
 bb.bk:                                            ; preds = %bb.bj
-  %i.eh = load i32, ptr @_Py_NoneStruct, align 8, !tbaa !205 ; 2 uses
+  %i.eh = load i32, ptr %i.dn, align 8, !tbaa !205 ; 2 uses
   %.not.i17.i = icmp sgt i32 %i.eh, -1
   br i1 %.not.i17.i, label %bb.bl, label %bb.cj
 
 bb.bl:                                            ; preds = %bb.bk
   %i.ei = add nsw i32 %i.eh, -1                   ; 2 uses
-  store i32 %i.ei, ptr @_Py_NoneStruct, align 8, !tbaa !205
+  store i32 %i.ei, ptr %i.dn, align 8, !tbaa !205
   %i.ej = icmp eq i32 %i.ei, 0
   br i1 %i.ej, label %bb.bm, label %bb.cj
 
 bb.bm:                                            ; preds = %bb.bl
-  call void @_Py_Dealloc(ptr noundef nonnull @_Py_NoneStruct) #33
+  call void @_Py_Dealloc(ptr noundef nonnull %i.dn) #33
   br label %bb.cj
 
 bb.bn:                                            ; preds = %bb.bj
@@ -1546,7 +1544,7 @@ bb.c:                                             ; preds = %bb.b
   br label %Py_DECREF.exit
 
 bb.d:                                             ; preds = %bb.a
-  %i.c = load ptr, ptr %0, align 8, !tbaa !194    ; 12 uses
+  %i.c = load ptr, ptr %0, align 8, !tbaa !194    ; 15 uses
   %i.d = icmp eq ptr %1, null
   %i.e = icmp eq ptr %i.c, null
   %or.cond = select i1 %i.d, i1 true, i1 %i.e
@@ -1584,18 +1582,18 @@ bb.i:                                             ; preds = %bb.f
   br i1 %i.m, label %bb.j, label %bb.n
 
 bb.j:                                             ; preds = %bb.i
-  %i.n = load i32, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 60176), align 8, !tbaa !205 ; 2 uses
+  %i.n = load i32, ptr %i.c, align 8, !tbaa !205  ; 2 uses
   %.not.i73 = icmp sgt i32 %i.n, -1
   br i1 %.not.i73, label %bb.k, label %Py_DECREF.exit74
 
 bb.k:                                             ; preds = %bb.j
   %i.o = add nsw i32 %i.n, -1                     ; 2 uses
-  store i32 %i.o, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 60176), align 8, !tbaa !205
+  store i32 %i.o, ptr %i.c, align 8, !tbaa !205
   %i.p = icmp eq i32 %i.o, 0
   br i1 %i.p, label %bb.l, label %Py_DECREF.exit74
 
 bb.l:                                             ; preds = %bb.k
-  tail call void @_Py_Dealloc(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 60176)) #33
+  tail call void @_Py_Dealloc(ptr noundef nonnull %i.c) #33
   br label %Py_DECREF.exit74
 
 Py_DECREF.exit74:                                 ; preds = %bb.j, %bb.k, %bb.l
@@ -1998,7 +1996,7 @@ bb.e:                                             ; preds = %Py_DECREF.exit24
   br label %Py_DECREF.exit22
 
 bb.f:                                             ; preds = %Py_DECREF.exit24
-  %i.j = load ptr, ptr %i.a, align 8, !tbaa !194  ; 5 uses
+  %i.j = load ptr, ptr %i.a, align 8, !tbaa !194  ; 6 uses
   %i.k = icmp eq ptr %i.j, null
   br i1 %i.k, label %bb.g, label %bb.i
 
@@ -2018,7 +2016,7 @@ bb.i:                                             ; preds = %bb.f
   br i1 %i.n, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
-  store ptr @_Py_NoneStruct, ptr %2, align 8, !tbaa !194
+  store ptr %i.j, ptr %2, align 8, !tbaa !194
   br label %Py_DECREF.exit22
 
 bb.k:                                             ; preds = %bb.i

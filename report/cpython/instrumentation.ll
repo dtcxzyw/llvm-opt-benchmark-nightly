@@ -204,11 +204,13 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.m = getelementptr i8, ptr %0, i64 24
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !199
-  %i.o = tail call ptr @PyObject_Vectorcall(ptr noundef %i.n, ptr noundef nonnull %1, i64 noundef %2, ptr noundef %3) #12
+  %i.o = tail call ptr @PyObject_Vectorcall(ptr noundef %i.n, ptr noundef nonnull %1, i64 noundef %2, ptr noundef %3) #12 ; 2 uses
+  %4 = icmp eq ptr %i.o, @_PyInstrumentation_DISABLE
+  %spec.select = select i1 %4, ptr @_PyInstrumentation_DISABLE, ptr %i.o
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
-  %.3 = phi ptr [ null, %bb.a ], [ @_PyInstrumentation_DISABLE, %bb.b ], [ %i.o, %bb.c ]
+  %.3 = phi ptr [ null, %bb.a ], [ @_PyInstrumentation_DISABLE, %bb.b ], [ %spec.select, %bb.c ]
   ret ptr %.3
 }
 

@@ -203,10 +203,10 @@ bb.dz:                                            ; preds = %.lr.ph
   %i.px = fmul nsz float %i.pw, %i.os             ; 2 uses
   %i.py = shufflevector <2 x float> %i.pu, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 poison, i32 1>
   %i.pz = insertelement <4 x float> %i.py, float 0.000000e+00, i64 2
-  %i.qa = fmul nsz <4 x float> %i.pz, %i.pg       ; 3 uses
+  %i.qa = fmul nsz <4 x float> %i.pz, %i.pg       ; 2 uses
   %i.qb = insertelement <2 x float> poison, float %i.pv, i64 0
   %i.qc = shufflevector <2 x float> %i.qb, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.qd = fmul nsz <2 x float> %i.qc, %i.pn       ; 2 uses
+  %i.qd = fmul nsz <2 x float> %i.qc, %i.pn       ; 3 uses
   %i.qe = getelementptr inbounds nuw i8, ptr %i.mo, i64 76
   %i.qf = load float, ptr %i.qe, align 4, !tbaa !121, !noalias !114 ; 2 uses
   %i.qg = fmul nsz float %i.qf, %i.oy             ; 2 uses
@@ -216,7 +216,7 @@ bb.dz:                                            ; preds = %.lr.ph
   %i.qk = getelementptr inbounds nuw i8, ptr %i.mo, i64 44
   %i.ql = load <2 x float>, ptr %i.mp, align 4, !tbaa !112, !noalias !114 ; 2 uses
   %i.qm = load <2 x float>, ptr %i.qk, align 4, !tbaa !112, !noalias !114 ; 2 uses
-  %i.qn = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !96 ; 16 uses
+  %i.qn = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !96 ; 14 uses
   %i.qo = load ptr, ptr %i.lb, align 8, !tbaa !92
   %.not.i.i360 = icmp eq ptr %i.qn, %i.qo
   br i1 %.not.i.i360, label %bb.eb, label %bb.ea
@@ -224,13 +224,8 @@ bb.dz:                                            ; preds = %.lr.ph
 bb.ea:                                            ; preds = %bb.dz
   store float %i.px, ptr %i.qn, align 4
   %.sroa.6498.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.qn, i64 4
-  %85 = shufflevector <4 x float> %i.qa, <4 x float> poison, <2 x i32> <i32 0, i32 1>
-  store <2 x float> %85, ptr %.sroa.6498.0..sroa_idx, align 4
-  %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.qn, i64 12
-  store float 0.000000e+00, ptr %.sroa.8.0..sroa_idx, align 4
-  %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.qn, i64 16
-  %86 = extractelement <4 x float> %i.qa, i64 3
-  store float %86, ptr %.sroa.9.0..sroa_idx, align 4
+  %85 = insertelement <4 x float> %i.qa, float 0.000000e+00, i64 2
+  store <4 x float> %85, ptr %.sroa.6498.0..sroa_idx, align 4
   %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.qn, i64 20
   store <2 x float> %i.qd, ptr %.sroa.10.0..sroa_idx, align 4
   %.sroa.12.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.qn, i64 28
@@ -282,12 +277,16 @@ _ZNKSt6vectorIN4core8CMatrix4IfEESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds
           to label %.noexc363 unwind label %.loopexit ; 5 uses
 
 .noexc363:                                        ; preds = %_ZNKSt6vectorIN4core8CMatrix4IfEESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i
-  %i.re = getelementptr inbounds nuw i8, ptr %i.rd, i64 %i.qv ; 8 uses
+  %i.re = getelementptr inbounds nuw i8, ptr %i.rd, i64 %i.qv ; 9 uses
   store float %i.px, ptr %i.re, align 4
-  %.sroa.6498.0..sroa_idx499.a = getelementptr inbounds nuw i8, ptr %i.re, i64 4
-  store <4 x float> %i.qa, ptr %.sroa.6498.0..sroa_idx499.a, align 4
-  %.sroa.10.0..sroa_idx507 = getelementptr inbounds nuw i8, ptr %i.re, i64 20
-  store <2 x float> %i.qd, ptr %.sroa.10.0..sroa_idx507, align 4
+  %.sroa.6498.0..sroa_idx499 = getelementptr inbounds nuw i8, ptr %i.re, i64 4
+  store <4 x float> %i.qa, ptr %.sroa.6498.0..sroa_idx499, align 4
+  %.sroa.6498.0..sroa_idx499.a = getelementptr inbounds nuw i8, ptr %i.re, i64 20
+  %86 = extractelement <2 x float> %i.qd, i64 0
+  store float %86, ptr %.sroa.6498.0..sroa_idx499.a, align 4
+  %.sroa.10.0..sroa_idx507 = getelementptr inbounds nuw i8, ptr %i.re, i64 24
+  %87 = extractelement <2 x float> %i.qd, i64 1
+  store float %87, ptr %.sroa.10.0..sroa_idx507, align 4
   %.sroa.12.0..sroa_idx511 = getelementptr inbounds nuw i8, ptr %i.re, i64 28
   store float 0.000000e+00, ptr %.sroa.12.0..sroa_idx511, align 4
   %.sroa.13513.0..sroa_idx514 = getelementptr inbounds nuw i8, ptr %i.re, i64 32

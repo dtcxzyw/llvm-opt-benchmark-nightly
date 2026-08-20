@@ -203,7 +203,7 @@ bb.a:
   %i.k = fsub nsz <2 x float> %i.j, %i.i
   %i.l = fdiv nsz <2 x float> %i.k, splat (float 6.400000e+02)
   %i.m = tail call nsz <2 x float> @llvm.floor.v2f32(<2 x float> %i.l)
-  %i.n = fptosi <2 x float> %i.m to <2 x i16>     ; 5 uses
+  %i.n = fptosi <2 x float> %i.m to <2 x i16>     ; 4 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 372 ; 2 uses
   %i.p = load i8, ptr %i.o, align 4, !tbaa !120, !range !118, !noundef !132
   %i.q = trunc nuw i8 %i.p to i1
@@ -238,8 +238,8 @@ bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
   %i.aj = load i64, ptr %i.h, align 8             ; 2 uses
   store i64 %i.aj, ptr %i.ai, align 8
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 368
-  %i.al = extractelement <2 x i16> %i.n, i64 1
-  %i.am = extractelement <2 x i16> %i.n, i64 0
+  %i.al = extractelement <2 x i16> %i.n, i64 1    ; 2 uses
+  %i.am = extractelement <2 x i16> %i.n, i64 0    ; 2 uses
   store <2 x i16> %i.n, ptr %i.ak, align 8
   store i8 1, ptr %i.o, align 4, !tbaa !120
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 435 ; 2 uses
@@ -250,6 +250,7 @@ bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
   %i.as = fcmp nsz oge float %i.ar, f0x3C23D70A
   %i.at = select i1 %i.ap, i1 %i.as, i1 false
   %i.au = select i1 %i.at, i32 6, i32 1           ; 2 uses
+  %2 = sitofp i16 %i.am to float
   %i.av = trunc i64 %i.aj to i32
   %i.aw = bitcast i32 %i.av to float
   %i.ax = extractelement <2 x float> %i.i, i64 1
@@ -263,15 +264,19 @@ bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
   %i.be = and <4 x i32> %i.bd, <i32 255, i32 255, i32 255, i32 poison>
   %i.bf = uitofp nneg <4 x i32> %i.be to <4 x float>
   %i.bg = fmul nnan nsz <4 x float> %i.bf, <float f0x3B808081, float f0x3B808081, float f0x3B808081, float poison> ; 3 uses
-  %i.bh = shufflevector <4 x float> %i.bg, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 0>
+  %i.bh = shufflevector <4 x float> %i.bg, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 0> ; 2 uses
+  %3 = tail call nnan nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.bh, <4 x float> <float 2.500000e-01, float 2.500000e-01, float 2.500000e-01, float 5.000000e-01>, <4 x float> <float 7.500000e-01, float 7.500000e-01, float 7.500000e-01, float 5.000000e-01>)
   %i.bi = shufflevector <4 x float> %i.bg, <4 x float> poison, <2 x i32> <i32 1, i32 2> ; 2 uses
-  %2 = sitofp <2 x i16> %i.n to <2 x float>
+  %4 = sitofp i16 %i.al to float
   %i.bj = shufflevector <2 x float> %i.bi, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %3 = shufflevector <2 x float> %2, <2 x float> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %4 = shufflevector <4 x float> %i.bh, <4 x float> %i.bj, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 poison, i32 poison>
-  %5 = tail call nnan nsz <8 x float> @llvm.fmuladd.v8f32(<8 x float> %4, <8 x float> <float 2.500000e-01, float 2.500000e-01, float 2.500000e-01, float 5.000000e-01, float 5.000000e-01, float 5.000000e-01, float undef, float undef>, <8 x float> <float 7.500000e-01, float 7.500000e-01, float 7.500000e-01, float 5.000000e-01, float 5.000000e-01, float 5.000000e-01, float undef, float undef>)
-  %6 = shufflevector <8 x float> %3, <8 x float> %5, <8 x i32> <i32 0, i32 1, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13>
-  %i.bk = fmul nnan nsz <8 x float> %6, <float 6.400000e+02, float 6.400000e+02, float 2.550000e+02, float 2.550000e+02, float 2.550000e+02, float 2.550000e+02, float 2.550000e+02, float 2.550000e+02> ; 5 uses
+  %5 = shufflevector <4 x float> %i.bh, <4 x float> %i.bj, <4 x i32> <i32 2, i32 3, i32 4, i32 5>
+  %6 = tail call nnan nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %5, <4 x float> <float 2.500000e-01, float 5.000000e-01, float 5.000000e-01, float 5.000000e-01>, <4 x float> <float 7.500000e-01, float 5.000000e-01, float 5.000000e-01, float 5.000000e-01>)
+  %7 = shufflevector <4 x float> %3, <4 x float> poison, <8 x i32> <i32 poison, i32 poison, i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison>
+  %8 = insertelement <8 x float> %7, float %2, i64 0
+  %9 = insertelement <8 x float> %8, float %4, i64 1
+  %10 = shufflevector <4 x float> %6, <4 x float> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
+  %11 = shufflevector <8 x float> %9, <8 x float> %10, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
+  %i.bk = fmul nnan nsz <8 x float> %11, <float 6.400000e+02, float 6.400000e+02, float 2.550000e+02, float 2.550000e+02, float 2.550000e+02, float 2.550000e+02, float 2.550000e+02, float 2.550000e+02> ; 5 uses
   %i.bl = extractelement <8 x float> %i.bk, i64 0
   %i.bm = fadd nsz float %i.bl, %i.aw
   %i.bn = extractelement <8 x float> %i.bk, i64 1
@@ -665,7 +670,7 @@ bb.p:                                             ; preds = %.lr.ph653, %bb.av
   %i.kh = fmul nnan nsz float %i.kf, 6.400000e+02
   %i.ki = fadd nsz float %i.bm, %i.kh             ; 4 uses
   %i.kj = fmul nnan nsz float %i.kg, 6.400000e+02
-  %i.kk = fadd nsz float %i.bo, %i.kj
+  %i.kk = fadd nsz float %i.bo, %i.kj             ; 2 uses
   %i.kl = load i8, ptr %i.an, align 1, !tbaa !117, !range !118, !noundef !132
   %i.km = trunc nuw i8 %i.kl to i1
   %i.kn = load float, ptr %i.aq, align 4          ; 2 uses
@@ -699,7 +704,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.q,
   %i.kz = add nsw i32 %i.jr, 1                    ; 3 uses
   %i.la = add nsw i32 %i.jv, 1                    ; 3 uses
   %i.lb = add nsw i32 %i.jr, -1
-  %i.lc = insertelement <4 x float> <float poison, float -0.000000e+00, float -0.000000e+00, float -0.000000e+00>, float %i.kk, i64 0 ; 4 uses
+  %i.lc = insertelement <4 x float> <float poison, float -0.000000e+00, float -0.000000e+00, float -0.000000e+00>, float %i.kk, i64 0 ; 3 uses
   %i.ld = insertelement <2 x float> poison, float %i.ki, i64 0
   %i.le = insertelement <2 x float> <float 3.200000e+02, float poison>, float %i.kr, i64 1
   br label %bb.t
@@ -896,11 +901,12 @@ default.unreachable:                              ; preds = %bb.t
 
 .preheader624.preheader:                          ; preds = %.preheader621.preheader, %bb.ah, %.preheader618.preheader, %bb.ae, %.preheader615.preheader, %bb.aa, %.preheader612.preheader, %bb.x, %bb.t, %.preheader.preheader
   %.sroa.282.5 = phi i32 [ %.sroa.282.0, %.preheader.preheader ], [ %i.dw, %bb.t ], [ %i.cw, %bb.x ], [ %i.db, %bb.aa ], [ %i.cw, %bb.ae ], [ %i.dw, %.preheader612.preheader ], [ %i.dw, %.preheader615.preheader ], [ %i.dw, %.preheader618.preheader ], [ %i.dw, %.preheader621.preheader ], [ %i.db, %bb.ah ] ; 4 uses
-  %.sroa.271.4 = phi nsz float [ 0.000000e+00, %.preheader.preheader ], [ 0.000000e+00, %bb.t ], [ -1.000000e+00, %bb.x ], [ 0.000000e+00, %bb.aa ], [ -1.000000e+00, %bb.ae ], [ -1.000000e+00, %.preheader612.preheader ], [ 0.000000e+00, %.preheader615.preheader ], [ -1.000000e+00, %.preheader618.preheader ], [ 0.000000e+00, %.preheader621.preheader ], [ 0.000000e+00, %bb.ah ] ; 4 uses
-  %.sroa.260.4 = phi nsz float [ 1.000000e+00, %.preheader.preheader ], [ -1.000000e+00, %bb.t ], [ 0.000000e+00, %bb.x ], [ 0.000000e+00, %bb.aa ], [ 0.000000e+00, %bb.ae ], [ 0.000000e+00, %.preheader612.preheader ], [ 0.000000e+00, %.preheader615.preheader ], [ 0.000000e+00, %.preheader618.preheader ], [ 0.000000e+00, %.preheader621.preheader ], [ 0.000000e+00, %bb.ah ] ; 4 uses
-  %.sroa.249.4 = phi nsz float [ 0.000000e+00, %.preheader.preheader ], [ 0.000000e+00, %bb.t ], [ 0.000000e+00, %bb.x ], [ 1.000000e+00, %bb.aa ], [ 0.000000e+00, %bb.ae ], [ 0.000000e+00, %.preheader612.preheader ], [ 1.000000e+00, %.preheader615.preheader ], [ 0.000000e+00, %.preheader618.preheader ], [ -1.000000e+00, %.preheader621.preheader ], [ -1.000000e+00, %bb.ah ] ; 4 uses
+  %.sroa.271.4 = phi nsz float [ 0.000000e+00, %.preheader.preheader ], [ 0.000000e+00, %bb.t ], [ -1.000000e+00, %bb.x ], [ 0.000000e+00, %bb.aa ], [ -1.000000e+00, %bb.ae ], [ -1.000000e+00, %.preheader612.preheader ], [ 0.000000e+00, %.preheader615.preheader ], [ -1.000000e+00, %.preheader618.preheader ], [ 0.000000e+00, %.preheader621.preheader ], [ 0.000000e+00, %bb.ah ] ; 5 uses
+  %.sroa.260.4 = phi nsz float [ 1.000000e+00, %.preheader.preheader ], [ -1.000000e+00, %bb.t ], [ 0.000000e+00, %bb.x ], [ 0.000000e+00, %bb.aa ], [ 0.000000e+00, %bb.ae ], [ 0.000000e+00, %.preheader612.preheader ], [ 0.000000e+00, %.preheader615.preheader ], [ 0.000000e+00, %.preheader618.preheader ], [ 0.000000e+00, %.preheader621.preheader ], [ 0.000000e+00, %bb.ah ] ; 5 uses
+  %.sroa.249.4 = phi nsz float [ 0.000000e+00, %.preheader.preheader ], [ 0.000000e+00, %bb.t ], [ 0.000000e+00, %bb.x ], [ 1.000000e+00, %bb.aa ], [ 0.000000e+00, %bb.ae ], [ 0.000000e+00, %.preheader612.preheader ], [ 1.000000e+00, %.preheader615.preheader ], [ 0.000000e+00, %.preheader618.preheader ], [ -1.000000e+00, %.preheader621.preheader ], [ -1.000000e+00, %bb.ah ] ; 5 uses
   %.sroa.220728.0 = phi nsz float [ 3.200000e+02, %.preheader.preheader ], [ 3.200000e+02, %bb.t ], [ -3.200000e+02, %bb.x ], [ 3.200000e+02, %bb.aa ], [ 3.200000e+02, %bb.ae ], [ -3.200000e+02, %.preheader612.preheader ], [ 3.200000e+02, %.preheader615.preheader ], [ 3.200000e+02, %.preheader618.preheader ], [ -3.200000e+02, %.preheader621.preheader ], [ -3.200000e+02, %bb.ah ]
   %.sroa.207.5 = phi i32 [ %.sroa.207.0, %.preheader.preheader ], [ %i.dw, %bb.t ], [ %i.cw, %bb.x ], [ %i.db, %bb.aa ], [ %i.cw, %bb.ae ], [ %i.dw, %.preheader612.preheader ], [ %i.dw, %.preheader615.preheader ], [ %i.dw, %.preheader618.preheader ], [ %i.dw, %.preheader621.preheader ], [ %i.db, %bb.ah ] ; 4 uses
+  %.sroa.165.0 = phi nsz float [ 3.200000e+02, %.preheader.preheader ], [ -3.200000e+02, %bb.t ], [ -3.200000e+02, %bb.x ], [ 3.200000e+02, %bb.aa ], [ 3.200000e+02, %bb.ae ], [ -3.200000e+02, %.preheader612.preheader ], [ 3.200000e+02, %.preheader615.preheader ], [ 3.200000e+02, %.preheader618.preheader ], [ -3.200000e+02, %.preheader621.preheader ], [ -3.200000e+02, %bb.ah ]
   %.sroa.136.5 = phi i32 [ %.sroa.136.0, %.preheader.preheader ], [ %i.dw, %bb.t ], [ %i.cw, %bb.x ], [ %i.db, %bb.aa ], [ %i.cw, %bb.ae ], [ %.sroa.136.0, %.preheader612.preheader ], [ %.sroa.136.0, %.preheader615.preheader ], [ %.sroa.136.0, %.preheader618.preheader ], [ %.sroa.136.0, %.preheader621.preheader ], [ %i.db, %bb.ah ] ; 4 uses
   %.sroa.85.0 = phi nsz float [ %i.kr, %.preheader.preheader ], [ 0.000000e+00, %bb.t ], [ %i.kr, %bb.x ], [ %i.kr, %bb.aa ], [ %i.kr, %bb.ae ], [ %i.kr, %.preheader612.preheader ], [ %i.kr, %.preheader615.preheader ], [ %i.kr, %.preheader618.preheader ], [ %i.kr, %.preheader621.preheader ], [ %i.kr, %bb.ah ]
   %.sroa.74684.0 = phi nsz float [ -3.200000e+02, %.preheader.preheader ], [ -3.200000e+02, %bb.t ], [ 3.200000e+02, %bb.x ], [ 3.200000e+02, %bb.aa ], [ -3.200000e+02, %bb.ae ], [ 3.200000e+02, %.preheader612.preheader ], [ 3.200000e+02, %.preheader615.preheader ], [ -3.200000e+02, %.preheader618.preheader ], [ -3.200000e+02, %.preheader621.preheader ], [ -3.200000e+02, %bb.ah ]
@@ -908,7 +914,6 @@ default.unreachable:                              ; preds = %bb.t
   %.sroa.0.0 = phi nsz float [ -3.200000e+02, %.preheader.preheader ], [ 3.200000e+02, %bb.t ], [ -3.200000e+02, %bb.x ], [ 3.200000e+02, %bb.aa ], [ 3.200000e+02, %bb.ae ], [ -3.200000e+02, %.preheader612.preheader ], [ 3.200000e+02, %.preheader615.preheader ], [ 3.200000e+02, %.preheader618.preheader ], [ -3.200000e+02, %.preheader621.preheader ], [ -3.200000e+02, %bb.ah ]
   %i.ny = phi <4 x float> [ <float -3.200000e+02, float 0.000000e+00, float 1.000000e+00, float 0.000000e+00>, %.preheader.preheader ], [ <float -3.200000e+02, float 0.000000e+00, float -1.000000e+00, float 0.000000e+00>, %bb.t ], [ <float -3.200000e+02, float 0.000000e+00, float 0.000000e+00, float -1.000000e+00>, %bb.x ], [ <float -3.200000e+02, float 1.000000e+00, float 0.000000e+00, float 0.000000e+00>, %bb.aa ], [ <float 3.200000e+02, float 0.000000e+00, float 0.000000e+00, float -1.000000e+00>, %bb.ae ], [ <float -3.200000e+02, float 0.000000e+00, float 0.000000e+00, float -1.000000e+00>, %.preheader612.preheader ], [ <float -3.200000e+02, float 1.000000e+00, float 0.000000e+00, float 0.000000e+00>, %.preheader615.preheader ], [ <float 3.200000e+02, float 0.000000e+00, float 0.000000e+00, float -1.000000e+00>, %.preheader618.preheader ], [ <float 3.200000e+02, float -1.000000e+00, float 0.000000e+00, float 0.000000e+00>, %.preheader621.preheader ], [ <float 3.200000e+02, float -1.000000e+00, float 0.000000e+00, float 0.000000e+00>, %bb.ah ]
   %i.nz = phi <2 x float> [ %i.le, %.preheader.preheader ], [ <float -3.200000e+02, float 0.000000e+00>, %bb.t ], [ <float 3.200000e+02, float 0.000000e+00>, %bb.x ], [ <float 3.200000e+02, float 0.000000e+00>, %bb.aa ], [ <float -3.200000e+02, float 0.000000e+00>, %bb.ae ], [ <float 3.200000e+02, float 0.000000e+00>, %.preheader612.preheader ], [ <float 3.200000e+02, float 0.000000e+00>, %.preheader615.preheader ], [ <float -3.200000e+02, float 0.000000e+00>, %.preheader618.preheader ], [ <float -3.200000e+02, float 0.000000e+00>, %.preheader621.preheader ], [ <float -3.200000e+02, float 0.000000e+00>, %bb.ah ]
-  %7 = phi <4 x float> [ <float 3.200000e+02, float 0.000000e+00, float 1.000000e+00, float 0.000000e+00>, %.preheader.preheader ], [ <float -3.200000e+02, float 0.000000e+00, float -1.000000e+00, float 0.000000e+00>, %bb.t ], [ <float -3.200000e+02, float 0.000000e+00, float 0.000000e+00, float -1.000000e+00>, %bb.x ], [ <float 3.200000e+02, float 1.000000e+00, float 0.000000e+00, float 0.000000e+00>, %bb.aa ], [ <float 3.200000e+02, float 0.000000e+00, float 0.000000e+00, float -1.000000e+00>, %bb.ae ], [ <float -3.200000e+02, float 0.000000e+00, float 0.000000e+00, float -1.000000e+00>, %.preheader612.preheader ], [ <float 3.200000e+02, float 1.000000e+00, float 0.000000e+00, float 0.000000e+00>, %.preheader615.preheader ], [ <float 3.200000e+02, float 0.000000e+00, float 0.000000e+00, float -1.000000e+00>, %.preheader618.preheader ], [ <float -3.200000e+02, float -1.000000e+00, float 0.000000e+00, float 0.000000e+00>, %.preheader621.preheader ], [ <float -3.200000e+02, float -1.000000e+00, float 0.000000e+00, float 0.000000e+00>, %bb.ah ]
   %i.oa = phi <4 x float> [ <float 3.200000e+02, float 0.000000e+00, float 1.000000e+00, float 0.000000e+00>, %.preheader.preheader ], [ <float 3.200000e+02, float 0.000000e+00, float -1.000000e+00, float 0.000000e+00>, %bb.t ], [ <float -3.200000e+02, float 0.000000e+00, float 0.000000e+00, float -1.000000e+00>, %bb.x ], [ <float 3.200000e+02, float 1.000000e+00, float 0.000000e+00, float 0.000000e+00>, %bb.aa ], [ <float 3.200000e+02, float 0.000000e+00, float 0.000000e+00, float -1.000000e+00>, %bb.ae ], [ <float -3.200000e+02, float 0.000000e+00, float 0.000000e+00, float -1.000000e+00>, %.preheader612.preheader ], [ <float 3.200000e+02, float 1.000000e+00, float 0.000000e+00, float 0.000000e+00>, %.preheader615.preheader ], [ <float 3.200000e+02, float 0.000000e+00, float 0.000000e+00, float -1.000000e+00>, %.preheader618.preheader ], [ <float -3.200000e+02, float -1.000000e+00, float 0.000000e+00, float 0.000000e+00>, %.preheader621.preheader ], [ <float -3.200000e+02, float -1.000000e+00, float 0.000000e+00, float 0.000000e+00>, %bb.ah ]
   %i.ob = phi <4 x float> [ <float -3.200000e+02, float 0.000000e+00, float 1.000000e+00, float 0.000000e+00>, %.preheader.preheader ], [ <float 3.200000e+02, float 0.000000e+00, float -1.000000e+00, float 0.000000e+00>, %bb.t ], [ <float -3.200000e+02, float 0.000000e+00, float 0.000000e+00, float -1.000000e+00>, %bb.x ], [ <float -3.200000e+02, float 1.000000e+00, float 0.000000e+00, float 0.000000e+00>, %bb.aa ], [ <float 3.200000e+02, float 0.000000e+00, float 0.000000e+00, float -1.000000e+00>, %bb.ae ], [ <float -3.200000e+02, float 0.000000e+00, float 0.000000e+00, float -1.000000e+00>, %.preheader612.preheader ], [ <float -3.200000e+02, float 1.000000e+00, float 0.000000e+00, float 0.000000e+00>, %.preheader615.preheader ], [ <float 3.200000e+02, float 0.000000e+00, float 0.000000e+00, float -1.000000e+00>, %.preheader618.preheader ], [ <float 3.200000e+02, float -1.000000e+00, float 0.000000e+00, float 0.000000e+00>, %.preheader621.preheader ], [ <float 3.200000e+02, float -1.000000e+00, float 0.000000e+00, float 0.000000e+00>, %bb.ah ]
   %i.oc = load float, ptr %i.is, align 8, !tbaa !105
@@ -1114,17 +1119,23 @@ _ZNSt6vectorIN5video9S3DVertexESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx
 
 _ZNSt6vectorIN5video9S3DVertexESaIS1_EE9push_backERKS1_.exit.1: ; preds = %_ZNSt6vectorIN5video9S3DVertexESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.1, %bb.am
   %i.qb = phi ptr [ %i.qa, %_ZNSt6vectorIN5video9S3DVertexESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.1 ], [ %.pre751, %bb.am ] ; 4 uses
-  %i.qc = phi ptr [ %i.pz, %_ZNSt6vectorIN5video9S3DVertexESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.1 ], [ %i.pj, %bb.am ] ; 6 uses
+  %i.qc = phi ptr [ %i.pz, %_ZNSt6vectorIN5video9S3DVertexESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.1 ], [ %i.pj, %bb.am ] ; 9 uses
   %i.qd = insertelement <2 x float> %i.ld, float %i.od, i64 1
   %i.qe = fadd nsz <2 x float> %i.qd, %i.nz       ; 4 uses
-  %8 = fadd nsz <4 x float> %i.lc, %7             ; 2 uses
+  %12 = fadd nsz float %i.kk, %.sroa.165.0        ; 2 uses
   %.not.i.2 = icmp eq ptr %i.qc, %i.qb
   br i1 %.not.i.2, label %bb.aq, label %bb.ap
 
 bb.ap:                                            ; preds = %_ZNSt6vectorIN5video9S3DVertexESaIS1_EE9push_backERKS1_.exit.1
   store <2 x float> %i.qe, ptr %i.qc, align 4, !tbaa !14
   %.sroa.165.80..sroa_idx = getelementptr inbounds nuw i8, ptr %i.qc, i64 8
-  store <4 x float> %8, ptr %.sroa.165.80..sroa_idx, align 4, !tbaa !14
+  store float %12, ptr %.sroa.165.80..sroa_idx, align 4, !tbaa !14
+  %.sroa.174.80..sroa_idx = getelementptr inbounds nuw i8, ptr %i.qc, i64 12
+  store float %.sroa.249.4, ptr %.sroa.174.80..sroa_idx, align 4, !tbaa !14
+  %.sroa.185.80..sroa_idx = getelementptr inbounds nuw i8, ptr %i.qc, i64 16
+  store float %.sroa.260.4, ptr %.sroa.185.80..sroa_idx, align 4, !tbaa !14
+  %.sroa.196.80..sroa_idx = getelementptr inbounds nuw i8, ptr %i.qc, i64 20
+  store float %.sroa.271.4, ptr %.sroa.196.80..sroa_idx, align 4, !tbaa !14
   %.sroa.207.80..sroa_idx = getelementptr inbounds nuw i8, ptr %i.qc, i64 24
   store i32 %.sroa.207.5, ptr %.sroa.207.80..sroa_idx, align 4, !tbaa !101
   %.sroa.217.80..sroa_idx = getelementptr inbounds nuw i8, ptr %i.qc, i64 28
@@ -1162,8 +1173,7 @@ _ZNKSt6vectorIN5video9S3DVertexESaIS1_EE12_M_check_lenEmPKc.exit.i.i.2: ; preds 
   %i.qt = getelementptr inbounds nuw i8, ptr %i.qs, i64 %i.qk ; 8 uses
   store <2 x float> %i.qe, ptr %i.qt, align 4, !tbaa !14
   %.sroa.165.80..sroa_idx710 = getelementptr inbounds nuw i8, ptr %i.qt, i64 8
-  %9 = extractelement <4 x float> %8, i64 0
-  store float %9, ptr %.sroa.165.80..sroa_idx710, align 4, !tbaa !14
+  store float %12, ptr %.sroa.165.80..sroa_idx710, align 4, !tbaa !14
   %.sroa.174.80..sroa_idx712 = getelementptr inbounds nuw i8, ptr %i.qt, i64 12
   store float %.sroa.249.4, ptr %.sroa.174.80..sroa_idx712, align 4, !tbaa !14
   %.sroa.185.80..sroa_idx714 = getelementptr inbounds nuw i8, ptr %i.qt, i64 16
@@ -1566,7 +1576,8 @@ define linkonce_odr dso_local void @_ZNK5scene10ISceneNode25getRelativeTransform
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 12
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(36) %i.a, i8 0, i64 36, i1 false)
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 60
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 60 ; 2 uses
+  store float 1.000000e+00, ptr %i.b, align 4, !tbaa !14
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 124
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 132
@@ -1630,8 +1641,7 @@ bb.a:
   %i.ba = getelementptr inbounds nuw i8, ptr %1, i64 120
   %i.bb = load float, ptr %i.ba, align 8, !tbaa !208 ; 5 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
-  %2 = insertelement <2 x float> <float poison, float 1.000000e+00>, float %i.bb, i64 0
-  store <2 x float> %2, ptr %i.bc, align 4, !tbaa !14
+  store float %i.bb, ptr %i.bc, align 4, !tbaa !14
   %i.bd = getelementptr inbounds nuw i8, ptr %1, i64 136
   %i.be = load float, ptr %i.bd, align 8, !tbaa !222 ; 4 uses
   %i.bf = fcmp nsz oeq float %i.be, 1.000000e+00
@@ -2032,9 +2042,6 @@ declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.floor.v2f32(<2 x float>) #12
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <8 x float> @llvm.fmuladd.v8f32(<8 x float>, <8 x float>, <8 x float>) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #12

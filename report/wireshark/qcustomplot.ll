@@ -203,11 +203,11 @@ bb.a:
   %9 = alloca %class.QLine, align 8               ; 5 uses
   %10 = alloca %class.QLineF, align 8             ; 7 uses
   %11 = alloca %class.QLineF, align 8             ; 7 uses
-  %12 = alloca %class.QLineF, align 8             ; 7 uses
+  %12 = alloca %class.QLineF, align 8             ; 6 uses
   %13 = alloca %class.QRectF, align 16            ; 5 uses
   %14 = alloca %class.QRectF, align 16            ; 5 uses
-  %15 = alloca %class.QLineF, align 8             ; 7 uses
-  %16 = alloca %class.QLineF, align 8             ; 7 uses
+  %15 = alloca %class.QLineF, align 8             ; 6 uses
+  %16 = alloca %class.QLineF, align 16            ; 5 uses
   %17 = alloca %class.QDebug, align 8             ; 12 uses
   %18 = alloca %class.QMessageLogger, align 8     ; 7 uses
   %i.a = getelementptr i8, ptr %0, i64 136        ; 2 uses
@@ -333,10 +333,8 @@ _ZN10QCPPainter8drawLineERK6QLineF.exit21:        ; preds = %bb.g, %bb.h
   %i.bb = fmul nnan <2 x double> %i.ba, splat (double 5.000000e-01) ; 4 uses
   store double 0.000000e+00, ptr %12, align 8
   %i.bc = getelementptr inbounds nuw i8, ptr %12, i64 8
-  %19 = extractelement <2 x double> %i.bb, i64 0
-  store double %19, ptr %i.bc, align 8
-  %20 = getelementptr inbounds nuw i8, ptr %12, i64 16
-  store double 0.000000e+00, ptr %20, align 8
+  %19 = insertelement <2 x double> %i.bb, double 0.000000e+00, i64 1
+  store <2 x double> %19, ptr %i.bc, align 8
   %i.bd = getelementptr inbounds nuw i8, ptr %12, i64 24
   %i.be = extractelement <2 x double> %i.bb, i64 1
   store double %i.be, ptr %i.bd, align 8
@@ -413,10 +411,8 @@ bb.n:                                             ; preds = %bb.a
   %i.ck = fmul nnan <2 x double> %i.cj, splat (double 5.000000e-01) ; 4 uses
   store double 0.000000e+00, ptr %15, align 8
   %i.cl = getelementptr inbounds nuw i8, ptr %15, i64 8
-  %21 = extractelement <2 x double> %i.ck, i64 0
-  store double %21, ptr %i.cl, align 8
-  %22 = getelementptr inbounds nuw i8, ptr %15, i64 16
-  store double 0.000000e+00, ptr %22, align 8
+  %20 = insertelement <2 x double> %i.ck, double 0.000000e+00, i64 1
+  store <2 x double> %20, ptr %i.cl, align 8
   %i.cm = getelementptr inbounds nuw i8, ptr %15, i64 24
   %i.cn = extractelement <2 x double> %i.ck, i64 1
   store double %i.cn, ptr %i.cm, align 8
@@ -458,15 +454,11 @@ _ZN10QCPPainter8drawLineERK6QLineF.exit41:        ; preds = %bb.p, %bb.q
   %i.dd = insertelement <2 x i32> %i.dc, i32 %i.da, i64 1
   %i.de = sitofp <2 x i32> %i.dd to <2 x double>
   %i.df = fmul nnan <2 x double> %i.de, splat (double 5.000000e-01) ; 4 uses
-  %23 = extractelement <2 x double> %i.df, i64 0
-  store double %23, ptr %16, align 8
-  %24 = getelementptr inbounds nuw i8, ptr %16, i64 8
-  store double 0.000000e+00, ptr %24, align 8
+  %21 = insertelement <2 x double> %i.df, double 0.000000e+00, i64 1
+  store <2 x double> %21, ptr %16, align 16
   %i.dg = getelementptr inbounds nuw i8, ptr %16, i64 16
-  %25 = extractelement <2 x double> %i.df, i64 1
-  store double %25, ptr %i.dg, align 8
-  %26 = getelementptr inbounds nuw i8, ptr %16, i64 24
-  store double 0.000000e+00, ptr %26, align 8
+  %22 = shufflevector <2 x double> %i.df, <2 x double> <double poison, double 0.000000e+00>, <2 x i32> <i32 1, i32 3>
+  store <2 x double> %22, ptr %i.dg, align 16
   %i.dh = load i8, ptr %i.co, align 4, !range !6, !noundef !7
   %i.di = trunc nuw i8 %i.dh to i1
   br i1 %i.di, label %bb.s, label %bb.r

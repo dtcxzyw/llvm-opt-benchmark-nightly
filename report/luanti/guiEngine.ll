@@ -204,7 +204,7 @@ bb.a:
   %2 = alloca %"class.core::rect", align 4        ; 7 uses
   %3 = alloca %"class.core::rect", align 4        ; 6 uses
   %4 = alloca %"class.core::rect", align 4        ; 7 uses
-  %5 = alloca %"class.core::rect", align 4        ; 6 uses
+  %5 = alloca %"class.core::rect", align 16       ; 4 uses
   %i.a = load ptr, ptr %1, align 8, !tbaa !82
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 488
   %i.c = load ptr, ptr %i.b, align 8
@@ -303,11 +303,9 @@ bb.e:                                             ; preds = %bb.b
   %i.ay = getelementptr inbounds nuw i8, ptr %4, i64 12
   store i32 %i.av, ptr %i.ay, align 4, !tbaa !279
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #26
-  store i32 0, ptr %5, align 4, !tbaa !277
-  %6 = getelementptr inbounds nuw i8, ptr %5, i64 4
-  store i32 0, ptr %6, align 4, !tbaa !279
-  %7 = getelementptr inbounds nuw i8, ptr %5, i64 8
-  store <2 x i32> %i.i, ptr %7, align 4, !tbaa !137
+  %6 = shufflevector <2 x i32> %i.i, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %7 = shufflevector <4 x i32> %6, <4 x i32> <i32 0, i32 0, i32 poison, i32 poison>, <4 x i32> <i32 4, i32 5, i32 0, i32 1>
+  store <4 x i32> %7, ptr %5, align 16, !tbaa !137
   call void @_Z23draw2DImageFilterScaledPN5video12IVideoDriverEPNS_8ITextureERKN4core4rectIiEES8_PS7_PKNS_6SColorEb(ptr noundef nonnull %1, ptr noundef nonnull %i.g, ptr noundef nonnull align 4 dereferenceable(16) %4, ptr noundef nonnull align 4 dereferenceable(16) %5, ptr noundef null, ptr noundef null, i1 noundef zeroext true)
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #26

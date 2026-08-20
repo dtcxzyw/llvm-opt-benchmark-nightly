@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %classify_conv_attrs
 
 bb.h:                                             ; preds = %bb.g, %classify_conv_attrs.exit
   %i.u = phi i32 [ %.pre, %bb.g ], [ %i.k, %classify_conv_attrs.exit ] ; 2 uses
-  %.0 = phi ptr [ %i.o, %bb.g ], [ null, %classify_conv_attrs.exit ] ; 6 uses
+  %.0 = phi ptr [ %i.o, %bb.g ], [ null, %classify_conv_attrs.exit ] ; 7 uses
   switch i32 %i.u, label %bb.j [
     i32 1, label %output_eol.exit.thread23
     i32 4, label %output_eol.exit.thread
@@ -272,7 +272,9 @@ bb.m:                                             ; preds = %bb.l
 
 output_eol.exit.thread23:                         ; preds = %bb.h, %bb.h, %bb.i, %text_eol_is_crlf.exit.i, %bb.h, %output_eol.exit
   %.not.i14 = icmp eq ptr %.0, null
-  %spec.select = select i1 %.not.i14, ptr @null_filter_singleton, ptr %.0
+  %.not20.i15 = icmp eq ptr %.0, @null_filter_singleton
+  %or.cond.i16 = or i1 %.not.i14, %.not20.i15
+  %spec.select = select i1 %or.cond.i16, ptr @null_filter_singleton, ptr %.0
   br label %cascade_filter.exit
 
 cascade_filter.exit:                              ; preds = %output_eol.exit.thread23, %bb.f, %bb.d, %bb.e, %bb.c, %bb.b, %bb.m, %bb.l, %output_eol.exit.thread

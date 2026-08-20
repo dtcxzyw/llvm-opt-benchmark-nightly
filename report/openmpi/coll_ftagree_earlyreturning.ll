@@ -203,7 +203,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.at = load ptr, ptr %i.as, align 8, !tbaa !130
   %i.au = getelementptr inbounds nuw i8, ptr %i.aq, i64 360
   store ptr %i.at, ptr %i.au, align 8, !tbaa !130
-  %i.av = call i32 @mca_coll_ftagree_era_intra(ptr noundef nonnull %i.c, i32 noundef 2, ptr noundef nonnull @ompi_mpi_int, ptr noundef nonnull @ompi_mpi_op_band, ptr noundef %4, i1 noundef zeroext %5, ptr noundef %i.aq, ptr noundef %7)
+  %i.av = call i32 @mca_coll_ftagree_era_intra(ptr noundef nonnull %i.c, i32 noundef 2, ptr noundef nonnull %2, ptr noundef nonnull %3, ptr noundef %4, i1 noundef zeroext %5, ptr noundef %i.aq, ptr noundef %7)
   %i.aw = load ptr, ptr %i.a, align 8, !tbaa !249 ; 7 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 360
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !130 ; 3 uses

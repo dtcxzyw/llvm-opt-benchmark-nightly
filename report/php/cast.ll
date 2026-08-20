@@ -176,12 +176,13 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.ai
 
 bb.i:                                             ; preds = %bb.f
-  %i.u = load ptr, ptr %0, align 8, !tbaa !13
+  %i.u = load ptr, ptr %0, align 8, !tbaa !13     ; 2 uses
   %i.v = icmp eq ptr %i.u, @php_stream_stdio_ops
   br i1 %i.v, label %bb.j, label %bb.n
 
 bb.j:                                             ; preds = %bb.i
-  %i.w = load ptr, ptr getelementptr inbounds nuw (i8, ptr @php_stream_stdio_ops, i64 48), align 8, !tbaa !33 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %i.u, i64 48
+  %i.w = load ptr, ptr %4, align 8, !tbaa !33     ; 2 uses
   %.not79 = icmp eq ptr %i.w, null
   br i1 %.not79, label %bb.n, label %bb.k
 

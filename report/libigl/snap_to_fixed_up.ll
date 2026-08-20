@@ -204,7 +204,7 @@ declare float @llvm.sqrt.f32(float) #2
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr dso_local noundef nonnull align 16 dereferenceable(16) ptr @_ZN5Eigen14QuaternionBaseINS_10QuaternionIfLi0EEEE17setFromTwoVectorsINS_6MatrixIfLi3ELi1ELi0ELi3ELi1EEES6_EERS2_RKNS_10MatrixBaseIT_EERKNS8_IT0_EE(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr noundef nonnull align 1 dereferenceable(1) %1, ptr noundef nonnull align 1 dereferenceable(1) %2) local_unnamed_addr #3 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = alloca %"class.Eigen::Matrix.159", align 4 ; 9 uses
+  %3 = alloca %"class.Eigen::Matrix.159", align 4 ; 8 uses
   %4 = alloca %"class.Eigen::JacobiSVD", align 16 ; 11 uses
   %i.a = load <2 x float>, ptr %1, align 4, !tbaa !9, !noalias !78 ; 4 uses
   %i.b = fmul <2 x float> %i.a, %i.a              ; 2 uses
@@ -251,13 +251,13 @@ bb.c:                                             ; preds = %_ZNK5Eigen10MatrixB
 
 _ZNK5Eigen10MatrixBaseINS_6MatrixIfLi3ELi1ELi0ELi3ELi1EEEE10normalizedEv.exit18: ; preds = %_ZNK5Eigen10MatrixBaseINS_6MatrixIfLi3ELi1ELi0ELi3ELi1EEEE10normalizedEv.exit, %bb.c
   %.sroa.052.0 = phi float [ %i.z, %bb.c ], [ %i.q, %_ZNK5Eigen10MatrixBaseINS_6MatrixIfLi3ELi1ELi0ELi3ELi1EEEE10normalizedEv.exit ] ; 4 uses
-  %i.ad = phi <2 x float> [ %i.ac, %bb.c ], [ %i.t, %_ZNK5Eigen10MatrixBaseINS_6MatrixIfLi3ELi1ELi0ELi3ELi1EEEE10normalizedEv.exit ] ; 4 uses
+  %i.ad = phi <2 x float> [ %i.ac, %bb.c ], [ %i.t, %_ZNK5Eigen10MatrixBaseINS_6MatrixIfLi3ELi1ELi0ELi3ELi1EEEE10normalizedEv.exit ] ; 5 uses
   %i.ae = extractelement <2 x float> %i.p, i64 0  ; 2 uses
   %i.af = fmul float %i.ae, %.sroa.052.0
   %i.ag = extractelement <2 x float> %i.ad, i64 0 ; 2 uses
   %i.ah = extractelement <2 x float> %i.p, i64 1  ; 2 uses
   %i.ai = fmul float %i.ah, %i.ag
-  %i.aj = extractelement <2 x float> %i.ad, i64 1 ; 2 uses
+  %i.aj = extractelement <2 x float> %i.ad, i64 1
   %i.ak = fmul float %.sroa.12.0, %i.aj
   %i.al = fadd float %i.ak, %i.ai
   %i.am = fadd float %i.af, %i.al                 ; 4 uses
@@ -272,13 +272,12 @@ bb.d:                                             ; preds = %_ZNK5Eigen10MatrixB
   %i.ap = getelementptr inbounds nuw i8, ptr %3, i64 8
   store float %i.ah, ptr %i.ap, align 4, !tbaa !9, !noalias !84
   %i.aq = getelementptr inbounds nuw i8, ptr %3, i64 16
-  store float %.sroa.12.0, ptr %i.aq, align 4, !tbaa !9, !noalias !84
   %i.ar = getelementptr inbounds nuw i8, ptr %3, i64 4
   store float %.sroa.052.0, ptr %i.ar, align 4, !tbaa !9
   %i.as = getelementptr inbounds nuw i8, ptr %3, i64 12
   store float %i.ag, ptr %i.as, align 4, !tbaa !9
-  %5 = getelementptr inbounds nuw i8, ptr %3, i64 20
-  store float %i.aj, ptr %5, align 4, !tbaa !9
+  %5 = insertelement <2 x float> %i.ad, float %.sroa.12.0, i64 0
+  store <2 x float> %5, ptr %i.aq, align 4, !tbaa !9
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #19
   %i.at = getelementptr inbounds nuw i8, ptr %4, i64 60
   %i.au = getelementptr inbounds nuw i8, ptr %4, i64 72

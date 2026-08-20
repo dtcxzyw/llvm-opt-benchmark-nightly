@@ -204,7 +204,7 @@ bb.k:                                             ; preds = %bb.i
   br label %.body
 
 bb.l:                                             ; preds = %bb.j, %bb.h, %bb.g
-  %i.ai = load ptr, ptr %2, align 8, !tbaa !70    ; 3 uses
+  %i.ai = load ptr, ptr %2, align 8, !tbaa !70    ; 4 uses
   %i.aj = icmp eq ptr %i.ai, @_ZZN8facebook5velox12IPPrefixType3getEvE9kInstance
   br i1 %i.aj, label %bb.m, label %bb.ai
 
@@ -281,7 +281,7 @@ bb.r:                                             ; preds = %.thread270, %bb.o, 
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #34
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #34
   tail call void @llvm.experimental.noalias.scope.decl(metadata !348)
-  %i.bh = tail call ptr @__dynamic_cast(ptr nonnull @_ZZN8facebook5velox12IPPrefixType3getEvE9kInstance, ptr nonnull @_ZTIN8facebook5velox4TypeE, ptr nonnull @_ZTIN8facebook5velox7RowTypeE, i64 0) #34, !noalias !348 ; 2 uses
+  %i.bh = tail call ptr @__dynamic_cast(ptr nonnull %i.ai, ptr nonnull @_ZTIN8facebook5velox4TypeE, ptr nonnull @_ZTIN8facebook5velox7RowTypeE, i64 0) #34, !noalias !348 ; 2 uses
   %.not.not.i = icmp eq ptr %i.bh, null
   br i1 %.not.not.i, label %_ZNSt10shared_ptrIKN8facebook5velox7RowTypeEEC2IKNS1_4TypeEEERKS_IT_EPS3_.exit.i, label %bb.s
 

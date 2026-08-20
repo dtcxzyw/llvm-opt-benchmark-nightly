@@ -204,7 +204,7 @@ begin_hunk_0_@_homography:bb.a
   %i.kp = shufflevector <4 x float> %i.kb, <4 x float> poison, <4 x i32> <i32 3, i32 1, i32 2, i32 3>
   %i.kq = fadd reassoc nsz arcp contract afn <4 x float> %i.kp, %i.kg
   %i.kr = fadd reassoc nsz arcp contract afn <4 x float> %i.kb, %i.km
-  %i.ks = fadd reassoc nsz arcp contract afn <4 x float> %i.kq, %i.kj ; 5 uses
+  %i.ks = fadd reassoc nsz arcp contract afn <4 x float> %i.kq, %i.kj ; 4 uses
   %i.kt = fadd reassoc nsz arcp contract afn <4 x float> %i.kr, %i.ko ; 6 uses
   %i.ku = shufflevector <4 x float> %i.jx, <4 x float> poison, <4 x i32> <i32 3, i32 1, i32 2, i32 3>
   %i.kv = fadd reassoc nsz arcp contract afn <4 x float> %i.kn, %i.ku
@@ -278,12 +278,11 @@ bb.f:                                             ; preds = %.preheader.us, %bb.
   %i.mn = fadd reassoc nsz arcp contract afn <4 x float> %i.ml, %i.ks
   %i.mo = fsub reassoc nsz arcp contract afn <4 x float> %i.mn, %i.mm
   store <4 x float> %i.mo, ptr %i.a, align 64, !tbaa !14, !alias.scope !99, !noalias !102
-  %11 = shufflevector <4 x float> %i.kt, <4 x float> %i.ml, <4 x i32> <i32 1, i32 2, i32 7, i32 poison>
-  %12 = shufflevector <4 x float> %11, <4 x float> %i.ks, <4 x i32> <i32 0, i32 1, i32 2, i32 5>
-  %i.mp = fmul reassoc nsz arcp contract afn <4 x float> %12, <float 1.000000e+00, float 1.000000e+00, float 1.000000e+00, float 0.000000e+00>
-  %13 = shufflevector <4 x float> %i.ks, <4 x float> %i.kx, <4 x i32> <i32 1, i32 2, i32 4, i32 5>
-  %14 = fmul reassoc nsz arcp contract afn <4 x float> %13, <float 0.000000e+00, float 0.000000e+00, float 1.000000e+00, float 1.000000e+00> ; 2 uses
-  %i.mq = fadd reassoc nsz arcp contract afn <4 x float> %i.mp, %14 ; 2 uses
+  %11 = shufflevector <4 x float> %i.ks, <4 x float> %i.kx, <4 x i32> <i32 1, i32 2, i32 4, i32 5>
+  %i.mp = fmul reassoc nsz arcp contract afn <4 x float> %11, <float 0.000000e+00, float 0.000000e+00, float 1.000000e+00, float 1.000000e+00> ; 3 uses
+  %12 = shufflevector <4 x float> %i.kt, <4 x float> %i.ml, <4 x i32> <i32 1, i32 2, i32 7, i32 poison>
+  %13 = shufflevector <4 x float> %12, <4 x float> %i.mp, <4 x i32> <i32 0, i32 1, i32 2, i32 4>
+  %i.mq = fadd reassoc nsz arcp contract afn <4 x float> %13, %i.mp ; 2 uses
   %i.mr = shufflevector <2 x float> %i.mj, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 poison, i32 poison>
   %i.ms = shufflevector <4 x float> %i.kx, <4 x float> %i.kt, <4 x i32> <i32 1, i32 2, i32 4, i32 5>
   %i.mt = shufflevector <4 x float> %i.mr, <4 x float> <float 0.000000e+00, float 0.000000e+00, float poison, float poison>, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
@@ -293,7 +292,7 @@ bb.f:                                             ; preds = %.preheader.us, %bb.
   %i.mx = shufflevector <4 x float> %i.mv, <4 x float> %i.mw, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   store <4 x float> %i.mx, ptr %i.bi, align 16, !tbaa !14, !alias.scope !99, !noalias !102
   %shift = shufflevector <4 x float> %i.kx, <4 x float> poison, <4 x i32> <i32 poison, i32 2, i32 poison, i32 poison>
-  %foldExtExtBinop373 = fadd reassoc nsz arcp contract afn <4 x float> %14, %shift
+  %foldExtExtBinop373 = fadd reassoc nsz arcp contract afn <4 x float> %i.mp, %shift
   %shift375 = shufflevector <4 x float> %i.ml, <4 x float> poison, <4 x i32> <i32 poison, i32 2, i32 poison, i32 poison>
   %foldExtExtBinop376 = fadd reassoc nsz arcp contract afn <4 x float> %foldExtExtBinop373, %shift375
   %i.my = extractelement <4 x float> %foldExtExtBinop376, i64 1

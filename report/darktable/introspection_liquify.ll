@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.f, %bb.e, %bb.d, %bb.c, %bb.b
   %indvars.iv.i.lcssa = phi i64 [ %indvars.iv.i, %bb.b ], [ %indvars.iv.next.i, %bb.c ], [ %indvars.iv.next.i.1, %bb.d ], [ %indvars.iv.next.i.2, %bb.e ], [ %indvars.iv.next.i.3, %bb.f ] ; 2 uses
-  %.lcssa = phi ptr [ %i.a, %bb.b ], [ %i.d, %bb.c ], [ %i.g, %bb.d ], [ %i.j, %bb.e ], [ %i.m, %bb.f ] ; 10 uses
+  %.lcssa = phi ptr [ %i.a, %bb.b ], [ %i.d, %bb.c ], [ %i.g, %bb.d ], [ %i.j, %bb.e ], [ %i.m, %bb.f ] ; 8 uses
   %i.p = trunc nuw nsw i64 %indvars.iv.i.lcssa to i32
   store i32 %i.p, ptr %.704.val, align 4, !tbaa !12
   %i.q = trunc i64 %indvars.iv.i.lcssa to i8
@@ -215,15 +215,12 @@ bb.h:                                             ; preds = %bb.f, %bb.e, %bb.d,
   %i.t = getelementptr inbounds nuw i8, ptr %.lcssa, i64 18
   store i8 -1, ptr %i.t, align 2, !tbaa !213
   store <4 x i32> <i32 2, i32 3, i32 0, i32 0>, ptr %.lcssa, align 4, !tbaa !12
-  %1 = getelementptr inbounds nuw i8, ptr %.lcssa, i64 20
-  %i.u = getelementptr inbounds nuw i8, ptr %.lcssa, i64 52
-  store i32 0, ptr %i.u, align 4, !tbaa !93
-  %i.v = getelementptr inbounds nuw i8, ptr %.lcssa, i64 36
-  store <2 x float> %0, ptr %i.v, align 4
-  %2 = shufflevector <2 x float> %0, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  store <4 x float> %2, ptr %1, align 4
-  %3 = getelementptr inbounds nuw i8, ptr %.lcssa, i64 44
-  store <2 x float> <float 5.000000e-01, float 7.500000e-01>, ptr %3, align 4, !tbaa !13
+  %i.u = getelementptr inbounds nuw i8, ptr %.lcssa, i64 20
+  %i.v = getelementptr inbounds nuw i8, ptr %.lcssa, i64 52
+  store i32 0, ptr %i.v, align 4, !tbaa !93
+  %1 = shufflevector <2 x float> %0, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %2 = shufflevector <4 x float> %1, <4 x float> <float poison, float poison, float 5.000000e-01, float 7.500000e-01>, <8 x i32> <i32 0, i32 1, i32 0, i32 1, i32 0, i32 1, i32 6, i32 7>
+  store <8 x float> %2, ptr %i.u, align 4
   %i.w = getelementptr inbounds nuw i8, ptr %.lcssa, i64 56
   store i32 0, ptr %i.w, align 4, !tbaa !91
   br label %node_alloc.exit.thread
@@ -280,7 +277,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.f, %bb.e, %bb.d, %bb.c, %bb.b
   %indvars.iv.i.lcssa = phi i64 [ %indvars.iv.i, %bb.b ], [ %indvars.iv.next.i, %bb.c ], [ %indvars.iv.next.i.1, %bb.d ], [ %indvars.iv.next.i.2, %bb.e ], [ %indvars.iv.next.i.3, %bb.f ] ; 2 uses
-  %.lcssa = phi ptr [ %i.a, %bb.b ], [ %i.d, %bb.c ], [ %i.g, %bb.d ], [ %i.j, %bb.e ], [ %i.m, %bb.f ] ; 11 uses
+  %.lcssa = phi ptr [ %i.a, %bb.b ], [ %i.d, %bb.c ], [ %i.g, %bb.d ], [ %i.j, %bb.e ], [ %i.m, %bb.f ] ; 9 uses
   %i.p = trunc nuw nsw i64 %indvars.iv.i.lcssa to i32
   store i32 %i.p, ptr %.704.val, align 4, !tbaa !12
   %i.q = trunc i64 %indvars.iv.i.lcssa to i8
@@ -296,12 +293,9 @@ bb.h:                                             ; preds = %bb.f, %bb.e, %bb.d,
   %i.w = getelementptr inbounds nuw i8, ptr %.lcssa, i64 52
   store i32 0, ptr %i.w, align 4, !tbaa !93
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.u, i8 0, i64 16, i1 false)
-  %1 = getelementptr inbounds nuw i8, ptr %.lcssa, i64 36
-  store <2 x float> %0, ptr %1, align 4
-  %2 = shufflevector <2 x float> %0, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  store <4 x float> %2, ptr %i.v, align 4
-  %3 = getelementptr inbounds nuw i8, ptr %.lcssa, i64 44
-  store <2 x float> <float 5.000000e-01, float 7.500000e-01>, ptr %3, align 4, !tbaa !13
+  %1 = shufflevector <2 x float> %0, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %2 = shufflevector <4 x float> %1, <4 x float> <float poison, float poison, float 5.000000e-01, float 7.500000e-01>, <8 x i32> <i32 0, i32 1, i32 0, i32 1, i32 0, i32 1, i32 6, i32 7>
+  store <8 x float> %2, ptr %i.v, align 4
   %i.x = getelementptr inbounds nuw i8, ptr %.lcssa, i64 56
   store i32 0, ptr %i.x, align 4, !tbaa !91
   br label %node_alloc.exit.thread

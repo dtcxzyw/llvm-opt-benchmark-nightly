@@ -203,7 +203,7 @@ declare void @_ZN3g2omlERKN5Eigen9TransformIdLi3ELi1ELi0EEERKNS_6Line3DE(ptr dea
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr void @_ZN3g2o6Line3D6ominusERKS0_(ptr dead_on_unwind noalias writable sret(%"class.Eigen::Matrix.28") align 16 %0, ptr noundef nonnull align 16 dereferenceable(48) %1, ptr noundef nonnull align 16 dereferenceable(48) %2) local_unnamed_addr #5 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = alloca %"class.Eigen::Matrix.161", align 16 ; 13 uses
+  %3 = alloca %"class.Eigen::Matrix.161", align 16 ; 12 uses
   %4 = alloca %"class.Eigen::Quaternion", align 16 ; 11 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.b = load <2 x double>, ptr %i.a, align 8, !tbaa !66, !noalias !94 ; 7 uses
@@ -229,9 +229,8 @@ bb.a:
   %i.v = fadd <2 x double> %i.t, %i.u
   %i.w = insertelement <2 x double> poison, double %i.r, i64 0
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #23
-  %5 = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %i.x = getelementptr inbounds nuw i8, ptr %3, i64 24
-  %i.y = getelementptr inbounds nuw i8, ptr %3, i64 32
+  %i.x = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %i.y = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.z = getelementptr inbounds nuw i8, ptr %3, i64 40
   %i.aa = getelementptr inbounds nuw i8, ptr %3, i64 56
   %i.ab = load double, ptr %i.g, align 16, !tbaa !8, !noalias !99 ; 4 uses
@@ -294,7 +293,7 @@ bb.a:
   %i.cg = fmul <2 x double> %i.bv, %i.cf          ; 3 uses
   %i.ch = shufflevector <2 x double> %i.cd, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.ci = fmul <2 x double> %i.f, %i.ch           ; 3 uses
-  %i.cj = fmul <2 x double> %i.az, %i.cd          ; 5 uses
+  %i.cj = fmul <2 x double> %i.az, %i.cd          ; 3 uses
   %i.ck = shufflevector <2 x double> %i.at, <2 x double> %i.cb, <2 x i32> <i32 1, i32 2>
   %i.cl = fdiv <2 x double> splat (double 1.000000e+00), %i.ck ; 3 uses
   %i.cm = shufflevector <2 x double> %i.cl, <2 x double> poison, <2 x i32> <i32 1, i32 1>
@@ -302,45 +301,38 @@ bb.a:
   %i.co = shufflevector <2 x double> %i.cl, <2 x double> poison, <2 x i32> zeroinitializer
   %i.cp = fmul <2 x double> %i.m, %i.co           ; 3 uses
   %i.cq = insertelement <2 x double> %i.bs, double %i.r, i64 1
-  %i.cr = fmul <2 x double> %i.cq, %i.av          ; 4 uses
+  %i.cr = fmul <2 x double> %i.cq, %i.av          ; 3 uses
   %i.cs = insertelement <2 x double> %i.ay, double %i.ah, i64 0
-  %i.ct = fmul <2 x double> %i.cs, %i.cl          ; 4 uses
+  %i.ct = fmul <2 x double> %i.cs, %i.cl          ; 3 uses
   %i.cu = fmul <2 x double> %i.ao, %i.ce
   %i.cv = fmul <2 x double> %i.ci, %i.bb          ; 2 uses
   %i.cw = fmul <2 x double> %i.bb, %i.ax          ; 2 uses
-  %6 = fmul <2 x double> %i.bb, %i.cg             ; 2 uses
-  %7 = fmul <2 x double> %i.ax, %i.cn             ; 2 uses
-  %8 = shufflevector <2 x double> %7, <2 x double> %6, <2 x i32> <i32 0, i32 2>
-  %9 = shufflevector <2 x double> %7, <2 x double> %6, <2 x i32> <i32 1, i32 3>
-  %10 = fadd <2 x double> %8, %9
-  %i.cx = fmul <2 x double> %i.cr, %i.cu
-  %i.cy = fadd <2 x double> %i.cx, %10            ; 3 uses
-  %11 = extractelement <2 x double> %i.cy, i64 1
-  store double %11, ptr %5, align 16, !tbaa !8
-  %i.cz = fmul <2 x double> %i.ci, %i.cp          ; 2 uses
-  %shift45 = shufflevector <2 x double> %i.cz, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop46 = fadd <2 x double> %i.cz, %shift45
-  %shift48 = shufflevector <2 x double> %i.cj, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop49 = fmul <2 x double> %shift48, %i.ct
-  %foldExtExtBinop51.a = fadd <2 x double> %foldExtExtBinop49, %foldExtExtBinop46 ; 2 uses
-  %i.da = extractelement <2 x double> %foldExtExtBinop51.a, i64 0
-  store double %i.da, ptr %i.x, align 8, !tbaa !8
-  %i.db = fmul <2 x double> %i.ax, %i.cp          ; 2 uses
-  %shift53 = shufflevector <2 x double> %i.db, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop54 = fadd <2 x double> %i.db, %shift53
-  %12 = shufflevector <2 x double> %i.ct, <2 x double> %i.cj, <2 x i32> <i32 0, i32 3>
-  %i.dc = fmul <2 x double> %i.cr, %12
-  %i.dd = shufflevector <2 x double> %i.cv, <2 x double> %i.cw, <2 x i32> <i32 0, i32 2>
-  %i.de = shufflevector <2 x double> %i.cv, <2 x double> %i.cw, <2 x i32> <i32 1, i32 3>
+  %5 = shufflevector <2 x double> %i.cv, <2 x double> %i.cw, <2 x i32> <i32 0, i32 2>
+  %6 = shufflevector <2 x double> %i.cv, <2 x double> %i.cw, <2 x i32> <i32 1, i32 3>
+  %7 = fadd <2 x double> %5, %6
+  %8 = shufflevector <2 x double> %i.cr, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %9 = shufflevector <2 x double> %i.cj, <2 x double> %i.cr, <2 x i32> <i32 1, i32 2> ; 2 uses
+  %i.cx = fmul <2 x double> %8, %9
+  %i.cy = fadd <2 x double> %7, %i.cx             ; 3 uses
+  store <2 x double> %i.cy, ptr %3, align 16, !tbaa !8
+  %10 = fmul <2 x double> %i.bb, %i.cg            ; 2 uses
+  %i.cz = fmul <2 x double> %i.ax, %i.cn          ; 2 uses
+  %11 = shufflevector <2 x double> %i.cz, <2 x double> %10, <2 x i32> <i32 0, i32 2>
+  %12 = shufflevector <2 x double> %i.cz, <2 x double> %10, <2 x i32> <i32 1, i32 3>
+  %13 = fadd <2 x double> %11, %12
+  %foldExtExtBinop49 = fmul <2 x double> %i.cr, %i.cu
+  %foldExtExtBinop51.a = fadd <2 x double> %foldExtExtBinop49, %13 ; 3 uses
+  %i.da = extractelement <2 x double> %foldExtExtBinop51.a, i64 1
+  store double %i.da, ptr %i.x, align 16, !tbaa !8
+  %i.db = fmul <2 x double> %i.ci, %i.cp          ; 2 uses
+  %i.dc = fmul <2 x double> %i.ax, %i.cp          ; 2 uses
+  %i.dd = shufflevector <2 x double> %i.db, <2 x double> %i.dc, <2 x i32> <i32 0, i32 2>
+  %i.de = shufflevector <2 x double> %i.db, <2 x double> %i.dc, <2 x i32> <i32 1, i32 3>
   %i.df = fadd <2 x double> %i.dd, %i.de
-  %13 = shufflevector <2 x double> %i.cj, <2 x double> %i.cr, <2 x i32> <i32 1, i32 3>
-  %14 = shufflevector <2 x double> %i.cr, <2 x double> poison, <2 x i32> <i32 1, i32 0>
-  %i.dg = fmul <2 x double> %13, %14
-  %15 = fadd <2 x double> %i.df, %i.dg            ; 4 uses
-  store <2 x double> %15, ptr %3, align 16, !tbaa !8
-  %foldExtExtBinop56 = fadd <2 x double> %i.dc, %foldExtExtBinop54 ; 3 uses
-  %16 = extractelement <2 x double> %foldExtExtBinop56, i64 0
-  store double %16, ptr %i.y, align 16, !tbaa !8
+  %14 = shufflevector <2 x double> %i.ct, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.dg = fmul <2 x double> %9, %14
+  %foldExtExtBinop56 = fadd <2 x double> %i.dg, %i.df ; 3 uses
+  store <2 x double> %foldExtExtBinop56, ptr %i.y, align 8, !tbaa !8
   %i.dh = fmul <2 x double> %i.cg, %i.cp          ; 2 uses
   %i.di = fmul <2 x double> %i.ci, %i.cn          ; 2 uses
   %i.dj = shufflevector <2 x double> %i.dh, <2 x double> %i.di, <2 x i32> <i32 0, i32 2>
@@ -349,7 +341,7 @@ bb.a:
   %i.dm = fmul <2 x double> %i.cj, %i.ct
   %i.dn = fadd <2 x double> %i.dm, %i.dl          ; 2 uses
   store <2 x double> %i.dn, ptr %i.z, align 8, !tbaa !8
-  %i.do = extractelement <2 x double> %i.cy, i64 0
+  %i.do = extractelement <2 x double> %foldExtExtBinop51.a, i64 0
   store double %i.do, ptr %i.aa, align 8, !tbaa !8
   %i.dp = getelementptr inbounds nuw i8, ptr %3, i64 64
   %i.dq = fmul <2 x double> %i.cg, %i.cn          ; 2 uses
@@ -357,30 +349,31 @@ bb.a:
   %foldExtExtBinop59 = fadd <2 x double> %i.dq, %shift58
   %shift61 = shufflevector <2 x double> %i.ct, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop62 = fmul <2 x double> %i.cj, %shift61
-  %foldExtExtBinop64 = fadd <2 x double> %foldExtExtBinop62, %foldExtExtBinop59 ; 2 uses
-  %i.dr = extractelement <2 x double> %foldExtExtBinop64, i64 0 ; 2 uses
+  %foldExtExtBinop64 = fadd <2 x double> %foldExtExtBinop62, %foldExtExtBinop59
+  %i.dr = extractelement <2 x double> %foldExtExtBinop64, i64 0 ; 3 uses
   store double %i.dr, ptr %i.dp, align 16, !tbaa !8
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #23
-  %foldExtExtBinop66 = fadd <2 x double> %foldExtExtBinop56, %foldExtExtBinop64
-  %foldExtExtBinop68 = fadd <2 x double> %15, %foldExtExtBinop66
-  %i.ds = extractelement <2 x double> %foldExtExtBinop68, i64 0 ; 2 uses
-  %i.dt = fcmp ogt double %i.ds, 0.000000e+00
+  %15 = extractelement <2 x double> %foldExtExtBinop56, i64 1 ; 2 uses
+  %16 = fadd double %15, %i.dr
+  %i.ds = extractelement <2 x double> %i.cy, i64 0 ; 2 uses
+  %17 = fadd double %i.ds, %16                    ; 2 uses
+  %i.dt = fcmp ogt double %17, 0.000000e+00
   br i1 %i.dt, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.du = fadd double %i.ds, 1.000000e+00
+  %i.du = fadd double %17, 1.000000e+00
   %i.dv = tail call double @sqrt(double noundef %i.du) #23 ; 2 uses
   %i.dw = fmul double %i.dv, 5.000000e-01
   %i.dx = getelementptr inbounds nuw i8, ptr %4, i64 24
   store double %i.dw, ptr %i.dx, align 8, !tbaa !8
   %i.dy = fdiv double 5.000000e-01, %i.dv         ; 2 uses
-  %i.dz = fsub <2 x double> %i.dn, %i.cy
+  %i.dz = fsub <2 x double> %i.dn, %foldExtExtBinop51.a
   %i.ea = insertelement <2 x double> poison, double %i.dy, i64 0
   %i.eb = shufflevector <2 x double> %i.ea, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ec = fmul <2 x double> %i.dz, %i.eb
   store <2 x double> %i.ec, ptr %4, align 16, !tbaa !8
-  %shift70 = shufflevector <2 x double> %15, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop71 = fsub <2 x double> %shift70, %foldExtExtBinop51.a
+  %shift70 = shufflevector <2 x double> %i.cy, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop71 = fsub <2 x double> %shift70, %foldExtExtBinop56
   %i.ed = extractelement <2 x double> %foldExtExtBinop71, i64 0
   %i.ee = fmul double %i.ed, %i.dy
   %i.ef = getelementptr inbounds nuw i8, ptr %4, i64 16
@@ -388,8 +381,7 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZN5Eigen10QuaternionIdLi0EEC2INS_6MatrixIdLi3ELi3ELi0ELi3ELi3EEEEERKNS_10MatrixBaseIT_EE.exit
 
 bb.c:                                             ; preds = %bb.a
-  %17 = fcmp ogt <2 x double> %foldExtExtBinop56, %15
-  %18 = extractelement <2 x i1> %17, i64 0        ; 3 uses
+  %18 = fcmp ogt double %15, %i.ds                ; 3 uses
   %.0.i.i.i = zext i1 %18 to i64
   %.0.i.i.i.sroa.sel.idx.sroa.sel.idx = select i1 %18, i64 8, i64 0
   %.0.i.i.i.sroa.sel.idx.sroa.sel = getelementptr inbounds nuw i8, ptr %3, i64 %.0.i.i.i.sroa.sel.idx.sroa.sel.idx

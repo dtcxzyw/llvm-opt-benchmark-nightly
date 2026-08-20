@@ -203,7 +203,7 @@ bb.d:                                             ; preds = %bb.a
   br i1 %i.i, label %bb.e, label %bb.f, !prof !12
 
 bb.e:                                             ; preds = %bb.d
-  %i.j = tail call fastcc i32 @zend_array_recalc_elements(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @executor_globals, i64 304))
+  %i.j = tail call fastcc i32 @zend_array_recalc_elements(ptr noundef nonnull %0)
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.d
