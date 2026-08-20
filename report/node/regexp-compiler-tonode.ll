@@ -204,14 +204,15 @@ bb.a:
 
 .lr.ph.i.i.us:                                    ; preds = %.lr.ph.split.us
   %.sroa.5.0.extract.shift.us = lshr i64 %i.f, 32
-  %.sroa.5.0.extract.trunc.us = trunc nuw i64 %.sroa.5.0.extract.shift.us to i32 ; 2 uses
+  %.sroa.5.0.extract.trunc.us = trunc nuw i64 %.sroa.5.0.extract.shift.us to i32
+  %6 = icmp ugt i64 %i.f, 281474976710655
+  %.sroa.speculated = select i1 %6, i32 65535, i32 %.sroa.5.0.extract.trunc.us ; 3 uses
   %i.h = icmp samesign ugt i32 %.sroa.043.0.extract.trunc.us, 55295
-  %i.i = icmp ult i64 %i.f, 246290604621824
+  %i.i = icmp ult i32 %.sroa.speculated, 57344
   %or.cond.us = and i1 %i.h, %i.i
   br i1 %or.cond.us, label %bb.f, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph.i.i.us
-  %6 = call i32 @llvm.umin.i32(i32 %.sroa.5.0.extract.trunc.us, i32 65535)
   %i.j = call noundef zeroext i1 @_ZN2v88internal30RangeContainsLatin1EquivalentsENS0_14CharacterRangeE(i64 %i.f) #20
   br i1 %i.j, label %bb.e, label %bb.c
 
@@ -220,11 +221,11 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.k, label %bb.f, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %spec.store.select.us = call i32 @llvm.umin.i32(i32 %.sroa.5.0.extract.trunc.us, i32 255)
+  %spec.store.select.us = call i32 @llvm.umin.i32(i32 %.sroa.speculated, i32 255)
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.b
-  %.030.us = phi i32 [ %6, %bb.b ], [ %spec.store.select.us, %bb.d ]
+  %.030.us = phi i32 [ %.sroa.speculated, %bb.b ], [ %spec.store.select.us, %bb.d ]
   %i.l = call noundef nonnull align 8 dereferenceable(200) ptr @_ZN6icu_7810UnicodeSet3addEii(ptr noundef nonnull align 8 dereferenceable(200) %4, i32 noundef %.sroa.043.0.extract.trunc.us, i32 noundef %.030.us) #20 ; 0 uses
   br label %bb.f
 
@@ -262,16 +263,17 @@ bb.f:                                             ; preds = %bb.e, %bb.c, %.lr.p
   br i1 %i.aa, label %bb.h, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.split
+  %.sroa.5.0.extract.shift = lshr i64 %i.z, 32
+  %.sroa.5.0.extract.trunc = trunc nuw i64 %.sroa.5.0.extract.shift to i32
+  %7 = icmp ugt i64 %i.z, 281474976710655
+  %.sroa.speculated63 = select i1 %7, i32 65535, i32 %.sroa.5.0.extract.trunc ; 2 uses
   %i.ab = icmp samesign ugt i32 %.sroa.043.0.extract.trunc, 55295
-  %i.ac = icmp ult i64 %i.z, 246290604621824
+  %i.ac = icmp ult i32 %.sroa.speculated63, 57344
   %or.cond = and i1 %i.ab, %i.ac
   br i1 %or.cond, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph.i.i
-  %.sroa.5.0.extract.shift = lshr i64 %i.z, 32
-  %.sroa.5.0.extract.trunc = trunc nuw i64 %.sroa.5.0.extract.shift to i32
-  %7 = call i32 @llvm.umin.i32(i32 %.sroa.5.0.extract.trunc, i32 65535)
-  %i.ad = call noundef nonnull align 8 dereferenceable(200) ptr @_ZN6icu_7810UnicodeSet3addEii(ptr noundef nonnull align 8 dereferenceable(200) %4, i32 noundef %.sroa.043.0.extract.trunc, i32 noundef %7) #20 ; 0 uses
+  %i.ad = call noundef nonnull align 8 dereferenceable(200) ptr @_ZN6icu_7810UnicodeSet3addEii(ptr noundef nonnull align 8 dereferenceable(200) %4, i32 noundef %.sroa.043.0.extract.trunc, i32 noundef %.sroa.speculated63) #20 ; 0 uses
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %.lr.ph.i.i, %.lr.ph.split

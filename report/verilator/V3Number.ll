@@ -204,23 +204,18 @@ _ZN12V3NumberData8setLogicEv.exit:                ; preds = %_ZN12V3NumberData13
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.e, %_ZN12V3NumberData8setLogicEv.exit
-  %.0228 = phi ptr [ %1, %_ZN12V3NumberData8setLogicEv.exit ], [ %i.aq, %bb.e ] ; 3 uses
+  %.0228 = phi ptr [ %1, %_ZN12V3NumberData8setLogicEv.exit ], [ %i.aq, %bb.e ] ; 2 uses
   %i.ap = load i8, ptr %.0228, align 1, !tbaa !23
   switch i8 %i.ap, label %bb.e [
     i8 0, label %.thread
-    i8 39, label %8
+    i8 39, label %bb.f
   ]
 
 bb.e:                                             ; preds = %bb.d
   %i.aq = getelementptr inbounds nuw i8, ptr %.0228, i64 1
   br label %bb.d, !llvm.loop !92
 
-8:                                                ; preds = %bb.d
-  %9 = getelementptr inbounds nuw i8, ptr %.0228, i64 1
-  %.not263 = icmp eq ptr %9, %1
-  br i1 %.not263, label %.thread, label %bb.f
-
-bb.f:                                             ; preds = %8
+bb.f:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #30
   %i.ar = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 8 uses
   store ptr %i.ar, ptr %2, align 8, !tbaa !15
@@ -467,11 +462,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit303: ; preds = %_Z
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #30
   br label %.thread
 
-.thread:                                          ; preds = %bb.d, %8, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit303
-  %.not263484 = phi i1 [ false, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit303 ], [ true, %8 ], [ true, %bb.d ]
-  %.0250 = phi i1 [ %i.bx, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit303 ], [ false, %8 ], [ false, %bb.d ] ; 4 uses
-  %.1248 = phi i8 [ %i.bv, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit303 ], [ 100, %8 ], [ 100, %bb.d ] ; 4 uses
-  %.1225 = phi ptr [ %spec.select291, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit303 ], [ %1, %8 ], [ %1, %bb.d ] ; 2 uses
+.thread:                                          ; preds = %bb.d, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit303
+  %.not263484 = phi i1 [ false, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit303 ], [ true, %bb.d ]
+  %.0250 = phi i1 [ %i.bx, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit303 ], [ false, %bb.d ] ; 4 uses
+  %.1248 = phi i8 [ %i.bv, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit303 ], [ 100, %bb.d ] ; 4 uses
+  %.1225 = phi ptr [ %spec.select291, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit303 ], [ %1, %bb.d ] ; 2 uses
   %i.dn = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 24 uses
   %i.do = load i32, ptr %i.dn, align 8, !tbaa !41 ; 3 uses
   %i.dp = icmp sgt i32 %i.do, 0
@@ -874,16 +869,17 @@ bb.gu:                                            ; preds = %.invoke.invoke, %_Z
 
 bb.gv:                                            ; preds = %bb.gt
   %i.arr = getelementptr inbounds nuw i8, ptr %1, i64 36
-  %i.ars = load i8, ptr %i.arr, align 4, !tbaa !42 ; 2 uses
-  %i.art = and i8 %i.ars, -2
+  %i.ars = load i8, ptr %i.arr, align 4, !tbaa !42
+  %.fr15.i = freeze i8 %i.ars                     ; 3 uses
+  %i.art = and i8 %.fr15.i, -2
   %switch.i = icmp eq i8 %i.art, 2
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %1, i64 32
   %.pre1319 = load i32, ptr %.phi.trans.insert, align 8, !tbaa !41
-  %.fr.i.i606 = freeze i32 %.pre1319              ; 8 uses
+  %.fr.i.i606 = freeze i32 %.pre1319              ; 6 uses
   br i1 %switch.i, label %.critedge251, label %.preheader.i
 
 .preheader.i:                                     ; preds = %bb.gv
-  %i.aru = add i8 %i.ars, -3
+  %i.aru = add i8 %.fr15.i, -3
   %spec.select.i.i.i607 = icmp ult i8 %i.aru, -2  ; 2 uses
   %i.arv = icmp slt i32 %.fr.i.i606, 1            ; 2 uses
   %invariant.op.i = or i1 %spec.select.i.i.i607, %i.arv
@@ -901,7 +897,7 @@ bb.gw:                                            ; preds = %_ZNK8V3Number6bitIs
   br i1 %exitcond.not.i616, label %.invoke.invoke, label %tailrecurse.preheader.i.i609, !llvm.loop !256
 
 tailrecurse.preheader.i.i609:                     ; preds = %bb.gw, %tailrecurse.preheader.i.lr.ph.i
-  %.059.i.a = phi i32 [ 0, %tailrecurse.preheader.i.lr.ph.i ], [ %i.ary, %bb.gw ] ; 3 uses
+  %.059.i.a = phi i32 [ %i.ary, %bb.gw ], [ 0, %tailrecurse.preheader.i.lr.ph.i ] ; 3 uses
   %i.arz = lshr i32 %.059.i.a, 5
   %i.asa = zext nneg i32 %i.arz to i64
   %i.asb = getelementptr inbounds nuw [8 x i8], ptr %spec.select.i9.i.i608, i64 %i.asa ; 2 uses
@@ -930,11 +926,11 @@ _ZNK8V3Number6isAllZEv.exit..lr.ph.i624_crit_edge: ; preds = %_ZNK8V3Number6isAl
   %.pre1318 = load ptr, ptr %1, align 8
   br label %.lr.ph.i624
 
-.lr.ph.i624:                                      ; preds = %_ZNK8V3Number6bitIsZEi.exit.i612, %tailrecurse.preheader.i.i609, %_ZNK8V3Number6isAllZEv.exit..lr.ph.i624_crit_edge
-  %i.ask = phi ptr [ %.pre1318, %_ZNK8V3Number6isAllZEv.exit..lr.ph.i624_crit_edge ], [ %i.arx, %tailrecurse.preheader.i.i609 ], [ %i.arx, %_ZNK8V3Number6bitIsZEi.exit.i612 ]
+.lr.ph.i624:                                      ; preds = %tailrecurse.preheader.i.i609, %_ZNK8V3Number6bitIsZEi.exit.i612, %_ZNK8V3Number6isAllZEv.exit..lr.ph.i624_crit_edge
+  %i.ask = phi ptr [ %.pre1318, %_ZNK8V3Number6isAllZEv.exit..lr.ph.i624_crit_edge ], [ %i.arx, %_ZNK8V3Number6bitIsZEi.exit.i612 ], [ %i.arx, %tailrecurse.preheader.i.i609 ]
   %i.asl = icmp samesign ult i32 %.fr.i.i606, 129
-  %spec.select.i11.i.i626 = select i1 %i.asl, ptr %1, ptr %i.ask ; 2 uses
-  br i1 %spec.select.i.i.i607, label %.critedge251, label %_ZNK12V3NumberData3numEv.exit.i.i627
+  %spec.select.i11.i.i626 = select i1 %i.asl, ptr %1, ptr %i.ask
+  br i1 %spec.select.i.i.i607, label %.preheader.i1283, label %_ZNK12V3NumberData3numEv.exit.i.i627
 
 _ZNK12V3NumberData3numEv.exit.i.i627:             ; preds = %.lr.ph.i624, %_ZNK8V3Number6bitIsXEi.exit.thread.i635
   %.059.i628 = phi i32 [ %i.asw, %_ZNK8V3Number6bitIsXEi.exit.thread.i635 ], [ 0, %.lr.ph.i624 ] ; 3 uses
@@ -961,17 +957,28 @@ _ZNK8V3Number6bitIsXEi.exit.i631:                 ; preds = %_ZNK12V3NumberData3
 _ZNK8V3Number6bitIsXEi.exit.thread.i635:          ; preds = %_ZNK8V3Number6bitIsXEi.exit.i631, %_ZNK12V3NumberData3numEv.exit.i.i627
   %i.asw = add nuw nsw i32 %.059.i628, 1          ; 2 uses
   %exitcond.not.i636 = icmp eq i32 %i.asw, %.fr.i.i606
-  br i1 %exitcond.not.i636, label %.preheader.i1284, label %_ZNK12V3NumberData3numEv.exit.i.i627, !llvm.loop !257
+  br i1 %exitcond.not.i636, label %.preheader.i1283, label %_ZNK12V3NumberData3numEv.exit.i.i627, !llvm.loop !257
 
-.preheader.i1284:                                 ; preds = %_ZNK8V3Number6bitIsXEi.exit.thread.i635
-  %25 = icmp slt i32 %.fr.i.i606, 1
-  br i1 %25, label %.critedge251, label %tailrecurse.preheader.i.i1287
+.preheader.i1283:                                 ; preds = %_ZNK8V3Number6bitIsXEi.exit.thread.i635, %.lr.ph.i624
+  %25 = getelementptr inbounds nuw i8, ptr %1, i64 32
+  %26 = load i32, ptr %25, align 8, !tbaa !41
+  %.fr.i.i1284 = freeze i32 %26                   ; 6 uses
+  %27 = icmp sgt i32 %.fr.i.i1284, 0
+  br i1 %27, label %.preheader.i1284, label %.critedge251
+
+.preheader.i1284:                                 ; preds = %.preheader.i1283
+  %28 = add i8 %.fr15.i, -3
+  %spec.select.i.i.i1285 = icmp ult i8 %28, -2
+  %29 = icmp samesign ult i32 %.fr.i.i1284, 129
+  %30 = load ptr, ptr %1, align 8
+  %spec.select.i9.i.i = select i1 %29, ptr %1, ptr %30
+  br i1 %spec.select.i.i.i1285, label %.critedge251, label %tailrecurse.preheader.i.i1287
 
 tailrecurse.preheader.i.i1287:                    ; preds = %.preheader.i1284, %_ZNK8V3Number6bitIsZEi.exit.thread.i1295
   %.059.i1288 = phi i32 [ %i.ati, %_ZNK8V3Number6bitIsZEi.exit.thread.i1295 ], [ 0, %.preheader.i1284 ] ; 3 uses
   %i.asx = lshr i32 %.059.i1288, 5
   %i.asy = zext nneg i32 %i.asx to i64
-  %i.asz = getelementptr inbounds nuw [8 x i8], ptr %spec.select.i11.i.i626, i64 %i.asy ; 2 uses
+  %i.asz = getelementptr inbounds nuw [8 x i8], ptr %spec.select.i9.i.i, i64 %i.asy ; 2 uses
   %.sroa.0.0.copyload.i.i1289 = load i32, ptr %i.asz, align 4, !tbaa !66
   %i.ata = xor i32 %.sroa.0.0.copyload.i.i1289, -1
   %i.atb = zext i32 %i.ata to i64
@@ -992,7 +999,7 @@ _ZNK8V3Number6bitIsZEi.exit.i1291:                ; preds = %tailrecurse.prehead
 
 _ZNK8V3Number6bitIsZEi.exit.thread.i1295:         ; preds = %_ZNK8V3Number6bitIsZEi.exit.i1291, %tailrecurse.preheader.i.i1287
   %i.ati = add nuw nsw i32 %.059.i1288, 1         ; 2 uses
-  %exitcond.not.i = icmp eq i32 %i.ati, %.fr.i.i606
+  %exitcond.not.i = icmp eq i32 %i.ati, %.fr.i.i1284
   br i1 %exitcond.not.i, label %.critedge251, label %tailrecurse.preheader.i.i1287, !llvm.loop !258
 
 .invoke.invoke:                                   ; preds = %bb.gw, %_ZNK8V3Number6bitIsXEi.exit.i631, %_ZNK8V3Number6bitIsZEi.exit.i1291, %bb.gt, %_ZNK8V3Number6isAllZEv.exit
@@ -1001,8 +1008,9 @@ _ZNK8V3Number6bitIsZEi.exit.thread.i1295:         ; preds = %_ZNK8V3Number6bitIs
   %i.atl = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %6, i64 noundef 0, i64 noundef %i.atk, ptr noundef nonnull %i.atj, i64 noundef 1)
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit605 unwind label %bb.gu ; 0 uses
 
-.critedge251:                                     ; preds = %_ZNK8V3Number6bitIsZEi.exit.thread.i1295, %.preheader.i1284, %.lr.ph.i624, %bb.gv
-  %i.atm = icmp sgt i32 %.fr.i.i606, 64           ; 2 uses
+.critedge251:                                     ; preds = %_ZNK8V3Number6bitIsZEi.exit.thread.i1295, %bb.gv, %.preheader.i1284, %.preheader.i1283
+  %31 = phi i32 [ %.fr.i.i606, %bb.gv ], [ %.fr.i.i1284, %.preheader.i1283 ], [ %.fr.i.i1284, %.preheader.i1284 ], [ %.fr.i.i1284, %_ZNK8V3Number6bitIsZEi.exit.thread.i1295 ]
+  %i.atm = icmp sgt i32 %31, 64                   ; 2 uses
   br i1 %i.aqf, label %bb.gx, label %bb.hf
 
 bb.gx:                                            ; preds = %.critedge251
@@ -1405,8 +1413,9 @@ _ZNK12V3NumberData3numEv.exit.us..critedge.loopexit_crit_edge: ; preds = %_ZNK12
 define dso_local noundef zeroext i1 @_ZNK8V3Number6isAllZEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(56) %0) #8 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 36
-  %i.b = load i8, ptr %i.a, align 4, !tbaa !42    ; 2 uses
-  %i.c = and i8 %i.b, -2
+  %i.b = load i8, ptr %i.a, align 4, !tbaa !42
+  %.fr15 = freeze i8 %i.b                         ; 2 uses
+  %i.c = and i8 %.fr15, -2
   %switch = icmp eq i8 %i.c, 2
   br i1 %switch, label %_ZNK8V3Number6bitIsZEi.exit.thread, label %.preheader
 
@@ -1414,7 +1423,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.e = load i32, ptr %i.d, align 8, !tbaa !41
   %.fr.i = freeze i32 %i.e                        ; 3 uses
-  %i.f = add i8 %i.b, -3
+  %i.f = add i8 %.fr15, -3
   %spec.select.i.i = icmp ult i8 %i.f, -2
   %i.g = icmp slt i32 %.fr.i, 1                   ; 2 uses
   %invariant.op = or i1 %spec.select.i.i, %i.g
@@ -1432,7 +1441,7 @@ bb.b:                                             ; preds = %_ZNK8V3Number6bitIs
   br i1 %exitcond.not, label %_ZNK8V3Number6bitIsZEi.exit.thread, label %tailrecurse.preheader.i, !llvm.loop !256
 
 tailrecurse.preheader.i:                          ; preds = %tailrecurse.preheader.i.lr.ph, %bb.b
-  %.059 = phi i32 [ 0, %tailrecurse.preheader.i.lr.ph ], [ %i.j, %bb.b ] ; 3 uses
+  %.059 = phi i32 [ %i.j, %bb.b ], [ 0, %tailrecurse.preheader.i.lr.ph ] ; 3 uses
   %i.k = lshr i32 %.059, 5
   %i.l = zext nneg i32 %i.k to i64
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %spec.select.i9.i, i64 %i.l ; 2 uses

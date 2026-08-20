@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.e
   unreachable
 
 _ZNK7xgboost6common4SpanIKjLm18446744073709551615EEixEm.exit24: ; preds = %bb.e
-  %i.w = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %i.o ; 4 uses
+  %i.w = getelementptr [8 x i8], ptr %i.s, i64 %i.o ; 5 uses
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !220, !nonnull !211, !align !212 ; 2 uses
   %i.z = load i64, ptr %i.y, align 8, !tbaa !221
@@ -268,12 +268,13 @@ _ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit: ; preds = %_ZNK7xgb
   %i.as = mul i64 %i.ar, %i.ag
   %i.at = getelementptr inbounds nuw [4 x i8], ptr %i.aq, i64 %i.as
   %i.au = load float, ptr %i.at, align 4, !tbaa !231
-  %i.av = fpext float %i.au to double             ; 6 uses
+  %i.av = fpext float %i.au to double             ; 2 uses
   store double %i.av, ptr %i.w, align 8, !tbaa !67
   %i.aw = icmp ugt i32 %i.l, 1                    ; 2 uses
   br i1 %i.aw, label %_ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit41.preheader, label %_ZNK7xgboost6common4SpanIKjLm18446744073709551615EEixEm.exit31
 
 _ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit41.preheader: ; preds = %_ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit
+  %load_initial83 = load double, ptr %i.w, align 8 ; 2 uses
   %i.ax = add nsw i64 %i.p, -1                    ; 3 uses
   %xtraiter = and i64 %i.ax, 1
   %i.ay = icmp eq i32 %i.l, 2
@@ -288,10 +289,11 @@ _ZNK7xgboost6common4SpanIKjLm18446744073709551615EEixEm.exit31.loopexit.unr-lcss
   br i1 %lcmp.mod.not, label %_ZNK7xgboost6common4SpanIKjLm18446744073709551615EEixEm.exit31, label %_ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit41.epil.preheader
 
 _ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit41.epil.preheader: ; preds = %_ZNK7xgboost6common4SpanIKjLm18446744073709551615EEixEm.exit31.loopexit.unr-lcssa, %_ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit41.preheader
-  %.epil.init = phi double [ %i.av, %_ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit41.preheader ], [ %i.cb, %_ZNK7xgboost6common4SpanIKjLm18446744073709551615EEixEm.exit31.loopexit.unr-lcssa ]
+  %.epil.init = phi double [ %load_initial83, %_ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit41.preheader ], [ %i.cb, %_ZNK7xgboost6common4SpanIKjLm18446744073709551615EEixEm.exit31.loopexit.unr-lcssa ]
   %.02174.epil.init = phi i64 [ 1, %_ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit41.preheader ], [ %i.cc, %_ZNK7xgboost6common4SpanIKjLm18446744073709551615EEixEm.exit31.loopexit.unr-lcssa ] ; 2 uses
   %lcmp.mod86 = trunc i64 %i.ax to i1
   tail call void @llvm.assume(i1 %lcmp.mod86)
+  %2 = getelementptr [8 x i8], ptr %i.w, i64 %.02174.epil.init
   %i.az = getelementptr inbounds nuw [8 x i8], ptr %i.ad, i64 %.02174.epil.init
   %i.ba = load i64, ptr %i.az, align 8, !tbaa !22
   %i.bb = mul i64 %i.ba, %i.ag
@@ -299,7 +301,6 @@ _ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit41.epil.preheader: ; 
   %i.bd = load float, ptr %i.bc, align 4, !tbaa !231
   %i.be = fpext float %i.bd to double
   %i.bf = fadd double %.epil.init, %i.be
-  %2 = getelementptr inbounds nuw [8 x i8], ptr %i.w, i64 %.02174.epil.init
   store double %i.bf, ptr %2, align 8, !tbaa !67
   br label %_ZNK7xgboost6common4SpanIKjLm18446744073709551615EEixEm.exit31
 
@@ -325,11 +326,12 @@ bb.p:                                             ; preds = %bb.o
   unreachable
 
 _ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit38: ; preds = %bb.o
-  %i.bk = getelementptr inbounds nuw [8 x i8], ptr %i.bj, i64 %i.o ; 4 uses
+  %i.bk = getelementptr inbounds nuw [8 x i8], ptr %i.bj, i64 %i.o ; 5 uses
   store double %i.av, ptr %i.bk, align 8, !tbaa !67
   br i1 %i.aw, label %_ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit44.preheader, label %._crit_edge
 
 _ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit44.preheader: ; preds = %_ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit38
+  %load_initial = load double, ptr %i.bk, align 8 ; 2 uses
   %i.bl = add nsw i64 %i.p, -1                    ; 3 uses
   %xtraiter87 = and i64 %i.bl, 1
   %i.bm = icmp eq i32 %i.l, 2
@@ -340,9 +342,10 @@ _ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit44.preheader.new: ; p
   br label %_ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit44
 
 _ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit41: ; preds = %_ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit41, %_ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit41.preheader.new
-  %i.bn = phi double [ %i.av, %_ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit41.preheader.new ], [ %i.cb, %_ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit41 ]
+  %i.bn = phi double [ %load_initial83, %_ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit41.preheader.new ], [ %i.cb, %_ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit41 ]
   %.02174 = phi i64 [ 1, %_ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit41.preheader.new ], [ %i.cc, %_ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit41 ] ; 4 uses
   %niter = phi i64 [ 0, %_ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit41.preheader.new ], [ %niter.next.1, %_ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit41 ]
+  %3 = getelementptr [8 x i8], ptr %i.w, i64 %.02174
   %i.bo = getelementptr inbounds nuw [8 x i8], ptr %i.ad, i64 %.02174
   %i.bp = load i64, ptr %i.bo, align 8, !tbaa !22
   %i.bq = mul i64 %i.bp, %i.ag
@@ -350,9 +353,9 @@ _ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit41: ; preds = %_ZNK7x
   %i.bs = load float, ptr %i.br, align 4, !tbaa !231
   %i.bt = fpext float %i.bs to double
   %i.bu = fadd double %i.bn, %i.bt                ; 2 uses
-  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.w, i64 %.02174
   store double %i.bu, ptr %3, align 8, !tbaa !67
   %4 = add nuw nsw i64 %.02174, 1                 ; 2 uses
+  %5 = getelementptr [8 x i8], ptr %i.w, i64 %4
   %i.bv = getelementptr inbounds nuw [8 x i8], ptr %i.ad, i64 %4
   %i.bw = load i64, ptr %i.bv, align 8, !tbaa !22
   %i.bx = mul i64 %i.bw, %i.ag
@@ -360,7 +363,6 @@ _ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit41: ; preds = %_ZNK7x
   %i.bz = load float, ptr %i.by, align 4, !tbaa !231
   %i.ca = fpext float %i.bz to double
   %i.cb = fadd double %i.bu, %i.ca                ; 3 uses
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %i.w, i64 %4
   store double %i.cb, ptr %5, align 8, !tbaa !67
   %i.cc = add nuw nsw i64 %.02174, 2              ; 2 uses
   %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
@@ -372,10 +374,11 @@ _ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit41: ; preds = %_ZNK7x
   br i1 %lcmp.mod90.not, label %._crit_edge, label %_ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit44.epil.preheader
 
 _ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit44.epil.preheader: ; preds = %._crit_edge.loopexit.unr-lcssa, %_ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit44.preheader
-  %.epil.init89 = phi double [ %i.av, %_ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit44.preheader ], [ %i.dh, %._crit_edge.loopexit.unr-lcssa ]
+  %.epil.init89 = phi double [ %load_initial, %_ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit44.preheader ], [ %i.dh, %._crit_edge.loopexit.unr-lcssa ]
   %.075.epil.init = phi i64 [ 1, %_ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit44.preheader ], [ %i.de, %._crit_edge.loopexit.unr-lcssa ] ; 3 uses
   %lcmp.mod91 = trunc i64 %i.bl to i1
   tail call void @llvm.assume(i1 %lcmp.mod91)
+  %6 = getelementptr [8 x i8], ptr %i.bk, i64 %.075.epil.init
   %i.cd = getelementptr inbounds nuw [8 x i8], ptr %i.ad, i64 %.075.epil.init
   %i.ce = load i64, ptr %i.cd, align 8, !tbaa !22
   %i.cf = mul i64 %i.ce, %i.ag
@@ -386,7 +389,6 @@ _ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit44.epil.preheader: ; 
   %i.ck = uitofp nneg i64 %i.cj to double
   %i.cl = fdiv double %i.ci, %i.ck
   %i.cm = fadd double %.epil.init89, %i.cl
-  %6 = getelementptr inbounds nuw [8 x i8], ptr %i.bk, i64 %.075.epil.init
   store double %i.cm, ptr %6, align 8, !tbaa !67
   br label %._crit_edge
 
@@ -394,9 +396,10 @@ _ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit44.epil.preheader: ; 
   ret void
 
 _ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit44: ; preds = %_ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit44, %_ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit44.preheader.new
-  %i.cn = phi double [ %i.av, %_ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit44.preheader.new ], [ %i.dh, %_ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit44 ]
+  %i.cn = phi double [ %load_initial, %_ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit44.preheader.new ], [ %i.dh, %_ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit44 ]
   %.075 = phi i64 [ 1, %_ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit44.preheader.new ], [ %i.de, %_ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit44 ] ; 4 uses
   %niter93 = phi i64 [ 0, %_ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit44.preheader.new ], [ %niter93.next.1, %_ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit44 ]
+  %7 = getelementptr [8 x i8], ptr %i.bk, i64 %.075
   %i.co = getelementptr inbounds nuw [8 x i8], ptr %i.ad, i64 %.075
   %i.cp = load i64, ptr %i.co, align 8, !tbaa !22
   %i.cq = mul i64 %i.cp, %i.ag
@@ -407,8 +410,8 @@ _ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit44: ; preds = %_ZNK7x
   %i.cv = uitofp nneg i64 %i.cu to double
   %i.cw = fdiv double %i.ct, %i.cv
   %i.cx = fadd double %i.cn, %i.cw                ; 2 uses
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %i.bk, i64 %.075
   store double %i.cx, ptr %7, align 8, !tbaa !67
+  %8 = getelementptr [8 x i8], ptr %i.bk, i64 %i.cu
   %i.cy = getelementptr inbounds nuw [8 x i8], ptr %i.ad, i64 %i.cu
   %i.cz = load i64, ptr %i.cy, align 8, !tbaa !22
   %i.da = mul i64 %i.cz, %i.ag
@@ -419,7 +422,6 @@ _ZNK7xgboost6common4SpanIdLm18446744073709551615EEixEm.exit44: ; preds = %_ZNK7x
   %i.df = uitofp nneg i64 %i.de to double
   %i.dg = fdiv double %i.dd, %i.df
   %i.dh = fadd double %i.cx, %i.dg                ; 3 uses
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %i.bk, i64 %i.cu
   store double %i.dh, ptr %8, align 8, !tbaa !67
   %niter93.next.1 = add nuw i64 %niter93, 2       ; 2 uses
   %niter93.ncmp.1 = icmp eq i64 %niter93.next.1, %unroll_iter92
