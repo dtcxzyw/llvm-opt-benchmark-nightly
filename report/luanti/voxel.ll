@@ -201,6 +201,7 @@ _ZL9checkAreaRK9VoxelArea.exit:                   ; preds = %_ZN9VoxelArea7addAr
   %i.cm = extractelement <2 x i16> %i.ae, i64 0   ; 2 uses
   %i.cn = sext i16 %i.cm to i32                   ; 2 uses
   %i.co = load i16, ptr %.sroa.16.0..sroa_idx, align 8, !tbaa !52 ; 2 uses
+  %4 = sext i16 %i.co to i32
   %.not3092 = icmp sgt i16 %i.cm, %i.co
   %i.cp = sext i16 %i.j to i32
   %i.cq = extractelement <4 x i16> %i.ba, i64 0
@@ -213,11 +214,11 @@ _ZL9checkAreaRK9VoxelArea.exit:                   ; preds = %_ZN9VoxelArea7addAr
   br i1 %.not3092, label %._crit_edge97.split, label %.lr.ph96.split
 
 .lr.ph96.split:                                   ; preds = %.lr.ph96
-  %4 = sext i16 %i.co to i32
   %i.cx = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.cy = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.cz = load ptr, ptr %i.cy, align 8, !tbaa !14
   %i.da = load ptr, ptr %i.cx, align 8, !tbaa !22
+  %5 = zext i32 %i.cn to i64
   %i.db = tail call i16 @llvm.smax.i16(i16 %i.cj, i16 %i.cl)
   %smax100 = sext i16 %i.db to i32
   br label %.lr.ph
@@ -253,10 +254,11 @@ _ZL9checkAreaRK9VoxelArea.exit:                   ; preds = %_ZN9VoxelArea7addAr
   br i1 %exitcond101.not, label %._crit_edge97.split, label %.lr.ph, !llvm.loop !124
 
 bb.n:                                             ; preds = %.lr.ph, %bb.n
-  %.093 = phi i32 [ %i.cn, %.lr.ph ], [ %5, %bb.n ] ; 4 uses
-  %i.do = add i32 %i.dj, %.093
+  %indvars.iv = phi i64 [ %5, %.lr.ph ], [ %indvars.iv.next, %bb.n ] ; 2 uses
+  %6 = trunc nuw i64 %indvars.iv to i32           ; 3 uses
+  %i.do = add i32 %i.dj, %6
   %i.dp = mul i32 %i.do, %.sroa.20.0.copyload
-  %i.dq = add i32 %i.dm, %.093
+  %i.dq = add i32 %i.dm, %6
   %i.dr = mul i32 %i.dq, %.sroa.20.0
   %i.ds = add nsw i32 %i.cu, %i.dr
   %i.dt = zext i32 %i.ds to i64                   ; 2 uses
@@ -267,9 +269,9 @@ bb.n:                                             ; preds = %.lr.ph, %bb.n
   %i.dx = getelementptr inbounds nuw i8, ptr %i.ci, i64 %i.dt
   %i.dy = getelementptr inbounds nuw i8, ptr %i.da, i64 %i.dv
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.dx, ptr align 1 %i.dy, i64 %i.cv, i1 false)
-  %5 = add nsw i32 %.093, 1
-  %exitcond.not = icmp eq i32 %.093, %4
-  br i1 %exitcond.not, label %._crit_edge, label %bb.n, !llvm.loop !125
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %.not30.not = icmp slt i32 %6, %4
+  br i1 %.not30.not, label %bb.n, label %._crit_edge, !llvm.loop !125
 
 bb.o:                                             ; preds = %._crit_edge97.split
   tail call void @_ZdaPv(ptr noundef nonnull %i.dd) #18

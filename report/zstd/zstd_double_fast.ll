@@ -50,8 +50,8 @@ bb.b:                                             ; preds = %bb.a
 .peel.begin.i:                                    ; preds = %.loopexit.i, %.lr.ph.i
   %.03846.i = phi ptr [ %i.m, %.lr.ph.i ], [ %i.bx, %.loopexit.i ] ; 11 uses
   %i.z = ptrtoint ptr %.03846.i to i64
-  %i.aa = sub i64 %i.z, %i.t
-  %i.ab = trunc i64 %i.aa to i32                  ; 3 uses
+  %i.aa = sub i64 %i.z, %i.t                      ; 3 uses
+  %i.ab = trunc i64 %i.aa to i32
   %i.ac = shl i32 %i.ab, 8                        ; 2 uses
   switch i32 %i.e, label %bb.g [
     i32 8, label %bb.f
@@ -125,7 +125,8 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e,
 bb.i:                                             ; preds = %.peel.next.i.preheader
   %i.bg = trunc i64 %i.bb to i32
   %i.bh = and i32 %i.bg, 255
-  %i.bi = shl i32 %i.ab, 8
+  %4 = trunc i64 %i.aa to i32
+  %i.bi = shl i32 %4, 8
   %i.bj = add i32 %i.bi, 256
   %i.bk = or disjoint i32 %i.bh, %i.bj
   store i32 %i.bk, ptr %i.bd, align 4, !tbaa !25
@@ -145,7 +146,8 @@ bb.i:                                             ; preds = %.peel.next.i.prehea
 bb.j:                                             ; preds = %.peel.next.i.1
   %i.bs = trunc i64 %i.bn to i32
   %i.bt = and i32 %i.bs, 255
-  %i.bu = shl i32 %i.ab, 8
+  %5 = trunc i64 %i.aa to i32
+  %i.bu = shl i32 %5, 8
   %i.bv = add i32 %i.bu, 512
   %i.bw = or disjoint i32 %i.bt, %i.bv
   store i32 %i.bw, ptr %i.bp, align 4, !tbaa !25

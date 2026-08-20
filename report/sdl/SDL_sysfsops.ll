@@ -38,24 +38,26 @@ bb.a:
 
 .preheader38:                                     ; preds = %bb.a
   %i.h = icmp sgt i32 %i.d, 1
-  br i1 %i.h, label %.lr.ph, label %.critedge
+  br i1 %i.h, label %.lr.ph.preheader, label %.critedge
 
-.lr.ph:                                           ; preds = %.preheader38, %bb.b
-  %.030.in40 = phi i32 [ %.03041, %bb.b ], [ %i.d, %.preheader38 ] ; 3 uses
+.lr.ph.preheader:                                 ; preds = %.preheader38
+  %3 = zext nneg i32 %i.d to i64
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
+  %indvars.iv = phi i64 [ %3, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.b ] ; 3 uses
   %i.i = load ptr, ptr %i.a, align 8              ; 3 uses
-  %3 = zext nneg i32 %.030.in40 to i64
-  %i.j = getelementptr i8, ptr %i.i, i64 %3
+  %i.j = getelementptr i8, ptr %i.i, i64 %indvars.iv
   %i.k = getelementptr i8, ptr %i.j, i64 -2
   %i.l = load i8, ptr %i.k, align 1
   %i.m = icmp eq i8 %i.l, 47
   br i1 %i.m, label %bb.b, label %.critedge
 
 bb.b:                                             ; preds = %.lr.ph
-  %.03041 = add nsw i32 %.030.in40, -1            ; 2 uses
-  %4 = zext nneg i32 %.03041 to i64
-  %i.n = getelementptr inbounds nuw i8, ptr %i.i, i64 %4
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %i.i, i64 %indvars.iv.next
   store i8 0, ptr %i.n, align 1
-  %i.o = icmp sgt i32 %.030.in40, 2
+  %i.o = icmp sgt i64 %indvars.iv, 2
   br i1 %i.o, label %.lr.ph, label %..critedge.loopexit_crit_edge, !llvm.loop !3
 
 ..critedge.loopexit_crit_edge:                    ; preds = %bb.b

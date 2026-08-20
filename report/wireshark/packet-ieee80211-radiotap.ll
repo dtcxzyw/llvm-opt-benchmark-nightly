@@ -201,9 +201,9 @@ bb.ep:                                            ; preds = %bb.ek, %bb.en, %bb.
   br label %bb.eq
 
 bb.eq:                                            ; preds = %bb.ep, %bb.fh
-  %indvars.iv936 = phi i64 [ 0, %bb.ep ], [ %indvars.iv.next937, %bb.fh ] ; 9 uses
+  %indvars.iv936 = phi i64 [ 0, %bb.ep ], [ %indvars.iv.next937, %bb.fh ] ; 10 uses
   %.0737924 = phi ptr [ null, %bb.ep ], [ %.2739, %bb.fh ] ; 2 uses
-  %i.yk = trunc nuw nsw i64 %indvars.iv936 to i32 ; 2 uses
+  %i.yk = trunc i64 %indvars.iv936 to i32
   %i.yl = add i32 %i.yf, %i.yk                    ; 4 uses
   %i.ym = call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %i.yl) ; 3 uses
   %i.yn = zext i8 %i.ym to i32                    ; 2 uses
@@ -233,7 +233,8 @@ bb.et:                                            ; preds = %bb.es, %bb.er
 bb.eu:                                            ; preds = %bb.et
   %i.yv = load i32, ptr @hf_radiotap_vht_user, align 4
   %i.yw = call ptr @proto_tree_add_item(ptr noundef nonnull %.0740, i32 noundef %i.yv, ptr noundef %0, i32 noundef %i.yf, i32 noundef 5, i32 noundef 0) ; 2 uses
-  call void (ptr, ptr, ...) @proto_item_append_text(ptr noundef %i.yw, ptr noundef nonnull @.str.1280, i32 noundef %i.yk, i32 noundef %i.yp)
+  %6 = trunc nuw nsw i64 %indvars.iv936 to i32
+  call void (ptr, ptr, ...) @proto_item_append_text(ptr noundef %i.yw, ptr noundef nonnull @.str.1280, i32 noundef %6, i32 noundef %i.yp)
   %i.yx = load i32, ptr @ett_radiotap_vht_user, align 4
   %i.yy = call ptr @proto_item_add_subtree(ptr noundef %i.yw, i32 noundef %i.yx) ; 5 uses
   %i.yz = getelementptr [4 x i8], ptr @hf_radiotap_vht_mcs, i64 %indvars.iv936

@@ -203,8 +203,8 @@ define internal fastcc void @gray_render_line(ptr nofree noundef captures(none) 
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 2 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !133  ; 5 uses
-  %i.c = lshr i64 %i.b, 8
-  %i.d = trunc i64 %i.c to i32                    ; 6 uses
+  %i.c = lshr i64 %i.b, 8                         ; 3 uses
+  %i.d = trunc i64 %i.c to i32                    ; 4 uses
   %i.e = lshr i64 %2, 8
   %i.f = trunc i64 %i.e to i32                    ; 7 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 44
@@ -355,30 +355,33 @@ bb.n:                                             ; preds = %bb.m
 
 .preheader223:                                    ; preds = %bb.n
   %.neg = mul nsw i32 %i.t, -2
+  %3 = and i64 %i.c, 4294967295
   %.pre = load ptr, ptr %i.bq, align 8, !tbaa !117
   br label %bb.w
 
 .preheader:                                       ; preds = %bb.n
   %i.by = shl nuw nsw i32 %i.t, 1
   %i.bz = sub nuw nsw i32 256, %i.v
+  %4 = and i64 %i.c, 4294967295
   %.pre250 = load ptr, ptr %i.bq, align 8, !tbaa !117
   br label %bb.o
 
 bb.o:                                             ; preds = %.preheader, %gray_set_cell.exit204
-  %i.ca = phi ptr [ %.0.sink.i197, %gray_set_cell.exit204 ], [ %.pre250, %.preheader ] ; 2 uses
-  %.0172 = phi i32 [ 256, %gray_set_cell.exit204 ], [ %i.bz, %.preheader ] ; 2 uses
-  %.0168 = phi i32 [ %3, %gray_set_cell.exit204 ], [ %i.d, %.preheader ]
+  %i.ca = phi ptr [ %.pre250, %.preheader ], [ %.0.sink.i197, %gray_set_cell.exit204 ] ; 2 uses
+  %indvars.iv251 = phi i64 [ %4, %.preheader ], [ %indvars.iv.next252, %gray_set_cell.exit204 ]
+  %.0168 = phi i32 [ %i.bz, %.preheader ], [ 256, %gray_set_cell.exit204 ] ; 2 uses
   %i.cb = getelementptr inbounds nuw i8, ptr %i.ca, i64 4 ; 2 uses
   %i.cc = load i32, ptr %i.cb, align 4, !tbaa !102
-  %i.cd = add i32 %i.cc, %.0172
+  %i.cd = add i32 %i.cc, %.0168
   store i32 %i.cd, ptr %i.cb, align 4, !tbaa !102
   %i.ce = getelementptr inbounds nuw i8, ptr %i.ca, i64 8 ; 2 uses
   %i.cf = load i32, ptr %i.ce, align 8, !tbaa !101
-  %i.cg = mul nuw nsw i32 %i.by, %.0172
+  %i.cg = mul nuw nsw i32 %i.by, %.0168
   %i.ch = add i32 %i.cf, %i.cg
   store i32 %i.ch, ptr %i.ce, align 8, !tbaa !101
-  %3 = add nsw i32 %.0168, 1                      ; 3 uses
-  %i.ci = sub nsw i32 %3, %i.j                    ; 3 uses
+  %indvars.iv.next252 = add nuw nsw i64 %indvars.iv251, 1 ; 2 uses
+  %indvars253 = trunc i64 %indvars.iv.next252 to i32 ; 2 uses
+  %i.ci = sub nsw i32 %indvars253, %i.j           ; 3 uses
   %i.cj = icmp slt i32 %i.ci, 0
   br i1 %i.cj, label %bb.r, label %bb.p
 
@@ -454,24 +457,25 @@ bb.v:                                             ; preds = %._crit_edge.i202
 gray_set_cell.exit204:                            ; preds = %.lr.ph.i200, %bb.r, %bb.u, %bb.v
   %.0.sink.i197 = phi ptr [ %i.cm, %bb.r ], [ %i.de, %bb.u ], [ %i.de, %bb.v ], [ %i.cx, %.lr.ph.i200 ] ; 3 uses
   store ptr %.0.sink.i197, ptr %i.bq, align 8, !tbaa !117
-  %.not190 = icmp eq i32 %3, %i.f
+  %.not190 = icmp eq i32 %indvars253, %i.f
   br i1 %.not190, label %.loopexit, label %bb.o, !llvm.loop !136
 
 bb.w:                                             ; preds = %.preheader223, %gray_set_cell.exit213
-  %i.dm = phi ptr [ %.0.sink.i206, %gray_set_cell.exit213 ], [ %.pre, %.preheader223 ] ; 2 uses
-  %.1173 = phi i32 [ 256, %gray_set_cell.exit213 ], [ %i.v, %.preheader223 ] ; 2 uses
-  %.1169 = phi i32 [ %4, %gray_set_cell.exit213 ], [ %i.d, %.preheader223 ]
+  %i.dm = phi ptr [ %.pre, %.preheader223 ], [ %.0.sink.i206, %gray_set_cell.exit213 ] ; 2 uses
+  %indvars.iv = phi i64 [ %3, %.preheader223 ], [ %indvars.iv.next, %gray_set_cell.exit213 ]
+  %.1169 = phi i32 [ %i.v, %.preheader223 ], [ 256, %gray_set_cell.exit213 ] ; 2 uses
   %i.dn = getelementptr inbounds nuw i8, ptr %i.dm, i64 4 ; 2 uses
   %i.do = load i32, ptr %i.dn, align 4, !tbaa !102
-  %i.dp = sub i32 %i.do, %.1173
+  %i.dp = sub i32 %i.do, %.1169
   store i32 %i.dp, ptr %i.dn, align 4, !tbaa !102
   %i.dq = getelementptr inbounds nuw i8, ptr %i.dm, i64 8 ; 2 uses
   %i.dr = load i32, ptr %i.dq, align 8, !tbaa !101
-  %.neg188 = mul nsw i32 %.neg, %.1173
+  %.neg188 = mul nsw i32 %.neg, %.1169
   %i.ds = add i32 %i.dr, %.neg188
   store i32 %i.ds, ptr %i.dq, align 8, !tbaa !101
-  %4 = add nsw i32 %.1169, -1                     ; 3 uses
-  %i.dt = sub nsw i32 %4, %i.j                    ; 3 uses
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
+  %indvars = trunc i64 %indvars.iv.next to i32    ; 2 uses
+  %i.dt = sub nsw i32 %indvars, %i.j              ; 3 uses
   %i.du = icmp slt i32 %i.dt, 0
   br i1 %i.du, label %bb.z, label %bb.x
 
@@ -547,7 +551,7 @@ bb.ad:                                            ; preds = %._crit_edge.i211
 gray_set_cell.exit213:                            ; preds = %.lr.ph.i209, %bb.z, %bb.ac, %bb.ad
   %.0.sink.i206 = phi ptr [ %i.dx, %bb.z ], [ %i.ep, %bb.ac ], [ %i.ep, %bb.ad ], [ %i.ei, %.lr.ph.i209 ] ; 3 uses
   store ptr %.0.sink.i206, ptr %i.bq, align 8, !tbaa !117
-  %.not189 = icmp eq i32 %4, %i.f
+  %.not189 = icmp eq i32 %indvars, %i.f
   br i1 %.not189, label %.loopexit, label %bb.w, !llvm.loop !137
 
 bb.ae:                                            ; preds = %bb.m

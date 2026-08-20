@@ -201,19 +201,20 @@ bb.a:
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %i.a = zext i32 %.promoted to i64
+  %wide.trip.count = zext i32 %2 to i64
   br label %.lr.ph
 
 bb.b:                                             ; preds = %.lr.ph
   %i.b = add i32 %.01523, 7
-  %exitcond.not = icmp eq i32 %2, %i.c
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !32
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.b
   %indvars.iv = phi i64 [ %i.a, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.b ] ; 2 uses
   %.01523 = phi i32 [ 0, %.lr.ph.preheader ], [ %i.b, %bb.b ] ; 2 uses
   %.01622 = phi i64 [ 0, %.lr.ph.preheader ], [ %i.j, %bb.b ]
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %i.c = trunc i64 %indvars.iv.next to i32        ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
+  %i.c = trunc nuw i64 %indvars.iv.next to i32
   store i32 %i.c, ptr %1, align 4, !tbaa !31
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv
   %i.e = load i8, ptr %i.d, align 1, !tbaa !25    ; 2 uses

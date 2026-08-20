@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.lr.ph296, %.loopex
   %i.al = fpext float %i.ak to double
   %i.am = fadd double %i.ah, %i.al                ; 3 uses
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge.unr-lcssa, label %.lr.ph, !llvm.loop !67
 
@@ -607,7 +607,7 @@ bb.z:                                             ; preds = %.lr.ph184, %._crit_
   %i.gz = sext i32 %i.gy to i64
   %i.ha = getelementptr inbounds [4 x i8], ptr %i.go, i64 %i.gz
   %i.hb = xor i32 %.0139181, -1
-  %i.hc = add nsw i32 %.0139181, -2
+  %i.hc = add nuw nsw i32 %.0139181, -2
   br label %bb.aa
 
 bb.aa:                                            ; preds = %.lr.ph177, %stbir__insert_coeff.exit
@@ -1010,8 +1010,8 @@ bb.b:                                             ; preds = %._crit_edge, %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.d, %.peel.next
-  %indvars.iv = phi i64 [ 1, %.peel.next ], [ %indvars.iv.next, %bb.d ] ; 3 uses
-  %i.u = trunc nuw nsw i64 %indvars.iv to i32     ; 2 uses
+  %indvars.iv = phi i64 [ 1, %.peel.next ], [ %indvars.iv.next, %bb.d ] ; 4 uses
+  %i.u = trunc i64 %indvars.iv to i32
   %.reass36 = add i32 %invariant.op35, %i.u
   %i.v = srem i32 %.reass36, %i.l
   %i.w = mul nsw i32 %i.n, %i.v
@@ -1022,15 +1022,19 @@ bb.c:                                             ; preds = %bb.d, %.peel.next
   %i.aa = load float, ptr %i.y, align 4, !tbaa !54
   %i.ab = fcmp oeq float %i.aa, 3.000000e+38
   %.not29 = xor i1 %i.ab, %i.t
-  br i1 %.not29, label %bb.d, label %._crit_edge
+  br i1 %.not29, label %bb.d, label %._crit_edge.loopexit.split.loop.exit
 
 bb.d:                                             ; preds = %bb.c
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %bb.c, !llvm.loop !963
 
-._crit_edge:                                      ; preds = %bb.d, %bb.c, %bb.b
-  %.0 = phi i32 [ %spec.store.select, %bb.b ], [ %i.u, %bb.c ], [ %spec.store.select, %bb.d ] ; 3 uses
+._crit_edge.loopexit.split.loop.exit:             ; preds = %bb.c
+  %7 = trunc nuw nsw i64 %indvars.iv to i32
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %bb.d, %._crit_edge.loopexit.split.loop.exit, %bb.b
+  %.0 = phi i32 [ %7, %._crit_edge.loopexit.split.loop.exit ], [ %spec.store.select, %bb.b ], [ %spec.store.select, %bb.d ] ; 3 uses
   %i.ac = load float, ptr %i.r, align 4, !tbaa !54
   %i.ad = fcmp oeq float %i.ac, 3.000000e+38
   %i.ae = select i1 %i.ad, ptr @stbir__vertical_scatter_sets, ptr @stbir__vertical_scatter_blends
@@ -1218,7 +1222,7 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph.new
   store <2 x float> zeroinitializer, ptr %i.cf, align 4, !tbaa !54
   store float 3.000000e+38, ptr %i.ce, align 4, !tbaa !54
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.preheader156.loopexit.unr-lcssa, label %bb.i, !llvm.loop !970
 
@@ -1347,7 +1351,7 @@ bb.v:                                             ; preds = %._crit_edge.i, %bb.
 
 bb.w:                                             ; preds = %bb.x, %.peel.next.i
   %indvars.iv.i = phi i64 [ 1, %.peel.next.i ], [ %indvars.iv.next.i, %bb.x ] ; 3 uses
-  %i.ds = trunc nuw nsw i64 %indvars.iv.i to i32  ; 2 uses
+  %i.ds = trunc i64 %indvars.iv.i to i32          ; 2 uses
   %.reass36.i = add i32 %invariant.op35.i, %i.ds
   %i.dt = srem i32 %.reass36.i, %i.dk
   %i.du = mul nsw i32 %i.dt, %i.dm
@@ -1365,8 +1369,8 @@ bb.x:                                             ; preds = %bb.w
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
   br i1 %exitcond.not.i, label %._crit_edge.i, label %bb.w, !llvm.loop !963
 
-._crit_edge.i:                                    ; preds = %bb.x, %bb.w, %bb.v
-  %.0.i = phi i32 [ %i.df, %bb.v ], [ %i.df, %bb.x ], [ %i.ds, %bb.w ] ; 3 uses
+._crit_edge.i:                                    ; preds = %bb.w, %bb.x, %bb.v
+  %.0.i = phi i32 [ %i.df, %bb.v ], [ %i.ds, %bb.w ], [ %i.df, %bb.x ] ; 3 uses
   %i.ea = fcmp oeq float %.pre, 3.000000e+38
   %i.eb = select i1 %i.ea, ptr @stbir__vertical_scatter_sets, ptr @stbir__vertical_scatter_blends
   %i.ec = sext i32 %.0.i to i64
@@ -1449,7 +1453,7 @@ bb.ab:                                            ; preds = %.lr.ph167.1
 
 bb.ac:                                            ; preds = %bb.ab, %.lr.ph167.1
   %indvars.iv.next172.1 = add nuw nsw i64 %indvars.iv171, 2 ; 2 uses
-  %niter197.next.1 = add i64 %niter197, 2         ; 2 uses
+  %niter197.next.1 = add nuw i64 %niter197, 2     ; 2 uses
   %niter197.ncmp.1 = icmp eq i64 %niter197.next.1, %unroll_iter196
   br i1 %niter197.ncmp.1, label %._crit_edge168.loopexit.unr-lcssa, label %.lr.ph167, !llvm.loop !975
 
@@ -1852,7 +1856,7 @@ bb.a:
   %i.y = getelementptr inbounds nuw i8, ptr %i.p, i64 32
   store i32 %i.d, ptr %i.y, align 8, !tbaa !967
   %indvars.iv.next84.1 = add nuw nsw i64 %indvars.iv83, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge77.loopexit.unr-lcssa, label %.lr.ph76.split.us, !llvm.loop !985
 
@@ -1991,7 +1995,7 @@ bb.a:
   %.01217 = phi i32 [ 0, %.lr.ph.preheader.new ], [ %i.i, %.lr.ph ] ; 3 uses
   %.01316 = phi i32 [ %1, %.lr.ph.preheader.new ], [ %i.h, %.lr.ph ] ; 2 uses
   %niter = phi i32 [ 0, %.lr.ph.preheader.new ], [ %niter.next.1, %.lr.ph ]
-  %i.c = sub nsw i32 %0, %.01217
+  %i.c = sub nuw nsw i32 %0, %.01217
   %i.d = sdiv i32 %.01316, %i.c                   ; 2 uses
   %spec.select = tail call i32 @llvm.smax.i32(i32 %i.d, i32 %.018)
   %i.e = sub nsw i32 %.01316, %i.d                ; 2 uses
@@ -2015,7 +2019,7 @@ bb.a:
   %.01316.epil.init = phi i32 [ %1, %.lr.ph.preheader ], [ %i.h, %._crit_edge.loopexit.unr-lcssa ]
   %lcmp.mod20 = trunc i32 %0 to i1
   tail call void @llvm.assume(i1 %lcmp.mod20)
-  %i.j = sub nsw i32 %0, %.01217.epil.init
+  %i.j = sub nuw nsw i32 %0, %.01217.epil.init
   %i.k = sdiv i32 %.01316.epil.init, %i.j
   %spec.select.epil = tail call i32 @llvm.smax.i32(i32 %i.k, i32 %.018.epil.init)
   br label %._crit_edge
@@ -2140,7 +2144,7 @@ bb.a:
   %.01217.i = phi i32 [ 0, %.lr.ph.i.preheader.new ], [ %i.k, %.lr.ph.i ] ; 3 uses
   %.01316.i = phi i32 [ %i.b, %.lr.ph.i.preheader.new ], [ %i.j, %.lr.ph.i ] ; 2 uses
   %niter = phi i32 [ 0, %.lr.ph.i.preheader.new ], [ %niter.next.1, %.lr.ph.i ]
-  %i.e = sub nsw i32 %5, %.01217.i
+  %i.e = sub nuw nsw i32 %5, %.01217.i
   %i.f = sdiv i32 %.01316.i, %i.e                 ; 2 uses
   %spec.select.i = tail call i32 @llvm.smax.i32(i32 %i.f, i32 %.018.i)
   %i.g = sub nsw i32 %.01316.i, %i.f              ; 2 uses
@@ -2164,7 +2168,7 @@ stbir__get_max_split.exit.loopexit.unr-lcssa:     ; preds = %.lr.ph.i
   %.01316.i.epil.init = phi i32 [ %i.b, %.lr.ph.i.preheader ], [ %i.j, %stbir__get_max_split.exit.loopexit.unr-lcssa ]
   %lcmp.mod436 = trunc i32 %5 to i1
   tail call void @llvm.assume(i1 %lcmp.mod436)
-  %i.l = sub nsw i32 %5, %.01217.i.epil.init
+  %i.l = sub nuw nsw i32 %5, %.01217.i.epil.init
   %i.m = sdiv i32 %.01316.i.epil.init, %i.l
   %spec.select.i.epil = tail call i32 @llvm.smax.i32(i32 %i.m, i32 %.018.i.epil.init)
   br label %stbir__get_max_split.exit
@@ -2567,7 +2571,7 @@ stbir_simd_memcpy.exit340:                        ; preds = %bb.bc, %bb.bg
   %i.qn = getelementptr inbounds nuw i8, ptr %i.qe, i64 32
   store i32 %i.ps, ptr %i.qn, align 8, !tbaa !967
   %indvars.iv.next84.i.1 = add nuw nsw i64 %indvars.iv83.i, 2 ; 2 uses
-  %niter447.next.1 = add i64 %niter447, 2         ; 2 uses
+  %niter447.next.1 = add nuw i64 %niter447, 2     ; 2 uses
   %niter447.ncmp.1 = icmp eq i64 %niter447.next.1, %unroll_iter446
   br i1 %niter447.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph76.split.us.i, !llvm.loop !985
 

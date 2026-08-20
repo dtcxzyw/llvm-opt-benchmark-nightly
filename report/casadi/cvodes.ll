@@ -204,7 +204,7 @@ bb.ga:                                            ; preds = %bb.ga, %.lr.ph613.n
   %i.wb = add nsw i64 %i.vv, %i.wa                ; 3 uses
   store i64 %i.wb, ptr %i.vg, align 8, !tbaa !136
   %indvars.iv.next628.1 = add nuw nsw i64 %indvars.iv627, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %cvInitialSetup.exit.thread.loopexit.unr-lcssa, label %bb.ga, !llvm.loop !245
 
@@ -607,16 +607,18 @@ bb.j:                                             ; preds = %bb.h
 
 .preheader.lr.ph:                                 ; preds = %bb.j
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 320
+  %4 = zext nneg i32 %i.af to i64
   %.not67.not68.not = icmp eq i32 %2, 0
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %bb.m
-  %.072 = phi i32 [ %i.af, %.preheader.lr.ph ], [ %6, %bb.m ] ; 6 uses
-  %i.ah = sub nsw i32 %.072, %2
+  %indvars.iv = phi i64 [ %4, %.preheader.lr.ph ], [ %indvars.iv.next, %bb.m ] ; 4 uses
+  %5 = trunc nuw i64 %indvars.iv to i32           ; 3 uses
+  %i.ah = sub nsw i32 %5, %2
   br i1 %.not67.not68.not, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader, %.lr.ph
-  %.05970 = phi i32 [ %i.ak, %.lr.ph ], [ %.072, %.preheader ] ; 2 uses
+  %.05970 = phi i32 [ %i.ak, %.lr.ph ], [ %5, %.preheader ] ; 2 uses
   %.06169 = phi double [ %i.aj, %.lr.ph ], [ 1.000000e+00, %.preheader ]
   %i.ai = sitofp i32 %.05970 to double
   %i.aj = fmul double %.06169, %i.ai              ; 2 uses
@@ -627,11 +629,11 @@ bb.j:                                             ; preds = %bb.h
 ._crit_edge:                                      ; preds = %.lr.ph, %.preheader
   %.061.lcssa = phi double [ 1.000000e+00, %.preheader ], [ %i.aj, %.lr.ph ] ; 2 uses
   %i.al = load i32, ptr %i.d, align 8, !tbaa !84
-  %4 = icmp eq i32 %.072, %i.al
-  %5 = zext nneg i32 %.072 to i64
-  %i.am = getelementptr inbounds nuw [8 x i8], ptr %i.ag, i64 %5
+  %6 = zext i32 %i.al to i64
+  %7 = icmp eq i64 %indvars.iv, %6
+  %i.am = getelementptr inbounds nuw [8 x i8], ptr %i.ag, i64 %indvars.iv
   %i.an = load ptr, ptr %i.am, align 8, !tbaa !46 ; 2 uses
-  br i1 %4, label %bb.k, label %bb.l
+  br i1 %7, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %._crit_edge
   tail call void @N_VScale(double noundef %.061.lcssa, ptr noundef %i.an, ptr noundef nonnull %3) #12
@@ -642,8 +644,8 @@ bb.l:                                             ; preds = %._crit_edge
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.k, %bb.l
-  %6 = add nsw i32 %.072, -1
-  %.not.not = icmp sgt i32 %.072, %2
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %.not.not = icmp slt i32 %2, %5
   br i1 %.not.not, label %.preheader, label %._crit_edge73, !llvm.loop !288
 
 ._crit_edge73:                                    ; preds = %bb.m, %bb.j
@@ -1046,7 +1048,7 @@ bb.w:                                             ; preds = %bb.v
   %i.ip = fdiv double %i.il, %i.io
   %i.iq = fsub double %i.ij, %i.ip                ; 3 uses
   %indvars.iv.next.i.i.i.i.1 = add nuw nsw i64 %indvars.iv.i.i.i.i, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %cvAltSum.exit.loopexit.i.i.i.unr-lcssa, label %.preheader.i.i.i.i, !llvm.loop !308
 
@@ -1180,7 +1182,7 @@ cvAltSum.exit28.thread.i.i:                       ; preds = %bb.u
   %i.ku = fdiv double %i.kq, %i.kt
   %i.kv = fsub double %i.ko, %i.ku                ; 3 uses
   %indvars.iv.next.i17.i.i.1 = add nuw nsw i64 %indvars.iv.i16.i.i, 2 ; 3 uses
-  %niter1039.next.1 = add i64 %niter1039, 2       ; 2 uses
+  %niter1039.next.1 = add nuw i64 %niter1039, 2   ; 2 uses
   %niter1039.ncmp.1 = icmp eq i64 %niter1039.next.1, %unroll_iter1038
   br i1 %niter1039.ncmp.1, label %.preheader.i21.i.i.preheader.unr-lcssa, label %.preheader.i15.i.i, !llvm.loop !308
 
@@ -1226,7 +1228,7 @@ cvAltSum.exit28.thread.i.i:                       ; preds = %bb.u
   %i.lp = fdiv double %i.ll, %i.lo
   %i.lq = fsub double %i.lj, %i.lp                ; 3 uses
   %indvars.iv.next.i25.i.i.1 = add nuw nsw i64 %indvars.iv.i22.i.i, 2 ; 3 uses
-  %niter1045.next.1 = add i64 %niter1045, 2       ; 2 uses
+  %niter1045.next.1 = add nuw i64 %niter1045, 2   ; 2 uses
   %niter1045.ncmp.1 = icmp eq i64 %niter1045.next.1, %unroll_iter1044
   br i1 %niter1045.ncmp.1, label %cvAltSum.exit28.i.i.unr-lcssa, label %.preheader.i21.i.i, !llvm.loop !308
 
@@ -1408,7 +1410,7 @@ middle.block:                                     ; preds = %vector.body
   %i.ok = fdiv double %i.og, %i.oj
   %i.ol = fsub double %i.oe, %i.ok                ; 3 uses
   %indvars.iv.next.i.i39.i.i.1 = add nuw nsw i64 %indvars.iv.i.i36.i.i, 2 ; 2 uses
-  %niter1051.next.1 = add i64 %niter1051, 2       ; 2 uses
+  %niter1051.next.1 = add nuw i64 %niter1051, 2   ; 2 uses
   %niter1051.ncmp.1 = icmp eq i64 %niter1051.next.1, %unroll_iter1050
   br i1 %niter1051.ncmp.1, label %cvAltSum.exit.i.i.i.loopexit.unr-lcssa, label %.preheader.i.i35.i.i, !llvm.loop !308
 
@@ -1811,16 +1813,18 @@ bb.l:                                             ; preds = %bb.j
 
 .preheader.lr.ph:                                 ; preds = %bb.l
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 464
+  %4 = zext nneg i32 %i.ah to i64
   %.not66.not67.not = icmp eq i32 %2, 0
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %bb.o
-  %.071 = phi i32 [ %i.ah, %.preheader.lr.ph ], [ %6, %bb.o ] ; 6 uses
-  %i.aj = sub nsw i32 %.071, %2
+  %indvars.iv = phi i64 [ %4, %.preheader.lr.ph ], [ %indvars.iv.next, %bb.o ] ; 4 uses
+  %5 = trunc nuw i64 %indvars.iv to i32           ; 3 uses
+  %i.aj = sub nsw i32 %5, %2
   br i1 %.not66.not67.not, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader, %.lr.ph
-  %.05769 = phi i32 [ %i.am, %.lr.ph ], [ %.071, %.preheader ] ; 2 uses
+  %.05769 = phi i32 [ %i.am, %.lr.ph ], [ %5, %.preheader ] ; 2 uses
   %.05968 = phi double [ %i.al, %.lr.ph ], [ 1.000000e+00, %.preheader ]
   %i.ak = sitofp i32 %.05769 to double
   %i.al = fmul double %.05968, %i.ak              ; 2 uses
@@ -1831,11 +1835,11 @@ bb.l:                                             ; preds = %bb.j
 ._crit_edge:                                      ; preds = %.lr.ph, %.preheader
   %.059.lcssa = phi double [ 1.000000e+00, %.preheader ], [ %i.al, %.lr.ph ] ; 2 uses
   %i.an = load i32, ptr %i.f, align 8, !tbaa !84
-  %4 = icmp eq i32 %.071, %i.an
-  %5 = zext nneg i32 %.071 to i64
-  %i.ao = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %5
+  %6 = zext i32 %i.an to i64
+  %7 = icmp eq i64 %indvars.iv, %6
+  %i.ao = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %indvars.iv
   %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !46 ; 2 uses
-  br i1 %4, label %bb.m, label %bb.n
+  br i1 %7, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %._crit_edge
   tail call void @N_VScale(double noundef %.059.lcssa, ptr noundef %i.ap, ptr noundef nonnull %3) #12
@@ -1846,8 +1850,8 @@ bb.n:                                             ; preds = %._crit_edge
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.m, %bb.n
-  %6 = add nsw i32 %.071, -1
-  %.not65.not = icmp sgt i32 %.071, %2
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %.not65.not = icmp slt i32 %2, %5
   br i1 %.not65.not, label %.preheader, label %._crit_edge72, !llvm.loop !400
 
 ._crit_edge72:                                    ; preds = %bb.o, %bb.l
@@ -2078,16 +2082,18 @@ bb.o:                                             ; preds = %bb.m
 .preheader.lr.ph:                                 ; preds = %bb.o
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 600
   %i.am = zext nneg i32 %3 to i64
+  %5 = zext nneg i32 %i.ak to i64
   %.not74.not75.not = icmp eq i32 %2, 0
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %bb.r
-  %.079 = phi i32 [ %i.ak, %.preheader.lr.ph ], [ %7, %bb.r ] ; 6 uses
-  %i.an = sub nsw i32 %.079, %2
+  %indvars.iv = phi i64 [ %5, %.preheader.lr.ph ], [ %indvars.iv.next, %bb.r ] ; 4 uses
+  %6 = trunc nuw i64 %indvars.iv to i32           ; 3 uses
+  %i.an = sub nsw i32 %6, %2
   br i1 %.not74.not75.not, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader, %.lr.ph
-  %.06377 = phi i32 [ %i.aq, %.lr.ph ], [ %.079, %.preheader ] ; 2 uses
+  %.06377 = phi i32 [ %i.aq, %.lr.ph ], [ %6, %.preheader ] ; 2 uses
   %.06576 = phi double [ %i.ap, %.lr.ph ], [ 1.000000e+00, %.preheader ]
   %i.ao = sitofp i32 %.06377 to double
   %i.ap = fmul double %.06576, %i.ao              ; 2 uses
@@ -2098,13 +2104,13 @@ bb.o:                                             ; preds = %bb.m
 ._crit_edge:                                      ; preds = %.lr.ph, %.preheader
   %.065.lcssa = phi double [ 1.000000e+00, %.preheader ], [ %i.ap, %.lr.ph ] ; 2 uses
   %i.ar = load i32, ptr %i.f, align 8, !tbaa !84
-  %5 = icmp eq i32 %.079, %i.ar
-  %6 = zext nneg i32 %.079 to i64
-  %i.as = getelementptr inbounds nuw [8 x i8], ptr %i.al, i64 %6
+  %7 = zext i32 %i.ar to i64
+  %8 = icmp eq i64 %indvars.iv, %7
+  %i.as = getelementptr inbounds nuw [8 x i8], ptr %i.al, i64 %indvars.iv
   %i.at = load ptr, ptr %i.as, align 8, !tbaa !134
   %i.au = getelementptr inbounds nuw [8 x i8], ptr %i.at, i64 %i.am
   %i.av = load ptr, ptr %i.au, align 8, !tbaa !46 ; 2 uses
-  br i1 %5, label %bb.p, label %bb.q
+  br i1 %8, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %._crit_edge
   tail call void @N_VScale(double noundef %.065.lcssa, ptr noundef %i.av, ptr noundef nonnull %4) #12
@@ -2115,8 +2121,8 @@ bb.q:                                             ; preds = %._crit_edge
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.p, %bb.q
-  %7 = add nsw i32 %.079, -1
-  %.not73.not = icmp sgt i32 %.079, %2
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %.not73.not = icmp slt i32 %2, %6
   br i1 %.not73.not, label %.preheader, label %._crit_edge80, !llvm.loop !403
 
 ._crit_edge80:                                    ; preds = %bb.r, %bb.o
@@ -2347,16 +2353,18 @@ bb.o:                                             ; preds = %bb.m
 .preheader.lr.ph:                                 ; preds = %bb.o
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 752
   %i.am = zext nneg i32 %3 to i64
+  %5 = zext nneg i32 %i.ak to i64
   %.not74.not75.not = icmp eq i32 %2, 0
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %bb.r
-  %.079 = phi i32 [ %i.ak, %.preheader.lr.ph ], [ %7, %bb.r ] ; 6 uses
-  %i.an = sub nsw i32 %.079, %2
+  %indvars.iv = phi i64 [ %5, %.preheader.lr.ph ], [ %indvars.iv.next, %bb.r ] ; 4 uses
+  %6 = trunc nuw i64 %indvars.iv to i32           ; 3 uses
+  %i.an = sub nsw i32 %6, %2
   br i1 %.not74.not75.not, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader, %.lr.ph
-  %.06377 = phi i32 [ %i.aq, %.lr.ph ], [ %.079, %.preheader ] ; 2 uses
+  %.06377 = phi i32 [ %i.aq, %.lr.ph ], [ %6, %.preheader ] ; 2 uses
   %.06576 = phi double [ %i.ap, %.lr.ph ], [ 1.000000e+00, %.preheader ]
   %i.ao = sitofp i32 %.06377 to double
   %i.ap = fmul double %.06576, %i.ao              ; 2 uses
@@ -2367,13 +2375,13 @@ bb.o:                                             ; preds = %bb.m
 ._crit_edge:                                      ; preds = %.lr.ph, %.preheader
   %.065.lcssa = phi double [ 1.000000e+00, %.preheader ], [ %i.ap, %.lr.ph ] ; 2 uses
   %i.ar = load i32, ptr %i.f, align 8, !tbaa !84
-  %5 = icmp eq i32 %.079, %i.ar
-  %6 = zext nneg i32 %.079 to i64
-  %i.as = getelementptr inbounds nuw [8 x i8], ptr %i.al, i64 %6
+  %7 = zext i32 %i.ar to i64
+  %8 = icmp eq i64 %indvars.iv, %7
+  %i.as = getelementptr inbounds nuw [8 x i8], ptr %i.al, i64 %indvars.iv
   %i.at = load ptr, ptr %i.as, align 8, !tbaa !134
   %i.au = getelementptr inbounds nuw [8 x i8], ptr %i.at, i64 %i.am
   %i.av = load ptr, ptr %i.au, align 8, !tbaa !46 ; 2 uses
-  br i1 %5, label %bb.p, label %bb.q
+  br i1 %8, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %._crit_edge
   tail call void @N_VScale(double noundef %.065.lcssa, ptr noundef %i.av, ptr noundef nonnull %4) #12
@@ -2384,8 +2392,8 @@ bb.q:                                             ; preds = %._crit_edge
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.p, %bb.q
-  %7 = add nsw i32 %.079, -1
-  %.not73.not = icmp sgt i32 %.079, %2
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %.not73.not = icmp slt i32 %2, %6
   br i1 %.not73.not, label %.preheader, label %._crit_edge80, !llvm.loop !406
 
 ._crit_edge80:                                    ; preds = %bb.r, %bb.o

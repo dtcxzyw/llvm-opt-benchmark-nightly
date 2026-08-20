@@ -203,7 +203,12 @@ bb.gf:                                            ; preds = %.lr.ph.i
 
 bb.gg:                                            ; preds = %.lr.ph316.preheader.i
   %exitcond350.peel.not.i = icmp eq i64 %i.vn, 8
-  br i1 %exitcond350.peel.not.i, label %._crit_edge317.i, label %.lr.ph316.i
+  br i1 %exitcond350.peel.not.i, label %._crit_edge317.i, label %.lr.ph316.peel.next.i
+
+.lr.ph316.peel.next.i:                            ; preds = %bb.gg
+  %30 = getelementptr inbounds nuw i8, ptr %i.vk, i64 -8
+  %31 = getelementptr inbounds nuw i8, ptr %i.sy, i64 -4
+  br label %.lr.ph316.i
 
 .lr.ph311.i:                                      ; preds = %.loopexit.i, %bb.gp
   %.0184310.i = phi i64 [ %i.wq, %bb.gp ], [ 0, %.loopexit.i ] ; 5 uses
@@ -355,8 +360,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit258.i: ; preds = %
   %i.xp = icmp slt i32 %i.xn, %i.xo
   br i1 %i.xp, label %bb.hw, label %bb.ho
 
-.lr.ph316.i:                                      ; preds = %bb.gg, %bb.hn
-  %.0183315.i = phi i64 [ %i.zu, %bb.hn ], [ 1, %bb.gg ] ; 7 uses
+.lr.ph316.i:                                      ; preds = %bb.hn, %.lr.ph316.peel.next.i
+  %.0183315.i = phi i64 [ %i.zu, %bb.hn ], [ 1, %.lr.ph316.peel.next.i ] ; 6 uses
   %i.xq = getelementptr inbounds nuw [8 x i8], ptr %i.vk, i64 %.0183315.i
   %i.xr = load i64, ptr %i.xq, align 8, !tbaa !9  ; 4 uses
   %.not239.i = icmp ugt i64 %i.xr, %i.te
@@ -428,11 +433,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit261.i: ; preds = %
   br label %common.resume
 
 bb.hf:                                            ; preds = %.lr.ph316.i
-  %30 = add i64 %.0183315.i, -1                   ; 4 uses
-  %31 = getelementptr inbounds nuw [8 x i8], ptr %i.vk, i64 %30
-  %i.ym = load i64, ptr %31, align 8, !tbaa !9    ; 2 uses
-  %32 = getelementptr inbounds nuw [4 x i8], ptr %i.sy, i64 %30
-  %i.yn = load i32, ptr %32, align 4, !tbaa !21
+  %i.ym = load i64, ptr %30, align 8, !tbaa !9    ; 2 uses
+  %i.yn = load i32, ptr %31, align 4, !tbaa !21
   %i.yo = sext i32 %i.yn to i64
   %i.yp = getelementptr inbounds nuw [4 x i8], ptr %i.tf, i64 %i.yo
   %i.yq = load i32, ptr %i.yp, align 4, !tbaa !21 ; 2 uses
@@ -462,11 +464,11 @@ bb.hh:                                            ; preds = %bb.hg
   %i.za = load ptr, ptr %7, align 8, !tbaa !20
   %i.zb = load i64, ptr %i.yv, align 8, !tbaa !17
   %i.zc = load ptr, ptr %i.lq, align 8, !tbaa !113 ; 2 uses
-  %33 = getelementptr inbounds nuw [8 x i8], ptr %i.zc, i64 %30
-  %i.zd = load i64, ptr %33, align 8, !tbaa !9
+  %32 = getelementptr inbounds nuw i8, ptr %i.zc, i64 -8
+  %i.zd = load i64, ptr %32, align 8, !tbaa !9
   %i.ze = load ptr, ptr %i.ic, align 8, !tbaa !62
-  %34 = getelementptr inbounds nuw [4 x i8], ptr %i.ze, i64 %30
-  %i.zf = load i32, ptr %34, align 4, !tbaa !21
+  %33 = getelementptr inbounds nuw i8, ptr %i.ze, i64 -4
+  %i.zf = load i32, ptr %33, align 4, !tbaa !21
   %i.zg = sext i32 %i.zf to i64
   %i.zh = load ptr, ptr %i.eo, align 8, !tbaa !62
   %i.zi = getelementptr inbounds nuw [4 x i8], ptr %i.zh, i64 %i.zg

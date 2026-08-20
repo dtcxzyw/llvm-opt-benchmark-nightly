@@ -201,7 +201,7 @@ bb.e:                                             ; preds = %bb.c, %bb.b
   store i32 %3, ptr %i.h, align 8
   %i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 50
   store i16 %5, ptr %i.i, align 2
-  %i.j = zext i32 %3 to i64                       ; 2 uses
+  %i.j = zext i32 %3 to i64                       ; 3 uses
   %i.k = tail call ptr @slurm_xcalloc(i64 noundef %i.j, i64 noundef 2, i1 noundef zeroext true, i1 noundef zeroext false, ptr noundef nonnull @.str, i32 noundef 171, ptr noundef nonnull @__func__.fake_slurm_step_layout_create) #8
   %i.l = getelementptr inbounds nuw i8, ptr %i.e, i64 56 ; 8 uses
   store ptr %i.k, ptr %i.l, align 8
@@ -297,8 +297,8 @@ bb.f:                                             ; preds = %.lr.ph104.split
   br label %.loopexit
 
 bb.g:                                             ; preds = %.lr.ph104.split
-  %6 = trunc nuw nsw i64 %indvars.iv111 to i32
-  %7 = sub i32 %3, %6                             ; 3 uses
+  %6 = sub nuw nsw i64 %i.j, %indvars.iv111       ; 2 uses
+  %7 = trunc nuw i64 %6 to i32                    ; 2 uses
   %i.bf = add i32 %i.r, %7
   %i.bg = sub i32 %i.bf, %i.ba                    ; 2 uses
   %i.bh = udiv i32 %i.bg, %7                      ; 2 uses
@@ -311,7 +311,8 @@ bb.g:                                             ; preds = %.lr.ph104.split
   %i.bn = load ptr, ptr %i.n, align 8
   %i.bo = getelementptr inbounds nuw [8 x i8], ptr %i.bn, i64 %indvars.iv111
   store ptr %i.bm, ptr %i.bo, align 8
-  %.not106 = icmp ugt i32 %7, %i.bg
+  %8 = zext i32 %i.bg to i64
+  %.not106 = icmp samesign ugt i64 %6, %8
   br i1 %.not106, label %.loopexit, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.g

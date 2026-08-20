@@ -201,23 +201,27 @@ bb.w:                                             ; preds = %bb.v
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.x
-  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.x ] ; 2 uses
-  %i.ch = trunc nuw nsw i64 %indvars.iv to i32    ; 2 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.x ] ; 3 uses
+  %i.ch = trunc i64 %indvars.iv to i32
   %i.ci = sub i32 %i.cg, %i.ch
   %i.cj = sext i32 %i.ci to i64
   %i.ck = getelementptr inbounds [4 x i8], ptr %i.aa, i64 %i.cj
   %i.cl = load i32, ptr %i.ck, align 4, !tbaa !4
   %i.cm = and i32 %i.cl, 8372287
   %or.cond221 = icmp eq i32 %i.cm, 34
-  br i1 %or.cond221, label %bb.x, label %._crit_edge
+  br i1 %or.cond221, label %bb.x, label %._crit_edge.split.loop.exit308
 
 bb.x:                                             ; preds = %.lr.ph
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !70
 
-._crit_edge:                                      ; preds = %bb.x, %.lr.ph
-  %.0161.lcssa.ph = phi i32 [ %i.cd, %bb.x ], [ %i.ch, %.lr.ph ]
+._crit_edge.split.loop.exit308:                   ; preds = %.lr.ph
+  %3 = trunc nuw nsw i64 %indvars.iv to i32
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %bb.x, %._crit_edge.split.loop.exit308
+  %.0161.lcssa.ph = phi i32 [ %3, %._crit_edge.split.loop.exit308 ], [ %i.cd, %bb.x ]
   %i.cn = and i32 %.0161.lcssa.ph, 1
   %i.co = icmp eq i32 %i.cn, 0
   br i1 %i.co, label %.critedge, label %.critedge232

@@ -205,7 +205,7 @@ vector.ph:                                        ; preds = %.preheader.i.i
 vector.body:                                      ; preds = %vector.body.interim, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body.interim ] ; 2 uses
   %vec.ind = phi <16 x i64> [ <i64 0, i64 1, i64 2, i64 3, i64 4, i64 5, i64 6, i64 7, i64 8, i64 9, i64 10, i64 11, i64 12, i64 13, i64 14, i64 15>, %vector.ph ], [ %vec.ind.next, %vector.body.interim ] ; 2 uses
-  %i.bq = add <16 x i64> %vec.ind, %broadcast.splat
+  %i.bq = add nuw <16 x i64> %vec.ind, %broadcast.splat
   %i.br = shl nuw <16 x i64> splat (i64 1), %i.bq
   %i.bs = and <16 x i64> %i.br, %broadcast.splat71
   %.fr = freeze <16 x i64> %i.bs
@@ -215,14 +215,14 @@ vector.body:                                      ; preds = %vector.body.interim
   br i1 %.not72, label %vector.body.interim, label %vector.early.exit
 
 vector.body.interim:                              ; preds = %vector.body
-  %vec.ind.next = add <16 x i64> %vec.ind, splat (i64 16)
+  %vec.ind.next = add nuw <16 x i64> %vec.ind, splat (i64 16)
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.bv = icmp eq i64 %index.next, %n.vec
   br i1 %i.bv, label %middle.block, label %vector.body, !llvm.loop !147
 
 middle.block:                                     ; preds = %vector.body.interim
   %cmp.n = icmp eq i64 %i.bp, %n.vec
-  br i1 %cmp.n, label %.critedge.i.i, label %scalar.ph.preheader
+  br i1 %cmp.n, label %bb.s, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %.preheader.i.i, %middle.block
   %.028.i.i.ph = phi i64 [ 0, %.preheader.i.i ], [ %n.vec, %middle.block ]
@@ -235,35 +235,37 @@ vector.early.exit:                                ; preds = %vector.body
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %bb.r
   %.028.i.i = phi i64 [ %i.cb, %bb.r ], [ %.028.i.i.ph, %scalar.ph.preheader ] ; 3 uses
-  %i.by = add i64 %.028.i.i, %.02429.i.i
+  %i.by = add nuw i64 %.028.i.i, %.02429.i.i
   %i.bz = shl nuw i64 1, %i.by
   %i.ca = and i64 %i.bz, %i.bk
   %.not.i75.i = icmp eq i64 %i.ca, 0
   br i1 %.not.i75.i, label %.critedge.i.i, label %bb.r
 
 bb.r:                                             ; preds = %scalar.ph
-  %i.cb = add i64 %.028.i.i, 1                    ; 3 uses
+  %i.cb = add nuw i64 %.028.i.i, 1                ; 3 uses
   %i.cc = add i64 %i.cb, %.02429.i.i
   %i.cd = icmp ult i64 %i.cc, %i.bl
-  br i1 %i.cd, label %scalar.ph, label %.critedge.i.i, !llvm.loop !150
+  br i1 %i.cd, label %scalar.ph, label %bb.s, !llvm.loop !150
 
-.critedge.i.i:                                    ; preds = %bb.r, %scalar.ph, %vector.early.exit, %middle.block
-  %.0.lcssa.i.i = phi i64 [ %n.vec, %middle.block ], [ %i.bx, %vector.early.exit ], [ %i.cb, %bb.r ], [ %.028.i.i, %scalar.ph ] ; 4 uses
-  %.not27.i.i = icmp eq i64 %.0.lcssa.i.i, 0
+.critedge.i.i:                                    ; preds = %scalar.ph, %vector.early.exit
+  %.028.i.i.lcssa = phi i64 [ %i.bx, %vector.early.exit ], [ %.028.i.i, %scalar.ph ] ; 2 uses
+  %.not27.i.i = icmp eq i64 %.028.i.i.lcssa, 0
   br i1 %.not27.i.i, label %bb.t, label %bb.s
 
-bb.s:                                             ; preds = %.critedge.i.i
+bb.s:                                             ; preds = %bb.r, %middle.block, %.critedge.i.i
+  %.0.lcssa35.i.i = phi i64 [ %.028.i.i.lcssa, %.critedge.i.i ], [ %n.vec, %middle.block ], [ %i.cb, %bb.r ] ; 3 uses
   %i.ce = add i64 %.02429.i.i, %i.aq
-  call fastcc void @mi_arena_purge(ptr noundef nonnull %i.x, i64 noundef %i.ce, i64 noundef %.0.lcssa.i.i, ptr noundef %2)
-  %i.cf = icmp eq i64 %.0.lcssa.i.i, %.15688.i
+  call fastcc void @mi_arena_purge(ptr noundef nonnull %i.x, i64 noundef %i.ce, i64 noundef %.0.lcssa35.i.i, ptr noundef %2)
+  %i.cf = icmp eq i64 %.0.lcssa35.i.i, %.15688.i
   %spec.select.i.i = select i1 %i.cf, i1 true, i1 %.02330.i.i
   %i.cg = freeze i1 %spec.select.i.i
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.s, %.critedge.i.i
+  %.0.lcssa36.i.i = phi i64 [ %.0.lcssa35.i.i, %bb.s ], [ 0, %.critedge.i.i ]
   %.2.i.i = phi i1 [ %i.cg, %bb.s ], [ %.02330.i.i, %.critedge.i.i ] ; 2 uses
   %i.ch = add i64 %.02429.i.i, 1
-  %i.ci = add i64 %i.ch, %.0.lcssa.i.i            ; 2 uses
+  %i.ci = add i64 %i.ch, %.0.lcssa36.i.i          ; 2 uses
   %i.cj = icmp ult i64 %i.ci, %i.bl
   br i1 %i.cj, label %.preheader.i.i, label %mi_arena_purge_range.exit.i, !llvm.loop !151
 
@@ -666,7 +668,7 @@ bb.ac:                                            ; preds = %_mi_stat_increase.e
   %.neg89 = add nsw i64 %i.cx, %.neg
   %i.cz = sub i64 %.neg89, %i.cy
   %i.da = add i64 %i.cz, %reass.mul               ; 2 uses
-  %i.db = add i64 %.049107, 2
+  %i.db = add nuw i64 %.049107, 2
   %i.dc = udiv i64 %i.da, %i.db
   %i.dd = mul i64 %i.dc, %0
   %i.de = icmp sgt i64 %i.dd, %i.bb
@@ -1069,7 +1071,7 @@ bb.c:                                             ; preds = %bb.c, %.new
   %i.am = mul i64 %i.al, -7723592293110705685     ; 2 uses
   %i.an = lshr i64 %i.am, 31
   %i.ao = xor i64 %i.an, %i.am                    ; 3 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.unr-lcssa, label %bb.c, !llvm.loop !276
 }
@@ -1150,7 +1152,7 @@ bb.d:                                             ; preds = %bb.d, %.critedge.ne
   %i.ad = mul i64 %i.ac, -7723592293110705685     ; 2 uses
   %i.ae = lshr i64 %i.ad, 31
   %i.af = xor i64 %i.ae, %i.ad                    ; 3 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_mi_os_random_weak.exit.preheader.unr-lcssa, label %bb.d, !llvm.loop !276
 
@@ -1553,7 +1555,7 @@ mi_segment_ensure_committed.exit.thread:          ; preds = %mi_commit_mask_is_e
   %i.ij = getelementptr i8, ptr %.pn5, i64 348
   store i32 1, ptr %i.ij, align 4, !tbaa !21
   %i.ik = add nuw i64 %.0476, 4                   ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !645
 

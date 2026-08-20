@@ -204,10 +204,11 @@ bb.ap:                                            ; preds = %bb.ao
   %.sroa.2.0.insert.shift.i281.3 = shl nuw i64 %.sroa.2.0.insert.ext.i280.3, 32
   %.sroa.0.0.insert.ext.i282.3 = zext i32 %i.lh to i64
   %.sroa.0.0.insert.insert.i283.3 = or disjoint i64 %.sroa.2.0.insert.shift.i281.3, %.sroa.0.0.insert.ext.i282.3
-  %i.lm = load float, ptr %i.ld, align 4, !tbaa !202
+  %69 = getelementptr inbounds nuw i8, ptr %i.ld, i64 32
+  %i.lm = load float, ptr %69, align 4, !tbaa !202
   %i.ln = insertelement <4 x float> poison, float %i.lm, i64 0
   %i.lo = call noundef i32 @llvm.x86.sse.cvtss2si(<4 x float> %i.ln)
-  %i.lp = getelementptr inbounds nuw i8, ptr %i.ld, i64 4
+  %i.lp = getelementptr inbounds nuw i8, ptr %i.ld, i64 36
   %i.lq = load float, ptr %i.lp, align 4, !tbaa !204
   %i.lr = insertelement <4 x float> poison, float %i.lq, i64 0
   %i.ls = call noundef i32 @llvm.x86.sse.cvtss2si(<4 x float> %i.lr)
@@ -610,7 +611,7 @@ bb.a:
   %i.al = sext i32 %i.ak to i64
   %i.am = mul i64 %i.ai, %i.al                    ; 3 uses
   %i.an = getelementptr inbounds nuw i8, ptr %.01735, i64 32 ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph
 

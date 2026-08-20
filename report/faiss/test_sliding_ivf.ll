@@ -203,26 +203,29 @@ bb.a:
   br i1 %.not.not26, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.c = sub nsw i32 %2, %i.b
+  %i.c = sub i32 %2, %i.b
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  %3 = zext i32 %i.c to i64
   br label %bb.b
 
 ._crit_edge:                                      ; preds = %_ZNSt10unique_ptrIN5faiss5IndexESt14default_deleteIS1_EED2Ev.exit, %bb.a
   ret ptr %i.a
 
 bb.b:                                             ; preds = %.lr.ph, %_ZNSt10unique_ptrIN5faiss5IndexESt14default_deleteIS1_EED2Ev.exit
-  %.017.in27 = phi i32 [ %i.c, %.lr.ph ], [ %.01728, %_ZNSt10unique_ptrIN5faiss5IndexESt14default_deleteIS1_EED2Ev.exit ] ; 2 uses
-  %.01728 = add nsw i32 %.017.in27, 1             ; 4 uses
-  %i.e = icmp sgt i32 %.017.in27, -2
+  %indvars.iv = phi i64 [ %3, %.lr.ph ], [ %indvars.iv.next, %_ZNSt10unique_ptrIN5faiss5IndexESt14default_deleteIS1_EED2Ev.exit ] ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
+  %indvars = trunc i64 %indvars.iv.next to i32    ; 2 uses
+  %4 = trunc nuw i64 %indvars.iv to i32
+  %i.e = icmp sgt i32 %4, -2
   %i.f = load i32, ptr @total_size, align 4
-  %.not = icmp slt i32 %.01728, %i.f
+  %.not = icmp sgt i32 %i.f, %indvars
   %or.cond = select i1 %i.e, i1 %.not, i1 false
   br i1 %or.cond, label %bb.c, label %_ZNSt10unique_ptrIN5faiss5IndexESt14default_deleteIS1_EED2Ev.exit
 
 bb.c:                                             ; preds = %bb.b
-  %3 = zext nneg i32 %.01728 to i64
+  %5 = and i64 %indvars.iv.next, 4294967295
   %i.g = load ptr, ptr %1, align 8, !tbaa !64
-  %i.h = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %3
+  %i.h = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %5
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !33
   %i.j = tail call noundef ptr @_ZN5faiss11clone_indexEPKNS_5IndexE(ptr noundef %i.i) ; 7 uses
   %i.k = invoke noundef ptr @_ZN5faiss6ivflib17extract_index_ivfEPNS_5IndexE(ptr noundef %i.a)
@@ -254,7 +257,7 @@ _ZNKSt14default_deleteIN5faiss5IndexEEclEPS1_.exit.i: ; preds = %bb.f
   br label %_ZNSt10unique_ptrIN5faiss5IndexESt14default_deleteIS1_EED2Ev.exit
 
 _ZNSt10unique_ptrIN5faiss5IndexESt14default_deleteIS1_EED2Ev.exit: ; preds = %_ZNKSt14default_deleteIN5faiss5IndexEEclEPS1_.exit.i, %bb.f, %bb.b
-  %.not.not = icmp slt i32 %.01728, %2
+  %.not.not = icmp sgt i32 %2, %indvars
   br i1 %.not.not, label %bb.b, label %._crit_edge, !llvm.loop !88
 
 bb.g:                                             ; preds = %bb.c
@@ -657,6 +660,7 @@ bb.k:                                             ; preds = %.lr.ph203, %_ZNSt6v
 
 .lr.ph.preheader:                                 ; preds = %bb.k
   %i.ay = sub nsw i32 %.014202, %i.ax
+  %12 = zext i32 %i.ay to i64
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %_ZNSt6vectorIPKN5faiss13InvertedListsESaIS3_EE9push_backERKS3_.exit
@@ -668,21 +672,23 @@ bb.k:                                             ; preds = %.lr.ph203, %_ZNSt6v
   br i1 %i.bd, label %bb.bi, label %bb.s
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZNSt6vectorIPKN5faiss13InvertedListsESaIS3_EE9push_backERKS3_.exit
-  %.0.in198 = phi i32 [ %.0199, %_ZNSt6vectorIPKN5faiss13InvertedListsESaIS3_EE9push_backERKS3_.exit ], [ %i.ay, %.lr.ph.preheader ] ; 2 uses
-  %.sroa.16.0197 = phi ptr [ %.sroa.16.1, %_ZNSt6vectorIPKN5faiss13InvertedListsESaIS3_EE9push_backERKS3_.exit ], [ null, %.lr.ph.preheader ] ; 6 uses
-  %.sroa.11.0196 = phi ptr [ %.sroa.11.1, %_ZNSt6vectorIPKN5faiss13InvertedListsESaIS3_EE9push_backERKS3_.exit ], [ null, %.lr.ph.preheader ] ; 4 uses
-  %.sroa.0105.0195 = phi ptr [ %.sroa.0105.1, %_ZNSt6vectorIPKN5faiss13InvertedListsESaIS3_EE9push_backERKS3_.exit ], [ null, %.lr.ph.preheader ] ; 8 uses
-  %.0199 = add nsw i32 %.0.in198, 1               ; 4 uses
-  %i.be = icmp sgt i32 %.0.in198, -2
+  %indvars.iv = phi i64 [ %12, %.lr.ph.preheader ], [ %indvars.iv.next, %_ZNSt6vectorIPKN5faiss13InvertedListsESaIS3_EE9push_backERKS3_.exit ] ; 2 uses
+  %.sroa.16.0197 = phi ptr [ null, %.lr.ph.preheader ], [ %.sroa.16.1, %_ZNSt6vectorIPKN5faiss13InvertedListsESaIS3_EE9push_backERKS3_.exit ] ; 6 uses
+  %.sroa.11.0196 = phi ptr [ null, %.lr.ph.preheader ], [ %.sroa.11.1, %_ZNSt6vectorIPKN5faiss13InvertedListsESaIS3_EE9push_backERKS3_.exit ] ; 4 uses
+  %.sroa.0105.0195 = phi ptr [ null, %.lr.ph.preheader ], [ %.sroa.0105.1, %_ZNSt6vectorIPKN5faiss13InvertedListsESaIS3_EE9push_backERKS3_.exit ] ; 8 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
+  %indvars = trunc i64 %indvars.iv.next to i32    ; 2 uses
+  %13 = trunc nuw i64 %indvars.iv to i32
+  %i.be = icmp sgt i32 %13, -2
   %i.bf = load i32, ptr @total_size, align 4
-  %.not = icmp slt i32 %.0199, %i.bf
+  %.not = icmp sgt i32 %i.bf, %indvars
   %or.cond = select i1 %i.be, i1 %.not, i1 false
   br i1 %or.cond, label %bb.l, label %_ZNSt6vectorIPKN5faiss13InvertedListsESaIS3_EE9push_backERKS3_.exit
 
 bb.l:                                             ; preds = %.lr.ph
-  %12 = zext nneg i32 %.0199 to i64
+  %14 = and i64 %indvars.iv.next, 4294967295
   %i.bg = load ptr, ptr %2, align 8, !tbaa !64
-  %i.bh = getelementptr inbounds nuw [8 x i8], ptr %i.bg, i64 %12
+  %i.bh = getelementptr inbounds nuw [8 x i8], ptr %i.bg, i64 %14
   %i.bi = load ptr, ptr %i.bh, align 8, !tbaa !33
   %i.bj = invoke noundef ptr @_ZN5faiss6ivflib17extract_index_ivfEPNS_5IndexE(ptr noundef %i.bi)
           to label %bb.m unwind label %.loopexit
@@ -753,7 +759,7 @@ _ZNSt6vectorIPKN5faiss13InvertedListsESaIS3_EE9push_backERKS3_.exit: ; preds = %
   %.sroa.0105.1 = phi ptr [ %.sroa.0105.0195, %.lr.ph ], [ %i.bx, %_ZNSt6vectorIPKN5faiss13InvertedListsESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i ], [ %.sroa.0105.0195, %bb.n ] ; 9 uses
   %.sroa.11.1 = phi ptr [ %.sroa.11.0196, %.lr.ph ], [ %i.cb, %_ZNSt6vectorIPKN5faiss13InvertedListsESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i ], [ %i.bm, %bb.n ] ; 3 uses
   %.sroa.16.1 = phi ptr [ %.sroa.16.0197, %.lr.ph ], [ %i.cc, %_ZNSt6vectorIPKN5faiss13InvertedListsESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i ], [ %.sroa.16.0197, %bb.n ] ; 5 uses
-  %.not.not = icmp slt i32 %.0199, %.014202
+  %.not.not = icmp sgt i32 %.014202, %indvars
   br i1 %.not.not, label %.lr.ph, label %._crit_edge, !llvm.loop !154
 
 .loopexit:                                        ; preds = %bb.l, %_ZNKSt6vectorIPKN5faiss13InvertedListsESaIS3_EE12_M_check_lenEmPKc.exit.i.i
