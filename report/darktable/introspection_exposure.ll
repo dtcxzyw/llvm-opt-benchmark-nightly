@@ -204,10 +204,10 @@ bb.b:                                             ; preds = %bb.c
 bb.c:                                             ; preds = %bb.a, %bb.c
   %.01 = phi i32 [ 0, %bb.a ], [ %i.ag, %bb.c ]   ; 2 uses
   %i.n = uitofp nneg i32 %.01 to float            ; 2 uses
+  %0 = fmul reassoc nnan nsz arcp contract afn float %i.n, f0x3D579436
   %.reass = fmul reassoc nsz arcp contract afn float %invariant.op, %i.n
   %i.o = fadd reassoc nsz arcp contract afn float %.reass, %i.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #22
-  %0 = fmul reassoc nnan nsz arcp contract afn float %i.n, f0x3D579436
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #22
   %i.p = fmul reassoc nsz arcp contract afn float %i.o, 8.620690e-03
   %i.q = fadd reassoc nsz arcp contract afn float %i.p, f0x3E0D3DCB ; 2 uses

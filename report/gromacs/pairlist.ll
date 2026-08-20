@@ -204,9 +204,9 @@ _ZSt8_DestroyIPSt5arrayImLm2EES1_EvT_S3_RSaIT0_E.exit.i.i.i: ; preds = %bb.d
 
 _ZNSt6vectorISt5arrayImLm2EESaIS1_EE5clearEv.exit.i: ; preds = %_ZSt8_DestroyIPSt5arrayImLm2EES1_EvT_S3_RSaIT0_E.exit.i.i.i, %bb.d
   %i.ap = phi ptr [ %i.ao, %bb.d ], [ %i.am, %_ZSt8_DestroyIPSt5arrayImLm2EES1_EvT_S3_RSaIT0_E.exit.i.i.i ] ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %18) #14
   %i.aq = add i32 %i.al, 15
   %i.ar = sdiv i32 %i.aq, 16
+  call void @llvm.lifetime.start.p0(ptr nonnull %18) #14
   %i.as = sext i32 %i.ar to i64                   ; 4 uses
   %i.at = ptrtoint ptr %i.ap to i64
   %i.au = ptrtoint ptr %i.am to i64
@@ -609,9 +609,9 @@ _ZSt8_DestroyIPSt5arrayImLm2EES1_EvT_S3_RSaIT0_E.exit.i.i.i: ; preds = %bb.f
 
 _ZNSt6vectorISt5arrayImLm2EESaIS1_EE5clearEv.exit.i: ; preds = %_ZSt8_DestroyIPSt5arrayImLm2EES1_EvT_S3_RSaIT0_E.exit.i.i.i, %bb.f
   %i.dj = phi ptr [ %i.di, %bb.f ], [ %i.dg, %_ZSt8_DestroyIPSt5arrayImLm2EES1_EvT_S3_RSaIT0_E.exit.i.i.i ] ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %34) #14
   %i.dk = add i32 %i.df, 15
   %i.dl = sdiv i32 %i.dk, 16
+  call void @llvm.lifetime.start.p0(ptr nonnull %34) #14
   %i.dm = sext i32 %i.dl to i64                   ; 4 uses
   %i.dn = ptrtoint ptr %i.dj to i64
   %i.do = ptrtoint ptr %i.dg to i64

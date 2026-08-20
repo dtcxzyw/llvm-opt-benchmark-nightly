@@ -204,14 +204,10 @@ bb.cu:                                            ; preds = %bb.ct
   %i.ta = icmp samesign ult i64 %.sroa.01.013.i.i, %i.sy
   br i1 %i.ta, label %bb.cv, label %2
 
-2:                                                ; preds = %.lr.ph.i25.i
-  call void @_RNvNtCs6JMX4GRUq9U_4core9panicking18panic_bounds_check(i64 noundef %.sroa.01.013.i.i, i64 noundef range(i64 0, -9223372036854775808) %i.sy, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @204) #30, !noalias !2129
-  unreachable
-
 bb.cv:                                            ; preds = %.lr.ph.i25.i
   %i.tb = add i64 %.sroa.06.012.i.i, -1           ; 2 uses
   %i.tc = add nuw i64 %.sroa.01.013.i.i, 2
-  %i.td = getelementptr inbounds nuw i8, ptr %i.sx, i64 %.sroa.01.013.i.i ; 3 uses
+  %i.td = getelementptr i8, ptr %i.sx, i64 %.sroa.01.013.i.i ; 3 uses
   %i.te = getelementptr i8, ptr %i.td, i64 -1     ; 2 uses
   %.sroa.04.0.copyload.i.i = load i8, ptr %i.td, align 1, !alias.scope !2126, !noalias !1959
   %i.tf = load i8, ptr %i.te, align 1, !alias.scope !2126, !noalias !1959
@@ -219,6 +215,10 @@ bb.cv:                                            ; preds = %.lr.ph.i25.i
   store i8 %.sroa.04.0.copyload.i.i, ptr %i.te, align 1, !alias.scope !2126, !noalias !1959
   %.not.i26.i = icmp eq i64 %i.tb, 0
   br i1 %.not.i26.i, label %_RNvNvCsbMXVmEvvZJf_5uu_dd11read_helper12perform_swab.exit.loopexit.i, label %.lr.ph.i25.i
+
+2:                                                ; preds = %.lr.ph.i25.i
+  call void @_RNvNtCs6JMX4GRUq9U_4core9panicking18panic_bounds_check(i64 noundef %.sroa.01.013.i.i, i64 noundef range(i64 0, -9223372036854775808) %i.sy, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @204) #30, !noalias !2129
+  unreachable
 
 bb.cw:                                            ; preds = %_RNvNvCsbMXVmEvvZJf_5uu_dd11read_helper12perform_swab.exit.i
   %.val18.i = load ptr, ptr %i.hl, align 8, !alias.scope !1943, !noalias !1954, !nonnull !8, !noundef !8

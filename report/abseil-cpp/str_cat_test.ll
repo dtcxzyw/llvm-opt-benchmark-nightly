@@ -203,7 +203,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i10
   br label %_ZN12_GLOBAL__N_18CheckHexIjEEvT_PKcS3_S3_.exit.i
 
 bb.av:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit154.i.i, %.preheader.i.i
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit154.i.i ], [ 66, %.preheader.i.i ] ; 3 uses
+  %indvars.iv.i = phi i64 [ 66, %.preheader.i.i ], [ %indvars.iv.next.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit154.i.i ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %41) #24
   %i.fj = add nuw nsw i64 %indvars.iv.i, 192
   %i.fk = and i64 %i.fj, 255
@@ -606,7 +606,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i13
   br label %_ZN12_GLOBAL__N_18CheckDecIjEEvT_PKcS3_S3_.exit.i
 
 bb.do:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit205.i.i, %.preheader.i27.i
-  %indvars.iv153.i = phi i64 [ %indvars.iv.next154.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit205.i.i ], [ 66, %.preheader.i27.i ] ; 3 uses
+  %indvars.iv153.i = phi i64 [ 66, %.preheader.i27.i ], [ %indvars.iv.next154.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit205.i.i ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %26) #24
   %i.pw = add nuw nsw i64 %indvars.iv153.i, 192
   %i.px = and i64 %i.pw, 255
@@ -1009,7 +1009,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i13
   br label %_ZN12_GLOBAL__N_113CheckHexDec32Ej.exit
 
 bb.gm:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit208.i110.i, %.preheader.i91.i
-  %indvars.iv157.i = phi i64 [ %indvars.iv.next158.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit208.i110.i ], [ 66, %.preheader.i91.i ] ; 3 uses
+  %indvars.iv157.i = phi i64 [ 66, %.preheader.i91.i ], [ %indvars.iv.next158.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit208.i110.i ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #24
   %i.ack = add nuw nsw i64 %indvars.iv157.i, 192
   %i.acl = and i64 %i.ack, 255
@@ -1412,7 +1412,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i11
   br label %_ZN12_GLOBAL__N_18CheckHexIyEEvT_PKcS3_S3_.exit
 
 bb.av:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit160.i, %.preheader.i
-  %indvars.iv = phi i64 [ %indvars.iv.next, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit160.i ], [ 66, %.preheader.i ] ; 3 uses
+  %indvars.iv = phi i64 [ 66, %.preheader.i ], [ %indvars.iv.next, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit160.i ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %56) #24
   %i.fl = add nuw nsw i64 %indvars.iv, 192
   %i.fm = and i64 %i.fl, 255
@@ -1815,7 +1815,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i13
   br label %_ZN12_GLOBAL__N_18CheckDecIyEEvT_PKcS3_S3_.exit
 
 bb.do:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit205.i, %.preheader.i31
-  %indvars.iv209 = phi i64 [ %indvars.iv.next210, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit205.i ], [ 66, %.preheader.i31 ] ; 3 uses
+  %indvars.iv209 = phi i64 [ 66, %.preheader.i31 ], [ %indvars.iv.next210, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit205.i ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %41) #24
   %i.py = add nuw nsw i64 %indvars.iv209, 192
   %i.pz = and i64 %i.py, 255
@@ -2218,7 +2218,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i13
   br label %_ZN12_GLOBAL__N_18CheckDecIxEEvT_PKcS3_S3_.exit
 
 bb.gm:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit207.i, %.preheader.i96
-  %indvars.iv213 = phi i64 [ %indvars.iv.next214, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit207.i ], [ 66, %.preheader.i96 ] ; 3 uses
+  %indvars.iv213 = phi i64 [ 66, %.preheader.i96 ], [ %indvars.iv.next214, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit207.i ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %26) #24
   %i.acj = add nuw nsw i64 %indvars.iv213, 192
   %i.ack = and i64 %i.acj, 255
@@ -2621,7 +2621,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i10
   br label %_ZN12_GLOBAL__N_18CheckHexIPvEEvT_PKcS4_S4_.exit
 
 bb.jl:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit157.i, %.preheader.i157
-  %indvars.iv217 = phi i64 [ %indvars.iv.next218, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit157.i ], [ 66, %.preheader.i157 ] ; 3 uses
+  %indvars.iv217 = phi i64 [ 66, %.preheader.i157 ], [ %indvars.iv.next218, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit157.i ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #24
   %i.ame = add nuw nsw i64 %indvars.iv217, 192
   %i.amf = and i64 %i.ame, 255

@@ -204,8 +204,8 @@ vector.ph:                                        ; preds = %.lr.ph.preheader.i.
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %store_forwarded = phi <4 x i8> [ %load_initial, %vector.ph ], [ %i.hi, %vector.body ]
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.hg = getelementptr inbounds nuw i8, ptr %i.hb, i64 %index
-  %i.hh = getelementptr inbounds nuw i8, ptr %i.hg, i64 4 ; 2 uses
+  %i.hg = getelementptr i8, ptr %i.hb, i64 %index
+  %i.hh = getelementptr i8, ptr %i.hg, i64 4      ; 2 uses
   %wide.load = load <4 x i8>, ptr %i.hh, align 1, !alias.scope !618, !noalias !577
   %i.hi = add <4 x i8> %store_forwarded, %wide.load ; 2 uses
   store <4 x i8> %i.hi, ptr %i.hh, align 1, !alias.scope !618, !noalias !577
@@ -223,7 +223,7 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.preheader.i.i.i:                           ; preds = %.lr.ph.preheader.i.i.i.preheader542, %.lr.ph.preheader.i.i.i
   %.sroa.01.04.i.i.i = phi i64 [ %i.hl, %.lr.ph.preheader.i.i.i ], [ %.sroa.01.04.i.i.i.ph, %.lr.ph.preheader.i.i.i.preheader542 ] ; 2 uses
-  %i.hk = getelementptr inbounds nuw i8, ptr %i.hb, i64 %.sroa.01.04.i.i.i ; 3 uses
+  %i.hk = getelementptr i8, ptr %i.hb, i64 %.sroa.01.04.i.i.i ; 3 uses
   %i.hl = add nuw nsw i64 %.sroa.01.04.i.i.i, 1   ; 2 uses
   %i.hm = load i8, ptr %i.hk, align 1, !alias.scope !618, !noalias !577, !noundef !4
   %i.hn = getelementptr i8, ptr %i.hk, i64 -4
@@ -626,8 +626,8 @@ vector.ph:                                        ; preds = %.lr.ph.preheader.i.
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %store_forwarded = phi <4 x i8> [ %load_initial, %vector.ph ], [ %i.fj, %vector.body ]
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.fh = getelementptr inbounds nuw i8, ptr %i.fc, i64 %index
-  %i.fi = getelementptr inbounds nuw i8, ptr %i.fh, i64 4 ; 2 uses
+  %i.fh = getelementptr i8, ptr %i.fc, i64 %index
+  %i.fi = getelementptr i8, ptr %i.fh, i64 4      ; 2 uses
   %wide.load = load <4 x i8>, ptr %i.fi, align 1, !alias.scope !813
   %i.fj = add <4 x i8> %store_forwarded, %wide.load ; 2 uses
   store <4 x i8> %i.fj, ptr %i.fi, align 1, !alias.scope !813
@@ -645,7 +645,7 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.preheader.i:                               ; preds = %.lr.ph.preheader.i.preheader595, %.lr.ph.preheader.i
   %.sroa.01.04.i = phi i64 [ %i.fm, %.lr.ph.preheader.i ], [ %.sroa.01.04.i.ph, %.lr.ph.preheader.i.preheader595 ] ; 2 uses
-  %i.fl = getelementptr inbounds nuw i8, ptr %i.fc, i64 %.sroa.01.04.i ; 3 uses
+  %i.fl = getelementptr i8, ptr %i.fc, i64 %.sroa.01.04.i ; 3 uses
   %i.fm = add nuw nsw i64 %.sroa.01.04.i, 1       ; 2 uses
   %i.fn = load i8, ptr %i.fl, align 1, !alias.scope !813, !noundef !4
   %i.fo = getelementptr i8, ptr %i.fl, i64 -4

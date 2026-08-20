@@ -204,7 +204,7 @@ _ZN5boost5beast13static_bufferILm13EEC2ERKS2_.exit: ; preds = %_ZN5boost4asio6de
   call void @llvm.lifetime.end.p0(ptr nonnull %25) #28
   br label %.lr.ph.i.i289.preheader
 
-.lr.ph.i.i289.preheader:                          ; preds = %_ZN5boost4asio11buffer_copyINS_5beast6detail12buffers_pairILb1EEENS0_12const_bufferEEEmRKT_RKT0_.exit300, %_ZN5boost5beast13static_bufferILm13EEC2ERKS2_.exit
+.lr.ph.i.i289.preheader:                          ; preds = %_ZN5boost5beast13static_bufferILm13EEC2ERKS2_.exit, %_ZN5boost4asio11buffer_copyINS_5beast6detail12buffers_pairILb1EEENS0_12const_bufferEEEmRKT_RKT0_.exit300
   %.sroa.0418.0606 = phi ptr [ %i.ag, %_ZN5boost5beast13static_bufferILm13EEC2ERKS2_.exit ], [ %i.xh, %_ZN5boost4asio11buffer_copyINS_5beast6detail12buffers_pairILb1EEENS0_12const_bufferEEEmRKT_RKT0_.exit300 ] ; 2 uses
   %.sroa.7.0605 = phi i64 [ %.052620, %_ZN5boost5beast13static_bufferILm13EEC2ERKS2_.exit ], [ %i.xi, %_ZN5boost4asio11buffer_copyINS_5beast6detail12buffers_pairILb1EEENS0_12const_bufferEEEmRKT_RKT0_.exit300 ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %88) #28
@@ -212,11 +212,11 @@ _ZN5boost5beast13static_bufferILm13EEC2ERKS2_.exit: ; preds = %_ZN5boost4asio6de
   %i.wx = sub i64 13, %i.ww
   %.sroa.speculated413 = call i64 @llvm.umin.i64(i64 %i.wx, i64 %storemerge618)
   call void @_ZN5boost5beast18static_buffer_base7prepareEm(ptr dead_on_unwind nonnull writable sret(%"class.boost::beast::detail::buffers_pair.15") align 8 %88, ptr noundef nonnull align 8 dereferenceable(40) %87, i64 noundef %.sroa.speculated413)
+  %.sroa.speculated = call i64 @llvm.umin.i64(i64 %.sroa.7.0605, i64 %storemerge79615)
   %i.wy = load i64, ptr %i.vm, align 8, !tbaa !121
   %.not.i.i.i284 = icmp eq i64 %i.wy, 0
   %.0.v.i.i.i285.sroa.sel.v.sroa.sel.v.sroa.sel.v = select i1 %.not.i.i.i284, i64 16, i64 32
   %.0.v.i.i.i285.sroa.sel.v.sroa.sel.v.sroa.sel = getelementptr inbounds nuw i8, ptr %88, i64 %.0.v.i.i.i285.sroa.sel.v.sroa.sel.v.sroa.sel.v
-  %.sroa.speculated = call i64 @llvm.umin.i64(i64 %.sroa.7.0605, i64 %storemerge79615)
   br label %.lr.ph.i.i289
 
 .lr.ph.i.i289:                                    ; preds = %.lr.ph.i.i289.preheader, %_ZN5boost4asio6detail13buffer_copy_1ERKNS0_14mutable_bufferERKNS0_12const_bufferE.exit.i.i298

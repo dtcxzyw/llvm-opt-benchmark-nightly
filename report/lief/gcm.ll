@@ -204,6 +204,15 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 400 ; 2 uses
   br label %.lr.ph62
 
+.preheader53:                                     ; preds = %mbedtls_xor.exit49
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 400
+  %.0.copyload.i52.1.pre = load i64, ptr %.phi.trans.insert, align 8
+  %4 = xor i64 %i.j, %.0.copyload.i52.1.pre
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 400
+  store i64 %4, ptr %5, align 8
+  tail call fastcc void @gcm_mult(ptr noundef nonnull %0, ptr noundef nonnull %i.c, ptr noundef nonnull %i.c)
+  br label %bb.d
+
 .lr.ph62:                                         ; preds = %.lr.ph62.preheader, %mbedtls_xor.exit49
   %.061 = phi ptr [ %i.bg, %mbedtls_xor.exit49 ], [ %2, %.lr.ph62.preheader ] ; 11 uses
   %.04060 = phi i64 [ %i.bf, %mbedtls_xor.exit49 ], [ %3, %.lr.ph62.preheader ] ; 4 uses
@@ -335,18 +344,9 @@ mbedtls_xor.exit49:                               ; preds = %.lr.ph58.prol.loope
   %i.bf = sub i64 %.04060, %i.l                   ; 2 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %.061, i64 %i.l
   %.not44 = icmp eq i64 %i.bf, 0
-  br i1 %.not44, label %mbedtls_xor.exit, label %.lr.ph62, !llvm.loop !30
+  br i1 %.not44, label %.preheader53, label %.lr.ph62, !llvm.loop !30
 
-mbedtls_xor.exit:                                 ; preds = %mbedtls_xor.exit49
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 400
-  %.0.copyload.i52.1.pre = load i64, ptr %.phi.trans.insert, align 8
-  %4 = xor i64 %i.j, %.0.copyload.i52.1.pre
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 400
-  store i64 %4, ptr %5, align 8
-  tail call fastcc void @gcm_mult(ptr noundef nonnull %0, ptr noundef nonnull %i.c, ptr noundef nonnull %i.c)
-  br label %bb.d
-
-bb.d:                                             ; preds = %mbedtls_xor.exit, %bb.c
+bb.d:                                             ; preds = %.preheader53, %bb.c
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 376
   %i.bi = call i32 @mbedtls_cipher_update(ptr noundef nonnull %0, ptr noundef nonnull %i.c, i64 noundef 16, ptr noundef nonnull %i.bh, ptr noundef nonnull %i.a) #9
   br label %bb.e
@@ -630,7 +630,7 @@ bb.f:                                             ; preds = %bb.e, %bb.b
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 416 ; 2 uses
   br label %mbedtls_xor.exit59
 
-mbedtls_xor.exit59:                               ; preds = %mbedtls_xor.exit59, %.lr.ph80
+mbedtls_xor.exit59:                               ; preds = %.lr.ph80, %mbedtls_xor.exit59
   %.179 = phi ptr [ %.045, %.lr.ph80 ], [ %i.bp, %mbedtls_xor.exit59 ] ; 3 uses
   %.14778 = phi i64 [ %.046, %.lr.ph80 ], [ %i.bo, %mbedtls_xor.exit59 ]
   %.0.copyload.i66 = load i64, ptr %i.bj, align 8
