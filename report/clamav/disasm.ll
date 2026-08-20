@@ -204,7 +204,7 @@ bb.ca:                                            ; preds = %bb.bz, %bb.bw, %bb.
   %i.oe = sext i32 %i.od to i64
   %i.of = add nsw i64 %i.nx, %i.oe                ; 3 uses
   %i.og = add nuw nsw i32 %.3537796.i, 4          ; 2 uses
-  %niter725.next.3 = add i32 %niter725, 4         ; 2 uses
+  %niter725.next.3 = add nuw i32 %niter725, 4     ; 2 uses
   %niter725.ncmp.3 = icmp eq i32 %niter725.next.3, %unroll_iter724
   br i1 %niter725.ncmp.3, label %.unr-lcssa, label %.lr.ph799.i
 
@@ -274,25 +274,20 @@ bb.cc:                                            ; preds = %bb.cb
   br i1 %i.ox, label %._crit_edge790.i, label %.lr.ph789.preheader.i
 
 .lr.ph789.preheader.i:                            ; preds = %bb.cc, %.thread969.i
-  %.5973.i = phi i32 [ 2, %.thread969.i ], [ %i.pd, %bb.cc ] ; 5 uses
+  %.5973.i = phi i32 [ 2, %.thread969.i ], [ %i.pd, %bb.cc ] ; 4 uses
   %i.pg = add nsw i32 %.5973.i, -1                ; 3 uses
   %.not938.i = icmp ugt i32 %i.jr, %i.pg
   br i1 %.not938.i, label %.lr.ph789.i.preheader, label %.loopexit
 
 .lr.ph789.i.preheader:                            ; preds = %.lr.ph789.preheader.i
-  %xtraiter = and i32 %.5973.i, 3                 ; 3 uses
+  %xtraiter = and i32 %.5973.i, 3                 ; 2 uses
   %i.ph = icmp ult i32 %i.pg, 3
-  br i1 %i.ph, label %.lr.ph789.i.epil.preheader, label %.lr.ph789.i.preheader.new
+  br i1 %i.ph, label %.lr.ph789.i.epil.preheader, label %.lr.ph789.i
 
-.lr.ph789.i.preheader.new:                        ; preds = %.lr.ph789.i.preheader
-  %unroll_iter = and i32 %.5973.i, 124
-  br label %.lr.ph789.i
-
-.lr.ph789.i:                                      ; preds = %.lr.ph789.i, %.lr.ph789.i.preheader.new
-  %.1787.i = phi i64 [ 0, %.lr.ph789.i.preheader.new ], [ %i.qj, %.lr.ph789.i ]
-  %.4538786.i = phi i32 [ 0, %.lr.ph789.i.preheader.new ], [ %5, %.lr.ph789.i ] ; 4 uses
-  %.9566784.i = phi ptr [ %i.jt, %.lr.ph789.i.preheader.new ], [ %i.qd, %.lr.ph789.i ] ; 5 uses
-  %niter = phi i32 [ 0, %.lr.ph789.i.preheader.new ], [ %niter.next.3, %.lr.ph789.i ]
+.lr.ph789.i:                                      ; preds = %.lr.ph789.i.preheader, %.lr.ph789.i
+  %.1787.i = phi i64 [ %i.qj, %.lr.ph789.i ], [ 0, %.lr.ph789.i.preheader ]
+  %.4538786.i = phi i32 [ %niter.next.3, %.lr.ph789.i ], [ 0, %.lr.ph789.i.preheader ] ; 4 uses
+  %.9566784.i = phi ptr [ %i.qd, %.lr.ph789.i ], [ %i.jt, %.lr.ph789.i.preheader ] ; 5 uses
   %i.pi = load i8, ptr %.9566784.i, align 1, !tbaa !14
   %i.pj = getelementptr inbounds nuw i8, ptr %.9566784.i, i64 1
   %i.pk = zext i8 %i.pi to i64
@@ -314,34 +309,25 @@ bb.cc:                                            ; preds = %bb.cb
   %i.qa = zext nneg i32 %i.pz to i64
   %i.qb = add nuw nsw i64 %i.pt, %i.qa
   %i.qc = load i8, ptr %i.pv, align 1, !tbaa !14
-  %i.qd = getelementptr inbounds nuw i8, ptr %.9566784.i, i64 4 ; 2 uses
+  %i.qd = getelementptr inbounds nuw i8, ptr %.9566784.i, i64 4
   %i.qe = zext i8 %i.qc to i32
   %i.qf = shl i32 %.4538786.i, 3
   %i.qg = or disjoint i32 %i.qf, 24
   %i.qh = shl nuw nsw i32 %i.qe, %i.qg
   %i.qi = zext nneg i32 %i.qh to i64
-  %i.qj = add nuw nsw i64 %i.qb, %i.qi            ; 3 uses
-  %5 = add nuw nsw i32 %.4538786.i, 4             ; 2 uses
-  %niter.next.3 = add i32 %niter, 4               ; 2 uses
-  %niter.ncmp.3 = icmp eq i32 %niter.next.3, %unroll_iter
-  br i1 %niter.ncmp.3, label %._crit_edge790.loopexit.i.unr-lcssa, label %.lr.ph789.i
+  %i.qj = add nuw nsw i64 %i.qb, %i.qi
+  %niter.next.3 = add nuw nsw i32 %.4538786.i, 4
+  br label %.lr.ph789.i
 
-._crit_edge790.loopexit.i.unr-lcssa:              ; preds = %.lr.ph789.i
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge790.loopexit.i, label %.lr.ph789.i.epil.preheader
-
-.lr.ph789.i.epil.preheader:                       ; preds = %._crit_edge790.loopexit.i.unr-lcssa, %.lr.ph789.i.preheader
-  %.1787.i.epil.init = phi i64 [ 0, %.lr.ph789.i.preheader ], [ %i.qj, %._crit_edge790.loopexit.i.unr-lcssa ]
-  %.4538786.i.epil.init = phi i32 [ 0, %.lr.ph789.i.preheader ], [ %5, %._crit_edge790.loopexit.i.unr-lcssa ]
-  %.9566784.i.epil.init = phi ptr [ %i.jt, %.lr.ph789.i.preheader ], [ %i.qd, %._crit_edge790.loopexit.i.unr-lcssa ]
+.lr.ph789.i.epil.preheader:                       ; preds = %.lr.ph789.i.preheader
   %lcmp.mod718 = icmp ne i32 %xtraiter, 0
   tail call void @llvm.assume(i1 %lcmp.mod718)
   br label %.lr.ph789.i.epil
 
 .lr.ph789.i.epil:                                 ; preds = %.lr.ph789.i.epil, %.lr.ph789.i.epil.preheader
-  %.1787.i.epil = phi i64 [ %i.qq, %.lr.ph789.i.epil ], [ %.1787.i.epil.init, %.lr.ph789.i.epil.preheader ]
-  %.4538786.i.epil = phi i32 [ %i.qr, %.lr.ph789.i.epil ], [ %.4538786.i.epil.init, %.lr.ph789.i.epil.preheader ] ; 2 uses
-  %.9566784.i.epil = phi ptr [ %i.ql, %.lr.ph789.i.epil ], [ %.9566784.i.epil.init, %.lr.ph789.i.epil.preheader ] ; 2 uses
+  %.1787.i.epil = phi i64 [ %i.qq, %.lr.ph789.i.epil ], [ 0, %.lr.ph789.i.epil.preheader ]
+  %.4538786.i.epil = phi i32 [ %i.qr, %.lr.ph789.i.epil ], [ 0, %.lr.ph789.i.epil.preheader ] ; 2 uses
+  %.9566784.i.epil = phi ptr [ %i.ql, %.lr.ph789.i.epil ], [ %i.jt, %.lr.ph789.i.epil.preheader ] ; 2 uses
   %epil.iter = phi i32 [ %epil.iter.next, %.lr.ph789.i.epil ], [ 0, %.lr.ph789.i.epil.preheader ]
   %i.qk = load i8, ptr %.9566784.i.epil, align 1, !tbaa !14
   %i.ql = getelementptr inbounds nuw i8, ptr %.9566784.i.epil, i64 1
@@ -355,8 +341,7 @@ bb.cc:                                            ; preds = %bb.cb
   %epil.iter.cmp.not = icmp eq i32 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %._crit_edge790.loopexit.i, label %.lr.ph789.i.epil, !llvm.loop !44
 
-._crit_edge790.loopexit.i:                        ; preds = %.lr.ph789.i.epil, %._crit_edge790.loopexit.i.unr-lcssa
-  %.lcssa614 = phi i64 [ %i.qj, %._crit_edge790.loopexit.i.unr-lcssa ], [ %i.qq, %.lr.ph789.i.epil ]
+._crit_edge790.loopexit.i:                        ; preds = %.lr.ph789.i.epil
   %i.qs = sub i32 %i.jr, %.5973.i
   %scevgep.i = getelementptr i8, ptr %.0557942.i147, i64 3
   %i.qt = zext nneg i32 %i.pg to i64
@@ -370,7 +355,7 @@ bb.cc:                                            ; preds = %bb.cb
   %.5974.i = phi i64 [ 64, %bb.cc ], [ %i.qw, %._crit_edge790.loopexit.i ] ; 2 uses
   %.9566.lcssa.i = phi ptr [ %i.jt, %bb.cc ], [ %scevgep901.i, %._crit_edge790.loopexit.i ]
   %.10.lcssa.i = phi i32 [ %i.jr, %bb.cc ], [ %i.qs, %._crit_edge790.loopexit.i ]
-  %.1.lcssa.i = phi i64 [ 0, %bb.cc ], [ %.lcssa614, %._crit_edge790.loopexit.i ]
+  %.1.lcssa.i = phi i64 [ 0, %bb.cc ], [ %i.qq, %._crit_edge790.loopexit.i ]
   %i.qx = shl i64 %.1.lcssa.i, %.5974.i
   %i.qy = ashr exact i64 %i.qx, %.5974.i
   %i.qz = trunc nsw i64 %i.qy to i32

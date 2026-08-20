@@ -204,7 +204,7 @@ bb.ab:                                            ; preds = %bb.aa
 
 bb.ac:                                            ; preds = %bb.ab, %bb.aa
   %i.ga = add nuw i64 %.096142, 2                 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.thread.loopexit.unr-lcssa, label %bb.y, !llvm.loop !277
 
@@ -438,7 +438,7 @@ bb.am:                                            ; preds = %bb.am, %.lr.ph145.n
   %i.lv = call noundef float @sqrtf(float noundef %i.lu) #28
   %i.lw = fadd float %i.lr, %i.lv                 ; 3 uses
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %niter216.next.3 = add i64 %niter216, 4         ; 2 uses
+  %niter216.next.3 = add nuw i64 %niter216, 4     ; 2 uses
   %niter216.ncmp.3 = icmp eq i64 %niter216.next.3, %unroll_iter215
   br i1 %niter216.ncmp.3, label %._crit_edge146.thread.unr-lcssa, label %bb.am, !llvm.loop !285
 
@@ -841,7 +841,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !49   ; 7 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 4
-  %i.d = load i32, ptr %i.c, align 4, !tbaa !38   ; 9 uses
+  %i.d = load i32, ptr %i.c, align 4, !tbaa !38   ; 8 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 72
   %i.f = add nsw i32 %i.d, -1                     ; 2 uses
   %i.g = load i32, ptr %i.e, align 4, !tbaa !45   ; 2 uses
@@ -911,7 +911,6 @@ bb.e:                                             ; preds = %_ZN2cv8MatShapeixEm
 .lr.ph.i.i.i.us.preheader:                        ; preds = %.lr.ph.i.i.i.lr.ph
   %i.ad = add nsw i32 %i.d, -1
   %i.ae = icmp ult i32 %i.ad, 3
-  %lcmp.mod151.not = icmp eq i32 %i.d, 0
   %lcmp.mod153 = icmp ne i32 %i.d, 0
   br label %.lr.ph.i.i.i.us
 
@@ -923,9 +922,8 @@ bb.e:                                             ; preds = %_ZN2cv8MatShapeixEm
   br i1 %i.ae, label %.epil.preheader148, label %.lr.ph.i.i.i.us.new
 
 .lr.ph.i.i.i.us.new:                              ; preds = %.lr.ph.i.i.i.us, %.lr.ph.i.i.i.us.new
-  %indvars.iv.i.i.i.us = phi i64 [ %indvars.iv.next.i.i.i.us.3, %.lr.ph.i.i.i.us.new ], [ 0, %.lr.ph.i.i.i.us ] ; 6 uses
+  %indvars.iv.i.i.i.us = phi i64 [ %niter155.next.3, %.lr.ph.i.i.i.us.new ], [ 0, %.lr.ph.i.i.i.us ] ; 6 uses
   %.010.i.i.i.us = phi ptr [ %i.bg, %.lr.ph.i.i.i.us.new ], [ %i.z, %.lr.ph.i.i.i.us ]
-  %niter155 = phi i64 [ %niter155.next.3, %.lr.ph.i.i.i.us.new ], [ 0, %.lr.ph.i.i.i.us ]
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %indvars.iv.i.i.i.us
   %i.ag = load i32, ptr %i.af, align 4, !tbaa !22
   %i.ah = sext i32 %i.ag to i64
@@ -956,14 +954,12 @@ bb.e:                                             ; preds = %_ZN2cv8MatShapeixEm
   %i.bd = getelementptr inbounds nuw [8 x i8], ptr %i.aa, i64 %indvars.iv.next.i.i.i.us.2
   %i.be = load i64, ptr %i.bd, align 8, !tbaa !76
   %i.bf = mul i64 %i.be, %i.bc
-  %i.bg = getelementptr inbounds nuw i8, ptr %i.az, i64 %i.bf ; 3 uses
-  %indvars.iv.next.i.i.i.us.3 = add nuw nsw i64 %indvars.iv.i.i.i.us, 4 ; 2 uses
-  %niter155.next.3 = add i64 %niter155, 4         ; 2 uses
-  %niter155.ncmp.3 = icmp eq i64 %niter155.next.3, 0
-  br i1 %niter155.ncmp.3, label %_ZN2cv3Mat2atINS_3VecIhLi92EEEEERT_PKi.exit.i.loopexit.us.unr-lcssa, label %.lr.ph.i.i.i.us.new, !llvm.loop !406
+  %i.bg = getelementptr inbounds nuw i8, ptr %i.az, i64 %i.bf
+  %niter155.next.3 = add nuw nsw i64 %indvars.iv.i.i.i.us, 4
+  br label %.lr.ph.i.i.i.us.new, !llvm.loop !406
 
 .lr.ph.i.us:                                      ; preds = %_ZN2cv3Mat2atINS_3VecIhLi92EEEEERT_PKi.exit.i.loopexit.us, %.lr.ph.i.us
-  %.02.i.us = phi ptr [ %i.bh, %.lr.ph.i.us ], [ %.lcssa, %_ZN2cv3Mat2atINS_3VecIhLi92EEEEERT_PKi.exit.i.loopexit.us ] ; 2 uses
+  %.02.i.us = phi ptr [ %i.bh, %.lr.ph.i.us ], [ %i.bq, %_ZN2cv3Mat2atINS_3VecIhLi92EEEEERT_PKi.exit.i.loopexit.us ] ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %.02.i.us, i64 92 ; 2 uses
   store <2 x float> zeroinitializer, ptr %.02.i.us, align 4, !tbaa !27
   %i.bi = icmp ult ptr %i.bh, %i.br
@@ -975,18 +971,13 @@ bb.e:                                             ; preds = %_ZN2cv8MatShapeixEm
   %exitcond118.not = icmp eq i32 %i.bj, %i.v
   br i1 %exitcond118.not, label %.loopexit, label %.lr.ph.i.i.i.us, !llvm.loop !408
 
-_ZN2cv3Mat2atINS_3VecIhLi92EEEEERT_PKi.exit.i.loopexit.us.unr-lcssa: ; preds = %.lr.ph.i.i.i.us.new
-  br i1 %lcmp.mod151.not, label %_ZN2cv3Mat2atINS_3VecIhLi92EEEEERT_PKi.exit.i.loopexit.us, label %.epil.preheader148
-
-.epil.preheader148:                               ; preds = %_ZN2cv3Mat2atINS_3VecIhLi92EEEEERT_PKi.exit.i.loopexit.us.unr-lcssa, %.lr.ph.i.i.i.us
-  %indvars.iv.i.i.i.us.epil.init = phi i64 [ 0, %.lr.ph.i.i.i.us ], [ %indvars.iv.next.i.i.i.us.3, %_ZN2cv3Mat2atINS_3VecIhLi92EEEEERT_PKi.exit.i.loopexit.us.unr-lcssa ]
-  %.010.i.i.i.us.epil.init = phi ptr [ %i.z, %.lr.ph.i.i.i.us ], [ %i.bg, %_ZN2cv3Mat2atINS_3VecIhLi92EEEEERT_PKi.exit.i.loopexit.us.unr-lcssa ]
+.epil.preheader148:                               ; preds = %.lr.ph.i.i.i.us
   tail call void @llvm.assume(i1 %lcmp.mod153)
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.f, %.epil.preheader148
-  %indvars.iv.i.i.i.us.epil = phi i64 [ %indvars.iv.i.i.i.us.epil.init, %.epil.preheader148 ], [ %indvars.iv.next.i.i.i.us.epil, %bb.f ] ; 3 uses
-  %.010.i.i.i.us.epil = phi ptr [ %.010.i.i.i.us.epil.init, %.epil.preheader148 ], [ %i.bq, %bb.f ]
+  %indvars.iv.i.i.i.us.epil = phi i64 [ 0, %.epil.preheader148 ], [ %indvars.iv.next.i.i.i.us.epil, %bb.f ] ; 3 uses
+  %.010.i.i.i.us.epil = phi ptr [ %i.z, %.epil.preheader148 ], [ %i.bq, %bb.f ]
   %epil.iter150 = phi i64 [ 0, %.epil.preheader148 ], [ %epil.iter150.next, %bb.f ]
   %i.bk = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %indvars.iv.i.i.i.us.epil
   %i.bl = load i32, ptr %i.bk, align 4, !tbaa !22
@@ -994,15 +985,14 @@ bb.f:                                             ; preds = %bb.f, %.epil.prehea
   %i.bn = getelementptr inbounds nuw [8 x i8], ptr %i.aa, i64 %indvars.iv.i.i.i.us.epil
   %i.bo = load i64, ptr %i.bn, align 8, !tbaa !76
   %i.bp = mul i64 %i.bo, %i.bm
-  %i.bq = getelementptr inbounds nuw i8, ptr %.010.i.i.i.us.epil, i64 %i.bp ; 2 uses
+  %i.bq = getelementptr inbounds nuw i8, ptr %.010.i.i.i.us.epil, i64 %i.bp ; 3 uses
   %indvars.iv.next.i.i.i.us.epil = add nuw nsw i64 %indvars.iv.i.i.i.us.epil, 1
   %epil.iter150.next = add i64 %epil.iter150, 1   ; 2 uses
   %epil.iter150.cmp.not = icmp eq i64 %epil.iter150.next, %wide.trip.count.i.i.i
   br i1 %epil.iter150.cmp.not, label %_ZN2cv3Mat2atINS_3VecIhLi92EEEEERT_PKi.exit.i.loopexit.us, label %bb.f, !llvm.loop !409
 
-_ZN2cv3Mat2atINS_3VecIhLi92EEEEERT_PKi.exit.i.loopexit.us: ; preds = %bb.f, %_ZN2cv3Mat2atINS_3VecIhLi92EEEEERT_PKi.exit.i.loopexit.us.unr-lcssa
-  %.lcssa = phi ptr [ %i.bg, %_ZN2cv3Mat2atINS_3VecIhLi92EEEEERT_PKi.exit.i.loopexit.us.unr-lcssa ], [ %i.bq, %bb.f ] ; 2 uses
-  %i.br = getelementptr inbounds nuw i8, ptr %.lcssa, i64 %.idx.i
+_ZN2cv3Mat2atINS_3VecIhLi92EEEEERT_PKi.exit.i.loopexit.us: ; preds = %bb.f
+  %i.br = getelementptr inbounds nuw i8, ptr %i.bq, i64 %.idx.i
   br label %.lr.ph.i.us
 
 bb.g:                                             ; preds = %_ZN2cv8MatShapeixEm.exit
@@ -1125,7 +1115,7 @@ _ZN2cv8MatShapeixEm.exit63.us:                    ; preds = %_ZN2cv8MatShapeixEm
   %i.ec = mul i64 %i.eb, %i.dz
   %i.ed = getelementptr inbounds nuw i8, ptr %i.dw, i64 %i.ec ; 3 uses
   %indvars.iv.next.i.i.i71.us.3 = add nuw nsw i64 %indvars.iv.i.i.i69.us, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZN2cv3Mat2atINS_3VecIhLi92EEEEERT_PKi.exit.i64.us.unr-lcssa, label %.lr.ph.i.i.i67.us.new, !llvm.loop !406
 
@@ -1528,7 +1518,7 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph.i.i.i
   %i.br = mul i64 %i.bq, %i.bo
   %i.bs = getelementptr inbounds nuw i8, ptr %i.bl, i64 %i.br ; 3 uses
   %indvars.iv.next.i.i.i.us.3 = add nuw nsw i64 %indvars.iv.i.i.i.us, 4 ; 2 uses
-  %niter181.next.3 = add i64 %niter181, 4         ; 2 uses
+  %niter181.next.3 = add nuw i64 %niter181, 4     ; 2 uses
   %niter181.ncmp.3 = icmp eq i64 %niter181.next.3, %unroll_iter180
   br i1 %niter181.ncmp.3, label %_ZN2cv3Mat2atINS_3VecIfLi4EEEEERT_PKi.exit.i.us.loopexit.unr-lcssa, label %bb.f, !llvm.loop !406
 
@@ -1888,7 +1878,7 @@ bb.t:                                             ; preds = %bb.t, %.lr.ph.i.i.i
   %i.ip = mul i64 %i.io, %i.im
   %i.iq = getelementptr inbounds nuw i8, ptr %i.ij, i64 %i.ip ; 3 uses
   %indvars.iv.next.i.i.i70.3 = add nuw nsw i64 %indvars.iv.i.i.i68, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZN2cv3Mat2atINS_3VecIfLi4EEEEERT_PKi.exit.i63.loopexit.unr-lcssa, label %bb.t, !llvm.loop !406
 

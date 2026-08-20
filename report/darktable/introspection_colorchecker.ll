@@ -204,7 +204,7 @@ bb.w:                                             ; preds = %bb.w, %.lr.ph518.ne
   %gep642.7 = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep641, i64 %i.yi
   store double 1.000000e+00, ptr %gep642.7, align 8, !tbaa !83
   %indvars.iv.next564.7 = add nuw nsw i64 %indvars.iv563, 8 ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %.lr.ph520.unr-lcssa, label %bb.w
 
@@ -296,7 +296,7 @@ bb.y:                                             ; preds = %bb.y, %.lr.ph520.ne
   %i.zk = getelementptr inbounds nuw i8, ptr %gep646.3, i64 8
   store double %i.zi, ptr %i.zk, align 8, !tbaa !83
   %indvars.iv.next569.3 = add nuw nsw i64 %indvars.iv568, 4 ; 2 uses
-  %niter1177.next.3 = add i64 %niter1177, 4       ; 2 uses
+  %niter1177.next.3 = add nuw i64 %niter1177, 4   ; 2 uses
   %niter1177.ncmp.3 = icmp eq i64 %niter1177.next.3, %unroll_iter1176
   br i1 %niter1177.ncmp.3, label %.lr.ph522.unr-lcssa, label %bb.y
 
@@ -393,7 +393,7 @@ bb.aa:                                            ; preds = %bb.aa, %.lr.ph522.n
   %i.aar = getelementptr inbounds nuw i8, ptr %gep650.3, i64 16
   store double %i.aap, ptr %i.aar, align 8, !tbaa !83
   %indvars.iv.next574.3 = add nuw nsw i64 %indvars.iv573, 4 ; 2 uses
-  %niter1184.next.3 = add i64 %niter1184, 4       ; 2 uses
+  %niter1184.next.3 = add nuw i64 %niter1184, 4   ; 2 uses
   %niter1184.ncmp.3 = icmp eq i64 %niter1184.next.3, %unroll_iter1183
   br i1 %niter1184.ncmp.3, label %.lr.ph524.unr-lcssa, label %bb.aa
 
@@ -494,7 +494,7 @@ bb.ac:                                            ; preds = %bb.ac, %.lr.ph524.n
   %i.ace = getelementptr inbounds nuw i8, ptr %gep654.3, i64 24
   store double %i.acc, ptr %i.ace, align 8, !tbaa !83
   %indvars.iv.next579.3 = add nuw nsw i64 %indvars.iv578, 4 ; 2 uses
-  %niter1191.next.3 = add i64 %niter1191, 4       ; 2 uses
+  %niter1191.next.3 = add nuw i64 %niter1191, 4   ; 2 uses
   %niter1191.ncmp.3 = icmp eq i64 %niter1191.next.3, %unroll_iter1190
   br i1 %niter1191.ncmp.3, label %.preheader506.loopexit.unr-lcssa, label %bb.ac
 
@@ -897,11 +897,11 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph58.i
   br i1 %epil.iter.cmp.not, label %.epilog-lcssa, label %bb.b, !llvm.loop !127
 
 .epilog-lcssa:                                    ; preds = %bb.b
-  %indvars.iv.next73.i = add nsw i64 %wide.trip.count65.i, -1 ; 5 uses
   %.not35 = icmp eq i32 %2, 2
   br i1 %.not35, label %gauss_solve_triangular.exit, label %bb.c
 
 bb.c:                                             ; preds = %.epilog-lcssa
+  %indvars.iv.next73.i = add nsw i64 %wide.trip.count65.i, -1 ; 4 uses
   %i.cn = mul nuw nsw i64 %indvars.iv.next73.i, %i.bd
   %i.co = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.cn
   %i.cp = load double, ptr %i.co, align 8, !tbaa !83
@@ -910,27 +910,22 @@ bb.c:                                             ; preds = %.epilog-lcssa
   %i.cs = fdiv reassoc nsz arcp contract afn double %i.cr, %i.cp ; 6 uses
   store double %i.cs, ptr %i.cq, align 8, !tbaa !83
   %invariant.gep75.i.1 = getelementptr [8 x i8], ptr %0, i64 %indvars.iv.next73.i ; 5 uses
-  %xtraiter30.1 = and i64 %indvars.iv.next73.i, 3 ; 3 uses
+  %xtraiter30.1 = and i64 %indvars.iv.next73.i, 3 ; 2 uses
   %i.ct = add nsw i32 %2, -3
   %i.cu = icmp ult i32 %i.ct, 3
-  br i1 %i.cu, label %.epil.preheader.1, label %.new.1
+  br i1 %i.cu, label %.epil.preheader.1, label %bb.d
 
-.new.1:                                           ; preds = %bb.c
-  %unroll_iter.1 = and i64 %indvars.iv.next73.i, -4
-  br label %bb.d
-
-bb.d:                                             ; preds = %bb.d, %.new.1
-  %indvars.iv67.i.1 = phi i64 [ 0, %.new.1 ], [ %indvars.iv.next68.i.3.1, %bb.d ] ; 6 uses
-  %niter.1 = phi i64 [ 0, %.new.1 ], [ %niter.next.3.1, %bb.d ]
-  %i.cv = mul nuw nsw i64 %indvars.iv67.i.1, %i.f
+bb.d:                                             ; preds = %bb.c, %bb.d
+  %niter.1 = phi i64 [ %niter.next.3.1, %bb.d ], [ 0, %bb.c ] ; 6 uses
+  %i.cv = mul nuw nsw i64 %niter.1, %i.f
   %gep76.i.133 = getelementptr [8 x i8], ptr %invariant.gep75.i.1, i64 %i.cv
   %i.cw = load double, ptr %gep76.i.133, align 8, !tbaa !83
   %i.cx = fmul reassoc nsz arcp contract afn double %i.cw, %i.cs
-  %i.cy = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv67.i.1 ; 2 uses
+  %i.cy = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %niter.1 ; 2 uses
   %i.cz = load double, ptr %i.cy, align 8, !tbaa !83
   %i.da = fsub reassoc nsz arcp contract afn double %i.cz, %i.cx
   store double %i.da, ptr %i.cy, align 8, !tbaa !83
-  %indvars.iv.next68.i.134 = or disjoint i64 %indvars.iv67.i.1, 1 ; 2 uses
+  %indvars.iv.next68.i.134 = or disjoint i64 %niter.1, 1 ; 2 uses
   %i.db = mul nuw nsw i64 %indvars.iv.next68.i.134, %i.f
   %gep76.i.1.1 = getelementptr [8 x i8], ptr %invariant.gep75.i.1, i64 %i.db
   %i.dc = load double, ptr %gep76.i.1.1, align 8, !tbaa !83
@@ -939,7 +934,7 @@ bb.d:                                             ; preds = %bb.d, %.new.1
   %i.df = load double, ptr %i.de, align 8, !tbaa !83
   %i.dg = fsub reassoc nsz arcp contract afn double %i.df, %i.dd
   store double %i.dg, ptr %i.de, align 8, !tbaa !83
-  %indvars.iv.next68.i.1.1 = or disjoint i64 %indvars.iv67.i.1, 2 ; 2 uses
+  %indvars.iv.next68.i.1.1 = or disjoint i64 %niter.1, 2 ; 2 uses
   %i.dh = mul nuw nsw i64 %indvars.iv.next68.i.1.1, %i.f
   %gep76.i.2.1 = getelementptr [8 x i8], ptr %invariant.gep75.i.1, i64 %i.dh
   %i.di = load double, ptr %gep76.i.2.1, align 8, !tbaa !83
@@ -948,7 +943,7 @@ bb.d:                                             ; preds = %bb.d, %.new.1
   %i.dl = load double, ptr %i.dk, align 8, !tbaa !83
   %i.dm = fsub reassoc nsz arcp contract afn double %i.dl, %i.dj
   store double %i.dm, ptr %i.dk, align 8, !tbaa !83
-  %indvars.iv.next68.i.2.1 = or disjoint i64 %indvars.iv67.i.1, 3 ; 2 uses
+  %indvars.iv.next68.i.2.1 = or disjoint i64 %niter.1, 3 ; 2 uses
   %i.dn = mul nuw nsw i64 %indvars.iv.next68.i.2.1, %i.f
   %gep76.i.3.1 = getelementptr [8 x i8], ptr %invariant.gep75.i.1, i64 %i.dn
   %i.do = load double, ptr %gep76.i.3.1, align 8, !tbaa !83
@@ -957,23 +952,16 @@ bb.d:                                             ; preds = %bb.d, %.new.1
   %i.dr = load double, ptr %i.dq, align 8, !tbaa !83
   %i.ds = fsub reassoc nsz arcp contract afn double %i.dr, %i.dp
   store double %i.ds, ptr %i.dq, align 8, !tbaa !83
-  %indvars.iv.next68.i.3.1 = add nuw nsw i64 %indvars.iv67.i.1, 4 ; 2 uses
-  %niter.next.3.1 = add i64 %niter.1, 4           ; 2 uses
-  %niter.ncmp.3.1 = icmp eq i64 %niter.next.3.1, %unroll_iter.1
-  br i1 %niter.ncmp.3.1, label %.unr-lcssa.1, label %bb.d
+  %niter.next.3.1 = add nuw nsw i64 %niter.1, 4
+  br label %bb.d
 
-.unr-lcssa.1:                                     ; preds = %bb.d
-  %lcmp.mod31.1.not = icmp eq i64 %xtraiter30.1, 0
-  br i1 %lcmp.mod31.1.not, label %gauss_solve_triangular.exit, label %.epil.preheader.1
-
-.epil.preheader.1:                                ; preds = %.unr-lcssa.1, %bb.c
-  %indvars.iv67.i.epil.init.1 = phi i64 [ 0, %bb.c ], [ %indvars.iv.next68.i.3.1, %.unr-lcssa.1 ]
+.epil.preheader.1:                                ; preds = %bb.c
   %lcmp.mod32.1 = icmp ne i64 %xtraiter30.1, 0
   tail call void @llvm.assume(i1 %lcmp.mod32.1)
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.e, %.epil.preheader.1
-  %indvars.iv67.i.epil.1 = phi i64 [ %indvars.iv67.i.epil.init.1, %.epil.preheader.1 ], [ %indvars.iv.next68.i.epil.1, %bb.e ] ; 3 uses
+  %indvars.iv67.i.epil.1 = phi i64 [ 0, %.epil.preheader.1 ], [ %indvars.iv.next68.i.epil.1, %bb.e ] ; 3 uses
   %epil.iter.1 = phi i64 [ 0, %.epil.preheader.1 ], [ %epil.iter.next.1, %bb.e ]
   %i.dt = mul nuw nsw i64 %indvars.iv67.i.epil.1, %i.f
   %gep76.i.epil.1 = getelementptr [8 x i8], ptr %invariant.gep75.i.1, i64 %i.dt
@@ -988,7 +976,7 @@ bb.e:                                             ; preds = %bb.e, %.epil.prehea
   %epil.iter.cmp.1.not = icmp eq i64 %epil.iter.next.1, %xtraiter30.1
   br i1 %epil.iter.cmp.1.not, label %gauss_solve_triangular.exit, label %bb.e, !llvm.loop !127
 
-gauss_solve_triangular.exit:                      ; preds = %.unr-lcssa.1, %bb.e, %.epilog-lcssa
+gauss_solve_triangular.exit:                      ; preds = %bb.e, %.epilog-lcssa
   %i.dz = load double, ptr %0, align 8, !tbaa !83
   %i.ea = load double, ptr %1, align 8, !tbaa !83
   %i.eb = fdiv reassoc nsz arcp contract afn double %i.ea, %i.dz

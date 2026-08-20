@@ -204,7 +204,7 @@ bb.l:                                             ; preds = %bb.k
   %i.ea = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %i.dz
   store i32 %i.dw, ptr %i.ea, align 4, !tbaa !25
   %indvars.iv.next213.1 = add nuw nsw i64 %indvars.iv212, 2
-  %niter.next.1 = add i32 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i32 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i32 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.unr-lcssa, label %.preheader, !llvm.loop !31
 
@@ -607,7 +607,7 @@ bb.u:                                             ; preds = %bb.t
   %i.ht = getelementptr inbounds nuw i8, ptr %i.et, i64 %i.hs
   tail call void @llvm.prefetch.p0(ptr %i.ht, i32 0, i32 3, i32 1)
   %indvars.iv.next100.7 = add nuw nsw i64 %indvars.iv99, 8 ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %.lr.ph79.unr-lcssa, label %.lr.ph75, !llvm.loop !196
 
@@ -1010,7 +1010,7 @@ bb.u:                                             ; preds = %bb.t
   %i.ho = getelementptr inbounds nuw i8, ptr %i.eo, i64 %i.hn
   tail call void @llvm.prefetch.p0(ptr %i.ho, i32 0, i32 3, i32 1)
   %indvars.iv.next100.7 = add nuw nsw i64 %indvars.iv99, 8 ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %.lr.ph79.unr-lcssa, label %.lr.ph75, !llvm.loop !196
 
@@ -1413,7 +1413,7 @@ bb.u:                                             ; preds = %bb.t
   %i.ho = getelementptr inbounds nuw i8, ptr %i.eo, i64 %i.hn
   tail call void @llvm.prefetch.p0(ptr %i.ho, i32 0, i32 3, i32 1)
   %indvars.iv.next100.7 = add nuw nsw i64 %indvars.iv99, 8 ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %.lr.ph79.unr-lcssa, label %.lr.ph75, !llvm.loop !196
 
@@ -1816,7 +1816,7 @@ bb.ac:                                            ; preds = %bb.ab
   %i.nx = getelementptr inbounds nuw i8, ptr %i.ku, i64 %i.nw
   tail call void @llvm.prefetch.p0(ptr %i.nx, i32 0, i32 3, i32 1)
   %indvars.iv.next129.7 = add nuw nsw i64 %indvars.iv128, 8 ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %.lr.ph97.unr-lcssa, label %.lr.ph93, !llvm.loop !196
 
@@ -2219,7 +2219,7 @@ bb.ac:                                            ; preds = %bb.ab
   %i.of = getelementptr inbounds nuw i8, ptr %i.lc, i64 %i.oe
   tail call void @llvm.prefetch.p0(ptr %i.of, i32 0, i32 3, i32 1)
   %indvars.iv.next132.7 = add nuw nsw i64 %indvars.iv131, 8 ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %.lr.ph97.unr-lcssa, label %.lr.ph93, !llvm.loop !196
 
@@ -2622,7 +2622,7 @@ bb.ad:                                            ; preds = %bb.ac
   %i.ny = getelementptr inbounds nuw i8, ptr %i.kv, i64 %i.nx
   tail call void @llvm.prefetch.p0(ptr %i.ny, i32 0, i32 3, i32 1)
   %indvars.iv.next133.7 = add nuw nsw i64 %indvars.iv132, 8 ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %.lr.ph97.unr-lcssa, label %.lr.ph93, !llvm.loop !196
 
@@ -3025,7 +3025,7 @@ bb.ac:                                            ; preds = %bb.ab
   %i.ny = getelementptr inbounds nuw i8, ptr %i.kv, i64 %i.nx
   tail call void @llvm.prefetch.p0(ptr %i.ny, i32 0, i32 3, i32 1)
   %indvars.iv.next129.7 = add nuw nsw i64 %indvars.iv128, 8 ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %.lr.ph97.unr-lcssa, label %.lr.ph93, !llvm.loop !196
 
@@ -3428,7 +3428,7 @@ bb.ac:                                            ; preds = %bb.ab
   %i.og = getelementptr inbounds nuw i8, ptr %i.ld, i64 %i.of
   tail call void @llvm.prefetch.p0(ptr %i.og, i32 0, i32 3, i32 1)
   %indvars.iv.next132.7 = add nuw nsw i64 %indvars.iv131, 8 ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %.lr.ph97.unr-lcssa, label %.lr.ph93, !llvm.loop !196
 
@@ -3831,7 +3831,7 @@ bb.ad:                                            ; preds = %bb.ac
   %i.nz = getelementptr inbounds nuw i8, ptr %i.kw, i64 %i.ny
   tail call void @llvm.prefetch.p0(ptr %i.nz, i32 0, i32 3, i32 1)
   %indvars.iv.next133.7 = add nuw nsw i64 %indvars.iv132, 8 ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %.lr.ph97.unr-lcssa, label %.lr.ph93, !llvm.loop !196
 
@@ -4234,7 +4234,7 @@ bb.ac:                                            ; preds = %bb.ab
   %i.ny = getelementptr inbounds nuw i8, ptr %i.kv, i64 %i.nx
   tail call void @llvm.prefetch.p0(ptr %i.ny, i32 0, i32 3, i32 1)
   %indvars.iv.next129.7 = add nuw nsw i64 %indvars.iv128, 8 ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %.lr.ph97.unr-lcssa, label %.lr.ph93, !llvm.loop !196
 
@@ -4637,7 +4637,7 @@ bb.ac:                                            ; preds = %bb.ab
   %i.og = getelementptr inbounds nuw i8, ptr %i.ld, i64 %i.of
   tail call void @llvm.prefetch.p0(ptr %i.og, i32 0, i32 3, i32 1)
   %indvars.iv.next132.7 = add nuw nsw i64 %indvars.iv131, 8 ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %.lr.ph97.unr-lcssa, label %.lr.ph93, !llvm.loop !196
 
@@ -5040,7 +5040,7 @@ bb.ad:                                            ; preds = %bb.ac
   %i.nz = getelementptr inbounds nuw i8, ptr %i.kw, i64 %i.ny
   tail call void @llvm.prefetch.p0(ptr %i.nz, i32 0, i32 3, i32 1)
   %indvars.iv.next133.7 = add nuw nsw i64 %indvars.iv132, 8 ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %.lr.ph97.unr-lcssa, label %.lr.ph93, !llvm.loop !196
 

@@ -201,9 +201,9 @@ bb.c:                                             ; preds = %bb.a
   br label %_ZN12_GLOBAL__N_115baselinePaletteEbRK8QPalette.exit
 
 _ZN12_GLOBAL__N_115baselinePaletteEbRK8QPalette.exit: ; preds = %bb.b, %bb.c
-  %i.b = load ptr, ptr %4, align 8                ; 5 uses
+  %i.b = load ptr, ptr %4, align 8                ; 4 uses
   %.not.i = icmp eq ptr %i.b, null
-  br i1 %.not.i, label %_ZNK5QHashI7QStringN8QPalette9ColorRoleEE10constBeginEv.exit, label %bb.d
+  br i1 %.not.i, label %._crit_edge, label %bb.d
 
 bb.d:                                             ; preds = %_ZN12_GLOBAL__N_115baselinePaletteEbRK8QPalette.exit
   %i.c = getelementptr i8, ptr %i.b, i64 32
@@ -216,12 +216,12 @@ bb.e:                                             ; preds = %bb.d
   %i.f = getelementptr i8, ptr %i.b, i64 16
   %i.g = load i64, ptr %i.f, align 8              ; 2 uses
   %i.h = icmp eq i64 %i.g, 1
-  br i1 %i.h, label %_ZNK5QHashI7QStringN8QPalette9ColorRoleEE10constBeginEv.exit, label %.lr.ph267
+  br i1 %i.h, label %._crit_edge, label %.lr.ph267
 
 bb.f:                                             ; preds = %.lr.ph267
-  %i.i = add i64 %i.k, 1                          ; 2 uses
+  %i.i = add nuw i64 %i.k, 1                      ; 2 uses
   %i.j = icmp eq i64 %i.i, %i.g
-  br i1 %i.j, label %_ZNK5QHashI7QStringN8QPalette9ColorRoleEE10constBeginEv.exit, label %.lr.ph267, !llvm.loop !6
+  br i1 %i.j, label %._crit_edge, label %.lr.ph267, !llvm.loop !6
 
 .lr.ph267:                                        ; preds = %bb.e, %bb.f
   %i.k = phi i64 [ %i.i, %bb.f ], [ 1, %bb.e ]    ; 4 uses
@@ -231,33 +231,21 @@ bb.f:                                             ; preds = %.lr.ph267
   %i.o = getelementptr i8, ptr %i.m, i64 %i.n
   %i.p = load i8, ptr %i.o, align 1
   %.not.i.i.i.i = icmp eq i8 %i.p, -1
-  br i1 %.not.i.i.i.i, label %bb.f, label %._ZNK5QHashI7QStringN8QPalette9ColorRoleEE10constBeginEv.exit.loopexit_crit_edge, !llvm.loop !6
+  br i1 %.not.i.i.i.i, label %bb.f, label %_ZNK5QHashI7QStringN8QPalette9ColorRoleEE14const_iteratorneERKS4_.exit.thread.lr.ph, !llvm.loop !6
 
-._ZNK5QHashI7QStringN8QPalette9ColorRoleEE10constBeginEv.exit.loopexit_crit_edge: ; preds = %.lr.ph267
-  br label %_ZNK5QHashI7QStringN8QPalette9ColorRoleEE10constBeginEv.exit, !llvm.loop !6
-
-_ZNK5QHashI7QStringN8QPalette9ColorRoleEE10constBeginEv.exit: ; preds = %bb.f, %bb.e, %._ZNK5QHashI7QStringN8QPalette9ColorRoleEE10constBeginEv.exit.loopexit_crit_edge, %_ZN12_GLOBAL__N_115baselinePaletteEbRK8QPalette.exit
-  %.sroa.0.0.i = phi ptr [ null, %_ZN12_GLOBAL__N_115baselinePaletteEbRK8QPalette.exit ], [ null, %bb.e ], [ %i.b, %._ZNK5QHashI7QStringN8QPalette9ColorRoleEE10constBeginEv.exit.loopexit_crit_edge ], [ null, %bb.f ] ; 2 uses
-  %.sroa.4.0.i = phi i64 [ 0, %_ZN12_GLOBAL__N_115baselinePaletteEbRK8QPalette.exit ], [ 0, %bb.e ], [ %i.k, %._ZNK5QHashI7QStringN8QPalette9ColorRoleEE10constBeginEv.exit.loopexit_crit_edge ], [ 0, %bb.f ] ; 2 uses
-  %25 = icmp ne ptr %.sroa.0.0.i, null
-  %26 = icmp ne i64 %.sroa.4.0.i, 0
-  %or.cond205 = or i1 %25, %26
-  br i1 %or.cond205, label %_ZNK5QHashI7QStringN8QPalette9ColorRoleEE14const_iteratorneERKS4_.exit.thread.lr.ph, label %._crit_edge
-
-_ZNK5QHashI7QStringN8QPalette9ColorRoleEE14const_iteratorneERKS4_.exit.thread.lr.ph: ; preds = %bb.d, %_ZNK5QHashI7QStringN8QPalette9ColorRoleEE10constBeginEv.exit
-  %.sroa.4.0.i252 = phi i64 [ %.sroa.4.0.i, %_ZNK5QHashI7QStringN8QPalette9ColorRoleEE10constBeginEv.exit ], [ 0, %bb.d ]
-  %.sroa.0.0.i251 = phi ptr [ %.sroa.0.0.i, %_ZNK5QHashI7QStringN8QPalette9ColorRoleEE10constBeginEv.exit ], [ %i.b, %bb.d ]
+_ZNK5QHashI7QStringN8QPalette9ColorRoleEE14const_iteratorneERKS4_.exit.thread.lr.ph: ; preds = %.lr.ph267, %bb.d
+  %.sroa.4.0.i252 = phi i64 [ 0, %bb.d ], [ %i.k, %.lr.ph267 ]
   %.sroa.238.0..sroa_idx = getelementptr inbounds nuw i8, ptr %16, i64 8
   br label %_ZNK5QHashI7QStringN8QPalette9ColorRoleEE14const_iteratorneERKS4_.exit.thread
 
-._crit_edge:                                      ; preds = %_ZN5QHashI7QStringN8QPalette9ColorRoleEE14const_iteratorppEv.exit, %_ZNK5QHashI7QStringN8QPalette9ColorRoleEE10constBeginEv.exit
+._crit_edge:                                      ; preds = %bb.f, %_ZN5QHashI7QStringN8QPalette9ColorRoleEE14const_iteratorppEv.exit, %_ZN12_GLOBAL__N_115baselinePaletteEbRK8QPalette.exit, %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #12
   %i.q = invoke noundef align 8 dereferenceable(8) ptr @_ZNK8QPalette5brushENS_10ColorGroupENS_9ColorRoleE(ptr noundef align 8 dereferenceable_or_null(12) %0, i32 noundef 4, i32 noundef 9)
           to label %bb.n unwind label %bb.v
 
 _ZNK5QHashI7QStringN8QPalette9ColorRoleEE14const_iteratorneERKS4_.exit.thread: ; preds = %_ZNK5QHashI7QStringN8QPalette9ColorRoleEE14const_iteratorneERKS4_.exit.thread.lr.ph, %_ZN5QHashI7QStringN8QPalette9ColorRoleEE14const_iteratorppEv.exit
   %.sroa.9186.0207 = phi i64 [ %.sroa.4.0.i252, %_ZNK5QHashI7QStringN8QPalette9ColorRoleEE14const_iteratorneERKS4_.exit.thread.lr.ph ], [ %.sroa.9186.1, %_ZN5QHashI7QStringN8QPalette9ColorRoleEE14const_iteratorppEv.exit ] ; 3 uses
-  %.sroa.0182.0206 = phi ptr [ %.sroa.0.0.i251, %_ZNK5QHashI7QStringN8QPalette9ColorRoleEE14const_iteratorneERKS4_.exit.thread.lr.ph ], [ %.sroa.0182.1, %_ZN5QHashI7QStringN8QPalette9ColorRoleEE14const_iteratorppEv.exit ] ; 3 uses
+  %.sroa.0182.0206 = phi ptr [ %i.b, %_ZNK5QHashI7QStringN8QPalette9ColorRoleEE14const_iteratorneERKS4_.exit.thread.lr.ph ], [ %.sroa.0182.1, %_ZN5QHashI7QStringN8QPalette9ColorRoleEE14const_iteratorppEv.exit ] ; 3 uses
   %i.r = getelementptr i8, ptr %.sroa.0182.0206, i64 32 ; 2 uses
   %i.s = load ptr, ptr %i.r, align 8
   %i.t = lshr i64 %.sroa.9186.0207, 7
@@ -384,9 +372,9 @@ bb.n:                                             ; preds = %._crit_edge
   %i.az = load ptr, ptr %i.q, align 8
   %i.ba = getelementptr i8, ptr %i.az, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %17, ptr noundef align 4 dereferenceable(16) %i.ba, i64 16, i1 false)
-  %i.bb = load ptr, ptr %4, align 8               ; 5 uses
+  %i.bb = load ptr, ptr %4, align 8               ; 4 uses
   %.not.i87 = icmp eq ptr %i.bb, null
-  br i1 %.not.i87, label %_ZNK5QHashI7QStringN8QPalette9ColorRoleEE10constBeginEv.exit94, label %bb.o
+  br i1 %.not.i87, label %._crit_edge211, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
   %i.bc = getelementptr i8, ptr %i.bb, i64 32
@@ -399,12 +387,12 @@ bb.p:                                             ; preds = %bb.o
   %i.bf = getelementptr i8, ptr %i.bb, i64 16
   %i.bg = load i64, ptr %i.bf, align 8            ; 2 uses
   %i.bh = icmp eq i64 %i.bg, 1
-  br i1 %i.bh, label %_ZNK5QHashI7QStringN8QPalette9ColorRoleEE10constBeginEv.exit94, label %.lr.ph280
+  br i1 %i.bh, label %._crit_edge211, label %.lr.ph280
 
 bb.q:                                             ; preds = %.lr.ph280
-  %i.bi = add i64 %i.bk, 1                        ; 2 uses
+  %i.bi = add nuw i64 %i.bk, 1                    ; 2 uses
   %i.bj = icmp eq i64 %i.bi, %i.bg
-  br i1 %i.bj, label %_ZNK5QHashI7QStringN8QPalette9ColorRoleEE10constBeginEv.exit94, label %.lr.ph280, !llvm.loop !6
+  br i1 %i.bj, label %._crit_edge211, label %.lr.ph280, !llvm.loop !6
 
 .lr.ph280:                                        ; preds = %bb.p, %bb.q
   %i.bk = phi i64 [ %i.bi, %bb.q ], [ 1, %bb.p ]  ; 4 uses
@@ -414,27 +402,15 @@ bb.q:                                             ; preds = %.lr.ph280
   %i.bo = getelementptr i8, ptr %i.bm, i64 %i.bn
   %i.bp = load i8, ptr %i.bo, align 1
   %.not.i.i.i.i93 = icmp eq i8 %i.bp, -1
-  br i1 %.not.i.i.i.i93, label %bb.q, label %._ZNK5QHashI7QStringN8QPalette9ColorRoleEE10constBeginEv.exit94.loopexit_crit_edge, !llvm.loop !6
+  br i1 %.not.i.i.i.i93, label %bb.q, label %_ZNK5QHashI7QStringN8QPalette9ColorRoleEE14const_iteratorneERKS4_.exit98.thread.lr.ph, !llvm.loop !6
 
-._ZNK5QHashI7QStringN8QPalette9ColorRoleEE10constBeginEv.exit94.loopexit_crit_edge: ; preds = %.lr.ph280
-  br label %_ZNK5QHashI7QStringN8QPalette9ColorRoleEE10constBeginEv.exit94, !llvm.loop !6
-
-_ZNK5QHashI7QStringN8QPalette9ColorRoleEE10constBeginEv.exit94: ; preds = %bb.q, %bb.p, %._ZNK5QHashI7QStringN8QPalette9ColorRoleEE10constBeginEv.exit94.loopexit_crit_edge, %bb.n
-  %.sroa.0.0.i89 = phi ptr [ null, %bb.n ], [ null, %bb.p ], [ %i.bb, %._ZNK5QHashI7QStringN8QPalette9ColorRoleEE10constBeginEv.exit94.loopexit_crit_edge ], [ null, %bb.q ] ; 2 uses
-  %.sroa.4.0.i90 = phi i64 [ 0, %bb.n ], [ 0, %bb.p ], [ %i.bk, %._ZNK5QHashI7QStringN8QPalette9ColorRoleEE10constBeginEv.exit94.loopexit_crit_edge ], [ 0, %bb.q ] ; 2 uses
-  %27 = icmp ne ptr %.sroa.0.0.i89, null
-  %28 = icmp ne i64 %.sroa.4.0.i90, 0
-  %or.cond197208 = or i1 %27, %28
-  br i1 %or.cond197208, label %_ZNK5QHashI7QStringN8QPalette9ColorRoleEE14const_iteratorneERKS4_.exit98.thread.lr.ph, label %._crit_edge211
-
-_ZNK5QHashI7QStringN8QPalette9ColorRoleEE14const_iteratorneERKS4_.exit98.thread.lr.ph: ; preds = %bb.o, %_ZNK5QHashI7QStringN8QPalette9ColorRoleEE10constBeginEv.exit94
-  %.sroa.4.0.i90257 = phi i64 [ %.sroa.4.0.i90, %_ZNK5QHashI7QStringN8QPalette9ColorRoleEE10constBeginEv.exit94 ], [ 0, %bb.o ]
-  %.sroa.0.0.i89256 = phi ptr [ %.sroa.0.0.i89, %_ZNK5QHashI7QStringN8QPalette9ColorRoleEE10constBeginEv.exit94 ], [ %i.bb, %bb.o ]
+_ZNK5QHashI7QStringN8QPalette9ColorRoleEE14const_iteratorneERKS4_.exit98.thread.lr.ph: ; preds = %.lr.ph280, %bb.o
+  %.sroa.4.0.i90257 = phi i64 [ 0, %bb.o ], [ %i.bk, %.lr.ph280 ]
   %.sroa.231.0..sroa_idx = getelementptr inbounds nuw i8, ptr %18, i64 8
   %.sroa.227.0..sroa_idx = getelementptr inbounds nuw i8, ptr %19, i64 8
   br label %_ZNK5QHashI7QStringN8QPalette9ColorRoleEE14const_iteratorneERKS4_.exit98.thread
 
-._crit_edge211:                                   ; preds = %_ZN5QHashI7QStringN8QPalette9ColorRoleEE14const_iteratorppEv.exit111, %_ZNK5QHashI7QStringN8QPalette9ColorRoleEE10constBeginEv.exit94
+._crit_edge211:                                   ; preds = %bb.q, %_ZN5QHashI7QStringN8QPalette9ColorRoleEE14const_iteratorppEv.exit111, %bb.n, %bb.p
   call void @llvm.lifetime.start.p0(ptr nonnull %20) #12
   %.val80 = load ptr, ptr %1, align 8             ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #12
@@ -539,7 +515,7 @@ bb.v:                                             ; preds = %._crit_edge
 
 _ZNK5QHashI7QStringN8QPalette9ColorRoleEE14const_iteratorneERKS4_.exit98.thread: ; preds = %_ZNK5QHashI7QStringN8QPalette9ColorRoleEE14const_iteratorneERKS4_.exit98.thread.lr.ph, %_ZN5QHashI7QStringN8QPalette9ColorRoleEE14const_iteratorppEv.exit111
   %.sroa.9.0210 = phi i64 [ %.sroa.4.0.i90257, %_ZNK5QHashI7QStringN8QPalette9ColorRoleEE14const_iteratorneERKS4_.exit98.thread.lr.ph ], [ %.sroa.9.1, %_ZN5QHashI7QStringN8QPalette9ColorRoleEE14const_iteratorppEv.exit111 ] ; 3 uses
-  %.sroa.0170.0209 = phi ptr [ %.sroa.0.0.i89256, %_ZNK5QHashI7QStringN8QPalette9ColorRoleEE14const_iteratorneERKS4_.exit98.thread.lr.ph ], [ %.sroa.0170.1, %_ZN5QHashI7QStringN8QPalette9ColorRoleEE14const_iteratorppEv.exit111 ] ; 3 uses
+  %.sroa.0170.0209 = phi ptr [ %i.bb, %_ZNK5QHashI7QStringN8QPalette9ColorRoleEE14const_iteratorneERKS4_.exit98.thread.lr.ph ], [ %.sroa.0170.1, %_ZN5QHashI7QStringN8QPalette9ColorRoleEE14const_iteratorppEv.exit111 ] ; 3 uses
   %i.dc = getelementptr i8, ptr %.sroa.0170.0209, i64 32 ; 2 uses
   %i.dd = load ptr, ptr %i.dc, align 8
   %i.de = lshr i64 %.sroa.9.0210, 7

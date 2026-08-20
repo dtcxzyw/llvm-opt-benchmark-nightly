@@ -204,14 +204,10 @@ bb.u:                                             ; preds = %select.unfold.i.i.i
 
 bb.v:                                             ; preds = %._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %bb.u
   %indvar = phi i64 [ %indvar.next, %._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ 0, %bb.u ] ; 2 uses
-  %.sroa.01.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ %i.dj, %._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ 0, %bb.u ] ; 9 uses
-  %i.dj = add i64 %.sroa.01.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 32 ; 2 uses
+  %.sroa.01.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ %i.dj, %._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ 0, %bb.u ] ; 8 uses
+  %i.dj = add nuw i64 %.sroa.01.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 32 ; 2 uses
   %.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp ugt i64 %i.dj, %i.di
-  br i1 %.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %.preheader14.i.i.i.i.i.i.i.i.i.i.i.i.i.i
-
-.preheader14.i.i.i.i.i.i.i.i.i.i.i.i.i.i:         ; preds = %bb.v
-  %.not36.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %.sroa.01.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i, -32
-  br i1 %.not36.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %.loopexit.i.i.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i.i.i
+  br i1 %.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i.i.i
 
 .preheader.i.i.i.i.i.i.i.i.i.i.i.i.i.i:           ; preds = %bb.v
   %i.dk = icmp ult i64 %.sroa.01.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %i.di
@@ -308,7 +304,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %exitcond.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.ek, %i.di
   br i1 %exitcond.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %_ZN4core5slice5ascii8is_ascii17h899e380db11233a2E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i, label %.lr.ph25.i.i.i.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !9227
 
-._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i.i.i:          ; preds = %.preheader14.i.i.i.i.i.i.i.i.i.i.i.i.i.i
+._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i.i.i:          ; preds = %bb.v
   %i.el = getelementptr inbounds nuw i8, ptr %i.dh, i64 %.sroa.01.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i
   %i.em = load <32 x i8>, ptr %i.el, align 1, !alias.scope !9217, !noalias !9220
   %i.en = icmp slt <32 x i8> %i.em, zeroinitializer
@@ -452,7 +448,7 @@ bb.ah:                                            ; preds = %.noexc52.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !9233
   br label %.loopexit.i.i.i.i.i.i.i.i
 
-.loopexit.i.i.i.i.i.i.i.i:                        ; preds = %._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %.preheader14.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %bb.ah, %bb.ag, %.noexc55.i.i, %bb.af, %bb.z, %_ZN4core5slice5ascii8is_ascii17h899e380db11233a2E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i, %select.unfold.i.i.i.i.i.i.i.i
+.loopexit.i.i.i.i.i.i.i.i:                        ; preds = %._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %bb.ah, %bb.ag, %.noexc55.i.i, %bb.af, %bb.z, %_ZN4core5slice5ascii8is_ascii17h899e380db11233a2E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i, %select.unfold.i.i.i.i.i.i.i.i
   br i1 %i.dc, label %"_ZN97_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$alloc..vec..spec_extend..SpecExtend$LT$T$C$I$GT$$GT$11spec_extend17ha459e49e806ad5f2E.exit.i.i", label %.lr.ph.i.i.i.i.i.i.i.i.backedge
 
 .lr.ph.i.i.i.i.i.i.i.i.backedge:                  ; preds = %.loopexit.i.i.i.i.i.i.i.i, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17heca627093a1cf687E.exit.i.i.i.i"
@@ -855,7 +851,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   store i64 0, ptr %i.y, align 8, !noalias !11621
   store <2 x i64> %i.z, ptr %.sroa.43.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.3, align 8, !noalias !11621
   %i.aa = add nuw nsw i64 %i.j, 4                 ; 3 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge.i.i.i.i.i.i.i.i.i.i.loopexit.unr-lcssa, label %.lr.ph.i.i.i.i.i.i.i.i.i.i
 
@@ -1258,7 +1254,7 @@ bb.p:                                             ; preds = %bb.p, %.lr.ph.i.i13
   %i.ec = bitcast <16 x i8> %.lobit.i.i.i.1 to <2 x i64>
   %i.ed = or <2 x i64> %i.ec, splat (i64 -9187201950435737472)
   store <2 x i64> %i.ed, ptr %i.eb, align 16, !noalias !15375
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.i.i14.unr-lcssa, label %bb.p
 

@@ -203,7 +203,7 @@ bb.f:                                             ; preds = %.lr.ph.i
   br i1 %exitcond.not.i, label %_ZNK7rocksdb5Slice17difference_offsetERKS0_.exit, label %.lr.ph.i, !llvm.loop !67
 
 _ZNK7rocksdb5Slice17difference_offsetERKS0_.exit: ; preds = %.lr.ph.i, %bb.f, %bb.e
-  %.0.lcssa.i = phi i64 [ 0, %bb.e ], [ %..i, %bb.f ], [ %.011.i, %.lr.ph.i ] ; 4 uses
+  %.0.lcssa.i = phi i64 [ 0, %bb.e ], [ %..i, %bb.f ], [ %.011.i, %.lr.ph.i ] ; 3 uses
   %i.ao = load ptr, ptr %i.e, align 8, !tbaa !40
   %i.ap = load ptr, ptr %i.d, align 8, !tbaa !37
   %.not54.not = icmp eq ptr %i.ao, %i.ap
@@ -226,7 +226,7 @@ _ZNK7rocksdb5Slice17difference_offsetERKS0_.exit: ; preds = %.lr.ph.i, %bb.f, %b
 
 .critedge:                                        ; preds = %.lr.ph
   %i.ax = add i64 %i.at, -8
-  %spec.select.i = select i1 %i.av, i64 %i.at, i64 %i.ax ; 6 uses
+  %spec.select.i = select i1 %i.av, i64 %i.at, i64 %i.ax ; 5 uses
   %.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %spec.select.i, i64 %.0.lcssa.i) ; 4 uses
   %i.ay = sub i64 %spec.select.i, %.sroa.speculated.i ; 3 uses
   %i.az = icmp ugt i64 %i.ay, 7
@@ -248,20 +248,14 @@ bb.g:                                             ; preds = %.critedge
   %i.be = tail call noundef i64 @llvm.bswap.i64(i64 %.0.copyload.i)
   br label %_ZN7rocksdb15ReadBe64FromKeyENS_5SliceEbm.exit
 
-._crit_edge.i.loopexit.unr-lcssa:                 ; preds = %.lr.ph.i24.new
-  %lcmp.mod.not.not = icmp ugt i64 %spec.select.i, %.0.lcssa.i
-  br i1 %lcmp.mod.not.not, label %.epil.preheader, label %._crit_edge.i
-
-.epil.preheader:                                  ; preds = %._crit_edge.i.loopexit.unr-lcssa, %.lr.ph.i24
-  %.028.i.epil.init = phi i64 [ 0, %.lr.ph.i24 ], [ %1, %._crit_edge.i.loopexit.unr-lcssa ]
-  %.01327.i.epil.init = phi i64 [ 0, %.lr.ph.i24 ], [ %i.di, %._crit_edge.i.loopexit.unr-lcssa ]
+.epil.preheader:                                  ; preds = %.lr.ph.i24
   %lcmp.mod75 = icmp ugt i64 %spec.select.i, %.0.lcssa.i
   tail call void @llvm.assume(i1 %lcmp.mod75)
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.h, %.epil.preheader
-  %.028.i.epil = phi i64 [ %.028.i.epil.init, %.epil.preheader ], [ %i.bk, %bb.h ] ; 2 uses
-  %.01327.i.epil = phi i64 [ %.01327.i.epil.init, %.epil.preheader ], [ %i.bj, %bb.h ]
+  %.028.i.epil = phi i64 [ 0, %.epil.preheader ], [ %i.bk, %bb.h ] ; 2 uses
+  %.01327.i.epil = phi i64 [ 0, %.epil.preheader ], [ %i.bj, %bb.h ]
   %epil.iter = phi i64 [ 0, %.epil.preheader ], [ %epil.iter.next, %bb.h ]
   %i.bf = shl i64 %.01327.i.epil, 8
   %i.bg = getelementptr i8, ptr %i.ba, i64 %.028.i.epil
@@ -273,8 +267,8 @@ bb.h:                                             ; preds = %bb.h, %.epil.prehea
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %i.ay
   br i1 %epil.iter.cmp.not, label %._crit_edge.i, label %bb.h, !llvm.loop !68
 
-._crit_edge.i:                                    ; preds = %._crit_edge.i.loopexit.unr-lcssa, %bb.h, %.preheader.i
-  %.013.lcssa.i = phi i64 [ 0, %.preheader.i ], [ %i.di, %._crit_edge.i.loopexit.unr-lcssa ], [ %i.bj, %bb.h ]
+._crit_edge.i:                                    ; preds = %bb.h, %.preheader.i
+  %.013.lcssa.i = phi i64 [ 0, %.preheader.i ], [ %i.bj, %bb.h ]
   %i.bl = shl nuw nsw i64 %i.ay, 3
   %i.bm = sub nuw nsw i64 64, %i.bl
   %i.bn = select i1 %.not.not29.i, i64 %i.bm, i64 0
@@ -282,60 +276,57 @@ bb.h:                                             ; preds = %bb.h, %.epil.prehea
   br label %_ZN7rocksdb15ReadBe64FromKeyENS_5SliceEbm.exit
 
 .lr.ph.i24.new:                                   ; preds = %.lr.ph.i24, %.lr.ph.i24.new
-  %.028.i = phi i64 [ %1, %.lr.ph.i24.new ], [ 0, %.lr.ph.i24 ] ; 9 uses
-  %.01327.i.a = phi i64 [ %i.di, %.lr.ph.i24.new ], [ 0, %.lr.ph.i24 ]
-  %niter = phi i64 [ %niter.next.7, %.lr.ph.i24.new ], [ 0, %.lr.ph.i24 ]
-  %i.bo = getelementptr i8, ptr %i.ba, i64 %.028.i
+  %.01327.i.a = phi i64 [ %niter.next.7, %.lr.ph.i24.new ], [ 0, %.lr.ph.i24 ] ; 9 uses
+  %niter = phi i64 [ %i.di, %.lr.ph.i24.new ], [ 0, %.lr.ph.i24 ]
+  %i.bo = getelementptr i8, ptr %i.ba, i64 %.01327.i.a
   %i.bp = load i8, ptr %i.bo, align 1, !tbaa !36
   %i.bq = zext i8 %i.bp to i64
-  %i.br = shl i64 %.01327.i.a, 16
+  %i.br = shl i64 %niter, 16
   %i.bs = shl nuw nsw i64 %i.bq, 8
   %i.bt = or disjoint i64 %i.br, %i.bs
-  %i.bu = getelementptr i8, ptr %i.ba, i64 %.028.i
+  %i.bu = getelementptr i8, ptr %i.ba, i64 %.01327.i.a
   %i.bv = getelementptr i8, ptr %i.bu, i64 1
   %i.bw = load i8, ptr %i.bv, align 1, !tbaa !36
   %i.bx = zext i8 %i.bw to i64
   %i.by = or disjoint i64 %i.bt, %i.bx
-  %i.bz = getelementptr i8, ptr %i.ba, i64 %.028.i
+  %i.bz = getelementptr i8, ptr %i.ba, i64 %.01327.i.a
   %i.ca = getelementptr i8, ptr %i.bz, i64 2
   %i.cb = load i8, ptr %i.ca, align 1, !tbaa !36
   %i.cc = zext i8 %i.cb to i64
   %i.cd = shl i64 %i.by, 16
   %i.ce = shl nuw nsw i64 %i.cc, 8
   %i.cf = or disjoint i64 %i.cd, %i.ce
-  %i.cg = getelementptr i8, ptr %i.ba, i64 %.028.i
+  %i.cg = getelementptr i8, ptr %i.ba, i64 %.01327.i.a
   %i.ch = getelementptr i8, ptr %i.cg, i64 3
   %i.ci = load i8, ptr %i.ch, align 1, !tbaa !36
   %i.cj = zext i8 %i.ci to i64
   %i.ck = or disjoint i64 %i.cf, %i.cj
-  %i.cl = getelementptr i8, ptr %i.ba, i64 %.028.i
+  %i.cl = getelementptr i8, ptr %i.ba, i64 %.01327.i.a
   %i.cm = getelementptr i8, ptr %i.cl, i64 4
   %i.cn = load i8, ptr %i.cm, align 1, !tbaa !36
   %i.co = zext i8 %i.cn to i64
   %i.cp = shl i64 %i.ck, 16
   %i.cq = shl nuw nsw i64 %i.co, 8
   %i.cr = or disjoint i64 %i.cp, %i.cq
-  %i.cs = getelementptr i8, ptr %i.ba, i64 %.028.i
+  %i.cs = getelementptr i8, ptr %i.ba, i64 %.01327.i.a
   %i.ct = getelementptr i8, ptr %i.cs, i64 5
   %i.cu = load i8, ptr %i.ct, align 1, !tbaa !36
   %i.cv = zext i8 %i.cu to i64
   %i.cw = or disjoint i64 %i.cr, %i.cv
-  %i.cx = getelementptr i8, ptr %i.ba, i64 %.028.i
+  %i.cx = getelementptr i8, ptr %i.ba, i64 %.01327.i.a
   %i.cy = getelementptr i8, ptr %i.cx, i64 6
   %i.cz = load i8, ptr %i.cy, align 1, !tbaa !36
   %i.da = zext i8 %i.cz to i64
   %i.db = shl i64 %i.cw, 16
   %i.dc = shl nuw nsw i64 %i.da, 8
   %i.dd = or disjoint i64 %i.db, %i.dc
-  %i.de = getelementptr i8, ptr %i.ba, i64 %.028.i
+  %i.de = getelementptr i8, ptr %i.ba, i64 %.01327.i.a
   %i.df = getelementptr i8, ptr %i.de, i64 7
   %i.dg = load i8, ptr %i.df, align 1, !tbaa !36
   %i.dh = zext i8 %i.dg to i64
-  %i.di = or disjoint i64 %i.dd, %i.dh            ; 3 uses
-  %1 = add nuw nsw i64 %.028.i, 8                 ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
-  %niter.ncmp.7 = icmp eq i64 %niter.next.7, 0
-  br i1 %niter.ncmp.7, label %._crit_edge.i.loopexit.unr-lcssa, label %.lr.ph.i24.new, !llvm.loop !70
+  %i.di = or disjoint i64 %i.dd, %i.dh
+  %niter.next.7 = add nuw nsw i64 %.01327.i.a, 8
+  br label %.lr.ph.i24.new, !llvm.loop !70
 
 _ZN7rocksdb15ReadBe64FromKeyENS_5SliceEbm.exit:   ; preds = %bb.g, %._crit_edge.i
   %.014.i = phi i64 [ %i.be, %bb.g ], [ %.1.i, %._crit_edge.i ] ; 2 uses

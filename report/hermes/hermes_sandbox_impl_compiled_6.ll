@@ -203,15 +203,13 @@ bb.f:                                             ; preds = %.loopexit209
   br i1 %.not184, label %.preheader.preheader, label %.loopexit
 
 .preheader.preheader:                             ; preds = %bb.f
-  %3 = add i32 %2, -1                             ; 2 uses
-  %wide.trip.count = zext i32 %3 to i64
-  %exitcond220 = icmp eq i32 %3, 1
+  %wide.trip.count = zext i32 %2 to i64
+  %exitcond220 = icmp eq i32 %2, 2
   br i1 %exitcond220, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader.preheader, %.lr.ph
-  %indvars.iv214221 = phi i64 [ %indvars.iv.next215, %.lr.ph ], [ 1, %.preheader.preheader ]
-  %indvars.iv.next215 = add nuw nsw i64 %indvars.iv214221, 1 ; 3 uses
-  %indvars = trunc i64 %indvars.iv.next215 to i32
+  %indvars.iv214221 = phi i64 [ %indvars.iv.next215, %.lr.ph ], [ 2, %.preheader.preheader ] ; 2 uses
+  %indvars = trunc nuw i64 %indvars.iv214221 to i32
   %i.aw = shl i32 %indvars, 3
   %i.ax = add i32 %i.aw, %1
   %i.ay = zext i32 %i.ax to i64                   ; 2 uses
@@ -224,9 +222,10 @@ bb.f:                                             ; preds = %.loopexit209
   %i.bb = getelementptr inbounds nuw i8, ptr %.val, i64 %i.ay
   store i64 %i.ba, ptr %i.bb, align 1
   %.not185 = icmp ne i64 %i.ba, 0
+  %indvars.iv.next215 = add nuw nsw i64 %indvars.iv214221, 1 ; 2 uses
   %exitcond = icmp eq i64 %indvars.iv.next215, %wide.trip.count
-  %or.cond222 = or i1 %.not185, %exitcond
-  br i1 %or.cond222, label %.loopexit, label %.lr.ph
+  %or.cond221 = select i1 %.not185, i1 true, i1 %exitcond
+  br i1 %or.cond221, label %.loopexit, label %.lr.ph
 
 .loopexit:                                        ; preds = %.lr.ph, %.preheader.preheader, %bb.f, %.loopexit209, %bb.a
   ret void
@@ -629,7 +628,7 @@ bb.u:                                             ; preds = %.lr.ph.split.split
   %i.dy = icmp ult i32 %i.dx, -8
   %i.dz = select i1 %i.dy, i32 %i.dv, i32 %i.dw   ; 4 uses
   %i.ea = add i32 %.54348, 2
-  %i.eb = add i32 %.24290, 2                      ; 2 uses
+  %i.eb = add nuw i32 %.24290, 2                  ; 2 uses
   %.not4471 = icmp eq i32 %i.eb, %i.co
   br i1 %.not4471, label %bb.v, label %.preheader5739
 
@@ -1032,7 +1031,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.j, label %bb.g, label %.loopexit567
 
 bb.g:                                             ; preds = %bb.f
-  %i.k = and i32 %i.h, -8                         ; 2 uses
+  %i.k = and i32 %i.h, -8
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.h, %bb.g
@@ -1073,14 +1072,14 @@ bb.h:                                             ; preds = %bb.h, %bb.g
   %i.ac = getelementptr inbounds nuw i8, ptr %.val537, i64 %i.o
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 8
   store i64 0, ptr %i.ad, align 1
-  %indvars.iv.next590 = add nuw nsw i64 %indvars.iv589, 8
-  %i.ae = add i32 %.0497, 8                       ; 2 uses
+  %indvars.iv.next590 = add nuw nsw i64 %indvars.iv589, 8 ; 2 uses
+  %i.ae = add nuw i32 %.0497, 8                   ; 2 uses
   %.not518 = icmp eq i32 %i.ae, %i.k
   br i1 %.not518, label %.loopexit567.loopexit, label %bb.h
 
 .loopexit567.loopexit:                            ; preds = %bb.h
-  %7 = shl i32 %i.k, 3
-  %8 = or disjoint i32 %7, 8
+  %7 = trunc nuw i64 %indvars.iv.next590 to i32
+  %8 = shl i32 %7, 3
   br label %.loopexit567
 
 .loopexit567:                                     ; preds = %.loopexit567.loopexit, %bb.f

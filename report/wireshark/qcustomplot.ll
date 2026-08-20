@@ -203,7 +203,7 @@ bb.c:                                             ; preds = %_ZN5QHashIN3QCP10Ma
   br i1 %i.j, label %_ZN13QHashIteratorIN3QCP10MarginSideE5QListIP16QCPLayoutElementEEC2ERK5QHashIS1_S5_E.exit, label %.lr.ph
 
 bb.d:                                             ; preds = %.lr.ph
-  %i.k = add i64 %i.m, 1                          ; 2 uses
+  %i.k = add nuw i64 %i.m, 1                      ; 2 uses
   %i.l = icmp eq i64 %i.k, %i.i
   br i1 %i.l, label %_ZN13QHashIteratorIN3QCP10MarginSideE5QListIP16QCPLayoutElementEEC2ERK5QHashIS1_S5_E.exit, label %.lr.ph, !llvm.loop !78
 
@@ -415,7 +415,7 @@ bb.c:                                             ; preds = %_ZN5QHashIN3QCP10Ma
   br i1 %i.j, label %_ZN13QHashIteratorIN3QCP10MarginSideE5QListIP16QCPLayoutElementEEC2ERK5QHashIS1_S5_E.exit, label %.lr.ph
 
 bb.d:                                             ; preds = %.lr.ph
-  %i.k = add i64 %i.m, 1                          ; 2 uses
+  %i.k = add nuw i64 %i.m, 1                      ; 2 uses
   %i.l = icmp eq i64 %i.k, %i.i
   br i1 %i.l, label %_ZN13QHashIteratorIN3QCP10MarginSideE5QListIP16QCPLayoutElementEEC2ERK5QHashIS1_S5_E.exit, label %.lr.ph, !llvm.loop !78
 
@@ -818,7 +818,7 @@ bb.ag:                                            ; preds = %bb.ag, %.lr.ph525.n
   %.1.1 = select i1 %i.gh, i32 %i.fw, i32 %.1     ; 3 uses
   %.1103.1 = select i1 %i.gh, double %i.gg, double %.1103 ; 3 uses
   %i.gi = getelementptr i8, ptr %.sroa.8445.0522, i64 8 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge526.loopexit.unr-lcssa, label %bb.ag, !llvm.loop !131
 
@@ -1221,7 +1221,7 @@ bb.f:                                             ; preds = %bb.a
   %i.ak = add i32 %i.aj, %.sroa.speculated42.2
   %.sroa.speculated42.3 = call i32 @llvm.smin.i32(i32 %i.ak, i32 16777215) ; 3 uses
   %i.al = getelementptr i8, ptr %.sroa.851.067, i64 16 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !236
 
@@ -1315,7 +1315,7 @@ _ZNK13QCPLayoutGrid11columnCountEv.exit:          ; preds = %_ZN9QtPrivate17QFor
   %i.bx = add i32 %i.bw, %.sroa.speculated34.2
   %.sroa.speculated34.3 = call i32 @llvm.smin.i32(i32 %i.bx, i32 16777215) ; 3 uses
   %i.by = getelementptr i8, ptr %.sroa.8.070, i64 16 ; 2 uses
-  %niter90.next.3 = add i64 %niter90, 4           ; 2 uses
+  %niter90.next.3 = add nuw i64 %niter90, 4       ; 2 uses
   %niter90.ncmp.3 = icmp eq i64 %niter90.next.3, %unroll_iter89
   br i1 %niter90.ncmp.3, label %._crit_edge73.loopexit.unr-lcssa, label %.lr.ph72, !llvm.loop !238
 
@@ -1718,9 +1718,9 @@ _ZNK4QSetIP15QCPItemPositionE4sizeEv.exit:        ; preds = %bb.a, %bb.b
           to label %bb.c unwind label %bb.i
 
 bb.c:                                             ; preds = %_ZNK4QSetIP15QCPItemPositionE4sizeEv.exit
-  %i.f = load ptr, ptr %1, align 8, !noalias !482 ; 5 uses
+  %i.f = load ptr, ptr %1, align 8, !noalias !482 ; 4 uses
   %.not.i.i5 = icmp eq ptr %i.f, null
-  br i1 %.not.i.i5, label %_ZNK4QSetIP15QCPItemPositionE10constBeginEv.exit, label %bb.d
+  br i1 %.not.i.i5, label %._crit_edge, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.g = getelementptr i8, ptr %i.f, i64 32
@@ -1733,12 +1733,12 @@ bb.e:                                             ; preds = %bb.d
   %i.j = getelementptr i8, ptr %i.f, i64 16
   %i.k = load i64, ptr %i.j, align 8, !noalias !482 ; 2 uses
   %i.l = icmp eq i64 %i.k, 1
-  br i1 %i.l, label %_ZNK4QSetIP15QCPItemPositionE10constBeginEv.exit, label %.lr.ph
+  br i1 %i.l, label %._crit_edge, label %.lr.ph
 
 bb.f:                                             ; preds = %.lr.ph
-  %i.m = add i64 %i.o, 1                          ; 2 uses
+  %i.m = add nuw i64 %i.o, 1                      ; 2 uses
   %i.n = icmp eq i64 %i.m, %i.k
-  br i1 %i.n, label %_ZNK4QSetIP15QCPItemPositionE10constBeginEv.exit, label %.lr.ph, !llvm.loop !485
+  br i1 %i.n, label %._crit_edge, label %.lr.ph, !llvm.loop !485
 
 .lr.ph:                                           ; preds = %bb.e, %bb.f
   %i.o = phi i64 [ %i.m, %bb.f ], [ 1, %bb.e ]    ; 4 uses
@@ -1748,28 +1748,16 @@ bb.f:                                             ; preds = %.lr.ph
   %i.s = getelementptr i8, ptr %i.q, i64 %i.r
   %i.t = load i8, ptr %i.s, align 1, !noalias !482
   %.not.i.i.i.i.i = icmp eq i8 %i.t, -1
-  br i1 %.not.i.i.i.i.i, label %bb.f, label %._ZNK4QSetIP15QCPItemPositionE10constBeginEv.exit.loopexit_crit_edge, !llvm.loop !485
+  br i1 %.not.i.i.i.i.i, label %bb.f, label %_ZNK4QSetIP15QCPItemPositionE14const_iteratorneERKS3_.exit.thread.lr.ph, !llvm.loop !485
 
-._ZNK4QSetIP15QCPItemPositionE10constBeginEv.exit.loopexit_crit_edge: ; preds = %.lr.ph
-  br label %_ZNK4QSetIP15QCPItemPositionE10constBeginEv.exit, !llvm.loop !485
-
-_ZNK4QSetIP15QCPItemPositionE10constBeginEv.exit: ; preds = %bb.f, %bb.e, %._ZNK4QSetIP15QCPItemPositionE10constBeginEv.exit.loopexit_crit_edge, %bb.c
-  %.sroa.0.0.i.i = phi ptr [ null, %bb.c ], [ %i.f, %._ZNK4QSetIP15QCPItemPositionE10constBeginEv.exit.loopexit_crit_edge ], [ null, %bb.e ], [ null, %bb.f ] ; 2 uses
-  %.sroa.4.0.i.i = phi i64 [ 0, %bb.c ], [ %i.o, %._ZNK4QSetIP15QCPItemPositionE10constBeginEv.exit.loopexit_crit_edge ], [ 0, %bb.e ], [ 0, %bb.f ] ; 2 uses
-  %2 = icmp ne ptr %.sroa.0.0.i.i, null
-  %3 = icmp ne i64 %.sroa.4.0.i.i, 0
-  %or.cond14 = or i1 %2, %3
-  br i1 %or.cond14, label %_ZNK4QSetIP15QCPItemPositionE14const_iteratorneERKS3_.exit.thread.lr.ph, label %._crit_edge
-
-_ZNK4QSetIP15QCPItemPositionE14const_iteratorneERKS3_.exit.thread.lr.ph: ; preds = %bb.d, %_ZNK4QSetIP15QCPItemPositionE10constBeginEv.exit
-  %.sroa.4.0.i.i25 = phi i64 [ %.sroa.4.0.i.i, %_ZNK4QSetIP15QCPItemPositionE10constBeginEv.exit ], [ 0, %bb.d ]
-  %.sroa.0.0.i.i24 = phi ptr [ %.sroa.0.0.i.i, %_ZNK4QSetIP15QCPItemPositionE10constBeginEv.exit ], [ %i.f, %bb.d ]
+_ZNK4QSetIP15QCPItemPositionE14const_iteratorneERKS3_.exit.thread.lr.ph: ; preds = %.lr.ph, %bb.d
+  %.sroa.4.0.i.i25 = phi i64 [ 0, %bb.d ], [ %i.o, %.lr.ph ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 16
   br label %_ZNK4QSetIP15QCPItemPositionE14const_iteratorneERKS3_.exit.thread
 
 _ZNK4QSetIP15QCPItemPositionE14const_iteratorneERKS3_.exit.thread: ; preds = %_ZNK4QSetIP15QCPItemPositionE14const_iteratorneERKS3_.exit.thread.lr.ph, %_ZN4QSetIP15QCPItemPositionE14const_iteratorppEv.exit
   %.sroa.8.016 = phi i64 [ %.sroa.4.0.i.i25, %_ZNK4QSetIP15QCPItemPositionE14const_iteratorneERKS3_.exit.thread.lr.ph ], [ %.sroa.8.1, %_ZN4QSetIP15QCPItemPositionE14const_iteratorppEv.exit ] ; 3 uses
-  %.sroa.09.015 = phi ptr [ %.sroa.0.0.i.i24, %_ZNK4QSetIP15QCPItemPositionE14const_iteratorneERKS3_.exit.thread.lr.ph ], [ %.sroa.09.1, %_ZN4QSetIP15QCPItemPositionE14const_iteratorppEv.exit ] ; 3 uses
+  %.sroa.09.015 = phi ptr [ %i.f, %_ZNK4QSetIP15QCPItemPositionE14const_iteratorneERKS3_.exit.thread.lr.ph ], [ %.sroa.09.1, %_ZN4QSetIP15QCPItemPositionE14const_iteratorppEv.exit ] ; 3 uses
   %i.v = getelementptr i8, ptr %.sroa.09.015, i64 32 ; 2 uses
   %i.w = load ptr, ptr %i.v, align 8
   %i.x = lshr i64 %.sroa.8.016, 7
@@ -1850,7 +1838,7 @@ bb.j:                                             ; preds = %_ZNK17QArrayDataPoi
           cleanup
   br label %bb.k
 
-._crit_edge:                                      ; preds = %_ZN4QSetIP15QCPItemPositionE14const_iteratorppEv.exit, %_ZNK4QSetIP15QCPItemPositionE10constBeginEv.exit
+._crit_edge:                                      ; preds = %bb.f, %_ZN4QSetIP15QCPItemPositionE14const_iteratorppEv.exit, %bb.c, %bb.e
   ret void
 
 bb.k:                                             ; preds = %bb.j, %bb.i
@@ -2253,7 +2241,7 @@ bb.c:                                             ; preds = %_ZN5QHashIN7QCPAxis
   br i1 %i.j, label %_ZN13QHashIteratorIN7QCPAxis8AxisTypeE5QListIPS0_EEC2ERK5QHashIS1_S4_E.exit, label %.lr.ph
 
 bb.d:                                             ; preds = %.lr.ph
-  %i.k = add i64 %i.m, 1                          ; 2 uses
+  %i.k = add nuw i64 %i.m, 1                      ; 2 uses
   %i.l = icmp eq i64 %i.k, %i.i
   br i1 %i.l, label %_ZN13QHashIteratorIN7QCPAxis8AxisTypeE5QListIPS0_EEC2ERK5QHashIS1_S4_E.exit, label %.lr.ph, !llvm.loop !632
 
@@ -2656,7 +2644,7 @@ bb.m:                                             ; preds = %bb.m, %._crit_edge.
   %i.bt = shufflevector <2 x double> %i.bs, <2 x double> poison, <2 x i32> zeroinitializer
   %i.bu = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.bt, <2 x double> %i.bs, <2 x double> %i.bo) ; 3 uses
   %indvars.iv.next106.1 = add nuw nsw i64 %indvars.iv105, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge98.loopexit.unr-lcssa, label %bb.m, !llvm.loop !739
 
@@ -3059,7 +3047,7 @@ bb.c:                                             ; preds = %_ZN5QHashIN7QCPAxis
   br i1 %i.j, label %_ZN13QHashIteratorIN7QCPAxis8AxisTypeE5QListIPS0_EEC2ERK5QHashIS1_S4_E.exit, label %.lr.ph
 
 bb.d:                                             ; preds = %.lr.ph
-  %i.k = add i64 %i.m, 1                          ; 2 uses
+  %i.k = add nuw i64 %i.m, 1                      ; 2 uses
   %i.l = icmp eq i64 %i.k, %i.i
   br i1 %i.l, label %_ZN13QHashIteratorIN7QCPAxis8AxisTypeE5QListIPS0_EEC2ERK5QHashIS1_S4_E.exit, label %.lr.ph, !llvm.loop !632
 
@@ -3462,7 +3450,7 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph.new
   %i.y = fcmp olt double %i.w, %.113
   %.113.1 = select i1 %i.y, double %i.w, double %.113 ; 3 uses
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %bb.d, !llvm.loop !1193
 
@@ -3865,7 +3853,7 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph.i.new
   %i.aa = fcmp olt double %i.y, %.113.i
   %.113.i.1 = select i1 %i.aa, double %i.y, double %.113.i ; 3 uses
   %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.i.loopexit.unr-lcssa, label %bb.e, !llvm.loop !1193
 

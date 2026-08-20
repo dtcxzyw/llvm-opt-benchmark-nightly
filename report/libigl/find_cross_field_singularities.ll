@@ -203,14 +203,14 @@ bb.i:                                             ; preds = %.lr.ph, %bb.j
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 8
   %i.bq = load ptr, ptr %i.bp, align 8, !tbaa !36 ; 2 uses
   %i.br = load ptr, ptr %i.bo, align 8, !tbaa !26 ; 3 uses
-  %8 = ptrtoint ptr %i.bq to i64
-  %9 = ptrtoint ptr %i.br to i64
-  %10 = sub i64 %8, %9
-  %11 = ashr exact i64 %10, 2
   %.not76 = icmp eq ptr %i.bq, %i.br
   br i1 %.not76, label %._crit_edge, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %.preheader68
+  %8 = ptrtoint ptr %i.bq to i64
+  %9 = ptrtoint ptr %i.br to i64
+  %10 = sub i64 %8, %9
+  %11 = ashr exact i64 %10, 2
   %i.bs = load ptr, ptr %1, align 8, !tbaa !37
   %i.bt = load i64, ptr %i.p, align 8, !tbaa !39  ; 2 uses
   %i.bu = load ptr, ptr %2, align 8, !tbaa !37
@@ -244,10 +244,9 @@ bb.i:                                             ; preds = %.lr.ph, %bb.j
   %i.cq = getelementptr [4 x i8], ptr %i.cp, i64 %i.co
   %i.cr = load i32, ptr %i.cq, align 4, !tbaa !18
   %i.cs = add nsw i32 %i.cr, %.03771              ; 2 uses
-  %indvars.iv.next = add i64 %indvars.iv, 1       ; 2 uses
-  %12 = and i64 %indvars.iv.next, 4294967295
-  %13 = icmp ugt i64 %11, %12
-  br i1 %13, label %.preheader, label %._crit_edge.loopexit, !llvm.loop !40
+  %indvars.iv.next = add nuw i64 %indvars.iv, 1   ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %11
+  br i1 %exitcond.not, label %._crit_edge.loopexit, label %.preheader, !llvm.loop !40
 
 ._crit_edge.loopexit:                             ; preds = %.preheader
   %i.ct = srem i32 %i.cs, 4
@@ -266,10 +265,9 @@ bb.i:                                             ; preds = %.lr.ph, %bb.j
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %._crit_edge
-  %indvars.iv.next80 = add i64 %indvars.iv79, 1   ; 2 uses
-  %14 = and i64 %indvars.iv.next80, 4294967295
-  %15 = icmp samesign ugt i64 %i.l, %14
-  br i1 %15, label %bb.i, label %._crit_edge75, !llvm.loop !41
+  %indvars.iv.next80 = add nuw nsw i64 %indvars.iv79, 1 ; 2 uses
+  %12 = icmp sgt i64 %i.l, %indvars.iv.next80
+  br i1 %12, label %bb.i, label %._crit_edge75, !llvm.loop !41
 
 bb.k:                                             ; preds = %bb.h
   %i.da = getelementptr inbounds nuw i8, ptr %5, i64 32
@@ -584,14 +582,14 @@ bb.i:                                             ; preds = %.lr.ph, %bb.j
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 8
   %i.bq = load ptr, ptr %i.bp, align 8, !tbaa !36 ; 2 uses
   %i.br = load ptr, ptr %i.bo, align 8, !tbaa !26 ; 3 uses
-  %8 = ptrtoint ptr %i.bq to i64
-  %9 = ptrtoint ptr %i.br to i64
-  %10 = sub i64 %8, %9
-  %11 = ashr exact i64 %10, 2
   %.not76 = icmp eq ptr %i.bq, %i.br
   br i1 %.not76, label %._crit_edge, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %.preheader68
+  %8 = ptrtoint ptr %i.bq to i64
+  %9 = ptrtoint ptr %i.br to i64
+  %10 = sub i64 %8, %9
+  %11 = ashr exact i64 %10, 2
   %i.bs = load ptr, ptr %1, align 8, !tbaa !44
   %i.bt = load i64, ptr %i.p, align 8, !tbaa !46  ; 2 uses
   %i.bu = load ptr, ptr %2, align 8, !tbaa !44
@@ -625,10 +623,9 @@ bb.i:                                             ; preds = %.lr.ph, %bb.j
   %i.cq = getelementptr [4 x i8], ptr %i.cp, i64 %i.co
   %i.cr = load i32, ptr %i.cq, align 4, !tbaa !18
   %i.cs = add nsw i32 %i.cr, %.03771              ; 2 uses
-  %indvars.iv.next = add i64 %indvars.iv, 1       ; 2 uses
-  %12 = and i64 %indvars.iv.next, 4294967295
-  %13 = icmp ugt i64 %11, %12
-  br i1 %13, label %.preheader, label %._crit_edge.loopexit, !llvm.loop !47
+  %indvars.iv.next = add nuw i64 %indvars.iv, 1   ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %11
+  br i1 %exitcond.not, label %._crit_edge.loopexit, label %.preheader, !llvm.loop !47
 
 ._crit_edge.loopexit:                             ; preds = %.preheader
   %i.ct = srem i32 %i.cs, 4
@@ -647,10 +644,9 @@ bb.i:                                             ; preds = %.lr.ph, %bb.j
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %._crit_edge
-  %indvars.iv.next80 = add i64 %indvars.iv79, 1   ; 2 uses
-  %14 = and i64 %indvars.iv.next80, 4294967295
-  %15 = icmp samesign ugt i64 %i.l, %14
-  br i1 %15, label %bb.i, label %._crit_edge75, !llvm.loop !48
+  %indvars.iv.next80 = add nuw nsw i64 %indvars.iv79, 1 ; 2 uses
+  %12 = icmp sgt i64 %i.l, %indvars.iv.next80
+  br i1 %12, label %bb.i, label %._crit_edge75, !llvm.loop !48
 
 bb.k:                                             ; preds = %bb.h
   %i.da = getelementptr inbounds nuw i8, ptr %5, i64 32
@@ -912,14 +908,14 @@ bb.h:                                             ; preds = %.lr.ph, %bb.i
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
   %i.bw = load ptr, ptr %i.bv, align 8, !tbaa !36 ; 2 uses
   %i.bx = load ptr, ptr %i.bu, align 8, !tbaa !26 ; 3 uses
-  %8 = ptrtoint ptr %i.bw to i64
-  %9 = ptrtoint ptr %i.bx to i64
-  %10 = sub i64 %8, %9
-  %11 = ashr exact i64 %10, 2
   %.not77 = icmp eq ptr %i.bw, %i.bx
   br i1 %.not77, label %._crit_edge, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %.preheader69
+  %8 = ptrtoint ptr %i.bw to i64
+  %9 = ptrtoint ptr %i.bx to i64
+  %10 = sub i64 %8, %9
+  %11 = ashr exact i64 %10, 2
   %i.by = load ptr, ptr %1, align 8, !tbaa !44
   %i.bz = load i64, ptr %i.v, align 8, !tbaa !46  ; 2 uses
   %i.ca = load ptr, ptr %2, align 8, !tbaa !37
@@ -953,10 +949,9 @@ bb.h:                                             ; preds = %.lr.ph, %bb.i
   %i.cw = getelementptr [4 x i8], ptr %i.cv, i64 %i.cu
   %i.cx = load i32, ptr %i.cw, align 4, !tbaa !18
   %i.cy = add nsw i32 %i.cx, %.03772              ; 2 uses
-  %indvars.iv.next = add i64 %indvars.iv, 1       ; 2 uses
-  %12 = and i64 %indvars.iv.next, 4294967295
-  %13 = icmp ugt i64 %11, %12
-  br i1 %13, label %.preheader, label %._crit_edge.loopexit, !llvm.loop !50
+  %indvars.iv.next = add nuw i64 %indvars.iv, 1   ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %11
+  br i1 %exitcond.not, label %._crit_edge.loopexit, label %.preheader, !llvm.loop !50
 
 ._crit_edge.loopexit:                             ; preds = %.preheader
   %i.cz = srem i32 %i.cy, 4
@@ -975,10 +970,9 @@ bb.h:                                             ; preds = %.lr.ph, %bb.i
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %._crit_edge
-  %indvars.iv.next81 = add i64 %indvars.iv80, 1   ; 2 uses
-  %14 = and i64 %indvars.iv.next81, 4294967295
-  %15 = icmp samesign ugt i64 %i.r, %14
-  br i1 %15, label %bb.h, label %._crit_edge76, !llvm.loop !51
+  %indvars.iv.next81 = add nuw nsw i64 %indvars.iv80, 1 ; 2 uses
+  %12 = icmp sgt i64 %i.r, %indvars.iv.next81
+  br i1 %12, label %bb.h, label %._crit_edge76, !llvm.loop !51
 
 bb.j:                                             ; preds = %bb.g
   %i.dg = getelementptr inbounds nuw i8, ptr %5, i64 32
@@ -1206,14 +1200,14 @@ bb.h:                                             ; preds = %.lr.ph, %bb.i
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
   %i.bw = load ptr, ptr %i.bv, align 8, !tbaa !36 ; 2 uses
   %i.bx = load ptr, ptr %i.bu, align 8, !tbaa !26 ; 3 uses
-  %8 = ptrtoint ptr %i.bw to i64
-  %9 = ptrtoint ptr %i.bx to i64
-  %10 = sub i64 %8, %9
-  %11 = ashr exact i64 %10, 2
   %.not77 = icmp eq ptr %i.bw, %i.bx
   br i1 %.not77, label %._crit_edge, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %.preheader69
+  %8 = ptrtoint ptr %i.bw to i64
+  %9 = ptrtoint ptr %i.bx to i64
+  %10 = sub i64 %8, %9
+  %11 = ashr exact i64 %10, 2
   %i.by = load ptr, ptr %1, align 8, !tbaa !44
   %i.bz = load i64, ptr %i.v, align 8, !tbaa !46  ; 2 uses
   %i.ca = load ptr, ptr %2, align 8, !tbaa !44
@@ -1247,10 +1241,9 @@ bb.h:                                             ; preds = %.lr.ph, %bb.i
   %i.cw = getelementptr [4 x i8], ptr %i.cv, i64 %i.cu
   %i.cx = load i32, ptr %i.cw, align 4, !tbaa !18
   %i.cy = add nsw i32 %i.cx, %.03772              ; 2 uses
-  %indvars.iv.next = add i64 %indvars.iv, 1       ; 2 uses
-  %12 = and i64 %indvars.iv.next, 4294967295
-  %13 = icmp ugt i64 %11, %12
-  br i1 %13, label %.preheader, label %._crit_edge.loopexit, !llvm.loop !52
+  %indvars.iv.next = add nuw i64 %indvars.iv, 1   ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %11
+  br i1 %exitcond.not, label %._crit_edge.loopexit, label %.preheader, !llvm.loop !52
 
 ._crit_edge.loopexit:                             ; preds = %.preheader
   %i.cz = srem i32 %i.cy, 4
@@ -1269,10 +1262,9 @@ bb.h:                                             ; preds = %.lr.ph, %bb.i
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %._crit_edge
-  %indvars.iv.next81 = add i64 %indvars.iv80, 1   ; 2 uses
-  %14 = and i64 %indvars.iv.next81, 4294967295
-  %15 = icmp samesign ugt i64 %i.r, %14
-  br i1 %15, label %bb.h, label %._crit_edge76, !llvm.loop !53
+  %indvars.iv.next81 = add nuw nsw i64 %indvars.iv80, 1 ; 2 uses
+  %12 = icmp sgt i64 %i.r, %indvars.iv.next81
+  br i1 %12, label %bb.h, label %._crit_edge76, !llvm.loop !53
 
 bb.j:                                             ; preds = %bb.g
   %i.dg = getelementptr inbounds nuw i8, ptr %5, i64 32
@@ -1494,14 +1486,14 @@ bb.i:                                             ; preds = %.lr.ph, %bb.j
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 8
   %i.bq = load ptr, ptr %i.bp, align 8, !tbaa !36 ; 2 uses
   %i.br = load ptr, ptr %i.bo, align 8, !tbaa !26 ; 3 uses
-  %8 = ptrtoint ptr %i.bq to i64
-  %9 = ptrtoint ptr %i.br to i64
-  %10 = sub i64 %8, %9
-  %11 = ashr exact i64 %10, 2
   %.not76 = icmp eq ptr %i.bq, %i.br
   br i1 %.not76, label %._crit_edge, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %.preheader68
+  %8 = ptrtoint ptr %i.bq to i64
+  %9 = ptrtoint ptr %i.br to i64
+  %10 = sub i64 %8, %9
+  %11 = ashr exact i64 %10, 2
   %i.bs = load ptr, ptr %1, align 8, !tbaa !44
   %i.bt = load i64, ptr %i.p, align 8, !tbaa !46  ; 2 uses
   %i.bu = load ptr, ptr %2, align 8, !tbaa !37
@@ -1535,10 +1527,9 @@ bb.i:                                             ; preds = %.lr.ph, %bb.j
   %i.cq = getelementptr [4 x i8], ptr %i.cp, i64 %i.co
   %i.cr = load i32, ptr %i.cq, align 4, !tbaa !18
   %i.cs = add nsw i32 %i.cr, %.03771              ; 2 uses
-  %indvars.iv.next = add i64 %indvars.iv, 1       ; 2 uses
-  %12 = and i64 %indvars.iv.next, 4294967295
-  %13 = icmp ugt i64 %11, %12
-  br i1 %13, label %.preheader, label %._crit_edge.loopexit, !llvm.loop !54
+  %indvars.iv.next = add nuw i64 %indvars.iv, 1   ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %11
+  br i1 %exitcond.not, label %._crit_edge.loopexit, label %.preheader, !llvm.loop !54
 
 ._crit_edge.loopexit:                             ; preds = %.preheader
   %i.ct = srem i32 %i.cs, 4
@@ -1557,10 +1548,9 @@ bb.i:                                             ; preds = %.lr.ph, %bb.j
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %._crit_edge
-  %indvars.iv.next80 = add i64 %indvars.iv79, 1   ; 2 uses
-  %14 = and i64 %indvars.iv.next80, 4294967295
-  %15 = icmp samesign ugt i64 %i.l, %14
-  br i1 %15, label %bb.i, label %._crit_edge75, !llvm.loop !55
+  %indvars.iv.next80 = add nuw nsw i64 %indvars.iv79, 1 ; 2 uses
+  %12 = icmp sgt i64 %i.l, %indvars.iv.next80
+  br i1 %12, label %bb.i, label %._crit_edge75, !llvm.loop !55
 
 bb.k:                                             ; preds = %bb.h
   %i.da = getelementptr inbounds nuw i8, ptr %5, i64 32

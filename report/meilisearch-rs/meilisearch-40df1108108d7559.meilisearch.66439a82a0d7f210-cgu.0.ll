@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %"_ZN4core3ops8funct
   %.sink.i.i.i.i.i.i.i.i.i.i.i.i.1 = phi i64 [ %i.u, %bb.g ], [ %.sink.i.i.i.i.i.i.i.i.i.i.i.i, %"_ZN4core3ops8function5impls79_$LT$impl$u20$core..ops..function..FnMut$LT$A$GT$$u20$for$u20$$RF$mut$u20$F$GT$8call_mut17hc9d333e66b445010E.exit.i.i.i.i.i.i.i.i" ] ; 3 uses
   %i.v = add i64 %i.i, 2                          ; 2 uses
   %i.w = add nuw i64 %.sroa.06.0.i.i.i.i.i.i.i.i, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.unr-lcssa, label %bb.e
 
@@ -474,7 +474,7 @@ bb.q:                                             ; preds = %"_ZN4core3ops8funct
   %.sink.i.i.i.i.i.i36.i.i.i.i.i.i.1 = phi i64 [ %i.bw, %bb.q ], [ %.sink.i.i.i.i.i.i36.i.i.i.i.i.i, %"_ZN4core3ops8function5impls79_$LT$impl$u20$core..ops..function..FnMut$LT$A$GT$$u20$for$u20$$RF$mut$u20$F$GT$8call_mut17hc9d333e66b445010E.exit.i.i31.i.i.i.i.i.i" ] ; 3 uses
   %i.bx = add i64 %i.bk, 2                        ; 2 uses
   %i.by = add nuw i64 %.sroa.06.0.i.i24.i.i.i.i.i.i, 2 ; 2 uses
-  %niter39.next.1 = add i64 %niter39, 2           ; 2 uses
+  %niter39.next.1 = add nuw i64 %niter39, 2       ; 2 uses
   %niter39.ncmp.1 = icmp eq i64 %niter39.next.1, %unroll_iter38
   br i1 %niter39.ncmp.1, label %"_ZN116_$LT$core..iter..adapters..flatten..FlattenCompat$LT$I$C$U$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold7flatten28_$u7b$$u7b$closure$u7d$$u7d$17h8f7b6898e7c309acE.exit41.i.i.i.i.i.i.loopexit.unr-lcssa", label %bb.o
 
@@ -877,7 +877,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %.sroa.65.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.1 = getelementptr inbounds nuw i8, ptr %i.q, i64 16
   store i8 %.val21.i.i.i.i.i.i.i.i.i.1, ptr %.sroa.65.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.1, align 8, !noalias !93070
   %i.r = add nuw i64 %i.l, 2                      ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN4core4iter6traits8iterator8Iterator7collect17h529b0eba304cadf6E.exit.loopexit.unr-lcssa, label %.preheader.i.i.i.i.i.i
 
@@ -1280,7 +1280,7 @@ bb.aw:                                            ; preds = %bb.aw, %.new337
   %.sroa.6.0.i.i.i.i.i.i.i.i.i.i.i.i.1 = select i1 %narrow.i.i.i.i.i.i.i.i.i.i.i.i, i64 %i.ka, i64 undef ; 3 uses
   %narrow.i.i.i.i.i.i.i.i.i.i.i.i.1 = select i1 %narrow.i.i.i.i.i.i.i.i.i.i.i.i, i1 %i.kb, i1 false ; 2 uses
   %i.kc = add nuw i64 %.sroa.06.0.i.i.i.i.i.i.i.i.i, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i.loopexit.unr-lcssa, label %bb.aw
 
@@ -1683,7 +1683,7 @@ bb.am:                                            ; preds = %bb.al
   %i.hy = lshr i128 %i.hx, 64
   %i.hz = xor i128 %i.hy, %i.hx
   %i.ia = trunc i128 %i.hz to i64                 ; 3 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1.not = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1.not, label %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h012ee1d2997e0755E.exit68.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.unr-lcssa", label %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h012ee1d2997e0755E.exit72.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i"
 
@@ -2086,7 +2086,7 @@ bb.di:                                            ; preds = %bb.df, %bb.dg
   %i.nd = getelementptr inbounds nuw i8, ptr %.sroa.04.05.i, i64 696
   %i.ne = load i64, ptr %i.nd, align 8, !alias.scope !143868, !noundef !12
   %i.nf = add i64 %i.ne, %i.nb                    ; 3 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN11meilisearch6routes7indexes9documents14merge_metadata17hde8fb83d7bcd06c7E.exit.loopexit.unr-lcssa, label %.lr.ph.i
 
@@ -2489,7 +2489,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.z = getelementptr inbounds nuw [64 x i8], ptr %.sroa.10.0.i.i.i.i.i.i.i, i64 %i.q
   %.sroa.43.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i.7 = getelementptr inbounds nuw i8, ptr %i.z, i64 504
   store i8 0, ptr %.sroa.43.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i.7, align 8, !noalias !186391
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %.loopexit.thread.unr-lcssa, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i
 
@@ -2688,7 +2688,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.aa = getelementptr inbounds nuw [112 x i8], ptr %.sroa.10.0.i.i.i.i.i.i.i, i64 %i.r
   %.sroa.43.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i.7 = getelementptr inbounds nuw i8, ptr %i.aa, i64 888
   store i8 0, ptr %.sroa.43.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i.7, align 8, !noalias !186442
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %.loopexit.unr-lcssa, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i
 
@@ -3091,14 +3091,10 @@ bb.f:                                             ; preds = %.thread, %bb.d
 
 bb.g:                                             ; preds = %._crit_edge.i, %bb.f
   %indvar = phi i64 [ %indvar.next, %._crit_edge.i ], [ 0, %bb.f ] ; 2 uses
-  %.sroa.01.0.i = phi i64 [ %i.t, %._crit_edge.i ], [ 0, %bb.f ] ; 9 uses
-  %i.t = add i64 %.sroa.01.0.i, 32                ; 2 uses
+  %.sroa.01.0.i = phi i64 [ %i.t, %._crit_edge.i ], [ 0, %bb.f ] ; 8 uses
+  %i.t = add nuw i64 %.sroa.01.0.i, 32            ; 2 uses
   %.not.i = icmp ugt i64 %i.t, %.sroa.0.015
-  br i1 %.not.i, label %.preheader.i, label %.preheader14.i
-
-.preheader14.i:                                   ; preds = %bb.g
-  %.not36.i = icmp eq i64 %.sroa.01.0.i, -32
-  br i1 %.not36.i, label %_ZN4core5slice5ascii8is_ascii17h899e380db11233a2E.exit.thread, label %._crit_edge.i
+  br i1 %.not.i, label %.preheader.i, label %._crit_edge.i
 
 .preheader.i:                                     ; preds = %bb.g
   %i.u = icmp ult i64 %.sroa.01.0.i, %.sroa.0.015
@@ -3195,7 +3191,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %exitcond.not.i = icmp eq i64 %i.au, %.sroa.0.015
   br i1 %exitcond.not.i, label %_ZN4core5slice5ascii8is_ascii17h899e380db11233a2E.exit, label %.lr.ph25.i, !llvm.loop !234028
 
-._crit_edge.i:                                    ; preds = %.preheader14.i
+._crit_edge.i:                                    ; preds = %bb.g
   %i.av = getelementptr inbounds nuw i8, ptr %i.s, i64 %.sroa.01.0.i
   %i.aw = load <32 x i8>, ptr %i.av, align 1, !alias.scope !234022
   %i.ax = icmp slt <32 x i8> %i.aw, zeroinitializer
@@ -3208,7 +3204,7 @@ _ZN4core5slice5ascii8is_ascii17h899e380db11233a2E.exit: ; preds = %.lr.ph25.i, %
   %.lcssa144 = phi i1 [ %.not159, %vec.epilog.middle.block ], [ %.not157, %middle.block ], [ %i.at, %.lr.ph25.i ]
   br i1 %.lcssa144, label %_ZN4core5slice5ascii8is_ascii17h899e380db11233a2E.exit.thread17, label %_ZN4core5slice5ascii8is_ascii17h899e380db11233a2E.exit.thread
 
-_ZN4core5slice5ascii8is_ascii17h899e380db11233a2E.exit.thread: ; preds = %.preheader14.i, %._crit_edge.i, %_ZN4core5slice5ascii8is_ascii17h899e380db11233a2E.exit
+_ZN4core5slice5ascii8is_ascii17h899e380db11233a2E.exit.thread: ; preds = %._crit_edge.i, %_ZN4core5slice5ascii8is_ascii17h899e380db11233a2E.exit
   br i1 %.not6, label %._crit_edge, label %bb.h
 
 bb.h:                                             ; preds = %_ZN4core5slice5ascii8is_ascii17h899e380db11233a2E.exit.thread
@@ -3611,7 +3607,7 @@ bb.az:                                            ; preds = %bb.az, %.new
   %.val.i.i.i86.i.3 = load i64, ptr %i.en, align 8, !noalias !240778, !noundef !12
   %.sroa.0.0.i.i.i.i.i.i.i.3 = call noundef i64 @llvm.umax.i64(i64 %.sroa.0.0.i.i.i.i.i.i.i.2, i64 %.val.i.i.i86.i.3) ; 3 uses
   %i.eo = add nuw i64 %.sroa.09.0.i.i.i.i, 4      ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.loopexit.i.loopexit.unr-lcssa, label %bb.az
 
@@ -4014,7 +4010,7 @@ bb.l:                                             ; preds = %bb.l, %.new
   %i.cc = trunc nuw nsw i64 %i.bu to i16
   %i.cd = getelementptr inbounds nuw i8, ptr %i.cb, i64 360
   store i16 %i.cc, ptr %i.cd, align 8, !noalias !353442
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %"_ZN5alloc11collections5btree4node119NodeRef$LT$alloc..collections..btree..node..marker..Mut$C$K$C$V$C$alloc..collections..btree..node..marker..Internal$GT$30correct_childrens_parent_links17h7df28fbaf06ebbc1E.exit.loopexit.unr-lcssa", label %bb.l
 }
@@ -4198,7 +4194,7 @@ bb.l:                                             ; preds = %bb.l, %.new
   %i.by = trunc nuw nsw i64 %i.bq to i16
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bx, i64 536
   store i16 %i.by, ptr %i.bz, align 8, !noalias !353476
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %"_ZN5alloc11collections5btree4node119NodeRef$LT$alloc..collections..btree..node..marker..Mut$C$K$C$V$C$alloc..collections..btree..node..marker..Internal$GT$30correct_childrens_parent_links17hd5234f6b70c0e821E.exit.loopexit.unr-lcssa", label %bb.l
 }
@@ -4386,7 +4382,7 @@ bb.l:                                             ; preds = %bb.l, %.new
   %i.cc = trunc nuw nsw i64 %i.bs to i16
   %i.cd = getelementptr inbounds nuw i8, ptr %i.ca, i64 800
   store i16 %i.cc, ptr %i.cd, align 8, !noalias !353510
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %"_ZN5alloc11collections5btree4node119NodeRef$LT$alloc..collections..btree..node..marker..Mut$C$K$C$V$C$alloc..collections..btree..node..marker..Internal$GT$30correct_childrens_parent_links17ha013393a37b14e16E.exit.loopexit.unr-lcssa", label %bb.l
 }
@@ -4570,7 +4566,7 @@ bb.l:                                             ; preds = %bb.l, %.new
   %i.by = trunc nuw nsw i64 %i.bq to i16
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bx, i64 536
   store i16 %i.by, ptr %i.bz, align 8, !noalias !353544
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %"_ZN5alloc11collections5btree4node119NodeRef$LT$alloc..collections..btree..node..marker..Mut$C$K$C$V$C$alloc..collections..btree..node..marker..Internal$GT$30correct_childrens_parent_links17h649cba572a0a87afE.exit.loopexit.unr-lcssa", label %bb.l
 }
@@ -4740,7 +4736,7 @@ bb.l:                                             ; preds = %bb.l, %.new
   %i.bq = trunc nuw nsw i64 %i.bi to i16
   %i.br = getelementptr inbounds nuw i8, ptr %i.bp, i64 272
   store i16 %i.bq, ptr %i.br, align 8, !noalias !353567
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %"_ZN5alloc11collections5btree4node119NodeRef$LT$alloc..collections..btree..node..marker..Mut$C$K$C$V$C$alloc..collections..btree..node..marker..Internal$GT$30correct_childrens_parent_links17hd06a46209fe69343E.exit.loopexit.unr-lcssa", label %bb.l
 }
@@ -4928,7 +4924,7 @@ bb.l:                                             ; preds = %bb.l, %.new
   %i.cc = trunc nuw nsw i64 %i.bs to i16
   %i.cd = getelementptr inbounds nuw i8, ptr %i.ca, i64 712
   store i16 %i.cc, ptr %i.cd, align 8, !noalias !353601
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %"_ZN5alloc11collections5btree4node119NodeRef$LT$alloc..collections..btree..node..marker..Mut$C$K$C$V$C$alloc..collections..btree..node..marker..Internal$GT$30correct_childrens_parent_links17h8e7322e382af368bE.exit.loopexit.unr-lcssa", label %bb.l
 }
@@ -5112,7 +5108,7 @@ bb.l:                                             ; preds = %bb.l, %.new
   %i.by = trunc nuw nsw i64 %i.bq to i16
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bx, i64 536
   store i16 %i.by, ptr %i.bz, align 8, !noalias !353635
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %"_ZN5alloc11collections5btree4node119NodeRef$LT$alloc..collections..btree..node..marker..Mut$C$K$C$V$C$alloc..collections..btree..node..marker..Internal$GT$30correct_childrens_parent_links17h90f56f1112e80f2dE.exit.loopexit.unr-lcssa", label %bb.l
 }
@@ -5515,11 +5511,11 @@ bb.x:                                             ; preds = %_ZN4core5alloc6layo
   %i.fm = getelementptr inbounds nuw [96 x i8], ptr %i.fd, i64 %.sroa.0.011.i.i.i.i.i.i.i.i.i.i.i.i
   %.sroa.43.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i.i.6 = getelementptr inbounds nuw i8, ptr %i.fm, i64 664
   store i8 0, ptr %.sroa.43.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i.i.6, align 8, !noalias !357728
-  %i.fn = add nuw i64 %.sroa.0.011.i.i.i.i.i.i.i.i.i.i.i.i, 8
+  %i.fn = add nuw nsw i64 %.sroa.0.011.i.i.i.i.i.i.i.i.i.i.i.i, 8
   %i.fo = getelementptr inbounds nuw [96 x i8], ptr %i.fd, i64 %.sroa.0.011.i.i.i.i.i.i.i.i.i.i.i.i
   %.sroa.43.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i.i.7 = getelementptr inbounds nuw i8, ptr %i.fo, i64 760
   store i8 0, ptr %.sroa.43.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i.i.7, align 8, !noalias !357728
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN4core4iter6traits8iterator8Iterator7collect17h9b90eba357bceac2E.exit.i, label %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h8ce315fe888c4bc9E.exit.i.i.i.i.i.i.i.i.i"
 
@@ -5531,7 +5527,7 @@ bb.x:                                             ; preds = %_ZN4core5alloc6layo
 "_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h8ce315fe888c4bc9E.exit.i.i.i.i.i.i.i.i.i.epil": ; preds = %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h8ce315fe888c4bc9E.exit.i.i.i.i.i.i.i.i.i.epil", %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h8ce315fe888c4bc9E.exit.i.i.i.i.i.i.i.i.i.epil.preheader"
   %.sroa.0.011.i.i.i.i.i.i.i.i.i.i.i.i.epil = phi i64 [ %i.fp, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h8ce315fe888c4bc9E.exit.i.i.i.i.i.i.i.i.i.epil" ], [ 0, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h8ce315fe888c4bc9E.exit.i.i.i.i.i.i.i.i.i.epil.preheader" ] ; 2 uses
   %epil.iter = phi i64 [ %epil.iter.next, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h8ce315fe888c4bc9E.exit.i.i.i.i.i.i.i.i.i.epil" ], [ 0, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h8ce315fe888c4bc9E.exit.i.i.i.i.i.i.i.i.i.epil.preheader" ]
-  %i.fp = add nuw i64 %.sroa.0.011.i.i.i.i.i.i.i.i.i.i.i.i.epil, 1
+  %i.fp = add nuw nsw i64 %.sroa.0.011.i.i.i.i.i.i.i.i.i.i.i.i.epil, 1
   %i.fq = getelementptr inbounds nuw [96 x i8], ptr %i.fd, i64 %.sroa.0.011.i.i.i.i.i.i.i.i.i.i.i.i.epil
   %.sroa.43.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i.i.epil = getelementptr inbounds nuw i8, ptr %i.fq, i64 88
   store i8 0, ptr %.sroa.43.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i.i.epil, align 8, !noalias !357728
@@ -5649,7 +5645,7 @@ bb.ac:                                            ; preds = %_ZN4core5alloc6layo
   %i.go = getelementptr inbounds nuw [32 x i8], ptr %i.gd, i64 %.sroa.0.011.i.i.i.i.i.i.i.i.i.i.i.i136
   %.sroa.43.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i.i137.7 = getelementptr inbounds nuw i8, ptr %i.go, i64 248
   store i8 0, ptr %.sroa.43.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i.i137.7, align 8, !noalias !357762
-  %niter891.next.7 = add i64 %niter891, 8         ; 2 uses
+  %niter891.next.7 = add nuw i64 %niter891, 8     ; 2 uses
   %niter891.ncmp.7 = icmp eq i64 %niter891.next.7, %unroll_iter890
   br i1 %niter891.ncmp.7, label %_ZN4core4iter6traits8iterator8Iterator7collect17h596ab05db15f2092E.exit.i, label %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17hc95c7db04a5c7252E.exit.i.i.i.i.i.i.i.i.i"
 
@@ -5776,7 +5772,7 @@ bb.ag:                                            ; preds = %_ZN4core5alloc6layo
   %i.ho = getelementptr inbounds nuw [32 x i8], ptr %i.hd, i64 %.sroa.0.011.i.i.i.i.i.i.i.i.i.i.i.i149
   %.sroa.43.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i.i150.7 = getelementptr inbounds nuw i8, ptr %i.ho, i64 248
   store i8 0, ptr %.sroa.43.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i.i150.7, align 8, !noalias !357796
-  %niter897.next.7 = add i64 %niter897, 8         ; 2 uses
+  %niter897.next.7 = add nuw i64 %niter897, 8     ; 2 uses
   %niter897.ncmp.7 = icmp eq i64 %niter897.next.7, %unroll_iter896
   br i1 %niter897.ncmp.7, label %_ZN4core4iter6traits8iterator8Iterator7collect17h2cd7aab007624e1eE.exit.i, label %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h93be259b14e71eccE.exit.i.i.i.i.i.i.i.i.i"
 
@@ -6179,7 +6175,7 @@ bb.k:                                             ; preds = %bb.j
   %.sroa.533.0..sroa.0.09.i.i.i.sroa_idx.i.i.i.i.i.i.i.i.i.3 = getelementptr inbounds nuw i8, ptr %.sroa.0.09.i.i.i.i.i.i.i.i.i.i.i.i, i64 88
   store i64 0, ptr %.sroa.533.0..sroa.0.09.i.i.i.sroa_idx.i.i.i.i.i.i.i.i.i.3, align 8, !noalias !367371
   %i.cv = getelementptr inbounds nuw i8, ptr %.sroa.0.09.i.i.i.i.i.i.i.i.i.i.i.i, i64 96 ; 3 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge.thread.i.i.i.i.i.i.i.i.i.i.i.i.loopexit.unr-lcssa, label %.preheader.i.i.i.i.i.i.i.i.i
 
@@ -6582,7 +6578,7 @@ bb.e:                                             ; preds = %bb.d, %"_ZN4core3nu
   store ptr inttoptr (i64 8 to ptr), ptr %.sroa.43.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.3, align 8, !noalias !382923
   %.sroa.54.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.3 = getelementptr inbounds nuw i8, ptr %i.ad, i64 88
   store i64 0, ptr %.sroa.54.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.3, align 8, !noalias !382923
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZN4core4iter6traits8iterator8Iterator7collect17h2c6b4db5399c544eE.exit.loopexit.unr-lcssa, label %.lr.ph.i.i.i.i.i.i.i.i.i
 
@@ -6985,7 +6981,7 @@ bb.dd:                                            ; preds = %bb.dd, %.new
   %.val.i.i.i.i.i17.3 = load i64, ptr %i.nz, align 8, !noalias !427865, !noundef !12
   %i.oa = add i64 %.val.i.i.i.i.i17.3, %i.nx      ; 3 uses
   %i.ob = add nuw i64 %.sroa.09.0.i.i.i.i.i, 4    ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17hfee89a5a191f5c1dE.exit.i.i.i.i.loopexit.unr-lcssa", label %bb.dd
 
@@ -7049,7 +7045,7 @@ bb.dg:                                            ; preds = %bb.dg, %.new937
   %.val.i3.i.i.i.i.3 = load i64, ptr %i.ot, align 8, !noalias !427865, !noundef !12
   %i.ou = add i64 %.val.i3.i.i.i.i.3, %i.or       ; 3 uses
   %i.ov = add nuw nsw i64 %.sroa.09.0.i1.i.i.i.i, 4 ; 2 uses
-  %niter945.next.3 = add i64 %niter945, 4         ; 2 uses
+  %niter945.next.3 = add nuw i64 %niter945, 4     ; 2 uses
   %niter945.ncmp.3 = icmp eq i64 %niter945.next.3, %unroll_iter944
   br i1 %niter945.ncmp.3, label %"_ZN109_$LT$alloc..collections..vec_deque..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17h89a299ca88e197d3E.exit.i.i.i.loopexit.unr-lcssa", label %bb.dg
 
@@ -7452,7 +7448,7 @@ bb.d:                                             ; preds = %bb.d, %.new
   %.val.i.i.3 = load i64, ptr %i.au, align 8, !noalias !459907, !noundef !12
   %i.av = add i64 %.val.i.i.3, %i.as              ; 3 uses
   %i.aw = add nuw i64 %.sroa.09.0.i.i, 4          ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17hfee89a5a191f5c1dE.exit.i.loopexit.unr-lcssa", label %bb.d
 
@@ -7516,7 +7512,7 @@ bb.g:                                             ; preds = %bb.g, %.new618
   %.val.i3.i.3 = load i64, ptr %i.bo, align 8, !noalias !459907, !noundef !12
   %i.bp = add i64 %.val.i3.i.3, %i.bm             ; 3 uses
   %i.bq = add nuw nsw i64 %.sroa.09.0.i1.i, 4     ; 2 uses
-  %niter626.next.3 = add i64 %niter626, 4         ; 2 uses
+  %niter626.next.3 = add nuw i64 %niter626, 4     ; 2 uses
   %niter626.ncmp.3 = icmp eq i64 %niter626.next.3, %unroll_iter625
   br i1 %niter626.ncmp.3, label %"_ZN109_$LT$alloc..collections..vec_deque..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17h89a299ca88e197d3E.exit.loopexit.unr-lcssa", label %bb.g
 
@@ -7724,7 +7720,7 @@ bb.u:                                             ; preds = %bb.u, %.new627
   %.val.i.i.i.i.i.i121.3 = load i64, ptr %i.ec, align 8, !noalias !459955, !noundef !12
   %i.ed = add i64 %.val.i.i.i.i.i.i121.3, %i.ea   ; 3 uses
   %i.ee = add nuw i64 %.sroa.09.0.i.i.i.i.i.i119, 4 ; 2 uses
-  %niter635.next.3 = add i64 %niter635, 4         ; 2 uses
+  %niter635.next.3 = add nuw i64 %niter635, 4     ; 2 uses
   %niter635.ncmp.3 = icmp eq i64 %niter635.next.3, %unroll_iter634
   br i1 %niter635.ncmp.3, label %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17hfee89a5a191f5c1dE.exit.i.i.i.i.i122.loopexit.unr-lcssa", label %bb.u
 
@@ -7788,7 +7784,7 @@ bb.x:                                             ; preds = %bb.x, %.new636
   %.val.i3.i.i.i.i.i126.3 = load i64, ptr %i.ew, align 8, !noalias !459955, !noundef !12
   %i.ex = add i64 %.val.i3.i.i.i.i.i126.3, %i.eu  ; 3 uses
   %i.ey = add nuw nsw i64 %.sroa.09.0.i1.i.i.i.i.i124, 4 ; 2 uses
-  %niter644.next.3 = add i64 %niter644, 4         ; 2 uses
+  %niter644.next.3 = add nuw i64 %niter644, 4     ; 2 uses
   %niter644.ncmp.3 = icmp eq i64 %niter644.next.3, %unroll_iter643
   br i1 %niter644.ncmp.3, label %_ZN5bytes3buf8buf_impl3Buf13has_remaining17h025c4b5a87f01529E.exit129.loopexit.unr-lcssa, label %bb.x
 
@@ -7883,7 +7879,7 @@ bb.aa:                                            ; preds = %bb.aa, %.new645
   %.val.i.i.i.i.i.i.3 = load i64, ptr %i.gc, align 8, !noalias !459968, !noundef !12
   %i.gd = add i64 %.val.i.i.i.i.i.i.3, %i.ga      ; 3 uses
   %i.ge = add nuw i64 %.sroa.09.0.i.i.i.i.i.i, 4  ; 2 uses
-  %niter653.next.3 = add i64 %niter653, 4         ; 2 uses
+  %niter653.next.3 = add nuw i64 %niter653, 4     ; 2 uses
   %niter653.ncmp.3 = icmp eq i64 %niter653.next.3, %unroll_iter652
   br i1 %niter653.ncmp.3, label %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17hfee89a5a191f5c1dE.exit.i.i.i.i.i.loopexit.unr-lcssa", label %bb.aa
 
@@ -7947,7 +7943,7 @@ bb.ad:                                            ; preds = %bb.ad, %.new654
   %.val.i3.i.i.i.i.i.3 = load i64, ptr %i.gw, align 8, !noalias !459968, !noundef !12
   %i.gx = add i64 %.val.i3.i.i.i.i.i.3, %i.gu     ; 3 uses
   %i.gy = add nuw nsw i64 %.sroa.09.0.i1.i.i.i.i.i, 4 ; 2 uses
-  %niter662.next.3 = add i64 %niter662, 4         ; 2 uses
+  %niter662.next.3 = add nuw i64 %niter662, 4     ; 2 uses
   %niter662.ncmp.3 = icmp eq i64 %niter662.next.3, %unroll_iter661
   br i1 %niter662.ncmp.3, label %_ZN5bytes3buf8buf_impl3Buf13has_remaining17h025c4b5a87f01529E.exit.loopexit.unr-lcssa, label %bb.ad
 
@@ -8240,7 +8236,7 @@ bb.as:                                            ; preds = %bb.as, %.new681
   %.val.i.i.i.i177.3 = load i64, ptr %i.ke, align 8, !noalias !460042, !noundef !12
   %i.kf = add i64 %.val.i.i.i.i177.3, %i.kc       ; 3 uses
   %i.kg = add nuw i64 %.sroa.09.0.i.i.i.i175, 4   ; 2 uses
-  %niter689.next.3 = add i64 %niter689, 4         ; 2 uses
+  %niter689.next.3 = add nuw i64 %niter689, 4     ; 2 uses
   %niter689.ncmp.3 = icmp eq i64 %niter689.next.3, %unroll_iter688
   br i1 %niter689.ncmp.3, label %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17hfee89a5a191f5c1dE.exit.i.i.i178.loopexit.unr-lcssa", label %bb.as
 
@@ -8304,7 +8300,7 @@ bb.av:                                            ; preds = %bb.av, %.new690
   %.val.i3.i.i.i182.3 = load i64, ptr %i.ky, align 8, !noalias !460042, !noundef !12
   %i.kz = add i64 %.val.i3.i.i.i182.3, %i.kw      ; 3 uses
   %i.la = add nuw nsw i64 %.sroa.09.0.i1.i.i.i180, 4 ; 2 uses
-  %niter698.next.3 = add i64 %niter698, 4         ; 2 uses
+  %niter698.next.3 = add nuw i64 %niter698, 4     ; 2 uses
   %niter698.ncmp.3 = icmp eq i64 %niter698.next.3, %unroll_iter697
   br i1 %niter698.ncmp.3, label %"_ZN59_$LT$$RF$mut$u20$T$u20$as$u20$bytes..buf..buf_impl..Buf$GT$9remaining17hc49c1d138b1493e6E.exit184.loopexit.unr-lcssa", label %bb.av
 
@@ -8402,7 +8398,7 @@ bb.az:                                            ; preds = %bb.az, %.new663
   %.val.i.i.i.i164.3 = load i64, ptr %i.mb, align 8, !noalias !460057, !noundef !12
   %i.mc = add i64 %.val.i.i.i.i164.3, %i.lz       ; 3 uses
   %i.md = add nuw i64 %.sroa.09.0.i.i.i.i, 4      ; 2 uses
-  %niter671.next.3 = add i64 %niter671, 4         ; 2 uses
+  %niter671.next.3 = add nuw i64 %niter671, 4     ; 2 uses
   %niter671.ncmp.3 = icmp eq i64 %niter671.next.3, %unroll_iter670
   br i1 %niter671.ncmp.3, label %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17hfee89a5a191f5c1dE.exit.i.i.i.loopexit.unr-lcssa", label %bb.az
 
@@ -8466,7 +8462,7 @@ bb.bc:                                            ; preds = %bb.bc, %.new672
   %.val.i3.i.i.i.3 = load i64, ptr %i.mv, align 8, !noalias !460057, !noundef !12
   %i.mw = add i64 %.val.i3.i.i.i.3, %i.mt         ; 3 uses
   %i.mx = add nuw nsw i64 %.sroa.09.0.i1.i.i.i, 4 ; 2 uses
-  %niter680.next.3 = add i64 %niter680, 4         ; 2 uses
+  %niter680.next.3 = add nuw i64 %niter680, 4     ; 2 uses
   %niter680.ncmp.3 = icmp eq i64 %niter680.next.3, %unroll_iter679
   br i1 %niter680.ncmp.3, label %"_ZN59_$LT$$RF$mut$u20$T$u20$as$u20$bytes..buf..buf_impl..Buf$GT$9remaining17hc49c1d138b1493e6E.exit.loopexit.unr-lcssa", label %bb.bc
 
@@ -8869,7 +8865,7 @@ bb.tv:                                            ; preds = %"_ZN4core3ptr52drop
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.43.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i.i.i.1, ptr noundef nonnull readonly align 8 dereferenceable(24) %i.f, i64 24, i1 false), !noalias !653692
   %i.aub = add nuw nsw i64 %i.atu, 2              ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %"_ZN4core3ptr52drop_in_place$LT$$u5b$alloc..string..String$u5d$$GT$17hbb76ef1c9ad4aed6E.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.loopexit.unr-lcssa", label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i
 
@@ -9272,7 +9268,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.i.new
   %i.u = bitcast <16 x i8> %.lobit.i.i.1 to <2 x i64>
   %i.v = or <2 x i64> %i.u, splat (i64 -9187201950435737472)
   store <2 x i64> %i.v, ptr %i.t, align 16
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.i.unr-lcssa, label %bb.b
 
@@ -9675,7 +9671,7 @@ bb.p:                                             ; preds = %bb.p, %.lr.ph.i.i.n
   %i.bz = bitcast <16 x i8> %.lobit.i.i.i.1 to <2 x i64>
   %i.ca = or <2 x i64> %i.bz, splat (i64 -9187201950435737472)
   store <2 x i64> %i.ca, ptr %i.by, align 16, !noalias !689167
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.i.i.unr-lcssa, label %bb.p
 

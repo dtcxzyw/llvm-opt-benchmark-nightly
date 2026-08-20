@@ -204,14 +204,10 @@ bb.e:                                             ; preds = %_ZN3csv11byte_recor
 
 bb.f:                                             ; preds = %._crit_edge.i, %bb.e
   %indvar = phi i64 [ %indvar.next, %._crit_edge.i ], [ 0, %bb.e ] ; 2 uses
-  %.sroa.02.0.i = phi i64 [ %i.t, %._crit_edge.i ], [ 0, %bb.e ] ; 9 uses
-  %i.t = add i64 %.sroa.02.0.i, 32                ; 2 uses
+  %.sroa.02.0.i = phi i64 [ %i.t, %._crit_edge.i ], [ 0, %bb.e ] ; 8 uses
+  %i.t = add nuw i64 %.sroa.02.0.i, 32            ; 2 uses
   %.not.i4 = icmp ugt i64 %i.t, %.sroa.0.0.i12
-  br i1 %.not.i4, label %.preheader.i, label %.preheader13.i
-
-.preheader13.i:                                   ; preds = %bb.f
-  %.not35.i = icmp eq i64 %.sroa.02.0.i, -32
-  br i1 %.not35.i, label %_ZN4core5slice5ascii8is_ascii17h25c8d476e89a1ec1E.exit.thread, label %._crit_edge.i
+  br i1 %.not.i4, label %.preheader.i, label %._crit_edge.i
 
 .preheader.i:                                     ; preds = %bb.f
   %i.u = icmp ult i64 %.sroa.02.0.i, %.sroa.0.0.i12
@@ -308,7 +304,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %exitcond.not.i = icmp eq i64 %i.au, %.sroa.0.0.i12
   br i1 %exitcond.not.i, label %_ZN4core5slice5ascii8is_ascii17h25c8d476e89a1ec1E.exit, label %.lr.ph24.i, !llvm.loop !2915
 
-._crit_edge.i:                                    ; preds = %.preheader13.i
+._crit_edge.i:                                    ; preds = %bb.f
   %i.av = getelementptr inbounds nuw i8, ptr %i.s, i64 %.sroa.02.0.i
   %i.aw = load <32 x i8>, ptr %i.av, align 1, !alias.scope !2907
   %i.ax = icmp slt <32 x i8> %i.aw, zeroinitializer
@@ -321,7 +317,7 @@ _ZN4core5slice5ascii8is_ascii17h25c8d476e89a1ec1E.exit: ; preds = %.lr.ph24.i, %
   %.lcssa144 = phi i1 [ %.not159, %vec.epilog.middle.block ], [ %.not157, %middle.block ], [ %i.at, %.lr.ph24.i ]
   br i1 %.lcssa144, label %_ZN4core5slice5ascii8is_ascii17h25c8d476e89a1ec1E.exit.thread14, label %_ZN4core5slice5ascii8is_ascii17h25c8d476e89a1ec1E.exit.thread
 
-_ZN4core5slice5ascii8is_ascii17h25c8d476e89a1ec1E.exit.thread: ; preds = %.preheader13.i, %._crit_edge.i, %_ZN4core5slice5ascii8is_ascii17h25c8d476e89a1ec1E.exit
+_ZN4core5slice5ascii8is_ascii17h25c8d476e89a1ec1E.exit.thread: ; preds = %._crit_edge.i, %_ZN4core5slice5ascii8is_ascii17h25c8d476e89a1ec1E.exit
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2916)
   %i.ba = load i64, ptr %i.c, align 8, !alias.scope !2916, !noundef !8 ; 5 uses
   %i.bb = load ptr, ptr %i.e, align 8, !alias.scope !2916, !nonnull !8, !noundef !8
@@ -724,7 +720,7 @@ bb.l:                                             ; preds = %bb.l, %.new
   %i.cc = trunc nuw nsw i64 %i.bs to i16
   %i.cd = getelementptr inbounds nuw i8, ptr %i.ca, i64 624
   store i16 %i.cc, ptr %i.cd, align 8, !noalias !9524
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %"_ZN5alloc11collections5btree4node119NodeRef$LT$alloc..collections..btree..node..marker..Mut$C$K$C$V$C$alloc..collections..btree..node..marker..Internal$GT$30correct_childrens_parent_links17h42a4453733c4e46eE.exit.loopexit.unr-lcssa", label %bb.l
 }

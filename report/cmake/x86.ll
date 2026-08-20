@@ -97,21 +97,14 @@ bb.e:                                             ; preds = %bb.c
   %i.r = add i32 %i.i, %i.n
   %i.s = sub i32 %i.r, %.195112
   %i.t = icmp ult i32 %i.s, 7
-  br i1 %i.t, label %.lr.ph.epil.preheader, label %.lr.ph
+  br i1 %i.t, label %.lr.ph.epil, label %.lr.ph.epil.preheader
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %niter = phi i32 [ %niter.next.7, %.lr.ph ], [ 0, %.lr.ph.preheader ]
-  %niter.next.7 = add i32 %niter, 8               ; 2 uses
-  %niter.ncmp.7 = icmp eq i32 %niter.next.7, 0
-  br i1 %niter.ncmp.7, label %.lr.ph.epil.preheader, label %.lr.ph, !llvm.loop !20
+.lr.ph.epil.preheader:                            ; preds = %.lr.ph.preheader, %.lr.ph.epil.preheader
+  br label %.lr.ph.epil.preheader, !llvm.loop !20
 
-.lr.ph.epil.preheader:                            ; preds = %.lr.ph, %.lr.ph.preheader
-  %.198107.epil.init = phi i32 [ %.097111, %.lr.ph.preheader ], [ 0, %.lr.ph ]
-  br label %.lr.ph.epil
-
-.lr.ph.epil:                                      ; preds = %.lr.ph.epil, %.lr.ph.epil.preheader
-  %.198107.epil = phi i32 [ %i.v, %.lr.ph.epil ], [ %.198107.epil.init, %.lr.ph.epil.preheader ]
-  %epil.iter = phi i32 [ %epil.iter.next, %.lr.ph.epil ], [ 0, %.lr.ph.epil.preheader ]
+.lr.ph.epil:                                      ; preds = %.lr.ph.preheader, %.lr.ph.epil
+  %.198107.epil = phi i32 [ %i.v, %.lr.ph.epil ], [ %.097111, %.lr.ph.preheader ]
+  %epil.iter = phi i32 [ %epil.iter.next, %.lr.ph.epil ], [ 0, %.lr.ph.preheader ]
   %i.u = shl i32 %.198107.epil, 1
   %i.v = and i32 %i.u, 238                        ; 2 uses
   %epil.iter.next = add i32 %epil.iter, 1         ; 2 uses

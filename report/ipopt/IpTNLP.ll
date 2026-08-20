@@ -203,7 +203,7 @@ _ZN5Ipopt8SmartPtrINS_16NLPScalingObjectEED2Ev.exit: ; preds = %bb.cd, %bb.ce
   %i.in = fmul double %i.hi, %i.im
   store double %i.in, ptr %i.il, align 8, !tbaa !84
   %indvars.iv.next513.1 = add nuw nsw i64 %indvars.iv512, 2 ; 2 uses
-  %niter584.next.1 = add i64 %niter584, 2         ; 2 uses
+  %niter584.next.1 = add nuw i64 %niter584, 2     ; 2 uses
   %niter584.ncmp.1 = icmp eq i64 %niter584.next.1, %unroll_iter583
   br i1 %niter584.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph.split.us, !llvm.loop !87
 
@@ -388,7 +388,7 @@ bb.cu:                                            ; preds = %bb.ct
   store double %i.lh, ptr %i.la, align 8, !tbaa !84
   store double %i.ld, ptr %i.le, align 8, !tbaa !84
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit578.unr-lcssa, label %.lr.ph.split, !llvm.loop !87
 
@@ -791,7 +791,7 @@ bb.ea:                                            ; preds = %bb.dz, %bb.dy
   %i.qr = getelementptr inbounds [8 x i8], ptr %6, i64 %i.qq
   store double %.sroa.speculated.i486.us1234.1, ptr %i.qr, align 8, !tbaa !84
   %indvars.iv.next1257.1 = add nuw nsw i64 %indvars.iv1256, 2 ; 2 uses
-  %niter1521.next.1 = add i64 %niter1521, 2       ; 2 uses
+  %niter1521.next.1 = add nuw i64 %niter1521, 2   ; 2 uses
   %niter1521.ncmp.1 = icmp eq i64 %niter1521.next.1, %unroll_iter1520
   br i1 %niter1521.ncmp.1, label %.split1230.us.thread.loopexit.unr-lcssa, label %.split1228.split.us.split, !llvm.loop !468
 
@@ -947,7 +947,7 @@ bb.ef:                                            ; preds = %.body.thread
   %i.sw = getelementptr inbounds [8 x i8], ptr %6, i64 %i.sv
   store double %.sroa.speculated.i486.1, ptr %i.sw, align 8, !tbaa !84
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.split1230.us.thread.loopexit1515.unr-lcssa, label %.split1228.split.split, !llvm.loop !468
 
@@ -1350,7 +1350,7 @@ bb.la:                                            ; preds = %bb.la, %.lr.ph.spli
   %i.bcv = getelementptr inbounds [8 x i8], ptr %7, i64 %i.bcu
   store double %i.bcr, ptr %i.bcv, align 8, !tbaa !84
   %indvars.iv.next1272.1 = add nuw nsw i64 %indvars.iv1271, 2 ; 2 uses
-  %niter1531.next.1 = add i64 %niter1531, 2       ; 2 uses
+  %niter1531.next.1 = add nuw i64 %niter1531, 2   ; 2 uses
   %niter1531.ncmp.1 = icmp eq i64 %niter1531.next.1, %unroll_iter1530
   br i1 %niter1531.ncmp.1, label %._crit_edge.loopexit1513.unr-lcssa, label %.lr.ph.split.us.split, !llvm.loop !537
 
@@ -1596,7 +1596,7 @@ bb.lr:                                            ; preds = %bb.lr, %.lr.ph.spli
   %i.bgn = getelementptr inbounds [8 x i8], ptr %8, i64 %i.bgm
   store double %i.bgj, ptr %i.bgn, align 8, !tbaa !84
   %indvars.iv.next1267.1 = add nuw nsw i64 %indvars.iv1266, 2 ; 2 uses
-  %niter1526.next.1 = add i64 %niter1526, 2       ; 2 uses
+  %niter1526.next.1 = add nuw i64 %niter1526, 2   ; 2 uses
   %niter1526.ncmp.1 = icmp eq i64 %niter1526.next.1, %unroll_iter1525
   br i1 %niter1526.ncmp.1, label %._crit_edge.loopexit1514.unr-lcssa, label %bb.lr, !llvm.loop !537
 
@@ -1999,7 +1999,7 @@ bb.pu:                                            ; preds = %bb.pu, %.lr.ph1247.
   %i.byh = call double @llvm.fmuladd.f64(double %i.bxw, double %i.byb, double %i.byg)
   store double %i.byh, ptr %i.byf, align 8, !tbaa !84
   %indvars.iv.next1289.1 = add nuw nsw i64 %indvars.iv1288, 2 ; 2 uses
-  %niter1543.next.1 = add i64 %niter1543, 2       ; 2 uses
+  %niter1543.next.1 = add nuw i64 %niter1543, 2   ; 2 uses
   %niter1543.ncmp.1 = icmp eq i64 %niter1543.next.1, %unroll_iter1542
   br i1 %niter1543.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %bb.pu, !llvm.loop !561
 
@@ -2038,7 +2038,7 @@ bb.pv:                                            ; preds = %bb.pv, %.lr.ph1243.
   %i.bzh = call double @llvm.fmuladd.f64(double %i.byy, double %i.bzb, double %i.bzg)
   store double %i.bzh, ptr %i.bzf, align 8, !tbaa !84
   %indvars.iv.next1284.1 = add nuw nsw i64 %indvars.iv1283, 2 ; 2 uses
-  %niter1537.next.1 = add i64 %niter1537, 2       ; 2 uses
+  %niter1537.next.1 = add nuw i64 %niter1537, 2   ; 2 uses
   %niter1537.ncmp.1 = icmp eq i64 %niter1537.next.1, %unroll_iter1536
   br i1 %niter1537.ncmp.1, label %.loopexit.loopexit1512.unr-lcssa, label %bb.pv, !llvm.loop !562
 

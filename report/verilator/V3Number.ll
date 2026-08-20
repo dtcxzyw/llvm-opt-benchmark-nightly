@@ -204,10 +204,9 @@ bb.s:                                             ; preds = %bb.r
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.s, %bb.r
-  %indvars.iv.next45 = add i64 %indvars.iv44, 1   ; 2 uses
-  %3 = and i64 %indvars.iv.next45, 4294967295
-  %4 = icmp ugt i64 %i.l, %3
-  br i1 %4, label %.lr.ph.split.split.us, label %.loopexit, !llvm.loop !46
+  %indvars.iv.next45 = add nuw i64 %indvars.iv44, 1 ; 2 uses
+  %exitcond47.not = icmp eq i64 %indvars.iv.next45, %i.l
+  br i1 %exitcond47.not, label %.loopexit, label %.lr.ph.split.split.us, !llvm.loop !46
 
 bb.u:                                             ; preds = %bb.d
   %i.br = landingpad { ptr, i32 }
@@ -382,10 +381,9 @@ bb.al:                                            ; preds = %bb.ak
   br label %bb.am
 
 bb.am:                                            ; preds = %bb.al, %bb.ak
-  %indvars.iv.next = add i64 %indvars.iv, 1       ; 2 uses
-  %5 = and i64 %indvars.iv.next, 4294967295
-  %6 = icmp ugt i64 %i.l, %5
-  br i1 %6, label %.lr.ph.split.split, label %.loopexit, !llvm.loop !46
+  %indvars.iv.next = add nuw i64 %indvars.iv, 1   ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.l
+  br i1 %exitcond.not, label %.loopexit, label %.lr.ph.split.split, !llvm.loop !46
 
 .loopexit:                                        ; preds = %bb.am, %bb.t, %.preheader, %bb.b
   %i.dy = load i8, ptr %i.c, align 1
@@ -788,7 +786,7 @@ _ZNK12V3NumberData3numEv.exit.us.us:              ; preds = %_ZNK12V3NumberData3
   %i.ch = icmp samesign ugt i64 %i.cd, 4294967295
   %i.ci = zext i1 %i.ch to i64                    ; 2 uses
   %indvars.iv.next101.1 = add nuw nsw i64 %indvars.iv100, 2 ; 2 uses
-  %niter162.next.1 = add i64 %niter162, 2         ; 2 uses
+  %niter162.next.1 = add nuw i64 %niter162, 2     ; 2 uses
   %niter162.ncmp.1 = icmp eq i64 %niter162.next.1, %unroll_iter161
   br i1 %niter162.ncmp.1, label %_ZN8V3Number11setAllBitsXEv.exit.loopexit125.unr-lcssa, label %_ZNK12V3NumberData3numEv.exit.us.us, !llvm.loop !161
 
@@ -843,7 +841,7 @@ _ZNK12V3NumberData3numEv.exit.us.us53:            ; preds = %_ZNK12V3NumberData3
   %i.di = icmp samesign ugt i64 %i.df, 4294967295
   %i.dj = zext i1 %i.di to i64                    ; 2 uses
   %indvars.iv.next95.1 = add nuw nsw i64 %indvars.iv94, 2 ; 2 uses
-  %niter157.next.1 = add i64 %niter157, 2         ; 2 uses
+  %niter157.next.1 = add nuw i64 %niter157, 2     ; 2 uses
   %niter157.ncmp.1 = icmp eq i64 %niter157.next.1, %unroll_iter156
   br i1 %niter157.ncmp.1, label %_ZN8V3Number11setAllBitsXEv.exit.loopexit126.unr-lcssa, label %_ZNK12V3NumberData3numEv.exit.us.us53, !llvm.loop !161
 
@@ -883,7 +881,7 @@ _ZNK12V3NumberData3numEv.exit.us:                 ; preds = %_ZNK12V3NumberData3
   %i.ek = icmp samesign ugt i64 %i.eg, 4294967295
   %i.el = zext i1 %i.ek to i64                    ; 2 uses
   %indvars.iv.next89.1 = add nuw nsw i64 %indvars.iv88, 2 ; 4 uses
-  %niter152.next.1 = add i64 %niter152, 2         ; 2 uses
+  %niter152.next.1 = add nuw i64 %niter152, 2     ; 2 uses
   %niter152.ncmp.1 = icmp eq i64 %niter152.next.1, %unroll_iter151
   br i1 %niter152.ncmp.1, label %_ZN8V3Number11setAllBitsXEv.exit.loopexit127.unr-lcssa, label %_ZNK12V3NumberData3numEv.exit.us, !llvm.loop !161
 
@@ -941,7 +939,7 @@ _ZNK12V3NumberData3numEv.exit.us39.us:            ; preds = %_ZNK12V3NumberData3
   %i.fl = icmp samesign ugt i64 %i.fi, 4294967295
   %i.fm = zext i1 %i.fl to i64                    ; 2 uses
   %indvars.iv.next83.1 = add nuw nsw i64 %indvars.iv82, 2 ; 2 uses
-  %niter147.next.1 = add i64 %niter147, 2         ; 2 uses
+  %niter147.next.1 = add nuw i64 %niter147, 2     ; 2 uses
   %niter147.ncmp.1 = icmp eq i64 %niter147.next.1, %unroll_iter146
   br i1 %niter147.ncmp.1, label %_ZN8V3Number11setAllBitsXEv.exit.loopexit128.unr-lcssa, label %_ZNK12V3NumberData3numEv.exit.us39.us, !llvm.loop !161
 
@@ -981,7 +979,7 @@ _ZNK12V3NumberData3numEv.exit.us39:               ; preds = %_ZNK12V3NumberData3
   %i.gn = icmp samesign ugt i64 %i.gj, 4294967295
   %i.go = zext i1 %i.gn to i64                    ; 2 uses
   %indvars.iv.next77.1 = add nuw nsw i64 %indvars.iv76, 2 ; 4 uses
-  %niter142.next.1 = add i64 %niter142, 2         ; 2 uses
+  %niter142.next.1 = add nuw i64 %niter142, 2     ; 2 uses
   %niter142.ncmp.1 = icmp eq i64 %niter142.next.1, %unroll_iter141
   br i1 %niter142.ncmp.1, label %_ZN8V3Number11setAllBitsXEv.exit.loopexit129.unr-lcssa, label %_ZNK12V3NumberData3numEv.exit.us39, !llvm.loop !161
 
@@ -1038,7 +1036,7 @@ _ZNK12V3NumberData3numEv.exit.us45:               ; preds = %_ZNK12V3NumberData3
   %i.hq = icmp samesign ugt i64 %i.hn, 4294967295
   %i.hr = zext i1 %i.hq to i64                    ; 2 uses
   %indvars.iv.next71.1 = add nuw nsw i64 %indvars.iv70, 2 ; 2 uses
-  %niter137.next.1 = add i64 %niter137, 2         ; 2 uses
+  %niter137.next.1 = add nuw i64 %niter137, 2     ; 2 uses
   %niter137.ncmp.1 = icmp eq i64 %niter137.next.1, %unroll_iter136
   br i1 %niter137.ncmp.1, label %_ZN8V3Number11setAllBitsXEv.exit.loopexit130.unr-lcssa, label %_ZNK12V3NumberData3numEv.exit.us45, !llvm.loop !161
 
@@ -1080,7 +1078,7 @@ _ZNK12V3NumberData3numEv.exit:                    ; preds = %_ZNK12V3NumberData3
   %i.iu = icmp samesign ugt i64 %i.iq, 4294967295
   %i.iv = zext i1 %i.iu to i64                    ; 2 uses
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 4 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN8V3Number11setAllBitsXEv.exit.loopexit131.unr-lcssa, label %_ZNK12V3NumberData3numEv.exit, !llvm.loop !161
 
@@ -1483,7 +1481,7 @@ _ZNK12V3NumberData3numEv.exit:                    ; preds = %_ZNK12V3NumberData3
   %i.ai = add i32 %i.ah, %i.ad
   %i.aj = xor i32 %i.ai, %i.aa                    ; 3 uses
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %_ZNK12V3NumberData3numEv.exit, !llvm.loop !327
 
@@ -1886,7 +1884,7 @@ _ZN12V3NumberData3numEv.exit328.us:               ; preds = %_ZN12V3NumberData3n
   %i.ll = getelementptr inbounds nuw i8, ptr %i.lk, i64 56
   store i32 0, ptr %i.ll, align 8, !tbaa !44
   %indvars.iv.next477.7 = add nuw nsw i64 %indvars.iv476, 8 ; 2 uses
-  %niter635.next.7 = add i64 %niter635, 8         ; 2 uses
+  %niter635.next.7 = add nuw i64 %niter635, 8     ; 2 uses
   %niter635.ncmp.7 = icmp eq i64 %niter635.next.7, %unroll_iter634
   br i1 %niter635.ncmp.7, label %.lr.ph434.preheader.loopexit.unr-lcssa, label %_ZN12V3NumberData3numEv.exit328.us, !llvm.loop !392
 
@@ -1963,7 +1961,7 @@ _ZN12V3NumberData3numEv.exit328:                  ; preds = %_ZN12V3NumberData3n
   %i.mc = getelementptr inbounds nuw i8, ptr %i.mb, i64 24
   store i32 0, ptr %i.mc, align 4, !tbaa !44
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.lr.ph434.preheader.loopexit627.unr-lcssa, label %_ZN12V3NumberData3numEv.exit328, !llvm.loop !392
 
@@ -2366,7 +2364,7 @@ _ZN12V3NumberData3numEv.exit352:                  ; preds = %._crit_edge447
   %i.up = ashr i64 %i.um, 32
   %i.uq = sub nsw i64 %i.uo, %i.up                ; 3 uses
   %indvars.iv.next493.1 = add nuw nsw i64 %indvars.iv492, 2 ; 2 uses
-  %niter642.next.1 = add i64 %niter642, 2         ; 2 uses
+  %niter642.next.1 = add nuw i64 %niter642, 2     ; 2 uses
   %niter642.ncmp.1 = icmp eq i64 %niter642.next.1, %unroll_iter641
   br i1 %niter642.ncmp.1, label %._crit_edge447.loopexit.unr-lcssa, label %.lr.ph446, !llvm.loop !400
 
@@ -2444,7 +2442,7 @@ _ZN12V3NumberData3numEv.exit355:                  ; preds = %_ZN12V3NumberData3n
   store i32 %i.vx, ptr %gep614.1, align 4, !tbaa !66
   %i.vy = lshr i64 %i.vw, 32                      ; 3 uses
   %indvars.iv.next499.1 = add nuw nsw i64 %indvars.iv498, 2 ; 2 uses
-  %niter649.next.1 = add i64 %niter649, 2         ; 2 uses
+  %niter649.next.1 = add nuw i64 %niter649, 2     ; 2 uses
   %niter649.ncmp.1 = icmp eq i64 %niter649.next.1, %unroll_iter648
   br i1 %niter649.ncmp.1, label %._crit_edge451.loopexit.unr-lcssa, label %.lr.ph450, !llvm.loop !401
 

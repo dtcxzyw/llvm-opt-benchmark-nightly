@@ -204,7 +204,7 @@ bb.ep:                                            ; preds = %_ZN4core5alloc6layo
   store ptr inttoptr (i64 1 to ptr), ptr %.sroa.43.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.3, align 8, !noalias !5387
   %.sroa.54.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.3 = getelementptr inbounds nuw i8, ptr %i.xw, i64 88
   store i64 0, ptr %.sroa.54.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.3, align 8, !noalias !5387
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.lr.ph.preheader.i.unr-lcssa, label %.lr.ph.i.i.i.i.i.i.i.i.i.i
 
@@ -607,7 +607,7 @@ bb.h:                                             ; preds = %bb.h, %.lr.ph.prehe
   store <2 x i64> %i.ap, ptr %i.am, align 1, !alias.scope !7195, !noalias !7193
   store <2 x i64> %i.ao, ptr %i.an, align 1, !alias.scope !7201, !noalias !7190
   %i.aq = add nuw nsw i64 %.sroa.0.014.i.i, 2     ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %"_ZN4core5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$7reverse17h065073bf2b8ac653E.exit.loopexit.unr-lcssa", label %bb.h
 
@@ -1010,14 +1010,10 @@ bb.f:                                             ; preds = %.thread, %bb.d
 
 bb.g:                                             ; preds = %._crit_edge.i, %bb.f
   %indvar = phi i64 [ %indvar.next, %._crit_edge.i ], [ 0, %bb.f ] ; 2 uses
-  %.sroa.01.0.i = phi i64 [ %i.t, %._crit_edge.i ], [ 0, %bb.f ] ; 9 uses
-  %i.t = add i64 %.sroa.01.0.i, 32                ; 2 uses
+  %.sroa.01.0.i = phi i64 [ %i.t, %._crit_edge.i ], [ 0, %bb.f ] ; 8 uses
+  %i.t = add nuw i64 %.sroa.01.0.i, 32            ; 2 uses
   %.not.i = icmp ugt i64 %i.t, %.sroa.0.015
-  br i1 %.not.i, label %.preheader.i, label %.preheader14.i
-
-.preheader14.i:                                   ; preds = %bb.g
-  %.not36.i = icmp eq i64 %.sroa.01.0.i, -32
-  br i1 %.not36.i, label %_ZN4core5slice5ascii8is_ascii17h899e380db11233a2E.exit.thread, label %._crit_edge.i
+  br i1 %.not.i, label %.preheader.i, label %._crit_edge.i
 
 .preheader.i:                                     ; preds = %bb.g
   %i.u = icmp ult i64 %.sroa.01.0.i, %.sroa.0.015
@@ -1114,7 +1110,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %exitcond.not.i = icmp eq i64 %i.au, %.sroa.0.015
   br i1 %exitcond.not.i, label %_ZN4core5slice5ascii8is_ascii17h899e380db11233a2E.exit, label %.lr.ph25.i, !llvm.loop !7936
 
-._crit_edge.i:                                    ; preds = %.preheader14.i
+._crit_edge.i:                                    ; preds = %bb.g
   %i.av = getelementptr inbounds nuw i8, ptr %i.s, i64 %.sroa.01.0.i
   %i.aw = load <32 x i8>, ptr %i.av, align 1, !alias.scope !7930
   %i.ax = icmp slt <32 x i8> %i.aw, zeroinitializer
@@ -1127,7 +1123,7 @@ _ZN4core5slice5ascii8is_ascii17h899e380db11233a2E.exit: ; preds = %.lr.ph25.i, %
   %.lcssa144 = phi i1 [ %.not159, %vec.epilog.middle.block ], [ %.not157, %middle.block ], [ %i.at, %.lr.ph25.i ]
   br i1 %.lcssa144, label %_ZN4core5slice5ascii8is_ascii17h899e380db11233a2E.exit.thread17, label %_ZN4core5slice5ascii8is_ascii17h899e380db11233a2E.exit.thread
 
-_ZN4core5slice5ascii8is_ascii17h899e380db11233a2E.exit.thread: ; preds = %.preheader14.i, %._crit_edge.i, %_ZN4core5slice5ascii8is_ascii17h899e380db11233a2E.exit
+_ZN4core5slice5ascii8is_ascii17h899e380db11233a2E.exit.thread: ; preds = %._crit_edge.i, %_ZN4core5slice5ascii8is_ascii17h899e380db11233a2E.exit
   br i1 %.not6, label %._crit_edge, label %bb.h
 
 bb.h:                                             ; preds = %_ZN4core5slice5ascii8is_ascii17h899e380db11233a2E.exit.thread
@@ -1530,7 +1526,7 @@ _ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.us.i: ; pre
   %.sroa.5.0..sroa.0.0.sroa_idx.us.i.3 = getelementptr inbounds nuw i8, ptr %.sroa.0.010.us14.i, i64 88
   store i64 0, ptr %.sroa.5.0..sroa.0.0.sroa_idx.us.i.3, align 8, !noalias !10897
   %i.ad = getelementptr inbounds nuw i8, ptr %.sroa.0.010.us14.i, i64 96 ; 3 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge.loopexit.i.unr-lcssa, label %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.us.i
 
@@ -1933,7 +1929,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.i.new
   %i.u = bitcast <16 x i8> %.lobit.i.i.1 to <2 x i64>
   %i.v = or <2 x i64> %i.u, splat (i64 -9187201950435737472)
   store <2 x i64> %i.v, ptr %i.t, align 16
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.i.unr-lcssa, label %bb.b
 

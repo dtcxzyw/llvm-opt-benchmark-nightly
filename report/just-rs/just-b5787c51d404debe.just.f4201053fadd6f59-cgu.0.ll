@@ -204,7 +204,7 @@ _RNvMNtCsj6eKBz9Db1c_4core5sliceSTjjE12split_at_mutCskXtk6F4WjxZ_4just.exit11.i:
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ca, ptr noundef nonnull align 8 dereferenceable(16) %i.cb, i64 16, i1 false), !alias.scope !15631
   store <2 x i64> %i.cc, ptr %i.cb, align 8, !alias.scope !15629, !noalias !15626
   %i.cd = add nuw nsw i64 %.sroa.0.016.i, 2       ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_RINvNvMNtCsj6eKBz9Db1c_4core5sliceSp7reverse7revswapTjjEECskXtk6F4WjxZ_4just.exit.loopexit.unr-lcssa, label %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTjjE12split_at_mutCskXtk6F4WjxZ_4just.exit11.i
 
@@ -607,7 +607,7 @@ _RNvMNtCsj6eKBz9Db1c_4core5sliceSTcjE12split_at_mutCskXtk6F4WjxZ_4just.exit11.i.
   %i.bd = getelementptr inbounds nuw i8, ptr %i.az, i64 8
   store i64 %i.bc, ptr %i.bd, align 8, !alias.scope !25038, !noalias !25039
   %i.be = add nuw nsw i64 %.sroa.0.016.i.i, 2     ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTcjE7reverseCskXtk6F4WjxZ_4just.exit.loopexit.unr-lcssa, label %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTcjE12split_at_mutCskXtk6F4WjxZ_4just.exit11.i.i
 
@@ -1010,7 +1010,7 @@ bb.ch:                                            ; preds = %bb.ch, %.new
   %i.kq = trunc nuw nsw i64 %i.kg to i16
   %i.kr = getelementptr inbounds nuw i8, ptr %i.ko, i64 624
   store i16 %i.kq, ptr %i.kr, align 8, !noalias !32976
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.unr-lcssa, label %bb.ch
 
@@ -1413,7 +1413,7 @@ bb.ej:                                            ; preds = %bb.ej, %.new
   %i.vp = trunc nuw nsw i64 %i.vf to i16
   %i.vq = getelementptr inbounds nuw i8, ptr %i.vn, i64 360
   store i16 %i.vp, ptr %i.vq, align 8, !noalias !35707
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.unr-lcssa, label %bb.ej
 
@@ -1816,7 +1816,7 @@ bb.ib:                                            ; preds = %bb.ib, %.new4384
   %i.akm = trunc nuw nsw i64 %i.akc to i16
   %i.akn = getelementptr inbounds nuw i8, ptr %i.akk, i64 272
   store i16 %i.akm, ptr %i.akn, align 8, !noalias !35979
-  %niter4393.next.3 = add i64 %niter4393, 4       ; 2 uses
+  %niter4393.next.3 = add nuw i64 %niter4393, 4   ; 2 uses
   %niter4393.ncmp.3 = icmp eq i64 %niter4393.next.3, %unroll_iter4392
   br i1 %niter4393.ncmp.3, label %.unr-lcssa4385, label %bb.ib
 
@@ -2219,7 +2219,7 @@ bb.ba:                                            ; preds = %bb.ba, %.new
   %i.hy = trunc nuw nsw i64 %i.hq to i16
   %i.hz = getelementptr inbounds nuw i8, ptr %i.hx, i64 8
   store i16 %i.hy, ptr %i.hz, align 8, !noalias !38455
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_RINvMsW_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree4nodeINtB6_6HandleINtB6_7NodeRefNtNtB6_6marker3MutNtNtCskXtk6F4WjxZ_4just5sigil5SigilNtNtB8_7set_val9SetValZSTNtB1n_8InternalENtB1n_2KVE5splitNtNtBc_5alloc6GlobalEB1H_.exit.i.i.i.i.unr-lcssa, label %bb.ba
 
@@ -2622,7 +2622,7 @@ bb.bp:                                            ; preds = %bb.bp, %.new
   %i.hx = trunc nuw nsw i64 %i.hp to i16
   %i.hy = getelementptr inbounds nuw i8, ptr %i.hw, i64 1548
   store i16 %i.hx, ptr %i.hy, align 4, !noalias !41161
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.unr-lcssa, label %bb.bp
 
@@ -3025,7 +3025,7 @@ bb.bo:                                            ; preds = %bb.bo, %.new
   %i.jl = trunc nuw nsw i64 %i.jb to i16
   %i.jm = getelementptr inbounds nuw i8, ptr %i.jj, i64 1328
   store i16 %i.jl, ptr %i.jm, align 8, !noalias !41440
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.unr-lcssa, label %bb.bo
 
@@ -3428,7 +3428,7 @@ bb.bt:                                            ; preds = %bb.bt, %.new
   %i.jl = trunc nuw nsw i64 %i.jb to i16
   %i.jm = getelementptr inbounds nuw i8, ptr %i.jj, i64 1592
   store i16 %i.jl, ptr %i.jm, align 8, !noalias !41689
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.unr-lcssa, label %bb.bt
 
@@ -3831,7 +3831,7 @@ bb.bt:                                            ; preds = %bb.bt, %.new
   %i.jl = trunc nuw nsw i64 %i.jb to i16
   %i.jm = getelementptr inbounds nuw i8, ptr %i.jj, i64 4056
   store i16 %i.jl, ptr %i.jm, align 8, !noalias !41955
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.unr-lcssa, label %bb.bt
 
@@ -4234,7 +4234,7 @@ bb.bo:                                            ; preds = %bb.bo, %.new
   %i.jj = trunc nuw nsw i64 %i.iz to i16
   %i.jk = getelementptr inbounds nuw i8, ptr %i.jh, i64 3000
   store i16 %i.jj, ptr %i.jk, align 8, !noalias !42198
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.unr-lcssa, label %bb.bo
 
@@ -4637,7 +4637,7 @@ bb.bo:                                            ; preds = %bb.bo, %.new
   %i.jj = trunc nuw nsw i64 %i.iz to i16
   %i.jk = getelementptr inbounds nuw i8, ptr %i.jh, i64 1240
   store i16 %i.jj, ptr %i.jk, align 8, !noalias !42430
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.unr-lcssa, label %bb.bo
 
@@ -5040,7 +5040,7 @@ bb.bu:                                            ; preds = %bb.bu, %.new
   %i.ji = trunc nuw nsw i64 %i.iy to i16
   %i.jj = getelementptr inbounds nuw i8, ptr %i.jg, i64 10128
   store i16 %i.ji, ptr %i.jj, align 8, !noalias !42674
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.unr-lcssa, label %bb.bu
 
@@ -5443,7 +5443,7 @@ bb.kf:                                            ; preds = %bb.kf, %.new2152
   %i.age = trunc nuw nsw i64 %i.afw to i16
   %i.agf = getelementptr inbounds nuw i8, ptr %i.agd, i64 4584
   store i16 %i.age, ptr %i.agf, align 8, !noalias !44481
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.unr-lcssa, label %bb.kf
 
@@ -5846,7 +5846,7 @@ bb.np:                                            ; preds = %bb.np, %.new
   %i.asu = trunc nuw nsw i64 %i.ask to i16
   %i.asv = getelementptr inbounds nuw i8, ptr %i.ass, i64 2384
   store i16 %i.asu, ptr %i.asv, align 8, !noalias !46013
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.unr-lcssa, label %bb.np
 
@@ -6249,7 +6249,7 @@ bb.ue:                                            ; preds = %bb.ue, %.new13952
   %i.bmu = trunc nuw nsw i64 %i.bmm to i16
   %i.bmv = getelementptr inbounds nuw i8, ptr %i.bmt, i64 96
   store i16 %i.bmu, ptr %i.bmv, align 8, !noalias !46280
-  %niter13959.next.3 = add i64 %niter13959, 4     ; 2 uses
+  %niter13959.next.3 = add nuw i64 %niter13959, 4 ; 2 uses
   %niter13959.ncmp.3 = icmp eq i64 %niter13959.next.3, %unroll_iter13958
   br i1 %niter13959.ncmp.3, label %_RINvMsW_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree4nodeINtB6_6HandleINtB6_7NodeRefNtNtB6_6marker3MutNtNtCskXtk6F4WjxZ_4just9attribute13AttributeKindjNtB1n_8InternalENtB1n_2KVE5splitNtNtBc_5alloc6GlobalEB1H_.exit.i.i.i.i.unr-lcssa, label %bb.ue
 
@@ -6652,7 +6652,7 @@ bb.ds:                                            ; preds = %bb.ds, %.new
   %i.mm = trunc nuw nsw i64 %i.me to i16
   %i.mn = getelementptr inbounds nuw i8, ptr %i.ml, i64 272
   store i16 %i.mm, ptr %i.mn, align 8, !noalias !49928
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_RINvMsW_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree4nodeINtB6_6HandleINtB6_7NodeRefNtNtB6_6marker3MutNtNtCsaKJjC64KgbL_3std4path7PathBufNtNtB8_7set_val9SetValZSTNtB1n_8InternalENtB1n_2KVE5splitNtNtBc_5alloc6GlobalECskXtk6F4WjxZ_4just.exit.i.i.i.i.unr-lcssa, label %bb.ds
 
@@ -7055,7 +7055,7 @@ bb.pi:                                            ; preds = %bb.pi, %.new11323
   %i.bdm = trunc nuw nsw i64 %i.bdc to i16
   %i.bdn = getelementptr inbounds nuw i8, ptr %i.bdk, i64 2912
   store i16 %i.bdm, ptr %i.bdn, align 8, !noalias !50927
-  %niter11332.next.3 = add i64 %niter11332, 4     ; 2 uses
+  %niter11332.next.3 = add nuw i64 %niter11332, 4 ; 2 uses
   %niter11332.ncmp.3 = icmp eq i64 %niter11332.next.3, %unroll_iter11331
   br i1 %niter11332.ncmp.3, label %.unr-lcssa11324, label %bb.pi
 
@@ -7458,7 +7458,7 @@ bb.ub:                                            ; preds = %bb.ub, %.new11306
   %i.bvc = trunc nuw nsw i64 %i.bus to i16
   %i.bvd = getelementptr inbounds nuw i8, ptr %i.bva, i64 2824
   store i16 %i.bvc, ptr %i.bvd, align 8, !noalias !51268
-  %niter11315.next.3 = add i64 %niter11315, 4     ; 2 uses
+  %niter11315.next.3 = add nuw i64 %niter11315, 4 ; 2 uses
   %niter11315.ncmp.3 = icmp eq i64 %niter11315.next.3, %unroll_iter11314
   br i1 %niter11315.ncmp.3, label %.unr-lcssa11307, label %bb.ub
 
@@ -7861,7 +7861,7 @@ bb.ada:                                           ; preds = %bb.ada, %.new11285
   %i.dbj = trunc nuw nsw i64 %i.daz to i16
   %i.dbk = getelementptr inbounds nuw i8, ptr %i.dbh, i64 1504
   store i16 %i.dbj, ptr %i.dbk, align 8, !noalias !51829
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.unr-lcssa, label %bb.ada
 
@@ -8264,7 +8264,7 @@ bb.rj:                                            ; preds = %bb.rj, %.new
   %i.bbs = trunc nuw nsw i64 %i.bbk to i16
   %i.bbt = getelementptr inbounds nuw i8, ptr %i.bbr, i64 536
   store i16 %i.bbs, ptr %i.bbt, align 8, !noalias !53924
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.unr-lcssa, label %bb.rj
 
@@ -8667,7 +8667,7 @@ bb.cc:                                            ; preds = %bb.cc, %.new
   %i.mv = trunc nuw nsw i64 %i.ml to i16
   %i.mw = getelementptr inbounds nuw i8, ptr %i.mt, i64 624
   store i16 %i.mv, ptr %i.mw, align 8, !noalias !54798
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.unr-lcssa, label %bb.cc
 
@@ -9070,7 +9070,7 @@ bb.ft:                                            ; preds = %bb.ft, %.new1688
   %i.abf = trunc nuw nsw i64 %i.aax to i16
   %i.abg = getelementptr inbounds nuw i8, ptr %i.abe, i64 360
   store i16 %i.abf, ptr %i.abg, align 8, !noalias !55080
-  %niter1697.next.3 = add i64 %niter1697, 4       ; 2 uses
+  %niter1697.next.3 = add nuw i64 %niter1697, 4   ; 2 uses
   %niter1697.ncmp.3 = icmp eq i64 %niter1697.next.3, %unroll_iter1696
   br i1 %niter1697.ncmp.3, label %.unr-lcssa1689, label %bb.ft
 
@@ -9473,7 +9473,7 @@ bb.hr:                                            ; preds = %bb.hr, %.new1482
   %i.aky = trunc nuw nsw i64 %i.ako to i16
   %i.akz = getelementptr inbounds nuw i8, ptr %i.akw, i64 624
   store i16 %i.aky, ptr %i.akz, align 8, !noalias !57462
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.unr-lcssa, label %bb.hr
 
@@ -9876,7 +9876,7 @@ bb.l:                                             ; preds = %bb.l, %.new
   %i.cc = trunc nuw nsw i64 %i.bu to i16
   %i.cd = getelementptr inbounds nuw i8, ptr %i.cb, i64 4584
   store i16 %i.cc, ptr %i.cd, align 8
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_RINvMsp_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree4nodeINtB6_7NodeRefNtNtB6_6marker3MutNtNtBc_6string6StringNtNtCskXtk6F4WjxZ_4just13arg_attribute12ArgAttributeNtB1a_8InternalE30correct_childrens_parent_linksINtNtNtCsj6eKBz9Db1c_4core3ops5range5RangejEEB1P_.exit.loopexit.unr-lcssa, label %bb.l
 }
@@ -10279,7 +10279,7 @@ bb.l:                                             ; preds = %bb.l, %.new
   %i.bs = trunc nuw nsw i64 %i.bk to i16
   %i.bt = getelementptr inbounds nuw i8, ptr %i.br, i64 272
   store i16 %i.bs, ptr %i.bt, align 8
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_RINvMsp_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree4nodeINtB6_7NodeRefNtNtB6_6marker3MutNtNtCsaKJjC64KgbL_3std4path7PathBufNtNtB8_7set_val9SetValZSTNtB1a_8InternalE30correct_childrens_parent_linksINtNtNtCsj6eKBz9Db1c_4core3ops5range5RangejEECskXtk6F4WjxZ_4just.exit.loopexit.unr-lcssa, label %bb.l
 }
@@ -10682,7 +10682,7 @@ bb.l:                                             ; preds = %bb.l, %.new
   %i.cm = trunc nuw nsw i64 %i.cc to i16
   %i.cn = getelementptr inbounds nuw i8, ptr %i.ck, i64 4056
   store i16 %i.cm, ptr %i.cn, align 8
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_RINvMsp_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree4nodeINtB6_7NodeRefNtNtB6_6marker3MutReINtNtCskXtk6F4WjxZ_4just6recipe6RecipeNtNtB1x_21unresolved_dependency20UnresolvedDependencyENtB1a_8InternalE30correct_childrens_parent_linksINtNtNtCsj6eKBz9Db1c_4core3ops5range5RangejEEB1x_.exit.loopexit.unr-lcssa, label %bb.l
 }
@@ -11085,7 +11085,7 @@ bb.l:                                             ; preds = %bb.l, %.new
   %i.cm = trunc nuw nsw i64 %i.cc to i16
   %i.cn = getelementptr inbounds nuw i8, ptr %i.ck, i64 2384
   store i16 %i.cm, ptr %i.cn, align 8
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_RINvMsp_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree4nodeINtB6_7NodeRefNtNtB6_6marker3MutReTNtNtCskXtk6F4WjxZ_4just4name4NameINtNtCsj6eKBz9Db1c_4core6option6OptionNtNtB1x_10expression10ExpressionEENtB1a_8InternalE30correct_childrens_parent_linksINtNtNtB25_3ops5range5RangejEEB1x_.exit.loopexit.unr-lcssa, label %bb.l
 }
@@ -11488,7 +11488,7 @@ bb.l:                                             ; preds = %bb.l, %.new
   %i.cf = trunc nuw nsw i64 %i.bx to i16
   %i.cg = getelementptr inbounds nuw i8, ptr %i.ce, i64 2252
   store i16 %i.cf, ptr %i.cg, align 4
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_RINvMsp_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree4nodeINtB6_7NodeRefNtNtB6_6marker3MutlNtNtCsaKJjC64KgbL_3std7process7CommandNtB1a_8InternalE30correct_childrens_parent_linksINtNtNtCsj6eKBz9Db1c_4core3ops5range5RangejEECskXtk6F4WjxZ_4just.exit.loopexit.unr-lcssa, label %bb.l
 }
@@ -11891,7 +11891,7 @@ bb.bs:                                            ; preds = %bb.bs, %.new
   %i.ho = trunc nuw nsw i64 %i.hg to i16
   %i.hp = getelementptr inbounds nuw i8, ptr %i.hn, i64 536
   store i16 %i.ho, ptr %i.hp, align 8, !noalias !63557
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.unr-lcssa, label %bb.bs
 
@@ -12294,7 +12294,7 @@ bb.cb:                                            ; preds = %bb.cb, %.new
   %i.hf = trunc nuw nsw i64 %i.gx to i16
   %i.hg = getelementptr inbounds nuw i8, ptr %i.he, i64 536
   store i16 %i.hf, ptr %i.hg, align 8, !noalias !63800
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.unr-lcssa, label %bb.cb
 
@@ -12697,7 +12697,7 @@ bb.cq:                                            ; preds = %bb.cq, %.new8719
   %i.vq = trunc nuw nsw i64 %i.vg to i16
   %i.vr = getelementptr inbounds nuw i8, ptr %i.vo, i64 448
   store i16 %i.vq, ptr %i.vr, align 8, !noalias !64540
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_RINvMsW_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree4nodeINtB6_6HandleINtB6_7NodeRefNtNtB6_6marker3MutReINtNtBc_3vec3VecB1D_ENtB1n_8InternalENtB1n_2KVE5splitNtNtBc_5alloc6GlobalECskXtk6F4WjxZ_4just.exit.i.i.i.i.unr-lcssa, label %bb.cq
 
@@ -13100,7 +13100,7 @@ bb.m:                                             ; preds = %.loopexit35.i
   %i.by = getelementptr inbounds nuw i8, ptr %i.bx, i64 8
   store i64 %.val16.i.i.i.i.i.i.i.1, ptr %i.by, align 8, !noalias !65982
   %i.bz = add nuw i64 %i.bn, 2                    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_RNvXs_NtNtCs4wP2HXfJTCR_5alloc3vec21spec_from_iter_nestedINtB6_3VecReEINtB4_18SpecFromIterNestedB13_INtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters3map3MapINtNtNtB1J_5slice4iter4IterNtNtB8_6string6StringENvMB2R_B2P_6as_strEE9from_iterCskXtk6F4WjxZ_4just.exit.i.unr-lcssa, label %.preheader.i.i.i38.i
 
@@ -13503,7 +13503,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.i.new
   %i.u = bitcast <16 x i8> %.lobit.i.i.1 to <2 x i64>
   %i.v = or <2 x i64> %i.u, splat (i64 -9187201950435737472)
   store <2 x i64> %i.v, ptr %i.t, align 16
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.i.unr-lcssa, label %bb.b
 
@@ -13906,7 +13906,7 @@ bb.bz:                                            ; preds = %bb.bz, %.new
   %i.ie = trunc nuw nsw i64 %i.hw to i16
   %i.if = getelementptr inbounds nuw i8, ptr %i.id, i64 536
   store i16 %i.ie, ptr %i.if, align 8, !noalias !70573
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.unr-lcssa, label %bb.bz
 
@@ -14309,7 +14309,7 @@ bb.bz:                                            ; preds = %bb.bz, %.new
   %i.hz = trunc nuw nsw i64 %i.hr to i16
   %i.ia = getelementptr inbounds nuw i8, ptr %i.hy, i64 536
   store i16 %i.hz, ptr %i.ia, align 8, !noalias !70871
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.unr-lcssa, label %bb.bz
 
@@ -14712,7 +14712,7 @@ bb.be:                                            ; preds = %bb.be, %.new
   %i.gl = trunc nuw nsw i64 %i.gd to i16
   %i.gm = getelementptr inbounds nuw i8, ptr %i.gk, i64 272
   store i16 %i.gl, ptr %i.gm, align 8, !noalias !71087
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_RINvMsW_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree4nodeINtB6_6HandleINtB6_7NodeRefNtNtB6_6marker3MutNtNtBc_6string6StringNtNtB8_7set_val9SetValZSTNtB1n_8InternalENtB1n_2KVE5splitNtNtBc_5alloc6GlobalECskXtk6F4WjxZ_4just.exit.i.i.i.unr-lcssa, label %bb.be
 
@@ -15115,7 +15115,7 @@ bb.bj:                                            ; preds = %bb.bj, %.new
   %i.hz = trunc nuw nsw i64 %i.hr to i16
   %i.ia = getelementptr inbounds nuw i8, ptr %i.hy, i64 360
   store i16 %i.hz, ptr %i.ia, align 8, !noalias !71304
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_RINvMsW_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree4nodeINtB6_6HandleINtB6_7NodeRefNtNtB6_6marker3MutNtNtBc_6string6StringjNtB1n_8InternalENtB1n_2KVE5splitNtNtBc_5alloc6GlobalECskXtk6F4WjxZ_4just.exit.i.i.i.unr-lcssa, label %bb.bj
 
@@ -15518,7 +15518,7 @@ bb.ao:                                            ; preds = %bb.ao, %.new
   %i.fm = trunc nuw nsw i64 %i.fe to i16
   %i.fn = getelementptr inbounds nuw i8, ptr %i.fl, i64 8
   store i16 %i.fm, ptr %i.fn, align 8, !noalias !71430
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_RINvMsW_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree4nodeINtB6_6HandleINtB6_7NodeRefNtNtB6_6marker3MutNtNtCskXtk6F4WjxZ_4just10token_kind9TokenKindNtNtB8_7set_val9SetValZSTNtB1n_8InternalENtB1n_2KVE5splitNtNtBc_5alloc6GlobalEB1H_.exit.i.i.i.unr-lcssa, label %bb.ao
 
@@ -15921,7 +15921,7 @@ bb.ao:                                            ; preds = %bb.ao, %.new
   %i.fm = trunc nuw nsw i64 %i.fe to i16
   %i.fn = getelementptr inbounds nuw i8, ptr %i.fl, i64 8
   store i16 %i.fm, ptr %i.fn, align 8, !noalias !71541
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_RINvMsW_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree4nodeINtB6_6HandleINtB6_7NodeRefNtNtB6_6marker3MutNtNtCskXtk6F4WjxZ_4just16unstable_feature15UnstableFeatureNtNtB8_7set_val9SetValZSTNtB1n_8InternalENtB1n_2KVE5splitNtNtBc_5alloc6GlobalEB1H_.exit.i.i.i.unr-lcssa, label %bb.ao
 
@@ -16324,7 +16324,7 @@ bb.aq:                                            ; preds = %bb.aq, %.new
   %i.gp = trunc nuw nsw i64 %i.gf to i16
   %i.gq = getelementptr inbounds nuw i8, ptr %i.gn, i64 184
   store i16 %i.gp, ptr %i.gq, align 8, !noalias !71678
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_RINvMsW_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree4nodeINtB6_6HandleINtB6_7NodeRefNtNtB6_6marker3MutReNtNtB8_7set_val9SetValZSTNtB1n_8InternalENtB1n_2KVE5splitNtNtBc_5alloc6GlobalECskXtk6F4WjxZ_4just.exit.i.i.i.unr-lcssa, label %bb.aq
 
@@ -16727,7 +16727,7 @@ bb.ar:                                            ; preds = %bb.ar, %.new
   %i.hz = trunc nuw nsw i64 %i.hp to i16
   %i.ia = getelementptr inbounds nuw i8, ptr %i.hx, i64 272
   store i16 %i.hz, ptr %i.ia, align 8, !noalias !71841
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_RINvMsW_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree4nodeINtB6_6HandleINtB6_7NodeRefNtNtB6_6marker3MutRejNtB1n_8InternalENtB1n_2KVE5splitNtNtBc_5alloc6GlobalECskXtk6F4WjxZ_4just.exit.i.i.i.unr-lcssa, label %bb.ar
 
@@ -17130,7 +17130,7 @@ bb.bw:                                            ; preds = %bb.bw, %.new
   %i.ju = trunc nuw nsw i64 %i.jm to i16
   %i.jv = getelementptr inbounds nuw i8, ptr %i.jt, i64 888
   store i16 %i.ju, ptr %i.jv, align 8, !noalias !72136
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.unr-lcssa, label %bb.bw
 
@@ -17533,7 +17533,7 @@ bb.ar:                                            ; preds = %bb.ar, %.new
   %i.hy = trunc nuw nsw i64 %i.ho to i16
   %i.hz = getelementptr inbounds nuw i8, ptr %i.hw, i64 228
   store i16 %i.hy, ptr %i.hz, align 4, !noalias !72296
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_RINvMsW_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree4nodeINtB6_6HandleINtB6_7NodeRefNtNtB6_6marker3MutTjjEmNtB1n_8InternalENtB1n_2KVE5splitNtNtBc_5alloc6GlobalECskXtk6F4WjxZ_4just.exit.i.i.i.unr-lcssa, label %bb.ar
 
@@ -17936,7 +17936,7 @@ bb.bo:                                            ; preds = %bb.bo, %.new
   %i.hv = trunc nuw nsw i64 %i.hn to i16
   %i.hw = getelementptr inbounds nuw i8, ptr %i.hu, i64 2252
   store i16 %i.hv, ptr %i.hw, align 4, !noalias !72464
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.unr-lcssa, label %bb.bo
 

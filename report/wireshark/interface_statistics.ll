@@ -203,7 +203,7 @@ bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   %i.b = alloca i32, align 4                      ; 4 uses
   %i.c = getelementptr i8, ptr %0, i64 72         ; 3 uses
-  %i.d = load ptr, ptr %i.c, align 8              ; 3 uses
+  %i.d = load ptr, ptr %i.c, align 8              ; 5 uses
   %.not.i.i = icmp eq ptr %i.d, null
   br i1 %.not.i.i, label %_ZNK4QSetI7QStringE4sizeEv.exit, label %bb.b
 
@@ -214,9 +214,9 @@ bb.b:                                             ; preds = %bb.a
 
 _ZNK4QSetI7QStringE4sizeEv.exit:                  ; preds = %bb.a, %bb.b
   %i.g = phi i64 [ %i.f, %bb.b ], [ 0, %bb.a ]
-  %i.h = load ptr, ptr %1, align 8                ; 5 uses
+  %i.h = load ptr, ptr %1, align 8                ; 4 uses
   %.not.i = icmp eq ptr %i.h, null
-  br i1 %.not.i, label %_ZNK5QHashI7QString20InterfaceStatsSampleE6cbeginEv.exit, label %bb.c
+  br i1 %.not.i, label %._crit_edge, label %bb.c
 
 bb.c:                                             ; preds = %_ZNK4QSetI7QStringE4sizeEv.exit
   %i.i = getelementptr i8, ptr %i.h, i64 32
@@ -229,12 +229,12 @@ bb.d:                                             ; preds = %bb.c
   %i.l = getelementptr i8, ptr %i.h, i64 16
   %i.m = load i64, ptr %i.l, align 8              ; 2 uses
   %i.n = icmp eq i64 %i.m, 1
-  br i1 %i.n, label %_ZNK5QHashI7QString20InterfaceStatsSampleE6cbeginEv.exit, label %.lr.ph
+  br i1 %i.n, label %._crit_edge, label %.lr.ph
 
 bb.e:                                             ; preds = %.lr.ph
-  %i.o = add i64 %i.q, 1                          ; 2 uses
+  %i.o = add nuw i64 %i.q, 1                      ; 2 uses
   %i.p = icmp eq i64 %i.o, %i.m
-  br i1 %i.p, label %_ZNK5QHashI7QString20InterfaceStatsSampleE6cbeginEv.exit, label %.lr.ph, !llvm.loop !33
+  br i1 %i.p, label %._crit_edge, label %.lr.ph, !llvm.loop !33
 
 .lr.ph:                                           ; preds = %bb.d, %bb.e
   %i.q = phi i64 [ %i.o, %bb.e ], [ 1, %bb.d ]    ; 4 uses
@@ -244,22 +244,10 @@ bb.e:                                             ; preds = %.lr.ph
   %i.u = getelementptr i8, ptr %i.s, i64 %i.t
   %i.v = load i8, ptr %i.u, align 1
   %.not.i.i.i.i = icmp eq i8 %i.v, -1
-  br i1 %.not.i.i.i.i, label %bb.e, label %._ZNK5QHashI7QString20InterfaceStatsSampleE6cbeginEv.exit.loopexit_crit_edge, !llvm.loop !33
+  br i1 %.not.i.i.i.i, label %bb.e, label %_ZNK5QHashI7QString20InterfaceStatsSampleE14const_iteratorneERKS3_.exit.thread.lr.ph, !llvm.loop !33
 
-._ZNK5QHashI7QString20InterfaceStatsSampleE6cbeginEv.exit.loopexit_crit_edge: ; preds = %.lr.ph
-  br label %_ZNK5QHashI7QString20InterfaceStatsSampleE6cbeginEv.exit, !llvm.loop !33
-
-_ZNK5QHashI7QString20InterfaceStatsSampleE6cbeginEv.exit: ; preds = %bb.e, %bb.d, %._ZNK5QHashI7QString20InterfaceStatsSampleE6cbeginEv.exit.loopexit_crit_edge, %_ZNK4QSetI7QStringE4sizeEv.exit
-  %.sroa.0.0.i = phi ptr [ null, %_ZNK4QSetI7QStringE4sizeEv.exit ], [ null, %bb.d ], [ %i.h, %._ZNK5QHashI7QString20InterfaceStatsSampleE6cbeginEv.exit.loopexit_crit_edge ], [ null, %bb.e ] ; 2 uses
-  %.sroa.4.0.i = phi i64 [ 0, %_ZNK4QSetI7QStringE4sizeEv.exit ], [ 0, %bb.d ], [ %i.q, %._ZNK5QHashI7QString20InterfaceStatsSampleE6cbeginEv.exit.loopexit_crit_edge ], [ 0, %bb.e ] ; 2 uses
-  %4 = icmp ne ptr %.sroa.0.0.i, null
-  %5 = icmp ne i64 %.sroa.4.0.i, 0
-  %or.cond62 = or i1 %4, %5
-  br i1 %or.cond62, label %_ZNK5QHashI7QString20InterfaceStatsSampleE14const_iteratorneERKS3_.exit.thread.lr.ph, label %._crit_edge
-
-_ZNK5QHashI7QString20InterfaceStatsSampleE14const_iteratorneERKS3_.exit.thread.lr.ph: ; preds = %bb.c, %_ZNK5QHashI7QString20InterfaceStatsSampleE6cbeginEv.exit
-  %.sroa.4.0.i84 = phi i64 [ %.sroa.4.0.i, %_ZNK5QHashI7QString20InterfaceStatsSampleE6cbeginEv.exit ], [ 0, %bb.c ]
-  %.sroa.0.0.i83 = phi ptr [ %.sroa.0.0.i, %_ZNK5QHashI7QString20InterfaceStatsSampleE6cbeginEv.exit ], [ %i.h, %bb.c ]
+_ZNK5QHashI7QString20InterfaceStatsSampleE14const_iteratorneERKS3_.exit.thread.lr.ph: ; preds = %.lr.ph, %bb.c
+  %.sroa.4.0.i84 = phi i64 [ 0, %bb.c ], [ %i.q, %.lr.ph ]
   %i.w = getelementptr i8, ptr %0, i64 40         ; 2 uses
   %i.x = getelementptr i8, ptr %0, i64 48         ; 2 uses
   %i.y = getelementptr i8, ptr %0, i64 56
@@ -273,13 +261,13 @@ _ZNK5QHashI7QString20InterfaceStatsSampleE14const_iteratorneERKS3_.exit.thread.l
   %.pre = load ptr, ptr %i.c, align 8
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %_ZNK5QHashI7QString20InterfaceStatsSampleE6cbeginEv.exit
-  %6 = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %i.d, %_ZNK5QHashI7QString20InterfaceStatsSampleE6cbeginEv.exit ] ; 2 uses
-  %.not.i.i30 = icmp eq ptr %6, null
+._crit_edge:                                      ; preds = %bb.e, %_ZNK4QSetI7QStringE4sizeEv.exit, %bb.d, %._crit_edge.loopexit
+  %4 = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %i.d, %bb.d ], [ %i.d, %_ZNK4QSetI7QStringE4sizeEv.exit ], [ %i.d, %bb.e ] ; 2 uses
+  %.not.i.i30 = icmp eq ptr %4, null
   br i1 %.not.i.i30, label %_ZNK4QSetI7QStringE4sizeEv.exit31, label %bb.f
 
 bb.f:                                             ; preds = %._crit_edge
-  %i.ad = getelementptr i8, ptr %6, i64 8
+  %i.ad = getelementptr i8, ptr %4, i64 8
   %i.ae = load i64, ptr %i.ad, align 8
   br label %_ZNK4QSetI7QStringE4sizeEv.exit31
 
@@ -290,7 +278,7 @@ _ZNK4QSetI7QStringE4sizeEv.exit31:                ; preds = %._crit_edge, %bb.f
 
 _ZNK5QHashI7QString20InterfaceStatsSampleE14const_iteratorneERKS3_.exit.thread: ; preds = %_ZNK5QHashI7QString20InterfaceStatsSampleE14const_iteratorneERKS3_.exit.thread.lr.ph, %_ZN5QHashI7QString20InterfaceStatsSampleE14const_iteratorppEv.exit
   %.sroa.8.064 = phi i64 [ %.sroa.4.0.i84, %_ZNK5QHashI7QString20InterfaceStatsSampleE14const_iteratorneERKS3_.exit.thread.lr.ph ], [ %.sroa.8.1, %_ZN5QHashI7QString20InterfaceStatsSampleE14const_iteratorppEv.exit ] ; 3 uses
-  %.sroa.055.063 = phi ptr [ %.sroa.0.0.i83, %_ZNK5QHashI7QString20InterfaceStatsSampleE14const_iteratorneERKS3_.exit.thread.lr.ph ], [ %.sroa.055.1, %_ZN5QHashI7QString20InterfaceStatsSampleE14const_iteratorppEv.exit ] ; 3 uses
+  %.sroa.055.063 = phi ptr [ %i.h, %_ZNK5QHashI7QString20InterfaceStatsSampleE14const_iteratorneERKS3_.exit.thread.lr.ph ], [ %.sroa.055.1, %_ZN5QHashI7QString20InterfaceStatsSampleE14const_iteratorppEv.exit ] ; 3 uses
   %i.ag = getelementptr i8, ptr %.sroa.055.063, i64 32 ; 2 uses
   %i.ah = load ptr, ptr %i.ag, align 8
   %i.ai = lshr i64 %.sroa.8.064, 7
@@ -693,7 +681,7 @@ bb.f:                                             ; preds = %_ZN5QHashI7QString5
   br i1 %i.t, label %_ZN5QHashI7QString5QListIiEE5beginEv.exit, label %.lr.ph
 
 bb.g:                                             ; preds = %.lr.ph
-  %i.u = add i64 %i.w, 1                          ; 2 uses
+  %i.u = add nuw i64 %i.w, 1                      ; 2 uses
   %i.v = icmp eq i64 %i.u, %i.s
   br i1 %i.v, label %_ZN5QHashI7QString5QListIiEE5beginEv.exit, label %.lr.ph, !llvm.loop !53
 
@@ -705,20 +693,16 @@ bb.g:                                             ; preds = %.lr.ph
   %i.aa = getelementptr i8, ptr %i.y, i64 %i.z
   %i.ab = load i8, ptr %i.aa, align 1
   %.not.i.i.i.i = icmp eq i8 %i.ab, -1
-  br i1 %.not.i.i.i.i, label %bb.g, label %._ZN5QHashI7QString5QListIiEE5beginEv.exit.loopexit_crit_edge, !llvm.loop !53
+  br i1 %.not.i.i.i.i, label %bb.g, label %_ZNK5QHashI7QString5QListIiEE8iteratorneERKS4_.exit.thread.lr.ph, !llvm.loop !53
 
-._ZN5QHashI7QString5QListIiEE5beginEv.exit.loopexit_crit_edge: ; preds = %.lr.ph
-  br label %_ZN5QHashI7QString5QListIiEE5beginEv.exit, !llvm.loop !53
+_ZN5QHashI7QString5QListIiEE5beginEv.exit:        ; preds = %bb.g, %bb.f, %_ZN5QHashI7QString5QListIiEE6detachEv.exit.i
+  %.sroa.0.0.i.i = phi ptr [ %i.n, %_ZN5QHashI7QString5QListIiEE6detachEv.exit.i ], [ null, %bb.f ], [ null, %bb.g ] ; 2 uses
+  %.not = icmp eq ptr %.sroa.0.0.i.i, null
+  br i1 %.not, label %.critedge, label %_ZNK5QHashI7QString5QListIiEE8iteratorneERKS4_.exit.thread.lr.ph
 
-_ZN5QHashI7QString5QListIiEE5beginEv.exit:        ; preds = %bb.g, %bb.f, %._ZN5QHashI7QString5QListIiEE5beginEv.exit.loopexit_crit_edge, %_ZN5QHashI7QString5QListIiEE6detachEv.exit.i
-  %.sroa.0.0.i.i = phi ptr [ %i.n, %_ZN5QHashI7QString5QListIiEE6detachEv.exit.i ], [ %i.n, %._ZN5QHashI7QString5QListIiEE5beginEv.exit.loopexit_crit_edge ], [ null, %bb.f ], [ null, %bb.g ] ; 2 uses
-  %.sroa.5.0.i.i = phi i64 [ 0, %_ZN5QHashI7QString5QListIiEE6detachEv.exit.i ], [ %i.w, %._ZN5QHashI7QString5QListIiEE5beginEv.exit.loopexit_crit_edge ], [ 0, %bb.f ], [ 0, %bb.g ] ; 2 uses
-  %1 = icmp ne ptr %.sroa.0.0.i.i, null
-  %2 = icmp ne i64 %.sroa.5.0.i.i, 0
-  %or.cond28 = or i1 %1, %2
-  br i1 %or.cond28, label %_ZNK5QHashI7QString5QListIiEE8iteratorneERKS4_.exit.thread.lr.ph, label %.critedge
-
-_ZNK5QHashI7QString5QListIiEE8iteratorneERKS4_.exit.thread.lr.ph: ; preds = %_ZN5QHashI7QString5QListIiEE5beginEv.exit
+_ZNK5QHashI7QString5QListIiEE8iteratorneERKS4_.exit.thread.lr.ph: ; preds = %.lr.ph, %_ZN5QHashI7QString5QListIiEE5beginEv.exit
+  %.sroa.5.0.i.i47 = phi i64 [ 0, %_ZN5QHashI7QString5QListIiEE5beginEv.exit ], [ %i.w, %.lr.ph ]
+  %.sroa.0.0.i.i46 = phi ptr [ %.sroa.0.0.i.i, %_ZN5QHashI7QString5QListIiEE5beginEv.exit ], [ %i.n, %.lr.ph ]
   %i.ac = getelementptr i8, ptr %0, i64 104       ; 2 uses
   %i.ad = getelementptr i8, ptr %0, i64 64
   br label %_ZNK5QHashI7QString5QListIiEE8iteratorneERKS4_.exit.thread
@@ -728,8 +712,8 @@ _ZNK5QHashI7QString5QListIiEE8iteratorneERKS4_.exit.thread.lr.ph: ; preds = %_ZN
 
 _ZNK5QHashI7QString5QListIiEE8iteratorneERKS4_.exit.thread: ; preds = %_ZNK5QHashI7QString5QListIiEE8iteratorneERKS4_.exit.thread.lr.ph, %_ZN5QHashI7QString5QListIiEE8iteratorppEv.exit
   %.031 = phi i1 [ false, %_ZNK5QHashI7QString5QListIiEE8iteratorneERKS4_.exit.thread.lr.ph ], [ %.1, %_ZN5QHashI7QString5QListIiEE8iteratorppEv.exit ] ; 2 uses
-  %.sroa.8.030 = phi i64 [ %.sroa.5.0.i.i, %_ZNK5QHashI7QString5QListIiEE8iteratorneERKS4_.exit.thread.lr.ph ], [ %.sroa.8.1, %_ZN5QHashI7QString5QListIiEE8iteratorppEv.exit ] ; 3 uses
-  %.sroa.021.029 = phi ptr [ %.sroa.0.0.i.i, %_ZNK5QHashI7QString5QListIiEE8iteratorneERKS4_.exit.thread.lr.ph ], [ %.sroa.021.1, %_ZN5QHashI7QString5QListIiEE8iteratorppEv.exit ] ; 3 uses
+  %.sroa.8.030 = phi i64 [ %.sroa.5.0.i.i47, %_ZNK5QHashI7QString5QListIiEE8iteratorneERKS4_.exit.thread.lr.ph ], [ %.sroa.8.1, %_ZN5QHashI7QString5QListIiEE8iteratorppEv.exit ] ; 3 uses
+  %.sroa.021.029 = phi ptr [ %.sroa.0.0.i.i46, %_ZNK5QHashI7QString5QListIiEE8iteratorneERKS4_.exit.thread.lr.ph ], [ %.sroa.021.1, %_ZN5QHashI7QString5QListIiEE8iteratorppEv.exit ] ; 3 uses
   %i.ae = getelementptr i8, ptr %.sroa.021.029, i64 32 ; 3 uses
   %i.af = load ptr, ptr %i.ae, align 8
   %i.ag = lshr i64 %.sroa.8.030, 7                ; 2 uses
@@ -1132,18 +1116,18 @@ _ZN5QHashI7QString5QListIiEE6detachEv.exit.i:     ; preds = %bb.e, %bb.d
   %i.l = load ptr, ptr %i.k, align 8              ; 2 uses
   %i.m = load i8, ptr %i.l, align 1
   %.not.i.i.i = icmp eq i8 %i.m, -1
-  br i1 %.not.i.i.i, label %bb.f, label %_ZN5QHashI7QString5QListIiEE5beginEv.exit
+  br i1 %.not.i.i.i, label %bb.f, label %._ZN5QHashI7QString5QListIiEE5beginEv.exit.loopexit_crit_edge
 
 bb.f:                                             ; preds = %_ZN5QHashI7QString5QListIiEE6detachEv.exit.i
   %i.n = getelementptr i8, ptr %i.j, i64 16
   %i.o = load i64, ptr %i.n, align 8              ; 2 uses
   %i.p = icmp eq i64 %i.o, 1
-  br i1 %i.p, label %_ZN5QHashI7QString5QListIiEE5beginEv.exit, label %.lr.ph
+  br i1 %i.p, label %._ZN5QHashI7QString5QListIiEE5beginEv.exit.loopexit_crit_edge, label %.lr.ph
 
 bb.g:                                             ; preds = %.lr.ph
-  %i.q = add i64 %i.s, 1                          ; 2 uses
+  %i.q = add nuw i64 %i.s, 1                      ; 2 uses
   %i.r = icmp eq i64 %i.q, %i.o
-  br i1 %i.r, label %_ZN5QHashI7QString5QListIiEE5beginEv.exit, label %.lr.ph, !llvm.loop !53
+  br i1 %i.r, label %._ZN5QHashI7QString5QListIiEE5beginEv.exit.loopexit_crit_edge, label %.lr.ph, !llvm.loop !53
 
 .lr.ph:                                           ; preds = %bb.f, %bb.g
   %i.s = phi i64 [ %i.q, %bb.g ], [ 1, %bb.f ]    ; 4 uses
@@ -1153,20 +1137,19 @@ bb.g:                                             ; preds = %.lr.ph
   %i.w = getelementptr i8, ptr %i.u, i64 %i.v
   %i.x = load i8, ptr %i.w, align 1
   %.not.i.i.i.i = icmp eq i8 %i.x, -1
-  br i1 %.not.i.i.i.i, label %bb.g, label %._ZN5QHashI7QString5QListIiEE5beginEv.exit.loopexit_crit_edge, !llvm.loop !53
+  br i1 %.not.i.i.i.i, label %bb.g, label %_ZN5QHashI7QString5QListIiEE5beginEv.exit, !llvm.loop !53
 
-._ZN5QHashI7QString5QListIiEE5beginEv.exit.loopexit_crit_edge: ; preds = %.lr.ph
-  br label %_ZN5QHashI7QString5QListIiEE5beginEv.exit, !llvm.loop !53
+._ZN5QHashI7QString5QListIiEE5beginEv.exit.loopexit_crit_edge: ; preds = %bb.g, %bb.f, %_ZN5QHashI7QString5QListIiEE6detachEv.exit.i
+  %.sroa.0.0.i.i = phi ptr [ %i.j, %_ZN5QHashI7QString5QListIiEE6detachEv.exit.i ], [ null, %bb.f ], [ null, %bb.g ] ; 2 uses
+  %.not = icmp eq ptr %.sroa.0.0.i.i, null
+  br i1 %.not, label %._crit_edge, label %_ZN5QHashI7QString5QListIiEE5beginEv.exit
 
-_ZN5QHashI7QString5QListIiEE5beginEv.exit:        ; preds = %bb.g, %bb.f, %._ZN5QHashI7QString5QListIiEE5beginEv.exit.loopexit_crit_edge, %_ZN5QHashI7QString5QListIiEE6detachEv.exit.i
-  %.sroa.0.0.i.i = phi ptr [ %i.j, %_ZN5QHashI7QString5QListIiEE6detachEv.exit.i ], [ %i.j, %._ZN5QHashI7QString5QListIiEE5beginEv.exit.loopexit_crit_edge ], [ null, %bb.f ], [ null, %bb.g ] ; 2 uses
-  %.sroa.5.0.i.i = phi i64 [ 0, %_ZN5QHashI7QString5QListIiEE6detachEv.exit.i ], [ %i.s, %._ZN5QHashI7QString5QListIiEE5beginEv.exit.loopexit_crit_edge ], [ 0, %bb.f ], [ 0, %bb.g ] ; 2 uses
-  %2 = icmp ne ptr %.sroa.0.0.i.i, null
-  %3 = icmp ne i64 %.sroa.5.0.i.i, 0
-  %or.cond53 = or i1 %2, %3
-  br i1 %or.cond53, label %_ZNK5QHashI7QString5QListIiEE8iteratorneERKS4_.exit.thread, label %._crit_edge
+_ZN5QHashI7QString5QListIiEE5beginEv.exit:        ; preds = %.lr.ph, %._ZN5QHashI7QString5QListIiEE5beginEv.exit.loopexit_crit_edge
+  %.sroa.749.055.ph = phi i64 [ 0, %._ZN5QHashI7QString5QListIiEE5beginEv.exit.loopexit_crit_edge ], [ %i.s, %.lr.ph ]
+  %.sroa.046.054.ph = phi ptr [ %.sroa.0.0.i.i, %._ZN5QHashI7QString5QListIiEE5beginEv.exit.loopexit_crit_edge ], [ %i.j, %.lr.ph ]
+  br label %_ZNK5QHashI7QString5QListIiEE8iteratorneERKS4_.exit.thread
 
-._crit_edge:                                      ; preds = %_ZN5QHashI7QString5QListIiEE8iteratorppEv.exit, %_ZN5QHashI7QString5QListIiEE5beginEv.exit
+._crit_edge:                                      ; preds = %_ZN5QHashI7QString5QListIiEE8iteratorppEv.exit, %._ZN5QHashI7QString5QListIiEE5beginEv.exit.loopexit_crit_edge
   %i.y = getelementptr i8, ptr %0, i64 64         ; 2 uses
   %i.z = load ptr, ptr %i.y, align 8              ; 4 uses
   %.not.i.i10 = icmp eq ptr %i.z, null
@@ -1188,18 +1171,18 @@ _ZN5QHashI7QString5QListIiEE6detachEv.exit.i11:   ; preds = %bb.i, %bb.h
   %i.af = load ptr, ptr %i.ae, align 8            ; 2 uses
   %i.ag = load i8, ptr %i.af, align 1
   %.not.i.i.i12 = icmp eq i8 %i.ag, -1
-  br i1 %.not.i.i.i12, label %bb.j, label %_ZN5QHashI7QString5QListIiEE5beginEv.exit18
+  br i1 %.not.i.i.i12, label %bb.j, label %._ZN5QHashI7QString5QListIiEE5beginEv.exit18.loopexit_crit_edge
 
 bb.j:                                             ; preds = %_ZN5QHashI7QString5QListIiEE6detachEv.exit.i11
   %i.ah = getelementptr i8, ptr %i.ad, i64 16
   %i.ai = load i64, ptr %i.ah, align 8            ; 2 uses
   %i.aj = icmp eq i64 %i.ai, 1
-  br i1 %i.aj, label %_ZN5QHashI7QString5QListIiEE5beginEv.exit18, label %.lr.ph83
+  br i1 %i.aj, label %._ZN5QHashI7QString5QListIiEE5beginEv.exit18.loopexit_crit_edge, label %.lr.ph83
 
 bb.k:                                             ; preds = %.lr.ph83
-  %i.ak = add i64 %i.am, 1                        ; 2 uses
+  %i.ak = add nuw i64 %i.am, 1                    ; 2 uses
   %i.al = icmp eq i64 %i.ak, %i.ai
-  br i1 %i.al, label %_ZN5QHashI7QString5QListIiEE5beginEv.exit18, label %.lr.ph83, !llvm.loop !53
+  br i1 %i.al, label %._ZN5QHashI7QString5QListIiEE5beginEv.exit18.loopexit_crit_edge, label %.lr.ph83, !llvm.loop !53
 
 .lr.ph83:                                         ; preds = %bb.j, %bb.k
   %i.am = phi i64 [ %i.ak, %bb.k ], [ 1, %bb.j ]  ; 4 uses
@@ -1209,22 +1192,21 @@ bb.k:                                             ; preds = %.lr.ph83
   %i.aq = getelementptr i8, ptr %i.ao, i64 %i.ap
   %i.ar = load i8, ptr %i.aq, align 1
   %.not.i.i.i.i17 = icmp eq i8 %i.ar, -1
-  br i1 %.not.i.i.i.i17, label %bb.k, label %._ZN5QHashI7QString5QListIiEE5beginEv.exit18.loopexit_crit_edge, !llvm.loop !53
+  br i1 %.not.i.i.i.i17, label %bb.k, label %_ZN5QHashI7QString5QListIiEE5beginEv.exit18, !llvm.loop !53
 
-._ZN5QHashI7QString5QListIiEE5beginEv.exit18.loopexit_crit_edge: ; preds = %.lr.ph83
-  br label %_ZN5QHashI7QString5QListIiEE5beginEv.exit18, !llvm.loop !53
+._ZN5QHashI7QString5QListIiEE5beginEv.exit18.loopexit_crit_edge: ; preds = %bb.k, %bb.j, %_ZN5QHashI7QString5QListIiEE6detachEv.exit.i11
+  %.sroa.0.0.i.i13 = phi ptr [ %i.ad, %_ZN5QHashI7QString5QListIiEE6detachEv.exit.i11 ], [ null, %bb.j ], [ null, %bb.k ] ; 2 uses
+  %.not83 = icmp eq ptr %.sroa.0.0.i.i13, null
+  br i1 %.not83, label %.loopexit, label %_ZN5QHashI7QString5QListIiEE5beginEv.exit18
 
-_ZN5QHashI7QString5QListIiEE5beginEv.exit18:      ; preds = %bb.k, %bb.j, %._ZN5QHashI7QString5QListIiEE5beginEv.exit18.loopexit_crit_edge, %_ZN5QHashI7QString5QListIiEE6detachEv.exit.i11
-  %.sroa.0.0.i.i13 = phi ptr [ %i.ad, %_ZN5QHashI7QString5QListIiEE6detachEv.exit.i11 ], [ %i.ad, %._ZN5QHashI7QString5QListIiEE5beginEv.exit18.loopexit_crit_edge ], [ null, %bb.j ], [ null, %bb.k ] ; 2 uses
-  %.sroa.5.0.i.i14 = phi i64 [ 0, %_ZN5QHashI7QString5QListIiEE6detachEv.exit.i11 ], [ %i.am, %._ZN5QHashI7QString5QListIiEE5beginEv.exit18.loopexit_crit_edge ], [ 0, %bb.j ], [ 0, %bb.k ] ; 2 uses
-  %4 = icmp ne ptr %.sroa.0.0.i.i13, null
-  %5 = icmp ne i64 %.sroa.5.0.i.i14, 0
-  %or.cond5256 = or i1 %4, %5
-  br i1 %or.cond5256, label %_ZNK5QHashI7QString5QListIiEE8iteratorneERKS4_.exit25.thread, label %.loopexit
+_ZN5QHashI7QString5QListIiEE5beginEv.exit18:      ; preds = %.lr.ph83, %._ZN5QHashI7QString5QListIiEE5beginEv.exit18.loopexit_crit_edge
+  %.sroa.7.058.ph = phi i64 [ 0, %._ZN5QHashI7QString5QListIiEE5beginEv.exit18.loopexit_crit_edge ], [ %i.am, %.lr.ph83 ]
+  %.sroa.039.057.ph = phi ptr [ %.sroa.0.0.i.i13, %._ZN5QHashI7QString5QListIiEE5beginEv.exit18.loopexit_crit_edge ], [ %i.ad, %.lr.ph83 ]
+  br label %_ZNK5QHashI7QString5QListIiEE8iteratorneERKS4_.exit25.thread
 
 _ZNK5QHashI7QString5QListIiEE8iteratorneERKS4_.exit.thread: ; preds = %_ZN5QHashI7QString5QListIiEE5beginEv.exit, %_ZN5QHashI7QString5QListIiEE8iteratorppEv.exit
-  %.sroa.749.055 = phi i64 [ %.sroa.749.1, %_ZN5QHashI7QString5QListIiEE8iteratorppEv.exit ], [ %.sroa.5.0.i.i, %_ZN5QHashI7QString5QListIiEE5beginEv.exit ] ; 3 uses
-  %.sroa.046.054 = phi ptr [ %.sroa.046.1, %_ZN5QHashI7QString5QListIiEE8iteratorppEv.exit ], [ %.sroa.0.0.i.i, %_ZN5QHashI7QString5QListIiEE5beginEv.exit ] ; 3 uses
+  %.sroa.749.055 = phi i64 [ %.sroa.749.1, %_ZN5QHashI7QString5QListIiEE8iteratorppEv.exit ], [ %.sroa.749.055.ph, %_ZN5QHashI7QString5QListIiEE5beginEv.exit ] ; 3 uses
+  %.sroa.046.054 = phi ptr [ %.sroa.046.1, %_ZN5QHashI7QString5QListIiEE8iteratorppEv.exit ], [ %.sroa.046.054.ph, %_ZN5QHashI7QString5QListIiEE5beginEv.exit ] ; 3 uses
   %i.as = getelementptr i8, ptr %.sroa.046.054, i64 32 ; 2 uses
   %i.at = load ptr, ptr %i.as, align 8
   %i.au = lshr i64 %.sroa.749.055, 7
@@ -1317,8 +1299,8 @@ _ZN5QHashI7QString5QListIiEE8iteratorppEv.exit:   ; preds = %bb.n, %._ZN5QHashI7
   br i1 %or.cond, label %_ZNK5QHashI7QString5QListIiEE8iteratorneERKS4_.exit.thread, label %._crit_edge
 
 _ZNK5QHashI7QString5QListIiEE8iteratorneERKS4_.exit25.thread: ; preds = %_ZN5QHashI7QString5QListIiEE5beginEv.exit18, %_ZN5QHashI7QString5QListIiEE8iteratorppEv.exit38
-  %.sroa.7.058 = phi i64 [ %.sroa.7.1, %_ZN5QHashI7QString5QListIiEE8iteratorppEv.exit38 ], [ %.sroa.5.0.i.i14, %_ZN5QHashI7QString5QListIiEE5beginEv.exit18 ] ; 3 uses
-  %.sroa.039.057 = phi ptr [ %.sroa.039.1, %_ZN5QHashI7QString5QListIiEE8iteratorppEv.exit38 ], [ %.sroa.0.0.i.i13, %_ZN5QHashI7QString5QListIiEE5beginEv.exit18 ] ; 3 uses
+  %.sroa.7.058 = phi i64 [ %.sroa.7.1, %_ZN5QHashI7QString5QListIiEE8iteratorppEv.exit38 ], [ %.sroa.7.058.ph, %_ZN5QHashI7QString5QListIiEE5beginEv.exit18 ] ; 3 uses
+  %.sroa.039.057 = phi ptr [ %.sroa.039.1, %_ZN5QHashI7QString5QListIiEE8iteratorppEv.exit38 ], [ %.sroa.039.057.ph, %_ZN5QHashI7QString5QListIiEE5beginEv.exit18 ] ; 3 uses
   %i.ch = getelementptr i8, ptr %.sroa.039.057, i64 32 ; 2 uses
   %i.ci = load ptr, ptr %i.ch, align 8
   %i.cj = lshr i64 %.sroa.7.058, 7
@@ -1410,7 +1392,7 @@ _ZN5QHashI7QString5QListIiEE8iteratorppEv.exit38: ; preds = %bb.q, %._ZN5QHashI7
   %or.cond52 = or i1 %i.du, %i.dv
   br i1 %or.cond52, label %_ZNK5QHashI7QString5QListIiEE8iteratorneERKS4_.exit25.thread, label %.loopexit
 
-.loopexit:                                        ; preds = %_ZN5QHashI7QString5QListIiEE8iteratorppEv.exit38, %_ZN5QHashI7QString5QListIiEE5beginEv.exit18, %bb.b, %bb.a
+.loopexit:                                        ; preds = %_ZN5QHashI7QString5QListIiEE8iteratorppEv.exit38, %._ZN5QHashI7QString5QListIiEE5beginEv.exit18.loopexit_crit_edge, %bb.b, %bb.a
   ret void
 }
 

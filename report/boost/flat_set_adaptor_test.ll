@@ -204,7 +204,7 @@ vector.body166:                                   ; preds = %vector.body166, %ve
   store <2 x i64> %vec.ind, ptr %next.gep, align 8, !tbaa !272
   store <2 x i64> %step.add, ptr %i.ec, align 8, !tbaa !272
   %index.next168 = add nuw i64 %index167, 4       ; 2 uses
-  %vec.ind.next = add <2 x i64> %vec.ind, splat (i64 4)
+  %vec.ind.next = add nuw <2 x i64> %vec.ind, splat (i64 4)
   %i.ed = icmp eq i64 %index.next168, %n.vec165
   br i1 %i.ed, label %middle.block169, label %vector.body166, !llvm.loop !2866
 
@@ -222,7 +222,7 @@ middle.block169:                                  ; preds = %vector.body166
   %.079.i.i = phi ptr [ %i.ee, %.lr.ph.i.i ], [ %.079.i.i.ph, %.lr.ph.i.i.preheader173 ] ; 2 uses
   store i64 %.010.i.i, ptr %.079.i.i, align 8, !tbaa !272
   %i.ee = getelementptr inbounds nuw i8, ptr %.079.i.i, i64 8
-  %i.ef = add i64 %.010.i.i, 1                    ; 2 uses
+  %i.ef = add nuw i64 %.010.i.i, 1                ; 2 uses
   %.not.i.i = icmp eq i64 %i.ef, %i.dx
   br i1 %.not.i.i, label %_ZN5boost7movelib15detail_adaptive14combine_paramsIPmNS1_4lessEmNS0_13adaptive_xbufIiPimEEEEvT_T0_T1_SA_SA_RT2_RSA_SD_SD_SD_b.exit, label %.lr.ph.i.i, !llvm.loop !2867
 
@@ -625,7 +625,7 @@ middle.block:                                     ; preds = %vector.body
   %storemerge10.i.i = phi i64 [ %storemerge.i.i, %.lr.ph.i.i ], [ %storemerge10.i.i.ph, %.lr.ph.i.i.preheader22 ] ; 2 uses
   %i.v = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %storemerge10.i.i
   store i32 %i.o, ptr %i.v, align 4, !tbaa !69
-  %storemerge.i.i = add i64 %storemerge10.i.i, 1  ; 2 uses
+  %storemerge.i.i = add nuw i64 %storemerge10.i.i, 1 ; 2 uses
   %.not.i.i = icmp eq i64 %storemerge.i.i, %i.i
   br i1 %.not.i.i, label %_ZN5boost7movelib13adaptive_xbufIiPimE16initialize_untilEmRi.exit.i, label %.lr.ph.i.i, !llvm.loop !3303
 
@@ -1028,7 +1028,7 @@ bb.o:                                             ; preds = %.lr.ph.i.14.13
   br label %_ZN5boost7movelib14insertion_sortINS_9container3dtl23flat_tree_value_compareISt4lessIiEiNS_11move_detail8identityIiEEEEPiEEvT0_SC_T_.exit
 
 _ZN5boost7movelib14insertion_sortINS_9container3dtl23flat_tree_value_compareISt4lessIiEiNS_11move_detail8identityIiEEEEPiEEvT0_SC_T_.exit: ; preds = %.critedge.i.14, %.lr.ph37.i.14
-  %i.mo = add i64 %.04460, 16                     ; 3 uses
+  %i.mo = add nuw i64 %.04460, 16                 ; 3 uses
   %i.mp = sub i64 %i.d, %i.mo
   %i.mq = icmp ugt i64 %i.mp, 16
   br i1 %i.mq, label %.lr.ph, label %._crit_edge, !llvm.loop !3401
@@ -1431,7 +1431,7 @@ vector.body157:                                   ; preds = %vector.body157, %ve
   store <2 x i64> %vec.ind159, ptr %next.gep161, align 8, !tbaa !272
   store <2 x i64> %step.add160, ptr %i.v, align 8, !tbaa !272
   %index.next162 = add nuw i64 %index158, 4       ; 2 uses
-  %vec.ind.next163 = add <2 x i64> %vec.ind159, splat (i64 4)
+  %vec.ind.next163 = add nuw <2 x i64> %vec.ind159, splat (i64 4)
   %i.w = icmp eq i64 %index.next162, %n.vec156
   br i1 %i.w, label %middle.block164, label %vector.body157, !llvm.loop !3536
 
@@ -1449,7 +1449,7 @@ middle.block164:                                  ; preds = %vector.body157
   %.079.i.i.us.us = phi ptr [ %i.x, %.lr.ph.i.i.us.us ], [ %.079.i.i.us.us.ph, %.lr.ph.i.i.us.us.preheader184 ] ; 2 uses
   store i64 %.010.i.i.us.us, ptr %.079.i.i.us.us, align 8, !tbaa !272
   %i.x = getelementptr inbounds nuw i8, ptr %.079.i.i.us.us, i64 8
-  %i.y = add i64 %.010.i.i.us.us, 1               ; 2 uses
+  %i.y = add nuw i64 %.010.i.i.us.us, 1           ; 2 uses
   %.not.i.i.us.us = icmp eq i64 %i.y, %i.q
   br i1 %.not.i.i.us.us, label %_ZN5boost7movelib15detail_adaptive14combine_paramsIPmNS1_4lessEmNS0_10range_xbufIPimNS0_7move_opEEEEEvT_T0_T1_SB_SB_RT2_RSB_SE_SE_SE_b.exit.us.us, label %.lr.ph.i.i.us.us, !llvm.loop !3537
 
@@ -1499,7 +1499,7 @@ vector.body142:                                   ; preds = %vector.body142, %ve
   store <2 x i64> %vec.ind144, ptr %next.gep146, align 8, !tbaa !272
   store <2 x i64> %step.add145, ptr %i.ao, align 8, !tbaa !272
   %index.next147 = add nuw i64 %index143, 4       ; 2 uses
-  %vec.ind.next148 = add <2 x i64> %vec.ind144, splat (i64 4)
+  %vec.ind.next148 = add nuw <2 x i64> %vec.ind144, splat (i64 4)
   %i.ap = icmp eq i64 %index.next147, %n.vec141
   br i1 %i.ap, label %middle.block149, label %vector.body142, !llvm.loop !3539
 
@@ -1517,7 +1517,7 @@ middle.block149:                                  ; preds = %vector.body142
   %.079.i.i.us = phi ptr [ %i.aq, %.lr.ph.i.i.us ], [ %.079.i.i.us.ph, %.lr.ph.i.i.us.preheader186 ] ; 2 uses
   store i64 %.010.i.i.us, ptr %.079.i.i.us, align 8, !tbaa !272
   %i.aq = getelementptr inbounds nuw i8, ptr %.079.i.i.us, i64 8
-  %i.ar = add i64 %.010.i.i.us, 1                 ; 2 uses
+  %i.ar = add nuw i64 %.010.i.i.us, 1             ; 2 uses
   %.not.i.i.us = icmp eq i64 %i.ar, %i.aj
   br i1 %.not.i.i.us, label %_ZN5boost7movelib15detail_adaptive14combine_paramsIPmNS1_4lessEmNS0_10range_xbufIPimNS0_7move_opEEEEEvT_T0_T1_SB_SB_RT2_RSB_SE_SE_SE_b.exit.us, label %.lr.ph.i.i.us, !llvm.loop !3540
 
@@ -1567,7 +1567,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <2 x i64> %vec.ind, ptr %next.gep, align 8, !tbaa !272
   store <2 x i64> %step.add, ptr %i.bh, align 8, !tbaa !272
   %index.next = add nuw i64 %index, 4             ; 2 uses
-  %vec.ind.next = add <2 x i64> %vec.ind, splat (i64 4)
+  %vec.ind.next = add nuw <2 x i64> %vec.ind, splat (i64 4)
   %i.bi = icmp eq i64 %index.next, %n.vec
   br i1 %i.bi, label %middle.block, label %vector.body, !llvm.loop !3541
 
@@ -1585,7 +1585,7 @@ middle.block:                                     ; preds = %vector.body
   %.079.i.i = phi ptr [ %i.bj, %.lr.ph.i.i ], [ %.079.i.i.ph, %.lr.ph.i.i.preheader188 ] ; 2 uses
   store i64 %.010.i.i, ptr %.079.i.i, align 8, !tbaa !272
   %i.bj = getelementptr inbounds nuw i8, ptr %.079.i.i, i64 8
-  %i.bk = add i64 %.010.i.i, 1                    ; 2 uses
+  %i.bk = add nuw i64 %.010.i.i, 1                ; 2 uses
   %.not.i.i = icmp eq i64 %i.bk, %i.bc
   br i1 %.not.i.i, label %_ZN5boost7movelib15detail_adaptive14combine_paramsIPmNS1_4lessEmNS0_10range_xbufIPimNS0_7move_opEEEEEvT_T0_T1_SB_SB_RT2_RSB_SE_SE_SE_b.exit, label %.lr.ph.i.i, !llvm.loop !3542
 
@@ -1648,7 +1648,7 @@ vector.body172:                                   ; preds = %vector.body172, %ve
   store <2 x i64> %vec.ind174, ptr %next.gep176, align 8, !tbaa !272
   store <2 x i64> %step.add175, ptr %i.ch, align 8, !tbaa !272
   %index.next177 = add nuw i64 %index173, 4       ; 2 uses
-  %vec.ind.next178 = add <2 x i64> %vec.ind174, splat (i64 4)
+  %vec.ind.next178 = add nuw <2 x i64> %vec.ind174, splat (i64 4)
   %i.ci = icmp eq i64 %index.next177, %n.vec171
   br i1 %i.ci, label %middle.block179, label %vector.body172, !llvm.loop !3543
 
@@ -1666,7 +1666,7 @@ middle.block179:                                  ; preds = %vector.body172
   %.079.i.i88 = phi ptr [ %i.cj, %.lr.ph.i.i86 ], [ %.079.i.i88.ph, %.lr.ph.i.i86.preheader183 ] ; 2 uses
   store i64 %.010.i.i87, ptr %.079.i.i88, align 8, !tbaa !272
   %i.cj = getelementptr inbounds nuw i8, ptr %.079.i.i88, i64 8
-  %i.ck = add i64 %.010.i.i87, 1                  ; 2 uses
+  %i.ck = add nuw i64 %.010.i.i87, 1              ; 2 uses
   %.not.i.i89 = icmp eq i64 %i.ck, %i.cc
   br i1 %.not.i.i89, label %_ZN5boost7movelib15detail_adaptive14combine_paramsIPmNS1_4lessEmNS0_10range_xbufIPimNS0_7move_opEEEEEvT_T0_T1_SB_SB_RT2_RSB_SE_SE_SE_b.exit90, label %.lr.ph.i.i86, !llvm.loop !3544
 
@@ -2069,7 +2069,7 @@ middle.block:                                     ; preds = %vector.body
   %storemerge10.i.i = phi i64 [ %storemerge.i.i, %.lr.ph.i.i ], [ %storemerge10.i.i.ph, %.lr.ph.i.i.preheader24 ] ; 2 uses
   %i.w = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %storemerge10.i.i
   store i32 %i.p, ptr %i.w, align 4, !tbaa !69
-  %storemerge.i.i = add i64 %storemerge10.i.i, 1  ; 2 uses
+  %storemerge.i.i = add nuw i64 %storemerge10.i.i, 1 ; 2 uses
   %.not.i.i = icmp eq i64 %storemerge.i.i, %i.i
   br i1 %.not.i.i, label %_ZN5boost7movelib13adaptive_xbufIiPimE16initialize_untilEmRi.exit.i, label %.lr.ph.i.i, !llvm.loop !4776
 
@@ -2472,7 +2472,7 @@ vector.body119:                                   ; preds = %vector.body119, %ve
   store <2 x i64> %vec.ind, ptr %next.gep, align 8, !tbaa !272
   store <2 x i64> %step.add, ptr %i.cg, align 8, !tbaa !272
   %index.next121 = add nuw i64 %index120, 4       ; 2 uses
-  %vec.ind.next = add <2 x i64> %vec.ind, splat (i64 4)
+  %vec.ind.next = add nuw <2 x i64> %vec.ind, splat (i64 4)
   %i.ch = icmp eq i64 %index.next121, %n.vec118
   br i1 %i.ch, label %middle.block122, label %vector.body119, !llvm.loop !7118
 
@@ -2490,7 +2490,7 @@ middle.block122:                                  ; preds = %vector.body119
   %.079.i.i = phi ptr [ %i.ci, %.lr.ph.i.i ], [ %.079.i.i.ph, %.lr.ph.i.i.preheader126 ] ; 2 uses
   store i64 %.010.i.i, ptr %.079.i.i, align 8, !tbaa !272
   %i.ci = getelementptr inbounds nuw i8, ptr %.079.i.i, i64 8
-  %i.cj = add i64 %.010.i.i, 1                    ; 2 uses
+  %i.cj = add nuw i64 %.010.i.i, 1                ; 2 uses
   %.not.i.i55 = icmp eq i64 %i.cj, %i.cb
   br i1 %.not.i.i55, label %_ZN5boost7movelib15detail_adaptive14combine_paramsIPmNS1_4lessEmNS0_13adaptive_xbufIiPimEEEEvT_T0_T1_SA_SA_RT2_RSA_SD_SD_SD_b.exit, label %.lr.ph.i.i, !llvm.loop !7119
 
@@ -2893,7 +2893,7 @@ middle.block:                                     ; preds = %vector.body
   %storemerge10.i = phi i64 [ %storemerge.i, %.lr.ph.i ], [ %storemerge10.i.ph, %.lr.ph.i.preheader15 ] ; 2 uses
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %storemerge10.i
   store i32 %i.q, ptr %i.x, align 4, !tbaa !69
-  %storemerge.i = add i64 %storemerge10.i, 1      ; 2 uses
+  %storemerge.i = add nuw i64 %storemerge10.i, 1  ; 2 uses
   %.not.i = icmp eq i64 %storemerge.i, %4
   br i1 %.not.i, label %_ZN5boost7movelib13adaptive_xbufIiPimE16initialize_untilEmRi.exit, label %.lr.ph.i, !llvm.loop !8106
 
@@ -3296,7 +3296,7 @@ bb.a:
   %7 = alloca %"class.boost::container::stable_vector_iterator", align 8 ; 8 uses
   %i.a = load ptr, ptr %1, align 8, !tbaa !1450   ; 4 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !1354
-  %i.c = load ptr, ptr %0, align 8, !tbaa !1450   ; 4 uses
+  %i.c = load ptr, ptr %0, align 8, !tbaa !1450   ; 3 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !1354 ; 3 uses
   %i.e = ptrtoint ptr %i.b to i64
   %i.f = ptrtoint ptr %i.d to i64
@@ -3379,22 +3379,18 @@ bb.f:                                             ; preds = %.critedge.i, %.lr.p
   br i1 %.not19.i, label %_ZN5boost7movelib14insertion_sortINS_9container3dtl23flat_tree_value_compareISt4lessIiEiNS_11move_detail8identityIiEEEENS2_22stable_vector_iteratorIPiLb0EEEEEvT0_SE_T_.exit, label %.lr.ph30.i, !llvm.loop !6836
 
 _ZN5boost7movelib14insertion_sortINS_9container3dtl23flat_tree_value_compareISt4lessIiEiNS_11move_detail8identityIiEEEENS2_22stable_vector_iteratorIPiLb0EEEEEvT0_SE_T_.exit: ; preds = %bb.f, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPiLb0EEEl.exit36, %bb.c
-  %i.ah = add i64 %.033100, 16                    ; 4 uses
+  %i.ah = add nuw i64 %.033100, 16                ; 3 uses
   %i.ai = sub i64 %i.h, %i.ah
   %i.aj = icmp ugt i64 %i.ai, 16
-  br i1 %i.aj, label %.lr.ph, label %._crit_edge, !llvm.loop !8431
+  br i1 %i.aj, label %.lr.ph, label %bb.g, !llvm.loop !8431
 
-._crit_edge:                                      ; preds = %_ZN5boost7movelib14insertion_sortINS_9container3dtl23flat_tree_value_compareISt4lessIiEiNS_11move_detail8identityIiEEEENS2_22stable_vector_iteratorIPiLb0EEEEEvT0_SE_T_.exit
-  %.not.i.i37 = icmp eq i64 %i.ah, 0
-  br i1 %.not.i.i37, label %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPiLb0EEEl.exit38, label %bb.g
-
-bb.g:                                             ; preds = %._crit_edge
+bb.g:                                             ; preds = %_ZN5boost7movelib14insertion_sortINS_9container3dtl23flat_tree_value_compareISt4lessIiEiNS_11move_detail8identityIiEEEENS2_22stable_vector_iteratorIPiLb0EEEEEvT0_SE_T_.exit
   %i.ak = getelementptr inbounds [8 x i8], ptr %i.d, i64 %i.ah
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !1352, !noalias !8432
   br label %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPiLb0EEEl.exit38
 
-_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPiLb0EEEl.exit38: ; preds = %bb.a, %._crit_edge, %bb.g
-  %.sroa.081.0 = phi ptr [ %i.c, %._crit_edge ], [ %i.al, %bb.g ], [ %i.c, %bb.a ] ; 4 uses
+_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPiLb0EEEl.exit38: ; preds = %bb.a, %bb.g
+  %.sroa.081.0 = phi ptr [ %i.al, %bb.g ], [ %i.c, %bb.a ] ; 4 uses
   %.not.i39 = icmp eq ptr %.sroa.081.0, %i.a
   br i1 %.not.i39, label %_ZN5boost7movelib14insertion_sortINS_9container3dtl23flat_tree_value_compareISt4lessIiEiNS_11move_detail8identityIiEEEENS2_22stable_vector_iteratorIPiLb0EEEEEvT0_SE_T_.exit55, label %bb.h
 
@@ -3797,7 +3793,7 @@ vector.body179:                                   ; preds = %vector.body179, %ve
   store <2 x i64> %vec.ind181, ptr %next.gep183, align 8, !tbaa !272
   store <2 x i64> %step.add182, ptr %i.w, align 8, !tbaa !272
   %index.next184 = add nuw i64 %index180, 4       ; 2 uses
-  %vec.ind.next185 = add <2 x i64> %vec.ind181, splat (i64 4)
+  %vec.ind.next185 = add nuw <2 x i64> %vec.ind181, splat (i64 4)
   %i.x = icmp eq i64 %index.next184, %n.vec178
   br i1 %i.x, label %middle.block186, label %vector.body179, !llvm.loop !8788
 
@@ -3815,7 +3811,7 @@ middle.block186:                                  ; preds = %vector.body179
   %.079.i.i.us.us = phi ptr [ %i.y, %.lr.ph.i.i.us.us ], [ %.079.i.i.us.us.ph, %.lr.ph.i.i.us.us.preheader206 ] ; 2 uses
   store i64 %.010.i.i.us.us, ptr %.079.i.i.us.us, align 8, !tbaa !272
   %i.y = getelementptr inbounds nuw i8, ptr %.079.i.i.us.us, i64 8
-  %i.z = add i64 %.010.i.i.us.us, 1               ; 2 uses
+  %i.z = add nuw i64 %.010.i.i.us.us, 1           ; 2 uses
   %.not.i.i.us.us = icmp eq i64 %i.z, %i.r
   br i1 %.not.i.i.us.us, label %_ZN5boost7movelib15detail_adaptive14combine_paramsIPmNS1_4lessEmNS0_10range_xbufINS_9container22stable_vector_iteratorIPiLb0EEEmNS0_7move_opEEEEEvT_T0_T1_SE_SE_RT2_RSE_SH_SH_SH_b.exit.us.us, label %.lr.ph.i.i.us.us, !llvm.loop !8789
 
@@ -3874,7 +3870,7 @@ vector.body164:                                   ; preds = %vector.body164, %ve
   store <2 x i64> %vec.ind166, ptr %next.gep168, align 8, !tbaa !272
   store <2 x i64> %step.add167, ptr %i.as, align 8, !tbaa !272
   %index.next169 = add nuw i64 %index165, 4       ; 2 uses
-  %vec.ind.next170 = add <2 x i64> %vec.ind166, splat (i64 4)
+  %vec.ind.next170 = add nuw <2 x i64> %vec.ind166, splat (i64 4)
   %i.at = icmp eq i64 %index.next169, %n.vec163
   br i1 %i.at, label %middle.block171, label %vector.body164, !llvm.loop !8790
 
@@ -3892,7 +3888,7 @@ middle.block171:                                  ; preds = %vector.body164
   %.079.i.i.us = phi ptr [ %i.au, %.lr.ph.i.i.us ], [ %.079.i.i.us.ph, %.lr.ph.i.i.us.preheader208 ] ; 2 uses
   store i64 %.010.i.i.us, ptr %.079.i.i.us, align 8, !tbaa !272
   %i.au = getelementptr inbounds nuw i8, ptr %.079.i.i.us, i64 8
-  %i.av = add i64 %.010.i.i.us, 1                 ; 2 uses
+  %i.av = add nuw i64 %.010.i.i.us, 1             ; 2 uses
   %.not.i.i.us = icmp eq i64 %i.av, %i.an
   br i1 %.not.i.i.us, label %_ZN5boost7movelib15detail_adaptive14combine_paramsIPmNS1_4lessEmNS0_10range_xbufINS_9container22stable_vector_iteratorIPiLb0EEEmNS0_7move_opEEEEEvT_T0_T1_SE_SE_RT2_RSE_SH_SH_SH_b.exit.us, label %.lr.ph.i.i.us, !llvm.loop !8791
 
@@ -3951,7 +3947,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <2 x i64> %vec.ind, ptr %next.gep, align 8, !tbaa !272
   store <2 x i64> %step.add, ptr %i.bo, align 8, !tbaa !272
   %index.next = add nuw i64 %index, 4             ; 2 uses
-  %vec.ind.next = add <2 x i64> %vec.ind, splat (i64 4)
+  %vec.ind.next = add nuw <2 x i64> %vec.ind, splat (i64 4)
   %i.bp = icmp eq i64 %index.next, %n.vec
   br i1 %i.bp, label %middle.block, label %vector.body, !llvm.loop !8792
 
@@ -3969,7 +3965,7 @@ middle.block:                                     ; preds = %vector.body
   %.079.i.i = phi ptr [ %i.bq, %.lr.ph.i.i ], [ %.079.i.i.ph, %.lr.ph.i.i.preheader210 ] ; 2 uses
   store i64 %.010.i.i, ptr %.079.i.i, align 8, !tbaa !272
   %i.bq = getelementptr inbounds nuw i8, ptr %.079.i.i, i64 8
-  %i.br = add i64 %.010.i.i, 1                    ; 2 uses
+  %i.br = add nuw i64 %.010.i.i, 1                ; 2 uses
   %.not.i.i = icmp eq i64 %i.br, %i.bj
   br i1 %.not.i.i, label %_ZN5boost7movelib15detail_adaptive14combine_paramsIPmNS1_4lessEmNS0_10range_xbufINS_9container22stable_vector_iteratorIPiLb0EEEmNS0_7move_opEEEEEvT_T0_T1_SE_SE_RT2_RSE_SH_SH_SH_b.exit, label %.lr.ph.i.i, !llvm.loop !8793
 
@@ -4048,7 +4044,7 @@ vector.body194:                                   ; preds = %vector.body194, %ve
   store <2 x i64> %vec.ind196, ptr %next.gep198, align 8, !tbaa !272
   store <2 x i64> %step.add197, ptr %i.ct, align 8, !tbaa !272
   %index.next199 = add nuw i64 %index195, 4       ; 2 uses
-  %vec.ind.next200 = add <2 x i64> %vec.ind196, splat (i64 4)
+  %vec.ind.next200 = add nuw <2 x i64> %vec.ind196, splat (i64 4)
   %i.cu = icmp eq i64 %index.next199, %n.vec193
   br i1 %i.cu, label %middle.block201, label %vector.body194, !llvm.loop !8794
 
@@ -4066,7 +4062,7 @@ middle.block201:                                  ; preds = %vector.body194
   %.079.i.i78 = phi ptr [ %i.cv, %.lr.ph.i.i76 ], [ %.079.i.i78.ph, %.lr.ph.i.i76.preheader205 ] ; 2 uses
   store i64 %.010.i.i77, ptr %.079.i.i78, align 8, !tbaa !272
   %i.cv = getelementptr inbounds nuw i8, ptr %.079.i.i78, i64 8
-  %i.cw = add i64 %.010.i.i77, 1                  ; 2 uses
+  %i.cw = add nuw i64 %.010.i.i77, 1              ; 2 uses
   %.not.i.i79 = icmp eq i64 %i.cw, %i.co
   br i1 %.not.i.i79, label %_ZN5boost7movelib15detail_adaptive14combine_paramsIPmNS1_4lessEmNS0_10range_xbufINS_9container22stable_vector_iteratorIPiLb0EEEmNS0_7move_opEEEEEvT_T0_T1_SE_SE_RT2_RSE_SH_SH_SH_b.exit80, label %.lr.ph.i.i76, !llvm.loop !8795
 
@@ -4469,7 +4465,7 @@ middle.block:                                     ; preds = %vector.body
   %storemerge10.i = phi i64 [ %storemerge.i, %.lr.ph.i ], [ %storemerge10.i.ph, %.lr.ph.i.preheader16 ] ; 2 uses
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %storemerge10.i
   store i32 %i.q, ptr %i.x, align 4, !tbaa !69
-  %storemerge.i = add i64 %storemerge10.i, 1      ; 2 uses
+  %storemerge.i = add nuw i64 %storemerge10.i, 1  ; 2 uses
   %.not.i = icmp eq i64 %storemerge.i, %5
   br i1 %.not.i, label %_ZN5boost7movelib13adaptive_xbufIiPimE16initialize_untilEmRi.exit, label %.lr.ph.i, !llvm.loop !12042
 
@@ -4872,7 +4868,7 @@ vector.body102:                                   ; preds = %vector.body102, %ve
   store <2 x i64> %vec.ind, ptr %next.gep, align 8, !tbaa !272
   store <2 x i64> %step.add, ptr %i.dn, align 8, !tbaa !272
   %index.next104 = add nuw i64 %index103, 4       ; 2 uses
-  %vec.ind.next = add <2 x i64> %vec.ind, splat (i64 4)
+  %vec.ind.next = add nuw <2 x i64> %vec.ind, splat (i64 4)
   %i.do = icmp eq i64 %index.next104, %n.vec101
   br i1 %i.do, label %middle.block105, label %vector.body102, !llvm.loop !14210
 
@@ -4890,7 +4886,7 @@ middle.block105:                                  ; preds = %vector.body102
   %.079.i.i = phi ptr [ %i.dp, %.lr.ph.i.i ], [ %.079.i.i.ph, %.lr.ph.i.i.preheader109 ] ; 2 uses
   store i64 %.010.i.i, ptr %.079.i.i, align 8, !tbaa !272
   %i.dp = getelementptr inbounds nuw i8, ptr %.079.i.i, i64 8
-  %i.dq = add i64 %.010.i.i, 1                    ; 2 uses
+  %i.dq = add nuw i64 %.010.i.i, 1                ; 2 uses
   %.not.i.i53 = icmp eq i64 %i.dq, %i.di
   br i1 %.not.i.i53, label %_ZN5boost7movelib15detail_adaptive14combine_paramsIPmNS1_4lessEmNS0_13adaptive_xbufIiPimEEEEvT_T0_T1_SA_SA_RT2_RSA_SD_SD_SD_b.exit, label %.lr.ph.i.i, !llvm.loop !14211
 
@@ -5293,7 +5289,7 @@ middle.block:                                     ; preds = %vector.body
   %storemerge10.i = phi i64 [ %storemerge.i, %.lr.ph.i ], [ %storemerge10.i.ph, %.lr.ph.i.preheader22 ] ; 2 uses
   %i.as = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %storemerge10.i
   store i32 %i.al, ptr %i.as, align 4, !tbaa !69
-  %storemerge.i = add i64 %storemerge10.i, 1      ; 2 uses
+  %storemerge.i = add nuw i64 %storemerge10.i, 1  ; 2 uses
   %.not.i = icmp eq i64 %storemerge.i, %4
   br i1 %.not.i, label %_ZN5boost7movelib13adaptive_xbufIiPimE16initialize_untilEmRi.exit, label %.lr.ph.i, !llvm.loop !15423
 
@@ -5696,7 +5692,7 @@ bb.a:
   %6 = alloca %"class.boost::container::deque_iterator", align 8 ; 5 uses
   %7 = alloca %"class.boost::container::deque_iterator", align 8 ; 5 uses
   %i.a = load ptr, ptr %1, align 8, !tbaa !1889   ; 5 uses
-  %i.b = load ptr, ptr %0, align 8, !tbaa !1889   ; 11 uses
+  %i.b = load ptr, ptr %0, align 8, !tbaa !1889   ; 10 uses
   %i.c = icmp eq ptr %i.a, %i.b
   br i1 %i.c, label %._crit_edge.thread, label %_ZNK5boost9container14deque_iteratorIPiLb0ELj0ELj0EmEmiERKS3_.exit
 
@@ -5720,7 +5716,7 @@ _ZNK5boost9container14deque_iteratorIPiLb0ELj0ELj0EmEmiERKS3_.exit: ; preds = %b
   %i.t = ptrtoint ptr %i.r to i64
   %i.u = sub i64 %i.s, %i.t
   %i.v = ashr exact i64 %i.u, 2
-  %i.w = sub i64 %i.q, %i.v                       ; 6 uses
+  %i.w = sub i64 %i.q, %i.v                       ; 5 uses
   %i.x = icmp ugt i64 %i.w, 16
   br i1 %i.x, label %.lr.ph, label %._crit_edge.thread
 
@@ -5732,7 +5728,7 @@ _ZNK5boost9container14deque_iteratorIPiLb0ELj0ELj0EmEmiERKS3_.exit: ; preds = %b
 
 .lr.ph:                                           ; preds = %_ZNK5boost9container14deque_iteratorIPiLb0ELj0ELj0EmEmiERKS3_.exit
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.z = load ptr, ptr %i.y, align 8, !tbaa !13016, !noalias !15708 ; 11 uses
+  %i.z = load ptr, ptr %i.y, align 8, !tbaa !13016, !noalias !15708 ; 10 uses
   %i.aa = ptrtoint ptr %i.b to i64
   %.pre = load ptr, ptr %i.z, align 8, !tbaa !75, !noalias !1789 ; 5 uses
   %i.ab = ptrtoint ptr %.pre to i64
@@ -5938,16 +5934,12 @@ _ZN5boost9container14deque_iteratorIPiLb0ELj0ELj0EmEppEv.exit5.i: ; preds = %bb.
   br i1 %.not28.i, label %_ZN5boost7movelib14insertion_sortINS_9container3dtl23flat_tree_value_compareISt4lessIiEiNS_11move_detail8identityIiEEEENS2_14deque_iteratorIPiLb0ELj0ELj0EmEEEEvT0_SE_T_.exit, label %.lr.ph39.i, !llvm.loop !13919
 
 _ZN5boost7movelib14insertion_sortINS_9container3dtl23flat_tree_value_compareISt4lessIiEiNS_11move_detail8identityIiEEEENS2_14deque_iteratorIPiLb0ELj0ELj0EmEEEEvT0_SE_T_.exit: ; preds = %_ZN5boost9container14deque_iteratorIPiLb0ELj0ELj0EmEppEv.exit5.i, %_ZNK5boost9container14deque_iteratorIPiLb0ELj0ELj0EmEplEl.exit43, %_ZN5boost9container14deque_iteratorIPiLb0ELj0ELj0EmEppEv.exit.i
-  %i.db = add i64 %.033181, 16                    ; 5 uses
+  %i.db = add nuw i64 %.033181, 16                ; 4 uses
   %i.dc = sub i64 %i.w, %i.db
   %i.dd = icmp ugt i64 %i.dc, 16
-  br i1 %i.dd, label %bb.b, label %._crit_edge, !llvm.loop !15717
+  br i1 %i.dd, label %bb.b, label %bb.t, !llvm.loop !15717
 
-._crit_edge:                                      ; preds = %_ZN5boost7movelib14insertion_sortINS_9container3dtl23flat_tree_value_compareISt4lessIiEiNS_11move_detail8identityIiEEEENS2_14deque_iteratorIPiLb0ELj0ELj0EmEEEEvT0_SE_T_.exit
-  %.not.i.i44 = icmp eq i64 %i.db, 0
-  br i1 %.not.i.i44, label %_ZNK5boost9container14deque_iteratorIPiLb0ELj0ELj0EmEplEl.exit48, label %bb.t
-
-bb.t:                                             ; preds = %._crit_edge
+bb.t:                                             ; preds = %_ZN5boost7movelib14insertion_sortINS_9container3dtl23flat_tree_value_compareISt4lessIiEiNS_11move_detail8identityIiEEEENS2_14deque_iteratorIPiLb0ELj0ELj0EmEEEEvT0_SE_T_.exit
   %i.de = load ptr, ptr %i.z, align 8, !tbaa !75, !noalias !15705
   %i.df = ptrtoint ptr %i.b to i64
   %i.dg = ptrtoint ptr %i.de to i64
@@ -5973,11 +5965,11 @@ bb.v:                                             ; preds = %bb.t
   %i.dt = getelementptr inbounds [4 x i8], ptr %i.dq, i64 %i.ds
   br label %_ZNK5boost9container14deque_iteratorIPiLb0ELj0ELj0EmEplEl.exit48
 
-_ZNK5boost9container14deque_iteratorIPiLb0ELj0ELj0EmEplEl.exit48: ; preds = %._crit_edge.thread, %._crit_edge, %bb.u, %bb.v
-  %.0.i222232 = phi i64 [ %i.w, %._crit_edge ], [ %i.w, %bb.u ], [ %i.w, %bb.v ], [ %.0.i223, %._crit_edge.thread ] ; 6 uses
-  %8 = phi i1 [ true, %._crit_edge ], [ true, %bb.u ], [ true, %bb.v ], [ false, %._crit_edge.thread ]
-  %.sroa.6.1.i46 = phi ptr [ %i.z, %._crit_edge ], [ %i.z, %bb.u ], [ %i.dp, %bb.v ], [ %.pre192, %._crit_edge.thread ] ; 3 uses
-  %.sroa.0.0.i47 = phi ptr [ %i.b, %._crit_edge ], [ %i.dk, %bb.u ], [ %i.dt, %bb.v ], [ %i.b, %._crit_edge.thread ] ; 4 uses
+_ZNK5boost9container14deque_iteratorIPiLb0ELj0ELj0EmEplEl.exit48: ; preds = %._crit_edge.thread, %bb.u, %bb.v
+  %.0.i222232 = phi i64 [ %.0.i223, %._crit_edge.thread ], [ %i.w, %bb.u ], [ %i.w, %bb.v ] ; 6 uses
+  %8 = phi i1 [ false, %._crit_edge.thread ], [ true, %bb.u ], [ true, %bb.v ]
+  %.sroa.6.1.i46 = phi ptr [ %.pre192, %._crit_edge.thread ], [ %i.z, %bb.u ], [ %i.dp, %bb.v ] ; 3 uses
+  %.sroa.0.0.i47 = phi ptr [ %i.b, %._crit_edge.thread ], [ %i.dk, %bb.u ], [ %i.dt, %bb.v ] ; 4 uses
   %i.du = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.dv = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.not.i49 = icmp eq ptr %.sroa.0.0.i47, %i.a
@@ -6380,7 +6372,7 @@ vector.body217:                                   ; preds = %vector.body217, %ve
   store <2 x i64> %vec.ind219, ptr %next.gep221, align 8, !tbaa !272
   store <2 x i64> %step.add220, ptr %i.ab, align 8, !tbaa !272
   %index.next222 = add nuw i64 %index218, 4       ; 2 uses
-  %vec.ind.next223 = add <2 x i64> %vec.ind219, splat (i64 4)
+  %vec.ind.next223 = add nuw <2 x i64> %vec.ind219, splat (i64 4)
   %i.ac = icmp eq i64 %index.next222, %n.vec216
   br i1 %i.ac, label %middle.block224, label %vector.body217, !llvm.loop !16097
 
@@ -6398,7 +6390,7 @@ middle.block224:                                  ; preds = %vector.body217
   %.079.i.i.us.us = phi ptr [ %i.ad, %.lr.ph.i.i.us.us ], [ %.079.i.i.us.us.ph, %.lr.ph.i.i.us.us.preheader246 ] ; 2 uses
   store i64 %.010.i.i.us.us, ptr %.079.i.i.us.us, align 8, !tbaa !272
   %i.ad = getelementptr inbounds nuw i8, ptr %.079.i.i.us.us, i64 8
-  %i.ae = add i64 %.010.i.i.us.us, 1              ; 2 uses
+  %i.ae = add nuw i64 %.010.i.i.us.us, 1          ; 2 uses
   %.not.i.i.us.us = icmp eq i64 %i.ae, %i.w
   br i1 %.not.i.i.us.us, label %_ZN5boost7movelib15detail_adaptive14combine_paramsIPmNS1_4lessEmNS0_10range_xbufINS_9container14deque_iteratorIPiLb0ELj0ELj0EmEEmNS0_7move_opEEEEEvT_T0_T1_SE_SE_RT2_RSE_SH_SH_SH_b.exit.us.us, label %.lr.ph.i.i.us.us, !llvm.loop !16098
 
@@ -6478,7 +6470,7 @@ vector.body202:                                   ; preds = %vector.body202, %ve
   store <2 x i64> %vec.ind204, ptr %next.gep206, align 8, !tbaa !272
   store <2 x i64> %step.add205, ptr %i.bk, align 8, !tbaa !272
   %index.next207 = add nuw i64 %index203, 4       ; 2 uses
-  %vec.ind.next208 = add <2 x i64> %vec.ind204, splat (i64 4)
+  %vec.ind.next208 = add nuw <2 x i64> %vec.ind204, splat (i64 4)
   %i.bl = icmp eq i64 %index.next207, %n.vec201
   br i1 %i.bl, label %middle.block209, label %vector.body202, !llvm.loop !16099
 
@@ -6496,7 +6488,7 @@ middle.block209:                                  ; preds = %vector.body202
   %.079.i.i.us = phi ptr [ %i.bm, %.lr.ph.i.i.us ], [ %.079.i.i.us.ph, %.lr.ph.i.i.us.preheader250 ] ; 2 uses
   store i64 %.010.i.i.us, ptr %.079.i.i.us, align 8, !tbaa !272
   %i.bm = getelementptr inbounds nuw i8, ptr %.079.i.i.us, i64 8
-  %i.bn = add i64 %.010.i.i.us, 1                 ; 2 uses
+  %i.bn = add nuw i64 %.010.i.i.us, 1             ; 2 uses
   %.not.i.i.us = icmp eq i64 %i.bn, %i.bf
   br i1 %.not.i.i.us, label %_ZN5boost7movelib15detail_adaptive14combine_paramsIPmNS1_4lessEmNS0_10range_xbufINS_9container14deque_iteratorIPiLb0ELj0ELj0EmEEmNS0_7move_opEEEEEvT_T0_T1_SE_SE_RT2_RSE_SH_SH_SH_b.exit.us, label %.lr.ph.i.i.us, !llvm.loop !16100
 
@@ -6582,7 +6574,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <2 x i64> %vec.ind, ptr %next.gep, align 8, !tbaa !272
   store <2 x i64> %step.add, ptr %i.ct, align 8, !tbaa !272
   %index.next = add nuw i64 %index, 4             ; 2 uses
-  %vec.ind.next = add <2 x i64> %vec.ind, splat (i64 4)
+  %vec.ind.next = add nuw <2 x i64> %vec.ind, splat (i64 4)
   %i.cu = icmp eq i64 %index.next, %n.vec
   br i1 %i.cu, label %middle.block, label %vector.body, !llvm.loop !16101
 
@@ -6600,7 +6592,7 @@ middle.block:                                     ; preds = %vector.body
   %.079.i.i = phi ptr [ %i.cv, %.lr.ph.i.i ], [ %.079.i.i.ph, %.lr.ph.i.i.preheader254 ] ; 2 uses
   store i64 %.010.i.i, ptr %.079.i.i, align 8, !tbaa !272
   %i.cv = getelementptr inbounds nuw i8, ptr %.079.i.i, i64 8
-  %i.cw = add i64 %.010.i.i, 1                    ; 2 uses
+  %i.cw = add nuw i64 %.010.i.i, 1                ; 2 uses
   %.not.i.i = icmp eq i64 %i.cw, %i.co
   br i1 %.not.i.i, label %_ZN5boost7movelib15detail_adaptive14combine_paramsIPmNS1_4lessEmNS0_10range_xbufINS_9container14deque_iteratorIPiLb0ELj0ELj0EmEEmNS0_7move_opEEEEEvT_T0_T1_SE_SE_RT2_RSE_SH_SH_SH_b.exit, label %.lr.ph.i.i, !llvm.loop !16102
 
@@ -6735,7 +6727,7 @@ vector.body232:                                   ; preds = %vector.body232, %ve
   store <2 x i64> %vec.ind234, ptr %next.gep236, align 8, !tbaa !272
   store <2 x i64> %step.add235, ptr %i.fa, align 8, !tbaa !272
   %index.next237 = add nuw i64 %index233, 4       ; 2 uses
-  %vec.ind.next238 = add <2 x i64> %vec.ind234, splat (i64 4)
+  %vec.ind.next238 = add nuw <2 x i64> %vec.ind234, splat (i64 4)
   %i.fb = icmp eq i64 %index.next237, %n.vec231
   br i1 %i.fb, label %middle.block239, label %vector.body232, !llvm.loop !16103
 
@@ -6753,7 +6745,7 @@ middle.block239:                                  ; preds = %vector.body232
   %.079.i.i85 = phi ptr [ %i.fc, %.lr.ph.i.i83 ], [ %.079.i.i85.ph, %.lr.ph.i.i83.preheader243 ] ; 2 uses
   store i64 %.010.i.i84, ptr %.079.i.i85, align 8, !tbaa !272
   %i.fc = getelementptr inbounds nuw i8, ptr %.079.i.i85, i64 8
-  %i.fd = add i64 %.010.i.i84, 1                  ; 2 uses
+  %i.fd = add nuw i64 %.010.i.i84, 1              ; 2 uses
   %.not.i.i86 = icmp eq i64 %i.fd, %i.ev
   br i1 %.not.i.i86, label %_ZN5boost7movelib15detail_adaptive14combine_paramsIPmNS1_4lessEmNS0_10range_xbufINS_9container14deque_iteratorIPiLb0ELj0ELj0EmEEmNS0_7move_opEEEEEvT_T0_T1_SE_SE_RT2_RSE_SH_SH_SH_b.exit87, label %.lr.ph.i.i83, !llvm.loop !16104
 
@@ -7156,7 +7148,7 @@ middle.block:                                     ; preds = %vector.body
   %storemerge10.i = phi i64 [ %storemerge.i, %.lr.ph.i ], [ %storemerge10.i.ph, %.lr.ph.i.preheader23 ] ; 2 uses
   %i.as = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %storemerge10.i
   store i32 %i.al, ptr %i.as, align 4, !tbaa !69
-  %storemerge.i = add i64 %storemerge10.i, 1      ; 2 uses
+  %storemerge.i = add nuw i64 %storemerge10.i, 1  ; 2 uses
   %.not.i = icmp eq i64 %storemerge.i, %5
   br i1 %.not.i, label %_ZN5boost7movelib13adaptive_xbufIiPimE16initialize_untilEmRi.exit, label %.lr.ph.i, !llvm.loop !19881
 

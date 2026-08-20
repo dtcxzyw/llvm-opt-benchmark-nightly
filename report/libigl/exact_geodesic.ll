@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %bb.h, %.lr.ph.new
   %i.cg = getelementptr inbounds nuw i8, ptr %i.bp, i64 72
   store double %i.cf, ptr %i.cg, align 8, !tbaa !79
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %bb.h, !llvm.loop !425
 
@@ -607,10 +607,9 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac
   %i.agu = load double, ptr %i.agt, align 8, !tbaa !79
   %i.agv = fadd double %i.agp, %i.agu
   store double %i.agv, ptr %i.agt, align 8, !tbaa !79
-  %indvars.iv.next514 = add i64 %indvars.iv513, 1 ; 2 uses
-  %1 = and i64 %indvars.iv.next514, 4294967295
-  %2 = icmp samesign ugt i64 %i.qa, %1
-  br i1 %2, label %.lr.ph434, label %.preheader361, !llvm.loop !447
+  %indvars.iv.next514 = add nuw i64 %indvars.iv513, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next514, %i.qa
+  br i1 %exitcond.not, label %.preheader361, label %.lr.ph434, !llvm.loop !447
 
 .preheader:                                       ; preds = %.lr.ph436, %.preheader361
   %.not454 = icmp eq i64 %.lcssa368, 0

@@ -162,7 +162,7 @@ bb.a:
   %niter = phi i32 [ 0, %.lr.ph.i.preheader.new ], [ %niter.next.7, %.lr.ph.i ]
   %i.cq = shl i64 %.025.i, 32                     ; 2 uses
   %i.cr = or disjoint i64 %i.cq, 4294967295       ; 3 uses
-  %niter.next.7 = add i32 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i32 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i32 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN16OpenColorIO_v2_514AVX512RGBAPackILNS_8BitDepthE8EE10LoadMaskedEPKfRDv16_fS6_S6_S6_j.exit.unr-lcssa, label %.lr.ph.i, !llvm.loop !11
 
@@ -257,7 +257,7 @@ _ZN16OpenColorIO_v2_514AVX512RGBAPackILNS_8BitDepthE8EE10LoadMaskedEPKfRDv16_fS6
   %niter122 = phi i32 [ 0, %_ZN16OpenColorIO_v2_514AVX512RGBAPackILNS_8BitDepthE8EE10LoadMaskedEPKfRDv16_fS6_S6_S6_j.exit.new ], [ %niter122.next.7, %.lr.ph.i42 ]
   %i.ez = shl i64 %.02334.i, 32                   ; 2 uses
   %i.fa = or disjoint i64 %i.ez, 4294967295       ; 3 uses
-  %niter122.next.7 = add i32 %niter122, 8         ; 2 uses
+  %niter122.next.7 = add nuw i32 %niter122, 8     ; 2 uses
   %niter122.ncmp.7 = icmp eq i32 %niter122.next.7, %unroll_iter121
   br i1 %niter122.ncmp.7, label %_ZN16OpenColorIO_v2_514AVX512RGBAPackILNS_8BitDepthE1EE11StoreMaskedEPhDv16_fS4_S4_S4_j.exit.unr-lcssa, label %.lr.ph.i42, !llvm.loop !14
 
@@ -464,7 +464,7 @@ bb.a:
   %niter = phi i32 [ 0, %.lr.ph.i.preheader.new ], [ %niter.next.7, %.lr.ph.i ]
   %i.cq = shl i64 %.025.i, 32                     ; 2 uses
   %i.cr = or disjoint i64 %i.cq, 4294967295       ; 3 uses
-  %niter.next.7 = add i32 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i32 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i32 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN16OpenColorIO_v2_514AVX512RGBAPackILNS_8BitDepthE8EE10LoadMaskedEPKfRDv16_fS6_S6_S6_j.exit.unr-lcssa, label %.lr.ph.i, !llvm.loop !11
 
@@ -559,7 +559,7 @@ _ZN16OpenColorIO_v2_514AVX512RGBAPackILNS_8BitDepthE8EE10LoadMaskedEPKfRDv16_fS6
   %niter119 = phi i32 [ 0, %_ZN16OpenColorIO_v2_514AVX512RGBAPackILNS_8BitDepthE8EE10LoadMaskedEPKfRDv16_fS6_S6_S6_j.exit.new ], [ %niter119.next.7, %.lr.ph.i.i ]
   %i.ez = shl i64 %.02334.i.i, 32                 ; 2 uses
   %i.fa = or disjoint i64 %i.ez, 4294967295       ; 3 uses
-  %niter119.next.7 = add i32 %niter119, 8         ; 2 uses
+  %niter119.next.7 = add nuw i32 %niter119, 8     ; 2 uses
   %niter119.ncmp.7 = icmp eq i32 %niter119.next.7, %unroll_iter118
   br i1 %niter119.ncmp.7, label %_ZN16OpenColorIO_v2_514AVX512RGBAPackILNS_8BitDepthE2EE11StoreMaskedEPtDv16_fS4_S4_S4_j.exit.unr-lcssa, label %.lr.ph.i.i, !llvm.loop !18
 
@@ -766,7 +766,7 @@ bb.a:
   %niter = phi i32 [ 0, %.lr.ph.i.preheader.new ], [ %niter.next.7, %.lr.ph.i ]
   %i.cq = shl i64 %.025.i, 32                     ; 2 uses
   %i.cr = or disjoint i64 %i.cq, 4294967295       ; 3 uses
-  %niter.next.7 = add i32 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i32 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i32 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN16OpenColorIO_v2_514AVX512RGBAPackILNS_8BitDepthE8EE10LoadMaskedEPKfRDv16_fS6_S6_S6_j.exit.unr-lcssa, label %.lr.ph.i, !llvm.loop !11
 
@@ -861,7 +861,7 @@ _ZN16OpenColorIO_v2_514AVX512RGBAPackILNS_8BitDepthE8EE10LoadMaskedEPKfRDv16_fS6
   %niter119 = phi i32 [ 0, %_ZN16OpenColorIO_v2_514AVX512RGBAPackILNS_8BitDepthE8EE10LoadMaskedEPKfRDv16_fS6_S6_S6_j.exit.new ], [ %niter119.next.7, %.lr.ph.i.i ]
   %i.ez = shl i64 %.02334.i.i, 32                 ; 2 uses
   %i.fa = or disjoint i64 %i.ez, 4294967295       ; 3 uses
-  %niter119.next.7 = add i32 %niter119, 8         ; 2 uses
+  %niter119.next.7 = add nuw i32 %niter119, 8     ; 2 uses
   %niter119.ncmp.7 = icmp eq i32 %niter119.next.7, %unroll_iter118
   br i1 %niter119.ncmp.7, label %_ZN16OpenColorIO_v2_514AVX512RGBAPackILNS_8BitDepthE3EE11StoreMaskedEPtDv16_fS4_S4_S4_j.exit.unr-lcssa, label %.lr.ph.i.i, !llvm.loop !22
 
@@ -1068,7 +1068,7 @@ bb.a:
   %niter = phi i32 [ 0, %.lr.ph.i.preheader.new ], [ %niter.next.7, %.lr.ph.i ]
   %i.cq = shl i64 %.025.i, 32                     ; 2 uses
   %i.cr = or disjoint i64 %i.cq, 4294967295       ; 3 uses
-  %niter.next.7 = add i32 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i32 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i32 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN16OpenColorIO_v2_514AVX512RGBAPackILNS_8BitDepthE8EE10LoadMaskedEPKfRDv16_fS6_S6_S6_j.exit.unr-lcssa, label %.lr.ph.i, !llvm.loop !11
 
@@ -1163,7 +1163,7 @@ _ZN16OpenColorIO_v2_514AVX512RGBAPackILNS_8BitDepthE8EE10LoadMaskedEPKfRDv16_fS6
   %niter119 = phi i32 [ 0, %_ZN16OpenColorIO_v2_514AVX512RGBAPackILNS_8BitDepthE8EE10LoadMaskedEPKfRDv16_fS6_S6_S6_j.exit.new ], [ %niter119.next.7, %.lr.ph.i.i ]
   %i.ez = shl i64 %.02334.i.i, 32                 ; 2 uses
   %i.fa = or disjoint i64 %i.ez, 4294967295       ; 3 uses
-  %niter119.next.7 = add i32 %niter119, 8         ; 2 uses
+  %niter119.next.7 = add nuw i32 %niter119, 8     ; 2 uses
   %niter119.ncmp.7 = icmp eq i32 %niter119.next.7, %unroll_iter118
   br i1 %niter119.ncmp.7, label %_ZN16OpenColorIO_v2_514AVX512RGBAPackILNS_8BitDepthE5EE11StoreMaskedEPtDv16_fS4_S4_S4_j.exit.unr-lcssa, label %.lr.ph.i.i, !llvm.loop !26
 
@@ -1359,7 +1359,7 @@ bb.a:
   %niter = phi i32 [ 0, %.lr.ph.i.preheader.new ], [ %niter.next.7, %.lr.ph.i ]
   %i.ch = shl i64 %.025.i, 32                     ; 2 uses
   %i.ci = or disjoint i64 %i.ch, 4294967295       ; 3 uses
-  %niter.next.7 = add i32 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i32 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i32 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN16OpenColorIO_v2_514AVX512RGBAPackILNS_8BitDepthE8EE10LoadMaskedEPKfRDv16_fS6_S6_S6_j.exit.unr-lcssa, label %.lr.ph.i, !llvm.loop !11
 
@@ -1454,7 +1454,7 @@ _ZN16OpenColorIO_v2_514AVX512RGBAPackILNS_8BitDepthE8EE10LoadMaskedEPKfRDv16_fS6
   %niter123 = phi i32 [ 0, %_ZN16OpenColorIO_v2_514AVX512RGBAPackILNS_8BitDepthE8EE10LoadMaskedEPKfRDv16_fS6_S6_S6_j.exit.new ], [ %niter123.next.7, %.lr.ph.i42 ]
   %i.eq = shl i64 %.024.i, 16                     ; 2 uses
   %i.er = or disjoint i64 %i.eq, 65535            ; 3 uses
-  %niter123.next.7 = add i32 %niter123, 8         ; 2 uses
+  %niter123.next.7 = add nuw i32 %niter123, 8     ; 2 uses
   %niter123.ncmp.7 = icmp eq i32 %niter123.next.7, %unroll_iter122
   br i1 %niter123.ncmp.7, label %_ZN16OpenColorIO_v2_514AVX512RGBAPackILNS_8BitDepthE7EE11StoreMaskedEPN9Imath_3_14halfEDv16_fS6_S6_S6_j.exit.unr-lcssa, label %.lr.ph.i42, !llvm.loop !30
 
@@ -1637,7 +1637,7 @@ bb.a:
   %niter = phi i32 [ 0, %.lr.ph.i.preheader.new ], [ %niter.next.7, %.lr.ph.i ]
   %i.cd = shl i64 %.025.i, 32                     ; 2 uses
   %i.ce = or disjoint i64 %i.cd, 4294967295       ; 3 uses
-  %niter.next.7 = add i32 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i32 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i32 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN16OpenColorIO_v2_514AVX512RGBAPackILNS_8BitDepthE8EE10LoadMaskedEPKfRDv16_fS6_S6_S6_j.exit.unr-lcssa, label %.lr.ph.i, !llvm.loop !11
 
@@ -1732,7 +1732,7 @@ _ZN16OpenColorIO_v2_514AVX512RGBAPackILNS_8BitDepthE8EE10LoadMaskedEPKfRDv16_fS6
   %niter116 = phi i32 [ 0, %_ZN16OpenColorIO_v2_514AVX512RGBAPackILNS_8BitDepthE8EE10LoadMaskedEPKfRDv16_fS6_S6_S6_j.exit.new ], [ %niter116.next.7, %.lr.ph.i40 ]
   %i.em = shl i64 %.01927.i, 32                   ; 2 uses
   %i.en = or disjoint i64 %i.em, 4294967295       ; 3 uses
-  %niter116.next.7 = add i32 %niter116, 8         ; 2 uses
+  %niter116.next.7 = add nuw i32 %niter116, 8     ; 2 uses
   %niter116.ncmp.7 = icmp eq i32 %niter116.next.7, %unroll_iter115
   br i1 %niter116.ncmp.7, label %_ZN16OpenColorIO_v2_514AVX512RGBAPackILNS_8BitDepthE8EE11StoreMaskedEPfDv16_fS4_S4_S4_j.exit.unr-lcssa, label %.lr.ph.i40, !llvm.loop !34
 

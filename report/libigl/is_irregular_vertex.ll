@@ -204,10 +204,9 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l
-  %indvars.iv.next = add i64 %indvars.iv, 1       ; 2 uses
-  %4 = and i64 %indvars.iv.next, 4294967295
-  %5 = icmp sgt i64 %i.bp, %4
-  br i1 %5, label %.preheader, label %._crit_edge, !llvm.loop !28
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.bp
+  br i1 %exitcond.not, label %._crit_edge, label %.preheader, !llvm.loop !28
 
 ._crit_edge:                                      ; preds = %bb.n, %_ZN5Eigen6MatrixIiLin1ELi1ELi0ELin1ELi1EEC2INS_14CwiseNullaryOpINS_8internal18scalar_constant_opIiEES1_EEEERKNS_9EigenBaseIT_EE.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #13

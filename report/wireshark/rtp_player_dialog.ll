@@ -203,9 +203,9 @@ _ZNK4QSetIiE4sizeEv.exit:                         ; preds = %bb.a, %bb.b
           to label %bb.c unwind label %bb.i
 
 bb.c:                                             ; preds = %_ZNK4QSetIiE4sizeEv.exit
-  %i.f = load ptr, ptr %1, align 8, !noalias !159 ; 5 uses
+  %i.f = load ptr, ptr %1, align 8, !noalias !159 ; 4 uses
   %.not.i.i5 = icmp eq ptr %i.f, null
-  br i1 %.not.i.i5, label %_ZNK4QSetIiE10constBeginEv.exit, label %bb.d
+  br i1 %.not.i.i5, label %._crit_edge, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.g = getelementptr i8, ptr %i.f, i64 32
@@ -218,12 +218,12 @@ bb.e:                                             ; preds = %bb.d
   %i.j = getelementptr i8, ptr %i.f, i64 16
   %i.k = load i64, ptr %i.j, align 8, !noalias !159 ; 2 uses
   %i.l = icmp eq i64 %i.k, 1
-  br i1 %i.l, label %_ZNK4QSetIiE10constBeginEv.exit, label %.lr.ph
+  br i1 %i.l, label %._crit_edge, label %.lr.ph
 
 bb.f:                                             ; preds = %.lr.ph
-  %i.m = add i64 %i.o, 1                          ; 2 uses
+  %i.m = add nuw i64 %i.o, 1                      ; 2 uses
   %i.n = icmp eq i64 %i.m, %i.k
-  br i1 %i.n, label %_ZNK4QSetIiE10constBeginEv.exit, label %.lr.ph, !llvm.loop !162
+  br i1 %i.n, label %._crit_edge, label %.lr.ph, !llvm.loop !162
 
 .lr.ph:                                           ; preds = %bb.e, %bb.f
   %i.o = phi i64 [ %i.m, %bb.f ], [ 1, %bb.e ]    ; 4 uses
@@ -233,28 +233,16 @@ bb.f:                                             ; preds = %.lr.ph
   %i.s = getelementptr i8, ptr %i.q, i64 %i.r
   %i.t = load i8, ptr %i.s, align 1, !noalias !159
   %.not.i.i.i.i.i = icmp eq i8 %i.t, -1
-  br i1 %.not.i.i.i.i.i, label %bb.f, label %._ZNK4QSetIiE10constBeginEv.exit.loopexit_crit_edge, !llvm.loop !162
+  br i1 %.not.i.i.i.i.i, label %bb.f, label %_ZNK4QSetIiE14const_iteratorneERKS1_.exit.thread.lr.ph, !llvm.loop !162
 
-._ZNK4QSetIiE10constBeginEv.exit.loopexit_crit_edge: ; preds = %.lr.ph
-  br label %_ZNK4QSetIiE10constBeginEv.exit, !llvm.loop !162
-
-_ZNK4QSetIiE10constBeginEv.exit:                  ; preds = %bb.f, %bb.e, %._ZNK4QSetIiE10constBeginEv.exit.loopexit_crit_edge, %bb.c
-  %.sroa.0.0.i.i = phi ptr [ null, %bb.c ], [ %i.f, %._ZNK4QSetIiE10constBeginEv.exit.loopexit_crit_edge ], [ null, %bb.e ], [ null, %bb.f ] ; 2 uses
-  %.sroa.4.0.i.i = phi i64 [ 0, %bb.c ], [ %i.o, %._ZNK4QSetIiE10constBeginEv.exit.loopexit_crit_edge ], [ 0, %bb.e ], [ 0, %bb.f ] ; 2 uses
-  %2 = icmp ne ptr %.sroa.0.0.i.i, null
-  %3 = icmp ne i64 %.sroa.4.0.i.i, 0
-  %or.cond14 = or i1 %2, %3
-  br i1 %or.cond14, label %_ZNK4QSetIiE14const_iteratorneERKS1_.exit.thread.lr.ph, label %._crit_edge
-
-_ZNK4QSetIiE14const_iteratorneERKS1_.exit.thread.lr.ph: ; preds = %bb.d, %_ZNK4QSetIiE10constBeginEv.exit
-  %.sroa.4.0.i.i25 = phi i64 [ %.sroa.4.0.i.i, %_ZNK4QSetIiE10constBeginEv.exit ], [ 0, %bb.d ]
-  %.sroa.0.0.i.i24 = phi ptr [ %.sroa.0.0.i.i, %_ZNK4QSetIiE10constBeginEv.exit ], [ %i.f, %bb.d ]
+_ZNK4QSetIiE14const_iteratorneERKS1_.exit.thread.lr.ph: ; preds = %.lr.ph, %bb.d
+  %.sroa.4.0.i.i25 = phi i64 [ 0, %bb.d ], [ %i.o, %.lr.ph ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 16
   br label %_ZNK4QSetIiE14const_iteratorneERKS1_.exit.thread
 
 _ZNK4QSetIiE14const_iteratorneERKS1_.exit.thread: ; preds = %_ZNK4QSetIiE14const_iteratorneERKS1_.exit.thread.lr.ph, %_ZN4QSetIiE14const_iteratorppEv.exit
   %.sroa.8.016 = phi i64 [ %.sroa.4.0.i.i25, %_ZNK4QSetIiE14const_iteratorneERKS1_.exit.thread.lr.ph ], [ %.sroa.8.1, %_ZN4QSetIiE14const_iteratorppEv.exit ] ; 3 uses
-  %.sroa.09.015 = phi ptr [ %.sroa.0.0.i.i24, %_ZNK4QSetIiE14const_iteratorneERKS1_.exit.thread.lr.ph ], [ %.sroa.09.1, %_ZN4QSetIiE14const_iteratorppEv.exit ] ; 3 uses
+  %.sroa.09.015 = phi ptr [ %i.f, %_ZNK4QSetIiE14const_iteratorneERKS1_.exit.thread.lr.ph ], [ %.sroa.09.1, %_ZN4QSetIiE14const_iteratorppEv.exit ] ; 3 uses
   %i.v = getelementptr i8, ptr %.sroa.09.015, i64 32 ; 2 uses
   %i.w = load ptr, ptr %i.v, align 8
   %i.x = lshr i64 %.sroa.8.016, 7
@@ -335,7 +323,7 @@ bb.j:                                             ; preds = %_ZNK17QArrayDataPoi
           cleanup
   br label %bb.k
 
-._crit_edge:                                      ; preds = %_ZN4QSetIiE14const_iteratorppEv.exit, %_ZNK4QSetIiE10constBeginEv.exit
+._crit_edge:                                      ; preds = %bb.f, %_ZN4QSetIiE14const_iteratorppEv.exit, %bb.c, %bb.e
   ret void
 
 bb.k:                                             ; preds = %bb.j, %bb.i
