@@ -204,7 +204,7 @@ bb.cs:                                            ; preds = %bb.cr, %bb.ck
   br label %.lr.ph2485
 
 bb.ct:                                            ; preds = %bb.cs
-  %i.mv = sub nuw nsw i32 %.41001, %.3990         ; 3 uses
+  %i.mv = sub nuw i32 %.41001, %.3990             ; 3 uses
   %.not2914 = icmp eq i32 %.3990, 0
   br i1 %.not2914, label %.loopexit2433, label %.lr.ph2493
 
@@ -607,23 +607,24 @@ bb.fh:                                            ; preds = %.thread2130, %bb.fc
   br i1 %i.aly, label %.lr.ph2518.preheader, label %._crit_edge2519
 
 .lr.ph2518.preheader:                             ; preds = %bb.fh
-  %i.alz = add nsw i32 %.910062063, -3            ; 2 uses
-  %i.ama = lshr i32 %i.alz, 1                     ; 3 uses
-  %6 = icmp eq i32 %i.ama, 1
+  %i.alz = add i32 %.910062063, -3                ; 2 uses
+  %i.ama = lshr i32 %i.alz, 1
+  %umax = tail call i32 @llvm.umax.i32(i32 %i.ama, i32 1) ; 3 uses
+  %xtraiter3043 = and i32 %umax, 1
+  %6 = icmp ult i32 %i.alz, 4
   br i1 %6, label %.lr.ph2518.epil.preheader, label %.lr.ph2518.preheader.new
 
 .lr.ph2518.preheader.new:                         ; preds = %.lr.ph2518.preheader
-  %unroll_iter3055.a = and i32 %i.ama, 2147483646
+  %unroll_iter3055.a = and i32 %umax, 2147483646
   br label %.lr.ph2518
 
 ._crit_edge2519.loopexit.unr-lcssa:               ; preds = %.lr.ph2518
-  %7 = and i32 %i.alz, 2
-  %lcmp.mod3052.not = icmp eq i32 %7, 0
+  %lcmp.mod3052.not = icmp eq i32 %xtraiter3043, 0
   br i1 %lcmp.mod3052.not, label %._crit_edge2519, label %.lr.ph2518.epil.preheader
 
 .lr.ph2518.epil.preheader:                        ; preds = %._crit_edge2519.loopexit.unr-lcssa, %.lr.ph2518.preheader
   %.322516.epil.init = phi ptr [ %i.alx, %.lr.ph2518.preheader ], [ %i.amy, %._crit_edge2519.loopexit.unr-lcssa ] ; 2 uses
-  %lcmp.mod3054.a = trunc i32 %i.ama to i1
+  %lcmp.mod3054.a = trunc i32 %umax to i1
   tail call void @llvm.assume(i1 %lcmp.mod3054.a)
   %i.amb = load i64, ptr %i.f, align 8, !tbaa !16
   %i.amc = and i64 %i.amb, 4294967295
@@ -1026,28 +1027,28 @@ bb.id:                                            ; preds = %bb.ic, %bb.ia
   %.sink2907 = phi i64 [ 2, %bb.ic ], [ 1, %bb.ia ]
   %.0857 = phi i64 [ %i.bcv, %bb.ic ], [ %i.bbz, %bb.ia ] ; 3 uses
   %i.bdc = getelementptr inbounds nuw i8, ptr %.45.lcssa, i64 %.sink2907 ; 3 uses
+  %7 = add i32 %i.awq, -3                         ; 2 uses
+  %8 = lshr i32 %7, 1                             ; 3 uses
   %i.bdd = icmp sgt i32 %i.awq, 4
   br i1 %i.bdd, label %.lr.ph2511.preheader, label %._crit_edge2512
 
 .lr.ph2511.preheader:                             ; preds = %bb.id
-  %8 = add nsw i32 %i.awq, -3                     ; 2 uses
-  %9 = lshr i32 %8, 1                             ; 3 uses
-  %i.bde = icmp eq i32 %9, 1
+  %i.bde = icmp eq i32 %8, 1
   br i1 %i.bde, label %.lr.ph2511.epil.preheader, label %.lr.ph2511.preheader.new
 
 .lr.ph2511.preheader.new:                         ; preds = %.lr.ph2511.preheader
-  %unroll_iter3049 = and i32 %9, 2147483646
+  %unroll_iter3049 = and i32 %8, 2147483646
   br label %.lr.ph2511
 
 ._crit_edge2512.loopexit.unr-lcssa:               ; preds = %.lr.ph2511
-  %i.bdf = and i32 %8, 2
+  %i.bdf = and i32 %7, 2
   %lcmp.mod3045.not = icmp eq i32 %i.bdf, 0
   br i1 %lcmp.mod3045.not, label %._crit_edge2512, label %.lr.ph2511.epil.preheader
 
 .lr.ph2511.epil.preheader:                        ; preds = %._crit_edge2512.loopexit.unr-lcssa, %.lr.ph2511.preheader
   %.532509.epil.init = phi ptr [ %i.bdc, %.lr.ph2511.preheader ], [ %i.bec, %._crit_edge2512.loopexit.unr-lcssa ] ; 2 uses
   %.18582507.epil.init = phi i64 [ %.0857, %.lr.ph2511.preheader ], [ %i.bdy, %._crit_edge2512.loopexit.unr-lcssa ]
-  %lcmp.mod3048 = trunc i32 %9 to i1
+  %lcmp.mod3048 = trunc i32 %8 to i1
   tail call void @llvm.assume(i1 %lcmp.mod3048)
   %i.bdg = and i64 %.18582507.epil.init, 4294967295
   %i.bdh = mul nuw nsw i64 %i.bdg, 100            ; 2 uses
@@ -1450,35 +1451,36 @@ bb.kd:                                            ; preds = %bb.kc, %bb.ka
   %.0849 = phi i64 [ %i.bvi, %bb.kc ], [ %i.bup, %bb.ka ] ; 3 uses
   %i.bvp = getelementptr inbounds nuw i8, ptr %.59, i64 %.sink2909 ; 3 uses
   %i.bvq = icmp samesign ugt i32 %.221019, 12
-  br i1 %i.bvq, label %.lr.ph2552.preheader, label %._crit_edge2553.thread.a
+  br i1 %i.bvq, label %._crit_edge2553.thread.a, label %.lr.ph2552.preheader.new
 
 ._crit_edge2553.thread.a:                         ; preds = %bb.kd
-  %10 = and i64 %.0849, 4294967295
-  %11 = mul nuw nsw i64 %10, 100                  ; 2 uses
-  %12 = lshr i64 %11, 32
-  %13 = trunc nuw nsw i64 %12 to i32
-  br label %bb.ke
+  %.lhs.trunc = add nuw i32 %.221019, 245
+  %9 = lshr i32 %.lhs.trunc, 1
+  %.zext = and i32 %9, 127                        ; 2 uses
+  %umax3057 = tail call i32 @llvm.umax.i32(i32 %.zext, i32 1) ; 3 uses
+  %xtraiter3058 = and i32 %umax3057, 1
+  %10 = icmp samesign ult i32 %.zext, 2
+  br i1 %10, label %.lr.ph2552.epil.preheader, label %.lr.ph2552.preheader
 
-.lr.ph2552.preheader:                             ; preds = %bb.kd
-  %.lhs.trunc = add nuw i32 %.221019, 245         ; 3 uses
-  %14 = lshr i32 %.lhs.trunc, 1                   ; 2 uses
-  %i.bvr = and i32 %.lhs.trunc, 254
-  %15 = icmp eq i32 %i.bvr, 2
-  br i1 %15, label %.lr.ph2552.epil.preheader, label %.lr.ph2552.preheader.new
-
-.lr.ph2552.preheader.new:                         ; preds = %.lr.ph2552.preheader
-  %unroll_iter3069 = and i32 %14, 126
+.lr.ph2552.preheader:                             ; preds = %._crit_edge2553.thread.a
+  %i.bvr = and i32 %umax3057, 126
   br label %.lr.ph2552
 
+.lr.ph2552.preheader.new:                         ; preds = %bb.kd
+  %11 = and i64 %.0849, 4294967295
+  %12 = mul nuw nsw i64 %11, 100                  ; 2 uses
+  %13 = lshr i64 %12, 32
+  %14 = trunc nuw nsw i64 %13 to i32
+  br label %bb.ke
+
 ._crit_edge2553.unr-lcssa:                        ; preds = %.lr.ph2552
-  %16 = and i32 %.lhs.trunc, 2
-  %lcmp.mod3065.not = icmp eq i32 %16, 0
+  %lcmp.mod3065.not = icmp eq i32 %xtraiter3058, 0
   br i1 %lcmp.mod3065.not, label %._crit_edge2553, label %.lr.ph2552.epil.preheader
 
-.lr.ph2552.epil.preheader:                        ; preds = %._crit_edge2553.unr-lcssa, %.lr.ph2552.preheader
-  %.662550.epil.init = phi ptr [ %i.bvp, %.lr.ph2552.preheader ], [ %i.bwn, %._crit_edge2553.unr-lcssa ] ; 2 uses
-  %.18502548.epil.init = phi i64 [ %.0849, %.lr.ph2552.preheader ], [ %i.bwj, %._crit_edge2553.unr-lcssa ]
-  %lcmp.mod3068 = trunc i32 %14 to i1
+.lr.ph2552.epil.preheader:                        ; preds = %._crit_edge2553.unr-lcssa, %._crit_edge2553.thread.a
+  %.662550.epil.init = phi ptr [ %i.bvp, %._crit_edge2553.thread.a ], [ %i.bwn, %._crit_edge2553.unr-lcssa ] ; 2 uses
+  %.18502548.epil.init = phi i64 [ %.0849, %._crit_edge2553.thread.a ], [ %i.bwj, %._crit_edge2553.unr-lcssa ]
+  %lcmp.mod3068 = trunc i32 %umax3057 to i1
   tail call void @llvm.assume(i1 %lcmp.mod3068)
   %i.bvs = and i64 %.18502548.epil.init, 4294967295
   %i.bvt = mul nuw nsw i64 %i.bvs, 100            ; 2 uses
@@ -1503,10 +1505,10 @@ bb.kd:                                            ; preds = %bb.kc, %bb.ka
   %.not1119 = icmp eq i32 %.221019, 16
   br i1 %.not1119, label %bb.kh, label %bb.ke
 
-.lr.ph2552:                                       ; preds = %.lr.ph2552, %.lr.ph2552.preheader.new
-  %.662550 = phi ptr [ %i.bvp, %.lr.ph2552.preheader.new ], [ %i.bwn, %.lr.ph2552 ] ; 3 uses
-  %.18502548 = phi i64 [ %.0849, %.lr.ph2552.preheader.new ], [ %i.bwj, %.lr.ph2552 ]
-  %niter3070 = phi i32 [ 0, %.lr.ph2552.preheader.new ], [ %niter3070.next.1, %.lr.ph2552 ]
+.lr.ph2552:                                       ; preds = %.lr.ph2552, %.lr.ph2552.preheader
+  %.662550 = phi ptr [ %i.bvp, %.lr.ph2552.preheader ], [ %i.bwn, %.lr.ph2552 ] ; 3 uses
+  %.18502548 = phi i64 [ %.0849, %.lr.ph2552.preheader ], [ %i.bwj, %.lr.ph2552 ]
+  %niter3070 = phi i32 [ 0, %.lr.ph2552.preheader ], [ %niter3070.next.1, %.lr.ph2552 ]
   %i.bwc = and i64 %.18502548, 4294967295
   %i.bwd = mul nuw nsw i64 %i.bwc, 100            ; 2 uses
   %sh.diff2424 = lshr i64 %i.bwd, 31
@@ -1524,16 +1526,16 @@ bb.kd:                                            ; preds = %bb.kc, %bb.ka
   store i16 %i.bwm, ptr %i.bwh, align 1
   %i.bwn = getelementptr inbounds nuw i8, ptr %.662550, i64 4 ; 3 uses
   %niter3070.next.1 = add i32 %niter3070, 2       ; 2 uses
-  %niter3070.ncmp.1 = icmp eq i32 %niter3070.next.1, %unroll_iter3069
+  %niter3070.ncmp.1 = icmp eq i32 %niter3070.next.1, %i.bvr
   br i1 %niter3070.ncmp.1, label %._crit_edge2553.unr-lcssa, label %.lr.ph2552, !llvm.loop !56
 
-bb.ke:                                            ; preds = %._crit_edge2553.thread.a, %._crit_edge2553, %bb.kb
-  %i.bwo = phi i32 [ %.pre2658.pre, %._crit_edge2553 ], [ %i.bfr, %bb.kb ], [ %i.bfr, %._crit_edge2553.thread.a ] ; 3 uses
-  %i.bwp = phi i32 [ %.pre2657.pre, %._crit_edge2553 ], [ %i.bfj, %bb.kb ], [ %i.bfj, %._crit_edge2553.thread.a ]
-  %i.bwq = phi i64 [ %.pre2656.pre, %._crit_edge2553 ], [ %i.bfi, %bb.kb ], [ %i.bfi, %._crit_edge2553.thread.a ]
-  %.32964 = phi i32 [ %i.bwb, %._crit_edge2553 ], [ %i.bvk, %bb.kb ], [ %13, %._crit_edge2553.thread.a ] ; 4 uses
-  %.2851 = phi i64 [ %i.bvz, %._crit_edge2553 ], [ %i.bvi, %bb.kb ], [ %11, %._crit_edge2553.thread.a ]
-  %.67 = phi ptr [ %.lcssa2979, %._crit_edge2553 ], [ %i.buj, %bb.kb ], [ %i.bvp, %._crit_edge2553.thread.a ] ; 3 uses
+bb.ke:                                            ; preds = %.lr.ph2552.preheader.new, %._crit_edge2553, %bb.kb
+  %i.bwo = phi i32 [ %.pre2658.pre, %._crit_edge2553 ], [ %i.bfr, %bb.kb ], [ %i.bfr, %.lr.ph2552.preheader.new ] ; 3 uses
+  %i.bwp = phi i32 [ %.pre2657.pre, %._crit_edge2553 ], [ %i.bfj, %bb.kb ], [ %i.bfj, %.lr.ph2552.preheader.new ]
+  %i.bwq = phi i64 [ %.pre2656.pre, %._crit_edge2553 ], [ %i.bfi, %bb.kb ], [ %i.bfi, %.lr.ph2552.preheader.new ]
+  %.32964 = phi i32 [ %i.bwb, %._crit_edge2553 ], [ %i.bvk, %bb.kb ], [ %14, %.lr.ph2552.preheader.new ] ; 4 uses
+  %.2851 = phi i64 [ %i.bvz, %._crit_edge2553 ], [ %i.bvi, %bb.kb ], [ %12, %.lr.ph2552.preheader.new ]
+  %.67 = phi ptr [ %.lcssa2979, %._crit_edge2553 ], [ %i.buj, %bb.kb ], [ %i.bvp, %.lr.ph2552.preheader.new ] ; 3 uses
   %i.bwr = trunc i64 %.2851 to i32                ; 2 uses
   %i.bws = sub nuw nsw i32 16, %.221019
   %i.bwt = icmp slt i32 %i.bwo, -8
@@ -1689,25 +1691,26 @@ bb.kr:                                            ; preds = %bb.kq, %bb.ko
   br i1 %i.bzq, label %.lr.ph2544.preheader, label %._crit_edge2545
 
 .lr.ph2544.preheader:                             ; preds = %bb.kr
-  %.lhs.trunc2842 = add nuw i32 %.221019, 253     ; 3 uses
-  %i.bzr = lshr i32 %.lhs.trunc2842, 1            ; 2 uses
-  %i.bzs = and i32 %.lhs.trunc2842, 254
-  %17 = icmp eq i32 %i.bzs, 2
-  br i1 %17, label %.lr.ph2544.epil.preheader, label %.lr.ph2544.preheader.new
+  %.lhs.trunc2842 = add i32 %.221019, 253
+  %i.bzr = lshr i32 %.lhs.trunc2842, 1
+  %.zext2836 = and i32 %i.bzr, 127                ; 2 uses
+  %umax3049 = tail call i32 @llvm.umax.i32(i32 %.zext2836, i32 1) ; 3 uses
+  %i.bzs = and i32 %umax3049, 1
+  %15 = icmp samesign ult i32 %.zext2836, 2
+  br i1 %15, label %.lr.ph2544.epil.preheader, label %.lr.ph2544.preheader.new
 
 .lr.ph2544.preheader.new:                         ; preds = %.lr.ph2544.preheader
-  %unroll_iter3062 = and i32 %i.bzr, 126
+  %unroll_iter3062 = and i32 %umax3049, 126
   br label %.lr.ph2544
 
 ._crit_edge2545.loopexit.unr-lcssa:               ; preds = %.lr.ph2544
-  %18 = and i32 %.lhs.trunc2842, 2
-  %lcmp.mod3058.not = icmp eq i32 %18, 0
+  %lcmp.mod3058.not = icmp eq i32 %i.bzs, 0
   br i1 %lcmp.mod3058.not, label %._crit_edge2545, label %.lr.ph2544.epil.preheader
 
 .lr.ph2544.epil.preheader:                        ; preds = %._crit_edge2545.loopexit.unr-lcssa, %.lr.ph2544.preheader
   %.712542.epil.init = phi ptr [ %i.bzp, %.lr.ph2544.preheader ], [ %i.cao, %._crit_edge2545.loopexit.unr-lcssa ] ; 2 uses
   %.18462540.epil.init = phi i64 [ %.0845, %.lr.ph2544.preheader ], [ %i.cak, %._crit_edge2545.loopexit.unr-lcssa ]
-  %lcmp.mod3061 = trunc i32 %i.bzr to i1
+  %lcmp.mod3061 = trunc i32 %umax3049 to i1
   tail call void @llvm.assume(i1 %lcmp.mod3061)
   %i.bzt = and i64 %.18462540.epil.init, 4294967295
   %i.bzu = mul nuw nsw i64 %i.bzt, 100            ; 2 uses

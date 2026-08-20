@@ -68,7 +68,7 @@ bb.b:                                             ; preds = %bb.a
   %i.p = load i32, ptr %i.o, align 4, !tbaa !28
   %.not41 = icmp eq i32 %i.p, 0
   %spec.select = select i1 %.not41, i32 %i.l, i32 %i.n ; 3 uses
-  %i.q = sdiv i32 %i.h, %spec.select              ; 2 uses
+  %i.q = sdiv i32 %i.h, %spec.select              ; 3 uses
   %i.r = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !36
   tail call void @_ZN4ncnn3Mat11create_likeERKS0_PNS_9AllocatorE(ptr noundef nonnull align 8 dereferenceable(72) %2, ptr noundef nonnull align 8 dereferenceable(72) %1, ptr noundef %i.s)
@@ -104,7 +104,8 @@ bb.c:                                             ; preds = %_ZNK4ncnn3Mat5empty
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %i.am = zext nneg i32 %spec.select to i64       ; 2 uses
-  %i.an = zext nneg i32 %i.q to i64               ; 2 uses
+  %4 = zext nneg i32 %i.q to i64
+  %i.an = zext nneg i32 %i.q to i64
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge
@@ -136,8 +137,8 @@ bb.c:                                             ; preds = %_ZNK4ncnn3Mat5empty
   %i.bd = getelementptr inbounds nuw i8, ptr %i.ay, i64 %i.bc
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ax, ptr align 1 %i.bd, i64 %i.ah, i1 false)
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.an
-  br i1 %exitcond.not, label %._crit_edge, label %.noexc, !llvm.loop !48
+  %5 = icmp samesign ult i64 %indvars.iv.next, %4
+  br i1 %5, label %.noexc, label %._crit_edge, !llvm.loop !48
 
 _ZNK4ncnn3Mat5emptyEv.exit.thread:                ; preds = %._crit_edge, %bb.c, %.preheader.lr.ph, %bb.b, %_ZNK4ncnn3Mat5emptyEv.exit, %bb.a
   %.1 = phi i32 [ -100, %bb.a ], [ -100, %_ZNK4ncnn3Mat5emptyEv.exit ], [ -100, %bb.b ], [ 0, %.preheader.lr.ph ], [ 0, %bb.c ], [ 0, %._crit_edge ]

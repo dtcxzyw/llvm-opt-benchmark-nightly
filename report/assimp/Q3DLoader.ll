@@ -204,8 +204,7 @@ bb.ld:                                            ; preds = %_ZNSt6vectorIN6Assi
   %i.aje = ptrtoint ptr %i.ajd to i64
   %i.ajf = ptrtoint ptr %i.ajc to i64
   %i.ajg = sub i64 %i.aje, %i.ajf
-  %.fr1648 = freeze i64 %i.ajg
-  %i.ajh = sdiv i64 %.fr1648, 1072                ; 3 uses
+  %i.ajh = sdiv exact i64 %i.ajg, 1072            ; 3 uses
   %i.aji = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.ajh, i64 24) ; 2 uses
   %i.ajj = extractvalue { i64, i1 } %i.aji, 1
   %i.ajk = extractvalue { i64, i1 } %i.aji, 0
@@ -219,18 +218,20 @@ bb.ld:                                            ; preds = %_ZNSt6vectorIN6Assi
 
 bb.le:                                            ; preds = %bb.ld
   store i64 %i.ajh, ptr %i.ajq, align 16
-  %.ptr519 = getelementptr i8, ptr %i.ajq, i64 8  ; 5 uses
+  %.ptr519 = getelementptr inbounds nuw i8, ptr %i.ajq, i64 8 ; 6 uses
   %i.ajr = icmp eq ptr %i.ajd, %i.ajc
-  br i1 %i.ajr, label %.loopexit971, label %.loopexit971.loopexit
+  br i1 %i.ajr, label %.loopexit971, label %10
 
-.loopexit971.loopexit:                            ; preds = %bb.le
-  %10 = mul nsw i64 %i.ajh, 24
-  %11 = add nsw i64 %10, -24                      ; 2 uses
-  %12 = urem i64 %11, 24
-  %13 = sub nuw nsw i64 %11, %12
-  %14 = add nsw i64 %13, 24
-  call void @llvm.memset.p0.i64(ptr align 8 %.ptr519, i8 0, i64 %14, i1 false)
-  br label %.loopexit971
+10:                                               ; preds = %bb.le
+  %11 = getelementptr inbounds [24 x i8], ptr %.ptr519, i64 %i.ajh
+  br label %.loopexit971.loopexit
+
+.loopexit971.loopexit:                            ; preds = %.loopexit971.loopexit, %10
+  %12 = phi ptr [ %.ptr519, %10 ], [ %13, %.loopexit971.loopexit ] ; 2 uses
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %12, i8 0, i64 24, i1 false)
+  %13 = getelementptr inbounds nuw i8, ptr %12, i64 24 ; 2 uses
+  %14 = icmp eq ptr %13, %11
+  br i1 %14, label %.loopexit971, label %.loopexit971.loopexit
 
 .loopexit971:                                     ; preds = %.loopexit971.loopexit, %bb.le
   %i.ajs = load ptr, ptr %9, align 8              ; 2 uses

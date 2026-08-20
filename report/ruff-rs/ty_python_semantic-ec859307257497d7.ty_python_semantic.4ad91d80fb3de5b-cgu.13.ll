@@ -204,7 +204,7 @@ define void @_RINvMs_NtCs45bxiIjzMqg_5salsa11zalsa_localNtB5_10ZalsaLocal13alloc
 bb.a:
   %i.a = alloca [56 x i8], align 8                ; 4 uses
   %i.b = alloca [8 x i8], align 8                 ; 4 uses
-  %i.c = alloca [56 x i8], align 8                ; 7 uses
+  %i.c = alloca [56 x i8], align 8                ; 8 uses
   %i.d = alloca [104 x i8], align 8               ; 14 uses
   %i.e = alloca [56 x i8], align 8                ; 11 uses
   %i.f = alloca [24 x i8], align 8                ; 7 uses
@@ -269,7 +269,7 @@ _RINvMs18_NtNtNtCs2AWtUsOyxgP_3std11collections4hash3mapINtB7_5EntryNtNtCs45bxiI
   %i.ad = extractelement <4 x i32> %i.ac, i64 0
   %.not5 = icmp eq i32 %i.ad, -1
   %i.ae = extractelement <4 x i32> %i.ac, i64 2
-  %i.af = extractelement <4 x i32> %i.ac, i64 3
+  %i.af = extractelement <4 x i32> %i.ac, i64 3   ; 2 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %_RNvMNtNtCsc4HYy37PfYO_6boxcar3vec3rawINtB2_3VecNtNtCs45bxiIjzMqg_5salsa5table4PageE4pushCsoTR8nlGN3X_18ty_python_semantic.exit
@@ -326,15 +326,17 @@ _RINvMs6_NtCs45bxiIjzMqg_5salsa5tableINtB6_8PageViewINtNtB8_8interned5ValueNtNtC
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !1725
   store i32 %i.au, ptr %i.c, align 8, !noalias !1725
   %i.bb = getelementptr inbounds nuw i8, ptr %i.c, i64 4
-  store i32 0, ptr %i.bb, align 4, !noalias !1725
-  %i.bc = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
-  store <4 x i32> %i.ac, ptr %i.bc, align 8, !noalias !1729
+  %5 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
+  %6 = shufflevector <4 x i32> %i.ac, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>, <4 x i32> <i32 4, i32 0, i32 1, i32 2>
+  store <4 x i32> %6, ptr %i.bb, align 4, !noalias !1729
+  %i.bc = getelementptr inbounds nuw i8, ptr %i.c, i64 20
+  store i32 %i.af, ptr %i.bc, align 4, !noalias !1729
   %.sroa.836.0..sroa_idx37 = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   store ptr %.sroa.836.0..sroa_idx.promoted, ptr %.sroa.836.0..sroa_idx37, align 8, !noalias !1729
   %.sroa.939.0..sroa_idx40 = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.939.0..sroa_idx40, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.939.0..sroa_idx, i64 24, i1 false)
   %i.bd = getelementptr inbounds nuw i8, ptr %i.d, i64 32
-  call void @_RNvXs0_NvNtCsoTR8nlGN3X_18ty_python_semantic5typess5_1__INtB5_9StructKeyNtNtCs2O29vuvTAEJ_14ty_python_core7program7ProgramNtB7_4TypeReNtB7_18MemberLookupPolicyEINtNtCs45bxiIjzMqg_5salsa8interned6LookupTB18_B1W_NtNtCskLngH8kgpZI_15ruff_python_ast4name4NameB28_EE10into_ownedB9_(ptr noalias noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.bd, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(48) %i.bc), !noalias !1720
+  call void @_RNvXs0_NvNtCsoTR8nlGN3X_18ty_python_semantic5typess5_1__INtB5_9StructKeyNtNtCs2O29vuvTAEJ_14ty_python_core7program7ProgramNtB7_4TypeReNtB7_18MemberLookupPolicyEINtNtCs45bxiIjzMqg_5salsa8interned6LookupTB18_B1W_NtNtCskLngH8kgpZI_15ruff_python_ast4name4NameB28_EE10into_ownedB9_(ptr noalias noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.bd, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(48) %5), !noalias !1720
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !1725
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.12.0..sroa_idx.promoted) ]
   %i.be = getelementptr inbounds nuw i8, ptr %.sroa.12.0..sroa_idx.promoted, i64 16
@@ -737,7 +739,7 @@ define void @_RINvMs_NtCs45bxiIjzMqg_5salsa11zalsa_localNtB5_10ZalsaLocal13alloc
 bb.a:
   %i.a = alloca [56 x i8], align 8                ; 4 uses
   %i.b = alloca [8 x i8], align 8                 ; 4 uses
-  %i.c = alloca [72 x i8], align 4                ; 7 uses
+  %i.c = alloca [72 x i8], align 4                ; 8 uses
   %i.d = alloca [120 x i8], align 8               ; 14 uses
   %i.e = alloca [56 x i8], align 8                ; 11 uses
   %i.f = alloca [24 x i8], align 8                ; 7 uses
@@ -802,7 +804,7 @@ _RINvMs18_NtNtNtCs2AWtUsOyxgP_3std11collections4hash3mapINtB7_5EntryNtNtCs45bxiI
   %i.ad = extractelement <4 x i32> %i.ac, i64 0
   %.not5 = icmp eq i32 %i.ad, -1
   %i.ae = extractelement <4 x i32> %i.ac, i64 2
-  %i.af = extractelement <4 x i32> %i.ac, i64 3
+  %i.af = extractelement <4 x i32> %i.ac, i64 3   ; 2 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %_RNvMNtNtCsc4HYy37PfYO_6boxcar3vec3rawINtB2_3VecNtNtCs45bxiIjzMqg_5salsa5table4PageE4pushCsoTR8nlGN3X_18ty_python_semantic.exit
@@ -859,14 +861,16 @@ _RINvMs6_NtCs45bxiIjzMqg_5salsa5tableINtB6_8PageViewINtNtB8_8interned5ValueNtNtC
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !1853
   store i32 %i.au, ptr %i.c, align 4, !noalias !1853
   %i.bb = getelementptr inbounds nuw i8, ptr %i.c, i64 4
-  store i32 0, ptr %i.bb, align 4, !noalias !1853
-  %i.bc = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
-  store <4 x i32> %i.ac, ptr %i.bc, align 4, !noalias !1857
+  %5 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
+  %6 = shufflevector <4 x i32> %i.ac, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>, <4 x i32> <i32 4, i32 0, i32 1, i32 2>
+  store <4 x i32> %6, ptr %i.bb, align 4, !noalias !1857
+  %i.bc = getelementptr inbounds nuw i8, ptr %i.c, i64 20
+  store i32 %i.af, ptr %i.bc, align 4, !noalias !1857
   %.sroa.836.0..sroa_idx37 = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   store ptr %.sroa.836.0..sroa_idx.promoted, ptr %.sroa.836.0..sroa_idx37, align 4, !noalias !1857
   %.sroa.939.0..sroa_idx40 = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(40) %.sroa.939.0..sroa_idx40, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.939.0..sroa_idx, i64 40, i1 false)
-  call void @_RNvXs0_NvNtCsoTR8nlGN3X_18ty_python_semantic5typess_1__INtB5_9StructKeyNtB7_4TypeB17_INtNtCs4NRVxsYgnAr_4core6option6OptionB17_EB17_EINtNtCs45bxiIjzMqg_5salsa8interned6LookupTB17_B17_B1l_B17_EE10into_ownedB9_(ptr noalias noundef nonnull sret([64 x i8]) align 8 captures(none) dereferenceable(120) %i.d, ptr noalias noundef nonnull align 4 captures(address) dereferenceable(64) %i.bc), !noalias !1848
+  call void @_RNvXs0_NvNtCsoTR8nlGN3X_18ty_python_semantic5typess_1__INtB5_9StructKeyNtB7_4TypeB17_INtNtCs4NRVxsYgnAr_4core6option6OptionB17_EB17_EINtNtCs45bxiIjzMqg_5salsa8interned6LookupTB17_B17_B1l_B17_EE10into_ownedB9_(ptr noalias noundef nonnull sret([64 x i8]) align 8 captures(none) dereferenceable(120) %i.d, ptr noalias noundef nonnull align 4 captures(address) dereferenceable(64) %5), !noalias !1848
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !1853
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.12.0..sroa_idx.promoted) ]
   %i.bd = getelementptr inbounds nuw i8, ptr %.sroa.12.0..sroa_idx.promoted, i64 16
@@ -1057,7 +1061,7 @@ define void @_RINvMs_NtCs45bxiIjzMqg_5salsa11zalsa_localNtB5_10ZalsaLocal13alloc
 bb.a:
   %i.a = alloca [56 x i8], align 8                ; 4 uses
   %i.b = alloca [8 x i8], align 8                 ; 4 uses
-  %i.c = alloca [48 x i8], align 4                ; 7 uses
+  %i.c = alloca [48 x i8], align 4                ; 8 uses
   %i.d = alloca [96 x i8], align 8                ; 14 uses
   %i.e = alloca [56 x i8], align 8                ; 11 uses
   %i.f = alloca [24 x i8], align 8                ; 7 uses
@@ -1122,7 +1126,7 @@ _RINvMs18_NtNtNtCs2AWtUsOyxgP_3std11collections4hash3mapINtB7_5EntryNtNtCs45bxiI
   %i.ad = extractelement <4 x i32> %i.ac, i64 0
   %.not5 = icmp eq i32 %i.ad, -1
   %i.ae = extractelement <4 x i32> %i.ac, i64 2
-  %i.af = extractelement <4 x i32> %i.ac, i64 3
+  %i.af = extractelement <4 x i32> %i.ac, i64 3   ; 2 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %_RNvMNtNtCsc4HYy37PfYO_6boxcar3vec3rawINtB2_3VecNtNtCs45bxiIjzMqg_5salsa5table4PageE4pushCsoTR8nlGN3X_18ty_python_semantic.exit
@@ -1179,15 +1183,17 @@ _RINvMs6_NtCs45bxiIjzMqg_5salsa5tableINtB6_8PageViewINtNtB8_8interned5ValueNtNtC
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !1885
   store i32 %i.au, ptr %i.c, align 4, !noalias !1885
   %i.bb = getelementptr inbounds nuw i8, ptr %i.c, i64 4
-  store i32 0, ptr %i.bb, align 4, !noalias !1885
-  %i.bc = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
-  store <4 x i32> %i.ac, ptr %i.bc, align 4, !noalias !1889
+  %5 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
+  %6 = shufflevector <4 x i32> %i.ac, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>, <4 x i32> <i32 4, i32 0, i32 1, i32 2>
+  store <4 x i32> %6, ptr %i.bb, align 4, !noalias !1889
+  %i.bc = getelementptr inbounds nuw i8, ptr %i.c, i64 20
+  store i32 %i.af, ptr %i.bc, align 4, !noalias !1889
   %.sroa.836.0..sroa_idx37 = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   store ptr %.sroa.836.0..sroa_idx.promoted, ptr %.sroa.836.0..sroa_idx37, align 4, !noalias !1889
   %.sroa.939.0..sroa_idx40 = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.939.0..sroa_idx40, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.939.0..sroa_idx, i64 16, i1 false)
   %i.bd = getelementptr inbounds nuw i8, ptr %i.d, i64 48
-  call void @_RNvXs0_NvNtCsoTR8nlGN3X_18ty_python_semantic5typessa_1__INtB5_9StructKeyNtNtCs2O29vuvTAEJ_14ty_python_core7program7ProgramNtB7_4TypeB1W_EINtNtCs45bxiIjzMqg_5salsa8interned6LookupTB18_B1W_B1W_EE10into_ownedB9_(ptr noalias noundef nonnull sret([40 x i8]) align 4 captures(none) dereferenceable(40) %i.bd, ptr noalias noundef nonnull align 4 captures(address) dereferenceable(40) %i.bc), !noalias !1880
+  call void @_RNvXs0_NvNtCsoTR8nlGN3X_18ty_python_semantic5typessa_1__INtB5_9StructKeyNtNtCs2O29vuvTAEJ_14ty_python_core7program7ProgramNtB7_4TypeB1W_EINtNtCs45bxiIjzMqg_5salsa8interned6LookupTB18_B1W_B1W_EE10into_ownedB9_(ptr noalias noundef nonnull sret([40 x i8]) align 4 captures(none) dereferenceable(40) %i.bd, ptr noalias noundef nonnull align 4 captures(address) dereferenceable(40) %5), !noalias !1880
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !1885
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.12.0..sroa_idx.promoted) ]
   %i.be = getelementptr inbounds nuw i8, ptr %.sroa.12.0..sroa_idx.promoted, i64 16
@@ -1590,7 +1596,7 @@ define void @_RINvMs_NtCs45bxiIjzMqg_5salsa11zalsa_localNtB5_10ZalsaLocal13alloc
 bb.a:
   %i.a = alloca [56 x i8], align 8                ; 4 uses
   %i.b = alloca [8 x i8], align 8                 ; 4 uses
-  %i.c = alloca [56 x i8], align 4                ; 7 uses
+  %i.c = alloca [56 x i8], align 4                ; 8 uses
   %i.d = alloca [104 x i8], align 8               ; 14 uses
   %i.e = alloca [56 x i8], align 8                ; 11 uses
   %i.f = alloca [24 x i8], align 8                ; 7 uses
@@ -1655,7 +1661,7 @@ _RINvMs18_NtNtNtCs2AWtUsOyxgP_3std11collections4hash3mapINtB7_5EntryNtNtCs45bxiI
   %i.ad = extractelement <4 x i32> %i.ac, i64 0
   %.not5 = icmp eq i32 %i.ad, -2
   %i.ae = extractelement <4 x i32> %i.ac, i64 2
-  %i.af = extractelement <4 x i32> %i.ac, i64 3
+  %i.af = extractelement <4 x i32> %i.ac, i64 3   ; 2 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %_RNvMNtNtCsc4HYy37PfYO_6boxcar3vec3rawINtB2_3VecNtNtCs45bxiIjzMqg_5salsa5table4PageE4pushCsoTR8nlGN3X_18ty_python_semantic.exit
@@ -1712,15 +1718,17 @@ _RINvMs6_NtCs45bxiIjzMqg_5salsa5tableINtB6_8PageViewINtNtB8_8interned5ValueNtNtN
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !2035
   store i32 %i.au, ptr %i.c, align 4, !noalias !2035
   %i.bb = getelementptr inbounds nuw i8, ptr %i.c, i64 4
-  store i32 0, ptr %i.bb, align 4, !noalias !2035
-  %i.bc = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
-  store <4 x i32> %i.ac, ptr %i.bc, align 4, !noalias !2039
+  %5 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
+  %6 = shufflevector <4 x i32> %i.ac, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>, <4 x i32> <i32 4, i32 0, i32 1, i32 2>
+  store <4 x i32> %6, ptr %i.bb, align 4, !noalias !2039
+  %i.bc = getelementptr inbounds nuw i8, ptr %i.c, i64 20
+  store i32 %i.af, ptr %i.bc, align 4, !noalias !2039
   %.sroa.836.0..sroa_idx37 = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   store ptr %.sroa.836.0..sroa_idx.promoted, ptr %.sroa.836.0..sroa_idx37, align 4, !noalias !2039
   %.sroa.939.0..sroa_idx40 = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) %.sroa.939.0..sroa_idx40, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.939.0..sroa_idx, i64 24, i1 false)
   %i.bd = getelementptr inbounds nuw i8, ptr %i.d, i64 32
-  call void @_RNvXs0_NvNtNtCsoTR8nlGN3X_18ty_python_semantic5types11bound_supers0_1__INtB5_9StructKeyNtNtB9_10class_base9ClassBaseNtB7_14SuperOwnerKindEINtNtCs45bxiIjzMqg_5salsa8interned6LookupTB1n_B1Q_EE10into_ownedBb_(ptr noalias noundef nonnull sret([48 x i8]) align 4 captures(none) dereferenceable(48) %i.bd, ptr noalias noundef nonnull align 4 captures(address) dereferenceable(48) %i.bc), !noalias !2030
+  call void @_RNvXs0_NvNtNtCsoTR8nlGN3X_18ty_python_semantic5types11bound_supers0_1__INtB5_9StructKeyNtNtB9_10class_base9ClassBaseNtB7_14SuperOwnerKindEINtNtCs45bxiIjzMqg_5salsa8interned6LookupTB1n_B1Q_EE10into_ownedBb_(ptr noalias noundef nonnull sret([48 x i8]) align 4 captures(none) dereferenceable(48) %i.bd, ptr noalias noundef nonnull align 4 captures(address) dereferenceable(48) %5), !noalias !2030
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !2035
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.12.0..sroa_idx.promoted) ]
   %i.be = getelementptr inbounds nuw i8, ptr %.sroa.12.0..sroa_idx.promoted, i64 16
@@ -2123,7 +2131,7 @@ define void @_RINvMs_NtCs45bxiIjzMqg_5salsa11zalsa_localNtB5_10ZalsaLocal13alloc
 bb.a:
   %i.a = alloca [56 x i8], align 8                ; 4 uses
   %i.b = alloca [8 x i8], align 8                 ; 4 uses
-  %i.c = alloca [80 x i8], align 8                ; 7 uses
+  %i.c = alloca [80 x i8], align 8                ; 8 uses
   %i.d = alloca [128 x i8], align 8               ; 14 uses
   %i.e = alloca [56 x i8], align 8                ; 11 uses
   %i.f = alloca [24 x i8], align 8                ; 7 uses
@@ -2204,7 +2212,7 @@ bb.e:                                             ; preds = %bb.d, %.noexc
   %i.ad = extractelement <4 x i32> %i.ac, i64 0
   %.not5 = icmp eq i32 %i.ad, -2
   %i.ae = extractelement <4 x i32> %i.ac, i64 2
-  %i.af = extractelement <4 x i32> %i.ac, i64 3
+  %i.af = extractelement <4 x i32> %i.ac, i64 3   ; 2 uses
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph, %bb.aa
@@ -2273,15 +2281,17 @@ _RINvMs4_NtCs45bxiIjzMqg_5salsa5tableNtB6_5Table4pageINtNtB8_8interned5ValueNtNt
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !2142
   store i32 %i.au, ptr %i.c, align 8, !noalias !2142
   %i.bb = getelementptr inbounds nuw i8, ptr %i.c, i64 4
-  store i32 0, ptr %i.bb, align 4, !noalias !2142
-  %i.bc = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
-  store <4 x i32> %i.ac, ptr %i.bc, align 8, !noalias !2146
+  %5 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
+  %6 = shufflevector <4 x i32> %i.ac, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>, <4 x i32> <i32 4, i32 0, i32 1, i32 2>
+  store <4 x i32> %6, ptr %i.bb, align 4, !noalias !2146
+  %i.bc = getelementptr inbounds nuw i8, ptr %i.c, i64 20
+  store i32 %i.af, ptr %i.bc, align 4, !noalias !2146
   %.sroa.849.0..sroa_idx50 = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   store ptr %.sroa.849.0..sroa_idx.promoted, ptr %.sroa.849.0..sroa_idx50, align 8, !noalias !2146
   %.sroa.952.0..sroa_idx53 = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.952.0..sroa_idx53, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.952.0..sroa_idx, i64 48, i1 false)
   %i.bd = getelementptr inbounds nuw i8, ptr %i.d, i64 48
-  call void @_RNvXs0_NvNtNtCsoTR8nlGN3X_18ty_python_semantic5types14known_instances4_1__INtB5_9StructKeyINtNtCs4NRVxsYgnAr_4core6option6OptionNtB9_4TypeEbIB1r_bEIB1r_INtNtCscdodAO9FK5_5alloc5boxed3BoxeEEIB1r_TB22_B22_EENtNtNtB9_9dedicated8pydantic13ConfigBooleanEINtNtCs45bxiIjzMqg_5salsa8interned6LookupTB1q_bB2e_B2l_B31_B3h_EE10into_ownedBb_(ptr noalias noundef nonnull sret([72 x i8]) align 8 captures(none) dereferenceable(72) %i.bd, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(72) %i.bc)
+  call void @_RNvXs0_NvNtNtCsoTR8nlGN3X_18ty_python_semantic5types14known_instances4_1__INtB5_9StructKeyINtNtCs4NRVxsYgnAr_4core6option6OptionNtB9_4TypeEbIB1r_bEIB1r_INtNtCscdodAO9FK5_5alloc5boxed3BoxeEEIB1r_TB22_B22_EENtNtNtB9_9dedicated8pydantic13ConfigBooleanEINtNtCs45bxiIjzMqg_5salsa8interned6LookupTB1q_bB2e_B2l_B31_B3h_EE10into_ownedBb_(ptr noalias noundef nonnull sret([72 x i8]) align 8 captures(none) dereferenceable(72) %i.bd, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(72) %5)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !2142
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.12.0..sroa_idx.promoted) ]
   %i.be = getelementptr inbounds nuw i8, ptr %.sroa.12.0..sroa_idx.promoted, i64 16
@@ -2495,7 +2505,7 @@ define void @_RINvMs_NtCs45bxiIjzMqg_5salsa11zalsa_localNtB5_10ZalsaLocal13alloc
 bb.a:
   %i.a = alloca [56 x i8], align 8                ; 4 uses
   %i.b = alloca [8 x i8], align 8                 ; 4 uses
-  %i.c = alloca [72 x i8], align 8                ; 7 uses
+  %i.c = alloca [72 x i8], align 8                ; 8 uses
   %i.d = alloca [128 x i8], align 8               ; 14 uses
   %i.e = alloca [56 x i8], align 8                ; 11 uses
   %i.f = alloca [24 x i8], align 8                ; 7 uses
@@ -2560,7 +2570,7 @@ _RINvMs18_NtNtNtCs2AWtUsOyxgP_3std11collections4hash3mapINtB7_5EntryNtNtCs45bxiI
   %i.ad = extractelement <4 x i32> %i.ac, i64 0
   %.not5 = icmp eq i32 %i.ad, -2
   %i.ae = extractelement <4 x i32> %i.ac, i64 2
-  %i.af = extractelement <4 x i32> %i.ac, i64 3
+  %i.af = extractelement <4 x i32> %i.ac, i64 3   ; 2 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %_RNvMNtNtCsc4HYy37PfYO_6boxcar3vec3rawINtB2_3VecNtNtCs45bxiIjzMqg_5salsa5table4PageE4pushCsoTR8nlGN3X_18ty_python_semantic.exit
@@ -2617,15 +2627,17 @@ _RINvMs6_NtCs45bxiIjzMqg_5salsa5tableINtB6_8PageViewINtNtB8_8interned5ValueNtNtN
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !2174
   store i32 %i.au, ptr %i.c, align 8, !noalias !2174
   %i.bb = getelementptr inbounds nuw i8, ptr %i.c, i64 4
-  store i32 0, ptr %i.bb, align 4, !noalias !2174
-  %i.bc = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
-  store <4 x i32> %i.ac, ptr %i.bc, align 8, !noalias !2178
+  %5 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
+  %6 = shufflevector <4 x i32> %i.ac, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>, <4 x i32> <i32 4, i32 0, i32 1, i32 2>
+  store <4 x i32> %6, ptr %i.bb, align 4, !noalias !2178
+  %i.bc = getelementptr inbounds nuw i8, ptr %i.c, i64 20
+  store i32 %i.af, ptr %i.bc, align 4, !noalias !2178
   %.sroa.836.0..sroa_idx37 = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   store ptr %.sroa.836.0..sroa_idx.promoted, ptr %.sroa.836.0..sroa_idx37, align 8, !noalias !2178
   %.sroa.939.0..sroa_idx40 = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.939.0..sroa_idx40, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.939.0..sroa_idx, i64 40, i1 false)
   %i.bd = getelementptr inbounds nuw i8, ptr %i.d, i64 48
-  call void @_RNvXs0_NvNtNtCsoTR8nlGN3X_18ty_python_semantic5types14known_instances4_1__INtB5_9StructKeyINtNtCs4NRVxsYgnAr_4core6option6OptionNtB9_4TypeEbIB1r_bERIB1r_INtNtCscdodAO9FK5_5alloc5boxed3BoxeEEIB1r_TB22_B22_EENtNtNtB9_9dedicated8pydantic13ConfigBooleanEINtNtCs45bxiIjzMqg_5salsa8interned6LookupTB1q_bB2e_B2m_B32_B3i_EE10into_ownedBb_(ptr noalias noundef nonnull sret([72 x i8]) align 8 captures(none) dereferenceable(72) %i.bd, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(64) %i.bc), !noalias !2169
+  call void @_RNvXs0_NvNtNtCsoTR8nlGN3X_18ty_python_semantic5types14known_instances4_1__INtB5_9StructKeyINtNtCs4NRVxsYgnAr_4core6option6OptionNtB9_4TypeEbIB1r_bERIB1r_INtNtCscdodAO9FK5_5alloc5boxed3BoxeEEIB1r_TB22_B22_EENtNtNtB9_9dedicated8pydantic13ConfigBooleanEINtNtCs45bxiIjzMqg_5salsa8interned6LookupTB1q_bB2e_B2m_B32_B3i_EE10into_ownedBb_(ptr noalias noundef nonnull sret([72 x i8]) align 8 captures(none) dereferenceable(72) %i.bd, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(64) %5), !noalias !2169
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !2174
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.12.0..sroa_idx.promoted) ]
   %i.be = getelementptr inbounds nuw i8, ptr %.sroa.12.0..sroa_idx.promoted, i64 16
@@ -3028,7 +3040,7 @@ define void @_RINvMs_NtCs45bxiIjzMqg_5salsa11zalsa_localNtB5_10ZalsaLocal13alloc
 bb.a:
   %i.a = alloca [56 x i8], align 8                ; 4 uses
   %i.b = alloca [8 x i8], align 8                 ; 4 uses
-  %i.c = alloca [32 x i8], align 4                ; 6 uses
+  %i.c = alloca [32 x i8], align 4                ; 7 uses
   %i.d = alloca [80 x i8], align 8                ; 14 uses
   %i.e = alloca [56 x i8], align 8                ; 11 uses
   %i.f = alloca [24 x i8], align 8                ; 7 uses
@@ -3092,7 +3104,7 @@ _RINvMs18_NtNtNtCs2AWtUsOyxgP_3std11collections4hash3mapINtB7_5EntryNtNtCs45bxiI
   %i.ad = extractelement <4 x i32> %i.ac, i64 0
   %.not5 = icmp eq i32 %i.ad, -2
   %i.ae = extractelement <4 x i32> %i.ac, i64 2
-  %i.af = extractelement <4 x i32> %i.ac, i64 3
+  %i.af = extractelement <4 x i32> %i.ac, i64 3   ; 2 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %_RNvMNtNtCsc4HYy37PfYO_6boxcar3vec3rawINtB2_3VecNtNtCs45bxiIjzMqg_5salsa5table4PageE4pushCsoTR8nlGN3X_18ty_python_semantic.exit
@@ -3149,13 +3161,15 @@ _RINvMs6_NtCs45bxiIjzMqg_5salsa5tableINtB6_8PageViewINtNtB8_8interned5ValueNtNtN
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !2561
   store i32 %i.au, ptr %i.c, align 4, !noalias !2561
   %i.bb = getelementptr inbounds nuw i8, ptr %i.c, i64 4
-  store i32 0, ptr %i.bb, align 4, !noalias !2561
-  %i.bc = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
-  store <4 x i32> %i.ac, ptr %i.bc, align 4, !noalias !2565
+  %5 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
+  %6 = shufflevector <4 x i32> %i.ac, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>, <4 x i32> <i32 4, i32 0, i32 1, i32 2>
+  store <4 x i32> %6, ptr %i.bb, align 4, !noalias !2565
+  %i.bc = getelementptr inbounds nuw i8, ptr %i.c, i64 20
+  store i32 %i.af, ptr %i.bc, align 4, !noalias !2565
   %.sroa.836.0..sroa_idx37 = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   store ptr %.sroa.836.0..sroa_idx.promoted, ptr %.sroa.836.0..sroa_idx37, align 4, !noalias !2565
   %i.bd = getelementptr inbounds nuw i8, ptr %i.d, i64 48
-  call void @_RNvXs0_NvNtNtCsoTR8nlGN3X_18ty_python_semantic5types5infersb_1__INtB5_9StructKeyNtNtCs2O29vuvTAEJ_14ty_python_core5scope7ScopeIdNtB7_11TypeContextEINtNtCs45bxiIjzMqg_5salsa8interned6LookupTB1g_B22_EE10into_ownedBb_(ptr noalias noundef nonnull sret([24 x i8]) align 4 captures(none) dereferenceable(24) %i.bd, ptr noalias noundef nonnull align 4 captures(address) dereferenceable(24) %i.bc), !noalias !2556
+  call void @_RNvXs0_NvNtNtCsoTR8nlGN3X_18ty_python_semantic5types5infersb_1__INtB5_9StructKeyNtNtCs2O29vuvTAEJ_14ty_python_core5scope7ScopeIdNtB7_11TypeContextEINtNtCs45bxiIjzMqg_5salsa8interned6LookupTB1g_B22_EE10into_ownedBb_(ptr noalias noundef nonnull sret([24 x i8]) align 4 captures(none) dereferenceable(24) %i.bd, ptr noalias noundef nonnull align 4 captures(address) dereferenceable(24) %5), !noalias !2556
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !2561
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.12.0..sroa_idx.promoted) ]
   %i.be = getelementptr inbounds nuw i8, ptr %.sroa.12.0..sroa_idx.promoted, i64 16
@@ -3345,7 +3359,7 @@ define void @_RINvMs_NtCs45bxiIjzMqg_5salsa11zalsa_localNtB5_10ZalsaLocal13alloc
 bb.a:
   %i.a = alloca [56 x i8], align 8                ; 4 uses
   %i.b = alloca [8 x i8], align 8                 ; 4 uses
-  %i.c = alloca [32 x i8], align 4                ; 6 uses
+  %i.c = alloca [32 x i8], align 4                ; 7 uses
   %i.d = alloca [80 x i8], align 8                ; 14 uses
   %i.e = alloca [56 x i8], align 8                ; 11 uses
   %i.f = alloca [24 x i8], align 8                ; 7 uses
@@ -3409,7 +3423,7 @@ _RINvMs18_NtNtNtCs2AWtUsOyxgP_3std11collections4hash3mapINtB7_5EntryNtNtCs45bxiI
   %i.ad = extractelement <4 x i32> %i.ac, i64 0
   %.not5 = icmp eq i32 %i.ad, -2
   %i.ae = extractelement <4 x i32> %i.ac, i64 2
-  %i.af = extractelement <4 x i32> %i.ac, i64 3
+  %i.af = extractelement <4 x i32> %i.ac, i64 3   ; 2 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %_RNvMNtNtCsc4HYy37PfYO_6boxcar3vec3rawINtB2_3VecNtNtCs45bxiIjzMqg_5salsa5table4PageE4pushCsoTR8nlGN3X_18ty_python_semantic.exit
@@ -3466,13 +3480,15 @@ _RINvMs6_NtCs45bxiIjzMqg_5salsa5tableINtB6_8PageViewINtNtB8_8interned5ValueNtNtN
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !2593
   store i32 %i.au, ptr %i.c, align 4, !noalias !2593
   %i.bb = getelementptr inbounds nuw i8, ptr %i.c, i64 4
-  store i32 0, ptr %i.bb, align 4, !noalias !2593
-  %i.bc = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
-  store <4 x i32> %i.ac, ptr %i.bc, align 4, !noalias !2597
+  %5 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
+  %6 = shufflevector <4 x i32> %i.ac, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>, <4 x i32> <i32 4, i32 0, i32 1, i32 2>
+  store <4 x i32> %6, ptr %i.bb, align 4, !noalias !2597
+  %i.bc = getelementptr inbounds nuw i8, ptr %i.c, i64 20
+  store i32 %i.af, ptr %i.bc, align 4, !noalias !2597
   %.sroa.836.0..sroa_idx37 = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   store ptr %.sroa.836.0..sroa_idx.promoted, ptr %.sroa.836.0..sroa_idx37, align 4, !noalias !2597
   %i.bd = getelementptr inbounds nuw i8, ptr %i.d, i64 48
-  call void @_RNvXs0_NvNtNtCsoTR8nlGN3X_18ty_python_semantic5types5infers9_1__INtB5_9StructKeyNtNtCs2O29vuvTAEJ_14ty_python_core10expression10ExpressionNtB7_11TypeContextEINtNtCs45bxiIjzMqg_5salsa8interned6LookupTB1g_B2c_EE10into_ownedBb_(ptr noalias noundef nonnull sret([24 x i8]) align 4 captures(none) dereferenceable(24) %i.bd, ptr noalias noundef nonnull align 4 captures(address) dereferenceable(24) %i.bc), !noalias !2588
+  call void @_RNvXs0_NvNtNtCsoTR8nlGN3X_18ty_python_semantic5types5infers9_1__INtB5_9StructKeyNtNtCs2O29vuvTAEJ_14ty_python_core10expression10ExpressionNtB7_11TypeContextEINtNtCs45bxiIjzMqg_5salsa8interned6LookupTB1g_B2c_EE10into_ownedBb_(ptr noalias noundef nonnull sret([24 x i8]) align 4 captures(none) dereferenceable(24) %i.bd, ptr noalias noundef nonnull align 4 captures(address) dereferenceable(24) %5), !noalias !2588
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !2593
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.12.0..sroa_idx.promoted) ]
   %i.be = getelementptr inbounds nuw i8, ptr %.sroa.12.0..sroa_idx.promoted, i64 16
@@ -3875,7 +3891,7 @@ define void @_RINvMs_NtCs45bxiIjzMqg_5salsa11zalsa_localNtB5_10ZalsaLocal13alloc
 bb.a:
   %i.a = alloca [56 x i8], align 8                ; 4 uses
   %i.b = alloca [8 x i8], align 8                 ; 4 uses
-  %i.c = alloca [32 x i8], align 4                ; 6 uses
+  %i.c = alloca [32 x i8], align 4                ; 7 uses
   %i.d = alloca [80 x i8], align 8                ; 14 uses
   %i.e = alloca [56 x i8], align 8                ; 11 uses
   %i.f = alloca [24 x i8], align 8                ; 7 uses
@@ -3939,7 +3955,7 @@ _RINvMs18_NtNtNtCs2AWtUsOyxgP_3std11collections4hash3mapINtB7_5EntryNtNtCs45bxiI
   %i.ad = extractelement <4 x i32> %i.ac, i64 0
   %.not5 = icmp eq i32 %i.ad, -1
   %i.ae = extractelement <4 x i32> %i.ac, i64 2
-  %i.af = extractelement <4 x i32> %i.ac, i64 3
+  %i.af = extractelement <4 x i32> %i.ac, i64 3   ; 2 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %_RNvMNtNtCsc4HYy37PfYO_6boxcar3vec3rawINtB2_3VecNtNtCs45bxiIjzMqg_5salsa5table4PageE4pushCsoTR8nlGN3X_18ty_python_semantic.exit
@@ -3996,13 +4012,15 @@ _RINvMs6_NtCs45bxiIjzMqg_5salsa5tableINtB6_8PageViewINtNtB8_8interned5ValueNtNtN
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !2681
   store i32 %i.au, ptr %i.c, align 4, !noalias !2681
   %i.bb = getelementptr inbounds nuw i8, ptr %i.c, i64 4
-  store i32 0, ptr %i.bb, align 4, !noalias !2681
-  %i.bc = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
-  store <4 x i32> %i.ac, ptr %i.bc, align 4, !noalias !2685
+  %5 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
+  %6 = shufflevector <4 x i32> %i.ac, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>, <4 x i32> <i32 4, i32 0, i32 1, i32 2>
+  store <4 x i32> %6, ptr %i.bb, align 4, !noalias !2685
+  %i.bc = getelementptr inbounds nuw i8, ptr %i.c, i64 20
+  store i32 %i.af, ptr %i.bc, align 4, !noalias !2685
   %.sroa.836.0..sroa_idx37 = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   store ptr %.sroa.836.0..sroa_idx.promoted, ptr %.sroa.836.0..sroa_idx37, align 4, !noalias !2685
   %i.bd = getelementptr inbounds nuw i8, ptr %i.d, i64 48
-  call void @_RNvXs0_NvNtNtCsoTR8nlGN3X_18ty_python_semantic5types6method1__INtB5_9StructKeyNtNtB9_8function12FunctionTypeNtB9_4TypeEINtNtCs45bxiIjzMqg_5salsa8interned6LookupTB1e_B1I_EE10into_ownedBb_(ptr noalias noundef nonnull sret([24 x i8]) align 4 captures(none) dereferenceable(24) %i.bd, ptr noalias noundef nonnull align 4 captures(address) dereferenceable(24) %i.bc), !noalias !2676
+  call void @_RNvXs0_NvNtNtCsoTR8nlGN3X_18ty_python_semantic5types6method1__INtB5_9StructKeyNtNtB9_8function12FunctionTypeNtB9_4TypeEINtNtCs45bxiIjzMqg_5salsa8interned6LookupTB1e_B1I_EE10into_ownedBb_(ptr noalias noundef nonnull sret([24 x i8]) align 4 captures(none) dereferenceable(24) %i.bd, ptr noalias noundef nonnull align 4 captures(address) dereferenceable(24) %5), !noalias !2676
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !2681
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.12.0..sroa_idx.promoted) ]
   %i.be = getelementptr inbounds nuw i8, ptr %.sroa.12.0..sroa_idx.promoted, i64 16
@@ -4405,7 +4423,7 @@ define void @_RINvMs_NtCs45bxiIjzMqg_5salsa11zalsa_localNtB5_10ZalsaLocal13alloc
 bb.a:
   %i.a = alloca [56 x i8], align 8                ; 4 uses
   %i.b = alloca [8 x i8], align 8                 ; 4 uses
-  %i.c = alloca [24 x i8], align 4                ; 5 uses
+  %i.c = alloca [24 x i8], align 4                ; 6 uses
   %i.d = alloca [72 x i8], align 8                ; 14 uses
   %i.e = alloca [56 x i8], align 8                ; 11 uses
   %i.f = alloca [24 x i8], align 8                ; 7 uses
@@ -4467,7 +4485,7 @@ _RINvMs18_NtNtNtCs2AWtUsOyxgP_3std11collections4hash3mapINtB7_5EntryNtNtCs45bxiI
   %i.ad = extractelement <4 x i32> %i.ac, i64 0
   %.not5 = icmp eq i32 %i.ad, -2
   %i.ae = extractelement <4 x i32> %i.ac, i64 2
-  %i.af = extractelement <4 x i32> %i.ac, i64 3
+  %i.af = extractelement <4 x i32> %i.ac, i64 3   ; 2 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %_RNvMNtNtCsc4HYy37PfYO_6boxcar3vec3rawINtB2_3VecNtNtCs45bxiIjzMqg_5salsa5table4PageE4pushCsoTR8nlGN3X_18ty_python_semantic.exit
@@ -4524,11 +4542,13 @@ _RINvMs6_NtCs45bxiIjzMqg_5salsa5tableINtB6_8PageViewINtNtB8_8interned5ValueNtNtN
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !3523
   store i32 %i.au, ptr %i.c, align 4, !noalias !3523
   %i.bb = getelementptr inbounds nuw i8, ptr %i.c, i64 4
-  store i32 0, ptr %i.bb, align 4, !noalias !3523
-  %i.bc = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
-  store <4 x i32> %i.ac, ptr %i.bc, align 4, !noalias !3527
+  %5 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
+  %6 = shufflevector <4 x i32> %i.ac, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>, <4 x i32> <i32 4, i32 0, i32 1, i32 2>
+  store <4 x i32> %6, ptr %i.bb, align 4, !noalias !3527
+  %i.bc = getelementptr inbounds nuw i8, ptr %i.c, i64 20
+  store i32 %i.af, ptr %i.bc, align 4, !noalias !3527
   %i.bd = getelementptr inbounds nuw i8, ptr %i.d, i64 32
-  call void @_RNvXs0_NvNtNtCsoTR8nlGN3X_18ty_python_semantic5types8instances5_1__INtB5_9StructKeyNtNtB9_14protocol_class13ProtocolClassNtB9_19MaterializationKindEINtNtCs45bxiIjzMqg_5salsa8interned6LookupTB1j_B1V_EE10into_ownedBb_(ptr noalias noundef nonnull sret([16 x i8]) align 4 captures(none) dereferenceable(16) %i.bd, ptr noalias noundef nonnull align 4 captures(address) dereferenceable(16) %i.bc), !noalias !3518
+  call void @_RNvXs0_NvNtNtCsoTR8nlGN3X_18ty_python_semantic5types8instances5_1__INtB5_9StructKeyNtNtB9_14protocol_class13ProtocolClassNtB9_19MaterializationKindEINtNtCs45bxiIjzMqg_5salsa8interned6LookupTB1j_B1V_EE10into_ownedBb_(ptr noalias noundef nonnull sret([16 x i8]) align 4 captures(none) dereferenceable(16) %i.bd, ptr noalias noundef nonnull align 4 captures(address) dereferenceable(16) %5), !noalias !3518
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !3523
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.12.0..sroa_idx.promoted) ]
   %i.be = getelementptr inbounds nuw i8, ptr %.sroa.12.0..sroa_idx.promoted, i64 16
@@ -4931,7 +4951,7 @@ define void @_RINvMs_NtCs45bxiIjzMqg_5salsa11zalsa_localNtB5_10ZalsaLocal13alloc
 bb.a:
   %i.a = alloca [56 x i8], align 8                ; 4 uses
   %i.b = alloca [8 x i8], align 8                 ; 4 uses
-  %i.c = alloca [40 x i8], align 8                ; 7 uses
+  %i.c = alloca [40 x i8], align 8                ; 8 uses
   %i.d = alloca [96 x i8], align 8                ; 14 uses
   %i.e = alloca [56 x i8], align 8                ; 11 uses
   %i.f = alloca [24 x i8], align 8                ; 7 uses
@@ -4997,7 +5017,7 @@ _RINvMs18_NtNtNtCs2AWtUsOyxgP_3std11collections4hash3mapINtB7_5EntryNtNtCs45bxiI
   %i.ad = extractelement <4 x i32> %i.ac, i64 0
   %.not5 = icmp eq i32 %i.ad, -1
   %i.ae = extractelement <4 x i32> %i.ac, i64 2
-  %i.af = extractelement <4 x i32> %i.ac, i64 3
+  %i.af = extractelement <4 x i32> %i.ac, i64 3   ; 2 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %_RNvMNtNtCsc4HYy37PfYO_6boxcar3vec3rawINtB2_3VecNtNtCs45bxiIjzMqg_5salsa5table4PageE4pushCsoTR8nlGN3X_18ty_python_semantic.exit
@@ -5054,15 +5074,17 @@ _RINvMs6_NtCs45bxiIjzMqg_5salsa5tableINtB6_8PageViewINtNtB8_8interned5ValueNtNtN
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !3677
   store i32 %i.au, ptr %i.c, align 8, !noalias !3677
   %i.bb = getelementptr inbounds nuw i8, ptr %i.c, i64 4
-  store i32 0, ptr %i.bb, align 4, !noalias !3677
-  %i.bc = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
-  store <4 x i32> %i.ac, ptr %i.bc, align 8, !noalias !3681
+  %5 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
+  %6 = shufflevector <4 x i32> %i.ac, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>, <4 x i32> <i32 4, i32 0, i32 1, i32 2>
+  store <4 x i32> %6, ptr %i.bb, align 4, !noalias !3681
+  %i.bc = getelementptr inbounds nuw i8, ptr %i.c, i64 20
+  store i32 %i.af, ptr %i.bc, align 4, !noalias !3681
   %.sroa.836.0..sroa_idx37 = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   store ptr %.sroa.836.0..sroa_idx.promoted, ptr %.sroa.836.0..sroa_idx37, align 8, !noalias !3681
   %.sroa.939.0..sroa_idx40 = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   store i64 %.sroa.939.0..sroa_idx.promoted, ptr %.sroa.939.0..sroa_idx40, align 8, !noalias !3681
   %i.bd = getelementptr inbounds nuw i8, ptr %i.d, i64 48
-  call void @_RNvXs0_NvNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class11named_tuples_1__INtB5_9StructKeyRNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameNtB7_23DynamicNamedTupleAnchorEINtNtCs45bxiIjzMqg_5salsa8interned6LookupTB1v_B2e_EE10into_ownedBd_(ptr noalias noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %i.bd, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(32) %i.bc), !noalias !3672
+  call void @_RNvXs0_NvNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class11named_tuples_1__INtB5_9StructKeyRNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameNtB7_23DynamicNamedTupleAnchorEINtNtCs45bxiIjzMqg_5salsa8interned6LookupTB1v_B2e_EE10into_ownedBd_(ptr noalias noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %i.bd, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(32) %5), !noalias !3672
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !3677
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.12.0..sroa_idx.promoted) ]
   %i.be = getelementptr inbounds nuw i8, ptr %.sroa.12.0..sroa_idx.promoted, i64 16
@@ -5253,7 +5275,7 @@ define void @_RINvMs_NtCs45bxiIjzMqg_5salsa11zalsa_localNtB5_10ZalsaLocal13alloc
 bb.a:
   %i.a = alloca [56 x i8], align 8                ; 4 uses
   %i.b = alloca [8 x i8], align 8                 ; 4 uses
-  %i.c = alloca [48 x i8], align 8                ; 7 uses
+  %i.c = alloca [48 x i8], align 8                ; 8 uses
   %i.d = alloca [96 x i8], align 8                ; 14 uses
   %i.e = alloca [56 x i8], align 8                ; 11 uses
   %i.f = alloca [24 x i8], align 8                ; 7 uses
@@ -5318,7 +5340,7 @@ _RINvMs18_NtNtNtCs2AWtUsOyxgP_3std11collections4hash3mapINtB7_5EntryNtNtCs45bxiI
   %i.ad = extractelement <4 x i32> %i.ac, i64 0
   %.not5 = icmp eq i32 %i.ad, -1
   %i.ae = extractelement <4 x i32> %i.ac, i64 2
-  %i.af = extractelement <4 x i32> %i.ac, i64 3
+  %i.af = extractelement <4 x i32> %i.ac, i64 3   ; 2 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %_RNvMNtNtCsc4HYy37PfYO_6boxcar3vec3rawINtB2_3VecNtNtCs45bxiIjzMqg_5salsa5table4PageE4pushCsoTR8nlGN3X_18ty_python_semantic.exit
@@ -5375,15 +5397,17 @@ _RINvMs6_NtCs45bxiIjzMqg_5salsa5tableINtB6_8PageViewINtNtB8_8interned5ValueNtNtN
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !3709
   store i32 %i.au, ptr %i.c, align 8, !noalias !3709
   %i.bb = getelementptr inbounds nuw i8, ptr %i.c, i64 4
-  store i32 0, ptr %i.bb, align 4, !noalias !3709
-  %i.bc = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
-  store <4 x i32> %i.ac, ptr %i.bc, align 8, !noalias !3713
+  %5 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
+  %6 = shufflevector <4 x i32> %i.ac, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>, <4 x i32> <i32 4, i32 0, i32 1, i32 2>
+  store <4 x i32> %6, ptr %i.bb, align 4, !noalias !3713
+  %i.bc = getelementptr inbounds nuw i8, ptr %i.c, i64 20
+  store i32 %i.af, ptr %i.bc, align 4, !noalias !3713
   %.sroa.836.0..sroa_idx37 = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   store ptr %.sroa.836.0..sroa_idx.promoted, ptr %.sroa.836.0..sroa_idx37, align 8, !noalias !3713
   %.sroa.939.0..sroa_idx40 = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.939.0..sroa_idx40, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.939.0..sroa_idx, i64 16, i1 false)
   %i.bd = getelementptr inbounds nuw i8, ptr %i.d, i64 48
-  call void @_RNvXs0_NvNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class11named_tuples_1__INtB5_9StructKeyReNtB7_23DynamicNamedTupleAnchorEINtNtCs45bxiIjzMqg_5salsa8interned6LookupTNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameB1w_EE10into_ownedBd_(ptr noalias noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %i.bd, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(40) %i.bc), !noalias !3704
+  call void @_RNvXs0_NvNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class11named_tuples_1__INtB5_9StructKeyReNtB7_23DynamicNamedTupleAnchorEINtNtCs45bxiIjzMqg_5salsa8interned6LookupTNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameB1w_EE10into_ownedBd_(ptr noalias noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %i.bd, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(40) %5), !noalias !3704
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !3709
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.12.0..sroa_idx.promoted) ]
   %i.be = getelementptr inbounds nuw i8, ptr %.sroa.12.0..sroa_idx.promoted, i64 16
@@ -5573,7 +5597,7 @@ define void @_RINvMs_NtCs45bxiIjzMqg_5salsa11zalsa_localNtB5_10ZalsaLocal13alloc
 bb.a:
   %i.a = alloca [56 x i8], align 8                ; 4 uses
   %i.b = alloca [8 x i8], align 8                 ; 4 uses
-  %i.c = alloca [56 x i8], align 8                ; 7 uses
+  %i.c = alloca [56 x i8], align 8                ; 8 uses
   %i.d = alloca [112 x i8], align 8               ; 14 uses
   %i.e = alloca [56 x i8], align 8                ; 11 uses
   %i.f = alloca [24 x i8], align 8                ; 7 uses
@@ -5638,7 +5662,7 @@ _RINvMs18_NtNtNtCs2AWtUsOyxgP_3std11collections4hash3mapINtB7_5EntryNtNtCs45bxiI
   %i.ad = extractelement <4 x i32> %i.ac, i64 0
   %.not5 = icmp eq i32 %i.ad, -2
   %i.ae = extractelement <4 x i32> %i.ac, i64 2
-  %i.af = extractelement <4 x i32> %i.ac, i64 3
+  %i.af = extractelement <4 x i32> %i.ac, i64 3   ; 2 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %_RNvMNtNtCsc4HYy37PfYO_6boxcar3vec3rawINtB2_3VecNtNtCs45bxiIjzMqg_5salsa5table4PageE4pushCsoTR8nlGN3X_18ty_python_semantic.exit
@@ -5695,15 +5719,17 @@ _RINvMs6_NtCs45bxiIjzMqg_5salsa5tableINtB6_8PageViewINtNtB8_8interned5ValueNtNtN
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !3741
   store i32 %i.au, ptr %i.c, align 8, !noalias !3741
   %i.bb = getelementptr inbounds nuw i8, ptr %i.c, i64 4
-  store i32 0, ptr %i.bb, align 4, !noalias !3741
-  %i.bc = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
-  store <4 x i32> %i.ac, ptr %i.bc, align 8, !noalias !3745
+  %5 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
+  %6 = shufflevector <4 x i32> %i.ac, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>, <4 x i32> <i32 4, i32 0, i32 1, i32 2>
+  store <4 x i32> %6, ptr %i.bb, align 4, !noalias !3745
+  %i.bc = getelementptr inbounds nuw i8, ptr %i.c, i64 20
+  store i32 %i.af, ptr %i.bc, align 4, !noalias !3745
   %.sroa.836.0..sroa_idx37 = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   store ptr %.sroa.836.0..sroa_idx.promoted, ptr %.sroa.836.0..sroa_idx37, align 8, !noalias !3745
   %.sroa.939.0..sroa_idx40 = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.939.0..sroa_idx40, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.939.0..sroa_idx, i64 24, i1 false)
   %i.bd = getelementptr inbounds nuw i8, ptr %i.d, i64 48
-  call void @_RNvXs0_NvNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class12enum_literals0_1__INtB5_9StructKeyRNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameNtB7_17DynamicEnumAnchorNtNtB9_5known10KnownClassINtNtCs4NRVxsYgnAr_4core6option6OptionNtBb_4TypeEEINtNtCs45bxiIjzMqg_5salsa8interned6LookupTB1x_B2g_B2E_B33_EE10into_ownedBd_(ptr noalias noundef nonnull sret([56 x i8]) align 8 captures(none) dereferenceable(56) %i.bd, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(48) %i.bc), !noalias !3736
+  call void @_RNvXs0_NvNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class12enum_literals0_1__INtB5_9StructKeyRNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameNtB7_17DynamicEnumAnchorNtNtB9_5known10KnownClassINtNtCs4NRVxsYgnAr_4core6option6OptionNtBb_4TypeEEINtNtCs45bxiIjzMqg_5salsa8interned6LookupTB1x_B2g_B2E_B33_EE10into_ownedBd_(ptr noalias noundef nonnull sret([56 x i8]) align 8 captures(none) dereferenceable(56) %i.bd, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(48) %5), !noalias !3736
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !3741
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.12.0..sroa_idx.promoted) ]
   %i.be = getelementptr inbounds nuw i8, ptr %.sroa.12.0..sroa_idx.promoted, i64 16
@@ -5893,7 +5919,7 @@ define void @_RINvMs_NtCs45bxiIjzMqg_5salsa11zalsa_localNtB5_10ZalsaLocal13alloc
 bb.a:
   %i.a = alloca [56 x i8], align 8                ; 4 uses
   %i.b = alloca [8 x i8], align 8                 ; 4 uses
-  %i.c = alloca [64 x i8], align 8                ; 7 uses
+  %i.c = alloca [64 x i8], align 8                ; 8 uses
   %i.d = alloca [112 x i8], align 8               ; 14 uses
   %i.e = alloca [56 x i8], align 8                ; 11 uses
   %i.f = alloca [24 x i8], align 8                ; 7 uses
@@ -5958,7 +5984,7 @@ _RINvMs18_NtNtNtCs2AWtUsOyxgP_3std11collections4hash3mapINtB7_5EntryNtNtCs45bxiI
   %i.ad = extractelement <4 x i32> %i.ac, i64 0
   %.not5 = icmp eq i32 %i.ad, -2
   %i.ae = extractelement <4 x i32> %i.ac, i64 2
-  %i.af = extractelement <4 x i32> %i.ac, i64 3
+  %i.af = extractelement <4 x i32> %i.ac, i64 3   ; 2 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %_RNvMNtNtCsc4HYy37PfYO_6boxcar3vec3rawINtB2_3VecNtNtCs45bxiIjzMqg_5salsa5table4PageE4pushCsoTR8nlGN3X_18ty_python_semantic.exit
@@ -6015,15 +6041,17 @@ _RINvMs6_NtCs45bxiIjzMqg_5salsa5tableINtB6_8PageViewINtNtB8_8interned5ValueNtNtN
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !3773
   store i32 %i.au, ptr %i.c, align 8, !noalias !3773
   %i.bb = getelementptr inbounds nuw i8, ptr %i.c, i64 4
-  store i32 0, ptr %i.bb, align 4, !noalias !3773
-  %i.bc = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
-  store <4 x i32> %i.ac, ptr %i.bc, align 8, !noalias !3777
+  %5 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
+  %6 = shufflevector <4 x i32> %i.ac, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>, <4 x i32> <i32 4, i32 0, i32 1, i32 2>
+  store <4 x i32> %6, ptr %i.bb, align 4, !noalias !3777
+  %i.bc = getelementptr inbounds nuw i8, ptr %i.c, i64 20
+  store i32 %i.af, ptr %i.bc, align 4, !noalias !3777
   %.sroa.836.0..sroa_idx37 = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   store ptr %.sroa.836.0..sroa_idx.promoted, ptr %.sroa.836.0..sroa_idx37, align 8, !noalias !3777
   %.sroa.939.0..sroa_idx40 = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.939.0..sroa_idx40, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.939.0..sroa_idx, i64 32, i1 false)
   %i.bd = getelementptr inbounds nuw i8, ptr %i.d, i64 48
-  call void @_RNvXs0_NvNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class12enum_literals0_1__INtB5_9StructKeyReNtB7_17DynamicEnumAnchorNtNtB9_5known10KnownClassINtNtCs4NRVxsYgnAr_4core6option6OptionNtBb_4TypeEEINtNtCs45bxiIjzMqg_5salsa8interned6LookupTNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameB1y_B1W_B2l_EE10into_ownedBd_(ptr noalias noundef nonnull sret([56 x i8]) align 8 captures(none) dereferenceable(56) %i.bd, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(56) %i.bc), !noalias !3768
+  call void @_RNvXs0_NvNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class12enum_literals0_1__INtB5_9StructKeyReNtB7_17DynamicEnumAnchorNtNtB9_5known10KnownClassINtNtCs4NRVxsYgnAr_4core6option6OptionNtBb_4TypeEEINtNtCs45bxiIjzMqg_5salsa8interned6LookupTNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameB1y_B1W_B2l_EE10into_ownedBd_(ptr noalias noundef nonnull sret([56 x i8]) align 8 captures(none) dereferenceable(56) %i.bd, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(56) %5), !noalias !3768
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !3773
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.12.0..sroa_idx.promoted) ]
   %i.be = getelementptr inbounds nuw i8, ptr %.sroa.12.0..sroa_idx.promoted, i64 16
@@ -6426,7 +6454,7 @@ define void @_RINvMs_NtCs45bxiIjzMqg_5salsa11zalsa_localNtB5_10ZalsaLocal13alloc
 bb.a:
   %i.a = alloca [56 x i8], align 8                ; 4 uses
   %i.b = alloca [8 x i8], align 8                 ; 4 uses
-  %i.c = alloca [80 x i8], align 8                ; 7 uses
+  %i.c = alloca [80 x i8], align 8                ; 8 uses
   %i.d = alloca [136 x i8], align 8               ; 14 uses
   %i.e = alloca [56 x i8], align 8                ; 11 uses
   %i.f = alloca [24 x i8], align 8                ; 7 uses
@@ -6507,7 +6535,7 @@ bb.e:                                             ; preds = %bb.d, %.noexc
   %i.ad = extractelement <4 x i32> %i.ac, i64 0
   %.not5 = icmp eq i32 %i.ad, 2
   %i.ae = extractelement <4 x i32> %i.ac, i64 2
-  %i.af = extractelement <4 x i32> %i.ac, i64 3
+  %i.af = extractelement <4 x i32> %i.ac, i64 3   ; 2 uses
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph, %bb.aa
@@ -6576,15 +6604,17 @@ _RINvMs4_NtCs45bxiIjzMqg_5salsa5tableNtB6_5Table4pageINtNtB8_8interned5ValueNtNt
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !3887
   store i32 %i.au, ptr %i.c, align 8, !noalias !3887
   %i.bb = getelementptr inbounds nuw i8, ptr %i.c, i64 4
-  store i32 0, ptr %i.bb, align 4, !noalias !3887
-  %i.bc = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
-  store <4 x i32> %i.ac, ptr %i.bc, align 8, !noalias !3891
+  %5 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
+  %6 = shufflevector <4 x i32> %i.ac, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>, <4 x i32> <i32 4, i32 0, i32 1, i32 2>
+  store <4 x i32> %6, ptr %i.bb, align 4, !noalias !3891
+  %i.bc = getelementptr inbounds nuw i8, ptr %i.c, i64 20
+  store i32 %i.af, ptr %i.bc, align 4, !noalias !3891
   %.sroa.847.0..sroa_idx48 = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   store ptr %.sroa.847.0..sroa_idx.promoted, ptr %.sroa.847.0..sroa_idx48, align 8, !noalias !3891
   %.sroa.950.0..sroa_idx51 = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.950.0..sroa_idx51, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.950.0..sroa_idx, i64 48, i1 false)
   %i.bd = getelementptr inbounds nuw i8, ptr %i.d, i64 32
-  call void @_RNvXs0_NvNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class15dynamic_literal1__INtB5_9StructKeyRNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameNtB7_18DynamicClassAnchorINtNtCscdodAO9FK5_5alloc5boxed3BoxSTB1x_NtBb_4TypeEEbINtNtCs4NRVxsYgnAr_4core6option6OptionNtBb_15DataclassParamsEEINtNtCs45bxiIjzMqg_5salsa8interned6LookupTB1x_B2g_B2F_bB3w_EE10into_ownedBd_(ptr noalias noundef nonnull sret([80 x i8]) align 8 captures(none) dereferenceable(80) %i.bd, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(72) %i.bc)
+  call void @_RNvXs0_NvNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class15dynamic_literal1__INtB5_9StructKeyRNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameNtB7_18DynamicClassAnchorINtNtCscdodAO9FK5_5alloc5boxed3BoxSTB1x_NtBb_4TypeEEbINtNtCs4NRVxsYgnAr_4core6option6OptionNtBb_15DataclassParamsEEINtNtCs45bxiIjzMqg_5salsa8interned6LookupTB1x_B2g_B2F_bB3w_EE10into_ownedBd_(ptr noalias noundef nonnull sret([80 x i8]) align 8 captures(none) dereferenceable(80) %i.bd, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(72) %5)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !3887
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.12.0..sroa_idx.promoted) ]
   %i.be = getelementptr inbounds nuw i8, ptr %.sroa.12.0..sroa_idx.promoted, i64 16
@@ -6987,7 +7017,7 @@ define void @_RINvMs_NtCs45bxiIjzMqg_5salsa11zalsa_localNtB5_10ZalsaLocal13alloc
 bb.a:
   %i.a = alloca [56 x i8], align 8                ; 4 uses
   %i.b = alloca [8 x i8], align 8                 ; 4 uses
-  %i.c = alloca [88 x i8], align 8                ; 7 uses
+  %i.c = alloca [88 x i8], align 8                ; 8 uses
   %i.d = alloca [136 x i8], align 8               ; 14 uses
   %i.e = alloca [56 x i8], align 8                ; 11 uses
   %i.f = alloca [24 x i8], align 8                ; 7 uses
@@ -7068,7 +7098,7 @@ bb.e:                                             ; preds = %bb.d, %.noexc
   %i.ad = extractelement <4 x i32> %i.ac, i64 0
   %.not5 = icmp eq i32 %i.ad, 2
   %i.ae = extractelement <4 x i32> %i.ac, i64 2
-  %i.af = extractelement <4 x i32> %i.ac, i64 3
+  %i.af = extractelement <4 x i32> %i.ac, i64 3   ; 2 uses
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph, %bb.aa
@@ -7137,15 +7167,17 @@ _RINvMs4_NtCs45bxiIjzMqg_5salsa5tableNtB6_5Table4pageINtNtB8_8interned5ValueNtNt
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !3944
   store i32 %i.au, ptr %i.c, align 8, !noalias !3944
   %i.bb = getelementptr inbounds nuw i8, ptr %i.c, i64 4
-  store i32 0, ptr %i.bb, align 4, !noalias !3944
-  %i.bc = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
-  store <4 x i32> %i.ac, ptr %i.bc, align 8, !noalias !3948
+  %5 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
+  %6 = shufflevector <4 x i32> %i.ac, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>, <4 x i32> <i32 4, i32 0, i32 1, i32 2>
+  store <4 x i32> %6, ptr %i.bb, align 4, !noalias !3948
+  %i.bc = getelementptr inbounds nuw i8, ptr %i.c, i64 20
+  store i32 %i.af, ptr %i.bc, align 4, !noalias !3948
   %.sroa.847.0..sroa_idx48 = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   store ptr %.sroa.847.0..sroa_idx.promoted, ptr %.sroa.847.0..sroa_idx48, align 8, !noalias !3948
   %.sroa.950.0..sroa_idx51 = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %.sroa.950.0..sroa_idx51, ptr noundef nonnull align 8 dereferenceable(56) %.sroa.950.0..sroa_idx, i64 56, i1 false)
   %i.bd = getelementptr inbounds nuw i8, ptr %i.d, i64 32
-  call void @_RNvXs0_NvNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class15dynamic_literal1__INtB5_9StructKeyReNtB7_18DynamicClassAnchorINtNtCscdodAO9FK5_5alloc5boxed3BoxSTNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameNtBb_4TypeEEbINtNtCs4NRVxsYgnAr_4core6option6OptionNtBb_15DataclassParamsEEINtNtCs45bxiIjzMqg_5salsa8interned6LookupTB2x_B1y_B1X_bB3t_EE10into_ownedBd_(ptr noalias noundef nonnull sret([80 x i8]) align 8 captures(none) dereferenceable(80) %i.bd, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(80) %i.bc)
+  call void @_RNvXs0_NvNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class15dynamic_literal1__INtB5_9StructKeyReNtB7_18DynamicClassAnchorINtNtCscdodAO9FK5_5alloc5boxed3BoxSTNtNtCskLngH8kgpZI_15ruff_python_ast4name4NameNtBb_4TypeEEbINtNtCs4NRVxsYgnAr_4core6option6OptionNtBb_15DataclassParamsEEINtNtCs45bxiIjzMqg_5salsa8interned6LookupTB2x_B1y_B1X_bB3t_EE10into_ownedBd_(ptr noalias noundef nonnull sret([80 x i8]) align 8 captures(none) dereferenceable(80) %i.bd, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(80) %5)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !3944
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.12.0..sroa_idx.promoted) ]
   %i.be = getelementptr inbounds nuw i8, ptr %.sroa.12.0..sroa_idx.promoted, i64 16

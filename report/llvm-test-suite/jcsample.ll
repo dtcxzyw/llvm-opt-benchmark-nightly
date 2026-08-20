@@ -203,7 +203,7 @@ bb.a:
   %i.j = load i32, ptr %i.i, align 4, !tbaa !48   ; 4 uses
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 5 uses
   %i.l = load i32, ptr %i.k, align 4, !tbaa !47   ; 2 uses
-  %i.m = sdiv i32 %i.j, %i.l                      ; 3 uses
+  %i.m = sdiv i32 %i.j, %i.l                      ; 4 uses
   %i.n = mul nsw i32 %i.m, %i.h                   ; 4 uses
   %i.o = sdiv i32 %i.n, 2                         ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -310,7 +310,8 @@ expand_right_edge.exit:                           ; preds = %expand_right_edge.e
   br i1 %i.bc, label %.preheader.lr.ph.us.us.preheader, label %.lr.ph.split.split.us.split
 
 .preheader.lr.ph.us.us.preheader:                 ; preds = %.lr.ph.split.split.us
-  %i.bg = zext nneg i32 %i.m to i64               ; 2 uses
+  %4 = zext nneg i32 %i.m to i64
+  %i.bg = zext nneg i32 %i.m to i64
   %xtraiter109 = and i32 %i.h, 7                  ; 3 uses
   %i.bh = icmp ult i32 %i.h, 8
   %unroll_iter114 = and i32 %i.h, 2147483640
@@ -377,7 +378,7 @@ expand_right_edge.exit:                           ; preds = %expand_right_edge.e
   %i.cq = load i8, ptr %i.cl, align 1, !tbaa !60
   %i.cr = zext i8 %i.cq to i64
   %i.cs = add nsw i64 %i.co, %i.cr                ; 3 uses
-  %niter115.next.7 = add nuw nsw i32 %niter115, 8 ; 2 uses
+  %niter115.next.7 = add i32 %niter115, 8         ; 2 uses
   %niter115.ncmp.7 = icmp eq i32 %niter115.next.7, %unroll_iter114
   br i1 %niter115.ncmp.7, label %._crit_edge.us.us.us.us.us.unr-lcssa, label %.lr.ph.us.us.us.us.us.new, !llvm.loop !77
 
@@ -405,8 +406,8 @@ bb.b:                                             ; preds = %bb.b, %.epil.prehea
 ._crit_edge.us.us.us.us.us:                       ; preds = %bb.b, %._crit_edge.us.us.us.us.us.unr-lcssa
   %.lcssa = phi i64 [ %i.cs, %._crit_edge.us.us.us.us.us.unr-lcssa ], [ %i.cw, %bb.b ] ; 2 uses
   %indvars.iv.next82 = add nuw nsw i64 %indvars.iv81, 1 ; 2 uses
-  %exitcond84.not = icmp eq i64 %indvars.iv.next82, %i.bg
-  br i1 %exitcond84.not, label %._crit_edge54.split.us.us.us.us.us, label %.lr.ph.us.us.us.us.us, !llvm.loop !79
+  %5 = icmp samesign ult i64 %indvars.iv.next82, %4
+  br i1 %5, label %.lr.ph.us.us.us.us.us, label %._crit_edge54.split.us.us.us.us.us, !llvm.loop !79
 
 ._crit_edge54.split.us.us.us.us.us:               ; preds = %._crit_edge.us.us.us.us.us
   %i.cx = add nsw i64 %.lcssa, %i.bd

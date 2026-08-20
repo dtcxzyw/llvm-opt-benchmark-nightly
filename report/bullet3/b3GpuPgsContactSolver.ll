@@ -203,8 +203,8 @@ bb.f:                                             ; preds = %bb.d, %.noexc129, %
   br label %_ZN13b3ProfileZoneD2Ev.exit
 
 bb.g:                                             ; preds = %bb.e, %.loopexit212
-  %i.au = sdiv i32 %5, 32                         ; 4 uses
-  %i.av = add nsw i32 %i.au, 1                    ; 8 uses
+  %i.au = sdiv i32 %5, 32                         ; 5 uses
+  %i.av = add nsw i32 %i.au, 1                    ; 7 uses
   %i.aw = load i32, ptr getelementptr inbounds nuw (i8, ptr @bodyUsed, i64 4), align 4, !tbaa !41 ; 2 uses
   %.not206 = icmp slt i32 %i.au, %i.aw
   br i1 %.not206, label %.loopexit211, label %bb.h
@@ -371,9 +371,10 @@ _ZN20b3AlignedObjectArrayIiE10deallocateEv.exit.i.i145: ; preds = %bb.j, %_ZNK20
 
 .lr.ph:                                           ; preds = %.loopexit211
   %i.cl = load ptr, ptr getelementptr inbounds nuw (i8, ptr @bodyUsed, i64 16), align 8, !tbaa !40
-  %i.cm = zext i32 %i.av to i64
+  %i.cm = zext i32 %i.au to i64
   %i.cn = shl nuw nsw i64 %i.cm, 2
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.cl, i8 0, i64 %i.cn, i1 false), !tbaa !123
+  %7 = add nuw nsw i64 %i.cn, 4
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.cl, i8 0, i64 %7, i1 false), !tbaa !123
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph, %.loopexit211

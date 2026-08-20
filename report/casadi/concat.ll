@@ -203,7 +203,8 @@ bb.a:
   br i1 %i.g, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %i.h = udiv exact i64 %i.f, 24
+  %i.h = udiv i64 %i.f, 24
+  %4 = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1)
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %_ZN6casadi2MXaSERKS0_.exit, %bb.a
@@ -225,7 +226,7 @@ _ZN6casadi2MXaSERKS0_.exit:                       ; preds = %.lr.ph
   call void @_ZN6casadi2MXD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %3) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #20
   %i.o = add nuw nsw i64 %.09, 1                  ; 2 uses
-  %exitcond.not = icmp eq i64 %i.o, %i.h
+  %exitcond.not = icmp eq i64 %i.o, %4
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !128
 
 bb.b:                                             ; preds = %.lr.ph
@@ -533,10 +534,11 @@ bb.a:
   br i1 %i.g, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.h = udiv exact i64 %i.f, 24
+  %i.h = udiv i64 %i.f, 24
   %i.i = getelementptr inbounds nuw i8, ptr %4, i64 24
   %i.j = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.k = getelementptr inbounds nuw i8, ptr %5, i64 16
+  %6 = call i64 @llvm.umax.i64(i64 %i.h, i64 1)
   br label %bb.d
 
 ._crit_edge:                                      ; preds = %_ZNSt6vectorIN6casadi2MXESaIS1_EED2Ev.exit, %bb.a
@@ -623,7 +625,7 @@ bb.g:                                             ; preds = %_ZSt8_DestroyIPN6ca
 _ZNSt6vectorIN6casadi2MXESaIS1_EED2Ev.exit:       ; preds = %_ZSt8_DestroyIPN6casadi2MXES1_EvT_S3_RSaIT0_E.exit.i, %bb.g
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #20
   %i.al = add nuw nsw i64 %.01618, 1              ; 2 uses
-  %exitcond.not = icmp eq i64 %i.al, %i.h
+  %exitcond.not = icmp eq i64 %i.al, %6
   br i1 %exitcond.not, label %._crit_edge, label %bb.d, !llvm.loop !132
 
 bb.h:                                             ; preds = %bb.d
@@ -1026,7 +1028,8 @@ bb.a:
   br i1 %i.g, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %i.h = udiv exact i64 %i.f, 24
+  %i.h = udiv i64 %i.f, 24
+  %4 = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1)
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %_ZN6casadi2MXaSERKS0_.exit, %bb.a
@@ -1048,7 +1051,7 @@ _ZN6casadi2MXaSERKS0_.exit:                       ; preds = %.lr.ph
   call void @_ZN6casadi2MXD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %3) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #20
   %i.o = add nuw nsw i64 %.09, 1                  ; 2 uses
-  %exitcond.not = icmp eq i64 %i.o, %i.h
+  %exitcond.not = icmp eq i64 %i.o, %4
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !146
 
 bb.b:                                             ; preds = %.lr.ph
@@ -1196,9 +1199,10 @@ bb.a:
   br i1 %i.g, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.h = udiv exact i64 %i.f, 24
+  %i.h = udiv i64 %i.f, 24
   %i.i = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.j = getelementptr inbounds nuw i8, ptr %5, i64 16
+  %6 = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1)
   br label %bb.c
 
 ._crit_edge:                                      ; preds = %_ZNSt6vectorIN6casadi2MXESaIS1_EED2Ev.exit, %bb.a
@@ -1270,7 +1274,7 @@ bb.f:                                             ; preds = %_ZSt8_DestroyIPN6ca
 _ZNSt6vectorIN6casadi2MXESaIS1_EED2Ev.exit:       ; preds = %_ZSt8_DestroyIPN6casadi2MXES1_EvT_S3_RSaIT0_E.exit.i, %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #20
   %i.ad = add nuw nsw i64 %.01621, 1              ; 2 uses
-  %exitcond.not = icmp eq i64 %i.ad, %i.h
+  %exitcond.not = icmp eq i64 %i.ad, %6
   br i1 %exitcond.not, label %._crit_edge, label %bb.c, !llvm.loop !148
 
 bb.g:                                             ; preds = %bb.c
@@ -1673,7 +1677,8 @@ bb.a:
   br i1 %i.g, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %i.h = udiv exact i64 %i.f, 24
+  %i.h = udiv i64 %i.f, 24
+  %4 = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1)
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %_ZN6casadi2MXaSERKS0_.exit, %bb.a
@@ -1695,7 +1700,7 @@ _ZN6casadi2MXaSERKS0_.exit:                       ; preds = %.lr.ph
   call void @_ZN6casadi2MXD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %3) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #20
   %i.o = add nuw nsw i64 %.09, 1                  ; 2 uses
-  %exitcond.not = icmp eq i64 %i.o, %i.h
+  %exitcond.not = icmp eq i64 %i.o, %4
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !162
 
 bb.b:                                             ; preds = %.lr.ph
@@ -1843,9 +1848,10 @@ bb.a:
   br i1 %i.g, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.h = udiv exact i64 %i.f, 24
+  %i.h = udiv i64 %i.f, 24
   %i.i = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.j = getelementptr inbounds nuw i8, ptr %5, i64 16
+  %6 = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1)
   br label %bb.c
 
 ._crit_edge:                                      ; preds = %_ZNSt6vectorIN6casadi2MXESaIS1_EED2Ev.exit, %bb.a
@@ -1917,7 +1923,7 @@ bb.f:                                             ; preds = %_ZSt8_DestroyIPN6ca
 _ZNSt6vectorIN6casadi2MXESaIS1_EED2Ev.exit:       ; preds = %_ZSt8_DestroyIPN6casadi2MXES1_EvT_S3_RSaIT0_E.exit.i, %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #20
   %i.ad = add nuw nsw i64 %.01621, 1              ; 2 uses
-  %exitcond.not = icmp eq i64 %i.ad, %i.h
+  %exitcond.not = icmp eq i64 %i.ad, %6
   br i1 %exitcond.not, label %._crit_edge, label %bb.c, !llvm.loop !164
 
 bb.g:                                             ; preds = %bb.c
@@ -2319,6 +2325,9 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #19
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umax.i64(i64, i64) #19
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

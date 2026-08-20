@@ -203,10 +203,11 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not3848, label %.preheader.lr.ph, label %.loopexit
 
 .preheader.lr.ph:                                 ; preds = %bb.b
-  %i.f = add nuw nsw i32 %i.e, 1
-  %3 = lshr i32 %i.f, 1
+  %i.f = add nuw i32 %i.e, 1
+  %3 = sdiv i32 %i.f, 2
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !112  ; 3 uses
+  %smax = tail call i32 @llvm.smax.i32(i32 %3, i32 1)
   br label %bb.c
 
 bb.c:                                             ; preds = %.preheader.lr.ph, %.critedge40
@@ -262,7 +263,7 @@ bb.h:                                             ; preds = %bb.g
 
 .critedge40:                                      ; preds = %bb.h, %bb.g
   %i.ac = add nuw nsw i32 %.03249, 1              ; 2 uses
-  %exitcond.not = icmp eq i32 %i.ac, %3
+  %exitcond.not = icmp eq i32 %i.ac, %smax
   br i1 %exitcond.not, label %.loopexit, label %bb.c, !llvm.loop !279
 
 .loopexit:                                        ; preds = %.critedge40, %.critedge, %bb.b, %bb.a
@@ -327,12 +328,13 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not3848.i, label %.preheader.lr.ph.i, label %autoMemoryFreed.exit
 
 .preheader.lr.ph.i:                               ; preds = %bb.g
-  %i.o = add nuw nsw i32 %i.n, 1
-  %1 = lshr i32 %i.o, 1
+  %i.o = add nuw i32 %i.n, 1
+  %1 = sdiv i32 %i.o, 2
   %i.p = getelementptr inbounds nuw i8, ptr %.0, i64 32
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !112  ; 3 uses
+  %smax.i = tail call i32 @llvm.smax.i32(i32 %1, i32 1)
   %i.r = zext nneg i32 %i.n to i64
-  %i.s = zext nneg i32 %1 to i64
+  %i.s = zext nneg i32 %smax.i to i64
   %i.t = getelementptr [16 x i8], ptr %i.q, i64 %i.r
   br label %bb.h
 
@@ -425,12 +427,13 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not3848.i, label %.preheader.lr.ph.i, label %autoMemoryFreed.exit
 
 .preheader.lr.ph.i:                               ; preds = %bb.c
-  %i.h = add nuw nsw i32 %i.g, 1
-  %1 = lshr i32 %i.h, 1
+  %i.h = add nuw i32 %i.g, 1
+  %1 = sdiv i32 %i.h, 2
   %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 32
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !112  ; 3 uses
+  %smax.i = tail call i32 @llvm.smax.i32(i32 %1, i32 1)
   %i.k = zext nneg i32 %i.g to i64
-  %i.l = zext nneg i32 %1 to i64
+  %i.l = zext nneg i32 %smax.i to i64
   %i.m = getelementptr [16 x i8], ptr %i.j, i64 %i.k
   br label %bb.d
 
@@ -525,12 +528,13 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not3848.i, label %.preheader.lr.ph.i, label %autoMemoryFreed.exit
 
 .preheader.lr.ph.i:                               ; preds = %bb.c
-  %i.f = add nuw nsw i32 %i.e, 1
-  %2 = lshr i32 %i.f, 1
+  %i.f = add nuw i32 %i.e, 1
+  %2 = sdiv i32 %i.f, 2
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !112  ; 3 uses
+  %smax.i = tail call i32 @llvm.smax.i32(i32 %2, i32 1)
   %i.i = zext nneg i32 %i.e to i64
-  %i.j = zext nneg i32 %2 to i64
+  %i.j = zext nneg i32 %smax.i to i64
   %i.k = getelementptr [16 x i8], ptr %i.h, i64 %i.i
   br label %bb.d
 
@@ -624,12 +628,13 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not3848.i, label %.preheader.lr.ph.i, label %autoMemoryFreed.exit
 
 .preheader.lr.ph.i:                               ; preds = %bb.c
-  %i.f = add nuw nsw i32 %i.e, 1
-  %2 = lshr i32 %i.f, 1
+  %i.f = add nuw i32 %i.e, 1
+  %2 = sdiv i32 %i.f, 2
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !112  ; 3 uses
+  %smax.i = tail call i32 @llvm.smax.i32(i32 %2, i32 1)
   %i.i = zext nneg i32 %i.e to i64
-  %i.j = zext nneg i32 %2 to i64
+  %i.j = zext nneg i32 %smax.i to i64
   %i.k = getelementptr [16 x i8], ptr %i.h, i64 %i.i
   br label %bb.d
 
@@ -723,12 +728,13 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not3848.i, label %.preheader.lr.ph.i, label %autoMemoryFreed.exit
 
 .preheader.lr.ph.i:                               ; preds = %bb.c
-  %i.f = add nuw nsw i32 %i.e, 1
-  %2 = lshr i32 %i.f, 1
+  %i.f = add nuw i32 %i.e, 1
+  %2 = sdiv i32 %i.f, 2
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !112  ; 3 uses
+  %smax.i = tail call i32 @llvm.smax.i32(i32 %2, i32 1)
   %i.i = zext nneg i32 %i.e to i64
-  %i.j = zext nneg i32 %2 to i64
+  %i.j = zext nneg i32 %smax.i to i64
   %i.k = getelementptr [16 x i8], ptr %i.h, i64 %i.i
   br label %bb.d
 
@@ -832,12 +838,13 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not3848.i, label %.preheader.lr.ph.i, label %autoMemoryFreed.exit
 
 .preheader.lr.ph.i:                               ; preds = %bb.c
-  %i.f = add nuw nsw i32 %i.e, 1
-  %2 = lshr i32 %i.f, 1
+  %i.f = add nuw i32 %i.e, 1
+  %2 = sdiv i32 %i.f, 2
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !112  ; 3 uses
+  %smax.i = tail call i32 @llvm.smax.i32(i32 %2, i32 1)
   %i.i = zext nneg i32 %i.e to i64
-  %i.j = zext nneg i32 %2 to i64
+  %i.j = zext nneg i32 %smax.i to i64
   %i.k = getelementptr [16 x i8], ptr %i.h, i64 %i.i
   br label %bb.d
 
@@ -1240,12 +1247,13 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not3848.i, label %.preheader.lr.ph.i, label %autoMemoryFreed.exit
 
 .preheader.lr.ph.i:                               ; preds = %bb.c
-  %i.f = add nuw nsw i32 %i.e, 1
-  %2 = lshr i32 %i.f, 1
+  %i.f = add nuw i32 %i.e, 1
+  %2 = sdiv i32 %i.f, 2
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !112  ; 3 uses
+  %smax.i = tail call i32 @llvm.smax.i32(i32 %2, i32 1)
   %i.i = zext nneg i32 %i.e to i64
-  %i.j = zext nneg i32 %2 to i64
+  %i.j = zext nneg i32 %smax.i to i64
   %i.k = getelementptr [16 x i8], ptr %i.h, i64 %i.i
   br label %bb.d
 
@@ -1336,12 +1344,13 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not3848.i, label %.preheader.lr.ph.i, label %autoMemoryFreed.exit.thread
 
 .preheader.lr.ph.i:                               ; preds = %bb.c
-  %i.g = add nuw nsw i32 %i.f, 1
-  %2 = lshr i32 %i.g, 1
+  %i.g = add nuw i32 %i.f, 1
+  %2 = sdiv i32 %i.g, 2
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !112  ; 3 uses
+  %smax.i = tail call i32 @llvm.smax.i32(i32 %2, i32 1)
   %i.j = zext nneg i32 %i.f to i64
-  %i.k = zext nneg i32 %2 to i64
+  %i.k = zext nneg i32 %smax.i to i64
   %i.l = getelementptr [16 x i8], ptr %i.i, i64 %i.j
   br label %bb.d
 

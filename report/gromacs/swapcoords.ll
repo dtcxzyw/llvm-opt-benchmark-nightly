@@ -204,7 +204,7 @@ bb.jk:                                            ; preds = %bb.jk, %.lr.ph.us.u
   %i.avx = ptrtoint ptr %i.atl to i64
   %i.avy = ptrtoint ptr %i.atk to i64
   %i.avz = sub i64 %i.avx, %i.avy                 ; 2 uses
-  %i.awa = sdiv exact i64 %i.avz, 472             ; 3 uses
+  %i.awa = sdiv i64 %i.avz, 472                   ; 3 uses
   %i.awb = load i32, ptr %i.avw, align 8, !tbaa !103 ; 2 uses
   %i.awc = icmp sgt i32 %i.awb, 0
   %.pre.i526 = load ptr, ptr %i.avv, align 8, !tbaa !332 ; 10 uses
@@ -607,15 +607,16 @@ bb.kd:                                            ; preds = %_ZL30get_initial_io
   %i.beu = ptrtoint ptr %i.bet to i64
   %i.bev = ptrtoint ptr %i.bes to i64
   %i.bew = sub i64 %i.beu, %i.bev
-  %i.bex = sdiv exact i64 %i.bew, 472             ; 6 uses
+  %i.bex = sdiv i64 %i.bew, 472                   ; 5 uses
   %.not832 = icmp eq ptr %i.bet, %i.bes
   br i1 %.not832, label %.split837, label %.split
 
 .split:                                           ; preds = %bb.kd
   %i.bey = getelementptr inbounds nuw i8, ptr %.0, i64 96
   %i.bez = load ptr, ptr %i.bey, align 8, !tbaa !332 ; 10 uses
+  %39 = add nsw i64 %i.bex, -1                    ; 2 uses
   %xtraiter1642 = and i64 %i.bex, 3               ; 3 uses
-  %i.bfa = icmp ult i64 %i.bex, 4
+  %i.bfa = icmp ult i64 %39, 3
   br i1 %i.bfa, label %.epil.preheader, label %.split.new
 
 .split.new:                                       ; preds = %.split
@@ -828,7 +829,7 @@ bb.kf:                                            ; preds = %bb.kf, %.epil.prehe
 
 ._crit_edge835.preheader:                         ; preds = %bb.kf, %._crit_edge835.preheader.unr-lcssa
   %xtraiter1650 = and i64 %i.bex, 3               ; 3 uses
-  %i.bji = icmp ult i64 %i.bex, 4
+  %i.bji = icmp ult i64 %39, 3
   br i1 %i.bji, label %._crit_edge835.epil.preheader, label %._crit_edge835.preheader.new
 
 ._crit_edge835.preheader.new:                     ; preds = %._crit_edge835.preheader

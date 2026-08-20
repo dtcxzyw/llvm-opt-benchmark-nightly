@@ -203,7 +203,8 @@ iter.check:                                       ; preds = %.preheader274
   %i.fh = ptrtoint ptr %i.ff to i64
   %i.fi = ptrtoint ptr %i.fg to i64
   %i.fj = sub i64 %i.fh, %i.fi
-  %i.fk = sdiv exact i64 %i.fj, 96                ; 8 uses
+  %i.fk = sdiv i64 %i.fj, 96                      ; 5 uses
+  %umax320 = call i64 @llvm.umax.i64(i64 %i.fk, i64 1) ; 4 uses
   %min.iters.check = icmp ult i64 %i.fk, 4
   br i1 %min.iters.check, label %.lr.ph302.preheader, label %vector.main.loop.iter.check
 
@@ -212,8 +213,8 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
   br i1 %min.iters.check425, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.fl = and i64 %i.fk, 12
-  %n.vec = and i64 %i.fk, -16                     ; 4 uses
+  %i.fl = and i64 %umax320, 12
+  %n.vec = and i64 %umax320, -16                  ; 4 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -249,7 +250,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ] ; 2 uses
-  %n.vec433 = and i64 %i.fk, -4                   ; 3 uses
+  %n.vec433 = and i64 %umax320, -4                ; 3 uses
   %broadcast.splatinsert = insertelement <4 x i64> poison, i64 %vec.epilog.resume.val, i64 0
   %broadcast.splat = shufflevector <4 x i64> %broadcast.splatinsert, <4 x i64> poison, <4 x i32> zeroinitializer
   %induction = or disjoint <4 x i64> %broadcast.splat, <i64 0, i64 1, i64 2, i64 3>
@@ -287,7 +288,7 @@ _ZN7rocksdb6StatusD2Ev.exit236.thread:            ; preds = %_ZNK7rocksdb21FSRan
   %i.fq = getelementptr inbounds nuw i8, ptr %i.fp, i64 16
   store ptr null, ptr %i.fq, align 8, !tbaa !403
   %i.fr = add nuw i64 %.088301, 1                 ; 2 uses
-  %exitcond321.not = icmp eq i64 %i.fr, %i.fk
+  %exitcond321.not = icmp eq i64 %i.fr, %umax320
   br i1 %exitcond321.not, label %.loopexit275, label %.lr.ph302, !llvm.loop !409
 
 bb.ak:                                            ; preds = %_ZNK7rocksdb22RandomAccessFileReader13use_direct_ioEv.exit
@@ -304,13 +305,14 @@ _ZNSt10unique_ptrIA_cSt14default_deleteIS0_EE5resetIPcvEEvT_.exit.preheader317: 
   %i.fv = ptrtoint ptr %i.ft to i64
   %i.fw = ptrtoint ptr %i.fu to i64
   %i.fx = sub i64 %i.fv, %i.fw
-  %i.fy = sdiv exact i64 %i.fx, 96                ; 3 uses
-  %xtraiter = and i64 %i.fy, 7                    ; 3 uses
+  %i.fy = sdiv i64 %i.fx, 96                      ; 2 uses
+  %umax = call i64 @llvm.umax.i64(i64 %i.fy, i64 1) ; 2 uses
+  %xtraiter = and i64 %umax, 7                    ; 3 uses
   %i.fz = icmp ult i64 %i.fy, 8
   br i1 %i.fz, label %_ZNSt10unique_ptrIA_cSt14default_deleteIS0_EE5resetIPcvEEvT_.exit.epil.preheader, label %_ZNSt10unique_ptrIA_cSt14default_deleteIS0_EE5resetIPcvEEvT_.exit.preheader317.new
 
 _ZNSt10unique_ptrIA_cSt14default_deleteIS0_EE5resetIPcvEEvT_.exit.preheader317.new: ; preds = %_ZNSt10unique_ptrIA_cSt14default_deleteIS0_EE5resetIPcvEEvT_.exit.preheader317
-  %unroll_iter = and i64 %i.fy, -8
+  %unroll_iter = and i64 %umax, -8
   br label %_ZNSt10unique_ptrIA_cSt14default_deleteIS0_EE5resetIPcvEEvT_.exit
 
 _ZNSt10unique_ptrIA_cSt14default_deleteIS0_EE5resetIPcvEEvT_.exit: ; preds = %_ZNSt10unique_ptrIA_cSt14default_deleteIS0_EE5resetIPcvEEvT_.exit, %_ZNSt10unique_ptrIA_cSt14default_deleteIS0_EE5resetIPcvEEvT_.exit.preheader317.new

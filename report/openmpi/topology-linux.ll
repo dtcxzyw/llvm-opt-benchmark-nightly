@@ -203,10 +203,11 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.az, label %.lr.ph95.preheader, label %._crit_edge
 
 .lr.ph95.preheader:                               ; preds = %.loopexit
-  %i.ba = add nuw nsw i32 %.151, 1
-  %3 = lshr i32 %i.ba, 1
+  %i.ba = add nuw i32 %.151, 1
+  %3 = sdiv i32 %i.ba, 2
   %i.bb = zext nneg i32 %.151 to i64              ; 2 uses
-  %wide.trip.count = zext nneg i32 %3 to i64
+  %smax = call i32 @llvm.smax.i32(i32 %3, i32 1)
+  %wide.trip.count = zext nneg i32 %smax to i64
   br label %.lr.ph95
 
 .lr.ph95:                                         ; preds = %.lr.ph95.preheader, %bb.p

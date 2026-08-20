@@ -204,13 +204,15 @@ bb.i:                                             ; preds = %.lr.ph, %bb.i
   %.02631 = phi double [ %i.u, %.lr.ph ], [ %i.ac, %bb.i ] ; 2 uses
   %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
   %i.y = fptoui double %.02631 to i32             ; 2 uses
-  %i.z = getelementptr [4 x i8], ptr %i.w, i64 %indvars.iv.next
+  %1 = and i64 %indvars.iv.next, 4294967295
+  %i.z = getelementptr [4 x i8], ptr %i.w, i64 %1
   store i32 %i.y, ptr %i.z, align 4, !tbaa !7
   %i.aa = uitofp i32 %i.y to double
   %i.ab = fsub double %.02631, %i.aa
   %i.ac = tail call double @ldexp(double noundef %i.ab, i32 noundef 30) #16, !tbaa !7
-  %1 = icmp samesign ugt i64 %indvars.iv, 1
-  br i1 %1, label %bb.i, label %._crit_edge, !llvm.loop !34
+  %2 = trunc nuw i64 %indvars.iv to i32
+  %3 = icmp sgt i32 %2, 1
+  br i1 %3, label %bb.i, label %._crit_edge, !llvm.loop !34
 
 ._crit_edge:                                      ; preds = %bb.i, %bb.h
   br i1 %i.i, label %bb.k, label %bb.j

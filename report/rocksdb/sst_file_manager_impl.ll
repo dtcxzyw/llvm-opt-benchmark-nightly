@@ -203,7 +203,8 @@ _ZNK7rocksdb10Compaction15num_input_filesEm.exit.preheader.preheader: ; preds = 
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = ptrtoint ptr %i.e to i64
   %i.h = sub i64 %i.f, %i.g
-  %i.i = sdiv exact i64 %i.h, 56
+  %i.i = sdiv i64 %i.h, 56
+  %umax28 = tail call i64 @llvm.umax.i64(i64 %i.i, i64 1)
   br label %_ZNK7rocksdb10Compaction15num_input_filesEm.exit.preheader
 
 _ZNK7rocksdb10Compaction15num_input_filesEm.exit.preheader: ; preds = %_ZNK7rocksdb10Compaction15num_input_filesEm.exit.preheader.preheader, %_ZNK7rocksdb10Compaction15num_input_filesEm.exit._crit_edge
@@ -328,7 +329,7 @@ _ZN7rocksdb9MutexLockD2Ev.exit:                   ; preds = %._crit_edge
 _ZNK7rocksdb10Compaction15num_input_filesEm.exit._crit_edge: ; preds = %_ZNK7rocksdb10Compaction15num_input_filesEm.exit, %middle.block, %vec.epilog.middle.block, %_ZNK7rocksdb10Compaction15num_input_filesEm.exit.preheader
   %.1.lcssa = phi i64 [ %.01824, %_ZNK7rocksdb10Compaction15num_input_filesEm.exit.preheader ], [ %i.ai, %vec.epilog.middle.block ], [ %i.ac, %middle.block ], [ %i.at, %_ZNK7rocksdb10Compaction15num_input_filesEm.exit ] ; 2 uses
   %i.ao = add nuw i64 %.01725, 1                  ; 2 uses
-  %exitcond29.not = icmp eq i64 %i.ao, %i.i
+  %exitcond29.not = icmp eq i64 %i.ao, %umax28
   br i1 %exitcond29.not, label %._crit_edge, label %_ZNK7rocksdb10Compaction15num_input_filesEm.exit.preheader, !llvm.loop !194
 
 _ZNK7rocksdb10Compaction15num_input_filesEm.exit: ; preds = %_ZNK7rocksdb10Compaction15num_input_filesEm.exit.preheader56, %_ZNK7rocksdb10Compaction15num_input_filesEm.exit
@@ -606,7 +607,8 @@ bb.a:
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = ptrtoint ptr %i.e to i64
   %i.h = sub i64 %i.f, %i.g
-  %i.i = sdiv exact i64 %i.h, 56
+  %i.i = sdiv i64 %i.h, 56
+  %umax77 = tail call i64 @llvm.umax.i64(i64 %i.i, i64 1)
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge
@@ -725,7 +727,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 ._crit_edge:                                      ; preds = %.lr.ph, %middle.block, %vec.epilog.middle.block, %.preheader
   %.138.lcssa = phi i64 [ %.03770, %.preheader ], [ %i.ai, %vec.epilog.middle.block ], [ %i.ac, %middle.block ], [ %i.aw, %.lr.ph ] ; 2 uses
   %i.ar = add nuw i64 %.03671, 1                  ; 2 uses
-  %exitcond78.not = icmp eq i64 %i.ar, %i.i
+  %exitcond78.not = icmp eq i64 %i.ar, %umax77
   br i1 %exitcond78.not, label %._crit_edge72, label %.preheader, !llvm.loop !206
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
@@ -1127,6 +1129,9 @@ declare i64 @llvm.umin.i64(i64, i64) #20
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #21
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umax.i64(i64, i64) #20
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(read)
 declare <4 x i64> @llvm.masked.gather.v4i64.v4p0(<4 x ptr>, <4 x i1>, <4 x i64>) #22

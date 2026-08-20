@@ -204,12 +204,12 @@ dt_image_orientation_to_flip_bits.exit:           ; preds = %bb.ac, %bb.ac, %bb.
   store i32 -2, ptr %i.cf, align 8, !tbaa !54
   %i.cg = getelementptr inbounds nuw i8, ptr %3, i64 76
   store i32 -2, ptr %i.cg, align 4, !tbaa !55
-  %i.ch = getelementptr inbounds nuw i8, ptr %3, i64 20
-  %6 = getelementptr inbounds nuw i8, ptr %3, i64 60
-  store <4 x i32> zeroinitializer, ptr %6, align 4, !tbaa !11
-  %i.ci = getelementptr inbounds nuw i8, ptr %3, i64 52
-  store <2 x float> <float 2.000000e-01, float 8.000000e-01>, ptr %i.ci, align 4, !tbaa !50
-  store <8 x float> <float 0.000000e+00, float 0.000000e+00, float 2.000000e-01, float 2.000000e-01, float 8.000000e-01, float 2.000000e-01, float 8.000000e-01, float 8.000000e-01>, ptr %i.ch, align 4, !tbaa !50
+  %i.ch = getelementptr inbounds nuw i8, ptr %3, i64 60
+  store <4 x i32> zeroinitializer, ptr %i.ch, align 4, !tbaa !11
+  %6 = getelementptr inbounds nuw i8, ptr %3, i64 52
+  %i.ci = getelementptr inbounds nuw i8, ptr %3, i64 36
+  store <2 x float> <float 2.000000e-01, float 8.000000e-01>, ptr %6, align 4, !tbaa !50
+  store <4 x float> <float 8.000000e-01, float 2.000000e-01, float 8.000000e-01, float 8.000000e-01>, ptr %i.ci, align 4, !tbaa !50
   %i.cj = getelementptr inbounds nuw i8, ptr %3, i64 4 ; 4 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %3, i64 12 ; 3 uses
   %i.cl = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
@@ -288,8 +288,9 @@ dt_image_orientation_to_flip_bits.exit:           ; preds = %bb.ac, %bb.ac, %bb.
   %i.fa = fptrunc <2 x double> %i.ez to <2 x float> ; 5 uses
   %i.fb = extractelement <2 x float> %i.fa, i64 1
   %i.fc = extractelement <2 x float> %i.fa, i64 0
-  %7 = shufflevector <2 x float> %i.eq, <2 x float> %i.fa, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
-  store <4 x float> %7, ptr %i.cj, align 4, !tbaa !50
+  %7 = shufflevector <2 x float> %i.eq, <2 x float> %i.fa, <8 x i32> <i32 0, i32 2, i32 1, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
+  %8 = shufflevector <8 x float> %7, <8 x float> <float poison, float poison, float poison, float poison, float 0.000000e+00, float 0.000000e+00, float 2.000000e-01, float 2.000000e-01>, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 12, i32 13, i32 14, i32 15>
+  store <8 x float> %8, ptr %i.cj, align 4, !tbaa !50
   %i.fd = and i32 %.0.i, 2
   %.not272 = icmp eq i32 %i.fd, 0
   %i.fe = shufflevector <2 x float> %i.eq, <2 x float> poison, <2 x i32> <i32 1, i32 0>

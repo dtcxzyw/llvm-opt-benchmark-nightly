@@ -203,17 +203,18 @@ bb.a:
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = ptrtoint ptr %i.e to i64
   %i.h = sub i64 %i.f, %i.g
-  %i.i = sdiv exact i64 %i.h, 40                  ; 3 uses
+  %i.i = sdiv i64 %i.h, 40                        ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !65
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 16
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !17   ; 5 uses
-  %xtraiter = and i64 %i.i, 3                     ; 3 uses
+  %umax.i = tail call i64 @llvm.umax.i64(i64 %i.i, i64 1) ; 2 uses
+  %xtraiter = and i64 %umax.i, 3                  ; 3 uses
   %i.n = icmp ult i64 %i.i, 4
   br i1 %i.n, label %.epil.preheader, label %.lr.ph.i.new
 
 .lr.ph.i.new:                                     ; preds = %.lr.ph.i
-  %unroll_iter = and i64 %i.i, -4
+  %unroll_iter = and i64 %umax.i, -4
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %.lr.ph.i.new
@@ -418,17 +419,18 @@ bb.a:
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = sub i64 %i.e, %i.f
-  %i.h = sdiv exact i64 %i.g, 40                  ; 3 uses
+  %i.h = sdiv i64 %i.g, 40                        ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !65
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !17   ; 5 uses
-  %xtraiter = and i64 %i.h, 3                     ; 3 uses
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1) ; 2 uses
+  %xtraiter = and i64 %umax, 3                    ; 3 uses
   %i.m = icmp ult i64 %i.h, 4
   br i1 %i.m, label %.epil.preheader, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph
-  %unroll_iter = and i64 %i.h, -4
+  %unroll_iter = and i64 %umax, -4
   br label %bb.c
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %bb.c

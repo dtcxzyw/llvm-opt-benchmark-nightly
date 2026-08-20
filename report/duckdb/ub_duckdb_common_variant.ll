@@ -203,7 +203,7 @@ bb.a:
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = sub i64 %i.d, %i.e
-  %i.g = sdiv exact i64 %i.f, 144                 ; 10 uses
+  %i.g = sdiv i64 %i.f, 144                       ; 10 uses
   %i.h = icmp eq ptr %i.c, %i.b
   br i1 %i.h, label %bb.bq, label %bb.b
 
@@ -369,7 +369,11 @@ _ZNSt6vectorIN6duckdb11LogicalTypeESaIS1_EED2Ev.exit: ; preds = %_ZSt8_DestroyIP
   %i.al = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
   store i64 %i.g, ptr %i.al, align 8, !tbaa !159
   invoke void @_ZN6duckdb7variant17InitializeOffsetsERNS_9DataChunkEm(ptr noundef nonnull align 8 dereferenceable(72) %2, i64 noundef %i.g)
-          to label %.lr.ph unwind label %bb.o
+          to label %.lr.ph.preheader unwind label %bb.o
+
+.lr.ph.preheader:                                 ; preds = %_ZNSt6vectorIN6duckdb11LogicalTypeESaIS1_EED2Ev.exit
+  %umax = call i64 @llvm.umax.i64(i64 %i.g, i64 1)
+  br label %.lr.ph
 
 bb.o:                                             ; preds = %_ZNSt6vectorIN6duckdb11LogicalTypeESaIS1_EED2Ev.exit, %bb.b
   %i.am = landingpad { ptr, i32 }
@@ -412,8 +416,8 @@ bb.r:                                             ; preds = %_ZSt10_ConstructIN6
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #21
   br label %bb.bv
 
-.lr.ph:                                           ; preds = %_ZNSt6vectorIN6duckdb11LogicalTypeESaIS1_EED2Ev.exit, %bb.v
-  %.054185 = phi i64 [ %i.bd, %bb.v ], [ 0, %_ZNSt6vectorIN6duckdb11LogicalTypeESaIS1_EED2Ev.exit ] ; 3 uses
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.v
+  %.054185 = phi i64 [ %i.bd, %bb.v ], [ 0, %.lr.ph.preheader ] ; 3 uses
   %i.av = invoke noundef nonnull align 8 dereferenceable(144) ptr @_ZN6duckdb6vectorINS_12VariantValueELb1ESaIS1_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %.054185)
           to label %bb.s unwind label %bb.t       ; 3 uses
 
@@ -437,7 +441,7 @@ bb.u:                                             ; preds = %bb.s
 
 bb.v:                                             ; preds = %bb.u, %bb.s
   %i.bd = add nuw i64 %.054185, 1                 ; 2 uses
-  %exitcond.not = icmp eq i64 %i.bd, %i.g
+  %exitcond.not = icmp eq i64 %i.bd, %umax
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !173
 
 ._crit_edge:                                      ; preds = %bb.v
@@ -840,7 +844,11 @@ _ZNSt6vectorIN6duckdb11LogicalTypeESaIS1_EED2Ev.exit132: ; preds = %_ZSt8_Destro
 bb.am:                                            ; preds = %_ZNSt6vectorIN6duckdb11LogicalTypeESaIS1_EED2Ev.exit132
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #21
   invoke void @_ZN6duckdb17VariantVectorDataC1ERNS_6VectorE(ptr noundef nonnull align 8 dereferenceable(88) %10, ptr noundef nonnull align 8 dereferenceable(104) %1)
-          to label %.lr.ph187 unwind label %bb.av
+          to label %.lr.ph187.preheader unwind label %bb.av
+
+.lr.ph187.preheader:                              ; preds = %bb.am
+  %umax203 = call i64 @llvm.umax.i64(i64 %i.g, i64 1)
+  br label %.lr.ph187
 
 ._crit_edge188:                                   ; preds = %bb.ba
   %i.fm = invoke noundef nonnull align 8 dereferenceable(104) ptr @_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm(ptr noundef nonnull align 8 dereferenceable(72) %7, i64 noundef 3)
@@ -854,6 +862,7 @@ bb.am:                                            ; preds = %_ZNSt6vectorIN6duck
   %i.fn = getelementptr inbounds nuw i8, ptr %i.fm, i64 32
   %i.fo = load ptr, ptr %i.fn, align 8, !tbaa !12
   %i.fp = getelementptr inbounds nuw i8, ptr %10, i64 8
+  %umax205 = call i64 @llvm.umax.i64(i64 %i.g, i64 1)
   br label %bb.bc
 
 .loopexit164:                                     ; preds = %.lr.ph.i
@@ -947,8 +956,8 @@ bb.av:                                            ; preds = %bb.am
           cleanup
   br label %bb.br
 
-.lr.ph187:                                        ; preds = %bb.am, %bb.ba
-  %.052186 = phi i64 [ %i.gm, %bb.ba ], [ 0, %bb.am ] ; 4 uses
+.lr.ph187:                                        ; preds = %.lr.ph187.preheader, %bb.ba
+  %.052186 = phi i64 [ %i.gm, %bb.ba ], [ 0, %.lr.ph187.preheader ] ; 4 uses
   %i.ge = invoke noundef nonnull align 8 dereferenceable(144) ptr @_ZN6duckdb6vectorINS_12VariantValueELb1ESaIS1_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %.052186)
           to label %bb.aw unwind label %bb.ay     ; 3 uses
 
@@ -976,7 +985,7 @@ bb.az:                                            ; preds = %bb.aw
 
 bb.ba:                                            ; preds = %bb.az, %bb.ax
   %i.gm = add nuw i64 %.052186, 1                 ; 2 uses
-  %exitcond204.not = icmp eq i64 %i.gm, %i.g
+  %exitcond204.not = icmp eq i64 %i.gm, %umax203
   br i1 %exitcond204.not, label %._crit_edge188, label %.lr.ph187, !llvm.loop !181
 
 ._crit_edge191:                                   ; preds = %_ZN6duckdb8string_t18SetSizeAndFinalizeEjm.exit
@@ -1020,7 +1029,7 @@ _ZN6duckdb8string_t8FinalizeEv.exit.i:            ; preds = %.thread4.i, %._crit
 
 _ZN6duckdb8string_t18SetSizeAndFinalizeEjm.exit:  ; preds = %_ZN6duckdb8string_t8FinalizeEv.exit.i
   %i.hb = add nuw i64 %.0189, 1                   ; 2 uses
-  %exitcond206.not = icmp eq i64 %i.hb, %i.g
+  %exitcond206.not = icmp eq i64 %i.hb, %umax205
   br i1 %exitcond206.not, label %._crit_edge191, label %bb.bc, !llvm.loop !182
 
 bb.bd:                                            ; preds = %_ZN6duckdb8string_t8FinalizeEv.exit.i

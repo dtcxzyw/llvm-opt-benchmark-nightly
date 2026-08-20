@@ -21,12 +21,12 @@ bb.a:
   br i1 %.not136.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = tail call ptr @PyErr_NoMemory() #6
+  %i.b = tail call ptr @PyErr_NoMemory() #5
   br label %_Py_strhex_impl.exit
 
 bb.c:                                             ; preds = %bb.a
   %i.c = shl i64 %1, 1
-  %i.d = tail call ptr @PyUnicode_New(i64 noundef %i.c, i32 noundef 127) #6 ; 9 uses
+  %i.d = tail call ptr @PyUnicode_New(i64 noundef %i.c, i32 noundef 127) #5 ; 9 uses
   %.not139.i = icmp eq ptr %i.d, null
   br i1 %.not139.i, label %_Py_strhex_impl.exit, label %bb.d
 
@@ -209,7 +209,7 @@ bb.a:
   br label %bb.q
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = tail call i64 @PyObject_Size(ptr noundef nonnull %2) #6 ; 2 uses
+  %i.b = tail call i64 @PyObject_Size(ptr noundef nonnull %2) #5 ; 2 uses
   %i.c = icmp slt i64 %i.b, 0
   br i1 %i.c, label %.critedge, label %bb.c
 
@@ -219,7 +219,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.d = load ptr, ptr @PyExc_ValueError, align 8, !tbaa !18
-  tail call void @PyErr_SetString(ptr noundef %i.d, ptr noundef nonnull @.str) #6
+  tail call void @PyErr_SetString(ptr noundef %i.d, ptr noundef nonnull @.str) #5
   br label %.critedge
 
 bb.e:                                             ; preds = %bb.c
@@ -240,7 +240,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f
   %i.k = load ptr, ptr @PyExc_ValueError, align 8, !tbaa !18
-  tail call void @PyErr_SetString(ptr noundef %i.k, ptr noundef nonnull @.str.1) #6
+  tail call void @PyErr_SetString(ptr noundef %i.k, ptr noundef nonnull @.str.1) #5
   br label %.critedge
 
 bb.h:                                             ; preds = %bb.f
@@ -271,7 +271,7 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.k
   %i.q = load ptr, ptr @PyExc_TypeError, align 8, !tbaa !18
-  tail call void @PyErr_SetString(ptr noundef %i.q, ptr noundef nonnull @.str.2) #6
+  tail call void @PyErr_SetString(ptr noundef %i.q, ptr noundef nonnull @.str.2) #5
   br label %.critedge
 
 _PyUnicode_DATA.exit.i:                           ; preds = %bb.i, %bb.j, %bb.l
@@ -284,7 +284,7 @@ _PyUnicode_DATA.exit.i:                           ; preds = %bb.i, %bb.j, %bb.l
 
 bb.n:                                             ; preds = %_PyUnicode_DATA.exit.i
   %i.t = load ptr, ptr @PyExc_ValueError, align 8, !tbaa !18
-  tail call void @PyErr_SetString(ptr noundef %i.t, ptr noundef nonnull @.str.1) #6
+  tail call void @PyErr_SetString(ptr noundef %i.t, ptr noundef nonnull @.str.1) #5
   br label %.critedge
 
 bb.o:                                             ; preds = %_PyUnicode_DATA.exit.i
@@ -311,12 +311,12 @@ bb.q:                                             ; preds = %.thread154, %bb.p, 
   br i1 %.not136, label %bb.s, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  %i.ac = tail call ptr @PyErr_NoMemory() #6
+  %i.ac = tail call ptr @PyErr_NoMemory() #5
   br label %.critedge
 
 bb.s:                                             ; preds = %bb.q
   %i.ad = shl i64 %1, 1
-  %i.ae = add i64 %.0114, %i.ad                   ; 4 uses
+  %i.ae = add i64 %.0114, %i.ad                   ; 3 uses
   %i.af = zext i32 %i.aa to i64
   %.not137 = icmp ugt i64 %1, %i.af               ; 2 uses
   %spec.select = select i1 %.not137, i32 %.0124150159, i32 0 ; 2 uses
@@ -325,7 +325,7 @@ bb.s:                                             ; preds = %bb.q
   br i1 %.not138, label %bb.v, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  %i.ag = tail call ptr @PyBytes_FromStringAndSize(ptr noundef null, i64 noundef %i.ae) #6 ; 3 uses
+  %i.ag = tail call ptr @PyBytes_FromStringAndSize(ptr noundef null, i64 noundef %i.ae) #5 ; 3 uses
   %.not140 = icmp eq ptr %i.ag, null
   br i1 %.not140, label %.critedge, label %bb.u
 
@@ -334,7 +334,7 @@ bb.u:                                             ; preds = %bb.t
   br label %_PyUnicode_DATA.exit
 
 bb.v:                                             ; preds = %bb.s
-  %i.ai = tail call ptr @PyUnicode_New(i64 noundef %i.ae, i32 noundef 127) #6 ; 6 uses
+  %i.ai = tail call ptr @PyUnicode_New(i64 noundef %i.ae, i32 noundef 127) #5 ; 6 uses
   %.not139 = icmp eq ptr %i.ai, null
   br i1 %.not139, label %.critedge, label %bb.w
 
@@ -482,7 +482,7 @@ bb.ab:                                            ; preds = %bb.z
 bb.ac:                                            ; preds = %_PyUnicode_DATA.exit
   %i.dg = add i64 %1, -1                          ; 4 uses
   %i.dh = zext i32 %spec.select141 to i64
-  %i.di = sdiv i64 %i.dg, %i.dh                   ; 9 uses
+  %i.di = sdiv i64 %i.dg, %i.dh                   ; 6 uses
   %i.dj = icmp slt i32 %spec.select, 0
   br i1 %i.dj, label %.preheader165, label %.preheader169
 
@@ -493,7 +493,7 @@ bb.ac:                                            ; preds = %_PyUnicode_DATA.exi
 
 .preheader168.lr.ph:                              ; preds = %.preheader169
   %.not201 = icmp eq i32 %spec.select141, 0
-  br i1 %.not201, label %.preheader168.preheader, label %.preheader168.us.preheader
+  br i1 %.not201, label %.preheader168, label %.preheader168.us.preheader
 
 .preheader168.us.preheader:                       ; preds = %.preheader168.lr.ph
   %xtraiter = and i32 %spec.select141, 1
@@ -502,13 +502,6 @@ bb.ac:                                            ; preds = %_PyUnicode_DATA.exi
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   %lcmp.mod260 = trunc i32 %spec.select141 to i1
   br label %.preheader168.us
-
-.preheader168.preheader:                          ; preds = %.preheader168.lr.ph
-  %5 = sub nuw nsw i64 %i.ae, %i.di
-  %scevgep = getelementptr i8, ptr %.0112, i64 %5
-  tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep, i8 %.2119152158, i64 %i.di, i1 false), !tbaa !11
-  %6 = sub nuw nsw i64 %.3175, %i.di
-  br label %.preheader166
 
 .preheader168.us:                                 ; preds = %.preheader168.us.preheader, %._crit_edge.us
   %.3178.us = phi i64 [ %.3.us, %._crit_edge.us ], [ %.3175, %.preheader168.us.preheader ] ; 2 uses
@@ -598,8 +591,8 @@ bb.ac:                                            ; preds = %_PyUnicode_DATA.exi
   store i8 %.2119152158, ptr %i.fl, align 1, !tbaa !11
   %i.fm = add nuw nsw i64 %.1103177.us, 1         ; 2 uses
   %.3.us = add i64 %.4172.us.lcssa, -3            ; 2 uses
-  %exitcond216.not = icmp eq i64 %i.fm, %i.di
-  br i1 %exitcond216.not, label %.preheader166, label %.preheader168.us, !llvm.loop !32
+  %5 = icmp slt i64 %i.fm, %i.di
+  br i1 %5, label %.preheader168.us, label %.preheader166, !llvm.loop !32
 
 .preheader165:                                    ; preds = %bb.ac
   %i.fn = icmp sgt i64 %i.di, 0
@@ -607,17 +600,13 @@ bb.ac:                                            ; preds = %_PyUnicode_DATA.exi
 
 .preheader164.lr.ph:                              ; preds = %.preheader165
   %.not202 = icmp eq i32 %spec.select141, 0
-  br i1 %.not202, label %.preheader164.preheader, label %.preheader164.us.preheader
+  br i1 %.not202, label %.preheader164, label %.preheader164.us.preheader
 
 .preheader164.us.preheader:                       ; preds = %.preheader164.lr.ph
   %xtraiter263 = and i32 %spec.select141, 1
   %lcmp.mod264.not = icmp eq i32 %xtraiter263, 0
   %i.fo = icmp eq i32 %spec.select141, 1
   br label %.preheader164.us
-
-.preheader164.preheader:                          ; preds = %.preheader164.lr.ph
-  tail call void @llvm.memset.p0.i64(ptr align 1 %.0112, i8 %.2119152158, i64 %i.di, i1 false), !tbaa !11
-  br label %.preheader162
 
 .preheader164.us:                                 ; preds = %.preheader164.us.preheader, %._crit_edge.us194
   %.0102191.us = phi i64 [ %i.hs, %._crit_edge.us194 ], [ 0, %.preheader164.us.preheader ]
@@ -709,12 +698,20 @@ bb.ac:                                            ; preds = %_PyUnicode_DATA.exi
   %i.hr = getelementptr i8, ptr %.0112, i64 %.lcssa251
   store i8 %.2119152158, ptr %i.hr, align 1, !tbaa !11
   %i.hs = add nuw nsw i64 %.0102191.us, 1         ; 2 uses
-  %exitcond218.not = icmp eq i64 %i.hs, %i.di
-  br i1 %exitcond218.not, label %.preheader162, label %.preheader164.us, !llvm.loop !34
+  %6 = icmp slt i64 %i.hs, %i.di
+  br i1 %6, label %.preheader164.us, label %.preheader162, !llvm.loop !34
 
-.preheader162:                                    ; preds = %._crit_edge.us194, %.preheader164.preheader, %.preheader165
-  %.0106.lcssa = phi i64 [ 0, %.preheader165 ], [ 0, %.preheader164.preheader ], [ %.lcssa252, %._crit_edge.us194 ] ; 6 uses
-  %.0104.lcssa = phi i64 [ 0, %.preheader165 ], [ %i.di, %.preheader164.preheader ], [ %i.hq, %._crit_edge.us194 ] ; 3 uses
+.preheader164:                                    ; preds = %.preheader164.lr.ph, %.preheader164
+  %.0102191 = phi i64 [ %7, %.preheader164 ], [ 0, %.preheader164.lr.ph ] ; 2 uses
+  %7 = add nuw nsw i64 %.0102191, 1               ; 3 uses
+  %8 = getelementptr i8, ptr %.0112, i64 %.0102191
+  store i8 %.2119152158, ptr %8, align 1, !tbaa !11
+  %9 = icmp slt i64 %7, %i.di
+  br i1 %9, label %.preheader164, label %.preheader162, !llvm.loop !35
+
+.preheader162:                                    ; preds = %._crit_edge.us194, %.preheader164, %.preheader165
+  %.0106.lcssa = phi i64 [ 0, %.preheader165 ], [ 0, %.preheader164 ], [ %.lcssa252, %._crit_edge.us194 ] ; 6 uses
+  %.0104.lcssa = phi i64 [ 0, %.preheader165 ], [ %7, %.preheader164 ], [ %i.hq, %._crit_edge.us194 ] ; 3 uses
   %i.ht = icmp slt i64 %.0106.lcssa, %1
   br i1 %i.ht, label %.lr.ph200.preheader, label %.critedge
 
@@ -795,11 +792,21 @@ bb.ac:                                            ; preds = %_PyUnicode_DATA.exi
   %i.ju = getelementptr i8, ptr %i.jm, i64 3
   store i8 %i.js, ptr %i.ju, align 1, !tbaa !11
   %exitcond219.not.1 = icmp eq i64 %i.jc, %1
-  br i1 %exitcond219.not.1, label %.critedge, label %.lr.ph200, !llvm.loop !35
+  br i1 %exitcond219.not.1, label %.critedge, label %.lr.ph200, !llvm.loop !38
 
-.preheader166:                                    ; preds = %._crit_edge.us, %.preheader168.preheader, %.preheader169
-  %.3109.lcssa = phi i64 [ %i.dg, %.preheader169 ], [ %i.dg, %.preheader168.preheader ], [ %.lcssa256, %._crit_edge.us ] ; 6 uses
-  %.3.lcssa = phi i64 [ %.3175, %.preheader169 ], [ %6, %.preheader168.preheader ], [ %.3.us, %._crit_edge.us ] ; 3 uses
+.preheader168:                                    ; preds = %.preheader168.lr.ph, %.preheader168
+  %.3178 = phi i64 [ %.3, %.preheader168 ], [ %.3175, %.preheader168.lr.ph ] ; 2 uses
+  %.1103177 = phi i64 [ %11, %.preheader168 ], [ 0, %.preheader168.lr.ph ]
+  %10 = getelementptr i8, ptr %.0112, i64 %.3178
+  store i8 %.2119152158, ptr %10, align 1, !tbaa !11
+  %11 = add nuw nsw i64 %.1103177, 1              ; 2 uses
+  %.3 = add i64 %.3178, -1                        ; 2 uses
+  %12 = icmp slt i64 %11, %i.di
+  br i1 %12, label %.preheader168, label %.preheader166, !llvm.loop !39
+
+.preheader166:                                    ; preds = %._crit_edge.us, %.preheader168, %.preheader169
+  %.3109.lcssa = phi i64 [ %i.dg, %.preheader169 ], [ %i.dg, %.preheader168 ], [ %.lcssa256, %._crit_edge.us ] ; 6 uses
+  %.3.lcssa = phi i64 [ %.3175, %.preheader169 ], [ %.3, %.preheader168 ], [ %.3.us, %._crit_edge.us ] ; 3 uses
   %i.jv = icmp sgt i64 %.3109.lcssa, -1
   br i1 %i.jv, label %.lr.ph.preheader, label %.critedge
 
@@ -878,7 +885,7 @@ bb.ac:                                            ; preds = %_PyUnicode_DATA.exi
   %i.lw = getelementptr i8, ptr %i.lo, i64 -3
   store i8 %i.lu, ptr %i.lw, align 1, !tbaa !11
   %.not238.1 = icmp eq i64 %i.kp, 0
-  br i1 %.not238.1, label %.critedge, label %.lr.ph, !llvm.loop !36
+  br i1 %.not238.1, label %.critedge, label %.lr.ph, !llvm.loop !40
 
 .critedge.loopexit249.unr-lcssa:                  ; preds = %.lr.ph.i
   %lcmp.mod268.not = icmp eq i64 %xtraiter267, 0
@@ -920,12 +927,12 @@ bb.a:
   br i1 %.not136.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = tail call ptr @PyErr_NoMemory() #6
+  %i.b = tail call ptr @PyErr_NoMemory() #5
   br label %_Py_strhex_impl.exit
 
 bb.c:                                             ; preds = %bb.a
   %i.c = shl i64 %1, 1
-  %i.d = tail call ptr @PyBytes_FromStringAndSize(ptr noundef null, i64 noundef %i.c) #6 ; 7 uses
+  %i.d = tail call ptr @PyBytes_FromStringAndSize(ptr noundef null, i64 noundef %i.c) #5 ; 7 uses
   %.not140.i = icmp eq ptr %i.d, null
   br i1 %.not140.i, label %_Py_strhex_impl.exit, label %bb.d
 
@@ -1105,19 +1112,15 @@ declare ptr @PyUnicode_New(i64 noundef, i32 noundef) local_unnamed_addr #2
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.abs.i32(i32, i1 immarg) #3
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #4
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #5
+declare void @llvm.assume(i1 noundef) #4
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="128" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #4 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #5 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #6 = { nounwind }
+attributes #4 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #5 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4, !5}
 !llvm.ident = !{!6}
@@ -1158,6 +1161,10 @@ attributes #6 = { nounwind }
 !32 = distinct !{!32, !13}
 !33 = distinct !{!33, !13}
 !34 = distinct !{!34, !13}
-!35 = distinct !{!35, !13}
-!36 = distinct !{!36, !13}
+!35 = distinct !{!35, !13, !36, !37}
+!36 = !{!"llvm.loop.unroll.runtime.disable"}
+!37 = !{!"llvm.loop.isvectorized", i32 1}
+!38 = distinct !{!38, !13}
+!39 = distinct !{!39, !13, !36, !37}
+!40 = distinct !{!40, !13}
 end_hunk_0

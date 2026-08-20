@@ -203,8 +203,9 @@ bb.bh:                                            ; preds = %bb.bf
   %i.hl = ptrtoint ptr %i.hj to i64
   %i.hm = ptrtoint ptr %i.hk to i64
   %i.hn = sub i64 %i.hl, %i.hm
-  %i.ho = sdiv exact i64 %i.hn, 112               ; 2 uses
+  %i.ho = sdiv i64 %i.hn, 112
   %i.hp = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.l) #28 ; 3 uses
+  %umax.i = call i64 @llvm.umax.i64(i64 %i.ho, i64 1) ; 2 uses
   %i.hq = icmp eq i64 %i.hp, 0
   br i1 %i.hq, label %.lr.ph.i.split.us, label %.lr.ph.i.split
 
@@ -218,7 +219,7 @@ bb.bh:                                            ; preds = %bb.bf
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread13.i.us: ; preds = %.lr.ph.i.split.us
   %i.hv = add nuw i64 %.01020.i.us, 1             ; 2 uses
-  %exitcond.not.i.us = icmp eq i64 %i.hv, %i.ho
+  %exitcond.not.i.us = icmp eq i64 %i.hv, %umax.i
   br i1 %exitcond.not.i.us, label %_ZNK4ncnn3Net23find_blob_index_by_nameEPKc.exit.thread, label %.lr.ph.i.split.us, !llvm.loop !186
 
 .lr.ph.i.split:                                   ; preds = %.lr.ph.i, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread13.i
@@ -237,7 +238,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread13.i: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i, %.lr.ph.i.split
   %i.ic = add nuw i64 %.01020.i, 1                ; 2 uses
-  %exitcond.not.i = icmp eq i64 %i.ic, %i.ho
+  %exitcond.not.i = icmp eq i64 %i.ic, %umax.i
   br i1 %exitcond.not.i, label %_ZNK4ncnn3Net23find_blob_index_by_nameEPKc.exit.thread, label %.lr.ph.i.split, !llvm.loop !186
 
 _ZNK4ncnn3Net23find_blob_index_by_nameEPKc.exit.thread: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread13.i, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread13.i.us, %bb.bh
@@ -640,8 +641,9 @@ bb.a:
   %i.g = ptrtoint ptr %i.e to i64
   %i.h = ptrtoint ptr %i.f to i64
   %i.i = sub i64 %i.g, %i.h
-  %i.j = sdiv exact i64 %i.i, 112
+  %i.j = sdiv i64 %i.i, 112
   %i.k = tail call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #28 ; 3 uses
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.j, i64 1)
   %i.l = icmp eq i64 %i.k, 0
   br label %bb.b
 
@@ -668,7 +670,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread13: ; preds = %bb.b, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
   %i.t = add nuw i64 %.01020, 1                   ; 2 uses
-  %exitcond.not = icmp eq i64 %i.t, %i.j
+  %exitcond.not = icmp eq i64 %i.t, %umax
   br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !186
 
 ._crit_edge:                                      ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread13, %bb.a
@@ -1071,8 +1073,9 @@ bb.a:
   %i.j = ptrtoint ptr %i.h to i64
   %i.k = ptrtoint ptr %i.i to i64
   %i.l = sub i64 %i.j, %i.k
-  %i.m = sdiv exact i64 %i.l, 112                 ; 2 uses
+  %i.m = sdiv i64 %i.l, 112
   %i.n = tail call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #28 ; 3 uses
+  %umax.i = tail call i64 @llvm.umax.i64(i64 %i.m, i64 1) ; 2 uses
   %i.o = icmp eq i64 %i.n, 0
   br i1 %i.o, label %.lr.ph.i.split.us, label %.lr.ph.i.split
 
@@ -1086,7 +1089,7 @@ bb.a:
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread13.i.us: ; preds = %.lr.ph.i.split.us
   %i.t = add nuw i64 %.01020.i.us, 1              ; 2 uses
-  %exitcond.not.i.us = icmp eq i64 %i.t, %i.m
+  %exitcond.not.i.us = icmp eq i64 %i.t, %umax.i
   br i1 %exitcond.not.i.us, label %_ZNK4ncnn3Net23find_blob_index_by_nameEPKc.exit.thread, label %.lr.ph.i.split.us, !llvm.loop !186
 
 .lr.ph.i.split:                                   ; preds = %.lr.ph.i, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread13.i
@@ -1105,7 +1108,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread13.i: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i, %.lr.ph.i.split
   %i.aa = add nuw i64 %.01020.i, 1                ; 2 uses
-  %exitcond.not.i = icmp eq i64 %i.aa, %i.m
+  %exitcond.not.i = icmp eq i64 %i.aa, %umax.i
   br i1 %exitcond.not.i, label %_ZNK4ncnn3Net23find_blob_index_by_nameEPKc.exit.thread, label %.lr.ph.i.split, !llvm.loop !186
 
 _ZNK4ncnn3Net23find_blob_index_by_nameEPKc.exit.thread: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread13.i, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread13.i.us, %bb.a
@@ -1292,8 +1295,9 @@ bb.a:
   %i.j = ptrtoint ptr %i.h to i64
   %i.k = ptrtoint ptr %i.i to i64
   %i.l = sub i64 %i.j, %i.k
-  %i.m = sdiv exact i64 %i.l, 112                 ; 2 uses
+  %i.m = sdiv i64 %i.l, 112
   %i.n = tail call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #28 ; 3 uses
+  %umax.i = tail call i64 @llvm.umax.i64(i64 %i.m, i64 1) ; 2 uses
   %i.o = icmp eq i64 %i.n, 0
   br i1 %i.o, label %.lr.ph.i.split.us, label %.lr.ph.i.split
 
@@ -1307,7 +1311,7 @@ bb.a:
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread13.i.us: ; preds = %.lr.ph.i.split.us
   %i.t = add nuw i64 %.01020.i.us, 1              ; 2 uses
-  %exitcond.not.i.us = icmp eq i64 %i.t, %i.m
+  %exitcond.not.i.us = icmp eq i64 %i.t, %umax.i
   br i1 %exitcond.not.i.us, label %_ZNK4ncnn3Net23find_blob_index_by_nameEPKc.exit.thread, label %.lr.ph.i.split.us, !llvm.loop !186
 
 .lr.ph.i.split:                                   ; preds = %.lr.ph.i, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread13.i
@@ -1326,7 +1330,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread13.i: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i, %.lr.ph.i.split
   %i.aa = add nuw i64 %.01020.i, 1                ; 2 uses
-  %exitcond.not.i = icmp eq i64 %i.aa, %i.m
+  %exitcond.not.i = icmp eq i64 %i.aa, %umax.i
   br i1 %exitcond.not.i, label %_ZNK4ncnn3Net23find_blob_index_by_nameEPKc.exit.thread, label %.lr.ph.i.split, !llvm.loop !186
 
 _ZNK4ncnn3Net23find_blob_index_by_nameEPKc.exit.thread: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread13.i, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread13.i.us, %bb.a

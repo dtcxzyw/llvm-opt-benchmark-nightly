@@ -202,13 +202,14 @@ bb.dz:                                            ; preds = %bb.dw
   %i.acb = call ptr @proto_tree_add_item(ptr noundef %i.zz, i32 noundef %i.aca, ptr noundef %0, i32 noundef %i.abr, i32 noundef 1, i32 noundef 0) ; 0 uses
   %i.acc = load i32, ptr getelementptr inbounds nuw (i8, ptr @hf_lmp_filter, i64 756), align 4
   %i.acd = call ptr @proto_tree_add_item(ptr noundef %i.zz, i32 noundef %i.acc, ptr noundef %0, i32 noundef %i.abw, i32 noundef 1, i32 noundef 0) ; 0 uses
+  %5 = zext i8 %i.zu to i16
+  %.lhs.trunc = add nsw i16 %5, -8
+  %6 = sdiv i16 %.lhs.trunc, 4
+  %.sext = sext i16 %6 to i32
   %i.ace = icmp ugt i8 %i.zu, 11
   br i1 %i.ace, label %.lr.ph, label %.loopexit
 
 .lr.ph:                                           ; preds = %bb.dz
-  %.lhs.trunc = add i8 %i.zu, -8
-  %5 = lshr i8 %.lhs.trunc, 2
-  %.zext = zext nneg i8 %5 to i32
   %i.acf = add i32 %i.zs, 8
   %i.acg = add i32 %i.zs, 9
   br label %bb.ea
@@ -227,7 +228,7 @@ bb.ea:                                            ; preds = %.lr.ph, %bb.ea
   %i.acq = call i32 @tvb_get_ntoh24(ptr noundef %0, i32 noundef %i.ack)
   %i.acr = call ptr (ptr, i32, ptr, i32, i32, i32, ptr, ...) @proto_tree_add_uint_format(ptr noundef %i.zz, i32 noundef %i.ach, ptr noundef %0, i32 noundef %i.acj, i32 noundef 4, i32 noundef %i.acl, ptr noundef nonnull @.str.596, ptr noundef %i.acp, i32 noundef %i.acq) ; 0 uses
   %i.acs = add nuw nsw i32 %.110661177, 1         ; 2 uses
-  %exitcond.not = icmp eq i32 %i.acs, %.zext
+  %exitcond.not = icmp eq i32 %i.acs, %.sext
   br i1 %exitcond.not, label %.loopexit, label %bb.ea, !llvm.loop !11
 
 bb.eb:                                            ; preds = %bb.dw
