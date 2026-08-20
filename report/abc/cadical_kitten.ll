@@ -175,16 +175,20 @@ bb.c:                                             ; preds = %bb.a
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !35   ; 8 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.d = load i64, ptr %i.c, align 8, !tbaa !36
-  %i.e = lshr i64 %i.d, 1
+  %i.e = lshr i64 %i.d, 1                         ; 2 uses
   %i.f = trunc i64 %i.e to i32                    ; 7 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 4 uses
   %i.h = load i64, ptr %i.g, align 8, !tbaa !37
   %i.i = mul i64 %i.h, 6364136223846793005
   %i.j = add i64 %i.i, 1442695040888963407        ; 3 uses
   store i64 %i.j, ptr %i.g, align 8, !tbaa !37
-  %i.k = and i32 %i.f, -64                        ; 10 uses
+  %i.k = and i32 %i.f, -64                        ; 9 uses
   %.not3436 = icmp eq i32 %i.k, 0
-  br i1 %.not3436, label %.preheader, label %.lr.ph
+  br i1 %.not3436, label %.preheader, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %bb.c
+  %1 = and i64 %i.e, 4294967232
+  br label %.lr.ph
 
 .preheader:                                       ; preds = %.lr.ph, %bb.c
   %.033.lcssa = phi i64 [ %i.j, %bb.c ], [ %i.bu, %.lr.ph ] ; 7 uses
@@ -302,9 +306,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.au = icmp ugt i32 %i.at, -4
   br i1 %i.au, label %._crit_edge, label %.lr.ph43
 
-.lr.ph:                                           ; preds = %bb.c, %.lr.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ 0, %bb.c ] ; 2 uses
-  %.03337 = phi i64 [ %i.bu, %.lr.ph ], [ %i.j, %bb.c ] ; 8 uses
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
+  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 2 uses
+  %.03337 = phi i64 [ %i.j, %.lr.ph.preheader ], [ %i.bu, %.lr.ph ] ; 8 uses
   %i.av = getelementptr inbounds nuw i8, ptr %i.b, i64 %indvars.iv ; 8 uses
   %i.aw = and i64 %.03337, 72340172838076673
   store i64 %i.aw, ptr %i.av, align 8, !tbaa !37
@@ -341,8 +345,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.bu = add i64 %i.bt, 1442695040888963407      ; 3 uses
   store i64 %i.bu, ptr %i.g, align 8, !tbaa !37
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 64 ; 2 uses
-  %indvars = trunc i64 %indvars.iv.next to i32
-  %.not34 = icmp eq i32 %i.k, %indvars
+  %.not34 = icmp eq i64 %indvars.iv.next, %1
   br i1 %.not34, label %.preheader, label %.lr.ph, !llvm.loop !47
 
 .lr.ph43:                                         ; preds = %.lr.ph43.prol.loopexit, %.lr.ph43
@@ -404,21 +407,21 @@ bb.c:                                             ; preds = %bb.a
   %i.d = load i64, ptr %i.c, align 8, !tbaa !36
   %i.e = lshr i64 %i.d, 1                         ; 2 uses
   %i.f = trunc i64 %i.e to i32                    ; 5 uses
-  %i.g = and i32 %i.f, -8                         ; 6 uses
+  %i.g = and i32 %i.f, -8                         ; 5 uses
   %.not1315 = icmp eq i32 %i.g, 0
   br i1 %.not1315, label %.preheader, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.c
-  %1 = add nuw i64 %i.e, 4294967288
-  %2 = lshr i64 %1, 3
-  %3 = and i64 %2, 536870911                      ; 2 uses
+  %1 = and i64 %i.e, 4294967288                   ; 2 uses
+  %2 = add nsw i64 %1, -8                         ; 2 uses
+  %3 = lshr exact i64 %2, 3
   %i.h = add nuw nsw i64 %3, 1                    ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %3, 3
+  %min.iters.check = icmp ult i64 %2, 24
   br i1 %min.iters.check, label %.lr.ph.preheader43, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
-  %n.vec = and i64 %i.h, 1073741820               ; 3 uses
-  %i.i = shl nuw nsw i64 %n.vec, 3
+  %n.vec = and i64 %i.h, 4611686018427387900      ; 3 uses
+  %i.i = shl i64 %n.vec, 3
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -479,8 +482,7 @@ middle.block:                                     ; preds = %vector.body
   %i.y = xor i64 %i.x, 72340172838076673
   store i64 %i.y, ptr %i.w, align 8, !tbaa !37
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 8 ; 2 uses
-  %indvars = trunc i64 %indvars.iv.next to i32
-  %.not13 = icmp eq i32 %i.g, %indvars
+  %.not13 = icmp eq i64 %indvars.iv.next, %1
   br i1 %.not13, label %.preheader, label %.lr.ph, !llvm.loop !51
 
 .lr.ph19:                                         ; preds = %.lr.ph19.prol.loopexit, %.lr.ph19
