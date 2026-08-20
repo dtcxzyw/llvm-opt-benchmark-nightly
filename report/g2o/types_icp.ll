@@ -204,24 +204,24 @@ bb.a:
   %i.er = fadd double %i.em, %i.ep
   %i.es = insertelement <2 x double> %.sroa.8.0., double %.sroa.8.24..sroa.8.24..sroa.8.24..sroa.8.40., i64 1
   %i.et = fadd <2 x double> %i.es, %i.eq          ; 6 uses
-  %3 = fadd double %i.j, %i.er                    ; 3 uses
-  %i.eu = extractelement <2 x double> %i.et, i64 1
-  %4 = extractelement <2 x double> %i.eb, i64 0
-  %5 = fneg double %4
-  %6 = fmul double %3, %5
-  %7 = tail call noundef double @llvm.fmuladd.f64(double %i.eu, double %.sroa.25.48.vec.extract, double %6) ; 2 uses
-  %8 = shufflevector <2 x double> %i.et, <2 x double> poison, <2 x i32> <i32 poison, i32 0>
-  %9 = insertelement <2 x double> %8, double %3, i64 0 ; 2 uses
-  %10 = fneg <2 x double> %9
-  %11 = shufflevector <2 x double> %i.ds, <2 x double> %i.eb, <2 x i32> <i32 1, i32 3>
-  %12 = fmul <2 x double> %11, %10
-  %13 = shufflevector <2 x double> %i.dc, <2 x double> %i.ds, <2 x i32> <i32 1, i32 3>
-  %i.ev = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %13, <2 x double> %i.et, <2 x double> %12)
+  %3 = extractelement <2 x double> %i.et, i64 1
+  %i.eu = extractelement <2 x double> %i.eb, i64 0
+  %4 = fneg double %i.eu
+  %5 = shufflevector <2 x double> %i.et, <2 x double> poison, <2 x i32> <i32 poison, i32 0>
+  %6 = shufflevector <2 x double> %i.ds, <2 x double> %i.eb, <2 x i32> <i32 1, i32 3>
+  %7 = shufflevector <2 x double> %i.dc, <2 x double> %i.ds, <2 x i32> <i32 1, i32 3>
+  %8 = fadd double %i.j, %i.er                    ; 3 uses
+  %9 = fmul double %8, %4
+  %10 = tail call noundef double @llvm.fmuladd.f64(double %3, double %.sroa.25.48.vec.extract, double %9) ; 2 uses
+  %11 = insertelement <2 x double> %5, double %8, i64 0 ; 2 uses
+  %12 = fneg <2 x double> %11
+  %13 = fmul <2 x double> %6, %12
+  %i.ev = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %7, <2 x double> %i.et, <2 x double> %13)
   %i.ew = shufflevector <2 x double> %i.dc, <2 x double> %i.ds, <2 x i32> <i32 0, i32 2> ; 2 uses
   %i.ex = fneg <2 x double> %i.ew
   %i.ey = fmul <2 x double> %i.et, %i.ex
   %i.ez = shufflevector <2 x double> %i.ds, <2 x double> %i.eb, <2 x i32> <i32 0, i32 2>
-  %i.fa = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %9, <2 x double> %i.ez, <2 x double> %i.ey)
+  %i.fa = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %11, <2 x double> %i.ez, <2 x double> %i.ey)
   %i.fb = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.fc = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.fd = shufflevector <2 x double> %i.eb, <2 x double> %i.dc, <2 x i32> <i32 1, i32 3>
@@ -235,10 +235,10 @@ bb.a:
   %i.fk = shufflevector <2 x double> %i.eb, <2 x double> %i.dc, <2 x i32> <i32 0, i32 3>
   %i.fl = fmul <2 x double> %i.fk, %i.fj
   %i.fm = shufflevector <2 x double> %i.eb, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %i.fn = insertelement <2 x double> %i.ds, double %3, i64 1
+  %i.fn = insertelement <2 x double> %i.ds, double %8, i64 1
   %i.fo = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.fm, <2 x double> %i.fn, <2 x double> %i.fl) ; 2 uses
   %i.fp = shufflevector <2 x double> %i.fo, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %.sroa.0.8.vec.insert.i = insertelement <2 x double> %i.fp, double %7, i64 1
+  %.sroa.0.8.vec.insert.i = insertelement <2 x double> %i.fp, double %10, i64 1
   %i.fq = fmul <2 x double> %i.ds, %.sroa.0.8.vec.insert.i ; 2 uses
   %shift = shufflevector <2 x double> %i.fq, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop50 = fadd <2 x double> %i.fq, %shift
@@ -248,15 +248,15 @@ bb.a:
   %i.ft = insertelement <2 x double> poison, double %i.fs, i64 0
   %i.fu = shufflevector <2 x double> %i.ft, <2 x double> poison, <2 x i32> zeroinitializer ; 4 uses
   %i.fv = fmul <2 x double> %i.ev, %i.fu
-  %i.fw = fmul <2 x double> %i.fo, %i.fu          ; 2 uses
-  %14 = extractelement <2 x double> %i.fw, i64 0
-  store double %14, ptr %i.df, align 8, !tbaa !29
-  %15 = fmul <2 x double> %i.fa, %i.fu
-  store <2 x double> %15, ptr %i.dg, align 8, !tbaa !29
+  %i.fw = fmul <2 x double> %i.fa, %i.fu
+  %14 = fmul <2 x double> %i.fo, %i.fu            ; 2 uses
+  %15 = extractelement <2 x double> %14, i64 0
+  store double %15, ptr %i.df, align 8, !tbaa !29
+  store <2 x double> %i.fw, ptr %i.dg, align 8, !tbaa !29
   store <2 x double> %i.fv, ptr %i.de, align 8, !tbaa !29
-  %i.fx = extractelement <2 x double> %i.fw, i64 1
+  %i.fx = extractelement <2 x double> %14, i64 1
   store double %i.fx, ptr %0, align 8, !tbaa !29
-  %i.fy = fmul double %7, %i.fs
+  %i.fy = fmul double %10, %i.fs
   store double %i.fy, ptr %i.fb, align 8, !tbaa !29
   %i.fz = fmul <2 x double> %i.fh, %i.fu
   store <2 x double> %i.fz, ptr %i.fc, align 8, !tbaa !29

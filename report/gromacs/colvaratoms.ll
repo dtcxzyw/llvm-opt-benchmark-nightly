@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 1016
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 1032
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 1040
-  %i.n = load <2 x double>, ptr %i.k, align 8, !tbaa !128, !noalias !724 ; 8 uses
+  %i.n = load <2 x double>, ptr %i.k, align 8, !tbaa !128, !noalias !724 ; 10 uses
   %i.o = load <2 x double>, ptr %i.l, align 8, !tbaa !128, !noalias !724 ; 4 uses
   %i.p = load double, ptr %i.m, align 8, !tbaa !729, !noalias !724 ; 7 uses
   %i.q = tail call noundef ptr @_ZN12colvarmodule4mainEv() ; 0 uses
@@ -216,7 +216,7 @@ bb.c:                                             ; preds = %bb.b
 .lr.ph40:                                         ; preds = %bb.c
   %i.t = extractelement <2 x double> %i.o, i64 0  ; 5 uses
   %i.u = extractelement <2 x double> %i.n, i64 0  ; 4 uses
-  %i.v = extractelement <2 x double> %i.n, i64 1  ; 4 uses
+  %i.v = extractelement <2 x double> %i.n, i64 1  ; 2 uses
   %i.w = fneg double %i.t                         ; 3 uses
   %i.x = shufflevector <2 x double> %i.o, <2 x double> %i.n, <2 x i32> <i32 0, i32 2> ; 2 uses
   %i.y = shufflevector <2 x double> %i.o, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 3 uses
@@ -232,61 +232,61 @@ bb.c:                                             ; preds = %bb.b
   %i.ai = insertelement <2 x double> poison, double %i.p, i64 0
   %i.aj = shufflevector <2 x double> %i.ai, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ak = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.x, <2 x double> %i.aj, <2 x double> %i.ah) ; 2 uses
-  %3 = fneg double %i.p                           ; 3 uses
-  %4 = insertelement <2 x double> poison, double %3, i64 0
-  %5 = insertelement <2 x double> %4, double %i.p, i64 1
-  %6 = fmul <2 x double> %i.n, %5
-  %7 = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> <i32 1, i32 0>
-  %8 = shufflevector <2 x double> %i.o, <2 x double> poison, <2 x i32> zeroinitializer
-  %9 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.n, <2 x double> %8, <2 x double> %7) ; 2 uses
-  %10 = extractelement <2 x double> %9, i64 0
-  %11 = fmul double %10, 2.000000e+00
-  %12 = fmul double %i.v, %i.af
-  %13 = fmul double %i.v, %i.v
-  %14 = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 6 uses
-  %15 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %16 = getelementptr inbounds nuw i8, ptr %0, i64 1224
-  %17 = shufflevector <2 x double> %i.ak, <2 x double> %9, <2 x i32> <i32 1, i32 3>
-  %18 = fmul <2 x double> %17, splat (double 2.000000e+00) ; 2 uses
-  %i.al = tail call double @llvm.fmuladd.f64(double %i.u, double %i.u, double %12) ; 2 uses
-  %i.am = tail call double @llvm.fmuladd.f64(double %i.w, double %i.t, double %i.al)
-  %i.an = tail call double @llvm.fmuladd.f64(double %i.p, double %i.p, double %i.am)
-  %i.ao = tail call double @llvm.fmuladd.f64(double %i.t, double %i.t, double %i.al)
-  %19 = tail call double @llvm.fmuladd.f64(double %3, double %i.p, double %i.ao)
-  %i.ap = tail call double @llvm.fmuladd.f64(double %i.u, double %i.u, double %13)
+  %3 = shufflevector <2 x double> %i.o, <2 x double> poison, <2 x i32> zeroinitializer
+  %4 = fmul double %i.v, %i.af
+  %5 = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 6 uses
+  %6 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 1224
+  %8 = shufflevector <2 x double> %i.n, <2 x double> %i.ak, <2 x i32> <i32 1, i32 3>
+  %9 = shufflevector <2 x double> %i.n, <2 x double> <double poison, double 2.000000e+00>, <2 x i32> <i32 1, i32 3>
+  %10 = fmul <2 x double> %8, %9                  ; 2 uses
+  %11 = fneg double %i.p                          ; 3 uses
+  %12 = insertelement <2 x double> poison, double %11, i64 0
+  %13 = insertelement <2 x double> %12, double %i.p, i64 1
+  %14 = fmul <2 x double> %i.n, %13
+  %15 = shufflevector <2 x double> %14, <2 x double> poison, <2 x i32> <i32 1, i32 0>
+  %16 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.n, <2 x double> %3, <2 x double> %15)
+  %17 = fmul <2 x double> %16, splat (double 2.000000e+00) ; 2 uses
+  %18 = tail call double @llvm.fmuladd.f64(double %i.u, double %i.u, double %4) ; 2 uses
+  %i.al = tail call double @llvm.fmuladd.f64(double %i.w, double %i.t, double %18)
+  %i.am = tail call double @llvm.fmuladd.f64(double %i.p, double %i.p, double %i.al)
+  %i.an = tail call double @llvm.fmuladd.f64(double %i.t, double %i.t, double %18)
+  %i.ao = tail call double @llvm.fmuladd.f64(double %11, double %i.p, double %i.an)
+  %19 = extractelement <2 x double> %10, i64 0
+  %i.ap = tail call double @llvm.fmuladd.f64(double %i.u, double %i.u, double %19)
   %i.aq = tail call double @llvm.fmuladd.f64(double %i.w, double %i.t, double %i.ap)
-  %i.ar = tail call double @llvm.fmuladd.f64(double %3, double %i.p, double %i.aq)
-  %i.as = shufflevector <2 x double> %18, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %i.at = insertelement <2 x double> %i.as, double %19, i64 1
+  %i.ar = tail call double @llvm.fmuladd.f64(double %11, double %i.p, double %i.aq)
+  %i.as = shufflevector <2 x double> %17, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %i.at = insertelement <2 x double> %i.as, double %i.ao, i64 1
   %i.au = fmul <2 x double> %i.at, zeroinitializer
-  %i.av = insertelement <2 x double> poison, double %i.ar, i64 0
-  %20 = shufflevector <2 x double> %i.av, <2 x double> %18, <2 x i32> <i32 0, i32 2>
-  %21 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %20, <2 x double> zeroinitializer, <2 x double> %i.au) ; 2 uses
-  %i.aw = extractelement <2 x double> %21, i64 0
-  %i.ax = tail call double @llvm.fmuladd.f64(double %11, double 0.000000e+00, double %i.aw)
+  %i.av = insertelement <2 x double> %10, double %i.ar, i64 0
+  %20 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.av, <2 x double> zeroinitializer, <2 x double> %i.au) ; 2 uses
+  %21 = extractelement <2 x double> %20, i64 0
+  %i.aw = extractelement <2 x double> %17, i64 0
+  %i.ax = tail call double @llvm.fmuladd.f64(double %i.aw, double 0.000000e+00, double %21)
   %i.ay = fmul double %i.ae, 0.000000e+00
   %i.az = shufflevector <2 x double> %i.ak, <2 x double> %i.ac, <2 x i32> <i32 0, i32 3>
   %i.ba = fmul <2 x double> %i.az, splat (double 2.000000e+00)
-  %i.bb = shufflevector <2 x double> %21, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %i.bb = shufflevector <2 x double> %20, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %i.bc = insertelement <2 x double> %i.bb, double %i.ay, i64 1
   %i.bd = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ba, <2 x double> zeroinitializer, <2 x double> %i.bc) ; 2 uses
   %i.be = extractelement <2 x double> %i.bd, i64 1
-  %i.bf = tail call double @llvm.fmuladd.f64(double %i.an, double 0.000000e+00, double %i.be)
+  %i.bf = tail call double @llvm.fmuladd.f64(double %i.am, double 0.000000e+00, double %i.be)
   %i.bg = extractelement <2 x double> %i.bd, i64 0
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph40, %_ZN17colvarproxy_atoms17get_atom_velocityEi.exit
   %.01639 = phi i64 [ 0, %.lr.ph40 ], [ %i.bz, %_ZN17colvarproxy_atoms17get_atom_velocityEi.exit ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #28, !noalias !730
-  store ptr %14, ptr %2, align 8, !tbaa !17, !noalias !730
+  store ptr %5, ptr %2, align 8, !tbaa !17, !noalias !730
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #28, !noalias !730
   store i64 71, ptr %i.b, align 8, !tbaa !29, !noalias !730
   %i.bh = call noundef ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm(ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(8) %i.b, i64 noundef 0), !noalias !730 ; 3 uses
   store ptr %i.bh, ptr %2, align 8, !tbaa !47, !noalias !730
   %i.bi = load i64, ptr %i.b, align 8, !tbaa !29, !noalias !730 ; 3 uses
-  store i64 %i.bi, ptr %14, align 8, !tbaa !23, !noalias !730
+  store i64 %i.bi, ptr %5, align 8, !tbaa !23, !noalias !730
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(71) %i.bh, ptr noundef nonnull align 1 dereferenceable(71) @.str.119, i64 71, i1 false), !noalias !730
-  store i64 %i.bi, ptr %15, align 8, !tbaa !20, !noalias !730
+  store i64 %i.bi, ptr %6, align 8, !tbaa !20, !noalias !730
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bh, i64 %i.bi
   store i8 0, ptr %i.bj, align 1, !tbaa !23, !noalias !730
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #28, !noalias !730
@@ -295,11 +295,11 @@ bb.d:                                             ; preds = %.lr.ph40, %_ZN17col
 
 bb.e:                                             ; preds = %bb.d
   %i.bl = load ptr, ptr %2, align 8, !tbaa !47, !noalias !730 ; 2 uses
-  %i.bm = icmp eq ptr %i.bl, %14
+  %i.bm = icmp eq ptr %i.bl, %5
   br i1 %i.bm, label %_ZN17colvarproxy_atoms17get_atom_velocityEi.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i: ; preds = %bb.e
-  %i.bn = load i64, ptr %14, align 8, !tbaa !23, !noalias !730
+  %i.bn = load i64, ptr %5, align 8, !tbaa !23, !noalias !730
   %i.bo = add i64 %i.bn, 1
   call void @_ZdlPvm(ptr noundef %i.bl, i64 noundef %i.bo) #29, !noalias !730
   br label %_ZN17colvarproxy_atoms17get_atom_velocityEi.exit
@@ -308,11 +308,11 @@ bb.f:                                             ; preds = %bb.d
   %i.bp = landingpad { ptr, i32 }
           cleanup
   %i.bq = load ptr, ptr %2, align 8, !tbaa !47, !noalias !730 ; 2 uses
-  %i.br = icmp eq ptr %i.bq, %14
+  %i.br = icmp eq ptr %i.bq, %5
   br i1 %i.br, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit5.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i3.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i3.i: ; preds = %bb.f
-  %i.bs = load i64, ptr %14, align 8, !tbaa !23, !noalias !730
+  %i.bs = load i64, ptr %5, align 8, !tbaa !23, !noalias !730
   %i.bt = add i64 %i.bs, 1
   call void @_ZdlPvm(ptr noundef %i.bq, i64 noundef %i.bt) #29, !noalias !730
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit5.i
@@ -327,7 +327,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit5.i: ; preds = %bb
 
 _ZN17colvarproxy_atoms17get_atom_velocityEi.exit: ; preds = %bb.e, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #28, !noalias !730
-  %i.bu = load ptr, ptr %16, align 8, !tbaa !134
+  %i.bu = load ptr, ptr %7, align 8, !tbaa !134
   %i.bv = getelementptr inbounds nuw [8 x i8], ptr %i.bu, i64 %.01639 ; 3 uses
   store double %i.ax, ptr %i.bv, align 8, !tbaa !128
   %i.bw = load i64, ptr %i.r, align 8, !tbaa !127 ; 3 uses
