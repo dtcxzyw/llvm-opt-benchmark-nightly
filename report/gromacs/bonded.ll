@@ -203,6 +203,7 @@ bb.g:                                             ; preds = %_ZL9cos_anglePKfS0_
   %i.fe = fdiv float %i.eu, %i.em                 ; 2 uses
   %i.ff = fneg float %i.bk
   %i.fg = fmul float %i.fe, %i.ff
+  %10 = call float @llvm.fmuladd.f32(float %i.ew, float %i.bm, float %i.fg) ; 2 uses
   %i.fh = extractelement <2 x float> %i.bn, i64 0
   %i.fi = extractelement <2 x float> %i.bl, i64 0
   %i.fj = load <2 x float>, ptr %i.ey, align 4, !tbaa !17
@@ -241,7 +242,6 @@ bb.g:                                             ; preds = %_ZL9cos_anglePKfS0_
   %i.gm = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.gl, <2 x float> %i.bn, <2 x float> %i.gj) ; 3 uses
   %i.gn = load <2 x float>, ptr %i.fd, align 4, !tbaa !17
   %i.go = shufflevector <2 x float> %i.gm, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
-  %10 = call float @llvm.fmuladd.f32(float %i.ew, float %i.bm, float %i.fg) ; 2 uses
   %i.gp = insertelement <2 x float> %i.go, float %10, i64 0 ; 2 uses
   %i.gq = fadd <2 x float> %i.gp, %i.gn
   store <2 x float> %i.gq, ptr %i.fd, align 4, !tbaa !17

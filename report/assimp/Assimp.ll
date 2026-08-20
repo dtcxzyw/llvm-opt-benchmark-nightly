@@ -204,13 +204,13 @@ _ZN12aiMatrix3x3tIfEixEj.exit.2:                  ; preds = %bb.d, %bb.c, %bb.e
   %i.cz = fadd float %i.cy, 1.000000e+00
   store float %i.cz, ptr %i.an, align 4
   %i.da = fneg <2 x float> %i.ai
-  %3 = fneg float %i.bb
   %i.db = shufflevector <2 x float> %i.ce, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison> ; 2 uses
   %i.dc = shufflevector <4 x float> %i.au, <4 x float> %i.db, <2 x i32> <i32 0, i32 4>
   %i.dd = insertelement <2 x float> %i.ai, float %i.bl, i64 0
   %i.de = fmul <2 x float> %i.dc, %i.dd
   %i.df = fmul float %i.bq, %i.bb
   %i.dg = fmul float %i.ba, %i.bl
+  %3 = fneg float %i.bb
   %i.dh = fmul float %i.df, %3
   %i.di = tail call float @llvm.fmuladd.f32(float %i.dg, float %i.ba, float %i.ch)
   %i.dj = insertelement <2 x float> poison, float %i.dh, i64 0

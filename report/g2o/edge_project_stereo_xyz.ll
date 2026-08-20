@@ -203,13 +203,13 @@ bb.a:
   store double %i.dd, ptr %i.de, align 8, !tbaa !55
   %i.df = getelementptr inbounds nuw i8, ptr %0, i64 392 ; 8 uses
   %i.dg = load double, ptr %i.df, align 8, !tbaa !117 ; 2 uses
-  %1 = fneg double %i.dg
-  %2 = extractelement <2 x double> %i.by, i64 0   ; 2 uses
+  %1 = extractelement <2 x double> %i.by, i64 0   ; 2 uses
+  %2 = fneg double %i.dg
   %i.dh = fmul double %i.dg, %.sroa.059.8.vec.extract
   %foldExtExtBinop79 = fadd <2 x double> %i.bo, %i.bf
   %i.di = extractelement <2 x double> %foldExtExtBinop79, i64 0
-  %i.dj = fmul double %2, %i.dh
-  %i.dk = fmul double %i.di, %1
+  %i.dj = fmul double %1, %i.dh
+  %i.dk = fmul double %i.di, %2
   %i.dl = insertelement <2 x double> poison, double %i.dk, i64 0
   %i.dm = insertelement <2 x double> %i.dl, double %i.dj, i64 1
   %i.dn = fdiv <2 x double> %i.dm, %i.cp          ; 2 uses
@@ -250,7 +250,7 @@ bb.a:
   store double %i.em, ptr %i.en, align 8, !tbaa !55
   %i.eo = getelementptr inbounds nuw i8, ptr %0, i64 416 ; 6 uses
   %i.ep = load double, ptr %i.eo, align 8, !tbaa !57
-  %i.eq = fmul double %2, %i.ep
+  %i.eq = fmul double %1, %i.ep
   %i.er = fdiv double %i.eq, %i.ar
   %i.es = fsub double %i.ch, %i.er
   %i.et = getelementptr i8, ptr %i.az, i64 16

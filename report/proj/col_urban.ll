@@ -80,10 +80,10 @@ bb.c:                                             ; preds = %bb.a
   %i.ab = fdiv <2 x double> %i.y, %i.aa           ; 5 uses
   %i.ac = extractelement <2 x double> %i.ab, i64 0
   store <2 x double> %i.ab, ptr %i.a, align 8, !tbaa !48
-  %1 = tail call double @tan(double noundef %i.l) #7
-  %2 = extractelement <2 x double> %i.ab, i64 1   ; 2 uses
-  %3 = fmul double %2, 2.000000e+00
-  %i.ad = insertelement <2 x double> %i.ab, double %1, i64 1
+  %1 = extractelement <2 x double> %i.ab, i64 1   ; 2 uses
+  %2 = fmul double %1, 2.000000e+00
+  %3 = tail call double @tan(double noundef %i.l) #7
+  %i.ad = insertelement <2 x double> %i.ab, double %3, i64 1
   %i.ae = fadd double %i.ac, 1.000000e+00
   %i.af = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   store double %i.ae, ptr %i.af, align 8, !tbaa !49
@@ -92,14 +92,14 @@ bb.c:                                             ; preds = %bb.a
   %i.ai = insertelement <2 x double> %i.ah, double %i.u, i64 1
   %i.aj = fdiv <2 x double> %i.ag, %i.ai          ; 3 uses
   %i.ak = extractelement <2 x double> %i.aj, i64 0
-  %i.al = fmul double %i.ak, %3
+  %i.al = fmul double %i.ak, %2
   %i.am = insertelement <2 x double> %i.aj, double %i.al, i64 1
   %i.an = fdiv <2 x double> %i.ad, %i.am
   %i.ao = fadd <2 x double> %i.an, <double 1.000000e+00, double -0.000000e+00>
   store <2 x double> %i.ao, ptr %i.t, align 8, !tbaa !48
   %i.ap = extractelement <2 x double> %i.aj, i64 1
   %i.aq = fadd double %i.ap, 1.000000e+00
-  %i.ar = fmul double %i.aq, %2
+  %i.ar = fmul double %i.aq, %1
   %i.as = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   store double %i.ar, ptr %i.as, align 8, !tbaa !51
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 104

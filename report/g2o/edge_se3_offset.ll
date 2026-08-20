@@ -203,7 +203,6 @@ begin_hunk_0_@_ZN3g2o8internal22computeEdgeSE3GradientIN5Eigen3MapINS2_6MatrixId
   %i.hi = fadd double %i.hg, %i.hh
   %i.hj = fadd double %i.hf, %i.hi
   %i.hk = fadd <2 x double> %i.du, %i.he          ; 5 uses
-  %19 = fadd double %i.ea, %i.hj                  ; 3 uses
   %.sroa.0222.0.vec.extract = extractelement <2 x double> %i.eq, i64 0
   %i.hl = shufflevector <2 x double> %i.eq, <2 x double> poison, <2 x i32> zeroinitializer
   %i.hm = fmul <2 x double> %i.bz, %i.hl
@@ -229,8 +228,6 @@ begin_hunk_0_@_ZN3g2o8internal22computeEdgeSE3GradientIN5Eigen3MapINS2_6MatrixId
   %i.id = shufflevector <2 x double> %i.hk, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ie = fmul <2 x double> %i.bz, %i.id
   %i.if = shufflevector <2 x double> %i.hk, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %20 = insertelement <2 x double> poison, double %19, i64 0
-  %21 = shufflevector <2 x double> %20, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ig = fmul double %i.cl, %.sroa.26236.96.vec.extract
   %i.ih = load <2 x double>, ptr %i.ay, align 8, !tbaa !10, !noalias !169 ; 5 uses
   %i.ii = load <2 x double>, ptr %i.az, align 8, !tbaa !10, !noalias !169 ; 5 uses
@@ -289,7 +286,8 @@ begin_hunk_0_@_ZN3g2o8internal22computeEdgeSE3GradientIN5Eigen3MapINS2_6MatrixId
   %i.kj = extractelement <2 x double> %i.kf, i64 0
   %i.kk = fadd double %i.kj, %i.ki
   %i.kl = fadd <2 x double> %i.aq, %i.jy
-  %i.km = fadd double %i.ch, %i.kk
+  %19 = fadd double %i.ch, %i.kk
+  %i.km = fadd double %i.ea, %i.hj                ; 3 uses
   %i.kn = fmul <2 x double> %i.je, %i.hn
   %i.ko = fadd <2 x double> %i.hm, %i.kn
   %i.kp = fmul <2 x double> %i.jm, %i.hp
@@ -324,17 +322,19 @@ begin_hunk_0_@_ZN3g2o8internal22computeEdgeSE3GradientIN5Eigen3MapINS2_6MatrixId
   %i.lm = fadd double %i.ic, %i.ll                ; 18 uses
   %i.ln = fmul <2 x double> %i.je, %i.if
   %i.lo = fadd <2 x double> %i.ie, %i.ln
+  %20 = insertelement <2 x double> poison, double %i.km, i64 0
+  %21 = shufflevector <2 x double> %20, <2 x double> poison, <2 x i32> zeroinitializer
   %i.lp = fmul <2 x double> %i.jm, %21
   %i.lq = fadd <2 x double> %i.lp, %i.lo
   %i.lr = shufflevector <2 x double> %i.hk, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %i.ls = insertelement <2 x double> %i.lr, double %19, i64 1
+  %i.ls = insertelement <2 x double> %i.lr, double %i.km, i64 1
   %i.lt = fmul <2 x double> %i.ke, %i.ls          ; 2 uses
   %shift593 = shufflevector <2 x double> %i.lt, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop594 = fadd <2 x double> %shift593, %i.lt
   %i.lu = extractelement <2 x double> %foldExtExtBinop594, i64 0
   %i.lv = fadd double %i.ig, %i.lu
   %i.lw = fadd <2 x double> %i.kl, %i.lq
-  %i.lx = fadd double %i.km, %i.lv
+  %i.lx = fadd double %19, %i.lv
   %i.ly = load double, ptr %7, align 16, !tbaa !10, !noalias !180 ; 3 uses
   %i.lz = insertelement <2 x double> poison, double %i.ly, i64 0
   %i.ma = shufflevector <2 x double> %i.lz, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
@@ -423,7 +423,7 @@ begin_hunk_0_@_ZN3g2o8internal22computeEdgeSE3GradientIN5Eigen3MapINS2_6MatrixId
   %i.pf = fadd double %i.pd, %i.pe
   %i.pg = fadd double %i.pc, %i.pf
   %i.ph = fadd <2 x double> %i.hk, %i.pb          ; 2 uses
-  %i.pi = fadd double %19, %i.pg
+  %i.pi = fadd double %i.km, %i.pg
   %i.pj = fmul <2 x double> %i.kq, %i.ma
   %i.pk = fmul <2 x double> %i.la, %i.mf
   %i.pl = fadd <2 x double> %i.pj, %i.pk

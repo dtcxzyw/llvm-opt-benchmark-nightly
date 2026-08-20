@@ -201,12 +201,12 @@ bb.g:                                             ; preds = %bb.d
   %i.cr = extractelement <2 x double> %i.cq, i64 0
   %i.cs = extractelement <2 x double> %i.cq, i64 1
   %i.ct = sitofp i64 %i.at to double
-  %9 = uitofp nneg i64 %.sroa.speculated109 to double ; 2 uses
-  %10 = fadd double %i.cr, 8.800000e-01
-  %11 = fmul nnan double %i.ct, 8.800000e-01
-  %i.cu = insertelement <2 x double> poison, double %11, i64 0
-  %i.cv = insertelement <2 x double> %i.cu, double %10, i64 1
-  %i.cw = insertelement <2 x double> %i.cq, double %9, i64 0
+  %9 = fadd double %i.cr, 8.800000e-01
+  %10 = fmul nnan double %i.ct, 8.800000e-01
+  %11 = uitofp nneg i64 %.sroa.speculated109 to double ; 2 uses
+  %i.cu = insertelement <2 x double> poison, double %10, i64 0
+  %i.cv = insertelement <2 x double> %i.cu, double %9, i64 1
+  %i.cw = insertelement <2 x double> %i.cq, double %11, i64 0
   %i.cx = fdiv <2 x double> %i.cv, %i.cw          ; 2 uses
   %i.cy = extractelement <2 x double> %i.cx, i64 0 ; 2 uses
   %i.cz = extractelement <2 x double> %i.cx, i64 1 ; 2 uses
@@ -216,7 +216,7 @@ bb.g:                                             ; preds = %bb.d
   br label %._crit_edge.i.i78
 
 ._crit_edge.i.i78:                                ; preds = %bb.g, %._crit_edge
-  %.pre-phi = phi double [ %9, %bb.g ], [ %i.br, %._crit_edge ]
+  %.pre-phi = phi double [ %11, %bb.g ], [ %i.br, %._crit_edge ]
   %.063 = phi double [ %.sroa.speculated84, %bb.g ], [ %i.cj, %._crit_edge ]
   %.062 = phi double [ %i.db, %bb.g ], [ %.sroa.speculated89, %._crit_edge ]
   %i.dc = fmul double %.063, %.pre-phi
