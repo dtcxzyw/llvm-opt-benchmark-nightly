@@ -204,15 +204,15 @@ bb.c:                                             ; preds = %bb.a
 define hidden void @_ZNK6Assimp13ColladaParser24CalculateResultTransformERKSt6vectorINS_7Collada9TransformESaIS3_EE(ptr dead_on_unwind noalias nofree writable writeonly sret(%class.aiMatrix4x4t) align 4 captures(none) initializes((0, 64)) %0, ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(772) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %2) local_unnamed_addr #17 align 2 {
 bb.a:
   store float 1.000000e+00, ptr %0, align 4
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 3 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 3 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 20
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
   store float 1.000000e+00, ptr %i.b, align 4
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 40
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.c, i8 0, i64 16, i1 false)
   store float 1.000000e+00, ptr %i.d, align 4
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 3 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 44
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 60 ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.e, i8 0, i64 16, i1 false)
   store float 1.000000e+00, ptr %i.f, align 4
@@ -223,23 +223,14 @@ bb.a:
   br i1 %.not158, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 36 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 52 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
-  %.promoted = load float, ptr %0, align 1
-  %.promoted209 = load <2 x float>, ptr %i.a, align 1
-  %.promoted211 = load float, ptr %3, align 1
-  %.promoted213 = load float, ptr %i.j, align 1
-  %.promoted215 = load <2 x float>, ptr %i.b, align 1
-  %.promoted217 = load float, ptr %4, align 1
-  %.promoted219 = load float, ptr %i.k, align 1
-  %.promoted221 = load <2 x float>, ptr %5, align 1
-  %.promoted223 = load float, ptr %i.e, align 1
+  %.promoted = load <4 x float>, ptr %0, align 1
+  %.promoted209 = load <4 x float>, ptr %i.j, align 1
+  %.promoted211 = load <4 x float>, ptr %i.k, align 1
   %.promoted225 = load float, ptr %i.l, align 1
   %.promoted227 = load float, ptr %i.m, align 1
   %.promoted229 = load float, ptr %i.n, align 1
@@ -247,38 +238,26 @@ bb.a:
   br label %bb.b
 
 ._crit_edge.loopexit:                             ; preds = %bb.h
-  store float %32, ptr %0, align 1
-  store <2 x float> %31, ptr %i.a, align 1
-  store float %30, ptr %3, align 1
-  store float %i.lq, ptr %i.j, align 1
-  store <2 x float> %29, ptr %i.b, align 1
-  store float %i.lp, ptr %4, align 1
-  store float %i.lo, ptr %i.k, align 1
-  store <2 x float> %28, ptr %5, align 1
-  store float %i.ln, ptr %i.e, align 1
-  store float %27, ptr %i.l, align 1
-  store float %26, ptr %i.m, align 1
-  store float %25, ptr %i.n, align 1
-  store float %24, ptr %i.f, align 1
+  store <4 x float> %17, ptr %0, align 1
+  store <4 x float> %16, ptr %i.j, align 1
+  store <4 x float> %15, ptr %i.k, align 1
+  store float %i.lq, ptr %i.l, align 1
+  store float %i.lp, ptr %i.m, align 1
+  store float %i.lo, ptr %i.n, align 1
+  store float %i.ln, ptr %i.f, align 1
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
   ret void
 
 bb.b:                                             ; preds = %.lr.ph, %bb.h
-  %6 = phi float [ %.promoted231, %.lr.ph ], [ %24, %bb.h ]
-  %7 = phi float [ %.promoted229, %.lr.ph ], [ %25, %bb.h ]
-  %8 = phi float [ %.promoted227, %.lr.ph ], [ %26, %bb.h ]
-  %9 = phi float [ %.promoted225, %.lr.ph ], [ %27, %bb.h ]
-  %i.o = phi float [ %.promoted223, %.lr.ph ], [ %i.ln, %bb.h ]
-  %10 = phi <2 x float> [ %.promoted221, %.lr.ph ], [ %28, %bb.h ]
-  %i.p = phi float [ %.promoted219, %.lr.ph ], [ %i.lo, %bb.h ]
-  %i.q = phi float [ %.promoted217, %.lr.ph ], [ %i.lp, %bb.h ]
-  %11 = phi <2 x float> [ %.promoted215, %.lr.ph ], [ %29, %bb.h ]
-  %i.r = phi float [ %.promoted213, %.lr.ph ], [ %i.lq, %bb.h ]
-  %12 = phi float [ %.promoted211, %.lr.ph ], [ %30, %bb.h ]
-  %13 = phi <2 x float> [ %.promoted209, %.lr.ph ], [ %31, %bb.h ]
-  %14 = phi float [ %.promoted, %.lr.ph ], [ %32, %bb.h ]
+  %i.o = phi float [ %.promoted231, %.lr.ph ], [ %i.ln, %bb.h ]
+  %i.p = phi float [ %.promoted229, %.lr.ph ], [ %i.lo, %bb.h ]
+  %i.q = phi float [ %.promoted227, %.lr.ph ], [ %i.lp, %bb.h ]
+  %i.r = phi float [ %.promoted225, %.lr.ph ], [ %i.lq, %bb.h ]
+  %3 = phi <4 x float> [ %.promoted211, %.lr.ph ], [ %15, %bb.h ]
+  %4 = phi <4 x float> [ %.promoted209, %.lr.ph ], [ %16, %bb.h ]
+  %5 = phi <4 x float> [ %.promoted, %.lr.ph ], [ %17, %bb.h ]
   %.sroa.0149.0159 = phi ptr [ %i.g, %.lr.ph ], [ %i.lv, %bb.h ] ; 33 uses
   %i.s = phi <4 x float> [ <float 1.000000e+00, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00>, %.lr.ph ], [ %i.lr, %bb.h ] ; 21 uses
   %i.t = phi <4 x float> [ <float 0.000000e+00, float 1.000000e+00, float 0.000000e+00, float 0.000000e+00>, %.lr.ph ], [ %i.ls, %bb.h ] ; 21 uses
@@ -637,15 +616,15 @@ bb.g:                                             ; preds = %bb.b
   %i.lg = phi <4 x float> [ %i.lb, %bb.g ], [ %i.ib, %bb.f ], [ %i.hc, %bb.e ], [ %i.gc, %bb.d ], [ %i.dn, %_ZN10aiVector3tIfE9NormalizeEv.exit53 ] ; 5 uses
   %i.lh = phi <4 x float> [ %i.kg, %bb.g ], [ %i.hv, %bb.f ], [ %i.gq, %bb.e ], [ %i.fs, %bb.d ], [ %i.cy, %_ZN10aiVector3tIfE9NormalizeEv.exit53 ] ; 5 uses
   %i.li = phi <4 x float> [ %i.ju, %bb.g ], [ %i.hp, %bb.f ], [ %i.gn, %bb.e ], [ %i.fl, %bb.d ], [ %i.ct, %_ZN10aiVector3tIfE9NormalizeEv.exit53 ] ; 5 uses
-  %15 = extractelement <4 x float> %i.li, i64 3
-  %16 = shufflevector <4 x float> %i.lh, <4 x float> %i.lg, <2 x i32> <i32 3, i32 7>
-  %17 = extractelement <4 x float> %i.lf, i64 3
-  %18 = extractelement <4 x float> %i.li, i64 2
-  %19 = shufflevector <4 x float> %i.lh, <4 x float> %i.lg, <2 x i32> <i32 2, i32 6>
-  %20 = extractelement <4 x float> %i.lf, i64 2
-  %21 = extractelement <4 x float> %i.li, i64 1
-  %22 = shufflevector <4 x float> %i.lh, <4 x float> %i.lg, <2 x i32> <i32 1, i32 5>
-  %23 = extractelement <4 x float> %i.lf, i64 1
+  %6 = shufflevector <4 x float> %i.lh, <4 x float> %i.lg, <4 x i32> <i32 poison, i32 3, i32 7, i32 poison>
+  %7 = shufflevector <4 x float> %6, <4 x float> %i.li, <4 x i32> <i32 7, i32 1, i32 2, i32 poison>
+  %8 = shufflevector <4 x float> %7, <4 x float> %i.lf, <4 x i32> <i32 0, i32 1, i32 2, i32 7>
+  %9 = shufflevector <4 x float> %i.lh, <4 x float> %i.lg, <4 x i32> <i32 poison, i32 2, i32 6, i32 poison>
+  %10 = shufflevector <4 x float> %9, <4 x float> %i.li, <4 x i32> <i32 6, i32 1, i32 2, i32 poison>
+  %11 = shufflevector <4 x float> %10, <4 x float> %i.lf, <4 x i32> <i32 0, i32 1, i32 2, i32 6>
+  %12 = shufflevector <4 x float> %i.lh, <4 x float> %i.lg, <4 x i32> <i32 poison, i32 1, i32 5, i32 poison>
+  %13 = shufflevector <4 x float> %12, <4 x float> %i.li, <4 x i32> <i32 5, i32 1, i32 2, i32 poison>
+  %14 = shufflevector <4 x float> %13, <4 x float> %i.lf, <4 x i32> <i32 0, i32 1, i32 2, i32 5>
   %i.lj = extractelement <4 x float> %i.li, i64 0
   %i.lk = extractelement <4 x float> %i.lh, i64 0
   %i.ll = extractelement <4 x float> %i.lg, i64 0
@@ -653,19 +632,13 @@ bb.g:                                             ; preds = %bb.b
   br label %bb.h
 
 bb.h:                                             ; preds = %.sink.split, %bb.b
-  %24 = phi float [ %6, %bb.b ], [ %i.lm, %.sink.split ] ; 2 uses
-  %25 = phi float [ %7, %bb.b ], [ %i.ll, %.sink.split ] ; 2 uses
-  %26 = phi float [ %8, %bb.b ], [ %i.lk, %.sink.split ] ; 2 uses
-  %27 = phi float [ %9, %bb.b ], [ %i.lj, %.sink.split ] ; 2 uses
-  %i.ln = phi float [ %i.o, %bb.b ], [ %23, %.sink.split ] ; 2 uses
-  %28 = phi <2 x float> [ %10, %bb.b ], [ %22, %.sink.split ] ; 2 uses
-  %i.lo = phi float [ %i.p, %bb.b ], [ %21, %.sink.split ] ; 2 uses
-  %i.lp = phi float [ %i.q, %bb.b ], [ %20, %.sink.split ] ; 2 uses
-  %29 = phi <2 x float> [ %11, %bb.b ], [ %19, %.sink.split ] ; 2 uses
-  %i.lq = phi float [ %i.r, %bb.b ], [ %18, %.sink.split ] ; 2 uses
-  %30 = phi float [ %12, %bb.b ], [ %17, %.sink.split ] ; 2 uses
-  %31 = phi <2 x float> [ %13, %bb.b ], [ %16, %.sink.split ] ; 2 uses
-  %32 = phi float [ %14, %bb.b ], [ %15, %.sink.split ] ; 2 uses
+  %i.ln = phi float [ %i.o, %bb.b ], [ %i.lm, %.sink.split ] ; 2 uses
+  %i.lo = phi float [ %i.p, %bb.b ], [ %i.ll, %.sink.split ] ; 2 uses
+  %i.lp = phi float [ %i.q, %bb.b ], [ %i.lk, %.sink.split ] ; 2 uses
+  %i.lq = phi float [ %i.r, %bb.b ], [ %i.lj, %.sink.split ] ; 2 uses
+  %15 = phi <4 x float> [ %3, %bb.b ], [ %14, %.sink.split ] ; 2 uses
+  %16 = phi <4 x float> [ %4, %bb.b ], [ %11, %.sink.split ] ; 2 uses
+  %17 = phi <4 x float> [ %5, %bb.b ], [ %8, %.sink.split ] ; 2 uses
   %i.lr = phi <4 x float> [ %i.s, %bb.b ], [ %i.lf, %.sink.split ]
   %i.ls = phi <4 x float> [ %i.t, %bb.b ], [ %i.lg, %.sink.split ]
   %i.lt = phi <4 x float> [ %i.u, %bb.b ], [ %i.li, %.sink.split ]

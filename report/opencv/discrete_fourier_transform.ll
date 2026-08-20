@@ -90,11 +90,11 @@ bb.a:
   %28 = alloca %"class.cv::Mat", align 8          ; 7 uses
   %29 = alloca %"class.cv::Rect_", align 4        ; 7 uses
   %30 = alloca %"class.cv::Mat", align 8          ; 8 uses
-  %31 = alloca %"class.cv::Rect_", align 4        ; 7 uses
+  %31 = alloca %"class.cv::Rect_", align 16       ; 5 uses
   %32 = alloca %"class.cv::Mat", align 8          ; 8 uses
-  %33 = alloca %"class.cv::Rect_", align 4        ; 7 uses
+  %33 = alloca %"class.cv::Rect_", align 16       ; 5 uses
   %34 = alloca %"class.cv::Mat", align 8          ; 8 uses
-  %35 = alloca %"class.cv::Rect_", align 4        ; 7 uses
+  %35 = alloca %"class.cv::Rect_", align 16       ; 5 uses
   %36 = alloca %"class.cv::Mat", align 8          ; 8 uses
   %37 = alloca %"class.cv::Rect_", align 16       ; 5 uses
   %38 = alloca %"class.cv::Mat", align 8          ; 10 uses
@@ -497,16 +497,13 @@ bb.bj:                                            ; preds = %_ZNK2cv3MatclERKNS_
   call void @llvm.lifetime.end.p0(ptr nonnull %29) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %28) #12
   %i.jl = load <2 x i32>, ptr %i.je, align 8, !tbaa !80
-  %i.jm = sdiv <2 x i32> %i.jl, splat (i32 2)     ; 4 uses
-  %i.jn = shufflevector <2 x i32> %i.jm, <2 x i32> poison, <4 x i32> <i32 1, i32 0, i32 1, i32 0> ; 2 uses
+  %i.jm = sdiv <2 x i32> %i.jl, splat (i32 2)     ; 2 uses
+  %i.jn = shufflevector <2 x i32> %i.jm, <2 x i32> poison, <4 x i32> <i32 1, i32 0, i32 1, i32 0>
   call void @llvm.lifetime.start.p0(ptr nonnull %30) #12
   call void @llvm.lifetime.start.p0(ptr nonnull %31) #12
-  store i32 0, ptr %31, align 4, !tbaa !77
-  %51 = getelementptr inbounds nuw i8, ptr %31, i64 4
-  store i32 0, ptr %51, align 4, !tbaa !79
-  %52 = getelementptr inbounds nuw i8, ptr %31, i64 8
-  %53 = shufflevector <4 x i32> %i.jn, <4 x i32> poison, <2 x i32> <i32 0, i32 1> ; 2 uses
-  store <2 x i32> %53, ptr %52, align 4, !tbaa !80
+  %51 = shufflevector <2 x i32> %i.jm, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison> ; 3 uses
+  %52 = shufflevector <4 x i32> %51, <4 x i32> <i32 0, i32 0, i32 poison, i32 poison>, <4 x i32> <i32 4, i32 5, i32 1, i32 0>
+  store <4 x i32> %52, ptr %31, align 16, !tbaa !80
   invoke void @_ZN2cv3MatC1ERKS0_RKNS_5Rect_IiEE(ptr noundef nonnull align 8 dereferenceable(208) %30, ptr noundef nonnull align 8 dereferenceable(208) %24, ptr noundef nonnull align 4 dereferenceable(16) %31)
           to label %bb.bk unwind label %bb.cm
 
@@ -514,12 +511,8 @@ bb.bk:                                            ; preds = %bb.bj
   call void @llvm.lifetime.end.p0(ptr nonnull %31) #12
   call void @llvm.lifetime.start.p0(ptr nonnull %32) #12
   call void @llvm.lifetime.start.p0(ptr nonnull %33) #12
-  %54 = extractelement <2 x i32> %i.jm, i64 1
-  store i32 %54, ptr %33, align 4, !tbaa !77
-  %55 = getelementptr inbounds nuw i8, ptr %33, i64 4
-  store i32 0, ptr %55, align 4, !tbaa !79
-  %56 = getelementptr inbounds nuw i8, ptr %33, i64 8
-  store <2 x i32> %53, ptr %56, align 4, !tbaa !80
+  %53 = shufflevector <4 x i32> %51, <4 x i32> <i32 poison, i32 0, i32 poison, i32 poison>, <4 x i32> <i32 1, i32 5, i32 1, i32 0>
+  store <4 x i32> %53, ptr %33, align 16, !tbaa !80
   invoke void @_ZN2cv3MatC1ERKS0_RKNS_5Rect_IiEE(ptr noundef nonnull align 8 dereferenceable(208) %32, ptr noundef nonnull align 8 dereferenceable(208) %24, ptr noundef nonnull align 4 dereferenceable(16) %33)
           to label %bb.bl unwind label %bb.cn
 
@@ -527,12 +520,8 @@ bb.bl:                                            ; preds = %bb.bk
   call void @llvm.lifetime.end.p0(ptr nonnull %33) #12
   call void @llvm.lifetime.start.p0(ptr nonnull %34) #12
   call void @llvm.lifetime.start.p0(ptr nonnull %35) #12
-  store i32 0, ptr %35, align 4, !tbaa !77
-  %57 = getelementptr inbounds nuw i8, ptr %35, i64 4
-  %58 = extractelement <2 x i32> %i.jm, i64 0
-  store <2 x i32> %i.jm, ptr %57, align 4, !tbaa !80
-  %59 = getelementptr inbounds nuw i8, ptr %35, i64 12
-  store i32 %58, ptr %59, align 4, !tbaa !81
+  %54 = shufflevector <4 x i32> %51, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>, <4 x i32> <i32 4, i32 0, i32 1, i32 0>
+  store <4 x i32> %54, ptr %35, align 16, !tbaa !80
   invoke void @_ZN2cv3MatC1ERKS0_RKNS_5Rect_IiEE(ptr noundef nonnull align 8 dereferenceable(208) %34, ptr noundef nonnull align 8 dereferenceable(208) %24, ptr noundef nonnull align 4 dereferenceable(16) %35)
           to label %bb.bm unwind label %bb.co
 
@@ -935,7 +924,7 @@ bb.e:                                             ; preds = %bb.c
 bb.f:                                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #12
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %i.l = load i32, ptr %i.k, align 4, !tbaa !82
+  %i.l = load i32, ptr %i.k, align 4, !tbaa !81
   call void @_ZNK2cv3Mat7reshapeEiiPKi(ptr dead_on_unwind nonnull writable sret(%"class.cv::Mat") align 8 %2, ptr noundef nonnull align 8 dereferenceable(208) %1, i32 noundef 1, i32 noundef %i.l, ptr noundef null)
   %i.m = invoke noundef nonnull align 8 dereferenceable(208) ptr @_ZN2cv4Mat_IfEaSEONS_3MatE(ptr noundef nonnull align 8 dereferenceable(208) %0, ptr noundef nonnull align 8 dereferenceable(208) %2)
           to label %bb.g unwind label %bb.h
@@ -1057,7 +1046,7 @@ bb.e:                                             ; preds = %bb.c
 bb.f:                                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #12
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %i.l = load i32, ptr %i.k, align 4, !tbaa !82
+  %i.l = load i32, ptr %i.k, align 4, !tbaa !81
   call void @_ZNK2cv3Mat7reshapeEiiPKi(ptr dead_on_unwind nonnull writable sret(%"class.cv::Mat") align 8 %2, ptr noundef nonnull align 8 dereferenceable(208) %1, i32 noundef 1, i32 noundef %i.l, ptr noundef null)
   %i.m = invoke noundef nonnull align 8 dereferenceable(208) ptr @_ZN2cv3MataSEOS0_(ptr noundef nonnull align 8 dereferenceable(208) %0, ptr noundef nonnull align 8 dereferenceable(208) %2)
           to label %bb.g unwind label %bb.h       ; 0 uses
@@ -1196,6 +1185,5 @@ attributes #13 = { builtin nounwind }
 !78 = !{!"_ZTSN2cv5Rect_IiEE", !6, i64 0, !6, i64 4, !6, i64 8, !6, i64 12}
 !79 = !{!78, !6, i64 4}
 !80 = !{!6, !6, i64 0}
-!81 = !{!78, !6, i64 12}
-!82 = !{!48, !6, i64 4}
+!81 = !{!48, !6, i64 4}
 end_hunk_2

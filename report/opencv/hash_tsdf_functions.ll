@@ -204,20 +204,15 @@ bb.f:                                             ; preds = %_ZN2cv3_atERNS_3Mat
   %i.dq = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.dp, <4 x float> %i.df, <4 x float> %i.dn)
   %i.dr = shufflevector <12 x float> %i.dh, <12 x float> poison, <4 x i32> <i32 3, i32 7, i32 11, i32 poison>
   %i.ds = insertelement <4 x float> %i.dr, float 0.000000e+00, i64 3
-  %i.dt = fadd <4 x float> %i.ds, %i.dq           ; 3 uses
-  %i.du = load ptr, ptr %i.o, align 8, !tbaa !286 ; 8 uses
+  %i.dt = fadd <4 x float> %i.ds, %i.dq           ; 2 uses
+  %i.du = load ptr, ptr %i.o, align 8, !tbaa !286 ; 6 uses
   %i.dv = load ptr, ptr %i.p, align 8, !tbaa !298
   %.not.i.i77.i.i.i = icmp eq ptr %i.du, %i.dv
   br i1 %.not.i.i77.i.i.i, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %7 = shufflevector <4 x float> %i.dt, <4 x float> poison, <2 x i32> <i32 0, i32 1>
-  store <2 x float> %7, ptr %i.du, align 4, !tbaa !35
-  %8 = getelementptr inbounds nuw i8, ptr %i.du, i64 8
-  %9 = extractelement <4 x float> %i.dt, i64 2
-  store float %9, ptr %8, align 4, !tbaa !35
-  %10 = getelementptr inbounds nuw i8, ptr %i.du, i64 12
-  store float 0.000000e+00, ptr %10, align 4, !tbaa !35
+  %7 = insertelement <4 x float> %i.dt, float 0.000000e+00, i64 3
+  store <4 x float> %7, ptr %i.du, align 4, !tbaa !35
   %i.dw = getelementptr inbounds nuw i8, ptr %i.du, i64 16
   store ptr %i.dw, ptr %i.o, align 8, !tbaa !286
   br label %_ZNSt6vectorIN2cv3VecIfLi4EEESaIS2_EE9push_backEOS2_.exit.i.i.i
@@ -347,20 +342,15 @@ bb.l:                                             ; preds = %bb.k
   %i.gl = insertelement <4 x float> %i.gk, float %i.fs, i64 2
   %i.gm = insertelement <4 x float> <float poison, float -0.000000e+00, float poison, float poison>, float %.fca.1.extract5.i.i.i, i64 0
   %i.gn = shufflevector <4 x float> %i.gm, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
-  %i.go = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.gl, <4 x float> %i.gn, <4 x float> %i.gi) ; 3 uses
-  %i.gp = load ptr, ptr %i.t, align 8, !tbaa !286 ; 8 uses
+  %i.go = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.gl, <4 x float> %i.gn, <4 x float> %i.gi) ; 2 uses
+  %i.gp = load ptr, ptr %i.t, align 8, !tbaa !286 ; 6 uses
   %i.gq = load ptr, ptr %i.u, align 8, !tbaa !298
   %.not.i.i81.i.i.i = icmp eq ptr %i.gp, %i.gq
   br i1 %.not.i.i81.i.i.i, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %11 = shufflevector <4 x float> %i.go, <4 x float> poison, <2 x i32> <i32 0, i32 1>
-  store <2 x float> %11, ptr %i.gp, align 4, !tbaa !35
-  %12 = getelementptr inbounds nuw i8, ptr %i.gp, i64 8
-  %13 = extractelement <4 x float> %i.go, i64 2
-  store float %13, ptr %12, align 4, !tbaa !35
-  %14 = getelementptr inbounds nuw i8, ptr %i.gp, i64 12
-  store float 0.000000e+00, ptr %14, align 4, !tbaa !35
+  %8 = insertelement <4 x float> %i.go, float 0.000000e+00, i64 3
+  store <4 x float> %8, ptr %i.gp, align 4, !tbaa !35
   %i.gr = getelementptr inbounds nuw i8, ptr %i.gp, i64 16
   store ptr %i.gr, ptr %i.t, align 8, !tbaa !286
   br label %_ZNSt6vectorIN2cv3VecIfLi4EEESaIS2_EE9push_backEOS2_.exit83.i.i.i

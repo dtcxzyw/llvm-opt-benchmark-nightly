@@ -203,11 +203,11 @@ define hidden void @_Z8fftshiftRKN2cv3MatERS0_(ptr noundef nonnull align 8 deref
 bb.a:
   %2 = alloca %"class.cv::Mat", align 8           ; 7 uses
   %3 = alloca %"class.cv::Mat", align 8           ; 8 uses
-  %4 = alloca %"class.cv::Rect_", align 4         ; 6 uses
+  %4 = alloca %"class.cv::Rect_", align 16        ; 4 uses
   %5 = alloca %"class.cv::Mat", align 8           ; 8 uses
-  %6 = alloca %"class.cv::Rect_", align 4         ; 7 uses
+  %6 = alloca %"class.cv::Rect_", align 16        ; 5 uses
   %7 = alloca %"class.cv::Mat", align 8           ; 8 uses
-  %8 = alloca %"class.cv::Rect_", align 4         ; 7 uses
+  %8 = alloca %"class.cv::Rect_", align 16        ; 5 uses
   %9 = alloca %"class.cv::Mat", align 8           ; 8 uses
   %10 = alloca %"class.cv::Rect_", align 16       ; 5 uses
   %11 = alloca %"class.cv::Mat", align 8          ; 10 uses
@@ -227,26 +227,19 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #15
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.c = load <2 x i32>, ptr %i.b, align 8, !tbaa !56
-  %i.d = sdiv <2 x i32> %i.c, splat (i32 2)       ; 4 uses
-  %i.e = shufflevector <2 x i32> %i.d, <2 x i32> poison, <4 x i32> <i32 1, i32 0, i32 1, i32 0> ; 2 uses
+  %i.d = sdiv <2 x i32> %i.c, splat (i32 2)       ; 2 uses
+  %i.e = shufflevector <2 x i32> %i.d, <2 x i32> poison, <4 x i32> <i32 1, i32 0, i32 1, i32 0>
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #15
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #15
-  store i32 0, ptr %4, align 4, !tbaa !53
-  %18 = getelementptr inbounds nuw i8, ptr %4, i64 4
-  store i32 0, ptr %18, align 4, !tbaa !55
-  %19 = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %20 = extractelement <2 x i32> %i.d, i64 1
-  %21 = shufflevector <4 x i32> %i.e, <4 x i32> poison, <2 x i32> <i32 0, i32 1> ; 2 uses
-  store <2 x i32> %21, ptr %19, align 4, !tbaa !56
+  %18 = shufflevector <2 x i32> %i.d, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison> ; 3 uses
+  %19 = shufflevector <4 x i32> %18, <4 x i32> <i32 0, i32 0, i32 poison, i32 poison>, <4 x i32> <i32 4, i32 5, i32 1, i32 0>
+  store <4 x i32> %19, ptr %4, align 16, !tbaa !56
   call void @_ZN2cv3MatC1ERKS0_RKNS_5Rect_IiEE(ptr noundef nonnull align 8 dereferenceable(208) %3, ptr noundef nonnull align 8 dereferenceable(208) %1, ptr noundef nonnull align 4 dereferenceable(16) %4)
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #15
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #15
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #15
-  store i32 %20, ptr %6, align 4, !tbaa !53
-  %22 = getelementptr inbounds nuw i8, ptr %6, i64 4
-  store i32 0, ptr %22, align 4, !tbaa !55
-  %23 = getelementptr inbounds nuw i8, ptr %6, i64 8
-  store <2 x i32> %21, ptr %23, align 4, !tbaa !56
+  %20 = shufflevector <4 x i32> %18, <4 x i32> <i32 poison, i32 0, i32 poison, i32 poison>, <4 x i32> <i32 1, i32 5, i32 1, i32 0>
+  store <4 x i32> %20, ptr %6, align 16, !tbaa !56
   invoke void @_ZN2cv3MatC1ERKS0_RKNS_5Rect_IiEE(ptr noundef nonnull align 8 dereferenceable(208) %5, ptr noundef nonnull align 8 dereferenceable(208) %1, ptr noundef nonnull align 4 dereferenceable(16) %6)
           to label %bb.c unwind label %bb.m
 
@@ -254,12 +247,8 @@ bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #15
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #15
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #15
-  store i32 0, ptr %8, align 4, !tbaa !53
-  %24 = getelementptr inbounds nuw i8, ptr %8, i64 4
-  %25 = extractelement <2 x i32> %i.d, i64 0
-  store <2 x i32> %i.d, ptr %24, align 4, !tbaa !56
-  %26 = getelementptr inbounds nuw i8, ptr %8, i64 12
-  store i32 %25, ptr %26, align 4, !tbaa !86
+  %21 = shufflevector <4 x i32> %18, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>, <4 x i32> <i32 4, i32 0, i32 1, i32 0>
+  store <4 x i32> %21, ptr %8, align 16, !tbaa !56
   invoke void @_ZN2cv3MatC1ERKS0_RKNS_5Rect_IiEE(ptr noundef nonnull align 8 dereferenceable(208) %7, ptr noundef nonnull align 8 dereferenceable(208) %1, ptr noundef nonnull align 4 dereferenceable(16) %8)
           to label %bb.d unwind label %bb.n
 
@@ -468,10 +457,10 @@ bb.a:
   %.sroa.6.0.insert.shift23 = and i64 %1, -4294967296
   %.sroa.018.0.insert.ext19 = and i64 %1, 4294967295
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !87
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !86
   %i.c = sub nsw i32 %i.b, %.sroa.6.0.extract.trunc
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 12
-  %i.e = load i32, ptr %i.d, align 4, !tbaa !88
+  %i.e = load i32, ptr %i.d, align 4, !tbaa !87
   %i.f = sub nsw i32 %i.e, %.sroa.018.0.extract.trunc
   %.sroa.4.0.insert.ext = zext i32 %i.c to i64
   %.sroa.4.0.insert.shift = shl nuw i64 %.sroa.4.0.insert.ext, 32 ; 2 uses
@@ -655,7 +644,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 
 bb.j:                                             ; preds = %bb.i
   call void @_ZN2cv3MatC1Ev(ptr noundef nonnull align 8 dereferenceable(208) %i.f) #15
-  %i.ad = load ptr, ptr %10, align 8, !tbaa !70, !noalias !89 ; 2 uses
+  %i.ad = load ptr, ptr %10, align 8, !tbaa !70, !noalias !88 ; 2 uses
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !22
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 24
   %i.ag = load ptr, ptr %i.af, align 8
@@ -819,7 +808,7 @@ bb.v:                                             ; preds = %bb.u, %bb.t
 
 bb.w:                                             ; preds = %bb.v
   call void @_ZN2cv3MatC1Ev(ptr noundef nonnull align 8 dereferenceable(208) %i.ax) #15
-  %i.bv = load ptr, ptr %18, align 8, !tbaa !70, !noalias !92 ; 2 uses
+  %i.bv = load ptr, ptr %18, align 8, !tbaa !70, !noalias !91 ; 2 uses
   %i.bw = load ptr, ptr %i.bv, align 8, !tbaa !22
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 24
   %i.by = load ptr, ptr %i.bx, align 8
@@ -1169,7 +1158,7 @@ bb.e:                                             ; preds = %bb.c
 bb.f:                                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #15
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %i.l = load i32, ptr %i.k, align 4, !tbaa !95
+  %i.l = load i32, ptr %i.k, align 4, !tbaa !94
   call void @_ZNK2cv3Mat7reshapeEiiPKi(ptr dead_on_unwind nonnull writable sret(%"class.cv::Mat") align 8 %2, ptr noundef nonnull align 8 dereferenceable(208) %1, i32 noundef 1, i32 noundef %i.l, ptr noundef null)
   %i.m = invoke noundef nonnull align 8 dereferenceable(208) ptr @_ZN2cv3MataSEOS0_(ptr noundef nonnull align 8 dereferenceable(208) %0, ptr noundef nonnull align 8 dereferenceable(208) %2)
           to label %bb.g unwind label %bb.h       ; 0 uses
@@ -1333,14 +1322,13 @@ attributes #16 = { builtin nounwind }
 !83 = distinct !{!83, !84, !"_ZN2cv7Scalar_IdE3allEd: argument 0"}
 !84 = distinct !{!84, !"_ZN2cv7Scalar_IdE3allEd"}
 !85 = distinct !{null}
-!86 = !{!54, !6, i64 12}
-!87 = !{!63, !6, i64 8}
-!88 = !{!63, !6, i64 12}
-!89 = !{!90}
-!90 = distinct !{!90, !91, !"_ZNK2cv7MatExprcvNS_3MatEEv: argument 0"}
-!91 = distinct !{!91, !"_ZNK2cv7MatExprcvNS_3MatEEv"}
-!92 = !{!93}
-!93 = distinct !{!93, !94, !"_ZNK2cv7MatExprcvNS_3MatEEv: argument 0"}
-!94 = distinct !{!94, !"_ZNK2cv7MatExprcvNS_3MatEEv"}
-!95 = !{!63, !6, i64 4}
+!86 = !{!63, !6, i64 8}
+!87 = !{!63, !6, i64 12}
+!88 = !{!89}
+!89 = distinct !{!89, !90, !"_ZNK2cv7MatExprcvNS_3MatEEv: argument 0"}
+!90 = distinct !{!90, !"_ZNK2cv7MatExprcvNS_3MatEEv"}
+!91 = !{!92}
+!92 = distinct !{!92, !93, !"_ZNK2cv7MatExprcvNS_3MatEEv: argument 0"}
+!93 = distinct !{!93, !"_ZNK2cv7MatExprcvNS_3MatEEv"}
+!94 = !{!63, !6, i64 4}
 end_hunk_0

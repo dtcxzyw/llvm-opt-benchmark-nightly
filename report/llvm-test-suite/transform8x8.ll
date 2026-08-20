@@ -203,7 +203,7 @@ bb.ai:                                            ; preds = %bb.ag
   br label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai, %bb.ah
-  %i.kq = phi ptr [ %i.km, %bb.ai ], [ %.pre, %bb.ah ] ; 116 uses
+  %i.kq = phi ptr [ %i.km, %bb.ai ], [ %.pre, %bb.ah ] ; 114 uses
   %storemerge = phi i16 [ %i.kp, %bb.ai ], [ %i.kl, %bb.ah ]
   store i16 %storemerge, ptr @intrapred_luma8x8.PredPel, align 16, !tbaa !51
   %i.kr = getelementptr inbounds nuw i8, ptr %i.kq, i64 7376 ; 3 uses
@@ -376,44 +376,43 @@ bb.au:                                            ; preds = %bb.at
   %i.nu = shl nuw nsw i32 %i.nl, 1
   %i.nv = getelementptr inbounds nuw i8, ptr %i.kq, i64 7776
   %i.nw = getelementptr inbounds nuw i8, ptr %i.kq, i64 7762
+  %9 = getelementptr inbounds nuw i8, ptr %i.kq, i64 7792
   %i.nx = getelementptr inbounds nuw i8, ptr %i.kq, i64 7778
   %i.ny = getelementptr inbounds nuw i8, ptr %i.kq, i64 7764
+  %10 = getelementptr inbounds nuw i8, ptr %i.kq, i64 7794
   %i.nz = getelementptr inbounds nuw i8, ptr %i.kq, i64 7780
   %i.oa = getelementptr inbounds nuw i8, ptr %i.kq, i64 7766
-  %i.ob = getelementptr inbounds nuw i8, ptr %i.kq, i64 7824
-  %i.oc = getelementptr inbounds nuw i8, ptr %i.kq, i64 7768
-  %i.od = getelementptr inbounds nuw i8, ptr %i.kq, i64 7840
-  %i.oe = getelementptr inbounds nuw i8, ptr %i.kq, i64 7826
-  %i.of = getelementptr inbounds nuw i8, ptr %i.kq, i64 7812
+  %i.ob = getelementptr inbounds nuw i8, ptr %i.kq, i64 7796
+  %i.oc = getelementptr inbounds nuw i8, ptr %i.kq, i64 7782
+  %i.od = getelementptr inbounds nuw i8, ptr %i.kq, i64 7768
+  %i.oe = getelementptr inbounds nuw i8, ptr %i.kq, i64 7840
+  %i.of = getelementptr inbounds nuw i8, ptr %i.kq, i64 7784
   %i.og = getelementptr inbounds nuw i8, ptr %i.kq, i64 7770
   %i.oh = getelementptr inbounds nuw i8, ptr %i.kq, i64 7856
   %i.oi = getelementptr inbounds nuw i8, ptr %i.kq, i64 7842
   %i.oj = getelementptr inbounds nuw i8, ptr %i.kq, i64 7828
-  %i.ok = getelementptr inbounds nuw i8, ptr %i.kq, i64 7814
+  %i.ok = getelementptr inbounds nuw i8, ptr %i.kq, i64 7786
   %i.ol = getelementptr inbounds nuw i8, ptr %i.kq, i64 7772
   %i.om = getelementptr inbounds nuw i8, ptr %i.kq, i64 7872
   %i.on = getelementptr inbounds nuw i8, ptr %i.kq, i64 7844
   %i.oo = getelementptr inbounds nuw i8, ptr %i.kq, i64 7830
-  %i.op = getelementptr inbounds nuw i8, ptr %i.kq, i64 7816
+  %i.op = getelementptr inbounds nuw i8, ptr %i.kq, i64 7788
   %i.oq = getelementptr inbounds nuw i8, ptr %i.kq, i64 7774
   %i.or = getelementptr inbounds nuw i8, ptr %i.kq, i64 7874
   %i.os = getelementptr inbounds nuw i8, ptr %i.kq, i64 7846
   %i.ot = getelementptr inbounds nuw i8, ptr %i.kq, i64 7832
-  %9 = getelementptr inbounds nuw i8, ptr %i.kq, i64 7818
-  %i.ou = getelementptr inbounds nuw i8, ptr %i.kq, i64 7876
+  %i.ou = getelementptr inbounds nuw i8, ptr %i.kq, i64 7790
   %i.ov = getelementptr inbounds nuw i8, ptr %i.kq, i64 7848
   %i.ow = getelementptr inbounds nuw i8, ptr %i.kq, i64 7834
-  %10 = getelementptr inbounds nuw i8, ptr %i.kq, i64 7820
-  %11 = getelementptr inbounds nuw i8, ptr %i.kq, i64 7878
   %i.ox = getelementptr inbounds nuw i8, ptr %i.kq, i64 7836
-  %i.oy = getelementptr inbounds nuw i8, ptr %i.kq, i64 7822
-  %12 = getelementptr inbounds nuw i8, ptr %i.kq, i64 7882
-  %13 = load <8 x i16>, ptr getelementptr inbounds nuw (i8, ptr @intrapred_luma8x8.PredPel, i64 14), align 2, !tbaa !51
+  %i.oy = getelementptr inbounds nuw i8, ptr %i.kq, i64 7882
+  %11 = load <8 x i16>, ptr getelementptr inbounds nuw (i8, ptr @intrapred_luma8x8.PredPel, i64 14), align 2, !tbaa !51
+  %12 = load i16, ptr getelementptr inbounds nuw (i8, ptr @intrapred_luma8x8.PredPel, i64 16), align 16, !tbaa !51
   %i.oz = load <8 x i16>, ptr getelementptr inbounds nuw (i8, ptr @intrapred_luma8x8.PredPel, i64 16), align 16, !tbaa !51
   %i.pa = load i16, ptr getelementptr inbounds nuw (i8, ptr @intrapred_luma8x8.PredPel, i64 32), align 16, !tbaa !51
   %i.pb = load <8 x i16>, ptr getelementptr inbounds nuw (i8, ptr @intrapred_luma8x8.PredPel, i64 18), align 2, !tbaa !51
   %i.pc = load i16, ptr getelementptr inbounds nuw (i8, ptr @intrapred_luma8x8.PredPel, i64 30), align 2, !tbaa !51
-  %i.pd = zext <8 x i16> %13 to <8 x i32>         ; 3 uses
+  %i.pd = zext <8 x i16> %11 to <8 x i32>         ; 3 uses
   %i.pe = zext <8 x i16> %i.oz to <8 x i32>
   %i.pf = zext i16 %i.pa to i32
   %i.pg = zext <8 x i16> %i.pb to <8 x i32>
@@ -423,7 +422,7 @@ bb.au:                                            ; preds = %bb.at
   %i.pk = add nuw nsw <8 x i32> %i.pi, %i.pj
   %i.pl = add nuw nsw <8 x i32> %i.pk, %i.pg
   %i.pm = lshr <8 x i32> %i.pl, splat (i32 2)     ; 2 uses
-  %i.pn = trunc <8 x i32> %i.pm to <8 x i16>      ; 9 uses
+  %i.pn = trunc <8 x i32> %i.pm to <8 x i16>      ; 10 uses
   %i.po = extractelement <8 x i16> %i.pn, i64 0   ; 4 uses
   store i16 %i.po, ptr %i.oi, align 2, !tbaa !51
   store i16 %i.po, ptr %i.oj, align 4, !tbaa !51
@@ -433,27 +432,24 @@ bb.au:                                            ; preds = %bb.at
   store i16 %i.pp, ptr %i.om, align 8, !tbaa !51
   store i16 %i.pp, ptr %i.on, align 4, !tbaa !51
   store i16 %i.pp, ptr %i.oo, align 2, !tbaa !51
-  store i16 %i.pp, ptr %i.op, align 8, !tbaa !51
+  store i16 %i.pp, ptr %i.op, align 4, !tbaa !51
   store i16 %i.pp, ptr %i.oq, align 2, !tbaa !51
-  %i.pq = extractelement <8 x i16> %i.pn, i64 2   ; 4 uses
-  store i16 %i.pq, ptr %i.or, align 2, !tbaa !51
+  %i.pq = extractelement <8 x i16> %i.pn, i64 2   ; 3 uses
   store i16 %i.pq, ptr %i.os, align 2, !tbaa !51
   store i16 %i.pq, ptr %i.ot, align 8, !tbaa !51
-  store i16 %i.pq, ptr %9, align 2, !tbaa !51
-  %i.pr = extractelement <8 x i16> %i.pn, i64 3   ; 5 uses
-  store i16 %i.pr, ptr %i.ou, align 4, !tbaa !51
+  store i16 %i.pq, ptr %i.ou, align 2, !tbaa !51
+  %i.pr = extractelement <8 x i16> %i.pn, i64 3   ; 3 uses
   store i16 %i.pr, ptr %i.ow, align 2, !tbaa !51
-  store i16 %i.pr, ptr %10, align 4, !tbaa !51
-  %14 = extractelement <8 x i16> %i.pn, i64 4     ; 2 uses
-  store i16 %14, ptr %i.oy, align 2, !tbaa !51
+  %13 = extractelement <8 x i16> %i.pn, i64 4
+  %14 = shufflevector <8 x i16> %i.pn, <8 x i16> poison, <4 x i32> <i32 2, i32 3, i32 4, i32 5>
+  store <4 x i16> %14, ptr %i.or, align 2, !tbaa !51
   %i.ps = shufflevector <8 x i32> %i.pm, <8 x i32> poison, <2 x i32> <i32 4, i32 5>
-  %i.pt = trunc <2 x i32> %i.ps to <2 x i16>      ; 2 uses
-  store <2 x i16> %i.pt, ptr %11, align 2, !tbaa !51
+  %i.pt = trunc <2 x i32> %i.ps to <2 x i16>
   store <2 x i16> %i.pt, ptr %i.ox, align 4, !tbaa !51
   %i.pu = shufflevector <8 x i16> %i.pn, <8 x i16> poison, <4 x i32> <i32 3, i32 4, i32 5, i32 6>
   store <4 x i16> %i.pu, ptr %i.ov, align 8, !tbaa !51
   %i.pv = shufflevector <8 x i16> %i.pn, <8 x i16> poison, <2 x i32> <i32 6, i32 7>
-  store <2 x i16> %i.pv, ptr %12, align 2, !tbaa !51
+  store <2 x i16> %i.pv, ptr %i.oy, align 2, !tbaa !51
   store <8 x i16> %i.pn, ptr %i.oh, align 8, !tbaa !51
   %i.pw = mul nuw nsw i32 %i.pf, 3
   %i.px = add nuw nsw i32 %i.ph, 2
@@ -488,74 +484,75 @@ bb.au:                                            ; preds = %bb.at
   %i.qw = getelementptr inbounds nuw i8, ptr %i.kq, i64 8346
   %i.qx = getelementptr inbounds nuw i8, ptr %i.kq, i64 8286
   %i.qy = getelementptr inbounds nuw i8, ptr %i.kq, i64 8350
-  %15 = load <5 x i16>, ptr getelementptr inbounds nuw (i8, ptr @intrapred_luma8x8.PredPel, i64 8), align 8, !tbaa !51
-  %16 = load i16, ptr getelementptr inbounds nuw (i8, ptr @intrapred_luma8x8.PredPel, i64 8), align 8, !tbaa !51
-  %17 = zext <5 x i16> %15 to <5 x i32>           ; 6 uses
-  %18 = shufflevector <5 x i32> %17, <5 x i32> poison, <8 x i32> <i32 1, i32 2, i32 3, i32 4, i32 poison, i32 poison, i32 poison, i32 poison>
-  %19 = shufflevector <8 x i32> %i.pd, <8 x i32> poison, <8 x i32> <i32 2, i32 3, i32 4, i32 5, i32 poison, i32 poison, i32 poison, i32 poison>
-  %20 = shufflevector <8 x i32> %18, <8 x i32> %19, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
-  %21 = zext i16 %16 to i32                       ; 4 uses
-  %22 = shufflevector <5 x i32> %17, <5 x i32> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 poison, i32 poison, i32 poison>
-  %23 = shufflevector <8 x i32> %i.pd, <8 x i32> poison, <8 x i32> <i32 2, i32 3, i32 4, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %24 = shufflevector <8 x i32> %22, <8 x i32> %23, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 8, i32 9, i32 10>
-  %i.qz = add nuw nsw i32 %21, 2
+  %15 = load <4 x i16>, ptr getelementptr inbounds nuw (i8, ptr @intrapred_luma8x8.PredPel, i64 8), align 8, !tbaa !51
+  %16 = zext <4 x i16> %15 to <4 x i32>           ; 5 uses
+  %17 = extractelement <4 x i32> %16, i64 0       ; 4 uses
+  %i.qz = add nuw nsw i32 %17, 2
   %i.ra = add nuw nsw i32 %i.qz, %i.nn
   %i.rb = add nuw nsw i32 %i.ra, %i.nu
   %i.rc = lshr i32 %i.rb, 2
   %i.rd = trunc nuw i32 %i.rc to i16              ; 4 uses
   store i16 %i.rd, ptr %i.nv, align 8, !tbaa !51
   store i16 %i.rd, ptr %i.nw, align 2, !tbaa !51
-  %i.re = shl nuw nsw i32 %21, 1
+  %i.re = shl nuw nsw i32 %17, 1
   %i.rf = add nuw nsw i32 %i.np, %i.re
-  %i.rg = extractelement <5 x i32> %17, i64 1     ; 3 uses
+  %i.rg = extractelement <4 x i32> %16, i64 1     ; 3 uses
   %i.rh = add nuw nsw i32 %i.rf, %i.rg
   %i.ri = lshr i32 %i.rh, 2
-  %i.rj = trunc i32 %i.ri to i16                  ; 6 uses
+  %i.rj = trunc nuw i32 %i.ri to i16              ; 6 uses
+  store i16 %i.rj, ptr %9, align 8, !tbaa !51
   store i16 %i.rj, ptr %i.nx, align 2, !tbaa !51
   store i16 %i.rj, ptr %i.ny, align 4, !tbaa !51
   %i.rk = shl nuw nsw i32 %i.rg, 1                ; 2 uses
-  %i.rl = extractelement <5 x i32> %17, i64 2     ; 2 uses
+  %i.rl = extractelement <4 x i32> %16, i64 2     ; 2 uses
   %i.rm = add nuw nsw i32 %i.rl, 2                ; 3 uses
-  %i.rn = add nuw nsw i32 %i.rm, %21
+  %i.rn = add nuw nsw i32 %i.rm, %17
   %i.ro = add nuw nsw i32 %i.rn, %i.rk
   %i.rp = lshr i32 %i.ro, 2
-  %25 = trunc i32 %i.rp to i16                    ; 2 uses
-  store i16 %25, ptr %i.oa, align 2, !tbaa !51
-  %26 = shl nuw nsw i32 %i.rl, 1
-  %i.rq = extractelement <5 x i32> %17, i64 3     ; 2 uses
+  %18 = shl nuw nsw i32 %i.rl, 1
+  %19 = zext i16 %12 to i32                       ; 3 uses
+  %i.rq = extractelement <4 x i32> %16, i64 3     ; 2 uses
   %i.rr = add nuw nsw i32 %i.rq, 2                ; 2 uses
   %i.rs = add nuw nsw i32 %i.rr, %i.rg
-  %i.rt = add nuw nsw i32 %i.rs, %26
+  %i.rt = add nuw nsw i32 %i.rs, %18
   %i.ru = lshr i32 %i.rt, 2
-  %27 = trunc i32 %i.ru to i16                    ; 3 uses
-  store i16 %27, ptr %i.ob, align 8, !tbaa !51
-  store i16 %27, ptr %i.oc, align 8, !tbaa !51
-  %28 = shl nuw nsw i32 %i.rq, 1
-  %29 = add nuw nsw i32 %i.rm, %28
-  %30 = extractelement <5 x i32> %17, i64 4       ; 2 uses
-  %31 = add nuw nsw i32 %29, %30
-  %32 = lshr i32 %31, 2
-  %i.rv = trunc i32 %32 to i16                    ; 5 uses
+  %20 = shl nuw nsw i32 %i.rq, 1
+  %21 = add nuw nsw i32 %i.rm, %20
+  %22 = add nuw nsw i32 %21, %19
+  %23 = lshr i32 %22, 2
+  %24 = trunc i32 %i.rp to i16                    ; 4 uses
+  store i16 %24, ptr %10, align 2, !tbaa !51
+  store i16 %24, ptr %i.nz, align 4, !tbaa !51
+  store i16 %24, ptr %i.oa, align 2, !tbaa !51
+  %i.rv = trunc i32 %i.ru to i16                  ; 3 uses
+  store i16 %i.rv, ptr %i.oc, align 2, !tbaa !51
   store i16 %i.rv, ptr %i.od, align 8, !tbaa !51
-  store i16 %i.rv, ptr %i.oe, align 2, !tbaa !51
-  store i16 %i.rv, ptr %i.of, align 4, !tbaa !51
-  %33 = shufflevector <8 x i16> %i.pn, <8 x i16> poison, <8 x i32> <i32 poison, i32 poison, i32 poison, i32 0, i32 1, i32 2, i32 poison, i32 3>
-  %i.rw = insertelement <8 x i16> %33, i16 %25, i64 0
-  %i.rx = insertelement <8 x i16> %i.rw, i16 %27, i64 1
-  %i.ry = insertelement <8 x i16> %i.rx, i16 %i.rv, i64 2
-  %34 = insertelement <8 x i16> %i.ry, i16 %i.rj, i64 6
-  %35 = shufflevector <8 x i16> %34, <8 x i16> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 7, i32 0, i32 1>
-  store <16 x i16> %35, ptr %i.nz, align 4, !tbaa !51
-  store i16 %i.rv, ptr %i.og, align 2, !tbaa !51
-  %i.rz = shl nuw nsw i32 %30, 1
-  %i.sa = add nuw nsw i32 %i.qh, %21
+  %25 = trunc i32 %23 to i16                      ; 4 uses
+  store i16 %25, ptr %i.oe, align 8, !tbaa !51
+  %26 = shufflevector <8 x i16> %i.pn, <8 x i16> poison, <8 x i32> <i32 poison, i32 poison, i32 0, i32 1, i32 2, i32 3, i32 poison, i32 4>
+  %i.rw = insertelement <8 x i16> %26, i16 %i.rv, i64 0
+  %i.rx = insertelement <8 x i16> %i.rw, i16 %25, i64 1
+  %i.ry = insertelement <8 x i16> %i.rx, i16 %24, i64 6
+  %27 = shufflevector <8 x i16> %i.ry, <8 x i16> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 7, i32 0, i32 1>
+  store <16 x i16> %27, ptr %i.ob, align 4, !tbaa !51
+  store i16 %25, ptr %i.of, align 8, !tbaa !51
+  store i16 %25, ptr %i.og, align 2, !tbaa !51
+  %i.rz = shl nuw nsw i32 %19, 1
+  %i.sa = add nuw nsw i32 %i.qh, %17
   %i.sb = lshr i32 %i.sa, 1
   %i.sc = trunc nuw i32 %i.sb to i16              ; 3 uses
   store i16 %i.sc, ptr %i.qn, align 8, !tbaa !51
   store i16 %i.sc, ptr %i.qo, align 2, !tbaa !51
   store i16 %i.sc, ptr %i.qp, align 4, !tbaa !51
-  %i.sd = add nuw nsw <8 x i32> %24, splat (i32 1)
-  %i.se = add nuw nsw <8 x i32> %i.sd, %20
+  %28 = insertelement <8 x i32> poison, i32 %19, i64 0
+  %29 = shufflevector <8 x i32> %28, <8 x i32> %i.pd, <8 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 0, i32 10, i32 11, i32 12> ; 2 uses
+  %30 = shufflevector <4 x i32> %16, <4 x i32> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison> ; 2 uses
+  %31 = shufflevector <8 x i32> %30, <8 x i32> %29, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 12, i32 13, i32 14, i32 15>
+  %i.sd = add nuw nsw <8 x i32> %31, splat (i32 1)
+  %32 = shufflevector <8 x i32> %30, <8 x i32> %29, <8 x i32> <i32 1, i32 2, i32 3, i32 12, i32 poison, i32 poison, i32 poison, i32 poison>
+  %33 = shufflevector <8 x i32> %i.pd, <8 x i32> poison, <8 x i32> <i32 2, i32 3, i32 4, i32 5, i32 poison, i32 poison, i32 poison, i32 poison>
+  %34 = shufflevector <8 x i32> %32, <8 x i32> %33, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
+  %i.se = add nuw nsw <8 x i32> %i.sd, %34
   %i.sf = lshr <8 x i32> %i.se, splat (i32 1)     ; 2 uses
   %i.sg = trunc <8 x i32> %i.sf to <8 x i16>      ; 7 uses
   %i.sh = shufflevector <8 x i16> %i.sg, <8 x i16> poison, <2 x i32> <i32 0, i32 1> ; 2 uses
@@ -682,7 +679,7 @@ bb.au:                                            ; preds = %bb.at
   %i.vh = getelementptr inbounds nuw i8, ptr %i.kq, i64 8366
   store i16 %i.pr, ptr %i.vh, align 2, !tbaa !51
   %i.vi = getelementptr inbounds nuw i8, ptr %i.kq, i64 8398
-  store i16 %14, ptr %i.vi, align 2, !tbaa !51
+  store i16 %13, ptr %i.vi, align 2, !tbaa !51
   br label %bb.av
 
 bb.av:                                            ; preds = %bb.au, %bb.at

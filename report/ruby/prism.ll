@@ -204,12 +204,12 @@ bb.bm:                                            ; preds = %bb.bl
 context_push.exit343:                             ; preds = %bb.bl, %bb.bm
   tail call fastcc void @parser_lex(ptr noundef nonnull %0)
   %.sroa.0505.0.copyload = load i64, ptr %i.l, align 8
-  %i.kg = load <2 x ptr>, ptr %i.p, align 8, !tbaa !14 ; 5 uses
-  %i.kh = extractelement <2 x ptr> %i.kg, i64 0   ; 27 uses
+  %i.kg = load <2 x ptr>, ptr %i.p, align 8, !tbaa !14 ; 9 uses
+  %i.kh = extractelement <2 x ptr> %i.kg, i64 0   ; 23 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #27
   store i64 %.sroa.0505.0.copyload, ptr %11, align 8
   store ptr %i.kh, ptr %.sroa.4507.0..sroa_idx508, align 8, !tbaa !14
-  %i.ki = extractelement <2 x ptr> %i.kg, i64 1   ; 9 uses
+  %i.ki = extractelement <2 x ptr> %i.kg, i64 1   ; 5 uses
   %i.kj = getelementptr i8, ptr %i.ki, i64 -1     ; 9 uses
   store ptr %i.kj, ptr %.sroa.11.0..sroa_idx515, align 8, !tbaa !128
   %i.kk = load i8, ptr %i.z, align 1, !tbaa !43, !range !45, !noundef !46
@@ -283,7 +283,7 @@ bb.bu:                                            ; preds = %pm_parser_local_add
   %i.ln = load ptr, ptr %i.lm, align 8, !tbaa !257
   tail call void @free(ptr noundef %i.ll) #27
   store ptr %i.ln, ptr %i.y, align 8, !tbaa !253
-  %i.lo = tail call noalias dereferenceable_or_null(48) ptr @calloc(i64 noundef 1, i64 noundef 48) #30 ; 10 uses
+  %i.lo = tail call noalias dereferenceable_or_null(48) ptr @calloc(i64 noundef 1, i64 noundef 48) #30 ; 8 uses
   %i.lp = icmp eq ptr %i.lo, null
   br i1 %i.lp, label %bb.bv, label %pm_required_keyword_parameter_node_create.exit
 
@@ -302,15 +302,11 @@ pm_required_keyword_parameter_node_create.exit:   ; preds = %bb.bu
   %.sroa.3.0..sroa_idx.i348 = getelementptr inbounds nuw i8, ptr %i.lo, i64 4
   store i32 %i.lt, ptr %.sroa.3.0..sroa_idx.i348, align 4, !tbaa !7
   %.sroa.4.0..sroa_idx.i349 = getelementptr inbounds nuw i8, ptr %i.lo, i64 8
-  store ptr %i.kh, ptr %.sroa.4.0..sroa_idx.i349, align 8, !tbaa !14
-  %.sroa.5.0..sroa_idx.i350 = getelementptr inbounds nuw i8, ptr %i.lo, i64 16
-  store ptr %i.ki, ptr %.sroa.5.0..sroa_idx.i350, align 8, !tbaa !14
+  store <2 x ptr> %i.kg, ptr %.sroa.4.0..sroa_idx.i349, align 8, !tbaa !14
   %.sroa.6.0..sroa_idx.i351 = getelementptr inbounds nuw i8, ptr %i.lo, i64 24
   store i32 %i.lu, ptr %.sroa.6.0..sroa_idx.i351, align 8, !tbaa !7
   %.sroa.8.0..sroa_idx.i352 = getelementptr inbounds nuw i8, ptr %i.lo, i64 32
-  store ptr %i.kh, ptr %.sroa.8.0..sroa_idx.i352, align 8, !tbaa !14
-  %.sroa.9.0..sroa_idx.i353 = getelementptr inbounds nuw i8, ptr %i.lo, i64 40
-  store ptr %i.ki, ptr %.sroa.9.0..sroa_idx.i353, align 8, !tbaa !14
+  store <2 x ptr> %i.kg, ptr %.sroa.8.0..sroa_idx.i352, align 8, !tbaa !14
   br i1 %i.lf, label %.thread.sink.split, label %.thread
 
 bb.bw:                                            ; preds = %pm_parser_local_add_token.exit346, %pm_parser_local_add_token.exit346
@@ -327,7 +323,7 @@ bb.bw:                                            ; preds = %pm_parser_local_add
   br label %.critedge245.thread
 
 bb.bx:                                            ; preds = %bb.bw
-  %i.ly = tail call noalias dereferenceable_or_null(48) ptr @calloc(i64 noundef 1, i64 noundef 48) #30 ; 10 uses
+  %i.ly = tail call noalias dereferenceable_or_null(48) ptr @calloc(i64 noundef 1, i64 noundef 48) #30 ; 8 uses
   %i.lz = icmp eq ptr %i.ly, null
   br i1 %i.lz, label %bb.by, label %pm_required_keyword_parameter_node_create.exit364
 
@@ -346,15 +342,11 @@ pm_required_keyword_parameter_node_create.exit364: ; preds = %bb.bx
   %.sroa.3.0..sroa_idx.i358 = getelementptr inbounds nuw i8, ptr %i.ly, i64 4
   store i32 %i.md, ptr %.sroa.3.0..sroa_idx.i358, align 4, !tbaa !7
   %.sroa.4.0..sroa_idx.i359 = getelementptr inbounds nuw i8, ptr %i.ly, i64 8
-  store ptr %i.kh, ptr %.sroa.4.0..sroa_idx.i359, align 8, !tbaa !14
-  %.sroa.5.0..sroa_idx.i360 = getelementptr inbounds nuw i8, ptr %i.ly, i64 16
-  store ptr %i.ki, ptr %.sroa.5.0..sroa_idx.i360, align 8, !tbaa !14
+  store <2 x ptr> %i.kg, ptr %.sroa.4.0..sroa_idx.i359, align 8, !tbaa !14
   %.sroa.6.0..sroa_idx.i361 = getelementptr inbounds nuw i8, ptr %i.ly, i64 24
   store i32 %i.me, ptr %.sroa.6.0..sroa_idx.i361, align 8, !tbaa !7
   %.sroa.8.0..sroa_idx.i362 = getelementptr inbounds nuw i8, ptr %i.ly, i64 32
-  store ptr %i.kh, ptr %.sroa.8.0..sroa_idx.i362, align 8, !tbaa !14
-  %.sroa.9.0..sroa_idx.i363 = getelementptr inbounds nuw i8, ptr %i.ly, i64 40
-  store ptr %i.ki, ptr %.sroa.9.0..sroa_idx.i363, align 8, !tbaa !14
+  store <2 x ptr> %i.kg, ptr %.sroa.8.0..sroa_idx.i362, align 8, !tbaa !14
   br i1 %i.lf, label %.thread.sink.split, label %.thread
 
 bb.bz:                                            ; preds = %pm_parser_local_add_token.exit346

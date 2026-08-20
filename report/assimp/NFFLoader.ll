@@ -205,7 +205,7 @@ _ZNSt6vectorI9aiColor4tIfESaIS1_EE9push_backERKS1_.exit: ; preds = %_ZNSt6vector
   %.sroa.142657.1 = phi ptr [ %.sroa.142657.03959, %_ZNSt6vectorI10aiVector3tIfESaIS1_EE9push_backERKS1_.exit ], [ %.sroa.142657.1.be, %_ZNSt6vectorI9aiColor4tIfESaIS1_EE9push_backERKS1_.exit.backedge ] ; 15 uses
   %.sroa.02650.3 = phi ptr [ %.sroa.02650.03960, %_ZNSt6vectorI10aiVector3tIfESaIS1_EE9push_backERKS1_.exit ], [ %.sroa.02650.3.be, %_ZNSt6vectorI9aiColor4tIfESaIS1_EE9push_backERKS1_.exit.backedge ] ; 26 uses
   %.sroa.252701.3 = phi ptr [ %.sroa.252701.03964, %_ZNSt6vectorI10aiVector3tIfESaIS1_EE9push_backERKS1_.exit ], [ %.sroa.252701.3.be, %_ZNSt6vectorI9aiColor4tIfESaIS1_EE9push_backERKS1_.exit.backedge ] ; 25 uses
-  %.sroa.142695.1 = phi ptr [ %.sroa.142695.03965, %_ZNSt6vectorI10aiVector3tIfESaIS1_EE9push_backERKS1_.exit ], [ %.sroa.142695.1.be, %_ZNSt6vectorI9aiColor4tIfESaIS1_EE9push_backERKS1_.exit.backedge ] ; 16 uses
+  %.sroa.142695.1 = phi ptr [ %.sroa.142695.03965, %_ZNSt6vectorI10aiVector3tIfESaIS1_EE9push_backERKS1_.exit ], [ %.sroa.142695.1.be, %_ZNSt6vectorI9aiColor4tIfESaIS1_EE9push_backERKS1_.exit.backedge ] ; 14 uses
   %.sroa.02688.3 = phi ptr [ %.sroa.02688.03966, %_ZNSt6vectorI10aiVector3tIfESaIS1_EE9push_backERKS1_.exit ], [ %.sroa.02688.3.be, %_ZNSt6vectorI9aiColor4tIfESaIS1_EE9push_backERKS1_.exit.backedge ] ; 28 uses
   %.1701 = phi i1 [ %.07003967, %_ZNSt6vectorI10aiVector3tIfESaIS1_EE9push_backERKS1_.exit ], [ %.1701.be, %_ZNSt6vectorI9aiColor4tIfESaIS1_EE9push_backERKS1_.exit.backedge ] ; 8 uses
   %.1698 = phi i1 [ %.06973968, %_ZNSt6vectorI10aiVector3tIfESaIS1_EE9push_backERKS1_.exit ], [ %.1698.be, %_ZNSt6vectorI9aiColor4tIfESaIS1_EE9push_backERKS1_.exit.backedge ] ; 8 uses
@@ -337,18 +337,13 @@ _ZN6Assimp9strtoul16EPKcPS1_.exit:                ; preds = %bb.ec
   %i.tg = insertelement <4 x float> %i.tf, float %i.td, i64 1
   %i.th = insertelement <4 x float> <float poison, float poison, float poison, float 1.000000e+00>, float %i.ta, i64 2
   %i.ti = shufflevector <4 x float> %i.tg, <4 x float> %i.th, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  %i.tj = fdiv <4 x float> %i.ti, <float 2.550000e+02, float 2.550000e+02, float 2.550000e+02, float 1.000000e+00> ; 3 uses
+  %i.tj = fdiv <4 x float> %i.ti, <float 2.550000e+02, float 2.550000e+02, float 2.550000e+02, float 1.000000e+00> ; 2 uses
   %.not.i1063 = icmp eq ptr %.sroa.142695.1, %.sroa.252701.3
   br i1 %.not.i1063, label %bb.eg, label %bb.ef
 
 bb.ef:                                            ; preds = %_ZN6Assimp9strtoul16EPKcPS1_.exit
-  %46 = shufflevector <4 x float> %i.tj, <4 x float> poison, <2 x i32> <i32 0, i32 1>
-  store <2 x float> %46, ptr %.sroa.142695.1, align 4
-  %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.142695.1, i64 8
-  %47 = extractelement <4 x float> %i.tj, i64 2
-  store float %47, ptr %.sroa.8.0..sroa_idx, align 4
-  %.sroa.92630.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.142695.1, i64 12
-  store float 1.000000e+00, ptr %.sroa.92630.0..sroa_idx, align 4
+  %46 = insertelement <4 x float> %i.tj, float 1.000000e+00, i64 3
+  store <4 x float> %46, ptr %.sroa.142695.1, align 4
   %i.tk = getelementptr inbounds nuw i8, ptr %.sroa.142695.1, i64 16
   br label %_ZNSt6vectorI9aiColor4tIfESaIS1_EE9push_backERKS1_.exit.backedge
 
@@ -751,13 +746,13 @@ _ZN12aiMatrix3x3tIfEixEj.exit.2:                  ; preds = %bb.d, %bb.c, %bb.e
   %i.cz = fadd float %i.cy, 1.000000e+00
   store float %i.cz, ptr %i.an, align 4
   %i.da = fneg <2 x float> %i.ai
-  %3 = fneg float %i.bb
   %i.db = shufflevector <2 x float> %i.ce, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison> ; 2 uses
   %i.dc = shufflevector <4 x float> %i.au, <4 x float> %i.db, <2 x i32> <i32 0, i32 4>
   %i.dd = insertelement <2 x float> %i.ai, float %i.bl, i64 0
   %i.de = fmul <2 x float> %i.dc, %i.dd
   %i.df = fmul float %i.bq, %i.bb
   %i.dg = fmul float %i.ba, %i.bl
+  %3 = fneg float %i.bb
   %i.dh = fmul float %i.df, %3
   %i.di = tail call float @llvm.fmuladd.f32(float %i.dg, float %i.ba, float %i.ch)
   %i.dj = insertelement <2 x float> poison, float %i.dh, i64 0
