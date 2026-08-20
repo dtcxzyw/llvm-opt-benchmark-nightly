@@ -1,7 +1,7 @@
 inline.NumInlined: 42
 inline.NumDeleted: 9
-loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@Curl_dnscache_get:bb.a
   %.not.i15 = icmp eq ptr %.0.i, null
   br i1 %.not.i15, label %fetch_addr.exit.thread.thread, label %bb.f
@@ -203,8 +203,8 @@ bb.a:
   br i1 %.not4.i, label %num_addresses.exit.thread, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.a, %.lr.ph.i
-  %indvars.iv77 = phi i64 [ %indvars.iv.next78, %.lr.ph.i ], [ 0, %bb.a ] ; 2 uses
-  %.06.i = phi i32 [ %i.d, %.lr.ph.i ], [ 0, %bb.a ] ; 4 uses
+  %indvars.iv77 = phi i64 [ %indvars.iv.next78, %.lr.ph.i ], [ 0, %bb.a ] ; 13 uses
+  %.06.i = phi i32 [ %i.d, %.lr.ph.i ], [ 0, %bb.a ] ; 3 uses
   %.035.i = phi ptr [ %i.c, %.lr.ph.i ], [ %i.a, %bb.a ]
   %i.b = getelementptr inbounds nuw i8, ptr %.035.i, i64 40
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !104  ; 2 uses
@@ -256,21 +256,20 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e,
   %i.o = load ptr, ptr @Curl_cmalloc, align 8, !tbaa !108
   %i.p = zext i32 %i.d to i64                     ; 3 uses
   %i.q = shl nuw nsw i64 %i.p, 3
-  %i.r = tail call ptr %i.o(i64 noundef %i.q) #6  ; 17 uses
+  %i.r = tail call ptr %i.o(i64 noundef %i.q) #6  ; 21 uses
   %.not65 = icmp eq ptr %i.r, null
   br i1 %.not65, label %num_addresses.exit.thread, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %i.s = load ptr, ptr %1, align 8, !tbaa !103
   store ptr %i.s, ptr %i.r, align 8, !tbaa !103
-  %2 = zext i32 %.06.i to i64                     ; 4 uses
-  %i.t = add nsw i64 %i.p, -2                     ; 2 uses
-  %xtraiter = and i64 %2, 3                       ; 3 uses
+  %i.t = add i64 %indvars.iv77, -1                ; 2 uses
+  %xtraiter = and i64 %indvars.iv77, 3            ; 3 uses
   %i.u = icmp ult i64 %i.t, 3
   br i1 %i.u, label %.epil.preheader, label %.new
 
 .new:                                             ; preds = %bb.i
-  %unroll_iter = and i64 %2, 4294967292
+  %unroll_iter = and i64 %indvars.iv77, -4
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.j, %.new
@@ -333,40 +332,81 @@ bb.k:                                             ; preds = %bb.k, %.epil.prehea
 .epilog-lcssa:                                    ; preds = %bb.k, %.unr-lcssa
   %i.av = shl nuw nsw i64 %i.p, 2                 ; 2 uses
   %i.aw = load ptr, ptr @Curl_cmalloc, align 8, !tbaa !108
-  %i.ax = tail call ptr %i.aw(i64 noundef %i.av) #6 ; 4 uses
+  %i.ax = tail call ptr %i.aw(i64 noundef %i.av) #6 ; 6 uses
   %.not66 = icmp eq ptr %i.ax, null
   br i1 %.not66, label %bb.n, label %bb.l
 
 bb.l:                                             ; preds = %.epilog-lcssa
   %i.ay = tail call i32 @Curl_rand_bytes(ptr noundef %0, ptr noundef nonnull %i.ax, i64 noundef %i.av) #6
   %i.az = icmp eq i32 %i.ay, 0
-  br i1 %i.az, label %.preheader71, label %bb.m
+  br i1 %i.az, label %.preheader71.preheader, label %bb.m
 
-.preheader71:                                     ; preds = %bb.l, %.preheader71
-  %indvars.iv79 = phi i64 [ %indvars.iv.next80.a, %.preheader71 ], [ %indvars.iv77, %bb.l ] ; 5 uses
-  %i.ba = getelementptr inbounds nuw [4 x i8], ptr %i.ax, i64 %indvars.iv79
+.preheader71.preheader:                           ; preds = %bb.l
+  %smin = tail call i64 @llvm.smin.i64(i64 %indvars.iv77, i64 1)
+  %2 = sub i64 %i.p, %smin
+  %xtraiter95 = and i64 %2, 1
+  %lcmp.mod96.not = icmp eq i64 %xtraiter95, 0
+  br i1 %lcmp.mod96.not, label %.preheader71.prol.loopexit, label %.preheader71.prol
+
+.preheader71.prol:                                ; preds = %.preheader71.preheader
+  %3 = getelementptr inbounds nuw [4 x i8], ptr %i.ax, i64 %indvars.iv77
+  %4 = load i32, ptr %3, align 4, !tbaa !85
+  %5 = trunc i64 %indvars.iv77 to i32
+  %6 = add i32 %5, 1
+  %7 = urem i32 %4, %6
+  %8 = zext nneg i32 %7 to i64
+  %9 = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %8 ; 2 uses
+  %10 = load ptr, ptr %9, align 8, !tbaa !103
+  %11 = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %indvars.iv77 ; 2 uses
+  %12 = load ptr, ptr %11, align 8, !tbaa !103
+  store ptr %12, ptr %9, align 8, !tbaa !103
+  store ptr %10, ptr %11, align 8, !tbaa !103
+  %indvars.iv.next80.prol = add nsw i64 %indvars.iv77, -1
+  br label %.preheader71.prol.loopexit
+
+.preheader71.prol.loopexit:                       ; preds = %.preheader71.prol, %.preheader71.preheader
+  %indvars.iv79.unr = phi i64 [ %indvars.iv77, %.preheader71.preheader ], [ %indvars.iv.next80.prol, %.preheader71.prol ]
+  %13 = icmp slt i64 %indvars.iv77, 2
+  br i1 %13, label %.preheader.preheader, label %.preheader71
+
+.preheader71:                                     ; preds = %.preheader71.prol.loopexit, %.preheader71
+  %indvars.iv79 = phi i64 [ %indvars.iv.next80.a, %.preheader71 ], [ %indvars.iv79.unr, %.preheader71.prol.loopexit ] ; 6 uses
+  %14 = getelementptr inbounds nuw [4 x i8], ptr %i.ax, i64 %indvars.iv79
+  %15 = load i32, ptr %14, align 4, !tbaa !85
+  %16 = trunc i64 %indvars.iv79 to i32
+  %17 = add i32 %16, 1
+  %18 = urem i32 %15, %17
+  %19 = zext nneg i32 %18 to i64
+  %20 = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %19 ; 2 uses
+  %21 = load ptr, ptr %20, align 8, !tbaa !103
+  %22 = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %indvars.iv79 ; 2 uses
+  %23 = load ptr, ptr %22, align 8, !tbaa !103
+  store ptr %23, ptr %20, align 8, !tbaa !103
+  store ptr %21, ptr %22, align 8, !tbaa !103
+  %indvars.iv.next80 = add nsw i64 %indvars.iv79, -1 ; 3 uses
+  %i.ba = getelementptr inbounds nuw [4 x i8], ptr %i.ax, i64 %indvars.iv.next80
   %i.bb = load i32, ptr %i.ba, align 4, !tbaa !85
-  %i.bc = trunc i64 %indvars.iv79 to i32
+  %i.bc = trunc i64 %indvars.iv.next80 to i32
   %i.bd = add i32 %i.bc, 1
   %i.be = urem i32 %i.bb, %i.bd
   %i.bf = zext nneg i32 %i.be to i64
   %i.bg = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %i.bf ; 2 uses
   %i.bh = load ptr, ptr %i.bg, align 8, !tbaa !103
-  %i.bi = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %indvars.iv79 ; 2 uses
+  %i.bi = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %indvars.iv.next80 ; 2 uses
   %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !103
   store ptr %i.bj, ptr %i.bg, align 8, !tbaa !103
   store ptr %i.bh, ptr %i.bi, align 8, !tbaa !103
-  %indvars.iv.next80.a = add nsw i64 %indvars.iv79, -1
-  %i.bk = icmp sgt i64 %indvars.iv79, 1
+  %indvars.iv.next80.a = add nsw i64 %indvars.iv79, -2
+  %i.bk = icmp sgt i64 %indvars.iv79, 2
   br i1 %i.bk, label %.preheader71, label %.preheader.preheader, !llvm.loop !112
 
-.preheader.preheader:                             ; preds = %.preheader71
-  %xtraiter96 = and i64 %2, 3                     ; 3 uses
+.preheader.preheader:                             ; preds = %.preheader71, %.preheader71.prol.loopexit
+  %xtraiter96 = and i64 %indvars.iv77, 3          ; 3 uses
   %i.bl = icmp ult i64 %i.t, 3
   br i1 %i.bl, label %.preheader.epil.preheader, label %.preheader.preheader.new
 
 .preheader.preheader.new:                         ; preds = %.preheader.preheader
-  %unroll_iter101 = and i64 %2, 4294967292
+  %unroll_iter101 = and i64 %indvars.iv77, -4
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader, %.preheader.preheader.new
@@ -768,6 +808,9 @@ declare i64 @llvm.umin.i64(i64, i64) #4
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smin.i64(i64, i64) #4
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %.0 = phi ptr [ %i.d, %bb.b ], [ null, %bb.a ]  ; 11 uses
+  %.0 = phi ptr [ %i.d, %bb.b ], [ null, %bb.a ]  ; 14 uses
   br i1 %i.a, label %bb.d, label %bb.h
 
 bb.d:                                             ; preds = %bb.c
@@ -249,37 +249,45 @@ bb.h:                                             ; preds = %bb.g, %bb.c
   br i1 %.not121, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.h
+  %6 = zext nneg i32 %spec.store.select to i64    ; 4 uses
   %wide.trip.count = zext i32 %1 to i64
+  %invariant.gep = getelementptr inbounds nuw [16 x i8], ptr %.0, i64 %6
+  %invariant.gep136 = getelementptr inbounds nuw [16 x i8], ptr %.0, i64 %6
+  %invariant.gep138 = getelementptr inbounds nuw [16 x i8], ptr %.0, i64 %6
+  %invariant.gep140 = getelementptr inbounds nuw [16 x i8], ptr %.0, i64 %6
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.k
-  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.k ] ; 3 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.k ] ; 6 uses
   %i.s = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv ; 5 uses
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !199
   %i.u = tail call i32 @sqlite3_value_type(ptr noundef %i.t) #15
-  %6 = trunc nuw i64 %indvars.iv to i32
-  %7 = add i32 %spec.store.select, %6
-  %8 = zext i32 %7 to i64
-  %9 = getelementptr inbounds nuw [16 x i8], ptr %.0, i64 %8 ; 4 uses
   switch i32 %i.u, label %zend_string_alloc.exit [
     i32 1, label %bb.i
     i32 2, label %bb.j
-    i32 5, label %bb.k
+    i32 5, label %7
   ]
 
 bb.i:                                             ; preds = %.lr.ph
+  %gep139 = getelementptr inbounds nuw [16 x i8], ptr %invariant.gep138, i64 %indvars.iv ; 2 uses
   %i.v = load ptr, ptr %i.s, align 8, !tbaa !199
   %i.w = tail call i64 @sqlite3_value_int64(ptr noundef %i.v) #15
-  store i64 %i.w, ptr %9, align 8, !tbaa !14
+  store i64 %i.w, ptr %gep139, align 8, !tbaa !14
   br label %bb.k
 
 bb.j:                                             ; preds = %.lr.ph
+  %gep137 = getelementptr inbounds nuw [16 x i8], ptr %invariant.gep136, i64 %indvars.iv ; 2 uses
   %i.x = load ptr, ptr %i.s, align 8, !tbaa !199
   %i.y = tail call double @sqlite3_value_double(ptr noundef %i.x) #15
-  store double %i.y, ptr %9, align 8, !tbaa !14
+  store double %i.y, ptr %gep137, align 8, !tbaa !14
+  br label %bb.k
+
+7:                                                ; preds = %.lr.ph
+  %gep = getelementptr inbounds nuw [16 x i8], ptr %invariant.gep, i64 %indvars.iv
   br label %bb.k
 
 zend_string_alloc.exit:                           ; preds = %.lr.ph
+  %gep141 = getelementptr inbounds nuw [16 x i8], ptr %invariant.gep140, i64 %indvars.iv ; 2 uses
   %i.z = load ptr, ptr %i.s, align 8, !tbaa !199
   %i.aa = tail call ptr @sqlite3_value_text(ptr noundef %i.z) #15
   %i.ab = load ptr, ptr %i.s, align 8, !tbaa !199
@@ -299,12 +307,13 @@ zend_string_alloc.exit:                           ; preds = %.lr.ph
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ak, ptr align 1 %i.aa, i64 %i.ad, i1 false)
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 %i.ad
   store i8 0, ptr %i.al, align 1, !tbaa !14
-  store ptr %i.ag, ptr %9, align 8, !tbaa !14
+  store ptr %i.ag, ptr %gep141, align 8, !tbaa !14
   br label %bb.k
 
-bb.k:                                             ; preds = %.lr.ph, %bb.i, %bb.j, %zend_string_alloc.exit
-  %.sink = phi i32 [ 4, %bb.i ], [ 5, %bb.j ], [ 262, %zend_string_alloc.exit ], [ 1, %.lr.ph ]
-  %i.am = getelementptr inbounds nuw i8, ptr %9, i64 8
+bb.k:                                             ; preds = %bb.i, %bb.j, %7, %zend_string_alloc.exit
+  %gep139.sink = phi ptr [ %gep139, %bb.i ], [ %gep137, %bb.j ], [ %gep, %7 ], [ %gep141, %zend_string_alloc.exit ]
+  %.sink = phi i32 [ 4, %bb.i ], [ 5, %bb.j ], [ 1, %7 ], [ 262, %zend_string_alloc.exit ]
+  %i.am = getelementptr inbounds nuw i8, ptr %gep139.sink, i64 8
   store i32 %.sink, ptr %i.am, align 8, !tbaa !14
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
@@ -360,6 +369,7 @@ bb.o:                                             ; preds = %bb.n, %zend_call_kn
 
 .lr.ph119.preheader:                              ; preds = %.preheader
   %i.bg = zext nneg i32 %spec.store.select to i64
+  %wide.trip.count126 = zext i32 %i.b to i64
   br label %.lr.ph119
 
 .lr.ph119:                                        ; preds = %.lr.ph119.preheader, %.lr.ph119
@@ -367,8 +377,7 @@ bb.o:                                             ; preds = %bb.n, %zend_call_kn
   %i.bh = getelementptr inbounds nuw [16 x i8], ptr %.0, i64 %indvars.iv123
   call void @zval_ptr_dtor(ptr noundef %i.bh) #15
   %indvars.iv.next124 = add nuw nsw i64 %indvars.iv123, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next124 to i32
-  %exitcond126.not = icmp eq i32 %i.b, %lftr.wideiv
+  %exitcond126.not = icmp eq i64 %indvars.iv.next124, %wide.trip.count126
   br i1 %exitcond126.not, label %._crit_edge120, label %.lr.ph119, !llvm.loop !202
 
 ._crit_edge120:                                   ; preds = %.lr.ph119, %.preheader

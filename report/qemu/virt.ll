@@ -204,7 +204,7 @@ bb.ag:                                            ; preds = %bb.af
 bb.ah:                                            ; preds = %bb.ag, %bb.af
   %i.to = load ptr, ptr %i.qk, align 8            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j) #13
-  %i.tp = call noundef i32 @llvm.bswap.i32(i32 %.269.i) ; 25 uses
+  %i.tp = call noundef i32 @llvm.bswap.i32(i32 %.269.i) ; 26 uses
   %i.tq = getelementptr inbounds nuw i8, ptr %i.j, i64 12
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(448) %i.j, i8 0, i64 448, i1 false)
   store i32 16777216, ptr %i.tq, align 4
@@ -303,7 +303,7 @@ create_fdt_pcie.exit.i:                           ; preds = %bb.ai, %.thread96.i
   %.sink151.i.sroa.phi.i = phi ptr [ %.sink151.i.sroa.gep.i, %.thread96.i.i.i ], [ %.sink151.i.sroa.gep33.i, %bb.ai ]
   %.sink149.i11.i = phi i32 [ %i.tp, %.thread96.i.i.i ], [ 33554432, %bb.ai ] ; 2 uses
   %.sink148.i.sroa.phi.i = phi ptr [ %.sink189.i.sroa.gep20.i, %.thread96.i.i.i ], [ %.sink148.i.sroa.gep34.i, %bb.ai ]
-  %.sink146.i.i = phi i32 [ 536870912, %.thread96.i.i.i ], [ %i.tp, %bb.ai ] ; 2 uses
+  %.sink146.i.i = phi i32 [ 536870912, %.thread96.i.i.i ], [ %i.tp, %bb.ai ]
   %.sink145.i.sroa.phi.i = phi ptr [ %.sink186.i.sroa.gep21.i, %.thread96.i.i.i ], [ %.sink145.i.sroa.gep35.i, %bb.ai ]
   %.sink143.i.i = phi i32 [ 1048576, %.thread96.i.i.i ], [ 587202560, %bb.ai ]
   %.sink142.i.sroa.phi.i = phi ptr [ %.sink142.i.sroa.gep.i, %.thread96.i.i.i ], [ %.sink142.i.sroa.gep36.i, %bb.ai ]
@@ -339,13 +339,14 @@ create_fdt_pcie.exit.i:                           ; preds = %bb.ai, %.thread96.i
   %.sink93.i.i = phi i32 [ 16777216, %.thread96.i.i.i ], [ 1572864, %bb.ai ]
   %.sink92.i.sroa.phi.i = phi ptr [ %.sink127.i.sroa.gep41.i, %.thread96.i.i.i ], [ %.sink92.i.sroa.gep53.i, %bb.ai ]
   %.sink89.i.sroa.phi.i = phi ptr [ %.sink124.i.sroa.gep42.i, %.thread96.i.i.i ], [ %.sink89.i.sroa.gep54.i, %bb.ai ]
-  %.sink87.i.i = phi i32 [ 587202560, %.thread96.i.i.i ], [ 536870912, %bb.ai ]
+  %.sink87.i.i = phi i32 [ 587202560, %.thread96.i.i.i ], [ 603979776, %bb.ai ]
   %.sink86.i.sroa.phi.i = phi ptr [ %.sink86.i.sroa.gep.i, %.thread96.i.i.i ], [ %.sink86.i.sroa.gep55.i, %bb.ai ]
   %.sink83.i.sroa.phi.i = phi ptr [ %.sink118.i.sroa.gep44.i, %.thread96.i.i.i ], [ %.sink83.i.sroa.gep56.i, %bb.ai ]
   %.sink81.i.i = phi i32 [ 33554432, %.thread96.i.i.i ], [ 1572864, %bb.ai ]
   %.sink80.i.sroa.phi.i = phi ptr [ %.sink115.i.sroa.gep45.i, %.thread96.i.i.i ], [ %.sink80.i.sroa.gep57.i, %bb.ai ]
   %.sink78.i.i = phi i32 [ %i.tp, %.thread96.i.i.i ], [ 50331648, %bb.ai ]
   %.sink77.i.sroa.phi.i = phi ptr [ %.sink112.i.sroa.gep46.i, %.thread96.i.i.i ], [ %.sink77.i.sroa.gep58.i, %bb.ai ]
+  %.sink75.i.i = phi i32 [ 603979776, %.thread96.i.i.i ], [ %i.tp, %bb.ai ]
   %.sink74.i.sroa.phi.i = phi ptr [ %.sink109.i.sroa.gep47.i, %.thread96.i.i.i ], [ %.sink74.i.sroa.gep59.i, %bb.ai ]
   %.sink72.i.i = phi i32 [ 1572864, %.thread96.i.i.i ], [ 553648128, %bb.ai ]
   %.sink71.i.sroa.phi.i = phi ptr [ %.sink106.i.sroa.gep48.i, %.thread96.i.i.i ], [ %.sink71.i.sroa.gep60.i, %bb.ai ]
@@ -402,7 +403,7 @@ create_fdt_pcie.exit.i:                           ; preds = %bb.ai, %.thread96.i
   store i32 %.sink96.i.i, ptr %.sink86.i.sroa.phi.i, align 4
   store i32 %.sink81.i.i, ptr %.sink83.i.sroa.phi.i, align 4
   store i32 %.sink78.i.i, ptr %.sink80.i.sroa.phi.i, align 4
-  store i32 %.sink146.i.i, ptr %.sink77.i.sroa.phi.i, align 4
+  store i32 %.sink75.i.i, ptr %.sink77.i.sroa.phi.i, align 4
   store i32 %.sink72.i.i, ptr %.sink74.i.sroa.phi.i, align 4
   store i32 %.sink69.i.i, ptr %.sink71.i.sroa.phi.i, align 4
   store i32 %.sink66.i.i, ptr %.sink68.i.sroa.phi.i, align 4

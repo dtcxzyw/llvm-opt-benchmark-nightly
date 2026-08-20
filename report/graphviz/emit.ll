@@ -204,7 +204,7 @@ bb.s:                                             ; preds = %bb.r, %bb.q, %bb.p
   %.sroa.585.1.1 = phi double [ %.sroa.585.1, %bb.q ], [ %.sroa.585.1, %bb.r ], [ %i.ce, %bb.p ] ; 3 uses
   %i.ch = phi double [ %i.bv, %bb.q ], [ %i.ce, %bb.r ], [ %i.bv, %bb.p ] ; 3 uses
   %i.ci = phi double [ %i.bw, %bb.q ], [ %i.bw, %bb.r ], [ %i.ce, %bb.p ] ; 3 uses
-  %niter344.next.1 = add i64 %niter344, 2         ; 2 uses
+  %niter344.next.1 = add nuw i64 %niter344, 2     ; 2 uses
   %niter344.ncmp.1 = icmp eq i64 %niter344.next.1, %unroll_iter343
   br i1 %niter344.ncmp.1, label %ptsBB.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !155
 
@@ -380,7 +380,7 @@ bb.aj:                                            ; preds = %bb.ai, %bb.ah, %bb.
   %.sroa.581.1.1 = phi double [ %.sroa.581.1, %bb.ah ], [ %.sroa.581.1, %bb.ai ], [ %i.en, %bb.ag ] ; 3 uses
   %i.eq = phi double [ %i.ee, %bb.ah ], [ %i.en, %bb.ai ], [ %i.ee, %bb.ag ] ; 3 uses
   %i.er = phi double [ %i.ef, %bb.ah ], [ %i.ef, %bb.ai ], [ %i.en, %bb.ag ] ; 3 uses
-  %niter323.next.1 = add i64 %niter323, 2         ; 2 uses
+  %niter323.next.1 = add nuw i64 %niter323, 2     ; 2 uses
   %niter323.ncmp.1 = icmp eq i64 %niter323.next.1, %unroll_iter322
   br i1 %niter323.ncmp.1, label %ptsBB.exit73.loopexit.unr-lcssa, label %.lr.ph.i69, !llvm.loop !155
 
@@ -556,7 +556,7 @@ bb.ba:                                            ; preds = %bb.az, %bb.ay, %bb.
   %.sroa.5.1.1 = phi double [ %.sroa.5.1, %bb.ay ], [ %.sroa.5.1, %bb.az ], [ %i.gw, %bb.ax ] ; 3 uses
   %i.gz = phi double [ %i.gn, %bb.ay ], [ %i.gw, %bb.az ], [ %i.gn, %bb.ax ] ; 3 uses
   %i.ha = phi double [ %i.go, %bb.ay ], [ %i.go, %bb.az ], [ %i.gw, %bb.ax ] ; 3 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %ptsBB.exit78.loopexit.unr-lcssa, label %.lr.ph.i74, !llvm.loop !155
 
@@ -959,7 +959,7 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   %i.cr = load ptr, ptr %i.b, align 8, !tbaa !78
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cr, i64 32
   %i.ct = load <2 x double>, ptr %i.cs, align 8, !tbaa !105 ; 16 uses
-  %i.cu = extractelement <2 x double> %i.ct, i64 0 ; 3 uses
+  %i.cu = extractelement <2 x double> %i.ct, i64 0 ; 4 uses
   %i.cv = load ptr, ptr @N_style, align 8, !tbaa !225
   %i.cw = tail call ptr @late_nnstring(ptr noundef nonnull %1, ptr noundef %i.cv, ptr noundef nonnull @.str.13) #27 ; 2 uses
   %i.cx = load i8, ptr %i.cw, align 1, !tbaa !8
@@ -1115,8 +1115,11 @@ bb.ag:                                            ; preds = %bb.af
 
 bb.ah:                                            ; preds = %bb.ag
   store i32 1, ptr %i.fn, align 4, !tbaa !132
-  %i.fo = tail call fastcc ptr @gv_calloc(i64 noundef 2, i64 noundef 16) ; 3 uses
-  store <2 x double> %i.ct, ptr %i.fo, align 8, !tbaa !105
+  %i.fo = tail call fastcc ptr @gv_calloc(i64 noundef 2, i64 noundef 16) ; 4 uses
+  store double %i.cu, ptr %i.fo, align 8, !tbaa !129
+  %2 = getelementptr inbounds nuw i8, ptr %i.fo, i64 8
+  %3 = extractelement <2 x double> %i.ct, i64 1
+  store double %3, ptr %2, align 8, !tbaa !136
   %.idx187.i = shl i64 %i.ee, 5
   %i.fp = getelementptr i8, ptr %i.eg, i64 %.idx187.i ; 2 uses
   %i.fq = getelementptr i8, ptr %i.fp, i64 -16
@@ -1239,7 +1242,7 @@ gv_calloc.exit192.i:                              ; preds = %gv_calloc.exit192.i
   store <2 x double> %i.hf, ptr %i.hd, align 8, !tbaa !105
   %i.hg = add i64 %i.hb, %i.gp                    ; 2 uses
   %i.hh = add nuw i64 %.0163207.i, 2              ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.i.loopexit87.unr-lcssa, label %gv_calloc.exit192.i, !llvm.loop !309
 

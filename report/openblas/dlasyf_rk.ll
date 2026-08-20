@@ -201,7 +201,7 @@ bb.al:                                            ; preds = %bb.al, %.lr.ph794.n
   %i.lw = fdiv double %i.lv, %i.lt
   store double %i.lw, ptr %gep990.7, align 8, !tbaa !9
   %indvars.iv.next844.7 = add nuw nsw i64 %indvars.iv843, 8 ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %.loopexit771.loopexit.unr-lcssa, label %bb.al, !llvm.loop !11
 
@@ -604,9 +604,9 @@ bb.cb:                                            ; preds = %.lr.ph819, %bb.cd
   br label %.lr.ph814
 
 .lr.ph814:                                        ; preds = %.lr.ph814.preheader, %.lr.ph814
-  %indvars.iv860 = phi i64 [ %i.amn, %.lr.ph814.preheader ], [ %indvars.iv.next861, %.lr.ph814 ] ; 5 uses
+  %indvars.iv860 = phi i64 [ %i.amn, %.lr.ph814.preheader ], [ %indvars.iv.next861, %.lr.ph814 ] ; 6 uses
   %i.amo = load i32, ptr %i.j, align 4, !tbaa !8
-  %i.amp = trunc nsw i64 %indvars.iv860 to i32    ; 2 uses
+  %i.amp = trunc i64 %indvars.iv860 to i32
   %i.amq = sub i32 %.3645817, %i.amp
   %i.amr = add i32 %i.amq, %i.amo
   store i32 %i.amr, ptr %i.d, align 4, !tbaa !8
@@ -615,7 +615,8 @@ bb.cb:                                            ; preds = %.lr.ph819, %bb.cd
   store i32 %i.amt, ptr %i.e, align 4, !tbaa !8
   %gep1007 = getelementptr [8 x i8], ptr %invariant.gep1006, i64 %indvars.iv860
   %gep1009 = getelementptr [8 x i8], ptr %invariant.gep1008, i64 %indvars.iv860
-  %i.amu = mul i32 %i.tb, %i.amp
+  %11 = trunc nsw i64 %indvars.iv860 to i32
+  %i.amu = mul i32 %i.tb, %11
   %i.amv = sext i32 %i.amu to i64
   %i.amw = getelementptr inbounds [8 x i8], ptr %i.o, i64 %i.amv
   call void @dgemv_(ptr noundef nonnull @.str.2, ptr noundef nonnull %i.d, ptr noundef nonnull %i.e, ptr noundef nonnull @c_b9, ptr noundef %gep1007, ptr noundef nonnull %5, ptr noundef %gep1009, ptr noundef nonnull %9, ptr noundef nonnull @c_b10, ptr noundef %i.amw, ptr noundef nonnull @c__1) #5

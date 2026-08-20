@@ -204,12 +204,10 @@ bb.e:                                             ; preds = %bb.a
   br i1 %i.c, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.b, %bb.c, %bb.d, %bb.e
-  %.085 = phi i32 [ 8, %bb.e ], [ %., %bb.d ], [ 7, %bb.b ], [ 6, %bb.c ] ; 5 uses
+  %.085 = phi i32 [ 8, %bb.e ], [ %., %bb.d ], [ 7, %bb.b ], [ 6, %bb.c ] ; 4 uses
   %i.d = icmp eq i32 %5, 1                        ; 2 uses
   %.not61 = icmp eq i32 %5, 2
   %i.e = icmp eq i32 %4, 1
-  %6 = zext nneg i32 %.085 to i64
-  %7 = getelementptr i8, ptr %i.a, i64 %6
   %xtraiter = and i32 %.085, 1
   %unroll_iter = and i32 %.085, 14
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
@@ -251,10 +249,10 @@ bb.f:                                             ; preds = %.lr.ph, %bb.p
   %i.t = zext nneg i32 %i.s to i64
   %i.u = getelementptr i8, ptr @hex_dump_buffer.binhex, i64 %i.t
   %i.v = load i8, ptr %i.u, align 1
-  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 3 uses
+  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 5 uses
   %i.w = getelementptr i8, ptr %i.a, i64 %indvars.iv.next
   store i8 %i.v, ptr %i.w, align 1
-  %niter.next.1 = add i32 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i32 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i32 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.unr-lcssa, label %.preheader, !llvm.loop !45
 
@@ -270,15 +268,18 @@ bb.f:                                             ; preds = %.lr.ph, %bb.p
   %i.ab = zext nneg i32 %i.aa to i64
   %i.ac = getelementptr i8, ptr @hex_dump_buffer.binhex, i64 %i.ab
   %i.ad = load i8, ptr %i.ac, align 1
+  %indvars.iv.next.epil = add nuw nsw i64 %indvars.iv.next.1, 1
   %i.ae = getelementptr i8, ptr %i.a, i64 %indvars.iv.next.1
   store i8 %i.ad, ptr %i.ae, align 1
   br label %bb.g
 
 bb.g:                                             ; preds = %.unr-lcssa, %.preheader.epil.preheader
   %indvars.iv.lcssa = phi i64 [ %indvars.iv.next, %.unr-lcssa ], [ %indvars.iv.next.1, %.preheader.epil.preheader ] ; 2 uses
+  %indvars.iv.next.lcssa = phi i64 [ %indvars.iv.next.1, %.unr-lcssa ], [ %indvars.iv.next.epil, %.preheader.epil.preheader ]
   %i.af = trunc nuw i64 %indvars.iv.lcssa to i32  ; 3 uses
   %i.ag = add nuw i64 %indvars.iv.lcssa, 2
-  store i8 32, ptr %7, align 1
+  %6 = getelementptr i8, ptr %i.a, i64 %indvars.iv.next.lcssa
+  store i8 32, ptr %6, align 1
   %i.ah = add i32 %i.af, 3                        ; 4 uses
   %i.ai = and i64 %i.ag, 4294967295
   %i.aj = getelementptr i8, ptr %i.a, i64 %i.ai

@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph.new
   %i.ag = getelementptr inbounds i8, ptr %5, i64 %i.af
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.ag, i8 0, i64 %i.o, i1 false)
   %indvars.iv.next.7 = add nuw nsw i64 %indvars.iv, 8 ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %._crit_edge.loopexit.unr-lcssa, label %bb.d, !llvm.loop !135
 
@@ -576,7 +576,7 @@ bb.q:                                             ; preds = %bb.q, %.lr.ph204.ne
   %i.gz = fmul <4 x float> %i.gy, <float 1.000000e+00, float 5.000000e+00, float 1.000000e+00, float 5.000000e+00>
   store <4 x float> %i.gz, ptr %i.gw, align 8, !tbaa !32
   %indvars.iv.next231.1 = add nuw nsw i64 %indvars.iv230, 2 ; 2 uses
-  %niter347.next.1 = add i64 %niter347, 2         ; 2 uses
+  %niter347.next.1 = add nuw i64 %niter347, 2     ; 2 uses
   %niter347.ncmp.1 = icmp eq i64 %niter347.next.1, %unroll_iter346
   br i1 %niter347.ncmp.1, label %._crit_edge205.thread299.loopexit.unr-lcssa, label %bb.q, !llvm.loop !159
 
@@ -945,7 +945,7 @@ nsvg__appendPathPoint.exit200.i:                  ; preds = %bb.ad, %bb.ac
   %i.my = load float, ptr %i.mx, align 4, !tbaa !32
   %i.mz = fadd float %i.mv, %i.my                 ; 3 uses
   %indvars.iv.next319.i.7 = add nuw nsw i64 %indvars.iv318.i, 8 ; 2 uses
-  %niter333.next.7 = add i64 %niter333, 8         ; 2 uses
+  %niter333.next.7 = add nuw i64 %niter333, 8     ; 2 uses
   %niter333.ncmp.7 = icmp eq i64 %niter333.next.7, %unroll_iter332
   br i1 %niter333.ncmp.7, label %._crit_edge284.i.loopexit.unr-lcssa, label %.lr.ph283.i, !llvm.loop !171
 
@@ -1348,7 +1348,7 @@ bb.bo:                                            ; preds = %bb.bo, %.lr.ph207.n
   %i.abx = fmul <4 x float> %i.abw, <float 1.000000e+00, float 5.000000e+00, float 1.000000e+00, float 5.000000e+00>
   store <4 x float> %i.abx, ptr %i.abu, align 8, !tbaa !32
   %indvars.iv.next226.1 = add nuw nsw i64 %indvars.iv225, 2 ; 2 uses
-  %niter340.next.1 = add i64 %niter340, 2         ; 2 uses
+  %niter340.next.1 = add nuw i64 %niter340, 2     ; 2 uses
   %niter340.ncmp.1 = icmp eq i64 %niter340.next.1, %unroll_iter339
   br i1 %niter340.ncmp.1, label %._crit_edge208.thread302.loopexit.unr-lcssa, label %bb.bo, !llvm.loop !184
 
@@ -1751,7 +1751,7 @@ nsvg__getNextDashItem.exit._crit_edge:            ; preds = %bb.p, %nsvg__getNex
   %i.ct = load float, ptr %i.cs, align 4, !tbaa !32
   %i.cu = fadd float %i.cq, %i.ct                 ; 3 uses
   %indvars.iv.next.7 = add nuw nsw i64 %indvars.iv, 8 ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %._crit_edge33.loopexit.unr-lcssa, label %.lr.ph32, !llvm.loop !285
 
@@ -2154,7 +2154,7 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph46, %._crit_edge
   %.03744 = phi ptr [ %.03741, %.lr.ph46 ], [ %.037, %._crit_edge ] ; 3 uses
   %.043 = phi i32 [ 1, %.lr.ph46 ], [ %.1.lcssa, %._crit_edge ] ; 2 uses
-  %i.l = load ptr, ptr %.03744, align 8, !tbaa !66 ; 8 uses
+  %i.l = load ptr, ptr %.03744, align 8, !tbaa !66 ; 9 uses
   %i.m = load float, ptr %i.l, align 4, !tbaa !32
   %i.n = getelementptr inbounds nuw i8, ptr %i.l, i64 4
   %i.o = load float, ptr %i.n, align 4, !tbaa !32
@@ -2236,29 +2236,37 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %i.bn, label %.lr.ph.peel.next, label %._crit_edge
 
 .lr.ph.peel.next:                                 ; preds = %bb.e, %.lr.ph.peel.next
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph.peel.next ], [ 3, %bb.e ] ; 3 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph.peel.next ], [ 3, %bb.e ] ; 4 uses
   %i.bo = phi <4 x float> [ %i.cv, %.lr.ph.peel.next ], [ %i.bl, %bb.e ] ; 3 uses
+  %3 = shl i64 %indvars.iv, 33
+  %sext = add i64 %3, 8589934592
+  %4 = ashr exact i64 %sext, 30
+  %5 = getelementptr inbounds i8, ptr %i.l, i64 %4
   %i.bp = shl i64 %indvars.iv, 33
-  %sext.a = add i64 %i.bp, 8589934592
+  %sext.a = add i64 %i.bp, 17179869184
   %i.bq = ashr exact i64 %sext.a, 30
   %i.br = getelementptr inbounds i8, ptr %i.l, i64 %i.bq
+  %6 = load float, ptr %i.br, align 4, !tbaa !32
   %indvars.iv.tr = trunc i64 %indvars.iv to i32
   %i.bs = shl i32 %indvars.iv.tr, 1
-  %i.bt = add i32 %i.bs, 4
+  %i.bt = add i32 %i.bs, 5
   %i.bu = sext i32 %i.bt to i64
   %i.bv = getelementptr inbounds [4 x i8], ptr %i.l, i64 %i.bu
-  %i.bw = load <2 x float>, ptr %i.br, align 4, !tbaa !32 ; 2 uses
+  %7 = load float, ptr %i.bv, align 4, !tbaa !32
+  %i.bw = load <2 x float>, ptr %5, align 4, !tbaa !32 ; 2 uses
   %i.bx = load <2 x float>, ptr %2, align 4, !tbaa !32 ; 2 uses
   %i.by = shufflevector <2 x float> %i.bx, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
   %i.bz = load <2 x float>, ptr %i.d, align 4, !tbaa !32 ; 2 uses
   %i.ca = shufflevector <2 x float> %i.bz, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
   %i.cb = load <2 x float>, ptr %i.e, align 4, !tbaa !32 ; 2 uses
   %i.cc = shufflevector <2 x float> %i.cb, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  %3 = load <2 x float>, ptr %i.bv, align 4, !tbaa !32 ; 2 uses
-  %4 = shufflevector <2 x float> %i.bw, <2 x float> %3, <4 x i32> <i32 1, i32 1, i32 3, i32 3>
-  %i.cd = fmul <4 x float> %i.ca, %4
-  %5 = shufflevector <2 x float> %i.bw, <2 x float> %3, <4 x i32> <i32 0, i32 0, i32 2, i32 2>
-  %i.ce = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %5, <4 x float> %i.by, <4 x float> %i.cd)
+  %8 = shufflevector <2 x float> %i.bw, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %9 = insertelement <2 x float> %8, float %7, i64 1
+  %10 = shufflevector <2 x float> %9, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
+  %i.cd = fmul <4 x float> %i.ca, %10
+  %11 = insertelement <2 x float> %i.bw, float %6, i64 1
+  %12 = shufflevector <2 x float> %11, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
+  %i.ce = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %12, <4 x float> %i.by, <4 x float> %i.cd)
   %i.cf = fadd <4 x float> %i.cc, %i.ce
   store <4 x float> %i.cf, ptr %i.f, align 8, !tbaa !32
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 3 ; 3 uses

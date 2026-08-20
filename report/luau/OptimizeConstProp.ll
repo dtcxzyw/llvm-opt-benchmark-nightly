@@ -204,20 +204,21 @@ bb.azn:                                           ; preds = %bb.azm
 _ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit4603:   ; preds = %bb.azm, %bb.azn
   %i.euz = load ptr, ptr %i.euw, align 8, !tbaa !114
   %.sroa.066.0.copyload = load i32, ptr %i.euz, align 4, !tbaa !30
-  %i.eva = lshr i32 %.sroa.066.0.copyload, 4      ; 4 uses
+  %i.eva = lshr i32 %.sroa.066.0.copyload, 4      ; 3 uses
   %i.evb = getelementptr inbounds nuw i8, ptr %0, i64 3088
-  %i.evc = load i32, ptr %i.evb, align 8, !tbaa !117 ; 4 uses
+  %i.evc = load i32, ptr %i.evb, align 8, !tbaa !117 ; 3 uses
   %.not4.i = icmp sgt i32 %i.eva, %i.evc
   br i1 %.not4.i, label %_ZN4Luau7CodeGen14ConstPropState23invalidateRegistersFromEi.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %_ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit4603
   %i.evd = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
-  %i.eve = zext nneg i32 %i.eva to i64            ; 3 uses
+  %i.eve = zext nneg i32 %i.eva to i64            ; 4 uses
   %i.evf = add nuw i32 %i.evc, 1
-  %74 = add i32 %i.evc, %i.eva
-  %75 = and i32 %74, 1
-  %lcmp.mod5991.not.not = icmp eq i32 %75, 0
-  br i1 %lcmp.mod5991.not.not, label %.prol.loopexit5989.unr-lcssa, label %.prol.loopexit5989
+  %zext5146 = zext i32 %i.evf to i64              ; 2 uses
+  %74 = sub nsw i64 %zext5146, %i.eve
+  %xtraiter5992 = and i64 %74, 1
+  %lcmp.mod5991.not.not = icmp eq i64 %xtraiter5992, 0
+  br i1 %lcmp.mod5991.not.not, label %.prol.loopexit5989, label %.prol.loopexit5989.unr-lcssa
 
 .prol.loopexit5989.unr-lcssa:                     ; preds = %.lr.ph.i
   %i.evg = getelementptr inbounds nuw [12 x i8], ptr %i.evd, i64 %i.eve ; 3 uses
@@ -256,8 +257,7 @@ _ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit4603:   ; preds = %bb.azm, %bb.azn
   %i.evw = add i32 %i.evv, 1
   store i32 %i.evw, ptr %i.evu, align 4, !tbaa !126
   %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
-  %lftr.wideiv.i.1 = trunc i64 %indvars.iv.next.i.1 to i32
-  %exitcond.not.i.1 = icmp eq i32 %i.evf, %lftr.wideiv.i.1
+  %exitcond.not.i.1 = icmp eq i64 %indvars.iv.next.i.1, %zext5146
   br i1 %exitcond.not.i.1, label %_ZN4Luau7CodeGen14ConstPropState23invalidateRegistersFromEi.exit, label %.lr.ph.i.new, !llvm.loop !404
 
 _ZN4Luau7CodeGen14ConstPropState23invalidateRegistersFromEi.exit: ; preds = %.prol.loopexit5989, %.lr.ph.i.new, %_ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit4603
@@ -281,7 +281,7 @@ _ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit4605:   ; preds = %bb.azo, %bb.azp
   %i.ewb = lshr i32 %.sroa.065.0.copyload, 4
   %i.ewc = add nuw nsw i32 %i.ewb, 2              ; 2 uses
   %i.ewd = getelementptr inbounds nuw i8, ptr %0, i64 3088
-  %i.ewe = load i32, ptr %i.ewd, align 8, !tbaa !117 ; 4 uses
+  %i.ewe = load i32, ptr %i.ewd, align 8, !tbaa !117 ; 2 uses
   %.not4.i4606 = icmp sgt i32 %i.ewc, %i.ewe
   br i1 %.not4.i4606, label %_ZN4Luau7CodeGen14ConstPropState23invalidateRegistersFromEi.exit4612, label %.lr.ph.i4607
 
@@ -289,12 +289,14 @@ _ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit4605:   ; preds = %bb.azo, %bb.azp
   %i.ewf = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.ewg = zext nneg i32 %i.ewc to i64            ; 3 uses
   %i.ewh = add nuw i32 %i.ewe, 1
-  %i.ewi = lshr i32 %.sroa.065.0.copyload, 4      ; 2 uses
-  %76 = add i32 %i.ewe, -2
-  %77 = sub i32 %i.ewi, %i.ewe
-  %78 = and i32 %77, 1
-  %lcmp.mod5987.not.not = icmp eq i32 %78, 0
-  br i1 %lcmp.mod5987.not.not, label %.prol.loopexit5985.unr-lcssa, label %.prol.loopexit5985
+  %zext5145 = zext i32 %i.ewh to i64              ; 3 uses
+  %i.ewi = lshr i32 %.sroa.065.0.copyload, 4
+  %75 = zext nneg i32 %i.ewi to i64               ; 2 uses
+  %76 = sub nsw i64 %zext5145, %75
+  %77 = add nsw i64 %zext5145, -3
+  %xtraiter5988 = and i64 %76, 1
+  %lcmp.mod5987.not.not = icmp eq i64 %xtraiter5988, 0
+  br i1 %lcmp.mod5987.not.not, label %.prol.loopexit5985, label %.prol.loopexit5985.unr-lcssa
 
 .prol.loopexit5985.unr-lcssa:                     ; preds = %.lr.ph.i4607
   %i.ewj = getelementptr inbounds nuw [12 x i8], ptr %i.ewf, i64 %i.ewg ; 3 uses
@@ -310,7 +312,7 @@ _ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit4605:   ; preds = %bb.azo, %bb.azp
 
 .prol.loopexit5985:                               ; preds = %.prol.loopexit5985.unr-lcssa, %.lr.ph.i4607
   %indvars.iv.i4608.unr = phi i64 [ %i.ewg, %.lr.ph.i4607 ], [ %indvars.iv.next.i4609.prol, %.prol.loopexit5985.unr-lcssa ]
-  %i.ewo = icmp eq i32 %76, %i.ewi
+  %i.ewo = icmp eq i64 %77, %75
   br i1 %i.ewo, label %_ZN4Luau7CodeGen14ConstPropState23invalidateRegistersFromEi.exit4612, label %.lr.ph.i4607.new
 
 .lr.ph.i4607.new:                                 ; preds = %.prol.loopexit5985, %.lr.ph.i4607.new
@@ -333,8 +335,7 @@ _ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit4605:   ; preds = %bb.azo, %bb.azp
   %i.ewz = add i32 %i.ewy, 1
   store i32 %i.ewz, ptr %i.ewx, align 4, !tbaa !126
   %indvars.iv.next.i4609.1 = add nuw nsw i64 %indvars.iv.i4608, 2 ; 2 uses
-  %lftr.wideiv.i4610.1 = trunc i64 %indvars.iv.next.i4609.1 to i32
-  %exitcond.not.i4611.1 = icmp eq i32 %i.ewh, %lftr.wideiv.i4610.1
+  %exitcond.not.i4611.1 = icmp eq i64 %indvars.iv.next.i4609.1, %zext5145
   br i1 %exitcond.not.i4611.1, label %_ZN4Luau7CodeGen14ConstPropState23invalidateRegistersFromEi.exit4612, label %.lr.ph.i4607.new, !llvm.loop !404
 
 _ZN4Luau7CodeGen14ConstPropState23invalidateRegistersFromEi.exit4612: ; preds = %.prol.loopexit5985, %.lr.ph.i4607.new, %_ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit4605
@@ -380,7 +381,7 @@ _ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit4620:   ; preds = %bb.azq, %bb.azr
   %i.exm = lshr i32 %.sroa.064.0.copyload, 4
   %i.exn = add nuw nsw i32 %i.exm, 2              ; 2 uses
   %i.exo = getelementptr inbounds nuw i8, ptr %0, i64 3088
-  %i.exp = load i32, ptr %i.exo, align 8, !tbaa !117 ; 4 uses
+  %i.exp = load i32, ptr %i.exo, align 8, !tbaa !117 ; 2 uses
   %.not4.i4621 = icmp sgt i32 %i.exn, %i.exp
   br i1 %.not4.i4621, label %_ZN4Luau7CodeGen14ConstPropState23invalidateRegistersFromEi.exit4627, label %.lr.ph.i4622
 
@@ -388,12 +389,14 @@ _ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit4620:   ; preds = %bb.azq, %bb.azr
   %i.exq = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.exr = zext nneg i32 %i.exn to i64            ; 3 uses
   %i.exs = add nuw i32 %i.exp, 1
-  %i.ext = lshr i32 %.sroa.064.0.copyload, 4      ; 2 uses
-  %79 = add i32 %i.exp, -2
-  %80 = sub i32 %i.ext, %i.exp
-  %81 = and i32 %80, 1
-  %lcmp.mod.not.not = icmp eq i32 %81, 0
-  br i1 %lcmp.mod.not.not, label %.prol.loopexit.unr-lcssa, label %.prol.loopexit
+  %zext = zext i32 %i.exs to i64                  ; 3 uses
+  %i.ext = lshr i32 %.sroa.064.0.copyload, 4
+  %78 = zext nneg i32 %i.ext to i64               ; 2 uses
+  %79 = sub nsw i64 %zext, %78
+  %80 = add nsw i64 %zext, -3
+  %xtraiter = and i64 %79, 1
+  %lcmp.mod.not.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
 
 .prol.loopexit.unr-lcssa:                         ; preds = %.lr.ph.i4622
   %i.exu = getelementptr inbounds nuw [12 x i8], ptr %i.exq, i64 %i.exr ; 3 uses
@@ -409,7 +412,7 @@ _ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit4620:   ; preds = %bb.azq, %bb.azr
 
 .prol.loopexit:                                   ; preds = %.prol.loopexit.unr-lcssa, %.lr.ph.i4622
   %indvars.iv.i4623.unr = phi i64 [ %i.exr, %.lr.ph.i4622 ], [ %indvars.iv.next.i4624.prol, %.prol.loopexit.unr-lcssa ]
-  %i.exz = icmp eq i32 %79, %i.ext
+  %i.exz = icmp eq i64 %80, %78
   br i1 %i.exz, label %_ZN4Luau7CodeGen14ConstPropState23invalidateRegistersFromEi.exit4627, label %.lr.ph.i4622.new
 
 .lr.ph.i4622.new:                                 ; preds = %.prol.loopexit, %.lr.ph.i4622.new
@@ -432,8 +435,7 @@ _ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit4620:   ; preds = %bb.azq, %bb.azr
   %i.eyk = add i32 %i.eyj, 1
   store i32 %i.eyk, ptr %i.eyi, align 4, !tbaa !126
   %indvars.iv.next.i4624.1 = add nuw nsw i64 %indvars.iv.i4623, 2 ; 2 uses
-  %lftr.wideiv.i4625.1 = trunc i64 %indvars.iv.next.i4624.1 to i32
-  %exitcond.not.i4626.1 = icmp eq i32 %i.exs, %lftr.wideiv.i4625.1
+  %exitcond.not.i4626.1 = icmp eq i64 %indvars.iv.next.i4624.1, %zext
   br i1 %exitcond.not.i4626.1, label %_ZN4Luau7CodeGen14ConstPropState23invalidateRegistersFromEi.exit4627, label %.lr.ph.i4622.new, !llvm.loop !404
 
 _ZN4Luau7CodeGen14ConstPropState23invalidateRegistersFromEi.exit4627: ; preds = %.prol.loopexit, %.lr.ph.i4622.new, %_ZN4Luau7CodeGen5getOpERNS0_6IrInstEj.exit4620
