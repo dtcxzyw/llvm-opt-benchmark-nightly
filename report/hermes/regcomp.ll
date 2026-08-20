@@ -204,9 +204,10 @@ bb.ab:                                            ; preds = %.preheader.i
   br i1 %i.cm, label %.lr.ph.i.i, label %isinsets.exit.thread.i
 
 .lr.ph.i.i:                                       ; preds = %bb.ab
-  %i.cn = add nuw nsw i32 %i.ck, 7
-  %4 = lshr i32 %i.cn, 3
+  %i.cn = add nuw i32 %i.ck, 7
+  %4 = sdiv i32 %i.cn, 8
   %i.co = load ptr, ptr %i.ad, align 8, !tbaa !38
+  %smax.i.i = call i32 @llvm.smax.i32(i32 %4, i32 1)
   br label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ad, %.lr.ph.i.i
@@ -222,7 +223,7 @@ bb.ad:                                            ; preds = %bb.ac
   %i.cs = load i32, ptr %i.ac, align 8, !tbaa !22
   %i.ct = sext i32 %i.cs to i64
   %i.cu = getelementptr inbounds i8, ptr %.01012.i.i, i64 %i.ct
-  %exitcond.not.i.i = icmp eq i32 %i.cr, %4
+  %exitcond.not.i.i = icmp eq i32 %i.cr, %smax.i.i
   br i1 %exitcond.not.i.i, label %isinsets.exit.thread.i, label %bb.ac, !llvm.loop !39
 
 isinsets.exit.i:                                  ; preds = %bb.ac
@@ -248,10 +249,11 @@ bb.ae:                                            ; preds = %.lr.ph.i101
   br i1 %i.dd, label %.lr.ph.i25.i, label %.loopexit.i
 
 .lr.ph.i25.i:                                     ; preds = %bb.ae
-  %i.de = add nuw nsw i32 %i.dc, 7
-  %5 = lshr i32 %i.de, 3
+  %i.de = add nuw i32 %i.dc, 7
+  %5 = sdiv i32 %i.de, 8
   %i.df = load ptr, ptr %i.ad, align 8, !tbaa !38
   %i.dg = and i64 %indvars.iv.next12.i, 255
+  %smax.i26.i = call i32 @llvm.smax.i32(i32 %5, i32 1)
   br label %bb.af
 
 bb.af:                                            ; preds = %bb.ag, %.lr.ph.i25.i
@@ -269,7 +271,7 @@ bb.ag:                                            ; preds = %bb.af
   %i.dm = load i32, ptr %i.ac, align 8, !tbaa !22
   %i.dn = sext i32 %i.dm to i64
   %i.do = getelementptr inbounds i8, ptr %.01315.i.i, i64 %i.dn
-  %exitcond.not.i27.i = icmp eq i32 %i.dl, %5
+  %exitcond.not.i27.i = icmp eq i32 %i.dl, %smax.i26.i
   br i1 %exitcond.not.i27.i, label %.loopexit.i, label %bb.af, !llvm.loop !41
 
 .loopexit.i:                                      ; preds = %bb.ag, %bb.ae
@@ -670,6 +672,9 @@ bb.a:
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #16
   ret void
 }
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #14

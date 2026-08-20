@@ -201,9 +201,10 @@ bb.m:                                             ; preds = %bb.l
   br i1 %.not148171.i, label %.lr.ph.i, label %._crit_edge.i
 
 .lr.ph.i:                                         ; preds = %.critedge
-  %i.bn = add nuw nsw i32 %.val139.val183, 1
-  %12 = lshr i32 %i.bn, 1
+  %i.bn = add nuw i32 %.val139.val183, 1
+  %12 = sdiv i32 %i.bn, 2
   %i.bo = add nsw i32 %.val181, %.val139.val183
+  %smax.i = tail call i32 @llvm.smax.i32(i32 %12, i32 2)
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.x, %.lr.ph.i
@@ -307,7 +308,7 @@ bb.w:                                             ; preds = %.thread.i
 
 bb.x:                                             ; preds = %bb.w, %.thread.i
   %i.dl = add nuw nsw i32 %.0122173.i, 1          ; 2 uses
-  %exitcond.not.i = icmp eq i32 %i.dl, %12
+  %exitcond.not.i = icmp eq i32 %i.dl, %smax.i
   br i1 %exitcond.not.i, label %._crit_edge.i, label %bb.n, !llvm.loop !72
 
 ._crit_edge.i:                                    ; preds = %bb.x, %.critedge
@@ -708,6 +709,9 @@ declare void @opal_class_initialize(ptr noundef) local_unnamed_addr #1
 declare i32 @NBC_Sched_send(ptr noundef, i8 noundef signext, i64 noundef, ptr noundef, i32 noundef, ptr noundef, i1 noundef zeroext) local_unnamed_addr #1
 
 declare i32 @NBC_Sched_recv(ptr noundef, i8 noundef signext, i64 noundef, ptr noundef, i32 noundef, ptr noundef, i1 noundef zeroext) local_unnamed_addr #1
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #5

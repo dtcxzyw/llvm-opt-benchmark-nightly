@@ -203,13 +203,21 @@ bb.m:                                             ; preds = %bb.l
   %.not171204 = icmp sgt i32 %.4143, %i.n
   br i1 %.not171204, label %.preheader.preheader, label %.lr.ph206.preheader
 
+.preheader.preheader:                             ; preds = %.preheader.loopexit, %.preheader173
+  %.6208.ph = phi i32 [ %.4143, %.preheader173 ], [ %8, %.preheader.loopexit ]
+  br label %.preheader
+
 .lr.ph206.preheader:                              ; preds = %.preheader173
   %i.cc = sext i32 %.4143 to i64
-  %7 = add nuw nsw i32 %i.n, 1                    ; 2 uses
+  %7 = zext nneg i32 %i.n to i64
   br label %.lr.ph206
 
+.preheader.loopexit:                              ; preds = %bb.n
+  %8 = trunc nsw i64 %indvars.iv.next238 to i32
+  br label %.preheader.preheader
+
 .lr.ph206:                                        ; preds = %.lr.ph206.preheader, %bb.n
-  %indvars.iv237 = phi i64 [ %i.cc, %.lr.ph206.preheader ], [ %indvars.iv.next238, %bb.n ] ; 4 uses
+  %indvars.iv237 = phi i64 [ %i.cc, %.lr.ph206.preheader ], [ %indvars.iv.next238, %bb.n ] ; 5 uses
   %i.cd = shl i64 %indvars.iv237, 32
   %sext = add i64 %i.cd, 8589934592
   %i.ce = ashr exact i64 %sext, 32
@@ -220,13 +228,8 @@ bb.n:                                             ; preds = %.lr.ph206
   %indvars.iv.next238 = add nsw i64 %indvars.iv237, 1 ; 2 uses
   %i.cg = getelementptr i8, ptr %4, i64 %indvars.iv237
   store i8 32, ptr %i.cg, align 1
-  %lftr.wideiv = trunc i64 %indvars.iv.next238 to i32
-  %exitcond.not = icmp eq i32 %7, %lftr.wideiv
-  br i1 %exitcond.not, label %.preheader.preheader, label %.lr.ph206, !llvm.loop !18
-
-.preheader.preheader:                             ; preds = %bb.n, %.preheader173
-  %.6208.ph = phi i32 [ %.4143, %.preheader173 ], [ %7, %bb.n ]
-  br label %.preheader
+  %.not171.not = icmp slt i64 %indvars.iv237, %7
+  br i1 %.not171.not, label %.lr.ph206, label %.preheader.loopexit, !llvm.loop !18
 
 .preheader:                                       ; preds = %.preheader.preheader, %bb.q
   %i.ch = phi i64 [ %i.cx, %bb.q ], [ 0, %.preheader.preheader ]

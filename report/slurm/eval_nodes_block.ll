@@ -201,8 +201,8 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
   %i.qt = trunc nuw nsw i64 %indvars.iv.next to i32
   store i32 %i.qt, ptr %i.k, align 4
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.loopexit1110, label %scalar.ph, !llvm.loop !23
+  %2 = icmp samesign ult i64 %indvars.iv.next, %wide.trip.count
+  br i1 %2, label %scalar.ph, label %.loopexit1110, !llvm.loop !23
 
 .loopexit1110:                                    ; preds = %scalar.ph, %middle.block, %bb.dc, %bb.db
   %i.qu = phi ptr [ null, %bb.db ], [ %i.pi, %bb.dc ], [ %i.ml, %middle.block ], [ %i.ml, %scalar.ph ] ; 4 uses

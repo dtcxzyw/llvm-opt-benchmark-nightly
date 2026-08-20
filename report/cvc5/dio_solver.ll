@@ -203,12 +203,13 @@ bb.c:                                             ; preds = %bb.b
   %i.i = ptrtoint ptr %i.g to i64
   %i.j = ptrtoint ptr %i.h to i64
   %i.k = sub i64 %i.i, %i.j
-  %i.l = sdiv exact i64 %i.k, 24
+  %i.l = sdiv i64 %i.k, 24
+  %umax.i58 = tail call i64 @llvm.umax.i64(i64 %i.l, i64 1)
   br label %.lr.ph.i58
 
 bb.d:                                             ; preds = %.lr.ph.i58
   %i.m = add nuw i64 %.0710.i59, 1                ; 2 uses
-  %exitcond.not.i60 = icmp eq i64 %i.m, %i.l
+  %exitcond.not.i60 = icmp eq i64 %i.m, %umax.i58
   br i1 %exitcond.not.i60, label %.loopexit, label %.lr.ph.i58, !llvm.loop !131
 
 .lr.ph.i58:                                       ; preds = %bb.d, %.lr.ph.preheader.i57
@@ -325,14 +326,15 @@ bb.a:
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = sub i64 %i.e, %i.f
-  %i.h = sdiv exact i64 %i.g, 24
+  %i.h = sdiv i64 %i.g, 24
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1)
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader
   %.0710 = phi i64 [ %i.j, %.lr.ph ], [ 0, %.lr.ph.preheader ] ; 2 uses
   %i.i = tail call noundef zeroext i1 @_ZN4cvc58internal6theory5arith6linear9DioSolver24debugSubstitutionAppliesEmm(ptr noundef nonnull align 8 dereferenceable(1032) %0, i64 noundef %.0710, i64 noundef %1) ; 2 uses
   %i.j = add nuw i64 %.0710, 1                    ; 2 uses
-  %exitcond.not = icmp eq i64 %i.j, %i.h
+  %exitcond.not = icmp eq i64 %i.j, %umax
   %or.cond = select i1 %i.i, i1 true, i1 %exitcond.not
   br i1 %or.cond, label %._crit_edge, label %.lr.ph, !llvm.loop !131
 
@@ -735,7 +737,8 @@ _ZN4cvc57context3CDOImEaSERKm.exit11:             ; preds = %bb.g, %bb.h
   %i.cd = ptrtoint ptr %i.cb to i64
   %i.ce = ptrtoint ptr %i.cc to i64
   %i.cf = sub i64 %i.cd, %i.ce
-  %i.cg = sdiv exact i64 %i.cf, 24
+  %i.cg = sdiv i64 %i.cf, 24
+  %umax.i = call i64 @llvm.umax.i64(i64 %i.cg, i64 1)
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.preheader.i
@@ -743,7 +746,7 @@ _ZN4cvc57context3CDOImEaSERKm.exit11:             ; preds = %bb.g, %bb.h
   %.078.i = phi i64 [ %i.ch, %.lr.ph.i ], [ %i.ca, %.lr.ph.preheader.i ]
   %i.ch = call noundef i64 @_ZN4cvc58internal6theory5arith6linear9DioSolver17applySubstitutionEmm(ptr noundef nonnull align 8 dereferenceable(1032) %0, i64 noundef %.09.i, i64 noundef %.078.i) ; 2 uses
   %i.ci = add nuw i64 %.09.i, 1                   ; 2 uses
-  %exitcond.not.i = icmp eq i64 %i.ci, %i.cg
+  %exitcond.not.i = icmp eq i64 %i.ci, %umax.i
   br i1 %exitcond.not.i, label %_ZN4cvc58internal6theory5arith6linear9DioSolver28applyAllSubstitutionsToIndexEm.exit, label %.lr.ph.i, !llvm.loop !199
 
 _ZN4cvc58internal6theory5arith6linear9DioSolver28applyAllSubstitutionsToIndexEm.exit: ; preds = %.lr.ph.i, %_ZN4cvc57context3CDOImEaSERKm.exit11
@@ -863,7 +866,8 @@ bb.a:
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = sub i64 %i.e, %i.f
-  %i.h = sdiv exact i64 %i.g, 24
+  %i.h = sdiv i64 %i.g, 24
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1)
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
@@ -875,7 +879,7 @@ bb.a:
   %.078 = phi i64 [ %i.i, %.lr.ph ], [ %1, %.lr.ph.preheader ]
   %i.i = tail call noundef i64 @_ZN4cvc58internal6theory5arith6linear9DioSolver17applySubstitutionEmm(ptr noundef nonnull align 8 dereferenceable(1032) %0, i64 noundef %.09, i64 noundef %.078) ; 2 uses
   %i.j = add nuw i64 %.09, 1                      ; 2 uses
-  %exitcond.not = icmp eq i64 %i.j, %i.h
+  %exitcond.not = icmp eq i64 %i.j, %umax
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !199
 }
 

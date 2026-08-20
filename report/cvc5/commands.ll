@@ -203,8 +203,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = ptrtoint ptr %i.e to i64
-  %i.h = sub i64 %i.f, %i.g                       ; 2 uses
-  %i.i = sdiv exact i64 %i.h, 24
+  %i.h = sub i64 %i.f, %i.g
+  %i.i = sdiv i64 %i.h, 24                        ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.k = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull @.str.28, i64 noundef 1) ; 0 uses
   %i.l = load ptr, ptr %i.j, align 8, !tbaa !110
@@ -213,7 +213,7 @@ bb.b:                                             ; preds = %bb.a
   %i.o = load ptr, ptr %i.b, align 8, !tbaa !110
   %i.p = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZN4cvc5lsERSoRKNS_4TermE(ptr noundef nonnull align 8 dereferenceable(8) %i.m, ptr noundef nonnull align 8 dereferenceable(24) %i.o)
   %i.q = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.p, ptr noundef nonnull @.str.29, i64 noundef 1) ; 0 uses
-  %exitcond.peel.not = icmp eq i64 %i.h, 24
+  %exitcond.peel.not = icmp ult i64 %i.i, 2
   br i1 %exitcond.peel.not, label %._crit_edge, label %.peel.next
 
 ._crit_edge:                                      ; preds = %.peel.next, %bb.b, %bb.a
@@ -269,7 +269,7 @@ _ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_.exit: ; preds = %bb.d
   %i.aq = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZN4cvc5lsERSoRKNS_4TermE(ptr noundef nonnull align 8 dereferenceable(8) %i.am, ptr noundef nonnull align 8 dereferenceable(24) %i.ap)
   %i.ar = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.aq, ptr noundef nonnull @.str.29, i64 noundef 1) ; 0 uses
   %i.as = add nuw i64 %.012, 1                    ; 2 uses
-  %exitcond.not = icmp eq i64 %i.as, %i.i
+  %exitcond.not = icmp eq i64 %i.i, %i.as
   br i1 %exitcond.not, label %._crit_edge, label %.peel.next, !llvm.loop !309
 }
 
@@ -672,10 +672,10 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = ptrtoint ptr %i.e to i64
-  %i.h = sub i64 %i.f, %i.g                       ; 2 uses
-  %i.i = sdiv exact i64 %i.h, 24
+  %i.h = sub i64 %i.f, %i.g
+  %i.i = sdiv i64 %i.h, 24                        ; 2 uses
   %i.j = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZN4cvc5lsERSoRKNS_4TermE(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull align 8 dereferenceable(24) %i.e) ; 0 uses
-  %exitcond.peel.not = icmp eq i64 %i.h, 24
+  %exitcond.peel.not = icmp ult i64 %i.i, 2
   br i1 %exitcond.peel.not, label %._crit_edge, label %.lr.ph.peel.next
 
 ._crit_edge:                                      ; preds = %.lr.ph.peel.next, %bb.b, %bb.a
@@ -725,7 +725,7 @@ _ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_.exit: ; preds = %bb.d
   %i.ad = getelementptr inbounds nuw [24 x i8], ptr %i.ac, i64 %.011
   %i.ae = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZN4cvc5lsERSoRKNS_4TermE(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull align 8 dereferenceable(24) %i.ad) ; 0 uses
   %i.af = add nuw i64 %.011, 1                    ; 2 uses
-  %exitcond.not = icmp eq i64 %i.af, %i.i
+  %exitcond.not = icmp eq i64 %i.i, %i.af
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.peel.next, !llvm.loop !311
 }
 
@@ -1063,7 +1063,7 @@ bb.q:                                             ; preds = %._crit_edge
   %i.ax = ptrtoint ptr %i.av to i64
   %i.ay = ptrtoint ptr %i.aw to i64
   %i.az = sub i64 %i.ax, %i.ay
-  %i.ba = sdiv exact i64 %i.az, 24
+  %i.ba = sdiv i64 %i.az, 24
   %i.bb = getelementptr inbounds nuw i8, ptr %10, i64 16 ; 7 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %10, i64 8
   %i.bd = getelementptr inbounds nuw i8, ptr %10, i64 32 ; 5 uses
@@ -1076,6 +1076,7 @@ bb.q:                                             ; preds = %._crit_edge
   %i.bk = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 3 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %7, i64 16
   %i.bm = getelementptr inbounds nuw i8, ptr %11, i64 16
+  %umax = call i64 @llvm.umax.i64(i64 %i.ba, i64 1)
   %i.bn = getelementptr inbounds nuw i8, ptr %13, i64 40
   %i.bo = getelementptr inbounds nuw i8, ptr %13, i64 24
   br label %bb.s
@@ -1377,7 +1378,7 @@ _ZNSt6vectorIN4cvc54TermESaIS1_EED2Ev.exit:       ; preds = %_ZSt8_DestroyIPN4cv
   call void @_ZN4cvc54TermD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %8) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #30
   %i.ep = add nuw i64 %.025145, 1                 ; 2 uses
-  %exitcond.not = icmp eq i64 %i.ep, %i.ba
+  %exitcond.not = icmp eq i64 %i.ep, %umax
   br i1 %exitcond.not, label %._crit_edge148, label %bb.s, !llvm.loop !327
 
 bb.as:                                            ; preds = %bb.s

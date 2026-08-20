@@ -203,11 +203,11 @@ bb.i:                                             ; preds = %_ZN7rocksdb13Config
   %i.ah = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %0, %10
   %i.ai = getelementptr inbounds nuw i8, ptr %10, i64 1
-  %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 5 uses
+  %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 4 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 2 ; 3 uses
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 3 ; 3 uses
   %i.am = getelementptr inbounds nuw i8, ptr %10, i64 4
-  %i.an = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 3 uses
+  %i.an = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 4 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %10, i64 5 ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 5 ; 5 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 3 uses
@@ -226,7 +226,7 @@ bb.j:                                             ; preds = %_ZNSt7__cxx1112basi
   %i.ay = phi i8 [ 0, %bb.i ], [ %i.dq, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i ] ; 3 uses
   %i.az = phi i64 [ 0, %bb.i ], [ %i.dw, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i ]
   %.012.i.i.i = phi i64 [ 0, %bb.i ], [ %i.dx, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i ] ; 2 uses
-  %i.ba = phi <4 x i8> [ zeroinitializer, %bb.i ], [ %i.dr, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i ] ; 6 uses
+  %i.ba = phi <4 x i8> [ zeroinitializer, %bb.i ], [ %i.dr, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i ] ; 7 uses
   %i.bb = load i64, ptr %i.af, align 8, !tbaa !40, !noalias !665
   %i.bc = icmp ult i64 %.012.i.i.i, %i.bb
   %i.bd = icmp ne i64 %i.az, -1
@@ -547,8 +547,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit31.i.i.i: ; preds 
   br label %bb.az
 
 bb.aj:                                            ; preds = %bb.j
-  store i8 0, ptr %0, align 8
-  store <4 x i8> %i.ba, ptr %i.aj, align 1
+  %13 = shufflevector <4 x i8> %i.ba, <4 x i8> <i8 0, i8 poison, i8 poison, i8 poison>, <4 x i32> <i32 4, i32 0, i32 1, i32 2>
+  store <4 x i8> %13, ptr %0, align 8
+  %14 = extractelement <4 x i8> %i.ba, i64 3
+  store i8 %14, ptr %i.an, align 4
   store i8 %i.ay, ptr %i.ap, align 1
   store ptr %.pre15.i.i.i45, ptr %i.ae, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #26, !noalias !665

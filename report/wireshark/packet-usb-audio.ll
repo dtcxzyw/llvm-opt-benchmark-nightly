@@ -201,8 +201,8 @@ dissect_usb_midi_event.exit:                      ; preds = %bb.n, %bb.h, %bb.o,
   store i8 %i.ao, ptr %i.n, align 8
   %i.bh = add nuw nsw i32 %.02124, 4
   %i.bi = add nuw nsw i32 %.025, 1                ; 2 uses
-  %exitcond.not = icmp eq i32 %i.bi, %i.l
-  br i1 %exitcond.not, label %.loopexit, label %bb.e, !llvm.loop !8
+  %4 = icmp slt i32 %i.bi, %i.l
+  br i1 %4, label %bb.e, label %.loopexit, !llvm.loop !8
 
 bb.q:                                             ; preds = %bb.c
   %i.bj = tail call ptr @proto_tree_add_expert(ptr noundef %2, ptr noundef %1, ptr noundef nonnull @ei_usb_audio_undecoded, ptr noundef %0, i32 noundef 0, i32 noundef %i.g) ; 0 uses
@@ -605,7 +605,8 @@ bb.q:                                             ; preds = %bb.p
   %i.cn = load i32, ptr @ett_ac_if_fu_control_v2, align 4
   %i.co = tail call ptr @proto_tree_add_bitmask(ptr noundef %i.cl, ptr noundef %0, i32 noundef 5, i32 noundef %i.cm, i32 noundef %i.cn, ptr noundef nonnull @dissect_ac_if_feature_unit.v2_fu_controls, i32 noundef -2147483648)
   tail call void (ptr, ptr, ...) @proto_item_prepend_text(ptr noundef %i.co, ptr noundef nonnull @.str.872, ptr noundef nonnull @.str.873, i32 noundef 0)
-  %exitcond.peel.not = icmp ult i8 %4, 14
+  %5 = add i8 %4, -10
+  %exitcond.peel.not = icmp ult i8 %5, 4
   br i1 %exitcond.peel.not, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph

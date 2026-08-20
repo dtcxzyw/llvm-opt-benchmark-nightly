@@ -204,10 +204,11 @@ bb.a:
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = sub i64 %i.d, %i.e
-  %i.g = sdiv exact i64 %i.f, 48
+  %i.g = sdiv i64 %i.f, 48
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.i = load i64, ptr %i.h, align 8, !tbaa !34   ; 3 uses
   %i.j = load ptr, ptr %0, align 8
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.g, i64 1)
   %i.k = icmp eq i64 %i.i, 0
   br label %bb.b
 
@@ -230,7 +231,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit:
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread10: ; preds = %bb.b, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit
   %i.r = add nuw i64 %.0812, 1                    ; 2 uses
-  %exitcond.not = icmp eq i64 %i.r, %i.g
+  %exitcond.not = icmp eq i64 %i.r, %umax
   br i1 %exitcond.not, label %.thread, label %bb.b, !llvm.loop !56
 
 .thread:                                          ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread10, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit, %bb.c, %bb.a
@@ -633,11 +634,12 @@ bb.ac:                                            ; preds = %.lr.ph, %_ZNSt6vect
   %i.ct = ptrtoint ptr %i.cr to i64
   %i.cu = ptrtoint ptr %i.cs to i64
   %i.cv = sub i64 %i.ct, %i.cu
-  %i.cw = sdiv exact i64 %i.cv, 48                ; 2 uses
+  %i.cw = sdiv i64 %i.cv, 48
   %i.cx = getelementptr inbounds nuw i8, ptr %.sroa.0183.0258, i64 8
   %i.cy = load i64, ptr %i.cx, align 8, !tbaa !34
   %.fr285 = freeze i64 %i.cy                      ; 3 uses
   %i.cz = load ptr, ptr %.sroa.0183.0258, align 8
+  %umax.i = call i64 @llvm.umax.i64(i64 %i.cw, i64 1) ; 2 uses
   %i.da = icmp eq i64 %.fr285, 0
   br i1 %i.da, label %.lr.ph.i92.split.us, label %.lr.ph.i92.split
 
@@ -651,7 +653,7 @@ bb.ac:                                            ; preds = %.lr.ph, %_ZNSt6vect
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread10.i94.us: ; preds = %.lr.ph.i92.split.us
   %i.df = add nuw i64 %.0812.i93.us, 1            ; 2 uses
-  %exitcond.not.i95.us = icmp eq i64 %i.df, %i.cw
+  %exitcond.not.i95.us = icmp eq i64 %i.df, %umax.i
   br i1 %exitcond.not.i95.us, label %_ZN3igl7tinyply13find_propertyERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorINS0_11PlyPropertyESaISA_EE.exit.thread, label %.lr.ph.i92.split.us, !llvm.loop !56
 
 .lr.ph.i92.split:                                 ; preds = %.lr.ph.i92, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread10.i94
@@ -670,7 +672,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread10.i94: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.i96, %.lr.ph.i92.split
   %i.dm = add nuw i64 %.0812.i93, 1               ; 2 uses
-  %exitcond.not.i95 = icmp eq i64 %i.dm, %i.cw
+  %exitcond.not.i95 = icmp eq i64 %i.dm, %umax.i
   br i1 %exitcond.not.i95, label %_ZN3igl7tinyply13find_propertyERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorINS0_11PlyPropertyESaISA_EE.exit.thread, label %.lr.ph.i92.split, !llvm.loop !56
 
 _ZN3igl7tinyply13find_propertyERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorINS0_11PlyPropertyESaISA_EE.exit: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.i96, %.lr.ph.i92.split.us
@@ -928,11 +930,12 @@ bb.aw:                                            ; preds = %.lr.ph270, %bb.av
   %i.gb = ptrtoint ptr %i.fz to i64
   %i.gc = ptrtoint ptr %i.ga to i64
   %i.gd = sub i64 %i.gb, %i.gc
-  %i.ge = sdiv exact i64 %i.gd, 48                ; 2 uses
+  %i.ge = sdiv i64 %i.gd, 48
   %i.gf = getelementptr inbounds nuw i8, ptr %.sroa.0175.0268, i64 8
   %i.gg = load i64, ptr %i.gf, align 8, !tbaa !34
   %.fr = freeze i64 %i.gg                         ; 3 uses
   %i.gh = load ptr, ptr %.sroa.0175.0268, align 8
+  %umax.i107 = call i64 @llvm.umax.i64(i64 %i.ge, i64 1) ; 2 uses
   %i.gi = icmp eq i64 %.fr, 0
   br i1 %i.gi, label %.lr.ph.i106.split.us, label %.lr.ph.i106.split
 
@@ -946,7 +949,7 @@ bb.aw:                                            ; preds = %.lr.ph270, %bb.av
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread10.i108.us: ; preds = %.lr.ph.i106.split.us
   %i.gn = add nuw i64 %.0812.i107.us, 1           ; 2 uses
-  %exitcond.not.i109.us = icmp eq i64 %i.gn, %i.ge
+  %exitcond.not.i109.us = icmp eq i64 %i.gn, %umax.i107
   br i1 %exitcond.not.i109.us, label %_ZN3igl7tinyply13find_propertyERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorINS0_11PlyPropertyESaISA_EE.exit112, label %.lr.ph.i106.split.us, !llvm.loop !56
 
 .lr.ph.i106.split:                                ; preds = %.lr.ph.i106, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread10.i108
@@ -965,7 +968,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread10.i108: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.i110, %.lr.ph.i106.split
   %i.gu = add nuw i64 %.0812.i107, 1              ; 2 uses
-  %exitcond.not.i109 = icmp eq i64 %i.gu, %i.ge
+  %exitcond.not.i109 = icmp eq i64 %i.gu, %umax.i107
   br i1 %exitcond.not.i109, label %_ZN3igl7tinyply13find_propertyERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorINS0_11PlyPropertyESaISA_EE.exit112, label %.lr.ph.i106.split, !llvm.loop !56
 
 _ZN3igl7tinyply13find_propertyERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorINS0_11PlyPropertyESaISA_EE.exit112: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread10.i108, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.i110, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread10.i108.us, %.lr.ph.i106.split.us, %bb.aw
@@ -1368,11 +1371,12 @@ bb.ca:                                            ; preds = %.lr.ph281, %_ZNSt6v
   %i.na = ptrtoint ptr %i.my to i64
   %i.nb = ptrtoint ptr %i.mz to i64
   %i.nc = sub i64 %i.na, %i.nb
-  %i.nd = sdiv exact i64 %i.nc, 48                ; 2 uses
+  %i.nd = sdiv i64 %i.nc, 48
   %i.ne = getelementptr inbounds nuw i8, ptr %.sroa.0163.0279, i64 8
   %i.nf = load i64, ptr %i.ne, align 8, !tbaa !34
   %.fr286 = freeze i64 %i.nf                      ; 3 uses
   %i.ng = load ptr, ptr %.sroa.0163.0279, align 8
+  %umax.i140 = call i64 @llvm.umax.i64(i64 %i.nd, i64 1) ; 2 uses
   %i.nh = icmp eq i64 %.fr286, 0
   br i1 %i.nh, label %.lr.ph.i138.split.us, label %.lr.ph.i138.split
 
@@ -1386,7 +1390,7 @@ bb.ca:                                            ; preds = %.lr.ph281, %_ZNSt6v
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread10.i140.us: ; preds = %.lr.ph.i138.split.us
   %i.nm = add nuw i64 %.0812.i139.us, 1           ; 2 uses
-  %exitcond.not.i141.us = icmp eq i64 %i.nm, %i.nd
+  %exitcond.not.i141.us = icmp eq i64 %i.nm, %umax.i140
   br i1 %exitcond.not.i141.us, label %_ZN3igl7tinyply13find_propertyERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorINS0_11PlyPropertyESaISA_EE.exit144, label %.lr.ph.i138.split.us, !llvm.loop !56
 
 .lr.ph.i138.split:                                ; preds = %.lr.ph.i138, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread10.i140
@@ -1405,7 +1409,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread10.i140: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.i142, %.lr.ph.i138.split
   %i.nt = add nuw i64 %.0812.i139, 1              ; 2 uses
-  %exitcond.not.i141 = icmp eq i64 %i.nt, %i.nd
+  %exitcond.not.i141 = icmp eq i64 %i.nt, %umax.i140
   br i1 %exitcond.not.i141, label %_ZN3igl7tinyply13find_propertyERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorINS0_11PlyPropertyESaISA_EE.exit144, label %.lr.ph.i138.split, !llvm.loop !56
 
 _ZN3igl7tinyply13find_propertyERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorINS0_11PlyPropertyESaISA_EE.exit144: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread10.i140, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.i142, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread10.i140.us, %.lr.ph.i138.split.us, %bb.ca

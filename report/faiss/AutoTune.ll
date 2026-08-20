@@ -204,7 +204,8 @@ bb.k:                                             ; preds = %bb.h
   %i.ab = ptrtoint ptr %i.u to i64
   %i.ac = ptrtoint ptr %i.aa to i64
   %i.ad = sub i64 %i.ab, %i.ac
-  %i.ae = sdiv exact i64 %i.ad, 56
+  %i.ae = sdiv i64 %i.ad, 56
+  %umax = call i64 @llvm.umax.i64(i64 %i.ae, i64 1)
   br label %.lr.ph
 
 bb.l:                                             ; preds = %bb.k
@@ -234,7 +235,7 @@ _ZN5faiss14OperatingPointaSERKS0_.exit:           ; preds = %bb.m
 
 bb.n:                                             ; preds = %.lr.ph
   %i.ao = add nuw i64 %.05478, 1                  ; 2 uses
-  %exitcond.not = icmp eq i64 %i.ao, %i.ae
+  %exitcond.not = icmp eq i64 %i.ao, %umax
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !220
 
 ._crit_edge:                                      ; preds = %bb.n, %.preheader
@@ -637,14 +638,15 @@ bb.a:
   %i.aq = ptrtoint ptr %i.ao to i64
   %i.ar = ptrtoint ptr %i.ap to i64
   %i.as = sub i64 %i.aq, %i.ar
-  %i.at = sdiv exact i64 %i.as, 56
+  %i.at = sdiv i64 %i.as, 56
   %i.au = getelementptr inbounds nuw i8, ptr %i.an, i64 48
   %i.av = load i64, ptr %i.au, align 8, !tbaa !201 ; 3 uses
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.at, i64 1)
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.c
   %i.aw = add nuw i64 %.018, 1                    ; 2 uses
-  %exitcond.not = icmp eq i64 %i.aw, %i.at
+  %exitcond.not = icmp eq i64 %i.aw, %umax
   br i1 %exitcond.not, label %.loopexit, label %bb.c, !llvm.loop !237
 
 bb.c:                                             ; preds = %.lr.ph, %bb.b
@@ -710,14 +712,15 @@ bb.a:
 .lr.ph.preheader:                                 ; preds = %bb.a
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = ptrtoint ptr %i.d to i64
-  %i.g = sub i64 %i.e, %i.f                       ; 2 uses
-  %i.h = sdiv exact i64 %i.g, 56                  ; 3 uses
-  %xtraiter = and i64 %i.h, 1
-  %1 = icmp eq i64 %i.g, 56
+  %i.g = sub i64 %i.e, %i.f
+  %i.h = sdiv i64 %i.g, 56                        ; 2 uses
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1) ; 3 uses
+  %xtraiter = and i64 %umax, 1
+  %1 = icmp ult i64 %i.h, 2
   br i1 %1, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
-  %unroll_iter = and i64 %i.h, -2
+  %unroll_iter = and i64 %umax, -2
   br label %.lr.ph
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %.lr.ph
@@ -727,7 +730,7 @@ bb.a:
 .lr.ph.epil.preheader:                            ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.preheader
   %.07.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %i.am, %._crit_edge.loopexit.unr-lcssa ]
   %.056.epil.init = phi i64 [ 1, %.lr.ph.preheader ], [ %i.al, %._crit_edge.loopexit.unr-lcssa ]
-  %lcmp.mod9 = trunc i64 %i.h to i1
+  %lcmp.mod9 = trunc i64 %umax to i1
   tail call void @llvm.assume(i1 %lcmp.mod9)
   %i.i = getelementptr inbounds nuw [56 x i8], ptr %i.d, i64 %.07.epil.init ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 32
@@ -991,7 +994,8 @@ bb.a:
   %i.f = ptrtoint ptr %i.c to i64
   %i.g = ptrtoint ptr %i.d to i64
   %i.h = sub i64 %i.f, %i.g
-  %i.i = sdiv exact i64 %i.h, 56
+  %i.i = sdiv i64 %i.h, 56
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.i, i64 1)
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader
@@ -1014,7 +1018,7 @@ bb.a:
   %.not.not.not.not = icmp uge i64 %i.s, %i.u     ; 2 uses
   %.not.not.not.not.not = xor i1 %.not.not.not.not, true
   %i.w = add nuw i64 %.01625, 1                   ; 2 uses
-  %exitcond.not = icmp eq i64 %i.w, %i.i
+  %exitcond.not = icmp eq i64 %i.w, %umax
   %or.cond = select i1 %.not.not.not.not.not, i1 true, i1 %exitcond.not
   br i1 %or.cond, label %.critedge, label %.lr.ph, !llvm.loop !245
 
@@ -1417,18 +1421,19 @@ bb.a:
   %i.d = load ptr, ptr %i.a, align 8, !tbaa !83   ; 5 uses
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = ptrtoint ptr %i.d to i64
-  %i.g = sub i64 %i.e, %i.f                       ; 2 uses
-  %i.h = sdiv exact i64 %i.g, 56                  ; 4 uses
+  %i.g = sub i64 %i.e, %i.f
+  %i.h = sdiv i64 %i.g, 56                        ; 3 uses
   %.not.i = icmp eq ptr %i.c, %i.d
   br i1 %.not.i, label %_ZNK5faiss14ParameterSpace14n_combinationsEv.exit, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %bb.a
-  %xtraiter = and i64 %i.h, 1
-  %1 = icmp eq i64 %i.g, 56
+  %umax.i = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1) ; 3 uses
+  %xtraiter = and i64 %umax.i, 1
+  %1 = icmp ult i64 %i.h, 2
   br i1 %1, label %.lr.ph.i.epil.preheader, label %.lr.ph.i.preheader.new
 
 .lr.ph.i.preheader.new:                           ; preds = %.lr.ph.i.preheader
-  %unroll_iter = and i64 %i.h, -2
+  %unroll_iter = and i64 %umax.i, -2
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.i.preheader.new
@@ -1467,7 +1472,7 @@ _ZNK5faiss14ParameterSpace14n_combinationsEv.exit.loopexit.unr-lcssa: ; preds = 
 .lr.ph.i.epil.preheader:                          ; preds = %_ZNK5faiss14ParameterSpace14n_combinationsEv.exit.loopexit.unr-lcssa, %.lr.ph.i.preheader
   %.07.i.epil.init = phi i64 [ 0, %.lr.ph.i.preheader ], [ %i.ac, %_ZNK5faiss14ParameterSpace14n_combinationsEv.exit.loopexit.unr-lcssa ]
   %.056.i.epil.init = phi i64 [ 1, %.lr.ph.i.preheader ], [ %i.ab, %_ZNK5faiss14ParameterSpace14n_combinationsEv.exit.loopexit.unr-lcssa ]
-  %lcmp.mod25 = trunc i64 %i.h to i1
+  %lcmp.mod25 = trunc i64 %umax.i to i1
   tail call void @llvm.assume(i1 %lcmp.mod25)
   %i.ad = getelementptr inbounds nuw [56 x i8], ptr %i.d, i64 %.07.i.epil.init ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 32
@@ -1561,7 +1566,8 @@ bb.a:
   %i.h = ptrtoint ptr %i.e to i64
   %i.i = ptrtoint ptr %i.f to i64
   %i.j = sub i64 %i.h, %i.i
-  %i.k = sdiv exact i64 %i.j, 56
+  %i.k = sdiv i64 %i.j, 56
+  %umax.i = tail call i64 @llvm.umax.i64(i64 %i.k, i64 1)
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.b, %.lr.ph.preheader.i
@@ -1586,7 +1592,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph.i
   %i.y = add nuw i64 %.01625.i, 1                 ; 2 uses
-  %exitcond.not.i = icmp eq i64 %i.y, %i.k
+  %exitcond.not.i = icmp eq i64 %i.y, %umax.i
   br i1 %exitcond.not.i, label %.loopexit24, label %.lr.ph.i, !llvm.loop !245
 
 .loopexit24:                                      ; preds = %bb.b, %bb.a
@@ -1607,7 +1613,8 @@ _ZNK5faiss14ParameterSpace14combination_geEmm.exit: ; preds = %.lr.ph.i, %.loope
   %i.ad = ptrtoint ptr %i.e to i64
   %i.ae = ptrtoint ptr %i.f to i64
   %i.af = sub i64 %i.ad, %i.ae
-  %i.ag = sdiv exact i64 %i.af, 56
+  %i.ag = sdiv i64 %i.af, 56
+  %umax.i14 = tail call i64 @llvm.umax.i64(i64 %i.ag, i64 1)
   br label %.lr.ph.i14
 
 .lr.ph.i14:                                       ; preds = %bb.d, %.lr.ph.preheader.i13
@@ -1632,7 +1639,7 @@ _ZNK5faiss14ParameterSpace14combination_geEmm.exit: ; preds = %.lr.ph.i, %.loope
 
 bb.d:                                             ; preds = %.lr.ph.i14
   %i.au = add nuw i64 %.01625.i15, 1              ; 2 uses
-  %exitcond.not.i19 = icmp eq i64 %i.au, %i.ag
+  %exitcond.not.i19 = icmp eq i64 %i.au, %umax.i14
   br i1 %exitcond.not.i19, label %.loopexit, label %.lr.ph.i14, !llvm.loop !245
 
 .loopexit:                                        ; preds = %bb.d, %_ZNK5faiss14ParameterSpace14combination_geEmm.exit
@@ -1742,14 +1749,15 @@ bb.j:                                             ; preds = %bb.a
 .lr.ph.preheader.i:                               ; preds = %bb.j
   %i.aa = ptrtoint ptr %i.y to i64
   %i.ab = ptrtoint ptr %i.z to i64
-  %i.ac = sub i64 %i.aa, %i.ab                    ; 2 uses
-  %i.ad = sdiv exact i64 %i.ac, 56                ; 3 uses
-  %xtraiter = and i64 %i.ad, 1
-  %14 = icmp eq i64 %i.ac, 56
+  %i.ac = sub i64 %i.aa, %i.ab
+  %i.ad = sdiv i64 %i.ac, 56                      ; 2 uses
+  %umax.i = tail call i64 @llvm.umax.i64(i64 %i.ad, i64 1) ; 3 uses
+  %xtraiter = and i64 %umax.i, 1
+  %14 = icmp ult i64 %i.ad, 2
   br i1 %14, label %.lr.ph.i.epil.preheader, label %.lr.ph.preheader.i.new
 
 .lr.ph.preheader.i.new:                           ; preds = %.lr.ph.preheader.i
-  %unroll_iter = and i64 %i.ad, -2
+  %unroll_iter = and i64 %umax.i, -2
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.preheader.i.new
@@ -1788,7 +1796,7 @@ _ZNK5faiss14ParameterSpace14n_combinationsEv.exit.unr-lcssa: ; preds = %.lr.ph.i
 .lr.ph.i.epil.preheader:                          ; preds = %_ZNK5faiss14ParameterSpace14n_combinationsEv.exit.unr-lcssa, %.lr.ph.preheader.i
   %.07.i.epil.init = phi i64 [ 0, %.lr.ph.preheader.i ], [ %i.ay, %_ZNK5faiss14ParameterSpace14n_combinationsEv.exit.unr-lcssa ]
   %.056.i.epil.init = phi i64 [ 1, %.lr.ph.preheader.i ], [ %i.ax, %_ZNK5faiss14ParameterSpace14n_combinationsEv.exit.unr-lcssa ]
-  %lcmp.mod575 = trunc i64 %i.ad to i1
+  %lcmp.mod575 = trunc i64 %umax.i to i1
   tail call void @llvm.assume(i1 %lcmp.mod575)
   %i.az = getelementptr inbounds nuw [56 x i8], ptr %i.z, i64 %.07.i.epil.init ; 2 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 32
@@ -2191,14 +2199,16 @@ bb.aw:                                            ; preds = %_ZNSt7__cxx1112basi
   %i.ia = ptrtoint ptr %i.hy to i64
   %i.ib = ptrtoint ptr %i.hz to i64
   %i.ic = sub i64 %i.ia, %i.ib
-  %i.id = sdiv exact i64 %i.ic, 56
+  %i.id = sdiv i64 %i.ic, 56
   %i.ie = load ptr, ptr %i.x, align 8, !tbaa !66  ; 2 uses
   %i.if = load ptr, ptr %i.w, align 8, !tbaa !83  ; 4 uses
   %i.ig = icmp eq ptr %i.ie, %i.if                ; 2 uses
   %i.ih = ptrtoint ptr %i.ie to i64
   %i.ii = ptrtoint ptr %i.if to i64
   %i.ij = sub i64 %i.ih, %i.ii
-  %i.ik = sdiv exact i64 %i.ij, 56                ; 2 uses
+  %i.ik = sdiv i64 %i.ij, 56
+  %umax.i.i = call i64 @llvm.umax.i64(i64 %i.ik, i64 1) ; 2 uses
+  %umax = call i64 @llvm.umax.i64(i64 %i.id, i64 1)
   br label %bb.ay
 
 ._crit_edge:                                      ; preds = %_ZNK5faiss14ParameterSpace13update_boundsEmRKNS_14OperatingPointEPdS4_.exit, %bb.aw
@@ -2282,7 +2292,7 @@ bb.ay:                                            ; preds = %.lr.ph341, %_ZNK5fa
 
 bb.az:                                            ; preds = %.lr.ph.i.i195
   %i.kb = add nuw i64 %.01625.i.i, 1              ; 2 uses
-  %exitcond.not.i.i = icmp eq i64 %i.kb, %i.ik
+  %exitcond.not.i.i = icmp eq i64 %i.kb, %umax.i.i
   br i1 %exitcond.not.i.i, label %.loopexit24.i, label %.lr.ph.i.i195, !llvm.loop !245
 
 .loopexit24.i:                                    ; preds = %bb.az, %bb.ay
@@ -2320,7 +2330,7 @@ _ZNK5faiss14ParameterSpace14combination_geEmm.exit.i: ; preds = %.lr.ph.i.i195, 
 
 bb.bb:                                            ; preds = %.lr.ph.i14.i
   %i.ks = add nuw i64 %.01625.i15.i, 1            ; 2 uses
-  %exitcond.not.i19.i = icmp eq i64 %i.ks, %i.ik
+  %exitcond.not.i19.i = icmp eq i64 %i.ks, %umax.i.i
   br i1 %exitcond.not.i19.i, label %.loopexit.i, label %.lr.ph.i14.i, !llvm.loop !245
 
 .loopexit.i:                                      ; preds = %bb.bb, %_ZNK5faiss14ParameterSpace14combination_geEmm.exit.i
@@ -2334,7 +2344,7 @@ bb.bc:                                            ; preds = %.loopexit.i
 _ZNK5faiss14ParameterSpace13update_boundsEmRKNS_14OperatingPointEPdS4_.exit: ; preds = %.lr.ph.i14.i, %.loopexit.i, %bb.bc
   %.1 = phi double [ %i.kt, %bb.bc ], [ %.0339, %.loopexit.i ], [ %.0339, %.lr.ph.i14.i ] ; 2 uses
   %i.kv = add nuw i64 %.094340, 1                 ; 2 uses
-  %exitcond389.not = icmp eq i64 %i.kv, %i.id
+  %exitcond389.not = icmp eq i64 %i.kv, %umax
   br i1 %exitcond389.not, label %._crit_edge, label %bb.ay, !llvm.loop !381
 
 bb.bd:                                            ; preds = %_ZNK5faiss15OperatingPoints10t_for_perfEd.exit

@@ -203,13 +203,14 @@ _ZNSt6vectorImSaImEEC2EmRKmRKS0_.exit.thread:     ; preds = %_ZNSt6vectorImSaImE
   %i.v = ptrtoint ptr %i.t to i64
   %i.w = ptrtoint ptr %i.u to i64
   %i.x = sub i64 %i.v, %i.w
-  %i.y = sdiv exact i64 %i.x, 48                  ; 3 uses
-  %xtraiter = and i64 %i.y, 7                     ; 3 uses
+  %i.y = sdiv i64 %i.x, 48                        ; 2 uses
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.y, i64 1) ; 2 uses
+  %xtraiter = and i64 %umax, 7                    ; 3 uses
   %i.z = icmp ult i64 %i.y, 8
   br i1 %i.z, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
-  %unroll_iter = and i64 %i.y, -8
+  %unroll_iter = and i64 %umax, -8
   br label %.lr.ph
 
 ._crit_edge29:                                    ; preds = %_ZNSt6vectorImSaImEE12emplace_backIJRmEEES3_DpOT_.exit, %_ZNSt6vectorImSaImEEC2EmRKmRKS0_.exit

@@ -203,7 +203,8 @@ _ZNSt6vectorIN7rocksdb20CompactionInputFilesESaIS1_EE9push_backERKS1_.exit: ; pr
   %i.ss = ptrtoint ptr %i.sq to i64
   %i.st = ptrtoint ptr %i.sr to i64
   %i.su = sub i64 %i.ss, %i.st
-  %i.sv = sdiv exact i64 %i.su, 56
+  %i.sv = sdiv i64 %i.su, 56
+  %umax = call i64 @llvm.umax.i64(i64 %i.sv, i64 1)
   br label %.lr.ph500
 
 .lr.ph500:                                        ; preds = %.lr.ph500.preheader, %.loopexit437
@@ -243,7 +244,7 @@ _ZN7rocksdb16CompactionPicker20AreFilesInCompactionERKSt6vectorIPNS_12FileMetaDa
 
 .loopexit437:                                     ; preds = %bb.dl, %.lr.ph500
   %i.tl = add nuw i64 %.0499, 1                   ; 2 uses
-  %exitcond528.not = icmp eq i64 %i.tl, %i.sv
+  %exitcond528.not = icmp eq i64 %i.tl, %umax
   br i1 %exitcond528.not, label %.critedge279, label %.lr.ph500, !llvm.loop !469
 
 .critedge279:                                     ; preds = %.loopexit437, %_ZNSt6vectorIN7rocksdb20CompactionInputFilesESaIS1_EE9push_backERKS1_.exit

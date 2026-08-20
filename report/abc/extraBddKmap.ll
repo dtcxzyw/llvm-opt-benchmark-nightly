@@ -204,9 +204,8 @@ bb.o:                                             ; preds = %bb.m
   %fputc340573 = tail call i32 @fputc(i32 10, ptr %0) ; 0 uses
   %i.dx = icmp sgt i32 %.0322, -6
   %.not495 = icmp eq i32 %i.dc, 31
-  %8 = tail call i32 @llvm.smax.i32(i32 %i.db, i32 -2)
   %smax534 = tail call i32 @llvm.smax.i32(i32 %i.de, i32 1)
-  %i.dy = add nsw i32 %8, 2
+  %i.dy = add nsw i32 %i.db, 2
   br label %.preheader425
 
 .preheader425:                                    ; preds = %.preheader425.lr.ph, %._crit_edge457

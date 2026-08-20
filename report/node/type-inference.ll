@@ -203,8 +203,9 @@ bb.t:                                             ; preds = %bb.w
   %i.en = ptrtoint ptr %i.el to i64
   %i.eo = ptrtoint ptr %i.em to i64
   %i.ep = sub i64 %i.en, %i.eo
-  %i.eq = sdiv exact i64 %i.ep, 24
+  %i.eq = sdiv i64 %i.ep, 24
   %i.er = load ptr, ptr %i.ad, align 8
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.eq, i64 1)
   br label %bb.y
 
 .lr.ph104:                                        ; preds = %.preheader96, %bb.t
@@ -236,7 +237,7 @@ bb.w:                                             ; preds = %bb.u, %.lr.ph104
 
 bb.x:                                             ; preds = %bb.y
   %i.fe = add nuw i64 %.0105, 1                   ; 2 uses
-  %exitcond.not = icmp eq i64 %i.fe, %i.eq
+  %exitcond.not = icmp eq i64 %i.fe, %umax
   br i1 %exitcond.not, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %bb.y, !llvm.loop !15
 
 bb.y:                                             ; preds = %.lr.ph106, %bb.x
@@ -638,6 +639,9 @@ declare i64 @llvm.umin.i64(i64, i64) #17
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #18
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umax.i64(i64, i64) #17
 
 attributes #0 = { mustprogress uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

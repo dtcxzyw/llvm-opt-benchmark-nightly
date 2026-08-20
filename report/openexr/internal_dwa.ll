@@ -204,9 +204,7 @@ bb.e:                                             ; preds = %bb.e, %.epil.prehea
   %i.cj = shl nsw i32 %i.t, 3
   %i.ck = sext i32 %i.cj to i64
   %i.cl = zext i32 %i.n to i64
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.i, i32 1)
-  %smax495 = tail call i32 @llvm.smax.i32(i32 %i.m, i32 1)
-  %wide.trip.count474 = zext nneg i32 %smax to i64
+  %wide.trip.count474 = zext nneg i32 %i.i to i64
   %wide.trip.count459 = zext nneg i32 %i.e to i64
   %wide.trip.count464 = zext nneg i32 %i.e to i64
   %wide.trip.count469 = zext nneg i32 %i.e to i64
@@ -609,7 +607,7 @@ bb.ba:                                            ; preds = %bb.az
 ._crit_edge423:                                   ; preds = %.loopexit352, %.preheader355
   %i.yt = add nuw nsw i32 %.0274426, 1            ; 2 uses
   %indvars.iv.next478 = add nuw nsw i64 %indvars.iv477, 8
-  %exitcond496.not = icmp eq i32 %i.yt, %smax495
+  %exitcond496.not = icmp eq i32 %i.yt, %i.m
   br i1 %exitcond496.not, label %.preheader349, label %bb.g, !llvm.loop !292
 
 .preheader349:                                    ; preds = %._crit_edge423, %.preheader356
@@ -1011,9 +1009,6 @@ declare i16 @llvm.ctpop.i16(i16) #9
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #19
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #9
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #20

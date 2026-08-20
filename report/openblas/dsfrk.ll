@@ -108,11 +108,9 @@ bb.n:                                             ; preds = %bb.m
   %i.ae = add nuw nsw i32 %i.o, 1
   %i.af = mul nuw nsw i32 %i.ae, %i.o
   %i.ag = lshr i32 %i.af, 1
-  %10 = add nsw i32 %i.ag, -1
-  %i.ah = zext nneg i32 %10 to i64
+  %i.ah = zext nneg i32 %i.ag to i64
   %i.ai = shl nuw nsw i64 %i.ah, 3
-  %11 = add nuw nsw i64 %i.ai, 8
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %9, i8 0, i64 %11, i1 false), !tbaa !9
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %9, i8 0, i64 %i.ai, i1 false), !tbaa !9
   br label %.loopexit
 
 .thread487:                                       ; preds = %.thread488, %bb.l, %bb.n

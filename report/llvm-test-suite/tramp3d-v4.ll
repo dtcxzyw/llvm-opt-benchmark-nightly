@@ -204,7 +204,7 @@ bb.a:
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !791
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 24
   store i32 %.01722.us, ptr %i.y, align 4, !tbaa !4
-  %niter45.next.3 = add nuw nsw i32 %niter45, 4   ; 2 uses
+  %niter45.next.3 = add i32 %niter45, 4           ; 2 uses
   %niter45.ncmp.3 = icmp eq i32 %niter45.next.3, %unroll_iter44
   br i1 %niter45.ncmp.3, label %._crit_edge.us.unr-lcssa, label %.preheader.us.new, !llvm.loop !793
 
@@ -607,15 +607,14 @@ _ZN11FieldEngineI22UniformRectilinearMeshI10MeshTraitsILi3Ed21UniformRectilinear
   %i.dt = load ptr, ptr %i.ds, align 8, !tbaa !1185
   %i.du = load i64, ptr %i.l, align 8, !tbaa !1188
   %i.dv = getelementptr inbounds [56 x i8], ptr %i.dt, i64 %i.du
-  %i.dw = getelementptr inbounds [56 x i8], ptr %i.dv, i64 %i.dq ; 6 uses
+  %i.dw = getelementptr inbounds [56 x i8], ptr %i.dv, i64 %i.dq ; 5 uses
   store double 0.000000e+00, ptr %i.dw, align 8, !tbaa !1190
   %i.dx = getelementptr inbounds nuw i8, ptr %i.dw, i64 8
   store <4 x i32> %i.di, ptr %i.dx, align 8, !tbaa !4
   %i.dy = getelementptr inbounds nuw i8, ptr %i.dw, i64 24
-  store <2 x i32> %i.dj, ptr %i.dy, align 8, !tbaa !4
-  %5 = getelementptr inbounds nuw i8, ptr %i.dw, i64 32
-  %6 = shufflevector <4 x i32> %i.di, <4 x i32> poison, <2 x i32> <i32 0, i32 2>
-  store <2 x i32> %6, ptr %5, align 8
+  %5 = shufflevector <2 x i32> %i.dj, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %6 = shufflevector <4 x i32> %i.di, <4 x i32> %5, <4 x i32> <i32 4, i32 5, i32 0, i32 2>
+  store <4 x i32> %6, ptr %i.dy, align 8
   %.sroa.19.32..sroa_idx = getelementptr inbounds nuw i8, ptr %i.dw, i64 40
   store i32 %i.dk, ptr %.sroa.19.32..sroa_idx, align 8
   %i.dz = getelementptr inbounds nuw i8, ptr %i.dw, i64 48 ; 2 uses
@@ -1018,14 +1017,13 @@ _ZN11FieldEngineI22UniformRectilinearMeshI10MeshTraitsILi3Ed21UniformRectilinear
   %i.dt = load ptr, ptr %i.ds, align 8, !tbaa !3766
   %i.du = load i64, ptr %i.l, align 8, !tbaa !3773
   %i.dv = getelementptr inbounds [48 x i8], ptr %i.dt, i64 %i.du
-  %i.dw = getelementptr inbounds [48 x i8], ptr %i.dv, i64 %i.dq ; 5 uses
+  %i.dw = getelementptr inbounds [48 x i8], ptr %i.dv, i64 %i.dq ; 4 uses
   %i.dx = getelementptr inbounds nuw i8, ptr %i.dw, i64 4
   store <4 x i32> %i.di, ptr %i.dx, align 4, !tbaa !4
   %i.dy = getelementptr inbounds nuw i8, ptr %i.dw, i64 20
-  store <2 x i32> %i.dj, ptr %i.dy, align 4, !tbaa !4
-  %5 = getelementptr inbounds nuw i8, ptr %i.dw, i64 28
-  %6 = shufflevector <4 x i32> %i.di, <4 x i32> poison, <2 x i32> <i32 0, i32 2>
-  store <2 x i32> %6, ptr %5, align 4
+  %5 = shufflevector <2 x i32> %i.dj, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %6 = shufflevector <4 x i32> %i.di, <4 x i32> %5, <4 x i32> <i32 4, i32 5, i32 0, i32 2>
+  store <4 x i32> %6, ptr %i.dy, align 4
   %.sroa.17.28..sroa_idx = getelementptr inbounds nuw i8, ptr %i.dw, i64 36
   store i32 %i.dk, ptr %.sroa.17.28..sroa_idx, align 4
   %i.dz = getelementptr inbounds nuw i8, ptr %i.dw, i64 40 ; 2 uses

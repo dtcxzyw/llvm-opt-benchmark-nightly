@@ -201,18 +201,17 @@ bb.h:                                             ; preds = %bb.c
   br i1 %.not.i25, label %dissect_interface_identifier_range_parameter.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.h, %.lr.ph.i
-  %.016.i.a = phi i32 [ %i.br, %.lr.ph.i ], [ 4, %bb.h ] ; 3 uses
-  %.01315.i = phi i16 [ %4, %.lr.ph.i ], [ 0, %bb.h ]
+  %.016.i.a = phi i32 [ %indvars.iv.next.i, %.lr.ph.i ], [ 0, %bb.h ]
+  %.016.i = phi i32 [ %i.br, %.lr.ph.i ], [ 4, %bb.h ] ; 3 uses
   %i.bm = load i32, ptr @hf_interface_id_start, align 4
-  %i.bn = call ptr @proto_tree_add_item(ptr noundef %i.u, i32 noundef %i.bm, ptr noundef %i.k, i32 noundef %.016.i.a, i32 noundef 4, i32 noundef 0) ; 0 uses
+  %i.bn = call ptr @proto_tree_add_item(ptr noundef %i.u, i32 noundef %i.bm, ptr noundef %i.k, i32 noundef %.016.i, i32 noundef 4, i32 noundef 0) ; 0 uses
   %i.bo = load i32, ptr @hf_interface_id_stop, align 4
-  %i.bp = add i32 %.016.i.a, 4
+  %i.bp = add nuw nsw i32 %.016.i, 4
   %i.bq = call ptr @proto_tree_add_item(ptr noundef %i.u, i32 noundef %i.bo, ptr noundef %i.k, i32 noundef %i.bp, i32 noundef 4, i32 noundef 0) ; 0 uses
-  %i.br = add i32 %.016.i.a, 8
-  %4 = add i16 %.01315.i, 1                       ; 2 uses
-  %5 = zext i16 %4 to i32
-  %6 = icmp samesign ugt i32 %i.bl, %5
-  br i1 %6, label %.lr.ph.i, label %dissect_interface_identifier_range_parameter.exit, !llvm.loop !7
+  %i.br = add nuw nsw i32 %.016.i, 8
+  %indvars.iv.next.i = add nuw nsw i32 %.016.i.a, 1 ; 2 uses
+  %exitcond.not.i = icmp eq i32 %indvars.iv.next.i, %i.bl
+  br i1 %exitcond.not.i, label %dissect_interface_identifier_range_parameter.exit, label %.lr.ph.i, !llvm.loop !7
 
 dissect_interface_identifier_range_parameter.exit: ; preds = %.lr.ph.i, %bb.h
   %i.bs = add i16 %i.bi, -12

@@ -204,8 +204,8 @@ bb.a:
   %i.d = tail call noalias ptr @malloc(i64 noundef %i.c) #53 ; 2 uses
   %i.e = sdiv i32 %1, %3                          ; 15 uses
   %i.f = sdiv i32 %2, %3                          ; 8 uses
-  %i.g = mul nsw i32 %i.f, %i.e                   ; 3 uses
-  %i.h = sext i32 %i.g to i64
+  %i.g = mul nsw i32 %i.f, %i.e                   ; 2 uses
+  %i.h = sext i32 %i.g to i64                     ; 2 uses
   %i.i = shl nsw i64 %i.h, 3
   %i.j = tail call noalias ptr @malloc(i64 noundef %i.i) #53 ; 11 uses
   %i.k = icmp sgt i32 %i.g, 0
@@ -213,7 +213,6 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.l = add nsw i32 %3, -1                       ; 2 uses
-  %wide.trip.count = zext nneg i32 %i.g to i64
   br label %bb.b
 
 .preheader88:                                     ; preds = %bb.b, %bb.a
@@ -249,8 +248,8 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.ae = sitofp <2 x i32> %i.ad to <2 x float>
   store <2 x float> %i.ae, ptr %i.x, align 4
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.preheader88, label %bb.b
+  %4 = icmp slt i64 %indvars.iv.next, %i.h
+  br i1 %4, label %bb.b, label %.preheader88
 
 ._crit_edge98.split:                              ; preds = %._crit_edge, %.lr.ph97, %.preheader88
   tail call void @free(ptr noundef %i.j) #52
@@ -653,7 +652,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.k, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.l = add nsw i32 %3, -1
+  %i.l = add i32 %3, -1
   %i.m = sdiv i32 %3, 2                           ; 2 uses
   %.not61114 = icmp slt i32 %3, -1
   br i1 %.not61114, label %.loopexit, label %.lr.ph
@@ -706,7 +705,7 @@ ImageDrawLine.exit.loopexit.us:                   ; preds = %.lr.ph55.i.us
   br i1 %exitcond138.not, label %.preheader111, label %.thread.i.us
 
 .preheader111:                                    ; preds = %ImageDrawLine.exit.loopexit113, %ImageDrawLine.exit.loopexit.us, %.lr.ph
-  %i.ac = sdiv i32 %i.l, 2
+  %i.ac = sdiv i32 %i.l, 2                        ; 2 uses
   %.not62118 = icmp slt i32 %3, 3
   br i1 %.not62118, label %.loopexit, label %.lr.ph120
 
@@ -726,7 +725,6 @@ ImageDrawLine.exit.loopexit.us:                   ; preds = %.lr.ph55.i.us
   %i.ai = shl i32 %spec.select46.i68, 16
   %.1.i67 = tail call i32 @llvm.abs.i32(i32 %spec.select.i63, i1 true)
   %i.aj = sdiv i32 %i.ai, %.1.i67                 ; 2 uses
-  %smax140 = tail call i32 @llvm.smax.i32(i32 %i.ac, i32 1) ; 2 uses
   br i1 %i.ag, label %.thread.i66.us.preheader, label %.thread.i66.preheader
 
 .thread.i66.preheader:                            ; preds = %.lr.ph120.split
@@ -756,7 +754,7 @@ ImageDrawLine.exit.loopexit.us:                   ; preds = %.lr.ph55.i.us
 
 ImageDrawLine.exit77.loopexit.us:                 ; preds = %.lr.ph55.i73.us
   %i.as = add nuw nsw i32 %.055119.us, 1
-  %exitcond141.not.a = icmp eq i32 %.055119.us, %smax140
+  %exitcond141.not.a = icmp eq i32 %.055119.us, %i.ac
   br i1 %exitcond141.not.a, label %.loopexit, label %.thread.i66.us
 
 .thread.i:                                        ; preds = %.thread.i.preheader, %ImageDrawLine.exit.loopexit113
@@ -800,7 +798,7 @@ ImageDrawLine.exit.loopexit113:                   ; preds = %.lr.ph.i
 
 ImageDrawLine.exit77.loopexit110:                 ; preds = %.lr.ph.i69
   %i.bg = add nuw nsw i32 %.055119, 1
-  %exitcond139.not = icmp eq i32 %.055119, %smax140
+  %exitcond139.not = icmp eq i32 %.055119, %i.ac
   br i1 %exitcond139.not, label %.loopexit, label %.thread.i66
 
 bb.d:                                             ; preds = %bb.b, %bb.a
@@ -810,7 +808,7 @@ bb.d:                                             ; preds = %bb.b, %bb.a
   br i1 %.not58, label %.loopexit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.bj = add nsw i32 %3, -1
+  %i.bj = add i32 %3, -1
   %i.bk = sdiv i32 %3, 2                          ; 2 uses
   %.not59123 = icmp slt i32 %3, -1
   br i1 %.not59123, label %.loopexit, label %.lr.ph125
@@ -859,7 +857,7 @@ ImageDrawLine.exit92.loopexit.us:                 ; preds = %.lr.ph55.i88.us
   br i1 %exitcond143.not.a, label %.preheader, label %.thread.i81.us
 
 .preheader:                                       ; preds = %ImageDrawLine.exit92.loopexit109, %ImageDrawLine.exit92.loopexit.us, %.lr.ph125
-  %i.cc = sdiv i32 %i.bj, 2
+  %i.cc = sdiv i32 %i.bj, 2                       ; 2 uses
   %.not60128 = icmp slt i32 %3, 3
   br i1 %.not60128, label %.loopexit, label %.lr.ph130
 
@@ -882,7 +880,6 @@ ImageDrawLine.exit92.loopexit.us:                 ; preds = %.lr.ph55.i88.us
   %i.cl = shl i32 %spec.select46.i98, 16
   %.1.i97 = tail call i32 @llvm.abs.i32(i32 %spec.select.i93, i1 true)
   %i.cm = sdiv i32 %i.cl, %.1.i97                 ; 2 uses
-  %smax146 = tail call i32 @llvm.smax.i32(i32 %i.cc, i32 1) ; 2 uses
   br i1 %i.ch, label %.thread.i96.us, label %.thread.i96
 
 .thread.i96.us:                                   ; preds = %.lr.ph130.split, %ImageDrawLine.exit107.loopexit.us
@@ -904,7 +901,7 @@ ImageDrawLine.exit92.loopexit.us:                 ; preds = %.lr.ph55.i88.us
 
 ImageDrawLine.exit107.loopexit.us:                ; preds = %.lr.ph55.i103.us
   %i.ct = add nuw nsw i32 %.0129.us, 1
-  %exitcond147.not = icmp eq i32 %.0129.us, %smax146
+  %exitcond147.not = icmp eq i32 %.0129.us, %i.cc
   br i1 %exitcond147.not, label %.loopexit, label %.thread.i96.us
 
 .thread.i81:                                      ; preds = %.lr.ph125.split, %ImageDrawLine.exit92.loopexit109
@@ -948,7 +945,7 @@ ImageDrawLine.exit92.loopexit109:                 ; preds = %.lr.ph.i84
 
 ImageDrawLine.exit107.loopexit108:                ; preds = %.lr.ph.i99
   %i.dh = add nuw nsw i32 %.0129, 1
-  %exitcond145.not = icmp eq i32 %.0129, %smax146
+  %exitcond145.not = icmp eq i32 %.0129, %i.cc
   br i1 %exitcond145.not, label %.loopexit, label %.thread.i96
 
 .loopexit:                                        ; preds = %ImageDrawLine.exit77.loopexit110, %ImageDrawLine.exit77.loopexit.us, %ImageDrawLine.exit107.loopexit108, %ImageDrawLine.exit107.loopexit.us, %bb.e, %bb.c, %.preheader111, %.lr.ph120, %.preheader, %.lr.ph130, %bb.d
@@ -1351,10 +1348,10 @@ bb.cn:                                            ; preds = %.lr.ph76.split.i
 bb.co:                                            ; preds = %.lr.ph.i367
   %i.acj = icmp slt i32 %i.ach, %i.acf
   %spec.select64.i = select i1 %i.acj, i32 %.05367.i, i32 %.05268.i ; 2 uses
-  %i.ack = add nuw i32 %.05367.i, 1
-  %exitcond.not.i368 = icmp eq i32 %.05367.i, %spec.select.i366
+  %i.ack = add nuw nsw i32 %.05367.i, 1
+  %.not.not.i368 = icmp slt i32 %.05367.i, %spec.select.i366
   %i.acl = tail call i32 @llvm.smin.i32(i32 %i.ach, i32 %i.acf)
-  br i1 %exitcond.not.i368, label %._crit_edge.i369, label %.lr.ph.i367
+  br i1 %.not.not.i368, label %.lr.ph.i367, label %._crit_edge.i369
 
 ._crit_edge.i369:                                 ; preds = %bb.co, %.lr.ph.i367, %bb.cn
   %.052.lcssa.i = phi i32 [ 0, %bb.cn ], [ %spec.select64.i, %bb.co ], [ %.05268.i, %.lr.ph.i367 ] ; 2 uses

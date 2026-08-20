@@ -203,14 +203,14 @@ bb.n:                                             ; preds = %.preheader292, %bb.
   %i.fn = load i32, ptr %i.ea, align 8, !tbaa !218
   %i.fo = sub i32 %i.fm, %i.fn
   tail call void @stbte__tile_paint(ptr noundef nonnull %0, i32 noundef %i.fi, i32 noundef %i.fo, i32 noundef %.0301, i32 noundef %.0246302, i32 noundef %.0254310)
-  %i.fp = add nuw i32 %.0301, 1                   ; 2 uses
-  %exitcond.not = icmp eq i32 %i.fp, %spec.select
-  br i1 %exitcond.not, label %._crit_edge, label %bb.n, !llvm.loop !219
+  %i.fp = add nuw nsw i32 %.0301, 1               ; 2 uses
+  %1 = icmp slt i32 %i.fp, %spec.select
+  br i1 %1, label %bb.n, label %._crit_edge, !llvm.loop !219
 
 ._crit_edge:                                      ; preds = %bb.n
-  %i.fq = add nuw i32 %.0246302, 1                ; 2 uses
-  %exitcond336.not = icmp eq i32 %i.fq, %.0253
-  br i1 %exitcond336.not, label %._crit_edge303.split, label %.preheader292, !llvm.loop !220
+  %i.fq = add nuw nsw i32 %.0246302, 1            ; 2 uses
+  %2 = icmp slt i32 %i.fq, %.0253
+  br i1 %2, label %.preheader292, label %._crit_edge303.split, !llvm.loop !220
 
 ._crit_edge303.split:                             ; preds = %._crit_edge, %.preheader295
   %i.fr = icmp eq i32 %.0254310, 0
@@ -376,14 +376,14 @@ bb.q:                                             ; preds = %.preheader, %bb.q
   %i.jn = load i32, ptr %i.ea, align 8, !tbaa !218
   %i.jo = sub i32 %i.jm, %i.jn
   tail call void @stbte__tile(ptr noundef nonnull %0, i32 noundef %i.ji, i32 noundef %i.jo, i32 noundef %.3319, i32 noundef %.3249322)
-  %i.jp = add nuw i32 %.3319, 1                   ; 2 uses
-  %exitcond337.not = icmp eq i32 %i.jp, %spec.select
-  br i1 %exitcond337.not, label %._crit_edge321, label %bb.q, !llvm.loop !226
+  %i.jp = add nuw nsw i32 %.3319, 1               ; 2 uses
+  %3 = icmp slt i32 %i.jp, %spec.select
+  br i1 %3, label %bb.q, label %._crit_edge321, !llvm.loop !226
 
 ._crit_edge321:                                   ; preds = %bb.q
-  %i.jq = add nuw i32 %.3249322, 1                ; 2 uses
-  %exitcond338.not = icmp eq i32 %i.jq, %.0253
-  br i1 %exitcond338.not, label %._crit_edge323.split, label %.preheader, !llvm.loop !227
+  %i.jq = add nuw nsw i32 %.3249322, 1            ; 2 uses
+  %4 = icmp slt i32 %i.jq, %.0253
+  br i1 %4, label %.preheader, label %._crit_edge323.split, !llvm.loop !227
 
 ._crit_edge323.split:                             ; preds = %._crit_edge321, %.loopexit
   %i.jr = load i32, ptr getelementptr inbounds nuw (i8, ptr @stbte__ui, i64 20), align 4, !tbaa !101

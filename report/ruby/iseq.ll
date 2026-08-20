@@ -204,8 +204,7 @@ bb.a:
   br i1 %i.v, label %.preheader43.preheader.i, label %succ_index_table_invert.exit
 
 .preheader43.preheader.i:                         ; preds = %.preheader44.i
-  %smax.i = tail call i32 @llvm.smax.i32(i32 %i.l, i32 1)
-  %wide.trip.count71.i = zext nneg i32 %smax.i to i64
+  %wide.trip.count71.i = zext nneg i32 %i.l to i64
   br label %.preheader43.i
 
 bb.b:                                             ; preds = %.preheader45.i
@@ -607,9 +606,6 @@ declare i64 @rb_obj_is_proc(i64 noundef) local_unnamed_addr #2
 declare i64 @rb_obj_is_method(i64 noundef) local_unnamed_addr #2
 
 declare ptr @rb_method_iseq(i64 noundef) local_unnamed_addr #2
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #17
 
 attributes #0 = { nounwind sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

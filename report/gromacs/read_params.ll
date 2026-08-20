@@ -203,9 +203,10 @@ bb.g:                                             ; preds = %bb.c
   br i1 %i.ab, label %.lr.ph28.i, label %_ZN3gmxL29checkInputConsistencyIntervalERKNS_9AwhParamsEP14WarningHandler.exit
 
 .lr.ph28.i:                                       ; preds = %._crit_edge91
-  %i.ac = udiv exact i64 %.lcssa77, 104
+  %i.ac = udiv i64 %.lcssa77, 104
   %i.ad = getelementptr inbounds nuw i8, ptr %15, i64 8
   %i.ae = getelementptr inbounds nuw i8, ptr %15, i64 16 ; 4 uses
+  %18 = call i64 @llvm.umax.i64(i64 %i.ac, i64 1)
   br label %bb.h
 
 bb.h:                                             ; preds = %._crit_edge.i, %.lr.ph28.i
@@ -227,7 +228,7 @@ bb.h:                                             ; preds = %._crit_edge.i, %.lr
   br label %bb.i
 
 ._crit_edge.i:                                    ; preds = %bb.u, %bb.h
-  %exitcond51.not.i = icmp eq i64 %i.ao, %i.ac
+  %exitcond51.not.i = icmp eq i64 %i.ao, %18
   br i1 %exitcond51.not.i, label %_ZN3gmxL29checkInputConsistencyIntervalERKNS_9AwhParamsEP14WarningHandler.exit, label %bb.h, !llvm.loop !282
 
 bb.i:                                             ; preds = %bb.u, %.lr.ph.i

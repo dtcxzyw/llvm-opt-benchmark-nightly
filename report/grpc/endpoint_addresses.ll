@@ -201,23 +201,33 @@ bb.a:
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = sub i64 %i.d, %i.e                       ; 2 uses
-  %2 = sdiv exact i64 %i.f, 132
   %.not29 = icmp eq ptr %i.b, %i.c
+  br i1 %.not29, label %.._crit_edge_crit_edge, label %.lr.ph
+
+.._crit_edge_crit_edge:                           ; preds = %bb.a
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !12
-  %.pre30 = load ptr, ptr %1, align 8, !tbaa !8   ; 2 uses
+  %.pre30 = load ptr, ptr %1, align 8, !tbaa !8
   %.pre31 = ptrtoint ptr %.pre to i64
   %.pre32 = ptrtoint ptr %.pre30 to i64
-  %.pre34 = sub i64 %.pre31, %.pre32              ; 2 uses
-  br i1 %.not29, label %._crit_edge, label %.lr.ph
+  %.pre34 = sub i64 %.pre31, %.pre32
+  br label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.g = sdiv exact i64 %.pre34, 132
+  %2 = sdiv i64 %i.f, 132
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %4 = load ptr, ptr %3, align 8, !tbaa !12
+  %5 = load ptr, ptr %1, align 8, !tbaa !8        ; 2 uses
+  %6 = ptrtoint ptr %4 to i64
+  %7 = ptrtoint ptr %5 to i64
+  %8 = sub i64 %6, %7                             ; 2 uses
+  %i.g = sdiv exact i64 %8, 132
+  %umax = tail call i64 @llvm.umax.i64(i64 %2, i64 1)
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.f
   %i.h = add nuw i64 %.02128, 1                   ; 2 uses
-  %exitcond.not = icmp eq i64 %i.h, %2
+  %exitcond.not = icmp eq i64 %i.h, %umax
   br i1 %exitcond.not, label %._crit_edge, label %bb.c, !llvm.loop !20
 
 bb.c:                                             ; preds = %.lr.ph, %bb.b
@@ -229,7 +239,7 @@ bb.d:                                             ; preds = %bb.c
   %i.j = getelementptr inbounds nuw [132 x i8], ptr %i.c, i64 %.02128 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 128
   %i.l = load i32, ptr %i.k, align 4, !tbaa !22   ; 3 uses
-  %i.m = getelementptr inbounds nuw [132 x i8], ptr %.pre30, i64 %.02128 ; 2 uses
+  %i.m = getelementptr inbounds nuw [132 x i8], ptr %5, i64 %.02128 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 128
   %i.o = load i32, ptr %i.n, align 4, !tbaa !22   ; 2 uses
   %i.p = icmp ugt i32 %i.l, %i.o
@@ -245,8 +255,9 @@ bb.f:                                             ; preds = %bb.e
   %.not = icmp eq i32 %i.s, 0
   br i1 %.not, label %bb.b, label %.thread
 
-._crit_edge:                                      ; preds = %bb.b, %bb.a
-  %i.t = icmp ugt i64 %.pre34, %i.f
+._crit_edge:                                      ; preds = %bb.b, %.._crit_edge_crit_edge
+  %.pre-phi35 = phi i64 [ %.pre34, %.._crit_edge_crit_edge ], [ %8, %bb.b ]
+  %i.t = icmp ugt i64 %.pre-phi35, %i.f
   br i1 %i.t, label %.thread, label %bb.g
 
 bb.g:                                             ; preds = %._crit_edge

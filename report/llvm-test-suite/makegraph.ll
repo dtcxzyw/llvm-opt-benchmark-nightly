@@ -13,7 +13,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define dso_local noalias noundef ptr @MakeGraph(i32 noundef %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = sdiv i32 %0, %1                          ; 6 uses
+  %i.a = sdiv i32 %0, %1                          ; 5 uses
   %i.b = tail call noalias dereferenceable_or_null(8) ptr @malloc(i64 noundef 8) #7 ; 6 uses
   store ptr null, ptr %i.b, align 8, !tbaa !8
   %puts = tail call i32 @puts(ptr nonnull dereferenceable(1) @str) ; 0 uses
@@ -26,7 +26,7 @@ bb.a:
   br label %._crit_edge
 
 .lr.ph48:                                         ; preds = %bb.a
-  %i.e = sext i32 %i.a to i64                     ; 2 uses
+  %i.e = sext i32 %i.a to i64                     ; 3 uses
   %i.f = mul nsw i64 %i.e, 24
   %i.g = icmp sgt i32 %i.a, 0
   %i.h = sdiv i32 %0, 4                           ; 2 uses
@@ -40,7 +40,6 @@ bb.a:
 
 .lr.ph.us.preheader:                              ; preds = %.lr.ph48
   %i.k = zext nneg i32 %i.c to i64
-  %wide.trip.count = zext nneg i32 %i.a to i64
   br label %.lr.ph.us
 
 .lr.ph.us:                                        ; preds = %.lr.ph.us.preheader, %._crit_edge.us
@@ -62,8 +61,8 @@ bb.b:                                             ; preds = %.lr.ph.us, %bb.b
   %i.r = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   store ptr %.045.us, ptr %i.r, align 8, !tbaa !15
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge.us, label %bb.b, !llvm.loop !16
+  %2 = icmp slt i64 %indvars.iv.next, %i.e
+  br i1 %2, label %bb.b, label %._crit_edge.us, !llvm.loop !16
 
 ._crit_edge.us:                                   ; preds = %bb.b
   %i.s = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv63

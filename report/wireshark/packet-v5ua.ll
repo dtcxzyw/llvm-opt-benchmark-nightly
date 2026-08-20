@@ -201,19 +201,18 @@ bb.ao:                                            ; preds = %bb.p
   br i1 %.not.i.i.i.i, label %dissect_integer_range_interface_identifier_parameter.exit.i.i.i, label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.ao, %.lr.ph.i.i.i.i
-  %.016.i.i.i.i.a = phi i32 [ %i.hf, %.lr.ph.i.i.i.i ], [ 4, %bb.ao ]
-  %.01315.i.i.i.i = phi i16 [ %4, %.lr.ph.i.i.i.i ], [ 0, %bb.ao ]
+  %.016.i.i.i.i.a = phi i32 [ %indvars.iv.next.i.i.i.i, %.lr.ph.i.i.i.i ], [ 0, %bb.ao ]
+  %.016.i.i.i.i = phi i32 [ %i.hf, %.lr.ph.i.i.i.i ], [ 4, %bb.ao ]
   %i.gz = load i32, ptr @hf_if_range_start, align 4
-  %i.ha = and i32 %.016.i.i.i.i.a, 65535          ; 3 uses
+  %i.ha = and i32 %.016.i.i.i.i, 65535            ; 3 uses
   %i.hb = call ptr @proto_tree_add_item(ptr noundef %i.co, i32 noundef %i.gz, ptr noundef %i.bv, i32 noundef %i.ha, i32 noundef 4, i32 noundef 0) ; 0 uses
   %i.hc = load i32, ptr @hf_if_range_end, align 4
   %i.hd = add nuw nsw i32 %i.ha, 4
   %i.he = call ptr @proto_tree_add_item(ptr noundef %i.co, i32 noundef %i.hc, ptr noundef %i.bv, i32 noundef %i.hd, i32 noundef 4, i32 noundef 0) ; 0 uses
   %i.hf = add nuw nsw i32 %i.ha, 8
-  %4 = add i16 %.01315.i.i.i.i, 1                 ; 2 uses
-  %5 = zext i16 %4 to i32
-  %6 = icmp samesign ugt i32 %i.gy, %5
-  br i1 %6, label %.lr.ph.i.i.i.i, label %dissect_integer_range_interface_identifier_parameter.exit.i.i.i, !llvm.loop !8
+  %indvars.iv.next.i.i.i.i = add nuw nsw i32 %.016.i.i.i.i.a, 1 ; 2 uses
+  %exitcond.not.i.i.i.i = icmp eq i32 %indvars.iv.next.i.i.i.i, %i.gy
+  br i1 %exitcond.not.i.i.i.i, label %dissect_integer_range_interface_identifier_parameter.exit.i.i.i, label %.lr.ph.i.i.i.i, !llvm.loop !8
 
 dissect_integer_range_interface_identifier_parameter.exit.i.i.i: ; preds = %.lr.ph.i.i.i.i, %bb.ao
   %i.hg = add i16 %i.gv, -12
@@ -611,8 +610,8 @@ bb.b:                                             ; preds = %bb.a
   tail call void (ptr, ptr, ...) @proto_item_append_text(ptr noundef %2, ptr noundef nonnull @.str.238, i32 noundef %i.v)
   %i.w = add nuw nsw i32 %.027, 4
   %indvars.iv.next = add nuw nsw i32 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i32 %indvars.iv.next, %i.e
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.peel.next, !llvm.loop !10
+  %3 = icmp samesign ugt i32 %i.e, %indvars.iv.next
+  br i1 %3, label %.lr.ph.peel.next, label %._crit_edge, !llvm.loop !10
 
 ._crit_edge:                                      ; preds = %.lr.ph.peel.next, %bb.b, %bb.a
   tail call void (ptr, ptr, ...) @proto_item_append_text(ptr noundef %2, ptr noundef nonnull @.str.239)

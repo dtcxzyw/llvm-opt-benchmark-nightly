@@ -203,12 +203,13 @@ bb.ap:                                            ; preds = %_ZNSt6vectorItSaItE
   %i.cu = ptrtoint ptr %i.cs to i64
   %i.cv = ptrtoint ptr %i.ct to i64
   %i.cw = sub i64 %i.cu, %i.cv
-  %i.cx = sdiv exact i64 %i.cw, 24                ; 2 uses
+  %i.cx = sdiv i64 %i.cw, 24
   %i.cy = load ptr, ptr %i.al, align 8, !tbaa !62
   %i.cz = load ptr, ptr %7, align 8, !tbaa !64    ; 2 uses
   %i.da = ptrtoint ptr %i.cy to i64
   %i.db = ptrtoint ptr %i.cz to i64
   %i.dc = sub i64 %i.da, %i.db                    ; 2 uses
+  %umax = call i64 @llvm.umax.i64(i64 %i.cx, i64 1) ; 2 uses
   br label %bb.aq
 
 bb.aq:                                            ; preds = %.lr.ph128, %_ZSteqItSaItEEbRKSt6vectorIT_T0_ES6_.exit.thread113
@@ -244,11 +245,11 @@ _ZSteqItSaItEEbRKSt6vectorIT_T0_ES6_.exit:        ; preds = %bb.ar
 
 _ZSteqItSaItEEbRKSt6vectorIT_T0_ES6_.exit.thread113: ; preds = %bb.aq, %_ZSteqItSaItEEbRKSt6vectorIT_T0_ES6_.exit
   %i.dl = add nuw i64 %.047126, 1                 ; 2 uses
-  %exitcond135.not = icmp eq i64 %i.dl, %i.cx
+  %exitcond135.not = icmp eq i64 %i.dl, %umax
   br i1 %exitcond135.not, label %.critedge, label %bb.aq, !llvm.loop !71
 
 .critedge:                                        ; preds = %_ZSteqItSaItEEbRKSt6vectorIT_T0_ES6_.exit.thread113, %bb.ap
-  %.047.lcssa = phi i64 [ 0, %bb.ap ], [ %i.cx, %_ZSteqItSaItEEbRKSt6vectorIT_T0_ES6_.exit.thread113 ]
+  %.047.lcssa = phi i64 [ 0, %bb.ap ], [ %umax, %_ZSteqItSaItEEbRKSt6vectorIT_T0_ES6_.exit.thread113 ]
   %i.dm = load ptr, ptr %i.ao, align 8, !tbaa !72
   %.not.i = icmp eq ptr %i.cs, %i.dm
   br i1 %.not.i, label %bb.ax, label %bb.as

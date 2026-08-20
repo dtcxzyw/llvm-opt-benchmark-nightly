@@ -204,8 +204,9 @@ _ZNSt6vectorIN5faiss20simd_result_handlers12RangeHandlerINS0_4CMaxItlEELb1ELNS0_
   %i.w = ptrtoint ptr %i.u to i64
   %i.x = ptrtoint ptr %i.v to i64
   %i.y = sub i64 %i.w, %i.x
-  %i.z = sdiv exact i64 %i.y, 24
+  %i.z = sdiv i64 %i.y, 24
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 184
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.z, i64 1)
   br label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph, %bb.c
@@ -250,7 +251,7 @@ bb.d:                                             ; preds = %.lr.ph55, %bb.d
   %i.aw = getelementptr inbounds nuw [24 x i8], ptr %.sroa.039.0, i64 %i.au
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.aw, ptr noundef nonnull align 8 dereferenceable(24) %i.ap, i64 24, i1 false), !tbaa.struct !13213
   %i.ax = add nuw i64 %.02753, 1                  ; 2 uses
-  %exitcond.not = icmp eq i64 %i.ax, %i.z
+  %exitcond.not = icmp eq i64 %i.ax, %umax
   br i1 %exitcond.not, label %._crit_edge56, label %bb.d, !llvm.loop !13216
 
 .loopexit:                                        ; preds = %bb.h, %bb.g
@@ -653,8 +654,9 @@ _ZNSt6vectorIN5faiss20simd_result_handlers12RangeHandlerINS0_4CMinItlEELb1ELNS0_
   %i.w = ptrtoint ptr %i.u to i64
   %i.x = ptrtoint ptr %i.v to i64
   %i.y = sub i64 %i.w, %i.x
-  %i.z = sdiv exact i64 %i.y, 24
+  %i.z = sdiv i64 %i.y, 24
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 184
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.z, i64 1)
   br label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph, %bb.c
@@ -699,7 +701,7 @@ bb.d:                                             ; preds = %.lr.ph55, %bb.d
   %i.aw = getelementptr inbounds nuw [24 x i8], ptr %.sroa.039.0, i64 %i.au
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.aw, ptr noundef nonnull align 8 dereferenceable(24) %i.ap, i64 24, i1 false), !tbaa.struct !13213
   %i.ax = add nuw i64 %.02753, 1                  ; 2 uses
-  %exitcond.not = icmp eq i64 %i.ax, %i.z
+  %exitcond.not = icmp eq i64 %i.ax, %umax
   br i1 %exitcond.not, label %._crit_edge56, label %bb.d, !llvm.loop !13841
 
 .loopexit:                                        ; preds = %bb.h, %bb.g

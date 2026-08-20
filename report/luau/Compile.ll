@@ -201,10 +201,6 @@ bb.a:
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 2 uses
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !27   ; 2 uses
   %i.w = load ptr, ptr %i.t, align 8, !tbaa !28   ; 2 uses
-  %2 = ptrtoint ptr %i.v to i64
-  %3 = ptrtoint ptr %i.w to i64
-  %4 = sub i64 %2, %3
-  %5 = sdiv exact i64 %4, 24
   %i.x = icmp eq ptr %i.v, %i.w
   br i1 %i.x, label %bb.b, label %.lr.ph43.preheader
 
@@ -213,7 +209,12 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.g
 
 .lr.ph43.preheader:                               ; preds = %bb.a
+  %2 = ptrtoint ptr %i.v to i64
+  %3 = ptrtoint ptr %i.w to i64
+  %4 = sub i64 %2, %3
+  %5 = sdiv i64 %4, 24
   %i.z = tail call i64 @fwrite(ptr nonnull @.str.107, i64 2, i64 1, ptr %0) ; 0 uses
+  %umax = tail call i64 @llvm.umax.i64(i64 %5, i64 1)
   br label %.lr.ph43
 
 ._crit_edge44:                                    ; preds = %bb.f
@@ -282,7 +283,7 @@ bb.e:                                             ; preds = %._crit_edge
 
 bb.f:                                             ; preds = %bb.e, %._crit_edge
   %i.bg = add nuw i64 %.03841, 1                  ; 2 uses
-  %exitcond.not = icmp eq i64 %i.bg, %5
+  %exitcond.not = icmp eq i64 %i.bg, %umax
   br i1 %exitcond.not, label %._crit_edge44, label %.lr.ph43, !llvm.loop !35
 
 bb.g:                                             ; preds = %._crit_edge44, %bb.b
@@ -360,10 +361,6 @@ bb.a:
   %i.aq = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !56 ; 2 uses
   %i.as = load ptr, ptr %i.ap, align 8, !tbaa !57 ; 2 uses
-  %2 = ptrtoint ptr %i.ar to i64
-  %3 = ptrtoint ptr %i.as to i64
-  %4 = sub i64 %2, %3
-  %5 = sdiv exact i64 %4, 80                      ; 2 uses
   %i.at = icmp eq ptr %i.ar, %i.as
   br i1 %i.at, label %bb.b, label %.lr.ph
 
@@ -372,8 +369,13 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.f
 
 .lr.ph:                                           ; preds = %bb.a
+  %2 = ptrtoint ptr %i.ar to i64
+  %3 = ptrtoint ptr %i.as to i64
+  %4 = sub i64 %2, %3
+  %5 = sdiv i64 %4, 80                            ; 2 uses
   %i.av = tail call i64 @fwrite(ptr nonnull @.str.107, i64 2, i64 1, ptr %0) ; 0 uses
   %i.aw = add nsw i64 %5, -1
+  %umax = tail call i64 @llvm.umax.i64(i64 %5, i64 1)
   br label %bb.c
 
 ._crit_edge:                                      ; preds = %bb.e
@@ -394,7 +396,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c, %bb.d
   %i.bc = add nuw i64 %.041, 1                    ; 2 uses
-  %exitcond.not = icmp eq i64 %i.bc, %5
+  %exitcond.not = icmp eq i64 %i.bc, %umax
   br i1 %exitcond.not, label %._crit_edge, label %bb.c, !llvm.loop !58
 
 bb.f:                                             ; preds = %._crit_edge, %bb.b

@@ -203,7 +203,6 @@ bb.a:
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 6 uses
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 4 uses
-  %umax = call i64 @llvm.umax.i64(i64 %i.k, i64 1)
   %i.v = extractelement <2 x float> %i.d, i64 0
   %i.w = extractelement <2 x float> %i.d, i64 1
   br label %bb.h
@@ -606,8 +605,8 @@ bb.s:                                             ; preds = %bb.r
 bb.t:                                             ; preds = %bb.s
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #33
   %i.hk = add nuw i64 %.049216, 1                 ; 2 uses
-  %exitcond233.not = icmp eq i64 %i.hk, %umax
-  br i1 %exitcond233.not, label %._crit_edge, label %.lr.ph, !llvm.loop !271
+  %8 = icmp ult i64 %i.hk, %i.k
+  br i1 %8, label %.lr.ph, label %._crit_edge, !llvm.loop !271
 
 bb.u:                                             ; preds = %bb.r
   %i.hl = landingpad { ptr, i32 }

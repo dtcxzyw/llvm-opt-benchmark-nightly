@@ -204,17 +204,21 @@ _ZNSt10lock_guardISt5mutexEC2ERS0_.exit:          ; preds = %bb.a
   %i.i = ptrtoint ptr %i.h to i64
   %i.j = ptrtoint ptr %i.c to i64                 ; 5 uses
   %i.k = sub i64 %i.i, %i.j                       ; 9 uses
-  %i.l = sdiv exact i64 %i.k, 12                  ; 5 uses
+  %i.l = sdiv i64 %i.k, 12                        ; 5 uses
   %.not57.not = icmp eq ptr %i.h, %i.c
-  br i1 %.not57.not, label %.critedge.thread, label %.lr.ph
+  br i1 %.not57.not, label %.critedge.thread, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %.preheader
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.l, i64 1)
+  br label %.lr.ph
 
 bb.c:                                             ; preds = %.lr.ph
   %i.m = add nuw i64 %.01758, 1                   ; 2 uses
-  %exitcond.not = icmp eq i64 %i.m, %i.l
+  %exitcond.not = icmp eq i64 %i.m, %umax
   br i1 %exitcond.not, label %.critedge, label %.lr.ph, !llvm.loop !59
 
-.lr.ph:                                           ; preds = %.preheader, %bb.c
-  %.01758 = phi i64 [ %i.m, %bb.c ], [ 0, %.preheader ] ; 2 uses
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.c
+  %.01758 = phi i64 [ %i.m, %bb.c ], [ 0, %.lr.ph.preheader ] ; 2 uses
   %i.n = getelementptr inbounds nuw [12 x i8], ptr %i.c, i64 %.01758
   %i.o = load i32, ptr %i.n, align 4, !tbaa !60
   %i.p = icmp eq i32 %1, %i.o
@@ -617,8 +621,8 @@ bb.g:                                             ; preds = %._crit_edge.i.us, %
   %i.ck = load ptr, ptr %i.cg, align 8, !tbaa !27 ; 5 uses
   %i.cl = ptrtoint ptr %i.cj to i64
   %i.cm = ptrtoint ptr %i.ck to i64
-  %i.cn = sub i64 %i.cl, %i.cm                    ; 2 uses
-  %i.co = sdiv exact i64 %i.cn, 12                ; 3 uses
+  %i.cn = sub i64 %i.cl, %i.cm
+  %i.co = sdiv i64 %i.cn, 12                      ; 2 uses
   %.not36.i.us = icmp eq ptr %i.cj, %i.ck
   %.phi.trans.insert.i.us = getelementptr inbounds nuw i8, ptr %i.ch, i64 8
   %.pre.i.us = load ptr, ptr %.phi.trans.insert.i.us, align 8, !tbaa !25 ; 2 uses
@@ -634,12 +638,13 @@ bb.g:                                             ; preds = %._crit_edge.i.us, %
 .preheader.us.preheader.i.us:                     ; preds = %.preheader.lr.ph.i.us
   %i.cp = sub i64 %.pre44.i.us, %.pre45.i.us
   %i.cq = ashr exact i64 %i.cp, 2                 ; 3 uses
-  %xtraiter = and i64 %i.co, 1
-  %6 = icmp eq i64 %i.cn, 12
+  %umax39.i.us = call i64 @llvm.umax.i64(i64 %i.co, i64 1) ; 3 uses
+  %xtraiter = and i64 %umax39.i.us, 1
+  %6 = icmp ult i64 %i.co, 2
   br i1 %6, label %.preheader.us.i.us.epil.preheader, label %.preheader.us.preheader.i.us.new
 
 .preheader.us.preheader.i.us.new:                 ; preds = %.preheader.us.preheader.i.us
-  %unroll_iter = and i64 %i.co, -2
+  %unroll_iter = and i64 %umax39.i.us, -2
   br label %.preheader.us.i.us
 
 .preheader.us.i.us:                               ; preds = %..loopexit_crit_edge.us.i.us.1, %.preheader.us.preheader.i.us.new
@@ -703,7 +708,7 @@ bb.m:                                             ; preds = %bb.k
 .preheader.us.i.us.epil.preheader:                ; preds = %._crit_edge.i.us.loopexit.unr-lcssa, %.preheader.us.preheader.i.us
   %.02329.us.i.us.epil.init = phi i64 [ 0, %.preheader.us.preheader.i.us ], [ %i.dg, %._crit_edge.i.us.loopexit.unr-lcssa ]
   %.02428.us.i.us.epil.init = phi float [ 0.000000e+00, %.preheader.us.preheader.i.us ], [ %.1.us.i.us.1, %._crit_edge.i.us.loopexit.unr-lcssa ] ; 2 uses
-  %lcmp.mod65 = trunc i64 %i.co to i1
+  %lcmp.mod65 = trunc i64 %umax39.i.us to i1
   call void @llvm.assume(i1 %lcmp.mod65)
   %i.dh = getelementptr inbounds nuw [12 x i8], ptr %i.ck, i64 %.02329.us.i.us.epil.init
   %i.di = load i32, ptr %i.dh, align 4, !tbaa !60
@@ -969,8 +974,8 @@ bb.b:                                             ; preds = %.lr.ph, %._crit_edg
   %i.u = load ptr, ptr %i.q, align 8, !tbaa !27   ; 5 uses
   %i.v = ptrtoint ptr %i.t to i64
   %i.w = ptrtoint ptr %i.u to i64
-  %i.x = sub i64 %i.v, %i.w                       ; 2 uses
-  %i.y = sdiv exact i64 %i.x, 12                  ; 3 uses
+  %i.x = sub i64 %i.v, %i.w
+  %i.y = sdiv i64 %i.x, 12                        ; 2 uses
   %.not36 = icmp eq ptr %i.t, %i.u
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.r, i64 8
   %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !25 ; 2 uses
@@ -986,12 +991,13 @@ bb.b:                                             ; preds = %.lr.ph, %._crit_edg
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
   %i.z = sub i64 %.pre44, %.pre45
   %i.aa = ashr exact i64 %i.z, 2                  ; 3 uses
-  %xtraiter = and i64 %i.y, 1
-  %3 = icmp eq i64 %i.x, 12
+  %umax39 = tail call i64 @llvm.umax.i64(i64 %i.y, i64 1) ; 3 uses
+  %xtraiter = and i64 %umax39, 1
+  %3 = icmp ult i64 %i.y, 2
   br i1 %3, label %.preheader.us.epil.preheader, label %.preheader.us.preheader.new
 
 .preheader.us.preheader.new:                      ; preds = %.preheader.us.preheader
-  %unroll_iter = and i64 %i.y, -2
+  %unroll_iter = and i64 %umax39, -2
   br label %.preheader.us
 
 .preheader.us:                                    ; preds = %..loopexit_crit_edge.us.1, %.preheader.us.preheader.new
@@ -1055,7 +1061,7 @@ bb.h:                                             ; preds = %bb.f
 .preheader.us.epil.preheader:                     ; preds = %._crit_edge.loopexit.unr-lcssa, %.preheader.us.preheader
   %.02329.us.epil.init = phi i64 [ 0, %.preheader.us.preheader ], [ %i.aq, %._crit_edge.loopexit.unr-lcssa ]
   %.02428.us.epil.init = phi float [ 0.000000e+00, %.preheader.us.preheader ], [ %.1.us.1, %._crit_edge.loopexit.unr-lcssa ] ; 2 uses
-  %lcmp.mod54 = trunc i64 %i.y to i1
+  %lcmp.mod54 = trunc i64 %umax39 to i1
   tail call void @llvm.assume(i1 %lcmp.mod54)
   %i.ar = getelementptr inbounds nuw [12 x i8], ptr %i.u, i64 %.02329.us.epil.init
   %i.as = load i32, ptr %i.ar, align 4, !tbaa !60

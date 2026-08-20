@@ -204,7 +204,7 @@ bb.a:
   %.pre.i = ptrtoint ptr %i.c to i64
   %.pre24.i = ptrtoint ptr %i.d to i64
   %.pre26.i = sub i64 %.pre.i, %.pre24.i
-  %.pre28.i = sdiv exact i64 %.pre26.i, 120       ; 7 uses
+  %.pre28.i = sdiv i64 %.pre26.i, 120             ; 6 uses
   br i1 %.not.i.i, label %_ZNK7httplib6detail26insertion_ordered_multimapINS_9FormFieldESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE11equal_rangeERKS9_.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.a
@@ -212,6 +212,7 @@ bb.a:
   %i.f = load i64, ptr %i.e, align 8, !tbaa !64, !noalias !1204
   %.fr19.i = freeze i64 %i.f                      ; 3 uses
   %i.g = load ptr, ptr %2, align 8, !noalias !1204
+  %umax.i.i = tail call i64 @llvm.umax.i64(i64 %.pre28.i, i64 1) ; 2 uses
   %i.h = icmp eq i64 %.fr19.i, 0
   br i1 %i.h, label %.lr.ph.i.split.us.i, label %.lr.ph.i.split.i
 
@@ -225,7 +226,7 @@ bb.a:
 
 _ZN7httplib6detail26insertion_ordered_multimapINS_9FormFieldESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE10keys_equalERKS9_SD_.exit.thread9.i.us.i: ; preds = %.lr.ph.i.split.us.i
   %i.m = add nuw i64 %.0711.i.us.i, 1             ; 2 uses
-  %exitcond.not.i.us.i = icmp eq i64 %i.m, %.pre28.i
+  %exitcond.not.i.us.i = icmp eq i64 %i.m, %umax.i.i
   br i1 %exitcond.not.i.us.i, label %_ZNK7httplib6detail26insertion_ordered_multimapINS_9FormFieldESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE11equal_rangeERKS9_.exit, label %.lr.ph.i.split.us.i, !llvm.loop !1208
 
 .lr.ph.i.split.i:                                 ; preds = %.lr.ph.i.i, %_ZN7httplib6detail26insertion_ordered_multimapINS_9FormFieldESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE10keys_equalERKS9_SD_.exit.thread9.i.i
@@ -244,7 +245,7 @@ _ZN7httplib6detail26insertion_ordered_multimapINS_9FormFieldESt8equal_toINSt7__c
 
 _ZN7httplib6detail26insertion_ordered_multimapINS_9FormFieldESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE10keys_equalERKS9_SD_.exit.thread9.i.i: ; preds = %_ZN7httplib6detail26insertion_ordered_multimapINS_9FormFieldESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE10keys_equalERKS9_SD_.exit.i.i, %.lr.ph.i.split.i
   %i.t = add nuw i64 %.0711.i.i, 1                ; 2 uses
-  %exitcond.not.i.i = icmp eq i64 %i.t, %.pre28.i
+  %exitcond.not.i.i = icmp eq i64 %i.t, %umax.i.i
   br i1 %exitcond.not.i.i, label %_ZNK7httplib6detail26insertion_ordered_multimapINS_9FormFieldESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE11equal_rangeERKS9_.exit, label %.lr.ph.i.split.i, !llvm.loop !1208
 
 _ZNK7httplib6detail26insertion_ordered_multimapINS_9FormFieldESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE8index_ofERKS9_.exit.i: ; preds = %_ZN7httplib6detail26insertion_ordered_multimapINS_9FormFieldESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE10keys_equalERKS9_SD_.exit.i.i, %.lr.ph.i.split.us.i
@@ -341,7 +342,7 @@ bb.a:
   %.pre.i = ptrtoint ptr %i.c to i64
   %.pre24.i = ptrtoint ptr %i.d to i64
   %.pre26.i = sub i64 %.pre.i, %.pre24.i
-  %.pre28.i = sdiv exact i64 %.pre26.i, 120       ; 8 uses
+  %.pre28.i = sdiv i64 %.pre26.i, 120             ; 7 uses
   br i1 %.not.i.i, label %._crit_edge, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.a
@@ -349,6 +350,7 @@ bb.a:
   %i.f = load i64, ptr %i.e, align 8, !tbaa !64, !noalias !1213
   %.fr19.i = freeze i64 %i.f                      ; 3 uses
   %i.g = load ptr, ptr %2, align 8, !noalias !1213
+  %umax.i.i = tail call i64 @llvm.umax.i64(i64 %.pre28.i, i64 1) ; 2 uses
   %i.h = icmp eq i64 %.fr19.i, 0
   br i1 %i.h, label %.lr.ph.i.split.us.i, label %.lr.ph.i.split.i
 
@@ -362,7 +364,7 @@ bb.a:
 
 _ZN7httplib6detail26insertion_ordered_multimapINS_9FormFieldESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE10keys_equalERKS9_SD_.exit.thread9.i.us.i: ; preds = %.lr.ph.i.split.us.i
   %i.m = add nuw i64 %.0711.i.us.i, 1             ; 2 uses
-  %exitcond.not.i.us.i = icmp eq i64 %i.m, %.pre28.i
+  %exitcond.not.i.us.i = icmp eq i64 %i.m, %umax.i.i
   br i1 %exitcond.not.i.us.i, label %._crit_edge, label %.lr.ph.i.split.us.i, !llvm.loop !1208
 
 .lr.ph.i.split.i:                                 ; preds = %.lr.ph.i.i, %_ZN7httplib6detail26insertion_ordered_multimapINS_9FormFieldESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE10keys_equalERKS9_SD_.exit.thread9.i.i
@@ -381,7 +383,7 @@ _ZN7httplib6detail26insertion_ordered_multimapINS_9FormFieldESt8equal_toINSt7__c
 
 _ZN7httplib6detail26insertion_ordered_multimapINS_9FormFieldESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE10keys_equalERKS9_SD_.exit.thread9.i.i: ; preds = %_ZN7httplib6detail26insertion_ordered_multimapINS_9FormFieldESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE10keys_equalERKS9_SD_.exit.i.i, %.lr.ph.i.split.i
   %i.t = add nuw i64 %.0711.i.i, 1                ; 2 uses
-  %exitcond.not.i.i = icmp eq i64 %i.t, %.pre28.i
+  %exitcond.not.i.i = icmp eq i64 %i.t, %umax.i.i
   br i1 %exitcond.not.i.i, label %._crit_edge, label %.lr.ph.i.split.i, !llvm.loop !1208
 
 _ZNK7httplib6detail26insertion_ordered_multimapINS_9FormFieldESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE11equal_rangeERKS9_.exit: ; preds = %_ZN7httplib6detail26insertion_ordered_multimapINS_9FormFieldESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE10keys_equalERKS9_SD_.exit.i.i, %.lr.ph.i.split.us.i
@@ -389,7 +391,7 @@ _ZNK7httplib6detail26insertion_ordered_multimapINS_9FormFieldESt8equal_toINSt7__
   %i.u = freeze i64 %.us-phi.i                    ; 4 uses
   %i.v = icmp eq i64 %i.u, -1
   %.not3680 = icmp eq i64 %i.u, %.pre28.i
-  %.not36 = select i1 %i.v, i1 true, i1 %.not3680
+  %.not36 = or i1 %i.v, %.not3680
   br i1 %.not36, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZNK7httplib6detail26insertion_ordered_multimapINS_9FormFieldESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE11equal_rangeERKS9_.exit
@@ -535,7 +537,7 @@ bb.a:
   %.pre.i = ptrtoint ptr %i.b to i64
   %.pre12.i = ptrtoint ptr %i.c to i64
   %.pre14.i = sub i64 %.pre.i, %.pre12.i
-  %.pre16.i = sdiv exact i64 %.pre14.i, 120       ; 6 uses
+  %.pre16.i = sdiv i64 %.pre14.i, 120             ; 5 uses
   br i1 %.not.i.i, label %_ZNK7httplib6detail26insertion_ordered_multimapINS_9FormFieldESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE4findERKS9_.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.a
@@ -543,6 +545,7 @@ bb.a:
   %i.e = load i64, ptr %i.d, align 8, !tbaa !64, !noalias !1221
   %.fr7.i = freeze i64 %i.e                       ; 3 uses
   %i.f = load ptr, ptr %1, align 8, !noalias !1221
+  %umax.i.i = tail call i64 @llvm.umax.i64(i64 %.pre16.i, i64 1) ; 2 uses
   %i.g = icmp eq i64 %.fr7.i, 0
   br i1 %i.g, label %.lr.ph.i.split.us.i, label %.lr.ph.i.split.i
 
@@ -556,7 +559,7 @@ bb.a:
 
 _ZN7httplib6detail26insertion_ordered_multimapINS_9FormFieldESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE10keys_equalERKS9_SD_.exit.thread9.i.us.i: ; preds = %.lr.ph.i.split.us.i
   %i.l = add nuw i64 %.0711.i.us.i, 1             ; 2 uses
-  %exitcond.not.i.us.i = icmp eq i64 %i.l, %.pre16.i
+  %exitcond.not.i.us.i = icmp eq i64 %i.l, %umax.i.i
   br i1 %exitcond.not.i.us.i, label %_ZNK7httplib6detail26insertion_ordered_multimapINS_9FormFieldESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE4findERKS9_.exit, label %.lr.ph.i.split.us.i, !llvm.loop !1208
 
 .lr.ph.i.split.i:                                 ; preds = %.lr.ph.i.i, %_ZN7httplib6detail26insertion_ordered_multimapINS_9FormFieldESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE10keys_equalERKS9_SD_.exit.thread9.i.i
@@ -575,7 +578,7 @@ _ZN7httplib6detail26insertion_ordered_multimapINS_9FormFieldESt8equal_toINSt7__c
 
 _ZN7httplib6detail26insertion_ordered_multimapINS_9FormFieldESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE10keys_equalERKS9_SD_.exit.thread9.i.i: ; preds = %_ZN7httplib6detail26insertion_ordered_multimapINS_9FormFieldESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE10keys_equalERKS9_SD_.exit.i.i, %.lr.ph.i.split.i
   %i.s = add nuw i64 %.0711.i.i, 1                ; 2 uses
-  %exitcond.not.i.i = icmp eq i64 %i.s, %.pre16.i
+  %exitcond.not.i.i = icmp eq i64 %i.s, %umax.i.i
   br i1 %exitcond.not.i.i, label %_ZNK7httplib6detail26insertion_ordered_multimapINS_9FormFieldESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE4findERKS9_.exit, label %.lr.ph.i.split.i, !llvm.loop !1208
 
 _ZNK7httplib6detail26insertion_ordered_multimapINS_9FormFieldESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE8index_ofERKS9_.exit.i: ; preds = %_ZN7httplib6detail26insertion_ordered_multimapINS_9FormFieldESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE10keys_equalERKS9_SD_.exit.i.i, %.lr.ph.i.split.us.i
@@ -666,7 +669,7 @@ bb.a:
   %.pre.i = ptrtoint ptr %i.b to i64
   %.pre24.i = ptrtoint ptr %i.c to i64
   %.pre26.i = sub i64 %.pre.i, %.pre24.i
-  %.pre28.i = sdiv exact i64 %.pre26.i, 184       ; 7 uses
+  %.pre28.i = sdiv i64 %.pre26.i, 184             ; 6 uses
   br i1 %.not.i.i, label %_ZNK7httplib6detail26insertion_ordered_multimapINS_8FormDataESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE11equal_rangeERKS9_.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.a
@@ -674,6 +677,7 @@ bb.a:
   %i.e = load i64, ptr %i.d, align 8, !tbaa !64, !noalias !1227
   %.fr19.i = freeze i64 %i.e                      ; 3 uses
   %i.f = load ptr, ptr %2, align 8, !noalias !1227
+  %umax.i.i = tail call i64 @llvm.umax.i64(i64 %.pre28.i, i64 1) ; 2 uses
   %i.g = icmp eq i64 %.fr19.i, 0
   br i1 %i.g, label %.lr.ph.i.split.us.i, label %.lr.ph.i.split.i
 
@@ -687,7 +691,7 @@ bb.a:
 
 _ZN7httplib6detail26insertion_ordered_multimapINS_8FormDataESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE10keys_equalERKS9_SD_.exit.thread9.i.us.i: ; preds = %.lr.ph.i.split.us.i
   %i.l = add nuw i64 %.0711.i.us.i, 1             ; 2 uses
-  %exitcond.not.i.us.i = icmp eq i64 %i.l, %.pre28.i
+  %exitcond.not.i.us.i = icmp eq i64 %i.l, %umax.i.i
   br i1 %exitcond.not.i.us.i, label %_ZNK7httplib6detail26insertion_ordered_multimapINS_8FormDataESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE11equal_rangeERKS9_.exit, label %.lr.ph.i.split.us.i, !llvm.loop !1231
 
 .lr.ph.i.split.i:                                 ; preds = %.lr.ph.i.i, %_ZN7httplib6detail26insertion_ordered_multimapINS_8FormDataESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE10keys_equalERKS9_SD_.exit.thread9.i.i
@@ -706,7 +710,7 @@ _ZN7httplib6detail26insertion_ordered_multimapINS_8FormDataESt8equal_toINSt7__cx
 
 _ZN7httplib6detail26insertion_ordered_multimapINS_8FormDataESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE10keys_equalERKS9_SD_.exit.thread9.i.i: ; preds = %_ZN7httplib6detail26insertion_ordered_multimapINS_8FormDataESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE10keys_equalERKS9_SD_.exit.i.i, %.lr.ph.i.split.i
   %i.s = add nuw i64 %.0711.i.i, 1                ; 2 uses
-  %exitcond.not.i.i = icmp eq i64 %i.s, %.pre28.i
+  %exitcond.not.i.i = icmp eq i64 %i.s, %umax.i.i
   br i1 %exitcond.not.i.i, label %_ZNK7httplib6detail26insertion_ordered_multimapINS_8FormDataESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE11equal_rangeERKS9_.exit, label %.lr.ph.i.split.i, !llvm.loop !1231
 
 _ZNK7httplib6detail26insertion_ordered_multimapINS_8FormDataESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE8index_ofERKS9_.exit.i: ; preds = %_ZN7httplib6detail26insertion_ordered_multimapINS_8FormDataESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE10keys_equalERKS9_SD_.exit.i.i, %.lr.ph.i.split.us.i
@@ -778,7 +782,7 @@ bb.a:
   %.pre.i = ptrtoint ptr %i.c to i64
   %.pre24.i = ptrtoint ptr %i.d to i64
   %.pre26.i = sub i64 %.pre.i, %.pre24.i
-  %.pre28.i = sdiv exact i64 %.pre26.i, 184       ; 8 uses
+  %.pre28.i = sdiv i64 %.pre26.i, 184             ; 7 uses
   br i1 %.not.i.i, label %._crit_edge, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.a
@@ -786,6 +790,7 @@ bb.a:
   %i.f = load i64, ptr %i.e, align 8, !tbaa !64, !noalias !1236
   %.fr19.i = freeze i64 %i.f                      ; 3 uses
   %i.g = load ptr, ptr %2, align 8, !noalias !1236
+  %umax.i.i = tail call i64 @llvm.umax.i64(i64 %.pre28.i, i64 1) ; 2 uses
   %i.h = icmp eq i64 %.fr19.i, 0
   br i1 %i.h, label %.lr.ph.i.split.us.i, label %.lr.ph.i.split.i
 
@@ -799,7 +804,7 @@ bb.a:
 
 _ZN7httplib6detail26insertion_ordered_multimapINS_8FormDataESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE10keys_equalERKS9_SD_.exit.thread9.i.us.i: ; preds = %.lr.ph.i.split.us.i
   %i.m = add nuw i64 %.0711.i.us.i, 1             ; 2 uses
-  %exitcond.not.i.us.i = icmp eq i64 %i.m, %.pre28.i
+  %exitcond.not.i.us.i = icmp eq i64 %i.m, %umax.i.i
   br i1 %exitcond.not.i.us.i, label %._crit_edge, label %.lr.ph.i.split.us.i, !llvm.loop !1231
 
 .lr.ph.i.split.i:                                 ; preds = %.lr.ph.i.i, %_ZN7httplib6detail26insertion_ordered_multimapINS_8FormDataESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE10keys_equalERKS9_SD_.exit.thread9.i.i
@@ -818,7 +823,7 @@ _ZN7httplib6detail26insertion_ordered_multimapINS_8FormDataESt8equal_toINSt7__cx
 
 _ZN7httplib6detail26insertion_ordered_multimapINS_8FormDataESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE10keys_equalERKS9_SD_.exit.thread9.i.i: ; preds = %_ZN7httplib6detail26insertion_ordered_multimapINS_8FormDataESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE10keys_equalERKS9_SD_.exit.i.i, %.lr.ph.i.split.i
   %i.t = add nuw i64 %.0711.i.i, 1                ; 2 uses
-  %exitcond.not.i.i = icmp eq i64 %i.t, %.pre28.i
+  %exitcond.not.i.i = icmp eq i64 %i.t, %umax.i.i
   br i1 %exitcond.not.i.i, label %._crit_edge, label %.lr.ph.i.split.i, !llvm.loop !1231
 
 _ZNK7httplib6detail26insertion_ordered_multimapINS_8FormDataESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE11equal_rangeERKS9_.exit: ; preds = %_ZN7httplib6detail26insertion_ordered_multimapINS_8FormDataESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE10keys_equalERKS9_SD_.exit.i.i, %.lr.ph.i.split.us.i
@@ -826,7 +831,7 @@ _ZNK7httplib6detail26insertion_ordered_multimapINS_8FormDataESt8equal_toINSt7__c
   %i.u = freeze i64 %.us-phi.i                    ; 4 uses
   %i.v = icmp eq i64 %i.u, -1
   %.not3680 = icmp eq i64 %i.u, %.pre28.i
-  %.not36 = select i1 %i.v, i1 true, i1 %.not3680
+  %.not36 = or i1 %i.v, %.not3680
   br i1 %.not36, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZNK7httplib6detail26insertion_ordered_multimapINS_8FormDataESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE11equal_rangeERKS9_.exit
@@ -971,7 +976,7 @@ bb.a:
   %.pre.i = ptrtoint ptr %i.c to i64
   %.pre12.i = ptrtoint ptr %i.d to i64
   %.pre14.i = sub i64 %.pre.i, %.pre12.i
-  %.pre16.i = sdiv exact i64 %.pre14.i, 184       ; 6 uses
+  %.pre16.i = sdiv i64 %.pre14.i, 184             ; 5 uses
   br i1 %.not.i.i, label %_ZNK7httplib6detail26insertion_ordered_multimapINS_8FormDataESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE4findERKS9_.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.a
@@ -979,6 +984,7 @@ bb.a:
   %i.f = load i64, ptr %i.e, align 8, !tbaa !64, !noalias !1250
   %.fr7.i = freeze i64 %i.f                       ; 3 uses
   %i.g = load ptr, ptr %1, align 8, !noalias !1250
+  %umax.i.i = tail call i64 @llvm.umax.i64(i64 %.pre16.i, i64 1) ; 2 uses
   %i.h = icmp eq i64 %.fr7.i, 0
   br i1 %i.h, label %.lr.ph.i.split.us.i, label %.lr.ph.i.split.i
 
@@ -992,7 +998,7 @@ bb.a:
 
 _ZN7httplib6detail26insertion_ordered_multimapINS_8FormDataESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE10keys_equalERKS9_SD_.exit.thread9.i.us.i: ; preds = %.lr.ph.i.split.us.i
   %i.m = add nuw i64 %.0711.i.us.i, 1             ; 2 uses
-  %exitcond.not.i.us.i = icmp eq i64 %i.m, %.pre16.i
+  %exitcond.not.i.us.i = icmp eq i64 %i.m, %umax.i.i
   br i1 %exitcond.not.i.us.i, label %_ZNK7httplib6detail26insertion_ordered_multimapINS_8FormDataESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE4findERKS9_.exit, label %.lr.ph.i.split.us.i, !llvm.loop !1231
 
 .lr.ph.i.split.i:                                 ; preds = %.lr.ph.i.i, %_ZN7httplib6detail26insertion_ordered_multimapINS_8FormDataESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE10keys_equalERKS9_SD_.exit.thread9.i.i
@@ -1011,7 +1017,7 @@ _ZN7httplib6detail26insertion_ordered_multimapINS_8FormDataESt8equal_toINSt7__cx
 
 _ZN7httplib6detail26insertion_ordered_multimapINS_8FormDataESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE10keys_equalERKS9_SD_.exit.thread9.i.i: ; preds = %_ZN7httplib6detail26insertion_ordered_multimapINS_8FormDataESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE10keys_equalERKS9_SD_.exit.i.i, %.lr.ph.i.split.i
   %i.t = add nuw i64 %.0711.i.i, 1                ; 2 uses
-  %exitcond.not.i.i = icmp eq i64 %i.t, %.pre16.i
+  %exitcond.not.i.i = icmp eq i64 %i.t, %umax.i.i
   br i1 %exitcond.not.i.i, label %_ZNK7httplib6detail26insertion_ordered_multimapINS_8FormDataESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE4findERKS9_.exit, label %.lr.ph.i.split.i, !llvm.loop !1231
 
 _ZNK7httplib6detail26insertion_ordered_multimapINS_8FormDataESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE8index_ofERKS9_.exit.i: ; preds = %_ZN7httplib6detail26insertion_ordered_multimapINS_8FormDataESt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE10keys_equalERKS9_SD_.exit.i.i, %.lr.ph.i.split.us.i
@@ -1414,14 +1420,15 @@ _ZNSt8__detail9_ExecutorIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_st
 .lr.ph.preheader:                                 ; preds = %.preheader
   %i.ag = ptrtoint ptr %i.ae to i64
   %i.ah = ptrtoint ptr %i.af to i64
-  %i.ai = sub i64 %i.ag, %i.ah                    ; 2 uses
-  %i.aj = sdiv exact i64 %i.ai, 24                ; 3 uses
-  %xtraiter = and i64 %i.aj, 1
-  %4 = icmp eq i64 %i.ai, 24
+  %i.ai = sub i64 %i.ag, %i.ah
+  %i.aj = sdiv i64 %i.ai, 24                      ; 2 uses
+  %umax = call i64 @llvm.umax.i64(i64 %i.aj, i64 1) ; 3 uses
+  %xtraiter = and i64 %umax, 1
+  %4 = icmp ult i64 %i.aj, 2
   br i1 %4, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
-  %unroll_iter = and i64 %i.aj, -2
+  %unroll_iter = and i64 %umax, -2
   br label %.lr.ph
 
 bb.e:                                             ; preds = %_ZNSt6vectorINSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIPKcNS0_12basic_stringIcSt11char_traitsIcESaIcEEEEEEESaISC_EEC2ERKSE_.exit
@@ -1490,7 +1497,7 @@ bb.i:                                             ; preds = %bb.h, %.lr.ph.1
 
 .lr.ph.epil.preheader:                            ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph.preheader
   %.021.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %i.bj, %.loopexit.loopexit.unr-lcssa ] ; 2 uses
-  %lcmp.mod35 = trunc i64 %i.aj to i1
+  %lcmp.mod35 = trunc i64 %umax to i1
   call void @llvm.assume(i1 %lcmp.mod35)
   %i.bk = getelementptr inbounds nuw [24 x i8], ptr %i.af, i64 %.021.epil.init ; 3 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bk, i64 16
@@ -1893,14 +1900,15 @@ bb.f:                                             ; preds = %.noexc
 .lr.ph.preheader:                                 ; preds = %.preheader
   %i.cf = ptrtoint ptr %i.cd to i64
   %i.cg = ptrtoint ptr %i.ce to i64
-  %i.ch = sub i64 %i.cf, %i.cg                    ; 2 uses
-  %i.ci = sdiv exact i64 %i.ch, 24                ; 3 uses
-  %xtraiter37 = and i64 %i.ci, 1
-  %4 = icmp eq i64 %i.ch, 24
+  %i.ch = sub i64 %i.cf, %i.cg
+  %i.ci = sdiv i64 %i.ch, 24                      ; 2 uses
+  %umax = call i64 @llvm.umax.i64(i64 %i.ci, i64 1) ; 3 uses
+  %xtraiter37 = and i64 %umax, 1
+  %4 = icmp ult i64 %i.ci, 2
   br i1 %4, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
-  %unroll_iter = and i64 %i.ci, -2
+  %unroll_iter = and i64 %umax, -2
   br label %.lr.ph
 
 bb.g:                                             ; preds = %.noexc, %.loopexit.i
@@ -1964,7 +1972,7 @@ bb.j:                                             ; preds = %bb.i, %.lr.ph.1
 
 .lr.ph.epil.preheader:                            ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph.preheader
   %.024.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %i.dh, %.loopexit.loopexit.unr-lcssa ] ; 2 uses
-  %lcmp.mod39 = trunc i64 %i.ci to i1
+  %lcmp.mod39 = trunc i64 %umax to i1
   call void @llvm.assume(i1 %lcmp.mod39)
   %i.di = getelementptr inbounds nuw [24 x i8], ptr %i.ce, i64 %.024.epil.init ; 3 uses
   %i.dj = getelementptr inbounds nuw i8, ptr %i.di, i64 16
@@ -2367,14 +2375,15 @@ _ZNSt8__detail9_ExecutorIPKcSaINSt7__cxx119sub_matchIS2_EEENS3_12regex_traitsIcE
 .lr.ph.preheader:                                 ; preds = %.preheader
   %i.ai = ptrtoint ptr %i.ag to i64
   %i.aj = ptrtoint ptr %i.ah to i64
-  %i.ak = sub i64 %i.ai, %i.aj                    ; 2 uses
-  %i.al = sdiv exact i64 %i.ak, 24                ; 3 uses
-  %xtraiter = and i64 %i.al, 1
-  %4 = icmp eq i64 %i.ak, 24
+  %i.ak = sub i64 %i.ai, %i.aj
+  %i.al = sdiv i64 %i.ak, 24                      ; 2 uses
+  %umax = call i64 @llvm.umax.i64(i64 %i.al, i64 1) ; 3 uses
+  %xtraiter = and i64 %umax, 1
+  %4 = icmp ult i64 %i.al, 2
   br i1 %4, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
-  %unroll_iter = and i64 %i.al, -2
+  %unroll_iter = and i64 %umax, -2
   br label %.lr.ph
 
 bb.e:                                             ; preds = %_ZNSt6vectorINSt7__cxx119sub_matchIPKcEESaIS4_EEC2ERKS6_.exit
@@ -2435,7 +2444,7 @@ bb.i:                                             ; preds = %bb.h, %.lr.ph.1
 
 .lr.ph.epil.preheader:                            ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph.preheader
   %.020.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %i.bf, %.loopexit.loopexit.unr-lcssa ] ; 2 uses
-  %lcmp.mod34 = trunc i64 %i.al to i1
+  %lcmp.mod34 = trunc i64 %umax to i1
   call void @llvm.assume(i1 %lcmp.mod34)
   %i.bg = getelementptr inbounds nuw [24 x i8], ptr %i.ah, i64 %.020.epil.init ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bg, i64 16
@@ -2838,14 +2847,15 @@ bb.f:                                             ; preds = %.noexc
 .lr.ph.preheader:                                 ; preds = %.preheader
   %i.cf = ptrtoint ptr %i.cd to i64
   %i.cg = ptrtoint ptr %i.ce to i64
-  %i.ch = sub i64 %i.cf, %i.cg                    ; 2 uses
-  %i.ci = sdiv exact i64 %i.ch, 24                ; 3 uses
-  %xtraiter36 = and i64 %i.ci, 1
-  %4 = icmp eq i64 %i.ch, 24
+  %i.ch = sub i64 %i.cf, %i.cg
+  %i.ci = sdiv i64 %i.ch, 24                      ; 2 uses
+  %umax = call i64 @llvm.umax.i64(i64 %i.ci, i64 1) ; 3 uses
+  %xtraiter36 = and i64 %umax, 1
+  %4 = icmp ult i64 %i.ci, 2
   br i1 %4, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
-  %unroll_iter = and i64 %i.ci, -2
+  %unroll_iter = and i64 %umax, -2
   br label %.lr.ph
 
 bb.g:                                             ; preds = %.noexc, %.loopexit.i
@@ -2901,7 +2911,7 @@ bb.j:                                             ; preds = %bb.i, %.lr.ph.1
 
 .lr.ph.epil.preheader:                            ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph.preheader
   %.023.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %i.db, %.loopexit.loopexit.unr-lcssa ] ; 2 uses
-  %lcmp.mod38 = trunc i64 %i.ci to i1
+  %lcmp.mod38 = trunc i64 %umax to i1
   call void @llvm.assume(i1 %lcmp.mod38)
   %i.dc = getelementptr inbounds nuw [24 x i8], ptr %i.ce, i64 %.023.epil.init ; 2 uses
   %i.dd = getelementptr inbounds nuw i8, ptr %i.dc, i64 16

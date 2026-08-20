@@ -203,8 +203,8 @@ bb.f:                                             ; preds = %bb.d
   %i.al = call zeroext i16 @tvb_get_ntohs(ptr noundef %0, i32 noundef %.09471012) ; 3 uses
   %i.am = zext i16 %i.al to i32                   ; 10 uses
   %i.an = add i32 %.09471012, 2                   ; 22 uses
-  %i.ao = call zeroext i16 @tvb_get_ntohs(ptr noundef %0, i32 noundef %i.an) ; 5 uses
-  %i.ap = zext i16 %i.ao to i32                   ; 11 uses
+  %i.ao = call zeroext i16 @tvb_get_ntohs(ptr noundef %0, i32 noundef %i.an) ; 4 uses
+  %i.ap = zext i16 %i.ao to i32                   ; 12 uses
   %i.aq = call ptr @val_to_str_const(i32 noundef %i.am, ptr noundef nonnull @mpls_link_stlv_str, ptr noundef nonnull @.str.836) ; 41 uses
   %i.ar = add nuw nsw i32 %i.ap, 4                ; 20 uses
   %i.as = load i32, ptr @ett_ospf_lsa_mpls_link_stlv, align 4 ; 20 uses
@@ -607,13 +607,12 @@ bb.be:                                            ; preds = %.lr.ph1014
   %i.uy = load i32, ptr @hf_ospf_oif_encoding, align 4
   %i.uz = add i32 %.09471012, 5
   %i.va = call ptr @proto_tree_add_item(ptr noundef %i.uq, i32 noundef %i.uy, ptr noundef %0, i32 noundef %i.uz, i32 noundef 1, i32 noundef 0) ; 0 uses
+  %5 = add nsw i32 %i.ap, -4
+  %6 = sdiv i32 %5, 4
   %i.vb = icmp ugt i16 %i.ao, 7
   br i1 %i.vb, label %.lr.ph991, label %dissect_ospf_subtlv_ext_admin_group.exit
 
 .lr.ph991:                                        ; preds = %bb.be
-  %.lhs.trunc = add i16 %i.ao, -4
-  %5 = lshr i16 %.lhs.trunc, 2
-  %.zext = zext nneg i16 %5 to i32
   %i.vc = add i32 %.09471012, 8
   %i.vd = add i32 %.09471012, 9
   br label %bb.bf
@@ -633,8 +632,8 @@ bb.bf:                                            ; preds = %.lr.ph991, %bb.bf
   %i.vo = call i32 @tvb_get_ntoh24(ptr noundef %0, i32 noundef %i.vn)
   %i.vp = call ptr (ptr, i32, ptr, i32, i32, i32, ptr, ...) @proto_tree_add_uint_format(ptr noundef %i.uq, i32 noundef %i.ve, ptr noundef %0, i32 noundef %i.vg, i32 noundef 4, i32 noundef %i.vi, ptr noundef nonnull @.str.861, ptr noundef %i.vm, i32 noundef %i.vo) ; 0 uses
   %i.vq = add nuw nsw i32 %.6990, 1               ; 2 uses
-  %exitcond.not = icmp eq i32 %i.vq, %.zext
-  br i1 %exitcond.not, label %dissect_ospf_subtlv_ext_admin_group.exit, label %bb.bf, !llvm.loop !47
+  %7 = icmp slt i32 %i.vq, %6
+  br i1 %7, label %bb.bf, label %dissect_ospf_subtlv_ext_admin_group.exit, !llvm.loop !47
 
 bb.bg:                                            ; preds = %.lr.ph1014
   %i.vr = call ptr @rval_to_str_const(i32 noundef %i.am, ptr noundef nonnull @mpls_te_sub_tlv_rvals, ptr noundef nonnull @.str.777)
