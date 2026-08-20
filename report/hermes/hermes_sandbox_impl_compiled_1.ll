@@ -203,20 +203,19 @@ bb.aib:                                           ; preds = %bb.aia
 bb.aic:                                           ; preds = %bb.aib
   %i.inl = lshr i32 %i.inf, 5                     ; 2 uses
   %i.inm = icmp ult i32 %i.inf, 64
-  %6 = add nsw i32 %i.inl, -1
-  %i.inn = select i1 %i.inm, i32 0, i32 %6        ; 2 uses
+  %i.inn = select i1 %i.inm, i32 1, i32 %i.inl    ; 2 uses
   %wide.trip.count55716 = zext nneg i32 %i.inn to i64
-  %exitcond5571757421 = icmp eq i32 %i.inn, 0
+  %exitcond5571757421 = icmp eq i32 %i.inn, 1
   br i1 %exitcond5571757421, label %.loopexit54409, label %.lr.ph57424
 
 bb.aid:                                           ; preds = %.lr.ph57424
+  %indvars.iv.next55713 = add nuw nsw i64 %indvars.iv5571257422, 1 ; 2 uses
   %exitcond55717 = icmp eq i64 %indvars.iv.next55713, %wide.trip.count55716
   br i1 %exitcond55717, label %.loopexit54409, label %.lr.ph57424
 
 .lr.ph57424:                                      ; preds = %bb.aic, %bb.aid
-  %indvars.iv5571257422 = phi i64 [ %indvars.iv.next55713, %bb.aid ], [ 0, %bb.aic ]
-  %indvars.iv.next55713 = add nuw nsw i64 %indvars.iv5571257422, 1 ; 3 uses
-  %indvars55714 = trunc i64 %indvars.iv.next55713 to i32 ; 2 uses
+  %indvars.iv5571257422 = phi i64 [ %indvars.iv.next55713, %bb.aid ], [ 1, %bb.aic ] ; 2 uses
+  %indvars55714 = trunc nuw i64 %indvars.iv5571257422 to i32 ; 2 uses
   %i.ino = shl i32 %indvars55714, 2
   %i.inp = add i32 %i.ino, %.0.copyload.i52460
   %i.inq = zext i32 %i.inp to i64
@@ -619,20 +618,19 @@ bb.akc:                                           ; preds = %.loopexit54619
 bb.akd:                                           ; preds = %bb.akc
   %i.iza = lshr i32 %i.iyv, 5                     ; 2 uses
   %i.izb = icmp ult i32 %i.iyv, 64
-  %7 = add nsw i32 %i.iza, -1
-  %i.izc = select i1 %i.izb, i32 0, i32 %7        ; 2 uses
+  %i.izc = select i1 %i.izb, i32 1, i32 %i.iza    ; 2 uses
   %wide.trip.count55726 = zext nneg i32 %i.izc to i64
-  %exitcond5572757425 = icmp eq i32 %i.izc, 0
+  %exitcond5572757425 = icmp eq i32 %i.izc, 1
   br i1 %exitcond5572757425, label %.loopexit54618, label %.lr.ph57428.a
 
 bb.ake:                                           ; preds = %.lr.ph57428.a
-  %exitcond55727 = icmp eq i64 %indvars.iv.next55723, %wide.trip.count55726
+  %indvars.iv.next55721 = add nuw nsw i64 %indvars.iv5572257426, 1 ; 2 uses
+  %exitcond55727 = icmp eq i64 %indvars.iv.next55721, %wide.trip.count55726
   br i1 %exitcond55727, label %.loopexit54618, label %.lr.ph57428.a
 
 .lr.ph57428.a:                                    ; preds = %bb.akd, %bb.ake
-  %indvars.iv5572257426 = phi i64 [ %indvars.iv.next55723, %bb.ake ], [ 0, %bb.akd ]
-  %indvars.iv.next55723 = add nuw nsw i64 %indvars.iv5572257426, 1 ; 3 uses
-  %indvars55724 = trunc i64 %indvars.iv.next55723 to i32 ; 2 uses
+  %indvars.iv5572257426 = phi i64 [ %indvars.iv.next55721, %bb.ake ], [ 1, %bb.akd ] ; 2 uses
+  %indvars55724 = trunc nuw i64 %indvars.iv5572257426 to i32 ; 2 uses
   %i.izd = shl i32 %indvars55724, 2
   %i.ize = add i32 %i.izd, %.0.copyload.i52517
   %i.izf = zext i32 %i.ize to i64
@@ -1035,20 +1033,19 @@ bb.alu:                                           ; preds = %bb.alt
 bb.alv:                                           ; preds = %bb.alu
   %i.jio = lshr i32 %i.jij, 5                     ; 2 uses
   %i.jip = icmp ult i32 %i.jij, 64
-  %8 = add nsw i32 %i.jio, -1
-  %i.jiq = select i1 %i.jip, i32 0, i32 %8        ; 2 uses
+  %i.jiq = select i1 %i.jip, i32 1, i32 %i.jio    ; 2 uses
   %wide.trip.count55736 = zext nneg i32 %i.jiq to i64
-  %exitcond5573757429 = icmp eq i32 %i.jiq, 0
+  %exitcond5573757429 = icmp eq i32 %i.jiq, 1
   br i1 %exitcond5573757429, label %.loopexit54305, label %.lr.ph57432
 
 bb.alw:                                           ; preds = %.lr.ph57432
-  %exitcond55737 = icmp eq i64 %indvars.iv.next55733, %wide.trip.count55736
+  %indvars.iv.next55729 = add nuw nsw i64 %indvars.iv5573257430, 1 ; 2 uses
+  %exitcond55737 = icmp eq i64 %indvars.iv.next55729, %wide.trip.count55736
   br i1 %exitcond55737, label %.loopexit54305, label %.lr.ph57432
 
 .lr.ph57432:                                      ; preds = %bb.alv, %bb.alw
-  %indvars.iv5573257430 = phi i64 [ %indvars.iv.next55733, %bb.alw ], [ 0, %bb.alv ]
-  %indvars.iv.next55733 = add nuw nsw i64 %indvars.iv5573257430, 1 ; 3 uses
-  %indvars55734 = trunc i64 %indvars.iv.next55733 to i32 ; 2 uses
+  %indvars.iv5573257430 = phi i64 [ %indvars.iv.next55729, %bb.alw ], [ 1, %bb.alv ] ; 2 uses
+  %indvars55734 = trunc nuw i64 %indvars.iv5573257430 to i32 ; 2 uses
   %i.jir = shl i32 %indvars55734, 2
   %i.jis = add i32 %i.jir, %.0.copyload.i52568
   %i.jit = zext i32 %i.jis to i64
@@ -1451,20 +1448,19 @@ bb.ang:                                           ; preds = %bb.anf
 bb.anh:                                           ; preds = %bb.ang
   %i.jph = lshr i32 %i.jpc, 5                     ; 2 uses
   %i.jpi = icmp ult i32 %i.jpc, 64
-  %9 = add nsw i32 %i.jph, -1
-  %i.jpj = select i1 %i.jpi, i32 0, i32 %9        ; 2 uses
+  %i.jpj = select i1 %i.jpi, i32 1, i32 %i.jph    ; 2 uses
   %wide.trip.count55746 = zext nneg i32 %i.jpj to i64
-  %exitcond5574757433 = icmp eq i32 %i.jpj, 0
+  %exitcond5574757433 = icmp eq i32 %i.jpj, 1
   br i1 %exitcond5574757433, label %.loopexit54295, label %.lr.ph57436
 
 bb.ani:                                           ; preds = %.lr.ph57436
-  %exitcond55747 = icmp eq i64 %indvars.iv.next55743, %wide.trip.count55746
+  %indvars.iv.next55737 = add nuw nsw i64 %indvars.iv5574257434, 1 ; 2 uses
+  %exitcond55747 = icmp eq i64 %indvars.iv.next55737, %wide.trip.count55746
   br i1 %exitcond55747, label %.loopexit54295, label %.lr.ph57436
 
 .lr.ph57436:                                      ; preds = %bb.anh, %bb.ani
-  %indvars.iv5574257434 = phi i64 [ %indvars.iv.next55743, %bb.ani ], [ 0, %bb.anh ]
-  %indvars.iv.next55743 = add nuw nsw i64 %indvars.iv5574257434, 1 ; 3 uses
-  %indvars55744 = trunc i64 %indvars.iv.next55743 to i32 ; 2 uses
+  %indvars.iv5574257434 = phi i64 [ %indvars.iv.next55737, %bb.ani ], [ 1, %bb.anh ] ; 2 uses
+  %indvars55744 = trunc nuw i64 %indvars.iv5574257434 to i32 ; 2 uses
   %i.jpk = shl i32 %indvars55744, 2
   %i.jpl = add i32 %i.jpk, %.0.copyload.i52596
   %i.jpm = zext i32 %i.jpl to i64
@@ -1867,20 +1863,19 @@ bb.bhb:                                           ; preds = %.loopexit54567
 bb.bhc:                                           ; preds = %bb.bhb
   %i.psw = lshr i32 %i.psr, 5                     ; 2 uses
   %i.psx = icmp ult i32 %i.psr, 64
-  %10 = add nsw i32 %i.psw, -1
-  %i.psy = select i1 %i.psx, i32 0, i32 %10       ; 2 uses
+  %i.psy = select i1 %i.psx, i32 1, i32 %i.psw    ; 2 uses
   %wide.trip.count = zext nneg i32 %i.psy to i64
-  %exitcond57417 = icmp eq i32 %i.psy, 0
+  %exitcond57417 = icmp eq i32 %i.psy, 1
   br i1 %exitcond57417, label %.loopexit54565, label %.lr.ph57420
 
 bb.bhd:                                           ; preds = %.lr.ph57420
+  %indvars.iv.next55705 = add nuw nsw i64 %indvars.iv5570457418, 1 ; 2 uses
   %exitcond = icmp eq i64 %indvars.iv.next55705, %wide.trip.count
   br i1 %exitcond, label %.loopexit54565, label %.lr.ph57420
 
 .lr.ph57420:                                      ; preds = %bb.bhc, %bb.bhd
-  %indvars.iv5570457418 = phi i64 [ %indvars.iv.next55705, %bb.bhd ], [ 0, %bb.bhc ]
-  %indvars.iv.next55705 = add nuw nsw i64 %indvars.iv5570457418, 1 ; 3 uses
-  %indvars55706 = trunc i64 %indvars.iv.next55705 to i32 ; 2 uses
+  %indvars.iv5570457418 = phi i64 [ %indvars.iv.next55705, %bb.bhd ], [ 1, %bb.bhc ] ; 2 uses
+  %indvars55706 = trunc nuw i64 %indvars.iv5570457418 to i32 ; 2 uses
   %i.psz = shl i32 %indvars55706, 2
   %i.pta = add i32 %i.psz, %.0.copyload.i53460
   %i.ptb = zext i32 %i.pta to i64
@@ -2283,7 +2278,7 @@ bb.a:
   %i.t = icmp ugt i32 %.0.copyload.i469, %.0.copyload.i468 ; 3 uses
   %i.u = select i1 %i.t, i64 %.0.copyload.i467, i64 %.0.copyload.i ; 2 uses
   %i.v = lshr i64 %i.u, 32                        ; 3 uses
-  %i.w = trunc nuw i64 %i.v to i32                ; 6 uses
+  %i.w = trunc nuw i64 %i.v to i32                ; 5 uses
   %i.x = icmp ult i32 %.0.copyload.i471, %i.w
   br i1 %i.x, label %bb.w, label %bb.b
 
@@ -2401,13 +2396,13 @@ bb.k:                                             ; preds = %bb.j
   %.0 = phi i64 [ %i.bq, %bb.k ], [ 0, %bb.g ]
   %.val443 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.bs = getelementptr inbounds nuw i8, ptr %.val443, i64 %i.r
-  %.0.copyload.i477 = load i32, ptr %i.bs, align 1 ; 4 uses
+  %.0.copyload.i477 = load i32, ptr %i.bs, align 1 ; 3 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i477) #7, !srcloc !19
+  %4 = sub i32 %.0.copyload.i477, %i.w            ; 3 uses
   %.not432 = icmp eq i32 %.0.copyload.i477, %i.w
   br i1 %.not432, label %.loopexit488, label %bb.l
 
 bb.l:                                             ; preds = %.thread
-  %4 = sub i32 %.0.copyload.i477, %i.w
   %i.bt = add nsw i64 %.0, %.2411487              ; 2 uses
   %i.bu = zext i32 %i.br to i64                   ; 3 uses
   %.val452 = load ptr, ptr %i.d, align 8, !tbaa !18
@@ -2437,16 +2432,13 @@ bb.m:                                             ; preds = %bb.l
   br i1 %.not434, label %.preheader.preheader, label %.loopexit488
 
 .preheader.preheader:                             ; preds = %bb.m
-  %5 = xor i32 %i.w, -1
-  %6 = add i32 %.0.copyload.i477, %5              ; 2 uses
-  %wide.trip.count = zext i32 %6 to i64
-  %exitcond507 = icmp eq i32 %6, 1
+  %wide.trip.count = zext i32 %4 to i64
+  %exitcond507 = icmp eq i32 %4, 2
   br i1 %exitcond507, label %.loopexit488, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader.preheader, %.lr.ph
-  %indvars.iv495508 = phi i64 [ %indvars.iv.next496, %.lr.ph ], [ 1, %.preheader.preheader ]
-  %indvars.iv.next496 = add nuw nsw i64 %indvars.iv495508, 1 ; 3 uses
-  %indvars = trunc i64 %indvars.iv.next496 to i32
+  %indvars.iv495508 = phi i64 [ %indvars.iv.next496, %.lr.ph ], [ 2, %.preheader.preheader ] ; 2 uses
+  %indvars = trunc nuw i64 %indvars.iv495508 to i32
   %i.cd = shl i32 %indvars, 3
   %i.ce = add i32 %i.cd, %i.br
   %i.cf = zext i32 %i.ce to i64                   ; 2 uses
@@ -2459,9 +2451,10 @@ bb.m:                                             ; preds = %bb.l
   %i.ci = getelementptr inbounds nuw i8, ptr %.val460, i64 %i.cf
   store i64 %i.ch, ptr %i.ci, align 1
   %.not436 = icmp ne i64 %.0.copyload.i480, 0
+  %indvars.iv.next496 = add nuw nsw i64 %indvars.iv495508, 1 ; 2 uses
   %exitcond = icmp eq i64 %indvars.iv.next496, %wide.trip.count
-  %or.cond511 = or i1 %.not436, %exitcond
-  br i1 %or.cond511, label %.loopexit488, label %.lr.ph
+  %or.cond512 = select i1 %.not436, i1 true, i1 %exitcond
+  br i1 %or.cond512, label %.loopexit488, label %.lr.ph
 
 .loopexit488:                                     ; preds = %.lr.ph, %.preheader.preheader, %bb.l, %bb.m, %.thread
   %i.cj = add i32 %i.b, -8                        ; 2 uses
@@ -2639,7 +2632,7 @@ bb.a:
   %i.n = icmp ugt i32 %.0.copyload.i427, %.0.copyload.i428 ; 2 uses
   %i.o = select i1 %i.n, i64 %.0.copyload.i425, i64 %.0.copyload.i426 ; 2 uses
   %i.p = lshr i64 %i.o, 32                        ; 3 uses
-  %i.q = trunc nuw i64 %i.p to i32                ; 6 uses
+  %i.q = trunc nuw i64 %i.p to i32                ; 5 uses
   %i.r = icmp ult i32 %.0.copyload.i424, %i.q
   br i1 %i.r, label %bb.q, label %bb.b
 
@@ -2747,13 +2740,13 @@ bb.h:                                             ; preds = %.preheader444
   %.0 = phi i64 [ %i.bj, %bb.h ], [ 0, %bb.g ]
   %.val401 = load ptr, ptr %i.a, align 8, !tbaa !18
   %i.bl = getelementptr inbounds nuw i8, ptr %.val401, i64 %i.d
-  %.0.copyload.i434 = load i32, ptr %i.bl, align 1 ; 4 uses
+  %.0.copyload.i434 = load i32, ptr %i.bl, align 1 ; 3 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i434) #7, !srcloc !19
+  %4 = sub i32 %.0.copyload.i434, %i.q            ; 3 uses
   %.not392 = icmp eq i32 %.0.copyload.i434, %i.q
   br i1 %.not392, label %.loopexit443, label %bb.i
 
 bb.i:                                             ; preds = %.thread
-  %4 = sub i32 %.0.copyload.i434, %i.q
   %i.bm = add nsw i64 %.0, %.2371442
   %i.bn = zext i32 %i.bk to i64                   ; 3 uses
   %.val410 = load ptr, ptr %i.a, align 8, !tbaa !18
@@ -2783,16 +2776,13 @@ bb.j:                                             ; preds = %bb.i
   br i1 %.not394, label %.preheader.preheader, label %.loopexit443
 
 .preheader.preheader:                             ; preds = %bb.j
-  %5 = xor i32 %i.q, -1
-  %6 = add i32 %.0.copyload.i434, %5              ; 2 uses
-  %wide.trip.count = zext i32 %6 to i64
-  %exitcond462 = icmp eq i32 %6, 1
+  %wide.trip.count = zext i32 %4 to i64
+  %exitcond462 = icmp eq i32 %4, 2
   br i1 %exitcond462, label %.loopexit443, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader.preheader, %.lr.ph
-  %indvars.iv450463 = phi i64 [ %indvars.iv.next451, %.lr.ph ], [ 1, %.preheader.preheader ]
-  %indvars.iv.next451 = add nuw nsw i64 %indvars.iv450463, 1 ; 3 uses
-  %indvars = trunc i64 %indvars.iv.next451 to i32
+  %indvars.iv450463 = phi i64 [ %indvars.iv.next451, %.lr.ph ], [ 2, %.preheader.preheader ] ; 2 uses
+  %indvars = trunc nuw i64 %indvars.iv450463 to i32
   %i.bw = shl i32 %indvars, 3
   %i.bx = add i32 %i.bw, %i.bk
   %i.by = zext i32 %i.bx to i64                   ; 2 uses
@@ -2805,9 +2795,10 @@ bb.j:                                             ; preds = %bb.i
   %i.cb = getelementptr inbounds nuw i8, ptr %.val418, i64 %i.by
   store i64 %i.ca, ptr %i.cb, align 1
   %.not396 = icmp ne i64 %i.ca, 0
+  %indvars.iv.next451 = add nuw nsw i64 %indvars.iv450463, 1 ; 2 uses
   %exitcond = icmp eq i64 %indvars.iv.next451, %wide.trip.count
-  %or.cond466 = or i1 %.not396, %exitcond
-  br i1 %or.cond466, label %.loopexit443, label %.lr.ph
+  %or.cond467 = select i1 %.not396, i1 true, i1 %exitcond
+  br i1 %or.cond467, label %.loopexit443, label %.lr.ph
 
 .loopexit443:                                     ; preds = %.lr.ph, %.preheader.preheader, %bb.i, %bb.j, %.thread
   %.val = load ptr, ptr %i.a, align 8, !tbaa !18

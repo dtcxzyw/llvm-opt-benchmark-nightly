@@ -203,9 +203,9 @@ _ZNK4QSetI7QStringE4sizeEv.exit:                  ; preds = %bb.a, %bb.b
           to label %bb.c unwind label %bb.h
 
 bb.c:                                             ; preds = %_ZNK4QSetI7QStringE4sizeEv.exit
-  %i.e = load ptr, ptr %1, align 8, !noalias !55  ; 5 uses
+  %i.e = load ptr, ptr %1, align 8, !noalias !55  ; 4 uses
   %.not.i.i5 = icmp eq ptr %i.e, null
-  br i1 %.not.i.i5, label %_ZNK4QSetI7QStringE10constBeginEv.exit, label %bb.d
+  br i1 %.not.i.i5, label %._crit_edge, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.f = getelementptr i8, ptr %i.e, i64 32
@@ -218,12 +218,12 @@ bb.e:                                             ; preds = %bb.d
   %i.i = getelementptr i8, ptr %i.e, i64 16
   %i.j = load i64, ptr %i.i, align 8, !noalias !55 ; 2 uses
   %i.k = icmp eq i64 %i.j, 1
-  br i1 %i.k, label %_ZNK4QSetI7QStringE10constBeginEv.exit, label %.lr.ph
+  br i1 %i.k, label %._crit_edge, label %.lr.ph
 
 bb.f:                                             ; preds = %.lr.ph
-  %i.l = add i64 %i.n, 1                          ; 2 uses
+  %i.l = add nuw i64 %i.n, 1                      ; 2 uses
   %i.m = icmp eq i64 %i.l, %i.j
-  br i1 %i.m, label %_ZNK4QSetI7QStringE10constBeginEv.exit, label %.lr.ph, !llvm.loop !58
+  br i1 %i.m, label %._crit_edge, label %.lr.ph, !llvm.loop !58
 
 .lr.ph:                                           ; preds = %bb.e, %bb.f
   %i.n = phi i64 [ %i.l, %bb.f ], [ 1, %bb.e ]    ; 4 uses
@@ -233,28 +233,16 @@ bb.f:                                             ; preds = %.lr.ph
   %i.r = getelementptr i8, ptr %i.p, i64 %i.q
   %i.s = load i8, ptr %i.r, align 1, !noalias !55
   %.not.i.i.i.i.i = icmp eq i8 %i.s, -1
-  br i1 %.not.i.i.i.i.i, label %bb.f, label %._ZNK4QSetI7QStringE10constBeginEv.exit.loopexit_crit_edge, !llvm.loop !58
+  br i1 %.not.i.i.i.i.i, label %bb.f, label %_ZNK4QSetI7QStringE14const_iteratorneERKS2_.exit.thread.lr.ph, !llvm.loop !58
 
-._ZNK4QSetI7QStringE10constBeginEv.exit.loopexit_crit_edge: ; preds = %.lr.ph
-  br label %_ZNK4QSetI7QStringE10constBeginEv.exit, !llvm.loop !58
-
-_ZNK4QSetI7QStringE10constBeginEv.exit:           ; preds = %bb.f, %bb.e, %._ZNK4QSetI7QStringE10constBeginEv.exit.loopexit_crit_edge, %bb.c
-  %.sroa.0.0.i.i = phi ptr [ null, %bb.c ], [ %i.e, %._ZNK4QSetI7QStringE10constBeginEv.exit.loopexit_crit_edge ], [ null, %bb.e ], [ null, %bb.f ] ; 2 uses
-  %.sroa.4.0.i.i = phi i64 [ 0, %bb.c ], [ %i.n, %._ZNK4QSetI7QStringE10constBeginEv.exit.loopexit_crit_edge ], [ 0, %bb.e ], [ 0, %bb.f ] ; 2 uses
-  %2 = icmp ne ptr %.sroa.0.0.i.i, null
-  %3 = icmp ne i64 %.sroa.4.0.i.i, 0
-  %or.cond14 = or i1 %2, %3
-  br i1 %or.cond14, label %_ZNK4QSetI7QStringE14const_iteratorneERKS2_.exit.thread.lr.ph, label %._crit_edge
-
-_ZNK4QSetI7QStringE14const_iteratorneERKS2_.exit.thread.lr.ph: ; preds = %bb.d, %_ZNK4QSetI7QStringE10constBeginEv.exit
-  %.sroa.4.0.i.i25 = phi i64 [ %.sroa.4.0.i.i, %_ZNK4QSetI7QStringE10constBeginEv.exit ], [ 0, %bb.d ]
-  %.sroa.0.0.i.i24 = phi ptr [ %.sroa.0.0.i.i, %_ZNK4QSetI7QStringE10constBeginEv.exit ], [ %i.e, %bb.d ]
+_ZNK4QSetI7QStringE14const_iteratorneERKS2_.exit.thread.lr.ph: ; preds = %.lr.ph, %bb.d
+  %.sroa.4.0.i.i25 = phi i64 [ 0, %bb.d ], [ %i.n, %.lr.ph ]
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 16
   br label %_ZNK4QSetI7QStringE14const_iteratorneERKS2_.exit.thread
 
 _ZNK4QSetI7QStringE14const_iteratorneERKS2_.exit.thread: ; preds = %_ZNK4QSetI7QStringE14const_iteratorneERKS2_.exit.thread.lr.ph, %_ZN4QSetI7QStringE14const_iteratorppEv.exit
   %.sroa.8.016 = phi i64 [ %.sroa.4.0.i.i25, %_ZNK4QSetI7QStringE14const_iteratorneERKS2_.exit.thread.lr.ph ], [ %.sroa.8.1, %_ZN4QSetI7QStringE14const_iteratorppEv.exit ] ; 3 uses
-  %.sroa.09.015 = phi ptr [ %.sroa.0.0.i.i24, %_ZNK4QSetI7QStringE14const_iteratorneERKS2_.exit.thread.lr.ph ], [ %.sroa.09.1, %_ZN4QSetI7QStringE14const_iteratorppEv.exit ] ; 3 uses
+  %.sroa.09.015 = phi ptr [ %i.e, %_ZNK4QSetI7QStringE14const_iteratorneERKS2_.exit.thread.lr.ph ], [ %.sroa.09.1, %_ZN4QSetI7QStringE14const_iteratorppEv.exit ] ; 3 uses
   %i.u = getelementptr i8, ptr %.sroa.09.015, i64 32 ; 2 uses
   %i.v = load ptr, ptr %i.u, align 8
   %i.w = lshr i64 %.sroa.8.016, 7
@@ -331,7 +319,7 @@ bb.i:                                             ; preds = %_ZNK17QArrayDataPoi
           cleanup
   br label %bb.j
 
-._crit_edge:                                      ; preds = %_ZN4QSetI7QStringE14const_iteratorppEv.exit, %_ZNK4QSetI7QStringE10constBeginEv.exit
+._crit_edge:                                      ; preds = %bb.f, %_ZN4QSetI7QStringE14const_iteratorppEv.exit, %bb.c, %bb.e
   ret void
 
 bb.j:                                             ; preds = %bb.i, %bb.h

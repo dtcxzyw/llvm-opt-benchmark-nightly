@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
   %i.av = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.as
   store i8 %i.au, ptr %i.av, align 1, !tbaa !37
   %i.aw = add nuw nsw i64 %.07.i.i42.i, 4         ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZN6google8protobuf8internal12_GLOBAL__N_114LeftoverBuffer6appendESt17basic_string_viewIcSt11char_traitsIcEE.exit44.i.loopexit.unr-lcssa, label %.lr.ph.i.i41.i, !llvm.loop !82
 
@@ -262,42 +262,35 @@ bb.e:                                             ; preds = %.critedge33.i
 .lr.ph.i.i48.i.preheader:                         ; preds = %bb.e
   %i.bn = sub i64 %i.bi, %.sroa.0.0.i
   %i.bo = icmp ugt i64 %i.bn, -4
-  br i1 %i.bo, label %.lr.ph.i.i48.i.epil.preheader, label %.lr.ph.i.i48.i
+  br i1 %i.bo, label %.lr.ph.i.i48.i.epil, label %.lr.ph.i.i48.i
 
 .lr.ph.i.i48.i:                                   ; preds = %.lr.ph.i.i48.i.preheader, %.lr.ph.i.i48.i
-  %.07.i.i49.i = phi i64 [ %2, %.lr.ph.i.i48.i ], [ 0, %.lr.ph.i.i48.i.preheader ] ; 6 uses
-  %niter45 = phi i64 [ %niter45.next.3, %.lr.ph.i.i48.i ], [ 0, %.lr.ph.i.i48.i.preheader ]
-  %i.bp = getelementptr inbounds nuw i8, ptr %i.bj, i64 %.07.i.i49.i
+  %niter45 = phi i64 [ %niter45.next.3, %.lr.ph.i.i48.i ], [ 0, %.lr.ph.i.i48.i.preheader ] ; 6 uses
+  %i.bp = getelementptr inbounds nuw i8, ptr %i.bj, i64 %niter45
   %i.bq = load i8, ptr %i.bp, align 1, !tbaa !37
-  %i.br = getelementptr inbounds nuw i8, ptr %i.bm, i64 %.07.i.i49.i
+  %i.br = getelementptr inbounds nuw i8, ptr %i.bm, i64 %niter45
   store i8 %i.bq, ptr %i.br, align 1, !tbaa !37
-  %i.bs = or disjoint i64 %.07.i.i49.i, 1         ; 2 uses
+  %i.bs = or disjoint i64 %niter45, 1             ; 2 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bj, i64 %i.bs
   %i.bu = load i8, ptr %i.bt, align 1, !tbaa !37
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bm, i64 %i.bs
   store i8 %i.bu, ptr %i.bv, align 1, !tbaa !37
-  %i.bw = or disjoint i64 %.07.i.i49.i, 2         ; 2 uses
+  %i.bw = or disjoint i64 %niter45, 2             ; 2 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bj, i64 %i.bw
   %i.by = load i8, ptr %i.bx, align 1, !tbaa !37
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bm, i64 %i.bw
   store i8 %i.by, ptr %i.bz, align 1, !tbaa !37
-  %i.ca = or disjoint i64 %.07.i.i49.i, 3         ; 2 uses
+  %i.ca = or disjoint i64 %niter45, 3             ; 2 uses
   %i.cb = getelementptr inbounds nuw i8, ptr %i.bj, i64 %i.ca
   %i.cc = load i8, ptr %i.cb, align 1, !tbaa !37
   %i.cd = getelementptr inbounds nuw i8, ptr %i.bm, i64 %i.ca
   store i8 %i.cc, ptr %i.cd, align 1, !tbaa !37
-  %2 = add nuw nsw i64 %.07.i.i49.i, 4            ; 2 uses
-  %niter45.next.3 = add i64 %niter45, 4           ; 2 uses
-  %niter45.ncmp.3 = icmp eq i64 %niter45.next.3, 0
-  br i1 %niter45.ncmp.3, label %.lr.ph.i.i48.i.epil.preheader, label %.lr.ph.i.i48.i, !llvm.loop !85
+  %niter45.next.3 = add nuw nsw i64 %niter45, 4
+  br label %.lr.ph.i.i48.i, !llvm.loop !85
 
-.lr.ph.i.i48.i.epil.preheader:                    ; preds = %.lr.ph.i.i48.i, %.lr.ph.i.i48.i.preheader
-  %.07.i.i49.i.epil.init = phi i64 [ 0, %.lr.ph.i.i48.i.preheader ], [ %2, %.lr.ph.i.i48.i ]
-  br label %.lr.ph.i.i48.i.epil
-
-.lr.ph.i.i48.i.epil:                              ; preds = %.lr.ph.i.i48.i.epil, %.lr.ph.i.i48.i.epil.preheader
-  %.07.i.i49.i.epil = phi i64 [ %i.ch, %.lr.ph.i.i48.i.epil ], [ %.07.i.i49.i.epil.init, %.lr.ph.i.i48.i.epil.preheader ] ; 3 uses
-  %epil.iter41 = phi i64 [ %epil.iter41.next, %.lr.ph.i.i48.i.epil ], [ 0, %.lr.ph.i.i48.i.epil.preheader ]
+.lr.ph.i.i48.i.epil:                              ; preds = %.lr.ph.i.i48.i.preheader, %.lr.ph.i.i48.i.epil
+  %.07.i.i49.i.epil = phi i64 [ %i.ch, %.lr.ph.i.i48.i.epil ], [ 0, %.lr.ph.i.i48.i.preheader ] ; 3 uses
+  %epil.iter41 = phi i64 [ %epil.iter41.next, %.lr.ph.i.i48.i.epil ], [ 0, %.lr.ph.i.i48.i.preheader ]
   %i.ce = getelementptr inbounds nuw i8, ptr %i.bj, i64 %.07.i.i49.i.epil
   %i.cf = load i8, ptr %i.ce, align 1, !tbaa !37
   %i.cg = getelementptr inbounds nuw i8, ptr %i.bm, i64 %.07.i.i49.i.epil

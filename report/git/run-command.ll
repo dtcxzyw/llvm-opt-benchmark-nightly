@@ -203,59 +203,47 @@ bb.r:                                             ; preds = %bb.q
 
 .lr.ph.preheader.i:                               ; preds = %.thread, %bb.r
   %.251 = phi i32 [ %i.al, %.thread ], [ %.1, %bb.r ] ; 2 uses
-  %wide.trip.count.i = zext nneg i32 %.251 to i64 ; 6 uses
-  %xtraiter = and i64 %wide.trip.count.i, 7       ; 3 uses
+  %wide.trip.count.i = zext nneg i32 %.251 to i64 ; 5 uses
+  %xtraiter = and i64 %wide.trip.count.i, 7       ; 2 uses
   %i.an = icmp ult i32 %.251, 8
-  br i1 %i.an, label %.lr.ph.i.epil.preheader, label %.lr.ph.preheader.i.new
+  br i1 %i.an, label %.lr.ph.i.epil.preheader, label %.lr.ph.i
 
-.lr.ph.preheader.i.new:                           ; preds = %.lr.ph.preheader.i
-  %unroll_iter = and i64 %wide.trip.count.i, 2147483640
-  br label %.lr.ph.i
-
-.lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.preheader.i.new
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i.new ], [ %indvars.iv.next.i.7, %.lr.ph.i ] ; 9 uses
-  %niter = phi i64 [ 0, %.lr.ph.preheader.i.new ], [ %niter.next.7, %.lr.ph.i ]
-  %i.ao = getelementptr inbounds nuw [40 x i8], ptr %7, i64 %indvars.iv.i
+.lr.ph.i:                                         ; preds = %.lr.ph.preheader.i, %.lr.ph.i
+  %niter = phi i64 [ %niter.next.7, %.lr.ph.i ], [ 0, %.lr.ph.preheader.i ] ; 9 uses
+  %i.ao = getelementptr inbounds nuw [40 x i8], ptr %7, i64 %niter
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 24
   store i32 0, ptr %i.ap, align 8, !tbaa !88
-  %i.aq = getelementptr inbounds nuw [40 x i8], ptr %7, i64 %indvars.iv.i
+  %i.aq = getelementptr inbounds nuw [40 x i8], ptr %7, i64 %niter
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 64
   store i32 0, ptr %i.ar, align 16, !tbaa !88
-  %i.as = getelementptr inbounds nuw [40 x i8], ptr %7, i64 %indvars.iv.i
+  %i.as = getelementptr inbounds nuw [40 x i8], ptr %7, i64 %niter
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 104
   store i32 0, ptr %i.at, align 8, !tbaa !88
-  %i.au = getelementptr inbounds nuw [40 x i8], ptr %7, i64 %indvars.iv.i
+  %i.au = getelementptr inbounds nuw [40 x i8], ptr %7, i64 %niter
   %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 144
   store i32 0, ptr %i.av, align 16, !tbaa !88
-  %i.aw = getelementptr inbounds nuw [40 x i8], ptr %7, i64 %indvars.iv.i
+  %i.aw = getelementptr inbounds nuw [40 x i8], ptr %7, i64 %niter
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 184
   store i32 0, ptr %i.ax, align 8, !tbaa !88
-  %i.ay = getelementptr inbounds nuw [40 x i8], ptr %7, i64 %indvars.iv.i
+  %i.ay = getelementptr inbounds nuw [40 x i8], ptr %7, i64 %niter
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 224
   store i32 0, ptr %i.az, align 16, !tbaa !88
-  %i.ba = getelementptr inbounds nuw [40 x i8], ptr %7, i64 %indvars.iv.i
+  %i.ba = getelementptr inbounds nuw [40 x i8], ptr %7, i64 %niter
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 264
   store i32 0, ptr %i.bb, align 8, !tbaa !88
-  %i.bc = getelementptr inbounds nuw [40 x i8], ptr %7, i64 %indvars.iv.i
+  %i.bc = getelementptr inbounds nuw [40 x i8], ptr %7, i64 %niter
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bc, i64 304
   store i32 0, ptr %i.bd, align 16, !tbaa !88
-  %indvars.iv.next.i.7 = add nuw nsw i64 %indvars.iv.i, 8 ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
-  %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
-  br i1 %niter.ncmp.7, label %.lr.ph.i.preheader.preheader.i.unr-lcssa, label %.lr.ph.i, !llvm.loop !89
+  %niter.next.7 = add nuw nsw i64 %niter, 8
+  br label %.lr.ph.i, !llvm.loop !89
 
-.lr.ph.i.preheader.preheader.i.unr-lcssa:         ; preds = %.lr.ph.i
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.i.preheader.preheader.i, label %.lr.ph.i.epil.preheader
-
-.lr.ph.i.epil.preheader:                          ; preds = %.lr.ph.i.preheader.preheader.i.unr-lcssa, %.lr.ph.preheader.i
-  %indvars.iv.i.epil.init = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i.7, %.lr.ph.i.preheader.preheader.i.unr-lcssa ]
+.lr.ph.i.epil.preheader:                          ; preds = %.lr.ph.preheader.i
   %lcmp.mod66 = icmp ne i64 %xtraiter, 0
   tail call void @llvm.assume(i1 %lcmp.mod66)
   br label %.lr.ph.i.epil
 
 .lr.ph.i.epil:                                    ; preds = %.lr.ph.i.epil, %.lr.ph.i.epil.preheader
-  %indvars.iv.i.epil = phi i64 [ %indvars.iv.i.epil.init, %.lr.ph.i.epil.preheader ], [ %indvars.iv.next.i.epil, %.lr.ph.i.epil ] ; 2 uses
+  %indvars.iv.i.epil = phi i64 [ 0, %.lr.ph.i.epil.preheader ], [ %indvars.iv.next.i.epil, %.lr.ph.i.epil ] ; 2 uses
   %epil.iter = phi i64 [ 0, %.lr.ph.i.epil.preheader ], [ %epil.iter.next, %.lr.ph.i.epil ]
   %i.be = getelementptr inbounds nuw [40 x i8], ptr %7, i64 %indvars.iv.i.epil
   %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 24
@@ -265,7 +253,7 @@ bb.r:                                             ; preds = %bb.q
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %.lr.ph.i.preheader.preheader.i, label %.lr.ph.i.epil, !llvm.loop !90
 
-.lr.ph.i.preheader.preheader.i:                   ; preds = %.lr.ph.i.epil, %.lr.ph.i.preheader.preheader.i.unr-lcssa
+.lr.ph.i.preheader.preheader.i:                   ; preds = %.lr.ph.i.epil
   %i.bg = shl nuw nsw i64 %wide.trip.count.i, 3
   %i.bh = tail call ptr @xmalloc(i64 noundef %i.bg) #22 ; 3 uses
   br label %.lr.ph.i.i

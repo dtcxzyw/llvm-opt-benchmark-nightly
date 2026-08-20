@@ -203,9 +203,9 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 ; Function Attrs: inlinehint mustprogress null_pointer_is_valid sspstrong uwtable
 define linkonce_odr noundef zeroext i1 @_ZNK4QSetI7QStringE8containsERKS1_(ptr noundef align 8 dereferenceable_or_null(8) %0, ptr noundef align 8 dereferenceable(8) %1) local_unnamed_addr #17 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = load ptr, ptr %1, align 8, !noalias !38  ; 5 uses
+  %i.a = load ptr, ptr %1, align 8, !noalias !38  ; 4 uses
   %.not.i.i = icmp eq ptr %i.a, null
-  br i1 %.not.i.i, label %_ZNK4QSetI7QStringE10constBeginEv.exit, label %bb.b
+  br i1 %.not.i.i, label %_ZNK4QSetI7QStringE8containsERKS0_.exit.thread13, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr i8, ptr %i.a, i64 32
@@ -218,12 +218,12 @@ bb.c:                                             ; preds = %bb.b
   %i.e = getelementptr i8, ptr %i.a, i64 16
   %i.f = load i64, ptr %i.e, align 8, !noalias !38 ; 2 uses
   %i.g = icmp eq i64 %i.f, 1
-  br i1 %i.g, label %_ZNK4QSetI7QStringE10constBeginEv.exit, label %.lr.ph
+  br i1 %i.g, label %_ZNK4QSetI7QStringE8containsERKS0_.exit.thread13, label %.lr.ph
 
 bb.d:                                             ; preds = %.lr.ph
-  %i.h = add i64 %i.j, 1                          ; 2 uses
+  %i.h = add nuw i64 %i.j, 1                      ; 2 uses
   %i.i = icmp eq i64 %i.h, %i.f
-  br i1 %i.i, label %_ZNK4QSetI7QStringE10constBeginEv.exit, label %.lr.ph, !llvm.loop !41
+  br i1 %i.i, label %_ZNK4QSetI7QStringE8containsERKS0_.exit.thread13, label %.lr.ph, !llvm.loop !41
 
 .lr.ph:                                           ; preds = %bb.c, %bb.d
   %i.j = phi i64 [ %i.h, %bb.d ], [ 1, %bb.c ]    ; 4 uses
@@ -233,22 +233,10 @@ bb.d:                                             ; preds = %.lr.ph
   %i.n = getelementptr i8, ptr %i.l, i64 %i.m
   %i.o = load i8, ptr %i.n, align 1, !noalias !38
   %.not.i.i.i.i.i = icmp eq i8 %i.o, -1
-  br i1 %.not.i.i.i.i.i, label %bb.d, label %._ZNK4QSetI7QStringE10constBeginEv.exit.loopexit_crit_edge, !llvm.loop !41
+  br i1 %.not.i.i.i.i.i, label %bb.d, label %_ZNK4QSetI7QStringE14const_iteratorneERKS2_.exit.thread.lr.ph, !llvm.loop !41
 
-._ZNK4QSetI7QStringE10constBeginEv.exit.loopexit_crit_edge: ; preds = %.lr.ph
-  br label %_ZNK4QSetI7QStringE10constBeginEv.exit, !llvm.loop !41
-
-_ZNK4QSetI7QStringE10constBeginEv.exit:           ; preds = %bb.d, %bb.c, %._ZNK4QSetI7QStringE10constBeginEv.exit.loopexit_crit_edge, %bb.a
-  %.sroa.0.0.i.i = phi ptr [ null, %bb.a ], [ %i.a, %._ZNK4QSetI7QStringE10constBeginEv.exit.loopexit_crit_edge ], [ null, %bb.c ], [ null, %bb.d ] ; 2 uses
-  %.sroa.4.0.i.i = phi i64 [ 0, %bb.a ], [ %i.j, %._ZNK4QSetI7QStringE10constBeginEv.exit.loopexit_crit_edge ], [ 0, %bb.c ], [ 0, %bb.d ] ; 2 uses
-  %2 = icmp eq ptr %.sroa.0.0.i.i, null
-  %3 = icmp eq i64 %.sroa.4.0.i.i, 0
-  %or.cond.not21 = and i1 %2, %3
-  br i1 %or.cond.not21, label %_ZNK4QSetI7QStringE8containsERKS0_.exit.thread13, label %_ZNK4QSetI7QStringE14const_iteratorneERKS2_.exit.thread.lr.ph
-
-_ZNK4QSetI7QStringE14const_iteratorneERKS2_.exit.thread.lr.ph: ; preds = %bb.b, %_ZNK4QSetI7QStringE10constBeginEv.exit
-  %.sroa.4.0.i.i42 = phi i64 [ %.sroa.4.0.i.i, %_ZNK4QSetI7QStringE10constBeginEv.exit ], [ 0, %bb.b ]
-  %.sroa.0.0.i.i41 = phi ptr [ %.sroa.0.0.i.i, %_ZNK4QSetI7QStringE10constBeginEv.exit ], [ %i.a, %bb.b ]
+_ZNK4QSetI7QStringE14const_iteratorneERKS2_.exit.thread.lr.ph: ; preds = %.lr.ph, %bb.b
+  %.sroa.4.0.i.i42 = phi i64 [ 0, %bb.b ], [ %i.j, %.lr.ph ]
   %i.p = load ptr, ptr %0, align 8                ; 4 uses
   %.not.i.i5 = icmp eq ptr %i.p, null
   br i1 %.not.i.i5, label %_ZNK4QSetI7QStringE8containsERKS0_.exit.thread13, label %_ZNK4QSetI7QStringE14const_iteratorneERKS2_.exit.thread.lr.ph.split
@@ -267,7 +255,7 @@ _ZNK4QSetI7QStringE14const_iteratorneERKS2_.exit.thread.lr.ph.split: ; preds = %
 
 _ZNK4QSetI7QStringE14const_iteratorneERKS2_.exit.thread: ; preds = %_ZNK4QSetI7QStringE14const_iteratorneERKS2_.exit.thread.lr.ph.split, %_ZN4QSetI7QStringE14const_iteratorppEv.exit
   %.sroa.7.023 = phi i64 [ %.sroa.4.0.i.i42, %_ZNK4QSetI7QStringE14const_iteratorneERKS2_.exit.thread.lr.ph.split ], [ %.sroa.7.1, %_ZN4QSetI7QStringE14const_iteratorppEv.exit ] ; 3 uses
-  %.sroa.07.022 = phi ptr [ %.sroa.0.0.i.i41, %_ZNK4QSetI7QStringE14const_iteratorneERKS2_.exit.thread.lr.ph.split ], [ %.sroa.07.1, %_ZN4QSetI7QStringE14const_iteratorppEv.exit ] ; 3 uses
+  %.sroa.07.022 = phi ptr [ %i.a, %_ZNK4QSetI7QStringE14const_iteratorneERKS2_.exit.thread.lr.ph.split ], [ %.sroa.07.1, %_ZN4QSetI7QStringE14const_iteratorppEv.exit ] ; 3 uses
   %i.z = getelementptr i8, ptr %.sroa.07.022, i64 32
   %i.aa = load ptr, ptr %i.z, align 8             ; 2 uses
   %i.ab = lshr i64 %.sroa.7.023, 7
@@ -372,8 +360,8 @@ _ZN4QSetI7QStringE14const_iteratorppEv.exit:      ; preds = %bb.g, %._ZN4QSetI7Q
   %or.cond.not = and i1 %i.ce, %i.cf
   br i1 %or.cond.not, label %_ZNK4QSetI7QStringE8containsERKS0_.exit.thread13, label %_ZNK4QSetI7QStringE14const_iteratorneERKS2_.exit.thread, !llvm.loop !44
 
-_ZNK4QSetI7QStringE8containsERKS0_.exit.thread13: ; preds = %_ZNK4QSetI7QStringE8containsERKS0_.exit, %_ZNK4QSetI7QStringE14const_iteratorneERKS2_.exit.thread, %_ZN4QSetI7QStringE14const_iteratorppEv.exit, %_ZN12QHashPrivate4DataINS_4NodeI7QString15QHashDummyValueEEE6Bucket14advanceWrappedEPKS5_.exit.i.i.i, %_ZNK4QSetI7QStringE14const_iteratorneERKS2_.exit.thread.lr.ph, %_ZNK4QSetI7QStringE10constBeginEv.exit
-  %or.cond.not20 = phi i1 [ false, %_ZNK4QSetI7QStringE14const_iteratorneERKS2_.exit.thread.lr.ph ], [ true, %_ZNK4QSetI7QStringE10constBeginEv.exit ], [ false, %_ZN12QHashPrivate4DataINS_4NodeI7QString15QHashDummyValueEEE6Bucket14advanceWrappedEPKS5_.exit.i.i.i ], [ false, %_ZNK4QSetI7QStringE8containsERKS0_.exit ], [ false, %_ZNK4QSetI7QStringE14const_iteratorneERKS2_.exit.thread ], [ true, %_ZN4QSetI7QStringE14const_iteratorppEv.exit ]
+_ZNK4QSetI7QStringE8containsERKS0_.exit.thread13: ; preds = %bb.d, %_ZNK4QSetI7QStringE8containsERKS0_.exit, %_ZNK4QSetI7QStringE14const_iteratorneERKS2_.exit.thread, %_ZN4QSetI7QStringE14const_iteratorppEv.exit, %_ZN12QHashPrivate4DataINS_4NodeI7QString15QHashDummyValueEEE6Bucket14advanceWrappedEPKS5_.exit.i.i.i, %bb.c, %bb.a, %_ZNK4QSetI7QStringE14const_iteratorneERKS2_.exit.thread.lr.ph
+  %or.cond.not20 = phi i1 [ false, %_ZNK4QSetI7QStringE14const_iteratorneERKS2_.exit.thread.lr.ph ], [ true, %_ZN4QSetI7QStringE14const_iteratorppEv.exit ], [ true, %bb.a ], [ true, %bb.c ], [ false, %_ZN12QHashPrivate4DataINS_4NodeI7QString15QHashDummyValueEEE6Bucket14advanceWrappedEPKS5_.exit.i.i.i ], [ false, %_ZNK4QSetI7QStringE8containsERKS0_.exit ], [ false, %_ZNK4QSetI7QStringE14const_iteratorneERKS2_.exit.thread ], [ true, %bb.d ]
   ret i1 %or.cond.not20
 }
 

@@ -203,9 +203,9 @@ _ZN5QListIP16PacketListRecordEC2ERKS2_.exit:      ; preds = %bb.az, %bb.ba
 
 bb.bb:                                            ; preds = %_ZN5QListIP16PacketListRecordEC2ERKS2_.exit
   %i.fe = getelementptr i8, ptr %0, i64 208
-  %i.ff = load ptr, ptr %i.fe, align 8            ; 5 uses
+  %i.ff = load ptr, ptr %i.fe, align 8            ; 4 uses
   %.not.i154 = icmp eq ptr %i.ff, null
-  br i1 %.not.i154, label %_ZNK5QHashI7QStringiE10constBeginEv.exit, label %bb.bc
+  br i1 %.not.i154, label %.loopexit, label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bb
   %i.fg = getelementptr i8, ptr %i.ff, i64 32
@@ -218,12 +218,12 @@ bb.bd:                                            ; preds = %bb.bc
   %i.fj = getelementptr i8, ptr %i.ff, i64 16
   %i.fk = load i64, ptr %i.fj, align 8            ; 2 uses
   %i.fl = icmp eq i64 %i.fk, 1
-  br i1 %i.fl, label %_ZNK5QHashI7QStringiE10constBeginEv.exit, label %.lr.ph317
+  br i1 %i.fl, label %.loopexit, label %.lr.ph317
 
 bb.be:                                            ; preds = %.lr.ph317
-  %i.fm = add i64 %i.fo, 1                        ; 2 uses
+  %i.fm = add nuw i64 %i.fo, 1                    ; 2 uses
   %i.fn = icmp eq i64 %i.fm, %i.fk
-  br i1 %i.fn, label %_ZNK5QHashI7QStringiE10constBeginEv.exit, label %.lr.ph317, !llvm.loop !93
+  br i1 %i.fn, label %.loopexit, label %.lr.ph317, !llvm.loop !93
 
 .lr.ph317:                                        ; preds = %bb.bd, %bb.be
   %i.fo = phi i64 [ %i.fm, %bb.be ], [ 1, %bb.bd ] ; 4 uses
@@ -233,28 +233,16 @@ bb.be:                                            ; preds = %.lr.ph317
   %i.fs = getelementptr i8, ptr %i.fq, i64 %i.fr
   %i.ft = load i8, ptr %i.fs, align 1
   %.not.i.i.i.i = icmp eq i8 %i.ft, -1
-  br i1 %.not.i.i.i.i, label %bb.be, label %._ZNK5QHashI7QStringiE10constBeginEv.exit.loopexit_crit_edge, !llvm.loop !93
+  br i1 %.not.i.i.i.i, label %bb.be, label %_ZNK5QHashI7QStringiE14const_iteratorneERKS2_.exit.thread.lr.ph, !llvm.loop !93
 
-._ZNK5QHashI7QStringiE10constBeginEv.exit.loopexit_crit_edge: ; preds = %.lr.ph317
-  br label %_ZNK5QHashI7QStringiE10constBeginEv.exit, !llvm.loop !93
-
-_ZNK5QHashI7QStringiE10constBeginEv.exit:         ; preds = %bb.be, %bb.bd, %._ZNK5QHashI7QStringiE10constBeginEv.exit.loopexit_crit_edge, %bb.bb
-  %.sroa.0.0.i = phi ptr [ null, %bb.bb ], [ null, %bb.bd ], [ %i.ff, %._ZNK5QHashI7QStringiE10constBeginEv.exit.loopexit_crit_edge ], [ null, %bb.be ] ; 2 uses
-  %.sroa.4.0.i = phi i64 [ 0, %bb.bb ], [ 0, %bb.bd ], [ %i.fo, %._ZNK5QHashI7QStringiE10constBeginEv.exit.loopexit_crit_edge ], [ 0, %bb.be ] ; 2 uses
-  %20 = icmp ne ptr %.sroa.0.0.i, null
-  %21 = icmp ne i64 %.sroa.4.0.i, 0
-  %or.cond254256 = or i1 %20, %21
-  br i1 %or.cond254256, label %_ZNK5QHashI7QStringiE14const_iteratorneERKS2_.exit.thread.lr.ph, label %.loopexit
-
-_ZNK5QHashI7QStringiE14const_iteratorneERKS2_.exit.thread.lr.ph: ; preds = %bb.bc, %_ZNK5QHashI7QStringiE10constBeginEv.exit
-  %.sroa.4.0.i314 = phi i64 [ %.sroa.4.0.i, %_ZNK5QHashI7QStringiE10constBeginEv.exit ], [ 0, %bb.bc ]
-  %.sroa.0.0.i313 = phi ptr [ %.sroa.0.0.i, %_ZNK5QHashI7QStringiE10constBeginEv.exit ], [ %i.ff, %bb.bc ]
+_ZNK5QHashI7QStringiE14const_iteratorneERKS2_.exit.thread.lr.ph: ; preds = %.lr.ph317, %bb.bc
+  %.sroa.4.0.i314 = phi i64 [ 0, %bb.bc ], [ %i.fo, %.lr.ph317 ]
   %i.fu = getelementptr inbounds nuw i8, ptr %17, i64 8
   br label %_ZNK5QHashI7QStringiE14const_iteratorneERKS2_.exit.thread
 
 _ZNK5QHashI7QStringiE14const_iteratorneERKS2_.exit.thread: ; preds = %_ZNK5QHashI7QStringiE14const_iteratorneERKS2_.exit.thread.lr.ph, %_ZN5QHashI7QStringiE14const_iteratorppEv.exit
   %.sroa.9240.0258 = phi i64 [ %.sroa.4.0.i314, %_ZNK5QHashI7QStringiE14const_iteratorneERKS2_.exit.thread.lr.ph ], [ %.sroa.9240.1, %_ZN5QHashI7QStringiE14const_iteratorppEv.exit ] ; 3 uses
-  %.sroa.0236.0257 = phi ptr [ %.sroa.0.0.i313, %_ZNK5QHashI7QStringiE14const_iteratorneERKS2_.exit.thread.lr.ph ], [ %.sroa.0236.1, %_ZN5QHashI7QStringiE14const_iteratorppEv.exit ] ; 3 uses
+  %.sroa.0236.0257 = phi ptr [ %i.ff, %_ZNK5QHashI7QStringiE14const_iteratorneERKS2_.exit.thread.lr.ph ], [ %.sroa.0236.1, %_ZN5QHashI7QStringiE14const_iteratorppEv.exit ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #33
   %i.fv = getelementptr i8, ptr %.sroa.0236.0257, i64 32 ; 3 uses
   %i.fw = load ptr, ptr %i.fv, align 8
@@ -406,7 +394,7 @@ _ZN10QByteArrayD2Ev.exit169:                      ; preds = %bb.bl, %_ZN17QArray
   call void @llvm.lifetime.end.p0(ptr nonnull %17) #33
   br label %_ZN9QtPrivate17QForeachContainerI5QListIP16PacketListRecordEED2Ev.exit189
 
-.loopexit:                                        ; preds = %_ZN5QHashI7QStringiE14const_iteratorppEv.exit, %_ZNK5QHashI7QStringiE10constBeginEv.exit, %_ZN5QListIP16PacketListRecordEC2ERKS2_.exit
+.loopexit:                                        ; preds = %bb.be, %_ZN5QHashI7QStringiE14const_iteratorppEv.exit, %bb.bb, %bb.bd, %_ZN5QListIP16PacketListRecordEC2ERKS2_.exit
   %i.ic = load ptr, ptr %16, align 16             ; 3 uses
   %.not.i.i.i.i170 = icmp eq ptr %i.ic, null
   br i1 %.not.i.i.i.i170, label %_ZNK17QArrayDataPointerIP16PacketListRecordE11needsDetachEv.exit.thread.i.i.i, label %_ZNK17QArrayDataPointerIP16PacketListRecordE11needsDetachEv.exit.i.i.i171

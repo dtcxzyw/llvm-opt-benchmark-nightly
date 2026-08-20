@@ -204,7 +204,7 @@ bb.bi:                                            ; preds = %bb.bi, %.lr.ph.i.ne
   store i32 %.val.i55.3, ptr %i.ib, align 4
   %i.ic = getelementptr i8, ptr %.01719.i, i64 20 ; 2 uses
   %indvars.iv.next.i.3 = add nuw nsw i64 %indvars.iv.i, 4 ; 2 uses
-  %niter569.next.3 = add i64 %niter569, 4         ; 2 uses
+  %niter569.next.3 = add nuw i64 %niter569, 4     ; 2 uses
   %niter569.ncmp.3 = icmp eq i64 %niter569.next.3, %unroll_iter568
   br i1 %niter569.ncmp.3, label %parse_device.exit.loopexit471.unr-lcssa, label %bb.bi, !llvm.loop !39
 
@@ -607,7 +607,7 @@ bb.di:                                            ; preds = %bb.di, %.preheader.
   %i.rp = add i32 %i.rk, %i.ro
   store i32 %i.rp, ptr %i.rn, align 4
   %indvars.iv.next47.i.1 = add nuw nsw i64 %indvars.iv46.i, 2 ; 2 uses
-  %niter556.next.1 = add i64 %niter556, 2         ; 2 uses
+  %niter556.next.1 = add nuw i64 %niter556, 2     ; 2 uses
   %niter556.ncmp.1 = icmp eq i64 %niter556.next.1, %unroll_iter555
   br i1 %niter556.ncmp.1, label %.unr-lcssa, label %bb.di, !llvm.loop !41
 
@@ -1010,7 +1010,7 @@ bb.hm:                                            ; preds = %bb.hl
   %i.aik = getelementptr i8, ptr %i.aii, i64 28
   store i32 1, ptr %i.aik, align 4
   %indvars.iv.next118.i.i.3 = add nuw nsw i64 %indvars.iv117.i.i, 4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %parse_io.exit.i.loopexit.unr-lcssa, label %.preheader.i.i95, !llvm.loop !44
 
@@ -1413,13 +1413,12 @@ begin_hunk_3_@pcmcia_parse_tuple:bb.a
   br i1 %.not247.i.i, label %.lr.ph92.us.i.i.preheader, label %parse_device.exit
 
 .lr.ph92.us.i.i.preheader:                        ; preds = %.lr.ph92.us.preheader.i.i
-  br i1 %i.avb, label %.lr.ph92.us.i.i.epil.preheader, label %.lr.ph92.us.i.i
+  br i1 %i.avb, label %.lr.ph92.us.i.i.epil, label %.lr.ph92.us.i.i
 
 .lr.ph92.us.i.i:                                  ; preds = %.lr.ph92.us.i.i.preheader, %.lr.ph92.us.i.i
   %.091.us.i.i = phi i32 [ %i.axa, %.lr.ph92.us.i.i ], [ 0, %.lr.ph92.us.i.i.preheader ]
   %.290.us.i.i = phi i32 [ %i.axb, %.lr.ph92.us.i.i ], [ 0, %.lr.ph92.us.i.i.preheader ] ; 4 uses
   %.389.us.i.i = phi ptr [ %i.axc, %.lr.ph92.us.i.i ], [ %scevgep196.i.i, %.lr.ph92.us.i.i.preheader ] ; 5 uses
-  %niter540 = phi i32 [ %niter540.next.3, %.lr.ph92.us.i.i ], [ 0, %.lr.ph92.us.i.i.preheader ]
   %i.awd = load i8, ptr %.389.us.i.i, align 1
   %i.awe = zext i8 %i.awd to i32
   %i.awf = add i32 %.091.us.i.i, %i.awe
@@ -1443,24 +1442,16 @@ begin_hunk_3_@pcmcia_parse_tuple:bb.a
   %i.awx = shl i32 %.290.us.i.i, 3
   %i.awy = or disjoint i32 %i.awx, 24
   %i.awz = shl i32 %i.aww, %i.awy
-  %i.axa = add i32 %i.awz, %i.awt                 ; 2 uses
-  %i.axb = add nuw nsw i32 %.290.us.i.i, 4        ; 2 uses
-  %i.axc = getelementptr i8, ptr %.389.us.i.i, i64 4 ; 2 uses
-  %niter540.next.3 = add i32 %niter540, 4         ; 2 uses
-  %niter540.ncmp.3 = icmp eq i32 %niter540.next.3, 0
-  br i1 %niter540.ncmp.3, label %.lr.ph92.us.i.i.epil.preheader, label %.lr.ph92.us.i.i, !llvm.loop !47
+  %i.axa = add i32 %i.awz, %i.awt
+  %i.axb = add nuw nsw i32 %.290.us.i.i, 4
+  %i.axc = getelementptr i8, ptr %.389.us.i.i, i64 4
+  br label %.lr.ph92.us.i.i, !llvm.loop !47
 
-.lr.ph92.us.i.i.epil.preheader:                   ; preds = %.lr.ph92.us.i.i, %.lr.ph92.us.i.i.preheader
-  %.091.us.i.i.epil.init = phi i32 [ 0, %.lr.ph92.us.i.i.preheader ], [ %i.axa, %.lr.ph92.us.i.i ]
-  %.290.us.i.i.epil.init = phi i32 [ 0, %.lr.ph92.us.i.i.preheader ], [ %i.axb, %.lr.ph92.us.i.i ]
-  %.389.us.i.i.epil.init = phi ptr [ %scevgep196.i.i, %.lr.ph92.us.i.i.preheader ], [ %i.axc, %.lr.ph92.us.i.i ]
-  br label %.lr.ph92.us.i.i.epil
-
-.lr.ph92.us.i.i.epil:                             ; preds = %.lr.ph92.us.i.i.epil, %.lr.ph92.us.i.i.epil.preheader
-  %.091.us.i.i.epil = phi i32 [ %i.axh, %.lr.ph92.us.i.i.epil ], [ %.091.us.i.i.epil.init, %.lr.ph92.us.i.i.epil.preheader ]
-  %.290.us.i.i.epil = phi i32 [ %i.axi, %.lr.ph92.us.i.i.epil ], [ %.290.us.i.i.epil.init, %.lr.ph92.us.i.i.epil.preheader ] ; 2 uses
-  %.389.us.i.i.epil = phi ptr [ %i.axj, %.lr.ph92.us.i.i.epil ], [ %.389.us.i.i.epil.init, %.lr.ph92.us.i.i.epil.preheader ] ; 2 uses
-  %epil.iter535 = phi i32 [ %epil.iter535.next, %.lr.ph92.us.i.i.epil ], [ 0, %.lr.ph92.us.i.i.epil.preheader ]
+.lr.ph92.us.i.i.epil:                             ; preds = %.lr.ph92.us.i.i.preheader, %.lr.ph92.us.i.i.epil
+  %.091.us.i.i.epil = phi i32 [ %i.axh, %.lr.ph92.us.i.i.epil ], [ 0, %.lr.ph92.us.i.i.preheader ]
+  %.290.us.i.i.epil = phi i32 [ %i.axi, %.lr.ph92.us.i.i.epil ], [ 0, %.lr.ph92.us.i.i.preheader ] ; 2 uses
+  %.389.us.i.i.epil = phi ptr [ %i.axj, %.lr.ph92.us.i.i.epil ], [ %scevgep196.i.i, %.lr.ph92.us.i.i.preheader ] ; 2 uses
+  %epil.iter535 = phi i32 [ %epil.iter535.next, %.lr.ph92.us.i.i.epil ], [ 0, %.lr.ph92.us.i.i.preheader ]
   %i.axd = load i8, ptr %.389.us.i.i.epil, align 1
   %i.axe = zext i8 %i.axd to i32
   %i.axf = shl nuw nsw i32 %.290.us.i.i.epil, 3
@@ -1863,7 +1854,7 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.m, %bb.l
   %.2.i.1 = phi i64 [ %i.bj, %bb.m ], [ %.2.i, %bb.l ] ; 5 uses
   %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 3 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.i.loopexit.unr-lcssa, label %bb.j, !llvm.loop !57
 

@@ -204,7 +204,7 @@ bb.ag:                                            ; preds = %bb.af
 bb.ah:                                            ; preds = %bb.ag, %bb.af
   %i.dz = phi i32 [ %i.du, %bb.af ], [ 6, %bb.ag ] ; 3 uses
   %indvars.iv.next.7 = add nuw nsw i64 %indvars.iv, 8 ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %.loopexit252.loopexit.unr-lcssa, label %bb.r, !llvm.loop !37
 
@@ -607,7 +607,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i, %vecto
   %i.bn = load float, ptr %i.bm, align 4, !tbaa !23
   %i.bo = getelementptr inbounds nuw [12 x i8], ptr %i.ae, i64 %indvars.iv.next43.i
   %i.bp = getelementptr inbounds nuw [12 x i8], ptr %i.af, i64 %indvars.iv.next43.i
-  %indvars.iv.next43.i.1 = add nsw i64 %.066.i, -2 ; 7 uses
+  %indvars.iv.next43.i.1 = add nsw i64 %.066.i, -2 ; 6 uses
   %i.bq = getelementptr inbounds nuw [4 x i8], ptr %10, i64 %indvars.iv.next43.i.1
   %i.br = getelementptr inbounds nuw [12 x i8], ptr %i.ae, i64 %indvars.iv.next43.i.1
   %i.bs = getelementptr inbounds nuw [12 x i8], ptr %i.af, i64 %indvars.iv.next43.i.1
@@ -618,7 +618,6 @@ bb.k:                                             ; preds = %bb.j, %bb.i, %vecto
   %i.bv = getelementptr inbounds nuw [12 x i8], ptr %i.ae, i64 %indvars.iv.next43.i.2 ; 5 uses
   %i.bw = getelementptr inbounds nuw [12 x i8], ptr %i.af, i64 %indvars.iv.next43.i.2 ; 5 uses
   %i.bx = icmp ult i64 %i.bt, 3
-  %lcmp.mod.2.not = icmp eq i64 %indvars.iv.next43.i.1, 0
   %lcmp.mod74.2 = icmp ne i64 %indvars.iv.next43.i.1, 0
   br label %.preheader.i
 
@@ -696,21 +695,20 @@ bb.n:                                             ; preds = %.loopexit.i.1
   br i1 %i.bx, label %.epil.preheader.2, label %.new.2
 
 .new.2:                                           ; preds = %bb.n, %.new.2
-  %indvars.iv37.i.2 = phi i64 [ %indvars.iv.next38.i.3.2, %.new.2 ], [ 0, %bb.n ] ; 8 uses
-  %niter.2 = phi i64 [ %niter.next.3.2, %.new.2 ], [ 0, %bb.n ]
-  %i.dl = getelementptr inbounds nuw [4 x i8], ptr %i.bv, i64 %indvars.iv37.i.2
+  %niter.2 = phi i64 [ %niter.next.3.2, %.new.2 ], [ 0, %bb.n ] ; 8 uses
+  %i.dl = getelementptr inbounds nuw [4 x i8], ptr %i.bv, i64 %niter.2
   %i.dm = load float, ptr %i.dl, align 4, !tbaa !23
-  %i.dn = getelementptr inbounds nuw [4 x i8], ptr %i.by, i64 %indvars.iv37.i.2 ; 2 uses
+  %i.dn = getelementptr inbounds nuw [4 x i8], ptr %i.by, i64 %niter.2 ; 2 uses
   %i.do = load float, ptr %i.dn, align 4, !tbaa !23
   %i.dp = call float @llvm.fmuladd.f32(float %i.dk, float %i.dm, float %i.do)
   store float %i.dp, ptr %i.dn, align 4, !tbaa !23
-  %i.dq = getelementptr inbounds nuw [4 x i8], ptr %i.bw, i64 %indvars.iv37.i.2
+  %i.dq = getelementptr inbounds nuw [4 x i8], ptr %i.bw, i64 %niter.2
   %i.dr = load float, ptr %i.dq, align 4, !tbaa !23
-  %i.ds = getelementptr inbounds nuw [4 x i8], ptr %i.bz, i64 %indvars.iv37.i.2 ; 2 uses
+  %i.ds = getelementptr inbounds nuw [4 x i8], ptr %i.bz, i64 %niter.2 ; 2 uses
   %i.dt = load float, ptr %i.ds, align 4, !tbaa !23
   %i.du = call float @llvm.fmuladd.f32(float %i.dk, float %i.dr, float %i.dt)
   store float %i.du, ptr %i.ds, align 4, !tbaa !23
-  %indvars.iv.next38.i.276 = or disjoint i64 %indvars.iv37.i.2, 1 ; 4 uses
+  %indvars.iv.next38.i.276 = or disjoint i64 %niter.2, 1 ; 4 uses
   %i.dv = getelementptr inbounds nuw [4 x i8], ptr %i.bv, i64 %indvars.iv.next38.i.276
   %i.dw = load float, ptr %i.dv, align 4, !tbaa !23
   %i.dx = getelementptr inbounds nuw [4 x i8], ptr %i.by, i64 %indvars.iv.next38.i.276 ; 2 uses
@@ -723,7 +721,7 @@ bb.n:                                             ; preds = %.loopexit.i.1
   %i.ed = load float, ptr %i.ec, align 4, !tbaa !23
   %i.ee = call float @llvm.fmuladd.f32(float %i.dk, float %i.eb, float %i.ed)
   store float %i.ee, ptr %i.ec, align 4, !tbaa !23
-  %indvars.iv.next38.i.1.2 = or disjoint i64 %indvars.iv37.i.2, 2 ; 4 uses
+  %indvars.iv.next38.i.1.2 = or disjoint i64 %niter.2, 2 ; 4 uses
   %i.ef = getelementptr inbounds nuw [4 x i8], ptr %i.bv, i64 %indvars.iv.next38.i.1.2
   %i.eg = load float, ptr %i.ef, align 4, !tbaa !23
   %i.eh = getelementptr inbounds nuw [4 x i8], ptr %i.by, i64 %indvars.iv.next38.i.1.2 ; 2 uses
@@ -736,7 +734,7 @@ bb.n:                                             ; preds = %.loopexit.i.1
   %i.en = load float, ptr %i.em, align 4, !tbaa !23
   %i.eo = call float @llvm.fmuladd.f32(float %i.dk, float %i.el, float %i.en)
   store float %i.eo, ptr %i.em, align 4, !tbaa !23
-  %indvars.iv.next38.i.2.2 = or disjoint i64 %indvars.iv37.i.2, 3 ; 4 uses
+  %indvars.iv.next38.i.2.2 = or disjoint i64 %niter.2, 3 ; 4 uses
   %i.ep = getelementptr inbounds nuw [4 x i8], ptr %i.bv, i64 %indvars.iv.next38.i.2.2
   %i.eq = load float, ptr %i.ep, align 4, !tbaa !23
   %i.er = getelementptr inbounds nuw [4 x i8], ptr %i.by, i64 %indvars.iv.next38.i.2.2 ; 2 uses
@@ -749,21 +747,15 @@ bb.n:                                             ; preds = %.loopexit.i.1
   %i.ex = load float, ptr %i.ew, align 4, !tbaa !23
   %i.ey = call float @llvm.fmuladd.f32(float %i.dk, float %i.ev, float %i.ex)
   store float %i.ey, ptr %i.ew, align 4, !tbaa !23
-  %indvars.iv.next38.i.3.2 = add nuw nsw i64 %indvars.iv37.i.2, 4 ; 2 uses
-  %niter.next.3.2 = add i64 %niter.2, 4           ; 2 uses
-  %niter.ncmp.3.2 = icmp eq i64 %niter.next.3.2, 0
-  br i1 %niter.ncmp.3.2, label %.loopexit.i.unr-lcssa.2, label %.new.2, !llvm.loop !95
+  %niter.next.3.2 = add nuw nsw i64 %niter.2, 4
+  br label %.new.2, !llvm.loop !95
 
-.loopexit.i.unr-lcssa.2:                          ; preds = %.new.2
-  br i1 %lcmp.mod.2.not, label %.loopexit.i.2, label %.epil.preheader.2
-
-.epil.preheader.2:                                ; preds = %.loopexit.i.unr-lcssa.2, %bb.n
-  %indvars.iv37.i.epil.init.2 = phi i64 [ 0, %bb.n ], [ %indvars.iv.next38.i.3.2, %.loopexit.i.unr-lcssa.2 ]
+.epil.preheader.2:                                ; preds = %bb.n
   call void @llvm.assume(i1 %lcmp.mod74.2)
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.o, %.epil.preheader.2
-  %indvars.iv37.i.epil.2 = phi i64 [ %indvars.iv37.i.epil.init.2, %.epil.preheader.2 ], [ %indvars.iv.next38.i.epil.2, %bb.o ] ; 5 uses
+  %indvars.iv37.i.epil.2 = phi i64 [ 0, %.epil.preheader.2 ], [ %indvars.iv.next38.i.epil.2, %bb.o ] ; 5 uses
   %epil.iter.2 = phi i64 [ 0, %.epil.preheader.2 ], [ %epil.iter.next.2, %bb.o ]
   %i.ez = getelementptr inbounds nuw [4 x i8], ptr %i.bv, i64 %indvars.iv37.i.epil.2
   %i.fa = load float, ptr %i.ez, align 4, !tbaa !23
@@ -782,7 +774,7 @@ bb.o:                                             ; preds = %bb.o, %.epil.prehea
   %epil.iter.cmp.2.not = icmp eq i64 %epil.iter.next.2, %indvars.iv.next43.i.1
   br i1 %epil.iter.cmp.2.not, label %.loopexit.i.2, label %bb.o, !llvm.loop !94
 
-.loopexit.i.2:                                    ; preds = %.loopexit.i.unr-lcssa.2, %bb.o, %.loopexit.i.1
+.loopexit.i.2:                                    ; preds = %bb.o, %.loopexit.i.1
   %i.fj = add nuw nsw i64 %.06417.i, 1            ; 2 uses
   %exitcond46.not.i = icmp eq i64 %i.fj, %i.bl
   br i1 %exitcond46.not.i, label %_ZL22putAtomsInBoxTemplatedILb1EEv7PbcTypePA3_KfS3_N3gmx8ArrayRefINS4_11BasicVectorIfEEEES8_.exit, label %.preheader.i, !llvm.loop !96

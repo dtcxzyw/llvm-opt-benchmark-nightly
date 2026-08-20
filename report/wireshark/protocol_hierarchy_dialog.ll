@@ -203,7 +203,7 @@ define void @_ZN23ProtocolHierarchyDialog32on_actionCopyProtoList_triggeredEv(pt
 bb.a:
   %1 = alloca %class.QString, align 8             ; 9 uses
   %2 = alloca %class.QTextStream, align 8         ; 9 uses
-  %3 = alloca %class.QSetIterator, align 8        ; 11 uses
+  %3 = alloca %class.QSetIterator, align 8        ; 10 uses
   %4 = alloca %class.QString, align 8             ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #23
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) dereferenceable_or_null(24) %1, i8 0, i64 24, i1 false)
@@ -217,7 +217,7 @@ bb.b:                                             ; preds = %bb.a
   %i.b = load ptr, ptr %i.a, align 8              ; 5 uses
   store ptr %i.b, ptr %3, align 8
   %.not.i.i.i = icmp eq ptr %i.b, null
-  br i1 %.not.i.i.i, label %_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.a, label %bb.c
+  br i1 %.not.i.i.i, label %_ZNK12QSetIteratorI7QStringE7hasNextEv.exit.thread.preheader, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.c = load atomic i32, ptr %i.b monotonic, align 4
@@ -229,33 +229,26 @@ _ZN4QSetI7QStringEC2ERKS1_.exit.i:                ; preds = %bb.c
   %.pr.pre.i = load ptr, ptr %3, align 8, !noalias !71 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !71)
   %.not.i.i2.i = icmp eq ptr %.pr.pre.i, null
-  br i1 %.not.i.i2.i, label %_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.a, label %_ZN4QSetI7QStringEC2ERKS1_.exit.thread.i
+  br i1 %.not.i.i2.i, label %_ZNK12QSetIteratorI7QStringE7hasNextEv.exit.thread.preheader, label %_ZN4QSetI7QStringEC2ERKS1_.exit.thread.i
 
 _ZN4QSetI7QStringEC2ERKS1_.exit.thread.i:         ; preds = %bb.c, %_ZN4QSetI7QStringEC2ERKS1_.exit.i
-  %.pr8.i = phi ptr [ %.pr.pre.i, %_ZN4QSetI7QStringEC2ERKS1_.exit.i ], [ %i.b, %bb.c ] ; 5 uses
+  %.pr8.i = phi ptr [ %.pr.pre.i, %_ZN4QSetI7QStringEC2ERKS1_.exit.i ], [ %i.b, %bb.c ] ; 4 uses
   %i.e = getelementptr i8, ptr %.pr8.i, i64 32
   %i.f = load ptr, ptr %i.e, align 8, !noalias !71 ; 2 uses
   %i.g = load i8, ptr %i.f, align 1, !noalias !71
   %.not.i.i.i.i.i = icmp eq i8 %i.g, -1
-  br i1 %.not.i.i.i.i.i, label %bb.d, label %_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.thread
-
-_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.thread: ; preds = %_ZN4QSetI7QStringEC2ERKS1_.exit.thread.i
-  %5 = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
-  store ptr %.pr8.i, ptr %5, align 8, !alias.scope !71
-  %.sroa.2.0..sroa_idx.i.i.i42 = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
-  store i64 0, ptr %.sroa.2.0..sroa_idx.i.i.i42, align 8, !alias.scope !71
-  br label %_ZNK12QSetIteratorI7QStringE7hasNextEv.exit.thread.preheader
+  br i1 %.not.i.i.i.i.i, label %bb.d, label %_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.a
 
 bb.d:                                             ; preds = %_ZN4QSetI7QStringEC2ERKS1_.exit.thread.i
   %i.h = getelementptr i8, ptr %.pr8.i, i64 16
   %i.i = load i64, ptr %i.h, align 8, !noalias !71 ; 2 uses
   %i.j = icmp eq i64 %i.i, 1
-  br i1 %i.j, label %_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.a, label %.lr.ph
+  br i1 %i.j, label %_ZNK12QSetIteratorI7QStringE7hasNextEv.exit.thread.preheader, label %.lr.ph
 
 bb.e:                                             ; preds = %.lr.ph
-  %i.k = add i64 %i.m, 1                          ; 2 uses
+  %i.k = add nuw i64 %i.m, 1                      ; 2 uses
   %i.l = icmp eq i64 %i.k, %i.i
-  br i1 %i.l, label %_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.a, label %.lr.ph, !llvm.loop !74
+  br i1 %i.l, label %_ZNK12QSetIteratorI7QStringE7hasNextEv.exit.thread.preheader, label %.lr.ph, !llvm.loop !74
 
 .lr.ph:                                           ; preds = %bb.d, %bb.e
   %i.m = phi i64 [ %i.k, %bb.e ], [ 1, %bb.d ]    ; 4 uses
@@ -265,42 +258,33 @@ bb.e:                                             ; preds = %.lr.ph
   %i.q = getelementptr i8, ptr %i.o, i64 %i.p
   %i.r = load i8, ptr %i.q, align 1, !noalias !71
   %.not.i.i.i.i.i.i = icmp eq i8 %i.r, -1
-  br i1 %.not.i.i.i.i.i.i, label %bb.e, label %._ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.loopexit_crit_edge, !llvm.loop !74
+  br i1 %.not.i.i.i.i.i.i, label %bb.e, label %_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.a, !llvm.loop !74
 
-._ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.loopexit_crit_edge: ; preds = %.lr.ph
-  br label %_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.a, !llvm.loop !74
-
-_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.a: ; preds = %bb.e, %bb.d, %._ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.loopexit_crit_edge, %bb.b, %_ZN4QSetI7QStringEC2ERKS1_.exit.i
-  %.sroa.0.0.i.i.i = phi ptr [ null, %_ZN4QSetI7QStringEC2ERKS1_.exit.i ], [ null, %bb.b ], [ null, %bb.d ], [ %.pr8.i, %._ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.loopexit_crit_edge ], [ null, %bb.e ] ; 3 uses
-  %.sroa.4.0.i.i.i = phi i64 [ 0, %_ZN4QSetI7QStringEC2ERKS1_.exit.i ], [ 0, %bb.b ], [ 0, %bb.d ], [ %i.m, %._ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.loopexit_crit_edge ], [ 0, %bb.e ] ; 3 uses
-  %i.s = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
-  store ptr %.sroa.0.0.i.i.i, ptr %i.s, align 8, !alias.scope !71
-  %.sroa.2.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
-  store i64 %.sroa.4.0.i.i.i, ptr %.sroa.2.0..sroa_idx.i.i.i, align 8, !alias.scope !71
-  %6 = icmp ne ptr %.sroa.0.0.i.i.i, null
-  %7 = icmp ne i64 %.sroa.4.0.i.i.i, 0
-  %or.cond27 = or i1 %6, %7
-  br i1 %or.cond27, label %_ZNK12QSetIteratorI7QStringE7hasNextEv.exit.thread.preheader, label %._crit_edge
-
-_ZNK12QSetIteratorI7QStringE7hasNextEv.exit.thread.preheader: ; preds = %_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.thread, %_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.a
-  %.sroa.2.0..sroa_idx.i.i.i46 = phi ptr [ %.sroa.2.0..sroa_idx.i.i.i42, %_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.thread ], [ %.sroa.2.0..sroa_idx.i.i.i, %_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.a ] ; 3 uses
-  %8 = phi ptr [ %5, %_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.thread ], [ %i.s, %_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.a ] ; 3 uses
-  %.sroa.4.0.i.i.i45 = phi i64 [ 0, %_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.thread ], [ %.sroa.4.0.i.i.i, %_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.a ]
-  %.sroa.0.0.i.i.i44 = phi ptr [ %.pr8.i, %_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.thread ], [ %.sroa.0.0.i.i.i, %_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.a ]
+_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.a: ; preds = %.lr.ph, %_ZN4QSetI7QStringEC2ERKS1_.exit.thread.i
+  %.sroa.4.0.i.i.i.ph = phi i64 [ 0, %_ZN4QSetI7QStringEC2ERKS1_.exit.thread.i ], [ %i.m, %.lr.ph ] ; 2 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
+  store ptr %.pr8.i, ptr %i.s, align 8, !alias.scope !71
+  %.sroa.2.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 4 uses
+  store i64 %.sroa.4.0.i.i.i.ph, ptr %.sroa.2.0..sroa_idx.i.i.i, align 8, !alias.scope !71
   br label %_ZNK12QSetIteratorI7QStringE7hasNextEv.exit.thread
 
+_ZNK12QSetIteratorI7QStringE7hasNextEv.exit.thread.preheader: ; preds = %bb.e, %bb.d, %bb.b, %_ZN4QSetI7QStringEC2ERKS1_.exit.i
+  %5 = getelementptr inbounds nuw i8, ptr %3, i64 8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %5, i8 0, i64 16, i1 false)
+  br label %._crit_edge
+
 thread-pre-split:                                 ; preds = %.loopexit
-  %.pr = load ptr, ptr %8, align 8                ; 2 uses
+  %.pr = load ptr, ptr %i.s, align 8              ; 2 uses
   %i.t = icmp ne ptr %.pr, null
-  %i.u = load i64, ptr %.sroa.2.0..sroa_idx.i.i.i46, align 8 ; 2 uses
+  %i.u = load i64, ptr %.sroa.2.0..sroa_idx.i.i.i, align 8 ; 2 uses
   %i.v = icmp ne i64 %i.u, 0
   %or.cond = select i1 %i.t, i1 true, i1 %i.v
   br i1 %or.cond, label %_ZNK12QSetIteratorI7QStringE7hasNextEv.exit.thread, label %._crit_edge
 
-_ZNK12QSetIteratorI7QStringE7hasNextEv.exit.thread: ; preds = %_ZNK12QSetIteratorI7QStringE7hasNextEv.exit.thread.preheader, %thread-pre-split
-  %.sroa.4.0.copyload.i33 = phi i64 [ %i.u, %thread-pre-split ], [ %.sroa.4.0.i.i.i45, %_ZNK12QSetIteratorI7QStringE7hasNextEv.exit.thread.preheader ]
-  %.sroa.0.0.copyload.i31 = phi ptr [ %.pr, %thread-pre-split ], [ %.sroa.0.0.i.i.i44, %_ZNK12QSetIteratorI7QStringE7hasNextEv.exit.thread.preheader ]
-  %.028 = phi i1 [ false, %thread-pre-split ], [ true, %_ZNK12QSetIteratorI7QStringE7hasNextEv.exit.thread.preheader ]
+_ZNK12QSetIteratorI7QStringE7hasNextEv.exit.thread: ; preds = %_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.a, %thread-pre-split
+  %.sroa.4.0.copyload.i33 = phi i64 [ %i.u, %thread-pre-split ], [ %.sroa.4.0.i.i.i.ph, %_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.a ]
+  %.sroa.0.0.copyload.i31 = phi ptr [ %.pr, %thread-pre-split ], [ %.pr8.i, %_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.a ]
+  %.028 = phi i1 [ false, %thread-pre-split ], [ true, %_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.a ]
   br i1 %.028, label %bb.h, label %bb.f
 
 bb.f:                                             ; preds = %_ZNK12QSetIteratorI7QStringE7hasNextEv.exit.thread
@@ -308,8 +292,8 @@ bb.f:                                             ; preds = %_ZNK12QSetIteratorI
           to label %._crit_edge29 unwind label %.loopexit26 ; 0 uses
 
 ._crit_edge29:                                    ; preds = %bb.f
-  %.sroa.0.0.copyload.i.pre = load ptr, ptr %8, align 8
-  %.sroa.4.0.copyload.i.pre = load i64, ptr %.sroa.2.0..sroa_idx.i.i.i46, align 8
+  %.sroa.0.0.copyload.i.pre = load ptr, ptr %i.s, align 8
+  %.sroa.4.0.copyload.i.pre = load i64, ptr %.sroa.2.0..sroa_idx.i.i.i, align 8
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.a
@@ -337,13 +321,13 @@ bb.h:                                             ; preds = %._crit_edge29, %_ZN
 bb.i:                                             ; preds = %bb.k, %bb.h
   %i.aa = phi i64 [ %i.ab, %bb.k ], [ %.sroa.4.0.copyload.i, %bb.h ]
   %i.ab = add i64 %i.aa, 1                        ; 5 uses
-  store i64 %i.ab, ptr %.sroa.2.0..sroa_idx.i.i.i46, align 8, !noalias !75
+  store i64 %i.ab, ptr %.sroa.2.0..sroa_idx.i.i.i, align 8, !noalias !75
   %i.ac = load i64, ptr %i.y, align 8, !noalias !75
   %i.ad = icmp eq i64 %i.ab, %i.ac
   br i1 %i.ad, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) dereferenceable_or_null(16) %8, i8 0, i64 16, i1 false), !noalias !75
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) dereferenceable_or_null(16) %i.s, i8 0, i64 16, i1 false), !noalias !75
   %.pre.i = load ptr, ptr %i.z, align 8
   br label %.loopexit
 
@@ -371,7 +355,7 @@ bb.k:                                             ; preds = %bb.i
   %i.au = invoke noundef align 8 dereferenceable(16) ptr @_ZN11QTextStreamlsERK7QString(ptr noundef nonnull align 8 dereferenceable_or_null(16) %2, ptr noundef align 8 dereferenceable(24) %i.at)
           to label %thread-pre-split unwind label %.loopexit26, !llvm.loop !78 ; 0 uses
 
-._crit_edge:                                      ; preds = %thread-pre-split, %_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.a
+._crit_edge:                                      ; preds = %thread-pre-split, %_ZNK12QSetIteratorI7QStringE7hasNextEv.exit.thread.preheader
   %i.av = invoke noundef ptr @_ZN15QGuiApplication9clipboardEv()
           to label %bb.l unwind label %.loopexit.split-lp
 
@@ -484,7 +468,7 @@ define void @_ZN23ProtocolHierarchyDialog32on_actionDisableProtos_triggeredEv(pt
 bb.a:
   %1 = alloca %class.QString, align 8             ; 9 uses
   %2 = alloca %class.QByteArray, align 8          ; 9 uses
-  %3 = alloca %class.QSetIterator, align 8        ; 11 uses
+  %3 = alloca %class.QSetIterator, align 8        ; 10 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %5 = alloca %class.QString, align 16            ; 13 uses
   %6 = alloca %class.QString, align 16            ; 14 uses
@@ -495,7 +479,7 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8              ; 5 uses
   store ptr %i.b, ptr %3, align 8
   %.not.i.i.i = icmp eq ptr %i.b, null
-  br i1 %.not.i.i.i, label %_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.a, label %bb.b
+  br i1 %.not.i.i.i, label %_ZNK12QSetIteratorI7QStringE7hasNextEv.exit.thread.lr.ph, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = load atomic i32, ptr %i.b monotonic, align 4
@@ -507,33 +491,26 @@ _ZN4QSetI7QStringEC2ERKS1_.exit.i:                ; preds = %bb.b
   %.pr.pre.i = load ptr, ptr %3, align 8, !noalias !79 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !79)
   %.not.i.i2.i = icmp eq ptr %.pr.pre.i, null
-  br i1 %.not.i.i2.i, label %_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.a, label %_ZN4QSetI7QStringEC2ERKS1_.exit.thread.i
+  br i1 %.not.i.i2.i, label %_ZNK12QSetIteratorI7QStringE7hasNextEv.exit.thread.lr.ph, label %_ZN4QSetI7QStringEC2ERKS1_.exit.thread.i
 
 _ZN4QSetI7QStringEC2ERKS1_.exit.thread.i:         ; preds = %bb.b, %_ZN4QSetI7QStringEC2ERKS1_.exit.i
-  %.pr8.i = phi ptr [ %.pr.pre.i, %_ZN4QSetI7QStringEC2ERKS1_.exit.i ], [ %i.b, %bb.b ] ; 5 uses
+  %.pr8.i = phi ptr [ %.pr.pre.i, %_ZN4QSetI7QStringEC2ERKS1_.exit.i ], [ %i.b, %bb.b ] ; 4 uses
   %i.e = getelementptr i8, ptr %.pr8.i, i64 32
   %i.f = load ptr, ptr %i.e, align 8, !noalias !79 ; 2 uses
   %i.g = load i8, ptr %i.f, align 1, !noalias !79
   %.not.i.i.i.i.i = icmp eq i8 %i.g, -1
-  br i1 %.not.i.i.i.i.i, label %bb.c, label %_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.thread
-
-_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.thread: ; preds = %_ZN4QSetI7QStringEC2ERKS1_.exit.thread.i
-  %8 = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
-  store ptr %.pr8.i, ptr %8, align 8, !alias.scope !79
-  %.sroa.2.0..sroa_idx.i.i.i80 = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
-  store i64 0, ptr %.sroa.2.0..sroa_idx.i.i.i80, align 8, !alias.scope !79
-  br label %_ZNK12QSetIteratorI7QStringE7hasNextEv.exit.thread.lr.ph
+  br i1 %.not.i.i.i.i.i, label %bb.c, label %_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.a
 
 bb.c:                                             ; preds = %_ZN4QSetI7QStringEC2ERKS1_.exit.thread.i
   %i.h = getelementptr i8, ptr %.pr8.i, i64 16
   %i.i = load i64, ptr %i.h, align 8, !noalias !79 ; 2 uses
   %i.j = icmp eq i64 %i.i, 1
-  br i1 %i.j, label %_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.a, label %.lr.ph
+  br i1 %i.j, label %_ZNK12QSetIteratorI7QStringE7hasNextEv.exit.thread.lr.ph, label %.lr.ph
 
 bb.d:                                             ; preds = %.lr.ph
-  %i.k = add i64 %i.m, 1                          ; 2 uses
+  %i.k = add nuw i64 %i.m, 1                      ; 2 uses
   %i.l = icmp eq i64 %i.k, %i.i
-  br i1 %i.l, label %_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.a, label %.lr.ph, !llvm.loop !74
+  br i1 %i.l, label %_ZNK12QSetIteratorI7QStringE7hasNextEv.exit.thread.lr.ph, label %.lr.ph, !llvm.loop !74
 
 .lr.ph:                                           ; preds = %bb.c, %bb.d
   %i.m = phi i64 [ %i.k, %bb.d ], [ 1, %bb.c ]    ; 4 uses
@@ -543,34 +520,25 @@ bb.d:                                             ; preds = %.lr.ph
   %i.q = getelementptr i8, ptr %i.o, i64 %i.p
   %i.r = load i8, ptr %i.q, align 1, !noalias !79
   %.not.i.i.i.i.i.i = icmp eq i8 %i.r, -1
-  br i1 %.not.i.i.i.i.i.i, label %bb.d, label %._ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.loopexit_crit_edge, !llvm.loop !74
+  br i1 %.not.i.i.i.i.i.i, label %bb.d, label %_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.a, !llvm.loop !74
 
-._ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.loopexit_crit_edge: ; preds = %.lr.ph
-  br label %_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.a, !llvm.loop !74
-
-_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.a: ; preds = %bb.d, %bb.c, %._ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.loopexit_crit_edge, %bb.a, %_ZN4QSetI7QStringEC2ERKS1_.exit.i
-  %.sroa.0.0.i.i.i = phi ptr [ null, %_ZN4QSetI7QStringEC2ERKS1_.exit.i ], [ null, %bb.a ], [ null, %bb.c ], [ %.pr8.i, %._ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.loopexit_crit_edge ], [ null, %bb.d ] ; 3 uses
-  %.sroa.4.0.i.i.i = phi i64 [ 0, %_ZN4QSetI7QStringEC2ERKS1_.exit.i ], [ 0, %bb.a ], [ 0, %bb.c ], [ %i.m, %._ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.loopexit_crit_edge ], [ 0, %bb.d ] ; 3 uses
-  %i.s = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
-  store ptr %.sroa.0.0.i.i.i, ptr %i.s, align 8, !alias.scope !79
-  %.sroa.2.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
-  store i64 %.sroa.4.0.i.i.i, ptr %.sroa.2.0..sroa_idx.i.i.i, align 8, !alias.scope !79
-  %9 = icmp ne ptr %.sroa.0.0.i.i.i, null
-  %10 = icmp ne i64 %.sroa.4.0.i.i.i, 0
-  %or.cond58 = or i1 %9, %10
-  br i1 %or.cond58, label %_ZNK12QSetIteratorI7QStringE7hasNextEv.exit.thread.lr.ph, label %._crit_edge
-
-_ZNK12QSetIteratorI7QStringE7hasNextEv.exit.thread.lr.ph: ; preds = %_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.thread, %_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.a
-  %.sroa.2.0..sroa_idx.i.i.i84 = phi ptr [ %.sroa.2.0..sroa_idx.i.i.i80, %_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.thread ], [ %.sroa.2.0..sroa_idx.i.i.i, %_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.a ] ; 2 uses
-  %11 = phi ptr [ %8, %_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.thread ], [ %i.s, %_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.a ] ; 2 uses
-  %.sroa.4.0.i.i.i83 = phi i64 [ 0, %_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.thread ], [ %.sroa.4.0.i.i.i, %_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.a ]
-  %.sroa.0.0.i.i.i82 = phi ptr [ %.pr8.i, %_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.thread ], [ %.sroa.0.0.i.i.i, %_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.a ]
-  %12 = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 4 uses
+_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.a: ; preds = %.lr.ph, %_ZN4QSetI7QStringEC2ERKS1_.exit.thread.i
+  %.sroa.4.0.i.i.i.ph = phi i64 [ 0, %_ZN4QSetI7QStringEC2ERKS1_.exit.thread.i ], [ %i.m, %.lr.ph ] ; 2 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
+  store ptr %.pr8.i, ptr %i.s, align 8, !alias.scope !79
+  %.sroa.2.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
+  store i64 %.sroa.4.0.i.i.i.ph, ptr %.sroa.2.0..sroa_idx.i.i.i, align 8, !alias.scope !79
+  %8 = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 4 uses
   br label %_ZNK12QSetIteratorI7QStringE7hasNextEv.exit.thread
 
-_ZNK12QSetIteratorI7QStringE7hasNextEv.exit.thread: ; preds = %_ZNK12QSetIteratorI7QStringE7hasNextEv.exit.thread.lr.ph, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
-  %.sroa.4.0.copyload.i = phi i64 [ %.sroa.4.0.i.i.i83, %_ZNK12QSetIteratorI7QStringE7hasNextEv.exit.thread.lr.ph ], [ %i.be, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ] ; 3 uses
-  %i.t = phi ptr [ %.sroa.0.0.i.i.i82, %_ZNK12QSetIteratorI7QStringE7hasNextEv.exit.thread.lr.ph ], [ %.pr, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ] ; 2 uses
+_ZNK12QSetIteratorI7QStringE7hasNextEv.exit.thread.lr.ph: ; preds = %bb.d, %bb.c, %bb.a, %_ZN4QSetI7QStringEC2ERKS1_.exit.i
+  %9 = getelementptr inbounds nuw i8, ptr %3, i64 8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %9, i8 0, i64 16, i1 false)
+  br label %._crit_edge
+
+_ZNK12QSetIteratorI7QStringE7hasNextEv.exit.thread: ; preds = %_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.a, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
+  %.sroa.4.0.copyload.i = phi i64 [ %.sroa.4.0.i.i.i.ph, %_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.a ], [ %i.be, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ] ; 3 uses
+  %i.t = phi ptr [ %.pr8.i, %_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.a ], [ %.pr, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #23
   %i.u = getelementptr i8, ptr %i.t, i64 16
   %i.v = getelementptr i8, ptr %i.t, i64 32       ; 2 uses
@@ -579,13 +547,13 @@ _ZNK12QSetIteratorI7QStringE7hasNextEv.exit.thread: ; preds = %_ZNK12QSetIterato
 bb.e:                                             ; preds = %bb.g, %_ZNK12QSetIteratorI7QStringE7hasNextEv.exit.thread
   %i.w = phi i64 [ %i.x, %bb.g ], [ %.sroa.4.0.copyload.i, %_ZNK12QSetIteratorI7QStringE7hasNextEv.exit.thread ]
   %i.x = add i64 %i.w, 1                          ; 5 uses
-  store i64 %i.x, ptr %.sroa.2.0..sroa_idx.i.i.i84, align 8, !noalias !82
+  store i64 %i.x, ptr %.sroa.2.0..sroa_idx.i.i.i, align 8, !noalias !82
   %i.y = load i64, ptr %i.u, align 8, !noalias !82
   %i.z = icmp eq i64 %i.x, %i.y
   br i1 %i.z, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) dereferenceable_or_null(16) %11, i8 0, i64 16, i1 false), !noalias !82
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) dereferenceable_or_null(16) %i.s, i8 0, i64 16, i1 false), !noalias !82
   %.pre.i = load ptr, ptr %i.v, align 8
   br label %.loopexit
 
@@ -662,20 +630,20 @@ bb.l:                                             ; preds = %bb.i, %_ZN17QArrayD
 
 bb.m:                                             ; preds = %bb.l
   %i.az = load ptr, ptr %4, align 8               ; 2 uses
-  %i.ba = icmp eq ptr %i.az, %12
+  %i.ba = icmp eq ptr %i.az, %8
   br i1 %i.ba, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: ; preds = %bb.m
-  %i.bb = load i64, ptr %12, align 8
+  %i.bb = load i64, ptr %8, align 8
   %i.bc = add i64 %i.bb, 1
   call void @_ZdlPvm(ptr noundef %i.az, i64 noundef %i.bc) #24
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.m, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #23
-  %.pr = load ptr, ptr %11, align 8               ; 2 uses
+  %.pr = load ptr, ptr %i.s, align 8              ; 2 uses
   %i.bd = icmp ne ptr %.pr, null
-  %i.be = load i64, ptr %.sroa.2.0..sroa_idx.i.i.i84, align 8 ; 2 uses
+  %i.be = load i64, ptr %.sroa.2.0..sroa_idx.i.i.i, align 8 ; 2 uses
   %i.bf = icmp ne i64 %i.be, 0
   %or.cond = select i1 %i.bd, i1 true, i1 %i.bf
   br i1 %or.cond, label %_ZNK12QSetIteratorI7QStringE7hasNextEv.exit.thread, label %._crit_edge, !llvm.loop !88
@@ -694,11 +662,11 @@ bb.p:                                             ; preds = %bb.l
   %i.bi = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
   %i.bj = load ptr, ptr %4, align 8               ; 2 uses
-  %i.bk = icmp eq ptr %i.bj, %12
+  %i.bk = icmp eq ptr %i.bj, %8
   br i1 %i.bk, label %.body, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i17
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i17: ; preds = %bb.p
-  %i.bl = load i64, ptr %12, align 8
+  %i.bl = load i64, ptr %8, align 8
   %i.bm = add i64 %i.bl, 1
   call void @_ZdlPvm(ptr noundef %i.bj, i64 noundef %i.bm) #24
   br label %.body
@@ -708,7 +676,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i17
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #23
   br label %bb.am
 
-._crit_edge:                                      ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %_ZN12QSetIteratorI7QStringEC2ERK4QSetIS0_E.exit.a
+._crit_edge:                                      ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %_ZNK12QSetIteratorI7QStringE7hasNextEv.exit.thread.lr.ph
   %i.bn = getelementptr i8, ptr %0, i64 160
   %i.bo = load ptr, ptr %i.bn, align 8
   %i.bp = invoke zeroext i1 @enabled_protos_unsaved_changes()

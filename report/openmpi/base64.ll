@@ -77,12 +77,11 @@ iter.check:                                       ; preds = %._crit_edge
   store i8 0, ptr %i.an, align 1, !tbaa !11
   store i8 0, ptr %i.a, align 1, !tbaa !11
   %i.ao = icmp ult i64 %.046.lcssa, 4
-  br i1 %i.ao, label %.epil.preheader, label %iter.check.new
+  br i1 %i.ao, label %bb.c, label %iter.check.new
 
 iter.check.new:                                   ; preds = %iter.check, %iter.check.new
-  %indvars.iv = phi i64 [ %indvars.iv.next.3, %iter.check.new ], [ 0, %iter.check ] ; 5 uses
+  %indvars.iv = phi i64 [ %niter.next.3, %iter.check.new ], [ 0, %iter.check ] ; 5 uses
   %.14563 = phi ptr [ %i.ba, %iter.check.new ], [ %.044.lcssa, %iter.check ] ; 5 uses
-  %niter = phi i64 [ %niter.next.3, %iter.check.new ], [ 0, %iter.check ]
   %i.ap = getelementptr inbounds nuw i8, ptr %.14563, i64 1
   %i.aq = load i8, ptr %.14563, align 1, !tbaa !11
   %i.ar = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv
@@ -97,25 +96,18 @@ iter.check.new:                                   ; preds = %iter.check, %iter.c
   %i.ay = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 2
   store i8 %i.ax, ptr %i.az, align 1, !tbaa !11
-  %i.ba = getelementptr inbounds nuw i8, ptr %.14563, i64 4 ; 2 uses
+  %i.ba = getelementptr inbounds nuw i8, ptr %.14563, i64 4
   %i.bb = load i8, ptr %i.aw, align 1, !tbaa !11
   %i.bc = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bc, i64 3
   store i8 %i.bb, ptr %i.bd, align 1, !tbaa !11
-  %indvars.iv.next.3 = add i64 %indvars.iv, 4     ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
-  %niter.ncmp.3.not = icmp eq i64 %niter.next.3, 0
-  br i1 %niter.ncmp.3.not, label %.epil.preheader, label %iter.check.new, !llvm.loop !14
+  %niter.next.3 = add nuw i64 %indvars.iv, 4
+  br label %iter.check.new, !llvm.loop !14
 
-.epil.preheader:                                  ; preds = %iter.check.new, %iter.check
-  %indvars.iv.epil.init = phi i64 [ 0, %iter.check ], [ %indvars.iv.next.3, %iter.check.new ]
-  %.14563.epil.init = phi ptr [ %.044.lcssa, %iter.check ], [ %i.ba, %iter.check.new ]
-  br label %bb.c
-
-bb.c:                                             ; preds = %bb.c, %.epil.preheader
-  %indvars.iv.epil = phi i64 [ %indvars.iv.epil.init, %.epil.preheader ], [ %indvars.iv.next.epil, %bb.c ] ; 2 uses
-  %.14563.epil = phi ptr [ %.14563.epil.init, %.epil.preheader ], [ %i.be, %bb.c ] ; 2 uses
-  %epil.iter = phi i64 [ 0, %.epil.preheader ], [ %epil.iter.next, %bb.c ]
+bb.c:                                             ; preds = %iter.check, %bb.c
+  %indvars.iv.epil = phi i64 [ %indvars.iv.next.epil, %bb.c ], [ 0, %iter.check ] ; 2 uses
+  %.14563.epil = phi ptr [ %i.be, %bb.c ], [ %.044.lcssa, %iter.check ] ; 2 uses
+  %epil.iter = phi i64 [ %epil.iter.next, %bb.c ], [ 0, %iter.check ]
   %i.be = getelementptr inbounds nuw i8, ptr %.14563.epil, i64 1
   %i.bf = load i8, ptr %.14563.epil, align 1, !tbaa !11
   %i.bg = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.epil

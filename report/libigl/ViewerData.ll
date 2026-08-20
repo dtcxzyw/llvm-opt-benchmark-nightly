@@ -204,7 +204,7 @@ _ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIiL
   %gep.us.us.i.i.1.1 = getelementptr [4 x i8], ptr %invariant.gep.us.i.i.1, i64 %i.fw
   store i32 %i.fy, ptr %gep.us.us.i.i.1.1, align 4, !tbaa !120
   %i.fz = add nuw nsw i64 %.09.us.us.i.i.1, 2     ; 2 uses
-  %niter179.next.1 = add i64 %niter179, 2         ; 2 uses
+  %niter179.next.1 = add nuw i64 %niter179, 2     ; 2 uses
   %niter179.ncmp.1 = icmp eq i64 %niter179.next.1, %unroll_iter178
   br i1 %niter179.ncmp.1, label %._crit_edge.split.us.us.i.i.1.unr-lcssa, label %_ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEEENS2_INS_9ReplicateINS_14CwiseNullaryOpINS0_12linspaced_opIiEENS3_IiLin1ELi1ELi0ELin1ELi1EEEEELin1ELin1EEEEENS0_9assign_opIiiEELi0EE23assignCoeffByOuterInnerEll.exit.us.us.i.i.1, !llvm.loop !434
 
@@ -246,7 +246,7 @@ _ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIiL
   %gep.us.us.i.i.2.1 = getelementptr [4 x i8], ptr %invariant.gep.us.i.i.2, i64 %i.gf
   store i32 %i.gh, ptr %gep.us.us.i.i.2.1, align 4, !tbaa !120
   %i.gi = add nuw nsw i64 %.09.us.us.i.i.2, 2     ; 2 uses
-  %niter184.next.1 = add i64 %niter184, 2         ; 2 uses
+  %niter184.next.1 = add nuw i64 %niter184, 2     ; 2 uses
   %niter184.ncmp.1 = icmp eq i64 %niter184.next.1, %unroll_iter183
   br i1 %niter184.ncmp.1, label %_ZN5Eigen6MatrixIiLin1ELin1ELi0ELin1ELin1EEC2INS_9ReplicateINS_14CwiseNullaryOpINS_8internal12linspaced_opIiEENS0_IiLin1ELi1ELi0ELin1ELi1EEEEELin1ELin1EEEEERKNS_9EigenBaseIT_EE.exit.loopexit.unr-lcssa, label %_ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEEENS2_INS_9ReplicateINS_14CwiseNullaryOpINS0_12linspaced_opIiEENS3_IiLin1ELi1ELi0ELin1ELi1EEEEELin1ELin1EEEEENS0_9assign_opIiiEELi0EE23assignCoeffByOuterInnerEll.exit.us.us.i.i.2, !llvm.loop !434
 
@@ -649,10 +649,9 @@ middle.block1496:                                 ; preds = %vector.body1491
   br i1 %exitcond.not.i.i.i.i.i.i.i.i.i.i.us.2.3, label %.split.us, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.us.2, !llvm.loop !745
 
 .split.us:                                        ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.us.2.prol.loopexit, %.lr.ph.i.i.i.i.i.i.i.i.i.i.us.2, %middle.block1496, %.preheader1065
-  %indvars.iv.next1146 = add i64 %indvars.iv1145, 1 ; 2 uses
-  %10 = and i64 %indvars.iv.next1146, 4294967295
-  %11 = icmp samesign ugt i64 %i.wx, %10
-  br i1 %11, label %.preheader1065, label %_ZN5Eigen6MatrixIfLin1ELin1ELi1ELin1ELin1EEaSINS_12CwiseUnaryOpINS_8internal14scalar_cast_opIdfEEKNS0_IdLin1ELin1ELi0ELin1ELin1EEEEEEERS1_RKNS_9DenseBaseIT_EE.exit449, !llvm.loop !746
+  %indvars.iv.next1146 = add nuw nsw i64 %indvars.iv1145, 1 ; 2 uses
+  %10 = icmp sgt i64 %i.wx, %indvars.iv.next1146
+  br i1 %10, label %.preheader1065, label %_ZN5Eigen6MatrixIfLin1ELin1ELi1ELin1ELin1EEaSINS_12CwiseUnaryOpINS_8internal14scalar_cast_opIdfEEKNS0_IdLin1ELin1ELi0ELin1ELin1EEEEEEERS1_RKNS_9DenseBaseIT_EE.exit449, !llvm.loop !746
 
 bb.bf:                                            ; preds = %bb.c
   %i.acy = and i32 %i.u, 1
@@ -979,10 +978,9 @@ middle.block1538:                                 ; preds = %vector.body1533
   br i1 %exitcond.not.i.i.i.i.i.i.i.i.i.i.us.2.i.3, label %_ZN5Eigen5BlockINS_6MatrixIfLin1ELin1ELi1ELin1ELin1EEELi1ELin1ELb1EEaSINS_12CwiseUnaryOpINS_8internal14scalar_cast_opIdfEEKNS0_IKNS1_IdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEEEEERS3_RKNS_9DenseBaseIT_EE.exit.loopexit.us.2.i, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.us.2.i, !llvm.loop !761
 
 _ZN5Eigen5BlockINS_6MatrixIfLin1ELin1ELi1ELin1ELin1EEELi1ELin1ELb1EEaSINS_12CwiseUnaryOpINS_8internal14scalar_cast_opIdfEEKNS0_IKNS1_IdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEEEEERS3_RKNS_9DenseBaseIT_EE.exit.loopexit.us.2.i: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.us.2.i.prol.loopexit, %.lr.ph.i.i.i.i.i.i.i.i.i.i.us.2.i, %middle.block1538
-  %indvars.iv.next.i = add i64 %indvars.iv.i, 1   ; 2 uses
-  %12 = and i64 %indvars.iv.next.i, 4294967295
-  %13 = icmp samesign ugt i64 %i.adj, %12
-  br i1 %13, label %.preheader.us.i, label %"_ZZN3igl6opengl10ViewerData8updateGLERKS1_bRNS0_6MeshGLEENK3$_0clERKN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEERNS8_IfLin1ELin1ELi1ELin1ELin1EEE.exit", !llvm.loop !762
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next.i, %i.adj
+  br i1 %exitcond.not, label %"_ZZN3igl6opengl10ViewerData8updateGLERKS1_bRNS0_6MeshGLEENK3$_0clERKN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEERNS8_IfLin1ELin1ELi1ELin1ELin1EEE.exit", label %.preheader.us.i, !llvm.loop !762
 
 "_ZZN3igl6opengl10ViewerData8updateGLERKS1_bRNS0_6MeshGLEENK3$_0clERKN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEERNS8_IfLin1ELin1ELi1ELin1ELin1EEE.exit": ; preds = %_ZN5Eigen5BlockINS_6MatrixIfLin1ELin1ELi1ELin1ELin1EEELi1ELin1ELb1EEaSINS_12CwiseUnaryOpINS_8internal14scalar_cast_opIdfEEKNS0_IKNS1_IdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEEEEERS3_RKNS_9DenseBaseIT_EE.exit.loopexit.us.2.i, %.preheader.lr.ph.i, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIfLin1ELin1ELi1ELin1ELin1EEEE6resizeEll.exit.i, %bb.bh
   %i.ait = load i32, ptr %i.s, align 8, !tbaa !687
@@ -1298,10 +1296,9 @@ middle.block1580:                                 ; preds = %vector.body1575
   br i1 %exitcond.not.i.i.i.i.i.i.i.i.i.i.us.2.i489.3, label %_ZN5Eigen5BlockINS_6MatrixIfLin1ELin1ELi1ELin1ELin1EEELi1ELin1ELb1EEaSINS_12CwiseUnaryOpINS_8internal14scalar_cast_opIdfEEKNS0_IKNS1_IdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEEEEERS3_RKNS_9DenseBaseIT_EE.exit.loopexit.us.2.i490, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.us.2.i487, !llvm.loop !777
 
 _ZN5Eigen5BlockINS_6MatrixIfLin1ELin1ELi1ELin1ELin1EEELi1ELin1ELb1EEaSINS_12CwiseUnaryOpINS_8internal14scalar_cast_opIdfEEKNS0_IKNS1_IdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEEEEERS3_RKNS_9DenseBaseIT_EE.exit.loopexit.us.2.i490: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.us.2.i487.prol.loopexit, %.lr.ph.i.i.i.i.i.i.i.i.i.i.us.2.i487, %middle.block1580
-  %indvars.iv.next.i491 = add i64 %indvars.iv.i478, 1 ; 2 uses
-  %14 = and i64 %indvars.iv.next.i491, 4294967295
-  %15 = icmp samesign ugt i64 %i.ajc, %14
-  br i1 %15, label %.preheader.us.i477, label %"_ZZN3igl6opengl10ViewerData8updateGLERKS1_bRNS0_6MeshGLEENK3$_0clERKN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEERNS8_IfLin1ELin1ELi1ELin1ELin1EEE.exit492", !llvm.loop !762
+  %indvars.iv.next.i491 = add nuw nsw i64 %indvars.iv.i478, 1 ; 2 uses
+  %exitcond1149.not = icmp eq i64 %indvars.iv.next.i491, %i.ajc
+  br i1 %exitcond1149.not, label %"_ZZN3igl6opengl10ViewerData8updateGLERKS1_bRNS0_6MeshGLEENK3$_0clERKN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEERNS8_IfLin1ELin1ELi1ELin1ELin1EEE.exit492", label %.preheader.us.i477, !llvm.loop !762
 
 "_ZZN3igl6opengl10ViewerData8updateGLERKS1_bRNS0_6MeshGLEENK3$_0clERKN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEERNS8_IfLin1ELin1ELi1ELin1ELin1EEE.exit492": ; preds = %_ZN5Eigen5BlockINS_6MatrixIfLin1ELin1ELi1ELin1ELin1EEELi1ELin1ELb1EEaSINS_12CwiseUnaryOpINS_8internal14scalar_cast_opIdfEEKNS0_IKNS1_IdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEEEEERS3_RKNS_9DenseBaseIT_EE.exit.loopexit.us.2.i490, %.preheader.lr.ph.i476, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIfLin1ELin1ELi1ELin1ELin1EEEE6resizeEll.exit.i474, %"_ZZN3igl6opengl10ViewerData8updateGLERKS1_bRNS0_6MeshGLEENK3$_0clERKN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEERNS8_IfLin1ELin1ELi1ELin1ELin1EEE.exit"
   %i.aom = load i32, ptr %i.s, align 8, !tbaa !687
@@ -1617,10 +1614,9 @@ middle.block1622:                                 ; preds = %vector.body1617
   br i1 %exitcond.not.i.i.i.i.i.i.i.i.i.i.us.2.i508.3, label %_ZN5Eigen5BlockINS_6MatrixIfLin1ELin1ELi1ELin1ELin1EEELi1ELin1ELb1EEaSINS_12CwiseUnaryOpINS_8internal14scalar_cast_opIdfEEKNS0_IKNS1_IdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEEEEERS3_RKNS_9DenseBaseIT_EE.exit.loopexit.us.2.i509, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.us.2.i506, !llvm.loop !792
 
 _ZN5Eigen5BlockINS_6MatrixIfLin1ELin1ELi1ELin1ELin1EEELi1ELin1ELb1EEaSINS_12CwiseUnaryOpINS_8internal14scalar_cast_opIdfEEKNS0_IKNS1_IdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEEEEERS3_RKNS_9DenseBaseIT_EE.exit.loopexit.us.2.i509: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.us.2.i506.prol.loopexit, %.lr.ph.i.i.i.i.i.i.i.i.i.i.us.2.i506, %middle.block1622
-  %indvars.iv.next.i510 = add i64 %indvars.iv.i497, 1 ; 2 uses
-  %16 = and i64 %indvars.iv.next.i510, 4294967295
-  %17 = icmp samesign ugt i64 %i.aov, %16
-  br i1 %17, label %.preheader.us.i496, label %"_ZZN3igl6opengl10ViewerData8updateGLERKS1_bRNS0_6MeshGLEENK3$_0clERKN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEERNS8_IfLin1ELin1ELi1ELin1ELin1EEE.exit511", !llvm.loop !762
+  %indvars.iv.next.i510 = add nuw nsw i64 %indvars.iv.i497, 1 ; 2 uses
+  %exitcond1150.not = icmp eq i64 %indvars.iv.next.i510, %i.aov
+  br i1 %exitcond1150.not, label %"_ZZN3igl6opengl10ViewerData8updateGLERKS1_bRNS0_6MeshGLEENK3$_0clERKN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEERNS8_IfLin1ELin1ELi1ELin1ELin1EEE.exit511", label %.preheader.us.i496, !llvm.loop !762
 
 "_ZZN3igl6opengl10ViewerData8updateGLERKS1_bRNS0_6MeshGLEENK3$_0clERKN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEERNS8_IfLin1ELin1ELi1ELin1ELin1EEE.exit511": ; preds = %_ZN5Eigen5BlockINS_6MatrixIfLin1ELin1ELi1ELin1ELin1EEELi1ELin1ELb1EEaSINS_12CwiseUnaryOpINS_8internal14scalar_cast_opIdfEEKNS0_IKNS1_IdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEEEEERS3_RKNS_9DenseBaseIT_EE.exit.loopexit.us.2.i509, %.preheader.lr.ph.i495, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIfLin1ELin1ELi1ELin1ELin1EEEE6resizeEll.exit.i493, %"_ZZN3igl6opengl10ViewerData8updateGLERKS1_bRNS0_6MeshGLEENK3$_0clERKN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEERNS8_IfLin1ELin1ELi1ELin1ELin1EEE.exit492"
   %i.auf = load i32, ptr %i.s, align 8, !tbaa !687
@@ -1985,10 +1981,9 @@ middle.block1664:                                 ; preds = %vector.body1659
   br i1 %2, label %bb.bw, label %_ZN5Eigen6MatrixIfLin1ELin1ELi1ELin1ELin1EEaSINS_12CwiseUnaryOpINS_8internal18scalar_opposite_opIfEEKS1_EEEERS1_RKNS_9DenseBaseIT_EE.exit531
 
 .split1095.us:                                    ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i513.us.2.prol.loopexit, %.lr.ph.i.i.i.i.i.i.i.i.i.i513.us.2, %middle.block1664, %.preheader1064
-  %indvars.iv.next1154 = add i64 %indvars.iv1153, 1 ; 2 uses
-  %18 = and i64 %indvars.iv.next1154, 4294967295
-  %19 = icmp samesign ugt i64 %i.aun, %18
-  br i1 %19, label %.preheader1064, label %._crit_edge, !llvm.loop !811
+  %indvars.iv.next1154 = add nuw nsw i64 %indvars.iv1153, 1 ; 2 uses
+  %11 = icmp sgt i64 %i.aun, %indvars.iv.next1154
+  br i1 %11, label %.preheader1064, label %._crit_edge, !llvm.loop !811
 
 bb.bw:                                            ; preds = %._crit_edge
   %i.bag = load ptr, ptr %i.auh, align 8, !tbaa !662 ; 3 uses
@@ -2391,10 +2386,9 @@ middle.block1739:                                 ; preds = %vector.body1734
   br i1 %exitcond.not.i.i.i.i.i.i.i.i.i.i544.us.2.3, label %.split1102.us, label %.lr.ph.i.i.i.i.i.i.i.i.i.i542.us.2, !llvm.loop !835
 
 .split1102.us:                                    ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i542.us.2.prol.loopexit, %.lr.ph.i.i.i.i.i.i.i.i.i.i542.us.2, %middle.block1739, %.preheader
-  %indvars.iv.next1166 = add i64 %indvars.iv1165, 1 ; 2 uses
-  %20 = and i64 %indvars.iv.next1166, 4294967295
-  %21 = icmp samesign ugt i64 %i.bda, %20
-  br i1 %21, label %.preheader, label %_ZN5Eigen6MatrixIfLin1ELin1ELi1ELin1ELin1EEaSINS_12CwiseUnaryOpINS_8internal14scalar_cast_opIdfEEKNS0_IdLin1ELin1ELi0ELin1ELin1EEEEEEERS1_RKNS_9DenseBaseIT_EE.exit449, !llvm.loop !836
+  %indvars.iv.next1166 = add nuw nsw i64 %indvars.iv1165, 1 ; 2 uses
+  %12 = icmp sgt i64 %i.bda, %indvars.iv.next1166
+  br i1 %12, label %.preheader, label %_ZN5Eigen6MatrixIfLin1ELin1ELi1ELin1ELin1EEaSINS_12CwiseUnaryOpINS_8internal14scalar_cast_opIdfEEKNS0_IdLin1ELin1ELi0ELin1ELin1EEEEEEERS1_RKNS_9DenseBaseIT_EE.exit449, !llvm.loop !836
 
 _ZN5Eigen6MatrixIfLin1ELin1ELi1ELin1ELin1EEaSINS_12CwiseUnaryOpINS_8internal14scalar_cast_opIdfEEKNS0_IdLin1ELin1ELi0ELin1ELin1EEEEEEERS1_RKNS_9DenseBaseIT_EE.exit449: ; preds = %._crit_edge.i.i.i.i.i.i.i.i446, %.split.us, %.split1102.us, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIfLin1ELin1ELi1ELin1ELin1EEEE6resizeEll.exit472, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIfLin1ELin1ELi1ELin1ELin1EEEE6resizeEll.exit541, %bb.ah, %.loopexit1063, %bb.bz, %_ZN5Eigen6MatrixIjLin1ELin1ELi1ELin1ELin1EEaSINS_12CwiseUnaryOpINS_8internal14scalar_cast_opIijEEKNS0_IiLin1ELin1ELi0ELin1ELin1EEEEEEERS1_RKNS_9DenseBaseIT_EE.exit, %bb.az, %.loopexit1067
   %i.bjb = load i32, ptr %i.s, align 8, !tbaa !687
@@ -2797,9 +2791,8 @@ middle.block:                                     ; preds = %vector.body
   br i1 %exitcond.not.i.i.i.i.i.i.i.i.i.i.us.2.3, label %_ZN5Eigen5BlockINS_6MatrixIfLin1ELin1ELi1ELin1ELin1EEELi1ELin1ELb1EEaSINS_12CwiseUnaryOpINS_8internal14scalar_cast_opIdfEEKNS0_IKNS1_IdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEEEEERS3_RKNS_9DenseBaseIT_EE.exit.loopexit.us.2, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.us.2, !llvm.loop !964
 
 _ZN5Eigen5BlockINS_6MatrixIfLin1ELin1ELi1ELin1ELin1EEELi1ELin1ELb1EEaSINS_12CwiseUnaryOpINS_8internal14scalar_cast_opIdfEEKNS0_IKNS1_IdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEEEEERS3_RKNS_9DenseBaseIT_EE.exit.loopexit.us.2: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.us.2.prol.loopexit, %.lr.ph.i.i.i.i.i.i.i.i.i.i.us.2, %middle.block
-  %indvars.iv.next = add i64 %indvars.iv, 1       ; 2 uses
-  %2 = and i64 %indvars.iv.next, 4294967295
-  %i.fi = icmp sgt i64 %i.m, %2
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %i.fi = icmp sgt i64 %i.m, %indvars.iv.next
   br i1 %i.fi, label %.preheader.us, label %._crit_edge, !llvm.loop !965
 
 ._crit_edge:                                      ; preds = %_ZN5Eigen5BlockINS_6MatrixIfLin1ELin1ELi1ELin1ELin1EEELi1ELin1ELb1EEaSINS_12CwiseUnaryOpINS_8internal14scalar_cast_opIdfEEKNS0_IKNS1_IdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEEEEERS3_RKNS_9DenseBaseIT_EE.exit.loopexit.us.2, %.preheader.lr.ph, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIfLin1ELin1ELi1ELin1ELin1EEEE6resizeEll.exit

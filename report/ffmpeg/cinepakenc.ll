@@ -204,7 +204,7 @@ bb.s:                                             ; preds = %bb.s, %.lr.ph174.i.
   %i.px = getelementptr inbounds nuw i8, ptr %i.pr, i64 68
   store i32 0, ptr %i.px, align 4, !tbaa !82
   %indvars.iv.next197.i.i.i.1 = add nuw nsw i64 %indvars.iv196.i.i.i, 2 ; 2 uses
-  %niter254.next.1 = add i64 %niter254, 2         ; 2 uses
+  %niter254.next.1 = add nuw i64 %niter254, 2     ; 2 uses
   %niter254.ncmp.1 = icmp eq i64 %niter254.next.1, %unroll_iter253
   br i1 %niter254.ncmp.1, label %calculate_mode_score.exit.thread213.i.i.loopexit.unr-lcssa, label %bb.s, !llvm.loop !83
 
@@ -257,7 +257,7 @@ bb.t:                                             ; preds = %bb.t, %.lr.ph169.i.
   %i.rb = getelementptr inbounds nuw i8, ptr %i.qq, i64 68
   store i32 %spec.select.i.i.i.1, ptr %i.rb, align 4, !tbaa !82
   %indvars.iv.next192.i.i.i.1 = add nuw nsw i64 %indvars.iv191.i.i.i, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %calculate_mode_score.exit.thread.i.i.loopexit.unr-lcssa, label %bb.t, !llvm.loop !85
 
@@ -448,7 +448,7 @@ bb.ah:                                            ; preds = %bb.ah, %.lr.ph174.i
   %i.uh = getelementptr inbounds nuw i8, ptr %i.ub, i64 68
   store i32 0, ptr %i.uh, align 4, !tbaa !82
   %indvars.iv.next197.i174.i.i.1 = add nuw nsw i64 %indvars.iv196.i172.i.i, 2 ; 2 uses
-  %niter247.next.1 = add i64 %niter247, 2         ; 2 uses
+  %niter247.next.1 = add nuw i64 %niter247, 2     ; 2 uses
   %niter247.ncmp.1 = icmp eq i64 %niter247.next.1, %unroll_iter246
   br i1 %niter247.ncmp.1, label %calculate_mode_score.exit176.i.i.loopexit.unr-lcssa, label %bb.ah, !llvm.loop !83
 
@@ -499,7 +499,7 @@ bb.aj:                                            ; preds = %bb.aj, %.lr.ph165.i
   %i.vf = add i64 %i.uv, %i.ve
   %i.vg = add i64 %i.vf, %.220.i.i.i.1            ; 3 uses
   %indvars.iv.next187.i.i.i.1 = add nuw nsw i64 %indvars.iv186.i.i.i, 2 ; 2 uses
-  %niter240.next.1 = add i64 %niter240, 2         ; 2 uses
+  %niter240.next.1 = add nuw i64 %niter240, 2     ; 2 uses
   %niter240.ncmp.1 = icmp eq i64 %niter240.next.1, %unroll_iter239
   br i1 %niter240.ncmp.1, label %calculate_mode_score.exit176.i.i.loopexit201.unr-lcssa, label %bb.aj, !llvm.loop !88
 
@@ -758,16 +758,15 @@ bb.bc:                                            ; preds = %bb.bb, %bb.ba
   br label %.peel.next14.i.i.i.i
 
 .peel.next14.i.us.i.i.i.preheader:                ; preds = %.preheader.preheader.i.i.i.i
-  %xtraiter261 = and i64 %i.yl, 2                 ; 2 uses
+  %xtraiter261 = and i64 %i.yl, 2
   %i.yn = add nsw i32 %i.xy, -5
   %i.yo = icmp ult i32 %i.yn, 3
-  %lcmp.mod262.not = icmp eq i64 %xtraiter261, 0
   %lcmp.mod264 = icmp ne i64 %xtraiter261, 0
   br label %.peel.next14.i.us.i.i.i
 
 .peel.next14.i.us.i.i.i:                          ; preds = %.peel.next14.i.us.i.i.i.preheader, %.loopexit.i.loopexit.us.i.i.i
   %indvars.iv23.i.us.i.i.i = phi i64 [ %indvars.iv.next24.i.us.i.i.i, %.loopexit.i.loopexit.us.i.i.i ], [ 0, %.peel.next14.i.us.i.i.i.preheader ] ; 2 uses
-  %.34.i.us.i.i.i = phi i64 [ %indvars.iv.next.i.us.i.i.i.lcssa, %.loopexit.i.loopexit.us.i.i.i ], [ 4, %.peel.next14.i.us.i.i.i.preheader ] ; 2 uses
+  %.34.i.us.i.i.i = phi i64 [ %indvars.iv.next.i.us.i.i.i.epil, %.loopexit.i.loopexit.us.i.i.i ], [ 4, %.peel.next14.i.us.i.i.i.preheader ] ; 2 uses
   %i.yp = mul nuw nsw i64 %indvars.iv23.i.us.i.i.i, %i.yl
   %i.yq = getelementptr inbounds nuw [4 x i8], ptr %i.gx, i64 %i.yp ; 9 uses
   %i.yr = load i32, ptr %i.yq, align 4, !tbaa !53
@@ -793,63 +792,55 @@ bb.bc:                                            ; preds = %bb.bb, %bb.ba
   br i1 %i.yo, label %.peel.next18.i.us.i.i.i.epil.preheader, label %.peel.next18.i.us.i.i.i
 
 .peel.next18.i.us.i.i.i:                          ; preds = %.peel.next14.i.us.i.i.i, %.peel.next18.i.us.i.i.i
-  %indvars.iv5.i.us.i.i.i = phi i64 [ %indvars.iv.next6.i.us.i.i.i.3, %.peel.next18.i.us.i.i.i ], [ 4, %.peel.next14.i.us.i.i.i ] ; 5 uses
-  %indvars.iv.i.us.i.i.i.a = phi i64 [ %indvars.iv.next.i.us.i.i.i.3, %.peel.next18.i.us.i.i.i ], [ %indvars.iv.next.peel19.i.us.i.i.i, %.peel.next14.i.us.i.i.i ] ; 5 uses
-  %niter266 = phi i64 [ %niter266.next.3, %.peel.next18.i.us.i.i.i ], [ 0, %.peel.next14.i.us.i.i.i ]
-  %gep.i.us.i.i.i = getelementptr inbounds nuw [4 x i8], ptr %i.yq, i64 %indvars.iv5.i.us.i.i.i
+  %indvars.iv.i.us.i.i.i.a = phi i64 [ %niter266.next.3, %.peel.next18.i.us.i.i.i ], [ 4, %.peel.next14.i.us.i.i.i ] ; 5 uses
+  %niter266 = phi i64 [ %indvars.iv.next.i.us.i.i.i.3, %.peel.next18.i.us.i.i.i ], [ %indvars.iv.next.peel19.i.us.i.i.i, %.peel.next14.i.us.i.i.i ] ; 5 uses
+  %gep.i.us.i.i.i = getelementptr inbounds nuw [4 x i8], ptr %i.yq, i64 %indvars.iv.i.us.i.i.i.a
   %i.zg = load i32, ptr %gep.i.us.i.i.i, align 4, !tbaa !53
   %i.zh = trunc i32 %i.zg to i8
   %i.zi = xor i8 %i.zh, -128
-  %i.zj = getelementptr inbounds i8, ptr %i.xt, i64 %indvars.iv.i.us.i.i.i.a
+  %i.zj = getelementptr inbounds i8, ptr %i.xt, i64 %niter266
   store i8 %i.zi, ptr %i.zj, align 1, !tbaa !67
-  %i.zk = getelementptr inbounds nuw [4 x i8], ptr %i.yq, i64 %indvars.iv5.i.us.i.i.i
+  %i.zk = getelementptr inbounds nuw [4 x i8], ptr %i.yq, i64 %indvars.iv.i.us.i.i.i.a
   %gep.i.us.i.i.i.1 = getelementptr inbounds nuw i8, ptr %i.zk, i64 4
   %i.zl = load i32, ptr %gep.i.us.i.i.i.1, align 4, !tbaa !53
   %i.zm = trunc i32 %i.zl to i8
   %i.zn = xor i8 %i.zm, -128
-  %i.zo = getelementptr i8, ptr %i.xt, i64 %indvars.iv.i.us.i.i.i.a
+  %i.zo = getelementptr i8, ptr %i.xt, i64 %niter266
   %i.zp = getelementptr i8, ptr %i.zo, i64 1
   store i8 %i.zn, ptr %i.zp, align 1, !tbaa !67
-  %i.zq = getelementptr inbounds nuw [4 x i8], ptr %i.yq, i64 %indvars.iv5.i.us.i.i.i
+  %i.zq = getelementptr inbounds nuw [4 x i8], ptr %i.yq, i64 %indvars.iv.i.us.i.i.i.a
   %gep.i.us.i.i.i.2 = getelementptr inbounds nuw i8, ptr %i.zq, i64 8
   %i.zr = load i32, ptr %gep.i.us.i.i.i.2, align 4, !tbaa !53
   %i.zs = trunc i32 %i.zr to i8
   %i.zt = xor i8 %i.zs, -128
-  %i.zu = getelementptr i8, ptr %i.xt, i64 %indvars.iv.i.us.i.i.i.a
+  %i.zu = getelementptr i8, ptr %i.xt, i64 %niter266
   %i.zv = getelementptr i8, ptr %i.zu, i64 2
   store i8 %i.zt, ptr %i.zv, align 1, !tbaa !67
-  %i.zw = getelementptr inbounds nuw [4 x i8], ptr %i.yq, i64 %indvars.iv5.i.us.i.i.i
+  %i.zw = getelementptr inbounds nuw [4 x i8], ptr %i.yq, i64 %indvars.iv.i.us.i.i.i.a
   %gep.i.us.i.i.i.3 = getelementptr inbounds nuw i8, ptr %i.zw, i64 12
   %i.zx = load i32, ptr %gep.i.us.i.i.i.3, align 4, !tbaa !53
   %i.zy = trunc i32 %i.zx to i8
   %i.zz = xor i8 %i.zy, -128
-  %indvars.iv.next.i.us.i.i.i.3 = add nsw i64 %indvars.iv.i.us.i.i.i.a, 4 ; 3 uses
-  %i.aaa = getelementptr i8, ptr %i.xt, i64 %indvars.iv.i.us.i.i.i.a
+  %indvars.iv.next.i.us.i.i.i.3 = add nsw i64 %niter266, 4
+  %i.aaa = getelementptr i8, ptr %i.xt, i64 %niter266
   %i.aab = getelementptr i8, ptr %i.aaa, i64 3
   store i8 %i.zz, ptr %i.aab, align 1, !tbaa !67
-  %indvars.iv.next6.i.us.i.i.i.3 = add nuw nsw i64 %indvars.iv5.i.us.i.i.i, 4 ; 2 uses
-  %niter266.next.3 = add i64 %niter266, 4         ; 2 uses
-  %niter266.ncmp.3 = icmp eq i64 %niter266.next.3, 0
-  br i1 %niter266.ncmp.3, label %.loopexit.i.loopexit.us.i.i.i.unr-lcssa, label %.peel.next18.i.us.i.i.i, !llvm.loop !91
+  %niter266.next.3 = add nuw nsw i64 %indvars.iv.i.us.i.i.i.a, 4
+  br label %.peel.next18.i.us.i.i.i, !llvm.loop !91
 
-.loopexit.i.loopexit.us.i.i.i.unr-lcssa:          ; preds = %.peel.next18.i.us.i.i.i
-  br i1 %lcmp.mod262.not, label %.loopexit.i.loopexit.us.i.i.i, label %.peel.next18.i.us.i.i.i.epil.preheader
-
-.peel.next18.i.us.i.i.i.epil.preheader:           ; preds = %.loopexit.i.loopexit.us.i.i.i.unr-lcssa, %.peel.next14.i.us.i.i.i
-  %indvars.iv5.i.us.i.i.i.epil.init = phi i64 [ 4, %.peel.next14.i.us.i.i.i ], [ %indvars.iv.next6.i.us.i.i.i.3, %.loopexit.i.loopexit.us.i.i.i.unr-lcssa ]
-  %indvars.iv.i.us.i.i.i.epil.init = phi i64 [ %indvars.iv.next.peel19.i.us.i.i.i, %.peel.next14.i.us.i.i.i ], [ %indvars.iv.next.i.us.i.i.i.3, %.loopexit.i.loopexit.us.i.i.i.unr-lcssa ]
+.peel.next18.i.us.i.i.i.epil.preheader:           ; preds = %.peel.next14.i.us.i.i.i
   call void @llvm.assume(i1 %lcmp.mod264)
   br label %.peel.next18.i.us.i.i.i.epil
 
 .peel.next18.i.us.i.i.i.epil:                     ; preds = %.peel.next18.i.us.i.i.i.epil, %.peel.next18.i.us.i.i.i.epil.preheader
-  %indvars.iv5.i.us.i.i.i.epil = phi i64 [ %indvars.iv.next6.i.us.i.i.i.epil, %.peel.next18.i.us.i.i.i.epil ], [ %indvars.iv5.i.us.i.i.i.epil.init, %.peel.next18.i.us.i.i.i.epil.preheader ] ; 2 uses
-  %indvars.iv.i.us.i.i.i.epil = phi i64 [ %indvars.iv.next.i.us.i.i.i.epil, %.peel.next18.i.us.i.i.i.epil ], [ %indvars.iv.i.us.i.i.i.epil.init, %.peel.next18.i.us.i.i.i.epil.preheader ] ; 2 uses
+  %indvars.iv5.i.us.i.i.i.epil = phi i64 [ %indvars.iv.next6.i.us.i.i.i.epil, %.peel.next18.i.us.i.i.i.epil ], [ 4, %.peel.next18.i.us.i.i.i.epil.preheader ] ; 2 uses
+  %indvars.iv.i.us.i.i.i.epil = phi i64 [ %indvars.iv.next.i.us.i.i.i.epil, %.peel.next18.i.us.i.i.i.epil ], [ %indvars.iv.next.peel19.i.us.i.i.i, %.peel.next18.i.us.i.i.i.epil.preheader ] ; 2 uses
   %epil.iter = phi i64 [ %epil.iter.next, %.peel.next18.i.us.i.i.i.epil ], [ 0, %.peel.next18.i.us.i.i.i.epil.preheader ]
   %gep.i.us.i.i.i.epil = getelementptr inbounds nuw [4 x i8], ptr %i.yq, i64 %indvars.iv5.i.us.i.i.i.epil
   %i.aac = load i32, ptr %gep.i.us.i.i.i.epil, align 4, !tbaa !53
   %i.aad = trunc i32 %i.aac to i8
   %i.aae = xor i8 %i.aad, -128
-  %indvars.iv.next.i.us.i.i.i.epil = add nsw i64 %indvars.iv.i.us.i.i.i.epil, 1 ; 2 uses
+  %indvars.iv.next.i.us.i.i.i.epil = add nsw i64 %indvars.iv.i.us.i.i.i.epil, 1 ; 3 uses
   %i.aaf = getelementptr inbounds i8, ptr %i.xt, i64 %indvars.iv.i.us.i.i.i.epil
   store i8 %i.aae, ptr %i.aaf, align 1, !tbaa !67
   %indvars.iv.next6.i.us.i.i.i.epil = add nuw nsw i64 %indvars.iv5.i.us.i.i.i.epil, 1
@@ -857,8 +848,7 @@ bb.bc:                                            ; preds = %bb.bb, %bb.ba
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, 2
   br i1 %epil.iter.cmp.not, label %.loopexit.i.loopexit.us.i.i.i, label %.peel.next18.i.us.i.i.i.epil, !llvm.loop !93
 
-.loopexit.i.loopexit.us.i.i.i:                    ; preds = %.peel.next18.i.us.i.i.i.epil, %.loopexit.i.loopexit.us.i.i.i.unr-lcssa
-  %indvars.iv.next.i.us.i.i.i.lcssa = phi i64 [ %indvars.iv.next.i.us.i.i.i.3, %.loopexit.i.loopexit.us.i.i.i.unr-lcssa ], [ %indvars.iv.next.i.us.i.i.i.epil, %.peel.next18.i.us.i.i.i.epil ] ; 2 uses
+.loopexit.i.loopexit.us.i.i.i:                    ; preds = %.peel.next18.i.us.i.i.i.epil
   %indvars.iv.next24.i.us.i.i.i = add nuw nsw i64 %indvars.iv23.i.us.i.i.i, 1 ; 2 uses
   %exitcond27.not.i.us.i.i.i = icmp eq i64 %indvars.iv.next24.i.us.i.i.i, %wide.trip.count26.i.i.i.i
   br i1 %exitcond27.not.i.us.i.i.i, label %._crit_edge.loopexit.i.i.i.i, label %.peel.next14.i.us.i.i.i, !llvm.loop !95
@@ -913,7 +903,7 @@ bb.bc:                                            ; preds = %bb.bb, %bb.ba
   %i.abo = getelementptr i8, ptr %i.abb, i64 7
   store i8 %i.abn, ptr %i.abo, align 1, !tbaa !67
   %indvars.iv.next24.i.i.i.i.1 = add nuw nsw i64 %indvars.iv23.i.i.i.i, 2 ; 2 uses
-  %niter260.next.1 = add i64 %niter260, 2         ; 2 uses
+  %niter260.next.1 = add nuw i64 %niter260, 2     ; 2 uses
   %niter260.ncmp.1 = icmp eq i64 %niter260.next.1, %unroll_iter259
   br i1 %niter260.ncmp.1, label %._crit_edge.loopexit.i.i.i.i.loopexit204.unr-lcssa, label %.peel.next14.i.i.i.i, !llvm.loop !95
 
@@ -951,7 +941,7 @@ bb.bc:                                            ; preds = %bb.bb, %bb.ba
   br label %._crit_edge.loopexit.i.i.i.i
 
 ._crit_edge.loopexit.i.i.i.i:                     ; preds = %.peel.next14.i.i.i.i.epil.preheader, %._crit_edge.loopexit.i.i.i.i.loopexit204.unr-lcssa, %.loopexit.i.loopexit.us.i.i.i
-  %.us-phi.i.i.i = phi i64 [ %indvars.iv.next.i.us.i.i.i.lcssa, %.loopexit.i.loopexit.us.i.i.i ], [ %indvars.iv.next.peel19.i.i.i.i.1, %._crit_edge.loopexit.i.i.i.i.loopexit204.unr-lcssa ], [ %indvars.iv.next.peel19.i.i.i.i.epil, %.peel.next14.i.i.i.i.epil.preheader ]
+  %.us-phi.i.i.i = phi i64 [ %indvars.iv.next.i.us.i.i.i.epil, %.loopexit.i.loopexit.us.i.i.i ], [ %indvars.iv.next.peel19.i.i.i.i.1, %._crit_edge.loopexit.i.i.i.i.loopexit204.unr-lcssa ], [ %indvars.iv.next.peel19.i.i.i.i.epil, %.peel.next14.i.i.i.i.epil.preheader ]
   %i.acg = trunc nsw i64 %.us-phi.i.i.i to i32
   br label %encode_codebook.exit.i.i.i
 
@@ -1005,16 +995,15 @@ bb.be:                                            ; preds = %bb.bd, %encode_code
   br label %.peel.next14.i207.i.i.i
 
 .peel.next14.i207.us.i.i.i.preheader:             ; preds = %.preheader.preheader.i205.i.i.i
-  %xtraiter274 = and i64 %i.acz, 2                ; 2 uses
+  %xtraiter274 = and i64 %i.acz, 2
   %i.adb = add nsw i32 %i.acm, -5
   %i.adc = icmp ult i32 %i.adb, 3
-  %lcmp.mod276.not = icmp eq i64 %xtraiter274, 0
   %lcmp.mod278 = icmp ne i64 %xtraiter274, 0
   br label %.peel.next14.i207.us.i.i.i
 
 .peel.next14.i207.us.i.i.i:                       ; preds = %.peel.next14.i207.us.i.i.i.preheader, %.loopexit.i211.loopexit.us.i.i.i
   %indvars.iv23.i208.us.i.i.i = phi i64 [ %indvars.iv.next24.i213.us.i.i.i, %.loopexit.i211.loopexit.us.i.i.i ], [ 0, %.peel.next14.i207.us.i.i.i.preheader ] ; 2 uses
-  %.34.i209.us.i.i.i = phi i64 [ %indvars.iv.next.i221.us.i.i.i.lcssa, %.loopexit.i211.loopexit.us.i.i.i ], [ 4, %.peel.next14.i207.us.i.i.i.preheader ] ; 2 uses
+  %.34.i209.us.i.i.i = phi i64 [ %indvars.iv.next.i221.us.i.i.i.epil, %.loopexit.i211.loopexit.us.i.i.i ], [ 4, %.peel.next14.i207.us.i.i.i.preheader ] ; 2 uses
   %i.add = mul nuw nsw i64 %indvars.iv23.i208.us.i.i.i, %i.acz
   %i.ade = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %i.add ; 9 uses
   %i.adf = load i32, ptr %i.ade, align 4, !tbaa !53
@@ -1040,63 +1029,55 @@ bb.be:                                            ; preds = %bb.bd, %encode_code
   br i1 %i.adc, label %.peel.next18.i216.us.i.i.i.epil.preheader, label %.peel.next18.i216.us.i.i.i
 
 .peel.next18.i216.us.i.i.i:                       ; preds = %.peel.next14.i207.us.i.i.i, %.peel.next18.i216.us.i.i.i
-  %indvars.iv5.i218.us.i.i.i = phi i64 [ %indvars.iv.next6.i222.us.i.i.i.3, %.peel.next18.i216.us.i.i.i ], [ 4, %.peel.next14.i207.us.i.i.i ] ; 5 uses
-  %indvars.iv.i219.us.i.i.i.a = phi i64 [ %indvars.iv.next.i221.us.i.i.i.3, %.peel.next18.i216.us.i.i.i ], [ %indvars.iv.next.peel19.i210.us.i.i.i, %.peel.next14.i207.us.i.i.i ] ; 5 uses
-  %niter280 = phi i64 [ %niter280.next.3, %.peel.next18.i216.us.i.i.i ], [ 0, %.peel.next14.i207.us.i.i.i ]
-  %gep.i220.us.i.i.i = getelementptr inbounds nuw [4 x i8], ptr %i.ade, i64 %indvars.iv5.i218.us.i.i.i
+  %indvars.iv.i219.us.i.i.i.a = phi i64 [ %niter280.next.3, %.peel.next18.i216.us.i.i.i ], [ 4, %.peel.next14.i207.us.i.i.i ] ; 5 uses
+  %niter280 = phi i64 [ %indvars.iv.next.i221.us.i.i.i.3, %.peel.next18.i216.us.i.i.i ], [ %indvars.iv.next.peel19.i210.us.i.i.i, %.peel.next14.i207.us.i.i.i ] ; 5 uses
+  %gep.i220.us.i.i.i = getelementptr inbounds nuw [4 x i8], ptr %i.ade, i64 %indvars.iv.i219.us.i.i.i.a
   %i.adu = load i32, ptr %gep.i220.us.i.i.i, align 4, !tbaa !53
   %i.adv = trunc i32 %i.adu to i8
   %i.adw = xor i8 %i.adv, -128
-  %i.adx = getelementptr inbounds i8, ptr %i.ack, i64 %indvars.iv.i219.us.i.i.i.a
+  %i.adx = getelementptr inbounds i8, ptr %i.ack, i64 %niter280
   store i8 %i.adw, ptr %i.adx, align 1, !tbaa !67
-  %i.ady = getelementptr inbounds nuw [4 x i8], ptr %i.ade, i64 %indvars.iv5.i218.us.i.i.i
+  %i.ady = getelementptr inbounds nuw [4 x i8], ptr %i.ade, i64 %indvars.iv.i219.us.i.i.i.a
   %gep.i220.us.i.i.i.1 = getelementptr inbounds nuw i8, ptr %i.ady, i64 4
   %i.adz = load i32, ptr %gep.i220.us.i.i.i.1, align 4, !tbaa !53
   %i.aea = trunc i32 %i.adz to i8
   %i.aeb = xor i8 %i.aea, -128
-  %i.aec = getelementptr i8, ptr %i.ack, i64 %indvars.iv.i219.us.i.i.i.a
+  %i.aec = getelementptr i8, ptr %i.ack, i64 %niter280
   %i.aed = getelementptr i8, ptr %i.aec, i64 1
   store i8 %i.aeb, ptr %i.aed, align 1, !tbaa !67
-  %i.aee = getelementptr inbounds nuw [4 x i8], ptr %i.ade, i64 %indvars.iv5.i218.us.i.i.i
+  %i.aee = getelementptr inbounds nuw [4 x i8], ptr %i.ade, i64 %indvars.iv.i219.us.i.i.i.a
   %gep.i220.us.i.i.i.2 = getelementptr inbounds nuw i8, ptr %i.aee, i64 8
   %i.aef = load i32, ptr %gep.i220.us.i.i.i.2, align 4, !tbaa !53
   %i.aeg = trunc i32 %i.aef to i8
   %i.aeh = xor i8 %i.aeg, -128
-  %i.aei = getelementptr i8, ptr %i.ack, i64 %indvars.iv.i219.us.i.i.i.a
+  %i.aei = getelementptr i8, ptr %i.ack, i64 %niter280
   %i.aej = getelementptr i8, ptr %i.aei, i64 2
   store i8 %i.aeh, ptr %i.aej, align 1, !tbaa !67
-  %i.aek = getelementptr inbounds nuw [4 x i8], ptr %i.ade, i64 %indvars.iv5.i218.us.i.i.i
+  %i.aek = getelementptr inbounds nuw [4 x i8], ptr %i.ade, i64 %indvars.iv.i219.us.i.i.i.a
   %gep.i220.us.i.i.i.3 = getelementptr inbounds nuw i8, ptr %i.aek, i64 12
   %i.ael = load i32, ptr %gep.i220.us.i.i.i.3, align 4, !tbaa !53
   %i.aem = trunc i32 %i.ael to i8
   %i.aen = xor i8 %i.aem, -128
-  %indvars.iv.next.i221.us.i.i.i.3 = add nsw i64 %indvars.iv.i219.us.i.i.i.a, 4 ; 3 uses
-  %i.aeo = getelementptr i8, ptr %i.ack, i64 %indvars.iv.i219.us.i.i.i.a
+  %indvars.iv.next.i221.us.i.i.i.3 = add nsw i64 %niter280, 4
+  %i.aeo = getelementptr i8, ptr %i.ack, i64 %niter280
   %i.aep = getelementptr i8, ptr %i.aeo, i64 3
   store i8 %i.aen, ptr %i.aep, align 1, !tbaa !67
-  %indvars.iv.next6.i222.us.i.i.i.3 = add nuw nsw i64 %indvars.iv5.i218.us.i.i.i, 4 ; 2 uses
-  %niter280.next.3 = add i64 %niter280, 4         ; 2 uses
-  %niter280.ncmp.3 = icmp eq i64 %niter280.next.3, 0
-  br i1 %niter280.ncmp.3, label %.loopexit.i211.loopexit.us.i.i.i.unr-lcssa, label %.peel.next18.i216.us.i.i.i, !llvm.loop !91
+  %niter280.next.3 = add nuw nsw i64 %indvars.iv.i219.us.i.i.i.a, 4
+  br label %.peel.next18.i216.us.i.i.i, !llvm.loop !91
 
-.loopexit.i211.loopexit.us.i.i.i.unr-lcssa:       ; preds = %.peel.next18.i216.us.i.i.i
-  br i1 %lcmp.mod276.not, label %.loopexit.i211.loopexit.us.i.i.i, label %.peel.next18.i216.us.i.i.i.epil.preheader
-
-.peel.next18.i216.us.i.i.i.epil.preheader:        ; preds = %.loopexit.i211.loopexit.us.i.i.i.unr-lcssa, %.peel.next14.i207.us.i.i.i
-  %indvars.iv5.i218.us.i.i.i.epil.init = phi i64 [ 4, %.peel.next14.i207.us.i.i.i ], [ %indvars.iv.next6.i222.us.i.i.i.3, %.loopexit.i211.loopexit.us.i.i.i.unr-lcssa ]
-  %indvars.iv.i219.us.i.i.i.epil.init = phi i64 [ %indvars.iv.next.peel19.i210.us.i.i.i, %.peel.next14.i207.us.i.i.i ], [ %indvars.iv.next.i221.us.i.i.i.3, %.loopexit.i211.loopexit.us.i.i.i.unr-lcssa ]
+.peel.next18.i216.us.i.i.i.epil.preheader:        ; preds = %.peel.next14.i207.us.i.i.i
   call void @llvm.assume(i1 %lcmp.mod278)
   br label %.peel.next18.i216.us.i.i.i.epil
 
 .peel.next18.i216.us.i.i.i.epil:                  ; preds = %.peel.next18.i216.us.i.i.i.epil, %.peel.next18.i216.us.i.i.i.epil.preheader
-  %indvars.iv5.i218.us.i.i.i.epil = phi i64 [ %indvars.iv.next6.i222.us.i.i.i.epil, %.peel.next18.i216.us.i.i.i.epil ], [ %indvars.iv5.i218.us.i.i.i.epil.init, %.peel.next18.i216.us.i.i.i.epil.preheader ] ; 2 uses
-  %indvars.iv.i219.us.i.i.i.epil = phi i64 [ %indvars.iv.next.i221.us.i.i.i.epil, %.peel.next18.i216.us.i.i.i.epil ], [ %indvars.iv.i219.us.i.i.i.epil.init, %.peel.next18.i216.us.i.i.i.epil.preheader ] ; 2 uses
+  %indvars.iv5.i218.us.i.i.i.epil = phi i64 [ %indvars.iv.next6.i222.us.i.i.i.epil, %.peel.next18.i216.us.i.i.i.epil ], [ 4, %.peel.next18.i216.us.i.i.i.epil.preheader ] ; 2 uses
+  %indvars.iv.i219.us.i.i.i.epil = phi i64 [ %indvars.iv.next.i221.us.i.i.i.epil, %.peel.next18.i216.us.i.i.i.epil ], [ %indvars.iv.next.peel19.i210.us.i.i.i, %.peel.next18.i216.us.i.i.i.epil.preheader ] ; 2 uses
   %epil.iter275 = phi i64 [ %epil.iter275.next, %.peel.next18.i216.us.i.i.i.epil ], [ 0, %.peel.next18.i216.us.i.i.i.epil.preheader ]
   %gep.i220.us.i.i.i.epil = getelementptr inbounds nuw [4 x i8], ptr %i.ade, i64 %indvars.iv5.i218.us.i.i.i.epil
   %i.aeq = load i32, ptr %gep.i220.us.i.i.i.epil, align 4, !tbaa !53
   %i.aer = trunc i32 %i.aeq to i8
   %i.aes = xor i8 %i.aer, -128
-  %indvars.iv.next.i221.us.i.i.i.epil = add nsw i64 %indvars.iv.i219.us.i.i.i.epil, 1 ; 2 uses
+  %indvars.iv.next.i221.us.i.i.i.epil = add nsw i64 %indvars.iv.i219.us.i.i.i.epil, 1 ; 3 uses
   %i.aet = getelementptr inbounds i8, ptr %i.ack, i64 %indvars.iv.i219.us.i.i.i.epil
   store i8 %i.aes, ptr %i.aet, align 1, !tbaa !67
   %indvars.iv.next6.i222.us.i.i.i.epil = add nuw nsw i64 %indvars.iv5.i218.us.i.i.i.epil, 1
@@ -1104,8 +1085,7 @@ bb.be:                                            ; preds = %bb.bd, %encode_code
   %epil.iter275.cmp.not = icmp eq i64 %epil.iter275.next, 2
   br i1 %epil.iter275.cmp.not, label %.loopexit.i211.loopexit.us.i.i.i, label %.peel.next18.i216.us.i.i.i.epil, !llvm.loop !96
 
-.loopexit.i211.loopexit.us.i.i.i:                 ; preds = %.peel.next18.i216.us.i.i.i.epil, %.loopexit.i211.loopexit.us.i.i.i.unr-lcssa
-  %indvars.iv.next.i221.us.i.i.i.lcssa = phi i64 [ %indvars.iv.next.i221.us.i.i.i.3, %.loopexit.i211.loopexit.us.i.i.i.unr-lcssa ], [ %indvars.iv.next.i221.us.i.i.i.epil, %.peel.next18.i216.us.i.i.i.epil ] ; 2 uses
+.loopexit.i211.loopexit.us.i.i.i:                 ; preds = %.peel.next18.i216.us.i.i.i.epil
   %indvars.iv.next24.i213.us.i.i.i = add nuw nsw i64 %indvars.iv23.i208.us.i.i.i, 1 ; 2 uses
   %exitcond27.not.i214.us.i.i.i = icmp eq i64 %indvars.iv.next24.i213.us.i.i.i, %wide.trip.count26.i206.i.i.i
   br i1 %exitcond27.not.i214.us.i.i.i, label %._crit_edge.loopexit.i215.i.i.i, label %.peel.next14.i207.us.i.i.i, !llvm.loop !95
@@ -1160,7 +1140,7 @@ bb.be:                                            ; preds = %bb.bd, %encode_code
   %i.agc = getelementptr i8, ptr %i.afp, i64 7
   store i8 %i.agb, ptr %i.agc, align 1, !tbaa !67
   %indvars.iv.next24.i213.i.i.i.1 = add nuw nsw i64 %indvars.iv23.i208.i.i.i, 2 ; 2 uses
-  %niter273.next.1 = add i64 %niter273, 2         ; 2 uses
+  %niter273.next.1 = add nuw i64 %niter273, 2     ; 2 uses
   %niter273.ncmp.1 = icmp eq i64 %niter273.next.1, %unroll_iter272
   br i1 %niter273.ncmp.1, label %._crit_edge.loopexit.i215.i.i.i.loopexit203.unr-lcssa, label %.peel.next14.i207.i.i.i, !llvm.loop !95
 
@@ -1198,7 +1178,7 @@ bb.be:                                            ; preds = %bb.bd, %encode_code
   br label %._crit_edge.loopexit.i215.i.i.i
 
 ._crit_edge.loopexit.i215.i.i.i:                  ; preds = %.peel.next14.i207.i.i.i.epil.preheader, %._crit_edge.loopexit.i215.i.i.i.loopexit203.unr-lcssa, %.loopexit.i211.loopexit.us.i.i.i
-  %.us-phi246.i.i.i = phi i64 [ %indvars.iv.next.i221.us.i.i.i.lcssa, %.loopexit.i211.loopexit.us.i.i.i ], [ %indvars.iv.next.peel19.i210.i.i.i.1, %._crit_edge.loopexit.i215.i.i.i.loopexit203.unr-lcssa ], [ %indvars.iv.next.peel19.i210.i.i.i.epil, %.peel.next14.i207.i.i.i.epil.preheader ]
+  %.us-phi246.i.i.i = phi i64 [ %indvars.iv.next.i221.us.i.i.i.epil, %.loopexit.i211.loopexit.us.i.i.i ], [ %indvars.iv.next.peel19.i210.i.i.i.1, %._crit_edge.loopexit.i215.i.i.i.loopexit203.unr-lcssa ], [ %indvars.iv.next.peel19.i210.i.i.i.epil, %.peel.next14.i207.i.i.i.epil.preheader ]
   %i.agu = trunc nsw i64 %.us-phi246.i.i.i to i32
   br label %encode_codebook.exit224.i.i.i
 
@@ -1523,7 +1503,7 @@ bb.bp:                                            ; preds = %bb.bp, %.lr.ph305.i
   %i.amh = getelementptr i8, ptr %i.amg, i64 1
   store i8 %i.amf, ptr %i.amh, align 1, !tbaa !67
   %indvars.iv.next349.i.i.i.1 = add nuw nsw i64 %indvars.iv348.i.i.i, 2 ; 2 uses
-  %niter288.next.1 = add i64 %niter288, 2         ; 2 uses
+  %niter288.next.1 = add nuw i64 %niter288, 2     ; 2 uses
   %niter288.ncmp.1 = icmp eq i64 %niter288.next.1, %unroll_iter287
   br i1 %niter288.ncmp.1, label %.loopexit.loopexit.i.i.i.unr-lcssa, label %bb.bp, !llvm.loop !100
 
@@ -1926,7 +1906,7 @@ bb.ck:                                            ; preds = %bb.ck, %.lr.ph527.i
   %i.avg = getelementptr inbounds i8, ptr %i.avb, i64 %i.avf
   store i8 %i.aui, ptr %i.avg, align 1, !tbaa !67
   %indvars.iv.next571.i.3 = add nuw nsw i64 %indvars.iv570.i, 4 ; 2 uses
-  %niter295.next.3 = add i64 %niter295, 4         ; 2 uses
+  %niter295.next.3 = add nuw i64 %niter295, 4     ; 2 uses
   %niter295.ncmp.3 = icmp eq i64 %niter295.next.3, %unroll_iter294
   br i1 %niter295.ncmp.3, label %._crit_edge528.i.loopexit.unr-lcssa, label %bb.ck, !llvm.loop !111
 

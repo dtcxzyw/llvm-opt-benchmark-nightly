@@ -204,7 +204,7 @@ bb.di:                                            ; preds = %bb.dh
   br i1 %i.pk, label %_ZNK5QHashI7QString16ThemeSectionInfoE8keyBeginEv.exit.i, label %.lr.ph676
 
 bb.dj:                                            ; preds = %.lr.ph676
-  %i.pl = add i64 %i.pn, 1                        ; 2 uses
+  %i.pl = add nuw i64 %i.pn, 1                    ; 2 uses
   %i.pm = icmp eq i64 %i.pl, %i.pj
   br i1 %i.pm, label %_ZNK5QHashI7QString16ThemeSectionInfoE8keyBeginEv.exit.i, label %.lr.ph676, !llvm.loop !16
 
@@ -607,10 +607,10 @@ _ZN5QHashIN12ThemeManager10ThemeTokenE6QColorE7reserveEx.exit: ; preds = %_ZNK5Q
   store ptr %i.x, ptr %0, align 8
   %.pre = load ptr, ptr %i.r, align 8             ; 2 uses
   %.not.i42 = icmp eq ptr %.pre, null
-  br i1 %.not.i42, label %_ZNK5QHashIN12ThemeManager10ThemeTokenE14ThemeColorPairE10constBeginEv.exit, label %_ZN5QHashIN12ThemeManager10ThemeTokenE6QColorE7reserveEx.exit.thread
+  br i1 %.not.i42, label %._crit_edge, label %_ZN5QHashIN12ThemeManager10ThemeTokenE6QColorE7reserveEx.exit.thread
 
 _ZN5QHashIN12ThemeManager10ThemeTokenE6QColorE7reserveEx.exit.thread: ; preds = %_ZNK5QHashIN12ThemeManager10ThemeTokenE6QColorE8capacityEv.exit.i, %_ZN5QHashIN12ThemeManager10ThemeTokenE6QColorE7reserveEx.exit
-  %i.y = phi ptr [ %.pre, %_ZN5QHashIN12ThemeManager10ThemeTokenE6QColorE7reserveEx.exit ], [ %i.t, %_ZNK5QHashIN12ThemeManager10ThemeTokenE6QColorE8capacityEv.exit.i ] ; 4 uses
+  %i.y = phi ptr [ %.pre, %_ZN5QHashIN12ThemeManager10ThemeTokenE6QColorE7reserveEx.exit ], [ %i.t, %_ZNK5QHashIN12ThemeManager10ThemeTokenE6QColorE8capacityEv.exit.i ] ; 3 uses
   %i.z = getelementptr i8, ptr %i.y, i64 32
   %i.aa = load ptr, ptr %i.z, align 8             ; 2 uses
   %i.ab = load i8, ptr %i.aa, align 1
@@ -621,12 +621,12 @@ bb.v:                                             ; preds = %_ZN5QHashIN12ThemeM
   %i.ac = getelementptr i8, ptr %i.y, i64 16
   %i.ad = load i64, ptr %i.ac, align 8            ; 2 uses
   %i.ae = icmp eq i64 %i.ad, 1
-  br i1 %i.ae, label %_ZNK5QHashIN12ThemeManager10ThemeTokenE14ThemeColorPairE10constBeginEv.exit, label %.lr.ph
+  br i1 %i.ae, label %._crit_edge, label %.lr.ph
 
 bb.w:                                             ; preds = %.lr.ph
-  %i.af = add i64 %i.ah, 1                        ; 2 uses
+  %i.af = add nuw i64 %i.ah, 1                    ; 2 uses
   %i.ag = icmp eq i64 %i.af, %i.ad
-  br i1 %i.ag, label %_ZNK5QHashIN12ThemeManager10ThemeTokenE14ThemeColorPairE10constBeginEv.exit, label %.lr.ph, !llvm.loop !63
+  br i1 %i.ag, label %._crit_edge, label %.lr.ph, !llvm.loop !63
 
 .lr.ph:                                           ; preds = %bb.v, %bb.w
   %i.ah = phi i64 [ %i.af, %bb.w ], [ 1, %bb.v ]  ; 4 uses
@@ -636,26 +636,14 @@ bb.w:                                             ; preds = %.lr.ph
   %i.al = getelementptr i8, ptr %i.aj, i64 %i.ak
   %i.am = load i8, ptr %i.al, align 1
   %.not.i.i.i.i = icmp eq i8 %i.am, -1
-  br i1 %.not.i.i.i.i, label %bb.w, label %._ZNK5QHashIN12ThemeManager10ThemeTokenE14ThemeColorPairE10constBeginEv.exit.loopexit_crit_edge, !llvm.loop !63
+  br i1 %.not.i.i.i.i, label %bb.w, label %_ZNK5QHashIN12ThemeManager10ThemeTokenE14ThemeColorPairE14const_iteratorneERKS4_.exit.thread.lr.ph, !llvm.loop !63
 
-._ZNK5QHashIN12ThemeManager10ThemeTokenE14ThemeColorPairE10constBeginEv.exit.loopexit_crit_edge: ; preds = %.lr.ph
-  br label %_ZNK5QHashIN12ThemeManager10ThemeTokenE14ThemeColorPairE10constBeginEv.exit, !llvm.loop !63
-
-_ZNK5QHashIN12ThemeManager10ThemeTokenE14ThemeColorPairE10constBeginEv.exit: ; preds = %bb.w, %bb.v, %._ZNK5QHashIN12ThemeManager10ThemeTokenE14ThemeColorPairE10constBeginEv.exit.loopexit_crit_edge, %_ZN5QHashIN12ThemeManager10ThemeTokenE6QColorE7reserveEx.exit
-  %.sroa.0.0.i = phi ptr [ null, %_ZN5QHashIN12ThemeManager10ThemeTokenE6QColorE7reserveEx.exit ], [ null, %bb.v ], [ %i.y, %._ZNK5QHashIN12ThemeManager10ThemeTokenE14ThemeColorPairE10constBeginEv.exit.loopexit_crit_edge ], [ null, %bb.w ] ; 2 uses
-  %.sroa.4.0.i = phi i64 [ 0, %_ZN5QHashIN12ThemeManager10ThemeTokenE6QColorE7reserveEx.exit ], [ 0, %bb.v ], [ %i.ah, %._ZNK5QHashIN12ThemeManager10ThemeTokenE14ThemeColorPairE10constBeginEv.exit.loopexit_crit_edge ], [ 0, %bb.w ] ; 2 uses
-  %11 = icmp ne ptr %.sroa.0.0.i, null
-  %12 = icmp ne i64 %.sroa.4.0.i, 0
-  %or.cond74 = or i1 %12, %11
-  br i1 %or.cond74, label %_ZNK5QHashIN12ThemeManager10ThemeTokenE14ThemeColorPairE14const_iteratorneERKS4_.exit.thread.lr.ph, label %._crit_edge
-
-_ZNK5QHashIN12ThemeManager10ThemeTokenE14ThemeColorPairE14const_iteratorneERKS4_.exit.thread.lr.ph: ; preds = %_ZN5QHashIN12ThemeManager10ThemeTokenE6QColorE7reserveEx.exit.thread, %_ZNK5QHashIN12ThemeManager10ThemeTokenE14ThemeColorPairE10constBeginEv.exit
-  %.sroa.4.0.i104 = phi i64 [ %.sroa.4.0.i, %_ZNK5QHashIN12ThemeManager10ThemeTokenE14ThemeColorPairE10constBeginEv.exit ], [ 0, %_ZN5QHashIN12ThemeManager10ThemeTokenE6QColorE7reserveEx.exit.thread ]
-  %.sroa.0.0.i103 = phi ptr [ %.sroa.0.0.i, %_ZNK5QHashIN12ThemeManager10ThemeTokenE14ThemeColorPairE10constBeginEv.exit ], [ %i.y, %_ZN5QHashIN12ThemeManager10ThemeTokenE6QColorE7reserveEx.exit.thread ]
+_ZNK5QHashIN12ThemeManager10ThemeTokenE14ThemeColorPairE14const_iteratorneERKS4_.exit.thread.lr.ph: ; preds = %.lr.ph, %_ZN5QHashIN12ThemeManager10ThemeTokenE6QColorE7reserveEx.exit.thread
+  %.sroa.4.0.i104 = phi i64 [ 0, %_ZN5QHashIN12ThemeManager10ThemeTokenE6QColorE7reserveEx.exit.thread ], [ %i.ah, %.lr.ph ]
   %.v = select i1 %.0, i64 20, i64 4
   br label %_ZNK5QHashIN12ThemeManager10ThemeTokenE14ThemeColorPairE14const_iteratorneERKS4_.exit.thread
 
-._crit_edge:                                      ; preds = %_ZN5QHashIN12ThemeManager10ThemeTokenE14ThemeColorPairE14const_iteratorppEv.exit, %_ZNK5QHashIN12ThemeManager10ThemeTokenE14ThemeColorPairE10constBeginEv.exit
+._crit_edge:                                      ; preds = %bb.w, %_ZN5QHashIN12ThemeManager10ThemeTokenE14ThemeColorPairE14const_iteratorppEv.exit, %_ZN5QHashIN12ThemeManager10ThemeTokenE6QColorE7reserveEx.exit, %bb.v
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #29
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(56) %10, ptr noundef nonnull align 16 dereferenceable(56) @__const._ZNK12ThemeManager12previewThemeERK7QStringNS_13PreviewSchemeE.paletteTokens, i64 56, i1 false)
   %i.an = getelementptr inbounds nuw i8, ptr %10, i64 56
@@ -684,7 +672,7 @@ bb.aa:                                            ; preds = %_ZNK5QHashIN12Theme
   br label %bb.ap
 
 _ZNK5QHashIN12ThemeManager10ThemeTokenE14ThemeColorPairE14const_iteratorneERKS4_.exit.thread: ; preds = %_ZNK5QHashIN12ThemeManager10ThemeTokenE14ThemeColorPairE14const_iteratorneERKS4_.exit.thread.lr.ph, %_ZN5QHashIN12ThemeManager10ThemeTokenE14ThemeColorPairE14const_iteratorppEv.exit
-  %.sroa.062.076 = phi ptr [ %.sroa.0.0.i103, %_ZNK5QHashIN12ThemeManager10ThemeTokenE14ThemeColorPairE14const_iteratorneERKS4_.exit.thread.lr.ph ], [ %.sroa.062.1, %_ZN5QHashIN12ThemeManager10ThemeTokenE14ThemeColorPairE14const_iteratorppEv.exit ] ; 3 uses
+  %.sroa.062.076 = phi ptr [ %i.y, %_ZNK5QHashIN12ThemeManager10ThemeTokenE14ThemeColorPairE14const_iteratorneERKS4_.exit.thread.lr.ph ], [ %.sroa.062.1, %_ZN5QHashIN12ThemeManager10ThemeTokenE14ThemeColorPairE14const_iteratorppEv.exit ] ; 3 uses
   %.sroa.10.075 = phi i64 [ %.sroa.4.0.i104, %_ZNK5QHashIN12ThemeManager10ThemeTokenE14ThemeColorPairE14const_iteratorneERKS4_.exit.thread.lr.ph ], [ %.sroa.10.1, %_ZN5QHashIN12ThemeManager10ThemeTokenE14ThemeColorPairE14const_iteratorppEv.exit ] ; 3 uses
   %i.as = getelementptr i8, ptr %.sroa.062.076, i64 32 ; 2 uses
   %i.at = load ptr, ptr %i.as, align 8

@@ -203,9 +203,9 @@ _ZN12QHashPrivate4DataINS_4NodeIN12ThemeManager10ThemeTokenE14ThemeColorPairEEED
 _ZN5QHashIN12ThemeManager10ThemeTokenE14ThemeColorPairE5clearEv.exit: ; preds = %_ZN17QArrayDataPointerIDsED2Ev.exit249, %bb.ca, %_ZN9QtPrivate8RefCount5derefEv.exit.i, %bb.cb, %_ZN12QHashPrivate4DataINS_4NodeIN12ThemeManager10ThemeTokenE14ThemeColorPairEEED2Ev.exit.i
   store ptr null, ptr %i.gn, align 8
   %i.hh = load ptr, ptr %0, align 8, !align !8
-  %i.hi = load ptr, ptr %i.hh, align 8            ; 5 uses
+  %i.hi = load ptr, ptr %i.hh, align 8            ; 4 uses
   %.not.i252 = icmp eq ptr %i.hi, null
-  br i1 %.not.i252, label %_ZNK5QHashI7QString16ThemeSectionInfoE10constBeginEv.exit, label %bb.cf
+  br i1 %.not.i252, label %.critedge123, label %bb.cf
 
 bb.cf:                                            ; preds = %_ZN5QHashIN12ThemeManager10ThemeTokenE14ThemeColorPairE5clearEv.exit
   %i.hj = getelementptr i8, ptr %i.hi, i64 32
@@ -214,16 +214,20 @@ bb.cf:                                            ; preds = %_ZN5QHashIN12ThemeM
   %.not.i.i.i253 = icmp eq i8 %i.hl, -1
   br i1 %.not.i.i.i253, label %bb.cg, label %_ZNK5QHashI7QString16ThemeSectionInfoE14const_iteratorneERKS3_.exit.thread.preheader
 
+_ZNK5QHashI7QString16ThemeSectionInfoE14const_iteratorneERKS3_.exit.thread.preheader: ; preds = %.lr.ph, %bb.cf
+  %.sroa.10435.0493.ph = phi i64 [ 0, %bb.cf ], [ %i.hr, %.lr.ph ]
+  br label %_ZNK5QHashI7QString16ThemeSectionInfoE14const_iteratorneERKS3_.exit.thread
+
 bb.cg:                                            ; preds = %bb.cf
   %i.hm = getelementptr i8, ptr %i.hi, i64 16
   %i.hn = load i64, ptr %i.hm, align 8            ; 2 uses
   %i.ho = icmp eq i64 %i.hn, 1
-  br i1 %i.ho, label %_ZNK5QHashI7QString16ThemeSectionInfoE10constBeginEv.exit, label %.lr.ph
+  br i1 %i.ho, label %.critedge123, label %.lr.ph
 
 bb.ch:                                            ; preds = %.lr.ph
-  %i.hp = add i64 %i.hr, 1                        ; 2 uses
+  %i.hp = add nuw i64 %i.hr, 1                    ; 2 uses
   %i.hq = icmp eq i64 %i.hp, %i.hn
-  br i1 %i.hq, label %_ZNK5QHashI7QString16ThemeSectionInfoE10constBeginEv.exit, label %.lr.ph, !llvm.loop !9
+  br i1 %i.hq, label %.critedge123, label %.lr.ph, !llvm.loop !9
 
 .lr.ph:                                           ; preds = %bb.cg, %bb.ch
   %i.hr = phi i64 [ %i.hp, %bb.ch ], [ 1, %bb.cg ] ; 4 uses
@@ -233,23 +237,7 @@ bb.ch:                                            ; preds = %.lr.ph
   %i.hv = getelementptr i8, ptr %i.ht, i64 %i.hu
   %i.hw = load i8, ptr %i.hv, align 1
   %.not.i.i.i.i254 = icmp eq i8 %i.hw, -1
-  br i1 %.not.i.i.i.i254, label %bb.ch, label %._ZNK5QHashI7QString16ThemeSectionInfoE10constBeginEv.exit.loopexit_crit_edge, !llvm.loop !9
-
-._ZNK5QHashI7QString16ThemeSectionInfoE10constBeginEv.exit.loopexit_crit_edge: ; preds = %.lr.ph
-  br label %_ZNK5QHashI7QString16ThemeSectionInfoE10constBeginEv.exit, !llvm.loop !9
-
-_ZNK5QHashI7QString16ThemeSectionInfoE10constBeginEv.exit: ; preds = %bb.ch, %bb.cg, %._ZNK5QHashI7QString16ThemeSectionInfoE10constBeginEv.exit.loopexit_crit_edge, %_ZN5QHashIN12ThemeManager10ThemeTokenE14ThemeColorPairE5clearEv.exit
-  %.sroa.0.0.i = phi ptr [ null, %_ZN5QHashIN12ThemeManager10ThemeTokenE14ThemeColorPairE5clearEv.exit ], [ null, %bb.cg ], [ %i.hi, %._ZNK5QHashI7QString16ThemeSectionInfoE10constBeginEv.exit.loopexit_crit_edge ], [ null, %bb.ch ] ; 2 uses
-  %.sroa.4.0.i = phi i64 [ 0, %_ZN5QHashIN12ThemeManager10ThemeTokenE14ThemeColorPairE5clearEv.exit ], [ 0, %bb.cg ], [ %i.hr, %._ZNK5QHashI7QString16ThemeSectionInfoE10constBeginEv.exit.loopexit_crit_edge ], [ 0, %bb.ch ] ; 2 uses
-  %51 = icmp eq ptr %.sroa.0.0.i, null
-  %52 = icmp eq i64 %.sroa.4.0.i, 0
-  %or.cond.not491 = and i1 %51, %52
-  br i1 %or.cond.not491, label %.critedge123, label %_ZNK5QHashI7QString16ThemeSectionInfoE14const_iteratorneERKS3_.exit.thread.preheader
-
-_ZNK5QHashI7QString16ThemeSectionInfoE14const_iteratorneERKS3_.exit.thread.preheader: ; preds = %bb.cf, %_ZNK5QHashI7QString16ThemeSectionInfoE10constBeginEv.exit
-  %.sroa.10435.0493.ph = phi i64 [ 0, %bb.cf ], [ %.sroa.4.0.i, %_ZNK5QHashI7QString16ThemeSectionInfoE10constBeginEv.exit ]
-  %.sroa.0431.0492.ph = phi ptr [ %i.hi, %bb.cf ], [ %.sroa.0.0.i, %_ZNK5QHashI7QString16ThemeSectionInfoE10constBeginEv.exit ]
-  br label %_ZNK5QHashI7QString16ThemeSectionInfoE14const_iteratorneERKS3_.exit.thread
+  br i1 %.not.i.i.i.i254, label %bb.ch, label %_ZNK5QHashI7QString16ThemeSectionInfoE14const_iteratorneERKS3_.exit.thread.preheader, !llvm.loop !9
 
 bb.ci:                                            ; preds = %bb.bc
   %i.hx = landingpad { ptr, i32 }
@@ -421,7 +409,7 @@ _ZN17QArrayDataPointerIDsED2Ev.exit294:           ; preds = %bb.dc, %_ZN17QArray
 
 _ZNK5QHashI7QString16ThemeSectionInfoE14const_iteratorneERKS3_.exit.thread: ; preds = %_ZNK5QHashI7QString16ThemeSectionInfoE14const_iteratorneERKS3_.exit.thread.preheader, %_ZN5QHashI7QString16ThemeSectionInfoE14const_iteratorppEv.exit
   %.sroa.10435.0493 = phi i64 [ %.sroa.10435.1, %_ZN5QHashI7QString16ThemeSectionInfoE14const_iteratorppEv.exit ], [ %.sroa.10435.0493.ph, %_ZNK5QHashI7QString16ThemeSectionInfoE14const_iteratorneERKS3_.exit.thread.preheader ] ; 3 uses
-  %.sroa.0431.0492 = phi ptr [ %.sroa.0431.1, %_ZN5QHashI7QString16ThemeSectionInfoE14const_iteratorppEv.exit ], [ %.sroa.0431.0492.ph, %_ZNK5QHashI7QString16ThemeSectionInfoE14const_iteratorneERKS3_.exit.thread.preheader ] ; 3 uses
+  %.sroa.0431.0492 = phi ptr [ %.sroa.0431.1, %_ZN5QHashI7QString16ThemeSectionInfoE14const_iteratorppEv.exit ], [ %i.hi, %_ZNK5QHashI7QString16ThemeSectionInfoE14const_iteratorneERKS3_.exit.thread.preheader ] ; 3 uses
   %i.ix = getelementptr i8, ptr %.sroa.0431.0492, i64 32 ; 2 uses
   %i.iy = load ptr, ptr %i.ix, align 8
   %i.iz = lshr i64 %.sroa.10435.0493, 7
@@ -605,7 +593,7 @@ _ZN5QHashI7QString16ThemeSectionInfoE14const_iteratorppEv.exit: ; preds = %bb.dq
   %or.cond.not = and i1 %i.kv, %i.kw
   br i1 %or.cond.not, label %.critedge123, label %_ZNK5QHashI7QString16ThemeSectionInfoE14const_iteratorneERKS3_.exit.thread, !llvm.loop !11
 
-.critedge123:                                     ; preds = %_ZN5QHashI7QString16ThemeSectionInfoE14const_iteratorppEv.exit, %_ZNK5QHashI7QString16ThemeSectionInfoE10constBeginEv.exit
+.critedge123:                                     ; preds = %bb.ch, %_ZN5QHashI7QString16ThemeSectionInfoE14const_iteratorppEv.exit, %bb.cg, %_ZN5QHashIN12ThemeManager10ThemeTokenE14ThemeColorPairE5clearEv.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %37) #21
   store ptr null, ptr %37, align 8
   %i.kx = getelementptr inbounds nuw i8, ptr %37, i64 8
