@@ -204,10 +204,10 @@ bb.f:                                             ; preds = %bb.e
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr hidden void @_ZN2cv5coordERKNS_3MatEPKNS_12RGBTsdfVoxelERSt6vectorINS_3VecIfLi4EEESaIS8_EESB_SB_NS_7Point3_IiEENS7_IiLi4EEENS7_IiLi8EEENS_7Affine3IfEEffbbiiiNSC_IfEEfi(ptr noundef nonnull align 8 dereferenceable(208) %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef byval(%"class.cv::Point3_") align 8 %5, ptr noundef align 4 dead_on_return %6, ptr noundef align 4 dead_on_return %7, ptr noundef byval(%"class.cv::Affine3") align 8 %8, float noundef %9, float noundef %10, i1 noundef zeroext %11, i1 noundef zeroext %12, i32 noundef %13, i32 noundef %14, i32 noundef %15, <2 x float> %16, float %17, float noundef %18, i32 noundef %19) local_unnamed_addr #18 comdat {
 bb.a:
-  %20 = alloca %"class.cv::Vec.22", align 8       ; 6 uses
-  %21 = alloca %"class.cv::Vec.22", align 8       ; 6 uses
+  %20 = alloca %"class.cv::Vec.22", align 16      ; 4 uses
+  %21 = alloca %"class.cv::Vec.22", align 16      ; 4 uses
   %22 = alloca %"class.cv::Point3_.9", align 8    ; 5 uses
-  %23 = alloca %"class.cv::Vec.22", align 8       ; 6 uses
+  %23 = alloca %"class.cv::Vec.22", align 16      ; 4 uses
   %24 = alloca %"class.cv::Point3_.9", align 8    ; 5 uses
   switch i32 %19, label %.thread167 [
     i32 0, label %.thread
@@ -333,14 +333,9 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.ch = shufflevector <4 x float> <float poison, float poison, float poison, float 0.000000e+00>, <4 x float> %i.bo, <4 x i32> <i32 5, i32 poison, i32 poison, i32 3>
   %i.ci = shufflevector <4 x float> %i.ch, <4 x float> %i.bp, <4 x i32> <i32 0, i32 5, i32 poison, i32 3>
   %i.cj = shufflevector <4 x float> %i.ci, <4 x float> %i.ca, <4 x i32> <i32 0, i32 1, i32 5, i32 3>
-  %i.ck = fadd <4 x float> %i.cj, %i.cg           ; 3 uses
-  %25 = shufflevector <4 x float> %i.ck, <4 x float> poison, <2 x i32> <i32 0, i32 1>
-  store <2 x float> %25, ptr %20, align 8, !tbaa !8, !alias.scope !336
-  %26 = getelementptr inbounds nuw i8, ptr %20, i64 8
-  %27 = extractelement <4 x float> %i.ck, i64 2
-  store float %27, ptr %26, align 8, !tbaa !8, !alias.scope !336
-  %28 = getelementptr inbounds nuw i8, ptr %20, i64 12
-  store float 0.000000e+00, ptr %28, align 4, !tbaa !8, !alias.scope !336
+  %i.ck = fadd <4 x float> %i.cj, %i.cg           ; 2 uses
+  %25 = insertelement <4 x float> %i.ck, float 0.000000e+00, i64 3
+  store <4 x float> %25, ptr %20, align 16, !tbaa !8, !alias.scope !336
   %i.cl = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.cm = load ptr, ptr %i.cl, align 8, !tbaa !190 ; 4 uses
   %i.cn = getelementptr inbounds nuw i8, ptr %2, i64 16
@@ -393,14 +388,9 @@ bb.i:                                             ; preds = %_ZNSt6vectorIN2cv3V
   %i.dh = shufflevector <4 x float> %i.dg, <4 x float> %i.db, <4 x i32> <i32 0, i32 1, i32 5, i32 3>
   %i.di = insertelement <4 x float> <float poison, float -0.000000e+00, float poison, float poison>, float %.fca.1.extract23, i64 0
   %i.dj = shufflevector <4 x float> %i.di, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
-  %i.dk = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.dh, <4 x float> %i.dj, <4 x float> %i.de) ; 3 uses
-  %29 = shufflevector <4 x float> %i.dk, <4 x float> poison, <2 x i32> <i32 0, i32 1>
-  store <2 x float> %29, ptr %21, align 8, !tbaa !8, !alias.scope !339
-  %30 = getelementptr inbounds nuw i8, ptr %21, i64 8
-  %31 = extractelement <4 x float> %i.dk, i64 2
-  store float %31, ptr %30, align 8, !tbaa !8, !alias.scope !339
-  %32 = getelementptr inbounds nuw i8, ptr %21, i64 12
-  store float 0.000000e+00, ptr %32, align 4, !tbaa !8, !alias.scope !339
+  %i.dk = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.dh, <4 x float> %i.dj, <4 x float> %i.de) ; 2 uses
+  %26 = insertelement <4 x float> %i.dk, float 0.000000e+00, i64 3
+  store <4 x float> %26, ptr %21, align 16, !tbaa !8, !alias.scope !339
   %i.dl = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.dm = load ptr, ptr %i.dl, align 8, !tbaa !190 ; 4 uses
   %i.dn = getelementptr inbounds nuw i8, ptr %3, i64 16
@@ -463,14 +453,9 @@ bb.m:                                             ; preds = %bb.l
   %i.en = shufflevector <4 x float> %i.el, <4 x float> %i.em, <4 x i32> <i32 0, i32 1, i32 5, i32 3>
   %i.eo = insertelement <4 x float> <float poison, float -0.000000e+00, float poison, float poison>, float %.fca.1.extract7, i64 0
   %i.ep = shufflevector <4 x float> %i.eo, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
-  %i.eq = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.en, <4 x float> %i.ep, <4 x float> %i.eh) ; 3 uses
-  %33 = shufflevector <4 x float> %i.eq, <4 x float> poison, <2 x i32> <i32 0, i32 1>
-  store <2 x float> %33, ptr %23, align 8, !tbaa !8, !alias.scope !342
-  %34 = getelementptr inbounds nuw i8, ptr %23, i64 8
-  %35 = extractelement <4 x float> %i.eq, i64 2
-  store float %35, ptr %34, align 8, !tbaa !8, !alias.scope !342
-  %36 = getelementptr inbounds nuw i8, ptr %23, i64 12
-  store float 0.000000e+00, ptr %36, align 4, !tbaa !8, !alias.scope !342
+  %i.eq = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.en, <4 x float> %i.ep, <4 x float> %i.eh) ; 2 uses
+  %27 = insertelement <4 x float> %i.eq, float 0.000000e+00, i64 3
+  store <4 x float> %27, ptr %23, align 16, !tbaa !8, !alias.scope !342
   %i.er = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
   %i.es = load ptr, ptr %i.er, align 8, !tbaa !190 ; 4 uses
   %i.et = getelementptr inbounds nuw i8, ptr %4, i64 16

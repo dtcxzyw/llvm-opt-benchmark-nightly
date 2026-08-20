@@ -201,28 +201,28 @@ _ZZZN3igl10predicates27triangle_triangle_intersectIN5Eigen6MatrixIdLi3ELi1ELi0EL
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr dso_local noundef zeroext i1 @_ZZN3igl10predicates27triangle_triangle_intersectIN5Eigen6MatrixIdLi3ELi1ELi0ELi3ELi1EEEEEbRKT_S7_S7_S7_S7_S7_RbENKUlRKS4_SA_SA_SA_SA_SA_E_clESA_SA_SA_SA_SA_SA_(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(24) %5, ptr noundef nonnull align 8 dereferenceable(24) %6) local_unnamed_addr #3 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %7 = alloca %"class.Eigen::Matrix.25", align 16 ; 8 uses
+  %7 = alloca %"class.Eigen::Matrix.25", align 16 ; 7 uses
   %8 = alloca %"class.Eigen::Matrix.25", align 16 ; 7 uses
-  %9 = alloca %"class.Eigen::Matrix.25", align 16 ; 8 uses
+  %9 = alloca %"class.Eigen::Matrix.25", align 16 ; 7 uses
   %10 = alloca %"class.Eigen::Matrix.25", align 16 ; 7 uses
   %11 = alloca %"class.Eigen::Matrix.25", align 16 ; 7 uses
   %12 = alloca %"class.Eigen::Matrix.25", align 16 ; 7 uses
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.c = load double, ptr %i.a, align 8, !tbaa !22, !noalias !24 ; 4 uses
-  %i.d = load double, ptr %i.b, align 8, !tbaa !22, !noalias !24 ; 5 uses
+  %i.c = load double, ptr %i.a, align 8, !tbaa !22, !noalias !24 ; 3 uses
+  %i.d = load double, ptr %i.b, align 8, !tbaa !22, !noalias !24 ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.f = load double, ptr %i.e, align 8, !tbaa !22, !noalias !24 ; 4 uses
-  %i.g = load <2 x double>, ptr %3, align 8, !tbaa !22, !noalias !24 ; 5 uses
-  %i.h = load <2 x double>, ptr %1, align 8, !tbaa !22, !noalias !24 ; 6 uses
+  %i.g = load <2 x double>, ptr %3, align 8, !tbaa !22, !noalias !24 ; 4 uses
+  %i.h = load <2 x double>, ptr %1, align 8, !tbaa !22, !noalias !24 ; 5 uses
   %i.i = load <2 x double>, ptr %2, align 8, !tbaa !22, !noalias !24 ; 5 uses
   %i.j = insertelement <2 x double> poison, double %i.f, i64 0
   %i.k = insertelement <2 x double> %i.j, double %i.c, i64 1
   %i.l = insertelement <2 x double> poison, double %i.d, i64 0
   %i.m = shufflevector <2 x double> %i.l, <2 x double> poison, <2 x i32> zeroinitializer
   %i.n = fsub <2 x double> %i.k, %i.m
-  %i.o = insertelement <2 x double> %i.g, double %i.c, i64 0
-  %i.p = insertelement <2 x double> %i.h, double %i.d, i64 0
+  %i.o = insertelement <2 x double> %i.g, double %i.c, i64 0 ; 2 uses
+  %i.p = insertelement <2 x double> %i.h, double %i.d, i64 0 ; 2 uses
   %i.q = fsub <2 x double> %i.o, %i.p             ; 2 uses
   %i.r = shufflevector <2 x double> %i.g, <2 x double> %i.i, <2 x i32> <i32 0, i32 3>
   %i.s = fsub <2 x double> %i.r, %i.h             ; 3 uses
@@ -256,21 +256,14 @@ bb.a:
   %i.ao = extractelement <2 x double> %i.ai, i64 0 ; 3 uses
   %i.ap = fcmp ult double %i.am, %i.ao
   %or.cond = select i1 %i.an, i1 true, i1 %i.ap
-  %i.aq = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 2 uses
+  %i.aq = getelementptr inbounds nuw i8, ptr %8, i64 8
   br i1 %or.cond, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  store double %i.f, ptr %7, align 16, !tbaa !22
-  %13 = getelementptr inbounds nuw i8, ptr %7, i64 8
-  %14 = extractelement <2 x double> %i.i, i64 1
-  store double %14, ptr %13, align 8, !tbaa !22
-  store double %i.d, ptr %8, align 16, !tbaa !22
-  %15 = extractelement <2 x double> %i.h, i64 1
-  store double %15, ptr %i.aq, align 8, !tbaa !22
-  store double %i.c, ptr %9, align 16, !tbaa !22
-  %16 = getelementptr inbounds nuw i8, ptr %9, i64 8
-  %17 = extractelement <2 x double> %i.g, i64 1
-  store double %17, ptr %16, align 8, !tbaa !22
+  %13 = insertelement <2 x double> %i.i, double %i.f, i64 0
+  store <2 x double> %13, ptr %7, align 16, !tbaa !22
+  store <2 x double> %i.p, ptr %8, align 16, !tbaa !22
+  store <2 x double> %i.o, ptr %9, align 16, !tbaa !22
   %i.ar = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.as = load <2 x double>, ptr %i.ar, align 8, !tbaa !22
   %i.at = shufflevector <2 x double> %i.as, <2 x double> poison, <2 x i32> <i32 1, i32 0>
@@ -673,28 +666,28 @@ _ZZZN3igl10predicates27triangle_triangle_intersectIN5Eigen6MatrixIdLi1ELi3ELi1EL
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr dso_local noundef zeroext i1 @_ZZN3igl10predicates27triangle_triangle_intersectIN5Eigen6MatrixIdLi1ELi3ELi1ELi1ELi3EEEEEbRKT_S7_S7_S7_S7_S7_RbENKUlRKS4_SA_SA_SA_SA_SA_E_clESA_SA_SA_SA_SA_SA_(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(24) %5, ptr noundef nonnull align 8 dereferenceable(24) %6) local_unnamed_addr #3 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %7 = alloca %"class.Eigen::Matrix.25", align 16 ; 8 uses
+  %7 = alloca %"class.Eigen::Matrix.25", align 16 ; 7 uses
   %8 = alloca %"class.Eigen::Matrix.25", align 16 ; 7 uses
-  %9 = alloca %"class.Eigen::Matrix.25", align 16 ; 8 uses
+  %9 = alloca %"class.Eigen::Matrix.25", align 16 ; 7 uses
   %10 = alloca %"class.Eigen::Matrix.25", align 16 ; 7 uses
   %11 = alloca %"class.Eigen::Matrix.25", align 16 ; 7 uses
   %12 = alloca %"class.Eigen::Matrix.25", align 16 ; 7 uses
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.c = load double, ptr %i.a, align 8, !tbaa !22, !noalias !32 ; 4 uses
-  %i.d = load double, ptr %i.b, align 8, !tbaa !22, !noalias !32 ; 5 uses
+  %i.c = load double, ptr %i.a, align 8, !tbaa !22, !noalias !32 ; 3 uses
+  %i.d = load double, ptr %i.b, align 8, !tbaa !22, !noalias !32 ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.f = load double, ptr %i.e, align 8, !tbaa !22, !noalias !32 ; 4 uses
-  %i.g = load <2 x double>, ptr %3, align 8, !tbaa !22, !noalias !32 ; 5 uses
-  %i.h = load <2 x double>, ptr %1, align 8, !tbaa !22, !noalias !32 ; 6 uses
+  %i.g = load <2 x double>, ptr %3, align 8, !tbaa !22, !noalias !32 ; 4 uses
+  %i.h = load <2 x double>, ptr %1, align 8, !tbaa !22, !noalias !32 ; 5 uses
   %i.i = load <2 x double>, ptr %2, align 8, !tbaa !22, !noalias !32 ; 5 uses
   %i.j = insertelement <2 x double> poison, double %i.f, i64 0
   %i.k = insertelement <2 x double> %i.j, double %i.c, i64 1
   %i.l = insertelement <2 x double> poison, double %i.d, i64 0
   %i.m = shufflevector <2 x double> %i.l, <2 x double> poison, <2 x i32> zeroinitializer
   %i.n = fsub <2 x double> %i.k, %i.m
-  %i.o = insertelement <2 x double> %i.g, double %i.c, i64 0
-  %i.p = insertelement <2 x double> %i.h, double %i.d, i64 0
+  %i.o = insertelement <2 x double> %i.g, double %i.c, i64 0 ; 2 uses
+  %i.p = insertelement <2 x double> %i.h, double %i.d, i64 0 ; 2 uses
   %i.q = fsub <2 x double> %i.o, %i.p             ; 2 uses
   %i.r = shufflevector <2 x double> %i.g, <2 x double> %i.i, <2 x i32> <i32 0, i32 3>
   %i.s = fsub <2 x double> %i.r, %i.h             ; 3 uses
@@ -728,21 +721,14 @@ bb.a:
   %i.ao = extractelement <2 x double> %i.ai, i64 0 ; 3 uses
   %i.ap = fcmp ult double %i.am, %i.ao
   %or.cond = select i1 %i.an, i1 true, i1 %i.ap
-  %i.aq = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 2 uses
+  %i.aq = getelementptr inbounds nuw i8, ptr %8, i64 8
   br i1 %or.cond, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  store double %i.f, ptr %7, align 16, !tbaa !22
-  %13 = getelementptr inbounds nuw i8, ptr %7, i64 8
-  %14 = extractelement <2 x double> %i.i, i64 1
-  store double %14, ptr %13, align 8, !tbaa !22
-  store double %i.d, ptr %8, align 16, !tbaa !22
-  %15 = extractelement <2 x double> %i.h, i64 1
-  store double %15, ptr %i.aq, align 8, !tbaa !22
-  store double %i.c, ptr %9, align 16, !tbaa !22
-  %16 = getelementptr inbounds nuw i8, ptr %9, i64 8
-  %17 = extractelement <2 x double> %i.g, i64 1
-  store double %17, ptr %16, align 8, !tbaa !22
+  %13 = insertelement <2 x double> %i.i, double %i.f, i64 0
+  store <2 x double> %13, ptr %7, align 16, !tbaa !22
+  store <2 x double> %i.p, ptr %8, align 16, !tbaa !22
+  store <2 x double> %i.o, ptr %9, align 16, !tbaa !22
   %i.ar = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.as = load <2 x double>, ptr %i.ar, align 8, !tbaa !22
   %i.at = shufflevector <2 x double> %i.as, <2 x double> poison, <2 x i32> <i32 1, i32 0>

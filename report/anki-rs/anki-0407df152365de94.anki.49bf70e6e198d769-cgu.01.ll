@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.e, %bb.b
   %i.s = add i64 %.sroa.01.0.i.i.i, %i.r
   %i.t = and i64 %i.s, %i.l
   %i.u = sub nsw i64 0, %i.t
-  %i.v = getelementptr inbounds [32 x i8], ptr %i.m, i64 %i.u ; 4 uses
+  %i.v = getelementptr inbounds [32 x i8], ptr %i.m, i64 %i.u ; 3 uses
   %i.w = getelementptr inbounds i8, ptr %i.v, i64 -32
   %i.x = call noundef zeroext i1 @"_ZN52_$LT$Q$u20$as$u20$hashbrown..Equivalent$LT$K$GT$$GT$10equivalent17hbd2a7232015fe09dE"(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.a, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.w), !noalias !963
   br i1 %i.x, label %"_ZN9hashbrown3map28HashMap$LT$K$C$V$C$S$C$A$GT$9get_inner17h091641c9d264fb72E.exit", label %bb.d, !prof !21
@@ -233,16 +233,11 @@ bb.e:                                             ; preds = %._crit_edge.i.i
   %i.ai = shufflevector <4 x i32> %i.ah, <4 x i32> poison, <4 x i32> <i32 1, i32 2, i32 0, i32 3>
   store <4 x i32> %i.ai, ptr %i.ag, align 4
   %i.aj = getelementptr inbounds i8, ptr %i.v, i64 -8
-  %2 = load i32, ptr %i.aj, align 4, !noundef !4
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 76
-  store i32 %2, ptr %i.ak, align 4
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 80
-  %4 = shufflevector <4 x i32> %i.ah, <4 x i32> poison, <2 x i32> <i32 0, i32 1>
-  store <2 x i32> %4, ptr %3, align 8
-  %5 = getelementptr inbounds i8, ptr %i.v, i64 -4
-  %6 = load i32, ptr %5, align 4, !noundef !4
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 88
-  store i32 %6, ptr %7, align 8
+  %2 = load <2 x i32>, ptr %i.aj, align 4
+  %3 = shufflevector <2 x i32> %2, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %4 = shufflevector <4 x i32> %i.ah, <4 x i32> %3, <4 x i32> <i32 4, i32 0, i32 1, i32 5>
+  store <4 x i32> %4, ptr %i.ak, align 4
   br label %"_ZN9hashbrown3map28HashMap$LT$K$C$V$C$S$C$A$GT$9get_inner17h091641c9d264fb72E.exit.thread"
 
 "_ZN9hashbrown3map28HashMap$LT$K$C$V$C$S$C$A$GT$9get_inner17h091641c9d264fb72E.exit.thread": ; preds = %._crit_edge.i.i, %bb.a, %"_ZN9hashbrown3map28HashMap$LT$K$C$V$C$S$C$A$GT$9get_inner17h091641c9d264fb72E.exit"

@@ -203,13 +203,11 @@ bb.k:                                             ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #16
   store ptr null, ptr %17, align 8, !tbaa !116
   %i.z = getelementptr inbounds nuw i8, ptr %17, i64 8 ; 10 uses
-  %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %25 = load ptr, ptr %i.aa, align 8, !tbaa !117  ; 2 uses
-  store ptr %25, ptr %i.z, align 8, !tbaa !117
-  %i.ab = getelementptr inbounds nuw i8, ptr %17, i64 16 ; 16 uses
-  %26 = getelementptr inbounds nuw i8, ptr %1, i64 48
-  %i.ac = load ptr, ptr %26, align 8, !tbaa !118
-  store ptr %i.ac, ptr %i.ab, align 8, !tbaa !118
+  %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %17, i64 16 ; 15 uses
+  %25 = load <2 x ptr>, ptr %i.aa, align 8, !tbaa !8
+  %i.ac = load ptr, ptr %i.aa, align 8, !tbaa !117
+  store <2 x ptr> %25, ptr %i.z, align 8, !tbaa !8
   %i.ad = getelementptr inbounds nuw i8, ptr %17, i64 24 ; 11 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.af = load i32, ptr %i.ae, align 8, !tbaa !119
@@ -237,7 +235,7 @@ bb.l:                                             ; preds = %bb.k
   %i.ar = add nsw i32 %i.aq, -2
   store i32 %i.ar, ptr %i.ad, align 8, !tbaa !119
   %i.as = and i64 %i.ao, 576460752303423487
-  %i.at = getelementptr inbounds nuw i8, ptr %25, i64 %i.as
+  %i.at = getelementptr inbounds nuw i8, ptr %i.ac, i64 %i.as
   store ptr %i.at, ptr %i.ab, align 8, !tbaa !118
   %zext = zext nneg i32 %.sroa.230.0.copyload.pr.pre.pre to i64
   %.0.in.i315 = getelementptr inbounds nuw i8, ptr %i.ag, i64 1
@@ -640,13 +638,11 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #16
   store ptr null, ptr %3, align 8, !tbaa !116
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 6 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %4 = load ptr, ptr %i.f, align 8, !tbaa !117    ; 2 uses
-  store ptr %4, ptr %i.e, align 8, !tbaa !117
-  %i.g = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 11 uses
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.h = load ptr, ptr %5, align 8, !tbaa !118
-  store ptr %i.h, ptr %i.g, align 8, !tbaa !118
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 10 uses
+  %4 = load <2 x ptr>, ptr %i.f, align 8, !tbaa !8
+  %i.h = load ptr, ptr %i.f, align 8, !tbaa !117
+  store <2 x ptr> %4, ptr %i.e, align 8, !tbaa !8
   %i.i = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 7 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.k = load i32, ptr %i.j, align 8, !tbaa !119
@@ -677,7 +673,7 @@ bb.d:                                             ; preds = %bb.c
   %i.w = add nsw i32 %i.v, -2
   store i32 %i.w, ptr %i.i, align 8, !tbaa !119
   %i.x = and i64 %i.t, 576460752303423487
-  %i.y = getelementptr inbounds nuw i8, ptr %4, i64 %i.x
+  %i.y = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.x
   store ptr %i.y, ptr %i.g, align 8, !tbaa !118
   br label %.preheader.i
 

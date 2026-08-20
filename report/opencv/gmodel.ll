@@ -203,7 +203,7 @@ _ZNSt10__weak_ptrIN3ade4EdgeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ; preds = 
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZN2cv4GArgC2INS_5gimpl6RcDescETnNSt9enable_ifIXntsr6detail7is_gargIT_EE5valueEiE4typeELi0EEEOS5_(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(48) %1) unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca %"struct.cv::gimpl::RcDesc", align 8 ; 9 uses
+  %2 = alloca %"struct.cv::gimpl::RcDesc", align 16 ; 9 uses
   store i32 1, ptr %0, align 8, !tbaa !260
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 0, ptr %i.a, align 4, !tbaa !269
@@ -211,18 +211,16 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #18
   call void @_ZN2cv6detail9WrapValueINS_5gimpl6RcDescEvE4wrapERKS3_(ptr dead_on_unwind nonnull writable sret(%"struct.cv::gimpl::RcDesc") align 8 %2, ptr noundef nonnull align 8 dereferenceable(48) %1)
   %i.c = invoke noalias noundef nonnull dereferenceable(56) ptr @_Znwm(i64 noundef 56) #19
-          to label %.noexc unwind label %bb.e     ; 5 uses
+          to label %.noexc unwind label %bb.e     ; 4 uses
 
 .noexc:                                           ; preds = %bb.a
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN2cv4util3any11holder_implINS_5gimpl6RcDescEEE, i64 16), ptr %i.c, align 8, !tbaa !25
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  %3 = load i64, ptr %2, align 8
-  store i64 %3, ptr %i.d, align 8
-  %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 16
-  %4 = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
-  %5 = load i64, ptr %4, align 8, !tbaa !105      ; 2 uses
-  store i64 %5, ptr %i.e, align 8, !tbaa !105
-  %i.f = getelementptr inbounds nuw [8 x i8], ptr @constinit.13, i64 %5
+  %i.e = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
+  %3 = load i64, ptr %i.e, align 8, !tbaa !105
+  %4 = load <2 x i64>, ptr %2, align 16
+  store <2 x i64> %4, ptr %i.d, align 8
+  %i.f = getelementptr inbounds nuw [8 x i8], ptr @constinit.13, i64 %3
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !22
   %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
@@ -238,7 +236,7 @@ bb.b:                                             ; preds = %.noexc
 
 bb.c:                                             ; preds = %.noexc
   store ptr %i.c, ptr %i.b, align 8, !tbaa !39
-  %i.l = load i64, ptr %4, align 8, !tbaa !105
+  %i.l = load i64, ptr %i.e, align 8, !tbaa !105
   %i.m = getelementptr inbounds nuw [8 x i8], ptr @constinit.12, i64 %i.l
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !22
   invoke void %i.n(ptr noundef nonnull %i.i)
@@ -641,16 +639,14 @@ bb.a:
   %i.a = tail call noundef i64 @_ZNSt10_HashtableIN3ade7details10MetadataIdESt4pairIKS2_St10unique_ptrINS1_8Metadata18MetadataHolderBaseESt14default_deleteIS7_EEESaISB_ENSt8__detail10_Select1stESt8equal_toIS2_ENS6_6IdHashENSD_18_Mod_range_hashingENSD_20_Default_ranged_hashENSD_20_Prime_rehash_policyENSD_17_Hashtable_traitsILb1ELb0ELb1EEEE8_M_eraseESt17integral_constantIbLb1EERS4_(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr noundef nonnull align 8 dereferenceable(8) %1) ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #18
   tail call void @llvm.experimental.noalias.scope.decl(metadata !654)
-  %i.b = tail call noalias noundef nonnull dereferenceable(120) ptr @_Znwm(i64 noundef 120) #19, !noalias !654 ; 8 uses
+  %i.b = tail call noalias noundef nonnull dereferenceable(120) ptr @_Znwm(i64 noundef 120) #19, !noalias !654 ; 7 uses
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN3ade7details8Metadata14MetadataHolderIN2cv5gimpl4DataEEE, i64 16), ptr %i.b, align 8, !tbaa !25, !noalias !654
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %4 = load i64, ptr %2, align 8, !noalias !654
-  store i64 %4, ptr %i.c, align 8, !noalias !654
-  %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %5 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %6 = load i64, ptr %5, align 8, !tbaa !154, !noalias !654 ; 2 uses
-  store i64 %6, ptr %i.d, align 8, !tbaa !154, !noalias !654
-  %i.e = getelementptr inbounds nuw [8 x i8], ptr @constinit.18, i64 %6
+  %i.d = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %4 = load i64, ptr %i.d, align 8, !tbaa !154, !noalias !654
+  %5 = load <2 x i64>, ptr %2, align 8, !noalias !654
+  store <2 x i64> %5, ptr %i.c, align 8, !noalias !654
+  %i.e = getelementptr inbounds nuw [8 x i8], ptr @constinit.18, i64 %4
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !22, !noalias !654
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 16
