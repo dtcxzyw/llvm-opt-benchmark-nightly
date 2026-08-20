@@ -204,7 +204,7 @@ bb.a:
 
 iter.check:                                       ; preds = %.preheader.lr.ph.split, %._crit_edge
   %indvars.iv24 = phi i64 [ 0, %.preheader.lr.ph.split ], [ %indvars.iv.next25, %._crit_edge ] ; 5 uses
-  %i.k = mul i64 %indvars.iv24, %i.h
+  %i.k = mul nsw i64 %indvars.iv24, %i.h
   %i.l = add i64 %i.k, %i.b
   %i.m = trunc i64 %indvars.iv24 to i32
   %i.n = mul i32 %i.i, %i.m
@@ -218,7 +218,7 @@ iter.check:                                       ; preds = %.preheader.lr.ph.sp
   %invariant.gep30 = getelementptr i8, ptr %1, i64 %i.r ; 7 uses
   %i.t = sub i64 %i.p, %i.l
   %diff.check = icmp ugt i64 %i.t, -32
-  %or.cond40 = or i1 %or.cond39.not41, %diff.check
+  %or.cond40 = select i1 %or.cond39.not41, i1 true, i1 %diff.check
   br i1 %or.cond40, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check

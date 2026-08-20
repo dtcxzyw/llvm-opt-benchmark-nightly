@@ -203,7 +203,7 @@ fillcache.exit275:                                ; preds = %.epil.preheader562,
 
 .lr.ph385:                                        ; preds = %fillcache.exit275
   %i.pp = icmp sgt i32 %i.m, 0                    ; 2 uses
-  %wide.trip.count.i.i278 = zext i32 %i.m to i64  ; 26 uses
+  %wide.trip.count.i.i278 = zext i32 %i.m to i64  ; 18 uses
   %i.pq = shl i32 %i.m, 3                         ; 4 uses
   %i.pr = icmp slt i32 %i.m, 8                    ; 4 uses
   %.not11.i.i14.i287 = icmp eq i32 %i.m, 0        ; 4 uses
@@ -606,7 +606,7 @@ hemdistcache.exit329:                             ; preds = %.lr.ph.i.i306.epil.
 ._crit_edge386:                                   ; preds = %hemdistcache.exit329
   tail call void @pg_qsort(ptr noundef nonnull %i.po, i64 noundef %i.mt, i64 noundef 8, ptr noundef nonnull @comparecost) #12
   %i.zi = icmp sgt i32 %i.m, 0                    ; 4 uses
-  %wide.trip.count.i = zext i32 %i.m to i64       ; 2 uses
+  %wide.trip.count.i = zext i32 %i.m to i64       ; 10 uses
   %i.zj = shl i32 %i.m, 3                         ; 2 uses
   %i.zk = icmp slt i32 %i.m, 8                    ; 2 uses
   %.not11.i.i = icmp eq i32 %i.m, 0               ; 2 uses
@@ -614,9 +614,9 @@ hemdistcache.exit329:                             ; preds = %.lr.ph.i.i306.epil.
   %i.zm = add nuw nsw i64 %wide.trip.count.i.i278, 8 ; 2 uses
   %scevgep = getelementptr i8, ptr %i.lt, i64 %i.zm
   %scevgep488 = getelementptr i8, ptr %i.mj, i64 %i.zm
-  %xtraiter611 = and i64 %wide.trip.count.i.i278, 1
+  %xtraiter611 = and i64 %wide.trip.count.i, 1
   %i.zn = icmp eq i64 %i.ps, 0
-  %unroll_iter616 = and i64 %wide.trip.count.i.i278, 2147483646
+  %unroll_iter616 = and i64 %wide.trip.count.i, 2147483646
   %lcmp.mod613.not = icmp eq i64 %xtraiter611, 0
   %lcmp.mod615 = trunc i32 %i.m to i1
   %xtraiter618 = and i32 %i.m, 3                  ; 3 uses
@@ -624,9 +624,9 @@ hemdistcache.exit329:                             ; preds = %.lr.ph.i.i306.epil.
   %unroll_iter623 = and i32 %i.m, -4
   %lcmp.mod620.not = icmp eq i32 %xtraiter618, 0
   %lcmp.mod622 = icmp ne i32 %xtraiter618, 0
-  %xtraiter625 = and i64 %wide.trip.count.i.i278, 1
+  %xtraiter625 = and i64 %wide.trip.count.i, 1
   %i.zp = icmp eq i64 %i.ps, 0
-  %unroll_iter630 = and i64 %wide.trip.count.i.i278, 2147483646
+  %unroll_iter630 = and i64 %wide.trip.count.i, 2147483646
   %lcmp.mod627.not = icmp eq i64 %xtraiter625, 0
   %lcmp.mod629 = trunc i32 %i.m to i1
   %xtraiter632 = and i32 %i.m, 3                  ; 3 uses
@@ -642,7 +642,7 @@ hemdistcache.exit329:                             ; preds = %.lr.ph.i.i306.epil.
   %min.epilog.iters.check511 = icmp eq i64 %i.zr, 0
   %n.vec513 = and i64 %wide.trip.count.i.i278, 2147483644 ; 3 uses
   %cmp.n520 = icmp eq i64 %n.vec513, %wide.trip.count.i.i278
-  %xtraiter639 = and i64 %wide.trip.count.i.i278, 3 ; 2 uses
+  %xtraiter639 = and i64 %wide.trip.count.i, 3    ; 2 uses
   %lcmp.mod640.not = icmp eq i64 %xtraiter639, 0
   %min.iters.check = icmp ult i32 %i.m, 4
   %min.iters.check477 = icmp ult i32 %i.m, 32
@@ -652,7 +652,7 @@ hemdistcache.exit329:                             ; preds = %.lr.ph.i.i306.epil.
   %min.epilog.iters.check = icmp eq i64 %i.zs, 0
   %n.vec481 = and i64 %wide.trip.count.i.i278, 2147483644 ; 3 uses
   %cmp.n486 = icmp eq i64 %n.vec481, %wide.trip.count.i.i278
-  %xtraiter641 = and i64 %wide.trip.count.i.i278, 3 ; 2 uses
+  %xtraiter641 = and i64 %wide.trip.count.i, 3    ; 2 uses
   %lcmp.mod642.not = icmp eq i64 %xtraiter641, 0
   br label %bb.az
 
@@ -1055,7 +1055,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 .lr.ph392.prol.loopexit:                          ; preds = %.lr.ph392.prol, %.lr.ph392.preheader
   %indvars.iv428.unr = phi i64 [ %indvars.iv428.ph, %.lr.ph392.preheader ], [ %indvars.iv.next429.prol, %.lr.ph392.prol ]
-  %i.ahs = sub nsw i64 %indvars.iv428.ph, %wide.trip.count.i.i278
+  %i.ahs = sub nsw i64 %indvars.iv428.ph, %wide.trip.count.i
   %i.aht = icmp ugt i64 %i.ahs, -4
   br i1 %i.aht, label %.loopexit, label %.lr.ph392
 
@@ -1198,7 +1198,7 @@ vec.epilog.middle.block519:                       ; preds = %vec.epilog.vector.b
 
 .lr.ph389.prol.loopexit:                          ; preds = %.lr.ph389.prol, %.lr.ph389.preheader
   %indvars.iv423.unr = phi i64 [ %indvars.iv423.ph, %.lr.ph389.preheader ], [ %indvars.iv.next424.prol, %.lr.ph389.prol ]
-  %i.ajp = sub nsw i64 %indvars.iv423.ph, %wide.trip.count.i.i278
+  %i.ajp = sub nsw i64 %indvars.iv423.ph, %wide.trip.count.i
   %i.ajq = icmp ugt i64 %i.ajp, -4
   br i1 %i.ajq, label %.loopexit354, label %.lr.ph389
 

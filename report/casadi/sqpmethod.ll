@@ -204,13 +204,13 @@ _ZN6casadi23casadi_cvx_givens_applyIdEEvxPT_S1_S1_x.exit: ; preds = %.lr.ph84.i,
   br label %bb.m
 
 bb.m:                                             ; preds = %.lr.ph164, %_ZN6casadi22casadi_cvx_house_applyIdEEvxxxPT_S2_PKS1_S1_.exit
-  %indvar = phi i64 [ 0, %.lr.ph164 ], [ %indvar.next, %_ZN6casadi22casadi_cvx_house_applyIdEEvxxxPT_S2_PKS1_S1_.exit ] ; 13 uses
+  %indvar = phi i64 [ 0, %.lr.ph164 ], [ %indvar.next, %_ZN6casadi22casadi_cvx_house_applyIdEEvxxxPT_S2_PKS1_S1_.exit ] ; 14 uses
   %.0123162 = phi i64 [ %i.je, %.lr.ph164 ], [ %i.pi, %_ZN6casadi22casadi_cvx_house_applyIdEEvxxxPT_S2_PKS1_S1_.exit ] ; 11 uses
-  %i.jv = add i64 %indvar, 1
-  %i.jw = add i64 %indvar, 1                      ; 2 uses
+  %i.jv = add nuw i64 %indvar, 1
+  %i.jw = add nuw i64 %indvar, 1                  ; 2 uses
   %i.jx = sub i64 %i.jm, %indvar                  ; 2 uses
   %i.jy = sub i64 %i.jm, %indvar                  ; 3 uses
-  %i.jz = add i64 %indvar, 1                      ; 3 uses
+  %i.jz = add nuw i64 %indvar, 1                  ; 2 uses
   %i.ka = mul i64 %indvar, -8                     ; 2 uses
   %scevgep197 = getelementptr i8, ptr %i.jo, i64 %i.ka ; 2 uses
   %i.kb = mul i64 %i.ji, %indvar
@@ -316,7 +316,7 @@ _ZN6casadi12casadi_clearIdEEvPT_x.exit.thread.i:  ; preds = %bb.m
   br i1 %exitcond58.not.i, label %.lr.ph.us53.i.preheader, label %.lr.ph.us.i, !llvm.loop !946
 
 .lr.ph.us53.i.preheader:                          ; preds = %._crit_edge.us.i
-  %min.iters.check210 = icmp ult i64 %i.jz, 6
+  %min.iters.check210 = icmp ult i64 %indvar, 5
   %bound0202 = icmp ult ptr %scevgep197, %scevgep200
   %bound1203 = icmp ult ptr %scevgep199, %scevgep198
   %found.conflict204 = and i1 %bound0202, %bound1203

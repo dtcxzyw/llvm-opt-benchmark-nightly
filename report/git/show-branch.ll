@@ -204,12 +204,12 @@ bb.aq:                                            ; preds = %bb.ap
 
 .preheader275:                                    ; preds = %bb.az
   %i.nn = trunc nuw nsw i64 %indvars.iv.next356 to i32 ; 2 uses
-  %i.no = add nuw i64 %indvars.iv355458, 1        ; 2 uses
+  %i.no = add nuw nsw i64 %indvars.iv355458, 1    ; 2 uses
   %i.np = icmp eq i64 %indvars.iv355458, 0
   br i1 %i.np, label %.lr.ph311.epil.preheader, label %.preheader275.new
 
 .preheader275.new:                                ; preds = %.preheader275
-  %unroll_iter = and i64 %i.no, -2
+  %unroll_iter = and i64 %i.no, 9223372036854775806
   br label %.lr.ph311
 
 .lr.ph307:                                        ; preds = %bb.az

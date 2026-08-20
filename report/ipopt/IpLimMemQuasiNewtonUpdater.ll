@@ -203,9 +203,9 @@ _ZN5Ipopt14DenseSymMatrix6ValuesEv.exit45:        ; preds = %bb.c
 
 .preheader87:                                     ; preds = %.preheader87.preheader, %.loopexit
   %indvars.iv = phi i64 [ 0, %.preheader87.preheader ], [ %indvars.iv.next, %.loopexit ] ; 7 uses
-  %i.ae = add nuw i64 %indvars.iv, 1
+  %i.ae = add nuw nsw i64 %indvars.iv, 1
   %umax = tail call i64 @llvm.umax.i64(i64 %i.ae, i64 %wide.trip.count)
-  %i.af = sub i64 %umax, %indvars.iv              ; 3 uses
+  %i.af = sub nsw i64 %umax, %indvars.iv          ; 3 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
   %i.ag = mul nuw nsw i64 %indvars.iv.next, %i.z
   %i.ah = mul nuw nsw i64 %indvars.iv, %i.z
@@ -608,9 +608,9 @@ _ZN5Ipopt14DenseSymMatrix6ValuesEv.exit45:        ; preds = %bb.c
 
 .preheader87:                                     ; preds = %.preheader87.preheader, %.loopexit
   %indvars.iv = phi i64 [ 0, %.preheader87.preheader ], [ %indvars.iv.next, %.loopexit ] ; 7 uses
-  %i.ae = add nuw i64 %indvars.iv, 1
+  %i.ae = add nuw nsw i64 %indvars.iv, 1
   %umax = tail call i64 @llvm.umax.i64(i64 %i.ae, i64 %wide.trip.count)
-  %i.af = sub i64 %umax, %indvars.iv              ; 3 uses
+  %i.af = sub nsw i64 %umax, %indvars.iv          ; 3 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
   %i.ag = mul nuw nsw i64 %indvars.iv.next, %i.z
   %i.ah = mul nuw nsw i64 %indvars.iv, %i.z

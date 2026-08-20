@@ -203,7 +203,7 @@ lv_color_24_24_mix.exit.i.lver.orig:              ; preds = %lv_color_24_24_mix.
   br i1 %exitcond274.not.i.lver.orig, label %._crit_edge240.i, label %lv_color_24_24_mix.exit.i.lver.orig, !llvm.loop !63
 
 lv_color_24_24_mix.exit.i.ph:                     ; preds = %lv_color_24_24_mix.exit.i.lver.check
-  %i.ed = mul i64 %indvar, %i.cp
+  %i.ed = mul nsw i64 %indvar, %i.cp
   %i.ee = getelementptr i8, ptr %i.i, i64 %i.ed
   %scevgep485 = getelementptr i8, ptr %i.ee, i64 1
   %load_initial = load i8, ptr %scevgep485, align 1
@@ -606,7 +606,7 @@ lv_color_8_24_mix.exit.i.lver.orig:               ; preds = %lv_color_8_24_mix.e
   br i1 %exitcond238.not.i.lver.orig, label %._crit_edge203.i, label %lv_color_8_24_mix.exit.i.lver.orig, !llvm.loop !103
 
 lv_color_8_24_mix.exit.i.ph:                      ; preds = %lv_color_8_24_mix.exit.i.lver.check
-  %i.awn = mul i64 %indvar488, %i.avk
+  %i.awn = mul nsw i64 %indvar488, %i.avk
   %i.awo = getelementptr i8, ptr %i.arx, i64 %i.awn
   %scevgep490 = getelementptr i8, ptr %i.awo, i64 1
   %load_initial491 = load i8, ptr %scevgep490, align 1

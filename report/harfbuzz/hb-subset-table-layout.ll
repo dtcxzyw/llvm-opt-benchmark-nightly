@@ -204,7 +204,7 @@ bb.n:                                             ; preds = %bb.m
   %i.bq = zext i32 %i.bp to i64
   %i.br = getelementptr inbounds nuw [6 x i8], ptr %i.be, i64 %i.bq
   %i.bs = zext i16 %i.bl to i64
-  %i.bt = mul nuw i64 %indvars.iv, %i.bs
+  %i.bt = mul nuw nsw i64 %indvars.iv, %i.bs
   %i.bu = getelementptr inbounds nuw [6 x i8], ptr %i.c, i64 %i.bt
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bu, ptr nonnull readonly align 1 %i.br, i64 %i.bo, i1 false), !alias.scope !1164
   br label %bb.o
@@ -607,7 +607,7 @@ bb.j:                                             ; preds = %bb.i
   %i.av = call noundef i16 @llvm.bswap.i16(i16 %i.au)
   %i.aw = zext i16 %i.av to i32
   %i.ax = trunc nuw nsw i64 %indvars.iv to i32
-  %i.ay = add i32 %i.ax, %i.aw                    ; 3 uses
+  %i.ay = add nuw nsw i32 %i.ax, %i.aw            ; 3 uses
   %i.az = lshr i32 %i.ay, 9                       ; 3 uses
   %i.ba = load atomic i32, ptr %i.am monotonic, align 4 ; 2 uses
   %i.bb = load i32, ptr %i.an, align 4, !tbaa !502 ; 3 uses

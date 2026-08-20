@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %mul.ov.i, label %.thread.loopexit, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.ao = mul i64 %.06988, %i.e
+  %i.ao = mul nsw i64 %.06988, %i.e
   %i.ap = load ptr, ptr %5, align 8, !tbaa !17    ; 2 uses
   %i.aq = add nuw nsw i64 %i.an, 1
   %i.ar = mul nsw i64 %i.aq, %i.am                ; 3 uses
@@ -362,7 +362,7 @@ bb.d:                                             ; preds = %.lr.ph, %.lr.ph.spl
 
 bb.e:                                             ; preds = %bb.d
   %i.aj = load ptr, ptr %5, align 8, !tbaa !17
-  %i.ak = mul i64 %.05074, %i.e
+  %i.ak = mul nsw i64 %.05074, %i.e
   %i.al = load i16, ptr %i.a, align 8, !tbaa !30
   %i.am = zext nneg i16 %i.al to i32
   %i.an = shl nuw i32 1, %i.am
@@ -765,7 +765,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %mul.ov.i, label %cdf_read_sector.exit.thread, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.ak = mul i64 %.0314966, %i.e
+  %i.ak = mul nsw i64 %.0314966, %i.e
   %i.al = load ptr, ptr %3, align 8, !tbaa !37
   %i.am = add nuw nsw i64 %i.aj, 1
   %i.an = mul nsw i64 %i.am, %i.ai                ; 3 uses

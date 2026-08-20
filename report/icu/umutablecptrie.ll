@@ -204,7 +204,7 @@ _ZN6icu_7812_GLOBAL__N_110getOverlapIttEEiPKT_iPKT0_ii.exit.i.i.i.loopexit: ; pr
   br label %_ZN6icu_7812_GLOBAL__N_110getOverlapIttEEiPKT_iPKT0_ii.exit.i.i.i
 
 _ZN6icu_7812_GLOBAL__N_110getOverlapIttEEiPKT_iPKT0_ii.exit.i.i.i: ; preds = %bb.ex, %_ZN6icu_7812_GLOBAL__N_110getOverlapIttEEiPKT_iPKT0_ii.exit.i.i.i.loopexit
-  %indvar.lcssa = phi i64 [ %indvar.next.le, %_ZN6icu_7812_GLOBAL__N_110getOverlapIttEEiPKT_iPKT0_ii.exit.i.i.i.loopexit ], [ %indvar, %bb.ex ]
+  %indvar.lcssa = phi i64 [ %indvar.next.le, %_ZN6icu_7812_GLOBAL__N_110getOverlapIttEEiPKT_iPKT0_ii.exit.i.i.i.loopexit ], [ %indvar, %bb.ex ] ; 3 uses
   %indvars.iv468.i.i.i.lcssa = phi i64 [ %indvars.iv.next469.i.i.i.le, %_ZN6icu_7812_GLOBAL__N_110getOverlapIttEEiPKT_iPKT0_ii.exit.i.i.i.loopexit ], [ %indvars.iv468.i.i.i, %bb.ex ] ; 6 uses
   %indvars.iv.in.i.i110.i.i.lcssa = phi i64 [ %indvars.iv.i334.i.i.i, %_ZN6icu_7812_GLOBAL__N_110getOverlapIttEEiPKT_iPKT0_ii.exit.i.i.i.loopexit ], [ %indvars.iv.in.i.i110.i.i, %bb.ex ] ; 2 uses
   %.lcssa333 = phi i32 [ %i.aqx, %_ZN6icu_7812_GLOBAL__N_110getOverlapIttEEiPKT_iPKT0_ii.exit.i.i.i.loopexit ], [ %i.arh, %bb.ex ]
@@ -217,12 +217,12 @@ _ZN6icu_7812_GLOBAL__N_110getOverlapIttEEiPKT_iPKT0_ii.exit.i.i.i: ; preds = %bb
   br i1 %i.arr, label %iter.check, label %.loopexit375.i.i.i
 
 iter.check:                                       ; preds = %.preheader374.i.i.i
-  %i.ars = add i64 %indvar.lcssa, 1               ; 7 uses
-  %min.iters.check269 = icmp ult i64 %i.ars, 4
+  %i.ars = add nuw nsw i64 %indvar.lcssa, 1       ; 5 uses
+  %min.iters.check269 = icmp ult i64 %indvar.lcssa, 3
   br i1 %min.iters.check269, label %.lr.ph.i112.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check270 = icmp ult i64 %i.ars, 16
+  %min.iters.check270 = icmp ult i64 %indvar.lcssa, 15
   br i1 %min.iters.check270, label %vec.epilog.ph, label %vector.ph271
 
 vector.ph271:                                     ; preds = %vector.main.loop.iter.check

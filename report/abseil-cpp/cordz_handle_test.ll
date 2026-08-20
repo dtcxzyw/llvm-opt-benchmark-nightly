@@ -204,7 +204,7 @@ bb.al:                                            ; preds = %bb.ak
   br i1 %.not265, label %_ZN7testing8internal11NativeArrayIbED2Ev.exit, label %.preheader
 
 .preheader:                                       ; preds = %bb.al
-  %scevgep = getelementptr i8, ptr %1, i64 %.043.idx206
+  %scevgep = getelementptr nuw i8, ptr %1, i64 %.043.idx206
   %i.gg = load ptr, ptr %i.a, align 8, !tbaa !87  ; 2 uses
   %.not.i104 = icmp eq ptr %i.gg, null
   br i1 %.not.i104, label %_ZN7testing19MatchResultListenerlsIA3_cEERS0_RKT_.exit, label %bb.am

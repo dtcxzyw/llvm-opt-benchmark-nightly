@@ -203,9 +203,9 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 
 iter.check:                                       ; preds = %.lr.ph
   %i.h = zext nneg i8 %i.e to i64
-  %i.i = add nuw i64 %indvars.iv, 1
+  %i.i = add nuw nsw i64 %indvars.iv, 1
   %umax = tail call i64 @llvm.umax.i64(i64 %i.i, i64 %wide.trip.count)
-  %i.j = sub i64 %umax, %indvars.iv               ; 7 uses
+  %i.j = sub nsw i64 %umax, %indvars.iv           ; 7 uses
   %min.iters.check = icmp ult i64 %i.j, 4
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 

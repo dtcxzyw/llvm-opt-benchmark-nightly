@@ -204,12 +204,12 @@ bb.p:                                             ; preds = %bb.l
   br i1 %.sroa.18.0.in.i.i.i.i, label %bb.r, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %.sroa.0.0.i.i.i.i.i = call noundef range(i32 0, 7) i32 @llvm.umin.i32(i32 %.sroa.0.034.i.i.i, i32 6) ; 2 uses
-  %7 = mul nuw nsw i32 %.sroa.0.0.i.i.i.i.i, %.sroa.0.0.i.i.i.i.i ; 2 uses
   %.not.i23.i.i.i = icmp eq i32 %.sroa.0.034.i.i.i, 0
   br i1 %.not.i23.i.i.i, label %.backedge.i.i.i.backedge, label %.lr.ph.i24.i.i.i.preheader
 
 .lr.ph.i24.i.i.i.preheader:                       ; preds = %bb.q
+  %.sroa.0.0.i.i.i.i.i = call noundef range(i32 0, 7) i32 @llvm.umin.i32(i32 %.sroa.0.034.i.i.i, i32 6) ; 2 uses
+  %7 = mul nuw nsw i32 %.sroa.0.0.i.i.i.i.i, %.sroa.0.0.i.i.i.i.i ; 2 uses
   %xtraiter156 = and i32 %7, 5                    ; 3 uses
   %i.ar = icmp ult i32 %.sroa.0.034.i.i.i, 3
   br i1 %i.ar, label %.lr.ph.i24.i.i.i.epil.preheader, label %.lr.ph.i24.i.i.i.preheader.new
@@ -612,12 +612,12 @@ bb.n:                                             ; preds = %bb.j
   br i1 %.sroa.18.0.in.i.i, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %.sroa.0.0.i.i.i = call noundef range(i32 0, 7) i32 @llvm.umin.i32(i32 %.sroa.0.034.i, i32 6) ; 2 uses
-  %4 = mul nuw nsw i32 %.sroa.0.0.i.i.i, %.sroa.0.0.i.i.i ; 2 uses
   %.not.i23.i = icmp eq i32 %.sroa.0.034.i, 0
   br i1 %.not.i23.i, label %.backedge.i.backedge, label %.lr.ph.i24.i.preheader
 
 .lr.ph.i24.i.preheader:                           ; preds = %bb.o
+  %.sroa.0.0.i.i.i = call noundef range(i32 0, 7) i32 @llvm.umin.i32(i32 %.sroa.0.034.i, i32 6) ; 2 uses
+  %4 = mul nuw nsw i32 %.sroa.0.0.i.i.i, %.sroa.0.0.i.i.i ; 2 uses
   %xtraiter = and i32 %4, 5                       ; 3 uses
   %i.an = icmp ult i32 %.sroa.0.034.i, 3
   br i1 %i.an, label %.lr.ph.i24.i.epil.preheader, label %.lr.ph.i24.i.preheader.new
@@ -1020,12 +1020,12 @@ bb.m:                                             ; preds = %bb.j, %_RINvNtCsbvk
   br i1 %.sroa.18.0.in.i.i.i, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %.sroa.0.0.i.i.i.i = tail call noundef range(i32 0, 7) i32 @llvm.umin.i32(i32 %.sroa.0.071.i.lcssa.i, i32 6) ; 2 uses
-  %2 = mul nuw nsw i32 %.sroa.0.0.i.i.i.i, %.sroa.0.0.i.i.i.i ; 2 uses
   %.not.i24.i.i = icmp eq i32 %.sroa.0.071.i.lcssa.i, 0
   br i1 %.not.i24.i.i, label %.outer.backedge.i.i, label %.lr.ph.i25.i.i.preheader
 
 .lr.ph.i25.i.i.preheader:                         ; preds = %bb.n
+  %.sroa.0.0.i.i.i.i = tail call noundef range(i32 0, 7) i32 @llvm.umin.i32(i32 %.sroa.0.071.i.lcssa.i, i32 6) ; 2 uses
+  %2 = mul nuw nsw i32 %.sroa.0.0.i.i.i.i, %.sroa.0.0.i.i.i.i ; 2 uses
   %xtraiter162 = and i32 %2, 5                    ; 3 uses
   %i.bg = icmp ult i32 %.sroa.0.071.i.lcssa.i, 3
   br i1 %i.bg, label %.lr.ph.i25.i.i.epil.preheader, label %.lr.ph.i25.i.i.preheader.new
